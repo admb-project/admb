@@ -1,0 +1,41 @@
+
+#define HOME_VERSION
+//COPYRIGHT (c) 2003 OTTER RESEARCH LTD
+#include <fvar.hpp>
+
+
+
+  dvariable log_gamma_density(const prevariable& _x,double r, double mu)
+  {
+    prevariable& x= (prevariable&)(_x);
+
+    return r*log(mu) + (r-1)*log(x)-mu*x-gammln(r);
+  }
+    
+  dvariable log_gamma_density(const dvariable& _x,const dvariable& _r,
+    const  dvariable& _mu)
+  {
+    prevariable& x= (prevariable&)(_x);
+    prevariable& r= (prevariable&)(_r);
+    prevariable& mu= (prevariable&)(_mu);
+    return r*log(mu) + (r-1)*log(x)-mu*x-gammln(r);
+  }
+    
+    
+  dvariable gamma_density(const prevariable& _x,double r, double mu)
+  {
+    prevariable& x= (prevariable&)(_x);
+
+    return exp(r*log(mu) + (r-1)*log(x)-mu*x-gammln(r));
+  }
+    
+  dvariable gamma_density(const dvariable& _x,const dvariable& _r,
+    const  dvariable& _mu)
+  {
+    prevariable& x= (prevariable&)(_x);
+    prevariable& r= (prevariable&)(_r);
+    prevariable& mu= (prevariable&)(_mu);
+    return exp(r*log(mu) + (r-1)*log(x)-mu*x-gammln(r));
+  }
+    
+    

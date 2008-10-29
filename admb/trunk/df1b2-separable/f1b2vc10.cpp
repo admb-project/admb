@@ -1,0 +1,31 @@
+
+
+#include <df1b2fun.h>
+
+char ADcopy06[]="copyright 2006 otter research ltd";
+
+df1b2vector pow(const df1b2vector& _v,double x)
+{
+  ADUNCONST(df1b2vector,v);
+  //check_shape(x,M,"operator *");
+  int mmin=v.indexmin();
+  int mmax=v.indexmax();
+  df1b2vector tmp;
+  tmp.noallocate(mmin,mmax);
+  for (int i=mmin;i<=mmax;i++) tmp(i)=pow(v(i),x);
+  return tmp;
+}
+
+df1b2vector pow(const  df1b2vector& x,const df1b2vector& _v)
+{
+  ADUNCONST(df1b2vector,v);
+  //check_shape(x,M,"operator *");
+  //check_shape(x,M,"operator *");
+  int mmin=v.indexmin();
+  int mmax=v.indexmax();
+  df1b2vector tmp;
+  tmp.noallocate(mmin,mmax);
+  for (int i=mmin;i<=mmax;i++) tmp(i)=pow(x(i),v(i));
+  return tmp;
+}
+

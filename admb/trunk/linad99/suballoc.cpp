@@ -1,0 +1,278 @@
+#define HOME_VERSION
+//COPYRIGHT (c) 1991 OTTER RESEARCH LTD
+#include "fvar.hpp"
+
+  int sub_unallocated(const dvar_vector& m)
+  {
+    int iflag;
+    if (!allocated(m)) iflag=1;
+    return iflag;
+  }
+
+
+  int sub_unallocated(const dvar_matrix& m)
+  {
+    int iflag=0;
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    int mmin=m.indexmin();
+    int mmax=m.indexmax();
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    for (int i=mmin;i<=mmax;i++)
+    {
+      if (!allocated(m(i)))
+      {
+        iflag=1;
+        break;
+      }
+    }
+    return iflag;
+  }
+
+  int sub_unallocated(const dvar3_array& m)
+  {
+    int iflag=0;
+    int mmin=m.indexmin();
+    int mmax=m.indexmax();
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    for (int i=mmin;i<=mmax;i++)
+    {
+      if (sub_unallocated(m(i)))
+      {
+        iflag=1;
+        break;
+      }
+    }
+    return iflag;
+  }
+  int sub_unallocated(const dvar4_array& m)
+  {
+    int iflag=0;
+    int mmin=m.indexmin();
+    int mmax=m.indexmax();
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    for (int i=mmin;i<=mmax;i++)
+    {
+      if (sub_unallocated(m(i)))
+      {
+        iflag=1;
+        break;
+      }
+    }
+    return iflag;
+  }
+
+  int sub_unallocated(const dvar5_array& m)
+  {
+    int iflag=0;
+    int mmin=m.indexmin();
+    int mmax=m.indexmax();
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    for (int i=mmin;i<=mmax;i++)
+    {
+      if (sub_unallocated(m(i)))
+      {
+        iflag=1;
+        break;
+      }
+    }
+    return iflag;
+  }
+
+  int sub_unallocated(const dvector& m)
+  {
+    int iflag;
+    if (!allocated(m)) iflag=1;
+    return iflag;
+  }
+
+
+  int sub_unallocated(const dmatrix& m)
+  {
+    int iflag=0;
+    int mmin=m.indexmin();
+    int mmax=m.indexmax();
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    for (int i=mmin;i<=mmax;i++)
+    {
+      if (!allocated(m(i)))
+      {
+        iflag=1;
+        break;
+      }
+    }
+    return iflag;
+  }
+
+  int sub_unallocated(const d3_array& m)
+  {
+    int iflag=0;
+    int mmin=m.indexmin();
+    int mmax=m.indexmax();
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    for (int i=mmin;i<=mmax;i++)
+    {
+      if (sub_unallocated(m(i)))
+      {
+        iflag=1;
+        break;
+      }
+    }
+    return iflag;
+  }
+  int sub_unallocated(const d4_array& m)
+  {
+    int iflag=0;
+    int mmin=m.indexmin();
+    int mmax=m.indexmax();
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    for (int i=mmin;i<=mmax;i++)
+    {
+      if (sub_unallocated(m(i)))
+      {
+        iflag=1;
+        break;
+      }
+    }
+    return iflag;
+  }
+
+  int sub_unallocated(const d5_array& m)
+  {
+    int iflag=0;
+    int mmin=m.indexmin();
+    int mmax=m.indexmax();
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    for (int i=mmin;i<=mmax;i++)
+    {
+      if (sub_unallocated(m(i)))
+      {
+        iflag=1;
+        break;
+      }
+    }
+    return iflag;
+  }
+
+  int sub_unallocated(const ivector& m)
+  {
+    int iflag;
+    if (!allocated(m)) iflag=1;
+    return iflag;
+  }
+
+
+  int sub_unallocated(const imatrix& m)
+  {
+    int iflag=0;
+    int mmin=m.indexmin();
+    int mmax=m.indexmax();
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    for (int i=mmin;i<=mmax;i++)
+    {
+      if (!allocated(m(i)))
+      {
+        iflag=1;
+        break;
+      }
+    }
+    return iflag;
+  }
+
+  int sub_unallocated(const i3_array& m)
+  {
+    int iflag=0;
+    int mmin=m.indexmin();
+    int mmax=m.indexmax();
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    for (int i=mmin;i<=mmax;i++)
+    {
+      if (sub_unallocated(m(i)))
+      {
+        iflag=1;
+        break;
+      }
+    }
+    return iflag;
+  }
+  int sub_unallocated(const i4_array& m)
+  {
+    int iflag=0;
+    int mmin=m.indexmin();
+    int mmax=m.indexmax();
+    if (!allocated(m)) 
+    {
+      iflag=1;
+      return iflag;
+    }
+    for (int i=mmin;i<=mmax;i++)
+    {
+      if (sub_unallocated(m(i)))
+      {
+        iflag=1;
+        break;
+      }
+    }
+    return iflag;
+  }
+
+
+#undef HOME_VERSION

@@ -1,5 +1,14 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
-// char cc[43]={"Copyright (c) 1995 Otter Research Ltd"};
 #include <admodel.h>
 
 void generate_actual_multivariate_mixture(int nvar,BOR_CONST dvector& a,BOR_CONST dvector& b,

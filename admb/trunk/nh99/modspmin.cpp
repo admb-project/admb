@@ -1,16 +1,24 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 #include <admodel.h>
 //#define NO_MCMC
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
 #  include <windows.h>
 #endif
- //char cc[43]={"Copyright (c) 1993,2004 Otter Research Ltd"};
 char banner0[56]={"*****************************************************"};
 char banner1[56]={"This is the demonstration version of AD Model Builder"};
 char banner1a[58]={"You can buy the commercial version of AD Model Builder"};
 char banner2[30]={"From Otter research Ltd"};
 char banner3[55]={"PO Box 2040, Sidney,B.C. V8L 3S3 Canada"};
 char banner4[50]={"otter@otter-rsch.com   http://otter-rsch.com"};
-char adcopy[45]={"Copyright (c) 1993, 1998 Otter Research Ltd"};
 int ad_cheat_flag=0;
 #if defined(linux)
   int Sleep(int);
@@ -634,7 +642,7 @@ void write_banner_stuff(void)
     (*ad_printf)("%s\n", banner2);
     (*ad_printf)("%s\n", banner3);
     (*ad_printf)("%s\n", banner4);
-    (*ad_printf)("%s\n", adcopy);
+    //(*ad_printf)("%s\n", adcopy);
     (*ad_printf)("%s\n", banner0);
     (*ad_printf)("%s\n\n", banner0);
   }

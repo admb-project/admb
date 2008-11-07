@@ -1,6 +1,15 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 #define HOME_VERSION
-//COPYRIGHT (c) 2003 OTTER RESEARCH LTD
 #include <df1b2fun.h>
 
   df1b2variable gamma_density(const df1b2variable& _x,double r, double mu)

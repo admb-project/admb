@@ -1,5 +1,14 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
-//COPYRIGHT (c) 2006 OTTER RESEARCH LTD
 #include <fvar.hpp>
 
 dvariable beta_deviate(const prevariable& _a,const prevariable& _b,

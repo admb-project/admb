@@ -1,3 +1,13 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 #define HOME_VERSION
 #include <admodel.h>
@@ -17,7 +27,6 @@ extern "C" {
 	}
 #endif
 
- //char cc[43]={"Copyright (c) 1993,1998 Otter Research Ltd"};
  void goofr(void){;}
 
 dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)

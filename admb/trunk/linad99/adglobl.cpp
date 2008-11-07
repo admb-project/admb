@@ -1,9 +1,18 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 #include <admodel.h>
 
 
  int initial_params::straight_through_flag=0;
-// char cc[43]={"Copyright (c) 1993,1994 Otter Research Ltd"};
  unsigned char ad_comm::directory_prefix='\\';
  unsigned int ad_comm::wd_flag=0;
  adtimer * ad_comm::ptm=0;

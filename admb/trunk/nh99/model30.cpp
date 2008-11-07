@@ -1,7 +1,16 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 #include <admodel.h>
 
- char cc30[43]={"Copyright (c) 1993,1998 Otter Research Ltd"};
 
 
   void param_init_matrix::allocate(const ad_integer& rmin,

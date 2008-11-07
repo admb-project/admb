@@ -1,9 +1,18 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 
 
 #include <admodel.h>
 
- //char cc[40]={"Copyright (c) 1999 Otter Research Ltd"};
 
 void copy_value_from_vector(const double& _sd,const dvector& x,const int & _ii)
 {

@@ -1,3 +1,12 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: Unknown
+  */
 
 /* t.f -- translated by f2c (version 20000121).
    You must link the resulting object file with the libraries:

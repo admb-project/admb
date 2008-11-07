@@ -1,7 +1,16 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 
 #if defined(USE_LAPLACE)
-//char cc[40]={"Copyright (c) 2002 Otter Research Ltd"};
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>

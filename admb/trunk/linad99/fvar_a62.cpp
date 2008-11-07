@@ -1,5 +1,14 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
-//COPYRIGHT (c) 2007 OTTER RESEARCH LTD
 #include <admodel.h>
 
 dvar_vector posfun(const dvar_vector&x,double eps,const prevariable& _pen)

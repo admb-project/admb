@@ -1,9 +1,18 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 //#define HOME_VERSION
 #include <admodel.h>
 
 
-// char cc[40]={"Copyright (c) 1993 Otter Research Ltd"};
 
   void param_init_number::curv_scale(BOR_CONST dvector& _d,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {

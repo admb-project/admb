@@ -1,8 +1,17 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 #if defined(__GNUDOS__)
 #  pragma implementation "fvar.hpp"
 #endif
 #define HOME_VERSION
-//COPYRIGHT (c) 1991 OTTER RESEARCH LTD
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
 

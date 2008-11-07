@@ -1,9 +1,18 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 #include <admodel.h>
 
 #if defined(USE_ADPVM)
 
- char cc2003[43]={"Copyright (c) 2003 Otter Research Ltd"};
 
  int pvm_params::num_pvm_params=0;
  const int pvm_params::maxnum_pvm_params=50;

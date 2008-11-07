@@ -1,3 +1,13 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 
 //#define HOME_VERSION
@@ -7,7 +17,6 @@ double set_value_mc(double z,double min,double max);
 //double ndfboundp( double x, double fmin, double fmax,const double& fpen);
 //double ndfboundp_mc( double x, double fmin, double fmax,const double& fpen);
 
-// char cc[40]={"Copyright (c) 1993 Otter Research Ltd"};
 
 int initial_params::montecarlo_scale(BOR_CONST dvector& d,BOR_CONST dvector& x)
 {

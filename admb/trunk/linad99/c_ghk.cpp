@@ -1,6 +1,15 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 #define HOME_VERSION
-//COPYRIGHT (c) 2002 OTTER RESEARCH LTD
 #include "fvar.hpp"
 double ghk(const dvector& lower,const dvector& upper,const dmatrix& Sigma,
   const dmatrix& eps)

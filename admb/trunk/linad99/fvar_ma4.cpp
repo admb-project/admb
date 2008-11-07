@@ -1,5 +1,13 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: Unknown
+  */
 #define HOME_VERSION
-//COPYRIGHT (c) 1991 OTTER RESEARCH LTD
 
 #include "fvar.hpp"
 #include <math.h>

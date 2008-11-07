@@ -1,8 +1,17 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 
 #include <admodel.h>
 
-// char cc[43]={"Copyright (c) 1993,1996 Otter Research Ltd"};
 
 void named_dvar3_array::allocate(const ad_integer& sl,
   const ad_integer& sh,const index_type& nrl,const index_type& nrh,

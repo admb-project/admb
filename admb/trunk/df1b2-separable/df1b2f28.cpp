@@ -1,4 +1,13 @@
-//char df32fun_notice[50]="copyright (c) 2006 otter research ltd";
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 #include <df1b2fun.h>
 

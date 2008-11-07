@@ -1,3 +1,12 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: Unknown
+  */
 #include <fvar.hpp>
 #include <math.h>
 #define EPS 1.0e-9

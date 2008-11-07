@@ -1,7 +1,16 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 #include <admodel.h>
 
 cifstream&  operator >>(BOR_CONST cifstream &,BOR_CONST prevariable &);
-// char cc[43]={"Copyright (c) 1993,1994 Otter Research Ltd"};
 
 cifstream& operator >> (BOR_CONST cifstream& _s, BOR_CONST param_init_number& x)
 {

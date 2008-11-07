@@ -1,10 +1,19 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 //#define HOME_VERSION
 #include <admodel.h>
 
 //double ndfboundp( double x, double fmin, double fmax,BOR_CONST double& fpen);
 
-// char cc[40]={"Copyright (c) 1993 Otter Research Ltd"};
 
   void param_init_number::sd_scale(BOR_CONST dvector& _d,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {

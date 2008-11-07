@@ -1,3 +1,12 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: Unknown
+  */
 /* lbfgs.f -- translated by f2c (version 19950110).
    You must link the resulting object file with the libraries:
         -lf2c -lm   (in that order)

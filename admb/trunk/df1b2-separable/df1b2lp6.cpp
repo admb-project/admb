@@ -1,6 +1,15 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 
-// copyright(c) 2003 Otter Research Ltd
 //#define USE_DD_STUFF
 //#define USE_DD
 #if defined(USE_LAPLACE)

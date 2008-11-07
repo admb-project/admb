@@ -1,10 +1,19 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 
 
 //#define HOME_VERSION
 #include <admodel.h>
 
-// char cc[40]={"Copyright (c) 2005 Otter Research Ltd"};
 
   void param_init_d3array::sd_vscale(const dvar_vector& _d,
     const dvar_vector& x,const int& _ii)

@@ -1,6 +1,15 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 #include <df1b2fun.h>
 
- char cc100[40]={"Copyright (c) 2003 Otter Research Ltd"};
 
  df1b2_init_bounded_number_vector::df1b2_init_bounded_number_vector()
  {

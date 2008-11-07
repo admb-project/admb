@@ -1,6 +1,15 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 #define HOME_VERSION
 #include "fvar.hpp"
-//COPYRIGHT (c) 1998 OTTER RESEARCH LTD
 
 void get_eigenv(const dvector& _d,const dvector& _e,const dmatrix& _z);
 

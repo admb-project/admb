@@ -1,3 +1,12 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: Unknown
+  */
 #include <stdio.h>
 #include  <stdlib.h>
 #ifndef EXIT_FAILURE

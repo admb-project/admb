@@ -1,3 +1,12 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: Unknown
+  */
 #include <fvar.hpp>
 #define SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a))
 

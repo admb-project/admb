@@ -1,8 +1,17 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 //#define HOME_VERSION
 #include <admodel.h>
 
- char cc1[40]={"Copyright (c) 1999 Otter Research Ltd"};
  int stddev_params::num_stddev_params=0;
  int stddev_params::num_stddev_number_params=0;
  stddev_params * stddev_params::stddev_number_ptr[150]; // this should be a resizeable array

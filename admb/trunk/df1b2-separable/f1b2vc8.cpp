@@ -1,7 +1,16 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 #include <df1b2fun.h>
 
-//char ADcopy02[]="copyright 2002 otter research ltd";
 
 df1b2vector operator + (const df1b2variable& _x,const dvector& _v)
 {

@@ -1,3 +1,13 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 #include <admodel.h>
 
 double inv_cumd_norm(_CONST double& x);
@@ -6,7 +16,6 @@ double myran1(long int&);
 double better_rand(long int&);
     
 
-// char cc[43]={"Copyright (c) 1993,1994 Otter Research Ltd"};
 
 dvector new_probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
   dmatrix& ch,long int& iseed,BOR_CONST double& _wght,double pprobe)

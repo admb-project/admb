@@ -1,3 +1,13 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 
 //#define HOME_VERSION
@@ -5,7 +15,6 @@
 
 //double ndfboundp( double x, double fmin, double fmax,BOR_CONST double& fpen);
 
-// char cc[40]={"Copyright (c) 2001 Otter Research Ltd"};
 
   void param_init_bounded_number::set_maxb(double x)
   {

@@ -1,6 +1,15 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 #include <df1b2fun.h>
 
-char ADcopy03[]="copyright (C) 2004 Otter Research Ltd";
 
 df1b23array::df1b23array(int nrl,int nrh,int ncl,int nch,int nxl,int nxh)
 {

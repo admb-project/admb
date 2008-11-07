@@ -1,5 +1,14 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
-char cc98[45]={"Copyright (c) 1993,1998 Otter Research Ltd"};
 #include <admodel.h>
 
 #ifdef __GNUDOS__

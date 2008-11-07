@@ -1,3 +1,13 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 
 //#define HOME_VERSION
@@ -6,7 +16,6 @@
 
 //double ndfboundp( double x, double fmin, double fmax,const double& fpen);
 
-// char cc[40]={"Copyright (c) 2003 Otter Research Ltd"};
 
   int initial_df1b2params::stddev_scale(const dvector& d,const dvector& x)
   {

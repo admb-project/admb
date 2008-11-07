@@ -1,7 +1,16 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 #include <admodel.h>
 
- //char cc[40]={"Copyright (c) 1993,1994 Otter Research Ltd"};
 
 streampos ad_comm::change_datafile_name(_CONST adstring& s,
   const streampos& off)

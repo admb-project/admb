@@ -1,5 +1,14 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 #define HOME_VERSION
-//COPYRIGHT (c) 1991 OTTER RESEARCH LTD
 #include <fvar.hpp>
 
   dvector elem_prod(_CONST dvector& t1,_CONST dvector& t2)

@@ -1,3 +1,13 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #else
@@ -9,7 +19,6 @@
 void vm_initialize(void);
 int have_jvm=0;
 
- //char cc[40]={"Copyright (c) 1993,1994,2000,2005 Otter Research Ltd"};
 
 
 void  strip_full_path(BOR_CONST adstring& _s)
@@ -144,8 +153,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       }
       int n=i-1;
       adprogram_name=adprogram_name(1,n);
-      (*ad_printf)( " AD Model Builder version 8.0.2"
-              " copyright (c) 1993 2002 2005 2007 Otter Research Ltd\n");
+      (*ad_printf)( " AD Model Builder version 9.0.0\n"
+                    "Copyright (c) 2008 Regents of the University of California\n");
       (*ad_printf)(" USAGE--%s options\n",(char*)(adprogram_name));
       (*ad_printf)(" where an option consists of -option_tag followed by arguments if necessary\n");
       (*ad_printf)( " -ainp NAME      change default ascii input parameter file name to NAME\n");

@@ -1,5 +1,14 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
-// char cc[43]={"Copyright (c) 1995 Otter Research Ltd"};
 #include <fvar.hpp>
 
 double cumd_cauchy(_CONST double& x)

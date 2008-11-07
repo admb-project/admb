@@ -1,6 +1,14 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: Unknown
+  */
 #include <fvar.hpp>
 
- //char cc[43]={"Copyright (c) 1993,1994 Otter Research Ltd"};
 
 #define IM1 2147483563
 #define IM2 2147483399

@@ -1,3 +1,13 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 
 #include <admodel.h>
 
@@ -14,7 +24,6 @@ void report_confidence_limits(BOR_CONST ofstream& ofs3,int numsig_levels,
 void report_onesided_confidence_limits(BOR_CONST ofstream& ofs3,int numsig_levels,
   const dvector& siglevel,BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd,int ip);
 
-// char cc[43]={"Copyright (c) 1993,1994 Otter Research Ltd"};
   double max(double x,double y)
   {
     if (x>y) return x;

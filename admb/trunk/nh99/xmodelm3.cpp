@@ -1,3 +1,13 @@
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 #include <admodel.h>
 
 #if defined(USE_LAPLACE)
@@ -23,7 +33,6 @@ extern int traceflag;
 
 void tracing_message(int traceflag,const char *s);
 
- //char cc[43]={"Copyright (c) 1993,1994 Otter Research Ltd"};
 #if defined(USE_LAPLACE)
   int function_minimizer::inner_opt(void)
   {

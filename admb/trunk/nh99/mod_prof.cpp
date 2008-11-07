@@ -1,8 +1,16 @@
-//char cc[40]={"Copyright (c) 1993,1994 Otter Research Ltd"};
+/**
+  * $Id:   $
+  *
+  * $Rev   ::                       $: Revision of last commit
+  * $Author::                       $: Author of last commit
+  * $Date  ::                       $: Date of last commit
+  *
+  * Author: David Fournier
+  * Copyright (c) 2008 Regents of the University of California 
+  */
 //#define HOME_VERSION
 #include <admodel.h>
 
- //char cc1[40]={"Copyright (c) 1993 Otter Research Ltd"};
  int likeprof_params::num_likeprof_params=0;
  likeprof_params * likeprof_params::likeprofptr[50]; // this should be 
                                                  // a resizeable array

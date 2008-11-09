@@ -25,8 +25,11 @@ vpath %.obj $(LIBPATH)$
 .PHONY: disk
 include objects.lst
 
-$(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+$(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPARSE) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
+
+$(OBJSPARSE): %.obj: %.cpp
+	$(CC) $(FLAGS) -o$(LIBPATH)/$(@F) $<
 
 $(OBJ0): %.obj: %.cpp
 	$(CC) $(FLAGS)  $<

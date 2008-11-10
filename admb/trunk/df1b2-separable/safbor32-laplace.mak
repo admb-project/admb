@@ -1,7 +1,7 @@
 #macros for making optimized library for BORLAND 4.0
 CC = bcc32
 LL = tlib
-FLAGS = ${OPTIONS} -DUSE_LAPLACE  -Vd -O2 -H -Hc -DSAFE_ALL -DDOS386 -I. -6 -c -f
+FLAGS = -I\\Borland\\BCC55\\Include -I..\\tools99 -I..\\nh99 -I..\\linad99 ${OPTIONS} -DUSE_LAPLACE  -Vd -O2 -H -Hc -DSAFE_ALL -DDOS386 -I. -6 -c -f
 #FLAGS = -H -Hc -O2 -DOPT_LIB -DDOS386 -I. -5 -c -f
 LIBPATH = b32pslp
 LIBNAME = adf1b2s.lib 
@@ -48,7 +48,7 @@ disk:
 	cp f1b2locl.h $(DISKDIR)/$(INCLUDEDIR)
 	cp df1b2fnl.h $(DISKDIR)/$(INCLUDEDIR)
 	cp df3fun.h $(DISKDIR)/$(INCLUDEDIR)
-	bcc32 -DWIN32 tpl2rem.c
+	bcc32 -DWIN32 -I\\Borland\\BCC55\\Include -L\\Borland\\BCC55\\Lib tpl2rem.c
 	cp -v sed* $(DISKDIR)/$(BINDIR)
 	cp tpl2rem.exe $(DISKDIR)/$(BINDIR)/tpl2rem.exe
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 

@@ -4,7 +4,7 @@ CC = bcc32
 #CC = bcc32i
 LL = tlib
 #FLAGS = -Vd -O2 -OI -OM -5 -H=Hc -DDOS386;SAFE_ALL -I. -c -f
-FLAGS = ${OPTIONS} -DUSE_LAPLACE -Vd -O2 -5 -H=Hcd -DUSE_ECEPTIONS -DDOS386 -DSAFE_ALL -I. -c -f -I../hans-sparse
+FLAGS = -I\\Borland\\BCC55\\Include ${OPTIONS} -DUSE_LAPLACE -Vd -O2 -5 -H=Hcd -DUSE_ECEPTIONS -DDOS386 -DSAFE_ALL -I. -c -f -I..\\tools99 -I..\\sparse -I..\\nh99 -I..\\df1b2-separable 
 LIBPATH =b32pslp
 LIBNAME = ads32.lib
 LIBRARIAN = tlib

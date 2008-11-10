@@ -2,7 +2,7 @@
 #macros for making optimized library for BORLAND 4.0
 CC = bcc32
 LL = tlib
-FLAGS = ${OPTIONS} -Vd -O2 -DUSE_LAPLACE -6 -H -Hc -DDOS386 -DOPT_LIB -I. -I../linad99 -c -f
+FLAGS = -I\\Borland\\BCC55\\Include ${OPTIONS} -Vd -O2 -DUSE_LAPLACE -6 -H -Hc -DDOS386 -DOPT_LIB -I. -I../linad99 -c -f
 LIBPATH = b32polp
 LIBNAME = adt32.lib 
 LIBRARIAN = tlib

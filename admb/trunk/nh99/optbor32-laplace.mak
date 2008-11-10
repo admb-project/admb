@@ -4,7 +4,7 @@
 #CC = bcc32i
 CC = bcc32
 LL = tlib
-FLAGS = ${OPTIONS} -I../df1b2-separable -I../tools99 -I../linad99 -Vd -O2 -H -Hc -DUSE_LAPLACE -DOPT_LIB -DDOS386 -I. -6 -c -f
+FLAGS = -I\\Borland\\BCC55\\Include ${OPTIONS} -I../df1b2-separable -I../tools99 -I../linad99 -Vd -O2 -H -Hc -DUSE_LAPLACE -DOPT_LIB -DDOS386 -I. -6 -c -f
 
 #FLAGS = -H -Hc -O2 -DOPT_LIB -DDOS386 -I. -6 -c -f
 LIBPATH = b32polp
@@ -56,9 +56,9 @@ stub: df1b2stub.cpp
 	cd $(STUBPATH) ; \
 	tlib @t.rsp
 	cd ..
-disk: 
+disk: stub
 	cp admodel.h $(DISKDIR)/$(INCLUDEDIR)
-	bcc32 mylex.c
+	bcc32 -I\\Borland\\BCC55\\Include -L\\Borland\\BCC55\\Lib mylex.c
 	cp mylex.exe $(DISKDIR)/$(BINDIR)/tpl2cpp.exe
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 	cp $(STUBPATH)/df1b2stub.lib $(DISKDIR)/$(LIBDIR) 

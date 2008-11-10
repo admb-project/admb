@@ -46,7 +46,7 @@ disk: $(LIBPATH)/$(LIBNAME) tpl2rem
 	cp tpl2rem $(DISKDIR)/$(BINDIR)
 	cp sed* $(DISKDIR)/$(BINDIR)
 
-tpl2rem: tpl2rem.c
+tpl2rem:
 	- flex <  remod11
 	- sed -f sedflex lex.yy.c > tpl2rem.c
 	- rm lex.yy.c 

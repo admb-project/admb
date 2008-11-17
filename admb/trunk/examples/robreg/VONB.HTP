@@ -1,0 +1,46 @@
+class model_data{
+  data_int nobs;
+  data_matrix data;
+  dvector age;
+  dvector size;
+  ~model_data();
+  model_data();
+  friend class model_parameters;
+};
+
+class model_parameters : public ad_comm , public model_data ,
+  public function_minimizer
+{
+public:
+  void preliminary_calculations(void);
+  static int mceval_phase(void)
+  {
+    return initial_params::mceval_phase;
+  }
+  static int sd_phase(void)
+  {
+    return initial_params::sd_phase;
+  }
+  static int current_phase(void)
+  {
+    return initial_params::current_phase;
+  }
+  static int last_phase(void)
+  {
+    return (initial_params::current_phase
+      >=initial_params::max_number_phases);
+  }
+private:
+  ivector integer_control_flags;
+  dvector double_control_flags;
+  param_init_number linf;
+  param_init_number K;
+  param_init_number t0;
+  param_vector pred_size;
+  objective_function_value f;
+public:
+  virtual void userfunction(void);
+  virtual void report(void);
+  model_parameters(int sz=0,int argc=NULL, char * argv[]=NULL);
+  virtual void initializationfunction(void){}
+};

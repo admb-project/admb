@@ -1,0 +1,66 @@
+class model_data{
+  data_int nyrs;
+  data_int nages;
+  data_matrix obs_catch_at_age;
+  data_vector effort;
+  data_number M;
+  dvector relwt;
+  ~model_data();
+  model_data();
+  friend class model_parameters;
+};
+
+class model_parameters : public ad_comm , public model_data ,
+  public function_minimizer
+{
+public:
+  void preliminary_calculations(void);
+  static int mceval_phase(void)
+  {
+    return initial_params::mceval_phase;
+  }
+  static int sd_phase(void)
+  {
+    return initial_params::sd_phase;
+  }
+  static int current_phase(void)
+  {
+    return initial_params::current_phase;
+  }
+  static int last_phase(void)
+  {
+    return (initial_params::current_phase
+      >=initial_params::max_number_phases);
+  }
+private:
+  ivector integer_control_flags;
+  dvector double_control_flags;
+  param_init_number log_q;
+  param_init_number log_popscale;
+  param_init_bounded_dev_vector log_sel_coff;
+  param_init_bounded_dev_vector log_relpop;
+  param_init_bounded_dev_vector effort_devs;
+  param_vector log_sel;
+  param_vector log_initpop;
+  param_matrix F;
+  param_matrix Z;
+  param_matrix S;
+  param_matrix N;
+  param_matrix C;
+  objective_function_value f;
+  param_number recsum;
+  param_number initsum;
+  param_stddev_number avg_F;
+  param_stddev_vector predicted_N;
+  param_stddev_vector ratio_N;
+  param_likeprof_number pred_B;
+public:
+  virtual void userfunction(void);
+  virtual void report(void);
+  model_parameters(int sz=0,int argc=NULL, char * argv[]=NULL);
+  virtual void initializationfunction(void);
+  void get_mortality_and_survivial_rates(void);
+  void get_numbers_at_age(void);
+  void get_catch_at_age(void);
+  void evaluate_the_objective_function(void);
+};

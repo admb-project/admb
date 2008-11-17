@@ -1,0 +1,59 @@
+class model_data{
+  data_matrix Data;
+  data_vector T;
+  data_vector stepsize;
+  dmatrix data;
+  dmatrix sample_times;
+  dvector x0;
+  dvector x1;
+  ~model_data();
+  model_data();
+  friend class model_parameters;
+};
+
+class model_parameters : public ad_comm , public model_data ,
+  public function_minimizer
+{
+public:
+  void preliminary_calculations(void);
+  static int mceval_phase(void)
+  {
+    return initial_params::mceval_phase;
+  }
+  static int sd_phase(void)
+  {
+    return initial_params::sd_phase;
+  }
+  static int current_phase(void)
+  {
+    return initial_params::current_phase;
+  }
+  static int last_phase(void)
+  {
+    return (initial_params::current_phase
+      >=initial_params::max_number_phases);
+  }
+private:
+  ivector integer_control_flags;
+  dvector double_control_flags;
+  param_init_vector theta;
+  param_matrix init_conc;
+  param_vector instrument;
+  param_matrix y_samples;
+  param_vector diff;
+  objective_function_value f;
+  param_number bayes_part;
+  param_number y2;
+  param_number x_n;
+  param_vector y_n;
+  param_vector y_n1;
+  param_number A;
+  param_number B;
+  param_number C;
+  param_number D;
+public:
+  virtual void userfunction(void);
+  virtual void report(void);
+  model_parameters(int sz=0,int argc=NULL, char * argv[]=NULL);
+  virtual void initializationfunction(void){}
+};

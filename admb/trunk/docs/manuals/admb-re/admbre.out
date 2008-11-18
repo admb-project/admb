@@ -1,0 +1,33 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}
+\BOOKMARK [1][-]{section.1.1}{Summary of features}{chapter.1}
+\BOOKMARK [0][-]{chapter.2}{The language and the program}{}
+\BOOKMARK [1][-]{section.2.1}{What is ordinary ADMB?}{chapter.2}
+\BOOKMARK [1][-]{section.2.2}{Why random effects?}{chapter.2}
+\BOOKMARK [2][-]{subsection.2.2.1}{A code example}{section.2.2}
+\BOOKMARK [2][-]{subsection.2.2.2}{Parameter estimation}{section.2.2}
+\BOOKMARK [2][-]{subsection.2.2.3}{Log-normal random effects}{section.2.2}
+\BOOKMARK [1][-]{section.2.3}{Random effects modeling}{chapter.2}
+\BOOKMARK [2][-]{subsection.2.3.1}{Correlated random effects}{section.2.3}
+\BOOKMARK [2][-]{subsection.2.3.2}{Non-Gaussian random effects}{section.2.3}
+\BOOKMARK [2][-]{subsection.2.3.3}{REML \(Restricted maximum likelihood\)}{section.2.3}
+\BOOKMARK [2][-]{subsection.2.3.4}{Under the hood}{section.2.3}
+\BOOKMARK [2][-]{subsection.2.3.5}{Building a random effects model that works}{section.2.3}
+\BOOKMARK [2][-]{subsection.2.3.6}{Linear-Gaussian random effects models}{section.2.3}
+\BOOKMARK [1][-]{section.2.4}{Exploiting separability}{chapter.2}
+\BOOKMARK [2][-]{subsection.2.4.1}{The first example}{section.2.4}
+\BOOKMARK [2][-]{subsection.2.4.2}{Nested or clustered random effects}{section.2.4}
+\BOOKMARK [2][-]{subsection.2.4.3}{State-space models}{section.2.4}
+\BOOKMARK [2][-]{subsection.2.4.4}{Crossed random effects, and more general sparse models}{section.2.4}
+\BOOKMARK [2][-]{subsection.2.4.5}{Frequency weighting for multinomial likelihoods}{section.2.4}
+\BOOKMARK [1][-]{section.2.5}{Improving performance }{chapter.2}
+\BOOKMARK [2][-]{subsection.2.5.1}{Memory management; reducing the size of temporary files}{section.2.5}
+\BOOKMARK [2][-]{subsection.2.5.2}{Limited memory Newton optimization}{section.2.5}
+\BOOKMARK [2][-]{subsection.2.5.3}{Gaussian priors and quadratic penalties}{section.2.5}
+\BOOKMARK [2][-]{subsection.2.5.4}{Importance sampling}{section.2.5}
+\BOOKMARK [2][-]{subsection.2.5.5}{Gauss-Hermite quadrature}{section.2.5}
+\BOOKMARK [2][-]{subsection.2.5.6}{Phases}{section.2.5}
+\BOOKMARK [2][-]{subsection.2.5.7}{MCMC}{section.2.5}
+\BOOKMARK [1][-]{section.2.6}{Are all the ADMB-functions in ADMB-RE?}{chapter.2}
+\BOOKMARK [0][-]{appendix.A}{Command line options}{}
+\BOOKMARK [0][-]{appendix.B}{Interfacing ADMB with R}{}
+\BOOKMARK [0][-]{appendix.C}{Quick references}{}

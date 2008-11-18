@@ -1,0 +1,49 @@
+\contentsline {chapter}{\numberline {1}Introduction}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}Summary of features}{6}{section.1.1}
+\contentsline {paragraph}{Model formulation}{6}{section*.2}
+\contentsline {paragraph}{Computational basis of ADMB-RE}{6}{section*.3}
+\contentsline {paragraph}{The strengths of ADMB-RE}{7}{section*.4}
+\contentsline {paragraph}{Program interface}{7}{section*.5}
+\contentsline {paragraph}{How to order ADMB-RE}{7}{section*.6}
+\contentsline {chapter}{\numberline {2}The language and the program}{9}{chapter.2}
+\contentsline {section}{\numberline {2.1}What is ordinary ADMB?}{9}{section.2.1}
+\contentsline {paragraph}{Writing an ADMB program}{10}{section*.7}
+\contentsline {paragraph}{Compiling an ADMB program}{10}{section*.8}
+\contentsline {paragraph}{Running an ADMB-program}{11}{section*.9}
+\contentsline {paragraph}{Statistical prerequisites}{12}{section*.10}
+\contentsline {paragraph}{Frequentist or Bayesian statistics?}{12}{section*.11}
+\contentsline {section}{\numberline {2.2}Why random effects?}{12}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}A code example}{14}{subsection.2.2.1}
+\contentsline {paragraph}{Guide for the tpl-illiterate}{15}{section*.12}
+\contentsline {subsection}{\numberline {2.2.2}Parameter estimation}{15}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}Log-normal random effects}{16}{subsection.2.2.3}
+\contentsline {section}{\numberline {2.3}Random effects modeling}{16}{section.2.3}
+\contentsline {paragraph}{The sign of the objective function}{17}{section*.13}
+\contentsline {subsection}{\numberline {2.3.1}Correlated random effects}{18}{subsection.2.3.1}
+\contentsline {paragraph}{Large structured covariance matrices}{19}{section*.14}
+\contentsline {subsection}{\numberline {2.3.2}Non-Gaussian random effects}{19}{subsection.2.3.2}
+\contentsline {paragraph}{Full example:}{20}{section*.15}
+\contentsline {subsection}{\numberline {2.3.3}REML (Restricted maximum likelihood)}{21}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Under the hood}{22}{subsection.2.3.4}
+\contentsline {subsection}{\numberline {2.3.5}Building a random effects model that works}{22}{subsection.2.3.5}
+\contentsline {subsection}{\numberline {2.3.6}Linear-Gaussian random effects models}{24}{subsection.2.3.6}
+\contentsline {section}{\numberline {2.4}Exploiting separability}{24}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}The first example}{25}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Nested or clustered random effects}{27}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}State-space models}{28}{subsection.2.4.3}
+\contentsline {paragraph}{Full example}{29}{section*.16}
+\contentsline {subsection}{\numberline {2.4.4}Crossed random effects, and more general sparse models}{30}{subsection.2.4.4}
+\contentsline {subsection}{\numberline {2.4.5}Frequency weighting for multinomial likelihoods}{30}{subsection.2.4.5}
+\contentsline {paragraph}{Full example:}{31}{section*.17}
+\contentsline {section}{\numberline {2.5}Improving performance\nobreakspace {}}{32}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Memory management; reducing the size of temporary files}{32}{subsection.2.5.1}
+\contentsline {subsection}{\numberline {2.5.2}Limited memory Newton optimization}{33}{subsection.2.5.2}
+\contentsline {subsection}{\numberline {2.5.3}Gaussian priors and quadratic penalties}{33}{subsection.2.5.3}
+\contentsline {subsection}{\numberline {2.5.4}Importance sampling}{34}{subsection.2.5.4}
+\contentsline {subsection}{\numberline {2.5.5}Gauss-Hermite quadrature}{35}{subsection.2.5.5}
+\contentsline {subsection}{\numberline {2.5.6}Phases}{35}{subsection.2.5.6}
+\contentsline {subsection}{\numberline {2.5.7}MCMC}{36}{subsection.2.5.7}
+\contentsline {section}{\numberline {2.6}Are all the ADMB-functions in ADMB-RE?}{36}{section.2.6}
+\contentsline {chapter}{\numberline {A}Command line options}{37}{appendix.A}
+\contentsline {chapter}{\numberline {B}Interfacing ADMB with R}{39}{appendix.B}
+\contentsline {chapter}{\numberline {C}Quick references}{41}{appendix.C}

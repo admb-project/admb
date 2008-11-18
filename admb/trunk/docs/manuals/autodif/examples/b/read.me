@@ -1,0 +1,157 @@
+      Getting Started
+      ---------------
+
+      AUTODIF is designed to operate on 80286,  80386  and  80486  based
+      microcomputers  with  a  full 640 Kb main memory running under the
+      MS--DOS opering system version 3.2 or higher. A hard disk  is  not
+      required,  however  AUTODIF  may  generate  several Mb of gradient
+      information to be stored on an external device. A hard disk and  a
+      RAM  disk  are  highly recommended for greatest speed. The AUTODIF
+      libraries have been compiled  with  either  in  line  code  for  a
+      numeric coprocessor or with code to emulate a numeric coprocessor.
+      A numeric coprocessor is  also  highly  recommended  for  greatest
+      speed.   The   optimum   configuration  would  include  a  numeric
+      coprocessor plus a hard disk and RAM disk with at least 2 Mb  free
+      memory.  AUTODIF appears to be compatible with most popular extend
+      memory managers and multitasking systems.
+
+      The AUTODIF system consists of a header  file  FVAR.HPP  and   two
+      libraries:
+
+          ADE.LIB  - the ``safe'' library with 8087 emulation code.
+          ADO7.LIB - the optimized library with inline 8087 code.
+       
+      To use the optimized libraries, you must have a 80x87 math coprocssor
+      installed or a 80486 CPU.
+
+
+      Installation
+      ------------
+
+      The  simplest  way  to  install the AUTODIF system is to place the
+      header file in the directory where your compiler normally searches
+      for  header  files  and  the libraries in the directory where your
+      linker normally searches for libraries. If you choose this option,
+      there  is no need to specify additional paths for the compiler and
+      linker to search for header files  and  libraries.  Alternatively,
+      you  may  with to install the AUTODIF system in its own directory.
+      In this case you will need to tell the compiler and  linker  where
+      to look for the header file and libraries.
+
+      An installation program is included on the distribution disk. This
+      program is invoked by typing A:INSTALL at the DOS prompt (assuming
+      the  distribution disk is in drive A:). You will then be asked for
+      the drive of the source disk (in this case A) and the drive  where
+      you  want  to  install  AUTODIF.  Next  you  will be asked for the
+      directories  in  which  to  install  the  AUTODIF   header   file,
+      libraries,  and  examples.  Refer  to  the  User's Manual for more
+      details. The default directory specifications are consistent  with
+      the paths in the makefile and the Borland "project" files  used to
+      compile and link the  examples.  Read  the  file  EXAMPLES.DOC for
+      instructions for compiling and linking the examples.
+
+      Over 2 Mb of space are required to install  the  complete  AUTODIF
+      system.  Space  can  be recovered by deleting libraries which will
+      not be used. To get started the  only  essential  library  is  the
+      AUTDIF7.LIB (or AUTDIFE.LIB if you don't have a math coprocessor).
+
+
+
+      Using the safe and optimized libraries
+      --------------------------------------
+
+      Normally you should use the safe version of the AUTODIF libraries
+      during code development and if desired switch to the optimized
+      version when your application has been debugged.
+
+      No special steps are need for using the safe libraries -- you
+      simply link your compiled object modules to the desired library.
+
+      To use the optimized library you MUST include the definition
+      
+           #define OPT_LIB 
+
+      at the top of each file of your source code if the file contains
+      code which uses AUTODIF array objects. If you neglect to include this 
+      definition when linking to the optimized library the results will 
+      be unpredictable, but your program probably will not work.
+
+
+      Initialization of objects
+      -------------------------
+
+      With the safe libraries AUTODIF provides for the initialization of
+      all declared objects.  This  means  that if you  declare a  vector 
+      object with the declaration
+
+           dvector v(1,1000);
+
+      all the elements of the vector v will be set equal to 0 
+      automatically, so that the following code will perform properly.
+     
+           double w=10;
+           dvector v(1,1000);
+           for (int i=1;i<=1000;i++)
+           {
+             v(i)=v(i)+w;  
+           }
+       
+       If you switch to the optimized libray, however, the code will
+       be incorrect because v will not be initialized. 
+
+       To facilitate the transition from the safe to the optimized
+       libraries it is useful to anticipate which arrays will need
+       initialization and include some code  like
+ 
+
+           double w=10;
+           dvector v(1,1000);
+           #ifdef OPT_LIB
+             v.initialize();
+           #endif
+           for (int i=1;i<=1000;i++)
+           {
+             v(i)=v(i)+w;  
+           }
+ 
+
+        Now when you use the optimized libray the symbol OPT_LIB
+        will be defined so that the line
+      
+             v.initialize();
+
+        which initializes the dvector v will be included in your code.
+
+
+      Errata
+      ------ 
+
+      The  function  prototypes  for  the  access  functions  to  global
+      variables  in  the  Global  Variables  chapter  of  the manual are
+      incorrect. The correct list of the  function  prototypes  for  the
+      global variable access functions is:
+
+     void static gradient_structure::set_NUM_RETURN_ARRAYS(int i);
+     void static gradient_structure::set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
+     void static gradient_structure::set_GRADSTACK_BUFFER_SIZE(long int i);
+     void static gradient_structure::set_MAX_NVAR_OFFSET(unsigned int i);
+     void static gradient_structure::set_MAX_DLINKS(int i);
+
+      In addition, a new new buffer to hold temporary derivative information
+      has been added. The default size of this buffer is 16K and probably
+      should not be increased for 16 bit compilers. To increase the size
+      of this buffer use the access function
+
+     void static gradient_structure::set_CMPDIF_BUFFER_SIZE(long int i);
+
+      These  functions  are  static  member  function   of   the   class
+      gradient_structure. The prefix 'gradient_structure::' must be used
+      to invoke these functions. For  example,  to  set  the  amount  of
+      memory  available  for AUTODIF variable type objets to 20000 bytes
+      insert the line
+
+      gradient_structure::set_ARRAY_MEMBLOCK_SIZE(20000L);
+
+      into  your  code  prior  to   declaring   an   object   of   class
+      gradient_structure.
+

@@ -1,5 +1,5 @@
 /**
- * $Id:   $
+ * $Id$
  *
  * $Rev   ::                       $: Revision of last commit
  * $Author::                       $: Author of last commit
@@ -54,7 +54,7 @@
 //#  define ADDLL __stdcall
 #endif
 #define WIN32
-/* $Id: pvm3.h,v 1.46 2000/02/16 22:50:01 pvmsrc Exp $ */
+/* $Id$ */
 
 /*
  *         PVM version 3.4:  Parallel Virtual Machine System

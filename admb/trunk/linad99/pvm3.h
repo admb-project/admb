@@ -1,5 +1,5 @@
 /**
- * $Id:   $
+ * $Id$
  *
  * $Rev   ::                       $: Revision of last commit
  * $Author::                       $: Author of last commit
@@ -47,7 +47,7 @@
 
 
 
-/* $Id: pvm3.h,v 1.51 2001/09/27 21:24:18 pvmsrc Exp $ */
+/* $Id$ */
 
 /*
  *         PVM version 3.4:  Parallel Virtual Machine System

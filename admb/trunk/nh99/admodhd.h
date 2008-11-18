@@ -1,5 +1,5 @@
 /**
- * $Id:   $
+ * $Id$
  *
  * $Rev   ::                       $: Revision of last commit
  * $Author::                       $: Author of last commit

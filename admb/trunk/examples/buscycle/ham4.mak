@@ -1,4 +1,4 @@
-PROGRAM_NAME=catage
+PROGRAM_NAME=ham4
 run: $(PROGRAM_NAME)
 	@./$(PROGRAM_NAME)
 

@@ -49,12 +49,12 @@ FUNCTION dvariable h(const dvariable& z)
   tmp=exp(-.5*z*z + tau*(-1.+exp(-nu*pow(a(a_index),beta)*exp(sigma*z))) );  
   return tmp;
 REPORT_SECTION
-  report << "nsteps = " << setprecision(10) <<  nsteps << endl;
-  report << "f = " << setprecision(10) <<  f << endl;
+  report << "nsteps = " << std::setprecision(10) <<  nsteps << endl;
+  report << "f = " << std::setprecision(10) <<  f << endl;
   report << "a" << endl << a << endl;
   report << "freq" << endl << freq << endl;
   report << "S" << endl << S << endl;
-  report << "S/S(1)" << endl << setfixed << setprecision(6) << S/S(1) << endl;
+  report << "S/S(1)" << endl << std::ios::fixed << std::setprecision(6) << S/S(1) << endl;
   report << "tau "  << tau << endl; 
   report << "nu "  << nu << endl; 
   report << "beta "  << beta << endl; 

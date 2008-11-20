@@ -8,7 +8,7 @@ dvector function(dvar_vector& x,int nvar);
 #ifdef __ZTC__
   long _stack = 20000;
 #endif
-void main()
+int main()
 {
   int nvar=2;
   independent_variables x(1,nvar);
@@ -19,7 +19,8 @@ void main()
   x[2]=2;
   do      // Iterate until the norm of the dvector f is < 1.e-12
   {
-    f=function(x,nvar);
+    dvar_vector x2 = (dvar_vector)x;
+    f=function(x2,nvar);
     jacobcalc(nvar,jacobian); // calculate the derivatives for the
                          // dependent variables
     cout << " The x vector        = " << x << endl
@@ -40,6 +41,7 @@ void main()
          << inv(jacobian)(1) << endl
          << "                                       "
          << inv(jacobian)(2) << endl;
+  return 0;
 }
 
 dvector function(dvar_vector& x,int nvar)

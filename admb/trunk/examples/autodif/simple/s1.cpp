@@ -9,7 +9,7 @@ double fcomp(int, dvar_vector); // Function prototype declaration
 #ifdef __ZTC__
   long _stack = 20000;
 #endif
-void main()
+int main()
 {
   double f;
   int i;
@@ -21,7 +21,9 @@ void main()
   f=fcomp(nvar,x);
   gradcalc(nvar,g);        // The derivatives are calculated
   cout <<" The gradient vector is\n"<<g<<"\n"; // Print out the derivatives
-}                                              // on the screen
+                                               // on the screen
+  return 0;
+}
 
 // file: fcomp_s.cpp
 double fcomp(int n, dvar_vector x)

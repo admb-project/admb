@@ -21,17 +21,31 @@ public:
   ~var_parameters() {delete pv; delete pw;}
 };
 
+void fcomp(const_parameters&);
 void fcomp(var_parameters&);
 
-main()
+int main()
 {
   const_parameters cp(5,7);
  (*cp.pv).fill_seqadd(1,2);
  (*cp.pw).fill_seqadd(0,2.5);
  gradient_structure gs;
  {
+   var_parameters vp(cp);
    fcomp(cp);
+   fcomp(vp);
  }
+  return 0;
+}
+
+void fcomp(const_parameters& cp)
+{
+  dvector& v=*(cp.pv);
+  dvector& w=*(cp.pw);
+  cout << *(cp.pw) << "\n";
+  cout << *(cp.pv) << "\n\n";
+  cout << v << "\n";
+  cout << w << "\n\n";
 }
 
 void fcomp(var_parameters& vp)
@@ -42,5 +56,4 @@ void fcomp(var_parameters& vp)
   cout << *(vp.pv) << "\n\n";
   cout << v << "\n";
   cout << w << "\n\n";
-
 }

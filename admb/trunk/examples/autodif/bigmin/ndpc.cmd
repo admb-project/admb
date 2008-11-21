@@ -1,1 +1,0 @@
-bigmin.cpp

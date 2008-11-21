@@ -1,6 +1,6 @@
 #include <stdlib.h>
 // Increases the seed for the random number generators in robsim
-main()
+int main()
 {
   for (int i=1;i<=490;i++)
   {
@@ -10,5 +10,5 @@ main()
 
     system("update");
   }
-  exit(0);
+  return 0;
 }

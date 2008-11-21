@@ -12,7 +12,7 @@ double fcomp(dvector& OBS_Y,dvector& OBS_Z,dvar_vector& x);
   long _stack = 20000;
 #endif
 double alpha;
-void main()
+int main()
 {
   ifstream infile("robust.dat"); // robust.dat contains the observed data
   if(!infile)  // Check for I/O error
@@ -60,12 +60,14 @@ void main()
       if (fmc.ireturn > 0)
       {
         {
-          f=fcomp(Y,Z,dvar_vector(x));
+          dvar_vector x2 = x;
+          f=fcomp(Y,Z,x2);
         }
         gradcalc(nvar,g);
       }
     }
     cout << " The estimate for b = " << x(1) << "\n";
   }
+  return 0;
 }
 

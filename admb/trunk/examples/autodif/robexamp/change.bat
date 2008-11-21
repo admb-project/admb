@@ -1,1 +1,0 @@
-cd \autodif\junecop

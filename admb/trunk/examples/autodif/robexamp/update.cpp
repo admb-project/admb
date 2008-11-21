@@ -6,7 +6,7 @@
 #ifdef __ZTC__
   long _stack = 20000;
 #endif
-void main()
+int main()
 {
   ifstream infile("robsim.par"); // File contains the information for
 				 // generating the simulated data
@@ -44,5 +44,5 @@ void main()
     cerr << "Error writing parameters to robsim.par\n";
     exit(1);
   }
+  return 0;
 }
-

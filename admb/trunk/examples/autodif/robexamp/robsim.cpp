@@ -7,7 +7,7 @@
   #include <iomanip.hpp>
   long _stack = 20000;
 #endif
-void main()
+int main()
 {
   ifstream infile("robsim.par"); // File contains the information for
 				 // generating the simulated data
@@ -16,7 +16,8 @@ void main()
     cerr << "Error opening file robsim.par\n";
     exit(1);
   }
-  int nobs,seed;
+  int nobs;
+  long int seed;
   double b,p,sigma;
   // nobs      : The number of simulated observations
   // p         : The proportion of contamination with outliers
@@ -60,4 +61,5 @@ void main()
     outfile << nobs << "\n\n";
     outfile << /* setfixed << */ setw(15)<< setprecision(4) << tmp ;
   }
+  return 0;
 }

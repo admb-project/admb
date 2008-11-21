@@ -8,7 +8,7 @@ int num_weights_calc(int& num_levels,ivector& num_nodes);
 #ifdef __ZTC__
   long _stack = 20000;
 #endif
-void main()
+int main()
 {
 
   int num_levels;
@@ -72,5 +72,6 @@ void main()
   { 
      cerr << "ERROR writing bias terms from file weights.par\n"; exit(1);
   }
+  return 0;
 }
 

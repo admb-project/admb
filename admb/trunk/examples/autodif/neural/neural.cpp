@@ -15,11 +15,11 @@ int nvar_calc(int& num_levels,ivector& num_nodes);
 
 dvar_vector sigmoid(dvar_vector& v);
 
-void xinit(d3_array W,dmatrix& B,y,int& num_levels,ivector& num_nodes);
+void xinit(d3_array W,dmatrix& B, dvar_vector& y,int& num_levels,ivector& num_nodes);
 
-void reset(d3_array W,dmatrix& B,y,int& num_levels,ivector& num_nodes);
+void reset(d3_array W,dmatrix& B, dvar_vector& y,int& num_levels,ivector& num_nodes);
 
-main()
+int main()
 {
   int num_levels;
   int nvar;
@@ -76,6 +76,7 @@ main()
     outfile << W <<"\n";
     outfile << B <<"\n";
   }
+  return 0;
 }
 
 void xinit(d3_array W,dmatrix& B,y,int& num_levels,ivector& num_nodes)
@@ -232,7 +233,7 @@ main()
   }
 }
 
-xinit(d3_array W,dmatrix& B,y,int& num_levels,ivector& num_nodes)
+xinit(d3_array W,dmatrix& B, dvar_vector& y,int& num_levels,ivector& num_nodes)
 {
   int smin=W.slicemin();
   int smax=W.slicemax();

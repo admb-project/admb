@@ -14,7 +14,6 @@ int main()
 {
   // The observations are in the file mixture.dat
   dvector y("mixture.dat"); // Read in the observations
-/*
   ifstream infile2("mixture.par"); // The parameter estimates are in a
 				   // file named mixture.par
   int ngroups;
@@ -42,14 +41,14 @@ int main()
   dvector g(1,nvar);
   xinit(control,x,p,mu,sd,mumin,mumax,sdmin,sdmax); // Get the initial x values
   fmm fmc(nvar);
-  dvar_vector x2 = x;
-  dvar_vector mu2 = mu;
-  dvar_vector sd2 = sd;
+  gradient_structure::set_MAX_NVAR_OFFSET(768);
   BEGIN_MINIMIZATION(nvar,f,x,g,fmc) // Estimate the parameters by minimizing fcomp
+    dvar_vector x2 = x;
+    dvar_vector mu2 = mu;
+    dvar_vector sd2 = sd;
     f=fcomp(y,p,mu2,sd2,mumin,mumax,sdmin,sdmax,control,x2,0);
+    fcomp(y,p,mu2,sd2,mumin,mumax,sdmin,sdmax,control,x2,1); // Save the parameter
+                                                             // estimates
   END_MINIMIZATION(nvar,g)
-  fcomp(y,p,mu2,sd2,mumin,mumax,sdmin,sdmax,control,x2,1); // Save the parameter
-*/
-							   // estimates
   return 0;
 }

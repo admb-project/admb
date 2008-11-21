@@ -19,7 +19,7 @@ double fff(dvar_vector& x);
 //int nsize=100; // 10,000 variables!
 int nsize=10; 
 
-void main()
+int main()
 {
   int nvar=nsize*nsize;
   independent_variables x(1,nvar);
@@ -55,7 +55,7 @@ void main()
   }
   ofstream outfile("matinv.est");
   outfile << x << endl;
-  exit(1);
+  return 0;
 }
 
 double fff(dvar_vector& x)

@@ -8,12 +8,14 @@
   long _stack = 20000;
   #include <iomanip.hpp>
 #endif
-void main()
+int main()
 {
+  using std::cout;
+  using std::endl;
   // the file normsim.par contains the parameters used to simulate
   // a mixture of distributions; exit this file to produce a different
   // mixture
-  ifstream infile("normsim.par");
+  std::ifstream infile("normsim.par");
   int ngroups;
   int nsamp;
   // first line of file contains the number of groups
@@ -48,11 +50,11 @@ void main()
 
   double maxlen=max(lengths);
   double minlen=min(lengths);
-  ivector freq(1,maxlen-minlen+1);
+  ivector freq(1,int(maxlen-minlen+1));
   freq.fill_seqadd(0,0);
 
-  ofstream dout("normsim.out");
-  dout << setw(15)<< setscientific << column_vector(lengths);
+  std::ofstream dout("normsim.out");
+  dout << setw(15)<< std::ios::scientific << column_vector(lengths);
   dout.close();
   cout << "Sample of " << nsamp<< " lengths written to file 'normsim.out'.\n";
   cout << "Copy this file to 'mixture.par' to run the mixture example.\n\n";
@@ -62,10 +64,10 @@ void main()
     freq[lengths(i)-minlen+1]+=1;
   }
 
-  ofstream fout("normsim.frq");
+  std::ofstream fout("normsim.frq");
   for (i=freq.indexmin();i<=freq.indexmax(); i++)
   {
-    fout << setw(10) << setprecision(4) << setfixed << minlen+i-1
+    fout << setw(10) << std::setprecision(4) << std::ios::fixed << minlen+i-1
          << setw(10) << freq(i) << "\n";
   }
   fout.close();
@@ -73,5 +75,5 @@ void main()
   cout << "Frequency distributions written to file 'normsim.frq'.\n";
   cout << "This file may be view graphically with a grapchis\n"
           "utility or spreadsheet.\n";
-  exit(0);
+  return 0;
 }

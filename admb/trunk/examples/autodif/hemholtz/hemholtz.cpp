@@ -9,7 +9,7 @@ void hemholtz_energy(int n, dmatrix A, dvector b, dvar_vector x, double& f);
 #ifdef __ZTC__
   long _stack = 20000;
 #endif
-void main()
+int main()
 {
   int n=30;
   double f;
@@ -38,4 +38,5 @@ void main()
     cout << "The gradient is:\n";
     cout << g << "\n";
   }
+  return 0;
 }

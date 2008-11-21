@@ -8,8 +8,12 @@
   #include <iomanip.hpp>
   long _stack = 20000;
 #endif
-void main()
+int main()
 {
+  using std::cout;
+  using std::endl;
+  using std::ofstream;
+  using std::ifstream;
   int n = 20;
   int m = 5;
   int i, j;
@@ -27,9 +31,9 @@ void main()
     cout << "  In default format:\n";
     cout << x << endl;
     cout << "  In fixed point notation:\n";
-    cout << setw(13) << setprecision(4) << setfixed << x << endl;
+    cout << setw(13) << std::setprecision(4) << std::ios::fixed << x << endl;
     cout << "  In scientific notation:\n";
-    cout << setw(13) << setprecision(4) << setscientific << x << endl;
+    cout << setw(13) << std::setprecision(4) << std::ios::scientific << x << endl;
 
     // write x to formatted file, read back into y and display on screen
     cout << "After formatted write and read:\n";
@@ -88,5 +92,5 @@ void main()
       cout << setw(14) << setprecision(4) << y << endl;
     } // y and f1 go out of scope; file2.tmp is closed
   } // x and gs go out of scope
-  exit(0);
+  return 0;
 }

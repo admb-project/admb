@@ -1,13 +1,12 @@
 
-DISK= ../admb_gcc411_fedora8
+DISK=build/admb_gcc411_fedora8
 
 CCVERSION=gcc411
 OSVERSION=fedorar8
 COMP=g++
 
-all:
-	- mkdir ${DISK}
-	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include
+dist:
+	- mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals}
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 
@@ -21,6 +20,13 @@ all:
 	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
 	cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f  optg32-rh8-laplace.mak  disk
 	cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f  safg32-rh8-laplace.mak disk 
+	cp -vf LICENSE ${DISK}
+	cp -vf README ${DISK}
+	cp -vf scripts/bash/mygcc* ${DISK}/bin 
+	make -C docs/manuals
+	cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals
+	cp -vf docs/manuals/admb.pdf ${DISK}/docs/manuals
+	cp -vf docs/manuals/admb-re.pdf ${DISK}/docs/manuals
 	- rm ${DISK}.tar* 
 	tar -cvf ${DISK}.tar ${DISK}
 	bzip2 ${DISK}.tar 

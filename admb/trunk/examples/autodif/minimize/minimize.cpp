@@ -9,7 +9,7 @@ double userfun(dvar_vector&);
 #ifdef __ZTC__
   long _stack = 20000;
 #endif
-void main()
+int main()
 {
   int nvar=60;
   independent_variables x(1,nvar);
@@ -17,4 +17,5 @@ void main()
   double minimum_value= fmc.minimize(x,userfun); //Call the function minimizer
   cout << "The minimum value = " << minimum_value << "at x =\n"
     << x << "\n";
+  return 0;
 }

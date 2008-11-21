@@ -1,13 +1,14 @@
 /**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+ * $Id$
+ *
+ * $Rev   ::                       $: Revision of last commit
+ * $Author::                       $: Author of last commit
+ * $Date  ::                       $: Date of last commit
+ *
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California
+ */
+
 #define HOME_VERSION
 #include "fvar.hpp"
 #include <math.h>
@@ -190,26 +191,30 @@ dvector::dvector(const char * s)
    infile.clear();
    infile.seekg(0,ios::beg);
 
-   if ( (v = new double [(size_t) size()]) ==0)
-   {
-     cerr << " Error trying to allocate memory for dvector\n";
-     ad_exit(21);
-   }
-#if defined(THREAD_SAFE)
-   if ( (shape=new ts_vector_shapex(1,count,v)) == NULL)
-#else
-   if ( (shape=new vector_shapex(1,count,v)) == NULL)
-#endif
-   {
-     cerr << "Error trying to allocate memory for dvector\n";
-     ad_exit(21);
-   }
+    if ( (v = new double [count+2]) ==0)
+    {
+      cerr << " Error trying to allocate memory for dvector\n";
+      ad_exit(21);
+    }
+ #if defined(THREAD_SAFE)
+  if ( (shape=new ts_vector_shapex(1,count,v)) == NULL)
+ #else
+  if ( (shape=new vector_shapex(1,count,v)) == NULL)
+ #endif
+    {
+      cerr << "Error trying to allocate memory for dvector\n";
+      ad_exit(1);
+    }
+
+
+    index_min=1;
+    index_max=count;
+    v -= indexmin();
 
    #ifdef DIAG
      cout << "Created a ncopies with address " << _farptr_tolong(ncopies) <<"\n";
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
-   v -= indexmin();
    char * err_ptr;
    for (i=1;i<=count;i++)
    {

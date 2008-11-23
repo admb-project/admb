@@ -9,7 +9,6 @@ LIBPATH =b32polp
 LIBNAME = ado32.lib
 LIBRARIAN = tlib
 DRIVECHANGE=fff.bat
-DISKDIR= f:\borland-50-laplace
 SRCDIR =  src
 LIBDIR =  lib
 INCLUDEDIR = include 

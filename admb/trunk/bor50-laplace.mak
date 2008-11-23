@@ -1,4 +1,4 @@
-DISKDIR=j:/borland-50-laplace-ex
+DISKDIR=borland-50-laplace-ex
 DEMODISKDIR=j:/borland-50-laplace-demo
 DEMODISKDIR1=/cygdrive/f/borland-50-laplace-demo
 DEMOTPLDIR=l:/openssl-stuff
@@ -6,12 +6,13 @@ DEMOTPLDIR1=/cygdrive/l/openss~1
 #SHELL=/l/msys/bin/sh.exe
 
 all:
-	cd linad99; MAKE "OPTIONS=+c:\bc5\bor50lpdex.cfg    " "DISKDIR=j:/borland-50-laplace-ex" -f optbor32-laplace.mak  all
-	cd nh99; MAKE "OPTIONS=+c:\bc5\bor50lpdex.cfg    " "DISKDIR=j:/borland-50-laplace-ex" -f optbor32-laplace.mak 
-	cd df1b2-separable; MAKE "OPTIONS=+c:\bc5\bor50lpdex.cfg    " "DISKDIR=j:/borland-50-laplace-ex" -f optbor32-laplace.mak 
-	cd df1b2-separable; MAKE "OPTIONS=+c:\bc5\bor50lpdex.cfg    " "DISKDIR=j:/borland-50-laplace-ex" -f safbor32-laplace.mak 
-	cd linad99; MAKE "OPTIONS=+c:\bc5\bor50lpdex.cfg    " "DISKDIR=j:/borland-50-laplace-ex" -f safbor32-laplace.mak  all
-	cd tools99; MAKE "OPTIONS=+c:\bc5\bor50lpdex.cfg    " "DISKDIR=j:/borland-50-laplace-ex" -f optbor32-laplace.mak 
+	mkdir $(DISKDIR); mkdir $(DISKDIR)/lib; mkdir $(DISKDIR)/bin; mkdir $(DISKDIR)/include;
+	cd linad99; mkdir b32polp; MAKE "DISKDIR=../borland-50-laplace-ex" -f optbor32-laplace.mak  all
+	cd nh99; mkdir b32polp; mkdir b32polp-stub; mkdir $(DISKDIR)/bin; MAKE "DISKDIR=../borland-50-laplace-ex" -f optbor32-laplace.mak 
+	cd df1b2-separable; mkdir b32polp; MAKE "DISKDIR=../borland-50-laplace-ex" -f optbor32-laplace.mak 
+	cd df1b2-separable; mkdir b32pslp; MAKE "DISKDIR=../borland-50-laplace-ex" -f safbor32-laplace.mak 
+	cd linad99; mkdir b32pslp; mkdir b32polp; MAKE "DISKDIR=../borland-50-laplace-ex" -f safbor32-laplace.mak  all
+	cd tools99; mkdir b32polp; MAKE "DISKDIR=../borland-50-laplace-ex" -f optbor32-laplace.mak 
 
 prodfromscratch: clean all hanscopy
 

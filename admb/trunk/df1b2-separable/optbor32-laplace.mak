@@ -46,6 +46,8 @@ disk:
 	cp df32fun.h $(DISKDIR)/$(INCLUDEDIR)
 	cp df3fun.h $(DISKDIR)/$(INCLUDEDIR)
 	cp f1b2locl.h $(DISKDIR)/$(INCLUDEDIR)
+	$(GNUWIN32_HOME)/bin/flex < remod11
+	sed -f sedflex lex.yy.c > tpl2rem.c
 	bcc32 -DWIN32 -I\\Borland\\BCC55\\Include -L\\Borland\\BCC55\\Lib tpl2rem.c
 	cp tpl2rem.exe $(DISKDIR)/$(BINDIR)/tpl2rem.exe
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 

@@ -58,6 +58,8 @@ stub: df1b2stub.cpp
 	cd ..
 disk: stub
 	cp admodel.h $(DISKDIR)/$(INCLUDEDIR)
+	$(GNUWIN32_HOME)/bin/flex < allmod22
+	sed -f sedflex lex.yy.c > mylex.c
 	bcc32 -I\\Borland\\BCC55\\Include -L\\Borland\\BCC55\\Lib mylex.c
 	cp mylex.exe $(DISKDIR)/$(BINDIR)/tpl2cpp.exe
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 

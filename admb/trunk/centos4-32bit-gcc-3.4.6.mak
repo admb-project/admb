@@ -1,5 +1,5 @@
 
-DISK=build/admb_gcc411_fedora8
+DISK=dists/admb_gcc411_fedora8
 
 CCVERSION=gcc411
 OSVERSION=fedorar8

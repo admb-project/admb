@@ -1,2 +1,2 @@
-dist:
-	cd dists; ./make-dist.sh
+dists:
+	cd build/dists; ../../scripts/dists/make-dist.sh

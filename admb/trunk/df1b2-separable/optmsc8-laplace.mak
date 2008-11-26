@@ -5,7 +5,6 @@ LIBPATH = msc8olp
 FLAGS = ${OPTIONS} ${PVMOPTION} -Ik:/temp/ATLAS/include /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../linad99 -I../nh99 -I../tools99 -D__MSVC32__=8  -DOPT_LIB /Ox -Ih:/vs8/vc/include -Ih:/vs8/VC/PlatformSDK/Include
 LIBNAME = df1b2o.lib 
 LIBRARIAN = tlib
-DISKDIR= g:/adms7lp.m32
 SRCDIR =  src
 LIBDIR =  lib
 BINDIR =  bin
@@ -52,7 +51,9 @@ fvar.hpp:
 
 all: $(LIBPATH)/$(LIBNAME) disk xtpl2rem
 
-xtpl2rem: tpl2rem.c
+xtpl2rem: remod11
+	flex < remod11
+	sed -f sedflex lex.yy.c > tpl2rem.c
 	cl -DWIN32 -Ig:/vc7/include tpl2rem.c -o tpl2rem.exe
 	cp tpl2rem.exe $(DISKDIR)/$(BINDIR)
 

@@ -10,7 +10,6 @@ LIBNAME = ads32.lib
 LIBRARIAN = tlib
 DRIVECHANGE=
 #DRIVECHANGE=g.bat
-DISKDIR= g:/adms7lp.m32
 SRCDIR =  src
 LIBDIR =  lib
 INCLUDEDIR = include 

@@ -8,7 +8,6 @@ STUBLIBNAME = df1b2stubs.lib
 FLAGS = ${OPTIONS} ${PVMOPTION} -Ik:/temp/ATLAS/include /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../linad99 -I../tools99 -D__MSVC32__=8  -DSAFE_ALL /Ox -Ih:/vs8/vc/include -Ih:/vs8/VC/PlatformSDK/Include
 LIBNAME = admod32s.lib 
 LIBRARIAN = tlib
-DISKDIR= g:/adms7lp.m32
 SRCDIR =  src
 LIBDIR =  lib
 BINDIR =  bin

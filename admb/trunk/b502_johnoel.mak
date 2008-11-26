@@ -1,13 +1,11 @@
-
-
-DISK= ../admb_b502_win32
+DISK=build/dists/admb_b502_win32
 
 CCVERSION=bor502
 OSVERSION=win32
 COMP=bcc32
 
 all:
-	- mkdir ${DISK}
+	- mkdir -p ${DISK}
 	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 

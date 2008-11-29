@@ -5,8 +5,12 @@ OSVERSION=win32
 COMP=bcc32
 
 all:
+	rm -rf ${DISK}
 	- mkdir -p ${DISK}
-	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include
+	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include; mkdir -p examples
+	cp scripts/borland/*.bat ${DISK}/bin
+	cp scripts/borland/Makefile ${DISK}
+	svn export examples/admb ${DISK}/examples/admb
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 
@@ -30,5 +34,3 @@ clean:
 	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
 	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
 	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safbor32-laplace.mak clean
-
-

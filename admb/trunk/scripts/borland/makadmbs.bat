@@ -1,3 +1,3 @@
 tpl2cpp %1
-call mybccs
-call lnkadmbs
+call mybccs %1
+call lnkadmbs %1

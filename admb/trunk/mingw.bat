@@ -1,0 +1,3 @@
+set MINGW_HOME=C:\MinGW
+set CYGWIN_HOME=C:\Cygwin
+set PATH=%MINGW_HOME%\bin;%CYGWIN_HOME%\bin;%PATH%

@@ -1,4 +1,5 @@
-set MINGW_HOME=\mingw
-set BCC55_HOME=\borland\bcc55
-set CYGWIN_HOME=\cygwin
-set PATH=%CYGWIN_HOME%\bin;%MINGW_HOME%\bin;%BCC55_HOME%\bin;%PATH%
+set GNUWIN32_HOME=C:\Program Files\GnuWin32
+set MINGW_HOME=C:\mingw
+set BCC55_HOME=C:\borland\bcc55
+set CYGWIN_HOME=C:\cygwin
+set PATH=%GNUWIN32_HOME%\bin;%MINGW_HOME%\bin;%CYGWIN_HOME%\bin;%BCC55_HOME%\bin;%PATH%

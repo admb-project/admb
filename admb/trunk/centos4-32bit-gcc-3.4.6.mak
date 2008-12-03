@@ -6,7 +6,12 @@ OSVERSION=fedorar8
 COMP=g++
 
 dist:
-	- mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals}
+	rm -rf ${DISK}
+	- mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals,examples}
+	cp scripts/bash/link* ${DISK}/bin
+	cp scripts/bash/m* ${DISK}/bin
+	cp scripts/bash/Makefile ${DISK}
+	svn export examples/admb ${DISK}/examples/admb
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 

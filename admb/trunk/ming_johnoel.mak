@@ -10,6 +10,8 @@ all:
 	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include; mkdir examples
 	cp scripts/mingw/*.bat ${DISK}/bin
 	cp scripts/mingw/Makefile ${DISK}
+	cp LICENSE ${DISK}
+	cp README ${DISK}
 	svn export examples/admb ${DISK}/examples/admb
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 

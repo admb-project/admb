@@ -10,6 +10,8 @@ all:
 	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include; mkdir -p examples
 	cp scripts/borland/*.bat ${DISK}/bin
 	cp scripts/borland/Makefile ${DISK}
+	cp LICENSE ${DISK}
+	cp README ${DISK}
 	svn export examples/admb ${DISK}/examples/admb
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 

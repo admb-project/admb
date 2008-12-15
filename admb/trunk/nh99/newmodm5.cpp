@@ -5,7 +5,7 @@
 #  include <adrndeff.h>
 
 
-// char cc[43]={"Copyright (c) 2006 Otter Research Ltd"};
+// char cc[43]={"Copyright (c) 2008 Regents of the University of California"};
 
  
    void function_minimizer::prof_minimize_re(int iprof, double sigma,

@@ -11,7 +11,7 @@
  * License:
  *
  * ADModelbuilder and associated libraries and documentations are
- * provided under the general terms of the "New Free BSD" license
+ * provided under the general terms of the "New BSD" license
  * 
  * Copyright (c)  2008 Regents of the University of California.
  * 
@@ -50,7 +50,7 @@
   #define _ADSPLUS_H_
 #include <admodel.h>
 #include <spcomm.h>
-//char cc[40]={"Copyright (c) 1993,1994 Otter Research Ltd"};
+//char cc[40]={"Copyright (c) 2008 Regents of the University of California"};
 //#define DO_PROFILE
 #pragma interface
 //#include <admodhd.h>

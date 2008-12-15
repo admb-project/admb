@@ -36,7 +36,7 @@
   \ifnum \number\c@chapter > 0
     \message{c@chapter = \number\c@chapter}
      \makebox[\textwidth]{
-       {\ninerm Copyright\ \copyright\ 1993--2000 by Otter Research Ltd}
+       {\ninerm Copyright\ \copyright\ 2008 Regents of the University of California}
       \hfill
      \arabic{chapter}-\arabic{chapterpg}\quad}
    \else
@@ -73,7 +73,7 @@
 %         \global\advance\chappageno by -1
 %       \fi
 %   \fi
-%       {\ninerm Copyright\ \copyright\ 1993--2000 by Otter Research Ltd}
+%       {\ninerm Copyright\ \copyright\ 2008 Regents of the University of California}
 %     \ifnum\mychapno>0
 %      \message{here A}
 %   \hfill\number\mychapno \ -- \number\chappageno
@@ -144,7 +144,7 @@
 %  \else
 %    \ifodd\thepage
 %       \ifnum\thepage>0
-%       {\ninerm Copyright\ \copyright\ 1993--1999 by Otter Research Ltd}
+%       {\ninerm Copyright\ \copyright\ 2008 Regents of the University of California}
 %   \hfill\number\chapno \ -- \number\thepage\fi
 %    \else
 %       \ifnum\thepage>0 

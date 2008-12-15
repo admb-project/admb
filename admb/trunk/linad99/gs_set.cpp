@@ -15,12 +15,12 @@
 #endif
 #include <limits.h>
 char demo_capacity[]={"You have exceeded the capacity of this demonstration version of AD Model Builder"};
-char please_buy[]= {"Please buy the commerical version from:"};
-char otter_address1[]={" Otter Research Ltd"};
-char otter_address2[]={" P.O. Box 2040"};
-char otter_address3[]={" Sidney, B.C., CANADA V8L 3S3"};
-char otter_address4[]={" otter@otter-rsch.com"};
-char otter_address5[]={" http://otter-rsch.com"};
+char please_buy[]= {"Please use open source version from:"};
+char otter_address1[]={" http://www.admb-project.org/"};
+char otter_address2[]={" http://www.admb-project.org/"};
+char otter_address3[]={" http://www.admb-project.org/"};
+char otter_address4[]={" users@admb-project.org"};
+char otter_address5[]={" http://www.admb-project.org/"};
 char cannot_set[]=" You can not reset the number of independent variables in the Demonstration version";
 
 void gradient_structure::check_set_error(const char* variable_name)

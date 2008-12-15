@@ -14,11 +14,11 @@
 #  include <windows.h>
 #endif
 char banner0[56]={"*****************************************************"};
-char banner1[56]={"This is the demonstration version of AD Model Builder"};
-char banner1a[58]={"You can buy the commercial version of AD Model Builder"};
-char banner2[30]={"From Otter research Ltd"};
-char banner3[55]={"PO Box 2040, Sidney,B.C. V8L 3S3 Canada"};
-char banner4[50]={"otter@otter-rsch.com   http://otter-rsch.com"};
+char banner1[56]={"This is the open source version of AD Model Builder"};
+char banner1a[58]={"You can freely use AD Model Builder"};
+char banner2[30]={"http://www.admb-project.org/"};
+char banner3[55]={"http://www.admb-project.org/"};
+char banner4[50]={"users@admb-project.org   http://www.admb-project.org/"};
 int ad_cheat_flag=0;
 #if defined(linux)
   int Sleep(int);

@@ -1,6 +1,4 @@
-
-
-// copyright(c) 2007 Otter Research Ltd
+// Copyright (c) 2008 Regents of the University of California
 //#define USE_DD_STUFF
 //#define USE_DD
 #  include <admodel.h>

@@ -11,7 +11,7 @@ extern "C" {
 	}
 #endif
 
- //char cc[43]={"Copyright (c) 1993,1998 Otter Research Ltd"};
+ //char cc[43]={"Copyright (c) 2008 Regents of the University of California"};
 
 
 void function_minimizer::limited_memory_quasi_newton

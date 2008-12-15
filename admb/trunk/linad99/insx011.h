@@ -11,7 +11,7 @@
  * License:
  *
  * ADModelbuilder and associated libraries and documentations are
- * provided under the general terms of the "New Free BSD" license
+ * provided under the general terms of the "New BSD" license
  * 
  * Copyright (c)  2008 Regents of the University of California.
  * 

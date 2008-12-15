@@ -18,7 +18,7 @@ char banner1[56]={"This is the open source version of AD Model Builder"};
 char banner1a[58]={"You can freely use AD Model Builder"};
 char banner2[30]={"http://www.admb-project.org/"};
 char banner3[55]={"http://www.admb-project.org/"};
-char banner4[50]={"users@admb-project.org   http://www.admb-project.org/"};
+char banner4[60]={"users@admb-project.org   http://www.admb-project.org/"};
 int ad_cheat_flag=0;
 #if defined(linux)
   int Sleep(int);

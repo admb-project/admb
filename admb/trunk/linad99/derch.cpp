@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
 #ifdef __ZTC__
   #include <conio.h>
@@ -199,4 +193,3 @@ void derch(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST 
 }
 
 
-#undef HOME_VERSION

@@ -1,16 +1,10 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
 
-#define HOME_VERSION
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
 
@@ -111,5 +105,4 @@ void dmcm_prod(void)
   // cout << "leaving dmdm_prod"<<endl;
 }
 
-#undef HOME_VERSION
 

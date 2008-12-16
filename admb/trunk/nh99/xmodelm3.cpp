@@ -1,13 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include <admodel.h>
 
 #if defined(USE_LAPLACE)
@@ -806,4 +801,3 @@ void print_is_diagnostics(laplace_approximation_calculator *lapprox)
 
 #endif // #if defined(USE_LAPLACE)
 
- #undef HOME_VERSION

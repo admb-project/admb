@@ -1,15 +1,9 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
-#define HOME_VERSION
 #include <fvar.hpp>
 
 extern  int ctlc_flag;
@@ -35,4 +29,3 @@ fmmt1::fmmt1(int nvar,int _xm)
 //  cout << " In fmm::fmm(int nvar) nvar = " << nvar 
 //       << " and n = " << n << "\n";
 }
-#undef HOME_VERSION

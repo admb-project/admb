@@ -1,13 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include <admodel.h>
 
 
@@ -50,4 +45,3 @@ void data_3iarray::allocate(int hsl,int hsu,_CONST index_type& rmin,
   *(ad_comm::global_datafile) >> i3_array(*this);
 }
 
-#undef HOME_VERSION

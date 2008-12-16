@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include "fvar.hpp"
 
    dvar3_array elem_prod(_CONST dvar3_array& m1,_CONST d3_array& m2)
@@ -180,4 +174,3 @@
      return tmp;
    }  
 
-#undef HOME_VERSION

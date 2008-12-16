@@ -1,13 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include <admodel.h>
 //#define NO_MCMC
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
@@ -979,7 +974,7 @@ void adwait(double sec){;}
     cout << " **pflag3 = " << **pflag3 << endl;
     cout << " **pflag4 = " << **pflag4 << endl;
     cout << " *qflag5 = " << *qflag5 << endl;
-  */
+ */
   }
   
   void extra_random_effects_generator1(void)

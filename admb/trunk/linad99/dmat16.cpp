@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include "fvar.hpp"
 
  dmatrix  operator - (_CONST dmatrix& m1,_CONST dmatrix& m2 )
@@ -113,4 +107,3 @@
    return(tmp);
  }      
 
-#undef HOME_VERSION

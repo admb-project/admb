@@ -238,5 +238,4 @@
     }
    }
 
-#undef HOME_VERSION
 #endif //#if defined(USE_LAPLACE)

@@ -1,13 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: Unknown
+ */
 #ifdef __ZTC__
   #include <conio.h>
 #endif
@@ -603,4 +597,3 @@ label7020:
     }
     return -1.0*r;
   }
-#undef HOME_VERSION

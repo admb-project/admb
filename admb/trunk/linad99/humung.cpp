@@ -1,22 +1,15 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
-#define HOME_VERSION
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
 #define DOS386
 
 #include "fvar.hpp"
 
-#undef HOME_VERSION
 
 #if (defined(__ZTC__) && !defined(DOS386))
 //  void _far * _cdecl _farptr_norm(void _far *);
@@ -120,4 +113,3 @@ humungous_pointer& humungous_pointer::operator = (void * p)
   return *this; 
 }  
         
-#undef HOME_VERSION

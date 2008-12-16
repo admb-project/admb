@@ -1,15 +1,9 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
-#define HOME_VERSION
 // file: fvar_ops.cpp
 // operators involving prevariables
 
@@ -89,4 +83,3 @@
     * gradient_structure::GRAD_STACK1->ptr->dep_addr=0.;
   }
 
-#undef HOME_VERSION

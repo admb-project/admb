@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 // file: fvarm_io.cpp
 
 //////// i/o operations for class dvar_matrix
@@ -97,4 +91,3 @@ void dvar_matrix::read_from(BOR_CONST istream& s)
   }
 }
 
-#undef HOME_VERSION

@@ -1,15 +1,9 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
-#define HOME_VERSION
 #include <admodel.h>
 
 #if defined(max)
@@ -242,4 +236,3 @@ L50:
   x=xbest;
   return fbest+0.5*ln_det(user_d2frandeff(xbest),sgn);
 }
-#undef HOME_VERSION

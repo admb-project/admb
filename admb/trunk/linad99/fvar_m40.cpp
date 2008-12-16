@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include "fvar.hpp"
 
 banded_lower_triangular_dvar_matrix::banded_lower_triangular_dvar_matrix
@@ -192,7 +186,6 @@ ostream& operator << (BOR_CONST ostream& _ofs,_CONST banded_lower_triangular_dva
 
 
 
-#define HOME_VERSION
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -654,4 +647,3 @@ dvariable norm2(const banded_symmetric_dvar_matrix& B)
   return nm;
 }
 
-#undef HOME_VERSION

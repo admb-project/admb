@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159-1.10b (Web2C 7.4.5) (format=pdflatex 2008.6.3)  7 NOV 2008 10:06
+This is pdfTeX, Version 3.14159-1.10b (Web2C 7.4.5) (format=pdflatex 2008.6.3)  15 DEC 2008 15:08
 **all_ad
 (./all_ad.tex{/usr/share/texmf/pdftex/config/pdftex.cfg}
 LaTeX2e <2001/06/01>
@@ -11344,7 +11344,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 Here is how much of TeX's memory you used:
  5657 strings out of 95437
  64222 string characters out of 1190234
- 257575 words of memory out of 1000001
+ 257587 words of memory out of 1000001
  8058 multiletter control sequences out of 10000+50000
  22449 words of font info for 84 fonts, out of 500000 for 1000
  14 hyphenation exceptions out of 1000
@@ -11374,4 +11374,4 @@ fonts/type1/bluesky/cm/cmbx12.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr1
 7.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr12.pfb></usr/share/texmf/font
 s/type1/bluesky/cm/cmssi17.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmbx10.
 pfb>
-Output written on all_ad.pdf (185 pages, 814136 bytes).
+Output written on all_ad.pdf (185 pages, 814252 bytes).

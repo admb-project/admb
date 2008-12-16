@@ -1,13 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: Unknown
+ */
 #include <fvar.hpp>
 
 
@@ -134,4 +128,3 @@ dmatrix sort(_CONST dmatrix& m,BOR_CONST int& column,BOR_CONST int& NSTACK)
 }
 */
 
-#undef HOME_VERSION

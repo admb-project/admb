@@ -1,15 +1,9 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
-//#define HOME_VERSION
 // file: dmat_io.cpp
 
 // i/o operations for class dmatrix
@@ -57,4 +51,3 @@ uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST  dvar4_array & z)
 
 #endif
 
-#undef HOME_VERSION

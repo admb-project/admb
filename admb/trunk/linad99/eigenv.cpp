@@ -1,13 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: Unknown
+ */
 #define EIGEN_VECTORS
 
 #include <fvar.hpp>
@@ -286,7 +280,6 @@ double SIGNV( CGNU_DOUBLE x, double y)
 }
 
 #undef EIGEN_VECTORS
-#undef HOME_VERSION
 
 
 

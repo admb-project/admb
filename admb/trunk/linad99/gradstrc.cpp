@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include "fvar.hpp"
 
 //#define THREAD_SAFE
@@ -396,7 +390,7 @@ void allocate_dvariable_space(void)
    {
       cerr << "  3b Trying to allocate to a non NULL pointer in gradient structure \n";
    }
-  */
+ */
 
    ARRAY_MEMBLOCK_BASE = temp_ptr;
   
@@ -699,4 +693,3 @@ void memory_allocate_error(char * s, void * ptr)
 
 
 ;
-#undef HOME_VERSION

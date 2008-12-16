@@ -1,13 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: Unknown
+ */
 #include <fvar.hpp>
 #if defined(__SPDLL__)
 #  if !defined(linux)
@@ -801,4 +795,3 @@ label7020:
    else
       return(0.);
    }
-#undef HOME_VERSION

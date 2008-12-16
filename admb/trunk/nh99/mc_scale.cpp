@@ -1,16 +1,10 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
 
-//#define HOME_VERSION
 #include <admodel.h>
 
 double set_value_mc(double z,double min,double max);
@@ -172,4 +166,3 @@ void param_init_bounded_matrix::mc_scale(BOR_CONST dvector& _v,BOR_CONST dvector
 }
 
 
-#undef HOME_VERSION

@@ -1,12 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
+/*
+ * $Id$
+ * Author: Unknown
+ */
 #include <fvar.hpp>
 #include <math.h>
 #define EPS 1.0e-9
@@ -177,7 +172,7 @@ dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,_CONST dvariable& _x,
   c1(0)=1.0;
   d1(0)=1.0/(1.0-qab*x/qap);
   h1(0)=d1(0);
-  */
+ */
 
   //h1(0)=d1(0);
   dfd1(0)+=dfh1(0);
@@ -194,7 +189,7 @@ dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,_CONST dvariable& _x,
   qab=a+b;
   qap=a+1.0;
   qam=a-1.0;
-  */
+ */
 
   //qam=a-1.0;
   dfa+=dfqam;

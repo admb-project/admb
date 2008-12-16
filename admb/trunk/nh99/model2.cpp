@@ -1,15 +1,9 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
-//#define HOME_VERSION
 #include <admodel.h>
 
  int stddev_params::num_stddev_params=0;
@@ -235,4 +229,3 @@ class param_stddev_matrix: public named_dvar_matrix , stddev_params
   virtual void set_dependent_variables(void);
 };
 */
-#undef HOME_VERSION

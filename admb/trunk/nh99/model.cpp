@@ -1,13 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include <admodel.h>
 
 
@@ -720,7 +715,7 @@
     share_flags=new index_type(ishare);
     allocate(imin,imax,1,s);
   }
-  */
+ */
 
   void param_init_vector::allocate(int imin,int imax,int phase_start,
      const char * s)
@@ -773,7 +768,7 @@
     share_flags=new index_type(jshare);
     allocate(rmin,rmax,cmin,cmax,1,s);
   }
-  */
+ */
 
   void param_init_matrix::allocate(int rmin,int rmax,int cmin,int cmax,
     int _phase_start, const char * s)
@@ -1288,5 +1283,4 @@ void get_sp_printf(void)
     }
   } 
 
-#undef HOME_VERSION
 

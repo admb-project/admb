@@ -1,12 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
+/*
+ * $Id$
+ * Author: Unknown
+ */
 //#define EIGEN_VECTORS
 
 #include <fvar.hpp>
@@ -371,5 +366,4 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e,
 }
 
 #undef EIGEN_VECTORS
-#undef HOME_VERSION
 

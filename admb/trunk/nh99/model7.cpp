@@ -1,13 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #else
@@ -121,7 +116,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   {
     vm_initialize();
   }
-  */
+ */
   set_signal_handlers();
   adprogram_name=_argv[0];
   int len=strlen(_argv[0]);

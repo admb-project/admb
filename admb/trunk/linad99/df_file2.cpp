@@ -1,16 +1,10 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
 
-#define HOME_VERSION
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable
 
@@ -157,5 +151,4 @@ void DF_FILE::fwrite(const int& x)
   memcpy(buff+offset, &x, sizeof(int));
   offset=toffset;
 }
-#undef HOME_VERSION
 

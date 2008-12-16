@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
+/*
+ * $Id$
+ * Author: Unknown
+ */
 
-#define HOME_VERSION
 // file: fvar_ops.cpp
 // operators involving prevariables
 
@@ -53,4 +47,3 @@
      //  * gradient_structure::GRAD_STACK1->ptr->ind_addr1 << endl;
   }
 
-#undef HOME_VERSION

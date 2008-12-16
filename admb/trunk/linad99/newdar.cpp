@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include "fvar.hpp"
 #ifdef __ZTC__
   #include <iostream.hpp>
@@ -542,6 +536,5 @@ void arr_remove(arr_link ** pptr)
   //cout <<  "after delete number_arr_links = "<<  gradient_structure::ARR_LIST1->number_arr_links <<"\n";
 }
 
-#undef HOME_VERSION
 
 

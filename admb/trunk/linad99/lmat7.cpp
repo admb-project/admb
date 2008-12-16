@@ -1,17 +1,11 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
 
 
-#define HOME_VERSION
 #include "fvar.hpp"
 
 AD_LONG_INT sum(_CONST lmatrix& m)
@@ -64,4 +58,3 @@ lvector column(_CONST lmatrix& m,int col)
 }
 
 
-#undef HOME_VERSION

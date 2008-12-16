@@ -1,13 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
 #include <admodel.h>
 
@@ -420,4 +415,3 @@ void get_ee(BOR_CONST dmatrix& hh,BOR_CONST ofstream& _of5)
     of5 << l(i) << "  " << ll(i) << endl;
   }
 }
-#undef HOME_VERSION

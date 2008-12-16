@@ -1,13 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include <admodel.h>
 
 #ifdef __GNUDOS__
@@ -102,5 +97,4 @@ void param_init_bounded_matrix::add_value(BOR_CONST dvector& ndev,BOR_CONST int&
 }
 
 
-#undef HOME_VERSION
 

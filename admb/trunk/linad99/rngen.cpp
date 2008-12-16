@@ -1,13 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: Unknown
+ */
 #include "fvar.hpp"
 
 
@@ -227,6 +221,5 @@ double randu( BOR_CONST random_number_generator& rng)
     }
   }
 
-#undef HOME_VERSION
 
 

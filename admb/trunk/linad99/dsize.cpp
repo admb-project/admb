@@ -1,13 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
   
 #include "fvar.hpp"
 
@@ -69,4 +64,3 @@ int size_count_partial(_CONST d3_array& x,int n)
   return tmp;
 }
 
-#undef HOME_VERSION

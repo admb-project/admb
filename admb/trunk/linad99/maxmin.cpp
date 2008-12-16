@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 //#define DIAG
 #include <fvar.hpp>
 #if defined(__TURBOC__) && !defined(__linux__)
@@ -42,4 +36,3 @@ double min( CGNU_DOUBLE u, CGNU_DOUBLE v)
 }
 
 // #undef DIAG
-#undef HOME_VERSION

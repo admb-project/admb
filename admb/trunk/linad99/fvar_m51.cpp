@@ -1,16 +1,10 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
 
-#define HOME_VERSION
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -114,7 +108,7 @@ dvariable ln_det_choleski(_CONST dvar_matrix& MM)
     if (L(i,i)<minL) minL=L(i,i);
   }
   cout << "min in choleski = " << minL << endl;
-  */
+ */
 
 
   double log_det=2.0*log_det1;
@@ -365,7 +359,7 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
     if (L(i,i)<minL) minL=L(i,i);
   }
   cout << "min in choleski = " << minL << endl;
-  */
+ */
 
 
   double log_det=2.0*log_det1;
@@ -382,4 +376,3 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
   return vlog_det;
 }
 
-#undef HOME_VERSION

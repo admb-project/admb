@@ -1,12 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
+/*
+ * $Id$
+ * Author: Unknown
+ */
 #include <fvar.hpp>
 
 dvar_vector spline(const dvector &x,const dvar_vector&y,double yp1,double ypn);

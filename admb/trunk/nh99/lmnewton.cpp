@@ -1,4 +1,3 @@
-#define HOME_VERSION
 #include <admodel.h>
 
 #ifdef __cplusplus
@@ -341,5 +340,4 @@ L50:
   f=fbest;
   objective_function_value::gmax=fabs(max(gbest));
 }
-#undef HOME_VERSION
 

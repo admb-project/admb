@@ -1,10 +1,5 @@
-/**
+/*
  * $Id$
- *
- * $Rev   ::                       $: Revision of last commit
- * $Author::                       $: Author of last commit
- * $Date  ::                       $: Date of last commit
- *
  * Author: David Fournier
  * Copyright (c) 2008 Regents of the University of California
  * 
@@ -44,7 +39,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
 
 #if defined(__GNUDOS__)
 #  pragma interface
@@ -752,7 +746,6 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
 
     ivector( unsigned int sz, long int * x);
 
-//#ifdef HOME_VERSION
       void safe_allocate(int ncl,int ncu);
       void allocate(int ncl,int ncu);
       void allocate(_CONST ivector& iv);
@@ -761,7 +754,6 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
       void allocate(void);
       void deallocate(void);
       void safe_deallocate(void);
-//#endif
 
     //operator int* () {return v;}
 
@@ -2151,7 +2143,6 @@ private:
     friend class banded_symmetric_dmatrix;
     friend class banded_lower_triangular_dmatrix;
     
-//#ifdef HOME_VERSION
       void allocate(int ncl,int ncu);
       void allocate(_CONST dvector& dv);
       void allocatec(_CONST dvector& dv);
@@ -2161,7 +2152,6 @@ private:
       void deallocate(void);
       void safe_deallocate(void);
       void safe_allocate(int,int);
-//#endif
 
     _CONST double * address() _CONST { return (v); }
     double*& get_v(void) { return (v); }
@@ -2769,7 +2759,6 @@ double dmax(double i, double j);
     friend class banded_symmetric_dmatrix;
     friend class banded_lower_triangular_dmatrix;
 friend class dvar3_array;
-//#ifdef HOME_VERSION
   void shallow_copy(const dvar_matrix&);
   dvar_matrix();
   void allocate(int nrl,int nrh,int ncl,int nch);
@@ -2782,7 +2771,6 @@ friend class dvar3_array;
   void allocate(int nrl,int nrh,_CONST ivector& ncl,int nch);
   void allocate(void);
   void deallocate();
-//#endif
   dvar_matrix(_CONST banded_symmetric_dvar_matrix&v);
   dvar_matrix(_CONST banded_lower_triangular_dvar_matrix&v);
 # if defined(__NUMBERVECTOR__)
@@ -3020,7 +3008,6 @@ imatrix sort(_CONST imatrix&,int column,int NSTACK=60);
     int operator ! (void) _CONST {return (shape == NULL);}
 
     dmatrix sub(int,int);
-//#ifdef HOME_VERSION
     dmatrix(void); 
     dmatrix(int,int,kkludge_object); 
     dmatrix(int,int); 
@@ -3038,7 +3025,6 @@ imatrix sort(_CONST imatrix&,int column,int NSTACK=60);
     void allocate(const ad_integer& nrl,const ad_integer& nrh,
       const index_type& ncl,const index_type& nch);
     void allocate(int nrl,int nrh,const ivector& ncl,const ivector& nch);
-//#endif
     friend class banded_symmetric_dmatrix;
     friend class banded_lower_triangular_dmatrix;
 
@@ -3320,7 +3306,6 @@ imatrix restore_imatrix_value(BOR_CONST imatrix_position&);
     imatrix restore_imatrix_value(BOR_CONST imatrix_position& mpos);
     imatrix_position restore_imatrix_position(void);
 
-//#ifdef HOME_VERSION
     void allocate(void);
     void allocate(_CONST imatrix& dm);
     void allocate(int nrl,int nrh,int ncl,int nch);
@@ -3330,7 +3315,6 @@ imatrix restore_imatrix_value(BOR_CONST imatrix_position&);
     void allocate(const ad_integer& nrl,const ad_integer& nrh,
       const index_type& ncl,const index_type& nch);
     void deallocate();
-//#endif
 
 #ifdef OPT_LIB
  inline ivector& operator() (int i) {return m[i];}
@@ -3968,7 +3952,6 @@ public:
     d3_array(_CONST d3_array& m2);
     ~d3_array();
 
-//#ifdef HOME_VERSION
     void allocate(_CONST dvar3_array&);
     void allocate(_CONST d3_array& d3v);
     void allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch);
@@ -3999,7 +3982,6 @@ public:
       int ncl,_CONST ivector& nch);
     void allocate(void);
     void deallocate(void);
-//#endif
     void initialize(int sl,int sh,int nrl,_CONST ivector& nrh,
       int ncl,_CONST ivector& nch);
 
@@ -4138,7 +4120,6 @@ public:
     i3_array(const i3_array& m2);
     ~i3_array();
 
-//#ifdef HOME_VERSION
     void allocate(int sl,int sh,int nrl,const ivector& nrh,int ncl,int nch);
     void allocate(_CONST dvar3_array&);
     void allocate(_CONST i3_array& i3v);
@@ -4172,7 +4153,6 @@ public:
       int ncl,_CONST ivector& nch);
     void allocate(void);
     void deallocate(void);
-//#endif
     void initialize(int sl,int sh,int nrl,_CONST ivector& nrh,
       int ncl,_CONST ivector& nch);
 
@@ -4284,7 +4264,6 @@ public:
     // conclass cgors
 
     void initialize(void);
-//#ifdef HOME_VERSION
       void allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch);
       void allocate(int sl,int sh,int nrl,int nrh);
       void allocate(int sl,int sh,const index_type& nrl,const index_type& nrh);
@@ -4317,7 +4296,6 @@ public:
       void allocate(ad_integer sl,ad_integer sh);
 
       void deallocate();
-//#endif
     dvar3_array(int sl,int sh,int nrl,int nrh,int ncl,int nch);
     dvar3_array(int sl,int sh,int nrl,int nrh,_CONST ivector& ncl,int nch);
 
@@ -5050,9 +5028,6 @@ void ludcmp_index(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double&
 void ludcmp(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
 // this should allways appear at the end of the file
 #if (__BCPLUSPLUS__ >= 2)
-#ifdef HOME_VERSION
-//#pragma hdrstop
-#endif
 #endif
 
   class function_tweaker
@@ -6646,7 +6621,6 @@ lmatrix restore_lmatrix_value(BOR_CONST lmatrix_position&);
     lmatrix restore_lmatrix_value(BOR_CONST lmatrix_position& mpos);
     lmatrix_position restore_lmatrix_position(void);
 
-//#ifdef HOME_VERSION
     void allocate(_CONST lmatrix& dm);
     void allocate(int nrl,int nrh,int ncl,int nch);
     void allocate(int nrl,int nrh,int ncl,const ivector& nch);
@@ -6654,7 +6628,6 @@ lmatrix restore_lmatrix_value(BOR_CONST lmatrix_position&);
     void allocate(const ad_integer& nrl,const ad_integer& nrh,
       const index_type& ncl,const index_type& nch);
     void deallocate();
-//#endif
 
 #ifdef OPT_LIB
  inline lvector& operator() (int i) {return m[i];}
@@ -7773,7 +7746,6 @@ extern "C" {
 #  include <ddfvar.hpp>
 #  include <qdfvar.hpp>
 #endif
-//#undef HOME_VERSION
 
 void test_the_pointer(void);
 

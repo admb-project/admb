@@ -1,13 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include <admodel.h>
 
  const double simbdsmax=1.e+90;
@@ -439,4 +434,3 @@ void param_init_d3array::set_simulation_bounds(BOR_CONST dmatrix& _symbds,
 
 }
 
-#undef HOME_VERSION

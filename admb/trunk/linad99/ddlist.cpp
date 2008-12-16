@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 /// file ddlist.cpp
 #include "fvar.hpp"
 
@@ -86,7 +80,7 @@ dlink * dlist::create()
     cerr << "Error allocating dlink in dlist::create()\n";
     ad_exit(21);
   }
-  */
+ */
 
   dlink_addresses[nlinks]=tmp;   // keep track of the links so you can 
                                  // zero them out
@@ -207,4 +201,3 @@ dlink * dlist::append(dlink * app)
 
   return(last);
 }    
-#undef HOME_VERSION

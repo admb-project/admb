@@ -1,13 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
 
 #include "fvar.hpp"
@@ -395,4 +390,3 @@ void set_value_inv(_CONST dvar3_array& x,const dvector& v, const int& ii,
   }
 }
 
-#undef HOME_VERSION

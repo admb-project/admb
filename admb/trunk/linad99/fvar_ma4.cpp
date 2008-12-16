@@ -1,13 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: Unknown
+ */
 
 #include "fvar.hpp"
 #include <math.h>
@@ -150,4 +144,3 @@ void lubksb(dvar_matrix a,_CONST ivector& indx,dvar_vector b)
 }
 
 
-#undef HOME_VERSION

@@ -1,12 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
+/*
+ * $Id$
+ * Author: Unknown
+ */
 /* lbfgs.f -- translated by f2c (version 19950110).
    You must link the resulting object file with the libraries:
         -lf2c -lm   (in that order)
@@ -1483,7 +1478,7 @@ extern /* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx, dvariable 
     if (!fold) fold =new dvariable;
     if (!fbest) fbest =new dvariable;
     if (!xlinebest) xlinebest =new dvar_vector(x.indexmin(),x.indexmax());
-  */
+ */
     dvariable gn;
     dvariable sn;
 
@@ -1518,7 +1513,7 @@ extern /* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx, dvariable 
     *fbest=fabs(dginit);
     *dgbest=fabs(dginit);
     *xlinebest=x;    
-  */
+ */
     if (dginit >= zero) {
         io___71.ciunit = lb4_1.lp;
         // s_wsfe(&io___71);

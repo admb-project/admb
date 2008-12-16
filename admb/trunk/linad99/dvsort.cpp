@@ -1,13 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: Unknown
+ */
 #include <fvar.hpp>
 
 dvector sort(_CONST dvector& v, int NSTACK)
@@ -209,4 +203,3 @@ dvector sort(_CONST dvector& _v,BOR_CONST ivector& _index, int NSTACK)
     }
   }
 }
-#undef HOME_VERSION

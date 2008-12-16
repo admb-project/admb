@@ -1,4 +1,3 @@
-#define HOME_VERSION
 
 // this is to get UNIX systems to use getchar
 // #define UNIXKLUDGE
@@ -397,7 +396,7 @@ label1000:
         return;
       }
     }
-  */
+ */
 
 
     if ( ifn > maxfn )
@@ -1034,4 +1033,3 @@ void derch(BOR_CONST double& f,BOR_CONST dvector& _x,BOR_CONST dvector& _gg,int 
 }
 
 // #undef DIAG
-#undef HOME_VERSION

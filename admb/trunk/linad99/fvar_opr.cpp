@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 // file: fvar_ops.cpp
 // operators involving prevariables
 
@@ -92,4 +86,3 @@ prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2)
       return(v->x!=value(v1));
     }
 
-#undef HOME_VERSION

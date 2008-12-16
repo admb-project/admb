@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 // file: fvar_io.cpp
 
 // i/o operations for class prevariable
@@ -68,4 +62,3 @@ uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST prevariable& _f)
 #endif
 
 
-#undef HOME_VERSION

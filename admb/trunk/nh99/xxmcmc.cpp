@@ -1,13 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 
 
 #include <admodel.h>
@@ -919,7 +914,7 @@ void write_empirical_covariance_matrix(int ncor,BOR_CONST dvector& s_mean,
     }
     ofs << endl;
   }
-  */
+ */
 }
 
 void read_empirical_covariance_matrix(int nvar,BOR_CONST dmatrix& S,BOR_CONST adstring& prog_name)
@@ -963,7 +958,7 @@ void read_empirical_covariance_matrix(int nvar,BOR_CONST dmatrix& S,BOR_CONST ad
       S(j,i)=S(i,j);
     }
   }
-  */
+ */
 }
 
 void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST dvector& h,
@@ -1401,7 +1396,7 @@ void read_hessian_matrix_and_scale(int nvar, BOR_CONST dmatrix& SS,BOR_CONST dve
     }
   }
   while (neg_flag);
-  */
+ */
   S=inv(S);
 }
 
@@ -1658,5 +1653,4 @@ dvector read_old_scale(int & old_nvar)
   return sscale;
 }  
 
-#undef HOME_VERSION
 

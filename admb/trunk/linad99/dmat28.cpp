@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include "fvar.hpp"
 
 void get_eigenv(const dvector& _d,const dvector& _e,const dmatrix& _z);
@@ -386,4 +380,3 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
     
     
  
-#undef HOME_VERSION

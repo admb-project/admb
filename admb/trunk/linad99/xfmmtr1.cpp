@@ -1,5 +1,4 @@
 
-#define HOME_VERSION
 
 // this is to get UNIX systems to use getchar
 // #define UNIXKLUDGE
@@ -235,4 +234,3 @@ void fmmt1::fmin2(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR
   }
 
 
-#undef HOME_VERSION

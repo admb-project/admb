@@ -1,13 +1,7 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: Unknown
+ */
 
 #include "fvar.hpp"
 #include <math.h>
@@ -561,6 +555,5 @@ void ludcmp_index(BOR_CONST dmatrix& _a,BOR_CONST ivector& _indx,
   }
 }
 #undef TINY
-#undef HOME_VERSION
 
 

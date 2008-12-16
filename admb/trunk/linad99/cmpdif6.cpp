@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -59,7 +53,7 @@ void d3_array::save_d3_array_position(void) const
     gradient_structure::get_fp()->fwrite(&(tmp.ub(i)),wsize);
     gradient_structure::get_fp()->fwrite(&(tmp.ptr(i)),wsize1);
    }
-  */
+ */
   gradient_structure::get_fp()->fwrite(&(mmin),wsize);
   gradient_structure::get_fp()->fwrite(&(mmax),wsize);
 }
@@ -260,4 +254,3 @@ void nograd_assign_column(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int&
   d3_array_position::d3_array_position(int mmin,int mmax) :
     min(mmin), max(mmax)
   {}
-#undef HOME_VERSION

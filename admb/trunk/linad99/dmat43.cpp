@@ -1,14 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: David Fournier
-  * Copyright (c) 2008 Regents of the University of California 
-  */
-#define HOME_VERSION
+/*
+ * $Id$
+ * Author: David Fournier
+ * Copyright (c) 2008 Regents of the University of California 
+ */
 #include "fvar.hpp"
 
 banded_lower_triangular_dmatrix::
@@ -147,4 +141,3 @@ banded_lower_triangular_dmatrix choleski_decomp_trust_bound(
 //***********************************************************
 //***********************************************************
  
-#undef HOME_VERSION

@@ -1,15 +1,9 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
+/*
+ * $Id$
+ * Author: Unknown
+ */
 
 
-#define HOME_VERSION
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -203,5 +197,4 @@ dvector solve(const dmatrix& aa,const dvector& z,
 }
 
 #undef TINY
-#undef HOME_VERSION
 

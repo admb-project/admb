@@ -1,4 +1,4 @@
-set GNUWIN32_HOME=C:\Program Files\GnuWin32
+set GNUWIN32_HOME=C:\Progra~1\GnuWin32
 set MINGW_HOME=C:\mingw
 set BCC55_HOME=C:\borland\bcc55
 set CYGWIN_HOME=C:\cygwin

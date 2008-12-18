@@ -1,5 +1,7 @@
+SHELL = /bin/sh
 
 DISK=build/dists/admb_gcc411_fedora8
+PWD=$(shell pwd)
 
 CCVERSION=gcc411
 OSVERSION=fedorar8
@@ -12,6 +14,7 @@ dist:
 	cp scripts/bash/m* ${DISK}/bin
 	cp scripts/bash/Makefile ${DISK}
 	svn export examples/admb ${DISK}/examples/admb
+	svn export examples/admb-re ${DISK}/examples/admb-re
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 
@@ -35,6 +38,9 @@ dist:
 	- rm ${DISK}.tar* 
 	tar -cvf ${DISK}.tar ${DISK}
 	bzip2 ${DISK}.tar 
+
+verify:
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK}
 
 clean:
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak clean

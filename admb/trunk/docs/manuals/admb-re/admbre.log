@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159-1.10b (Web2C 7.4.5) (format=pdflatex 2008.6.3)  15 DEC 2008 15:08
+This is pdfTeX, Version 3.14159-1.10b (Web2C 7.4.5) (format=pdflatex 2008.4.28)  18 DEC 2008 09:19
 **admbre
 (./admbre.tex{/usr/share/texmf/pdftex/config/pdftex.cfg}
 LaTeX2e <2001/06/01>
@@ -466,7 +466,7 @@ No file admbre.ind.
 (./admbre.aux) ) 
 Here is how much of TeX's memory you used:
  3440 strings out of 95437
- 44105 string characters out of 1190234
+ 44105 string characters out of 1190233
  93347 words of memory out of 1000001
  6275 multiletter control sequences out of 10000+50000
  15197 words of font info for 57 fonts, out of 500000 for 1000
@@ -488,4 +488,4 @@ exmf/fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf/fonts/type1/bluesky/cm
 /cmsl12.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmbx12.pfb></usr/share/tex
 mf/fonts/type1/bluesky/cm/cmr12.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cm
 r17.pfb>
-Output written on admbre.pdf (43 pages, 267497 bytes).
+Output written on admbre.pdf (43 pages, 267495 bytes).

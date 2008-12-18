@@ -1,4 +1,4 @@
-verify: ham4 ham5 catage finance vonb vonbr n2mvol simple
+verify: ham4 ham5 catage finance vonb vonbr n2mvol simple union
 noverify: chem-eng forest pella-t truncreg
 
 ham4:
@@ -48,3 +48,7 @@ truncreg:
 n2mvol:
 	cd $(ADMB_HOME)/examples/admb/vol;makeadm n2mvol;./n2mvol
 	cd $(ADMB_HOME)/examples/admb/vol;makeadms n2mvol;./n2mvol
+
+union:
+	cd $(ADMB_HOME)/examples/admb-re/union;tpl2rem union;mygcco-re union;./union
+	cd $(ADMB_HOME)/examples/admb-re/union;tpl2rem union;mygccs union;./union

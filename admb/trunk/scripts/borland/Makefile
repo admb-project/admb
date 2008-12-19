@@ -1,4 +1,4 @@
-verify: ham4 ham5 catage vonb vonbr n2mvol simple 
+verify: ham4 ham5 catage vonb vonbr n2mvol simple union
 
 ham4:
 	cd $(ADMB_HOME)\examples\admb\buscycle
@@ -98,3 +98,8 @@ n2mvol:
 	cd $(ADMB_HOME)\examples\admb\vol
 	makadmbs n2mvol
 	n2mvol
+
+union:
+	cd $(ADMB_HOME)\examples\admb-re\union
+	makadmb-re union
+	union	

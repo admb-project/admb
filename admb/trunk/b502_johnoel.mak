@@ -1,10 +1,13 @@
 DISK=build/dists/admb_b502_win32
+PWD=$(shell pwd)
+WINADMB_HOME=$(shell cygpath --windows ${PWD}/${DISK})
+BORLAND_HOME=$(shell cygpath --unix $(BCC55_HOME))
 
 CCVERSION=bor502
 OSVERSION=win32
 COMP=bcc32
 
-all:
+dist:
 	rm -rf ${DISK}
 	- mkdir -p ${DISK}
 	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include; mkdir -p examples
@@ -13,6 +16,7 @@ all:
 	cp LICENSE ${DISK}
 	cp README ${DISK}
 	svn export examples/admb ${DISK}/examples/admb
+	svn export examples/admb-re ${DISK}/examples/admb-re
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 
@@ -29,6 +33,8 @@ all:
 	#tar -cvf ${DISK}.tar ${DISK}
 	#bzip2 ${DISK}.tar 
 
+verify:
+	cd ${DISK} && ADMB_HOME="${WINADMB_HOME}" PATH="$(BCC55_HOME)\\bin;${WINADMB_HOME}\\bin;%PATH%" $(BORLAND_HOME)/bin/make 
 clean:
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safbor32-laplace.mak clean

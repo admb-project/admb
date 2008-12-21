@@ -34,7 +34,7 @@ dist:
 	#bzip2 ${DISK}.tar 
 
 verify:
-	set-admb-home.bat ${PWD}\\build\\dists\\admb_gcc345_mingw32 && make -C ${DISK}
+	call set-admb-home.bat ${PWD} && make -C ${DISK}
 
 clean:
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak clean

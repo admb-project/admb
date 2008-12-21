@@ -1,4 +1,5 @@
-DISK= build/dists/admb_gcc345_mingw32
+DISK=build/dists/admb_gcc345_mingw32
+PWD=$(shell pwd)
 
 CCVERSION=gcc345mingw
 OSVERSION=win32
@@ -33,7 +34,7 @@ dist:
 	#bzip2 ${DISK}.tar 
 
 verify:
-	make -C ${DISK}
+	PATH=${PWD}/${DISK}/bin:$(PATH) make -C ${DISK}
 
 clean:
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak clean

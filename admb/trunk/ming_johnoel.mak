@@ -33,7 +33,7 @@ dist:
 	#bzip2 ${DISK}.tar 
 
 verify:
-	cd ${DISK}; bin/admb-mingw-vars.bat; make -C ${DISK}
+	make -C ${DISK}
 
 clean:
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak clean

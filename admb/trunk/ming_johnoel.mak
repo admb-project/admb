@@ -34,7 +34,7 @@ dist:
 	#bzip2 ${DISK}.tar 
 
 verify:
-	ADMB_HOME=${PWD}/${DISK} PATH=$(ADMB)/bin:$(PATH) make -C ${DISK}
+	ADMB_HOME=${PWD}/${DISK} PATH=${PWD}/${DISK}/bin:$(PATH) make -C ${DISK}
 
 clean:
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak clean

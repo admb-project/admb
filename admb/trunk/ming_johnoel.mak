@@ -20,6 +20,8 @@ dist:
 	- cd ./tools99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./df1b2-separable;mkdir  ${CCVERSION}-${OSVERSION}slp 
 	- cd ./df1b2-separable;mkdir  ${CCVERSION}-${OSVERSION}olp 
+	which gcc	
+	gcc --version
 	cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} PVMOPTION=-Dlinux -f  optg32-rh8-laplace.mak  disk
 	cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} PVMOPTION=-Dlinux -f  safg32-rh8-laplace.mak disk 
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} PVMOPTION=-Dlinux -f optg32-rh8-laplace.mak disk

@@ -2,6 +2,7 @@ verify: ham4 ham5 catage finance vonb vonbr n2mvol simple
 noverify: chem-eng forest pella-t truncreg
 
 ham4:
+	cd
 	cd examples/admb/buscycle && makeadm.bat ham4 && ./ham4.exe
 	cd examples/admb/buscycle && makeadms.bat ham4 && ./ham4.exe
 

@@ -6,7 +6,16 @@ dists:
 	cd build/dists; ../../scripts/dists/make-dist.sh
 	$(INNOSETUP_HOME)/iscc scripts\admb-win32-setup\admb-win32-setup.iss
 
-admb-windows-setup:
+mingw:
+	make -f ming_johnoel.mak
+
+bcc32:
+	make -f b502_johnoel.mak
+
+vc:
+	make -f vc8-johnoel.mak
+
+admb-windows-setup: mingw bcc32 vc
 	@echo $(VERSION)
 	$(INNOSETUP_HOME)/iscc scripts\admb-windows-setup\admb-windows-setup.iss
 	mv build/admb-windows-setup.exe build/admb-$(VERSION).exe

@@ -1,4 +1,12 @@
-verify: ham4 ham5 catage vonb vonbr n2mvol simple union
+verify: SS3 ham4 ham5 catage vonb vonbr n2mvol simple union
+
+SS3:
+	cd "$(ADMB_HOME)\examples\admb\SS3"
+	makadmb SS3
+	SS3
+	cd "$(ADMB_HOME)\examples\admb\SS3"
+	makadmbs SS3
+	SS3
 
 ham4:
 	cd $(ADMB_HOME)\examples\admb\buscycle

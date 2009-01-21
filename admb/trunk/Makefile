@@ -1,6 +1,6 @@
 VERSION=`cat VERSION.txt`
 
-all: admb-windows-setup
+all: inno-windows-setup
 
 dists:
 	cd build/dists; ../../scripts/dists/make-dist.sh
@@ -11,11 +11,11 @@ mingw:
 
 bcc32:
 	make -f b502_johnoel.mak
+	make -f b502_johnoel.mak verify
 
 vc:
 	make -f vc8-johnoel.mak
 
-admb-windows-setup: mingw bcc32 vc
-	@echo $(VERSION)
-	$(INNOSETUP_HOME)/iscc scripts\admb-windows-setup\admb-windows-setup.iss
-	mv build/admb-windows-setup.exe build/admb-$(VERSION).exe
+inno-setup-bcc551: bcc32
+	$(INNOSETUP_HOME)/iscc scripts\admb-windows-setup\inno-setup-bcc551.iss
+	mv build/admb-windows-setup.exe build/admb-$(VERSION)-bcc5.5.1.exe

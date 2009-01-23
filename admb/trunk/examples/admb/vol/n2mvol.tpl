@@ -165,7 +165,7 @@ FUNCTION void xfp12(dvar_vector& h, dvector& y,dvar_vector& m,dvar_matrix& v, dv
       if (i!=j) hess(j,i)=hess(i,j);
     }
   }
-  for (i=1;i<=ndim;i++)
+  for (int i=1;i<=ndim;i++)
   {
     hess(i,i)+=.25*vv(i);
   }
@@ -184,7 +184,7 @@ FUNCTION  fill_the_matrices
   Z=ch_Z*trans(ch_Z);
   ch_R.initialize();
   ii=1;
-  for (i=1;i<=ndim;i++)
+  for (int i=1;i<=ndim;i++)
   {
     for (int j=1;j<i;j++)
       ch_R(i,j)=v_R(ii++);  

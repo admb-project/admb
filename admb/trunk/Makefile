@@ -9,8 +9,17 @@ dists:
 mingw:
 	make -f ming_johnoel.mak
 
+mingw-test:
+	make -f ming_johnoel.mak verify
+
 bcc32:
 	make -f b502_johnoel.mak
+	make -f b502_johnoel.mak verify
+
+bcc55:
+	make -f b502_johnoel.mak
+
+bcc55-test:
 	make -f b502_johnoel.mak verify
 
 vc:

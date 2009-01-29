@@ -54,4 +54,9 @@ disk:
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 
 clean:
-	- cd $(LIBPATH) ; rm *.obj ; rm *.lib ; rm *.o ; rm *.a
+	rm -f tmpfile
+	rm -f Hc
+	rm -f Hcd
+	rm -f Hc.*
+	rm -f Hcd.*
+	- cd $(LIBPATH) ; rm -f *.obj ; rm -f *.lib ; rm -f *.o ; rm -f *.a; rm -f *.rsp

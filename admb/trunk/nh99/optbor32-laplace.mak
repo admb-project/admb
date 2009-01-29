@@ -67,4 +67,11 @@ disk: stub
 	cp admodel.h $(DISKDIR)/$(INCLUDEDIR) 
 
 clean:
-	- cd $(LIBPATH);  rm *obj; rm *lib
+	rm -f tmpfile
+	rm -f mylex.exe
+	rm -f mylex.tds
+	rm -f lex.yy.c
+	rm -f mylex.c
+	rm -f mylex.obj
+	- cd $(LIBPATH);  rm -f *obj; rm -f *lib; rm -f *.rsp
+	- cd $(STUBPATH);  rm -f *obj; rm -f *lib; rm -f *.rsp

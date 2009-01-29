@@ -25,3 +25,6 @@ autodif.pdf: $(AUTODIF_PATH)/all_au.tex
 admb-re.pdf: $(ADMB_RE_PATH)/admbre.tex
 	make -C $(ADMB_RE_PATH) admbre.pdf
 	cp -v $(ADMB_RE_PATH)/admbre.pdf $@
+
+clean:
+	make -C $(AUTODIF_PATH) clean

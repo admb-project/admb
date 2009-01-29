@@ -1,4 +1,5 @@
-verify: SS3 ham4 ham5 vonb vonbr simple
+verify: SS3 ham4 ham5 vonb vonbr simple catage finance n2mvol
+fails: union chem-eng forest pella-t truncreg
 
 SS3:
 	cd $(ADMB_HOME)\examples\admb\SS3
@@ -58,11 +59,10 @@ forest:
 
 pella-t:
 	cd $(ADMB_HOME)\examples\admb\pella-t
-	makadmb pella_t
-	pella_t
-	cd $(ADMB_HOME)\examples\admb\pella-t
-	makadmbs pella_t
-	pella_t
+	makadmb pella-t
+	pella-t
+	makadmbs pella-t
+	pella-t
 
 vonb:
 	cd $(ADMB_HOME)\examples\admb\robreg

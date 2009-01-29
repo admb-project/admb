@@ -42,4 +42,5 @@ disk:
 	cp clist.h $(DISKDIR)/$(INCLUDEDIR)
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 clean:
-	- cd $(LIBPATH);  rm *obj; rm *lib
+	rm -f tmpfile
+	- cd $(LIBPATH);  rm -f *obj; rm -f *lib; rm -f *.rsp

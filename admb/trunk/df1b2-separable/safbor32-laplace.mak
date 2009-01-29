@@ -53,4 +53,10 @@ disk:
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 
 clean:
-	- cd $(LIBPATH) ; rm *obj ; rm *lib
+	rm -f tmpfile
+	rm -f tpl2rem.obj
+	rm -f tpl2rem.c
+	rm -f tpl2rem.exe
+	rm -f lex.yy.c
+	rm -f tpl2rem.tds
+	- cd $(LIBPATH) ; rm -f *obj ; rm -f *lib; rm -f *.rsp

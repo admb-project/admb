@@ -1,4 +1,4 @@
-verify: SS3 ham4 ham5 catage vonb vonbr n2mvol simple union
+verify: SS3 ham4 ham5 vonb vonbr simple
 
 SS3:
 	cd $(ADMB_HOME)\examples\admb\SS3

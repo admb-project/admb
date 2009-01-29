@@ -5689,10 +5689,11 @@ RUNTIME_SECTION
 
 //  ProgLabel_5100_#  TOP_OF_MAIN_SECTION
 TOP_OF_MAIN_SECTION
+//  arrmblsize = 50000000;
   arrmblsize = 50000000;
-  gradient_structure::set_GRADSTACK_BUFFER_SIZE(89478485);
-  gradient_structure::set_CMPDIF_BUFFER_SIZE(170000000);
-  gradient_structure::set_MAX_NVAR_OFFSET(5000);
+//  gradient_structure::set_GRADSTACK_BUFFER_SIZE(89478485);
+//  gradient_structure::set_CMPDIF_BUFFER_SIZE(170000000);
+//  gradient_structure::set_MAX_NVAR_OFFSET(5000);
   gradient_structure::set_NUM_DEPENDENT_VARIABLES(10000);
 //  arrmblsize = 50000000;
 //  gradient_structure::set_GRADSTACK_BUFFER_SIZE(20000000000);

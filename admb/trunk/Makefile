@@ -28,3 +28,6 @@ vc:
 inno-setup-bcc551: bcc32
 	$(INNOSETUP_HOME)/iscc scripts\admb-windows-setup\inno-setup-bcc551.iss
 	mv build/admb-windows-setup.exe build/admb-$(VERSION)-bcc5.5.1.exe
+
+clean:
+	make -f b502_johnoel.mak clean

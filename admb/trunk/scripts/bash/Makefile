@@ -1,9 +1,9 @@
-verify: SS3 ham4 ham5 catage finance vonb vonbr n2mvol simple union
+verify: SS3-Simple ham4 ham5 catage finance vonb vonbr n2mvol simple union
 noverify: chem-eng forest pella-t truncreg
 
-SS3:
-	cd $(ADMB_HOME)/examples/admb/SS3;makeadm SS3;./SS3
-	cd $(ADMB_HOME)/examples/admb/SS3;makeadms SS3;./SS3
+SS3-Simple:
+	cd $(ADMB_HOME)/examples/admb/SS3-Simple;makeadm SS3;./SS3
+	cd $(ADMB_HOME)/examples/admb/SS3-Simple;makeadms SS3;./SS3
 
 ham4:
 	cd $(ADMB_HOME)/examples/admb/buscycle;makeadm ham4;./ham4

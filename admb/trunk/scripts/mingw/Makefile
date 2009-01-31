@@ -1,5 +1,9 @@
-verify: ham4 ham5 catage finance vonb vonbr n2mvol simple
+verify: SS3 ham4 ham5 catage finance vonb vonbr n2mvol simple
 noverify: chem-eng forest pella-t truncreg
+
+SS3:
+	cd examples/admb/SS3 && makeadm.bat SS3 && ./SS3.exe
+	cd examples/admb/SS3 && makeadms.bat SS3 && ./SS3.exe
 
 ham4:
 	cd

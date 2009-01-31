@@ -31,3 +31,4 @@ inno-setup-bcc551: bcc32
 
 clean:
 	make -f b502_johnoel.mak clean
+	make -f ming_johnoel.mak clean

@@ -1,95 +1,107 @@
 verify: ham4 ham5 catage vonb vonbr n2mvol simple 
 
 SS3:
-	cd "$(ADMB_HOME)"\examples\admb\SS3
+	cd SS3
 	makeadm SS3
 	SS3
 	makeadms SS3
 	SS3
+	cd ..
 
 ham4:
-	cd "$(ADMB_HOME)"\examples\admb\buscycle
+	cd buscycle
 	makeadm ham4
 	ham4
 	makeadms ham4
 	ham4
+	cd ..
 
 ham5:
-	cd "$(ADMB_HOME)"\examples\admb\buscycle
+	cd buscycle
 	makeadm ham5
 	ham5
 	makeadms ham5
 	ham5
+	cd ..
 
 catage:
-	cd "$(ADMB_HOME)"\examples\admb\catage
+	cd catage
 	makeadm catage
 	catage
 	makeadms catage
 	catage
+	cd ..
 
 chem-eng:
-	cd "$(ADMB_HOME)"\examples\admb\chem-eng
+	cd chem-eng
 	makeadm chem-eng
 	chem-eng
 	makeadms chem-eng
 	chem-eng
+	cd ..
 
 finance:
-	cd "$(ADMB_HOME)"\examples\admb\finance
+	cd finance
 	makeadm finance
 	finance
 	makeadms finance
 	finance
+	cd ..
 
 forest:
-	cd "$(ADMB_HOME)"\examples\admb\forest
+	cd forest
 	makeadm forest
 	forest
 	makeadms forest
 	forest
+	cd ..
 
 pella-t:
-	cd "$(ADMB_HOME)"\examples\admb\pella-t
+	cd pella-t
 	makeadm pella_t
 	pella_t
 	makeadms pella_t
 	pella_t
+	cd ..
 
 vonb:
-	cd "$(ADMB_HOME)"\examples\admb\robreg
+	cd robreg
 	makeadm vonb
 	vonb
 	makeadms vonb
 	vonb
+	cd ..
 
 vonbr:
-	cd "$(ADMB_HOME)"\examples\admb\robreg
+	cd robreg
 	makeadm vonbr
 	vonbr
 	makeadms vonbr
 	vonbr
-
+	cd ..
 
 simple:
-	cd "$(ADMB_HOME)"\examples\admb\simple
+	cd simple
 	makeadm simple
 	simple
 	makeadms simple
 	simple
+	cd ..
 
 truncreg:
-	cd "$(ADMB_HOME)"\examples\admb\truncreg
+	cd truncreg
 	makeadm truncreg
 	runtrunc
 	fruntrunc
 	makeadms truncreg
 	runtrunc
 	fruntrunc
+	cd ..
 
 n2mvol:
-	cd "$(ADMB_HOME)"\examples\admb\vol
+	cd vol
 	makeadm n2mvol
 	n2mvol
 	makeadms n2mvol
 	n2mvol
+	cd ..

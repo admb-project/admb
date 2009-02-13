@@ -15,6 +15,8 @@ dist:
 	cp scripts/bash/Makefile ${DISK}
 	svn export examples/admb ${DISK}/examples/admb
 	svn export examples/admb-re ${DISK}/examples/admb-re
+	rm -rvf ${DISK}/examples/admb/SS3
+	rm -rvf ${DISK}/examples/admb/SS3-Simple
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 

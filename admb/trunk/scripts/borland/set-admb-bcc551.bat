@@ -7,7 +7,7 @@ REM
 REM
 REM Sets the ADMB Home directory.
 REM
-@set ADMB_HOME=C:\admb
+@set ADMB_HOME=%CD%
 
 REM
 REM Adds the bin folder to BCC_HOME and ADMB_HOME to system path.

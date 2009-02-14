@@ -2,112 +2,113 @@ verify: SS3 ham4 ham5 vonb vonbr simple catage finance n2mvol
 fails: union chem-eng forest pella-t truncreg
 
 SS3:
-	cd $(ADMB_HOME)\examples\admb\SS3
+	cd SS3
 	makadmb SS3
 	SS3
-	cd $(ADMB_HOME)\examples\admb\SS3
 	makadmbs SS3
 	SS3
+	cd ..
 
 ham4:
-	cd $(ADMB_HOME)\examples\admb\buscycle
+	cd buscycle
 	makadmb ham4
 	ham4
-	cd $(ADMB_HOME)\examples\admb\buscycle
 	makadmbs ham4
 	ham4
+	cd ..
 
 ham5:
-	cd $(ADMB_HOME)\examples\admb\buscycle
+	cd buscycle
 	makadmb ham5
 	ham5
-	cd $(ADMB_HOME)\examples\admb\buscycle
 	makadmbs ham5
 	ham5
+	cd ..
 
 catage:
-	cd $(ADMB_HOME)\examples\admb\catage
+	cd catage
 	makadmb catage
 	catage
-	cd $(ADMB_HOME)\examples\admb\catage
 	makadmbs catage
 	catage
+	cd ..
 
 chem-eng:
-	cd $(ADMB_HOME)\examples\admb\chem-eng
+	cd chem-eng
 	makadmb chem-eng
 	chem-eng
-	cd $(ADMB_HOME)\examples\admb\chem-eng
 	makadmbs chem-eng
 	chem-eng
+	cd ..
 
 finance:
-	cd $(ADMB_HOME)\examples\admb\finance
+	cd finance
 	makadmb finance
 	finance
-	cd $(ADMB_HOME)\examples\admb\finance
 	makadmbs finance
 	finance
+	cd ..
 
 forest:
-	cd $(ADMB_HOME)\examples\admb\forest
+	cd forest
 	makadmb forest
 	forest
-	cd $(ADMB_HOME)\examples\admb\forest
 	makadmbs forest
 	forest
+	cd ..
 
 pella-t:
-	cd $(ADMB_HOME)\examples\admb\pella-t
+	cd pella-t
 	makadmb pella-t
 	pella-t
 	makadmbs pella-t
 	pella-t
+	cd ..
 
 vonb:
-	cd $(ADMB_HOME)\examples\admb\robreg
+	cd robreg
 	makadmb vonb
 	vonb
-	cd $(ADMB_HOME)\examples\admb\robreg
 	makadmbs vonb
 	vonb
+	cd ..
 
 vonbr:
-	cd $(ADMB_HOME)\examples\admb\robreg
+	cd robreg
 	makadmb vonbr
 	vonbr
-	cd $(ADMB_HOME)\examples\admb\robreg
 	makadmbs vonbr
 	vonbr
-
+	cd ..
 
 simple:
-	cd $(ADMB_HOME)\examples\admb\simple
+	cd simple
 	makadmb simple
 	simple
-	cd $(ADMB_HOME)\examples\admb\simple
 	makadmbs simple
 	simple
+	cd ..
 
 truncreg:
-	cd $(ADMB_HOME)\examples\admb\truncreg
+	cd truncreg
 	makadmb truncreg
 	runtrunc
 	fruntrunc
-	cd $(ADMB_HOME)\examples\admb\truncreg
 	makadmbs truncreg
 	runtrunc
 	fruntrunc
+	cd ..
 
 n2mvol:
-	cd $(ADMB_HOME)\examples\admb\vol
+	cd vol
 	makadmb n2mvol
 	n2mvol
-	cd $(ADMB_HOME)\examples\admb\vol
 	makadmbs n2mvol
 	n2mvol
+	cd ..
 
 union:
-	cd $(ADMB_HOME)\examples\admb-re\union
+	cd union
 	makadmb-re union
 	union	
+	cd ..

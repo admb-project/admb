@@ -16,13 +16,16 @@ bcc32:
 	make -f b502_johnoel.mak
 	make -f b502_johnoel.mak verify
 
-bcc55:
+bcc551:
 	make -f b502_johnoel.mak
 
-bcc55-test:
+bcc551-test:
 	make -f b502_johnoel.mak verify
 
 vc:
+vc7:
+vc8:
+vc9:
 	make -f vc8-johnoel.mak
 
 inno-setup-bcc551: bcc32

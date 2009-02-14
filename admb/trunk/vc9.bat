@@ -1,3 +1,3 @@
-call "c:\Progra~1\Micros~1.0\VC\vcvarsall.bat"
+call "%VS90COMNTOOLS%vsvars32.bat"
 call "enviroment.bat"
 make vc

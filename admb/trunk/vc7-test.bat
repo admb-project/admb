@@ -1,5 +1,4 @@
-call "%VS71COMNTOOLS%vsvars32.bat"
 cd build\dists\admb_vc8_win32
-set ADMB_HOME=%CD%
-set PATH=%ADMB_HOME%\bin;%PATH%
+call bin\set-admb-vc7.bat
+cd "%ADMB_HOME%\examples\admb"
 nmake

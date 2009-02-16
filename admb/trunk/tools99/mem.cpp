@@ -1,6 +1,6 @@
 /*
  * $Id$
- * Author: Unknown
+ * Author: Walter Bright
  */
 #include <stdio.h>
 #include  <stdlib.h>

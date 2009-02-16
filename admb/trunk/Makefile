@@ -22,11 +22,15 @@ bcc551:
 bcc551-test:
 	make -f b502_johnoel.mak verify
 
-vc:
 vc7:
+	make -f vc8-johnoel.mak
+
 vc8:
+	make -f vc8-johnoel.mak
+
 vc9:
 	make -f vc8-johnoel.mak
+
 
 inno-setup-bcc551: bcc32
 	$(INNOSETUP_HOME)/iscc scripts\admb-windows-setup\inno-setup-bcc551.iss

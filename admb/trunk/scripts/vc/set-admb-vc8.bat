@@ -1,5 +1,7 @@
 @echo off
 
+set MSSDK=%ProgramFiles%\Microsoft^ Platform^ SDK^ for^ Windows^ Server^ 2003^ R2
+
 REM
 REM Sets the ADMB Home directory.
 REM

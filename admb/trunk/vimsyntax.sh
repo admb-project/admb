@@ -9,7 +9,7 @@ BEGIN {
   VIM = "tpl.vim"
 
   print "\" ADModel Builder extentions to C++ context highlighting" > VIM
-  print "\" created by from "ARGV[1] >> VIM
+  print "\" created by vimsyntax.sh from "ARGV[1] >> VIM
   print "\"" >> VIM
   print "\" ----------------------------------------------------------------------------" >> VIM
   print "\" THE BEER-WARE LICENSE (Unknown Revision) http://en.wikipedia.org/wiki/Beerware:" >> VIM

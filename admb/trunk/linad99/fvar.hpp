@@ -4532,7 +4532,8 @@ void save_double_value(double x);
    dvar3_array elem_div(_CONST dvar3_array& m1,_CONST d3_array& m2);
    dvar3_array operator + (_CONST dvar3_array& m1,_CONST d3_array& m2);
    dvar3_array operator + (_CONST dvar3_array& m1,_CONST dvariable& m2);
-
+   dvar3_array operator + (_CONST dvariable& d1, _CONST dvar3_array& m1);
+  
    dvar3_array operator / (_CONST prevariable& m2,_CONST dvar3_array& m1);
    dvar3_array operator / (_CONST prevariable& m2,_CONST d3_array& m1);
    dvar3_array operator / ( double m2,_CONST dvar3_array& m1);

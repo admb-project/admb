@@ -174,3 +174,18 @@
      return tmp;
    }  
 
+   dvar3_array operator + (_CONST dvariable& d1, _CONST dvar3_array& m1)
+   {
+     RETURN_ARRAYS_INCREMENT();
+     dvar3_array tmp;
+     tmp.allocate(m1);
+
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     {
+       tmp(i)=m1(i)+d1;
+     }
+
+     RETURN_ARRAYS_DECREMENT();
+     return tmp;
+   }
+

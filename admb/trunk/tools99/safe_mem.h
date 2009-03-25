@@ -1,5 +1,6 @@
-/*
+/**
  * $Id$
+ *
  * Author: Walter Bright
  *
  * This in an early version of Walter Bright's MEM package originally

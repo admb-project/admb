@@ -1,7 +1,8 @@
-/*
+/**
  * $Id$
+ *
  * Author: David Fournier
- * Copyright (c) 2008 Regents of the University of California 
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
   double sum(_CONST dvector&v)

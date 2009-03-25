@@ -1,3 +1,10 @@
+/**
+ * $Id$
+ * 
+ * Author: David Fournier
+ * Copyright (c) 2008, 2009 Regents of the University of California
+ */
+
 #include <admodel.h>
 
   int * smart_counter::get_ncopies(void) 

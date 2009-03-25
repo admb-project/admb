@@ -1,10 +1,14 @@
+/**
+ * $Id$
+ *
+ * Author: David Fournier
+ * Copyright (c) 2008, 2009 Regents of the University of California
+ */
 
 
 // this is to get UNIX systems to use getchar
 // #define UNIXKLUDGE
 
-
-//COPYRIGHT (c) 1991 OTTER RESEARCH LTD
 #ifdef __ZTC__
   #include <conio.h>
 #endif

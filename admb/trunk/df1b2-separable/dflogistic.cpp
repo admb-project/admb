@@ -1,3 +1,9 @@
+/**
+ * $Id$
+ *
+ * Author: David Fournier
+ * Copyright (c) 2008, 2009 Regents of the University of California 
+ */
 
 #include <df1b2fun.h>
   df1b2variable logistic(double a,double b,const df1b2variable& x)

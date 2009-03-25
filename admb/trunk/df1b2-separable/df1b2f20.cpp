@@ -1,12 +1,8 @@
 /**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
+ * $Id$
+ *
+ * Author: Unknown
+ */
 #include <df1b2fun.h>
 
 df1b2variable gammlnguts(const df1b2variable _zz)

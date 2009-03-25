@@ -1,3 +1,10 @@
+/**
+ * $Id$
+ *
+ * Author: David Fournier
+ * Copyright (c) 2008, 2009 Regents of the University of California
+ */
+
 /* eval_extern.f -- translated by f2c (version 19950110).
    You must link the resultinumberv object file with the libraries:
 	-lf2c -lm   (in that order)

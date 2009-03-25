@@ -1,5 +1,6 @@
-/*
+/**
  * $Id$
+ *
  * Author: Unknown
  */
 /* lbfgs.f -- translated by f2c (version 19950110).

@@ -1,8 +1,12 @@
 /**
  * $Id$
  *
- * Author: Unknown
+ * Author: David Fournier
+ * Derived from algoriths described in "On the limited memory BFGS method 
+ * for large scale optimization", by D. Liu and J. Nocedal,
+ * Mathematical Programming B 45 (1989) 503-528.
  */
+
 /* lbfgs.f -- translated by f2c (version 19950110).
    You must link the resulting object file with the libraries:
         -lf2c -lm   (in that order)

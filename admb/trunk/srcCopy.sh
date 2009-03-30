@@ -1322,10 +1322,12 @@ linad99/vbivnorm.cpp
 linad99/cbetacf.cpp
 linad99/vbetacf.cpp
 linad99/fmmtr1.cpp
+linad99/rngen.cpp
 nh99/amoeba.cpp
 nh99/lbfgs.cpp
 nh99/bet_rand.cpp
 nh99/dfqromb.cpp
+nh99/t.cpp
 df1b2-separable/df1b2invcumdbeta.cpp  
 df1b2-separable/df3gammp.cpp
 df1b2-separable/f1b2lndt.cpp

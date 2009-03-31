@@ -360,7 +360,7 @@ class.
 The following listing is the {\tt fcomp} function
 modified to use automatic differentiation. 
 \bigbreak
-\listing{examples/simple/fcomp_s.cpp}
+\listing{../../../examples/autodif/simple/fcomp_s.cpp}
 
 \noindent There are five changes.
 
@@ -503,7 +503,7 @@ The second macro,
 {\tt END\_MINIMIZATION} takes two arguments, the number of variables and
 the name of the vector of partial derivatives. 
 \bigbreak
-\listing{examples/simple/simple.cpp}
+\listing{../../../examples/autodif/simple/simple.cpp}
 
 It is not necessary to use the macros. They have simply
 been provided for convenience. If you prefer their expansion
@@ -613,7 +613,7 @@ product of the vector~$x$ with the vector~$Ax$.
 Here is the code for the function which calculates the 
 Hemholtz energy using the overloaded operators.
 \bigbreak
-\listing{examples/hemholtz/hem_func.cpp}
+\listing{../../../examples/autodif/hemholtz/hem_func.cpp}
 
 \X{overloaded operators}
 All the vector and matrix multiplications are carried out using the
@@ -630,7 +630,7 @@ user.
 \goodbreak
 Here is the the code which calls the function {\tt hemholtz\_energy}. 
 \bigskip
-\listing{examples/hemholtz/hemholtz.cpp}
+\listing{../../../examples/autodif/hemholtz/hemholtz.cpp}
 
 \section{The log-likelihood function for a multivariate normal distribution}
 As a further example of to use \AD's vector and matrix
@@ -3202,7 +3202,7 @@ I/O support. It also illustrates the use fill operations
 and \cplus\ scoping rules to
 automatically destroy some variables.
 \bigskip
-\listing{examples/io_examp/io_examp.cpp}
+\listing{../../../examples/autodif/io_examp/io_examp.cpp}
 
 \endchapter
 
@@ -3507,7 +3507,7 @@ function {\tt minimize}.
 The following code invokes the {\tt minimize} routine
 to find the minimum for the user's function {\tt userfun}.
 \bigskip
-\listing{examples/minimize/minimize.cpp}
+\listing{../../../examples/autodif/minimize/minimize.cpp}
 
 \XX{independent\_variables}{declaration of}
 \XX{independent\_variables}{initialization of}
@@ -3522,7 +3522,7 @@ be minimized by this code is the code for the function
 $$\big(x[1]-1\big)^2 + \sum_{i=1}^{i<n} \big(x[i+1]-x[i]\big)^2$$
 whose minimum is at the point $(1,1,\ldots,1)$.
 \bigbreak
-\listing{examples/minimize/userfun.cpp}
+\listing{../../../examples/autodif/minimize/userfun.cpp}
 
 \X{dvar\_vector} \X{dvariable} 
 While the vector of independent variables is declared
@@ -4471,12 +4471,12 @@ the contribution to the residuals made by the outliers.
 \goodbreak
 The \AD\ code for this model is given below:
 \bigskip
-\listing{examples/robexamp/robust.cpp}
+\listing{../../../examples/autodif/robexamp/robust.cpp}
 \bigbreak
 {\openup 1.3truept
-\listing{examples/robexamp/fcomp_r.cpp}
+\listing{../../../examples/autodif/robexamp/fcomp_r.cpp}
 \bigbreak
-\listing{examples/robexamp/newreg2.cpp}
+\listing{../../../examples/autodif/robexamp/newreg2.cpp}
 }
 \bigbreak
 
@@ -4787,7 +4787,7 @@ is defined by (\number\mychapno.3).
 \goodbreak
 This example shows the \nr\ technique for two equations. 
 \bigskip
-\listing{examples/newt/newt.cpp}
+\listing{../../../examples/autodif/newt/newt.cpp}
 We have chosen a rather ``degenerate'' example where the Jacobian
 matrix is almost singular at the solution. The two functions are
 %$$ \eqalign{
@@ -4921,7 +4921,7 @@ correspond to equation $(\number\mychapno.1)$. The constant terms
 $1/\sqrt{2\pi}$ have been ignored. 
 
 \goodbreak\bigbreak
-\listing{examples/mixture/like.cpp}
+\listing{../../../examples/autodif/mixture/like.cpp}
 
 \noindent The term {\tt 1.e-20} is put in to improve the numerical stability
 of the program. The routine {\tt log\_likelihood} is intended to
@@ -4953,7 +4953,7 @@ and standard deviations. We need a routine to ``put'' the x's
 into the model.
 
 \goodbreak\bigbreak
-\listing{examples/mixture/reset.cpp}
+\listing{../../../examples/autodif/mixture/reset.cpp}
 
 \X{boundp}
 The function {\tt reset} not only puts the x's into the parameters of the
@@ -5015,7 +5015,7 @@ of the {\tt x} vector be? This problem is solved by the functions
 {\tt boundpin} and {\tt xinit}.
 
 \bigbreak
-\listing{examples/mixture/xinit.cpp}
+\listing{../../../examples/autodif/mixture/xinit.cpp}
 
 The control structure of {\tt xinit} exactly parallels that of {\tt reset}
 so that no matter what switch combinations or bounds are used, the
@@ -5032,7 +5032,7 @@ The job of the function
 {\tt nvarcal} is to use this information to calculate the number
 of active parameters.
 \bigbreak
-\listing{examples/mixture/nvarcal.cpp}
+\listing{../../../examples/autodif/mixture/nvarcal.cpp}
 
 The three functions {\tt reset}, {\tt xinit}, and {\tt nvarcal}
 all share a common control structure and make it possible to
@@ -5043,13 +5043,13 @@ program. The data are assumed to be in a file named {\tt mixture.dat}.
 The initial values for the parameters are assumed to be in a file
 named {\tt mixture.par}.
 \bigbreak
-\listing{examples/mixture/mixture.cpp}
+\listing{../../../examples/autodif/mixture/mixture.cpp}
 
 The job of the function fcomp is to put the x values into the model
 by calling the function {\tt reset} and then to evaluate the log-likelihood
 by calling the function {\tt log\_likelihood}.
 \bigbreak
-\listing{examples/mixture/fcomp_m.cpp}
+\listing{../../../examples/autodif/mixture/fcomp_m.cpp}
 
 Notice that while the parameterization of the mixture proportions,~{\tt p},
 has restricted the proportions to lie between~$0$ and~$1$, the
@@ -5057,7 +5057,7 @@ proportions have not been restricted so that they sum to 1.
 The function {\tt normalize\_p} restricts the~{\tt p} so that they sum 
 to~$1$. 
 \bigbreak
-\listing{examples/mixture/normaliz.cpp}
+\listing{../../../examples/autodif/mixture/normaliz.cpp}
 \X{penalty function}
 \noindent The penalty {\tt 1000.*log(psum)*log(psum)} has been added to the
 function being minimized to remove the degeneracy in the parameterization of
@@ -5079,7 +5079,7 @@ switch into {\tt fcomp} so that saving the parameters is enabled.
 The parameters are written into the file {\tt mixture.par} by the
 routine {\tt save\_pars}.
 \bigbreak
-\listing{examples/mixture/savepar.cpp}
+\listing{../../../examples/autodif/mixture/savepar.cpp}
 \endchapter
 
 

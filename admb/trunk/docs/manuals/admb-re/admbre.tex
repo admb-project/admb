@@ -16,8 +16,8 @@
 \usepackage{amssymb}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{here,harvard,makeidx,hyperref}
-\usepackage{graphicx,here}
+\usepackage{harvard,makeidx,hyperref}
+\usepackage{graphicx}
 
 
 %\textheight23cm
@@ -670,7 +670,8 @@ distribution of $(X,Y)$, because only normal distributions were involved. For ot
 binomial, no simple expression for the marginal distribution exists, and hence we must rely on ADMB to do the
 integration. In fact, the core of what ADMB-RE does for you is that it automatically calculates the marginal
 likelihood, at the same time as it estimates the hyper-parameters. The integration technique used by ADMB-RE is
-the so-called Laplace approximation \cite{skau:four:2004}. \index{random effects!Laplace approximation}
+the so-called Laplace approximation. % \cite{skau:four:2004}.
+\index{random effects!Laplace approximation}
 
 The algorithm used internally by ADMB-RE to estimate hyper-parameters
 involves iterating between the two steps:

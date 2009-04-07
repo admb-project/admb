@@ -1,18 +1,14 @@
 $Id:   $
-$Rev   ::                       $: Revision of last commit
-$Author::                       $: Author of last commit
-$Date  ::                       $: Date of last commit
-============================================================
 
 Table of Contents:
 ------------------
   - Overview
-  - Download Sites
   - Supported Platforms
-  - Installation
+  - Download Sites
   - Documentation
-  - Access to the Source code
+  - Installation
   - Developing ADModel Builder
+  - Access to the Source code
   - Contributors
 
 Overview
@@ -26,7 +22,6 @@ reverse mode automatic differentiation. A closely related software
 package, ADMB-RE, implements random effects in non-linear models.
 Download Sites
 
-
 Supported Platforms
 -------------------
 ADMB is available for Windows and linux operating systems in both 32
@@ -35,13 +30,9 @@ and 4.1 under linux and cygwin, and Microsoft Visual Studio 2003 (VC 8),
 MinGW, and Borland gcc 4.5 under Windows. Plans are inplace to support
 MacOS soon.
 
-
-Installation
-----------
-Windows Installation Instructions.
-
-Linux Software
-
+Download Sites
+--------------
+The ADMB downloads can be found at http://www.admb-project.org/downloads/ .
 
 Documentation
 -------------
@@ -49,18 +40,18 @@ User manuals for ADModel Builder, the AUTODIF library and the ADMB-RE
 Nonlinear random effects module can be downloaded from
 admb-project.org
 
-AUTODIF Library API
-
-
-Access to the Source code
--------------------------
-
+Installation
+------------
+The installation instructions can be found at http://www.admb-project.org/documention/ .
 
 Developing ADModel Builder
 --------------------------
 If you are interested in contributing to the further development of
 ADModel Builder please contact <support@admb-project.org>.
 
+Access to the Source Code
+-------------------------
+ADMB source version control can be found at http://code.google.com/p/admb-project/ .
 
 Contributors
 ------------
@@ -70,5 +61,5 @@ Project:
 
 David Fournier <davef@otter-rsch.com>
 John Sibert <sibert@hawaii.edu>
-Johnoel Ancheta <johnoel@hawaii.edu>
 Hans Skaug <Hans.Skaug@mi.uib.no>
+Johnoel Ancheta <johnoel@hawaii.edu>

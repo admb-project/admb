@@ -1,3 +1,5 @@
+.PHONY=dist
+
 VERSION=`cat VERSION.txt`
 
 all: 
@@ -14,6 +16,8 @@ vc:
 linux:
 	make -f linux.mak
 
+dist:
+	./srcCopy.sh
+
 clean:
-	make -f bcc.mak clean
-	make -f mingw.mak clean
+	@rm -rvf build

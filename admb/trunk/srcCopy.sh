@@ -1251,10 +1251,10 @@ df1b2-separable/optg32-rh8-laplace.mak
 df1b2-separable/safg32-rh8-laplace.mak
 df1b2-separable/objects.lst"
 
-DEST="../PublicBranch"
+DEST="build/public-source-distribution"
 #echo $DEST
 rm -rf $DEST
-mkdir -v $DEST
+mkdir -pv $DEST
 #cp -Rv examples $DEST
 svn export examples $DEST/examples
 rm -rvf $DEST/examples/admb/SS3

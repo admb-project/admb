@@ -1328,6 +1328,7 @@ nh99/lbfgs.cpp
 nh99/bet_rand.cpp
 nh99/dfqromb.cpp
 nh99/t.cpp
+df1b2-separable/df1b2bet.cpp 
 df1b2-separable/df1b2invcumdbeta.cpp  
 df1b2-separable/df3gammp.cpp
 df1b2-separable/f1b2lndt.cpp

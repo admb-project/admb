@@ -1,3 +1,4 @@
+.PHONY: dist
 SHELL = /bin/bash
 
 DISK=build/dists/admb_gcc411_fedora8
@@ -33,10 +34,10 @@ dist:
 	cp -vf LICENSE ${DISK}
 	cp -vf README ${DISK}
 	cp -vf scripts/bash/mygcc* ${DISK}/bin 
-	make -C docs/manuals
-	cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals
-	cp -vf docs/manuals/admb.pdf ${DISK}/docs/manuals
-	cp -vf docs/manuals/admb-re.pdf ${DISK}/docs/manuals
+	#make -C docs/manuals
+	#cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals
+	#cp -vf docs/manuals/admb.pdf ${DISK}/docs/manuals
+	#cp -vf docs/manuals/admb-re.pdf ${DISK}/docs/manuals
 	- rm -f ${DISK}.tar* 
 	tar -cvf ${DISK}.tar ${DISK}
 	bzip2 ${DISK}.tar 
@@ -45,9 +46,11 @@ verify:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK}
 
 clean:
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak clean
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak  clean 
-	cd ./nh99;    $(MAKE)  CC=${COMP} STUBPATH=${CCVERSION}-${OSVERSION}olp-stub   LIBPATH=${CCVERSION}-${OSVERSION}olp  DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  clean
-	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  clean
-	cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f  optg32-rh8-laplace.mak  clean
-	cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f  safg32-rh8-laplace.mak clean 
+	@rm -vf nh99/mylex.c
+	@rm -vf df1b2-separable/tpl2rem.c
+	@cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak clean
+	@cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak  clean 
+	@cd ./nh99;    $(MAKE)  CC=${COMP} STUBPATH=${CCVERSION}-${OSVERSION}olp-stub   LIBPATH=${CCVERSION}-${OSVERSION}olp  DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  clean
+	@cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  clean
+	@cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f  optg32-rh8-laplace.mak  clean
+	@cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f  safg32-rh8-laplace.mak clean 

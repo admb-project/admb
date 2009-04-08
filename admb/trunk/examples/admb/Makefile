@@ -1,14 +1,16 @@
 all:
 	@make -C buscycle
 	@make -C catage
-	@make -C chem-eng
 	@make -C finance
-	#@make -C forest
-	@make -C pella-t
 	@make -C robreg
 	@make -C simple
 	@make -C truncreg
 	@make -C vol
+
+all2:
+	@make -C forest
+	@make -C chem-eng
+	@make -C pella-t
 
 clean:
 	@make -C buscycle clean

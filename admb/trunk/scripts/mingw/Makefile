@@ -1,6 +1,6 @@
 .PHONY: all ham4 ham5 catage finance vonb vonbr n2mvol simple union
 
-verify: ham4 ham5 catage finance vonb vonbr n2mvol simple union
+verify: ham4 ham5 catage finance vonb vonbr n2mvol simple
 	@echo
 	@echo Completed ADMB example and runs
 	@echo Successful

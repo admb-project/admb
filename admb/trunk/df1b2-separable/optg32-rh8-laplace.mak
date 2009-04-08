@@ -3,10 +3,10 @@
 CC = gcc
 LL = tlib
 FLAGS1 = ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -DOPT_LIB -g -DSAFE_ALL -DUSE_LAPLACE -fpermissive -O3 -c -I. -I../nh99 -I../linad99 -I../tools99  \
-  -D __GNUDOS__
+  -D__GNUDOS__
 
 FLAGS = ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -DOPT_LIB  -fpermissive -DUSE_LAPLACE -O3 -c -I. -I../nh99 -I../linad99 -I../tools99  -Dlinux \
-  -D __GNUDOS__
+  -D__GNUDOS__
 LIBPATH =gcc32-rh8olp
 LIBNAME = libdf1b2o.a
 LIBDIR = lib
@@ -46,10 +46,12 @@ disk: $(LIBPATH)/$(LIBNAME) tpl2rem
 	cp tpl2rem $(DISKDIR)/$(BINDIR)
 	cp sed* $(DISKDIR)/$(BINDIR)
 
-tpl2rem:
+tpl2rem.c:
 	- flex <  remod11
 	- sed -f sedflex lex.yy.c > tpl2rem.c
 	- rm lex.yy.c 
+
+tpl2rem:
 	- gcc -DUX tpl2rem.c -otpl2rem
 	cp sed* $(DISKDIR)/$(BINDIR)
 

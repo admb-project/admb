@@ -65,10 +65,12 @@ df1b2stub:
 	$(CC) $(FLAGS) -o$(STUBPATH)/df1b2stub.o df1b2stub.cpp
 	 cd $(STUBPATH); ar -rs ${STUBNAME}  df1b2stub.o
 
-tpl2cpp:
+tpl2cpp.c:
 	- flex <  allmod22
 	- sed -f sedflex lex.yy.c > mylex.c
 	- rm lex.yy.c 
+
+tpl2cpp:
 	- gcc -I. -DUX mylex.c -otpl2cpp
 
 disk: $(LIBPATH)/$(LIBNAME)  df1b2stub tpl2cpp

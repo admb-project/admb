@@ -14,4 +14,4 @@ REM
 
 @echo Set ADMB Home directory to %ADMB_HOME%
 
-cd "%HOMEDRIVE%%HOMEPATH%"
+@cd "%ADMB_HOME%/examples/admb"

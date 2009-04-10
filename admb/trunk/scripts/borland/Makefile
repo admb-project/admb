@@ -1,3 +1,5 @@
+all: simple
+
 verify: SS3 ham4 ham5 vonb vonbr simple catage finance n2mvol
 fails: union chem-eng forest pella-t truncreg
 

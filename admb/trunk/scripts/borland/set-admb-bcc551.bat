@@ -16,3 +16,5 @@ REM
 
 @echo Set Borland Home directory to %BCC55_HOME%
 @echo Set ADMB Home directory to %ADMB_HOME%
+
+@cd "%ADMB_HOME%\examples\admb"

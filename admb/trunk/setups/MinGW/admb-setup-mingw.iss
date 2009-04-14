@@ -1,9 +1,12 @@
 [Setup]
+
 PrivilegesRequired=none
 AppName=ADMB
 AppVerName=ADMB
+UsePreviousAppDir=no
+UsePreviousGroup=no
 DefaultDirName=\ADMB\MinGW
-DefaultGroupName=ADMB (MinGW)
+DefaultGroupName=ADMB (MinGW GCC 3.4)
 UninstallDisplayIcon={app}\uninstall.exe
 OutputDir=.
 OutputBaseFilename=admb-win32-mingw
@@ -19,8 +22,8 @@ AlwaysShowComponentsList=no
 Name: "mingw"; Description: "Full installation of ADMB for MinGW"
 
 [Files]
-Source: "distribution\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs
+Source: "admb_gcc345_mingw32\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs
 
 [Icons]
-Name: "{group}\ADMB Command Prompt (MinGW)"; Filename: "{cmd}"; Parameters: "/K ""{app}\tools\set-tools-path.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW)"
+Name: "{group}\ADMB Command Prompt (MinGW GCC 3.4)"; Filename: "{cmd}"; Parameters: "/K ""{app}\tools\set-tools-path.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW)"
 Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB"

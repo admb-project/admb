@@ -19,7 +19,7 @@ REM
 REM
 REM Adds the bin folder to ADMB_HOME to system path.
 REM
-@set PATH=%ADMB_HOME%\bin;%GNUWIN32_HOME%\make-3.81-bin\bin;%MINGW_HOME%\bin;%CYGWIN_HOME%\bin;%PATH%
+@set PATH=%ADMB_HOME%\bin;%GNUWIN32_HOME%\coreutils-5.3.0-bin\bin;%GNUWIN32_HOME%\make-3.81-bin\bin;%MINGW_HOME%\bin;%PATH%
 
 @echo Set ADMB Home directory to %ADMB_HOME%
 

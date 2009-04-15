@@ -1,7 +1,3 @@
-DISK= build/dists/admb_vc8_win32
-
-CCVERSION=vc8
-OSVERSION=win32
 COMP=cl
 
 all:
@@ -11,8 +7,10 @@ all:
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 
+	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp-stub 
 	- cd ./tools99; mkdir ${CCVERSION}-${OSVERSION}olp 
+	- cd ./tools99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./df1b2-separable;mkdir  ${CCVERSION}-${OSVERSION}slp 
 	- cd ./df1b2-separable;mkdir  ${CCVERSION}-${OSVERSION}olp 
 	cp scripts/vc/*.bat ${DISK}/bin

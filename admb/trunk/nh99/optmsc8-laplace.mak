@@ -1,10 +1,6 @@
-
-
-#macros for making optimized library for MS         
 CC = cl
 LL = tlib
-LIBPATH = msc8olp
-STUBPATH = msc8olp-stub
+STUBPATH = ${LIBPATH}-stub
 STUBLIBNAME = df1b2stubo.lib
 FLAGS = ${OPTIONS} ${PVMOPTION} -Ik:/temp/ATLAS/include /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../linad99 -I../tools99 -D__MSVC32__=8  -DOPT_LIB /Ox -Ih:/vs8/vc/include -Ih:/vs8/VC/PlatformSDK/Include
 LIBNAME = admod32.lib 

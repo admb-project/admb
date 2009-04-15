@@ -1,9 +1,11 @@
-This is pdfTeX, Version 3.14159-1.10b (Web2C 7.4.5) (format=pdflatex 2008.6.3)  7 NOV 2008 10:06
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2008.12.30)  15 APR 2009 07:28
+entering extended mode
+ %&-line parsing enabled.
 **all_au
-(./all_au.tex{/usr/share/texmf/pdftex/config/pdftex.cfg}
-LaTeX2e <2001/06/01>
-Babel <v3.7h> and hyphenation patterns for american, french, german, ngerman, n
-ohyphenation, loaded.
+(./all_au.tex
+LaTeX2e <2005/12/01>
+Babel <v3.8h> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
 (./book.cls
 Document Class: book 1999/01/07 v1.4a Standard LaTeX document class
 (./bk12.clo
@@ -21,17 +23,17 @@ File: bk12.clo 1999/01/07 v1.4a Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (/usr/share/texmf/tex/generic/pictex/pictex.sty
-(/usr/share/texmf/tex/generic/pictex/prepictex.tex)
-(/usr/share/texmf/tex/generic/pictex/pictex.tex)
-(/usr/share/texmf/tex/generic/pictex/postpictex.tex)
-(/usr/share/texmf/tex/generic/pictex/picmore.tex))
-(/usr/share/texmf/tex/latex/base/makeidx.sty
+) (/usr/share/texmf-texlive/tex/generic/pictex/pictex.sty
+(/usr/share/texmf-texlive/tex/generic/pictex/prepictex.tex)
+(/usr/share/texmf-texlive/tex/generic/pictex/pictex.tex)
+(/usr/share/texmf-texlive/tex/generic/pictex/postpictex.tex)
+(/usr/share/texmf-texlive/tex/generic/pictex/picmore.tex)
+(/usr/share/texmf-texlive/tex/generic/pictex/piccorr.sty))
+(/usr/share/texmf-texlive/tex/latex/base/makeidx.sty
 Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
 ) (./docmacpdf.tex
 \spread=\dimen213
 \boldfam=\mathgroup4
-\thecompany=\box32
 \secno=\count104
 \subsecno=\count105
 \subsubsecno=\count106
@@ -55,7 +57,7 @@ Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
 \pagewidth=\dimen216
 \pageheight=\dimen217
 \ruleht=\dimen218
-\partialpage=\box33
+\partialpage=\box32
 \mydp=\dimen219
 \myhtt=\dimen220
 \mydpp=\dimen221
@@ -63,11 +65,11 @@ Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
 \myht=\dimen223
 \myeqwidth=\dimen224
 )
-(/usr/share/texmf/pdftex/plain/misc/pdfcolor.tex)
-(/usr/share/texmf/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2003/01/22 v6.73n Hypertext links for LaTeX
+(/usr/share/texmf-texlive/tex/plain/misc/pdfcolor.tex)
+(/usr/share/texmf-texlive/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2007/02/07 v6.75r Hypertext links for LaTeX
 
-(/usr/share/texmf/tex/latex/graphics/keyval.sty
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \KV@toks@=\toks17
 )
@@ -75,68 +77,59 @@ Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 \Hy@linkcounter=\count112
 \Hy@pagecounter=\count113
 
-(/usr/share/texmf/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2003/01/22 v6.73n Hyperref: PDFDocEncoding definition (HO)
+(/usr/share/texmf-texlive/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2007/02/07 v6.75r Hyperref: PDFDocEncoding definition (HO)
 )
-(/usr/share/texmf/tex/latex/config/hyperref.cfg
-File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive and teTeX
+(/etc/texmf/tex/latex/config/hyperref.cfg
+File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-Package hyperref Info: Hyper figures OFF on input line 1792.
-Package hyperref Info: Link nesting OFF on input line 1797.
-Package hyperref Info: Hyper index ON on input line 1800.
-Package hyperref Info: Plain pages ON on input line 1805.
-Package hyperref Info: Backreferencing OFF on input line 1812.
+(/usr/share/texmf-texlive/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2006/08/22 v2.4 Connects package keyval with LaTeX options (
+HO)
+)
+Package hyperref Info: Hyper figures OFF on input line 2288.
+Package hyperref Info: Link nesting OFF on input line 2293.
+Package hyperref Info: Hyper index ON on input line 2296.
+Package hyperref Info: Plain pages OFF on input line 2303.
+Package hyperref Info: Backreferencing OFF on input line 2308.
 
 Implicit mode ON; LaTeX internals redefined
-Package hyperref Info: Bookmarks ON on input line 1916.
-(/usr/share/texmf/tex/latex/html/url.sty
-Package: url 1999/03/02  ver 1.4  Verb mode for urls, email addresses, and file
- names
+Package hyperref Info: Bookmarks ON on input line 2444.
+(/usr/share/texmf-texlive/tex/latex/ltxmisc/url.sty
+\Urlmuskip=\muskip10
+Package: url 2005/06/27  ver 3.2  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 2055.
+LaTeX Info: Redefining \url on input line 2599.
 \Fld@menulength=\count114
 \Field@Width=\dimen226
 \Fld@charsize=\dimen227
 \Choice@toks=\toks18
 \Field@toks=\toks19
-Package hyperref Info: Hyper figures OFF on input line 2513.
-Package hyperref Info: Link nesting OFF on input line 2518.
-Package hyperref Info: Hyper index ON on input line 2521.
-Package hyperref Info: backreferencing OFF on input line 2528.
-Package hyperref Info: Link coloring OFF on input line 2533.
-\c@Item=\count115
-\c@Hfootnote=\count116
+Package hyperref Info: Hyper figures OFF on input line 3102.
+Package hyperref Info: Link nesting OFF on input line 3107.
+Package hyperref Info: Hyper index ON on input line 3110.
+Package hyperref Info: backreferencing OFF on input line 3117.
+Package hyperref Info: Link coloring OFF on input line 3122.
+\Hy@abspage=\count115
+\c@Item=\count116
+\c@Hfootnote=\count117
 )
 *hyperref using default driver hpdftex*
-(/usr/share/texmf/tex/latex/hyperref/hpdftex.def
-File: hpdftex.def 2003/01/22 v6.73n Hyperref driver for pdfTeX
-
-(/usr/share/texmf/tex/latex/psnfss/pifont.sty
-Package: pifont 2002/09/08 PSNFSS-v9.0a Pi font support (SPQR) 
-LaTeX Font Info:    Try loading font information for U+pzd on input line 62.
-
-(/usr/share/texmf/tex/latex/psnfss/upzd.fd
-File: upzd.fd 2001/06/04 font definitions for U/pzd.
+(/usr/share/texmf-texlive/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2007/02/07 v6.75r Hyperref driver for pdfTeX
+\Fld@listcount=\count118
 )
-LaTeX Font Info:    Try loading font information for U+psy on input line 63.
-
-(/usr/share/texmf/tex/latex/psnfss/upsy.fd
-File: upsy.fd 2001/06/04 font definitions for U/psy.
-))
-\Fld@listcount=\count117
-\@outlinefile=\write8
-)
-\@indexfile=\write9
-\openout9 = `all_au.idx'.
+\@indexfile=\write8
+\openout8 = `all_au.idx'.
 
 
 Writing index file all_au.idx
-\tm=\count118
-\bm=\count119
-\tom=\count120
-\bom=\count121
+\tm=\count119
+\bm=\count120
+\tom=\count121
+\bom=\count122
 \myname=\toks20
-\c@chapterpg=\count122
+\c@chapterpg=\count123
 (./all_au.aux)
 \openout1 = `all_au.aux'.
 
@@ -155,19 +148,25 @@ LaTeX Font Info:    ... okay on input line 89.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 89.
 LaTeX Font Info:    ... okay on input line 89.
 Package hyperref Info: Link coloring OFF on input line 89.
- (/usr/share/texmf/tex/latex/hyperref/nameref.sty
-Package: nameref 2001/01/27 v2.19 Cross-referencing by name of section
-\c@section@level=\count123
+ (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
+Package: nameref 2006/12/27 v2.28 Cross-referencing by name of section
+
+(/usr/share/texmf-texlive/tex/latex/oberdiek/refcount.sty
+Package: refcount 2006/02/20 v3.0 Data extraction from references (HO)
+)
+\c@section@level=\count124
 )
 LaTeX Info: Redefining \ref on input line 89.
 LaTeX Info: Redefining \pageref on input line 89.
- (./all_au.out) (./all_au.out)
-\openout8 = `all_au.out'.
+ (./all_au.out)
+(./all_au.out)
+\@outlinefile=\write9
+\openout9 = `all_au.out'.
 
  (./adtitle.tex [1
 
-{/usr/share/texmf/dvips/config/pdftex.map}]
-(../../../LICENSE) Here FE
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (../../../LICENSE) Here FE
+
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -319,7 +318,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[10] (./examples/simple/fcomp_s.cpp) Here DE
+[10] (../../../examples/autodif/simple/fcomp_s.cpp Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -334,13 +333,28 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[11]
+[11]) Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 1
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[12]
 Underfull \hbox (badness 10000) in paragraph at lines 449--466
-[]/cmr12/Notice that al-though /cmtt12/x /cmr12/has been de-clared to be an ob-
-ject of type
+[]\twelverm Notice that al-though \OT1/cmtt/m/n/12 x \twelverm has been de-clar
+ed to be an ob-ject of type
  []
 
-Here FE
+Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -355,7 +369,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[12] (./examples/simple/simple.cpp Here DE
+[13] (../../../examples/autodif/simple/simple.cpp Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -370,7 +384,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[13]) Here FE
+[14]) Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -385,7 +399,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[14] (./examples/hemholtz/hem_func.cpp) Here DE
+[15] (../../../examples/autodif/hemholtz/hem_func.cpp Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -400,7 +414,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[15] (./examples/hemholtz/hemholtz.cpp) Here FE
+[16]) Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -415,7 +429,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[16] Here DE
+[17] (../../../examples/autodif/hemholtz/hemholtz.cpp Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -430,7 +444,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[17] mychapno = 1 chapnonext = 3 Here FE
+[18]) Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -445,7 +459,22 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[18]
+[19] mychapno = 1 chapnonext = 3 Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 1
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[20]
 Chapter 2.
 Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -462,7 +491,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[19
+[21
 
 ]
 \ttitem #1->\myitem {{\catcode `\_=\other \tt #1}\hfill --~}
@@ -835,9 +864,10 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[20]
+[22]
 Underfull \hbox (badness 10000) in paragraph at lines 850--852
-[]/cmtt12/fp87.lib for the inline floating-point library or emu.lib for the
+[]\OT1/cmtt/m/n/12 fp87.lib for the inline floating-point library or emu.lib fo
+r the
  []
 
 Here DE
@@ -855,7 +885,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[21] mychapno = 2 chapnonext = 4 Here FE
+[23] mychapno = 2 chapnonext = 4 Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -870,7 +900,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[22]
+[24]
 Chapter 3.
 Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -887,45 +917,9 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[23
+[25
 
 ] Here FE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 3
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[24] Here DE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 3
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[25]
-Underfull \hbox (badness 1077) in paragraph at lines 1133--1144
-[]/cmr12/The code /cmtt12/dvector v=w; /cmr12/cre-ates a /cmtt12/dvector v /cmr
-12/by us-ing the ``copy ini-tial-izer'' 
- []
-
-Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -955,7 +949,13 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[27] Here FE
+[27]
+Underfull \hbox (badness 1077) in paragraph at lines 1133--1144
+[]\twelverm The code \OT1/cmtt/m/n/12 dvector v=w; \twelverm cre-ates a \OT1/cm
+tt/m/n/12 dvector v \twelverm by us-ing the ``copy ini-tial-izer'' 
+ []
+
+Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -970,13 +970,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[28]
-Underfull \hbox (badness 10000) in paragraph at lines 1408--1420
-[]/cmr12/The ap-pear-ance of the state-ments /cmtt12/RETURN[]ARRAYS[]INCREMENT(
-); /cmr12/and
- []
-
-Here DE
+[28] Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1007,15 +1001,9 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
 
 [30]
-Underfull \hbox (badness 1231) in paragraph at lines 1518--1537
-/cmr12/The /cmtt12/dmatrix /cmr12/and /cmtt12/dvar[]matrix /cmr12/classes are i
-m-ple-mented as ar-rays of /cmtt12/dvector /cmr12/and
- []
-
-
-Underfull \hbox (badness 4872) in paragraph at lines 1548--1558
-[]/cmr12/The con-struc-tor /cmtt12/dmatrix(lbr,lur,ivec[]lb,ivec[]ub) /cmr12/cr
-e-ates a /cmtt12/dmatrix /cmr12/with
+Underfull \hbox (badness 10000) in paragraph at lines 1408--1420
+[]\twelverm The ap-pear-ance of the state-ments \OT1/cmtt/m/n/12 RETURN[]ARRAYS
+[]INCREMENT(); \twelverm and
  []
 
 Here DE
@@ -1048,7 +1036,20 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[32] Here DE
+[32]
+Underfull \hbox (badness 1231) in paragraph at lines 1518--1537
+\twelverm The \OT1/cmtt/m/n/12 dmatrix \twelverm and \OT1/cmtt/m/n/12 dvar[]mat
+rix \twelverm classes are im-ple-mented as ar-rays of \OT1/cmtt/m/n/12 dvector 
+\twelverm and
+ []
+
+
+Underfull \hbox (badness 4872) in paragraph at lines 1548--1558
+[]\twelverm The con-struc-tor \OT1/cmtt/m/n/12 dmatrix(lbr,lur,ivec[]lb,ivec[]u
+b) \twelverm cre-ates a \OT1/cmtt/m/n/12 dmatrix \twelverm with
+ []
+
+Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1063,7 +1064,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[33] mychapno = 3 chapnonext = 5 Here FE
+[33] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1078,7 +1079,37 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[34]
+[34] Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 3
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[35] mychapno = 3 chapnonext = 5 Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 3
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[36]
 Chapter 4.
 Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1095,39 +1126,9 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[35
+[37
 
 ] Here FE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 4
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[36] Here DE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 4
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[37] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1217,13 +1218,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[43]
-Underfull \hbox (badness 3623) in paragraph at lines 2200--2202
-/cmr12/fills col-umn /cmtt12/j /cmr12/of a ma-trix with a se-quence of the form
- /cmtt12/base, base+offset,
- []
-
-Here FE
+[43] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1253,7 +1248,13 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[45] Here FE
+[45]
+Underfull \hbox (badness 3623) in paragraph at lines 2200--2202
+\twelverm fills col-umn \OT1/cmtt/m/n/12 j \twelverm of a ma-trix with a se-que
+nce of the form \OT1/cmtt/m/n/12 base, base+offset,
+ []
+
+Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1283,7 +1284,37 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[47] (./robgrph3.tex (./smoothdt.tex))
+[47] Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 4
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[48] Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 4
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[49] (./robgrph3.tex (./smoothdt.tex))
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  Here FE
@@ -1301,46 +1332,12 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[48] mychapno = 4 chapnonext = 6 Here DE
+[50] mychapno = 4 chapnonext = 6 Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
 c@chapter = 4
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[49] Here FE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 4
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[50
-
-]
-Chapter 5.
-Here DE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 5
 Overfull \hbox (13.05542pt too wide) has occurred while \output is active
    [] [] 
  []
@@ -1355,7 +1352,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-c@chapter = 5
+c@chapter = 4
 Overfull \hbox (13.05542pt too wide) has occurred while \output is active
    [] [] 
  []
@@ -1365,7 +1362,11 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[52] Here DE
+[52
+
+]
+Chapter 5.
+Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1425,10 +1426,40 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[56]
+[56] Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 5
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[57] Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 5
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[58]
 Underfull \hbox (badness 10000) in paragraph at lines 2919--2931
-/cmr12/the com-piler will con-struct a de-fault copy con-struc-tor for the clas
-s
+\twelverm the com-piler will con-struct a de-fault copy con-struc-tor for the c
+lass
  []
 
 Here DE
@@ -1446,7 +1477,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[57] mychapno = 5 chapnonext = 7 Here FE
+[59] mychapno = 5 chapnonext = 7 Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1461,7 +1492,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[58]
+[60]
 Chapter 6.
 Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1478,7 +1509,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[59
+[61
 
 ] mychapno = 6 chapnonext = 8 Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1495,7 +1526,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[60]
+[62]
 Chapter 7.
 Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1512,7 +1543,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[61
+[63
 
 ] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1529,7 +1560,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[62] (./examples/io_examp/io_examp.cpp Here DE
+[64] (../../../examples/autodif/io_examp/io_examp.cpp Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1544,7 +1575,10 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[63]) mychapno = 7 chapnonext = 9 Here FE
+[65]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1559,12 +1593,44 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[64]
+[66]) mychapno = 7 chapnonext = 9 Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 7
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[67] Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 7
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[68
+
+]
 Chapter 8.
 
 Underfull \hbox (badness 6268) in paragraph at lines 3262--3269
-[]/cmr12/The tem-po-rary gra-di-ent files are nor-mally deleted when ob-jects o
-f class
+[]\twelverm The tem-po-rary gra-di-ent files are nor-mally deleted when ob-ject
+s of class
  []
 
 mychapno = 8 chapnonext = 10 Here DE
@@ -1582,9 +1648,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[65
-
-] Here FE
+[69] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1599,7 +1663,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[66
+[70
 
 ]
 Chapter 9.
@@ -1618,76 +1682,12 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[67] Here FE
+[71] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
 c@chapter = 9
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[68] Here DE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 9
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[69] mychapno = 9 chapnonext = 11 Here FE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 9
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[70]
-Chapter 10.
-(./examples/minimize/minimize.cpp Here DE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 10
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[71
-
-]) (./examples/minimize/userfun.cpp) Here FE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 10
 Overfull \hbox (13.05542pt too wide) has occurred while \output is active
    [] [] 
  []
@@ -1702,7 +1702,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
 
-c@chapter = 10
+c@chapter = 9
 Overfull \hbox (13.05542pt too wide) has occurred while \output is active
    [] [] 
  []
@@ -1712,7 +1712,24 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[73] Here FE
+[73] mychapno = 9 chapnonext = 11 Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 9
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[74]
+Chapter 10.
+(../../../examples/autodif/minimize/minimize.cpp Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1727,7 +1744,9 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[74] Here DE
+[75
+
+]) (../../../examples/autodif/minimize/userfun.cpp Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1742,7 +1761,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[75] Here FE
+[76]) Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1757,7 +1776,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[76] Here DE
+[77] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1772,7 +1791,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[77] mychapno = 10 chapnonext = 12 Here FE
+[78] Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1787,7 +1806,82 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[78]
+[79] Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 10
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[80] Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 10
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[81] Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 10
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[82] Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 10
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[83] mychapno = 10 chapnonext = 12 Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 10
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[84]
 Chapter 11.
 Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1804,7 +1898,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[79
+[85
 
 ] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -1821,7 +1915,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[80] mychapno = 11 chapnonext = 13 Here DE
+[86] mychapno = 11 chapnonext = 13 Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1836,7 +1930,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[81] Here FE
+[87] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1851,7 +1945,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[82
+[88
 
 ]
 Chapter 12.
@@ -1870,7 +1964,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[83] Here FE
+[89] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -1885,113 +1979,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[84] Here DE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 12
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[85] Here FE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 12
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[86] (./graph.tex (./data.sa1)) Here DE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 12
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[87]
-Underfull \hbox (badness 4132) in paragraph at lines 4440--4444
-/cmr12/We shall fit a sim-ple 1 pa-ram-e-ter model us-ing the ro-bust re-gres-s
-ion rou-tine
- []
-
-Here FE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 12
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[88] (./examples/robexamp/robust.cpp Here DE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 12
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[89]) (./examples/robexamp/fcomp_r.cpp) (./examples/robexamp/newreg2.cpp
-Here FE
-Underfull \hbox (badness 10000) has occurred while \output is active
-[]
- []
-
-c@chapter = 12
-Overfull \hbox (13.05542pt too wide) has occurred while \output is active
-   [] [] 
- []
-
-
-Overfull \hbox (2.61108pt too wide) has occurred while \output is active
- []
- []
-
-[90]
-Underfull \hbox (badness 10000) in paragraph at lines 7--8
- []    /cmtt9/cerr << "In-dex lim-its on ob-served vec-tor are not equal to the
- In-dex\n  lim-its on the
- []
-
-) (./graph1.tex (./data.sa1))
-Underfull \vbox (badness 1502) has occurred while \output is active []
-
- Here DE
+[90] Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2021,7 +2009,142 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[92] (./robgrph2.tex (./scatte2.tex))
+[92] (./graph.tex (./data.sa1)) Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 12
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[93]
+Underfull \hbox (badness 4132) in paragraph at lines 4440--4444
+\twelverm We shall fit a sim-ple 1 pa-ram-e-ter model us-ing the ro-bust re-gre
+s-sion rou-tine
+ []
+
+Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 12
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[94] (../../../examples/autodif/robexamp/robust.cpp Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 12
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[95]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 12
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[96]) (../../../examples/autodif/robexamp/fcomp_r.cpp Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 12
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[97]) (../../../examples/autodif/robexamp/newreg2.cpp Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 12
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[98]
+Underfull \hbox (badness 10000) in paragraph at lines 44--45
+ []    \ttexample cerr << "In-dex lim-its on ob-served vec-tor are not equal to
+ the In-dex\n  lim-its on the
+ []
+
+) Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 12
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[99] (./graph1.tex (./data.sa1)) Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 12
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[100] (./robgrph2.tex (./scatte2.tex))
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  Here DE
@@ -2039,7 +2162,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[93] (./grph3.tex (./exam6.dat))
+[101] (./grph3.tex (./exam6.dat))
 Underfull \vbox (badness 6300) has occurred while \output is active []
 
  Here FE
@@ -2057,7 +2180,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[94] mychapno = 12 chapnonext = 14 Here DE
+[102] mychapno = 12 chapnonext = 14 Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2072,7 +2195,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[95] Here FE
+[103] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2087,13 +2210,13 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[96
+[104
 
 ]
 Chapter 13.
 
 Underfull \hbox (badness 10000) in paragraph at lines 4742--4751
-/cmr12/into your code. The deriva-tives are cal-cu-lated by
+\twelverm into your code. The deriva-tives are cal-cu-lated by
  []
 
 Here DE
@@ -2111,7 +2234,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[97] (./examples/newt/newt.cpp Here FE
+[105] (../../../examples/autodif/newt/newt.cpp Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2126,7 +2249,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[98]) Here DE
+[106] Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2141,7 +2264,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[99] mychapno = 13 chapnonext = 15 Here FE
+[107]) Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2156,7 +2279,39 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[100]
+[108] mychapno = 13 chapnonext = 15 Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 13
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[109] Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 13
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[110
+
+]
 Chapter 14.
 Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -2173,9 +2328,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[101
-
-] (./examples/mixture/like.cpp Here FE
+[111] (../../../examples/autodif/mixture/like.cpp Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2190,7 +2343,10 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[102]) (./examples/mixture/reset.cpp Here DE
+[112]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2205,7 +2361,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[103]) Here FE
+[113]) (../../../examples/autodif/mixture/reset.cpp Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2220,7 +2376,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[104] (./examples/mixture/xinit.cpp) Here DE
+[114]) Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2235,7 +2391,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[105] (./examples/mixture/nvarcal.cpp) (./examples/mixture/mixture.cpp Here FE
+[115] (../../../examples/autodif/mixture/xinit.cpp Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2250,7 +2406,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[106]) (./examples/mixture/fcomp_m.cpp Here DE
+[116]) Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2265,8 +2421,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[107]) (./examples/mixture/normaliz.cpp) (./examples/mixture/savepar.cpp
-Here FE
+[117] (../../../examples/autodif/mixture/nvarcal.cpp Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2281,7 +2436,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[108]) mychapno = 14 chapnonext = 16 Here DE
+[118]) (../../../examples/autodif/mixture/mixture.cpp Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2296,7 +2451,10 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[109] Here FE
+[119])
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2311,9 +2469,67 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[110
+[120] (../../../examples/autodif/mixture/fcomp_m.cpp Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
 
-]
+c@chapter = 14
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[121]) (../../../examples/autodif/mixture/normaliz.cpp Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 14
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[122]) (../../../examples/autodif/mixture/savepar.cpp Here DE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 14
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[123]) mychapno = 14 chapnonext = 16 Here FE
+Underfull \hbox (badness 10000) has occurred while \output is active
+[]
+ []
+
+c@chapter = 14
+Overfull \hbox (13.05542pt too wide) has occurred while \output is active
+   [] [] 
+ []
+
+
+Overfull \hbox (2.61108pt too wide) has occurred while \output is active
+ []
+ []
+
+[124]
 Chapter 15.
 Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
@@ -2330,7 +2546,9 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[111] Here FE
+[125
+
+] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2345,7 +2563,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[112] Here DE
+[126] Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2360,7 +2578,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[113] Here FE
+[127] Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2375,7 +2593,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[114] (./grph5.tex (./spiral.tex)) Here DE
+[128] (./grph5.tex (./spiral.tex)) Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2390,7 +2608,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[115] (./grph6.tex (./pointsn.red) (./spirala.) (./pointsn.grn) (./spiralb.)
+[129] (./grph6.tex (./pointsn.red) (./spirala.) (./pointsn.grn) (./spiralb.)
 (./pointsn.blu) (./spiralc.) (./pointsn.gra) (./spiraln.)) Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
@@ -2406,7 +2624,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[116] Here DE
+[130] Here DE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2421,7 +2639,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[117] (./auto_doc.bib Here FE
+[131] (./auto_doc.bib Here FE
 Underfull \hbox (badness 10000) has occurred while \output is active
 []
  []
@@ -2436,71 +2654,71 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
  []
 
-[118]) (./all_au.ind
+[132]) (./all_au.ind
 Chapter 16.
 
 Underfull \hbox (badness 10000) in paragraph at lines 15--16
-[]| /cmtt12/for dmatrix and dvar[]-matrix class,
+[]| \OT1/cmtt/m/n/12 for dmatrix and dvar[]-matrix class,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 18--19
-[]| /cmtt12/of derivative calculations,
+[]| \OT1/cmtt/m/n/12 of derivative calculations,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 30--31
-[]| /cmtt12/Calling RETURN[]-ARRAYS[]-DECREMENT(),
+[]| \OT1/cmtt/m/n/12 Calling RETURN[]-ARRAYS[]-DECREMENT(),
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 31--32
-[]| /cmtt12/Calling RETURN[]-ARRAYS[]-INCREMENT(),
+[]| \OT1/cmtt/m/n/12 Calling RETURN[]-ARRAYS[]-INCREMENT(),
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 32--34
-[]| /cmtt12/only creating a version of a
+[]| \OT1/cmtt/m/n/12 only creating a version of a
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 32--34
-/cmtt12/function which takes a
+\OT1/cmtt/m/n/12 function which takes a
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 34--36
-[]| /cmtt12/using a shallow copy when a
+[]| \OT1/cmtt/m/n/12 using a shallow copy when a
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 34--36
-/cmtt12/distinct object is desired,
+\OT1/cmtt/m/n/12 distinct object is desired,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 45--46
-[]| /cmtt12/boundp,   [],   [],
+[]| \OT1/cmtt/m/n/12 boundp,   [],   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 46--47
-[]| /cmtt12/boundpin,   [],   [],
+[]| \OT1/cmtt/m/n/12 boundpin,   [],   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 48--50
-[]/cmtt12/boundp,   [],   []boundpin,
+[]\OT1/cmtt/m/n/12 boundp,   [],   []boundpin,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 56--58
-[]| /cmtt12/from independent[]-variables to
+[]| \OT1/cmtt/m/n/12 from independent[]-variables to
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 58--59
-[]/cmtt12/choleski decomposition of a symmetric
+[]\OT1/cmtt/m/n/12 choleski decomposition of a symmetric
  []
 
 Here DE
@@ -2518,77 +2736,77 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
  []
 
-[119
+[133
 
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 62--63
-[]| /cmtt12/filling a matrix column with a
+[]| \OT1/cmtt/m/n/12 filling a matrix column with a
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 64--65
-[]| /cmtt12/filling a matrix with random
+[]| \OT1/cmtt/m/n/12 filling a matrix with random
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 79--80
-[]/cmtt12/conjugate gradient function
+[]\OT1/cmtt/m/n/12 conjugate gradient function
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 87--89
-[]| /cmtt12/from independent[]-variables to
+[]| \OT1/cmtt/m/n/12 from independent[]-variables to
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 90--91
-[]/cmtt12/controlling memory allocation,
+[]\OT1/cmtt/m/n/12 controlling memory allocation,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 91--92
-[]/cmtt12/convergence criteria for function
+[]\OT1/cmtt/m/n/12 convergence criteria for function
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 93--95
-[]| /cmtt12/between between integer and
+[]| \OT1/cmtt/m/n/12 between between integer and
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 93--95
-/cmtt12/floating point objects,
+\OT1/cmtt/m/n/12 floating point objects,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 100--102
-[]/cmtt12/Counting the number of elements in
+[]\OT1/cmtt/m/n/12 Counting the number of elements in
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 107--108
-[]/cmtt12/d3array and dvar3[]-array classes,
+[]\OT1/cmtt/m/n/12 d3array and dvar3[]-array classes,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 110--111
-[]| /cmtt12/ragged three dimensional arrays,
+[]| \OT1/cmtt/m/n/12 ragged three dimensional arrays,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 112--113
-[]| /cmtt12/set[]-NUM[]-DEPENDENT[]-VARIABLES(int
+[]| \OT1/cmtt/m/n/12 set[]-NUM[]-DEPENDENT[]-VARIABLES(int
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 114--115
-[]| /cmtt12/checking correctness of
+[]| \OT1/cmtt/m/n/12 checking correctness of
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 116--117
-[]| /cmtt12/invoking from the function
+[]| \OT1/cmtt/m/n/12 invoking from the function
  []
 
 Here FE
@@ -2606,84 +2824,84 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
  []
 
-[120]
+[134]
 Underfull \hbox (badness 10000) in paragraph at lines 127--129
-[]/cmtt12/dvar[]-vector,   [],   [],
+[]\OT1/cmtt/m/n/12 dvar[]-vector,   [],   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 129--131
-[]/cmtt12/dvariable,   [],   [],
+[]\OT1/cmtt/m/n/12 dvariable,   [],   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 131--133
-[]| /cmtt12/controlling the maximum number of
+[]| \OT1/cmtt/m/n/12 controlling the maximum number of
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 152--153
-[]| /cmtt12/specifying directory for
+[]| \OT1/cmtt/m/n/12 specifying directory for
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 154--156
-[]| /cmtt12/Need to increase the maximum
+[]| \OT1/cmtt/m/n/12 Need to increase the maximum
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 156--158
-[]| /cmtt12/Need to increase ARRAY[]-MEMBLOCK[]-
+[]| \OT1/cmtt/m/n/12 Need to increase ARRAY[]-MEMBLOCK[]-
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 158--160
-[]| /cmtt12/Overflow in RETURN[]-ARRAYS stack --
+[]| \OT1/cmtt/m/n/12 Overflow in RETURN[]-ARRAYS stack --
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 158--160
-/cmtt12/Increase NUM[]-RETURN[]-ARRAYS,
+\OT1/cmtt/m/n/12 Increase NUM[]-RETURN[]-ARRAYS,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 160--162
-[]| /cmtt12/You need to increase the global
+[]| \OT1/cmtt/m/n/12 You need to increase the global
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 160--162
-/cmtt12/variable MAX[]-NVAR[]-OFFSET to
+\OT1/cmtt/m/n/12 variable MAX[]-NVAR[]-OFFSET to
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 170--171
-[]/cmtt12/extracting a subvector,   [],
+[]\OT1/cmtt/m/n/12 extracting a subvector,   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 171--172
-[]/cmtt12/extracting data from arrays and
+[]\OT1/cmtt/m/n/12 extracting data from arrays and
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 179--180
-[]| /cmtt12/filling a vector with random
+[]| \OT1/cmtt/m/n/12 filling a vector with random
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 181--182
-[]| /cmtt12/filling a vector with random
+[]| \OT1/cmtt/m/n/12 filling a vector with random
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 183--184
-[]| /cmtt12/filling a vector with random
+[]| \OT1/cmtt/m/n/12 filling a vector with random
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 185--186
-[]| /cmtt12/filling a vector with random
+[]| \OT1/cmtt/m/n/12 filling a vector with random
  []
 
 Here DE
@@ -2701,29 +2919,29 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
  []
 
-[121]
+[135]
 Underfull \hbox (badness 10000) in paragraph at lines 198--199
-[]| /cmtt12/no corresponding AUTODIF type,
+[]| \OT1/cmtt/m/n/12 no corresponding AUTODIF type,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 200--201
-[]| /cmtt12/controlling minimization with,
+[]| \OT1/cmtt/m/n/12 controlling minimization with,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 209--210
-[]| /cmtt12/controlling minimization with,
+[]| \OT1/cmtt/m/n/12 controlling minimization with,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 213--214
-[]| /cmtt12/convergence criteria for,
+[]| \OT1/cmtt/m/n/12 convergence criteria for,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 222--224
-[]/cmtt12/gradient[]-structure,   [],   [],
+[]\OT1/cmtt/m/n/12 gradient[]-structure,   [],   [],
  []
 
 Here FE
@@ -2741,54 +2959,54 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
  []
 
-[122]
+[136]
 Underfull \hbox (badness 10000) in paragraph at lines 297--298
-[]| /cmtt12/multiplication by a number,
+[]| \OT1/cmtt/m/n/12 multiplication by a number,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 299--300
-[]| /cmtt12/multiplying a vector by a,
+[]| \OT1/cmtt/m/n/12 multiplying a vector by a,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 300--301
-[]| /cmtt12/multiplying a vector times a,
+[]| \OT1/cmtt/m/n/12 multiplying a vector times a,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 306--307
-[]| /cmtt12/subtracting a number from a,
+[]| \OT1/cmtt/m/n/12 subtracting a number from a,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 308--309
-[]| /cmtt12/the identity matrix function,
+[]| \OT1/cmtt/m/n/12 the identity matrix function,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 314--315
-[]| /cmtt12/operation on a vector,   [],
+[]| \OT1/cmtt/m/n/12 operation on a vector,   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 324--325
-[]| /cmtt12/operation on a vector,   [],
+[]| \OT1/cmtt/m/n/12 operation on a vector,   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 328--329
-[]| /cmtt12/conjugate gradient method,
+[]| \OT1/cmtt/m/n/12 conjugate gradient method,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 332--333
-[]/cmtt12/mixture of normal distributions,
+[]\OT1/cmtt/m/n/12 mixture of normal distributions,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 336--338
-[]| /cmtt12/calculation of the log-likelihood
+[]| \OT1/cmtt/m/n/12 calculation of the log-likelihood
  []
 
 Here DE
@@ -2806,49 +3024,49 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
  []
 
-[123]
+[137]
 Underfull \hbox (badness 10000) in paragraph at lines 354--355
-[]/cmtt12/nonlinear parameter estimation,
+[]\OT1/cmtt/m/n/12 nonlinear parameter estimation,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 362--363
-[]/cmtt12/operator (),   [],   [],
+[]\OT1/cmtt/m/n/12 operator (),   [],   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 377--378
-[]| /cmtt12/Accessing container class
+[]| \OT1/cmtt/m/n/12 Accessing container class
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 380--382
-[]| /cmtt12/using the best operators for a
+[]| \OT1/cmtt/m/n/12 using the best operators for a
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 380--382
-/cmtt12/calculation,   [],   [],
+\OT1/cmtt/m/n/12 calculation,   [],   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 399--400
-[]| /cmtt12/getting the sign correct,
+[]| \OT1/cmtt/m/n/12 getting the sign correct,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 400--401
-[]| /cmtt12/use wish bounding functions,
+[]| \OT1/cmtt/m/n/12 use wish bounding functions,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 412--413
-[]/cmtt12/ragged three dimensional arrays,
+[]\OT1/cmtt/m/n/12 ragged three dimensional arrays,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 420--421
-[]/cmtt12/RETURN[]-ARRAYS[]-DECREMENT,   [],
+[]\OT1/cmtt/m/n/12 RETURN[]-ARRAYS[]-DECREMENT,   [],
  []
 
 Here FE
@@ -2866,69 +3084,69 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
  []
 
-[124]
+[138]
 Underfull \hbox (badness 10000) in paragraph at lines 421--422
-[]/cmtt12/RETURN[]-ARRAYS[]-INCREMENT,   [],
+[]\OT1/cmtt/m/n/12 RETURN[]-ARRAYS[]-INCREMENT,   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 425--426
-[]| /cmtt12/in nonlinear parameter
+[]| \OT1/cmtt/m/n/12 in nonlinear parameter
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 430--431
-[]| /cmtt12/filling a matrix row with a
+[]| \OT1/cmtt/m/n/12 filling a matrix row with a
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 432--433
-[]| /cmtt12/filling a matrix with random
+[]| \OT1/cmtt/m/n/12 filling a matrix with random
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 434--435
-[]| /cmtt12/filling a matrix with random
+[]| \OT1/cmtt/m/n/12 filling a matrix with random
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 450--452
-[]| /cmtt12/setting the maximum number of
+[]| \OT1/cmtt/m/n/12 setting the maximum number of
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 452--453
-[]/cmtt12/set[]-NUM[]-DEPENDENT[]-VARIABLES(int i);,
+[]\OT1/cmtt/m/n/12 set[]-NUM[]-DEPENDENT[]-VARIABLES(int i);,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 470--471
-[]/cmtt12/Solving a system of linear equations,
+[]\OT1/cmtt/m/n/12 Solving a system of linear equations,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 478--479
-[]| /cmtt12/use of inverse tangent for,
+[]| \OT1/cmtt/m/n/12 use of inverse tangent for,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 480--481
-[]| /cmtt12/allocating sufficient space for
+[]| \OT1/cmtt/m/n/12 allocating sufficient space for
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 481--482
-[]| /cmtt12/checking for overflow of the,
+[]| \OT1/cmtt/m/n/12 checking for overflow of the,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 482--483
-[]| /cmtt12/setting the stack size for
+[]| \OT1/cmtt/m/n/12 setting the stack size for
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 483--484
-[]| /cmtt12/setting the stack size for
+[]| \OT1/cmtt/m/n/12 setting the stack size for
  []
 
 Here DE
@@ -2946,94 +3164,94 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
  []
 
-[125]
+[139]
 Underfull \hbox (badness 10000) in paragraph at lines 486--487
-[]| /cmtt12/standard deviation a vector
+[]| \OT1/cmtt/m/n/12 standard deviation a vector
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 493--494
-[]| /cmtt12/using to remove loops from code,
+[]| \OT1/cmtt/m/n/12 using to remove loops from code,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 509--510
-[]| /cmtt12/effect of abnormal program
+[]| \OT1/cmtt/m/n/12 effect of abnormal program
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 510--511
-[]| /cmtt12/for saving derivative
+[]| \OT1/cmtt/m/n/12 for saving derivative
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 511--512
-[]| /cmtt12/use of the DOS environment string
+[]| \OT1/cmtt/m/n/12 use of the DOS environment string
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 512--513
-[]| /cmtt12/use of the DOS environment string
+[]| \OT1/cmtt/m/n/12 use of the DOS environment string
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 513--514
-[]/cmtt12/three dimensional ragged array,
+[]\OT1/cmtt/m/n/12 three dimensional ragged array,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 514--515
-[]/cmtt12/two dimensional ragged array,
+[]\OT1/cmtt/m/n/12 two dimensional ragged array,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 515--516
-[]/cmtt12/two-sided exponential distribution,
+[]\OT1/cmtt/m/n/12 two-sided exponential distribution,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 522--523
-[]| /cmtt12/component-wise difference of,
+[]| \OT1/cmtt/m/n/12 component-wise difference of,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 529--530
-[]| /cmtt12/extracting a subvector,   [],
+[]| \OT1/cmtt/m/n/12 extracting a subvector,   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 536--538
-[]| /cmtt12/function call () to extract
+[]| \OT1/cmtt/m/n/12 function call () to extract
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 539--540
-[]| /cmtt12/maximum element of,   [],
+[]| \OT1/cmtt/m/n/12 maximum element of,   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 540--541
-[]| /cmtt12/minimum element of,   [],
+[]| \OT1/cmtt/m/n/12 minimum element of,   [],
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 541--542
-[]| /cmtt12/multiplying a matrix by a,
+[]| \OT1/cmtt/m/n/12 multiplying a matrix by a,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 542--543
-[]| /cmtt12/multiplying a matrix times a,
+[]| \OT1/cmtt/m/n/12 multiplying a matrix times a,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 543--544
-[]| /cmtt12/multiplying a number by a,
+[]| \OT1/cmtt/m/n/12 multiplying a number by a,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 545--546
-[]| /cmtt12/subtracting a number from a,
+[]| \OT1/cmtt/m/n/12 subtracting a number from a,
  []
 
 Here FE
@@ -3051,14 +3269,14 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
  []
 
-[126]
+[140]
 Underfull \hbox (badness 10000) in paragraph at lines 553--555
-[]| /cmtt12/to reduce the amount of temporary
+[]| \OT1/cmtt/m/n/12 to reduce the amount of temporary
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 559--561
-[]| /cmtt12/Temporary used for type xxx in
+[]| \OT1/cmtt/m/n/12 Temporary used for type xxx in
  []
 
 ) Here DE
@@ -3076,44 +3294,43 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  []
  []
 
-[127
+[141
 
 ] (./all_au.aux) ) 
 Here is how much of TeX's memory you used:
- 3427 strings out of 95437
- 41377 string characters out of 1190234
- 123814 words of memory out of 1000001
- 6007 multiletter control sequences out of 10000+50000
- 15817 words of font info for 55 fonts, out of 500000 for 1000
- 14 hyphenation exceptions out of 1000
- 27i,9n,37p,245b,289s stack positions out of 1500i,500n,5000p,200000b,5000s
- 1615 PDF objects out of 300000
- 257 named destinations out of 131072
- 821 words of extra memory for PDF output out of 65536
+ 3733 strings out of 95086
+ 47578 string characters out of 1183254
+ 132489 words of memory out of 1500000
+ 6477 multiletter control sequences out of 10000+50000
+ 14568 words of font info for 51 fonts, out of 1200000 for 2000
+ 28 hyphenation exceptions out of 8191
+ 25i,9n,37p,245b,385s stack positions out of 5000i,500n,6000p,200000b,5000s
+pdfTeX warning (dest): name{page.22, 23} has been referenced 
+but does not exist, replaced by a fixed one
 
-! pdfTeX warning (dest): name{page.20, 21} has been referenced but does not exi
+pdfTeX warning (dest): name{page.114, 115} has been referenced but does not exi
 st, replaced by a fixed one
 
-! pdfTeX warning (dest): name{page.103, 104} has been referenced but does not e
-xist, replaced by a fixed one
+</usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmbx10.pfb></usr/share/texmf-t
+exlive/fonts/type1/bluesky/cm/cmbx12.pfb></usr/share/texmf-texlive/fonts/type1/
+bluesky/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmmi12.p
+fb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmmi6.pfb></usr/share/texmf
+-texlive/fonts/type1/bluesky/cm/cmmi8.pfb></usr/share/texmf-texlive/fonts/type1
+/bluesky/cm/cmmib10.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr10.
+pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr12.pfb></usr/share/texm
+f-texlive/fonts/type1/bluesky/cm/cmr17.pfb></usr/share/texmf-texlive/fonts/type
+1/bluesky/cm/cmr5.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr6.pfb
+></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmr8.pfb></usr/share/texmf-te
+xlive/fonts/type1/bluesky/cm/cmr9.pfb></usr/share/texmf-texlive/fonts/type1/blu
+esky/cm/cmsl9.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmssi12.pfb>
+</usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmsy10.pfb></usr/share/texmf-t
+exlive/fonts/type1/bluesky/cm/cmsy6.pfb></usr/share/texmf-texlive/fonts/type1/b
+luesky/cm/cmsy8.pfb></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmti12.pfb
+></usr/share/texmf-texlive/fonts/type1/bluesky/cm/cmtt12.pfb></usr/share/texmf-
+texlive/fonts/type1/bluesky/cm/cmtt9.pfb>
+Output written on all_au.pdf (141 pages, 647869 bytes).
+PDF statistics:
+ 1760 PDF objects out of 2073 (max. 8388607)
+ 271 named destinations out of 1000 (max. 131072)
+ 937 words of extra memory for PDF output out of 10000 (max. 10000000)
 
- </var/lib/texmf/pk/ljfour/jknappen/sauter/cmr18.600pk>{/usr/share/texmf/dvips/
-tetex/bbad153f.enc}</usr/share/texmf/fonts/type1/bluesky/cm/cmsy6.pfb>{/usr/sha
-re/texmf/dvips/tetex/f7b6d320.enc}</usr/share/texmf/fonts/type1/bluesky/cm/cmr1
-0.pfb>{/usr/share/texmf/dvips/tetex/aae443f0.enc}</usr/share/texmf/fonts/type1/
-bluesky/cm/cmmi6.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr6.pfb></usr/sh
-are/texmf/fonts/type1/bluesky/cm/cmmib10.pfb>{/usr/share/texmf/dvips/tetex/74af
-c74c.enc}</usr/share/texmf/fonts/type1/bluesky/cm/cmti12.pfb>{/usr/share/texmf/
-dvips/tetex/0ef0afca.enc}</usr/share/texmf/fonts/type1/bluesky/cm/cmr5.pfb></us
-r/share/texmf/fonts/type1/bluesky/cm/cmex10.pfb></usr/share/texmf/fonts/type1/b
-luesky/cm/cmsy8.pfb>{/usr/share/texmf/dvips/tetex/09fbbfac.enc}</usr/share/texm
-f/fonts/type1/bluesky/cm/cmtt9.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cms
-y10.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmmi8.pfb></usr/share/texmf/fo
-nts/type1/bluesky/cm/cmsl9.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr8.pf
-b></usr/share/texmf/fonts/type1/bluesky/cm/cmmi12.pfb></usr/share/texmf/fonts/t
-ype1/bluesky/cm/cmtt12.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr9.pfb></
-usr/share/texmf/fonts/type1/bluesky/cm/cmbx12.pfb></usr/share/texmf/fonts/type1
-/bluesky/cm/cmr12.pfb></usr/share/texmf/fonts/type1/bluesky/cm/cmr17.pfb></usr/
-share/texmf/fonts/type1/bluesky/cm/cmbx10.pfb></usr/share/texmf/fonts/type1/blu
-esky/cm/cmssi12.pfb>
-Output written on all_au.pdf (127 pages, 636961 bytes).

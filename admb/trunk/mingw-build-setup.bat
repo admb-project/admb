@@ -1,3 +1,3 @@
-set INNOSETUP_HOME=%ProgramFiles%\Inno^ Setup^ 5
-
-"%INNOSETUP_HOME%"\iscc scripts\admb-windows-setup\admb-setup-mingw.iss
+@echo off
+cd setups\MinGW && mingw-build-setup.bat && cd ..\..
+@echo on

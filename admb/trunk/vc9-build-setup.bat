@@ -1,3 +1,3 @@
-set INNOSETUP_HOME=%ProgramFiles%\Inno^ Setup^ 5
-
-"%INNOSETUP_HOME%"\iscc scripts\admb-windows-setup\admb-setup-vc9.iss
+@echo off
+cd setups\VC9 && vc9-build-setup.bat && cd ..\..
+@echo on

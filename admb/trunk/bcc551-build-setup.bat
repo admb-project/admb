@@ -1,3 +1,3 @@
-set INNOSETUP_HOME=%ProgramFiles%\Inno^ Setup^ 5
-
-"%INNOSETUP_HOME%"\iscc scripts\admb-windows-setup\admb-setup-bcc551.iss
+@echo off
+cd setups\Borland && borland-bcc551-build-setup.bat && cd ..\..
+@echo on

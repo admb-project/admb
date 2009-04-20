@@ -1,4 +1,4 @@
-This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2008.12.30)  15 APR 2009 07:28
+This is pdfTeXk, Version 3.141592-1.40.3 (Web2C 7.5.6) (format=pdflatex 2008.12.30)  19 APR 2009 15:14
 entering extended mode
  %&-line parsing enabled.
 **all_au
@@ -133,21 +133,21 @@ Writing index file all_au.idx
 (./all_au.aux)
 \openout1 = `all_au.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 89.
-LaTeX Font Info:    ... okay on input line 89.
-Package hyperref Info: Link coloring OFF on input line 89.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 84.
+LaTeX Font Info:    ... okay on input line 84.
+Package hyperref Info: Link coloring OFF on input line 84.
  (/usr/share/texmf-texlive/tex/latex/hyperref/nameref.sty
 Package: nameref 2006/12/27 v2.28 Cross-referencing by name of section
 
@@ -156,8 +156,8 @@ Package: refcount 2006/02/20 v3.0 Data extraction from references (HO)
 )
 \c@section@level=\count124
 )
-LaTeX Info: Redefining \ref on input line 89.
-LaTeX Info: Redefining \pageref on input line 89.
+LaTeX Info: Redefining \ref on input line 84.
+LaTeX Info: Redefining \pageref on input line 84.
  (./all_au.out)
 (./all_au.out)
 \@outlinefile=\write9
@@ -349,7 +349,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 449--466
+Underfull \hbox (badness 10000) in paragraph at lines 444--461
 []\twelverm Notice that al-though \OT1/cmtt/m/n/12 x \twelverm has been de-clar
 ed to be an ob-ject of type
  []
@@ -865,7 +865,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
 
 [22]
-Underfull \hbox (badness 10000) in paragraph at lines 850--852
+Underfull \hbox (badness 10000) in paragraph at lines 845--847
 []\OT1/cmtt/m/n/12 fp87.lib for the inline floating-point library or emu.lib fo
 r the
  []
@@ -950,7 +950,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
 
 [27]
-Underfull \hbox (badness 1077) in paragraph at lines 1133--1144
+Underfull \hbox (badness 1077) in paragraph at lines 1128--1139
 []\twelverm The code \OT1/cmtt/m/n/12 dvector v=w; \twelverm cre-ates a \OT1/cm
 tt/m/n/12 dvector v \twelverm by us-ing the ``copy ini-tial-izer'' 
  []
@@ -1001,7 +1001,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
 
 [30]
-Underfull \hbox (badness 10000) in paragraph at lines 1408--1420
+Underfull \hbox (badness 10000) in paragraph at lines 1403--1415
 []\twelverm The ap-pear-ance of the state-ments \OT1/cmtt/m/n/12 RETURN[]ARRAYS
 []INCREMENT(); \twelverm and
  []
@@ -1037,14 +1037,14 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
 
 [32]
-Underfull \hbox (badness 1231) in paragraph at lines 1518--1537
+Underfull \hbox (badness 1231) in paragraph at lines 1513--1532
 \twelverm The \OT1/cmtt/m/n/12 dmatrix \twelverm and \OT1/cmtt/m/n/12 dvar[]mat
 rix \twelverm classes are im-ple-mented as ar-rays of \OT1/cmtt/m/n/12 dvector 
 \twelverm and
  []
 
 
-Underfull \hbox (badness 4872) in paragraph at lines 1548--1558
+Underfull \hbox (badness 4872) in paragraph at lines 1543--1553
 []\twelverm The con-struc-tor \OT1/cmtt/m/n/12 dmatrix(lbr,lur,ivec[]lb,ivec[]u
 b) \twelverm cre-ates a \OT1/cmtt/m/n/12 dmatrix \twelverm with
  []
@@ -1249,7 +1249,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
 
 [45]
-Underfull \hbox (badness 3623) in paragraph at lines 2200--2202
+Underfull \hbox (badness 3623) in paragraph at lines 2195--2197
 \twelverm fills col-umn \OT1/cmtt/m/n/12 j \twelverm of a ma-trix with a se-que
 nce of the form \OT1/cmtt/m/n/12 base, base+offset,
  []
@@ -1457,7 +1457,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
 
 [58]
-Underfull \hbox (badness 10000) in paragraph at lines 2919--2931
+Underfull \hbox (badness 10000) in paragraph at lines 2914--2926
 \twelverm the com-piler will con-struct a de-fault copy con-struc-tor for the c
 lass
  []
@@ -1628,7 +1628,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
 ]
 Chapter 8.
 
-Underfull \hbox (badness 6268) in paragraph at lines 3262--3269
+Underfull \hbox (badness 6268) in paragraph at lines 3257--3264
 []\twelverm The tem-po-rary gra-di-ent files are nor-mally deleted when ob-ject
 s of class
  []
@@ -2025,7 +2025,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
  []
 
 [93]
-Underfull \hbox (badness 4132) in paragraph at lines 4440--4444
+Underfull \hbox (badness 4132) in paragraph at lines 4435--4439
 \twelverm We shall fit a sim-ple 1 pa-ram-e-ter model us-ing the ro-bust re-gre
 s-sion rou-tine
  []
@@ -2215,7 +2215,7 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
 ]
 Chapter 13.
 
-Underfull \hbox (badness 10000) in paragraph at lines 4742--4751
+Underfull \hbox (badness 10000) in paragraph at lines 4737--4746
 \twelverm into your code. The deriva-tives are cal-cu-lated by
  []
 

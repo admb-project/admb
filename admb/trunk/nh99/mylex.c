@@ -43776,6 +43776,17 @@ YY_RULE_SETUP
     BEGIN DEFINE_DATA;
     data_defined=1;
     in_define_data=1;
+    size_t size = strlen(FILE_ROOT);
+    int i = 0;
+    while (i < size) 
+    {
+      int c = (int)FILE_ROOT[i];
+      if (isalnum(c) == 0)
+      {
+        FILE_ROOT[i] = '_';
+      }
+      i++;
+    }
     strcpy(buff,"#if !defined(_");
     strncat(buff,FILE_ROOT,100);
     strncat(buff,"_)\n#  define _" ,100);

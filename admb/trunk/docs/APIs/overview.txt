@@ -1,0 +1,2 @@
+<p align="center" class="doxFntTitle"><b>$TITLE$ version $VERSION$<br>API Specification</b></p>
+<p class="doxTxt">This document is the API specification for the <b><i>$TITLE$</i></b> version $VERSION$.</p>

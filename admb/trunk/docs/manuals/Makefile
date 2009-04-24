@@ -1,9 +1,4 @@
-#
 # $Id:   $
-#
-# $Rev   ::                       $: Revision of last commit
-# $Author::                       $: Author of last commit
-# $Date  ::                       $: Date of last commit
 #
 # Author: John Sibert
 # Copyright (c) 2008 ADMB Foundation

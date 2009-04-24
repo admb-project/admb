@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -6,6 +6,7 @@
  */
 
 #include "fvar.hpp"
+  /// Sets all elements to zero.
   void dvector::initialize(void)
   {
     if (!(!(*this)))  // only initialize allocated objects

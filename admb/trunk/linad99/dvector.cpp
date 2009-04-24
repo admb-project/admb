@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -127,6 +127,13 @@ static int ycounter=0;
     }
   }
 
+  /**
+    \brief Copy constructor.
+    This constructor make a "shallow" copy. Values of existing pointers are copied. No memory
+    is allocated. If a new object is required the assignment operator should be used.
+    Invoked by the compiler when calling a function containing an argument of class %dvector
+    passed by value. 
+    */
  dvector::dvector(_CONST dvector& t)
  {
    #ifdef DIAG
@@ -184,6 +191,12 @@ static int ycounter=0;
    index_max=pdv.ub;
  }
 
+ /**
+ \brief Assignment operator for double argument.
+
+  Assigns a the same value to all members of the vector object.
+  \param x A double.
+ */
  dvector& dvector::operator = ( CGNU_DOUBLE x)
  {
 

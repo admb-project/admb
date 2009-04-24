@@ -1,0 +1,12 @@
+/** \mainpage ADMB API Reference
+*
+* \section intro_sec Introduction
+* This is the introduction.
+
+* \section audodif_sec AUTODIF Library
+*
+* \section admodel_sec ADModel Builder
+*
+* \section tools_sec ADMB Tools
+*
+*/

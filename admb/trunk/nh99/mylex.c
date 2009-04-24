@@ -43776,7 +43776,7 @@ YY_RULE_SETUP
     BEGIN DEFINE_DATA;
     data_defined=1;
     in_define_data=1;
-    size_t size = strlen(FILE_ROOT);
+    int size = strlen(FILE_ROOT);
     int i = 0;
     while (i < size) 
     {

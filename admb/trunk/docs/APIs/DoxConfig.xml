@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <DoxConfig>
     <project>
-        <title>Project Title</title>
-        <author>Author Name</author>
-        <version>1.0.0</version>
-        <copyright>Copyright &copy; Year</copyright>
+        <title>ADModel Builder API</title>
+        <author>ADMB Foundation Core Development Team</author>
+        <version>9.x.r</version>
+        <copyright>Copyright ADMB Foundation 2009 </copyright>
 
         <header>file://pageHeader.txt</header>
         <footer>file://pageFooter.txt</footer>

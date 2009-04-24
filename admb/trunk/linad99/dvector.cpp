@@ -128,11 +128,11 @@ static int ycounter=0;
   }
 
   /**
-    \brief Copy constructor.
-    This constructor make a "shallow" copy. Values of existing pointers are copied. No memory
-    is allocated. If a new object is required the assignment operator should be used.
-    Invoked by the compiler when calling a function containing an argument of class %dvector
-    passed by value. 
+    Copy constructor. This constructor make a "shallow" copy. 
+    Values of existing pointers are copied, and no memory is allocated.
+    Invoked by the compiler when calling a function containing an argument 
+    of class %dvector passed by value. 
+    If a new object is required the assignment operator should be used.
     */
  dvector::dvector(_CONST dvector& t)
  {
@@ -192,10 +192,10 @@ static int ycounter=0;
  }
 
  /**
- \brief Assignment operator for double argument.
-
+  Assignment operator for double argument.
   Assigns a the same value to all members of the vector object.
-  \param x A double.
+  \param x A double constant.
+  \return Reference to a %dvector object.
  */
  dvector& dvector::operator = ( CGNU_DOUBLE x)
  {

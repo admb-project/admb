@@ -2096,12 +2096,13 @@ private:
     friend class dvar_vector;
   };
 
-  class dvector 
+  class dvector /// Vector of double prescision numbers
   {
   protected:
-    double * v;
-    int index_min;
-    int index_max;
+    double * v;    ///< pointer to the data
+    int index_min; ///< minimum valid subscript 
+    int index_max; ///< maximum valid subscript
+    /// pointer to vector housekeeping object
 #if defined(THREAD_SAFE)
     ts_vector_shapex * shape;
 #else

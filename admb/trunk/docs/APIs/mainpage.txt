@@ -1,7 +1,10 @@
 /** \mainpage ADMB API Reference
 *
 * \section intro_sec Introduction
-* This is the introduction.
+
+This is preliminary version of the API documentation. No class is 
+fully documented. See class \link dvector \endlink for an example of 
+how it might look and how to insert documentation.
 
 * \section audodif_sec AUTODIF Library
 *

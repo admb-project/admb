@@ -1,2 +1,2 @@
 all:
-	cd issue-34; ./run-test.sh
+	cd issue-34; ./test-unix.sh

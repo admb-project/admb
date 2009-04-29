@@ -84,6 +84,9 @@
   void call_destructors_for_user_classes(FILE * fall); 
   void marker(void);
   void write_unallocated(const char *);
+
+  int filename_index;
+  int filename_size;
 %}
 
 name [a-z_A-Z]+(->)?[a-z_A-Z0-9]*
@@ -368,16 +371,16 @@ DATA_SECTION  {
     BEGIN DEFINE_DATA;
     data_defined=1;
     in_define_data=1;
-    int size = strlen(FILE_ROOT);
-    int i = 0;
-    while (i < size) 
+    filename_size = strlen(FILE_ROOT);
+    filename_index = 0;
+    while (filename_index < filename_size) 
     {
-      int c = (int)FILE_ROOT[i];
+      int c = (int)FILE_ROOT[filename_index];
       if (isalnum(c) == 0)
       {
-        FILE_ROOT[i] = '_';
+        FILE_ROOT[filename_index] = '_';
       }
-      i++;
+      filename_index++;
     }
     strcpy(buff,"#if !defined(_");
     strncat(buff,FILE_ROOT,100);
@@ -3163,7 +3166,7 @@ TOP_OF_MAIN_SECTION {
                               }
 
 
-<<EOF>>           {
+<<EOF>> {
 
     if (!data_defined)
     {
@@ -3470,9 +3473,7 @@ TOP_OF_MAIN_SECTION {
     }
     
     exit(0);
-                  }
-
-
+}
 %%
 
 int option_match(int argc,char * argv[], char * string);

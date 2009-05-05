@@ -3011,7 +3011,7 @@ FUNCTION_DECLARATION[ ]*{name} |
                               }
 
 
-<DEFINE_PROCS>^[ \t].*$ { fprintf(fall,"%s\n",yytext); }
+<DEFINE_PROCS>^[ \t].* { fprintf(fall,"%s\n",yytext); }
 
  
 <DEFINE_AUX_PROC>^\ +{name}\ +{name}\(.*$       {

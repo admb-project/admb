@@ -70,7 +70,7 @@ tpl2cpp.c:
 	- sed -f sedflex lex.yy.c > mylex.c
 	- rm lex.yy.c 
 
-tpl2cpp:
+tpl2cpp: tpl2cpp.c
 	- gcc -I. -DUX mylex.c -otpl2cpp
 
 disk: $(LIBPATH)/$(LIBNAME)  df1b2stub tpl2cpp

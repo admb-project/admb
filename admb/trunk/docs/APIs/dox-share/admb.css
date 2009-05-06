@@ -7,11 +7,11 @@ BODY,TD {
 H1 {
 	text-align: center;
 	font-size: 240%;
-	color: #0000ff;
+	color: #000000;
 }
 H2 {
 	font-size: 180%;
-	color: #00ff00;
+	color: #000000;
 }
 a.anchor{
 #	text-decoration: underline; 	
@@ -25,7 +25,7 @@ a.anchor:hover {
 }
 H3 {
 	font-size: 100%;
-	color: #ff0000;
+	color: #000000;
 }
 CAPTION { 
 	font-weight: bold 
@@ -394,11 +394,11 @@ HR {
 	padding-left: 10px;
 }
 .memproto {
-	background-color: #d5e1e8;
+	background-color: #bfe2ac;
 	width: 100%;
 	border-width: 1px;
 	border-style: solid;
-	border-color: #84b0c7;
+	border-color: #80c65a;
 	font-weight: bold;
 	-moz-border-radius: 8px 8px 8px 8px;
 }

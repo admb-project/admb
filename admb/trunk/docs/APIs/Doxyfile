@@ -571,7 +571,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = ./mainpage.txt \
+INPUT                  = ./dox-share/mainpage.txt \
                          ../../linad99/fvar.hpp \
                          ../../linad99/dvector.cpp \
                          ../../linad99/dvect5.cpp
@@ -811,7 +811,7 @@ HTML_FOOTER            =
 # the style sheet file to the HTML output directory, so don't put your own 
 # stylesheet in the HTML output directory as well, or it will be erased!
 
-HTML_STYLESHEET        = admb.css
+HTML_STYLESHEET        = ./dox-share/admb.css
 
 # If the HTML_ALIGN_MEMBERS tag is set to YES, the members of classes, 
 # files or namespaces will be aligned in HTML using tables. If set to 
@@ -986,7 +986,7 @@ TREEVIEW_WIDTH         = 250
 # to manually remove any form_*.png images from the HTML output directory 
 # to force them to be regenerated.
 
-FORMULA_FONTSIZE       = 10
+FORMULA_FONTSIZE       = 12
 
 #---------------------------------------------------------------------------
 # configuration options related to the LaTeX output
@@ -1006,7 +1006,7 @@ LATEX_OUTPUT           = latex
 # The LATEX_CMD_NAME tag can be used to specify the LaTeX command name to be 
 # invoked. If left blank `latex' will be used as the default command name.
 
-LATEX_CMD_NAME         = pdflatex
+LATEX_CMD_NAME         = 
 
 # The MAKEINDEX_CMD_NAME tag can be used to specify the command name to 
 # generate index for LaTeX. If left blank `makeindex' will be used as the 
@@ -1043,7 +1043,7 @@ LATEX_HEADER           =
 # contain links (just like the HTML output) instead of page references 
 # This makes the output suitable for online browsing using a pdf viewer.
 
-PDF_HYPERLINKS         = NO
+PDF_HYPERLINKS         = YES
 
 # If the USE_PDFLATEX tag is set to YES, pdflatex will be used instead of 
 # plain latex in the generated Makefile. Set this option to YES to get a 

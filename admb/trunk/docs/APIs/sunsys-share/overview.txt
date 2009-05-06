@@ -2,8 +2,13 @@
 <p class="doxTxt">
 This document is the API specification for the <b><i>$TITLE$</i></b> version $VERSION$.
 This is preliminary version of the API documentation. No class is 
-fully documented. See class  dvector  for an example of 
-how it might look and how to insert documentation.</p>
+fully documented. See file <a href="[globals].00F1B.html">class dvector</a> for an example of 
+how it might look and how to insert documentation.
+<br>
+<br>
+Some featurues are not supported by the sunsys doxygen modification, such as \verbatim and TeX formula rendering.
+Consequently some of the documentation looks a bit odd.
+</p>
 
 <p class="doxTxt">
 Ut nibh nisi, cursus eget, aliquet eget, dapibus at, felis. Mauris

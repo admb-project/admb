@@ -34,7 +34,10 @@ dvector& dvector::shift(int min)
   return *this;
 }
 
-
+ /** 
+ Default destructor. Invoked by the compiler. Only frees allocated memory
+ if all shallow copies in scope have been removed.
+ */
  dvector::~dvector()
  {
    if (shape)
@@ -62,6 +65,10 @@ dvector& dvector::shift(int min)
 
 static int testflag=0;
 static int ycounter=0;
+  /** Deallocates memory for a dvector object.
+  Called by the ~dvector(); produces an error if the double * member
+  is NULL.
+  */
   void dvector::deallocate()
   {
    if (testflag)
@@ -111,6 +118,9 @@ static int ycounter=0;
    }
   }
 
+  /**
+  Deallocate memory safely. Checks if shallow copies are in scope.
+  */
   void dvector::safe_deallocate()
   {
     if (shape)
@@ -130,9 +140,21 @@ static int ycounter=0;
   /**
     Copy constructor. This constructor make a "shallow" copy. 
     Values of existing pointers are copied, and no memory is allocated.
-    Invoked by the compiler when calling a function containing an argument 
-    of class %dvector passed by value. 
-    If a new object is required the assignment operator should be used.
+    Invoked by the compiler in some circumstances such as function 
+    call containing an argument of class %dvector passed by value. 
+
+    The following code segments creates the \dvector object x and fills it with
+    uniform random numbers (using the constant 79 as seed). The new \dvector 
+    object y will reference the same memory locations as x, and any changes in y
+    will also appear in x. The new \dvector object \z does not refer to the same    memory locations as x, and any changes in z will be unique to z.
+
+    \verbatim
+    dvector x(1,10);
+    y.fill_randu(79L);
+    dvector y = x;
+    dvector z;
+    z = x;
+    \endverbatim
     */
  dvector::dvector(_CONST dvector& t)
  {
@@ -409,7 +431,14 @@ void dvector::allocatec(_CONST dvector& t)
   index_max=0;
  }
 
-
+  /** Compute the dot product of two vectors. The minimum and maxium
+  legal subscripts of the arguments must agree; otherwize an error message
+   is printed and execution terminates.
+  \param t1 A %dvector, \f$a\f$.
+  \param t2 A %dvector, \f$b\f$.
+  \return A double, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing 
+  the value of the dot product of the two arguments.
+  */
   double operator * (_CONST dvector& t1,_CONST dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())

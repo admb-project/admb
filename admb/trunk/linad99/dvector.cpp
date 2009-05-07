@@ -12,6 +12,7 @@ long int farptr_tolong(void *);
 #ifdef DOSX286
   int heapcheck(void){return 0;}
 #else
+  /// Does nothing.
   int heapcheck(void);
 #endif
 
@@ -19,12 +20,20 @@ long int farptr_tolong(void *);
 #include <memory.h>
 #endif
 
+/** Average of two numbers.
+\param x A double
+\param y A double
+\return \f$0.5*(x+y)\f$
+*/
 double avg(double x,double y)
 {
   return 0.5*(x+y);
 }
 
-
+/** Shift valid range of subscripts.
+\param min Ingeger value subtracted from the subscripts
+\return A %devector containing shifted vector.
+*/
 dvector& dvector::shift(int min)
 {
   v += indexmin()-min;
@@ -175,6 +184,10 @@ static int ycounter=0;
    index_max=t.index_max;
  }
 
+ /**
+ Explicit shallow copy.
+ \param t %dvecotor to be copied
+ */
  void dvector::shallow_copy(_CONST dvector& t)
  {
    #ifdef DIAG
@@ -194,6 +207,11 @@ static int ycounter=0;
    index_max=t.index_max;
  }
 
+ /**
+ Creates a %dvector from an instance of class %predvector.
+ Creates a shallow copy.
+ \param pdv an instance of class %predvector.
+ */
  dvector::dvector(_CONST predvector& pdv)
  {
    #ifdef DIAG
@@ -238,6 +256,14 @@ static int ycounter=0;
    return (*this);
  }
 
+ /**
+  Assignment operator for %dvector argument.
+  Assigns the values of the argument to a target %dvector in the LHS of the
+  assignment operator. The range of valid subscripts in the argument and the
+  target must be identical.
+  \param t A %dvector constant
+  \return Reference to a %dvector object.
+ */
  dvector& dvector::operator = (_CONST dvector& t)
  {
    if (!(*this))
@@ -269,6 +295,14 @@ static int ycounter=0;
    return (*this);
  }
 
+ /**
+  Assignment operator for %dvector argument.
+  Assigns the values of the argument to a %independent_variables target in the LHS of the
+  assignment operator. The range of valid subscripts in the argument and the
+  target must be identical.
+  \param t A %dvector constant
+  \return Reference to a %independent_variables object.
+ */
  independent_variables& independent_variables::operator = (_CONST dvector& t)
  {
 
@@ -296,7 +330,12 @@ static int ycounter=0;
    return (*this);
  }
 
-
+ /**
+ Construct a %dvector object from a C style array of doubles.
+ \param sz Number of valid memory locations allocated in the array
+ The range of valid subscripts for the %dvector object will be [0,sz-1].
+ \param x Pointer to double pointing to the first element in the array.
+ */
  dvector::dvector( unsigned int sz, double * x )
  {
    allocate(0,sz-1);
@@ -315,24 +354,45 @@ static int ycounter=0;
  }
 */
 
+ /**
+ Construct a %dvector object from a dvar_vector_position object.
+ Used in writing adjoint functions callled by the autodif library,
+ \param dvp Reference to a %dvar_vector_position object (usually read from stack)
+ \param kk Kludge to avoid ambiguous function references
+ */
  dvector::dvector(BOR_CONST dvar_vector_position& dvp,BOR_CONST kkludge_object& kk)
  {
    allocate(dvp.indexmin(),dvp.indexmax());
  }
 
+ /**
+ Construct a %dvector with specified range of valid subscript.
+ \param ncl Integer specifying lowest valid subscript.
+ \param nch Integer specifying highest valid subscript.
+ */
  dvector::dvector( int ncl,  int nch)
  {
    if (ncl>nch)
      allocate();
    else
-   allocate(ncl,nch);
+     allocate(ncl,nch);
  }
 
+ /**
+ Construct a %dvector without allocating memory. 
+ Useful in creating classes containing dvectors.
+ */
  dvector::dvector(void)
  {
    allocate();
  }
 
+ /**
+ Safely allocate memory for a %dvector.
+ Exits with an error message if memory for this instance has already been allocated.
+ \param ncl Integer specifying lowest valid subscript.
+ \param nch Integer specifying highest valid subscript.
+ */
  void dvector::safe_allocate(int ncl,int nch)
  {
    if (allocated())
@@ -346,6 +406,12 @@ static int ycounter=0;
    }
  }
 
+ /**
+ Allocate memory for a %dvector.
+ Exits with an error message if subscript range makes no sense.
+ \param ncl Integer specifying lowest valid subscript.
+ \param nch Integer specifying highest valid subscript.
+ */
  void dvector::allocate(int ncl,int nch)
  {
    if (ncl>nch)
@@ -393,16 +459,29 @@ static int ycounter=0;
    }
  }
 
+ /**
+ Allocate memory for a %dvector the same size as it's argument.
+ \param dv Reference to a %dvector.
+ */
 void dvector::allocate(_CONST dvector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
 
+ /**
+ Allocate memory for a %dvector the same size as it's argument.
+ \param dv Reference to a dvar_vector.
+ */
 void dvector::allocate(_CONST dvar_vector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
 
+/**
+Make shallow copy of %dvector shape.
+Copies the shape of its argument.
+\param t Reference to a %dvector.
+*/
 void dvector::allocatec(_CONST dvector& t)
 {
   if (!(*this)) 
@@ -422,7 +501,10 @@ void dvector::allocatec(_CONST dvector& t)
   }
 }
 
-
+ /**
+ Allocate %dvector without allocating memory.
+ All pointers set to NULL and subscript range is invalid.
+ */
  void dvector::allocate(void)
  {
    shape=NULL;
@@ -476,7 +558,14 @@ void dvector::allocatec(_CONST dvector& t)
      return(tmp);
   }
 
-
+  /**
+  Add two dvectors.
+  Exits with error if bounds of the two arguments differ.
+  \param t1 %dvector reference, \f$a\f$.
+  \param t2 %dvector reference, \f$b\f$.
+  \return A %dvector, \f$z_i = a_i + b_i\f$  containing 
+  the value of the sum of the two arguments.
+  */
   dvector operator + (_CONST dvector& t1,_CONST dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  
@@ -506,6 +595,14 @@ void dvector::allocatec(_CONST dvector& t)
      return(tmp);
   }
 
+  /**
+  Subtract two dvectors.
+  Exits with error if bounds of the two arguments differ.
+  \param t1 %dvector reference, \f$a\f$.
+  \param t2 %dvector reference, \f$b\f$.
+  \return A %dvector, \f$z_i = a_i - b_i\f$  containing 
+  the value of the difference of the two arguments.
+  */
   dvector operator - (_CONST dvector& t1,_CONST dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  
@@ -535,6 +632,12 @@ void dvector::allocatec(_CONST dvector& t)
      return(tmp);
   }
 
+  /**
+  Multiply a %dvector by a constant.
+  \param x Double constant, \f$x\f$.
+  \param t1 %dvector reference, \f$y\f$.
+  \return A %dvector \f$z_i = x*y_i\f$.
+  */
   dvector operator * ( CGNU_DOUBLE x,_CONST dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
@@ -572,11 +675,21 @@ void dvector::allocatec(_CONST dvector& t)
    }
 #else 
 */
+   /** Does nothing. This function is only defined for older Borland compilers.
+   The user could provide an implementation that might be useful in certain circumstances.
+   \param msg Pointer to character array.
+   */
    void myheapcheck(char * msg){}
+
 /*
 #endif
 */
 
+/** Largest of two integers
+\param a An integer
+\param b An integer
+\return A integer \f$ z = \max(a,b)\f$
+*/
 int max(int a,int b)
 {
   if (a>b)
@@ -584,13 +697,23 @@ int max(int a,int b)
   else
     return b;
 }
+
+/** Cube of a number.
+\param m Double, nunber to be cubed
+\return \f$m^3\f$
+*/
 double cube( CGNU_DOUBLE m)
 {
   return m*m*m;
 }
 
+/** Fourth power of a number.
+\param m Double, nunber to be taken to the fourth power.
+\return \f$m^4\f$
+*/
 double fourth( CGNU_DOUBLE m)
 {
   double m2=m*m;
   return m2*m2;
 }
+

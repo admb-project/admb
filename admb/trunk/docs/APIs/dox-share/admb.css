@@ -380,7 +380,7 @@ HR {
 }
 .memitem {
 	padding: 4px;
-	background-color: #eef3f5;
+	background-color: #bfe2ac;
 	border-width: 1px;
 	border-style: solid;
 	border-color: #dedeee;
@@ -394,7 +394,7 @@ HR {
 	padding-left: 10px;
 }
 .memproto {
-	background-color: #bfe2ac;
+	background-color: #80c65a;
 	width: 100%;
 	border-width: 1px;
 	border-style: solid;

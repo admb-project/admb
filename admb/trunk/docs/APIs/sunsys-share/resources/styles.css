@@ -1,14 +1,14 @@
-/**
- *  @file   styles.javadoc.css
+/*
+ * $Id: $
+ *
+ * Author: John Sibert
+ * Copyright (c) 2009 ADMB Foundation
+ *
+ *  modified from styles.javadoc.css
  *
  *  Sunsys Dox stylesheet, Javadoc-mimic theme.
  *
- *
- *  Copyright (C) Supernar Systems, Ltd. 2000-2005
- *  All Rights Reserved.
- *
- *  @author     Narech Koumar
- *  @version    1.6.0
+ *  by  Narech Koumar
  */
 
 
@@ -85,7 +85,7 @@ a:hover
 }
 .doxTabRow2
 {
-    background-color:       #bfe2ac;
+    background-color:       #cde2a7;
 }
 
 
@@ -134,7 +134,7 @@ a:hover
 }
 .doxTabHdrBgA
 {
-    background-color:       #80c65a;
+    background-color:       #74ae0b;
 }
 .doxTabHdrBgB
 {

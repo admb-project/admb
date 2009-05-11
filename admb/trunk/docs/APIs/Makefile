@@ -1,7 +1,7 @@
 # $Id$
 #
 # Author: John Sibert
-# Copyright (c) 2008 ADMB Foundation
+# Copyright (c) 2009 ADMB Foundation
 #
 .PHONY: default sunsys all clean
 

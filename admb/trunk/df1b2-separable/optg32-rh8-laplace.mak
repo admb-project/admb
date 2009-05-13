@@ -2,11 +2,8 @@
 
 CC = gcc
 LL = tlib
-FLAGS1 = ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -DOPT_LIB -g -DSAFE_ALL -DUSE_LAPLACE -fpermissive -O3 -c -I. -I../nh99 -I../linad99 -I../tools99  \
-  -D__GNUDOS__
-
-FLAGS = ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -DOPT_LIB  -fpermissive -DUSE_LAPLACE -O3 -c -I. -I../nh99 -I../linad99 -I../tools99  -Dlinux \
-  -D__GNUDOS__
+FLAGS1 = ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -DOPT_LIB -g -DUSE_LAPLACE -fpermissive -O3 -c -I. -I../nh99 -I../linad99 -I../tools99 -D__GNUDOS__
+FLAGS = ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -DOPT_LIB  -fpermissive -DUSE_LAPLACE -O3 -c -I. -I../nh99 -I../linad99 -I../tools99  -Dlinux -D__GNUDOS__
 LIBPATH =gcc32-rh8olp
 LIBNAME = libdf1b2o.a
 LIBDIR = lib
@@ -52,7 +49,7 @@ tpl2rem.c:
 	- rm lex.yy.c 
 
 tpl2rem:
-	- gcc -DUX tpl2rem.c -otpl2rem
+	- gcc -DUX tpl2rem.c -o tpl2rem
 	cp sed* $(DISKDIR)/$(BINDIR)
 
 clean:

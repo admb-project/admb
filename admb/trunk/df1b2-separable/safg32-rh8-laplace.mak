@@ -3,8 +3,7 @@ LL = tlib
 FLAGS1 = ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -g -DSAFE_ALL -DUSE_LAPLACE -fpermissive -O3 -c -I. -I../nh99 -I../linad99 -I../tools99  \
   -D __GNUDOS__ 
 
-FLAGS = ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -DSAFE_ALL -fpermissive -DUSE_LAPLACE -O3 -c -I. -I../nh99 -I../linad99 -I../tools99  \
-  -D __GNUDOS__
+FLAGS = ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -DSAFE_ALL -fpermissive -DUSE_LAPLACE -O3 -c -I. -I../nh99 -I../linad99 -I../tools99 -Dlinux -D __GNUDOS__
 
 LIBPATH =gcc32-rh8slp
 LIBNAME = libdf1b2s.a

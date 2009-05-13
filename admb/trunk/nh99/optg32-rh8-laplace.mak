@@ -71,7 +71,7 @@ tpl2cpp.c:
 	- rm lex.yy.c 
 
 tpl2cpp: tpl2cpp.c
-	- gcc -I. -DUX mylex.c -otpl2cpp
+	- gcc -I. -DUX mylex.c -o tpl2cpp
 
 disk: $(LIBPATH)/$(LIBNAME)  df1b2stub tpl2cpp
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR)

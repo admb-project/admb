@@ -1,5 +1,4 @@
-
-
+%option noyywrap
 
 %{
   #define   MAX_TMP_STRING 2000 

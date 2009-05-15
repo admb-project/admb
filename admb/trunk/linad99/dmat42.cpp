@@ -1,6 +1,8 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 #define SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a))
@@ -34,8 +36,17 @@ public:
 sing_val_decomp::sing_val_decomp(const dmatrix& _a, const dvector & _w,
   const dmatrix& _v) :
     a(_a), w(_w), v(_v)
-{} 
+{}
 
+/** Singular value decomposition.
+    Not clear that this is used for anything. 
+    \param _a
+    \return
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+*/
 sing_val_decomp singval_decomp(const dmatrix &_a)
 {
   if (_a.indexmin() !=1 )

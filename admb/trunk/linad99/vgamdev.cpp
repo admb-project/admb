@@ -42,6 +42,13 @@ static double gammp(double a,double x)
     return 1.0-gammcf;
   }
 }
+
+/** Incomplete gamma function.
+    Continued fraction approximation.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 6
+*/
 static void gcf(double& gammcf,double a,double x,double &gln)
 {
   int i;
@@ -68,6 +75,13 @@ static void gcf(double& gammcf,double a,double x,double &gln)
     cerr << "a too large, ITMAX too small in gcf" << endl;
   gammcf=exp(-x+a*log(x)-(gln))*h;
 }
+
+/** Incomplete gamma function.
+    Series approximation.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 6
+*/
 static void gser(double& gamser,double a,double x,double& gln)
 {
   int n;

@@ -24,7 +24,12 @@ void dmdv_solve(void);
 
 dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
   prevariable& ln_unsigned_det,BOR_CONST prevariable& sign);
-
+/** Solve a linear system using LU decomposition.
+    \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param z A dvar_vector containing the RHS, \f$b\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \return A dvar_vector containing solution vector \f$X\f$.
+*/
 dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z)
 {
   dvariable ln_unsigned_det;
@@ -33,7 +38,17 @@ dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z)
   return sol;
 }
 
-
+/** Solve a linear sysgem using LU decomposition.
+    \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param z A dvar_vector containing the RHS, \f$b\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \param _ln_unsigned_deg
+    \param sign
+    \return A dvar_vector containing solution vector \f$X\f$.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+*/
 dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
   prevariable& ln_unsigned_det,BOR_CONST prevariable& _sign)
 {
@@ -222,6 +237,7 @@ dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
   return vc;
 }
 
+/// Adjoint code for dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
 void dmdv_solve(void)
 {
   verify_identifier_string("PLACE0");

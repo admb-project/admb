@@ -1,6 +1,8 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 
 
@@ -24,6 +26,7 @@
 void dmdv_solve(void);
 
 
+/** Solve a linear system using LU decomposition. */
 dvector csolve(const dmatrix& aa,const dvector& z)
 {
   double ln_unsigned_det;
@@ -32,6 +35,12 @@ dvector csolve(const dmatrix& aa,const dvector& z)
   return sol;
 }
 
+/** Solve a linear system using LU decomposition.
+    \param aa A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param z A dvector containing the RHS, \f$b\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \return A dvector containing solution vector \f$X\f$.
+*/
 dvector solve(const dmatrix& aa,const dvector& z)
 {
   double ln_unsigned_det;
@@ -40,7 +49,18 @@ dvector solve(const dmatrix& aa,const dvector& z)
   return sol;
 }
 
+/** Solve a linear system using LU decomposition.
+    \param aa A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param z A dvector containing the RHS, \f$b\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \param _ln_unsigned_deg
+    \param sign
+    \return A dvector containing solution vector \f$X\f$.
 
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+*/
 dvector solve(const dmatrix& aa,const dvector& z,
   const double& _ln_unsigned_det,double& sign)
 {

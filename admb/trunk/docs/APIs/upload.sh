@@ -1,5 +1,5 @@
 #!/bin/bash
-# $Id: $
+# $Id$
 #
 # Author: John Sibert
 # Copyright (c) 2009 ADMB Foundation

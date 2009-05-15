@@ -20,7 +20,14 @@ void dfinvpret(void);
 // int min(int a,int b);
 void df_xdet(void);
 
-  dvariable det(_CONST dvar_matrix& aa)
+/** Determinaant of matrix.
+    \param aa dvar_matrix containing a square matrix,\f$A\f$.
+    \return \f$\det(A)\f$.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+*/
+dvariable det(_CONST dvar_matrix& aa)
 {
   int i,imax,j,k,n;
   n=aa.colsize();
@@ -151,6 +158,7 @@ void df_xdet(void);
   return rdet;
 }
 
+/** Adjoint code for dvariable det(_CONST dvar_matrix& aa) */
 void df_xdet(void)
 {
   verify_identifier_string("PLACE0");

@@ -1,13 +1,23 @@
 /*
  * $Id$
- * Author: Unknown
+ * 
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 #include <math.h>
 #define EPS 1.0e-9
-//#define EPS 3.0e-7
 #define FPMIN 1.0e-30
 
+/** Incomplete beta function for constant objects.
+    \param a \f$a\f$
+    \param b \f$b\f$
+    \param x \f$x\f$
+    Evaluates the continued fraction approximation for imcomplete beta function.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+*/
 double betacf(_CONST double& a,_CONST double& b,_CONST double& x, int MAXIT)
 {
   int m,m2;

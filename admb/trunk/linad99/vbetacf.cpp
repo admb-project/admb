@@ -1,13 +1,26 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 #include <math.h>
 #define EPS 1.0e-9
-//#define EPS 3.0e-7
 #define FPMIN 1.0e-30
 
+/** Incomplete beta function for variable objects.
+    Evaluates the continued fraction for imcomplete beta function.
+    \param _a \f$a\f$
+    \param _b \f$b\f$
+    \param _x \f$x\f$
+    \param MAXIT Maximum number of interatioons for the continued fraction approximation in betacf.
+    \return Incomplete beta function \f$I_x(a,b)\f$
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+*/
 dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,_CONST dvariable& _x,
   int MAXIT)
 {

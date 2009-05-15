@@ -152,10 +152,10 @@ static int ycounter=0;
     Invoked by the compiler in some circumstances such as function 
     call containing an argument of class %dvector passed by value. 
 
-    The following code segments creates the \dvector object x and fills it with
-    uniform random numbers (using the constant 79 as seed). The new \dvector 
+    The following code segments creates the /dvector object x and fills it with
+    uniform random numbers (using the constant 79 as seed). The new /dvector 
     object y will reference the same memory locations as x, and any changes in y
-    will also appear in x. The new \dvector object \z does not refer to the same    memory locations as x, and any changes in z will be unique to z.
+    will also appear in x. The new /dvector object /z does not refer to the same    memory locations as x, and any changes in z will be unique to z.
 
     \verbatim
     dvector x(1,10);

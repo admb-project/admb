@@ -1,6 +1,8 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
@@ -13,7 +15,12 @@
 #define FPMIN 1.0e-30
 double get_values(double x,double y,int print_switch);
 
-
+/** Incomplete gamma function.
+    Continued fraction approximation.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 6
+*/
 void gcf(const dvariable& _gammcf,const dvariable& a,
   const dvariable& x,const dvariable& _gln)
 {
@@ -44,6 +51,12 @@ void gcf(const dvariable& _gammcf,const dvariable& a,
   gammcf=exp(-x+a*log(x)-(gln))*h;
 }
 
+/** Incomplete gamma function.
+    Series approximation.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 6
+*/
 void gser(const dvariable& _gamser,const dvariable& a,
   const dvariable& x,const dvariable& _gln)
 {

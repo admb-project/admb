@@ -1,7 +1,10 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
+
 
 #include <fvar.hpp>
 #ifdef __TURBOC__
@@ -31,7 +34,11 @@ dvariable ln_det(const dvar_matrix& a)
   int sgn;
   return ln_det(a,sgn);
 }
-
+/** 
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+*/
 dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
 {
   int& sgn=(int&)(_sgn);
@@ -179,6 +186,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
   return rdet;
 }
 
+/// Adjoint code for dvariable ln_det(const dvar_matrix& aa,const int& _sgn).
 void df_xldet(void)
 {
   verify_identifier_string("PLACE0");

@@ -49,10 +49,10 @@ $(OBJ3): %.obj: %.cpp
 	mv $*.obj $(LIBPATH)       
 fvar.hpp:
 
-all: $(LIBPATH)/$(LIBNAME) disk xtpl2rem
+all: $(LIBPATH)/$(LIBNAME) disk tpl2rem
 
-xtpl2rem: remod11
-	flex < remod11
+tpl2rem: tpl2rem.lex
+	flex < tpl2rem.lex
 	sed -f sedflex lex.yy.c > tpl2rem.c
 	cl -DWIN32 -Ig:/vc7/include tpl2rem.c -o tpl2rem.exe
 	cp tpl2rem.exe $(DISKDIR)/$(BINDIR)

@@ -69,10 +69,9 @@ disk:
 	cp spcomm.h $(DISKDIR)/$(INCLUDEDIR)
 	cp s.h $(DISKDIR)/$(INCLUDEDIR)
 	cp newredef.h $(DISKDIR)/$(INCLUDEDIR)
-	flex < allmod22
-	sed -f sedflex lex.yy.c > mylex.c
-	$(CC) mylex.c -I. -Ig:/vc7/include /link /libpath:g:/vc7/include 
-	cp mylex.exe $(DISKDIR)/$(BINDIR)/tpl2cpp.exe
+	flex < tpl2cpp.lex
+	sed -f sedflex lex.yy.c > tpl2cpp.c
+	$(CC) tpl2cpp.c -I. -Ig:/vc7/include /link /libpath:g:/vc7/include 
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 	cp $(STUBPATH)/$(STUBLIBNAME) $(DISKDIR)/$(LIBDIR) 
 

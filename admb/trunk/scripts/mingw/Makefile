@@ -1,4 +1,4 @@
-.PHONY: all ham4 ham5 catage finance vonb vonbr n2mvol simple union
+.PHONY: all ham4 ham5 catage finance vonb vonbr n2mvol simple
 
 verify: ham4 ham5 catage finance vonb vonbr n2mvol simple
 	@echo -------------------------------
@@ -7,7 +7,7 @@ verify: ham4 ham5 catage finance vonb vonbr n2mvol simple
 	@echo -------------------------------
 
 all: simple
-noverify: chem-eng forest pella-t truncreg
+noverify: chem-eng forest pella-t truncreg union
 
 ham4:
 	@echo Build and run $@: && cd buscycle && makeadm.bat ham4 && ham4.exe

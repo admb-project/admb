@@ -1,5 +1,5 @@
-verify: ham4 ham5 catage finance vonb vonbr n2mvol simple union
-noverify: SS3-Simple chem-eng forest pella-t truncreg
+verify: ham4 ham5 catage finance vonb vonbr n2mvol simple
+noverify: SS3-Simple chem-eng forest pella-t truncreg union
 
 SS3-Simple:
 	cd $(ADMB_HOME)/examples/admb/SS3-Simple;makeadm SS3;./SS3

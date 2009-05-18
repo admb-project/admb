@@ -72,6 +72,7 @@ disk:
 	flex < tpl2cpp.lex
 	sed -f sedflex lex.yy.c > tpl2cpp.c
 	$(CC) tpl2cpp.c -I. -Ig:/vc7/include /link /libpath:g:/vc7/include 
+	cp tpl2cpp.exe $(DISKDIR)/$(BINDIR)/
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 	cp $(STUBPATH)/$(STUBLIBNAME) $(DISKDIR)/$(LIBDIR) 
 

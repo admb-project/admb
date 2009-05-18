@@ -61,6 +61,7 @@ disk: stub
 	flex < tpl2cpp.lex
 	sed -f sedflex lex.yy.c > tpl2cpp.c
 	bcc32 -I\\Borland\\BCC55\\Include -L\\Borland\\BCC55\\Lib tpl2cpp.c
+	cp tpl2cpp.exe $(DISKDIR)/$(BINDIR)/
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 	cp $(STUBPATH)/df1b2stub.lib $(DISKDIR)/$(LIBDIR) 
 	cp admodel.h $(DISKDIR)/$(INCLUDEDIR) 

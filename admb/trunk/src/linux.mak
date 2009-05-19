@@ -1,7 +1,7 @@
 .PHONY: dist
 SHELL = /bin/bash
 
-DISK=build/dists/admb_gcc411_fedora8
+DISK=../build/dists/admb_gcc411_fedora8
 PWD=$(shell pwd)
 
 CCVERSION=gcc411
@@ -11,11 +11,11 @@ COMP=g++
 dist:
 	rm -rf ${DISK}
 	- mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals,examples}
-	cp scripts/bash/link* ${DISK}/bin
-	cp scripts/bash/m* ${DISK}/bin
-	cp scripts/bash/Makefile ${DISK}
-	svn export examples/admb ${DISK}/examples/admb
-	svn export examples/admb-re ${DISK}/examples/admb-re
+	cp ../scripts/bash/link* ${DISK}/bin
+	cp ../scripts/bash/m* ${DISK}/bin
+	cp ../scripts/bash/Makefile ${DISK}
+	svn export ../examples/admb ${DISK}/examples/admb
+	svn export ../examples/admb-re ${DISK}/examples/admb-re
 	rm -rvf ${DISK}/examples/admb/SS3
 	rm -rvf ${DISK}/examples/admb/SS3-Simple
 	- cd ./linad99; mkdir -p ${CCVERSION}-${OSVERSION}olp 
@@ -31,9 +31,9 @@ dist:
 	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
 	cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f  optg32-rh8-laplace.mak  disk
 	cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f  safg32-rh8-laplace.mak disk 
-	cp -vf LICENSE ${DISK}
-	cp -vf README ${DISK}
-	cp -vf scripts/bash/mygcc* ${DISK}/bin 
+	cp -vf ../LICENSE ${DISK}
+	cp -vf ../README ${DISK}
+	cp -vf ../scripts/bash/mygcc* ${DISK}/bin 
 	#make -C docs/manuals
 	#cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals
 	#cp -vf docs/manuals/admb.pdf ${DISK}/docs/manuals

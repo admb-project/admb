@@ -1,4 +1,4 @@
-DISK=build/dists/admb_b502_win32
+DISK=../build/dists/admb_b502_win32
 PWD=$(shell pwd)
 WINADMB_HOME=$(shell cygpath --windows ${PWD}/${DISK})
 BORLAND_HOME=$(shell cygpath --unix $(BCC55_HOME))
@@ -11,12 +11,12 @@ dist:
 	rm -rf ${DISK}
 	- mkdir -p ${DISK}
 	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include; mkdir -p examples
-	cp scripts/borland/*.bat ${DISK}/bin
-	cp LICENSE ${DISK}
-	cp README ${DISK}
-	svn export examples/admb ${DISK}/examples/admb
-	svn export examples/admb-re ${DISK}/examples/admb-re
-	cp scripts/borland/Makefile ${DISK}/examples/admb
+	cp ../scripts/borland/*.bat ${DISK}/bin
+	cp ../LICENSE ${DISK}
+	cp ../README ${DISK}
+	svn export ../examples/admb ${DISK}/examples/admb
+	svn export ../examples/admb-re ${DISK}/examples/admb-re
+	cp ../scripts/borland/Makefile ${DISK}/examples/admb
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 

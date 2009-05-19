@@ -5,16 +5,19 @@ VERSION=`cat VERSION.txt`
 all: 
 
 mingw:
-	make -f mingw.mak
+	make --directory=src --file=mingw.mak
 
 bcc:
-	make -f bcc.mak
+	make --directory=src --file=bcc.mak
 
 vc:
-	make -f vc.mak
+	make --directory=src --file=vc.mak
 
 linux:
-	make -f linux.mak
+	make --directory=src --file=linux.mak
+
+linux-verify:
+	make --directory=src --file=linux.mak verify
 
 dist:
 	./srcCopy.sh

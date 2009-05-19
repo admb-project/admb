@@ -575,17 +575,33 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../linad99/fvar.hpp \
                          ../../linad99/dvector.cpp \
                          ../../linad99/dvect5.cpp \
-                         ../../linad99/cbetai.cpp \
-                         ../../linad99/cbetacf.cpp \
-                         ../../linad99/vbetai.cpp \
-                         ../../linad99/vbetacf.cpp
-#                        ../../linad99/dmat3.cpp \
+                         ../../linad99/cbetai.cpp
+#                        ../../linad99/cbetacf.cpp \
+#                        ../../linad99/cgamdev.cpp \
+#                        ../../linad99/combc.cpp \
+#                        ../../linad99/conjprod.cpp \
+#                        ../../linad99/cspline.cpp \
+#                        ../../linad99/derch.cpp \
+#                        ../../linad99/dfgammp.cpp \
 #                        ../../linad99/dmat34.cpp \
-#                        ../../linad99/fvar_ma4.cpp \
+#                        ../../linad99/dmat3.cpp \
+#                        ../../linad99/dmat42.cpp \
+#                        ../../linad99/dranpois.cpp \
+#                        ../../linad99/dvsort.cpp \
 #                        ../../linad99/fvar_m15.cpp \
 #                        ../../linad99/fvar_m20.cpp \
 #                        ../../linad99/fvar_m24.cpp \
-#                        ../../linad99/fvar_m42.cpp
+#                        ../../linad99/fvar_m42.cpp \
+#                        ../../linad99/fvar_ma4.cpp \
+#                        ../../linad99/gaussher.cpp \
+#                        ../../linad99/ivsort.cpp \
+#                        ../../linad99/ranfill.cpp \
+#                        ../../linad99/rngen.cpp \
+#                        ../../linad99/vbetacf.cpp \
+#                        ../../linad99/vbetai.cpp \
+#                        ../../linad99/vgamdev.cpp \
+#                        ../../linad99/vspline.cpp
+
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 

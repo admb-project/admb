@@ -26,3 +26,7 @@ scp -rv default.zip admbfoun@admb-foundation.org:~/public_html/documentation/api
 ssh admbfoun@admb-foundation.org 'cd public_html/documentation/api/default; unzip default.zip';
 cd $WD
 pwd
+
+cp -v cadaver-script ~/.cadaver
+cadaver -V
+rm -fv ~/.cadaver

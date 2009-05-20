@@ -23,8 +23,8 @@ Name: "mingw"; Description: "Full installation of ADMB for MinGW"
 
 [Files]
 Source: "..\..\build\dists\admb_gcc345_mingw32\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs
-Source: "..\..\tools\*"; DestDir: "{app}\tools"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\utilities\*"; DestDir: "{app}\tools"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 
 [Icons]
-Name: "{group}\ADMB Command Prompt (MinGW GCC 3.4)"; Filename: "{cmd}"; Parameters: "/K ""{app}\tools\set-tools-path.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW)"
+Name: "{group}\ADMB Command Prompt (MinGW GCC 3.4)"; Filename: "{cmd}"; Parameters: "/K ""{app}\utilities\set-tools-path.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW)"
 Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB"

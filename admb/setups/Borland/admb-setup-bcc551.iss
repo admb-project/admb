@@ -20,7 +20,7 @@ LicenseFile=..\MinGW\LICENSE
 Name: "bcc551"; Description: "ADMB for Borland BCC32 5.5.1"
 
 [Files]
-Source: "..\..\build\dists\admb_b502_win32\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs
+Source: "..\..\trunk\build\dists\admb_b502_win32\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs
 
 [Icons]
 Name: "{group}\ADMB Command Prompt (Borland BCC32 5.5.1)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-bcc551.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt"

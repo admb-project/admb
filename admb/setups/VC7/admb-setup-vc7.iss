@@ -20,7 +20,7 @@ LicenseFile=..\MinGW\LICENSE
 Name: "vc7"; Description: "ADMB for Microsoft Visual Studio .NET 2003"
 
 [Files]
-Source: "..\..\build\dists\admb_vc7_win32\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs
+Source: "..\..\trunk\build\dists\admb_vc7_win32\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs
 
 [Icons]
 Name: "{group}\ADMB Command Prompt (Microsoft Visual Studio .NET 2003)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-vc7.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt"

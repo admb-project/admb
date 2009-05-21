@@ -18,7 +18,7 @@ linux-verify:
 	make --directory=src --file=linux.mak verify
 
 dist:
-	./srcCopy.sh
+	scripts/srcCopy.sh
 
 clean:
 	@rm -rvf build

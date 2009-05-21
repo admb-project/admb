@@ -1,7 +1,5 @@
 .PHONY=dist
 
-VERSION=`cat VERSION.txt`
-
 all: 
 
 mingw:

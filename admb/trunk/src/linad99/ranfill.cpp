@@ -1,6 +1,8 @@
 /*
  * $Id$
- * Author: Unknown
+ * 
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 
@@ -38,6 +40,12 @@ void reinitialize_auto_rand()
   auto_rand(One,-One);
 }
 
+/** Random number generator.
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+*/
 double auto_rand(long int& idum, int reset)
 {
   static long ix1,ix2,ix3;

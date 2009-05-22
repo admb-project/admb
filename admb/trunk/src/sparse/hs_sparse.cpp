@@ -1,3 +1,13 @@
+/*
+ * $Id$
+ *
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB foundation
+ *
+ * This code is inspired by the CSparse package written by Timothy A. Davis.
+ * It has been extensively modified for compliance with ADMB.
+ */
+
 #include <fvar.hpp>
 //#include <admodel.h>
 //#include <df1b2fun.h>

@@ -1,6 +1,10 @@
 /*
  * $Id$
- * Author: Unknown
+*
+ * Authors: Alan Genz and Yihong Ge
+ *
+ * Ported to C++ and exentensivly modified by David Fournier
+ * copyright (c) 2009 ADMB foundation
  */
 
 /* t.f -- translated by f2c (version 20000121).
@@ -242,6 +246,14 @@ dvariable mvbvu_(const dvariable *sh,const  dvariable *sk,
 #ifdef __cplusplus
 }
 #endif
+
+/** Cumulative bivariate normal distribution.
+  Assumes two distributions X and Y both N(0,1).
+  \param x Upper limit of inetegration on X.
+  \param y Upper limit of inetegration on Y
+  \param rho correlation coefficient.
+  \return Probability that X is larger than x; and Y is larger than y 
+*/
 dvariable cumbvn(const dvariable& x,const dvariable& y,const dvariable& rho)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -253,6 +265,15 @@ dvariable cumbvn(const dvariable& x,const dvariable& y,const dvariable& rho)
   return retval;
 }
 
+/** Cumulative bivariate normal distribution.
+  Assumes two distributions X and Y both N(0,1).
+  \param xl Lower limit of inetegration on X.
+  \param yl Lower limit of inetegration on Y.
+  \param xu Upper limit of inetegration on X.
+  \param yu Upper limit of inetegration on Y.
+  \param rho correlation coefficient.
+  \return Probability that X is between xl and xu and Y is between yl and yu
+*/
 dvariable cumbvn(const dvariable& xl,const dvariable& yl,
   const dvariable& xu,const dvariable& yu,const dvariable& rho)
 {

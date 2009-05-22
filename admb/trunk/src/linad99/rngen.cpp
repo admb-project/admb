@@ -1,7 +1,8 @@
 /**
  * $Id$
  *
- * Author: Unknown
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include "fvar.hpp"
 
@@ -49,7 +50,12 @@
     better_rand();
   }
 
+/** Random number generator.
 
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+*/
 double random_number_generator::better_rand() 
 {
   long int * idum= (&xdum);

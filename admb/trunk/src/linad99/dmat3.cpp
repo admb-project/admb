@@ -360,6 +360,7 @@ void ludcmp_det(BOR_CONST dmatrix& _a,BOR_CONST ivector& _indx,BOR_CONST double&
     \param indx Permutation vector from ludcmp.
     \param b A dvector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved, and containing on return the solution vector \f$X\f$.
+
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2

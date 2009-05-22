@@ -1,6 +1,8 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 
@@ -33,6 +35,12 @@ dvector cubic_spline_function::operator () (_CONST dvector& u)
   return z;
 }
 
+/** Cubic spline interpolating function.
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 3
+*/
 dvector spline(BOR_CONST dvector &_x,BOR_CONST dvector&_y,double yp1,double ypn)
 {
   dvector& x=(dvector&) _x;
@@ -89,6 +97,12 @@ dvector spline(BOR_CONST dvector &_x,BOR_CONST dvector&_y,double yp1,double ypn)
 }
 
 
+/** Cubic spline interpolation.
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 3
+*/
 double splint(BOR_CONST dvector& _xa,BOR_CONST dvector& _ya,BOR_CONST dvector& _y2a,double x)
 {
   dvector& xa=(dvector&) _xa;

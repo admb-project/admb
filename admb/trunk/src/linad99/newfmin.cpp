@@ -7,7 +7,6 @@
  * David Fournier. 
  *
  *  Copyright (c) 2009 ADMB Foundation
- *  License: BSD
  */
 
 

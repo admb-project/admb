@@ -1,6 +1,8 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 
@@ -18,6 +20,14 @@ double factln(double n)
   return gammln(n+1.0);
 }
 
+/** Log gamma function.
+    \param xx \f$x\f$
+    \return \f$\ln\bigr(\Gamma(x)\bigl)\f$
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 6
+*/
 double gammln(double xx)
 {
   double x,tmp,ser;
@@ -44,7 +54,7 @@ double gammln(double xx)
     if (mmin != r.indexmin() || mmax != r.indexmax()) 
     {
       cerr << "Incompatible array bounds in function "
-        "dvar_vector log_comb(BOR_CONST dvar_vector& n, BOR_CONST dvector& r)" << endl;
+        "dvector log_comb(_CONST dvector& n, _CONST dvector& r)" << endl;
       ad_exit(1);
     } 
     dvector tmp(mmin,mmax);

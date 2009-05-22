@@ -1,6 +1,8 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 
@@ -19,7 +21,12 @@
 #define NDIV (1+IMM1/NTAB)
 #define EPS 1.2e-7
 #define RNMX (1.0-EPS)
+/** Random number generator.
 
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+*/
 double better_rand(long int &pidum)
 {
   long int * idum=&pidum;

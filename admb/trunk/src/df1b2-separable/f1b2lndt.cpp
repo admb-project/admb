@@ -1,12 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
+/*
+ * $Id$
+ *
+ * Author: David Fournier
+ */
 
 #include <df1b2fun.h>
 
@@ -29,7 +25,16 @@ df1b2vector reorder(const df1b2vector& M,const ivector& indx);
 void ludcmp(const df1b2matrix& a,int k);
 df1b2matrix_pair ludcmp(const df1b2matrix& a);
 
+/** LU decomposition back susbstitution alogrithm for df1b2matrix object.
+    \param a A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param indx Permutation vector from ludcmp.
+    \param b A dvector containing the RHS, \f$b\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved, and containing on return the solution vector \f$X\f$.
 
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+*/
 df1b2vector lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
   ivector & ,const df1b2vector& b)
 {

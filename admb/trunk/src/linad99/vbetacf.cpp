@@ -14,7 +14,7 @@
     \param _a \f$a\f$
     \param _b \f$b\f$
     \param _x \f$x\f$
-    \param MAXIT Maximum number of interatioons for the continued fraction approximation in betacf.
+    \param MAXIT Maximum number of iterations for the continued fraction approximation in betacf.
     \return Incomplete beta function \f$I_x(a,b)\f$
 
     \n\n The implementation of this algorithm was inspired by

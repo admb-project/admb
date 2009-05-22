@@ -1,6 +1,8 @@
 /*
  * $Id$
- * Author: Unknown
+ * 
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 
@@ -8,6 +10,12 @@ static double eps=3.0e-14;
 static double pim=0.7511255444649427;
 static int maxit=50;
 
+/** Gauss-Hermite quadature.
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 4
+*/
 void gauss_hermite(BOR_CONST dvector& _x,BOR_CONST dvector& _w)
 {
   dvector x=(dvector&) _x;
@@ -76,6 +84,12 @@ void gauss_hermite(BOR_CONST dvector& _x,BOR_CONST dvector& _w)
   w.shift(ximin);
 }
 
+/** Gauss-Legendre quadature.
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 4
+*/
 void gauss_legendre(double x1, double x2, const dvector& _x, const dvector& _w)
 {
   dvector & x=(dvector&)(_x);
@@ -122,14 +136,17 @@ void gauss_legendre(double x1, double x2, const dvector& _x, const dvector& _w)
   w.shift(ximin);
 }
 
+/** Gauss-Legendre quadature.
+*/
 void gauss_legendre(const dvector& _x, const dvector& _w)
 {
   gauss_legendre(0,1,_x,_w);
 }
 
-// this is normlaized so that stndard normal density
-// integrates to 1
-
+/** Gauss-Hermite quadature.
+ this is normlaized so that standard normal density
+ integrates to 1
+*/
 void normalized_gauss_hermite(const dvector& _x, const dvector& _w)
 {
   dvector& x=(dvector&) _x;

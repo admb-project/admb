@@ -1,20 +1,41 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Author: David Fournier
+ * copyright (c) 2009 ADMB foundation
  */
+
 #include <admodel.h>
 #include <math.h>
 #define NRANSI
 //#include "nrutil.h"
 #define NMAX 5000
+
+/** \def GET_PSUM
+  Computes psum.
+*/
 #define GET_PSUM \
           for (j=1;j<=ndim;j++) {\
           for (sum=0.0,i=1;i<=mpts;i++) sum += p[i][j];\
           psum[j]=sum;}
-#define SWAP(a,b) {swap=(a);(a)=(b);(b)=swap;}
-//double amxxx(BOR_CONST dmatrix & p, BOR_CONST dvector& y, BOR_CONST dvector& psum, int ndim,
-  //double (*funk)(double []), int ihi, double fac);
 
+/** \def SWAP(a,b)
+  Reverses a and b
+*/
+#define SWAP(a,b) {swap=(a);(a)=(b);(b)=swap;}
+
+
+/** Nelder-Mead simplex alogrithm.
+  \param _p Matrix
+  \param _y Vector
+  \param ndim Integer
+  \param ftol Double
+  \param nfunk Integer
+
+  \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 10
+*/
 void function_minimizer::adamoeba(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, int ndim,
   double ftol,int nfunk)
 {

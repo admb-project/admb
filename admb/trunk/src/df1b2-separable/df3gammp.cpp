@@ -1,12 +1,9 @@
-/**
+/*
   * $Id$
   *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
+ */
 #include <df1b2fun.h>
 #define ITMAX 100
 #define EPS 1.0e-9
@@ -38,7 +35,14 @@ df1b2variable log_negbinomial_density(double x,const df1b2variable& _xmu,
   return tmp1;
 }
 
+/** Log gamma function.
+    \param xx \f$x\f$
+    \return \f$\ln\bigr(\Gamma(x)\bigl)\f$
 
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 6
+*/
 df3_two_variable gammln(const df3_two_variable& xx)
 {
   df3_two_variable x,tmp,ser,tmp1;
@@ -58,6 +62,12 @@ df3_two_variable gammln(const df3_two_variable& xx)
 }
 
 
+/** Incomplete gamma function.
+    Continued fraction approximation.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 6
+*/
 void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
   const df3_two_variable& x,const df3_two_variable& _gln)
 {
@@ -88,6 +98,12 @@ void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
   gammcf=exp(-x+a*log(x)-(gln))*h;
 }
 
+/** Incomplete gamma function.
+    Continued fraction approximation.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 6
+*/
 void gser(const df3_two_variable& _gamser,const df3_two_variable& a,
   const df3_two_variable& x,const df3_two_variable& _gln)
 {

@@ -1,6 +1,8 @@
 /*
  * $Id$
- * Author: Unknown
+ * Author: David Fournier
+ *
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
 

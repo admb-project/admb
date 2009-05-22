@@ -1,6 +1,10 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Authors: Alan Genz and Yihong Ge
+ *
+ * Ported to C++ and exentensivly modified by David Fournier
+ * copyright (c) 2009 ADMB foundation
  */
 
 /* t.f -- translated by f2c (version 20000121).
@@ -247,6 +251,14 @@ double cmvbvu_(const double *sh,const  double *sk,
 #ifdef __cplusplus
 }
 #endif
+
+/** Cumulative bivariate normal distribution.
+  Assumes two distributions X and Y both N(0,1).
+  \param x Upper limit of inetegration on X.
+  \param y Upper limit of inetegration on Y
+  \param rho correlation coefficient.
+  \return Probability that X is larger than x; and Y is larger than y 
+*/
 double cumbvn(const double& x,const double& y,const double& rho)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -258,6 +270,15 @@ double cumbvn(const double& x,const double& y,const double& rho)
   return retval;
 }
 
+/** Cumulative bivariate normal distribution.
+  Assumes two distributions X and Y both N(0,1).
+  \param xl Lower limit of inetegration on X.
+  \param yl Lower limit of inetegration on Y.
+  \param xu Upper limit of inetegration on X.
+  \param yu Upper limit of inetegration on Y.
+  \param rho correlation coefficient.
+  \return Probability that X is between xl and xu and Y is between yl and yu
+*/
 double cumbvn(const double& xl,const double& yl,
   const double& xu,const double& yu,const double& rho)
 {
@@ -274,6 +295,8 @@ double cumbvn(const double& xl,const double& yl,
 #ifdef __cplusplus
 extern "C" {
 #endif
+/* BVN - calculate the probability that X is larger than SH and Y is */
+/*       larger than SK. */
 double cmvbvu_(const double *sh,const double *sk,const double *r__)
 {
   RETURN_ARRAYS_INCREMENT();

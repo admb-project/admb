@@ -14,6 +14,7 @@
     \param b \f$b\f$
     \param x \f$x\f$
     Evaluates the continued fraction approximation for imcomplete beta function.
+
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2

@@ -1,7 +1,14 @@
 /*
  * $Id$
+ *
  * Author: Unknown
+ * This file was originally written in FORTRAN II by and unknown author.
+ * In the 1980s, it was ported to C and C++ and extensively modified by
+ * David Fournier. 
+ *
+ *  Copyright (c) 2009 ADMB Foundation
  */
+
 #ifdef __ZTC__
   #include <conio.h>
 #endif

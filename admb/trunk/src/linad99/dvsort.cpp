@@ -1,9 +1,19 @@
 /*
  * $Id$
- * Author: Unknown
+ * Author: David Fournier
+ *
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
+/** Quicksort.
+    \param v Vector of doubles to be sorted
+    \param NSTACK Lenth of intermediate storage vector. Default is NSTACK = 60.
+    \return dvector object containing the input vector sorted in ascending order.
 
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 8
+*/
 dvector sort(_CONST dvector& v, int NSTACK)
 {
    const int M=7;
@@ -89,6 +99,16 @@ dvector sort(_CONST dvector& v, int NSTACK)
   }
 }
 
+/** Quicksort.
+    \param _v Vector to be sorted
+    \param _index ivector on return containing the input order of the origian vector.
+    \param NSTACK Lenth of intermediate storage vector. Default is NSTACK = 60.
+    \return dvector object containing the input vector sorted in ascending order.
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 8
+*/
 dvector sort(_CONST dvector& _v,BOR_CONST ivector& _index, int NSTACK)
 {
    const int M=7;

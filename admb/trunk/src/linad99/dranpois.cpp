@@ -1,6 +1,8 @@
 /*
  * $Id$
- * Author: Unknown
+ * 
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 #include "fvar.hpp"
 
@@ -24,7 +26,15 @@
           
   
 #define PI 3.141592654
+/* Poisson random deviates.
+   \param xm Mean of Poisson distribution
+   \param rng Instance of class random_number_generator.
+   \return Integer-valued double drawn from the Poisson distribution with given mean.
 
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+*/
 double randpoisson(double xm, BOR_CONST random_number_generator& rng)
 {
   double gammln(double xx);

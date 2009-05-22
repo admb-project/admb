@@ -1,6 +1,8 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Author: David Fournier
+ * Copyright (c) 2009 ADMB Foundation
  */
 
 #include <admodel.h>
@@ -20,6 +22,17 @@ void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,
   BOR_CONST dvariable& y,BOR_CONST dvariable& dy);
 
 
+/** Romberg integration.
+  \param func Pointer to a member function of class model_parameters.
+  \param a Lower limit of integration.
+  \param b Upper limit of inegration.
+  \param ns
+  \return The integral of the function from a to b
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+*/
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
   double b,int ns)
 {
@@ -47,6 +60,17 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 }
 
 
+/** Romberg integration.
+  \param func Pointer to a member function of class model_parameters.
+  \param a Lower limit of integration.
+  \param b Upper limit of inegration.
+  \param ns
+  \return The integral of the function from a to b
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+*/
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,
   double b,int ns)
 {
@@ -73,6 +97,17 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   return 0.0;
 }
 
+/** Romberg integration.
+  \param func Pointer to a member function of class model_parameters.
+  \param a Lower limit of integration.
+  \param b Upper limit of inegration.
+  \param ns
+  \return The integral of the function from a to b
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+*/
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
   BOR_CONST dvariable& b,int ns)
 {
@@ -100,6 +135,17 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 }
 
 
+/** Romberg integration.
+  \param func Pointer to a member function of class model_parameters.
+  \param a Lower limit of integration.
+  \param b Upper limit of inegration.
+  \param ns
+  \return The integral of the function from a to b
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+*/
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),
   BOR_CONST dvariable& a,BOR_CONST dvariable& b, int ns)
 {
@@ -127,6 +173,12 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 }
 
 
+/** Extended trapezoid rule.
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 7
+*/
 dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int n)
 {
   double x,tnm,del;

@@ -88,6 +88,9 @@
 #  include <pthread_alloc>
 #endif
 #define  __NUMBERVECTOR__
+/** \def ADUNCONST(type,obj)
+  Creates a shallow copy of obj that is not CONST
+*/
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
 #define my_off_t long int
@@ -2096,13 +2099,13 @@ private:
     friend class dvar_vector;
   };
 
-  class dvector /// Vector of double prescision numbers
+  class dvector /// Vector of double precision numbers
   {
   protected:
     double * v;    ///< pointer to the data
     int index_min; ///< minimum valid subscript 
     int index_max; ///< maximum valid subscript
-    /// pointer to vector housekeeping object
+    /// pointer to general vector housekeeping object
 #if defined(THREAD_SAFE)
     ts_vector_shapex * shape;
 #else

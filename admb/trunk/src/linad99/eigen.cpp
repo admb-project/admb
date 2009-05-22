@@ -1,8 +1,11 @@
 /*
  * $Id$
- * Author: Unknown
+ *
+ * Author: David Fournier
+ * copyright (c) 2009 ADMB foundation
  */
-//#define EIGEN_VECTORS
+
+//#define eigen_vectors
 
 #include <fvar.hpp>
 
@@ -10,11 +13,15 @@
 void tri_dag(BOR_CONST dmatrix& m,BOR_CONST dvector& d,BOR_CONST dvector& e);
 void get_eigen(BOR_CONST dvector& d,BOR_CONST dvector& e,_CONST dmatrix& z);
 
+/** Eigenvalues.
+  \param m Input matrix (unchanged on return).
+  \return Vector of eigenvalues.
+*/
 dvector eigenvalues(_CONST dmatrix& m)
 {
   if (m.rowsize()!=m.colsize())
   {
-    cerr << "Error -- non square matrix passed to dvector eigen(_CONST dmatrix& m)\n";
+    cerr << "error -- non square matrix passed to dvector eigen(_CONST dmatrix& m)\n";
     ad_exit(1);
   }
   dmatrix m1=symmetrize(m);
@@ -34,8 +41,16 @@ dvector eigenvalues(_CONST dmatrix& m)
 
 }
 
+/** Householder transformation for eigenvalue computation.
+  \param _m Real, symmetric matrix; on return contains the orthogonal
+   transformed matrix.
+  \param _d On return contains the diagonal elements of the tri-diagonal matrix.
+  \param _e On teturn contains the off-diagonal elements.
 
-
+  \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 11
+*/
 void tri_dag(BOR_CONST dmatrix& _m,BOR_CONST dvector& _d,BOR_CONST dvector& _e)
 {
   dvector& d = (dvector&) _d;
@@ -154,6 +169,15 @@ double SIGN( CGNU_DOUBLE x, double y)
 }
 //#define SIGN(a,b) ((b)<0 ? -fabs(a) : fabs(a))
 
+/** Eigenvalues.
+  \param _d Diagonal elements of the matrix computed by Householder transformation.
+  \param _e Off-diagonal elements.
+  \param _z On output contains nothing useful.
+
+  \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 11
+*/
 void get_eigen(BOR_CONST dvector& _d,BOR_CONST dvector& _e,_CONST dmatrix& _z)
 {
   dvector& d = (dvector&) _d;
@@ -224,7 +248,16 @@ void get_eigen(BOR_CONST dvector& _d,BOR_CONST dvector& _e,_CONST dmatrix& _z)
   }
 }
 
+/** Eigenvalues.
+  \param _d Diagonal elements of the matrix computed by Householder transformation.
+  \param _e Off-diagonal elements.
+  \return Vector of eigenvalues.
 
+
+ \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 11
+*/
 dvector get_eigen_values(const dvector& _d,const dvector& _e)
 {
   dvector& d = (dvector&) _d;
@@ -287,6 +320,16 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e)
   return d;
 }
 
+/** Eigenvalues and eigenvectors.
+  \param _d Diagonal elements of the matrix computed by Householder transformation.
+  \param _e Off-diagonal elements.
+  \param _z On return containses eigenvectors.
+  \return Vector of eigenvalues.
+
+ \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 11
+*/
 dvector get_eigen_values(const dvector& _d,const dvector& _e,
   const dmatrix& _z)
   //eigenvectors are returned in z

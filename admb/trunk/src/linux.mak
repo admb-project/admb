@@ -13,6 +13,9 @@ dist:
 	- mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals,examples}
 	cp ../scripts/bash/link* ${DISK}/bin
 	cp ../scripts/bash/m* ${DISK}/bin
+	cp ../scripts/bash/admb ${DISK}/bin
+	cp ../scripts/bash/adcomp ${DISK}/bin
+	cp ../scripts/bash/adlink ${DISK}/bin
 	cp ../scripts/bash/Makefile ${DISK}
 	svn export ../examples/admb ${DISK}/examples/admb
 	svn export ../examples/admb-re ${DISK}/examples/admb-re

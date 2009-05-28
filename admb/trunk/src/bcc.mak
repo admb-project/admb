@@ -12,6 +12,7 @@ dist:
 	- mkdir -p ${DISK}
 	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include; mkdir -p examples
 	cp ../scripts/borland/*.bat ${DISK}/bin
+	cp ../scripts/mingw/admb.bat ${DISK}/bin
 	cp ../LICENSE ${DISK}
 	cp ../README ${DISK}
 	svn export ../examples/admb ${DISK}/examples/admb

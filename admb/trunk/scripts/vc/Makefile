@@ -2,106 +2,106 @@ verify: ham4 ham5 catage vonb vonbr n2mvol simple
 
 SS3:
 	cd SS3
-	makeadm SS3
+	admb SS3
 	SS3
-	makeadms SS3
+	admb -s SS3
 	SS3
 	cd ..
 
 ham4:
 	cd buscycle
-	makeadm ham4
+	admb ham4
 	ham4
-	makeadms ham4
+	admb -s ham4
 	ham4
 	cd ..
 
 ham5:
 	cd buscycle
-	makeadm ham5
+	admb ham5
 	ham5
-	makeadms ham5
+	admb -s ham5
 	ham5
 	cd ..
 
 catage:
 	cd catage
-	makeadm catage
+	admb catage
 	catage
-	makeadms catage
+	admb -s catage
 	catage
 	cd ..
 
 chem-eng:
 	cd chem-eng
-	makeadm chem-eng
+	admb chem-eng
 	chem-eng
-	makeadms chem-eng
+	admb -s chem-eng
 	chem-eng
 	cd ..
 
 finance:
 	cd finance
-	makeadm finance
+	admb finance
 	finance
-	makeadms finance
+	admb -s finance
 	finance
 	cd ..
 
 forest:
 	cd forest
-	makeadm forest
+	admb forest
 	forest
-	makeadms forest
+	admb -s forest
 	forest
 	cd ..
 
 pella-t:
 	cd pella-t
-	makeadm pella_t
+	admb pella_t
 	pella_t
-	makeadms pella_t
+	admb -s pella_t
 	pella_t
 	cd ..
 
 vonb:
 	cd robreg
-	makeadm vonb
+	admb vonb
 	vonb
-	makeadms vonb
+	admb -s vonb
 	vonb
 	cd ..
 
 vonbr:
 	cd robreg
-	makeadm vonbr
+	admb vonbr
 	vonbr
-	makeadms vonbr
+	admb -s vonbr
 	vonbr
 	cd ..
 
 simple:
 	cd simple
-	makeadm simple
+	admb simple
 	simple
-	makeadms simple
+	admb -s simple
 	simple
 	cd ..
 
 truncreg:
 	cd truncreg
-	makeadm truncreg
+	admb truncreg
 	runtrunc
 	fruntrunc
-	makeadms truncreg
+	admb -s truncreg
 	runtrunc
 	fruntrunc
 	cd ..
 
 n2mvol:
 	cd vol
-	makeadm n2mvol
+	admb n2mvol
 	n2mvol
-	makeadms n2mvol
+	admb -s n2mvol
 	n2mvol
 	cd ..

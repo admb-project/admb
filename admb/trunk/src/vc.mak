@@ -14,6 +14,7 @@ all:
 	- cd ./df1b2-separable;mkdir  ${CCVERSION}-${OSVERSION}slp 
 	- cd ./df1b2-separable;mkdir  ${CCVERSION}-${OSVERSION}olp 
 	cp ../scripts/vc/*.bat ${DISK}/bin
+	cp ../scripts/mingw/admb.bat ${DISK}/bin
 	cp ../LICENSE ${DISK}
 	cp ../README ${DISK}
 	svn export ../examples/admb ${DISK}/examples/admb

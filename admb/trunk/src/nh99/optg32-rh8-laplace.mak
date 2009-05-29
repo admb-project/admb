@@ -66,11 +66,11 @@ df1b2stub:
 	 cd $(STUBPATH); ar -rs ${STUBNAME}  df1b2stub.o
 
 tpl2cpp.c: tpl2cpp.lex
-	- flex <  tpl2cpp.lex
-	- sed -f sedflex lex.yy.c > tpl2cpp.c
+	flex < tpl2cpp.lex
+	sed -f sedflex lex.yy.c > tpl2cpp.c
 
 tpl2cpp: tpl2cpp.c
-	- gcc -I. -DUX tpl2cpp.c -o tpl2cpp
+	gcc tpl2cpp.c -o $@
 
 disk: $(LIBPATH)/$(LIBNAME)  df1b2stub tpl2cpp
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR)

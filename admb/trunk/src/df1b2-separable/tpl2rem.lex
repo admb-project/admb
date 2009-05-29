@@ -7,7 +7,7 @@
   #include <stdlib.h>
   #include <string.h>
   #include <stdio.h>
-  #if (!defined(UX))
+  #if defined(_WIN32)
   #  include <io.h>  fopen
   #endif
   char tmp_string[MAX_TMP_STRING];
@@ -3894,7 +3894,7 @@ TOP_OF_MAIN_SECTION {
     fclose(fdat);
     fclose(fall);
 
-#if !defined(UX)
+#if defined(_WIN32)
     strcpy(outcommand,"copy xxglobal.tmp + xxhtop.tmp + header.tmp "
      "+ xxalloc1.tmp + xxalloc2.tmp + xxalloc3.tmp + xxalloc4.tmp "
      " + xxalloc5.tmp  + xxtopm.tmp  + xxalloc6.tmp ");

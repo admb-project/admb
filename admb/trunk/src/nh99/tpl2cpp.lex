@@ -7,7 +7,7 @@
   #include <stdlib.h>
   #include <string.h>
   #include <stdio.h>
-  #if (!defined(UX))
+  #if defined(_WIN32)
   #  include <io.h>  fopen
   #endif
   char tmp_string[MAX_TMP_STRING];
@@ -364,7 +364,7 @@ DATA_SECTION  {
   else
   {
     char buff[1000];
-#   if (!defined(UX))
+#   if defined(_WIN32)
       char * FILE_ROOT = strupr(strdup(infile_root));
 #   else
       char * FILE_ROOT = strdup(infile_root);
@@ -3446,7 +3446,7 @@ TOP_OF_MAIN_SECTION {
     fclose(ftopmain);
     fclose(fdat);
     fclose(fall);
-#if !defined(UX)
+#if defined(_WIN32)
     strcpy(outcommand,"copy /b xxglobal.tmp + xxhtop.tmp + header.tmp + xxalloc.tmp"
       " + xxtopm.tmp ");
 #else

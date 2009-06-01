@@ -53,12 +53,6 @@ $(OBJ3): %.obj: %.cpp
 	$(CC) $(FLAGS) $<
 	mv $*.o $(LIBPATH)/$*.obj
 
-
-admodel.obj : admodel.cpp
-	$(CC) $(FLAGS1) $<
-	mv $*.o $(LIBPATH)/$*.obj
-
-
 all: $(LIBPATH)/$(LIBNAME)  tpl2cpp disk  
 
 df1b2stub:

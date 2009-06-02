@@ -10,5 +10,3 @@ s/dvar_matrix/df1b2matrix/g
   s/^SEPFUN3//
 }
 #
-/\}\;/ i\
-void final_calcs();

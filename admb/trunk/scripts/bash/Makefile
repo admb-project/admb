@@ -1,5 +1,10 @@
-verify: ham4 ham5 catage finance vonb vonbr n2mvol simple
-noverify: SS3-Simple chem-eng forest pella-t truncreg union
+verify: admb admb-re
+
+admb: ham4 ham5 catage finance vonb vonbr n2mvol simple
+admb-skip: SS3-Simple chem-eng forest pella-t truncreg union
+
+admb-re: biglog 
+admb-re-skip: union
 
 SS3-Simple:
 	cd $(ADMB_HOME)/examples/admb/SS3-Simple;admb SS3;./SS3
@@ -56,3 +61,7 @@ n2mvol:
 union:
 	cd $(ADMB_HOME)/examples/admb-re/union;tpl2rem union;mygcco-re union;./union
 	cd $(ADMB_HOME)/examples/admb-re/union;tpl2rem union;mygccs union;./union
+
+biglog:
+	cd $(ADMB_HOME)/examples/admb-re/biglog;admb -r biglog;./biglog
+	cd $(ADMB_HOME)/examples/admb-re/biglog;admb -r -s biglog;./biglog

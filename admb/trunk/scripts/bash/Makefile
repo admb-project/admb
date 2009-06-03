@@ -4,7 +4,7 @@ admb: ham4 ham5 catage finance vonb vonbr n2mvol simple
 admb-skip: SS3-Simple chem-eng forest pella-t truncreg union
 
 admb-re: biglog caest kidney
-admb-re-skip: orange2 union skewed weights gamma nested4 bcb sdv pheno orange
+admb-re-skip: orange2 union skewed weights gamma nested4 bcb sdv pheno orange polio
 
 SS3-Simple:
 	cd $(ADMB_HOME)/examples/admb/SS3-Simple;admb SS3;./SS3
@@ -117,5 +117,9 @@ orange:
 	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@
 
 socatt:
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@
+
+polio:
 	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r $@;./$@;check-expected-results $@
 	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@

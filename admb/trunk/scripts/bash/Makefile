@@ -4,7 +4,7 @@ admb: ham4 ham5 catage finance vonb vonbr n2mvol simple
 admb-skip: SS3-Simple chem-eng forest pella-t truncreg union
 
 admb-re: biglog caest
-admb-re-skip: union skewed weights
+admb-re-skip: union skewed weights gamma
 
 SS3-Simple:
 	cd $(ADMB_HOME)/examples/admb/SS3-Simple;admb SS3;./SS3

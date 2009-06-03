@@ -43,7 +43,7 @@ if %re%==1 if %adlib%==-lads set df1b2lib=-ldf1b2s
 REM echo %linker% %s% %def% -L%ADMB_HOME%/lib %1.o %df1b2lib% -ladmod -ladt %adlib% %df1b2lib% -ladmod -ladt %adlib% %out%
 REM      %linker% %s% %def% -L"%ADMB_HOME%\lib" %1.o %df1b2lib% -ladmod -ladt %adlib% %df1b2lib% -ladmod -ladt %adlib% %out%
 
-call linkadmb %1
+call lnkadmb %1
 
 goto EOF
 

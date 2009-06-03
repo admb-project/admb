@@ -83,3 +83,7 @@ weights:
 orange_cor:
 	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r $@;./$@;check-expected-results $@
 	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@
+
+gamma:
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r liver_$@;./liver_$@;check-expected-results liver_$@
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s liver_$@;./liver_$@;check-expected-results liver_$@

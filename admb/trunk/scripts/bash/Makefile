@@ -3,8 +3,8 @@ verify: admb admb-re
 admb: ham4 ham5 catage finance vonb vonbr n2mvol simple
 admb-skip: SS3-Simple chem-eng forest pella-t truncreg union
 
-admb-re: biglog caest skewed
-admb-re-skip: union
+admb-re: biglog caest
+admb-re-skip: union skewed weights
 
 SS3-Simple:
 	cd $(ADMB_HOME)/examples/admb/SS3-Simple;admb SS3;./SS3
@@ -75,3 +75,7 @@ skewed:
 	cd $(ADMB_HOME)/examples/admb-re/skewed;admb -r -s diet;./diet;check-expected-results diet
 	cd $(ADMB_HOME)/examples/admb-re/skewed;admb -r diet_sk;./diet_sk;check-expected-results diet_sk
 	cd $(ADMB_HOME)/examples/admb-re/skewed;admb -r -s diet_sk;./diet_sk;check-expected-results diet_sk
+
+weights:
+	cd $(ADMB_HOME)/examples/admb-re/weights;admb -r binomial_w2;./binomial_w2;check-expected-results binomial_w2
+	cd $(ADMB_HOME)/examples/admb-re/weights;admb -r -s binomial_w2;./binomial_w2;check-expected-results binomial_w2

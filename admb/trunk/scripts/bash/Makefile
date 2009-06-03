@@ -79,3 +79,7 @@ skewed:
 weights:
 	cd $(ADMB_HOME)/examples/admb-re/weights;admb -r binomial_w2;./binomial_w2;check-expected-results binomial_w2
 	cd $(ADMB_HOME)/examples/admb-re/weights;admb -r -s binomial_w2;./binomial_w2;check-expected-results binomial_w2
+
+orange_cor:
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@

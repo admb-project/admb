@@ -1,4 +1,3 @@
-all:nbmm
 verify: admb admb-re
 
 admb: ham4 ham5 catage finance vonb vonbr n2mvol simple

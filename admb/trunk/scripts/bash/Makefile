@@ -58,9 +58,6 @@ n2mvol:
 	cd $(ADMB_HOME)/examples/admb/vol;admb n2mvol;./n2mvol
 	cd $(ADMB_HOME)/examples/admb/vol;admb -s n2mvol;./n2mvol
 
-union:
-	cd $(ADMB_HOME)/examples/admb-re/union;tpl2rem union;mygcco-re union;./union
-	cd $(ADMB_HOME)/examples/admb-re/union;tpl2rem union;mygccs union;./union
 
 biglog:
 	cd $(ADMB_HOME)/examples/admb-re/biglog;admb -r biglog;./biglog;check-expected-results biglog
@@ -129,5 +126,9 @@ logistic:
 	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@
 
 lidar:
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@
+
+union:
 	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r $@;./$@;check-expected-results $@
 	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@

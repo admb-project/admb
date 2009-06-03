@@ -3,8 +3,8 @@ verify: admb admb-re
 admb: ham4 ham5 catage finance vonb vonbr n2mvol simple
 admb-skip: SS3-Simple chem-eng forest pella-t truncreg union
 
-admb-re: biglog caest
-admb-re-skip: orange2 union skewed weights gamma nested4 bcb
+admb-re: biglog caest kidney
+admb-re-skip: orange2 union skewed weights gamma nested4 bcb sdv
 
 SS3-Simple:
 	cd $(ADMB_HOME)/examples/admb/SS3-Simple;admb SS3;./SS3
@@ -97,5 +97,13 @@ bcb:
 	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@
 
 orange2:
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@
+
+sdv:
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@
+
+kidney:
 	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r $@;./$@;check-expected-results $@
 	cd $(ADMB_HOME)/examples/admb-re/$@;admb -r -s $@;./$@;check-expected-results $@

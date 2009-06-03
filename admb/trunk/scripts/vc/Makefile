@@ -1,4 +1,6 @@
-verify: ham4 ham5 catage vonb vonbr n2mvol simple 
+verify: ham4 ham5 catage vonb vonbr n2mvol simple
+
+admb-re: biglog
 
 SS3:
 	cd SS3
@@ -105,3 +107,11 @@ n2mvol:
 	admb -s n2mvol
 	n2mvol
 	cd ..
+
+biglog:
+	cd ..\admb-re\biglog
+	admb -r biglog
+	biglog
+	admb -r -s biglog
+	biglog
+	cd ..\..\admb

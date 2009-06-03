@@ -3,7 +3,7 @@ verify: admb admb-re
 admb: ham4 ham5 catage finance vonb vonbr n2mvol simple
 admb-skip: SS3-Simple chem-eng forest pella-t truncreg union
 
-admb-re: biglog 
+admb-re: biglog caest
 admb-re-skip: union
 
 SS3-Simple:
@@ -63,5 +63,9 @@ union:
 	cd $(ADMB_HOME)/examples/admb-re/union;tpl2rem union;mygccs union;./union
 
 biglog:
-	cd $(ADMB_HOME)/examples/admb-re/biglog;admb -r biglog;./biglog
-	cd $(ADMB_HOME)/examples/admb-re/biglog;admb -r -s biglog;./biglog
+	cd $(ADMB_HOME)/examples/admb-re/biglog;admb -r biglog;./biglog;check-expected-results biglog
+	cd $(ADMB_HOME)/examples/admb-re/biglog;admb -r -s biglog;./biglog;check-expected-results biglog
+
+caest:
+	cd $(ADMB_HOME)/examples/admb-re/caest;admb -r caest;./caest;check-expected-results caest
+	cd $(ADMB_HOME)/examples/admb-re/caest;admb -r -s caest;./caest;check-expected-results caest

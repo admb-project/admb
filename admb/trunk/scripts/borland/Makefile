@@ -1,116 +1,124 @@
 all: simple
 
+admb-re: biglog
+
 verify: SS3 ham4 ham5 vonb vonbr simple catage finance n2mvol
 fails: union chem-eng forest pella-t truncreg
 
 SS3:
 	cd SS3
-	makadmb SS3
+	admb SS3
 	SS3
-	makadmbs SS3
+	admb -s SS3
 	SS3
 	cd ..
 
 ham4:
 	cd buscycle
-	makadmb ham4
+	admb ham4
 	ham4
-	makadmbs ham4
+	admb -s ham4
 	ham4
 	cd ..
 
 ham5:
 	cd buscycle
-	makadmb ham5
+	admb ham5
 	ham5
-	makadmbs ham5
+	admb -s ham5
 	ham5
 	cd ..
 
 catage:
 	cd catage
-	makadmb catage
+	admb catage
 	catage
-	makadmbs catage
+	admb -s catage
 	catage
 	cd ..
 
 chem-eng:
 	cd chem-eng
-	makadmb chem-eng
+	admb chem-eng
 	chem-eng
-	makadmbs chem-eng
+	admb -s chem-eng
 	chem-eng
 	cd ..
 
 finance:
 	cd finance
-	makadmb finance
+	admb finance
 	finance
-	makadmbs finance
+	admb -s finance
 	finance
 	cd ..
 
 forest:
 	cd forest
-	makadmb forest
+	admb forest
 	forest
-	makadmbs forest
+	admb -s forest
 	forest
 	cd ..
 
 pella-t:
 	cd pella-t
-	makadmb pella-t
+	admb pella-t
 	pella-t
-	makadmbs pella-t
+	admb -s pella-t
 	pella-t
 	cd ..
 
 vonb:
 	cd robreg
-	makadmb vonb
+	admb vonb
 	vonb
-	makadmbs vonb
+	admb -s vonb
 	vonb
 	cd ..
 
 vonbr:
 	cd robreg
-	makadmb vonbr
+	admb vonbr
 	vonbr
-	makadmbs vonbr
+	admb -s vonbr
 	vonbr
 	cd ..
 
 simple:
 	cd simple
-	makadmb simple
+	admb simple
 	simple
-	makadmbs simple
+	admb -s simple
 	simple
 	cd ..
 
 truncreg:
 	cd truncreg
-	makadmb truncreg
+	admb truncreg
 	runtrunc
 	fruntrunc
-	makadmbs truncreg
+	admb -s truncreg
 	runtrunc
 	fruntrunc
 	cd ..
 
 n2mvol:
 	cd vol
-	makadmb n2mvol
+	admb n2mvol
 	n2mvol
-	makadmbs n2mvol
+	admb -s n2mvol
 	n2mvol
 	cd ..
 
 union:
 	cd union
-	makadmb-re union
+	admb-re union
 	union	
 	cd ..
+
+biglog:
+	cd ..\admb-re\biglog
+	admb -r biglog
+	biglog
+	cd ..\..\admb

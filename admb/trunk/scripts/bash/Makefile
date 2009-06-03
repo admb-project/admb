@@ -3,7 +3,7 @@ verify: admb admb-re
 admb: ham4 ham5 catage finance vonb vonbr n2mvol simple
 admb-skip: SS3-Simple chem-eng forest pella-t truncreg union
 
-admb-re: biglog caest
+admb-re: biglog caest skewed
 admb-re-skip: union
 
 SS3-Simple:
@@ -69,3 +69,9 @@ biglog:
 caest:
 	cd $(ADMB_HOME)/examples/admb-re/caest;admb -r caest;./caest;check-expected-results caest
 	cd $(ADMB_HOME)/examples/admb-re/caest;admb -r -s caest;./caest;check-expected-results caest
+
+skewed:
+	cd $(ADMB_HOME)/examples/admb-re/skewed;admb -r diet;./diet;check-expected-results diet
+	cd $(ADMB_HOME)/examples/admb-re/skewed;admb -r -s diet;./diet;check-expected-results diet
+	cd $(ADMB_HOME)/examples/admb-re/skewed;admb -r diet_sk;./diet_sk;check-expected-results diet_sk
+	cd $(ADMB_HOME)/examples/admb-re/skewed;admb -r -s diet_sk;./diet_sk;check-expected-results diet_sk

@@ -325,15 +325,32 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
 
   void init_df1b2vector::allocate(void)
   {
-    index_min=1;
-    index_max=0;
+    //deallocate(); a// don;t know why this was ever here DF 6june09
+    index_min=0;
+    index_max=-1;
     ncopies=0;
-    int size=0;
-    trueptr=0;
     ptr=0;
   }
 
   init_df1b2vector::~init_df1b2vector()
+  {
+    if (ncopies)
+    {
+      if (*ncopies)
+        *(ncopies--);
+      else
+      {
+        if (trueptr)
+        {
+          delete [] trueptr;
+          trueptr=0;
+        }
+        delete ncopies;
+        ncopies=0;
+      }
+    }
+  }
+  void init_df1b2vector::deallocate(void)
   {
     if (ncopies)
     {

@@ -14,54 +14,54 @@ admb-skip: forest truncreg SS3-Simple
 
 buscycle: ham4 ham5
 ham4:
-	cd $(ADMB_HOME)/examples/admb/buscycle;admb $@;./$@
-	cd $(ADMB_HOME)/examples/admb/buscycle;admb -s $@;./$@
+	cd $(ADMB_HOME)/examples/admb/buscycle;admb $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/buscycle;admb -s $@;./$@;check-expected-results $@
 
 ham5:
-	cd $(ADMB_HOME)/examples/admb/buscycle;admb $@;./$@
-	cd $(ADMB_HOME)/examples/admb/buscycle;admb -s $@;./$@
+	cd $(ADMB_HOME)/examples/admb/buscycle;admb $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/buscycle;admb -s $@;./$@;check-expected-results $@
 
 catage:
-	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@
-	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@
+	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@;check-expected-results $@
 
 chem-eng:
-	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@
-	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@
+	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@;check-expected-results $@
 
 finance:
-	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@
-	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@
+	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@;check-expected-results $@
 
 forest:
-	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@
-	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@
+	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@;check-expected-results $@
 
 pella-t:
-	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@
-	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@
+	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@;check-expected-results $@
 
 robreg: vonb vonbr
 vonb:
-	cd $(ADMB_HOME)/examples/admb/robreg;admb $@;./$@
-	cd $(ADMB_HOME)/examples/admb/robreg;admb -s $@;./$@
+	cd $(ADMB_HOME)/examples/admb/robreg;admb $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/robreg;admb -s $@;./$@;check-expected-results $@
 
 vonbr:
-	cd $(ADMB_HOME)/examples/admb/robreg;admb $@;./$@
-	cd $(ADMB_HOME)/examples/admb/robreg;admb -s $@;./$@
+	cd $(ADMB_HOME)/examples/admb/robreg;admb $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/robreg;admb -s $@;./$@;check-expected-results $@
 
 simple:
-	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@
-	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@
+	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./$@;check-expected-results $@
 
 truncreg:
-	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./runtrunc.bat;./fruntrunc.bat
-	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./runtrunc.bat;./fruntrunc.bat
+	cd $(ADMB_HOME)/examples/admb/$@;admb $@;./runtrunc.bat;./fruntrunc.bat;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/$@;admb -s $@;./runtrunc.bat;./fruntrunc.bat;check-expected-results $@
 
 vol: n2mvol
 n2mvol:
-	cd $(ADMB_HOME)/examples/admb/vol;admb $@;./$@
-	cd $(ADMB_HOME)/examples/admb/vol;admb -s $@;./$@
+	cd $(ADMB_HOME)/examples/admb/vol;admb $@;./$@;check-expected-results $@
+	cd $(ADMB_HOME)/examples/admb/vol;admb -s $@;./$@;check-expected-results $@
 
 SS3-Simple:
 	cd $(ADMB_HOME)/examples/admb/SS3-Simple;admb SS3;./SS3

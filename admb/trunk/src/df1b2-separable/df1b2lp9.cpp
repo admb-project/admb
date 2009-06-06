@@ -260,6 +260,13 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     quadratic_prior::get_M_calculations();
   }
   gradient_structure::set_YES_DERIVATIVES();
+  for (i=1;i<=num_separable_calls;i++)
+  {
+    if (pfmc1[i])
+    {
+      delete pfmc1[i];
+    }
+  }
   pfmc1++;
   delete [] pfmc1;
   pfmc1 = 0;

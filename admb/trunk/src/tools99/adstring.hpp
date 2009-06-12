@@ -140,7 +140,8 @@ public :
   inline int operator == (const char* u)
     { return *this == adstring(u); }
 
-  inline int operator != (_CONST adstring & u);
+  inline int operator != (_CONST adstring & u)
+    { return(!(*this==u)); }
 
   adstring operator()(int i, int j);
   #if defined(USE_CONST)

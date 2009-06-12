@@ -41,7 +41,7 @@ extern int ctlc_flag;
   #endif
 #endif
 #if defined(__GNU__) || defined(UNIXKLUDGE)
-  #include <iostream.h>
+  #include <iostream>
   #include <signal.h>
   #define getch getchar
 #if !defined(UNIXKLUDGE) && !defined(linux)

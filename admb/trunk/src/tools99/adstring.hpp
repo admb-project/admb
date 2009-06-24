@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -247,8 +247,8 @@ public:
   #endif
   adstring& operator [] (int i);
   adstring& operator () (int i);
-  adstring_array& adstring_array::operator += (const adstring& s);
-  adstring_array& adstring_array::append_distinct(const adstring& s);
+  adstring_array& /*adstring_array::*/operator += (const adstring& s);
+  adstring_array& /*adstring_array::*/append_distinct(const adstring& s);
   friend ifstream& operator >> (ifstream& ifs,adstring_array& sa);
   friend ostream& operator << (BOR_CONST ostream& ifs,_CONST adstring_array& sa);
   friend cifstream& operator >> (cifstream& ifs,adstring_array& sa);

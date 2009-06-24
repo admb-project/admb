@@ -48,7 +48,12 @@
 
 #if  defined(__GNU__) || defined(__linux__)
 #include <memory.h>
-#include <iostream.h>
+  #if (__GNUC__ >3)
+     #include <iostream>
+     using namespace std;
+  #else   
+    #include <iostream.h>
+  #endif
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>

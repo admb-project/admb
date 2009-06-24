@@ -108,6 +108,17 @@
    m -= rowmin();
  }
 
+double min(const dmatrix& m)
+{
+  double tmp=max(m(m.rowmin()));
+  for (int i=m.rowmin()+1;i<=m.rowmax();i++)
+  {
+    double tmp1=min(m(i));
+    if (tmp>tmp1) tmp=tmp1;
+  }
+  return tmp;
+}
+
 double max(_CONST dmatrix& m)
 {
   double tmp=max(m(m.rowmin()));

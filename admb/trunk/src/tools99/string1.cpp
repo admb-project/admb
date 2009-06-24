@@ -184,14 +184,13 @@ int adstring::operator == (_CONST adstring & v)
   int tmp = strcmp (* this, v);
   return (tmp == 0);
 }
-
+/*
 int adstring::operator != (_CONST adstring & v)
 {
   int tmp = strcmp (* this, v);
   return (tmp != 0);
 }
-
-
+*/
 adstring & adstring::operator += (_CONST adstring & v)
 {
   int us = size ();

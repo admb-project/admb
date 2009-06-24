@@ -5,12 +5,18 @@
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 
+
 #include <admodel.h>
 #if !defined(__GNUG__) 
 #  include <new.h>
 #else
 #  if __GNUG__>=3 
-#    include <new.h>
+#    include <iostream>
+     using namespace std;
+
+#     if __GNUG__<4 
+#       include <new.h>
+#     endif
 #  endif
 #endif
 

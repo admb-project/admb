@@ -50,7 +50,12 @@ extern int ctlc_flag;
 #endif
 
 #if defined(__GNU__) || defined(UNIXKLUDGE)
-  #include <iostream.h>
+  #if (__GNUC__ >3)
+     #include <iostream>
+     using namespace std;
+  #else   
+    #include <iostream.h>
+  #endif
   #include <signal.h>
   #define getch getchar
   //typedef void (*SignalHandler) ();

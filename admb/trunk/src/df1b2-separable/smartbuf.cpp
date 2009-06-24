@@ -20,7 +20,12 @@
 
 #if  defined(__GNU__) || defined(__linux__)
 #include <memory.h>
-#include <iostream.h>
+  #if (__GNUC__ >3)
+     #include <iostream>
+     using namespace std;
+  #else   
+    #include <iostream.h>
+  #endif
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -58,7 +63,12 @@
 
 #ifdef __GNU__
 #include <memory.h>
-#include <iostream.h>
+  #if (__GNUC__ >3)
+     #include <iostream>
+     using namespace std;
+  #else   
+    #include <iostream.h>
+  #endif
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -138,7 +148,11 @@
     }
 #endif
 
+  #ifdef __GNU__
+    file_ptr=open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777 );
+  #else
     file_ptr=open(file_name, O_RDWR | O_CREAT | O_TRUNC );
+  #endif
 
     if (file_ptr == -1)
     {

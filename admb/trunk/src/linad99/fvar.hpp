@@ -1844,6 +1844,7 @@ private:
   dvector operator - (_CONST  dvector& t1, double x);
   dvector operator - (_CONST dvector& t1);
 
+  double min(_CONST dmatrix&);
   double max(_CONST dmatrix&);
   int max(const imatrix&);
   double max(_CONST dvector&);

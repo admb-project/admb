@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -10,11 +10,11 @@
 #pragma implementation "cifstrem.h"
 
 #include "cifstrem.h"
-
+/*
 #ifdef __GNUDOS__
-  void strnset(char *, const char, size_t n);
+  void strnset(char *, const char, size_t n); // is never referenced
 #endif
-
+*/
 void cifstream::set_eof_bit(void)
 {
   int current_state = rdstate();
@@ -420,7 +420,7 @@ void cifstream::report_error(const char * msg)
 
 void cifstream::report_error(const char * msg) {;}
 
-
+/*
 #if defined(__GNUDOS__) 
 #  if !defined(__ADSGI__)
   void strnset(char * comment_line, char x, size_t len)
@@ -436,4 +436,5 @@ void cifstream::report_error(const char * msg) {;}
     memset(comment_line,x,tlen);
   }
 #endif
+*/
 

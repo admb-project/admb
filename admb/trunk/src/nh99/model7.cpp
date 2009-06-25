@@ -136,7 +136,11 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       int i;
       for (i=adprogram_name.size();i>=1;i--)
       {
-        if (adprogram_name(i)=='\\')
+#ifdef _WIN32
+        if (adprogram_name(i) == '\\')
+#else
+        if (adprogram_name(i) == '/')
+#endif
         {
           adprogram_name=adprogram_name(i+1,adprogram_name.size());
           break;
@@ -149,8 +153,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       }
       int n=i-1;
       adprogram_name=adprogram_name(1,n);
-      (*ad_printf)( " AD Model Builder version 9.0.0\n"
-                    "Copyright (c) 2008 Regents of the University of California\n");
+      (*ad_printf)( " AD Model Builder version 9.0.x\n"
+                    "Copyright (c) 2008, 2009 Regents of the University of California\n");
       (*ad_printf)(" USAGE--%s options\n",(char*)(adprogram_name));
       (*ad_printf)(" where an option consists of -option_tag followed by arguments if necessary\n");
       (*ad_printf)( " -ainp NAME      change default ascii input parameter file name to NAME\n");
@@ -195,6 +199,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -master         run as PVM master program\n");
       (*ad_printf)( " -slave          run as PVM slave program\n");
       (*ad_printf)( " -pvmtime        record timing information for PVM performance analysis\n");
+      (*ad_printf)( " -info           Contributors acknowledgements\n");
       (*ad_printf)( " -? or -help     this message\n");
       (*ad_printf)( " Random effects options if applicable\n");
     //if (function_minimizer::random_effects_flag)
@@ -222,6 +227,45 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -shess         use sparse Hessian structure"
            " inner optimzation\n");       
     }
+      ad_exit(0);
+    }
+    else if (option_match(_argc,_argv,"-info") > -1)
+    {
+      (*ad_printf)("ADMB version 9.0.x (2009-xx-xx)\n");
+      (*ad_printf)("Copyright (C) 2008, 2009\n");
+      (*ad_printf)("\n");
+      (*ad_printf)("ADMB is free software and comes with ABSOLUTELY NO WARRANTY.\n");
+      (*ad_printf)("You are welcome to redistribute it under certain conditions.\n");
+      (*ad_printf)("Use the –license command line option for distribution details.\n");
+      (*ad_printf)("\n");
+      (*ad_printf)("AD Model Builder, or ADMB, was developed by David Fournier of Otter\n");
+      (*ad_printf)("Research Ltd, Sidney, B.C., Canada. In 2007, scientists from the University\n");
+      (*ad_printf)("of Hawai’i at Mānoa Pelagic Fisheries Research Program (John Sibert and\n");
+      (*ad_printf)("Anders Nielsen) and the Inter-American Tropical Tuna Commission (Mark\n");
+      (*ad_printf)("Maunder), in consultation with scientists from NOAA Fisheries (Richard\n");
+      (*ad_printf)("Methot), created the non-profit ADMB Foundation (admb-foundation.org) with\n");
+      (*ad_printf)("the goal of increasing the number of ADMB users by making the software free\n");
+      (*ad_printf)("and open source. In partnership with NOAA Fisheries and the National Center\n");
+      (*ad_printf)("for Ecological Analysis and Synthesis (NCEAS, www.nceas.ucsb.edu), the ADMB\n");
+      (*ad_printf)("Foundation obtained funding from the Gordon and Betty Moore Foundation\n");
+      (*ad_printf)("(www.moore.org) to acquire the copyright to the ADMB software suite, in\n");
+      (*ad_printf)("order to make it broadly and freely available to the research community. In\n");
+      (*ad_printf)("2008 the copyright was transferred from Otter Research Ltd to the\n");
+      (*ad_printf)("University of California. The binary files were released in December 2008\n");
+      (*ad_printf)("and the source code was released in March 2009. More information about the\n");
+      (*ad_printf)("ADMB project can be found at admb-project.org\n");
+      (*ad_printf)("\n");
+      (*ad_printf)("ADMB was initially written by David Fournier of Otter Research Ltd. ADMB is\n");
+      (*ad_printf)("now the result of a collaborative effort. Since 2009 there has been a core\n");
+      (*ad_printf)("group modifying the ADMB source code, currently consisting of\n");
+      (*ad_printf)("\n");
+      (*ad_printf)("David Fournier\n");
+      (*ad_printf)("John Sibert\n");
+      (*ad_printf)("Mark Maunder\n");
+      (*ad_printf)("Anders Nielsen\n");
+      (*ad_printf)("Hans Skaug\n");
+      (*ad_printf)("Arni Magnusson\n");
+      (*ad_printf)("Johnoel Ancheta\n");
       ad_exit(0);
     }
   }

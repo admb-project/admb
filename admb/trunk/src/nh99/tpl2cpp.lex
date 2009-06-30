@@ -15,6 +15,7 @@
   char tmp_string2[MAX_TMP_STRING];
   char tmp_string3[MAX_TMP_STRING];
   char tmp_string4[MAX_TMP_STRING];
+  char tmp_string5[MAX_TMP_STRING];
   char reference_statements[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
   char class_instances[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
   char outcommand[100];
@@ -2927,7 +2928,21 @@ PROCEDURE_SECTION {
                   }
 
 
-FUNCTION[ ]*{name}[ ]*{name}\(.*\) {
+FUNCTION[ ]*{name}[ ]*{name}\( {
+    char c;
+    int i = 0; 
+    tmp_string5[i] = '\0';
+    while ((c = input()) != ')' || i >= MAX_TMP_STRING - 1)
+    {
+      tmp_string5[i] = c;
+      i++;
+    }
+    if (i >= MAX_TMP_STRING - 1) {
+      fprintf(stderr,"Error -- Function parameter list has too many characters.");
+      exit(1);
+    }
+    tmp_string5[i] = ')';
+    tmp_string5[i + 1] = '\0';
     if (!in_procedure_def)
     {
       fprintf(stderr,"Error -- FUNCTION must be used within the"
@@ -2941,8 +2956,8 @@ FUNCTION[ ]*{name}[ ]*{name}\(.*\) {
     after_part(tmp_string4,tmp_string2,' ');  // get function name
     strip_leading_blanks(tmp_string1,tmp_string4); 
     fprintf(fall,"}\n\n%s ",tmp_string3);
-    fprintf(fall,"model_parameters::%s\n{\n",tmp_string1);
-    fprintf(fdat," %s %s;\n",tmp_string3,tmp_string1);
+    fprintf(fall,"model_parameters::%s%s\n{\n",tmp_string1,tmp_string5);
+    fprintf(fdat," %s %s%s;\n",tmp_string3,tmp_string1,tmp_string5);
     add_references_to_user_classes(fall); 
     in_aux_proc=1;
     BEGIN DEFINE_PROCS;

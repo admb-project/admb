@@ -1,7 +1,7 @@
-cp -v ../../examples/admb/simple/simple.tpl simple_hypen.tpl
-cp -v ../../examples/admb/simple/simple.tpl simple-hypen.tpl
-cp -v ../../examples/admb/simple/simple.dat simple_hypen.dat
-cp -v ../../examples/admb/simple/simple.dat simple-hypen.dat
+cp -v ../../trunk/examples/admb/simple/simple.tpl simple_hypen.tpl
+cp -v ../../trunk/examples/admb/simple/simple.tpl simple-hypen.tpl
+cp -v ../../trunk/examples/admb/simple/simple.dat simple_hypen.dat
+cp -v ../../trunk/examples/admb/simple/simple.dat simple-hypen.dat
 
 PATH=.:$ADMB_HOME/bin:$PATH
 

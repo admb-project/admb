@@ -2921,7 +2921,7 @@ int varchol(XCONST dvar_hs_smatrix &_A, XCONST hs_symbolic &_S,dvar_hs_smatrix &
   return (1) ; 
 }
 
- static void dfcholeski_sparse(void)
+void dfcholeski_sparse(void)
 {
   //ofstream ofs("log2");
   int ttc=0;

@@ -1,7 +1,7 @@
 #!/usr/bin/gawk -f
 BEGIN {
   FS="[> <]"
-  tplSection = "syn keyword tplSection"
+  tplSection = "syn keyword tplSection FUNCTION"
   tplSection = tplSection" LOCAL_CALCS END_CALCS"
   dataType = ""
   paramType = ""

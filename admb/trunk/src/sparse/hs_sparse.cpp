@@ -1260,10 +1260,10 @@ int cs_scatter(XCONST dvar_hs_smatrix &_A, int j, double beta, ivector &w, dvar_
 }
 
 /* C = alpha*A + beta*B */
-hs_smatrix cs_add(XCONST hs_smatrix &_AA, XCONST hs_smatrix &_BB, double alpha, double beta)
+hs_smatrix cs_add(XCONST hs_smatrix &AA, XCONST hs_smatrix &BB, double alpha, double beta)
 {
-    hs_smatrix& A = (hs_smatrix&) _AA;
-    hs_smatrix& B = (hs_smatrix&) _BB;
+    hs_smatrix& A = (hs_smatrix&) AA;
+    hs_smatrix& B = (hs_smatrix&) BB;
     int p, j, nz = 0, anz,m, n, bnz;
 
     if (A.m != B.m || A.n != B.n)
@@ -1304,10 +1304,10 @@ hs_smatrix cs_add(XCONST hs_smatrix &_AA, XCONST hs_smatrix &_BB, double alpha, 
 }
 
 
-dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &_AA, XCONST dvar_hs_smatrix &_BB, double alpha, double beta)
+dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &AA, XCONST dvar_hs_smatrix &BB, double alpha, double beta)
 {
-    dvar_hs_smatrix& A = (dvar_hs_smatrix&) _AA;
-    dvar_hs_smatrix& B = (dvar_hs_smatrix&) _BB;
+    dvar_hs_smatrix& A = (dvar_hs_smatrix&) AA;
+    dvar_hs_smatrix& B = (dvar_hs_smatrix&) BB;
     int p, j, nz = 0, anz,m, n, bnz;
 
     if (A.m != B.m || A.n != B.n)

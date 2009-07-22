@@ -53,9 +53,9 @@ _CONST double& banded_lower_triangular_dmatrix::operator () (int i,int j) _CONST
 
 
 banded_symmetric_dmatrix::banded_symmetric_dmatrix(
-  const banded_symmetric_dmatrix& _BB,int _lb,int _ub) : d(0,_BB.bw-1) , bw(_BB.bw)
+  const banded_symmetric_dmatrix& BB,int _lb,int _ub) : d(0,BB.bw-1) , bw(BB.bw)
 {
-  banded_symmetric_dmatrix& B= (banded_symmetric_dmatrix&) (_BB);
+  banded_symmetric_dmatrix& B= (banded_symmetric_dmatrix&) BB;
   if (_lb<B.indexmin() || _ub>B.indexmax())
   {
     cerr << "bounds error" << endl;

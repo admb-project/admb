@@ -60,7 +60,7 @@ df1b2stub:
 	 cd $(STUBPATH); ar -rs ${STUBNAME}  df1b2stub.o
 
 tpl2cpp.c: tpl2cpp.lex
-	flex < tpl2cpp.lex
+	flex tpl2cpp.lex
 	sed -f sedflex lex.yy.c > tpl2cpp.c
 
 tpl2cpp: tpl2cpp.c

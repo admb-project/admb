@@ -781,9 +781,9 @@ void myacc(int & p,int Lpi1,int ci,const ivector & Li,
 }
         
 // Numeric Cholesky factorization (L is factor). Return 1 on success; 0 otherwise
-int chol(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L)
+int chol(XCONST hs_smatrix &A, XCONST hs_symbolic &_SS, hs_smatrix &L)
 {
-    ADUNCONST(hs_symbolic,S)
+    hs_symbolic& S = (hs_symbolic&) _SS;
     double d, lki;
     int top, i, p, k, n;
   
@@ -861,10 +861,10 @@ int chol(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L)
 
 
 
-int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
+int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_SS, hs_smatrix &L,
   ivector & nxcount)
 {
-    ADUNCONST(hs_symbolic,S)
+    hs_symbolic& S = (hs_symbolic&) _SS;
     double d, lki;
     int top, i, p, k, n;
   
@@ -1035,9 +1035,9 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
 }
 
 /* solve Lx=b where x and b are dense.  x=b on input, solution on output. */
- dvector cs_lsolve (XCONST hs_smatrix &_L, XCONST dvector &y)
+ dvector cs_lsolve (XCONST hs_smatrix &_LL, XCONST dvector &y)
 {
-   ADUNCONST(hs_smatrix,L)
+    hs_smatrix& L = (hs_smatrix&) _LL;
     int p, j, n;
 
     n = L.n; 
@@ -1059,9 +1059,9 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
     return (x) ;
 }
 
- dvar_vector cs_lsolve (XCONST dvar_hs_smatrix &_L, XCONST dvar_vector &y)
+ dvar_vector cs_lsolve (XCONST dvar_hs_smatrix &_LL, XCONST dvar_vector &y)
 {
-   ADUNCONST(dvar_hs_smatrix,L)
+    dvar_hs_smatrix& L = (dvar_hs_smatrix&) _LL;
     int p, j, n;
 
     n = L.n; 
@@ -1084,9 +1084,9 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
 }
 
 /* solve L'x=b where x and b are dense.  x=b on input, solution on output. */
- dvector cs_ltsolve (XCONST hs_smatrix &_L, XCONST dvector &y)
+ dvector cs_ltsolve (XCONST hs_smatrix &_LL, XCONST dvector &y)
 {
-   ADUNCONST(hs_smatrix,L)
+    hs_smatrix& L = (hs_smatrix&) _LL;
     int p, j, n;
 
     n = L.n; 
@@ -1107,9 +1107,9 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
     return (x) ;
 }
 
- dvar_vector cs_ltsolve (XCONST dvar_hs_smatrix &_L, XCONST dvar_vector &y)
+ dvar_vector cs_ltsolve (XCONST dvar_hs_smatrix &_LL, XCONST dvar_vector &y)
 {
-   ADUNCONST(dvar_hs_smatrix,L)
+    dvar_hs_smatrix& L = (dvar_hs_smatrix&) _LL;
     int p, j, n;
 
     n = L.n; 
@@ -1260,10 +1260,10 @@ int cs_scatter(XCONST dvar_hs_smatrix &_A, int j, double beta, ivector &w, dvar_
 }
 
 /* C = alpha*A + beta*B */
-hs_smatrix cs_add(XCONST hs_smatrix &_A, XCONST hs_smatrix &_B, double alpha, double beta)
+hs_smatrix cs_add(XCONST hs_smatrix &_AA, XCONST hs_smatrix &_BB, double alpha, double beta)
 {
-    ADUNCONST(hs_smatrix,A)
-    ADUNCONST(hs_smatrix,B)
+    hs_smatrix& A = (hs_smatrix&) _AA;
+    hs_smatrix& B = (hs_smatrix&) _BB;
     int p, j, nz = 0, anz,m, n, bnz;
 
     if (A.m != B.m || A.n != B.n)
@@ -1304,10 +1304,10 @@ hs_smatrix cs_add(XCONST hs_smatrix &_A, XCONST hs_smatrix &_B, double alpha, do
 }
 
 
-dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &_A, XCONST dvar_hs_smatrix &_B, double alpha, double beta)
+dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &_AA, XCONST dvar_hs_smatrix &_BB, double alpha, double beta)
 {
-    ADUNCONST(dvar_hs_smatrix,A)
-    ADUNCONST(dvar_hs_smatrix,B)
+    dvar_hs_smatrix& A = (dvar_hs_smatrix&) _AA;
+    dvar_hs_smatrix& B = (dvar_hs_smatrix&) _BB;
     int p, j, nz = 0, anz,m, n, bnz;
 
     if (A.m != B.m || A.n != B.n)
@@ -2725,11 +2725,11 @@ double ln_det(dcompressed_triplet& VM)
 }
 
 
-int cholnew(XCONST hs_smatrix &_A, XCONST hs_symbolic &_S, hs_smatrix &_L)
+int cholnew(XCONST hs_smatrix &_AA, XCONST hs_symbolic &_SS, hs_smatrix &_LL)
 {
-    ADUNCONST(hs_symbolic,S)
-    ADUNCONST(hs_smatrix,L)
-    ADUNCONST(hs_smatrix,A)
+    hs_symbolic& S = (hs_symbolic&)_SS;
+    hs_smatrix& L = (hs_smatrix&)_LL;
+    hs_smatrix& A = (hs_smatrix&)_AA;
     double d, lki;
     int top, i, p, k, n;
   
@@ -2812,14 +2812,14 @@ int cholnew(XCONST hs_smatrix &_A, XCONST hs_symbolic &_S, hs_smatrix &_L)
 
 void dfcholeski_sparse(void);
 
-int varchol(XCONST dvar_hs_smatrix &_A, XCONST hs_symbolic &_S,dvar_hs_smatrix &_L,
+int varchol(XCONST dvar_hs_smatrix &_AA, XCONST hs_symbolic &_SS,dvar_hs_smatrix &_LL,
  dcompressed_triplet & sparse_triplet2)
  //laplace_approximation_calculator * lapprox)
 {
   RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
-  ADUNCONST(hs_symbolic,S)
-  ADUNCONST(dvar_hs_smatrix,L)
-  ADUNCONST(dvar_hs_smatrix,A)
+  hs_symbolic& S = (hs_symbolic&)_SS;
+  dvar_hs_smatrix& L = (dvar_hs_smatrix&)_LL;
+  dvar_hs_smatrix& A = (dvar_hs_smatrix&)_AA;
   int icount=0;
   double lki;
   double d;
@@ -3287,12 +3287,12 @@ void dfcholeski_sparse(void)
     return  ; 
 }
 
-int chol(XCONST dvar_hs_smatrix &_A, XCONST hs_symbolic &_S,
-  dvar_hs_smatrix &_L)
+int chol(XCONST dvar_hs_smatrix &_AA, XCONST hs_symbolic &_SS,
+  dvar_hs_smatrix &_LL)
 {
-  ADUNCONST(hs_symbolic,S)
-  ADUNCONST(dvar_hs_smatrix,L)
-  ADUNCONST(dvar_hs_smatrix,A)
+  hs_symbolic& S = (hs_symbolic&)_SS;
+  dvar_hs_smatrix& L = (dvar_hs_smatrix&)_LL;
+  dvar_hs_smatrix& A = (dvar_hs_smatrix&)_AA;
   int icount=0;
   dvariable lki;
   dvariable d;

@@ -43,7 +43,7 @@ void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST
 int minnz(BOR_CONST dvector& x);
 int maxnz(BOR_CONST dvector& xa);
 
-void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& SS,double s,
+void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& _SS,double s,
   int mcmc2_flag);
 
 int read_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dvector& h,
@@ -1311,9 +1311,9 @@ void read_covariance_matrix(BOR_CONST dmatrix& S,int nvar,int& oldHbf,
     exit(1);
   }
 }  
-void read_hessian_matrix_and_scale(int nvar, BOR_CONST dmatrix& SS,BOR_CONST dvector& pen_vector)
+void read_hessian_matrix_and_scale(int nvar, BOR_CONST dmatrix& _SS,BOR_CONST dvector& pen_vector)
 {
-  dmatrix& S= (dmatrix&) SS;
+  dmatrix& S= (dmatrix&) _SS;
   adstring tmpstring="admodel.hes";
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".hes";
@@ -1401,10 +1401,10 @@ void read_hessian_matrix_and_scale(int nvar, BOR_CONST dmatrix& SS,BOR_CONST dve
   S=inv(S);
 }
 
-void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& SS,
+void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& _SS,
   double rbp,int mcmc2_flag)
 {
-  dmatrix& S= (dmatrix&) SS;
+  dmatrix& S= (dmatrix&) _SS;
   adstring tmpstring="admodel.hes";
   if (mcmc2_flag)
   {

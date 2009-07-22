@@ -43,7 +43,7 @@ void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST
 int minnz(BOR_CONST dvector& x);
 int maxnz(BOR_CONST dvector& xa);
 
-void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& SS,double s,
+void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& _SS,double s,
   int mcmc2_flag);
 
 int read_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dvector& h,

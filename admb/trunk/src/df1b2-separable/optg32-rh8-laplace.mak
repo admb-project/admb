@@ -44,8 +44,8 @@ disk: $(LIBPATH)/$(LIBNAME) tpl2rem
 	cp sed* $(DISKDIR)/$(BINDIR)
 
 tpl2rem.c: tpl2rem.lex
-	- flex <  tpl2rem.lex
-	- sed -f sedflex lex.yy.c > tpl2rem.c
+	flex tpl2rem.lex
+	sed -f sedflex lex.yy.c > tpl2rem.c
 
 tpl2rem: tpl2rem.c
 	gcc tpl2rem.c -o tpl2rem

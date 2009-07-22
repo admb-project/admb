@@ -53,9 +53,9 @@ _CONST double& banded_lower_triangular_dmatrix::operator () (int i,int j) _CONST
 
 
 banded_symmetric_dmatrix::banded_symmetric_dmatrix(
-  const banded_symmetric_dmatrix& _B,int _lb,int _ub) : d(0,_B.bw-1) , bw(_B.bw)
+  const banded_symmetric_dmatrix& _BB,int _lb,int _ub) : d(0,_BB.bw-1) , bw(_BB.bw)
 {
-  banded_symmetric_dmatrix& B= (banded_symmetric_dmatrix&) (_B);
+  banded_symmetric_dmatrix& B= (banded_symmetric_dmatrix&) (_BB);
   if (_lb<B.indexmin() || _ub>B.indexmax())
   {
     cerr << "bounds error" << endl;
@@ -323,9 +323,9 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
     return banded_symmetric_dmatrix(*this,l,u);
   }
 
-  dvector eigenvalues(const banded_symmetric_dmatrix& _S)
+  dvector eigenvalues(const banded_symmetric_dmatrix& _SS)
   {
-    ADUNCONST(banded_symmetric_dmatrix,S);
+    banded_symmetric_dmatrix& S = (banded_symmetric_dmatrix&) _SS;
     if (S.bandwidth() !=2)
     {
       cerr << "error bandwidth not equal 2" << endl;
@@ -343,9 +343,9 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
   }
 
     
-  dmatrix eigenvectors(const banded_symmetric_dmatrix& _S,const dvector& _e)
+  dmatrix eigenvectors(const banded_symmetric_dmatrix& _SS,const dvector& _e)
   {
-    ADUNCONST(banded_symmetric_dmatrix,S);
+    banded_symmetric_dmatrix& S = (banded_symmetric_dmatrix&) _SS;
     ADUNCONST(dvector,e);
     if (S.bandwidth() !=2)
     {

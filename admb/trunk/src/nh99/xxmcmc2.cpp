@@ -36,7 +36,7 @@ void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
 void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST dvector& h,
   dvector& m,BOR_CONST dvector& s,BOR_CONST dvector& parsave,long int iseed, double size_scale);
 
-void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& SS,double s,
+void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& _SS,double s,
   int flag=0);
 
 int minnz(BOR_CONST dvector& x);

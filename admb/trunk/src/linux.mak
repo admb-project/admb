@@ -56,3 +56,7 @@ clean:
 	@cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  clean
 	@cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f  optg32-rh8-laplace.mak  clean
 	@cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f  safg32-rh8-laplace.mak clean 
+	@rm -f nh99/lex.yy.c
+	@rm -f nh99/tpl2cpp.c
+	@rm -f nh99/gcc411-fedorar8olp-stub/libdf1b2stub.a
+	@rm -f df1b2-separable/lex.yy.c

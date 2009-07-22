@@ -195,10 +195,10 @@ df1b2vector operator * (const dvector& _x,const df1b2matrix& _M)
 }
 
 
-df1b2matrix operator * (const df1b2matrix& _M,const df1b2matrix& _N)
+df1b2matrix operator * (const df1b2matrix& _MM,const df1b2matrix& _NN)
 {
-  ADUNCONST(df1b2matrix,M)
-  ADUNCONST(df1b2matrix,N)
+  df1b2matrix& M = (df1b2matrix&)_MM;
+  df1b2matrix& N = (df1b2matrix&)_NN;
   //check_shape(x,M,"operator *");
   int rmin=M.indexmin();
   int rmax=M.indexmax();
@@ -242,10 +242,10 @@ df1b2vector operator * (const df1b2matrix& _M,const dvector& _x)
   return tmp;
 }
 
-df1b2matrix elem_prod(const df1b2matrix& _M,const df1b2matrix& _N)
+df1b2matrix elem_prod(const df1b2matrix& _MM,const df1b2matrix& _NN)
 {
-  ADUNCONST(df1b2matrix,M)
-  ADUNCONST(df1b2matrix,N)
+  df1b2matrix& M = (df1b2matrix&)_MM;
+  df1b2matrix& N = (df1b2matrix&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
   df1b2matrix tmp(rmin,rmax);
@@ -262,10 +262,10 @@ df1b2matrix elem_prod(const df1b2matrix& _M,const df1b2matrix& _N)
   return tmp;
 }
 
-df1b2matrix elem_prod(const dmatrix& _M,const df1b2matrix& _N)
+df1b2matrix elem_prod(const dmatrix& _MM,const df1b2matrix& _NN)
 {
-  ADUNCONST(dmatrix,M)
-  ADUNCONST(df1b2matrix,N)
+  dmatrix& M = (dmatrix&)_MM;
+  df1b2matrix& N = (df1b2matrix&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
   df1b2matrix tmp(rmin,rmax);
@@ -282,10 +282,10 @@ df1b2matrix elem_prod(const dmatrix& _M,const df1b2matrix& _N)
   return tmp;
 }
 
-df1b2matrix elem_prod(const df1b2matrix& _M,const dmatrix& _N)
+df1b2matrix elem_prod(const df1b2matrix& _MM,const dmatrix& _NN)
 {
-  ADUNCONST(df1b2matrix,M)
-  ADUNCONST(dmatrix,N)
+  df1b2matrix& M = (df1b2matrix&)_MM;
+  dmatrix& N = (dmatrix&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
   df1b2matrix tmp(rmin,rmax);
@@ -302,10 +302,10 @@ df1b2matrix elem_prod(const df1b2matrix& _M,const dmatrix& _N)
   return tmp;
 }
 
-df1b2matrix elem_div(const df1b2matrix& _M,const df1b2matrix& _N)
+df1b2matrix elem_div(const df1b2matrix& _MM,const df1b2matrix& _NN)
 {
-  ADUNCONST(df1b2matrix,M)
-  ADUNCONST(df1b2matrix,N)
+  df1b2matrix& M = (df1b2matrix&)_MM;
+  df1b2matrix& N = (df1b2matrix&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
   df1b2matrix tmp(rmin,rmax);
@@ -322,10 +322,10 @@ df1b2matrix elem_div(const df1b2matrix& _M,const df1b2matrix& _N)
   return tmp;
 }
 
-df1b2matrix elem_div(const dmatrix& _M,const df1b2matrix& _N)
+df1b2matrix elem_div(const dmatrix& _MM,const df1b2matrix& _NN)
 {
-  ADUNCONST(dmatrix,M)
-  ADUNCONST(df1b2matrix,N)
+  dmatrix& M = (dmatrix&)_MM;
+  df1b2matrix& N = (df1b2matrix&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
   df1b2matrix tmp(rmin,rmax);
@@ -342,10 +342,10 @@ df1b2matrix elem_div(const dmatrix& _M,const df1b2matrix& _N)
   return tmp;
 }
 
-df1b2matrix elem_div(const df1b2matrix& _M,const dmatrix& _N)
+df1b2matrix elem_div(const df1b2matrix& _MM,const dmatrix& _NN)
 {
-  ADUNCONST(df1b2matrix,M)
-  ADUNCONST(dmatrix,N)
+  df1b2matrix& M = (df1b2matrix&)_MM;
+  dmatrix& N = (dmatrix&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
   df1b2matrix tmp(rmin,rmax);

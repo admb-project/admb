@@ -295,10 +295,10 @@ df1b2matrix operator - (const double x,const df1b2matrix& _M)
   return tmp;
 }
 
-df1b2matrix operator +(const df1b2matrix& _M,const df1b2matrix& _N)
+df1b2matrix operator +(const df1b2matrix& _MM,const df1b2matrix& _NN)
 {
-  ADUNCONST(df1b2matrix,M)
-  ADUNCONST(df1b2matrix,N)
+  df1b2matrix& M = (df1b2matrix&)_MM;
+  df1b2matrix& N = (df1b2matrix&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
   df1b2matrix tmp(rmin,rmax);
@@ -332,9 +332,9 @@ df1b2matrix operator +(const df1b2matrix& _M,const dmatrix& N)
   }
   return tmp;
 }
-df1b2matrix operator +(const dmatrix& M,const df1b2matrix& _N)
+df1b2matrix operator +(const dmatrix& M,const df1b2matrix& _NN)
 {
-  ADUNCONST(df1b2matrix,N)
+  df1b2matrix& N = (df1b2matrix&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
   df1b2matrix tmp(rmin,rmax);
@@ -350,10 +350,10 @@ df1b2matrix operator +(const dmatrix& M,const df1b2matrix& _N)
   }
   return tmp;
 }
-df1b2matrix operator -(const df1b2matrix& _M,const df1b2matrix& _N)
+df1b2matrix operator -(const df1b2matrix& _MM,const df1b2matrix& _NN)
 {
-  ADUNCONST(df1b2matrix,M)
-  ADUNCONST(df1b2matrix,N)
+  df1b2matrix& M = (df1b2matrix&)_MM;
+  df1b2matrix& N = (df1b2matrix&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
   df1b2matrix tmp(rmin,rmax);
@@ -387,9 +387,9 @@ df1b2matrix operator -(const df1b2matrix& _M,const dmatrix& N)
   }
   return tmp;
 }
-df1b2matrix operator -(const dmatrix& M,const df1b2matrix& _N)
+df1b2matrix operator -(const dmatrix& M,const df1b2matrix& _NN)
 {
-  ADUNCONST(df1b2matrix,N)
+  df1b2matrix& N = (df1b2matrix&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
   df1b2matrix tmp(rmin,rmax);

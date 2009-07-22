@@ -8,10 +8,10 @@
 #include <df1b2fun.h>
 
 
-df1b2matrix outer_prod(const df1b2vector& _M,const df1b2vector& _N)
+df1b2matrix outer_prod(const df1b2vector& _MM,const df1b2vector& _NN)
 {
-  ADUNCONST(df1b2vector,M)
-  ADUNCONST(df1b2vector,N)
+  df1b2vector& M = (df1b2vector&)_MM;
+  df1b2vector& N = (df1b2vector&)_NN;
   int rmin=M.indexmin();
   int rmax=M.indexmax();
   int cmin=N.indexmin(); 

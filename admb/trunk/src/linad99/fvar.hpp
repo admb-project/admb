@@ -7717,8 +7717,8 @@ dvariable norm_to_gamma(const prevariable & v,const prevariable& alpha,
 
 double norm_to_gamma(double v,double alpha,double bound=0.999999);
 
-dmatrix eigenvectors(const banded_symmetric_dmatrix& _S,const dvector& e);
-dvector eigenvalues(const banded_symmetric_dmatrix& _S);
+dmatrix eigenvectors(const banded_symmetric_dmatrix& _SS,const dvector& e);
+dvector eigenvalues(const banded_symmetric_dmatrix& _SS);
 dvector get_eigen_values(const dvector& _d,const dvector& _e);
 dvar_vector get_eigen_values(const dvar_vector& _d,const dvar_vector& _e);
 dvector get_eigen_values(const dvector& _d,const dvector& _e,const dmatrix&_z);

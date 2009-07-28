@@ -53,7 +53,7 @@ dvariable function_minimizer::do_gauss_hermite_integration_multi(void)
       }
       int is=mi.get_offset()+1;
       ftmp+=exp(-lapprox->gh->gauss_hermite_values(isc,is))*ww;
-      mi++;
+      ++mi;
     }
     while(mi.get_depth()<=lus);
     fun-=log(ftmp);

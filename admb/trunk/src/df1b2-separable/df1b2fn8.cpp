@@ -70,7 +70,7 @@ int df1b2_gradlist::write_pass1_minuseq(const df1b2variable * _px,
   // ***** write  record size
   nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
   nlist.bptr->pf=(ADrfptr)(&ad_read_pass1_minus_eq);
-  nlist++;
+  ++nlist;
   return 0;
 }
 

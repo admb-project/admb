@@ -43,7 +43,7 @@ int df1b2_gradlist::write_save_pass2_tilde_values(const df1b2variable * _px)
   // ***** write  record size
   nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
   nlist.bptr->pf=(ADrfptr)(&ad_read_write_tilde_values);
-  nlist++;
+  ++nlist;
   return 0;
 }
     
@@ -151,7 +151,7 @@ void read_tilde_values_2(void)
   zero_it(px->get_u_tilde(),1);
   *nlist3.bptr=adptr_diff(list3.bptr,tmpptr3);
   list.bptr+=sizeof(df1b2_header);
-  nlist3++;
+  ++nlist3;
 }
 
 void read_tilde_values_3(void)
@@ -176,7 +176,7 @@ void read_tilde_values_3(void)
   // save the pointer to the beginning of the record
   fixed_smartlist2& nlist3=f1b2gradlist->nlist3; 
   test_smartlist& list3=f1b2gradlist->list3; 
-  nlist3--;
+  --nlist3;
   // get record size
   int num_bytes3=*nlist3.bptr;
   // backup the size of the record

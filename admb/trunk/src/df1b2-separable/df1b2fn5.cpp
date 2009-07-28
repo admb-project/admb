@@ -176,7 +176,7 @@ int df1b2_gradlist::write_pass1_initialize(df1b2variable * pz)
   // ***** write  record size
   nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
   nlist.bptr->pf=(ADrfptr)(&ad_read_pass1_initialize);
-  nlist++;
+  ++nlist;
   return 0;
 }
 
@@ -273,7 +273,7 @@ void read_pass1_init_1(void)
      memcpy(list2,pz->get_u_dot_bar(),nvar*sizeof(double));
      //list2.bptr+=nvar*sizeof(double);
      *nlist2.bptr=adptr_diff(list2.bptr,tmpptr2);
-     nlist2++;
+     ++nlist2;
   // }
   //
   // ****************************************************************
@@ -325,7 +325,7 @@ void read_pass1_init_2(void)
   fixed_smartlist2 & nlist2=f1b2gradlist->nlist2; 
   // get record size
   int num_bytes2=*nlist2.bptr;
-  nlist2--;
+  --nlist2;
   // backup the size of the record
   list2-=num_bytes2;
   // save the pointer to the beginning of the record

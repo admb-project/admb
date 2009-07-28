@@ -86,7 +86,7 @@ void ad_read_pass2_prodc1(void);
      ad_exit(1);
    }
    nlist.bptr->pf=(ADrfptr)(&ad_read_pass2_prodc1);
-      nlist++;
+      ++nlist;
    return 0;
  }
 
@@ -187,7 +187,7 @@ void read_pass2_1_prodc1(void)
     memcpy(list2,pz->get_u_dot_bar(),nvar*sizeof(double));
   }
   *nlist2.bptr=adptr_diff(list2.bptr,tmpptr);
-  nlist2++;
+  ++nlist2;
 
   // Do first reverse pass calculations
   int i;
@@ -245,7 +245,7 @@ void read_pass2_2_prodc1(void)
   fixed_smartlist2 & nlist2=f1b2gradlist->nlist2; 
   // get record size
   int num_bytes2=*nlist2.bptr;
-  nlist2--;
+  --nlist2;
   // backup the size of the record
   list2-=num_bytes2;
   list2.saveposition(); // save pointer to beginning of record;

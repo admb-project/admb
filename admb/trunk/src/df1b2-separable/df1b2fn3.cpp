@@ -159,7 +159,7 @@ int df1b2_gradlist::write_pass1_pluseq(const df1b2variable * _px,
   // ***** write  record size
   nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
   nlist.bptr->pf=(ADrfptr)(&ad_read_pass1_plus_eq);
-  nlist++;
+  ++nlist;
   return 0;
 }
 

@@ -59,7 +59,7 @@ void ad_read_pass2_sumc(void);
    // ***** write  record size
    nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
    nlist.bptr->pf=(ADrfptr)(&ad_read_pass2_sumc);
-      nlist++;
+      ++nlist;
   return 0;
  }
 

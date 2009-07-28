@@ -56,7 +56,7 @@ $(OBJ3): %.obj: %.cpp
 all: $(LIBPATH)/$(LIBNAME)  tpl2cpp disk  
 
 df1b2stub:
-	$(CC) $(FLAGS) -o$(STUBPATH)/df1b2stub.o df1b2stub.cpp
+	$(CC) $(FLAGS) -o $(STUBPATH)/df1b2stub.o df1b2stub.cpp
 	 cd $(STUBPATH); ar -rs ${STUBNAME}  df1b2stub.o
 
 tpl2cpp.c: tpl2cpp.lex

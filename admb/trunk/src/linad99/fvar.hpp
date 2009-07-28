@@ -347,8 +347,8 @@ class dependent_variables_information;
 #undef __SUN__
 #endif
 
-#if ( defined(__GNUC__) && __GNUC__<3)
-#if defined(linux) || defined(__CYGWIN__)
+#if ( defined(__GNUC__) && __GNUC__<3) || defined(__SUNPRO_CC)
+#if defined(linux) || defined(__CYGWIN__) || defined(__SUNPRO_CC)
 #   include <strstream.h>
 #  else
 #   include <strstrea.h>
@@ -3609,7 +3609,7 @@ public:
 
 #if defined(__GNUDOS__) 
 #  if !defined(__ADSGI__)
-#    if (__GNUC__  < 3) 
+#    if (__GNUC__  < 3) && !defined(__SUNPRO_CC) 
   uostream(const char* name, int mode = ios::out | ios::bin,int prot=0664);
   void open(const char* name, int mode = ios::out | ios::bin,int prot=0664);
 #    else  
@@ -3735,7 +3735,7 @@ public:
 
 #if defined(__GNUDOS__) 
 #  if !defined(__ADSGI__)
-#    if (__GNUC__  < 3) 
+#    if (__GNUC__  < 3) && !defined(__SUNPRO_CC) 
        uistream(const char* name, int mode = ios::in | ios::bin, int prot=0664);
        void open(const char* name, int mode = ios::in | ios::bin, int prot=0664);
 #    else  

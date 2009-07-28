@@ -59,7 +59,7 @@
     int sz=maxd-mind+1;
     for (int i=imin+1;i<=mx;i++)
     {
-#  if (__MSVC32__>=8)
+#  if (__MSVC32__>=8) || defined(__SUNPRO_CC)
       offset+=int(pow(double(sz),i-imin))*(index(i)-mind);
 #  else
       offset+=pow(sz,i-imin)*(index(i)-mind);

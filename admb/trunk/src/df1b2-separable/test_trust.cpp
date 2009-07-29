@@ -642,6 +642,7 @@ dvector laplace_approximation_calculator::lincg(dvector& xinit,
     cout << norm(H*x(k)-c) << endl;
   }
   while(1);
+  return 0;
 }  
 
 

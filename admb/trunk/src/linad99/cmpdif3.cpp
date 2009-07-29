@@ -19,7 +19,7 @@
 extern ofstream clogf;
 
 
-static void report_gradstack_flag(void)
+void report_gradstack_flag(void)
 {
   verify_identifier_string("stack");
   // Back up the stream and read the number of bytes written in the

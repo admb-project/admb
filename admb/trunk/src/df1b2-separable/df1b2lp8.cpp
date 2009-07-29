@@ -261,7 +261,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   }
 }
 
-static double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
+double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
   dmatrix& M)
 {
   dmatrix VM(1,samplesize,1,n);

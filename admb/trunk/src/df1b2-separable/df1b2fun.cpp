@@ -168,7 +168,7 @@ void df1b2_gradcalc1(void)
       }
       */
       //nlist-=sizeof(char*);
-      nlist--;
+      --nlist;
       if (nlist.eof()) 
         break;
       ADrfptr rf=nlist.bptr->pf;
@@ -224,7 +224,7 @@ void df1b2_gradcalc1(void)
       f1b2gradlist->nlist.rewind();
 
       //nlist.reset();  // set pointer to beginning of list
-      f1b2gradlist->nlist2--;  // backup one record
+      --(f1b2gradlist->nlist2);  // backup one record
       int icount=0;
       do
       {
@@ -235,7 +235,7 @@ void df1b2_gradcalc1(void)
         //ADrfptr rf=*ADprfptr(nlist.bptr);
         ADrfptr rf=nlist.bptr->pf;
         (*rf)();
-        nlist++;
+        ++nlist;
         
        /*
         if (initial_df1b2params::current_phase==2)

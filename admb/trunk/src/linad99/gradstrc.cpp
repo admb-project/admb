@@ -41,7 +41,9 @@ void null_ptr_err_message(void);
 //void adwait(double);
 
 extern ofstream clogf;
-typedef int (* fptr) (const char * format, ...) ;
+#ifndef __SUNPRO_CC
+typedef int* fptr (const char* format, ...) ;
+#endif
 
 fptr ad_printf = printf;
 extern "C"{

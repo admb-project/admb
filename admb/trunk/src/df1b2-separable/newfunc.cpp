@@ -111,7 +111,7 @@ int write_pass1(const df1b2variable * px,
    f1b2gradlist->nlist.bptr->numbytes=
       adptr_diff(f1b2gradlist->list.bptr,tmpptr);
    f1b2gradlist->nlist.bptr->pf=(ADrfptr)(&ad_read_xxx);
-      f1b2gradlist->nlist++;
+      ++(f1b2gradlist->nlist);
    return 0;
  }
 

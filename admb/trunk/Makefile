@@ -11,6 +11,12 @@ bcc:
 vc:
 	make --directory=src --file=vc.mak
 
+sunstudio:
+	make --directory=src --file=sunstudio.mak
+
+sunstudio-verify:
+	make --directory=src --file=sunstudio.mak verify
+
 linux:
 	make --directory=src --file=linux.mak
 
@@ -22,3 +28,4 @@ dist:
 
 clean:
 	@rm -rvf build
+	@make --directory=src --file=linux.mak clean

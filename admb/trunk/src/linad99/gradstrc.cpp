@@ -42,7 +42,7 @@ void null_ptr_err_message(void);
 
 extern ofstream clogf;
 #ifndef __SUNPRO_CC
-typedef int* fptr (const char* format, ...) ;
+typedef int (* fptr) (const char * format, ...) ;
 #endif
 
 fptr ad_printf = printf;

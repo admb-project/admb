@@ -180,7 +180,7 @@ double ndfboundp( double x, double fmin, double fmax,const double& fpen)
   }
 } 
 
-double boundp(const double x, double fmin, double fmax)
+double boundp(double x, double fmin, double fmax)
 {
   if (gradient_structure::Hybrid_bounded_flag==0)
   {

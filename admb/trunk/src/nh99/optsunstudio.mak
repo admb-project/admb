@@ -33,10 +33,6 @@ include objects.lst
 $(LIBPATH)/$(LIBNAME) :  $(filter-out dfqromb.obj, $(OBJ0)) $(OBJ1) $(OBJ2) $(OBJ3) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 
-admodel.obj : admodel.cpp
-	$(CC) $(FLAGS1)  $<
-	mv $*.o $(LIBPATH)/$*.obj
-
 %.obj: %.cpp
 	$(CC) $(FLAGS)  $<
 	mv $*.o $(LIBPATH)/$*.obj

@@ -45,11 +45,6 @@ $(OBJ3): %.obj: %.cpp
 	$(CC) $(FLAGS) $<
 	mv $*.o $(LIBPATH)/$*.obj
 
-fvar1.obj: fvar1.cpp
-	$(CC) $(FLAGS1) $<
-	mv $*.o $(LIBPATH)/$*.obj
-
-
 all: $(LIBPATH)/$(LIBNAME)  disk
 
 

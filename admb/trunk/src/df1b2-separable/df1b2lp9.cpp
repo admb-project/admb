@@ -147,7 +147,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
         }
       }
       initrun_flag=0;
-      for (i=1;i<=num_separable_calls;i++)
+      for (int i=1;i<=num_separable_calls;i++)
       {
         int m=(*derindex)(i).indexmax();
         for (int j=1;j<=m;j++)
@@ -197,7 +197,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
         if (saddlepointflag==2)
         {
           ff[1]=-(*separable_function_difference)(1);
-          for (i=2;i<=num_separable_calls;i++)
+          for (int i=2;i<=num_separable_calls;i++)
           {
             ff[i]=-(*separable_function_difference)(i);
             //ff[i]=-(*separable_function_difference)(i)
@@ -214,7 +214,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
         else
         {
           ff[1]=(*separable_function_difference)(1);
-          for (i=2;i<=num_separable_calls;i++)
+          for (int i=2;i<=num_separable_calls;i++)
           {
             ff[i]=(*separable_function_difference)(i);
             //ff[i]=(*separable_function_difference)(i)
@@ -229,7 +229,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
           }
         }
         f=0.0;
-        for (i=1;i<=num_separable_calls;i++)
+        for (int i=1;i<=num_separable_calls;i++)
         {
           f+=ff[i];
         }

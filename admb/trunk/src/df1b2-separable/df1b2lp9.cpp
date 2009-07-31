@@ -27,10 +27,8 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
 {
   if (separable_function_difference)
   {
-    if (allocated(*separable_function_difference))
-    {
-      separable_function_difference->deallocate();
-    }
+    delete separable_function_difference;
+    separable_function_difference=0;
   }
   separable_function_difference = new dvector(1,num_separable_calls);
   

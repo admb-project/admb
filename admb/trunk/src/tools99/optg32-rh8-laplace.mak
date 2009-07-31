@@ -1,7 +1,7 @@
 #macros for making optimized library for DJGPP
 CC = gcc
 LL = tlib
-FLAGS = ${PVMOPTION} -DUSE_LAPLACE -fpermissive -O3 -c -I. -I../linad99 -I../tools99 -D__SPDLL__\
+FLAGS = -Wno-deprecated ${PVMOPTION} -DUSE_LAPLACE -fpermissive -O3 -c -I. -I../linad99 -I../tools99 -D__SPDLL__\
  -D__GNUDOS__ -Dlinux -DOPT_LIB
 LIBPATH =gcc32-rh8olp
 LIBNAME = libadt.a

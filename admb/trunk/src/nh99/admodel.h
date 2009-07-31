@@ -1564,7 +1564,7 @@ public:
   int ef_(double * f, double * x);
   int constrained_minimization2(int _n,int _nh, int _ng,dvector& __x);
   static int constraint_exit_number;
-  void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
+  void get_bigS(int ndvar,int nvar1,int nvar,
     dmatrix& S,dmatrix& BS,dvector& scale);
 
 #ifdef CURVE_CORRECT
@@ -1642,7 +1642,7 @@ public:
   void pvm_master_mcmc_routine(int nmcmc,int iseed0,double dscale,
     int restart_flag);
   void pvm_slave_mcmc_routine(void);
-  void function_minimizer::trust_region_update(int nvar,int _crit,
+  void trust_region_update(int nvar,int _crit,
     independent_variables& x,const dvector& _g,const double& _f);
 
   void multint4(int n,BOR_CONST dvar_vector& a,BOR_CONST dvar_vector& b,BOR_CONST dvar_vector& h,
@@ -1693,11 +1693,11 @@ public:
   void quasi_newton_block_pvm_master_random_effects(int nvar,int _crit,
     independent_variables& x,const dvector& g,const double& f);
   void function_evaluation_block_pvm_slave_random_effects(void);
-  void function_minimizer::hess_routine_random_effects(void);
+  void hess_routine_random_effects(void);
 #endif
   void quasi_newton_block_pvm_master(int nvar,int _crit,
     independent_variables& x,const dvector& g,const double& f);
-  void function_minimizer::hess_routine_noparallel_random_effects(void);
+  void hess_routine_noparallel_random_effects(void);
 #if defined(USE_ADPVM)
   void function_evaluation_block_pvm_slave(void);
   void hess_routine_slave_random_effects(void);
@@ -2244,13 +2244,13 @@ int ad_get_commandline_option(const char * option_label,BOR_CONST int & option_v
   dvector get_scalefactor(void);
   param_init_bounded_matrix_vector();
  
-   void param_init_bounded_matrix_vector::allocate(int min1,int max1,
+   void allocate(int min1,int max1,
      const index_type& min, const index_type& max, const index_type& min2,
      const index_type& max2, const double_index_type& dmin2,
      const double_index_type& dmax2, const index_type& phase_start,
      const char * s);
 
-   void param_init_bounded_matrix_vector::allocate(int min1,int max1,
+   void allocate(int min1,int max1,
      const index_type& min, const index_type& max, const index_type& min2,
      const index_type& max2, const double_index_type& dmin2,
      const double_index_type& dmax2,const char * s);

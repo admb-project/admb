@@ -697,7 +697,7 @@ void print_derivatives(df1b2_header * px,const char * s,
       double df_xyy,
       double df_yyy);
 
- int df1b2_gradlist::write_pass1(const df1b2variable * _px, 
+ int write_pass1(const df1b2variable * _px, 
    const df1b2variable * _py,const df1b2variable * pw,
    const df1b2variable * pz,
    double df_x, double df_y, double df_z, 

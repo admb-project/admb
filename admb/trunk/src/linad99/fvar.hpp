@@ -4067,8 +4067,8 @@ public:
   #endif
 #endif
 
-    d3_array& d3_array::operator= (_CONST d3_array& m1);
-    d3_array& d3_array::operator= (double x);
+    d3_array& operator= (_CONST d3_array& m1);
+    d3_array& operator= (double x);
     friend d3_array value(_CONST dvar3_array& ar);
 
     void fill_randn(BOR_CONST random_number_generator& rng);
@@ -4238,8 +4238,8 @@ public:
   #endif
 #endif
 
-    i3_array& i3_array::operator= (_CONST i3_array& m1);
-    i3_array& i3_array::operator= (int x);
+    i3_array& operator= (_CONST i3_array& m1);
+    i3_array& operator= (int x);
 
     void fill_randu(long int& n);
     void fill_randn(long int& n);
@@ -4263,7 +4263,7 @@ public:
 
     void shallow_copy(const dvar3_array&);
     dvar3_array sub(int,int);
-    dvar3_array::dvar3_array(int,int);
+    dvar3_array(int,int);
     int operator ! (void) _CONST {return (shape == NULL);}
     // conclass cgors
 
@@ -5083,7 +5083,7 @@ class d4_array
   d3_array * t;
 public:
     void shallow_copy(const d4_array&);
-    d4_array::d4_array(int,int);
+    d4_array(int,int);
     d4_array sub(int,int);
   void allocate(int hsl,int hsu,int sl,int sh,int nrl,
     int nrh,int ncl,int nch);
@@ -5248,7 +5248,7 @@ class dvar4_array
   dvar3_array * t;
 public:
     void shallow_copy(const dvar4_array&);
-    dvar4_array::dvar4_array(int,int);
+    dvar4_array(int,int);
     dvar4_array sub(int,int);
   void allocate(int hsl,int hsu,int sl,int sh,int nrl,
     int nrh,int ncl,int nch);
@@ -6261,8 +6261,8 @@ public:
   const int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
-  void dvar6_array::operator /=(_CONST prevariable& d);
-  void dvar6_array::operator /=(_CONST double& d);
+  void operator /=(_CONST prevariable& d);
+  void operator /=(_CONST double& d);
 };
 
 dvar6_array operator / (_CONST d6_array& m,_CONST prevariable& d);
@@ -6560,8 +6560,8 @@ public:
   const int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
-  void dvar7_array::operator /=(_CONST prevariable& d);
-  void dvar7_array::operator /=(_CONST double& d);
+  void operator /=(_CONST prevariable& d);
+  void operator /=(_CONST double& d);
 };
 
 dvar7_array operator / (_CONST d7_array& m,_CONST prevariable& d);

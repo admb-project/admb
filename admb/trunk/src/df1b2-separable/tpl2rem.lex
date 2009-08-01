@@ -3883,7 +3883,7 @@ TOP_OF_MAIN_SECTION {
     {
       fprintf(ftopmain,"\nextern \"C\"  {\n");
       fprintf(ftopmain,"  void ad_boundf(int i)\n  {\n");
-      //fprintf(ftopmain,"    \/\/ so we can stop here\n");
+      fprintf(ftopmain,"    /* so we can stop here */\n");
       fprintf(ftopmain,"    exit(i);\n  }\n}\n");
     }
       

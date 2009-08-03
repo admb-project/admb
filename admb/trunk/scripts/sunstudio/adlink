@@ -46,4 +46,4 @@ if [[ -z $shared ]]; then out="-o $1"; else out="-o $1.so"; fi
 if [[ -n $re && $adlib=="-lado" ]]; then df1b2lib=-ldf1b2o; fi
 if [[ -n $re && $adlib=="-lads" ]]; then df1b2lib=-ldf1b2s; fi
 
-CC -v -o $1 $1.o  -L$ADMB_HOME/lib -ladmod -ladt -lado $df1b2lib
+CC -v -o $1 $1.o  -L$ADMB_HOME/lib -ladmod -ladt $adlib $df1b2lib

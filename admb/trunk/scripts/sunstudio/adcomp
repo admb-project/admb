@@ -41,4 +41,4 @@ while getopts "drs" A; do
 done
 shift $[OPTIND-1]
 
-CC -c $g -O3 -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -I. -I$ADMB_HOME/include $1.cpp
+CC -c $g -O3 -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -I. -I$ADMB_HOME/include $1.cpp

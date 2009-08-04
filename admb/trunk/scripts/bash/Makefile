@@ -93,8 +93,8 @@ bcb:
 	cd examples/admb-re/$@;admb -r -s $@
 
 biglog:
-	cd examples/admb-re/$@;admb -r $@;./$@
-	cd examples/admb-re/$@;admb -r -s $@;./$@
+	@#cd examples/admb-re/$@;admb -r $@;./$@
+	@#cd examples/admb-re/$@;admb -r -s $@;./$@
 
 bvprobit:
 	@#cd examples/admb-re/glmmadmb;admb -r $@;./$@

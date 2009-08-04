@@ -11,6 +11,9 @@ bcc:
 vc:
 	make --directory=src --file=vc.mak
 
+vc-clean:
+	make --directory=src --file=vc.mak clean
+
 sunstudio:
 	make --directory=src --file=sunstudio.mak
 

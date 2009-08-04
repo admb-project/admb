@@ -82,6 +82,7 @@ PRELIMINARY_CALCS_SECTION
   data=trans(Data);   // it is more convenient to work with the transformed
                    // matrix
 PROCEDURE_SECTION
+    int i;
 
     // set up the begining and ending times for the three runs
     x0(1)=0;
@@ -120,7 +121,7 @@ PROCEDURE_SECTION
       // get the initial conditions for this run
       x_n=x0(run);
       y_n=init_conc(run);
-      for (int i=1;i<=nstep+1;i++)
+      for (i=1;i<=nstep+1;i++)
       {
         // gather common subexpressions
         y2=y_n(2)*y_n(2);
@@ -152,7 +153,7 @@ PROCEDURE_SECTION
 
     // Add the Bayesian stuff
     bayes_part=0.0;
-    for  (int i=5;i<=9;i++)
+    for  (i=5;i<=9;i++)
     {
       bayes_part+=(theta(i)-1)*(theta(i)-1); 
     }

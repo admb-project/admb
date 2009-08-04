@@ -38,11 +38,11 @@ PRELIMINARY_CALCS_SECTION
 GLOBALS_SECTION
 
 PROCEDURE_SECTION
-
+  int j;
   g = 0;
 
   // Second order difference penalty
-  for(int j=3;j<=m1;j++)
+  for(j=3;j<=m1;j++)
     g -= -0.5*square(u1(j) - 2*u1(j-1) + u1(j-2));
   //for(j=3;j<=m2;j++)
   //  g -= -0.5*square(u2(j) - 2*u2(j-1) + u2(j-2));
@@ -54,7 +54,7 @@ PROCEDURE_SECTION
   for(int i=1;i<=n;i++)
   {
     tmps = 0.0;
-    for(int j=J1(i,1);j<=J1(i,2);j++)
+    for(j=J1(i,1);j<=J1(i,2);j++)
       mu(i) +=  X_B1(i,j)*u1(j);
     mu(i) *=  lambda1;
 

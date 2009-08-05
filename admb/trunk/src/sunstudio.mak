@@ -44,7 +44,7 @@ dist:
 	#cp -vf docs/manuals/admb-re.pdf ${DISK}/docs/manuals
 
 verify:
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); cd ${DISK}; make
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); cd ${DISK}; make all
 
 clean:
 	@rm -rf linad99/SunWS_cache

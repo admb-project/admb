@@ -8,11 +8,11 @@ COMP=gcc
 dist:
 	rm -rf ${DISK}
 	- mkdir -p ${DISK}
-	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include; mkdir examples
+	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include
 	cp ../scripts/mingw/*.bat ${DISK}/bin
 	cp ../LICENSE ${DISK}
 	cp ../README ${DISK}
-	svn export ../examples/admb ${DISK}/examples/admb
+	svn export ../examples ${DISK}/examples
 	cp ../scripts/mingw/Makefile ${DISK}/examples/admb
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 

@@ -17,7 +17,7 @@ dist:
 	cp ../README ${DISK}
 	svn export ../examples/admb ${DISK}/examples/admb
 	svn export ../examples/admb-re ${DISK}/examples/admb-re
-	cp ../scripts/borland/Makefile ${DISK}/examples/admb
+	cp ../scripts/borland/Makefile ${DISK}/examples
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 
@@ -35,7 +35,8 @@ dist:
 	#bzip2 ${DISK}.tar 
 
 verify:
-	cd ${DISK} && ADMB_HOME="${WINADMB_HOME}" PATH="$(BCC55_HOME)\\bin;${WINADMB_HOME}\\bin;%PATH%" $(BORLAND_HOME)/bin/make 
+	cd ${DISK}\examples && ADMB_HOME="${WINADMB_HOME}" PATH="$(BCC55_HOME)\\bin;${WINADMB_HOME}\\bin;%PATH%" $(BORLAND_HOME)/bin/make 
+
 clean:
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safbor32-laplace.mak clean

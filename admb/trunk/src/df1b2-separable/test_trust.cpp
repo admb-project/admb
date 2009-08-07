@@ -161,7 +161,7 @@ dvector laplace_approximation_calculator::test_trust_region_method
     double truediff;
     int iflag=0;
     int inner_iter=0;
-    int oldbest=bestf;
+    int oldbest=(int)bestf;
     int maxfn=15;
     dvector xret=lincg(xx,g,H,tol,Delta,pfmin,truef,estdiff,
      truediff,bestf,iflag,inner_iter,maxfn);

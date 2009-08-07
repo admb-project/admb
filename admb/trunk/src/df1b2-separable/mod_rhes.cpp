@@ -255,8 +255,8 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
             ofs1 << lapprox->usize << lapprox->xsize;
             for (int i=mmin;i<=mmax;i++)
             {
-              if (i>1) e(i-1)=0.0;
-              e(i)=1.0;
+              if (i>1) e(i-1)=0;
+              e(i)=1;
               dvector w=solve_trans(C,solve(C,e));
               ofs << setprecision(5) << setscientific() 
                   << setw(14) << u(i) << " " << sqrt(w(i)) << endl;;

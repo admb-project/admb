@@ -45,7 +45,7 @@ df1b2vector operator + (const df1b2vector& _x,const dvector& _y)
   
 df1b2vector operator + (const dvector& _x,const df1b2vector& _y)
 {
-  ADUNCONST(df1b2vector,x)
+  ADUNCONST(dvector,x)
   ADUNCONST(df1b2vector,y)
   check_shape(x,y,"operator +");
   

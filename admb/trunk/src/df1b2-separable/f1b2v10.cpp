@@ -65,9 +65,9 @@ void ad_read_pass2_prod_vector(void);
 
    //int total_bytes=3*sizeof(df1b2_header)
     // +2*(nvar+1)*sizeof(double);
-   int total_bytes= 2*sizeof(int) + 2.0*(mmax-mmin+1)*sizeof(df1b2_header)
-    + sizeof(df1b2_header) + 2.0*(mmax-mmin+1)*sizeof(double)
-    + 2.0*(mmax-mmin+1)*nvar*sizeof(double);
+   int total_bytes= 2*sizeof(int) + 2*(mmax-mmin+1)*sizeof(df1b2_header)
+    + sizeof(df1b2_header) + 2*(mmax-mmin+1)*sizeof(double)
+    + 2*(mmax-mmin+1)*nvar*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="DL";

@@ -3839,7 +3839,7 @@ TOP_OF_MAIN_SECTION {
       else
       {
         fprintf(fd,"LIBRARY %s\n",infile_root);
-        fprintf(fd,"EXPORTS\n     %s\n,infile_root");
+        fprintf(fd,"EXPORTS\n     %s\n",infile_root);
       }
     }
       
@@ -4322,7 +4322,7 @@ int main(int argc, char * argv[])
     strcat(headerfile_name,".htp");
     strcat(deffile_name,".def");
     strcat(headerfile_name2,"2.htp");
-    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n", infile_name);
     yyin=fopen(infile_name,"r");
     if (!yyin)
     {
@@ -4330,7 +4330,7 @@ int main(int argc, char * argv[])
         infile_name);
       exit(1);
     }
-    if (debug_flag) fprintf(stderr,"Opened file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Opened file %s for input\n", infile_name);
     if (makedll) 
     {
       strcpy(tmp_string1,argv[ioff]);
@@ -4347,7 +4347,7 @@ int main(int argc, char * argv[])
   {
     strcpy(infile_name,"admodel.tpl");
     strcpy(outfile_name,"admodel.cpp");
-    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n", infile_name);
     yyin=fopen(infile_name,"r");
     if (!yyin)
     {
@@ -4355,7 +4355,7 @@ int main(int argc, char * argv[])
         infile_name);
       exit(1);
     }
-    if (debug_flag) fprintf(stderr,"Opened file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Opened file %s for input\n", infile_name);
   }
   conlist_ptr=&(conlist[0]);
   classlist_ptr=&(classlist[0]);

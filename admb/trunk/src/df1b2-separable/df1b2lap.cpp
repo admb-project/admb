@@ -1539,7 +1539,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
    {
      if(laplace_approximation_calculator::saddlepointflag==0)
      {
-       int ierr=0.0;
+       int ierr=0;
        if (pmin->lapprox->sparse_hessian_flag==0)
        {
          ld=0.5*ln_det_choleski_error(vHess,ierr);
@@ -1599,7 +1599,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
      dmatrix tt=trans(r);
      dmatrix ss=trans(sort(tt,1));
      cout << ss(1,1)  << " " << ss(1,eig.indexmax()) << " " ;
-     int nnn=ss(2,1);
+     int nnn=(int)ss(2,1);
      dmatrix d=eigenvectors(cHess);
      //cout << " d " << d(nnn) << " " << d(nnn)*cHess*d(nnn) << endl;
      dmatrix t=trans(d);

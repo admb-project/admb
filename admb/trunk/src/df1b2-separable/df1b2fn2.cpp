@@ -88,7 +88,7 @@ int adptr_diff(void * x, void * y) { return int(x)-int(y); }
     if (sanity_flag)
       df1b2variable::pool->sanity_check();
 #endif
-    double nvar=((twointsandptr*)ptr)->ptr->nvar;
+    int nvar=((twointsandptr*)ptr)->ptr->nvar;
     int blocksize=get_blocksize(nvar);
     for (double * tmp=ptr+2;tmp<ptr+blocksize-1;*tmp++=0);
    /*

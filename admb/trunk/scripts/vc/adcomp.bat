@@ -30,15 +30,14 @@ set opt=-DOPT_LIB
 if [%2]==[] goto ENDLOOP
 if %1==-d set dll=-DBUILDING_DLL& shift
 if %1==-r shift
-if %1==-s set g=-g& set opt=& shift
+REM if %1==-s set g=-g& set opt=& shift
+if %1==-s set g=-g& shift
 goto STARTLOOP
 :ENDLOOP
 
-REM echo g++ -c %g% -O3 -Wno-deprecated -D__GNUDOS__ %dll% -Dlinux %opt% -DUSE_LAPLACE -fpermissive -I. -I%ADMB_HOME%/include %1.cpp
-REM g++ -c -w %g% -O3 -Wno-deprecated -D__GNUDOS__ %dll% -Dlinux %opt% -DUSE_LAPLACE -Dlinux -fpermissive -I. -I"%ADMB_HOME%\include" %1.cpp
-
-call mycl %1
-
+@echo on
+cl -c /EHsc -DUSE_LAPLACE -DWIN32 %opt% /Ox -D__MSVC32__=8 -I. -I"%MSSDK%"\include -I"%ADMB_HOME%"\include %1.cpp
+@echo off
 
 goto EOF
 

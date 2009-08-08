@@ -24,26 +24,23 @@ REM ############################################################################
 
 rem Pop args until model=%1
 set re=0
-set linker=g++
 set s=-s
 set def=
-set df1b2lib=-ldf1b2stub
-set adlib=-lado
+set df1b2lib=df1b2stubo.lib
+set adlib=ado32.lib
 :STARTLOOP
 if [%2]==[] goto ENDLOOP
-if %1==-d set linker=dllwrap& shift
 if %1==-r set re=1& shift
-if %1==-s set s=& set adlib=-lads& shift
+REM if %1==-s set s=& set adlib=ads32.lib& set df1b2lib=df1b2stubs.lib& shift
+if %1==-s set s=& shift
 goto STARTLOOP
 :ENDLOOP
-if %linker%==g++ (set out=-o %1) else (set def=-def %1.def --driver-name g++& set out=--output-lib lib%1.a -o %1.dll)
-if %re%==1 if %adlib%==-lado set df1b2lib=-ldf1b2o
-if %re%==1 if %adlib%==-lads set df1b2lib=-ldf1b2s
+if %re%==1 if %adlib%==ado32.lib set df1b2lib=df1b2o.lib
+if %re%==1 if %adlib%==ads32.lib set df1b2lib=df1b2s.lib
 
-REM echo %linker% %s% %def% -L%ADMB_HOME%/lib %1.o %df1b2lib% -ladmod -ladt %adlib% %df1b2lib% -ladmod -ladt %adlib% %out%
-REM      %linker% %s% %def% -L"%ADMB_HOME%\lib" %1.o %df1b2lib% -ladmod -ladt %adlib% %df1b2lib% -ladmod -ladt %adlib% %out%
-
-call linkcl %1
+@echo on
+cl  %1.obj %df1b2lib% admod32.lib %adlib% adt32.lib /link /libpath:"%ADMB_HOME%"\lib /libpath:"%MSSDK%"\lib
+@echo off
 
 goto EOF
 

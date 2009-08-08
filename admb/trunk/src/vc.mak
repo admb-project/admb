@@ -9,7 +9,7 @@ all:
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp-stub 
-	mkdir ./nh99/msc8slp-stub
+	- cd ./nh99;    mkdir msc8slp-stub
 	- cd ./tools99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./tools99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./df1b2-separable;mkdir  ${CCVERSION}-${OSVERSION}slp 
@@ -19,7 +19,7 @@ all:
 	cp ../LICENSE ${DISK}
 	cp ../README ${DISK}
 	svn export ../examples ${DISK}/examples
-	cp ../scripts/vc/Makefile ${DISK}/examples/admb
+	cp ../scripts/vc/Makefile ${DISK}/examples
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -I\"${MSSDK}\"/Include" -f optmsc8-laplace.mak all
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -I\"${MSSDK}\"/Include" -f safmsc8-laplace.mak all
 	cd ./nh99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -I\"${MSSDK}\"/Include" -f optmsc8-laplace.mak all

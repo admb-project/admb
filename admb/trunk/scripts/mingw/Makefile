@@ -1,62 +1,182 @@
-.PHONY: all ham4 ham5 catage finance vonb vonbr n2mvol simple
+default: simple
 
-verify: ham4 ham5 catage finance vonb vonbr n2mvol simple
-	@echo -------------------------------
-	@echo Completed ADMB example and runs
-	@echo Successful
-	@echo -------------------------------
+all: admb-re
 
-all: simple
-noverify: chem-eng forest pella-t truncreg union
+admb: \
+buscycle\
+catage \
+chem-eng \
+forest \
+finance \
+pella-t \
+robreg \
+truncreg \
+simple \
+vol
 
+buscycle: ham4 ham5
 ham4:
-	@echo Build and run $@: && cd buscycle && admb.bat ham4 && ham4.exe
-	@echo Build and run $@: && cd buscycle && admb.bat -s ham4 && ham4.exe
+	cd examples/admb/buscycle;admb.bat $@;./$@
+	cd examples/admb/buscycle;admb.bat -s $@;./$@
 
 ham5:
-	@echo Build and run $@: && cd buscycle && admb.bat ham5 && ham5.exe
-	@echo Build and run $@: && cd buscycle && admb.bat -s ham5 && ham5.exe
+	cd examples/admb/buscycle;admb.bat $@;./$@
+	cd examples/admb/buscycle;admb.bat -s $@;./$@
 
 catage:
-	@echo Build and run $@: && cd catage && admb.bat catage && catage.exe
-	@echo Build and run $@: && cd catage && admb.bat -s catage && catage.exe
+	cd examples/admb/$@;admb.bat $@;./$@
+	cd examples/admb/$@;admb.bat -s $@;./$@
 
 chem-eng:
-	@echo Build and run $@: && cd chem-eng && admb.bat chem-eng && chem-eng.exe
-	@echo Build and run $@: && cd chem-eng && admb.bat -s chem-eng && chem-eng.exe
+	cd examples/admb/$@;admb.bat $@;./$@
+	cd examples/admb/$@;admb.bat -s $@;./$@
 
 finance:
-	@echo Build and run $@: && cd finance && admb.bat finance && finance.exe
-	@echo Build and run $@: && cd finance && admb.bat -s finance && finance.exe
+	cd examples/admb/$@;admb.bat $@;./$@
+	cd examples/admb/$@;admb.bat -s $@;./$@
 
 forest:
-	@echo Build and run $@: && cd forest && admb.bat forest && forest.exe
-	@echo Build and run $@: && cd forest && admb.bat -s forest && forest.exe
+	-cd examples/admb/$@;admb.bat $@;./$@
+	-cd examples/admb/$@;admb.bat -s $@;./$@
 
 pella-t:
-	@echo Build and run $@: && cd pella-t && admb.bat pella-t && pella-t.exe
-	@echo Build and run $@: && cd pella-t && admb.bat -s pella-t && pella-t.exe
+	cd examples/admb/$@;admb.bat $@;./$@
+	cd examples/admb/$@;admb.bat -s $@;./$@
 
+robreg: vonb vonbr
 vonb:
-	@echo Build and run $@: && cd robreg && admb.bat vonb && vonb.exe
-	@echo Build and run $@: && cd robreg && admb.bat -s vonb && vonb.exe
+	cd examples/admb/robreg;admb.bat $@;./$@
+	cd examples/admb/robreg;admb.bat -s $@;./$@
 
 vonbr:
-	@echo Build and run $@: && cd robreg && admb.bat vonbr && vonbr.exe
-	@echo Build and run $@: && cd robreg && admb.bat -s vonbr && vonbr.exe
+	cd examples/admb/robreg;admb.bat $@;./$@
+	cd examples/admb/robreg;admb.bat -s $@;./$@
 
 simple:
-	@echo Build and run $@: && cd simple && admb.bat simple && simple.exe
-	@echo Build and run $@: && cd simple && admb.bat -s simple && simple.exe
+	cd examples/admb/$@;admb.bat $@;./$@
+	cd examples/admb/$@;admb.bat -s $@;./$@
 
 truncreg:
-	@echo Build and run $@: && cd truncreg && admb.bat truncreg && runtrunc.bat && fruntrunc
-	@echo Build and run $@: && cd truncreg && admb.bat -s truncreg && runtrunc.bat && fruntrunc
+	@#cd examples/admb/$@;admb.bat $@;./runtrunc.bat;./fruntrunc.bat
+	@#cd examples/admb/$@;admb.bat -s $@;./runtrunc.bat;./fruntrunc.bat
 
+vol: n2mvol
 n2mvol:
-	@echo Build and run $@: && cd vol && admb.bat n2mvol && n2mvol.exe
-	@echo Build and run $@: && cd vol && admb.bat -s n2mvol && n2mvol.exe
+	cd examples/admb/vol;admb.bat $@;./$@
+	cd examples/admb/vol;admb.bat -s $@;./$@
+
+admb-re:\
+bcb \
+biglog \
+bvprobit \
+caest \
+gamma \
+kidney \
+lidar \
+logistic \
+nbmm \
+nested4 \
+orange \
+orange2 \
+orange_cor \
+pheno \
+polio \
+sdv \
+skewed \
+socatt \
+spatial \
+union \
+weights
+
+bcb:
+	cd examples/admb-re/$@;admb.bat -r $@
+	cd examples/admb-re/$@;admb.bat -r -s $@
+
+biglog:
+	@#cd examples/admb-re/$@;admb.bat -r $@;./$@
+	@#cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+bvprobit:
+	@#cd examples/admb-re/glmmadmb;admb.bat -r $@;./$@
+	@#cd examples/admb-re/glmmadmb;admb.bat -r -s $@;./$@
+
+caest:
+	@#cd examples/admb-re/$@;admb.bat -r $@;./$@
+	@#cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+gamma:
+	cd examples/admb-re/$@;admb.bat -r liver_$@;./liver_$@
+	cd examples/admb-re/$@;admb.bat -r -s liver_$@;./liver_$@
+
+kidney:
+	cd examples/admb-re/$@;admb.bat -r $@;./$@
+	cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+lidar:
+	cd examples/admb-re/$@;admb.bat -r $@;./$@
+	cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+logistic:
+	@#cd examples/admb-re/$@;admb.bat -r $@;./$@
+	@#cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+nbmm:
+	@#cd examples/admb-re/glmmadmb;admb.bat -r $@;./$@
+	@#cd examples/admb-re/glmmadmb;admb.bat -r -s $@;./$@
+
+nested4:
+	cd examples/admb-re/$@;admb.bat -r $@;./$@
+	cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+orange:
+	cd examples/admb-re/$@;admb.bat -r $@;./$@
+	cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+orange2:
+	cd examples/admb-re/$@;admb.bat -r $@;./$@
+	cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+orange_cor:
+	@#cd examples/admb-re/$@;admb.bat -r $@;./$@
+	@#cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+pheno:
+	cd examples/admb-re/$@;admb.bat -r $@;./$@
+	cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+polio:
+	cd examples/admb-re/$@;admb.bat -r $@;./$@
+	cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+sdv:
+	cd examples/admb-re/$@;admb.bat -r $@;./$@
+	cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+skewed: diet diet_sk
+diet:
+	cd examples/admb-re/skewed;admb.bat -r $@;./diet
+	cd examples/admb-re/skewed;admb.bat -r -s $@;./diet
+
+diet_sk:
+	cd examples/admb-re/skewed;admb.bat -r $@;./diet
+	cd examples/admb-re/skewed;admb.bat -r -s $@;./diet
+
+socatt:
+	cd examples/admb-re/$@;admb.bat -r $@;./$@
+	cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+spatial:
+	cd examples/admb-re/$@;admb.bat -r $@;./$@
+	cd examples/admb-re/$@;admb.bat -r -s $@;./$@
 
 union:
-	@echo Build and run $@: && cd union && admbre.bat union && union.exe
-	@echo Build and run $@: && cd union && admbres.bat union && union.exe
+	@#cd examples/admb-re/$@;admb.bat -r $@;./$@
+	@#cd examples/admb-re/$@;admb.bat -r -s $@;./$@
+
+weights: binomial binomial_w2
+binomial:
+	cd examples/admb-re/weights;admb.bat -r $@;./$@
+	cd examples/admb-re/weights;admb.bat -r -s $@;./$@
+binomial_w2:
+	@#cd examples/admb-re/weights;admb.bat -r $@;./$@
+	@#cd examples/admb-re/weights;admb.bat -r -s $@;./$@

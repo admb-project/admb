@@ -13,7 +13,7 @@ dist:
 	cp ../LICENSE ${DISK}
 	cp ../README ${DISK}
 	svn export ../examples ${DISK}/examples
-	cp ../scripts/mingw/Makefile ${DISK}/examples/admb
+	cp ../scripts/mingw/Makefile ${DISK}
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 

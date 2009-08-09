@@ -18,25 +18,25 @@
      if (i<rowmin())
      {
        cerr << "matrix bound exceeded -- row index too low in imatrix::operator()(int, int)"
-             << "\nvalue was " << i;
+             << "\nvalue was " << i << endl;
        ad_exit(21);
      }
      if (i>rowmax())
      {
        cerr << "matrix bound exceeded -- row index too high in imatrix::operator()(int, int)"
-             << "\nvalue was " << i;
+             << "\nvalue was " << i << endl;
        ad_exit(22);
      }
      if (j<(*this)(i).indexmin())
      {
        cerr << "matrix bound exceeded -- column index too low in imatrix::operator()(int, int)"
-	     << "\nvalue was " << j;
+	     << "\nvalue was " << j << endl;
        ad_exit(21);
      }
      if (j>(*this)(i).indexmax())
      {
        cerr << "matrix bound exceeded -- column index too high in imatrix::operator()(int, int)"
-	     << "\nvalue was " << j;
+	     << "\nvalue was " << j << endl;
        ad_exit(22);
      }
    #endif
@@ -50,25 +50,25 @@
      if (i<rowmin())
      {
        cerr << "matrix bound exceeded -- row index too low in imatrix::operator()(int, int)"
-             << "\nvalue was " << i;
+             << "\nvalue was " << i << endl;
        ad_exit(21);
      }
      if (i>rowmax())
      {
        cerr << "matrix bound exceeded -- row index too high in imatrix::operator()(int, int)"
-             << "\nvalue was " << i;
+             << "\nvalue was " << i << endl;
        ad_exit(22);
      }
      if (j<(*this)(i).indexmin())
      {
        cerr << "matrix bound exceeded -- column index too low in imatrix::operator()(int, int)"
-	     << "\nvalue was " << j;
+	     << "\nvalue was " << j << endl;
        ad_exit(21);
      }
      if (j>(*this)(i).indexmax())
      {
        cerr << "matrix bound exceeded -- column index too high in imatrix::operator()(int, int)"
-	     << "\nvalue was " << j;
+	     << "\nvalue was " << j << endl;
        ad_exit(22);
      }
    #endif

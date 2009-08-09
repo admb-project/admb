@@ -79,7 +79,11 @@ void gradcalc(int nvar,BOR_CONST dvector& _g)
   {
     if (nvar != gradient_structure::NVAR)
     {
-      cerr << "nvar != NVAR in gradcalc" << endl;
+      cerr << "nvar != gradient_structure::NVAR in gradcalc" << endl;
+      cerr << "  nvar = " << nvar << endl;
+      cerr << "  gradient_structure::NVAR = " << gradient_structure::NVAR 
+           << endl;
+      cerr << "  in " __FILE__ << endl;
       ad_exit(1);
     }
   }

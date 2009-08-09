@@ -7,8 +7,8 @@ LL = tlib
 FLAGS = -I\\Borland\\BCC55\\Include ${OPTIONS} -I../df1b2-separable -I../tools99 -I../linad99 -Vd -O2 -H -Hc -DUSE_LAPLACE -DOPT_LIB -DDOS386 -I. -6 -c -f
 
 #FLAGS = -H -Hc -O2 -DOPT_LIB -DDOS386 -I. -6 -c -f
-LIBPATH = b32polp
-STUBPATH = b32polp-stub
+LIBPATH = bor502-win32olp
+STUBPATH = bor502-win32olp-stub
 LIBNAME = admod32.lib 
 BINDIR=bin
 LIBRARIAN = tlib
@@ -68,10 +68,8 @@ disk: stub
 
 clean:
 	rm -f tmpfile
-	rm -f mylex.exe
-	rm -f mylex.tds
+	rm -f tpl2cpp.exe
+	rm -f tpl2cpp.tds
 	rm -f lex.yy.c
-	rm -f mylex.c
-	rm -f mylex.obj
 	- cd $(LIBPATH);  rm -f *obj; rm -f *lib; rm -f *.rsp
 	- cd $(STUBPATH);  rm -f *obj; rm -f *lib; rm -f *.rsp

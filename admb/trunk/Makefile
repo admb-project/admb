@@ -5,6 +5,9 @@ all:
 mingw:
 	make --directory=src --file=mingw.mak
 
+mingw-clean:
+	make --directory=src --file=mingw.mak clean
+
 bcc:
 	make --directory=src --file=bcc.mak
 

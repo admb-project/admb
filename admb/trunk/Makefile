@@ -8,6 +8,9 @@ mingw:
 bcc:
 	make --directory=src --file=bcc.mak
 
+bcc-clean:
+	make --directory=src --file=bcc.mak clean
+
 vc:
 	make --directory=src --file=vc.mak
 

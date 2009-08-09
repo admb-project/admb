@@ -41,7 +41,7 @@ catage:
 
 chem-eng:
 	cd admb\\chem-eng
-	admb chem-engh
+	admb chem-eng
 	chem-eng
 	admb -s chem-eng
 	chem-eng
@@ -131,94 +131,186 @@ weights
 
 bcb:
 	cd admb-re\\bcb
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 biglog:
 	cd admb-re\\biglog
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 bvprobit:
 	cd admb-re\\glmmadmb
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 caest:
 	cd admb-re\\caest
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 gamma:
 	cd admb-re\\gamma
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 kidney:
 	cd admb-re\\kidney
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 lidar:
 	cd admb-re\\lidar
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 logistic:
 	cd admb-re\\logistic
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 nbmm:
 	cd admb-re\\glmmadmb
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 nested4:
 	cd admb-re\\nested4
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 orange:
 	cd admb-re\\orange
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 orange2:
 	cd admb-re\\orange2
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 orange_cor:
 	cd admb-re\\orange_cor
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 pheno:
 	cd admb-re\\pheno
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 polio:
 	cd admb-re\\polio
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 sdv:
 	cd admb-re\\sdv
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 skewed: diet diet_sk
 diet:
 	cd admb-re\\skewed
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 diet_sk:
 	cd admb-re\\skewed
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 socatt:
 	cd admb-re\\socatt
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 spatial:
 	cd admb-re\\spatial
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 union:
 	cd admb-re\\union
+	admb -r $@
+	@REM $@
+	admb -r -s $@
+	@REM $@
 	cd ..\\..
 
 weights: binomial binomial_w2
 binomial:
 	cd admb-re\\weights
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..
 
 binomial_w2:
 	cd admb-re\\weights
+	admb -r $@
+	-$@
+	admb -r -s $@
+	-$@
 	cd ..\\..

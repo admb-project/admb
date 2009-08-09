@@ -37,7 +37,9 @@ goto STARTLOOP
 REM echo g++ -c %g% -O3 -Wno-deprecated -D__GNUDOS__ %dll% -Dlinux %opt% -DUSE_LAPLACE -fpermissive -I. -I%ADMB_HOME%/include %1.cpp
 REM g++ -c -w %g% -O3 -Wno-deprecated -D__GNUDOS__ %dll% -Dlinux %opt% -DUSE_LAPLACE -Dlinux -fpermissive -I. -I"%ADMB_HOME%\include" %1.cpp
 
-call mybcc %1
+@echo on
+bcc32 -O2 -Vd -c -DUSE_LAPLACE;DOS386 %opt% -I. -I"%BCC55_HOME%\include" -I"%ADMB_HOME%\include" %1.cpp
+@echo off
 
 
 goto EOF

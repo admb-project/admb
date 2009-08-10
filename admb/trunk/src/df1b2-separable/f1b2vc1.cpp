@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -28,7 +28,7 @@ df1b2vector operator + (const df1b2vector& _x,const df1b2vector& _y)
 df1b2vector operator + (const df1b2vector& _x,const dvector& _y)
 {
   ADUNCONST(df1b2vector,x)
-  ADUNCONST(df1b2vector,y)
+  ADUNCONST(dvector,y)
   check_shape(x,y,"operator +");
   
   int mmin=x.indexmin();
@@ -395,8 +395,8 @@ df1b2variable& df1b2vector::operator () (int i) const
       " value = " << i << endl;  
     ad_exit(1);
   }
-  //return *(v+i);
-  return *((df1b2variable*)((char*)(v)+i*pointersize()));
+  return *(v+i);
+  //return *((df1b2variable*)((char*)(v)+i*pointersize()));
 }
 /*
 const df1b2variable& df1b2vector::operator () (int i) const

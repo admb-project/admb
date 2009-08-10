@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -46,7 +46,9 @@
 #pragma interface
 #endif
 #include <adpool.h>
-#include <fvar.hpp>
+#ifndef FVAR_HPP
+#  include <fvar.hpp>
+#endif
 #include <sys/stat.h>
 #if defined(__CYGWIN__) || defined(linux)
 #include <stddef.h>
@@ -142,6 +144,7 @@ int adptr_diff(void * x, void * y);
 void read_pass1_1(void);
 void read_pass1_2(void);
 
+#undef AD_ALLOCATE
 #define AD_ALLOCATE(ptr,type,n,classname) \
   if ( (ptr = new type[n])==NULL) \
   { \
@@ -150,8 +153,9 @@ void read_pass1_2(void);
   }
 
 
-
+#undef ADUNCONST
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
+
 
   struct df1b2_header 
   {
@@ -1113,6 +1117,10 @@ df1b2vector operator / (const double& y,const df1b2vector& x);
 df1b2vector operator / (const df1b2vector& x,const df1b2variable& y);
 df1b2vector operator / (const df1b2vector& x,double y);
 df1b2vector pow(const df1b2vector& x,double y);
+df1b2vector pow(const df1b2vector& v,const df1b2variable & x);
+df1b2vector pow(const df1b2vector& v,const df1b2vector & x);
+df1b2vector pow(const df1b2variable& v,const df1b2vector & x);
+df1b2vector pow(double v,const df1b2vector & x);
 
 df1b2vector operator / (const dvector& x,const df1b2variable& y);
 df1b2vector operator + (const dvector& x,const df1b2variable& y);
@@ -1590,6 +1598,10 @@ double calculate_importance_sample_block_diagonal_funnel(const dvector& x,
 double calculate_importance_sample(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
+
+double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
+  const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
+  const dmatrix& _Hessadjoint,function_minimizer * pmin);
 double calculate_importance_sample(const dvector& x,const dvector& u0,
   const banded_symmetric_dmatrix& bHess,const dvector& _xadjoint,
   const dvector& _uadjoint,
@@ -1614,8 +1626,9 @@ class quadratic_prior : public style_flag_class
   dvar_vector * pu;
   int xmyindex;
 public:
+  static int qflag; 
   static quadratic_prior * ptr[]; // this should be a resizeable array
-  static void get_M_calculations();
+  static void get_M_calculations(void);
   static void cleanup_pMinv();
   static void cleanup_dfpMinv();
   static int num_quadratic_prior;
@@ -1794,6 +1807,8 @@ df1b2variable robust_normal_mixture_deviate(const df1b2variable& x,
 df1b2variable gamma_deviate(const df1b2variable& _x,const df1b2variable& _a);
 df1b2variable inv_cumd_gamma(const df1b2variable& _y,const df1b2variable& _a);
 double inv_cumd_gamma(double y,double _a);
+
+df1b2variable inv_cumd_cauchy(const df1b2variable& n);
 df1b2variable inv_cumd_t(const df1b2variable& n,const df1b2variable&  u,
   double eps=1.e-7);
 

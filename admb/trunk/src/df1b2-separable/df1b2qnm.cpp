@@ -280,7 +280,28 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
         { 
           lapprox->check_hessian_type(this);
         }
-        cout << "Hessian type = " << lapprox->hesstype << endl;
+
+        // Print Hessian type and related info       
+        switch(lapprox->hesstype)
+        {
+        case 1:
+          cout << "Hessian type 1 " << endl;
+          break;
+        case 2:
+          cout << "\nBlock diagonal Hessian (Block size =" <<
+		 (lapprox->usize)/(lapprox->num_separable_calls) << ")\n" << endl;
+          break;
+        case 3:
+          cout << "\nBanded Hessian (Band width = " << lapprox->bw << ")\n" << endl;
+          break;
+        case 4:
+          cout << "Hessian type 4 " << endl;
+          break;
+        default:
+          cerr << "This can't happen" << endl;
+          ad_exit(1);
+        }
+
       }
     }
 

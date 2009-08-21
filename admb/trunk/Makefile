@@ -29,9 +29,6 @@ sunstudio-verify:
 linux:
 	make --directory=src --file=linux.mak
 
-linux-hans:
-	make --directory=src --file=linux.mak OPTIONS="-pg"
-
 linux-verify:
 	make --directory=src --file=linux.mak verify
 

@@ -1,11 +1,18 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
-
+  /** 
+  \ingroup matop
+  Element-wise multiplication of two vectors; constant objects.
+  Exits with error if bounds of the two arguments differ. 
+  \param t1 A vector, \f$u\f$ with valid subscripts in \f$[i_1,i_n]\f$
+  \param t2 A vector, \f$v\f$ with valid subscripts in \f$[i_1,i_n]\f$
+  \return A vector containing \f$z_i = u_i\times v_i; [i_1,i_n]\f$.
+  */
   dvector elem_prod(_CONST dvector& t1,_CONST dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  
@@ -29,6 +36,14 @@
      return(tmp);
   }
 
+  /** 
+  \ingroup matop
+  Element-wise division of two vectors; constant objects.
+  Exits with error if bounds of the two arguments differ. 
+  \param t1 A vector, \f$u\f$ with valid subscripts in \f$[i_1,i_n]\f$
+  \param t2 A vector, \f$v\f$ with valid subscripts in \f$[i_1,i_n]\f$
+  \return A vector containing \f$z_i = u_i\div v_i; [i_1,i_n]\f$.
+  */
   dvector elem_div(_CONST dvector& t1,_CONST dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  

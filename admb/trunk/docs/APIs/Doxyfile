@@ -572,18 +572,21 @@ WARN_LOGFILE           =
 # with spaces.
 
 INPUT                  = ./dox-share/mainpage.txt \
-                         ../../src/linad99/fvar.hpp \
-                         ../../src/nh99/admodel.h \
                          ../../src/linad99/dvector.cpp \
+                         ../../src/linad99/dvect2.cpp \
+                         ../../src/linad99/dvect3.cpp \
                          ../../src/linad99/dvect5.cpp \
                          ../../src/linad99/cbetai.cpp \
                          ../../src/linad99/cbetacf.cpp \
                          ../../src/linad99/cgamdev.cpp \
+                         ../../src/linad99/cgamdens.cpp \
+                         ../../src/linad99/vgamdens.cpp \
                          ../../src/linad99/combc.cpp \
                          ../../src/linad99/conjprod.cpp \
                          ../../src/linad99/cspline.cpp \
                          ../../src/linad99/dfgammp.cpp \
                          ../../src/linad99/dmat34.cpp \
+                         ../../src/linad99/dmat2.cpp \
                          ../../src/linad99/dmat3.cpp \
                          ../../src/linad99/dmat42.cpp \
                          ../../src/linad99/dranpois.cpp \
@@ -607,6 +610,8 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/dveigenv.cpp \
                          ../../src/linad99/cbivnorm.cpp \
                          ../../src/linad99/vbivnorm.cpp \
+                         ../../src/linad99/cnegbin.cpp \
+                         ../../src/linad99/vnegbin.cpp \
                          ../../src/nh99/dfqromb.cpp \
                          ../../src/nh99/bet_rand.cpp \
                          ../../src/nh99/amoeba.cpp \
@@ -614,6 +619,8 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/df1b2-separable/f1b2lndt.cpp \
                          ../../src/df1b2-separable/df3gammp.cpp \
 
+                         ../../src/linad99/fvar.hpp \
+                         ../../src/nh99/admodel.h \
 
 
 # This tag can be used to specify the character encoding of the source files 
@@ -795,7 +802,7 @@ VERBATIM_HEADERS       = YES
 # of all compounds will be generated. Enable this if the project 
 # contains a lot of classes, structs, unions or interfaces.
 
-ALPHABETICAL_INDEX     = NO
+ALPHABETICAL_INDEX     = YES
 
 # If the alphabetical index is enabled (see ALPHABETICAL_INDEX) then 
 # the COLS_IN_ALPHA_INDEX tag can be used to specify the number of columns 

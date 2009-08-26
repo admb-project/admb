@@ -233,6 +233,7 @@ static int ycounter=0;
 
  /**
   Assignment operator for double argument.
+  \ingroup matop
   Assigns a the same value to all members of the vector object.
   \param x A double constant.
   \return Reference to a %dvector object.
@@ -257,6 +258,7 @@ static int ycounter=0;
  }
 
  /**
+  \ingroup matop
   Assignment operator for %dvector argument.
   Assigns the values of the argument to a target %dvector in the LHS of the
   assignment operator. The range of valid subscripts in the argument and the
@@ -296,6 +298,7 @@ static int ycounter=0;
  }
 
  /**
+  \ingroup matop
   Assignment operator for %dvector argument.
   Assigns the values of the argument to a %independent_variables target in the LHS of the
   assignment operator. The range of valid subscripts in the argument and the
@@ -516,6 +519,7 @@ void dvector::allocatec(_CONST dvector& t)
   /** Compute the dot product of two vectors. The minimum and maxium
   legal subscripts of the arguments must agree; otherwize an error message
    is printed and execution terminates.
+  \ingroup matop
   \param t1 A %dvector, \f$a\f$.
   \param t2 A %dvector, \f$b\f$.
   \return A double, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing 
@@ -559,6 +563,7 @@ void dvector::allocatec(_CONST dvector& t)
   }
 
   /**
+  \ingroup matop
   Add two dvectors.
   Exits with error if bounds of the two arguments differ.
   \param t1 %dvector reference, \f$a\f$.
@@ -596,6 +601,7 @@ void dvector::allocatec(_CONST dvector& t)
   }
 
   /**
+  \ingroup matop
   Subtract two dvectors.
   Exits with error if bounds of the two arguments differ.
   \param t1 %dvector reference, \f$a\f$.
@@ -633,6 +639,7 @@ void dvector::allocatec(_CONST dvector& t)
   }
 
   /**
+  \ingroup matop
   Multiply a %dvector by a constant.
   \param x Double constant, \f$x\f$.
   \param t1 %dvector reference, \f$y\f$.

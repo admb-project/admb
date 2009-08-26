@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -9,6 +9,13 @@
 
 #include "fvar.hpp"
 
+  /** Log negative bionomial density; variable objects.
+  \ingroup PDF
+  \param x
+  \param mu
+  \param tau
+  \return 
+  */
   dvariable log_negbinomial_density(double x,const prevariable& mu, 
     const prevariable& tau)
   {
@@ -26,6 +33,13 @@
     return tmp;
   }
 
+  /** Negative bionomial density; variable objects.
+  \ingroup PDF
+  \param x
+  \param mu
+  \param tau
+  \return 
+  */ 
   dvariable negbinomial_density(double x,const prevariable& mu, 
     const prevariable& tau)
   {
@@ -52,6 +66,12 @@
     return tmp;
   }
 
+  /**  Log Poisson density; variable objects.
+  \ingroup PDF
+  \param x Number of observed occurences, \f$k\f$.
+  \param mu Mean or expected value, \f$\mu\f$.
+  \return Log of Poisson density. \f$-\mu+k*\log(\mu)-k!\f$.
+  */
   dvariable log_density_poisson(double x,const prevariable& mu)
   {
     return -mu+x*log(mu)-gammln(x+1);

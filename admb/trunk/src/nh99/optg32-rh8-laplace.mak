@@ -69,7 +69,7 @@ disk: $(LIBPATH)/$(LIBNAME)  df1b2stub tpl2cpp
 	cp adsplus.h $(DISKDIR)/$(INCLDIR)
 	cp newredef.h $(DISKDIR)/$(INCLDIR)
 	cp s.h $(DISKDIR)/$(INCLDIR)
-	- cp tpl2cpp $(DISKDIR)/$(BINDIR)     
+	- cp tpl2cpp tpl2cpp.exe $(DISKDIR)/$(BINDIR)     
 	cp sed* $(DISKDIR)/$(BINDIR)     
 	cp $(STUBPATH)/${STUBNAME} $(DISKDIR)/$(LIBDIR)
 

@@ -40,7 +40,7 @@ disk: $(LIBPATH)/$(LIBNAME) tpl2rem
 	cp df1b2fnl.h $(DISKDIR)/$(INCLDIR)
 	cp df1b2loc.h $(DISKDIR)/$(INCLDIR)
 	cp smartbuf.h $(DISKDIR)/$(INCLDIR)
-	cp tpl2rem $(DISKDIR)/$(BINDIR)
+	- cp tpl2rem tpl2rem.exe $(DISKDIR)/$(BINDIR)
 	cp sed* $(DISKDIR)/$(BINDIR)
 
 tpl2rem.c: tpl2rem.lex

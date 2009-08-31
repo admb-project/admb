@@ -6,7 +6,7 @@ PWD=$(shell pwd)
 
 CCVERSION=gcc411
 OSVERSION=fedorar8
-COMP=g++
+COMP="g++ -Wall"
 
 dist:
 	rm -rf ${DISK}

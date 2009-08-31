@@ -3,7 +3,7 @@ PWD=$(shell pwd)
 
 CCVERSION=gcc345mingw
 OSVERSION=win32
-COMP=gcc
+COMP="g++ -Wall"
 
 dist:
 	rm -rf ${DISK}

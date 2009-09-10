@@ -2,10 +2,10 @@
 CC = gcc
 SHELL=sh
 LL = tlib
-FLAGS =  ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -w -DUSE_LAPLACE -DSAFE_ALL -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../tools99 -I../df1b2-separable
+FLAGS =  ${OPTIONS} ${PVMOPTION} -DUSE_LAPLACE -DSAFE_ALL -D__GNUDOS__ -Dlinux -O3 -c -I. -I../nh99 -I../tools99 -I../df1b2-separable
 
 LIBPATH =gcc32-rh8o
-FLAGS1 = ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -g -DUSE_LAPLACE -DSAFE_ALL -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../tools99 -I../df1b2-separable
+FLAGS1 = ${OPTIONS} ${PVMOPTION} -g -DUSE_LAPLACE -DSAFE_ALL -D__GNUDOS__ -Dlinux -O3 -c -I. -I../nh99 -I../tools99 -I../df1b2-separable
 LIBPATH =gcc32-rh8slp
 LIBNAME = libads.a
 LIBDIR = lib

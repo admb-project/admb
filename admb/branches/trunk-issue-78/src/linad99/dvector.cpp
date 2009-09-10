@@ -318,7 +318,6 @@ static int ycounter=0;
      cerr << "Index bounds do not match in dvector& operator = (_CONST dvector&)\n";
      ad_exit(1);
    }
-     double tmp;
    // disconnect dvector  pointer  from old array
    if (v != t.address())
    {
@@ -343,7 +342,7 @@ static int ycounter=0;
  {
    allocate(0,sz-1);
 
-   for (int i=0; i<sz; i++)
+   for (unsigned int i=0; i<sz; i++)
    {
      cout << "Doing the assignment in constructor\n";
      v[i] = x[i];

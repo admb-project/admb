@@ -87,16 +87,14 @@ void function_minimizer::limited_memory_quasi_newton
 
   double xtol, f;
   dvector diag(1,nvar);
-  int j, n, iflag, icall;
+  int iflag, icall;
   double fbest=1.e+100;
   dvector g(1,nvar);
   g.initialize();
   dvector xbest(1,nvar);
   dvector gbest(1,nvar);
-  double t1, t2;
   long int diagco=0.0;
   int iprintx[2];
-  double epsx;
   //m = 35;
   dvector w(1,nvar+2*m+2*nvar*m);
   nopt=0;
@@ -141,9 +139,13 @@ L20:
     if (iprint>0)
     {
       if (!itn)
+      {
         if (ad_printf) (*ad_printf)("\nInitial statistics: ");
+      }
       else
+      {
         if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
+      }
 
       if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
@@ -245,16 +247,14 @@ void function_minimizer::limited_memory_quasi_newton
 
   double xtol;
   dvector diag(1,nvar);
-  int j, n, iflag, icall;
+  int iflag, icall;
   double fbest=1.e+100;
   dvector g(1,nvar);
   g.initialize();
   dvector xbest(1,nvar);
   dvector gbest(1,nvar);
-  double t1, t2;
   long int diagco=0;
   int iprintx[2];
-  double epsx;
   //m = 35;
   dvector w(1,nvar+2*m+2*nvar*m);
   iprintx[0] = iprint;
@@ -285,9 +285,13 @@ L20:
     if (iprint>0)
     {
       if (!itn)
+      {
         if (ad_printf) (*ad_printf)("\nInitial statistics: ");
+      }
       else
+      {
         if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
+      }
 
       if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);

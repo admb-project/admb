@@ -40,8 +40,6 @@ dvector new_probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,B
   double diff1;
   int expflag;
   double y;
-  int in=0;
-  int ie=0;
   double u = better_rand(iseed);
   int rflag;
   if (u>rob1)
@@ -191,8 +189,6 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1
   double diff1;
   int expflag;
   double y;
-  int in=0;
-  int ie=0;
 
   a=a1;
   b=b1;
@@ -202,7 +198,7 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1
     y=_y(i);
     ah=a(i)/ch(i,i); 
     bl=b(i)/ch(i,i); 
-    double u = better_rand(iseed);
+    better_rand(iseed);
     upper=cumd_norm(bl);
     lower=cumd_norm(ah); 
     diff=upper-lower;

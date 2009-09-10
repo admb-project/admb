@@ -10,10 +10,12 @@
 
  
 #  if defined(USE_SHARE_FLAGS)
+/*
   static int integer(const index_type& it)
   {
     return it.integer();
   }
+*/
 
   int param_init_d3array::shared_size_count(void)
   {
@@ -70,7 +72,7 @@
       int  jmin=bmap(i).indexmin();
       int  jmax=bmap(i).indexmax();
   
-      int ii1;
+      int ii1 = 0;
       for (int j=jmin;j<=jmax;j++)
       {
         dvar_vector& v=(*this)(bmap(i,j,1),bmap(i,j,2));

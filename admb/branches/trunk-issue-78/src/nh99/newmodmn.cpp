@@ -115,7 +115,7 @@ void report_onesided_confidence_limits(BOR_CONST ofstream& _ofs3,int numsig_leve
     dmatrix upper_bd(0,3,1,3);
 #endif
     double sigma;
-    int nvar=initial_params::nvarcalc();
+    initial_params::nvarcalc();
     int numsig_levels=siglevel.indexmax();
     for (int ip=0;ip<likeprof_params::num_likeprof_params;ip++)
     {
@@ -125,7 +125,6 @@ void report_onesided_confidence_limits(BOR_CONST ofstream& _ofs3,int numsig_leve
       if (llen>8) profrep_name=profrep_name(1,8);
       ofstream ofs3((char*) (profrep_name+adstring(".plt")));
       sigma=likeprof_params::likeprofptr[ip]->get_sigma();
-      double diff;
       ofs2 << likeprof_params::likeprofptr[ip]->label() << ":" << endl;
       ofs3 << likeprof_params::likeprofptr[ip]->label() << ":" << endl;
       ofs2 << sigma << endl  << global_min << " " << udet << endl;
@@ -236,8 +235,8 @@ void report_onesided_confidence_limits(BOR_CONST ofstream& _ofs3,int numsig_leve
         int k;
         for (k=min_ind;k<=0;k++)
         {
-          double * xa=(&all_values(k))-1;
-          double * ya=(&lm(ii,k))-1;
+          //double * xa=(&all_values(k))-1;
+          //double * ya=(&lm(ii,k))-1;
           //ms(ii,kmult*k)=exp(lm(ii,k));
           ms(ii,kmult*k)=lm(ii,k);
           if (k<max_ind)
@@ -254,8 +253,8 @@ void report_onesided_confidence_limits(BOR_CONST ofstream& _ofs3,int numsig_leve
 
         for (k=1;k<=max_ind;k++)
         {
-          double * xa=(&all_values(k))-2;
-          double * ya=(&lm(ii,k))-2;
+          //double * xa=(&all_values(k))-2;
+          //double * ya=(&lm(ii,k))-2;
           //ms(ii,kmult*k)=exp(lm(ii,k));
           ms(ii,kmult*k)=lm(ii,k);
           if (k<max_ind)

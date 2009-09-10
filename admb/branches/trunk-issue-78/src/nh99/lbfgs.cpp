@@ -225,8 +225,9 @@ typedef doublereal E_f;	/* real function with -R not specified */
 #undef vax
 #endif
 #endif
-/* Common Block Declarations */
+// Common Block Declarations
 
+/*
 struct lb3_1_ {
     integer mp, lp;
     doublereal gtol, stpmin, stpmax;
@@ -234,13 +235,26 @@ struct lb3_1_ {
 
 #define lb3_1 (*(struct lb3_1_ *) &lb3_)
 
-/* Initialized data */
+// Initialized data
 
 struct {
     integer e_1[2];
     doublereal e_2[3];
-    } lb3_ = { 6, 6, .9, 1e-20, 1e20 };
+    } lb3_ = { { 6, 6 }, { .9, 1e-20, 1e20 } };
+*/
+class lb3_
+{
+public:
+  lb3_(): mp(6), lp(6), gtol(.9), stpmin(1e-20), stpmax(1e20)
+  {
+  }
 
+public:
+  integer mp, lp;
+  doublereal gtol, stpmin, stpmax;
+};
+
+lb3_ lb3_1;
 
 /* Table of constant values */
 
@@ -1401,8 +1415,8 @@ L30:
 /*        IF AN UNUSUAL TERMINATION IS TO OCCUR THEN LET */
 /*        STP BE THE LOWEST POINT OBTAINED SO FAR. */
 
-    if (brackt && (*stp <= stmin || *stp >= stmax) || *nfev >= *maxfev - 1 || 
-            infoc == 0 || brackt && stmax - stmin <= *xtol * stmax) {
+    if ((brackt && (*stp <= stmin || *stp >= stmax)) || *nfev >= *maxfev - 1 || 
+            infoc == 0 || (brackt && stmax - stmin <= *xtol * stmax)) {
         *stp = stx;
     }
 
@@ -1431,7 +1445,7 @@ L45:
 
 /*        TEST FOR CONVERGENCE. */
 
-    if ( brackt && (*stp <= stmin || *stp >= stmax) || infoc == 0) {
+    if ((brackt && (*stp <= stmin || *stp >= stmax)) || infoc == 0) {
         *info = 6;
     }
     if (*stp == lb3_1.stpmax && *f <= ftest1 && dg <= dgtest) {
@@ -1459,7 +1473,7 @@ L45:
 /*        IN THE FIRST STAGE WE SEEK A STEP FOR WHICH THE MODIFIED */
 /*        FUNCTION HAS A NONPOSITIVE VALUE AND NONNEGATIVE DERIVATIVE. */
 
-    if (stage1 && *f <= ftest1 && dg >= min(*ftol,lb3_1.gtol) * dginit) {
+    if (stage1  && *f <= ftest1 && dg >= min(*ftol,lb3_1.gtol) * dginit) {
         stage1 = FALSE_;
     }
 
@@ -1596,7 +1610,7 @@ L45:
 
 /*     CHECK THE INPUT PARAMETERS FOR ERRORS. */
 
-    if (*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty)) || *dx *
+    if ((*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty))) || *dx *
              (*stp - *stx) >= (float)0. || *stpmax < *stpmin) {
         return 0;
     }

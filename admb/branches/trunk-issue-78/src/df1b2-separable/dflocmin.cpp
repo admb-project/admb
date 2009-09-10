@@ -36,7 +36,7 @@ dvector laplace_approximation_calculator::local_minimization
 {
   int better_flag=0;
   int counter=0;
-  double fbest,f2;
+  double fbest;
   dvector vbest(1,usize);
   s.initialize();
   s(1)=1.0;
@@ -78,6 +78,7 @@ dvector laplace_approximation_calculator::local_minimization
     cerr << "Error cannot find better value to try and get a"
       " positive definite hessian" << endl;
   }
+  return 0;
 }
 
 

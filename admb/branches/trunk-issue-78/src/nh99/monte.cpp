@@ -147,8 +147,6 @@ dvector probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_C
   double diff1;
   int expflag;
   double y;
-  int in=0;
-  int ie=0;
   for (int i=1;i<=nvar;i++)
   {
     ah=a(i)/ch(i,i); 

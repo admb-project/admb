@@ -33,7 +33,6 @@ df1b2matrix choleski_decomp(const df1b2matrix& MM)
   }
  
 
-  int n=rmax;
   df1b2matrix L(rmin,rmax,rmin,rmax);
 #ifndef SAFE_INITIALIZE
     L.initialize();

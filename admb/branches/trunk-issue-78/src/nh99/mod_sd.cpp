@@ -66,7 +66,7 @@ void function_minimizer::sd_routine(void)
        (initial_params::varsptr[i])->label();
       param_size[ii]=
        (initial_params::varsptr[i])->size_count();
-      if (max_name_length<param_labels[ii].size())
+      if ((unsigned int)max_name_length<param_labels[ii].size())
       {
         max_name_length=param_labels[ii].size();
       }
@@ -81,7 +81,7 @@ void function_minimizer::sd_routine(void)
       stddev_params::stddevptr[i]->label();
     param_size[ii]=
       stddev_params::stddevptr[i]->size_count();
-    if (max_name_length<param_labels[ii].size())
+    if ((unsigned int)max_name_length<param_labels[ii].size())
     {
       max_name_length=param_labels[ii].size();
     }
@@ -114,7 +114,7 @@ void function_minimizer::sd_routine(void)
     }
   }
   int sgn;
-  int check=initial_params::stddev_scale(scale,x);
+  initial_params::stddev_scale(scale,x);
   double lndet=-ln_det(S,sgn)-2.0*sum(log(scale));
   initial_params::set_active_random_effects(); 
   //int nvar1=initial_params::nvarcalc(); 
@@ -438,7 +438,7 @@ void function_minimizer::sd_routine(void)
         }
       }
 
-      for (int in=1;in<=max_name_length+1-param_labels[lc].size();in++)
+      for (int in=1;in<=max_name_length+1-(int)param_labels[lc].size();in++)
       {
         ofs << " ";
         ofsd << " ";

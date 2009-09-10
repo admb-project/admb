@@ -43,7 +43,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
 {
   int& sgn=(int&)(_sgn);
   int errflag=0;
-  int i,imax,j,k,n;
+  int i,imax = 0,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -190,7 +190,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
 void df_xldet(void)
 {
   verify_identifier_string("PLACE0");
-  double ld=restore_double_value();
+  /*double ld=*/restore_double_value();
   verify_identifier_string("PLACE1");
   dmatrix_position bpos=restore_dmatrix_position();
   verify_identifier_string("PLACE2");

@@ -116,9 +116,8 @@
     offset=0;
     toffset=0;
 
-    char * path = getenv("ADTMP1"); // NULL if not defined
-
 #if defined(USE_ADPVM)
+    char * path = getenv("ADTMP1"); // NULL if not defined
     adstring string_path;
     if (path) string_path=path;
     int on=0;
@@ -249,14 +248,14 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
     //cout << " trying to read buff_size = " << buff_size 
       //   << " from cmpdif file" << endl;
   //cout << "offset before read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
-  if (read(file_ptr,buff,buff_size)<buff_size)
+  if (read(file_ptr,buff,buff_size)<(int)buff_size)
   {
     cerr << "End of file trying to read "<< cmpdif_file_name << endl;
     ad_exit(1);
   }
   lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
   //cout << "offset after read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
-  for(int i=0;i<sizeof(unsigned int);i++)
+  for(unsigned int i=0;i<sizeof(unsigned int);i++)
   {
      fourb[i] = *(buff+buff_end+1+i);
   }
@@ -270,12 +269,12 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
          //<< " into cmpdif file" << endl;
     //cout << "offset before write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
     //if (write(file_ptr,buff,buff_size)<buff_size)
-    for(int i=0;i<sizeof(unsigned int);i++)
+    for(unsigned int i=0;i<sizeof(unsigned int);i++)
     {
 	 *(buff+buff_end+1+i)=fourb[i]; // save the offset at the
 			//end of the used part of the buffer
     }
-    if (write(file_ptr,buff,buff_size)<buff_size)
+    if ((unsigned int)write(file_ptr,buff,buff_size)<buff_size)
     {
       cerr << "End of file trying to write to file "<< cmpdif_file_name << endl;
       cerr << "There is probably no more room on the TMP1 (if defined) device\n"

@@ -235,7 +235,7 @@ label7003:
         if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
             f, gmax);
       }
-label7002:
+//label7002:
       if(iprint>0) 
       {
         fmmdisp(x, g, n, this->scroll_flag,noprintx);
@@ -470,7 +470,7 @@ label65:
 label70:
       if (link == 1) goto label60;
       if (link == 2) goto label65;
-label90:
+//label90:
       for (i=1;i<=n;i++)
          g.elem(i)=w.elem(i);
 label92:
@@ -589,7 +589,7 @@ label7020:
       for (i=k;i>=lb;i--)
       {
         int i1=i%(m1);
-        int i2=(i+1)%(m1);
+        //int i2=(i+1)%(m1);
         {
           alpha(i-lb)=xrho(i1)*(s(i1)*t);
         }

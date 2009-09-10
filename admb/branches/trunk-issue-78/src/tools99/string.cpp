@@ -60,7 +60,7 @@ adstring::operator _CONST char * () _CONST
 
 ostream & operator << (ostream & c, _CONST adstring & t)
 {
-  for (int i = 1; i <= t.size(); i++)
+  for (unsigned int i = 1; i <= t.size(); i++)
   {
   #if (defined __ZTC__) || (defined __NDPX__)
     c << (char)(t.s)[i];

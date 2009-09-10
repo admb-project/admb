@@ -34,7 +34,7 @@ df1b2vector solve(const df1b2matrix& aa,const dvector& z,
 
 df1b2vector csolve(const df1b2matrix& aa,const dvector& z)
 {
-  double ln_unsigned_det;
+  double ln_unsigned_det = 0;
   double sign;
   df1b2vector sol=solve(aa,z,ln_unsigned_det,sign);
   return sol;
@@ -53,7 +53,7 @@ df1b2vector solve(const df1b2matrix& aa,const dvector& z,
   const df1b2variable & _ln_unsigned_det,double& sign)
 {
   ADUNCONST(df1b2variable,ln_unsigned_det)
-  int i,imax,j,k,n;
+  int i,imax = 0,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -69,7 +69,6 @@ df1b2vector solve(const df1b2matrix& aa,const dvector& z,
   indx.fill_seqadd(lb,One);
   double  d;
   df1b2variable big,dum,sum,temp;
-  kkludge_object kkk;
   df1b2vector vv(lb,ub);
 
   d=1.0;

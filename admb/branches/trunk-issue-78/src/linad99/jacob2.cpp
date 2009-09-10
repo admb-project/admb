@@ -71,7 +71,6 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
 {
   ADUNCONST(ofstream,ofs)
   dvector jac(1,nvar);
-  int i;
   my_off_t lpos;
   int depvar_count=DEPVARS_INFO->depvar_count;
 
@@ -125,12 +124,12 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
     // position the cmpdif file correctly;
     if (last_cpos)
     {
-      int cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
+      long int cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
       lseek(fp->file_ptr,cmp_lpos,SEEK_SET);
       #if !defined(__MSVC32__) && !defined(__GNUDOS__) && !defined (__WAT32__)
         fp->read_cmpdif_stack_buffer(cmp_lpos);
       #else
-        fp->read_cmpdif_stack_buffer((long int&)cmp_lpos);
+        fp->read_cmpdif_stack_buffer(cmp_lpos);
       #endif
     }
     GRAD_STACK1->_GRADFILE_PTR = GRAD_STACK1->gradfile_handle();
@@ -170,7 +169,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
 
     gradient_structure::GRAD_STACK1->ptr--;
 
-    for (i=0; i< GRAD_LIST->nlinks; i++)
+    for (unsigned int i=0; i< GRAD_LIST->nlinks; i++)
     {
       * (double*) (GRAD_LIST->dlink_addresses[i]) = 0;
     }
@@ -194,7 +193,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
 
     double * zptr;
 
-    for (i=0 ; i< (max_last_offset/size) ; i++ )
+    for (unsigned int i=0 ; i< (max_last_offset/size) ; i++ )
     {
       tmp->x = 0;
       #if defined (__ZTC__)
@@ -215,7 +214,6 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
     * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
-    double z;
     int break_flag=1;
 
     do
@@ -224,7 +222,6 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
       #ifdef FAST_ASSEMBLER
         gradloop();
       #else
-        int counter=0;
       while (gradient_structure::GRAD_STACK1->ptr-- >
     		gradient_structure::GRAD_STACK1->ptr_first)
       {
@@ -246,7 +243,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
     }  while (break_flag); // do
 
     int mindx = g.indexmin();
-    for (i=0; i<nvar; i++)
+    for (int i=0; i<nvar; i++)
     {
       g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
     }

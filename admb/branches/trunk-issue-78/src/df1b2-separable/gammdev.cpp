@@ -55,7 +55,7 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
     // now use the derivatives of z to get the
     //derivatives of x wrt y,a and save them
 
-    double ca=value(a);
+    //double ca=value(a);
 
     double F_x=1.0/(*z.get_u_x());
    

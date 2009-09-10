@@ -19,7 +19,6 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
 dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
   (const dvector& x,function_minimizer * pfmin)
 {
-  double f=0.0;
   dvector g(1,usize);
   independent_variables u(1,usize);
   fmc1.itn=0;
@@ -41,7 +40,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
     ad_comm::global_savefile=tmpfile;
   }
 
-  system(" catageqd -nox -nohess -crit 1.e-10 -ainp catageqd.ppp ");
+  if (system(" catageqd -nox -nohess -crit 1.e-10 -ainp catageqd.ppp ")) {}
 
   uistream ifs("uval.dat");
 

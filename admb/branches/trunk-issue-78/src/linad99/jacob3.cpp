@@ -70,7 +70,6 @@ void jacobcalc(int nvar,BOR_CONST uostream& ofs)
 void gradient_structure::jacobcalc(int nvar,BOR_CONST uostream& ofs)
 {
   dvector jac(1,nvar);
-  int i;
   my_off_t lpos;
   int depvar_count=DEPVARS_INFO->depvar_count;
 
@@ -169,7 +168,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST uostream& ofs)
 
     gradient_structure::GRAD_STACK1->ptr--;
 
-    for (i=0; i< GRAD_LIST->nlinks; i++)
+    for (unsigned int i=0; i< GRAD_LIST->nlinks; i++)
     {
       * (double*) (GRAD_LIST->dlink_addresses[i]) = 0;
     }
@@ -193,7 +192,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST uostream& ofs)
 
     double * zptr;
 
-    for (i=0 ; i< (max_last_offset/size) ; i++ )
+    for (unsigned int i=0 ; i< (max_last_offset/size) ; i++ )
     {
       tmp->x = 0;
       #if defined (__ZTC__)
@@ -214,7 +213,6 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST uostream& ofs)
     * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
-    double z;
     int break_flag=1;
 
     do
@@ -223,7 +221,6 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST uostream& ofs)
       #ifdef FAST_ASSEMBLER
         gradloop();
       #else
-        int counter=0;
       while (gradient_structure::GRAD_STACK1->ptr-- >
     		gradient_structure::GRAD_STACK1->ptr_first)
       {
@@ -245,7 +242,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST uostream& ofs)
     }  while (break_flag); // do
 
     int mindx = g.indexmin();
-    for (i=0; i<nvar; i++)
+    for (int i=0; i<nvar; i++)
     {
       g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
     }

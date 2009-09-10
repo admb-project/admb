@@ -50,6 +50,13 @@ const int MAX_NUMBER_ROWS = 6550;
 #define HUGE 1.e+100
 #endif
 
+#ifdef __GNUC__
+#include <sstream>
+using std::istringstream;
+#else
+#include <strstream>
+using std::istrstream;
+#endif
 
 dvector::dvector(const char * s)
 {
@@ -106,7 +113,12 @@ dvector::dvector(const char * s)
 
     allocate(ncl,nch);
 
+#ifdef __GNUC__
+    istringstream ss(t);
+#else
     istrstream ss(t);
+#endif
+
 
    char * field =  new char[size_t(MAX_FIELD_LENGTH+1)];
    char * err_ptr;
@@ -306,7 +318,12 @@ void dvector::allocate(const char * s)
 
     allocate(ncl,nch);
 
+#ifdef __GNUC__
+    istringstream ss(t);
+#else
     istrstream ss(t);
+#endif
+
 
    char * field =  new char[size_t(MAX_FIELD_LENGTH+1)];
    char * err_ptr;

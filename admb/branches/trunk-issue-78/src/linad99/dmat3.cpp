@@ -277,7 +277,7 @@ void ludcmp(BOR_CONST dmatrix& _a,BOR_CONST ivector& _indx,BOR_CONST double& _d)
 */
 void ludcmp_det(BOR_CONST dmatrix& _a,BOR_CONST ivector& _indx,BOR_CONST double& _d)
 {
-  int i,imax,j,k,n;
+  int i,imax = 0,j,k,n;
   double& d=(double&)_d;
   dmatrix& a=(dmatrix&)_a;
   ivector& indx=(ivector&)_indx;

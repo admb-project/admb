@@ -26,7 +26,7 @@ void ludcmp(BOR_CONST dvar_matrix& _a,BOR_CONST ivector& _indx,BOR_CONST prevari
   ADUNCONST(dvar_matrix,a)
   ADUNCONST(prevariable,d)
   ivector& indx= (ivector&) _indx;
-  int i,imax,j,k,n;
+  int i,imax = 0,j,k,n;
 
   n=a.colsize();
   int lb=a.colmin();
@@ -126,7 +126,7 @@ void lubksb(dvar_matrix a,_CONST ivector& indx,dvar_vector b)
 {
   int i,ii=0,ip,j,iiflag=0;
   dvariable sum;
-  int n=a.colsize();
+  //int n=a.colsize();
   int lb=a.colmin();
   int ub=a.colmax();
   for (i=lb;i<=ub;i++) 

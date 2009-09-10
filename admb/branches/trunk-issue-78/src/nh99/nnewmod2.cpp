@@ -16,7 +16,6 @@ double function_minimizer::projected_hess_determinant(BOR_CONST dvector& g,
  int ibreak=-1;
  int sgn=0;
  double lndet=0.0;
- char ch;
  if (!underflow_flag)
  {
   uistream ifs("admodel.hes");

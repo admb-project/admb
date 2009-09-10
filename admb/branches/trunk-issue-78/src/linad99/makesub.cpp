@@ -60,7 +60,7 @@ void ad_getcd(const adstring& _s)
 #elif (defined(__GNUDOS__) || defined(unix) || defined(__linux__) )
   char tmp[101];
   tmp[100]=0;
-  getcwd(tmp,100);
+  if (getcwd(tmp,100)) {}
   s=adstring(tmp);
 #else
   xxx
@@ -86,8 +86,8 @@ int make_sub_directory(const char * s)
   adstring currdir;
   adstring currdir1;
   ad_getcd(currdir);
-  const int len=100;
-  char dirname[len+1];
+  //const int len=100;
+  //char dirname[len+1];
 #if defined(_WIN32)
   int ierr=SetCurrentDirectory(s);
 #else

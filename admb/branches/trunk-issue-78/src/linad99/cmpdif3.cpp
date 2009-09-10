@@ -32,6 +32,7 @@ void report_gradstack_flag(void)
   cout << "in report_gradstack_flag  " << str1 << endl;
 }
 
+#if defined(CHK_ID_STRING)
 static void report_gradstack_flag2(void)
 {
   verify_identifier_string("stack");
@@ -49,12 +50,13 @@ static void report_gradstack_flag2(void)
   if (i==3 && j==91)
     cout << "HERE" << endl;
 }
+#endif
 
 
 void set_gradstack_flag(char* str)
 {
 #if defined(CHK_ID_STRING)
-  int wsize=sizeof(char);
+  //int wsize=sizeof(char);
   int length=strlen(str);
   gradient_structure::get_fp()->fwrite(str,length);
   gradient_structure::get_fp()->fwrite(&length,sizeof(int));
@@ -71,7 +73,7 @@ void set_gradstack_flag(char* _str,int i,int j)
   ads+=str(i);
   ads+=" ";
   ads+=str(j);
-  int wsize=sizeof(char);
+  //int wsize=sizeof(char);
   char * str=(char*)(ads);
   int length=strlen(str);
   gradient_structure::get_fp()->fwrite(&i,sizeof(int));

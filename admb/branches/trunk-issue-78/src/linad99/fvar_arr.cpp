@@ -72,7 +72,7 @@ dvar_vector& dvar_vector::shift(int min)
  dvar_vector::dvar_vector( unsigned int sz, double * x )
  {
    allocate(0,sz-1);
-   for (int i=0; i<sz; i++)
+   for (unsigned int i=0; i<sz; i++)
    {
      va[i].x = x[i];
    }
@@ -123,7 +123,7 @@ void make_indvar_list(_CONST dvar_vector& t)
   {
     return;
   }
-  if ( (t.indexmax()-t.indexmin()+1)> gradient_structure::MAX_NVAR_OFFSET)
+  if ( (unsigned int)(t.indexmax()-t.indexmin()+1)> gradient_structure::MAX_NVAR_OFFSET)
   {
    #if defined(__SPDLL__)
    if (ad_printf)

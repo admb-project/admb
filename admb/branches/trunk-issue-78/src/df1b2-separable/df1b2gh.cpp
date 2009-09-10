@@ -19,7 +19,7 @@ double do_gauss_hermite_block_diagonal(const dvector& x,
 {
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)
-  ADUNCONST(dmatrix,Hessadjoint)
+  //ADUNCONST(dmatrix,Hessadjoint)
   const int xs=x.size();
   const int us=u0.size();
   gradient_structure::set_NO_DERIVATIVES();
@@ -33,7 +33,7 @@ double do_gauss_hermite_block_diagonal(const dvector& x,
   // init parameters should be active in this phase
   initial_params::set_inactive_only_random_effects(); 
   initial_params::set_active_random_effects(); 
-  int onvar=initial_params::nvarcalc(); 
+  initial_params::nvarcalc(); 
   initial_params::xinit(y);    // get the initial values into the
   // do we need this next line?
   y(1,xs)=x;

@@ -40,7 +40,10 @@
  */
 
 
+#if !(defined __GNUC__)
 #pragma hdrstop
+#endif
+
 /*
 class fmmq : public fmm_control
 {

@@ -83,7 +83,6 @@ df1b2variable operator / (const df1b2variable& x,const df1b2variable& y)
   double yu=*y.get_u();
   double yinv=1.0/yu;
   *z.get_u()=xu*yinv;
-  double zu=*z.get_u();
   double yinv2=yinv*yinv;
   double yinv3=yinv2*yinv;
 
@@ -152,7 +151,6 @@ df1b2variable pow(const df1b2variable& x,double y)
   df1b2variable z;
   double xu=*x.get_u();
   *z.get_u()=::pow(xu,y);
-  double zu=*z.get_u();
 
   double dfx= y*::pow(xu,y-1.0);
   double dfxx= y*(y-1.0)*::pow(xu,y-2.0);

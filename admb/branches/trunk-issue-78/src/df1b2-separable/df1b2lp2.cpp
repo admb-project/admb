@@ -24,7 +24,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
   // for use when there is no separability
   ADUNCONST(dvector,x)
   ADUNCONST(double,f)
-  int i,j;
+  int i;
 
   initial_params::set_inactive_only_random_effects(); 
   gradient_structure::set_NO_DERIVATIVES();
@@ -141,7 +141,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     x_con.initialize();
     dvector dscale(1,nvar);   // need to get scale from somewhere
     dscale=1.0;
-    int check=initial_params::stddev_scale(dscale,x);
+    initial_params::stddev_scale(dscale,x);
     dvector sscale=dscale(1,xsize);
     // *******************************************************
     // *******************************************************
@@ -244,7 +244,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     x_con.initialize();
     dvector dscale(1,nvar);   // need to get scale from somewhere
     dscale=1.0;
-    int check=initial_params::stddev_scale(dscale,x);
+    initial_params::stddev_scale(dscale,x);
     dvector sscale=dscale(1,xsize);
     // *******************************************************
     // *******************************************************
@@ -361,7 +361,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     block_diagonal_flag=0;
     dvector scale1(1,xsize);   // need to get scale from somewhere
     initial_params::set_inactive_only_random_effects(); 
-    int check=initial_params::stddev_scale(scale1,x);
+    initial_params::stddev_scale(scale1,x);
     for (i=1;i<=xadjoint.indexmax();i++)
       xadjoint(i)*=scale1(i);
   }
@@ -373,7 +373,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
 dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
   (function_minimizer * pfmin)
 {
-  int i,j,ip; 
+  int ip = 0; 
   
   int nv=initial_df1b2params::set_index();
   if (allocated(used_flags))

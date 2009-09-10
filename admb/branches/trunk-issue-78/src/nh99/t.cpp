@@ -280,7 +280,8 @@ typedef dvariable E_f;	/* real function with -R not specified */
 #undef vax
 #endif
 #endif
-/* Common Block Declarations */
+/*
+// Common Block Declarations
 
 struct lb4_1_ {
     integer mp, lp;
@@ -289,12 +290,29 @@ struct lb4_1_ {
 
 #define lb4_1 (*(struct lb4_1_ *) &lb4_)
 
-/* Initialized data */
+// Initialized data
 
 struct {
     integer e_1[2];
     double e_2[3];
     } lb4_ = { 6, 6, .9, 1e-20, 1e20 };
+*/
+
+class lb4_1_
+{
+public:
+  lb4_1_() : mp(6), lp(6), gtol(.9), stpmin(1e-20), stpmax(1e20)
+  {
+  }
+  
+public:
+  integer mp, lp;
+  double gtol, stpmin, stpmax;
+};
+
+lb4_1_ lb4_1;
+
+
 #ifdef __cplusplus
 }
 #endif
@@ -1579,8 +1597,8 @@ L30:
 /*        IF AN UNUSUAL TERMINATION IS TO OCCUR THEN LET */
 /*        STP BE THE LOWEST POINT OBTAINED SO FAR. */
 
-    if (brackt && (*stp <= stmin || *stp >= stmax) || *nfev >= *maxfev - 1 || 
-            infoc == 0 || brackt && stmax - stmin <= *xtol * stmax) {
+    if ((brackt && (*stp <= stmin || *stp >= stmax)) || *nfev >= *maxfev - 1 || 
+            infoc == 0 || (brackt && stmax - stmin <= *xtol * stmax)) {
         *stp = stx;
     }
 
@@ -1817,7 +1835,7 @@ L45:
 
 /*     CHECK THE INPUT PARAMETERS FOR ERRORS. */
 
-    if (*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty)) || *dx *
+    if ((*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty))) || *dx *
              (*stp - *stx) >= (float)0. || *stpmax < *stpmin) {
         return 0;
     }

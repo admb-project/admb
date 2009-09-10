@@ -47,6 +47,14 @@ const int MAX_NUMBER_ROWS = 6550;
 #define HUGE 1.e+100
 #endif
 
+#ifdef __GNUC__
+#include <sstream>
+using std::istringstream;
+#else
+#include <strstream>
+using std::istrstream;
+#endif
+
 void dvector::fill(const char * s)
 {
   int n = strlen(s);
@@ -120,7 +128,13 @@ void dvector::fill(const char * s)
         ad_exit(1);
       }
     }
+
+#ifdef __GNUC__
+    istringstream ss(t);
+#else
     istrstream ss(t);
+#endif
+
 
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];
    char * field = new char[size_t(MAX_FIELD_LENGTH+1)];

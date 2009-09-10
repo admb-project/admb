@@ -80,7 +80,7 @@ void slave_gradcalc(void)
   {
     gradient_structure::TOTAL_BYTES = 0;
     gradient_structure::PREVIOUS_TOTAL_BYTES=0;
-    int i;
+    unsigned int i;
     my_off_t lpos;
   
      gradient_structure::GRAD_STACK1->_GRADFILE_PTR =
@@ -154,7 +154,7 @@ void slave_gradcalc(void)
     //* gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
   
-    double z;
+    //double z;
     int break_flag=1;
     
     do
@@ -186,7 +186,9 @@ void slave_gradcalc(void)
     }  while (break_flag); // do
   
     {
+     #ifdef GRAD_DIAG
       my_off_t ttmp = 
+     #endif
         lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
      #ifdef GRAD_DIAG
         cout << "Offset in file at end of gradcalc is " << ttmp

@@ -13,8 +13,6 @@ sdmatrix::sdmatrix(int irh)
 
 sdmatrix::sdmatrix()
 {
-   unsigned nrl = 0;
-   unsigned nrh = 0;
    shape=NULL;
    m=NULL;
 }
@@ -22,7 +20,6 @@ sdmatrix::sdmatrix()
 void sdmatrix::allocate(int irh)
 {
    unsigned nrl = 1;
-   unsigned nrh = irh;
    index_min=nrl;
    index_max=nrl;
 

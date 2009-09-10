@@ -20,8 +20,6 @@ dvar_vector eigenvalues(_CONST dvar_matrix& m)
   }
   dvar_matrix m1=symmetrize(m);
   int n=m1.rowsize();
-  int cmin=m1.colmin();
-  int rmin=m1.rowmin();
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   dvar_vector diag(1,n);
@@ -165,7 +163,7 @@ void get_eigen(BOR_CONST dvar_vector& _d,BOR_CONST dvar_vector& _e,_CONST dvar_m
   ADUNCONST(dvar_vector,d)
   ADUNCONST(dvar_vector,e)
   int n=d.size();
-  int m,l,iter,i,k;
+  int m,l,iter,i;
   dvariable s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];
@@ -243,7 +241,7 @@ dvar_vector get_eigen_values(const dvar_vector& _ddd,const dvar_vector& _eee)
 
 
   int n=d.size();
-  int m,l,iter,i,k;
+  int m,l,iter,i;
   dvariable s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];

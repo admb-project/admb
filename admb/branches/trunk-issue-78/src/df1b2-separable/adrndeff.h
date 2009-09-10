@@ -153,14 +153,10 @@ public:
 class laplace_approximation_calculator
 {
 public:
-  int init_switch;
   nested_calls_indices nested_indices;
   nested_calls_shape nested_shape;
-  int separable_call_level;
   int dd_nr_flag;
   dmatrix * antiepsilon;
-  i3_array * triplet_information;
-  imatrix * compressed_triplet_information;
   imatrix * calling_set;
   dvector *  importance_sampling_values; 
   dvector *  importance_sampling_weights; 
@@ -174,9 +170,6 @@ public:
   static int where_are_we_flag; // 1 in inner opt 2 in newton-raphson 3 in
                                 // laplace approximation
   int num_separable_calls; // 1 in inner opt 2 in newton-raphson 3 in
-  int separable_calls_counter; // 1 in inner opt 2 in newton-raphson 3 in
-  ivector nested_separable_calls_counter;
-  ivector nested_tree_position;
   ivector * num_local_re_array; // 1 in inner opt 2 in newton-raphson 3 in
   ivector * num_local_fixed_array; // 1 in inner opt 2 in newton-raphson 3 in
   int use_outliers;
@@ -196,23 +189,40 @@ public:
   imatrix * block_diagonal_fe_list;
   d3_array * block_diagonal_vhessianadjoint;
   dvar3_array * block_diagonal_vhessian;
-  dvector local_dtemp;
   double inner_crit;
   double max_separable_g;
   double nr_crit;
   ivector used_flags;
   int have_users_hesstype;
   int inner_maxfn;
-  int nr_debug;
   int inner_lmnflag;
   int inner_lmnsteps;
   int inner_iprint;
   int inner_noprintx;
   function_minimizer * pmin;
-  int block_diagonal_flag;
-  int bw;
   int xsize;   
   int usize;
+  dvector xadjoint;
+  dvector uadjoint;
+  dvector uhat;
+  fmm fmc;
+  fmm fmc1;
+  //fmmt1 fmc1;
+  int block_diagonal_flag;
+  dvector local_dtemp;
+  dvector check_local_xadjoint;
+  dvector check_local_uadjoint;
+  dvector check_local_xadjoint2;
+  dvector check_local_uadjoint2;
+  int bHess_pd_flag;
+  int nr_debug;
+  int separable_call_level;
+  ivector nested_separable_calls_counter;
+  ivector nested_tree_position;
+  dvector ubest;
+  int init_switch;
+  int separable_calls_counter; // 1 in inner opt 2 in newton-raphson 3 in
+  int bw;
   int nvariables;
   int nvar;
   ivector minder;
@@ -226,18 +236,19 @@ public:
   int have_bounded_random_effects;
   int isfunnel_flag;
   int nfunnelblocks;
-  int bHess_pd_flag;
   banded_symmetric_dmatrix * bHess;
   banded_symmetric_dmatrix * bHessadjoint;
   dcompressed_triplet * sparse_triplet;
-  ivector * sparse_iterator;
-  int sparse_count;
-  int sparse_count_adjoint;
-  dcompressed_triplet * sparse_triplet2;
-  dvar_compressed_triplet * vsparse_triplet;
-  dcompressed_triplet * vsparse_triplet_adjoint;
   hs_symbolic * sparse_symbolic; 
   hs_symbolic * sparse_symbolic2; 
+  dvar_compressed_triplet * vsparse_triplet;
+  i3_array * triplet_information;
+  imatrix * compressed_triplet_information;
+  dcompressed_triplet * sparse_triplet2;
+  ivector * sparse_iterator;
+  int sparse_count;
+  dcompressed_triplet * vsparse_triplet_adjoint;
+  int sparse_count_adjoint;
 
   void make_sparse_triplet(void);
   void check_for_need_to_reallocate(int ip);
@@ -257,19 +268,8 @@ public:
     function_minimizer * pfmin);
   dmatrix get_gradient_for_hessian_calcs(const dmatrix& local_Hess,
     double & f);
-  fmm fmc1;
-  //fmmt1 fmc1;
-  fmm fmc;
   dvector scale;
   dvector curv;
-  dvector xadjoint;
-  dvector check_local_uadjoint;
-  dvector check_local_uadjoint2;
-  dvector check_local_xadjoint;
-  dvector check_local_xadjoint2;
-  dvector uadjoint;
-  dvector uhat;
-  dvector ubest;
   dvector grad;
   dvector * grad_x_u;
   dvector * grad_x;

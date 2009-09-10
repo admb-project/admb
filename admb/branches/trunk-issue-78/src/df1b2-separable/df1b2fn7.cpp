@@ -97,7 +97,7 @@ void read_tilde_values_1(void)
  
 void read_tilde_values_2(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1
@@ -117,10 +117,10 @@ void read_tilde_values_2(void)
   checkidentiferstring("YS",list);
 #endif
 
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
+  //fixed_smartlist & nlist=f1b2gradlist->nlist; 
    // nlist-=sizeof(int);
   // get record size
-  int num_bytes=nlist.bptr->numbytes;
+  //int num_bytes=nlist.bptr->numbytes;
     // nlist+=nlist_record_size;
   df1b2_header * px=(df1b2_header *) list.bptr; 
   //

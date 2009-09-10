@@ -176,7 +176,6 @@ dvar_vector nograd_assign(dvector tmp)
 dvar_matrix nograd_assign(_CONST dmatrix& m)
 {
   // cout << "Entering nograd assign"<<endl;
-  kkludge_object kg;
   int nrl=m.rowmin();
   int nrh=m.rowmax();
   ivector ncl(nrl,nrh);
@@ -205,7 +204,6 @@ dvar_matrix nograd_assign(_CONST dmatrix& m)
 dvar_matrix nograd_assign_trans(_CONST dmatrix& m)
 {
   // cout << "Entering nograd assign"<<endl;
-  kkludge_object kg;
   int nrl=m.rowmin();
   int nrh=m.rowmax();
   ivector ncl(nrl,nrh);
@@ -233,7 +231,6 @@ dvar_matrix nograd_assign_trans(_CONST dmatrix& m)
 void nograd_assign_column(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)
 {
   // cout << "Entering nograd assign"<<endl;
-  kkludge_object kg;
   if (ii<m.colmin()||ii>m.colmax()  ||
    (v.indexmin()!=m.rowmin()) ||
    (v.indexmax()!=m.rowmax()) )

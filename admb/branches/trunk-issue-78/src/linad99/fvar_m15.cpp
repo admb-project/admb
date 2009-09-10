@@ -40,7 +40,7 @@ int min(int a,int b)
 */
 dvar_matrix inv(_CONST dvar_matrix& aa)
 {
-  int i,imax,j,k,n;
+  int imax = 0,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -68,7 +68,7 @@ dvar_matrix inv(_CONST dvar_matrix& aa)
   dvector vv(lb,ub);
 
   d=1.0;
-  for (i=lb;i<=ub;i++)
+  for (int i=lb;i<=ub;i++)
   {
     big=0.0;
     for (j=lb;j<=ub;j++)
@@ -89,7 +89,7 @@ dvar_matrix inv(_CONST dvar_matrix& aa)
 
   for (j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++)
+    for (int i=lb;i<j;i++)
     {
       sum=bb.elem(i,j);
       for (k=lb;k<i;k++)
@@ -100,7 +100,7 @@ dvar_matrix inv(_CONST dvar_matrix& aa)
       bb.elem(i,j)=sum;
     }
     big=0.0;
-    for (i=j;i<=ub;i++)
+    for (int i=j;i<=ub;i++)
     {
       sum=bb.elem(i,j);
       for (k=lb;k<j;k++)
@@ -143,7 +143,7 @@ dvar_matrix inv(_CONST dvar_matrix& aa)
     if (j != n)
     {
       dum=1.0/bb.elem(j,j);
-      for (i=j+1;i<=ub;i++)
+      for (int i=j+1;i<=ub;i++)
       {
         bb.elem(i,j) = bb.elem(i,j) * dum;
       }
@@ -156,7 +156,7 @@ dvar_matrix inv(_CONST dvar_matrix& aa)
   //int ub=rowmax;
   dmatrix& b=bb;
   ivector indxinv(lb,ub);
-  for (i=lb;i<=ub;i++)
+  for (int i=lb;i<=ub;i++)
   {
     indxinv(indx.elem(i))=i;
   }
@@ -181,7 +181,7 @@ dvar_matrix inv(_CONST dvar_matrix& aa)
       }
       y.elem(i)=sum;
     }
-    for (i=ub;i>=lb;i--)
+    for (int i=ub;i>=lb;i--)
     {
       sum=y.elem(i);
       for (int j=i+1;j<=ub;j++)

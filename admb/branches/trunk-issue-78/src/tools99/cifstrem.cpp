@@ -10,6 +10,15 @@
 #pragma implementation "cifstrem.h"
 
 #include "cifstrem.h"
+
+#ifdef __GNUC__
+#include <sstream>
+using std::istringstream;
+#else
+#include <strstream>
+using std::istrstream;
+#endif
+
 /*
 #ifdef __GNUDOS__
   void strnset(char *, const char, size_t n); // is never referenced
@@ -17,11 +26,12 @@
 */
 void cifstream::set_eof_bit(void)
 {
-  int current_state = rdstate();
 #ifdef __BCPLUSPLUS__
+  int current_state = rdstate();
   setstate(current_state | ios::eofbit);
 #endif
 #ifdef __ZTC__
+  int current_state = rdstate();
   clear(current_state | ios::eofbit);
 #endif
 }
@@ -70,7 +80,7 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
 #elif defined (__NDPX__)
  : ifstream(fn, ios::in | open_m) , file_name(fn)
 #elif defined (__GNUDOS__)
- : ifstream(fn, ios::in | open_m) , file_name(fn)
+ : ifstream(fn, ios::in) , file_name(fn)
 #elif defined (__ZTC__)
  : ios(&buffer), ifstream(fn, ios::in | open_m) , file_name(fn)
 #else
@@ -242,7 +252,11 @@ cifstream& cifstream::operator >> (BOR_CONST long& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
+#ifdef __GNUC__
+  istringstream is(s);
+#else
   istrstream is(s, strlen(s));
+#endif
   is >> (long&) i;
 #ifdef __NDPX__
   if (is.eof()) is.clear();
@@ -270,7 +284,11 @@ cifstream& cifstream::operator >> (long long & i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
+#ifdef __GNUC__
+  istringstream is(s);
+#else
   istrstream is(s, strlen(s));
+#endif
   is >> i;
 #ifdef __NDPX__
   if (is.eof()) is.clear();
@@ -304,7 +322,11 @@ cifstream& cifstream::operator >> (BOR_CONST int& i)
   //cout << "cifstream& cifstream::operator >> (int& i) s = '" << s 
   //     << "'" << endl;
   js_strip_leading_zeros(s);
+#ifdef __GNUC__
+  istringstream is(s);
+#else
   istrstream is(s, strlen(s));
+#endif
   is >> (int&)i;
 #ifdef __NDPX__
   if (is.eof()) is.clear();
@@ -327,8 +349,13 @@ cifstream& cifstream::operator >> (BOR_CONST double& _x)
   if (s[0]=='#' && s[1] == '\0')
     get_field(s);
 
-#if !defined(__BORLANDC__)
+#ifdef __GNUC__
+  istringstream is(s);
+#else
   istrstream is(s, strlen(s));
+#endif
+
+#if !defined(__BORLANDC__)
   if (!is)
   {
     this->clear(is.rdstate());
@@ -358,7 +385,11 @@ cifstream& cifstream::operator >> (BOR_CONST float& x)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
+#ifdef __GNUC__
+  istringstream is(s);
+#else
   istrstream is(s, strlen(s));
+#endif
   is >> (float&)x;
 #ifdef __NDPX__
   if (is.eof()) is.clear();

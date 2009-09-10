@@ -8,10 +8,18 @@
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
+
+#ifdef __GNUC__
+#include <sstream>
+using std::istringstream;
+#else
+#include <strstream>
+using std::istrstream;
+#endif
+
 //#include <vmon.h>
 static int no_stuff=0;
-static void xxxy(void)
-{}
+//static void xxxy(void) {}
 
 void function_minimizer::quasi_newton_block(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f)
@@ -37,7 +45,6 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   dvector & g= (dvector&)_g;
   // *********************************************************
   // block for quasi-newton minimization
-  int itnold=0;
   int nx=nvar;
   if (negdirections) 
   {
@@ -94,8 +101,12 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     }
     else
     {   
-  
+#ifdef __GNUC__
+      istringstream ist(ad_comm::argv[on+1]);
+#else
       istrstream ist(ad_comm::argv[on+1]);
+#endif
+
       ist >> _dfn;
   
       if (_dfn<=0)

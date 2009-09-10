@@ -51,4 +51,4 @@
  }
 #endif
 #endif
-void AAsvs(void){int x=1;}
+void AAsvs(void){/*int x=1;*/}

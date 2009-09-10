@@ -181,7 +181,6 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
   gradient_structure::set_YES_DERIVATIVES();
 
   initial_params::set_active_only_random_effects(); 
-  int lmn_flag=0;
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm1)
@@ -332,7 +331,6 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
     }
   }
   get_second_ders_master(xsize,usize,y,Hess,Dux,f1b2gradlist,pfmin,this);
-  int sgn=0;
   
   if (ad_comm::time_flag)
   {
@@ -450,7 +448,7 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
         }
       }
     
-      int mind=y(1).minder;
+      //int mind=y(1).minder;
       df1b2variable::passnumber=2;
       df1b2_gradcalc1();
     
@@ -486,7 +484,7 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
     if (initial_df1b2params::separable_flag)
     {
       dvector scale(1,nvar);   // need to get scale from somewhere
-      int check=initial_params::stddev_scale(scale,x);
+      initial_params::stddev_scale(scale,x);
       dvector sscale=scale(1,Dux(1).indexmax());
       for (i=1;i<=usize;i++)
       {
@@ -632,12 +630,12 @@ void laplace_approximation_calculator::get_newton_raphson_info_master
       grad.initialize();
     }
 
-    double time1;
+    double time1 = 0;
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
       {
-        double time1=ad_comm::ptm->get_elapsed_time();
+        time1=ad_comm::ptm->get_elapsed_time();
       }
     }
 
@@ -679,7 +677,7 @@ void laplace_approximation_calculator::get_newton_raphson_info_master
     if (ip<num_der_blocks)
       f1b2gradlist->reset();
   }
-  double time1;
+  double time1 = 0;
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -725,7 +723,7 @@ void laplace_approximation_calculator::get_newton_raphson_info_master
   {
     if (ad_comm::ptm)
     {
-      double time1=ad_comm::ptm->get_elapsed_time();
+      time1=ad_comm::ptm->get_elapsed_time();
     }
   }
   dmatrix g1=get_dvector_from_slaves();

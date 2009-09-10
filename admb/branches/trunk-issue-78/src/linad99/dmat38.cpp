@@ -30,7 +30,7 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
 
 dmatrix solve(const dmatrix& aa,const dmatrix& tz)
 {
-  double ln;
+  double ln = 0;
   double sgn;
   return solve(aa,tz,ln,sgn);
 }
@@ -39,7 +39,7 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz)
 dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   double ln_unsigned_det,double& sign)
 {
-  int i,imax,j,k,n;
+  int i,imax = 0,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -55,7 +55,6 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   indx.fill_seqadd(lb,One);
   double d;
   double big,dum,sum,temp;
-  kkludge_object kkk;
   dvector vv(lb,ub);
 
   d=1.0;

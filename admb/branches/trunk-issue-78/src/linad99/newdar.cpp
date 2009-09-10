@@ -184,7 +184,7 @@ double_and_int * arr_new(unsigned int sz)
   gradient_structure::ARR_LIST1->last_offset += bytes_needed;
 
   if (gradient_structure::ARR_LIST1->last_offset>
-    gradient_structure::max_last_offset )
+    (unsigned int)gradient_structure::max_last_offset )
   {
     gradient_structure::max_last_offset=
       gradient_structure::ARR_LIST1->last_offset;
@@ -312,7 +312,6 @@ void arr_free(double_and_int * varr)
 void check_derivative_values(const char * _s)
 {
   char * s = (char *) _s;
-  char label[20];
   save_identifier_string(s);
   gradient_structure::GRAD_STACK1->
     set_gradient_stack(df_check_derivative_values);
@@ -321,7 +320,6 @@ void check_derivative_values(const char * _s)
 void check_derivative_values(const char * _s,int i)
 {
   char * s = (char *) _s;
-  char label[20];
   save_identifier_string(s);
   save_int_value(i);
   gradient_structure::GRAD_STACK1->
@@ -340,7 +338,6 @@ void insert_identifier_string(const char * _s)
 void check_derivative_values_break(const char * _s,int i,int b)
 {
   char * s = (char *) _s;
-  char label[20];
   save_identifier_string(s);
   save_int_value(i);
   save_int_value(b);
@@ -352,7 +349,6 @@ void  rrkludge(double * temp_ptr){;}
 
 void df_check_derivative_values(void)
 {
-  char label[20];
   adstring str=get_string_marker();
   double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
   unsigned long int max_last_offset = 
@@ -362,8 +358,7 @@ void df_check_derivative_values(void)
   int icount=0;
   int exit_flag=0;
   cout << str << endl;
-  int i;
-  for (i=0 ; i< (max_last_offset/size) ; i++ )
+  for (unsigned int i=0 ; i< (max_last_offset/size) ; i++ )
   {
     if (fabs(temp_ptr[i])>1.e+8) 
     {
@@ -378,7 +373,7 @@ void df_check_derivative_values(void)
   }
 
   icount=0;
-  for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
     if (* (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i])
       > 1.e+8) 
@@ -408,7 +403,6 @@ void df_print_identifier_string(void)
 
 void df_check_derivative_values_indexed(void)
 {
-  char label[20];
   int index=restore_int_value();
   adstring str=get_string_marker();
   double * temp_ptr = gradient_structure::get_ARRAY_MEMBLOCK_BASE();
@@ -419,8 +413,7 @@ void df_check_derivative_values_indexed(void)
   int icount=0;
   int exit_flag=0;
   cout << str << " index = " << index << endl;
-  int i;
-  for (i=0 ; i< (max_last_offset/size) ; i++ )
+  for (unsigned int i=0 ; i< (max_last_offset/size) ; i++ )
   {
     if (fabs(temp_ptr[i])>1.e+8) 
     {
@@ -432,7 +425,7 @@ void df_check_derivative_values_indexed(void)
   }
 
   icount=0;
-  for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
     if (* (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i])
       > 1.e+8) 
@@ -453,7 +446,6 @@ void df_check_derivative_values_indexed(void)
 
 void df_check_derivative_values_indexed_break(void)
 {
-  char label[20];
   int b=restore_int_value();
   int index=restore_int_value();
   adstring str=get_string_marker();
@@ -469,8 +461,7 @@ void df_check_derivative_values_indexed_break(void)
   int icount=0;
   int exit_flag=0;
   cout << str << " index = " << index << endl;
-  int i;
-  for (i=0 ; i< (max_last_offset/size) ; i++ )
+  for (unsigned int i=0 ; i< (max_last_offset/size) ; i++ )
   {
     if (fabs(temp_ptr[i])>1.e+8) 
     {
@@ -482,7 +473,7 @@ void df_check_derivative_values_indexed_break(void)
   }
 
   icount=0;
-  for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
     if (* (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i])
       > 1.e+8) 

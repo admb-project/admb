@@ -439,12 +439,12 @@ int getch(void);
 #  include <iomanip>
 #  include <sstream>
 #  include <istream>
-#  include <strstream>
+#  include <sstream>
      using std::ofstream;
      using std::ostream;
      using std::ifstream;
      using std::istream;
-     using std::istrstream;
+     //using std::istrstream;
      using std::streampos;
      using std::streambuf;
      using std::setw;
@@ -583,7 +583,7 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
 
   class kkludge_object
   {
-    char u;
+    //char u;
   };
 
       class humungous_pointer
@@ -2053,7 +2053,6 @@ private:
   class vector_shapex 
   {
   public:
-    void * trueptr;
     vector_shapex(int lb,int ub,void * p) : index_min(lb), 
       index_max(ub), ncopies(0), trueptr(p) {}
     void * get_truepointer(void){ return trueptr; }
@@ -2067,10 +2066,11 @@ private:
     void operator delete(void * ptr,size_t n)
     {  xpool->free(ptr); }
 #endif
-    unsigned int ncopies;
     void shift(int min);
     int index_min;
     int index_max;
+    unsigned int ncopies;
+    void * trueptr;
   private:
     friend class subdvector;
     friend class lvector;
@@ -3511,11 +3511,11 @@ private:
   dvector funval;
   int xm;
   dmatrix xstep;
-  dvector xrho;
-  dvector rrr;
   dmatrix xy; 
+  dvector xrho;
   dvector xold; 
   dvector gold; 
+  dvector rrr;
 public:
   double dmin,fbest,df;
 
@@ -4695,10 +4695,13 @@ void dv_init(void);
 
 
 // ********************************************************
-int save_identifier_string(char*);
-void insert_identifier_string(const char * s);
-void verify_identifier_string(char*);
-
+int save_identifier_string(char* str);
+int save_identifier_string(const char* str);
+int save_identifier_string(const std::string& str);
+void insert_identifier_string(const char * str);
+void verify_identifier_string(char* str);
+void verify_identifier_string(const char* str);
+void verify_identifier_string(const std::string& str);
 
 ivector restore_ivector_value(BOR_CONST ivector_position&);
 ivector_position restore_ivector_position(void);
@@ -5037,9 +5040,9 @@ void ludcmp(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
 
   class function_tweaker
   {
-    double mult;
-    double eps;
     dvector coffs;
+    double eps;
+    double mult;
   public:
     function_tweaker(double eps,double mult);
     double operator () (double);
@@ -5047,9 +5050,9 @@ void ludcmp(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
     
   class dfunction_tweaker
   {
-    double mult;
-    double eps;
     dvector coffs;
+    double eps;
+    double mult;
   public:
     dfunction_tweaker(double eps,double mult);
     dvariable operator () (const prevariable&);
@@ -6935,8 +6938,8 @@ public:
 
 class banded_symmetric_dvar_matrix
 {
-  int bw;
   dvar_matrix d; 
+  int bw;
 public:
   void initialize(void);
   int bandwidth(void) _CONST{return bw;}
@@ -7010,8 +7013,8 @@ public:
 
 class banded_lower_triangular_dvar_matrix
 {
-  int bw;
   dvar_matrix d; 
+  int bw;
 public:
   int bandwidth(void) _CONST{return bw;}
   int indexmin(void) _CONST{return d(0).indexmin();}
@@ -7788,10 +7791,10 @@ void test_the_pointer(void);
 
   class multi_index
   {
+    ivector index;
     int mind;
     int maxd;
     int depth;
-    ivector index;
   public:
     multi_index(int min,int max,int dim);
     ivector& operator () (void) {return index;}

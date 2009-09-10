@@ -11,11 +11,7 @@ df1b2variable gammlnguts(const df1b2variable _zz)
   ADUNCONST(df1b2variable,zz)
   df1b2variable u;
   double  z = value(_zz);
-  double zdot=1.0;
-  double z2dot=0.0;
-  double z3dot=0.0;
-  const double lpi =1.1447298858494001741434272;
-  const double pi =3.1415926535897932384626432;
+  //double zdot=1.0;
   const double lpp =0.9189385332046727417803297;
   int n=7;
   const double c[9]={0.99999999999980993, 
@@ -43,7 +39,7 @@ df1b2variable gammlnguts(const df1b2variable _zz)
     x3dot-=6.0*c[i]*fourth(zinv);
   }    
   double t=z+n+0.5;
-  double tdot=zdot;
+  //double tdot=zdot;
   //return lpp + (z+0.5)*log(t) -t + log(x);
   double ans= lpp + (z+0.5)*log(t) -t + log(x);
   //double dfx=zdot*log(t) + (z+0.5)/t*tdot -tdot +xdot/x;

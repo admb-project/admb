@@ -114,10 +114,12 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
 
 laplace_approximation_calculator::laplace_approximation_calculator
   (int _xsize,int _usize,int _minder,int _maxder,
-  function_minimizer * _pmin) : xsize(_xsize),
+  function_minimizer * _pmin) : 
+  pmin(_pmin),
+  xsize(_xsize),
   usize(_usize),xadjoint(1,_xsize),uadjoint(1,_usize),
-  uhat(1,_usize),fmc(_xsize),fmc1(_usize),block_diagonal_flag(0),
-  pmin(_pmin),local_dtemp(1,_xsize),
+  uhat(1,_usize),fmc(_xsize),fmc1(_usize),
+block_diagonal_flag(0),local_dtemp(1,_xsize),
   check_local_xadjoint(1,_xsize),check_local_uadjoint(1,_usize),
   check_local_xadjoint2(1,_xsize),check_local_uadjoint2(1,_usize)
   {;}
@@ -131,7 +133,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   dvector & g= (dvector&)_g;
   // *********************************************************
   // block for quasi-newton minimization
-  int itnold=0;
+  //int itnold=0;
   fmm fmc(nvar);
   int on1;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-nox"))>-1)

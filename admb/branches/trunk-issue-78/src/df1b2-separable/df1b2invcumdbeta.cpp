@@ -27,6 +27,7 @@
   df3_three_variable betai(const df3_three_variable& a,const df3_three_variable& b,
     double x,int maxit);
   
+/*
   static double lnbeta(double a,double b)
   {
     return gammln(a)+gammln(b)-gammln(a+b);
@@ -39,6 +40,7 @@
     else
       return -1;
   }
+*/
   
   double inv_cumd_beta(double _a,double _b,double _y);
   double inv_cumd_beta_stable(double _a,double _b,double _y,double eps);
@@ -335,8 +337,6 @@
 static df3_three_variable gammlnguts(const df3_three_variable& _z)
 {
   df3_three_variable x;
-  const double lpi =1.1447298858494001741434272;
-  const double pi =3.1415926535897932384626432;
   const double lpp =0.9189385332046727417803297;
   int n=7;
   const double c[9]={0.99999999999980993, 

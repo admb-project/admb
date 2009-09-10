@@ -87,7 +87,7 @@ dlink * dlist::create()
                                  // zero them out
   nlinks+=1;
 
-  if (nlinks > gradient_structure::MAX_DLINKS)
+  if ((int)nlinks > gradient_structure::MAX_DLINKS)
   {
     cerr << "Need to increase the maximum number of dlinks" << endl;
 #if defined(AD_DEMO)

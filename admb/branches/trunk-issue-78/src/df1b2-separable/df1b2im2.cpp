@@ -31,7 +31,7 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
   // init parameters should be active in this phase
   initial_params::set_inactive_only_random_effects(); 
   initial_params::set_active_random_effects(); 
-  int onvar=initial_params::nvarcalc(); 
+  initial_params::nvarcalc(); 
   initial_params::xinit(y);    // get the initial values into the
   y(1,xs)=x;
 

@@ -18,7 +18,7 @@ imatrix sort(_CONST imatrix& m,int col,int NSTACK)
     ind1(i)=m(i).indexmin();
     ind2(i)=m(i).indexmax();
   }
-  const ivector& iv=column(m,col);
+  //const ivector& iv=column(m,col);
   sort(column(m,col),ind);
   imatrix tmp(m.rowmin(),m.rowmax(),ind1,ind2);
   for (i=m.rowmin();i<=m.rowmax();i++)

@@ -140,9 +140,9 @@
  void i3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
       int ncl,_CONST imatrix& nch)
  {
-   int imin=nrh.indexmin();
-   int rmin=nch.rowmin();
-   int cmin=nch(rmin).indexmin();
+   //int imin=nrh.indexmin();
+   //int rmin=nch.rowmin();
+   //int cmin=nch(rmin).indexmin();
 
    if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
@@ -166,10 +166,6 @@
  {
    int sl=_sl;
    int sh=_sh;
-   int nrl=m1.rowmin();
-   int nrh=m1.rowmax();
-   int ncl=m1.colmin();
-   int nch=m1.colmax();
    if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
@@ -202,10 +198,6 @@
  {
    int sl=i3v.slicemin();
    int sh=i3v.slicemax();
-   int nrl=i3v.rowmin();
-   int nrh=i3v.rowmax();
-   int ncl=i3v.colmin();
-   int nch=i3v.colmax();
    if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
@@ -260,7 +252,7 @@
    if (shape)
    {
      t += slicemin();
-     int ss=slicesize();
+     //int ss=slicesize();
      delete [] t;
      delete shape;
      t=NULL;

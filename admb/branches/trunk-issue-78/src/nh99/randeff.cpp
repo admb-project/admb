@@ -99,17 +99,15 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   double xtol;
   dvariable f;
   dvar_vector diag(1,nvar);
-  int j, n, icall;
+  int icall;
   integer iflag;
   dvariable fbest=1.e+100;
   dvar_vector g(1,nvar);
   dvar_vector xbest(1,nvar);
   dvar_vector gbest(1,nvar);
   g.initialize();
-  double t1, t2;
   long int diagco=0.0;
   integer iprintx[2];
-  double epsx;
   //m = 35;
   dvar_vector w(1,nvar+2*m+2*nvar*m);
   iprintx[0] = iprint;
@@ -144,9 +142,13 @@ L20:
     if (iprint>0)
     {
       if (!itn)
+      {
         if (ad_printf) (*ad_printf)("\nInitial statistics: ");
+      }
       else
+      {
         if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
+      }
 
       if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);

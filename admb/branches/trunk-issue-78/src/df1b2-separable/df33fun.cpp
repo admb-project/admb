@@ -904,7 +904,7 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     double yinv3 = yinv * yinv2; 
     doubl yd = *y.get_udot();
 
-    //*z.get_u() = *x.get_u() /  *y.get_u();
+    // *z.get_u() = *x.get_u() /  *y.get_u();
     *z.get_u() = *x.get_u() * yinv;
 
     *z.get_udot() =  - (*x.get_u()) * yinv2 * yd

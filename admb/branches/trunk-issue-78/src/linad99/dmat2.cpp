@@ -33,9 +33,7 @@
  */
     double norm(_CONST dmatrix& m1)
     {
-      double tmp;
-      double tmp1;
-      tmp=0;
+      double tmp=0;
       for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
       {
         tmp+=norm2(m1.elem(i));
@@ -50,9 +48,7 @@
  */
     double norm2(_CONST dmatrix& m1)
     {
-      double tmp;
-      double tmp1;
-      tmp=0;
+      double tmp=0;
       for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
       {
         tmp+=norm2(m1.elem(i));

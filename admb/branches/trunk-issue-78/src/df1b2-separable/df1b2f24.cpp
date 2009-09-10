@@ -116,7 +116,6 @@ void set_value(const df1b2_init_bounded_matrix & _v,const dvector& x,
 void df1b2_init_bounded_matrix::set_value(const dvector& x,
   const int& ii)
 {
-  double pen=0.0;
   ::set_value(*this,x,ii,minb,maxb);
 }
 

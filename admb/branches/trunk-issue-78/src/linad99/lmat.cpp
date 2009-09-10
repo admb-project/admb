@@ -137,7 +137,7 @@
      }
      else
      {
-       int offset = rowmin();   
+       //int offset = rowmin();   
        m += rowmin();
        delete [] m;
        m=NULL;

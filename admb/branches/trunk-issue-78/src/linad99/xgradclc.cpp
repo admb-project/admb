@@ -84,7 +84,6 @@ void funnel_gradcalc(void)
 #  endif
   gradient_structure::TOTAL_BYTES = 0;
   gradient_structure::PREVIOUS_TOTAL_BYTES=0;
-  int i;
   long int lpos;
   if(!gradient_structure::instances)
   {
@@ -116,7 +115,7 @@ void funnel_gradcalc(void)
 
   gradient_structure::GRAD_STACK1->ptr--;
 
-  for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
     * (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i]) = 0;
   }
@@ -139,7 +138,7 @@ void funnel_gradcalc(void)
 
   double * zptr;
 
-   for (i=0 ; i< (max_last_offset/size) ; i++ )
+   for (unsigned int i=0 ; i< (max_last_offset/size) ; i++ )
    {
      tmp->x = 0;
      #if defined (__ZTC__)
@@ -160,7 +159,7 @@ void funnel_gradcalc(void)
     * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
-double z;
+//double z;
 int break_flag=1;
 int funnel_flag=0;
 
@@ -198,7 +197,10 @@ do
 
  {
    if (lpos<0) 
-   {  long int ttmp = 
+   {  
+     #ifdef GRAD_DIAG
+      long int ttmp = 
+     #endif
       lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
 
      #ifdef GRAD_DIAG
@@ -240,7 +242,7 @@ do
       nzero++;
     }
     
-    for (int i1=1;i1<dsize;i1++)
+    for (unsigned int i1=1;i1<dsize;i1++)
     {
       if (*(++dptr))
       {
@@ -267,7 +269,7 @@ do
     }
     save_int_value(dcount);
 
-    for (i=0;i<ii;i++)
+    for (int i=0;i<ii;i++)
     {
       save_int_value(offset(i));
     }
@@ -276,7 +278,7 @@ do
     unsigned int ssize=gradient_structure::GRAD_LIST->nlinks;
     dvector stmp(0,ssize-1);
 
-    for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+    for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
     {
       memcpy((char*)&(stmp(i)),
         gradient_structure::GRAD_LIST->dlink_addresses[i],sizeof(double));
@@ -307,13 +309,12 @@ void funnel_derivatives(void)
   //dvector_position dtmp_pos=restore_dvector_position();
   //dvector dtmp=restore_dvector_value(dtmp_pos);
   int ii=restore_int_value();
-  int i;
   int ip=ii;
   if (!ip) ip=1;
   ivector offset(0,ip);
   offset(ip)=0;
   //ivector offset(0,ip-1);
-  for (i=ii-1;i>=0;i--)
+  for (int i=ii-1;i>=0;i--)
   {
     offset(i)=restore_int_value();
   }
@@ -321,7 +322,7 @@ void funnel_derivatives(void)
   int dc=dcount;
   if (!dc) dc=1;
   dvector dx(0,dc-1);
-  for (i=dcount-1;i>=0;i--)
+  for (int i=dcount-1;i>=0;i--)
   {
     dx(i)=restore_double_value();
   }
@@ -335,7 +336,7 @@ void funnel_derivatives(void)
   ii=0;
   int ic=0;
   dptr+=offset(ii++);
-  for (i=0;i<dcount;i++)
+  for (int i=0;i<dcount;i++)
   {
     *(dptr++)+=dx(i)*df;
     if (++ic==offset(ii))
@@ -351,7 +352,7 @@ void funnel_derivatives(void)
   }
 
   int smax=stmp.indexmax();
-  for (i=0;i<smax;i++)
+  for (int i=0;i<smax;i++)
   {
     if (stmp(i))
     {

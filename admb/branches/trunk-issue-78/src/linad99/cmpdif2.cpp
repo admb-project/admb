@@ -217,10 +217,29 @@ dmatrix_position::dmatrix_position(BOR_CONST dmatrix_position& p)
 int save_identifier_string(char* str)
 {
 #if defined(CHK_ID_STRING)
-  int wsize=sizeof(char);
+  //int wsize=sizeof(char);
   int length=strlen(str);
   gradient_structure::get_fp()->fwrite(str,length);
 #endif
   return 0;
 }
 
+int save_identifier_string(const char* str)
+{
+  return save_identifier_string((char*)str);
+}
+
+int save_identifier_string(const std::string& str)
+{
+  return save_identifier_string(str.c_str());
+}
+
+void verify_identifier_string(const char* str)
+{
+  verify_identifier_string((char*)str);
+}
+
+void verify_identifier_string(const std::string& str)
+{
+  verify_identifier_string(str.c_str());
+}

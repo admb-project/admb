@@ -22,7 +22,7 @@ dvector sort(_CONST dvector& v, int NSTACK)
    const int  FC=1663;
 
   int n=v.size();
-  int minsave=v.indexmin();
+  //int minsave=v.indexmin();
   dvector arr(v.indexmin(),v.indexmax());
   arr=v;
   arr.shift(1);

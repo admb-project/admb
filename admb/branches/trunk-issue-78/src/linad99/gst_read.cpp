@@ -120,11 +120,11 @@
     #endif
     ptr = ptr_first + length-1;
 
-    if (nread == -1 )
+    if (nread == (unsigned int)-1 )
     {
       perror("IO error trying to read temporary gradient file\n");
     }
-    if (nread <((long int)(sizeof(grad_stack_entry)*length)) )
+    if ((long int)nread <((long int)(sizeof(grad_stack_entry)*length)) )
     {
       perror("End of file encountered trying to read temporary gradient file\n");
       cout << "Read " << nread << "bytes from temp. grad. file\n";

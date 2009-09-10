@@ -12,7 +12,7 @@ void fixed_smartlist::reset(void)
   end_saved=0;
   bptr=buffer; 
   eof_flag=0;
-  off_t pos=lseek(fp,0L,SEEK_CUR);
+  lseek(fp,0L,SEEK_CUR);
   endof_file_ptr=lseek(fp,0,SEEK_SET);
   written_flag=0;
 }
@@ -59,7 +59,7 @@ void fixed_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
     ad_exit(1);
   }
 
-  off_t pos=lseek(fp,0L,SEEK_CUR);
+  lseek(fp,0L,SEEK_CUR);
 }
 
 void fixed_smartlist::write(int n)
@@ -74,13 +74,13 @@ void fixed_smartlist::write(int n)
 void fixed_smartlist::rewind(void)
 {
   bptr=buffer;
-  int nbytes=0;
+  unsigned int nbytes=0;
   eof_flag=0;
   if (written_flag)
   {
     lseek(fp,0,SEEK_SET);
     // get the record size
-    ::read(fp,&nbytes,sizeof(int));
+    if (::read(fp,&nbytes,sizeof(int))) {}
     //cout << nbytes << endl;
     if (nbytes>bufsize)
     {
@@ -91,7 +91,8 @@ void fixed_smartlist::rewind(void)
       ad_exit(1);
     }
     // now read the record into the buffer
-    int nr=::read(fp,buffer,nbytes);
+    //int nr = 
+    if (::read(fp,buffer,nbytes)) {}
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
@@ -104,7 +105,6 @@ void fixed_smartlist::initialize(void)
   end_saved=0;
   eof_flag=0;
   bptr=buffer;
-  int nbytes=0;
   written_flag=0;
   lseek(fp,0,SEEK_SET);
   set_forward();
@@ -120,7 +120,7 @@ void fixed_smartlist::check_buffer_size(int nsize)
     }
     else
     {
-      if (nsize>bufsize)
+      if ((unsigned int)nsize>bufsize)
       {
          cout << "Need to increase buffsize in list" << endl;
          exit(1);
@@ -136,7 +136,7 @@ void fixed_smartlist::restore_end(void)
   {
     if (end_saved)
     {
-      off_t ipos=lseek(fp,0,SEEK_END);
+      lseek(fp,0,SEEK_END);
       lseek(fp,endof_file_ptr,SEEK_SET);
       read_buffer();
       set_recend();
@@ -167,7 +167,7 @@ void fixed_smartlist::write_buffer_one_less(void)
   
     // write the size of the next record into the file
     //cout << nbytes << endl;
-    ::write(fp,&nbytes,sizeof(int));
+    if (::write(fp,&nbytes,sizeof(int))) {}
   
     // write the record into the file
     int nw=::write(fp,buffer,nbytes);
@@ -186,7 +186,7 @@ void fixed_smartlist::write_buffer_one_less(void)
   
     // now write the previous file position into the file so we can back up
     // when we want to.
-    ::write(fp,&pos,sizeof(off_t));
+    if (::write(fp,&pos,sizeof(off_t))) {}
   
     endof_file_ptr=lseek(fp,0L,SEEK_CUR);
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
@@ -196,7 +196,7 @@ void fixed_smartlist::write_buffer_one_less(void)
 void fixed_smartlist::write_buffer(void)
 {
   int nbytes=adptr_diff(bptr+1,buffer);
-  if (nbytes>bufsize)
+  if ((unsigned int)nbytes>bufsize)
   {
     cerr << "n bytes > bufsize in "
       "fixed_smartlist::write_buffer(void) this can't happen!" << endl;
@@ -208,7 +208,7 @@ void fixed_smartlist::write_buffer(void)
     off_t pos=lseek(fp,0L,SEEK_CUR);
   
     // write the size of the next record into the file
-    ::write(fp,&nbytes,sizeof(int));
+    if (::write(fp,&nbytes,sizeof(int))) {}
   
     // write the record into the file
     int nw=::write(fp,buffer,nbytes);
@@ -227,7 +227,7 @@ void fixed_smartlist::write_buffer(void)
   
     // now write the previous file position into the file so we can back up
     // when we want to.
-    ::write(fp,&pos,sizeof(off_t));
+    if (::write(fp,&pos,sizeof(off_t))) {}
   
     endof_file_ptr=lseek(fp,0L,SEEK_CUR);
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
@@ -257,14 +257,14 @@ void fixed_smartlist::read_buffer(void)
       // offset of the begining of the record is at the end
       // of the record
       lseek(fp,-sizeof(off_t),SEEK_CUR);
-      read(fp,&pos,sizeof(off_t));
+      if (read(fp,&pos,sizeof(off_t))) {}
       // back up to the beginning of the record (plus record size) 
       lseek(fp,pos,SEEK_SET);
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     // get the record size
-    ::read(fp,&nbytes,sizeof(int));
-    if (nbytes>bufsize)
+    if (::read(fp,&nbytes,sizeof(int))) {}
+    if ((unsigned int)nbytes>bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
        " the buffer it was created from " << endl 
@@ -388,7 +388,7 @@ void memcpy(void * p,const fixed_smartlist & _list,int nsize)
 	    }
 	    else
 	    {
-	      if (nsize>bufsize)
+	      if (nsize>(int)bufsize)
 	      {
 		 cout << "Need to increase buffsize in list" << endl;
 		 exit(1);
@@ -436,7 +436,7 @@ void fixed_smartlist::read_file(void)
     nw=::read(fp,&nbytes,sizeof(int));
     nw=::read(fp,buffer+offset,nbytes);
     offset+=nbytes;
-    ::read(fp,&pos,sizeof(off_t));
+    if (::read(fp,&pos,sizeof(off_t))) {}
   }
   while(nw);
 }

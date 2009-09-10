@@ -89,7 +89,7 @@ void fmmdisp(_CONST dvector& x,_CONST dvector& g,
     int      cols = 3;     /* number of columns to display  */
   
     int      rownum;       /* row number to print */
-    static int colnum[3] = {1, 28, 55}; /* position in line for each column */
+    //static int colnum[3] = {1, 28, 55}; /* position in line for each column */
     int      i, j, ij;
     int      imax;         /* number of lines to display */
     int      wmax;         /* number of lines in current window */
@@ -176,7 +176,7 @@ void fmmdisp(_CONST double * x,_CONST double * g,
     int      cols = 3;     /* number of columns to display  */
   
     int      rownum;       /* row number to print */
-    static int colnum[3] = {1, 28, 55}; /* position in line for each column */
+    //static int colnum[3] = {1, 28, 55}; /* position in line for each column */
     int      i, j, ij;
     int      imax;         /* number of lines to display */
     int      wmax;         /* number of lines in current window */

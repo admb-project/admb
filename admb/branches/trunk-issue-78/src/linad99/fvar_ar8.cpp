@@ -75,7 +75,7 @@ void gradfree(dlink *);
 
  dvar_vector pow(_CONST dvar_vector& v1,_CONST dvar_vector& v2)              // ***
  {
-   shape_check(v1,v2,"dvar_vector pow(_CONST dvar_vector& v1,_CONST dvar_vector& v2)");
+   shape_check(v1,v2,(char*)"dvar_vector pow(_CONST dvar_vector& v1,_CONST dvar_vector& v2)");
 
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());

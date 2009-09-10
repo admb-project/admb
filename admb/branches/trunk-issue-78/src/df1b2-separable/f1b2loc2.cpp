@@ -67,7 +67,7 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
   p=&_x;
   int mmin=x.indexmin();
   int mmax=x.indexmax();
-  int ind_index = x(mmin).get_ind_index();
+  //int ind_index = x(mmin).get_ind_index();
   df1b2variable::noallocate=1;
   df1b2vector::allocate(mmin,mmax);
   df1b2variable::noallocate=0;

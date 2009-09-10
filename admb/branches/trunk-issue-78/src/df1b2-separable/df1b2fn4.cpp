@@ -84,13 +84,13 @@ int df1b2_gradlist::write_pass1_eq(const df1b2variable * _px,
   df1b2variable * pz)
 {
   ADUNCONST(df1b2variable*,px)
-  char * pg=0;
+  //char * pg=0;
   ncount++;
 #if defined(CHECK_COUNT)
   if (ncount >= ncount_check)
     ncount_checker(ncount,ncount_check);
 #endif
-  int nvar=df1b2variable::nvar;
+  //int nvar=df1b2variable::nvar;
 
   int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header);
 // string identifier debug stuff
@@ -233,7 +233,7 @@ void read_pass1_eq_1(void)
 
 void read_pass1_eq_2(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1

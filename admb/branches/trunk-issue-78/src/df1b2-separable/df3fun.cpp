@@ -382,7 +382,7 @@
                    + ::exp(*x.get_u())* *x.get_udot2();
 
     *z.get_udot3() = ::exp(*x.get_u()) * cube(*x.get_udot())
-                   + 3.0 * ::exp(*x.get_u()) * *x.get_udot() * *x.get_udot2();
+                   + 3.0 * ::exp(*x.get_u()) * *x.get_udot() * *x.get_udot2()
                    + ::exp(*x.get_u()) * *x.get_udot3();
     return z;
   }
@@ -497,7 +497,7 @@
     double yinv3 = yinv * yinv2; 
     doubl yd = *y.get_udot();
 
-    //*z.get_u() = *x.get_u() /  *y.get_u();
+    // *z.get_u() = *x.get_u() /  *y.get_u();
     *z.get_u() = *x.get_u() * yinv;
 
     *z.get_udot() =  - (*x.get_u()) * yinv2 * yd
@@ -751,10 +751,6 @@ df1b2variable cumd_norm(const df1b2variable& _x)
   const double b3=1.781477937;
   const double b4=-1.821255978;
   const double b5=1.330274429;
-  const double b55=b5*5;
-  const double b44=b4*4;
-  const double b33=b3*3;
-  const double b22=b2*2;
   const double p=.2316419;
   
   if (value(x)>=0)
@@ -787,10 +783,6 @@ df1b2variable bounded_cumd_norm(const df1b2variable& _x, double beta)
   const double b3=1.781477937;
   const double b4=-1.821255978;
   const double b5=1.330274429;
-  const double b55=b5*5;
-  const double b44=b4*4;
-  const double b33=b3*3;
-  const double b22=b2*2;
   const double p=.2316419;
   
   if (value(x)>=0)

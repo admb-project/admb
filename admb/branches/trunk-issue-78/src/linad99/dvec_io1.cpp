@@ -27,6 +27,14 @@ const int MAX_NUMBER_ROWS = 6550;
 #define HUGE 1.e+100
 #endif
 
+#ifdef __GNUC__
+#include <sstream>
+using std::istringstream;
+#else
+#include <strstream>
+using std::istrstream;
+#endif
+
  int get_non_blank_line(BOR_CONST ifstream& infile,char * & line,
    const unsigned int& line_length);
 
@@ -63,8 +71,13 @@ const int MAX_NUMBER_ROWS = 6550;
      }
      int j=0;              // j counts columns
 
-     #ifndef __ZTC__
+#ifdef __GNUC__
+       istringstream f(line);
+#else
        istrstream f(line);
+#endif
+
+     #ifndef __ZTC__
        while ( (f >> field).good() )
      #else
        while( sscanf(line,"%s",field)) // reads a field from line into field
@@ -72,7 +85,6 @@ const int MAX_NUMBER_ROWS = 6550;
      {
        // f >> field;      // Need to derive a class so that this thing stops at
                            // , or maybe deals with strings
-       char * err_ptr;
        // increment row counter
        if ( ++j > MAX_NUMBER_COLUMNS)
        {
@@ -143,8 +155,14 @@ const int MAX_NUMBER_ROWS = 6550;
    // increment row counter
    i++;
    int j=0;              // j counts columns
-   #ifndef __ZTC__
+
+#ifdef __GNUC__
+     istringstream f(line);
+#else
      istrstream f(line);
+#endif
+
+   #ifndef __ZTC__
      while ( (f >> field).good() )
    #else
      while( sscanf(line,"%s",field)) // reads a field from line into field

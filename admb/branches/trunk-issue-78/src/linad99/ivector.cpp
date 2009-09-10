@@ -163,7 +163,7 @@ long int farptr_tolong(void *);
  {
    allocate(0,sz-1);
 
-   for (int i=0; i<sz; i++)
+   for (unsigned int i=0; i<sz; i++)
    {
      cout << "Doing the assignment in constructor\n";
      v[i] = x[i];

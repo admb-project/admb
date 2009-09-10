@@ -133,7 +133,7 @@ void read_pass2_1_prodc2(void)
   bptr+=sizeof(df1b2_header);
   memcpy(&xu,bptr,sizeof(double));
   bptr+=sizeof(double);
-  double * xdot=(double*)bptr;
+  //double * xdot=(double*)bptr;
 
   list.restoreposition(); // save pointer to beginning of record;
  
@@ -230,7 +230,6 @@ void read_pass2_2_prodc2(void)
 
   double xu;
   double * xdot;
-  df1b2_header x,z;
   //df1b2function2 * pf;
 
   // get info from tape1
@@ -258,29 +257,27 @@ void read_pass2_2_prodc2(void)
   zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
   list2.restoreposition(); // save pointer to beginning of record;
 
-  double * x_tilde=px->get_u_tilde();
-  double * x_dot_tilde=px->get_u_dot_tilde();
+  //double * x_tilde=px->get_u_tilde();
+  //double * x_dot_tilde=px->get_u_dot_tilde();
   double * x_bar_tilde=px->get_u_bar_tilde();
   double * x_dot_bar_tilde=px->get_u_dot_bar_tilde();
   double * z_bar_tilde=pz->get_u_bar_tilde();
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
 
-  int i;
-  
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
   }
 
   // start with y and add x
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     z_bar_tilde[i]+=yu*x_bar_tilde[i];
   }
 
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     z_dot_bar_tilde[i]+=yu*x_dot_bar_tilde[i];
   }
@@ -303,8 +300,6 @@ void read_pass2_3_prodc2(void)
   // save the pointer to the beginning of the record
   double xu;
   double * xdot;
-  df1b2_header z;
-  df1b2function2 * pf;
 
   // get info from tape1
   // get info from tape1

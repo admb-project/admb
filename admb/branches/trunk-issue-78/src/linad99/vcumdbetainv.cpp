@@ -17,6 +17,7 @@ static double lnbeta(double a,double b)
   return gammln(a)+gammln(b)-gammln(a+b);
 }
 
+/*
 static int sgn(double z)
 {
   if (z>=0)
@@ -24,6 +25,7 @@ static int sgn(double z)
   else
     return -1;
 }
+*/
 
 df1_two_variable betai(const df1_two_variable& a,
   const df1_two_variable& b,double x,int maxit=100);
@@ -225,8 +227,6 @@ df1_two_variable gammln(const df1_two_variable& xx)
 static df1_two_variable gammlnguts(const df1_two_variable& _z)
 {
   df1_two_variable x;
-  const double lpi =1.1447298858494001741434272;
-  const double pi =3.1415926535897932384626432;
   const double lpp =0.9189385332046727417803297;
   int n=7;
   const double c[9]={0.99999999999980993, 

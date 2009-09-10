@@ -24,7 +24,7 @@ adstring::adstring(_CONST char * t) : clist()
 //  s = new char[size_t(sz + 1)];
   allocate(sz);
   s--;
-  for (int i = 1; i <= sz; i++)
+  for (unsigned int i = 1; i <= sz; i++)
   {
     s[i] = t[i - 1];
   }
@@ -49,7 +49,7 @@ int adstring::pos(_CONST adstring& substr) _CONST
 #else
   const char * ptr = strstr((const char *)(*this), (const char *)(substr));
 #endif
-  int i = 0;
+  unsigned int i = 0;
 
   if (ptr != NULL)
   {

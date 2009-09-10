@@ -13,7 +13,6 @@ double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
 
 void laplace_approximation_calculator::make_sparse_triplet(void)
 {
-  int i;
   /*
   int mmax=Hess.indexmax();
   int nz=sum(Hess);
@@ -122,7 +121,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
 {
   // number of random vectors
   const ivector & itmp=(*num_local_re_array)(1,num_separable_calls);
-  const ivector & itmpf=(*num_local_fixed_array)(1,num_separable_calls);
+  //const ivector & itmpf=(*num_local_fixed_array)(1,num_separable_calls);
   int i;
   for (i=2;i<=num_separable_calls;i++)
   {
@@ -224,14 +223,14 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   {
     while (fmc.ireturn>=0)
     {
-      int badflag=0;
+      //int badflag=0;
       fmc.fmin(f,xx,g);
       if (fmc.ihang)
       {
-        int hang_flag=fmc.ihang;
-        double maxg=max(g);
-        double ccrit=fmc.crit;
-        int current_ifn=fmc.ifn;
+        //int hang_flag=fmc.ihang;
+        //double maxg=max(g);
+        //double ccrit=fmc.crit;
+        //int current_ifn=fmc.ifn;
       }
       if (fmc.ireturn>0)
       {
@@ -372,7 +371,7 @@ void function_minimizer::pre_user_function(void)
 void laplace_approximation_calculator::
   check_hessian_type(function_minimizer * pfmin)
 {
-  int i,j,ip; 
+  int i,ip = 0; 
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
     hesstype=4;

@@ -99,9 +99,9 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
 {
   uostream * pofs_psave=NULL;
   dmatrix mcmc_display_matrix;
-  int mcmc_save_index=1; 
-  int mcmc_wrap_flag=0;
-  int mcmc_gui_length=10000;
+  //int mcmc_save_index=1; 
+  //int mcmc_wrap_flag=0;
+  //int mcmc_gui_length=10000;
   int no_sd_mcmc=0;
   
   int on2=-1;
@@ -131,7 +131,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
     ivector number_offsets;
     dvector lkvector;
     //double current_bf=0;
-    double lcurrent_bf=0;
     double size_scale=1.0;
     double total_spread=200;
     //double total_spread=2500;
@@ -152,11 +151,9 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
     dmatrix s_covar;
     dvector s_mean;
     int on=-1;
-    int ncsim=25000;
     int nslots=800;
     //int nslots=3600;
     int initial_nsim=4800;
-    int ntmp=0;
     int ncor=0;
     double bfsum=0;
     int ibfcount=0;
@@ -172,7 +169,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
     s_covar.initialize();
 
     int ndvar=stddev_params::num_stddev_calc();
-    int numdvar=stddev_params::num_stddev_number_calc();
+    /*int numdvar=*/stddev_params::num_stddev_number_calc();
     /*
     if (adjm_ptr) 
     {
@@ -213,7 +210,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
     bmn.initialize();
     int use_empirical_flag=0;
     int diag_option=0;
-    int topt=0;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
     {
       diag_option=1;
@@ -324,7 +320,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
     cout << sort(eigenvalues(S)) << endl;
     dmatrix chd = choleski_decomp( (dscale*2.4/sqrt(double(nvar))) * S);
     dmatrix chdinv=inv(chd);
-    int sgn;
   
     dmatrix symbds(1,2,1,nvar);
     initial_params::set_all_simulation_bounds(symbds);
@@ -358,7 +353,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
       better_rand(iseed);   
       double lprob=0.0;
       double lpinv=0.0;
-      double lprob3=0.0;
       // get lower and upper bounds
   
       independent_variables y(1,nvar);
@@ -390,7 +384,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         {
           iseed=-iseed;
         }
-        double br=better_rand(iseed);
+        better_rand(iseed);
         if (tmp) have_hist_flag=1;
         chd=size_scale*chd;
         chdinv=chdinv/size_scale;
@@ -607,9 +601,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         }
       }    
 
-       int start_flag;
        int java_quit_flag=0;
-       int der_flag,next_flag;
        for (int i=1;i<=number_sims;i++)
        {
          if (user_stop()) break;
@@ -893,9 +885,9 @@ void write_empirical_covariance_matrix(int ncor,BOR_CONST dvector& s_mean,
   cout << "In write empirical covariance matrix" << endl;
   cout << sort(eigenvalues(sigma)) << endl;
   dvector std(1,nvar);
-  int i;
   ofs << sigma;
   /*
+  int i;
   for (i=1;i<=nvar;i++)
   {
     std(i)=sigma(i,i);
@@ -970,8 +962,7 @@ void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST
   adstring_array param_labels(1,nsdvars);
   ivector param_size(1,nsdvars);
   int ii=1;
-  int max_name_length=0;
-  int start_stdlabels=1;
+  unsigned int max_name_length=0;
   int i;
   for (i=0;i< stddev_params::num_stddev_params;i++)
   {
@@ -985,7 +976,6 @@ void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST
     }
     ii++;
   }
-  int end_stdlabels=ii-1;
 
   int lc=1;
   int ic=1;
@@ -1343,8 +1333,6 @@ void read_hessian_matrix_and_scale(int nvar, BOR_CONST dmatrix& _SS,BOR_CONST dv
   cifs >> tmp;
   dvector wts=pen_vector/.16;
   dvector diag_save(1,nvar);
-  int neg_flag;
-  double base=5.0;
   double dmin=min(eigenvalues(S));
   cout << "Smallest eigenvalue = " << dmin << endl;
   for (int i=1;i<=nvar;i++)

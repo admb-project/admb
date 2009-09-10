@@ -22,13 +22,15 @@ void main()
 */
 
 
+/*
 static double fsign( double num, double sign )
-/* Transfers sign of argument sign to argument num */
+// Transfers sign of argument sign to argument num
 {
 if ( ( sign>0.0f && num<0.0f ) || ( sign<0.0f && num>0.0f ) )
     return -num;
 else return num;
 }
+*/
 
 
 double sgamma(double a,const random_number_generator& _rng)

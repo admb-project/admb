@@ -38,6 +38,16 @@
 
 #include <string.h>
 #include <ctype.h>
+
+#ifdef __GNUC__
+#include <sstream>
+using std::istringstream;
+#else
+#include <strstream>
+using std::istrstream;
+#endif
+
+
 const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
@@ -120,7 +130,12 @@ void dvar_vector::fill(const char * s)
         ad_exit(1);
       }
     }
+#ifdef __GNUC__
+    istringstream ss(t);
+#else
     istrstream ss(t);
+#endif
+
 
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];
    char * field = new char[size_t(MAX_FIELD_LENGTH+1)];

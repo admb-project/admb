@@ -286,7 +286,7 @@ void dfsdmat::save()
   int _n=size();
   int nn=(_n*(_n+1))/2;
   lseek(tmp_file,0L,SEEK_SET);
-  write(tmp_file,&_n,sizeof(int));
+  if (write(tmp_file,&_n,sizeof(int))) {}
   int num_bytes=write(tmp_file,ptr,nn*sizeof(double));
   if (num_bytes < nn) 
   {
@@ -313,7 +313,7 @@ void dfsdmat::restore()
 {
   int _n=0;
   lseek(tmp_file,0L,SEEK_SET);
-  read(tmp_file,&_n,sizeof(int));
+  if (read(tmp_file,&_n,sizeof(int))) {}
   int nn=(_n*(_n+1))/2;
   //if (!shared_memory) allocate(_n);
   int num_bytes=read(tmp_file,ptr,nn*sizeof(double));

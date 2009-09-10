@@ -52,6 +52,15 @@
 #include <string.h>
 #include <ctype.h>
 
+#ifdef __GNUC__
+#include <sstream>
+using std::istringstream;
+#else
+#include <strstream>
+using std::istrstream;
+#endif
+
+
 int mystrlen(char * line);
 
 const unsigned int MAX_LINE_LENGTH = 10000;
@@ -212,10 +221,13 @@ dmatrix::dmatrix(char * s)
       }
 
       int j=0;              // j counts columns
+#ifdef __GNUC__
+      istringstream f(line);
+#else
       istrstream f(line);
+#endif
       while ( (f >> field).good() )
       {
-       char * err_ptr;
        // increment row counter
        if ( ++j > MAX_NUMBER_COLUMNS)
        {
@@ -288,7 +300,11 @@ dmatrix::dmatrix(char * s)
      i++;
 
      int j=0;              // j counts columns
+#ifdef __GNUC__
+     istringstream f(line);
+#else
      istrstream f(line);
+#endif
      while ( (f >> field).good() )
      {
        char * err_ptr;

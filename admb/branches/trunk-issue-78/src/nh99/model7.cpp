@@ -147,7 +147,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
         }
       }
 
-      for (i=1;i<=adprogram_name.size();i++)
+      for (i=1;i<=(int)adprogram_name.size();i++)
       {
         if (adprogram_name(i)=='.') break;
       }
@@ -300,7 +300,7 @@ void ad_comm::allocate(void)
 #endif
   // strip off the .exe if it is there
   int n=adprogram_name.size();
-  for (i=1;i<=adprogram_name.size()-1;i++)
+  for (i=1;i<=(int)adprogram_name.size()-1;i++)
   {
     if ( adprogram_name(i)=='.' 
       && adprogram_name(i+1) != directory_prefix ) 

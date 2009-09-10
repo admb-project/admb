@@ -107,8 +107,6 @@ df1b2vector operator * (const dmatrix& _M,const df1b2vector& _x)
   //check_shape(x,M,"operator *");
   int rmin=M.indexmin();
   int rmax=M.indexmax();
-  int mmin=x.indexmin();
-  int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
   for (int i=rmin;i<=rmax;i++) 
@@ -126,8 +124,6 @@ df1b2vector operator * (const df1b2matrix& _M,const df1b2vector& _x)
   //check_shape(x,M,"operator *");
   int rmin=M.indexmin();
   int rmax=M.indexmax();
-  int mmin=x.indexmin();
-  int mmax=x.indexmax();
   df1b2vector tmp(rmin,rmax);
   tmp.initialize();
   for (int i=rmin;i<=rmax;i++) 

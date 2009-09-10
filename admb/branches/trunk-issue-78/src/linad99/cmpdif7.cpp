@@ -20,7 +20,6 @@
 void nograd_assign_row(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)
 {
   // cout << "Entering nograd assign"<<endl;
-  kkludge_object kg;
   if (ii<m.rowmin()||ii>m.rowmax()  ||
    (v.indexmin()!=m(ii).indexmin()) ||
    (v.indexmax()!=m(ii).indexmax()) )

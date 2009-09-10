@@ -23,7 +23,7 @@ ivector sort(_CONST ivector& v, int NSTACK)
    const int  FC=1663;
 
   int n=v.size();
-  int minsave=v.indexmin();
+  //int minsave=v.indexmin();
   ivector arr(v.indexmin(),v.indexmax());
   arr=v;
   arr.shift(1);

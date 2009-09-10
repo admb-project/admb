@@ -14,7 +14,6 @@
 void imatrix::save_imatrix_value(void)
 {
   // saves the size, address, and value information for a imatrix
-  int ierr;
   for (int i=rowmin();i<=rowmax();i++)
   {
     ((*this)(i).save_ivector_value());
@@ -66,7 +65,6 @@ imatrix restore_imatrix_value(BOR_CONST imatrix_position& mpos)
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
   imatrix out(mpos);
-  int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
   for (int i=max;i>=min;i--)

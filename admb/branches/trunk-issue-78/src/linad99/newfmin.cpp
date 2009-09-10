@@ -133,9 +133,13 @@ void print_values(const double& f, const dvector & x,const dvector& g)
   logstream << setprecision(13) << x << endl;
   logstream << setprecision(13) << g << endl;
 }
-extern adtimer * pfmintime=0;
+adtimer * pfmintime=0;
 extern int traceflag;
+
+#if !(defined __GNU__)
 #pragma warn -sig
+#endif
+
 void fmm::fmin(BOR_CONST double& _f, const dvector & _x,BOR_CONST dvector& _g)
 {
   if (log_values_switch)
@@ -370,7 +374,7 @@ label7003:
               f, gmax);
 #endif
       }
-label7002:
+//label7002:
       if(iprint>0) 
       {
         fmmdisp(x, g, n, this->scroll_flag,noprintx);
@@ -690,7 +694,7 @@ label70:
       }
       if (xxlink == 1) goto label60;
       if (xxlink == 2) goto label65;
-label90:
+//label90:
       for (i=1;i<=n;i++)
          g.elem(i)=w.elem(i);
 label92:

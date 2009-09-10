@@ -34,7 +34,7 @@ void gauss_hermite(BOR_CONST dvector& _x,BOR_CONST dvector& _w)
   w.shift(1);
   int n=x.size();
   int i,its,j,m;
-  double p1,p2,p3,pp,z,z1;
+  double p1,p2,p3,pp,z = 0,z1;
 
   m=(n+1)/2;
   for (i=1;i<=m;i++) 

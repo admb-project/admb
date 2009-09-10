@@ -106,7 +106,7 @@
    return( t[i]);
  }
 #endif
- void s9ee43q(void){int i=1;}
+ void s9ee43q(void){ /*int i=1;*/ }
 
 dvariable sum(_CONST dvar3_array& m)
 {

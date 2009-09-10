@@ -15,11 +15,10 @@ void function_minimizer::function_evaluation_block_pvm_slave_random_effects
   independent_variables& x,const dvector& _g,const double& _f)
 {
   double & f= (double&)_f;
-  dvector& g=(dvector&) _g;
+  //dvector& g=(dvector&) _g;
   // *********************************************************
   // block for quasi-newton minimization
   tracing_message(traceflag,"C2");
-	int itnold=0;
   fmm fmc(nvar);
   int on1;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-nox"))>-1)

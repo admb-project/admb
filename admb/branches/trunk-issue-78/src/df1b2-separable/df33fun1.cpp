@@ -146,7 +146,7 @@ void read_pass2_1_dvdvdv(void)
   list.saveposition(); // save pointer to beginning of record;
   double xu,yu,wu;
   //ad_dstar xdot,ydot;
-  df1b2function2 * pf;
+  //df1b2function2 * pf;
 
   // get info from tape1
 #if defined(SAFE_ARRAYS)
@@ -191,34 +191,54 @@ void read_pass2_1_dvdvdv(void)
   double d2f33=*(double*) bptr;
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f111=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f112=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f113=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f122=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f123=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f133=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f222=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f223=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f233=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f333=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
   memcpy(&xu,bptr,sizeof(double));
@@ -399,7 +419,7 @@ void read_pass2_1_dvdvdv(void)
 
 void read_pass2_2_dvdvdv(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1
@@ -440,7 +460,7 @@ void read_pass2_2_dvdvdv(void)
 
   double xu,yu,wu;
   //df1b2_header x,z;
-  df1b2function2 * pf;
+  //df1b2function2 * pf;
 
   // get info from tape1
   // get info from tape1
@@ -770,7 +790,7 @@ void read_pass2_3_dvdvdv(void)
   double yu;
   double wu;
   //df1b2_header x,z;
-  df1b2function2 * pf;
+  //df1b2function2 * pf;
 
   // get info from tape1
   // get info from tape1
@@ -814,34 +834,54 @@ void read_pass2_3_dvdvdv(void)
   double d2f33=*(double*) list.bptr;
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f111=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f112=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f113=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f122=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f123=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f133=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f222=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f223=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f233=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f333=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
   memcpy(&xu,list.bptr,sizeof(double));

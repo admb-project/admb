@@ -92,7 +92,7 @@ adstring & adstring::operator = (_CONST adstring & t)
     s =  (unsigned char*)mem_malloc(sz+1);
   #endif
     s--;
-    for (int i = 1; i <= t.size(); i++)
+    for (unsigned int i = 1; i <= t.size(); i++)
     {
       s[i] = t[i];
     }

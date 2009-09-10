@@ -1814,9 +1814,9 @@ df1b2variable inv_cumd_t(const df1b2variable& n,const df1b2variable&  u,
 
   class df1b2function_tweaker
   {
-    double mult;
-    double eps;
     dvector coffs;
+    double eps;
+    double mult;
   public:
     df1b2function_tweaker(double eps,double mult);
     df1b2variable operator () (const df1b2variable&);

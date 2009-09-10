@@ -52,8 +52,8 @@ int number31=0;
 
 gggg01::gggg01(logical _wwuq3, logical _te0, logical _te1,
   logical _te2, logical _te3, logical _cold) :
-  wwuq3(_wwuq3), te0(_te0), te1(_te1), te2(_te2),
-  te3(_te3), cold(_cold) {}
+  te0(_te0), te1(_te1), te2(_te2),
+  te3(_te3), wwuq3(_wwuq3), cold(_cold) {}
 
 gggg24::gggg24()
 {
@@ -309,7 +309,7 @@ void make_all_classes(int _n,int _numberw,int _numberv)
   stj5 = 0;
   stj23 = 13;
   stj210 = nx;
- logical stj8 = FALSE_;
+ //logical stj8 = FALSE_;
   stj9 = 5;
   stj2800 = number3;
   stj21 = 11;

@@ -24,7 +24,6 @@
 void dmatrix::save_dmatrix_value(void) _CONST
 {
   // saves the size, address, and value information for a dvar_matrix
-  int ierr;
   for (int i=rowmin();i<=rowmax();i++)
   {
     ((*this)(i).save_dvector_value());
@@ -38,7 +37,6 @@ void dmatrix::save_dmatrix_value(void) _CONST
 void d3_array::save_d3_array_value(void) const
 {
   // saves the size, address, and value information for a dvar_matrix
-  int ierr;
   for (int i=indexmin();i<=indexmax();i++)
   {
     ((*this)(i).save_dmatrix_value());
@@ -50,7 +48,6 @@ dmatrix restore_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
   dmatrix out((BOR_CONST dvar_matrix_position&)mpos);
-  int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
   for (int i=max;i>=min;i--)
@@ -66,7 +63,6 @@ dmatrix restore_dmatrix_value(BOR_CONST dmatrix_position& mpos)
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
   dmatrix out((BOR_CONST dmatrix_position&) mpos);
-  int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
   for (int i=max;i>=min;i--)
@@ -82,7 +78,6 @@ d3_array restore_d3_array_value(const d3_array_position& mpos)
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix
   d3_array out((const d3_array_position&) mpos);
-  int ierr;
   int min=out.indexmin();
   int max=out.indexmax();
   for (int i=max;i>=min;i--)

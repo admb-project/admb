@@ -11,6 +11,15 @@
 #  include <adrndeff.h>
 #endif
 
+#ifdef __GNUC__
+#include <sstream>
+using std::istringstream;
+#else
+#include <strstream>
+using std::istrstream;
+#endif
+
+
   void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,int& next_flag);
 
   void ad_update_function_minimizer_report(int feval,int iter,int phase,double fval,
@@ -153,8 +162,12 @@ void tracing_message(int traceflag,const char *s);
       }
       else
       {   
-    
+#ifdef __GNUC__
+        istringstream ist(ad_comm::argv[on+1]);
+#else
         istrstream ist(ad_comm::argv[on+1]);
+#endif
+ 
         ist >> _crit;
     
         if (_crit<=0)
@@ -174,8 +187,11 @@ void tracing_message(int traceflag,const char *s);
       }
       else
       {   
-    
+#ifdef __GNUC__
+        istringstream ist(ad_comm::argv[on+1]);
+#else
         istrstream ist(ad_comm::argv[on+1]);
+#endif
         ist >> bandwidth;
     
         if (bandwidth<=0)

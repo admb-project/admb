@@ -41,6 +41,15 @@
 
 #include <string.h>
 #include <ctype.h>
+
+#ifdef __GNUC__
+#include <sstream>
+using std::istringstream;
+#else
+#include <strstream>
+using std::istrstream;
+#endif
+
 const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
@@ -103,8 +112,12 @@ dvar_vector::dvar_vector(const char * s)
     int nch = commas + 1;
 
     allocate(ncl,nch);
-    istrstream ss(t);
 
+#ifdef __GNUC__
+    istringstream ss(t);
+#else
+    istrstream ss(t);
+#endif
     for (k = ncl; k <= nch; k++)
     {
       ss >> this->elem(k);

@@ -82,7 +82,6 @@
       dvar_vector& v=(dvar_vector&) _v;
       int mmin=indexmin();
       int mmax=indexmax();
-      double pen=0;
       for (int i=mmin;i<=mmax;i++)
       {
         v(ii)=dfboundp(x(ii),minb,maxb);

@@ -3,9 +3,9 @@
 CC = gcc
 SHELL=sh
 LL = tlib
-FLAGS1 = ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -g -DUSE_LAPLACE  -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../df1b2-separable -I../nh99 -I../tools99  
+FLAGS1 = ${OPTIONS} ${PVMOPTION} -g -DUSE_LAPLACE  -DOPT_LIB -D__GNUDOS__ -Dlinux -O3 -c -I. -I../df1b2-separable -I../nh99 -I../tools99  
 
-FLAGS = ${OPTIONS}  -w -I/usr/src/ATLAS/include ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../df1b2-separable -I../tools99  
+FLAGS = ${OPTIONS} ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -O3 -c -I. -I../nh99 -I../df1b2-separable -I../tools99  
 LIBPATH =gcc32-rh8olp
 LIBNAME = libado.a
 LIBDIR = lib

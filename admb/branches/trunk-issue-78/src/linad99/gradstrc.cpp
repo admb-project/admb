@@ -322,7 +322,7 @@ void allocate_dvariable_space(void)
        }
      }
      DEPVARS_INFO=new dependent_variables_information(NUM_DEPENDENT_VARIABLES);
-     memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
+     memory_allocate_error((char*)"DEPVARS_INFO", (void *) DEPVARS_INFO);
    }
 
    if (fp!= NULL)
@@ -333,7 +333,7 @@ void allocate_dvariable_space(void)
    else
    {
      fp=new DF_FILE(CMPDIF_BUFFER_SIZE);
-     memory_allocate_error("fp", (void *) fp);
+     memory_allocate_error((char*)"fp", (void *) fp);
    }
 
    void * temp_ptr;
@@ -351,7 +351,7 @@ void allocate_dvariable_space(void)
    else
    {
       GRAD_LIST = new dlist;
-      memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
+      memory_allocate_error((char*)"GRAD_LIST", (void *) GRAD_LIST);
    }
 
    if ( ARR_LIST1!= NULL)
@@ -361,7 +361,7 @@ void allocate_dvariable_space(void)
    else
    {
       ARR_LIST1 = new arr_list;
-      memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
+      memory_allocate_error((char*)"ARR_LIST1", (void *) ARR_LIST1);
    }
 
  /*
@@ -372,7 +372,7 @@ void allocate_dvariable_space(void)
    else
    {
       ARR_FREE_LIST1 = new arr_list;
-      memory_allocate_error("ARR_FREE_LIST1", (void *) ARR_FREE_LIST1);
+      memory_allocate_error((char*)"ARR_FREE_LIST1", (void *) ARR_FREE_LIST1);
    }
  */
 
@@ -411,7 +411,7 @@ void allocate_dvariable_space(void)
    else
    {
      GRAD_STACK1 = new grad_stack;
-     memory_allocate_error("GRAD_STACK1",GRAD_STACK1);
+     memory_allocate_error((char*)"GRAD_STACK1",GRAD_STACK1);
      gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
    }
     #ifdef DIAG
@@ -430,7 +430,7 @@ void allocate_dvariable_space(void)
    else
    {
      INDVAR_LIST = new indvar_offset_list;
-     memory_allocate_error("INDVAR_LIST",INDVAR_LIST);
+     memory_allocate_error((char*)"INDVAR_LIST",INDVAR_LIST);
  // ****************************************************************
  // ****************************************************************
       int nopt=0;
@@ -454,7 +454,7 @@ void allocate_dvariable_space(void)
  // ****************************************************************
 
      INDVAR_LIST->address = new double * [ (size_t) MAX_NVAR_OFFSET];
-     memory_allocate_error("INDVAR_LIST->address",INDVAR_LIST->address);
+     memory_allocate_error((char*)"INDVAR_LIST->address",INDVAR_LIST->address);
    }
 
    //allocate_dvariable_space();
@@ -467,13 +467,13 @@ void allocate_dvariable_space(void)
    else
    {
       RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];
-      memory_allocate_error("RETURN_ARRAYS",RETURN_ARRAYS);
+      memory_allocate_error((char*)"RETURN_ARRAYS",RETURN_ARRAYS);
 
       //allocate_dvariable_space();
       for (i=0; i< NUM_RETURN_ARRAYS; i++)
       {
 	 RETURN_ARRAYS[i]=new dvariable[RETURN_ARRAYS_SIZE];
-	 memory_allocate_error("RETURN_ARRAYS[i]",RETURN_ARRAYS[i]);
+	 memory_allocate_error((char*)"RETURN_ARRAYS[i]",RETURN_ARRAYS[i]);
       }
       RETURN_ARRAYS_PTR=0;
       MIN_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR];
@@ -483,7 +483,7 @@ void allocate_dvariable_space(void)
    //RETURN_INDEX = 0;
 
    RETURN_PTR_CONTAINER=new dvariable*[NUM_RETURN_ARRAYS];
-   memory_allocate_error("RETURN_INDICES_CONTAINER",RETURN_PTR_CONTAINER);
+   memory_allocate_error((char*)"RETURN_INDICES_CONTAINER",RETURN_PTR_CONTAINER);
 
    for (i=0; i< NUM_RETURN_ARRAYS; i++)
    {

@@ -198,7 +198,7 @@
      return;
    }
 
-   int imin=nrh.indexmin();
+   //int imin=nrh.indexmin();
    //int rmin=nch.rowmin();
    //int cmin=nch(rmin).indexmin();
    if ( (nrl.isinteger() && (sl !=nrl.indexmin() || sh !=nrl.indexmax())) ||

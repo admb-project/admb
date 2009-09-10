@@ -487,7 +487,7 @@
    if (shape)
    {
      t += slicemin();
-     int ss=slicesize();
+     //int ss=slicesize();
      delete [] t;
      delete shape;
      t=NULL;

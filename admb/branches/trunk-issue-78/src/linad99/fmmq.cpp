@@ -6,13 +6,17 @@
  */
 
 #include <fvar.hpp>
+#if !(defined __GNUC__)
 #pragma hdrstop
+#endif
 #include "fmmq.hpp"
 
-fmmq::fmmq(int nv) : xa(1,nv) , xb(1,nv) , d(1,nv) , ga(1,nv),
-   gb(1,nv) , h(1,(nv*(nv+1))/2) , w(1,4*nv) , scale(1,nv) ,
-   funval(1,10), xsave(1,nv) , gsave(1,nv), xbest(1,nv),
-   gbest(1,nv)
+fmmq::fmmq(int nv) : 
+h(1,(nv*(nv+1))/2) , w(1,4*nv) , funval(1,10),
+   gbest(1,nv), xbest(1,nv), xsave(1,nv) , gsave(1,nv),
+ scale(1,nv) ,
+xa(1,nv) , xb(1,nv) , d(1,nv) , ga(1,nv),
+   gb(1,nv)
 {
   mode = 1;
   igwindow = 2;

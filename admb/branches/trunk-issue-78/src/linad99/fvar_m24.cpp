@@ -55,7 +55,7 @@ dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
   prevariable& sign=(prevariable&) _sign;
   
   RETURN_ARRAYS_INCREMENT();
-  int i,imax,j,k,n;
+  int i,imax = 0,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();

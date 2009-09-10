@@ -98,7 +98,7 @@
 
  dvector pow(_CONST dvector& v1,_CONST dvector& v2)              // ***
  {
-   shape_check(v1,v2,"dvector pow(_CONST dvector& v1,_CONST dvector& v2)");
+   shape_check(v1,v2,(char*)"dvector pow(_CONST dvector& v1,_CONST dvector& v2)");
 
    dvector tmp(v1.indexmin(),v1.indexmax());
    for (int i=v1.indexmin();i<=v1.indexmax();i++)

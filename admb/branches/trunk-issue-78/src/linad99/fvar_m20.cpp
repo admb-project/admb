@@ -29,7 +29,7 @@ void df_xdet(void);
 */
 dvariable det(_CONST dvar_matrix& aa)
 {
-  int i,imax,j,k,n;
+  int i,imax = 0,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();

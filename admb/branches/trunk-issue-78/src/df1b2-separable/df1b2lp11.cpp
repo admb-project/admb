@@ -124,7 +124,7 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
   return L;
 }
 */
-static void xxx(double x){;}
+//static void xxx(double x){;}
 
 dvector safe_choleski_solver::solve
   (const banded_symmetric_dmatrix& _m,const dvector&_v)
@@ -133,7 +133,7 @@ dvector safe_choleski_solver::solve
   ADUNCONST(dvector,v)
   ADUNCONST(banded_symmetric_dmatrix,m)
   int mmin=m.indexmin();
-  int mmax=m.indexmax();
+  //int mmax=m.indexmax();
   if (hadbad && id>0.0)
   {
     positivize(m,id);
@@ -218,8 +218,6 @@ void laplace_approximation_calculator::
       quadratic_prior::get_cHessian_contribution(Hess,xsize);
       quadratic_prior::get_cgradient_contribution(grad,xsize);
     }
-
-    int ierr=0;
 
     dvector g1(1,usize);
     maxg=fabs(evaluate_function(fval,uhat,g1,pfmin));

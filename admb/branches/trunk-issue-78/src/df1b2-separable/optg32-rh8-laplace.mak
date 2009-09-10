@@ -2,8 +2,8 @@
 
 CC = gcc
 LL = tlib
-FLAGS1 = -Wno-deprecated ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -DOPT_LIB -g -DUSE_LAPLACE -fpermissive -O3 -c -I. -I../nh99 -I../linad99 -I../tools99 -D__GNUDOS__
-FLAGS = -Wno-deprecated ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -DOPT_LIB  -fpermissive -DUSE_LAPLACE -O3 -c -I. -I../nh99 -I../linad99 -I../tools99  -Dlinux -D__GNUDOS__
+FLAGS1 = ${OPTIONS} ${PVMOPTION} -DOPT_LIB -g -DUSE_LAPLACE -O3 -c -I. -I../nh99 -I../linad99 -I../tools99 -D__GNUDOS__
+FLAGS = ${OPTIONS} ${PVMOPTION} -DOPT_LIB  -DUSE_LAPLACE -O3 -c -I. -I../nh99 -I../linad99 -I../tools99  -Dlinux -D__GNUDOS__
 LIBPATH =gcc32-rh8olp
 LIBNAME = libdf1b2o.a
 LIBDIR = lib

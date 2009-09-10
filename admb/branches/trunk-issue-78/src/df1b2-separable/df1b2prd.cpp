@@ -266,7 +266,6 @@ void read_pass2_2_prod(void)
   double xu,yu;
   double * xdot;
   double * ydot;
-  df1b2_header x,z;
   //df1b2function2 * pf;
 
   // get info from tape1
@@ -312,16 +311,14 @@ void read_pass2_2_prod(void)
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
 
-  int i;
-  
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
   }
   
   // start with x and add y
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d2f11)(xu,yu)*zbar[i]*x_bar_tilde[i];
     //z_bar_tilde[i]+=(pf->df1)(xu,yu)*x_bar_tilde[i];
@@ -330,7 +327,7 @@ void read_pass2_2_prod(void)
     *y_tilde+=zbar[i]*x_bar_tilde[i];
   }
 
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d2f11)(xu,yu)*zdotbar[i]*x_dot_bar_tilde[i];
     //*y_tilde+=(pf->d2f12)(xu,yu)*zdotbar[i]*x_dot_bar_tilde[i];
@@ -349,7 +346,7 @@ void read_pass2_2_prod(void)
   }
   */
   // start with y and add x
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     //*y_tilde+=(pf->d2f22)(xu,yu)*zbar[i]*y_bar_tilde[i];
     //*x_tilde+=(pf->d2f12)(xu,yu)*zbar[i]*y_bar_tilde[i];
@@ -358,7 +355,7 @@ void read_pass2_2_prod(void)
     z_bar_tilde[i]+=xu*y_bar_tilde[i];
   }
 
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     //*y_tilde+=(pf->d2f22)(xu,yu)*zdotbar[i]*y_dot_bar_tilde[i];
     //*x_tilde+=(pf->d2f12)(xu,yu)*zdotbar[i]*y_dot_bar_tilde[i];
@@ -376,7 +373,7 @@ void read_pass2_2_prod(void)
     *x_tilde+=(pf->d3f122)(xu,yu)*ydot[i]*zdotbar[i]*y_bar_tilde[i];
   }
   */
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d3f112)(xu,yu)*ydot[i]*zdotbar[i]*x_bar_tilde[i];
     //*y_tilde+=(pf->d3f122)(xu,yu)*ydot[i]*zdotbar[i]*x_bar_tilde[i];
@@ -385,7 +382,7 @@ void read_pass2_2_prod(void)
     y_dot_tilde[i]+=zdotbar[i]*x_bar_tilde[i];
     z_dot_bar_tilde[i]+=ydot[i]*x_bar_tilde[i];
   }
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     //*x_tilde+=(pf->d3f112)(xu,yu)*xdot[i]*zdotbar[i]*y_bar_tilde[i];
     //*y_tilde+=(pf->d3f122)(xu,yu)*xdot[i]*zdotbar[i]*y_bar_tilde[i];
@@ -415,8 +412,7 @@ void read_pass2_3_prod(void)
   double yu;
   double * xdot;
   double * ydot;
-  df1b2_header x,z;
-  df1b2function2 * pf;
+  //df1b2function2 * pf;
 
   // get info from tape1
   // get info from tape1

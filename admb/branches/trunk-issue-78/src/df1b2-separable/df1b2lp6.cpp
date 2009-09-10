@@ -282,7 +282,7 @@ dvector laplace_approximation_calculator::banded_calculations
   // for use when there is no separability
   ADUNCONST(dvector,x)
   ADUNCONST(double,f)
-  int i,j;
+  int i;
 
   initial_params::set_inactive_only_random_effects(); 
   gradient_structure::set_NO_DERIVATIVES();
@@ -297,8 +297,6 @@ dvector laplace_approximation_calculator::banded_calculations
     gradient_structure::set_YES_DERIVATIVES();
   }
   //int lmn_flag=0;
-  double maxg;
-  double maxg_save;
   //dvector uhat(1,usize);
   double f_from_1=0.0;
 
@@ -496,7 +494,7 @@ dvector laplace_approximation_calculator::banded_calculations
       block_diagonal_flag=0;
       dvector scale1(1,nvar);   // need to get scale from somewhere
       initial_params::set_inactive_only_random_effects(); 
-      int check=initial_params::stddev_scale(scale1,x);
+      initial_params::stddev_scale(scale1,x);
       //for (i=1;i<=xadjoint.indexmax();i++)
       //  xadjoint(i)*=scale1(i);
       laplace_approximation_calculator::where_are_we_flag=0; 
@@ -516,7 +514,7 @@ dvector laplace_approximation_calculator::banded_calculations
       if (initial_df1b2params::separable_flag)
       {
         dvector scale(1,nvar);   // need to get scale from somewhere
-        int check=initial_params::stddev_scale(scale,x);
+        initial_params::stddev_scale(scale,x);
         dvector sscale=scale(1,Dux(1).indexmax());
         for (i=1;i<=usize;i++)
         {
@@ -702,7 +700,7 @@ df1b2variable * tmp_pen=00;
 dvector laplace_approximation_calculator::
   get_newton_raphson_info_banded (function_minimizer * pfmin)
 {
-  int i,j,ip; 
+  int ip; 
   
   int nv=initial_df1b2params::set_index();
   if (allocated(used_flags))
@@ -905,7 +903,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   // init parameters should be active in this phase
   initial_params::set_inactive_only_random_effects(); 
   initial_params::set_active_random_effects(); 
-  int onvar=initial_params::nvarcalc(); 
+  initial_params::nvarcalc(); 
   initial_params::xinit(y);    // get the initial values into the
   y(1,xs)=x;
 
@@ -991,9 +989,8 @@ dvector laplace_approximation_calculator::
   double delta=5.e-5;
   //do
   dvector values(1,300);
-  double oldfbest=pmin->lapprox->fmc1.fbest; 
-  double best_value=oldfbest;
-  double newfbest;
+  //double oldfbest=pmin->lapprox->fmc1.fbest; 
+  double newfbest = 0;
   int have_value=0;
   //for (int jj=1;jj<=300;jj++)
   int jj=1;
@@ -1029,7 +1026,7 @@ dvector laplace_approximation_calculator::
       //cout << "norm(uhat_old) = " << norm(uhat_old) 
        //    << "   norm(uhat) = " << norm(uhat)  << endl;
        
-      double maxg=fabs(evaluate_function(newval,uhat,pfmin));
+      fabs(evaluate_function(newval,uhat,pfmin));
       if (have_value && newval>newfbest) 
       {
         break;
@@ -1073,7 +1070,6 @@ dvector laplace_approximation_calculator::
   initial_params::set_active_only_random_effects(); 
   //int lmn_flag=0;
   double maxg;
-  double maxg_save;
   double f_from_1=0.0;
   if (!inner_lmnflag)
   {

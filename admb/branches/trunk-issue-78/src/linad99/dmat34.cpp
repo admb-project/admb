@@ -65,7 +65,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
   const double& _ln_unsigned_det,double& sign)
 {
   double& ln_unsigned_det=(double&) (_ln_unsigned_det);
-  int i,imax,j,k,n;
+  int i,imax = 0,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
@@ -81,7 +81,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
   indx.fill_seqadd(lb,One);
   double d;
   double big,dum,sum,temp;
-  kkludge_object kkk;
+  //kkludge_object kkk;
   dvector vv(lb,ub);
 
   d=1.0;

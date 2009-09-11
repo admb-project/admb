@@ -22,10 +22,12 @@
       allocate(indexmin(),int(s*indexmax()));
       (*this)(oldmin,oldmax)=tmp;
     }
+    /*
     else
     {
       ivector tmp(1,s);
     }
+    */
   }
 
 

@@ -1386,7 +1386,7 @@ ivector cs_amd (XCONST hs_smatrix &A)  /* Implements only order == 1: Chol*/
     hs_smatrix AT(n,A.nzmax);
     cs_transpose(A,0,AT);
 
-    dense = CS_MAX (16, 10 * sqrt ((double) n)) ;   /* find dense threshold */
+    dense = int(CS_MAX (16, 10 * sqrt ((double) n))) ;   /* find dense threshold */
     dense = CS_MIN (n-2, dense) ;
 
     hs_smatrix C = cs_add(A,AT);
@@ -1720,7 +1720,7 @@ ivector cs_amd (XCONST dvar_hs_smatrix &A)  /* Implements only order == 1: Chol*
     dvar_hs_smatrix AT(n,A.nzmax);
     cs_transpose(A,0,AT);
 
-    dense = CS_MAX (16, 10 * sqrt ((double) n)) ;   /* find dense threshold */
+    dense = int(CS_MAX (16, 10 * sqrt ((double) n)));   /* find dense threshold */
     dense = CS_MIN (n-2, dense) ;
 
     dvar_hs_smatrix C = cs_add(A,AT);
@@ -3223,7 +3223,7 @@ void dfcholeski_sparse(void)
 
     for (k = n-1 ; k >=0 ; k--)   
     {
-      c[k]=csave(--tccount);
+      c[k]=int(csave(--tccount));
       p=c[k];
       s=ssave(k);
       //if (k==3)
@@ -3241,7 +3241,7 @@ void dfcholeski_sparse(void)
       {
         i=s(top);
         //Lx [p] = lki ;
-        c[i]=csave(--tccount);
+        c[i]=int(csave(--tccount));
         p2=c[i];
         //ofs << --ttc << " " << p2 << " 2" << endl;
         dflki+=dfLx[p2];

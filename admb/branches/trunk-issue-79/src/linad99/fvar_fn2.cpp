@@ -32,7 +32,7 @@ dvariable avg( const prevariable& x,const prevariable& y)
     double dftmp;
     double tmp2;
     double tmp3;
-    int i=cx;
+    int i=int(cx);
     if (cx-i <= 0.5)
     {
       tmp=cx-i;

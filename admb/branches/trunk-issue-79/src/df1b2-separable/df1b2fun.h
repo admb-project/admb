@@ -138,7 +138,7 @@ void df1b2_gradcalc1(void);
 
 extern char AD_allocation_error_message[];
 
-int adptr_diff(void * x, void * y);
+size_t adptr_diff(void * x, void * y);
 
 
 void read_pass1_1(void);
@@ -436,7 +436,7 @@ void print_derivatives(df1b2_header * px,const char * s,
     smartlist(unsigned int bufsize,const adstring& filename);
     double report_usage(void) 
     { 
-      return double(int(bptr)-int(buffer))/double(int(buffend)-int(buffer));
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
   };
     
@@ -485,7 +485,7 @@ void print_derivatives(df1b2_header * px,const char * s,
     void operator += (int);
     double report_usage(void) 
     { 
-      return double(int(bptr)-int(buffer))/double(int(buffend)-int(buffer));
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
     void write(void * p,int n);
     void write(int n);
@@ -554,7 +554,7 @@ void print_derivatives(df1b2_header * px,const char * s,
     void operator += (int);
     double report_usage(void) 
     { 
-      return double(int(bptr)-int(buffer))/double(int(buffend)-int(buffer));
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
     void write(void * p,int n);
     void write(int n);
@@ -616,7 +616,7 @@ void print_derivatives(df1b2_header * px,const char * s,
     void operator += (int);
     double report_usage(void) 
     { 
-      return double(int(bptr)-int(buffer))/double(int(buffend)-int(buffer));
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
     void write(void * p,int n);
     void write(int n);
@@ -839,7 +839,7 @@ public:
   int indexmax(void)const {return index_max;}
   int size(){return index_max-index_min+1;}
   df1b2vector(int lb,int ub);
-  ~df1b2vector();
+  virtual ~df1b2vector();
   df1b2vector(const df1b2vector&);
   void copy(const df1b2vector&);
   df1b2vector(void);
@@ -1217,6 +1217,9 @@ public:
   void allocate(int min, int max,int phase_start, const adstring& s="unnamed");
   void allocate(int min, int max,const adstring& s="unnamed");
   virtual void set_index(int aflag,const int& ii);
+
+public:
+  virtual ~df1b2_init_vector() {}
 };
 
 class df1b2_init_matrix : public df1b2matrix, public initial_df1b2params
@@ -1261,6 +1264,9 @@ public:
   virtual void set_value(const init_df1b2vector& x,const int& _ii,
     const df1b2variable& pen);
   virtual void set_index(int aflag,const int& ii);
+
+public:
+  virtual ~df1b2_init_matrix() {}
 };
 
 
@@ -1281,6 +1287,9 @@ public:
   void allocate(int,const adstring&);
   df1b2_init_number();
   void operator = (const df1b2variable& _x); 
+
+public:
+  virtual ~df1b2_init_number() {}
 };
 
 class df1b2_init_number_vector 
@@ -1330,6 +1339,9 @@ public:
   virtual void set_value(const dvector& x,const int& _ii);
   virtual void set_value(const init_df1b2vector& x,const int& _ii,
     const df1b2variable& pen);
+
+public:
+  virtual ~df1b2_init_bounded_number() {}
 };
 
 class df1b2_init_bounded_number_vector 
@@ -1381,6 +1393,9 @@ public:
     const df1b2variable& pen);
   inline double getminb(void){return minb;}
   inline double getmaxb(void){return maxb;}
+
+public:
+  virtual ~df1b2_init_bounded_vector() {}
 };
 
 
@@ -1646,7 +1661,7 @@ public:
   static dvariable get_quadratic_priors(void);
   dvariable get_function(void);
   quadratic_prior(void); 
-  ~quadratic_prior(void);
+  virtual ~quadratic_prior(void);
   void allocate(const dvar_vector & _u,const char * s);
   void allocate(const dvar_vector & _u);
   void allocate(const dvar_matrix & _M, const dvar_vector & _u,const char * s);
@@ -1692,7 +1707,7 @@ public:
   static dvariable get_quadratic_priors(void);
   df1b2variable get_function(void);
   df1b2quadratic_prior(void); 
-  ~df1b2quadratic_prior(void);
+  virtual ~df1b2quadratic_prior(void);
   void allocate(const df1b2_init_vector & _u,const char * s);
   void allocate(const df1b2_init_vector & _u);
   void allocate(const df1b2matrix & _M, const df1b2_init_vector & _u,const char * s);

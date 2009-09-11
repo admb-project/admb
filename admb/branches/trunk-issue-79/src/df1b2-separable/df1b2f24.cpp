@@ -84,7 +84,7 @@ void df1b2_init_bounded_matrix::set_value(const init_df1b2vector& _x,
       int cmax=(*this)(i).indexmax();
       for (int j=cmin;j<=cmax;j++)
       {
-        int tmp= (int)( &((*this)(i,j)) );
+        size_t tmp= (size_t)( &((*this)(i,j)) );
         (*initial_df1b2params::pointer_table)(ii1)(1)=tmp;
         (*initial_df1b2params::pointer_table)(ii1)(2)=x(ii1).ind_index;
         ii1++;

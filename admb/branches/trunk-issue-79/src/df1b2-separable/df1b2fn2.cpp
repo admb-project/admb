@@ -76,7 +76,7 @@ int ad_dstar::n=0;
 
 void ad_read_pass2(void);
 // should inline this
-int adptr_diff(void * x, void * y) { return int(x)-int(y); }
+size_t adptr_diff(void * x, void * y) { return size_t(x)-size_t(y); }
 #if defined(__CHECK_MEMORY__)
   int sanity_flag=0;
 #endif

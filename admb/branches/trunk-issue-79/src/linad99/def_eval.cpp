@@ -35,7 +35,7 @@
 #endif
 
 #ifdef __GNU__
- #if (__GNUC__ >3)
+ #if (__GNUC__ > 2)
    #include <iostream>
    using namespace std;
   #else   

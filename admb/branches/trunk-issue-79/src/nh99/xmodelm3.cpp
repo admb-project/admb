@@ -197,7 +197,7 @@ void tracing_message(int traceflag,const char *s);
         if (bandwidth<=0)
         {
           cerr << "Usage -bw option needs positive number  -- ignored" << endl;
-          bandwidth=0.0;
+          bandwidth=0;
         } 
         else
         {
@@ -351,7 +351,7 @@ void tracing_message(int traceflag,const char *s);
 #if   defined(USE_LAPLACE)
         if (negative_eigenvalue_flag)
         {
-          trust_region_update(nvar,_crit,x,g,f);
+          trust_region_update(nvar,int(_crit),x,g,f);
         }
 #endif   //defined(USE_LAPLACE)
         if (!ad_comm::pvm_manager)
@@ -369,7 +369,7 @@ void tracing_message(int traceflag,const char *s);
             }
             if (maxfn>0)
             {
-              quasi_newton_block(nvar,_crit,x,g,f);
+              quasi_newton_block(nvar,int(_crit),x,g,f);
             }
           }
           while(repeatminflag);

@@ -158,11 +158,11 @@ dvector laplace_approximation_calculator::default_calculations
         quadratic_prior::get_cgradient_contribution(grad,xsize);
       }
 
+       /*
       if (ii==1)
       {
           fabs(re_objective_function_value::fun_without_pen-
           objective_function_value::fun_without_pen);
-       /*
         if (diff>1.e-7)
         {
           cout << "there is a difference in the the user_functions " 
@@ -173,8 +173,8 @@ dvector laplace_approximation_calculator::default_calculations
             << diff  << endl;
           //ad_exit(1);
         }
-       */
       }
+       */
   
       if (ad_comm::time_flag)
       {

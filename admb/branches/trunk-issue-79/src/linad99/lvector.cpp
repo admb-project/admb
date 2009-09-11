@@ -148,7 +148,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
    #ifdef SAFE_ARRAYS
      for ( int i=indexmin(); i<=indexmax(); i++)
      {
-       v[i]=0.;
+       v[i]=0;
      }
    #endif
  }

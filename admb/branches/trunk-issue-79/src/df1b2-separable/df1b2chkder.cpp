@@ -137,11 +137,13 @@ dvector laplace_approximation_calculator::
         quadratic_prior::get_cgradient_contribution(grad,xsize);
       }
 
+/*
       if (ii==1)
       {
         fabs(re_objective_function_value::fun_without_pen-
           objective_function_value::fun_without_pen);
       }
+*/
   
       dvector step;
       int print_hess_in_newton_raphson_flag=0;

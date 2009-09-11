@@ -60,7 +60,7 @@ sing_val_decomp singval_decomp(const dmatrix &_a)
   a=_a;
   dvector w(1,n);
   dmatrix v(1,n,1,m);
-  int flag,i,its,j,jj,k,l,nm;
+  int flag,i,its,j,jj,k,l = 0,nm = 0;
   double anorm,c,f,g,h,s,scale,x,y,z;
 
   dvector rv1(1,n);
@@ -109,7 +109,7 @@ sing_val_decomp singval_decomp(const dmatrix &_a)
         for (k=l;k<=n;k++) a[i][k] *= scale;
       }
     }
-    anorm=max(anorm,(fabs(w[i])+fabs(rv1[i])));
+    anorm=max(int(anorm),int(fabs(w[i])+fabs(rv1[i])));
   }
   for (i=n;i>=1;i--) {
     if (i < n) {

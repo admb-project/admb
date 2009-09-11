@@ -983,7 +983,7 @@ void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST
   ivector mmin(1,nsdvars);
   ivector mmax(1,nsdvars);
 
-  nsim=sum(hist(1));
+  nsim=int(sum(hist(1)));
   for (i=1;i<=nsdvars;i++)
   {
     mmin(i)=minnz(hist(i));

@@ -25,7 +25,7 @@ double calculate_importance_sample_block_diagonal_funnel(const dvector& x,
   gradient_structure::set_NO_DERIVATIVES();
   int nsc=pmin->lapprox->num_separable_calls;
   const ivector lrea = (*pmin->lapprox->num_local_re_array)(1,nsc);
-  int hroom =  sum(square(lrea));
+  int hroom = int(sum(square(lrea)));
   int nvar=x.size()+u0.size()+hroom;
   independent_variables y(1,nvar);
   

@@ -262,7 +262,7 @@ void make_all_classes(int _n,int _numberw,int _numberv)
  inumber1=3500;
 
  doublereal _jgh4=0.1;
- int _jgh5=1.e+4;
+ int _jgh5=int(1e+4);
  logical _wwuq3=TRUE_;
  logical _te0=FALSE_;
  logical _te1=FALSE_;

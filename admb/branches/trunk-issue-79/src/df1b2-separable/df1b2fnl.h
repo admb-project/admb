@@ -172,6 +172,8 @@ public:
     const df1b2variable&);
   virtual void set_value(const init_df1b2vector&,const int& ii){ cout << "here"<< endl;}
   virtual void set_index(imatrix&,int& ii);
+public:
+  virtual ~funnel_init_df1b2matrix() {}
 };
 
 

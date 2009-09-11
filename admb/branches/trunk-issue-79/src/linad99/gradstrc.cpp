@@ -224,7 +224,7 @@ void allocate_dvariable_space(void)
     cerr << "sizeof(dlink) is greater than 2*sizeof(double) --"
        " need to modify allocate_dvariable_space in gradstrc.cpp" << endl;
   }
-  char * tmp= (char*) malloc(2.0*sizeof(double)*(numlinks+1));
+  char * tmp= (char*) malloc(2*sizeof(double)*(numlinks+1));
   char * tmp1=tmp;
 
   dlink * dl=(dlink*)tmp1;
@@ -399,7 +399,7 @@ void allocate_dvariable_space(void)
   
    //cout << (void*) ARRAY_MEMBLOCK_BASE.ptr  << "   ";
    //cout << (int) ARRAY_MEMBLOCK_BASE.ptr  << endl;
-   int adjustment=(8-((int) ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
+   size_t adjustment=(8-((size_t) ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
    //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
    ARRAY_MEMBLOCK_BASE.adjust(adjustment);
    //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;

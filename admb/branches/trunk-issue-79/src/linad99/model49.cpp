@@ -56,7 +56,7 @@
 #  endif
 #else
 #  if ( defined(linux) && __GNUC__ < 4)
-     return (prevariable&) (v[i][j]);
+     return v[i][j];
 #  else
      return v[i][j];
 #  endif
@@ -124,7 +124,7 @@
 #  endif
 #else
 #  if ( defined(linux) && __GNUC__ < 4)
-     return (prevariable&) v[i](j,k);
+     return v[i](j,k);
 #  else
      return v[i](j,k);
 #  endif
@@ -180,7 +180,7 @@
 #  endif
 #else
 #  if ( defined(linux) && __GNUC__ < 4)
-     return (prevariable&) (v[i][j]);
+     return v[i][j];
 #  else
      return v[i][j];
 #  endif
@@ -249,7 +249,7 @@
 #  endif
 #else
 #  if ( defined(linux) && __GNUC__ < 4)
-     return (prevariable&) v[i](j,k);
+     return v[i](j,k);
 #  else
      return v[i](j,k);
 #  endif

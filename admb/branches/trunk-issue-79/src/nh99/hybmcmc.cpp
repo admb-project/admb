@@ -512,7 +512,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
          hstep2=0.5*hstep;
          // randomize the number of steps
          double rnd2=randn(rng);
-         int hnsteps=hybnstep*exp(.2*rnd2);
+         int hnsteps=int(hybnstep*exp(.2*rnd2));
          
          for (int i=1;i<=hnsteps;i++)
          {

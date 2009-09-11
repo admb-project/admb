@@ -20,7 +20,7 @@
 
 #if  defined(__GNU__) || defined(__linux__)
 #include <memory.h>
-  #if (__GNUC__ >3)
+  #if (__GNUC__ >2)
      #include <iostream>
      using namespace std;
   #else   
@@ -63,7 +63,7 @@
 
 #ifdef __GNU__
 #include <memory.h>
-  #if (__GNUC__ >3)
+  #if (__GNUC__ >2)
      #include <iostream>
      using namespace std;
   #else   

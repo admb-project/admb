@@ -51,7 +51,7 @@
 #endif
 
 #if  defined(__GNU__) || defined(__linux__)
-  #if (__GNUC__ >3)
+  #if (__GNUC__ > 2)
      #include <iostream>
      using namespace std;
   #else   

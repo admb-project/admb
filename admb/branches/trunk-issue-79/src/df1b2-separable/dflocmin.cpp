@@ -130,7 +130,7 @@ dvector laplace_approximation_calculator::local_minimization_routine
   s=ub;
   cout <<  " inner maxg = " <<  fmc1.gmax;
 
-  fmc1.maxfn=fmsave;
+  fmc1.maxfn=(long int)fmsave;
   fmc1.ireturn=0;
   fmc1.fbest=fb;
   return ub;

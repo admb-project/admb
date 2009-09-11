@@ -129,7 +129,7 @@ void derch(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST 
     for (ii=n1; ii<=n2; ii++)
     {
       if (order_flag==1)
-        i=index(ii);
+        i=(long int)index(ii);
       else
         i=ii;
 

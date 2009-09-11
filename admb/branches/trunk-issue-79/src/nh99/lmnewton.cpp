@@ -93,7 +93,7 @@ void function_minimizer::limited_memory_quasi_newton
   g.initialize();
   dvector xbest(1,nvar);
   dvector gbest(1,nvar);
-  long int diagco=0.0;
+  long int diagco=0;
   int iprintx[2];
   //m = 35;
   dvector w(1,nvar+2*m+2*nvar*m);

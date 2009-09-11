@@ -8,16 +8,16 @@
 
 #include <admodel.h>
 #if !defined(__GNUG__) 
-#  include <new.h>
+  #include <new.h>
 #else
-#  if __GNUG__>=3 
-#    include <iostream>
-     using namespace std;
-
-#     if __GNUG__<4 
-#       include <new.h>
-#     endif
-#  endif
+  #if __GNUC__ > 2 && __cplusplus 
+    #include <iostream>
+    #include <new>
+    using namespace std;
+  #else
+    #include <iostream.h>
+    #include <new.h>
+  #endif
 #endif
 
 #if !defined(__GNUG__) ||   (defined(__GNUG__) && __GNUG__>=3) 

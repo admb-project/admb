@@ -65,7 +65,7 @@ dlist::dlist(void)
    (gradient_structure::MAX_DLINKS+1));
   //cout << (int) (ddlist_space) << endl;
   //cout << ((int) (ddlist_space))%8 << endl;
-  int adjust=(8- ((int) (ddlist_space))%8)%8;
+  size_t adjust=(8- ((size_t) (ddlist_space))%8)%8;
   
   ddlist_spacea=ddlist_space+adjust;
   

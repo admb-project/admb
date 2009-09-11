@@ -106,7 +106,7 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   dvar_vector xbest(1,nvar);
   dvar_vector gbest(1,nvar);
   g.initialize();
-  long int diagco=0.0;
+  long int diagco=0;
   integer iprintx[2];
   //m = 35;
   dvar_vector w(1,nvar+2*m+2*nvar*m);

@@ -135,7 +135,7 @@ using std::istrstream;
 
    if (sizeof(int)==sizeof(char*))
    {
-     if ( (unsigned) v < indexmin() * sizeof(double) )
+     if ( (size_t)v < indexmin() * sizeof(double) )
      {
         //cerr << "Pointer wrap in dvector(unsigned int ncl, unsigned int nch)\n";
         //cerr << "pointer = "<< (unsigned int) v <<

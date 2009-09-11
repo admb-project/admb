@@ -58,7 +58,7 @@ dvector sort(_CONST dvector& v, int NSTACK)
       iq=l+((ir-l+1)*fx)/FM;
       if (iq<=0)
       {
-        iq=l+((ir-l+1.0)*fx)/FM;
+        iq=int(l+((ir-l+1.0)*fx)/FM);
       } 
       a=arr[iq];
       arr[iq]=arr[l];
@@ -177,7 +177,7 @@ dvector sort(_CONST dvector& _v,BOR_CONST ivector& _index, int NSTACK)
       iq=l+((ir-l+1)*fx)/FM;
       if (iq<0)
       {
-        iq=l+((ir-l+1.0)*fx)/FM;
+        iq=int(l+((ir-l+1.0)*fx)/FM);
       }
       a=arr[iq];
       iii=index[iq];

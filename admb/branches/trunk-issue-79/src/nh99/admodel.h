@@ -1781,6 +1781,9 @@ class param_stddev_vector: public named_dvar_vector , stddev_params
   param_stddev_vector& operator = (_CONST dvar_vector& m);
   param_stddev_vector& operator = (_CONST dvector& m);
   param_stddev_vector& operator = (CGNU_DOUBLE m);
+
+public:
+  virtual ~param_stddev_vector() {}
 };
 
 class param_stddev_number: public named_dvariable , public stddev_params
@@ -1800,6 +1803,9 @@ protected:
   virtual void set_dependent_variables(void);
   param_stddev_number& operator = (_CONST prevariable&);
   param_stddev_number& operator = (CGNU_DOUBLE);
+
+public:
+  virtual ~param_stddev_number() {}
 };
 
 class param_likeprof_number: public param_stddev_number ,
@@ -1818,6 +1824,9 @@ class param_likeprof_number: public param_stddev_number ,
 public:
     param_likeprof_number& operator = (_CONST prevariable&);
     param_likeprof_number& operator = (CGNU_DOUBLE);
+
+public:
+  virtual ~param_likeprof_number() {}
 };
 
 class param_stddev_matrix: public named_dvar_matrix , stddev_params
@@ -1836,6 +1845,9 @@ class param_stddev_matrix: public named_dvar_matrix , stddev_params
   param_stddev_matrix& operator = (CGNU_DOUBLE m);
   param_stddev_matrix& operator = (_CONST dmatrix& m);
   param_stddev_matrix& operator = (_CONST dvar_matrix& m);
+
+public:
+  virtual ~param_stddev_matrix() {}
 };
 
 class adpvm_slave_args

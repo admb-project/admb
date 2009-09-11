@@ -15,8 +15,8 @@ void grad_chk(void)
   }    // current is one past the end so -- it
   else
   {
-    cout << int(gradient_structure::GRAD_STACK1->ptr)
-       -int(gradient_structure::GRAD_STACK1->ptr_first)
+    cout << size_t(gradient_structure::GRAD_STACK1->ptr)
+       - size_t(gradient_structure::GRAD_STACK1->ptr_first)
      << " offset in gradstack " << endl;
   }
 }

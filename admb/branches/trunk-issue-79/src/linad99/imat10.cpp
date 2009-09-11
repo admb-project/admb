@@ -36,7 +36,7 @@ ivector diagonal(const imatrix& m)
      dvector m2col=column(m2,j);
      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
      {
-       tmp(i,j)=m1(i) * m2col;
+       tmp(i,j)=int(m1(i) * m2col);
      }
    }
    return(tmp);

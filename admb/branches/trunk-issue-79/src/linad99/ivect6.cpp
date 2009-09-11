@@ -24,7 +24,7 @@
 #if (__MSVC32__>=8) || defined(__SUNPRO_CC)
      tmp.elem(i)=pow(double(v1.elem(i)),x);           
 #else
-     tmp.elem(i)=pow(v1.elem(i),x);           
+     tmp.elem(i)=int(pow(v1.elem(i),x));
 #endif
    }
    return(tmp);
@@ -38,7 +38,7 @@
 #if (__MSVC32__>=8)|| defined(__SUNPRO_CC)
      tmp.elem(i)=pow(double(x),v1.elem(i));           
 #else
-     tmp.elem(i)=pow(x,v1.elem(i));           
+     tmp.elem(i)=int(pow(x,v1.elem(i)));           
 #endif
    }
    return(tmp);

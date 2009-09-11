@@ -151,7 +151,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
     ssum+=exp((n-1)*log(x)-0.5*x*x-tmax);
   }
   double tsum=0;
-  dvector dist(1,samplesize+1);
+  dvector dist(1,int(samplesize)+1);
   dist.initialize();
   int is=0;
   int ii;
@@ -167,7 +167,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   }
   if (is==samplesize-1)
   {
-    dist(samplesize)=mid;
+    dist(int(samplesize))=mid;
   }
   else if (is<samplesize-1)
   {
@@ -186,7 +186,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
       antiepsilon=0;
     }
   }
-  antiepsilon=new dmatrix(1,samplesize,1,n);
+  antiepsilon=new dmatrix(1,int(samplesize),1,n);
   dmatrix & M=*antiepsilon;
   M.fill_randn(rng);
   
@@ -194,7 +194,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   {
     M(i)=M(i)/norm(M(i));
   }
-  int nvar=(samplesize-1)*n;
+  int nvar=(int(samplesize)-1)*n;
   independent_variables xx(1,nvar);
   ii=0;
   for (i=2;i<=samplesize;i++)
@@ -234,7 +234,7 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
       }
       if (fmc.ireturn>0)
       {
-         f=fcomp1(xx,dist,samplesize,n,g,M);
+         f=fcomp1(xx,dist,int(samplesize),n,g,M);
          if (f < fbest)
          {
            fbest=f;
@@ -891,7 +891,7 @@ void save_number_of_local_effects(int num_separable_calls,
       ad_exit(1);
     }
     int old_max=(*num_local_re_array)->indexmax();
-    int new_max=old_max+100+10*sqrt(double(old_max));
+    int new_max=int(old_max+100+10*sqrt(double(old_max)));
     ivector tmp(1,old_max);
     tmp=(**num_local_re_array);
     (*num_local_re_array)=new ivector(1,new_max);
@@ -930,7 +930,7 @@ void save_number_of_local_effects(int num_separable_calls,
       ad_exit(1);
     }
     int old_max=(*num_local_fixed_array)->indexmax();
-    int new_max=old_max+100+10*sqrt(double(old_max));
+    int new_max=int(old_max+100+10*sqrt(double(old_max)));
     ivector tmp(1,old_max);
     tmp=(**num_local_fixed_array);
     (*num_local_fixed_array)=new ivector(1,new_max);

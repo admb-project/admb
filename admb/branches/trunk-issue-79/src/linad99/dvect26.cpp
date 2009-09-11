@@ -20,10 +20,12 @@
       allocate(indexmin(),int(s*indexmax()));
       *this=tmp;
     }
+    /*
     else
     {
       dvector tmp(1,s);
     }
+    */
   }
 
 

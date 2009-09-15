@@ -355,6 +355,8 @@ void print_derivatives(df1b2_header * px,const char * s,
     df1b2variable& operator () (const df1b2variable& z,const df1b2variable& x,
        int s); // s is a switch for picking special function for simple
                // operations like +=
+  public:
+    virtual ~df1b2function1() {}
   }; 
 
   class df1b2function2
@@ -387,6 +389,9 @@ void print_derivatives(df1b2_header * px,const char * s,
     );
 
     df1b2variable operator () (const df1b2variable& x,const df1b2variable& y);
+
+  public:
+    virtual ~df1b2function2() {}
   }; 
 
   class mydf1b2function2
@@ -1166,7 +1171,9 @@ dvector value(const df1b2vector& _x);
 dmatrix value(const df1b2matrix& _x);
 
 class initial_df1b2params
-{
+{ 
+public:
+  virtual ~initial_df1b2params() {}
 public:
   static int stddev_scale(const dvector& d,const dvector& x);
   static int current_phase;   
@@ -1411,6 +1418,8 @@ public:
   friend class df1b2variable;
   virtual void set_value(const init_df1b2vector& x,const int& _ii,
     const df1b2variable& pen);
+public:
+  virtual ~random_effects_bounded_vector_info() {}
 }; 
 
 
@@ -1631,6 +1640,8 @@ public:
   int old_style_flag;
   virtual void set_old_style_flag(void)=0;
   //style_flag_class(void) {set_old_style_flag();}
+public:
+  virtual ~style_flag_class() {}
 };
 
 

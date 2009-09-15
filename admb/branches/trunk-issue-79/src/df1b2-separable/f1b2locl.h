@@ -86,6 +86,9 @@ public:
     
   static void allocate_all(void);
   static int nvarcalc_all(void);
+
+public:
+  virtual ~local_init_var() {}
 };
 
 
@@ -149,6 +152,9 @@ public:
   virtual void set_value(const init_df1b2vector&,const int& ii);
   virtual void set_index(imatrix&,int& ii);
   virtual void dot_calcs(local_dep_df1b2variable&,int ){ cout << "Here" << endl;}
+
+public:
+  virtual ~local_init_df1b2vector() {}
 };
 // ************************************************************
 // ************************************************************
@@ -188,6 +194,9 @@ public:
   static void deallocate_all(void);
   static void allocate_all(void);
   static int nvarcalc_all(void);
+
+public:
+  virtual ~local_dep_var() {}
 };
 
 
@@ -234,6 +243,9 @@ public:
   //  const df1b2variable&);
   //virtual void set_value(const dep_df1b2vector&,const int& ii);
   virtual void set_index(imatrix&,int& ii);
+
+public:
+  virtual ~local_dep_df1b2vector() {}
 };
 
 
@@ -260,6 +272,9 @@ public:
   virtual int nvar_calc(void)=0;
   static void allocate_all(void);
   static int nvarcalc_all(void);
+
+public:
+  virtual ~local_init_pass1_var() {}
 };
 
 class local_init_pass1_df1b2variable : public local_init_pass1_var, 

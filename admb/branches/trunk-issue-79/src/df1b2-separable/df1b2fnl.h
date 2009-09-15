@@ -80,6 +80,8 @@ public:
     
   static void allocate_all(void);
   static int nvarcalc_all(void);
+public:
+  virtual ~funnel_init_var() {}
 };
 
 class funnel_dependent_df1b2variable : public df1b2variable 

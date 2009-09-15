@@ -849,6 +849,8 @@ public:
   param_init_vector& operator = (const dvar_vector&);
   param_init_vector& operator = (const prevariable&);
   param_init_vector& operator = (const double&);
+public:
+  virtual ~param_init_vector() {}
 };
 
 class dll_param_init_vector: public param_init_vector
@@ -922,6 +924,9 @@ public:
   void pvm_pack(void){::pvm_pack(*this);}
   void pvm_unpack(void){::pvm_unpack(*this);}
 #endif
+
+public:
+  virtual ~param_init_bounded_vector() {}
 };
 
 class dll_param_init_bounded_vector: public param_init_bounded_vector 
@@ -944,6 +949,8 @@ public:
   param_init_bounded_dev_vector& operator = (const dvector& m);
   param_init_bounded_dev_vector& operator = (const prevariable& m);
   param_init_bounded_dev_vector& operator = (const double& m);
+public:
+  virtual ~param_init_bounded_dev_vector() {}
 };
 
 class param_init_number: public named_dvariable , public initial_params
@@ -985,6 +992,8 @@ protected:
   param_init_number();
   param_init_number& operator = (CGNU_DOUBLE m);
   param_init_number& operator = (_CONST prevariable& m);
+public:
+  ~param_init_number() {}
 };
 
 class dll_param_init_number: public param_init_number
@@ -1017,6 +1026,7 @@ public:
   void pvm_unpack(void){::pvm_unpack(*this);}
 #endif
   param_init_bounded_number();
+  ~param_init_bounded_number() {}
 private:
   virtual void set_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST int& ii);
 //  virtual void set_simulation_bounds(BOR_CONST dmatrix&,BOR_CONST dvector& symbds,BOR_CONST int& ii);
@@ -1184,6 +1194,9 @@ public:
   void allocate(const ad_integer& rmin,const ad_integer& rmax,_CONST index_type& cmin,
     _CONST index_type& cmax, double _minb,double _maxb,
     int phase_start=1,const char * = "UNNAMED");
+
+public:
+  virtual ~param_init_bounded_matrix() {}
 };
 
 class data_int : public model_name_tag
@@ -1714,6 +1727,9 @@ ostream& operator << (BOR_CONST ostream& s,BOR_CONST label_class& lc);
 
 class stddev_params
 {
+public:
+  virtual ~stddev_params() {}
+
 protected:
 public:
   static stddev_params * stddevptr[150]; // this should be a resizeable array
@@ -1765,6 +1781,8 @@ public:
   void set_stepsize(double);
   void set_stepnumber(int);
   friend class function_minimizer;
+public:
+  virtual ~likeprof_params() { }
 };
 
 class param_stddev_vector: public named_dvar_vector , stddev_params

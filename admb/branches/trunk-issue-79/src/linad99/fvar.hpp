@@ -547,6 +547,9 @@ ostream& setscientific(BOR_CONST ostream& s);
 //ostream& setshowpoint(BOR_CONST ostream& s);
 class preshowpoint
 {
+public:
+  preshowpoint() : x(0) {}
+private:
   int x;
 };
 preshowpoint  setshowpoint(void);
@@ -558,6 +561,9 @@ ostream& operator << (BOR_CONST ostream&,preshowpoint);
   ostream& setfixed(BOR_CONST ostream& s);
   class prefixed
   {
+  public:
+    prefixed() : x(0) {}
+  private:
     int x;
   };
   prefixed  setfixed(void);
@@ -569,6 +575,9 @@ ostream& operator << (BOR_CONST ostream&,preshowpoint);
 #else
   class prescientific
   {
+  public:
+    prescientific() : x(0) {}
+  private:
     int x;
   };
   prescientific  setscientific(void);

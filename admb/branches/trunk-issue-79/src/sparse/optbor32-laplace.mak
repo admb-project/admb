@@ -2,7 +2,7 @@
 #macros for making optimized library for BORLAND 4.0
 CC = bcc32
 LL = tlib
-FLAGS = ${OPTIONS} -Vd -O2 -DUSE_LAPLACE -6 -H -Hc -DDOS386 -DOPT_LIB -I. -I../linad99 -c -f
+FLAGS = -w ${OPTIONS} -O2 -DUSE_LAPLACE -6 -DDOS386 -DOPT_LIB -I. -I../linad99 -c -f
 LIBPATH = b32polp
 LIBNAME = adt32.lib 
 LIBRARIAN = tlib
@@ -24,7 +24,7 @@ $(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJSPLUS)
 	rm *.lib ; \
 	ls *.obj >> t.rsp
 	cd ..
-	sed -e ' 1,$$s/$$/ \&/' -e '2,$$s/^/+-/' -e ' $$s/ \&//' -e ' s/b32o\///' $(LIBPATH)/t.rsp > tmpfile
+	sed -e ' 1,$$s/$$/ \&/' -e '2,$$s/^/+/' -e ' $$s/ \&//' -e ' s/b32o\///' $(LIBPATH)/t.rsp > tmpfile
 	cp tmpfile $(LIBPATH)/t.rsp 
 	cd $(LIBPATH) ; \
 	tlib /P256 @t.rsp 

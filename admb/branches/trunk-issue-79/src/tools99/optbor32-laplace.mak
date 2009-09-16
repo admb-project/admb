@@ -2,7 +2,7 @@
 #macros for making optimized library for BORLAND 4.0
 CC = bcc32
 LL = tlib
-FLAGS = -I\\Borland\\BCC55\\Include ${OPTIONS} -Vd -O2 -DUSE_LAPLACE -6 -H -Hc -DDOS386 -DOPT_LIB -I. -I../linad99 -c -f
+FLAGS = -w -I\\Borland\\BCC55\\Include ${OPTIONS} -O2 -DUSE_LAPLACE -6 -DDOS386 -DOPT_LIB -I. -I../linad99 -c -f
 LIBPATH = b32polp
 LIBNAME = adt32.lib 
 LIBRARIAN = tlib
@@ -24,14 +24,14 @@ $(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJSPLUS)
 	rm *.lib ; \
 	ls *.obj >> t.rsp
 	cd ..
-	sed -e ' 1,$$s/$$/ \&/' -e '2,$$s/^/+-/' -e ' $$s/ \&//' -e ' s/b32o\///' $(LIBPATH)/t.rsp > tmpfile
+	sed -e ' 1,$$s/$$/ \&/' -e '2,$$s/^/+/' -e ' $$s/ \&//' -e ' s/b32o\///' $(LIBPATH)/t.rsp > tmpfile
 	cp tmpfile $(LIBPATH)/t.rsp 
 	cd $(LIBPATH) ; \
 	tlib /P256 @t.rsp 
 	cd ..
 
 $(OBJ0): %.obj: %.cpp
-	$(CC) $(FLAGS) -o$(LIBPATH)/$* $<
+	$(CC) $(FLAGS) -w-8071 -w-8004 -w-8057 -w-8060 -o$(LIBPATH)/$* $<
 
 $(OBJSPLUS): %.obj: %.cpp
 	$(CC) $(FLAGS) -o$(LIBPATH)/$* $<
@@ -42,5 +42,6 @@ disk:
 	cp clist.h $(DISKDIR)/$(INCLUDEDIR)
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 clean:
-	rm -f tmpfile
-	- cd $(LIBPATH);  rm -f *obj; rm -f *lib; rm -f *.rsp
+	-rm -f bor502-win32olp/*
+	-rm -f bor502-win32slp/*
+	-rm -f tmpfile

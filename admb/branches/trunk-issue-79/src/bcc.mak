@@ -38,9 +38,9 @@ verify:
 	cd ${DISK}\examples && ADMB_HOME="${WINADMB_HOME}" PATH="$(BCC55_HOME)\\bin;${WINADMB_HOME}\\bin;%PATH%" $(BORLAND_HOME)/bin/make 
 
 clean:
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safbor32-laplace.mak clean
-	cd ./nh99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
-	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
-	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
-	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safbor32-laplace.mak clean
+	make -C linad99 -f optbor32-laplace.mak clean
+	make -C linad99 -f safbor32-laplace.mak clean
+	make -C nh99 -f optbor32-laplace.mak clean
+	make -C tools99 -f optbor32-laplace.mak clean
+	make -C df1b2-separable -f optbor32-laplace.mak clean
+	make -C df1b2-separable -f safbor32-laplace.mak clean

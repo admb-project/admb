@@ -52,7 +52,7 @@
 
 #define BIG_INIT_PARAMS 
 
-#if !defined(linux)
+#if !defined(linux) && !defined(_MSC_VER)
 #  define BORCAST (prevariable&)
 #else
 #  define BORCAST 

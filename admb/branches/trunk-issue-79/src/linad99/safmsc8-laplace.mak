@@ -3,8 +3,8 @@ CC = cl
 LL = tlib
 LIBPATH = msc8slp
 
-FLAGS = ${OPTIONS} ${PVMOPTION} -Ik:/temp/ATLAS/include /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../nh99 -I../tools99 -D__MSVC32__=8  -DSAFE_ALL /Ox -Ih:/vs8/vc/include -Ih:/vs8/VC/PlatformSDK/Include
-FLAGS1 = ${OPTIONS} ${PVMOPTION} /GF -I../nh99 -DWIN32 /c /EHsc -I. -D__MSVC32__=8  -DSAFE_ALL /Ox -I../df1b2-separable -I../tools99  -Ih:/vs8/vc/include -Ih:/vs8/VC/PlatformSDK/Include
+FLAGS = /nologo /W4 /wd4005 /wd4717 /wd4239 /wd4238 /wd4100 /wd4996 /wd4127 /wd4244 /wd4190 /wd4099 ${OPTIONS} ${PVMOPTION} /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../nh99 -I../tools99 -D__MSVC32__=8  -DSAFE_ALL /Ox /EHsc
+FLAGS1 = /nologo /W4 /wd4005 /wd4717 /wd4239 /wd4238 /wd4100 /wd4996 /wd4127 /wd4244 /wd4190 /wd4099 ${OPTIONS} ${PVMOPTION} /GF -I../nh99 -DWIN32 /c /EHsc -I. -D__MSVC32__=8  -DSAFE_ALL /Ox -I../df1b2-separable -I../tools99
 
 LIBNAME = ads32.lib 
 LIBRARIAN = tlib
@@ -19,12 +19,13 @@ vpath %.obj $(LIBPATH)$
 
 include objects.lst
 
-$(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)  $(OBJSPARSE)
-	rm t.rsp ; \
+OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)  $(OBJSPARSE) 
+$(LIBPATH)/$(LIBNAME) : $(OBJECTS)
+	rm -f t.rsp ; \
 	echo /OUT:$(LIBNAME)  > $(LIBPATH)/t.rsp ; \
 	cd $(LIBPATH) ; \
-	ls *.obj >> t.rsp ; \
-	lib @t.rsp ; \
+	ls $(filter-out cnorlogmix.obj ad_atlas.obj d3arr11.obj dmat_acc.obj dmat32.obj dmat8.obj dvec_acc.obj dvect21.obj f3arr12.obj f3arr18.obj imat2.obj imat1.obj fvar_m48.obj model49.obj lmat2.obj lmat1.obj i3arr1.obj fvma_acc.obj fvar_ma8.obj f3arr19.obj fvar_a52.obj ../sparse/hs_sparse.obj, $(OBJECTS) ) >> t.rsp ; \
+	lib /NOLOGO @t.rsp ; \
 	cd ..
 
 $(OBJSPARSE): %.obj: %.cpp

@@ -2,26 +2,28 @@ CC = cl
 LL = tlib
 STUBPATH = ${LIBPATH}-stub
 STUBLIBNAME = df1b2stubo.lib
-FLAGS = ${OPTIONS} ${PVMOPTION} -Ik:/temp/ATLAS/include /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../linad99 -I../tools99 -D__MSVC32__=8  -DOPT_LIB /Ox -Ih:/vs8/vc/include -Ih:/vs8/VC/PlatformSDK/Include
+FLAGS = /nologo /W4 /wd4100 /wd4996 /wd4127 /wd4190 /wd4706 /wd4701 /wd4068 /wd4244 /wd4101 /wd4189 /wd4717 ${OPTIONS} ${PVMOPTION} /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../linad99 -I../tools99 -D__MSVC32__=8  -DOPT_LIB /Ox
 LIBNAME = admod32.lib 
 LIBRARIAN = tlib
 SRCDIR =  src
 LIBDIR =  lib
 BINDIR =  bin
 INCLUDEDIR = include 
+LIBPATH = msc8olp
 
 .SUFFIXES: .obj .cpp
 vpath %.obj $(LIBPATH)$
 
 include objects.lst
 
-$(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+$(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJECTS)
 	- rm $(LIBPATH)/t.rsp ; \
 	rm $(LIBPATH)/$(LIBNAME)   ; \
 	echo /OUT:$(LIBNAME)  > $(LIBPATH)/t.rsp ; \
 	cd $(LIBPATH) ; \
 	cat t.rsp  ; \
-	ls *.obj >> t.rsp  ; \
+	ls $(filter-out pvmvar1.obj para3.obj, $(OBJECTS)) >> t.rsp  ; \
 	lib @t.rsp ; \
 	cd ..
 	
@@ -59,9 +61,7 @@ stub: df1b2stub.cpp
 	cd $(STUBPATH) ; \
 	cat t.rsp  ; \
 	ls *.obj >> t.rsp  ; \
-	lib @t.rsp 
-	-rm $(STUBPATH)/t.rsp ; \
-
+	lib /NOLOGO @t.rsp 
 
 disk: 
 	cp admodel.h $(DISKDIR)/$(INCLUDEDIR)
@@ -71,7 +71,7 @@ disk:
 	cp newredef.h $(DISKDIR)/$(INCLUDEDIR)
 	flex < tpl2cpp.lex
 	sed -f sedflex lex.yy.c > tpl2cpp.c
-	$(CC) tpl2cpp.c -I. -Ig:/vc7/include /link /libpath:g:/vc7/include 
+	$(CC) tpl2cpp.c
 	cp tpl2cpp.exe $(DISKDIR)/$(BINDIR)/
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 	cp $(STUBPATH)/$(STUBLIBNAME) $(DISKDIR)/$(LIBDIR) 

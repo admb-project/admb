@@ -8,6 +8,7 @@
 
 #include <df1b2fun.h>
 
+/*
 df1b2vector pow(const df1b2vector& _v,double x)
 {
   ADUNCONST(df1b2vector,v);
@@ -78,6 +79,7 @@ df1b2vector pow(const double v,const df1b2vector& _x)
   }
   return tmp;
 }
+*/
 
 df1b2variable operator * (const df1b2vector& _x,const df1b2vector& _y)
 {

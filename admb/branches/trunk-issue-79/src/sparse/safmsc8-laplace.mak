@@ -4,7 +4,7 @@
 CC = cl
 LL = tlib
 LIBPATH = msc8slp
-FLAGS = ${OPTIONS} ${PVMOPTION} -Ik:/temp/ATLAS/include /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../nh99 -I../linad99 -D__MSVC32__=8  -DSAFE_ALL /Ox -Ih:/vs8/vc/include -Ih:/vs8/VC/PlatformSDK/Include
+FLAGS = /W4 ${OPTIONS} ${PVMOPTION} /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../nh99 -I../linad99 -D__MSVC32__=8  -DSAFE_ALL /Ox
 LIBNAME = adt32s.lib 
 LIBRARIAN = tlib
 DISKDIR= g:/adms7lp.m32

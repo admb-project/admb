@@ -9,7 +9,7 @@
 double fmm::minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&))
 {  
   int nvar=x.size();
-  double f;
+  double f = 0;
   dvector g(1,nvar);
 #ifndef SAFE_INITIALIZE
   g.initialize();

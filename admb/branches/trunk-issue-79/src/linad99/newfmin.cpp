@@ -136,8 +136,8 @@ void print_values(const double& f, const dvector & x,const dvector& g)
 adtimer * pfmintime=0;
 extern int traceflag;
 
-#if !(defined __GNU__)
-#pragma warn -sig
+#if !(defined __GNU__) && !defined(_MSC_VER)
+  #pragma warn -sig
 #endif
 
 void fmm::fmin(BOR_CONST double& _f, const dvector & _x,BOR_CONST dvector& _g)

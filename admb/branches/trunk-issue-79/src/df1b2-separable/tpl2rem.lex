@@ -2304,8 +2304,7 @@ DATA_SECTION  {
 
 <IN_THREE_ARRAY_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) |
 <IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index},{index}\) |
-<IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index}\) |
-<IN_THREE_ARRAY_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) {
+<IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index}\) {
 
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)
     fprintf(fdat,"%s",tmp_string);

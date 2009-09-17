@@ -2,7 +2,7 @@
 CC = cl
 LL = tlib
 LIBPATH = msc8olp
-FLAGS = ${OPTIONS} ${PVMOPTION} -Ik:/temp/ATLAS/include /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../linad99 -I../nh99 -I../tools99 -D__MSVC32__=8  -DOPT_LIB /Ox -Ih:/vs8/vc/include -Ih:/vs8/VC/PlatformSDK/Include
+FLAGS = /nologo /W4 /wd4100 /wd4127 /wd4706 /wd4996 /wd4244 /wd4146 /wd4701 ${OPTIONS} ${PVMOPTION} /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../linad99 -I../nh99 -I../tools99 -D__MSVC32__=8  -DOPT_LIB /Ox
 LIBNAME = df1b2o.lib 
 LIBRARIAN = tlib
 SRCDIR =  src
@@ -15,12 +15,13 @@ vpath %.obj $(LIBPATH)$
 
 include objects.lst
 
-$(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+$(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJECTS)
 	rm $(LIBPATH)/t.rsp ; \
 	echo /OUT:$(LIBNAME)  > $(LIBPATH)/t.rsp ; \
 	cd $(LIBPATH) ; \
 	cat t.rsp  ; \
-	ls *.obj >> t.rsp  ; \
+	ls $(filter-out df1b2lp12.obj, $(OBJECTS)) >> t.rsp  ; \
 	lib @t.rsp ; \
 	cd ..
 	
@@ -54,7 +55,7 @@ all: $(LIBPATH)/$(LIBNAME) disk tpl2rem
 tpl2rem: tpl2rem.lex
 	flex < tpl2rem.lex
 	sed -f sedflex lex.yy.c > tpl2rem.c
-	cl -DWIN32 -Ig:/vc7/include tpl2rem.c -o tpl2rem.exe
+	cl /nologo /W4 /wd4700 /wd4702 /wd4018 /wd4996 /wd4131 /wd4127 /wd4244 /wd4101 /wd4189 -DWIN32 tpl2rem.c
 	cp tpl2rem.exe $(DISKDIR)/$(BINDIR)
 
 disk: 

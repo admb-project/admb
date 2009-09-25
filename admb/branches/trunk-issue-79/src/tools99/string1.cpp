@@ -94,7 +94,7 @@ adstring & adstring::operator = (_CONST adstring & t)
     s--;
     for (unsigned int i = 1; i <= t.size(); i++)
     {
-      s[i] = t[i];
+      s[i] = t(i);
     }
     s[sz + 1] = '\0';
     adstring * tmp = (adstring *) this->next;

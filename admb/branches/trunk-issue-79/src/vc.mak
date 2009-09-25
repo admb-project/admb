@@ -50,6 +50,8 @@ clean:
 	rm -vf nh99/tpl2cpp.obj
 	rm -vf nh99/tpl2cpp.lib
 	rm -vf nh99/tpl2cpp.exe
+	rm -vf nh99/tpl2cpp.c
+	rm -vf nh99/lex.yy.c
 	rm -rvf nh99/msc8slp-stub
 	rm -rvf linad99/vc7-win32olp
 	rm -rvf linad99/vc7-win32slp
@@ -57,3 +59,6 @@ clean:
 	rm -rvf df1b2-separable/vc7-win32slp
 	rm -vf df1b2-separable/tpl2rem.obj
 	rm -vf df1b2-separable/tpl2rem.exe
+	rm -vf df1b2-separable/tpl2rem.c
+	rm -vf df1b2-separable/lex.yy.c
+	rm -vf linad99/vc8-win32olp/*

@@ -5,7 +5,7 @@ LL = tlib
 LIBPATH = msc8slp
 STUBPATH = msc8slp-stub
 STUBLIBNAME = df1b2stubs.lib
-FLAGS = /nologo /W4 /wd4804 /wd4100 /wd4996 /wd4127 /wd4190 /wd4706 /wd4701 /wd4068 /wd4244 /wd4101 /wd4189 /wd4717 ${OPTIONS} ${PVMOPTION} /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../linad99 -I../tools99 -D__MSVC32__=8  -DSAFE_ALL /Ox
+FLAGS = /nologo /W4 /wd4512 /wd4511 /wd4804 /wd4100 /wd4996 /wd4127 /wd4190 /wd4706 /wd4701 /wd4068 /wd4244 /wd4101 /wd4189 /wd4717 ${OPTIONS} ${PVMOPTION} /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../linad99 -I../tools99 -D__MSVC32__=8  -DSAFE_ALL /Ox
 LIBNAME = admod32s.lib 
 LIBRARIAN = tlib
 SRCDIR =  src

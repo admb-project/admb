@@ -2,10 +2,10 @@
 #macros for making optimized library for DJGPP
 CC = gcc
 LL = tli3
-FLAGS1 = ${OPTIONS} -w -I/usr/src/ATLAS/include ${PVMOPTION} -g -DUSE_LAPLACE -fpermissive -O3 -c -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ \
+FLAGS1 = ${OPTIONS} -w ${PVMOPTION} -g -DUSE_LAPLACE -O3 -c -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ \
 -D__GNUDOS__ -DOPT_LIB -Dlinux
 
-FLAGS =  ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -w -DUSE_LAPLACE -fpermissive -O3 -c -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ \
+FLAGS =  ${OPTIONS} ${PVMOPTION} -w -DUSE_LAPLACE -O3 -c -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ \
 -D__GNUDOS__ -DOPT_LIB -Dlinux
 LIBPATH =gcc32-rh8olp
 STUBPATH =gcc32-rh8olp-stub

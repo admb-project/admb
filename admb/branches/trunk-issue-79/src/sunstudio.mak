@@ -6,7 +6,7 @@ PWD=$(shell pwd)
 
 CCVERSION=gcc411
 OSVERSION=fedorar8
-COMP=CC
+COMP="CC +w +w2 -errtags -erroff=notused,hidef,unknownpragma,doubunder,wvarhidenmem,reftotemp,wvarhidemem,badargtype2w,wunreachable,badcastw,wbadinit,unassigned"
 
 dist:
 	rm -rf ${DISK}

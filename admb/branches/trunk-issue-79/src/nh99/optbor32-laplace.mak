@@ -4,7 +4,7 @@
 #CC = bcc32i
 CC = bcc32
 LL = tlib
-FLAGS = -w -I\\Borland\\BCC55\\Include ${OPTIONS} -I../df1b2-separable -I../tools99 -I../linad99 -O2 -DUSE_LAPLACE -DOPT_LIB -DDOS386 -I. -6 -c -f
+FLAGS = -q -w -I\\Borland\\BCC55\\Include ${OPTIONS} -I../df1b2-separable -I../tools99 -I../linad99 -O2 -DUSE_LAPLACE -DOPT_LIB -DDOS386 -I. -6 -c -f
 
 #FLAGS = -H -Hc -O2 -DOPT_LIB -DDOS386 -I. -6 -c -f
 LIBPATH = bor502-win32olp

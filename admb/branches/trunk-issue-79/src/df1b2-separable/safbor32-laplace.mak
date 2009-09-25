@@ -1,7 +1,7 @@
 #macros for making optimized library for BORLAND 4.0
 CC = bcc32
 LL = tlib
-FLAGS = -w -I\\Borland\\BCC55\\Include -I..\\tools99 -I..\\nh99 -I..\\linad99 ${OPTIONS} -DUSE_LAPLACE -O2 -DSAFE_ALL -DDOS386 -I. -6 -c -f
+FLAGS = -q -w -I\\Borland\\BCC55\\Include -I..\\tools99 -I..\\nh99 -I..\\linad99 ${OPTIONS} -DUSE_LAPLACE -O2 -DSAFE_ALL -DDOS386 -I. -6 -c -f
 #FLAGS = -H -Hc -O2 -DOPT_LIB -DDOS386 -I. -5 -c -f
 LIBPATH = b32pslp
 LIBNAME = df1b2s.lib 

@@ -6,8 +6,8 @@ SHELL=sh
 CC = cl
 LL = tlib
 LIBPATH = msc8olp
-FLAGS = /nologo /W4 /wd4068 /wd4389 /wd4288 /wd4505 /wd4700 /wd4701 /wd4018 /wd4101 /wd4189 /wd4102 /wd4189 /wd4702 /wd4512 /wd4511 /wd4005 /wd4717 /wd4239 /wd4238 /wd4100 /wd4996 /wd4127 /wd4244 /wd4190 /wd4099 ${OPTIONS} ${PVMOPTION}  -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../nh99 -I../tools99 -D__MSVC32__=8  -DOPT_LIB /Ox /EHsc
-FLAGS1 = /nologo /W4 /wd4068 /wd4389 /wd4288 /wd4505 /wd4700 /wd4701 /wd4018 /wd4101 /wd4189 /wd4102 /wd4189 /wd4702 /wd4512 /wd4511 /wd4005 /wd4717 /wd4239 /wd4238 /wd4100 /wd4996 /wd4127 /wd4244 /wd4190 /wd4099 ${OPTIONS} ${PVMOPTION} /GF -I../nh99 -DWIN32 /c /EHsc -I. -D__MSVC32__=8  -DOPT_LIB /Ox -I../df1b2-separable -I../tools99
+FLAGS = /nologo /W4 /wd4258 /wd4068 /wd4389 /wd4288 /wd4505 /wd4700 /wd4701 /wd4018 /wd4101 /wd4189 /wd4102 /wd4189 /wd4702 /wd4512 /wd4511 /wd4005 /wd4717 /wd4239 /wd4238 /wd4100 /wd4996 /wd4127 /wd4244 /wd4190 /wd4099 ${OPTIONS} ${PVMOPTION}  -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../nh99 -I../tools99 -D__MSVC32__=8  -DOPT_LIB /Ox /EHsc
+FLAGS1 = /nologo /W4 /wd4258 /wd4068 /wd4389 /wd4288 /wd4505 /wd4700 /wd4701 /wd4018 /wd4101 /wd4189 /wd4102 /wd4189 /wd4702 /wd4512 /wd4511 /wd4005 /wd4717 /wd4239 /wd4238 /wd4100 /wd4996 /wd4127 /wd4244 /wd4190 /wd4099 ${OPTIONS} ${PVMOPTION} /GF -I../nh99 -DWIN32 /c /EHsc -I. -D__MSVC32__=8  -DOPT_LIB /Ox -I../df1b2-separable -I../tools99
 LIBNAME = ado32.lib 
 LIBRARIAN = tlib
 DRIVECHANGE=

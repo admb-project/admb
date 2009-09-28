@@ -4,9 +4,9 @@ CC = gcc
 SHELL=sh
 LL = tlib
 
-FLAGS = ${OPTIONS} -fno-for-scope -Wall -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../df1b2-separable -I../tools99
+FLAGS = -fdiagnostics-show-option ${OPTIONS} -fno-for-scope -Wall -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../df1b2-separable -I../tools99
 
-FLAGS1 = ${OPTIONS} -w ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../df1b2-separable -I../tools99
+FLAGS1 = -fdiagnostics-show-option ${OPTIONS} -w ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../df1b2-separable -I../tools99
 
 LIBPATH =gcc32-rh8olp
 LIBNAME = libado.a

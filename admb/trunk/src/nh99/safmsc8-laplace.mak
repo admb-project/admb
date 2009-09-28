@@ -5,7 +5,7 @@ LL = tlib
 LIBPATH = msc8slp
 STUBPATH = msc8slp-stub
 STUBLIBNAME = df1b2stubs.lib
-FLAGS = ${OPTIONS} ${PVMOPTION} -Ik:/temp/ATLAS/include /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../linad99 -I../tools99 -D__MSVC32__=8  -DSAFE_ALL /Ox -Ih:/vs8/vc/include -Ih:/vs8/VC/PlatformSDK/Include
+FLAGS = /nologo /W4 /wd4700 /wd4288 /wd4018 /wd4505 /wd4239 /wd4512 /wd4511 /wd4804 /wd4100 /wd4996 /wd4127 /wd4190 /wd4706 /wd4701 /wd4068 /wd4244 /wd4101 /wd4189 /wd4717 ${OPTIONS} ${PVMOPTION} /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../linad99 -I../tools99 -D__MSVC32__=8  -DSAFE_ALL /Ox
 LIBNAME = admod32s.lib 
 LIBRARIAN = tlib
 SRCDIR =  src
@@ -18,14 +18,14 @@ vpath %.obj $(LIBPATH)$
 
 include objects.lst
 
-$(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
-	- rm $(LIBPATH)/t.rsp ; \
-	rm $(LIBPATH)/$(LIBNAME)   ; \
+OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+$(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJECTS)
+	rm -f $(LIBPATH)/$(LIBNAME)   ; \
 	echo /OUT:$(LIBNAME)  > $(LIBPATH)/t.rsp ; \
 	cd $(LIBPATH) ; \
 	cat t.rsp  ; \
-	ls *.obj >> t.rsp  ; \
-	lib @t.rsp ; \
+	ls $(filter-out pvmvar1.obj para3.obj, $(OBJECTS)) >> t.rsp  ; \
+	lib /NOLOGO @t.rsp ; \
 	cd ..
 	
 $(OBJGUI): %.obj: %.cpp
@@ -62,8 +62,7 @@ stub: df1b2stub.cpp
 	cd $(STUBPATH) ; \
 	cat t.rsp  ; \
 	ls *.obj >> t.rsp  ; \
-	lib @t.rsp  
-	- rm $(STUBPATH)/t.rsp  
+	lib /NOLOGO @t.rsp  
 
 
 disk: 
@@ -72,7 +71,7 @@ disk:
 	cp spcomm.h $(DISKDIR)/$(INCLUDEDIR)
 	cp s.h $(DISKDIR)/$(INCLUDEDIR)
 	cp newredef.h $(DISKDIR)/$(INCLUDEDIR)
-	$(CC) tpl2cpp.c -I. -Ig:/vc7/include /link /libpath:g:/vc7/include 
+	$(CC) /nologo tpl2cpp.c -I. -Ig:/vc7/include /link /libpath:g:/vc7/include 
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 	- cp $(STUBPATH)/$(STUBLIBNAME) $(DISKDIR)/$(LIBDIR) 
 

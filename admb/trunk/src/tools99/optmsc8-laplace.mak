@@ -4,7 +4,7 @@
 CC = cl
 LL = tlib
 LIBPATH = msc8olp
-FLAGS = ${OPTIONS} ${PVMOPTION} -Ik:/temp/ATLAS/include /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../nh99 -I../linad99 -D__MSVC32__=8  -DOPT_LIB /Ox -Ih:/vs8/vc/include -Ih:/vs8/VC/PlatformSDK/Include
+FLAGS = /nologo /W4 /wd4018 /wd4189 /wd4512 /wd4511 /wd4100 /wd4244 /wd4068 /wd4996 /wd4127 /wd4706 ${OPTIONS} ${PVMOPTION} /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../nh99 -I../linad99 -D__MSVC32__=8  -DOPT_LIB /Ox
 LIBNAME = adt32.lib 
 LIBRARIAN = tlib
 SRCDIR =  src
@@ -17,11 +17,10 @@ vpath %.obj $(LIBPATH)$
 include objects.lst
 
 $(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)  
-	rm $(LIBPATH)/t.rsp ; \
 	echo /OUT:$(LIBNAME)  > $(LIBPATH)/t.rsp ; \
 	cd $(LIBPATH) ; \
 	ls *.obj >> t.rsp ; \
-	lib @t.rsp ; \
+	lib /NOLOGO @t.rsp ; \
 	cd ..
 
 $(OBJ0): %.obj: %.cpp

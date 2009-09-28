@@ -47,7 +47,7 @@ class hs_smatrix    	// matrix in compressed-column, 0 offset
     //hs_smatrix(int ,XCONST dmatrix &); 			// Initialization
     hs_smatrix(int ,XCONST dcompressed_triplet &); 			// Initialization
     hs_smatrix(int n, int nzmax); 			// Initialization
-    hs_smatrix::hs_smatrix(XCONST cs *A);		// To convert from cs-format
+    hs_smatrix(XCONST cs *A);		// To convert from cs-format
     hs_smatrix(XCONST hs_symbolic &); 			// To generate cholesky factor
     hs_smatrix(XCONST hs_smatrix &); 			// Copy XCONSTructor
     void reallocate(int _nzmax);
@@ -78,7 +78,7 @@ class dvar_hs_smatrix    	// matrix in compressed-column, 0 offset
     dvar_hs_smatrix(int ,XCONST dmatrix &); 			// Initialization
     dvar_hs_smatrix(int ,XCONST dvar_compressed_triplet &); 			// Initialization
     dvar_hs_smatrix(int n, int nzmax); 			// Initialization
-    dvar_hs_smatrix::dvar_hs_smatrix(XCONST cs *A);		// To convert from cs-format
+    dvar_hs_smatrix(XCONST cs *A);		// To convert from cs-format
     dvar_hs_smatrix(XCONST hs_symbolic &); 			// To generate cholesky factor
     dvar_hs_smatrix(XCONST dvar_hs_smatrix &); 			// Copy XCONSTructor
     void reallocate(int _nzmax);

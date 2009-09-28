@@ -92,7 +92,7 @@
     int indexmax(void) const { return int(index_max); }
     df1_two_vector(int min,int max);
     df1_two_vector(void);
-    void df1_two_vector::allocate(void);
+    void allocate(void);
     void allocate(int min,int max);
     df1_two_variable& operator () (int i) const 
     { 
@@ -140,7 +140,7 @@
     //df1_two_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df1_two_matrix();
-    df1_two_matrix::df1_two_matrix(const df1_two_matrix& m2);
+    df1_two_matrix(const df1_two_matrix& m2);
   };
 
  dmatrix value(const df1_two_matrix& v);

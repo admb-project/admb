@@ -2,10 +2,10 @@
 #macros for making optimized library for DJGPP
 CC = gcc
 LL = tli3
-FLAGS1 = ${OPTIONS} -w -I/usr/src/ATLAS/include ${PVMOPTION} -g -DUSE_LAPLACE -fpermissive -O3 -c -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ \
+FLAGS1 = ${OPTIONS} -fno-for-scope -Wall -Wno-comment -Wno-parentheses -Wno-ignored-qualifiers -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-ignored-qualifiers -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -g -DUSE_LAPLACE -fpermissive -O3 -c -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ \
 -D__GNUDOS__ -DOPT_LIB -Dlinux
 
-FLAGS =  ${OPTIONS} -I/usr/src/ATLAS/include ${PVMOPTION} -w -DUSE_LAPLACE -fpermissive -O3 -c -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ \
+FLAGS =  ${OPTIONS} -fno-for-scope -Wall -Wno-comment -Wno-parentheses -Wno-ignored-qualifiers -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-ignored-qualifiers -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -O3 -c -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ \
 -D__GNUDOS__ -DOPT_LIB -Dlinux
 LIBPATH =gcc32-rh8olp
 STUBPATH =gcc32-rh8olp-stub
@@ -56,11 +56,11 @@ df1b2stub:
 	 cd $(STUBPATH); ar -rs ${STUBNAME}  df1b2stub.o
 
 tpl2cpp.c: tpl2cpp.lex
-	flex tpl2cpp.lex
+	flex -w tpl2cpp.lex
 	sed -f sedflex lex.yy.c > tpl2cpp.c
 
 tpl2cpp: tpl2cpp.c
-	gcc tpl2cpp.c -o $@
+	gcc -Wno-format tpl2cpp.c -o $@
 
 disk: $(LIBPATH)/$(LIBNAME)  df1b2stub tpl2cpp
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR)

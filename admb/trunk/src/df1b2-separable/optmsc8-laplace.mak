@@ -22,7 +22,7 @@ $(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJECTS)
 	cd $(LIBPATH) ; \
 	cat t.rsp  ; \
 	ls $(filter-out df1b2lp12.obj, $(OBJECTS)) >> t.rsp  ; \
-	lib @t.rsp ; \
+	lib /NOLOGO /IGNORE:4006 @t.rsp ; \
 	cd ..
 	
 $(OBJGUI): %.obj: %.cpp

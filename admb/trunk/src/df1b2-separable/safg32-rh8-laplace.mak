@@ -33,7 +33,7 @@ $(filter-out df1b2f14.obj df1b2f13.obj df1b2f10.obj f1b2lapqd.obj df1b2fnl.obj d
 	mv $*.o $(LIBPATH)/$*.obj
 
 df1b2f14.obj df1b2f13.obj df1b2f10.obj f1b2lapqd.obj df1b2fnl.obj df3fun.obj dflocmin.obj df1b2lap.obj: %.obj: %.cpp
-	$(CC) $(FLAGS1)  $<
+	g++ $(FLAGS1)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 
 disk: $(LIBPATH)/$(LIBNAME) 

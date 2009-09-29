@@ -32,7 +32,7 @@ $(filter-out df1b2f14.obj df1b2f13.obj df1b2f10.obj f1b2lapqd.obj df1b2fnl.obj d
 	mv $*.o $(LIBPATH)/$*.obj
 
 df1b2f14.obj df1b2f13.obj df1b2f10.obj f1b2lapqd.obj df1b2fnl.obj df3fun.obj dflocmin.obj df1b2lap.obj: %.obj: %.cpp
-	g++ $(FLAGS1)  $<
+	$(CC) $(FLAGS)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 
 disk: $(LIBPATH)/$(LIBNAME) tpl2rem

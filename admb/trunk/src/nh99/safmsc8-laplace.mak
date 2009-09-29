@@ -71,7 +71,7 @@ disk:
 	cp spcomm.h $(DISKDIR)/$(INCLUDEDIR)
 	cp s.h $(DISKDIR)/$(INCLUDEDIR)
 	cp newredef.h $(DISKDIR)/$(INCLUDEDIR)
-	$(CC) /nologo tpl2cpp.c -I. -Ig:/vc7/include /link /libpath:g:/vc7/include 
+	$(CC) /nologo /wd4996 tpl2cpp.c
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 	- cp $(STUBPATH)/$(STUBLIBNAME) $(DISKDIR)/$(LIBDIR) 
 

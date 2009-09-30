@@ -33,11 +33,11 @@ include objects.lst
 $(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 
-hybmcmc.obj randeff.obj cnstrs.obj xmodelm3.obj xxmcmc.obj lmnewton.obj: %.obj: %.cpp
+model52.obj hybmcmc.obj randeff.obj cnstrs.obj xmodelm3.obj xxmcmc.obj lmnewton.obj: %.obj: %.cpp
 	$(CC) $(FLAGS1)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 
-$(filter-out hybmcmc.obj randeff.obj cnstrs.obj xmodelm3.obj xxmcmc.obj lmnewton.obj, $(OBJ0)): %.obj: %.cpp
+$(filter-out model52.obj hybmcmc.obj randeff.obj cnstrs.obj xmodelm3.obj xxmcmc.obj lmnewton.obj, $(OBJ0)): %.obj: %.cpp
 	$(CC) $(FLAGS)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 

@@ -27,12 +27,12 @@ include objects.lst
 $(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 
-$(filter-out df1b2f14.obj df1b2f13.obj df1b2f10.obj f1b2lapqd.obj df1b2fnl.obj df3fun.obj dflocmin.obj df1b2lap.obj, $(OBJ0)): %.obj: %.cpp
+$(filter-out df1b2ghmult.obj df1b2gh.obj  df1b2im5.obj df1b2im3f.obj df1b2lp6.obj df1b2lp8.obj df1b2f14.obj df1b2f13.obj df1b2f10.obj f1b2lapqd.obj df1b2fnl.obj df3fun.obj dflocmin.obj df1b2lap.obj, $(OBJ0)): %.obj: %.cpp
 	$(CC) $(FLAGS)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 
-df1b2f14.obj df1b2f13.obj df1b2f10.obj f1b2lapqd.obj df1b2fnl.obj df3fun.obj dflocmin.obj df1b2lap.obj: %.obj: %.cpp
-	$(CC) $(FLAGS)  $<
+df1b2ghmult.obj df1b2gh.obj df1b2im5.obj df1b2im3f.obj df1b2lp6.obj df1b2lp8.obj df1b2f14.obj df1b2f13.obj df1b2f10.obj f1b2lapqd.obj df1b2fnl.obj df3fun.obj dflocmin.obj df1b2lap.obj: %.obj: %.cpp
+	$(CC) $(FLAGS1)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 
 disk: $(LIBPATH)/$(LIBNAME) tpl2rem

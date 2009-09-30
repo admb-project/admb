@@ -2,7 +2,7 @@
 CC = gcc
 SHELL=sh
 LL = tlib
-FLAGS = ${OPTIONS} -fno-for-scope -Wall -Wno-non-virtual-dtor -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DSAFE_ALL -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../tools99 -I../df1b2-separable
+FLAGS = ${OPTIONS} -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DSAFE_ALL -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../tools99 -I../df1b2-separable
 
 LIBPATH =gcc32-rh8o
 FLAGS1 = ${OPTIONS} -w ${PVMOPTION} -g -DUSE_LAPLACE -DSAFE_ALL -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../tools99 -I../df1b2-separable
@@ -29,14 +29,14 @@ include objects.lst
 $(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPARSE) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 
-dfsdmat.obj sgradclc.obj newfmin.obj makesub.obj: %.obj: %.cpp
+ivect11.obj model49.obj multiindex.obj gradstrc.obj dvect26.obj derch.obj dvsort.obj fvar_fn2.obj lvector.obj ivect6.obj dmat42.obj imat10.obj dfsdmat.obj sgradclc.obj newfmin.obj makesub.obj: %.obj: %.cpp
 	$(CC) $(FLAGS1)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 
 $(OBJSPARSE): %.obj: %.cpp
-	$(CC) $(FLAGS) -o $(LIBPATH)/$(@F) $<
+	$(CC) $(FLAGS1) -o $(LIBPATH)/$(@F) $<
 
-$(filter-out dfsdmat.obj, $(OBJ0)): %.obj: %.cpp
+$(filter-out ivect11.obj model49.obj multiindex.obj gradstrc.obj dvect26.obj lvector.obj ivect6.obj dmat42.obj dfsdmat.obj, $(OBJ0)): %.obj: %.cpp
 	$(CC) $(FLAGS)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 
@@ -44,7 +44,7 @@ $(OBJ1): %.obj: %.cpp
 	$(CC) $(FLAGS)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 
-$(filter-out sgradclc.obj newfmin.obj, $(OBJ2)): %.obj: %.cpp
+$(filter-out fvar_fn2.obj derch.obj dvsort.obj imat10.obj sgradclc.obj newfmin.obj, $(OBJ2)): %.obj: %.cpp
 	$(CC) $(FLAGS) $<
 	mv $*.o $(LIBPATH)/$*.obj
 

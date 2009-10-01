@@ -71,7 +71,7 @@ disk:
 	cp newredef.h $(DISKDIR)/$(INCLUDEDIR)
 	flex -w tpl2cpp.lex
 	sed -f sedflex lex.yy.c > tpl2cpp.c
-	$(CC) /nologo tpl2cpp.c
+	$(CC) /nologo /wd4996 tpl2cpp.c
 	cp tpl2cpp.exe $(DISKDIR)/$(BINDIR)/
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 	cp $(STUBPATH)/$(STUBLIBNAME) $(DISKDIR)/$(LIBDIR) 

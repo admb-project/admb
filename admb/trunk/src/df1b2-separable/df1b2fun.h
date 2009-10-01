@@ -436,7 +436,7 @@ void print_derivatives(df1b2_header * px,const char * s,
     smartlist(unsigned int bufsize,const adstring& filename);
     double report_usage(void) 
     { 
-      return double(int(bptr)-int(buffer))/double(int(buffend)-int(buffer));
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
   };
     
@@ -485,7 +485,7 @@ void print_derivatives(df1b2_header * px,const char * s,
     void operator += (int);
     double report_usage(void) 
     { 
-      return double(int(bptr)-int(buffer))/double(int(buffend)-int(buffer));
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
     void write(void * p,int n);
     void write(int n);
@@ -554,7 +554,7 @@ void print_derivatives(df1b2_header * px,const char * s,
     void operator += (int);
     double report_usage(void) 
     { 
-      return double(int(bptr)-int(buffer))/double(int(buffend)-int(buffer));
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
     void write(void * p,int n);
     void write(int n);
@@ -616,7 +616,7 @@ void print_derivatives(df1b2_header * px,const char * s,
     void operator += (int);
     double report_usage(void) 
     { 
-      return double(int(bptr)-int(buffer))/double(int(buffend)-int(buffer));
+      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
     void write(void * p,int n);
     void write(int n);

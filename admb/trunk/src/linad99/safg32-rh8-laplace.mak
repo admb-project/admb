@@ -29,18 +29,18 @@ include objects.lst
 $(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPARSE) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 
-ivect11.obj model49.obj multiindex.obj gradstrc.obj dvect26.obj derch.obj dvsort.obj fvar_fn2.obj lvector.obj ivect6.obj dmat42.obj imat10.obj dfsdmat.obj sgradclc.obj newfmin.obj makesub.obj: %.obj: %.cpp
+dvec_io1.obj ddlist.obj gradchk.obj ivect11.obj model49.obj multiindex.obj gradstrc.obj dvect26.obj derch.obj dvsort.obj fvar_fn2.obj lvector.obj ivect6.obj dmat42.obj imat10.obj dfsdmat.obj sgradclc.obj newfmin.obj makesub.obj: %.obj: %.cpp
 	$(CC) $(FLAGS1)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 
 $(OBJSPARSE): %.obj: %.cpp
 	$(CC) $(FLAGS1) -o $(LIBPATH)/$(@F) $<
 
-$(filter-out ivect11.obj model49.obj multiindex.obj gradstrc.obj dvect26.obj lvector.obj ivect6.obj dmat42.obj dfsdmat.obj, $(OBJ0)): %.obj: %.cpp
+$(filter-out ddlist.obj gradchk.obj ivect11.obj model49.obj multiindex.obj gradstrc.obj dvect26.obj lvector.obj ivect6.obj dmat42.obj dfsdmat.obj, $(OBJ0)): %.obj: %.cpp
 	$(CC) $(FLAGS)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 
-$(OBJ1): %.obj: %.cpp
+$(filter-out dvec_io1.obj, $(OBJ1)): %.obj: %.cpp
 	$(CC) $(FLAGS)  $<
 	mv $*.o $(LIBPATH)/$*.obj
 

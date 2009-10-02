@@ -113,7 +113,7 @@ PROCEDURE_SECTION
     {
        // integrate the differential equations to get the predicted
        // values for the y_samples
-      int nstep((x1(run)-x0(run))/stepsize(run));
+      int nstep = (int)((x1(run)-x0(run))/stepsize(run));
       nstep++;
       double h=(x1(run)-x0(run))/nstep; // h is the stepsize for intagration
 

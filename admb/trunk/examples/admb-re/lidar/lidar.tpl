@@ -54,11 +54,11 @@ PROCEDURE_SECTION
   for(int i=1;i<=n;i++)
   {
     tmps = 0.0;
-    for(j=J1(i,1);j<=J1(i,2);j++)
+    for(j=(int)J1(i,1);j<=(int)J1(i,2);j++)
       mu(i) +=  X_B1(i,j)*u1(j);
     mu(i) *=  lambda1;
 
-    for(j=J2(i,1);j<=J2(i,2);j++)
+    for(j=(int)J2(i,1);j<=(int)J2(i,2);j++)
       tmps  +=  X_B2(i,j)*u2(j);
     sigma(i) = mfexp(lambda2*tmps);
   }

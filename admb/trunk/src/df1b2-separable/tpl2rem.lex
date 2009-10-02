@@ -4902,7 +4902,7 @@ void print_quadratic_random_effect_penalty_class(char *text)
      "  \n"
      "  for (int i=rmin;i<=rmax;i++)\n"
      "  {\n"
-     "    int row((*Lxu)(i,0));\n"
+     "    int row = (int)((*Lxu)(i,0));\n"
      "    for (int j=cmin;j<=cmax;j++)\n"
      "    {\n"
      "      LXU(j,row)+=(*Lxu)(i,j);\n"

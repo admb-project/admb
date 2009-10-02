@@ -17,7 +17,7 @@ dist:
 	cp ../scripts/sunstudio/adcomp ${DISK}/bin
 	cp ../scripts/sunstudio/adlink ${DISK}/bin
 	cp ../scripts/bash/check-expected-results ${DISK}/bin
-	cp ../scripts/bash/Makefile ${DISK}
+	cp ../scripts/sunstudio/Makefile ${DISK}
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 	rm -rf ${DISK}/examples/admb/SS3

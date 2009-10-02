@@ -125,8 +125,9 @@ void dfbltsolve(void)
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //dfm(imax,imax)=0.0;
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  dfv(1)+=dfx(imin)/m(1,1);
-  dfm(1,1)-=dfx(imin)*v(1)/(m(1,1)*m(1,1));
+  //x.elem_value(imin)=v.elem_value(imin)/m.elem_value(imin,imin);
+  dfv(imin)+=dfx(imin)/m(imin,imin);
+  dfm(imin,imin)-=dfx(imin)*v(imin)/(m(imin,imin)*m(imin,imin));
   dfx(imin)=0.0;
 
   dfm.save_dmatrix_derivatives(mpos);

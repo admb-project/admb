@@ -13,7 +13,7 @@ dvar_vector solve(BOR_CONST banded_lower_triangular_dvar_matrix& m,BOR_CONST dva
   int imin=m.indexmin();
   int imax=m.indexmax();
   dvar_vector x(imin,imax);
-  x.elem_value(imin)=v.elem_value(1)/m.elem_value(imin,imin);
+  x.elem_value(imin)=v.elem_value(imin)/m.elem_value(imin,imin);
   for (int i=imin+1;i<=imax;i++)
   {
     int jmin=admax(imin,i-bw+1);

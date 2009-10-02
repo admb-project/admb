@@ -110,7 +110,7 @@ FUNCTION calculate_biomass_and_predicted_catch
     k=binit/beta;
   }
   // only calculate these for the standard deviation report
-  if (sd_phase)
+  if (sd_phase())
   {
     k_1=k(1);
     k_last=k(nobs);

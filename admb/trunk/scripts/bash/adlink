@@ -30,7 +30,7 @@ if [[ "$1" == "--help" ]]; then help; exit; fi
 
 # Pop args until model=$1
 unset re
-s=-s
+s=
 unset shared
 df1b2lib=-ldf1b2stub
 adlib=-lado

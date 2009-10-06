@@ -116,6 +116,8 @@ dmatrix eigenvectors(_CONST dmatrix& m,BOR_CONST dvector& _diag)  //,_CONST dvec
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+    \deprecated Scheduled for replacement by 2010.
 */
 #ifdef EIGEN_VECTORS
   void tri_dagv(BOR_CONST dmatrix& _m,BOR_CONST dvector& _d,BOR_CONST dvector& _e)
@@ -246,6 +248,8 @@ double SIGNV( CGNU_DOUBLE x, double y)
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+  \deprecated Scheduled for replacement by 2010.
 */
 #ifdef EIGEN_VECTORS
   void get_eigenv(const dvector& _d,const dvector& _e,const dmatrix& _z)

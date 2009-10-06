@@ -20,6 +20,8 @@ void ludcmp(BOR_CONST dvar_matrix& a,BOR_CONST ivector& indx,_CONST prevariable&
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void ludcmp(BOR_CONST dvar_matrix& _a,BOR_CONST ivector& _indx,BOR_CONST prevariable& _d)
 {
@@ -121,6 +123,8 @@ void ludcmp(BOR_CONST dvar_matrix& _a,BOR_CONST ivector& _indx,BOR_CONST prevari
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void lubksb(dvar_matrix a,_CONST ivector& indx,dvar_vector b)
 {

@@ -46,6 +46,8 @@ sing_val_decomp::sing_val_decomp(const dmatrix& _a, const dvector & _w,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 sing_val_decomp singval_decomp(const dmatrix &_a)
 {

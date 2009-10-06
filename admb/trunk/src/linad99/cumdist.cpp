@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -67,6 +67,11 @@ double inv_cumd_norm(_CONST double& x)
   return y;
 }
 
+/** Culative normal distribution; constant objects.
+\param x Normalized "Z" score (subtact the mean and divide by the stdard deviation).
+\return Probablity that of an observation will exceed the argument.
+\ingroup PDF
+*/
 double cumd_norm(_CONST double& x)
 {
   const double b1=0.319381530;

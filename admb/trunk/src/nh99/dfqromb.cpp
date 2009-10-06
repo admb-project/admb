@@ -32,6 +32,8 @@ void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 7
+
+   \deprecated Scheduled for replacement by 2010.
 */
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
   double b,int ns)
@@ -70,6 +72,8 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 7
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,
   double b,int ns)
@@ -107,6 +111,8 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 7
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
   BOR_CONST dvariable& b,int ns)
@@ -145,6 +151,8 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 7
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),
   BOR_CONST dvariable& a,BOR_CONST dvariable& b, int ns)
@@ -178,6 +186,8 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 7
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int n)
 {

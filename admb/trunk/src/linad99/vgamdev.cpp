@@ -48,6 +48,8 @@ static double gammp(double a,double x)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 static void gcf(double& gammcf,double a,double x,double &gln)
 {
@@ -81,6 +83,8 @@ static void gcf(double& gammcf,double a,double x,double &gln)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 static void gser(double& gamser,double a,double x,double& gln)
 {

@@ -50,6 +50,8 @@ dvector eigenvalues(_CONST dmatrix& m)
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+  \deprecated Scheduled for replacement by 2010.
 */
 void tri_dag(BOR_CONST dmatrix& _m,BOR_CONST dvector& _d,BOR_CONST dvector& _e)
 {
@@ -177,6 +179,8 @@ double SIGN( CGNU_DOUBLE x, double y)
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+  \deprecated Scheduled for replacement by 2010.
 */
 void get_eigen(BOR_CONST dvector& _d,BOR_CONST dvector& _e,_CONST dmatrix& _z)
 {
@@ -257,6 +261,8 @@ void get_eigen(BOR_CONST dvector& _d,BOR_CONST dvector& _e,_CONST dmatrix& _z)
  \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+  \deprecated Scheduled for replacement by 2010.
 */
 dvector get_eigen_values(const dvector& _d,const dvector& _e)
 {
@@ -329,6 +335,8 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e)
  \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvector get_eigen_values(const dvector& _d,const dvector& _e,
   const dmatrix& _z)

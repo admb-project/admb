@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -159,6 +159,11 @@ dvariable old_cumd_norm(_CONST prevariable& x)
   }
 }
 
+/** Culative normal distribution; variable objects.
+\param x Normalized "Z" score (subtact the mean and divide by the stdard deviation).
+\return Probablity that of an observation will exceed the argument.
+\ingroup PDF
+*/
 prevariable& cumd_norm(_CONST prevariable& _x)
 {
  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)

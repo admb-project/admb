@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -79,6 +79,14 @@ void gradfree(dlink *);
  }
 
 
+    /** \ingroup misc
+    Absolute value. Simple overload of standard C library function. 
+    Not differentiable and should not be used in cases where an
+    independent variable is expected to change sign. 
+    Use \ref sfabs in such cases.
+    \param v1 Indpendent variable \f$x\f$
+    \return \f$|x|\f$
+    */
     prevariable& fabs(_CONST prevariable& v1)
     {
       double tmp;
@@ -100,12 +108,19 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+    /** \ingroup misc
+    Smooth absolute value. 
+    Uses thrid order polynomial to interpolate between += 0.001.
+    Derivatives correct for all values of indpendent variable != 0.
+    \param v1 Indpendent variable \f$x\f$
+    \return \f$|x|\f$
+    */
     prevariable& sfabs(_CONST prevariable& v1)
     {
-      #define cutoff 0.001
+      #define cutoff 0.001 //  h
       #define cutoff2 0.000001
-      double a = 2./cutoff;
-      double b = 1./cutoff2;
+      double a = 2./cutoff; // 2.0/h
+      double b = 1./cutoff2; // 1.0/(h*h)
 
       double tmp,tmp1,t2;
 

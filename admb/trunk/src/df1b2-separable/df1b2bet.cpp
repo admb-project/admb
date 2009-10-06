@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -15,6 +15,19 @@ df1b2variable betacf(_CONST df1b2variable& a,_CONST df1b2variable& b,
 //df1b2variable betai(_CONST df1b2variable& a,_CONST df1b2variable& b,
  // double x, int maxit=100);
 
+/** Incomplete beta function for df1b2variable objects.
+    \param a \f$a\f$
+    \param b \f$b\f$
+    \param x \f$x\f$
+    \param maxit Maximum number of iterations for the continued fraction approximation in betacf.
+    \return Incomplete beta function \f$I_x(a,b)\f$
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
+*/
 df1b2variable betai(_CONST df1b2variable & a,_CONST df1b2variable & b,double x,
   int maxit)
 {
@@ -30,6 +43,20 @@ df1b2variable betai(_CONST df1b2variable & a,_CONST df1b2variable & b,double x,
     return 1.0-bt*betacf(b,a,1.0-x,maxit)/b;
 }
 
+/** Incomplete beta function for df1b2variable objects.
+    Evaluates the continued fraction for imcomplete beta function.
+    \param _a \f$a\f$
+    \param _b \f$b\f$
+    \param _x \f$x\f$
+    \param MAXIT Maximum number of iterations for the continued fraction approximation in betacf.
+    \return Incomplete beta function \f$I_x(a,b)\f$
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
+*/
 df1b2variable betacf(_CONST df1b2variable& a,_CONST df1b2variable& b,
   double x, int MAXIT)
 {

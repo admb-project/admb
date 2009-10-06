@@ -34,6 +34,8 @@
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 7
+
+    \deprecated Scheduled for replacement by 2010.
 */
 double randpoisson(double xm, BOR_CONST random_number_generator& rng)
 {

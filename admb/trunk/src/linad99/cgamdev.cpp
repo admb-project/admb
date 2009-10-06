@@ -48,6 +48,8 @@ double cumd_gamma(double x,double a)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void gcf(double& gammcf,double a,double x,double &gln)
 {
@@ -81,6 +83,8 @@ void gcf(double& gammcf,double a,double x,double &gln)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void gser(double& gamser,double a,double x,double& gln)
 {

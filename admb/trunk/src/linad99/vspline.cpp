@@ -64,6 +64,8 @@ dvar_vector vcubic_spline_function::operator () (const dvar_vector& u)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 3
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
   dvariable ypn)
@@ -128,6 +130,8 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 3
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvar_vector spline(const dvector &_x,const dvar_vector&_y,double yp1,
   double ypn)
@@ -192,6 +196,8 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,double yp1,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 3
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
   double ypn)
@@ -256,6 +262,8 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 3
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvariable splint(const dvector& _xa,const dvar_vector& _ya,
   const dvar_vector& _y2a,double x)
@@ -297,6 +305,8 @@ dvariable splint(const dvector& _xa,const dvar_vector& _ya,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 3
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvariable splint(const dvector& _xa,const dvar_vector& _ya,
   const dvar_vector& _y2a,const prevariable& _x)

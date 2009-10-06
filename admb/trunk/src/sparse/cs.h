@@ -3,6 +3,8 @@
  *
  * Author: Timothy A. Davis
  * Copyright (c) Timothy A. Davis, 2006-2007
+ *
+ * License: LGPL
  */
 
 

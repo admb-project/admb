@@ -42,6 +42,8 @@ df1b2variable log_negbinomial_density(double x,const df1b2variable& _xmu,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 df3_two_variable gammln(const df3_two_variable& xx)
 {
@@ -67,6 +69,8 @@ df3_two_variable gammln(const df3_two_variable& xx)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
   const df3_two_variable& x,const df3_two_variable& _gln)
@@ -103,6 +107,8 @@ void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void gser(const df3_two_variable& _gamser,const df3_two_variable& a,
   const df3_two_variable& x,const df3_two_variable& _gln)

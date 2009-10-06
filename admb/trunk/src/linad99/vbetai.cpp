@@ -17,6 +17,8 @@
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvariable betai(_CONST dvariable a,_CONST dvariable b,_CONST dvariable x,
   int maxit)

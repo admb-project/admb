@@ -27,6 +27,8 @@ void ludcmp(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dmatrix inv(_CONST dmatrix& m1)
 {
@@ -80,6 +82,8 @@ dmatrix inv(_CONST dmatrix& m1)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dmatrix inv(_CONST dmatrix& m1,const double& _ln_det, const int& _sgn)
 {
@@ -165,6 +169,8 @@ dmatrix inv(_CONST dmatrix& m1,const double& _ln_det, const int& _sgn)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void ludcmp(BOR_CONST dmatrix& _a,BOR_CONST ivector& _indx,BOR_CONST double& _d)
 {
@@ -274,6 +280,8 @@ void ludcmp(BOR_CONST dmatrix& _a,BOR_CONST ivector& _indx,BOR_CONST double& _d)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void ludcmp_det(BOR_CONST dmatrix& _a,BOR_CONST ivector& _indx,BOR_CONST double& _d)
 {
@@ -379,6 +387,8 @@ void ludcmp_det(BOR_CONST dmatrix& _a,BOR_CONST ivector& _indx,BOR_CONST double&
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void lubksb(dmatrix a,_CONST ivector& indx,dvector b)
 {
@@ -424,6 +434,8 @@ void lubksb(dmatrix a,_CONST ivector& indx,dvector b)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 double det(_CONST dmatrix& m1)
 {
@@ -461,6 +473,8 @@ double det(_CONST dmatrix& m1)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 double ln_det(_CONST dmatrix& m1,BOR_CONST int& _sgn)
 {
@@ -519,6 +533,7 @@ double ln_det(_CONST dmatrix& m1,BOR_CONST int& _sgn)
 
 /** LU decomposition. 
     \deprecated This function may be completely unused?
+
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2

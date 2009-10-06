@@ -6,6 +6,8 @@
  *
  * This code is inspired by the CSparse package written by Timothy A. Davis.
  * It has been extensively modified for compliance with ADMB.
+ *
+ * License: LGPL
  */
 
 #include <fvar.hpp>

@@ -1,12 +1,8 @@
-/**
-  * $Id$
-  *
-  * $Rev   ::                       $: Revision of last commit
-  * $Author::                       $: Author of last commit
-  * $Date  ::                       $: Date of last commit
-  *
-  * Author: Unknown
-  */
+/*
+ * $Id$
+ *
+ * Author: David Fournier
+ */
 
 
 
@@ -49,6 +45,13 @@ df1b2vector solve(const df1b2matrix& aa,const dvector& z)
 }
 
 
+/** LU Decomposition solver.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
+*/
 df1b2vector solve(const df1b2matrix& aa,const dvector& z,
   const df1b2variable & _ln_unsigned_det,double& sign)
 {

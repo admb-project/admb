@@ -15,6 +15,8 @@ static int maxit=50;
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 4
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void gauss_hermite(BOR_CONST dvector& _x,BOR_CONST dvector& _w)
 {
@@ -89,6 +91,8 @@ void gauss_hermite(BOR_CONST dvector& _x,BOR_CONST dvector& _w)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 4
+
+    \deprecated Scheduled for replacement by 2010.
 */
 void gauss_legendre(double x1, double x2, const dvector& _x, const dvector& _w)
 {

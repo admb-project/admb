@@ -38,6 +38,8 @@ dvariable ln_det(const dvar_matrix& a)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
 {

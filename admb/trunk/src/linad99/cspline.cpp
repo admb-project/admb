@@ -40,6 +40,8 @@ dvector cubic_spline_function::operator () (_CONST dvector& u)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 3
+
+    \deprecated Scheduled for replacement by 2010.
 */
 dvector spline(BOR_CONST dvector &_x,BOR_CONST dvector&_y,double yp1,double ypn)
 {
@@ -102,6 +104,8 @@ dvector spline(BOR_CONST dvector &_x,BOR_CONST dvector&_y,double yp1,double ypn)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 3
+
+    \deprecated Scheduled for replacement by 2010.
 */
 double splint(BOR_CONST dvector& _xa,BOR_CONST dvector& _ya,BOR_CONST dvector& _y2a,double x)
 {

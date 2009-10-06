@@ -63,6 +63,7 @@ disk:
 
 clean:
 	rm -f tmpfile
+	rm -f tpl2rem.c
 	rm -f tpl2rem.obj
 	rm -f tpl2rem.exe
 	rm -f lex.yy.c

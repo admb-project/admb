@@ -71,3 +71,4 @@ disk:
 
 clean:
 	- cd $(LIBPATH) ; rm *.obj ; rm *.lib ; rm *.o ; rm *.a
+	- rm -f tpl2rem.c

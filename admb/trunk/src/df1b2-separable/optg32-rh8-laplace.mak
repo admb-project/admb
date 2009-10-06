@@ -57,7 +57,8 @@ tpl2rem: tpl2rem.c
 
 clean:
 	- cd $(LIBPATH) ; rm *.obj ; rm *.lib ; rm *.o ; rm *.a
-	- rm tpl2rem
+	- rm -f tpl2rem
+	- rm -f tpl2rem.c
 
 
 

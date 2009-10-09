@@ -301,7 +301,7 @@ PRELIMINARY_CALCS_SECTION  {
   }
                 }
 
-<DEFINE_PRELIMINARY_CALCS>^" ".* {fprintf(fall,"%s\n",yytext);}
+<DEFINE_PRELIMINARY_CALCS>^[ \t].* { fprintf(fall,"%s\n",yytext); }
 
 BETWEEN_PHASES_SECTION {
 
@@ -741,6 +741,14 @@ DATA_SECTION  {
     if (in_define_parameters) BEGIN DEFINE_PARAMETERS;
       
                   }
+
+<IN_LOCAL_CALCS>^[ \t][^ \tE].*$ {
+    fprintf(stderr,"%s","Error: In LOCAL_SECTION lines should be indented with two spaces or tabs.\n");
+    fprintf(stderr,"Line %d:\n",nline);
+    fprintf(stderr,"%s\n",yytext);
+    fprintf(stderr,"^\n");
+    exit(1);
+}
 
 <IN_LOCAL_CALCS>^[ \t][ \t].*$       {
     fprintf(fall,"%s\n",yytext);

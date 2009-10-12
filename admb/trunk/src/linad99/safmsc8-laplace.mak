@@ -24,7 +24,7 @@ $(LIBPATH)/$(LIBNAME) : $(OBJECTS)
 	rm -f t.rsp ; \
 	echo /OUT:$(LIBNAME)  > $(LIBPATH)/t.rsp ; \
 	cd $(LIBPATH) ; \
-	ls $(filter-out cnorlogmix.obj ad_atlas.obj d3arr11.obj dmat_acc.obj dmat32.obj dmat8.obj dvec_acc.obj dvect21.obj f3arr12.obj f3arr18.obj imat2.obj imat1.obj fvar_m48.obj model49.obj lmat2.obj lmat1.obj i3arr1.obj fvma_acc.obj fvar_ma8.obj f3arr19.obj fvar_a52.obj ../sparse/hs_sparse.obj, $(OBJECTS) ) >> t.rsp ; \
+	ls hs_sparse.obj $(filter-out cnorlogmix.obj ad_atlas.obj d3arr11.obj dmat_acc.obj dmat32.obj dmat8.obj dvec_acc.obj dvect21.obj f3arr12.obj f3arr18.obj imat2.obj imat1.obj fvar_m48.obj model49.obj lmat2.obj lmat1.obj i3arr1.obj fvma_acc.obj fvar_ma8.obj f3arr19.obj fvar_a52.obj ../sparse/hs_sparse.obj, $(OBJECTS) ) >> t.rsp ; \
 	lib /NOLOGO @t.rsp ; \
 	cd ..
 

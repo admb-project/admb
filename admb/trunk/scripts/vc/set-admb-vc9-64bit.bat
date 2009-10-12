@@ -5,7 +5,7 @@ REM Sets the ADMB Home directory.
 REM
 @set ADMB_HOME=%CD%
 
-call "%VCINSTALLDIR%vcvarsall.bat amd64"
+call "%VS90COMNTOOLS%..\..\vcvarsall.bat amd64"
 
 REM
 REM Adds the bin folder to ADMB_HOME to system path.

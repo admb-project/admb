@@ -32,6 +32,9 @@ linux:
 linux-verify:
 	make --directory=src --file=linux.mak verify
 
+linux-64bit:
+	make --directory=src --file=linux.mak dist-64bit
+
 dist:
 	scripts/srcCopy.sh
 

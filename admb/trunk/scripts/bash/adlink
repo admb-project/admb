@@ -43,8 +43,8 @@ while getopts "drs" A; do
 done
 shift $[OPTIND-1]
 if [[ -z $shared ]]; then out="-o $1"; else out="-o $1.so"; fi
-if [[ -n $re && $adlib=="-lado" ]]; then df1b2lib=-ldf1b2o; fi
-if [[ -n $re && $adlib=="-lads" ]]; then df1b2lib=-ldf1b2s; fi
+if [[ -n $re && "$adlib" = "-lado" ]]; then df1b2lib=-ldf1b2o; fi
+if [[ -n $re && "$adlib" = "-lads" ]]; then df1b2lib=-ldf1b2s; fi
 
 echo -e "g++ $s $shared -L$ADMB_HOME/lib $1.o $df1b2lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $out\n"
          g++ $s $shared -L$ADMB_HOME/lib $1.o $df1b2lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $out

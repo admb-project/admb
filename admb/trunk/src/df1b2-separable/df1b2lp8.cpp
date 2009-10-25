@@ -4,6 +4,7 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -447,6 +448,7 @@ void laplace_approximation_calculator::
         pfmin->AD_uf_inner();
         // allocate space for uncompressed sparse hessian information
 
+        //num_separable_calls=separable_calls_counter;
         if (triplet_information==0) 
         {
           triplet_information =new i3_array(1,separable_calls_counter);
@@ -536,7 +538,7 @@ void laplace_approximation_calculator::
       }
       if (non_block_diagonal)
       {
-        if (bw< usize/2)
+        if (bw< usize/2 && sparse_hessian_flag==0)
         {
           hesstype=3;  //banded
           if (bHess)
@@ -1023,7 +1025,7 @@ void laplace_approximation_calculator::
           Hess.initialize();
         }
         */
-        int dim= (num_local_re*(num_local_re+1))/2;
+        int dim= num_local_re*num_local_re;
         imatrix tmp(1,2,1,dim);
           
         int ii=0;
@@ -1035,6 +1037,10 @@ void laplace_approximation_calculator::
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
             int j1=list(lrej,1)-xsize;
+            if (i1<=0)
+            {
+              cout << "cant happen?" << endl;
+            }
             if (i1<=j1) 
             {
               //Hess(i1,j1)=1;
@@ -1065,6 +1071,7 @@ void laplace_approximation_calculator::
     if (num_separable_calls> derindex->indexmax())
     {
        cerr << "Need to increase the maximum number of separable calls allowed"
+            << " to at least " << num_separable_calls 
             << endl << "Current value is " <<  derindex->indexmax() << endl;
        cerr << "Use the -ndi N command line option" << endl;
        ad_exit(1);

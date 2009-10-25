@@ -38,8 +38,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
-
 #include <admodel.h>
 #if !defined(__DF1FUN__)
 #  define __DF1FUN__
@@ -55,14 +53,21 @@
     df1_one_variable& operator = (double v);
     df1_one_variable& operator += (const df1_one_variable& v);
     df1_one_variable& operator -= (const df1_one_variable& v);
+    df1_one_variable& operator -= (double);
     df1_one_variable& operator *= (const df1_one_variable& v);
     df1_one_variable& operator /= (const df1_one_variable& v);
     df1_one_variable(void);
     df1_one_variable(const df1_one_variable& );
   };
 
-  inline  double& value(const df1_one_variable& x) 
-  { return double(*x.get_u()); }
+  inline double& value(const df1_one_variable& _x)
+  {
+    ADUNCONST(df1_one_variable,x)
+    return (*x.get_u());
+  }
+
+  //inline  double& value(const df1_one_variable& x) 
+  //{ return double(*x.get_u()); }
 
   class init_df1_one_variable : public df1_one_variable
   {
@@ -177,6 +182,8 @@
   df1_one_variable operator + (const df1_one_variable& x,
     const df1_one_variable& y);
 
+  df1_one_variable operator - (const df1_one_variable& x,
+    double y);
   df1_one_variable operator - (const df1_one_variable& x,
     const df1_one_variable& y);
   df1_one_variable operator - (const df1_one_variable& x,

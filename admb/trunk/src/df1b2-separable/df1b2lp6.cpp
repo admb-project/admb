@@ -269,7 +269,7 @@ double laplace_approximation_calculator::
   }
   else
   {
-    uhat=get_uhat_lm_newton2(x,pfmin);
+    uhat=get_uhat_lm_newton(x,pfmin);
     //maxg=objective_function_value::gmax;
   }
   return fmc1.fbest;

@@ -314,6 +314,13 @@
 
 */
 
+  df3_one_variable& df3_one_variable::operator -= (double v)
+  {
+    *get_u() -= v;
+    return *this;
+  }
+
+
   df3_one_variable& df3_one_variable::operator -= (const df3_one_variable& v)
   {
     *get_u() -= *v.get_u();
@@ -384,6 +391,27 @@
     *z.get_udot3() = ::exp(*x.get_u()) * cube(*x.get_udot())
                    + 3.0 * ::exp(*x.get_u()) * *x.get_udot() * *x.get_udot2();
                    + ::exp(*x.get_u()) * *x.get_udot3();
+    return z;
+  }
+
+  df3_one_variable log(const df3_one_variable& x)
+  {
+    df3_one_variable z;
+
+    double xp=1.0/(*x.get_u());
+    double xp2=-square(xp);
+    double xp3=2.0*xp*xp2;
+
+    *z.get_u() = ::log(*x.get_u());
+
+    *z.get_udot() = xp * *x.get_udot();
+
+    *z.get_udot2() = xp2* square(*x.get_udot())
+                   + xp * *x.get_udot2();
+
+    *z.get_udot3() = xp3 * cube(*x.get_udot())
+                   + 3.0 * xp2 * *x.get_udot() * *x.get_udot2();
+                   + xp * *x.get_udot3();
     return z;
   }
 
@@ -480,42 +508,14 @@
     return x*u;
   }
 
-  df3_one_variable operator / (const double x,
+  df3_one_variable operator / (double x,
     const df3_one_variable& y)
   {
     df3_one_variable u=inv(y);
     return x*u;
   }
 
- /*
-  df3_one_variable operator / (const df3_one_variable& x,
-    const df3_one_variable& y)
-  {
-    df3_one_variable z;
-    double yinv =  1.0 / (*y.get_u());
-    double yinv2 = yinv * yinv; 
-    double yinv3 = yinv * yinv2; 
-    doubl yd = *y.get_udot();
-
-    //*z.get_u() = *x.get_u() /  *y.get_u();
-    *z.get_u() = *x.get_u() * yinv;
-
-    *z.get_udot() =  - (*x.get_u()) * yinv2 * yd
-                  + *x.get_udot() * yinv;
-
-    *z.get_udot2() = *x.get_udot2() * yinv
-                   - 2.0 * *x.get_udot() * yd * yinv2
-                   + 2.0 * *x.get_u() * yinv3  * yd *yd
-                   -  *x.get_u() * yinv2 * y.get_udot2();
-    
-    *z.get_udot3() = *x.get_udot3() * yinv
-                   + 3.0 * *x.get_udot2() * *y.get_udot()
-                   + 3.0 * *x.get_udot() * *y.get_udot2()
-                   +  *x.get_u() * *y.get_udot3();
-  }
- */
-
-  df3_one_variable operator + (const double x,const df3_one_variable& y)
+  df3_one_variable operator + (double x,const df3_one_variable& y)
   {
     df3_one_variable z;
     *z.get_u() =  x + *y.get_u();
@@ -524,6 +524,34 @@
     *z.get_udot3() = *y.get_udot3();
     return z;
   }
+
+ //  
+ //   df3_one_variable operator / (const df3_one_variable& x,
+ //     const df3_one_variable& y)
+ //   {
+ //     df3_one_variable z;
+ //     double yinv =  1.0 / (*y.get_u());
+ //     double yinv2 = yinv * yinv; 
+ //     double yinv3 = yinv * yinv2; 
+ //     doubl yd = *y.get_udot();
+ // 
+ //     //*z.get_u() = *x.get_u() /  *y.get_u();
+ //     *z.get_u() = *x.get_u() * yinv;
+ // 
+ //     *z.get_udot() =  - (*x.get_u()) * yinv2 * yd
+ //                   + *x.get_udot() * yinv;
+ // 
+ //     *z.get_udot2() = *x.get_udot2() * yinv
+ //                    - 2.0 * *x.get_udot() * yd * yinv2
+ //                    + 2.0 * *x.get_u() * yinv3  * yd *yd
+ //                    -  *x.get_u() * yinv2 * y.get_udot2();
+ //     
+ //     *z.get_udot3() = *x.get_udot3() * yinv
+ //                    + 3.0 * *x.get_udot2() * *y.get_udot()
+ //                    + 3.0 * *x.get_udot() * *y.get_udot2()
+ //                    +  *x.get_u() * *y.get_udot3();
+ //   }
+ //  
 
 
   df3_one_variable operator + (const df3_one_variable& y,
@@ -560,6 +588,17 @@
   }
 
   df3_one_variable operator - (const df3_one_variable& x,
+    double y)
+  {
+    df3_one_variable z;
+    *z.get_u() = *x.get_u() - y;
+    *z.get_udot() = *x.get_udot();
+    *z.get_udot2() = *x.get_udot2();
+    *z.get_udot3() = *x.get_udot3();
+    return z;
+  }
+
+  df3_one_variable operator - (const df3_one_variable& x,
     const df3_one_variable& y);
   df3_one_variable operator / (const df3_one_variable& x,
     const df3_one_variable& y);
@@ -570,15 +609,15 @@
   init_df3_one_variable::init_df3_one_variable(const df1b2variable& _v)
   {
     ADUNCONST(df1b2variable,v)
-    /*
-    if (ind_var != 0)
+   /*
+    if (num_ind_var>0)
     {
-      cerr << " can only have 1 independent_variable in a reverse funnel"
-           << endl;
+      cerr << "can only have 1 independent_variables in df3_one_variable"
+       " function" << endl;
       ad_exit(1);
-    }
-    */
-    ind_var=&v;
+   }
+   */
+   ind_var=&v;
     *get_u() =  *v.get_u();
     *get_udot() = 1.0;
     *get_udot2() = 0.0;

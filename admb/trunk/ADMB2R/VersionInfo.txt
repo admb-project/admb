@@ -1,0 +1,7 @@
+This version of ADMB2R is abased on a version archived on by the authors
+Thursday, 22 October 2009 at 16:37:23.
+
+The current revision information is
+$Id$
+
+For most recent version, please consult the ADMB Project at http://admb-project.org/

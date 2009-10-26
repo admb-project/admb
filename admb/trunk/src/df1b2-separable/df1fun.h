@@ -76,10 +76,7 @@
     init_df1_one_variable(const prevariable& );
     init_df1_one_variable(double );
     ~init_df1_one_variable();
-    virtual df1_one_variable& operator = (const df1_one_variable& v)
-    { 
-      cerr << "can't do this" << endl; ad_exit(1); 
-    }
+    virtual df1_one_variable& operator = (const df1_one_variable& v) = 0;
   };
 
   df1_one_variable sin(const df1_one_variable& );

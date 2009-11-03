@@ -1,4 +1,3 @@
-$Id$
 ======================================================================
 * * * Before using ADMB2R, make sure ADMB can find it. * * *
 ======================================================================
@@ -23,11 +22,8 @@ variables that begin with letter "a".
 ======================================================================
 * * * A Note for Unix and Linux Users * * * 
 ======================================================================
-Copy admb2r.cpp with the following command:
-cp admb2r.cpp $ADMB_HOME/include
-
 The ADMB2R distribution is prepared on a Windows PC. You may have to 
 change line-end characters of some files for compatibility with your
-compilers. The command 'dos2unix *' usually does the job.
+compilers.
 ======================================================================
 

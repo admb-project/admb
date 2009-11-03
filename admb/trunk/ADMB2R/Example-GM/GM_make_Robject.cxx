@@ -1,4 +1,3 @@
-// $Id$
 ///////////////////////////////////////////////////////////////////////
 // * ADMB2R statements that, when included in an  AD Model Builder
 //   program, will create an ASCII file with an R data object (R list).

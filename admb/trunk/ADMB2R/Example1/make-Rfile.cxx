@@ -1,4 +1,3 @@
-// $Id$
 //========================================================================
 // Example ADMB code calling ADMB2R functions to create a file containing
 // an R object as output from an AD Model Builder model.

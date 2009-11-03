@@ -1,4 +1,3 @@
-// $Id$
 //*****************************************************************************************
 //  test-admb2r.tpl     August, 2006
 //  Simple AD Model Builder template (program) to demonstrate capabilities of ADMB2R.

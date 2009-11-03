@@ -1,4 +1,3 @@
-# $Id$
 ################################################################################
 #   Sample R program for testing and demonstrating the "FishGraph" collection
 #   of R graphics functions for analysis of stock-assessment results.

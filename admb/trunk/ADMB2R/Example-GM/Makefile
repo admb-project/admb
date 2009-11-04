@@ -2,7 +2,7 @@
 
 gm_menhaden:
 	cp -vf ../admb2r.cpp .
-	dos2unix $@.tpl
-	dos2unix $@.dat
+	#dos2unix $@.tpl
+	#dos2unix $@.dat
 	admb -s $@
 	./$@

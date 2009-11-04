@@ -1,8 +1,11 @@
-.PHONY: rs196
+.PHONY: rs196 mingw
 
 rs196:
 	cp -vf ../admb2r.cpp .
-	#dos2unix $@.dat
-	#dos2unix $@.tpl
 	admb -s $@ 
 	-./$@
+
+mingw:
+	cp -vf ../admb2r.cpp .
+	admb -s rs196
+	-./rs196.exe

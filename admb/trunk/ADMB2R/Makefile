@@ -11,4 +11,8 @@ vc:
 bcc:
 	cd Example1 && make
 	cd Example2 && make
-	cd Example-GM && make
+
+mingw:
+	make --directory Example1 mingw
+	make --directory Example2 mingw
+	make --directory Example-GM mingw

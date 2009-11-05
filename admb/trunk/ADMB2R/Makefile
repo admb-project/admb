@@ -4,13 +4,14 @@ all:
 	make --directory Example-GM
 
 vc:
-	cd Example1 && nmake
-	cd Example2 && nmake
-	cd Example-GM && nmake
+	cd Example1 && nmake vc
+	cd Example2 && nmake vc
+	cd Example-GM && nmake vc
 
 bcc:
-	cd Example1 && make
-	cd Example2 && make
+	cd Example1 && make bcc
+	cd Example2 && make bcc
+	cd Example-GM && make bcc
 
 mingw:
 	make --directory Example1 mingw

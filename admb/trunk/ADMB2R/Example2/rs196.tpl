@@ -1741,7 +1741,7 @@ FUNCTION get_msy
 
   msy_out=max(L_eq);
 
-  for(ff=1; ff<=n_iter_msy; ff++)
+  for(int ff=1; ff<=n_iter_msy; ff++)
   {
    if(L_eq(ff) == msy_out)
       {

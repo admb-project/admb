@@ -117,7 +117,7 @@ open_r_file(adprogram_name + ".rdat", 6, -999);
 
     wrt_r_comment("No names, NA matrix");
 
-    for ( i = 1; i <= nyrs; i++) {
+    for (int i = 1; i <= nyrs; i++) {
         for (int j = 1; j<= nages; j++){
             NA[i][j] = 0;
         }

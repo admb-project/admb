@@ -93,15 +93,15 @@ FUNCTION get_numbers_at_age
   {
     N(1,j)=mfexp(log_initpop(nyrs+j-1));
   }
-  for (i=1;i<nyrs;i++)
+  for (int i=1;i<nyrs;i++)
   {
-    for (j=1;j<nages;j++)
+    for (int j=1;j<nages;j++)
     {
       N(i+1,j+1)=N(i,j)*S(i,j);
     }
   }
   // calculated predicted numbers at age for next year
-  for (j=1;j<nages;j++)
+  for (int j=1;j<nages;j++)
   {
     predicted_N(j+1)=N(nyrs,j)*S(nyrs,j);
     ratio_N(j+1)=predicted_N(j+1)/N(1,j+1);

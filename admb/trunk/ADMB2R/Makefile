@@ -18,5 +18,4 @@ vc:
 
 mingw:
 	make --directory Example1 mingw
-	@REM make --directory Example2 mingw
 	make --directory Example-GM mingw

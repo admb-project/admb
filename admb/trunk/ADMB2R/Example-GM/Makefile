@@ -8,7 +8,7 @@ gm_menhaden:
 mingw:
 	cp -vf ../admb2r.cpp .
 	admb -s gm_menhaden
-	./gm_menhaden.exe
+	gm_menhaden.exe
 
 bcc:
 	cp -vf ../admb2r.cpp .

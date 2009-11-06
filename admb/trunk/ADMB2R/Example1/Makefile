@@ -8,7 +8,7 @@ testadmb2r:
 mingw:
 	cp -vf ../admb2r.cpp .
 	admb -s testadmb2r
-	./testadmb2r.exe
+	testadmb2r.exe
 
 bcc:
 	cp -vf ../admb2r.cpp .

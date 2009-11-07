@@ -1,5 +1,8 @@
 .PHONY=dist
 
+ADMB_VERSION=9.0.x
+export ADMB_VERSION
+
 all: 
 
 mingw:

@@ -153,8 +153,11 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       }
       int n=i-1;
       adprogram_name=adprogram_name(1,n);
-      (*ad_printf)( " AD Model Builder version 9.0.x\n"
-                    "Copyright (c) 2008, 2009 Regents of the University of California\n");
+
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x) 
+      (*ad_printf)( " AD Model Builder version " TOSTRING(ADMB_VERSION)
+                   "\nCopyright (c) 2008, 2009 Regents of the University of California\n");
       (*ad_printf)(" USAGE--%s options\n",(char*)(adprogram_name));
       (*ad_printf)(" where an option consists of -option_tag followed by arguments if necessary\n");
       (*ad_printf)( " -ainp NAME      change default ascii input parameter file name to NAME\n");

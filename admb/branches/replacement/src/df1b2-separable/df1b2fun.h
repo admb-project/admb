@@ -197,6 +197,7 @@ void read_pass1_2(void);
 
   class df3_one_variable;
   class df3_two_variable;
+  class df3_three_variable;
   class random_effects_bounded_vector_info;
 
   class df1b2variable : public df1b2_header
@@ -268,6 +269,7 @@ void read_pass1_2(void);
   
     df1b2variable& operator = (const df3_one_variable& v);
     df1b2variable& operator = (const df3_two_variable& v);
+    df1b2variable& operator = (const df3_three_variable& v);
     df1b2variable& operator = (const df1b2variable& v);
     df1b2variable& operator += (const df1b2variable& v);
     df1b2variable& operator -= (const df1b2variable& v);
@@ -673,6 +675,8 @@ void print_derivatives(df1b2_header * px,const char * s,
 
     int write_pass1_prod(const df1b2variable * px, const df1b2variable * py,
       df1b2variable * pz);
+    int write_pass1_minuscv(const df1b2variable * py,df1b2variable * pz);
+    int write_pass1_minusvc(const df1b2variable * py,df1b2variable * pz);
     int write_pass1_minus(const df1b2variable * px, const df1b2variable * py,
       df1b2variable * pz);
     int write_pass1c(const df1b2variable * px, double y, df1b2variable * pz,
@@ -756,6 +760,7 @@ df1b2variable mfexp(const df1b2variable& x,double b);
 // ************************************************************
     
 df1b2variable fabs(const df1b2variable& x);
+df1b2variable sfabs(const df1b2variable& x);
 df1b2variable pow(const df1b2variable& x,const df1b2variable& y);
 df1b2variable pow(const df1b2variable& x,double y);
 df1b2variable mypow(const df1b2variable& x,double y);
@@ -778,6 +783,7 @@ df1b2variable mult_add(const df1b2variable& x,const df1b2variable& y);
 df1b2variable operator + (const df1b2variable& x,const df1b2variable& y);
 df1b2variable div(const df1b2variable& x,const df1b2variable& y);
 df1b2variable operator + (double x,const df1b2variable& y);
+df1b2variable operator + (const df1b2variable& x,double y);
 
 inline df1b2variable operator + (const df1b2variable& x,double y)
 {
@@ -788,8 +794,10 @@ df1b2variable operator - (const df1b2variable& x,const df1b2variable& y);
 //df1b2variable operator - (double x,const df1b2variable& y);
 df1b2variable operator / (const df1b2variable& x,const df1b2variable& y);
 df1b2variable operator / (const df1b2variable& x,double y);
+df1b2variable operator - (const df1b2variable& x,double y);
 df1b2variable operator / (double x,const df1b2variable& y);
 
+df1b2variable lgamma2(const df1b2variable& _x);  // new log gamma using forward AD
 df1b2variable gammln(const df1b2variable& _xx);
 df1b2variable log_comb(_CONST df1b2variable& n,double k);
 df1b2variable log_comb(_CONST df1b2variable& n,_CONST df1b2variable& k);

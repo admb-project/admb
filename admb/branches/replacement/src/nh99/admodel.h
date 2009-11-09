@@ -40,7 +40,6 @@
  */
 
 
-//char cc[40]={"2008 Regents of the University of California"};
 #define USE_SHARE_FLAGS 
 //#define DO_PROFILE
 #define __MINI_MAX__
@@ -1435,6 +1434,7 @@ typedef void (model_parameters::*PMFVIV4) (const dvar_vector&,int n,
 class function_minimizer
 {
 public:
+  static int bad_step_flag;
   static int likeprof_flag;
   static int first_hessian_flag;
   static int test_trust_flag;
@@ -1548,7 +1548,9 @@ public:
   void pvm_master_function_evaluation(double& f,
     independent_variables& x,const dvector & g,int nvar);
   dmatrix dep_hess_routine(BOR_CONST dvariable& dep);
+  void top_mcmc_routine(int,int,double,int);
   void mcmc_routine(int,int,double,int);
+  void sgibbs_mcmc_routine(int,int,double,int);
   void hybrid_mcmc_routine(int,int,double,int);
   double pvm_master_get_monte_carlo_value(int nvar, 
     const dvector& x);
@@ -1687,6 +1689,10 @@ public:
   friend class inequality_constraint_vector;
   void quasi_newton_block(int nvar,int crit,independent_variables& x,
     const dvector& g,const double& f);
+  void limited_memory_quasi_newton_block(int nvar,int _crit,
+    independent_variables& x,const dvector& _g,const double& _f,
+    int nsteps);
+
 #if defined(USE_LAPLACE)
   void function_evaluation_block_pvm_slave_random_effects(int nvar,int _crit,
     independent_variables& x,const dvector& g,const double& f);

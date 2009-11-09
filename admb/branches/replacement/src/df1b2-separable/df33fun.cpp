@@ -4,9 +4,6 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-
-
-
 #include <df1b2fun.h>
 #include <df33fun.h>
   df1b2variable * df3_three_variable::ind_var[3];
@@ -29,6 +26,67 @@
    }
    v = m2.v;
  }
+
+df1b2variable& df1b2variable::operator = (const df3_three_variable& v)
+{
+  df1b2variable * px=df3_three_variable::ind_var[0];
+  df1b2variable * py=df3_three_variable::ind_var[1];
+  df1b2variable * pv=df3_three_variable::ind_var[2];
+  df3_three_variable::num_ind_var=0;
+  df3_three_variable::ind_var[0]=0;
+  df3_three_variable::ind_var[1]=0;
+  df3_three_variable::ind_var[2]=0;
+  //df1b2variable * px=0;
+  double  dfx= *v.get_u_x();
+  double  dfy= *v.get_u_y();
+  double  dfz= *v.get_u_z();
+  double * xd=px->get_u_dot();
+  double * yd=py->get_u_dot();
+  double * vd=pv->get_u_dot();
+  double * zd=get_u_dot();
+  *get_u()=*v.get_u();
+  for (int i=0;i<df1b2variable::nvar;i++)
+  {
+    *zd++ = dfx * *xd++ + dfy * *yd++ + dfz * *vd++;
+  }
+      
+ /*
+  cout << *v.get_u()  << " ";
+  cout << *v.get_udot()  << " ";
+  cout << *v.get_udot2()  << " ";
+  cout << *v.get_udot3()  << endl;
+  */
+  f1b2gradlist->write_pass1(px,
+    py,
+    pv,
+    this,
+    *v.get_u_x(),
+    *v.get_u_y(),
+    *v.get_u_z(),
+    *v.get_u_xx(),
+    *v.get_u_xy(),
+    *v.get_u_xz(),
+    *v.get_u_yy(),
+    *v.get_u_yz(),
+    *v.get_u_zz(),
+    *v.get_u_xxx(),
+    *v.get_u_xxy(),
+    *v.get_u_xxz(),
+    *v.get_u_xyy(),
+    *v.get_u_xyz(),
+    *v.get_u_xzz(),
+    *v.get_u_yyy(),
+    *v.get_u_yyz(),
+    *v.get_u_yzz(),
+    *v.get_u_zzz());
+  return *this;
+}
+
+void df3_three_variable::initialize(void) 
+{
+  for (int i=0;i<20;i++)
+    v[i]=0.0;
+}
 
  df3_three_vector::~df3_three_vector()
  {
@@ -233,6 +291,12 @@
     return *this;
   }
 
+  df3_three_variable& df3_three_variable::operator -= (double v)
+  {
+    *get_u() -= v;
+    return *this;
+  }
+
   df3_three_variable operator - (const df3_three_variable& v)
   {
     df3_three_variable z;
@@ -286,12 +350,45 @@
     return *this;
   }
 
+  df3_three_variable& df3_three_variable::operator *= (double v)
+  {
+    *get_u() *= v;
+    *get_u_x() *= v;
+    *get_u_y() *= v;
+    *get_u_z() *= v;
+    *get_u_xx() *= v;
+    *get_u_xy() *= v;
+    *get_u_xz() *= v;
+    *get_u_yy() *= v;
+    *get_u_yz() *= v;
+    *get_u_zz() *= v;
+    *get_u_xxx() *= v;
+    *get_u_xxy() *= v;
+    *get_u_xxz() *= v;
+    *get_u_xyy() *= v;
+    *get_u_xyz() *= v;
+    *get_u_xzz() *= v;
+    *get_u_yyy() *= v;
+    *get_u_yyz() *= v;
+    *get_u_yzz() *= v;
+    *get_u_zzz() *= v;
+    return *this;
+  }
+
   df3_three_variable& df3_three_variable::operator *= (const df3_three_variable& v)
   {
     df3_three_variable x=*this * v;
     *this=x;
     return *this;
   }
+
+  df3_three_variable& df3_three_variable::operator /= (const df3_three_variable& v)
+  {
+    df3_three_variable x=*this / v;
+    *this=x;
+    return *this;
+  }
+
 
   df3_three_variable& df3_three_variable::operator += (double v)
   {
@@ -652,6 +749,15 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+  df3_three_variable pow(const df3_three_variable& x,
+    const df3_three_variable& y)
+  {
+    df3_three_variable z;
+    z=exp(y*log(x));
+    return z;
+  }
+
+
   df3_three_variable square(const df3_three_variable& x)
   {
     df3_three_variable z;
@@ -664,6 +770,7 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     set_derivatives(z,x,u,zp,zp2,zp3);
     return z;
   }
+
 
   df3_three_variable tan(const df3_three_variable& x)
   {
@@ -838,6 +945,59 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     *z.get_u_yyz() = x * *v.get_u_yyz();
     *z.get_u_yzz() = x * *v.get_u_yzz();
     *z.get_u_zzz() = x * *v.get_u_zzz();
+
+    return z;
+  }
+
+  df3_three_variable fabs(const df3_three_variable& v)
+  {
+    df3_three_variable z;
+    if (value(v)>=0)
+    {
+      *z.get_u() = *v.get_u();
+      *z.get_u_x() = *v.get_u_x();
+      *z.get_u_y() = *v.get_u_y();
+      *z.get_u_z() = *v.get_u_z();
+      *z.get_u_xx() = *v.get_u_xx();
+      *z.get_u_xy() = *v.get_u_xy();
+      *z.get_u_xz() = *v.get_u_xz();
+      *z.get_u_yy() = *v.get_u_yy();
+      *z.get_u_yz() = *v.get_u_yz();
+      *z.get_u_zz() = *v.get_u_zz();
+      *z.get_u_xxx() = *v.get_u_xxx();
+      *z.get_u_xxy() = *v.get_u_xxy();
+      *z.get_u_xxz() = *v.get_u_xxz();
+      *z.get_u_xyy() = *v.get_u_xyy();
+      *z.get_u_xyz() = *v.get_u_xyz();
+      *z.get_u_xzz() = *v.get_u_xzz();
+      *z.get_u_yyy() = *v.get_u_yyy();
+      *z.get_u_yyz() = *v.get_u_yyz();
+      *z.get_u_yzz() = *v.get_u_yzz();
+      *z.get_u_zzz() = *v.get_u_zzz();
+    }
+    else
+    {
+      *z.get_u() = -*v.get_u();
+      *z.get_u_x() = -*v.get_u_x();
+      *z.get_u_y() = -*v.get_u_y();
+      *z.get_u_z() = -*v.get_u_z();
+      *z.get_u_xx() = -*v.get_u_xx();
+      *z.get_u_xy() = -*v.get_u_xy();
+      *z.get_u_xz() = -*v.get_u_xz();
+      *z.get_u_yy() = -*v.get_u_yy();
+      *z.get_u_yz() = -*v.get_u_yz();
+      *z.get_u_zz() = -*v.get_u_zz();
+      *z.get_u_xxx() = -*v.get_u_xxx();
+      *z.get_u_xxy() = -*v.get_u_xxy();
+      *z.get_u_xxz() = -*v.get_u_xxz();
+      *z.get_u_xyy() = -*v.get_u_xyy();
+      *z.get_u_xyz() = -*v.get_u_xyz();
+      *z.get_u_xzz() = -*v.get_u_xzz();
+      *z.get_u_yyy() = -*v.get_u_yyy();
+      *z.get_u_yyz() = -*v.get_u_yyz();
+      *z.get_u_yzz() = -*v.get_u_yzz();
+      *z.get_u_zzz() = -*v.get_u_zzz();
+    }
 
     return z;
   }

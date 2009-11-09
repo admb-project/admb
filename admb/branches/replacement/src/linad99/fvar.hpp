@@ -1776,6 +1776,8 @@ private:
   dvar_matrix& operator << (BOR_CONST dvar_matrix& v1,_CONST dvar_matrix& v2);
 
   class df1_one_variable;
+  class df1_two_variable;
+  class df1_three_variable;
 
   class dvariable : public prevariable
   {
@@ -1788,6 +1790,8 @@ private:
      dvariable(_CONST prevariable&);
      dvariable& operator=(_CONST prevariable&);
      dvariable& operator = (const df1_one_variable& v);
+     dvariable& operator = (const df1_two_variable& v);
+     dvariable& operator = (const df1_three_variable& v);
      dvariable& operator=( double);
 #if defined(USE_DDOUBLE)
 #  undef double

@@ -90,11 +90,14 @@ class df1b2variable;
     df3_three_variable& operator = (double v);
     df3_three_variable& operator += (const df3_three_variable& v);
     df3_three_variable& operator *= (const df3_three_variable& v);
+    df3_three_variable& operator *= (double v);
     df3_three_variable& operator += (double v);
     df3_three_variable& operator -= (const df3_three_variable& v);
+    df3_three_variable& operator -= (double v);
     df3_three_variable& operator /= (const df3_three_variable& v);
     df3_three_variable(void);
     df3_three_variable(const df3_three_variable& );
+    void initialize(void);
   };
 
   inline  double value(const df3_three_variable& x) { return double(*x.get_u()); }
@@ -201,6 +204,7 @@ class df1b2variable;
 
 */
 
+  df3_three_variable fabs(const df3_three_variable& x);
   df3_three_variable sin(const df3_three_variable& x);
   df3_three_variable sqrt(const df3_three_variable& x);
   df3_three_variable atan(const df3_three_variable& x);

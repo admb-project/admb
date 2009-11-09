@@ -3,6 +3,8 @@ OBJSPARSE = \
 OBJ0 = \
 fmmtr1.obj \
 tsdfpool.obj \
+df13fun.obj \
+df13incbet.obj \
 multiindex.obj \
 indextyp.obj \
 logit.obj \
@@ -477,10 +479,6 @@ f4arr.obj
 OBJ3= \
 mfexp.obj \
 orthpoly.obj \
-cbetacf.obj \
-vbetacf.obj \
-vbetai.obj \
-cbetai.obj \
 makesub.obj \
 fvar_a49.obj \
 adpvm2.obj 
@@ -488,3 +486,8 @@ OBJ4= \
 manip.obj \
 conjprod.obj 
 #fmmqmin.obj   
+UNUSED= \
+cbetacf.obj \
+vbetacf.obj \
+vbetai.obj \
+cbetai.obj \

@@ -47,7 +47,7 @@ verify:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); cd ${DISK}; make all
 
 check-admb2r:
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make --directory ../ADMB2R
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make --directory ../ADMB2R gcc
 
 clean:
 	@rm -rf linad99/SunWS_cache

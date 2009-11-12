@@ -228,7 +228,7 @@ void read_pass2_3_minusvc(void)
   list.restoreposition(); // save pointer to beginning of record;
   int i;
   
-  *(py->u_tilde)-=*(pz->u_tilde);
+  *(py->u_tilde)+=*(pz->u_tilde);
   for (i=0;i<nvar;i++)
   {
     py->u_dot_tilde[i]+=pz->u_dot_tilde[i];

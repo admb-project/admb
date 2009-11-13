@@ -200,10 +200,10 @@ diet:
 	examples/admb-re/skewed/$@
 
 diet_sk:
-	cd examples/admb-re/$@ && admb.bat -r $@
-	examples/admb-re/$@/$@
-	cd examples/admb-re/$@ && admb.bat -r -s $@
-	examples/admb-re/$@/$@
+	cd examples/admb-re/skewed && admb.bat -r $@
+	examples/admb-re/skewed/$@
+	cd examples/admb-re/skewed && admb.bat -r -s $@
+	examples/admb-re/skewed/$@
 
 socatt:
 	cd examples/admb-re/$@ && admb.bat -r $@
@@ -223,9 +223,9 @@ union:
 
 weights: binomial binomial_w2
 binomial:
-	cd examples/admb-re/$@ && admb.bat -r $@
+	cd examples/admb-re/weights && admb.bat -r $@
 	examples/admb-re/weights/$@
-	cd examples/admb-re/$@ && admb.bat -r -s $@
+	cd examples/admb-re/weights && admb.bat -r -s $@
 	examples/admb-re/weights/$@
 
 binomial_w2:

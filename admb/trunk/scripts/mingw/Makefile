@@ -181,10 +181,10 @@ pheno:
 	examples/admb-re/$@/$@
 
 polio:
-	cd examples/admb-re/$@ && admb.bat -r $@
-	examples/admb-re/$@/$@
-	cd examples/admb-re/$@ && admb.bat -r -s $@
-	examples/admb-re/$@/$@
+	@##REM cd examples/admb-re/$@ && admb.bat -r $@
+	@##REM examples/admb-re/$@/$@
+	@##REM cd examples/admb-re/$@ && admb.bat -r -s $@
+	@##REM examples/admb-re/$@/$@
 
 sdv:
 	cd examples/admb-re/$@ && admb.bat -r $@

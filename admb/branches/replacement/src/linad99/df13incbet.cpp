@@ -349,9 +349,7 @@ static double C[] = {
 
 /* log( sqrt( 2*pi ) ) */
 static double LS2PI = 0.91893853320467274178;
-static double MAXLGM = 2.556348e305;
 
-/* Logarithm of gamma function */
 
 int operator <(const df1_three_variable & x, double n)
 {
@@ -394,6 +392,8 @@ int operator >(const df1_three_variable & x, const df1_three_variable & n)
 }
 
 
+static double MAXLGM = 2.556348e305;
+/* Logarithm of gamma function */
 df1_three_variable lgam(const df1_three_variable & _x)
 {
    df1_three_variable x, p, q, u, w, z, p1;
@@ -642,7 +642,14 @@ static df1_three_variable incbet(const df1_three_variable & _aa,
 				 const df1_three_variable & _bb,
 				 const df1_three_variable & _xx);
 
-// this is the wrapper to call the main inbet function
+/** Incomplete beta function; variable objects.
+  Wrapper to call the main incbet function
+    \param _a Parameter \f$a\f$ of incomplete beta function; \f$a>0\f$
+    \param _b Parameter \f$b\f$ of incomplete beta function; \f$b>0\f$
+    \param _x Parameter \f$x\f$ of incomplete beta function; \f$0<x\le 1\f$
+    \return Incomplete beta function \f$B_x(a,b) = \int_0^x t^{a-1}(1-t)^{b-1} dt\f$
+    \ingroup PDF
+*/
 dvariable incbet(const dvariable & _a, const dvariable & _b,
 		 const dvariable & _x)
 {
@@ -1039,6 +1046,19 @@ static df1_three_variable incbd(const df1_three_variable & _a,
 				const df1_three_variable & _b,
 				const df1_three_variable & _x);
 
+/** Incomplete beta function; variable objects.
+  Computes first derivative with respect to three arguments using forward 
+  mode automatic differentiation.
+  Based on code from Cephes C and C++ language special functions math library
+  and adapeted for automatic differentiation.
+  http://www.moshier.net/#Cephes or
+  http://www.netlib.org/cephes/
+    \param _aa Parameter \f$a\f$ of incomplete beta function; \f$a>0\f$
+    \param _bb Parameter \f$b\f$ of incomplete beta function; \f$b>0\f$
+    \param _xx Parameter \f$x\f$ of incomplete beta function; \f$0<x\le 1\f$
+    \return Incomplete beta function \f$B_x(a,b) = \int_0^x t^{a-1}(1-t)^{b-1} dt\f$
+    \ingroup PDF
+*/
 static df1_three_variable incbet(const df1_three_variable & _aa,
 				 const df1_three_variable & _bb,
 				 const df1_three_variable & _xx)
@@ -1158,9 +1178,9 @@ static df1_three_variable incbcf(const df1_three_variable & _a,
 				 const df1_three_variable & _x)
 {
    ADUNCONST(df1_three_variable, a)
-      ADUNCONST(df1_three_variable, b)
-      ADUNCONST(df1_three_variable, x)
-      df1_three_variable xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
+   ADUNCONST(df1_three_variable, b)
+   ADUNCONST(df1_three_variable, x)
+   df1_three_variable xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
    df1_three_variable k1, k2, k3, k4, k5, k6, k7, k8;
    df1_three_variable r, t, ans, thresh;
    int n;
@@ -1421,5 +1441,3 @@ static df1_three_variable df3_get_values(double a, double b, double x)
    df1_three_variable vy = incbet(va, vb, vx);
    return vy;
 }
-
-

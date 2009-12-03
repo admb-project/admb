@@ -736,7 +736,7 @@ void adwait(double sec){;}
       double dscale=1.0;
       if (nopt)
       {
-        nmcmc=atoi(ad_comm::argv[on+1]);
+        nmcmc=(int)atof(ad_comm::argv[on+1]);
         if (nmcmc <=0)
         {
           cerr << " Invalid option following command line option -mcmc -- "
@@ -763,7 +763,7 @@ void adwait(double sec){;}
           iseed0=atoi(ad_comm::argv[on+1]);
           if (iseed0 <=0)
           {
-            cerr << " Invalid option following command line option -mcmc -- "
+            cerr << " Invalid option following command line option -mcseed -- "
               << endl << " ignored" << endl;
             iseed0=0;
           }
@@ -823,7 +823,7 @@ void adwait(double sec){;}
       double dscale=1.0;
       if (nopt)
       {
-        nmcmc=atoi(ad_comm::argv[on+1]);
+        nmcmc=(int)atof(ad_comm::argv[on+1]);
         if (nmcmc <=0)
         {
           cerr << " Invalid option following command line option -mcmc -- "
@@ -850,7 +850,7 @@ void adwait(double sec){;}
           iseed0=atoi(ad_comm::argv[on+1]);
           if (iseed0 <=0)
           {
-            cerr << " Invalid option following command line option -mcmc -- "
+            cerr << " Invalid option following command line option -mcseed -- "
               << endl << " ignored" << endl;
             iseed0=0;
           }

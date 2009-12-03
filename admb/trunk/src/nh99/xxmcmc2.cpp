@@ -450,7 +450,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
 
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)
       {
-        int jj=atoi(ad_comm::argv[on+1]);
+        int jj=(int)atof(ad_comm::argv[on+1]);
         if (jj <=0)
         {
           cerr << " Invalid option following command line option -mcsave -- " 

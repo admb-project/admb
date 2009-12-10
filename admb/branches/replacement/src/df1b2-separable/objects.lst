@@ -15,7 +15,6 @@ df1b2normgam.obj \
 dflocmin.obj \
 df1b2tweak.obj \
 df1b2chkder.obj \
-df3gammp.obj \
 gammdev.obj \
 df1b2cum.obj \
 df32fun.obj \

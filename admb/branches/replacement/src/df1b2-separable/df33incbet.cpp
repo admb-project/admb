@@ -14,6 +14,48 @@
 #include <df1b2fun.h>
 #include <df33fun.h>
 
+// operators that belong in df33fun
+int operator <(const df3_three_variable & x, double n)
+{
+   return value(x) < n;
+}
+
+int operator >(const df3_three_variable & x, double n)
+{
+   return value(x) > n;
+}
+
+int operator >=(const df3_three_variable & x, double n)
+{
+   return value(x) >= n;
+}
+
+int operator ==(const df3_three_variable & x, const df3_three_variable & n)
+{
+   return value(x) == value(n);
+}
+
+int operator ==(const df3_three_variable & x, double n)
+{
+   return value(x) == n;
+}
+
+int operator ==(double x, const df3_three_variable & n)
+{
+   return x == value(n);
+}
+
+int operator <(const df3_three_variable & x, const df3_three_variable & n)
+{
+   return value(x) < value(n);
+}
+
+int operator >(const df3_three_variable & x, const df3_three_variable & n)
+{
+   return value(x) > value(n);
+}
+
+/*
 static int mtherr(char *s, int n);
 static df3_three_variable igam(const df3_three_variable & a,
 			       const df3_three_variable & x);
@@ -23,6 +65,7 @@ static double MINLOG = -200;
 static double big = 4.503599627370496e15;
 static double biginv = 2.22044604925031308085e-16;
 static double MACHEP = 2.22045e-16;
+*/
 /*							gamma.c
  *
  *	Gamma function
@@ -122,7 +165,7 @@ static double MACHEP = 2.22045e-16;
 
 /*							gamma.c	*/
 /*	gamma function	*/
-
+/*
 static double P[] = {
    1.60119522476751861407E-4,
    1.19135147006586384913E-3,
@@ -147,8 +190,7 @@ static double MAXGAM = 171.624376956302725;
 static double LOGPI = 1.14472988584940017414;
 static double PI = 3.14159265358979323844;
 
-
-/* Stirling's formula for the gamma function */
+// Stirling's formula for the gamma function
 static double STIR[5] = {
    7.87311395793093628397E-4,
    -2.29549961613378126380E-4,
@@ -168,33 +210,134 @@ static double p1evl(double, void *, int);
 static df3_three_variable p1evl(const df3_three_variable &, void *, int);
 
 const double MYINF = 1.7976931348623158E+308;
-
-/* Gamma function computed by Stirling's formula.
- * The polynomial STIR is valid for 33 <= x <= 172.
+/* A[]: Stirling's formula expansion of log gamma
+ * B[], C[]: log gamma function between 2 and 3
  */
-static df3_three_variable stirf(const df3_three_variable & _x)
-{
-   ADUNCONST(df3_three_variable, x) df3_three_variable y, w, v;
+/*
+static double A[] = {
+   8.11614167470508450300E-4,
+   -5.95061904284301438324E-4,
+   7.93650340457716943945E-4,
+   -2.77777777730099687205E-3,
+   8.33333333333331927722E-2
+};
 
-   w = 1.0 / x;
-   w = 1.0 + w * polevl(w, STIR, 4);
-   y = exp(x);
-   if (value(x) > MAXSTIR)
-   {				/* Avoid overflow in pow() */
-      v = pow(x, 0.5 * x - 0.25);
-      y = v * (v / y);
-   } else
+static double B[] = {
+   -1.37825152569120859100E3,
+   -3.88016315134637840924E4,
+   -3.31612992738871184744E5,
+   -1.16237097492762307383E6,
+   -1.72173700820839662146E6,
+   -8.53555664245765465627E5
+};
+
+static double C[] = {
+//  1.00000000000000000000E0,
+   -3.51815701436523470549E2,
+   -1.70642106651881159223E4,
+   -2.20528590553854454839E5,
+   -1.13933444367982507207E6,
+   -2.53252307177582951285E6,
+   -2.01889141433532773231E6
+};
+
+// log( sqrt( 2*pi ) ) 
+static double LS2PI = 0.91893853320467274178;
+static double MAXLGM = 2.556348e305;
+*/
+
+// this namespace is implemented in linad99/df13incbet.cpp
+namespace Cephes
+{
+   double *A;
+   double *B;
+   double *C;
+   double *P;
+   double *Q;
+   double STIR[5];
+   double MAXGAM;
+   double MAXLOG;
+   double MINLOG;
+   double MACHEP;
+   double big;
+   double biginv;
+   double LOGPI;
+   double PI;
+   double MAXSTIR;
+   double SQTPI;
+   int sgngam;
+   double MAXNUM;
+   double polevl(double, void *, int);
+   double p1evl(double, void *, int);
+   double MYINF;
+   double LS2PI;
+   double MAXLGM;
+
+   int mtherr(char *s, int n);
+
+   df3_three_variable polevl(const df3_three_variable & x, void *_coef,
+			     int N)
    {
-      y = pow(x, x - 0.5) / y;
+      double *coef = (double *) (_coef);
+      df3_three_variable ans;
+      int i;
+      double *p;
+
+       p = coef;
+       ans = *p++;
+       i = N;
+
+      do
+	  ans = ans * x + *p++;
+      while (--i);
+
+       return (ans);
    }
-   y = SQTPI * y * w;
-   return (y);
-}
+
+   df3_three_variable stirf(const df3_three_variable & _x)
+   {
+      ADUNCONST(df3_three_variable, x) df3_three_variable y, w, v;
+
+      w = 1.0 / x;
+      w = 1.0 + w * polevl(w, STIR, 4);
+      y = exp(x);
+      if (value(x) > MAXSTIR)
+      {				/* Avoid overflow in pow() */
+	 v = pow(x, 0.5 * x - 0.25);
+	 y = v * (v / y);
+      } else
+      {
+	 y = pow(x, x - 0.5) / y;
+      }
+      y = SQTPI * y * w;
+      return (y);
+   }
+
+   df3_three_variable p1evl(const df3_three_variable & x, void *_coef,
+			    int N)
+   {
+      double *coef = (double *) (_coef);
+      df3_three_variable ans;
+      double *p;
+      int i;
+
+      p = coef;
+      ans = x + *p++;
+      i = N - 1;
+
+      do
+	 ans = ans * x + *p++;
+      while (--i);
+
+      return (ans);
+   }
 
 
+} //namespace Cephes
 
-static df3_three_variable gamma(const df3_three_variable & xx1)
+df3_three_variable gamma(const df3_three_variable & xx1)
 {
+   using namespace Cephes;
    df3_three_variable x;
    x = xx1;
    df3_three_variable MYBIG;
@@ -317,85 +460,12 @@ static df3_three_variable gamma(const df3_three_variable & xx1)
 
 
 
-/* A[]: Stirling's formula expansion of log gamma
- * B[], C[]: log gamma function between 2 and 3
- */
-static double A[] = {
-   8.11614167470508450300E-4,
-   -5.95061904284301438324E-4,
-   7.93650340457716943945E-4,
-   -2.77777777730099687205E-3,
-   8.33333333333331927722E-2
-};
-
-static double B[] = {
-   -1.37825152569120859100E3,
-   -3.88016315134637840924E4,
-   -3.31612992738871184744E5,
-   -1.16237097492762307383E6,
-   -1.72173700820839662146E6,
-   -8.53555664245765465627E5
-};
-
-static double C[] = {
-/* 1.00000000000000000000E0, */
-   -3.51815701436523470549E2,
-   -1.70642106651881159223E4,
-   -2.20528590553854454839E5,
-   -1.13933444367982507207E6,
-   -2.53252307177582951285E6,
-   -2.01889141433532773231E6
-};
-
-/* log( sqrt( 2*pi ) ) */
-static double LS2PI = 0.91893853320467274178;
-static double MAXLGM = 2.556348e305;
-
 /* Logarithm of gamma function */
-
-int operator <(const df3_three_variable & x, double n)
-{
-   return value(x) < n;
-}
-
-int operator >(const df3_three_variable & x, double n)
-{
-   return value(x) > n;
-}
-
-int operator >=(const df3_three_variable & x, double n)
-{
-   return value(x) >= n;
-}
-
-int operator ==(const df3_three_variable & x, const df3_three_variable & n)
-{
-   return value(x) == value(n);
-}
-
-int operator ==(const df3_three_variable & x, double n)
-{
-   return value(x) == n;
-}
-
-int operator ==(double x, const df3_three_variable & n)
-{
-   return x == value(n);
-}
-
-int operator <(const df3_three_variable & x, const df3_three_variable & n)
-{
-   return value(x) < value(n);
-}
-
-int operator >(const df3_three_variable & x, const df3_three_variable & n)
-{
-   return value(x) > value(n);
-}
 
 
 df3_three_variable lgam(const df3_three_variable & _x)
 {
+   using namespace Cephes;
    df3_three_variable x, p, q, u, w, z, p1;
    x = _x;
    int i;
@@ -550,26 +620,6 @@ df3_three_variable lgam(const df3_three_variable & _x)
  */
 
 
-static df3_three_variable polevl(const df3_three_variable & x, void *_coef,
-				 int N)
-{
-   double *coef = (double *) (_coef);
-   df3_three_variable ans;
-   int i;
-   double *p;
-
-   p = coef;
-   ans = *p++;
-   i = N;
-
-   do
-      ans = ans * x + *p++;
-   while (--i);
-
-   return (ans);
-}
-
-
 /*							p1evl()	*/
 /*                                          N
  * Evaluate polynomial when coefficient of x  is 1.0.
@@ -594,25 +644,6 @@ double p1evl(double x, void *_coef, int N)
 
    return (ans);
 }
-*/
-
-df3_three_variable p1evl(const df3_three_variable & x, void *_coef, int N)
-{
-   double *coef = (double *) (_coef);
-   df3_three_variable ans;
-   double *p;
-   int i;
-
-   p = coef;
-   ans = x + *p++;
-   i = N - 1;
-
-   do
-      ans = ans * x + *p++;
-   while (--i);
-
-   return (ans);
-}
 
 static int mtherr(char *s, int n)
 {
@@ -620,6 +651,7 @@ static int mtherr(char *s, int n)
    ad_exit(1);
    return 0;
 }
+*/
 
 df3_three_variable incbet(const df3_three_variable & _aa,
 			  const df3_three_variable & _bb,
@@ -630,9 +662,9 @@ df1b2variable incbet(const df1b2variable & _a, const df1b2variable & _b,
 		     const df1b2variable & _x)
 {
    ADUNCONST(df1b2variable, a)
-   ADUNCONST(df1b2variable, b) ADUNCONST(df1b2variable, x)
-   // these three lines will automatically put in the
-   // derivatvie glue
+      ADUNCONST(df1b2variable, b) ADUNCONST(df1b2variable, x)
+      // these three lines will automatically put in the
+      // derivatvie glue
    init_df3_three_variable vx(x);
    init_df3_three_variable va(a);
    init_df3_three_variable vb(b);
@@ -730,6 +762,8 @@ static df3_three_variable igam(const df3_three_variable & a,
 df3_three_variable igamc(const df3_three_variable & _a,
 			 const df3_three_variable & _x)
 {
+   using namespace Cephes;
+
    ADUNCONST(df3_three_variable, a)
       ADUNCONST(df3_three_variable, x)
       df3_three_variable ans, ax, c, yc, r, t, y, z;
@@ -811,6 +845,8 @@ df3_three_variable igamc(const df3_three_variable & _a,
 df3_three_variable igam(const df3_three_variable & _a,
 			const df3_three_variable & _x)
 {
+   using namespace Cephes;
+
    ADUNCONST(df3_three_variable, a)
       ADUNCONST(df3_three_variable, x) df3_three_variable ans, ax, c, r;
 
@@ -912,6 +948,7 @@ df3_three_variable igam(const df3_three_variable & _a,
  // Copyright 1984, 1995, 2000 by Stephen L. Moshier
  // */
 
+
 static df3_three_variable incbcf(const df3_three_variable & _a,
 				 const df3_three_variable & _b,
 				 const df3_three_variable & _x);
@@ -926,6 +963,7 @@ static df3_three_variable incbet(const df3_three_variable & _aa,
 				 const df3_three_variable & _bb,
 				 const df3_three_variable & _xx)
 {
+   using namespace Cephes;
 
    df3_three_variable aa;
    df3_three_variable bb;
@@ -1040,6 +1078,8 @@ static df3_three_variable incbcf(const df3_three_variable & _a,
 				 const df3_three_variable & _b,
 				 const df3_three_variable & _x)
 {
+   using namespace Cephes;
+
    ADUNCONST(df3_three_variable, a)
       ADUNCONST(df3_three_variable, b)
       ADUNCONST(df3_three_variable, x)
@@ -1135,6 +1175,8 @@ static df3_three_variable incbd(const df3_three_variable & _a,
 				const df3_three_variable & _b,
 				const df3_three_variable & _x)
 {
+   using namespace Cephes;
+
    ADUNCONST(df3_three_variable, a)
       ADUNCONST(df3_three_variable, b) ADUNCONST(df3_three_variable, x)
       //df3_three_variable s, t, u, v, n, t1, z, ai;
@@ -1228,6 +1270,8 @@ df3_three_variable pseries(const df3_three_variable & _a,
 			   const df3_three_variable & _b,
 			   const df3_three_variable & _x)
 {
+   using namespace Cephes;
+
    df3_three_variable a;
    df3_three_variable b;
    df3_three_variable x;

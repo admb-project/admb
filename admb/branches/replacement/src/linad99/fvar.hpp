@@ -7220,6 +7220,10 @@ void gauss_legendre(const dvector& _x, const dvector& _w);
 
 dvariable incbet(_CONST dvariable a,_CONST dvariable b,_CONST dvariable x);
 double incbet(const double a,const double b,const double x);
+df1_three_variable incbet(const df1_three_variable & _aa,
+				 const df1_three_variable & _bb,
+				 const df1_three_variable & _xx);
+
 
 dvar_matrix tensor_prod(const dvar_matrix& a,const dvar_matrix & b);
 

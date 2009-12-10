@@ -1570,8 +1570,7 @@ int allocated(const df1b2vector&);
 int allocated(const df1b2_init_matrix&);
 #include <df3fun.h>
 
-df1b2variable betai(_CONST df1b2variable& a,_CONST df1b2variable& b,
-  double x, int maxit=100);
+//df1b2variable betai(_CONST df1b2variable& a,_CONST df1b2variable& b, double x, int maxit=100);
 
 double do_gauss_hermite_block_diagonal(const dvector& x,
   const dvector& u0,const dmatrix& Hess,const dvector& _xadjoint,

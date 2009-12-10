@@ -27,9 +27,6 @@ dvect26.obj \
 cnormgam.obj \
 ftweak.obj \
 dftweak.obj \
-dfgammp.obj \
-vgamdev.obj \
-cgamdev.obj \
 ccumdexp.obj \
 vcumdexp.obj \
 newhand.obj \

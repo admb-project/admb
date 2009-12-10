@@ -197,5 +197,14 @@
 
 
   df1_three_variable gammln(const df1_three_variable& xx);
-#endif  // __DF12FUN__
 
+  int operator <(const df1_three_variable & x, double n);
+  int operator >(const df1_three_variable & x, const df1_three_variable & n);
+  int operator <(const df1_three_variable & x, const df1_three_variable & n);
+  int operator ==(double x, const df1_three_variable & n);
+  int operator ==(const df1_three_variable & x, double n);
+  int operator ==(const df1_three_variable & x, const df1_three_variable & n);
+  int operator >=(const df1_three_variable & x, double n);
+  int operator >(const df1_three_variable & x, double n);
+
+#endif  // __DF12FUN__

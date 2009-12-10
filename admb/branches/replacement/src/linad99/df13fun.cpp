@@ -768,3 +768,43 @@ dvariable& dvariable::operator = (const df1_three_variable& v)
   return *this;
 }
 
+int operator <(const df1_three_variable & x, double n)
+{
+   return value(x) < n;
+}
+
+int operator >(const df1_three_variable & x, double n)
+{
+   return value(x) > n;
+}
+
+int operator >=(const df1_three_variable & x, double n)
+{
+   return value(x) >= n;
+}
+
+int operator ==(const df1_three_variable & x, const df1_three_variable & n)
+{
+   return value(x) == value(n);
+}
+
+int operator ==(const df1_three_variable & x, double n)
+{
+   return value(x) == n;
+}
+
+int operator ==(double x, const df1_three_variable & n)
+{
+   return x == value(n);
+}
+
+int operator <(const df1_three_variable & x, const df1_three_variable & n)
+{
+   return value(x) < value(n);
+}
+
+int operator >(const df1_three_variable & x, const df1_three_variable & n)
+{
+   return value(x) > value(n);
+}
+

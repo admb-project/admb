@@ -19,7 +19,7 @@ LicenseFile=LICENSE
 AlwaysShowComponentsList=no
 
 [Types]
-Name: "mingw"; Description: "Full installation of ADMB for MinGW"
+Name: "mingw"; Description: "ADMB with MinGW tools"
 
 [Files]
 Source: "..\..\trunk\build\dists\admb_gcc345_mingw32\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs

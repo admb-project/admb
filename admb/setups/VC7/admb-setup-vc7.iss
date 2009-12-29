@@ -17,7 +17,7 @@ AppPublisherURL=http://www.admb-project.org/
 LicenseFile=..\MinGW\LICENSE
 
 [Types]
-Name: "vc7"; Description: "ADMB for Microsoft Visual Studio .NET 2003"
+Name: "vc7"; Description: "ADMB for Microsoft Visual C++ .NET 2003"
 
 [Files]
 Source: "..\..\trunk\build\dists\admb_vc7_win32\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs

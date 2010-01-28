@@ -6,12 +6,11 @@
  */
 
 #include <fvar.hpp>
-#define ITMAX 100
-//#define EPS 3.0e-7
-#define EPS 1.0e-9
-#define FPMIN 1.0e-30
-static void gcf(double& gammcf,double a,double x,double &gln);
-static void gser(double& gamser,double a,double x,double& gln);
+//#define ITMAX 100
+//#define EPS 1.0e-9
+//#define FPMIN 1.0e-30
+//static void gcf(double& gammcf,double a,double x,double &gln);
+//static void gser(double& gamser,double a,double x,double& gln);
 
   dvariable gamma_deviate(const prevariable& _x,const prevariable& _a)
   {
@@ -27,7 +26,13 @@ static void gser(double& gamser,double a,double x,double& gln);
     return z;
   }
 
+double igamc(const double a, const double x);
+static double gammp(double a,double x)
+{
+  return igamc(a,x);
+}
 
+/*
 static double gammp(double a,double x)
 {
   double gamser,gammcf,gln;
@@ -42,6 +47,7 @@ static double gammp(double a,double x)
     return 1.0-gammcf;
   }
 }
+*/
 
 /** Incomplete gamma function.
     Continued fraction approximation.
@@ -51,6 +57,7 @@ static double gammp(double a,double x)
 
     \deprecated Scheduled for replacement by 2010.
 */
+/*
 static void gcf(double& gammcf,double a,double x,double &gln)
 {
   int i;
@@ -77,7 +84,7 @@ static void gcf(double& gammcf,double a,double x,double &gln)
     cerr << "a too large, ITMAX too small in gcf" << endl;
   gammcf=exp(-x+a*log(x)-(gln))*h;
 }
-
+*/
 /** Incomplete gamma function.
     Series approximation.
     \n\n The implementation of this algorithm was inspired by
@@ -86,6 +93,7 @@ static void gcf(double& gammcf,double a,double x,double &gln)
 
     \deprecated Scheduled for replacement by 2010.
 */
+/*
 static void gser(double& gamser,double a,double x,double& gln)
 {
   int n;
@@ -113,6 +121,7 @@ static void gser(double& gamser,double a,double x,double& gln)
     return;
   }
 }
+*/
 
 static double get_initial_u(double a,double y);
 

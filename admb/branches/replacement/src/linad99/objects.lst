@@ -18,6 +18,7 @@ vbetdev.obj \
 df12fun.obj \
 ccumdbetainv_incbet.obj \
 vcumdbetainv_incbet.obj \
+vgamdev.obj \
 normmix2.obj \
 normmix.obj \
 cnormmix.obj \

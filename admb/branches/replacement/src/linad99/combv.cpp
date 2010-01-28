@@ -162,7 +162,7 @@ dvar_vector gammln(_CONST dvar_vector& v)
   return tmp;
 }
 
-  
+/*  
 static dvariable gammlnguts(const prevariable _z)
 {
   double  z = value(_z);
@@ -218,4 +218,4 @@ dvariable gammln(const prevariable& z)
     return gammlnguts(z);
   }
 }
-
+*/

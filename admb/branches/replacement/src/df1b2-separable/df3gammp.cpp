@@ -5,6 +5,8 @@
  * Copyright (c) 2009 ADMB Foundation
  */
 #include <df1b2fun.h>
+#include <df13fun.h>
+
 #define ITMAX 100
 #define EPS 1.0e-9
 //#define EPS 3.0e-7
@@ -72,6 +74,7 @@ df3_two_variable gammln(const df3_two_variable& xx)
 
     \deprecated Scheduled for replacement by 2010.
 */
+/*
 void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
   const df3_two_variable& x,const df3_two_variable& _gln)
 {
@@ -101,7 +104,7 @@ void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
     cerr << "a too large, ITMAX too small in gcf" << endl;
   gammcf=exp(-x+a*log(x)-(gln))*h;
 }
-
+*/
 /** Incomplete gamma function.
     Continued fraction approximation.
     \n\n The implementation of this algorithm was inspired by
@@ -110,6 +113,7 @@ void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
 
     \deprecated Scheduled for replacement by 2010.
 */
+/*
 void gser(const df3_two_variable& _gamser,const df3_two_variable& a,
   const df3_two_variable& x,const df3_two_variable& _gln)
 {
@@ -143,11 +147,19 @@ void gser(const df3_two_variable& _gamser,const df3_two_variable& a,
     return;
   }
 }
+*/
 
+df3_two_variable igamc(const df3_two_variable & a, const df3_two_variable & x);
 
 df3_two_variable cumd_gamma(const df3_two_variable& x,
   const df3_two_variable& a)
 {
+  //ADUNCONST(df3_two_variable, a)
+  //ADUNCONST(df3_two_variable, x)
+
+  df3_two_variable gamma = igamc(a,x);
+  return (gamma);
+  /*
   df3_two_variable gamser,gammcf,gln;
 
   if (value(x) < 0.0 || value(a) <= 0.0) 
@@ -159,6 +171,7 @@ df3_two_variable cumd_gamma(const df3_two_variable& x,
     gcf(gammcf,a,x,gln);
     return 1.0-gammcf;
   }
+  */
 }
 df3_two_variable cumd_exponential(const df3_two_variable& x,
   const df3_two_variable& a)

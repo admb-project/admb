@@ -9,6 +9,7 @@
 
 double factln(double n);
 double gammln(double xx);
+double lgam(const double xx);
 
 double log_comb(double n, double k)
 {
@@ -30,6 +31,7 @@ double factln(double n)
 
     \deprecated Scheduled for replacement by 2010.
 */
+/*
 double gammln(double xx)
 {
   double x,tmp,ser;
@@ -47,6 +49,13 @@ double gammln(double xx)
   }
   return -tmp+log(2.50662827465*ser);
 }
+*/
+
+double gammln(double xx)
+{  
+  return lgam(xx);
+}
+
 
 
   dvector log_comb(_CONST dvector& n,_CONST dvector& r)

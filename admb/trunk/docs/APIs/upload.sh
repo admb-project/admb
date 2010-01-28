@@ -27,6 +27,6 @@ ssh admbfoun@admb-foundation.org 'cd public_html/documentation/api/default; unzi
 cd $WD
 pwd
 
-cp -v cadaver-script ~/.cadaver
-cadaver -V
-rm -fv ~/.cadaver
+#cp -v cadaver-script ~/.cadaver
+#cadaver -V
+#rm -fv ~/.cadaver

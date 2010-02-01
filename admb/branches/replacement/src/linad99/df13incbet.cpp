@@ -11,6 +11,11 @@
  *
  */
 #include <df13fun.h>
+// function prototype
+df1_three_variable incbet(const df1_three_variable & _aa,
+			  const df1_three_variable & _bb,
+			  const df1_three_variable & _xx);
+
 
 // operators that belong somewhere else
 // moved to df13fun.h and df13fun.cpp
@@ -653,12 +658,11 @@ df1_three_variable lgam(const df1_three_variable & _x)
    return (q);
 }
 
-df1_three_variable incbet(const df1_three_variable & _aa,
+/** Incomplete beta function; variable objects.
+  Wrapper to call df1_three_variable incbet(const df1_three_variable & _aa,
 			  const df1_three_variable & _bb,
 			  const df1_three_variable & _xx);
 
-/** Incomplete beta function; variable objects.
-  Wrapper to call the main incbet function
     \param _a Parameter \f$a\f$ of incomplete beta function; \f$a>0\f$
     \param _b Parameter \f$b\f$ of incomplete beta function; \f$b>0\f$
     \param _x Parameter \f$x\f$ of incomplete beta function; \f$0<x\le 1\f$
@@ -669,13 +673,20 @@ dvariable incbet(const dvariable & _a, const dvariable & _b,
 		 const dvariable & _x)
 {
    ADUNCONST(dvariable, a) ADUNCONST(dvariable, b) ADUNCONST(dvariable, x)
-      // these three lines will automatically put in the
-      // derivatvie glue
+
+   // these three lines will automatically put in the derivatvie "glue"
+   // linking forward mode computation to reverse mode computation
    init_df1_three_variable vx(x);
    init_df1_three_variable va(a);
    init_df1_three_variable vb(b);
+
    df1_three_variable vy;
    vy = incbet(va, vb, vx);
+
+   // the assignment operator
+   // dvariable& dvariable::operator = (const df1_three_variable& v)
+   // puts the forward mode derivitive contributions back into the
+   // autodif gradient stack
    dvariable z;
    z = vy;
    return z;
@@ -1433,6 +1444,14 @@ df1_three_variable pseries(const df1_three_variable & _a,
    return (s);
 }
 
+/** Equivalent to incomplete beta function for constant objects.
+This function needs to be fixed up a bit and used as the guts of 
+yet to be written. It should also not be publicall visible.
+double incbet(double a, double b, double x.
+Questions for Dave: What are the purposes of the functions 
+double get_values(double a, double b, double x) and 
+df1_three_variable df3_get_values(double a, double b, double x)
+*/
 double get_values(double a, double b, double x)
 {
    df1_three_variable va, vb, vx;

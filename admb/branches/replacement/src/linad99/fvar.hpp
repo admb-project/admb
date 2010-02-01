@@ -39,6 +39,11 @@
  *
  */
 
+/** \file fvar.hpp
+AUTODIF classes.
+A more detailed description might someday be written.
+*/
+
 #if defined(__GNUDOS__)
 #  pragma interface
 #endif

@@ -612,14 +612,15 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/vnegbin.cpp \
                          ../../src/linad99/cumdist.cpp \
                          ../../src/linad99/vcumdist.cpp \
+                         ../../src/linad99/df13fun.cpp \
                          ../../src/nh99/dfqromb.cpp \
                          ../../src/nh99/bet_rand.cpp \
                          ../../src/nh99/amoeba.cpp \
-                         ../../src/df1b2-separable/df1b2invcumdbeta_incbet.cpp
+                         ../../src/df1b2-separable/df1b2invcumdbeta_incbet.cpp \
                          ../../src/df1b2-separable/f1b2lndt.cpp \
                          ../../src/df1b2-separable/df3gammp.cpp \
+                         ../../src/linad99/df13fun.h \
                          ../../src/linad99/fvar.hpp \
-
                          ../../src/nh99/admodel.h \
 
 

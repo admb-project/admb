@@ -636,9 +636,9 @@ void set_derivatives( df1_three_variable& z, const df1_three_variable& x,
   init_df1_three_variable::init_df1_three_variable(const prevariable& _v)
   {
     ADUNCONST(prevariable,v)
-    if (num_ind_var>2)
+    if (num_ind_var>2) // zero offset array
     {
-      cerr << "can only have 2 independent_variables in df1_three_variable"
+      cerr << "can only have 3 independent_variables in df1_three_variable"
        " function" << endl;
       ad_exit(1);
     }

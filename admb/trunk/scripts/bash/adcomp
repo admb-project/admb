@@ -32,14 +32,16 @@ if [[ "$1" == "--help" ]]; then help; exit; fi
 unset g
 unset dll
 opt=-DOPT_LIB
-while getopts "drs" A; do
+g=-O3
+while getopts "drsg" A; do
   case $A in
     d) dll=-DBUILDING_DLL;;
     r) ;;
-    s) g=-g; opt=;;
+    s) opt=;;
+    g) g=-g;;
   esac
 done
 shift $[OPTIND-1]
 
-echo -e "g++ -c $g -O3 -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $1.cpp\n"
-         g++ -c $g -O3 -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $1.cpp
+echo -e "g++ -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $1.cpp\n"
+         g++ -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $1.cpp

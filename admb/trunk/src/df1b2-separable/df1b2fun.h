@@ -42,9 +42,13 @@
 
 #if !defined(__DF1B2FUN__)
 #  define __DF1B2FUN__ 
+
 #if defined(__GNUC__)
-#pragma interface
+  #if (__GNUC__ < 3)
+     #pragma interface
+  #endif
 #endif
+
 #include <adpool.h>
 #ifndef FVAR_HPP
 #  include <fvar.hpp>

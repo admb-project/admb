@@ -35,8 +35,14 @@ sunstudio-check-admb2r:
 linux:
 	make --directory=src --file=linux.mak
 
+linux-debug:
+	DEBUG=1 make --directory=src --file=linux.mak
+
 linux-verify:
 	make --directory=src --file=linux.mak verify
+
+linux-verify-debug:
+	DEBUG=1 make --directory=src --file=linux.mak verify
 
 linux-check-admb2r:
 	make --directory=src --file=linux.mak check-admb2r

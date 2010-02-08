@@ -1,10 +1,11 @@
 #!/bin/bash
 shopt -s expand_aliases
-alias help='echo -e "Usage: admb [-d] [-r] [-s] model\n
+alias help='echo -e "Usage: admb [-d] [-r] [-s] [-g] model\n
 Build AD Model Builder executable from TPL.\n
   -d     Create DLL
   -r     Create ADMB-RE
-  -s     Use safe bounds and debugging symbols
+  -s     Use safe bounds
+  -g     Use debugging symbols
   model  Filename prefix, e.g. simple\n"'
 if [[ "$1" == "" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
@@ -35,18 +36,20 @@ unset s
 tpl2cpp=tpl2cpp
 unset bounds
 unset dll
-while getopts "drs" A; do
+unset g
+while getopts "drsg" A; do
   case $A in
     d) d=-d; dll=-dll;;
     r) r=-r; tpl2cpp=tpl2rem;;
     s) s=-s; bounds=-bounds;;
+    g) g=-g;;
   esac
 done
 shift $[OPTIND-1]
 
 echo -e "\n*** $tpl2cpp $bounds $dll $1"
                $tpl2cpp $bounds $dll $1
-echo -e "\n*** adcomp $d $r $s $1"
-               adcomp $d $r $s $1
+echo -e "\n*** adcomp $d $r $s $g $1"
+               adcomp $d $r $s $g $1
 echo -e "\n*** adlink $d $r $s $1"
                adlink $d $r $s $1

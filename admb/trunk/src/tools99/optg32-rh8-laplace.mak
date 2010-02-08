@@ -2,12 +2,17 @@
 CC = gcc
 LL = tlib
 
-FLAGS = -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-format -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -O3 -c -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux -DOPT_LIB
+CFLAGS=-O3
+ifdef DEBUG
+CFLAGS=-g
+endif
+
+FLAGS = $(CFLAGS) -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-format -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -c -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux -DOPT_LIB
 
 #FLAGS = -fdiagnostics-show-option -fno-for-scope -Wall -Wno-format -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -O3 -c -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux -DOPT_LIB
 
 
-FLAGS1 = -w ${PVMOPTION} -DUSE_LAPLACE -fpermissive -O3 -c -I. -I../linad99 -I../tools99 -D__SPDLL__\
+FLAGS1 = $(CFLAGS) -w ${PVMOPTION} -DUSE_LAPLACE -fpermissive -c -I. -I../linad99 -I../tools99 -D__SPDLL__\
  -D__GNUDOS__ -Dlinux -DOPT_LIB
 
 LIBPATH =gcc32-rh8olp

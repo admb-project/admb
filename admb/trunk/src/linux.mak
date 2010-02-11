@@ -3,6 +3,7 @@ SHELL = /bin/bash
 
 DISK=../build/dists/admb_gcc411_fedora8
 PWD=$(shell pwd)
+NOW=$(shell date)
 
 CCVERSION=gcc411
 OSVERSION=fedorar8
@@ -86,7 +87,8 @@ dist-64bit:
 	#bzip2 ${DISK}.tar 
 
 verify:
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK} all
+	#export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK} all
+	../scripts/get-outputs.sh ../build/dists/admb_gcc411_fedora8/examples > "../benchmarks-${NOW}.txt"
 
 check-admb2r:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ../ADMB2R gcc

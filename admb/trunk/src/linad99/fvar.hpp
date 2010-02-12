@@ -6858,14 +6858,12 @@ public:
 
 class random_number_generator
 {
-  long int xdum;
-  long idum2;
-  long iy;
-  ivector iv;
+ unsigned long *mt; /* the array for the state vector  */
+ int mti; /* mti==N+1 means mt[N] is not initialized */
 public:
-  double better_rand(void);
-  random_number_generator(int seed);
-  void reinitialize(int seed);
+ double better_rand(void);
+ random_number_generator(int seed);
+ void reinitialize(int seed);
 };
 
 double randpoisson(double lambda,BOR_CONST random_number_generator& rng);

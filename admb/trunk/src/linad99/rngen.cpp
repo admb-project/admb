@@ -4,51 +4,99 @@
  * Author: David Fournier
  * Copyright (c) 2009 ADMB Foundation
  */
+
+/* 
+   A C-program for MT19937, with initialization improved 2002/1/26.
+   Coded by Takuji Nishimura and Makoto Matsumoto.
+
+   Before using, initialize the state by using init_genrand(seed)  
+   or init_by_array(init_key, key_length).
+
+   Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura,
+   All rights reserved.                          
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions
+   are met:
+
+     1. Redistributions of source code must retain the above copyright
+        notice, this list of conditions and the following disclaimer.
+
+     2. Redistributions in binary form must reproduce the above copyright
+        notice, this list of conditions and the following disclaimer in the
+        documentation and/or other materials provided with the distribution.
+
+     3. The names of its contributors may not be used to endorse or promote 
+        products derived from this software without specific prior written 
+        permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+   A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+   EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+   PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+   PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+   LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+   Any feedback is very welcome.
+   http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
+   email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
+*/
+
+/*
+   Modified for AD Model Builder by Kasper Kristensen <kkr@aqua.dtu.dk> and 
+   Anders Nielsen <an@aqua.dtu.dk> 2009     
+*/
+
+
 #include "fvar.hpp"
 
+#define N 624
+#define M 397
+#define MATRIX_A 0x9908b0dfUL   /* constant vector a */
+#define UPPER_MASK 0x80000000UL /* most significant w-r bits */
+#define LOWER_MASK 0x7fffffffUL /* least significant r bits */
 
-#define IM1 2147483563
-#define IM2 2147483399
-#define AM (1.0/IM1)
-#define IMM1 (IM1-1)
-#define IA1 40014
-#define IA2 40692
-#define IQ1 53668
-#define IQ2 52774
-#define IR1 12211
-#define IR2 3791
-#define NTAB 32
-#define NDIV (1+IMM1/NTAB)
-#define EPS 1.2e-7
-#define RNMX (1.0-EPS)
+random_number_generator::random_number_generator(int seed) 
+{
+  unsigned long s=seed;
+  mt=new unsigned long [N]; /* the array for the state vector  */
+  mti=N+1; /* mti==N+1 means mt[N] is not initialized */
 
-
-  random_number_generator::random_number_generator(int seed) :
-    idum2(123456789), iy(0), iv(0,NTAB-1)
-  {
-    if (seed<0)
-      xdum=seed;
-    else if (seed>0)
-      xdum=-seed;
-    else
-      xdum=-14528;
-    better_rand();
+  mt[0]= s & 0xffffffffUL;
+  for (mti=1; mti<N; mti++) {
+    mt[mti] = (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti); 
+    /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
+    /* In the previous versions, MSBs of the seed affect   */
+    /* only MSBs of the array mt[].                        */
+    /* 2002/01/09 modified by Makoto Matsumoto             */
+    mt[mti] &= 0xffffffffUL;
+    /* for >32 bit machines */
   }
+  better_rand();
+}
 
-  void random_number_generator::reinitialize(int seed)
-  {
-    if (seed<0)
-      xdum=seed;
-    else if (seed>0)
-      xdum=-seed;
-    else
-      xdum=-14528;
-
-    idum2=123456789;
-    iy=0;
-    iv=0;
-    better_rand();
+void random_number_generator::reinitialize(int seed)
+{
+  unsigned long s=seed;
+  mt[0]= s & 0xffffffffUL;
+  for (mti=1; mti<N; mti++) {
+      mt[mti] = 
+  	    (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti); 
+      /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
+      /* In the previous versions, MSBs of the seed affect   */
+      /* only MSBs of the array mt[].                        */
+      /* 2002/01/09 modified by Makoto Matsumoto             */
+      mt[mti] &= 0xffffffffUL;
+      /* for >32 bit machines */
   }
+  better_rand();
+}
 
 /** Random number generator.
 
@@ -60,52 +108,46 @@
 */
 double random_number_generator::better_rand() 
 {
-  long int * idum= (&xdum);
-	long int j;
-	long k;
-	double temp;
+  unsigned long y;
+  static unsigned long mag01[2]={0x0UL, MATRIX_A};
+  /* mag01[x] = x * MATRIX_A  for x=0,1 */
 
-	if (*idum <= 0) {
-		if (-(*idum) < 1) *idum=1;
-		else *idum = -(*idum);
-		idum2=(*idum);
-		for (j=NTAB+7;j>=0;j--) {
-			k=(*idum)/IQ1;
-			*idum=IA1*(*idum-k*IQ1)-k*IR1;
-			if (*idum < 0) *idum += IM1;
-			if (j < NTAB) iv(j) = *idum;
-		}
-		iy=iv[0];
-	}
-	k=(*idum)/IQ1;
-	*idum=IA1*(*idum-k*IQ1)-k*IR1;
-	if (*idum < 0) *idum += IM1;
-	k=idum2/IQ2;
-	idum2=IA2*(idum2-k*IQ2)-k*IR2;
-	if (idum2 < 0) idum2 += IM2;
-	j=iy/NDIV;
-	iy=iv(j)-idum2;
-	iv(j) = *idum;
-	if (iy < 1) iy += IMM1;
-	if ((temp=AM*iy) > RNMX) return RNMX;
-	else return temp;
+  if (mti >= N) { /* generate N words at one time */
+      int kk;
+
+      //if (mti == N+1)   /* if init_genrand() has not been called, */
+      //    init_genrand(5489UL); /* a default initial seed is used */
+
+      for (kk=0;kk<N-M;kk++) {
+          y = (mt[kk]&UPPER_MASK)|(mt[kk+1]&LOWER_MASK);
+          mt[kk] = mt[kk+M] ^ (y >> 1) ^ mag01[y & 0x1UL];
+      }
+      for (;kk<N-1;kk++) {
+          y = (mt[kk]&UPPER_MASK)|(mt[kk+1]&LOWER_MASK);
+          mt[kk] = mt[kk+(M-N)] ^ (y >> 1) ^ mag01[y & 0x1UL];
+      }
+      y = (mt[N-1]&UPPER_MASK)|(mt[0]&LOWER_MASK);
+      mt[N-1] = mt[M-1] ^ (y >> 1) ^ mag01[y & 0x1UL];
+
+      mti = 0;
+  }
+ 
+  y = mt[mti++];
+
+  /* Tempering */
+  y ^= (y >> 11);
+  y ^= (y << 7) & 0x9d2c5680UL;
+  y ^= (y << 15) & 0xefc60000UL;
+  y ^= (y >> 18);
+
+  return (((double)y) + 0.5)*(1.0/4294967296.0); 
 }
-#undef IM1
-#undef IM2
-#undef AM
-#undef IMM1
-#undef IA1
-#undef IA2
-#undef IQ1
-#undef IQ2
-#undef IR1
-#undef IR2
-#undef NTAB
-#undef NDIV
-#undef EPS
-#undef RNMX
 
-
+#undef N 
+#undef M 
+#undef MATRIX_A 
+#undef UPPER_MASK 
+#undef LOWER_MASK 
           
 double randn( BOR_CONST random_number_generator& rng)
 {
@@ -124,111 +166,109 @@ double randu( BOR_CONST random_number_generator& rng)
 }
   
 
-  void dvector::fill_randbi(double p, BOR_CONST random_number_generator& rng)
+void dvector::fill_randbi(double p, BOR_CONST random_number_generator& rng)
+{
+  if ( p<0 || p>1)
   {
-    if ( p<0 || p>1)
-    {
-      cerr << "Error in dvar_vector::fill_randbi proportions of"
-       " successes must lie between 0 and 1\n";
-      ad_exit(1);
-    }
-    for (int i=indexmin(); i<=indexmax(); i++)
-    {
-      if ( ((random_number_generator&) rng).better_rand()<=p)
-      {
-        elem(i)=1;
-      }
-      else
-      {
-        elem(i)=0;
-      } 
-    }
+    cerr << "Error in dvar_vector::fill_randbi proportions of"
+     " successes must lie between 0 and 1\n";
+    ad_exit(1);
   }
-
-
-  void dvector::fill_randu( BOR_CONST random_number_generator& rng)
+  for (int i=indexmin(); i<=indexmax(); i++)
   {
-    for (int i=indexmin(); i<=indexmax(); i++)
+    if ( ((random_number_generator&) rng).better_rand()<=p)
     {
-      elem(i)=((random_number_generator&) rng).better_rand();
+      elem(i)=1;
     }
+    else
+    {
+      elem(i)=0;
+    } 
   }
+}
 
-  void dmatrix::colfill_randu(BOR_CONST int&j, BOR_CONST random_number_generator& rng)
+
+void dvector::fill_randu( BOR_CONST random_number_generator& rng)
+{
+  for (int i=indexmin(); i<=indexmax(); i++)
   {
-    for (int i=rowmin(); i<=rowmax(); i++)
-    {
-      elem(i,j)=((random_number_generator&) rng).better_rand();
-    }
+    elem(i)=((random_number_generator&) rng).better_rand();
   }
+}
 
-
-  void dmatrix::rowfill_randu(BOR_CONST int& i, BOR_CONST random_number_generator& rng)
+void dmatrix::colfill_randu(BOR_CONST int&j, BOR_CONST random_number_generator& rng)
+{
+  for (int i=rowmin(); i<=rowmax(); i++)
   {
-    for (int j=colmin(); j<=colmax(); j++)
-    {
-      elem(i,j)=((random_number_generator&) rng).better_rand();
-    }
+    elem(i,j)=((random_number_generator&) rng).better_rand();
   }
+}
 
 
-  void dvector::fill_randn( BOR_CONST random_number_generator& rng)
+void dmatrix::rowfill_randu(BOR_CONST int& i, BOR_CONST random_number_generator& rng)
+{
+  for (int j=colmin(); j<=colmax(); j++)
   {
-    for (int i=indexmin(); i<=indexmax(); i++)
-    {
-      (*this)(i)=randn(rng);
-    }
+    elem(i,j)=((random_number_generator&) rng).better_rand();
   }
+}
 
-  void dmatrix::fill_randn( BOR_CONST random_number_generator& rng)
+
+void dvector::fill_randn( BOR_CONST random_number_generator& rng)
+{
+  for (int i=indexmin(); i<=indexmax(); i++)
   {
-    for (int i=rowmin(); i<=rowmax(); i++)
-    {
-      elem(i).fill_randn(rng);
-    }
+    (*this)(i)=randn(rng);
   }
+}
 
-  void d3_array::fill_randn( BOR_CONST random_number_generator& rng)
+void dmatrix::fill_randn( BOR_CONST random_number_generator& rng)
+{
+  for (int i=rowmin(); i<=rowmax(); i++)
   {
-    for (int i=slicemin(); i<=slicemax(); i++)
-    {
-      elem(i).fill_randn(rng);
-    }
+    elem(i).fill_randn(rng);
   }
+}
 
-  void d3_array::fill_randu( BOR_CONST random_number_generator& rng)
+void d3_array::fill_randn( BOR_CONST random_number_generator& rng)
+{
+  for (int i=slicemin(); i<=slicemax(); i++)
   {
-    for (int i=slicemin(); i<=slicemax(); i++)
-    {
-      elem(i).fill_randu(rng);
-    }
+    elem(i).fill_randn(rng);
   }
+}
 
-  void dmatrix::fill_randu( BOR_CONST random_number_generator& rng)
+void d3_array::fill_randu( BOR_CONST random_number_generator& rng)
+{
+  for (int i=slicemin(); i<=slicemax(); i++)
   {
-    for (int i=rowmin(); i<=rowmax(); i++)
-    {
-      elem(i).fill_randu(rng);
-    }
+    elem(i).fill_randu(rng);
   }
+}
 
-
-  void dmatrix::colfill_randn(BOR_CONST int&j, BOR_CONST random_number_generator& rng)
+void dmatrix::fill_randu( BOR_CONST random_number_generator& rng)
+{
+  for (int i=rowmin(); i<=rowmax(); i++)
   {
-    for (int i=rowmin(); i<=rowmax(); i++)
-    {
-      elem(i,j)=randn(rng);
-    }
+    elem(i).fill_randu(rng);
   }
+}
 
 
-  void dmatrix::rowfill_randn(BOR_CONST int& i, BOR_CONST random_number_generator& rng)
+void dmatrix::colfill_randn(BOR_CONST int&j, BOR_CONST random_number_generator& rng)
+{
+  for (int i=rowmin(); i<=rowmax(); i++)
   {
-    for (int j=colmin(); j<=colmax(); j++)
-    {
-      elem(i,j)=randn(rng);
-    }
+    elem(i,j)=randn(rng);
   }
+}
 
 
+void dmatrix::rowfill_randn(BOR_CONST int& i, BOR_CONST random_number_generator& rng)
+{
+  for (int j=colmin(); j<=colmax(); j++)
+  {
+    elem(i,j)=randn(rng);
+  }
+}
 

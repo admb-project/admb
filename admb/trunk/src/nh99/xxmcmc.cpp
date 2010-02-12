@@ -1017,7 +1017,7 @@ void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST
   ofs << parsave.indexmax() << endl;
   ofs << "#current parameter values for mcmc restart" << endl;
   ofs << parsave << endl;
-  ofs << "#random nmber seed" << endl;
+  ofs << "#random number seed" << endl;
   ofs << iseed << endl;
   for (i=1;i<=nsdvars;i++)
   {

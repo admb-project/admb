@@ -3,6 +3,9 @@
 #include <df1b2fun.h>
 #include <df33fun.h>
 
+namespace replacement
+{
+
 static df3_three_variable igam(const df3_three_variable & a,const df3_three_variable & x);
 //  what should MAXLOG MINLOG be?
   double MAXLOG=200;
@@ -811,6 +814,7 @@ return( ans );
  * Otherwise same as polevl.
  */
 
+/*
 double p1evl( double x, void * _coef, int N )
 {
 double * coef= (double*)(_coef);
@@ -828,6 +832,7 @@ while( --i );
 
 return( ans );
 }
+*/
  
 df3_three_variable p1evl(const df3_three_variable & x, void * _coef, int N )
 {
@@ -856,7 +861,7 @@ _INFINITY' referenced from module all.cpp
 'isfinite(double)' referenced from module all.cpp
 */
 
-int mtherr(char* s,int n){ /*ad_exit(1);*/  return 0;}
+int mtherr(char* s,int n);
  df3_three_variable incbet(const df3_three_variable & _aa, 
    const df3_three_variable & _bb, const df3_three_variable & _xx );
 
@@ -2030,3 +2035,4 @@ static df3_three_variable df3_get_values(double a,double b,double x)
   // while(1);
   //  //cout << "dfx = " << dfx << endl;
   //}
+}

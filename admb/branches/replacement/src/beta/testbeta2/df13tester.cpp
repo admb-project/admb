@@ -1,8 +1,10 @@
 
-
 #include <admodel.h>
 //#include <df1b2fun.h>
 #include <df13fun.h>
+
+namespace replacement
+{
 
 static df1_three_variable igam(const df1_three_variable & a,const df1_three_variable & x);
 //  what should MAXLOG MINLOG be?
@@ -877,7 +879,7 @@ dvariable incbet(const dvariable& _a,const dvariable& _b,
   init_df1_three_variable va(a);
   init_df1_three_variable vb(b);
   df1_three_variable vy;
-  vy = incbet( va, vb, vx );
+  vy = replacement::incbet( va, vb, vx );
   dvariable z;
   z=vy;
   return z;
@@ -1697,7 +1699,7 @@ static double get_values(double a,double b,double x)
    *va.get_u_x()=1.0;
    *vb.get_u_y()=1.0;
    *vx.get_u_z()=1.0;
-   df1_three_variable vy = incbet(va,vb,vx);
+   df1_three_variable vy = replacement::incbet(va,vb,vx);
    return *vy.get_u();
 }
 
@@ -1713,7 +1715,7 @@ static df1_three_variable df3_get_values(double a,double b,double x)
    *va.get_u_x()=1.0;
    *vb.get_u_y()=1.0;
    *vx.get_u_z()=1.0;
-   df1_three_variable vy = incbet(va,vb,vx);
+   df1_three_variable vy = replacement::incbet(va,vb,vx);
    return vy;
 }
 
@@ -2032,3 +2034,4 @@ static df1_three_variable df3_get_values(double a,double b,double x)
   // while(1);
   //  //cout << "dfx = " << dfx << endl;
   //}
+}

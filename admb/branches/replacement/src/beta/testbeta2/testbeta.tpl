@@ -18,6 +18,9 @@ GLOBALS_SECTION
 
   namespace replacement 
   {
+    //df33tester.cpp:871
     df1b2variable incbet(const df1b2variable& _a,const df1b2variable& _b, const df1b2variable& _x);
+
+    //df13tester.cpp:870
     dvariable incbet(const dvariable& _a,const dvariable& _b, const dvariable& _x);
   }

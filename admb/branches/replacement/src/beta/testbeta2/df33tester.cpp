@@ -880,7 +880,7 @@ df1b2variable incbet(const df1b2variable& _a,const df1b2variable& _b,
   init_df3_three_variable va(a);
   init_df3_three_variable vb(b);
   df3_three_variable vy;
-  vy = incbet( va, vb, vx );
+  vy = replacement::incbet( va, vb, vx );
   df1b2variable z;
   z=vy;
   return z;
@@ -1700,7 +1700,7 @@ static double get_values(double a,double b,double x)
    *va.get_u_x()=1.0;
    *vb.get_u_y()=1.0;
    *vx.get_u_z()=1.0;
-   df3_three_variable vy = incbet(va,vb,vx);
+   df3_three_variable vy = replacement::incbet(va,vb,vx);
    return *vy.get_u();
 }
 
@@ -1716,7 +1716,7 @@ static df3_three_variable df3_get_values(double a,double b,double x)
    *va.get_u_x()=1.0;
    *vb.get_u_y()=1.0;
    *vx.get_u_z()=1.0;
-   df3_three_variable vy = incbet(va,vb,vx);
+   df3_three_variable vy = replacement::incbet(va,vb,vx);
    return vy;
 }
 

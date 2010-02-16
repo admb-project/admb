@@ -47,4 +47,22 @@ clean:
 	rm -vf $(OBJECTS)
 	rm -vf testbeta.cpp
 	rm -vf testbeta
-
+	rm -vf testbeta.luu
+	rm -vf admodel.hes
+	rm -vf testbeta.bgs
+	rm -vf testbeta.eva
+	rm -vf testbeta2.htp
+	rm -vf variance
+	rm -vf testbeta.log
+	rm -vf admodel.cov
+	rm -vf testbeta.par
+	rm -vf testbeta.cor
+	rm -vf eigv.rpt
+	rm -vf hesscheck
+	rm -vf hessian.bin
+	rm -vf testbeta.std
+	rm -vf fmin.log
+	rm -vf testbeta.rhes
+	rm -vf admodel.dep
+	rm -vf testbeta2.cpp
+	rm -vf testbeta.bar

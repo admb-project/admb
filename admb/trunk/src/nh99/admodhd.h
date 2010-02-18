@@ -43,7 +43,13 @@
 #ifndef __ADMOD3D__
 #define __ADMOD3D__
 
-#pragma interface
+#if defined(__GNUC__)
+  #if (__GNUC__ < 3)
+    #pragma interface
+  #endif
+#else
+  #pragma interface
+#endif
 
 #include <admodel.h>
 

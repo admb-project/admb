@@ -45,7 +45,7 @@
 
 #if defined(__GNUC__)
   #if (__GNUC__ < 3)
-     #pragma interface
+    #pragma interface
   #endif
 #endif
 

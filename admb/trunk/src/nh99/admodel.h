@@ -45,7 +45,13 @@
 //#define DO_PROFILE
 #define __MINI_MAX__
 #if !defined(__MSVC32__)
-#  pragma interface
+  #if defined(__GNUC__)
+    #if (__GNUC__ < 3)
+      #pragma interface
+    #endif
+  #else
+    #pragma interface
+  #endif
 #endif
 #ifndef _ADMODEL_H_
   #define  _ADMODEL_H_

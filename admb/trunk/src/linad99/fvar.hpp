@@ -40,7 +40,13 @@
  */
 
 #if defined(__GNUDOS__)
-#  pragma interface
+  #if defined(__GNUC__)
+    #if (__GNUC__ < 3)
+      #pragma interface
+    #endif
+  #else
+    #pragma interface
+  #endif
 #endif
 
 
@@ -1070,7 +1076,13 @@ private:
   void jacobcalc(int nvar,BOR_CONST uostream& ofs);
 
 #if defined(__BORLANDC__ )
-#  pragma interface
+  #if defined(__GNUC__)
+    #if (__GNUC__ < 3)
+      #pragma interface
+    #endif
+  #else
+    #pragma interface
+  #endif
 #endif
     class dvect_ptr_ptr
     {

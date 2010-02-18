@@ -42,7 +42,13 @@
 
 //char cc[40]={"Copyright (c) 2008 Regents of the University of California"};
 //#define DO_PROFILE
-#  pragma interface
+#if defined(__GNUC__)
+  #if (__GNUC__ < 3)
+    #pragma interface
+  #endif
+#else
+  #pragma interface
+#endif
 
 //#include <admodhd.h>
 #ifndef _ADMODEL_H_

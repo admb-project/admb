@@ -81,7 +81,6 @@ class df1b2variable;
     int indexmax(void) const { return int(index_max); }
     df3_three_vector(int min,int max);
     df3_three_vector(void);
-    void df3_three_vector::allocate(void);
     void allocate(int min,int max);
     df3_three_variable& operator () (int i) const 
     { 
@@ -133,7 +132,6 @@ class df1b2variable;
     //df3_three_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df3_three_matrix();
-    df3_three_matrix::df3_three_matrix(const df3_three_matrix& m2);
   };
 
  dmatrix value(const df3_three_matrix& v);

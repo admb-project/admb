@@ -399,7 +399,7 @@ gamnan:
 			return( sgngam * MYINF);
 #else
 goverf:
-			mtherr( "gamma", OVERFLOW );
+			//mtherr( "gamma", OVERFLOW );
 			return( sgngam * MYBIG);
 			//return( sgngam * MAXNUM);
 #endif
@@ -633,7 +633,7 @@ if( x < -34.0 )
 		{
 lgsing:
 #ifdef INFINITIES
-		mtherr( "lgam", SING );
+		//mtherr( "lgam", SING );
 		return (MYINF);
 #else
 		goto loverf;
@@ -698,7 +698,7 @@ if( x > MAXLGM )
 	return( sgngam * MYINF );
 #else
 loverf:
-	mtherr( "lgam", OVERFLOW );
+	//mtherr( "lgam", OVERFLOW );
 	df3_three_variable tmp;
         tmp=sgngam * MAXNUM;
 	return tmp;
@@ -789,7 +789,7 @@ Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  // return( ans );
  // }
 
-static df3_three_variable polevl( const df3_three_variable&  x, void * _coef, int N )
+df3_three_variable polevl( const df3_three_variable&  x, void * _coef, int N )
 {
 double * coef=(double *)(_coef);
 df3_three_variable  ans;
@@ -861,7 +861,7 @@ _INFINITY' referenced from module all.cpp
 'isfinite(double)' referenced from module all.cpp
 */
 
-int mtherr(char* s,int n);
+//int mtherr(char* s,int n);
  df3_three_variable incbet(const df3_three_variable & _aa, 
    const df3_three_variable & _bb, const df3_three_variable & _xx );
 
@@ -1339,7 +1339,7 @@ static   df3_three_variable incbcf(const df3_three_variable & _a, const df3_thre
 static   df3_three_variable pseries(const df3_three_variable & _a, const df3_three_variable & _b, const df3_three_variable & _x );
 static  df3_three_variable incbd(const df3_three_variable & _a, const df3_three_variable & _b, const df3_three_variable & _x );
 
-static  df3_three_variable incbet(const df3_three_variable & _aa, 
+df3_three_variable incbet(const df3_three_variable & _aa, 
    const df3_three_variable & _bb, const df3_three_variable & _xx )
  {
 

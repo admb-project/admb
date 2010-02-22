@@ -249,29 +249,29 @@ static double MAXLGM = 2.556348e305;
 // this namespace is implemented in linad99/df13incbet.cpp
 namespace Cephes
 {
-   double *A;
-   double *B;
-   double *C;
-   double *P;
-   double *Q;
-   double STIR[5];
-   double MAXGAM;
-   double MAXLOG;
-   double MINLOG;
-   double MACHEP;
-   double big;
-   double biginv;
-   double LOGPI;
-   double PI;
-   double MAXSTIR;
-   double SQTPI;
-   int sgngam;
-   double MAXNUM;
+   extern double *A;
+   extern double *B;
+   extern double *C;
+   extern double *P;
+   extern double *Q;
+   extern double STIR[5];
+   extern double MAXGAM;
+   extern double MAXLOG;
+   extern double MINLOG;
+   extern double MACHEP;
+   extern double big;
+   extern double biginv;
+   extern double LOGPI;
+   extern double PI;
+   extern double MAXSTIR;
+   extern double SQTPI;
+   extern int sgngam;
+   extern double MAXNUM;
    double polevl(double, void *, int);
    double p1evl(double, void *, int);
-   double MYINF;
-   double LS2PI;
-   double MAXLGM;
+   extern double MYINF;
+   extern double LS2PI;
+   extern double MAXLGM;
 
    int mtherr(char *s, int n);
 
@@ -1027,7 +1027,7 @@ static df3_three_variable incbet(const df3_three_variable & _aa,
    }
 
    /* Choose expansion for better convergence. */
-   y = x * (a + b - 2.0) - (a - 1.0);
+   y = x * (a + b - 2.0) - (a - 1.0); // Shouldn't this be (a + 1.0)?
    if (value(y) < 0.0)
       w = incbcf(a, b, x);
    else

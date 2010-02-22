@@ -883,7 +883,7 @@ double lgam(const double _x)
  */
 
 //df1_three_variable igam(const df1_three_variable & a,
-//                             const df1_three_variable & x);
+//                        const df1_three_variable & x);
 
 df1_three_variable igamc(const df1_three_variable & _a,
 			 const df1_three_variable & _x)
@@ -1157,7 +1157,7 @@ df1_three_variable incbet(const df1_three_variable & _aa,
    }
 
    /* Choose expansion for better convergence. */
-   y = x * (a + b - 2.0) - (a - 1.0);
+   y = x * (a + b - 2.0) - (a - 1.0); // Shouldn't this be (a + 1.0)?
    if (value(y) < 0.0)
       w = incbcf(a, b, x);
    else

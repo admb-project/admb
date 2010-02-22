@@ -400,7 +400,7 @@ gamnan:
 			return( sgngam * MYINF);
 #else
 goverf:
-			mtherr( "gamma", OVERFLOW );
+			( "gamma", OVERFLOW );
 			return( sgngam * MYBIG);
 			//return( sgngam * MAXNUM);
 #endif
@@ -634,7 +634,7 @@ if( x < -34.0 )
 		{
 lgsing:
 #ifdef INFINITIES
-		mtherr( "lgam", SING );
+		//mtherr( "lgam", SING );
 		return (MYINF);
 #else
 		goto loverf;
@@ -699,7 +699,7 @@ if( x > MAXLGM )
 	return( sgngam * MYINF );
 #else
 loverf:
-	mtherr( "lgam", OVERFLOW );
+	//mtherr( "lgam", OVERFLOW );
 	df1_three_variable tmp;
         tmp=sgngam * MAXNUM;
 	return tmp;
@@ -772,7 +772,7 @@ Direct inquiries to 30 Frost Street, Cambridge, MA 02140
 */
 
 
-static double polevl( double  x, void * _coef, int N )
+double polevl( double  x, void * _coef, int N )
 {
 double * coef=(double *)(_coef);
 double  ans;
@@ -790,7 +790,7 @@ while( --i );
 return( ans );
 }
 
-static df1_three_variable polevl( const df1_three_variable&  x, void * _coef, int N )
+df1_three_variable polevl( const df1_three_variable&  x, void * _coef, int N )
 {
 double * coef=(double *)(_coef);
 df1_three_variable  ans;
@@ -815,7 +815,7 @@ return( ans );
  * Otherwise same as polevl.
  */
 
-static double p1evl( double x, void * _coef, int N )
+double p1evl( double x, void * _coef, int N )
 {
 double * coef= (double*)(_coef);
 double ans;
@@ -833,7 +833,7 @@ while( --i );
 return( ans );
 }
  
-static df1_three_variable p1evl(const df1_three_variable & x, void * _coef, int N )
+df1_three_variable p1evl(const df1_three_variable & x, void * _coef, int N )
 {
 double * coef= (double*)(_coef);
 df1_three_variable ans;
@@ -860,7 +860,7 @@ _INFINITY' referenced from module all.cpp
 'isfinite(double)' referenced from module all.cpp
 */
 
-static int mtherr(char* s,int n){ /*ad_exit(1);*/  return 0;}
+//static int mtherr(const char* s,int n){ /*ad_exit(1);*/  return 0;}
  static df1_three_variable incbet(const df1_three_variable & _aa, 
    const df1_three_variable & _bb, const df1_three_variable & _xx );
 
@@ -909,7 +909,7 @@ dvariable incbet(const dvariable& _a,const dvariable& _b,
   //   }
   // }
 
-static double lgam(double x)
+double lgam(double x)
 {
 double p, q, u, w, z;
 int i;
@@ -934,7 +934,7 @@ if( x < -34.0 )
 		{
 lgsing:
 #ifdef INFINITIES
-		mtherr( "lgam", SING );
+		//mtherr( "lgam", SING );
 		return (MYINF);
 #else
 		goto loverf;
@@ -999,7 +999,7 @@ if( x > MAXLGM )
 	return( sgngam * MYINF );
 #else
 loverf:
-	mtherr( "lgam", OVERFLOW );
+	//mtherr( "lgam", OVERFLOW );
 	return( sgngam * MAXNUM );
 #endif
 	}

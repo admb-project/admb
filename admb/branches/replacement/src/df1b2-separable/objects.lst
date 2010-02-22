@@ -124,6 +124,8 @@ f1b2ma1.obj \
 f1b23d1.obj \
 df1b2negb.obj \
 smartbuf.obj  \
+df13tester.obj \
+df33tester.obj \
 mod_rhes.obj  
 UNUSED =\
 df1b2bet.obj \

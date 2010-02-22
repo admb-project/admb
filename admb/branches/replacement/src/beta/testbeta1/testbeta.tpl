@@ -6,7 +6,10 @@ PARAMETER_SECTION
   random_effects_vector u(1,1)
   objective_function_value f
 PROCEDURE_SECTION
-  f+=square(incbet(a,b,x)-4.0+u(1));
+  const dvariable& A=a;
+  const dvariable& B=b;
+  const dvariable& X=x;
+  f+=square(incbet( A, B, X)-4.0+u(1));
   f+=square(u(1)-0.5);
   f+=square(a-2.0);
   f+=square(b-3.0);

@@ -62,8 +62,8 @@ simple:
 	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
 
 truncreg:
-	@#cd examples/admb/$@;admb $@;./runtrunc.bat;./fruntrunc.bat
-	@#cd examples/admb/$@;admb -s $@;./runtrunc.bat;./fruntrunc.bat
+	@cd examples/admb/$@;admb $@;./$@ -ams 2000000;./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
+	@cd examples/admb/$@;admb -s $@;./$@ -ams 2000000;./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
 
 vol: n2mvol
 n2mvol:
@@ -98,16 +98,17 @@ bcb:
 	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@
 
 biglog:
-	@#cd examples/admb-re/$@;admb -r $@;./$@
-	@#cd examples/admb-re/$@;admb -r -s $@;./$@
+	@cd examples/admb-re/$@;admb -r $@;./$@
+	@cd examples/admb-re/$@;admb -r -s $@;./$@
 
 bvprobit:
-	@#cd examples/admb-re/glmmadmb;admb -r $@;./$@
-	@#cd examples/admb-re/glmmadmb;admb -r -s $@;./$@
+	@#Missing bvprobit.dat
+	@-cd examples/admb-re/glmmadmb;admb -r $@;./$@
+	@-cd examples/admb-re/glmmadmb;admb -r -s $@;./$@
 
 caest:
-	@#cd examples/admb-re/$@;admb -r $@;./$@
-	@#cd examples/admb-re/$@;admb -r -s $@;./$@
+	@cd examples/admb-re/$@;admb -r $@;./$@
+	@cd examples/admb-re/$@;admb -r -s $@;./$@
 
 gamma:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) liver_$@;./liver_$@
@@ -122,12 +123,13 @@ lidar:
 	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 logistic:
-	@#cd examples/admb-re/$@;admb -r $@;./$@
-	@#cd examples/admb-re/$@;admb -r -s $@;./$@
+	@cd examples/admb-re/$@;admb -r $@;./$@
+	@cd examples/admb-re/$@;admb -r -s $@;./$@
 
 nbmm:
-	@#cd examples/admb-re/glmmadmb;admb -r $@;./$@
-	@#cd examples/admb-re/glmmadmb;admb -r -s $@;./$@
+	@#Missing .dat file
+	@-cd examples/admb-re/glmmadmb;admb -r $@;./$@
+	@-cd examples/admb-re/glmmadmb;admb -r -s $@;./$@
 
 nested4:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
@@ -142,8 +144,8 @@ orange2:
 	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 orange_cor:
-	@#cd examples/admb-re/$@;admb -r $@;./$@
-	@#cd examples/admb-re/$@;admb -r -s $@;./$@
+	@-cd examples/admb-re/$@;admb -r $@;./$@
+	@-cd examples/admb-re/$@;admb -r -s $@;./$@
 
 pheno:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
@@ -175,13 +177,13 @@ spatial:
 	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 union:
-	@#cd examples/admb-re/$@;admb -r $@;./$@
-	@#cd examples/admb-re/$@;admb -r -s $@;./$@
+	@cd examples/admb-re/$@;admb -r $@;./$@
+	@cd examples/admb-re/$@;admb -r -s $@;./$@
 
 weights: binomial binomial_w2
 binomial:
 	cd examples/admb-re/weights;admb -r $(DEBUG_OPTION) $@;./$@
 	cd examples/admb-re/weights;admb -r -s $(DEBUG_OPTION) $@;./$@
 binomial_w2:
-	@#cd examples/admb-re/weights;admb -r $@;./$@
-	@#cd examples/admb-re/weights;admb -r -s $@;./$@
+	@-cd examples/admb-re/weights;admb -r $@;./$@
+	@-cd examples/admb-re/weights;admb -r -s $@;./$@

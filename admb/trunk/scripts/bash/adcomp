@@ -1,47 +1,53 @@
 #!/bin/bash
 shopt -s expand_aliases
-alias help='echo -e "Usage: adcomp [-d] [-r] [-s] model\n
+alias help='echo -e "Usage: adcomp [-d] [-g] [-r] [-s] model\n
 Compile AD Model Builder C++ to object code.\n
-  -d     Create object file for DLL
-  -r     Create object file for ADMB-RE
-  -s     Create object file with safe bounds and debugging symbols
+  -d     Create DLL
+  -g     Insert debugging symbols
+  -r     Create ADMB-RE
+  -s     Enforce safe bounds
   model  Filename prefix, e.g. simple\n"'
 if [[ "$1" == "" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 ###########################################################################################################################
 ###                                                                                                                       #
-### Script:   adcomp [-d] [-r] [-s] model                                                                                 #
+### Script:   adcomp [-d] [-g] [-r] [-s] model                                                                            #
 ###                                                                                                                       #
 ### Purpose:  Compile ADMB C++ to object code                                                                             #
 ###                                                                                                                       #
 ### Args:     -d creates object file for DLL                                                                              #
+###           -g inserts debugging symbols                                                                                #
 ###           -r creates object file for ADMB-RE                                                                          #
-###           -s creates object file with safe bounds and debugging symbols                                               #
-###           model is the filename prefix, e.g. simple                                                                   #
+###           -s creates object file that enforces safe array bounds during runtime                                       #
+###           model is the filename with or without extension, e.g. simple or simple.cpp                                  #
 ###                                                                                                                       #
 ### Requires: ADMB header files, g++                                                                                      #
 ###                                                                                                                       #
 ### Returns:  Creates object file with same prefix                                                                        #
 ###                                                                                                                       #
 ### History:  23 May 2009  Arni Magnusson created                                                                         #
+###           27 Nov 2009  Arni Magnusson added support for filename extension, e.g. simple.cpp                           #
+###            8 Feb 2010  Johnoel Ancheta split the -s combo option into separate -g and -s options                      #
+###           22 Feb 2010  Arni Magnusson merged forked versions                                                          #
 ###                                                                                                                       #
 ###########################################################################################################################
 
 # Pop args until model=$1
-unset g
 unset dll
-opt=-DOPT_LIB
 g=-O3
-while getopts "drsg" A; do
+opt=-DOPT_LIB
+while getopts "dgrs" A; do
   case $A in
     d) dll=-DBUILDING_DLL;;
+    g) g=-g;;
     r) ;;
     s) opt=;;
-    g) g=-g;;
   esac
 done
 shift $[OPTIND-1]
 
-echo -e "g++ -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $1.cpp\n"
-         g++ -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $1.cpp
+model="${1%.*}"
+
+echo -e "g++ -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $model.cpp\n"
+         g++ -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $model.cpp

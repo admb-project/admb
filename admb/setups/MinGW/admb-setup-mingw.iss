@@ -23,8 +23,8 @@ Name: "mingw"; Description: "ADMB with MinGW tools"
 
 [Files]
 Source: "..\..\trunk\build\dists\admb_gcc345_mingw32\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs
-Source: "..\..\utilities\GnuWin32"; DestDir: "{app}\utilities"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
-Source: "..\..\utilities\MinGW"; DestDir: "{app}\utilities"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\utilities\GnuWin32\*"; DestDir: "{app}\utilities\GnuWin32"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\utilities\MinGW\*"; DestDir: "{app}\utilities\MinGW"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "..\..\utilities\set-utilities-path.bat"; DestDir: "{app}\utilities"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 
 [Icons]

@@ -3,6 +3,7 @@ SHELL = /bin/bash
 
 DISK=../build/dists/admb_gcc411_fedora8
 PWD=$(shell pwd)
+NOW=$(shell date)
 
 CCVERSION=gcc411
 OSVERSION=fedorar8

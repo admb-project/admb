@@ -1,9 +1,11 @@
-/**
- * $Id$
+/*
+ * $Id:  $
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2009 ADMB Foundation
+ *
  */
+
 #include <df1b2fun.h>
 #include <df33fun.h>
   df1b2variable * df3_three_variable::ind_var[3];
@@ -1064,7 +1066,7 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     double yinv3 = yinv * yinv2; 
     doubl yd = *y.get_udot();
 
-    //*z.get_u() = *x.get_u() /  *y.get_u();
+    // *z.get_u() = *x.get_u() /  *y.get_u();
     *z.get_u() = *x.get_u() * yinv;
 
     *z.get_udot() =  - (*x.get_u()) * yinv2 * yd

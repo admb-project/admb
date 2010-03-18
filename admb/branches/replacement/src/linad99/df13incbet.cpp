@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id:  $
  *
  * Based on code from Cephes C and C++ language special functions math library
  * and adapeted for automatic differentiation.
@@ -11,69 +11,16 @@
  *
  */
 #include <df13fun.h>
-// function prototype
-df1_three_variable incbet(const df1_three_variable & _aa,
-			  const df1_three_variable & _bb,
-			  const df1_three_variable & _xx);
 
+static int mtherr(char *s, int n);
+static df1_three_variable igam(const df1_three_variable & a,
+			       const df1_three_variable & x);
 
-// operators that belong somewhere else
-// moved to df13fun.h and df13fun.cpp
-/*
-int operator <(const df1_three_variable & x, double n)
-{
-   return value(x) < n;
-}
-
-int operator >(const df1_three_variable & x, double n)
-{
-   return value(x) > n;
-}
-
-int operator >=(const df1_three_variable & x, double n)
-{
-   return value(x) >= n;
-}
-
-int operator ==(const df1_three_variable & x, const df1_three_variable & n)
-{
-   return value(x) == value(n);
-}
-
-int operator ==(const df1_three_variable & x, double n)
-{
-   return value(x) == n;
-}
-
-int operator ==(double x, const df1_three_variable & n)
-{
-   return x == value(n);
-}
-
-int operator <(const df1_three_variable & x, const df1_three_variable & n)
-{
-   return value(x) < value(n);
-}
-
-int operator >(const df1_three_variable & x, const df1_three_variable & n)
-{
-   return value(x) > value(n);
-}
-
-*/
-
-namespace Cephes
-{
-
-   int mtherr(char *s, int n);
-   df1_three_variable igam(const df1_three_variable & a,
-			   const df1_three_variable & x);
-
-   double MAXLOG = 200;
-   double MINLOG = -200;
-   double big = 4.503599627370496e15;
-   double biginv = 2.22044604925031308085e-16;
-   double MACHEP = 2.22045e-16;
+static double MAXLOG = 200;
+static double MINLOG = -200;
+static double big = 4.503599627370496e15;
+static double biginv = 2.22044604925031308085e-16;
+static double MACHEP = 2.22045e-16;
 /*							gamma.c
  *
  *	Gamma function
@@ -174,254 +121,79 @@ namespace Cephes
 /*							gamma.c	*/
 /*	gamma function	*/
 
-   double P[] = {
-      1.60119522476751861407E-4,
-      1.19135147006586384913E-3,
-      1.04213797561761569935E-2,
-      4.76367800457137231464E-2,
-      2.07448227648435975150E-1,
-      4.94214826801497100753E-1,
-      9.99999999999999996796E-1
-   };
+static double P[] = {
+   1.60119522476751861407E-4,
+   1.19135147006586384913E-3,
+   1.04213797561761569935E-2,
+   4.76367800457137231464E-2,
+   2.07448227648435975150E-1,
+   4.94214826801497100753E-1,
+   9.99999999999999996796E-1
+};
 
-   double Q[] = {
-      -2.31581873324120129819E-5,
-      5.39605580493303397842E-4,
-      -4.45641913851797240494E-3,
-      1.18139785222060435552E-2,
-      3.58236398605498653373E-2,
-      -2.34591795718243348568E-1,
-      7.14304917030273074085E-2,
-      1.00000000000000000320E0
-   };
+static double Q[] = {
+   -2.31581873324120129819E-5,
+   5.39605580493303397842E-4,
+   -4.45641913851797240494E-3,
+   1.18139785222060435552E-2,
+   3.58236398605498653373E-2,
+   -2.34591795718243348568E-1,
+   7.14304917030273074085E-2,
+   1.00000000000000000320E0
+};
 
-   double MAXGAM = 171.624376956302725;
-   double LOGPI = 1.14472988584940017414;
-   double PI = 3.14159265358979323844;
+static double MAXGAM = 171.624376956302725;
+static double LOGPI = 1.14472988584940017414;
+static double PI = 3.14159265358979323844;
 
 /* Stirling's formula for the gamma function */
-   double STIR[5] = {
-      7.87311395793093628397E-4,
-      -2.29549961613378126380E-4,
-      -2.68132617805781232825E-3,
-      3.47222221605458667310E-3,
-      8.33333333333482257126E-2,
-   };
-   double MAXSTIR = 143.01608;
-   double SQTPI = 2.50662827463100050242E0;
+static double STIR[5] = {
+   7.87311395793093628397E-4,
+   -2.29549961613378126380E-4,
+   -2.68132617805781232825E-3,
+   3.47222221605458667310E-3,
+   8.33333333333482257126E-2,
+};
+static double MAXSTIR = 143.01608;
+static double SQTPI = 2.50662827463100050242E0;
 
-   int sgngam = 0;
-   double MAXNUM = 1.7976931348623158E+308;
+static int sgngam = 0;
+static double MAXNUM = 1.7976931348623158E+308;
 
-   double polevl(double, void *, int);
-   df1_three_variable polevl(const df1_three_variable &, void *, int);
-   double p1evl(double, void *, int);
-   df1_three_variable p1evl(const df1_three_variable &, void *, int);
-   //double lgam(const double);
+static double polevl(double, void *, int);
+static  df1_three_variable polevl(const df1_three_variable &, void *, int);
+static  double p1evl(double, void *, int);
+static  df1_three_variable p1evl(const df1_three_variable &, void *, int);
+static double lgam(double);
 
-   double MYINF = 1.7976931348623158E+308;
+const double MYINF = 1.7976931348623158E+308;
 
 /* Gamma function computed by Stirling's formula.
  * The polynomial STIR is valid for 33 <= x <= 172.
  */
-   df1_three_variable stirf(const df1_three_variable & _x)
-   {
-      ADUNCONST(df1_three_variable, x) df1_three_variable y, w, v;
-
-      w = 1.0 / x;
-      w = 1.0 + w * polevl(w, STIR, 4);
-      y = exp(x);
-      if (value(x) > MAXSTIR)
-      {				/* Avoid overflow in pow() */
-	 v = pow(x, 0.5 * x - 0.25);
-	 y = v * (v / y);
-      } else
-      {
-	 y = pow(x, x - 0.5) / y;
-      }
-      y = SQTPI * y * w;
-      return (y);
-   }
-
-
-
-
-
-/* A[]: Stirling's formula expansion of log gamma
- * B[], C[]: log gamma function between 2 and 3
- */
-   double A[] = {
-      8.11614167470508450300E-4,
-      -5.95061904284301438324E-4,
-      7.93650340457716943945E-4,
-      -2.77777777730099687205E-3,
-      8.33333333333331927722E-2
-   };
-
-   double B[] = {
-      -1.37825152569120859100E3,
-      -3.88016315134637840924E4,
-      -3.31612992738871184744E5,
-      -1.16237097492762307383E6,
-      -1.72173700820839662146E6,
-      -8.53555664245765465627E5
-   };
-
-   double C[] = {
-/* 1.00000000000000000000E0, */
-      -3.51815701436523470549E2,
-      -1.70642106651881159223E4,
-      -2.20528590553854454839E5,
-      -1.13933444367982507207E6,
-      -2.53252307177582951285E6,
-      -2.01889141433532773231E6
-   };
-
-/* log( sqrt( 2*pi ) ) */
-   double LS2PI = 0.91893853320467274178;
-   double MAXLGM = 2.556348e305;
-
-/*							polevl.c
- *							p1evl.c
- *
- *	Evaluate polynomial
- *
- *
- *
- * SYNOPSIS:
- *
- * int N;
- * double x, y, coef[N+1], polevl[];
- *
- * y = polevl( x, coef, N );
- *
- *
- *
- * DESCRIPTION:
- *
- * Evaluates polynomial of degree N:
- *
- *                     2          N
- * y  =  C  + C x + C x  +...+ C x
- *        0    1     2          N
- *
- * Coefficients are stored in reverse order:
- *
- * coef[0] = C  , ..., coef[N] = C  .
- *            N                   0
- *
- *  The function p1evl() assumes that coef[N] = 1.0 and is
- * omitted from the array.  Its calling arguments are
- * otherwise the same as polevl().
- *
- *
- * SPEED:
- *
- * In the interest of speed, there are no checks for out
- * of bounds arithmetic.  This routine is used by most of
- * the functions in the library.  Depending on available
- * equipment features, the user may wish to rewrite the
- * program in microcode or assembly language.
- *
- */
-
-
-   double polevl(double x, void *_coef, int N)
-   {
-      double *coef = (double *) (_coef);
-      double ans;
-      int i;
-      double *p;
-
-      p = coef;
-      ans = *p++;
-      i = N;
-
-      do
-	 ans = ans * x + *p++;
-      while (--i);
-
-      return (ans);
-   }
-
-   df1_three_variable polevl(const df1_three_variable & x, void *_coef,
-			     int N)
-   {
-      double *coef = (double *) (_coef);
-      df1_three_variable ans;
-      int i;
-      double *p;
-
-      p = coef;
-      ans = *p++;
-      i = N;
-
-      do
-	 ans = ans * x + *p++;
-      while (--i);
-
-      return (ans);
-   }
-
-
-/*							p1evl()	*/
-/*                                          N
- * Evaluate polynomial when coefficient of x  is 1.0.
- * Otherwise same as polevl.
- */
-
-   double p1evl(double x, void *_coef, int N)
-   {
-      double *coef = (double *) (_coef);
-      double ans;
-      double *p;
-      int i;
-
-      p = coef;
-      ans = x + *p++;
-      i = N - 1;
-
-      do
-	 ans = ans * x + *p++;
-      while (--i);
-
-      return (ans);
-   }
-
-   df1_three_variable p1evl(const df1_three_variable & x, void *_coef,
-			    int N)
-   {
-      double *coef = (double *) (_coef);
-      df1_three_variable ans;
-      double *p;
-      int i;
-
-      p = coef;
-      ans = x + *p++;
-      i = N - 1;
-
-      do
-	 ans = ans * x + *p++;
-      while (--i);
-
-      return (ans);
-   }
-
-   int mtherr(char *s, int n)
-   {
-      cerr << "Error code " << n << "in " << *s << endl;
-      ad_exit(1);
-      return 0;
-   }
-
-
-
-}				//namespace Cephes
-
-df1_three_variable gamma(const df1_three_variable & xx1)
+static df1_three_variable stirf(const df1_three_variable & _x)
 {
-   using namespace Cephes;
+   ADUNCONST(df1_three_variable, x) df1_three_variable y, w, v;
 
+   w = 1.0 / x;
+   w = 1.0 + w * polevl(w, STIR, 4);
+   y = exp(x);
+   if (value(x) > MAXSTIR)
+   {				/* Avoid overflow in pow() */
+      v = pow(x, 0.5 * x - 0.25);
+      y = v * (v / y);
+   } else
+   {
+      y = pow(x, x - 0.5) / y;
+   }
+   y = SQTPI * y * w;
+   return (y);
+}
+
+
+
+static df1_three_variable gamma(const df1_three_variable & xx1)
+{
    df1_three_variable x;
    x = xx1;
    df1_three_variable MYBIG;
@@ -544,11 +316,86 @@ df1_three_variable gamma(const df1_three_variable & xx1)
 }
 
 
+
+/* A[]: Stirling's formula expansion of log gamma
+ * B[], C[]: log gamma function between 2 and 3
+ */
+static double A[] = {
+   8.11614167470508450300E-4,
+   -5.95061904284301438324E-4,
+   7.93650340457716943945E-4,
+   -2.77777777730099687205E-3,
+   8.33333333333331927722E-2
+};
+
+static double B[] = {
+   -1.37825152569120859100E3,
+   -3.88016315134637840924E4,
+   -3.31612992738871184744E5,
+   -1.16237097492762307383E6,
+   -1.72173700820839662146E6,
+   -8.53555664245765465627E5
+};
+
+static double C[] = {
+/* 1.00000000000000000000E0, */
+   -3.51815701436523470549E2,
+   -1.70642106651881159223E4,
+   -2.20528590553854454839E5,
+   -1.13933444367982507207E6,
+   -2.53252307177582951285E6,
+   -2.01889141433532773231E6
+};
+
+/* log( sqrt( 2*pi ) ) */
+static double LS2PI = 0.91893853320467274178;
+static double MAXLGM = 2.556348e305;
+
 /* Logarithm of gamma function */
+
+int operator <(const df1_three_variable & x, double n)
+{
+   return value(x) < n;
+}
+
+int operator >(const df1_three_variable & x, double n)
+{
+   return value(x) > n;
+}
+
+int operator >=(const df1_three_variable & x, double n)
+{
+   return value(x) >= n;
+}
+
+int operator ==(const df1_three_variable & x, const df1_three_variable & n)
+{
+   return value(x) == value(n);
+}
+
+int operator ==(const df1_three_variable & x, double n)
+{
+   return value(x) == n;
+}
+
+int operator ==(double x, const df1_three_variable & n)
+{
+   return x == value(n);
+}
+
+int operator <(const df1_three_variable & x, const df1_three_variable & n)
+{
+   return value(x) < value(n);
+}
+
+int operator >(const df1_three_variable & x, const df1_three_variable & n)
+{
+   return value(x) > value(n);
+}
+
+
 df1_three_variable lgam(const df1_three_variable & _x)
 {
-   using namespace Cephes;
-
    df1_three_variable x, p, q, u, w, z, p1;
    x = _x;
    int i;
@@ -658,46 +505,164 @@ df1_three_variable lgam(const df1_three_variable & _x)
    return (q);
 }
 
-/** Incomplete beta function; variable objects.
-  Wrapper to call df1_three_variable incbet(const df1_three_variable & _aa,
-			  const df1_three_variable & _bb,
-			  const df1_three_variable & _xx);
+/*							polevl.c
+ *							p1evl.c
+ *
+ *	Evaluate polynomial
+ *
+ *
+ *
+ * SYNOPSIS:
+ *
+ * int N;
+ * double x, y, coef[N+1], polevl[];
+ *
+ * y = polevl( x, coef, N );
+ *
+ *
+ *
+ * DESCRIPTION:
+ *
+ * Evaluates polynomial of degree N:
+ *
+ *                     2          N
+ * y  =  C  + C x + C x  +...+ C x
+ *        0    1     2          N
+ *
+ * Coefficients are stored in reverse order:
+ *
+ * coef[0] = C  , ..., coef[N] = C  .
+ *            N                   0
+ *
+ *  The function p1evl() assumes that coef[N] = 1.0 and is
+ * omitted from the array.  Its calling arguments are
+ * otherwise the same as polevl().
+ *
+ *
+ * SPEED:
+ *
+ * In the interest of speed, there are no checks for out
+ * of bounds arithmetic.  This routine is used by most of
+ * the functions in the library.  Depending on available
+ * equipment features, the user may wish to rewrite the
+ * program in microcode or assembly language.
+ *
+ */
+
 
-    \param _a Parameter \f$a\f$ of incomplete beta function; \f$a>0\f$
-    \param _b Parameter \f$b\f$ of incomplete beta function; \f$b>0\f$
-    \param _x Parameter \f$x\f$ of incomplete beta function; \f$0<x\le 1\f$
-    \return Incomplete beta function \f$B_x(a,b) = \int_0^x t^{a-1}(1-t)^{b-1} dt\f$
-    \ingroup PDF
-*/
+static double polevl(double x, void *_coef, int N)
+{
+   double *coef = (double *) (_coef);
+   double ans;
+   int i;
+   double *p;
+
+   p = coef;
+   ans = *p++;
+   i = N;
+
+   do
+      ans = ans * x + *p++;
+   while (--i);
+
+   return (ans);
+}
+
+static df1_three_variable polevl(const df1_three_variable & x, void *_coef,
+				 int N)
+{
+   double *coef = (double *) (_coef);
+   df1_three_variable ans;
+   int i;
+   double *p;
+
+   p = coef;
+   ans = *p++;
+   i = N;
+
+   do
+      ans = ans * x + *p++;
+   while (--i);
+
+   return (ans);
+}
+
+
+/*							p1evl()	*/
+/*                                          N
+ * Evaluate polynomial when coefficient of x  is 1.0.
+ * Otherwise same as polevl.
+ */
+
+static double p1evl(double x, void *_coef, int N)
+{
+   double *coef = (double *) (_coef);
+   double ans;
+   double *p;
+   int i;
+
+   p = coef;
+   ans = x + *p++;
+   i = N - 1;
+
+   do
+      ans = ans * x + *p++;
+   while (--i);
+
+   return (ans);
+}
+
+static df1_three_variable p1evl(const df1_three_variable & x, void *_coef,
+				int N)
+{
+   double *coef = (double *) (_coef);
+   df1_three_variable ans;
+   double *p;
+   int i;
+
+   p = coef;
+   ans = x + *p++;
+   i = N - 1;
+
+   do
+      ans = ans * x + *p++;
+   while (--i);
+
+   return (ans);
+}
+
+static int mtherr(char *s, int n)
+{
+   cerr << "Error code " << n << "in " << *s << endl;
+   ad_exit(1);
+   return 0;
+}
+
+static df1_three_variable incbet(const df1_three_variable & _aa,
+				 const df1_three_variable & _bb,
+				 const df1_three_variable & _xx);
+
+// this is the wrapper to call the main inbet function
 dvariable incbet(const dvariable & _a, const dvariable & _b,
 		 const dvariable & _x)
 {
    ADUNCONST(dvariable, a) ADUNCONST(dvariable, b) ADUNCONST(dvariable, x)
-
-   // these three lines will automatically put in the derivatvie "glue"
-   // linking forward mode computation to reverse mode computation
+   // these three lines will automatically put in the
+   // derivatvie glue
    init_df1_three_variable vx(x);
    init_df1_three_variable va(a);
    init_df1_three_variable vb(b);
-
    df1_three_variable vy;
    vy = incbet(va, vb, vx);
-
-   // the assignment operator
-   // dvariable& dvariable::operator = (const df1_three_variable& v)
-   // puts the forward mode derivitive contributions back into the
-   // autodif gradient stack
    dvariable z;
    z = vy;
    return z;
 }
 
 
-double lgam(const double _x)
+static double lgam(double x)
 {
-   using namespace Cephes;
-   double p, q, u, w, z, x;
-   x = _x;
+   double p, q, u, w, z;
    int i;
 
    sgngam = 1;
@@ -882,13 +847,12 @@ double lgam(const double _x)
  *    IEEE     0.01,0.5  0,100      200000       1.4e-13     1.6e-15
  */
 
-//df1_three_variable igam(const df1_three_variable & a,
-//                        const df1_three_variable & x);
+static df1_three_variable igam(const df1_three_variable & a,
+			       const df1_three_variable & x);
 
 df1_three_variable igamc(const df1_three_variable & _a,
 			 const df1_three_variable & _x)
 {
-   using namespace Cephes;
    ADUNCONST(df1_three_variable, a)
       ADUNCONST(df1_three_variable, x)
       df1_three_variable ans, ax, c, yc, r, t, y, z;
@@ -970,7 +934,6 @@ df1_three_variable igamc(const df1_three_variable & _a,
 df1_three_variable igam(const df1_three_variable & _a,
 			const df1_three_variable & _x)
 {
-   using namespace Cephes;
    ADUNCONST(df1_three_variable, a)
       ADUNCONST(df1_three_variable, x) df1_three_variable ans, ax, c, r;
 
@@ -1066,34 +1029,20 @@ df1_three_variable igam(const df1_three_variable & _a,
    * incbet underflow                     0.0
    */
 
-df1_three_variable incbcf(const df1_three_variable & _a,
-			  const df1_three_variable & _b,
-			  const df1_three_variable & _x);
-df1_three_variable pseries(const df1_three_variable & _a,
-			   const df1_three_variable & _b,
-			   const df1_three_variable & _x);
-df1_three_variable incbd(const df1_three_variable & _a,
-			 const df1_three_variable & _b,
-			 const df1_three_variable & _x);
+static df1_three_variable incbcf(const df1_three_variable & _a,
+				 const df1_three_variable & _b,
+				 const df1_three_variable & _x);
+static df1_three_variable pseries(const df1_three_variable & _a,
+				  const df1_three_variable & _b,
+				  const df1_three_variable & _x);
+static df1_three_variable incbd(const df1_three_variable & _a,
+				const df1_three_variable & _b,
+				const df1_three_variable & _x);
 
-/** Incomplete beta function; variable objects.
-  Computes first derivative with respect to three arguments using forward 
-  mode automatic differentiation.
-  Based on code from Cephes C and C++ language special functions math library
-  and adapeted for automatic differentiation.
-  http://www.moshier.net/#Cephes or
-  http://www.netlib.org/cephes/
-    \param _aa Parameter \f$a\f$ of incomplete beta function; \f$a>0\f$
-    \param _bb Parameter \f$b\f$ of incomplete beta function; \f$b>0\f$
-    \param _xx Parameter \f$x\f$ of incomplete beta function; \f$0<x\le 1\f$
-    \return Incomplete beta function \f$B_x(a,b) = \int_0^x t^{a-1}(1-t)^{b-1} dt\f$
-    \ingroup PDF
-*/
-df1_three_variable incbet(const df1_three_variable & _aa,
-			  const df1_three_variable & _bb,
-			  const df1_three_variable & _xx)
+static df1_three_variable incbet(const df1_three_variable & _aa,
+				 const df1_three_variable & _bb,
+				 const df1_three_variable & _xx)
 {
-   using namespace Cephes;
 
    df1_three_variable aa;
    df1_three_variable bb;
@@ -1157,7 +1106,7 @@ df1_three_variable incbet(const df1_three_variable & _aa,
    }
 
    /* Choose expansion for better convergence. */
-   y = x * (a + b - 2.0) - (a - 1.0); // Shouldn't this be (a + 1.0)?
+   y = x * (a + b - 2.0) - (a - 1.0);
    if (value(y) < 0.0)
       w = incbcf(a, b, x);
    else
@@ -1204,11 +1153,10 @@ df1_three_variable incbet(const df1_three_variable & _aa,
    * for incomplete beta integral
    */
 
-df1_three_variable incbcf(const df1_three_variable & _a,
-			  const df1_three_variable & _b,
-			  const df1_three_variable & _x)
+static df1_three_variable incbcf(const df1_three_variable & _a,
+				 const df1_three_variable & _b,
+				 const df1_three_variable & _x)
 {
-   using namespace Cephes;
    ADUNCONST(df1_three_variable, a)
       ADUNCONST(df1_three_variable, b)
       ADUNCONST(df1_three_variable, x)
@@ -1298,11 +1246,10 @@ df1_three_variable incbcf(const df1_three_variable & _a,
   /* Continued fraction expansion #2
    * for incomplete beta integral
    */
-df1_three_variable incbd(const df1_three_variable & _a,
-			 const df1_three_variable & _b,
-			 const df1_three_variable & _x)
+static df1_three_variable incbd(const df1_three_variable & _a,
+				const df1_three_variable & _b,
+				const df1_three_variable & _x)
 {
-   using namespace Cephes;
    ADUNCONST(df1_three_variable, a)
       ADUNCONST(df1_three_variable, b) ADUNCONST(df1_three_variable, x)
       //df1_three_variable s, t, u, v, n, t1, z, ai;
@@ -1396,7 +1343,6 @@ df1_three_variable pseries(const df1_three_variable & _a,
 			   const df1_three_variable & _b,
 			   const df1_three_variable & _x)
 {
-   using namespace Cephes;
    df1_three_variable a;
    df1_three_variable b;
    df1_three_variable x;
@@ -1444,15 +1390,7 @@ df1_three_variable pseries(const df1_three_variable & _a,
    return (s);
 }
 
-/** Equivalent to incomplete beta function for constant objects.
-This function needs to be fixed up a bit and used as the guts of 
-yet to be written. It should also not be publicall visible.
-double incbet(double a, double b, double x.
-Questions for Dave: What are the purposes of the functions 
-double get_values(double a, double b, double x) and 
-df1_three_variable df3_get_values(double a, double b, double x)
-*/
-double get_values(double a, double b, double x)
+static double get_values(double a, double b, double x)
 {
    df1_three_variable va, vb, vx;
    va.initialize();
@@ -1468,7 +1406,7 @@ double get_values(double a, double b, double x)
    return *vy.get_u();
 }
 
-df1_three_variable df3_get_values(double a, double b, double x)
+static df1_three_variable df3_get_values(double a, double b, double x)
 {
    df1_three_variable va, vb, vx;
    va.initialize();
@@ -1483,3 +1421,5 @@ df1_three_variable df3_get_values(double a, double b, double x)
    df1_three_variable vy = incbet(va, vb, vx);
    return vy;
 }
+
+

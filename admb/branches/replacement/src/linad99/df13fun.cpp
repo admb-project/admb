@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id:  $
  *
  * Author: David Fournier
  * Copyright (c) 2009 ADMB Foundation
@@ -636,9 +636,9 @@ void set_derivatives( df1_three_variable& z, const df1_three_variable& x,
   init_df1_three_variable::init_df1_three_variable(const prevariable& _v)
   {
     ADUNCONST(prevariable,v)
-    if (num_ind_var>2) // zero offset array
+    if (num_ind_var>2)
     {
-      cerr << "can only have 3 independent_variables in df1_three_variable"
+      cerr << "can only have 2 independent_variables in df1_three_variable"
        " function" << endl;
       ad_exit(1);
     }
@@ -766,45 +766,5 @@ dvariable& dvariable::operator = (const df1_three_variable& v)
     dfz);
 
   return *this;
-}
-
-int operator <(const df1_three_variable & x, double n)
-{
-   return value(x) < n;
-}
-
-int operator >(const df1_three_variable & x, double n)
-{
-   return value(x) > n;
-}
-
-int operator >=(const df1_three_variable & x, double n)
-{
-   return value(x) >= n;
-}
-
-int operator ==(const df1_three_variable & x, const df1_three_variable & n)
-{
-   return value(x) == value(n);
-}
-
-int operator ==(const df1_three_variable & x, double n)
-{
-   return value(x) == n;
-}
-
-int operator ==(double x, const df1_three_variable & n)
-{
-   return x == value(n);
-}
-
-int operator <(const df1_three_variable & x, const df1_three_variable & n)
-{
-   return value(x) < value(n);
-}
-
-int operator >(const df1_three_variable & x, const df1_three_variable & n)
-{
-   return value(x) > value(n);
 }
 

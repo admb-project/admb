@@ -70,8 +70,6 @@ bcb \
 biglog \
 bvprobit \
 caest \
-gamma \
-kidney \
 lidar \
 logistic \
 nbmm \
@@ -103,14 +101,6 @@ bvprobit:
 caest:
 	@#cd examples/admb-re/$@;admb -r $@;./$@
 	@#cd examples/admb-re/$@;admb -r -s $@;./$@
-
-gamma:
-	cd examples/admb-re/$@;admb -r liver_$@;./liver_$@
-	cd examples/admb-re/$@;admb -r -s liver_$@;./liver_$@
-
-kidney:
-	cd examples/admb-re/$@;admb -r $@;./$@
-	cd examples/admb-re/$@;admb -r -s $@;./$@
 
 lidar:
 	cd examples/admb-re/$@;admb -r $@;./$@
@@ -175,8 +165,8 @@ union:
 
 weights: binomial binomial_w2
 binomial:
-	cd examples/admb-re/weights;admb -r $@;./$@
-	cd examples/admb-re/weights;admb -r -s $@;./$@
+	cd examples/admb-re/weights;touch xxalloc4.tmp xxalloc5.tmp;admb -r $@;./$@
+	cd examples/admb-re/weights;touch xxalloc4.tmp xxalloc5.tmp;admb -r -s $@;./$@
 binomial_w2:
-	@#cd examples/admb-re/weights;admb -r $@;./$@
-	@#cd examples/admb-re/weights;admb -r -s $@;./$@
+	@#cd examples/admb-re/weights;touch xxalloc4.tmp xxalloc5.tmp;admb -r $@;./$@
+	@#cd examples/admb-re/weights;touch xxalloc4.tmp xxalloc5.tmp;admb -r -s $@;./$@

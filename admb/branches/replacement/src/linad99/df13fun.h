@@ -1,10 +1,6 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2009 ADMB Foundation
- *
- */
+
+
+
 #if !defined(__DF12FUN__)
 #  define __DF12FUN__
 #ifndef FVAR_HPP
@@ -62,7 +58,7 @@
     int indexmax(void) const { return int(index_max); }
     df1_three_vector(int min,int max);
     df1_three_vector(void);
-    void allocate(void);
+    void df1_three_vector::allocate(void);
     void allocate(int min,int max);
     df1_three_variable& operator () (int i) const 
     { 
@@ -110,7 +106,7 @@
     //df1_three_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df1_three_matrix();
-    df1_three_matrix(const df1_three_matrix& m2);
+    df1_three_matrix::df1_three_matrix(const df1_three_matrix& m2);
   };
 
  dmatrix value(const df1_three_matrix& v);
@@ -197,14 +193,5 @@
 
 
   df1_three_variable gammln(const df1_three_variable& xx);
-
-  int operator <(const df1_three_variable & x, double n);
-  int operator >(const df1_three_variable & x, const df1_three_variable & n);
-  int operator <(const df1_three_variable & x, const df1_three_variable & n);
-  int operator ==(double x, const df1_three_variable & n);
-  int operator ==(const df1_three_variable & x, double n);
-  int operator ==(const df1_three_variable & x, const df1_three_variable & n);
-  int operator >=(const df1_three_variable & x, double n);
-  int operator >(const df1_three_variable & x, double n);
-
 #endif  // __DF12FUN__
+

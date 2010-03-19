@@ -24,9 +24,9 @@ Name: "mingw"; Description: "ADMB with MinGW tools"
 [Files]
 Source: "..\..\trunk\build\dists\admb_gcc345_mingw32\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs
 Source: "..\..\utilities\GnuWin32\*"; DestDir: "{app}\utilities\GnuWin32"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
-Source: "..\..\utilities\MinGW-gcc4.4\*"; DestDir: "{app}\utilities\MinGW"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
-Source: "..\..\utilities\set-utilities-path.bat"; DestDir: "{app}\utilities"
+Source: "..\..\utilities\MinGW-gcc4.4\*"; DestDir: "{app}\utilities\MinGW-gcc4.4"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\utilities\set-utilities-path-gcc4.4.bat"; DestDir: "{app}\utilities"
 
 [Icons]
-Name: "{group}\ADMB Command Prompt (MinGW GCC 4.4)"; Filename: "{cmd}"; Parameters: "/K ""{app}\utilities\set-utilities-path.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW)"
+Name: "{group}\ADMB Command Prompt (MinGW GCC 4.4)"; Filename: "{cmd}"; Parameters: "/K ""{app}\utilities\set-utilities-path-gcc4.4.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW)"
 Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB"

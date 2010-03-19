@@ -70,6 +70,8 @@ bcb \
 biglog \
 bvprobit \
 caest \
+gamma \
+kidney \
 lidar \
 logistic \
 nbmm \
@@ -101,6 +103,14 @@ bvprobit:
 caest:
 	@#cd examples/admb-re/$@;admb -r $@;./$@
 	@#cd examples/admb-re/$@;admb -r -s $@;./$@
+
+gamma:
+	@#cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) liver_$@;./liver_$@
+	@#cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) liver_$@;./liver_$@
+
+kidney:
+	@#cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
+	@#cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 lidar:
 	cd examples/admb-re/$@;admb -r $@;./$@

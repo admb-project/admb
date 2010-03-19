@@ -1,6 +1,7 @@
 OBJSPARSE = \
 ../sparse/hs_sparse.obj 
 OBJ0 = \
+cgamdev.obj \
 fmmtr1.obj \
 tsdfpool.obj \
 df13fun.obj \

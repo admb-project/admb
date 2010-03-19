@@ -65,6 +65,7 @@ class df1b2variable;
     df3_two_variable& operator = (double v);
     df3_two_variable& operator += (const df3_two_variable& v);
     df3_two_variable& operator *= (const df3_two_variable& v);
+    df3_two_variable& operator *= (double v);
     df3_two_variable& operator += (double v);
     df3_two_variable& operator -= (double v);
     df3_two_variable& operator -= (const df3_two_variable& v);
@@ -177,6 +178,7 @@ class df1b2variable;
 */
 
   df3_two_variable sin(const df3_two_variable& x);
+  df3_two_variable fabs(const df3_two_variable& x);
   df3_two_variable sqrt(const df3_two_variable& x);
   df3_two_variable atan(const df3_two_variable& x);
   df3_two_variable cos(const df3_two_variable& x);

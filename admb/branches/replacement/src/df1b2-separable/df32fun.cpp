@@ -284,6 +284,41 @@
     return *this;
   }
 
+//Fix this
+  df3_two_variable& df3_two_variable::operator *= (double v)
+  {
+
+    cout << "This operator needs to be finished. df3_two_variable::operator *= (double v)" << endl;
+   /*
+    df1_two_variable x=*this * v;
+    *this=x;
+    return *this;
+   */
+ //   *get_u()*=v;
+ //   *get_u_x() = *get_u_x()*v;
+ //   *get_u_y() = *get_u_y()*v;
+  }
+
+//Fix guts of this one
+  df3_two_variable& df3_two_variable::operator /= (const df3_two_variable& y)
+  {
+    cout << "This operator needs to be finished. df3_two_variable::operator /= (const df3_two_variable& y)" << endl;
+   /*
+    df1_two_variable x=*this * inv(y);
+    *this=x;
+    return *this;
+   */
+   // properly optimized code
+
+/*
+    double tmp=1.0/value(y);
+    *get_u()*=tmp;
+    *get_u_x() = *get_u_x()*tmp- *get_u()*tmp* *y.get_u_x();
+    *get_u_y() = *get_u_y()*tmp- *get_u()*tmp* *y.get_u_y();
+    return *this;
+*/
+  }
+
 
 void set_derivatives( df3_two_variable& z,const df3_two_variable& x,double u,
   double zp,double zp2,double zp3)
@@ -488,6 +523,19 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
 
     set_derivatives(z,x,u,zp,zp2,zp3);
     return z;
+  }
+
+//Fix insides
+  df3_two_variable fabs(const df3_two_variable& x)
+  {
+    cout << "This needs to be finished. df3_two_variable fabs(const df3_two_variable& x)" << endl;
+/*
+    df1_two_variable z;
+    if (value(x)>=0.0)
+      z=x; 
+    else
+      z=-x;
+    return z;*/
   }
 
   df3_two_variable log(const df3_two_variable& x)

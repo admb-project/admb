@@ -44,9 +44,9 @@ dist:
 	#cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals
 	#cp -vf docs/manuals/admb.pdf ${DISK}/docs/manuals
 	#cp -vf docs/manuals/admb-re.pdf ${DISK}/docs/manuals
-	- rm -f ${DISK}.tar* 
-	tar -cvf ${DISK}.tar ${DISK}
-	bzip2 ${DISK}.tar 
+	#- rm -f ${DISK}.tar* 
+	#tar -cvf ${DISK}.tar ${DISK}
+	#bzip2 ${DISK}.tar 
 
 dist-64bit:
 	rm -rf ${DISK}

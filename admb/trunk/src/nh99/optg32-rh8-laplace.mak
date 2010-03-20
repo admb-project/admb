@@ -31,6 +31,7 @@ vpath %.obj $(LIBPATH)
 .PHONY: t3
 .PHONY: disk
 .PHONY: admodel.cpp
+.PHONY: tpl2cpp.c
 
 include objects.lst
 
@@ -61,7 +62,7 @@ all: $(LIBPATH)/$(LIBNAME)  tpl2cpp disk
 
 df1b2stub:
 	$(CC) $(FLAGS) -o $(STUBPATH)/df1b2stub.o df1b2stub.cpp
-	 cd $(STUBPATH); ar -rs ${STUBNAME}  df1b2stub.o
+	ar -rs $(STUBPATH)/${STUBNAME} $(STUBPATH)/df1b2stub.o
 
 tpl2cpp.c: tpl2cpp.lex
 	flex -w tpl2cpp.lex

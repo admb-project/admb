@@ -16,7 +16,8 @@ vol
 
 buscycle: ham4 ham5
 ham4:
-	cd examples/admb/buscycle && admb.bat $@ && $@
+	cd examples/admb/buscycle && admb.bat $@
+	cd examples/admb/buscycle && $@
 	cd examples/admb/buscycle && admb.bat -s $@ && $@
 
 ham5:

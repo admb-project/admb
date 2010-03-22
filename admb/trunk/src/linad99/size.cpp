@@ -23,7 +23,7 @@ int size_count_partial(_CONST dvar_vector& x,int n)
   if (!(x))
     return 0;
   else  
-    return n;
+    return max(0, n);
 }
 
 int size_count(_CONST dvar_matrix& x)

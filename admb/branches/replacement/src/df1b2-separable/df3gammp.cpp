@@ -4,11 +4,8 @@
  * Author: David Fournier
  * Copyright (c) 2009 ADMB Foundation
  */
-
 #include <df1b2fun.h>
 #include <df13fun.h>
-#include <df32fun.h>
-
 
 #define ITMAX 100
 #define EPS 1.0e-9
@@ -167,6 +164,7 @@ static double Q[] = {
 static double LOGPI = 1.14472988584940017414;
 #endif
 static double PI = 3.14159265358979323844;
+
 
 
 df1b2variable log_negbinomial_density(double x,const df1b2variable& _xmu, 
@@ -433,6 +431,7 @@ static unsigned short LS2P[] = {
 #define MAXLGM 2.556348e305
 #endif
 
+
 /* Logarithm of gamma function */
 
 int operator < (const df3_two_variable& x,double n) { return value(x) < n; }
@@ -607,26 +606,6 @@ Copyright 1984, 1987, 1988 by Stephen L. Moshier
 Direct inquiries to 30 Frost Street, Cambridge, MA 02140
 */
 
-/*
-double polevl( double  x, void * _coef, int N )
-{
-double * coef=(double *)(_coef);
-double  ans;
-int i;
-double *p;
-
-p = coef;
-ans = *p++;
-i = N;
-
-do
-	ans = ans * x  +  *p++;
-while( --i );
-
-return( ans );
-}
-*/
-
 
 df3_two_variable polevl( const df3_two_variable&  x, void * _coef, int N )
 {
@@ -653,26 +632,6 @@ return( ans );
  * Otherwise same as polevl.
  */
 
-/*
-double p1evl( double x, void * _coef, int N )
-{
-double * coef= (double*)(_coef);
-double ans;
-double *p;
-int i;
-
-p = coef;
-ans = x + *p++;
-i = N-1;
-
-do
-	ans = ans * x  + *p++;
-while( --i );
-
-return( ans );
-}
-*/
-
  
 df3_two_variable p1evl(const df3_two_variable & x, void * _coef, int N )
 {
@@ -691,15 +650,6 @@ while( --i );
 
 return( ans );
 }
-
-/*
- int isnan(double) {return 0;}
-_INFINITY' referenced from module all.cpp
-'_NAN' referenced from module all.cpp
-'mtherr(char*,int)' referenced from module all.cpp
-'_PI' referenced from module all.cpp
-'isfinite(double)' referenced from module all.cpp
-*/
 
 int mtherr(char* s,int n){ /*ad_exit(1);*/  return 0;}
 
@@ -857,7 +807,7 @@ df3_two_variable igamc(const df3_two_variable & _a, const df3_two_variable & _x)
    	}
    while( t > MACHEP );
    
-   return( ans * ax );  
+   return( ans * ax ); 
    }
 
 
@@ -928,7 +878,6 @@ df3_two_variable cumd_gamma(const df3_two_variable& x,
   }
   */
 }
-
 df3_two_variable cumd_exponential(const df3_two_variable& x,
   const df3_two_variable& a)
 {

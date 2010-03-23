@@ -284,39 +284,30 @@
     return *this;
   }
 
-//Fix this
+//Check this
   df3_two_variable& df3_two_variable::operator *= (double v)
   {
-
-    cout << "This operator needs to be finished. df3_two_variable::operator *= (double v)" << endl;
-   /*
-    df1_two_variable x=*this * v;
-    *this=x;
+    cout << "Check *= operator" << endl;
+    *get_u() *= v;
+    *get_u_x() *= v;
+    *get_u_y() *= v;
+    *get_u_xx() *= v;
+    *get_u_xy() *= v;
+    *get_u_yy() *= v;
+    *get_u_xxx() *= v;
+    *get_u_xxy() *= v;
+    *get_u_xyy() *= v;
+    *get_u_yyy() *= v;
     return *this;
-   */
- //   *get_u()*=v;
- //   *get_u_x() = *get_u_x()*v;
- //   *get_u_y() = *get_u_y()*v;
   }
 
-//Fix guts of this one
+//Check this
   df3_two_variable& df3_two_variable::operator /= (const df3_two_variable& y)
   {
-    cout << "This operator needs to be finished. df3_two_variable::operator /= (const df3_two_variable& y)" << endl;
-   /*
-    df1_two_variable x=*this * inv(y);
+    cout << "Check /= operator" << endl;
+    df3_two_variable x=*this / y;
     *this=x;
     return *this;
-   */
-   // properly optimized code
-
-/*
-    double tmp=1.0/value(y);
-    *get_u()*=tmp;
-    *get_u_x() = *get_u_x()*tmp- *get_u()*tmp* *y.get_u_x();
-    *get_u_y() = *get_u_y()*tmp- *get_u()*tmp* *y.get_u_y();
-    return *this;
-*/
   }
 
 
@@ -526,16 +517,39 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
   }
 
 //Fix insides
-  df3_two_variable fabs(const df3_two_variable& x)
+  df3_two_variable fabs(const df3_two_variable& v)
   {
-    cout << "This needs to be finished. df3_two_variable fabs(const df3_two_variable& x)" << endl;
-/*
-    df1_two_variable z;
-    if (value(x)>=0.0)
-      z=x; 
+    cout << "Check fabs.. df3_two_variable" << endl;
+
+    df3_two_variable z;
+    if (value(v)>=0)
+    {
+      *z.get_u() = *v.get_u();
+      *z.get_u_x() = *v.get_u_x();
+      *z.get_u_y() = *v.get_u_y();
+      *z.get_u_xx() = *v.get_u_xx();
+      *z.get_u_xy() = *v.get_u_xy();
+      *z.get_u_yy() = *v.get_u_yy();
+      *z.get_u_xxx() = *v.get_u_xxx();
+      *z.get_u_xxy() = *v.get_u_xxy();
+      *z.get_u_xyy() = *v.get_u_xyy();
+      *z.get_u_yyy() = *v.get_u_yyy();
+    }
     else
-      z=-x;
-    return z;*/
+    {
+      *z.get_u() = -*v.get_u();
+      *z.get_u_x() = -*v.get_u_x();
+      *z.get_u_y() = -*v.get_u_y();
+      *z.get_u_xx() = -*v.get_u_xx();
+      *z.get_u_xy() = -*v.get_u_xy();
+      *z.get_u_yy() = -*v.get_u_yy();
+      *z.get_u_xxx() = -*v.get_u_xxx();
+      *z.get_u_xxy() = -*v.get_u_xxy();
+      *z.get_u_xyy() = -*v.get_u_xyy();
+      *z.get_u_yyy() = -*v.get_u_yyy();
+    }
+
+    return z;
   }
 
   df3_two_variable log(const df3_two_variable& x)

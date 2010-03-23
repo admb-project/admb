@@ -12,7 +12,7 @@
 //static void gcf(double& gammcf,double a,double x,double &gln);
 //static void gser(double& gamser,double a,double x,double& gln);
 
-  extern double MAXLOG;//=200
+  static double MAXLOG=200;//
   static double big = 4.503599627370496e15;
   static double biginv =  2.22044604925031308085e-16;
   static double MACHEP=2.22045e-16;
@@ -39,6 +39,8 @@ double p1evl( double x, void * _coef, int N );
 double igam(const double & a, const double & x );
 double igamc(const double & a, const double & x);
 
+
+
   dvariable gamma_deviate(const prevariable& _x,const prevariable& _a)
   {
     prevariable& x= (prevariable&)(_x);
@@ -56,6 +58,7 @@ double igamc(const double & a, const double & x);
 /* A[]: Stirling's formula expansion of log gamma
  * B[], C[]: log gamma function between 2 and 3
  */
+
 #ifdef UNK
 static double A[] = {
  8.11614167470508450300E-4,
@@ -73,7 +76,7 @@ static double B[] = {
 -8.53555664245765465627E5
 };
 static double C[] = {
-/* 1.00000000000000000000E0, */
+// 1.00000000000000000000E0,
 -3.51815701436523470549E2,
 -1.70642106651881159223E4,
 -2.20528590553854454839E5,
@@ -81,7 +84,7 @@ static double C[] = {
 -2.53252307177582951285E6,
 -2.01889141433532773231E6
 };
-/* log( sqrt( 2*pi ) ) */
+// log( sqrt( 2*pi ) )
 static double LS2PI  =  0.91893853320467274178;
 #define MAXLGM 2.556348e305
 #endif
@@ -103,7 +106,7 @@ static unsigned short B[] = {
 0145120,0061472,0120300,0025363
 };
 static unsigned short C[] = {
-/*0040200,0000000,0000000,0000000*/
+//0040200,0000000,0000000,0000000
 0142257,0164150,0163630,0112622,
 0143605,0050153,0156116,0135272,
 0144527,0056045,0145642,0062332,
@@ -111,7 +114,7 @@ static unsigned short C[] = {
 0145432,0111254,0044577,0115142,
 0145366,0071133,0050217,0005122
 };
-/* log( sqrt( 2*pi ) ) */
+// log( sqrt( 2*pi ) )
 static unsigned short LS2P[] = {040153,037616,041445,0172645,};
 #define LS2PI *(double *)LS2P
 #define MAXLGM 2.035093e36
@@ -134,7 +137,7 @@ static unsigned short B[] = {
 0x055e,0x5418,0x0c67,0xc12a
 };
 static unsigned short C[] = {
-/*0x0000,0x0000,0x0000,0x3ff0,*/
+//0x0000,0x0000,0x0000,0x3ff0,
 0x12b2,0x1cf3,0xfd0d,0xc075,
 0xd757,0x7b89,0xaa0d,0xc0d0,
 0x4c9b,0xb974,0xeb84,0xc10a,
@@ -142,7 +145,7 @@ static unsigned short C[] = {
 0xf34c,0x892f,0x5255,0xc143,
 0xe14a,0x6a11,0xce4b,0xc13e
 };
-/* log( sqrt( 2*pi ) ) */
+// log( sqrt( 2*pi ) )
 static unsigned short LS2P[] = {
 0xbeb5,0xc864,0x67f1,0x3fed
 };
@@ -174,13 +177,14 @@ static unsigned short C[] = {
 0xc143,0x5255,0x892f,0xf34c,
 0xc13e,0xce4b,0x6a11,0xe14a
 };
-/* log( sqrt( 2*pi ) ) */
+// log( sqrt( 2*pi ) )
 static unsigned short LS2P[] = {
 0x3fed,0x67f1,0xc864,0xbeb5
 };
 #define LS2PI *(double *)LS2P
 #define MAXLGM 2.556348e305
 #endif
+
 
 double lgam(double x)
 {
@@ -210,8 +214,7 @@ lgsing:
 		mtherr( "lgam", SING );
 		return (MYINF);
 #else
-		//goto loverf;
-		goto lgsing;
+		goto loverf;
 #endif
 		}
 	i = p;
@@ -227,7 +230,7 @@ lgsing:
 		}
 	z = q * sin( PI * z );
 	if( z == 0.0 )
-
+		goto lgsing;
 //	z = log(PI) - log( z ) - w;
 	z = LOGPI - log( z ) - w;
 	return( z );
@@ -260,7 +263,11 @@ if( x < 13.0 )
 	else
 		sgngam = 1;
 	if( u == 2.0 )
+		{
+
 		return( log(z) );
+
+		}
 	p -= 2.0;
 	x = x + p;
 	p = x * polevl( x, B, 5 ) / p1evl( x, C, 6);
@@ -279,9 +286,9 @@ loverf:
 	}
 
 q = ( x - 0.5 ) * log(x) - x + LS2PI;
-if( x > 1.0e8 )
+if( x > 1.0e8 ){
 	return( q );
-
+	}
 p = 1.0/(x*x);
 if( x >= 1000.0 )
 	q += ((   7.9365079365079365079365e-4 * p
@@ -289,6 +296,7 @@ if( x >= 1000.0 )
 		+ 0.0833333333333333333333) / x;
 else
 	q += polevl( p, A, 4 ) / x;
+
 return( q );
 }
 
@@ -393,6 +401,7 @@ return( ans );
 
 double igamc(const double & a, const double & x)
    {
+	cout << "      entering igamc(a,x), a = " << a << " x = " << x << endl;
      //ADUNCONST(df1_two_variable,a)
      //ADUNCONST(df1_two_variable,x)
    double ans, ax, c, yc, r, t, y, z;
@@ -405,10 +414,12 @@ double igamc(const double & a, const double & x)
      return(tmp);
    }
    
-   if( (x < 1.0) || (x < a ))
-   	return( 1.0 - igam(a,x) );
+   if( (x < 1.0) || (x < a )){
+	cout << "      returning igamc, value = " << 1.0-igam(a,x) << endl;
+   	return( 1.0 - igam(a,x) );}
    
    ax = a * log(x) - x - lgam(a);
+	cout << "        in igamc, ax = " << ax << endl;
    if( ax < -MAXLOG )
    	{
    	  cerr <<  "igamc UNDERFLOW " << endl; 
@@ -416,7 +427,7 @@ double igamc(const double & a, const double & x)
    	}
    ax = exp(ax);
    
-   /* continued fraction */
+   // continued fraction
    y = 1.0 - a;
    z = x + y + 1.0;
    c = 0.0;
@@ -501,7 +512,7 @@ double igam(const double & a, const double & x )
    return( ans * ax/a );
    }
 
-
+//Is this correct?
 static double gammp(double a,double x)
 {
   return igamc(a,x);
@@ -610,36 +621,45 @@ df3_two_variable cumd_gamma(const df3_two_variable& x,
 
 dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
 {
+
   double a=value(_a);
   double y=value(_y);
+	cout << "entering inv_cumd_gamma(y,a) y = " << y << " a = " << a << endl;
   if (a<0.05)
   {
-    cerr << "a musdt be > 0.1" << endl;
+    cerr << "a must be > 0.1" << endl;
     ad_exit(1);
   }
   double u=get_initial_u(a,y);
+	cout << "  in inv_cumd_gamma. u = " << u << endl;
   double h;
   int loop_counter=0;
   do
   {
     loop_counter++;
+	cout << "  in inv_cumd_gama a*exp(u) = " << a*exp(u) << endl;
     double z=gammp(a,a*exp(u));
-/*    double d=y-z;
-    //cout << d << endl;
+	cout << "    in inv_cumd_gama z = " << z << endl;
+    double d=y-z;
+	cout << "      in inv_cumd_gama d = " << d << endl;
     double log_fprime=a*log(a)+a*(u-exp(u)) -gammln(a);
+	cout << "        in inv_cumd_gama log_fprime = " << log_fprime << endl;
     double fprime=exp(log_fprime);
+	cout << "          in inv_cumd_gama fprime = " << fprime << endl;
     h=d/fprime;
+	cout << "            in inv_cumd_gama h = " << h << endl;
     u+=h;
+	cout << "              in inv_cumd_gama u = " << u << endl;
     if (loop_counter>1000)
     {
       cerr << "Error in inv_cumd_gamma"
         " maximum number of interations exceeded for values"
         << endl << "  x = " << y << "  a =  " << a  << "  h =  " << h  << endl;
-    }*/
+    }
   }
   while(fabs(h)>1.e-12);
   
-/*  double x=a*exp(u);
+  double x=a*exp(u);
 
   init_df3_two_variable xx(x);
   init_df3_two_variable aa(a);
@@ -657,8 +677,8 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
     &(vz.v->x),&(_y.v->x),F_x,&(_a.v->x),F_y);
 
-
-  return vz;*/
+	cout << "returning inv_cumd_gamma value = " << vz << endl;
+  return vz;
 }
 
 #endif

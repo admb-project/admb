@@ -401,7 +401,7 @@ return( ans );
 
 double igamc(const double & a, const double & x)
    {
-	cout << "      entering igamc(a,x), a = " << a << " x = " << x << endl;
+	cout << "        entering igamc(" << a << "," << a << x << ")" << endl;
      //ADUNCONST(df1_two_variable,a)
      //ADUNCONST(df1_two_variable,x)
    double ans, ax, c, yc, r, t, y, z;
@@ -415,11 +415,9 @@ double igamc(const double & a, const double & x)
    }
    
    if( (x < 1.0) || (x < a )){
-	cout << "      returning igamc, value = " << 1.0-igam(a,x) << endl;
-   	return( 1.0 - igam(a,x) );}
+   	return( 1.0 - igam(a,x) ); }
    
    ax = a * log(x) - x - lgam(a);
-	cout << "        in igamc, ax = " << ax << endl;
    if( ax < -MAXLOG )
    	{
    	  cerr <<  "igamc UNDERFLOW " << endl; 
@@ -512,7 +510,7 @@ double igam(const double & a, const double & x )
    return( ans * ax/a );
    }
 
-//Is this correct?
+
 static double gammp(double a,double x)
 {
   return igamc(a,x);
@@ -631,25 +629,19 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
     ad_exit(1);
   }
   double u=get_initial_u(a,y);
-	cout << "  in inv_cumd_gamma. u = " << u << endl;
+	cout << "  inside inv_cumd_gamma. u = " << u << endl;
   double h;
   int loop_counter=0;
   do
   {
     loop_counter++;
-	cout << "  in inv_cumd_gama a*exp(u) = " << a*exp(u) << endl;
     double z=gammp(a,a*exp(u));
-	cout << "    in inv_cumd_gama z = " << z << endl;
     double d=y-z;
-	cout << "      in inv_cumd_gama d = " << d << endl;
     double log_fprime=a*log(a)+a*(u-exp(u)) -gammln(a);
-	cout << "        in inv_cumd_gama log_fprime = " << log_fprime << endl;
     double fprime=exp(log_fprime);
-	cout << "          in inv_cumd_gama fprime = " << fprime << endl;
     h=d/fprime;
-	cout << "            in inv_cumd_gama h = " << h << endl;
     u+=h;
-	cout << "              in inv_cumd_gama u = " << u << endl;
+	cout << "      inside inv_cumd_gama u = " << u << endl;
     if (loop_counter>1000)
     {
       cerr << "Error in inv_cumd_gamma"
@@ -677,7 +669,6 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
     &(vz.v->x),&(_y.v->x),F_x,&(_a.v->x),F_y);
 
-	cout << "returning inv_cumd_gamma value = " << vz << endl;
   return vz;
 }
 

@@ -2065,7 +2065,6 @@ private:
   class vector_shapex 
   {
   public:
-    void * trueptr;
     vector_shapex(int lb,int ub,void * p) : index_min(lb), 
       index_max(ub), ncopies(0), trueptr(p) {}
     void * get_truepointer(void){ return trueptr; }
@@ -2079,10 +2078,11 @@ private:
     void operator delete(void * ptr,size_t n)
     {  xpool->free(ptr); }
 #endif
-    unsigned int ncopies;
     void shift(int min);
     int index_min;
     int index_max;
+    unsigned int ncopies;
+    void * trueptr;
   private:
     friend class subdvector;
     friend class lvector;

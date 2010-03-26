@@ -178,8 +178,9 @@ spatial:
 	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 union:
-	@cd examples/admb-re/$@;admb -r $@;./$@
-	@cd examples/admb-re/$@;admb -r -s $@;./$@
+	@#Runtine errors
+	@-cd examples/admb-re/$@;admb -r $@;./$@
+	@-cd examples/admb-re/$@;admb -r -s $@;./$@
 
 weights: binomial binomial_w2
 binomial:

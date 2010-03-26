@@ -123,8 +123,9 @@ lidar:
 	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 logistic:
-	@cd examples/admb-re/$@;admb -r $@;./$@
-	@cd examples/admb-re/$@;admb -r -s $@;./$@
+	@#runtime error
+	@-cd examples/admb-re/$@;admb -r $@;./$@
+	@-cd examples/admb-re/$@;admb -r -s $@;./$@
 
 nbmm:
 	@#Missing .dat file

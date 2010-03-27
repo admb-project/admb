@@ -401,7 +401,6 @@ return( ans );
 
 double igamc(const double & a, const double & x)
    {
-	cout << "        entering igamc(" << a << "," << a << x << ")" << endl;
      //ADUNCONST(df1_two_variable,a)
      //ADUNCONST(df1_two_variable,x)
    double ans, ax, c, yc, r, t, y, z;
@@ -513,7 +512,8 @@ double igam(const double & a, const double & x )
 
 static double gammp(double a,double x)
 {
-  return igamc(a,x);
+  //return igamc(a,x);
+  return igam(a,x);
 }
 
 /*
@@ -619,17 +619,15 @@ df3_two_variable cumd_gamma(const df3_two_variable& x,
 
 dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
 {
-
   double a=value(_a);
   double y=value(_y);
-	cout << "entering inv_cumd_gamma(y,a) y = " << y << " a = " << a << endl;
+
   if (a<0.05)
   {
     cerr << "a must be > 0.1" << endl;
     ad_exit(1);
   }
   double u=get_initial_u(a,y);
-	cout << "  inside inv_cumd_gamma. u = " << u << endl;
   double h;
   int loop_counter=0;
   do
@@ -641,7 +639,7 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
     double fprime=exp(log_fprime);
     h=d/fprime;
     u+=h;
-	cout << "      inside inv_cumd_gama u = " << u << endl;
+
     if (loop_counter>1000)
     {
       cerr << "Error in inv_cumd_gamma"
@@ -662,7 +660,7 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
   df3_two_variable z=cumd_gamma(xx,aa);
   double F_x=1.0/(*z.get_u_x());
   double F_y=-F_x*(*z.get_u_y());
-  
+
   dvariable vz=0.0;
   value(vz)=x;
 

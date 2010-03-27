@@ -271,9 +271,11 @@
     return *this;
   }
 
+// I'm pretty sure it should be like this
   df3_two_variable& df3_two_variable::operator -= (double v)
   {
-    *get_u() += v;
+    //*get_u() += v;
+    *get_u() -= v;
     return *this;
   }
 
@@ -287,7 +289,7 @@
 //Check this
   df3_two_variable& df3_two_variable::operator *= (double v)
   {
-    cout << "Check *= operator" << endl;
+    //cout << "Check *= operator" << endl;
     *get_u() *= v;
     *get_u_x() *= v;
     *get_u_y() *= v;
@@ -304,7 +306,7 @@
 //Check this
   df3_two_variable& df3_two_variable::operator /= (const df3_two_variable& y)
   {
-    cout << "Check /= operator" << endl;
+    //cout << "Check /= operator" << endl;
     df3_two_variable x=*this / y;
     *this=x;
     return *this;
@@ -519,7 +521,7 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
 //Fix insides
   df3_two_variable fabs(const df3_two_variable& v)
   {
-    cout << "Check fabs.. df3_two_variable" << endl;
+    //cout << "Check fabs.. df3_two_variable" << __FILE__ << __LINE__ << endl;
 
     df3_two_variable z;
     if (value(v)>=0)

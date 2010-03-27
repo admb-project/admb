@@ -40,6 +40,7 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
   {
     df1b2variable& y= (df1b2variable&)(_y);
     df1b2variable& a= (df1b2variable&)(_a);
+
     // get the inverse values
     double x=inv_cumd_gamma(value(y),value(_a));
 

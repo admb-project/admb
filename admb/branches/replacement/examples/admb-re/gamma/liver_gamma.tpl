@@ -32,7 +32,7 @@ PARAMETER_SECTION
   init_vector beta(0,2);
   init_bounded_number log_theta1(-5.0,3.0,2)
 
-  random_effects_vector u(1,nh,2)
+  random_effects_vector u(1,nh,3)
   objective_function_value f
 
 PROCEDURE_SECTION

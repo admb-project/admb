@@ -862,7 +862,7 @@ df3_two_variable cumd_gamma(const df3_two_variable& x,
   //ADUNCONST(df3_two_variable, a)
   //ADUNCONST(df3_two_variable, x)
 
-  df3_two_variable gamma = igamc(a,x);
+  df3_two_variable gamma = igam(a,x);
   return (gamma);
   /*
   df3_two_variable gamser,gammcf,gln;

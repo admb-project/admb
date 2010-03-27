@@ -40,7 +40,7 @@ dvar_vector eigenvalues(_CONST dvar_matrix& m)
   \param _m Real, symmetric matrix; on return contains the orthogonal
    transformed matrix.
   \param _d On return contains the diagonal elements of the tri-diagonal matrix.
-  \param _e On teturn contains the off-diagonal elements.
+  \param _e On return contains the off-diagonal elements.
 
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,

@@ -20,8 +20,8 @@ dist:
 	cp ../scripts/bash/adlink ${DISK}/bin
 	cp ../scripts/bash/check-expected-results ${DISK}/bin
 	cp ../scripts/bash/Makefile ${DISK}
-	svn export ../examples/admb ${DISK}/examples/admb
-	svn export ../examples/admb-re ${DISK}/examples/admb-re
+	cp -R ../examples/admb ${DISK}/examples/admb
+	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 	rm -rvf ${DISK}/examples/admb/SS3
 	rm -rvf ${DISK}/examples/admb/SS3-Simple
 	- cd ./linad99; mkdir -p ${CCVERSION}-${OSVERSION}olp 
@@ -58,8 +58,8 @@ dist-64bit:
 	cp ../scripts/bash/adlink-64bit ${DISK}/bin/adlink
 	cp ../scripts/bash/check-expected-results ${DISK}/bin
 	cp ../scripts/bash/Makefile ${DISK}
-	svn export ../examples/admb ${DISK}/examples/admb
-	svn export ../examples/admb-re ${DISK}/examples/admb-re
+	cp -R ../examples/admb ${DISK}/examples/admb
+	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 	rm -rvf ${DISK}/examples/admb/SS3
 	rm -rvf ${DISK}/examples/admb/SS3-Simple
 	- cd ./linad99; mkdir -p ${CCVERSION}-${OSVERSION}olp 

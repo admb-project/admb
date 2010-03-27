@@ -1,4 +1,5 @@
 OBJ0 = \
+df1b2lmn2.obj \
 dflogistic.obj \
 tdev.obj \
 dfinvcumdt.obj \

@@ -1693,6 +1693,10 @@ public:
   friend class inequality_constraint_vector;
   void quasi_newton_block(int nvar,int crit,independent_variables& x,
     const dvector& g,const double& f);
+  void limited_memory_quasi_newton_block(int nvar,int _crit,
+    independent_variables& x,const dvector& _g,const double& _f,
+    int nsteps);
+
 #if defined(USE_LAPLACE)
   void function_evaluation_block_pvm_slave_random_effects(int nvar,int _crit,
     independent_variables& x,const dvector& g,const double& f);

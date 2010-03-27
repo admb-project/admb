@@ -166,6 +166,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -noest          do not do the parameter estimation (optimization) \n");
       (*ad_printf)( " -ind NAME       change default input data file name to NAME\n");
       (*ad_printf)( " -lmn N          use limited memory quasi newton -- keep N steps\n");
+      (*ad_printf)( " -lmn2 N         use other limited memory quasi newton -- keep N steps\n");
       (*ad_printf)( " -dd N           check derivatives after n function evaluations\n");
       (*ad_printf)( " -lprof          perform profile likelihood calculations\n");
       (*ad_printf)( " -maxph N        increase the maximum phase number to N\n");

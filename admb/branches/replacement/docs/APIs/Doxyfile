@@ -622,6 +622,8 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/df13fun.h \
                          ../../src/linad99/fvar.hpp \
                          ../../src/nh99/admodel.h \
+                         ../../src/df1b2-separable/df13tester.cpp \
+                         ../../src/df1b2-separable/df33tester.cpp \
 
 
 # This tag can be used to specify the character encoding of the source files 

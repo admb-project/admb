@@ -219,7 +219,7 @@ df3_two_variable gammln(const df3_two_variable& xx)
 }
 
 
-/** Incomplete gamma function.
+/* Incomplete gamma function.
     Continued fraction approximation.
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
@@ -258,7 +258,7 @@ void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
   gammcf=exp(-x+a*log(x)-(gln))*h;
 }
 */
-/** Incomplete gamma function.
+/* Incomplete gamma function.
     Continued fraction approximation.
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
@@ -443,7 +443,17 @@ int operator == (double x,const df3_two_variable& n) { return x==value(n); }
 int operator < (const df3_two_variable& x,const df3_two_variable& n) { return value(x)<value(n); }
 int operator > (const df3_two_variable& x,const df3_two_variable& n) { return value(x)>value(n); }
 
-df3_two_variable lgam(df3_two_variable& x) //Worry about htis too!
+/**
+ * \f$y = \ln(\Gamma(x))\f$.
+ * Returns the base \f$e\f$ logarithm of the absolute
+ * value of the gamma function of the argument.
+ * The sign (+1 or -1) of the gamma function is returned in a
+ * global (extern) variable named sgngam.
+ * Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
+df3_two_variable lgam(df3_two_variable& x)
 {
 
 df3_two_variable  p,q, u, w, z,p1;
@@ -631,6 +641,13 @@ return( ans );
  * Evaluate polynomial when coefficient of x  is 1.0.
  * Otherwise same as polevl.
  */
+/**
+ * Evaluate polynomial when coefficient of \f$x^N\f$  is \f$1.0\f$.
+ * Otherwise same as polevl.
+ * Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
 
  
 df3_two_variable p1evl(const df3_two_variable & x, void * _coef, int N )
@@ -740,6 +757,14 @@ Copyright 1985, 1987, 2000 by Stephen L. Moshier
 
 df3_two_variable igam(const df3_two_variable & _a, const df3_two_variable & _x );
 
+/**
+ * Complemented incomplete gamma integral.
+ * The function is defined by:
+ * igamc(a,x) = \f$1-\f$ igam(a,x) \f$ = \frac{1}{\Gamma(a)}\int_{x}^{\infty}e^{-t}t^{a-1}dt \f$.
+ * Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
 df3_two_variable igamc(const df3_two_variable & _a, const df3_two_variable & _x)
 {
      ADUNCONST(df3_two_variable,a)
@@ -810,7 +835,14 @@ df3_two_variable igamc(const df3_two_variable & _a, const df3_two_variable & _x)
    return( ans * ax ); 
    }
 
-
+/**
+ * Incomplete gamma integral.
+ * The function is defined by
+ * igam(a,x)\f$ = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$.
+ * Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
    df3_two_variable igam(const df3_two_variable & _a, 
     const df3_two_variable & _x )
    {

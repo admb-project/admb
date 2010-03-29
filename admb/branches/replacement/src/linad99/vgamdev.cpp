@@ -21,7 +21,7 @@
 extern int sgngam;
 static double MAXNUM=1.7976931348623158E+308;
 
-#include "../beta/cephes-beta/mconf.h"
+#include "mconf.h"
 #ifdef INFINITIES
 #undef INFINITIES
 #endif
@@ -33,7 +33,7 @@ static double MAXNUM=1.7976931348623158E+308;
 static double LOGPI = 1.14472988584940017414;
 static double PI = 3.14159265358979323844;
 
-double polevl( double  x, void * _coef, int N );
+double polevl( double x, void * _coef, int N );
 double p1evl( double x, void * _coef, int N );
 
 double igam(const double & a, const double & x );
@@ -186,6 +186,16 @@ static unsigned short LS2P[] = {
 #endif
 
 
+/**
+ * \f$y = \ln(\Gamma(x))\f$.
+ * Returns the base \f$e\f$ logarithm of the absolute
+ * value of the gamma function of the argument.
+ * The sign (+1 or -1) of the gamma function is returned in a
+ * global (extern) variable named sgngam.
+ * Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
 double lgam(double x)
 {
 double p, q, u, w, z;
@@ -377,6 +387,13 @@ return( ans );
  * Evaluate polynomial when coefficient of x  is 1.0.
  * Otherwise same as polevl.
  */
+/**
+ * Evaluate polynomial when coefficient of \f$x^N\f$  is \f$1.0\f$.
+ * Otherwise same as polevl.
+ * Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
 
 
 double p1evl( double x, void * _coef, int N )
@@ -398,7 +415,14 @@ return( ans );
 }
 
 
-
+/**
+ * Complemented incomplete gamma integral.
+ * The function is defined by:
+ * igamc(a,x) = \f$1-\f$ igam(a,x) \f$ = \frac{1}{\Gamma(a)}\int_{x}^{\infty}e^{-t}t^{a-1}dt \f$.
+ * Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
 double igamc(const double & a, const double & x)
    {
      //ADUNCONST(df1_two_variable,a)
@@ -467,6 +491,14 @@ double igamc(const double & a, const double & x)
    return( ans * ax );
    }
 
+/**
+ * Incomplete gamma integral.
+ * The function is defined by
+ * igam(a,x)\f$ = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$.
+ * Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
 double igam(const double & a, const double & x )
    {
       //ADUNCONST(df1_two_variable,a)
@@ -621,7 +653,6 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
 {
   double a=value(_a);
   double y=value(_y);
-
   if (a<0.05)
   {
     cerr << "a must be > 0.1" << endl;

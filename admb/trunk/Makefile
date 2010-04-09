@@ -55,4 +55,4 @@ dist:
 
 clean:
 	@rm -rvf build
-	@make --directory=src --file=linux.mak clean
+	@rm -rvf configure config.log config.status autom4te.cache admb-config.mak

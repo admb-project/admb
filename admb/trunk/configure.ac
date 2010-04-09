@@ -1,4 +1,4 @@
-AC_INIT([ADMB], [`cat VERSION`], [users@admb-project.org])
+AC_INIT([ADMB], [9.1], [users@admb-project.org])
 
 # Check for programs used in building ADMB.
 AC_PROG_CC
@@ -29,4 +29,4 @@ then
 fi
 
 AC_SUBST(target, $admb_target)
-AC_OUTPUT(admb-config.mak)
+AC_OUTPUT(admb.cfg)

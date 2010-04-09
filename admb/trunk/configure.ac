@@ -6,7 +6,9 @@ AC_PROG_CXX
 AC_LANG([C++])
 AC_CHECK_HEADERS(iostream)
 AC_PROG_LEX
-AC_PROG_SED
+
+## Requires autoconf version 2.60 or newer
+#AC_PROG_SED
 
 # Check for programs used in building ADMB.
 CXX_32OR64BIT="32bit"
@@ -26,6 +28,12 @@ then
   MACOS_XCODE_VERSION=`xcodebuild -version | grep Xcode | awk '{print $2}'`
   ADMB_TARGET="admb-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}"
   admb_target="admb-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
+fi
+
+if test  "`uname -s`" =  "Linux"
+then
+  GCC_VERSION=`gcc -dumpversion`
+  admb_target="admb-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
 fi
 
 AC_SUBST(target, $admb_target)

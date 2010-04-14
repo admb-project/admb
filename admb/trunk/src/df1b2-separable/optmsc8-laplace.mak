@@ -1,4 +1,3 @@
-#macros for making optimized library for MS         
 CC = cl
 LL = tlib
 LIBPATH = msc8olp
@@ -17,13 +16,7 @@ include objects.lst
 
 OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
 $(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJECTS)
-	rm $(LIBPATH)/t.rsp ; \
-	echo /OUT:$(LIBNAME)  > $(LIBPATH)/t.rsp ; \
-	cd $(LIBPATH) ; \
-	cat t.rsp  ; \
-	ls $(filter-out df1b2lp12.obj, $(OBJECTS)) >> t.rsp  ; \
-	lib /NOLOGO /IGNORE:4006 @t.rsp ; \
-	cd ..
+	cd $(LIBPATH) && lib /OUT:$(LIBNAME) /NOLOGO /IGNORE:4006 $(filter-out df1b2lp12.obj, $(OBJECTS))
 	
 $(OBJGUI): %.obj: %.cpp
 	$(CC) $(FLAGS)  $<
@@ -52,9 +45,11 @@ fvar.hpp:
 
 all: $(LIBPATH)/$(LIBNAME) disk tpl2rem
 
-tpl2rem: tpl2rem.lex
+tpl2rem.c: tpl2rem.lex
 	flex -w tpl2rem.lex
 	sed -f sedflex lex.yy.c > tpl2rem.c
+
+tpl2rem: tpl2rem.c
 	cl /nologo /W4 /wd4049 /wd4700 /wd4702 /wd4018 /wd4996 /wd4131 /wd4127 /wd4244 /wd4101 /wd4189 -DWIN32 tpl2rem.c
 	cp tpl2rem.exe $(DISKDIR)/$(BINDIR)
 

@@ -17,11 +17,7 @@ vpath %.obj $(LIBPATH)$
 include objects.lst
 
 $(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)  
-	echo /OUT:$(LIBNAME)  > $(LIBPATH)/t.rsp ; \
-	cd $(LIBPATH) ; \
-	ls *.obj >> t.rsp ; \
-	lib /NOLOGO @t.rsp ; \
-	cd ..
+	cd $(LIBPATH) && lib /OUT:$(LIBNAME) /NOLOGO *.obj
 
 $(OBJ0): %.obj: %.cpp
 	$(CC) $(FLAGS)  $<

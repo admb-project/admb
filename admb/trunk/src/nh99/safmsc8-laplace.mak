@@ -20,13 +20,7 @@ include objects.lst
 
 OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
 $(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJECTS)
-	rm -f $(LIBPATH)/$(LIBNAME)   ; \
-	echo /OUT:$(LIBNAME)  > $(LIBPATH)/t.rsp ; \
-	cd $(LIBPATH) ; \
-	cat t.rsp  ; \
-	ls $(filter-out pvmvar1.obj para3.obj, $(OBJECTS)) >> t.rsp  ; \
-	lib /NOLOGO @t.rsp ; \
-	cd ..
+	cd $(LIBPATH) && lib /NOLOGO /OUT:$(LIBNAME) $(filter-out pvmvar1.obj para3.obj, $(OBJECTS))
 	
 $(OBJGUI): %.obj: %.cpp
 	$(CC) $(FLAGS)  $<
@@ -58,11 +52,7 @@ all: $(LIBPATH)/$(LIBNAME) stub disk
 stub: df1b2stub.cpp
 	$(CC) $(FLAGS) df1b2stub.cpp
 	mv df1b2stub.obj $(STUBPATH)       
-	echo /OUT:$(STUBLIBNAME)  > $(STUBPATH)/t.rsp ; \
-	cd $(STUBPATH) ; \
-	cat t.rsp  ; \
-	ls *.obj >> t.rsp  ; \
-	lib /NOLOGO @t.rsp  
+	cd $(STUBPATH) && lib /OUT:$(STUBLIBNAME) /NOLOGO df1b2stub.obj
 
 
 disk: 
@@ -71,7 +61,6 @@ disk:
 	cp spcomm.h $(DISKDIR)/$(INCLUDEDIR)
 	cp s.h $(DISKDIR)/$(INCLUDEDIR)
 	cp newredef.h $(DISKDIR)/$(INCLUDEDIR)
-	$(CC) /nologo /wd4996 tpl2cpp.c
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 	- cp $(STUBPATH)/$(STUBLIBNAME) $(DISKDIR)/$(LIBDIR) 
 

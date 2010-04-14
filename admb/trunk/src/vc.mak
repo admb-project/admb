@@ -1,46 +1,49 @@
+DISK=../build
+CCVERSION=vc10
+OSVERSION=win7
 COMP=cl
 
 all:
 	rm -rf ${DISK}
-	- mkdir -p ${DISK}
-	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include
-	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
-	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
-	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 
-	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}slp 
-	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp-stub 
-	- cd ./nh99;    mkdir msc8slp-stub
-	- cd ./tools99; mkdir ${CCVERSION}-${OSVERSION}olp 
-	- cd ./tools99; mkdir ${CCVERSION}-${OSVERSION}slp 
-	- cd ./df1b2-separable;mkdir  ${CCVERSION}-${OSVERSION}slp 
-	- cd ./df1b2-separable;mkdir  ${CCVERSION}-${OSVERSION}olp 
+	- mkdir.exe -p ${DISK}/bin
+	- mkdir.exe -p ${DISK}/lib
+	- mkdir.exe -p ${DISK}/include
+	- mkdir.exe -p linad99/${CCVERSION}-${OSVERSION}olp 
+	- mkdir.exe -p linad99/${CCVERSION}-${OSVERSION}slp 
+	- mkdir.exe -p nh99/${CCVERSION}-${OSVERSION}olp 
+	- mkdir.exe -p nh99/${CCVERSION}-${OSVERSION}slp 
+	- mkdir.exe -p nh99/${CCVERSION}-${OSVERSION}olp-stub 
+	- mkdir.exe -p nh99/msc8slp-stub
+	- mkdir.exe -p tools99/${CCVERSION}-${OSVERSION}olp 
+	- mkdir.exe -p tools99/${CCVERSION}-${OSVERSION}slp 
+	- mkdir.exe -p df1b2-separable/${CCVERSION}-${OSVERSION}slp 
+	- mkdir.exe -p df1b2-separable/${CCVERSION}-${OSVERSION}olp 
 	cp ../scripts/vc/*.bat ${DISK}/bin
 	cp ../scripts/mingw/admb.bat ${DISK}/bin
 	cp ../LICENSE ${DISK}
 	cp ../README ${DISK}
 	cp -R ../examples ${DISK}/examples
 	cp ../scripts/vc/Makefile ${DISK}/examples
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -I\"${MSSDK}\"/Include" -f optmsc8-laplace.mak all
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -I\"${MSSDK}\"/Include" -f safmsc8-laplace.mak all
-	cd ./nh99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -I\"${MSSDK}\"/Include" -f optmsc8-laplace.mak all
-	cd ./nh99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -I\"${MSSDK}\"/Include" -f safmsc8-laplace.mak all
-	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -I\"${MSSDK}\"/Include" -f optmsc8-laplace.mak all
-	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -I\"${MSSDK}\"/Include" -f safmsc8-laplace.mak all
-	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -I\"${MSSDK}\"/Include" -f optmsc8-laplace.mak all
-	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -I\"${MSSDK}\"/Include" -f safmsc8-laplace.mak all
-	#- rm ${DISK}.tar* 
-	#tar -cvf ${DISK}.tar ${DISK}
-	#bzip2 ${DISK}.tar 
+	$(MAKE)  --directory=linad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optmsc8-laplace.mak all
+	$(MAKE)  --directory=linad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safmsc8-laplace.mak all
+	$(MAKE) --directory=nh99  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optmsc8-laplace.mak all
+	$(MAKE)  --directory=nh99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safmsc8-laplace.mak all
+	$(MAKE) --directory=tools99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optmsc8-laplace.mak all
+	$(MAKE) --directory=tools99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safmsc8-laplace.mak all
+	$(MAKE) --directory=df1b2-separable  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optmsc8-laplace.mak all
+	$(MAKE)  --directory=df1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safmsc8-laplace.mak all
+
+verify:
 
 clean:
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optmsc8-laplace.mak clean
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safmsc8-laplace.mak clean
-	cd ./nh99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optmsc8-laplace.mak clean
-	cd ./nh99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safmsc8-laplace.mak clean
-	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optmsc8-laplace.mak clean
-	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safmsc8-laplace.mak clean
-	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optmsc8-laplace.mak clean
-	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safmsc8-laplace.mak clean
+	$(MAKE) --directory=linad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optmsc8-laplace.mak clean
+	$(MAKE)  --directory=linad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safmsc8-laplace.mak clean
+	$(MAKE)  --directory=nh99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optmsc8-laplace.mak clean
+	$(MAKE)  --directory=nh99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safmsc8-laplace.mak clean
+	$(MAKE)  --directory=tools99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optmsc8-laplace.mak clean
+	$(MAKE)  --directory=tools99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safmsc8-laplace.mak clean
+	$(MAKE)  --directory=df1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optmsc8-laplace.mak clean
+	$(MAKE)  --directory=df1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safmsc8-laplace.mak clean
 	rm -rvf tools99/vc7-win32olp
 	rm -rvf tools99/vc7-win32slp
 	rm -vf nh99/t.rsp

@@ -24,22 +24,22 @@ REM ############################################################################
 
 rem Pop args until model=%1
 set re=0
-set s=-s
-set def=
+set s=
 set df1b2lib=df1b2stubo.lib
 set adlib=ado32.lib
 :STARTLOOP
 if [%2]==[] goto ENDLOOP
 if %1==-r set re=1& shift
-REM if %1==-s set s=& set adlib=ads32.lib& set df1b2lib=df1b2stubs.lib& shift
-if %1==-s set s=& shift
+if %1==-s set adlib=ads32.lib& set s=s& shift
 goto STARTLOOP
 :ENDLOOP
-if %re%==1 if %adlib%==ado32.lib set df1b2lib=df1b2o.lib
-if %re%==1 if %adlib%==ads32.lib set df1b2lib=df1b2s.lib
+
+if %adlib%==ado32.lib set df1b2lib=df1b2o.lib
+if %adlib%==ads32.lib set df1b2lib=df1b2s.lib
+set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
-cl  %1.obj %df1b2lib% admod32.lib %adlib% adt32.lib /link /libpath:"%ADMB_HOME%"\lib /libpath:"%MSSDK%"\lib
+cl  %1.obj %df1b2lib% admod32%s%.lib %adlib% adt32%s%.lib /link /libpath:"%ADMB_HOME%"\lib libpath:"%MSSDK%"\lib
 @echo off
 
 goto EOF

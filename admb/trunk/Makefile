@@ -20,6 +20,9 @@ bcc-clean:
 vc:
 	make --directory=src --file=vc.mak
 
+vc-verify:
+	make --directory=src --file=vc.mak verify
+
 vc-clean:
 	make --directory=src --file=vc.mak clean
 

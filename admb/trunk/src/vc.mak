@@ -2,6 +2,9 @@ DISK=../build
 CCVERSION=vc10
 OSVERSION=win7
 COMP=cl
+PWD=$(shell pwd)
+WINADMB_HOME=$(shell cygpath --windows ${PWD}/${DISK})
+BORLAND_HOME=$(shell cygpath --unix $(BCC55_HOME))
 
 all:
 	rm -rf ${DISK}

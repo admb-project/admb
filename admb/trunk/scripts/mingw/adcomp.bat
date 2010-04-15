@@ -36,14 +36,16 @@ if [%2]==[] goto ENDLOOP
 if %1==-d set dll=-DBUILDING_DLL& shift
 if %1==-g set g=-g& shift
 if %1==-r shift
-if %1==-s set opt=& shift
+if %1==-s set opt=-DSAFE_ALL& shift
 goto STARTLOOP
 :ENDLOOP
 
 set model=%~n1
 
-echo g++ -c %g% -Wno-deprecated -D__GNUDOS__ %dll% -Dlinux %opt% -DUSE_LAPLACE -fpermissive -I. -I%ADMB_HOME%/include %model%.cpp
-     g++ -c %g% -Wno-deprecated -D__GNUDOS__ %dll% -Dlinux %opt% -DUSE_LAPLACE -fpermissive -I. -I%ADMB_HOME%/include %model%.cpp
+echo on
+g++ -c %g% -Wno-deprecated -D__GNUDOS__ %dll% -Dlinux %opt% -DUSE_LAPLACE -fpermissive -I. -I%ADMB_HOME%/include %model%.cpp
+echo off
+
 goto EOF
 
 :HELP

@@ -31,13 +31,14 @@ rem Pop args until model=%1
 set adlib=-lado
 set linker=g++
 set re=0
-set s=-s
+set s=
+set g=
 :STARTLOOP
 if [%2]==[] goto ENDLOOP
 if %1==-d set linker=dllwrap& shift
-if %1==-g set s=& shift
+if %1==-g set g=-g& shift
 if %1==-r set re=1& shift
-if %1==-s set adlib=-lads& shift
+if %1==-s set adlib=-lads& set s=s& shift
 goto STARTLOOP
 :ENDLOOP
 
@@ -46,11 +47,12 @@ set model=%~n1
 set def=
 set df1b2lib=-ldf1b2stub
 if %linker%==g++ (set out=-o %model%) else (set def=-def %model%.def --driver-name g++& set out=--output-lib lib%model%.a -o %model%.dll)
-if %re%==1 if %adlib%==-lado set df1b2lib=-ldf1b2o
-if %re%==1 if %adlib%==-lads set df1b2lib=-ldf1b2s
+if %adlib%==-lado set df1b2lib=-ldf1b2o
+if %adlib%==-lads set df1b2lib=-ldf1b2s
 
-echo %linker% %s% -static %def% -L%ADMB_HOME%/lib %model%.o %df1b2lib% -ladmod -ladt %adlib% %df1b2lib% -ladmod -ladt %adlib% %out%
-     %linker% %s% -static %def% -L%ADMB_HOME%/lib %model%.o %df1b2lib% -ladmod -ladt %adlib% %df1b2lib% -ladmod -ladt %adlib% %out%
+echo on
+%linker% %s% -static %def% -L%ADMB_HOME%/lib %model%.o %df1b2lib% -ladmod -ladt %adlib% %df1b2lib% -ladmod -ladt %adlib% %out%
+echo off
 goto EOF
 
 :HELP

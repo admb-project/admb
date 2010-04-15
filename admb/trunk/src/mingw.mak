@@ -3,7 +3,7 @@ PWD=$(shell pwd)
 
 CCVERSION=gcc345mingw
 OSVERSION=win32
-COMP="g++ -Wall"
+COMP=g++
 
 dist:
 	rm -rf ${DISK}
@@ -23,7 +23,7 @@ dist:
 	- mkdir.exe -p tools99/${CCVERSION}-${OSVERSION}olp 
 	- mkdir.exe -p df1b2-separable/${CCVERSION}-${OSVERSION}slp 
 	- mkdir.exe -p df1b2-separable/${CCVERSION}-${OSVERSION}olp 
-	$(MAKE) -C df1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} PVMOPTION=-Dlinux -f  optg32-rh8-laplace.mak  disk
+	$(MAKE) -C df1b2-separable CC=g++ LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} PVMOPTION=-Dlinux -f optg32-rh8-laplace.mak disk
 	$(MAKE) -C df1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} PVMOPTION=-Dlinux -f  safg32-rh8-laplace.mak disk 
 	$(MAKE) -C linad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} PVMOPTION=-Dlinux -f optg32-rh8-laplace.mak disk
 	$(MAKE) -C linad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} PVMOPTION=-Dlinux -f safg32-rh8-laplace.mak  disk 
@@ -31,9 +31,10 @@ dist:
 	$(MAKE)  -C tools99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} PVMOPTION=-Dlinux -f optg32-rh8-laplace.mak  disk
 	
 verify:
-	make -C ${DISK}
+	$(MAKE) -C ${DISK} all
 
 clean:
+	#cd ${DISK}
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak clean
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak  clean 
 	cd ./nh99;    $(MAKE)  CC=${COMP} STUBPATH=${CCVERSION}-${OSVERSION}olp-stub   LIBPATH=${CCVERSION}-${OSVERSION}olp  DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  clean

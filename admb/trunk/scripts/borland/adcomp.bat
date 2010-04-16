@@ -41,8 +41,9 @@ goto STARTLOOP
 
 set model=%~n1
 
-echo bcc32 -c -O2 %v% -DDOS386;USE_LAPLACE%opt%%dll% -I%ADMB_HOME%\include %model%.cpp
-     bcc32 -c -O2 %v% -DDOS386;USE_LAPLACE%opt%%dll% -I%ADMB_HOME%\include %model%.cpp
+@echo on
+bcc32 -c -O2 %v% -DDOS386;USE_LAPLACE%opt%%dll% -I%BCC55_HOME%\include -I%ADMB_HOME%\include %model%.cpp
+@echo off
 goto EOF
 
 :HELP

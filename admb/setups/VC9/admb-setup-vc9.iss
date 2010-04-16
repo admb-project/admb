@@ -20,7 +20,7 @@ LicenseFile=..\MinGW\LICENSE
 Name: "vc9"; Description: "ADMB for Microsoft Visual C++ 2008"
 
 [Files]
-Source: "..\..\trunk\build\dists\admb_vc9_win32\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs
+Source: "..\..\trunk\build\*"; DestDir: "{app}"; Excludes: "*\SS3*\*"; Flags: recursesubdirs
 
 [Icons]
 Name: "{group}\ADMB Command Prompt (Microsoft Visual C++ 2008)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-vc9.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt"

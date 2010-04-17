@@ -42,8 +42,8 @@ goto STARTLOOP
 set model=%~n1
 
 set df1b2lib=df1b2stub.lib
-if %re%==1 if %adlib%==ado32.lib set df1b2lib=df1b2o.lib
-if %re%==1 if %adlib%==ads32.lib set df1b2lib=df1b2s.lib
+if %adlib%==ado32.lib set df1b2lib=df1b2o.lib
+if %adlib%==ads32.lib set df1b2lib=df1b2s.lib
 
 @echo on
 bcc32 %v% %wd% -L%BCC55_HOME%\lib -L%ADMB_HOME%\lib %model%.obj admod32.lib adt32.lib %adlib% %df1b2lib%

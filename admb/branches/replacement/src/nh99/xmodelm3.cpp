@@ -353,7 +353,38 @@ void tracing_message(int traceflag,const char *s);
             }
             if (maxfn>0)
             {
-              quasi_newton_block(nvar,_crit,x,g,f);
+              int lmnflag=-1;
+              int nsteps=5;
+              if ( (lmnflag=option_match(ad_comm::argc,ad_comm::argv,
+                 "-lmn2",nopt))>-1)
+              {
+                if (!nopt)
+                {
+                  cerr << "Usage -lmn option needs integer"
+                     "  -- set to default 5" << endl;
+                }
+                else
+                {   
+                  int jj=atoi(ad_comm::argv[lmnflag+1]);
+                  if (jj<=0)
+                  {
+                    cerr << "Usage -lmn option needs positive integer "
+                     " -- set to defalt 5" << endl;
+                  }
+                  else
+                  {
+                    nsteps=jj;
+                  }
+                }
+              }
+              if (lmnflag<0)
+              {
+                quasi_newton_block(nvar,_crit,x,g,f);
+              }
+              else
+              {
+                limited_memory_quasi_newton_block(nvar,_crit,x,g,f,nsteps);
+              }
             }
           }
           while(repeatminflag);

@@ -13,7 +13,8 @@ extern "C" {
 #endif
   int lbfgs_(long int *, long int *, double *, 
 	    double *, double *, long int *, double *, long int *, 
-	    double *, double *, double *, long int *,long int *);
+	    double *, double *, double *, long int *,long int *,
+            long int *);
 #ifdef __cplusplus
 	}
 #endif
@@ -151,7 +152,7 @@ L20:
       if (!itn)
       {
         if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
-          f, max(g));
+          f, max(fabs(g)));
       }
       else
       {
@@ -174,8 +175,9 @@ L20:
   long int liprintx= *iprintx;
   long int liflag=iflag;
   long int lm=m;
+  long int linfo=0;
   lbfgs_(&lnvar, &lm, &(x[1]) , &f, &(g[1]), &diagco, &(diag[1]),
-    &liprintx, &crit, &xtol, &(w[1]), &liflag,&litn);
+    &liprintx, &crit, &xtol, &(w[1]), &liflag,&litn,&linfo);
   itn=int(litn);
   iflag=int(liflag);
 
@@ -317,8 +319,9 @@ L20:
   long int liprintx= *iprintx;
   long int liflag=iflag;
   long int lm=m;
+  long int linfo=0;
   lbfgs_(&lnvar, &lm, &(x[1]) , &f, &(g[1]), &diagco, &(diag[1]),
-    &liprintx, &crit, &xtol, &(w[1]), &liflag,&litn);
+    &liprintx, &crit, &xtol, &(w[1]), &liflag,&litn,&linfo);
   itn=int(litn);
   iflag=int(liflag);
 

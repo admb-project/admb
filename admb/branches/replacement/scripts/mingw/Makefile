@@ -16,54 +16,54 @@ vol
 
 buscycle: ham4 ham5
 ham4:
-	cd examples\\admb\\buscycle && admb.bat $@ && $@
-	cd examples\\admb\\buscycle && admb.bat -s $@ && $@
+	cd examples/admb/buscycle && admb.bat $@ && cmd /c $@
+	cd examples/admb/buscycle && admb.bat -s $@ && cmd /c $@
 
 ham5:
-	cd examples\\admb\\buscycle && admb.bat $@ && $@
-	cd examples\\admb\\buscycle && admb.bat -s $@ && $@
-
-catage:
-	cd examples\\admb\\$@ && admb.bat $@ && $@
-	cd examples\\admb\\$@ && admb.bat -s $@ && $@
+	cd examples/admb/buscycle && admb.bat $@ && cmd /c $@
+	cd examples/admb/buscycle && admb.bat -s $@ && cmd /c $@
 
 chem-eng:
-	cd examples\\admb\\$@ && admb.bat $@ && $@
-	cd examples\\admb\\$@ && admb.bat -s $@ && $@
+	cd examples/admb/$@ && admb.bat $@ && cmd /c $@
+	cd examples/admb/$@ && admb.bat -s $@ && cmd /c $@
+
+catage:
+	cd examples/admb/$@ && admb.bat $@ && cmd /c $@
+	cd examples/admb/$@ && admb.bat -s $@ && cmd /c $@
 
 finance:
-	cd examples\\admb\\$@ && admb.bat $@ && $@
-	cd examples\\admb\\$@ && admb.bat -s $@ && $@
+	cd examples/admb/$@ && admb.bat $@ && cmd /c $@
+	cd examples/admb/$@ && admb.bat -s $@ && cmd /c $@
 
 forest:
-	@REM cd examples\\admb\\$@ && admb.bat $@ && $@
-	@REM cd examples\\admb\\$@ && admb.bat -s $@ && $@
+	-cd examples/admb/$@ && admb.bat $@ && cmd /c $@
+	-cd examples/admb/$@ && admb.bat -s $@ && cmd /c $@
 
 pella-t:
-	cd examples\\admb\\$@ && admb.bat $@ && $@
-	cd examples\\admb\\$@ && admb.bat -s $@ && $@
+	cd examples/admb/$@ && admb.bat $@ && cmd /c $@
+	cd examples/admb/$@ && admb.bat -s $@ && cmd /c $@
 
 robreg: vonb vonbr
 vonb:
-	cd examples\\admb\\robreg && admb.bat $@ && $@
-	cd examples\\admb\\robreg && admb.bat -s $@ && $@
+	cd examples/admb/robreg && admb.bat $@ && cmd /c $@
+	cd examples/admb/robreg && admb.bat -s $@ && cmd /c $@
 
 vonbr:
-	cd examples\\admb\\robreg && admb.bat $@ && $@
-	cd examples\\admb\\robreg && admb.bat -s $@ && $@
+	cd examples/admb/robreg && admb.bat $@ && cmd /c $@
+	cd examples/admb/robreg && admb.bat -s $@ && cmd /c $@
 
 simple:
-	cd examples\\admb\\$@ && admb.bat $@ && $@
-	cd examples\\admb\\$@ && admb.bat -s $@ && $@
+	cd examples/admb/$@ && admb.bat $@ && cmd /c $@
+	cd examples/admb/$@ && admb.bat -s $@ && cmd /c $@
 
 truncreg:
-	@REM cd examples\\admb\\$@ && admb.bat $@ && runtrunc.bat && fruntrunc.bat
-	@REM cd examples\\admb\\$@ && admb.bat -s $@ && runtrunc.bat && fruntrunc.bat
+	-cd examples/admb/$@ && admb.bat $@ && cmd /c runtrunc.bat && cmd /c fruntrunc.bat
+	-cd examples/admb/$@ && admb.bat -s $@ && cmd /c runtrunc.bat && cmd /c fruntrunc.bat
 
 vol: n2mvol
 n2mvol:
-	cd examples\\admb\\vol && admb.bat $@ && $@
-	cd examples\\admb\\vol && admb.bat -s $@ && $@
+	cd examples/admb/vol &&  admb.bat $@ && cmd /c $@
+	cd examples/admb/vol && admb.bat -s $@ && cmd /c $@
 
 admb-re:\
 bcb \
@@ -89,95 +89,95 @@ union \
 weights
 
 bcb:
-	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 biglog:
-	@REM cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	@REM cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	-cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	-cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 bvprobit:
-	@REM cd examples\\admb-re\\glmmadmb && admb.bat -r $@ && $@
-	@REM cd examples\\admb-re\\glmmadmb && admb.bat -r -s $@ && $@
+	-cd examples/admb-re/glmmadmb && admb.bat -r $@ && cmd /c $@
+	-cd examples/admb-re/glmmadmb && admb.bat -r -s $@ && cmd /c $@
 
 caest:
-	@REM cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	@REM cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	-cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	-cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 gamma:
-	cd examples\\admb-re\\$@ && admb.bat -r liver_$@ && liver_$@
-	cd examples\\admb-re\\$@ && admb.bat -r -s liver_$@ && liver_$@
+	cd examples/admb-re/$@ && admb.bat -r liver_$@ && cmd /c liver_$@
+	cd examples/admb-re/$@ && admb.bat -r -s liver_$@ && cmd /c liver_$@
 
 kidney:
-	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 lidar:
-	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 logistic:
-	@REM cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	@REM cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	-cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	-cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 nbmm:
-	@REM cd examples\\admb-re\\glmmadmb && admb.bat -r $@ && $@
-	@REM cd examples\\admb-re\\glmmadmb && admb.bat -r -s $@ && $@
+	-cd examples/admb-re/glmmadmb && admb.bat -r $@ && cmd /c $@
+	-cd examples/admb-re/glmmadmb && admb.bat -r -s $@ && cmd /c $@
 
 nested4:
-	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 orange:
-	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 orange2:
-	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 orange_cor:
-	@REM cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	@REM cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	-cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	-cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 pheno:
-	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 polio:
-	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 sdv:
-	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 skewed: diet diet_sk
 diet:
-	cd examples\\admb-re\\skewed && admb.bat -r $@ && $@
-	cd examples\\admb-re\\skewed && admb.bat -r -s $@ && $@
+	cd examples/admb-re/skewed && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/skewed && admb.bat -r -s $@ && cmd /c $@
 
 diet_sk:
-	cd examples\\admb-re\\skewed && admb.bat -r $@ && $@
-	cd examples\\admb-re\\skewed && admb.bat -r -s $@ && $@
+	cd examples/admb-re/skewed && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/skewed && admb.bat -r -s $@ && cmd /c $@
 
 socatt:
-	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 spatial:
-	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 union:
-	@REM cd examples\\admb-re\\$@ && admb.bat -r $@ && $@
-	@REM cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
+	-cd examples/admb-re/$@ && admb.bat -r $@ && cmd /c $@
+	-cd examples/admb-re/$@ && admb.bat -r -s $@ && cmd /c $@
 
 weights: binomial binomial_w2
 binomial:
-	cd examples\\admb-re\\weights && admb.bat -r $@ && $@
-	cd examples\\admb-re\\weights && admb.bat -r -s $@ && $@
+	cd examples/admb-re/weights && admb.bat -r $@ && cmd /c $@
+	cd examples/admb-re/weights && admb.bat -r -s $@ && cmd /c $@
 
 binomial_w2:
-	@REM cd examples\\admb-re\\weights && admb.bat -r $@ && $@
-	@REM cd examples\\admb-re\\weights && admb.bat -r -s $@ && $@
+	-cd examples/admb-re/weights && admb.bat -r $@ && cmd /c $@
+	-cd examples/admb-re/weights && admb.bat -r -s $@ && cmd /c $@

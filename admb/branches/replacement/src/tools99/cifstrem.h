@@ -45,7 +45,13 @@
 #  include <fvar.hpp>
 
 #if defined(__GNUDOS__)
-#  pragma interface
+  #if defined(__GNUC__)
+    #if (__GNUC__ < 3)
+      #pragma interface
+    #endif
+  #else
+    #pragma interface
+  #endif
 #endif
 
 #if defined(linux) || defined(__GNUDOS__)

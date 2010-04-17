@@ -45,7 +45,13 @@
 #define __STRING_HPP__
 
 #if defined(__BORLANDC__ )
-#  pragma interface
+  #if defined(__GNUC__)
+    #if (__GNUC__ < 3)
+      #pragma interface
+    #endif
+  #else
+    #pragma interface
+  #endif
 #endif
 
 #include "clist.h"

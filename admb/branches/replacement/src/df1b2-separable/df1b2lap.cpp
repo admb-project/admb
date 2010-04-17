@@ -1818,7 +1818,7 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   vf+=*objective_function_value::pobjfun;
   laplace_approximation_calculator::where_are_we_flag=0; 
   initial_df1b2params::cobjfun=value(vf);
-  gradcalc(usize,g);
+  gradcalc(usize,g);  // Values of g going in are the same, but different comming out
   double maxg=max(fabs(g));
   if (!initial_params::mc_phase)
   {

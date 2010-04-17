@@ -15,8 +15,8 @@ dist:
 	cp ../scripts/mingw/admb.bat ${DISK}/bin
 	cp ../LICENSE ${DISK}
 	cp ../README ${DISK}
-	svn export ../examples/admb ${DISK}/examples/admb
-	svn export ../examples/admb-re ${DISK}/examples/admb-re
+	cp -R ../examples/admb ${DISK}/examples/admb
+	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 	cp ../scripts/borland/Makefile ${DISK}/examples
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 

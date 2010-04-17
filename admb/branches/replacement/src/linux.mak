@@ -20,8 +20,8 @@ dist:
 	cp ../scripts/bash/adlink ${DISK}/bin
 	cp ../scripts/bash/check-expected-results ${DISK}/bin
 	cp ../scripts/bash/Makefile ${DISK}
-	svn export ../examples/admb ${DISK}/examples/admb
-	svn export ../examples/admb-re ${DISK}/examples/admb-re
+	cp -R ../examples/admb ${DISK}/examples/admb
+	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 	rm -rvf ${DISK}/examples/admb/SS3
 	rm -rvf ${DISK}/examples/admb/SS3-Simple
 	- cd ./linad99; mkdir -p ${CCVERSION}-${OSVERSION}olp 
@@ -44,9 +44,9 @@ dist:
 	#cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals
 	#cp -vf docs/manuals/admb.pdf ${DISK}/docs/manuals
 	#cp -vf docs/manuals/admb-re.pdf ${DISK}/docs/manuals
-	- rm -f ${DISK}.tar* 
-	tar -cvf ${DISK}.tar ${DISK}
-	bzip2 ${DISK}.tar 
+	#- rm -f ${DISK}.tar* 
+	#tar -cvf ${DISK}.tar ${DISK}
+	#bzip2 ${DISK}.tar 
 
 dist-64bit:
 	rm -rf ${DISK}
@@ -58,8 +58,8 @@ dist-64bit:
 	cp ../scripts/bash/adlink-64bit ${DISK}/bin/adlink
 	cp ../scripts/bash/check-expected-results ${DISK}/bin
 	cp ../scripts/bash/Makefile ${DISK}
-	svn export ../examples/admb ${DISK}/examples/admb
-	svn export ../examples/admb-re ${DISK}/examples/admb-re
+	cp -R ../examples/admb ${DISK}/examples/admb
+	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 	rm -rvf ${DISK}/examples/admb/SS3
 	rm -rvf ${DISK}/examples/admb/SS3-Simple
 	- cd ./linad99; mkdir -p ${CCVERSION}-${OSVERSION}olp 
@@ -89,6 +89,9 @@ dist-64bit:
 verify:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK} all
 	../scripts/get-outputs.sh ../build/dists/admb_gcc411_fedora8/examples > "../benchmarks-${NOW}.txt"
+
+check-admb2r:
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ../ADMB2R gcc
 
 clean:
 	@cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak clean

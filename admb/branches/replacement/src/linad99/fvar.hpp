@@ -45,7 +45,13 @@ A more detailed description might someday be written.
 */
 
 #if defined(__GNUDOS__)
-#  pragma interface
+  #if defined(__GNUC__)
+    #if (__GNUC__ < 3)
+      #pragma interface
+    #endif
+  #else
+    #pragma interface
+  #endif
 #endif
 
 
@@ -1075,7 +1081,13 @@ private:
   void jacobcalc(int nvar,BOR_CONST uostream& ofs);
 
 #if defined(__BORLANDC__ )
-#  pragma interface
+  #if defined(__GNUC__)
+    #if (__GNUC__ < 3)
+      #pragma interface
+    #endif
+  #else
+    #pragma interface
+  #endif
 #endif
     class dvect_ptr_ptr
     {
@@ -2062,7 +2074,6 @@ private:
   class vector_shapex 
   {
   public:
-    void * trueptr;
     vector_shapex(int lb,int ub,void * p) : index_min(lb), 
       index_max(ub), ncopies(0), trueptr(p) {}
     void * get_truepointer(void){ return trueptr; }
@@ -2076,10 +2087,11 @@ private:
     void operator delete(void * ptr,size_t n)
     {  xpool->free(ptr); }
 #endif
-    unsigned int ncopies;
     void shift(int min);
     int index_min;
     int index_max;
+    unsigned int ncopies;
+    void * trueptr;
   private:
     friend class subdvector;
     friend class lvector;
@@ -6867,14 +6879,12 @@ public:
 
 class random_number_generator
 {
-  long int xdum;
-  long idum2;
-  long iy;
-  ivector iv;
+ unsigned long *mt; /* the array for the state vector  */
+ int mti; /* mti==N+1 means mt[N] is not initialized */
 public:
-  double better_rand(void);
-  random_number_generator(int seed);
-  void reinitialize(int seed);
+ double better_rand(void);
+ random_number_generator(int seed);
+ void reinitialize(int seed);
 };
 
 double randpoisson(double lambda,BOR_CONST random_number_generator& rng);

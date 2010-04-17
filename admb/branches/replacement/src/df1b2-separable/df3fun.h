@@ -39,7 +39,6 @@
  *
  */
 
-
 #if !defined(__DF3FUN__)
 #  define __DF3FUN__
 
@@ -56,6 +55,7 @@
     df3_one_variable& operator = (double v);
     df3_one_variable& operator += (const df3_one_variable& v);
     df3_one_variable& operator -= (const df3_one_variable& v);
+    df3_one_variable& operator -= (double);
     df3_one_variable& operator *= (const df3_one_variable& v);
     df3_one_variable& operator /= (const df3_one_variable& v);
     df3_one_variable(void);
@@ -167,6 +167,7 @@
 
   df3_one_variable sqrt(const df3_one_variable& x);
   df3_one_variable exp(const df3_one_variable& x);
+  df3_one_variable log(const df3_one_variable& x);
   df3_one_variable inv(const df3_one_variable& x);
   df3_one_variable operator * (const df3_one_variable& x,
     const df3_one_variable& y);
@@ -191,6 +192,8 @@
   df3_one_variable operator + (const df3_one_variable& x,
     const df3_one_variable& y);
 
+  df3_one_variable operator - (const df3_one_variable& x,
+    double);
   df3_one_variable operator - (const df3_one_variable& x,
     const df3_one_variable& y);
   df3_one_variable operator - (const df3_one_variable& x,

@@ -21,7 +21,7 @@ PARAMETER_SECTION
   init_bounded_number r(.5,2)			// Shape parameter in Weibull distribution
   init_bounded_number log_sigma(-6.0,1.0)	// 0.5*log-variance component
 
-  random_effects_vector u(1,n,3)			// Random effect
+  random_effects_vector u(1,n)			// Random effect
 
   objective_function_value g			// Joint log-likelihood
 

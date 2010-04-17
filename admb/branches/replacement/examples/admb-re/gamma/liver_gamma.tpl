@@ -63,7 +63,4 @@ SEPARABLE_FUNCTION void fun( int i,int & j ,const prevariable& ui, const prevari
    f += lambda*S(j) - log_lambda;
  }
 
-GLOBALS_SECTION
-  //#include <df1b2fun.h>
-  //df3_two_variable igamc(const df3_two_variable & a, const df3_two_variable & x){}
-  //double igamc(const double a, const double x){}
+

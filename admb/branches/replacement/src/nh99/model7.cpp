@@ -153,8 +153,11 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       }
       int n=i-1;
       adprogram_name=adprogram_name(1,n);
-      (*ad_printf)( " AD Model Builder version 9.0.x\n"
-                    "Copyright (c) 2008, 2009 Regents of the University of California\n");
+
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x) 
+      (*ad_printf)( " AD Model Builder version " TOSTRING(ADMB_VERSION)
+                   "\nCopyright (c) 2008, 2009 Regents of the University of California\n");
       (*ad_printf)(" USAGE--%s options\n",(char*)(adprogram_name));
       (*ad_printf)(" where an option consists of -option_tag followed by arguments if necessary\n");
       (*ad_printf)( " -ainp NAME      change default ascii input parameter file name to NAME\n");
@@ -163,6 +166,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -noest          do not do the parameter estimation (optimization) \n");
       (*ad_printf)( " -ind NAME       change default input data file name to NAME\n");
       (*ad_printf)( " -lmn N          use limited memory quasi newton -- keep N steps\n");
+      (*ad_printf)( " -lmn2 N         use other limited memory quasi newton -- keep N steps\n");
       (*ad_printf)( " -dd N           check derivatives after n function evaluations\n");
       (*ad_printf)( " -lprof          perform profile likelihood calculations\n");
       (*ad_printf)( " -maxph N        increase the maximum phase number to N\n");

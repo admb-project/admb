@@ -18,7 +18,7 @@
   static double MACHEP=2.22045e-16;
 
 //int sgngam = 0;
-extern int sgngam;
+static int sgngam = 0;
 static double MAXNUM=1.7976931348623158E+308;
 
 #include "mconf.h"
@@ -185,6 +185,7 @@ static unsigned short LS2P[] = {
 #define MAXLGM 2.556348e305
 #endif
 
+int mtherr(char* s,int n){ /*ad_exit(1);*/  return 0;}
 
 /**
  * \f$y = \ln(\Gamma(x))\f$.
@@ -794,6 +795,7 @@ static double get_initial_u(double a,double y)
     else
     {
       cerr << "this can't happen" << endl;
+	cout <<"but it did" << endl;
       ad_exit(1);
     }
   }

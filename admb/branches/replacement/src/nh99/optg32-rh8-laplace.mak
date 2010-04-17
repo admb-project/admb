@@ -1,11 +1,15 @@
 
 #macros for making optimized library for DJGPP
-CC = gcc
-LL = tli3
+CC = g++
 
-FLAGS =  ${OPTIONS} -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -O3 -c -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
+CFLAGS=-O3
+ifdef DEBUG
+CFLAGS=-g
+endif
 
-FLAGS1 =  ${OPTIONS} -w ${PVMOPTION} -DUSE_LAPLACE -fpermissive -O3 -c -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
+FLAGS =  -c $(CFLAGS) ${OPTIONS} -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux -DADMB_VERSION=${ADMB_VERSION}
+
+FLAGS1 =  -c $(CFLAGS) ${OPTIONS} -w ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux -DADMB_VERSION=${ADMB_VERSION}
 
 LIBPATH =gcc32-rh8olp
 STUBPATH =gcc32-rh8olp-stub
@@ -27,6 +31,7 @@ vpath %.obj $(LIBPATH)
 .PHONY: t3
 .PHONY: disk
 .PHONY: admodel.cpp
+.PHONY: tpl2cpp.c
 
 include objects.lst
 
@@ -57,7 +62,7 @@ all: $(LIBPATH)/$(LIBNAME)  tpl2cpp disk
 
 df1b2stub:
 	$(CC) $(FLAGS) -o $(STUBPATH)/df1b2stub.o df1b2stub.cpp
-	 cd $(STUBPATH); ar -rs ${STUBNAME}  df1b2stub.o
+	ar -rs $(STUBPATH)/${STUBNAME} $(STUBPATH)/df1b2stub.o
 
 tpl2cpp.c: tpl2cpp.lex
 	flex -w tpl2cpp.lex

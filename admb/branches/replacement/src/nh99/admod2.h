@@ -41,7 +41,14 @@
 
 
 //char cc[40]={"2008 Regents of the University of California"};
-#pragma interface
+#if defined(__GNUC__)
+  #if (__GNUC__ < 3)
+    #pragma interface
+  #endif
+#else
+  #pragma interface
+#endif
+
 #ifndef _ADMODEL_H_
   #define  _ADMODEL_H_
 #ifdef __GNUDOS__

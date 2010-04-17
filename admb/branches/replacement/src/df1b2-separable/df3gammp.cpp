@@ -6,25 +6,44 @@
  */
 #include <df1b2fun.h>
 #include <df13fun.h>
-
+#include "mconf.h"
 #define ITMAX 100
 #define EPS 1.0e-9
 //#define EPS 3.0e-7
 #define FPMIN 1.0e-30
 
-  double MAXLOG=200;
-  static double big = 4.503599627370496e15;
-  static double biginv =  2.22044604925031308085e-16;
-  static double MACHEP=2.22045e-16;
+static int sgngam = 0;
+static double MAXLOG = 200;
+static double MAXNUM = 1.7976931348623158E+308;
+static double PI = 3.14159265358979323844;
+static double LOGPI = 1.14472988584940017414;
+static double big = 4.503599627370496e15;
+static double biginv =  2.22044604925031308085e-16;
+//static double MACHEP=2.22045e-16;
+static double MACHEP=2.22045e-16;
+#ifdef INFINITIES
+#undef INFINITIES
+#endif
+#ifdef NANS
+#undef NANS
+#endif
 
-int sgngam = 0;
-extern int sgngam;
-static double MAXNUM=1.7976931348623158E+308;
+int operator < (const df3_two_variable& x,double n) { return value(x) < n; }
+int operator > (const df3_two_variable& x,double n) { return value(x) > n; }
+int operator >= (const df3_two_variable& x,double n) { return value(x) >= n; }
+int operator == (const df3_two_variable& x,const df3_two_variable& n) { return value(x)==value(n); }
+int operator == (const df3_two_variable& x,double n) { return value(x)==n; }
+int operator == (double x,const df3_two_variable& n) { return x==value(n); }
+int operator < (const df3_two_variable& x,const df3_two_variable& n) { return value(x)<value(n); }
+int operator > (const df3_two_variable& x,const df3_two_variable& n) { return value(x)>value(n); }
 
-extern df3_two_variable polevl (const df3_two_variable&, void *, int );
-extern df3_two_variable p1evl ( const df3_two_variable& , void *, int );
 
 double get_values(double x,double y,int print_switch);
+df3_two_variable polevl (const df3_two_variable&, void *, int );
+df3_two_variable p1evl ( const df3_two_variable& , void *, int );
+df3_two_variable igam(const df3_two_variable & _a, const df3_two_variable & _x );
+df3_two_variable igamc(const df3_two_variable & _a, const df3_two_variable & _x);
+//int mtherr(char* s,int n){ /*ad_exit(1);*/  return 0;}
 
 /*							gamma.c
  *
@@ -126,20 +145,8 @@ double get_values(double x,double y,int print_switch);
 /*							gamma.c	*/
 /*	gamma function	*/
 
-/*
-Cephes Math Library Release 2.8:  June, 2000
-Copyright 1984, 1987, 1989, 1992, 2000 by Stephen L. Moshier
-*/
-
-
-#include "mconf.h"
-#ifdef INFINITIES
-#undef INFINITIES
-#endif
-#ifdef NANS
-#undef NANS
-#endif
-
+//----------------------------------------------------------------------
+/* Coefficents used for the rational function in gamma(x) */
 #ifdef UNK
 static double P[] = {
   1.60119522476751861407E-4,
@@ -161,147 +168,300 @@ static double Q[] = {
  1.00000000000000000320E0
 };
 #define MAXGAM 171.624376956302725
-static double LOGPI = 1.14472988584940017414;
 #endif
-static double PI = 3.14159265358979323844;
 
+#ifdef DEC
+static unsigned short P[] = {
+0035047,0162701,0146301,0005234,
+0035634,0023437,0032065,0176530,
+0036452,0137157,0047330,0122574,
+0037103,0017310,0143041,0017232,
+0037524,0066516,0162563,0164605,
+0037775,0004671,0146237,0014222,
+0040200,0000000,0000000,0000000
+};
+static unsigned short Q[] = {
+0134302,0041724,0020006,0116565,
+0035415,0072121,0044251,0025634,
+0136222,0003447,0035205,0121114,
+0036501,0107552,0154335,0104271,
+0037022,0135717,0014776,0171471,
+0137560,0034324,0165024,0037021,
+0037222,0045046,0047151,0161213,
+0040200,0000000,0000000,0000000
+};
+#define MAXGAM 34.84425627277176174
+static unsigned short LPI[4] = {
+0040222,0103202,0043475,0006750,
+};
+#define LOGPI *(double *)LPI
+#endif
 
+#ifdef IBMPC
+static unsigned short P[] = {
+0x2153,0x3998,0xfcb8,0x3f24,
+0xbfab,0xe686,0x84e3,0x3f53,
+0x14b0,0xe9db,0x57cd,0x3f85,
+0x23d3,0x18c4,0x63d9,0x3fa8,
+0x7d31,0xdcae,0x8da9,0x3fca,
+0xe312,0x3993,0xa137,0x3fdf,
+0x0000,0x0000,0x0000,0x3ff0
+};
+static unsigned short Q[] = {
+0xd3af,0x8400,0x487a,0xbef8,
+0x2573,0x2915,0xae8a,0x3f41,
+0xb44a,0xe750,0x40e4,0xbf72,
+0xb117,0x5b1b,0x31ed,0x3f88,
+0xde67,0xe33f,0x5779,0x3fa2,
+0x87c2,0x9d42,0x071a,0xbfce,
+0x3c51,0xc9cd,0x4944,0x3fb2,
+0x0000,0x0000,0x0000,0x3ff0
+};
+#define MAXGAM 171.624376956302725
+static unsigned short LPI[4] = {
+0xa1bd,0x48e7,0x50d0,0x3ff2,
+};
+#define LOGPI *(double *)LPI
+#endif 
 
-df1b2variable log_negbinomial_density(double x,const df1b2variable& _xmu, 
-  const df1b2variable& _xtau)
+#ifdef MIEEE
+static unsigned short P[] = {
+0x3f24,0xfcb8,0x3998,0x2153,
+0x3f53,0x84e3,0xe686,0xbfab,
+0x3f85,0x57cd,0xe9db,0x14b0,
+0x3fa8,0x63d9,0x18c4,0x23d3,
+0x3fca,0x8da9,0xdcae,0x7d31,
+0x3fdf,0xa137,0x3993,0xe312,
+0x3ff0,0x0000,0x0000,0x0000
+};
+static unsigned short Q[] = {
+0xbef8,0x487a,0x8400,0xd3af,
+0x3f41,0xae8a,0x2915,0x2573,
+0xbf72,0x40e4,0xe750,0xb44a,
+0x3f88,0x31ed,0x5b1b,0xb117,
+0x3fa2,0x5779,0xe33f,0xde67,
+0xbfce,0x071a,0x9d42,0x87c2,
+0x3fb2,0x4944,0xc9cd,0x3c51,
+0x3ff0,0x0000,0x0000,0x0000
+};
+#define MAXGAM 171.624376956302725
+static unsigned short LPI[4] = {
+0x3ff2,0x50d0,0x48e7,0xa1bd,
+};
+#define LOGPI *(double *)LPI
+#endif 
+
+/* Stirling's formula for the gamma function */
+#if UNK
+static double STIR[5] = {
+ 7.87311395793093628397E-4,
+-2.29549961613378126380E-4,
+-2.68132617805781232825E-3,
+ 3.47222221605458667310E-3,
+ 8.33333333333482257126E-2,
+};
+#define MAXSTIR 143.01608
+static double SQTPI = 2.50662827463100050242E0;
+#endif
+#if DEC
+static unsigned short STIR[20] = {
+0035516,0061622,0144553,0112224,
+0135160,0131531,0037460,0165740,
+0136057,0134460,0037242,0077270,
+0036143,0107070,0156306,0027751,
+0037252,0125252,0125252,0146064,
+};
+#define MAXSTIR 26.77
+static unsigned short SQT[4] = {
+0040440,0066230,0177661,0034055,
+};
+#define SQTPI *(double *)SQT
+#endif
+#if IBMPC
+static unsigned short STIR[20] = {
+0x7293,0x592d,0xcc72,0x3f49,
+0x1d7c,0x27e6,0x166b,0xbf2e,
+0x4fd7,0x07d4,0xf726,0xbf65,
+0xc5fd,0x1b98,0x71c7,0x3f6c,
+0x5986,0x5555,0x5555,0x3fb5,
+};
+#define MAXSTIR 143.01608
+static unsigned short SQT[4] = {
+0x2706,0x1ff6,0x0d93,0x4004,
+};
+#define SQTPI *(double *)SQT
+#endif
+#if MIEEE
+static unsigned short STIR[20] = {
+0x3f49,0xcc72,0x592d,0x7293,
+0xbf2e,0x166b,0x27e6,0x1d7c,
+0xbf65,0xf726,0x07d4,0x4fd7,
+0x3f6c,0x71c7,0x1b98,0xc5fd,
+0x3fb5,0x5555,0x5555,0x5986,
+};
+#define MAXSTIR 143.01608
+static unsigned short SQT[4] = {
+0x4004,0x0d93,0x1ff6,0x2706,
+};
+#define SQTPI *(double *)SQT
+#endif
+
+/* Gamma function computed by Stirling's formula.
+ * The polynomial STIR is valid for 33 <= x <= 172.
+ */
+static df3_two_variable stirf(const df3_two_variable & _x)
 {
-  ADUNCONST(df1b2variable,xmu)
-  ADUNCONST(df1b2variable,xtau)
-  init_df3_two_variable mu(xmu);
-  init_df3_two_variable tau(xtau);
-  *mu.get_u_x()=1.0;
-  *tau.get_u_y()=1.0;
-  if (value(tau)-1.0<0.0)
-  {
-    cerr << "tau <=1 in log_negbinomial_density " << endl;
-    ad_exit(1);
-  }
-  df3_two_variable r=mu/(1.e-120+(tau-1.0));
-  df3_two_variable tmp;
-  tmp=gammln(x+r)-gammln(r) -gammln(x+1)
-    +r*log(r)+x*log(mu)-(r+x)*log(r+mu);
-  df1b2variable tmp1;
-  tmp1=tmp;
-  return tmp1;
+   ADUNCONST(df3_two_variable,x)
+df3_two_variable y, w, v;
+
+w = 1.0/x;
+w = 1.0 + w * polevl( w, STIR, 4 );
+y = exp(x);
+if( value(x) > MAXSTIR )
+	{ /* Avoid overflow in pow() */
+	v = pow( x, 0.5 * x - 0.25 );
+	y = v * (v / y);
+	}
+else
+	{
+	y = pow( x, x - 0.5 ) / y;
+	}
+y = SQTPI * y * w;
+return( y );
 }
 
-/** Log gamma function.
-    \param xx \f$x\f$
-    \return \f$\ln\bigr(\Gamma(x)\bigl)\f$
 
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 6
 
-    \deprecated Scheduled for replacement by 2010.
-*/
-df3_two_variable gammln(const df3_two_variable& xx)
+static df3_two_variable gamma(const df3_two_variable & xx1)
 {
-  df3_two_variable x,tmp,ser,tmp1;
-  static double cof[6]={76.18009173,-86.50532033,24.01409822,
-    -1.231739516,0.120858003e-2,-0.536382e-5};
-  int j;
-  x=xx-1.0;
-  tmp=x+5.5;
-  tmp -= (x+0.5)*log(tmp);
-  ser=1.0;
-  for (j=0;j<=5;j++) 
-  {
-    x += 1.0;
-    ser += cof[j]/x;
-  }
-  return -tmp+log(2.50662827465*ser);
+   df3_two_variable x;
+  x=xx1;
+   df3_two_variable MYBIG;
+   MYBIG=1.e+300;
+df3_two_variable p, q, z;
+df3_two_variable zero;
+zero=0.0;
+int i;
+
+ sgngam = 1;
+
+#ifdef NANS
+if( isnan(x) )
+	return(x);
+#endif
+#ifdef INFINITIES
+#ifdef NANS
+if( value(x) == MYINF )
+	return(x);
+if( value(x) == -MYINF )
+	return(NAN);
+#else
+if( !isfinite(value(x)) )
+	return(x);
+#endif
+#endif
+q = fabs(x);
+
+if( value(q) > 33.0 )
+	{
+	if( value(x) < 0.0 )
+		{
+		p = floor(value(q));
+		if( value(p) == value(q) )
+			{
+#ifdef NANS
+gamnan:
+			cerr <<  "gamma DOMAIN" << endl;
+			return (zero);
+#else
+			goto goverf;
+#endif
+			}
+		i = value(p);
+		if( (i & 1) == 0 )
+			sgngam = -1;
+		z = q - p;
+		if( value(z) > 0.5 )
+			{
+			p += 1.0;
+			z = q - p;
+			}
+		z = q * sin( PI * z );
+		if( value(z) == 0.0 )
+			{
+#ifdef INFINITIES
+			return( sgngam * MYINF);
+#else
+goverf:
+			//( "gamma", OVERFLOW );
+			return( sgngam * MYBIG);
+			//return( sgngam * MAXNUM);
+#endif
+			}
+		z = fabs(z);
+		z = PI/(z * stirf(q) );
+		}
+	else
+		{
+		z = stirf(x);
+		}
+	return( sgngam * z );
+	}
+
+z = 1.0;
+while( value(x) >= 3.0 )
+	{
+	x -= 1.0;
+	z *= x;
+	}
+
+while( value(x) < 0.0 )
+	{
+	if( value(x) > -1.E-9 )
+		goto small;
+	z /= x;
+	x += 1.0;
+	}
+
+while( value(x) < 2.0 )
+	{
+	if( value(x) < 1.e-9 )
+		goto small;
+	z /= x;
+	x += 1.0;
+	}
+
+if( value(x) == 2.0 ) {
+//	return(z);
+	}
+
+x -= 2.0;
+p = polevl( x, P, 6 );
+q = polevl( x, Q, 7 );
+z = z * p / q;
+return( z );
+
+small:
+if( value(x) == 0.0 )
+	{
+#ifdef INFINITIES
+#ifdef NANS
+	  goto gamnan;
+#else
+	  return( MYINF );
+#endif
+#else
+	cerr <<  "gamma SING " << endl;
+	return( MYBIG);
+#endif
+	}
+else
+	return( z/((1.0 + 0.5772156649015329 * x) * x) );
 }
 
 
-/* Incomplete gamma function.
-    Continued fraction approximation.
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 6
 
-    \deprecated Scheduled for replacement by 2010.
-*/
-/*
-void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
-  const df3_two_variable& x,const df3_two_variable& _gln)
-{
-  ADUNCONST(df3_two_variable,gln)
-  ADUNCONST(df3_two_variable,gammcf)
-  int i;
-  df3_two_variable an,b,c,d,del,h;
-
-  gln=gammln(a);
-  b=x+1.0-a;
-  c=1.0/FPMIN;
-  d=1.0/b;
-  h=d;
-  for (i=1;i<=ITMAX;i++) {
-    an = -i*(i-a);
-    b += 2.0;
-    d=an*d+b;
-    if (fabs(value(d)) < FPMIN) d=FPMIN;
-    c=b+an/c;
-    if (fabs(value(c)) < FPMIN) c=FPMIN;
-    d=1.0/d;
-    del=d*c;
-    h *= del;
-    if (fabs(value(del)-1.0) < EPS) break;
-  }
-  if (i > ITMAX) 
-    cerr << "a too large, ITMAX too small in gcf" << endl;
-  gammcf=exp(-x+a*log(x)-(gln))*h;
-}
-*/
-/* Incomplete gamma function.
-    Continued fraction approximation.
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 6
-
-    \deprecated Scheduled for replacement by 2010.
-*/
-/*
-void gser(const df3_two_variable& _gamser,const df3_two_variable& a,
-  const df3_two_variable& x,const df3_two_variable& _gln)
-{
-  int n;
-  ADUNCONST(df3_two_variable,gln)
-  ADUNCONST(df3_two_variable,gamser)
-  df3_two_variable sum,del,ap;
-
-  gln=gammln(a);
-
-  if (value(x) <= 0.0) {
-    if (value(x) < 0.0) 
-      cerr << "x less than 0 in routine gser" << endl;
-    gamser=0.0;
-    return;
-  } 
-  else 
-  {
-    ap=a;
-    del=sum=1.0/a;
-    for (n=1;n<=ITMAX;n++) {
-      ap+=1.0;
-      del *= x/ap;
-      sum += del;
-      if (fabs(value(del)) < fabs(value(sum))*EPS) {
-        gamser=sum*exp(-x+a*log(x)-(gln));
-        return;
-      }
-    }
-    cerr << "a too large, ITMAX too small in routine gser" << endl;
-    return;
-  }
-}
-*/
-
+//------------------------------------------------------------------
 /* A[]: Stirling's formula expansion of log gamma
  * B[], C[]: log gamma function between 2 and 3
  */
@@ -432,17 +592,6 @@ static unsigned short LS2P[] = {
 #endif
 
 
-/* Logarithm of gamma function */
-
-int operator < (const df3_two_variable& x,double n) { return value(x) < n; }
-int operator > (const df3_two_variable& x,double n) { return value(x) > n; }
-int operator >= (const df3_two_variable& x,double n) { return value(x) >= n; }
-int operator == (const df3_two_variable& x,const df3_two_variable& n) { return value(x)==value(n); }
-int operator == (const df3_two_variable& x,double n) { return value(x)==n; }
-int operator == (double x,const df3_two_variable& n) { return x==value(n); }
-int operator < (const df3_two_variable& x,const df3_two_variable& n) { return value(x)<value(n); }
-int operator > (const df3_two_variable& x,const df3_two_variable& n) { return value(x)>value(n); }
-
 /**
  * \f$y = \ln(\Gamma(x))\f$.
  * Returns the base \f$e\f$ logarithm of the absolute
@@ -456,7 +605,7 @@ int operator > (const df3_two_variable& x,const df3_two_variable& n) { return va
 df3_two_variable lgam(df3_two_variable& x)
 {
 
-df3_two_variable  p,q, u, w, z,p1;
+df3_two_variable  p, q, u, w, z;
 int i;
 
 sgngam = 1;
@@ -530,8 +679,11 @@ if( x < 13.0 )
 		}
 	else
 		sgngam = 1;
-	if( u == 2.0 )
+	if( u == 2.0 ) {
+		z = x;
+		z = gamma(z);
 		return( log(z) );
+		}
 	p -= 2.0;
 	x = x + p;
 	p = x * polevl( x, B, 5 ) / p1evl( x, C, 6);
@@ -565,57 +717,11 @@ else
 return( q );
 }
 
-/*							polevl.c
- *							p1evl.c
- *
- *	Evaluate polynomial
- *
- *
- *
- * SYNOPSIS:
- *
- * int N;
- * double x, y, coef[N+1], polevl[];
- *
- * y = polevl( x, coef, N );
- *
- *
- *
- * DESCRIPTION:
- *
- * Evaluates polynomial of degree N:
- *
- *                     2          N
- * y  =  C  + C x + C x  +...+ C x
- *        0    1     2          N
- *
- * Coefficients are stored in reverse order:
- *
- * coef[0] = C  , ..., coef[N] = C  .
- *            N                   0
- *
- *  The function p1evl() assumes that coef[N] = 1.0 and is
- * omitted from the array.  Its calling arguments are
- * otherwise the same as polevl().
- *
- *
- * SPEED:
- *
- * In the interest of speed, there are no checks for out
- * of bounds arithmetic.  This routine is used by most of
- * the functions in the library.  Depending on available
- * equipment features, the user may wish to rewrite the
- * program in microcode or assembly language.
- *
- */
-
-
 /*
 Cephes Math Library Release 2.1:  December, 1988
 Copyright 1984, 1987, 1988 by Stephen L. Moshier
 Direct inquiries to 30 Frost Street, Cambridge, MA 02140
 */
-
 
 df3_two_variable polevl( const df3_two_variable&  x, void * _coef, int N )
 {
@@ -635,7 +741,6 @@ while( --i );
 return( ans );
 }
 
-
 /*							p1evl()	*/
 /*                                          N
  * Evaluate polynomial when coefficient of x  is 1.0.
@@ -649,7 +754,6 @@ return( ans );
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
 
- 
 df3_two_variable p1evl(const df3_two_variable & x, void * _coef, int N )
 {
 double * coef= (double*)(_coef);
@@ -668,94 +772,98 @@ while( --i );
 return( ans );
 }
 
-int mtherr(char* s,int n){ /*ad_exit(1);*/  return 0;}
+//------------------------------------------------------------------------
+/** Incomplete gamma function.
+    Continued fraction approximation.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 6
 
+    \deprecated Scheduled for replacement by 2010.
+*//*
+void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
+  const df3_two_variable& x,const df3_two_variable& _gln)
+{
+  ADUNCONST(df3_two_variable,gln)
+  ADUNCONST(df3_two_variable,gammcf)
+  int i;
+  df3_two_variable an,b,c,d,del,h;
 
-/*							igam.c
- *
- *	Incomplete gamma integral
- *
- *
- *
- * SYNOPSIS:
- *
- * double a, x, y, igam();
- *
- * y = igam( a, x );
- *
- * DESCRIPTION:
- *
+  gln=gammln(a);
+  b=x+1.0-a;
+  c=1.0/FPMIN;
+  d=1.0/b;
+  h=d;
+  for (i=1;i<=ITMAX;i++) {
+    an = -i*(i-a);
+    b += 2.0;
+    d=an*d+b;
+    if (fabs(value(d)) < FPMIN) d=FPMIN;
+    c=b+an/c;
+    if (fabs(value(c)) < FPMIN) c=FPMIN;
+    d=1.0/d;
+    del=d*c;
+    h *= del;
+    if (fabs(value(del)-1.0) < EPS) break;
+  }
+  if (i > ITMAX) 
+    cerr << "a too large, ITMAX too small in gcf" << endl;
+  gammcf=exp(-x+a*log(x)-(gln))*h;
+}*/
+
+/**
+ * Incomplete gamma integral.
  * The function is defined by
- *
- *                           x
- *                            -
- *                   1       | |  -t  a-1
- *  igam(a,x)  =   -----     |   e   t   dt.
- *                  -      | |
- *                 | (a)    -
- *                           0
- *
- *
- * In this implementation both arguments must be positive.
- * The integral is evaluated by either a power series or
- * continued fraction expansion, depending on the relative
- * values of a and x.
- *
- * ACCURACY:
- *
- *                      Relative error:
- * arithmetic   domain     # trials      peak         rms
- *    IEEE      0,30       200000       3.6e-14     2.9e-15
- *    IEEE      0,100      300000       9.9e-14     1.5e-14
+ * igam(a,x)\f$ = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$.
+ * Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
-/*							igamc()
- *
- *	Complemented incomplete gamma integral
- *
- *
- *
- * SYNOPSIS:
- *
- * double a, x, y, igamc();
- *
- * y = igamc( a, x );
- *
- * DESCRIPTION:
- *
- * The function is defined by
- *
- *
- *  igamc(a,x)   =   1 - igam(a,x)
- *
- *                            inf.
- *                              -
- *                     1       | |  -t  a-1
- *               =   -----     |   e   t   dt.
- *                    -      | |
- *                   | (a)    -
- *                             x
- *
- *
- * In this implementation both arguments must be positive.
- * The integral is evaluated by either a power series or
- * continued fraction expansion, depending on the relative
- * values of a and x.
- *
- * ACCURACY:
- *
- * Tested at random a, x.
- *                a         x                      Relative error:
- * arithmetic   domain   domain     # trials      peak         rms
- *    IEEE     0.5,100   0,100      200000       1.9e-14     1.7e-15
- *    IEEE     0.01,0.5  0,100      200000       1.4e-13     1.6e-15
- */
-
-/*
-Cephes Math Library Release 2.8:  June, 2000
-Copyright 1985, 1987, 2000 by Stephen L. Moshier
-*/
+   df3_two_variable igam(const df3_two_variable & _a, 
+    const df3_two_variable & _x )
+   {
+      ADUNCONST(df3_two_variable,a)
+      ADUNCONST(df3_two_variable,x)
 
-df3_two_variable igam(const df3_two_variable & _a, const df3_two_variable & _x );
+   df3_two_variable ans, ax, c, r;
+
+   if( (value(x) <= 0) || ( value(a) <= 0) )
+   {
+     df3_two_variable tmp;
+     tmp=0.0;
+     return(tmp);
+   }
+
+   if( (value(x) > 1.0) && (value(x) > value(a) ) ) {
+   	return( 1.0 - igamc(a,x) );
+	}
+
+   // Compute  x**a * exp(-x) / gamma(a)
+   ax = a * log(x) - x - lgam(a);
+
+   if( value(ax) < -MAXLOG )
+   	{
+   	 cerr <<  "igam UNDERFLOW " << endl;
+   	 ad_exit(1);
+   	}
+
+   ax = exp(ax);
+   
+   // power series 
+   r = a;
+   c = 1.0;
+   ans = 1.0;
+
+   do
+   	{
+   	r += 1.0;
+   	c *= x/r;
+   	ans += c;
+   	}
+   while( c/ans > MACHEP );
+
+   return( ans * ax/a );
+   }
 
 /**
  * Complemented incomplete gamma integral.
@@ -779,10 +887,11 @@ df3_two_variable igamc(const df3_two_variable & _a, const df3_two_variable & _x)
      return(tmp);
    }
 
-   if( (value(x) < 1.0) || (value(x) < value(a) ))
-   	return( 1.0 - igam(a,x) );
+//   if( (value(x) < 1.0) || (value(x) < value(a) )) {
+//   	return( 1.0 - igam(a,x) );
+//	}
 
-   ax = a * log(x) - x - lgam(a);
+/*   ax = a * log(x) - x - lgam(a);
 
    if( value(ax) < -MAXLOG )
    	{
@@ -816,8 +925,9 @@ df3_two_variable igamc(const df3_two_variable & _a, const df3_two_variable & _x)
    		t = fabs( (ans - r)/r );
    		ans = r;
    		}
-   	else
+   	else {
    		t = 1.0;
+		}
    	pkm2 = pkm1;
    	pkm1 = pk;
    	qkm2 = qkm1;
@@ -830,73 +940,125 @@ df3_two_variable igamc(const df3_two_variable & _a, const df3_two_variable & _x)
    		qkm1 *= biginv;
    		}
    	}
-   while( t > MACHEP );
+   while( t > MACHEP ); 
    
-   return( ans * ax ); 
+   return( ans * ax );*/
+cout << "igamc\n";
+   return( 1.0 - igam(a,x) );
    }
 
-/**
- * Incomplete gamma integral.
- * The function is defined by
- * igam(a,x)\f$ = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$.
- * Cephes Math Library Release 2.1:  December, 1988
- * Copyright 1984, 1987, 1988 by Stephen L. Moshier
- * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
- */
-   df3_two_variable igam(const df3_two_variable & _a, 
-    const df3_two_variable & _x )
-   {
-      ADUNCONST(df3_two_variable,a)
-      ADUNCONST(df3_two_variable,x)
+//-----------------------------------------------------------------------
 
-   df3_two_variable ans, ax, c, r;
+df1b2variable log_negbinomial_density(double x,const df1b2variable& _xmu, 
+  const df1b2variable& _xtau)
+{
+  ADUNCONST(df1b2variable,xmu)
+  ADUNCONST(df1b2variable,xtau)
+  init_df3_two_variable mu(xmu);
+  init_df3_two_variable tau(xtau);
+  *mu.get_u_x()=1.0;
+  *tau.get_u_y()=1.0;
+  if (value(tau)-1.0<0.0)
+  {
+    cerr << "tau <=1 in log_negbinomial_density " << endl;
+    ad_exit(1);
+  }
+  df3_two_variable r=mu/(1.e-120+(tau-1.0));
+  df3_two_variable tmp;
+  tmp=gammln(x+r)-gammln(r) -gammln(x+1)
+    +r*log(r)+x*log(mu)-(r+x)*log(r+mu);
+  df1b2variable tmp1;
+  tmp1=tmp;
+  return tmp1;
+}
 
-   if( (value(x) <= 0) || ( value(a) <= 0) )
-   {
-     df3_two_variable tmp;
-     tmp=0.0;
-     return(tmp);
-   }
+/* Log gamma function.
+    \param xx \f$x\f$
+    \return \f$\ln\bigr(\Gamma(x)\bigl)\f$
 
-   if( (value(x) > 1.0) && (value(x) > value(a) ) )
-   	return( 1.0 - igamc(a,x) );
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 6
 
-   // Compute  x**a * exp(-x) / gamma(a)
-   ax = a * log(x) - x - lgam(a);
+    \deprecated Scheduled for replacement by 2010.
+*/
+df3_two_variable gammln(const df3_two_variable& xx)
+{
+/*  df3_two_variable x,tmp,ser,tmp1;
+  static double cof[6]={76.18009173,-86.50532033,24.01409822,
+    -1.231739516,0.120858003e-2,-0.536382e-5};
+  int j;
+  x=xx-1.0;
+  tmp=x+5.5;
+  tmp -= (x+0.5)*log(tmp);
+  ser=1.0;
+  for (j=0;j<=5;j++) 
+  {
+    x += 1.0;
+    ser += cof[j]/x;
+  }
+  return -tmp+log(2.50662827465*ser); */
 
-   if( value(ax) < -MAXLOG )
-   	{
-   	 cerr <<  "igam UNDERFLOW " << endl;
-   	 ad_exit(1);
-   	}
+  df3_two_variable x = xx;
+  return lgam(x);
+}
 
-   ax = exp(ax);
-   
-   // power series 
-   r = a;
-   c = 1.0;
-   ans = 1.0;
 
-   do
-   	{
-   	r += 1.0;
-   	c *= x/r;
-   	ans += c;
-   	}
-   while( c/ans > MACHEP );
-   
-   return( ans * ax/a );
-   }
+
+
+/** Incomplete gamma function.
+    Continued fraction approximation.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
+*/
+/*void gser(const df3_two_variable& _gamser,const df3_two_variable& a,
+  const df3_two_variable& x,const df3_two_variable& _gln)
+{
+  int n;
+  ADUNCONST(df3_two_variable,gln)
+  ADUNCONST(df3_two_variable,gamser)
+  df3_two_variable sum,del,ap;
+
+  gln=gammln(a);
+
+  if (value(x) <= 0.0) {
+    if (value(x) < 0.0) 
+      cerr << "x less than 0 in routine gser" << endl;
+    gamser=0.0;
+    return;
+  } 
+  else 
+  {
+    ap=a;
+    del=sum=1.0/a;
+    for (n=1;n<=ITMAX;n++) {
+      ap+=1.0;
+      del *= x/ap;
+      sum += del;
+      if (fabs(value(del)) < fabs(value(sum))*EPS) {
+        gamser=sum*exp(-x+a*log(x)-(gln));
+        return;
+      }
+    }
+    cerr << "a too large, ITMAX too small in routine gser" << endl;
+    return;
+  }
+*/
+
+gamser = igam(a,x);
+}*/
+
 
 df3_two_variable cumd_gamma(const df3_two_variable& x,
   const df3_two_variable& a)
 {
-  //ADUNCONST(df3_two_variable, a)
-  //ADUNCONST(df3_two_variable, x)
 
   df3_two_variable gamma = igam(a,x);
-  return (gamma);
-  /*
+  return( gamma );
+/*
   df3_two_variable gamser,gammcf,gln;
 
   if (value(x) < 0.0 || value(a) <= 0.0) 
@@ -907,7 +1069,7 @@ df3_two_variable cumd_gamma(const df3_two_variable& x,
   } else {
     gcf(gammcf,a,x,gln);
     return 1.0-gammcf;
-  }
+  }*/
   */
 }
 df3_two_variable cumd_exponential(const df3_two_variable& x,

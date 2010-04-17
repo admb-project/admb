@@ -1,4 +1,5 @@
 OBJ0 = \
+df1b2lmn2.obj \
 dflogistic.obj \
 tdev.obj \
 dfinvcumdt.obj \
@@ -36,6 +37,7 @@ f1b2sol3.obj \
 f1b2locl.obj \
 f1b2loc2.obj \
 f1b2loc3.obj \
+\
 df1b2imp.obj \
 df1b2impf.obj \
 df1b2im2.obj \
@@ -46,6 +48,7 @@ df1b2im3f.obj \
 f1b2trst.obj \
 df1b2glo.obj \
 df1b2ptr.obj \
+df1fun.obj  \
 df3fun.obj  \
 df1b2funx.obj  \
 df1b2mat.obj \

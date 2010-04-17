@@ -4,7 +4,7 @@
 #CC = bcc32i
 CC = bcc32
 LL = tlib
-FLAGS = -I\\Borland\\BCC55\\Include ${OPTIONS} -I../df1b2-separable -I../tools99 -I../linad99 -Vd -O2 -H -Hc -DUSE_LAPLACE -DOPT_LIB -DDOS386 -I. -6 -c -f
+FLAGS = -DADMB_VERSION=${ADMB_VERSION} -I\\Borland\\BCC55\\Include ${OPTIONS} -I../df1b2-separable -I../tools99 -I../linad99 -Vd -O2 -H -Hc -DUSE_LAPLACE -DOPT_LIB -DDOS386 -I. -6 -c -f
 
 #FLAGS = -H -Hc -O2 -DOPT_LIB -DDOS386 -I. -6 -c -f
 LIBPATH = bor502-win32olp

@@ -580,6 +580,14 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
     return z;
   }
 
+  df3_two_variable pow(const df3_two_variable& x,
+                       const df3_two_variable& y)
+  {
+    df3_two_variable z;
+    z=exp(y*log(x));
+    return z;
+  }
+
   df3_two_variable inv(const df3_two_variable& x)
   {
     df3_two_variable z;

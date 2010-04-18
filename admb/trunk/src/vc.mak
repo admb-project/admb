@@ -5,9 +5,6 @@ COMP=cl
 PWD=$(shell pwd)
 WINADMB_HOME=$(shell cygpath --windows ${PWD}/${DISK})
 BORLAND_HOME=$(shell cygpath --unix $(BCC55_HOME))
-ifdef ${MSSDK}
-export PVM_OPTION=-I${MSSDK}/include
-endif
 
 all:
 	rm -rf ${DISK}

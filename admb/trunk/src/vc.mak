@@ -6,6 +6,11 @@ PWD=$(shell pwd)
 WINADMB_HOME=$(shell cygpath --windows ${PWD}/${DISK})
 BORLAND_HOME=$(shell cygpath --unix $(BCC55_HOME))
 
+ifdef MSSDK
+PVM_OPTION=${MSSDK}
+export PVM_OPTION
+endif
+
 all:
 	rm -rf ${DISK}
 	- mkdir.exe -p ${DISK}/bin

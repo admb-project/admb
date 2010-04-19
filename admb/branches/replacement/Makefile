@@ -42,6 +42,7 @@ linux-verify:
 	make --directory=src --file=linux.mak verify
 
 linux-verify-debug:
+linux-verify-debug-64bit:
 	DEBUG=1 make --directory=src --file=linux.mak verify
 
 linux-check-admb2r:
@@ -49,6 +50,9 @@ linux-check-admb2r:
 
 linux-64bit:
 	make --directory=src --file=linux.mak dist-64bit
+
+linux-debug-64bit:
+	DEBUG=1 make --directory=src --file=linux.mak dist-64bit
 
 dist:
 	scripts/srcCopy.sh

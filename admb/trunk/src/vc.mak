@@ -7,8 +7,8 @@ WINADMB_HOME=$(shell cygpath --windows ${PWD}/${DISK})
 BORLAND_HOME=$(shell cygpath --unix $(BCC55_HOME))
 
 ifdef MSSDK
-PVM_OPTION=${MSSDK}
-export PVM_OPTION
+PVMOPTION=${MSSDK}
+export PVMOPTION
 endif
 
 all:

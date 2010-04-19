@@ -11,6 +11,9 @@ mingw:
 mingw-clean:
 	make --directory=src --file=mingw.mak clean
 
+mingw-verify:
+	make --directory=src --file=mingw.mak verify
+
 bcc:
 	make --directory=src --file=bcc.mak
 
@@ -25,6 +28,9 @@ vc-verify:
 
 vc-clean:
 	make --directory=src --file=vc.mak clean
+
+vc-verify:
+	make --directory=src --file=vc.mak verify
 
 sunstudio:
 	make --directory=src --file=sunstudio.mak
@@ -41,17 +47,22 @@ linux:
 linux-debug:
 	DEBUG=1 make --directory=src --file=linux.mak
 
+linux-64bit:
+	make --directory=src --file=linux.mak dist-64bit
+
+linux-debug-64bit:
+	DEBUG=1 make --directory=src --file=linux.mak dist-64bit
+
 linux-verify:
+linux-verify-64bit:
 	make --directory=src --file=linux.mak verify
 
 linux-verify-debug:
+linux-verify-debug-64bit:
 	DEBUG=1 make --directory=src --file=linux.mak verify
 
 linux-check-admb2r:
 	make --directory=src --file=linux.mak check-admb2r
-
-linux-64bit:
-	make --directory=src --file=linux.mak dist-64bit
 
 dist:
 	scripts/srcCopy.sh

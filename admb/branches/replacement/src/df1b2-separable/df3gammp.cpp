@@ -735,9 +735,9 @@ void gcf(const df3_two_variable& _gammcf,const df3_two_variable& a,
      return(tmp);
    }
 
-   if( (value(x) > 1.0) && (value(x) > value(a) ) ) {
-   	return( 1.0 - igamc(a,x) );
-	}
+//   if( (value(x) > 1.0) && (value(x) > value(a) ) ) {
+//   	return( 1.0 - igamc(a,x) );
+//	}
 
    // Compute  x**a * exp(-x) / gamma(a)
    ax = a * log(x) - x - lgam(a);

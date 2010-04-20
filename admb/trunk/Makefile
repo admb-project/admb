@@ -29,9 +29,6 @@ vc-verify:
 vc-clean:
 	make --directory=src --file=vc.mak clean
 
-vc-verify:
-	make --directory=src --file=vc.mak verify
-
 sunstudio:
 	make --directory=src --file=sunstudio.mak
 

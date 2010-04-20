@@ -43,7 +43,7 @@ goto STARTLOOP
 set model=%~n1
 
 echo on
-g++ -c %g% -Wno-deprecated -D__GNUDOS__ %dll% -Dlinux %opt% -DUSE_LAPLACE -fpermissive -I. -I%ADMB_HOME%/include %model%.cpp
+g++ -c %g% -Wno-deprecated -D__GNUDOS__ %dll% -Dlinux %opt% -DUSE_LAPLACE -fpermissive -I. -I"%ADMB_HOME%"/include %model%.cpp
 echo off
 
 goto EOF

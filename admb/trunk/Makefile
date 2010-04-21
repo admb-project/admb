@@ -38,6 +38,12 @@ sunstudio-verify:
 sunstudio-check-admb2r:
 	make --directory=src --file=sunstudio.mak check-admb2r
 
+icc:
+	make --directory=src --file=icc.mak
+
+icc-verify:
+	make --directory=src --file=icc.mak verify
+
 linux:
 	make --directory=src --file=linux.mak
 

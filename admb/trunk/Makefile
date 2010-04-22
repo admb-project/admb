@@ -1,4 +1,4 @@
-.PHONY=dist
+.PHONY: linux-verify solaris-verify
 
 ADMB_VERSION=9.0.x
 export ADMB_VERSION

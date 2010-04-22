@@ -8,11 +8,6 @@ REM
 REM
 REM
 REM
-@set CYGWIN_HOME=C:\cygwin
-
-REM
-REM
-REM
 @set GNUWIN32_HOME=%ProgramFiles%\GNUWIN32
 
 REM
@@ -24,7 +19,7 @@ REM
 REM
 REM Adds the bin folder to ADMB_HOME to system path.
 REM
-@set PATH=.;%ADMB_HOME%\bin;%GNUWIN32_HOME%\bin;%MINGW_HOME%\bin;%CYGWIN_HOME%\bin;%PATH%
+@set PATH=.;%ADMB_HOME%\bin;%GNUWIN32_HOME%\bin;%MINGW_HOME%\bin;%PATH%
 
 @echo Set ADMB Home directory to %ADMB_HOME%
 

@@ -1,3 +1,4 @@
+
 DISK=../build/dists/admb_b502_win32
 PWD=$(shell pwd)
 WINADMB_HOME=$(shell cygpath --windows ${PWD}/${DISK})

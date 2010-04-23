@@ -1,4 +1,4 @@
-.PHONY: dist
+.PHONY: dist verify
 SHELL = /bin/bash
 
 DISK=../build/dists/admb_gcc411_fedora8

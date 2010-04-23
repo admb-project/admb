@@ -1,3 +1,5 @@
+.PHONY: dist verify
+
 DISK=../build/dists/admb_gcc345_mingw32
 PWD=$(shell pwd)
 

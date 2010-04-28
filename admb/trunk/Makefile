@@ -1,8 +1,5 @@
 .PHONY: linux-verify solaris-verify
 
-ADMB_VERSION=9.0.x
-export ADMB_VERSION
-
 all: 
 
 mingw:
@@ -21,13 +18,13 @@ bcc-clean:
 	make --directory=src --file=bcc.mak clean
 
 vc:
-	make --directory=src --file=vc.mak
+	cd src& nmake /f vc.mak
 
 vc-verify:
-	make --directory=src --file=vc.mak verify
+	cd src& nmake /f vc.mak verify
 
 vc-clean:
-	make --directory=src --file=vc.mak clean
+	cd src& nmake /f vc.mak clean
 
 sunstudio:
 	make --directory=src --file=sunstudio.mak

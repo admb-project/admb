@@ -1,48 +1,23 @@
-
-
-#macros for making optimized library for MS         
-CC = cl
-LL = tlib
-LIBPATH = msc8slp
-FLAGS = /nologo /W4 /wd4018 /wd4189 /wd4512 /wd4511 /wd4100 /wd4244 /wd4068 /wd4996 /wd4127 /wd4706 ${OPTIONS} ${PVMOPTION} /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../nh99 -I../linad99 -D__MSVC32__=8  -DSAFE_ALL /Ox
-LIBNAME = adt32s.lib 
-LIBRARIAN = tlib
-SRCDIR =  src
-LIBDIR =  lib
-INCLUDEDIR = include 
-
 .SUFFIXES: .obj .cpp
-vpath %.obj $(LIBPATH)$
 
-include objects.lst
+CC = cl
 
-$(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)  
-	cd $(LIBPATH) && lib /OUT:$(LIBNAME) /NOLOGO *.obj
+FLAGS = /nologo /W4 /wd4018 /wd4189 /wd4512 /wd4511 /wd4100 /wd4244 /wd4068 /wd4996 /wd4127 /wd4706 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I.. /I..\..\df1b2-separable /I..\..\nh99 /I..\..\linad99 /D__MSVC32__=8  /DSAFE_ALL /Ox
 
-$(OBJ0): %.obj: %.cpp
-	$(CC) $(FLAGS)  $<
-	mv $*.obj $(LIBPATH)       
+include ..\objects.lst
 
-$(OBJ1): %.obj: %.cpp
-	$(CC) $(FLAGS)  $<
-	mv $*.obj $(LIBPATH)       
+LIBNAME = adt32s.lib 
 
-$(OBJ2): %.obj: %.cpp
+$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)  
+	lib /OUT:$(LIBNAME) /NOLOGO *.obj
+
+{..}.cpp.obj:
 	$(CC) $(FLAGS) $<
-	mv $*.obj $(LIBPATH)       
 
-$(OBJ3): %.obj: %.cpp
-	$(CC) $(FLAGS) $<
-	mv $*.obj $(LIBPATH)       
-fvar.hpp:
-
-all: $(LIBPATH)/$(LIBNAME) disk
+all: $(LIBNAME) disk
 
 disk: 
-	cp clist.h $(DISKDIR)/$(INCLUDEDIR)
-	cp cifstrem.h $(DISKDIR)/$(INCLUDEDIR)
-	cp adstring.hpp $(DISKDIR)/$(INCLUDEDIR)
-	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
-
-clean:
-	- cd $(LIBPATH) ; rm *.obj ; rm *.lib ; rm *.o ; rm *.a
+	copy ..\clist.h $(DISKDIR)\include
+	copy ..\cifstrem.h $(DISKDIR)\include
+	copy ..\adstring.hpp $(DISKDIR)\include
+	copy $(LIBNAME) $(DISKDIR)\lib

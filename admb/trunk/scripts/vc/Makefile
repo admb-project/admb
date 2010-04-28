@@ -310,7 +310,7 @@ binomial:
 binomial_w2:
 	cd admb-re\\weights
 	admb -r $@
-	$@
+	@REM $@
 	admb -r -s $@
-	$@
+	@REM $@
 	cd ..\\..

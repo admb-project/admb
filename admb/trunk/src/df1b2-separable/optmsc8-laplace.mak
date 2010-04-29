@@ -19,7 +19,7 @@ all: $(LIBNAME) tpl2rem disk
 	flex -w ..\tpl2rem.lex
 	sed -f ..\sedflex lex.yy.c > ..\tpl2rem-winflex.c
 
-tpl2rem: ..\tpl2rem-winflex.c
+tpl2rem:
 	cl /nologo /W4 /wd4049 /wd4700 /wd4702 /wd4018 /wd4996 /wd4131 /wd4127 /wd4244 /wd4101 /wd4189 /DWIN32 ..\tpl2rem-winflex.c
 
 disk: 

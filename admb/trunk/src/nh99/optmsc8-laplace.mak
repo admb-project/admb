@@ -27,7 +27,7 @@ tpl2cpp-winflex.c: tpl2cpp.lex
 	flex -w tpl2cpp.lex
 	sed -f sedflex lex.yy.c > tpl2cpp-winflex.c
 
-tpl2cpp: ..\tpl2cpp-winflex.c
+tpl2cpp:
 	cl /nologo /wd4996 ..\tpl2cpp-winflex.c
 
 disk: tpl2cpp

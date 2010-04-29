@@ -44,8 +44,7 @@ all:
 verify:
 	set ADMB_HOME=$(MAKEDIR)\$(DISK)
 	set PATH=$(MAKEDIR)\$(DISK)\bin;$(PATH)
-	cd $(MAKEDIR)\$(DISK)\examples
-	nmake all
+	cd $(MAKEDIR)\$(DISK)\examples& nmake /f Makefile all
 
 clean:
 	IF EXIST linad99\$(CCVERSION)-$(OSVERSION)olp rmdir /S /Q linad99\$(CCVERSION)-$(OSVERSION)olp

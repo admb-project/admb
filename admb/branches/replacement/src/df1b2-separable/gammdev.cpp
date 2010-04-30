@@ -50,7 +50,6 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
     //init_df3_two_variable aa(2.0);
     *xx.get_u_x()=1.0;
     *aa.get_u_y()=1.0;
-    
     df3_two_variable z=cumd_gamma(xx,aa);
 
     // now use the derivatives of z to get the

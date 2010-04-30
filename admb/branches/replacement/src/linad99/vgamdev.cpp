@@ -33,11 +33,11 @@ static double MAXNUM=1.7976931348623158E+308;
 static double LOGPI = 1.14472988584940017414;
 static double PI = 3.14159265358979323844;
 
-double polevl( double x, void * _coef, int N );
-double p1evl( double x, void * _coef, int N );
+static double polevl( double x, void * _coef, int N );
+static double p1evl( double x, void * _coef, int N );
 
-double igam(const double & a, const double & x );
-double igamc(const double & a, const double & x);
+static double igam(const double & a, const double & x );
+static double igamc(const double & a, const double & x);
 
 
 
@@ -197,7 +197,7 @@ int mtherr(char* s,int n){ /*ad_exit(1);*/  return 0;}
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
-double lgam(double x)
+static double lgam(double x)
 {
 double p, q, u, w, z;
 int i;
@@ -363,7 +363,7 @@ Direct inquiries to 30 Frost Street, Cambridge, MA 02140
 */
 
 
-double polevl( double  x, void * _coef, int N )
+static double polevl( double  x, void * _coef, int N )
 {
 double * coef=(double *)(_coef);
 double  ans;
@@ -397,7 +397,7 @@ return( ans );
  */
 
 
-double p1evl( double x, void * _coef, int N )
+static double p1evl( double x, void * _coef, int N )
 {
 double * coef= (double*)(_coef);
 double ans;
@@ -424,7 +424,7 @@ return( ans );
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
-double igamc(const double & a, const double & x)
+static double igamc(const double & a, const double & x)
    {
      //ADUNCONST(df1_two_variable,a)
      //ADUNCONST(df1_two_variable,x)
@@ -500,7 +500,7 @@ double igamc(const double & a, const double & x)
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
-double igam(const double & a, const double & x )
+static double igam(const double & a, const double & x )
    {
       //ADUNCONST(df1_two_variable,a)
       //ADUNCONST(df1_two_variable,x)
@@ -654,12 +654,14 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
 {
   double a=value(_a);
   double y=value(_y);
+
   if (a<0.05)
   {
     cerr << "a must be > 0.1" << endl;
     ad_exit(1);
   }
   double u=get_initial_u(a,y);
+
   double h;
   int loop_counter=0;
   do
@@ -680,14 +682,12 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
     }
   }
   while(fabs(h)>1.e-12);
-  
-  double x=a*exp(u);
 
+  double x=a*exp(u);
   init_df3_two_variable xx(x);
   init_df3_two_variable aa(a);
   *xx.get_u_x()=1.0;
   *aa.get_u_y()=1.0;
-
 
   df3_two_variable z=cumd_gamma(xx,aa);
   double F_x=1.0/(*z.get_u_x());
@@ -795,7 +795,6 @@ static double get_initial_u(double a,double y)
     else
     {
       cerr << "this can't happen" << endl;
-	cout <<"but it did" << endl;
       ad_exit(1);
     }
   }

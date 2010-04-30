@@ -21,7 +21,7 @@ double factln(double n)
   return gammln(n+1.0);
 }
 
-/** Log gamma function.
+/* Log gamma function.
     \param xx \f$x\f$
     \return \f$\ln\bigr(\Gamma(x)\bigl)\f$
 
@@ -52,7 +52,7 @@ double gammln(double xx)
 */
 
 double gammln(double xx)
-{  
+{
   return lgam(xx);
 }
 

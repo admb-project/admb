@@ -58,7 +58,7 @@ dist:
 	scripts/srcCopy.sh
 
 df32testigam:
-	g++ -Wno-deprecated -DOPT_LIB -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -Ibuild/dists/admb_gcc411_fedora8/include -Lbuild/dists/admb_gcc411_fedora8/lib -ladmod -ladt -lado -ldf1b2o -o df32testigam tests/df32testigam.cpp
+	g++ tests/df32testigam.cpp -Wno-deprecated -DSAFE_ALL -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -Ibuild/dists/admb_gcc411_fedora8/include -Lbuild/dists/admb_gcc411_fedora8/lib -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -ldf1b2s -o df32testigam
 
 clean:
 	@rm -rvf build

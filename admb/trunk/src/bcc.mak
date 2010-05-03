@@ -4,6 +4,9 @@ PWD=$(shell pwd)
 WINADMB_HOME=$(shell cygpath --windows ${PWD}/${DISK})
 BORLAND_HOME=$(shell cygpath --unix $(BCC55_HOME))
 
+ADMB_VERSION=9.0.x
+export ADMB_VERSION
+
 CCVERSION=bor502
 OSVERSION=win32
 COMP=bcc32

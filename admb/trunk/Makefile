@@ -54,10 +54,14 @@ linux-debug-64bit:
 	DEBUG=1 make --directory=src --file=linux.mak dist-64bit
 
 linux-verify:
+	make --directory=src --file=linux.mak verify
+
 linux-verify-64bit:
 	make --directory=src --file=linux.mak verify
 
 linux-verify-debug:
+	DEBUG=1 make --directory=src --file=linux.mak verify
+
 linux-verify-debug-64bit:
 	DEBUG=1 make --directory=src --file=linux.mak verify
 

@@ -500,8 +500,9 @@ static unsigned short LS2P[] = {
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
-df3_two_variable lgam(df3_two_variable& x)
+df3_two_variable lgam(const df3_two_variable& xx)
 {
+df3_two_variable x = xx;
 df3_two_variable  p, q, u, w, z, tmp;
 int i;
 
@@ -723,8 +724,19 @@ df3_two_variable igam(const df3_two_variable & aa, const df3_two_variable & xx )
    	r += 1.0;
    	c *= x/r;
    	ans += c;
+	t=c/ans;
    	}
-   while( c/ans > MACHEP );
+   while( (fabs(*t.get_u()) > MACHEP) &&
+          (fabs(*t.get_u_x()) > MACHEP) &&
+          (fabs(*t.get_u_xx()) > MACHEP) &&
+          (fabs(*t.get_u_xxx()) > MACHEP) &&
+          (fabs(*t.get_u_y()) > MACHEP) &&
+          (fabs(*t.get_u_yy()) > MACHEP) &&
+          (fabs(*t.get_u_yyy()) > MACHEP) &&
+          (fabs(*t.get_u_xy()) > MACHEP) &&
+          (fabs(*t.get_u_xxy()) > MACHEP) &&
+          (fabs(*t.get_u_xyy()) > MACHEP) );
+   //while( c/ans > MACHEP );
 
    return( ans * ax );
    }
@@ -805,7 +817,17 @@ df3_two_variable igamc(const df3_two_variable & aa, const df3_two_variable & xx)
    		qkm1 *= biginv;
    		}
    	}
-   while( t > MACHEP );
+   while( (fabs(*t.get_u()) > MACHEP) &&
+          (fabs(*t.get_u_x()) > MACHEP) &&
+          (fabs(*t.get_u_xx()) > MACHEP) &&
+          (fabs(*t.get_u_xxx()) > MACHEP) &&
+          (fabs(*t.get_u_y()) > MACHEP) &&
+          (fabs(*t.get_u_yy()) > MACHEP) &&
+          (fabs(*t.get_u_yyy()) > MACHEP) &&
+          (fabs(*t.get_u_xy()) > MACHEP) &&
+          (fabs(*t.get_u_xxy()) > MACHEP) &&
+          (fabs(*t.get_u_xyy()) > MACHEP) );
+   //while( t > MACHEP );
 
    return( ans * ax );
    }
@@ -903,7 +925,7 @@ df3_two_variable gammln(const df3_two_variable& xx)
   gammcf=exp(-x+a*log(x)-(gln))*h;
   return gammcf;
 }*/
-
+ 
 
 /** Incomplete gamma function.
     Continued fraction approximation.
@@ -935,7 +957,16 @@ df3_two_variable gammln(const df3_two_variable& xx)
       ap+=1.0;
       del *= x/ap;
       sum += del;
-      if (fabs(value(del)) < fabs(value(sum))*EPS) {
+      if ((fabs(*del.get_u()) > EPS) &&
+          (fabs(*del.get_u_x()) > EPS) &&
+          (fabs(*del.get_u_xx()) > EPS) &&
+          (fabs(*del.get_u_xxx()) > EPS) &&
+          (fabs(*del.get_u_y()) > EPS) &&
+          (fabs(*del.get_u_yy()) > EPS) &&
+          (fabs(*del.get_u_yyy()) > EPS) &&
+          (fabs(*del.get_u_xy()) > EPS) &&
+          (fabs(*del.get_u_xxy()) > EPS) &&
+          (fabs(*del.get_u_xyy()) > EPS) ) {//fabs(value(del)) < fabs(value(sum))*EPS
         gamser=sum*exp(-x+a*log(x)-(gln));
         return gamser;
       }
@@ -952,8 +983,8 @@ df3_two_variable cumd_gamma(const df3_two_variable& x,
   return( gamma );
 }
 
-/*
-df3_two_variable cumd_gamma(const df3_two_variable& x,
+
+/*df3_two_variable cumd_gamma(const df3_two_variable& x,
   const df3_two_variable& a)
 {
   df3_two_variable gamser,gammcf;

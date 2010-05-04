@@ -4,7 +4,7 @@
 #define FPMIN 1.0e-30
 
 df3_two_variable igam(const df3_two_variable & _a, const df3_two_variable & _x );
-
+df3_two_variable gser(const df3_two_variable & _a, const df3_two_variable & _x );
 
 double get_values(double x,double y,int print_switch);
   double inv_cumd_gamma(double y,double a,int print_switch);
@@ -18,6 +18,7 @@ df3_two_variable df3_get_values(double cx,double cy,
   *x.get_u_x()=1.0;
   *y.get_u_y()=1.0;
   return igam(x,y);
+  //return gser(x,y);
 }
 
 int main()
@@ -137,8 +138,18 @@ int main()
     cout << "d2fxy = " << d2fxy(0,0) << "  "  << *z.get_u_xy() << endl;
     cout << "d3fxxy = " << d3fxxy(0,0) << "  "  << *z.get_u_xxy() << endl;
     cout << "d3fxyy = " << d3fxyy(0,0) << "  "  << *z.get_u_xyy() << endl;
+/*    cout << endl;
+    cout << dfx(0,0) - *z.get_u_x() << endl;
+    cout << d2fxx(0,0) - *z.get_u_xx() << endl;
+    cout << d3fxxx(0,0) - *z.get_u_xxx() << endl;
   
-    cout << "d3fyyy = " << d3fyyy(0,0) << "  "  << *z.get_u_yyy() << endl;
+    cout << dfy(0,0) - *z.get_u_y() << endl;
+    cout << d2fyy(0,0) - *z.get_u_yy() << endl;
+    cout << d3fyyy(0,0) - *z.get_u_yyy() << endl;
+  
+    cout << d2fxy(0,0) - *z.get_u_xy() << endl;
+    cout << d3fxxy(0,0) - *z.get_u_xxy() << endl;
+    cout << d3fxyy(0,0) - *z.get_u_xyy() << endl;*/
   }
   while(1);
 
@@ -153,6 +164,7 @@ double get_values(double cx,double cy,int print_switch)
   *x.get_u_x()=1.0;
   *y.get_u_y()=1.0;
 
-  df3_two_variable z=igam( x,y);
+  df3_two_variable z=igam(x,y);
+  //df3_two_variable z=gser(x,y);
   return *z.get_u();
 }

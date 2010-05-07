@@ -1,4 +1,7 @@
+DEBUG_OPTION=
+ifdef DEBUG
 DEBUG_OPTION=-g
+endif
 
 default: simple
 
@@ -18,45 +21,45 @@ vol
 
 buscycle: ham4 ham5
 ham4:
-	cd examples/admb/buscycle;admb $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb/buscycle;admb -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb/buscycle;admb $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/buscycle;admb -s $(DEBUG_OPTION) $@;./$@
 
 ham5:
-	cd examples/admb/buscycle;admb $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb/buscycle;admb -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb/buscycle;admb $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/buscycle;admb -s $(DEBUG_OPTION) $@;./$@
 
 catage:
-	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
 
 chem-eng:
-	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
 
 finance:
-	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
 
 forest:
-	-cd examples/admb/$@;admb $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	-cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	-cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
 
 pella-t:
-	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
 
 robreg: vonb vonbr
 vonb:
-	cd examples/admb/robreg;admb $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb/robreg;admb -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb/robreg;admb $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/robreg;admb -s $(DEBUG_OPTION) $@;./$@
 
 vonbr:
-	cd examples/admb/robreg;admb $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb/robreg;admb -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb/robreg;admb $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/robreg;admb -s $(DEBUG_OPTION) $@;./$@
 
 simple:
-	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
 
 truncreg:
 	@cd examples/admb/$@;admb $@;./$@ -ams 2000000;./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
@@ -64,8 +67,8 @@ truncreg:
 
 vol: n2mvol
 n2mvol:
-	cd examples/admb/vol;admb $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb/vol;admb -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb/vol;admb $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/vol;admb -s $(DEBUG_OPTION) $@;./$@
 
 admb-re:\
 bcb \
@@ -95,94 +98,94 @@ bcb:
 	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@
 
 biglog:
-	@cd examples/admb-re/$@;admb -r $@;valgrind --leak-check=yes ./$@
-	@cd examples/admb-re/$@;admb -r -s $@;valgrind --leak-check=yes ./$@
+	@cd examples/admb-re/$@;admb -r $@;./$@
+	@cd examples/admb-re/$@;admb -r -s $@;./$@
 
 bvprobit:
 	@#Missing bvprobit.dat
-	@-cd examples/admb-re/glmmadmb;admb -r $@;valgrind --leak-check=yes ./$@
-	@-cd examples/admb-re/glmmadmb;admb -r -s $@;valgrind --leak-check=yes ./$@
+	@-cd examples/admb-re/glmmadmb;admb -r $@;./$@
+	@-cd examples/admb-re/glmmadmb;admb -r -s $@;./$@
 
 caest:
-	@-cd examples/admb-re/$@;admb -r $@;valgrind --leak-check=yes ./$@
-	@-cd examples/admb-re/$@;admb -r -s $@;valgrind --leak-check=yes ./$@
+	@-cd examples/admb-re/$@;admb -r $@;./$@
+	@-cd examples/admb-re/$@;admb -r -s $@;./$@
 
 gamma:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) liver_$@;valgrind --leak-check=yes ./liver_$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) liver_$@;valgrind --leak-check=yes ./liver_$@
+	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) liver_$@;./liver_$@
+	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) liver_$@;./liver_$@
 
 kidney:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 lidar:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 logistic:
 	@#runtime error
-	@-cd examples/admb-re/$@;admb -r $@;valgrind --leak-check=yes ./$@
-	@-cd examples/admb-re/$@;admb -r -s $@;valgrind --leak-check=yes ./$@
+	@-cd examples/admb-re/$@;admb -r $@;./$@
+	@-cd examples/admb-re/$@;admb -r -s $@;./$@
 
 nbmm:
 	@#Missing .dat file
-	@-cd examples/admb-re/glmmadmb;admb -r $@;valgrind --leak-check=yes ./$@
-	@-cd examples/admb-re/glmmadmb;admb -r -s $@;valgrind --leak-check=yes ./$@
+	@-cd examples/admb-re/glmmadmb;admb -r $@;./$@
+	@-cd examples/admb-re/glmmadmb;admb -r -s $@;./$@
 
 nested4:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 orange:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 orange2:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 orange_cor:
-	@-cd examples/admb-re/$@;admb -r $@;valgrind --leak-check=yes ./$@
-	@-cd examples/admb-re/$@;admb -r -s $@;valgrind --leak-check=yes ./$@
+	@-cd examples/admb-re/$@;admb -r $@;./$@
+	@-cd examples/admb-re/$@;admb -r -s $@;./$@
 
 pheno:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 polio:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 sdv:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 skewed: diet diet_sk
 diet:
-	cd examples/admb-re/skewed;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./diet
-	cd examples/admb-re/skewed;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./diet
+	cd examples/admb-re/skewed;admb -r $(DEBUG_OPTION) $@;./diet
+	cd examples/admb-re/skewed;admb -r -s $(DEBUG_OPTION) $@;./diet
 
 diet_sk:
-	cd examples/admb-re/skewed;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./diet
-	cd examples/admb-re/skewed;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./diet
+	cd examples/admb-re/skewed;admb -r $(DEBUG_OPTION) $@;./diet
+	cd examples/admb-re/skewed;admb -r -s $(DEBUG_OPTION) $@;./diet
 
 socatt:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 spatial:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 union:
 	@#Runtine errors
-	@-cd examples/admb-re/$@;admb -r $@;valgrind --leak-check=yes ./$@
-	@-cd examples/admb-re/$@;admb -r -s $@;valgrind --leak-check=yes ./$@
+	@-cd examples/admb-re/$@;admb -r $@;./$@
+	@-cd examples/admb-re/$@;admb -r -s $@;./$@
 
 weights: binomial binomial_w2
 binomial:
-	cd examples/admb-re/weights;admb -r $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
-	cd examples/admb-re/weights;admb -r -s $(DEBUG_OPTION) $@;valgrind --leak-check=yes ./$@
+	cd examples/admb-re/weights;admb -r $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/weights;admb -r -s $(DEBUG_OPTION) $@;./$@
 binomial_w2:
-	@-cd examples/admb-re/weights;admb -r $@;valgrind --leak-check=yes ./$@
-	@-cd examples/admb-re/weights;admb -r -s $@;valgrind --leak-check=yes ./$@
+	@-cd examples/admb-re/weights;admb -r $@;./$@
+	@-cd examples/admb-re/weights;admb -r -s $@;./$@

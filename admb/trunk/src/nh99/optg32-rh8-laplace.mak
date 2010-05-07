@@ -7,9 +7,21 @@ ifdef DEBUG
 CFLAGS=-g
 endif
 
-FLAGS =  -c $(CFLAGS) ${OPTIONS} -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux -DADMB_VERSION=${ADMB_VERSION}
+FLAGS:=-c $(CFLAGS) ${OPTIONS} -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
 
-FLAGS1 =  -c $(CFLAGS) ${OPTIONS} -w ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux -DADMB_VERSION=${ADMB_VERSION}
+FLAGS1:=-c $(CFLAGS) ${OPTIONS} -w ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
+
+ifneq ($(strip $(ADMB_VERSION)),)
+  FLAGS+=-DADMB_VERSION=${ADMB_VERSION}
+  FLAGS1+=-DADMB_VERSION=${ADMB_VERSION}
+endif
+
+ifneq ($(strip $(ADMB_REVISION)),)
+  ifneq ('$(strip $(ADMB_REVISION))', 'exported')
+    FLAGS+=-DADMB_REVISION=${ADMB_REVISION}
+    FLAGS1+=-DADMB_REVISION=${ADMB_REVISION}
+  endif
+endif
 
 LIBPATH =gcc32-rh8olp
 STUBPATH =gcc32-rh8olp-stub

@@ -4,6 +4,8 @@ SHELL = /bin/bash
 DISK=../build/dists/admb_gcc411_fedora8
 PWD=$(shell pwd)
 NOW=$(shell date)
+ADMB_VERSION=$(shell cat ../VERSION)
+ADMB_REVISION=$(shell svnversion ..)
 
 CCVERSION=gcc411
 OSVERSION=fedorar8
@@ -35,7 +37,7 @@ dist:
 	cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f  safg32-rh8-laplace.mak disk 
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak  disk 
-	cd ./nh99;    $(MAKE)  CC=${COMP} STUBPATH=${CCVERSION}-${OSVERSION}olp-stub   LIBPATH=${CCVERSION}-${OSVERSION}olp  DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
+	cd ./nh99; $(MAKE) CC=${COMP} STUBPATH=${CCVERSION}-${OSVERSION}olp-stub LIBPATH=${CCVERSION}-${OSVERSION}olp ADMB_VERSION=${ADMB_VERSION} ADMB_REVISION=${ADMB_REVISION} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
 	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
 	cp -vf ../LICENSE ${DISK}
 	cp -vf ../README ${DISK}
@@ -87,7 +89,7 @@ dist-64bit:
 	#bzip2 ${DISK}.tar 
 
 verify:
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK} all
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK} simple
 	../scripts/get-outputs.sh ../build/dists/admb_gcc411_fedora8/examples > "../benchmarks-${NOW}.txt"
 
 check-admb2r:
@@ -101,6 +103,5 @@ clean:
 	@cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f  optg32-rh8-laplace.mak  clean
 	@cd ./df1b2-separable; $(MAKE) CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f  safg32-rh8-laplace.mak clean 
 	@rm -f nh99/lex.yy.c
-	@rm -f nh99/tpl2cpp.c
 	@rm -f nh99/gcc411-fedorar8olp-stub/libdf1b2stub.a
 	@rm -f df1b2-separable/lex.yy.c

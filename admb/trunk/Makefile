@@ -68,6 +68,9 @@ linux-verify-debug-64bit:
 linux-check-admb2r:
 	make --directory=src --file=linux.mak check-admb2r
 
+linux-clean: clean
+	make --directory=src --file=linux.mak clean
+
 dist:
 	scripts/srcCopy.sh
 

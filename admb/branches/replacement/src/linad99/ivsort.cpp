@@ -6,6 +6,9 @@
  */
 #include <fvar.hpp>
 
+static void quicksort1(ivector& a, int left, int right);
+static void quicksort2(ivector& a, ivector& b, int left, int right);
+
 /** Quicksort.
     \param v Vector of integers to be sorted
     \param NSTACK Lenth of intermediate storage vector. Default is NSTACK = 60.
@@ -16,6 +19,18 @@
     Press, Teukolsky, Vetterling, Flannery, chapter 8
 */
 ivector sort(_CONST ivector& v, int NSTACK)
+{
+  ivector arr(v.indexmin(),v.indexmax());
+  arr=v;
+
+  quicksort1(arr, arr.indexmin(), arr.indexmax());
+
+  arr.shift(v.indexmin());
+  return arr;
+}
+
+
+/*ivector sort(_CONST ivector& v, int NSTACK)
 {
    const int M=7;
    const int  FM=7875;
@@ -94,7 +109,7 @@ ivector sort(_CONST ivector& v, int NSTACK)
       }
     }
   }
-}
+}*/
 
 /** Quicksort.
     \param _v Vector of integers to be sorted
@@ -107,6 +122,33 @@ ivector sort(_CONST ivector& v, int NSTACK)
     Press, Teukolsky, Vetterling, Flannery, chapter 8
 */
 ivector sort(_CONST ivector& _v,BOR_CONST ivector& _index, int NSTACK)
+{
+   ivector& index = (ivector&) _index;
+   ivector& v = (ivector&) _v;
+
+  if (v.size() != index.size())
+  {
+    cerr << " Incompatible array sizes in vector v and ivector index\n"
+      << " in ivector sort(_CONST ivector& v,_CONST ivector& index)\n";
+    ad_exit(1);
+  }
+
+  int One=1;
+  int nne=v.indexmin();
+  index.fill_seqadd(nne,One);
+  ivector arr(v.indexmin(),v.indexmax());
+  arr=v;
+  arr.shift(1);
+  index.shift(1);
+
+  quicksort2(arr, index, arr.indexmin(), arr.indexmax());
+
+  arr.shift(v.indexmin());
+  index.shift(v.indexmin());
+  return arr;
+}
+
+/*ivector sort(_CONST ivector& _v,BOR_CONST ivector& _index, int NSTACK)
 {
    const int M=7;
    const int  FM=7875;
@@ -215,4 +257,98 @@ ivector sort(_CONST ivector& _v,BOR_CONST ivector& _index, int NSTACK)
       }
     }
   }
+}*/
+
+/*
+ * Based on Robert Sedgewick and Kevin Wayne quicksort
+ * from slides disscussing the algorithm from their book
+ * 'Algorthms'. This uses quicksort3 (3way partition) and
+ * an insertion sort once sublists are of length < 8.
+ * Modified by Derek Seiple
+ */
+static void quicksort1(ivector& a, int left, int right)
+{
+  int i = left-1, j = right, p = left-1, q = right;
+  int temp;
+  int r_m_l = right-left;
+  if (r_m_l <= 0) return;
+
+  if((r_m_l)<8) {
+    for(int i=left+1;i<=right;i++) {
+      for(int k = i; k >= left+1; k--) {
+        if(a[k] < a[k-1]) { temp=a[k];a[k]=a[k-1];a[k-1]=temp; }
+      }
+    }
+    return;
+  }
+  int v = a[right];
+  for(;;)
+    {
+      while (a[++i] < v);
+      while (v < a[--j]) if (j == left) break;
+      if (i >= j) break;
+      temp=a[i];a[i]=a[j];a[j]=temp;               
+      if (a[i] == v) { p++; temp=a[p];a[p]=a[i];a[i]=temp; }
+      if (v == a[j]) { q--; temp=a[j];a[j]=a[q];a[q]=temp; }
+    }
+
+  temp=a[i];a[i]=a[right];a[right]=temp; j = i-1; i = i+1;
+  for (int k = left; k <= p; k++, j--) { temp=a[k];a[k]=a[j];a[j]=temp; }
+  for (k = right-1; k >= q; k--, i++) { temp=a[i];a[i]=a[k];a[k]=temp; }
+  quicksort1(a, left, j);
+  quicksort1(a, i, right);
+}
+
+static void quicksort2(ivector& a, ivector& b, int left, int right)
+{
+  int i = left-1, j = right, p = left-1, q = right;
+  int temp;
+  int r_m_l = right-left;
+  if (r_m_l <= 0) return;
+
+  if((r_m_l)<8) {
+    for(int i=left+1;i<=right;i++) {
+      for(int k = i; k >= left+1; k--) {
+        if(a[k] < a[k-1]) {
+          temp=a[k];a[k]=a[k-1];a[k-1]=temp;
+          temp=b[k];b[k]=b[k-1];b[k-1]=temp;
+        }
+      }
+    }
+    return;
+  }
+
+  int v = a[right];
+
+  for(;;)
+    {
+      while (a[++i] < v);
+      while (v < a[--j]) if (j == left) break;
+      if (i >= j) break;
+      temp=a[i];a[i]=a[j];a[j]=temp;
+      temp=b[i];b[i]=b[j];b[j]=temp;
+      if (a[i] == v) {
+        p++;
+        temp=a[p];a[p]=a[i];a[i]=temp;
+        temp=b[p];b[p]=b[i];b[i]=temp;
+      }
+      if (v == a[j]) {
+        q--;
+        temp=a[j];a[j]=a[q];a[q]=temp;
+        temp=b[j];b[j]=b[q];b[q]=temp;
+      }
+    }
+  temp=a[i];a[i]=a[right];a[right]=temp;
+  temp=b[i];b[i]=b[right];b[right]=temp;
+  j = i-1; i = i+1;
+  for (int k = left; k <= p; k++, j--) {
+    temp=a[k];a[k]=a[j];a[j]=temp;
+    temp=b[k];b[k]=b[j];b[j]=temp;
+  }
+  for (k = right-1; k >= q; k--, i++) {
+    temp=a[i];a[i]=a[k];a[k]=temp;
+    temp=b[i];b[i]=b[k];b[k]=temp;
+  }
+  quicksort2(a, b, left, j);
+  quicksort2(a, b, i, right);
 }

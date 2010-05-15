@@ -206,155 +206,146 @@ static unsigned short SQT[4] = {
  */
 static df3_two_variable stirf(const df3_two_variable & _x)
 {
-   ADUNCONST(df3_two_variable,x)
-df3_two_variable y, w, v;
+  ADUNCONST(df3_two_variable,x)
+  df3_two_variable y, w, v;
 
-w = 1.0/x;
-w = 1.0 + w * polevl( w, STIR, 4 );
-y = exp(x);
-if( value(x) > MAXSTIR )
-	{ /* Avoid overflow in pow() */
-	v = pow( x, 0.5 * x - 0.25 );
-	y = v * (v / y);
-	}
-else
-	{
-	y = pow( x, x - 0.5 ) / y;
-	}
-y = SQTPI * y * w;
-return( y );
+  w = 1.0/x;
+  w = 1.0 + w * polevl( w, STIR, 4 );
+  y = exp(x);
+  if( value(x) > MAXSTIR ) { /* Avoid overflow in pow() */
+    v = pow( x, 0.5 * x - 0.25 );
+    y = v * (v / y);
+  }
+  else {
+    y = pow( x, x - 0.5 ) / y;
+  }
+  y = SQTPI * y * w;
+  return( y );
 }
 
 
 
 static df3_two_variable gamma(const df3_two_variable & xx1)
 {
-   df3_two_variable x;
+  df3_two_variable x;
   x=xx1;
-   df3_two_variable MYBIG;
-   MYBIG=1.e+300;
-df3_two_variable p, q, z, tmp;
-df3_two_variable zero;
-zero=0.0;
-int i;
+  df3_two_variable MYBIG;
+  MYBIG=1.e+300;
+  df3_two_variable p, q, z, tmp;
+  df3_two_variable zero;
+  zero=0.0;
+  int i;
 
- sgngam = 1;
+  sgngam = 1;
 
-#ifdef NANS
-if( isnan(value(x)) )
-	return(x);
-#endif
-#ifdef INFINITIES
-#ifdef NANS
-if( value(x) == MYINF )
-	return(x);
-if( value(x) == -MYINF ) {
-	x = NAN;
-	return(x);
-	}
-#else
-if( !isfinite(value(x)) )
-	return(x);
-#endif
-#endif
-q = fabs(x);
+  #ifdef NANS
+  if( isnan(value(x)) )
+    return(x);
+  #endif
+  #ifdef INFINITIES
+  #ifdef NANS
+  if( value(x) == MYINF )
+    return(x);
+  if( value(x) == -MYINF ) {
+    x = NAN;
+    return(x);
+  }
+  #else
+  if( !isfinite(value(x)) )
+    return(x);
+  #endif
+  #endif
+  q = fabs(x);
 
-if( value(q) > 33.0 )
-	{
-	if( value(x) < 0.0 )
-		{
-		p = floor(value(q));
-		if( value(p) == value(q) )
-			{
-#ifdef NANS
-gamnan:
-			cerr <<  "gamma DOMAIN" << endl;
-			return (zero);
-#else
-			goto goverf;
-#endif
-			}
-		i = value(p);
-		if( (i & 1) == 0 )
-			sgngam = -1;
-		z = q - p;
-		if( value(z) > 0.5 )
-			{
-			p += 1.0;
-			z = q - p;
-			}
-		z = q * sin( PI * z );
-		if( value(z) == 0.0 )
-			{
-#ifdef INFINITIES
-			tmp = sgngam * MYINF;
-			return( tmp );
-#else
-goverf:
-			//( "gamma", OVERFLOW );
-			return( sgngam * MYBIG);
-			//return( sgngam * MAXNUM);
-#endif
-			}
-		z = fabs(z);
-		z = PI/(z * stirf(q) );
-		}
-	else
-		{
-		z = stirf(x);
-		}
-	return( sgngam * z );
-	}
+  if( value(q) > 33.0 ) {
+    if( value(x) < 0.0 ) {
+      p = floor(value(q));
+      if( value(p) == value(q) ) {
+        #ifdef NANS
+        gamnan:
+        cerr <<  "gamma DOMAIN" << endl;
+        return (zero);
+        #else
+        goto goverf;
+        #endif
+      }
+      i = value(p);
 
-z = 1.0;
-while( value(x) >= 3.0 )
-	{
-	x -= 1.0;
-	z *= x;
-	}
+      if( (i & 1) == 0 )
+        sgngam = -1;
+      z = q - p;
 
-while( value(x) < 0.0 )
-	{
-	if( value(x) > -1.E-9 )
-		goto small;
-	z /= x;
-	x += 1.0;
-	}
+      if( value(z) > 0.5 ) {
+        p += 1.0;
+        z = q - p;
+      }
+      z = q * sin( PI * z );
 
-while( value(x) < 2.0 )
-	{
-	if( value(x) < 1.e-9 )
-		goto small;
-	z /= x;
-	x += 1.0;
-	}
+      if( value(z) == 0.0 ) {
+        #ifdef INFINITIES
+        tmp = sgngam * MYINF;
+        return( tmp );
+        #else
+        goverf:
+        //( "gamma", OVERFLOW );
+        return( sgngam * MYBIG);
+        //return( sgngam * MAXNUM);
+        #endif
+      }
+      z = fabs(z);
+      z = PI/(z * stirf(q) );
+    }
+    else {
+      z = stirf(x);
+    }
+    return( sgngam * z );
+  }
 
-if( value(x) == 2.0 ) {
-//	return(z);
-	}
+  z = 1.0;
+  while( value(x) >= 3.0 ) {
+    x -= 1.0;
+    z *= x;
+  }
 
-x -= 2.0;
-p = polevl( x, P, 6 );
-q = polevl( x, Q, 7 );
-z = z * p / q;
-return( z );
+  while( value(x) < 0.0 ) {
+    if( value(x) > -1.E-9 )
+      goto small;
+    z /= x;
+    x += 1.0;
+  }
 
-small:
-if( value(x) == 0.0 )
-	{
-#ifdef INFINITIES
-#ifdef NANS
-	  goto gamnan;
-#else
-	  return( MYINF );
-#endif
-#else
-	cerr <<  "gamma SING " << endl;
-	return( MYBIG);
-#endif
-	}
-else
-	return( z/((1.0 + 0.5772156649015329 * x) * x) );
+  while( value(x) < 2.0 ) {
+    if( value(x) < 1.e-9 )
+      goto small;
+    z /= x;
+    x += 1.0;
+  }
+
+  if( value(x) == 2.0 ) {
+    //return(z);
+  }
+
+  x -= 2.0;
+  p = polevl( x, P, 6 );
+  q = polevl( x, Q, 7 );
+  z = z * p / q;
+  return( z );
+
+  small:
+  if( value(x) == 0.0 ) {
+    #ifdef INFINITIES
+    #ifdef NANS
+    goto gamnan;
+    #else
+    return( MYINF );
+    #endif
+    #else
+    cerr <<  "gamma SING " << endl;
+    return( MYBIG);
+    #endif
+  }
+  else
+    return( z/((1.0 + 0.5772156649015329 * x) * x) );
 }
 
 
@@ -502,121 +493,120 @@ static unsigned short LS2P[] = {
  */
 df3_two_variable lgam(const df3_two_variable& xx)
 {
-df3_two_variable x = xx;
-df3_two_variable  p, q, u, w, z, tmp;
-int i;
+  df3_two_variable x = xx;
+  df3_two_variable  p, q, u, w, z, tmp;
+  int i;
 
-sgngam = 1;
-#ifdef NANS
-if( isnan(value(x)) )
-	return(x);
-#endif
+  sgngam = 1;
+  #ifdef NANS
+  if( isnan(value(x)) )
+    return(x);
+  #endif
 
-#ifdef INFINITIES
-if( !isfinite(value(x)) ) {
-	tmp = MYINF;
-	return( tmp );
-	}
-#endif
+  #ifdef INFINITIES
+  if( !isfinite(value(x)) ) {
+    tmp = MYINF;
+    return( tmp );
+  }
+  #endif
 
-if( x < -34.0 )
-	{
-	q = -x;
-	w = lgam(q); // note this modifies sgngam! 
-	p = floor(value(q));
-	if( p == q )
-		{
-lgsing:
-#ifdef INFINITIES
-		mtherr( "lgam", SING );
-		tmp = MYINF;
-		return ( tmp );
-#else
-		goto loverf;
-#endif
-		}
-	i = value(p);
-	if( (i & 1) == 0 )
-		sgngam = -1;
-	else
-		sgngam = 1;
-	z = q - p;
-	if( z > 0.5 )
-		{
-		p += 1.0;
-		z = p - q;
-		}
-	z = q * sin( PI * z );
-	if( z == 0.0 )
-		goto lgsing;
-//	z = log(PI) - log( z ) - w;
-	z = LOGPI - log( z ) - w;
-	return( z );
-	}
+  if( x < -34.0 ) {
+    q = -x;
+    w = lgam(q); // note this modifies sgngam! 
+    p = floor(value(q));
+    if( p == q ) {
+      lgsing:
+      #ifdef INFINITIES
+      mtherr( "lgam", SING );
+      tmp = MYINF;
+      return ( tmp );
+      #else
+      goto loverf;
+      #endif
+    }
+    i = value(p);
 
-if( x < 13.0 )
-	{
-	z = 1.0;
-	p = 0.0;
-	u = x;
-	while( u >= 3.0 )
-		{
-		p -= 1.0;
-		u = x + p;
-		z *= u;
-		}
-	while( u < 2.0 )
-		{
-		if( u == 0.0 )
-			goto lgsing;
-		z /= u;
-		p += 1.0;
-		u = x + p;
-		}
-	if( z < 0.0 )
-		{
-		sgngam = -1;
-		z = -z;
-		}
-	else
-		sgngam = 1;
-	if( u == 2.0 ) {
-		z = x;
-		z = gamma(z);
-		return( log(z) );
-		}
-	p -= 2.0;
-	x = x + p;
-	p = x * polevl( x, B, 5 ) / p1evl( x, C, 6);
-	return( log(z) + p );
-	}
+    if( (i & 1) == 0 )
+      sgngam = -1;
+    else
+      sgngam = 1;
 
-if( x > MAXLGM )
-	{
-#ifdef INFINITIES
-	tmp = sgngam * MYINF;
-	return( tmp );
-#else
-loverf:
-	mtherr( "lgam", OVERFLOW );
-	df3_two_variable tmp;
-        tmp=sgngam * MAXNUM;
-	return tmp;
-#endif
-	}
+    z = q - p;
 
-q = ( x - 0.5 ) * log(x) - x + LS2PI;
-if( x > 1.0e8 )
-	return( q );
+    if( z > 0.5 ) {
+      p += 1.0;
+      z = p - q;
+    }
 
-p = 1.0/(x*x);
-if( x >= 1000.0 )
-	q += ((   7.9365079365079365079365e-4 * p
-		- 2.7777777777777777777778e-3) *p
-		+ 0.0833333333333333333333) / x;
-else
-	q += polevl( p, A, 4 ) / x;
-return( q );
+    z = q * sin( PI * z );
+
+    if( z == 0.0 )
+      goto lgsing;
+
+    //z = log(PI) - log( z ) - w;
+    z = LOGPI - log( z ) - w;
+    return( z );
+  }
+
+  if( x < 13.0 ) {
+    z = 1.0;
+    p = 0.0;
+    u = x;
+    while( u >= 3.0 ) {
+      p -= 1.0;
+      u = x + p;
+      z *= u;
+    }
+    while( u < 2.0 ) {
+      if( u == 0.0 )
+        goto lgsing;
+      z /= u;
+      p += 1.0;
+      u = x + p;
+    }
+    if( z < 0.0 ) {
+      sgngam = -1;
+      z = -z;
+    }
+    else
+      sgngam = 1;
+
+    if( u == 2.0 ) {
+      z = x;
+      z = gamma(z);
+      return( log(z) );
+    }
+    p -= 2.0;
+    x = x + p;
+    p = x * polevl( x, B, 5 ) / p1evl( x, C, 6);
+    return( log(z) + p );
+  }
+
+  if( x > MAXLGM ) {
+    #ifdef INFINITIES
+    tmp = sgngam * MYINF;
+    return( tmp );
+    #else
+    loverf:
+    mtherr( "lgam", OVERFLOW );
+    df3_two_variable tmp;
+    tmp=sgngam * MAXNUM;
+    return tmp;
+    #endif
+  }
+
+  q = ( x - 0.5 ) * log(x) - x + LS2PI;
+  if( x > 1.0e8 )
+    return( q );
+
+  p = 1.0/(x*x);
+  if( x >= 1000.0 )
+    q += ((   7.9365079365079365079365e-4 * p
+    - 2.7777777777777777777778e-3) *p
+    + 0.0833333333333333333333) / x;
+  else
+    q += polevl( p, A, 4 ) / x;
+  return( q );
 }
 
 /*
@@ -627,20 +617,20 @@ Direct inquiries to 30 Frost Street, Cambridge, MA 02140
 
 df3_two_variable polevl( const df3_two_variable&  x, void * _coef, int N )
 {
-double * coef=(double *)(_coef);
-df3_two_variable  ans;
-int i;
-double *p;
+  double * coef=(double *)(_coef);
+  df3_two_variable  ans;
+  int i;
+  double *p;
 
-p = coef;
-ans = *p++;
-i = N;
+  p = coef;
+  ans = *p++;
+  i = N;
 
-do
-	ans = ans * x  +  *p++;
-while( --i );
+  do
+    ans = ans * x  +  *p++;
+  while( --i );
 
-return( ans );
+  return( ans );
 }
 
 /*							p1evl()	*/
@@ -658,24 +648,24 @@ return( ans );
 
 df3_two_variable p1evl(const df3_two_variable & x, void * _coef, int N )
 {
-double * coef= (double*)(_coef);
-df3_two_variable ans;
-double *p;
-int i;
+  double * coef= (double*)(_coef);
+  df3_two_variable ans;
+  double *p;
+  int i;
 
-p = coef;
-ans = x + *p++;
-i = N-1;
+  p = coef;
+  ans = x + *p++;
+  i = N-1;
 
-do
-	ans = ans * x  + *p++;
-while( --i );
+  do
+    ans = ans * x  + *p++;
+  while( --i );
 
-return( ans );
+  return( ans );
 }
 
 //------------------------------------------------------------------------
-//df3_two_variable gcf(const df3_two_variable& a, const df3_two_variable& x);
+
 /**
  * Incomplete gamma integral.
  * The function is defined by
@@ -686,60 +676,59 @@ return( ans );
  */
 df3_two_variable igam(const df3_two_variable & aa, const df3_two_variable & xx )
 {
-      df3_two_variable a = aa;
-      df3_two_variable x = xx;
+  df3_two_variable a = aa;
+  df3_two_variable x = xx;
 
-   df3_two_variable ans, ax, c, r, t;
+  df3_two_variable ans, ax, c, r, t;
 
+  if( (value(x) <= 0) || ( value(a) <= 0) )
+  {
+    df3_two_variable tmp;
+    tmp=0.0;
+    return(tmp);
+  }
 
-   if( (value(x) <= 0) || ( value(a) <= 0) )
-   {
-     df3_two_variable tmp;
-     tmp=0.0;
-     return(tmp);
-   }
+  if( (value(x) > 1.0) && (value(x) > value(a) ) ) {
+    return( 1.0 - igamc(a,x) );
+  }
 
-   if( (value(x) > 1.0) && (value(x) > value(a) ) ) {
-   	return( 1.0 - igamc(a,x) );
-	}
+  // Compute  x**a * exp(-x) / gamma(a)
+  ax = a * log(x) - x - lgam(a);
 
-   // Compute  x**a * exp(-x) / gamma(a)
-   ax = a * log(x) - x - lgam(a);
+  if( value(ax) < -MAXLOG )
+    {
+      cerr <<  "igam UNDERFLOW " << endl;
+      ad_exit(1);
+    }
 
-   if( value(ax) < -MAXLOG )
-   	{
-   	 cerr <<  "igam UNDERFLOW " << endl;
-   	 ad_exit(1);
-   	}
-
-   ax = exp(ax);
+  ax = exp(ax);
    
-   // power series 
-   r = a;
-   c = 1.0/a;
-   ans = 1.0/a;
+  // power series 
+  r = a;
+  c = 1.0/a;
+  ans = 1.0/a;
 
-   do
-   	{
-   	r += 1.0;
-   	c *= x/r;
-   	ans += c;
-	t=c/ans;
-   	}
-   while( (fabs(*t.get_u()) > MACHEP) &&
-          (fabs(*t.get_u_x()) > MACHEP) &&
-          (fabs(*t.get_u_xx()) > MACHEP) &&
-          (fabs(*t.get_u_xxx()) > MACHEP) &&
-          (fabs(*t.get_u_y()) > MACHEP) &&
-          (fabs(*t.get_u_yy()) > MACHEP) &&
-          (fabs(*t.get_u_yyy()) > MACHEP) &&
-          (fabs(*t.get_u_xy()) > MACHEP) &&
-          (fabs(*t.get_u_xxy()) > MACHEP) &&
-          (fabs(*t.get_u_xyy()) > MACHEP) );
-   //while( c/ans > MACHEP );
+  do
+    {
+      r += 1.0;
+      c *= x/r;
+      ans += c;
+      t=c/ans;
+    }
+//  while( fabs(t) > MACHEP);
+  while( (fabs(*t.get_u()) > MACHEP) &&
+         (fabs(*t.get_u_x()) > MACHEP) &&
+         (fabs(*t.get_u_xx()) > MACHEP) &&
+         (fabs(*t.get_u_xxx()) > MACHEP) &&
+         (fabs(*t.get_u_y()) > MACHEP) &&
+         (fabs(*t.get_u_yy()) > MACHEP) &&
+         (fabs(*t.get_u_yyy()) > MACHEP) &&
+         (fabs(*t.get_u_xy()) > MACHEP) &&
+         (fabs(*t.get_u_xxy()) > MACHEP) &&
+         (fabs(*t.get_u_xyy()) > MACHEP) );
 
-   return( ans * ax );
-   }
+  return( ans * ax );
+}
 
 /**
  * Complemented incomplete gamma integral.
@@ -751,86 +740,82 @@ df3_two_variable igam(const df3_two_variable & aa, const df3_two_variable & xx )
  */
 df3_two_variable igamc(const df3_two_variable & aa, const df3_two_variable & xx)
 {
-      df3_two_variable a = aa;
-      df3_two_variable x = xx;
+  df3_two_variable a = aa;
+  df3_two_variable x = xx;
 
-   df3_two_variable ans, ax, c, yc, r, t, y, z;
-   df3_two_variable pk, pkm1, pkm2, qk, qkm1, qkm2;
+  df3_two_variable ans, ax, c, yc, r, t, y, z;
+  df3_two_variable pk, pkm1, pkm2, qk, qkm1, qkm2;
 
-   if( (value(x) <= 0) || ( value(a) <= 0) )
-   {
-     df3_two_variable tmp;
-     tmp=0.0;
-     return(tmp);
-   }
+  if( (value(x) <= 0) || ( value(a) <= 0) ) {
+    df3_two_variable tmp;
+    tmp=0.0;
+    return(tmp);
+  }
 
-   if( (value(x) < 1.0) || (value(x) < value(a) )) {
-   	return( 1.0 - igam(a,x) );
-	}
+  if( (value(x) < 1.0) || (value(x) < value(a) )) {
+    return( 1.0 - igam(a,x) );
+  }
 
-   ax = a * log(x) - x - lgam(a);
+  ax = a * log(x) - x - lgam(a);
 
-   if( value(ax) < -MAXLOG )
-   	{
-   	  cerr <<  "igamc UNDERFLOW " << endl; 
-   	  ad_exit(1);
-   	}
+  if( value(ax) < -MAXLOG )
+    {
+      cerr <<  "igamc UNDERFLOW " << endl; 
+      ad_exit(1);
+    }
 
-   ax = exp(ax);
+  ax = exp(ax);
 
-   // continued fraction 
-   y = 1.0 - a;
-   z = x + y + 1.0;
-   c = 0.0;
-   pkm2 = 1.0;
-   qkm2 = x;
-   pkm1 = x + 1.0;
-   qkm1 = z * x;
-   ans = pkm1/qkm1;
+  // continued fraction 
+  y = 1.0 - a;
+  z = x + y + 1.0;
+  c = 0.0;
+  pkm2 = 1.0;
+  qkm2 = x;
+  pkm1 = x + 1.0;
+  qkm1 = z * x;
+  ans = pkm1/qkm1;
    
-   do
-   	{
-   	c += 1.0;
-   	y += 1.0;
-   	z += 2.0;
-   	yc = y * c;
-   	pk = pkm1 * z  -  pkm2 * yc;
-   	qk = qkm1 * z  -  qkm2 * yc;
-   	if( value(qk) != 0 )
-   		{
-   		r = pk/qk;
-   		t = fabs( (ans - r)/r );
-   		ans = r;
-   		}
-   	else {
-   		t = 1.0;
-		}
-   	pkm2 = pkm1;
-   	pkm1 = pk;
-   	qkm2 = qkm1;
-   	qkm1 = qk;
-   	if( fabs(value(pk)) > big )
-   		{
-   		pkm2 *= biginv;
-   		pkm1 *= biginv;
-   		qkm2 *= biginv;
-   		qkm1 *= biginv;
-   		}
-   	}
-   while( (fabs(*t.get_u()) > MACHEP) &&
-          (fabs(*t.get_u_x()) > MACHEP) &&
-          (fabs(*t.get_u_xx()) > MACHEP) &&
-          (fabs(*t.get_u_xxx()) > MACHEP) &&
-          (fabs(*t.get_u_y()) > MACHEP) &&
-          (fabs(*t.get_u_yy()) > MACHEP) &&
-          (fabs(*t.get_u_yyy()) > MACHEP) &&
-          (fabs(*t.get_u_xy()) > MACHEP) &&
-          (fabs(*t.get_u_xxy()) > MACHEP) &&
-          (fabs(*t.get_u_xyy()) > MACHEP) );
-   //while( t > MACHEP );
+  do {
+    c += 1.0;
+    y += 1.0;
+    z += 2.0;
+    yc = y * c;
+    pk = pkm1 * z  -  pkm2 * yc;
+    qk = qkm1 * z  -  qkm2 * yc;
+    if( value(qk) != 0 ) {
+      r = pk/qk;
+      t = fabs( (ans - r)/r );
+      ans = r;
+    }
+    else {
+      t = 1.0;
+    }
+    pkm2 = pkm1;
+    pkm1 = pk;
+    qkm2 = qkm1;
+    qkm1 = qk;
+    if( fabs(value(pk)) > big ) {
+      pkm2 *= biginv;
+      pkm1 *= biginv;
+      qkm2 *= biginv;
+      qkm1 *= biginv;
+    }
+  }
+//  while( fabs(t) > MACHEP );
+  while( (fabs(*t.get_u()) > MACHEP) &&
+         (fabs(*t.get_u_x()) > MACHEP) &&
+         (fabs(*t.get_u_xx()) > MACHEP) &&
+         (fabs(*t.get_u_xxx()) > MACHEP) &&
+         (fabs(*t.get_u_y()) > MACHEP) &&
+         (fabs(*t.get_u_yy()) > MACHEP) &&
+         (fabs(*t.get_u_yyy()) > MACHEP) &&
+         (fabs(*t.get_u_xy()) > MACHEP) &&
+         (fabs(*t.get_u_xxy()) > MACHEP) &&
+         (fabs(*t.get_u_xyy()) > MACHEP) );
 
-   return( ans * ax );
-   }
+  return( ans * ax );
+}
 
 //-----------------------------------------------------------------------
 
@@ -867,9 +852,9 @@ df1b2variable log_negbinomial_density(double x,const df1b2variable& _xmu,
 
     \deprecated Scheduled for replacement by 2010.
 */
-df3_two_variable gammln(const df3_two_variable& xx)
+/*df3_two_variable gammln(const df3_two_variable& xx)
 {
-/*  df3_two_variable x,tmp,ser,tmp1;
+  df3_two_variable x,tmp,ser,tmp1;
   static double cof[6]={76.18009173,-86.50532033,24.01409822,
     -1.231739516,0.120858003e-2,-0.536382e-5};
   int j;
@@ -882,8 +867,12 @@ df3_two_variable gammln(const df3_two_variable& xx)
     x += 1.0;
     ser += cof[j]/x;
   }
-  return -tmp+log(2.50662827465*ser); */
+  return -tmp+log(2.50662827465*ser);
+}*/
 
+
+df3_two_variable gammln(const df3_two_variable& xx)
+{
   df3_two_variable x = xx;
   return lgam(x);
 }
@@ -900,7 +889,7 @@ df3_two_variable gammln(const df3_two_variable& xx)
   const df3_two_variable& x)
 {
   int i;
-  df3_two_variable an,b,c,d,del,h,gammcf,gln;
+  df3_two_variable an,b,c,d,del,h,gammcf,gln,t;
 
   gln=gammln(a);
 
@@ -918,7 +907,19 @@ df3_two_variable gammln(const df3_two_variable& xx)
     d=1.0/d;
     del=d*c;
     h *= del;
-    if (fabs(value(del)-1.0) < EPS) break;
+    t = del-1.0;
+    if ((fabs(*t.get_u()) < EPS) &&
+        (fabs(*t.get_u_x()) < EPS) &&
+        (fabs(*t.get_u_xx()) < EPS) &&
+        (fabs(*t.get_u_xxx()) < EPS) &&
+        (fabs(*t.get_u_y()) < EPS) &&
+        (fabs(*t.get_u_yy()) < EPS) &&
+        (fabs(*t.get_u_yyy()) < EPS) &&
+        (fabs(*t.get_u_xy()) < EPS) &&
+        (fabs(*t.get_u_xxy()) < EPS) &&
+        (fabs(*t.get_u_xyy()) < EPS) ) { //fabs(value(del)-1.0) < EPS
+      break;
+    }
   }
   if (i > ITMAX) 
     cerr << "a too large, ITMAX too small in gcf" << endl;
@@ -957,16 +958,16 @@ df3_two_variable gammln(const df3_two_variable& xx)
       ap+=1.0;
       del *= x/ap;
       sum += del;
-      if ((fabs(*del.get_u()) > EPS) &&
-          (fabs(*del.get_u_x()) > EPS) &&
-          (fabs(*del.get_u_xx()) > EPS) &&
-          (fabs(*del.get_u_xxx()) > EPS) &&
-          (fabs(*del.get_u_y()) > EPS) &&
-          (fabs(*del.get_u_yy()) > EPS) &&
-          (fabs(*del.get_u_yyy()) > EPS) &&
-          (fabs(*del.get_u_xy()) > EPS) &&
-          (fabs(*del.get_u_xxy()) > EPS) &&
-          (fabs(*del.get_u_xyy()) > EPS) ) {//fabs(value(del)) < fabs(value(sum))*EPS
+      if ((fabs(*del.get_u()) < EPS) &&
+          (fabs(*del.get_u_x()) < EPS) &&
+          (fabs(*del.get_u_xx()) < EPS) &&
+          (fabs(*del.get_u_xxx()) < EPS) &&
+          (fabs(*del.get_u_y()) < EPS) &&
+          (fabs(*del.get_u_yy()) < EPS) &&
+          (fabs(*del.get_u_yyy()) < EPS) &&
+          (fabs(*del.get_u_xy()) < EPS) &&
+          (fabs(*del.get_u_xxy()) < EPS) &&
+          (fabs(*del.get_u_xyy()) < EPS) ) {//fabs(value(del)) < fabs(value(sum))*EPS
         gamser=sum*exp(-x+a*log(x)-(gln));
         return gamser;
       }
@@ -983,8 +984,8 @@ df3_two_variable cumd_gamma(const df3_two_variable& x,
   return( gamma );
 }
 
-
-/*df3_two_variable cumd_gamma(const df3_two_variable& x,
+/*
+df3_two_variable cumd_gamma(const df3_two_variable& x,
   const df3_two_variable& a)
 {
   df3_two_variable gamser,gammcf;

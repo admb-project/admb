@@ -41,6 +41,9 @@ all:
 	cd tools99\$(CCVERSION)-$(OSVERSION)olp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\optmsc8-laplace.mak all
 	cd tools99\$(CCVERSION)-$(OSVERSION)slp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\safmsc8-laplace.mak all
 
+install:
+	cscript ..\scripts\create-admb-shortcut.vbs
+
 verify:
 	set ADMB_HOME=$(MAKEDIR)\$(DISK)
 	set PATH=$(MAKEDIR)\$(DISK)\bin;$(PATH)

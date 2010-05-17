@@ -23,6 +23,9 @@ vc:
 vc-verify:
 	cd src& nmake /f vc.mak verify
 
+vc-install:
+	cd src& nmake /f vc.mak install
+
 vc-clean:
 	cd src& nmake /f vc.mak clean
 

@@ -42,6 +42,9 @@ all:
 	cd tools99\$(CCVERSION)-$(OSVERSION)slp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\safmsc8-laplace.mak all
 
 install:
+	IF EXIST c:%HOMEPATH%\Desktop\ADMB rmdir /S /Q c:%HOMEPATH%\Desktop\ADMB
+	mkdir c:%HOMEPATH%\Desktop\ADMB
+	xcopy ..\build\* c:%HOMEPATH%\Desktop\ADMB /S /Y
 	cscript ..\scripts\create-admb-shortcut.vbs
 
 verify:

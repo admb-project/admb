@@ -14,8 +14,7 @@ oShellLink.TargetPath = "cmd"
 If Len(WshSysEnv("VS100COMNTOOLS")) > 0 Then
 
 'Set the additional parameters for the shortcut
-'oShellLink.Arguments = "/K call ""%VS100COMNTOOLS%\vsvars32.bat"" & set ADMB_HOME=" & strAdmbHome & "& set PATH=" & strAdmbHome & "\bin;%PATH%"
-oShellLink.Arguments = "/K call ""%VS100COMNTOOLS%\vsvars32.bat"" & set ADMB_HOME=""%CD%"" & set PATH=""%CD%""\bin;%PATH%"
+oShellLink.Arguments = "/K set ADMB_HOME=%CD%& set PATH=%CD%\bin;%PATH%& call ""%VS100COMNTOOLS%\vsvars32.bat"""
 
 End If
 
@@ -26,4 +25,3 @@ oShellLink.Save
 
 'Clean up the WshShortcut Object
 Set oShellLink = Nothing
-

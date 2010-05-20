@@ -47,12 +47,29 @@ goto STARTLOOP
 
 set model=%~n1
 
-echo.& echo *** %tpl2cpp% %bounds% %dll% %model%
-                %tpl2cpp% %bounds% %dll% %model%
-echo.& echo *** adcomp %d% %g% %r% %s% %model%
-           call adcomp %d% %g% %r% %s% %model%
-echo.& echo *** adlink %d% %g% %r% %s% %model%
-           call adlink %d% %g% %r% %s% %model%
+if not exist %model%.tpl (
+  goto EOF
+)
+
+%tpl2cpp% %bounds% %dll% %model%
+
+if not exist %model%.htp (
+  goto EOF
+)
+
+if not exist %model%.cpp (
+  goto EOF
+)
+
+call adcomp %d% %g% %r% %s% %model%
+
+if not exist %model%.o goto EOF
+call adlink %d% %g% %r% %s% %model%
+
+if not exist %model%.exe (
+  goto EOF
+)
+
 goto EOF
 
 :HELP

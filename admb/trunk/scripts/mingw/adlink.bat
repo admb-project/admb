@@ -51,7 +51,7 @@ if %adlib%==-lado set df1b2lib=-ldf1b2o
 if %adlib%==-lads set df1b2lib=-ldf1b2s
 
 echo on
-%linker% %s% -static %def% -L"%ADMB_HOME%"/lib %model%.o %df1b2lib% -ladmod -ladt %adlib% %df1b2lib% -ladmod -ladt %adlib% %out%
+%linker% %model%.o -static %def% -L"%ADMB_HOME%"\\lib  %df1b2lib% -ladmod -ladt %adlib% %df1b2lib% -ladmod -ladt %adlib% %out%
 echo off
 goto EOF
 

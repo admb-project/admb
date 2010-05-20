@@ -1,4 +1,4 @@
-.PHONY: linux-verify solaris-verify
+.PHONY: mingw mingw-verify linux-verify solaris-verify
 
 all: 
 

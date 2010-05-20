@@ -25,7 +25,7 @@ dist:
 	if not exist linad99\${CCVERSION}-${OSVERSION}olp mkdir linad99\${CCVERSION}-${OSVERSION}olp 
 	if not exist linad99\${CCVERSION}-${OSVERSION}slp mkdir linad99\${CCVERSION}-${OSVERSION}slp 
 	if not exist nh99\${CCVERSION}-${OSVERSION}olp mkdir nh99\${CCVERSION}-${OSVERSION}olp 
-	if not exist nh99\${CCVERSION}-${OSVERSION}olp-stub -mkdir nh99\${CCVERSION}-${OSVERSION}olp-stub 
+	if not exist nh99\${CCVERSION}-${OSVERSION}olp-stub mkdir nh99\${CCVERSION}-${OSVERSION}olp-stub 
 	if not exist tools99\${CCVERSION}-${OSVERSION}olp mkdir tools99\${CCVERSION}-${OSVERSION}olp 
 	if not exist df1b2-separable\${CCVERSION}-${OSVERSION}olp mkdir df1b2-separable\${CCVERSION}-${OSVERSION}olp 
 	if not exist df1b2-separable\${CCVERSION}-${OSVERSION}slp mkdir df1b2-separable\${CCVERSION}-${OSVERSION}slp 

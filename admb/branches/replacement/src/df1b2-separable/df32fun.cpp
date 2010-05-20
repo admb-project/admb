@@ -271,10 +271,8 @@
     return *this;
   }
 
-// I'm pretty sure it should be like this
   df3_two_variable& df3_two_variable::operator -= (double v)
   {
-    //*get_u() += v;
     *get_u() -= v;
     return *this;
   }
@@ -286,10 +284,8 @@
     return *this;
   }
 
-//Check this
   df3_two_variable& df3_two_variable::operator *= (double v)
   {
-    //cout << "Check *= operator" << endl;
     *get_u() *= v;
     *get_u_x() *= v;
     *get_u_y() *= v;
@@ -303,14 +299,52 @@
     return *this;
   }
 
-//Check this
   df3_two_variable& df3_two_variable::operator /= (const df3_two_variable& y)
   {
-    //cout << "Check /= operator" << endl;
     df3_two_variable x=*this / y;
     *this=x;
     return *this;
   }
+
+int operator <(const df3_two_variable & x, double n)
+{
+   return value(x) < n;
+}
+
+int operator >(const df3_two_variable & x, double n)
+{
+   return value(x) > n;
+}
+
+int operator >=(const df3_two_variable & x, double n)
+{
+   return value(x) >= n;
+}
+
+int operator ==(const df3_two_variable & x, const df3_two_variable & n)
+{
+   return value(x) == value(n);
+}
+
+int operator ==(const df3_two_variable & x, double n)
+{
+   return value(x) == n;
+}
+
+int operator ==(double x, const df3_two_variable & n)
+{
+   return x == value(n);
+}
+
+int operator <(const df3_two_variable & x, const df3_two_variable & n)
+{
+   return value(x) < value(n);
+}
+
+int operator >(const df3_two_variable & x, const df3_two_variable & n)
+{
+   return value(x) > value(n);
+}
 
 
 void set_derivatives( df3_two_variable& z,const df3_two_variable& x,double u,
@@ -518,11 +552,8 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
     return z;
   }
 
-//Fix insides
   df3_two_variable fabs(const df3_two_variable& v)
   {
-    //cout << "Check fabs.. df3_two_variable" << __FILE__ << __LINE__ << endl;
-
     df3_two_variable z;
     if (value(v)>=0)
     {

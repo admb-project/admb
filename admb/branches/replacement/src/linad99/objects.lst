@@ -28,6 +28,7 @@ ivect11.obj \
 dvect26.obj \
 cnormgam.obj \
 ftweak.obj \
+dfgammp.obj \
 dftweak.obj \
 ccumdexp.obj \
 vcumdexp.obj \

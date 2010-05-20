@@ -572,23 +572,26 @@ WARN_LOGFILE           =
 # with spaces.
 
 INPUT                  = ./dox-share/mainpage.txt \
+                         ../../src/linad99/dfgammp.cpp \
                          ../../src/linad99/dvector.cpp \
                          ../../src/linad99/dvect2.cpp \
                          ../../src/linad99/dvect3.cpp \
                          ../../src/linad99/dvect5.cpp \
-                         ../../src/linad99/cgamdev.cpp \
-                         ../../src/linad99/cgamdens.cpp \
-                         ../../src/linad99/vgamdens.cpp \
-                         ../../src/linad99/combc.cpp \
-                         ../../src/linad99/conjprod.cpp \
-                         ../../src/linad99/cspline.cpp \
-                         ../../src/linad99/dfgammp.cpp \
                          ../../src/linad99/dmat34.cpp \
                          ../../src/linad99/dmat2.cpp \
                          ../../src/linad99/dmat3.cpp \
                          ../../src/linad99/dmat42.cpp \
                          ../../src/linad99/dranpois.cpp \
                          ../../src/linad99/dvsort.cpp \
+                         ../../src/linad99/df13fun.h \
+                         ../../src/linad99/cgamdev.cpp \
+                         ../../src/linad99/cgamdens.cpp \
+                         ../../src/linad99/vgamdens.cpp \
+                         ../../src/linad99/vgamdev.cpp \
+                         ../../src/linad99/combc.cpp \
+                         ../../src/linad99/conjprod.cpp \
+                         ../../src/linad99/cspline.cpp \
+                         ../../src/linad99/fvar.hpp \
                          ../../src/linad99/fvar_fn.cpp \
                          ../../src/linad99/fvar_m15.cpp \
                          ../../src/linad99/fvar_m20.cpp \
@@ -600,7 +603,6 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/ranfill.cpp \
                          ../../src/linad99/rngen.cpp \
                          ../../src/linad99/df13incbet.cpp \
-                         ../../src/linad99/vgamdev.cpp \
                          ../../src/linad99/vspline.cpp \
                          ../../src/linad99/eigen.cpp \
                          ../../src/linad99/eigenv.cpp \
@@ -616,12 +618,10 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/nh99/dfqromb.cpp \
                          ../../src/nh99/bet_rand.cpp \
                          ../../src/nh99/amoeba.cpp \
+                         ../../src/nh99/admodel.h \
                          ../../src/df1b2-separable/df1b2invcumdbeta_incbet.cpp \
                          ../../src/df1b2-separable/f1b2lndt.cpp \
                          ../../src/df1b2-separable/df3gammp.cpp \
-                         ../../src/linad99/df13fun.h \
-                         ../../src/linad99/fvar.hpp \
-                         ../../src/nh99/admodel.h \
                          ../../src/df1b2-separable/df13tester.cpp \
                          ../../src/df1b2-separable/df33tester.cpp \
 

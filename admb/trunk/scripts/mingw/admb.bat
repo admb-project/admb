@@ -63,7 +63,8 @@ if not exist %model%.cpp (
 
 call adcomp %d% %g% %r% %s% %model%
 
-if not exist %model%.o goto EOF
+if not exist %model%.obj goto EOF
+
 call adlink %d% %g% %r% %s% %model%
 
 if not exist %model%.exe (

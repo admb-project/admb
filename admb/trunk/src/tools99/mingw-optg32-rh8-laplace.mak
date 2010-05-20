@@ -26,7 +26,7 @@ vpath %.obj $(LIBPATH)$
 include objects.lst
 
 $(LIBPATH)\$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
-	ar -rs $(LIBPATH)\\$(LIBNAME) $(LIBPATH)\\*.obj
+	cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj
 
 $(filter-out cifstrem.obj, $(OBJ0)): %.obj: %.cpp
 	$(CC) $(FLAGS) $< -o $(LIBPATH)\$*.obj

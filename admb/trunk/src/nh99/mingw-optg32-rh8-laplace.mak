@@ -42,7 +42,7 @@ vpath %.obj $(LIBPATH)
 include objects.lst
 
 $(LIBPATH)\\$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
-	ar -rs $(LIBPATH)\\$(LIBNAME) $(LIBPATH)\\*.obj
+	cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj
 
 model52.obj hybmcmc.obj randeff.obj cnstrs.obj xmodelm3.obj xxmcmc.obj lmnewton.obj: %.obj: %.cpp
 	$(CC) $(FLAGS1)  $< -o $(LIBPATH)\\$*.obj

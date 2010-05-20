@@ -29,7 +29,7 @@ vpath %.obj $(LIBPATH)$
 include objects.lst
 
 $(LIBPATH)\\$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPARSE)
-	ar -rs $(LIBPATH)\\$(LIBNAME) $(LIBPATH)\\*.obj
+	cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj
 
 dvec_io1.obj ddlist.obj gradchk.obj ivect11.obj model49.obj multiindex.obj gradstrc.obj dvect26.obj derch.obj dvsort.obj fvar_fn2.obj lvector.obj ivect6.obj dmat42.obj imat10.obj dfsdmat.obj sgradclc.obj newfmin.obj makesub.obj: %.obj: %.cpp
 	$(CC) $(FLAGS1)  $< -o $(LIBPATH)\\$*.obj

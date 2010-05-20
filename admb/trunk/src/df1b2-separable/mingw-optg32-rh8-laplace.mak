@@ -25,7 +25,7 @@ vpath %.obj $(LIBPATH)$
 include objects.lst
 
 $(LIBPATH)\$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
-	cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj
+	cmd /C "cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj"
 
 $(filter-out df1b2f24.obj df1b2fn2.obj df1b2f19.obj df1b2fun.obj df1b2pow.obj df1b2ghmult.obj df1b2gh.obj  df1b2im5.obj df1b2im3f.obj df1b2lp6.obj df1b2lp8.obj df1b2f14.obj df1b2f13.obj df1b2f10.obj f1b2lapqd.obj df1b2fnl.obj df3fun.obj df1fun.obj dflocmin.obj df1b2lap.obj, $(OBJ0)): %.obj: %.cpp
 	$(CC) $(FLAGS)  $< -o $(LIBPATH)\$*.obj
@@ -33,24 +33,24 @@ $(filter-out df1b2f24.obj df1b2fn2.obj df1b2f19.obj df1b2fun.obj df1b2pow.obj df
 df1b2f24.obj df1b2fn2.obj df1b2f19.obj df1b2fun.obj df1b2pow.obj df1b2ghmult.obj df1b2gh.obj df1b2im5.obj df1b2im3f.obj df1b2lp6.obj df1b2lp8.obj df1b2f14.obj df1b2f13.obj df1b2f10.obj f1b2lapqd.obj df1b2fnl.obj df3fun.obj df1fun.obj dflocmin.obj df1b2lap.obj: %.obj: %.cpp
 	$(CC) $(FLAGS)  $< -o $(LIBPATH)\$*.obj
 
-disk: $(LIBPATH)\$(LIBNAME) tpl2rem
-	copy $(LIBPATH)\\$(LIBNAME) $(DISKDIR)\\lib
-	copy adpool.h $(DISKDIR)\\include
-	copy adrndeff.h $(DISKDIR)\\include
-	copy df1b2fun.h $(DISKDIR)\\include
-	copy df1fun.h $(DISKDIR)\\include
-	copy df3fun.h $(DISKDIR)\\include
-	copy df1b2fnl.h $(DISKDIR)\\include
-	copy df1b2loc.h $(DISKDIR)\\include
-	copy smartbuf.h $(DISKDIR)\\include
-	copy tpl2rem.exe $(DISKDIR)\\bin
-	copy sed* $(DISKDIR)\\bin
+disk: $(LIBPATH)\$(LIBNAME) tpl2rem.exe
+	cmd /C "copy $(LIBPATH)\\$(LIBNAME) $(DISKDIR)\\lib"
+	cmd /C "copy adpool.h $(DISKDIR)\\include"
+	cmd /C "copy adrndeff.h $(DISKDIR)\\include"
+	cmd /C "copy df1b2fun.h $(DISKDIR)\\include"
+	cmd /C "copy df1fun.h $(DISKDIR)\\include"
+	cmd /C "copy df3fun.h $(DISKDIR)\\include"
+	cmd /C "copy df1b2fnl.h $(DISKDIR)\\include"
+	cmd /C "copy df1b2loc.h $(DISKDIR)\\include"
+	cmd /C "copy smartbuf.h $(DISKDIR)\\include"
+	cmd /C "copy tpl2rem.exe $(DISKDIR)\\bin"
+	cmd /C "copy sed* $(DISKDIR)\\bin"
 
 tpl2rem.c: tpl2rem.lex
 	flex tpl2rem.lex
 	sed -f sedflex lex.yy.c > tpl2rem.c
 
-tpl2rem: tpl2rem.c
+tpl2rem.exe: tpl2rem.c
 	gcc tpl2rem.c -o tpl2rem
 
 clean:

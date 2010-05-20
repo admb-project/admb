@@ -1,4 +1,3 @@
-#macros for making optimized library for DJGPP
 CC = gcc
 LL = tlib
 
@@ -18,15 +17,11 @@ vpath %.obj $(LIBPATH)$
 
 .SUFFIXES: .obj .cpp
 
-.PHONY: t0
-.PHONY: t1
-.PHONY: t2
-.PHONY: t3
 .PHONY: disk
 include objects.lst
 
 $(LIBPATH)\$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
-	cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj
+	cmd /C "cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj"
 
 $(filter-out cifstrem.obj, $(OBJ0)): %.obj: %.cpp
 	$(CC) $(FLAGS) $< -o $(LIBPATH)\$*.obj
@@ -48,11 +43,11 @@ all: $(LIBPATH)\$(LIBNAME)  disk
 
 
 disk: $(LIBPATH)\$(LIBNAME) 
-	copy $(LIBPATH)\$(LIBNAME) $(DISKDIR)\lib
-	copy adoption.hpp $(DISKDIR)\include
-	copy adstring.hpp $(DISKDIR)\include
-	copy cifstrem.h $(DISKDIR)\include
-	copy clist.h $(DISKDIR)\include
+	cmd /C "copy $(LIBPATH)\$(LIBNAME) $(DISKDIR)\lib"
+	cmd /C "copy adoption.hpp $(DISKDIR)\include"
+	cmd /C "copy adstring.hpp $(DISKDIR)\include"
+	cmd /C "copy cifstrem.h $(DISKDIR)\include"
+	cmd /C "copy clist.h $(DISKDIR)\include"
 
 clean:
 	if exist $(LIBPATH) rmdir /S /Q $(LIBPATH)

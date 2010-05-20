@@ -30,7 +30,7 @@ vpath %.obj $(LIBPATH)$
 include objects.lst
 
 $(LIBPATH)\\$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPARSE) 
-	cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj
+	cmd /C "cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj"
 
 dvec_io1.obj ddlist.obj gradchk.obj ivect11.obj model49.obj multiindex.obj gradstrc.obj dvect26.obj derch.obj dvsort.obj fvar_fn2.obj lvector.obj ivect6.obj dmat42.obj imat10.obj dfsdmat.obj sgradclc.obj newfmin.obj makesub.obj: %.obj: %.cpp
 	$(CC) $(FLAGS1) $< -o $(LIBPATH)\\$*.obj
@@ -54,8 +54,9 @@ all: $(LIBPATH)\\$(LIBNAME)  disk
 
 
 disk: $(LIBPATH)\\$(LIBNAME) 
-	copy $(LIBPATH)\\$(LIBNAME) $(DISKDIR)\\lib
-	copy fvar.hpp $(DISKDIR)\\include
-	copy trunc.hpp $(DISKDIR)\\include
+	cmd /C "copy $(LIBPATH)\\$(LIBNAME) $(DISKDIR)\\lib"
+	cmd /C "copy fvar.hpp $(DISKDIR)\\include"
+	cmd /C "copy trunc.hpp $(DISKDIR)\\include"
+
 clean:
 	if exist $(LIBPATH) rmdir /S /Q $(LIBPATH)

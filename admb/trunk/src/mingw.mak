@@ -14,14 +14,6 @@ dist:
 	mkdir $(DISK)\lib
 	mkdir $(DISK)\include
 
-	copy ..\scripts\mingw\*.bat ${DISK}\bin
-	copy ..\LICENSE ${DISK}
-	copy ..\README ${DISK}
-	copy ..\scripts\mingw\Makefile ${DISK}
-
-	mkdir ${DISK}\examples
-	xcopy ..\examples ${DISK}\examples /S
-
 	if not exist linad99\${CCVERSION}-${OSVERSION}olp mkdir linad99\${CCVERSION}-${OSVERSION}olp 
 	if not exist linad99\${CCVERSION}-${OSVERSION}slp mkdir linad99\${CCVERSION}-${OSVERSION}slp 
 	if not exist nh99\${CCVERSION}-${OSVERSION}olp mkdir nh99\${CCVERSION}-${OSVERSION}olp 
@@ -36,6 +28,14 @@ dist:
 	$(MAKE) -C linad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-safg32-rh8-laplace.mak  disk 
 	$(MAKE)  -C nh99 CC=${COMP} STUBPATH=${CCVERSION}-${OSVERSION}olp-stub   LIBPATH=${CCVERSION}-${OSVERSION}olp  DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak  disk
 	$(MAKE)  -C tools99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak  disk
+
+	copy ..\scripts\mingw\*.bat ${DISK}\bin
+	copy ..\LICENSE ${DISK}
+	copy ..\README ${DISK}
+	copy ..\scripts\mingw\Makefile ${DISK}
+
+	mkdir ${DISK}\examples
+	xcopy ..\examples ${DISK}\examples /S
 	
 verify:
 	set ADMB_HOME=%CD%\$(DISK)& set PATH=%CD%\$(DISK)\bin;$(PATH)& set& $(MAKE) -C ${DISK} all

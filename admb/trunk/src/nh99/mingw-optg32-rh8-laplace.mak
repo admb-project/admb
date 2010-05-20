@@ -42,7 +42,7 @@ vpath %.obj $(LIBPATH)
 include objects.lst
 
 $(LIBPATH)\\$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
-	cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj
+	cmd /C "cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj"
 
 model52.obj hybmcmc.obj randeff.obj cnstrs.obj xmodelm3.obj xxmcmc.obj lmnewton.obj: %.obj: %.cpp
 	$(CC) $(FLAGS1)  $< -o $(LIBPATH)\\$*.obj
@@ -69,19 +69,19 @@ tpl2cpp.c: tpl2cpp.lex
 	flex -w tpl2cpp.lex
 	sed -f sedflex lex.yy.c > tpl2cpp.c
 
-tpl2cpp: tpl2cpp.c
+tpl2cpp.exe: tpl2cpp.c
 	gcc -Wno-format tpl2cpp.c -o $@
 
-disk: $(LIBPATH)\\$(LIBNAME)  df1b2stub tpl2cpp
-	copy $(LIBPATH)/$(LIBNAME) $(DISKDIR)\\lib
-	copy admodel.h $(DISKDIR)\\include
-	copy spcomm.h $(DISKDIR)\\include
-	copy adsplus.h $(DISKDIR)\\include
-	copy newredef.h $(DISKDIR)\\include
-	copy s.h $(DISKDIR)\\include
-	copy tpl2cpp.exe $(DISKDIR)\\bin
-	copy sed* $(DISKDIR)\\bin
-	copy $(STUBPATH)\\${STUBNAME} $(DISKDIR)\\bin
+disk: $(LIBPATH)\\$(LIBNAME)  df1b2stub tpl2cpp.exe
+	cmd /C "copy $(LIBPATH)/$(LIBNAME) $(DISKDIR)\\lib"
+	cmd /C "copy admodel.h $(DISKDIR)\\include"
+	cmd /C "copy spcomm.h $(DISKDIR)\\include"
+	cmd /C "copy adsplus.h $(DISKDIR)\\include"
+	cmd /C "copy newredef.h $(DISKDIR)\\include"
+	cmd /C "copy s.h $(DISKDIR)\\include"
+	cmd /C "copy tpl2cpp.exe $(DISKDIR)\\bin"
+	cmd /C "copy sed* $(DISKDIR)\\bin"
+	cmd /C "copy $(STUBPATH)\\${STUBNAME} $(DISKDIR)\\bin"
 
 clean:
 	if exist $(LIBPATH) rmdir /S /Q $(LIBPATH)

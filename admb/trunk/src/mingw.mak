@@ -41,9 +41,13 @@ verify:
 	set ADMB_HOME=%CD%\$(DISK)& set PATH=%CD%\$(DISK)\bin;$(PATH)& set& $(MAKE) -C ${DISK} all
 
 clean:
-	$(MAKE) -Clinad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak clean
-	$(MAKE) -Clinad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak  clean 
-	$(MAKE) -Cnh99 CC=${COMP} STUBPATH=${CCVERSION}-${OSVERSION}olp-stub   LIBPATH=${CCVERSION}-${OSVERSION}olp  DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  clean
-	$(MAKE) -Ctools99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  clean
-	$(MAKE) -Cdf1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f  optg32-rh8-laplace.mak  clean
-	$(MAKE) -Cdf1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f  safg32-rh8-laplace.mak clean 
+	if exist linad99\\${CCVERSION}-${OSVERSION}olp rmdir /S /Q linad99\\${CCVERSION}-${OSVERSION}olp
+	if exist linad99\${CCVERSION}-${OSVERSION}slp rmdir /S /Q linad99\${CCVERSION}-${OSVERSION}slp
+	if exist nh99\${CCVERSION}-${OSVERSION}olp rmdir /S /Q nh99\${CCVERSION}-${OSVERSION}olp
+	if exist nh99\${CCVERSION}-${OSVERSION}olp-stub rmdir /S /Q nh99\${CCVERSION}-${OSVERSION}olp-stub
+	if exist tools99\${CCVERSION}-${OSVERSION}olp rmdir /S /Q tools99\${CCVERSION}-${OSVERSION}olp
+	if exist df1b2-separable\${CCVERSION}-${OSVERSION}olp rmdir /S /Q df1b2-separable\${CCVERSION}-${OSVERSION}olp
+	if exist df1b2-separable\${CCVERSION}-${OSVERSION}slp rmdir /S /Q df1b2-separable\${CCVERSION}-${OSVERSION}slp
+	if exist df1b2-separable\tpl2rem.exe del /Q df1b2-separable\tpl2rem.exe
+	if exist nh99\tpl2cpp.exe del /Q nh99\tpl2cpp.exe
+	if exist nh99\lex.yy.c del /Q nh99\lex.yy.c

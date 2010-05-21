@@ -11,12 +11,12 @@ CCVERSION=gcc411
 OSVERSION=fedorar8
 COMP=g++
 COMP64BIT="g++ -m64"
-CXXFLAGS_NH99_OPT =-c -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
-CXXFLAGS_DF_OPT = -fno-for-scope -Wall -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${OPTIONS} ${PVMOPTION} -DOPT_LIB  -fpermissive -DUSE_LAPLACE -c -I. -I../nh99 -I../linad99 -I../tools99  -Dlinux -D__GNUDOS__
-CXXFLAGS_DF_SAF = $(CFLAGS) -fno-for-scope -Wall -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${OPTIONS} ${PVMOPTION} -DSAFE_ALL -fpermissive -DUSE_LAPLACE -c -I. -I../nh99 -I../linad99 -I../tools99 -Dlinux -D __GNUDOS__
-CXXFLAGS_LIN_OPT = -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -c -I. -I../nh99 -I../df1b2-separable -I../tools99
-CXXFLAGS_LIN_SAF= -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DSAFE_ALL -D__GNUDOS__ -Dlinux -fpermissive -c -I. -I../nh99 -I../tools99 -I../df1b2-separable
-CXXFLAGS_TOOLS_OPT = $(CFLAGS) -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-format -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -c -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux -DOPT_LIB
+CXXFLAGS_NH99_OPT =$(CXXFLAGS) -c -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
+CXXFLAGS_DF_OPT =$(CXXFLAGS)  -fno-for-scope -Wall -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${OPTIONS} ${PVMOPTION} -DOPT_LIB  -fpermissive -DUSE_LAPLACE -c -I. -I../nh99 -I../linad99 -I../tools99  -Dlinux -D__GNUDOS__
+CXXFLAGS_DF_SAF = $(CXXFLAGS) -fno-for-scope -Wall -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${OPTIONS} ${PVMOPTION} -DSAFE_ALL -fpermissive -DUSE_LAPLACE -c -I. -I../nh99 -I../linad99 -I../tools99 -Dlinux -D __GNUDOS__
+CXXFLAGS_LIN_OPT = $(CXXFLAGS) -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -c -I. -I../nh99 -I../df1b2-separable -I../tools99
+CXXFLAGS_LIN_SAF= $(CXXFLAGS) -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DSAFE_ALL -D__GNUDOS__ -Dlinux -fpermissive -c -I. -I../nh99 -I../tools99 -I../df1b2-separable
+CXXFLAGS_TOOLS_OPT = $(CXXFLAGS) -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-format -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -c -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux -DOPT_LIB
 
 dist:
 	rm -rf ${DISK}
@@ -57,43 +57,9 @@ dist:
 	#tar -cvf ${DISK}.tar ${DISK}
 	#bzip2 ${DISK}.tar 
 
-dist-64bit:
-	rm -rf ${DISK}
-	- mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals,examples}
-	cp ../scripts/bash/link* ${DISK}/bin
-	cp ../scripts/bash/m* ${DISK}/bin
-	cp ../scripts/bash/admb ${DISK}/bin/admb
+dist-64bit: dist
 	cp ../scripts/bash/adcomp-64bit ${DISK}/bin/adcomp
 	cp ../scripts/bash/adlink-64bit ${DISK}/bin/adlink
-	cp ../scripts/bash/check-expected-results ${DISK}/bin
-	cp ../scripts/bash/Makefile ${DISK}
-	cp -R ../examples/admb ${DISK}/examples/admb
-	cp -R ../examples/admb-re ${DISK}/examples/admb-re
-	rm -rvf ${DISK}/examples/admb/SS3
-	rm -rvf ${DISK}/examples/admb/SS3-Simple
-	- cd ./linad99; mkdir -p ${CCVERSION}-${OSVERSION}olp 
-	- cd ./linad99; mkdir -p ${CCVERSION}-${OSVERSION}slp 
-	- cd ./nh99;    mkdir -p ${CCVERSION}-${OSVERSION}olp 
-	- cd ./nh99;    mkdir -p ${CCVERSION}-${OSVERSION}olp-stub 
-	- cd ./tools99; mkdir -p ${CCVERSION}-${OSVERSION}olp 
-	- cd ./df1b2-separable; mkdir -p ${CCVERSION}-${OSVERSION}slp 
-	- cd ./df1b2-separable; mkdir -p ${CCVERSION}-${OSVERSION}olp 
-	cd ./df1b2-separable; $(MAKE) CC=${COMP64BIT} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f  optg32-rh8-laplace.mak  disk
-	cd ./df1b2-separable; $(MAKE) CC=${COMP64BIT} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f  safg32-rh8-laplace.mak disk 
-	cd ./linad99; $(MAKE)  CC=${COMP64BIT} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	cd ./linad99; $(MAKE)  CC=${COMP64BIT} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak  disk 
-	cd ./nh99;    $(MAKE)  CC=${COMP64BIT} STUBPATH=${CCVERSION}-${OSVERSION}olp-stub   LIBPATH=${CCVERSION}-${OSVERSION}olp  DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
-	cd ./tools99; $(MAKE)  CC=${COMP64BIT} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
-	cp -vf ../LICENSE ${DISK}
-	cp -vf ../README ${DISK}
-	cp -vf ../scripts/bash/mygcc* ${DISK}/bin 
-	#make -C docs/manuals
-	#cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals
-	#cp -vf docs/manuals/admb.pdf ${DISK}/docs/manuals
-	#cp -vf docs/manuals/admb-re.pdf ${DISK}/docs/manuals
-	#- rm -f ${DISK}.tar* 
-	#tar -cvf ${DISK}.tar ${DISK}
-	#bzip2 ${DISK}.tar 
 
 verify:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK} all

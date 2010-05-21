@@ -51,10 +51,10 @@ linux-debug:
 	DEBUG=1 make --directory=src --file=linux.mak
 
 linux-64bit:
-	make --directory=src --file=linux.mak dist-64bit
+	CXXFLAGS=-m64 make --directory=src --file=linux.mak dist-64bit
 
 linux-debug-64bit:
-	DEBUG=1 make --directory=src --file=linux.mak dist-64bit
+	CXXFLAGS=-m64 DEBUG=1 make --directory=src --file=linux.mak dist-64bit
 
 linux-verify:
 	make --directory=src --file=linux.mak verify

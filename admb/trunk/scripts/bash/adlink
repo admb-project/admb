@@ -49,7 +49,15 @@ while getopts "dgrs" A; do
 done
 shift $[OPTIND-1]
 
+if [ "`uname -s`" = "Darwin" ] ; then
+  s=
+fi
+
 model="${1%.*}"
+
+if [ "`uname -s`" = "Darwin" ] ; then
+  s=
+fi
 
 df1b2lib=-ldf1b2stub
 if [[ -z $shared ]]; then out="-o $model"; else out="-o $model.so"; fi

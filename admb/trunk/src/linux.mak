@@ -15,17 +15,6 @@ COMP64BIT="g++ -m64"
 dist:
 	rm -rf ${DISK}
 	- mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals,examples}
-	cp ../scripts/bash/link* ${DISK}/bin
-	cp ../scripts/bash/m* ${DISK}/bin
-	cp ../scripts/bash/admb ${DISK}/bin
-	cp ../scripts/bash/adcomp ${DISK}/bin
-	cp ../scripts/bash/adlink ${DISK}/bin
-	cp ../scripts/bash/check-expected-results ${DISK}/bin
-	cp ../scripts/bash/Makefile ${DISK}
-	cp -R ../examples/admb ${DISK}/examples/admb
-	cp -R ../examples/admb-re ${DISK}/examples/admb-re
-	rm -rvf ${DISK}/examples/admb/SS3
-	rm -rvf ${DISK}/examples/admb/SS3-Simple
 	- cd ./linad99; mkdir -p ${CCVERSION}-${OSVERSION}olp 
 	- cd ./linad99; mkdir -p ${CCVERSION}-${OSVERSION}slp 
 	- cd ./nh99;    mkdir -p ${CCVERSION}-${OSVERSION}olp 
@@ -42,6 +31,17 @@ dist:
 	cp -vf ../LICENSE ${DISK}
 	cp -vf ../README ${DISK}
 	cp -vf ../scripts/bash/mygcc* ${DISK}/bin 
+	cp ../scripts/bash/link* ${DISK}/bin
+	cp ../scripts/bash/m* ${DISK}/bin
+	cp ../scripts/bash/admb ${DISK}/bin
+	cp ../scripts/bash/adcomp ${DISK}/bin
+	cp ../scripts/bash/adlink ${DISK}/bin
+	cp ../scripts/bash/check-expected-results ${DISK}/bin
+	cp ../scripts/bash/Makefile ${DISK}
+	cp -R ../examples/admb ${DISK}/examples/admb
+	cp -R ../examples/admb-re ${DISK}/examples/admb-re
+	rm -rvf ${DISK}/examples/admb/SS3
+	rm -rvf ${DISK}/examples/admb/SS3-Simple
 	#make -C docs/manuals
 	#cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals
 	#cp -vf docs/manuals/admb.pdf ${DISK}/docs/manuals
@@ -89,7 +89,7 @@ dist-64bit:
 	#bzip2 ${DISK}.tar 
 
 verify:
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK} simple
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK} all
 	../scripts/get-outputs.sh ../build/dists/admb_gcc411_fedora8/examples > "../benchmarks-${NOW}.txt"
 
 check-admb2r:

@@ -1,60 +1,30 @@
-CC = gcc
-SHELL=sh
-LL = tlib
+.PHONY: disk
 
 CFLAGS=-O3
 ifdef DEBUG
 CFLAGS=-g
 endif
 
-#FLAGS = -fdiagnostics-show-option ${OPTIONS} -fno-for-scope -Wall -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../df1b2-separable -I../tools99
-FLAGS = $(CFLAGS) ${OPTIONS} -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -c -I. -I../nh99 -I../df1b2-separable -I../tools99
-
-#FLAGS1 = -fdiagnostics-show-option ${OPTIONS} -w ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -O3 -c -I. -I../nh99 -I../df1b2-separable -I../tools99
-FLAGS1 = $(CFLAGS) ${OPTIONS} -w ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -c -I. -I../nh99 -I../df1b2-separable -I../tools99
-
 LIBNAME = libado.a
 SRCDIR =  src
 .SUFFIXES: .obj .cpp
 vpath %.obj $(LIBPATH)
 
-
-.PHONY: t0
-.PHONY: t1
-.PHONY: t2
-.PHONY: t3
-.PHONY: disk
 include objects.lst
+
+all: $(LIBPATH)/$(LIBNAME)  disk
 
 $(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPARSE)
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 
-dvec_io1.obj ddlist.obj gradchk.obj ivect11.obj model49.obj multiindex.obj gradstrc.obj dvect26.obj derch.obj dvsort.obj fvar_fn2.obj lvector.obj ivect6.obj dmat42.obj imat10.obj dfsdmat.obj sgradclc.obj newfmin.obj makesub.obj: %.obj: %.cpp
-	$(CC) $(FLAGS1) $< -o $(LIBPATH)/$*.obj
-
 $(OBJSPARSE): %.obj: %.cpp
-	$(CC) $(FLAGS1) -o $(LIBPATH)/$(@F) $<
+	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/hs_sparse.obj
 
-$(filter-out ddlist.obj gradchk.obj ivect11.obj model49.obj multiindex.obj gradstrc.obj dvect26.obj ivect11.obj lvector.obj ivect6.obj dmat42.obj dfsdmat.obj, $(OBJ0)): %.obj: %.cpp
-	$(CC) $(FLAGS) $< -o $(LIBPATH)/$*.obj
-
-$(filter-out dvec_io1.obj, $(OBJ1)): %.obj: %.cpp
-	$(CC) $(FLAGS) $< -o $(LIBPATH)/$*.obj
-
-$(filter-out derch.obj dvsort.obj fvar_fn2.obj imat10.obj sgradclc.obj newfmin.obj, $(OBJ2)): %.obj: %.cpp
-	$(CC) $(FLAGS) $< -o $(LIBPATH)/$*.obj
-
-$(filter-out makesub.obj, $(OBJ3)): %.obj: %.cpp
-	$(CC) $(FLAGS) $< -o $(LIBPATH)/$*.obj
-
-all: $(LIBPATH)/$(LIBNAME)  disk
-
+%.obj: %.cpp
+	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/$*.obj
 
 disk: $(LIBPATH)/$(LIBNAME) 
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/lib
 	cp fvar.hpp $(DISKDIR)/include
 	cp dfpool.h $(DISKDIR)/include
 	cp trunc.hpp $(DISKDIR)/include
-
-clean:
-	rm -rvf $(LIBPATH)

@@ -73,7 +73,7 @@ tpl2cpp.exe: tpl2cpp.c
 	gcc -Wno-format tpl2cpp.c -o $@
 
 disk: $(LIBPATH)\\$(LIBNAME)  df1b2stub tpl2cpp.exe
-	cmd /C "copy $(LIBPATH)/$(LIBNAME) $(DISKDIR)\\lib"
+	cmd /C "copy $(LIBPATH)\\$(LIBNAME) $(DISKDIR)\\lib"
 	cmd /C "copy admodel.h $(DISKDIR)\\include"
 	cmd /C "copy spcomm.h $(DISKDIR)\\include"
 	cmd /C "copy adsplus.h $(DISKDIR)\\include"

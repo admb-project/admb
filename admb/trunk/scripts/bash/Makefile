@@ -33,8 +33,8 @@ catage:
 	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
 
 chem-eng:
-	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
-	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
 
 finance:
 	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@

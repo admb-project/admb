@@ -67,8 +67,8 @@ truncreg:
 
 vol: n2mvol
 n2mvol:
-	cd examples/admb/vol;admb $(DEBUG_OPTION) $@;./$@
-	cd examples/admb/vol;admb -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb/vol;admb $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb/vol;admb -s $(DEBUG_OPTION) $@;./$@
 
 admb-re:\
 bcb \

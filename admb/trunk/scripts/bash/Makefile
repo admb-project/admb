@@ -95,11 +95,11 @@ weights
 
 bcb:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@
 
 biglog:
 	@cd examples/admb-re/$@;admb -r $@;./$@
-	@cd examples/admb-re/$@;admb -r -s $@;./$@
+	-@cd examples/admb-re/$@;admb -r -s $@;./$@
 
 bvprobit:
 	@#Missing bvprobit.dat
@@ -112,15 +112,15 @@ caest:
 
 gamma:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) liver_$@;./liver_$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) liver_$@;./liver_$@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) liver_$@;./liver_$@
 
 kidney:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 lidar:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 logistic:
 	@#runtime error
@@ -134,15 +134,15 @@ nbmm:
 
 nested4:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 orange:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 orange2:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 orange_cor:
 	@-cd examples/admb-re/$@;admb -r $@;./$@
@@ -150,32 +150,32 @@ orange_cor:
 
 pheno:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 polio:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 sdv:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 skewed: diet diet_sk
 diet:
 	cd examples/admb-re/skewed;admb -r $(DEBUG_OPTION) $@;./diet
-	cd examples/admb-re/skewed;admb -r -s $(DEBUG_OPTION) $@;./diet
+	-cd examples/admb-re/skewed;admb -r -s $(DEBUG_OPTION) $@;./diet
 
 diet_sk:
 	cd examples/admb-re/skewed;admb -r $(DEBUG_OPTION) $@;./diet
-	cd examples/admb-re/skewed;admb -r -s $(DEBUG_OPTION) $@;./diet
+	-cd examples/admb-re/skewed;admb -r -s $(DEBUG_OPTION) $@;./diet
 
 socatt:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 spatial:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
 
 union:
 	@#Runtine errors
@@ -185,7 +185,7 @@ union:
 weights: binomial binomial_w2
 binomial:
 	cd examples/admb-re/weights;admb -r $(DEBUG_OPTION) $@;./$@
-	cd examples/admb-re/weights;admb -r -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/weights;admb -r -s $(DEBUG_OPTION) $@;./$@
 binomial_w2:
 	@-cd examples/admb-re/weights;admb -r $@;./$@
 	@-cd examples/admb-re/weights;admb -r -s $@;./$@

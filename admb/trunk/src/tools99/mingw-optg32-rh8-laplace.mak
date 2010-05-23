@@ -43,7 +43,7 @@ all: $(LIBPATH)\$(LIBNAME)  disk
 
 
 disk: $(LIBPATH)\$(LIBNAME) 
-	cmd /C "copy $(LIBPATH)\$(LIBNAME) $(DISKDIR)\lib"
+	cmd /C "copy $(LIBPATH)\\$(LIBNAME) $(DISKDIR)\lib"
 	cmd /C "copy adoption.hpp $(DISKDIR)\include"
 	cmd /C "copy adstring.hpp $(DISKDIR)\include"
 	cmd /C "copy cifstrem.h $(DISKDIR)\include"

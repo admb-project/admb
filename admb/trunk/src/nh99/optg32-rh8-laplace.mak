@@ -1,19 +1,17 @@
 .PHONY: disk
 
-CFLAGS=-O3
-ifdef DEBUG
-CFLAGS=-g
-endif
+#CFLAGS=-O3
+#ifdef DEBUG
+#CFLAGS=-g
+#endif
 
 ifneq ($(strip $(ADMB_VERSION)),)
-  FLAGS+=-DADMB_VERSION=${ADMB_VERSION}
-  FLAGS1+=-DADMB_VERSION=${ADMB_VERSION}
+  CXXFLAGS+=-DADMB_VERSION=${ADMB_VERSION}
 endif
 
 ifneq ($(strip $(ADMB_REVISION)),)
   ifneq ('$(strip $(ADMB_REVISION))', 'exported')
-    FLAGS+=-DADMB_REVISION=${ADMB_REVISION}
-    FLAGS1+=-DADMB_REVISION=${ADMB_REVISION}
+    CXXFLAGS+=-DADMB_REVISION=${ADMB_REVISION}
   endif
 endif
 
@@ -35,6 +33,8 @@ $(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/$*.obj
+
+all: $(LIBPATH)/$(LIBNAME)  tpl2cpp disk  
 
 df1b2stub:
 	$(CXX) $(CXXFLAGS) -o $(STUBPATH)/df1b2stub.o df1b2stub.cpp

@@ -37,5 +37,5 @@ tpl2rem.c: tpl2rem.lex
 	sed -f sedflex lex.yy.c > tpl2rem.c
 
 tpl2rem: tpl2rem.c
-	gcc tpl2rem.c -o tpl2rem
+	$(CC) tpl2rem.c -o tpl2rem
 	cp sed* $(DISKDIR)/bin

@@ -28,7 +28,14 @@ include objects.lst
 
 all: $(LIBPATH)/$(LIBNAME) tpl2cpp disk  
 
-$(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+
+ifeq "CC" "$(CXX)"
+OBJECTS = $(filter-out dfqromb.obj, $(OBJ0)) $(OBJ1) $(OBJ2) $(OBJ3) 
+else
+OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+endif
+
+$(LIBPATH)/$(LIBNAME) :  $(OBJECTS) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 
 %.obj: %.cpp

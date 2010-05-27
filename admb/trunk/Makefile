@@ -30,7 +30,7 @@ vc-clean:
 	cd src& nmake /f vc.mak clean
 
 sunstudio:
-	make --directory=src --file=sunstudio.mak
+	ARCH_CXXFLAGS=-m32 make --directory=src --file=sunstudio.mak
 
 sunstudio-verify:
 	make --directory=src --file=sunstudio.mak verify

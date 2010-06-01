@@ -123,7 +123,11 @@ const int MAX_NUMBER_ROWS = 6550;
 
    if (sizeof(int)==sizeof(char*))
    {
+#if defined(__SUNPRO_CC) && defined(__x86_64)
+     if ( (long)v < indexmin() * sizeof(double) )
+#else
      if ( (unsigned) v < indexmin() * sizeof(double) )
+#endif
      {
         //cerr << "Pointer wrap in dvector(unsigned int ncl, unsigned int nch)\n";
         //cerr << "pointer = "<< (unsigned int) v <<

@@ -15,8 +15,13 @@ void grad_chk(void)
   }    // current is one past the end so -- it
   else
   {
+#if defined(__SUNPRO_CC) && defined(__x86_64)
+    cout << long(gradient_structure::GRAD_STACK1->ptr)
+       -long(gradient_structure::GRAD_STACK1->ptr_first)
+#else
     cout << int(gradient_structure::GRAD_STACK1->ptr)
        -int(gradient_structure::GRAD_STACK1->ptr_first)
+#endif
      << " offset in gradstack " << endl;
   }
 }

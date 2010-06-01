@@ -3,6 +3,9 @@ SHELL = /bin/bash
 
 DISK=../build/dists/admb_gcc411_fedora8
 PWD=$(shell pwd)
+NOW=$(shell date)
+ADMB_VERSION=$(shell cat ../VERSION)
+ADMB_REVISION=$(shell svnversion ..)
 
 CCVERSION=gcc411
 OSVERSION=fedorar8
@@ -46,9 +49,11 @@ dist:
 
 dist-64bit: dist
 	cp ../scripts/sunstudio/adcomp-64bit ${DISK}/bin/adcomp
+	cp ../scripts/sunstudio/adlink-64bit ${DISK}/bin/adlink
 
 verify:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); cd ${DISK}; make all
+	../scripts/get-outputs.sh ../build/dists/admb_gcc411_fedora8/examples > "../benchmarks-${NOW}-r${ADMB_REVISION}.txt"
 
 check-admb2r:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make --directory ../ADMB2R gcc

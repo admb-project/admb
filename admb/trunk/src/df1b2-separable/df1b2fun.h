@@ -142,8 +142,11 @@ void df1b2_gradcalc1(void);
 
 extern char AD_allocation_error_message[];
 
+#if defined(__SUNPRO_CC) && defined(__x86_64)
+long adptr_diff(void * x, void * y);
+#else
 int adptr_diff(void * x, void * y);
-
+#endif
 
 void read_pass1_1(void);
 void read_pass1_2(void);

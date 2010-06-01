@@ -32,6 +32,9 @@ vc-clean:
 sunstudio:
 	ARCH_CXXFLAGS=-m32 make --directory=src --file=sunstudio.mak
 
+sunstudio-64bit:
+	ARCH_CXXFLAGS=-m64 make --directory=src --file=sunstudio.mak dist-64bit
+
 sunstudio-verify:
 	make --directory=src --file=sunstudio.mak verify
 

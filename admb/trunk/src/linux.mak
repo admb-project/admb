@@ -82,3 +82,5 @@ clean:
 	@rm -f nh99/lex.yy.c
 	@rm -f nh99/gcc411-fedorar8olp-stub/libdf1b2stub.a
 	@rm -f df1b2-separable/lex.yy.c
+	@rm -f nh99/tpl2cpp
+	@rm -f df1b2-separable/tpl2rem

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ADMB_HOME=@prefix@/admb PATH=@prefix@/bin:$PATH admb $*

@@ -1,16 +1,21 @@
 .PHONY: dist verify
 SHELL = /bin/bash
 
-DISK=../build/dists/admb_gcc411_fedora8
+ifndef DISK
+  DISK=../build/dists/admb_gcc411_fedora8
+endif
+
 PWD=$(shell pwd)
 NOW=$(shell date)
 ADMB_VERSION=$(shell cat ../VERSION)
 ADMB_REVISION=$(shell svnversion ..)
 
-CCVERSION=gcc411
-OSVERSION=fedorar8
-COMP=g++
-COMP64BIT="g++ -m64"
+ifndef LIBPATH
+  CCVERSION=gcc411
+  OSVERSION=fedorar8
+  LIBPATH=../build/${CCVERSION}-${OSVERSION}
+endif
+
 #CXXFLAGS_NH99_OPT =-c -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
 
 MYCXX=$(CXXFLAGS) -c -O3 -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
@@ -24,19 +29,19 @@ CXXFLAGS_TOOLS_OPT = $(CXXFLAGS) -fno-for-scope -Wall -Wno-conversion -Wno-non-v
 dist:
 	rm -rf ${DISK}
 	- mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals,examples}
-	- cd ./linad99; mkdir -p ${CCVERSION}-${OSVERSION}olp 
-	- cd ./linad99; mkdir -p ${CCVERSION}-${OSVERSION}slp 
-	- cd ./nh99;    mkdir -p ${CCVERSION}-${OSVERSION}olp 
-	- cd ./nh99;    mkdir -p ${CCVERSION}-${OSVERSION}olp-stub 
-	- cd ./tools99; mkdir -p ${CCVERSION}-${OSVERSION}olp 
-	- cd ./df1b2-separable; mkdir -p ${CCVERSION}-${OSVERSION}slp 
-	- cd ./df1b2-separable; mkdir -p ${CCVERSION}-${OSVERSION}olp 
-	$(MAKE) --directory=df1b2-separable CXXFLAGS="$(CXXFLAGS_DF_OPT)" LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=df1b2-separable CXXFLAGS="$(CXXFLAGS_DF_SAF)" LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
-	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS_LIN_OPT)" LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS_LIN_SAF)" LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
-	$(MAKE) --directory=nh99 CXXFLAGS="$(MYCXX)" STUBPATH=${CCVERSION}-${OSVERSION}olp-stub LIBPATH=${CCVERSION}-${OSVERSION}olp ADMB_VERSION=${ADMB_VERSION} ADMB_REVISION=${ADMB_REVISION} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
-	$(MAKE) --directory=tools99 CXXFLAGS="$(CXXFLAGS_TOOLS_OPT)" LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	- cd ./linad99; mkdir -p ../${LIBPATH}/linad99-olp 
+	- cd ./linad99; mkdir -p ../${LIBPATH}/linad99-slp 
+	- cd ./nh99;    mkdir -p ../${LIBPATH}/nh99-olp 
+	- cd ./nh99;    mkdir -p ../${LIBPATH}/nh99-olp-stub 
+	- cd ./tools99; mkdir -p ../${LIBPATH}/tools99-olp 
+	- cd ./df1b2-separable; mkdir -p ../${LIBPATH}/df1b2-separable-slp 
+	- cd ./df1b2-separable; mkdir -p ../${LIBPATH}/df1b2-separable-olp 
+	$(MAKE) --directory=df1b2-separable CC=gcc CXXFLAGS="$(CXXFLAGS_DF_OPT)" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) --directory=df1b2-separable CXXFLAGS="$(CXXFLAGS_DF_SAF)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
+	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS_LIN_OPT)" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS_LIN_SAF)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
+	$(MAKE) --directory=nh99 CC=gcc CXXFLAGS="$(MYCXX)" STUBPATH=../${LIBPATH}/nh99-olp-stub LIBPATH=../${LIBPATH}/nh99-olp ADMB_VERSION=${ADMB_VERSION} ADMB_REVISION=${ADMB_REVISION} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
+	$(MAKE) --directory=tools99 CXXFLAGS="$(CXXFLAGS_TOOLS_OPT)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE ${DISK}
 	cp -vf ../README ${DISK}
 	cp -vf ../scripts/bash/mygcc* ${DISK}/bin 
@@ -72,13 +77,13 @@ check-admb2r:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ../ADMB2R gcc
 
 clean:
-	rm -rvf linad99/${CCVERSION}-${OSVERSION}olp
-	rm -rvf linad99/${CCVERSION}-${OSVERSION}slp
-	rm -rvf nh99/${CCVERSION}-${OSVERSION}olp
-	rm -rvf nh99/${CCVERSION}-${OSVERSION}olp-stub
-	rm -rvf tools99/${CCVERSION}-${OSVERSION}olp
-	rm -rvf df1b2-separable/${CCVERSION}-${OSVERSION}olp
-	rm -rvf df1b2-separable/${CCVERSION}-${OSVERSION}slp
+	@rm -rvf linad99/${LIBPATH}-olp
+	@rm -rvf linad99/${LIBPATH}-slp
+	@rm -rvf nh99/${LIBPATH}-olp
+	@rm -rvf nh99/${LIBPATH}-olp-stub
+	@rm -rvf tools99/${LIBPATH}olp
+	@rm -rvf df1b2-separable/${LIBPATH}-olp
+	@rm -rvf df1b2-separable/${LIBPATH}-slp
 	@rm -f nh99/lex.yy.c
 	@rm -f nh99/gcc411-fedorar8olp-stub/libdf1b2stub.a
 	@rm -f df1b2-separable/lex.yy.c

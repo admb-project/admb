@@ -1,5 +1,5 @@
 all:
-	autoconf --verbose --output=configure.ac
+	autoconf --verbose --output=../../configure
 
 clean:
 	@rm -vrf autom4te.cache/

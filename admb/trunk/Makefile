@@ -1,6 +1,20 @@
 .PHONY: mingw mingw-verify linux-verify solaris-verify
 
 all: 
+	make --directory=scripts/configure
+	./configure
+	#make --directory=src
+
+verify:
+	make --directory=src verify
+
+install:
+	make --directory=src install
+
+clean:
+	rm -rvf build
+	rm -rvf scripts/configure/autom4te.cache
+	make --directory=src clean
 
 mingw:
 	make --directory=src --file=mingw.mak
@@ -80,6 +94,3 @@ linux-clean: clean
 dist:
 	scripts/srcCopy.sh
 
-clean:
-	@rm -rvf build
-	@rm -rvf configure config.log config.status autom4te.cache admb-config.mak

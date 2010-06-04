@@ -66,6 +66,7 @@ PROCEDURE_SECTION
      a_index=i;
      ad_begin_funnel();
      Integral=adromb(&model_parameters::h,-3.0,3.0,nsteps);
+     //cout << "Integral = " << Integral << endl;
      S(i)=Integral;
    }
    f=0.0;

@@ -3,7 +3,7 @@
 all: 
 	make --directory=scripts/configure
 	./configure
-	#make --directory=src
+	make --directory=src
 
 verify:
 	make --directory=src verify
@@ -14,7 +14,7 @@ install:
 clean:
 	rm -rvf build
 	rm -rvf scripts/configure/autom4te.cache
-	make --directory=src clean
+	#make --directory=src clean
 
 mingw:
 	make --directory=src --file=mingw.mak

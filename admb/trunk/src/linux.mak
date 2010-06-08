@@ -16,32 +16,24 @@ ifndef LIBPATH
   LIBPATH=../build/${CCVERSION}-${OSVERSION}
 endif
 
-#CXXFLAGS_NH99_OPT =-c -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
-
-MYCXX=$(CXXFLAGS) -c -O3 -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
-
-CXXFLAGS_DF_OPT = $(CXXFLAGS) -fno-for-scope -Wall -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${OPTIONS} ${PVMOPTION} -DOPT_LIB  -fpermissive -DUSE_LAPLACE -c -I. -I../nh99 -I../linad99 -I../tools99  -Dlinux -D__GNUDOS__
-CXXFLAGS_DF_SAF = $(CXXFLAGS) -fno-for-scope -Wall -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${OPTIONS} ${PVMOPTION} -DSAFE_ALL -fpermissive -DUSE_LAPLACE -c -I. -I../nh99 -I../linad99 -I../tools99 -Dlinux -D __GNUDOS__
-CXXFLAGS_LIN_OPT = $(CXXFLAGS) -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DOPT_LIB -D__GNUDOS__ -Dlinux -fpermissive -c -I. -I../nh99 -I../df1b2-separable -I../tools99
-CXXFLAGS_LIN_SAF= $(CXXFLAGS) -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -DSAFE_ALL -D__GNUDOS__ -Dlinux -fpermissive -c -I. -I../nh99 -I../tools99 -I../df1b2-separable
-CXXFLAGS_TOOLS_OPT = $(CXXFLAGS) -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-format -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -c -I. -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux -DOPT_LIB
+CXXFLAGS:=$(CXXFLAGS) -c -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux
 
 dist:
 	rm -rf ${DISK}
-	- mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals,examples}
-	- cd ./linad99; mkdir -p ../${LIBPATH}/linad99-olp 
-	- cd ./linad99; mkdir -p ../${LIBPATH}/linad99-slp 
-	- cd ./nh99;    mkdir -p ../${LIBPATH}/nh99-olp 
-	- cd ./nh99;    mkdir -p ../${LIBPATH}/nh99-olp-stub 
-	- cd ./tools99; mkdir -p ../${LIBPATH}/tools99-olp 
-	- cd ./df1b2-separable; mkdir -p ../${LIBPATH}/df1b2-separable-slp 
-	- cd ./df1b2-separable; mkdir -p ../${LIBPATH}/df1b2-separable-olp 
-	$(MAKE) --directory=df1b2-separable CC=gcc CXXFLAGS="$(CXXFLAGS_DF_OPT)" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=df1b2-separable CXXFLAGS="$(CXXFLAGS_DF_SAF)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
-	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS_LIN_OPT)" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS_LIN_SAF)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
-	$(MAKE) --directory=nh99 CC=gcc CXXFLAGS="$(MYCXX)" STUBPATH=../${LIBPATH}/nh99-olp-stub LIBPATH=../${LIBPATH}/nh99-olp ADMB_VERSION=${ADMB_VERSION} ADMB_REVISION=${ADMB_REVISION} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
-	$(MAKE) --directory=tools99 CXXFLAGS="$(CXXFLAGS_TOOLS_OPT)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals,examples}
+	mkdir -p ${LIBPATH}/linad99-olp 
+	mkdir -p ${LIBPATH}/linad99-slp 
+	mkdir -p ${LIBPATH}/nh99-olp 
+	mkdir -p ${LIBPATH}/nh99-olp-stub 
+	mkdir -p ${LIBPATH}/tools99-olp 
+	mkdir -p ${LIBPATH}/df1b2-separable-slp 
+	mkdir -p ${LIBPATH}/df1b2-separable-olp 
+	$(MAKE) --directory=df1b2-separable CC=gcc CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) --directory=df1b2-separable CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
+	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
+	$(MAKE) --directory=nh99 CC=gcc CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" STUBPATH=../${LIBPATH}/nh99-olp-stub LIBPATH=../${LIBPATH}/nh99-olp ADMB_VERSION=${ADMB_VERSION} ADMB_REVISION=${ADMB_REVISION} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
+	$(MAKE) --directory=tools99 CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE ${DISK}
 	cp -vf ../README ${DISK}
 	cp -vf ../scripts/bash/mygcc* ${DISK}/bin 

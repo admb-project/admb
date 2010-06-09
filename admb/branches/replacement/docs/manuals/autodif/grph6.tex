@@ -13,10 +13,12 @@
 \put {\eighteenrm A} at -2.0 2.0
 %  \plotheading{Figure \number\mychapno.1}
 % \multiput {.} at  "points10.red"
-   \setcolor\cmykRed  % turn on color 
+   %xx \setcolor\cmykRed  % turn on color 
+   \color{red}
  \multiput {.} at  "pointsn.red"
-   \setcolor\cmykBlack  % turn on color 
- \multiput {\eighteenrm .} at  "spirala."
+  % \setcolor\cmykBlack  % turn on color 
+  \color{black}
+ \multiput {\eighteenrm .} at  "spirala.txt"
 % \circulararc 360 degrees from  2.15  0
 %    center at 0 0 
 \endpicture
@@ -29,10 +31,12 @@
 \put {\eighteenrm B} at -2.0 2.0
 %  \plotheading{Figure \number\mychapno.1}
 % \multiput {.} at  "points10.grn"
-   \setcolor\cmykGreen  % turn on color 
+   %\setcolor\cmykGreen  % turn on color 
+   \color{green}
  \multiput {.} at  "pointsn.grn"
-   \setcolor\cmykBlack  % turn on color 
- \multiput {\eighteenrm .} at  "spiralb."
+   % \setcolor\cmykBlack  % turn on color 
+  \color{black}
+ \multiput {\eighteenrm .} at  "spiralb.txt"
 % \circulararc 360 degrees from  2.15  0
 %    center at 0 0 
 \endpicture
@@ -49,10 +53,12 @@
 \put {\eighteenrm C} at -2.0 2.0
 %  \plotheading{Figure \number\mychapno.1}
 % \multiput {.} at  "points10.blu"
-   \setcolor\cmykMidnightBlue  % turn on color 
+  % \setcolor\cmykMidnightBlue  % turn on color 
+  \color{blue}
  \multiput {.} at  "pointsn.blu"
-   \setcolor\cmykBlack  % turn on color 
- \multiput {\eighteenrm .} at  "spiralc."
+   % \setcolor\cmykBlack  % turn on color 
+  \color{black}
+ \multiput {\eighteenrm .} at  "spiralc.txt"
 % \circulararc 360 degrees from  2.15  0
 %    center at 0 0 
 \endpicture
@@ -62,16 +68,19 @@
 \beginpicture
   \setcoordinatesystem units <.5in,.5in>
   \setplotarea x from -2.2 to 2.2, y from -2.1 to 2.1 
+   \color{black}
 \put {\eighteenrm D} at -2.0 2.0
 %  \plotheading{Figure \number\mychapno.1}
+ \color{black}
  \multiput {\rm.} at  "pointsn.gra"
 % \multiput {\rm.} at  "points2.gra"
- \multiput {\eighteenrm .} at  "spiraln."
+ \multiput {\eighteenrm .} at  "spiraln.txt"
 % \circulararc 360 degrees from  2.15  0
 %    center at 0 0 
 \endpicture
 \hfill
 }
 \medskip
-{\tenrm\noindent Figure \number\mychapno.2 }  
+{%\tenrm\noindent Figure \number\mychapno.2 
+}  
 } %\vbox

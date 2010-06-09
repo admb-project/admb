@@ -25,13 +25,6 @@ all:
 	IF NOT EXIST tools99\$(CCVERSION)-$(OSVERSION)slp mkdir tools99\$(CCVERSION)-$(OSVERSION)slp 
 	IF NOT EXIST df1b2-separable\$(CCVERSION)-$(OSVERSION)slp mkdir df1b2-separable\$(CCVERSION)-$(OSVERSION)slp 
 	IF NOT EXIST df1b2-separable\$(CCVERSION)-$(OSVERSION)olp mkdir df1b2-separable\$(CCVERSION)-$(OSVERSION)olp 
-	copy ..\scripts\vc\*.bat $(DISK)\bin
-	copy ..\scripts\mingw\admb.bat $(DISK)\bin
-	copy ..\LICENSE $(DISK)
-	copy ..\README $(DISK)
-	mkdir $(DISK)\examples
-	xcopy ..\examples $(DISK)\examples /S
-	copy ..\scripts\vc\Makefile $(DISK)\examples
 	cd df1b2-separable\$(CCVERSION)-$(OSVERSION)olp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\optmsc8-laplace.mak all
 	cd df1b2-separable\$(CCVERSION)-$(OSVERSION)slp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\safmsc8-laplace.mak all
 	cd linad99\$(CCVERSION)-$(OSVERSION)olp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\optmsc8-laplace.mak all
@@ -40,12 +33,14 @@ all:
 	cd nh99\$(CCVERSION)-$(OSVERSION)slp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\safmsc8-laplace.mak all
 	cd tools99\$(CCVERSION)-$(OSVERSION)olp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\optmsc8-laplace.mak all
 	cd tools99\$(CCVERSION)-$(OSVERSION)slp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\safmsc8-laplace.mak all
-
-install:
-	IF EXIST c:%HOMEPATH%\Desktop\ADMB rmdir /S /Q c:%HOMEPATH%\Desktop\ADMB
-	mkdir c:%HOMEPATH%\Desktop\ADMB
-	xcopy ..\build\* c:%HOMEPATH%\Desktop\ADMB /S /Y
-	cscript ..\scripts\create-admb-shortcut.vbs
+	copy ..\scripts\vc\*.bat $(DISK)\bin
+	copy ..\scripts\mingw\admb.bat $(DISK)\bin
+	copy ..\LICENSE $(DISK)
+	copy ..\README $(DISK)
+	mkdir $(DISK)\examples
+	xcopy ..\examples $(DISK)\examples /S
+	copy ..\scripts\vc\Makefile $(DISK)\examples
+	cd $(DISK)& cscript ..\scripts\create-admb-shortcut.vbs
 
 verify:
 	set ADMB_HOME=$(MAKEDIR)\$(DISK)

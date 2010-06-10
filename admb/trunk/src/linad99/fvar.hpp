@@ -6868,13 +6868,13 @@ public:
  spdll_exception(int _e=0){e=_e;}
 };
 
-class random_number_generator
+class random_number_generator /// Random number generator
 {
- unsigned long *mt; /* the array for the state vector  */
- int mti; /* mti==N+1 means mt[N] is not initialized */
+ unsigned long *mt; ///< the array for the state vector
+ int mti; ///< mti==N+1 means mt[N] is not initialized
 public:
- double better_rand(void);
  random_number_generator(int seed);
+ double better_rand(void);
  void reinitialize(int seed);
 };
 

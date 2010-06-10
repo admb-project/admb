@@ -6,7 +6,7 @@
  */
 #include <fvar.hpp>
 
-
+/*
 #define IM1 2147483563
 #define IM2 2147483399
 #define AM (1.0/IM1)
@@ -21,14 +21,14 @@
 #define NDIV (1+IMM1/NTAB)
 #define EPS 1.2e-7
 #define RNMX (1.0-EPS)
-/** Random number generator.
+ * Random number generator.
 
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 7
 
     \deprecated Scheduled for replacement by 2010.
-*/
+
 double better_rand(long int &pidum)
 {
   long int * idum=&pidum;
@@ -78,8 +78,6 @@ double better_rand(long int &pidum)
 #undef NDIV
 #undef EPS
 #undef RNMX
-/* (C) Copr. 1986-92 Numerical Recipes Software 888888888888. */
-/*
 double better_rand(long int& idum)
 {
    long int im1=2147483563;
@@ -144,3 +142,9 @@ double better_rand(long int& idum)
 }
 */
  
+double better_rand(long int& idum)
+{
+  random_number_generator rng(idum);
+  double rr = ((random_number_generator&) rng).better_rand();
+  return rr;
+}

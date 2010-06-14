@@ -20,6 +20,7 @@ static int maxit=50;
 */
 void gauss_hermite(BOR_CONST dvector& _x,BOR_CONST dvector& _w)
 {
+cout << "gauss_hermite" << endl;
   dvector x=(dvector&) _x;
   dvector w=(dvector&) _w;
   int ximin=x.indexmin();

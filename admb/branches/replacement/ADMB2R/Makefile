@@ -7,9 +7,9 @@ bcc:
 	cd ..
 
 gcc:
-	make --directory Example1
+	-make --directory Example1
 	@# make --directory Example2
-	make --directory Example-GM
+	-make --directory Example-GM
 
 vc:
 	cd Example1 && nmake vc

@@ -76,7 +76,12 @@ int ad_dstar::n=0;
 
 void ad_read_pass2(void);
 // should inline this
+#if defined(__SUNPRO_CC) && defined(__x86_64)
+long adptr_diff(void * x, void * y) { return long(x)-long(y); }
+#else
 int adptr_diff(void * x, void * y) { return int(x)-int(y); }
+#endif
+
 #if defined(__CHECK_MEMORY__)
   int sanity_flag=0;
 #endif

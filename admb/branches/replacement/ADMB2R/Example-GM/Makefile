@@ -16,6 +16,6 @@ bcc:
 	gm_menhaden.exe
 
 vc:
-	cp -vf ../admb2r.cpp .
+	copy ..\admb2r.cpp .
 	admb -s gm_menhaden
 	gm_menhaden.exe

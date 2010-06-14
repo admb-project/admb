@@ -36,7 +36,7 @@ while getopts "drs" A; do
   case $A in
     d) dll=-DBUILDING_DLL;;
     r) ;;
-    s) g=-g; opt=;;
+    s) g=-g; opt=-DSAFE_ALL;;
   esac
 done
 shift $[OPTIND-1]

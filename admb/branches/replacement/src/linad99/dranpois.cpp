@@ -7,6 +7,7 @@
 #include "fvar.hpp"
 
 
+/*
 #define IM1 2147483563
 #define IM2 2147483399
 #define AM (1.0/IM1)
@@ -21,21 +22,13 @@
 #define NDIV (1+IMM1/NTAB)
 #define EPS 1.2e-7
 #define RNMX (1.0-EPS)
-
-
+*/
           
-  
 #define PI 3.141592654
-/* Poisson random deviates.
+/** Poisson random deviates.
    \param xm Mean of Poisson distribution
    \param rng Instance of class random_number_generator.
    \return Integer-valued double drawn from the Poisson distribution with given mean.
-
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 7
-
-    \deprecated Scheduled for replacement by 2010.
 */
 double randpoisson(double xm, BOR_CONST random_number_generator& rng)
 {
@@ -78,6 +71,13 @@ double randpoisson(double xm, BOR_CONST random_number_generator& rng)
 }
 #undef PI
 
+/**
+  \ingroup RNG
+  Fill vector with Poisson pseudorandom numbers.
+  \param lambda Expected value of Poission distribution.
+
+  \returns dvector containing Poisson deviates
+*/
   void dvector::fill_randpoisson(double lambda,BOR_CONST random_number_generator& rng)
   {
     for (int i=indexmin(); i<=indexmax(); i++)

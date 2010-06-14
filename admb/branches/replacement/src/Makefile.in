@@ -1,0 +1,12 @@
+all:
+	CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ make --file=@makefile@
+
+verify:
+	DISK=@disk@ make --file=@makefile@ verify
+
+install:
+	cp -R @disk@ @prefix@/admb
+	ln -sf scripts/bash/admb-bin @prefix@/bin/admb
+
+clean:
+	make --file=@makefile@ clean

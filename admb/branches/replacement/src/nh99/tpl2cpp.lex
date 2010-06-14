@@ -1,6 +1,13 @@
 %option noyywrap
 
 %{
+  /**
+   * $Id$
+   *
+   * Author: David Fournier
+   * Copyright (c) 2008, 2009, 2010 Regents of the University of California
+   */
+
   #define   MAX_TMP_STRING  501
   #define   MAX_USER_CLASSES  501
   #define   MAX_USER_CLASSNAME_LENGTH  251
@@ -66,7 +73,7 @@
   char arglist1[4000];
   char *  arglist_ptr;
   char arglist[4000];
-  char uuu_xxx[80]={"Copyright (c) 2008 Regents of the University of California"};
+  char uuu_xxx[80]={"Copyright (c) 2008, 2009, 2010 Regents of the University of California"};
   FILE * fdat=NULL;
   FILE * htop=NULL;
   FILE * fall=NULL;
@@ -3697,6 +3704,11 @@ char * after_part(char * d, char * s, char c)
       d[i-ipos]=s[i];
     }
     d[strlen(s)-ipos]='\0';
+    if (strlen(s)-ipos-1 >= 0)
+    {
+      if (d[strlen(s)-ipos-1] == 13)   // crtl M
+        d[strlen(s)-ipos-1] = '\0';
+    }
   }
   return d;
 }
@@ -3727,6 +3739,11 @@ char * strict_after_part(char * d, char * s, char c)
       d[i-ipos-1]=s[i];
     }
     d[strlen(s)-ipos-1]='\0';
+    if (strlen(s)-ipos-1 >= 0)
+    {
+      if (d[strlen(s)-ipos-1] == 13)   // crtl M
+        d[strlen(s)-ipos-1] = '\0';
+    }
   }
   return d;
 }
@@ -3756,6 +3773,11 @@ char * after_partb(char * d, char * s, char c)
       d[i-ipos]=s[i];
     }
     d[strlen(s)-ipos]='\0';
+    if (strlen(s)-ipos-1 >= 0)
+    {
+      if (d[strlen(s)-ipos-1] == 13)   // crtl M
+        d[strlen(s)-ipos-1] = '\0';
+    }
   }
   else
   {

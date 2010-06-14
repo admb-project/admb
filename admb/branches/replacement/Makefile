@@ -1,15 +1,29 @@
-.PHONY: dist df32testigam
-
-ADMB_VERSION=9.0.x
-export ADMB_VERSION
+.PHONY: mingw mingw-verify linux-verify solaris-verify
 
 all: 
+	make --directory=scripts/configure
+	./configure
+	make --directory=src
+
+verify:
+	make --directory=src verify
+
+install:
+	make --directory=src install
+
+clean:
+	rm -rvf build
+	rm -rvf scripts/configure/autom4te.cache
+	#make --directory=src clean
 
 mingw:
 	make --directory=src --file=mingw.mak
 
 mingw-clean:
 	make --directory=src --file=mingw.mak clean
+
+mingw-verify:
+	make --directory=src --file=mingw.mak verify
 
 bcc:
 	make --directory=src --file=bcc.mak
@@ -18,13 +32,22 @@ bcc-clean:
 	make --directory=src --file=bcc.mak clean
 
 vc:
-	make --directory=src --file=vc.mak
+	cd src& nmake /f vc.mak
+
+vc-verify:
+	cd src& nmake /f vc.mak verify
+
+vc-install:
+	cd src& nmake /f vc.mak install
 
 vc-clean:
-	make --directory=src --file=vc.mak clean
+	cd src& nmake /f vc.mak clean
 
 sunstudio:
-	make --directory=src --file=sunstudio.mak
+	ARCH_CXXFLAGS=-m32 make --directory=src --file=sunstudio.mak
+
+sunstudio-64bit:
+	ARCH_CXXFLAGS=-m64 make --directory=src --file=sunstudio.mak dist-64bit
 
 sunstudio-verify:
 	make --directory=src --file=sunstudio.mak verify
@@ -32,27 +55,41 @@ sunstudio-verify:
 sunstudio-check-admb2r:
 	make --directory=src --file=sunstudio.mak check-admb2r
 
+icc:
+	make --directory=src --file=icc.mak
+
+icc-verify:
+	make --directory=src --file=icc.mak verify
+
 linux:
 	make --directory=src --file=linux.mak
 
 linux-debug:
 	DEBUG=1 make --directory=src --file=linux.mak
 
+linux-64bit:
+	CXXFLAGS=-m64 make --directory=src --file=linux.mak dist-64bit
+
+linux-debug-64bit:
+	CXXFLAGS=-m64 DEBUG=1 make --directory=src --file=linux.mak dist-64bit
+
 linux-verify:
 	make --directory=src --file=linux.mak verify
 
+linux-verify-64bit:
+	make --directory=src --file=linux.mak verify
+
 linux-verify-debug:
+	DEBUG=1 make --directory=src --file=linux.mak verify
+
 linux-verify-debug-64bit:
 	DEBUG=1 make --directory=src --file=linux.mak verify
 
 linux-check-admb2r:
 	make --directory=src --file=linux.mak check-admb2r
 
-linux-64bit:
-	make --directory=src --file=linux.mak dist-64bit
-
-linux-debug-64bit:
-	DEBUG=1 make --directory=src --file=linux.mak dist-64bit
+linux-clean: clean
+	make --directory=src --file=linux.mak clean
 
 dist:
 	scripts/srcCopy.sh
@@ -60,6 +97,3 @@ dist:
 df32testigam:
 	g++ tests/df32testigam.cpp -Wno-deprecated -DSAFE_ALL -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -Ibuild/dists/admb_gcc411_fedora8/include -Lbuild/dists/admb_gcc411_fedora8/lib -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -ldf1b2s -o df32testigam
 
-clean:
-	@rm -rvf build
-	@make --directory=src --file=linux.mak clean

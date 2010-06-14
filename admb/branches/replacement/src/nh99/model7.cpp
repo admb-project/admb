@@ -127,6 +127,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 #endif
   adstring workdir;
   ad_getcd(workdir);
+#define STR(x) STR2(x)
+#define STR2(x) #x
   if (_argc>1)
   {
     if (option_match(_argc,_argv,"-?")>-1
@@ -154,12 +156,19 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       int n=i-1;
       adprogram_name=adprogram_name(1,n);
 
-#define STRINGIFY(x) #x
-#define TOSTRING(x) STRINGIFY(x) 
-      (*ad_printf)( " AD Model Builder version " TOSTRING(ADMB_VERSION)
-                   "\nCopyright (c) 2008, 2009 Regents of the University of California\n");
-      (*ad_printf)(" USAGE--%s options\n",(char*)(adprogram_name));
-      (*ad_printf)(" where an option consists of -option_tag followed by arguments if necessary\n");
+      (*ad_printf)("ADMB");
+#ifdef ADMB_VERSION
+      (*ad_printf)(" %s", STR(ADMB_VERSION));
+#endif
+#ifdef ADMB_REVISION
+      (*ad_printf)(" (Revision: %s)", STR(ADMB_REVISION));
+#endif
+      (*ad_printf)("\n");
+      (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California\n");
+      (*ad_printf)("\n");
+
+      (*ad_printf)( " USAGE--%s options\n",(char*)(adprogram_name));
+      (*ad_printf)( " where an option consists of -option_tag followed by arguments if necessary\n");
       (*ad_printf)( " -ainp NAME      change default ascii input parameter file name to NAME\n");
       (*ad_printf)( " -binp NAME      change default binary input parameter file name to NAME\n");
       (*ad_printf)( " -est            only do the parameter estimation\n");
@@ -235,12 +244,21 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     }
     else if (option_match(_argc,_argv,"-info") > -1)
     {
-      (*ad_printf)("ADMB version 9.0.x (2009-xx-xx)\n");
-      (*ad_printf)("Copyright (C) 2008, 2009\n");
+      (*ad_printf)("ADMB");
+#ifdef ADMB_VERSION
+      (*ad_printf)(" %s", STR(ADMB_VERSION));
+#endif
+#ifdef ADMB_REVISION
+      (*ad_printf)(" (Revision: %s)", STR(ADMB_REVISION));
+#endif
       (*ad_printf)("\n");
+
+      (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California\n");
+      (*ad_printf)("\n");
+
       (*ad_printf)("ADMB is free software and comes with ABSOLUTELY NO WARRANTY.\n");
       (*ad_printf)("You are welcome to redistribute it under certain conditions.\n");
-      (*ad_printf)("Use the –license command line option for distribution details.\n");
+      //(*ad_printf)("Use the –license command line option for distribution details.\n");
       (*ad_printf)("\n");
       (*ad_printf)("AD Model Builder, or ADMB, was developed by David Fournier of Otter\n");
       (*ad_printf)("Research Ltd, Sidney, B.C., Canada. In 2007, scientists from the University\n");

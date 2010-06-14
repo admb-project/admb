@@ -42,7 +42,7 @@ while getopts "dgrs" A; do
     d) dll=-DBUILDING_DLL;;
     g) g=-g;;
     r) ;;
-    s) opt=;;
+    s) opt=-DSAFE_ALL;;
   esac
 done
 shift $[OPTIND-1]

@@ -65,7 +65,11 @@ dlist::dlist(void)
    (gradient_structure::MAX_DLINKS+1));
   //cout << (int) (ddlist_space) << endl;
   //cout << ((int) (ddlist_space))%8 << endl;
+#if defined(__SUNPRO_CC) && defined(__x86_64)
+  long adjust=(8 - ((long)(ddlist_space))%8)%8;
+#else
   int adjust=(8- ((int) (ddlist_space))%8)%8;
+#endif
   
   ddlist_spacea=ddlist_space+adjust;
   

@@ -1,7 +1,11 @@
+
 DISK=../build/dists/admb_b502_win32
 PWD=$(shell pwd)
 WINADMB_HOME=$(shell cygpath --windows ${PWD}/${DISK})
 BORLAND_HOME=$(shell cygpath --unix $(BCC55_HOME))
+
+ADMB_VERSION=9.0.x
+export ADMB_VERSION
 
 CCVERSION=bor502
 OSVERSION=win32
@@ -9,8 +13,11 @@ COMP=bcc32
 
 dist:
 	rm -rf ${DISK}
-	- mkdir -p ${DISK}
-	- cd ${DISK}; mkdir bin; mkdir lib; mkdir include; mkdir -p examples
+	- mkdir.exe -p ${DISK}
+	- mkdir.exe -p ${DISK}/bin
+	- mkdir.exe -p ${DISK}/lib
+	- mkdir.exe -p ${DISK}/include
+	- mkdir.exe -p ${DISK}/examples
 	cp ../scripts/borland/*.bat ${DISK}/bin
 	cp ../scripts/mingw/admb.bat ${DISK}/bin
 	cp ../LICENSE ${DISK}
@@ -18,12 +25,12 @@ dist:
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 	cp ../scripts/borland/Makefile ${DISK}/examples
-	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}olp 
-	- cd ./linad99; mkdir ${CCVERSION}-${OSVERSION}slp 
-	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp 
-	- cd ./nh99;    mkdir ${CCVERSION}-${OSVERSION}olp-stub 
-	- cd ./tools99; mkdir ${CCVERSION}-${OSVERSION}olp 
-	- cd ./df1b2-separable;mkdir  ${CCVERSION}-${OSVERSION}olp 
+	- mkdir.exe -p  linad99/${CCVERSION}-${OSVERSION}olp 
+	- cd ./linad99 & mkdir.exe -p  linad99/${CCVERSION}-${OSVERSION}slp 
+	- cd ./nh99 & mkdir.exe -p  nh99/${CCVERSION}-${OSVERSION}olp 
+	- cd ./nh99 & mkdir.exe -p  nh99/${CCVERSION}-${OSVERSION}olp-stub 
+	- cd ./tools99 & mkdir.exe -p  tools99/${CCVERSION}-${OSVERSION}olp 
+	- cd ./df1b2-separable & mkdir.exe -p   ${CCVERSION}-${OSVERSION}olp 
 	cd ./nh99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp STUBPATH=${CCVERSION}-${OSVERSION}olp-stub DISKDIR=../${DISK} -f optbor32-laplace.mak all
 	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optbor32-laplace.mak all
 	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optbor32-laplace.mak all

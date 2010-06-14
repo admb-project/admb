@@ -1,81 +1,44 @@
-CC = cl
-LL = tlib
-STUBPATH = ${LIBPATH}-stub
-STUBLIBNAME = df1b2stubo.lib
-FLAGS = /nologo /W4 /wd4258 /wd4700 /wd4288 /wd4018 /wd4505 /wd4239 /wd4512 /wd4511 /wd4100 /wd4996 /wd4127 /wd4190 /wd4706 /wd4701 /wd4068 /wd4244 /wd4101 /wd4189 /wd4717 ${OPTIONS} ${PVMOPTION} /GF /EHsc -DUSE_LAPLACE -DWIN32 /c -I. -I../df1b2-separable -I../linad99 -I../tools99 -D__MSVC32__=8  -DOPT_LIB /Ox -DADMB_VERSION=${ADMB_VERSION}
-LIBNAME = admod32.lib 
-LIBRARIAN = tlib
-SRCDIR =  src
-LIBDIR =  lib
-BINDIR =  bin
-INCLUDEDIR = include 
-LIBPATH = msc8olp
-
 .SUFFIXES: .obj .cpp
-vpath %.obj $(LIBPATH)$
 
-include objects.lst
+CC = cl
+
+STUBPATH = $(LIBPATH)-stub
+STUBLIBNAME = df1b2stubo.lib
+FLAGS = /nologo /W4 /wd4258 /wd4700 /wd4288 /wd4018 /wd4505 /wd4239 /wd4512 /wd4511 /wd4100 /wd4996 /wd4127 /wd4190 /wd4706 /wd4701 /wd4068 /wd4244 /wd4101 /wd4189 /wd4717 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I.. /I../../df1b2-separable /I../../linad99 /I../../tools99 /D__MSVC32__=8  /DOPT_LIB /Ox 
+
+#/DADMB_VERSION=$(ADMB_VERSION)
+
+LIBNAME = admod32.lib 
+
+include ..\objects.lst
 
 OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
-$(LIBPATH)/$(LIBNAME) :  fvar.hpp $(OBJECTS)
-	- rm $(LIBPATH)/t.rsp ; \
-	rm $(LIBPATH)/$(LIBNAME)   ; \
-	echo /OUT:$(LIBNAME)  > $(LIBPATH)/t.rsp ; \
-	cd $(LIBPATH) ; \
-	cat t.rsp  ; \
-	ls $(filter-out pvmvar1.obj para3.obj, $(OBJECTS)) >> t.rsp  ; \
-	lib /NOLOGO @t.rsp ; \
-	cd ..
+
+$(LIBNAME): $(OBJECTS)
+	lib /NOLOGO /OUT:$(LIBNAME) *.obj
 	
-$(OBJGUI): %.obj: %.cpp
-	$(CC) $(FLAGS)  $<
-	mv $*.obj $(LIBPATH)       
-
-$(OBJ0): %.obj: %.cpp
-	$(CC) $(FLAGS)  $<
-	mv $*.obj $(LIBPATH)       
-
-$(OBJ1): %.obj: %.cpp
-	$(CC) $(FLAGS)  $<
-	mv $*.obj $(LIBPATH)       
-
-$(OBJ2): %.obj: %.cpp
+{..}.cpp.obj:
 	$(CC) $(FLAGS) $<
-	mv $*.obj $(LIBPATH)       
 
-$(OBJSPLUS): %.obj: %.cpp
-	$(CC) $(FLAGS) $<
-	mv $*.obj $(LIBPATH)       
+all: $(LIBNAME) $(STUBLIBNAME) disk
 
-$(OBJ3): %.obj: %.cpp
-	$(CC) $(FLAGS) $<
-	mv $*.obj $(LIBPATH)       
-fvar.hpp:
+$(STUBLIBNAME): ..\df1b2stub.cpp
+	$(CC) $(FLAGS) ..\df1b2stub.cpp
+	lib /OUT:$(STUBLIBNAME) /NOLOGO df1b2stub.obj
 
-all: $(LIBPATH)/$(LIBNAME) stub disk
-
-stub: df1b2stub.cpp
-	$(CC) $(FLAGS) df1b2stub.cpp
-	mv df1b2stub.obj $(STUBPATH)       
-	echo /OUT:$(STUBLIBNAME)  > $(STUBPATH)/t.rsp ; \
-	cd $(STUBPATH) ; \
-	cat t.rsp  ; \
-	ls *.obj >> t.rsp  ; \
-	lib /NOLOGO @t.rsp 
-
-disk: 
-	cp admodel.h $(DISKDIR)/$(INCLUDEDIR)
-	cp adsplus.h $(DISKDIR)/$(INCLUDEDIR)
-	cp spcomm.h $(DISKDIR)/$(INCLUDEDIR)
-	cp s.h $(DISKDIR)/$(INCLUDEDIR)
-	cp newredef.h $(DISKDIR)/$(INCLUDEDIR)
+tpl2cpp-winflex.c: tpl2cpp.lex 
 	flex -w tpl2cpp.lex
-	sed -f sedflex lex.yy.c > tpl2cpp.c
-	$(CC) /nologo /wd4996 tpl2cpp.c
-	cp tpl2cpp.exe $(DISKDIR)/$(BINDIR)/
-	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
-	cp $(STUBPATH)/$(STUBLIBNAME) $(DISKDIR)/$(LIBDIR) 
+	sed -f sedflex lex.yy.c > tpl2cpp-winflex.c
 
-clean:
-	- cd $(LIBPATH) ; rm *.obj ; rm *.lib ; rm *.o ; rm *.a
-	- cd $(STUBPATH) ; rm *.obj ; rm *.lib ; rm *.o ; rm *.a
+tpl2cpp:
+	cl /nologo /wd4996 ..\tpl2cpp-winflex.c
+
+disk: tpl2cpp
+	copy ..\admodel.h $(DISKDIR)\include
+	copy ..\adsplus.h $(DISKDIR)\include
+	copy ..\spcomm.h $(DISKDIR)\include
+	copy ..\s.h $(DISKDIR)\include
+	copy ..\newredef.h $(DISKDIR)\include
+	copy $(LIBNAME) $(DISKDIR)\lib
+	copy $(STUBLIBNAME) $(DISKDIR)\lib
+	copy tpl2cpp-winflex.exe $(DISKDIR)\bin\tpl2cpp.exe

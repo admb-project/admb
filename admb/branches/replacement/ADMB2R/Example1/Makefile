@@ -16,6 +16,6 @@ bcc:
 	testadmb2r.exe
 
 vc:
-	cp -vf ../admb2r.cpp .
+	copy ..\admb2r.cpp .
 	admb -s testadmb2r
 	testadmb2r.exe

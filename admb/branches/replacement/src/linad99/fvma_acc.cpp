@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -12,23 +12,28 @@
       #ifdef SAFE_ARRAYS
         if (i<rowmin())
         {
-          cerr << "array bound exceeded -- index too low in dvar_matrix::operator(int,int)";
-          ad_exit(1);
+          cerr << "array bound exceeded -- index too low in dvar_matrix::operator(int,int)"
+               << "value was " << i << endl;
+      
+          ad_exit(21);
         }
         if (i>rowmax())
         {
-          cerr << "array bound exceeded -- index too high in dvar_matrix::operator(int,int)";
-          ad_exit(1);
+          cerr << "array bound exceeded -- index too high in dvar_matrix::operator(int,int)"
+               << "value was " << i << endl;
+          ad_exit(22);
         }
         if (j<elem(i).indexmin())
         {
-          cerr << "array bound exceeded -- index too low in dvar_matrix::operator(int,int)";
-          ad_exit(1);
+          cerr << "array bound exceeded -- index too low in dvar_matrix::operator(int,int)"
+               << "value was " << j << endl;
+          ad_exit(23);
         }
         if (j>elem(i).indexmax())
         {
-          cerr << "array bound exceeded -- index too high in dvar_matrix::operator(int,int)";
-          ad_exit(1);
+          cerr << "array bound exceeded -- index too high in dvar_matrix::operator(int,int)"
+               << "value was " << j << endl;
+          ad_exit(24);
         }
       #endif
       return ( m[i].va+j );
@@ -59,23 +64,27 @@
       #ifdef SAFE_ARRAYS
         if (i<rowmin())
         {
-          cerr << "array bound exceeded -- index too low in dvar_matrix::operator(int,int)";
-          ad_exit(1);
+          cerr << "array bound exceeded -- index too low in dvar_matrix::operator(int,int)"
+               << "value was " << i << endl;
+          ad_exit(21);
         }
         if (j<elem(i).indexmin())
         {
-          cerr << "array bound exceeded -- index too low in dvar_matrix::operator(int,int)";
-          ad_exit(1);
+          cerr << "array bound exceeded -- index too low in dvar_matrix::operator(int,int)"
+               << "value was " << i << endl;
+          ad_exit(22);
         }
         if (i>rowmax())
         {
-          cerr << "array bound exceeded -- index too high in dvar_matrix::operator(int,int)";
-          ad_exit(1);
+          cerr << "array bound exceeded -- index too high in dvar_matrix::operator(int,int)"
+               << "value was " << j << endl;
+          ad_exit(23);
         }
         if (j>elem(i).indexmax())
         {
-          cerr << "array bound exceeded -- index too high in dvar_matrix::operator(int,int)";
-          ad_exit(1);
+          cerr << "array bound exceeded -- index too high in dvar_matrix::operator(int,int)"
+               << "value was " << j << endl;
+          ad_exit(24);
         }
       #endif
       return ( m[i].va+j );

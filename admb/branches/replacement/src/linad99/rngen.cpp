@@ -1,11 +1,8 @@
-/**
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2009 ADMB Foundation
- */
+/*
+   $Id$
+  
+   ADMB adaptations copyright (c) 2009, 2010 ADMB Foundation
 
-/* 
    A C-program for MT19937, with initialization improved 2002/1/26.
    Coded by Takuji Nishimura and Makoto Matsumoto.
 
@@ -46,13 +43,10 @@
    Any feedback is very welcome.
    http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
    email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
-*/
 
-/*
    Modified for AD Model Builder by Kasper Kristensen <kkr@aqua.dtu.dk> and 
    Anders Nielsen <an@aqua.dtu.dk> 2009     
 */
-
 
 #include "fvar.hpp"
 
@@ -62,6 +56,12 @@
 #define UPPER_MASK 0x80000000UL /* most significant w-r bits */
 #define LOWER_MASK 0x7fffffffUL /* least significant r bits */
 
+/**
+  \ingroup RNG
+  Constructor for random_number_generator class.
+  Based on the C-program for MT19937, originally coded by
+  Takuji Nishimura and Makoto Matsumoto.
+*/
 random_number_generator::random_number_generator(int seed) 
 {
   unsigned long s=seed;
@@ -81,6 +81,12 @@ random_number_generator::random_number_generator(int seed)
   better_rand();
 }
 
+/**
+  \ingroup RNG
+  Reinitialize random number seed.
+  Based on the C-program for MT19937, originally coded by
+  Takuji Nishimura and Makoto Matsumoto.
+*/
 void random_number_generator::reinitialize(int seed)
 {
   unsigned long s=seed;
@@ -98,13 +104,17 @@ void random_number_generator::reinitialize(int seed)
   better_rand();
 }
 
-/** Random number generator.
+/**
+  \ingroup RNG
+  Random number generator.
+  Based on the Mersenne twister alorithm, MT19937, originally coded by
+  Takuji Nishimura and Makoto Matsumoto.\n\n
+  See Nishimura, T. and M. Matusomoto (1998) Mersenne twister:
+  a 623-dimensionally equidistributed uniform pseudo-random number generator.
+  ACM Transactions on Modeling and Computer Simulation (TOMACS) 8(1):3-30.
 
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 7
-
-    \deprecated Scheduled for replacement by 2010.
+  \returns double containing uniformly distributed pseudorandom number 
+   between zero and one.
 */
 double random_number_generator::better_rand() 
 {
@@ -149,6 +159,12 @@ double random_number_generator::better_rand()
 #undef UPPER_MASK 
 #undef LOWER_MASK 
           
+/**
+  \ingroup RNG
+  Normal number generator.
+  \returns N(0,1) double containing Normally distributed pseudorandom number 
+   with mean zero and standard deviation one.
+*/
 double randn( BOR_CONST random_number_generator& rng)
 {
   double x,y;
@@ -158,6 +174,13 @@ double randn( BOR_CONST random_number_generator& rng)
   return(u);
 }
   
+/**
+  \ingroup RNG
+  Uniform random number generator.
+
+  \returns double containing uniformly distributed pseudorandom number 
+   between zero and one.
+*/
 double randu( BOR_CONST random_number_generator& rng)
 {
   double x;

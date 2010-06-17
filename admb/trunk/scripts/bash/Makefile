@@ -98,8 +98,8 @@ bcb:
 	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@
 
 biglog:
-	@cd examples/admb-re/$@;admb -r $@;./$@
-	-@cd examples/admb-re/$@;admb -r -s $@;./$@
+	@cd examples/admb-re/$@;touch xxalloc4.tmp xxalloc5.tmp;admb -r $@;./$@
+	-@cd examples/admb-re/$@;touch xxalloc4.tmp xxalloc5.tmp;admb -r -s $@;./$@
 
 bvprobit:
 	@#Missing bvprobit.dat
@@ -111,8 +111,8 @@ caest:
 	@-cd examples/admb-re/$@;admb -r -s $@;./$@
 
 gamma:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) liver_$@;./liver_$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) liver_$@;./liver_$@
+	cd examples/admb-re/$@;touch xxalloc4.tmp xxalloc5.tmp;admb -r $(DEBUG_OPTION) liver_$@;./liver_$@
+	-cd examples/admb-re/$@;touch xxalloc4.tmp xxalloc5.tmp;admb -r -s $(DEBUG_OPTION) liver_$@;./liver_$@
 
 kidney:
 	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
@@ -184,8 +184,8 @@ union:
 
 weights: binomial binomial_w2
 binomial:
-	cd examples/admb-re/weights;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/weights;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/weights;touch xxalloc4.tmp xxalloc5.tmp;admb -r $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb-re/weights;touch xxalloc4.tmp xxalloc5.tmp;admb -r -s $(DEBUG_OPTION) $@;./$@
 binomial_w2:
 	@-cd examples/admb-re/weights;admb -r $@;./$@
-	@-cd examples/admb-re/weights;admb -r -s $@;./$@
+	@-cd examples/admb-re/weights;touch xxalloc4.tmp xxalloc5.tmp;admb -r -s $@;./$@

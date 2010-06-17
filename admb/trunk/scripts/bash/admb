@@ -43,19 +43,51 @@ unset s
 tpl2cpp=tpl2cpp
 while getopts "dgrs" A; do
   case $A in
-    d) d=-d; dll=-dll;;
-    g) g=-g;;
-    r) r=-r; tpl2cpp=tpl2rem;;
-    s) s=-s; bounds=-bounds;;
+    d) d="-d "; dll="-dll ";;
+    g) g="-g ";;
+    r) r="-r "; tpl2cpp=tpl2rem;;
+    s) s="-s "; bounds="-bounds ";;
   esac
 done
 shift $[OPTIND-1]
 
 model="${1%.*}"
 
-echo -e "\n*** $tpl2cpp $bounds $dll $model"
-               $tpl2cpp $bounds $dll $model
-echo -e "\n*** adcomp $d $g $r $s $model"
-               adcomp $d $g $r $s $model
-echo -e "\n*** adlink $d $g $r $s $model"
-               adlink $d $g $r $s $model
+rm -f ${model}.htp
+rm -f ${model}.cpp
+rm -f ${model}.o
+rm -f ${model}
+
+if test -f ${model}.tpl ; then
+CMD1="$tpl2cpp ${bounds}${dll}$model"
+printf "\n*** Parsing: %s\n" "${CMD1}"
+eval ${CMD1}
+fi
+
+if test -f ${model}.htp -a -f ${model}.cpp ; then
+  ARG1=
+  if test ! -z "${CXXFLAGS}" ; then
+    ARG1="CXXFLAGS=\"${CXXFLAGS}\" "
+  fi
+  CMD2="${ARG1}adcomp ${d}${g}${r}${s}$model"
+  printf "\n*** Compiling: %s\n" "${CMD2}"
+  eval ${CMD2}
+fi
+
+if test -f ${model}.o ; then
+  ARG2=
+  if test ! -z "${LDFLAGS}" ; then
+    ARG2="LDFLAGS=\"${LDFLAGS}\" "
+  fi
+  CMD3="${ARG2}adlink ${d}${g}${r}${s}$model"
+  printf "\n*** Linking: %s\n" "${CMD3}"
+  eval ${CMD3}
+fi
+
+if test -x ${model} ; then
+  printf "\nSuccessful build of executable: %s\n" "${model}"
+else
+  printf "\nError: Failed to build executable.\n"
+fi
+
+exit 0

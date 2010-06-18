@@ -2457,5 +2457,7 @@ int withinbound(int lb,int n,int ub);
 #  endif
 #endif
 
+#include "param_init_bounded_number_matrix.h"
+
 extern int to_make_sure_admodel_cpp_gets_linked;
 #endif

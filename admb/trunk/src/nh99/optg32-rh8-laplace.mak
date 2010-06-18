@@ -60,6 +60,7 @@ disk: $(LIBPATH)/$(LIBNAME)  df1b2stub tpl2cpp
 	cp spcomm.h $(DISKDIR)/include
 	cp adsplus.h $(DISKDIR)/include
 	cp newredef.h $(DISKDIR)/include
+	cp param_init_bounded_number_matrix.h $(DISKDIR)/include
 	cp s.h $(DISKDIR)/include
 	cp tpl2cpp $(DISKDIR)/bin
 	cp sed* $(DISKDIR)/bin

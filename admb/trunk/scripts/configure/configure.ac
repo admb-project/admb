@@ -1,7 +1,7 @@
 AC_INIT([ADMB], [9.1], [users@admb-project.org])
 
 AC_CONFIG_FILES(
-  [admb.cfg:scripts/configure/admb.cfg.in src/Makefile scripts/bash/admb-bin]
+  [GNUmakefile:scripts/configure/GNUmakefile.in scripts/bash/admb-bin]
 )
 
 # Check for programs used in building ADMB.

@@ -66,7 +66,7 @@ verify:
 	../scripts/get-outputs.sh ${DISK}/examples > "../benchmarks-${NOW}-r${ADMB_REVISION}.txt"
 
 check-admb2r:
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ../ADMB2R gcc
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ../test/admb2r gcc
 
 clean:
 	@rm -rvf linad99/${LIBPATH}-olp

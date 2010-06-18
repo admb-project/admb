@@ -56,7 +56,7 @@ verify:
 	../scripts/get-outputs.sh ../build/dists/admb_gcc411_fedora8/examples > "../benchmarks-${NOW}-r${ADMB_REVISION}.txt"
 
 check-admb2r:
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make --directory ../ADMB2R gcc
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make --directory=../test/admb2r gcc
 
 clean:
 	@rm -rf linad99/SunWS_cache

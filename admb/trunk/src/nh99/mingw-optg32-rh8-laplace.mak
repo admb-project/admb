@@ -79,6 +79,7 @@ disk: $(LIBPATH)\\$(LIBNAME)  df1b2stub tpl2cpp.exe
 	cmd /C "copy adsplus.h $(DISKDIR)\\include"
 	cmd /C "copy newredef.h $(DISKDIR)\\include"
 	cmd /C "copy s.h $(DISKDIR)\\include"
+	cmd /C "copy param_init_bounded_number_matrix.h $(DISKDIR)\\include"
 	cmd /C "copy tpl2cpp.exe $(DISKDIR)\\bin"
 	cmd /C "copy sed* $(DISKDIR)\\bin"
 	cmd /C "copy $(STUBPATH)\\${STUBNAME} $(DISKDIR)\\bin"

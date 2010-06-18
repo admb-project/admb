@@ -65,6 +65,7 @@ disk: stub
 	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
 	cp $(STUBPATH)/df1b2stub.lib $(DISKDIR)/$(LIBDIR) 
 	cp admodel.h $(DISKDIR)/$(INCLUDEDIR) 
+	cp param_init_bounded_number_matrix.h $(DISKDIR)/include
 
 clean:
 	rm -f tmpfile

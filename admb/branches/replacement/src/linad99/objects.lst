@@ -49,7 +49,7 @@ fvar_m53.obj \
 fvar_m57.obj \
 ad_atlas.obj \
 timer.obj \
-dmat34.obj \
+\
 dmat35.obj \
 dmat36.obj \
 dmat37.obj \
@@ -111,7 +111,7 @@ f5arr3.obj \
 admanip.obj \
 fvar_m38.obj \
 fvar_m41.obj \
-fvar_m42.obj \
+\
 fvar_m43.obj \
 fvar_m44.obj \
 fvar_m45.obj \
@@ -340,14 +340,14 @@ fvar_m11.obj \
 fvar_m12.obj \
 fvar_m13.obj \
 fvar_m14.obj \
-fvar_m15.obj \
+\
 fvar_m18.obj \
 fvar_m19.obj \
-fvar_m20.obj \
+\
 fvar_m21.obj \
 fvar_m22.obj \
 fvar_m23.obj \
-fvar_m24.obj \
+\
 fvar_m27.obj \
 fvar_m28.obj \
 fvar_m29.obj \
@@ -437,7 +437,7 @@ newfmin.obj \
 ufstream.obj \
 boundfun.obj \
 derch.obj \
-dmat3.obj \
+\
 dvsort.obj \
 ivsort.obj \
 eigen.obj \
@@ -448,7 +448,7 @@ dveigenv.obj \
 fmm_cont.obj \
 dvec_dif.obj \
 fvar_dif.obj \
-fvar_ma4.obj \
+\
 dvec_io2.obj \
 dmat_io3.obj \
 fvara_io.obj \
@@ -491,3 +491,10 @@ cbetacf.obj \
 vbetacf.obj \
 vbetai.obj \
 cbetai.obj \
+dmat3.obj \
+dmat34.obj \
+fvar_ma4.obj \
+fvar_m15.obj \
+fvar_m20.obj \
+fvar_m24.obj \
+fvar_m42.obj \

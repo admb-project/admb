@@ -1,10 +1,5 @@
 .PHONY: disk
 
-#CFLAGS=-O3
-#ifdef DEBUG
-#CFLAGS=-g
-#endif
-
 ifneq ($(strip $(ADMB_VERSION)),)
   CXXFLAGS+=-DADMB_VERSION=${ADMB_VERSION}
 endif
@@ -37,6 +32,9 @@ endif
 
 $(LIBPATH)/$(LIBNAME) :  $(OBJECTS) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
+
+evalxtrn.obj: evalxtrn.cpp
+	$(CXX) -O3 $(CXXFLAGS) evalxtrn.cpp -o $(LIBPATH)/$*.obj
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/$*.obj

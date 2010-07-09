@@ -1,10 +1,5 @@
 .PHONY: disk
 
-CFLAGS=-O3
-ifdef DEBUG
-CFLAGS=-g
-endif
-
 LIBNAME = libads.a
 SRCDIR =  src
 .SUFFIXES: .obj .cpp

@@ -3,6 +3,10 @@ ifdef DEBUG
 DEBUG_OPTION=-g
 endif
 
+ifdef SAFE_OPTION
+SAFE_OPTION=-s
+endif
+
 default: simple
 
 all: admb admb-re
@@ -21,54 +25,42 @@ vol
 
 buscycle: ham4 ham5
 ham4:
-	cd examples/admb/buscycle;admb $(DEBUG_OPTION) $@;./$@
-	cd examples/admb/buscycle;admb -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/buscycle;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@
 
 ham5:
-	cd examples/admb/buscycle;admb $(DEBUG_OPTION) $@;./$@
-	cd examples/admb/buscycle;admb -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/buscycle;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@
 
 catage:
-	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
-	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@
 
 chem-eng:
-	-cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@
 
 finance:
-	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
-	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@
 
 forest:
-	-cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@
 
 pella-t:
-	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
-	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@
 
 robreg: vonb vonbr
 vonb:
-	cd examples/admb/robreg;admb $(DEBUG_OPTION) $@;./$@
-	cd examples/admb/robreg;admb -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/robreg;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@
 
 vonbr:
-	cd examples/admb/robreg;admb $(DEBUG_OPTION) $@;./$@
-	cd examples/admb/robreg;admb -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/robreg;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@
 
 simple:
-	cd examples/admb/$@;admb $(DEBUG_OPTION) $@;./$@
-	cd examples/admb/$@;admb -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@
 
 truncreg:
-	@cd examples/admb/$@;admb $@;./$@ -ams 2000000;./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
-	@cd examples/admb/$@;admb -s $@;./$@ -ams 2000000;./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
+	@cd examples/admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@ -ams 2000000;./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
 
 vol: n2mvol
 n2mvol:
-	-cd examples/admb/vol;admb $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb/vol;admb -s $(DEBUG_OPTION) $@;./$@
+	-cd examples/admb/vol;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;./$@
 
 admb-re:\
 bcb \
@@ -94,99 +86,76 @@ union \
 weights
 
 bcb:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@
 
 biglog:
-	@cd examples/admb-re/$@;admb -r $@;./$@
-	-@cd examples/admb-re/$@;admb -r -s $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;touch xxalloc4.tmp xxalloc5.tmp;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 bvprobit:
 	@#Missing bvprobit.dat
-	@-cd examples/admb-re/glmmadmb;admb -r $@;./$@
-	@-cd examples/admb-re/glmmadmb;admb -r -s $@;./$@
+	-cd examples/admb-re/glmmadmb;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 caest:
-	@-cd examples/admb-re/$@;admb -r $@;./$@
-	@-cd examples/admb-re/$@;admb -r -s $@;./$@
+	-cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 gamma:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) liver_$@;./liver_$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) liver_$@;./liver_$@
+	cd examples/admb-re/$@;rm -f @.par @.std;touch xxalloc4.tmp xxalloc5.tmp;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) liver_$@;./liver_$@
 
 kidney:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 lidar:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 logistic:
 	@#runtime error
-	@-cd examples/admb-re/$@;admb -r $@;./$@
-	@-cd examples/admb-re/$@;admb -r -s $@;./$@
+	-cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 nbmm:
 	@#Missing .dat file
-	@-cd examples/admb-re/glmmadmb;admb -r $@;./$@
-	@-cd examples/admb-re/glmmadmb;admb -r -s $@;./$@
+	-cd examples/admb-re/glmmadmb;rm -f @.par @.std;admb -r $(SAFE_OPTION) $@;./$@
 
 nested4:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 orange:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 orange2:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 orange_cor:
-	@-cd examples/admb-re/$@;admb -r $@;./$@
-	@-cd examples/admb-re/$@;admb -r -s $@;./$@
+	-cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 pheno:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 polio:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 sdv:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 skewed: diet diet_sk
 diet:
-	cd examples/admb-re/skewed;admb -r $(DEBUG_OPTION) $@;./diet
-	-cd examples/admb-re/skewed;admb -r -s $(DEBUG_OPTION) $@;./diet
+	cd examples/admb-re/skewed;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./diet
 
 diet_sk:
-	cd examples/admb-re/skewed;admb -r $(DEBUG_OPTION) $@;./diet
-	-cd examples/admb-re/skewed;admb -r -s $(DEBUG_OPTION) $@;./diet
+	cd examples/admb-re/skewed;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./diet
 
 socatt:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 spatial:
-	cd examples/admb-re/$@;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/$@;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 union:
-	@#Runtine errors
-	@-cd examples/admb-re/$@;admb -r $@;./$@
-	@-cd examples/admb-re/$@;admb -r -s $@;./$@
+	@#Runtime errors
+	-cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 weights: binomial binomial_w2
 binomial:
-	cd examples/admb-re/weights;admb -r $(DEBUG_OPTION) $@;./$@
-	-cd examples/admb-re/weights;admb -r -s $(DEBUG_OPTION) $@;./$@
+	cd examples/admb-re/weights;rm -f @.par @.std;touch xxalloc4.tmp xxalloc5.tmp;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 binomial_w2:
-	@-cd examples/admb-re/weights;admb -r $@;./$@
-	@-cd examples/admb-re/weights;admb -r -s $@;./$@
+	-cd examples/admb-re/weights;rm -f @.par @.std;touch xxalloc4.tmp xxalloc5.tmp;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@

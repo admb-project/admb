@@ -1,8 +1,3 @@
-CFLAGS=-O3
-ifdef DEBUG
-CFLAGS=-g
-endif
-
 LIBPATH =gcc32-rh8slp
 LIBNAME = libdf1b2s.a
 SRCDIR =  src

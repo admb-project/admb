@@ -11,7 +11,8 @@ PARAMETER_SECTION
  objective_function_value f
 PROCEDURE_SECTION
  int sgn=0;
- f=my_ln_det(VM,sgn);
+ //f=my_ln_det(VM,sgn);
+ f=ln_det(VM,sgn);
 GLOBALS_SECTION
   
   #include <admodel.h>
@@ -664,7 +665,7 @@ GLOBALS_SECTION
     return clu;
   }
 
-  void df_my_ln_det(void);
+  static void df_my_ln_det(void);
 
   dvariable my_ln_det(const dvar_matrix & M,int & sign)
   {

@@ -93,7 +93,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       cout << "max separable g " << max_separable_g << endl; 
       cout << "Newton raphson " << ii << endl;
       uhat+=step;
-    
+
       evaluate_function(uhat,pfmin);
       pmin->inner_opt_flag=0;
     }
@@ -103,7 +103,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       y(i+xsize)=uhat(i);
     }
   }
- 
+
   cout << initial_df1b2params::cobjfun << endl;
   xadjoint.initialize();
   uadjoint.initialize();

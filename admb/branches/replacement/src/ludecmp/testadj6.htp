@@ -49,6 +49,3 @@ public:
   virtual void final_calcs(void);
   model_parameters(int sz,int argc, char * argv[]);
   virtual void initializationfunction(void){}
-
-};
-#endif

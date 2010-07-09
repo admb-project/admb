@@ -28,5 +28,6 @@ disk:
 	copy ..\spcomm.h $(DISKDIR)\include
 	copy ..\s.h $(DISKDIR)\include
 	copy ..\newredef.h $(DISKDIR)\include
+	copy ..\param_init_bounded_number_matrix.h $(DISKDIR)\include
 	copy $(LIBNAME) $(DISKDIR)\lib
 	copy $(STUBLIBNAME) $(DISKDIR)\lib

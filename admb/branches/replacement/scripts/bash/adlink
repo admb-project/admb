@@ -37,11 +37,11 @@ if [[ "$1" == "--help" ]]; then help; exit; fi
 # Pop args until model=$1
 adlib=-lado
 unset re
-s=-s
+s="-s "
 unset shared
 while getopts "dgrs" A; do
   case $A in
-    d) shared=-shared;;
+    d) shared="-shared ";;
     g) unset s;;
     r) re=true;;
     s) adlib=-lads;;
@@ -55,14 +55,18 @@ fi
 
 model="${1%.*}"
 
-if [ "`uname -s`" = "Darwin" ] ; then
-  s=
-fi
-
 df1b2lib=-ldf1b2stub
 if [[ -z $shared ]]; then out="-o $model"; else out="-o $model.so"; fi
 if [[ $adlib == "-lado" ]]; then df1b2lib=-ldf1b2o; fi
 if [[ $adlib == "-lads" ]]; then df1b2lib=-ldf1b2s; fi
 
-echo -e "g++ $s $shared -L$ADMB_HOME/lib $model.o $df1b2lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $out\n"
-         g++ $s $shared -L$ADMB_HOME/lib $model.o $df1b2lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $out
+ARG=
+if test ! -z "${LDFLAGS}" ; then
+  ARG="${LDFLAGS} "
+fi
+
+CMD="g++ ${s}${shared}-L$ADMB_HOME/lib $model.o $df1b2lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib ${ARG}$out"
+printf "%s\n" "${CMD}"
+eval ${CMD}
+
+exit 0

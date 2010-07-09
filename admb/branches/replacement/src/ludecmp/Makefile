@@ -15,15 +15,17 @@ LFLAGS=-lm -L$(ADMB_HOME)/lib -ldf1b2o -ladmod -ladt -lads -ldf1b2o -ladmod -lad
 CC=g++
 LL=$(CC)
 
-OBJECTS= adjoint_classes.o
+OBJECTS1= adjoint_classes.o
+OBJECTS2= testadj4.o
+OBJECTS3= testadj6.o
 
-adjoint_classes: $(OBJECTS)
+adjoint_classes: $(OBJECTS1)
 	$(LL) -o$@ $(DEBUG) $^ $(LFLAGS)
 
-testadj4: $(OBJECTS)
+testadj4: $(OBJECTS2)
 	$(LL) -o$@ $(DEBUG) $^ $(LFLAGS)
 
-testadj6: $(OBJECTS)
+testadj6: $(OBJECTS3)
 	$(LL) -o$@ $(DEBUG) $^ $(LFLAGS)
 
 .cpp.o:

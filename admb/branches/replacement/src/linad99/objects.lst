@@ -111,9 +111,8 @@ f5arr3.obj \
 admanip.obj \
 fvar_m38.obj \
 fvar_m41.obj \
-ludcmp.obj \
-ludcmp_ln_det.obj \
-ludcmp_operators.obj \
+\
+fvar_m42.obj \
 fvar_m43.obj \
 fvar_m44.obj \
 fvar_m45.obj \
@@ -493,4 +492,7 @@ cbetacf.obj \
 vbetacf.obj \
 vbetai.obj \
 cbetai.obj \
-fvar_m42.obj \
+\
+ludcmp.obj \
+ludcmp_ln_det.obj \
+ludcmp_operators.obj \

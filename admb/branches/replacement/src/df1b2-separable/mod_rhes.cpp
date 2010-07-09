@@ -290,7 +290,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       uis1 >> i >> j;
       cout << i << " " << j << endl;
     }
-      
+
     int npts=2;
     int on,nopt;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hpts",nopt))>-1)
@@ -330,7 +330,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
         delta=_delta;
       }
     }
-        
+
     // get a number which is exactly representable
     double sdelta=1.0+delta;
     useless(sdelta);

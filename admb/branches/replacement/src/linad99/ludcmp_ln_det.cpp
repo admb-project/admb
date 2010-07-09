@@ -81,6 +81,15 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
 {
   int sign =_sgn;
   dvar_matrix M = aa;
-  dvariable lndet = my_ln_det(M,sign);
+  dvariable lndet;
+
+  if(M.indexmax() == 1)
+  {
+    lndet = log(M(1,1));
+  }
+  else
+  {
+    lndet = my_ln_det(M,sign);
+  }
   return lndet;
 }

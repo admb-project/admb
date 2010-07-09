@@ -622,7 +622,7 @@
     save_identifier_string("OZ");
     return clu;
   }
-  void df_my_ln_det(void);
+  static void df_my_ln_det(void);
   dvariable my_ln_det(const dvar_matrix & M,int & sign)
   {
     cltudecomp clu1=xludecomp_pivot(M);
@@ -884,7 +884,8 @@ model_parameters::model_parameters(int sz,int argc,char * argv[]) :
 void model_parameters::userfunction(void)
 {
  int sgn=0;
- f=my_ln_det(VM,sgn);
+ //f=my_ln_det(VM,sgn);
+ f=ln_det(VM,sgn);
 }
 
 void model_parameters::preliminary_calculations(void){

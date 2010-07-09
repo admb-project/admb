@@ -61,6 +61,8 @@
   Constructor for random_number_generator class.
   Based on the C-program for MT19937, originally coded by
   Takuji Nishimura and Makoto Matsumoto.
+  \param seed Integer used to initialize the random number generator.
+  Using different values of seed will generat different series of random numbers.
 */
 random_number_generator::random_number_generator(int seed) 
 {
@@ -85,7 +87,9 @@ random_number_generator::random_number_generator(int seed)
   \ingroup RNG
   Reinitialize random number seed.
   Based on the C-program for MT19937, originally coded by
-  Takuji Nishimura and Makoto Matsumoto.
+  Takuji Nshimura and Makoto Matsumoto.
+  \param seed Integer used to initialize the random number generator.
+  Using different values of seed will generat different series of random numbers.
 */
 void random_number_generator::reinitialize(int seed)
 {

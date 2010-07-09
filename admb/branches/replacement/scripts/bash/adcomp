@@ -35,19 +35,28 @@ if [[ "$1" == "--help" ]]; then help; exit; fi
 
 # Pop args until model=$1
 unset dll
-g=-O3
-opt=-DOPT_LIB
+g="-O3 "
+opt="-DOPT_LIB "
 while getopts "dgrs" A; do
   case $A in
-    d) dll=-DBUILDING_DLL;;
-    g) g=-g;;
+    d) dll="-DBUILDING_DLL ";;
+    g) g="-g ";;
     r) ;;
-    s) opt=-DSAFE_ALL;;
+    s) opt="-DSAFE_ALL ";;
   esac
 done
 shift $[OPTIND-1]
 
 model="${1%.*}"
 
-echo -e "g++ -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $model.cpp\n"
-         g++ -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $model.cpp
+
+ARG=
+if test ! -z "${CXXFLAGS}" ; then
+  ARG="${CXXFLAGS} "
+fi
+
+CMD="g++ -c -Wno-deprecated ${g}${dll}${opt}-D__GNUDOS__ -Dlinux -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include ${ARG}$model.cpp"
+printf "%s\n" "${CMD}"
+eval ${CMD}
+
+exit 0

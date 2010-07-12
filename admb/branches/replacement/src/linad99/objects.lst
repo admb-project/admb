@@ -112,7 +112,10 @@ admanip.obj \
 fvar_m38.obj \
 fvar_m41.obj \
 \
-fvar_m42.obj \
+ludcmp.obj \
+ludcmp_det.obj \
+ludcmp_ln_det.obj \
+ludcmp_operators.obj \
 fvar_m43.obj \
 fvar_m44.obj \
 fvar_m45.obj \
@@ -344,7 +347,7 @@ fvar_m14.obj \
 fvar_m15.obj \
 fvar_m18.obj \
 fvar_m19.obj \
-fvar_m20.obj \
+\
 fvar_m21.obj \
 fvar_m22.obj \
 fvar_m23.obj \
@@ -493,6 +496,5 @@ vbetacf.obj \
 vbetai.obj \
 cbetai.obj \
 \
-ludcmp.obj \
-ludcmp_ln_det.obj \
-ludcmp_operators.obj \
+fvar_m42.obj \
+fvar_m20.obj \

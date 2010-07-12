@@ -1,3 +1,9 @@
+/*
+ * $Id:$
+ *
+ * Copyright (c) 2009 ADMB Foundation
+ */
+
 #ifndef __LUDCMP_HPP__
 #define __LUDCMP_HPP__
 #include <admodel.h>

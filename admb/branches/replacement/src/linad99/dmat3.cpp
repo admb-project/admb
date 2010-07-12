@@ -436,7 +436,7 @@ void lubksb(dmatrix a,_CONST ivector& indx,dvector b)
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 
     \deprecated Scheduled for replacement by 2010.
-*/
+*//*
 double det(_CONST dmatrix& m1)
 {
   double d;
@@ -464,7 +464,7 @@ double det(_CONST dmatrix& m1)
   }
 
   return(d);
-}
+}*/
 
 /** Compute log determinant of a constant matrix.
     \param m1 A dmatrix, \f$M\f$, for which the determinant is computed.
@@ -476,6 +476,7 @@ double det(_CONST dmatrix& m1)
 
     \deprecated Scheduled for replacement by 2010.
 */
+/*
 double ln_det(_CONST dmatrix& m1,BOR_CONST int& _sgn)
 {
   double d;
@@ -529,7 +530,7 @@ double ln_det(_CONST dmatrix& m1,BOR_CONST int& _sgn)
     }
   }
   return(ln_det);
-}
+}*/
 
 /** LU decomposition. 
     \deprecated This function may be completely unused?

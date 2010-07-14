@@ -436,7 +436,8 @@ void lubksb(dmatrix a,_CONST ivector& indx,dvector b)
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 
     \deprecated Scheduled for replacement by 2010.
-*//*
+*/
+/*
 double det(_CONST dmatrix& m1)
 {
   double d;

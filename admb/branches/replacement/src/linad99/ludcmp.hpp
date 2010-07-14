@@ -57,6 +57,24 @@
       U.allocate(lb,ub,lb,iv1);
       indx2.fill_seqadd(lb,1);
     }
+
+    cltudecomp & assign_value (const dvar_matrix& M)
+    {
+      int mmin=indexmin();
+      int mmax=indexmax();
+
+      if (mmin != M.indexmin() ||
+          mmax != M.indexmax())
+      {
+        cerr << "Shape error in =" << endl;
+        ad_exit(1);
+      }
+      for (int i=mmin;i<=mmax;i++)
+        for (int j=mmin;j<=mmax;j++)
+          elem(i,j)=value(M(i,j));
+      return *this;
+    }
+
     dmatrix & get_L(){ return L;}
     int indexmin(){return U.indexmin();}
     int indexmax(){return U.indexmax();}
@@ -64,6 +82,11 @@
     ivector & get_index(){ return indx;}
     ivector & get_index2(){ return indx2;}
     int & get_sign(){ return sign;}
+    double & elem(int i,int j){ if (i>j)
+                                         return L(i,j);
+                                       else
+                                         return U(j,i);
+                                     }
     // overload () (int,int) to look like Numerical Recipes
     double & operator() (int i,int j){ if (i>j)
                                          return L(i,j);

@@ -115,6 +115,7 @@ fvar_m41.obj \
 ludcmp.obj \
 ludcmp_det.obj \
 ludcmp_ln_det.obj \
+ludcmp_inv.obj \
 ludcmp_operators.obj \
 fvar_m43.obj \
 fvar_m44.obj \
@@ -344,7 +345,7 @@ fvar_m11.obj \
 fvar_m12.obj \
 fvar_m13.obj \
 fvar_m14.obj \
-fvar_m15.obj \
+\
 fvar_m18.obj \
 fvar_m19.obj \
 \
@@ -498,3 +499,4 @@ cbetai.obj \
 \
 fvar_m42.obj \
 fvar_m20.obj \
+fvar_m15.obj \

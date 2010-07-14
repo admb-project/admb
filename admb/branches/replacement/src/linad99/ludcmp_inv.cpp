@@ -1,31 +1,12 @@
-DATA_SECTION
-  int n
- !! n=25;
-  matrix C(1,n,1,n)
-  matrix Id(1,n,1,n)
- LOC_CALCS
-  random_number_generator rng(873);
-  C.fill_randn(rng);
-  Id.initialize();
-  for (int i=1;i<=n;i++)
-    Id(i,i)=1.0;
-PARAMETER_SECTION
-  init_matrix A(1,n,1,n)
-  objective_function_value f
-PROCEDURE_SECTION
-  //cout << norm2(my_inv(A+C)*(A+C)-Id)<< endl;
-  //f=norm2(my_inv(A+C));
-  //cout << norm2(inv(A+C)*(A+C)-Id)<< endl;
-  f=norm2(inv(A+C));
-
-TOP_OF_MAIN_SECTION
-  gradient_structure::set_MAX_NVAR_OFFSET(625);
-
-GLOBALS_SECTION
+/*
+ * $Id$
+ *
+ * Copyright (c) 2009 ADMB Foundation
+ */
 
   #define HOME_VERSION
   #include <fvar.hpp>
-  #include "../linad99/ludcmp.hpp"
+  #include <ludcmp.hpp>
   
   #ifdef __TURBOC__
     #pragma hdrstop
@@ -37,15 +18,19 @@ GLOBALS_SECTION
   #endif
   
   #define TINY 1.0e-20;
-  void my_dfinvpret(void);
+  void dfinvpret(void);
   
-  int my_min(int a,int b)
+  int min(int a,int b)
   {
     if (a>b) return b;
     return a;
   }
-  
-  dvar_matrix my_inv(_CONST dvar_matrix& aa)
+
+/** Inverse of a varaiable matrix.    
+    \param aa dvar_matrix conaining matrix to be inverted,\f$A\f$.
+    \return dvar_matrix containing \f$A^{-1}\f$.
+*/ 
+  dvar_matrix inv(_CONST dvar_matrix& aa)
   {
     int i,imax,j,k,n;
     n=aa.colsize();
@@ -250,8 +235,10 @@ GLOBALS_SECTION
         set_gradient_stack(dfinvpret);
     return vc;
   }
-  
-  void my_dfinvpret(void)
+
+/** Adjoint code for dvar_matrix inv(_CONST dvar_matrix& aa).
+*/  
+  void dfinvpret(void)
   {
     verify_identifier_string("P1");
     dmatrix_position bpos=restore_dmatrix_position();
@@ -344,7 +331,7 @@ GLOBALS_SECTION
           dfb.elem(i,j)=0.;
         }
   
-        for (int k=my_min(i-1,j-1);k>=lb;k--)
+        for (int k=min(i-1,j-1);k>=lb;k--)
         {
           // ssum-=b.elem(i,k)*b.elem(k,j);
           dfb.elem(i,k)-=dfssum*b.elem(k,j);

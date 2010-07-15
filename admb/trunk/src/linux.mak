@@ -52,8 +52,6 @@ dist:
 	cp ../scripts/bash/Makefile ${DISK}
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
-	rm -rvf ${DISK}/examples/admb/SS3
-	rm -rvf ${DISK}/examples/admb/SS3-Simple
 
 	#make -C docs/manuals
 	#cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals

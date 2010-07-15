@@ -37,8 +37,6 @@ dist:
 	cp ../scripts/bash/Makefile ${DISK}
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
-	rm -rf ${DISK}/examples/admb/SS3
-	rm -rf ${DISK}/examples/admb/SS3-Simple
 	cp -f ../LICENSE ${DISK}
 	cp -f ../README ${DISK}
 	cp -f ../scripts/bash/mygcc* ${DISK}/bin 

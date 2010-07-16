@@ -8,5 +8,8 @@ install:
 	cp -R @disk@ @prefix@/admb
 	ln -sf scripts/bash/admb-bin @prefix@/bin/admb
 
+test:
+	make --directory=test
+
 clean:
 	make --directory=src --file=@makefile@ clean

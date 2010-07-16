@@ -15,12 +15,10 @@ TEST_F(test_admb_messages, tools99_string5_01)
     if (exit_code == expected_exit_code)
     {
       SUCCEED();
-    }
-    else
-    {
-      FAIL();
+      return;
     }
   }
+  FAIL();
 }
 /**
  * Tests errors for "adstring& adstring_array::operator [] (int i)"
@@ -39,12 +37,10 @@ TEST_F(test_admb_messages, tools99_string5_02)
     if (exit_code == expected_exit_code)
     {
       SUCCEED();
-    }
-    else
-    {
-      FAIL();
+      return;
     }
   }
+  FAIL();
 }
 /**
  * Tests errors for "adstring& adstring_array::operator () (int i)"
@@ -63,10 +59,8 @@ TEST_F(test_admb_messages, tools99_string5_03)
     if (exit_code == expected_exit_code)
     {
       SUCCEED();
-    }
-    else
-    {
-      FAIL();
+      return;
     }
   }
+  FAIL();
 }

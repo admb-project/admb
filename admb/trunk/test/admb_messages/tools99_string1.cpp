@@ -22,12 +22,10 @@ TEST_F(test_admb_messages, selftest01)
     if (exit_code == expected_exit_code)
     {
       SUCCEED();
-    }
-    else
-    {
-      FAIL();
+      return;
     }
   }
+  FAIL();
 }
 /**
  * Tests for errors in "adstring adstring::operator()(int i, int j)"
@@ -45,12 +43,10 @@ TEST_F(test_admb_messages, tools99_string1_01)
     if (exit_code == expected_exit_code)
     {
       SUCCEED();
-    }
-    else
-    {
-      FAIL();
+      return;
     }
   }
+  FAIL();
 }
 /**
  * Tests for errors in "adstring adstring::operator()(int i, int j)"
@@ -68,12 +64,10 @@ TEST_F(test_admb_messages, tools99_string1_02)
     if (exit_code == expected_exit_code)
     {
       SUCCEED();
-    }
-    else
-    {
-      FAIL();
+      return;
     }
   }
+  FAIL();
 }
 /**
  * Tests for errors in "adstring adstring::operator()(int i, int j)"
@@ -91,12 +85,10 @@ TEST_F(test_admb_messages, tools99_string1_03)
     if (exit_code == expected_exit_code)
     {
       SUCCEED();
-    }
-    else
-    {
-      FAIL();
+      return;
     }
   }
+  FAIL();
 }
 /**
  * Tests for errors in "unsigned char & adstring::operator()(_CONST int i)"
@@ -114,12 +106,10 @@ TEST_F(test_admb_messages, tools99_string1_04)
     if (exit_code == expected_exit_code)
     {
       SUCCEED();
-    }
-    else
-    {
-      FAIL();
+      return;
     }
   }
+  FAIL();
 }
 /**
  * Tests for errors in "unsigned char & adstring::operator()(_CONST int i)"
@@ -137,12 +127,10 @@ TEST_F(test_admb_messages, tools99_string1_05)
     if (exit_code == expected_exit_code)
     {
       SUCCEED();
-    }
-    else
-    {
-      FAIL();
+      return;
     }
   }
+  FAIL();
 }
 /**
  * Tests for errors in "unsigned char & adstring::operator()(_CONST int i)"
@@ -160,10 +148,8 @@ TEST_F(test_admb_messages, tools99_string1_06)
     if (exit_code == expected_exit_code)
     {
       SUCCEED();
-    }
-    else
-    {
-      FAIL();
+      return;
     }
   }
+  FAIL();
 }

@@ -84,6 +84,11 @@ dvariable ln_det(const dvar_matrix& a)
     clu1.ludecomp_pivot_for_adjoint_2();
   }
 
+/** Compute log determinant of a constant dvar_matrix.
+    \param aa A dvar_dmatrix, \f$M\f$, for which the determinant is computed.
+    \param _sgn
+    \return A dvariable containing \f$|\log(M)|\f$.
+*/
 dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
 {
   int sign =_sgn;

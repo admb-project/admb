@@ -75,6 +75,23 @@
       return *this;
     }
 
+    cltudecomp & assign_value (const dmatrix& M)
+    {
+      int mmin=indexmin();
+      int mmax=indexmax();
+
+      if (mmin != M.indexmin() ||
+          mmax != M.indexmax())
+      {
+        cerr << "Shape error in =" << endl;
+        ad_exit(1);
+      }
+      for (int i=mmin;i<=mmax;i++)
+        for (int j=mmin;j<=mmax;j++)
+          elem(i,j)=M(i,j);
+      return *this;
+    }
+
     dmatrix & get_L(){ return L;}
     int indexmin(){return U.indexmin();}
     int indexmax(){return U.indexmax();}

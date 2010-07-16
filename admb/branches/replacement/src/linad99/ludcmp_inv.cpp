@@ -18,6 +18,7 @@
   #endif
   
   #define TINY 1.0e-20;
+  cltudecomp ludecomp(const dmatrix & M);
   void dfinvpret(void);
   
   int min(int a,int b)
@@ -25,6 +26,163 @@
     if (a>b) return b;
     return a;
   }
+
+
+
+  dmatrix inv(_CONST dmatrix& aa)
+  {
+    int imax,n;
+    n=aa.colsize();
+    int lb=aa.colmin();
+    int ub=aa.colmax();
+    dmatrix vc(lb,ub,lb,ub);
+    if (n==1)
+    {
+      if (aa(lb,lb)==0.0)
+      {
+        cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
+        ad_exit(1);
+      }
+      else
+      {
+        vc(lb,lb)=1.0/aa(lb,lb);
+        return vc;
+      }
+    }
+    else if (n==2)
+    {
+      double det=aa(lb,lb)*aa(ub,ub)-aa(lb,ub)*aa(ub,lb);
+      if (det==0.0)
+      {
+        cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
+        ad_exit(1);
+      }
+      else
+      {
+        double detinv=1.0/det;
+        vc(lb,lb)=aa(ub,ub)*detinv;
+        vc(ub,ub)=aa(lb,lb)*detinv;
+        vc(lb,ub)=-aa(lb,ub)*detinv;
+        vc(ub,lb)=-aa(ub,lb)*detinv;
+        return vc;
+      }
+    }
+
+    cltudecomp bb(lb,ub);
+    bb=ludecomp(aa);
+
+    dmatrix alpha=bb.get_L();
+    dmatrix beta=bb.get_U();
+
+    //check if invertable
+    double det=1.0;
+    for(int i=lb;i<=ub;i++)
+    {
+      det*=beta(i,i);
+    }
+    if (det==0.0)
+    {
+      cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
+      ad_exit(1);
+    }
+
+    // Find inverse of L
+    for(i=lb+1;i<=ub;i++)
+    {
+      alpha(i,1)=-alpha(i,1);
+    }
+    for(int k=lb+1;k<ub;k++)
+    {
+      for(int j=lb;j<k;j++)
+      {
+        for(int i=k+1;i<=ub;i++)
+        {
+          alpha(i,j)-=alpha(k,j)*alpha(i,k);
+        }
+      }
+      for(int i=k+1;i<=ub;i++)
+      {
+          alpha(i,k)=-alpha(i,k);
+      }
+    }
+
+    //Put L^-1 in Matrix to multiply with U^-1
+    dmatrix Low(lb,ub,lb,ub);
+    for(i=lb+1;i<=ub;i++)
+    {
+      for(int j=lb;j<i;j++)
+      {
+        Low(i,j)=alpha(i,j);
+      }
+    }
+    for(i=lb;i<=ub;i++)
+    {
+      Low(i,i)=1.0;
+    }
+    for(i=lb;i<=ub-1;i++)
+    {
+      for(int j=lb+i;j<=ub;j++)
+      {
+        Low(i,j)=0.0;
+      }
+    }
+
+    // Find inverse of U
+    for(i=lb+1;i<=ub;i++)
+    {
+      for(int j=lb;j<i;j++)
+      {
+        beta(i,j)=beta(i,j)/beta(i,i);
+      }
+    }
+    for(i=lb;i<=ub;i++)
+    {
+      beta(i,i)=1/beta(i,i);
+    }
+    for(i=lb+1;i<=ub;i++)
+    {
+      beta(i,1)=-beta(i,1)*beta(1,1);
+    }
+    for(k=lb+1;k<ub;k++)
+    {
+      for(int j=lb;j<k;j++)
+      {
+        for(int i=k+1;i<=ub;i++)
+        {
+          beta(i,j)-=beta(k,j)*beta(i,k);
+        }
+      }
+      for(int i=k+1;i<=ub;i++)
+      {
+          beta(i,k)=-beta(i,k)*beta(k,k);
+      }
+    }
+
+    //Put U^-1 in Matrix to multiply with U^-1
+    dmatrix Up(lb,ub,lb,ub);
+    for(i=lb;i<=ub;i++)
+    {
+      for(int j=lb;j<=i;j++)
+      {
+        Up(i,j)=beta(i,j);
+      }
+    }
+    for(i=lb;i<=ub-1;i++)
+    {
+      for(int j=lb+i;j<=ub;j++)
+      {
+        Up(i,j)=0.0;
+      }
+    }
+    Up=trans(Up);
+
+    //compute inverese by U^-1*L^-1
+    vc = Up*Low;
+    return vc;
+  }
+
+
+
 
 /** Inverse of a varaiable matrix.    
     \param aa dvar_matrix conaining matrix to be inverted,\f$A\f$.
@@ -343,6 +501,10 @@
       }
     }
   }
+
+
+
+
   
   #undef TINY
   #undef HOME_VERSION

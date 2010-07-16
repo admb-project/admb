@@ -1,3 +1,9 @@
+/*
+ * $Id$
+ *
+ * Copyright (c) 2009 ADMB Foundation
+ */
+
 #include <ludcmp.hpp>
 
   double operator * 

@@ -10,6 +10,55 @@
   cltudecomp ludecomp_pivot(const dmatrix & M);
   dmatrix ludecomp_pivot_for_adjoint(const dmatrix & M,
       const cltudecomp & dfclu,const ivector& index2);
+
+
+  // LU decomp wihout partial pivoting
+  cltudecomp ludecomp(const dmatrix & M)
+  {
+    int mmin=M.indexmin();
+    int mmax=M.indexmax();
+    cltudecomp clu(mmin,mmax);
+ 
+    // get upper and lower parts of LU
+    dmatrix & alpha = clu.get_L();
+    dmatrix & gamma = clu.get_U(); // gamma is the transpose of beta
+    // copy M into alpha and gamma
+    for (int i=mmin;i<=mmax;i++)
+    {
+      for (int j=mmin;j<=mmax;j++)
+      {
+        clu(i,j)=M(i,j);
+      }
+    }
+    for (int j=mmin;j<=mmax;j++)
+    {
+      int i;
+      for (i=mmin+1;i<j;i++)
+      {
+        // using subvector here
+        clu(i,j)-=alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
+      }
+      for (i=j;i<=mmax;i++)
+      {
+        // using subvector here
+        if (j>1)
+        {
+          clu(i,j)-=alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
+        }
+      }
+      if (j!=mmax)
+      {
+        double z= 1.0/gamma(j,j);
+        for (i=j+1;i<=mmax;i++)
+        {
+          alpha(i,j)*=z;
+        }
+      }
+    }
+    return clu;
+  }
+
+
   
    
   // adjoint code

@@ -1,7 +1,3 @@
-#include <admodel.h>
-
-gradient_structure gs(1500000L);
-
 /**
  * Tests errors for "param_init_vector& param_init_vector_vector::operator [] (int i)"
  */

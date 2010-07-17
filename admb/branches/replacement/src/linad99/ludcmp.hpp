@@ -75,6 +75,7 @@
       return *this;
     }
 
+   //Check to see if this is needed
     cltudecomp & assign_value (const dmatrix& M)
     {
       int mmin=indexmin();

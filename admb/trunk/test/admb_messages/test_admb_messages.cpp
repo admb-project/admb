@@ -21,6 +21,8 @@ gradient_structure gs(1500000L);
 #include "linad99_d6arr.cpp"
 #include "linad99.cpp"
 #include "linad99_d4arr.cpp"
+#include "linad99_d7arr.cpp"
+#include "linad99_lmat1_lmat2_lmat4.cpp"
 
 int main(int argc, char** argv)
 {

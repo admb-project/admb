@@ -117,8 +117,8 @@ ludcmp_det.obj \
 ludcmp_inv.obj \
 ludcmp_ln_det.obj \
 ludcmp_operators.obj \
+ludcmp_solve.obj \
 \
-dmat34.obj \
 fvar_m24.obj \
 \
 fvar_m43.obj \
@@ -506,4 +506,4 @@ fvar_m20.obj \
 fvar_m15.obj \
 dmat3.obj \
 fvar_ma4.obj \
-ludcmp_solve.obj \
+dmat34.obj \

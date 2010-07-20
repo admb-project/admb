@@ -32,6 +32,7 @@ dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
 */
 dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z)
 {
+cout << "dvar_vector solve()" << endl;
   dvariable ln_unsigned_det;
   dvariable sign;
   dvar_vector sol=solve(aa,z,ln_unsigned_det,sign);

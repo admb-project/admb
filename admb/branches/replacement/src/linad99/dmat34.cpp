@@ -43,6 +43,7 @@ dvector csolve(const dmatrix& aa,const dvector& z)
 */
 dvector solve(const dmatrix& aa,const dvector& z)
 {
+cout << "dvector solve()" << endl;
   double ln_unsigned_det;
   double sign;
   dvector sol=solve(aa,z,ln_unsigned_det,sign);

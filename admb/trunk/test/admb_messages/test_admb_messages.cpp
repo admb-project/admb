@@ -15,7 +15,6 @@ class test_admb_messages: public ::testing::Test {};
 #include <admodel.h>
 
 gradient_structure gs(1500000L);
-#include "linad99.cpp"
 #include "tools99_string1.cpp"
 #include "tools99_string5.cpp"
 #include "linad99_model49.cpp"
@@ -28,6 +27,8 @@ gradient_structure gs(1500000L);
 #include "linad99_i3arr1_i4arr_i5arr.cpp"
 #include "linad99_f6arr.cpp"
 #include "linad99_f5arr.cpp"
+#include "linad99_f4arr.cpp"
+#include "linad99.cpp"
 
 int main(int argc, char** argv)
 {

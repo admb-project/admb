@@ -221,3 +221,18 @@ dvector solve(const dmatrix& aa,const dvector& z)
   
     clu1.ludecomp_pivot_for_adjoint_2();
   }
+
+
+dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
+  prevariable& ln_unsigned_det,BOR_CONST prevariable& _sign)
+{
+//this is just to test an idea
+
+  dvariable lndet=ln_det(aa);
+  ln_unsigned_det=lndet;
+  dvariable sign=0.0;
+  _sign=sign;
+
+  dvar_vector sol=solve(aa,z);
+  return sol;
+}

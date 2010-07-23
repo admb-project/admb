@@ -13,6 +13,7 @@ class test_admb_messages: public ::testing::Test {};
 
 #include <fvar.hpp>
 #include <admodel.h>
+#include <df1b2fun.h>
 
 gradient_structure gs(1500000L);
 #include "tools99_string1.cpp"
@@ -29,6 +30,8 @@ gradient_structure gs(1500000L);
 #include "linad99_f5arr.cpp"
 #include "linad99_f4arr.cpp"
 #include "linad99.cpp"
+#include "linad99_f7arr.cpp"
+#include "df1b2_separable.cpp"
 
 int main(int argc, char** argv)
 {

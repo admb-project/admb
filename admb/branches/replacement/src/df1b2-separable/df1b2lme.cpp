@@ -180,15 +180,15 @@ dvector laplace_approximation_calculator::banded_calculations_lme
   dvariable ld;
   dvariable tmp=0.0;
 
-  dvector step=value(solve(vHess,g));
-  tmp=ln_det(vHess);
-  //dvariable sgn;
+  //dvector step=value(solve(vHess,g));
+  //tmp=ln_det(vHess);
+  dvariable sgn;
 
-  //dvector step=value(solve(vHess,g,tmp,sgn)); 
-  //if (value(sgn)<=0) 
-  //{
-  //  cerr << "sgn sucks" << endl;
-  //}
+  dvector step=value(solve(vHess,g,tmp,sgn)); 
+  if (value(sgn)<=0) 
+  {
+    cerr << "sgn sucks" << endl;
+  }
   int mmin=variance_components_vector->indexmin();
   int mmax=variance_components_vector->indexmax();
   int nv=mmax-mmin+1;

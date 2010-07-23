@@ -29,7 +29,7 @@ dvector solve(const dmatrix& aa,const dvector& z)
   dmatrix bb(lb,ub,lb,ub);
   bb=aa;
   cltudecomp dcmp;
-  dcmp = ludecomp(bb);
+  dcmp = ludecomp(bb); //use ludecomp_pivot instead
 
   //check if invertable
   double det=1.0;
@@ -71,7 +71,12 @@ dvector solve(const dmatrix& aa,const dvector& z)
 }
 
 
-
+/** Solve a linear system using LU decomposition.
+    \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param z A dvar_vector containing the RHS, \f$b\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \return A dvar_vector containing solution vector \f$X\f$.
+*/
   dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z)
   {
     int lb=aa.indexmin();

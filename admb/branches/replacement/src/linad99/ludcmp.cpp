@@ -12,7 +12,8 @@
       const cltudecomp & dfclu,const ivector& index2);
 
 
-  // LU decomp wihout partial pivoting
+  // LU decomp wihout partial pivoting  
+  //redo this so this is not needed
   cltudecomp ludecomp(const dmatrix & M)
   {
     int mmin=M.indexmin();

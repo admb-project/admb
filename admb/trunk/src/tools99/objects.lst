@@ -1,4 +1,7 @@
-OBJ0 = cifstrem.obj \
+OBJ0 = \
+cifstrem.obj \
+strcase.obj \
+strcase2.obj \
 string6.obj \
 string.obj \
 str_aio.obj \

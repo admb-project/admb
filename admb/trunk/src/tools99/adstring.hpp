@@ -177,8 +177,14 @@ public :
   friend adstring str(_CONST int x);
   friend void val(_CONST adstring& s, int& v, int& code);
   friend int val(const adstring& s);
-};
 
+  void to_upper(void);
+  void to_lower(void);
+  adstring to_upper(adstring& s);
+  adstring to_lower(adstring& s);
+};
+adstring to_lower(adstring& s);
+adstring to_upper(adstring& s);
 adstring str(double x, int minwidth=17, int decplaces=-1);
 adstring str(_CONST int x);
 void val(_CONST adstring& s, int& v, int& code);
@@ -258,10 +264,16 @@ public:
   friend ifstream& operator >> (ifstream& ifs,adstring_array& sa);
   friend ostream& operator << (BOR_CONST ostream& ifs,_CONST adstring_array& sa);
   friend cifstream& operator >> (cifstream& ifs,adstring_array& sa);
+
+  void to_upper(void);
+  void to_lower(void);
+  adstring_array to_upper(adstring_array& s);
+  adstring_array to_lower(adstring_array& s); 
 };   // end class adstring_array
+adstring_array to_lower(adstring_array& s);
+adstring_array to_upper(adstring_array& s);
 
 ostream& operator << (BOR_CONST ostream& ifs,_CONST adstring_array& sa);
-
 
 int atoi(adstring& s);
 #endif //#ifndef __STRING_HPP__

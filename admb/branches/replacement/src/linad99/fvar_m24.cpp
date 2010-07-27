@@ -30,13 +30,13 @@ dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
     \f$A\cdot X = B\f$, to be solved.
     \return A dvar_vector containing solution vector \f$X\f$.
 */
-dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z)
+/*dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z)
 {
   dvariable ln_unsigned_det;
   dvariable sign;
   dvar_vector sol=solve(aa,z,ln_unsigned_det,sign);
   return sol;
-}
+}*/
 
 /** Solve a linear sysgem using LU decomposition.
     \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$. 

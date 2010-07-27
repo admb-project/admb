@@ -79,18 +79,54 @@ dvector solve(const dmatrix& aa,const dvector& z)
 */
   dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z)
   {
-    int lb=aa.indexmin();
-    int ub=aa.indexmax();
+  int n=aa.colsize();
+  int lb=aa.colmin();
+  int ub=aa.colmax();
+  if (lb!=aa.rowmin()||ub!=aa.colmax())
+  {
+    cerr << "Error matrix not square in solve(dmatrix)"<<endl;
+    ad_exit(1);
+  }
+
+
+
+
+    dvar_vector x(lb,ub);
+
+    if(ub==lb)
+    {
+      x(lb)=z(lb)/aa(lb,lb);
+      return(x);
+    }
+    
+    
+
     cltudecomp clu1=xludecomp_pivot(aa);
     ivector index2=clu1.get_index2();
     dmatrix & gamma=clu1.get_U();
     dmatrix & alpha=clu1.get_L();
 
+  //check if invertable
+    int i;
+  double det=1.0;
+  for(i=lb;i<=ub;i++)
+  {
+    det*=clu1(i,i);
+  }
+  if (det==0.0)
+  {
+    cerr << "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
+    ad_exit(1);
+  }
+
+
+
+
     //Solve L*y=b with forward-substitution (before solving Ux=y)
     dvector y(lb,ub);
     dvector tmp1(lb,ub);
     tmp1.initialize();
-    int i;
+
     for(i=lb;i<=ub;i++)
     {
       for(int j=lb;j<i;j++)
@@ -101,7 +137,6 @@ dvector solve(const dmatrix& aa,const dvector& z)
     }
   
     //Now solve U*x=y with back substitution
-    dvar_vector x(lb,ub);
     dvector tmp2(lb,ub);
     tmp2.initialize();
     for(i=ub;i>=lb;i--)
@@ -137,6 +172,7 @@ dvector solve(const dmatrix& aa,const dvector& z)
     save_identifier_string("LAST");
     gradient_structure::GRAD_STACK1->
           set_gradient_stack(df_solve);
+
     return(x);
   }
   static void df_solve(void)
@@ -218,11 +254,11 @@ dvector solve(const dmatrix& aa,const dvector& z)
     dftmp1.initialize();
 
 
-  
     clu1.ludecomp_pivot_for_adjoint_2();
+    dfz.save_dvector_derivatives(z_pos);
   }
 
-
+/*
 dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
   prevariable& ln_unsigned_det,BOR_CONST prevariable& _sign)
 {
@@ -235,4 +271,4 @@ dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
 
   dvar_vector sol=solve(aa,z);
   return sol;
-}
+}*/

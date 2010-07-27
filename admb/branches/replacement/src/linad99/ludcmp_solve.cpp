@@ -78,7 +78,17 @@ dvector solve(const dmatrix& aa,const dvector& z)
     \f$A\cdot X = B\f$, to be solved.
     \return A dvar_vector containing solution vector \f$X\f$.
 */
-  dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z)
+dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z)
+{
+  dvariable ln_unsigned_det;
+  dvariable sign;
+  dvar_vector sol=solve(aa,z,ln_unsigned_det,sign);
+  return sol;
+}
+
+
+dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
+  prevariable& ln_unsigned_det,BOR_CONST prevariable& _sign)
   {
   int n=aa.colsize();
   int lb=aa.colmin();
@@ -89,8 +99,6 @@ dvector solve(const dmatrix& aa,const dvector& z)
     ad_exit(1);
   }
 
-
-
     dvar_vector x(lb,ub);
 
     if(ub==lb)
@@ -99,26 +107,35 @@ dvector solve(const dmatrix& aa,const dvector& z)
       return(x);
     }
 
-
     cltudecomp clu1=xludecomp_pivot(aa);
+    _sign=clu1.get_sign();
     ivector index2=clu1.get_index2();
     dmatrix & gamma=clu1.get_U();
     dmatrix & alpha=clu1.get_L();
 
-  //check if invertable
     int i;
-  double det=1.0;
-  for(i=lb;i<=ub;i++)
-  {
-    det*=clu1(i,i);
-  }
-  if (det==0.0)
-  {
-    cerr << "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
-    ad_exit(1);
-  }
+    double lndet=0.0;
+    // get lndet
+    for (i=lb;i<=ub;i++)
+    {
+      if (gamma(i,i)==0.0)
+      {
+        cerr << "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
+        ad_exit(1);
+      }
+      if (gamma(i,i)<0)
+      {
+        _sign=-_sign;
+        lndet+=log(-gamma(i,i));
+      }
+      else
+      {
+        lndet+=log(gamma(i,i));
+      }
+    }
+    dvariable vldet=nograd_assign(lndet);
 
-
+    ln_unsigned_det=vldet;
 
 
     //Solve L*y=b with forward-substitution (before solving Ux=y)
@@ -256,18 +273,3 @@ dvector solve(const dmatrix& aa,const dvector& z)
     clu1.ludecomp_pivot_for_adjoint_2();
     dfz.save_dvector_derivatives(z_pos);
   }
-
-
-dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
-  prevariable& ln_unsigned_det,BOR_CONST prevariable& _sign)
-{
-//this is just to test an idea
-
-  dvariable lndet=ln_det(aa);
-  ln_unsigned_det=lndet;
-  dvariable sign=0.0;
-  _sign=sign;
-
-  dvar_vector sol=solve(aa,z);
-  return sol;
-}

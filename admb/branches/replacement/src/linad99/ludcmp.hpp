@@ -76,7 +76,7 @@
     }
 
    //Check to see if this is needed
-    cltudecomp & assign_value (const dmatrix& M)
+   /* cltudecomp & assign_value (const dmatrix& M)
     {
       int mmin=indexmin();
       int mmax=indexmax();
@@ -91,7 +91,7 @@
         for (int j=mmin;j<=mmax;j++)
           elem(i,j)=M(i,j);
       return *this;
-    }
+    }*/
 
     dmatrix & get_L(){ return L;}
     int indexmin(){return U.indexmin();}

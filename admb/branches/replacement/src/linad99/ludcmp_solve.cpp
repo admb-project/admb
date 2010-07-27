@@ -90,7 +90,6 @@ dvector solve(const dmatrix& aa,const dvector& z)
 
 
 
-
     dvar_vector x(lb,ub);
 
     if(ub==lb)
@@ -98,8 +97,7 @@ dvector solve(const dmatrix& aa,const dvector& z)
       x(lb)=z(lb)/aa(lb,lb);
       return(x);
     }
-    
-    
+
 
     cltudecomp clu1=xludecomp_pivot(aa);
     ivector index2=clu1.get_index2();
@@ -258,7 +256,7 @@ dvector solve(const dmatrix& aa,const dvector& z)
     dfz.save_dvector_derivatives(z_pos);
   }
 
-/*
+
 dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
   prevariable& ln_unsigned_det,BOR_CONST prevariable& _sign)
 {
@@ -271,4 +269,4 @@ dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
 
   dvar_vector sol=solve(aa,z);
   return sol;
-}*/
+}

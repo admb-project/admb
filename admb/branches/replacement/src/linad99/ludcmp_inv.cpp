@@ -28,7 +28,11 @@
   }
 
 
-
+/** Inverse of a constant matrix by LU decomposition.
+    \ingroup matop
+    \param m1 A dmatrix, \f$M\f$, for which the inverse is to be computed.
+    \return A dmatrix containing \f$M^{-1}\f$.
+*/
   dmatrix inv(_CONST dmatrix& aa)
   {
     int imax,n;

@@ -42,7 +42,7 @@ dvariable ln_det(const dvar_matrix& a)
         lndet+=log(gamma(i,i));
       }
     }
-    dvariable vldet=nograd_assign(lndet);  
+    dvariable vldet=nograd_assign(lndet);
       
     save_identifier_string("OT");
     vldet.save_prevariable_position();
@@ -50,6 +50,8 @@ dvariable ln_det(const dvar_matrix& a)
     set_gradient_stack(df_my_ln_det);
     return vldet;
   }
+/** Adjoint code for dvariable my_ln_det(const dvar_matrix & M,int & sign).
+*/
   static void df_my_ln_det(void)
   {
     double dflndet=restore_prevariable_derivative();

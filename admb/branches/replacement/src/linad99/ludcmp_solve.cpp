@@ -6,7 +6,7 @@
 
 #include <ludcmp.hpp>
 
-cltudecomp ludecomp_pivot(const dmatrix & M);
+cltudecomp ludecomp(const dmatrix & M);
 cltudecomp xludecomp_pivot(const dvar_matrix & M);
 static void df_solve(void);
 
@@ -29,8 +29,7 @@ dvector solve(const dmatrix& aa,const dvector& z)
   dmatrix bb(lb,ub,lb,ub);
   bb=aa;
   cltudecomp dcmp;
-  dcmp = ludecomp_pivot(bb);
-  ivector index2=dcmp.get_index2();
+  dcmp = ludecomp(bb); //use ludecomp_pivot instead
 
   //check if invertable
   double det=1.0;
@@ -53,7 +52,7 @@ dvector solve(const dmatrix& aa,const dvector& z)
     {
       tmp+=dcmp(i,j)*y(j);
     }
-    y(i)=z(index2(i))-tmp;
+    y(i)=z(i)-tmp;
   }
 
   //Now solve U*x=y with back substitution
@@ -95,20 +94,6 @@ dvector solve(const dmatrix& aa,const dvector& z)
 
     if(ub==lb)
     {
-      if (aa(lb,lb)==0.0)
-      {
-        cerr << "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
-        ad_exit(1);
-      }
-      if(aa(lb,lb)<0.0)
-      {
-        _sign=-_sign;
-        ln_unsigned_det = log(-aa(lb,lb));
-      }
-      else
-      {
-        ln_unsigned_det = log(aa(lb,lb));
-      }
       x(lb)=z(lb)/aa(lb,lb);
       return(x);
     }
@@ -188,9 +173,6 @@ dvector solve(const dmatrix& aa,const dvector& z)
 
     return(x);
   }
-/** Adjoint code for dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
-    prevariable& ln_unsigned_det,BOR_CONST prevariable& _sign).
-*/
   static void df_solve(void)
   {
     verify_identifier_string("LAST");

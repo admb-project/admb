@@ -29,7 +29,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
    dmatrix bb(lb, ub, lb, ub);
    bb = aa;
    cltudecomp dcmp;
-   dcmp = ludecomp_pivot(bb);	//use ludecomp_pivot instead
+   dcmp = ludecomp_pivot(bb);
    ivector index2 = dcmp.get_index2();
 
    //check if invertable
@@ -89,8 +89,6 @@ dvar_vector solve(_CONST dvar_matrix & aa, _CONST dvar_vector & z)
       ad_exit(1);
    }
 
-
-
    dvar_vector x(lb, ub);
 
    if (ub == lb)
@@ -98,7 +96,6 @@ dvar_vector solve(_CONST dvar_matrix & aa, _CONST dvar_vector & z)
       x(lb) = z(lb) / aa(lb, lb);
       return (x);
    }
-
 
    cltudecomp clu1 = xludecomp_pivot(aa);
    ivector index2 = clu1.get_index2();
@@ -118,8 +115,6 @@ dvar_vector solve(_CONST dvar_matrix & aa, _CONST dvar_vector & z)
 	 "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
       ad_exit(1);
    }
-
-
 
    //Solve L*y=b with forward-substitution (before solving Ux=y)
    dvector y(lb, ub);
@@ -236,8 +231,6 @@ static void df_solve(void)
    //tmp2.initialize();
    dftmp2.initialize();
 
-
-
    for (i = ub; i >= lb; i--)
    {
       //y(i)=value(z(index2(i)))-tmp1(i);
@@ -253,17 +246,15 @@ static void df_solve(void)
    //tmp1.initialize();
    dftmp1.initialize();
 
-
    clu1.ludecomp_pivot_for_adjoint_2();
    dfz.save_dvector_derivatives(z_pos);
 }
 
-
+//can improve this
 dvar_vector solve(_CONST dvar_matrix & aa, _CONST dvar_vector & z,
 		  prevariable & ln_unsigned_det,
 		  BOR_CONST prevariable & _sign)
 {
-//this is just to test an idea
 
    dvariable lndet = ln_det(aa);
    ln_unsigned_det = lndet;

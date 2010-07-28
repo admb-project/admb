@@ -29,7 +29,8 @@ dvector solve(const dmatrix& aa,const dvector& z)
   dmatrix bb(lb,ub,lb,ub);
   bb=aa;
   cltudecomp dcmp;
-  dcmp = ludecomp(bb); //use ludecomp_pivot instead
+  dcmp = ludecomp_pivot(bb); //use ludecomp_pivot instead
+    ivector index2=dcmp.get_index2();
 
   //check if invertable
   double det=1.0;
@@ -52,7 +53,7 @@ dvector solve(const dmatrix& aa,const dvector& z)
     {
       tmp+=dcmp(i,j)*y(j);
     }
-    y(i)=z(i)-tmp;
+    y(i)=z(index2(i))-tmp;
   }
 
   //Now solve U*x=y with back substitution

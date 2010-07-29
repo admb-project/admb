@@ -1,6 +1,9 @@
-.PHONY: admb_messages
+.PHONY: init_bounded_number_matrix
 
-all: admb_messages
+all: init_bounded_number_matrix
 
 admb_messages:
-	OPTIONS=-s make --directory=admb_messages
+	OPTIONS=-s make --directory=$@
+
+init_bounded_number_matrix:
+	OPTIONS=-s make --directory=$@

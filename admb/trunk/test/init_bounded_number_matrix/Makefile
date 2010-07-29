@@ -1,20 +1,40 @@
-all:
-	export ADMB_HOME=/Users/johnoel/Desktop/admb-trunk3/test/init_bounded_number_matrix/../../build/admb-macos10.6.3-xcode3.2.2-64bit/dist; export PATH=/Users/johnoel/Desktop/admb-trunk3/test/init_bounded_number_matrix/../../build/admb-macos10.6.3-xcode3.2.2-64bit/dist/bin:${PATH}; CXXFLAGS=-I/usr/local/gtest-1.5.0/include LDFLAGS="-L/usr/local/gtest-1.5.0/lib -lgtest" admb init_bounded_number_matrix
+.PHONY: tpl
+TARGET=test_param_init_bounded_number_matrix
+ADMB_HOME=/Users/johnoel/admb-trunk-init_bounded_number_matrix/build/admb-macos10.6.4-xcode3.2.2-64bit/dist
+
+all: clean run tpl
+
+run: $(TARGET)
+	./$(TARGET)
+
+$(TARGET): $(TARGET).o
+	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=-I/usr/local/gtest-1.5.0/include LDFLAGS="-L/usr/local/gtest-1.5.0/lib -lgtest" adlink ${OPTIONS} $(TARGET)
+
+$(TARGET).o: $(TARGET).cpp
+	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=-I/usr/local/gtest-1.5.0/include LDFLAGS="-L/usr/local/gtest-1.5.0/lib -lgtest" adcomp ${OPTIONS} $(TARGET) 
+
+tpl:
+	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=-I/usr/local/gtest-1.5.0/include LDFLAGS="-L/usr/local/gtest-1.5.0/lib -lgtest" admb -s test
+	touch test.dat
+	./test
 
 clean:
-	rm -f admodel.cov
-	rm -f admodel.dep
-	rm -f admodel.hes
-	rm -f eigv.rpt
-	rm -f fmin.log
-	rm -f init_bounded_number_matrix
-	rm -f init_bounded_number_matrix.bar
-	rm -f init_bounded_number_matrix.cor
-	rm -f init_bounded_number_matrix.cpp
-	rm -f init_bounded_number_matrix.eva
-	rm -f init_bounded_number_matrix.htp
-	rm -f init_bounded_number_matrix.log
-	rm -f init_bounded_number_matrix.o
-	rm -f init_bounded_number_matrix.par
-	rm -f init_bounded_number_matrix.std
-	rm -f variance
+	@rm -vf  $(TARGET).o
+	@rm -vf  $(TARGET)
+	@rm -vf test
+	@rm -vf test.bar
+	@rm -vf test.dat
+	@rm -vf variance
+	@rm -vf test.eva
+	@rm -vf test.log
+	@rm -vf test.par
+	@rm -vf test.cpp
+	@rm -vf test.cor
+	@rm -vf test.std
+	@rm -vf test.dat
+	@rm -vf admodel.hes
+	@rm -vf fmin.log
+	@rm -vf test.htp
+	@rm -vf admodel.cov
+	@rm -vf admodel.dep
+	@rm -vf eigv.rpt

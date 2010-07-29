@@ -30,39 +30,37 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-//2GLOBALS_SECTION
-GLOBALS_SECTION
-  #include "test_init_bounded_number_matrix.h"
-
-  void me();
-
 DATA_SECTION
-  init_int rowmin
-  init_int rowmax
-  init_int colmin
-  init_int colmax
-
-  init_matrix lower_bounds(rowmin,rowmax,colmin,colmax)
-  init_matrix upper_bounds(rowmin,rowmax,colmin,colmax)
-  init_imatrix phases(rowmin,rowmax,colmin,colmax)
-
-  //DEFECT: should allow spaces after commas
-  //-> init_matrix lower_bounds(rowmin, rowmax, colmin, colmax)
-
+  int rowmin
+  !! rowmin = 1;
+  int rowmax
+  !! rowmax = 5;
+  vector lower_bounds_vector(rowmin,rowmax)
+  !! lower_bounds_vector = 4;
+  vector upper_bounds_vector(rowmin,rowmax)
+  !! upper_bounds_vector = 10;
+  ivector phases_vector(rowmin,rowmax)
+  !! phases_vector = 1;
+  int colmin
+  !! colmin = 1;
+  int colmax
+  !! colmax = 5;
+  matrix lower_bounds_matrix(rowmin,rowmax,colmin,colmax)
+  !! lower_bounds_matrix = 4;
+  matrix upper_bounds_matrix(rowmin,rowmax,colmin,colmax)
+  !! upper_bounds_matrix = 4;
+  imatrix phases_matrix(rowmin,rowmax,colmin,colmax)
+  !! phases_matrix = 1;
 PARAMETER_SECTION
-  init_number a
-  !!//init_bounded_number_matrix ibnm(rowmin, rowmax, colmin, colmax, lower_bounds, upper_bounds, phases);
+  init_bounded_number_vector ibnv(rowmin,rowmax,lower_bounds_vector,upper_bounds_vector,phases_vector)
+  init_bounded_number_matrix pibnm(rowmin,rowmax,rowmin,rowmax,lower_bounds_vector,upper_bounds_vector,phases_vector)
   objective_function_value f
-
-
 PROCEDURE_SECTION
-  param_init_bounded_number_matrix ibnm;
-  //j;
-  for (int i = rowmin; i <= rowmax; i++)
-  {
-    //f += ibnm(i);
-    f = a * a;
-  }
+  dvar_vector v(ibnv);
+  f += norm2(v);
 
-  //me(); 
+  dvar_matrix m(pibnm);
+  f += norm2(m);
+
+GLOBALS_SECTION
+  #include "param_init_bounded_number_matrix.h"

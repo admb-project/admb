@@ -46,9 +46,17 @@ DATA_SECTION
   int colmax
   !! colmax = 5;
   matrix lower_bounds_matrix(rowmin,rowmax,colmin,colmax)
-  !! lower_bounds_matrix = 4;
+  !! double value = 0;
+  !! for (int i = rowmin; i <= rowmax; i++)
+  !! {
+  !!   for (int j = colmin; i <= colmax; i++)
+  !!   {
+  !!     lower_bounds_matrix(i, j) = value;
+  !!     value += 0.5;
+  !!   } 
+  !! } 
   matrix upper_bounds_matrix(rowmin,rowmax,colmin,colmax)
-  !! upper_bounds_matrix = 8;
+  !! upper_bounds_matrix = 100;
   imatrix phases_matrix(rowmin,rowmax,colmin,colmax)
   !! phases_matrix = 1;
 PARAMETER_SECTION

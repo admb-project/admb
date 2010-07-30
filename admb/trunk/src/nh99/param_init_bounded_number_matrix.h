@@ -20,15 +20,15 @@ public:
    */
   void allocate(int rowmin, int rowmax, 
                 int colmin, int colmax, 
-                const double_index_type& bmin, const double_index_type& bmax, 
+                const dmatrix& bmin, const dmatrix& bmax, 
                 const char* s);
   /**
    *
    */
   void allocate(int rowmin, int rowmax, 
                 int colmin, int colmax, 
-                const double_index_type& bmin, const double_index_type& bmax, 
-                const index_type& phase_start,
+                const dmatrix& bmin, const dmatrix& bmax, 
+                const imatrix& phase_start,
                 const char* s);
   /**
    *

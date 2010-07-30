@@ -6,18 +6,17 @@ param_init_bounded_number_matrix::param_init_bounded_number_matrix(): index_min(
 }
 void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax, 
                                                 int colmin, int colmax, 
-                                                const double_index_type& bmin, const double_index_type& bmax, 
+                                                const dmatrix& bmin, const dmatrix& bmax, 
                                                 const char* s)
 {
-  imatrix m(rowmin, rowmax, colmin, colmax);
-  m = 1;
-  index_type phase_start(m);
+  imatrix phase_start(rowmin, rowmax, colmin, colmax); 
+  phase_start = 1;
   allocate(rowmin, rowmax, colmin, colmax, bmin, bmax, phase_start, s);
 }
 void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax, 
                                                 int colmin, int colmax, 
-                                                const double_index_type& bmin, const double_index_type& bmax, 
-                                                const index_type& phase_start,
+                                                const dmatrix& bmin, const dmatrix& bmax, 
+                                                const imatrix& phase_start,
                                                 const char* s)
 {
   index_min = rowmin;
@@ -32,6 +31,7 @@ void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
       exit(1);
     }
     v -= index_min;
+
     for (int i = index_min; i <= index_max; i++)
     {
       /*if (it) v[i].set_initial_value(it[i]);*/

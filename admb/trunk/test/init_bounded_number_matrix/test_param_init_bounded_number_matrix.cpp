@@ -40,15 +40,12 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
 TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_02)
 {
   dmatrix b(1, 5, 1, 5);
-  double_index_type bmin(b);
-  double_index_type bmax(b);
   imatrix m(1, 5, 1, 5);
-  index_type phase_start(m);
   param_init_bounded_number_matrix v;
   v.allocate(1, 5, 
              1, 5,
-             bmin, bmax,
-             phase_start,
+             b, b,
+             m,
              "test");
 
   if (v.allocated() == true 
@@ -66,15 +63,12 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
 TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_03)
 {
   dmatrix b(1, 5, 1, 5);
-  double_index_type bmin(b);
-  double_index_type bmax(b);
   imatrix m(1, 5, 1, 5);
-  index_type phase_start(m);
   param_init_bounded_number_matrix v;
   v.allocate(1, 5, 
              1, 5,
-             bmin, bmax,
-             phase_start,
+             b, b,
+             m,
              "test");
 
   v.set_scalefactor(1);
@@ -112,15 +106,12 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
 TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_04)
 {
   dmatrix b(1, 5, 1, 5);
-  double_index_type bmin(b);
-  double_index_type bmax(b);
   imatrix m(1, 5, 1, 5);
-  index_type phase_start(m);
   param_init_bounded_number_matrix v;
   v.allocate(1, 5, 
              1, 5,
-             bmin, bmax,
-             phase_start,
+             b, b,
+             m,
              "test");
 
   dmatrix scalefactor(1, 5, 1, 5);
@@ -160,15 +151,12 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
 TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_05)
 {
   dmatrix b(1, 5, 1, 5);
-  double_index_type bmin(b);
-  double_index_type bmax(b);
   imatrix m(1, 5, 1, 5);
-  index_type phase_start(m);
   param_init_bounded_number_matrix v;
   v.allocate(1, 5, 
              1, 5,
-             bmin, bmax,
-             phase_start,
+             b, b,
+             m,
              "test");
   try
   {
@@ -192,15 +180,12 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
 TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_06)
 {
   dmatrix b(1, 5, 1, 5);
-  double_index_type bmin(b);
-  double_index_type bmax(b);
   imatrix m(1, 5, 1, 5);
-  index_type phase_start(m);
   param_init_bounded_number_matrix v;
   v.allocate(1, 5, 
              1, 5,
-             bmin, bmax,
-             phase_start,
+             b, b,
+             m,
              "test");
   try
   {
@@ -224,15 +209,12 @@ TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_0
 TEST_F(test_param_init_bounded_number_matrix, param_init_bounded_number_matrix_07)
 {
   dmatrix b(1, 5, 1, 5);
-  double_index_type bmin(b);
-  double_index_type bmax(b);
   imatrix m(1, 5, 1, 5);
-  index_type phase_start(m);
   param_init_bounded_number_matrix v;
   v.allocate(1, 5, 
              1, 5,
-             bmin, bmax,
-             phase_start,
+             b, b,
+             m,
              "test");
   try
   {

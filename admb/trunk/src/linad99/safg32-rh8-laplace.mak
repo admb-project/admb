@@ -3,13 +3,13 @@
 LIBNAME = libads.a
 SRCDIR =  src
 .SUFFIXES: .obj .cpp
-vpath %.obj $(LIBPATH)$
+vpath %.obj $(LIBPATH)
 
 include objects.lst
 
 all: $(LIBPATH)/$(LIBNAME) disk
 
-$(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPARSE) 
+$(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPARSE)
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 
 $(OBJSPARSE): %.obj: %.cpp

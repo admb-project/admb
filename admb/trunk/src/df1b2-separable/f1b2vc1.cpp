@@ -5,7 +5,7 @@
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <df1b2fun.h>
-
+#include "admb_messages.h"
 
 df1b2vector operator + (const df1b2vector& _x,const df1b2vector& _y)
 {
@@ -333,67 +333,51 @@ df1b2vector& df1b2vector::operator /= (const df1b2variable& _x)
 #if defined(SAFE_ARRAYS)
 df1b2variable& df1b2matrix::operator () (int i,int j) const 
 {
-  if (i<indexmin())
+  if (i < indexmin())
   {
-    cerr << "Index too low in df1b2matrix& operator () (int i)"
-      " value = " << i << endl;  
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2variable& df1b2matrix::operator () (int i, int j) const", indexmin(), indexmax(), i);
   }
-  if (i>indexmax())
+  if (i > indexmax())
   {
-    cerr << "Index too high in df1b2matrix& operator () (int i)"
-      " value = " << i << endl;  
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "df1b2variable& df1b2matrix::operator () (int i, int j) const", indexmin(), indexmax(), i);
   }
   return (df1b2variable&)(v[i][j]);
 }
 df1b2vector& df1b2matrix::operator [] (int i) const
 {
-  if (i<indexmin())
+  if (i < indexmin())
   {
-    cerr << "Index too low in df1b2variable& operator () (int i)"
-      " value = " << i << endl;  
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2vector& df1b2matrix::operator [] (int i) const", indexmin(), indexmax(), i);
   }
-  if (i>indexmax())
+  if (i > indexmax())
   {
-    cerr << "Index too high in df1b2variable& operator () (int i)"
-      " value = " << i << endl;  
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "df1b2vector& df1b2matrix::operator [] (int i) const", indexmin(), indexmax(), i);
   }
   return (df1b2vector&)(v[i]);
 }
 
 df1b2vector& df1b2matrix::operator () (int i) const 
 {
-  if (i<indexmin())
+  if (i < indexmin())
   {
-    cerr << "Index too low in df1b2variable& operator () (int i)"
-      " value = " << i << endl;  
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2vector& df1b2matrix::operator () (int i) const", indexmin(), indexmax(), i);
   }
-  if (i>indexmax())
+  if (i > indexmax())
   {
-    cerr << "Index too high in df1b2variable& operator () (int i)"
-      " value = " << i << endl;  
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "df1b2vector& df1b2matrix::operator () (int i) const", indexmin(), indexmax(), i);
   }
   return (df1b2vector&)(v[i]);
 }
 
 df1b2variable& df1b2vector::operator () (int i) const
 { 
-  if (i<indexmin())
+  if (i < indexmin())
   {
-    cerr << "Index too low in df1b2variable& operator () (int i)"
-      " value = " << i << endl;  
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2variable& df1b2vector::operator () (int i) const", indexmin(), indexmax(), i);
   }
-  if (i>indexmax())
+  if (i > indexmax())
   {
-    cerr << "Index too high in df1b2variable& operator () (int i)"
-      " value = " << i << endl;  
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "df1b2variable& df1b2vector::operator () (int i) const", indexmin(), indexmax(), i);
   }
   return *(v+i);
   //return *((df1b2variable*)((char*)(v)+i*pointersize()));
@@ -419,17 +403,13 @@ const df1b2variable& df1b2vector::operator () (int i) const
 */
 df1b2variable& df1b2vector::operator [] (int i) const
 { 
-  if (i<indexmin())
+  if (i < indexmin())
   {
-    cerr << "Index too low in df1b2variable& operator () (int i)"
-      " value = " << i << endl;  
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2variable& df1b2vector::operator [] (int i) const", indexmin(), indexmax(), i);
   }
-  if (i>indexmax())
+  if (i > indexmax())
   {
-    cerr << "Index too high in df1b2variable& operator () (int i)"
-      " value = " << i << endl;  
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "df1b2variable& df1b2vector::operator [] (int i) const", indexmin(), indexmax(), i);
   }
   //return *(v+i);
   return *((df1b2variable*)((char*)(v)+i*pointersize()));

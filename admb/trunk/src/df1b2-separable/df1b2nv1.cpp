@@ -5,7 +5,7 @@
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <df1b2fun.h>
-
+#include "admb_messages.h"
 
  df1b2_init_bounded_number_vector::df1b2_init_bounded_number_vector()
  {
@@ -13,28 +13,20 @@
  }
 
 #if defined(SAFE_ALL)
- df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator [] 
-   (int i) 
+ df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator [] (int i) 
  { 
-   if (i< indexmin() || i>indexmax())
+   if (i < indexmin() || i > indexmax())
    {
-     cerr << "Index out of randge in "
-      "df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator []"
-     << " value was " << i << endl;
-     ad_exit(1);
+     ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator [] (int i)", indexmin(), indexmax(), i);
    }
    return v[i];
  }
 
- df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator ()
-   (int i) 
+ df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator () (int i) 
  { 
-   if (i< indexmin() || i>indexmax())
+   if (i < indexmin() || i > indexmax())
    {
-     cerr << "Index out of randge in "
-      "df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator ()"
-     << " value was " << i << endl;
-     ad_exit(1);
+     ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator () (int i)", indexmin(), indexmax(), i);
    }
    return v[i];
  }
@@ -178,28 +170,20 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
  }
 */
 #if defined(SAFE_ALL)
- df1b2_init_number& df1b2_init_number_vector::operator [] 
-   (int i) 
+ df1b2_init_number& df1b2_init_number_vector::operator [] (int i) 
  { 
-   if (i< indexmin() || i>indexmax())
+   if (i < indexmin() || i > indexmax())
    {
-     cerr << "Index out of randge in "
-      "df1b2_init_number& df1b2_init_number_vector::operator []"
-     << " value was " << i << endl;
-     ad_exit(1);
+     ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_number& df1b2_init_number_vector::operator [] (int i)", indexmin(), indexmax(), i);
    }
    return v[i];
  }
 
- df1b2_init_number& df1b2_init_number_vector::operator ()
-   (int i) 
+ df1b2_init_number& df1b2_init_number_vector::operator () (int i) 
  { 
-   if (i< indexmin() || i>indexmax())
+   if (i < indexmin() || i > indexmax())
    {
-     cerr << "Index out of randge in "
-      "df1b2_init_number& df1b2_init_number_vector::operator ()"
-     << " value was " << i << endl;
-     ad_exit(1);
+     ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_number& df1b2_init_number_vector::operator () (int i)", indexmin(), indexmax(), i);
    }
    return v[i];
  }

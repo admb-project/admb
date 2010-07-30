@@ -4,11 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-
-
-
 #include "fvar.hpp"
+#include "admb_messages.h"
 
+/* JCA: Need sum(lvector)
 AD_LONG_INT sum(_CONST lmatrix& m)
 {
   AD_LONG_INT ssum=0;
@@ -20,14 +19,13 @@ AD_LONG_INT sum(_CONST lmatrix& m)
   }
   return ssum;
 }
+*/
 
 AD_LONG_INT colsum(_CONST lmatrix& m,int col)
 { 
-  if (col<m.colmin() || col>m.colmax())
+  if (col < m.colmin() || col > m.colmax())
   {
-    cerr << "Row out of bounds in function"
-            " colsum(_CONST imatrix& m,int col)" << endl;
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "AD_LONG_INT colsum(_CONST lmatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
   AD_LONG_INT isum=0;
   int mmin=m.rowmin();
@@ -39,14 +37,11 @@ AD_LONG_INT colsum(_CONST lmatrix& m,int col)
   return isum;
 }
 
-
 lvector column(_CONST lmatrix& m,int col)
 { 
-  if (col<m.colmin() || col>m.colmax())
+  if (col < m.colmin() || col > m.colmax())
   {
-    cerr << "Row out of bounds in function"
-            " column(_CONST imatrix& m,int col)" << endl;
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "lvector column(_CONST lmatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
   int mmin=m.rowmin();
   int mmax=m.rowmax();
@@ -57,5 +52,3 @@ lvector column(_CONST lmatrix& m,int col)
   }
   return tmp;
 }
-
-

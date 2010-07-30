@@ -5,48 +5,37 @@
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <admodel.h>
+#include "admb_messages.h"
 
 
 #if !defined(OPT_LIB)
    param_init_vector& param_init_vector_vector::operator [] (int i) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_vector_vector operator []"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_vector& param_init_vector_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_vector_vector operator []"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_vector& param_init_vector_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }
    param_init_vector& param_init_vector_vector::operator () (int i) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_vector_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_vector& param_init_vector_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_vector_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_vector& param_init_vector_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }
    prevariable param_init_vector_vector::operator () (int i,int j) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_vector_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "prevariable param_init_vector_vector::operator () (int i, int j)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_vector_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "prevariable param_init_vector_vector::operator () (int i, int j)", indexmin(), indexmax(), i);
      }
 #if defined(__BORLANDC__)
 #  if (__BORLANDC__  >= 0x0540) 
@@ -65,56 +54,40 @@
    param_init_matrix& param_init_matrix_vector::operator [] (int i) 
    {
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_matrix_vector operator []"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_matrix& prevariable param_init_vector_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_matrix_vector operator []"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_matrix& prevariable param_init_vector_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }
    param_init_matrix& param_init_matrix_vector::operator () (int i) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_matrix& param_init_matrix_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_matrix& param_init_matrix_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }
    dvar_vector& param_init_matrix_vector::operator () (int i,int j) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "dvar_vector& param_init_matrix_vector::operator () (int i, int j)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "dvar_vector& param_init_matrix_vector::operator () (int i, int j)", indexmin(), indexmax(), i);
      }
      return v[i][j];
    }
    prevariable param_init_matrix_vector::operator () (int i,int j,int k) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "prevariable param_init_matrix_vector::operator () (int i, int j, int k)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "prevariable param_init_matrix_vector::operator () (int i, int j, int k)", indexmin(), indexmax(), i);
      }
 #if defined(__BORLANDC__)
 #  if (__BORLANDC__  >= 0x0540) 
@@ -130,47 +103,33 @@
 #  endif
 #endif
    }
-   param_init_bounded_vector& param_init_bounded_vector_vector::operator [] 
-     (int i) 
+   param_init_bounded_vector& param_init_bounded_vector_vector::operator [] (int i) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_bounded_vector_vector operator []"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_bounded_vector& param_init_bounded_vector_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_bounded_vector_vector operator []"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_bounded_vector& param_init_bounded_vector_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }
-   param_init_bounded_vector& param_init_bounded_vector_vector::operator () 
-     (int i) 
+   param_init_bounded_vector& param_init_bounded_vector_vector::operator () (int i) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_bounded_vector_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_bounded_vector& param_init_bounded_vector_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_bounded_vector_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_bounded_vector& param_init_bounded_vector_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }
    prevariable param_init_bounded_vector_vector::operator () (int i,int j) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_bounded_vector_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "prevariable param_init_bounded_vector_vector::operator () (int i, int j)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_bounded_vector_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "prevariable param_init_bounded_vector_vector::operator () (int i, int j)", indexmin(), indexmax(), i);
      }
 #if defined(__BORLANDC__)
 #  if (__BORLANDC__  >= 0x0540) 
@@ -190,56 +149,40 @@
    param_init_bounded_matrix& param_init_bounded_matrix_vector::operator [] (int i) 
    {
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_bounded_matrix_vector operator []"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_bounded_matrix& param_init_bounded_matrix_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_bounded_matrix_vector operator []"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_bounded_matrix& param_init_bounded_matrix_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }
    param_init_bounded_matrix& param_init_bounded_matrix_vector::operator () (int i) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_bounded_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_bounded_matrix& param_init_bounded_matrix_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_bounded_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_bounded_matrix& param_init_bounded_matrix_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }
    dvar_vector& param_init_bounded_matrix_vector::operator () (int i,int j) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_bounded_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "dvar_vector& param_init_bounded_matrix_vector::operator () (int i, int j)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_bounded_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "dvar_vector& param_init_bounded_matrix_vector::operator () (int i, int j)", indexmin(), indexmax(), i);
      }
      return v[i][j];
    }
    prevariable param_init_bounded_matrix_vector::operator () (int i,int j,int k) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_bounded_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "prevariable param_init_bounded_matrix_vector::operator () (int i, int j, int k)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_bounded_matrix_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "prevariable param_init_bounded_matrix_vector::operator () (int i, int j, int k)", indexmin(), indexmax(), i);
      }
 #if defined(__BORLANDC__)
 #  if (__BORLANDC__  >= 0x0540) 
@@ -255,61 +198,43 @@
 #  endif
 #endif
    }
-
    param_init_number& param_init_number_vector::operator [] (int i) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_number_vector operator []"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_number& param_init_number_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_number_vector operator []"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_number& param_init_number_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }
    param_init_number& param_init_number_vector::operator () (int i) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_number_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_number& param_init_number_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_number_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_number& param_init_number_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }
-
    param_init_bounded_number& param_init_bounded_number_vector::operator [] (int i) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_bounded_number_vector operator []"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_bounded_number& param_init_bounded_number_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_bounded_number_vector operator []"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_bounded_number& param_init_bounded_number_vector::operator [] (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }
    param_init_bounded_number& param_init_bounded_number_vector::operator () (int i) 
    { 
      if (i<indexmin()) {
-       cerr << "Index too low in param_init_bounded_number_vector operator ()"
-         " value " << i << " minimum " << indexmin() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_bounded_number& param_init_bounded_number_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      if (i>indexmax()) {
-       cerr << "Index too high in param_init_bounded_number_vector operator ()"
-         " value " << i << " minimum " << indexmax() << endl;
-       ad_exit(1); 
+       ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_bounded_number& param_init_bounded_number_vector::operator () (int i)", indexmin(), indexmax(), i);
      }
      return v[i];
    }

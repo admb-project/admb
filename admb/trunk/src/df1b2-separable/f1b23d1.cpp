@@ -5,7 +5,7 @@
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <df1b2fun.h>
-
+#include "admb_messages.h"
 
 df1b23array::df1b23array(int nrl,int nrh,int ncl,int nch,int nxl,int nxh)
 {
@@ -238,40 +238,36 @@ df1b2variable sum(const df1b23array& _x)
 #if !defined(OPT_LIB)
 df1b2variable& df1b23array::operator () (int i,int j,int k)
 {
-  if (i<indexmin() || i>indexmax())
+  if (i < indexmin() || i > indexmax())
   {
-    cerr << "Index out of bounds in access operator" << endl;
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "df1b2variable& df1b23array::operator () (int i,int j,int k)", indexmin(), indexmax(), i);
   }
   return v[i][j][k];
 }
 
 df1b2vector& df1b23array::operator () (int i,int j)
 {
-  if (i<indexmin() || i>indexmax())
+  if (i < indexmin() || i > indexmax())
   {
-    cerr << "Index out of bounds in access operator" << endl;
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "df1b2vector& df1b23array::operator () (int i,int j)", indexmin(), indexmax(), i);
   }
   return v[i][j];
 }
 
 df1b2matrix& df1b23array::operator () (int i)
 {
-  if (i<indexmin() || i>indexmax())
+  if (i < indexmin() || i > indexmax())
   {
-    cerr << "Index out of bounds in access operator" << endl;
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "df1b2matrix& df1b23array::operator () (int i)", indexmin(), indexmax(), i);
   }
   return v[i];
 }
 
 df1b2matrix& df1b23array::operator [] (int i)
 {
-  if (i<indexmin() || i>indexmax())
+  if (i < indexmin() || i > indexmax())
   {
-    cerr << "Index out of bounds in access operator" << endl;
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "df1b2matrix& df1b23array::operator [] (int i)", indexmin(), indexmax(), i);
   }
   return v[i];
 }

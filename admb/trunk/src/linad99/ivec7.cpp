@@ -16,31 +16,26 @@
 #endif
 
 #include <stdlib.h>
+#include "admb_messages.h"
 
 #ifndef OPT_LIB
  int& ivector::operator[] (int i)
  {
    #ifdef SAFE_ARRAYS
-     if (!v)
-     {
+   if (!v)
+   {
        cerr << "\nattempting to acces non-allocated ivector in ivector::operator[]";
        ad_exit(1);
        cerr << endl;
-     }
-     if (i>indexmax())
-     {
-       cerr << "\narray bound exceeded -- index too high in ivector::operator[]";
-       cerr << "index value " << i << " max value " << indexmax() << endl;
-       cerr << endl;
-       ad_exit(1);
-     }
-
-     if (i<indexmin())
-     {
-       cerr << "\narray bound exceeded -- index too low in ivector::operator[]";
-       cerr << endl;
-       ad_exit(1);
-     }
+   }
+   if (i > indexmax())
+   {
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high", "int& ivector::operator[] (int i)", indexmin(), indexmax(), i);
+   }
+   if (i<indexmin())
+   {
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low", "int& ivector::operator[] (int i)", indexmin(), indexmax(), i);
+   }
    #endif
    return(*(v+i));
  }
@@ -48,26 +43,20 @@
  int& ivector::operator() (int i)
  {
    #ifdef SAFE_ARRAYS
-     if (!v)
-     {
+   if (!v)
+   {
        cerr << "\nattempting to acces non-allocated ivector in ivector::operator()";
        ad_exit(1);
        cerr << endl;
-     }
-     if (i>indexmax())
-     {
-       cerr << "\narray bound exceeded -- index too high in ivector::operator()";
-       cerr << "index value " << i << " max value " << indexmax() << endl;
-       cerr << endl;
-       ad_exit(1);
-     }
-
-     if (i<indexmin())
-     {
-       cerr << "\narray bound exceeded -- index too low in ivector::operator[]";
-       cerr << endl;
-       ad_exit(1);
-     }
+   }
+   if (i > indexmax())
+   {
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high", "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
+   }
+   if (i < indexmin())
+   {
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low", "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
+   }
    #endif
    return(*(v+i));
  }
@@ -131,4 +120,3 @@
 #endif
 
 void abcde_f(void) { int i=1;}
-

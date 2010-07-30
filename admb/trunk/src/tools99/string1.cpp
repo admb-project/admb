@@ -8,33 +8,22 @@
 #include <string.h>
 #include <stdlib.h>
 #include <safe_mem.h>
+#include "admb_messages.h"
 
 adstring adstring::operator()(int i, int j)
 {
   if (i < 1 || i > (int) shape->size())
   {
-    cerr << "First index out of bounds in adstring::operator () (int,int)\n"
-    << "Index value was " << i << " The size of this adstring is "
-    << shape->size() << "\n";
-    exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("First index out of bounds", "adstring adstring::operator()(int i, int j)", 1, shape->size(), i);
   }
-  if (j < 1 || j > (int) shape->size())
-  {
-    cerr << "Second index out of bounds in adstring::operator () (int,int)\n"
-    << "Index value was " << j << " The size of this adstring is "
-    << shape->size() << "\n";
-    exit(1);
-  }
-
   if (i > j)
   {
-    cerr << "First index must be less than or equal to second index in"
-    " adstring::operator () (int,int)\n"
-    << "Index value was " << i << " The size of this adstring is "
-    << shape->size() << "\n";
-    exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("First index must be less than or equal to second index", "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
   }
- 
+  if (j > (int) shape->size())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("Second index out of bounds", "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
+  }
   adstring tmp(1, size_t(j - i + 1));
   for (int ii = i; ii <= j; ii++)
   {
@@ -48,28 +37,16 @@ adstring adstring::operator()(int i, int j) _CONST
 {
   if (i < 1 || i > (int) shape->size())
   {
-    cerr << "First index out of bounds in adstring::operator () (int,int)\n"
-    << "Index value was " << i << " The size of this adstring is "
-    << shape->size() << "\n";
-    exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("First index out of bounds", "adstring adstring::operator()(int i, int j)", 1, shape->size(), i);
   }
-  if (j < 1 || j > (int) shape->size())
-  {
-    cerr << "Second index out of bounds in adstring::operator () (int,int)\n"
-    << "Index value was " << j << " The size of this adstring is "
-    << shape->size() << "\n";
-    exit(1);
-  }
-
   if (i > j)
   {
-    cerr << "First index must be less than or equal to second index in"
-    " adstring::operator () (int,int)\n"
-    << "Index value was " << i << " The size of this adstring is "
-    << shape->size() << "\n";
-    exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("First index must be less than or equal to second index", "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
   }
- 
+  if (j > (int) shape->size())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("Second index out of bounds", "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
+  }
   adstring tmp(1, size_t(j - i + 1));
   for (int ii = i; ii <= j; ii++)
   {
@@ -138,10 +115,7 @@ unsigned char & adstring::operator()(_CONST int i)
 {
   if (i < 1 || i > (int) shape->size())
   {
-    cerr << "Index out of bounds in adstring::operator () (const int)\n"
-    << "Index value was " << i << " The size of this adstring is "
-    << shape->size() << "\n";
-    exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "unsigned char & adstring::operator()(int i)", 1, shape->size(), i);
   }
   return ( ((unsigned char *)s)[i]);
 }
@@ -151,10 +125,7 @@ _CONST unsigned char & adstring::operator()(_CONST int i) _CONST
 {
   if (i < 1 || i > (int) shape->size())
   {
-    cerr << "Index out of bounds in adstring::operator () (const int)\n"
-    << "Index value was " << i << " The size of this adstring is "
-    << shape->size() << "\n";
-    exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "unsigned char & adstring::operator()(int i) _CONST", 1, shape->size(), i);
   }
   return (s[i]);
 }
@@ -163,9 +134,7 @@ _CONST unsigned char & adstring::operator[] (_CONST int i) _CONST
 {
   if (i < 1 || i > (int) shape->size())
   {
-    cerr << "Index out of bounds in adstring::operator () (const int)\n"
-    << "Index value was " << i << " The size of this adstring is "
-    << shape->size() << "\n";
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "unsigned char & adstring::operator[](int i) _CONST", 1, shape->size(), i);
   }
   return (s[i]);
 }

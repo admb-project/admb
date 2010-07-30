@@ -7,6 +7,7 @@
 
 
 #include "fvar.hpp"
+#include "admb_messages.h"
 
   dvector column(_CONST dmatrix& m,int j)
   {
@@ -22,11 +23,7 @@
   {
     if (j < m.colmin() || j > m.colmax())
     {
-      cerr << " Invalid matrix column specified in "
-        "dvector extract_column(_CONST dmatrix& m,int j)\n value specified "
-        "was " << j << " valid range is " << m.colmin() <<
-        " to " << m.colmax() << "\n";
-      ad_exit(1);
+      ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix column specified", "dvector extract_column(_CONST dmatrix& m,int j)", m.colmin(), m.colmax(), j);
     }  
     int mmin=m.rowmin();
     int mmax=m.rowmax();
@@ -43,11 +40,7 @@
   {
     if (i < m.rowmin() || i > m.rowmax())
     {
-      cerr << " Invalid matrix row specified in "
-        "dvector extract_row(_CONST dmatrix& m,int i)\n value specified "
-        "was " << i << " valid range is " << m.rowmin() <<
-        " to " << m.rowmax() << "\n";
-      ad_exit(1);
+      ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix row specified", "dvector extract_row(_CONST dmatrix& m,int i)", m.rowmin(), m.rowmax(), i);
     }  
     dvector tmp(m.colmin(),m.colmax());
 

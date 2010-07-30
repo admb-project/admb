@@ -5,21 +5,19 @@
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
+#include "admb_messages.h"
+
 #if !defined(OPT_LIB)
  dvector& dmatrix::operator() (int i)
  {
 #  ifdef SAFE_ARRAYS
      if (i<rowmin())
      {
-       cerr << "matrix bound exceeded -- row index too low in dmatrix::operator()"
-             << "value was" << i;
-       ad_exit(21);
+       ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low", "dvector& dmatrix::operator() (int i)", rowmin(), rowmax(), i);
      }
      if (i>rowmax())
      {
-       cerr << "matrix bound exceeded -- row index too high in dmatrix::operator()"
-             << "value was" << i;
-       ad_exit(22);
+       ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high", "dvector& dmatrix::operator() (int i)", rowmin(), rowmax(), i);
      }
 #  endif
    return *(m+i);

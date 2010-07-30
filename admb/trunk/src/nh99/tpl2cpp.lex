@@ -1133,6 +1133,11 @@ DATA_SECTION  {
     BEGIN INIT_BOUNDED_VECTOR_DEF;
     fprintf(fdat,"%s","  param_init_bounded_number_vector ");
                      }
+<DEFINE_PARAMETERS>init_bounded_number_matrix {
+
+    BEGIN INIT_BOUNDED_MATRIX_DEF;
+    fprintf(fdat,"%s","  param_init_bounded_number_matrix ");
+                     }
 
 <DEFINE_PARAMETERS>splus_init_vector |
 <DEFINE_PARAMETERS>dll_init_vector {

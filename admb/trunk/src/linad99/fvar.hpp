@@ -2497,6 +2497,7 @@ double dmax(double i, double j);
 #if defined(__NUMBERVECTOR__)
   class param_init_number_vector;
   class param_init_bounded_number_vector;
+  class param_init_bounded_number_matrix;
   class param_init_vector_vector;
   class param_init_bounded_vector_vector;
 #endif
@@ -2792,6 +2793,7 @@ friend class dvar3_array;
 # if defined(__NUMBERVECTOR__)
     dvar_matrix(const param_init_vector_vector& );
     dvar_matrix(const param_init_bounded_vector_vector&);
+    dvar_matrix(const param_init_bounded_number_matrix&);
 # endif
   dvar_matrix sub(int,int);
 

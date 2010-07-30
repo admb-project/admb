@@ -6,6 +6,7 @@
  */
 
 #include "fvar.hpp"
+#include "param_init_bounded_number_matrix.h"
 
 
  dvar_matrix::dvar_matrix(int nrl,int nrh,int ncl,int nch)
@@ -30,6 +31,23 @@
    #ifdef SAFE_ARRAYS
      initialize();
    #endif 
+ }
+
+ dvar_matrix::dvar_matrix(const param_init_bounded_number_matrix& pibnm)
+ {
+   int indexmin = pibnm.indexmin();
+   int indexmax = pibnm.indexmax();
+   allocate(indexmin, indexmax);
+
+   #ifdef SAFE_ARRAYS
+   initialize();
+   #endif
+
+   for (int i = indexmin; i <= indexmax; i++)
+   {
+     dvar_vector v(pibnm(i));
+     this->operator()(i) = v;
+   }
  }
 
  dvar_matrix dvar_matrix::sub(int nrl,int nrh)

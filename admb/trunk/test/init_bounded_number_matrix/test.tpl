@@ -48,12 +48,12 @@ DATA_SECTION
   matrix lower_bounds_matrix(rowmin,rowmax,colmin,colmax)
   !! lower_bounds_matrix = 4;
   matrix upper_bounds_matrix(rowmin,rowmax,colmin,colmax)
-  !! upper_bounds_matrix = 4;
+  !! upper_bounds_matrix = 8;
   imatrix phases_matrix(rowmin,rowmax,colmin,colmax)
   !! phases_matrix = 1;
 PARAMETER_SECTION
   init_bounded_number_vector ibnv(rowmin,rowmax,lower_bounds_vector,upper_bounds_vector,phases_vector)
-  init_bounded_number_matrix pibnm(rowmin,rowmax,rowmin,rowmax,lower_bounds_vector,upper_bounds_vector,phases_vector)
+  init_bounded_number_matrix pibnm(rowmin,rowmax,rowmin,rowmax,lower_bounds_matrix,upper_bounds_matrix,phases_matrix)
   objective_function_value f
 PROCEDURE_SECTION
   dvar_vector v(ibnv);
@@ -61,6 +61,3 @@ PROCEDURE_SECTION
 
   dvar_matrix m(pibnm);
   f += norm2(m);
-
-GLOBALS_SECTION
-  #include "param_init_bounded_number_matrix.h"

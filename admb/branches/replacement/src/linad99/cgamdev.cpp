@@ -52,12 +52,15 @@ int mtherr(char *s, int n);
 
 
 /**
- * \f$y = \ln(\Gamma(x))\f$.
- * Returns the base \f$e\f$ logarithm of the absolute
- * value of the gamma function of the argument.
- * The sign (+1 or -1) of the gamma function is returned in a
- * global (extern) variable named sgngam.
- * Cephes Math Library Release 2.1:  December, 1988
+ * \ingroup gammafunc
+ * Log-gamma function
+ * \param x \f$x\f$
+ * \return natural log of the absolute
+ *   value of the gamma function \f$\ln(|\Gamma(x)|)\f$
+ *
+ * \param sgngam Global variable holding the sign (+1 or -1) of the gamma function
+ *
+ * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
@@ -176,57 +179,15 @@ double lgam(double x)
    return (q);
 }
 
-/*							polevl.c
- *							p1evl.c
- *
- *	Evaluate polynomial
- *
- *
- *
- * SYNOPSIS:
- *
- * int N;
- * double x, y, coef[N+1], polevl[];
- *
- * y = polevl( x, coef, N );
- *
- *
- *
- * DESCRIPTION:
- *
- * Evaluates polynomial of degree N:
- *
- *                     2          N
- * y  =  C  + C x + C x  +...+ C x
- *        0    1     2          N
- *
- * Coefficients are stored in reverse order:
- *
- * coef[0] = C  , ..., coef[N] = C  .
- *            N                   0
- *
- *  The function p1evl() assumes that coef[N] = 1.0 and is
- * omitted from the array.  Its calling arguments are
- * otherwise the same as polevl().
- *
- *
- * SPEED:
- *
- * In the interest of speed, there are no checks for out
- * of bounds arithmetic.  This routine is used by most of
- * the functions in the library.  Depending on available
- * equipment features, the user may wish to rewrite the
- * program in microcode or assembly language.
- *
- */
-
-
-
 /**
- * Complemented incomplete gamma integral.
- * The function is defined by:
- * igamc(a,x) = \f$1-\f$ igam(a,x) \f$ = \frac{1}{\Gamma(a)}\int_{x}^{\infty}e^{-t}t^{a-1}dt \f$.
- * Cephes Math Library Release 2.1:  December, 1988
+ * \ingroup gammafunc
+ * Incomplete gamma integral complement .
+ * \param aa \f$a\f$
+ * \param xx \f$x\f$
+ * \return complement of th incomplete gamma integral
+ *   \f$\Gamma(a,x) = 1-\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{x}^{\infty}e^{-t}t^{a-1}dt \f$
+ *
+ * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
@@ -300,10 +261,13 @@ double igamc(const double &a, const double &x)
 }
 
 /**
+ * \ingroup gammafunc
  * Incomplete gamma integral.
- * The function is defined by
- * igam(a,x)\f$ = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$.
- * Cephes Math Library Release 2.1:  December, 1988
+ * \param aa \f$a\f$
+ * \param xx \f$x\f$
+ * \return Incomplete gamma integral \f$\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$
+ *
+ * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */

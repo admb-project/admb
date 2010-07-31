@@ -6,7 +6,7 @@
  */
 #include "fvar.hpp"
 
-void get_eigenv(const dvector& _d,const dvector& _e,const dmatrix& _z);
+//void get_eigenv(const dvector& _d,const dvector& _e,const dmatrix& _z);
 
 #if !defined(OPT_LIB)
 dvector banded_symmetric_dmatrix::operator () (int i)
@@ -323,6 +323,63 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
     return banded_symmetric_dmatrix(*this,l,u);
   }
 
+
+  dvector eigenvalues(const banded_symmetric_dmatrix& _SS)
+  {
+    banded_symmetric_dmatrix& S = (banded_symmetric_dmatrix&) _SS;
+    if (S.bandwidth() !=2)
+    {
+      cerr << "error bandwidth not equal 2" << endl;
+      ad_exit(1);
+    }
+
+    int lb=S.indexmin();
+    int ub=S.indexmax();
+    int bw=S.bandwidth();
+    dmatrix M(lb,ub,lb,ub);
+    M.initialize();
+
+    for(int i=lb;i<=ub;i++)
+    {
+      for(int j=i;j<=min(bw+i-1,ub);j++)
+      {
+        M(j,i) = S(j,i);
+        if(i!=j) M(i,j)=M(j,i);
+      }
+    }
+
+    return eigenvalues(M);
+  }
+
+  dmatrix eigenvectors(const banded_symmetric_dmatrix& _SS,const dvector& _e)
+  {
+    banded_symmetric_dmatrix& S = (banded_symmetric_dmatrix&) _SS;
+    if (S.bandwidth() !=2)
+    {
+      cerr << "error bandwidth not equal 2" << endl;
+      ad_exit(1);
+    }
+
+    int lb=S.indexmin();
+    int ub=S.indexmax();
+    int bw=S.bandwidth();
+    dmatrix M(lb,ub,lb,ub);
+    M.initialize();
+
+    for(int i=lb;i<=ub;i++)
+    {
+      for(int j=i;j<=min(bw+i-1,ub);j++)
+      {
+        M(j,i) = S(j,i);
+        if(i!=j) M(i,j)=M(j,i);
+      }
+    }
+
+    return eigenvectors(M);
+  }
+
+
+/*
   dvector eigenvalues(const banded_symmetric_dmatrix& _SS)
   {
     banded_symmetric_dmatrix& S = (banded_symmetric_dmatrix&) _SS;
@@ -377,7 +434,4 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
     z.rowshift(minsave);
     return z;
   }
-
-    
-    
- 
+*/

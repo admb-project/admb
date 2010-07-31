@@ -33,7 +33,6 @@ namespace Cephes
    df3_two_variable polevl(const df3_two_variable &, void *, int);
    df3_two_variable p1evl(const df3_two_variable &, void *, int);
 
-//int mtherr(char* s,int n){ /*ad_exit(1);*/  return 0;}
 
 
 /* Coefficents used for the rational function in gamma(x) */
@@ -214,9 +213,16 @@ namespace Cephes
    extern const double SQTPI = *(double *)SQT;
 #endif
 
-/* Gamma function computed by Stirling's formula.
- * The polynomial STIR is valid for 33 <= x <= 172.
- */
+   /**
+    * \ingroup gammafunc
+    * Stirling's formula (approximation to large factorials)
+    * \param _x \f$x\f$
+    * \return Sterling's approximation to \f$x!\f$
+    * 
+    * \n\n Cephes Math Library Release 2.1:  December, 1988
+    * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
+    * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+    */
    df3_two_variable stirf(const df3_two_variable & _x)
    {
       ADUNCONST(df3_two_variable, x) df3_two_variable y, w, v;
@@ -380,12 +386,18 @@ namespace Cephes
    extern const double MAXLGM = 2.556348e305;
 #endif
 
-/*
-Cephes Math Library Release 2.1:  December, 1988
-Copyright 1984, 1987, 1988 by Stephen L. Moshier
-Direct inquiries to 30 Frost Street, Cambridge, MA 02140
-*/
-
+   /**
+    * \ingroup gammafunc
+    * Polynomial evaluation
+    * \param x \f$x\f$
+    * \param _coef The coefficents of the polynomial
+    * \param N \f$N\f$ The degree of the polynomial
+    * \return The polynomial evaluated at \f$x\f$
+    * 
+    * \n\n Cephes Math Library Release 2.1:  December, 1988
+    * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
+    * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+    */
    df3_two_variable polevl(const df3_two_variable & x, void *_coef, int N)
    {
       double *coef = (double *) (_coef);
@@ -404,19 +416,19 @@ Direct inquiries to 30 Frost Street, Cambridge, MA 02140
       return (ans);
    }
 
-/*							p1evl() *
- *                                          N
- * Evaluate polynomial when coefficient of x  is 1.0.
- * Otherwise same as polevl.
- */
-/**
- * Evaluate polynomial when coefficient of \f$x^N\f$  is \f$1.0\f$.
- * Otherwise same as polevl.
- * Cephes Math Library Release 2.1:  December, 1988
- * Copyright 1984, 1987, 1988 by Stephen L. Moshier
- * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
- */
-
+   /**
+    * \ingroup gammafunc
+    * Polynomial evaluation when leading coefficent is 1
+    * (i.e. leading term is \f$x^N\f$)
+    * \param x \f$x\f$
+    * \param _coef The coefficents of the polynomial
+    * \param N \f$N\f$ The degree of the polynomial
+    * \return The polynomial evaluated at \f$x\f$
+    * 
+    * \n\n Cephes Math Library Release 2.1:  December, 1988
+    * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
+    * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+    */
    df3_two_variable p1evl(const df3_two_variable & x, void *_coef, int N)
    {
       double *coef = (double *) (_coef);
@@ -439,6 +451,16 @@ Direct inquiries to 30 Frost Street, Cambridge, MA 02140
 
 //----------------------------------------------------------------------
 
+/**
+ * \ingroup gammafunc
+ * Gamma Function
+ * \param xx1 \f$x\f$
+ * \return The Gamma Function \f$\Gamma(x)\f$
+ * 
+ * \n\n Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
 static df3_two_variable gamma(const df3_two_variable & xx1)
 {
    using namespace Cephes;
@@ -576,12 +598,15 @@ static df3_two_variable gamma(const df3_two_variable & xx1)
 //------------------------------------------------------------------
 
 /**
- * \f$y = \ln(\Gamma(x))\f$.
- * Returns the base \f$e\f$ logarithm of the absolute
- * value of the gamma function of the argument.
- * The sign (+1 or -1) of the gamma function is returned in a
- * global (extern) variable named sgngam.
- * Cephes Math Library Release 2.1:  December, 1988
+ * \ingroup gammafunc
+ * Log-gamma function
+ * \param xx \f$x\f$
+ * \return natural log of the absolute
+ *   value of the gamma function \f$\ln(|\Gamma(x)|)\f$
+ *
+ * \param sgngam Global variable holding the sign (+1 or -1) of the gamma function
+ *
+ * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
@@ -716,10 +741,13 @@ df3_two_variable lgam(const df3_two_variable & xx)
 //------------------------------------------------------------------------
 
 /**
+ * \ingroup gammafunc
  * Incomplete gamma integral.
- * The function is defined by
- * igam(a,x)\f$ = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$.
- * Cephes Math Library Release 2.1:  December, 1988
+ * \param aa \f$a\f$
+ * \param xx \f$x\f$
+ * \return Incomplete gamma integral \f$\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$
+ *
+ * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
@@ -784,10 +812,14 @@ df3_two_variable igam(const df3_two_variable & aa,
 //-----------------------------------------------------------------------
 
 /**
- * Complemented incomplete gamma integral.
- * The function is defined by:
- * igamc(a,x) = \f$1-\f$ igam(a,x) \f$ = \frac{1}{\Gamma(a)}\int_{x}^{\infty}e^{-t}t^{a-1}dt \f$.
- * Cephes Math Library Release 2.1:  December, 1988
+ * \ingroup gammafunc
+ * Incomplete gamma integral complement .
+ * \param aa \f$a\f$
+ * \param xx \f$x\f$
+ * \return complement of th incomplete gamma integral
+ *   \f$\Gamma(a,x) = 1-\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{x}^{\infty}e^{-t}t^{a-1}dt \f$
+ *
+ * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */

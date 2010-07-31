@@ -447,8 +447,8 @@ derch.obj \
 \
 dvsort.obj \
 ivsort.obj \
-eigen.obj \
-eigenv.obj \
+\
+eigen_dmat.obj \
 ivect_io.obj \
 dveigen.obj \
 dveigenv.obj \
@@ -498,7 +498,6 @@ cbetacf.obj \
 vbetacf.obj \
 vbetai.obj \
 cbetai.obj \
-\
 fvar_m42.obj \
 fvar_m20.obj \
 fvar_m15.obj \
@@ -506,3 +505,5 @@ dmat3.obj \
 fvar_ma4.obj \
 dmat34.obj \
 fvar_m24.obj \
+eigen.obj \
+eigenv.obj \

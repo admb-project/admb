@@ -449,9 +449,9 @@ dvsort.obj \
 ivsort.obj \
 \
 eigen_dmat.obj \
+eigen_dvar.obj \
 ivect_io.obj \
-dveigen.obj \
-dveigenv.obj \
+\
 fmm_cont.obj \
 dvec_dif.obj \
 fvar_dif.obj \
@@ -507,3 +507,5 @@ dmat34.obj \
 fvar_m24.obj \
 eigen.obj \
 eigenv.obj \
+dveigen.obj \
+dveigenv.obj \

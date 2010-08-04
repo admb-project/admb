@@ -132,8 +132,6 @@ dvariable gamma_deviate(const prevariable & _x, const prevariable & _a)
  * \return natural log of the absolute
  *   value of the gamma function \f$\ln(|\Gamma(x)|)\f$
  *
- * \param sgngam Global variable holding the sign (+1 or -1) of the gamma function
- *
  * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
@@ -258,8 +256,8 @@ static double lgam(double x)
 /**
  * \ingroup gammafunc
  * Incomplete gamma integral complement .
- * \param aa \f$a\f$
- * \param xx \f$x\f$
+ * \param a \f$a\f$
+ * \param x \f$x\f$
  * \return complement of th incomplete gamma integral
  *   \f$\Gamma(a,x) = 1-\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{x}^{\infty}e^{-t}t^{a-1}dt \f$
  *
@@ -339,8 +337,8 @@ static double igamc(const double &a, const double &x)
 /**
  * \ingroup gammafunc
  * Incomplete gamma integral.
- * \param aa \f$a\f$
- * \param xx \f$x\f$
+ * \param a \f$a\f$
+ * \param x \f$x\f$
  * \return Incomplete gamma integral \f$\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$
  *
  * \n\n Cephes Math Library Release 2.1:  December, 1988

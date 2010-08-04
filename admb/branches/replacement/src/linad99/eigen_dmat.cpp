@@ -9,7 +9,13 @@
 
 void eigens(const dmatrix& m, const dmatrix& _evecs, const dvector& _evals);
 
-
+/**
+ * \ingroup eigen
+ * Eigenvalues
+ * \param m \f$m\f$
+ * \return a variable vector containing the
+ *         eigenvalues of \f$m\f$.
+ */
 dvector eigenvalues(_CONST dmatrix& m)
 {
   if (m.rowsize()!=m.colsize())
@@ -29,7 +35,13 @@ dvector eigenvalues(_CONST dmatrix& m)
   return evals;
 }
 
-
+/**
+ * \ingroup eigen
+ * Eigenvectors
+ * \param m \f$m\f$
+ * \return a variable matrix with the
+ *         eigenvectors of \f$m\f$ stored in its columns.
+ */
 dmatrix eigenvectors(_CONST dmatrix& m)
 {
   if (m.rowsize()!=m.colsize())
@@ -49,7 +61,15 @@ dmatrix eigenvectors(_CONST dmatrix& m)
   return evecs;
 }
 
-
+/**
+ * \ingroup eigen
+ * Eigenvectors and Eigenvalues
+ * \param m \f$m\f$
+ * \param _diag
+ * \return a constant matrix with the
+ *         eigenvectors of \f$m\f$ stored in its columns.
+ * On return _diag contains the eigenvalues of \f$m\f$.
+ */
 dmatrix eigenvectors(_CONST dmatrix& m, BOR_CONST dvector& _diag)
 {
   ADUNCONST(dvector,diag)
@@ -72,7 +92,23 @@ dmatrix eigenvectors(_CONST dmatrix& m, BOR_CONST dvector& _diag)
 }
 
 
-
+/**
+ * \ingroup eigen
+ * Eigenvector and Eigenvalue algorithm
+ * \param m \f$m\f$
+ * \param _evecs
+ * \param _evals
+ *
+ * \return
+ * On return _evecs will be a constant matrix with the
+ *  eigenvectors of \f$m\f$ stored in its columns.
+ * On return _evals will be a constant vector containing the
+ *  eigenvalues of \f$m\f$.
+ * 
+ * \n\n Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
 void eigens(const dmatrix& m, const dmatrix& _evecs, const dvector& _evals)
 {
   ADUNCONST(dmatrix,evecs)

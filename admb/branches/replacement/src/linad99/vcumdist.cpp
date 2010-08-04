@@ -160,7 +160,7 @@ dvariable old_cumd_norm(_CONST prevariable& x)
 }
 
 /** Culative normal distribution; variable objects.
-\param x Normalized "Z" score (subtact the mean and divide by the stdard deviation).
+\param _x Normalized "Z" score (subtact the mean and divide by the stdard deviation).
 \return Probablity that of an observation will exceed the argument.
 \ingroup PDF
 */

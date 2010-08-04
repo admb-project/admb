@@ -8,8 +8,14 @@
   
   void eigens(const dvar_matrix& m, const dvar_matrix& _evecs, const dvar_vector& _evals);
   
-  
-  dvar_vector my_eigenvalues(_CONST dvar_matrix& m)
+/**
+ * \ingroup eigen
+ * Eigenvalues
+ * \param m \f$m\f$
+ * \return a variable vector containing the
+ *         eigenvalues of \f$m\f$.
+ */  
+  dvar_vector eigenvalues(_CONST dvar_matrix& m)
   {
     if (m.rowsize()!=m.colsize())
     {
@@ -28,7 +34,14 @@
     return evals;
   }
 
-  dvar_matrix my_eigenvectors(_CONST dvar_matrix& m)
+/**
+ * \ingroup eigen
+ * Eigenvectors
+ * \param m \f$m\f$
+ * \return a variable matrix with the
+ *         eigenvectors of \f$m\f$ stored in its columns.
+ */
+  dvar_matrix eigenvectors(_CONST dvar_matrix& m)
   {
     if (m.rowsize()!=m.colsize())
     {
@@ -47,7 +60,23 @@
     return evecs;
   }
   
-  
+/**
+ * \ingroup eigen
+ * Eigenvector and Eigenvalue algorithm
+ * \param m \f$m\f$
+ * \param _evecs
+ * \param _evals
+ *
+ * \return
+ * On return _evecs will be a variable matrix with the
+ *  eigenvectors of \f$m\f$ stored in its columns.
+ * On return _evals will be a variable vector containing the
+ *  eigenvalues of \f$m\f$.
+ * 
+ * \n\n Cephes Math Library Release 2.1:  December, 1988
+ * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
+ * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+ */
   void eigens(const dvar_matrix& m, const dvar_matrix& _evecs, const dvar_vector& _evals)
   {
     ADUNCONST(dvar_matrix,evecs)

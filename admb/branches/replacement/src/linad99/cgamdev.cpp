@@ -58,8 +58,6 @@ int mtherr(char *s, int n);
  * \return natural log of the absolute
  *   value of the gamma function \f$\ln(|\Gamma(x)|)\f$
  *
- * \param sgngam Global variable holding the sign (+1 or -1) of the gamma function
- *
  * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140

@@ -596,11 +596,9 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/ranfill.cpp \
                          ../../src/linad99/rngen.cpp \
                          ../../src/linad99/df13incbet.cpp \
+                         ../../src/linad99/eigen_dmat.cpp \
+                         ../../src/linad99/eigen_dvar.cpp \
                          ../../src/linad99/vspline.cpp \
-                         ../../src/linad99/eigen.cpp \
-                         ../../src/linad99/eigenv.cpp \
-                         ../../src/linad99/dveigen.cpp \
-                         ../../src/linad99/dveigenv.cpp \
                          ../../src/linad99/cbivnorm.cpp \
                          ../../src/linad99/vbivnorm.cpp \
                          ../../src/linad99/cnegbin.cpp \

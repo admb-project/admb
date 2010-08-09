@@ -1,13 +1,126 @@
 /*
  * $Id$
- * Author: David Fournier
  *
  * Copyright (c) 2009 ADMB Foundation
  */
 #include <fvar.hpp>
+#include "qsort.h"
 
-static void quicksort1(dvector & a, int left, int right);
-static void quicksort2(dvector & a, ivector & b, int left, int right);
+void double_qsort(double *arr, unsigned n) {
+  #define double_lt(a,b) ((*a)<(*b))
+    QSORT(double, arr, n, double_lt);
+  }
+
+void double_qsort2(double *arr, int *arr2, unsigned n) {
+  #define double_lt(a,b) ((*a)<(*b))
+    QSORT2(double, int, arr, arr2, n, double_lt);
+  }
+
+/** Quicksort.
+    \param v A dvector to be sorted.
+    \param NSTACK Not used.
+    \return dvector object containing the input vector sorted in ascending order.
+
+    \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
+*/
+dvector sort(_CONST dvector & v, int NSTACK)
+{
+   int lb=v.indexmin();
+   int ub=v.indexmax();
+   int size=v.size();
+
+   double *doublearray;
+   doublearray = new double[size];
+   int i;
+   for(i=0;i<size;i++)
+   {
+      doublearray[i] = v(lb+i);
+   }
+
+   double_qsort(doublearray,size);
+
+   dvector arr(lb, ub);
+   for(i=0;i<size;i++) {
+      arr(lb+i) = doublearray[i];
+   }
+
+   delete [] doublearray;
+
+   return arr;
+}
+
+/** Quicksort.
+    \param _v A dvector to be sorted.
+    \param _index ivector on return containing the input order of the original vector.
+    \param NSTACK Not used.
+    \return ivector object containing the input vector sorted in ascending order.
+
+    \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
+*/   
+dvector sort(_CONST dvector & _v, BOR_CONST ivector & _index, int NSTACK)
+{
+   ivector & index = (ivector &) _index;
+   dvector & v = (dvector &) _v;
+
+   if (v.size() != index.size())
+   {
+      cerr << " Incompatible array sizes in vector v and ivector index\n"
+	 << " in ivector sort(_CONST ivector& v,_CONST ivector& index)\n";
+      ad_exit(1);
+   }
+
+   int lb=v.indexmin();
+   int ub=v.indexmax();
+   int size=v.size();
+
+   double *doublearray;
+   doublearray = new double[size];
+   int i;
+   for(i=0;i<size;i++)
+   {
+      doublearray[i] = v(lb+i);
+   }
+
+   int *intarray;
+   intarray = new int[size];
+   for(i=0;i<size;i++)
+   {
+      intarray[i] = lb+i;
+   }
+
+   double_qsort2(doublearray,intarray,size);
+
+   dvector arr(lb, ub);
+   for(i=0;i<size;i++) {
+      arr(lb+i) = doublearray[i];
+   }
+
+   for(i=0;i<size;i++) {
+      index(index.indexmin()+i) = intarray[i];
+   }
+
+   delete doublearray;
+   delete intarray;
+
+   return arr;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//static void quicksort1(dvector & a, int left, int right);
+//static void quicksort2(dvector & a, ivector & b, int left, int right);
 
 /** Quicksort.
     \param v Vector of doubles to be sorted
@@ -18,7 +131,7 @@ static void quicksort2(dvector & a, ivector & b, int left, int right);
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 8
 */
-dvector sort(_CONST dvector & v, int NSTACK)
+/*dvector sort(_CONST dvector & v, int NSTACK)
 {
    dvector arr(v.indexmin(), v.indexmax());
    arr = v;
@@ -28,7 +141,7 @@ dvector sort(_CONST dvector & v, int NSTACK)
    arr.shift(v.indexmin());
    return arr;
 }
-
+*/
 /*dvector sort(_CONST dvector& v, int NSTACK)
 {
    const int M=7;
@@ -124,7 +237,7 @@ dvector sort(_CONST dvector & v, int NSTACK)
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 8
 */
-
+/*
 dvector sort(_CONST dvector & _v, BOR_CONST ivector & _index, int NSTACK)
 {
    ivector & index = (ivector &) _index;
@@ -151,7 +264,7 @@ dvector sort(_CONST dvector & _v, BOR_CONST ivector & _index, int NSTACK)
    index.shift(v.indexmin());
    return arr;
 }
-
+*/
 /*dvector sort(_CONST dvector& _v,BOR_CONST ivector& _index, int NSTACK)
 {
    const int M=7;
@@ -274,7 +387,7 @@ dvector sort(_CONST dvector & _v, BOR_CONST ivector & _index, int NSTACK)
  * an insertion sort once sublists are of length < 8.
  * Modified by Derek Seiple
  */
-
+/*
 static void quicksort1(dvector & a, int left, int right)
 {
    int i = left - 1, j = right, p = left - 1, q = right;
@@ -443,4 +556,4 @@ static void quicksort2(dvector & a, ivector & b, int left, int right)
    }
    quicksort2(a, b, left, j);
    quicksort2(a, b, i, right);
-}
+}*/

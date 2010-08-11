@@ -81,7 +81,15 @@ df1b2variable gammln(const df1b2variable& z)
   }
 }
 
-
+df1b2vector gammln(const df1b2vector&  z){
+  int from=z.indexmin();
+  int to=z.indexmax();
+  df1b2vector ret(from,to);
+  for(int i=from; i<=to; ++i){
+    ret(i)=gammln(z(i));
+ }
+ return(ret);
+}
 
 df1b2variable log_comb(_CONST df1b2variable& n,double k)
 {

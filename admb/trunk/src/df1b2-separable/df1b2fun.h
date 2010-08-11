@@ -798,6 +798,7 @@ df1b2variable operator / (const df1b2variable& x,double y);
 df1b2variable operator / (double x,const df1b2variable& y);
 
 df1b2variable gammln(const df1b2variable& _xx);
+df1b2vector gammln(const df1b2vector&  _xx);
 df1b2variable log_comb(_CONST df1b2variable& n,double k);
 df1b2variable log_comb(_CONST df1b2variable& n,_CONST df1b2variable& k);
 df1b2variable log_comb(double n,_CONST df1b2variable& k);

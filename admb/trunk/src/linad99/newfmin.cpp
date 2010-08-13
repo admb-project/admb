@@ -80,6 +80,9 @@ extern int ctlc_flag;
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+
+int* pointer_to_phase = 0;
+
 double dafsqrt( double x );
   void tracing_message(int traceflag,const char *s);
   void tracing_message(int traceflag,const char *s,int *pn);
@@ -359,9 +362,14 @@ label20:
 label7003:
       if (iprint>0)
       {
-	if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-              n, itn, ifn);
-	if (ad_printf) (*ad_printf)("Function value %15.7le; maximum gradient component mag %12.4le\n",
+	if (ad_printf) 
+        {
+          (*ad_printf)("%d variables; iteration %ld; function evaluation %ld", n, itn, ifn);
+          if (pointer_to_phase)
+          {
+            (*ad_printf)("; phase %d", *pointer_to_phase);
+          }
+	  (*ad_printf)("\nFunction value %15.7le; maximum gradient component mag %12.4le\n",
 #if defined(USE_DDOUBLE)
 #undef double
               double(f), double(gmax));
@@ -369,6 +377,7 @@ label7003:
 #else
               f, gmax);
 #endif
+        }
       }
 label7002:
       if(iprint>0) 

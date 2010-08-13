@@ -7479,7 +7479,7 @@ protected:
   ad_comm(int argc,char * argv[]);
   ad_comm(void);
   void allocate(void);
-  ~ad_comm();
+  virtual ~ad_comm();
 public:
   static int time_flag;
   static int bandwidth;

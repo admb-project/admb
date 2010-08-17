@@ -584,6 +584,7 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/combc.cpp \
                          ../../src/linad99/conjprod.cpp \
                          ../../src/linad99/cspline.cpp \
+                         ../../src/linad99/d3arr4.cpp \
                          ../../src/linad99/dfgammp.cpp \
                          ../../src/linad99/dmat34.cpp \
                          ../../src/linad99/dmat2.cpp \
@@ -597,6 +598,7 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/fvar_m24.cpp \
                          ../../src/linad99/fvar_m42.cpp \
                          ../../src/linad99/fvar_ma4.cpp \
+                         ../../src/linad99/fvar_op8.cpp \
                          ../../src/linad99/gaussher.cpp \
                          ../../src/linad99/ivsort.cpp \
                          ../../src/linad99/ranfill.cpp \
@@ -615,6 +617,8 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/vnegbin.cpp \
                          ../../src/linad99/cumdist.cpp \
                          ../../src/linad99/vcumdist.cpp \
+                         ../../src/linad99/cmpdif2.cpp \
+                         ../../src/linad99/cmpdif3.cpp \
                          ../../src/nh99/dfqromb.cpp \
                          ../../src/nh99/amoeba.cpp \
                          ../../src/df1b2-separable/df1b2invcumdbeta.cpp \

@@ -1,15 +1,11 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 
-
-// file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable
-
-#include "fvar.hpp"
+#include <fvar.hpp>
 
 #if defined (__WAT32__)
   #include <fcntl.h>
@@ -118,6 +114,26 @@ void DF_FILE::fread(BOR_CONST int& _x)
   offset=toffset;
 }
 
+
+void DF_FILE::fread(void* &x)
+{
+  const unsigned num_bytes=sizeof(void*);
+  if (toffset < num_bytes)
+  {
+     my_off_t lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
+    //cout << "In fread filepos = " << lpos << endl;
+    read_cmpdif_stack_buffer(lpos);
+    offset -= num_bytes;
+    toffset = offset;
+  }
+  else
+  {
+    toffset-=num_bytes; //decrement the temporary offset count
+  }
+  memcpy(&x, buff+toffset, sizeof(void*));
+  offset=toffset;
+}
+
 void DF_FILE::fwrite( CGNU_DOUBLE x)
 {
   #ifdef NO_DERIVS
@@ -155,6 +171,26 @@ void DF_FILE::fwrite(const int& x)
     offset=0;
   }
   memcpy(buff+offset, &x, sizeof(int));
+  offset=toffset;
+}
+
+void DF_FILE::fwrite(void * ptr)
+{
+  #ifdef NO_DERIVS
+    if (gradient_structure::no_derivatives)
+    {
+      return;
+    }
+  #endif
+  const unsigned num_bytes=sizeof(void*);
+  toffset+=num_bytes; //increment the temporary offset count
+  if (toffset>buff_end)
+  {
+    write_cmpdif_stack_buffer();
+    toffset=num_bytes;
+    offset=0;
+  }
+  memcpy(buff+offset, &ptr, sizeof(void*));
   offset=toffset;
 }
 

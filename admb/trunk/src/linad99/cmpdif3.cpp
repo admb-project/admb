@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -83,6 +83,16 @@ void set_gradstack_flag(char* _str,int i,int j)
   save_identifier_string("stack");
 #endif
 }
+
+/**
+\ingroup DEVEL
+Verifies gradient stack string.
+Retrieves a character string from the adjoint code variable stack
+and compares it to its argument. Reports and error and exits
+if the two strings are not identical. Only available in the "safe"
+library. Used primarily for debugging adjoint coide.
+\param str1 Character sting to compare with value retrieved from stack.
+*/
 void verify_identifier_string(char* str1)
 {
 #if defined(CHK_ID_STRING)

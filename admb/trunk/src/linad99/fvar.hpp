@@ -4726,6 +4726,8 @@ double restore_double_value(void);
 int restore_int_value(void);
 void save_double_value( double x);
 void save_int_value(int x);
+void save_pointer_value(void * ptr);
+void* restore_pointer_value(void);
 dvar_matrix nograd_assign_trans(_CONST dmatrix& m);
 dvar_matrix nograd_assign(_CONST dmatrix&);
 dvariable nograd_assign(double tmp);
@@ -4917,6 +4919,9 @@ public:
   void fwrite(const int&);
   void fread(BOR_CONST int&);
   void fread(BOR_CONST double&);
+
+  void fwrite(void * ptr);
+  void fread(void* &ptr);
 };
 
 char which_library();

@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -9,6 +9,12 @@
 
 #include "fvar.hpp"
 
+/** Cube of a number; variable object.
+Optimized for derivative computations.
+\ingroup misc
+\param m number to be cubed
+\return \f$m^3\f$
+*/
 prevariable& cube(_CONST prevariable& v1)
 {
   double x=value(v1);
@@ -20,6 +26,13 @@ prevariable& cube(_CONST prevariable& v1)
    return(*gradient_structure::RETURN_PTR);
  }
 
+
+/** Cube of a number; variable object.
+Optimized for derivative computations.
+\ingroup misc
+\param m number to be cubed
+\return \f$m^4\f$
+*/
 prevariable& fourth(_CONST prevariable& v1)
 {
   double x=value(v1);

@@ -12,11 +12,11 @@ CC=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMake
 
 all:
 	rm -rvf admbinstaller
-	mkdir -p admbinstaller/opt/local/bin
-	mkdir -p admbinstaller/opt/local/admb
-	cp -Rvf ../../trunk/build/dists/admb_gcc411_fedora8/* admbinstaller/opt/local/admb
+	mkdir -p admbinstaller/usr/local/bin
+	mkdir -p admbinstaller/usr/local/admb
+	cp -Rvf ../../trunk/build/dists/admb_gcc411_fedora8/* admbinstaller/usr/local/admb
 	rm -rvf `find ./admbinstaller -type d -name .svn`
-	cp -vf admb admbinstaller/opt/local/bin
-	cp admbinstaller/opt/local/admb/README Resources/Welcome.txt
-	cp admbinstaller/opt/local/admb/LICENSE Resources/License.txt
+	cp -vf admb admbinstaller/usr/local/bin
+	cp admbinstaller/usr/local/admb/README Resources/Welcome.txt
+	cp admbinstaller/usr/local/admb/LICENSE Resources/License.txt
 	-$(CC) --verbose --title $(DISTRIBUTION_NAME) --root admbinstaller --id www.admb-project.org --resources Resources

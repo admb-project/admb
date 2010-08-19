@@ -4771,6 +4771,8 @@ dmatrix choleski_decomp_positive(const dmatrix& MM,const int& ierr);
 dmatrix choleski_decomp_positive(const dmatrix& MM,double bound);
 dvar_matrix choleski_decomp(_CONST dvar_matrix& M);
 
+dvar_matrix expm(const dvar_matrix & A);
+
 dvariable factln(_CONST dvariable& n);
 double factln(double n);
 dvar_vector factln(_CONST dvar_vector& n);

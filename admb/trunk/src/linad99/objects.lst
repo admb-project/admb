@@ -476,6 +476,7 @@ f4arr3.obj \
 f4arr.obj 
 OBJ3= \
 mfexp.obj \
+expm.obj \
 orthpoly.obj \
 cbetacf.obj \
 vbetacf.obj \

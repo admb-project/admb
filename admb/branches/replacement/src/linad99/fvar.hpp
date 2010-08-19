@@ -7794,6 +7794,7 @@ void test_the_pointer(void);
     dvector w;
     dmatrix v;
   public:
+    sing_val_decomp() {};
     sing_val_decomp(const dmatrix& _a, const dvector & _w,const dmatrix& _v);
     dmatrix get_u(void){return a;}
     dvector get_w(void){return w;}

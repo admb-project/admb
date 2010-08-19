@@ -8,7 +8,7 @@ dmatrix fabs(const dmatrix & X){
   int rmin = X.rowmin();
   int rmax = X.rowmax();
   int cmin = X.colmin();
-  int cmax = X.colmax();
+  int cmax = X.colmax(); 
   dmatrix ret(rmin,rmax,cmin,cmax);
   for(int i=rmin; i<=rmax; ++i){
     for(int j=cmin; j<=cmax; ++j){
@@ -194,7 +194,13 @@ dvar_matrix solve(const dvar_matrix& aa,const dvar_matrix& tz,
   return trans(x);
 }
 
-/** Matrix exponential using (6,6) Padé approximation adapted from Moler and van Loan */
+  /**
+  \ingroup PDF
+   Matrix exponential using (6,6) Padé approximation adapted from Moler and van Loan 
+  \param A square dvar_matrix
+  \returns The matrix exponentiel of A
+  */
+
 dvar_matrix expm(const dvar_matrix & A)
 {
   RETURN_ARRAYS_INCREMENT();    

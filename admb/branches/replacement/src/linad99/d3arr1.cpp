@@ -5,6 +5,7 @@
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include "fvar.hpp"
+#include "admb_messages.h"
 
 #ifndef OPT_LIB
     double& d3_array::operator () (int k, int i, int j)
@@ -12,13 +13,11 @@
       #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
-          cerr << "array bound exceeded -- slice index too low in d3_array::operator(int,int)";
-          ad_exit(1);
+          ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low", "dmatrix& d3_array::operator() (int k, int i, int j)", slicemin(), slicemax(), k);
         }
         if (k>slicemax())
         {
-          cerr << "array bound exceeded -- slice index too high in d3_array::operator(int,int)";
-          ad_exit(1);
+          ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high", "dmatrix& d3_array::operator() (int k, int i, int j)", slicemin(), slicemax(), k);
         }
       #endif
       return ( (elem(k))(i,j) );
@@ -30,13 +29,11 @@
       #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
-          cerr << "array bound exceeded -- slice index too low in d3_array::operator(int,int)";
-          ad_exit(1);
+          ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low", "dmatrix& d3_array::operator() (int k, int i)", slicemin(), slicemax(), k);
         }
         if (k>slicemax())
         {
-          cerr << "array bound exceeded -- slice index too high in d3_array::operator(int,int)";
-          ad_exit(1);
+          ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high", "dmatrix& d3_array::operator() (int k, int i)", slicemin(), slicemax(), k);
         }
       #endif
       return ( (elem(k))(i) );
@@ -50,15 +47,11 @@
    #ifdef SAFE_ARRAYS
      if (i<slicemin())
      {
-       cerr << "matrix bound exceeded -- row index too low in 3d_array::operator[]"
-             << "value was" << i;
-       ad_exit(21);
+       ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low", "dmatrix& d3_array::operator[] (int i)", indexmin(), indexmax(), i);
      }
      if (i>slicemax())
      {
-       cerr << "matrix bound exceeded -- row index too high in 3d_array::operator[]"
-             << "value was" << i;
-       ad_exit(22);
+       ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high", "dmatrix& d3_array::operator[] (int i)", indexmin(), indexmax(), i);
      }
    #endif
    return(t[i]);
@@ -69,15 +62,11 @@
    #ifdef SAFE_ARRAYS
      if (i<slicemin())
      {
-       cerr << "matrix bound exceeded -- row index too low in 3d_array::operator[]"
-             << "value was" << i;
-       ad_exit(21);
+       ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low", "dmatrix& d3_array::operator() (int i)", indexmin(), indexmax(), i);
      }
      if (i>slicemax())
      {
-       cerr << "matrix bound exceeded -- row index too high in 3d_array::operator[]"
-             << "value was" << i;
-       ad_exit(22);
+       ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high", "dmatrix& d3_array::operator() (int i)", indexmin(), indexmax(), i);
      }
    #endif
    return(t[i]);

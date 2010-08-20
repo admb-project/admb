@@ -44,3 +44,6 @@ typically optimized for automatic differentiation and automatically
 invoke custom adjoint code.
 */
 
+/** \defgroup DEVEL Development Utilities
+\details ADMB functions of use to developers of ADMB code.
+*/

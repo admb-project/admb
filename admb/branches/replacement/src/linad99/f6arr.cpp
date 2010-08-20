@@ -4,10 +4,8 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-
-
-
 #include "fvar.hpp"
+#include "admb_messages.h"
 
  void dvar6_array::initialize(void)
  {
@@ -150,15 +148,13 @@
  }
 
   #ifndef OPT_LIB
-
     dvar5_array& dvar6_array::operator ( ) (int i)
     {
       #ifdef SAFE_ARRAYS
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error  index out of bounds in\n"
-            "dvar5_array& dvar6_array::operator ( )" << endl;
-          ad_exit(1);
-        }
+      if (i < indexmin() || i > indexmax())
+      { 
+        ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "dvar5_array& dvar6_array::operator()(int i)", indexmin(), indexmax(), i);
+      }
       #endif
       return t[i];
     }
@@ -166,11 +162,10 @@
     dvar5_array& dvar6_array::operator [] (int i)
     {
       #ifdef SAFE_ARRAYS
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error  index out of bounds in\n"
-            "dvar5_array& dvar6_array::operator []" << endl;
-          ad_exit(1);
-        }
+      if (i < indexmin() || i > indexmax())
+      { 
+        ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "dvar5_array& dvar6_array::operator[](int i)", indexmin(), indexmax(), i);
+      }
       #endif
       return t[i];
     }
@@ -179,11 +174,10 @@
     dvar4_array& dvar6_array::operator ( ) (int i ,int j)
     {
       #ifdef SAFE_ARRAYS
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "dvar_matrix& dvar6_array::operator ( )" << endl;
-          ad_exit(1);
-        }
+      if (i < indexmin() || i > indexmax())
+      { 
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar5_array& dvar6_array::operator()(int i, int j)", indexmin(), indexmax(), i);
+      }
       #endif
       return elem(i)(j);
     }
@@ -191,22 +185,20 @@
     dvar3_array& dvar6_array::operator ( ) (int i,int j,int k)
     {
       #ifdef SAFE_ARRAYS
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-	    "dvar_vector& dvar4_array::operator ( )" << endl;
-          ad_exit(1);
-        }
+      if (i < indexmin() || i > indexmax())
+      { 
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar5_array& dvar6_array::operator()(int i, int j, int k)", indexmin(), indexmax(), i);
+      }
       #endif
       return elem(i)(j,k);
     }
     dvar_matrix& dvar6_array::operator ( ) (int i,int j,int k,int l)
     {
       #ifdef SAFE_ARRAYS
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "dvar-vector& dvar4_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
+      if (i < indexmin() || i > indexmax())
+      { 
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar_matrix& dvar6_array::operator()(int i, int j, int k, int l)", indexmin(), indexmax(), i);
+      }
       #endif
       return elem(i)(j,k,l);
     }
@@ -214,11 +206,10 @@
     dvar_vector& dvar6_array::operator ( ) (int i,int j,int k,int l,int m)
     {
       #ifdef SAFE_ARRAYS
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "prevariable& dvar4_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
+      if (i < indexmin() || i > indexmax())
+      { 
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar_vector& dvar6_array::operator()(int i, int j, int k, int l, int m)", indexmin(), indexmax(), i);
+      }
       #endif
       return elem(i)(j,k,l,m);
     }
@@ -227,11 +218,10 @@
       int n)
     {
       #ifdef SAFE_ARRAYS
-        if (i<indexmin()||i>indexmax())
-        { cerr << "Error hslice index out of bounds in\n"
-            "prevariable& dvar4_array::operator ( )"  << endl;
-          ad_exit(1);
-        }
+      if (i < indexmin() || i > indexmax())
+      { 
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "prevariable dvar6_array::operator()(int i, int j, int k, int l, int m, int n)", indexmin(), indexmax(), i);
+      }
       #endif
       return elem(i)(j,k,l,m,n);
     }

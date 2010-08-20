@@ -20,6 +20,7 @@ disk: $(LIBPATH)/$(LIBNAME)
 	cp adstring.hpp $(DISKDIR)/include
 	cp cifstrem.h $(DISKDIR)/include
 	cp clist.h $(DISKDIR)/include
+	cp admb_messages.h $(DISKDIR)/include
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/$*.obj

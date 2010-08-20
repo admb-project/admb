@@ -7,6 +7,7 @@
 
 
 #include "fvar.hpp"
+#include "admb_messages.h"
 
 int sum(_CONST imatrix& m)
 {
@@ -22,11 +23,10 @@ int sum(_CONST imatrix& m)
 
 int colsum(_CONST imatrix& m,int col)
 { 
-  if (col<m.colmin() || col>m.colmax())
+  if (col < m.colmin() || col > m.colmax())
   {
-    cerr << "Row out of bounds in function"
-            " colsum(_CONST imatrix& m,int col)" << endl;
-    ad_exit(1);
+    //JCA: Should be Column out of bounds
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "int colsum(_CONST imatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
   int isum=0;
   int mmin=m.rowmin();
@@ -41,11 +41,10 @@ int colsum(_CONST imatrix& m,int col)
 
 ivector column(_CONST imatrix& m,int col)
 { 
-  if (col<m.colmin() || col>m.colmax())
+  if (col < m.colmin() || col > m.colmax())
   {
-    cerr << "Row out of bounds in function"
-            " column(_CONST imatrix& m,int col)" << endl;
-    ad_exit(1);
+    //JCA: Should be Column out of bounds
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "int colsum(_CONST imatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
   int mmin=m.rowmin();
   int mmax=m.rowmax();

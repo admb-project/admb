@@ -53,6 +53,7 @@ dist:
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 
+
 	#make -C docs/manuals
 	#cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals
 	#cp -vf docs/manuals/admb.pdf ${DISK}/docs/manuals

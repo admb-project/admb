@@ -5,6 +5,7 @@
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <df1b2fun.h>
+#include "admb_messages.h"
 
 void myderkludge(void);
 
@@ -747,33 +748,25 @@ void re_objective_function_value::allocate(const char * s)
 #if defined(SAFE_ARRAYS)
 init_df1b2variable& init_df1b2vector::operator () (int i) 
 { 
-  if (i<indexmin())
+  if (i < indexmin())
   {
-    cerr << "Index too low in init_df1b2variable& operator () (int i);"
-       " value is " << i << endl;
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "init_df1b2variable& init_df1b2vector::operator () (int i)", indexmin(), indexmax(), i);
   }
-  if (i>indexmax())
+  if (i > indexmax())
   {
-    cerr << "Index too high in init_df1b2variable& operator () (int i);"
-       " value is " << i << endl;
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "init_df1b2variable& init_df1b2vector::operator () (int i)", indexmin(), indexmax(), i);
   }
   return ptr[i]; 
 }
 init_df1b2variable& init_df1b2vector::operator [] (int i) 
 { 
-  if (i<indexmin())
+  if (i < indexmin())
   {
-    cerr << "Index too low in init_df1b2variable& operator () (int i);"
-       " value is " << i << endl;
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "init_df1b2variable& init_df1b2vector::operator [] (int i)", indexmin(), indexmax(), i);
   }
-  if (i>indexmax())
+  if (i > indexmax())
   {
-    cerr << "Index too high in init_df1b2variable& operator () (int i);"
-       " value is " << i << endl;
-    ad_exit(1);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "init_df1b2variable& init_df1b2vector::operator [] (int i)", indexmin(), indexmax(), i);
   }
   return ptr[i]; 
 }

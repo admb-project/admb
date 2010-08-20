@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -214,6 +214,14 @@ dmatrix_position::dmatrix_position(BOR_CONST dmatrix_position& p)
   // cout << "ptr= " << ptr ;
 }
 
+/**
+\ingroup DEVEL
+Writes a gradient stack verification string.
+Writes a character string to the adjoint code variable stack.
+Only available in the "safe" library. 
+Used primarily for debugging adjoint coide.
+\param str Character sting to saved on the stack.
+*/
 int save_identifier_string(char* str)
 {
 #if defined(CHK_ID_STRING)

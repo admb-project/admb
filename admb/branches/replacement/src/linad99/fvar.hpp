@@ -2506,6 +2506,7 @@ double dmax(double i, double j);
 #if defined(__NUMBERVECTOR__)
   class param_init_number_vector;
   class param_init_bounded_number_vector;
+  class param_init_bounded_number_matrix;
   class param_init_vector_vector;
   class param_init_bounded_vector_vector;
 #endif
@@ -2801,6 +2802,7 @@ friend class dvar3_array;
 # if defined(__NUMBERVECTOR__)
     dvar_matrix(const param_init_vector_vector& );
     dvar_matrix(const param_init_bounded_vector_vector&);
+    dvar_matrix(const param_init_bounded_number_matrix&);
 # endif
   dvar_matrix sub(int,int);
 
@@ -4733,6 +4735,8 @@ double restore_double_value(void);
 int restore_int_value(void);
 void save_double_value( double x);
 void save_int_value(int x);
+void save_pointer_value(void * ptr);
+void* restore_pointer_value(void);
 dvar_matrix nograd_assign_trans(_CONST dmatrix& m);
 dvar_matrix nograd_assign(_CONST dmatrix&);
 dvariable nograd_assign(double tmp);
@@ -4775,6 +4779,8 @@ dmatrix choleski_decomp_neghess_error(_CONST dmatrix& M,int& ierror);
 dmatrix choleski_decomp_positive(const dmatrix& MM,const int& ierr);
 dmatrix choleski_decomp_positive(const dmatrix& MM,double bound);
 dvar_matrix choleski_decomp(_CONST dvar_matrix& M);
+
+dvar_matrix expm(const dvar_matrix & A);
 
 dvariable factln(_CONST dvariable& n);
 double factln(double n);
@@ -4924,6 +4930,9 @@ public:
   void fwrite(const int&);
   void fread(BOR_CONST int&);
   void fread(BOR_CONST double&);
+
+  void fwrite(void * ptr);
+  void fread(void* &ptr);
 };
 
 char which_library();
@@ -7489,7 +7498,7 @@ protected:
   ad_comm(int argc,char * argv[]);
   ad_comm(void);
   void allocate(void);
-  ~ad_comm();
+  virtual ~ad_comm();
 public:
   static int time_flag;
   static int bandwidth;

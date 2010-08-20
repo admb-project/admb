@@ -1,4 +1,5 @@
 OBJ0 =   \
+param_init_bounded_number_matrix.obj \
 newmodm5.obj  \
 shared1.obj \
 shared.obj \

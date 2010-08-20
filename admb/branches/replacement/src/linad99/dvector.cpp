@@ -20,7 +20,8 @@ long int farptr_tolong(void *);
 #include <memory.h>
 #endif
 
-/** Average of two numbers.
+/** Average of two numbers; constant objects.
+\ingroup misc
 \param x A double
 \param y A double
 \return \f$0.5*(x+y)\f$
@@ -31,6 +32,7 @@ double avg(double x,double y)
 }
 
 /** Shift valid range of subscripts.
+\ingroup matop
 \param min Ingeger value subtracted from the subscripts
 \return A %devector containing shifted vector.
 */
@@ -692,10 +694,11 @@ void dvector::allocatec(_CONST dvector& t)
 #endif
 */
 
-/** Largest of two integers
+/** Largest of two integer; constant objects
+\ingroup misc
 \param a An integer
 \param b An integer
-\return A integer \f$ z = \max(a,b)\f$
+\return A integer containing  \f$ z = \max(a,b)\f$
 */
 int max(int a,int b)
 {
@@ -705,8 +708,9 @@ int max(int a,int b)
     return b;
 }
 
-/** Cube of a number.
-\param m Double, nunber to be cubed
+/** Cube of a number; constant objects.
+\ingroup misc
+\param m Number to be cubed
 \return \f$m^3\f$
 */
 double cube( CGNU_DOUBLE m)
@@ -714,8 +718,9 @@ double cube( CGNU_DOUBLE m)
   return m*m*m;
 }
 
-/** Fourth power of a number.
-\param m Double, nunber to be taken to the fourth power.
+/** Fourth power of a number; constant objects.
+\ingroup misc
+\param m Number to be taken to the fourth power.
 \return \f$m^4\f$
 */
 double fourth( CGNU_DOUBLE m)

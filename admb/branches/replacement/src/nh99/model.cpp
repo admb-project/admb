@@ -63,6 +63,7 @@
 #  endif
   }
   
+extern int* pointer_to_phase;
   initial_params::initial_params(void)
   {
 #  if defined(USE_SHARE_FLAGS)
@@ -74,6 +75,7 @@
     initial_value_flag=0;
     active_flag=0;
     scalefactor=0;
+    pointer_to_phase=&initial_params::current_phase;
   }
 
   void initial_params::set_initial_value(double x)

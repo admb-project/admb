@@ -1,9 +1,5 @@
 AC_INIT([ADMB], [9.1], [users@admb-project.org])
 
-AC_CONFIG_FILES(
-  [GNUmakefile:scripts/configure/GNUmakefile.in scripts/bash/admb-bin]
-)
-
 # Check for programs used in building ADMB.
 AC_PROG_CC
 AC_PROG_CXX
@@ -32,6 +28,7 @@ then
   MACOS_XCODE_VERSION=`xcodebuild -version | grep Xcode | awk '{print $2}'`
   ADMB_TARGET="admb-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
+  INSTALLER_PACKAGEMAKER="scripts/installers/packagemaker/GNUmakefile"
 fi
 
 if test  "`uname -s`" =  "Linux"
@@ -40,6 +37,10 @@ then
   ADMB_TARGET="admb-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
 fi
+
+AC_CONFIG_FILES(
+  [GNUmakefile:scripts/configure/GNUmakefile.in scripts/bash/admb-bin ${INSTALLER_PACKAGEMAKER} ]
+)
 
 AC_SUBST(target, ${ADMB_TARGET})
 AC_SUBST(disk, ../build/${ADMB_TARGET}/dist)

@@ -5,6 +5,8 @@
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
 #include <fvar.hpp>
+#include "admb_messages.h"
+
 void i4_array::allocate(void)
 {
   t=0;
@@ -173,11 +175,9 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
     i3_array& i4_array::operator ( ) (int i)
     {
 #     if defined(SAFE_ARRAYS)
-      if (i<indexmin() || i>indexmax())
+      if (i < indexmin() || i > indexmax())
       {
-	cerr << "Index out of bounds in i4_array::operator () (int)"
-	     << endl;
-        ad_exit(1);
+        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "i3_array& i4_array::operator ( ) (int i)", indexmin(), indexmax(), i);
       }
 #     endif
       return t[i];
@@ -186,11 +186,9 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
     i3_array& i4_array::operator [] (int i)
     {
 #     if defined(SAFE_ARRAYS)
-      if (i<indexmin() || i>indexmax())
+      if (i < indexmin() || i > indexmax())
       {
-	cerr << "Index out of bounds in i4_array::operator () (int)"
-	     << endl;
-        ad_exit(1);
+        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "i3_array& i4_array::operator [] (int i)", indexmin(), indexmax(), i);
       }
 #     endif
       return t[i];

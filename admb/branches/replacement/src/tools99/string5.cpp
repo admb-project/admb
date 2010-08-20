@@ -7,6 +7,7 @@
 
 #include <fvar.hpp>
 #include <stdlib.h>
+#include "admb_messages.h"
 
   adstring_array::adstring_array(_CONST adstring_array& sa) :
     clist(sa)
@@ -84,17 +85,11 @@
 
     if (i<indexmin())
     {
-      cerr << "Error index too low in adstring& operator [] (int i)" << endl;
-      cerr << "value was " << i << " minimum valid index is "
-        << indexmin() << endl;
-      exit(1);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator [] (int i)", indexmin(), indexmax(), i);
     }
     if (i>indexmax())
     {
-      cerr << "Error index too high in adstring& operator [] (int i)" << endl;
-      cerr << "value was " << i << " maximum valid index is "
-        << indexmax() << endl;
-      exit(1);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator [] (int i)", indexmin(), indexmax(), i);
     }
     return *(ptr[i]);
   }
@@ -109,17 +104,11 @@
     }
     if (i<indexmin())
     {
-      cerr << "Error index too low in adstring& operator [] (int i)" << endl;
-      cerr << "value was " << i << " minimum valid index is "
-        << indexmin() << endl;
-      exit(1);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator () (int i)", indexmin(), indexmax(), i);
     }
     if (i>indexmax())
     {
-      cerr << "Error index too high in adstring& operator [] (int i)" << endl;
-      cerr << "value was " << i << " maximum valid index is "
-        << indexmax() << endl;
-      exit(1);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator () (int i)", indexmin(), indexmax(), i);
     }
     return *(ptr[i]);
   }
@@ -137,17 +126,11 @@
 
     if (i<indexmin())
     {
-      cerr << "Error index too low in adstring& operator [] (int i)" << endl;
-      cerr << "value was " << i << " minimum valid index is "
-        << indexmin() << endl;
-      exit(1);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator [] (int i) _CONST", indexmin(), indexmax(), i);
     }
     if (i>indexmax())
     {
-      cerr << "Error index too high in adstring& operator [] (int i)" << endl;
-      cerr << "value was " << i << " maximum valid index is "
-        << indexmax() << endl;
-      exit(1);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator [] (int i) _CONST", indexmin(), indexmax(), i);
     }
     return *(ptr[i]);
   }
@@ -162,17 +145,11 @@
     }
     if (i<indexmin())
     {
-      cerr << "Error index too low in adstring& operator [] (int i)" << endl;
-      cerr << "value was " << i << " minimum valid index is "
-        << indexmin() << endl;
-      exit(1);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator () (int i) _CONST", indexmin(), indexmax(), i);
     }
     if (i>indexmax())
     {
-      cerr << "Error index too high in adstring& operator [] (int i)" << endl;
-      cerr << "value was " << i << " maximum valid index is "
-        << indexmax() << endl;
-      exit(1);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator () (int i) _CONST", indexmin(), indexmax(), i);
     }
     return *(ptr[i]);
   }

@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -60,6 +60,11 @@ void save_int_value( int x)
   gradient_structure::get_fp()->fwrite(x);
 }
 
+void save_pointer_value(void *ptr)
+{
+  gradient_structure::get_fp()->fwrite(ptr);
+}
+
 double restore_prevariable_derivative(BOR_CONST prevariable_position& _pos)
 {
   prevariable_position& pos= (prevariable_position&) _pos; 
@@ -98,6 +103,13 @@ double restore_double_value(void)
 int restore_int_value(void)
 {
   int tmpout;
+  gradient_structure::get_fp()->fread(tmpout);
+  return tmpout;
+}
+
+void* restore_pointer_value(void)
+{
+  void* tmpout = NULL;
   gradient_structure::get_fp()->fread(tmpout);
   return tmpout;
 }

@@ -50,19 +50,7 @@ sing_val_decomp::sing_val_decomp(const dmatrix& _a, const dvector & _w,
 {}
 
 /** Singular value decomposition.
-    Not clear that this is used for anything. 
-    \param _a
-    \return
-
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
 */
-
-
-
 sing_val_decomp singval_decomp(const dmatrix &_a)
 {
   if (_a.indexmin() !=1 )
@@ -96,7 +84,26 @@ sing_val_decomp singval_decomp(const dmatrix &_a)
 
 
 
-
+/** Singular value decomposition.
+ * \ingroup svd
+ *
+ * \param m \f$m\f$ the number of rows of \f$A\f$
+ * \param n \f$n\f$ the number of columns of \f$A\f$
+ * \param withu true if the \f$U\f$-part is wanted
+ * \param withv true if the \f$V\f$-part is wanted
+ * \param eps
+ * \param tol
+ * \param aa \f$A\f$
+ * \param _q \f$q\f$
+ * \param _u \f$U\f$
+ * \param _v \f$V\f$
+ * \return an error code = 0, if no errors and 'k' if a failure to
+ *         converge at the 'kth' singular value.
+ *
+ * On return \f$q\f$ will contain the singular values of \f$A\f$
+ *           and \f$U\f$ and \f$V\f$ will be a column-orthogonal matrices
+ *           so that \f$A = U\cdot\mbox{diag(q)}\cdot V^{T} \f$
+ */
 int svd(int m,int n,int withu,int withv,double eps,double tol,
         _CONST dmatrix& aa,BOR_CONST dvector& _q,
         BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v)
@@ -138,6 +145,16 @@ int svd(int m,int n,int withu,int withv,double eps,double tol,
   return k;
 }
 
+/**  Singular value decomposition.
+ * \ingroup svd
+ *
+ * Used to find the svd of a matrix when \f$m<n\f$.
+ *
+ * \n\n Modified from svd.c (http://www.crbond.com/download/misc/svd.c),
+ *      an algorithm that was translated by C. Bond
+ *      to 'C' from the original Algol code in "Handbook for
+ *      Automatic Computation, vol. II, Linear Algebra", Springer-Verlag.
+ */
 int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
         _CONST dmatrix& aa,BOR_CONST dvector& _q,
         BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v)
@@ -146,12 +163,6 @@ int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
   ADUNCONST(dmatrix,v)
   ADUNCONST(dvector,q)
 
-  //dmatrix a=aa;
-  //int arlb=u.rowmin();
-  //int aclb=u.colmin();
-  //a.rowshift(0);
-  //a.colshift(0);
-
   int i,j,k,l,l1,iter,retval;
   double c,f,g,h,s,x,y,z;
   double *e;
@@ -159,12 +170,7 @@ int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
   e = (double *)calloc(n,sizeof(double));
   retval = 0;
 
-/* Copy 'a' to 'u' */    
-/*  for (i=0;i<m;i++) {
-    for (j=0;j<n;j++)
-      u[i][j] = a[i][j];
-  }*/
-u=aa;
+  u=aa;
 
 /* Householder's reduction to bidiagonal form. */
   g = x = 0.0;    
@@ -413,12 +419,19 @@ convergence:
   
   free(e);
 
-  //a.rowshift(arlb);
-  //a.colshift(aclb);
-
   return retval;
 }
 
+/** \ingroup svd
+ * Singular value decomposition.
+ *
+ * Used to find the svd of a matrix when \f$m\ge n\f$.
+ *
+ * \n\n Modified from svd.c (http://www.crbond.com/download/misc/svd.c),
+ *      an algorithm that was translated by C. Bond
+ *      to 'C' from the original Algol code in "Handbook for
+ *      Automatic Computation, vol. II, Linear Algebra", Springer-Verlag.
+ */
 int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
         _CONST dmatrix& aa,BOR_CONST dvector& _q,
         BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v)
@@ -428,12 +441,6 @@ int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
   ADUNCONST(dmatrix,v)
   ADUNCONST(dvector,q)
 
-  //dmatrix a=aa;
-  //int arlb=u.rowmin();
-  //int aclb=u.colmin();
-  //a.rowshift(0);
-  //a.colshift(0);
-
   int i,j,k,l,l1,iter,retval;
   double c,f,g,h,s,x,y,z;
   double *e;
@@ -441,14 +448,7 @@ int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
   e = (double *)calloc(n,sizeof(double));
   retval = 0;
 
-/* Copy 'a' to 'u' */    
-//  for (i=0;i<m;i++) {
-//    for (j=0;j<n;j++)
-//      u[i][j] = a[i][j];
-//
-//  }
-
-u=aa;
+  u=aa;
 /* Householder's reduction to bidiagonal form. */
   g = x = 0.0;    
   for (i=0;i<n;i++)
@@ -686,9 +686,6 @@ convergence:
   } /* end k */
   
   free(e);
-
-  //a.rowshift(arlb);
-  //a.colshift(aclb);
 
   return retval;
 }

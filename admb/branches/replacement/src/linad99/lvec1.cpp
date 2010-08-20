@@ -6,8 +6,7 @@
  */
 
 #include "fvar.hpp"
-
-
+#include "admb_messages.h"
 
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -26,14 +25,12 @@
    #ifdef SAFE_ARRAYS
      if (i>indexmax())
      {
-       cerr << "array bound exceeded -- index too high in lvector::operator[]";
-       ad_exit(1);
+       ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high", "AD_LONG_INT& lvector::operator() (int i)", indexmin(), indexmax(), i);
      }
      
      if (i<indexmin())
      {
-       cerr << "array bound exceeded -- index too low in lvector::operator[]";
-       ad_exit(1);
+       ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low", "AD_LONG_INT& lvector::operator() (int i)", indexmin(), indexmax(), i);
      }
    #endif
    return(*(v+i));
@@ -44,18 +41,14 @@
    #ifdef SAFE_ARRAYS
      if (i>indexmax())
      {
-       cerr << "array bound exceeded -- index too high in lvector::operator[]";
-       ad_exit(1);
+       ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high", "AD_LONG_INT& lvector::operator() (int i)", indexmin(), indexmax(), i);
      }
-     
      if (i<indexmin())
      {
-       cerr << "array bound exceeded -- index too low in lvector::operator[]";
-       ad_exit(1);
+       ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low", "AD_LONG_INT& lvector::operator() (int i)", indexmin(), indexmax(), i);
      }
    #endif
    return(*(v+i));
  }
 #endif
 void xyw8(void){int x=1;}
-

@@ -33,15 +33,26 @@ fi
 
 if test  "`uname -s`" =  "Linux"
 then
+  ADMB_VERSION=`cat VERSION`
+  if test -e `which svnversion`
+  then
+    SVNVERSION=`svnversion .` 
+    if test "${SVNVERSION}" != "exported"
+    then
+      ADMB_REVISION=".${SVNVERSION}"
+    fi
+  fi
   GCC_VERSION=`gcc -dumpversion`
   ADMB_TARGET="admb-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
 fi
 
 AC_CONFIG_FILES(
-  [GNUmakefile:scripts/configure/GNUmakefile.in scripts/bash/admb-bin ${INSTALLER_PACKAGEMAKER} ]
+  [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/bash/admb-bin ${INSTALLER_PACKAGEMAKER} ]
 )
 
+AC_SUBST(revision, ${ADMB_REVISION})
+AC_SUBST(version, ${ADMB_VERSION})
 AC_SUBST(target, ${ADMB_TARGET})
 AC_SUBST(disk, ../build/${ADMB_TARGET}/dist)
 AC_SUBST(libpath, ../build/${ADMB_TARGET}/objects)

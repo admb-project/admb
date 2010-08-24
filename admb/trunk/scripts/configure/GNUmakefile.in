@@ -1,6 +1,6 @@
 all:
-	CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ make --directory=src --file=@makefile@
-	find build/@target@/dist/examples -type d -name .svn -exec rm -rf {} +
+	CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
+	rm -rf `find build/@target@/dist -type d -name .svn`
 
 verify:
 	DISK=@disk@ make --directory=src --file=@makefile@ verify

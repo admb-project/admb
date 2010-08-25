@@ -22,6 +22,17 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])],
 ARCH_CXXFLAG=${CXXFLAGS}
 
 ADMB_TARGET=unix
+
+ADMB_VERSION=`cat VERSION`
+if test -e `which svnversion`
+then
+  SVNVERSION=`svnversion .` 
+  if test "${SVNVERSION}" != "exported"
+  then
+    ADMB_REVISION=".${SVNVERSION}"
+  fi
+fi
+
 if test  "`uname -s`" =  "Darwin"
 then
   MACOS_PRODUCT_VERSION=`sw_vers -productVersion`
@@ -33,15 +44,6 @@ fi
 
 if test  "`uname -s`" =  "Linux"
 then
-  ADMB_VERSION=`cat VERSION`
-  if test -e `which svnversion`
-  then
-    SVNVERSION=`svnversion .` 
-    if test "${SVNVERSION}" != "exported"
-    then
-      ADMB_REVISION=".${SVNVERSION}"
-    fi
-  fi
   GCC_VERSION=`gcc -dumpversion`
   ADMB_TARGET="admb-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
@@ -64,3 +66,5 @@ PREFIX=${prefix}
 AC_SUBST(PREFIX)
 
 AC_OUTPUT
+printf "\nConfigure completed for ${ADMB_TARGET}\n"
+printf "To build ADMB, type 'make'\n"

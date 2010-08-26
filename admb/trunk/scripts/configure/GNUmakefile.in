@@ -4,6 +4,20 @@ all:
 	@printf "\nBuild completed for @target@\n"
 	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
 
+debug:
+	DEBUG=1 CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
+	rm -rf `find build/@target@/dist -type d -name .svn`
+	@printf "\nBuild completed for @target@\n"
+	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
+
+dist:
+	mkdir -p build/dist
+	rm -rf build/dist/admb-@version@@revision@-src
+	svn export . build/dist/admb-@version@@revision@-src
+	rm -rf build/dist/admb-@version@@revision@-src/test
+	cp configure build/dist/admb-@version@@revision@-src
+	cd build/dist && zip -r admb-@version@@revision@-src.zip admb-@version@@revision@-src 
+
 verify:
 	DISK=@disk@ make --directory=src --file=@makefile@ verify
 

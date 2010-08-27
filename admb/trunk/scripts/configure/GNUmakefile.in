@@ -40,3 +40,4 @@ test:
 
 clean:
 	make --directory=src --file=@makefile@ clean
+	make --directory=test clean

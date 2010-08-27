@@ -1,4 +1,4 @@
-.PHONY: admb_messages init_bounded_number_matrix beta_regression
+.PHONY: clean admb_messages init_bounded_number_matrix beta_regression
 
 all: admb_messages init_bounded_number_matrix beta_regression
 
@@ -10,3 +10,6 @@ init_bounded_number_matrix:
 
 beta_regression:
 	OPTIONS=-s make --directory=$@
+
+clean:
+	make --directory=beta_regression clean

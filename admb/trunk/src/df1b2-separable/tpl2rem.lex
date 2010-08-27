@@ -3896,8 +3896,16 @@ TOP_OF_MAIN_SECTION {
 
 #if defined(_WIN32)
     strcpy(outcommand,"copy xxglobal.tmp + xxhtop.tmp + header.tmp "
-     "+ xxalloc1.tmp + xxalloc2.tmp + xxalloc3.tmp + xxalloc4.tmp "
-     " + xxalloc5.tmp  + xxtopm.tmp  + xxalloc6.tmp ");
+     "+ xxalloc1.tmp + xxalloc2.tmp + xxalloc3.tmp");
+    if (report_defined)
+    {
+      strcat(outcommand," + xxalloc4.tmp ");
+    }
+    if (preliminary_calcs_defined)
+    {
+      strcat(outcommand," + xxalloc5.tmp ");
+    } 
+    strcat(outcommand, " + xxtopm.tmp + xxalloc6.tmp ");
   
     strcpy(outcommand2,"copy tfile1 + tfile2 + tfile3 +tfile4 ");
 

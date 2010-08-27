@@ -1,3 +1,5 @@
+.PHONY: test
+
 all:
 	CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
 	rm -rf `find build/@target@/dist -type d -name .svn`
@@ -34,7 +36,7 @@ install:
 	cp -Rf build/@target@/dist/examples/* @prefix@/admb/examples
 
 test:
-	make --directory=test
+	export ADMB_HOME=${PWD}/build/@target@/dist; export PATH=${PWD}/build/@target@/dist/bin:$(PATH); make --directory=test
 
 clean:
 	make --directory=src --file=@makefile@ clean

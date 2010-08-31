@@ -583,6 +583,17 @@ dvariable cumd_gamma(const dvariable& x, const dvariable& a)
    return z;
 }
 
+dvariable gammln(_CONST dvariable& xx)
+{
+   dvariable z=lgam(xx);
+   return z;
+}
+
+dvariable gammln(const prevariable& z)
+{
+   dvariable y=lgam(z);
+   return y;
+}
 
 //double gammln(double xx);
 

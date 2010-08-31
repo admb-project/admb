@@ -7134,7 +7134,7 @@ ivector diagonal(const imatrix&);
 dvar_vector diagonal(const dvar_matrix&);
 
 double gammln(double xx);
-//dvariable gammln(_CONST dvariable& xx);
+dvariable gammln(_CONST dvariable& xx);
 dvariable gammln(_CONST prevariable& xx);
 ivector histogram(double min,double max,int nbin,_CONST dvector& input);
 

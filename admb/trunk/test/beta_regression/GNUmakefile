@@ -5,7 +5,7 @@ TARGET=beta_regression
 all: clean $(TARGET) run3 run2 run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=-I/usr/local/gtest-1.5.0/include LDFLAGS="-L/usr/local/gtest-1.5.0/lib -lgtest" admb -r -s $(TARGET)
+	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=-I/usr/local/gtest-1.5.0/include LDFLAGS="-static -L/usr/local/gtest-1.5.0/lib -lgtest -lpthread" admb -r -s $(TARGET)
 
 run:
 	@printf "Started run:\n"

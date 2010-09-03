@@ -17,3 +17,5 @@ hysimple:
 clean:
 	make --directory=beta_regression clean
 	make --directory=hysimple clean
+	make --directory=admb_messages clean
+	make --directory=init_bounded_number_matrix clean

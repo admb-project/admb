@@ -601,6 +601,7 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/fvar_op8.cpp \
                          ../../src/linad99/gaussher.cpp \
                          ../../src/linad99/ivsort.cpp \
+                         ../../src/linad99/libtype.cpp \
                          ../../src/linad99/ranfill.cpp \
                          ../../src/linad99/rngen.cpp \
                          ../../src/linad99/vbetacf.cpp \

@@ -34,6 +34,7 @@ SEPARABLE_FUNCTION void f1(const int& y, const prevariable & mu, const prevariab
   g -= w(y+1)*f;					// Where the weights are applied.
 
 
+
 TOP_OF_MAIN_SECTION
   arrmblsize = 4000000L;
   gradient_structure::set_GRADSTACK_BUFFER_SIZE(300000);

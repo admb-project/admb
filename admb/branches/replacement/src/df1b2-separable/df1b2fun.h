@@ -767,6 +767,7 @@ df1b2variable mfexp(const df1b2variable& x,double b);
 // ************************************************************
     
 df1b2variable fabs(const df1b2variable& x);
+df1b2variable max(const df1b2vector& t1);
 df1b2variable sfabs(const df1b2variable& x);
 df1b2variable pow(const df1b2variable& x,const df1b2variable& y);
 df1b2variable pow(const df1b2variable& x,double y);
@@ -1035,6 +1036,7 @@ public:
 
 // **************************************
 // **************************************
+df1b2vector fabs(const df1b2vector& t1);
 df1b2vector mfexp(const df1b2vector& x);
 df1b2vector exp(const df1b2vector& x);
 df1b2vector sqrt(const df1b2vector& x);

@@ -379,6 +379,7 @@ ivector getreindex(ivector & indx)
 
 df1b2vector solve(df1b2matrix& M,df1b2vector& v)
 {
+cout << "solve() " << __FILE__ << ":" << __LINE__ << endl;
   int mmin=M.indexmin();
   int mmax=M.indexmax();
   if (mmin !=1)
@@ -398,6 +399,7 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v)
 
 df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det)
 {
+cout << "solve() " << __FILE__ << ":" << __LINE__ << endl;
   df1b2variable& ln_det = (df1b2variable&) _ln_det;
   int mmin=M.indexmin();
   int mmax=M.indexmax();
@@ -421,6 +423,7 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det)
 df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det,
   const int& sgn)
 {
+cout << "solve() " << __FILE__ << ":" << __LINE__ << endl;
   df1b2variable& ln_det = (df1b2variable&) _ln_det;
   int mmin=M.indexmin();
   int mmax=M.indexmax();

@@ -85,7 +85,7 @@ dvar_vector solve(_CONST dvar_matrix & aa, _CONST dvar_vector & z)
    int ub = aa.colmax();
    if (lb != aa.rowmin() || ub != aa.colmax())
    {
-      cerr << "Error matrix not square in solve(dmatrix)" << endl;
+      cerr << "Error matrix not square in solve(dvar_matrix)" << endl;
       ad_exit(1);
    }
 
@@ -112,7 +112,7 @@ dvar_vector solve(_CONST dvar_matrix & aa, _CONST dvar_vector & z)
    if (det == 0.0)
    {
       cerr <<
-	 "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
+	 "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";
       ad_exit(1);
    }
 

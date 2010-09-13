@@ -212,7 +212,7 @@ cltudecomp ludecomp_pivot(const dmatrix & M)
    int i, j, k;
    int mmin = M.indexmin();
    int mmax = M.indexmax();
-   int imax = mmin - 1;
+   int imax = mmax - 1;
    cltudecomp clu(mmin, mmax);
    dvector scale(mmin, mmax);
 
@@ -301,10 +301,12 @@ cltudecomp ludecomp_pivot(const dmatrix & M)
   // LU decomp with partial pivoting
 cltudecomp xludecomp_pivot(const dvar_matrix & M)
 {
+
    int i, j, k;
    int mmin = M.indexmin();
    int mmax = M.indexmax();
-   int imax = mmin - 1;
+   //int imax = mmin - 1;
+   int imax = mmax - 1;
    cltudecomp clu(mmin, mmax);
    dvector scale(mmin, mmax);
 
@@ -322,6 +324,7 @@ cltudecomp xludecomp_pivot(const dvar_matrix & M)
       }
       scale(i) = 1.0 / value(max(fabs(M(i))));
    }
+
    // get upper and lower parts of LU
    dmatrix & alpha = clu.get_L();
    dmatrix & gamma = clu.get_U();	// gamma is the transpose of beta
@@ -359,6 +362,7 @@ cltudecomp xludecomp_pivot(const dvar_matrix & M)
 	    imax = i;
 	 }
       }
+
       if (j != imax)
       {
 	 // have to do this element-wise
@@ -375,7 +379,6 @@ cltudecomp xludecomp_pivot(const dvar_matrix & M)
 	 sign = -sign;
       }
       index(j) = imax;
-
       if (clu(j, j) == 0.0)
 	 clu(j, j) = eps;
       if (j != mmax)
@@ -387,6 +390,7 @@ cltudecomp xludecomp_pivot(const dvar_matrix & M)
 	 }
       }
    }
+
    save_identifier_string("OZ1");
    M.save_dvar_matrix_value();
    M.save_dvar_matrix_position();

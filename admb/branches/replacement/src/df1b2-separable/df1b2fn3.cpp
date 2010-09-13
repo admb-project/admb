@@ -379,3 +379,27 @@ df1b2variable fabs(const df1b2variable& x)
   else
     return -x;
 }
+
+df1b2vector fabs(const df1b2vector& t1)
+{
+   df1b2vector tmp(t1.indexmin(),t1.indexmax());
+   for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
+   {
+     tmp(i)=fabs(t1(i));
+   }
+
+   return(tmp);
+}
+
+df1b2variable max(const df1b2vector& t1)
+{
+   df1b2variable tmp;
+   int mmin=t1.indexmin();
+   int mmax=t1.indexmax();
+   tmp=t1(mmin);
+   for (int i=mmin+1; i<=mmax; i++)
+   {
+     if (value(tmp)<value(t1(i))) tmp=t1(i);
+   }
+   return(tmp);
+}

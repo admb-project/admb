@@ -626,7 +626,6 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/df1b2-separable/f1b2lndt.cpp \
                          ../../src/df1b2-separable/df3gammp.cpp \
                          ../../src/linad99/fvar.hpp \
-
                          ../../src/nh99/admodel.h \
 
 

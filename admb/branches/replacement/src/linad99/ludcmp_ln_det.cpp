@@ -110,7 +110,7 @@ dvariable ln_det(const dvar_matrix & aa, const int &_sgn)
     \param _sgn
     \return A double containing \f$|\log(M)|\f$.
 */
-double ln_det(_CONST dmatrix & m1, BOR_CONST int &_sgn)
+double ln_det(const dmatrix & m1, const int &_sgn)
 {
    dmatrix M = m1;
    int sign = _sgn;

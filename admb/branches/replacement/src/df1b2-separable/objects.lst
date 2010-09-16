@@ -31,7 +31,7 @@ newfunc.obj \
 df1b2gh.obj \
 df1b2ghmult.obj \
 test_trust.obj \
-f1b2solv.obj \
+\
 \
 f1b2sol3.obj \
 f1b2locl.obj \
@@ -133,3 +133,4 @@ mod_rhes.obj
 UNUSED =\
 df1b2bet.obj \
 f1b2sol2.obj \
+f1b2solv.obj \

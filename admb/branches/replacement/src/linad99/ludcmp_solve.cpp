@@ -11,8 +11,25 @@ cltudecomp xludecomp_pivot(const dvar_matrix & M);
 static void df_solve(void);
 
 /** Solve a linear system using LU decomposition.
-    \param aa A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
-    \param z A dvector containing the RHS, \f$b\f$ of the linear equation
+    \param aa A dvar_matrix \f$A\f$. 
+    \param z A dvector containing the RHS, \f$B\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \return A dvar_vector containing solution vector \f$X\f$.
+*/
+dvar_vector solve(const dvar_matrix& aa,const dvector& z)
+{
+  dvar_vector zz(z.indexmin(),z.indexmax());
+  for(int i=z.indexmin();i<=z.indexmax();i++)
+  {
+    zz(i) = 0.0;
+    zz(i) = z(i);
+  }
+  return solve(aa,zz);
+}
+
+/** Solve a linear system using LU decomposition.
+    \param aa A constant matrix. \f$A\f$. 
+    \param z A dvector containing the RHS, \f$B\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved.
     \return A dvector containing solution vector \f$X\f$.
 */
@@ -78,7 +95,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
     \f$A\cdot X = B\f$, to be solved.
     \return A dvar_vector containing solution vector \f$X\f$.
 */
-dvar_vector solve(_CONST dvar_matrix & aa, _CONST dvar_vector & z)
+dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
 {
    int n = aa.colsize();
    int lb = aa.colmin();
@@ -251,11 +268,10 @@ static void df_solve(void)
 }
 
 //can improve this
-dvar_vector solve(_CONST dvar_matrix & aa, _CONST dvar_vector & z,
+dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
 		  prevariable & ln_unsigned_det,
-		  BOR_CONST prevariable & _sign)
+		  const prevariable & _sign)
 {
-
    dvariable lndet = ln_det(aa);
    ln_unsigned_det = lndet;
    dvariable sign = 0.0;

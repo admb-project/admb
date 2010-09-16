@@ -377,6 +377,7 @@ ivector getreindex(ivector & indx)
 
 }
 
+/*
 df1b2vector solve(df1b2matrix& M,df1b2vector& v)
 {
 cout << "solve() " << __FILE__ << ":" << __LINE__ << endl;
@@ -395,7 +396,7 @@ cout << "solve() " << __FILE__ << ":" << __LINE__ << endl;
   df1b2vector rb=reorder(v,indx);
   df1b2matrix_pair p=ludcmp(RM);
   return lubksb(p.get_a(),p.get_b(),indx,rb);
-}
+}*/
 
 df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det)
 {

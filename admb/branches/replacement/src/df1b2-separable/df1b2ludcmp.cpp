@@ -10,6 +10,7 @@
   // LU decomp with partial pivoting
   df1b2ludecomp ludecomp_pivot(const df1b2matrix & M)
   {
+   cout << "<-------------df1b start---------->" << endl;
      int i, j, k;
      int mmin = M.indexmin();
      int mmax = M.indexmax();
@@ -29,6 +30,7 @@
   	 // use ad_exit() so that debugger can trace this
   	 ad_exit(1);
         }
+        scale(i) = 0.0;
         scale(i) = 1.0 / max(fabs(M(i)));
      }
      // get upper and lower parts of LU
@@ -54,6 +56,7 @@
   	 clu(i, j) -= alpha(i) (mmin, i - 1) * gamma(j) (mmin, i - 1);
         }
         df1b2variable maxterm = 0.0;
+
         for (i = j; i <= mmax; i++)
         {
   	 // using subvector here
@@ -63,12 +66,16 @@
   	 }
          df1b2variable tmp = 0.0;
   	 tmp = scale(i) * fabs(clu(i, j));
+      //cout << "tmp=" << value(tmp) << " maxterm=" << value(maxterm) << endl;
   	 if (value(tmp) > value(maxterm))
   	 {
   	    maxterm = tmp;
   	    imax = i;
+           //cout << "tmp " << tmp << " maxterm " << maxterm << " imax " << imax << endl;
   	 }
         }
+             //cout << "  1:df1b gamma" << endl << gamma << endl << endl;
+      //cout << "  j=" << j << " imax=" << imax << endl << endl;
         if (j != imax)
         {
   	 // have to do this element-wise
@@ -79,6 +86,7 @@
   	    clu(imax, k) = clu(j,k);
   	    clu(j, k) = tmp;
   	 }
+             //cout << "2:df1b gamma" << endl << gamma << endl << endl;
   	 scale(imax) = scale(j);
   	 int itmp = index2(imax);
   	 index2(imax) = index2(j);
@@ -86,7 +94,7 @@
   	 sign = -sign;
         }
         index(j) = imax;
-
+             //cout << "3:df1b gamma" << endl << gamma << endl << endl;
         if (value(clu(j, j)) == 0.0)
   	  clu(j, j) = 1.e-25;
         if (j != mmax)
@@ -99,6 +107,8 @@
   	 }
         }
      }
+             cout << "  2:df1b gamma" << endl << gamma << endl << endl;
+   cout << "<-------------df1b stop---------->" << endl;
      return clu;
   }
   //end ludcmp pivoting
@@ -124,8 +134,8 @@
 
    df1b2matrix MC(lb,ub,lb,ub);
    MC=aa;
-   dmatrix dmat = value(MC);
-   dvector dvec = value(z);
+   //dmatrix dmat = value(MC);
+   //dvector dvec = value(z);
    df1b2ludecomp dcmp = ludecomp_pivot(MC);
    ivector index2 = dcmp.get_index2();
    df1b2matrix & gamma = dcmp.get_U();
@@ -170,3 +180,16 @@
 
    return x;
   }
+
+
+
+df1b2vector solve(const df1b2matrix& aa,const dvector& z)
+{
+  df1b2vector zz(z.indexmin(),z.indexmax());
+  for(int i=z.indexmin();i<=z.indexmax();i++)
+  {
+    zz(i) = 0.0;
+    zz(i) = z(i);
+  }
+  return solve(aa,zz);
+}

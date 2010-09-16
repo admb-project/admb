@@ -121,4 +121,7 @@
   };
   //end class stuff
 
+  df1b2ludecomp ludecomp_pivot(const df1b2matrix & M);
+  df1b2vector solve(const df1b2matrix& aa,const dvector& z);
+
 #endif	//#ifndef __DF1B2LUDCMP_HPP__

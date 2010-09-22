@@ -10,7 +10,6 @@
   // LU decomp with partial pivoting
   df1b2ludecomp ludecomp_pivot(const df1b2matrix & M)
   {
-   cout << "<-------------df1b start---------->" << endl;
      int i, j, k;
      int mmin = M.indexmin();
      int mmax = M.indexmax();
@@ -107,8 +106,6 @@
   	 }
         }
      }
-             cout << "  2:df1b gamma" << endl << gamma << endl << endl;
-   cout << "<-------------df1b stop---------->" << endl;
      return clu;
   }
   //end ludcmp pivoting
@@ -181,8 +178,6 @@
    return x;
   }
 
-
-
 df1b2vector solve(const df1b2matrix& aa,const dvector& z)
 {
   df1b2vector zz(z.indexmin(),z.indexmax());
@@ -192,4 +187,47 @@ df1b2vector solve(const df1b2matrix& aa,const dvector& z)
     zz(i) = z(i);
   }
   return solve(aa,zz);
+}
+
+df1b2variable ln_det(const df1b2matrix & m1)
+{
+   int mmin = m1.indexmin();
+   int mmax = m1.indexmax();
+
+   df1b2matrix M(mmin,mmax,mmin,mmax);
+   M = m1;
+   df1b2ludecomp clu1 = ludecomp_pivot(M);
+
+   int sign = clu1.get_sign();
+   ivector index2 = clu1.get_index2();
+   df1b2variable lndet = 0.0;
+   df1b2matrix & gamma = clu1.get_U();
+   df1b2matrix & alpha = clu1.get_L();
+
+   // only need to save the diagonal of gamma
+   for (int i = mmin; i <= mmax; i++)
+   {
+      if (value(gamma(i, i)) < 0.0)
+      {
+	 sign = -sign;
+	 lndet += log(-gamma(i, i));
+      } else
+      {
+	 lndet += log(gamma(i, i));
+      }
+   }
+   return lndet;
+}
+
+df1b2vector solve(const df1b2matrix & aa, const df1b2vector & z,
+      df1b2variable & ln_unsigned_det,
+      const df1b2variable & _sign)
+{
+   df1b2variable lndet = ln_det(aa);
+   ln_unsigned_det = lndet;
+   df1b2variable sign = 0.0;
+   _sign = sign;
+
+   df1b2vector sol = solve(aa, z);
+   return sol;
 }

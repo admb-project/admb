@@ -121,7 +121,11 @@
   };
   //end class stuff
 
-  df1b2ludecomp ludecomp_pivot(const df1b2matrix & M);
-  df1b2vector solve(const df1b2matrix& aa,const dvector& z);
+df1b2ludecomp ludecomp_pivot(const df1b2matrix & M);
+df1b2vector solve(const df1b2matrix& aa,const dvector& z);
+df1b2variable ln_det(const df1b2matrix & m1);
+df1b2vector solve(const df1b2matrix & aa, const df1b2vector & z,
+      df1b2variable & ln_unsigned_det,
+      const df1b2variable & _sign);
 
 #endif	//#ifndef __DF1B2LUDCMP_HPP__

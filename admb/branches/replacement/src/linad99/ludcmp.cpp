@@ -209,7 +209,6 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
   // LU decomp with partial pivoting
 cltudecomp ludecomp_pivot(const dmatrix & M)
 {
-   cout << "<-------------dmat start---------->" << endl;
    int i, j, k;
    int mmin = M.indexmin();
    int mmax = M.indexmax();
@@ -263,7 +262,7 @@ cltudecomp ludecomp_pivot(const dmatrix & M)
 	    clu(i, j) -= alpha(i) (mmin, j - 1) * gamma(j) (mmin, j - 1);
 	 }
 	 double tmp = scale(i) * fabs(clu(i, j));
-      //cout << "";
+      cout << "";
 	 if (tmp > maxterm)
 	 {
 	    maxterm = tmp;
@@ -302,8 +301,6 @@ cltudecomp ludecomp_pivot(const dmatrix & M)
 	 }
       }
    }
-             cout << "  2:dmat gamma" << endl << gamma << endl << endl;
-   cout << "<-------------dmat stop---------->" << endl;
    return clu;
 }
 

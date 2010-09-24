@@ -23,11 +23,8 @@ endif
 $(LIBPATH)/$(LIBNAME) :  $(OBJECTS) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 
-evalxtrn.obj: evalxtrn.cpp
-	$(CXX) -O3 $(CXXFLAGS) evalxtrn.cpp -o $(LIBPATH)/$*.obj
-
 model7.obj: model7.cpp
-	$(CXX) -DADMB_CONFIGURE="${ADMB_CONFIGURE}" -O3 $(CXXFLAGS) model7.cpp -o $(LIBPATH)/model7.obj
+	$(CXX) -DADMB_CONFIGURE="${ADMB_CONFIGURE}" $(CXXFLAGS) model7.cpp -o $(LIBPATH)/model7.obj
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/$*.obj

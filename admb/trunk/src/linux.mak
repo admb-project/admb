@@ -18,7 +18,7 @@ endif
 ifdef DEBUG
 CXXFLAGS:=$(CXXFLAGS) -g
 else
-CXXFLAGS:=$(CXXFLAGS) -O3
+CXXFLAGS:=$(CXXFLAGS)
 endif
 
 CXXFLAGS:=-c $(CXXFLAGS) -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux

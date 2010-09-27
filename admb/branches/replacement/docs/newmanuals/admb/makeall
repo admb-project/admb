@@ -1,0 +1,6 @@
+pdflatex all_ad
+makeindex -s docindex.sty all_ad.idx
+#sed -f sedmodxxx xxx.sed > yyy.sed
+sed -f yyy.sed all_ad.ind > ttmp
+#sed -f href.sed ttmp > all_ad.ind 
+pdflatex all_ad

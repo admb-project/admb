@@ -1,15 +1,5 @@
 .PHONY: disk
 
-ifneq ($(strip $(ADMB_VERSION)),)
-  CXXFLAGS+=-DADMB_VERSION=${ADMB_VERSION}
-endif
-
-ifneq ($(strip $(ADMB_REVISION)),)
-  ifneq ('$(strip $(ADMB_REVISION))', 'exported')
-    CXXFLAGS+=-DADMB_REVISION=${ADMB_REVISION}
-  endif
-endif
-
 LIBPATH =gcc32-rh8olp
 STUBPATH =gcc32-rh8olp-stub
 STUBNAME = libdf1b2stub.a
@@ -33,8 +23,8 @@ endif
 $(LIBPATH)/$(LIBNAME) :  $(OBJECTS) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 
-evalxtrn.obj: evalxtrn.cpp
-	$(CXX) -O3 $(CXXFLAGS) evalxtrn.cpp -o $(LIBPATH)/$*.obj
+model7.obj: model7.cpp
+	$(CXX) -DADMB_CONFIGURE="${ADMB_CONFIGURE}" $(CXXFLAGS) model7.cpp -o $(LIBPATH)/model7.obj
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/$*.obj

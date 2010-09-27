@@ -541,10 +541,10 @@ DATA_SECTION  {
 
 
 
-<DEFINE_DATA>^[ \t]LOCAL_CALCULATIONS | 
-<DEFINE_DATA>^[ \t]LOCAL_CALCS |
-<DEFINE_DATA>^[ \t]LOC_CALCULATIONS | 
-<DEFINE_DATA>^[ \t]LOC_CALCS  {
+<DEFINE_DATA>^[ \t]*LOCAL_CALCULATIONS | 
+<DEFINE_DATA>^[ \t]*LOCAL_CALCS |
+<DEFINE_DATA>^[ \t]*LOC_CALCULATIONS | 
+<DEFINE_DATA>^[ \t]*LOC_CALCS  {
 
     BEGIN IN_LOCAL_CALCS;
 
@@ -824,10 +824,10 @@ DATA_SECTION  {
     
     }
 
-<DEFINE_PARAMETERS>^[ \t]LOCAL_CALCULATIONS | 
-<DEFINE_PARAMETERS>^[ \t]LOCAL_CALCS |
-<DEFINE_PARAMETERS>^[ \t]LOC_CALCULATIONS | 
-<DEFINE_PARAMETERS>^[ \t]LOC_CALCS  {
+<DEFINE_PARAMETERS>^[ \t]*LOCAL_CALCULATIONS | 
+<DEFINE_PARAMETERS>^[ \t]*LOCAL_CALCS |
+<DEFINE_PARAMETERS>^[ \t]*LOC_CALCULATIONS | 
+<DEFINE_PARAMETERS>^[ \t]*LOC_CALCS  {
 
     BEGIN IN_LOCAL_CALCS;
 
@@ -3896,8 +3896,16 @@ TOP_OF_MAIN_SECTION {
 
 #if defined(_WIN32)
     strcpy(outcommand,"copy xxglobal.tmp + xxhtop.tmp + header.tmp "
-     "+ xxalloc1.tmp + xxalloc2.tmp + xxalloc3.tmp + xxalloc4.tmp "
-     " + xxalloc5.tmp  + xxtopm.tmp  + xxalloc6.tmp ");
+     "+ xxalloc1.tmp + xxalloc2.tmp + xxalloc3.tmp");
+    if (report_defined)
+    {
+      strcat(outcommand," + xxalloc4.tmp ");
+    }
+    if (preliminary_calcs_defined)
+    {
+      strcat(outcommand," + xxalloc5.tmp ");
+    } 
+    strcat(outcommand, " + xxtopm.tmp + xxalloc6.tmp ");
   
     strcpy(outcommand2,"copy tfile1 + tfile2 + tfile3 +tfile4 ");
 
@@ -3942,8 +3950,17 @@ TOP_OF_MAIN_SECTION {
 
 #else
     strcpy(outcommand,"cat xxglobal.tmp   xxhtop.tmp   header.tmp "
-     "  xxalloc1.tmp   xxalloc2.tmp   xxalloc3.tmp   xxalloc4.tmp "
-     "   xxalloc5.tmp    xxtopm.tmp    xxalloc6.tmp > ");
+     "  xxalloc1.tmp   xxalloc2.tmp   xxalloc3.tmp ");
+    if (report_defined)
+    {
+      strcat(outcommand," xxalloc4.tmp");
+    }
+    if (preliminary_calcs_defined)
+    {
+      strcat(outcommand," xxalloc5.tmp");
+    } 
+    strcat(outcommand, "  xxtopm.tmp    xxalloc6.tmp > ");
+
     strcpy(outcommand2,"cat tfile1  tfile2 tfile3 tfile4 > ");
 
     strcpy(outcommand3a,"sed -n -f ");

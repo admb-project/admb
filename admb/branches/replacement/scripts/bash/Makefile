@@ -89,7 +89,7 @@ bcb:
 	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@
 
 biglog:
-	cd examples/admb-re/$@;rm -f @.par @.std;touch xxalloc4.tmp xxalloc5.tmp;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 bvprobit:
 	@#Missing bvprobit.dat
@@ -99,7 +99,7 @@ caest:
 	-cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 gamma:
-	cd examples/admb-re/$@;rm -f @.par @.std;touch xxalloc4.tmp xxalloc5.tmp;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) liver_$@;./liver_$@
+	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) liver_$@;./liver_$@
 
 kidney:
 	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
@@ -155,7 +155,7 @@ union:
 
 weights: binomial binomial_w2
 binomial:
-	cd examples/admb-re/weights;rm -f @.par @.std;touch xxalloc4.tmp xxalloc5.tmp;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
+	cd examples/admb-re/weights;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 binomial_w2:
-	-cd examples/admb-re/weights;rm -f @.par @.std;touch xxalloc4.tmp xxalloc5.tmp;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
+	-cd examples/admb-re/weights;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@

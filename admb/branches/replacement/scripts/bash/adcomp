@@ -35,7 +35,7 @@ if [[ "$1" == "--help" ]]; then help; exit; fi
 
 # Pop args until model=$1
 unset dll
-g="-O3 "
+g=" "
 opt="-DOPT_LIB "
 while getopts "dgrs" A; do
   case $A in

@@ -9,6 +9,11 @@ AC_PROG_LEX
 
 ## Requires autoconf version 2.60 or newer
 #AC_PROG_SED
+AC_CHECK_PROG(HAS_SED,sed,[yes])
+if test "${HAS_SED}" = "sed" -a "${LEX}" = "flex"
+then
+  LEX_TARGETS="tpl2rem.lex tpl2cpp.lex"
+fi
 
 # Check for programs used in building ADMB.
 CXX_32OR64BIT="32bit"
@@ -22,11 +27,24 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])],
 ARCH_CXXFLAG=${CXXFLAGS}
 
 ADMB_TARGET=unix
+
+ADMB_VERSION=`cat VERSION`
+
+AC_CHECK_PROG(HAS_SVNVERSION,svnversion,[yes])
+if test "${HAS_SVNVERSION}" = "yes"
+then
+  SVNVERSION=`svnversion .`
+  if test "${SVNVERSION}" != "exported"
+  then
+    ADMB_REVISION=".${SVNVERSION}"
+  fi
+fi
+
 if test  "`uname -s`" =  "Darwin"
 then
   MACOS_PRODUCT_VERSION=`sw_vers -productVersion`
   MACOS_XCODE_VERSION=`xcodebuild -version | grep Xcode | awk '{print $2}'`
-  ADMB_TARGET="admb-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
+  ADMB_TARGET="admb${ADMB_VERSION}${ADMB_REVISION}-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
   INSTALLER_PACKAGEMAKER="scripts/installers/packagemaker/GNUmakefile"
 fi
@@ -34,14 +52,24 @@ fi
 if test  "`uname -s`" =  "Linux"
 then
   GCC_VERSION=`gcc -dumpversion`
-  ADMB_TARGET="admb-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  ADMB_TARGET="admb${ADMB_VERSION}${ADMB_REVISION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  MAKEFILE="linux.mak"
+fi
+
+if test  "`uname -s`" =  "MINGW32_NT-6.1"
+then
+  GCC_VERSION=`gcc -dumpversion`
+  ADMB_TARGET="admb${ADMB_VERSION}${ADMB_REVISION}-mingw-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
 fi
 
 AC_CONFIG_FILES(
-  [GNUmakefile:scripts/configure/GNUmakefile.in scripts/bash/admb-bin ${INSTALLER_PACKAGEMAKER} ]
+  [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/bash/admb-bin ${INSTALLER_PACKAGEMAKER} ]
 )
 
+AC_SUBST(revision, ${ADMB_REVISION})
+AC_SUBST(lextargets, ${LEX_TARGETS})
+AC_SUBST(version, ${ADMB_VERSION})
 AC_SUBST(target, ${ADMB_TARGET})
 AC_SUBST(disk, ../build/${ADMB_TARGET}/dist)
 AC_SUBST(libpath, ../build/${ADMB_TARGET}/objects)
@@ -53,3 +81,5 @@ PREFIX=${prefix}
 AC_SUBST(PREFIX)
 
 AC_OUTPUT
+printf "\nConfigure completed for ${ADMB_TARGET}\n"
+printf "To build ADMB, type 'make'\n"

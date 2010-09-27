@@ -7,7 +7,6 @@ endif
 
 PWD=$(shell pwd)
 NOW=$(shell date)
-ADMB_VERSION=$(shell cat ../VERSION)
 ADMB_REVISION=$(shell svnversion ..)
 
 ifndef LIBPATH
@@ -19,7 +18,7 @@ endif
 ifdef DEBUG
 CXXFLAGS:=$(CXXFLAGS) -g
 else
-CXXFLAGS:=$(CXXFLAGS) -O3
+CXXFLAGS:=$(CXXFLAGS)
 endif
 
 CXXFLAGS:=-c $(CXXFLAGS) -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux
@@ -38,7 +37,7 @@ dist:
 	$(MAKE) --directory=df1b2-separable CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
 	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
-	$(MAKE) --directory=nh99 CC=gcc CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" STUBPATH=../${LIBPATH}/nh99-olp-stub LIBPATH=../${LIBPATH}/nh99-olp ADMB_VERSION=${ADMB_VERSION} ADMB_REVISION=${ADMB_REVISION} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
+	$(MAKE) --directory=nh99 CC=gcc CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" STUBPATH=../${LIBPATH}/nh99-olp-stub LIBPATH=../${LIBPATH}/nh99-olp ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
 	$(MAKE) --directory=tools99 CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE ${DISK}
 	cp -vf ../README ${DISK}

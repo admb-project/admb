@@ -35,6 +35,8 @@
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 10
+
+  \deprecated Scheduled for replacement in 2011.
 */
 void function_minimizer::adamoeba(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, int ndim,
   double ftol,int nfunk)

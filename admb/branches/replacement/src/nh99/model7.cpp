@@ -12,6 +12,11 @@
 //#include <parallel.h>
 #include <signal.h>
 
+#undef ADMB_CONFIGURE
+#ifdef ADMB_CONFIGURE
+  #include "../../admb_configure.h"
+#endif
+
 void vm_initialize(void);
 int have_jvm=0;
 
@@ -156,19 +161,17 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       int n=i-1;
       adprogram_name=adprogram_name(1,n);
 
-      (*ad_printf)("ADMB");
-#ifdef ADMB_VERSION
-      (*ad_printf)(" %s", STR(ADMB_VERSION));
-#endif
-#ifdef ADMB_REVISION
-      (*ad_printf)(" (Revision: %s)", STR(ADMB_REVISION));
+      (*ad_printf)("AD Model Builder");
+#ifdef ADMB_CONFIGURE
+      (*ad_printf)(" %s", (char*)admb_banner);
 #endif
       (*ad_printf)("\n");
       (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California\n");
       (*ad_printf)("\n");
 
-      (*ad_printf)( " USAGE--%s options\n",(char*)(adprogram_name));
-      (*ad_printf)( " where an option consists of -option_tag followed by arguments if necessary\n");
+      (*ad_printf)( "Usage: %s option(s)\n",(char*)(adprogram_name));
+      (*ad_printf)( "       where an option consists of -option_tag followed by arguments if necessary\n");
+      (*ad_printf)("\n");
       (*ad_printf)( " -ainp NAME      change default ascii input parameter file name to NAME\n");
       (*ad_printf)( " -binp NAME      change default binary input parameter file name to NAME\n");
       (*ad_printf)( " -est            only do the parameter estimation\n");
@@ -214,6 +217,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -pvmtime        record timing information for PVM performance analysis\n");
       (*ad_printf)( " -info           Contributors acknowledgements\n");
       (*ad_printf)( " -? or -help     this message\n");
+      (*ad_printf)("\n");
       (*ad_printf)( " Random effects options if applicable\n");
     //if (function_minimizer::random_effects_flag)
     {
@@ -233,26 +237,25 @@ ad_comm::ad_comm(int _argc,char * _argv[])
            " random effects (reduces temporary file sizes)\n");       
       (*ad_printf)( " -ddnr           use high precision Newton-Raphson for"
            " inner optimization for banded hessian case ONLY even if implemented\n");       
-      (*ad_printf)( " -nrdbg           verbose reporting for debugging newton-raphson\n");       
+      (*ad_printf)( " -nrdbg          verbose reporting for debugging newton-raphson\n");       
 #  if defined(__MINI_MAX__)
-      (*ad_printf)( " -mm N          do minimax optimization\n");
+      (*ad_printf)( " -mm N           do minimax optimization\n");
 #  endif
-      (*ad_printf)( " -shess         use sparse Hessian structure"
+      (*ad_printf)( " -shess          use sparse Hessian structure"
            " inner optimzation\n");       
+      (*ad_printf)("\n");
+      (*ad_printf)("Read online documentation at http://www.admb-project.org/\n");
+      (*ad_printf)("Contact <users@admb-project.org> for help.\n");
     }
       ad_exit(0);
     }
     else if (option_match(_argc,_argv,"-info") > -1)
     {
-      (*ad_printf)("ADMB");
-#ifdef ADMB_VERSION
-      (*ad_printf)(" %s", STR(ADMB_VERSION));
-#endif
-#ifdef ADMB_REVISION
-      (*ad_printf)(" (Revision: %s)", STR(ADMB_REVISION));
+      (*ad_printf)("AD Model Builder");
+#ifdef ADMB_CONFIGURE
+      (*ad_printf)(" %s", (char*)admb_banner);
 #endif
       (*ad_printf)("\n");
-
       (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California\n");
       (*ad_printf)("\n");
 

@@ -108,8 +108,16 @@
   }
   //end ludcmp pivoting
 
-  df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
-  {
+
+
+/** Solve a linear system using LU decomposition.
+    \param aa A df1b2matrix \f$A\f$. 
+    \param z A df1b2vector containing the RHS, \f$B\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \return A df1b2vector containing solution vector \f$X\f$.
+*/
+df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
+{
    int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
@@ -129,8 +137,6 @@
 
    df1b2matrix MC(lb,ub,lb,ub);
    MC=aa;
-   //dmatrix dmat = value(MC);
-   //dvector dvec = value(z);
    df1b2ludecomp dcmp = ludecomp_pivot(MC);
    ivector index2 = dcmp.get_index2();
    df1b2matrix & gamma = dcmp.get_U();
@@ -174,8 +180,15 @@
    }
 
    return x;
-  }
+}
 
+
+/** Solve a linear system using LU decomposition.
+    \param aa A df1b2matrix \f$A\f$. 
+    \param z A dvector containing the RHS, \f$B\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \return A df1b2vector containing solution vector \f$X\f$.
+*/
 df1b2vector solve(const df1b2matrix& aa,const dvector& z)
 {
   df1b2vector zz(z.indexmin(),z.indexmax());
@@ -187,6 +200,11 @@ df1b2vector solve(const df1b2matrix& aa,const dvector& z)
   return solve(aa,zz);
 }
 
+
+/** Compute log determinant of a df1b2matrix.
+    \param m1 A df1b2matrix, \f$M\f$, for which the determinant is computed.
+    \return A df1b2matrix containing \f$|\log(M)|\f$.
+*/
 df1b2variable ln_det(const df1b2matrix & m1)
 {
    int mmin = m1.indexmin();
@@ -217,6 +235,16 @@ df1b2variable ln_det(const df1b2matrix & m1)
    return lndet;
 }
 
+
+
+/** Solve a linear system using LU decomposition.
+    \param aa A df1b2matrix \f$A\f$. 
+    \param z A dvector containing the RHS, \f$B\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \return A df1b2vector containing solution vector \f$X\f$.
+
+    On return ln_unsigned_det will contain \f$|\log(A)|\f$.
+*/
 df1b2vector solve(const df1b2matrix & aa, const df1b2vector & z,
       df1b2variable & ln_unsigned_det,
       const df1b2variable & _sign)

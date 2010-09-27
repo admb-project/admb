@@ -74,14 +74,14 @@ function output {
       if test -f $DIRNAME/$BASENAME.par ; then
         printf "#File(par)\n"
         cat $DIRNAME/$BASENAME.par
-        par2csv builderid $BASENAME $DIRNAME/$BASENAME.par >> ../par.csv
+        #par2csv builderid $BASENAME $DIRNAME/$BASENAME.par >> ../par.csv
       fi
       ##printf "#File(cor)\n"
       ##cat $DIRNAME/$BASENAME.cor
       if test -f $DIRNAME/$BASENAME.std ; then
         printf "#File(std)\n"
         cat $DIRNAME/$BASENAME.std
-        std2csv builderid $BASENAME $DIRNAME/$BASENAME.std >> ../std.csv
+        #std2csv builderid $BASENAME $DIRNAME/$BASENAME.std >> ../std.csv
       fi
     done
   done

@@ -1,0 +1,9 @@
+#!/bin/bash
+pdflatex --interaction batchmode all_au 
+cp all_au.log all_au.1.log
+makeindex -s docindex.sty all_au.idx
+sed -f sedmodxxx xxx.sed > yyy.sed
+sed -f yyy.sed all_au.ind > ttmp
+sed -f href.sed ttmp > all_au.ind 
+pdflatex all_au
+cp all_au.log all_au.2.log

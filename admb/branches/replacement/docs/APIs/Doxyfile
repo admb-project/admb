@@ -600,6 +600,7 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/fvar_op8.cpp \
                          ../../src/linad99/gaussher.cpp \
                          ../../src/linad99/ivsort.cpp \
+                         ../../src/linad99/libtype.cpp \
                          ../../src/linad99/ranfill.cpp \
                          ../../src/linad99/rngen.cpp \
                          ../../src/linad99/df13incbet.cpp \
@@ -630,7 +631,6 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/ludcmp_ln_det.cpp \
                          ../../src/linad99/ludcmp_operators.cpp \
                          ../../src/linad99/ludcmp_solve.cpp \
-
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
 # also the default input encoding. Doxygen uses libiconv (or the iconv built 

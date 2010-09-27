@@ -4,7 +4,6 @@
 #define TINY 1.0e-20;
 
 dmatrix fabs(const dmatrix & X){
-  RETURN_ARRAYS_INCREMENT();  
   int rmin = X.rowmin();
   int rmax = X.rowmax();
   int cmin = X.colmin();
@@ -15,15 +14,13 @@ dmatrix fabs(const dmatrix & X){
       ret(i,j)=fabs(X(i,j));
     }
   }
-  RETURN_ARRAYS_DECREMENT();
   return ret;
 }
 
 
-dvar_matrix solve(const dvar_matrix& aa,const dvar_matrix& tz,
-  dvariable ln_unsigned_det,dvariable& sign);
+dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_unsigned_det, dvariable& sign);
 
-dvar_matrix solve(const dvar_matrix& aa,const dvar_matrix& tz)
+dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz)
 {
   dvariable ln;
   dvariable sgn;
@@ -31,8 +28,7 @@ dvar_matrix solve(const dvar_matrix& aa,const dvar_matrix& tz)
 }
 
 
-dvar_matrix solve(const dvar_matrix& aa,const dvar_matrix& tz,
-  dvariable ln_unsigned_det,dvariable& sign)
+dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_unsigned_det, dvariable& sign)
 {
   RETURN_ARRAYS_INCREMENT();    
   int i,imax,j,k,n;

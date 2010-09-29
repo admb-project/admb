@@ -147,6 +147,350 @@ void gauss_hermite (const dvector& _t,const dvector& _wts)
 }
 
 
+/*void gauss_hermite(BOR_CONST dvector& _x,BOR_CONST dvector& _w)
+{
+cout << "gauss_hermite" << endl;
+  dvector x=(dvector&) _x;
+  dvector w=(dvector&) _w;
+  int ximin=x.indexmin();
+  int ximax=x.indexmax();
+  int wimin=w.indexmin();
+  int wimax=w.indexmax();
+  if (ximin != wimin || ximax != wimax) 
+  {
+    cerr << " Vector size mismatch in Gauss_hermite routine" << endl;
+    ad_exit(1);
+  }
+    
+  x.shift(1);
+  w.shift(1);
+  int n=x.size();
+  int i,its,j,m;
+  double p1,p2,p3,pp,z,z1;
+
+  m=(n+1)/2;
+  for (i=1;i<=m;i++) 
+  {
+    if (i == 1) 
+    {
+      z=sqrt((double)(2*n+1))-1.85575*pow((double)(2*n+1),-0.16667);
+    } 
+    else if (i == 2) 
+    {
+      z -= 1.14*pow((double)n,0.426)/z;
+    } 
+    else if (i == 3) 
+    {
+      z=1.86*z-0.86*x[1];
+    } 
+    else if (i == 4) 
+    {
+      z=1.91*z-0.91*x[2];
+    } 
+    else 
+    {
+      z=2.0*z-x[i-2];
+    }
+    for (its=1;its<=maxit;its++) 
+    {
+      p1=pim;
+      p2=0.0;
+      for (j=1;j<=n;j++) 
+      {
+        p3=p2;
+        p2=p1;
+        p1=z*sqrt(2.0/j)*p2-sqrt(((double)(j-1))/j)*p3;
+      }
+      pp=sqrt((double)2*n)*p2;
+      z1=z;
+      z=z1-p1/pp;
+      if (fabs(z-z1) <= eps) break;
+    }
+    if (its > maxit) cerr << "too many iterations in gaussher" << endl;
+    x[i]=z;
+    x[n+1-i] = -z;
+    w[i]=2.0/(pp*pp);
+    w[n+1-i]=w[i];
+  }
+  x.shift(ximin);
+  w.shift(ximin);
+}*/
+
+/** Gauss-Legendre quadature.
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 4
+
+    \deprecated Scheduled for replacement by 2010.
+*/
+
+
+void gauss_legendre ( double a, double b, const dvector& _t, const dvector& _wts )
+
+//****************************************************************************80
+//
+//  Purpose:
+//
+//    CGQF computes knots and weights of a Gauss quadrature formula.
+//
+//  Discussion:
+//
+//    The user may specify the interval (A,B).
+//
+//    Only simple knots are produced.
+//
+//    Use routine EIQFS to evaluate this quadrature formula.
+//
+//  Licensing:
+//
+//    This code is distributed under the GNU LGPL license. 
+//
+//  Modified:
+//
+//    September 2010 by Derek Seiple
+//
+//  Author:
+//
+//    Original FORTRAN77 version by Sylvan Elhay, Jaroslav Kautsky.
+//    C++ version by John Burkardt.
+//
+//  Reference:
+//
+//    Sylvan Elhay, Jaroslav Kautsky,
+//    Algorithm 655: IQPACK, FORTRAN Subroutines for the Weights of 
+//    Interpolatory Quadrature,
+//    ACM Transactions on Mathematical Software,
+//    Volume 13, Number 4, December 1987, pages 399-415.
+//
+//  Parameters:
+//
+//    Input, double A, B, the interval endpoints, or
+//    other parameters.
+//
+//    Output, double T[NT], the knots.
+//
+//    Output, double WTS[NT], the weights.
+//
+{
+  dvector t=(dvector&) _t;
+  dvector wts=(dvector&) _wts;
+
+  if( t.indexmax()!=wts.indexmax() )
+  {
+    cerr << "Incompatible sizes in void "
+         << "void mygauss_legendre(double a, double b, const dvector& _t, const dvector& _wts)" << endl;
+    ad_exit(-1);
+  }
+
+  int lb = t.indexmin();
+  t.shift(0);
+  wts.shift(0);
+  int nt = t.indexmax() + 1;
+  int ub = nt-1;
+
+  int i;
+  int k;
+  int l;
+  double al;
+  double ab;
+  double abi;
+  double abj;
+  double be;
+  double p;
+  double shft;
+  double slp;
+  double temp;
+  double tmp;
+  double zemu;
+
+  //  Compute the Gauss quadrature formula for default values of A and B.
+  dvector aj(0,ub);
+  dvector bj(0,ub);
+
+  ab = 0.0;
+  zemu = 2.0 / ( ab + 1.0 );
+  for ( i = 0; i < nt; i++ )
+  {
+    aj[i] = 0.0;
+  }
+  for ( i = 1; i <= nt; i++ )
+  {
+    abi = i + ab * ( i % 2 );
+    abj = 2 * i + ab;
+    bj[i-1] = sqrt ( abi * abi / ( abj * abj - 1.0 ) );
+  }
+
+
+
+  //  Compute the knots and weights. 
+  if ( zemu <= 0.0 )  //  Exit if the zero-th moment is not positive.
+  {
+    cout << "\n";
+    cout << "Fatal error!\n";
+    cout << "  ZEMU <= 0.\n";
+    exit ( 1 );
+  }
+
+  //  Set up vectors for IMTQLX.
+  for ( i = 0; i < nt; i++ )
+  {
+    t[i] = aj[i];
+  }
+  wts[0] = sqrt ( zemu );
+  for ( i = 1; i < nt; i++ )
+  {
+    wts[i] = 0.0;
+  }
+
+  //  Diagonalize the Jacobi matrix.
+  imtqlx (t, bj, wts );
+
+  for ( i = 0; i < nt; i++ )
+  {
+    wts[i] = wts[i] * wts[i];
+  }
+
+
+
+
+
+
+//  Prepare to scale the quadrature formula to other weight function with 
+//  valid A and B.
+
+
+  ivector mlt(0,ub);
+  for ( i = 0; i < nt; i++ )
+  {
+    mlt[i] = 1;
+  }
+  ivector ndx(0,ub);
+  for ( i = 0; i < nt; i++ )
+  {
+    ndx[i] = i + 1;
+  }
+
+  dvector st(0,ub);
+  dvector swts(0,ub);
+
+  temp = 3.0e-14;
+  al = 0.0;
+  be = 0.0;
+  if ( fabs ( b - a ) <= temp )
+  {
+    cout << "\n";
+    cout << "Fatal error!\n";
+    cout << "  |B - A| too small.\n";
+    exit ( 1 );
+  }
+  shft = ( a + b ) / 2.0;
+  slp = ( b - a ) / 2.0;
+
+  p = pow ( slp, al + be + 1.0 );
+
+  for ( k = 0; k < nt; k++ )
+  {
+    st[k] = shft + slp * t[k];
+    l = abs ( ndx[k] );
+
+    if ( l != 0 )
+    {
+      tmp = p;
+      for ( i = l - 1; i <= l - 1 + mlt[k] - 1; i++ )
+      {
+        swts[i] = wts[i] * tmp;
+        tmp = tmp * slp;
+      }
+    }
+  }
+
+  for(i=0;i<nt;i++)
+  {
+    t(i) = st(ub-i);
+    wts(i) = swts(ub-i);
+  }
+
+
+  return;
+}
+
+
+
+
+
+
+
+/*void gauss_legendre(double x1, double x2, const dvector& _x, const dvector& _w)
+{
+  dvector & x=(dvector&)(_x);
+  dvector & w=(dvector&)(_w);
+  int ximin=x.indexmin();
+  int ximax=x.indexmax();
+  int wimin=w.indexmin();
+  int wimax=w.indexmax();
+  if (ximin != wimin || ximax != wimax) 
+  {
+    cerr << " Vector size mismatch in Gauss_hermite routine" << endl;
+    ad_exit(1);
+  }
+  x.shift(1);
+  w.shift(1);
+    
+  int m,j,i;
+  double z1,z,xm,xl,pp,p3,p2,p1;
+  int n=x.size();
+
+  m=(n+1)/2;
+  xm=0.5*(x2+x1);
+  xl=0.5*(x2-x1);
+  for (i=1;i<=m;i++) {
+    z=cos(3.141592654*(i-0.25)/(n+0.5));
+    do {
+      p1=1.0;
+      p2=0.0;
+      for (j=1;j<=n;j++) {
+        p3=p2;
+        p2=p1;
+        p1=((2.0*j-1.0)*z*p2-(j-1.0)*p3)/j;
+      }
+      pp=n*(z*p1-p2)/(z*z-1.0);
+      z1=z;
+      z=z1-p1/pp;
+    } while (fabs(z-z1) > eps);
+    x[i]=xm-xl*z;
+    x[n+1-i]=xm+xl*z;
+    w[i]=2.0*xl/((1.0-z*z)*pp*pp);
+    w[n+1-i]=w[i];
+  }
+  x.shift(ximin);
+  w.shift(ximin);
+}*/
+
+/** Gauss-Legendre quadature.
+*/
+void gauss_legendre(const dvector& _x, const dvector& _w)
+{
+  gauss_legendre(0,1,_x,_w);
+}
+
+/** Gauss-Hermite quadature.
+ this is normlaized so that standard normal density
+ integrates to 1
+*/
+void normalized_gauss_hermite(const dvector& _x, const dvector& _w)
+{
+  dvector& x=(dvector&) _x;
+  dvector& w=(dvector&) _w;
+  gauss_hermite(x,w);
+  w=elem_prod(w,exp(square(x)));
+  x*=sqrt(2.0);
+  w*=sqrt(2.0);
+}
+  
+
+
+
 //****************************************************************************80
 
 void imtqlx ( const dvector& _d, const dvector& _e, const dvector& _z )
@@ -358,170 +702,3 @@ void imtqlx ( const dvector& _d, const dvector& _e, const dvector& _z )
   z.shift(lb);
   return;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*void gauss_hermite(BOR_CONST dvector& _x,BOR_CONST dvector& _w)
-{
-cout << "gauss_hermite" << endl;
-  dvector x=(dvector&) _x;
-  dvector w=(dvector&) _w;
-  int ximin=x.indexmin();
-  int ximax=x.indexmax();
-  int wimin=w.indexmin();
-  int wimax=w.indexmax();
-  if (ximin != wimin || ximax != wimax) 
-  {
-    cerr << " Vector size mismatch in Gauss_hermite routine" << endl;
-    ad_exit(1);
-  }
-    
-  x.shift(1);
-  w.shift(1);
-  int n=x.size();
-  int i,its,j,m;
-  double p1,p2,p3,pp,z,z1;
-
-  m=(n+1)/2;
-  for (i=1;i<=m;i++) 
-  {
-    if (i == 1) 
-    {
-      z=sqrt((double)(2*n+1))-1.85575*pow((double)(2*n+1),-0.16667);
-    } 
-    else if (i == 2) 
-    {
-      z -= 1.14*pow((double)n,0.426)/z;
-    } 
-    else if (i == 3) 
-    {
-      z=1.86*z-0.86*x[1];
-    } 
-    else if (i == 4) 
-    {
-      z=1.91*z-0.91*x[2];
-    } 
-    else 
-    {
-      z=2.0*z-x[i-2];
-    }
-    for (its=1;its<=maxit;its++) 
-    {
-      p1=pim;
-      p2=0.0;
-      for (j=1;j<=n;j++) 
-      {
-        p3=p2;
-        p2=p1;
-        p1=z*sqrt(2.0/j)*p2-sqrt(((double)(j-1))/j)*p3;
-      }
-      pp=sqrt((double)2*n)*p2;
-      z1=z;
-      z=z1-p1/pp;
-      if (fabs(z-z1) <= eps) break;
-    }
-    if (its > maxit) cerr << "too many iterations in gaussher" << endl;
-    x[i]=z;
-    x[n+1-i] = -z;
-    w[i]=2.0/(pp*pp);
-    w[n+1-i]=w[i];
-  }
-  x.shift(ximin);
-  w.shift(ximin);
-}*/
-
-/** Gauss-Legendre quadature.
-
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 4
-
-    \deprecated Scheduled for replacement by 2010.
-*/
-void gauss_legendre(double x1, double x2, const dvector& _x, const dvector& _w)
-{
-  dvector & x=(dvector&)(_x);
-  dvector & w=(dvector&)(_w);
-  int ximin=x.indexmin();
-  int ximax=x.indexmax();
-  int wimin=w.indexmin();
-  int wimax=w.indexmax();
-  if (ximin != wimin || ximax != wimax) 
-  {
-    cerr << " Vector size mismatch in Gauss_hermite routine" << endl;
-    ad_exit(1);
-  }
-  x.shift(1);
-  w.shift(1);
-    
-  int m,j,i;
-  double z1,z,xm,xl,pp,p3,p2,p1;
-  int n=x.size();
-
-  m=(n+1)/2;
-  xm=0.5*(x2+x1);
-  xl=0.5*(x2-x1);
-  for (i=1;i<=m;i++) {
-    z=cos(3.141592654*(i-0.25)/(n+0.5));
-    do {
-      p1=1.0;
-      p2=0.0;
-      for (j=1;j<=n;j++) {
-        p3=p2;
-        p2=p1;
-        p1=((2.0*j-1.0)*z*p2-(j-1.0)*p3)/j;
-      }
-      pp=n*(z*p1-p2)/(z*z-1.0);
-      z1=z;
-      z=z1-p1/pp;
-    } while (fabs(z-z1) > eps);
-    x[i]=xm-xl*z;
-    x[n+1-i]=xm+xl*z;
-    w[i]=2.0*xl/((1.0-z*z)*pp*pp);
-    w[n+1-i]=w[i];
-  }
-  x.shift(ximin);
-  w.shift(ximin);
-}
-
-/** Gauss-Legendre quadature.
-*/
-void gauss_legendre(const dvector& _x, const dvector& _w)
-{
-  gauss_legendre(0,1,_x,_w);
-}
-
-/** Gauss-Hermite quadature.
- this is normlaized so that standard normal density
- integrates to 1
-*/
-void normalized_gauss_hermite(const dvector& _x, const dvector& _w)
-{
-  dvector& x=(dvector&) _x;
-  dvector& w=(dvector&) _w;
-  gauss_hermite(x,w);
-  w=elem_prod(w,exp(square(x)));
-  x*=sqrt(2.0);
-  w*=sqrt(2.0);
-}
-  

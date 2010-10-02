@@ -1,6 +1,7 @@
-.PHONY: clean admb_messages init_bounded_number_matrix beta_regression hysimple
+.PHONY: clean admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc
 
-all: admb_messages init_bounded_number_matrix beta_regression hysimple
+#all: admb_messages init_bounded_number_matrix beta_regression hysimple
+all: simple_mcmc
 
 admb_messages:
 	OPTIONS=-s make --directory=$@
@@ -12,6 +13,9 @@ beta_regression:
 	OPTIONS=-s make --directory=$@
 
 hysimple:
+	OPTIONS=-s make --directory=$@
+
+simple_mcmc:
 	OPTIONS=-s make --directory=$@
 
 clean:

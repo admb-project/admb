@@ -2,10 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-  
 #include <admodel.h>
 #include "fvar.hpp"
 #define USE_BARD_PEN
@@ -293,6 +291,3 @@ void set_value(dvar3_array& x,_CONST dvar_vector& v, const int& ii)
     }
   } 
 }
-
-
-

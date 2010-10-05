@@ -1,11 +1,9 @@
-
 /**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
-
 #include <admodel.h>
 
 #ifdef __cplusplus
@@ -18,9 +16,6 @@ extern "C" {
 #ifdef __cplusplus
 	}
 #endif
-
- //char cc[43]={"Copyright (c) 2008 Regents of the University of California"};
-
 
 void function_minimizer::limited_memory_quasi_newton
   (BOR_CONST independent_variables& _x,int m)

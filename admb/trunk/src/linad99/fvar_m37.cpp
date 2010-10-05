@@ -2,13 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <fvar.hpp>
-
-
-
 
  dvar_matrix::dvar_matrix(const ad_integer& nrl,const ad_integer& nrh,
    const index_type& ncl,const index_type& nch)
@@ -58,6 +54,3 @@
      }
    }
  }
-
-
-

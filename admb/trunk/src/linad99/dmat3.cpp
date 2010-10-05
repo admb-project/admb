@@ -1,10 +1,9 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009 ADMB Foundation
+ * Copyright (c) 2009, 2010 ADMB Foundation
  */
-
 #include "fvar.hpp"
 #include <math.h>
 #ifndef __ZTC__

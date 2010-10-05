@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <df1b2fnl.h>
 //#include <df1b2fun.h>
@@ -744,4 +744,3 @@ void constant_quadratic_re_penalty::operator = (const dmatrix & M)
 { 
   quadratic_prior::operator = (M);
 }
-

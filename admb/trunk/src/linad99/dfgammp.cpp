@@ -1,8 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009 ADMB Foundation
+ * Copyright (c) 2009, 2010 ADMB Foundation
  */
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>

@@ -2,11 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include "fvar.hpp"
-
 
 int allocated(_CONST ivector& v)
 {
@@ -107,6 +105,3 @@ int allocated(_CONST dvar7_array& v)
 {
   return !(!(v));
 }
-
-
-

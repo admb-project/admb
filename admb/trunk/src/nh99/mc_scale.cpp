@@ -2,10 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 #include <admodel.h>
 
 double set_value_mc(double z,double min,double max);

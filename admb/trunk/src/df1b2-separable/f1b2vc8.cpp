@@ -2,11 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <df1b2fun.h>
-
 
 df1b2vector operator + (const df1b2variable& _x,const dvector& _v)
 {

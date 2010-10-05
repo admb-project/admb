@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include "fvar.hpp"
 
 void dvector::fill_randnegbinomial(double lambda,double tau,
@@ -15,6 +14,3 @@ void dvector::fill_randnegbinomial(double lambda,double tau,
     elem(i)=randnegbinomial(lambda,tau,rng);
   }
 }
-
-
-

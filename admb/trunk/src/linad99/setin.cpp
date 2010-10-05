@@ -2,10 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 #include "fvar.hpp"
 
 void set_value_inv( CGNU_DOUBLE x,const dvector& _v, const int& _ii)
@@ -390,4 +388,3 @@ void set_value_inv(_CONST dvar3_array& x,const dvector& v, const int& ii,
     }
   }
 }
-

@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include "fvar.hpp"
 
    dvar3_array mfexp(_CONST dvar3_array& m)
@@ -28,5 +27,3 @@
      }
      return tmp;
    }  
-
-

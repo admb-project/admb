@@ -2,13 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
-
-
-
 #include "fvar.hpp"
 
 void DF_dvexp(void);
@@ -39,5 +34,3 @@ dvar_vector mfexp(_CONST dvar_vector& v1, CGNU_DOUBLE d)
             set_gradient_stack(DF_dvexp);
   return vtmp;
 }
-
-

@@ -1,8 +1,8 @@
 /**
- * $Id: df1fun.cpp 1.1 2009/10/22 09:59:51 hsk021 Exp $
+ * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 
 #include <df1fun.h>

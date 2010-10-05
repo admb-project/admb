@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <admodel.h>
 
 void get_confidence_interval(BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd,

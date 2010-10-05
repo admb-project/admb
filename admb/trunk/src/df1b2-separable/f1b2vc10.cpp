@@ -1,10 +1,9 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <df1b2fun.h>
 
 df1b2vector pow(const df1b2vector& _v,double x)

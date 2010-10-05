@@ -2,15 +2,12 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #if defined(USE_LAPLACE)
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h>
-
-
-
   void random_effects_number::set_only_random_effects_active(void)
   {
     //phase_start=1;

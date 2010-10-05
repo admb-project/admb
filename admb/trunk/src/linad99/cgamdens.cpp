@@ -1,11 +1,10 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 double get_values(double x,double y,int print_switch);
-
 
 #include "fvar.hpp"
   /**
@@ -33,5 +32,3 @@ double get_values(double x,double y,int print_switch);
   {
     return r*log(mu) + (r-1)*log(x)-mu*x-gammln(r);
   }
-    
-

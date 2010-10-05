@@ -2,12 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <admodel.h>
-
-
 
   void param_init_matrix::allocate(const ad_integer& rmin,
     const ad_integer& rmax,_CONST index_type& cmin,
@@ -33,11 +30,9 @@
     }
   }
 
-
   void param_init_matrix::allocate(const ad_integer& rmin,
     const ad_integer& rmax,_CONST index_type& cmin,
     _CONST index_type& cmax,const char * s)
   {
     allocate(rmin,rmax,cmin,cmax,1,s);
   }
-

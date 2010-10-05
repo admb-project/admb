@@ -2,11 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <admodel.h>
-
 
  int initial_params::straight_through_flag=0;
  unsigned char ad_comm::directory_prefix='\\';
@@ -34,4 +32,3 @@
  int ad_comm::no_ln_det_choleski_flag=0;
  char ** ad_comm::argv=NULL;
  double objective_function_value::fun_without_pen=0;
-

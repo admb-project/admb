@@ -1,8 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * copyright (c) 2009 ADMB foundation
+ * Copyright (c) 2009, 2010 ADMB foundation
  */
 
 //#define eigen_vectors

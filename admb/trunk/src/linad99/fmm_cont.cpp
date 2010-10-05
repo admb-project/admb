@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include "fvar.hpp"
 
@@ -103,4 +103,3 @@ void fmm_control::writeon(BOR_CONST ostream& _s) const
   s << "  scroll_flag  =  " << scroll_flag  << endl;
   s << "  ireturn  = " << ireturn  << endl;
 }
-

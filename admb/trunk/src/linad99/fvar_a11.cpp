@@ -2,11 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
-
 #include "fvar.hpp"
 
   dvariable max(_CONST dvar_vector& t1)
@@ -34,4 +31,3 @@
      }
      return(tmp);
   }
-

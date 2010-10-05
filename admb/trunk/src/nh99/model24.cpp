@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <admodel.h>
 
 param_init_bounded_dev_vector& param_init_bounded_dev_vector::operator = (const dvector& m)
@@ -28,4 +27,3 @@ param_init_bounded_dev_vector& param_init_bounded_dev_vector::operator = (const 
   dvar_vector::operator=(m);
   return *this;
 }
-

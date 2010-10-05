@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -61,4 +61,3 @@ dvariable function_minimizer::do_gauss_hermite_integration_multi(void)
   return fun;
 }
 #endif // #if defined(USE_LAPLACE)
-

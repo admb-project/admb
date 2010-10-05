@@ -1,10 +1,10 @@
-/*
+/**
  * $Id$
-*
- * Authors: Alan Genz and Yihong Ge
  *
- * Ported to C++ and exentensivly modified by David Fournier
- * copyright (c) 2009 ADMB foundation
+ * Authors: Alan Genz and Yihong Ge
+ * Copyright (c) 2009, 2010 ADMB foundation
+ *
+ * Ported to C++ and extensively modified by David Fournier
  */
 
 /* t.f -- translated by f2c (version 20000121).

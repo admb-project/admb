@@ -2,11 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <fvar.hpp>
-
 
 function_tweaker::function_tweaker(double _eps,double _mult) : coffs(1,3), 
   eps(_eps) ,mult(_mult)
@@ -37,7 +35,6 @@ function_tweaker::function_tweaker(double _eps,double _mult) : coffs(1,3),
 
   coffs=solve(M,y);
 }
-
 
 double function_tweaker::operator () (double x)
 {

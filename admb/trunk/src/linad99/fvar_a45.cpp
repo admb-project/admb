@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
@@ -176,4 +176,3 @@ void dvcv_elem_prod(void)
   dfv1.save_dvector_derivatives(v1pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
-

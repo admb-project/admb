@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -38,8 +38,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
-
 #if !defined(_SVDCMP_)
 #define _SVDCMP_ 
 

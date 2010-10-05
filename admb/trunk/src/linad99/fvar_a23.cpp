@@ -2,15 +2,10 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
-
-
 #include "fvar.hpp"
 void dvcv_sub(void);
-
 
 dvar_vector operator - (_CONST dvar_vector& v1,_CONST dvector& v2)
 {
@@ -56,5 +51,3 @@ void dvcv_sub(void)
   dfv1.save_dvector_derivatives(v1pos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
-
-

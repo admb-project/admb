@@ -2,12 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 #include <admodel.h>
-
 
 void named_dvar7_array::allocate(
     const ad_integer& hhsl,const ad_integer& hhsu,
@@ -93,4 +90,3 @@ named_dvar7_array& named_dvar7_array::operator = (_CONST d7_array& m)
   this->dvar7_array::operator=(m);
   return *this;
 }
-

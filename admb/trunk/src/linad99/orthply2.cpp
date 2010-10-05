@@ -2,10 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <fvar.hpp>
-
 
 d4_array orthpoly2(int d1,int d2, int n,int m)
 {

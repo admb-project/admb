@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include "fvar.hpp"
 #include "admb_messages.h"
 //#include <d4arr.hpp>
@@ -345,5 +344,3 @@ void d5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
        l5(i),u5(i));
    }
  }
-
-

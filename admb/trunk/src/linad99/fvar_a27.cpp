@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include "fvar.hpp"
 #if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
@@ -32,5 +31,3 @@
      set_gradient_stack(dv_init);
    return(*this);
  }
-
-

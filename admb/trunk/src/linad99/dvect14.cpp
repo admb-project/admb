@@ -2,15 +2,12 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 // file fvar_fn.cpp
 // math.h functions involving prevariables
 #include "fvar.hpp"
 #include <stdio.h>
-
-
 
  double sfabs( CGNU_DOUBLE v1)
  {
@@ -43,8 +40,6 @@
    return(return_value);
  }
 
-
-
   dvector sfabs(_CONST dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
@@ -55,4 +50,3 @@
      }
      return(tmp);
   }
-

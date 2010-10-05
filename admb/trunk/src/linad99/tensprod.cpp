@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <fvar.hpp>
   dvar_matrix tensor_prod(const dvar_matrix& a,const dvar_matrix & b)
@@ -19,6 +19,3 @@
         c(i,j)=ta(i)*tb(j);
     return c;
   }
-
-
-

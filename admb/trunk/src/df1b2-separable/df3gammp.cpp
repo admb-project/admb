@@ -1,8 +1,8 @@
-/*
-  * $Id$
-  *
+/**
+ * $Id$
+ *
  * Author: David Fournier
- * Copyright (c) 2009 ADMB Foundation
+ * Copyright (c) 2009, 2010 ADMB Foundation
  */
 #include <df1b2fun.h>
 #define ITMAX 100

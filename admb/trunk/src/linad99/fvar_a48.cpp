@@ -2,13 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 #include "fvar.hpp"
-
-
 
   void DF_cdble_dv_diveq(void);
 
@@ -97,4 +93,3 @@
     dfthis.save_dvector_derivatives(this_pos);
     save_double_derivative(dfx+tmp1,x_pos);
  }
-

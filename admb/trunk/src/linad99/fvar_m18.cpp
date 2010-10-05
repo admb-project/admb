@@ -2,10 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -101,5 +99,3 @@ void cmdm_prod(void)
   dfm2.save_dmatrix_derivatives(m2pos);
   // cout << "leaving dmdm_prod"<<endl;
 }
-
-

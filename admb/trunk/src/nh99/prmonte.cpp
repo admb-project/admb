@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -10,8 +10,6 @@ double inv_cumd_norm(_CONST double& x);
 double cumd_norm(_CONST double& x);
 double myran1(long int&);
 double better_rand(long int&);
-    
-
 
 dvector new_probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
   dmatrix& ch,long int& iseed,BOR_CONST double& _wght,double pprobe)

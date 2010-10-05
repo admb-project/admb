@@ -2,10 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 #include "fvar.hpp"
 double upick(double x)
 {
@@ -34,5 +32,3 @@ dvariable& square(_CONST prevariable& v1)
      }
      return tmp;
    }  
-
-

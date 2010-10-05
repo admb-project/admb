@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 // file fvar.cpp
 // constructors, destructors and misc functions involving class dvariable 
 
@@ -57,4 +56,3 @@ dvar_matrix operator / (_CONST prevariable& e,_CONST dmatrix& m)
   }
   return tmp;
 }
-

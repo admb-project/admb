@@ -2,13 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <admodel.h>
-
-
-
 
   vector_kludge::vector_kludge(const param_init_number_vector & _v) : 
     dvar_vector()

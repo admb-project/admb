@@ -2,10 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 #include "fvar.hpp"
 
 void dvdm_prod(void);
@@ -158,4 +156,3 @@ void dvcm_prod(void)
    }
    dfx.save_dvector_derivatives(x_pos);
 }
-

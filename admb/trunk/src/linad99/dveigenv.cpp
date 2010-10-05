@@ -1,10 +1,9 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009 ADMB foundation
+ * Copyright (c) 2009, 2010 ADMB foundation
  */
-
 /** \def EIGEN_VECTORS
    Causes Eigenvectors to be computed
 */

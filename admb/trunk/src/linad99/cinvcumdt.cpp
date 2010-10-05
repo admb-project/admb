@@ -2,10 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <admodel.h>
-
 
 double inv_cumd_t(double n,double u,double eps)
 {

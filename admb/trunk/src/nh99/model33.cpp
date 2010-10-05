@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <admodel.h>
 
 void ad_make_code_reentrant(void)
@@ -407,16 +406,13 @@ char * string_parser::get_next_option(int & n)
   return rt;
 }
 
-
 typedef char * chararray;
-
 
 void davesnobullshitstrncpy(char * a,const char * b, int n)
 {
   strncpy(a,b,n);
   a[n]=0;
 }
-
 
 char ** parse_dll_options(char * pname,BOR_CONST int& _argc,char * s)
 {

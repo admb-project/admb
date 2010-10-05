@@ -2,17 +2,12 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
-
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
-
-
-// char cc[43]={"Copyright (c) 2008 Regents of the University of California"};
-
  
    void function_minimizer::prof_minimize_re(int iprof, double sigma,
      double new_value, BOR_CONST double& _fprof,const int underflow_flag,

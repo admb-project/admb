@@ -2,11 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
-
 #include <fvar.hpp>
 
   dvariable mf_upper_bound(_CONST prevariable& x,double M,prevariable& fpen)
@@ -21,4 +18,3 @@
       return M+(1.+2.*(x-M))/(1.+x-M);
     }
   }
-

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <fvar.hpp>
   dvector operator & (_CONST dvector& t1,_CONST dvector& t2)
@@ -25,7 +25,6 @@
     }
     return tmp;
   }
-
 
   dvar_vector operator & (_CONST dvar_vector& t1,_CONST dvar_vector& t2)
   {

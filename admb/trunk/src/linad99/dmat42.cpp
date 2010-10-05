@@ -1,8 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009 ADMB Foundation
+ * Copyright (c) 2009, 2010 ADMB Foundation
  */
 #include <fvar.hpp>
 #define SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a))

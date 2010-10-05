@@ -1,5 +1,6 @@
-/*
+/**
  * $Id$
+ *
  * Author: Unknown
  */
 //#define EIGEN_VECTORS

@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 // file: dmat_io.cpp
 
 // i/o operations for class dmatrix
@@ -49,6 +48,4 @@ uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST  dvar4_array & z)
   }
   return (uistream&) istr;
 }
-
 #endif
-

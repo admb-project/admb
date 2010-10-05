@@ -2,10 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 #include <fvar.hpp>
 
 dvariable regression(_CONST dvector& obs,_CONST dvar_vector& pred)
@@ -15,4 +13,3 @@ dvariable regression(_CONST dvector& obs,_CONST dvar_vector& pred)
   vhat/=nobs;
   return (.5*nobs*log(vhat));
 }
-

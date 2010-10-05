@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  * 
  * License:
  *
@@ -38,8 +38,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
-
 #if !defined(__AD_F1B1__)
 # define __AD_F1B1__
 

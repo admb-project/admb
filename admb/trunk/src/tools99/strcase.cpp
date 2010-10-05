@@ -1,3 +1,9 @@
+/**
+ * $Id$
+ *
+ * Author: John Sibert
+ * Copyright (c) 2010 ADMB Foundation
+ */
 #include "fvar.hpp"
 #include "adstring.hpp"
 

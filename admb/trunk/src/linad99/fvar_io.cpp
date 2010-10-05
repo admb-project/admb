@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 // file: fvar_io.cpp
 
@@ -61,5 +61,3 @@ uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST prevariable& _f)
   return istr;
 }
 #endif
-
-

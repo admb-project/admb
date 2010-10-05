@@ -2,11 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <admodel.h>
-
 
 dvariable inv_cumd_t(const prevariable& n,const prevariable&  u,double eps)
 {

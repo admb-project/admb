@@ -2,11 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <admodel.h>
-
 
 void function_minimizer::quasi_newton_block_pvm_master(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f)

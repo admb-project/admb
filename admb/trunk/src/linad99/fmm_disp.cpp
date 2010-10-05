@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #if defined(__SPDLL__)
 #  if !defined(linux)
 #    include <windows.h>
@@ -356,4 +355,3 @@ void fmmdisp(_CONST double * x,_CONST double * g,
 //#endif
 //}
 //
-

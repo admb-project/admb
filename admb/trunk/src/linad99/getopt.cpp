@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <admodel.h>
 
 int get_option_number(const char * option_name,const char * error_message,
@@ -29,4 +28,3 @@ int get_option_number(const char * option_name,const char * error_message,
   }
   return on1;
 }
-

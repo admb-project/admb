@@ -2,13 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 #include <df1b2test.h>
-
-  
 
   df1b2variable df1b2function2c::operator () (double x,const df1b2variable& _y)
   {

@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include "fvar.hpp"
 
   void dvar_vector::initialize(void)
@@ -65,6 +64,3 @@ void dv_init(void)
     gradient_structure::GRAD_STACK1->
       set_gradient_stack(dv_init);
   }
-
-
-

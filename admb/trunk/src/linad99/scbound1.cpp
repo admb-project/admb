@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include "fvar.hpp"
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -46,4 +45,3 @@ double boundpin(const prevariable& xx, double fmin, double fmax,const double& s)
   tinv=::asin(2.*(x-fmin)/(fmax-fmin)-1.)/1.57079632679489661;
   return(s*tinv);
 }
-

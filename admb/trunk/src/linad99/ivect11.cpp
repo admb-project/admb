@@ -2,12 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
-
-
 #include "fvar.hpp"
 
   void ivector::reallocate(double s)
@@ -27,5 +23,3 @@
       ivector tmp(1,s);
     }
   }
-
-

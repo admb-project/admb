@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include "fvar.hpp"
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -49,5 +48,3 @@ imatrix_position::imatrix_position(BOR_CONST imatrix_position& p)
   ptr=p.ptr;
   // cout << "ptr= " << ptr ;
 }
-
-

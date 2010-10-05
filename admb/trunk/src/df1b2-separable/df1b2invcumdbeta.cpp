@@ -1,6 +1,5 @@
-/*
+/**
  * $Id$
- *
  *
  * Author: Unknown
  */

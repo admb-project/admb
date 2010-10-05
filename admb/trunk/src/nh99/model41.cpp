@@ -2,13 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 #include <admodel.h>
-
-
 
   void stddev_params::get_all_sd_values(BOR_CONST dvector& x,BOR_CONST int& ii)
   {
@@ -32,7 +28,3 @@
   {
     ::copy_value_from_vector(sd,x,ii);
   }
-
-
-  
-

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -38,13 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
-
 #ifndef _ADSPLUS_H_
   #define _ADSPLUS_H_
 #include <admodel.h>
 #include <spcomm.h>
-//char cc[40]={"Copyright (c) 2008 Regents of the University of California"};
 //#define DO_PROFILE
 #pragma interface
 //#include <admodhd.h>

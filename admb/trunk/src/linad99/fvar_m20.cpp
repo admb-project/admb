@@ -1,9 +1,8 @@
-/*
+/**
  * $Id$
+ *
  * Author: Unknown
  */
-
-
 #include <fvar.hpp>
 #ifdef __TURBOC__
   #pragma hdrstop

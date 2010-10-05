@@ -1,10 +1,9 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009 ADMB Foundation
+ * Copyright (c) 2009, 2010 ADMB Foundation
  */
-
 #include <admodel.h>
 #define EPS 1.0e-4
 #define JMAX 50

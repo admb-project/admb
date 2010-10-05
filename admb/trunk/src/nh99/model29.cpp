@@ -2,10 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <admodel.h>
-
 
 void named_i3_array::allocate(int hsl,int hsu,int rmin,int rmax,
   int cmin,int cmax,const char * s)
@@ -45,4 +44,3 @@ void data_3iarray::allocate(int hsl,int hsu,_CONST index_type& rmin,
   named_i3_array::allocate(hsl,hsu,rmin,rmax,cmin,cmax,s);
   *(ad_comm::global_datafile) >> i3_array(*this);
 }
-

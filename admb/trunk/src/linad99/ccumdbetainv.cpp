@@ -1,5 +1,6 @@
-/*
+/**
  * $Id$
+ *
  * Author: Unknown
  */
 #include <admodel.h>

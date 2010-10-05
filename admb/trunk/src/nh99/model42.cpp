@@ -4,11 +4,7 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
-
-
-
 #include <admodel.h>
-
 
 void copy_value_from_vector(const double& _sd,const dvector& x,const int & _ii)
 {
@@ -36,6 +32,3 @@ void copy_value_from_vector(const dmatrix& _sd,const dvector& x,const int & _ii)
   for (int i=mmin;i<=mmax;i++)
     copy_value_from_vector(sd(i),x,ii);
 }
-
-
-

@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include "fvar.hpp"
 dvector mfexp(_CONST dvector& v1)
 {
@@ -45,4 +44,3 @@ dvector mfexp(_CONST dvector& v1, CGNU_DOUBLE d)
   }
   return vtmp;
 }
-

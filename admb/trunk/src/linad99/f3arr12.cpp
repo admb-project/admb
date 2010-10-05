@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include "fvar.hpp"
 #ifdef USE_CONST
@@ -32,7 +32,6 @@
       #endif
     }
 
-
      _CONST dvar_vector& dvar3_array::operator () (int k, int i) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -55,11 +54,5 @@
       #endif
       return ( t[k].m[i]);
     }
-
-
-
   #endif
 #endif
-
-
-

@@ -2,14 +2,10 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 
-
-
 #include <admodel.h>
-
-
 
   void data_4array::allocate(int hhsl,int hhsu,int hsl,int hsu,
     int rmin,int rmax,int cmin,int cmax,const char * s)
@@ -24,4 +20,3 @@
     named_d4_array::allocate(hhsl,hhsu,hsl,hsu,rmin,rmax,cmin,cmax,s);
     *(ad_comm::global_datafile) >> d4_array(*this);
   }
-

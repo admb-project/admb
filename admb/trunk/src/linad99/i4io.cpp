@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 
 // file: dmat_io.cpp
@@ -56,4 +56,3 @@ istream& operator>>(BOR_CONST istream& istr,BOR_CONST i4_array& z)
   }
   return (istream&) istr;
 }
-

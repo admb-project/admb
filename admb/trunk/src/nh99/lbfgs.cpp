@@ -1,14 +1,12 @@
-/*
+/**
  * $Id$
  *
  * Author: Jorge Nodecal
- *
- * Translated from fortran and extensively modified for compliance with
- * ADMB.
- *
- * Copyright ADMB Foundation 2009
+ * Copyright (c) 2009, 2010 ADMB Foundation
  *
  * License: Public domain
+ * Translated from fortran and extensively modified for compliance with
+ * ADMB.
  */
 /* lbfgs.f -- translated by f2c (version 19950110).
    You must link the resulting object file with the libraries:

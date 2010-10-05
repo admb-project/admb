@@ -2,13 +2,11 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <admodel.h>
 
 #if defined(USE_ADPVM)
-
 
  int pvm_params::num_pvm_params=0;
  const int pvm_params::maxnum_pvm_params=50;

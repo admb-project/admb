@@ -2,10 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <admodel.h>
-
 
   void initial_params::save(BOR_CONST ofstream& _ofs,int prec)
   {
@@ -44,5 +43,3 @@
     ofstream& ofs=(ofstream&) _ofs;
     ofs << setw(prec+6) << setprecision(prec) << dvar_matrix(*this) << endl;
   }
-
-

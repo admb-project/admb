@@ -2,11 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <admodel.h>
-
 
 void dll_data_int::allocate(int *_pi,const char * _s)
 {
@@ -335,8 +333,6 @@ void dll_param_init_bounded_number::allocate(double *_pd,double _minb,
   }
 }
 
-
-
 void dll_param_init_bounded_vector::allocate(double* _pd,int imin,int imax,
   double _minb,double _maxb,int phase_start,const char * s)
 {
@@ -362,9 +358,6 @@ void dll_param_init_bounded_vector::allocate(double* _pd,int imin,int imax,
 {
   allocate(_pd,imin,imax,_minb,_maxb,1,s);
 }
-
-
-
 
 dll_param_matrix& dll_param_matrix::operator =
   (const dvar_matrix& m)

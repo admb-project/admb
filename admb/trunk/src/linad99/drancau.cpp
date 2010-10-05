@@ -2,12 +2,10 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include "fvar.hpp"
 
-          
 double randcau( BOR_CONST random_number_generator& rng)
 {
   double u=inv_cumd_cauchy(((random_number_generator&) rng).better_rand());
@@ -37,6 +35,3 @@ void d3_array::fill_randcau( BOR_CONST random_number_generator& rng)
     elem(i).fill_randcau(rng);
   }
 }
-
-
-

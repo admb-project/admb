@@ -2,10 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 // file: fvar_ops.cpp
 // operators involving prevariables
 
@@ -37,4 +35,3 @@
     * gradient_structure::GRAD_STACK1->ptr->ind_addr1
                -= * gradient_structure::GRAD_STACK1->ptr->dep_addr;
   }
-

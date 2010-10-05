@@ -2,9 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #define SAFE_ARRAYS
 #include <fvar.hpp>
 
@@ -25,8 +24,6 @@
     #define close _close 
 
   #endif
-
-
 
 #if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop

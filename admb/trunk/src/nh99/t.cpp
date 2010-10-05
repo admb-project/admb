@@ -2,6 +2,8 @@
  * $Id$
  *
  * Author: David Fournier
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
+ *
  * Derived from algoriths described in "On the limited memory BFGS method 
  * for large scale optimization", by D. Liu and J. Nocedal,
  * Mathematical Programming B 45 (1989) 503-528.

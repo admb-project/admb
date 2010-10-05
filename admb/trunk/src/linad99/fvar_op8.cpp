@@ -1,12 +1,9 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
-
 #include "fvar.hpp"
 
 /** Cube of a number; variable object.
@@ -43,4 +40,3 @@ prevariable& fourth(_CONST prevariable& v1)
      &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),4*x2*x );
    return(*gradient_structure::RETURN_PTR);
  }
-

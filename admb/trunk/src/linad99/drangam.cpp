@@ -1,8 +1,8 @@
-/*
+/**
  * $Id$
  *
  * Authors: H. H. Ahrens, U. Dieter and B. W. Brown.
- * License: Public domain.`
+ * License: Public domain.
  */
 #include <fvar.hpp>
 

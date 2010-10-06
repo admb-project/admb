@@ -20,11 +20,16 @@ else
 OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
 endif
 
+
 $(LIBPATH)/$(LIBNAME) :  $(OBJECTS) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 
 model7.obj: model7.cpp
+ifdef ADMB_CONFIGURE
 	$(CXX) -DADMB_CONFIGURE="${ADMB_CONFIGURE}" $(CXXFLAGS) model7.cpp -o $(LIBPATH)/model7.obj
+else
+	$(CXX) $(CXXFLAGS) model7.cpp -o $(LIBPATH)/model7.obj
+endif
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/$*.obj

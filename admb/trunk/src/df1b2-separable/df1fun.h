@@ -98,7 +98,7 @@
     int indexmax(void) const { return int(index_max); }
     df1_one_vector(int min,int max);
     df1_one_vector(void);
-    void df1_one_vector::allocate(void);
+    void allocate(void);
     void allocate(int min,int max);
     df1_one_variable& operator () (int i) const 
     { 
@@ -146,7 +146,7 @@
     //df1_one_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df1_one_matrix();
-    df1_one_matrix::df1_one_matrix(const df1_one_matrix& m2);
+    df1_one_matrix(const df1_one_matrix& m2);
   };
 
  dmatrix value(const df1_one_matrix& v);

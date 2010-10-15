@@ -4,21 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+/**
+ * \file
+ * This file deals with the Incomplete Gamma Functions
+ * of constant types. All supporting mathematical functions
+ * required to compute the Inmomplete Gamma Function
+ * are included. They being: log gamma,
+ * and some polynomial evaluation functions.
+ */
 
 #include <fvar.hpp>
-//#include "mconf.h"
-//#define ITMAX 100
-//#define EPS 1.e-9
-//#define FPMIN 1.0e-30
-//#ifdef INFINITIES
-//#undef INFINITIES
-//#endif
-//#ifdef NANS
-//#undef NANS
-//#endif
-//#define MAXGAM 171.624376956302725
-//void gcf(double& gammcf,double a,double x,double &gln);
-//void gser(double& gamser,double a,double x,double& gln);
 
 namespace Cephes
 {
@@ -39,24 +34,83 @@ namespace Cephes
    extern const double LS2PI;
    extern const double MAXSTIR;
 
-   extern double polevl(double x, void *_coef, int N);
-   extern double p1evl(double x, void *_coef, int N);
+   double polevl(double x, void *_coef, int N);
+   double p1evl(double x, void *_coef, int N);
+   /**
+    * \ingroup gammafunc
+    * Polynomial evaluation
+    * \param x \f$x\f$ the point to be evaluated
+    * \param _coef The coefficents of the polynomial
+    * \param N \f$N\f$ The degree of the polynomial
+    * \return The polynomial evaluated at \f$x\f$
+    * 
+    * \n\n Cephes Math Library Release 2.1:  December, 1988
+    * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
+    * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+    */
+   double polevl(double x, void *_coef, int N)
+   {
+      double *coef = (double *) (_coef);
+      double ans;
+      int i;
+      double *p;
 
+       p = coef;
+       ans = *p++;
+       i = N;
 
+      do
+	  ans = ans * x + *p++;
+      while (--i);
+
+       return (ans);
+   }
+
+   /**
+    * \ingroup gammafunc
+    * Polynomial evaluation when leading coefficent is 1
+    * (i.e. leading term is \f$x^N\f$)
+    * \param x \f$x\f$ the point to be evaluated
+    * \param _coef The coefficents of the polynomial
+    * \param N \f$N\f$ The degree of the polynomial
+    * \return The polynomial evaluated at \f$x\f$
+    * 
+    * \n\n Cephes Math Library Release 2.1:  December, 1988
+    * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
+    * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
+    */
+   double p1evl(double x, void *_coef, int N)
+   {
+      double *coef = (double *) (_coef);
+      double ans;
+      double *p;
+
+      p = coef;
+      ans = x + *p++;
+      int i = N - 1;
+
+      do
+	 ans = ans * x + *p++;
+      while (--i);
+
+      return (ans);
+   }
 }
-
 
 double igam(const double &a, const double &x);
 double igamc(const double &a, const double &x);
-int mtherr(char *s, int n);
 
+/**
+ * An error handler for the Cephes code
+ */
+int mtherr(char *s, int n);
 
 /**
  * \ingroup gammafunc
- * Log-gamma function
+ * Log-gamma function \f$\ln(|\Gamma(x)|)\f$
  * \param x \f$x\f$
  * \return natural log of the absolute
- *   value of the gamma function \f$\ln(|\Gamma(x)|)\f$
+ *   value of the gamma function 
  *
  * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
@@ -140,9 +194,7 @@ double lgam(double x)
 	 sgngam = 1;
       if (u == 2.0)
       {
-
 	 return (log(z));
-
       }
       p -= 2.0;
       x = x + p;
@@ -179,17 +231,17 @@ double lgam(double x)
 
 /**
  * \ingroup gammafunc
- * Incomplete gamma integral complement .
- * \param aa \f$a\f$
- * \param xx \f$x\f$
- * \return complement of th incomplete gamma integral
- *   \f$\Gamma(a,x) = 1-\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{x}^{\infty}e^{-t}t^{a-1}dt \f$
+ * Incomplete gamma integral complement
+ * \f$\Gamma(a,x) = 1-\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{x}^{\infty}e^{-t}t^{a-1}dt \f$
+ * \param a \f$a, \, a>0\f$
+ * \param x \f$x\f$
+ * \return complement of the incomplete gamma integral.
  *
  * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
-double igamc(const double &a, const double &x)
+double igamc(const double& a, const double& x)
 {
    using namespace Cephes;
 
@@ -260,16 +312,16 @@ double igamc(const double &a, const double &x)
 
 /**
  * \ingroup gammafunc
- * Incomplete gamma integral.
- * \param aa \f$a\f$
- * \param xx \f$x\f$
- * \return Incomplete gamma integral \f$\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$
+ * Incomplete gamma integral \f$\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$
+ * \param a \f$a, \, a>0\f$
+ * \param x \f$x\f$
+ * \return Incomplete gamma integral
  *
  * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
-double igam(const double &a, const double &x)
+double igam(const double& a, const double& x)
 {
    using namespace Cephes;
 
@@ -310,126 +362,31 @@ double igam(const double &a, const double &x)
    return (ans * ax / a);
 }
 
-
+/**
+ * A wrapper for igam
+ */
 double gammp(double a, double x)
 {
    return igam(a, x);
 }
 
-/*
-double gammp(double a,double x)
-{
-  double gamser,gammcf,gln;
-
-  if (x < 0.0 || a <= 0.0) 
-    cerr << "Invalid arguments in routine gammp" << endl;
-  if (x < (a+1.0)) {
-    gser(gamser,a,x,gln);
-    return gamser;
-  } else {
-    gcf(gammcf,a,x,gln);
-    return 1.0-gammcf;
-  }
-}
-*/
-
+/**
+ * A wrapper for igam
+ */
 double cumd_gamma(double x, double a)
 {
    return igam(a, x);
 }
 
-/*
-double cumd_gamma(double x,double a)
-{
-  double gamser,gammcf,gln;
-
-  if (x < 0.0 || a <= 0.0) 
-    cerr << "Invalid arguments in routine gammp" << endl;
-  if (x < (a+1.0)) {
-    gser(gamser,a,x,gln);
-    return gamser;
-  } else {
-    gcf(gammcf,a,x,gln);
-    return 1.0-gammcf;
-  }
-}
-*/
-
-/* Incomplete gamma function.
-    Continued fraction approximation.
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 6
-
-    \deprecated Scheduled for replacement by 2010.
-*/
-/*void gcf(double& gammcf,double a,double x,double &gln)
-{
-  int i;
-  double an,b,c,d,del,h;
-
-  gln=gammln(a);
-  b=x+1.0-a;
-  c=1.0/FPMIN;
-  d=1.0/b;
-  h=d;
-  for (i=1;i<=ITMAX;i++) {
-    an = -i*(i-a);
-    b += 2.0;
-    d=an*d+b;
-    if (fabs(d) < FPMIN) d=FPMIN;
-    c=b+an/c;
-    if (fabs(c) < FPMIN) c=FPMIN;
-    d=1.0/d;
-    del=d*c;
-    h *= del;
-    if (fabs(del-1.0) < EPS) break;
-  }
-  if (i > ITMAX) 
-    cerr << "a too large, ITMAX too small in gcf" << endl;
-  gammcf=exp(-x+a*log(x)-(gln))*h;
-}*/
-
-/* Incomplete gamma function.
-    Series approximation.
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 6
-
-    \deprecated Scheduled for replacement by 2010.
-*/
-/*void gser(double& gamser,double a,double x,double& gln)
-{
-  int n;
-  double sum,del,ap;
-
-  gln=gammln(a);
-  if (x <= 0.0) {
-    if (x < 0.0) 
-      cerr << "x less than 0 in routine gser" << endl;
-    gamser=0.0;
-    return;
-  } else {
-    ap=a;
-    del=sum=1.0/a;
-    for (n=1;n<=ITMAX;n++) {
-      ++ap;
-      del *= x/ap;
-      sum += del;
-      if (fabs(del) < fabs(sum)*EPS) {
-        gamser=sum*exp(-x+a*log(x)-(gln));
-        return;
-      }
-    }
-    cerr << "a too large, ITMAX too small in routine gser" << endl;
-    return;
-  }
-}*/
-
 double get_initial_u(double a, double y);
 
 double Sn(double x, double a);
 
+
+/**
+ * \param a \f$a, \, a>0\f$
+ * \param y 
+ */
 double inv_cumd_gamma(double y, double a)
 {
    if (a < 0.05)
@@ -443,7 +400,6 @@ double inv_cumd_gamma(double y, double a)
    {
       double z = gammp(a, a * exp(u));
       double d = y - z;
-      //cout << d << endl;
       double log_fprime = a * log(a) + a * (u - exp(u)) - gammln(a);
       double fprime = exp(log_fprime);
       h = d / fprime;
@@ -454,9 +410,11 @@ double inv_cumd_gamma(double y, double a)
    return x;
 }
 
-#undef ITMAX
-#undef EPS
-
+/**
+ * Subroutine used in get_initial_u
+ * \param x
+ * \param a 
+ */
 double Sn(double x, double a)
 {
    int i = 1;
@@ -482,8 +440,11 @@ double Sn(double x, double a)
    return summ;
 }
 
-
-
+/**
+ * Gets initial u value for inv_cumd_gamma
+ * \param a
+ * \param y 
+ */
 double get_initial_u(double a, double y)
 {
    const double c = 0.57721;
@@ -502,7 +463,8 @@ double get_initial_u(double a, double y)
 	 if (logB + logQ > log(1.e-8))
 	 {
 	    logu = (logP + gammln(1.0 + a)) / a;
-	 } else
+	 }
+         else
 	 {
 	    logu = -exp(logQ) / a - c;
 	 }
@@ -511,21 +473,24 @@ double get_initial_u(double a, double y)
 	 double tmp = log(1 - u / (1.0 + a));
 	 log_x0 = logu;
 	 log_x0 -= tmp;
-      } else if (a < .3 && log(.35) <= logB && logB <= log(.6))
+      }
+      else if (a < .3 && log(.35) <= logB && logB <= log(.6))
       {
 	 double t = exp(-c - exp(logB));
 	 double logt = -c - exp(logB);
 	 double u = t * exp(t);
 	 x0 = t * exp(u);
 	 log_x0 = logt + u;
-      } else if ((log(.15) <= logB && logB <= log(.35)) ||
+      }
+      else if ((log(.15) <= logB && logB <= log(.35)) ||
 		 ((log(.15) <= logB && logB <= log(.45)) && a >= .3))
       {
 	 double y = -logB;
 	 double v = y - (1 - a) * log(y);
 	 x0 = y - (1 - a) * log(v) - log(1 + (1.0 - a) / (1.0 + v));
 	 log_x0 = log(x0);
-      } else if (log(.01) < logB && logB < log(.15))
+      }
+      else if (log(.01) < logB && logB < log(.15))
       {
 	 double y = -logB;
 	 double v = y - (1 - a) * log(y);
@@ -536,7 +501,8 @@ double get_initial_u(double a, double y)
 								  a) * v +
 								 2));
 	 log_x0 = log(x0);
-      } else if (logB < log(.01))
+      }
+      else if (logB < log(.01))
       {
 	 double y = -logB;
 	 double v = y - (1 - a) * log(y);
@@ -547,12 +513,14 @@ double get_initial_u(double a, double y)
 								  a) * v +
 								 2));
 	 log_x0 = log(x0);
-      } else
+      }
+      else
       {
 	 cerr << "this can't happen" << endl;
 	 ad_exit(1);
       }
-   } else if (a >= 1.0)
+   }
+   else if (a >= 1.0)
    {
       const double a0 = 3.31125922108741;
       const double b1 = 6.61053765625462;
@@ -569,14 +537,14 @@ double get_initial_u(double a, double y)
       {
 	 logtau = logP;
 	 sgn = -1;
-      } else
+      }
+      else
       {
 	 logtau = logQ;
 	 sgn = 1;
       }
 
       double t = sqrt(-2.0 * logtau);
-
 
       double num = (((a3 * t + a2) * t + a1) * t) + a0;
       double den = ((((b4 * t + b3) * t + b2) * t) + b1) * t + 1;
@@ -597,7 +565,8 @@ double get_initial_u(double a, double y)
 	 if (w > .15 * (a + 1))
 	 {
 	    x0 = w;
-	 } else
+	 }
+         else
 	 {
 	    double v = logP + gammln(a + 1);
 	    double u1 = exp(v + w) / a;
@@ -611,7 +580,8 @@ double get_initial_u(double a, double y)
 	    if (z < .002 * (a + 1.0))
 	    {
 	       x0 = z;
-	    } else
+	    }
+            else
 	    {
 	       double sn = Sn(z, a);
 	       double zbar = exp((v + z - log(sn)) / a);
@@ -623,7 +593,8 @@ double get_initial_u(double a, double y)
 
 	 }
 	 log_x0 = log(x0);
-      } else
+      }
+      else
       {
 	 double u =
 	    -logB + (a - 1.0) * log(w) - log(1.0 + (1.0 - a) / (1 + w));

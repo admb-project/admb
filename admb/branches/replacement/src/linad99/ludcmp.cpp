@@ -3,6 +3,11 @@
  *
  * Copyright (c) 2009 ADMB Foundation
  */
+/**
+ * \file
+ * This file contains the routines necessary to compute
+ * the LU decomposition of a matrix
+ */
 
 #include <ludcmp.hpp>
 
@@ -12,6 +17,12 @@ dmatrix ludecomp_pivot_for_adjoint(const dmatrix & M,
 				   const cltudecomp & dfclu,
 				   const ivector & index2);
 
+/**
+ * LU Decomposition of a Matrix
+ * \param M \f$M\f$ a square matrix to decompose
+ * \return a cltudecomp object containg the
+ * upper and lower parts of the decomposed matrix
+ */
 cltudecomp ludecomp(const dmatrix & M)
 {
    int mmin = M.indexmin();
@@ -121,7 +132,6 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
       }
    }
 
-
    // OUTER LOOP2
    //for (int j=mmin;j<=mmax;j++)
    for (j = mmax; j >= mmin; j--)
@@ -206,7 +216,15 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
    return dfM;
 }
 
-  // LU decomp with partial pivoting
+
+/**
+ * LU decomp with partial pivoting 
+ * \param M \f$M\f$ a constant square matrix to decompose
+ * \return a cltudecomp object containg the
+ * upper and lower parts of the decomposed matrix
+ * as well as an index that keeps track of the
+ * pivots.
+ */
 cltudecomp ludecomp_pivot(const dmatrix & M)
 {
    int i, j, k;
@@ -301,7 +319,14 @@ cltudecomp ludecomp_pivot(const dmatrix & M)
    return clu;
 }
 
-  // LU decomp with partial pivoting
+/**
+ * LU decomp with partial pivoting 
+ * \param M \f$M\f$ a variable square matrix to decompose
+ * \return a cltudecomp object containg the
+ * upper and lower parts of the decomposed matrix
+ * as well as an index that keeps track of the
+ * pivots.
+ */
 cltudecomp xludecomp_pivot(const dvar_matrix & M)
 {
 

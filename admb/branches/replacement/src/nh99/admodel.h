@@ -1686,6 +1686,8 @@ public:
 
   virtual void * mycast() { return (void*)this;}
 
+  void neldmead(int n, dvector& _start, dvector& _xmin, double *ynewlo,
+    double reqmin, double delta,int *icount, int *numres, int *ifault);
   void adamoeba(BOR_CONST dmatrix& p, BOR_CONST dvector& y, int ndim, double ftol,int maxfn);
   void set_initial_simplex(BOR_CONST dmatrix& p,BOR_CONST dvector& y,int nvar,BOR_CONST dvector& x,
     double delta);

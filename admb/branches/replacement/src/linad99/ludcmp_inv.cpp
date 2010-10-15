@@ -3,6 +3,11 @@
  *
  * Copyright (c) 2009 ADMB Foundation
  */
+/**
+ * \file
+ * This file contains the routines necessary to compute
+ * the inverse of a matrix
+ */
 
 #define HOME_VERSION
 #include <fvar.hpp>
@@ -185,9 +190,6 @@ dmatrix inv(_CONST dmatrix & aa)
    return vc;
 }
 
-
-
-
 /** Inverse of a varaiable matrix.    
     \param aa dvar_matrix conaining matrix to be inverted,\f$A\f$.
     \return dvar_matrix containing \f$A^{-1}\f$.
@@ -332,8 +334,7 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
 
    dvector y(lb, ub);
    dvector x(lb, ub);
-   //int lb=rowmin;
-   //int ub=rowmax;
+
    cltudecomp & b = bb;
    ivector indxinv(lb, ub);
    for (i = lb; i <= ub; i++)

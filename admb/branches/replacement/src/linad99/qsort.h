@@ -2,7 +2,7 @@
  * $Id$
  *
  * Modified by Derek Seiple
- * Copyright (c) 2009 ADMB Foundation
+ * Copyright (c) 2010 ADMB Foundation
  *
  * Adopted from GNU glibc by Mjt.
  * See stdlib/qsort.c in glibc
@@ -124,7 +124,6 @@ typedef struct {
 #define	_QSORT_POP2(low, high, top)	\
 	((--top, (low = top->_lo2), (high = top->_hi2)))
 #define	_QSORT_STACK_NOT_EMPTY	(_stack < _top)
-
 
 /* Order size using quicksort.  This implementation incorporates
    four optimizations discussed in Sedgewick:
@@ -311,14 +310,6 @@ typedef struct {
 									\
 }
 
-
-
-
-
-
-
-
-/* The main code starts here... */
 //modified by Derek Seiple
 #define QSORT2(QSORT_TYPE,QSORT_TYPE2,QSORT_BASE,QSORT_BASE2,QSORT_NELT,QSORT_LT)	\
 {									\

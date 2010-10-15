@@ -389,7 +389,7 @@ namespace Cephes
    /**
     * \ingroup gammafunc
     * Polynomial evaluation
-    * \param x \f$x\f$
+    * \param x \f$x\f$ the point to be evaluated
     * \param _coef The coefficents of the polynomial
     * \param N \f$N\f$ The degree of the polynomial
     * \return The polynomial evaluated at \f$x\f$
@@ -420,7 +420,7 @@ namespace Cephes
     * \ingroup gammafunc
     * Polynomial evaluation when leading coefficent is 1
     * (i.e. leading term is \f$x^N\f$)
-    * \param x \f$x\f$
+    * \param x \f$x\f$ the point to be evaluated
     * \param _coef The coefficents of the polynomial
     * \param N \f$N\f$ The degree of the polynomial
     * \return The polynomial evaluated at \f$x\f$

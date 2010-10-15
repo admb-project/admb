@@ -3,12 +3,22 @@
  *
  * Copyright (c) 2009 ADMB Foundation
  */
+/**
+ * \file
+ * This file contains the routines necessary to compute
+ * the natural log of the determinate of a matrix
+ */
 
 #include <ludcmp.hpp>
 
 cltudecomp xludecomp_pivot(const dvar_matrix & M);
 cltudecomp ludecomp_pivot(const dmatrix & M);
 
+/** 
+ * Compute log determinant of a constant dvar_matrix. 
+ * \param aa A dvar_dmatrix, \f$M\f$, for which the determinant is computed.
+ * \return A dvariable containing \f$|\log(M)|\f$.
+ */
 dvariable ln_det(const dvar_matrix & a)
 {
    int sgn;
@@ -17,6 +27,12 @@ dvariable ln_det(const dvar_matrix & a)
 
 static void df_my_ln_det(void);
 
+/** 
+ * Compute log determinant of a constant dvar_matrix. 
+ * \param aa A dvar_dmatrix, \f$M\f$, for which the determinant is computed.
+ * \param _sgn the sign of the log
+ * \return A dvariable containing \f$|\log(M)|\f$.
+ */
 dvariable my_ln_det(const dvar_matrix & M, int &sign)
 {
    cltudecomp clu1 = xludecomp_pivot(M);
@@ -86,7 +102,7 @@ static void df_my_ln_det(void)
 
 /** Compute log determinant of a constant dvar_matrix.
     \param aa A dvar_dmatrix, \f$M\f$, for which the determinant is computed.
-    \param _sgn
+    \param _sgn the sign of the log
     \return A dvariable containing \f$|\log(M)|\f$.
 */
 dvariable ln_det(const dvar_matrix & aa, const int &_sgn)
@@ -107,7 +123,7 @@ dvariable ln_det(const dvar_matrix & aa, const int &_sgn)
 
 /** Compute log determinant of a constant matrix.
     \param m1 A dmatrix, \f$M\f$, for which the determinant is computed.
-    \param _sgn
+    \param _sgn the sign of the log
     \return A double containing \f$|\log(M)|\f$.
 */
 double ln_det(const dmatrix & m1, const int &_sgn)

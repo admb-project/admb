@@ -4,10 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2009 ADMB Foundation
  */
+/**
+ * \file
+ * Contains routines for cubic spline interpolation
+ * for constant types.
+ */
+/**
+ * \defgroup cub_spline
+ */
+
 #include <fvar.hpp>
 
 dvector spline(BOR_CONST dvector &x,BOR_CONST dvector&y,double yp1,double ypn);
-dvector spline_cubic_set (int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
+dvector spline_cubic_set(int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
   double ybcbeg, int ibcend, double ybcend );
 double spline_cubic_val(int n, _CONST dvector& t, double tval,
   _CONST dvector& y, _CONST dvector& ypp);
@@ -50,7 +59,7 @@ dvector cubic_spline_function::operator () (_CONST dvector& u)
  *        end point
  * \return an array containing the second derivatives
 */
-dvector spline(BOR_CONST dvector &_x,BOR_CONST dvector&_y,double yp1,double ypn)
+dvector spline(BOR_CONST dvector& _x,BOR_CONST dvector& _y,double yp1,double ypn)
 {
   int ibcbeg, ibcend;
   double ybcbeg, ybcend;
@@ -83,68 +92,9 @@ dvector spline(BOR_CONST dvector &_x,BOR_CONST dvector&_y,double yp1,double ypn)
   return ret;
 }
 
-
-/*dvector spline(BOR_CONST dvector &_x,BOR_CONST dvector&_y,double yp1,double ypn)
-{
-  dvector& x=(dvector&) _x;
-  dvector& y=(dvector&) _y;
-  int orig_min=x.indexmin();
-  x.shift(1);
-  y.shift(1);
-  // need to check that x is monotone increasing;
-  if  ( x.indexmax() != y.indexmax() )
-  {
-    cerr << " Incompatible bounds in input to spline" << endl;
-  }
-  int n=x.indexmax();
-  dvector y2(1,n);
-  int i,k;
-  double  p,qn,sig,un;
-
-  dvector u(1,n-1);
-  if (yp1 > 0.99e30)
-  {
-    y2[1]=u[1]=0.0;
-  }
-  else
-  {
-    y2[1] = -0.5;
-    u[1]=(3.0/(x[2]-x[1]))*((y[2]-y[1])/(x[2]-x[1])-yp1);
-  }
-  for (i=2;i<=n-1;i++)
-  {
-    sig=(x[i]-x[i-1])/(x[i+1]-x[i-1]);
-    p=sig*y2[i-1]+2.0;
-    y2[i]=(sig-1.0)/p;
-    u[i]=(y[i+1]-y[i])/(x[i+1]-x[i]) - (y[i]-y[i-1])/(x[i]-x[i-1]);
-    u[i]=(6.0*u[i]/(x[i+1]-x[i-1])-sig*u[i-1])/p;
-  }
-  if (ypn > 0.99e30)
-  {
-    qn=un=0.0;
-  }
-  else 
-  {
-    qn=0.5;
-    un=(3.0/(x[n]-x[n-1]))*(ypn-(y[n]-y[n-1])/(x[n]-x[n-1]));
-  }
-  y2[n]=(un-qn*u[n-1])/(qn*y2[n-1]+1.0);
-  for (k=n-1;k>=1;k--)
-  {
-    y2[k]=y2[k]*y2[k+1]+u[k];
-  }
-  x.shift(orig_min);
-  y.shift(orig_min);
-  y2.shift(orig_min);
-  return y2;
-}*/
-
-
-
-
-/** \ingroup cub_spline
+/**
  *  Cubic spline interpolation.
- *
+ * \ingroup cub_spline
  * \param _xa array of abscissa
  * \param _ya array of corresponding values \f$y_i=f(x_i)\f$
  * \param _y2a array of 2nd derivatives computed from dvector spline()
@@ -156,48 +106,20 @@ double splint(BOR_CONST dvector& _xa,BOR_CONST dvector& _ya,BOR_CONST dvector& _
   return spline_cubic_val(_xa.size(), _xa, x, _ya, _y2a);
 }
 
-
-
-
-/*double splint(BOR_CONST dvector& _xa,BOR_CONST dvector& _ya,BOR_CONST dvector& _y2a,double x)
-{
-  dvector& xa=(dvector&) _xa;
-  dvector& ya=(dvector&) _ya;
-  dvector& y2a=(dvector&) _y2a;
-  int orig_min=xa.indexmin();
-  xa.shift(1);
-  ya.shift(1);
-  y2a.shift(1);
-  double y;
-  int n = xa.indexmax();
-  int klo,khi,k;
-  double h,b,a;
-
-  klo=1;
-  khi=n;
-  while (khi-klo > 1) 
-  {
-    k=(khi+klo) >> 1;
-    if (xa[k] > x) khi=k;
-    else klo=k;
-  }
-  h=xa[khi]-xa[klo];
-  a=(xa[khi]-x)/h;
-  b=(x-xa[klo])/h;
-  y=a*ya[klo]+b*ya[khi]+((a*a*a-a)*y2a[klo]+(b*b*b-b)*y2a[khi])*(h*h)/6.0;
-  xa.shift(orig_min);
-  ya.shift(orig_min);
-  y2a.shift(orig_min);
-  return y;
-}*/
-
-
-//****************************************************************************80
-
+/**
+ * \ingroup cub_spline
+ * Evaluates a piecewise cubic spline at a point
+ * \param n the number of knots
+ * \param t the knot values
+ * \param tval a point, typically between t[0] and t[N-1], at
+ *        which the spline is to be evalulated.  If tval lies outside
+ *        this range, extrapolation is used.
+ * \param y the data values at the knots
+ * \param ypp the second derivatives of the spline at the knots
+ * \return the value of the spline at tval
+ */
 double spline_cubic_val(int n, _CONST dvector& t, double tval,
   _CONST dvector& y, _CONST dvector& ypp)
-
-//****************************************************************************80
 //
 //  Purpose:
 //
@@ -250,14 +172,8 @@ double spline_cubic_val(int n, _CONST dvector& t, double tval,
 //    which the spline is to be evalulated.  If TVAL lies outside
 //    this range, extrapolation is used.
 //
-//    Input, double Y[N], the data values at the knots.
-//
 //    Input, double YPP[N], the second derivatives of the spline at
 //    the knots.
-//
-//    Output, double *YPVAL, the derivative of the spline at TVAL.
-//
-//    Output, double *YPPVAL, the second derivative of the spline at TVAL.
 //
 //    Output, double SPLINE_VAL, the value of the spline at TVAL.
 //
@@ -267,10 +183,9 @@ double spline_cubic_val(int n, _CONST dvector& t, double tval,
   int i;
   int ival;
   double yval;
-//
-//  Determine the interval [ T(I), T(I+1) ] that contains TVAL.
-//  Values below T[0] or above T[N-1] use extrapolation.
-//
+
+  //  Determine the interval [ T(I), T(I+1) ] that contains TVAL.
+  //  Values below T[0] or above T[N-1] use extrapolation.
   ival = n - 2;
 
   for ( i = 0; i < n-1; i++ )
@@ -281,10 +196,9 @@ double spline_cubic_val(int n, _CONST dvector& t, double tval,
       break;
     }
   }
-//
-//  In the interval I, the polynomial is in terms of a normalized
-//  coordinate between 0 and 1.
-//
+
+  //  In the interval I, the polynomial is in terms of a normalized
+  //  coordinate between 0 and 1.
   dt = tval - t[ival];
   h = t[ival+1] - t[ival];
 
@@ -294,7 +208,7 @@ double spline_cubic_val(int n, _CONST dvector& t, double tval,
     + dt * ( 0.5 * ypp[ival]
     + dt * ( ( ypp[ival+1] - ypp[ival] ) / ( 6.0 * h ) ) ) );
 
-  /**ypval = ( y[ival+1] - y[ival] ) / h
+  /* *ypval = ( y[ival+1] - y[ival] ) / h
     - ( ypp[ival+1] / 6.0 + ypp[ival] / 3.0 ) * h
     + dt * ( ypp[ival]
     + dt * ( 0.5 * ( ypp[ival+1] - ypp[ival] ) / h ) );
@@ -304,12 +218,15 @@ double spline_cubic_val(int n, _CONST dvector& t, double tval,
   return yval;
 }
 
-
-//****************************************************************************80
-
-double *d3_np_fs ( int n, _CONST dvector& _a, _CONST dvector& _b)
-
-//****************************************************************************80
+/**
+ * \ingroup cub_spline
+ * factors and solves a D3 system.
+ * \param n the order of the linear system
+ * \param _a On input, the nonzero diagonals of the linear system
+ * \param _b the right hand side
+ * \return the solution of the linear system
+ */
+double *d3_np_fs(int n, _CONST dvector& _a, _CONST dvector& _b)
 //
 //  Purpose:
 //
@@ -371,9 +288,8 @@ double *d3_np_fs ( int n, _CONST dvector& _a, _CONST dvector& _b)
   int i;
   double *x;
   double xmult;
-//
-//  Check.
-//
+
+  //  Check.
   for ( i = 0; i < n; i++ )
   {
     if ( a[1+i*3] == 0.0 )
@@ -404,16 +320,28 @@ double *d3_np_fs ( int n, _CONST dvector& _a, _CONST dvector& _b)
   return x;
 }
 
-
-
-
-
-//****************************************************************************80
-
-dvector spline_cubic_set (int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
+/**
+ * \ingroup cub_spline
+ * Computes the second derivatives of a piecewise cubic spline
+ * \param n The number of data points. \f$n\f$ must be at least 2.
+ *        In the special case where \f$n = 2\f$ and ibcend = ibcend = 0,
+ *        the spline will actually be linear.
+ * \param t The knot values. The knot values should be distinct, and increasing.
+ * \param y The data values to be interpolated
+ * \param ibcbeg The left boundary flag,
+ *        0: the cubic spline should be a quadratic over the first interval;
+ *        1: the first derivative at the left endpoint should be ybcbeg;
+ *        2: the second derivative at the left endpoint should be ybcbeg.
+ * \param ybcbeg The values to be used in the boundary conditions
+ * \param ibcend The right boundary flag,
+ *        0: the cubic spline should be a quadratic over the last interval;
+ *        1: the first derivative at the right endpoint should be YBCEND;
+ *        2: the second derivative at the right endpoint should be YBCEND.
+ * \param ybcend the values to be used in the boundary conditions
+ * \return the second derivatives of the cubic spline
+ */
+dvector spline_cubic_set(int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
   double ybcbeg, int ibcend, double ybcend )
-
-//****************************************************************************80
 //
 //  Purpose:
 //
@@ -535,9 +463,8 @@ dvector spline_cubic_set (int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
   dvector b(0,n-1);
   int i;
   double *ypp;
-//
-//  Check.
-//
+
+  //  Check.
   if ( n <= 1 )
   {
     cout << "\n";
@@ -559,9 +486,7 @@ dvector spline_cubic_set (int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
     }
   }
 
-//
-//  Set up the first equation.
-//
+  //  Set up the first equation.
   if ( ibcbeg == 0 )
   {
     b[0] = 0.0;
@@ -587,9 +512,8 @@ dvector spline_cubic_set (int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
     cout << "  IBCBEG must be 0, 1 or 2.\n";
     cout << "  The input value is " << ibcbeg << ".\n";
   }
-//
-//  Set up the intermediate equations.
-//
+
+  //  Set up the intermediate equations.
   for ( i = 1; i < n-1; i++ )
   {
     b[i] = ( y[i+1] - y[i] ) / ( t[i+1] - t[i] )
@@ -598,9 +522,8 @@ dvector spline_cubic_set (int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
     a[1+ i   *3] = ( t[i+1] - t[i-1] ) / 3.0;
     a[0+(i+1)*3] = ( t[i+1] - t[i] ) / 6.0;
   }
-//
-//  Set up the last equation.
-//
+
+  //  Set up the last equation.
   if ( ibcend == 0 )
   {
     b[n-1] = 0.0;
@@ -626,9 +549,8 @@ dvector spline_cubic_set (int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
     cout << "  IBCEND must be 0, 1 or 2.\n";
     cout << "  The input value is " << ibcend << ".\n";
   }
-//
-//  Solve the linear system.
-//
+
+  //  Solve the linear system.
   if ( n == 2 && ibcbeg == 0 && ibcend == 0 )
   {
     dvector ret(0,1);
@@ -652,7 +574,4 @@ dvector spline_cubic_set (int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
     }
     return ret;
   }
-
 }
-
-

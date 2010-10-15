@@ -3,6 +3,11 @@
  *
  * Copyright (c) 2009 ADMB Foundation
  */
+/**
+ * \file
+ * This file contains the routines necessary to compute
+ * the determinate of a matrix
+ */
 
 #include <fvar.hpp>
 

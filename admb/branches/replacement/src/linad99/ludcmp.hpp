@@ -1,7 +1,11 @@
-/*
+/**
  * $Id$
  *
  * Copyright (c) 2009 ADMB Foundation
+ */
+
+/**
+ * LU Decomposition classes
  */
 
 #ifndef __LUDCMP_HPP__
@@ -210,7 +214,6 @@ class dmatrix_for_adjoint
       count = 1;
    }
 };
-
 
 class cltudecomp_for_adjoint
 {

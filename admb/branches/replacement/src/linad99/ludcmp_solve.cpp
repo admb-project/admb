@@ -3,6 +3,11 @@
  *
  * Copyright (c) 2009 ADMB Foundation
  */
+/**
+ * \file
+ * This file contains the routines necessary to solve
+ * a linear system of equations given in Matrix-vector form
+ */
 
 #include <ludcmp.hpp>
 
@@ -87,7 +92,6 @@ dvector solve(const dmatrix & aa, const dvector & z)
 
    return x;
 }
-
 
 /** Solve a linear system using LU decomposition.
     \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$. 
@@ -267,7 +271,16 @@ static void df_solve(void)
    dfz.save_dvector_derivatives(z_pos);
 }
 
-//can improve this
+/** 
+ * Solve a linear system using LU decomposition.
+ * \param aa A dvar_matrix containing LU decomposition of input matrix. \f$A\f$. 
+ * \param z A dvar_vector containing the RHS, \f$b\f$ of the linear equation
+ * \param ln_unsigned_det holds the log-determinant on return
+ * \param _sign the sign of the lo
+ * \f$A\cdot X = B\f$, to be solved.
+ * \return A dvar_vector containing solution vector \f$X\f$.
+ * \return The log-determinant of \f$A\f$.
+*/
 dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
 		  prevariable & ln_unsigned_det,
 		  const prevariable & _sign)

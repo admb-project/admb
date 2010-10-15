@@ -4,20 +4,26 @@
  * Author: David Fournier
  * Copyright (c) 2009 ADMB Foundation
  */
+
+/**
+ * \file
+ * This file deals with the Incomplete Gamma Functions
+ * of variable types. All supporting mathematical functions
+ * required to compute the Inmomplete Gamma Function
+ * are included. They being: gamma function, log gamma,
+ * and some polynomial evaluation functions.
+ */
+
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #else
 #  include <fvar.hpp>
 #endif
-#define ITMAX 100
-#define EPS 1.0e-9
-//#define EPS 3.0e-7
-#define FPMIN 1.0e-30
 
 double get_values(double x,double y,int print_switch);
 dvariable igam(const dvariable & _a, const dvariable & _x);
 dvariable igamc(const dvariable & _a, const dvariable & _x);
-   extern int mtherr(char* s,int n);
+extern int mtherr(char* s,int n);
 
 namespace Cephes
 {
@@ -43,8 +49,6 @@ namespace Cephes
 
    dvariable polevl(const dvariable & x, const void *_coef, int N);
    dvariable p1evl(const dvariable & x, const void *_coef, int N);
-
-
 
    /**
     * \ingroup gammafunc
@@ -78,7 +82,7 @@ namespace Cephes
    /**
     * \ingroup gammafunc
     * Polynomial evaluation
-    * \param x \f$x\f$
+    * \param x \f$x\f$ the point to be evaluated
     * \param _coef The coefficents of the polynomial
     * \param N \f$N\f$ The degree of the polynomial
     * \return The polynomial evaluated at \f$x\f$
@@ -109,7 +113,7 @@ namespace Cephes
     * \ingroup gammafunc
     * Polynomial evaluation when leading coefficent is 1
     * (i.e. leading term is \f$x^N\f$)
-    * \param x \f$x\f$
+    * \param x \f$x\f$ the point to be evaluated
     * \param _coef The coefficents of the polynomial
     * \param N \f$N\f$ The degree of the polynomial
     * \return The polynomial evaluated at \f$x\f$
@@ -135,14 +139,13 @@ namespace Cephes
 
       return (ans);
    }
-} // Cephes namespace
-
+} // End Cephes namespace
 
 /**
  * \ingroup gammafunc
- * Gamma Function
+ * Gamma Function \f$\Gamma(x)\f$
  * \param xx1 \f$x\f$
- * \return The Gamma Function \f$\Gamma(x)\f$
+ * \return The Gamma Function
  * 
  * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
@@ -282,15 +285,12 @@ static dvariable gamma(const dvariable & xx1)
       return (z / ((1.0 + 0.5772156649015329 * x) * x));
 }
 
-//------------------------------------------------------------------
-
-
 /**
  * \ingroup gammafunc
- * Log-gamma function
+ * Log-gamma function \f$\ln(|\Gamma(x)|)\f$
  * \param xx \f$x\f$
  * \return natural log of the absolute
- *   value of the gamma function \f$\ln(|\Gamma(x)|)\f$
+ *   value of the gamma function
  *
  * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
@@ -424,15 +424,12 @@ dvariable lgam(const dvariable & xx)
    return (q);
 }
 
-//------------------------------------------------------------------------
-
-
 /**
  * \ingroup gammafunc
- * Incomplete gamma integral.
- * \param aa \f$a\f$
+ * Incomplete gamma integral \f$\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$
+ * \param aa \f$a, \, a>0\f$
  * \param xx \f$x\f$
- * \return Incomplete gamma integral \f$\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{0}^{x}e^{-t}t^{a-1}dt \f$
+ * \return Incomplete gamma integral
  *
  * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
@@ -485,16 +482,14 @@ dvariable igam(const dvariable & aa, const dvariable & xx)
    return (ans * ax);
 }
 
-//-----------------------------------------------------------------------
-
 /**
  * \ingroup gammafunc
- * Incomplete gamma integral complement .
- * \param aa \f$a\f$
+ * Incomplete gamma integral complement
+ * \f$\Gamma(a,x) = 1-\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{x}^{\infty}e^{-t}t^{a-1}dt \f$
+ * \param aa \f$a, \, a>0\f$
  * \param xx \f$x\f$
  * \return complement of th incomplete gamma integral
- *   \f$\Gamma(a,x) = 1-\gamma(a,x) = \frac{1}{\Gamma(a)}\int_{x}^{\infty}e^{-t}t^{a-1}dt \f$
- *
+ * 
  * \n\n Cephes Math Library Release 2.1:  December, 1988
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
@@ -574,122 +569,29 @@ dvariable igamc(const dvariable & aa, const dvariable & xx)
    return (ans * ax);
 }
 
-
-//-----------------------------------------------------------------------
-
+/**
+ * A wrapper for igam
+ */
 dvariable cumd_gamma(const dvariable& x, const dvariable& a)
 {
    dvariable z=igam(a,x);
    return z;
 }
 
+/**
+ * A wrapper for lgam
+ */
 dvariable gammln(_CONST dvariable& xx)
 {
    dvariable z=lgam(xx);
    return z;
 }
 
+/**
+ * A wrapper for lgam
+ */
 dvariable gammln(const prevariable& z)
 {
    dvariable y=lgam(z);
    return y;
 }
-
-//double gammln(double xx);
-
-/* Incomplete gamma function.
-    Continued fraction approximation.
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 6
-
-    \deprecated Scheduled for replacement by 2010.
-*/
-/*void gcf(const dvariable& _gammcf,const dvariable& a,
-  const dvariable& x,const dvariable& _gln)
-{
-  ADUNCONST(dvariable,gln)
-  ADUNCONST(dvariable,gammcf)
-  int i;
-  dvariable an,b,c,d,del,h;
-
-  gln=gammln(value(a));
-  b=x+1.0-a;
-  c=1.0/FPMIN;
-  d=1.0/b;
-  h=d;
-  for (i=1;i<=ITMAX;i++) {
-    an = -i*(i-a);
-    b += 2.0;
-    d=an*d+b;
-    if (fabs(value(d)) < FPMIN) d=FPMIN;
-    c=b+an/c;
-    if (fabs(value(c)) < FPMIN) c=FPMIN;
-    d=1.0/d;
-    del=d*c;
-    h *= del;
-    if (fabs(value(del)-1.0) < EPS) break;
-  }
-  if (i > ITMAX) 
-    cerr << "a too large, ITMAX too small in gcf" << endl;
-  gammcf=exp(-x+a*log(x)-(gln))*h;
-}*/
-
-/* Incomplete gamma function.
-    Series approximation.
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 6
-
-    \deprecated Scheduled for replacement by 2010.
-*/
-
-/*void gser(const dvariable& _gamser,const dvariable& a,
-  const dvariable& x,const dvariable& _gln)
-{
-  ADUNCONST(dvariable,gln)
-  ADUNCONST(dvariable,gamser)
-  int n;
-  dvariable sum,del,ap;
-
-  gln=gammln(value(a));
-
-  if (value(x) <= 0.0) {
-    if (value(x) < 0.0) 
-      cerr << "x less than 0 in routine gser" << endl;
-    gamser=0.0;
-    return;
-  } 
-  else 
-  {
-    ap=a;
-    del=sum=1.0/a;
-    for (n=1;n<=ITMAX;n++) {
-      ap+=1.0;
-      del *= x/ap;
-      sum += del;
-      if (fabs(value(del)) < fabs(value(sum))*EPS) {
-        gamser=sum*exp(-x+a*log(x)-(gln));
-        return;
-      }
-    }
-    cerr << "a too large, ITMAX too small in routine gser" << endl;
-    return;
-  }
-}*/
-
-/*
-dvariable cumd_gamma(const dvariable& x, const dvariable& a)
-{
-  dvariable gamser,gammcf,gln;
-
-  if (value(x) < 0.0 || value(a) <= 0.0) 
-    cerr << "Invalid arguments in routine gammp" << endl;
-  if (value(x) < (value(a)+1.0)) {
-    gser(gamser,a,x,gln);
-    return gamser;
-  } else {
-    gcf(gammcf,a,x,gln);
-    return 1.0-gammcf;
-  }
-}*/

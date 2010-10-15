@@ -13,6 +13,8 @@ run:
 	@printf "Finished run.\n"
 
 clean:
+	@rm -vf ss3.par
+	@rm -vf wtatage.ss_new
 	@rm -vf ParmTrace.SSO
 	@rm -vf Starter.SS_New
 	@rm -vf Forecast-report.SSO

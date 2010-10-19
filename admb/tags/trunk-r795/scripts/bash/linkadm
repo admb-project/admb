@@ -1,7 +1,0 @@
-# linking in libpthread first because of multithreading problems
-# you may not want this
-gcc  -Xlinker -s -Xlinker -L /admodel/lib  $1.obj -o $1  -ladmod -ladt -lado -lado -lpthread -lstdc++ -ldl -lm
-# if not try removing the -lpthread as in
-# gcc -O3 -Xlinker -s -Xlinker -L /admodel/lib  $1.obj -o $1 -ladmod -ladt -lado -lstdc++ -ldl -lm
-# use this instead for debugging 
-#gcc -g -Xlinker -L /admodel/lib  $1.obj -o $1 -ladmod -ladt -lado -lpthread -lstdc++ -ldl -lm

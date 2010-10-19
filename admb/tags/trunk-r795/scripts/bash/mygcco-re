@@ -1,7 +1,0 @@
-if [ ! -n "$ADMB_HOME" ]; then
-    echo you must define the environment string ADMB_HOME
-else
-    g++ -w -o$1 -g $1.cpp -I. -fpermissive -I/${ADMB_HOME}/include \
-      -L/${ADMB_HOME}/lib -DUSE_LAPLACE -D__GNUDOS__ -Dlinux -DOPT_LIB -O3 \
-      -ldf1b2o -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado
-fi

@@ -1,0 +1,559 @@
+% $Id$
+%
+% Author: David Fournier
+% Copyright (c) 2008 Regents of the University of California
+%
+\def\plainline#1{\hbox to \hsize{#1}}
+\def\sin{\hbox{\rm sin}}
+\def\cos{\hbox{\rm cos}}
+% beginning of easy.tex
+%\openup -1.3truept
+%\openup 1.25truept
+\baselineskip = 11.5pt plus 1pt
+\lineskiplimit=1truept
+\lineskip=2truept minus .5truept
+\newdimen\spread
+\spread=2pt
+%\baselineskip = 11pt plus 1pt
+%\lineskip=5pt minus 4pt
+%\def\ifundefined#1{\expandafter\ifx\csname#1\endcsname\relax}
+\def\bestbreak{\par\penalty-9000}
+%\font\odd=cmsy18 at 18truept
+%\font\bmf=cmmib10 
+\font\Lrm=cmss10 at 12truept 
+%%\font\LLrm=cmss10 at 12truept
+\font\Lbf=cmbx10 % scaled \magstep2
+\font\Lit=cmti10 % scaled \magstep2
+%\font\lrm=cmss10 at 12truept 
+\font\eighteenrm=cmr17 %scaled \magstep1
+%\font\lsl=cmssi10% scaled \magstep1
+%\font\it=cmssi10 at12truept
+%\font\lit=cmssi10 at12truept
+%\font\ltt=cmtt10 at12truept
+%\font\rm=cmr18 at 18true pt  %scaled \magstep1
+%\font\rmtwelve=cmr10 at 12 true pt
+%\font\bf=cmbx10 at 12 truept
+%\font\sl=cmssi10 at12truept
+\font\slsmall=cmsl9 %scaled \magstep1
+%\font\it=cmssi10 at12truept
+%\font\srm=cmss10 at 8.333pt
+%\font\stt=cmtt8   at 8truept
+\font\tenrm=cmr10 %at 10truept
+\font\twelverm=cmr12 %at 10truept
+%\font\tenbfmi=cmmib10
+%\font\sevenbfmi=cmmib10 at 7pt
+%\font\ninecmmi=cmmi9 at 9truept
+%\font\sevencmmi=cmmi7 at 7truept
+%\font\largebss=cmssbx12
+\font\rmsmall=cmr9
+\font\ninerm=cmr9 
+\font\fiverm=cmr5 
+\font\eightrm=cmr8 at 8 truept
+%\font\largett=cmtt12
+\font\ttexample=cmtt9
+\font\tteight=cmtt8 at 8truept
+%\rm
+\newfam\boldfam
+%\textfont\boldfam=\tenbfmi
+%\scriptfont\boldfam=\sevenbfmi
+%\def\bmit{\fam\boldfam\tenbfmi}
+
+%\newfam\smallfam
+%\textfont\smallfam=\ninecmmi
+%\scriptfont\smallfam=\sevencmmi
+%\def\smit{\fam\smallfam\ninecmmi}
+\def\supereject{\newpage}
+
+
+%\def\_{\hbox{\kern .04em\vbox{\kern .04em\hrule width.3em\kern -.04em}
+ %                     \kern -.45em}} 
+
+
+%\def\bs{$\backslash$}
+\def\bs{\char92}
+
+\def\sloppy{\tolerance 2000 \hfuzz .5pt \vfuzz .5pt}
+\def\fussy{\tolerance 200 \hfuzz .1pt \vfuzz .1pt}
+
+\let\3=\ss
+\tolerance=10000
+
+\def\makeheadline{\vbox to 0pt{\vskip-.5truein
+  \plainline{\vbox to 8.5pt{}\the\headline}\vss}\nointerlineskip}
+\def\makefootline{\baselineskip=.5truein \plainline{\footline}} % redefined below
+\def\noheadlines{\def\makeheadline{}
+    \advance\voffset by -.5truein \advance\vsize by .5truein}
+\def\nofootlines{\def\makefootline{}\advance\vsize by .5truein}
+
+\def\nopageno{\def\footline{}}
+
+
+\def\advancepageno{\ifnum\pageno<0 \global\advance\pageno by -1
+  \else\global\advance\pageno by 1 \fi}
+
+%\newbox\thecompany
+%\global\setbox\thecompany=\hbox{\Lrm {\odd O}\kern .1em TTER {\odd S}OFTWARE}
+
+
+\parindent=2em
+\parskip=.5\baselineskip plus .5\baselineskip minus.25\baselineskip
+%\parskip= 6truept plus 2truept minus 2truept %\medskipamount
+
+\def\today{\hbox{\number\day.~\number\month.~\number\year}}
+\def\date{\hbox{\number\year-\number\month-\number\day}}
+
+\def\Narrower{\advance\leftskip by \displayindent
+	     \advance\rightskip by \displayindent}
+\def\singlespacing{\baselineskip=\normalbaselineskip}
+\def\halfspacing{\baselineskip=1.3\normalbaselineskip}
+\def\doublespacing{\baselineskip=1.6\normalbaselineskip}
+
+\def\condbreak#1{\vskip 0pt plus #1\penalty-500\vskip 0pt plus-#1}
+
+\def\center{\vskip\parskip\begingroup
+	    \parindent=0pt \parskip=0pt plus 1pt
+	    \rightskip=0pt plus 1fill \leftskip=0pt plus 1fill
+	    \obeylines}
+\def\endcenter{\endgroup}
+\def\flushleft{\vskip\parskip\begingroup
+	       \parindent=0pt \parskip=0pt plus 1pt
+	       \rightskip=0pt plus 1fill \leftskip=0pt
+	       \obeylines}
+\def\endflushleft{\endgroup}
+\def\flushright{\vskip\parskip\begingroup
+		\parindent=0pt \parskip=0pt plus 1pt
+		\rightskip=0pt \leftskip=0pt plus 1fill
+		\obeylines}
+\def\endflushright{\endgroup}
+
+\def\myitem#1#2{\item[#1]#2}
+
+\def\itemize#1{\par\begingroup\parindent=#1}
+\def\litem#1{\par\hang\noindent\hbox to \parindent{#1\hfil}}
+\def\ttitem#1{\myitem{{\catcode`\_=\other \tt #1}\hfill --~}}
+\def\ttt{\catcode`\_=\other \tt} % from mixmac
+\def\ritem#1{\par\hang\noindent\hbox to \parindent{\hfil#1\enspace}}
+\def\enditemize{\par\endgroup\par}
+\def\bitem{\ritem{$\bullet$}}
+
+\def\disbox{\vskip\parskip \hbox to\hsize\bgroup
+	    \hskip\displayindent \vbox\bgroup
+	    \advance\hsize by-2\displayindent \plainline{}
+	    \prevdepth=0pt \vskip-\parskip }
+\def\enddisbox{\egroup\hss\egroup}
+
+\def\example{\disbox \flushleft\tt}
+\def\endexample{\endflushleft\enddisbox} % note this is redefined below
+
+\def\framebox{\hrule height.6pt \hbox to\hsize\bgroup
+	      \vrule width.6pt \hskip 9.5pt
+	      \vbox\bgroup
+	      \advance\hsize by-20.2pt \plainline{}
+	      \vskip 9.5pt \nointerlineskip}
+\def\endframebox{\vskip 9.5pt \egroup \hss \vrule width.6pt
+		 \egroup \hrule height.6pt}
+
+% This is the end of easy.tex
+
+\newcount\secno \secno=0
+\newcount\subsecno \subsecno=0
+\newcount\subsubsecno \subsubsecno=0
+\newcount\appendixno \appendixno=0
+\newcount\mychapno \mychapno=0
+\newcount\chapnonext \chapnonext=0
+\newcount\chappageno \chappageno=0
+%\newcount\allpageno \allpageno=0
+
+\newwrite\newindex
+\immediate\openout\newindex=xxx.sed % file for table of contents
+
+  \def\myrulea{\hrule height4pt depth-3pt}
+  \def\myrulefill{\leaders\myrulea\hfill}
+
+\def\exp{{\,\hbox{\rm exp}}}
+\def\det{{\,\hbox{\rm det}}}
+\def\log{{\,\hbox{\rm log}}}
+\def\ln{{\,\hbox{\rm ln}}}
+%\scriptfont0=\sevenrm
+\def\smax{{\hbox{\sevenrm max}}}
+\def\smin{{\hbox{\sevenrm min}}}
+\def\min{\mathop{\,\hbox{\rm min}}}
+\def\max{\mathop{\,\hbox{\rm max}}}
+\def\lia{\xi_{i\alpha}}
+\def\qia{Q_{i\alpha}}
+\def\qija{q_{ij\alpha}}
+\def\cia{\psi_{i\alpha}}
+\def\ta{\tau_\alpha}
+\def\sja{\sigma_{j\alpha}}
+\def\Qia{Q_{i\alpha}}
+\def\pja{p_{j\alpha}}
+\def\mja{\mu_{j\alpha}}
+\def\MNJ{m_N}
+\def\month{m}
+\def\MONE{m_1}
+\def\proda{\prod_{\alpha=1}^{N_A}}
+\def\prodi{\prod_{i=1}^{N_I}}
+\def\suma{\sum_{\alpha=1}^{N_A}}
+\def\sumi{\sum_{i=1}^{N_I}}
+\def\gt{>}
+\def\sigd{\sigma_{\hbox{$\scriptscriptstyle D$}}}
+\def\myrule{\hrule height 5truept width 3truept depth 3truept}
+\long\def\switchinsert#1 #2{\parindent=40pt\item{\myrule switch #1}
+  \ #2\penalty 10000\myrule\par}
+
+\def\switchmsg#1#2{\smallskip\
+\vbox height 5pt width 2pt\quad switch #1 \ \ #2\quad$\bullet\,\bullet$ \smallskip}
+
+\def\mytextindent#1{\vrule height 8pt width 3pt depth 1pt\kern 5pt
+{\bf Switch #1}\quad\ignorespaces}
+%\def\myitem{\par\hang\mytextindent}
+
+\def\mf{MULTIFAN}
+
+\def\mystrut{\vrule height 8.0truept depth 3.0 truept width 0pt}
+
+\def\mykern{\kern 1.25truept}
+
+\def\myhrule{\hrule height .6truept}
+
+\def\myvrule{\vrule width .6truept}
+
+\def\keybox#1{\lower 4.5truept\hbox{\vbox{\myhrule\hbox{\myvrule\mykern
+  \vbox{\mykern\hbox{\mystrut\tt #1}\mykern}\mykern\myvrule}\myhrule}}}
+\def\bigkey#1{\keybox{$\>#1\>$}}
+
+  \def\ts{\thinspace}
+\def\mNJ{m_{\lower.4truept \hbox{$\scriptstyle N_J$}}}
+\def\mone{m_{\lower.4truept \hbox{$\scriptstyle 1$}}}
+
+\def\mmone{$\mone$}
+\def\mmNJ{$\mNJ$}
+ \def\ipar{switch}
+
+
+% john's additions to docmac since 30 aug
+
+\def\menusymbol{        \hbox to .6em{\hrulefill}\kern-.6em
+  \raise.25\baselineskip\hbox to .6em{\hrulefill}\kern-.6em
+  \raise.50\baselineskip\hbox to .6em{\hrulefill}
+   }
+
+\def\jpar{Control Flag}
+
+\def\enter{\keybox{Enter}}
+\def\esc{\keybox{Esc}}
+\def\alt{\keybox{Alt}}
+\def\ctrl{\keybox{Ctrl}}
+\def\pgdn{\keybox{Page Down}}
+\def\pgup{\keybox{Page Up}}
+\def\fone{\keybox{F1}}
+\def\prnscrn{\ctrl\ \keybox{Print~Screen}}
+\def\larrow{\keybox{$\leftarrow$}}
+\def\rarrow{\keybox{$\rightarrow$}}
+\def\dnarrow{\keybox{$\>\downarrow\>$}}
+\def\uarrow{\keybox{$\>\uparrow\>$}}
+\def\lfa{{length frequency analysis}}
+\def\lf{{length frequency}}
+\def\Lfa{{Length frequency analysis}}
+
+%\def\uncatcodespecials{\def\do##1{\catcode`##1=12 }\dospecials}
+%\def\set{\stt \overfullrule=0pt \hyphenpenalty=10000 \exhyphenpenalty=10000
+  %\baselineskip = 10pt plus 2pt\lineskip=1pt\obeylines \parskip=0pt
+  %\uncatcodespecials \obeyspaces}
+%{\obeyspaces\global\let =\ } %
+
+% john's additions since 2 sept
+
+\def\ctrlf{\ctrl\ \keybox{F}}
+\def\ctrlg{\ctrl\ \keybox{G}}
+\def\vB{von Bertalanffy}
+\def\vBK{\vB\ $K$}
+%\def\mone{$m_1$}
+%\def\mNJ{$m_{N_J}$}
+
+\newwrite\shitout
+\newwrite\indx
+\immediate\openout\indx=index % file for table of index
+\newcount\kludgenumber
+
+\def\INDEX#1{\kludgenumber=\number\chapno\multiply\kludgenumber by 50\advance\kludgenumber by \number\pageno\xdef\indextext{#1}\toindex}
+
+\def\SUBINDEX#1#2{\kludgenumber=\number\chapno\multiply\kludgenumber by 50\advance\kludgenumber by \number\pageno
+\xdef\subindextextone{#1}
+\xdef\subindextexttwo{#2}\tosubindex}
+\newwrite\toc
+\immediate\openout\toc=contents % file for table of contents
+
+\def\X#1{\index{#1}}
+\def\XX#1#2{\index{#1!#2}}
+
+%\def\X#1{\INDEX{#1}}
+%\def\XX#1#2{\SUBINDEX{#1}{#2}}
+
+\def\tocline{{\let\the=0
+  \edef\next{\ifnum\chapno>0\write\toc{\text\string\dotfill\ \number\chapno -\number\pageno}
+             \else\write\toc{\text\string\dotfill\ \uppercase\expandafter{\romannumeral\appendixno} -\number\pageno}\fi}
+  \next}
+   }        
+
+\def\toclinea{{\let\the=0
+  \edef\next{\write\toc{\text\string\hfill\ }}
+  \next}} 
+
+
+
+\def\endchapter{%\showthe\pageno
+                \ifodd\pageno \vfill\supereject\plainline{}\vfill\eject
+            \else
+                 \vfill\supereject
+                  \fi
+  }
+
+
+\def\otherbox#1{\lower 4.5truept\hbox{\vbox{\myhrule\hbox{\myvrule\mykern
+  \vbox{\mykern\hbox{\tt#1}\mykern}\mykern\myvrule}\myhrule}}}
+
+\def\menubox#1{\otherbox{\simple{#1}}}
+
+\def\simple#1{\hbox{\vbox{\myhrule\hbox{\myvrule\mykern
+  \vbox{\mykern\hbox{\mystrut\tt#1}\mykern}\mykern\myvrule}\myhrule}}}
+
+
+\def\llf{log-likelihood function}
+
+
+
+
+\def\adtypes{{\tt dvariable, dvar\_array, dvar\_matrix, dvector,}
+and {\tt dmatrix}}
+\def\nr{{Newton-Raphson}}
+\def\question#1{\bigbreak\noindent{\bf #1?}\medskip}
+\def\cplus{C\raise1pt\hbox{\rmsmall++}}
+\def\ts{\thinspace}
+\def\dec{dec}
+\def\AD{AUTODIF}
+\def\classdec#1{\goodbreak\bigbreak\noindent{\largett #1}\medskip}
+\def\db{{$\backslash\backslash$}}
+\def\n{\char92 n}
+%\def\n{{$\backslash$n}}
+\parskip=.5\baselineskip plus .5\baselineskip minus.25\baselineskip
+
+\chardef\other=12
+\def\uncatcodespecials{
+  \catcode`\{=\other \catcode`\}=\other \catcode`\&=\other
+  \catcode`\_=\other \catcode`\#=\other
+  } 
+
+\def\set{\ttexample \overfullrule=0pt \hyphenpenalty=10000 
+  \exhyphenpenalty=10000\openup-1truept \openup -\spread
+  \def\par{\leavevmode\endgraf} 
+  %\obeylines \parskip=0pt \parindent=0pt 
+  \obeylines \parskip=0pt \advance\leftskip by .25truein \parindent=0pt
+  \openup-1pt
+  \uncatcodespecials \obeyspaces}
+
+{\obeyspaces\global\let =\ } %
+
+%\def\beginexample{\smallskip\begingroup\catcode`\%=11\set}
+\def\beginexample{\par\begingroup\catcode`\%=11\set}
+\def\beginexamplea{\par\vskip -5truept\begingroup\set}
+\def\endexample{\endgroup\smallbreak}
+\def\beginexampledf{\par\begingroup\set}
+\def\endexampledf{\endgroup\par\vskip-10pt}
+
+\def\listing#1{\smallskip\begingroup\set\input#1\endgroup\smallbreak}
+
+\def\logrob#1#2#3{-#1\log(#2)+\sum_{i=1}^#1 
+    \log\bigg[.95\exp\Big\{ {-{\big(#3\big)}^2\over 2{#2}^2} \Big\} +
+    .05\Big\{1+{{\big(#3\big)}^4\over{#2}^4}\Big\}^{-1}\bigg]} 
+
+
+\def\opensquiggle{\begingroup\catcode`\{=1{\catcode`\{=12\endgroup} 
+\def\closesquiggle{\catcode`\}=2}\catcode`\}=12} 
+%\def\onepageout#1{\shipout\vbox{#1}\advancepageno}
+
+\def\onepageout#1{\shipout\vbox{
+    #1  \ifvoid\footins\else
+     \vskip\skip\footins \kern-3pt
+     \hrule height\ruleht width\pagewidth \kern-\ruleht \kern3pt
+     \unvbox\footins\fi \makefootline}\advancepageno}
+
+\newdimen\allht
+\newdimen\dimtwofive
+\newdimen\pagewidth
+\newdimen\pageheight
+\newdimen\ruleht
+\pagewidth=\hsize \pageheight=\vsize \ruleht=.5pt
+
+% see page 417 of the TexBook
+\newbox\partialpage
+
+\def\footline{ {%\rm
+  \ifnum\pageno<0
+   % \hfil\romannumeral -\pageno\hfil
+  \else
+    \ifodd\pageno
+       \ifnum\pageno>0
+       {\ninerm admb-project.org}
+                                   \hfill\number\chapno \ -- \number\pageno\fi
+    \else
+       \ifnum\pageno>0 
+           \number\chapno \ -- \number\pageno\hfill
+          {\ninerm {\slsmall AUTODIF}\ \ User's Manual}
+         % {\ninerm {\slsmall AD Model Builder}}
+                                                                 \fi
+    \fi
+   \fi
+  } }
+
+\def\mychapter#1{\mark{\number\mychapno}
+     \message{mychapno = \number\mychapno}
+  \global\advance\mychapno by 1 \chapnonext=\mychapno
+  \global\advance\chapnonext by 1
+     \message{chapnonext = \number\chapnonext}
+  \chapter{#1} \mark{\number\chapnonext}}
+
+
+\newdimen\mydp
+\newdimen\myhtt
+\newdimen\mydpp
+\newdimen\mywidth
+\newdimen\myht
+\def\myover#1#2{{\displaystyle #1\over \displaystyle #2}}
+
+
+\def\hrefname#1#2{{
+  \setbox0\hbox{#2 }
+\myht=\ht0
+\myhtt=\ht0
+\mydp=\dp0
+\mydpp=\dp0
+\mywidth=\wd0
+\advance \myht by 4pt
+\advance \myhtt by 3pt
+\advance \mydp by 4pt
+\advance \mydpp by 3pt
+\advance \mywidth by 2pt
+\hbox{\vrule height\myht depth\mydp width 0pt
+\pdfstartlink height \myhtt depth \mydpp attr {/C [0.9 0 0.0] /Border [0 0 1] } goto name {page.#1}
+ \ #2
+
+\pdfendlink}}}
+
+
+\makeatletter
+
+\def\@startindexsection#1#2#3#4#5#6{%
+  \if@noskipsec \leavevmode \fi
+  \par
+  %\@tempskipa #4\relax
+  \@afterindenttrue
+  \ifdim \@tempskipa <\z@
+    \@tempskipa -\@tempskipa \@afterindentfalse
+  \fi
+  \if@nobreak
+    \everypar{}%
+  \else
+    \addpenalty\@secpenalty\addvspace\@tempskipa
+  \fi
+  \@ifstar
+    {\@indexssect{#3}{#4}{#5}{#6}}% !!!!
+    {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
+
+\def\@sect#1#2#3#4#5#6[#7]#8{%
+  \ifnum #2>\c@secnumdepth
+    \let\@svsec\@empty
+  \else
+    \refstepcounter{#1}%
+    %\protected@edef\@svsec{\@seccntformat{#1}\relax}%
+    %\protected@edef\@svsec{{#1}\relax}%
+    \let\@svsec\@empty
+  \fi
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      %#6 {%
+      %  \@hangfrom{\hskip #3\relax\@svsec}%
+      %    \interlinepenalty \@M #8\@@par}%
+    \endgroup
+    \csname #1mark\endcsname{#7}%
+    \addcontentsline{toc}{#1}{%
+      \ifnum #2>\c@secnumdepth \else
+        \protect\numberline{\csname the#1\endcsname}%
+      \fi
+      #7}%
+  \else
+    \def\@svsechd{%
+      #6{\hskip #3\relax
+      \@svsec #8}%
+      \csname #1mark\endcsname{#7}%
+      \addcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname}%
+        \fi
+        #7}}%
+  \fi
+  \@xsect{#5}}
+
+\def\@indexssect#1#2#3#4#5{%
+    \@tempskipa #3\relax
+    \ifdim \@tempskipa>\z@
+      \begingroup
+        #4{%
+          \@hangfrom{\hskip #1}%
+            \interlinepenalty \@M #5\@@par}%
+      \endgroup
+    \else
+      \def\@svsechd{#4{\hskip #1\relax #5}}%
+    \fi
+  \@xsect{#3}}
+
+\def\@indexsect#1#2#3#4#5#6[#7]#8{%
+  \ifnum #2>\c@secnumdepth
+    \let\@svsec\@empty
+  \else
+    \refstepcounter{#1}%
+    %\protected@edef\@svsec{\@seccntformat{#1}\relax}%
+    \protected@edef\@svsec{{#1}\relax}%
+  \fi
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      #6{%
+        \@hangfrom{\hskip #3\relax\@svsec}%
+          \interlinepenalty \@M #8\@@par}%
+    \endgroup
+    \csname #1mark\endcsname{#7}%
+    \addcontentsline{toc}{#1}{%
+      \ifnum #2>\c@secnumdepth \else
+        \protect\numberline{\csname the#1\endcsname}%
+      \fi
+      #7}%
+  \else
+    \def\@svsechd{%
+      #6{\hskip #3\relax
+      \@svsec #8}%
+      \csname #1mark\endcsname{#7}%
+      \addcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname}%
+        \fi
+        #7}}%
+  \fi
+  \@xsect{#5}}
+\makeatother
+
+
+\newdimen\myeqwidth
+\myeqwidth=\hsize
+%\advance\myeqwidth by -.1in
+
+\def\myfrac#1#2{{\displaystyle #1\over \displaystyle #2}}
+\hfuzz=5truept
+\hoffset=0.1truein
+\hsize=6.5truein
+\vsize=8.5truein
+%*******************************************************
+%*******************************************************
+%:*******************************************************
+%*******************************************************

@@ -1,0 +1,2466 @@
+admb-dll.tex
+adtitle.tex
+9,10c9,10
+< %\nofootlines
+< %\nopageno
+---
+> \nofootlines
+> \nopageno
+44c44
+< \centerline{{\halfinch AD MODEL BUILDER Version 4.5}}
+---
+> \centerline{{\halfinch AD MODEL BUILDER Version 4}}
+50,51c50,51
+< \newpage
+< \thispagestyle{empty}
+---
+> \eject
+> 
+advectors.tex
+all_ad.tex
+0a1
+> 
+2c3
+< \documentclass[12pt]{book}
+---
+> \documentclass{book}
+5d5
+< %\usepackage{tocbibind}
+13,18c13,16
+< \newcount\tm
+< \newcount\bm
+< \newcount\tom
+< \newcount\bom
+< \newtoks\myname
+< \newcounter{chapterpg}[chapter]
+---
+>   \newcount\tm
+>   \newcount\bm
+>   \newtoks\myname
+> 
+22c20
+< \def\ps@yyy{
+---
+> \def\ps@xxx{
+25,31d22
+< \def\@evenfoot{}
+< \def\@oddfoot{}
+< }
+< 
+< \def\ps@xxx{
+< \def\@oddhead{\message{Here DE}}
+< \def\@evenhead{\message{Here FE}}
+33,40c24,35
+< \plainline{ 
+<   \addtocounter{chapterpg}{1}
+<   \ifnum \number\c@chapter > 0
+<     \message{c@chapter = \number\c@chapter}
+<      \makebox[\textwidth]{
+<        {\ninerm Copyright\ \copyright\ 1993--2000 by Otter Research Ltd}
+<       \hfill
+<      \arabic{chapter}-\arabic{chapterpg}\quad}
+---
+>   \hbox to\textwidth{ 
+>      \tm=\topmark
+>      \bm=\botmark
+>      \message{tm = \number\tm}
+>      \message{bm = \number\bm}
+>      \message{mychapno = \number\mychapno}
+>      \message{chappageno = \number\chappageno}
+>      %\read16 to \myname
+>     %\plainline{ %topmark\ \topmark botmark\  \botmark
+>    \ifnum\bm>\tm
+>      \global\advance\mychapno by 1
+>      \global\chappageno=1
+42c37,41
+<     \makebox[\textwidth]{\roman{chapterpg}}
+---
+>        \ifnum\mychapno>0
+>          \global\advance\chappageno by 1
+>        \else
+>          \global\advance\chappageno by -1
+>        \fi
+44,48c43,59
+<     \expandafter\write\newindex {%
+<       \thepage-\arabic{chapter}-\arabic{chapterpg}
+<      }
+<   %\makebox[\textwidth]{\arabic{page}}
+<  }} 
+---
+>        {\ninerm Copyright\ \copyright\ 1993--2000 by Otter Research Ltd}
+>      \ifnum\mychapno>0
+>       \message{here A}
+>    \hfill\number\mychapno \ -- \number\chappageno
+>   \else 
+>       \message{here AA}
+>    \hfill
+>     \roman-\number\chappageno
+>   \fi
+>      \ifnum\mychapno>0
+>         \expandafter\write\newindex {%
+>         \thepage-\number\mychapno-\number\chappageno
+>          }
+>      \fi
+>  }}
+> 
+> 
+50,56c61,73
+< \plainline{ 
+<   \addtocounter{chapterpg}{1}
+<   \ifnum \number\c@chapter > 0
+<     \message{c@chapter = \number\c@chapter}
+<        \makebox[\textwidth]{
+<        \arabic{chapter}-\arabic{chapterpg}\hfill
+<           {\ninerm {\slsmall AD Model Builder}}\quad}
+---
+>   \hbox to \textwidth{ 
+>      \tm=\topmark
+>      \bm=\botmark
+>      \message{tm = \number\tm}
+>      \message{bm = \number\bm}
+>      \message{mychapno = \number\mychapno}
+>      \message{chappageno = \number\chappageno}
+>      %\read16 to \myname
+>   %\plainline{ % topmark\ \topmark botmark\  \botmark
+>    \ifnum\bm>\tm
+>      \message{tm>bm = \number\tm > \number\bm}
+>      \global\advance\mychapno by 1
+>      \global\chappageno=1
+58c75,79
+<     \makebox[\textwidth]{\roman{chapterpg}}
+---
+>        \ifnum\mychapno>0
+>          \global\advance\chappageno by 1
+>        \else
+>          \global\advance\chappageno by -1
+>        \fi
+60,122c81,96
+<     \expandafter\write\newindex {%
+<       \thepage-\arabic{chapter}-\arabic{chapterpg}
+<      }
+<   %\makebox[\textwidth]{\arabic{page}}
+<  }} 
+< %   \if \topmark \neq \botmark
+< %     \global\advance\mychapno by 1
+< %     \global\chappageno=1
+< %   \else
+< %       \ifnum\mychapno>=0
+< %         \global\advance\chappageno by 1
+< %       \else
+< %         \global\advance\chappageno by -1
+< %       \fi
+< %   \fi
+< %       {\ninerm Copyright\ \copyright\ 1993--2000 by Otter Research Ltd}
+< %     \ifnum\mychapno>0
+< %      \message{here A}
+< %   \hfill\number\mychapno \ -- \number\chappageno
+< %  \else 
+< %      \message{here AA}
+< %   \hfill
+< %    \roman -\number\chappageno
+< %  \fi
+< %      \message{here BB}
+< %    \expandafter\write\newindex {%
+< %      \thepage-\number\mychapno-\number\chappageno
+< %     }
+< %} }}
+< %
+< %
+< %\def\@evenfoot{
+< %\plainline{ 
+< %  \makebox[\textwidth]{ 
+< %      \message{here YE}
+< %   \if \topmark \neq \botmark
+< %     \message{tm>bm = \number\tm > \number\bm}
+< %     \global\advance\mychapno by 1
+< %     \global\chappageno=1
+< %   \else
+< %       \ifnum\mychapno>=0
+< %         \global\advance\chappageno by 1
+< %       \else
+< %         \global\advance\chappageno by -1
+< %       \fi
+< %   \fi
+< %       \ifnum\mychapno>0
+< %      \message{here B}
+< %           \number\mychapno \ -- \number\chappageno\hfill
+< %  \else 
+< %      \message{here BB}
+< %   \hfill
+< %    \roman -\number\chappageno
+< %    %\hfil\roman\number\thepage\hfil
+< %  \fi
+< %          {\ninerm {\slsmall AD Model Builder}}
+< %    \expandafter\write\newindex {%
+< %      \thepage-\number\mychapno-\number\chappageno
+< %     }
+< %}}}
+< %
+< }
+< \makeatother
+---
+>        \ifnum\mychapno>0
+>       \message{here B}
+>            \number\mychapno \ -- \number\chappageno\hfill
+>   \else 
+>       \message{here BB}
+>    \hfill
+>     \roman-\number\chappageno
+>     %\hfil\roman\number\thepage\hfil
+>   \fi
+>           {\ninerm {\slsmall AD Model Builder}}
+>      \ifnum\mychapno>0
+>         \expandafter\write\newindex {%
+>           \thepage-\number\mychapno-\number\chappageno
+>           }
+>      \fi
+> }}}
+123a98
+> \makeatother
+135,136d109
+<      %\topmark=0
+<      %\botmark=0
+158d130
+< \def\eqspace{\hskip 1000pt mi 990pt}
+201,203c173
+< \def\myeq#1{{\myeqwidth=\hsize \advance\myeqwidth by -.5in
+<    \hbox to \myeqwidth{\hfil$#1$\hfil}}}
+< \thispagestyle{yyy}
+---
+> \thispagestyle{empty}
+209,210c179,181
+< %\tracingmacros=1%
+< \htmlnewfile
+---
+> \mychapter{Function reference}
+> \input allfun.tex
+> \end{document}
+212,213c183,184
+< %\tracingmacros=0
+< \pdfimage  height 4.5in width 7in depth 0in {/corrplot21.png}
+---
+> %\pagenumbering{bychapter}
+> %\bye
+215d185
+< %\end{document}
+304a275
+> \X{optional extras}
+308c279,280
+< for parameters of interest (Hastings-Metropolis algorithm).
+---
+> ({\bf optional at extra cost})  for parameters
+> of interest (Hastings-Metropolis algorithm).
+312,314c284
+< 
+< %\item{1.} 
+< A very simple example. This is a trivial least squares
+---
+> \item{1.} A very simple example. This is a trivial least squares
+322,323c292
+< %\item{2.}  
+< A simple nonlinear regression model for estimating the parameters
+---
+> \item{2.}  A simple nonlinear regression model for estimating the parameters
+328,329c297
+< %\item{3.}  
+< A chemical kinetics problem.  A model defined by a
+---
+> \item{3.}  A chemical kinetics problem.  A model defined by a
+333,334c301
+< %\item{4.} 
+< A problem in financial modeling. A Generalized Autoregressive 
+---
+> \item{4.} A problem in financial modeling. A Generalized Autoregressive 
+339c306
+< %\item{5.}
+---
+> \item{5.}
+351,352c318
+< %\item{6.}  
+< A Simple Fisheries catch-at-age model. These models
+---
+> \item{6.}  A Simple Fisheries catch-at-age model. These models
+356,357d321
+< %\item{7.} 
+< More complex examples are presented in subsequent chapters. 
+392a357
+> 
+498c463
+< It is the parameters of your model which
+---
+> Roughly speaking it is the parameters of your model which
+538,540c503
+< chosen so that this value is minimized\footnote{Thus it should be set equal to
+< minus the log-likelihood function if that criterion is used}. 
+< Every \ADM\ template
+---
+> chosen so that this value is minimized. Every \ADM\ template
+719c682
+< \section{Robust Nonlinear regression with \ADM}
+---
+> \mychapter{Robust Nonlinear regression}
+720a684
+> \section{A three parameter growth model}
+729d692
+< \medskip
+731,732c694,695
+< \quad\hbox to \hsize{
+< \hfill
+---
+> \medskip
+> \quad\hbox{
+749c712
+< \centerline{Results for nonlinear regression with good data set}
+---
+> \qquad Results for nonlinear regression with good data set
+763,767c726
+< %$$
+< \begin{equation}
+< \myeq{s(a)=L_{\infty}\big(\,1-\exp(-K(a-t_0))\,\big)}\label{chp1:xx2}
+< \end{equation}
+< %$$
+---
+> $$s(a)=L_{\infty}\big(\,1-\exp(-K(a-t_0))\,\big)\eqno(.1)$$
+772c731
+< animal. The predicted size $s(a_i)$ is given by equation \ref{chp1:xx2}.
+---
+> animal. The predicted size $s(a_i)$ is given by equation $.1$.
+1038c997
+< \section{Chemical engineering -- a chemical kinetics problem}
+---
+> \mychapter{Chemical engineering -- a chemical kinetics problem}
+1044c1003,1008
+< This example may strike you as being fairly complicated. If so, you
+---
+> \X{model defined by ordinary differential equations}
+> \XX{ordinary differential equations}{model defined by}
+> 
+> This is an example of a  model defined by a system of two first order
+> ordinary differential equations.
+> It may strike you as being fairly complicated. If so, you
+1049,1050c1013
+< page 233.  This is a model defined by a first order system of two ordinary
+< differential equations.
+---
+> page 233.  
+1107c1070
+< %$$\eqalign{
+---
+> %%$$\eqalign{
+1109,1112c1072,1075
+< s_1(t_{n+1})&=&s_1(t_n)\cr
+<     &-h&\theta_1\gutst\cr
+<            s_2(t_{n+1})&=&s_2(t_n)\cr
+<     +&2h&\theta_1\gutst \cr \label{chp1:xx3}
+---
+> s_1(t_{n+1})&=&s_1(t_n)\\
+>     -h\theta_1&&\gutst\\
+>            s_2(t_{n+1})&=&s_2(t_n)\\
+>     +2h\theta_1&&\gutst \label{bard:explicit}
+1116c1079
+< Equations 2 are called explicit because the values of $s_1$
+---
+> Equations \ref{bard:explicit} are called explicit because the values of $s_1$
+1139c1102
+<    s_1(t_{n+1})&=&
+---
+>    s_1(t_{n+1})&=
+1141c1104
+<            s_2(t_{n+1})&=&
+---
+>            s_2(t_{n+1})&=
+1149,1150c1112,1113
+< s_1(t_{n+1})&=&\big(s_1(t_n)+DB s_2(t_n)\big)/(1+D) \cr
+<            s_2(t_{n+1})&=&\big(s_2(t_n)+2Ds_1(t_n)\big)/
+---
+> s_1(t_{n+1})&=\big(s_1(t_n)+DB s_2(t_n)\big)/(1+D) \cr
+>            s_2(t_{n+1})&=\big(s_2(t_n)+2Ds_1(t_n)\big)/
+1325,1326c1288,1290
+< \section{Financial Modelling -- A Generalized Autoregressive Conditional
+< \hbox{Heteroskedasticity} or GARCH model} 
+---
+> % xxxxxx1
+> \mychapter{Financial Modelling}
+> \section{A Generalized Autoregressive Conditional Heteroskedasticity or GARCH model} 
+1511a1476
+> %xxxxxx2
+1513c1478,1479
+< \section{Natural resource management -- the Schaeffer-Pella-Tomlinson Model}
+---
+> \mychapter{Natural resource management}
+> \section{The Schaeffer-Pella-Tomlinson Model}
+1531,1535c1497,1498
+< \begin{equation}
+< \myeq{{\displaystyle dB\over\displaystyle dt}=rB\bigg(\,1-\Big(\myfrac{B}{k}\Big)^{m-1}\,\bigg) 
+<            - FB  \qquad \hbox{\rm where}\quad m>1}
+< \label{chp3:xx3}
+< \end{equation} 
+---
+> $${dB\over dt}=rB\bigg(\,1-\Big({B\over k}\Big)^{m-1}\,\bigg) 
+>            - FB  \qquad \hbox{\rm where}\quad m>1\eqno(\number\mychapno.1)$$
+1541,1544c1504
+< \begin{equation}
+< \myeq{C=FB}
+< \label{chp3:xx4}
+< \end{equation} 
+---
+> $$C=FB\eqno(\number\mychapno.2)$$
+1554,1558c1514,1515
+< \begin{equation}
+< \myeq{B_{t+\delta}=B_t+rB_t\delta-rB_t\Big(\myfrac{B_t}{k}\Big)^{m-1}\delta 
+<      - F_tB_t\delta}
+<   \label{chp3:xx5}
+< \end{equation} 
+---
+> $$B_{t+\delta}=B_t+rB_t\delta-rB_t\Big({B_t\over k}\Big)^{m-1}\delta 
+>      - F_tB_t\delta \eqno(\number\mychapno.3)$$
+1562,1568c1519,1521
+< right hand side  of \ref{chp3:xx5} by $B_{t+\delta}$ to get
+< \begin{equation}
+< \myeq{B_{t+\delta}
+<    =B_t+rB_t\delta-rB_{t+\delta}\Big(\myfrac{B_t}{k}\Big)^{m-1}\delta 
+<      - F_tB_{t+\delta}\delta}
+<  \label{chp3:xx6}
+< \end{equation} 
+---
+> right hand side  of $(\number\mychapno.3)$ by $B_{t+\delta}$ to get
+> $$B_{t+\delta}=B_t+rB_t\delta-rB_{t+\delta}\Big({B_t\over k}\Big)^{m-1}\delta 
+>      - F_tB_{t+\delta}\delta \eqno(\number\mychapno.4)$$
+1570,1574c1523,1524
+< \begin{equation}
+< \myeq{B_{t+\delta}
+<    =\myfrac{B_t(1+r\delta)}{1+\big(\,r(B_t/k)^{m-1}+F_t\,\big)\delta}}
+<   \label{chp3:xx7}
+< \end{equation} 
+---
+> $$B_{t+\delta}={B_t(1+r\delta)\over 1+\big(\,r(B_t/k)^{m-1}+F_t\,\big)\delta} 
+>                                               \eqno(\number\mychapno.5)$$
+1577,1580c1527
+< \begin{equation}
+<  \myeq{C_{t+\delta} =F_tB_{t+\delta}\delta }
+<   \label{chp3:xx8}
+< \end{equation} 
+---
+> $$C_{t+\delta} =F_tB_{t+\delta}\delta \eqno(\number\mychapno.7)$$
+1591c1538
+< $$\bmax=\myfrac{k}{\root {m-1} \of m}$$
+---
+> $$\bmax={k\over \root {m-1} \of m}$$
+1645,1646c1592
+< \begin{equation}
+<  \myeq{-(3n-1)/2\log\Big(\,\sum_{i=1}^n \big(\log(\cobs)-\log(C_i)\,\big)^2
+---
+> $$ -(3n-1)/2\log\Big(\,\sum_{i=1}^n \big(\log(\cobs)-\log(C_i)\,\big)^2
+1648,1650c1594
+<       -2.\log(m-1)^2 }    
+<   \label{ch1:xx7}
+< \end{equation} 
+---
+>       -2.\log(m-1)^2          \eqno(\number\mychapno.8)$$
+2087,2089c2031,2033
+< initial population in year $1$, $N_{11}, N_{12},\ldots, N_{1r}$
+< and knowledge of the recruitment in each year $N_{21}, N_{31},\ldots
+< N_{n1}$.
+---
+> initial population in year $1$, $N_{1,1}, N_{1,2},\ldots, N_{1,r}$
+> and knowledge of the recruitment in each year $N_{2,1}, N_{3,1},\ldots
+> N_{n,1}$.
+2096c2040
+< $N_{n+1,j+1}=N_{nj}S_{nj}$. If we have estimates $m_j$ for the mean weight
+---
+> $N_{n+1,j+1}=N_{n,j}S_{n,j}$. If we have estimates $m_j$ for the mean weight
+2600,2601c2544
+< up to dimension~7 in the documentation\footnote{See the chapter on
+< regime switching models for an example of the use of higher dimensional arrays.}.
+---
+> up to dimension~7 in the documentation.
+2721,2722d2663
+< \XX{command line arguments}{-mcsave}
+< \XX{command line arguments}{-nosdmcmc}
+2806d2746
+< \XX{command line arguments}{-nosdmcmc}
+2814,2822c2754
+< ASCII see the next section. If you have a large number of variables of
+< type {\tt sdreport} calculating the values of them for the mcmc can
+< appreciably slow down the calculations. To turn off these
+< calculations during the {\tt -mcsave} phase use the option
+< {\tt -nosdmcmc}. {\bf Note: If you use thus option and restart the
+< mcmc calculations with the {\tt -mcr} option you must use the
+< {\tt -nosdmcmc} as well. Otherwise the program will try to read in the
+< non-existent histogram data.}
+< 
+---
+> ASCII see the next section.
+3002,3007c2934,2936
+< \begin{equation}
+<   \myeq{
+< l(\tau,\nu,\beta,\sigma) = 
+<    \sum_i f_i\,\big[\ln\big(S_i-S_{i+1}\big)-\ln\big(S(1)\big)\big]}
+< \label{chp3:xx9}
+< \end{equation} 
+---
+> $$l(\tau,\nu,\beta,\sigma) = 
+>    \sum_i f_i\,\big[\ln\big(S_i-S_{i+1}\big)-\ln\big(S(1)\big)\big]
+>   \eqno(\number\mychapno.1)$$
+3009,3011c2938
+< \begin{equation}
+<   \myeq{
+< S_i=\int_{-\infty}^\infty 
+---
+> $$S_i=\int_{-\infty}^\infty 
+3013,3015c2940
+<   \tau\Big(-1+\exp\big(-\nu a_i^\beta\exp(\sigma z)\big)\Big) \Big\}dz}
+< \label{chp3:xx10}
+< \end{equation} 
+---
+>   \tau\Big(-1+\exp\big(-\nu a_i^\beta\exp(\sigma z)\big)\Big) \Big\}dz$$
+3305,3309c3230
+< \begin{equation}
+<  \myeq{
+< Y_t=a_0+a_1s_{ti}+Z_t}
+< \label{chp4:xx1}
+< \end{equation} 
+---
+> $$Y_t=a_0+a_1s_{ti}+Z_t \eqno(\number\mychapno.1)$$
+3312,3317c3233,3234
+< \begin{equation}
+<   \myeq{
+< Z_t=f_1Z_{t-1}+f_2Z_{t-2}+f_3Z_{t-3}+f_4Z_{t-4}+
+<   \epsilon_t }
+< \label{chp4:xx2}
+< \end{equation} 
+---
+> $$Z_t=f_1Z_{t-1}+f_2Z_{t-2}+f_3Z_{t-3}+f_4Z_{t-4}+
+>   \epsilon_t\eqno(\number\mychapno.2)$$
+3347c3264
+< $P=(p_{ij})$\footnote{${}^{\dagger\dagger\dagger}${\rmfoot 
+---
+> $P=(p_{ij})$\footnote{${}^{\dagger\dagger\dagger}$}{\rmfoot 
+3351c3268
+< $p_{ij}$ may correspond to our $p_{ji}$.}}
+---
+> $p_{ij}$ may correspond to our $p_{ji}$.}
+3376,3381c3293,3294
+< \begin{equation}
+<  \myeq{
+< q_b(t,i,j,k,l,m)=\sum_{n}
+<   P_{ij}q_a(t-1j,k,l,m,n)}
+< \label{chp4:xx3}
+< \end{equation} 
+---
+> $$q_b(t,i,j,k,l,m)=\sum_{n}
+>   P_{ij}q_a(t-1j,k,l,m,n)\eqno(\number\mychapno.4)$$
+3387,3392c3300,3301
+< \begin{equation}
+< \myeq{
+< Q(Y_t|(i,j,k,l,m),Y_{t-1},Y_{t-2},Y_{t-3},Y_{t-4})=
+<   \exp\big(-e(i,j,k,l,m)^2/2\sigma^2\big)/\sigma }
+< \label{chp4:xx4}
+< \end{equation} 
+---
+> $$Q(Y_t|(i,j,k,l,m),Y_{t-1},Y_{t-2},Y_{t-3},Y_{t-4})=
+>   \exp\big(-e(i,j,k,l,m)^2/2\sigma^2\big)/\sigma \eqno(\number\mychapno.6)$$ 
+3394,3396c3303
+< \begin{equation}
+<  u(Y_t,i,j,k,l,m)=
+< \myeq{
+---
+> $$ u(Y_t,i,j,k,l,m)=
+3398,3400c3305
+<     q_b(t,i,j,k,l,m)}
+< \label{chp4:xx5}
+< \end{equation} 
+---
+>     q_b(t,i,j,k,l,m)\eqno(\number\mychapno.7)$$  
+3403,3409c3308,3310
+< \begin{equation}
+< \myeq{
+< q_a(t,i_{t},j,k,l,m)= u(Y_t,i,j,k,l,m)/
+<    \sum_{i,j,k,l,m} u(Y_t,i,j,k,l,m)}
+< \label{chp4:xx6}
+< \end{equation} 
+< 
+---
+> $$q_a(t,i_{t},j,k,l,m)= u(Y_t,i,j,k,l,m)/
+>    \sum_{i,j,k,l,m} u(Y_t,i,j,k,l,m)
+>                                                       \eqno(\number\mychapno.8) $$
+3412,3417c3313,3315
+< \begin{equation}
+< \myeq{
+< \sum_t \log\big(\sum_{i,j,k,l,m} 
+<         u(Y_t,i,j,k,l,m)\big) }
+< \label{chp4:xx7}
+< \end{equation} 
+---
+> $$\sum_t \log\big(\sum_{i,j,k,l,m} 
+>         u(Y_t,i,j,k,l,m)\big) 
+>                               \eqno(\number\mychapno.9) $$
+3974,3978c3872
+< \begin{equation}
+< \myeq{
+< Y_t=a_0+a_1s_{ti}+Z_t }
+< \label{chp5:yy1}
+< \end{equation} 
+---
+> $$Y_t=a_0+a_1s_{ti}+Z_t \eqno(\number\mychapno.10)$$
+3981,3986c3875,3876
+< \begin{equation}
+< \myeq{
+< Z_t=f_1Z_{t-1}+f_2Z_{t-2}+f_3Z_{t-3}+f_4Z_{t-4}+f_5Z_{t-5}+
+<   \epsilon_t}
+< \label{chp5:yy2}
+< \end{equation} 
+---
+> $$Z_t=f_1Z_{t-1}+f_2Z_{t-2}+f_3Z_{t-3}+f_4Z_{t-4}+f_5Z_{t-5}+
+>   \epsilon_t\eqno(\number\mychapno.11)$$
+4252d4141
+< \mychapter{Econometric Models -- simultaneous equations}
+4261,4282d4149
+< \mychapter{
+< Applying the Laplace approximation to the Generalized 
+< Kalman Filter -- with an application to Stochastic Volatility Models}
+< \input kal_lap.tex
+< \htmlnewfile
+< \mychapter{
+< Using Vectors of initial parameter types} 
+< \input advectors.tex
+< \endchapter
+< \htmlnewfile
+< \mychapter{Creating Dynamic Link Libraries with AD Model Builder}
+< \input admb-dll.tex 
+< \endchapter
+< \htmlnewfile
+< \mychapter{Command line options}
+< \input commandl.tex
+< \endchapter
+< \htmlnewfile
+< \mychapter{All the functions in AD Model Builder}
+< \input allfun.tex
+< \endchapter
+< \htmlnewfile
+4476c4343
+< 80386 computers including Borland \cplus, 
+---
+> 80386 computers including Borland \cplus, Zortech (Symantec) \cplus,
+4478c4345
+< Other compilers are supported at present on Linux, SUN, HP,
+---
+> Other compilers are supported at present on SUN, HP,
+4481c4348
+< and version of your compiler for UNIX.
+---
+> and version of your compiler.
+4510d4376
+< \pagestyle{xxx}
+4512d4377
+< %\printindex
+allfun.tex
+2c2
+< \def\leftset#1{#1\hfill}
+---
+> \def\leftset#1{#1\hfilll}
+5c5
+< continually being added. If you are aware of a function which is
+---
+> continually being added. I fyou are aware of a function which is
+8,61d7
+< 
+< \section{Naming conventions for documenting functions}
+< Whereever applicable the name function has been supplied for
+< constand and variable objects (such as {\tt double} and {\tt dvariable}).
+< Instead of repeating the description for bioth kinds of objects
+< the convention of referring to both types as ``number'', ``vector'',
+< ``matrix'', etc. with be observed.
+< 
+< \section{Mathematical Functions}
+<  The following functions have been included in \AD\ by overloading the 
+< \cplus\ library functions
+< \beginexamplea
+<   sin cos tan asin atan acos sinh cosh tanh fabs (sfabs) exp log log10 sqrt pow 
+<   gammln log_comb
+< \endexample
+< \X{sin} \X{cos} \X{tan} \X{asin} \X{atan} \X{acos} \X{sinh} 
+< \X{cosh} \X{tanh} \X{fabs} \X{sfabs} \X{exp} \X{log} 
+< \X{log10} \X{sqrt} \X{pow} 
+< \X{gammln}\X{log\_comb}
+< \XX{functions}{sin} \XX{functions}{cos} \XX{functions}{tan} 
+< \XX{functions}{asin} \XX{functions}{atan} \XX{functions}{acos} 
+< \XX{functions}{sinh} \XX{functions}{cosh} \XX{functions}{tanh} 
+< \XX{functions}{fabs} \XX{functions}{sfabs} \XX{functions}{exp} 
+< \XX{functions}{log} \XX{functions}{log10} \XX{functions}{sqrt} 
+< \XX{functions}{pow} 
+< \XX{functions}{gammln}\XX{functions}{log\_comb}
+< \noindent These functions can be used on numbers or vector\_objects
+< in the form 
+< \beginexample
+< number = function(number);
+< vector_object = function(vector_object);
+< \endexample
+< \noindent When operating on {\tt vector\_objects} the functions operate  
+< element by element, so that if {\tt y} is a {\tt dvector} whose
+< elements are $(y_1,\ldots,y_n)$ then {\tt exp(y)} is a 
+< {\tt dvector} whose elements are $(\exp(y_1),\ldots,\exp(y_n))$.
+< 
+< \XX{vector}{maximum element}\XX{max}{operation on a vector}
+< \XX{vector}{minimum element}\XX{min}{operation on a vector}
+< The functions {\tt min} and {\tt max} when applied to a {\tt vector\_object}
+< return a {\tt number} which is equal to the minimum or maximum element of the
+< {\tt vector\_object}
+< 
+< The function {\tt gammln} is the logarithm, of the gamma function.
+< \XX{gamma function}{logarithm}
+< 
+< The function {\tt log\_comb(n,k)} is the logarithm, of the  function
+< the combination of {\tt n} things taken {\tt k} at a time.
+< It is defined via the logarithm of the gamma function 
+< for non-integer values 
+< and is differentiable.
+< 
+< \X{log\_comb function}
+< 
+84,85c30,31
+< \XX{functions}{element-wise product of vectors}
+< \XX{vector}{element-wise product}\XX{elem\_prod}{element-wise product}
+---
+> 
+> \XX{vector}{element-wise product of}\XX{elem\_prod}{element-wise product}
+91d36
+< \XX{functions}{element-wise division of vectors}
+96,97c41
+< \XX{functions}{element-wise product of matrices}
+< \XX{matrix}{element-wise product}
+---
+> \XX{matrix}{element-wise product of}
+103d46
+< \XX{functions}{element-wise division of matrices}
+109,110c52
+< \XX{functions}{identity matrix function}
+< \XX{matrix}{identity matrix function}
+---
+> \XX{matrix}{the identity matrix function}
+120,121c62
+< \XX{matrix}{determinant}\X{determinant}
+< \XX{functions}{determinant of a matrix}
+---
+> \XX{matrix}{the determinant of}\X{determinant}
+128,129c69
+< \XX{matrix}{inverse}\X{inverse} \X{\tt inv}
+< \XX{functions}{inverse of a matrix}
+---
+> \XX{matrix}{the inverse of}\X{inverse} \X{\tt inv}
+134,138c74,77
+< \XX{functions}{norm of a vector}
+< \XX{vector}{norm}
+< \XX{vector}{norm squared}\X{norm}
+< \XX{matrix}{norm}\X{norm}
+< \XX{matrix}{norm squared}\X{norm}
+---
+> \XX{vector}{the norm of}
+> \XX{vector}{the norm squared of}\X{norm}
+> \XX{matrix}{the norm of}\X{norm}
+> \XX{matrix}{the norm squared of}\X{norm}
+144,145c83
+< \XX{matrix}{norm squared}\X{norm}
+< \XX{functions}{norm squared of a vector}
+---
+> \XX{matrix}{the norm of}\X{norm}
+151d88
+< \XX{functions}{norm of a matrix}
+155d91
+< \XX{functions}{norm squared of a matrix}
+161,167d96
+< $$\leftset{z_{ij}=x_{ji} }$$
+< \XX{functions}{transpose of a matrix}
+< \XX{matrix}{transpose}
+< The transpose of a matrix\_object
+< \beginexample
+< matrix_object = trans(matrix_object)
+< \endexampledf
+171,172c100
+< \XX{functions}{sum over the elements of a vector}
+< \XX{vector}{sum over the elements}\XX{sum}{operation on a vector}
+---
+> \XX{vector}{sum over the elements of}\XX{sum}{operation on a vector}
+178c106
+< \XX{matrix}{rowsum}\XX{rowsum}{operation on a matrix}
+---
+> \XX{matrix}{rowsum of}\XX{rowsum}{operation on a matrix}
+184,185c112
+< \XX{matrix}{colsum}\XX{colsum}{operation on a matrix}
+< \XX{functions}{sum over the columns of a matrix}
+---
+> \XX{matrix}{colsum of}\XX{colsum}{operation on a matrix}
+191,192c118
+< \XX{vector}{minimum element}\XX{min}{operation on a vector}
+< \XX{functions}{minimum element of a vector}
+---
+> \XX{vector}{minimum element of}\XX{min}{operation on a vector}
+196,197c122
+< \XX{vector}{maximum element}\XX{max}{operation on a vector}
+< \XX{functions}{maximum element of a vector}
+---
+> \XX{vector}{maximum element of}\XX{max}{operation on a vector}
+205,206d129
+< \XX{functions}{eigenvalues of symmetric matrix}
+< \XX{functions}{eigenvectors of symmetric matrix}
+236d158
+< \XX{functions}{choleski decomposition}
+251d172
+< \XX{functions}{solving linear system of equations}
+318d238
+< \XX{functions}{filling arrays and matrices}
+370,374d289
+< \section{Methods for filling arrays and matrices with random numbers}
+< This mehtiod of filling containers with random numbers is becoming
+< obsolete. the preferred method is to use the
+< {\tt random\_number\_generator} class.
+< See section \ref{rng} for instructions on using this class.
+395c310
+< {\tt random\_number\_generator} class to generate random numbers. 
+---
+> {\tt random\_number\_generator} class to generato random numbers. 
+455,500d369
+< \section{Methods for obtaining shape information from containers}
+< When this code was first written the maximum dimnsion of arrays
+< was about 4. At this level it perhaps make sense to think of
+< a one dimensional array as a vector, a two dimensional array as
+< a matrix etc. For a matrix one thinks in terms of rows and columns.
+< However with the adoption of ragged container objects up to
+< eight dimensions (at present) a more generic method of obtaining
+< shape information of these objects was called for.
+< 
+< If {\tt v} is a vector object then
+< \beginexample
+< int v.indexmin()
+< int v.indexmax()
+< \endexample
+< \noindent
+< return the minimum and maximum valid indices for v.
+< If {\tt m} is a matrix object then
+< \beginexample
+< int v.rowmin()
+< int v.rowmax()
+< int v.colmin()
+< int v.colmax()
+< \endexample
+< \noindent
+< return the minimum and maximum valid row and column indices
+< for m. These functions make sense for a matrix where every
+< row is a vector with the same minimum and maximum valid
+< indices.  For a ragged matrix this is no longer the case so that
+< the {\tt rowmin} and {\tt rowmax()} functions don't make sense
+< in this case. To deal with a ragged matrix one may need to calculate
+< the minimum and maximum valid indices for each row of the ragged matrix. 
+< To facilitate this approach the functions {\tt indexmin} and 
+< {\tt indexmax} have been defined for all container classes so that
+< for example if {\tt w} is a six dimensional array then
+< \beginexample
+< int w.indexmin()
+< int w.indexmax()
+< \endexample
+< return the minimum and maximum valid indices for the first
+< index of {\tt w}. For a matrix object {\tt m} 
+< {\tt m.indexmin()} and {\tt m.colmin()} are the same
+< and as long as {\tt m} is not ragged then
+< {\tt m(m.indexmin()).indexmin()} is the same as {\tt m.colmin()}
+< and {\tt m(m.indexmin()).indexmax()} is the same as {\tt m.colmax()}.
+< 
+< 
+565,567d433
+< \XX{functions}{++ use with vectors}
+< \XX{functions}{-- use with vectors}
+< \XX{functions}{shift use with vectors}
+574d439
+< dvector  w(1,19);
+576d440
+< 
+578d441
+< 
+580d442
+< 
+582,583d443
+<                // probably not what you want
+< w=v;   // error different index ranges
+586c446
+< {\tt u} both of the above assigments have the same effect. It will have
+---
+> {\tt v} both of the above assigments have the same effect. It will have
+588,596c448
+< effects on the vector {\tt v}. The operation {\tt ++v}
+< will increase the minimum and maximum valid index range of the vector 
+< {\tt v} by one. This increase is permanent. On the other hand
+< the operation {\tt --u(2,20)} decrements the valid index bounds of
+< the {\it subvector} {\tt u(2,20)}. This is a distinct object from
+< the vector {\tt u} although both objects share a common area for their
+< components. Thus the valid index bounds of {\tt u} are not
+< effected by this process.  
+< The use of subvectors and increment and decrement
+---
+> effects on the vector {\tt v}. The use of subvectors and increment and decrement
+616,635d467
+< \XX{functions}{shift use with vectors}
+< Ths {\tt shift} function can be sued to set the minimum (and maximum)
+< valid index for a vector.
+< \beginexample
+< dvector u(10,100);  // minimum valid index is 10
+<                     // maximum valid index is 100
+< u.shift(25);        // minimum valid index is 25
+<                     // maximum valid index is 115
+< \endexample
+< \noindent In particular the operators {\tt --} and {\tt ++}
+< are just convenient shorthand for using the {\tt shift}
+< function to chnage the minimum valid index by 1.
+< \beginexample
+< dvector u(10,100);     // minimum valid index is 10
+<                        // maximum valid index is 100
+< u.shift(u.indexmin()-1); // minimum valid index is 9
+< --u;                   // same result as u.shift(u.indexmin()-1) 
+< u.shift(u.indexmin()+1); // minimum valid index is 11
+< ++u;                   // same result as u.shift(u.indexmin()+1) 
+< \endexample
+679a512,547
+> \section{Mathematical Functions}
+>  The following functions have been included in \AD\ by overloading the 
+> \cplus\ library functions
+> \beginexamplea
+>   sin cos tan asin atan acos sinh cosh tanh fabs (sfabs) exp log log10 sqrt pow 
+>   gammln log_comb
+> \endexample
+>   \X{sin} \X{cos} \X{tan} \X{asin} \X{atan} \X{acos} \X{sinh} \X{cosh} \X{tanh} \X{fabs} \X{sfabs} \X{exp} \X{log} \X{log10} \X{sqrt} \X{pow} 
+> \X{gammln}\X{log_comb}
+> \noindent These functions can be used on numbers or vector\_objects
+> in the form 
+> \beginexample
+> number = function(number);
+> vector_object = function(vector_object);
+> \endexample
+> \noindent When operating on {\tt vector\_objects} the functions operate  
+> element by element, so that if {\tt y} is a {\tt dvector} whose
+> elements are $(y_1,\ldots,y_n)$ then {\tt exp(y)} is a 
+> {\tt dvector} whose elements are $(\exp(y_1),\ldots,\exp(y_n))$.
+> 
+> \XX{vector}{maximum element of}\XX{max}{operation on a vector}
+> \XX{vector}{minimum element of}\XX{min}{operation on a vector}
+> The functions {\tt min} and {\tt max} when applied to a {\tt vector\_object}
+> return a {\tt number} which is equal to the minimum or maximum element of the
+> {\tt vector\_object}
+> 
+> The function {\tt gammln} is the logarithm, of the gamma function.
+> \XX{gamma function}{logarithm of}
+> 
+> The function {\tt log\_comb(n,k)} is the logarithm, of the  function
+> the combination of {\tt n} things taken {\tt k} at a time.
+> It is defined via the gamma function for non-integer values 
+> and is differentiable.
+> 
+> \X{log\_comb function}
+> 
+690,692d557
+< \label{rng}
+< \XX{cumulative distribution function}{normal}
+< \XX{cumulative distribution function}{cauchy}
+694d558
+< \XX{function}{random\_number\_generator}
+696c560
+< random numbers. A random number generator object is created with the
+---
+> random numbers. A random number generator object is crated with the
+705c569
+< randpoisson(lambda,r);  // generate a poisson with parameter lambda
+---
+> randpoisson(lambda,r);  // genreate a poisson with parameter lambda
+711,728d574
+< v.fill_multinomial(r,p)  // fill a vector v 
+<                       // p is a vector of probabilities
+< m.fill_randu(r)  // fill a matrix m
+< m.fill_randn(r)  // fill matrix m
+< m.fill_randpoisson(lambda,r)  // fill a matrix m
+< \endexample
+< The incomplete beta function $I_x(a,b)$ is defined by
+< \begin{equation}
+< I_x(a,b)=\myover{1}{B(a,b)}\int_0^x t^{a-1}(1-t)^{b-1}\,dt\qquad (a,b,>0)
+< \end{equation}
+< This is also the cumulative distribution function for the beta family
+< of probability distributions.
+< The function is named {\tt betai} and is invoked by
+< \XX{cumulative distribution function}{beta}
+< \XX{function}{beta function, incomplete}
+< \beginexamplea
+<   \\ .....
+<  dvariable p=betai(a,b,x);
+commandl.tex
+contents.tex
+docmacpdf.tex
+28c28
+< %\font\rm=cmr18 at 18true pt  %scaled \magstep1
+---
+> %\font\rm=cmr10 at 12true pt  %scaled \magstep1
+534,536c534
+<      \message{mychapno = \number\mychapno}
+<   \global\advance\chapnonext by 1
+<      \message{chapnonext = \number\chapnonext}
+---
+>   \advance\chapnonext by 1
+545d542
+< \def\myover#1#2{{\displaystyle #1\over \displaystyle #2}}
+562c559
+<  \ #2
+---
+> #2
+566,674d562
+< 
+< \makeatletter
+< 
+< \def\@startindexsection#1#2#3#4#5#6{%
+<   \if@noskipsec \leavevmode \fi
+<   \par
+<   %\@tempskipa #4\relax
+<   \@afterindenttrue
+<   \ifdim \@tempskipa <\z@
+<     \@tempskipa -\@tempskipa \@afterindentfalse
+<   \fi
+<   \if@nobreak
+<     \everypar{}%
+<   \else
+<     \addpenalty\@secpenalty\addvspace\@tempskipa
+<   \fi
+<   \@ifstar
+<     {\@indexssect{#3}{#4}{#5}{#6}}% !!!!
+<     {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
+< 
+< \def\@sect#1#2#3#4#5#6[#7]#8{%
+<   \ifnum #2>\c@secnumdepth
+<     \let\@svsec\@empty
+<   \else
+<     \refstepcounter{#1}%
+<     %\protected@edef\@svsec{\@seccntformat{#1}\relax}%
+<     %\protected@edef\@svsec{{#1}\relax}%
+<     \let\@svsec\@empty
+<   \fi
+<   \@tempskipa #5\relax
+<   \ifdim \@tempskipa>\z@
+<     \begingroup
+<       %#6 {%
+<       %  \@hangfrom{\hskip #3\relax\@svsec}%
+<       %    \interlinepenalty \@M #8\@@par}%
+<     \endgroup
+<     \csname #1mark\endcsname{#7}%
+<     \addcontentsline{toc}{#1}{%
+<       \ifnum #2>\c@secnumdepth \else
+<         \protect\numberline{\csname the#1\endcsname}%
+<       \fi
+<       #7}%
+<   \else
+<     \def\@svsechd{%
+<       #6{\hskip #3\relax
+<       \@svsec #8}%
+<       \csname #1mark\endcsname{#7}%
+<       \addcontentsline{toc}{#1}{%
+<         \ifnum #2>\c@secnumdepth \else
+<           \protect\numberline{\csname the#1\endcsname}%
+<         \fi
+<         #7}}%
+<   \fi
+<   \@xsect{#5}}
+< 
+< \def\@indexssect#1#2#3#4#5{%
+<     \@tempskipa #3\relax
+<     \ifdim \@tempskipa>\z@
+<       \begingroup
+<         #4{%
+<           \@hangfrom{\hskip #1}%
+<             \interlinepenalty \@M #5\@@par}%
+<       \endgroup
+<     \else
+<       \def\@svsechd{#4{\hskip #1\relax #5}}%
+<     \fi
+<   \@xsect{#3}}
+< 
+< \def\@indexsect#1#2#3#4#5#6[#7]#8{%
+<   \ifnum #2>\c@secnumdepth
+<     \let\@svsec\@empty
+<   \else
+<     \refstepcounter{#1}%
+<     %\protected@edef\@svsec{\@seccntformat{#1}\relax}%
+<     \protected@edef\@svsec{{#1}\relax}%
+<   \fi
+<   \@tempskipa #5\relax
+<   \ifdim \@tempskipa>\z@
+<     \begingroup
+<       #6{%
+<         \@hangfrom{\hskip #3\relax\@svsec}%
+<           \interlinepenalty \@M #8\@@par}%
+<     \endgroup
+<     \csname #1mark\endcsname{#7}%
+<     \addcontentsline{toc}{#1}{%
+<       \ifnum #2>\c@secnumdepth \else
+<         \protect\numberline{\csname the#1\endcsname}%
+<       \fi
+<       #7}%
+<   \else
+<     \def\@svsechd{%
+<       #6{\hskip #3\relax
+<       \@svsec #8}%
+<       \csname #1mark\endcsname{#7}%
+<       \addcontentsline{toc}{#1}{%
+<         \ifnum #2>\c@secnumdepth \else
+<           \protect\numberline{\csname the#1\endcsname}%
+<         \fi
+<         #7}}%
+<   \fi
+<   \@xsect{#5}}
+< \makeatother
+< 
+< 
+< \newdimen\myeqwidth
+< \myeqwidth=\hsize
+< %\advance\myeqwidth by -.1in
+< 
+< \def\myfrac#1#2{{\displaystyle #1\over \displaystyle #2}}
+index.tex
+kal_lap.tex
+kalman.tex
+47,48c47,48
+<    \alpha_t&=&\alpha_{t-1}+\eta_t\cr
+<    y_t&=&\alpha_t+\epsilon_t\cr
+---
+>    \alpha_t&=&\alpha_{t-1}+\eta_t\\
+>    y_t&=&\alpha_t+\epsilon_t
+52,53c52,53
+< $$ T=\left(\matrix{1 & 0\cr
+<                     0 & 1\cr }\right) 
+---
+> $$ T=\left(\matrix{1 & 0\\
+>                     0 & 1\\ }\right) 
+55,56c55,56
+<    Z=\left(\matrix{1 & 0\cr
+<                     0 & 1\cr }\right) 
+---
+>    Z=\left(\matrix{1 & 0\\
+>                     0 & 1\\ }\right) 
+58,59c58,59
+<    R=\left(\matrix{1 & 0\cr
+<                     0 & 1\cr }\right) 
+---
+>    R=\left(\matrix{1 & 0\\
+>                     0 & 1\\ }\right) 
+69,70c69,70
+<    Q=\left(\matrix{1 & 0.8\cr
+<                    0.8 & 1 \cr }\right)
+---
+>    Q=\left(\matrix{1 & 0.8\\
+>                    0.8 & 1 \\ }\right)
+72,73c72,73
+<    H=\left(\matrix{3 & -2.5\cr
+<                    -2.5 & 3 \cr }\right)
+---
+>    H=\left(\matrix{3 & -2.5\\
+>                    -2.5 & 3 \\ }\right)
+82,86c82,86
+<       \aone&=&T_ta_{t-1}+c_t\cr
+<       \Pone&=&T_tP_{t-1}T^\prime_t +R_tQ_tR^\prime_t\cr
+<       v_t&=&y_t-Z_t\aone-d_t\cr
+<       F_t&=&Z_t\Pone Z_t^\prime+H_t\cr
+<       a_t&=&\aone-\Pone Z_t^\prime F_t^{-1}v_t\cr
+---
+>       \aone&=&T_ta_{t-1}+c_t\\
+>       \Pone&=&T_tP_{t-1}T^\prime_t +R_tQ_tR^\prime_t\\
+>       v_t&=&y_t-Z_t\aone-d_t\\
+>       F_t&=&Z_t\Pone Z^\prime+H_t\\
+>       a_t&=&\aone-\Pone Z_t^\prime F_t^{-1}v_t\\
+mprobit.tex
+paper.tex
+qafter4.tex
+qbefore4.tex
+simequat.tex
+33,38c33,34
+< \begin{equation}
+< \myeq{
+< L(B,\Gamma,D)=T/2\log(|B|^2)-T/2\log(|D|)-1/2\sum_{t=1}^T
+<   [By_t + \Gamma x_t]^\prime D^{-1} [By_t + \Gamma x_t] \label{se:1}
+< }
+< \end{equation}
+---
+> $$L(B,\Gamma,D)=T/2\log(|B|^2)-T/2\log(|D|)-1/2\sum_{t=1}^T
+>   [By_t + \Gamma x_t]^\prime D^{-1} [By_t + \Gamma x_t] \label{simequat:a}$$
+41c37
+< \ref{se:1} can be solved for in terms of the other parameters and
+---
+> can be solved for in terms of the other parameters and
+43,49c39,45
+< \begin{equation}
+< \myeq{
+< \hat D =
+< 1/T\sum_{t=1}^T [By_t + \Gamma x_t]^\prime [By_t + \Gamma x_t] \label{se:2}
+< }
+< \end{equation}
+< substituting this value into $(\number\mychapno.1)$ it can be shown that
+---
+> \X{empirical covariance matrix}{calculating}
+> $$\hat D =
+> 1/T\sum_{t=1}^T [By_t + \Gamma x_t]^\prime [By_t + \Gamma x_t] 
+> \label{simequat:empcov}$$ 
+> We shall refer to this quantity as the empirical covariance matrix.
+> It is the average of the outer product of the residuals.
+> Substituting this value into \label{simequat:a} it can be shown that
+53,58c49,50
+< equation \ref{se:2}
+< \begin{equation}
+< \myeq{
+< \tilde L(B,\Gamma)=T/2\log(|B|^2)-T/2\log(|\hat D|)\label{se:3} 
+< }
+< \end{equation}
+---
+> equation \label{simequat:a} simplifies to
+> $$\tilde L(B,\Gamma)=T/2\log(|B|^2)-T/2\log(|\hat D|) \label{simequat:conc}$$
+65c57
+< maximize \ref{se:1} which is in general a numerically unstable problem. 
+---
+> maximize $(\number\mychapno.1)$ which is in general a numerically unstable problem. 
+352c344
+< this proecedure helsp to stabilize the optimzation when several
+---
+> this procedure helps to stabilize the optimzation when several
+471c463,464
+<   emp_D=empirical_covariance(z);
+---
+>   emp_D=empirical_covariance(z); // use function
+>                     // empirical covariance for efficiency
+497c490
+< The {\tt REPORT\_SECTION} prints out a report of the imodel's results.
+---
+> The {\tt REPORT\_SECTION} prints out a report of the model's results.
+test.tex
+admb-dll.tex
+adtitle.tex
+9,10c9,10
+< %\nofootlines
+< %\nopageno
+---
+> \nofootlines
+> \nopageno
+44c44
+< \centerline{{\halfinch AD MODEL BUILDER Version 4.5}}
+---
+> \centerline{{\halfinch AD MODEL BUILDER Version 4}}
+50,51c50,51
+< \newpage
+< \thispagestyle{empty}
+---
+> \eject
+> 
+advectors.tex
+all_ad.tex
+0a1
+> 
+2c3
+< \documentclass[12pt]{book}
+---
+> \documentclass{book}
+5d5
+< %\usepackage{tocbibind}
+13,18c13,16
+< \newcount\tm
+< \newcount\bm
+< \newcount\tom
+< \newcount\bom
+< \newtoks\myname
+< \newcounter{chapterpg}[chapter]
+---
+>   \newcount\tm
+>   \newcount\bm
+>   \newtoks\myname
+> 
+22c20
+< \def\ps@yyy{
+---
+> \def\ps@xxx{
+25,31d22
+< \def\@evenfoot{}
+< \def\@oddfoot{}
+< }
+< 
+< \def\ps@xxx{
+< \def\@oddhead{\message{Here DE}}
+< \def\@evenhead{\message{Here FE}}
+33,40c24,35
+< \plainline{ 
+<   \addtocounter{chapterpg}{1}
+<   \ifnum \number\c@chapter > 0
+<     \message{c@chapter = \number\c@chapter}
+<      \makebox[\textwidth]{
+<        {\ninerm Copyright\ \copyright\ 1993--2000 by Otter Research Ltd}
+<       \hfill
+<      \arabic{chapter}-\arabic{chapterpg}\quad}
+---
+>   \hbox to\textwidth{ 
+>      \tm=\topmark
+>      \bm=\botmark
+>      \message{tm = \number\tm}
+>      \message{bm = \number\bm}
+>      \message{mychapno = \number\mychapno}
+>      \message{chappageno = \number\chappageno}
+>      %\read16 to \myname
+>     %\plainline{ %topmark\ \topmark botmark\  \botmark
+>    \ifnum\bm>\tm
+>      \global\advance\mychapno by 1
+>      \global\chappageno=1
+42c37,41
+<     \makebox[\textwidth]{\roman{chapterpg}}
+---
+>        \ifnum\mychapno>0
+>          \global\advance\chappageno by 1
+>        \else
+>          \global\advance\chappageno by -1
+>        \fi
+44,48c43,59
+<     \expandafter\write\newindex {%
+<       \thepage-\arabic{chapter}-\arabic{chapterpg}
+<      }
+<   %\makebox[\textwidth]{\arabic{page}}
+<  }} 
+---
+>        {\ninerm Copyright\ \copyright\ 1993--2000 by Otter Research Ltd}
+>      \ifnum\mychapno>0
+>       \message{here A}
+>    \hfill\number\mychapno \ -- \number\chappageno
+>   \else 
+>       \message{here AA}
+>    \hfill
+>     \roman-\number\chappageno
+>   \fi
+>      \ifnum\mychapno>0
+>         \expandafter\write\newindex {%
+>         \thepage-\number\mychapno-\number\chappageno
+>          }
+>      \fi
+>  }}
+> 
+> 
+50,56c61,73
+< \plainline{ 
+<   \addtocounter{chapterpg}{1}
+<   \ifnum \number\c@chapter > 0
+<     \message{c@chapter = \number\c@chapter}
+<        \makebox[\textwidth]{
+<        \arabic{chapter}-\arabic{chapterpg}\hfill
+<           {\ninerm {\slsmall AD Model Builder}}\quad}
+---
+>   \hbox to \textwidth{ 
+>      \tm=\topmark
+>      \bm=\botmark
+>      \message{tm = \number\tm}
+>      \message{bm = \number\bm}
+>      \message{mychapno = \number\mychapno}
+>      \message{chappageno = \number\chappageno}
+>      %\read16 to \myname
+>   %\plainline{ % topmark\ \topmark botmark\  \botmark
+>    \ifnum\bm>\tm
+>      \message{tm>bm = \number\tm > \number\bm}
+>      \global\advance\mychapno by 1
+>      \global\chappageno=1
+58c75,79
+<     \makebox[\textwidth]{\roman{chapterpg}}
+---
+>        \ifnum\mychapno>0
+>          \global\advance\chappageno by 1
+>        \else
+>          \global\advance\chappageno by -1
+>        \fi
+60,122c81,96
+<     \expandafter\write\newindex {%
+<       \thepage-\arabic{chapter}-\arabic{chapterpg}
+<      }
+<   %\makebox[\textwidth]{\arabic{page}}
+<  }} 
+< %   \if \topmark \neq \botmark
+< %     \global\advance\mychapno by 1
+< %     \global\chappageno=1
+< %   \else
+< %       \ifnum\mychapno>=0
+< %         \global\advance\chappageno by 1
+< %       \else
+< %         \global\advance\chappageno by -1
+< %       \fi
+< %   \fi
+< %       {\ninerm Copyright\ \copyright\ 1993--2000 by Otter Research Ltd}
+< %     \ifnum\mychapno>0
+< %      \message{here A}
+< %   \hfill\number\mychapno \ -- \number\chappageno
+< %  \else 
+< %      \message{here AA}
+< %   \hfill
+< %    \roman -\number\chappageno
+< %  \fi
+< %      \message{here BB}
+< %    \expandafter\write\newindex {%
+< %      \thepage-\number\mychapno-\number\chappageno
+< %     }
+< %} }}
+< %
+< %
+< %\def\@evenfoot{
+< %\plainline{ 
+< %  \makebox[\textwidth]{ 
+< %      \message{here YE}
+< %   \if \topmark \neq \botmark
+< %     \message{tm>bm = \number\tm > \number\bm}
+< %     \global\advance\mychapno by 1
+< %     \global\chappageno=1
+< %   \else
+< %       \ifnum\mychapno>=0
+< %         \global\advance\chappageno by 1
+< %       \else
+< %         \global\advance\chappageno by -1
+< %       \fi
+< %   \fi
+< %       \ifnum\mychapno>0
+< %      \message{here B}
+< %           \number\mychapno \ -- \number\chappageno\hfill
+< %  \else 
+< %      \message{here BB}
+< %   \hfill
+< %    \roman -\number\chappageno
+< %    %\hfil\roman\number\thepage\hfil
+< %  \fi
+< %          {\ninerm {\slsmall AD Model Builder}}
+< %    \expandafter\write\newindex {%
+< %      \thepage-\number\mychapno-\number\chappageno
+< %     }
+< %}}}
+< %
+< }
+< \makeatother
+---
+>        \ifnum\mychapno>0
+>       \message{here B}
+>            \number\mychapno \ -- \number\chappageno\hfill
+>   \else 
+>       \message{here BB}
+>    \hfill
+>     \roman-\number\chappageno
+>     %\hfil\roman\number\thepage\hfil
+>   \fi
+>           {\ninerm {\slsmall AD Model Builder}}
+>      \ifnum\mychapno>0
+>         \expandafter\write\newindex {%
+>           \thepage-\number\mychapno-\number\chappageno
+>           }
+>      \fi
+> }}}
+123a98
+> \makeatother
+135,136d109
+<      %\topmark=0
+<      %\botmark=0
+158d130
+< \def\eqspace{\hskip 1000pt mi 990pt}
+201,203c173
+< \def\myeq#1{{\myeqwidth=\hsize \advance\myeqwidth by -.5in
+<    \hbox to \myeqwidth{\hfil$#1$\hfil}}}
+< \thispagestyle{yyy}
+---
+> \thispagestyle{empty}
+209,210c179,181
+< %\tracingmacros=1%
+< \htmlnewfile
+---
+> \mychapter{Function reference}
+> \input allfun.tex
+> \end{document}
+212,213c183,184
+< %\tracingmacros=0
+< \pdfimage  height 4.5in width 7in depth 0in {/corrplot21.png}
+---
+> %\pagenumbering{bychapter}
+> %\bye
+215d185
+< %\end{document}
+304a275
+> \X{optional extras}
+308c279,280
+< for parameters of interest (Hastings-Metropolis algorithm).
+---
+> ({\bf optional at extra cost})  for parameters
+> of interest (Hastings-Metropolis algorithm).
+312,314c284
+< 
+< %\item{1.} 
+< A very simple example. This is a trivial least squares
+---
+> \item{1.} A very simple example. This is a trivial least squares
+322,323c292
+< %\item{2.}  
+< A simple nonlinear regression model for estimating the parameters
+---
+> \item{2.}  A simple nonlinear regression model for estimating the parameters
+328,329c297
+< %\item{3.}  
+< A chemical kinetics problem.  A model defined by a
+---
+> \item{3.}  A chemical kinetics problem.  A model defined by a
+333,334c301
+< %\item{4.} 
+< A problem in financial modeling. A Generalized Autoregressive 
+---
+> \item{4.} A problem in financial modeling. A Generalized Autoregressive 
+339c306
+< %\item{5.}
+---
+> \item{5.}
+351,352c318
+< %\item{6.}  
+< A Simple Fisheries catch-at-age model. These models
+---
+> \item{6.}  A Simple Fisheries catch-at-age model. These models
+356,357d321
+< %\item{7.} 
+< More complex examples are presented in subsequent chapters. 
+392a357
+> 
+498c463
+< It is the parameters of your model which
+---
+> Roughly speaking it is the parameters of your model which
+538,540c503
+< chosen so that this value is minimized\footnote{Thus it should be set equal to
+< minus the log-likelihood function if that criterion is used}. 
+< Every \ADM\ template
+---
+> chosen so that this value is minimized. Every \ADM\ template
+719c682
+< \section{Robust Nonlinear regression with \ADM}
+---
+> \mychapter{Robust Nonlinear regression}
+720a684
+> \section{A three parameter growth model}
+729d692
+< \medskip
+731,732c694,695
+< \quad\hbox to \hsize{
+< \hfill
+---
+> \medskip
+> \quad\hbox{
+749c712
+< \centerline{Results for nonlinear regression with good data set}
+---
+> \qquad Results for nonlinear regression with good data set
+763,767c726
+< %$$
+< \begin{equation}
+< \myeq{s(a)=L_{\infty}\big(\,1-\exp(-K(a-t_0))\,\big)}\label{chp1:xx2}
+< \end{equation}
+< %$$
+---
+> $$s(a)=L_{\infty}\big(\,1-\exp(-K(a-t_0))\,\big)\eqno(.1)$$
+772c731
+< animal. The predicted size $s(a_i)$ is given by equation \ref{chp1:xx2}.
+---
+> animal. The predicted size $s(a_i)$ is given by equation $.1$.
+1038c997
+< \section{Chemical engineering -- a chemical kinetics problem}
+---
+> \mychapter{Chemical engineering -- a chemical kinetics problem}
+1044c1003,1008
+< This example may strike you as being fairly complicated. If so, you
+---
+> \X{model defined by ordinary differential equations}
+> \XX{ordinary differential equations}{model defined by}
+> 
+> This is an example of a  model defined by a system of two first order
+> ordinary differential equations.
+> It may strike you as being fairly complicated. If so, you
+1049,1050c1013
+< page 233.  This is a model defined by a first order system of two ordinary
+< differential equations.
+---
+> page 233.  
+1107c1070
+< %$$\eqalign{
+---
+> %%$$\eqalign{
+1109,1112c1072,1075
+< s_1(t_{n+1})&=&s_1(t_n)\cr
+<     &-h&\theta_1\gutst\cr
+<            s_2(t_{n+1})&=&s_2(t_n)\cr
+<     +&2h&\theta_1\gutst \cr \label{chp1:xx3}
+---
+> s_1(t_{n+1})&=&s_1(t_n)\\
+>     -h\theta_1&&\gutst\\
+>            s_2(t_{n+1})&=&s_2(t_n)\\
+>     +2h\theta_1&&\gutst \label{bard:explicit}
+1116c1079
+< Equations 2 are called explicit because the values of $s_1$
+---
+> Equations \ref{bard:explicit} are called explicit because the values of $s_1$
+1139c1102
+<    s_1(t_{n+1})&=&
+---
+>    s_1(t_{n+1})&=
+1141c1104
+<            s_2(t_{n+1})&=&
+---
+>            s_2(t_{n+1})&=
+1149,1150c1112,1113
+< s_1(t_{n+1})&=&\big(s_1(t_n)+DB s_2(t_n)\big)/(1+D) \cr
+<            s_2(t_{n+1})&=&\big(s_2(t_n)+2Ds_1(t_n)\big)/
+---
+> s_1(t_{n+1})&=\big(s_1(t_n)+DB s_2(t_n)\big)/(1+D) \cr
+>            s_2(t_{n+1})&=\big(s_2(t_n)+2Ds_1(t_n)\big)/
+1325,1326c1288,1290
+< \section{Financial Modelling -- A Generalized Autoregressive Conditional
+< \hbox{Heteroskedasticity} or GARCH model} 
+---
+> % xxxxxx1
+> \mychapter{Financial Modelling}
+> \section{A Generalized Autoregressive Conditional Heteroskedasticity or GARCH model} 
+1511a1476
+> %xxxxxx2
+1513c1478,1479
+< \section{Natural resource management -- the Schaeffer-Pella-Tomlinson Model}
+---
+> \mychapter{Natural resource management}
+> \section{The Schaeffer-Pella-Tomlinson Model}
+1531,1535c1497,1498
+< \begin{equation}
+< \myeq{{\displaystyle dB\over\displaystyle dt}=rB\bigg(\,1-\Big(\myfrac{B}{k}\Big)^{m-1}\,\bigg) 
+<            - FB  \qquad \hbox{\rm where}\quad m>1}
+< \label{chp3:xx3}
+< \end{equation} 
+---
+> $${dB\over dt}=rB\bigg(\,1-\Big({B\over k}\Big)^{m-1}\,\bigg) 
+>            - FB  \qquad \hbox{\rm where}\quad m>1\eqno(\number\mychapno.1)$$
+1541,1544c1504
+< \begin{equation}
+< \myeq{C=FB}
+< \label{chp3:xx4}
+< \end{equation} 
+---
+> $$C=FB\eqno(\number\mychapno.2)$$
+1554,1558c1514,1515
+< \begin{equation}
+< \myeq{B_{t+\delta}=B_t+rB_t\delta-rB_t\Big(\myfrac{B_t}{k}\Big)^{m-1}\delta 
+<      - F_tB_t\delta}
+<   \label{chp3:xx5}
+< \end{equation} 
+---
+> $$B_{t+\delta}=B_t+rB_t\delta-rB_t\Big({B_t\over k}\Big)^{m-1}\delta 
+>      - F_tB_t\delta \eqno(\number\mychapno.3)$$
+1562,1568c1519,1521
+< right hand side  of \ref{chp3:xx5} by $B_{t+\delta}$ to get
+< \begin{equation}
+< \myeq{B_{t+\delta}
+<    =B_t+rB_t\delta-rB_{t+\delta}\Big(\myfrac{B_t}{k}\Big)^{m-1}\delta 
+<      - F_tB_{t+\delta}\delta}
+<  \label{chp3:xx6}
+< \end{equation} 
+---
+> right hand side  of $(\number\mychapno.3)$ by $B_{t+\delta}$ to get
+> $$B_{t+\delta}=B_t+rB_t\delta-rB_{t+\delta}\Big({B_t\over k}\Big)^{m-1}\delta 
+>      - F_tB_{t+\delta}\delta \eqno(\number\mychapno.4)$$
+1570,1574c1523,1524
+< \begin{equation}
+< \myeq{B_{t+\delta}
+<    =\myfrac{B_t(1+r\delta)}{1+\big(\,r(B_t/k)^{m-1}+F_t\,\big)\delta}}
+<   \label{chp3:xx7}
+< \end{equation} 
+---
+> $$B_{t+\delta}={B_t(1+r\delta)\over 1+\big(\,r(B_t/k)^{m-1}+F_t\,\big)\delta} 
+>                                               \eqno(\number\mychapno.5)$$
+1577,1580c1527
+< \begin{equation}
+<  \myeq{C_{t+\delta} =F_tB_{t+\delta}\delta }
+<   \label{chp3:xx8}
+< \end{equation} 
+---
+> $$C_{t+\delta} =F_tB_{t+\delta}\delta \eqno(\number\mychapno.7)$$
+1591c1538
+< $$\bmax=\myfrac{k}{\root {m-1} \of m}$$
+---
+> $$\bmax={k\over \root {m-1} \of m}$$
+1645,1646c1592
+< \begin{equation}
+<  \myeq{-(3n-1)/2\log\Big(\,\sum_{i=1}^n \big(\log(\cobs)-\log(C_i)\,\big)^2
+---
+> $$ -(3n-1)/2\log\Big(\,\sum_{i=1}^n \big(\log(\cobs)-\log(C_i)\,\big)^2
+1648,1650c1594
+<       -2.\log(m-1)^2 }    
+<   \label{ch1:xx7}
+< \end{equation} 
+---
+>       -2.\log(m-1)^2          \eqno(\number\mychapno.8)$$
+2087,2089c2031,2033
+< initial population in year $1$, $N_{11}, N_{12},\ldots, N_{1r}$
+< and knowledge of the recruitment in each year $N_{21}, N_{31},\ldots
+< N_{n1}$.
+---
+> initial population in year $1$, $N_{1,1}, N_{1,2},\ldots, N_{1,r}$
+> and knowledge of the recruitment in each year $N_{2,1}, N_{3,1},\ldots
+> N_{n,1}$.
+2096c2040
+< $N_{n+1,j+1}=N_{nj}S_{nj}$. If we have estimates $m_j$ for the mean weight
+---
+> $N_{n+1,j+1}=N_{n,j}S_{n,j}$. If we have estimates $m_j$ for the mean weight
+2600,2601c2544
+< up to dimension~7 in the documentation\footnote{See the chapter on
+< regime switching models for an example of the use of higher dimensional arrays.}.
+---
+> up to dimension~7 in the documentation.
+2721,2722d2663
+< \XX{command line arguments}{-mcsave}
+< \XX{command line arguments}{-nosdmcmc}
+2806d2746
+< \XX{command line arguments}{-nosdmcmc}
+2814,2822c2754
+< ASCII see the next section. If you have a large number of variables of
+< type {\tt sdreport} calculating the values of them for the mcmc can
+< appreciably slow down the calculations. To turn off these
+< calculations during the {\tt -mcsave} phase use the option
+< {\tt -nosdmcmc}. {\bf Note: If you use thus option and restart the
+< mcmc calculations with the {\tt -mcr} option you must use the
+< {\tt -nosdmcmc} as well. Otherwise the program will try to read in the
+< non-existent histogram data.}
+< 
+---
+> ASCII see the next section.
+3002,3007c2934,2936
+< \begin{equation}
+<   \myeq{
+< l(\tau,\nu,\beta,\sigma) = 
+<    \sum_i f_i\,\big[\ln\big(S_i-S_{i+1}\big)-\ln\big(S(1)\big)\big]}
+< \label{chp3:xx9}
+< \end{equation} 
+---
+> $$l(\tau,\nu,\beta,\sigma) = 
+>    \sum_i f_i\,\big[\ln\big(S_i-S_{i+1}\big)-\ln\big(S(1)\big)\big]
+>   \eqno(\number\mychapno.1)$$
+3009,3011c2938
+< \begin{equation}
+<   \myeq{
+< S_i=\int_{-\infty}^\infty 
+---
+> $$S_i=\int_{-\infty}^\infty 
+3013,3015c2940
+<   \tau\Big(-1+\exp\big(-\nu a_i^\beta\exp(\sigma z)\big)\Big) \Big\}dz}
+< \label{chp3:xx10}
+< \end{equation} 
+---
+>   \tau\Big(-1+\exp\big(-\nu a_i^\beta\exp(\sigma z)\big)\Big) \Big\}dz$$
+3305,3309c3230
+< \begin{equation}
+<  \myeq{
+< Y_t=a_0+a_1s_{ti}+Z_t}
+< \label{chp4:xx1}
+< \end{equation} 
+---
+> $$Y_t=a_0+a_1s_{ti}+Z_t \eqno(\number\mychapno.1)$$
+3312,3317c3233,3234
+< \begin{equation}
+<   \myeq{
+< Z_t=f_1Z_{t-1}+f_2Z_{t-2}+f_3Z_{t-3}+f_4Z_{t-4}+
+<   \epsilon_t }
+< \label{chp4:xx2}
+< \end{equation} 
+---
+> $$Z_t=f_1Z_{t-1}+f_2Z_{t-2}+f_3Z_{t-3}+f_4Z_{t-4}+
+>   \epsilon_t\eqno(\number\mychapno.2)$$
+3347c3264
+< $P=(p_{ij})$\footnote{${}^{\dagger\dagger\dagger}${\rmfoot 
+---
+> $P=(p_{ij})$\footnote{${}^{\dagger\dagger\dagger}$}{\rmfoot 
+3351c3268
+< $p_{ij}$ may correspond to our $p_{ji}$.}}
+---
+> $p_{ij}$ may correspond to our $p_{ji}$.}
+3376,3381c3293,3294
+< \begin{equation}
+<  \myeq{
+< q_b(t,i,j,k,l,m)=\sum_{n}
+<   P_{ij}q_a(t-1j,k,l,m,n)}
+< \label{chp4:xx3}
+< \end{equation} 
+---
+> $$q_b(t,i,j,k,l,m)=\sum_{n}
+>   P_{ij}q_a(t-1j,k,l,m,n)\eqno(\number\mychapno.4)$$
+3387,3392c3300,3301
+< \begin{equation}
+< \myeq{
+< Q(Y_t|(i,j,k,l,m),Y_{t-1},Y_{t-2},Y_{t-3},Y_{t-4})=
+<   \exp\big(-e(i,j,k,l,m)^2/2\sigma^2\big)/\sigma }
+< \label{chp4:xx4}
+< \end{equation} 
+---
+> $$Q(Y_t|(i,j,k,l,m),Y_{t-1},Y_{t-2},Y_{t-3},Y_{t-4})=
+>   \exp\big(-e(i,j,k,l,m)^2/2\sigma^2\big)/\sigma \eqno(\number\mychapno.6)$$ 
+3394,3396c3303
+< \begin{equation}
+<  u(Y_t,i,j,k,l,m)=
+< \myeq{
+---
+> $$ u(Y_t,i,j,k,l,m)=
+3398,3400c3305
+<     q_b(t,i,j,k,l,m)}
+< \label{chp4:xx5}
+< \end{equation} 
+---
+>     q_b(t,i,j,k,l,m)\eqno(\number\mychapno.7)$$  
+3403,3409c3308,3310
+< \begin{equation}
+< \myeq{
+< q_a(t,i_{t},j,k,l,m)= u(Y_t,i,j,k,l,m)/
+<    \sum_{i,j,k,l,m} u(Y_t,i,j,k,l,m)}
+< \label{chp4:xx6}
+< \end{equation} 
+< 
+---
+> $$q_a(t,i_{t},j,k,l,m)= u(Y_t,i,j,k,l,m)/
+>    \sum_{i,j,k,l,m} u(Y_t,i,j,k,l,m)
+>                                                       \eqno(\number\mychapno.8) $$
+3412,3417c3313,3315
+< \begin{equation}
+< \myeq{
+< \sum_t \log\big(\sum_{i,j,k,l,m} 
+<         u(Y_t,i,j,k,l,m)\big) }
+< \label{chp4:xx7}
+< \end{equation} 
+---
+> $$\sum_t \log\big(\sum_{i,j,k,l,m} 
+>         u(Y_t,i,j,k,l,m)\big) 
+>                               \eqno(\number\mychapno.9) $$
+3974,3978c3872
+< \begin{equation}
+< \myeq{
+< Y_t=a_0+a_1s_{ti}+Z_t }
+< \label{chp5:yy1}
+< \end{equation} 
+---
+> $$Y_t=a_0+a_1s_{ti}+Z_t \eqno(\number\mychapno.10)$$
+3981,3986c3875,3876
+< \begin{equation}
+< \myeq{
+< Z_t=f_1Z_{t-1}+f_2Z_{t-2}+f_3Z_{t-3}+f_4Z_{t-4}+f_5Z_{t-5}+
+<   \epsilon_t}
+< \label{chp5:yy2}
+< \end{equation} 
+---
+> $$Z_t=f_1Z_{t-1}+f_2Z_{t-2}+f_3Z_{t-3}+f_4Z_{t-4}+f_5Z_{t-5}+
+>   \epsilon_t\eqno(\number\mychapno.11)$$
+4252d4141
+< \mychapter{Econometric Models -- simultaneous equations}
+4261,4282d4149
+< \mychapter{
+< Applying the Laplace approximation to the Generalized 
+< Kalman Filter -- with an application to Stochastic Volatility Models}
+< \input kal_lap.tex
+< \htmlnewfile
+< \mychapter{
+< Using Vectors of initial parameter types} 
+< \input advectors.tex
+< \endchapter
+< \htmlnewfile
+< \mychapter{Creating Dynamic Link Libraries with AD Model Builder}
+< \input admb-dll.tex 
+< \endchapter
+< \htmlnewfile
+< \mychapter{Command line options}
+< \input commandl.tex
+< \endchapter
+< \htmlnewfile
+< \mychapter{All the functions in AD Model Builder}
+< \input allfun.tex
+< \endchapter
+< \htmlnewfile
+4476c4343
+< 80386 computers including Borland \cplus, 
+---
+> 80386 computers including Borland \cplus, Zortech (Symantec) \cplus,
+4478c4345
+< Other compilers are supported at present on Linux, SUN, HP,
+---
+> Other compilers are supported at present on SUN, HP,
+4481c4348
+< and version of your compiler for UNIX.
+---
+> and version of your compiler.
+4510d4376
+< \pagestyle{xxx}
+4512d4377
+< %\printindex
+allfun.tex
+2c2
+< \def\leftset#1{#1\hfill}
+---
+> \def\leftset#1{#1\hfilll}
+5c5
+< continually being added. If you are aware of a function which is
+---
+> continually being added. I fyou are aware of a function which is
+8,61d7
+< 
+< \section{Naming conventions for documenting functions}
+< Whereever applicable the name function has been supplied for
+< constand and variable objects (such as {\tt double} and {\tt dvariable}).
+< Instead of repeating the description for bioth kinds of objects
+< the convention of referring to both types as ``number'', ``vector'',
+< ``matrix'', etc. with be observed.
+< 
+< \section{Mathematical Functions}
+<  The following functions have been included in \AD\ by overloading the 
+< \cplus\ library functions
+< \beginexamplea
+<   sin cos tan asin atan acos sinh cosh tanh fabs (sfabs) exp log log10 sqrt pow 
+<   gammln log_comb
+< \endexample
+< \X{sin} \X{cos} \X{tan} \X{asin} \X{atan} \X{acos} \X{sinh} 
+< \X{cosh} \X{tanh} \X{fabs} \X{sfabs} \X{exp} \X{log} 
+< \X{log10} \X{sqrt} \X{pow} 
+< \X{gammln}\X{log\_comb}
+< \XX{functions}{sin} \XX{functions}{cos} \XX{functions}{tan} 
+< \XX{functions}{asin} \XX{functions}{atan} \XX{functions}{acos} 
+< \XX{functions}{sinh} \XX{functions}{cosh} \XX{functions}{tanh} 
+< \XX{functions}{fabs} \XX{functions}{sfabs} \XX{functions}{exp} 
+< \XX{functions}{log} \XX{functions}{log10} \XX{functions}{sqrt} 
+< \XX{functions}{pow} 
+< \XX{functions}{gammln}\XX{functions}{log\_comb}
+< \noindent These functions can be used on numbers or vector\_objects
+< in the form 
+< \beginexample
+< number = function(number);
+< vector_object = function(vector_object);
+< \endexample
+< \noindent When operating on {\tt vector\_objects} the functions operate  
+< element by element, so that if {\tt y} is a {\tt dvector} whose
+< elements are $(y_1,\ldots,y_n)$ then {\tt exp(y)} is a 
+< {\tt dvector} whose elements are $(\exp(y_1),\ldots,\exp(y_n))$.
+< 
+< \XX{vector}{maximum element}\XX{max}{operation on a vector}
+< \XX{vector}{minimum element}\XX{min}{operation on a vector}
+< The functions {\tt min} and {\tt max} when applied to a {\tt vector\_object}
+< return a {\tt number} which is equal to the minimum or maximum element of the
+< {\tt vector\_object}
+< 
+< The function {\tt gammln} is the logarithm, of the gamma function.
+< \XX{gamma function}{logarithm}
+< 
+< The function {\tt log\_comb(n,k)} is the logarithm, of the  function
+< the combination of {\tt n} things taken {\tt k} at a time.
+< It is defined via the logarithm of the gamma function 
+< for non-integer values 
+< and is differentiable.
+< 
+< \X{log\_comb function}
+< 
+84,85c30,31
+< \XX{functions}{element-wise product of vectors}
+< \XX{vector}{element-wise product}\XX{elem\_prod}{element-wise product}
+---
+> 
+> \XX{vector}{element-wise product of}\XX{elem\_prod}{element-wise product}
+91d36
+< \XX{functions}{element-wise division of vectors}
+96,97c41
+< \XX{functions}{element-wise product of matrices}
+< \XX{matrix}{element-wise product}
+---
+> \XX{matrix}{element-wise product of}
+103d46
+< \XX{functions}{element-wise division of matrices}
+109,110c52
+< \XX{functions}{identity matrix function}
+< \XX{matrix}{identity matrix function}
+---
+> \XX{matrix}{the identity matrix function}
+120,121c62
+< \XX{matrix}{determinant}\X{determinant}
+< \XX{functions}{determinant of a matrix}
+---
+> \XX{matrix}{the determinant of}\X{determinant}
+128,129c69
+< \XX{matrix}{inverse}\X{inverse} \X{\tt inv}
+< \XX{functions}{inverse of a matrix}
+---
+> \XX{matrix}{the inverse of}\X{inverse} \X{\tt inv}
+134,138c74,77
+< \XX{functions}{norm of a vector}
+< \XX{vector}{norm}
+< \XX{vector}{norm squared}\X{norm}
+< \XX{matrix}{norm}\X{norm}
+< \XX{matrix}{norm squared}\X{norm}
+---
+> \XX{vector}{the norm of}
+> \XX{vector}{the norm squared of}\X{norm}
+> \XX{matrix}{the norm of}\X{norm}
+> \XX{matrix}{the norm squared of}\X{norm}
+144,145c83
+< \XX{matrix}{norm squared}\X{norm}
+< \XX{functions}{norm squared of a vector}
+---
+> \XX{matrix}{the norm of}\X{norm}
+151d88
+< \XX{functions}{norm of a matrix}
+155d91
+< \XX{functions}{norm squared of a matrix}
+161,167d96
+< $$\leftset{z_{ij}=x_{ji} }$$
+< \XX{functions}{transpose of a matrix}
+< \XX{matrix}{transpose}
+< The transpose of a matrix\_object
+< \beginexample
+< matrix_object = trans(matrix_object)
+< \endexampledf
+171,172c100
+< \XX{functions}{sum over the elements of a vector}
+< \XX{vector}{sum over the elements}\XX{sum}{operation on a vector}
+---
+> \XX{vector}{sum over the elements of}\XX{sum}{operation on a vector}
+178c106
+< \XX{matrix}{rowsum}\XX{rowsum}{operation on a matrix}
+---
+> \XX{matrix}{rowsum of}\XX{rowsum}{operation on a matrix}
+184,185c112
+< \XX{matrix}{colsum}\XX{colsum}{operation on a matrix}
+< \XX{functions}{sum over the columns of a matrix}
+---
+> \XX{matrix}{colsum of}\XX{colsum}{operation on a matrix}
+191,192c118
+< \XX{vector}{minimum element}\XX{min}{operation on a vector}
+< \XX{functions}{minimum element of a vector}
+---
+> \XX{vector}{minimum element of}\XX{min}{operation on a vector}
+196,197c122
+< \XX{vector}{maximum element}\XX{max}{operation on a vector}
+< \XX{functions}{maximum element of a vector}
+---
+> \XX{vector}{maximum element of}\XX{max}{operation on a vector}
+205,206d129
+< \XX{functions}{eigenvalues of symmetric matrix}
+< \XX{functions}{eigenvectors of symmetric matrix}
+236d158
+< \XX{functions}{choleski decomposition}
+251d172
+< \XX{functions}{solving linear system of equations}
+318d238
+< \XX{functions}{filling arrays and matrices}
+370,374d289
+< \section{Methods for filling arrays and matrices with random numbers}
+< This mehtiod of filling containers with random numbers is becoming
+< obsolete. the preferred method is to use the
+< {\tt random\_number\_generator} class.
+< See section \ref{rng} for instructions on using this class.
+395c310
+< {\tt random\_number\_generator} class to generate random numbers. 
+---
+> {\tt random\_number\_generator} class to generato random numbers. 
+455,500d369
+< \section{Methods for obtaining shape information from containers}
+< When this code was first written the maximum dimnsion of arrays
+< was about 4. At this level it perhaps make sense to think of
+< a one dimensional array as a vector, a two dimensional array as
+< a matrix etc. For a matrix one thinks in terms of rows and columns.
+< However with the adoption of ragged container objects up to
+< eight dimensions (at present) a more generic method of obtaining
+< shape information of these objects was called for.
+< 
+< If {\tt v} is a vector object then
+< \beginexample
+< int v.indexmin()
+< int v.indexmax()
+< \endexample
+< \noindent
+< return the minimum and maximum valid indices for v.
+< If {\tt m} is a matrix object then
+< \beginexample
+< int v.rowmin()
+< int v.rowmax()
+< int v.colmin()
+< int v.colmax()
+< \endexample
+< \noindent
+< return the minimum and maximum valid row and column indices
+< for m. These functions make sense for a matrix where every
+< row is a vector with the same minimum and maximum valid
+< indices.  For a ragged matrix this is no longer the case so that
+< the {\tt rowmin} and {\tt rowmax()} functions don't make sense
+< in this case. To deal with a ragged matrix one may need to calculate
+< the minimum and maximum valid indices for each row of the ragged matrix. 
+< To facilitate this approach the functions {\tt indexmin} and 
+< {\tt indexmax} have been defined for all container classes so that
+< for example if {\tt w} is a six dimensional array then
+< \beginexample
+< int w.indexmin()
+< int w.indexmax()
+< \endexample
+< return the minimum and maximum valid indices for the first
+< index of {\tt w}. For a matrix object {\tt m} 
+< {\tt m.indexmin()} and {\tt m.colmin()} are the same
+< and as long as {\tt m} is not ragged then
+< {\tt m(m.indexmin()).indexmin()} is the same as {\tt m.colmin()}
+< and {\tt m(m.indexmin()).indexmax()} is the same as {\tt m.colmax()}.
+< 
+< 
+565,567d433
+< \XX{functions}{++ use with vectors}
+< \XX{functions}{-- use with vectors}
+< \XX{functions}{shift use with vectors}
+574d439
+< dvector  w(1,19);
+576d440
+< 
+578d441
+< 
+580d442
+< 
+582,583d443
+<                // probably not what you want
+< w=v;   // error different index ranges
+586c446
+< {\tt u} both of the above assigments have the same effect. It will have
+---
+> {\tt v} both of the above assigments have the same effect. It will have
+588,596c448
+< effects on the vector {\tt v}. The operation {\tt ++v}
+< will increase the minimum and maximum valid index range of the vector 
+< {\tt v} by one. This increase is permanent. On the other hand
+< the operation {\tt --u(2,20)} decrements the valid index bounds of
+< the {\it subvector} {\tt u(2,20)}. This is a distinct object from
+< the vector {\tt u} although both objects share a common area for their
+< components. Thus the valid index bounds of {\tt u} are not
+< effected by this process.  
+< The use of subvectors and increment and decrement
+---
+> effects on the vector {\tt v}. The use of subvectors and increment and decrement
+616,635d467
+< \XX{functions}{shift use with vectors}
+< Ths {\tt shift} function can be sued to set the minimum (and maximum)
+< valid index for a vector.
+< \beginexample
+< dvector u(10,100);  // minimum valid index is 10
+<                     // maximum valid index is 100
+< u.shift(25);        // minimum valid index is 25
+<                     // maximum valid index is 115
+< \endexample
+< \noindent In particular the operators {\tt --} and {\tt ++}
+< are just convenient shorthand for using the {\tt shift}
+< function to chnage the minimum valid index by 1.
+< \beginexample
+< dvector u(10,100);     // minimum valid index is 10
+<                        // maximum valid index is 100
+< u.shift(u.indexmin()-1); // minimum valid index is 9
+< --u;                   // same result as u.shift(u.indexmin()-1) 
+< u.shift(u.indexmin()+1); // minimum valid index is 11
+< ++u;                   // same result as u.shift(u.indexmin()+1) 
+< \endexample
+679a512,547
+> \section{Mathematical Functions}
+>  The following functions have been included in \AD\ by overloading the 
+> \cplus\ library functions
+> \beginexamplea
+>   sin cos tan asin atan acos sinh cosh tanh fabs (sfabs) exp log log10 sqrt pow 
+>   gammln log_comb
+> \endexample
+>   \X{sin} \X{cos} \X{tan} \X{asin} \X{atan} \X{acos} \X{sinh} \X{cosh} \X{tanh} \X{fabs} \X{sfabs} \X{exp} \X{log} \X{log10} \X{sqrt} \X{pow} 
+> \X{gammln}\X{log_comb}
+> \noindent These functions can be used on numbers or vector\_objects
+> in the form 
+> \beginexample
+> number = function(number);
+> vector_object = function(vector_object);
+> \endexample
+> \noindent When operating on {\tt vector\_objects} the functions operate  
+> element by element, so that if {\tt y} is a {\tt dvector} whose
+> elements are $(y_1,\ldots,y_n)$ then {\tt exp(y)} is a 
+> {\tt dvector} whose elements are $(\exp(y_1),\ldots,\exp(y_n))$.
+> 
+> \XX{vector}{maximum element of}\XX{max}{operation on a vector}
+> \XX{vector}{minimum element of}\XX{min}{operation on a vector}
+> The functions {\tt min} and {\tt max} when applied to a {\tt vector\_object}
+> return a {\tt number} which is equal to the minimum or maximum element of the
+> {\tt vector\_object}
+> 
+> The function {\tt gammln} is the logarithm, of the gamma function.
+> \XX{gamma function}{logarithm of}
+> 
+> The function {\tt log\_comb(n,k)} is the logarithm, of the  function
+> the combination of {\tt n} things taken {\tt k} at a time.
+> It is defined via the gamma function for non-integer values 
+> and is differentiable.
+> 
+> \X{log\_comb function}
+> 
+690,692d557
+< \label{rng}
+< \XX{cumulative distribution function}{normal}
+< \XX{cumulative distribution function}{cauchy}
+694d558
+< \XX{function}{random\_number\_generator}
+696c560
+< random numbers. A random number generator object is created with the
+---
+> random numbers. A random number generator object is crated with the
+705c569
+< randpoisson(lambda,r);  // generate a poisson with parameter lambda
+---
+> randpoisson(lambda,r);  // genreate a poisson with parameter lambda
+711,728d574
+< v.fill_multinomial(r,p)  // fill a vector v 
+<                       // p is a vector of probabilities
+< m.fill_randu(r)  // fill a matrix m
+< m.fill_randn(r)  // fill matrix m
+< m.fill_randpoisson(lambda,r)  // fill a matrix m
+< \endexample
+< The incomplete beta function $I_x(a,b)$ is defined by
+< \begin{equation}
+< I_x(a,b)=\myover{1}{B(a,b)}\int_0^x t^{a-1}(1-t)^{b-1}\,dt\qquad (a,b,>0)
+< \end{equation}
+< This is also the cumulative distribution function for the beta family
+< of probability distributions.
+< The function is named {\tt betai} and is invoked by
+< \XX{cumulative distribution function}{beta}
+< \XX{function}{beta function, incomplete}
+< \beginexamplea
+<   \\ .....
+<  dvariable p=betai(a,b,x);
+commandl.tex
+contents.tex
+docmacpdf.tex
+28c28
+< %\font\rm=cmr18 at 18true pt  %scaled \magstep1
+---
+> %\font\rm=cmr10 at 12true pt  %scaled \magstep1
+534,536c534
+<      \message{mychapno = \number\mychapno}
+<   \global\advance\chapnonext by 1
+<      \message{chapnonext = \number\chapnonext}
+---
+>   \advance\chapnonext by 1
+545d542
+< \def\myover#1#2{{\displaystyle #1\over \displaystyle #2}}
+562c559
+<  \ #2
+---
+> #2
+566,674d562
+< 
+< \makeatletter
+< 
+< \def\@startindexsection#1#2#3#4#5#6{%
+<   \if@noskipsec \leavevmode \fi
+<   \par
+<   %\@tempskipa #4\relax
+<   \@afterindenttrue
+<   \ifdim \@tempskipa <\z@
+<     \@tempskipa -\@tempskipa \@afterindentfalse
+<   \fi
+<   \if@nobreak
+<     \everypar{}%
+<   \else
+<     \addpenalty\@secpenalty\addvspace\@tempskipa
+<   \fi
+<   \@ifstar
+<     {\@indexssect{#3}{#4}{#5}{#6}}% !!!!
+<     {\@dblarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
+< 
+< \def\@sect#1#2#3#4#5#6[#7]#8{%
+<   \ifnum #2>\c@secnumdepth
+<     \let\@svsec\@empty
+<   \else
+<     \refstepcounter{#1}%
+<     %\protected@edef\@svsec{\@seccntformat{#1}\relax}%
+<     %\protected@edef\@svsec{{#1}\relax}%
+<     \let\@svsec\@empty
+<   \fi
+<   \@tempskipa #5\relax
+<   \ifdim \@tempskipa>\z@
+<     \begingroup
+<       %#6 {%
+<       %  \@hangfrom{\hskip #3\relax\@svsec}%
+<       %    \interlinepenalty \@M #8\@@par}%
+<     \endgroup
+<     \csname #1mark\endcsname{#7}%
+<     \addcontentsline{toc}{#1}{%
+<       \ifnum #2>\c@secnumdepth \else
+<         \protect\numberline{\csname the#1\endcsname}%
+<       \fi
+<       #7}%
+<   \else
+<     \def\@svsechd{%
+<       #6{\hskip #3\relax
+<       \@svsec #8}%
+<       \csname #1mark\endcsname{#7}%
+<       \addcontentsline{toc}{#1}{%
+<         \ifnum #2>\c@secnumdepth \else
+<           \protect\numberline{\csname the#1\endcsname}%
+<         \fi
+<         #7}}%
+<   \fi
+<   \@xsect{#5}}
+< 
+< \def\@indexssect#1#2#3#4#5{%
+<     \@tempskipa #3\relax
+<     \ifdim \@tempskipa>\z@
+<       \begingroup
+<         #4{%
+<           \@hangfrom{\hskip #1}%
+<             \interlinepenalty \@M #5\@@par}%
+<       \endgroup
+<     \else
+<       \def\@svsechd{#4{\hskip #1\relax #5}}%
+<     \fi
+<   \@xsect{#3}}
+< 
+< \def\@indexsect#1#2#3#4#5#6[#7]#8{%
+<   \ifnum #2>\c@secnumdepth
+<     \let\@svsec\@empty
+<   \else
+<     \refstepcounter{#1}%
+<     %\protected@edef\@svsec{\@seccntformat{#1}\relax}%
+<     \protected@edef\@svsec{{#1}\relax}%
+<   \fi
+<   \@tempskipa #5\relax
+<   \ifdim \@tempskipa>\z@
+<     \begingroup
+<       #6{%
+<         \@hangfrom{\hskip #3\relax\@svsec}%
+<           \interlinepenalty \@M #8\@@par}%
+<     \endgroup
+<     \csname #1mark\endcsname{#7}%
+<     \addcontentsline{toc}{#1}{%
+<       \ifnum #2>\c@secnumdepth \else
+<         \protect\numberline{\csname the#1\endcsname}%
+<       \fi
+<       #7}%
+<   \else
+<     \def\@svsechd{%
+<       #6{\hskip #3\relax
+<       \@svsec #8}%
+<       \csname #1mark\endcsname{#7}%
+<       \addcontentsline{toc}{#1}{%
+<         \ifnum #2>\c@secnumdepth \else
+<           \protect\numberline{\csname the#1\endcsname}%
+<         \fi
+<         #7}}%
+<   \fi
+<   \@xsect{#5}}
+< \makeatother
+< 
+< 
+< \newdimen\myeqwidth
+< \myeqwidth=\hsize
+< %\advance\myeqwidth by -.1in
+< 
+< \def\myfrac#1#2{{\displaystyle #1\over \displaystyle #2}}
+index.tex
+kal_lap.tex
+kalman.tex
+47,48c47,48
+<    \alpha_t&=&\alpha_{t-1}+\eta_t\cr
+<    y_t&=&\alpha_t+\epsilon_t\cr
+---
+>    \alpha_t&=&\alpha_{t-1}+\eta_t\\
+>    y_t&=&\alpha_t+\epsilon_t
+52,53c52,53
+< $$ T=\left(\matrix{1 & 0\cr
+<                     0 & 1\cr }\right) 
+---
+> $$ T=\left(\matrix{1 & 0\\
+>                     0 & 1\\ }\right) 
+55,56c55,56
+<    Z=\left(\matrix{1 & 0\cr
+<                     0 & 1\cr }\right) 
+---
+>    Z=\left(\matrix{1 & 0\\
+>                     0 & 1\\ }\right) 
+58,59c58,59
+<    R=\left(\matrix{1 & 0\cr
+<                     0 & 1\cr }\right) 
+---
+>    R=\left(\matrix{1 & 0\\
+>                     0 & 1\\ }\right) 
+69,70c69,70
+<    Q=\left(\matrix{1 & 0.8\cr
+<                    0.8 & 1 \cr }\right)
+---
+>    Q=\left(\matrix{1 & 0.8\\
+>                    0.8 & 1 \\ }\right)
+72,73c72,73
+<    H=\left(\matrix{3 & -2.5\cr
+<                    -2.5 & 3 \cr }\right)
+---
+>    H=\left(\matrix{3 & -2.5\\
+>                    -2.5 & 3 \\ }\right)
+82,86c82,86
+<       \aone&=&T_ta_{t-1}+c_t\cr
+<       \Pone&=&T_tP_{t-1}T^\prime_t +R_tQ_tR^\prime_t\cr
+<       v_t&=&y_t-Z_t\aone-d_t\cr
+<       F_t&=&Z_t\Pone Z_t^\prime+H_t\cr
+<       a_t&=&\aone-\Pone Z_t^\prime F_t^{-1}v_t\cr
+---
+>       \aone&=&T_ta_{t-1}+c_t\\
+>       \Pone&=&T_tP_{t-1}T^\prime_t +R_tQ_tR^\prime_t\\
+>       v_t&=&y_t-Z_t\aone-d_t\\
+>       F_t&=&Z_t\Pone Z^\prime+H_t\\
+>       a_t&=&\aone-\Pone Z_t^\prime F_t^{-1}v_t\\
+mprobit.tex
+paper.tex
+qafter4.tex
+qbefore4.tex
+simequat.tex
+33,38c33,34
+< \begin{equation}
+< \myeq{
+< L(B,\Gamma,D)=T/2\log(|B|^2)-T/2\log(|D|)-1/2\sum_{t=1}^T
+<   [By_t + \Gamma x_t]^\prime D^{-1} [By_t + \Gamma x_t] \label{se:1}
+< }
+< \end{equation}
+---
+> $$L(B,\Gamma,D)=T/2\log(|B|^2)-T/2\log(|D|)-1/2\sum_{t=1}^T
+>   [By_t + \Gamma x_t]^\prime D^{-1} [By_t + \Gamma x_t] \label{simequat:a}$$
+41c37
+< \ref{se:1} can be solved for in terms of the other parameters and
+---
+> can be solved for in terms of the other parameters and
+43,49c39,45
+< \begin{equation}
+< \myeq{
+< \hat D =
+< 1/T\sum_{t=1}^T [By_t + \Gamma x_t]^\prime [By_t + \Gamma x_t] \label{se:2}
+< }
+< \end{equation}
+< substituting this value into $(\number\mychapno.1)$ it can be shown that
+---
+> \X{empirical covariance matrix}{calculating}
+> $$\hat D =
+> 1/T\sum_{t=1}^T [By_t + \Gamma x_t]^\prime [By_t + \Gamma x_t] 
+> \label{simequat:empcov}$$ 
+> We shall refer to this quantity as the empirical covariance matrix.
+> It is the average of the outer product of the residuals.
+> Substituting this value into \label{simequat:a} it can be shown that
+53,58c49,50
+< equation \ref{se:2}
+< \begin{equation}
+< \myeq{
+< \tilde L(B,\Gamma)=T/2\log(|B|^2)-T/2\log(|\hat D|)\label{se:3} 
+< }
+< \end{equation}
+---
+> equation \label{simequat:a} simplifies to
+> $$\tilde L(B,\Gamma)=T/2\log(|B|^2)-T/2\log(|\hat D|) \label{simequat:conc}$$
+65c57
+< maximize \ref{se:1} which is in general a numerically unstable problem. 
+---
+> maximize $(\number\mychapno.1)$ which is in general a numerically unstable problem. 
+352c344
+< this proecedure helsp to stabilize the optimzation when several
+---
+> this procedure helps to stabilize the optimzation when several
+471c463,464
+<   emp_D=empirical_covariance(z);
+---
+>   emp_D=empirical_covariance(z); // use function
+>                     // empirical covariance for efficiency
+497c490
+< The {\tt REPORT\_SECTION} prints out a report of the imodel's results.
+---
+> The {\tt REPORT\_SECTION} prints out a report of the model's results.
+test.tex

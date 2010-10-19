@@ -1,0 +1,438 @@
+\indexentry{dvariable|hyperpage}{7}
+\indexentry{dvar\_vector|hyperpage}{7}
+\indexentry{automatic differentiation|hyperpage}{7}
+\indexentry{accuracy!of derivative calculations|hyperpage}{7}
+\indexentry{speed!of calculations|hyperpage}{8}
+\indexentry{precompiled derivative code|hyperpage}{9}
+\indexentry{dvariable|hyperpage}{11}
+\indexentry{dvar\_vector|hyperpage}{11}
+\indexentry{independent variables|hyperpage}{13}
+\indexentry{minimization!of a function|hyperpage}{13}
+\indexentry{gradient\_structure|hyperpage}{13}
+\indexentry{constructor!from {\tt  independent\_variables} to {\tt  dvar\_vector}|hyperpage}{13}
+\indexentry{Warning messages!Temporary used for type xxx in function yyy|hyperpage}{13}
+\indexentry{cast!from {\tt  independent\_variables} to {\tt  dvar\_vector}|hyperpage}{13}
+\indexentry{BEGIN\_MINIMIZATION|hyperpage}{13}
+\indexentry{END\_MINIMIZATION|hyperpage}{13}
+\indexentry{macros!BEGIN\_MINIMIZATION|hyperpage}{13}
+\indexentry{macros!END\_MINIMIZATION|hyperpage}{13}
+\indexentry{function minimizer!conjugate gradient|hyperpage}{16}
+\indexentry{conjugate gradient function minimizer|hyperpage}{16}
+\indexentry{overloading!of functions in C++|hyperpage}{16}
+\indexentry{bounds checking!for container objects|hyperpage}{16}
+\indexentry{safe arrays|hyperpage}{16}
+\indexentry{dvector|hyperpage}{16}
+\indexentry{dvar\_vector|hyperpage}{16}
+\indexentry{dmatrix|hyperpage}{16}
+\indexentry{dvar\_matrix|hyperpage}{16}
+\indexentry{overloaded operators|hyperpage}{17}
+\indexentry{multivariate normal distribution!log-likelihood function|hyperpage}{19}
+\indexentry{System Requirements|hyperpage}{21}
+\indexentry{hardware|hyperpage}{21}
+\indexentry{libraries|hyperpage}{21}
+\indexentry{Borland|hyperpage}{22}
+\indexentry{IDE!Borland|hyperpage}{22}
+\indexentry{memory model|hyperpage}{22}
+\indexentry{make|hyperpage}{22}
+\indexentry{compiler options!Borland|hyperpage}{22}
+\indexentry{memory model|hyperpage}{22}
+\indexentry{linker options!Borland|hyperpage}{23}
+\indexentry{linking!Borland linkers|hyperpage}{23}
+\indexentry{Zortech|hyperpage}{23}
+\indexentry{IDE!Zortech|hyperpage}{23}
+\indexentry{compiler options!Zortech|hyperpage}{23}
+\indexentry{memory model|hyperpage}{23}
+\indexentry{examples|hyperpage}{24}
+\indexentry{double|hyperpage}{25}
+\indexentry{float|hyperpage}{25}
+\indexentry{dvariable|hyperpage}{25}
+\indexentry{dvector|hyperpage}{25}
+\indexentry{dvar\_vector|hyperpage}{25}
+\indexentry{constant objects|hyperpage}{25}
+\indexentry{container classes|hyperpage}{25}
+\indexentry{variable objects|hyperpage}{25}
+\indexentry{dmatrix|hyperpage}{25}
+\indexentry{dvar\_matrix|hyperpage}{25}
+\indexentry{d3array|hyperpage}{25}
+\indexentry{dvar3\_array|hyperpage}{25}
+\indexentry{long int|hyperpage}{25}
+\indexentry{ivector|hyperpage}{25}
+\indexentry{lvector|hyperpage}{25}
+\indexentry{imatrix|hyperpage}{25}
+\indexentry{lmatrix|hyperpage}{25}
+\indexentry{int|hyperpage}{25}
+\indexentry{copy operation|hyperpage}{26}
+\indexentry{constructor!copy initializer|hyperpage}{26}
+\indexentry{dvariable(dvariable\&)|hyperpage}{26}
+\indexentry{copy operation!shallow|hyperpage}{26}
+\indexentry{value function|hyperpage}{26}
+\indexentry{stream operators!<<\ \ >>|hyperpage}{26}
+\indexentry{operators!<<\ \ >>|hyperpage}{26}
+\indexentry{stream input and output!of dvariables|hyperpage}{26}
+\indexentry{array!of dvariables|hyperpage}{27}
+\indexentry{float!no corresponding AUTODIF\ type|hyperpage}{27}
+\indexentry{safe arrays|hyperpage}{27}
+\indexentry{maximum size!of a dvar\_vector|hyperpage}{27}
+\indexentry{AVOID!using a shallow copy when a distinct object is desired|hyperpage}{28}
+\indexentry{constructor!dvector|hyperpage}{29}
+\indexentry{AVOID!only creating a version of a function which takes a variable argument|hyperpage}{30}
+\indexentry{dot product!of vectors|hyperpage}{31}
+\indexentry{RETURN\_ARRAYS\_INCREMENT|hyperpage}{31}
+\indexentry{RETURN\_ARRAYS\_DECREMENT|hyperpage}{31}
+\indexentry{AVOID!Calling {\tt  RETURN\_ARRAYS\_INCREMENT()}|hyperpage}{32}
+\indexentry{AVOID!Calling {\tt  RETURN\_ARRAYS\_DECREMENT()}|hyperpage}{32}
+\indexentry{operators () []|hyperpage}{32}
+\indexentry{access functions!array elements|hyperpage}{32}
+\indexentry{libraries!safe|hyperpage}{32}
+\indexentry{libraries!optimized|hyperpage}{32}
+\indexentry{column\_vector function|hyperpage}{32}
+\indexentry{row\_vector function|hyperpage}{32}
+\indexentry{constructor!dmatrix|hyperpage}{32}
+\indexentry{operators!<<|hyperpage}{33}
+\indexentry{dmatrix!access functions|hyperpage}{35}
+\indexentry{access functions!for dmatrix and dvar\_matrix class|hyperpage}{35}
+\indexentry{rowmax()|hyperpage}{35}
+\indexentry{colmin()|hyperpage}{35}
+\indexentry{colmax()|hyperpage}{35}
+\indexentry{rowsize()|hyperpage}{35}
+\indexentry{colsize()|hyperpage}{35}
+\indexentry{colshift(int&)|hyperpage}{35}
+\indexentry{rowshift(int&)|hyperpage}{35}
+\indexentry{d3array and dvar3\_array classes|hyperpage}{35}
+\indexentry{constructor!d3array|hyperpage}{35}
+\indexentry{slice!of a d3array|hyperpage}{35}
+\indexentry{access functions!for a d3array|hyperpage}{35}
+\indexentry{d3array!access functions|hyperpage}{35}
+\indexentry{slicemin()|hyperpage}{35}
+\indexentry{slicemax()|hyperpage}{35}
+\indexentry{slicesize()|hyperpage}{35}
+\indexentry{rowmin()|hyperpage}{35}
+\indexentry{rowmax()|hyperpage}{35}
+\indexentry{colmin()|hyperpage}{35}
+\indexentry{colmax()|hyperpage}{35}
+\indexentry{rowsize()|hyperpage}{35}
+\indexentry{colsize()|hyperpage}{35}
+\indexentry{colshift(int&)|hyperpage}{35}
+\indexentry{rowshift(int&)|hyperpage}{35}
+\indexentry{slicehift(int&)|hyperpage}{35}
+\indexentry{conversion!between between integer and floating point objects|hyperpage}{35}
+\indexentry{implicit conversion|hyperpage}{36}
+\indexentry{conversion!implicit|hyperpage}{36}
+\indexentry{operators + - * |hyperpage}{37}
+\indexentry{vector!component-wise sum of|hyperpage}{37}
+\indexentry{addition of vectors|hyperpage}{37}
+\indexentry{optimizing performance!using the best operators for a calculation|hyperpage}{37}
+\indexentry{vector!component-wise difference of|hyperpage}{38}
+\indexentry{subtraction of vectors|hyperpage}{38}
+\indexentry{vector!subtracting a number from a|hyperpage}{38}
+\indexentry{matrix!subtracting a number from a|hyperpage}{38}
+\indexentry{vector!dot product of two|hyperpage}{38}
+\indexentry{dot product|hyperpage}{38}
+\indexentry{vector!multiplying a number by a|hyperpage}{39}
+\indexentry{scalar product|hyperpage}{39}
+\indexentry{vector!multiplying a matrix by a|hyperpage}{39}
+\indexentry{matrix!multiplying a vector times a|hyperpage}{39}
+\indexentry{vector!multiplying a matrix times a|hyperpage}{39}
+\indexentry{matrix!multiplying a vector by a|hyperpage}{39}
+\indexentry{matrix!multiplication of two|hyperpage}{39}
+\indexentry{matrix multiplication|hyperpage}{39}
+\indexentry{matrix!multiplication by a number|hyperpage}{39}
+\indexentry{vector!outer product of two|hyperpage}{39}
+\indexentry{outer product!of two vectors|hyperpage}{39}
+\indexentry{operators += -= *= /=|hyperpage}{40}
+\indexentry{* /|hyperpage}{41}
+\indexentry{vector!dividing by a number|hyperpage}{41}
+\indexentry{vector!dividing a number by|hyperpage}{41}
+\indexentry{matrix!dividing by a number|hyperpage}{41}
+\indexentry{concatenation!of vector objects|hyperpage}{41}
+\indexentry{vector objects!concatenation|hyperpage}{41}
+\indexentry{resizeable arrays|hyperpage}{41}
+\indexentry{vector!element-wise product of|hyperpage}{42}
+\indexentry{elem\_prod!element-wise product|hyperpage}{42}
+\indexentry{vector!element-wise division|hyperpage}{42}
+\indexentry{elem\_div!element-wise division|hyperpage}{42}
+\indexentry{matrix!element-wise product of|hyperpage}{42}
+\indexentry{matrix!element-wise division|hyperpage}{42}
+\indexentry{matrix!the identity matrix function|hyperpage}{42}
+\indexentry{matrix!the determinant of|hyperpage}{42}
+\indexentry{determinant|hyperpage}{42}
+\indexentry{det|hyperpage}{42}
+\indexentry{matrix!the inverse of|hyperpage}{42}
+\indexentry{inverse|hyperpage}{42}
+\indexentry{\tt  inv|hyperpage}{42}
+\indexentry{vector!the norm of|hyperpage}{43}
+\indexentry{vector!the norm squared of|hyperpage}{43}
+\indexentry{norm|hyperpage}{43}
+\indexentry{matrix!the norm of|hyperpage}{43}
+\indexentry{norm|hyperpage}{43}
+\indexentry{matrix!the norm squared of|hyperpage}{43}
+\indexentry{norm|hyperpage}{43}
+\indexentry{matrix!the norm of|hyperpage}{43}
+\indexentry{norm|hyperpage}{43}
+\indexentry{vector!sum over the elements of|hyperpage}{43}
+\indexentry{sum!operation on a vector|hyperpage}{43}
+\indexentry{matrix!rowsum of|hyperpage}{43}
+\indexentry{rowsum!operation on a matrix|hyperpage}{43}
+\indexentry{matrix!colsum of|hyperpage}{43}
+\indexentry{colsum!operation on a matrix|hyperpage}{43}
+\indexentry{vector!minimum element of|hyperpage}{43}
+\indexentry{min!operation on a vector|hyperpage}{43}
+\indexentry{vector!maximum element of|hyperpage}{44}
+\indexentry{max!operation on a vector|hyperpage}{44}
+\indexentry{eigenvalues!not differentiable|hyperpage}{44}
+\indexentry{eigenvectors!not differentiable|hyperpage}{44}
+\indexentry{eigenvalues!of a symmetric matrix|hyperpage}{44}
+\indexentry{eigenvectors!of a symmetric matrix|hyperpage}{44}
+\indexentry{choleski decomposition of a symmetric matrix|hyperpage}{44}
+\indexentry{symmetric matrix!choleski decomposition|hyperpage}{44}
+\indexentry{Solving a system of linear equations|hyperpage}{44}
+\indexentry{solve function|hyperpage}{44}
+\indexentry{optimizing performance!using the best operators for a calculation|hyperpage}{44}
+\indexentry{multivariate normal distribution!calculation of the log-likelihood function for|hyperpage}{45}
+\indexentry{filling arrays and matrices|hyperpage}{45}
+\indexentry{vector!fill|hyperpage}{45}
+\indexentry{fill!filling a vector|hyperpage}{45}
+\indexentry{vector!fill\_seqadd|hyperpage}{45}
+\indexentry{fill\_seqadd!filling a vector|hyperpage}{45}
+\indexentry{matrix!rowfill\_seqadd|hyperpage}{46}
+\indexentry{rowfill\_seqadd!filling a matrix|hyperpage}{46}
+\indexentry{matrix!colfill\_seqadd|hyperpage}{46}
+\indexentry{colfill\_seqadd!filling a matrix|hyperpage}{46}
+\indexentry{matrix!colfill|hyperpage}{46}
+\indexentry{colfill!filling a matrix column with a vector|hyperpage}{46}
+\indexentry{matrix!rowfill|hyperpage}{46}
+\indexentry{rowfill!filling a matrix row with a vector|hyperpage}{46}
+\indexentry{vector!fill\_randu|hyperpage}{46}
+\indexentry{fill\_randu!filling a vector with random numbers|hyperpage}{46}
+\indexentry{matrix!colfill\_randu|hyperpage}{46}
+\indexentry{colfill\_randu!filling a matrix with random numbers|hyperpage}{46}
+\indexentry{matrix!rowfill\_randu|hyperpage}{46}
+\indexentry{rowfill\_randu!filling a matrix with random numbers|hyperpage}{46}
+\indexentry{vector!fill\_randbi|hyperpage}{46}
+\indexentry{fill\_randbi!filling a vector with random numbers|hyperpage}{46}
+\indexentry{vector!fill\_randn|hyperpage}{46}
+\indexentry{fill\_randn!filling a vector with random numbers|hyperpage}{46}
+\indexentry{matrix!rowfill\_randn|hyperpage}{47}
+\indexentry{rowfill\_randn!filling a matrix with random numbers|hyperpage}{47}
+\indexentry{vector!fill\_multinomial|hyperpage}{47}
+\indexentry{fill\_multinomial!filling a vector with random numbers|hyperpage}{47}
+\indexentry{extracting data from arrays and matrices|hyperpage}{47}
+\indexentry{matrix!extract\_column|hyperpage}{47}
+\indexentry{extract\_column!from a matrix|hyperpage}{47}
+\indexentry{extract\_diagonal!from a matrix|hyperpage}{47}
+\indexentry{operator ()|hyperpage}{47}
+\indexentry{vector!extracting a subvector|hyperpage}{47}
+\indexentry{extracting a subvector|hyperpage}{47}
+\indexentry{matrix!extract\_row|hyperpage}{47}
+\indexentry{extract\_row!from a matrix|hyperpage}{47}
+\indexentry{vector!function call () to extract subvector|hyperpage}{47}
+\indexentry{operator ++|hyperpage}{48}
+\indexentry{operator --|hyperpage}{48}
+\indexentry{operator ++!use with subvectors|hyperpage}{48}
+\indexentry{operator --!use with subvectors|hyperpage}{48}
+\indexentry{operator ++!for {\tt  dvectors}|hyperpage}{48}
+\indexentry{operator --!for {\tt  dvectors}|hyperpage}{48}
+\indexentry{subvectors!using to remove loops from code|hyperpage}{48}
+\indexentry{bootstrap sample!code for|hyperpage}{48}
+\indexentry{sorting|hyperpage}{49}
+\indexentry{dvector!sorting a|hyperpage}{49}
+\indexentry{dmatrix!sorting a|hyperpage}{49}
+\indexentry{sorting!dvector|hyperpage}{49}
+\indexentry{sorting!dmatrix|hyperpage}{49}
+\indexentry{operator ()|hyperpage}{49}
+\indexentry{sin|hyperpage}{50}
+\indexentry{cos|hyperpage}{50}
+\indexentry{tan|hyperpage}{50}
+\indexentry{asin|hyperpage}{50}
+\indexentry{atan|hyperpage}{50}
+\indexentry{acos|hyperpage}{50}
+\indexentry{sinh|hyperpage}{50}
+\indexentry{cosh|hyperpage}{50}
+\indexentry{tanh|hyperpage}{50}
+\indexentry{fabs|hyperpage}{50}
+\indexentry{sfabs|hyperpage}{50}
+\indexentry{exp|hyperpage}{50}
+\indexentry{log|hyperpage}{50}
+\indexentry{log10|hyperpage}{50}
+\indexentry{sqrt|hyperpage}{50}
+\indexentry{pow|hyperpage}{50}
+\indexentry{vector!maximum element of|hyperpage}{50}
+\indexentry{max!operation on a vector|hyperpage}{50}
+\indexentry{vector!minimum element of|hyperpage}{50}
+\indexentry{min!operation on a vector|hyperpage}{50}
+\indexentry{optimization considerations!temporary files|hyperpage}{53}
+\indexentry{\tt  sum|hyperpage}{54}
+\indexentry{optimizing performance!using the best operators for a calculation|hyperpage}{54}
+\indexentry{optimization considerations!Accessing container class elements|hyperpage}{54}
+\indexentry{data structures!ragged matrices|hyperpage}{55}
+\indexentry{ragged matrices|hyperpage}{55}
+\indexentry{data structures!ragged three dimensional arrays|hyperpage}{55}
+\indexentry{ragged three dimensional arrays|hyperpage}{55}
+\indexentry{AUTDIF!libraries|hyperpage}{61}
+\indexentry{libraries!safe|hyperpage}{61}
+\indexentry{libraries!optimized|hyperpage}{61}
+\indexentry{initializing AUTODIF classes|hyperpage}{61}
+\indexentry{overlays!BORLAND C\raise 1pt\hbox {\rmsmall ++}\ compiler and|hyperpage}{62}
+\indexentry{Borland|hyperpage}{62}
+\indexentry{Input and Output|hyperpage}{63}
+\indexentry{iostream|hyperpage}{63}
+\indexentry{operators << >>|hyperpage}{63}
+\indexentry{vector!I/O operations|hyperpage}{63}
+\indexentry{Input and Output!formatted|hyperpage}{63}
+\indexentry{formatting|hyperpage}{63}
+\indexentry{manipulators!setw|hyperpage}{63}
+\indexentry{manipulators!setfixex|hyperpage}{63}
+\indexentry{manipulators!setscientific|hyperpage}{63}
+\indexentry{manipulators!setprecision|hyperpage}{63}
+\indexentry{manipulators!setf|hyperpage}{64}
+\indexentry{I/O Error checking|hyperpage}{64}
+\indexentry{operator !|hyperpage}{64}
+\indexentry{operator !!I/O error checking and|hyperpage}{64}
+\indexentry{Input and Output!unformatted|hyperpage}{65}
+\indexentry{Input and Output!binary|hyperpage}{65}
+\indexentry{Input and Output!example|hyperpage}{65}
+\indexentry{gradfil1.tmp|hyperpage}{69}
+\indexentry{gradfil2.tmp|hyperpage}{69}
+\indexentry{cmpdiff.tmp|hyperpage}{69}
+\indexentry{temporary files!{\tt  gradfil1.tmp}|hyperpage}{69}
+\indexentry{temporary files!{\tt  gradfil2.tmp}|hyperpage}{69}
+\indexentry{temporary files!{\tt  cmpdiff.tmp}|hyperpage}{69}
+\indexentry{temporary files!for saving derivative information|hyperpage}{69}
+\indexentry{RAM disk!and temporary files|hyperpage}{69}
+\indexentry{temporary files!use of the DOS environment string TMP|hyperpage}{69}
+\indexentry{temporary files!use of the DOS environment string TMP1|hyperpage}{69}
+\indexentry{temporary files!default directory for|hyperpage}{69}
+\indexentry{environment string!specifying directory for temporary files|hyperpage}{69}
+\indexentry{temporary files!effect of abnormal program termination on|hyperpage}{69}
+\indexentry{global variables!access functions for|hyperpage}{71}
+\indexentry{gradient\_structure|hyperpage}{71}
+\indexentry{controlling memory allocation|hyperpage}{71}
+\indexentry{NUM\_RETURN\_ARRAYS!default value|hyperpage}{71}
+\indexentry{RETURN\_ARRAYS\_INCREMENT|hyperpage}{71}
+\indexentry{RETURN\_ARRAYS\_DECREMENT|hyperpage}{71}
+\indexentry{Error messages!Overflow in RETURN_ARRAYS stack -- Increase NUM_RETURN_ARRAYS|hyperpage}{71}
+\indexentry{GRADSTACK\_BUFFER\_SIZE|hyperpage}{71}
+\indexentry{CMPDIF\_BUFFER\_SIZE|hyperpage}{71}
+\indexentry{set\_CMPDIF\_BUFFER\_SIZE|hyperpage}{71}
+\indexentry{RETURN\_ARRAYS\_SIZE|hyperpage}{72}
+\indexentry{MAX\_NVAR\_OFFSET|hyperpage}{72}
+\indexentry{independent variables!maximum number of|hyperpage}{72}
+\indexentry{Error messages!You need to increase the global variable MAX\_NVAR\_OFFSET to xxx|hyperpage}{72}
+\indexentry{ARRAY\_MEMBLOCK\_SIZE|hyperpage}{72}
+\indexentry{Error messages!Need to increase ARRAY\_MEMBLOCK\_SIZE parameter|hyperpage}{73}
+\indexentry{dvariable!controlling the maximum number of with set\_MAX\_DLINKS|hyperpage}{73}
+\indexentry{set\_MAX\_DLINKS!setting the maximum number of dvariable objects|hyperpage}{73}
+\indexentry{Error messages! Need to increase the maximum number of dlinks|hyperpage}{73}
+\indexentry{access functions!for global objects|hyperpage}{73}
+\indexentry{stack!allocating sufficient space for the|hyperpage}{73}
+\indexentry{stack!checking for overflow of the|hyperpage}{73}
+\indexentry{\_stklen|hyperpage}{73}
+\indexentry{Borland|hyperpage}{73}
+\indexentry{stack!setting the stack size for Borland \cplus|hyperpage}{73}
+\indexentry{\_stack|hyperpage}{74}
+\indexentry{Zortech|hyperpage}{74}
+\indexentry{stack!setting the stack size for Zortech \cplus|hyperpage}{74}
+\indexentry{minimization of functions!quasi--Newton method|hyperpage}{75}
+\indexentry{minimization of functions!conjugate gradient method|hyperpage}{75}
+\indexentry{conjugate gradient method|hyperpage}{75}
+\indexentry{quasi--Newton method|hyperpage}{75}
+\indexentry{minimization of functions!user interface|hyperpage}{75}
+\indexentry{minimize function|hyperpage}{75}
+\indexentry{independent\_variables!declaration of|hyperpage}{76}
+\indexentry{independent\_variables!initialization of|hyperpage}{76}
+\indexentry{dvar\_vector|hyperpage}{77}
+\indexentry{dvariable|hyperpage}{77}
+\indexentry{BEGIN\_MINIMIZATION|hyperpage}{78}
+\indexentry{END\_MINIMIZATION|hyperpage}{78}
+\indexentry{BEGIN\_MINIMIZATION!number of arguments|hyperpage}{79}
+\indexentry{END\_MINIMIZATION!number of arguments|hyperpage}{79}
+\indexentry{fmm class!controlling minimization with|hyperpage}{79}
+\indexentry{fmmc class!controlling minimization with|hyperpage}{79}
+\indexentry{fmm class!maxfn|hyperpage}{79}
+\indexentry{fmm class!min\_improve|hyperpage}{79}
+\indexentry{fmm class!crit|hyperpage}{79}
+\indexentry{fmm class!imax|hyperpage}{79}
+\indexentry{fmm class!iprint|hyperpage}{79}
+\indexentry{fmm class!scroll\_flag|hyperpage}{79}
+\indexentry{fmm class!ireturn|hyperpage}{79}
+\indexentry{convergence criteria for function minimizer|hyperpage}{80}
+\indexentry{function minimizer!convergence criteria for|hyperpage}{80}
+\indexentry{boundp|hyperpage}{81}
+\indexentry{bounding functions!boundp|hyperpage}{81}
+\indexentry{penalty function!use wish bounding functions|hyperpage}{81}
+\indexentry{penalty function!getting the sign correct|hyperpage}{82}
+\indexentry{boundpin|hyperpage}{82}
+\indexentry{bounding functions!boundpin|hyperpage}{82}
+\indexentry{bounding functions!inverse function for|hyperpage}{82}
+\indexentry{Derivative checker!checking correctness of derivatives with|hyperpage}{82}
+\indexentry{Derivative checker!invoking from the function minimizer|hyperpage}{82}
+\indexentry{Derivative checker!invoking explicitly|hyperpage}{83}
+\indexentry{statistical functions|hyperpage}{85}
+\indexentry{simulation models|hyperpage}{85}
+\indexentry{nonlinear parameter estimation|hyperpage}{85}
+\indexentry{random numbers!filling vectors with|hyperpage}{85}
+\indexentry{filling vectors!with random numbers|hyperpage}{85}
+\indexentry{fill_randu|hyperpage}{85}
+\indexentry{fill_randn|hyperpage}{85}
+\indexentry{fill_randbi|hyperpage}{85}
+\indexentry{fill_multinomial|hyperpage}{85}
+\indexentry{random number generator!example of the use of|hyperpage}{86}
+\indexentry{robust estimation|hyperpage}{86}
+\indexentry{mixture of normal distributions|hyperpage}{86}
+\indexentry{multinomial fill!of an ivector object|hyperpage}{86}
+\indexentry{operator ()|hyperpage}{86}
+\indexentry{vector!extracting a subvector|hyperpage}{86}
+\indexentry{extracting a subvector|hyperpage}{86}
+\indexentry{vector!function call () to extract subvector|hyperpage}{86}
+\indexentry{mean!mean of a vector object|hyperpage}{87}
+\indexentry{std\_dev!standard deviation a vector object|hyperpage}{87}
+\indexentry{least squares!parameter estimation|hyperpage}{89}
+\indexentry{robust estimation!in nonlinear parameter estimation|hyperpage}{89}
+\indexentry{parameter estimation!least squares|hyperpage}{89}
+\indexentry{parameter estimation!robust nonlinear|hyperpage}{89}
+\indexentry{maximum likelihood estimation!for robust regression|hyperpage}{91}
+\indexentry{two-sided exponential distribution|hyperpage}{91}
+\indexentry{outliers!in robust regression|hyperpage}{93}
+\indexentry{vector operations!example of|hyperpage}{93}
+\indexentry{vector operations!to reduce the amount of temporary storage required|hyperpage}{93}
+\indexentry{bounding functions!boundp|hyperpage}{94}
+\indexentry{bounding functions!boundpin|hyperpage}{94}
+\indexentry{robust regression!a simple example|hyperpage}{94}
+\indexentry{several dependent variables|hyperpage}{105}
+\indexentry{several dependent variables!use of the operator {\tt  <<}|hyperpage}{105}
+\indexentry{several dependent variables!default number of|hyperpage}{105}
+\indexentry{dependent variables!set\_NUM\_DEPENDENT\_VARIABLES(int i);|hyperpage}{105}
+\indexentry{set\_NUM\_DEPENDENT\_VARIABLES(int i);|hyperpage}{105}
+\indexentry{gradient\_structure|hyperpage}{106}
+\indexentry{jacobcalc|hyperpage}{106}
+\indexentry{finding roots of equations!Newton--Raphson method|hyperpage}{106}
+\indexentry{Newton--Raphson method!Roots of equations|hyperpage}{106}
+\indexentry{Newton--Raphson method!example of|hyperpage}{106}
+\indexentry{boundp|hyperpage}{114}
+\indexentry{bounding functions!boundp|hyperpage}{114}
+\indexentry{penalty function|hyperpage}{114}
+\indexentry{boundp|hyperpage}{115}
+\indexentry{penalty function|hyperpage}{115}
+\indexentry{boundpin|hyperpage}{116}
+\indexentry{bounding functions!boundpin|hyperpage}{116}
+\indexentry{penalty function|hyperpage}{123}
+\indexentry{neural net|hyperpage}{125}
+\indexentry{neural net!feed-forward|hyperpage}{125}
+\indexentry{neural net!input layer|hyperpage}{125}
+\indexentry{neural net!output layer|hyperpage}{125}
+\indexentry{neural net!nodes|hyperpage}{125}
+\indexentry{neural net!squashing function|hyperpage}{125}
+\indexentry{neural net!bias terms|hyperpage}{125}
+\indexentry{two dimensional ragged array|hyperpage}{125}
+\indexentry{ragged matrix|hyperpage}{125}
+\indexentry{three dimensional ragged array|hyperpage}{126}
+\indexentry{set_value_inv|hyperpage}{127}
+\indexentry{set_value|hyperpage}{127}
+\indexentry{size_count|hyperpage}{127}
+\indexentry{Counting the number of elements in container classes|hyperpage}{127}
+\indexentry{neural net!training set|hyperpage}{127}
+\indexentry{neural net!weights|hyperpage}{127}
+\indexentry{neural net!bias terms|hyperpage}{127}
+\indexentry{ridge regression|hyperpage}{128}
+\indexentry{squashing function!use of inverse tangent for|hyperpage}{128}
+\indexentry{GRADFIL1.TMP|hyperpage}{130}

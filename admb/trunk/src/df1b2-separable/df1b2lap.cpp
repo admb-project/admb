@@ -900,14 +900,43 @@ laplace_approximation_calculator::laplace_approximation_calculator
   // !!! nov 12
   f1b2gradlist = new df1b2_gradlist(4000000U,200000U,8000000U,400000U,
     2000000U,100000U,adstring("f1b2list1"));
-  ad_dstar::allocate(nvar);
-  global_nvar=nvar;
-  df1b2variable::set_nvar(nvar);
-  df1b2variable::set_minder(minder(1));
-  df1b2variable::set_maxder(maxder(1));
-  df1b2variable::set_blocksize();
+
+  if (hesstype==2)
+  {
+    ad_dstar::allocate(nvar);
+    global_nvar=nvar;
+    df1b2variable::set_nvar(nvar);
+    df1b2variable::set_minder(minder(1));
+    df1b2variable::set_maxder(maxder(1));
+    df1b2variable::set_blocksize();
+  }
   if (hesstype!=2)
-    y.allocate(1,nvariables);
+  {
+    if (sparse_hessian_flag==0)
+    {
+      ad_dstar::allocate(nvar);
+      global_nvar=nvar;
+      df1b2variable::set_nvar(nvar);
+      df1b2variable::set_minder(minder(1));
+      df1b2variable::set_maxder(maxder(1));
+      df1b2variable::set_blocksize();
+      y.allocate(1,nvariables);
+    }
+    else
+    {
+      int nsave=nvar;
+      nvar=1;
+      ad_dstar::allocate(nvar);
+      global_nvar=nvar;
+      df1b2variable::set_nvar(1);
+      df1b2variable::set_minder(minder(1));
+      df1b2variable::set_maxder(maxder(1));
+      df1b2variable::set_blocksize();
+      y.allocate(1,nvariables);
+      nvar=nsave;
+      global_nvar=nvar;
+    }
+  }
   if (df1b2variable::adpool_counter !=0)
   {
     cout << "this can't happen" << endl;
@@ -1452,7 +1481,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
       if (vsparse_triplet==0)
       {
         pmin->lapprox->vsparse_triplet=
-          new dvar_compressed_triplet(mmin,mmax,us);
+          new dvar_compressed_triplet(mmin,mmax,us,us);
         vsparse_triplet = pmin->lapprox->vsparse_triplet;
         for (i=mmin;i<=mmax;i++)
         {
@@ -1464,7 +1493,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
       {
         if (!allocated(*vsparse_triplet))
         {
-          (*vsparse_triplet).allocate(mmin,mmax,us);
+          (*vsparse_triplet).allocate(mmin,mmax,us,us);
           for (i=mmin;i<=mmax;i++)
           {
             (*vsparse_triplet)(1,i)=lst(1,i);
@@ -1478,7 +1507,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
       if (vsparse_triplet_adjoint==0)
       {
         pmin->lapprox->vsparse_triplet_adjoint=
-          new dcompressed_triplet(mmin,mmax,us);
+          new dcompressed_triplet(mmin,mmax,us,us);
         vsparse_triplet_adjoint = pmin->lapprox->vsparse_triplet_adjoint;
         for (i=mmin;i<=mmax;i++)
         {
@@ -1490,7 +1519,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
       {
         if (!allocated(*vsparse_triplet_adjoint))
         {
-          (*vsparse_triplet_adjoint).allocate(mmin,mmax,us);
+          (*vsparse_triplet_adjoint).allocate(mmin,mmax,us,us);
           for (i=mmin;i<=mmax;i++)
           {
             (*vsparse_triplet_adjoint)(1,i)=lst(1,i);

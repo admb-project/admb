@@ -5,6 +5,11 @@
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <admodel.h>
+#if defined(USE_LAPLACE)
+#  include <df1b2fun.h>
+#  include <adrndeff.h>
+#endif
+
 //#define NO_MCMC
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
 #  include <windows.h>
@@ -455,6 +460,23 @@ int * kill_address;
       {
         if (!quit_flag)
         {
+
+#       if defined(USE_LAPLACE)
+          // save the sparse Hessian for the random effects
+          if (lapprox && lapprox->sparse_hessian_flag)
+          {
+            if (lapprox->sparse_triplet2)
+            {
+              dcompressed_triplet& dct=*(lapprox->sparse_triplet2);
+              adstring tmpstring = ad_comm::adprogram_name + ".shess";
+              uostream uos((char*)(tmpstring));
+              uos << dct.get_n()  << dct.indexmin() << dct.indexmax()
+                  << dct.get_coords() << dct.get_x();
+            }
+          }
+#endif     //  if defined(USE_LAPLACE)
+
+
           int on=-1;
           int on1=-1;
           on=option_match(argc,argv,"-nohess");
@@ -769,29 +791,25 @@ void adwait(double sec){;}
           }
         }
       }    
+      int hybrid_flag=0;
+      if (option_match(ad_comm::argc,ad_comm::argv,"-hybrid") > -1)
+      {
+        hybrid_flag=1;
+        gradient_structure::Hybrid_bounded_flag=1;
+      }
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcr",nopt))>-1)
       {
-#if defined(NO_MCMC)
-        cerr << "mcmc option not supported you must purchase"
-                " this as an add on" << endl;
-        exit(1);
-#else
-        mcmc_routine(nmcmc,iseed0,dscale,1);
-#endif
+        if (hybrid_flag==0)
+        {
+          mcmc_routine(nmcmc,iseed0,dscale,1);
+        }
+        else
+        {
+          hybrid_mcmc_routine(nmcmc,iseed0,dscale,1);
+        }
       }
       else
       {
-#if defined(NO_MCMC)
-        cerr << "mcmc option not supported you must purchase"
-                " this as an add on" << endl;
-        exit(1);
-#else
-        int hybrid_flag=0;
-        if (option_match(ad_comm::argc,ad_comm::argv,"-hybrid") > -1)
-        {
-          hybrid_flag=1;
-          gradient_structure::Hybrid_bounded_flag=1;
-        }
         if (hybrid_flag==0)
         {
           mcmc_routine(nmcmc,iseed0,dscale,0);
@@ -800,7 +818,6 @@ void adwait(double sec){;}
         {
           hybrid_mcmc_routine(nmcmc,iseed0,dscale,0);
         }
-#endif
       }
     }
   }

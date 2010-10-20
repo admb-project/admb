@@ -7847,6 +7847,7 @@ void test_the_pointer(void);
   class dvar_compressed_triplet
   {
     int n;
+    int m;
     imatrix coords;
     dvar_vector x;
   public:
@@ -7855,31 +7856,35 @@ void test_the_pointer(void);
     prevariable operator [] (int i) { return x[i];} 
     prevariable operator () (int i) { return x(i);} 
     int& operator () (int i,int j) { return coords(i,j);} 
-    dvar_compressed_triplet(int mmin,int mmax,int n);
-    void allocate(int mmin,int mmax,int n);
+    dvar_compressed_triplet(int mmin,int mmax,int n,int m);
+    void allocate(int mmin,int mmax,int n,int m);
     void deallocate(void);
     imatrix& get_coords(void)  { return coords; }
     dvar_vector& get_x(void)  { return x; }
     int get_n(){return n;}
+    int get_m(){return m;}
   };
   
-  class dcompressed_triplet
+ class dcompressed_triplet
   {
-    int n;
+    int n;  // number of rows
+    int m;  // number of columns
     imatrix coords;
     dvector x;
   public:
     int indexmin(void) { return x.indexmin();}
     int indexmax(void) { return x.indexmax();}
-    double& operator [] (int i) { return x[i];} 
-    double& operator () (int i) { return x(i);} 
-    int& operator () (int i,int j) { return coords(i,j);} 
-    dcompressed_triplet(int mmin,int mmax,int n);
-    void allocate(int mmin,int mmax,int n);
+    double& operator [] (int i) { return x[i];}
+    double& operator () (int i) { return x(i);}
+    int& operator () (int i,int j) { return coords(i,j);}
+    dcompressed_triplet(int mmin,int mmax,int n,int m);
+    //dcompressed_triplet make_dcompressed_triplet(const dmatrix & );
+    void allocate(int mmin,int mmax,int n,int m);
     void deallocate(void);
     imatrix& get_coords(void)  { return coords; }
     dvector& get_x(void)  { return x; }
     int get_n(){return n;}
+    int get_m(){return m;}
     void initialize(void);
   };
 
@@ -7890,24 +7895,39 @@ void test_the_pointer(void);
   istream& operator >>  (const istream&,const dvar_compressed_triplet& );
   */
 
-
   typedef struct cs_symbolic css;
-  class hs_symbolic    	// Info for symbolic cholesky
+ class hs_symbolic     // Info for symbolic cholesky
   {
    public:
       int n ;   // Dimension of underlying pos. def. matrix
-      ivector pinv ;   	// inverse row perm. for QR, fill red. perm for Chol 
-      ivector parent ; 	// elimination tree for Cholesky and QR 
+      int m ;   // Dimension of underlying pos. def. matrix
+      ivector pinv ;    // inverse row perm. for QR, fill red. perm for Chol 
+      ivector parent ;  // elimination tree for Cholesky and QR 
       ivector cp ;      // column pointers for Cholesky, row counts for QR 
-      double lnz ;    	// # entries in L for LU or Cholesky; in V for QR 
-      hs_symbolic(int,  css *); 
+      double lnz ;      // # entries in L for LU or Cholesky; in V for QR 
+      hs_symbolic(int,  css *);
       hs_symbolic(int n, dmatrix &T, int order);
       hs_symbolic(const dcompressed_triplet &T, int order);
+
       hs_symbolic(const dvar_compressed_triplet &T, int order);
-      int is_null(); 
+      int is_null();
       int cmp(hs_symbolic &S);
       hs_symbolic(void);
   };
+
+  class hs_smatrix;
+  class dvar_hs_smatrix;
+
+
+  hs_smatrix * return_choleski_decomp(dcompressed_triplet & st);
+
+  dvector return_choleski_factor_solve(hs_smatrix * PL,dvector& eps);
+
+  dvar_vector return_choleski_factor_solve(dvar_hs_smatrix * PL,dvector& eps);
+
+  dvector return_choleski_decomp_solve(dcompressed_triplet & dct,dvector& eps);
+
+  dvar_hs_smatrix * return_choleski_decomp(dvar_compressed_triplet & st);
 
   int allocated(const dcompressed_triplet & t);
   int allocated(const dvar_compressed_triplet & t);
@@ -7922,6 +7942,7 @@ void test_the_pointer(void);
   double ln_det(const dcompressed_triplet&,int& ierr);
   dvariable ln_det(const dvar_compressed_triplet&,int&ierr);
 
+  dvar_vector return_choleski_factor_solve(dvar_hs_smatrix * PL,dvector& eps);
   void save_ad_pointer(void *);
   void * restore_ad_pointer(void);
 

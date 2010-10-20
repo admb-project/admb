@@ -53,13 +53,13 @@ void laplace_approximation_calculator::make_sparse_triplet(void)
     delete sparse_triplet;
     sparse_triplet=0;
   }
-  //sparse_triplet = new dcompressed_triplet(1,nz2,usize);
+  //sparse_triplet = new dcompressed_triplet(1,nz2,usize,usize);
   if (sparse_triplet2)
   {
     delete sparse_triplet2;
     sparse_triplet2=0;
   }
-  sparse_triplet2 = new dcompressed_triplet(1,nz2,usize);
+  sparse_triplet2 = new dcompressed_triplet(1,nz2,usize,usize);
 
   if (compressed_triplet_information)
   {

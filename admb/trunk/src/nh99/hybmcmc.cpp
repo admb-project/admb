@@ -16,9 +16,6 @@
   #define getch getchar
 #endif
 
-#ifdef __GNUDOS__
-  #include <gccmanip.h>
-#endif
 
 #if defined (__ZTC__) || defined(__TURBOC__) || defined(__WAT32__) \
   || defined (__MSVC32__)
@@ -104,6 +101,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int mcmc_wrap_flag=0;
   int mcmc_gui_length=10000;
   int no_sd_mcmc=0;
+
   
   int on2=-1;
   int nvar1=0;
@@ -178,6 +176,13 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       initial_params::set_inactive_random_effects();
       nvar=initial_params::nvarcalc(); // get the number of active parameters
     }
+#endif
+
+#if defined(USE_LAPLACE)
+      independent_variables parsave(1,nvar_re);
+      initial_params::restore_start_phase(); 
+#else
+      independent_variables parsave(1,nvar);
 #endif
     dvector x(1,nvar);
     //dvector scale(1,nvar);
@@ -256,6 +261,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       cout << " Setting covariance matrix to diagonal with entries " << dscale
            << endl;  
     }
+    int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
     dmatrix S(1,nvar,1,nvar);
     dvector old_scale(1,nvar);
     int old_nvar;
@@ -363,24 +369,104 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
     
-    // will need this stuff to do restarts but for now
-    // just topen a new file
-    /*
-    if (!psvflag) {
-      pofs_psave=
-        new uostream(
-          (char*)(ad_comm::adprogram_name + adstring(".psv")),ios::app);
-    } else {
+    // for hybrid mcmc option always save output
+    //if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)
+    int mcsave_flag=1;
+    if ( mcrestart_flag>-1)
+    {
+      // check that nvar is correct
+      uistream uis((char*)(ad_comm::adprogram_name + adstring(".psv")));
+      if (!uis)
+      {
+        cerr << "Error trying to open file" << 
+          ad_comm::adprogram_name + adstring(".psv") <<
+          " for mcrestart" <<   endl;
+        ad_exit(1);
+      } else {
+        int nv1;
+        uis >> nv1;
+        if (nv1 !=nvar) {
+          cerr << "wrong number of independent variables in" <<
+            ad_comm::adprogram_name + adstring(".psv") << endl
+           << " I found " << nv1 << " instead of " << nvar  << endl;
+          ad_exit(1);
+        }
+        // get last x vector from file
+        int sz=parsave.size()*sizeof(double);
+        // backup from end of file
+        uis.seekg(-sz,ios::end);
+        uis >> parsave;
+       cout << " restored "  << parsave(parsave.indexmin()) << " "
+            << parsave(parsave.indexmax()) << endl;
+        if (!uis)
+        {
+          cerr << "error resotring last mcmc poistion from file "
+            << ad_comm::adprogram_name + adstring(".psv") << endl;
+          ad_exit(1);
+        }
+        int ii=1;
+        dvector x0(1,nvar);
+        initial_params::restore_all_values(parsave,ii);
+        //x0.initialize();
+        //dvector pen_vector(1,nvar);
+        //initial_params::reset(dvar_vector(parsave),pen_vector); 
+        //initial_params::xinit(x0);   
+        //cout << " x0 " << x0(x0.indexmin()) << endl;
+      }
+    } 
+
+
+    if ( mcrestart_flag>-1)
+    {
+      pofs_psave= new uostream( (char*)(ad_comm::adprogram_name 
+          + adstring(".psv")),ios::app);
+     /*
+      pofs_psave->seekp(0,std::ios::end);
+      *pofs_psave << 123;
+      delete pofs_psave;
+      uistream uis((char*)(ad_comm::adprogram_name + adstring(".psv")));
+      if (!uis)
+      {
+        cerr << "Error trying to open file" << 
+          ad_comm::adprogram_name + adstring(".psv") <<
+          " for mcrestart" <<   endl;
+        ad_exit(1);
+      } else {
+        int nv1;
+        uis >> nv1;
+        if (nv1 !=nvar) {
+          cerr << "wrong number of independent variables in" <<
+            ad_comm::adprogram_name + adstring(".psv") << endl
+           << " I found " << nv1 << " instead of " << nvar  << endl;
+          ad_exit(1);
+        }
+      }
      */
+    }
+    else
+    {
       pofs_psave=
         new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
-      (*pofs_psave) << nvar;
-    //}
+    }
+
+    if (!pofs_psave|| !(*pofs_psave))
+    {
+      cerr << "Error trying to open file" << 
+        ad_comm::adprogram_name + adstring(".psv") << endl;
+      ad_exit(1);
+    }
+    if (mcrestart_flag == -1 )
+    {
+        (*pofs_psave) << nvar;
+    }
+
       // need to rescale the hessian
       // get the current scale
       dvector x0(1,nvar);
       dvector current_scale(1,nvar);
       initial_params::xinit(x0);   
+      // cout << "starting with " << x0(x0.indexmin()) << " "
+        //    << x0(x0.indexmax()) << endl;
       int mctmp=initial_params::mc_phase;
       initial_params::mc_phase=0;
       initial_params::stddev_scale(current_scale,x);
@@ -412,14 +498,13 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // ***************************************************************
       // ***************************************************************
       independent_variables z(1,nvar);
+      z=x0;
+      gradient_structure::set_NO_DERIVATIVES();
+      dvector g(1,nvar);
+      //cout << "initial ll value " << get_hybrid_monte_carlo_value(nvar,z,g)
+      //     << endl;
       dvector y(1,nvar);
       y.initialize();
-#if defined(USE_LAPLACE)
-      independent_variables parsave(1,nvar_re);
-      initial_params::restore_start_phase(); 
-#else
-      independent_variables parsave(1,nvar);
-#endif
 
 #if defined(USE_LAPLACE)
       if (mcmc2_flag==0)
@@ -431,11 +516,19 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       dvector p(1,nvar);  // momentum
       int iseed=2197;
       if (iseed0) iseed=iseed0;
+      if ( mcrestart_flag>-1)
+      {
+        ifstream ifs("hybrid_seed");
+        ifs >> iseed;
+        if (!ifs)
+        {
+           cerr << "error reading random number seed" << endl;
+        }
+      }
       random_number_generator rng(iseed);
       gradient_structure::set_YES_DERIVATIVES();
       ofstream ogs("sims");
       initial_params::xinit(x0);   
-      dvector g(1,nvar);
       
       z=x0+chd*y;
       double llc=get_hybrid_monte_carlo_value(nvar,z,g);
@@ -579,7 +672,8 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
            double r2=0.5*norm2(p);
            pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
          }
-         cout << iaccept/is << " " << Hbegin-Ham << " " << Ham << endl;
+         if ((is%50)==1)
+           cout << iaccept/is << " " << Hbegin-Ham << " " << Ham << endl;
          if (rr<pp)
          {
            iaccept++;
@@ -599,9 +693,16 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
          }
          (*pofs_psave) << parsave;
        }
+      // cout << " saved  " << parsave(parsave.indexmin()) << " "
+        //    << parsave(parsave.indexmax()) << endl;
+       //double ll=get_hybrid_monte_carlo_value(nvar,parsave,g);
+       //cout << "ll  " << ll << endl;
     // ***************************************************************
     // ***************************************************************
     // ***************************************************************
+    ofstream ofs("hybrid_seed");
+    int seed=(int) (10000*randu(rng));
+    ofs << seed;
     if (pofs_psave)
     {
       delete pofs_psave;

@@ -215,7 +215,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     if (num_variables>=minder && num_variables<=maxder)
     {
       int offset= num_variables-minder;
-      u_dot[offset]=1.0;
+      //u_dot[offset]=1.0;
     }
   }
 

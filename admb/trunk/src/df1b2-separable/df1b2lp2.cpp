@@ -70,13 +70,27 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     }
   }
 
-  for (i=1;i<=xsize;i++)
+  if (sparse_hessian_flag==0)
   {
-    y(i)=x(i);
+    for (i=1;i<=xsize;i++)
+    {  
+      y(i)=x(i);
+    }
+    for (int i=1;i<=usize;i++)
+    {
+      y(i+xsize)=uhat(i);
+    }
   }
-  for (i=1;i<=usize;i++)
+  else  
   {
-    y(i+xsize)=uhat(i);
+    for (i=1;i<=xsize;i++)
+    {  
+      value(y(i))=x(i);
+    }
+    for (int i=1;i<=usize;i++)
+    {
+      value(y(i+xsize))=uhat(i);
+    }
   }
   //cout << y << endl;
         
@@ -98,9 +112,19 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       pmin->inner_opt_flag=0;
     }
   
-    for (i=1;i<=usize;i++)
+    if (sparse_hessian_flag==0)
     {
-      y(i+xsize)=uhat(i);
+      for (int i=1;i<=usize;i++)
+      {
+        y(i+xsize)=uhat(i);
+      }
+    }
+    else  
+    {
+      for (int i=1;i<=usize;i++)
+      {
+        value(y(i+xsize))=uhat(i);
+      }
     }
   }
  

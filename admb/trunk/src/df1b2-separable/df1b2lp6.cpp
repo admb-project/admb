@@ -4,8 +4,6 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 //#define USE_DD_STUFF
 //#define USE_DD
 #if defined(USE_LAPLACE)
@@ -17,6 +15,10 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const dvector& _uadjoint,
   const banded_symmetric_dmatrix& _bHessadjoint,function_minimizer * pmin);
 double calculate_laplace_approximation(const dvector& x,const dvector& u0,
+  const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
+  const dmatrix& _Hessadjoint,function_minimizer * pmin);
+
+double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
 
@@ -205,7 +207,28 @@ void laplace_approximation_calculator::
           else
           {
             cerr << "matrix not pos definite in sparse choleski"  << endl;
-            ad_exit(1);
+            pfmin->bad_step_flag=1;
+
+            int on;
+            int nopt;
+            if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ieigvec",nopt))>-1)
+            {
+              dmatrix M=make_dmatrix(*sparse_triplet2);
+
+              ofstream ofs3("inner-eigvectors");
+              ofs3 << "eigenvalues and eigenvectors " << endl;
+              dvector v=eigenvalues(M);
+              dmatrix ev=trans(eigenvectors(M));
+              ofs3 << "eigenvectors" << endl;
+              int i;
+              for (i=1;i<=ev.indexmax();i++)
+               {
+                  ofs3 << setw(4) << i  << " " 
+                   << setshowpoint() << setw(14) << setprecision(10) << v(i) << " "
+                   << setshowpoint() << setw(14) << setprecision(10)
+                   << ev(i) << endl;
+               }
+            }
           }
           //cout << norm2(step-tmpstep) << endl;
           //dvector step1=-solve(Hess,grad);
@@ -216,6 +239,8 @@ void laplace_approximation_calculator::
           step=-solve(Hess,grad);
         }
 #     endif
+      if (pmin->bad_step_flag)
+        break;
       uhat_old=uhat;
       uhat+=step;
     
@@ -233,9 +258,19 @@ void laplace_approximation_calculator::
       }
     }
     
-    for (int i=1;i<=usize;i++)
+    if (sparse_hessian_flag==0)
     {
-      y(i+xsize)=uhat(i);
+      for (int i=1;i<=usize;i++)
+      {
+        y(i+xsize)=uhat(i);
+      }
+    }
+    else  
+    {
+      for (int i=1;i<=usize;i++)
+      {
+        value(y(i+xsize))=uhat(i);
+      }
     }
   }
 }
@@ -270,6 +305,7 @@ double laplace_approximation_calculator::
   else
   {
     uhat=get_uhat_lm_newton(x,pfmin);
+    //uhat=get_uhat_lm_newton2(x,pfmin);
     //maxg=objective_function_value::gmax;
   }
   return fmc1.fbest;
@@ -316,8 +352,16 @@ dvector laplace_approximation_calculator::banded_calculations
           no_converge_flag);
       }
   
-      for (i=1;i<=xsize;i++) { y(i)=x(i); }
-      for (i=1;i<=usize;i++) { y(i+xsize)=uhat(i); }
+      if (sparse_hessian_flag==0)
+      {
+        for (i=1;i<=xsize;i++) { y(i)=x(i); }
+        for (i=1;i<=usize;i++) { y(i+xsize)=uhat(i); }
+      }
+      else
+      {
+        for (i=1;i<=xsize;i++) { value(y(i))=x(i); }
+        for (i=1;i<=usize;i++) { value(y(i+xsize))=uhat(i); }
+      }
           
       laplace_approximation_calculator::where_are_we_flag=2; 
       if (admb_ssflag==0)
@@ -332,25 +376,45 @@ dvector laplace_approximation_calculator::banded_calculations
    
       if (num_nr_iters<=0) { evaluate_function(uhat,pfmin); }
   
-      for (i=1;i<=usize;i++) { y(i+xsize)=uhat(i); }
+      if (sparse_hessian_flag==0)
+      {
+        for (i=1;i<=usize;i++) { y(i+xsize)=uhat(i); }
+      }
+      else
+      {
+        for (i=1;i<=usize;i++) { value(y(i+xsize))=uhat(i); }
+      }
+      if (pfmin->bad_step_flag)
+        return xadjoint;
     }
     while(no_converge_flag);
   
     /* If we are in mcmc phase we just need to calcualte the
        ln_det(Hess) and return
     */
+    hs_symbolic & ssymb=*(pmin->lapprox->sparse_symbolic2);
     if (initial_params::mc_phase)
     {
       do_newton_raphson_banded(pfmin,f_from_1,no_converge_flag);
       int sgn=0;
       double& f = (double&) _f;
       f=initial_df1b2params::cobjfun;
-      if (bHess==0)
-      {
-        cerr << "Block diagonal Hessian is unallocated" << endl;
-        ad_exit(1);
+     if (pmin->lapprox->sparse_hessian_flag==0)
+     {
+        if (bHess==0)
+        {
+          cerr << "Block diagonal Hessian is unallocated" << endl;
+          ad_exit(1);
+        }
+        f+=0.5*ln_det_choleski(*bHess,sgn);
       }
-      f+=0.5*ln_det_choleski(*bHess,sgn);
+      else
+      {
+        //hs_symbolic & ssymb=*(pmin->lapprox->sparse_symbolic2);
+        //dvariable tmp=0.5*ln_det(*(pmin->lapprox->vsparse_triplet),
+        //  ssymb,*(pmin->lapprox->sparse_triplet2));
+        f+=0.5*ln_det(*(pmin->lapprox->sparse_triplet2),ssymb);
+      }
     }
     else
     {
@@ -411,8 +475,12 @@ dvector laplace_approximation_calculator::banded_calculations
           }
           else if (hesstype==4)
           {
-            f=calculate_importance_sample(x,uhat,Hess,xadjoint,uadjoint,
-              Hessadjoint,pfmin);
+            if (pmin->lapprox->sparse_hessian_flag==0)
+              f=calculate_importance_sample(x,uhat,Hess,xadjoint,uadjoint,
+                Hessadjoint,pfmin);
+            else
+              f=calculate_importance_sample_shess(x,uhat,Hess,xadjoint,uadjoint,
+                Hessadjoint,pfmin);
           }
           else
           {
@@ -719,6 +787,10 @@ dvector laplace_approximation_calculator::
   
   for (ip=1;ip<=num_der_blocks;ip++)
   {
+    if (ip>1)   // change to combine sparse matrix stuff with num der blocks
+    {           // df  3-4-09
+      sparse_count=0;
+    }
     used_flags.initialize();
     // do we need to reallocate memory for df1b2variables?
     check_for_need_to_reallocate(ip);
@@ -749,8 +821,11 @@ dvector laplace_approximation_calculator::
     }
     */
 
-    if (sparse_triplet2)
-      sparse_triplet2->initialize();
+    if (ip==1)
+    {
+      if (sparse_triplet2)
+        sparse_triplet2->initialize();
+    }
 
     pfmin->user_function();
     /*

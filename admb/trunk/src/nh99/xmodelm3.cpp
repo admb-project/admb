@@ -39,6 +39,8 @@ void tracing_message(int traceflag,const char *s);
 #endif
 
 
+  int function_minimizer::bad_step_flag=0;  
+
   void function_minimizer::minimize(void)
   {
     int nopt=0;

@@ -2,7 +2,7 @@
 
 #all: clean beta_regression hysimple simple_mcmc betareg gmrf
 #all: clean init_bounded_number_matrix admb_messages
-all: clean SS3
+all: clean betareg beta_regression gmrf simple_mcmc
 
 SS3:
 	OPTIONS=-s make --directory=$@
@@ -35,3 +35,4 @@ clean:
 	make --directory=init_bounded_number_matrix clean
 	make --directory=betareg clean
 	make --directory=gmrf clean
+	make --directory=simple_mcmc clean

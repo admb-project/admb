@@ -14,7 +14,7 @@
 
 #undef ADMB_CONFIGURE
 #ifdef ADMB_CONFIGURE
-  #include "../../admb_configure.h"
+  //#include "../../admb_configure.h"
 #endif
 
 void vm_initialize(void);
@@ -163,7 +163,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 
       (*ad_printf)("AD Model Builder");
 #ifdef ADMB_CONFIGURE
-      (*ad_printf)(" %s", (char*)admb_banner);
+    //  (*ad_printf)(" %s", (char*)admb_banner);
 #endif
       (*ad_printf)("\n");
       (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California\n");
@@ -254,7 +254,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     {
       (*ad_printf)("AD Model Builder");
 #ifdef ADMB_CONFIGURE
-      (*ad_printf)(" %s", (char*)admb_banner);
+      //(*ad_printf)(" %s", (char*)admb_banner);
 #endif
       (*ad_printf)("\n");
       (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California\n");

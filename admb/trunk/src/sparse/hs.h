@@ -1,10 +1,3 @@
-/*
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008 Regents of the University of California
- */
-
 #if !defined(__HS_H__)
 #define  __HS_H__ 
 extern "C" 
@@ -43,9 +36,11 @@ class hs_smatrix    	// matrix in compressed-column, 0 offset
     ivector p ;        	// column pointers (size n+1) or col indices; size nzmax 
     ivector i ;        	// row indices, size nzmax 
     dvector x ;     	// numerical values, size nzmax 
+    hs_symbolic sym;
 
     //hs_smatrix(int ,XCONST dmatrix &); 			// Initialization
     hs_smatrix(int ,XCONST dcompressed_triplet &); 			// Initialization
+    hs_smatrix(const dcompressed_triplet &); 			// Initialization
     hs_smatrix(int n, int nzmax); 			// Initialization
     hs_smatrix(XCONST cs *A);		// To convert from cs-format
     hs_smatrix(XCONST hs_symbolic &); 			// To generate cholesky factor
@@ -58,10 +53,10 @@ class hs_smatrix    	// matrix in compressed-column, 0 offset
     int print();
     int print_pattern();
     int print_trans_zeros();
-    hs_symbolic sym;
     
     dvector & get_x(void) {return x;}
     hs_smatrix(void) : nzmax(0),m(0),n(0){}
+    void set_symbolic(hs_symbolic&);
 };
 
 class dvar_hs_smatrix    	// matrix in compressed-column, 0 offset
@@ -92,6 +87,7 @@ class dvar_hs_smatrix    	// matrix in compressed-column, 0 offset
     int print_pattern();
     int print_trans_zeros();
     hs_symbolic sym;
+    void set_symbolic(hs_symbolic& s);
 };
 
 cs *hs_calloc();

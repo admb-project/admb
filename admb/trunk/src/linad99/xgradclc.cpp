@@ -82,7 +82,7 @@ void funnel_gradcalc(void)
 #  endif
   gradient_structure::TOTAL_BYTES = 0;
   gradient_structure::PREVIOUS_TOTAL_BYTES=0;
-  int i;
+  unsigned int i;
   long int lpos;
   if(!gradient_structure::instances)
   {
@@ -158,7 +158,7 @@ void funnel_gradcalc(void)
     * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
-double z;
+//double z;
 int break_flag=1;
 int funnel_flag=0;
 
@@ -196,7 +196,10 @@ do
 
  {
    if (lpos<0) 
-   {  long int ttmp = 
+   {  
+     #ifdef GRAD_DIAG
+      long int ttmp = 
+     #endif
       lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
 
      #ifdef GRAD_DIAG
@@ -217,7 +220,7 @@ do
 
     double* dptr=(double*) gradient_structure::ARRAY_MEMBLOCK_BASE;
     dptr-=1;
-    int ii=0;
+    unsigned int ii=0;
     int nzero=0;
     int nnzero=0;
     int dcount=0;
@@ -238,7 +241,7 @@ do
       nzero++;
     }
     
-    for (int i1=1;i1<dsize;i1++)
+    for (unsigned int i1=1;i1<dsize;i1++)
     {
       if (*(++dptr))
       {

@@ -46,7 +46,7 @@ int common(ivector& v,ivector& w)
 {
   check_order(v);
   check_order(w);
-  int vmin=v.indexmin();
+  //int vmin=v.indexmin();
   int wmin=w.indexmin();
   int vmax=v.indexmax();
   int wmax=w.indexmax();
@@ -82,7 +82,8 @@ int common(ivector& v,ivector& w)
 void laplace_approximation_calculator::
   check_hessian_type2(function_minimizer * pfmin)
 {
-  int i,j,ip; 
+  //int i,j,ip; 
+  int i,ip; 
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
     hesstype=4;

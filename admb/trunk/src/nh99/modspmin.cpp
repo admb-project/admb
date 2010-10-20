@@ -25,6 +25,7 @@ int ad_cheat_flag=0;
   int Sleep(int);
 #endif
 
+/*
 static int return_int(int * v)
 {
   if (*v==1011)
@@ -32,6 +33,7 @@ static int return_int(int * v)
   else
     return 1831;
 }
+*/
 
 void ADSleep(int x);
 
@@ -54,7 +56,7 @@ void ADSleep(int x);
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
 
-  static int try_it_again(int stupid_flag);
+//  static int try_it_again(int stupid_flag);
 
 #if defined(ADMB_REDEMO)
   static int q830=830;
@@ -124,7 +126,7 @@ extern admb_javapointers * adjm_ptr;
 #   endif
   }
 int something_105=0;
-static int something_106=0;
+//static int something_106=0;
 
 #if defined(ADMB_REDEMO)
 static int stupid_flag=17;
@@ -331,7 +333,7 @@ int * kill_address;
        ad_cheat_flag=1;
      }
 #endif
-    char ch;
+    //char ch;
     int on=-1;
     int nopt=-1;
     //dvector xxxx("{1.1,2.1,3.1}");
@@ -444,7 +446,7 @@ int * kill_address;
       
       tracing_message(traceflag,"D1");
   
-      double ratio=100.*gradient_structure::max_last_offset/12000.0;
+      //double ratio=100.*gradient_structure::max_last_offset/12000.0;
   #if defined (AD_DEMO)
       cout << endl << endl;
       if (ad_printf)
@@ -597,8 +599,8 @@ int * kill_address;
             if ( (on=option_match(argc,argv,"-sob",nopt))>-1)
             {
               int nsob=0;
-              int iseed0=0;
-              double dscale=1.0;
+              //int iseed0=0;
+              //double dscale=1.0;
               if (nopt)
               {
                 nsob=atoi(argv[on+1]);

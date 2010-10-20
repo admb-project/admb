@@ -116,7 +116,7 @@ void read_pass2_1_dvdv(void)
   list.saveposition(); // save pointer to beginning of record;
   double xu,yu;
   //ad_dstar xdot,ydot;
-  df1b2function2 * pf;
+  //df1b2function2 * pf;
 
   // get info from tape1
 #if defined(SAFE_ARRAYS)
@@ -147,16 +147,24 @@ void read_pass2_1_dvdv(void)
   double d2f22=*(double*) bptr;
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f111=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f112=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f122=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f222=*(double*) bptr;
+#endif
   bptr+=sizeof(double);
 
   memcpy(&xu,bptr,sizeof(double));
@@ -343,7 +351,7 @@ void read_pass2_1_dvdv(void)
 
 void read_pass2_2_dvdv(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1
@@ -383,8 +391,8 @@ void read_pass2_2_dvdv(void)
   // bptr and bptr2 now both point to the beginning of their records
 
   double xu,yu;
-  df1b2_header x,z;
-  df1b2function2 * pf;
+  //df1b2_header x,z;
+  //df1b2function2 * pf;
 
   // get info from tape1
   // get info from tape1
@@ -617,8 +625,8 @@ void read_pass2_3_dvdv(void)
   // save the pointer to the beginning of the record
   double xu;
   double yu;
-  df1b2_header x,z;
-  df1b2function2 * pf;
+  //df1b2_header x,z;
+  //df1b2function2 * pf;
 
   // get info from tape1
   // get info from tape1
@@ -666,16 +674,24 @@ void read_pass2_3_dvdv(void)
   double d2f22=*(double*) list.bptr;
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f111=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f112=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f122=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
+#if defined(PRINT_DERS)
   double d3f222=*(double*) list.bptr;
+#endif
   list.bptr+=sizeof(double);
 
   memcpy(&xu,list.bptr,sizeof(double));

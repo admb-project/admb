@@ -47,4 +47,4 @@
  }
 #endif
 #endif
-void AAsvf(void){int x=1;}
+void AAsvf(void){/*int x=1;*/}

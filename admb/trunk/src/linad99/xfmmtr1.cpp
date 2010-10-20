@@ -118,9 +118,11 @@ double dafsqrt( double x );
 
 void fmmt1::fmin2(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST dvector& _g, function_minimizer * pmp)
 {
-  int itn=0; int bigbreak=0; int smallbreak=0; int midbreak=0;
+  //int itn=0; int bigbreak=0; int smallbreak=0; int midbreak=0;
+  int itn=0; int smallbreak=0; int midbreak=0;
   int nvar=initial_params::nvarcalc(); // get the number of active
-  double a,f, curf, rnorm, stepsize,b,epsilon;
+  //double a,f, curf, rnorm, stepsize,b,epsilon;
+  double a,f, curf, stepsize,b,epsilon;
   independent_variables x(1,nvar);
   initial_params::xinit(x);    // get the initial values into the
   dvariable vf=0.0;            // x vector
@@ -216,7 +218,7 @@ void fmmt1::fmin2(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR
       for (i=k;i>=lb;i--)
       {
         int i1=i%(m1);
-        int i2=(i+1)%(m1);
+        //int i2=(i+1)%(m1);
         //if (i==k)
         {
           alpha(i-lb)=xrho(i1)*(s(i1)*t);

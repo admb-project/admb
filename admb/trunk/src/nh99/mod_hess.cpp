@@ -177,7 +177,7 @@ void function_minimizer::hess_routine_noparallel(void)
   }
   ofs << gradient_structure::Hybrid_bounded_flag;
   dvector tscale(1,nvar);   // need to get scale from somewhere
-  int check=initial_params::stddev_scale(tscale,x);
+  /*int check=*/initial_params::stddev_scale(tscale,x);
   ofs << tscale;
 }
 
@@ -195,7 +195,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof,BOR_CONST dvector
   dvector hess(1,nvar);
   dvector hess1(1,nvar);
   dvector hess2(1,nvar);
-  double eps=.1;
+  //double eps=.1;
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
   uostream ofs("admodel.hes");
@@ -480,8 +480,8 @@ void function_minimizer::depvars_routine(void)
   int ndvar=stddev_params::num_stddev_calc();
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
-  double f;
-  double delta=1.e-7;
+  //double f;
+  //double delta=1.e-7;
   adstring tmpstring="admodel.dep";
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".dep";
@@ -528,7 +528,7 @@ void function_minimizer::hess_inv(void)
   independent_variables x(1,nvar);
 
   initial_params::xinit(x);        // get the initial values into the x vector
-  double f;
+  //double f;
   dmatrix hess(1,nvar,1,nvar);
   uistream ifs("admodel.hes");
   int file_nvar;
@@ -723,7 +723,7 @@ void function_minimizer::hess_inv(void)
   }
 }
 
-void useless(BOR_CONST double& sdelta2){int i=0;}
+void useless(BOR_CONST double& sdelta2){/*int i=0;*/}
 
 #if defined (__SPDLL__)
  void hess_calcreport(int i,int nvar)

@@ -7,10 +7,12 @@
 #include <admodel.h>
  
 #  if defined(USE_SHARE_FLAGS)
+/*
   static int integer(const index_type& it)
   {
     return it.integer();
   }
+*/
 
   int param_init_d3array::shared_size_count(void)
   {

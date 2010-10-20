@@ -251,9 +251,9 @@ void get_bounded_cauchy(double x1,double x2,BOR_CONST double& _y,BOR_CONST doubl
 {
   double& log_density=(double&) _log_density;
   double& y=(double&) _y;
-  double lp1;
-  double lp2;
-  double v;
+  //double lp1;
+  //double lp2;
+  //double v;
   double w;
   double u = better_rand(iseed);
   {
@@ -271,9 +271,9 @@ void get_bounded_mixture(double x1,double x2,BOR_CONST double& _y,BOR_CONST doub
 {
   double& y=(double&) _y;
   double& log_density=(double&) _log_density;
-  double lp1;
-  double lp2;
-  double v;
+  //double lp1;
+  //double lp2;
+  //double v;
   double w;
   double u = better_rand(iseed);
   {

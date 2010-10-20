@@ -12,7 +12,7 @@ void fixed_smartlist::reset(void)
   end_saved=0;
   bptr=buffer; 
   eof_flag=0;
-  off_t pos=lseek(fp,0L,SEEK_CUR);
+  /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
   endof_file_ptr=lseek(fp,0,SEEK_SET);
   written_flag=0;
 }
@@ -59,7 +59,7 @@ void fixed_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
     ad_exit(1);
   }
 
-  off_t pos=lseek(fp,0L,SEEK_CUR);
+  /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
 }
 
 void fixed_smartlist::write(int n)
@@ -74,7 +74,7 @@ void fixed_smartlist::write(int n)
 void fixed_smartlist::rewind(void)
 {
   bptr=buffer;
-  int nbytes=0;
+  unsigned int nbytes=0;
   eof_flag=0;
   if (written_flag)
   {
@@ -91,7 +91,7 @@ void fixed_smartlist::rewind(void)
       ad_exit(1);
     }
     // now read the record into the buffer
-    int nr=::read(fp,buffer,nbytes);
+    /*int nr=*/::read(fp,buffer,nbytes);
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
@@ -104,7 +104,7 @@ void fixed_smartlist::initialize(void)
   end_saved=0;
   eof_flag=0;
   bptr=buffer;
-  int nbytes=0;
+  //int nbytes=0;
   written_flag=0;
   lseek(fp,0,SEEK_SET);
   set_forward();
@@ -120,7 +120,7 @@ void fixed_smartlist::check_buffer_size(int nsize)
     }
     else
     {
-      if (nsize>bufsize)
+      if ((unsigned int)nsize>bufsize)
       {
          cout << "Need to increase buffsize in list" << endl;
          exit(1);
@@ -136,7 +136,7 @@ void fixed_smartlist::restore_end(void)
   {
     if (end_saved)
     {
-      off_t ipos=lseek(fp,0,SEEK_END);
+      /*off_t ipos=*/lseek(fp,0,SEEK_END);
       lseek(fp,endof_file_ptr,SEEK_SET);
       read_buffer();
       set_recend();
@@ -195,7 +195,7 @@ void fixed_smartlist::write_buffer_one_less(void)
 
 void fixed_smartlist::write_buffer(void)
 {
-  int nbytes=adptr_diff(bptr+1,buffer);
+  unsigned int nbytes=adptr_diff(bptr+1,buffer);
   if (nbytes>bufsize)
   {
     cerr << "n bytes > bufsize in "
@@ -211,7 +211,7 @@ void fixed_smartlist::write_buffer(void)
     ::write(fp,&nbytes,sizeof(int));
   
     // write the record into the file
-    int nw=::write(fp,buffer,nbytes);
+    unsigned int nw=::write(fp,buffer,nbytes);
     //cout << "Number of bytes written " << nw 
      //    << " bptr value =  " << bptr << endl; 
     //for (int ii=0;ii<=25;ii++)
@@ -236,7 +236,7 @@ void fixed_smartlist::write_buffer(void)
 void fixed_smartlist::read_buffer(void)
 {
   off_t pos;
-  int nbytes;
+  unsigned int nbytes;
   if (!written_flag)
   {
     if (direction ==-1) 
@@ -273,7 +273,7 @@ void fixed_smartlist::read_buffer(void)
       ad_exit(1);
     }
     // now read the record into the buffer
-    int nr=::read(fp,buffer,nbytes);
+    unsigned int nr=::read(fp,buffer,nbytes);
     if (nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
@@ -388,7 +388,7 @@ void memcpy(void * p,const fixed_smartlist & _list,int nsize)
 	    }
 	    else
 	    {
-	      if (nsize>bufsize)
+	      if ((unsigned int)nsize>bufsize)
 	      {
 		 cout << "Need to increase buffsize in list" << endl;
 		 exit(1);

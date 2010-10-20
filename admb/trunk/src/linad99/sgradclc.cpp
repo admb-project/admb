@@ -88,7 +88,7 @@ void gradcalc(int nvar,BOR_CONST dvector& _g)
   dvector& g= (dvector&) _g;
   gradient_structure::TOTAL_BYTES = 0;
   gradient_structure::PREVIOUS_TOTAL_BYTES=0;
-  int i;
+  unsigned int i;
   long int lpos;
   if(!gradient_structure::instances)
   {
@@ -174,7 +174,7 @@ void gradcalc(int nvar,BOR_CONST dvector& _g)
     * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
-double z;
+//double z;
 int break_flag=1;
 int icount=0;
 
@@ -212,7 +212,9 @@ do
 }  while (break_flag); // do
 
  {
+   #ifdef GRAD_DIAG
   long int ttmp = 
+   #endif
     lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
    #ifdef GRAD_DIAG
       cout << "Offset in file at end of gradcalc is " << ttmp
@@ -221,7 +223,7 @@ do
   }
 
   int mindx = g.indexmin();
-  for (i=0; i<nvar; i++)
+  for (i=0; i < (unsigned int)nvar; i++)
   {
     g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
   }
@@ -375,7 +377,7 @@ void gradient_structure::save_variables()
 	 << " save buffer " << endl;
     ad_exit(1);
   }
-  for (int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
     //variables_save[i]= * (double*)
     //	  (gradient_structure::GRAD_LIST->dlink_addresses[i]);
@@ -386,7 +388,7 @@ void gradient_structure::save_variables()
 
 void gradient_structure::restore_variables()
 {
-  for (int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
      //* (double*)(gradient_structure::GRAD_LIST->dlink_addresses[i])
      //	= variables_save[i];
@@ -410,7 +412,7 @@ void reset_gradient_stack(void)
 }
 
 static int inner_count=0;
-static grad_stack_entry * pgse = (grad_stack_entry*) (0x1498fffc);
+//static grad_stack_entry * pgse = (grad_stack_entry*) (0x1498fffc);
 void grad_stack::set_gradient_stack1(void (* func)(void),
   double * dep_addr,double * ind_addr1)
 {

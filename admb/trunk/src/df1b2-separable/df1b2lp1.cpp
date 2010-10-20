@@ -43,7 +43,7 @@ dvector laplace_approximation_calculator::default_calculations
   gradient_structure::set_YES_DERIVATIVES();
 
   initial_params::set_active_only_random_effects(); 
-  int lmn_flag=0;
+  //int lmn_flag=0;
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm1)
@@ -69,7 +69,7 @@ dvector laplace_approximation_calculator::default_calculations
   }
   
   double maxg=1.e+200;
-  double maxg_save;
+  //double maxg_save;
   dvector uhat_old(1,usize);
   double f_from_1=0.0;
   if (inner_maxfn>0)
@@ -154,7 +154,7 @@ dvector laplace_approximation_calculator::default_calculations
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {
         laplace_approximation_calculator::where_are_we_flag=2; 
-        double maxg=fabs(evaluate_function_quiet(uhat,pfmin));
+        /*double maxg=*/fabs(evaluate_function_quiet(uhat,pfmin));
         laplace_approximation_calculator::where_are_we_flag=0; 
         quadratic_prior::get_cHessian_contribution(Hess,xsize);
         quadratic_prior::get_cgradient_contribution(grad,xsize);
@@ -162,7 +162,7 @@ dvector laplace_approximation_calculator::default_calculations
 
       if (ii==1)
       {
-        double diff= fabs(re_objective_function_value::fun_without_pen-
+        /*double diff=*/fabs(re_objective_function_value::fun_without_pen-
           objective_function_value::fun_without_pen);
        /*
         if (diff>1.e-7)
@@ -286,7 +286,7 @@ dvector laplace_approximation_calculator::default_calculations
           if (quadratic_prior::get_num_quadratic_prior()>0)
           {
             laplace_approximation_calculator::where_are_we_flag=2; 
-            double maxg=fabs(evaluate_function_quiet(uhat,pfmin));
+            /*double maxg=*/fabs(evaluate_function_quiet(uhat,pfmin));
             laplace_approximation_calculator::where_are_we_flag=0; 
             quadratic_prior::get_cHessian_contribution(Hess,xsize);
             quadratic_prior::get_cgradient_contribution(grad,xsize);
@@ -395,7 +395,7 @@ dvector laplace_approximation_calculator::default_calculations
     }
     initial_params::set_inactive_only_random_effects(); 
     initial_params::set_active_random_effects(); 
-    int nnn=initial_params::nvarcalc();  
+    /*int nnn=*/initial_params::nvarcalc();  
     evaluate_function_gradient(f,localx,pfmin,xadjoint,uadjoint);
     pmin->inner_opt_flag=1;
     get_second_ders(xsize,usize,y,Hess,Dux,f1b2gradlist,pfmin,this);
@@ -412,7 +412,7 @@ dvector laplace_approximation_calculator::default_calculations
   else // don't need this for minimax calculations
   {
     get_second_ders(xsize,usize,y,Hess,Dux,f1b2gradlist,pfmin,this);
-    int sgn=0;
+    //int sgn=0;
     
     if (ad_comm::time_flag)
     {
@@ -527,7 +527,7 @@ dvector laplace_approximation_calculator::default_calculations
           }
         }
       
-        int mind=y(1).minder;
+        //int mind=y(1).minder;
         df1b2variable::passnumber=2;
         df1b2_gradcalc1();
       
@@ -564,7 +564,7 @@ dvector laplace_approximation_calculator::default_calculations
       if (initial_df1b2params::separable_flag)
       {
         dvector scale(1,nvar);   // need to get scale from somewhere
-        int check=initial_params::stddev_scale(scale,x);
+        /*int check=*/initial_params::stddev_scale(scale,x);
         dvector sscale=scale(1,Dux(1).indexmax());
         for (i=1;i<=usize;i++)
         {
@@ -641,7 +641,7 @@ dvector laplace_approximation_calculator::default_calculations
    // *****************************************************************
     if (ad_comm::ptm)
     {
-      double time=ad_comm::ptm->get_elapsed_time_and_reset();
+      /*double time=*/ad_comm::ptm->get_elapsed_time_and_reset();
     }
   
   #if defined(USE_ATLAS)   
@@ -725,7 +725,7 @@ void laplace_approximation_calculator::get_newton_raphson_info
     {
       if (ad_comm::ptm)
       {
-        double time1=ad_comm::ptm->get_elapsed_time();
+        /*double time1=*/ad_comm::ptm->get_elapsed_time();
       }
     }
 
@@ -811,7 +811,7 @@ void laplace_approximation_calculator::get_newton_raphson_info
   {
     if (ad_comm::ptm)
     {
-      double time=ad_comm::ptm->get_elapsed_time();
+      /*double time=*/ad_comm::ptm->get_elapsed_time();
     }
   }
 }

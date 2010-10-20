@@ -159,7 +159,7 @@ dvector laplace_approximation_calculator::banded_calculations_lme
   // for use when there is no separability
   ADUNCONST(dvector,x)
   ADUNCONST(double,f)
-  int i,j;
+  //int i,j;
 
   initial_params::set_inactive_only_random_effects(); 
   gradient_structure::set_NO_DERIVATIVES();
@@ -212,7 +212,7 @@ dvector laplace_approximation_calculator::get_gradient_lme
   (function_minimizer * pfmin)
 {
   double f=0.0;
-  double fb=1.e+100;
+  //double fb=1.e+100;
   dvector g(1,usize);
   dvector ub(1,usize);
   independent_variables u(1,usize);
@@ -238,7 +238,7 @@ dvector laplace_approximation_calculator::get_gradient_lme
   (const dvector& x,function_minimizer * pfmin)
 {
   double f=0.0;
-  double fb=1.e+100;
+  //double fb=1.e+100;
   dvector g(1,usize);
   dvector ub(1,usize);
   independent_variables u(1,usize);
@@ -263,7 +263,7 @@ dvector laplace_approximation_calculator::get_gradient_lme_hp
   (const double& _f,function_minimizer * pfmin)
 {
   ADUNCONST(double,f)
-  double fb=1.e+100;
+  //double fb=1.e+100;
   dvector g(1,xsize);
   dvector ub(1,xsize);
   independent_variables u(1,xsize);

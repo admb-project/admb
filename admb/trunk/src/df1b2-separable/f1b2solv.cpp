@@ -71,7 +71,7 @@ df1b2vector solve(const df1b2matrix& aa,const dvector& z,
   indx.fill_seqadd(lb,One);
   double  d;
   df1b2variable big,dum,sum,temp;
-  kkludge_object kkk;
+  //kkludge_object k;
   df1b2vector vv(lb,ub);
 
   d=1.0;

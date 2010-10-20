@@ -94,7 +94,7 @@ humungous_pointer& humungous_pointer::operator += (unsigned long int& offset)
 // Note that pointer addition is in bytes not the size of the
 // object pointed to
 {
-  char * tmp;
+  //char * tmp;
   #if (defined(__ZTC__) && !defined(DOS386))
     ptr=(char*)(_farptr_fromlong(_farptr_tolong(ptr)+offset));
   #else

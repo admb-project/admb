@@ -348,8 +348,8 @@ void read_pass2_2_prod_vector(void)
   //  +2*(nvar+1)*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
-  char ids[]="DL";
-  int slen=strlen(ids);
+  //char ids[]="DL";
+  //int slen=strlen(ids);
   //total_bytes+=slen;
 #endif
 // end of string identifier debug stuff
@@ -373,7 +373,7 @@ void read_pass2_2_prod_vector(void)
   // save the pointer to the beginning of the record
   // bptr and bptr2 now both point to the beginning of their records
 
-  df1b2_header x,z;
+  //df1b2_header x,z;
   //df1b2function2 * pf;
 
   // get info from tape1
@@ -510,8 +510,8 @@ void read_pass2_3_prod_vector(void)
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
 
-  df1b2_header x,z;
-  df1b2function2 * pf;
+  //df1b2_header x,z;
+  //df1b2function2 * pf;
 
   // get info from tape1
   // get info from tape1

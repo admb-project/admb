@@ -32,6 +32,7 @@ void report_gradstack_flag(void)
   cout << "in report_gradstack_flag  " << str1 << endl;
 }
 
+#if defined(CHK_ID_STRING)
 static void report_gradstack_flag2(void)
 {
   verify_identifier_string("stack");
@@ -49,12 +50,12 @@ static void report_gradstack_flag2(void)
   if (i==3 && j==91)
     cout << "HERE" << endl;
 }
-
+#endif
 
 void set_gradstack_flag(char* str)
 {
 #if defined(CHK_ID_STRING)
-  int wsize=sizeof(char);
+  //int wsize=sizeof(char);
   int length=strlen(str);
   gradient_structure::get_fp()->fwrite(str,length);
   gradient_structure::get_fp()->fwrite(&length,sizeof(int));
@@ -71,7 +72,7 @@ void set_gradstack_flag(char* _str,int i,int j)
   ads+=str(i);
   ads+=" ";
   ads+=str(j);
-  int wsize=sizeof(char);
+  //int wsize=sizeof(char);
   char * str=(char*)(ads);
   int length=strlen(str);
   gradient_structure::get_fp()->fwrite(&i,sizeof(int));
@@ -93,7 +94,7 @@ if the two strings are not identical. Only available in the "safe"
 library. Used primarily for debugging adjoint coide.
 \param str1 Character sting to compare with value retrieved from stack.
 */
-void verify_identifier_string(char* str1)
+void verify_identifier_string(const char* str1)
 {
 #if defined(CHK_ID_STRING)
   // Back up the stream and read the number of bytes written in the

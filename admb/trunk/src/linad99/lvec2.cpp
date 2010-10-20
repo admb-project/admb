@@ -57,4 +57,4 @@
 #endif
 #endif
 
-void f63hhh(void){int x=1;}
+void f63hhh(void){/*int x=1;*/}

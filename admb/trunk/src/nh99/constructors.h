@@ -239,7 +239,7 @@ struct gggg17 {
 struct gggg18 {
     independent_variables xtr;
     doublereal *xsc, *fu, *fugrad	/* was *[
-    //doublereal *xtr, *xsc, *fu, *fugrad	/* was *[
+    //doublereal *xtr, *xsc, *fu, *fugrad	/ * was *[
 	    number3+1] */, *fud	/* was ** */, wwuq5, wdg5bnd;
   gggg18(int nvar,doublereal _wwuq5, doublereal _wdg5bnd);
 };

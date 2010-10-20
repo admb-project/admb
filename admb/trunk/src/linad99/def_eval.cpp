@@ -122,7 +122,7 @@
 
   void default_evaluation2(void)
   {
-    char ch;
+    //char ch;
     // there is one independent variable
     grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
     //cout << setprecision(16) << *grad_ptr->dep_addr << endl;

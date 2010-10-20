@@ -7,11 +7,11 @@
 #include "fvar.hpp"
 
 banded_lower_triangular_dvar_matrix::banded_lower_triangular_dvar_matrix
-   (_CONST banded_lower_triangular_dvar_matrix& S) : d(S.d), bw(S.bw) 
+   (_CONST banded_lower_triangular_dvar_matrix& S) : bw(S.bw), d(S.d) 
 {}
 
 banded_symmetric_dvar_matrix::banded_symmetric_dvar_matrix
-   (_CONST banded_symmetric_dvar_matrix& S) : d(S.d), bw(S.bw) 
+   (_CONST banded_symmetric_dvar_matrix& S) : bw(S.bw), d(S.d)
 {}
 
   
@@ -558,7 +558,7 @@ dmatrix restore_lower_triangular_dvar_matrix_value(const dvar_matrix_position& m
 {
   // restores the size, address, and value information for a dvar_matrix
   banded_lower_triangular_dmatrix out((BOR_CONST dvar_matrix_position&)mpos);
-  int ierr;
+  //int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
   for (int i=max;i>=min;i--)

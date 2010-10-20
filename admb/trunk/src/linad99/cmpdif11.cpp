@@ -59,7 +59,7 @@ banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(BOR_CONST dv
 {
   // restores the size, address, and value information for a dvar_matrix
   banded_symmetric_dmatrix out((BOR_CONST dvar_matrix_position&)mpos);
-  int ierr;
+  //int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
   for (int i=max;i>=min;i--)
@@ -74,7 +74,7 @@ banded_lower_triangular_dmatrix restore_banded_lower_triangular_dvar_matrix_valu
 {
   // restores the size, address, and value information for a dvar_matrix
   banded_lower_triangular_dmatrix out((BOR_CONST dvar_matrix_position&)mpos);
-  int ierr;
+  //int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
   for (int i=max;i>=min;i--)

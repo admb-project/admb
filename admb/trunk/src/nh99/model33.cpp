@@ -110,7 +110,7 @@ char ** no_dll_options(char * pname,BOR_CONST int& _nopt)
   int& nopt=(int&) _nopt;
   nopt=1;
   char ** a;
-  char * p=NULL;
+  //char * p=NULL;
   //a=(char **)malloc((nopt+1)*sizeof(char *));
   a[nopt]=NULL;
   //a[0]=(char *)malloc((strlen(pname)+5)*sizeof(char));
@@ -350,7 +350,7 @@ char ** parse_dll_options(char * s,int& argc);
 
 string_parser::string_parser(char * s,int n) 
 {
-  if (strlen(s)>n)
+  if (strlen(s) > (unsigned int)n)
   {
     cerr << "string too long in string_parser" << endl;
     exit(1);

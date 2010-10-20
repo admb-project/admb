@@ -13,7 +13,7 @@ static int no_stuff=0;
 static int write_sparse_flag=0;
     static void trapper(void)
     {
-      int x=5;
+      //int x=5;
     }
 int noboundepen_flag=1;
 
@@ -41,7 +41,7 @@ dvar_vector *
 dvector laplace_approximation_calculator::get_uhat_quasi_newton
   (const dvector& x,function_minimizer * pfmin)
 {
-  int on,nopt;
+  //int on,nopt;
   pfmin->inner_opt_flag=1;
   double f=0.0;
   double fb=1.e+100;
@@ -290,19 +290,39 @@ void set_partition_sizes(int & num_der_blocks,ivector& minder,
 
 laplace_approximation_calculator::laplace_approximation_calculator
   (int _xsize,int _usize,int _minder,int _maxder,
-  function_minimizer * _pmin) : xsize(_xsize),
-  usize(_usize),xadjoint(1,_xsize),uadjoint(1,_usize),
-  uhat(1,_usize),fmc(_xsize),fmc1(usize,1),block_diagonal_flag(0),
-  pmin(_pmin),local_dtemp(1,_xsize),
-  check_local_xadjoint(1,_xsize),check_local_uadjoint(1,_usize),
-  check_local_xadjoint2(1,_xsize),check_local_uadjoint2(1,_usize),
-  bHess_pd_flag(0),nr_debug(0),separable_call_level(0),
+  function_minimizer * _pmin) : 
+  init_switch(1),
+  separable_call_level(0),
+  triplet_information(0), 
+  compressed_triplet_information(0),
   nested_separable_calls_counter(1,10),
-  nested_tree_position(1,5),ubest(1,_usize),
-  init_switch(1),sparse_triplet(0),sparse_symbolic(0),sparse_symbolic2(0),
-  vsparse_triplet(0), triplet_information(0), compressed_triplet_information(0),
-  sparse_triplet2(0),sparse_iterator(0),sparse_count(0),
-  vsparse_triplet_adjoint(0),sparse_count_adjoint(0)
+  nested_tree_position(1,5),
+  local_dtemp(1,_xsize),
+  nr_debug(0),
+  pmin(_pmin),
+  block_diagonal_flag(0),
+  xsize(_xsize),
+  usize(_usize),
+  bHess_pd_flag(0),
+  sparse_triplet(0),
+  sparse_iterator(0),
+  sparse_count(0),
+  sparse_count_adjoint(0),
+  sparse_triplet2(0),
+  vsparse_triplet(0), 
+  vsparse_triplet_adjoint(0),
+  sparse_symbolic(0),
+  sparse_symbolic2(0),
+  fmc1(usize,1),
+  fmc(_xsize),
+  xadjoint(1,_xsize),
+  check_local_uadjoint(1,_usize),
+  check_local_uadjoint2(1,_usize),
+  check_local_xadjoint(1,_xsize),
+  check_local_xadjoint2(1,_xsize),
+  uadjoint(1,_usize),
+  uhat(1,_usize),
+  ubest(1,_usize)
 {
   ubest.initialize();
   nested_shape.allocate(100,100,10);
@@ -950,21 +970,37 @@ laplace_approximation_calculator::laplace_approximation_calculator
   df1b2variable::increment_adpool_counter();
 }
 
-
 laplace_approximation_calculator::laplace_approximation_calculator
   (int _xsize,int _usize,ivector _minder,ivector _maxder,
-  function_minimizer * _pmin ) : pmin(_pmin), xsize(_xsize),
-  usize(_usize),xadjoint(1,_xsize),uadjoint(1,_usize),
-  uhat(1,_usize),fmc(_xsize),fmc1(0),
-  check_local_xadjoint(1,_xsize),check_local_uadjoint(1,_usize),
-  check_local_xadjoint2(1,_xsize),check_local_uadjoint2(1,_usize),
-  bHess_pd_flag(0),nr_debug(0),separable_call_level(1),
+  function_minimizer * _pmin ) : 
+  separable_call_level(1),
+  triplet_information(0),
+  compressed_triplet_information(0),
   nested_separable_calls_counter(1,10),
-  nested_tree_position(1,5),sparse_triplet(0),sparse_symbolic(0),
+  nested_tree_position(1,5),
+  nr_debug(0),
+  pmin(_pmin), 
+  xsize(_xsize),
+  usize(_usize),
+  bHess_pd_flag(0),
+  sparse_triplet(0),
+  sparse_iterator(0),
+  sparse_count(0),
+  sparse_count_adjoint(0),
+  sparse_triplet2(0),
+  vsparse_triplet(0),
+  vsparse_triplet_adjoint(0),
+  sparse_symbolic(0),
   sparse_symbolic2(0),
-  vsparse_triplet(0),triplet_information(0), compressed_triplet_information(0),
-  sparse_triplet2(0),sparse_iterator(0),sparse_count(0),
-  vsparse_triplet_adjoint(0),sparse_count_adjoint(0)
+  fmc1(0),
+  fmc(_xsize),
+  xadjoint(1,_xsize),
+  check_local_uadjoint(1,_usize),
+  check_local_uadjoint2(1,_usize),
+  check_local_xadjoint(1,_xsize),
+  check_local_xadjoint2(1,_xsize),
+  uadjoint(1,_usize),
+  uhat(1,_usize)
 {
   nested_tree_position.initialize();
   nested_separable_calls_counter.initialize();
@@ -1382,7 +1418,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   // init parameters should be active in this phase
   initial_params::set_inactive_only_random_effects(); 
   initial_params::set_active_random_effects(); 
-  int onvar=initial_params::nvarcalc(); 
+  /*int onvar=*/initial_params::nvarcalc(); 
   initial_params::xinit(y);    // get the initial values into the
   y(1,xs)=x;
 
@@ -1830,7 +1866,7 @@ void laplace_approximation_calculator::check_for_need_to_reallocate(int ip)
 double evaluate_function(const dvector& x,function_minimizer * pfmin)
 {
   int usize=initial_params::nvarcalc(); 
-  double f=0.0;
+  //double f=0.0;
   dvector g(1,usize);
   independent_variables u(1,usize);
   u=x;
@@ -1860,7 +1896,7 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
 double evaluate_function(double& fval,const dvector& x,function_minimizer * pfmin)
 {
   int usize=initial_params::nvarcalc(); 
-  double f=0.0;
+  //double f=0.0;
   dvector g(1,usize);
   independent_variables u(1,usize);
   u=x;
@@ -1892,7 +1928,7 @@ double evaluate_function(double& fval,const dvector& x,const dvector& g,
   function_minimizer * pfmin)
 {
   int usize=initial_params::nvarcalc(); 
-  double f=0.0;
+  //double f=0.0;
   //dvector g(1,usize);
   independent_variables u(1,usize);
   u=x;
@@ -1923,7 +1959,7 @@ double evaluate_function(double& fval,const dvector& x,const dvector& g,
 double evaluate_function_quiet(const dvector& x,function_minimizer * pfmin)
 {
   int usize=initial_params::nvarcalc(); 
-  double f=0.0;
+  //double f=0.0;
   dvector g(1,usize);
   independent_variables u(1,usize);
   u=x;
@@ -1976,7 +2012,7 @@ double evaluate_function_no_derivatives(const dvector& x,function_minimizer * pf
   double fval;
   gradient_structure::set_NO_DERIVATIVES();
   int usize=initial_params::nvarcalc(); 
-  double f=0.0;
+  //double f=0.0;
   dvector g(1,usize);
   independent_variables u(1,usize);
   u=x;
@@ -2513,7 +2549,7 @@ void nested_calls_indices::allocate(const nested_calls_shape& _nsc)
 dvector laplace_approximation_calculator::get_uhat_lm_newton2
   (const dvector& x,function_minimizer * pfmin)
 {
-  int on,nopt;
+  //int on,nopt;
   pfmin->inner_opt_flag=1;
   double f=0.0;
   double fb=1.e+100;

@@ -81,7 +81,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& _jac)
 {
   ADUNCONST(dmatrix,jac)
 
-  int i;
+  unsigned int i;
   long int lpos;
   if(!instances)
   {
@@ -125,7 +125,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& _jac)
   }
   grad_stack_entry * grad_ptr;
 
-  for (i=jac.rowmin();i<=jac.rowmax();i++)
+  for (i=jac.rowmin();i<=(unsigned int)jac.rowmax();i++)
   {
     if (jac(i).indexmin() !=1)
     {
@@ -260,7 +260,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& _jac)
     * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
-    double z;
+    //double z;
     int break_flag=1;
 
     do
@@ -269,7 +269,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& _jac)
       #ifdef FAST_ASSEMBLER
         gradloop();
       #else
-        int counter=0;
+        //int counter=0;
       while (gradient_structure::GRAD_STACK1->ptr-- >
     		gradient_structure::GRAD_STACK1->ptr_first)
       {
@@ -292,7 +292,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& _jac)
 
     int mindx = g.indexmin();
     dvector & gg=(dvector&)(g);
-    for (i=0; i<nvar; i++)
+    for (i=0; i<(unsigned int)nvar; i++)
     {
       gg[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
       //g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);

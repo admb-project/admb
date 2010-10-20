@@ -10,8 +10,7 @@
 #  include <adrndeff.h>
 //#include <vmon.h>
 static int no_stuff=0;
-static void xxxy(void)
-{}
+//static void xxxy(void) {}
 
 void function_minimizer::limited_memory_quasi_newton_block(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f,int nsteps)
@@ -37,7 +36,7 @@ void function_minimizer::limited_memory_quasi_newton_block(int nvar,int _crit,
   dvector & g= (dvector&)_g;
   // *********************************************************
   // block for quasi-newton minimization
-  int itnold=0;
+  //int itnold=0;
   int nx=nvar;
   if (negdirections) 
   {

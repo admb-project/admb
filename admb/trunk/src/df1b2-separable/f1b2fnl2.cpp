@@ -188,7 +188,7 @@ void laplace_approximation_calculator::
     for (i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
-      int i1=list(lrei,1);
+      //int i1=list(lrei,1);
       int i2=list(lrei,2);
       //grad(i1-xsize)= re_objective_function_value::pobjfun->u_dot[i2-1];
       //grad(i1-xsize)= ff.u_dot[i2-1];
@@ -236,7 +236,7 @@ void laplace_approximation_calculator::
     {
       int lrei=lre_index(i);
       int i1=list(lrei,1);
-      int i2=list(lrei,2);
+      //int i2=list(lrei,2);
       step(i1-xsize)=local_step(i); 
     }
   } 

@@ -18,8 +18,8 @@
  //     int get_depth(void) { return depth;}
  //   };
  // 
-  multi_index::multi_index(int min,int max,int dim) : index(1,dim), 
-    mind(min),maxd(max),depth(min)
+  multi_index::multi_index(int min,int max,int dim) :
+    mind(min),maxd(max),depth(min), index(1, dim)
   {
     index=min;
   }

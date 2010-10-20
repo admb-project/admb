@@ -4717,9 +4717,9 @@ void dv_init(void);
 
 
 // ********************************************************
-int save_identifier_string(char*);
+int save_identifier_string(const char*);
 void insert_identifier_string(const char * s);
-void verify_identifier_string(char*);
+void verify_identifier_string(const char*);
 
 
 ivector restore_ivector_value(BOR_CONST ivector_position&);
@@ -4923,7 +4923,7 @@ public:
   ~DF_FILE();
   void write_cmpdif_stack_buffer(void);
   void read_cmpdif_stack_buffer(my_off_t& lpos);
-  void fwrite(void* s,const size_t num_bytes);
+  void fwrite(const void* s,const size_t num_bytes);
   void fread(void* s,const size_t num_bytes);
   void fwrite( double);
   void fwrite(const int&);

@@ -286,7 +286,7 @@ grad_stack::~grad_stack()
 
   void  grad_stack::write_grad_stack_buffer()
   {
-    int ierr;
+    unsigned int ierr;
 
     #ifdef GRAD_DIAG
       cout << "Grad_stack size exceeded\n ";

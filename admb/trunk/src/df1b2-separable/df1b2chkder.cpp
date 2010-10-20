@@ -55,7 +55,7 @@ dvector laplace_approximation_calculator::
 
   initial_params::set_active_only_random_effects(); 
   initial_params::xinit(uhat);    // get current x values into the model
-  int lmn_flag=0;
+  //int lmn_flag=0;
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm1)
@@ -81,9 +81,9 @@ dvector laplace_approximation_calculator::
   }
   
   double maxg;
-  double maxg_save;
+  //double maxg_save;
   dvector uhat_old(1,usize);
-  double f_from_1=0.0;
+  //double f_from_1=0.0;
 
   for (i=1;i<=xsize;i++)
   {
@@ -133,7 +133,7 @@ dvector laplace_approximation_calculator::
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {
         laplace_approximation_calculator::where_are_we_flag=2; 
-        double maxg=fabs(evaluate_function_quiet(uhat,pfmin));
+        /*double maxg=*/fabs(evaluate_function_quiet(uhat,pfmin));
         laplace_approximation_calculator::where_are_we_flag=0; 
         quadratic_prior::get_cHessian_contribution(Hess,xsize);
         quadratic_prior::get_cgradient_contribution(grad,xsize);
@@ -141,7 +141,7 @@ dvector laplace_approximation_calculator::
 
       if (ii==1)
       {
-        double diff= fabs(re_objective_function_value::fun_without_pen-
+        /*double diff= */fabs(re_objective_function_value::fun_without_pen-
           objective_function_value::fun_without_pen);
       }
   
@@ -257,7 +257,7 @@ dvector laplace_approximation_calculator::
     }
   }
   get_second_ders(xsize,usize,y,Hess,Dux,f1b2gradlist,pfmin,this);
-  int sgn=0;
+  //int sgn=0;
   
   if (ad_comm::time_flag)
   {
@@ -373,7 +373,7 @@ dvector laplace_approximation_calculator::
         }
       }
     
-      int mind=y(1).minder;
+      //int mind=y(1).minder;
       df1b2variable::passnumber=2;
       df1b2_gradcalc1();
     
@@ -410,7 +410,7 @@ dvector laplace_approximation_calculator::
     if (initial_df1b2params::separable_flag)
     {
       dvector scale(1,nvar);   // need to get scale from somewhere
-      int check=initial_params::stddev_scale(scale,x);
+      /*int check=*/initial_params::stddev_scale(scale,x);
       dvector sscale=scale(1,Dux(1).indexmax());
       for (i=1;i<=usize;i++)
       {
@@ -487,7 +487,7 @@ dvector laplace_approximation_calculator::
  // *****************************************************************
   if (ad_comm::ptm)
   {
-    double time=ad_comm::ptm->get_elapsed_time_and_reset();
+    /*double time=*/ad_comm::ptm->get_elapsed_time_and_reset();
   }
 
 #if defined(USE_ATLAS)   

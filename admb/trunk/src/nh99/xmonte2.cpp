@@ -95,8 +95,8 @@ void probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR
   double lower; 
   double diff;
   double diff1;
-  int in=0;
-  int ie=0;
+  //int in=0;
+  //int ie=0;
   for (int i=1;i<=nvar;i++)
   {
     ah=a(i)/ch(i,i); 

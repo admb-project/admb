@@ -103,7 +103,7 @@
      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
      {
        sum=0;
-       const dvector& temp_row = m1.elem(i);
+       //const dvector& temp_row = m1.elem(i);
        sum=m1.elem(i) * m2col;
        tmp.elem(i,j)=sum;
      }

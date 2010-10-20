@@ -31,8 +31,9 @@ dvector laplace_approximation_calculator::test_trust_region_method
 {
   // for use when there is no separability
   ADUNCONST(dvector,x)
-  ADUNCONST(double,f)
-  int i,j;
+  //ADUNCONST(double,f)
+  //int i,j;
+  int i;
 
   initial_params::set_inactive_only_random_effects(); 
   gradient_structure::set_NO_DERIVATIVES();
@@ -125,8 +126,8 @@ dvector laplace_approximation_calculator::test_trust_region_method
   do
   {
     outer_iter++;
-    int ierr=0;
-    int niters=0;
+    //int ierr=0;
+    //int niters=0;
     dvector g(1,n);
     dmatrix H(1,n,1,n);
        
@@ -135,10 +136,10 @@ dvector laplace_approximation_calculator::test_trust_region_method
 
   
     double tol=1.e-6;
-    int itmax=1000;
-    int itol=1;
-    int iter=0;
-    double err=0;
+    //int itmax=1000;
+    //int itol=1;
+    //int iter=0;
+    //double err=0;
     //lambda=1;
   
     //cout << "input Delta" << endl;
@@ -160,7 +161,7 @@ dvector laplace_approximation_calculator::test_trust_region_method
     double truediff;
     int iflag=0;
     int inner_iter=0;
-    int oldbest=(int)bestf;
+    //int oldbest=(int)bestf;
     int maxfn=15;
     dvector xret=lincg(xx,g,H,tol,Delta,pfmin,truef,estdiff,
      truediff,bestf,iflag,inner_iter,maxfn);
@@ -245,7 +246,7 @@ void laplace_approximation_calculator::get_complete_hessian
     {
       if (ad_comm::ptm)
       {
-        double time1=ad_comm::ptm->get_elapsed_time();
+        /*double time1=*/ad_comm::ptm->get_elapsed_time();
       }
     }
 
@@ -323,7 +324,7 @@ void laplace_approximation_calculator::get_complete_hessian
   {
     if (ad_comm::ptm)
     {
-      double time=ad_comm::ptm->get_elapsed_time();
+      /*double time=*/ad_comm::ptm->get_elapsed_time();
     }
   }
 }
@@ -513,7 +514,7 @@ double laplace_approximation_calculator::do_one_feval
   (const dvector& x,function_minimizer * pfmin)
 {
   double f=0.0;
-  double fb=1.e+100;
+  //double fb=1.e+100;
   dvector g(1,usize);
   dvector ub(1,usize);
   initial_params::set_active_random_effects();

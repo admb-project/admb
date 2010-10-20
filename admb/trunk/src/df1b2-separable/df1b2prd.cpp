@@ -266,7 +266,7 @@ void read_pass2_2_prod(void)
   double xu,yu;
   double * xdot;
   double * ydot;
-  df1b2_header x,z;
+  //df1b2_header x,z;
   //df1b2function2 * pf;
 
   // get info from tape1
@@ -415,8 +415,8 @@ void read_pass2_3_prod(void)
   double yu;
   double * xdot;
   double * ydot;
-  df1b2_header x,z;
-  df1b2function2 * pf;
+  //df1b2_header x,z;
+  //df1b2function2 * pf;
 
   // get info from tape1
   // get info from tape1

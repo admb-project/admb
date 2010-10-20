@@ -103,7 +103,7 @@ void read_pass1_1(void)
   // save the pointer to the beginning of the record
   double xu;
   double * xdot;
-  df1b2_header x,z;
+  //df1b2_header x,z;
   df1b2function1 * pf;
 
   // get info from tape1
@@ -165,7 +165,7 @@ void read_pass1_1(void)
  
   double df=(pf->df)(xu);
   double d2f=(pf->d2f)(xu);
-  double d3f=(pf->d3f)(xu);
+  //double d3f=(pf->d3f)(xu);
 
   for (i=0;i<nvar;i++)
   {
@@ -201,7 +201,7 @@ void read_pass1_1(void)
 
 void read_pass1_2(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1
@@ -242,7 +242,7 @@ void read_pass1_2(void)
 
   double xu;
   double * xdot;
-  df1b2_header x,z;
+  //df1b2_header x,z;
   df1b2function1 * pf;
 
   // get info from tape1
@@ -345,7 +345,7 @@ void read_pass1_3(void)
   // save the pointer to the beginning of the record
   double xu;
   double * xdot;
-  df1b2_header x,z;
+  //df1b2_header x,z;
   df1b2function1 * pf;
 
   // get info from tape1

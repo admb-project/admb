@@ -167,9 +167,9 @@ dvar_vector gammln(_CONST dvar_vector& v)
 static dvariable gammlnguts(const prevariable _z)
 {
   double  z = value(_z);
-  double zdot=1.0;
-  const double lpi =1.1447298858494001741434272;
-  const double pi =3.1415926535897932384626432;
+  //double zdot=1.0;
+  //const double lpi =1.1447298858494001741434272;
+  //const double pi =3.1415926535897932384626432;
   const double lpp =0.9189385332046727417803297;
   int n=7;
   const double c[9]={0.99999999999980993, 
@@ -192,7 +192,7 @@ static dvariable gammlnguts(const prevariable _z)
     xdot-=c[i]*square(zinv);
   }    
   double t=z+n+0.5;
-  double tdot=zdot;
+  //double tdot=zdot;
   //return lpp + (z+0.5)*log(t) -t + log(x);
   double ans= lpp + (z+0.5)*log(t) -t + log(x);
   //double ansdot=zdot*log(t) + (z+0.5)/t*tdot -tdot +xdot/x;

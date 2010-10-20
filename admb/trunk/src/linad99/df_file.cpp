@@ -93,7 +93,7 @@
       cerr << "Error trying to allocate memory for DF_FILE buffer"<<endl;
       ad_exit(1);
     }
-    for (int i=0;i<sz;i++)
+    for (unsigned int i=0;i<sz;i++)
     {
       buff[i]='\0';
     }
@@ -248,7 +248,7 @@ void DF_FILE::fread(void* s,const size_t num_bytes)
   offset=toffset;
 }
 
-void DF_FILE::fwrite(void* s, const size_t num_bytes)
+void DF_FILE::fwrite(const void* s, const size_t num_bytes)
 {
   #ifdef NO_DERIVS
     if (gradient_structure::no_derivatives)
@@ -289,7 +289,7 @@ void DF_FILE::read_cmpdif_stack_buffer(my_off_t & lpos)
   }
   lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
   //cout << "offset after read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
-  for(int i=0;i<sizeof(unsigned int);i++)
+  for(unsigned int i=0;i<sizeof(unsigned int);i++)
   {
      fourb[i] = *(buff+buff_end+1+i);
   }
@@ -303,7 +303,7 @@ void DF_FILE::read_cmpdif_stack_buffer(my_off_t & lpos)
          //<< " into cmpdif file" << endl;
     //cout << "offset before write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
     //if (write(file_ptr,buff,buff_size)<buff_size)
-    for(int i=0;i<sizeof(unsigned int);i++)
+    for(unsigned int i=0;i<sizeof(unsigned int);i++)
     {
 	 *(buff+buff_end+1+i)=fourb[i]; // save the offset at the
 			//end of the used part of the buffer

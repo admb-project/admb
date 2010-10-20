@@ -38,7 +38,7 @@ void ad_read_pass2_sumc(void);
   if (ncount >= ncount_check)
     cout << ncount << endl;
 #endif
-   int nvar=df1b2variable::nvar;
+   //int nvar=df1b2variable::nvar;
 
    int total_bytes=2*sizeof(df1b2_header);
 // string identifier debug stuff
@@ -141,7 +141,7 @@ void read_pass2_1_sumc(void)
 
 void read_pass2_2_sumc(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1
@@ -212,7 +212,7 @@ void read_pass2_3_sumc(void)
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
-  df1b2_header x,z;
+  //df1b2_header x,z;
 
   // get info from tape1
   // get info from tape1

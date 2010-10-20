@@ -73,6 +73,4 @@
  }
 #endif
 
-void ee51qo(void){int i=1;}
-
-
+void ee51qo(void){ /*int i=1;*/}

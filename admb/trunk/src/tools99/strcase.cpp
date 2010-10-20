@@ -9,13 +9,13 @@
 
 void adstring::to_lower(void)
 {
-  for (int i=1; i <= size(); i++)
+  for (unsigned int i=1; i <= size(); i++)
     s[i] = tolower(s[i]);
 }
 
 void adstring::to_upper(void)
 {
-  for (int i=1; i <= size(); i++)
+  for (unsigned int i=1; i <= size(); i++)
     s[i] = toupper(s[i]);
 }
 

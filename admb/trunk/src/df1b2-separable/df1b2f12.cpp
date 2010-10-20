@@ -231,7 +231,7 @@ void read_pass2_1(void)
   int i;
   for (i=0;i<nvar;i++)
   {
-    double df1=(pf->df1)(xu,yu);
+    //double df1=(pf->df1)(xu,yu);
     px->u_bar[i]+=(pf->df1)(xu,yu)*pz->u_bar[i];
   }
   for (i=0;i<nvar;i++)
@@ -295,7 +295,7 @@ void read_pass2_1(void)
 
 void read_pass2_2(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1
@@ -337,7 +337,7 @@ void read_pass2_2(void)
   double xu,yu;
   double * xdot;
   double * ydot;
-  df1b2_header x,z;
+  //df1b2_header x,z;
   df1b2function2 * pf;
 
   // get info from tape1
@@ -526,7 +526,7 @@ void read_pass2_3(void)
   double yu;
   double * xdot;
   double * ydot;
-  df1b2_header x,z;
+  //df1b2_header x,z;
   df1b2function2 * pf;
 
   // get info from tape1

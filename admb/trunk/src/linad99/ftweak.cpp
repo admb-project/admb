@@ -5,9 +5,12 @@
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <fvar.hpp>
+    double mult;
+    double eps;
+    dvector coffs;
 
-function_tweaker::function_tweaker(double _eps,double _mult) : coffs(1,3), 
-  eps(_eps) ,mult(_mult)
+function_tweaker::function_tweaker(double _eps,double _mult) : 
+  mult(_mult), eps(_eps), coffs(1,3)
 {
   double e=eps;
   double e2=e*e;

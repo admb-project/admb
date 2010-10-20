@@ -205,9 +205,9 @@ void laplace_approximation_calculator::
     //if (lfei - list(lfei,2))
      // cout << lfei << " " <<  list(lfei,2) << endl;
     local_dtemp(i1)+=*locy(lfei).get_u_tilde();
+#if !defined(OPT_LIB)
     int mmin=xadjoint.indexmin();
     int mmax=xadjoint.indexmax();
-#if !defined(OPT_LIB)
     if (i1<mmin || i1> mmax)
     {
        cerr << "this can't happen" << endl;

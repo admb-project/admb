@@ -503,7 +503,7 @@
       int imin= sf.indexmin();
       int imax= sf.indexmax();
       int i,k;
-      int ibreak=0;
+      //int ibreak=0;
       // get intial values for min and max active flag values
       // get initial values for minimum and maximum shared
       // flags -- not just active ones
@@ -578,7 +578,7 @@
     share_flags = new shareinfo(sf,af);
     int idim1= share_flags->get_shareflags()->dimension();
     share_flags->get_dimension()=idim1;
-    int idim2= share_flags->get_activeflags()->dimension();
+    //int idim2= share_flags->get_activeflags()->dimension();
     if (idim1==2)
     {
       cout << " Error dim too high" << endl;

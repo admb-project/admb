@@ -11,7 +11,7 @@
     it=new double_index_type(_it);
  }
 
- param_init_bounded_number_vector::param_init_bounded_number_vector(): it(NULL), v(NULL)
+ param_init_bounded_number_vector::param_init_bounded_number_vector(): v(NULL), it(NULL)
  {
  }
      

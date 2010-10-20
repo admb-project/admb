@@ -140,7 +140,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       || option_match(_argc,_argv,"-help")>-1 )
     {
       // remove the first part of the path if present
-      int i;
+      unsigned int i;
       for (i=adprogram_name.size();i>=1;i--)
       {
 #ifdef _WIN32
@@ -312,7 +312,7 @@ void ad_comm::allocate(void)
 #endif
   adstring tmpstring;
   // remove the first part of the path if present
-  int i;
+  unsigned int i;
 #if !defined(__SPDLL__)
   for (i=adprogram_name.size();i>=1;i--)
   {

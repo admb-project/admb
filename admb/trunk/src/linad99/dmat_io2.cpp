@@ -214,7 +214,7 @@ dmatrix::dmatrix(char * s)
       istrstream f(line);
       while ( (f >> field).good() )
       {
-       char * err_ptr;
+       //char * err_ptr;
        // increment row counter
        if ( ++j > MAX_NUMBER_COLUMNS)
        {

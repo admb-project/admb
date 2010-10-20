@@ -29,7 +29,7 @@ ivector diagonal(const imatrix& m)
      ad_exit(21);
    }
    imatrix tmp(m1.rowmin(),m1.rowmax(), m2.colmin(), m2.colmax());
-   double sum;
+   //double sum;
    for (int j=m2.colmin(); j<=m2.colmax(); j++)
    {
      dvector m2col=column(m2,j);

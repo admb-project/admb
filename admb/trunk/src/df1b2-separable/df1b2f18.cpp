@@ -90,7 +90,7 @@ void set_value(const df1b2vector& _x,const dvector& v, const int& _ii,
 void df1b2_init_bounded_vector::set_value(const dvector& x,
   const int& ii)
 {
-  double pen=0.0;
+  //double pen=0.0;
   ::set_value(*this,x,ii,minb,maxb);
 }
 
@@ -105,7 +105,7 @@ void df1b2_init_bounded_dev_vector::set_value(const dvector& x,
 void df1b2_init_bounded_number::set_value(const dvector& x,const int& _ii)
 {
   ADUNCONST(int,ii)
-  double pen=0.0;
+  //double pen=0.0;
   ::set_value(*this,x,ii,minb,maxb);
 }
 

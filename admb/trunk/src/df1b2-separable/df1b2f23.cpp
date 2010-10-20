@@ -227,7 +227,7 @@ void read_pass2_1c1(void)
   int i;
   for (i=0;i<nvar;i++)
   {
-    double df=(pf->df)(xu,yu);
+    //double df=(pf->df)(xu,yu);
     py->u_bar[i]+=(pf->df)(xu,yu)*pz->u_bar[i];
   }
   for (i=0;i<nvar;i++)
@@ -266,7 +266,7 @@ void read_pass2_1c1(void)
 
 void read_pass2_2c1(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1
@@ -307,7 +307,7 @@ void read_pass2_2c1(void)
 
   double xu,yu;
   double * ydot;
-  df1b2_header x,z;
+  //df1b2_header x,z;
   df1b2function2c * pf;
 
   // get info from tape1
@@ -444,7 +444,7 @@ void read_pass2_3c1(void)
   double xu;
   double yu;
   double * ydot;
-  df1b2_header y,z;
+  //df1b2_header y,z;
   df1b2function2c * pf;
 
   // get info from tape1

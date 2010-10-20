@@ -14,7 +14,7 @@ void function_minimizer::quasi_newton_block_pvm_master(int nvar,int _crit,
   // *********************************************************
   // block for quasi-newton minimization
   tracing_message(traceflag,"C2");
-	int itnold=0;
+	//int itnold=0;
   fmm fmc(nvar);
   int on1;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-nox"))>-1)

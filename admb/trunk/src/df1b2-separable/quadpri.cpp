@@ -31,7 +31,7 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
   int xsize=initial_params::nvarcalc(); 
   dvector g(1,xsize);
   gradcalc(0,g);
-  double f=0.0;
+  //double f=0.0;
   independent_variables u(1,xsize);
   u=x;
   dvariable vf=0.0;

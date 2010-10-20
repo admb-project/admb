@@ -247,7 +247,7 @@ dmatrix trans(BOR_CONST dvector& x)
 	  int ic=1;
 	  initial_params::copy_all_values(xmax(sign*j),ic); // save the
 							// conditional maximum
-	  int check=initial_params::stddev_scale(xscale,xvector);
+	  /*int check=*/initial_params::stddev_scale(xscale,xvector);
         //#if defined(DO_PROFILE)
 	  //dvector curvscale(1,nvar);   // need to get scale from somewhere
         //#endif

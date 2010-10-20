@@ -49,7 +49,7 @@ dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,
   dvariable v_hat;
   double width=3.0;
   double pcon=0.05;
-  double width2=width*width;
+  //double width2=width*width;
   dvariable a2;
   a2=a*a;
   dvar_vector diff = obs-pred;     // These are the residuals

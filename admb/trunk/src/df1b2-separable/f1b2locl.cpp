@@ -60,7 +60,7 @@ local_init_df1b2vector::local_init_df1b2vector(const df1b2vector & _x)
   p=&_x;
   int mmin=x.indexmin();
   int mmax=x.indexmax();
-  int ind_index = x(mmin).get_ind_index();
+  //int ind_index = x(mmin).get_ind_index();
   df1b2variable::noallocate=1;
   df1b2vector::allocate(mmin,mmax);
   df1b2variable::noallocate=0;
@@ -243,7 +243,7 @@ local_init_df1b2vector::local_init_df1b2vector(const df1b2vector & _x)
         cerr << "memory allocation error" << endl;
         ad_exit(1);
       }
-      init_df1b2vector& tmp = *py;
+      //init_df1b2vector& tmp = *py;
     
   
     if (plist) 
@@ -437,7 +437,7 @@ local_init_df1b2vector::local_init_df1b2vector(const df1b2vector & _x)
         {
           df1b2_init_bounded_vector & b = *(df1b2_init_bounded_vector*)pointer; 
           //laplace_approximation_calculator * l =lapprox;
-          int uf=-1;
+          //int uf=-1;
           if (ind_index>0)
           {
            // uf=l->used_flags(ind_index);

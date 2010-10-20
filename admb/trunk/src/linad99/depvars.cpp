@@ -70,9 +70,12 @@
   }
 
   dependent_variables_information::dependent_variables_information(int ndv) :
-    grad_buffer_position(1,ndv), cmpdif_buffer_position(1,ndv),
-    grad_file_count(1,ndv), cmpdif_file_count(1,ndv),
-    grad_file_position(1,ndv), cmpdif_file_position(1,ndv)
+    grad_buffer_position(1,ndv),
+    cmpdif_buffer_position(1,ndv),
+    grad_file_position(1,ndv),
+    cmpdif_file_position(1,ndv),
+    grad_file_count(1,ndv),
+    cmpdif_file_count(1,ndv)
   {
      max_num_dependent_variables=ndv;
      depvar_count=0;

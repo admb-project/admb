@@ -78,7 +78,7 @@ void function_minimizer::monte_carlo_routine(void)
       }
 
       initial_params::mc_phase=0;
-      int check=initial_params::stddev_scale(scale,x);
+      /*int check=*/initial_params::stddev_scale(scale,x);
       initial_params::mc_phase=1;
       {
         dmatrix tmp(1,nvar,1,nvar);
@@ -111,7 +111,7 @@ void function_minimizer::monte_carlo_routine(void)
     }
     dmatrix CHD= choleski_decomp(S);
     int sgn;
-    double lnd=ln_det(S,sgn);
+    /*double lnd=*/ln_det(S,sgn);
     //cout << endl << S << endl << endl;
     //cout << endl << CHD << endl << endl;
   
@@ -131,16 +131,18 @@ void function_minimizer::monte_carlo_routine(void)
     }
     double ll=0.0;
     initial_params::add_random_vector(jac,bmn,ll,diag);
+/*
 #if defined(USE_DDOUBLE)
     double ljac0=sum(log(jac+double(1.e-50)));
 #else
     double ljac0=sum(log(jac+1.e-50));
 #endif
+*/
   
     dmatrix ch3=3.*chdec;
     dmatrix chinv=inv(chdec);
     dmatrix ch3inv=inv(ch3);
-    double xxin;
+    //double xxin;
   
     {
       long int iseed=0;
@@ -156,8 +158,8 @@ void function_minimizer::monte_carlo_routine(void)
         iseed=-iseed;
       }
       better_rand(iseed);   
-      double lprob=0.0;
-      double lprob3=0.0;
+      //double lprob=0.0;
+      //double lprob3=0.0;
       // get lower and upper bounds
   
       //independent_variables x(1,nvar);
@@ -168,14 +170,14 @@ void function_minimizer::monte_carlo_routine(void)
       gradient_structure::set_NO_DERIVATIVES();
       //ofstream ooff((char*) (ad_comm::adprogram_name + adstring(".mte")) );
       //ofstream ooff1((char*) (ad_comm::adprogram_name + adstring(".mt2")) );
-      double cont=0.00;
+      //double cont=0.00;
       double log_tprob_normal=0.0;
       double log_tprob_small_normal=0.0;
       double log_tprob_cauchy=0.0;
       double log_tprob=0.0;
       int ndvar=stddev_params::num_stddev_calc();
       dvector param_values(1,ndvar);
-      int outflag;
+      //int outflag;
       //ooff1 << "Number of simulations = " << number_sims << endl; 
       ii=1;
       initial_params::restore_all_values(parsave,ii);
@@ -215,9 +217,9 @@ void function_minimizer::monte_carlo_routine(void)
         log_tprob=log_tprob_cauchy
           +log(0.95*exp(log_tprob_normal-log_tprob_cauchy)+.05);
       }
-      double cdiff=-fbest-log_tprob;
-      double cfb=-fbest;
-      double clt=log_tprob;
+      //double cdiff=-fbest-log_tprob;
+      //double cfb=-fbest;
+      //double clt=log_tprob;
       //ooff1 << " *  weight    likelihood   simprob  ln det "
        //"  ljac0   ljac     parameter value " << endl;
       //ooff1 << setw(10) << exp(-fbest-log_tprob) << " "  
@@ -288,11 +290,13 @@ void function_minimizer::monte_carlo_routine(void)
         initial_params::xinit(y);   
 
         //initial_params::stddev_scale(jac,y);
+/*
 #if defined(USE_DDOUBLE)
         double ljac=sum(log(jac+double(1.e-50)));
 #else
         double ljac=sum(log(jac+1.e-50));
 #endif
+*/
 
 
        // ogs << log_tprob << " " << ll << " " << x << endl;

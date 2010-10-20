@@ -119,4 +119,4 @@
 #endif
 #endif
 
-void abcde_f(void) { int i=1;}
+void abcde_f(void) { /*int i=1;*/ }

@@ -111,10 +111,10 @@
       }
     }
     #if !defined( __NDPX__) && !defined( __SUN__)
-      unsigned int nread = read(_GRADFILE_PTR,ptr_first,
+      int nread = read(_GRADFILE_PTR,ptr_first,
         ((long int)(sizeof(grad_stack_entry)*length)) );
     #else
-      unsigned int nread = read(_GRADFILE_PTR,
+      int nread = read(_GRADFILE_PTR,
         (char*)ptr_first,((long int)(sizeof(grad_stack_entry)*length)) );
     #endif
     ptr = ptr_first + length-1;

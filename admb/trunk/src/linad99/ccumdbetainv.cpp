@@ -10,6 +10,7 @@ static double lnbeta(double a,double b)
   return gammln(a)+gammln(b)-gammln(a+b);
 }
 
+/*
 static int sgn(double z)
 {
   if (z>=0)
@@ -17,11 +18,12 @@ static int sgn(double z)
   else
     return -1;
 }
+*/
 
 
 double inv_cumd_beta_stable(double a,double b,double y,double eps)
 {
-  double u;
+  //double u;
   double eps1=1.0-eps;
 
   int icount=0;
@@ -59,7 +61,7 @@ double inv_cumd_beta_stable(double a,double b,double y,double eps)
   double d=0.0;
   do
   {
-    double xm;
+    //double xm;
     double f,dx; // der of x wrt s
     x=1.0/(1.0+exp(-s));  //transform from s to x
 

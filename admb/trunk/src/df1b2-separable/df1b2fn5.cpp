@@ -21,7 +21,7 @@ void df1b2variable::operator = (double d)
   //ptr[blocksize-1]=8219.4;
   get_ind_index()=-1;
   *u=d;
-  double * zd=get_u_dot();
+  //double * zd=get_u_dot();
   // !!! nov 1 02
   if (!df1b2_gradlist::no_derivatives)
     f1b2gradlist->write_save_pass2_tilde_values(this);
@@ -150,7 +150,7 @@ int df1b2_gradlist::write_pass1_initialize(df1b2variable * pz)
   if (ncount >= ncount_check)
     ncount_checker(ncount,ncount_check);
 #endif
-  int nvar=df1b2variable::nvar;
+  //int nvar=df1b2variable::nvar;
   int total_bytes=sizeof(df1b2_header)+sizeof(char *);
 
 // string identifier debug stuff
@@ -230,7 +230,7 @@ void read_pass1_init_1(void)
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
-  df1b2_header z;
+  //df1b2_header z;
   df1b2function1 * pf;
 
   // get info from tape1
@@ -242,7 +242,7 @@ void read_pass1_init_1(void)
   pf=*(df1b2function1 **) list.bptr;
   list.bptr+=sizeof(char*);
   list.restoreposition(); // save pointer to beginning of record;
-  int i;
+  //int i;
   
   // Do first reverse paSS calculations
   // ****************************************************************
@@ -294,7 +294,7 @@ void read_pass1_init_1(void)
 
 void read_pass1_init_2(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1
@@ -331,7 +331,7 @@ void read_pass1_init_2(void)
   // save the pointer to the beginning of the record
   // bptr and bptr2 now both point to the beginning of their records
 
-  df1b2_header z;
+  //df1b2_header z;
   df1b2function1 * pf;
 
   // get info from tape1
@@ -387,8 +387,8 @@ void read_pass1_init_3(void)
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
-  df1b2_header z;
-  df1b2function1 * pf;
+  //df1b2_header z;
+  // df1b2function1 * pf;
 
   // get info from tape1
 #if defined(SAFE_ALL)

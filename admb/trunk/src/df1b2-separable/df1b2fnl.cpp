@@ -8,7 +8,7 @@
 
 #define USE_BARD_PEN
 class newadkludge;
-extern newadkludge * newadkl=0;
+newadkludge * newadkl=0;
 
 
 typedef funnel_init_var  * PFUNNEL_INIT_VAR;
@@ -192,7 +192,7 @@ void funnel_init_var::allocate_all(void)
     cerr << "memory allocation error" << endl;
     ad_exit(1);
   }
-  init_df1b2vector& tmp = *py;
+  //init_df1b2vector& tmp = *py;
   
 
   if (plist) 
@@ -378,7 +378,7 @@ funnel_dependent_df1b2variable::funnel_dependent_df1b2variable
   df1b2variable::operator = (x);
   if (!df1b2_gradlist::no_derivatives)
   {
-    df1b2variable * tmp = (df1b2variable *) (this);
+    //df1b2variable * tmp = (df1b2variable *) (this);
     //set_dependent_variable(*tmp);
   }
   df1b2_gradlist::set_no_derivatives();

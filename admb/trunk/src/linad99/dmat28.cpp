@@ -53,7 +53,7 @@ _CONST double& banded_lower_triangular_dmatrix::operator () (int i,int j) _CONST
 
 
 banded_symmetric_dmatrix::banded_symmetric_dmatrix(
-  const banded_symmetric_dmatrix& BB,int _lb,int _ub) : d(0,BB.bw-1) , bw(BB.bw)
+  const banded_symmetric_dmatrix& BB,int _lb,int _ub) : bw(BB.bw), d(0,BB.bw-1)
 {
   banded_symmetric_dmatrix& B= (banded_symmetric_dmatrix&) BB;
   if (_lb<B.indexmin() || _ub>B.indexmax())
@@ -210,7 +210,7 @@ ostream& operator << (BOR_CONST ostream& _ofs,_CONST banded_lower_triangular_dma
 banded_lower_triangular_dmatrix choleski_decomp(
   const banded_symmetric_dmatrix& MM)
 {
-  int ierr;
+  //int ierr;
   return choleski_decomp(MM);
 }
 

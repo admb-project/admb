@@ -37,7 +37,7 @@ dvar_matrix eigenvectors(_CONST dvar_matrix& m)
 
   dvar_matrix m1=symmetrize(m);
   int n=m1.rowsize();
-  int imin=m.colmin();
+  //int imin=m.colmin();
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   dvar_vector diag(1,n);

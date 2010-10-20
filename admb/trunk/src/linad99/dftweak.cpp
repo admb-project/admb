@@ -6,8 +6,8 @@
  */
 #include <fvar.hpp>
 
-dfunction_tweaker::dfunction_tweaker(double _eps,double _mult) : coffs(1,3), 
-  eps(_eps) , mult(mult)  
+dfunction_tweaker::dfunction_tweaker(double _eps,double _mult) : 
+  mult(mult), eps(_eps), coffs(1, 3)
 {
   double e=eps;
   double e2=e*e;

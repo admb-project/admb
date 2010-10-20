@@ -10,8 +10,8 @@ void imatrix::allocate(_CONST imatrix& dm)
 {
   int nrl=dm.rowmin();
   int nrh=dm.rowmax();
-  int ncl=dm.colmin();
-  int nch=dm.colmax();
+  //int ncl=dm.colmin();
+  //int nch=dm.colmax();
   index_min=nrl;
   index_max=nrh;
 

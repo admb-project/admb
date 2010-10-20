@@ -13,8 +13,8 @@
 
 
 #include <string.h>
-int save_identifier_string(char*);
-void verify_identifier_string(char*);
+int save_identifier_string(const char*);
+void verify_identifier_string(const char*);
 
 struct dvar_matrix_position;
 struct dvector_position;
@@ -222,10 +222,10 @@ Only available in the "safe" library.
 Used primarily for debugging adjoint coide.
 \param str Character sting to saved on the stack.
 */
-int save_identifier_string(char* str)
+int save_identifier_string(const char* str)
 {
 #if defined(CHK_ID_STRING)
-  int wsize=sizeof(char);
+  //int wsize=sizeof(char);
   int length=strlen(str);
   gradient_structure::get_fp()->fwrite(str,length);
 #endif

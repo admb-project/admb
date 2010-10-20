@@ -22,7 +22,7 @@ void dvector::save_dvector_position(void) _CONST
   // saves the size and address information for a dvar_vector
   const unsigned wsize=sizeof(dvector_position);
   dvector_position tmp(*this);
-  int num_rec;
+  //int num_rec;
   gradient_structure::get_fp()->fwrite(&tmp,wsize);
 }
 
@@ -32,7 +32,7 @@ ivector_position restore_ivector_position(void)
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
   ivector_position tmp;
-  int ierr;
+  //int ierr;
   gradient_structure::get_fp()->fread(&tmp,sizeof(ivector_position));
   return tmp;
 }
@@ -62,8 +62,8 @@ void dvar_vector::save_dvar_vector_value(void) _CONST
 {
   //int ierr=save_dvar_vector_position();
   // saves the size, address, and value information for a dvar_vector
-  const unsigned wsize=sizeof(double);
-  int num_rec;
+  //const unsigned wsize=sizeof(double);
+  //int num_rec;
   int min=indexmin();
   int max=indexmax();
   for (int i=min;i<=max;i++)
@@ -80,7 +80,7 @@ void dvector::save_dvector_value(void) _CONST
   // saves the size, address, and value information for a dvar_vector
   // int ierr=save_dvector_position();
   //int wsize=sizeof(double);
-  int num_rec;
+  //int num_rec;
   int min=indexmin();
   int max=indexmax();
   for (int i=min;i<=max;i++)

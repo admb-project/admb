@@ -439,8 +439,8 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  void dvar4_array::allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
    int nrl, _CONST imatrix& nrh,int ncl,int nch)
  {
-   int rmin=nrh.rowmin();
-   int cmin=nrh(rmin).indexmin();
+   //int rmin=nrh.rowmin();
+   //int cmin=nrh(rmin).indexmin();
    if ( (shape=new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in d4_array contructor\n";

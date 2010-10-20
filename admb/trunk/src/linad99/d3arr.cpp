@@ -208,10 +208,10 @@ double sum(_CONST d3_array& m)
  {
    int sl=d3v.slicemin();
    int sh=d3v.slicemax();
-   int nrl=d3v.rowmin();
-   int nrh=d3v.rowmax();
-   int ncl=d3v.colmin();
-   int nch=d3v.colmax();
+   //int nrl=d3v.rowmin();
+   //int nrh=d3v.rowmax();
+   //int ncl=d3v.colmin();
+   //int nch=d3v.colmax();
    if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
@@ -537,7 +537,7 @@ static int testflag=0;
      if (testflag)
        test_the_pointer();
      t += slicemin();
-     int ss=slicesize();
+     //int ss=slicesize();
      delete [] t;
      if (testflag)
        test_the_pointer();

@@ -378,13 +378,13 @@ void adpool::clean(void)
     cerr << "error in adpool object " // << poolname
          << " you must set the unit size " << endl;
   }
-  const int overhead = 12;
+  //const int overhead = 12;
   
   double *ptr=first;
   for (int i=1;i<=nelem;i++)
   {
     ptr++;
-    for(int j=1;j<=size/sizeof(double)-2;j++) *ptr++=0.0;
+    for(unsigned int j=1;j<=size/sizeof(double)-2;j++) *ptr++=0.0;
     ptr++;
   }
 }

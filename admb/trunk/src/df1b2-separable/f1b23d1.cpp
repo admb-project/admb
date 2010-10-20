@@ -101,7 +101,7 @@ void df1b23array::allocate(int nrl,int nrh,int ncl,int nch)
 {
   index_min=nrl;
   index_max=nrh;
-  int rs=size();
+  //int rs=size();
   if ( (shape=new vector_shapex(nrl,nrh,v)) == 0)
   {
       cerr << " Error allocating memory in df1b23array contructor\n";

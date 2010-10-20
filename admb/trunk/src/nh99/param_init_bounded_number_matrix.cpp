@@ -7,7 +7,7 @@
 #include "param_init_bounded_number_matrix.h"
 #include "admb_messages.h"
 
-param_init_bounded_number_matrix::param_init_bounded_number_matrix(): index_min(0), index_max(0), v(NULL)
+param_init_bounded_number_matrix::param_init_bounded_number_matrix(): v(NULL), index_min(0), index_max(0)
 {
 }
 void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax, 

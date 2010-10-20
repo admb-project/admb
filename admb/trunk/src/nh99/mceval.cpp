@@ -77,7 +77,7 @@ void function_minimizer::mcmc_eval(void)
       int ii=1;
       initial_params::restore_all_values(y,ii);
       initial_params::xinit(y);   
-      double ll=-get_monte_carlo_value(nvar,y);
+      /*double ll=-*/get_monte_carlo_value(nvar,y);
     }
   }
   while(1);

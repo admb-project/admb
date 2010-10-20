@@ -115,7 +115,7 @@ int adptr_diff(void * x, void * y) { return int(x)-int(y); }
 
   void init_df1b2variable::set_u_dot(void) 
   {
-    int j;
+    //int j;
     double uvalue=*get_u();
     initialize();
     int nder=maxder-minder+1;
@@ -659,7 +659,7 @@ dmatrix check_second_derivatives(const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
   dmatrix h(1,df1b2variable::nvar,1,df1b2variable::nvar);
-  const double delta=1.e-3;
+  //const double delta=1.e-3;
   h.initialize();
   int i,j;
   for (i=1;i<=init_df1b2variable::num_variables;i++)
@@ -676,7 +676,7 @@ d3_array check_third_derivatives(const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
   d3_array h(1,df1b2variable::nvar,1,df1b2variable::nvar,1,df1b2variable::nvar);
-  const double delta=2.e-4;
+  //const double delta=2.e-4;
   h.initialize();
   int i,j,k;
   for (i=1;i<=init_df1b2variable::num_variables;i++)

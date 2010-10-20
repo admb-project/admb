@@ -11,9 +11,9 @@ double function_minimizer::projected_hess_determinant(BOR_CONST dvector& g,
 {
  int sgn=0;
  double lndet=0.0;
- double ld1=0.0;
- double ld2=0.0;
- char ch;
+ //double ld1=0.0;
+ //double ld2=0.0;
+ //char ch;
  if (!underflow_flag)
  {
     adstring tmpstring="admodel.hes";
@@ -143,9 +143,9 @@ double function_minimizer::projected_hess_determinant(BOR_CONST dvector& g,
  // cout << "old det = " << lndet << endl;
  // lndet=ld1-ld2;
  // cout << "new det = " << lndet  << "  "  << ld1 << "  " << ld2 << endl;
-  char ch;
+  //char ch;
   //cin >> ch;
-  double lndet2=0.;
+  //double lndet2=0.;
   if (sgn <= 0)
   {
     cerr << "Error restricted Hessian is not positive definite" << endl;

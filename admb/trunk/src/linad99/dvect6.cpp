@@ -12,7 +12,7 @@
 
 #include <math.h>
 
- void shape_check(_CONST dvector& v1,_CONST dvector& v2,char * function_name);
+ void shape_check(_CONST dvector& v1,_CONST dvector& v2, const char * function_name);
 
  dvector sin(_CONST dvector& v1)                            // ***
  {

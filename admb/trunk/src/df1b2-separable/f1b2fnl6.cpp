@@ -25,7 +25,8 @@ funnel_init_df1b2matrix::funnel_init_df1b2matrix(const df1b2matrix & _x)
   {
     add_to_list();
   }
-  int i,j;
+  //int i,j;
+  int i;
   ivector lb(mmin,mmax);
   ivector ub(mmin,mmax);
   lb(mmin)=(*p)(mmin).indexmin();

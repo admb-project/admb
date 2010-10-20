@@ -26,8 +26,8 @@ dvector eigenvalues(_CONST dmatrix& m)
   }
   dmatrix m1=symmetrize(m);
   int n=m1.rowsize();
-  int cmin=m1.colmin();
-  int rmin=m1.rowmin();
+  //int cmin=m1.colmin();
+  //int rmin=m1.rowmin();
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   dvector diag(1,n);
@@ -186,11 +186,12 @@ void get_eigen(BOR_CONST dvector& _d,BOR_CONST dvector& _e,_CONST dmatrix& _z)
 {
   dvector& d = (dvector&) _d;
   dvector& e = (dvector&) _e;
-  dmatrix& z = (dmatrix&) _z;
+  //dmatrix& z = (dmatrix&) _z;
   int max_iterations=30;
   int n=d.size();
   max_iterations+=10*(n/100);
-  int m,l,iter,i,k;
+  //int m,l,iter,i,k;
+  int m,l,iter,i;
   double s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];
@@ -272,7 +273,8 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e)
   int max_iterations=30;
   int n=d.size();
   max_iterations+=10*(n/100);
-  int m,l,iter,i,k;
+  //int m,l,iter,i,k;
+  int m,l,iter,i;
   double s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];

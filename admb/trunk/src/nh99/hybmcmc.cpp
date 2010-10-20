@@ -97,9 +97,9 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
   robust_hybrid_flag=0;
   uostream * pofs_psave=NULL;
   dmatrix mcmc_display_matrix;
-  int mcmc_save_index=1; 
-  int mcmc_wrap_flag=0;
-  int mcmc_gui_length=10000;
+  //int mcmc_save_index=1; 
+  //int mcmc_wrap_flag=0;
+  //int mcmc_gui_length=10000;
   int no_sd_mcmc=0;
 
   
@@ -130,11 +130,11 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     ivector number_offsets;
     dvector lkvector;
     //double current_bf=0;
-    double lcurrent_bf=0;
-    double size_scale=1.0;
-    double total_spread=200;
+    //double lcurrent_bf=0;
+    //double size_scale=1.0;
+    //double total_spread=200;
     //double total_spread=2500;
-    uostream * pofs_sd = NULL;
+    //uostream * pofs_sd = NULL;
 
 
     int nvar_x=0;
@@ -150,14 +150,14 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     int scov_option=0;
     dmatrix s_covar;
     dvector s_mean;
-    int ncsim=25000;
-    int nslots=800;
+    //int ncsim=25000;
+    //int nslots=800;
     //int nslots=3600;
-    int initial_nsim=4800;
-    int ntmp=0;
-    int ncor=0;
-    double bfsum=0;
-    int ibfcount=0;
+    //int initial_nsim=4800;
+    //int ntmp=0;
+    //int ncor=0;
+    //double bfsum=0;
+    //int ibfcount=0;
     double llbest;
     double lbmax;
   
@@ -168,7 +168,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     s_covar.initialize();
 
     int ndvar=stddev_params::num_stddev_calc();
-    int numdvar=stddev_params::num_stddev_number_calc();
+    /*int numdvar=*/stddev_params::num_stddev_number_calc();
 
 #if defined(USE_LAPLACE)
     if (mcmc2_flag==0)
@@ -187,7 +187,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     dvector x(1,nvar);
     //dvector scale(1,nvar);
     dmatrix values;
-    int have_hist_flag=0;
+    //int have_hist_flag=0;
     initial_params::xinit(x); 
     dvector pen_vector(1,nvar);
     {
@@ -209,7 +209,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     bmn.initialize();
     int use_empirical_flag=0;
     int diag_option=0;
-    int topt=0;
+    //int topt=0;
     int hybnstep=10;
     double hybeps=0.1;
     double _hybeps=-1.0;
@@ -491,7 +491,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       dmatrix chd = choleski_decomp(S);
       //dmatrix tchd = trans(chd);
       //dmatrix chdinv=inv(chd);
-      int sgn;
+      //int sgn;
       // ***************************************************************
       // ***************************************************************
       // NEW HYBRID MCMC
@@ -531,7 +531,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       initial_params::xinit(x0);   
       
       z=x0+chd*y;
-      double llc=get_hybrid_monte_carlo_value(nvar,z,g);
+      /*double llc=*/get_hybrid_monte_carlo_value(nvar,z,g);
       llbest=get_hybrid_monte_carlo_value(nvar,z,g);
       lbmax=llbest;
 
@@ -545,7 +545,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
        {
          number_sims=  nmcmc;
        }
-       double hybeps2=0.5*hybeps;
+       //double hybeps2=0.5*hybeps;
        double beginprior=get_hybrid_monte_carlo_value(nvar,z,g);
        dvector Fbegin=g*chd;
        // use trand(chd) ?
@@ -584,7 +584,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
        for (int is=1;is<=number_sims;is++)
        {
          int forflag=1;
-         double rnd=randu(rng);
+         //double rnd=randu(rng);
          //if (rnd<0.5) forflag=0;
          double hstep,hstep2;
          //if (forflag)

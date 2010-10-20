@@ -139,7 +139,7 @@ void read_pass2_1c(void)
   char * bptr=f1b2gradlist->list.bptr;
   df1b2_header * px=(df1b2_header *) bptr;
   bptr+=sizeof(df1b2_header);
-  double * py=(double *) bptr;
+  //double * py=(double *) bptr;
   bptr+=sizeof(double);
   df1b2_header * pz=(df1b2_header *) bptr;
   bptr+=sizeof(df1b2_header);
@@ -251,7 +251,7 @@ void read_pass2_1c(void)
   int i;
   for (i=0;i<nvar;i++)
   {
-    double df=(pf->df)(xu,yu);
+    //double df=(pf->df)(xu,yu);
     px->u_bar[i]+=(pf->df)(xu,yu)*pz->u_bar[i];
   }
   for (i=0;i<nvar;i++)
@@ -290,7 +290,7 @@ void read_pass2_1c(void)
 
 void read_pass2_2c(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1
@@ -331,7 +331,7 @@ void read_pass2_2c(void)
 
   double xu,yu;
   double * xdot;
-  df1b2_header x,z;
+  //df1b2_header x,z;
   df1b2function2c * pf;
 
   // get info from tape1
@@ -342,7 +342,7 @@ void read_pass2_2c(void)
 #endif
   df1b2_header * px=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  double * py=(double *) list.bptr;
+  //double * py=(double *) list.bptr;
   list.bptr+=sizeof(double);
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
@@ -469,7 +469,7 @@ void read_pass2_3c(void)
   double xu;
   double yu;
   double * xdot;
-  df1b2_header x,z;
+  //df1b2_header x,z;
   df1b2function2c * pf;
 
   // get info from tape1
@@ -479,7 +479,7 @@ void read_pass2_3c(void)
 #endif
   df1b2_header * px=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  double * py=(double *) list.bptr;
+  //double * py=(double *) list.bptr;
   list.bptr+=sizeof(double);
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);

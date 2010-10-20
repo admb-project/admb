@@ -589,7 +589,7 @@ label7020:
       for (i=k;i>=lb;i--)
       {
         int i1=i%(m1);
-        int i2=(i+1)%(m1);
+        //int i2=(i+1)%(m1);
         {
           alpha(i-lb)=xrho(i1)*(s(i1)*t);
         }

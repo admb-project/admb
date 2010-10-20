@@ -479,7 +479,7 @@ void df1b2vector::allocate(int lb,int ub)
       ind_1=0;
     }
 #  if defined(SAFE_ALL)
-    int i;
+    //int i;
    /*
     for (i=mmin+1;i<mmax;i++)
     {

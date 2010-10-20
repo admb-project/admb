@@ -36,7 +36,7 @@ void param_init_bounded_number::mc_scale(BOR_CONST dvector& _d,BOR_CONST dvector
   dvector& d=(dvector&) _d;
   int& ii=(int&) _ii;
   double pen=0;
-  double var;
+  //double var;
   double xx=set_value_inv_mc(*this,minb,maxb);
   double yy=boundpin(*this,minb,maxb);
   double a=ndfboundp(yy,minb,maxb,pen);

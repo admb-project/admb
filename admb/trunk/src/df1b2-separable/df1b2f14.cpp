@@ -55,7 +55,7 @@ void fixed_smartlist2::allocate(unsigned int _bufsize,
     ad_exit(1);
   }
 
-  off_t pos=lseek(fp,0L,SEEK_CUR);
+  /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
 }
 
 void fixed_smartlist2::write(int n)
@@ -70,7 +70,7 @@ void fixed_smartlist2::write(int n)
 void fixed_smartlist2::rewind(void)
 {
   bptr=buffer;
-  int nbytes=0;
+  unsigned int nbytes=0;
   eof_flag=0;
   if (written_flag)
   {
@@ -86,7 +86,7 @@ void fixed_smartlist2::rewind(void)
       ad_exit(1);
     }
     // now read the record into the buffer
-    int nr=::read(fp,buffer,nbytes);
+    /*int nr=*/::read(fp,buffer,nbytes);
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
@@ -99,7 +99,7 @@ void fixed_smartlist2::initialize(void)
   end_saved=0;
   eof_flag=0;
   bptr=buffer;
-  int nbytes=0;
+  //int nbytes=0;
   written_flag=0;
   lseek(fp,0,SEEK_SET);
   set_forward();
@@ -115,7 +115,7 @@ void fixed_smartlist2::check_buffer_size(int nsize)
     }
     else
     {
-      if (nsize>bufsize)
+      if ((unsigned int)nsize>bufsize)
       {
          cout << "Need to increase buffsize in list" << endl;
          exit(1);
@@ -131,7 +131,7 @@ void fixed_smartlist2::restore_end(void)
   {
     if (end_saved)
     {
-      off_t ipos=lseek(fp,endof_file_ptr,SEEK_SET);
+      /*off_t ipos=*/lseek(fp,endof_file_ptr,SEEK_SET);
       read_buffer();
       set_recend();
     }
@@ -226,7 +226,7 @@ void fixed_smartlist2::write_buffer(void)
 void fixed_smartlist2::read_buffer(void)
 {
   off_t pos;
-  int nbytes;
+  unsigned int nbytes;
   if (!written_flag)
   {
     if (direction ==-1) 
@@ -263,7 +263,7 @@ void fixed_smartlist2::read_buffer(void)
       ad_exit(1);
     }
     // now read the record into the buffer
-    int nr=::read(fp,buffer,nbytes);
+    unsigned int nr=::read(fp,buffer,nbytes);
     if (nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
@@ -376,7 +376,7 @@ void fixed_smartlist2::operator += (int nsize)
     }
     else
     {
-      if (nsize>bufsize)
+      if ((unsigned int)nsize>bufsize)
       {
          cout << "Need to increase buffsize in list" << endl;
          exit(1);

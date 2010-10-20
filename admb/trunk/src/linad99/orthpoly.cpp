@@ -8,7 +8,7 @@
 
 dmatrix orthpoly(int n,int deg)
 {
-  int i; int j; int ia; int is; int ik;
+  int j; int is; int ik;
   dmatrix ocoff(0,deg,1,n);
   double sum;
   ocoff(0)=sqrt(double(n));
@@ -34,7 +34,7 @@ dmatrix orthpoly(int n,int deg)
 
 dmatrix orthpoly(int n,int deg,int skip)
 {
-  int i; int j; int ia; int is; int ik;
+  int j; int is; int ik;
   dmatrix ocoff(0,deg,1,n);
   double sum;
   ocoff(0)=sqrt(double(n));
@@ -60,7 +60,7 @@ dmatrix orthpoly(int n,int deg,int skip)
 
 dmatrix orthpoly_constant_begin(int n,int deg,int nconst)
 {
-  int i; int j; int ia; int is; int ik;
+  int j; int is; int ik;
   dmatrix ocoff(0,deg,1,n);
   double sum;
   ocoff(0)=sqrt(double(n));
@@ -124,7 +124,7 @@ dmatrix orthpoly_constant_begin(int n,int deg,int nconst)
 dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
   int end_degree,int nconst_end)
 {
-  int i; int j; int ia; int is; int ik;
+  int j; int is; int ik;
   dmatrix ocoff(0,deg,1,n);
   double sum;
   ocoff(0)=sqrt(double(n));
@@ -199,7 +199,7 @@ dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
 dmatrix seldif_basis(int n)
 {
 
-  int i; int j; int ia; int is; int ik;
+  int i; int j;
   dmatrix ocoff(1,n,1,n);
   dmatrix ocoff1(1,n,1,n);
   ocoff.initialize();

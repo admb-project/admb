@@ -38,8 +38,8 @@
 
   dvector rowsum(_CONST dmatrix&v)
   {
-    int cmin=v.colmin();
-    int cmax=v.colmax();
+    //int cmin=v.colmin();
+    //int cmax=v.colmax();
     int rmin=v.rowmin();
     int rmax=v.rowmax();
 

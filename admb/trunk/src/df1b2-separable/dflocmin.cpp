@@ -36,7 +36,8 @@ dvector laplace_approximation_calculator::local_minimization
 {
   int better_flag=0;
   int counter=0;
-  double fbest,f2;
+  //double fbest,f2;
+  double fbest;
   dvector vbest(1,usize);
   s.initialize();
   s(1)=1.0;

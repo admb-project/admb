@@ -347,8 +347,8 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  void d4_array::allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
    int nrl, _CONST imatrix& nrh,int ncl,int nch)
  {
-   int rmin=nrh.rowmin();
-   int cmin=nrh(rmin).indexmin();
+   //int rmin=nrh.rowmin();
+   //int cmin=nrh(rmin).indexmin();
    if ( (shape=new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in d4_array contructor\n";
@@ -404,11 +404,11 @@ d4_array::d4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
 void d4_array::allocate(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
   _CONST imatrix& nrh,int ncl,_CONST i3_array& nch)
 {
-  int rmin=nrh.rowmin();
-  int cmin=nrh(rmin).indexmin();
-  int sl1=nch.slicemin();
-  int rmin1=nch(sl1).rowmin();
-  int cmin1=nch(sl1,rmin1).indexmin();
+  //int rmin=nrh.rowmin();
+  //int cmin=nrh(rmin).indexmin();
+  //int sl1=nch.slicemin();
+  //int rmin1=nch(sl1).rowmin();
+  //int cmin1=nch(sl1,rmin1).indexmin();
   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
   {
     cerr << " Error allocating memory in d4_array contructor\n";

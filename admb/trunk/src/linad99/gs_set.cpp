@@ -52,7 +52,7 @@ void gradient_structure::set_ARRAY_MEMBLOCK_SIZE(unsigned long i)
 
 void gradient_structure::set_CMPDIF_BUFFER_SIZE(long int i)
 {
-  if ( (unsigned long int) (UINT_MAX) < i)
+  if ( (unsigned long int) (UINT_MAX) < (unsigned long int)i)
   {
     unsigned int max_size=UINT_MAX;
 

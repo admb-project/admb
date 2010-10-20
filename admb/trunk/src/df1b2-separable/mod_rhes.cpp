@@ -120,7 +120,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
   dvector hess(1,nvar);
   dvector hess1(1,nvar);
   dvector hess2(1,nvar);
-  double eps=.1;
+  //double eps=.1;
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
 
@@ -178,8 +178,9 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
             ofs << "   value      std dev" << endl;
         int mmin=lapprox->bHess->indexmin();
         int mmax=lapprox->bHess->indexmax();
-        int i,j;
-        int ii=1;
+        //int i,j;
+        int i;
+        //int ii=1;
         dvector & u= lapprox->uhat;
         dvector e(mmin,mmax);
         //choleski_decomp(*lapprox->bHess);
@@ -208,7 +209,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       tmpstring = ad_comm::adprogram_name + ".rhes";
       ofstream ofs((char*)(tmpstring));
           ofs << "   value      std dev" << endl;
-      int ii=1;
+      //int ii=1;
       tmpstring = ad_comm::adprogram_name + ".luu";
       uostream ofs1((char*)(tmpstring));
       dvector & u= lapprox->uhat;
@@ -410,7 +411,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
         ofs << gradient_structure::Hybrid_bounded_flag;
         initial_params::set_inactive_only_random_effects(); 
         dvector tscale(1,nvar);   // need to get scale from somewhere
-        int check=initial_params::stddev_scale(tscale,x);
+        /*int check=*/initial_params::stddev_scale(tscale,x);
         ofs << tscale;
       }
     }

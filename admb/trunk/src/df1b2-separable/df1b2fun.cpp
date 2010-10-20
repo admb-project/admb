@@ -111,8 +111,10 @@ initial_df1b2params::initial_df1b2params(void) : ind_index(0)
   add_to_list();
 }
 
+/*
 static void stupid_xxx(int){;}
 static void stupid_xxx(void *){;}
+*/
 
 typedef void (**ADprfptr)(void);
 typedef void (*ADrfptr)(void);
@@ -122,7 +124,7 @@ void df1b2_gradcalc1(void)
   //smartlist & list=f1b2gradlist->list;
   fixed_smartlist & nlist=f1b2gradlist->nlist;
   int ncount=f1b2gradlist->ncount;
-  ADrfptr rf2;
+  //ADrfptr rf2;
   int xcount=0;
   int tmpcount;
   int tcount=f1b2gradlist->ncount;

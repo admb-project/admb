@@ -18,7 +18,7 @@ double calculate_importance_sample_block_diagonal_option2(const dvector& x,
 {
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)
-  ADUNCONST(dmatrix,Hessadjoint)
+  //ADUNCONST(dmatrix,Hessadjoint)
   const int xs=x.size();
   const int us=u0.size();
   gradient_structure::set_NO_DERIVATIVES();
@@ -32,7 +32,7 @@ double calculate_importance_sample_block_diagonal_option2(const dvector& x,
   // init parameters should be active in this phase
   initial_params::set_inactive_only_random_effects(); 
   initial_params::set_active_random_effects(); 
-  int onvar=initial_params::nvarcalc(); 
+  /*int onvar=*/initial_params::nvarcalc(); 
   initial_params::xinit(y);    // get the initial values into the
   // do we need this next line?
   y(1,xs)=x;
@@ -151,7 +151,7 @@ double calculate_importance_sample_block_diagonal_option2(const dvector& x,
      }
 
      *objective_function_value::pobjfun=0.0;
-     int istop=0;
+     //int istop=0;
      if (is==65)
      {
         xxx();
@@ -217,8 +217,8 @@ double calculate_importance_sample_block_diagonal_option2(const dvector& x,
      lcomp(isc)=dmin-log(mean(exp(dmin-diff)));
    }
 
-   double ns=lcomp.indexmax()-lcomp.indexmin()+1;
-   double min_vf=min(value(lcomp));
+   //double ns=lcomp.indexmax()-lcomp.indexmin()+1;
+   //double min_vf=min(value(lcomp));
    vf= sum(lcomp);
    vf-=us*0.91893853320467241; 
    

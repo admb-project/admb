@@ -41,8 +41,8 @@ dvariable ln_det_choleski(_CONST dvar_matrix& MM)
     return log(MM(mmin,mmin));
   }
 
-  int rowsave=M.rowmin();
-  int colsave=M.colmin();
+  //int rowsave=M.rowmin();
+  //int colsave=M.colmin();
   M.rowshift(1);
   M.colshift(1);
   int n=M.rowmax();
@@ -205,7 +205,7 @@ void df_ln_det_choleski(void)
   {
     log_det1+=log(L(i,i));
   }
-  double log_det=2.0*log_det1;
+  //double log_det=2.0*log_det1;
 
  //*******************************************************************8
  //*******************************************************************8
@@ -296,8 +296,8 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
     return log(MM(mmin,mmin));
   }
 
-  int rowsave=M.rowmin();
-  int colsave=M.colmin();
+  //int rowsave=M.rowmin();
+  //int colsave=M.colmin();
   M.rowshift(1);
   M.colshift(1);
   int n=M.rowmax();

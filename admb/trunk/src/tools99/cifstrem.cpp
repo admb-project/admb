@@ -16,11 +16,12 @@
 */
 void cifstream::set_eof_bit(void)
 {
-  int current_state = rdstate();
 #ifdef __BCPLUSPLUS__
+  int current_state = rdstate();
   setstate(current_state | ios::eofbit);
 #endif
 #ifdef __ZTC__
+  int current_state = rdstate();
   clear(current_state | ios::eofbit);
 #endif
 }

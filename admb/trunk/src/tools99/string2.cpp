@@ -22,7 +22,7 @@ adstring::adstring(int lb, int ub) : clist()
 //  s = new char[size_t(sz + 1)];
   allocate(sz);
   s--;
-  for (int i = 1; i <= sz; i++)
+  for (unsigned int i = 1; i <= sz; i++)
   {
     s[i] = '\0'; //' ';
   }

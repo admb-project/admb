@@ -71,7 +71,7 @@ const int MAX_NUMBER_ROWS = 6550;
      {
        // f >> field;      // Need to derive a class so that this thing stops at
                            // , or maybe deals with strings
-       char * err_ptr;
+       //char * err_ptr;
        // increment row counter
        if ( ++j > MAX_NUMBER_COLUMNS)
        {

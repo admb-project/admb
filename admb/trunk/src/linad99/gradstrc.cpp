@@ -130,7 +130,7 @@ humungous_pointer gradient_structure::ARRAY_MEMBLOCK_SAVE;
 double * gradient_structure::variables_save=NULL;
 void * farptr_norm(void *);
 long int farptr_tolong(void *) ;
-void memory_allocate_error(char * s, void * ptr);
+void memory_allocate_error(const char * s, void * ptr);
 
 
 long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
@@ -655,7 +655,7 @@ void null_ptr_err_message(void)
    cerr << "Trying to delete a NULL pointer in ~gradient_structure" << endl;
 }
 
-void memory_allocate_error(char * s, void * ptr)
+void memory_allocate_error(const char * s, void * ptr)
 {
   if (ptr == NULL)
   {

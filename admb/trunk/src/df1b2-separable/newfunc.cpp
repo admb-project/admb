@@ -10,7 +10,7 @@
 #include <adrndeff.h>
 
 static void xxx(double*,double*){;}
-static void xxx(double[]){;}
+//static void xxx(double[]){;}
 
 static void begin_local_calculations(int& nap) 
 { 
@@ -119,7 +119,7 @@ void read_xxx_1(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar=df1b2variable::nvar;
+  //int nvar=df1b2variable::nvar;
   fixed_smartlist & nlist=f1b2gradlist->nlist; 
   test_smartlist& list=f1b2gradlist->list; 
    // nlist-=sizeof(int);
@@ -138,7 +138,8 @@ void read_xxx_1(void)
   list.bptr+=sizeof(df1b2_header);
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  double xu,xpu,yu,ypu,zu,zpu;
+  //double xu,xpu,yu,ypu,zu,zpu;
+  double xu,yu,zu;
   memcpy(&xu,list.bptr,sizeof(double));
   list.bptr+=sizeof(double);
 
@@ -242,7 +243,7 @@ void read_xxx_1(void)
   double * yudotbar=py->get_u_dot_bar();
   double * pzudotbar=pz->get_u_dot_bar();
 
-  double zdottmp[100];
+  //double zdottmp[100];
   {
     for (int i=0;i<nvx;i++)
     {
@@ -293,24 +294,25 @@ void read_xxx_2(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
+  //fixed_smartlist & nlist=f1b2gradlist->nlist; 
   test_smartlist& list=f1b2gradlist->list; 
   int total_bytes=3*sizeof(df1b2_header)
     +2*(nvar+1)*sizeof(double);
-  int num_bytes=nlist.bptr->numbytes;
+  //int num_bytes=nlist.bptr->numbytes;
   f1b2gradlist->list.check_buffer_size(total_bytes);
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
 #if defined(SAFE_ARRAYS)
   checkidentiferstring("DL",list);
 #endif
-  df1b2_header * px=(df1b2_header *) list.bptr;
+  //df1b2_header * px=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  df1b2_header * py=(df1b2_header *) list.bptr;
+  //df1b2_header * py=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  df1b2_header * pz=(df1b2_header *) list.bptr;
+  //df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  double xu,xpu,yu,ypu,zu,zpu;
+  //double xu,xpu,yu,ypu,zu,zpu;
+  double xu,yu,zu;
   memcpy(&xu,list.bptr,sizeof(double));
   list.bptr+=sizeof(double);
 

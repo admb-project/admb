@@ -285,7 +285,7 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     df1_two_variable z;
     double u=::sqrt(*x.get_u());
     *z.get_u()=u;
-    double xinv=1.0/(*x.get_u());
+    //double xinv=1.0/(*x.get_u());
     double zp=0.5/u;
 
 
@@ -301,7 +301,7 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     df1_two_variable z;
     double cx=value(x);
     double d=1.0/(1+square(cx));
-    double d2=square(d);
+    //double d2=square(d);
     double u=::atan(cx);
     *z.get_u()=u;
     double zp=d;
@@ -327,7 +327,7 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     double u=::tan(*x.get_u());
     *z.get_u()=u;
     double v=1.0/::cos(*x.get_u());
-    double w=::sin(*x.get_u());
+    //double w=::sin(*x.get_u());
     double v2=v*v;
     double zp=v2;
 

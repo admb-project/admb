@@ -38,6 +38,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/** \file fvar.hpp
+AUTODIF classes.
+A more detailed description might someday be written.
+*/
+
 #if defined(__GNUDOS__)
   #if defined(__GNUC__)
     #if (__GNUC__ < 3)
@@ -1787,6 +1792,8 @@ private:
   dvar_matrix& operator << (BOR_CONST dvar_matrix& v1,_CONST dvar_matrix& v2);
 
   class df1_one_variable;
+  class df1_two_variable;
+  class df1_three_variable;
 
   class dvariable : public prevariable
   {
@@ -1799,6 +1806,8 @@ private:
      dvariable(_CONST prevariable&);
      dvariable& operator=(_CONST prevariable&);
      dvariable& operator = (const df1_one_variable& v);
+     dvariable& operator = (const df1_two_variable& v);
+     dvariable& operator = (const df1_three_variable& v);
      dvariable& operator=( double);
 #if defined(USE_DDOUBLE)
 #  undef double
@@ -7124,7 +7133,7 @@ ivector diagonal(const imatrix&);
 dvar_vector diagonal(const dvar_matrix&);
 
 double gammln(double xx);
-//dvariable gammln(_CONST dvariable& xx);
+dvariable gammln(_CONST dvariable& xx);
 dvariable gammln(_CONST prevariable& xx);
 ivector histogram(double min,double max,int nbin,_CONST dvector& input);
 
@@ -7223,18 +7232,21 @@ void normalized_gauss_hermite(const dvector& _x,const dvector& _w);
 void gauss_legendre(double x1, double x2, const dvector& _x, const dvector& _w);
 void gauss_legendre(const dvector& _x, const dvector& _w);
 
-dvariable beta(const prevariable&,const prevariable&);
+//dvariable beta(const prevariable&,const prevariable&);
 
+//dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b, _CONST dvariable& _x,int maxit=100);
 
-dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,
-  _CONST dvariable& _x,int maxit=100);
+//double betacf(_CONST double& _a,_CONST double& _b,_CONST double& _x,int maxit=100);
 
-double betacf(_CONST double& _a,_CONST double& _b,_CONST double& _x,int maxit=100);
+//dvariable betai(_CONST dvariable a,_CONST dvariable b,_CONST dvariable x, int maxit=100);
+//double betai(const double a,const double b,const double x, int maxit=100);
 
-dvariable betai(_CONST dvariable a,_CONST dvariable b,_CONST dvariable x,
-  int maxit=100);
-double betai(const double a,const double b,const double x,
-  int maxit=100);
+//dvariable incbet(_CONST dvariable a,_CONST dvariable b,_CONST dvariable x);
+double incbet(const double a,const double b,const double x);
+df1_three_variable incbet(const df1_three_variable & _aa,
+				 const df1_three_variable & _bb,
+				 const df1_three_variable & _xx);
+
 
 dvar_matrix tensor_prod(const dvar_matrix& a,const dvar_matrix & b);
 
@@ -7790,6 +7802,7 @@ void test_the_pointer(void);
     dvector w;
     dmatrix v;
   public:
+    sing_val_decomp() {};
     sing_val_decomp(const dmatrix& _a, const dvector & _w,const dmatrix& _v);
     dmatrix get_u(void){return a;}
     dvector get_w(void){return w;}

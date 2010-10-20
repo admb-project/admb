@@ -12,6 +12,7 @@
 //#include <parallel.h>
 #include <signal.h>
 
+#undef ADMB_CONFIGURE
 #ifdef ADMB_CONFIGURE
   #include "../../admb_configure.h"
 #endif
@@ -201,7 +202,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   //    (*ad_printf)( " -sp             for DLL running from splus write to command window\n");
       (*ad_printf)( " -nox            don't show vector and gradient values in function minimizer screen report\n");
       (*ad_printf)( " -phase N        start minimization in phase N\n");
-      (*ad_printf)( " -simplex        use simplex algorithm for minimization (new test version)\n");
+      (*ad_printf)( " -simplex        use simplex algorithm for minimization -- deprecated user should port to -neldmead\n");
+      (*ad_printf)( " -neldmead       use Nelder-Mead simplex algorithm for minimization (new test version)\n");
       (*ad_printf)( " -nohess         don't do hessian or delta method for std dev\n");
       (*ad_printf)( " -eigvec         calculate eigenvectors of the Hessian\n");
       (*ad_printf)( " -sdonly         do delta method for std dev estimates without redoing hessian\n");

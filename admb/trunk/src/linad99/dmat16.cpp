@@ -10,7 +10,7 @@
  {
    if (m1.colmin() != m2.colmin() || m1.colmax() != m2.colmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator + (_CONST dmatrix& x,_CONST dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dmatrix  operator - (_CONST dmatrix& x,_CONST dmatrix& m)\n";
      ad_exit(21);
    }
 

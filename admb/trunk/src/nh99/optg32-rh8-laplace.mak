@@ -20,7 +20,6 @@ else
 OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
 endif
 
-
 $(LIBPATH)/$(LIBNAME) :  $(OBJECTS) 
 	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
 

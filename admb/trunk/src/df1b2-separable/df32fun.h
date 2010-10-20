@@ -62,6 +62,7 @@ class df1b2variable;
     df3_two_variable& operator = (double v);
     df3_two_variable& operator += (const df3_two_variable& v);
     df3_two_variable& operator *= (const df3_two_variable& v);
+    df3_two_variable& operator *=(double v);
     df3_two_variable& operator += (double v);
     df3_two_variable& operator -= (double v);
     df3_two_variable& operator -= (const df3_two_variable& v);

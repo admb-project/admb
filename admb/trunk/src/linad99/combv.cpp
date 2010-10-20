@@ -220,3 +220,16 @@ dvariable gammln(const prevariable& z)
   }
 }
 
+dvariable gammln(const dvariable& z)
+{
+  const double lpi =1.1447298858494001741434272;
+  const double pi =3.1415926535897932384626432;
+  if (z<0.5)
+  {
+    return lpi - log(sin(pi*z)) - gammlnguts(1.0-z);
+  }
+  else
+  {
+    return gammlnguts(z);
+  }
+}

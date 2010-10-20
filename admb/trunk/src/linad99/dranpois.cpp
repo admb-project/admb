@@ -6,6 +6,7 @@
  */
 #include "fvar.hpp"
 /*
+/*
 #define IM1 2147483563
 #define IM2 2147483399
 #define AM (1.0/IM1)
@@ -73,7 +74,7 @@ double randpoisson(double xm, BOR_CONST random_number_generator& rng)
   \ingroup RNG
   Fill vector with Poisson pseudorandom numbers.
   \param lambda Expected value of Poission distribution.
-
+  \param rng Instance of class random_number_generator.
   \returns dvector containing Poisson deviates
 */
   void dvector::fill_randpoisson(double lambda,BOR_CONST random_number_generator& rng)

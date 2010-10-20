@@ -132,6 +132,7 @@ L20:
   
   //gradcalc(nvar,g);
   g=user_dfrandeff(x);
+
 #if defined(USE_DDOUBLE)
 #undef double
   if(fmod(double(itn),double(iprint)) == 0)

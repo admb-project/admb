@@ -34,13 +34,13 @@ df1b2vector csolve(const df1b2matrix& aa,const df1b2vector& z)
   return sol;
 }
 
-df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
+/*df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
 {
   df1b2variable ln_unsigned_det;
   double sign;
   df1b2vector sol=solve(aa,z,ln_unsigned_det,sign);
   return sol;
-}
+}*/
 
 /** LU Decomposition solver.
     \n\n The implementation of this algorithm was inspired by
@@ -201,7 +201,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
     }
     x(i)=sum/b(i,i);
   }
-
+   cout << "x=" << x << endl << endl;
   return x;
 }
 

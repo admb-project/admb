@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -67,7 +67,6 @@
 #include <unistd.h>
 #endif
 #endif
-
 
 #include <stdlib.h>
 #include <stdio.h>

@@ -5,6 +5,7 @@
  * Copyright (c) 2009, 2010 ADMB Foundation
  */
 #include <fvar.hpp>
+
 /*
 #define IM1 2147483563
 #define IM2 2147483399

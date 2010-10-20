@@ -36,6 +36,7 @@ df1b2vector csolve(const df1b2matrix& aa,const dvector& z)
 
 df1b2vector solve(const df1b2matrix& aa,const dvector& z)
 {
+cout << "solve() " << __FILE__ << ":" << __LINE__ << endl;
   df1b2variable ln_unsigned_det;
   double sign;
   df1b2vector sol=solve(aa,z,ln_unsigned_det,sign);

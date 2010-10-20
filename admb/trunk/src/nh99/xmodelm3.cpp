@@ -300,6 +300,23 @@ void tracing_message(int traceflag,const char *s);
           x=p(i);
           break;
         }
+        cerr << "The -simplex option is deprecated. The user should port "
+             << "to the -neldmead option." << endl;
+      }
+      if ( (simpflag=option_match(ad_comm::argc,ad_comm::argv,"-neldmead"))>-1)
+      {
+        gradient_structure::set_NO_DERIVATIVES();
+        double delta=1.e-4;
+        double ftol=1.e-16;
+        dvector mincords = x;
+        double ynewlo;
+        double* pynewlo = &ynewlo;
+        int icount, numres, ifault;
+        int* picount = &icount;
+        int* pnumres = &numres;
+        int* pifault = &ifault;
+        neldmead(nvar,mincords,mincords,pynewlo,ftol,delta,picount,pnumres,pifault);
+        x = mincords;
       }
       if ( (lmnflag=option_match(ad_comm::argc,ad_comm::argv,"-lmn",nopt))>-1)
       {

@@ -38,6 +38,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+
 #define USE_SHARE_FLAGS 
 //#define DO_PROFILE
 #define __MINI_MAX__
@@ -1438,6 +1439,7 @@ typedef void (model_parameters::*PMFVIV4) (const dvar_vector&,int n,
 class function_minimizer
 {
 public:
+  static int bad_step_flag;
   static int likeprof_flag;
   static int first_hessian_flag;
   static int test_trust_flag;
@@ -1551,7 +1553,9 @@ public:
   void pvm_master_function_evaluation(double& f,
     independent_variables& x,const dvector & g,int nvar);
   dmatrix dep_hess_routine(BOR_CONST dvariable& dep);
+  void top_mcmc_routine(int,int,double,int);
   void mcmc_routine(int,int,double,int);
+  void sgibbs_mcmc_routine(int,int,double,int);
   void hybrid_mcmc_routine(int,int,double,int);
   double pvm_master_get_monte_carlo_value(int nvar, 
     const dvector& x);
@@ -1681,6 +1685,8 @@ public:
 
   virtual void * mycast() { return (void*)this;}
 
+  void neldmead(int n, dvector& _start, dvector& _xmin, double *ynewlo,
+    double reqmin, double delta,int *icount, int *numres, int *ifault);
   void adamoeba(BOR_CONST dmatrix& p, BOR_CONST dvector& y, int ndim, double ftol,int maxfn);
   void set_initial_simplex(BOR_CONST dmatrix& p,BOR_CONST dvector& y,int nvar,BOR_CONST dvector& x,
     double delta);

@@ -552,6 +552,8 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
    case 0:
      *objective_function_value::pobjfun+=0.5*(*pu)*(solve(_M,*pu,lndet,sgn));
      *objective_function_value::pobjfun+=0.5*lndet;
+     //*objective_function_value::pobjfun+=0.5*(*pu)*(solve(_M,*pu));
+     //*objective_function_value::pobjfun+=0.5*ln_det(_M);
      break;
    case 1:
      *objective_function_value::pobjfun+=(*pu)*(solve(_M,*pu));

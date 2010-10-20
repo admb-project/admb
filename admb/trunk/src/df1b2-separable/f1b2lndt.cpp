@@ -38,6 +38,7 @@ df1b2matrix_pair ludcmp(const df1b2matrix& a);
 df1b2vector lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
   ivector & ,const df1b2vector& b)
 {
+cout << "df1b2vector lubksb 1" << endl;
   int i,ii=0,ip,j;
   df1b2variable sum;
   int mmin=b.indexmin();
@@ -100,10 +101,11 @@ df1b2variable get_ln_det(const df1b2matrix& b,int& sgn)
   return ln_det;
 }
 
-
+// Replace this to......
 df1b2matrix lubksb(const df1b2matrix&  alpha, const df1b2matrix& beta,
   ivector & ,const df1b2matrix& B)
 {
+cout << "df1b2vector lubksb 2" << endl;
   int i,ii=0,ip,j;
   int rmin=B.indexmin();
   int rmax=B.indexmin();
@@ -154,6 +156,7 @@ df1b2matrix_pair::df1b2matrix_pair(const df1b2matrix& _a,
 
 void ludcmp(const df1b2matrix& M,int kludge)
 {
+cout << "void ludcmp(" << endl;
   // do lu decomp once to get ordering
   int mmin=M.indexmin();
   int mmax=M.indexmax();
@@ -372,8 +375,10 @@ ivector getreindex(ivector & indx)
 
 }
 
+/*
 df1b2vector solve(df1b2matrix& M,df1b2vector& v)
 {
+cout << "solve() " << __FILE__ << ":" << __LINE__ << endl;
   int mmin=M.indexmin();
   int mmax=M.indexmax();
   if (mmin !=1)
@@ -389,10 +394,11 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v)
   df1b2vector rb=reorder(v,indx);
   df1b2matrix_pair p=ludcmp(RM);
   return lubksb(p.get_a(),p.get_b(),indx,rb);
-}
+}*/
 
 df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det)
 {
+cout << "solve() " << __FILE__ << ":" << __LINE__ << endl;
   df1b2variable& ln_det = (df1b2variable&) _ln_det;
   int mmin=M.indexmin();
   int mmax=M.indexmax();
@@ -416,6 +422,7 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det)
 df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& _ln_det,
   const int& sgn)
 {
+cout << "solve() " << __FILE__ << ":" << __LINE__ << endl;
   df1b2variable& ln_det = (df1b2variable&) _ln_det;
   int mmin=M.indexmin();
   int mmax=M.indexmax();

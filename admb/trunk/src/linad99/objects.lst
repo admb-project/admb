@@ -1,8 +1,11 @@
 OBJSPARSE = \
 ../sparse/hs_sparse.obj 
 OBJ0 = \
+cgamdev.obj \
 fmmtr1.obj \
 tsdfpool.obj \
+df13fun.obj \
+df13incbet.obj \
 multiindex.obj \
 indextyp.obj \
 logit.obj \
@@ -14,8 +17,9 @@ vtdev.obj \
 cbetdev.obj \
 vbetdev.obj \
 df12fun.obj \
-ccumdbetainv.obj \
-vcumdbetainv.obj \
+ccumdbetainv_incbet.obj \
+vcumdbetainv_incbet.obj \
+vgamdev.obj \
 normmix2.obj \
 normmix.obj \
 cnormmix.obj \
@@ -24,10 +28,8 @@ ivect11.obj \
 dvect26.obj \
 cnormgam.obj \
 ftweak.obj \
-dftweak.obj \
 dfgammp.obj \
-vgamdev.obj \
-cgamdev.obj \
+dftweak.obj \
 ccumdexp.obj \
 vcumdexp.obj \
 newhand.obj \
@@ -47,7 +49,7 @@ fvar_m53.obj \
 fvar_m57.obj \
 ad_atlas.obj \
 timer.obj \
-dmat34.obj \
+\
 dmat35.obj \
 dmat36.obj \
 dmat37.obj \
@@ -109,7 +111,15 @@ f5arr3.obj \
 admanip.obj \
 fvar_m38.obj \
 fvar_m41.obj \
+\
 fvar_m42.obj \
+fvar_m20.obj \
+fvar_m15.obj \
+dmat3.obj \
+fvar_ma4.obj \
+dmat34.obj \
+fvar_m24.obj \
+\
 fvar_m43.obj \
 fvar_m44.obj \
 fvar_m45.obj \
@@ -338,14 +348,14 @@ fvar_m11.obj \
 fvar_m12.obj \
 fvar_m13.obj \
 fvar_m14.obj \
-fvar_m15.obj \
+\
 fvar_m18.obj \
 fvar_m19.obj \
-fvar_m20.obj \
+\
 fvar_m21.obj \
 fvar_m22.obj \
 fvar_m23.obj \
-fvar_m24.obj \
+\
 fvar_m27.obj \
 fvar_m28.obj \
 fvar_m29.obj \
@@ -435,18 +445,18 @@ newfmin.obj \
 ufstream.obj \
 boundfun.obj \
 derch.obj \
-dmat3.obj \
+\
 dvsort.obj \
 ivsort.obj \
-eigen.obj \
-eigenv.obj \
+\
+eigen_dmat.obj \
+eigen_dvar.obj \
 ivect_io.obj \
-dveigen.obj \
-dveigenv.obj \
+\
 fmm_cont.obj \
 dvec_dif.obj \
 fvar_dif.obj \
-fvar_ma4.obj \
+\
 dvec_io2.obj \
 dmat_io3.obj \
 fvara_io.obj \
@@ -478,10 +488,6 @@ OBJ3= \
 mfexp.obj \
 expm.obj \
 orthpoly.obj \
-cbetacf.obj \
-vbetacf.obj \
-vbetai.obj \
-cbetai.obj \
 makesub.obj \
 fvar_a49.obj \
 adpvm2.obj 
@@ -489,3 +495,19 @@ OBJ4= \
 manip.obj \
 conjprod.obj 
 #fmmqmin.obj   
+UNUSED= \
+cbetacf.obj \
+vbetacf.obj \
+vbetai.obj \
+cbetai.obj \
+ludcmp.obj \
+ludcmp_det.obj \
+ludcmp_inv.obj \
+ludcmp_ln_det.obj \
+ludcmp_operators.obj \
+ludcmp_solve.obj \
+\
+eigen.obj \
+eigenv.obj \
+dveigen.obj \
+dveigenv.obj \

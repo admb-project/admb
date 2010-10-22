@@ -1,10 +1,9 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <df1b2fnl.h>
 
 funnel_init_df1b2matrix::funnel_init_df1b2matrix(const df1b2matrix & _x)

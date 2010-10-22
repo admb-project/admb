@@ -1,10 +1,9 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <df1fun.h>
   prevariable * df1_one_variable::ind_var=0;
   int init_df1_one_variable::num_vars=0;

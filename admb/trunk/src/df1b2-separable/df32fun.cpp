@@ -1,11 +1,9 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
-
 #include <df1b2fun.h>
   df1b2variable * df3_two_variable::ind_var[2];
   int df3_two_variable::num_ind_var=0;

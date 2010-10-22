@@ -1,10 +1,9 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <df1b2fun.h>
 
 double ADpow_fun(double x,double y)

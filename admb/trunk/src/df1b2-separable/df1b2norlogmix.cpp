@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
@@ -24,4 +24,3 @@ df1b2variable robust_normal_mixture_deviate(const df1b2variable& x,
   df1b2variable z = inv_cumd_normal_mixture(y,spread);
   return z;
 }
-

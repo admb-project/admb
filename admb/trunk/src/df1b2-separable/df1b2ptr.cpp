@@ -1,10 +1,9 @@
-/**
+/*
  * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
 #include <df1b2fun.h>
     typedef df1b2_header * ad_df1b2_header_ptr;
     typedef double * ad_double_ptr;

@@ -3,8 +3,6 @@
  *
  * Copyright (c) 2010 ADMB Foundation
  */
-
-
   #include <df1b2ludcmp.hpp>
 
   // LU decomp with partial pivoting

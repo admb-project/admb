@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Authors: H. H. Ahrens, U. Dieter and B. W. Brown.

@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * $Rev   ::                       $: Revision of last commit

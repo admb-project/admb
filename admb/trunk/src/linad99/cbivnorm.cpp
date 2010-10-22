@@ -1,4 +1,4 @@
-/**
+/*
  * $Id$
  *
  * Authors: Alan Genz and Yihong Ge

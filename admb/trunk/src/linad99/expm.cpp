@@ -1,5 +1,11 @@
-//  For AD Model Builder by Anders Nielsen <anders@nielsensweb.org> and Casper Berg <cbe@aqua.dtu.dk> 
-//  Aug. 2010
+/*
+ * $Id$
+ *
+ * Author: For AD Model Builder by Anders Nielsen <anders@nielsensweb.org> and Casper Berg <cbe@aqua.dtu.dk> 
+ * Copyright (c) 2010 Regents of the University of California 
+ * Started Aug. 2010
+ */
+
 #include <fvar.hpp>
 #define TINY 1.0e-20;
 

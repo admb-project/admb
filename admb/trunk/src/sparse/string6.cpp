@@ -1,3 +1,9 @@
+/*
+ * $Id$
+ *
+ * Author: David Fournier
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
+ */
 //#include <adstring.hpp>
 #include <fvar.hpp>
 #include <string.h>

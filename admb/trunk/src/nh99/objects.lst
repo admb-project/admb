@@ -13,7 +13,6 @@ vec_io.obj \
 t.obj \
 cnstrs.obj \
 pvmvar1.obj \
-evalxtrn.obj \
 con2fmin.obj \
 randeff.obj \
 model34.obj  \

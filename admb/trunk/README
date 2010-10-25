@@ -1,20 +1,33 @@
 ADMB Project
-Version 9.1
+Version 10.0 Beta
+Released November 1, 2010
 
-Table of Contents:
-------------------
-  - Overview
-  - Supported Platforms
-  - Download Sites
-  - Documentation
-  - Installation
-  - Developing ADModel Builder
-  - Access to the Source Code
-  - Building from Source Code
-  - Contributors
+Table of Contents
+=================
+ * Release Notes
+ * Overview
+ * Supported Platforms
+ * Download Sites
+ * Documentation
+ * Installation
+ * Developing ADModel Builder
+ * Access to the Source Code
+ * Building from Source Code
+ * Contributors
+
+Release Notes
+=============
+ * Improved algorithms
+ * Matrix exponential
+ * Hybrid MCMC
+ * Sparse Hessian
+ * Added more examples
+ * Added support for Intel C++ compiler
+ * Added Autoconf script
+ * Various bug fixes and improvements 
 
 Overview
---------
+========
 The ADMB software suite is an environment for non-linear statistical
 modeling enabling rapid model development, numerical stability, fast
 and efficient computation, and high accuracy parameter estimates.
@@ -25,43 +38,51 @@ package, ADMB-RE, implements random effects in non-linear models.
 Download Sites
 
 Supported Platforms
--------------------
-ADMB is available for Windows and linux operating systems in both 32
-and 64 bit version. Several compilers are supported including Gnu g++ 3.4
-and 4.1 under linux and cygwin, and Microsoft Visual Studio 2003 (VC 8),
-MinGW, and Borland gcc 4.5 under Windows. Plans are inplace to support
-MacOS soon.
+===================
+ADMB is available for Windows and unix operating systems in both 32
+and 64 bit version. 
+
+Several compilers are supported including 
+ * GNU g++ 3.4 or newer
+ * Microsoft Visual C++ 2003 or newer
+ * Borland 5.5
+ * MacOS XCode 3.2
+ * Intel C++ Compiler 11
 
 Download Sites
---------------
+==============
 The ADMB downloads can be found at http://www.admb-project.org/downloads/ .
 
 Documentation
--------------
+=============
 User manuals for ADModel Builder, the AUTODIF library and the ADMB-RE
 Nonlinear random effects module can be downloaded from
 admb-project.org
 
 Installation
-------------
+============
 The installation instructions can be found at http://www.admb-project.org/documention/ .
 
 Developing ADModel Builder
---------------------------
+==========================
 If you are interested in contributing to the further development of
-ADModel Builder please contact <support@admb-project.org>.
+ADModel Builder please contact <users@admb-project.org>.
 
 Access to the Source Code
--------------------------
+=========================
 ADMB source version control can be found at http://code.google.com/p/admb-project/ .
 
 Building from Source Code
--------------------------
+=========================
 The installation instructions can be found at http://www.admb-project.org/documention/INSTALL .
 
+Help and Support
+================
+For help and/or support, email the ADMB users group <users@admb-project.org>.
+
 Contributors
-------------
-This software was originally devloped by David Founier of Otter
+============
+This software was originally developed by David Founier of Otter
 Research, Ltd. Several other folks have contributed to the ADMB
 Project:
 
@@ -72,3 +93,4 @@ Mark Maunder <mmaunder@iattc.org>
 Anders Nielsen <anders@nielsensweb.org>
 Arni Magnusson <arnima@hafro.is> 
 Johnoel Ancheta <johnoel@hawaii.edu>
+Derek Seiple <dseiple@hawaii.edu>

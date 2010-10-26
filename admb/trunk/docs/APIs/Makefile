@@ -22,6 +22,7 @@ endif
 #( cat Doxyfile ; echo "PROJECT_NUMBER=1.0" ) | doxygen -
 
 default:
+	mkdir -vp dox/html
 	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo "GENERATE_XML = NO"; echo -n "PROJECT_NUMBER = ";svnversion ../..) | doxygen -
 	firefox ./dox/html/index.html&
 

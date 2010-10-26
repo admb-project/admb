@@ -1,7 +1,0 @@
-open http://www.admb-project.org/documentation/api
-cd javadoc
-put sunsys-dox/html/sunsys.zip 
-cd ../doxygen
-put dox/html/default.zip
-quit
-

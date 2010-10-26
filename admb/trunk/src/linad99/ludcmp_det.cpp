@@ -22,7 +22,8 @@ double ln_det(_CONST dmatrix & m1, BOR_CONST int &_sgn);
 dvariable det(const dvar_matrix & aa)
 {
    int sign = 0;
-   dvariable lndet, determ;
+   dvariable lndet = 0.0;
+   dvariable determ = 0.0;
    dvar_matrix mat;
    mat = aa;
 
@@ -39,7 +40,8 @@ dvariable det(const dvar_matrix & aa)
 double det(_CONST dmatrix & m1)
 {
    int sign = 0;
-   double lndet, determ;
+   double lndet = 0.0;
+   double determ = 0.0;
    dmatrix mat;
    mat = m1;
 

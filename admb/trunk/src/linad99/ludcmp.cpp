@@ -42,7 +42,7 @@ cltudecomp ludecomp(const dmatrix & M)
    }
    for (int j = mmin; j <= mmax; j++)
    {
-      int i;
+      int i = 0;
       for (i = mmin + 1; i < j; i++)
       {
 	 // using subvector here
@@ -84,7 +84,8 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
    dmatrix & dfgamma = dfclu.get_U();
    // copy M into alpha and gamma
    // OUTER LOOP1
-   int i, j;
+   int i = 0;
+   int j = 0;
    for (i = mmin; i <= mmax; i++)
    {
       for (int j = mmin; j <= mmax; j++)
@@ -95,7 +96,7 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
    // OUTER LOOP2
    for (j = mmin; j <= mmax; j++)
    {
-      int i;
+      int i = 0;
       // INNER LOOP 2 1
       for (i = mmin + 1; i < j; i++)
       {
@@ -136,7 +137,7 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
    //for (int j=mmin;j<=mmax;j++)
    for (j = mmax; j >= mmin; j--)
    {
-      int i;
+      int i = 0;
       // INNER LOOP 2 3
       if (j != mmax)
       {
@@ -227,17 +228,19 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
  */
 cltudecomp ludecomp_pivot(const dmatrix & M)
 {
-   int i, j, k;
+   int i = 0;
+   int j = 0;
+   int k = 0;
    int mmin = M.indexmin();
    int mmax = M.indexmax();
    int imax = mmax - 1;
    cltudecomp clu(mmin, mmax);
    dvector scale(mmin, mmax);
+   scale.initialize();
 
    // get terms for implicit scaling
    for (i = mmin; i <= mmax; i++)
    {
-
       double tmp = 1.0 / max(fabs(M(i)));
       if (tmp == 0.0)
       {
@@ -329,19 +332,20 @@ cltudecomp ludecomp_pivot(const dmatrix & M)
  */
 cltudecomp xludecomp_pivot(const dvar_matrix & M)
 {
-
-   int i, j, k;
+   int i = 0;
+   int j = 0;
+   int k = 0;
    int mmin = M.indexmin();
    int mmax = M.indexmax();
    //int imax = mmin - 1;
    int imax = mmax - 1;
    cltudecomp clu(mmin, mmax);
    dvector scale(mmin, mmax);
+   scale.initialize();
 
    // get terms for implicit scaling
    for (i = mmin; i <= mmax; i++)
    {
-
       double tmp = 1.0 / value(max(fabs(M(i))));
       if (tmp == 0.0)
       {
@@ -369,7 +373,7 @@ cltudecomp xludecomp_pivot(const dvar_matrix & M)
    }
    for (j = mmin; j <= mmax; j++)
    {
-      int i;
+      int i = 0;
       for (i = mmin + 1; i < j; i++)
       {
 	 // using subvector here
@@ -437,7 +441,8 @@ cltudecomp xludecomp_pivot(const dvar_matrix & M)
 
 void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_1(void)
 {
-   int i, j;
+   int i = 0;
+   int j = 0;
    verify_identifier_string("OZ");
    ivector_position vpos = restore_ivector_position();
    ivector tmpindx2 = restore_ivector_value(vpos);
@@ -515,7 +520,8 @@ void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_1(void)
 
 void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_2(void)
 {
-   int i, j;
+   int i = 0;
+   int j = 0;
    int mmin = indexmin();
    int mmax = indexmax();
    cltudecomp_for_adjoint & clu = *this;
@@ -596,6 +602,7 @@ void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_2(void)
    }
    // OUTER LOOP1
    dmatrix dfM(mmin, mmax, mmin, mmax);
+   dfM.initialize();
    for (i = mmin; i <= mmax; i++)
    {
       int i1 = indx2(i);

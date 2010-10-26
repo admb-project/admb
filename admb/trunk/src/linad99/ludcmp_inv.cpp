@@ -41,11 +41,13 @@ int min(int a, int b)
 */
 dmatrix inv(_CONST dmatrix & aa)
 {
-   int imax, n;
+   int imax = 0;
+   int n = 0;
    n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    dmatrix vc(lb, ub, lb, ub);
+   vc.initialize();
    if (n == 1)
    {
       if (aa(lb, lb) == 0.0)
@@ -117,6 +119,7 @@ dmatrix inv(_CONST dmatrix & aa)
 
    //Put L^-1 in Matrix to multiply with U^-1
    dmatrix Low(lb, ub, lb, ub);
+   Low.initialize();
    for (i = lb + 1; i <= ub; i++)
    {
       for (int j = lb; j < i; j++)
@@ -169,6 +172,7 @@ dmatrix inv(_CONST dmatrix & aa)
 
    //Put U^-1 in Matrix to multiply with U^-1
    dmatrix Up(lb, ub, lb, ub);
+   Up.initialize();
    for (i = lb; i <= ub; i++)
    {
       for (int j = lb; j <= i; j++)
@@ -196,7 +200,11 @@ dmatrix inv(_CONST dmatrix & aa)
 */
 dvar_matrix inv(_CONST dvar_matrix & aa)
 {
-   int i, imax, j, k, n;
+   int i = 0;
+   int imax = 0;
+   int j = 0;
+   int k = 0;
+   int n = 0;
    n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
@@ -233,16 +241,20 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
    }
 
    ivector indx(lb, ub);
+   indx.initialize();
    int One = 1;
    indx.fill_seqadd(lb, One);
-   double d;
-   double w1, ssum, temp;
+   double d = 0.0;
+   double w1 = 0.0;
+   double ssum = 0.0;
+   double temp = 0.0;
    dvar_matrix_position dmp(aa, 0);
    //dmatrix bb=value(aa);
    cltudecomp bb(lb, ub);
    //bb=value(aa);   // bad because it creates an extra copy of aa
    bb.assign_value(aa);
    dvector vv(lb, ub);
+   vv.initialize();
 
    d = 1.0;
    for (i = lb; i <= ub; i++)
@@ -267,7 +279,7 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
 
    dmatrix alpha = bb.get_L();
    dmatrix beta = bb.get_U();
-   double v1;
+   double v1 = 0.0;
    for (j = lb; j <= ub; j++)
    {
       for (i = lb; i < j; i++)
@@ -334,9 +346,12 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
 
    dvector y(lb, ub);
    dvector x(lb, ub);
+   y.initialize();
+   x.initialize();
 
    cltudecomp & b = bb;
    ivector indxinv(lb, ub);
+   indxinv.initialize();
    for (i = lb; i <= ub; i++)
    {
       indxinv(indx.elem(i)) = i;
@@ -376,6 +391,7 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
    }
 
    dmatrix bb1(lb, ub, lb, ub);
+   bb1.initialize();
    for (i = lb; i <= ub; i++)
    {
       for (j = lb; j <= ub; j++)

@@ -8,7 +8,9 @@
   // LU decomp with partial pivoting
   df1b2ludecomp ludecomp_pivot(const df1b2matrix & M)
   {
-     int i, j, k;
+     int i = 0;
+     int j = 0;
+     int k = 0;
      int mmin = M.indexmin();
      int mmax = M.indexmax();
      int imax = mmax - 1;
@@ -46,7 +48,7 @@
      }
      for (j = mmin; j <= mmax; j++)
      {
-        int i;
+        int i = 0;
         for (i = mmin + 1; i < j; i++)
         {
   	 // using subvector here

@@ -49,6 +49,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
       ad_exit(1);
    }
    dmatrix bb(lb, ub, lb, ub);
+   bb.initialize();
    bb = aa;
    cltudecomp dcmp;
    dcmp = ludecomp_pivot(bb);
@@ -68,6 +69,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
    }
    //Solve L*y=b with forward-substitution (before solving Ux=y)
    dvector y(lb, ub);
+   y.initialize();
    for (i = lb; i <= ub; i++)
    {
       double tmp = 0.0;
@@ -80,6 +82,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
 
    //Now solve U*x=y with back substitution
    dvector x(lb, ub);
+   x.initialize();
    for (i = ub; i >= lb; i--)
    {
       double tmp = 0.0;
@@ -124,7 +127,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
    dmatrix & alpha = clu1.get_L();
 
    //check if invertable
-   int i;
+   int i = 0;
    double det = 1.0;
    for (i = lb; i <= ub; i++)
    {
@@ -140,6 +143,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
    //Solve L*y=b with forward-substitution (before solving Ux=y)
    dvector y(lb, ub);
    dvector tmp1(lb, ub);
+   y.initialize();
    tmp1.initialize();
 
    for (i = lb; i <= ub; i++)
@@ -164,6 +168,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
    }
 
    dvector x_val(lb, ub);
+   x_val.initialize();
    x_val = value(x);
 
    save_identifier_string("FIRST");
@@ -280,7 +285,7 @@ static void df_solve(void)
  * \f$A\cdot X = B\f$, to be solved.
  * \return A dvar_vector containing solution vector \f$X\f$.
  * \return The log-determinant of \f$A\f$.
-*/
+ */
 dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
 		  prevariable & ln_unsigned_det,
 		  const prevariable & _sign)

@@ -112,13 +112,12 @@ admanip.obj \
 fvar_m38.obj \
 fvar_m41.obj \
 \
-fvar_m42.obj \
-fvar_m20.obj \
-fvar_m15.obj \
-dmat3.obj \
-fvar_ma4.obj \
-dmat34.obj \
-fvar_m24.obj \
+ludcmp.obj \
+ludcmp_det.obj \
+ludcmp_inv.obj \
+ludcmp_ln_det.obj \
+ludcmp_operators.obj \
+ludcmp_solve.obj \
 \
 fvar_m43.obj \
 fvar_m44.obj \
@@ -500,12 +499,13 @@ cbetacf.obj \
 vbetacf.obj \
 vbetai.obj \
 cbetai.obj \
-ludcmp.obj \
-ludcmp_det.obj \
-ludcmp_inv.obj \
-ludcmp_ln_det.obj \
-ludcmp_operators.obj \
-ludcmp_solve.obj \
+fvar_m42.obj \
+fvar_m20.obj \
+fvar_m15.obj \
+dmat3.obj \
+fvar_ma4.obj \
+dmat34.obj \
+fvar_m24.obj \
 \
 eigen.obj \
 eigenv.obj \

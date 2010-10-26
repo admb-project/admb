@@ -24,6 +24,7 @@ dvector operator *(double x, const dvector_for_adjoint & w)
    int mmin = w.indexmin();
    int mmax = w.indexmax();
    dvector tmp(mmin, mmax);
+   tmp.initialize();
    for (int i = mmin; i <= mmax; i++)
    {
       tmp(i) = x * w(i);
@@ -36,6 +37,7 @@ dmatrix get_dmatrix(cltudecomp & clu)
    int mmin = clu.indexmin();
    int mmax = clu.indexmax();
    dmatrix tmp(mmin, mmax, mmin, mmax);
+   tmp.initialize();
    for (int i = mmin; i <= mmax; i++)
    {
       for (int j = mmin; j <= mmax; j++)
@@ -51,6 +53,7 @@ dmatrix get_dmatrix(cltudecomp_for_adjoint & clu)
    int mmin = clu.indexmin();
    int mmax = clu.indexmax();
    dmatrix tmp(mmin, mmax, mmin, mmax);
+   tmp.initialize();
    for (int i = mmin; i <= mmax; i++)
    {
       for (int j = mmin; j <= mmax; j++)

@@ -21,7 +21,7 @@ cltudecomp ludecomp_pivot(const dmatrix & M);
  */
 dvariable ln_det(const dvar_matrix & a)
 {
-   int sgn;
+   int sgn = 0;
    return ln_det(a, sgn);
 }
 

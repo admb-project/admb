@@ -2,8 +2,11 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
+ * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+
+
+
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -22,7 +25,85 @@
 
 #define TINY 1.0e-20;
 
-dmatrix solve(const dmatrix& aa,const dmatrix& tz,
+#include "ludcmp.hpp"
+
+cltudecomp ludecomp_pivot(const dmatrix & M);
+
+/** Solve a linear system using LU decomposition.
+    \param aa A constant matrix. \f$A\f$. 
+    \param z A matrix containing the RHS, \f$B\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \return A matrix containing solution \f$X\f$.
+*/
+dmatrix solve(const dmatrix & aa, const dmatrix & zz)
+{
+   int n = aa.colsize();
+   int lb = aa.colmin();
+   int ub = aa.colmax();
+   if (lb != aa.rowmin() || ub != aa.colmax())
+   {
+      cerr << "Error matrix not square in"
+           << "solve(const dmatrix & aa, const dmatrix & z)" << endl;
+      ad_exit(1);
+   }
+   dmatrix bb(lb, ub, lb, ub);
+   bb = aa;
+   cltudecomp dcmp;
+   dcmp = ludecomp_pivot(bb);
+   ivector index2 = dcmp.get_index2();
+
+   //check if invertable
+   int i;
+   double det = 1.0;
+   for (i = lb; i <= ub; i++)
+   {
+      det *= dcmp(i, i);
+   }
+   if (det == 0.0)
+   {
+      cerr <<
+	 "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
+      ad_exit(1);
+   }
+
+   //for each column of X and B solve A*x_i = b_i
+   dmatrix xx(lb,ub,lb,ub);
+   for(int k=lb;k<=ub;k++)
+   {
+     dvector z = column(zz,k);
+
+     //Solve L*y=b with forward-substitution (before solving Ux=y)
+     dvector y(lb, ub);
+     for (i = lb; i <= ub; i++)
+     {
+        double tmp = 0.0;
+        for (int j = lb; j < i; j++)
+        {
+	   tmp += dcmp(i, j) * y(j);
+        }
+        y(i) = z(index2(i)) - tmp;
+     }
+
+     //Now solve U*x=y with back substitution
+     dvector x(lb, ub);
+     for (i = ub; i >= lb; i--)
+     {
+        double tmp = 0.0;
+        for (int j = ub; j > i; j--)
+        {
+	   tmp += dcmp(i, j) * x(j);
+        }
+        x(i) = (y(i) - tmp) / dcmp(i, i);
+     }
+
+     xx.colfill(k,x);
+   }
+
+   return xx;
+}
+
+
+/*dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   double ln_unsigned_det,double& sign);
 
 dmatrix solve(const dmatrix& aa,const dmatrix& tz)
@@ -52,7 +133,7 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   indx.fill_seqadd(lb,One);
   double d;
   double big,dum,sum,temp;
-  //kkludge_object k;
+  kkludge_object kkk;
   dvector vv(lb,ub);
 
   d=1.0;
@@ -192,7 +273,7 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   
   }
   return trans(x);
-}
+}*/
 
 double ln_det_choleski(
   const banded_symmetric_dmatrix& MM, const int& _ierr)

@@ -23,7 +23,8 @@ df32fun.obj \
 df32fun1.obj \
 bounder.obj \
 df1b2h.obj \
-f1b2lndt.obj \
+\
+df1b2ludcmp.obj \
 df1b2lme.obj \
 quadpri.obj \
 fquadpri.obj \
@@ -31,8 +32,8 @@ newfunc.obj \
 df1b2gh.obj \
 df1b2ghmult.obj \
 test_trust.obj \
-f1b2solv.obj \
-f1b2sol2.obj \
+\
+\
 f1b2sol3.obj \
 f1b2locl.obj \
 f1b2loc2.obj \
@@ -127,3 +128,7 @@ f1b23d1.obj \
 df1b2negb.obj \
 smartbuf.obj  \
 mod_rhes.obj  
+UNUSED =\
+f1b2sol2.obj \
+f1b2solv.obj \
+f1b2lndt.obj \

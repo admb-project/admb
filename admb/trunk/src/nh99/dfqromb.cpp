@@ -2,8 +2,9 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB Foundation
+ * Copyright (c) 2009 ADMB Foundation
  */
+
 #include <admodel.h>
 #define EPS 1.0e-4
 #define JMAX 50
@@ -21,6 +22,127 @@ void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,
   BOR_CONST dvariable& y,BOR_CONST dvariable& dy);
 
 
+
+//---------------------------------------------------------------------------
+
+/** Romberg integration.
+  \param func Pointer to a member function of class model_parameters.
+  \param a Lower limit of integration.
+  \param b Upper limit of inegration.
+  \param ns
+  \return The integral of the function from a to b using Romberg's method
+*/
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int ns)
+{
+  int MAXN = min(JMAX, ns);
+  dvar_vector s(1,MAXN+1);
+
+  for(int j=1; j<=MAXN+1; j++)
+  {
+    s[j] = trapzd(func,a,b,j);
+  }
+
+  for(int iter=1; iter<=MAXN+1; iter++)
+  {
+    for(j=1; j<=MAXN+1-iter; j++)
+    {
+      s[j] = (pow(4,iter)*s[j+1]-s[j])/(pow(4,iter)-1);
+    }
+  }
+
+  return s[1];
+}
+
+/** Romberg integration.
+  \param func Pointer to a member function of class model_parameters.
+  \param a Lower limit of integration.
+  \param b Upper limit of inegration.
+  \param ns
+  \return The integral of the function from a to b using Romberg's method
+*/
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,
+  double b,int ns)
+{
+  int MAXN = min(JMAX, ns);
+  dvar_vector s(1,MAXN+1);
+
+  for(int j=1; j<=MAXN+1; j++)
+  {
+    s[j] = trapzd(func,a,b,j);
+  }
+
+  for(int iter=1; iter<=MAXN+1; iter++)
+  {
+    for(j=1; j<=MAXN+1-iter; j++)
+    {
+      s[j] = (pow(4,iter)*s[j+1]-s[j])/(pow(4,iter)-1);
+    }
+  }
+
+  return s[1];
+}
+
+/** Romberg integration.
+  \param func Pointer to a member function of class model_parameters.
+  \param a Lower limit of integration.
+  \param b Upper limit of inegration.
+  \param ns
+  \return The integral of the function from a to b using Romberg's method
+*/
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
+  BOR_CONST dvariable& b,int ns)
+{
+  int MAXN = min(JMAX, ns);
+  dvar_vector s(1,MAXN+1);
+
+  for(int j=1; j<=MAXN+1; j++)
+  {
+    s[j] = trapzd(func,a,b,j);
+  }
+
+  for(int iter=1; iter<=MAXN+1; iter++)
+  {
+    for(j=1; j<=MAXN+1-iter; j++)
+    {
+      s[j] = (pow(4,iter)*s[j+1]-s[j])/(pow(4,iter)-1);
+    }
+  }
+
+  return s[1];
+}
+
+/** Romberg integration.
+  \param func Pointer to a member function of class model_parameters.
+  \param a Lower limit of integration.
+  \param b Upper limit of inegration.
+  \param ns
+  \return The integral of the function from a to b using Romberg's method
+*/
+dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),
+  BOR_CONST dvariable& a,BOR_CONST dvariable& b, int ns)
+{
+  int MAXN = min(JMAX, ns);
+  dvar_vector s(1,MAXN+1);
+
+  for(int j=1; j<=MAXN+1; j++)
+  {
+    s[j] = trapzd(func,a,b,j);
+  }
+
+  for(int iter=1; iter<=MAXN+1; iter++)
+  {
+    for(j=1; j<=MAXN+1-iter; j++)
+    {
+      s[j] = (pow(4,iter)*s[j+1]-s[j])/(pow(4,iter)-1);
+    }
+  }
+
+  return s[1];
+}
+
+
+
+//------------------------------------------------------------------------
 /** Romberg integration.
   \param func Pointer to a member function of class model_parameters.
   \param a Lower limit of integration.
@@ -34,7 +156,7 @@ void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,
 
    \deprecated Scheduled for replacement by 2010.
 */
-dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
+/*dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
   double b,int ns)
 {
   dvariable ss,dss;
@@ -58,7 +180,7 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   }
   cerr << "Too many steps in routine QROMB" << endl;
   return 0.0;
-}
+}*/
 
 
 /** Romberg integration.
@@ -74,7 +196,7 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 
     \deprecated Scheduled for replacement by 2010.
 */
-dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,
+/*dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,
   double b,int ns)
 {
   dvariable ss,dss;
@@ -98,7 +220,7 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   }
   cerr << "Too many steps in routine QROMB" << endl;
   return 0.0;
-}
+}*/
 
 /** Romberg integration.
   \param func Pointer to a member function of class model_parameters.
@@ -113,7 +235,7 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 
     \deprecated Scheduled for replacement by 2010.
 */
-dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
+/*dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
   BOR_CONST dvariable& b,int ns)
 {
   dvariable ss,dss;
@@ -137,8 +259,7 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   }
   cerr << "Too many steps in routine QROMB" << endl;
   return 0.0;
-}
-
+}*/
 
 /** Romberg integration.
   \param func Pointer to a member function of class model_parameters.
@@ -153,7 +274,7 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 
     \deprecated Scheduled for replacement by 2010.
 */
-dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),
+/*dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),
   BOR_CONST dvariable& a,BOR_CONST dvariable& b, int ns)
 {
   dvariable ss,dss;
@@ -177,8 +298,10 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   }
   cerr << "Too many steps in routine QROMB" << endl;
   return 0.0;
-}
+}*/
 
+
+//-----------------------------------------------------------------------------
 
 /** Extended trapezoid rule.
 
@@ -190,23 +313,22 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 */
 dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int n)
 {
-  double x,tnm,del;
+  double x,num_interval,hn;
   dvariable sum;
   static dvariable s;
-  static int it;
+  static int interval;
   int j;
   model_parameters * ptr= (model_parameters *) mycast();
-
   if (n == 1) {
-    it=1;
+    interval=1;
     return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    tnm=it;
-    del=(b-a)/tnm;
-    x=a+0.5*del;
-    for (sum=0.0,j=1;j<=it;j++,x+=del) sum += (ptr->*func)(x);
-    it *= 2;
-    s=0.5*(s+(b-a)*sum/tnm);
+    num_interval=interval;
+    hn=(b-a)/num_interval;
+    x=a+0.5*hn;
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    interval *= 2;
+    s=0.5*(s+(b-a)*sum/num_interval);
     return s;
   }
 }
@@ -214,22 +336,22 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
 
 dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,double b,int n)
 {
-  double tnm;
-  dvariable x,sum,del;
+  double num_interval;
+  dvariable x,sum,hn;
   static dvariable s;
-  static int it;
+  static int interval;
   int j;
   model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
-    it=1;
+    interval=1;
     return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    tnm=it;
-    del=(b-a)/tnm;
-    x=a+0.5*del;
-    for (sum=0.0,j=1;j<=it;j++,x+=del) sum += (ptr->*func)(x);
-    it *= 2;
-    s=0.5*(s+(b-a)*sum/tnm);
+    num_interval=interval;
+    hn=(b-a)/num_interval;
+    x=a+0.5*hn;
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    interval *= 2;
+    s=0.5*(s+(b-a)*sum/num_interval);
     return s;
   }
 }
@@ -237,47 +359,47 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
 
 dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,BOR_CONST dvariable& b,int n)
 {
-  double tnm;
-  dvariable sum,del,x;
+  double num_interval;
+  dvariable sum,hn,x;
   static dvariable s;
   
-  static int it;
+  static int interval;
   int j;
 
   model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
-    it=1;
+    interval=1;
     return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    tnm=it;
-    del=(b-a)/tnm;
-    x=a+0.5*del;
-    for (sum=0.0,j=1;j<=it;j++,x+=del) sum += (ptr->*func)(x);
-    it *= 2;
-    s=0.5*(s+(b-a)*sum/tnm);
+    num_interval=interval;
+    hn=(b-a)/num_interval;
+    x=a+0.5*hn;
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    interval *= 2;
+    s=0.5*(s+(b-a)*sum/num_interval);
     return s;
   }
 }
 
 dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,BOR_CONST dvariable& b,int n)
 {
-  double tnm;
-  dvariable sum,del,x;
+  double num_interval;
+  dvariable sum,hn,x;
   static dvariable s;
-  static int it;
+  static int interval;
   int j;
 
   model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
-    it=1;
+    interval=1;
     return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    tnm=it;
-    del=(b-a)/tnm;
-    x=a+0.5*del;
-    for (sum=0.0,j=1;j<=it;j++,x+=del) sum += (ptr->*func)(x);
-    it *= 2;
-    s=0.5*(s+(b-a)*sum/tnm);
+    num_interval=interval;
+    hn=(b-a)/num_interval;
+    x=a+0.5*hn;
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    interval *= 2;
+    s=0.5*(s+(b-a)*sum/num_interval);
     return s;
   }
 }
@@ -286,6 +408,7 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
 #undef JMAXP
 #undef K
 
+ //Not used elsewhere
 void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,BOR_CONST dvariable& _y,BOR_CONST dvariable& _dy)
 {
   dvariable& y=(dvariable&) _y;

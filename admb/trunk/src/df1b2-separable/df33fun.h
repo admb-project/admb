@@ -38,6 +38,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+
 #if !defined(__DF33FUN__)
 #  define __DF33FUN__
 class df1b2variable;
@@ -86,11 +87,14 @@ class df1b2variable;
     df3_three_variable& operator = (double v);
     df3_three_variable& operator += (const df3_three_variable& v);
     df3_three_variable& operator *= (const df3_three_variable& v);
+    df3_three_variable& operator *= (double v);
     df3_three_variable& operator += (double v);
     df3_three_variable& operator -= (const df3_three_variable& v);
+    df3_three_variable& operator -= (double v);
     df3_three_variable& operator /= (const df3_three_variable& v);
     df3_three_variable(void);
     df3_three_variable(const df3_three_variable& );
+    void initialize(void);
   };
 
   inline  double value(const df3_three_variable& x) { return double(*x.get_u()); }
@@ -116,7 +120,7 @@ class df1b2variable;
     int indexmax(void) const { return int(index_max); }
     df3_three_vector(int min,int max);
     df3_three_vector(void);
-    void allocate(void);
+    void df3_three_vector::allocate(void);
     void allocate(int min,int max);
     df3_three_variable& operator () (int i) const 
     { 
@@ -168,7 +172,7 @@ class df1b2variable;
     //df3_three_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df3_three_matrix();
-    df3_three_matrix(const df3_three_matrix& m2);
+    df3_three_matrix::df3_three_matrix(const df3_three_matrix& m2);
   };
 
  dmatrix value(const df3_three_matrix& v);
@@ -197,6 +201,7 @@ class df1b2variable;
 
 */
 
+  df3_three_variable fabs(const df3_three_variable& x);
   df3_three_variable sin(const df3_three_variable& x);
   df3_three_variable sqrt(const df3_three_variable& x);
   df3_three_variable atan(const df3_three_variable& x);

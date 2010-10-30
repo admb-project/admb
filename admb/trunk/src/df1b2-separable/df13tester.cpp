@@ -1342,7 +1342,8 @@ static   df1_three_variable pseries(const df1_three_variable & _a, const df1_thr
 static  df1_three_variable incbd(const df1_three_variable & _a, const df1_three_variable & _b, const df1_three_variable & _x );
 
 df1_three_variable incbet(const df1_three_variable & _aa, 
-   const df1_three_variable & _bb, const df1_three_variable & _xx )
+                          const df1_three_variable & _bb,
+                          const df1_three_variable & _xx )
  {
 
    df1_three_variable aa;

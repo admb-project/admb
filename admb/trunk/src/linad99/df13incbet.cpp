@@ -642,7 +642,7 @@ static int mtherr(char *s, int n)
    return 0;
 }
 
-static df1_three_variable incbet(const df1_three_variable & _aa,
+df1_three_variable incbet(const df1_three_variable & _aa,
 				 const df1_three_variable & _bb,
 				 const df1_three_variable & _xx);
 
@@ -1043,7 +1043,7 @@ static df1_three_variable incbd(const df1_three_variable & _a,
 				const df1_three_variable & _b,
 				const df1_three_variable & _x);
 
-static df1_three_variable incbet(const df1_three_variable & _aa,
+df1_three_variable incbet(const df1_three_variable & _aa,
 				 const df1_three_variable & _bb,
 				 const df1_three_variable & _xx)
 {

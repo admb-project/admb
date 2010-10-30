@@ -21,7 +21,7 @@ else
 CXXFLAGS:=$(CXXFLAGS)
 endif
 
-CXXFLAGS:=-c $(CXXFLAGS) -fno-for-scope -Wall -Wno-deprecated -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux
+CXXFLAGS:=-c $(CXXFLAGS) -Wall -Wno-deprecated -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux
 
 dist:
 	rm -rf ${DISK}

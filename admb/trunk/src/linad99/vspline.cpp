@@ -241,7 +241,6 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
   return ret;
 }
 
-
 /** 
  * \ingroup cub_spline
  *  Evaluates a piecewise cubic spline at a point.

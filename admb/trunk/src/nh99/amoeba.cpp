@@ -138,8 +138,8 @@ double function_minimizer::amxxx(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, B
 
 
 
-
-//****************************************************************************80
+void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin, 
+  double *ynewlo, double reqmin, double delta,int *icount, int *numres, int *ifault)
 //
 //  Purpose:
 //
@@ -210,9 +210,6 @@ double function_minimizer::amxxx(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, B
 //    1, REQMIN, N, or KONVGE has an illegal value.
 //    2, iteration terminated because KCOUNT was exceeded without convergence.
 //
-
-void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin, 
-  double *ynewlo, double reqmin, double delta,int *icount, int *numres, int *ifault)
 {
   dvector& start=(dvector&) _start;
   dvector& xmin=(dvector&) _xmin;
@@ -656,7 +653,6 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
     del = eps;
     *numres = *numres + 1;
   }
-
 
   start.shift(slb);
   xmin.shift(xlb);

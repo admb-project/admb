@@ -7,9 +7,13 @@
 #include <df1b2fun.h>
 #include <df13fun.h>
 #include "mconf.h"
-//#define ITMAX 100
-//#define EPS 1.0e-9
-//#define FPMIN 1.0e-30
+
+#ifdef NANS
+#undef NANS
+#endif
+#ifdef INFINITIES
+#undef INFINITIES
+#endif
 
 double get_values(double x, double y, int print_switch);
 df3_two_variable igam(const df3_two_variable & _a,
@@ -32,8 +36,6 @@ namespace Cephes
 
    df3_two_variable polevl(const df3_two_variable &, void *, int);
    df3_two_variable p1evl(const df3_two_variable &, void *, int);
-
-
 
 /* Coefficents used for the rational function in gamma(x) */
 #ifdef UNK
@@ -447,9 +449,7 @@ namespace Cephes
       return (ans);
    }
 
-}				// namespace Cephes
-
-//----------------------------------------------------------------------
+} //end namespace Cephes
 
 /**
  * \ingroup gammafunc
@@ -492,7 +492,7 @@ static df3_two_variable gamma(const df3_two_variable & xx1)
    if (!isfinite(value(x)))
       return (x);
 #endif
-#endif
+#endif*/
    q = fabs(x);
 
    if (value(q) > 33.0)
@@ -506,7 +506,7 @@ static df3_two_variable gamma(const df3_two_variable & xx1)
 	  gamnan:
 	    cerr << "gamma DOMAIN" << endl;
 	    return (zero);
-#else
+#else*/
 	    goto goverf;
 #endif
 	 }
@@ -594,8 +594,6 @@ static df3_two_variable gamma(const df3_two_variable & xx1)
    } else
       return (z / ((1.0 + 0.5772156649015329 * x) * x));
 }
-
-//------------------------------------------------------------------
 
 /**
  * \ingroup gammafunc
@@ -736,8 +734,6 @@ df3_two_variable lgam(const df3_two_variable & xx)
    return (q);
 }
 
-//------------------------------------------------------------------------
-
 /**
  * \ingroup gammafunc
  * Incomplete gamma integral.
@@ -806,8 +802,6 @@ df3_two_variable igam(const df3_two_variable & aa,
 
    return (ans * ax);
 }
-
-//-----------------------------------------------------------------------
 
 /**
  * \ingroup gammafunc
@@ -907,8 +901,6 @@ df3_two_variable igamc(const df3_two_variable & aa,
    return (ans * ax);
 }
 
-//-----------------------------------------------------------------------
-
 df1b2variable log_negbinomial_density(double x, const df1b2variable & _xmu,
 				      const df1b2variable & _xtau)
 {
@@ -931,140 +923,11 @@ df1b2variable log_negbinomial_density(double x, const df1b2variable & _xmu,
    return tmp1;
 }
 
-/* Log gamma function.
-    \param xx \f$x\f$
-    \return \f$\ln\bigr(\Gamma(x)\bigl)\f$
-
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 6
-
-    \deprecated Scheduled for replacement by 2010.
-*/
-/*df3_two_variable gammln(const df3_two_variable& xx)
-{
-  df3_two_variable x,tmp,ser,tmp1;
-  static double cof[6]={76.18009173,-86.50532033,24.01409822,
-    -1.231739516,0.120858003e-2,-0.536382e-5};
-  int j;
-  x=xx-1.0;
-  tmp=x+5.5;
-  tmp -= (x+0.5)*log(tmp);
-  ser=1.0;
-  for (j=0;j<=5;j++) 
-  {
-    x += 1.0;
-    ser += cof[j]/x;
-  }
-  return -tmp+log(2.50662827465*ser);
-}*/
-
-
 df3_two_variable gammln(const df3_two_variable & xx)
 {
    df3_two_variable x = xx;
    return lgam(x);
 }
-
-/* Incomplete gamma function.
-    Continued fraction approximation.
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 6
-
-    \deprecated Scheduled for replacement by 2010.
-*/
-/*df3_two_variable gcf(const df3_two_variable& a,
-  const df3_two_variable& x)
-{
-  int i;
-  df3_two_variable an,b,c,d,del,h,gammcf,gln,t;
-
-  gln=gammln(a);
-
-  b=x+1.0-a;
-  c=1.0/FPMIN;
-  d=1.0/b;
-  h=d;
-  for (i=1;i<=ITMAX;i++) {
-    an = -i*(i-a);
-    b += 2.0;
-    d=an*d+b;
-    if (fabs(value(d)) < FPMIN) d=FPMIN;
-    c=b+an/c;
-    if (fabs(value(c)) < FPMIN) c=FPMIN;
-    d=1.0/d;
-    del=d*c;
-    h *= del;
-    t = del-1.0;
-    if ((fabs(*t.get_u()) < EPS) &&
-        (fabs(*t.get_u_x()) < EPS) &&
-        (fabs(*t.get_u_xx()) < EPS) &&
-        (fabs(*t.get_u_xxx()) < EPS) &&
-        (fabs(*t.get_u_y()) < EPS) &&
-        (fabs(*t.get_u_yy()) < EPS) &&
-        (fabs(*t.get_u_yyy()) < EPS) &&
-        (fabs(*t.get_u_xy()) < EPS) &&
-        (fabs(*t.get_u_xxy()) < EPS) &&
-        (fabs(*t.get_u_xyy()) < EPS) ) { //fabs(value(del)-1.0) < EPS
-      break;
-    }
-  }
-  if (i > ITMAX) 
-    cerr << "a too large, ITMAX too small in gcf" << endl;
-  gammcf=exp(-x+a*log(x)-(gln))*h;
-  return gammcf;
-}*/
-
-
-/* Incomplete gamma function.
-    Continued fraction approximation.
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 6
-
-    \deprecated Scheduled for replacement by 2010.
-*/
-/*df3_two_variable gser(const df3_two_variable& a,
-  const df3_two_variable& x)
-{
-  int n;
-  df3_two_variable sum,del,ap,gamser,gln;
-
-  gln=gammln(a);
-
-  if (value(x) <= 0.0) {
-    if (value(x) < 0.0) 
-      cerr << "x less than 0 in routine gser" << endl;
-    gamser=0.0;
-    return;
-  } 
-  else 
-  {
-    ap=a;
-    del=sum=1.0/a;
-    for (n=1;n<=ITMAX;n++) {
-      ap+=1.0;
-      del *= x/ap;
-      sum += del;
-      if ((fabs(*del.get_u()) < EPS) &&
-          (fabs(*del.get_u_x()) < EPS) &&
-          (fabs(*del.get_u_xx()) < EPS) &&
-          (fabs(*del.get_u_xxx()) < EPS) &&
-          (fabs(*del.get_u_y()) < EPS) &&
-          (fabs(*del.get_u_yy()) < EPS) &&
-          (fabs(*del.get_u_yyy()) < EPS) &&
-          (fabs(*del.get_u_xy()) < EPS) &&
-          (fabs(*del.get_u_xxy()) < EPS) &&
-          (fabs(*del.get_u_xyy()) < EPS) ) {//fabs(value(del)) < fabs(value(sum))*EPS
-        gamser=sum*exp(-x+a*log(x)-(gln));
-        return gamser;
-      }
-    }
-    cerr << "a too large, ITMAX too small in routine gser" << endl;
-    return;
-  }
-}*/
 
 df3_two_variable cumd_gamma(const df3_two_variable & x,
 			    const df3_two_variable & a)
@@ -1072,24 +935,6 @@ df3_two_variable cumd_gamma(const df3_two_variable & x,
    df3_two_variable gamma = igam(a, x);
    return (gamma);
 }
-
-/*
-df3_two_variable cumd_gamma(const df3_two_variable& x,
-  const df3_two_variable& a)
-{
-  df3_two_variable gamser,gammcf;
-
-  if (value(x) < 0.0 || value(a) <= 0.0) 
-    cerr << "Invalid arguments in routine gammp" << endl;
-  if (value(x) < (value(a)+1.0)) {
-    gamser = gser(a,x);
-    return gamser;
-  } else {
-    gammcf = gcf(a,x);
-    return 1.0-gammcf;
-  }
-}
-*/
 
 df3_two_variable cumd_exponential(const df3_two_variable & x,
 				  const df3_two_variable & a)

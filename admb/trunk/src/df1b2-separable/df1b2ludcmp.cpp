@@ -108,8 +108,6 @@
   }
   //end ludcmp pivoting
 
-
-
 /** Solve a linear system using LU decomposition.
     \param aa A df1b2matrix \f$A\f$. 
     \param z A df1b2vector containing the RHS, \f$B\f$ of the linear equation
@@ -182,7 +180,6 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
    return x;
 }
 
-
 /** Solve a linear system using LU decomposition.
     \param aa A df1b2matrix \f$A\f$. 
     \param z A dvector containing the RHS, \f$B\f$ of the linear equation
@@ -199,7 +196,6 @@ df1b2vector solve(const df1b2matrix& aa,const dvector& z)
   }
   return solve(aa,zz);
 }
-
 
 /** Compute log determinant of a df1b2matrix.
     \param m1 A df1b2matrix, \f$M\f$, for which the determinant is computed.
@@ -234,8 +230,6 @@ df1b2variable ln_det(const df1b2matrix & m1)
    }
    return lndet;
 }
-
-
 
 /** Solve a linear system using LU decomposition.
     \param aa A df1b2matrix \f$A\f$. 

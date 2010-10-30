@@ -20,6 +20,13 @@
 #  include <fvar.hpp>
 #endif
 
+#ifdef NANS
+#undef NANS
+#endif
+#ifdef INFINITIES
+#undef INFINITIES
+#endif
+
 double get_values(double x,double y,int print_switch);
 dvariable igam(const dvariable & _a, const dvariable & _x);
 dvariable igamc(const dvariable & _a, const dvariable & _x);

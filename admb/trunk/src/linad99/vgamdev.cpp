@@ -17,6 +17,12 @@
  */
 
 #include <fvar.hpp>
+#ifdef NANS
+#undef NANS
+#endif
+#ifdef INFINITIES
+#undef INFINITIES
+#endif
 
 double igam(const double &a, const double &x);
 double igamc(const double &a, const double &x);

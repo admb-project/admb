@@ -242,8 +242,6 @@ void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts 
     bj[i-1] = sqrt ( abi * abi / ( abj * abj - 1.0 ) );
   }
 
-
-
   //  Compute the knots and weights. 
   if ( zemu <= 0.0 )  //  Exit if the zero-th moment is not positive.
   {

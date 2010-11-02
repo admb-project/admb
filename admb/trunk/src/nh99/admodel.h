@@ -1761,7 +1761,7 @@ class likeprof_params
   int    stepnumber;
 protected:
 public:
-  static likeprof_params * likeprofptr[50]; // this should be a 
+  static likeprof_params * likeprofptr[500]; // this should be a 
                                                // resizeable array
   static int num_likeprof_params;
   void allocate(void){;};

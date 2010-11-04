@@ -1,4 +1,4 @@
-DIST=../build/admb9.1.799M-macos10.6.4-xcode3.2.4-64bit/dist/
+DIST=$ADMB_HOME
 
 echo Example:admb:ham4.tpl
 cat $DIST/examples/admb/buscycle/ham4.par

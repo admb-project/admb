@@ -277,9 +277,7 @@ static df1_three_variable gamma(const df1_three_variable & xx1)
    while (value(x) < 0.0)
    {
       if (value(x) > -1.E-9)
-      {
-        goto SMALL;
-      }
+	 goto SMALL;
       z /= x;
       x += 1.0;
    }
@@ -287,9 +285,7 @@ static df1_three_variable gamma(const df1_three_variable & xx1)
    while (value(x) < 2.0)
    {
       if (value(x) < 1.e-9)
-      {
-        goto SMALL;
-      }
+	 goto SMALL;
       z /= x;
       x += 1.0;
    }
@@ -302,7 +298,7 @@ static df1_three_variable gamma(const df1_three_variable & xx1)
    q = polevl(x, Q, 7);
    return (z * p / q);
 
-   SMALL:
+ SMALL:
    if (value(x) == 0.0)
    {
 #ifdef INFINITIES

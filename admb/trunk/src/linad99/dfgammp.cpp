@@ -251,7 +251,7 @@ static dvariable gamma(const dvariable & xx1)
    while (value(x) < 0.0)
    {
       if (value(x) > -1.E-9)
-	 goto small;
+	 goto SMALL;
       z /= x;
       x += 1.0;
    }
@@ -259,7 +259,7 @@ static dvariable gamma(const dvariable & xx1)
    while (value(x) < 2.0)
    {
       if (value(x) < 1.e-9)
-	 goto small;
+	 goto SMALL;
       z /= x;
       x += 1.0;
    }
@@ -275,7 +275,7 @@ static dvariable gamma(const dvariable & xx1)
    z = z * p / q;
    return (z);
 
- small:
+ SMALL:
    if (value(x) == 0.0)
    {
 #ifdef INFINITIES

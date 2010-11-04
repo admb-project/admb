@@ -30,6 +30,7 @@ void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,
 */
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int ns)
 {
+  const double base = 4; 
   int MAXN = min(JMAX, ns);
   dvar_vector s(1,MAXN+1);
 
@@ -40,9 +41,9 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 
   for(int iter=1; iter<=MAXN+1; iter++)
   {
-    for(j=1; j<=MAXN+1-iter; j++)
+    for(int j=1; j<=MAXN+1-iter; j++)
     {
-      s[j] = (pow(4,iter)*s[j+1]-s[j])/(pow(4,iter)-1);
+      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
     }
   }
 
@@ -59,6 +60,7 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,
   double b,int ns)
 {
+  const double base = 4;
   int MAXN = min(JMAX, ns);
   dvar_vector s(1,MAXN+1);
 
@@ -69,9 +71,9 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 
   for(int iter=1; iter<=MAXN+1; iter++)
   {
-    for(j=1; j<=MAXN+1-iter; j++)
+    for(int j=1; j<=MAXN+1-iter; j++)
     {
-      s[j] = (pow(4,iter)*s[j+1]-s[j])/(pow(4,iter)-1);
+      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
     }
   }
 
@@ -88,6 +90,7 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
   BOR_CONST dvariable& b,int ns)
 {
+  const double base = 4;
   int MAXN = min(JMAX, ns);
   dvar_vector s(1,MAXN+1);
 
@@ -98,9 +101,9 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 
   for(int iter=1; iter<=MAXN+1; iter++)
   {
-    for(j=1; j<=MAXN+1-iter; j++)
+    for(int j=1; j<=MAXN+1-iter; j++)
     {
-      s[j] = (pow(4,iter)*s[j+1]-s[j])/(pow(4,iter)-1);
+      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
     }
   }
 
@@ -117,6 +120,7 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),
   BOR_CONST dvariable& a,BOR_CONST dvariable& b, int ns)
 {
+  const double base = 4;
   int MAXN = min(JMAX, ns);
   dvar_vector s(1,MAXN+1);
 
@@ -127,9 +131,9 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 
   for(int iter=1; iter<=MAXN+1; iter++)
   {
-    for(j=1; j<=MAXN+1-iter; j++)
+    for(int j=1; j<=MAXN+1-iter; j++)
     {
-      s[j] = (pow(4,iter)*s[j+1]-s[j])/(pow(4,iter)-1);
+      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
     }
   }
 

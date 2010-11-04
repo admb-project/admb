@@ -46,6 +46,9 @@ verify:
 	set ADMB_HOME=$(MAKEDIR)\$(DISK)
 	set PATH=$(MAKEDIR)\$(DISK)\bin;$(PATH)
 	cd $(MAKEDIR)\$(DISK)\examples& nmake /f Makefile all
+	-..\scripts\get-outputs.bat > "..\benchmarks-opt.txt"
+	cd $(MAKEDIR)\$(DISK)\examples& nmake /f Makefile OPTION=-s all
+	-..\scripts\get-outputs.bat > "..\benchmarks-saf.txt"
 
 clean:
 	IF EXIST linad99\$(CCVERSION)-$(OSVERSION)olp rmdir /S /Q linad99\$(CCVERSION)-$(OSVERSION)olp

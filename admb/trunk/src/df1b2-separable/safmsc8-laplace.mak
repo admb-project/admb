@@ -1,6 +1,6 @@
 .SUFFIXES: .obj .cpp
 
-FLAGS = /nologo /W4 /wd4018 /wd4552 /wd4189 /wd4715 /wd4700 /wd4018 /wd4101 /wd4505 /wd4239 /wd4702 /wd4512 /wd4511 /wd4100 /wd4127 /wd4706 /wd4996 /wd4244 /wd4146 /wd4701 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I.. /I..\..\linad99 /I..\..\nh99 /I..\..\tools99 /D__MSVC32__=8 /DSAFE_ALL /Ox
+FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I.. /I..\..\linad99 /I..\..\nh99 /I..\..\tools99 /D__MSVC32__=8 /DSAFE_ALL /Ox
 
 include ..\objects.lst
 

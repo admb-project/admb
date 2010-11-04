@@ -98,7 +98,7 @@ dmatrix inv(_CONST dmatrix & aa)
       ad_exit(1);
    }
    // Find inverse of L
-   for (i = lb + 1; i <= ub; i++)
+   for (int i = lb + 1; i <= ub; i++)
    {
       alpha(i, 1) = -alpha(i, 1);
    }
@@ -120,18 +120,18 @@ dmatrix inv(_CONST dmatrix & aa)
    //Put L^-1 in Matrix to multiply with U^-1
    dmatrix Low(lb, ub, lb, ub);
    Low.initialize();
-   for (i = lb + 1; i <= ub; i++)
+   for (int i = lb + 1; i <= ub; i++)
    {
       for (int j = lb; j < i; j++)
       {
 	 Low(i, j) = alpha(i, j);
       }
    }
-   for (i = lb; i <= ub; i++)
+   for (int i = lb; i <= ub; i++)
    {
       Low(i, i) = 1.0;
    }
-   for (i = lb; i <= ub - 1; i++)
+   for (int i = lb; i <= ub - 1; i++)
    {
       for (int j = lb + i; j <= ub; j++)
       {
@@ -140,22 +140,22 @@ dmatrix inv(_CONST dmatrix & aa)
    }
 
    // Find inverse of U
-   for (i = lb + 1; i <= ub; i++)
+   for (int i = lb + 1; i <= ub; i++)
    {
       for (int j = lb; j < i; j++)
       {
 	 beta(i, j) = beta(i, j) / beta(i, i);
       }
    }
-   for (i = lb; i <= ub; i++)
+   for (int i = lb; i <= ub; i++)
    {
       beta(i, i) = 1 / beta(i, i);
    }
-   for (i = lb + 1; i <= ub; i++)
+   for (int i = lb + 1; i <= ub; i++)
    {
       beta(i, 1) = -beta(i, 1) * beta(1, 1);
    }
-   for (k = lb + 1; k < ub; k++)
+   for (int k = lb + 1; k < ub; k++)
    {
       for (int j = lb; j < k; j++)
       {
@@ -173,14 +173,14 @@ dmatrix inv(_CONST dmatrix & aa)
    //Put U^-1 in Matrix to multiply with U^-1
    dmatrix Up(lb, ub, lb, ub);
    Up.initialize();
-   for (i = lb; i <= ub; i++)
+   for (int i = lb; i <= ub; i++)
    {
       for (int j = lb; j <= i; j++)
       {
 	 Up(i, j) = beta(i, j);
       }
    }
-   for (i = lb; i <= ub - 1; i++)
+   for (int i = lb; i <= ub - 1; i++)
    {
       for (int j = lb + i; j <= ub; j++)
       {
@@ -257,10 +257,10 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
    vv.initialize();
 
    d = 1.0;
-   for (i = lb; i <= ub; i++)
+   for (int i = lb; i <= ub; i++)
    {
       w1 = 0.0;
-      for (j = lb; j <= ub; j++)
+      for (int j = lb; j <= ub; j++)
       {
 	 temp = fabs(bb.elem(i, j));
 	 if (temp > w1)
@@ -280,9 +280,9 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
    dmatrix alpha = bb.get_L();
    dmatrix beta = bb.get_U();
    double v1 = 0.0;
-   for (j = lb; j <= ub; j++)
+   for (int j = lb; j <= ub; j++)
    {
-      for (i = lb; i < j; i++)
+      for (int i = lb; i < j; i++)
       {
 	 ssum = bb.elem(i, j);
 
@@ -294,7 +294,7 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
 	 bb.elem(i, j) = ssum;
       }
       w1 = 0.0;
-      for (i = j; i <= ub; i++)
+      for (int i = j; i <= ub; i++)
       {
 	 ssum = bb.elem(i, j);
 	 if (lb < j)
@@ -311,7 +311,7 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
       }
       if (j != imax)
       {
-	 for (k = lb; k <= ub; k++)
+	 for (int k = lb; k <= ub; k++)
 	 {
 	    v1 = bb.elem(imax, k);
 	    bb.elem(imax, k) = bb.elem(j, k);
@@ -337,7 +337,7 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
       if (j != n)
       {
 	 double binv = 1.0 / bb.elem(j, j);
-	 for (i = j + 1; i <= ub; i++)
+	 for (int i = j + 1; i <= ub; i++)
 	 {
 	    bb.elem(i, j) *= binv;
 	 }
@@ -352,7 +352,7 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
    cltudecomp & b = bb;
    ivector indxinv(lb, ub);
    indxinv.initialize();
-   for (i = lb; i <= ub; i++)
+   for (int i = lb; i <= ub; i++)
    {
       indxinv(indx.elem(i)) = i;
    }
@@ -376,7 +376,7 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
 	 }
 	 y.elem(i) = ssum;
       }
-      for (i = ub; i >= lb; i--)
+      for (int i = ub; i >= lb; i--)
       {
 	 ssum = y.elem(i);
 	 for (int j = i + 1; j <= ub; j++)
@@ -392,9 +392,9 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
 
    dmatrix bb1(lb, ub, lb, ub);
    bb1.initialize();
-   for (i = lb; i <= ub; i++)
+   for (int i = lb; i <= ub; i++)
    {
-      for (j = lb; j <= ub; j++)
+      for (int j = lb; j <= ub; j++)
       {
 	 bb1(i, j) = bb(i, j);
       }

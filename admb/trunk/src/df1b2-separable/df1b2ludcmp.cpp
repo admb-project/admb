@@ -156,7 +156,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
    //Solve L*y=b with forward-substitution (before solving Ux=y)
    df1b2vector y(lb, ub);
 
-   for (i = lb; i <= ub; i++)
+   for (int i = lb; i <= ub; i++)
    {
       df1b2variable tmp = 0.0;
       for (int j = lb; j < i; j++)
@@ -167,7 +167,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
    }
 
    //Now solve U*x=y with back substitution
-   for (i = ub; i >= lb; i--)
+   for (int i = ub; i >= lb; i--)
    {
       df1b2variable tmp = 0.0;
       for (int j = ub; j > i; j--)
@@ -245,8 +245,8 @@ df1b2vector solve(const df1b2matrix & aa, const df1b2vector & z,
 {
    df1b2variable lndet = ln_det(aa);
    ln_unsigned_det = lndet;
-   df1b2variable sign = 0.0;
-   _sign = sign;
+   //df1b2variable sign = 0.0;
+   //_sign = sign;
 
    df1b2vector sol = solve(aa, z);
    return sol;

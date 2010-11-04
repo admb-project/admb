@@ -2,7 +2,7 @@
 
 CC = cl
 
-FLAGS = /nologo /W4 /wd4018 /wd4189 /wd4512 /wd4511 /wd4100 /wd4244 /wd4068 /wd4996 /wd4127 /wd4706 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I.. /I..\..\df1b2-separable /I..\..\nh99 /I..\..\linad99 /D__MSVC32__=8  /DSAFE_ALL /Ox
+FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I.. /I..\..\df1b2-separable /I..\..\nh99 /I..\..\linad99 /D__MSVC32__=8  /DSAFE_ALL /Ox
 
 include ..\objects.lst
 

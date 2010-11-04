@@ -70,7 +70,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
    //Solve L*y=b with forward-substitution (before solving Ux=y)
    dvector y(lb, ub);
    y.initialize();
-   for (i = lb; i <= ub; i++)
+   for (int i = lb; i <= ub; i++)
    {
       double tmp = 0.0;
       for (int j = lb; j < i; j++)
@@ -83,7 +83,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
    //Now solve U*x=y with back substitution
    dvector x(lb, ub);
    x.initialize();
-   for (i = ub; i >= lb; i--)
+   for (int i = ub; i >= lb; i--)
    {
       double tmp = 0.0;
       for (int j = ub; j > i; j--)
@@ -292,8 +292,8 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
 {
    dvariable lndet = ln_det(aa);
    ln_unsigned_det = lndet;
-   dvariable sign = 0.0;
-   _sign = sign;
+   //dvariable sign = 0.0;
+   //_sign = sign;
 
    dvar_vector sol = solve(aa, z);
    return sol;

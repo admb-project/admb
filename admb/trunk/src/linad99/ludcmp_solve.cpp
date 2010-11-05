@@ -132,6 +132,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
       cerr << "Error matrix and vector not of same size in solve(dvar_matrix)" << endl;
       ad_exit(1);
    }
+
    dvar_vector x(lb, ub);
 
    if (ub == lb)

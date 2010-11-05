@@ -20,13 +20,6 @@
 #  include <fvar.hpp>
 #endif
 
-#ifdef NANS
-#undef NANS
-#endif
-#ifdef INFINITIES
-#undef INFINITIES
-#endif
-
 double get_values(double x,double y,int print_switch);
 dvariable igam(const dvariable & _a, const dvariable & _x);
 dvariable igamc(const dvariable & _a, const dvariable & _x);
@@ -172,11 +165,11 @@ static dvariable gamma(const dvariable & xx1)
 
    sgngam = 1;
 
-#ifdef NANS
+/*#ifdef NANS
    if (isnan(value(x)))
       return (x);
-#endif
-#ifdef INFINITIES
+#endif*/
+/*#ifdef INFINITIES
 #ifdef NANS
    if (value(x) == MYINF)
       return (x);
@@ -189,7 +182,7 @@ static dvariable gamma(const dvariable & xx1)
    if (!isfinite(value(x)))
       return (x);
 #endif
-#endif
+#endif*/
    q = fabs(x);
 
    if (value(q) > 33.0)
@@ -199,13 +192,13 @@ static dvariable gamma(const dvariable & xx1)
 	 p = floor(value(q));
 	 if (value(p) == value(q))
 	 {
-#ifdef NANS
+/*#ifdef NANS
 	  gamnan:
 	    cerr << "gamma DOMAIN" << endl;
 	    return (zero);
-#else
+#else*/
 	    goto goverf;
-#endif
+//#endif
 	 }
 	 i = value(p);
 
@@ -222,15 +215,15 @@ static dvariable gamma(const dvariable & xx1)
 
 	 if (value(z) == 0.0)
 	 {
-#ifdef INFINITIES
+/*#ifdef INFINITIES
 	    tmp = sgngam * MYINF;
 	    return (tmp);
-#else
+#else*/
 	  goverf:
 	    //( "gamma", OVERFLOW );
 	    return (sgngam * MYBIG);
 	    //return( sgngam * MAXNUM);
-#endif
+//#endif
 	 }
 	 z = fabs(z);
 	 z = PI / (z * stirf(q));
@@ -278,16 +271,16 @@ static dvariable gamma(const dvariable & xx1)
  SMALL:
    if (value(x) == 0.0)
    {
-#ifdef INFINITIES
+/*#ifdef INFINITIES
 #ifdef NANS
       goto gamnan;
 #else
       return (MYINF);
 #endif
-#else
+#else*/
       cerr << "gamma SING " << endl;
       return (MYBIG);
-#endif
+//#endif
    } else
       return (z / ((1.0 + 0.5772156649015329 * x) * x));
 }
@@ -311,7 +304,7 @@ dvariable lgam(const dvariable & xx)
    int i;
 
    sgngam = 1;
-#ifdef NANS
+/*#ifdef NANS
    if (isnan(value(x)))
       return (x);
 #endif
@@ -322,7 +315,7 @@ dvariable lgam(const dvariable & xx)
       tmp = MYINF;
       return (tmp);
    }
-#endif
+#endif*/
 
    if (x < -34.0)
    {
@@ -332,13 +325,13 @@ dvariable lgam(const dvariable & xx)
       if (p == q)
       {
        lgsing:
-#ifdef INFINITIES
+/*#ifdef INFINITIES
 	 mtherr("lgam", SING);
 	 tmp = MYINF;
 	 return (tmp);
-#else
+#else*/
 	 goto loverf;
-#endif
+//#endif
       }
       i = value(p);
 
@@ -405,16 +398,16 @@ dvariable lgam(const dvariable & xx)
 
    if (x > MAXLGM)
    {
-#ifdef INFINITIES
+/*#ifdef INFINITIES
       tmp = sgngam * MYINF;
       return (tmp);
-#else
+#else*/
     loverf:
       mtherr("lgam", OVERFLOW);
       dvariable tmp;
       tmp = sgngam * MAXNUM;
       return tmp;
-#endif
+//#endif
    }
 
    q = (x - 0.5) * log(x) - x + LS2PI;

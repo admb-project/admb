@@ -93,7 +93,7 @@ biglog:
 
 bvprobit:
 	@#Missing bvprobit.dat
-	-cd examples/admb-re/glmmadmb;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
+	-cd examples/admb-re/glmmadmb;rm -f @.par @.std;touch bvprobit.dat;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 caest:
 	-cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
@@ -113,7 +113,7 @@ logistic:
 
 nbmm:
 	@#Missing .dat file
-	-cd examples/admb-re/glmmadmb;rm -f @.par @.std;admb -r $(SAFE_OPTION) $@;./$@
+	-cd examples/admb-re/nbmm;rm -f @.par @.std;admb -r $(SAFE_OPTION) $@;./$@
 
 nested4:
 	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@

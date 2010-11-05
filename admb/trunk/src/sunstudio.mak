@@ -51,7 +51,7 @@ dist-64bit: dist
 
 verify:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); cd ${DISK}; make all
-	../scripts/get-outputs.sh ../build/dists/admb_gcc411_fedora8/examples > "../benchmarks-${NOW}-r${ADMB_REVISION}.txt"
+	export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ../build/dists/admb_gcc411_fedora8/examples > "../benchmarks-${NOW}-r${ADMB_REVISION}.txt"
 
 check-admb2r:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make --directory=../test/admb2r gcc

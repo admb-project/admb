@@ -1213,14 +1213,13 @@ laplace_approximation_calculator::~laplace_approximation_calculator()
 
 dvector laplace_approximation_calculator::operator () (const dvector& _x,
   const double& _f, function_minimizer * pfmin)
-{  
+{
 # if defined(USE_ADPVM)
 
   if (pfmin->test_trust_flag)
   {
     return test_trust_region_method(_x,_f,pfmin);
   }
-
   if (ad_comm::pvm_manager)
   {
     switch (ad_comm::pvm_manager->mode)

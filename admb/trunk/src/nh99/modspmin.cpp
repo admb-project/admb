@@ -416,7 +416,6 @@ int * kill_address;
 
 #endif // #if defined(ADMB_REDEMO)
 
-
     repeatminflag=0;
     do 
     {
@@ -435,15 +434,19 @@ int * kill_address;
       if (option_match(argc,argv,"-noest") == -1)
       {
         if (!function_minimizer::have_constraints)
+        {
           minimize();
+        }
         else
+        {
           constraints_minimize();
+        }
       }
       else
       {
+
         initial_params::current_phase=initial_params::max_number_phases;
       }
-      
       tracing_message(traceflag,"D1");
   
       //double ratio=100.*gradient_structure::max_last_offset/12000.0;
@@ -477,7 +480,6 @@ int * kill_address;
             }
           }
 #endif     //  if defined(USE_LAPLACE)
-
 
           int on=-1;
           int on1=-1;
@@ -559,7 +561,7 @@ int * kill_address;
             int nopt=0;
             int on2=-1;
             int nopt2=-1;
-  
+
             // stuff for mcmc
             //cout << "checking for mcmc" << endl;
             if ( (on=option_match(argc,argv,"-mcmc",nopt))>-1 ||
@@ -595,7 +597,6 @@ int * kill_address;
     #endif
               }
             }
-       
             if ( (on=option_match(argc,argv,"-sob",nopt))>-1)
             {
               int nsob=0;

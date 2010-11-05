@@ -48,6 +48,23 @@ dvector solve(const dmatrix & aa, const dvector & z)
       cerr << "Error matrix not square in solve(dmatrix)" << endl;
       ad_exit(1);
    }
+   if ( lb != z.indexmin() || ub != z.indexmax() )
+   {
+      cerr << "Error matrix and vector not of same size in solve(dmatrix)" << endl;
+      ad_exit(1);
+   }
+   dvector x(lb, ub);
+   x.initialize();
+   if (n == 1)
+   {
+     if( aa(lb,lb) == 0.0 )
+     {
+       cerr << "Error division by zero in solve(dvar_matrix)" << endl;
+       ad_exit(1);
+     }
+     x(lb) = z(lb)/aa(lb,lb);
+     return x;
+   }
    dmatrix bb(lb, ub, lb, ub);
    bb.initialize();
    bb = aa;
@@ -81,8 +98,6 @@ dvector solve(const dmatrix & aa, const dvector & z)
    }
 
    //Now solve U*x=y with back substitution
-   dvector x(lb, ub);
-   x.initialize();
    for (int i = ub; i >= lb; i--)
    {
       double tmp = 0.0;
@@ -112,11 +127,20 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
       cerr << "Error matrix not square in solve(dvar_matrix)" << endl;
       ad_exit(1);
    }
-
+   if ( lb != z.indexmin() || ub != z.indexmax() )
+   {
+      cerr << "Error matrix and vector not of same size in solve(dvar_matrix)" << endl;
+      ad_exit(1);
+   }
    dvar_vector x(lb, ub);
 
    if (ub == lb)
    {
+      if( aa(lb,lb) == 0.0 )
+      {
+        cerr << "Error division by zero in solve(dvar_matrix)" << endl;
+        ad_exit(1);
+      }
       x(lb) = z(lb) / aa(lb, lb);
       return (x);
    }
@@ -127,9 +151,8 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
    dmatrix & alpha = clu1.get_L();
 
    //check if invertable
-   int i = 0;
    double det = 1.0;
-   for (i = lb; i <= ub; i++)
+   for (int i = lb; i <= ub; i++)
    {
       det *= clu1(i, i);
    }
@@ -146,7 +169,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
    y.initialize();
    tmp1.initialize();
 
-   for (i = lb; i <= ub; i++)
+   for (int i = lb; i <= ub; i++)
    {
       for (int j = lb; j < i; j++)
       {
@@ -158,7 +181,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
    //Now solve U*x=y with back substitution
    dvector tmp2(lb, ub);
    tmp2.initialize();
-   for (i = ub; i >= lb; i--)
+   for (int i = ub; i >= lb; i--)
    {
       for (int j = ub; j > i; j--)
       {
@@ -239,8 +262,7 @@ static void df_solve(void)
    dfgamma.initialize();
    int lb = clu1.indexmin();
    int ub = clu1.indexmax();
-   int i;
-   for (i = lb; i <= ub; i++)
+   for (int i = lb; i <= ub; i++)
    {
       //value(x(i))=(y(i)-tmp2(i))/gamma(i,i);
       dfgamma(i, i) =
@@ -257,7 +279,7 @@ static void df_solve(void)
    //tmp2.initialize();
    dftmp2.initialize();
 
-   for (i = ub; i >= lb; i--)
+   for (int i = ub; i >= lb; i--)
    {
       //y(i)=value(z(index2(i)))-tmp1(i);
       dftmp1(i) = -dfy(i);
@@ -290,6 +312,8 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
 		  prevariable & ln_unsigned_det,
 		  const prevariable & _sign)
 {
+   ADUNCONST(dvariable, sign)
+   sign = 0.0;
    dvariable lndet = ln_det(aa);
    ln_unsigned_det = lndet;
    //dvariable sign = 0.0;

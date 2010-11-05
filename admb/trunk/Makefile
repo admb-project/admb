@@ -55,6 +55,9 @@ sunstudio-verify:
 sunstudio-check-admb2r:
 	make --directory=src --file=sunstudio.mak check-admb2r
 
+sunstudio-clean: clean
+	make --directory=src --file=sunstudio.mak clean
+
 icc:
 	make --directory=src --file=icc.mak
 

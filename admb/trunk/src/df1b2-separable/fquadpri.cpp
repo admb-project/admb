@@ -23,7 +23,7 @@ static char unallocatederror[] = " Trying to access unallocated"
     ptr[num_quadratic_prior++]=this;
   }
   void df1b2quadratic_prior::get_Lxu(dmatrix& M) 
-  { 
+  {
     if (!Lxu || !index)
     {
       cerr << nullptrerror << endl;

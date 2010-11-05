@@ -922,7 +922,7 @@ static df3_three_variable incbd(const df3_three_variable & _a,
 				const df3_three_variable & _b,
 				const df3_three_variable & _x);
 
-static df3_three_variable incbet(const df3_three_variable & _aa,
+df3_three_variable incbet(const df3_three_variable & _aa,
 				 const df3_three_variable & _bb,
 				 const df3_three_variable & _xx)
 {

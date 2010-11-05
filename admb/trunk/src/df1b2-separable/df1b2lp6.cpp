@@ -325,7 +325,7 @@ dvector laplace_approximation_calculator::banded_calculations
   gradient_structure::set_NO_DERIVATIVES();
   initial_params::reset(x);    // get current x values into the model
   gradient_structure::set_YES_DERIVATIVES();
-
+ 
   initial_params::set_active_only_random_effects(); 
   if (init_switch==0)
   {
@@ -340,7 +340,7 @@ dvector laplace_approximation_calculator::banded_calculations
   double f_from_1=0.0;
 
   int no_converge_flag=0;
-
+ 
   // this is the main loop to do inner optimization
   do
   {
@@ -389,7 +389,7 @@ dvector laplace_approximation_calculator::banded_calculations
         return xadjoint;
     }
     while(no_converge_flag);
-  
+
     /* If we are in mcmc phase we just need to calcualte the
        ln_det(Hess) and return
     */
@@ -442,7 +442,7 @@ dvector laplace_approximation_calculator::banded_calculations
       initial_params::straight_through_flag=0;
     
       int ierr=0;
-    
+
       laplace_approximation_calculator::where_are_we_flag=3; 
       if (!ierr)
       {
@@ -494,7 +494,7 @@ dvector laplace_approximation_calculator::banded_calculations
       {
         f=1.e+30;
       }
-    
+
       // set flag for thrid erivatvies and call function again because
       // stack is wiped out
       
@@ -552,8 +552,7 @@ dvector laplace_approximation_calculator::banded_calculations
         }
         (*pHess_non_quadprior_part)=Hess;
       } 
-        
-    
+           
       block_diagonal_flag=0;
       initial_params::straight_through_flag=1;
     
@@ -569,19 +568,19 @@ dvector laplace_approximation_calculator::banded_calculations
       //for (i=1;i<=xadjoint.indexmax();i++)
       //  xadjoint(i)*=scale1(i);
       laplace_approximation_calculator::where_are_we_flag=0; 
-    
+  
       if (df1b2quadratic_prior::get_num_quadratic_prior()>0)
-      {
+      {  
        // !!!! need to fix this!!!!!!!!!!!!!!!!!!!!!!!
         laplace_approximation_calculator::where_are_we_flag=3; 
         quadratic_prior::in_qp_calculations=1;
         funnel_init_var::lapprox=this;
-        df1b2_gradlist::set_no_derivatives();
+        df1b2_gradlist::set_no_derivatives(); 
         df1b2quadratic_prior::get_Lxu_contribution(Dux);
         quadratic_prior::in_qp_calculations=0;
         funnel_init_var::lapprox=0;
         laplace_approximation_calculator::where_are_we_flag=0; 
-      }
+      }   
       if (initial_df1b2params::separable_flag)
       {
         dvector scale(1,nvar);   // need to get scale from somewhere
@@ -594,26 +593,23 @@ dvector laplace_approximation_calculator::banded_calculations
         local_dtemp=elem_prod(local_dtemp,sscale);
       }
       //cout << trans(Dux)(1) << endl;
-      //cout << trans(Dux)(3) << endl;
-    
+      //cout << trans(Dux)(3) << endl;  
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {
         dvector tmp=evaluate_function_with_quadprior(x,usize,pfmin);
         local_dtemp+=tmp;
       }
-     
-      
+          
       for (i=1;i<=xsize;i++)
       {
         xadjoint(i)+=local_dtemp(i);
-      }
-    
+      }    
       if (df1b2quadratic_prior::get_num_quadratic_prior()>0)
       {
        // !!!! need to fix this!!!!!!!!!!!!!!!!!!!!!!!
         quadratic_prior::get_cHessian_contribution_from_vHessian(Hess,xsize);
       }
-    
+   
       if (hesstype==3)
       {
         //xadjoint -= uadjoint*solve(*bHess,Dux);

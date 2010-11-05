@@ -146,7 +146,6 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     }
   }
 
-  
   if (!random_effects_flag || !unvar)
   {
     dvariable xf=initial_params::reset(dvar_vector(x));
@@ -175,6 +174,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     }
     else
     {
+
       int i;
       int nx=negdirections->indexmax();
       independent_variables u(1,nx);

@@ -14,7 +14,7 @@
 
 double factln(double n);
 double gammln(double xx);
-double lgam(const double xx);
+double lgam(double xx);
 
 /**
  * Log of the binomial coefficent

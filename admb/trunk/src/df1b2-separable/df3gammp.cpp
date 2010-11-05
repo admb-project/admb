@@ -34,8 +34,8 @@ namespace Cephes
    extern const double MACHEP = 2.22045e-16;
    extern const double MYINF = 1.7976931348623158E+308;
 
-   df3_two_variable polevl(const df3_two_variable &, void *, int);
-   df3_two_variable p1evl(const df3_two_variable &, void *, int);
+   df3_two_variable polevl(const df3_two_variable & x, const double *_coef, int N);
+   df3_two_variable p1evl(const df3_two_variable & x, const double *_coef, int N);
 
 /* Coefficents used for the rational function in gamma(x) */
 #ifdef UNK
@@ -230,7 +230,7 @@ namespace Cephes
       ADUNCONST(df3_two_variable, x) df3_two_variable y, w, v;
 
       w = 1.0 / x;
-      w = 1.0 + w * polevl(w, (void*)STIR, 4);
+      w = 1.0 + w * polevl(w, STIR, 4);
       y = exp(x);
       if (value(x) > MAXSTIR)
       {				/* Avoid overflow in pow() */
@@ -400,7 +400,7 @@ namespace Cephes
     * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
     * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
     */
-   df3_two_variable polevl(const df3_two_variable & x, void *_coef, int N)
+   df3_two_variable polevl(const df3_two_variable & x, const double *_coef, int N)
    {
       double *coef = (double *) (_coef);
       df3_two_variable ans;
@@ -431,7 +431,7 @@ namespace Cephes
     * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
     * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
     */
-   df3_two_variable p1evl(const df3_two_variable & x, void *_coef, int N)
+   df3_two_variable p1evl(const df3_two_variable & x, const double *_coef, int N)
    {
       double *coef = (double *) (_coef);
       df3_two_variable ans;
@@ -573,8 +573,8 @@ static df3_two_variable gamma(const df3_two_variable & xx1)
    }
 
    x -= 2.0;
-   p = polevl(x, (void*)P, 6);
-   q = polevl(x, (void*)Q, 7);
+   p = polevl(x, P, 6);
+   q = polevl(x, Q, 7);
    z = z * p / q;
    return (z);
 
@@ -702,7 +702,7 @@ df3_two_variable lgam(const df3_two_variable & xx)
       }
       p -= 2.0;
       x = x + p;
-      p = x * polevl(x, (void*)B, 5) / p1evl(x, (void*)C, 6);
+      p = x * polevl(x, B, 5) / p1evl(x, C, 6);
       return (log(z) + p);
    }
 
@@ -730,7 +730,7 @@ df3_two_variable lgam(const df3_two_variable & xx)
 	     - 2.7777777777777777777778e-3) * p
 	    + 0.0833333333333333333333) / x;
    else
-      q += polevl(p, (void*)A, 4) / x;
+      q += polevl(p, A, 4) / x;
    return (q);
 }
 

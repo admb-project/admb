@@ -126,6 +126,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
    }
    
    df1b2vector x(lb, ub);
+   x.initialize();
 
    if (ub == lb)
    {
@@ -155,6 +156,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
 
    //Solve L*y=b with forward-substitution (before solving Ux=y)
    df1b2vector y(lb, ub);
+   y.initialize();
 
    for (int i = lb; i <= ub; i++)
    {
@@ -189,11 +191,13 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
 df1b2vector solve(const df1b2matrix& aa,const dvector& z)
 {
   df1b2vector zz(z.indexmin(),z.indexmax());
-  for(int i=z.indexmin();i<=z.indexmax();i++)
+  zz.initialize();
+  /*for(int i=z.indexmin();i<=z.indexmax();i++)
   {
     zz(i) = 0.0;
     zz(i) = z(i);
-  }
+  }*/
+  zz = z;
   return solve(aa,zz);
 }
 
@@ -243,6 +247,8 @@ df1b2vector solve(const df1b2matrix & aa, const df1b2vector & z,
       df1b2variable & ln_unsigned_det,
       const df1b2variable & _sign)
 {
+   ADUNCONST(df1b2variable, sign)
+   sign = 0.0;
    df1b2variable lndet = ln_det(aa);
    ln_unsigned_det = lndet;
    //df1b2variable sign = 0.0;

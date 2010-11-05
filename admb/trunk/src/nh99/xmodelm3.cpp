@@ -79,7 +79,6 @@ void tracing_message(int traceflag,const char *s);
       initial_params::restart_phase=0;
     }
     int allphases=initial_params::max_number_phases;
-    
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-maxph",nopt))>-1)
     {
       if (!nopt)
@@ -102,7 +101,6 @@ void tracing_message(int traceflag,const char *s);
         }
       }
     }
-      
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
     {
       if (!nopt)
@@ -122,7 +120,6 @@ void tracing_message(int traceflag,const char *s);
         }
       }
     }
-
 
     // set the maximum number of function evaluations by command line
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-maxfn",nopt))>-1)
@@ -144,7 +141,6 @@ void tracing_message(int traceflag,const char *s);
         }
       }
     }
-      
     double _crit=0;
     // set the maximum number of function evaluations by command line
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
@@ -166,7 +162,6 @@ void tracing_message(int traceflag,const char *s);
         } 
       }
     }
-      
     int bandwidth=0;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-bw",nopt))>-1)
     {
@@ -191,7 +186,6 @@ void tracing_message(int traceflag,const char *s);
         }
       }
     }
-      
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-phase"))>-1)
     {
       int jj=atoi(ad_comm::argv[on+1]);
@@ -211,14 +205,12 @@ void tracing_message(int traceflag,const char *s);
       initial_params::current_phase = jj;
       cout << "Set current phase to " << jj << endl;
     }
-    
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-lapqd"))>-1)
     {
       ADqd_flag=1;
     }
     
     tracing_message(traceflag,"A2");
-
     while (initial_params::current_phase <= allphases)
     {
       between_phases_calculations();
@@ -242,7 +234,6 @@ void tracing_message(int traceflag,const char *s);
       initial_params::xinit(x);    // get the initial values into the
       dvector zz(1,x.indexmax());
       dvector xsave(1,x.indexmax());
-
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-uhess"))>-1)
       {
         int ierr=0;
@@ -260,8 +251,7 @@ void tracing_message(int traceflag,const char *s);
             cerr << "couldn't read vector" << endl;
             ierr=1;
           }
-        }
-       
+        }   
         if (ierr==0)
         {
           do 
@@ -279,8 +269,7 @@ void tracing_message(int traceflag,const char *s);
         }
       } 
 
-
-         
+   
       double f=0.0;
 
       int lmnflag = -1;
@@ -468,7 +457,6 @@ void tracing_message(int traceflag,const char *s);
       }
       // end block for limited memory quasi newton minimization
       // *********************************************************
-
       tracing_message(traceflag,"M2");
 
       gradient_structure::set_NO_DERIVATIVES();

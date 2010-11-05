@@ -57,7 +57,7 @@ int cholnew(XCONST hs_smatrix &A, XCONST hs_symbolic &S, hs_smatrix &L);
 // Utility function: p [0..n] = cumulative sum of c [0..n-1], and then copy p [0..n-1] into c
  double cs_cumsum (ivector &p, ivector &c, int n)
 {
-    int i, nz = 0 ;
+   int i, nz = 0 ;
     double nz2 = 0 ;
     for (i = 0 ; i < n ; i++)
     {
@@ -70,7 +70,7 @@ int cholnew(XCONST hs_smatrix &A, XCONST hs_symbolic &S, hs_smatrix &L);
     return (nz2) ;                    // return sum (c [0..n-1]) 
 }
 
-/* clear w */
+// clear w
  int cs_wclear (int mark, int lemax, ivector &w, int n)
 {
     int k ;
@@ -79,7 +79,7 @@ int cholnew(XCONST hs_smatrix &A, XCONST hs_symbolic &S, hs_smatrix &L);
         for (k = 0 ; k < n ; k++) if (w [k] != 0) w [k] = 1 ;
         mark = 2 ;
     }
-    return (mark) ;        /* at this point, w [0..n-1] < mark holds */
+    return (mark) ;        // at this point, w [0..n-1] < mark holds
 }
 
 // Find C = A' 
@@ -98,17 +98,17 @@ int cholnew(XCONST hs_smatrix &A, XCONST hs_symbolic &S, hs_smatrix &L);
     ivector & Ci=C.i;
     dvector & Cx=C.x;
 
-    ivector w(0,n-1);                                      /* workspace */
+    ivector w(0,n-1);                                      // workspace
     w.initialize();
 
     for (p = 0 ; p < Ap [n] ; p++) 
-      w [Ai [p]]++ ;                                          /* row counts */
-    cs_cumsum (Cp, w, m) ;                              /* row pointers */
+      w [Ai [p]]++ ;                                          // row counts
+    cs_cumsum (Cp, w, m) ;                              // row pointers
     for (j = 0 ; j < n ; j++)
     {
         for (p = Ap [j] ; p < Ap [j+1] ; p++)
         {
-          Ci [q = w [Ai [p]]++] = j ; /* place A(i,j) as entry C(j,i) */
+          Ci [q = w [Ai [p]]++] = j ; // place A(i,j) as entry C(j,i)
           Cx [q] = Ax [p] ;
         }
     }
@@ -130,17 +130,17 @@ int cholnew(XCONST hs_smatrix &A, XCONST hs_symbolic &S, hs_smatrix &L);
     ivector & Ci=C.i;
     dvar_vector & Cx=C.x;
 
-    ivector w(0,n-1);                                      /* workspace */
+    ivector w(0,n-1);                                      // workspace
     w.initialize();
 
     for (p = 0 ; p < Ap [n] ; p++) 
-      w [Ai [p]]++ ;                                          /* row counts */
-    cs_cumsum (Cp, w, m) ;                              /* row pointers */
+      w [Ai [p]]++ ;                                          // row counts
+    cs_cumsum (Cp, w, m) ;                              // row pointers
     for (j = 0 ; j < n ; j++)
     {
         for (p = Ap [j] ; p < Ap [j+1] ; p++)
         {
-          Ci [q = w [Ai [p]]++] = j ; /* place A(i,j) as entry C(j,i) */
+          Ci [q = w [Ai [p]]++] = j ; // place A(i,j) as entry C(j,i)
           Cx [q] = Ax [p] ;
         }
     }
@@ -891,18 +891,21 @@ void myacc(int & p,int Lpi1,int ci,const ivector & Li,
   }
 }
         
-// Numeric Cholesky factorization (L is factor). Return 1 on success; 0 otherwise
-int chol(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L)
+// Numeric Cholesky factorization (L is factor). Return 1 on success 0 otherwise
+int chol(XCONST hs_smatrix& A,
+         XCONST hs_symbolic& T,
+         hs_smatrix& L)
 {
-    ADUNCONST(hs_symbolic,S)
+    //ADUNCONST(hs_symbolic,S)
+    hs_symbolic& S = (hs_symbolic&)T;
     double d, lki;
     int top, i, p, k, n;
   
     n = A.n ;
 
-    ivector c(0,n-1);                              /* int workspace */
-    ivector s(0,n-1);                                   /* int workspace */
-    dvector x(0,n-1) ;                        /* double workspace */
+    ivector c(0,n-1);                              // int workspace
+    ivector s(0,n-1);                                   // int workspace
+    dvector x(0,n-1) ;                        // double workspace
 
     ivector & cp=S.cp;
     ivector & pinv=S.pinv;
@@ -926,23 +929,23 @@ int chol(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L)
     for (k = 0 ; k < n ; k++) 
       Lp [k] = c [k] = cp [k] ;
 
-    for (k = 0 ; k < n ; k++)            /* compute L(:,k) for L*L' = C */
+    for (k = 0 ; k < n ; k++)            // compute L(:,k) for L*L' = C
     {
-        /* --- Nonzero pattern of L(k,:) ------------------------------------ */
-        top = cs_ereach (C, k, parent, s, c) ;            /* find pattern of L(k,:) */
-        x [k] = 0 ;                                    /* x (0:k) is now zero */
-        for (p = Cp [k] ; p < Cp [k+1] ; p++)            /* x = full(triu(C(:,k))) */
+        // --- Nonzero pattern of L(k,:) ------------------------------------
+        top = cs_ereach (C, k, parent, s, c) ;            // find pattern of L(k,:)
+        x [k] = 0 ;                                    // x (0:k) is now zero
+        for (p = Cp [k] ; p < Cp [k+1] ; p++)            // x = full(triu(C(:,k)))
         {
             if (Ci [p] <= k) x [Ci [p]] = Cx [p] ;
         }
-        d = x [k] ;                        /* d = C(k,k) */
-        x [k] = 0 ;                        /* clear x for k+1st iteration */
-        /* --- Triangular solve --------------------------------------------- */
-        for ( ; top < n ; top++)    /* solve L(0:k-1,0:k-1) * x = C(:,k) */
+        d = x [k] ;                        // d = C(k,k)
+        x [k] = 0 ;                        // clear x for k+1st iteration
+        // --- Triangular solve ---------------------------------------------
+        for ( ; top < n ; top++)    // solve L(0:k-1,0:k-1) * x = C(:,k)
         {
-            i = s [top] ;                /* s [top..n-1] is pattern of L(k,:) */
-            lki = x [i] / Lx [Lp [i]] ; /* L(k,i) = x (i) / L(i,i) */
-            x [i] = 0 ;                        /* clear x for k+1st iteration */
+            i = s [top] ;                // s [top..n-1] is pattern of L(k,:)
+            lki = x [i] / Lx [Lp [i]] ; // L(k,i) = x (i) / L(i,i)
+            x [i] = 0 ;                        // clear x for k+1st iteration
 
 
             int Lpi1=Lp[i]+1;
@@ -952,18 +955,18 @@ int chol(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L)
                 x [Li [p]] -= Lx [p] * lki ;
             }
 
-            d -= lki * lki ;                /* d = d - L(k,i)*L(k,i) */
+            d -= lki * lki ;                // d = d - L(k,i)*L(k,i)
             p = c [i]++ ;
-            Li [p] = k ;                /* store L(k,i) in column i */
+            Li [p] = k ;                // store L(k,i) in column i
             Lx [p] = lki ;
         }
-        /* --- Compute L(k,k) ----------------------------------------------- */
-        if (d <= 0) return (0) ; /* not pos def */
+        // --- Compute L(k,k) -----------------------------------------------
+        if (d <= 0) return (0) ; // not pos def
         p = c [k]++ ;
-        Li [p] = k ;                    /* store L(k,k) = sqrt (d) in column k */
+        Li [p] = k ;                    // store L(k,k) = sqrt (d) in column k
         Lx [p] = sqrt (d) ;
     }
-    Lp [n] = cp [n] ;                    /* finalize L */
+    Lp [n] = cp [n] ;                    // finalize L
     return (1) ; 
 }
 
@@ -972,10 +975,11 @@ int chol(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L)
 
 
 
-int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
+int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
   ivector & nxcount)
 {
-    ADUNCONST(hs_symbolic,S)
+    //ADUNCONST(hs_symbolic,S)
+    hs_symbolic& S = (hs_symbolic&)T;
     double d, lki;
     int top, i, p, k, n;
   
@@ -1146,9 +1150,10 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
 }
 
 /* solve Lx=b where x and b are dense.  x=b on input, solution on output. */
- dvector cs_lsolve (XCONST hs_smatrix &_L, XCONST dvector &y)
+ dvector cs_lsolve (XCONST hs_smatrix & LL, XCONST dvector &y)
 {
-   ADUNCONST(hs_smatrix,L)
+    //ADUNCONST(hs_smatrix,L)
+    hs_smatrix& L = (hs_smatrix&)LL;
     int p, j, n;
 
     n = L.n; 
@@ -1170,9 +1175,10 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
     return (x) ;
 }
 
- dvar_vector cs_lsolve (XCONST dvar_hs_smatrix &_L, XCONST dvar_vector &y)
+ dvar_vector cs_lsolve (XCONST dvar_hs_smatrix & LL, XCONST dvar_vector &y)
 {
-   ADUNCONST(dvar_hs_smatrix,L)
+    //ADUNCONST(dvar_hs_smatrix,L)
+    dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
     int p, j, n;
 
     n = L.n; 
@@ -1194,9 +1200,10 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
     return (x) ;
 }
 
- dvar_vector cs_lsolve (XCONST dvar_hs_smatrix &_L, XCONST dvector &y)
+ dvar_vector cs_lsolve (XCONST dvar_hs_smatrix & LL, XCONST dvector &y)
 {
-   ADUNCONST(dvar_hs_smatrix,L)
+    //ADUNCONST(dvar_hs_smatrix,L)
+    dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
     int p, j, n;
 
     n = L.n; 
@@ -1219,9 +1226,10 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
 }
 
 /* solve L'x=b where x and b are dense.  x=b on input, solution on output. */
- dvector cs_ltsolve (XCONST hs_smatrix &_L, XCONST dvector &y)
+ dvector cs_ltsolve (XCONST hs_smatrix &LL, XCONST dvector &y)
 {
-   ADUNCONST(hs_smatrix,L)
+    //ADUNCONST(hs_smatrix,L)
+    hs_smatrix& L = (hs_smatrix&)LL;
     int p, j, n;
 
     n = L.n; 
@@ -1242,9 +1250,10 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
     return (x) ;
 }
 
- dvar_vector cs_ltsolve (XCONST dvar_hs_smatrix &_L, XCONST dvar_vector &y)
+ dvar_vector cs_ltsolve (XCONST dvar_hs_smatrix &LL, XCONST dvar_vector &y)
 {
-   ADUNCONST(dvar_hs_smatrix,L)
+    //ADUNCONST(dvar_hs_smatrix,L)
+    dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
     int p, j, n;
 
     n = L.n; 
@@ -1323,10 +1332,11 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
 }
 
 /* x = x + beta * A(:,j), where x is a dense vector and A(:,j) is sparse */
- int cs_scatter(XCONST hs_smatrix &_A, int j, double beta, ivector &w, dvector &x, int mark,
+ int cs_scatter(XCONST hs_smatrix &AA, int j, double beta, ivector &w, dvector &x, int mark,
     hs_smatrix &C, int nz)
 {
-    ADUNCONST(hs_smatrix,A)
+    //ADUNCONST(hs_smatrix,A)
+    hs_smatrix& A = (hs_smatrix&)AA;
     int i, p;
     ivector & Ap=A.p;
     ivector & Ai=A.i;
@@ -1371,10 +1381,11 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic &_S, hs_smatrix &L,
 
 
 
-int cs_scatter(XCONST dvar_hs_smatrix &_A, int j, double beta, ivector &w, dvar_vector &x, int mark,
+int cs_scatter(XCONST dvar_hs_smatrix &AA, int j, double beta, ivector &w, dvar_vector &x, int mark,
     dvar_hs_smatrix &C, int nz)
 {
-    ADUNCONST(dvar_hs_smatrix,A)
+    //ADUNCONST(dvar_hs_smatrix,A)
+    dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
     int i, p;
     ivector & Ap=A.p;
     ivector & Ai=A.i;
@@ -1395,10 +1406,12 @@ int cs_scatter(XCONST dvar_hs_smatrix &_A, int j, double beta, ivector &w, dvar_
 }
 
 /* C = alpha*A + beta*B */
-hs_smatrix cs_add(XCONST hs_smatrix &_A, XCONST hs_smatrix &_B, double alpha, double beta)
+hs_smatrix cs_add(XCONST hs_smatrix &AA, XCONST hs_smatrix &BB, double alpha, double beta)
 {
-    ADUNCONST(hs_smatrix,A)
-    ADUNCONST(hs_smatrix,B)
+    //ADUNCONST(hs_smatrix,A)
+    //ADUNCONST(hs_smatrix,B)
+    hs_smatrix& A = (hs_smatrix&)AA;
+    hs_smatrix& B = (hs_smatrix&)BB;
     int p, j, nz = 0, anz,m, n, bnz;
 
     if (A.m != B.m || A.n != B.n)
@@ -1439,10 +1452,12 @@ hs_smatrix cs_add(XCONST hs_smatrix &_A, XCONST hs_smatrix &_B, double alpha, do
 }
 
 
-dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &_A, XCONST dvar_hs_smatrix &_B, double alpha, double beta)
+dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &AA, XCONST dvar_hs_smatrix &BB, double alpha, double beta)
 {
-    ADUNCONST(dvar_hs_smatrix,A)
-    ADUNCONST(dvar_hs_smatrix,B)
+    //ADUNCONST(dvar_hs_smatrix,A)
+    //ADUNCONST(dvar_hs_smatrix,B)
+    dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
+    dvar_hs_smatrix& B = (dvar_hs_smatrix&)BB;
     int p, j, nz = 0, anz,m, n, bnz;
 
     if (A.m != B.m || A.n != B.n)
@@ -2924,10 +2939,13 @@ dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S,
 }
 
 
-double ln_det(const dcompressed_triplet& _VM,const hs_symbolic& _S)
+double ln_det(const dcompressed_triplet& VVM,
+              const hs_symbolic& T)
 {
-  ADUNCONST(dcompressed_triplet,VM)
-  ADUNCONST(hs_symbolic,S)
+  //ADUNCONST(dcompressed_triplet,VM)
+  //ADUNCONST(hs_symbolic,S)
+  dcompressed_triplet& VM = (dcompressed_triplet&)VVM;
+  hs_symbolic& S = (hs_symbolic&)T;
   int n=VM.get_n();
   hs_smatrix H(n,VM);  
   //hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
@@ -2943,9 +2961,10 @@ double ln_det(const dcompressed_triplet& _VM,const hs_symbolic& _S)
 }
 
 
-double ln_det(const dcompressed_triplet& _VM)
+double ln_det(const dcompressed_triplet& VVM)
 {
-  ADUNCONST(dcompressed_triplet,VM)
+  //ADUNCONST(dcompressed_triplet,VM)
+  dcompressed_triplet& VM = (dcompressed_triplet&)VVM;
   int n=VM.get_n();
   hs_smatrix H(n,VM);  
   hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
@@ -2961,11 +2980,14 @@ double ln_det(const dcompressed_triplet& _VM)
 }
 
 
-int cholnew(XCONST hs_smatrix &_A, XCONST hs_symbolic &_S, hs_smatrix &_L)
+int cholnew(XCONST hs_smatrix &AA, XCONST hs_symbolic &T, hs_smatrix &LL)
 {
-    ADUNCONST(hs_symbolic,S)
-    ADUNCONST(hs_smatrix,L)
-    ADUNCONST(hs_smatrix,A)
+    //ADUNCONST(hs_symbolic,S)
+    //ADUNCONST(hs_smatrix,L)
+    //ADUNCONST(hs_smatrix,A)
+    hs_symbolic& S = (hs_symbolic&)T;
+    hs_smatrix& A = (hs_smatrix&)AA;
+    hs_smatrix& L = (hs_smatrix&)LL;
     double d, lki;
     int top, i, p, k, n;
   
@@ -3048,14 +3070,17 @@ int cholnew(XCONST hs_smatrix &_A, XCONST hs_symbolic &_S, hs_smatrix &_L)
 
 static void dfcholeski_sparse(void);
 
-int varchol(XCONST dvar_hs_smatrix &_A, XCONST hs_symbolic &_S,dvar_hs_smatrix &_L,
+int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,dvar_hs_smatrix &LL,
  dcompressed_triplet & sparse_triplet2)
  //laplace_approximation_calculator * lapprox)
 {
   RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
-  ADUNCONST(hs_symbolic,S)
-  ADUNCONST(dvar_hs_smatrix,L)
-  ADUNCONST(dvar_hs_smatrix,A)
+  //ADUNCONST(hs_symbolic,S)
+  //ADUNCONST(dvar_hs_smatrix,L)
+  //ADUNCONST(dvar_hs_smatrix,A)
+    hs_symbolic& S = (hs_symbolic&)T;
+    dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
+    dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
   int icount=0;
   double lki;
   double d;
@@ -3420,12 +3445,15 @@ static void dfcholeski_sparse(void)
     return  ; 
 }
 
-int chol(XCONST dvar_hs_smatrix &_A, XCONST hs_symbolic &_S,
-  dvar_hs_smatrix &_L)
+int chol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
+  dvar_hs_smatrix &LL)
 {
-  ADUNCONST(hs_symbolic,S)
-  ADUNCONST(dvar_hs_smatrix,L)
-  ADUNCONST(dvar_hs_smatrix,A)
+  //ADUNCONST(hs_symbolic,S)
+  //ADUNCONST(dvar_hs_smatrix,L)
+  //ADUNCONST(dvar_hs_smatrix,A)
+  dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
+  hs_symbolic& S = (hs_symbolic&)T;
+  dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
   int icount=0;
   dvariable lki;
   dvariable d;
@@ -3586,10 +3614,12 @@ void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
 }
 //#include "cs.h"
 /* C = A*B */
-hs_smatrix cs_multiply(const hs_smatrix &_A, const hs_smatrix  &_B)
+hs_smatrix cs_multiply(const hs_smatrix &AA, const hs_smatrix  &BB)
 {
-    ADUNCONST(hs_smatrix,A) 
-    ADUNCONST(hs_smatrix,B)
+    //ADUNCONST(hs_smatrix,A) 
+    //ADUNCONST(hs_smatrix,B)
+    hs_smatrix& A = (hs_smatrix&)AA;
+    hs_smatrix& B = (hs_smatrix&)BB;
     int p, j, nz = 0, anz,  m, n, bnz, values ;
     hs_smatrix *pC ;
     //hs_smatrix C(n,anz + bnz);

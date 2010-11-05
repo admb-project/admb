@@ -9,7 +9,7 @@ CFLAGS=-g
 endif
 
 FLAGS1 = $(CFLAGS) -w ${OPTIONS} ${PVMOPTION} -DOPT_LIB  -fpermissive -DUSE_LAPLACE -c -I. -I..\nh99 -I..\linad99 -I..\tools99  -Dlinux -D__GNUDOS__
-FLAGS = $(CFLAGS) -fno-for-scope -Wall -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${OPTIONS} ${PVMOPTION} -DOPT_LIB  -fpermissive -DUSE_LAPLACE -c -I. -I..\nh99 -I..\linad99 -I..\tools99  -Dlinux -D__GNUDOS__
+FLAGS = $(CFLAGS) -Wall -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${OPTIONS} ${PVMOPTION} -DOPT_LIB  -fpermissive -DUSE_LAPLACE -c -I. -I..\nh99 -I..\linad99 -I..\tools99  -Dlinux -D__GNUDOS__
 LIBPATH =gcc32-rh8olp
 LIBNAME = libdf1b2o.a
 SRCDIR =  src

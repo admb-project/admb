@@ -6,7 +6,7 @@ ifdef DEBUG
 CFLAGS=-g
 endif
 
-FLAGS:=-c $(CFLAGS) ${OPTIONS} -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I..\\df1b2-separable -I. -I..\\linad99 -I..\\tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
+FLAGS:=-c $(CFLAGS) ${OPTIONS} -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-parentheses -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I..\\df1b2-separable -I. -I..\\linad99 -I..\\tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
 
 FLAGS1:=-c $(CFLAGS) ${OPTIONS} -w ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I..\\linad99 -I..\\tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
 

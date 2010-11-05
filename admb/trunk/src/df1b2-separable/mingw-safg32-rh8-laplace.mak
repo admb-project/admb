@@ -8,7 +8,7 @@ endif
 
 FLAGS1 = $(CFLAGS) -w ${OPTIONS} ${PVMOPTION} -DSAFE_ALL -fpermissive -DUSE_LAPLACE -c -I. -I..\\nh99 -I..\\linad99 -I..\\tools99 -Dlinux -D __GNUDOS__
 
-FLAGS = $(CFLAGS) -fno-for-scope -Wall -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${OPTIONS} ${PVMOPTION} -DSAFE_ALL -fpermissive -DUSE_LAPLACE -c -I. -I..\\nh99 -I..\\linad99 -I..\\tools99 -Dlinux -D __GNUDOS__
+FLAGS = $(CFLAGS) -Wall -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-sign-compare -Wno-missing-braces -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -Wno-unused-label -Wno-unused-variable ${OPTIONS} ${PVMOPTION} -DSAFE_ALL -fpermissive -DUSE_LAPLACE -c -I. -I..\\nh99 -I..\\linad99 -I..\\tools99 -Dlinux -D __GNUDOS__
 
 LIBPATH =gcc32-rh8slp
 LIBNAME = libdf1b2s.a

@@ -1,4 +1,4 @@
-DIST=../build/dists/admb_gcc411_fedora8
+DIST=$ADMB_HOME
 
 echo Example:admb:ham4.tpl
 cat $DIST/examples/admb/buscycle/ham4.par

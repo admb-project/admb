@@ -81,8 +81,8 @@ cat $DIST/examples/admb-re/logistic/logistic.par
 cat $DIST/examples/admb-re/logistic/logistic.std
 
 echo Example:admb-re:nbmm.tpl
-cat $DIST/examples/admb-re/nbmm/nbmm.par
-cat $DIST/examples/admb-re/nbmm/nbmm.std
+cat $DIST/examples/admb-re/glmmadmb/nbmm.par
+cat $DIST/examples/admb-re/glmmadmb/nbmm.std
 
 echo Example:admb-re:nested4.tpl
 cat $DIST/examples/admb-re/nested4/nested4.par

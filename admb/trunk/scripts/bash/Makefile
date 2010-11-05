@@ -86,7 +86,7 @@ union \
 weights
 
 bcb:
-	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@
+	-cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 biglog:
 	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
@@ -138,10 +138,10 @@ sdv:
 
 skewed: diet diet_sk
 diet:
-	cd examples/admb-re/skewed;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./diet
+	cd examples/admb-re/skewed;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 diet_sk:
-	cd examples/admb-re/skewed;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./diet
+	cd examples/admb-re/skewed;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@
 
 socatt:
 	cd examples/admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;./$@

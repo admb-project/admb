@@ -57,8 +57,8 @@ cat $DIST/examples/admb-re/biglog/biglog.par
 cat $DIST/examples/admb-re/biglog/biglog.std
 
 echo Example:admb-re:bvprobit.tpl
-cat $DIST/examples/admb-re/bvprobit/bvprobit.par
-cat $DIST/examples/admb-re/bvprobit/bvprobit.std
+cat $DIST/examples/admb-re/glmmadmb/bvprobit.par
+cat $DIST/examples/admb-re/glmmadmb/bvprobit.std
 
 echo Example:admb-re:caest.tpl
 cat $DIST/examples/admb-re/caest/caest.par
@@ -80,9 +80,9 @@ echo Example:admb-re:logistic.tpl
 cat $DIST/examples/admb-re/logistic/logistic.par
 cat $DIST/examples/admb-re/logistic/logistic.std
 
-echo Example:admb-re:glmmadmb.tpl
-cat $DIST/examples/admb-re/nbmm/glmmadmb.par
-cat $DIST/examples/admb-re/nbmm/glmmadmb.std
+echo Example:admb-re:nbmm.tpl
+cat $DIST/examples/admb-re/glmmadmb/nbmm.par
+cat $DIST/examples/admb-re/glmmadmb/nbmm.std
 
 echo Example:admb-re:nested4.tpl
 cat $DIST/examples/admb-re/nested4/nested4.par

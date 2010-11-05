@@ -38,7 +38,7 @@ dist:
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 	cp -f ../LICENSE ${DISK}
-	cp -f ../README ${DISK}
+	cp -f ../README.txt ${DISK}
 	cp -f ../scripts/bash/mygcc* ${DISK}/bin 
 	#make -C docs/manuals
 	#cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals

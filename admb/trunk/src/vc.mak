@@ -36,7 +36,7 @@ all:
 	copy ..\scripts\vc\*.bat $(DISK)\bin
 	copy ..\scripts\mingw\admb.bat $(DISK)\bin
 	copy ..\LICENSE $(DISK)
-	copy ..\README $(DISK)
+	copy ..\README.txt $(DISK)
 	mkdir $(DISK)\examples
 	xcopy ..\examples $(DISK)\examples /S
 	copy ..\scripts\vc\Makefile $(DISK)\examples

@@ -31,7 +31,7 @@ dist:
 
 	copy ..\scripts\mingw\*.bat ${DISK}\bin
 	copy ..\LICENSE ${DISK}
-	copy ..\README ${DISK}
+	copy ..\README.txt ${DISK}
 	copy ..\scripts\mingw\Makefile ${DISK}
 
 	mkdir ${DISK}\examples

@@ -21,7 +21,7 @@ dist:
 	cp ../scripts/borland/*.bat ${DISK}/bin
 	cp ../scripts/mingw/admb.bat ${DISK}/bin
 	cp ../LICENSE ${DISK}
-	cp ../README ${DISK}
+	cp ../README.txt ${DISK}
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 	cp ../scripts/borland/Makefile ${DISK}/examples

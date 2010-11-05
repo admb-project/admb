@@ -35,7 +35,7 @@ dist:
 	$(MAKE) --directory=nh99 CXX=icc CC=icc CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" STUBPATH=../${LIBPATH}/nh99-olp-stub LIBPATH=../${LIBPATH}/nh99-olp ADMB_VERSION=${ADMB_VERSION} ADMB_REVISION=${ADMB_REVISION} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
 	$(MAKE) --directory=tools99 CXX=icc CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE ${DISK}
-	cp -vf ../README ${DISK}
+	cp -vf ../README.txt ${DISK}
 	cp -vf ../scripts/bash/mygcc* ${DISK}/bin 
 	cp ../scripts/bash/link* ${DISK}/bin
 	cp ../scripts/bash/m* ${DISK}/bin

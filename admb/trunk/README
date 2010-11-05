@@ -38,7 +38,7 @@ Table of Contents
 Release Notes
 =============
 The goal for this release was to improve algorithms, add new requested
-feeatures, correct defects (bugs), and streamline installation and build
+features, correct defects (bugs), and streamline installation and build
 process.
 
 Below lists some of the changes.
@@ -68,7 +68,7 @@ Several compilers are supported including
  * Intel C++ Compiler 11
 
 If the compiler is not listed, build the source distribution or 
-email user help <users@admb-project.org>.
+email user group <users@admb-project.org> for help.
 
 Downloading
 ===========
@@ -148,7 +148,7 @@ ADMB source version control is hosted at Code Google
 "http://code.google.com/p/admb-project/".  
 
 The instructions for checking out source trunk is at 
-"http://code.google.com/p/admb-project/".  
+"http://code.google.com/p/admb-project/source/checkout".  
 
 If you would like to write access, please email <users@admb-project.org>
 to request an account.
@@ -159,7 +159,7 @@ For help and support, email the ADMB users group <users@admb-project.org>.
 
 Contributors
 ============
-This software was originally developed by David Founier of Otter Research, Ltd. 
+This software was originally developed by David Fournier of Otter Research, Ltd. 
 
 Several other folks have contributed to the ADMB Project:
 

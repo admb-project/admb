@@ -16,7 +16,7 @@ ifndef LIBPATH
   LIBPATH=../build/${CCVERSION}-${OSVERSION}
 endif
 
-CXXFLAGS:=$(CXXFLAGS) -c -O3 -fno-for-scope -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux
+CXXFLAGS:=$(CXXFLAGS) -c -O3 -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-comment -Wno-strict-aliasing -Wno-write-strings -Wno-unused-function -Wno-unknown-pragmas -Wno-cast-qual -Wno-uninitialized -Wno-reorder -Wno-deprecated -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux
 
 dist:
 	rm -rf ${DISK}

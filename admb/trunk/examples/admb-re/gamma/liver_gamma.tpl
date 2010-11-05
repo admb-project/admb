@@ -7,7 +7,7 @@ DATA_SECTION
   vector S(1,np)
   vector TRT(1,np)
   vector CARD(1,np)
-LOC_CALCS
+ LOC_CALCS
   I=ivector(column(data,1));
   S=column(data,2);
   TRT=column(data,3);

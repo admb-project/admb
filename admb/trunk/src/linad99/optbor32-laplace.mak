@@ -3,7 +3,7 @@
 CC = bcc32
 LL = tlib
 #FLAGS = -Vd -O2 -OI -OM -5 -H=Hc -DDOS386;OPT_LIB -I. -c -f
-FLAGS = -I\\Borland\\BCC55\\Include ${OPTIONS} -DUSE_LAPLACE -Vd -W- -O2 -5 -H=Hc -DDOS386 -DOPT_LIB -I. -c -f -I..\\sparse -I..\\nh99 -I..\\df1b2-separable
+FLAGS = -I\\Borland\\BCC55\\Include ${OPTIONS} -DUSE_LAPLACE -Vd -W- -O2 -5 -H=Hc -DDOS386 -DOPT_LIB -I. -c -f -I..\\sparse -I..\\nh99 -I..\\df1b2-separable -I..\\tools99
 
 LIBPATH =b32polp
 LIBNAME = ado32.lib

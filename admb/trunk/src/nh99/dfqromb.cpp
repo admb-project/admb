@@ -141,13 +141,12 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
 }
 
 /** Extended trapezoid rule.
-
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 7
-
-    \deprecated Scheduled for replacement by 2010.
-*/
+ *
+ * This algorithm was adapted from function trapzd in
+ * "Numerical Recipes in C", 2nd edition,
+ * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
+ *
+ */
 dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int n)
 {
   double x,num_interval,hn;

@@ -57,8 +57,8 @@ Changes
 Requirements
 ============
 ADMB has been tested and used on Windows and UNIX operating systems 
-in both 32 and 64 bit versions.  A C/C++ compiler is required to 
-installed on the local computer. Below lists some tested compilers.
+in both 32 and 64 bit versions.  A C/C++ compiler must be be installed 
+on the local computer. Below lists some tested compilers.
 
 Several compilers are supported including 
  * GNU g++ 3.4 or newer

@@ -1,6 +1,6 @@
 ADMB Project
 Version 10.0Beta
-Released November 8, 2010
+Released November 9, 2010
 
 Overview
 ========
@@ -52,7 +52,8 @@ Changes
  * Added more examples
  * Added support for Intel C++ compiler
  * Added Autoconf script
- * Various bug fixes and improvements 
+ * Streamlined source builds
+ * Various bug fixes
 
 Requirements
 ============
@@ -63,9 +64,10 @@ on the local computer. Below lists some tested compilers.
 Several compilers are supported including 
  * GNU g++ 3.4 or newer
  * Microsoft Visual C++ 2003 or newer
- * Borland 5.5
  * MacOS XCode 3.2
  * Intel C++ Compiler 11
+ * Sun Studio 12
+ * Borland 5.5
 
 If the compiler is not listed, build the source distribution or 
 email user group <users@admb-project.org> for help.
@@ -84,19 +86,27 @@ Building form source code installation instructions can be found at
 "http://www.admb-project.org/documention/".
 
 Unix and GNU g++
-1. Configure the build files
+1. Extract source distribution
+   
+   $ unzip admb-10.0Beta.zip
+
+2. Change to distribution directory
+
+   $ cd admb-10.0Beta
+
+3. Configure the build files
 
    $ ./configure
 
-2. Build libraries 
+4. Build libraries 
   
    $ make
 
-3. [Optional] Test build by running examples
+5. [Optional] Test build by running examples
 
    $ make verify
 
-4. Install libraries to default location /usr/local.
+6. Install libraries to default location /usr/local.
 
    $ make install
 
@@ -108,7 +118,7 @@ Microsoft Windows and Visual C++
 
 3. Change directory to the "src" folder. 
 
-   > cd admb-10.0-src\src
+   > cd admb-10.0Beta\src
 
 4. Build libraries
 

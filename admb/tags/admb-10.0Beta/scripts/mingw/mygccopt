@@ -1,0 +1,4 @@
+# you may not want the -mcpu=pentiumpro -- see gcc docs
+# change /admodel/include to be the right directory
+g++ -Wno-deprecated -fpermissive  -I. -I/admodel/include \
+    -c -O3 -x c++ -D__GNUDOS__ -DOPT_LIB -Dlinux $1.cpp -o $1.obj

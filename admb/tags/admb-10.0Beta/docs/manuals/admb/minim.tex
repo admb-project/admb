@@ -1,0 +1,23 @@
+% $Id$
+%
+% Author: David Fournier
+% Copyright (c) 2008 Regents of the University of California
+%
+
+
+\mysection{Brief description of the optimization routines}
+At present there are three optimization routines include 
+with \ADM. They are a quasi-Newton routine, a limited memory
+quasi-Newton routine both of which use first derivatives 
+and the derivative free simplex algorithm.  
+
+The quasi-Newton  and the limited memory quasi-Newton
+methods employ the history of minimizing steps and the
+values of the gradient at each step to build up an 
+approximation to the Hessian matrix or its inverse.
+for the limited memory method only the last $m$ steps are
+used where $m$ can be set by the user. The major advantage 
+of the limited memory method is that the storage requirements
+are $O(n)$ where $n$ is the number of independent variables.
+for the quasi-Newton method the storage reuirements are
+$O(n^2)$.

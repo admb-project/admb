@@ -1,0 +1,93 @@
+#!/bin/bash
+shopt -s expand_aliases
+alias help='echo -e "Usage: admb [-d] [-g] [-r] [-s] model\n
+Build AD Model Builder executable from TPL.\n
+  -d     Create DLL
+  -g     Insert debugging symbols
+  -r     Create ADMB-RE
+  -s     Enforce safe bounds
+  model  Filename prefix, e.g. simple\n"'
+if [[ "$1" == "" ]]; then help; exit; fi
+if [[ "$1" == "-help" ]]; then help; exit; fi
+if [[ "$1" == "--help" ]]; then help; exit; fi
+###########################################################################################################################
+###                                                                                                                       #
+### Script:   admb [-d] [-g] [-r] [-s] model                                                                              #
+###                                                                                                                       #
+### Purpose:  Build ADMB executable from TPL, using tpl2cpp/tpl2rem, adcomp, and adlink                                   #
+###                                                                                                                       #
+### Args:     -d creates DLL                                                                                              #
+###           -g inserts debugging symbols                                                                                #
+###           -r creates ADMB-RE model                                                                                    #
+###           -s creates model that enforces safe array bounds during runtime                                             #
+###           model is the filename with or without extension, e.g. simple or simple.tpl                                  #
+###                                                                                                                       #
+### Requires: tpl2cpp, tpl2rem, adcomp, adlink                                                                            #
+###                                                                                                                       #
+### Returns:  Creates executable or DLL with same prefix                                                                  #
+###                                                                                                                       #
+### History:  23 May 2009  Arni Magnusson created                                                                         #
+###           27 Nov 2009  Arni Magnusson added support for filename extension, e.g. simple.tpl                           #
+###            8 Feb 2010  Johnoel Ancheta split the -s combo option into separate -g and -s options                      #
+###           22 Feb 2010  Arni Magnusson merged forked versions                                                          #
+###                                                                                                                       #
+###########################################################################################################################
+
+# Pop args until model=$1
+unset bounds
+unset d
+unset dll
+unset g
+unset r
+unset s
+tpl2cpp=tpl2cpp
+while getopts "dgrs" A; do
+  case $A in
+    d) d="-d "; dll="-dll ";;
+    g) g="-g ";;
+    r) r="-r "; tpl2cpp=tpl2rem;;
+    s) s="-s "; bounds="-bounds ";;
+  esac
+done
+shift $[OPTIND-1]
+
+model="${1%.*}"
+
+rm -f ${model}.htp
+rm -f ${model}.cpp
+rm -f ${model}.o
+rm -f ${model}
+
+if test -f ${model}.tpl ; then
+CMD1="$tpl2cpp ${bounds}${dll}$model"
+printf "\n*** Parsing: %s\n" "${CMD1}"
+eval ${CMD1}
+fi
+
+if test -f ${model}.htp -a -f ${model}.cpp ; then
+  ARG1=
+  if test ! -z "${CXXFLAGS}" ; then
+    ARG1="CXXFLAGS=\"${CXXFLAGS}\" "
+  fi
+  CMD2="${ARG1}adcomp ${d}${g}${r}${s}$model"
+  printf "\n*** Compiling: %s\n" "${CMD2}"
+  eval ${CMD2}
+fi
+
+if test -f ${model}.o ; then
+  ARG2=
+  if test ! -z "${LDFLAGS}" ; then
+    ARG2="LDFLAGS=\"${LDFLAGS}\" "
+  fi
+  CMD3="${ARG2}adlink ${d}${g}${r}${s}$model"
+  printf "\n*** Linking: %s\n" "${CMD3}"
+  eval ${CMD3}
+fi
+
+if test -x ${model} ; then
+  printf "\nSuccessful build of executable: %s\n" "${model}"
+else
+  printf "\nError: Failed to build executable.\n"
+fi
+
+exit 0

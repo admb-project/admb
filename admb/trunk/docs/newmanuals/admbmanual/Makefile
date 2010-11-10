@@ -19,6 +19,8 @@ INDEXER=mktexlsr
 
 .PHONY: INSTALLATION clean
 
+all: admbmanual.pdf admbmanual.cls
+
 admbmanual.pdf: admbmanual.dtx 
 	pdflatex admbmanual.dtx
 	mv admbmanual.pdf ..

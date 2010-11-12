@@ -52,7 +52,7 @@ fi
 if test  "`uname -s`" =  "Linux"
 then
 
-  if test  "`uname -p`" =  "x86_64"
+  if test  "`uname -m`" =  "x86_64"
   then
     CXX_32OR64BIT="64bit"
     CXXFLAGS="-m64"

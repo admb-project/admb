@@ -7115,8 +7115,11 @@ banded_lower_triangular_dmatrix
 banded_symmetric_dmatrix restore_bounded_symmetric_dvar_matrix_derivatives
   (BOR_CONST dvar_matrix_position& pos);
 
+double max(CGNU_DOUBLE u, CGNU_DOUBLE v);
+double min(CGNU_DOUBLE u, CGNU_DOUBLE v);
 int max(int i,int j,int k);
 int max(int i,int j);
+
 dvar_vector solve(BOR_CONST banded_lower_triangular_dvar_matrix& m,BOR_CONST dvar_vector&v);
   
 void check_choleski_decomp(_CONST banded_symmetric_dvar_matrix& MM,
@@ -7960,8 +7963,3 @@ void test_the_pointer(void);
      int norm2(const ivector&);
 
 #endif //#ifndef FVAR_HPP
-
-
-
-
-

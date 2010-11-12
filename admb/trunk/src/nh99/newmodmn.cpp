@@ -19,13 +19,6 @@ void report_confidence_limits(BOR_CONST ofstream& ofs3,int numsig_levels,
 void report_onesided_confidence_limits(BOR_CONST ofstream& ofs3,int numsig_levels,
   const dvector& siglevel,BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd,int ip);
 
-  double max(double x,double y)
-  {
-    if (x>y) return x;
-    return y;
-  }
-
-
 void report_confidence_limits(BOR_CONST ofstream& _ofs3,int numsig_levels,
   const dvector& siglevel,BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd)
 {

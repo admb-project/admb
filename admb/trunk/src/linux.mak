@@ -18,7 +18,7 @@ endif
 ifdef DEBUG
 CXXFLAGS:=$(CXXFLAGS) -g
 else
-CXXFLAGS:=$(CXXFLAGS)
+CXXFLAGS:=$(CXXFLAGS) -O3
 endif
 
 CXXFLAGS:=-c $(CXXFLAGS) -Wall -Wno-deprecated -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux

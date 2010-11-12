@@ -1,8 +1,11 @@
-.PHONY: clean SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf
+.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf
 
 #all: clean beta_regression hysimple simple_mcmc betareg gmrf
 #all: clean init_bounded_number_matrix admb_messages
-all: clean betareg beta_regression gmrf simple_mcmc
+all: testminmax
+
+testminmax:
+	OPTIONS=-s make --directory=$@
 
 SS3:
 	OPTIONS=-s make --directory=$@

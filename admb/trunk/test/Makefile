@@ -39,3 +39,4 @@ clean:
 	make --directory=betareg clean
 	make --directory=gmrf clean
 	make --directory=simple_mcmc clean
+	make --directory=testminmax clean

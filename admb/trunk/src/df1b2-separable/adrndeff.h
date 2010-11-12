@@ -38,18 +38,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
-
+/**
+ * \file
+ * Description not yet available.
+ */
 
 #if !defined(__RANDEFFECTS__)
 #  define __RANDEFFECTS__
-#
+
 #  include <admodel.h>
 
 class dcompressed_triplet;
 class hs_symbolic;
 class dvar_compressed_triplet;
 
+/**
+ * Description not yet available.
+ */
 class random_effects_number : public param_init_number
 {
   virtual void set_random_effects_active();
@@ -58,6 +63,9 @@ class random_effects_number : public param_init_number
   virtual void set_only_random_effects_inactive();
 };
 
+/**
+ * Description not yet available.
+ */
 class random_effects_bounded_number : public param_init_bounded_number
 {
   virtual void set_random_effects_active();
@@ -66,6 +74,9 @@ class random_effects_bounded_number : public param_init_bounded_number
   virtual void set_only_random_effects_inactive();
 };
 
+/**
+ * Description not yet available.
+ */
 class random_effects_vector : public param_init_vector
 {
   virtual void set_random_effects_active();
@@ -77,6 +88,9 @@ class random_effects_vector : public param_init_vector
 
 class random_effects_bounded_vector;
 
+/**
+ * Description not yet available.
+ */
 class random_effects_bounded_vector : public param_init_bounded_vector
 {
   virtual void set_random_effects_active();
@@ -85,6 +99,9 @@ class random_effects_bounded_vector : public param_init_bounded_vector
   virtual void set_only_random_effects_inactive();
 };
 
+/**
+ * Description not yet available.
+ */
 class random_effects_matrix : public param_init_matrix
 {
   virtual void set_random_effects_active();
@@ -93,6 +110,9 @@ class random_effects_matrix : public param_init_matrix
   virtual void set_only_random_effects_inactive();
 };
 
+/**
+ * Description not yet available.
+ */
 class random_effects_bounded_matrix : public param_init_bounded_matrix
 {
   virtual void set_random_effects_active();
@@ -106,6 +126,9 @@ class gauss_hermite_stuff;
 class nested_calls_shape;
 //class sparse_symbolic; 
 
+/**
+ * Description not yet available.
+ */
 class nested_calls_indices
 {
   imatrix * ptr1;
@@ -121,6 +144,9 @@ public:
   void allocate(const nested_calls_shape& nsc);
 };
 
+/**
+ * Description not yet available.
+ */
 class nested_calls_shape
 {
   ivector * ptr1;
@@ -150,6 +176,9 @@ public:
   int & operator () (int i,int j,int k,int l) {return (*ptr4)(i,j,k,l);}
 };
 
+/**
+ * Description not yet available.
+ */
 class laplace_approximation_calculator
 {
 public:
@@ -364,7 +393,9 @@ public:
   void build_up_nested_shape(void);
 };
 
-
+/**
+ * Description not yet available.
+ */
 class gauss_hermite_stuff
 {
 public:

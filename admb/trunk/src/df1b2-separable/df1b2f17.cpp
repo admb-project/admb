@@ -4,7 +4,15 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
+/**
+ * Description not yet available.
+ * \param
+ */
 fixed_smartlist::~fixed_smartlist()
 {
   delete [] true_buffer;
@@ -27,6 +35,10 @@ fixed_smartlist::~fixed_smartlist()
   #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 fixed_smartlist2::~fixed_smartlist2()
 {
   delete [] true_buffer;
@@ -48,4 +60,3 @@ fixed_smartlist2::~fixed_smartlist2()
    remove(filename);
   #endif
 }
-

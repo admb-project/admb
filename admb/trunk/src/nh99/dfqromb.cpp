@@ -4,12 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2009 ADMB Foundation
  */
+/**
+ * \file
+ * Contains routines for numerical integration
+ */
 
 #include <admodel.h>
-#define EPS 1.0e-4
+//#define EPS 1.0e-4
 #define JMAX 50
-#define JMAXP JMAX+1
-#define K 5
+//#define JMAXP JMAX+1
+//#define K 5
 
 class model_parameters;
 
@@ -169,6 +173,13 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
   }
 }
 
+/** Extended trapezoid rule.
+ *
+ * This algorithm was adapted from function trapzd in
+ * "Numerical Recipes in C", 2nd edition,
+ * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
+ *
+ */
 dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,double b,int n)
 {
   double num_interval;
@@ -191,6 +202,13 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
   }
 }
 
+/** Extended trapezoid rule.
+ *
+ * This algorithm was adapted from function trapzd in
+ * "Numerical Recipes in C", 2nd edition,
+ * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
+ *
+ */
 dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,BOR_CONST dvariable& b,int n)
 {
   double num_interval;
@@ -215,6 +233,13 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
   }
 }
 
+/** Extended trapezoid rule.
+ *
+ * This algorithm was adapted from function trapzd in
+ * "Numerical Recipes in C", 2nd edition,
+ * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
+ *
+ */
 dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),BOR_CONST dvariable& a,BOR_CONST dvariable& b,int n)
 {
   double num_interval;
@@ -237,10 +262,10 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
     return s;
   }
 }
-#undef EPS
+//#undef EPS
 #undef JMAX
-#undef JMAXP
-#undef K
+//#undef JMAXP
+//#undef K
 
  //Not used elsewhere
 void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,BOR_CONST dvariable& _y,BOR_CONST dvariable& _dy)

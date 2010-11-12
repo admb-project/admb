@@ -6,7 +6,7 @@
  */
 /**
  * \file
- * This file has routines for the
+ * This file has routines for the constant type
  * log-factorial, log-binomial, and log-gamma functions
  */
 

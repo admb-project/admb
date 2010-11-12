@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -12,6 +16,10 @@
 static int no_stuff=0;
 //static void xxxy(void) {}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::quasi_newton_block(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f)
 {

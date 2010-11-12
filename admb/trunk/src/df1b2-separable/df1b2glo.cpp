@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 #define _FIVE_ 50  // must defien the macro SIX to be one greater than FIVE
 #define _SIX_ 51 
@@ -12,6 +16,11 @@ int df1b2variable::current_allocation_index=0;
 const int df1b2variable::adpool_vectorsize=_FIVE_;
 int df1b2variable::adpool_use_index[_SIX_];
 adpool * df1b2variable::adpool_vector[_SIX_];
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2variable::increment_adpool_counter(void)
 {
  adpool_counter++;

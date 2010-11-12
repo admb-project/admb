@@ -4,9 +4,17 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #include <df1b2fun.h>
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
    do_separable_stuff_laplace_approximation_banded_adjoint
    (const df1b2variable& ff)

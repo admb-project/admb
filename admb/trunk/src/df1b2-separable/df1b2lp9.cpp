@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -21,6 +25,10 @@
 
 typedef fmm * pfmm;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   (const dvector& x,function_minimizer * pfmin)
 {

@@ -1,8 +1,6 @@
 /*
  * $Id$
  *
- *
- * Author: Unknown
  */
 #include <df1b2fun.h>
 #include <admodel.h>

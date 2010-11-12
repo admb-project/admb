@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 #include "admb_messages.h"
 
@@ -29,7 +33,10 @@ int get_f1b2buffer_size(const char * s);
 
 adpool * df1b2variable::pool= new adpool();
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2function1::df1b2function1(double (*_f)(double),double (*_df)(double),
     double (*_d2f)(double),double (*_d3f)(double), const adstring& _s )
 {
@@ -40,23 +47,39 @@ df1b2function1::df1b2function1(double (*_f)(double),double (*_df)(double),
   funname=_s;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ad_dstar::~ad_dstar(void)
 {
   if (p) delete []p;
   p = 0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int df1b2variable::get_blocksize(void)
 {
   return get_blocksize(nvar);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int df1b2variable::get_blocksize(int n)
 {
   return 6*n+5; 
   //return 6*n+4; 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2variable::set_blocksize(void)
 {
   blocksize=get_blocksize();
@@ -87,6 +110,10 @@ int adptr_diff(void * x, void * y) { return int(x)-int(y); }
   int sanity_flag=0;
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1b2variable::initialize(void)
   {
     //double * tmp=ptr+1;
@@ -105,14 +132,20 @@ int adptr_diff(void * x, void * y) { return int(x)-int(y); }
    */
   }
         
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1b2variable::initialize(int n)
   {
     int bs=get_blocksize(n);
     for (double * tmp=ptr+2;tmp<ptr+bs-1;*tmp++=0);
   }
         
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void init_df1b2variable::set_u_dot(void) 
   {
     //int j;
@@ -131,6 +164,10 @@ int adptr_diff(void * x, void * y) { return int(x)-int(y); }
     *get_u()=uvalue;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void init_df1b2variable::operator = (double d) 
   {
     //int nc=*ncopies;
@@ -144,6 +181,11 @@ int adptr_diff(void * x, void * y) { return int(x)-int(y); }
     get_ind_index()=-1;
     *u=d;
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   df1b2variable::df1b2variable(const df1b2variable& v) 
   {
 #if defined(__CHECK_MEMORY__)
@@ -188,6 +230,10 @@ int adptr_diff(void * x, void * y) { return int(x)-int(y); }
     
 typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df1b2variable::init_df1b2variable(double v) : df1b2variable(adkludgexxx)
   {
     ++num_variables;
@@ -220,11 +266,20 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
   }
 
   int no_destruct=0;
+
+/**
+ * Description not yet available.
+ * \param
+ */
   df1b2variable::~df1b2variable() 
   {
     deallocate();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1b2variable::deallocate(void) 
   {
     if (ptr)
@@ -253,7 +308,11 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
       }
     }
   }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */  
   void init_df1b2vector::set_value(const dvector& v)
   {
     int mmin=indexmin();
@@ -270,17 +329,28 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df1b2vector::init_df1b2vector(void)
   {
     allocate();
   }
-    
+
+/**
+ * Description not yet available.
+ * \param
+ */    
   init_df1b2vector::init_df1b2vector(int lb,int ub)
   {
     allocate(lb,ub);
   }
     
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void init_df1b2vector::allocate(int lb,int ub)
   {
     init_df1b2variable::num_variables= 0; 
@@ -319,6 +389,10 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     ptr-=lb;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void init_df1b2vector::reallocate()
   {
     int mmin=indexmin();
@@ -329,6 +403,10 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void init_df1b2vector::allocate(void)
   {
     //deallocate(); a// don;t know why this was ever here DF 6june09
@@ -338,6 +416,10 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     ptr=0;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df1b2vector::~init_df1b2vector()
   {
     if (ncopies)
@@ -356,6 +438,11 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
       }
     }
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void init_df1b2vector::deallocate(void)
   {
     if (ncopies)
@@ -371,6 +458,11 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
       }
     }
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df1b2vector::init_df1b2vector(const init_df1b2vector & v)
   {
     ncopies=v.ncopies;
@@ -391,15 +483,20 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     //cout << *ncopies << endl;
   }
 
-
-    
-
+/**
+ * Description not yet available.
+ * \param
+ */
   double& value(const df1b2variable& _x) 
   {
     ADUNCONST(df1b2variable,x)
     return *x.u;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1b2function2::df1b2function2(double (*_f)(double,double),
   double (*_df1)(double,double),double (*_df2)(double,double),
   double (*_d2f11)(double,double),
@@ -421,11 +518,19 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
   }
   typedef double (* PTDF)(double);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   PTDF tan_address()
   {
     return &tan;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1b2variable df1b2function1::operator () (const df1b2variable& _x)
   {
     ADUNCONST(df1b2variable,x)
@@ -454,6 +559,10 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1b2variable df1b2function2::operator () (const df1b2variable& _x,
     const df1b2variable& _y)
   {
@@ -479,6 +588,10 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_gradlist::reset(void)
 {
   ncount=0;
@@ -490,6 +603,10 @@ void df1b2_gradlist::reset(void)
   nlist3.reset();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2_gradlist::df1b2_gradlist(unsigned int _bs,unsigned int _nbs,
   unsigned int _bs2,unsigned int _nbs2,
   unsigned int _bs3,unsigned int _nbs3,
@@ -536,6 +653,10 @@ smartlist::smartlist(void)
 }
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 smartlist::smartlist(unsigned int _bufsize,const adstring& _filename) 
 {
   if (sizeof(char)>1)
@@ -558,7 +679,11 @@ smartlist::smartlist(unsigned int _bufsize,const adstring& _filename)
 }
 
 void ad_dstar::allocate(int _n){n=_n;}
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 ad_dstar::ad_dstar(void)
 {
   if (!n)
@@ -571,6 +696,10 @@ ad_dstar::ad_dstar(void)
 
 void junk(void* a ,void* b,void* c,void* d,void * e){;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_dependent_variable(const df1b2variable& _x) 
 {
   df1b2variable& x=(df1b2variable&) (_x);
@@ -581,7 +710,10 @@ void set_dependent_variable(const df1b2variable& _x)
   }
 }
 
-  
+/**
+ * Description not yet available.
+ * \param
+ */  
 dmatrix get_hessian(const init_df1b2vector& _x)
 {
   ADUNCONST(init_df1b2vector,x)
@@ -599,6 +731,10 @@ dmatrix get_hessian(const init_df1b2vector& _x)
 
 typedef df1b2variable (*P_USER_FUNCTION)(const init_df1b2vector& x);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double d1F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,double _delta)
 {
   ADUNCONST(init_df1b2vector,x)
@@ -620,6 +756,10 @@ double d1F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,double _delta)
   return d1f;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double d2F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,int j,
   double delta)
 {
@@ -640,6 +780,10 @@ double d2F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,int j,
   return d1f;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double d3F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,int j,int k,
   double delta)
 {
@@ -654,7 +798,10 @@ double d3F(P_USER_FUNCTION pu,const init_df1b2vector& _x,int i,int j,int k,
   return d1f;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix check_second_derivatives(const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
@@ -671,7 +818,11 @@ dmatrix check_second_derivatives(const init_df1b2vector& x)
   }
   return h;
 }
- 
+
+/**
+ * Description not yet available.
+ * \param
+ */
 d3_array check_third_derivatives(const init_df1b2vector& x)
 {
   f1b2gradlist->set_no_derivatives();
@@ -694,6 +845,10 @@ d3_array check_third_derivatives(const init_df1b2vector& x)
  
 #if defined(__DERCHECK__)
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dercheck_info::dercheck_info(int _node_number,double _delta,int _index) :
   node_number(_node_number), delta(_delta), index(_index)
 {
@@ -710,16 +865,28 @@ dercheck_info * derchecker;
 
 re_objective_function_value * re_objective_function_value::pobjfun=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 re_objective_function_value::re_objective_function_value(void)
 {
   pobjfun=this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 re_objective_function_value::~re_objective_function_value()
 {
   pobjfun=0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 re_objective_function_value& re_objective_function_value::operator = 
   (const df1b2variable& v)
 {
@@ -727,6 +894,10 @@ re_objective_function_value& re_objective_function_value::operator =
   return *this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 re_objective_function_value& re_objective_function_value::operator = 
   (double v)
 {
@@ -734,11 +905,19 @@ re_objective_function_value& re_objective_function_value::operator =
   return *this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void re_objective_function_value::allocate(void)
 {
   df1b2variable::allocate();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void re_objective_function_value::allocate(const char * s)
 {
   pobjfun=this;
@@ -746,6 +925,10 @@ void re_objective_function_value::allocate(const char * s)
 }
 
 #if defined(SAFE_ARRAYS)
+/**
+ * Description not yet available.
+ * \param
+ */
 init_df1b2variable& init_df1b2vector::operator () (int i) 
 { 
   if (i < indexmin())
@@ -758,6 +941,11 @@ init_df1b2variable& init_df1b2vector::operator () (int i)
   }
   return ptr[i]; 
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 init_df1b2variable& init_df1b2vector::operator [] (int i) 
 { 
   if (i < indexmin())
@@ -776,7 +964,10 @@ init_df1b2variable& init_df1b2vector::operator [] (int i)
 //int active(const df1b2vector& x){return 1;}
 //int active(const df1b2matrix& x){return 1;}
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 int get_f1b2buffer_size(const char * s)
 {
   int n=0;
@@ -796,6 +987,10 @@ int get_f1b2buffer_size(const char * s)
   return n;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable::df1b2variable(const random_effects_bounded_vector_info& rebv)
 {
   df1b2variable& v= *(rebv.pv->v+rebv.i);

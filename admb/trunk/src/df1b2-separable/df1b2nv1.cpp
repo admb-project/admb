@@ -4,15 +4,27 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 #include "admb_messages.h"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df1b2_init_bounded_number_vector::df1b2_init_bounded_number_vector()
  {
    it=NULL;
  }
 
 #if defined(SAFE_ALL)
+/**
+ * Description not yet available.
+ * \param
+ */
  df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator [] (int i) 
  { 
    if (i < indexmin() || i > indexmax())
@@ -22,6 +34,10 @@
    return v[i];
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator () (int i) 
  { 
    if (i < indexmin() || i > indexmax())
@@ -32,12 +48,19 @@
  }
 #endif
 
-     
+/**
+ * Description not yet available.
+ * \param
+ */
  df1b2_init_bounded_number_vector::~df1b2_init_bounded_number_vector()
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df1b2_init_bounded_number_vector::deallocate(void)
  {
    if(it)
@@ -53,12 +76,20 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df1b2_init_bounded_number_vector::allocate(int min1,int max1,
    const double_index_type & bmin,const double_index_type & bmax,const char * s)
  {
    allocate(min1,max1,bmin,bmax,1,s);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df1b2_init_bounded_number_vector::allocate(int min1,int max1,
    const double_index_type & bmin,const double_index_type & bmax,
    const index_type& phase_start,const char * s)
@@ -170,6 +201,10 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
  }
 */
 #if defined(SAFE_ALL)
+/**
+ * Description not yet available.
+ * \param
+ */
  df1b2_init_number& df1b2_init_number_vector::operator [] (int i) 
  { 
    if (i < indexmin() || i > indexmax())
@@ -179,6 +214,10 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
    return v[i];
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df1b2_init_number& df1b2_init_number_vector::operator () (int i) 
  { 
    if (i < indexmin() || i > indexmax())
@@ -189,17 +228,28 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
  }
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df1b2_init_number_vector::df1b2_init_number_vector()
  {
    it=NULL;
  }
 
-     
+/**
+ * Description not yet available.
+ * \param
+ */
  df1b2_init_number_vector::~df1b2_init_number_vector()
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df1b2_init_number_vector::deallocate(void)
  {
    if(it)
@@ -215,12 +265,20 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df1b2_init_number_vector::allocate(int min1,int max1,
    const char * s)
  {
    allocate(min1,max1,1,s);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df1b2_init_number_vector::allocate(int min1,int max1,
    const index_type& phase_start,const char * s)
  {

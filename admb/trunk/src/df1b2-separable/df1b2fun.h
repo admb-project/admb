@@ -38,7 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 
 #if !defined(__DF1B2FUN__)
 #  define __DF1B2FUN__ 
@@ -70,6 +73,10 @@ int withinbound(int lb,int n,int ub);
 class do_naught_kludge;
 class newadkludge;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class twointsandptr
 {
 public:
@@ -83,6 +90,10 @@ public:
 
 
 #if defined(__DERCHECK__)
+/**
+ * Description not yet available.
+ * \param
+ */
 class dercheck_info
 {
   int ind_index;
@@ -163,7 +174,10 @@ void read_pass1_2(void);
 #undef ADUNCONST
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   struct df1b2_header 
   {
     //double * ptr;
@@ -192,6 +206,11 @@ void read_pass1_2(void);
   class adkludge1;
 
   class df1b2vector;
+
+/**
+ * Description not yet available.
+ * \param
+ */
   class predf1b2vector
   {
     df1b2vector * p;
@@ -207,6 +226,10 @@ void read_pass1_2(void);
   class df3_three_variable;
   class random_effects_bounded_vector_info;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1b2variable : public df1b2_header
   {
 
@@ -299,6 +322,10 @@ void print_derivatives(const adstring&, double f, double df1,
 void print_derivatives(df1b2_header * px,const char * s,
   int bflag=0);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class init_df1b2variable : public df1b2variable  
   {
   public:
@@ -311,6 +338,10 @@ void print_derivatives(df1b2_header * px,const char * s,
     void set_u_dot(void); 
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class init_df1b2vector
   {
     int index_min;
@@ -339,13 +370,13 @@ void print_derivatives(df1b2_header * px,const char * s,
     void set_value(const dvector&);
     ~init_df1b2vector();
   };
- 
-
 
  
-  // This is a function object for a function of one variable which 
-  // stores the functions whihc calculate the first second and third 
-  // derivatives
+/**
+ * This is a function object for a function of one variable which 
+ * stores the functions which calculate the first second and third 
+ * derivatives
+ */
   class df1b2function1
   {
   public:
@@ -366,6 +397,10 @@ void print_derivatives(df1b2_header * px,const char * s,
                // operations like +=
   }; 
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1b2function2
   {
   public:
@@ -398,6 +433,10 @@ void print_derivatives(df1b2_header * px,const char * s,
     df1b2variable operator () (const df1b2variable& x,const df1b2variable& y);
   }; 
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class mydf1b2function2
   {
   public:
@@ -428,6 +467,10 @@ void print_derivatives(df1b2_header * px,const char * s,
     df1b2variable operator () (const df1b2variable& x,const df1b2variable& y);
   }; 
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class smartlist
   {
   public:
@@ -448,7 +491,11 @@ void print_derivatives(df1b2_header * px,const char * s,
       return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
   };
-    
+
+/**
+ * Description not yet available.
+ * \param
+ */
   class test_smartlist
   {
   public:
@@ -506,6 +553,10 @@ void print_derivatives(df1b2_header * px,const char * s,
 
   typedef void (*ADrfptr)(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class fixed_list_entry
   {
   public:
@@ -513,6 +564,10 @@ void print_derivatives(df1b2_header * px,const char * s,
     ADrfptr pf;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class fixed_smartlist
   {
   public:
@@ -574,6 +629,10 @@ void print_derivatives(df1b2_header * px,const char * s,
     int written(void){return written_flag;}
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class fixed_smartlist2
   {
   public:
@@ -643,7 +702,11 @@ void print_derivatives(df1b2_header * px,const char * s,
   void memcpy(void *,const test_smartlist &,int nsize);
 
   class df1b2function2c;
-    
+
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1b2_gradlist 
   {
   public:
@@ -735,6 +798,10 @@ void print_derivatives(df1b2_header * px,const char * s,
     void reset(void);
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class ad_dstar
 {
 public:
@@ -793,6 +860,10 @@ df1b2variable div(const df1b2variable& x,const df1b2variable& y);
 df1b2variable operator + (double x,const df1b2variable& y);
 df1b2variable operator + (const df1b2variable& x,double y);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 inline df1b2variable operator + (const df1b2variable& x,double y)
 {
   return y+x;
@@ -815,6 +886,10 @@ df1b2variable factln(_CONST df1b2variable& n);
 
 // vector and matrix stuff
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2vector_header
 {
 protected:
@@ -836,6 +911,10 @@ class df3_two_vector;
  //   friend class df1b2vector;
  // };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2vector : public df1b2vector_header
 {
   df1b2variable * v;
@@ -917,7 +996,10 @@ public:
 class df3_one_matrix;
 class df3_two_matrix;
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2matrix 
 {
   int index_min;
@@ -975,7 +1057,10 @@ public:
   df1b2matrix& operator /= (double x);
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b23array 
 {
   int index_min;
@@ -1183,6 +1268,10 @@ double& value(const df1b2variable& _x);
 dvector value(const df1b2vector& _x);
 dmatrix value(const df1b2matrix& _x);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class initial_df1b2params
 {
 public:
@@ -1220,10 +1309,18 @@ public:
 
 typedef initial_df1b2params * P_INITIAL_DF1B2PARAMS;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class do_naught_kludge
 {
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2_init_vector : public df1b2vector, public initial_df1b2params
 {
 public:
@@ -1237,6 +1334,10 @@ public:
   virtual void set_index(int aflag,const int& ii);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2_init_matrix : public df1b2matrix, public initial_df1b2params
 {
 public:
@@ -1282,7 +1383,10 @@ public:
 };
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2_init_number : public df1b2variable, public initial_df1b2params
 {
   static do_naught_kludge do_naught_kludge_a;
@@ -1301,6 +1405,10 @@ public:
   void operator = (const df1b2variable& _x); 
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2_init_number_vector 
 {
   df1b2_init_number * v;
@@ -1331,7 +1439,10 @@ public:
 
 class df1b2_init_bounded_number;
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2_init_bounded_number :public df1b2_init_number
 {
   double minb;
@@ -1350,6 +1461,10 @@ public:
     const df1b2variable& pen);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2_init_bounded_number_vector 
 {
   df1b2_init_bounded_number * v;
@@ -1382,7 +1497,10 @@ public:
   void deallocate(void);
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2_init_bounded_vector : public df1b2_init_vector 
 {
 protected:
@@ -1401,8 +1519,12 @@ public:
   inline double getmaxb(void){return maxb;}
 };
 
-
 class re_df1b2_init_bounded_vector;
+
+/**
+ * Description not yet available.
+ * \param
+ */
 class random_effects_bounded_vector_info 
 {
   re_df1b2_init_bounded_vector * pv;
@@ -1416,7 +1538,10 @@ public:
     const df1b2variable& pen);
 }; 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class re_df1b2_init_bounded_vector : public df1b2_init_bounded_vector 
 {
 public:
@@ -1430,6 +1555,10 @@ public:
   re_df1b2_init_bounded_vector(void);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2_init_bounded_matrix : public df1b2_init_matrix
 {
 protected:
@@ -1448,7 +1577,10 @@ public:
     const df1b2variable& pen);
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2_init_bounded_dev_vector : public df1b2_init_bounded_vector 
 {
 public:
@@ -1487,12 +1619,19 @@ df1b2variable posfun2(const df1b2variable&x,const double eps,
 df1b2variable posfun(const df1b2variable&x,const double eps,
   const df1b2variable& _pen);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 inline df1b2variable operator - (const df1b2variable& x)
 {
   return -double(1.0)*x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 inline df1b2vector operator - (const df1b2vector& x)
 {
   return -double(1.0)*x;
@@ -1524,7 +1663,10 @@ ostream& operator << (const ostream& ostr,const df1b2_init_bounded_number_vector
 class adkludge1;
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1b2_header_ptr_vector 
   {
     int index_min;
@@ -1539,6 +1681,10 @@ class adkludge1;
     int indexmax(void) {return index_max;}
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_ptr_vector 
   {
     int index_min;
@@ -1627,6 +1773,10 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
 dvector evaluate_function_with_quadprior(const dvector& x,int usize,
   function_minimizer * pfmin);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class style_flag_class
 {
 public:
@@ -1635,7 +1785,10 @@ public:
   //style_flag_class(void) {set_old_style_flag();}
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class quadratic_prior : public style_flag_class
 {
   dmatrix * pMinv;
@@ -1685,6 +1838,11 @@ public:
   friend class df1b2quadratic_prior;
   virtual void get_cM(void)=0;
 };
+
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2quadratic_prior : public style_flag_class
 {
   ivector * index;
@@ -1730,6 +1888,10 @@ public:
   friend class df1b2_parameters;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class normal_quadratic_prior : public quadratic_prior
 {
   virtual void set_old_style_flag(void);
@@ -1738,6 +1900,10 @@ public:
   void operator = (const dvar_matrix & M);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class normal_df1b2quadratic_prior : public df1b2quadratic_prior
 {
   virtual void set_old_style_flag(void);
@@ -1746,6 +1912,10 @@ public:
   normal_df1b2quadratic_prior(void);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class quadratic_re_penalty : public quadratic_prior
 {
   virtual void set_old_style_flag(void);
@@ -1755,6 +1925,10 @@ public:
   void operator = (const dmatrix & M);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class df1b2quadratic_re_penalty : public df1b2quadratic_prior
 {
   virtual void set_old_style_flag(void);
@@ -1766,6 +1940,10 @@ public:
 
 dvar_vector solve(const named_dvar_matrix &,const random_effects_vector&);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class constant_quadratic_re_penalty : public quadratic_prior
 {
   virtual void set_old_style_flag(void);
@@ -1774,6 +1952,10 @@ public:
   void operator = (const dmatrix & M);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class constant_df1b2quadratic_re_penalty : public df1b2quadratic_prior
 {
   virtual void set_old_style_flag(void);
@@ -1829,6 +2011,10 @@ df1b2variable inv_cumd_cauchy(const df1b2variable& n);
 df1b2variable inv_cumd_t(const df1b2variable& n,const df1b2variable&  u,
   double eps=1.e-7);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1b2function_tweaker
   {
     double mult;

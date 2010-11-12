@@ -35,7 +35,7 @@
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 10
 
-  \deprecated Scheduled for replacement in 2011.
+  \deprecated User should use the neldmead function
 */
 void function_minimizer::adamoeba(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, int ndim,
   double ftol,int nfunk)
@@ -136,8 +136,17 @@ double function_minimizer::amxxx(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, B
 }
 #undef NRANSI
 
-
-
+/** Nelder-Mead simplex alogrithm.
+  \param n Integer
+  \param _start Vector
+  \param _xmin Vector
+  \param ynewlo Double
+  \param reqmin Double
+  \param delta Double
+  \param icount Integer pointer
+  \param numres Integer pointer
+  \param ifault Integer pointer
+*/
 void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin, 
   double *ynewlo, double reqmin, double delta,int *icount, int *numres, int *ifault)
 //

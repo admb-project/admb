@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 void read_pass1_init_1(void);
 void read_pass1_init_2(void);
@@ -15,6 +19,11 @@ void read_pass1_init_3(void);
 #endif
 
 void ad_read_pass1_initialize(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2variable::operator = (double d) 
 {
   initialize();
@@ -29,6 +38,10 @@ void df1b2variable::operator = (double d)
     f1b2gradlist->write_pass1_initialize(this);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable::df1b2variable(double d) 
 {
   // vectors are all 1,...,nvar
@@ -53,6 +66,10 @@ df1b2variable::df1b2variable(double d)
     f1b2gradlist->write_pass1_initialize(this);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable::df1b2variable(void) 
 {
   if (!df1b2variable::noallocate)
@@ -76,6 +93,10 @@ df1b2variable::df1b2variable(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable::df1b2variable(const newadkludge* z) 
 {
   ptr=0;
@@ -92,6 +113,10 @@ df1b2variable::df1b2variable(const newadkludge* z)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2variable::allocate(void) 
 {
   // vectors are all 1,...,nvar
@@ -116,6 +141,10 @@ void df1b2variable::allocate(void)
     f1b2gradlist->write_pass1_initialize(this);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable::df1b2variable(adkludge1 * adkludgexxx)
 {
   // vectors are all 1,...,nvar
@@ -141,6 +170,11 @@ df1b2variable::df1b2variable(adkludge1 * adkludgexxx)
 
 //int df1b2_gradlist::write_pass1_initialize(const df1b2variable * px, 
 //  df1b2variable * pz)
+
+/**
+ * Description not yet available.
+ * \param
+ */
 int df1b2_gradlist::write_pass1_initialize(df1b2variable * pz)
 {
   char * pg=0;
@@ -180,6 +214,10 @@ int df1b2_gradlist::write_pass1_initialize(df1b2variable * pz)
   return 0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_read_pass1_initialize(void)
 {
   switch(df1b2variable::passnumber)
@@ -200,6 +238,10 @@ void ad_read_pass1_initialize(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void checkidentiferstring(const char * ids,test_smartlist& list)
 {
   int slen=strlen(ids);
@@ -214,7 +256,11 @@ void checkidentiferstring(const char * ids,test_smartlist& list)
   }
   list.bptr+=slen;
 }
-    
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass1_init_1(void)
 {
   // We are going backword for bptr and forward for bptr2
@@ -292,6 +338,10 @@ void read_pass1_init_1(void)
  
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass1_init_2(void)
 {
   //const int nlist_record_size=sizeof(int)+sizeof(char*);
@@ -372,6 +422,10 @@ void read_pass1_init_2(void)
   
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass1_init_3(void)
 {
   // We are going backword for bptr and forward for bptr2
@@ -405,4 +459,3 @@ void read_pass1_init_3(void)
   }
 
 }
-

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
 //#define  ADDEBUG_PRINT 
@@ -17,6 +21,10 @@ void read_tilde_values_2(void);
 void read_tilde_values_3(void);
 void zero_it(double * p,int n);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int df1b2_gradlist::write_save_pass2_tilde_values(const df1b2variable * _px) 
 {
   ADUNCONST(df1b2variable*, px) 
@@ -46,7 +54,11 @@ int df1b2_gradlist::write_save_pass2_tilde_values(const df1b2variable * _px)
   ++nlist;
   return 0;
 }
-    
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_read_write_tilde_values(void)
 {
   switch(df1b2variable::passnumber)
@@ -66,6 +78,11 @@ void ad_read_write_tilde_values(void)
     exit(1);
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_tilde_values_1(void)
 {
   // We are going backword for bptr and nbptr
@@ -94,7 +111,11 @@ void read_tilde_values_1(void)
     px->u_dot_bar[i]=0;
   }
 }
- 
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_tilde_values_2(void)
 {
   //const int nlist_record_size=sizeof(int)+sizeof(char*);
@@ -154,6 +175,10 @@ void read_tilde_values_2(void)
   ++nlist3;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_tilde_values_3(void)
 {
   // We are going backword for bptr and forward for bptr2
@@ -190,6 +215,11 @@ void read_tilde_values_3(void)
   memcpy(px->get_u_dot_tilde(),list3.bptr,nvar*sizeof(double));
   list3.restoreposition(); // save pointer to beginning of record;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void zero_it(double * p,int n)
 {
   for (int i=0;i<n;i++) *p++=0.0;

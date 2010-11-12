@@ -38,14 +38,20 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 
 #include <df1b2fun.h>
 #if !defined(__DF1B2FNL__)
 #  define __DF1B2FNL__ 
 #include <adrndeff.h>
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class funnel_init_var
 {
 public:
@@ -82,6 +88,10 @@ public:
   static int nvarcalc_all(void);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class funnel_dependent_df1b2variable : public df1b2variable 
 {
   int assign_flag;
@@ -96,7 +106,10 @@ public:
   //virtual void allocate_all(init_df1b2vector&,int& ii);
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class funnel_init_df1b2variable : public funnel_init_var, public df1b2variable 
 {
 public:
@@ -121,7 +134,10 @@ public:
   virtual void set_index(imatrix&,int& ii);
 };
 
-  
+/**
+ * Description not yet available.
+ * \param
+ */
 class funnel_init_bounded_df1b2vector : public funnel_init_var, 
   public df1b2vector 
 {
@@ -138,7 +154,10 @@ public:
 };
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class funnel_init_df1b2vector : public funnel_init_var, public df1b2vector 
 {
   const df1b2vector * p;
@@ -157,7 +176,10 @@ public:
 };
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class funnel_init_df1b2matrix : public funnel_init_var, public df1b2matrix 
 {
   const df1b2matrix* p;

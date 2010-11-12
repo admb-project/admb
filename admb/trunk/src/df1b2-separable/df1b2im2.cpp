@@ -4,11 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double calculate_importance_sample(const dvector& x,const dvector& u0,
   const banded_symmetric_dmatrix& bHess,const dvector& _xadjoint,
   const dvector& _uadjoint,

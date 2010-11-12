@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fnl.h>
 
 #define USE_BARD_PEN
@@ -30,6 +34,10 @@ imatrix * funnel_init_var::plist=0;
 
 void  xxx(init_df1b2vector & tmp,int x){;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_var::add_to_list(void)
 {
   index=num_vars;
@@ -37,6 +45,10 @@ void funnel_init_var::add_to_list(void)
   //all_list[num_all_vars++]=this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_var::delete_from_list(void)
 {
   if (index!=num_vars-1)
@@ -48,17 +60,29 @@ void funnel_init_var::delete_from_list(void)
   index=-1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_var::add_to_inactive_list(void)
 {
   index=-1;
   inactive_list[num_inactive_vars++]=this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_var::allocate(void)
 {
   //cout << "In allocate" << endl;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void check_pool_depths(void)
 {
   for (int i=0;i<df1b2variable::adpool_counter;i++)
@@ -69,6 +93,10 @@ void check_pool_depths(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_var::allocate_all(void)
 {
   re_objective_function_value::pobjfun->deallocate(); 
@@ -238,6 +266,10 @@ void funnel_init_var::allocate_all(void)
   df1b2variable::maxder=maxdersave;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 funnel_init_df1b2variable::funnel_init_df1b2variable
   (const df1b2_init_number & _x) : df1b2variable(newadkl)
   //(df1b2_init_number & x) : df1b2variable()
@@ -264,7 +296,10 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
   xu=*(x.get_u()); 
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 funnel_init_df1b2variable::funnel_init_df1b2variable
   (const random_effects_bounded_vector_info & _u)
   : df1b2variable(newadkl)
@@ -288,12 +323,20 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2variable::allocate(const df1b2variable& x)
 {
   cerr << "Haven't defined htis yet" << endl;
   ad_exit(1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 funnel_init_df1b2variable::funnel_init_df1b2variable
   (void) : df1b2variable(newadkl)
 {
@@ -310,6 +353,10 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2variable::
   preallocate(const df1b2variable & _x) 
 {
@@ -329,10 +376,18 @@ void funnel_init_df1b2variable::
   xu=*(x.get_u()); 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 funnel_init_df1b2variable::funnel_init_df1b2variable
   (const funnel_init_df1b2variable& x)  : df1b2variable(x)
 {}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 funnel_init_df1b2variable::funnel_init_df1b2variable
   (const df1b2variable & _x) : df1b2variable(newadkl)
 {
@@ -364,6 +419,10 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
   xu=*(x.get_u()); 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2variable::allocate(void)
 {
   df1b2variable::allocate();
@@ -372,6 +431,10 @@ void funnel_init_df1b2variable::allocate(void)
     get_u_dot()[index]=1.0; 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 funnel_dependent_df1b2variable::funnel_dependent_df1b2variable
   (const df1b2variable& x)
 {
@@ -384,6 +447,10 @@ funnel_dependent_df1b2variable::funnel_dependent_df1b2variable
   df1b2_gradlist::set_no_derivatives();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2variable::set_value(const init_df1b2vector& _x,
   const int& _ii)
 {
@@ -427,7 +494,10 @@ void funnel_init_df1b2variable::set_value(const init_df1b2vector& _x,
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2variable::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& _pen)
 {
@@ -503,7 +573,10 @@ void funnel_init_df1b2variable::set_value(const init_df1b2vector& _x,
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 int funnel_init_var::nvarcalc_all(void)
 {
   int n=0;
@@ -514,6 +587,10 @@ int funnel_init_var::nvarcalc_all(void)
   return n;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2variable::xinit(init_df1b2vector& y,int& ii)
 {
   if (!pointer)
@@ -544,7 +621,11 @@ void funnel_init_df1b2variable::xinit(init_df1b2vector& y,int& ii)
   }
   ii++;
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2variable::xinit(dvector& y,int& ii)
 {
   if (!pointer)
@@ -581,7 +662,11 @@ void funnel_init_df1b2variable::xinit(dvector& y,int& ii)
   ii++;
 }
 */
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2variable::set_index(imatrix& y,int& ii)
 {
   //cout << "FUCK " << ind_index << " " << ii << endl;
@@ -590,7 +675,10 @@ void funnel_init_df1b2variable::set_index(imatrix& y,int& ii)
   ii++;
 }
   
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_var::reset(init_df1b2vector& x)
 {
   int ii=1;
@@ -632,6 +720,10 @@ funnel_init_df1b2vector::funnel_init_df1b2vector(const df1b2_init_vector & _x)
 }
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 funnel_init_df1b2vector::funnel_init_df1b2vector(const df1b2vector & _x)
 {
   //ADUNCONST(df1b2_init_vector,x)
@@ -659,12 +751,19 @@ funnel_init_df1b2vector::funnel_init_df1b2vector(const df1b2vector & _x)
   df1b2variable::noallocate=0;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 int funnel_init_df1b2vector::nvar_calc(void)
 {
   return p->indexmax()-p->indexmin()+1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2vector::xinit(init_df1b2vector& y,int& ii)
 { 
   df1b2_init_vector * vp = (df1b2_init_vector *) p;
@@ -678,7 +777,10 @@ void funnel_init_df1b2vector::xinit(init_df1b2vector& y,int& ii)
   }
 }
 
-  
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2vector::set_index(imatrix& y,int& ii)
 {
   
@@ -693,7 +795,11 @@ void funnel_init_df1b2vector::set_index(imatrix& y,int& ii)
     ii++;
   }
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2vector::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& _pen)
 {
@@ -710,6 +816,11 @@ void funnel_init_df1b2vector::set_value(const init_df1b2vector& _x,
 // *****************************************************************
 // *****************************************************************
 // *****************************************************************
+
+/**
+ * Description not yet available.
+ * \param
+ */
 funnel_init_bounded_df1b2vector::funnel_init_bounded_df1b2vector(const df1b2_init_bounded_vector & _x)
 {
   ADUNCONST(df1b2_init_bounded_vector,x)
@@ -732,12 +843,19 @@ funnel_init_bounded_df1b2vector::funnel_init_bounded_df1b2vector(const df1b2_ini
   df1b2variable::noallocate=0;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 int funnel_init_bounded_df1b2vector::nvar_calc(void)
 {
   return p->indexmax()-p->indexmin()+1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_bounded_df1b2vector::xinit(init_df1b2vector& y,int& ii)
 { 
   df1b2_init_bounded_vector * vp = (df1b2_init_bounded_vector *) p;
@@ -751,7 +869,10 @@ void funnel_init_bounded_df1b2vector::xinit(init_df1b2vector& y,int& ii)
   }
 }
 
-  
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_bounded_df1b2vector::set_index(imatrix& y,int& ii)
 {
   
@@ -765,7 +886,11 @@ void funnel_init_bounded_df1b2vector::set_index(imatrix& y,int& ii)
     ii++;
   }
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_bounded_df1b2vector::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& _pen)
 {

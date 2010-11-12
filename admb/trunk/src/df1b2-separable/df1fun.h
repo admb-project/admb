@@ -38,10 +38,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 #if !defined(__DF1FUN__)
 #  define __DF1FUN__
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1_one_variable
   {
     double v[2];
@@ -60,6 +68,10 @@
     df1_one_variable(const df1_one_variable& );
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   inline double& value(const df1_one_variable& _x)
   {
     ADUNCONST(df1_one_variable,x)
@@ -69,6 +81,10 @@
   //inline  double& value(const df1_one_variable& x) 
   //{ return double(*x.get_u()); }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class init_df1_one_variable : public df1_one_variable
   {
   public:
@@ -86,7 +102,10 @@
   df1_one_variable square(const df1_one_variable& );
   df1_one_variable cube(const df1_one_variable& );
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1_one_vector
   {
     int index_min;
@@ -120,6 +139,10 @@
    
  dvector first_derivatives(const df1_one_vector& v);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1_one_matrix
   {
     int index_min;

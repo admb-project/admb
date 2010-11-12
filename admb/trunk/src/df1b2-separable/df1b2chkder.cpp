@@ -4,7 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <fvar.hpp>
 #  include <admodel.h>
@@ -28,6 +31,10 @@ double calculate_importance_sample_funnel(const dvector& x,const dvector& u0,
       
 dmatrix choleski_decomp_positive(const dmatrix& M,double b);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
   check_derivatives(const dvector& _x,function_minimizer * pfmin,double f)
 {
@@ -35,6 +42,10 @@ void laplace_approximation_calculator::
   ad_exit(1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::
   default_calculations_check_derivatives(const dvector& _x,
     function_minimizer * pfmin,double f)

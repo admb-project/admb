@@ -3,6 +3,11 @@
  *
  * copyright (c) 2009 ADMB foundation
  */
+/**
+ * \file
+ * Contains routines to find eigenvectors and eigenvalues
+ * for variable types.
+ */
 
 #include <fvar.hpp>
 

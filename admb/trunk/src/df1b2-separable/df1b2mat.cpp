@@ -6,9 +6,15 @@
  */
 #define HOME_VERSION
 #include <df1b2fun.h>
+/**
+ * \file
+ * Description not yet available.
+ */
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix choleski_decomp(const df1b2matrix& MM)
 {
   // kludge to deal with constantness

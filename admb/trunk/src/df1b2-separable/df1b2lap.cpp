@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -38,6 +42,10 @@ int laplace_approximation_calculator::where_are_we_flag=0;
 dvar_vector * 
   laplace_approximation_calculator::variance_components_vector=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::get_uhat_quasi_newton
   (const dvector& x,function_minimizer * pfmin)
 {
@@ -187,6 +195,10 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
   return u;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::get_uhat_lm_newton
   (const dvector& x,function_minimizer * pfmin)
 {
@@ -217,6 +229,10 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton
   return u;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_partition_sizes(int & num_der_blocks,ivector& minder,
   ivector& maxder,int nvariables)
 {
@@ -288,6 +304,10 @@ void set_partition_sizes(int & num_der_blocks,ivector& minder,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 laplace_approximation_calculator::laplace_approximation_calculator
   (int _xsize,int _usize,int _minder,int _maxder,
   function_minimizer * _pmin) : 
@@ -970,6 +990,10 @@ laplace_approximation_calculator::laplace_approximation_calculator
   df1b2variable::increment_adpool_counter();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 laplace_approximation_calculator::laplace_approximation_calculator
   (int _xsize,int _usize,ivector _minder,ivector _maxder,
   function_minimizer * _pmin ) : 
@@ -1066,6 +1090,10 @@ laplace_approximation_calculator::laplace_approximation_calculator
   y.allocate(1,nvariables);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 laplace_approximation_calculator::~laplace_approximation_calculator()
 {
   if(importance_sampling_weights)
@@ -1211,6 +1239,10 @@ laplace_approximation_calculator::~laplace_approximation_calculator()
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::operator () (const dvector& _x,
   const double& _f, function_minimizer * pfmin)
 {
@@ -1297,7 +1329,10 @@ dvector laplace_approximation_calculator::operator () (const dvector& _x,
 void   random_effects_userfunction(double f,const dvector& x,
   const dvector& g);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void get_second_ders(int xs,int us,const init_df1b2vector _y,dmatrix& Hess,
   dmatrix& Dux, df1b2_gradlist * f1b2gradlist,function_minimizer * pfmin,
   laplace_approximation_calculator * lpc)
@@ -1373,6 +1408,10 @@ void get_second_ders(int xs,int us,const init_df1b2vector _y,dmatrix& Hess,
   //cout << setprecision(16) << Dux << endl;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const dmatrix& _Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin)
@@ -1762,7 +1801,10 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   return f;
 }
 
-      
+/**
+ * Description not yet available.
+ * \param
+ */
 void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
   dmatrix& Hess, dvector& grad, df1b2_gradlist * f1b2gradlist,
   function_minimizer * pfmin)
@@ -1805,7 +1847,10 @@ void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::check_for_need_to_reallocate(int ip)
 {
   
@@ -1862,6 +1907,10 @@ void laplace_approximation_calculator::check_for_need_to_reallocate(int ip)
   //}
   //
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double evaluate_function(const dvector& x,function_minimizer * pfmin)
 {
   int usize=initial_params::nvarcalc(); 
@@ -1892,6 +1941,10 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   return maxg;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double evaluate_function(double& fval,const dvector& x,function_minimizer * pfmin)
 {
   int usize=initial_params::nvarcalc(); 
@@ -1923,6 +1976,10 @@ double evaluate_function(double& fval,const dvector& x,function_minimizer * pfmi
   return maxg;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double evaluate_function(double& fval,const dvector& x,const dvector& g,
   function_minimizer * pfmin)
 {
@@ -1955,6 +2012,10 @@ double evaluate_function(double& fval,const dvector& x,const dvector& g,
   return maxg;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double evaluate_function_quiet(const dvector& x,function_minimizer * pfmin)
 {
   int usize=initial_params::nvarcalc(); 
@@ -1980,6 +2041,10 @@ double evaluate_function_quiet(const dvector& x,function_minimizer * pfmin)
   return maxg;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void evaluate_function_gradient(double& f,const dvector& x,
   function_minimizer * pfmin,dvector& xadjoint,dvector& uadjoint)
 {
@@ -2006,6 +2071,10 @@ void evaluate_function_gradient(double& f,const dvector& x,
   uadjoint=g(xsize+1,xsize+us).shift(1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double evaluate_function_no_derivatives(const dvector& x,function_minimizer * pfmin)
 {
   double fval;
@@ -2030,6 +2099,11 @@ double evaluate_function_no_derivatives(const dvector& x,function_minimizer * pf
   gradient_structure::set_YES_DERIVATIVES();
   return fval;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void cleanup_laplace_stuff(laplace_approximation_calculator * l)
 {
   if (l)
@@ -2048,6 +2122,10 @@ void cleanup_laplace_stuff(laplace_approximation_calculator * l)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 gauss_hermite_stuff::gauss_hermite_stuff
   (laplace_approximation_calculator * lapprox,
   int use_gauss_hermite,int num_separable_calls ,const ivector& itmp) :
@@ -2097,7 +2175,10 @@ gauss_hermite_stuff::gauss_hermite_stuff
   is=0;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::set_default_hessian_type(void )
 {
   //if (function_minimizer::hesstype==0)
@@ -2126,6 +2207,10 @@ void laplace_approximation_calculator::set_default_hessian_type(void )
 
 #  if defined(USE_LAPLACE)
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double laplace_approximation_calculator::get_fx_fu(function_minimizer * pfmin)
 {
   initial_params::set_inactive_only_random_effects(); 
@@ -2158,6 +2243,11 @@ double laplace_approximation_calculator::get_fx_fu(function_minimizer * pfmin)
   double f=value(vf);
   return f;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void laplace_approximation_calculator::begin_separable_call_stuff(void)
   {
     separable_call_level++;
@@ -2166,6 +2256,11 @@ double laplace_approximation_calculator::get_fx_fu(function_minimizer * pfmin)
     //nested_separable_calls_counter(separable_call_level)++;
     //nested_tree_position(separable_call_level)++;
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void laplace_approximation_calculator::end_separable_call_stuff(void)
   {
     //build_up_nested_shape(); 
@@ -2173,7 +2268,10 @@ double laplace_approximation_calculator::get_fx_fu(function_minimizer * pfmin)
     separable_call_level--;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::build_up_nested_shape(void) 
 { 
   int ll;
@@ -2267,27 +2365,47 @@ void laplace_approximation_calculator::build_up_nested_shape(void)
     }
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 ivector * nested_calls_shape::get_ptr1(void)
 {
   return ptr1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 imatrix * nested_calls_shape::get_ptr2(void)
 {
   return ptr2;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 i3_array * nested_calls_shape::get_ptr3(void)
 {
   return ptr3;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 i4_array * nested_calls_shape::get_ptr4(void)
 {
   return ptr4;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream &  operator << (const ostream& _s,const nested_calls_shape& _m)
 {
   ADUNCONST(nested_calls_shape,m)
@@ -2307,6 +2425,10 @@ ostream &  operator << (const ostream& _s,const nested_calls_shape& _m)
   return s;
 }    
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void nested_calls_shape::trim(void)
 {
   int mmax1=0;
@@ -2372,6 +2494,10 @@ void nested_calls_shape::trim(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 nested_calls_shape::~nested_calls_shape()
 {
   if (ptr1)
@@ -2396,6 +2522,10 @@ nested_calls_shape::~nested_calls_shape()
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void nested_calls_shape::allocate(int n,int m,int p )
 {
   if (ptr1)
@@ -2426,6 +2556,10 @@ void nested_calls_shape::allocate(int n,int m,int p )
   */
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void nested_calls_shape::allocate(int n,int m)
 {
   if (ptr1)
@@ -2455,6 +2589,11 @@ void nested_calls_shape::allocate(int n,int m)
   }
   */
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void nested_calls_shape::initialize(void)
 {
   if (ptr1)
@@ -2478,7 +2617,10 @@ void nested_calls_shape::initialize(void)
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void nested_calls_shape::allocate(int n)
 {
   if (ptr1)
@@ -2509,8 +2651,11 @@ void nested_calls_shape::allocate(int n)
   */
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void nested_calls_indices::allocate(const nested_calls_shape& _nsc)
-
 {
   int mmax=0;
   ADUNCONST(nested_calls_shape,nsc)
@@ -2545,6 +2690,10 @@ void nested_calls_indices::allocate(const nested_calls_shape& _nsc)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::get_uhat_lm_newton2
   (const dvector& x,function_minimizer * pfmin)
 {

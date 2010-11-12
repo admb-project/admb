@@ -3,9 +3,17 @@
  *
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
+ *//**
+ * \file
+ * Description not yet available.
  */
+
 #include <df1b2test.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1b2variable df1b2function2c::operator () (double x,const df1b2variable& _y)
   {
     ADUNCONST(df1b2variable,y)
@@ -26,10 +34,12 @@
     return z;
   }
 
-
-
 void ad_read_pass2c1(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  int df1b2_gradlist::write_pass1c(double px,const df1b2variable * _py, 
    df1b2variable * pz,df1b2function2c * pf)
  {
@@ -73,7 +83,11 @@ void ad_read_pass2c1(void);
 void read_pass2_1c1(void);
 void read_pass2_2c1(void);
 void read_pass2_3c1(void);
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */  
 void ad_read_pass2c1(void)
 {
   switch(df1b2variable::passnumber)
@@ -94,6 +108,10 @@ void ad_read_pass2c1(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass2_1c1(void)
 {
   // We are going backword for bptr and nbptr
@@ -264,6 +282,10 @@ void read_pass2_1c1(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass2_2c1(void)
 {
   //const int nlist_record_size=sizeof(int)+sizeof(char*);
@@ -426,6 +448,10 @@ void read_pass2_2c1(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass2_3c1(void)
 {
   // We are going backword for bptr and forward for bptr2

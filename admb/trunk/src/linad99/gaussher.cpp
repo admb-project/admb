@@ -18,6 +18,10 @@ static int maxit=50;
 
 void imtqlx ( const dvector& _d, const dvector& _e, const dvector& _z );
 
+/**
+ * The sign of a number
+ * \param x Double
+ */
 double sign ( double x )
 {
   double value;
@@ -38,7 +42,7 @@ double sign ( double x )
  * Computes a Gauss-Hermite quadrature formula with simple knots.
  * \param _t array of abscissa
  * \param _wts array of corresponding wights
-*/
+ */
 void gauss_hermite (const dvector& _t,const dvector& _wts)
 //
 //  Purpose:
@@ -146,9 +150,11 @@ void gauss_hermite (const dvector& _t,const dvector& _wts)
 /**
  * Gauss-Legendre quadature.
  * computes knots and weights of a Gauss-Legendre quadrature formula.
+ * \param a Left endpoint of interval
+ * \param b Right endpoint of interval
  * \param _t array of abscissa
- * \param _t array of corresponding wights
-*/
+ * \param _wts array of corresponding wights
+ */
 void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts )
 //
 //  Purpose:

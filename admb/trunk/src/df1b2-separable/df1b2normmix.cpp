@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
 static double cc=0.39894228040143267794;
@@ -13,12 +17,20 @@ typedef double (*pinit_f)(double y,double a);
 double  nr_generic(double y,pinit_f p_get_initial_x,
   pinit_f pfun,pinit_f pdfun);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double cumd_normal_mixture(double x,double a)
 {
   double y=0.95*cumd_norm(x)+0.05*cumd_norm(x/a);
   return y;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double df_cumd_normal_mixture(double x,double a)
 {
   double x2=x*x;
@@ -27,6 +39,10 @@ static double df_cumd_normal_mixture(double x,double a)
   return dfx;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double cumd_normal_mixture_initx(double y,double a)
 {
   double x;
@@ -45,6 +61,10 @@ static double cumd_normal_mixture_initx(double y,double a)
   return x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable inv_cumd_normal_mixture(const df1b2variable& _yy,double a)
 {
   ADUNCONST(df1b2variable,yy)

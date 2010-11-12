@@ -16,7 +16,7 @@ cltudecomp ludecomp_pivot(const dmatrix & M);
 
 /** 
  * Compute log determinant of a constant dvar_matrix. 
- * \param aa A dvar_dmatrix, \f$M\f$, for which the determinant is computed.
+ * \param a A dvar_dmatrix, \f$M\f$, for which the determinant is computed.
  * \return A dvariable containing \f$|\log(M)|\f$.
  */
 dvariable ln_det(const dvar_matrix & a)
@@ -29,8 +29,8 @@ static void df_my_ln_det(void);
 
 /** 
  * Compute log determinant of a constant dvar_matrix. 
- * \param aa A dvar_dmatrix, \f$M\f$, for which the determinant is computed.
- * \param _sgn the sign of the log
+ * \param M A dvar_dmatrix, \f$M\f$, for which the determinant is computed.
+ * \param sign the sign of the log
  * \return A dvariable containing \f$|\log(M)|\f$.
  */
 dvariable my_ln_det(const dvar_matrix & M, int &sign)

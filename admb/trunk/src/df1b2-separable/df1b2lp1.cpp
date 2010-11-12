@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <fvar.hpp>
 #  include <admodel.h>
@@ -29,6 +33,10 @@ double calculate_importance_sample_funnel(const dvector& x,const dvector& u0,
       
 dmatrix choleski_decomp_positive(const dmatrix& M,double b);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::default_calculations
   (const dvector& _x,const double& _f,function_minimizer * pfmin)
 {
@@ -682,7 +690,11 @@ dvector laplace_approximation_calculator::default_calculations
   }
   return xadjoint;
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::get_newton_raphson_info
   (function_minimizer * pfmin)
 {
@@ -816,7 +828,10 @@ void laplace_approximation_calculator::get_newton_raphson_info
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::set_u_dot(int ip)
 {
   int mmin=y.indexmin(); 
@@ -828,8 +843,10 @@ void laplace_approximation_calculator::set_u_dot(int ip)
   }
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::check_pool_size(void)
 {
   int num_active_parameters=nvar;

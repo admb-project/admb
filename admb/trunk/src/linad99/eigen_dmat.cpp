@@ -3,7 +3,14 @@
  *
  * copyright (c) 2009 ADMB foundation
  */
-
+/**
+ * \file
+ * Contains routines to find eigenvectors and eigenvalues
+ * for constant types.
+ */
+/**
+ * \defgroup eigen
+ */
 #include <fvar.hpp>
 
 void eigens(const dmatrix & m, const dmatrix & _evecs,

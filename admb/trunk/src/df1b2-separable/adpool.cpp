@@ -4,11 +4,20 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
+
 #include <df1b2fun.h>
 #include <adpool.h>
 //#define (_USE_VALGRIND_)
 
 //ofstream xofs("allocation");
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpool::depth_check(void)
 {
   link * p=head;
@@ -25,6 +34,10 @@ int adpool::depth_check(void)
   int adpool::num_adpools=0;
 
 #if defined(__CHECK_MEMORY__)
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpool::sanity_check(void)
 {
   link * p=head;
@@ -39,6 +52,10 @@ void adpool::sanity_check(void)
   cout << "Depth = " << depth << endl;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpool::sanity_check2(void)
 {
   link * p=head;
@@ -53,6 +70,10 @@ void adpool::sanity_check2(void)
   cout << "Depth = " << depth << endl;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpool::sanity_check(void * ptr)
 {
   link * p=head;
@@ -70,6 +91,11 @@ void adpool::sanity_check(void * ptr)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param mmin Integer
+ * \param mmax Integer
+ */
 void adpool::write_pointers(int mmin,int mmax)
 {
   link * p=head;
@@ -84,7 +110,10 @@ void adpool::write_pointers(int mmin,int mmax)
 }
 #endif
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void * adpool::alloc(void)
 {
   if (!head) 
@@ -127,6 +156,9 @@ void * adpool::alloc(void)
 }
 
 #if defined(__CHECK_MEMORY__)
+/**
+ * Description not yet available.
+ */
 int adpool::bad(link * p)
 {
   int flag=1;
@@ -153,6 +185,10 @@ int adpool::bad(link * p)
   return flag;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpool::badaddress(link * p)
 {
   int flag=1;
@@ -170,6 +206,10 @@ int adpool::badaddress(link * p)
 void * pchecker=0;
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpool::free(void * b)
 {
 #if defined(SAFE_ALL)
@@ -209,11 +249,20 @@ void adpool::free(void * b)
   head = p;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 adpool::~adpool(void)
 {
   num_adpools--;
   deallocate();
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 adpool::adpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
 {
   num_adpools++;
@@ -230,6 +279,10 @@ adpool::adpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 adpool::adpool(void) 
 {
   num_adpools++;
@@ -253,6 +306,10 @@ adpool::adpool(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpool::set_size(unsigned int sz)
 {
   if (sz<0)
@@ -273,7 +330,10 @@ void adpool::set_size(unsigned int sz)
 
 
 //void xxiieeuu(void * tmp0){;}
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpool::deallocate(void)
 {
 #if defined(__CHECK_MEMORY__)
@@ -307,6 +367,9 @@ void adpool::deallocate(void)
 */
 
  const int pvalues_size=500000;
+/**
+ * Description not yet available.
+ */
 void adpool::grow(void)
 {
 #if defined(__CHECK_MEMORY__)
@@ -371,6 +434,11 @@ void adpool::grow(void)
   head = (link*) start;
   first= (double*) start;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpool::clean(void)
 {
   if (!size)

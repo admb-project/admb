@@ -4,7 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -18,6 +21,10 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
 
 static void xxx(ivector re_list,ivector fe_list){}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::block_diagonal_calculations
   (const dvector& _x,const double& _f,function_minimizer * pfmin)
 {
@@ -394,7 +401,11 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
   //f=initial_df1b2params::cobjfun;
   return xadjoint;
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
   (function_minimizer * pfmin)
 {

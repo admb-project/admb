@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * This file can probably be removed.
+ */
 //#define USE_DD_STUFF
 //#define USE_DD
 #  include <admodel.h>

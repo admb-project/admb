@@ -4,19 +4,35 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_vector::allocate(int mmin,int mmax,const adstring&s)
 {
   allocate(mmin,mmax,1,s);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_vector::allocate(int mmin,int mmax,int ps,const adstring&s)
 {
   set_phase_start(ps);
   df1b2vector::allocate(mmin,mmax);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void initial_df1b2params::add_to_list(void)
 {
   if (num_initial_df1b2params>=1000)
@@ -28,6 +44,10 @@ void initial_df1b2params::add_to_list(void)
   varsptr[num_initial_df1b2params++]= this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void initial_df1b2params::reset(const init_df1b2vector& x,
   const df1b2variable& _pen)
 {
@@ -46,6 +66,10 @@ void initial_df1b2params::reset(const init_df1b2vector& x,
   pen+=pen1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int initial_df1b2params::set_index(void)
 {
   int ii=1;
@@ -63,6 +87,10 @@ int initial_df1b2params::set_index(void)
   return ii-1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_vector::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& pen)
 {
@@ -77,6 +105,10 @@ void df1b2_init_vector::set_value(const init_df1b2vector& _x,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_vector::set_index(int aflag,const int& _ii)
 {
   ADUNCONST(int,ii)
@@ -98,6 +130,11 @@ void df1b2_init_vector::set_index(int aflag,const int& _ii)
     }
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_number::set_index(int aflag,const int& _ii)
 {
   ADUNCONST(int,ii)
@@ -111,6 +148,10 @@ void df1b2_init_number::set_index(int aflag,const int& _ii)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_matrix::set_index(int aflag,const int& _ii)
 {
   ADUNCONST(int,ii)
@@ -146,7 +187,11 @@ void df1b2_init_matrix::set_index(int aflag,const int& _ii)
     }
   }
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */  
 void df1b2_init_matrix::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& pen)
 {
@@ -167,7 +212,11 @@ void df1b2_init_matrix::set_value(const init_df1b2vector& _x,
     }
   }
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */  
 void df1b2_init_number::set_value(const init_df1b2vector& _x,const int& _ii,
     const df1b2variable& pen)
 {
@@ -176,6 +225,10 @@ void df1b2_init_number::set_value(const init_df1b2vector& _x,const int& _ii,
   operator = (x(ii++));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_number::allocate(const adstring& s)
 {
   if (!df1b2variable::noallocate)
@@ -185,25 +238,47 @@ void df1b2_init_number::allocate(const adstring& s)
   set_phase_start(1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_number::allocate(int _n,const adstring& s)
 {
   df1b2variable::allocate();
   set_phase_start(_n);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2variable::allocate(const char *s)
 {
   df1b2variable::allocate();
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2_init_number::df1b2_init_number() :  df1b2variable(do_naught_kludge_a)
 { 
   //cout << "Here" << endl;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_number::operator = (const df1b2variable& _x) 
 {
   df1b2variable::operator = (_x);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_bounded_number::allocate(double _minb,double _maxb,
  int _n,const char * s) 
 {
@@ -213,7 +288,11 @@ void df1b2_init_bounded_number::allocate(double _minb,double _maxb,
 
   set_phase_start(_n);
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */  
 void df1b2_init_bounded_number::allocate(double _minb,
   double _maxb,const char * s) 
 {
@@ -222,7 +301,11 @@ void df1b2_init_bounded_number::allocate(double _minb,
   df1b2_init_number::allocate(s);
   set_phase_start(1);
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */  
 void df1b2_init_bounded_number::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& pen)
 {
@@ -231,6 +314,10 @@ void df1b2_init_bounded_number::set_value(const init_df1b2vector& _x,
   ::set_value(*this,x,ii,minb,maxb,pen);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value(const df1b2variable& _u,const init_df1b2vector& _x,
   const int& _ii,double fmin,double fmax,const df1b2variable& _fpen)
 {
@@ -259,6 +346,10 @@ void set_value(const df1b2variable& _u,const init_df1b2vector& _x,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
   const df1b2variable& _fpen)
 {
@@ -303,6 +394,10 @@ df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
   return(t);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable boundp(const df1b2variable& x, double fmin, double fmax)
 {
   df1b2variable t;
@@ -315,6 +410,10 @@ df1b2variable boundp(const df1b2variable& x, double fmin, double fmax)
   return(t);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_mc(const df1b2vector& _x,const init_df1b2vector& _v, const int& _ii,
   double fmin,double fmax)
 {
@@ -332,6 +431,10 @@ void set_value_mc(const df1b2vector& _x,const init_df1b2vector& _v, const int& _
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value(const df1b2vector& _x,const init_df1b2vector& _v, const int& _ii,
   double fmin,double fmax,const df1b2variable& fpen)
 {
@@ -348,6 +451,10 @@ void set_value(const df1b2vector& _x,const init_df1b2vector& _v, const int& _ii,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_bounded_vector::set_value(const init_df1b2vector& _x,
   const int& ii,const df1b2variable& pen)
 {
@@ -362,17 +469,30 @@ void df1b2_init_bounded_vector::set_value(const init_df1b2vector& _x,
   }
 
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 re_df1b2_init_bounded_vector::re_df1b2_init_bounded_vector(void)
 {
   initial_df1b2params::have_bounded_random_effects=1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void re_df1b2_init_bounded_vector::set_value(const dvector& _x,
   const int& _ii)
 {
   df1b2_init_bounded_vector::set_value(_x,_ii);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void re_df1b2_init_bounded_vector::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& _pen)
 {
@@ -405,6 +525,10 @@ void re_df1b2_init_bounded_vector::set_value(const init_df1b2vector& _x,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_bounded_dev_vector::set_value(const init_df1b2vector& x,
   const int& ii,const df1b2variable& _pen)
 {
@@ -414,6 +538,10 @@ void df1b2_init_bounded_dev_vector::set_value(const init_df1b2vector& x,
   pen+=1000.0*square(m);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_bounded_vector::allocate(int mmin,int mmax,
   double _minb,double _maxb)
 {
@@ -422,12 +550,20 @@ void df1b2_init_bounded_vector::allocate(int mmin,int mmax,
   df1b2_init_vector::allocate(mmin,mmax);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_bounded_vector::allocate(int mmin,int mmax,
   double _minb,double _maxb,const char * s)
 {
   allocate(mmin,mmax,_minb,_maxb);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_bounded_vector::allocate(int mmin,int mmax,
   double _minb,double _maxb,int n,const char * s)
 {
@@ -435,7 +571,10 @@ void df1b2_init_bounded_vector::allocate(int mmin,int mmax,
   set_phase_start(n);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 int active(const df1b2_init_vector& x)
 {
    if (x.current_phase >= x.phase_start)
@@ -443,6 +582,11 @@ int active(const df1b2_init_vector& x)
    else
      return 0;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 int active(const df1b2_init_number& x)
 {
    if (x.current_phase >= x.phase_start)
@@ -450,6 +594,11 @@ int active(const df1b2_init_number& x)
    else
      return 0;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 int active(const df1b2_init_matrix& x)
 {
    if (x.current_phase >= x.phase_start)
@@ -458,6 +607,10 @@ int active(const df1b2_init_matrix& x)
      return 0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void random_effects_bounded_vector_info::set_value
   (const init_df1b2vector& _x,const int& _ii,const df1b2variable& _pen)
 {

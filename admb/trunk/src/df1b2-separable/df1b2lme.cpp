@@ -4,10 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::get_hessian_components_banded_lme
   (function_minimizer * pfmin)
 {
@@ -106,6 +115,10 @@ void laplace_approximation_calculator::get_hessian_components_banded_lme
   *variance_components_vector=vsave;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix laplace_approximation_calculator::get_hessian_from_components_lme
   (function_minimizer * pfmin)
 {
@@ -152,7 +165,10 @@ dvar_matrix laplace_approximation_calculator::get_hessian_from_components_lme
 }
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::banded_calculations_lme
   (const dvector& _x,const double& _f,function_minimizer * pfmin)
 {
@@ -208,6 +224,10 @@ dvector laplace_approximation_calculator::banded_calculations_lme
     
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::get_gradient_lme
   (function_minimizer * pfmin)
 {
@@ -234,6 +254,10 @@ dvector laplace_approximation_calculator::get_gradient_lme
   return g;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::get_gradient_lme
   (const dvector& x,function_minimizer * pfmin)
 {
@@ -259,6 +283,10 @@ dvector laplace_approximation_calculator::get_gradient_lme
   return g;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::get_gradient_lme_hp
   (const double& _f,function_minimizer * pfmin)
 {

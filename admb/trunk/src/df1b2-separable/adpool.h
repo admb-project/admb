@@ -38,7 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 
 #if !defined(__AD_POOL__)
 #define  __AD_POOL__ 
@@ -46,6 +49,9 @@
 extern void * pchecker;
 //#define __CHECK_MEMORY__
 
+/**
+ * Description not yet available.
+ */
 class adpool
 {
   static int num_adpools;

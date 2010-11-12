@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 void read_pass1_eq_1(void);
 void read_pass1_eq_2(void);
@@ -14,6 +18,10 @@ void read_pass1_eq_3(void);
   extern int addebug_count;
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable& df1b2variable::operator = (const df1b2variable& _x)
 {
   if (ptr != _x.ptr)
@@ -80,6 +88,10 @@ df1b2variable& df1b2variable::operator = (const df1b2variable& _x)
 
 void ad_read_pass1_eq(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int df1b2_gradlist::write_pass1_eq(const df1b2variable * _px, 
   df1b2variable * pz)
 {
@@ -114,6 +126,10 @@ int df1b2_gradlist::write_pass1_eq(const df1b2variable * _px,
   return 0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_read_pass1_eq(void)
 {
   switch(df1b2variable::passnumber)
@@ -134,7 +150,10 @@ void ad_read_pass1_eq(void)
   }
 }
 
-    
+/**
+ * Description not yet available.
+ * \param
+ */ 
 void read_pass1_eq_1(void)
 {
   // We are going backword for bptr and forward for bptr2
@@ -231,6 +250,10 @@ void read_pass1_eq_1(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass1_eq_2(void)
 {
   //const int nlist_record_size=sizeof(int)+sizeof(char*);
@@ -318,6 +341,10 @@ void read_pass1_eq_2(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass1_eq_3(void)
 {
   // We are going backword for bptr and forward for bptr2
@@ -374,4 +401,3 @@ void read_pass1_eq_3(void)
     pz->u_dot_tilde[i]=0;
   }
 }
-

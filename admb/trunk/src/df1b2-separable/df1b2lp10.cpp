@@ -4,10 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void report_calling_set(laplace_approximation_calculator *lapprox)
 {
   ofstream ofs("callset.rpt");
@@ -23,6 +32,11 @@ void report_calling_set(laplace_approximation_calculator *lapprox)
     ofs << callset(i)(1,callset(i).indexmax())<< endl;
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void check_order(ivector& v)
 {
   int mmin=v.indexmin();
@@ -42,6 +56,10 @@ void check_order(ivector& v)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int common(ivector& v,ivector& w)
 {
   check_order(v);
@@ -78,7 +96,10 @@ int common(ivector& v,ivector& w)
   return common_flag;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
   check_hessian_type2(function_minimizer * pfmin)
 {

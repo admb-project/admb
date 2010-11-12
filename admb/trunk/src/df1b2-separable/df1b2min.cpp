@@ -4,9 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df1b2variable operator - (const df1b2variable& _x, const df1b2variable& _y)
   {
     ADUNCONST(df1b2variable,x)
@@ -29,6 +36,10 @@
 
 void ad_read_pass2_minus(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  int df1b2_gradlist::write_pass1_minus(const df1b2variable * _px, 
    const df1b2variable * _py,df1b2variable * pz)
  {
@@ -70,6 +81,10 @@ void read_pass2_1_minus(void);
 void read_pass2_2_minus(void);
 void read_pass2_3_minus(void);
   
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_read_pass2_minus(void)
 {
   switch(df1b2variable::passnumber)
@@ -90,6 +105,10 @@ void ad_read_pass2_minus(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass2_1_minus(void)
 {
   // We are going backword for bptr and nbptr
@@ -151,6 +170,10 @@ void read_pass2_1_minus(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass2_2_minus(void)
 {
   //const int nlist_record_size=sizeof(int)+sizeof(char*);
@@ -224,6 +247,10 @@ void read_pass2_2_minus(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass2_3_minus(void)
 {
   // We are going backword for bptr and forward for bptr2

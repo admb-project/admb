@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void initial_df1b2params::reset_all(const dvector& x)
 {
   int ii=1;
@@ -15,6 +23,10 @@ void initial_df1b2params::reset_all(const dvector& x)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_vector::set_value(const dvector& x,const int& _ii)
 {
   ADUNCONST(int,ii)
@@ -27,6 +39,10 @@ void df1b2_init_vector::set_value(const dvector& x,const int& _ii)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_matrix::set_value(const dvector& x,const int& _ii)
 {
   ADUNCONST(int,ii)
@@ -43,6 +59,10 @@ void df1b2_init_matrix::set_value(const dvector& x,const int& _ii)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value(const df1b2_init_bounded_vector & _v,const dvector& x,
   const int& _ii,double fmin,double fmax)
 {
@@ -57,12 +77,20 @@ void set_value(const df1b2_init_bounded_vector & _v,const dvector& x,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_number::set_value(const dvector& x,const int& _ii)
 {
   ADUNCONST(int,ii)
   operator = (x(ii++));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value(const df1b2variable& _u,const dvector& x,const int& _ii,
   double fmin,double fmax)
 {
@@ -72,7 +100,10 @@ void set_value(const df1b2variable& _u,const dvector& x,const int& _ii,
   u=boundp(x(ii++),fmin,fmax,fpen);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value(const df1b2vector& _x,const dvector& v, const int& _ii,
   double fmin,double fmax)
 {
@@ -87,6 +118,10 @@ void set_value(const df1b2vector& _x,const dvector& v, const int& _ii,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_bounded_vector::set_value(const dvector& x,
   const int& ii)
 {
@@ -94,6 +129,10 @@ void df1b2_init_bounded_vector::set_value(const dvector& x,
   ::set_value(*this,x,ii,minb,maxb);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_bounded_dev_vector::set_value(const dvector& x,
   const int& ii)
 {
@@ -102,10 +141,13 @@ void df1b2_init_bounded_dev_vector::set_value(const dvector& x,
   //pen+=1000.0*square(m);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_init_bounded_number::set_value(const dvector& x,const int& _ii)
 {
   ADUNCONST(int,ii)
   //double pen=0.0;
   ::set_value(*this,x,ii,minb,maxb);
 }
-

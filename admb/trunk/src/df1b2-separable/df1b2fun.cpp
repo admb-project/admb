@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
 extern "C"
@@ -28,6 +32,10 @@ class df1b2_gradlist;
 
 int mydercheckercounter=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2variable::save_adpool_pointer(void) 
 { 
   if (adpool_stack_pointer> adpool_stack_size-1)
@@ -39,6 +47,10 @@ void df1b2variable::save_adpool_pointer(void)
   adpool_nvar_stack[adpool_stack_pointer++]=nvar;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2variable::restore_adpool_pointer(void) 
 { 
   if (adpool_stack_pointer<=0)
@@ -49,6 +61,11 @@ void df1b2variable::restore_adpool_pointer(void)
   pool=adpool_stack[--adpool_stack_pointer];
   nvar=adpool_nvar_stack[adpool_stack_pointer];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void initial_df1b2params::save_varsptr(void)
 {
   initial_df1b2params::varsptr_sav=initial_df1b2params::varsptr;
@@ -64,7 +81,11 @@ void initial_df1b2params::save_varsptr(void)
   num_initial_df1b2params_sav=num_initial_df1b2params; 
   num_initial_df1b2params =0;
 }
-   
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void initial_df1b2params::restore_varsptr(void)
 {
   if (num_initial_df1b2params == 0)
@@ -102,7 +123,10 @@ void initial_df1b2params::restore_varsptr(void)
   }
 }
    
-
+/**
+ * Description not yet available.
+ * \param
+ */
 initial_df1b2params::initial_df1b2params(void) : ind_index(0)
 {
   scalefactor=0.0;
@@ -119,6 +143,10 @@ static void stupid_xxx(void *){;}
 typedef void (**ADprfptr)(void);
 typedef void (*ADrfptr)(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2_gradcalc1(void)
 {
   //smartlist & list=f1b2gradlist->list;
@@ -277,32 +305,56 @@ df1b2function1 ADf1b2_sin(::sin,::cos,::nsin,::ncos,"sin");
 df1b2function1 ADf1b2_cos(::cos,::nsin,::ncos,::sin);
 df1b2function1 ADf1b2_exp(::exp,::exp,::exp,::exp,"exp");
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_df1_atan(double x)
 {
   return double(1.0)/(1+square(x));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_df2_atan(double x)
 {
   return double(-2.0)*x/square(1+square(x));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_df1_tan(double x)
 {
   return double(1.0)+square(tan(x));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_df2_tan(double x)
 {
   double y=tan(x);
   return double(2.0)*y*(double(1.0)+square(y));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_df3_atan(double x)
 {
   return double(-2.0)/square(double(1)+square(x))+double(12.0)*square(x)/cube(double(1)+square(x));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_df3_tan(double x)
 {
   double y=square(tan(x));
@@ -314,20 +366,37 @@ df1b2function1 ADf1b2_tan(::tan,::AD_df1_tan,::AD_df2_tan ,::AD_df3_tan,"tan");
 
 df1b2function1 ADf1b2_atan(::atan,::AD_df1_atan,::AD_df2_atan ,::AD_df3_atan,"atan");
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_arg_inv(double x)
 {
   return double(1.0)/x;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_minus_arg_inv2(double x)
 {
   return double(-1.0)/(x*x);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_2arg_inv3(double x)
 {
   return double(2.0)/(x*x*x);
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_minus6_arg_inv4(double x)
 {
   return double(-6.0)/(x*x*x*x);
@@ -345,22 +414,37 @@ df1b2variable sin(const df1b2variable& x)
 }
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable atan(const df1b2variable& x) 
 {
   return ADf1b2_atan(x);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable tan(const df1b2variable& x) 
 {
   return ADf1b2_tan(x);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable& df1b2variable::operator *= (const df1b2variable& v)
 {
   return *this=*this*v;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable& df1b2variable::operator /= (const df1b2variable& v)
 {
   return *this=*this/v;
@@ -376,12 +460,19 @@ df1b2variable cos(const df1b2variable& x)
 }
 */
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable exp(const df1b2variable& x) 
 {
   return ADf1b2_exp(x);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable mfexp(const df1b2variable& x) 
 {
   double b=60;
@@ -399,6 +490,10 @@ df1b2variable mfexp(const df1b2variable& x)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable mfexp(const df1b2variable& x,double b) 
 {
   if (value(x)<=b && value(x)>=-b) 
@@ -415,118 +510,226 @@ df1b2variable mfexp(const df1b2variable& x,double b)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable log(const df1b2variable& x) 
 {
   return ADf1b2_log(x);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable inv(const df1b2variable& x) 
 {
   return ADf1b2_inv(x);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADproduct_fun(double x,double y)
 {
   return x*y;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADmult_add_fun(double x,double y)
 {
   return x*y+x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADdiv_fun(double x,double y)
 {
   return x/y;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADsum_fun(double x,double y)
 {
   return x+y;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADdiff_fun(double x,double y)
 {
   return x-y;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADzero_fun(double x,double y)
 {
   return 0.0;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADzero_fun(double x)
 {
   return 0.0;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD1_fun(double x)
 {
   return 1.0;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD1_fun(double x,double y)
 {
   return 1.0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADm1_fun(double x,double y)
 {
   return -1.0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_id(double x)
 {
   return x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADfirst_arg(double x,double y)
 {
   return x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADsecond_arg_plus1(double x,double y)
 {
   return y+1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADsecond_arg(double x,double y)
 {
   return y;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_div_1(double x,double y)
 {
   return 1.0/y;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_div_2(double x,double y)
 {
   return -x/(y*y);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_div_22(double x,double y)
 {
   return 2.0*x/(y*y*y);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_div_122(double x,double y)
 {
   return 2.0/(y*y*y);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_div_12(double x,double y)
 {
   return -1.0/(y*y);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_div_11(double x,double y)
 {
   return 0.0;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_div_111(double x,double y)
 {
   return 0.0;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_div_112(double x,double y)
 {
   return 0.0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double AD_div_222(double x,double y)
 {
   return -6.0*x/(y*y*y*y);
@@ -544,10 +747,15 @@ df1b2function2 ADf1b2_mult_add(ADmult_add_fun,
   ADzero_fun, ADzero_fun, ADzero_fun,
   ADzero_fun,"mult_add");
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable mult_add(const df1b2variable& x,const df1b2variable& y)
 {
   return ADf1b2_mult_add(x,y);
 }
+
 
 df1b2function2 ADf1b2_product(ADproduct_fun,
   ADsecond_arg,ADfirst_arg,
@@ -561,44 +769,77 @@ df1b2function2 ADf1b2_diff(ADdiff_fun,
   ADzero_fun,ADzero_fun,ADzero_fun,
   ADzero_fun);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADsquare_fun(double x)
 {
   return x*x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADthree_square_fun(double x)
 {
   return 3.0*x*x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADcube_fun(double x)
 {
   return x*x*x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADtwo_id_fun(double x)
 {
   return 2.0*x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADsix_id_fun(double x)
 {
   return 6.0*x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADsix_fun(double x)
 {
   return 6.0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ADtwo_fun(double x)
 {
   return 2.0;
 }
 
+
 df1b2function1 ADf1b2_square(ADsquare_fun,ADtwo_id_fun,ADtwo_fun,ADzero_fun,
   "square");
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable square(const df1b2variable& x) 
 {
   return ADf1b2_square(x);
@@ -607,6 +848,10 @@ df1b2variable square(const df1b2variable& x)
 df1b2function1 ADf1b2_cube(ADcube_fun,ADthree_square_fun,ADsix_id_fun,ADsix_fun,
   "cube");
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable cube(const df1b2variable& x) 
 {
   return ADf1b2_cube(x);

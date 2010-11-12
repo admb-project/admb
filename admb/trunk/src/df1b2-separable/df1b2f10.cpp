@@ -4,9 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::reset(void)
 {
   bptr=buffer; 
@@ -18,6 +25,10 @@ void test_smartlist::reset(void)
 
 void xxx_yyy(df1b2variable * tmp){;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 test_smartlist::test_smartlist(void) 
 {
   bufsize=0;
@@ -28,10 +39,19 @@ test_smartlist::test_smartlist(void)
   fp=-1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 test_smartlist::test_smartlist(unsigned int _bufsize,const adstring& _filename) 
 {
   allocate(_bufsize,_filename);
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename) 
 {
   if (sizeof(char)>1)
@@ -72,6 +92,10 @@ void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
   /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::write(int n)
 {
   int nw=::write(fp,buffer,n);
@@ -81,6 +105,11 @@ void test_smartlist::write(int n)
     ad_exit(1);
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::rewind(void)
 {
   bptr=buffer;
@@ -105,7 +134,11 @@ void test_smartlist::rewind(void)
     lseek(fp,sizeof(off_t),SEEK_CUR);
   }
 }
-   
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::initialize(void)
 {
   end_saved=0;
@@ -116,6 +149,10 @@ void test_smartlist::initialize(void)
   set_forward();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::check_buffer_size(int nsize)
 {
   if ( bptr+nsize-1 > buffend)
@@ -135,7 +172,11 @@ void test_smartlist::check_buffer_size(int nsize)
     }
   }
 }
-   
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::restore_end(void)
 {
   if (written_flag)
@@ -148,6 +189,10 @@ void test_smartlist::restore_end(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::save_end(void)
 {
   if (written_flag)
@@ -160,6 +205,10 @@ void test_smartlist::save_end(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::write_buffer(void)
 {
   int nbytes=adptr_diff(bptr,buffer);
@@ -194,6 +243,11 @@ void test_smartlist::write_buffer(void)
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::read_buffer(void)
 {
   off_t pos;
@@ -256,7 +310,11 @@ void test_smartlist::read_buffer(void)
     }
   }
 }
-   
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void memcpy(const test_smartlist & _list,void * p,int nsize)
 {
   ADUNCONST(test_smartlist,list)
@@ -269,6 +327,10 @@ void memcpy(const test_smartlist & _list,void * p,int nsize)
   list.bptr+=nsize;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void memcpy(void * p,const test_smartlist & _list,int nsize)
 {
   ADUNCONST(test_smartlist,list)
@@ -281,6 +343,10 @@ void memcpy(void * p,const test_smartlist & _list,int nsize)
   list.bptr+=nsize;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::operator -= (int n) 
 {
   if (bptr-n<buffer)
@@ -303,6 +369,10 @@ void test_smartlist::operator -= (int n)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_smartlist::operator += (int nsize) 
 {
   if ( bptr+nsize-1 > buffend)
@@ -326,7 +396,11 @@ void test_smartlist::operator += (int nsize)
     bptr+=nsize;
   }
 }
-   
+
+/**
+ * Description not yet available.
+ * \param
+ */
 test_smartlist::~test_smartlist() 
 {
   end_saved=0;

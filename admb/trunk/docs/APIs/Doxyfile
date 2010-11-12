@@ -572,61 +572,155 @@ WARN_LOGFILE           =
 # with spaces.
 
 INPUT                  = ./dox-share/mainpage.txt \
+                         ../../src/linad99/dfgammp.cpp \
                          ../../src/linad99/dvector.cpp \
                          ../../src/linad99/dvect2.cpp \
                          ../../src/linad99/dvect3.cpp \
                          ../../src/linad99/dvect5.cpp \
-                         ../../src/linad99/cbetai.cpp \
-                         ../../src/linad99/cbetacf.cpp \
+                         ../../src/linad99/dmat2.cpp \
+                         ../../src/linad99/dmat42.cpp \
+                         ../../src/linad99/dranpois.cpp \
+                         ../../src/linad99/dvsort.cpp \
+                         ../../src/linad99/df13fun.h \
                          ../../src/linad99/cgamdev.cpp \
                          ../../src/linad99/cgamdens.cpp \
                          ../../src/linad99/vgamdens.cpp \
+                         ../../src/linad99/vgamdev.cpp \
                          ../../src/linad99/combc.cpp \
+                         ../../src/linad99/combv.cpp \
                          ../../src/linad99/conjprod.cpp \
                          ../../src/linad99/cspline.cpp \
+                         ../../src/linad99/fvar.hpp \
                          ../../src/linad99/d3arr4.cpp \
                          ../../src/linad99/dfgammp.cpp \
-                         ../../src/linad99/dmat34.cpp \
                          ../../src/linad99/dmat2.cpp \
-                         ../../src/linad99/dmat3.cpp \
                          ../../src/linad99/dmat42.cpp \
                          ../../src/linad99/dranpois.cpp \
                          ../../src/linad99/dvsort.cpp \
                          ../../src/linad99/fvar_fn.cpp \
-                         ../../src/linad99/fvar_m15.cpp \
-                         ../../src/linad99/fvar_m20.cpp \
-                         ../../src/linad99/fvar_m24.cpp \
-                         ../../src/linad99/fvar_m42.cpp \
-                         ../../src/linad99/fvar_ma4.cpp \
                          ../../src/linad99/fvar_op8.cpp \
                          ../../src/linad99/gaussher.cpp \
                          ../../src/linad99/ivsort.cpp \
                          ../../src/linad99/libtype.cpp \
                          ../../src/linad99/ranfill.cpp \
                          ../../src/linad99/rngen.cpp \
-                         ../../src/linad99/vbetacf.cpp \
-                         ../../src/linad99/vbetai.cpp \
-                         ../../src/linad99/vgamdev.cpp \
+                         ../../src/linad99/df13incbet.cpp \
+                         ../../src/linad99/eigen_dmat.cpp \
+                         ../../src/linad99/eigen_dvar.cpp \
                          ../../src/linad99/vspline.cpp \
-                         ../../src/linad99/eigen.cpp \
-                         ../../src/linad99/eigenv.cpp \
-                         ../../src/linad99/dveigen.cpp \
-                         ../../src/linad99/dveigenv.cpp \
                          ../../src/linad99/cbivnorm.cpp \
                          ../../src/linad99/vbivnorm.cpp \
                          ../../src/linad99/cnegbin.cpp \
                          ../../src/linad99/vnegbin.cpp \
                          ../../src/linad99/cumdist.cpp \
                          ../../src/linad99/vcumdist.cpp \
+                         ../../src/linad99/df13fun.cpp \
                          ../../src/linad99/cmpdif2.cpp \
                          ../../src/linad99/cmpdif3.cpp \
+                         ../../src/linad99/ludcmp.hpp \
+                         ../../src/linad99/ludcmp.cpp \
+                         ../../src/linad99/ludcmp_det.cpp \
+                         ../../src/linad99/ludcmp_inv.cpp \
+                         ../../src/linad99/ludcmp_ln_det.cpp \
+                         ../../src/linad99/ludcmp_operators.cpp \
+                         ../../src/linad99/ludcmp_solve.cpp \
                          ../../src/nh99/dfqromb.cpp \
                          ../../src/nh99/amoeba.cpp \
-                         ../../src/df1b2-separable/df1b2invcumdbeta.cpp \
-                         ../../src/df1b2-separable/f1b2lndt.cpp \
-                         ../../src/df1b2-separable/df3gammp.cpp \
-                         ../../src/linad99/fvar.hpp \
                          ../../src/nh99/admodel.h \
+                         ../../src/df1b2-separable/adpool.h \
+                         ../../src/df1b2-separable/adpool.cpp \
+                         ../../src/df1b2-separable/adrndeff.h \
+                         ../../src/df1b2-separable/bounder.cpp \
+                         ../../src/df1b2-separable/df1b2betdev.cpp \
+                         ../../src/df1b2-separable/df1b2chkder.cpp \
+                         ../../src/df1b2-separable/df1b2cum.cpp \
+                         ../../src/df1b2-separable/df1b2f10.cpp \
+                         ../../src/df1b2-separable/df1b2f11.cpp \
+                         ../../src/df1b2-separable/df1b2f12.cpp \
+                         ../../src/df1b2-separable/df1b2f13.cpp \
+                         ../../src/df1b2-separable/df1b2f14.cpp \
+                         ../../src/df1b2-separable/df1b2f15.cpp \
+                         ../../src/df1b2-separable/df1b2f16.cpp \
+                         ../../src/df1b2-separable/df1b2f17.cpp \
+                         ../../src/df1b2-separable/df1b2f18.cpp \
+                         ../../src/df1b2-separable/df1b2f19.cpp \
+                         ../../src/df1b2-separable/df1b2f20.cpp \
+                         ../../src/df1b2-separable/df1b2f21.cpp \
+                         ../../src/df1b2-separable/df1b2f22.cpp \
+                         ../../src/df1b2-separable/df1b2f23.cpp \
+                         ../../src/df1b2-separable/df1b2f24.cpp \
+                         ../../src/df1b2-separable/df1b2f25.cpp \
+                         ../../src/df1b2-separable/df1b2f26.cpp \
+                         ../../src/df1b2-separable/df1b2f27.cpp \
+                         ../../src/df1b2-separable/df1b2f28.cpp \
+                         ../../src/df1b2-separable/df1b2fn2.cpp \
+                         ../../src/df1b2-separable/df1b2fn3.cpp \
+                         ../../src/df1b2-separable/df1b2fn4.cpp \
+                         ../../src/df1b2-separable/df1b2fn5.cpp \
+                         ../../src/df1b2-separable/df1b2fn7.cpp \
+                         ../../src/df1b2-separable/df1b2fn8.cpp \
+                         ../../src/df1b2-separable/df1b2fnl.cpp \
+                         ../../src/df1b2-separable/df1b2fnl.h \
+                         ../../src/df1b2-separable/df1b2fun.cpp \
+                         ../../src/df1b2-separable/df1b2fun.h \
+                         ../../src/df1b2-separable/df1b2funx.cpp \
+                         ../../src/df1b2-separable/df1b2gh.cpp \
+                         ../../src/df1b2-separable/df1b2ghmult.cpp \
+                         ../../src/df1b2-separable/df1b2glo.cpp \
+                         ../../src/df1b2-separable/df1b2h.cpp \
+                         ../../src/df1b2-separable/df1b2im2.cpp \
+                         ../../src/df1b2-separable/df1b2im3.cpp \
+                         ../../src/df1b2-separable/df1b2im3f.cpp \
+                         ../../src/df1b2-separable/df1b2im4.cpp \
+                         ../../src/df1b2-separable/df1b2im5.cpp \
+                         ../../src/df1b2-separable/df1b2imp.cpp \
+                         ../../src/df1b2-separable/df1b2impf.cpp \
+                         ../../src/df1b2-separable/df1b2impspf.cpp \
+                         ../../src/df1b2-separable/df1b2invcumdbeta_incbet.cpp \
+                         ../../src/df1b2-separable/df1b2lap.cpp \
+                         ../../src/df1b2-separable/df1b2lme.cpp \
+                         ../../src/df1b2-separable/df1b2lmn2.cpp \
+                         ../../src/df1b2-separable/df1b2loc.cpp \
+                         ../../src/df1b2-separable/df1b2loc.h \
+                         ../../src/df1b2-separable/df1b2lp1.cpp \
+                         ../../src/df1b2-separable/df1b2lp2.cpp \
+                         ../../src/df1b2-separable/df1b2lp4.cpp \
+                         ../../src/df1b2-separable/df1b2lp5.cpp \
+                         ../../src/df1b2-separable/df1b2lp6.cpp \
+                         ../../src/df1b2-separable/df1b2lp7.cpp \
+                         ../../src/df1b2-separable/df1b2lp8.cpp \
+                         ../../src/df1b2-separable/df1b2lp9.cpp \
+                         ../../src/df1b2-separable/df1b2lp10.cpp \
+                         ../../src/df1b2-separable/df1b2lp11.cpp \
+                         ../../src/df1b2-separable/df1b2lp12.cpp \
+                         ../../src/df1b2-separable/df1b2ludcmp.cpp \
+                         ../../src/df1b2-separable/df1b2ludcmp.hpp \
+                         ../../src/df1b2-separable/df1b2mat.cpp \
+                         ../../src/df1b2-separable/df1b2min.cpp \
+                         ../../src/df1b2-separable/df1b2negb.cpp \
+                         ../../src/df1b2-separable/df1b2norlogmix.cpp \
+                         ../../src/df1b2-separable/df1b2normgam.cpp \
+                         ../../src/df1b2-separable/df1b2normmix.cpp \
+                         ../../src/df1b2-separable/df1b2normmix2.cpp \
+                         ../../src/df1b2-separable/df1b2nv1.cpp \
+                         ../../src/df1b2-separable/df1b2pow.cpp \
+                         ../../src/df1b2-separable/df1b2prb.cpp \
+                         ../../src/df1b2-separable/df1b2prc.cpp \
+                         ../../src/df1b2-separable/df1b2prd.cpp \
+                         ../../src/df1b2-separable/df1b2ptr.cpp \
+                         ../../src/df1b2-separable/df1b2qnm.cpp \
+                         ../../src/df1b2-separable/df1b2sum.cpp \
+                         ../../src/df1b2-separable/df1b2sumc.cpp \
+                         ../../src/df1b2-separable/df1b2test.h \
+                         ../../src/df1b2-separable/df1b2tweak.cpp \
+                         ../../src/df1b2-separable/df1fun.cpp \
+                         ../../src/df1b2-separable/df1fun.h \
+                         ../../src/df1b2-separable/df3fun.cpp \
+                         ../../src/df1b2-separable/df3fun.h \
+                         ../../src/df1b2-separable/df3gammp.cpp \
+                         ../../src/df1b2-separable/df13tester.cpp \
+                         ../../src/df1b2-separable/df33tester.cpp \
+
 
 
 # This tag can be used to specify the character encoding of the source files 
@@ -1322,7 +1416,12 @@ PREDEFINED             = USE_CONST:=1 \
                          DOS386:=1 \
                          _CONST:=const \
                          BOR_CONST:=const \
-                         CGNU_DOUBLE:=double
+                         CGNU_DOUBLE:=double \
+                         USE_LAPLACE:=1 \
+                         SAFE_ARRAYS:=1 \
+                         PRINT_DERS:=1 \
+                         USE_ADPVM:=1 \
+                         SAFE_ALL:=1
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then 
 # this tag can be used to specify a list of macro names that should be expanded. 

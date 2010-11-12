@@ -3,7 +3,9 @@
  *
  * Copyright (c) 2010 ADMB Foundation
  */
-
+/**
+ * LU Decomposition classes for random effects
+ */
 #ifndef __DF1B2LUDCMP_HPP__
 #define __DF1B2LUDCMP_HPP__
 #include <df1b2fun.h>

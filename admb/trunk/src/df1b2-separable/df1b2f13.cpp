@@ -4,9 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void fixed_smartlist::reset(void)
 {
   end_saved=0;
@@ -16,6 +23,11 @@ void fixed_smartlist::reset(void)
   endof_file_ptr=lseek(fp,0,SEEK_SET);
   written_flag=0;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 fixed_smartlist::fixed_smartlist(void) 
 {
   nentries=0;
@@ -26,6 +38,11 @@ fixed_smartlist::fixed_smartlist(void)
   bptr=0;
   fp=-1;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 fixed_smartlist::fixed_smartlist(unsigned int _bufsize,const adstring& _filename) 
 {
   allocate(_bufsize,_filename);
@@ -62,6 +79,10 @@ void fixed_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
   /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void fixed_smartlist::write(int n)
 {
   int nw=::write(fp,buffer,n);
@@ -71,6 +92,11 @@ void fixed_smartlist::write(int n)
     ad_exit(1);
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void fixed_smartlist::rewind(void)
 {
   bptr=buffer;
@@ -98,7 +124,11 @@ void fixed_smartlist::rewind(void)
     lseek(fp,sizeof(off_t),SEEK_CUR);
   }
 }
-   
+
+/**
+ * Description not yet available.
+ * \param
+ */   
 void fixed_smartlist::initialize(void)
 {
   end_saved=0;
@@ -110,6 +140,10 @@ void fixed_smartlist::initialize(void)
   set_forward();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void fixed_smartlist::check_buffer_size(int nsize)
 {
   if ( bptr+nsize-1 > buffend)
@@ -129,7 +163,11 @@ void fixed_smartlist::check_buffer_size(int nsize)
     }
   }
 }
-   
+
+/**
+ * Description not yet available.
+ * \param
+ */   
 void fixed_smartlist::restore_end(void)
 {
   if (written_flag)
@@ -144,6 +182,10 @@ void fixed_smartlist::restore_end(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void fixed_smartlist::save_end(void)
 {
   if (written_flag)
@@ -156,6 +198,10 @@ void fixed_smartlist::save_end(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void fixed_smartlist::write_buffer_one_less(void)
 {
   int nbytes=adptr_diff(bptr,buffer);
@@ -193,6 +239,10 @@ void fixed_smartlist::write_buffer_one_less(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void fixed_smartlist::write_buffer(void)
 {
   unsigned int nbytes=adptr_diff(bptr+1,buffer);
@@ -233,6 +283,11 @@ void fixed_smartlist::write_buffer(void)
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void fixed_smartlist::read_buffer(void)
 {
   off_t pos;
@@ -308,7 +363,11 @@ void fixed_smartlist::read_buffer(void)
     }
   }
 }
-   
+
+/**
+ * Description not yet available.
+ * \param
+ */   
 void memcpy(const fixed_smartlist & _list,void * p,int nsize)
 {
   ADUNCONST(fixed_smartlist,list)
@@ -321,6 +380,10 @@ void memcpy(const fixed_smartlist & _list,void * p,int nsize)
   list.bptr+=nsize;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void memcpy(void * p,const fixed_smartlist & _list,int nsize)
 {
   ADUNCONST(fixed_smartlist,list)
@@ -401,7 +464,11 @@ void memcpy(void * p,const fixed_smartlist & _list,int nsize)
     bptr+=nsize;
   }
 }
-   
+
+/**
+ * Description not yet available.
+ * \param
+ */   
 void fixed_smartlist::operator ++ (void) 
 {
   if ( bptr==buffend)
@@ -420,7 +487,11 @@ void fixed_smartlist::operator ++ (void)
     bptr++;
   }
 }
-   
+
+/**
+ * Description not yet available.
+ * \param
+ */   
 void fixed_smartlist::read_file(void)
 {
   //rewind the file

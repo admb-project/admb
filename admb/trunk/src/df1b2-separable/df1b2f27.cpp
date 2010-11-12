@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
 void ncount_checker(int ncount,int ncount_check);
@@ -18,7 +22,10 @@ void read_pass1_3x(void);
 void read_pass1_1x(void);
 void read_pass1_2x(void);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 int df1b2_gradlist::write_pass1x(const df1b2variable * _px, 
   df1b2variable * pz, df1b2function1 * pf)
 {
@@ -61,7 +68,11 @@ int df1b2_gradlist::write_pass1x(const df1b2variable * _px,
   ++nlist;
   return 0;
 }
- 
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_read_pass1x(void)
 {
   switch(df1b2variable::passnumber)
@@ -82,7 +93,10 @@ void ad_read_pass1x(void)
   }
 }
 
-    
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass1_1x(void)
 {
   // We are going backword for bptr and forward for bptr2
@@ -197,6 +211,10 @@ void read_pass1_1x(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass1_2x(void)
 {
   //const int nlist_record_size=sizeof(int)+sizeof(char*);
@@ -325,7 +343,11 @@ void read_pass1_2x(void)
  print_derivatives(px,"x"); 
 #endif
 }
-    
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass1_3x(void)
 {
   // We are going backword for bptr and forward for bptr2
@@ -393,4 +415,3 @@ void read_pass1_3x(void)
  print_derivatives(px,"x"); 
 #endif
 }
-

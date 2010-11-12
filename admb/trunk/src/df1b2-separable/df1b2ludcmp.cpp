@@ -3,9 +3,21 @@
  *
  * Copyright (c) 2010 ADMB Foundation
  */
+/**
+ * \file
+ * This file contains the routines necessary to compute
+ * the LU decomposition of a matrix with random effects.
+ */
   #include <df1b2ludcmp.hpp>
 
-  // LU decomp with partial pivoting
+/**
+ * LU decomp with partial pivoting 
+ * \param M \f$M\f$ a constant square matrix to decompose
+ * \return a cltudecomp object containg the
+ * upper and lower parts of the decomposed matrix
+ * as well as an index that keeps track of the
+ * pivots.
+ */
   df1b2ludecomp ludecomp_pivot(const df1b2matrix & M)
   {
      int i = 0;

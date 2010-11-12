@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -11,6 +15,10 @@
 double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
   dmatrix& M);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::make_sparse_triplet(void)
 {
   //int i;
@@ -118,6 +126,11 @@ void laplace_approximation_calculator::make_sparse_triplet(void)
   sparse_symbolic2 = new hs_symbolic(*sparse_triplet2,1); 
 
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::generate_antithetical_rvs()
 {
   // number of random vectors
@@ -261,6 +274,10 @@ void laplace_approximation_calculator::generate_antithetical_rvs()
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
   dmatrix& M)
 {
@@ -338,12 +355,20 @@ double fcomp1(dvector x,dvector d,int samplesize,int n,dvector & g,
   return f;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::check_hessian_type(const dvector& _x,
   function_minimizer * pfmin)
 {  
   pfmin->pre_user_function();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::pre_user_function(void)
 {  
   if (lapprox)
@@ -369,6 +394,10 @@ void function_minimizer::pre_user_function(void)
  */
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
   check_hessian_type(function_minimizer * pfmin)
 {
@@ -780,7 +809,10 @@ void laplace_approximation_calculator::
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::allocate_block_diagonal_stuff(void)
 {
   const ivector & itmp=(*num_local_re_array)(1,num_separable_calls);
@@ -871,6 +903,10 @@ void laplace_approximation_calculator::allocate_block_diagonal_stuff(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void save_number_of_local_effects(int num_separable_calls, 
   ivector ** num_local_re_array, ivector ** num_local_fixed_array,
   int num_local_re,int num_fixed_effects)
@@ -951,7 +987,10 @@ void save_number_of_local_effects(int num_separable_calls,
 }
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
   do_separable_stuff_hessian_type_information(void)
 {
@@ -1101,6 +1140,10 @@ void laplace_approximation_calculator::
   funnel_init_var::num_inactive_vars=0; 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
 {
   int i,ii;
@@ -1168,10 +1211,6 @@ imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
   return M;
 }      
       
-
-
-
-
 
 
 #endif // if defined(USE_LAPLACE)

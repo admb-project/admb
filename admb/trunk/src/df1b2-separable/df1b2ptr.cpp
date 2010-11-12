@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
     typedef df1b2_header * ad_df1b2_header_ptr;
     typedef double * ad_double_ptr;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1b2_header_ptr_vector::df1b2_header_ptr_vector(int mmin,int mmax)
   {
     index_min=mmin;
@@ -21,7 +29,11 @@
     }
     v-=indexmin();
   }
-    
+
+/**
+ * Description not yet available.
+ * \param
+ */
   df1b2_header_ptr_vector::~df1b2_header_ptr_vector()
   {
     if (v !=0)
@@ -33,7 +45,11 @@
       index_max=-1;
     }
   }
-    
+
+/**
+ * Description not yet available.
+ * \param
+ */
   double_ptr_vector::double_ptr_vector(int mmin,int mmax)
   {
     index_min=mmin;
@@ -47,7 +63,11 @@
     }
     v-=indexmin();
   }
-    
+
+/**
+ * Description not yet available.
+ * \param
+ */
   double_ptr_vector::~double_ptr_vector()
   {
     if (v !=0)
@@ -59,5 +79,3 @@
       index_max=-1;
     }
   }
-    
-  

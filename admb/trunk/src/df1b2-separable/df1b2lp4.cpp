@@ -4,7 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -17,7 +20,10 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
       
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void get_second_ders_master(int xs,int us,const init_df1b2vector _y,
   dmatrix& Hess,
   dmatrix& Dux, df1b2_gradlist * f1b2gradlist,function_minimizer * pfmin,
@@ -165,7 +171,10 @@ void get_second_ders_master(int xs,int us,const init_df1b2vector _y,
   //cout << setprecision(16) << Dux << endl;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::default_calculations_parallel_master
   (const dvector& _x,const double& _f,function_minimizer * pfmin)
 {
@@ -596,7 +605,11 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
 
   return xadjoint;
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::get_newton_raphson_info_master
   (function_minimizer * pfmin)
 {

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 //#define USE_DD_STUFF
 //#define USE_DD
 #if defined(USE_LAPLACE)
@@ -37,6 +41,10 @@ dvector solve(const dmatrix & st,const dmatrix & Hess,
 #  endif
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
   do_newton_raphson_banded(function_minimizer * pfmin,double f_from_1,
   int& no_converge_flag)
@@ -275,6 +283,10 @@ void laplace_approximation_calculator::
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double laplace_approximation_calculator::
   inner_optimization_banded(/*dvector& uhat,*/ dvector& x,
   function_minimizer * pfmin,int& no_converge_flag)
@@ -311,7 +323,10 @@ double laplace_approximation_calculator::
   return fmc1.fbest;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::banded_calculations
   (const dvector& _x,const double& _f,function_minimizer * pfmin)
 {
@@ -639,7 +654,11 @@ dvector laplace_approximation_calculator::banded_calculations
   return xadjoint;
 }
   //int check_pool_flag1=0;
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
   do_separable_stuff_newton_raphson_banded(df1b2variable& ff)
 {
@@ -764,6 +783,10 @@ void laplace_approximation_calculator::
 int tmp_testcount=0;
 df1b2variable * tmp_pen=00;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::
   get_newton_raphson_info_banded (function_minimizer * pfmin)
 {
@@ -840,6 +863,10 @@ dvector laplace_approximation_calculator::
   return step;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
   do_separable_stuff_laplace_approximation_banded(df1b2variable& ff)
 {
@@ -958,7 +985,11 @@ void laplace_approximation_calculator::
   funnel_init_var::num_active_parameters=0; 
   funnel_init_var::num_inactive_vars=0;
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const banded_symmetric_dmatrix& bHess,const dvector& _xadjoint,
   const dvector& _uadjoint,
@@ -1051,6 +1082,10 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   return f;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::
   banded_calculations_trust_region_approach(const dvector& _uhat,
   function_minimizer * pfmin)

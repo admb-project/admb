@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(__DF1B2TEST__)
 #  define __DF1B2TEST__ 
 #if defined(__GNUC__)
@@ -46,6 +50,10 @@
 #include <df1b2fun.h>
 #include <admodel.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1b2function2c
   {
   public:

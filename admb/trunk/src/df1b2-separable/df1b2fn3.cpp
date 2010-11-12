@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 void read_pass1_plus_eq_1(void);
 void read_pass1_plus_eq_2(void);
@@ -16,6 +20,10 @@ void read_pass1_plus_eq_3(void);
 
 
 #if defined(PRINT_DERS)
+/**
+ * Description not yet available.
+ * \param
+ */
 void print_derivatives(const adstring& s, double f, double df,
   double d2f,double d3f,int bflag)
 {
@@ -28,6 +36,11 @@ void print_derivatives(const adstring& s, double f, double df,
   *derout << "Function: " << s << " " << "f = " << f 
           << " df = " << df << " d2f = " << d2f << " d3f = " << d3f << endl; 
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void print_derivatives(const adstring& s, double f, double df1,
   double df2,double df11,double df12, double df22,
   double df111, double df112, double df122, double df222,int bflag)
@@ -50,6 +63,10 @@ void print_derivatives(const adstring& s, double f, double df1,
           << " df222 = " << df222 << endl; 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void print_derivatives(df1b2_header * px,const char * s,
   int bflag) 
 {
@@ -107,6 +124,10 @@ void print_derivatives(df1b2_header * px,const char * s,
 }
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable& df1b2variable::operator += (const df1b2variable& _x)
 {
   ADUNCONST(df1b2variable,x) 
@@ -128,6 +149,10 @@ df1b2variable& df1b2variable::operator += (const df1b2variable& _x)
 }
 void ad_read_pass1_plus_eq(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int df1b2_gradlist::write_pass1_pluseq(const df1b2variable * _px, 
   df1b2variable * pz)
 {
@@ -163,6 +188,10 @@ int df1b2_gradlist::write_pass1_pluseq(const df1b2variable * _px,
   return 0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_read_pass1_plus_eq(void)
 {
   switch(df1b2variable::passnumber)
@@ -183,7 +212,10 @@ void ad_read_pass1_plus_eq(void)
   }
 }
 
-    
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass1_plus_eq_1(void)
 {
   // We are going backword for bptr and forward for bptr2
@@ -258,6 +290,10 @@ void read_pass1_plus_eq_1(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass1_plus_eq_2(void)
 {
   const int nlist_record_size=sizeof(int)+sizeof(char*);
@@ -334,6 +370,10 @@ void read_pass1_plus_eq_2(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass1_plus_eq_3(void)
 {
   // We are going backword for bptr and forward for bptr2
@@ -372,6 +412,10 @@ void read_pass1_plus_eq_3(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable fabs(const df1b2variable& x)
 {
   if (value(x)>=0.0)
@@ -380,6 +424,10 @@ df1b2variable fabs(const df1b2variable& x)
     return -x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector fabs(const df1b2vector& t1)
 {
    df1b2vector tmp(t1.indexmin(),t1.indexmax());
@@ -391,6 +439,10 @@ df1b2vector fabs(const df1b2vector& t1)
    return(tmp);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable max(const df1b2vector& t1)
 {
    df1b2variable tmp;

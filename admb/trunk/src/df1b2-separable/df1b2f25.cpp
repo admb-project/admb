@@ -4,13 +4,21 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
+
 //#define HOME_VERSION
 #include <df1b2fun.h>
 #include <admodel.h>
 
 //double ndfboundp( double x, double fmin, double fmax,const double& fpen);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   int initial_df1b2params::stddev_scale(const dvector& d,const dvector& x)
   {
     int ii=1;
@@ -22,7 +30,10 @@
     return ii-1;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1b2_init_number::sd_scale(const dvector& _d,const dvector& x,const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -32,6 +43,10 @@
     ii++;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1b2_init_bounded_number::sd_scale(const dvector& _d,const dvector& x,const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -57,6 +72,10 @@
     ii++;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1b2_init_vector::sd_scale(const dvector& _v,const dvector& x,const int& _ii)
   {
     if (allocated())
@@ -74,6 +93,10 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1b2_init_matrix::sd_scale(const dvector& _v,const dvector& x,const int& _ii)
   {
     if (allocated())
@@ -99,6 +122,10 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1b2_init_bounded_vector::sd_scale(const dvector& _v,const dvector& x,const int& _ii)
   {
     if (allocated())
@@ -129,6 +156,11 @@
       }
     }
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1b2_init_bounded_matrix::sd_scale(const dvector& _v,const dvector& x,const int& _ii)
   {
     if (allocated())
@@ -158,21 +190,40 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int allocated(const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
   return x.allocated();
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 int allocated(const df1b2_init_vector& _x)
 {
   ADUNCONST(df1b2_init_vector,x)
   return x.allocated();
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 int allocated(const df1b2_init_matrix& _x)
 {
   ADUNCONST(df1b2_init_matrix,x)
   return x.allocated();
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 int allocated(const df1b2matrix& _x)
 {
   ADUNCONST(df1b2matrix,x)

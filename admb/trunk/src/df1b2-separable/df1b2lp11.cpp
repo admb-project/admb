@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_DD)
 #  define USE_DD_STUFF
 #endif
@@ -30,7 +34,10 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
 #  endif
 #endif
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void positivize(const banded_symmetric_dmatrix& _m,double id)
 {
   ADUNCONST(banded_symmetric_dmatrix,m)
@@ -41,6 +48,11 @@ void positivize(const banded_symmetric_dmatrix& _m,double id)
     m(i,i)+=id;
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 class safe_choleski_solver
 {
 public:
@@ -52,6 +64,10 @@ public:
   dvector solve(const banded_symmetric_dmatrix& _m,const dvector&_v);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 safe_choleski_solver::safe_choleski_solver(double _id)
 {
   id=_id;
@@ -126,6 +142,10 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
 */
 //static void xxx(double x){;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector safe_choleski_solver::solve
   (const banded_symmetric_dmatrix& _m,const dvector&_v)
 {
@@ -177,8 +197,10 @@ dvector safe_choleski_solver::solve
   return w;
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
   do_newton_raphson_state_space(function_minimizer * pfmin,double f_from_1,
   int& no_converge_flag)

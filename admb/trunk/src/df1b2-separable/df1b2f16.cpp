@@ -4,7 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
+
+/**
+ * Description not yet available.
+ * \param
+ */
   ostream& operator << (const ostream& _os, const df1b2variable& _x)
   {
       
@@ -19,6 +28,10 @@
     return os;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   ostream& operator << (const ostream& _os, const df1b2vector& _x)
   {
     ADUNCONST(ostream,os)
@@ -32,6 +45,10 @@
     return os;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   ostream& operator << (const ostream& _os, const df1b2matrix& _x)
   {
     ADUNCONST(ostream,os)
@@ -46,6 +63,10 @@
     return os;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   ostream& operator << (const ostream& _os, const df1b2_init_number_vector& _x)
   {
     ADUNCONST(ostream,os)
@@ -59,6 +80,10 @@
     return os;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   ostream& operator << (const ostream& _os, 
     const df1b2_init_bounded_number_vector& _x)
   {
@@ -73,6 +98,10 @@
     return os;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   ostream& operator << (const ostream& _os, 
     const init_df1b2vector& _x)
   {
@@ -86,4 +115,3 @@
     }  
     return os;
   }
-

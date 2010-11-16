@@ -1,53 +1,53 @@
+DISK=..\build\admb_b502_win32
 
-DISK=../build/dists/admb_b502_win32
-PWD=$(shell pwd)
-WINADMB_HOME=$(shell cygpath --windows ${PWD}/${DISK})
-BORLAND_HOME=$(shell cygpath --unix $(BCC55_HOME))
+OPT_CXXFLAGS ="-q -Ic:\Borland\BCC55\Include -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DOPT_LIB -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
+SAFE_CXXFLAGS ="-q -Ic:\Borland\BCC55\Include -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DSAFE_ALL -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
 
-ADMB_VERSION=9.0.x
-export ADMB_VERSION
-
-CCVERSION=bor502
-OSVERSION=win32
-COMP=bcc32
+all: dist
 
 dist:
-	rm -rf ${DISK}
-	- mkdir.exe -p ${DISK}
-	- mkdir.exe -p ${DISK}/bin
-	- mkdir.exe -p ${DISK}/lib
-	- mkdir.exe -p ${DISK}/include
-	- mkdir.exe -p ${DISK}/examples
-	cp ../scripts/borland/*.bat ${DISK}/bin
-	cp ../scripts/mingw/admb.bat ${DISK}/bin
-	cp ../LICENSE ${DISK}
-	cp ../README.txt ${DISK}
-	cp -R ../examples/admb ${DISK}/examples/admb
-	cp -R ../examples/admb-re ${DISK}/examples/admb-re
-	cp ../scripts/borland/Makefile ${DISK}/examples
-	- mkdir.exe -p  linad99/${CCVERSION}-${OSVERSION}olp 
-	- cd ./linad99 & mkdir.exe -p  linad99/${CCVERSION}-${OSVERSION}slp 
-	- cd ./nh99 & mkdir.exe -p  nh99/${CCVERSION}-${OSVERSION}olp 
-	- cd ./nh99 & mkdir.exe -p  nh99/${CCVERSION}-${OSVERSION}olp-stub 
-	- cd ./tools99 & mkdir.exe -p  tools99/${CCVERSION}-${OSVERSION}olp 
-	- cd ./df1b2-separable & mkdir.exe -p   ${CCVERSION}-${OSVERSION}olp 
-	cd ./nh99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp STUBPATH=${CCVERSION}-${OSVERSION}olp-stub DISKDIR=../${DISK} -f optbor32-laplace.mak all
-	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optbor32-laplace.mak all
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} -f optbor32-laplace.mak all
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} -f safbor32-laplace.mak all
-	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK}  -f optbor32-laplace.mak all
-	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK}  -f safbor32-laplace.mak all
-	#- rm ${DISK}.tar* 
-	#tar -cvf ${DISK}.tar ${DISK}
-	#bzip2 ${DISK}.tar 
+	IF NOT EXIST $(DISK)\dist\bin mkdir $(DISK)\dist\bin
+	IF NOT EXIST $(DISK)\dist\lib mkdir $(DISK)\dist\lib
+	IF NOT EXIST $(DISK)\dist\include mkdir $(DISK)\dist\include
+	IF NOT EXIST $(DISK)\objects\linad99-olp mkdir $(DISK)\objects\linad99-olp
+	IF NOT EXIST $(DISK)\objects\linad99-slp mkdir $(DISK)\objects\linad99-slp
+	cd linad99
+	$(MAKE) CC=bcc32 CXXFLAGS=$(OPT_CXXFLAGS) LIBPATH=..\$(DISK)\objects\linad99-olp DISKDIR=..\$(DISK) -f optbor32-laplace.mak all
+	$(MAKE) CC=bcc32 CXXFLAGS=$(SAFE_CXXFLAGS) LIBPATH=..\$(DISK)\objects\linad99-slp DISKDIR=..\$(DISK) -f safbor32-laplace.mak all
+	cd ..
+	IF NOT EXIST $(DISK)\objects\tools99-olp mkdir $(DISK)\objects\tools99-olp
+	IF NOT EXIST $(DISK)\objects\tools99-slp mkdir $(DISK)\objects\tools99-slp
+	cd tools99
+	$(MAKE) CC=bcc32 CXXFLAGS=$(OPT_CXXFLAGS) LIBPATH=..\$(DISK)\objects\tools99-olp DISKDIR=..\$(DISK) -f optbor32-laplace.mak all
+	$(MAKE) CC=bcc32 CXXFLAGS=$(SAFE_CXXFLAGS) LIBPATH=..\$(DISK)\objects\tools99-slp DISKDIR=..\$(DISK) -f safbor32-laplace.mak all
+	cd ..
+	IF NOT EXIST $(DISK)\objects\df1b2-separable-olp mkdir $(DISK)\objects\df1b2-separable-olp
+	IF NOT EXIST $(DISK)\objects\df1b2-separable-slp mkdir $(DISK)\objects\df1b2-separable-slp
+	cd df1b2-separable
+	$(MAKE) CC=bcc32 CXXFLAGS=$(OPT_CXXFLAGS) LIBPATH=..\$(DISK)\objects\df1b2-separable-olp DISKDIR=..\$(DISK) -f optbor32-laplace.mak all
+	$(MAKE) CC=bcc32 CXXFLAGS=$(SAFE_CXXFLAGS) LIBPATH=..\$(DISK)\objects\df1b2-separable-slp DISKDIR=..\$(DISK) -f safbor32-laplace.mak all
+	cd ..
+	IF NOT EXIST $(DISK)\objects\nh99-olp mkdir $(DISK)\objects\nh99-olp
+	IF NOT EXIST $(DISK)\objects\nh99-slp mkdir $(DISK)\objects\nh99-slp
+	cd nh99
+	$(MAKE) CC=bcc32 CXXFLAGS=$(OPT_CXXFLAGS) LIBPATH=..\$(DISK)\objects\nh99-olp DISKDIR=..\$(DISK) -f optbor32-laplace.mak all
+	$(MAKE) CC=bcc32 CXXFLAGS=$(SAFE_CXXFLAGS) LIBPATH=..\$(DISK)\objects\nh99-slp DISKDIR=..\$(DISK) -f safbor32-laplace.mak all
+	cd ..
+	copy ..\LICENSE $(DISK)\dist
+	copy ..\README.txt $(DISK)\dist
+	copy ..\scripts\borland\*.bat $(DISK)\dist\bin
+	copy ..\scripts\mingw\admb.bat $(DISK)\dist\bin
+	IF NOT EXIST $(DISK)\dist\examples mkdir $(DISK)\dist\examples
+	xcopy ..\examples $(DISK)\dist\examples /S /Y
+	copy ..\scripts\vc\Makefile $(DISK)\dist\examples
 
 verify:
-	cd ${DISK}\examples && ADMB_HOME="${WINADMB_HOME}" PATH="$(BCC55_HOME)\\bin;${WINADMB_HOME}\\bin;%PATH%" $(BORLAND_HOME)/bin/make 
+	cd $(DISK)\dist\examples
+	make all
+	-..\..\..\..\scripts\get-outputs.bat > "..\..\..\..\benchmarks-opt.txt"
+	make OPTION=-s all
+	-..\\..\..\..scripts\get-outputs.bat > "..\..\..\..\benchmarks-saf.txt"
+	cd ..\..\..\..\src
 
 clean:
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
-	cd ./linad99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safbor32-laplace.mak clean
-	cd ./nh99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
-	cd ./tools99; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
-	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f optbor32-laplace.mak clean
-	cd ./df1b2-separable; $(MAKE)  CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=../${DISK} "PVMOPTION= /GL- /EHsc  -Ie:/psdk/Include" -f safbor32-laplace.mak clean
+	IF EXIST $(DISK) rmdir /S /Q $(DISK)

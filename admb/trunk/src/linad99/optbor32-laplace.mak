@@ -1,59 +1,29 @@
-#macros for making optimized library for BORLAND 5.0
-#CC = bcc32i
-CC = bcc32
-LL = tlib
-#FLAGS = -Vd -O2 -OI -OM -5 -H=Hc -DDOS386;OPT_LIB -I. -c -f
-FLAGS = -I\\Borland\\BCC55\\Include ${OPTIONS} -DUSE_LAPLACE -Vd -W- -O2 -5 -H=Hc -DDOS386 -DOPT_LIB -I. -c -f -I..\\sparse -I..\\nh99 -I..\\df1b2-separable -I..\\tools99
-
-LIBPATH =b32polp
-LIBNAME = ado32.lib
-LIBRARIAN = tlib
-DRIVECHANGE=fff.bat
-SRCDIR =  src
-LIBDIR =  lib
-INCLUDEDIR = include 
-vpath %.obj $(LIBPATH)$
-
 .SUFFIXES: .obj .cpp
+.PATH.obj = $(LIBPATH)
+.PATH.cpp = ..\sparse;.
 
-include OBJECTS.LST
+LIBNAME = ado32.lib
 
+!include objects.lst
 
-$(LIBPATH)/$(LIBNAME) :  $(OBJSPARSE) $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)  $(OBJSPLUS)
-	echo $(LIBNAME)  > $(LIBPATH)/t.rsp
-	cd $(LIBPATH) ; rm *.lib ; ls *.obj >> t.rsp
-	cd ..
-	sed -e ' 1,$$s/$$/ \&/' -e '2,$$s/^/+-/' -e ' $$s/ \&//' -e ' s/b32o\///' $(LIBPATH)/t.rsp > tmpfile
-	cp tmpfile $(LIBPATH)/t.rsp ; cd $(LIBPATH) ; tlib /P1024 @t.rsp
-	cd ..
+all: $(LIBNAME) disk
 
-$(OBJSPARSE): %.obj: %.cpp
-	$(CC) $(FLAGS) -o$(LIBPATH)/$(@F) $<
+$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) hs_sparse.obj
+	cd $(LIBPATH)
+	tlib /P128 ..\..\dist\lib\$(LIBNAME) /a $(OBJ0)
+	tlib /P128 ..\..\dist\lib\$(LIBNAME) /a $(OBJ1)
+	tlib /P128 ..\..\dist\lib\$(LIBNAME) /a $(OBJ2)
+	tlib /P128 ..\..\dist\lib\$(LIBNAME) /a $(OBJ3)
+	tlib /P128 ..\..\dist\lib\$(LIBNAME) /a hs_sparse.obj
+	cd ..\..\..\..\src\linad99
 
-$(OBJ0): %.obj: %.cpp
-	$(CC) $(FLAGS) -o$(LIBPATH)/$*.obj $<
+hs_sparse.obj:
+	$(CC) $(CXXFLAGS) -o$(.PATH.obj)\hs_sparse.obj ..\sparse\hs_sparse.cpp
 
-$(OBJ1): %.obj: %.cpp
-	$(CC) $(FLAGS) -o$(LIBPATH)/$*.obj $<
-
-$(OBJ2): %.obj: %.cpp
-	$(CC) $(FLAGS) -o$(LIBPATH)/$*.obj $<
-
-$(OBJ3): %.obj: %.cpp
-	$(CC) $(FLAGS) -o$(LIBPATH)/$*.obj $<
-
-all: $(LIBPATH)/$(LIBNAME) disk
+.cpp.obj:
+	$(CC) $(CXXFLAGS) -o$(.PATH.obj)\$*.obj $<
 
 disk: 
-	cp fvar.hpp $(DISKDIR)/$(INCLUDEDIR)
-	cp dfpool.h $(DISKDIR)/$(INCLUDEDIR)
-	cp d4arr.hpp $(DISKDIR)/$(INCLUDEDIR)
-	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/$(LIBDIR) 
-
-clean:
-	rm -f tmpfile
-	rm -f Hc
-	rm -f Hcd
-	rm -f Hc.*
-	rm -f Hcd.*
-	- cd $(LIBPATH) ; rm -f *.obj ; rm -f *.lib ; rm -f *.o ; rm -f *.a; rm -f *.rsp
+	copy fvar.hpp $(DISKDIR)\dist\include
+	copy dfpool.h $(DISKDIR)\dist\include
+	copy d4arr.hpp $(DISKDIR)\dist\include

@@ -38,12 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+#ifndef __ADSTRING_HPP__
+#define __ADSTRING_HPP__
 
-
-
-#ifndef __STRING_HPP__
-#define __STRING_HPP__
-
+/*
 #if defined(__BORLANDC__ )
   #if defined(__GNUC__)
     #if (__GNUC__ < 3)
@@ -53,10 +51,13 @@
     #pragma interface
   #endif
 #endif
+*/
+#define BOR_CONST const
 
 #include "clist.h"
 #include <string.h>
-#include <fvar.hpp>
+//#include <fvar.hpp>
+#include <ostream>
 
 #include <stdio.h>
 
@@ -100,8 +101,8 @@ class adstring : public clist
   void allocate(int sz);
   friend class adstring_array;
 public :
-  friend ostream & operator << (ostream & c, _CONST adstring & t);
-  friend istream & operator >> (istream & c, adstring & t);
+  friend std::ostream & operator << (std::ostream & c, _CONST adstring & t);
+  friend std::istream & operator >> (std::istream & c, adstring & t);
 
   adstring(_CONST char * t);
   void allocate(_CONST char * t);
@@ -199,7 +200,7 @@ public:
   line_adstring(_CONST adstring& s) : adstring(s) {}
   line_adstring& operator = (_CONST adstring& s);
   line_adstring& operator = (_CONST char * s);
-  friend istream & operator >> (istream & c, line_adstring & t);
+  friend std::istream & operator >> (std::istream & c, line_adstring & t);
 };
 
 adstring itoa(int n,int d);
@@ -259,10 +260,10 @@ public:
   #endif
   adstring& operator [] (int i);
   adstring& operator () (int i);
-  adstring_array& /*adstring_array::*/operator += (const adstring& s);
-  adstring_array& /*adstring_array::*/append_distinct(const adstring& s);
-  friend ifstream& operator >> (ifstream& ifs,adstring_array& sa);
-  friend ostream& operator << (BOR_CONST ostream& ifs,_CONST adstring_array& sa);
+  adstring_array& operator += (const adstring& s);
+  adstring_array& append_distinct(const adstring& s);
+  friend std::ifstream& operator >> (std::ifstream& ifs,adstring_array& sa);
+  friend std::ostream& operator << (BOR_CONST std::ostream& ifs,_CONST adstring_array& sa);
   friend cifstream& operator >> (cifstream& ifs,adstring_array& sa);
 
   void to_upper(void);
@@ -273,7 +274,7 @@ public:
 adstring_array to_lower(adstring_array& s);
 adstring_array to_upper(adstring_array& s);
 
-ostream& operator << (BOR_CONST ostream& ifs,_CONST adstring_array& sa);
+std::ostream& operator << (BOR_CONST std::ostream& ifs,_CONST adstring_array& sa);
 
 int atoi(adstring& s);
 #endif //#ifndef __STRING_HPP__

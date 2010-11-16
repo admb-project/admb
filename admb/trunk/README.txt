@@ -133,6 +133,33 @@ Microsoft Windows and Visual C++
 
    > nmake /fvc.mak install
 
+Microsoft Windows and Borland C++ 5.5
+
+1. Extract source distribution.
+
+2. Open Windows Command Prompt. 
+
+3. Add Borland to system PATH variable.
+
+   > set PATH=%PATH%;c:\Borland\BCC551\Bin
+
+3. Change directory to the "src" folder. 
+
+   > cd admb-10.0Beta\src
+
+4. Build libraries
+
+   > make /fbcc.mak
+
+5. [Optional] Test build by running examples
+
+   > make /fbcc.mak verify
+
+6. Install libraries to default location %ProgramFiles%\ADMB
+   and adds ADMB shortcuts in the Start menu.
+
+   > make /fbcc.mak install
+
 From precompiled libraries
 --------------------------
 Binary installation instructions can be found at 

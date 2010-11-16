@@ -55,7 +55,7 @@ forest:
 pella-t:
 	cd admb\\pella-t
 	admb $(OPTION) $@
-	$@
+	REM $@
 	cd ..\\..
 
 robreg: vonb vonbr

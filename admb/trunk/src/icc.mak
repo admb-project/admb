@@ -42,7 +42,6 @@ dist:
 	cp ../scripts/bash/admb ${DISK}/bin
 	cp ../scripts/bash/adcomp ${DISK}/bin
 	cp ../scripts/bash/adlink ${DISK}/bin
-	cp ../scripts/bash/check-expected-results ${DISK}/bin
 	cp ../scripts/bash/Makefile ${DISK}
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re

@@ -33,12 +33,12 @@ dist:
 	mkdir -p ${LIBPATH}/tools99-olp 
 	mkdir -p ${LIBPATH}/df1b2-separable-slp 
 	mkdir -p ${LIBPATH}/df1b2-separable-olp 
-	$(MAKE) --directory=df1b2-separable CC=gcc CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=df1b2-separable CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
-	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
-	$(MAKE) --directory=nh99 CC=gcc CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" STUBPATH=../${LIBPATH}/nh99-olp-stub LIBPATH=../${LIBPATH}/nh99-olp ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
-	$(MAKE) --directory=tools99 CXXFLAGS="$(CXXFLAGS) -DOPT_LIB" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) --directory=df1b2-separable CC=gcc CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) --directory=df1b2-separable CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
+	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) --directory=linad99 CXX=g++ CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
+	$(MAKE) --directory=nh99 CC=gcc CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" STUBPATH=../${LIBPATH}/nh99-olp-stub LIBPATH=../${LIBPATH}/nh99-olp ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
+	$(MAKE) --directory=tools99 CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE ${DISK}
 	cp -vf ../README.txt ${DISK}
 	cp -vf ../scripts/bash/mygcc* ${DISK}/bin 

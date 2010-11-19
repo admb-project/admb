@@ -1,0 +1,188 @@
+<br>
+<table align="center" cellspacing="2" cellpadding="2" border="0">
+<tr>
+    <td colspan="2" align="center">
+	<h1>Weibull regression in censored survival analysis; <br>
+	A comparison with BUGS</h1>
+		<br><br>
+	</td>
+</tr>
+
+<tr>
+    <td width="30%">
+	<table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#359163">
+         <tr>
+           <td align="center">
+             <font face="Arial, Helvetica" color="White"><b>ADMB Files</b></font>
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <table cellspacing=0 cellpadding=3 width="100%" border=0 bgcolor="#ffffff">
+               <tr>
+			     <td>
+                     Code: <a href="kidney.tpl">kidney.tpl</a><br>
+                     Data: 		<a href="kidney.dat">kidney.dat</a><br>
+                     Initial values: <a href="kidney.pin">kidney.pin</a><br>
+<!--
+                     All required files (DOS): <a href="kidney.zip">kidney.zip</a><br>
+					 All required files (linux): <a href="kidney.tar.gz">kidney.tar.gz</a><br>					 
+-->
+                     Expected Results: <a href="kidney-expected-results.par">kidney.par</a><br>
+				   </font>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </table>
+<!--
+<br>
+
+	<table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#359163">
+         <tr>
+           <td align="center">
+             <font face="Arial, Helvetica" color="White"><b>Running ADMB-executables</b></font>
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <table cellspacing=0 cellpadding=3 width="100%" border=0 bgcolor="#ffffff">
+               <tr>
+			     <td>
+                     In a <a href="../admb_tutorial.html">DOS</a> window<br> 
+					 Under <a href="../admb_tutorial.html">linux</a><br>
+				   </font>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </table>
+<br>
+
+
+	<table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#359163">
+         <tr>
+           <td align="center">
+             <font face="Arial, Helvetica" color="White"><b>Results: Computation times</b></font>
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <table cellspacing=0 cellpadding=3 width="100%" border=0 bgcolor="#ffffff">
+               <tr>
+			     <td>
+                     ADMB-RE: 9 seconds.<br>
+					BUGS: 7 seconds,<br>
+					which was the time taken by WinBUGS 1.4 to perform 
+					1,000 iterations of two parallel chains.
+				   </font>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </table>
+
+	   <br>
+	   
+	   
+   <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0>
+        <TR>
+          <TD align=middle><FONT face="Arial, Helvetica" 
+            color=white><B>Navigation</B></FONT> </TD></TR>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=3 width="100%" bgColor=#ffffff 
+            border=0>
+              <TBODY>
+              <TR>
+                <TD>			  
+				<A href="http://otter-rsch.com/admbre/admbre.html">ADMB-RE home</A> <br>
+                <A href="http://otter-rsch.com/">Otter Research</A> 
+        </FONT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0></TABLE>
+	   
+
+	   
+	   
+-->
+	</td>
+	
+ <td width="75%">
+<h3><strong>Model description</strong></h3>
+
+The collection of examples following <a HREF="http://www.mrc-bsu.cam.ac.uk/bugs/">WinBUGS</a> (Volume 1, WinBUGS 1.4) 
+contains an application of Cox's proportional hazard model with random effects. A Weibull baseline hazard is used: <br>
+<br>
+<div align="center"><em>h<sub>0</sub>(t)</em> = <em>r*t<sup>r-1</sup></em>,  <em>r>0.</em></div>
+<br>
+The "kidney data" contain information on time-to-infection for 38 patients, and there are several explanatory variables (see table below).
+A full description of the model can be found here: <a href="kidney.pdf">kidney.pdf</a>. 
+
+
+ 
+<h3><strong>Comparison with BUGS</strong></h3>
+Parameter estimates for the kidney data are shown in the following table.<br>
+
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3 BORDER="1">
+<TR><TD ALIGN="LEFT"></TD>
+<TD ALIGN="LEFT"><FONT FACE="Symbol">b</FONT><sub><em>0</em></sub></TD>
+<TD ALIGN="LEFT"><FONT FACE="Symbol">b</FONT><sub>age</sub></TD>
+<TD ALIGN="LEFT"><FONT FACE="Symbol">b</FONT><sub><em>1</em></sub></TD>
+<TD ALIGN="LEFT"><FONT FACE="Symbol">b</FONT><sub><em>2</em></sub></TD>
+<TD ALIGN="LEFT"><FONT FACE="Symbol">b</FONT><sub><em>3</em></sub></TD>
+<TD ALIGN="LEFT"><FONT FACE="Symbol">b</FONT><sub>sex</sub></TD>
+<TD ALIGN="LEFT">r</TD>
+<TD ALIGN="LEFT"><FONT FACE="Symbol">s</FONT></TD>
+</TR>
+
+<TR><TD ALIGN="LEFT">ADMB-RE</TD>
+<TD ALIGN="LEFT">-4.344</TD>
+<TD ALIGN="LEFT">0.003</TD>
+<TD ALIGN="LEFT">0.1208</TD>
+<TD ALIGN="LEFT">0.6058</TD>
+<TD ALIGN="LEFT">-1.1423</TD>
+<TD ALIGN="LEFT">-1.8767</TD>
+<TD ALIGN="LEFT">1.1624</TD>
+<TD ALIGN="LEFT">0.5617</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Std. dev.</TD>
+<TD ALIGN="LEFT">0.872</TD>
+<TD ALIGN="LEFT">0.0137</TD>
+<TD ALIGN="LEFT">0.5008</TD>
+<TD ALIGN="LEFT">0.5011</TD>
+<TD ALIGN="LEFT">0.7729</TD>
+<TD ALIGN="LEFT">0.4754</TD>
+<TD ALIGN="LEFT">0.1626</TD>
+<TD ALIGN="LEFT">0.297</TD>
+</TR>
+<TR><TD ALIGN="LEFT"><a HREF="http://www.mrc-bsu.cam.ac.uk/bugs/">WinBUGS</a></TD>
+<TD ALIGN="LEFT">-4.6</TD>
+<TD ALIGN="LEFT">0.003</TD>
+<TD ALIGN="LEFT">0.1329</TD>
+<TD ALIGN="LEFT">0.6444</TD>
+<TD ALIGN="LEFT">-1.168</TD>
+<TD ALIGN="LEFT">-1.938</TD>
+<TD ALIGN="LEFT">1.215</TD>
+<TD ALIGN="LEFT">0.6374</TD>
+</TR>
+<TR><TD ALIGN="LEFT">Std. dev.</TD>
+<TD ALIGN="LEFT">0.8962</TD>
+<TD ALIGN="LEFT">0.0148</TD>
+<TD ALIGN="LEFT">0.5393</TD>
+<TD ALIGN="LEFT">0.5301</TD>
+<TD ALIGN="LEFT">0.8335</TD>
+<TD ALIGN="LEFT">0.4854</TD>
+<TD ALIGN="LEFT">0.1623</TD>
+<TD ALIGN="LEFT">0.357</TD>
+</TR>
+</TABLE>
+</DIV>
+
+
+
+</table>
+

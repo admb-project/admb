@@ -1,6 +1,6 @@
 ADMB Project
-Version 10.0Beta
-Released November 9, 2010
+Version 10.0Beta2
+Released November 19, 2010
 
 Overview
 ========
@@ -43,8 +43,16 @@ process.
 
 Below lists some of the changes.
 
-Changes
--------
+Changes Beta2
+------------
+ * Fixed MCMC issue
+ * Fixed configure script
+ * Updated Manuals 
+ * Fixed min and max functions
+ * Updated API documentation
+
+Changes Beta
+------------
  * Improved algorithms
  * Matrix exponential
  * Hybrid MCMC

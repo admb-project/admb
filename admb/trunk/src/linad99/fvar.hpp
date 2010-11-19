@@ -7116,6 +7116,8 @@ banded_lower_triangular_dmatrix
 banded_symmetric_dmatrix restore_bounded_symmetric_dvar_matrix_derivatives
   (BOR_CONST dvar_matrix_position& pos);
 
+unsigned long max(unsigned long u, unsigned long v);
+unsigned long min(unsigned long u, unsigned long v);
 double max(CGNU_DOUBLE u, CGNU_DOUBLE v);
 double min(CGNU_DOUBLE u, CGNU_DOUBLE v);
 int max(int i,int j,int k);

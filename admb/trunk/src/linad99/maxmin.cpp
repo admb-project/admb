@@ -15,3 +15,12 @@ double min(CGNU_DOUBLE u, CGNU_DOUBLE v)
 {
   return u < v ? u : v;
 }
+unsigned long max(unsigned long u, unsigned long v)
+{
+  return u > v ? u : v;
+}
+
+unsigned long min(unsigned long u, unsigned long v)
+{
+  return u < v ? u : v;
+}

@@ -6891,6 +6891,7 @@ class random_number_generator /// Random number generator
  int mti; ///< mti==N+1 means mt[N] is not initialized
 public:
  random_number_generator(int seed);
+ ~random_number_generator();
  double better_rand(void);
  void reinitialize(int seed);
 };

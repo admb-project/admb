@@ -1895,25 +1895,25 @@ void copy_value_from_vector(const dvector& _sd,const dvector& x,const int & _ii)
 void copy_value_from_vector(const dmatrix& _sd,const dvector& x,const int & _ii);
   
 void bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,long int& iseed,BOR_CONST double& wght,BOR_CONST dvector& y);
+  dmatrix& ch,BOR_CONST double& wght,BOR_CONST dvector& y, const random_number_generator& rng);
 
 void bounded_multivariate_uniform_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,long int& iseed,BOR_CONST double& wght,BOR_CONST dvector& y);
+  dmatrix& ch,BOR_CONST double& wght,BOR_CONST dvector& y, const random_number_generator& rng);
 
 dvector bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,long int& iseed,BOR_CONST double& lprob);
+  dmatrix& ch,BOR_CONST double& lprob, const random_number_generator& rng);
 
 dvector bounded_multivariate_normal_sobol(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,long int& iseed,BOR_CONST double& lprob);
+  dmatrix& ch,BOR_CONST double& lprob, const random_number_generator& rng);
 
 dvector probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,long int& iseed,BOR_CONST double& lprob,double pprobe);
+  dmatrix& ch,BOR_CONST double& lprob,double pprobe, const random_number_generator& rng);
 
 dvector bounded_multivariate_uniform(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,long int& iseed,BOR_CONST double& lprob);
+  dmatrix& ch,BOR_CONST double& lprob, const random_number_generator& rng);
 
 void probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,long int& iseed,BOR_CONST double& wght,BOR_CONST dvector& v,double pprobe);
+  dmatrix& ch,BOR_CONST double& wght,BOR_CONST dvector& v,double pprobe, const random_number_generator& rng);
 
 /*
 int option_match(int argc,char * argv[], const char * string);

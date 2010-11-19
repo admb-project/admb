@@ -23,7 +23,7 @@
 #  endif
 #endif
 
-double better_rand(long int&);
+//double better_rand(long int&);
 void store_mcmc_values(BOR_CONST ofstream& ofs);
 void set_labels_for_mcmc(void);
 void save_mcmc_for_gui(const dvector& mcmc_values,dmatrix &mdm,int& ids);
@@ -70,10 +70,10 @@ class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
 
 dvector new_probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,long int& iseed,BOR_CONST double& wght,double pprobe);
+  dmatrix& ch,BOR_CONST double& wght,double pprobe, const random_number_generator& rng);
 
 void new_probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,long int& iseed,BOR_CONST double& wght,BOR_CONST dvector& _y,double pprobe);
+  dmatrix& ch,BOR_CONST double& wght,BOR_CONST dvector& _y,double pprobe, const random_number_generator& rng);
 
 //void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,double d);
 void  newton_raftery_bayes_estimate_new(double cbf,int ic,BOR_CONST dvector& lk,double d);
@@ -296,7 +296,9 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         iseed=-iseed;
       }
       cout << "Initial seed value " << iseed << endl;
-      better_rand(iseed);   
+      random_number_generator rng(iseed);
+      rng.better_rand();   
+      //better_rand(iseed);   
       double lprob=0.0;
       double lpinv=0.0;
       double lprob3=0.0;
@@ -326,7 +328,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         {
           iseed=-iseed;
         }
-        double br=better_rand(iseed);
+        double br=rng.better_rand();
         if (tmp) have_hist_flag=1;
         chd=size_scale*chd;
         chdinv=chdinv/size_scale;
@@ -613,10 +615,10 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         {
           if (!probe_flag)
             bmn1=bounded_multivariate_normal(nvar,symbds(1),symbds(2),
-              chd,iseed,lprob);
+	      chd,lprob,rng);
           else
             bmn1=new_probing_bounded_multivariate_normal(
-              nvar,symbds(1),symbds(2),chd,iseed,lprob,pprobe);
+	      nvar,symbds(1),symbds(2),chd,lprob,pprobe,rng);
 
           initial_params::add_random_vector(bmn1);
           initial_params::xinit(y);   
@@ -624,10 +626,10 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
           initial_params::set_all_simulation_bounds(symbds);
           if (!probe_flag)
             bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),chd,
-              iseed,lpinv,-1*(chdinv*bmn1));
+	      lpinv,-1*(chdinv*bmn1),rng);
           else 
             new_probing_bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),
-              chd,iseed,lpinv,-1*(chdinv*bmn1),pprobe);
+	      chd,lpinv,-1*(chdinv*bmn1),pprobe,rng);
 
           send_int_to_slaves(1);
           ll=-pvm_master_get_monte_carlo_value(nvar,y);
@@ -638,13 +640,13 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         else
         {
           dvector bmn1=bounded_multivariate_uniform(nvar,symbds(1),symbds(2),chd,
-            iseed,lprob);
+						    lprob,rng);
           initial_params::add_random_vector(bmn1);
           initial_params::xinit(y);   
           // get the simulation bounds for the inverse transition
           initial_params::set_all_simulation_bounds(symbds);
           bounded_multivariate_uniform_mcmc(nvar,symbds(1),symbds(2),chd,
-            iseed,lpinv,-1*(chdinv*bmn1));
+					    lpinv,-1*(chdinv*bmn1),rng);
           send_int_to_slaves(1);
           ll=-pvm_master_get_monte_carlo_value(nvar,y);
           double ldiff=lprob-lpinv;
@@ -653,7 +655,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         //cout << logr << endl;
         // decide whether to accept the new point
         isim++;
-        double br=better_rand(iseed);
+        double br=rng.better_rand();
         if (logr>=0 || br< exp(logr) )
         {
           ii=1;

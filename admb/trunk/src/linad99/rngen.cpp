@@ -83,6 +83,12 @@ random_number_generator::random_number_generator(int seed)
   better_rand();
 }
 
+random_number_generator::~random_number_generator()
+{
+   delete [] mt;
+   mt=0;  // not  necessary but habit.
+}
+
 /**
   \ingroup RNG
   Reinitialize random number seed.

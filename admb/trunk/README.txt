@@ -94,6 +94,7 @@ Building form source code installation instructions can be found at
 "http://www.admb-project.org/documention/".
 
 Unix and GNU g++
+----------------
 1. Extract source distribution
    
    $ unzip admb-10.0Beta.zip
@@ -118,8 +119,52 @@ Unix and GNU g++
 
    $ make install
 
-Microsoft Windows and Visual C++
+Unix and Sun Studio 12
+----------------------
+1. Extract source distribution
+   
+   $ unzip admb-10.0Beta.zip
 
+2. Change to source directory
+
+   $ cd admb-10.0Beta/src
+
+3. Build libraries 
+  
+   $ make --file=sunstudio.mak
+
+4. [Optional] Test build by running examples
+
+   $ make verify
+
+5. Install libraries to default location /usr/local.
+
+   $ make install
+
+Unix and Intel C++ Compiler
+---------------------------
+1. Extract source distribution
+   
+   $ unzip admb-10.0Beta.zip
+
+2. Change to source directory
+
+   $ cd admb-10.0Beta/src
+
+3. Build libraries 
+  
+   $ make --file=icc.mak
+
+4. [Optional] Test build by running examples
+
+   $ make verify
+
+5. Install libraries to default location /usr/local.
+
+   $ make install
+
+Microsoft Windows and Visual C++
+--------------------------------
 1. Extract source distribution.
 
 2. Open Visual C++ Command Prompt. 
@@ -142,7 +187,7 @@ Microsoft Windows and Visual C++
    > nmake /fvc.mak install
 
 Microsoft Windows and Borland C++ 5.5
-
+-------------------------------------
 1. Extract source distribution.
 
 2. Open Windows Command Prompt. 
@@ -167,6 +212,34 @@ Microsoft Windows and Borland C++ 5.5
    and adds ADMB shortcuts in the Start menu.
 
    > make /fbcc.mak install
+
+Microsoft Windows and MinGW (gcc-4.5)
+-------------------------------------
+1. Open MinGW Shell located in Start->MinGW->"MinGW Shell"
+
+2. Extract source distribution.
+   
+   $ unzip admb-10.0Beta2.zip
+
+2. Change to distribution directory
+
+   $ cd admb-10.0Beta
+
+3. Configure the build files
+
+   $ ./configure
+
+4. Build libraries 
+  
+   $ make
+
+5. [Optional] Test build by running examples
+
+   $ make verify
+
+6. Install libraries to default location /usr/local.
+
+   $ make install
 
 From precompiled libraries
 --------------------------

@@ -1910,7 +1910,7 @@ dvector probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_C
   dmatrix& ch,BOR_CONST double& lprob,double pprobe, const random_number_generator& rng);
 
 dvector bounded_multivariate_uniform(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& lprob, const random_number_generator& rng);
+  dmatrix& ch,BOR_CONST double& lprob, random_number_generator& rng);
 
 void probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
   dmatrix& ch,BOR_CONST double& wght,BOR_CONST dvector& v,double pprobe, const random_number_generator& rng);

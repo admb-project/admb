@@ -51,7 +51,7 @@ double cumd_exp(double x)
 }
 
 dvector bounded_multivariate_normal(int nvar, BOR_CONST dvector& a1, BOR_CONST dvector& b1,
-  dmatrix& ch, BOR_CONST double& _wght, const random_number_generator & rng)
+  dmatrix& ch, BOR_CONST double& _wght, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   const double sqrt_tpi =sqrt(2*3.14159);
@@ -125,7 +125,7 @@ dvector bounded_multivariate_normal(int nvar, BOR_CONST dvector& a1, BOR_CONST d
 
 
 dvector probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1, 
-  dmatrix& ch, BOR_CONST double& _wght, double pprobe, const random_number_generator & rng)
+  dmatrix& ch, BOR_CONST double& _wght, double pprobe, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   const double sqrt_tpi =sqrt(2*3.14159);
@@ -205,7 +205,7 @@ dvector probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_C
 }
 
 dvector bounded_multivariate_uniform(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch, BOR_CONST double& _wght, const random_number_generator & rng)
+  dmatrix& ch, BOR_CONST double& _wght, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   dvector a(1,nvar);
@@ -245,7 +245,7 @@ dvector bounded_multivariate_uniform(int nvar,BOR_CONST dvector& a1,BOR_CONST dv
 
 dvector bounded_robust_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
   dmatrix& ch,BOR_CONST dmatrix& ch3, double contaminant,BOR_CONST double& _wght, 
-  const random_number_generator & rng)
+  random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   dvector w(1,nvar);

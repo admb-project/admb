@@ -72,10 +72,10 @@ class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
 
 dvector new_probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& wght,double pprobe, const random_number_generator& rng);
+  dmatrix& ch,BOR_CONST double& wght,double pprobe, random_number_generator& rng);
 
 void new_probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& wght,BOR_CONST dvector& _y,double pprobe, const random_number_generator& rng);
+  dmatrix& ch,BOR_CONST double& wght,BOR_CONST dvector& _y,double pprobe, random_number_generator& rng);
 
 //void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,double d);
 void  newton_raftery_bayes_estimate_new(double cbf,int ic,BOR_CONST dvector& lk,double d);

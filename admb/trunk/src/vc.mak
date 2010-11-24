@@ -37,7 +37,7 @@ all:
 	copy ..\scripts\mingw\admb.bat $(DISK)\bin
 	copy ..\LICENSE $(DISK)
 	copy ..\README.txt $(DISK)
-	mkdir $(DISK)\examples
+	IF NOT EXIST $(DISK)\examples mkdir $(DISK)\examples
 	xcopy ..\examples $(DISK)\examples /S
 	copy ..\scripts\vc\Makefile $(DISK)\examples
 	cd $(DISK)& cscript ..\scripts\create-admb-shortcut.vbs

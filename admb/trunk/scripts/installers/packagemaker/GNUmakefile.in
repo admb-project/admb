@@ -19,7 +19,7 @@ all:
 
 	cp -vf scripts/bash/admb-bin build/@target@/installer/usr/local/bin/admb
 
-	cp -vf build/@target@/installer/usr/local/admb/README build/@target@/Resources/Welcome.txt
+	cp -vf build/@target@/installer/usr/local/admb/README.txt build/@target@/Resources/Welcome.txt
 	cp -vf build/@target@/installer/usr/local/admb/LICENSE build/@target@/Resources/License.txt
 	mkdir -p build/@target@/package
 	$(CC) --verbose --title $(DISTRIBUTION_NAME) --root build/@target@/installer --id www.admb-project.org --resources build/@target@/Resources --out build/@target@/package/@target@.pkg

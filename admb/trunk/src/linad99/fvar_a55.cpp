@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
   void DF_ccv_dble_prod(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector operator * (_CONST dvector& t1,_CONST prevariable& x)
   {
     RETURN_ARRAYS_INCREMENT();
@@ -29,6 +37,10 @@
     return(tmp);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector operator * (_CONST prevariable& x,_CONST dvector& t1)
   {
     RETURN_ARRAYS_INCREMENT();
@@ -50,6 +62,10 @@
     return(tmp);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void DF_ccv_dble_prod(void)
  {
     verify_identifier_string("Da");

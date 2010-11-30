@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(__AD_F1B1__)
 # define __AD_F1B1__
 
@@ -45,6 +49,10 @@
 
   class f1b1_variable;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class f1b1_variable
   {
   public:
@@ -64,7 +72,10 @@
     void initialize(); 
   };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class f1b1_stack
   {
   public:
@@ -75,6 +86,10 @@
     void deassign(void) { f1b1_variable::f1b1_stack_ptr=NULL;}
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class f1b1_init_data : public f1b1_variable 
   {
   public:
@@ -82,6 +97,10 @@
     void kludge(double x,int i){*u=x;udot[i]=1;}
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class dep_data
   {
   public:
@@ -93,12 +112,20 @@
   class double_f1b1_function;
   class virtual_double_f1b1_function;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class virtual_f1b1_node
   {
   public: 
     virtual f1b1_variable * get_dep(void) =0;
   };
   
+/**
+ * Description not yet available.
+ * \param
+ */
   class single_f1b1_node : public virtual_f1b1_node
   {
   public:
@@ -110,6 +137,10 @@
     virtual f1b1_variable * get_dep(void){return dep;}
   };
     
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_f1b1_node : virtual_f1b1_node
   {
   public:
@@ -123,6 +154,10 @@
       ind1(_ind1), ind2(_ind2), f(_f) {}
   };
     
+/**
+ * Description not yet available.
+ * \param
+ */
   class single_f1b1_function
   {
   public:
@@ -138,6 +173,10 @@
 
   typedef double (*D2f1b1)(double,double);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class virtual_double_f1b1_function
   {
   public:
@@ -148,6 +187,10 @@
     virtual void node_evaluate(void)=0;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_f1b1_function : public virtual_double_f1b1_function
   {
   public:
@@ -167,6 +210,10 @@
     void node_evaluate(void);
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class plus_function : public virtual_double_f1b1_function
   {
   public:
@@ -177,6 +224,10 @@
     void node_evaluate(void);
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class times_function : public virtual_double_f1b1_function
   {
   public:

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: fvarm_io.cpp
 
 //////// i/o operations for class dvar_matrix
@@ -26,7 +30,10 @@
   #define __USE_IOSTREAM__
 #endif
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dvar_matrix& z)
 {
   ostream& ostr= (ostream&) _ostr; 
@@ -35,7 +42,10 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dvar_matrix& z)
   return ostr;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar_matrix::write_on(BOR_CONST ostream& _s) _CONST
 {
   ostream& s=(ostream&) _s;
@@ -66,6 +76,10 @@ void dvar_matrix::write_on(BOR_CONST ostream& _s) _CONST
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvar_matrix& _z)
 {
   dvar_matrix& z = (dvar_matrix&)_z;
@@ -75,6 +89,10 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvar_matrix& _z)
   return istr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar_matrix::read_from(BOR_CONST istream& s)
 {
   int n = rowmin() + rowsize() - 1;
@@ -91,4 +109,3 @@ void dvar_matrix::read_from(BOR_CONST istream& s)
     */
   }
 }
-

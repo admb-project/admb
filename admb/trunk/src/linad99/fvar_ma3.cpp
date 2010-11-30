@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 /*
@@ -56,7 +60,10 @@
  }      
 */
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable norm(_CONST dvar_matrix& m1)
     {
       RETURN_ARRAYS_INCREMENT();

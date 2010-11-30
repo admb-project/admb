@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
  void dv_subassign(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector dvar_vector::operator ()(_CONST ivector& u)
  {
    dvar_vector tmp(u.indexmin(),u.indexmax());
@@ -27,6 +35,10 @@
    return tmp;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dv_subassign(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -49,7 +61,10 @@ void dv_subassign(void)
   dft.save_dvector_derivatives(t_pos);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector dvar_vector::operator ()(_CONST lvector& u)
  {
    dvar_vector tmp(u.indexmin(),u.indexmax());

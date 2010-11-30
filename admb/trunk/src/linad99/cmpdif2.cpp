@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -21,6 +25,10 @@ struct dvector_position;
 long int reset_gs_stack(void);
 void reset_gs_stack(long int);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector_position::dvar_vector_position(_CONST dvar_vector& v)
 {
   min=v.indexmin();
@@ -28,6 +36,10 @@ dvar_vector_position::dvar_vector_position(_CONST dvar_vector& v)
   va=v.get_va();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector_position::dvector_position(_CONST dvector& vv)
 {
   min=vv.indexmin();
@@ -35,6 +47,10 @@ dvector_position::dvector_position(_CONST dvector& vv)
   v=vv.get_v();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector_position::dvar_vector_position(BOR_CONST dvar_vector_position& dvp)
 {
   min=dvp.min;
@@ -42,6 +58,10 @@ dvar_vector_position::dvar_vector_position(BOR_CONST dvar_vector_position& dvp)
   va=dvp.va;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector_position::dvector_position(BOR_CONST dvector_position& dvp)
 {
   min=dvp.min;
@@ -49,6 +69,10 @@ dvector_position::dvector_position(BOR_CONST dvector_position& dvp)
   v=dvp.v;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector_position::dvar_vector_position(void)
 {
   min=0;
@@ -56,6 +80,10 @@ dvar_vector_position::dvar_vector_position(void)
   va=0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector_position::dvector_position(void)
 {
   min=0;
@@ -63,6 +91,10 @@ dvector_position::dvector_position(void)
   v=0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ivector_position::ivector_position(_CONST ivector& iv)
 {
   min=iv.indexmin();
@@ -70,6 +102,10 @@ ivector_position::ivector_position(_CONST ivector& iv)
   v=iv.get_v();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ivector_position::ivector_position(BOR_CONST ivector_position& dvp)
 {
   min=dvp.min;
@@ -77,6 +113,10 @@ ivector_position::ivector_position(BOR_CONST ivector_position& dvp)
   v=dvp.v;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ivector_position::ivector_position(void)
 {
   min=0;
@@ -84,6 +124,10 @@ ivector_position::ivector_position(void)
   v=0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double& dvar_vector_position::operator () (BOR_CONST int& i)
 {
   if (i<min||i>max)
@@ -96,6 +140,10 @@ double& dvar_vector_position::operator () (BOR_CONST int& i)
    return va[i].x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector_position dvar_matrix_position::operator () (int i)
 {
   if (i<row_min||i>row_max)
@@ -111,6 +159,10 @@ dvar_vector_position dvar_matrix_position::operator () (int i)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector_position dmatrix_position::operator () (int i)
 {
   if (i<row_min||i>row_max)
@@ -126,6 +178,10 @@ dvector_position dmatrix_position::operator () (int i)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix_position::dvar_matrix_position(_CONST dvar_matrix& m,int x)
   : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
@@ -150,6 +206,10 @@ dvar_matrix_position::dvar_matrix_position(_CONST dvar_matrix& m,int x)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix_position::dmatrix_position(_CONST dmatrix& m)
   : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
@@ -164,6 +224,10 @@ dmatrix_position::dmatrix_position(_CONST dmatrix& m)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix_position::dvar_matrix_position(int min,int max)
   : lb(min,max), ub(min,max), ptr(min,max)
 {
@@ -177,6 +241,10 @@ dvar_matrix_position::dvar_matrix_position(int min,int max)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix_position::dmatrix_position(int min,int max)
   : lb(min,max), ub(min,max), ptr(min,max)
 {
@@ -190,6 +258,10 @@ dmatrix_position::dmatrix_position(int min,int max)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix_position::dvar_matrix_position(BOR_CONST dvar_matrix_position& p)
   : lb(p.row_min,p.row_max), ub(p.row_min,p.row_max),
     ptr(p.row_min,p.row_max)
@@ -202,6 +274,10 @@ dvar_matrix_position::dvar_matrix_position(BOR_CONST dvar_matrix_position& p)
   // cout << "ptr= " << ptr ;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix_position::dmatrix_position(BOR_CONST dmatrix_position& p)
   : lb(p.row_min,p.row_max), ub(p.row_min,p.row_max),
     ptr(p.row_min,p.row_max)

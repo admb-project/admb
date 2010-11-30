@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: fvar_ops.cpp
 // operators involving prevariables
 
@@ -22,6 +26,11 @@
 #include <stdio.h>
 #include <math.h>
 #if !defined(OPT_LIB)
+
+/**
+ * Description not yet available.
+ * \param
+ */
     void grad_stack::set_gradient_stack(void (* func)(void),
       double * dep_addr,double * ind_addr1, double mult1, double * ind_addr2,
       double mult2)
@@ -62,6 +71,10 @@
     }
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 prevariable& operator *( CGNU_DOUBLE x,_CONST prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -71,6 +84,10 @@ prevariable& operator *( CGNU_DOUBLE x,_CONST prevariable& v2)
   return(*gradient_structure::RETURN_PTR);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 prevariable& operator *(_CONST prevariable& v1, CGNU_DOUBLE x)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -80,7 +97,10 @@ prevariable& operator *(_CONST prevariable& v1, CGNU_DOUBLE x)
   return(*gradient_structure::RETURN_PTR);
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     void prevariable::operator /=(_CONST prevariable& v1)
     {
       double tmp=1./(v1.v->x);
@@ -89,7 +109,10 @@ prevariable& operator *(_CONST prevariable& v1, CGNU_DOUBLE x)
 		&(v->x),tmp,&(v1.v->x),-(v->x)*tmp);
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     void prevariable::operator /=( CGNU_DOUBLE v1)
     {
       double tmp=1./v1;
@@ -98,6 +121,10 @@ prevariable& operator *(_CONST prevariable& v1, CGNU_DOUBLE x)
 		&(v->x),tmp);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     void prevariable::operator *=(_CONST prevariable& v1)
     {
       double * tmp=&((v1.v)->x);
@@ -106,10 +133,13 @@ prevariable& operator *(_CONST prevariable& v1, CGNU_DOUBLE x)
       v->x *= *tmp;
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     void prevariable::operator *=( CGNU_DOUBLE v1)
     {
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(v->x),
 	       &(v->x),v1);
       v->x *= v1;
     }
-

@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 //class banded_symmetric_dmatrix;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream& operator << (const ostream& ofs1,const banded_symmetric_dmatrix& S1)
 {
   int w=ofs1.width();

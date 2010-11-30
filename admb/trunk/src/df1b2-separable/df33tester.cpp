@@ -3,6 +3,10 @@
  *
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <df33fun.h>
@@ -317,8 +321,9 @@ double lgam();
 #endif
 const double MYINF=1.7976931348623158E+308;
 
-/* Gamma function computed by Stirling's formula.
- * The polynomial STIR is valid for 33 <= x <= 172.
+/**
+ * Gamma function computed by Stirling's formula.
+ * \param _x \f$33 \le x \le 172\f$
  */
 static df3_three_variable stirf(const df3_three_variable & _x)
 {
@@ -341,8 +346,10 @@ y = SQTPI * y * w;
 return( y );
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 static df3_three_variable gamma(const df3_three_variable & xx1)
 {
    df3_three_variable x;
@@ -610,7 +617,10 @@ int operator == (double x,const df3_three_variable& n) { return x==value(n); }
 int operator < (const df3_three_variable& x,const df3_three_variable& n) { return value(x)<value(n); }
 int operator > (const df3_three_variable& x,const df3_three_variable& n) { return value(x)>value(n); }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df3_three_variable lgam(const df3_three_variable& _x)
 {
 df3_three_variable  x,p,q, u, w, z,p1;
@@ -793,6 +803,10 @@ Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  // return( ans );
  // }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df3_three_variable polevl( const df3_three_variable&  x, void * _coef, int N )
 {
 double * coef=(double *)(_coef);
@@ -837,7 +851,11 @@ while( --i );
 return( ans );
 }
 */
- 
+
+/**
+ * Description not yet available.
+ * \param
+ */
 df3_three_variable p1evl(const df3_three_variable & x, void * _coef, int N )
 {
 double * coef= (double*)(_coef);
@@ -869,9 +887,10 @@ _INFINITY' referenced from module all.cpp
  df3_three_variable incbet(const df3_three_variable & _aa, 
    const df3_three_variable & _bb, const df3_three_variable & _xx );
 
-
-
-// this is the wrapper to call the main inbet function
+/**
+ * this is the wrapper to call the main inbet function
+ * \param
+ */
 df1b2variable incbet(const df1b2variable& _a,const df1b2variable& _b,
   const df1b2variable& _x)
 {
@@ -1124,6 +1143,10 @@ static df3_three_variable igam(const df3_three_variable & a,const df3_three_vari
   // static double big = 4.503599627370496e15;
   // static double biginv =  2.22044604925031308085e-16;
   // 
+/**
+ * Description not yet available.
+ * \param
+ */
    df3_three_variable igamc(const df3_three_variable & _a, 
      const df3_three_variable & _x)
    {
@@ -1205,6 +1228,10 @@ static df3_three_variable igam(const df3_three_variable & a,const df3_three_vari
   //  *
   //  */
   // 
+/**
+ * Description not yet available.
+ * \param
+ */
    df3_three_variable igam(const df3_three_variable & _a, 
     const df3_three_variable & _x )
    {
@@ -1343,6 +1370,10 @@ static   df3_three_variable incbcf(const df3_three_variable & _a, const df3_thre
 static   df3_three_variable pseries(const df3_three_variable & _a, const df3_three_variable & _b, const df3_three_variable & _x );
 static  df3_three_variable incbd(const df3_three_variable & _a, const df3_three_variable & _b, const df3_three_variable & _x );
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df3_three_variable incbet(const df3_three_variable & _aa, 
    const df3_three_variable & _bb, const df3_three_variable & _xx )
  {
@@ -1450,11 +1481,12 @@ df3_three_variable incbet(const df3_three_variable & _aa,
  	}
  return( t );
  }
- // 
- // /* Continued fraction expansion #1
- //  * for incomplete beta integral
- //  */
- // 
+
+/**
+ * Continued fraction expansion number 1
+ * for incomplete beta integral
+ * \param
+ */
   static df3_three_variable incbcf(const df3_three_variable & _a, const df3_three_variable & _b, const df3_three_variable & _x )
   {
   ADUNCONST(df3_three_variable,a) 
@@ -1543,12 +1575,12 @@ df3_three_variable incbet(const df3_three_variable & _aa,
   cdone:
   return(ans);
   }
- // 
- // 
- // /* Continued fraction expansion #2
- //  * for incomplete beta integral
- //  */
- // 
+
+/**
+ * Continued fraction expansion number 2
+ * for incomplete beta integral
+ * \param
+ */
  static  df3_three_variable incbd(const df3_three_variable & _a, const df3_three_variable & _b, const df3_three_variable & _x )
  {
   ADUNCONST(df3_three_variable,a) 
@@ -1638,10 +1670,12 @@ df3_three_variable incbet(const df3_three_variable & _aa,
   cdone:
   return(ans);
   }
- // 
- // /* Power series for incomplete beta integral.
- //    Use when b*x is small and x not too close to 1.  */
- // 
+
+/**
+ * Power series for incomplete beta integral.
+ * Use when b*x is small and x not too close to 1.
+ * \param
+ */
   df3_three_variable pseries(const df3_three_variable & _a, const df3_three_variable & _b, const df3_three_variable & _x )
  {
   df3_three_variable a; 
@@ -1692,6 +1726,10 @@ df3_three_variable incbet(const df3_three_variable & _aa,
  return(s);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double get_values(double a,double b,double x)
 {
    df3_three_variable va,vb,vx;
@@ -1708,6 +1746,10 @@ static double get_values(double a,double b,double x)
    return *vy.get_u();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static df3_three_variable df3_get_values(double a,double b,double x)
 {
    df3_three_variable va,vb,vx;

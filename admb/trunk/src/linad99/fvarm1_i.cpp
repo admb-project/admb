@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: fvarm_io.cpp
 #include "fvar.hpp"
 
@@ -29,6 +33,10 @@
 // unformatted i/o
 
 #ifdef __USE_IOSTREAM__
+/**
+ * Description not yet available.
+ * \param
+ */
 uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvar_matrix& _z)
 {
   ADUNCONST(dvar_matrix,z)
@@ -36,6 +44,10 @@ uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvar_matrix& _z)
   return (uistream&)istr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar_matrix::read_from(BOR_CONST uistream& s)
 {
   if (allocated(*this))
@@ -54,6 +66,10 @@ void dvar_matrix::read_from(BOR_CONST uistream& s)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvar_matrix& z)
 {
   if (allocated(z))
@@ -62,6 +78,10 @@ uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvar_matrix& z)
   return (uostream&)ostr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar_matrix::write_on(BOR_CONST uostream& s) _CONST
 {
   if (allocated(*this))

@@ -4,11 +4,20 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 //#undef OPT_LIB
 #include "fvar.hpp"
 #include "admb_messages.h"
 
 #if !defined(OPT_LIB)
+
+/**
+ * Description not yet available.
+ * \param
+ */
  double& dvector::operator[] (int i)
  {
    #ifdef SAFE_ARRAYS
@@ -32,6 +41,10 @@
    return(*(v+i));
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  double& dvector::operator() (int i)
  {
    #ifdef SAFE_ARRAYS
@@ -49,6 +62,11 @@
 
 
 #ifdef USE_CONST
+
+/**
+ * Description not yet available.
+ * \param
+ */
  _CONST double& dvector::operator[] (int i) _CONST
  {
    #ifdef SAFE_ARRAYS
@@ -70,6 +88,10 @@
    return(*(v+i));
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  _CONST double& dvector::operator() (int i) _CONST
  {
    #ifdef SAFE_ARRAYS

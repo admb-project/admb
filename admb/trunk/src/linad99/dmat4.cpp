@@ -4,13 +4,25 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  struct dvec_ptr_ptr
  {
    void ** m;
  };
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix& dmatrix::operator= (_CONST dmatrix& m1)
  {
    if (allocated(*this))
@@ -44,6 +56,10 @@
    return(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix& dmatrix::operator+= (_CONST dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
@@ -59,6 +75,10 @@
    return(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix& dmatrix::operator-= (_CONST dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
@@ -73,4 +93,3 @@
    }
    return(*this);
  }
-

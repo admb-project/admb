@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 /*
@@ -19,7 +23,10 @@ void dvar_matrix::initialize(void)
 } 
 */
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfmatinit(void)
 {
   verify_identifier_string("q");
@@ -30,8 +37,10 @@ void dfmatinit(void)
   tmp.save_dmatrix_derivatives_na(tmp_pos);
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar_matrix::initialize(void)
 {
   if (!(!(*this)))  // only initialize allocated objects
@@ -60,5 +69,4 @@ void dvar_matrix::initialize(void)
       set_gradient_stack(dfmatinit);
     save_identifier_string("q");
   }
-} 
-
+}

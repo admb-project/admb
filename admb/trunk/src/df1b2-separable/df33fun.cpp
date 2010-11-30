@@ -5,18 +5,29 @@
  * Copyright (c) 2009 ADMB Foundation
  *
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 #include <df33fun.h>
   df1b2variable * df3_three_variable::ind_var[3];
   int df3_three_variable::num_ind_var=0;
   int df3_three_variable::num_local_ind_var=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable::df3_three_variable(const df3_three_variable& x)
   {
     memcpy(&(v[0]),&(x.v[0]),20*sizeof(double));
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df3_three_vector::df3_three_vector(const df3_three_vector& m2)
  {
    index_min=m2.index_min;
@@ -29,6 +40,10 @@
    v = m2.v;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable& df1b2variable::operator = (const df3_three_variable& v)
 {
   df1b2variable * px=df3_three_variable::ind_var[0];
@@ -84,17 +99,29 @@ df1b2variable& df1b2variable::operator = (const df3_three_variable& v)
   return *this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df3_three_variable::initialize(void) 
 {
   for (int i=0;i<20;i++)
     v[i]=0.0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df3_three_vector::~df3_three_vector()
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df3_three_vector::deallocate(void)
  {
    if(shape)
@@ -114,6 +141,10 @@ void df3_three_variable::initialize(void)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector value(const df3_three_vector& v)
  {
    
@@ -127,7 +158,10 @@ void df3_three_variable::initialize(void)
    return cv;
  }
    
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void df3_three_vector::initialize(void)
   {
     int mmin=indexmin();
@@ -138,16 +172,28 @@ void df3_three_variable::initialize(void)
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_vector::df3_three_vector(void)
   {
     allocate();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_vector::df3_three_vector(int min,int max)
   {
     allocate(min,max);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df3_three_vector::allocate(int min,int max)
   {
     index_min=min;
@@ -166,7 +212,11 @@ void df3_three_variable::initialize(void)
     }
     v-=min;
   }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */ 
   void df3_three_vector::allocate(void)
   {
     index_min=0;
@@ -175,7 +225,10 @@ void df3_three_variable::initialize(void)
     shape=0;
   }
     
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix value(const df3_three_matrix& v)
  {
    
@@ -195,7 +248,10 @@ void df3_three_variable::initialize(void)
    return cm;
  }
    
-
+/**
+ * Description not yet available.
+ * \param
+ */
  df3_three_matrix::df3_three_matrix(const df3_three_matrix& m2)
  {
    index_min=m2.index_min;
@@ -208,11 +264,19 @@ void df3_three_variable::initialize(void)
    v = m2.v;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df3_three_matrix::~df3_three_matrix()
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df3_three_matrix::deallocate(void)
  {
    if (shape)
@@ -232,7 +296,10 @@ void df3_three_variable::initialize(void)
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void df3_three_matrix::initialize(void)
   {
     int mmin=indexmin();
@@ -243,7 +310,10 @@ void df3_three_variable::initialize(void)
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_matrix::df3_three_matrix(int rmin,int rmax,int cmin,int cmax)
   {
     index_min=rmin;
@@ -267,7 +337,10 @@ void df3_three_variable::initialize(void)
     }
   }
     
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable& df3_three_variable::operator -= (const df3_three_variable& v)
   {
     *get_u() -= *v.get_u();
@@ -293,12 +366,20 @@ void df3_three_variable::initialize(void)
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable& df3_three_variable::operator -= (double v)
   {
     *get_u() -= v;
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator - (const df3_three_variable& v)
   {
     df3_three_variable z;
@@ -327,6 +408,10 @@ void df3_three_variable::initialize(void)
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable& df3_three_variable::operator += (const df3_three_variable& v)
   {
     *get_u() += *v.get_u();
@@ -352,6 +437,10 @@ void df3_three_variable::initialize(void)
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable& df3_three_variable::operator *= (double v)
   {
     *get_u() *= v;
@@ -377,6 +466,10 @@ void df3_three_variable::initialize(void)
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable& df3_three_variable::operator *= (const df3_three_variable& v)
   {
     df3_three_variable x=*this * v;
@@ -384,6 +477,10 @@ void df3_three_variable::initialize(void)
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable& df3_three_variable::operator /= (const df3_three_variable& v)
   {
     df3_three_variable x=*this / v;
@@ -391,7 +488,10 @@ void df3_three_variable::initialize(void)
     return *this;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable& df3_three_variable::operator += (double v)
   {
     *get_u() += v;
@@ -399,6 +499,10 @@ void df3_three_variable::initialize(void)
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_derivatives( df3_three_variable& z,const df3_three_variable& x,double u,
   double zp,double zp2,double zp3)
 {
@@ -478,6 +582,10 @@ void set_derivatives( df3_three_variable& z,const df3_three_variable& x,double u
 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   const df3_three_variable& y, double u,
   double f_u,double f_v,double f_uu,double f_uv,double f_vv,double f_uuu,
@@ -717,6 +825,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable sqrt(const df3_three_variable& x)
   {
     df3_three_variable z;
@@ -733,8 +845,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable atan(const df3_three_variable& x)
   {
     df3_three_variable z;
@@ -751,6 +865,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable pow(const df3_three_variable& x,
     const df3_three_variable& y)
   {
@@ -759,7 +877,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable square(const df3_three_variable& x)
   {
     df3_three_variable z;
@@ -773,7 +894,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable tan(const df3_three_variable& x)
   {
     df3_three_variable z;
@@ -790,6 +914,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable sin(const df3_three_variable& x)
   {
     df3_three_variable z;
@@ -803,6 +931,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable log(const df3_three_variable& x)
   {
     df3_three_variable z;
@@ -816,6 +948,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable exp(const df3_three_variable& x)
   {
     df3_three_variable z;
@@ -829,6 +965,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable inv(const df3_three_variable& x)
   {
     df3_three_variable z;
@@ -843,6 +983,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable& df3_three_variable::operator = (const df3_three_variable& v)
   {
     *get_u() =  *v.get_u();
@@ -872,6 +1016,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable& df3_three_variable::operator = (double x)
   {
 
@@ -899,7 +1047,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return *this;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator * (const df3_three_variable& x,
     const df3_three_variable& y)
   {
@@ -922,6 +1073,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator * (double x,
     const df3_three_variable& v)
   {
@@ -951,6 +1106,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable fabs(const df3_three_variable& v)
   {
     df3_three_variable z;
@@ -1004,6 +1163,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator * (const df3_three_variable& v,
     double x)
   {
@@ -1033,8 +1196,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator / (const df3_three_variable& x,
     double y)
   {
@@ -1042,6 +1207,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return x*u;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator / (const df3_three_variable& x,
     const df3_three_variable& y)
   {
@@ -1049,6 +1218,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return x*u;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator / (const double x,
     const df3_three_variable& y)
   {
@@ -1084,6 +1257,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   }
  */
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator + (const double x,const df3_three_variable& v)
   {
     df3_three_variable z;
@@ -1111,6 +1288,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator + (const df3_three_variable& v,const double x)
   {
     df3_three_variable z;
@@ -1141,8 +1322,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator + (const df3_three_variable& x,
     const df3_three_variable& y)
   {
@@ -1170,6 +1353,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator - (const df3_three_variable& x,
     const df3_three_variable& y)
   {
@@ -1197,6 +1384,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator - (double x,
     const df3_three_variable& v)
   {
@@ -1226,6 +1417,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df3_three_variable operator - (const df3_three_variable& v,
     double y)
   {
@@ -1262,6 +1457,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   df3_three_variable operator * (const df3_three_variable& x,
     const df3_three_variable& y);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df3_three_variable::~init_df3_three_variable()
   {
     num_local_ind_var--;
@@ -1276,6 +1475,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df3_three_variable::init_df3_three_variable(const df1b2variable& _v)
   {
     ADUNCONST(df1b2variable,v)
@@ -1325,6 +1528,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     *get_u_zzz() = 0.0;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df3_three_variable::init_df3_three_variable(double v)
   {
     if (num_local_ind_var>2)
@@ -1378,7 +1585,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
 
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df3_three_matrix choleski_decomp(const df3_three_matrix& MM)
 {
   // kludge to deal with constantness
@@ -1452,5 +1662,3 @@ df3_three_matrix choleski_decomp(const df3_three_matrix& MM)
 
   return L;
 }
-
-

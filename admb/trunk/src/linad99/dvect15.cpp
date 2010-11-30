@@ -4,7 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
+
+/**
+ * Description not yet available.
+ * \param
+ */
   dvector operator & (_CONST dvector& t1,_CONST dvector& t2)
   {
     int size =t1.size()+t2.size();
@@ -26,6 +35,10 @@
     return tmp;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector operator & (_CONST dvar_vector& t1,_CONST dvar_vector& t2)
   {
     int size =t1.size()+t2.size();

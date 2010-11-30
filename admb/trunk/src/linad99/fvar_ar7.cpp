@@ -4,19 +4,35 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector column(_CONST dvar_matrix& m,int j)
   {
     return extract_column(m,j);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector row(_CONST dvar_matrix& m,int j)
   {
     return extract_row(m,j);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector extract_column(_CONST dvar_matrix& m,int j)
   {
     if (j < m.colmin() || j > m.colmax())
@@ -31,6 +47,11 @@
     }
     return(tmp);
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   dvector column_value(_CONST dvar_matrix& m,int j)
   {
     if (j < m.colmin() || j > m.colmax())
@@ -46,7 +67,10 @@
     return(tmp);
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector extract_row(_CONST dvar_matrix& m,int i)
   {
     if (i < m.rowmin() || i > m.rowmax())

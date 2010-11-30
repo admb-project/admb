@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -17,6 +21,10 @@
 
 #include <math.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
   double var(_CONST dvector& v)
   {
     double tmp;
@@ -26,7 +34,10 @@
     return(tmp*tmp-tmp1*tmp1);
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   double std_dev(_CONST dvector& v)
   {
     double tmp;
@@ -36,8 +47,10 @@
     return(sqrt(tmp*tmp-tmp1*tmp1));
   }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   double mean(_CONST dvector& v)
   {
     double tmp=0;
@@ -48,8 +61,10 @@
     return(tmp/v.size());
   }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvector::fill_seqadd( CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
     double temp=0;
@@ -60,7 +75,10 @@
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void ivector::fill_seqadd(int base, int offset)
   {
     int temp=0;
@@ -71,6 +89,10 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void lvector::fill_seqadd(BOR_CONST AD_LONG_INT& base,BOR_CONST AD_LONG_INT& offset)
   {
     long int temp=0;
@@ -81,6 +103,10 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::colfill_seqadd(BOR_CONST int& j, CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
     double temp=0;
@@ -91,7 +117,10 @@
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::colfill(int j,_CONST dvector& v)
   {
     for (int i=rowmin(); i<=rowmax(); i++)
@@ -100,6 +129,10 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::rowfill(int i,_CONST dvector& v)
   {
     for (int j=colmin(); j<=colmax(); j++)
@@ -108,6 +141,10 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::rowfill_seqadd(BOR_CONST int& i, CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
     double temp=0;

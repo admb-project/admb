@@ -4,9 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 extern  int ctlc_flag;
+
+/**
+ * Description not yet available.
+ * \param
+ */
 fmm::fmm(int nvar,_CONST lvector& ipar,int _disk_save)
 : fmm_control(ipar),
   w(1,4*nvar), funval(1,10),
@@ -19,6 +28,10 @@ fmm::fmm(int nvar,_CONST lvector& ipar,int _disk_save)
   fbest=1.e+100;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 fmm::fmm(int nvar,int _disk_save)
 : w(1,4*nvar), funval(1,10),
   xx(0,nvar), gbest(0,nvar), xsave(0,nvar), gsave(0,nvar)

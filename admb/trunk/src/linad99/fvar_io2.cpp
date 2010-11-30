@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #if defined(__TURBOC__) && !defined(__linux__)
@@ -47,7 +51,10 @@ const int MAX_NUMBER_ROWS = 6550;
 #define HUGE 1.e+100
 #endif
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector::dvar_vector(const char * s)
 {
   int n = strlen(s);

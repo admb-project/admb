@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #if defined (__WAT32__)
@@ -72,6 +76,10 @@
 #include <stdio.h>
 #include <string.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_FILE::fread(BOR_CONST double& _x)
 {
   double& x = (double&) _x;
@@ -92,6 +100,10 @@ void DF_FILE::fread(BOR_CONST double& _x)
   offset=toffset;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_FILE::fread(BOR_CONST int& _x)
 {
   int& x = (int&) _x;
@@ -112,7 +124,10 @@ void DF_FILE::fread(BOR_CONST int& _x)
   offset=toffset;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_FILE::fread(void* &x)
 {
   const unsigned num_bytes=sizeof(void*);
@@ -132,6 +147,10 @@ void DF_FILE::fread(void* &x)
   offset=toffset;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_FILE::fwrite( CGNU_DOUBLE x)
 {
   #ifdef NO_DERIVS
@@ -152,6 +171,10 @@ void DF_FILE::fwrite( CGNU_DOUBLE x)
   offset=toffset;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_FILE::fwrite(const int& x)
 {
   #ifdef NO_DERIVS
@@ -172,6 +195,10 @@ void DF_FILE::fwrite(const int& x)
   offset=toffset;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_FILE::fwrite(void * ptr)
 {
   #ifdef NO_DERIVS
@@ -191,4 +218,3 @@ void DF_FILE::fwrite(void * ptr)
   memcpy(buff+offset, &ptr, sizeof(void*));
   offset=toffset;
 }
-

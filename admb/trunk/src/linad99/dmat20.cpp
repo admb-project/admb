@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 
 // file fvar.cpp
 // constructors, destructors and misc functions involving class dvariable 
@@ -55,6 +59,10 @@ dmatrix XXX(_CONST dmatrix& m)
 
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix pow(_CONST dmatrix& m,int e)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -73,6 +81,10 @@ dmatrix pow(_CONST dmatrix& m,int e)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix pow(_CONST dmatrix& m, CGNU_DOUBLE e)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -91,6 +103,10 @@ dmatrix pow(_CONST dmatrix& m, CGNU_DOUBLE e)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix tan(_CONST dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -109,7 +125,10 @@ dmatrix tan(_CONST dmatrix& m)
   return tmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix cos(_CONST dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -128,7 +147,10 @@ dmatrix cos(_CONST dmatrix& m)
   return tmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix sin(_CONST dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -147,6 +169,10 @@ dmatrix sin(_CONST dmatrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix elem_prod(_CONST dmatrix& m,_CONST dmatrix& m2)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -165,6 +191,10 @@ dmatrix elem_prod(_CONST dmatrix& m,_CONST dmatrix& m2)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix log(_CONST dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -183,7 +213,10 @@ dmatrix log(_CONST dmatrix& m)
   return tmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix sqrt(_CONST dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -202,6 +235,10 @@ dmatrix sqrt(_CONST dmatrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix sqr(_CONST dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -220,7 +257,10 @@ dmatrix sqr(_CONST dmatrix& m)
   return tmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix exp(_CONST dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -239,7 +279,10 @@ dmatrix exp(_CONST dmatrix& m)
   return tmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix elem_div(_CONST dmatrix& m,_CONST dmatrix& m2)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -257,5 +300,3 @@ dmatrix elem_div(_CONST dmatrix& m,_CONST dmatrix& m2)
   }
   return tmp;
 }
-
-

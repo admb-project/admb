@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <f1b2locl.h>
@@ -12,6 +16,10 @@
 static void xxx(double*,double*){;}
 //static void xxx(double[]){;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static void begin_local_calculations(int& nap) 
 { 
   df1b2_gradlist::set_no_derivatives();  
@@ -24,6 +32,10 @@ int write_pass1(const df1b2variable * _px,
   const df1b2variable * _py,
   const df1b2variable * _pz,int nap);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable plocal_tester(int i,const df1b2variable& x ,
   const df1b2variable& y)
 {
@@ -31,7 +43,11 @@ df1b2variable plocal_tester(int i,const df1b2variable& x ,
   z=square(x+2.0*y+2.5);
   return z;
 }
- 
+
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable   local_tester(int i,local_init_df1b2variable x ,
   local_init_df1b2variable y)
 {
@@ -52,6 +68,10 @@ df1b2variable   local_tester(int i,local_init_df1b2variable x ,
 }
  void ad_read_xxx(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int write_pass1(const df1b2variable * px, 
   const df1b2variable * py,
   const df1b2variable * pz,int nap)
@@ -114,6 +134,10 @@ int write_pass1(const df1b2variable * px,
    return 0;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_xxx_1(void)
 {
   // We are going backword for bptr and forward for bptr2
@@ -266,8 +290,10 @@ void read_xxx_1(void)
 void read_xxx_2(void);
 void read_xxx_3(void){;}
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_read_xxx(void)
 {
   switch(df1b2variable::passnumber)
@@ -288,6 +314,10 @@ void ad_read_xxx(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_xxx_2(void)
 {
   // We are going backword for bptr and forward for bptr2
@@ -430,4 +460,3 @@ void read_xxx_2(void)
   df1b2_gradcalc1();
 
 }
-

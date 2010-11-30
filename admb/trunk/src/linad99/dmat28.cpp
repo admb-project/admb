@@ -4,46 +4,83 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 //void get_eigenv(const dvector& _d,const dvector& _e,const dmatrix& _z);
 
 #if !defined(OPT_LIB)
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector banded_symmetric_dmatrix::operator () (int i)
 {
   return d(i);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 _CONST dvector banded_symmetric_dmatrix::operator () (int i) _CONST
 {
   return d(i);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 _CONST double& banded_symmetric_dmatrix::operator () (int i,int j) _CONST
 {
   return d(i-j,i);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double& banded_symmetric_dmatrix::operator () (int i,int j)
 {
   return d(i-j,i);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector banded_lower_triangular_dmatrix::operator () (int i)
 {
   return d(i);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 _CONST dvector banded_lower_triangular_dmatrix::operator () (int i) _CONST
 {
   return d(i);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double& banded_lower_triangular_dmatrix::operator () (int i,int j)
 {
   return d(i-j,i);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 _CONST double& banded_lower_triangular_dmatrix::operator () (int i,int j) _CONST
 {
   return d(i-j,i);
@@ -51,7 +88,10 @@ _CONST double& banded_lower_triangular_dmatrix::operator () (int i,int j) _CONST
 
 #endif
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_symmetric_dmatrix::banded_symmetric_dmatrix(
   const banded_symmetric_dmatrix& BB,int _lb,int _ub) : bw(BB.bw), d(0,BB.bw-1)
 {
@@ -68,18 +108,30 @@ banded_symmetric_dmatrix::banded_symmetric_dmatrix(
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void banded_symmetric_dmatrix::shift(int j)
 {
   for (int i=0;i<bw;i++)
     d(i).shift(j+i);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void banded_lower_triangular_dmatrix::shift(int j)
 {
   for (int i=0;i<bw;i++)
     d(i).shift(j+i);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  banded_symmetric_dmatrix::banded_symmetric_dmatrix
   (int _min,int _max,int _bw)
 {
@@ -89,6 +141,10 @@ void banded_lower_triangular_dmatrix::shift(int j)
   d.allocate(0,bw-1,lb,_max);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_symmetric_dmatrix::banded_symmetric_dmatrix
   (_CONST dvar_matrix_position& pos)
 {
@@ -102,6 +158,10 @@ banded_symmetric_dmatrix::banded_symmetric_dmatrix
   d.allocate(nrl,nrh,lb,cmax);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix
   (_CONST dvar_matrix_position& pos)
 {
@@ -115,7 +175,10 @@ banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix
   d.allocate(nrl,nrh,lb,cmax);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix::dmatrix(_CONST banded_lower_triangular_dmatrix& S)
 {
   int imin=S.indexmin();
@@ -141,6 +204,10 @@ dmatrix::dmatrix(_CONST banded_lower_triangular_dmatrix& S)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix::dmatrix(_CONST banded_symmetric_dmatrix& S)
 {
   int imin=S.indexmin();
@@ -171,6 +238,10 @@ dmatrix::dmatrix(_CONST banded_symmetric_dmatrix& S)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix
   (int _min,int _max,int _bw)
 {
@@ -180,6 +251,10 @@ banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix
   d.allocate(0,_bw-1,lb,_max);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream& operator << (BOR_CONST ostream& _ofs,_CONST banded_lower_triangular_dmatrix& S1)
 {
   ostream & ofs = (ostream&) _ofs;
@@ -207,6 +282,11 @@ ostream& operator << (BOR_CONST ostream& _ofs,_CONST banded_lower_triangular_dma
   }
   return ofs;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_lower_triangular_dmatrix choleski_decomp(
   const banded_symmetric_dmatrix& MM)
 {
@@ -214,6 +294,10 @@ banded_lower_triangular_dmatrix choleski_decomp(
   return choleski_decomp(MM);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_lower_triangular_dmatrix choleski_decomp(
   const banded_symmetric_dmatrix& _M,const int& _ierr)
 {
@@ -282,6 +366,10 @@ banded_lower_triangular_dmatrix choleski_decomp(
   return L;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator = 
   (const banded_symmetric_dmatrix& M)
 {
@@ -317,13 +405,19 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
   return *this;
 }
     
-
+/**
+ * Description not yet available.
+ * \param
+ */
   banded_symmetric_dmatrix banded_symmetric_dmatrix::sub(int l,int u)   
   {
     return banded_symmetric_dmatrix(*this,l,u);
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   dvector eigenvalues(const banded_symmetric_dmatrix& _SS)
   {
     banded_symmetric_dmatrix& S = (banded_symmetric_dmatrix&) _SS;
@@ -351,6 +445,10 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
     return eigenvalues(M);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dmatrix eigenvectors(const banded_symmetric_dmatrix& _SS,const dvector& _e)
   {
     banded_symmetric_dmatrix& S = (banded_symmetric_dmatrix&) _SS;

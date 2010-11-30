@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include <string.h>
 #include <ctype.h>
@@ -13,6 +17,10 @@ const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
 const int MAX_NUMBER_ROWS = 6550;
 
+/**
+ * Description not yet available.
+ * \param
+ */
  struct dvec_ptr_ptr
  {
    void ** m;
@@ -20,6 +28,10 @@ const int MAX_NUMBER_ROWS = 6550;
 
 const int MAXROWS = 5050;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::fill( const char * s)
 {
   #ifdef DIAG

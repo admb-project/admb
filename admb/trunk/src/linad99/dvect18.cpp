@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar_fn.cpp
 // math.h functions involving prevariables
 #include "fvar.hpp"
@@ -22,6 +26,10 @@
 #include <stdio.h>
 #include <math.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void shape_check(_CONST dvector& v1,_CONST dvector& v2, const char * function_name)
  {
    if (v1.indexmin() != v2.indexmin() || v1.indexmax() != v2.indexmax())

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // constructors, destructors and misc functions involving class prevariable 
 
 #include "fvar.hpp"
@@ -71,6 +75,11 @@
    return vtmp;
  }
 */
+
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix  operator * (_CONST dvar_matrix& m1,_CONST dvar_matrix& m2 )
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
@@ -109,6 +118,10 @@
    return vtmp;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmdm_prod(void)
 {
   verify_identifier_string("TEST6");
@@ -142,5 +155,3 @@ void dmdm_prod(void)
   dfm2.save_dmatrix_derivatives(m2pos);
   // cout << "leaving dmdm_prod"<<endl;
 }
-
-

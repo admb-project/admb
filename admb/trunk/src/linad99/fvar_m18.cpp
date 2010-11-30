@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -17,6 +21,10 @@
 
 void cmdm_prod(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix  operator * (_CONST dmatrix& cm1,_CONST dvar_matrix& m2 )
  {
    if (cm1.colmin() != m2.rowmin() || cm1.colmax() != m2.rowmax())
@@ -67,6 +75,10 @@ void cmdm_prod(void);
    return vtmp;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void cmdm_prod(void)
 {
   verify_identifier_string("TEST6");

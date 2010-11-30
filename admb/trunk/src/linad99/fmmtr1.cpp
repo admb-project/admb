@@ -9,6 +9,10 @@
  * David Fournier. 
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #ifdef __ZTC__
   #include <conio.h>
 #endif
@@ -66,6 +70,11 @@ extern int ctlc_flag;
   dvector update(int nvar,int iter,int m,BOR_CONST dvector& g,BOR_CONST dmatrix& xalpha,
     dmatrix& y,BOR_CONST dvector& x,BOR_CONST dvector& xold,BOR_CONST dvector& gold,BOR_CONST dvector& xrho);
 double dafsqrt( double x );
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void fmmt1::fmin(BOR_CONST double& _f, BOR_CONST dvector & _x,BOR_CONST dvector& _g)
 {
   double& f=(double&) _f;
@@ -555,6 +564,11 @@ label7020:
          #endif
          return;
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   dvector update(int nvar,int iter,int m,BOR_CONST dvector& g,BOR_CONST dmatrix& _s,
     dmatrix& y,BOR_CONST dvector& x,BOR_CONST dvector& _xold,BOR_CONST dvector& _gold,BOR_CONST dvector& _xrho)
   {

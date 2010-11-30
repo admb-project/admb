@@ -4,9 +4,17 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable colsum(_CONST dvar_matrix& m,int col)
 { 
   if (col < m.rowmin() || col > m.rowmax())

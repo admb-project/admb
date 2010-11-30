@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #ifdef __MSVC32__
   #define lseek _lseek
@@ -80,6 +84,10 @@
   void byte_copy(void * dest,void * source, unsigned num_bytes);
   extern char ad_random_part[6];
 
+/**
+ * Description not yet available.
+ * \param
+ */
   DF_FILE::DF_FILE(unsigned long int sz)
   {
     const int us=sizeof(unsigned int);
@@ -186,7 +194,10 @@
   }
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   DF_FILE::~DF_FILE()
   {
     delete [] buff;
@@ -222,7 +233,10 @@
   }
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_FILE::fread(void* s,const size_t num_bytes)
 {
   if (toffset < num_bytes)
@@ -248,6 +262,10 @@ void DF_FILE::fread(void* s,const size_t num_bytes)
   offset=toffset;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_FILE::fwrite(const void* s, const size_t num_bytes)
 {
   #ifdef NO_DERIVS
@@ -273,6 +291,10 @@ void DF_FILE::fwrite(const void* s, const size_t num_bytes)
   offset=toffset;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_FILE::read_cmpdif_stack_buffer(my_off_t & lpos)
 {
   if (lpos == -1L)
@@ -295,6 +317,10 @@ void DF_FILE::read_cmpdif_stack_buffer(my_off_t & lpos)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void DF_FILE::write_cmpdif_stack_buffer(void)
   {
     //cout << " trying to write buff_size = " << buff_size 
@@ -319,6 +345,10 @@ void DF_FILE::read_cmpdif_stack_buffer(my_off_t & lpos)
     //clogf << "offset after write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void byte_copy(void * dest,void * source, unsigned num_bytes)
 {
 #if !defined (__SUN__) && !defined (__WAT32__) && !defined(__ADSGI__) && !defined (__MSVC32__) && !defined(linux)

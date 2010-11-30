@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // this is to get UNIX systems to use getchar
 // #define UNIXKLUDGE
 
@@ -137,7 +141,10 @@ double max( BOR_CONST double&, BOR_CONST double&);
 #define EPS 1.0e-10
 #define FREEALL free_vector(xi,1,n);free_vector(h,1,n);free_vector(g,1,n);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void fmmc::fmin( BOR_CONST double& fret,BOR_CONST dvector& p,BOR_CONST dvector& gg)
 {
   dfn=0.0;;
@@ -484,10 +491,11 @@ label1000:
 #undef EPS
 #undef FREEALL
 
-
-// version of mylinmin which uses the deviative to help
-// bracket the minimum
-
+/**
+ * version of mylinmin which uses the deviative to help
+ * bracket the minimum
+ * \param
+ */
 double mylinmin( BOR_CONST double& fret, BOR_CONST double& Phi_i, BOR_CONST dvector& theta1, BOR_CONST dvector& q_i,
   fmmc& cs)
 
@@ -617,6 +625,10 @@ label555:
   return cs.converge_flag;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double do_interpolate( BOR_CONST double& fret, BOR_CONST double& left_bracket,
   double& left_bracket_value, BOR_CONST dvector& left_bracket_gradient,
   double& right_bracket, BOR_CONST double& right_bracket_value,
@@ -780,7 +792,10 @@ label200:
   return rho_star;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void do_extrapolate( BOR_CONST double& left_bracket, BOR_CONST double& left_bracket_value,
   dvector& left_bracket_gradient, BOR_CONST double& right_bracket,
   double& right_bracket_value, BOR_CONST dvector& right_bracket_gradient, BOR_CONST dvector& theta,
@@ -818,6 +833,10 @@ label2000:
   right_bracket_gradient=g1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void  bracket_report( BOR_CONST dvector& theta, BOR_CONST double& left_bracket,
   double& right_bracket, BOR_CONST dvector& d)
 {
@@ -837,7 +856,10 @@ void  bracket_report( BOR_CONST dvector& theta, BOR_CONST double& left_bracket,
 #endif
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 double cubic_interpolation( BOR_CONST double& u, BOR_CONST double& v, BOR_CONST double& aa, BOR_CONST double& bb,
   double& ap, BOR_CONST double& bp)
 {
@@ -910,6 +932,10 @@ double cubic_interpolation( BOR_CONST double& u, BOR_CONST double& v, BOR_CONST 
 
 #undef CUBIC_INTERPOLATION
 
+/**
+ * Description not yet available.
+ * \param
+ */
 fmmc::fmmc(BOR_CONST int& n)
 {
   ctlc_flag = 0;
@@ -950,6 +976,10 @@ fmmc::fmmc(BOR_CONST int& n)
   gbest=new dvector(1,n);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 fmmc::~fmmc(void)
 {
   delete left_bracket_gradient;
@@ -968,7 +998,10 @@ fmmc::~fmmc(void)
   delete gbest;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void derch(BOR_CONST double& f,BOR_CONST dvector& _x,BOR_CONST dvector& _gg,int n,BOR_CONST int & _ireturn)
 {
   int& ireturn=(int&) _ireturn;

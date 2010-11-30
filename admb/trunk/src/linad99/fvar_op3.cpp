@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: fvar_ops.cpp
 // operators involving prevariables
 #include "fvar.hpp"
@@ -22,31 +26,55 @@
 
 void gradfree(dlink *);
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator ==( CGNU_DOUBLE v1) _CONST
     {
       return(v->x==v1);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator <=( CGNU_DOUBLE v1) _CONST
     {
       return(v->x<=v1);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator <( CGNU_DOUBLE v1) _CONST
     {
       return(v->x<v1);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator >( CGNU_DOUBLE v1) _CONST
     {
       return(v->x>v1);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator >=( CGNU_DOUBLE v1) _CONST
     {
       return(v->x >=v1);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator !=( CGNU_DOUBLE v1) _CONST
     {
       return(v->x!=v1);

@@ -4,9 +4,17 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 void dfbltsolve(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector solve(BOR_CONST banded_lower_triangular_dvar_matrix& m,BOR_CONST dvar_vector&v)
 {
   int bw=m.bandwidth();
@@ -68,6 +76,10 @@ dvar_vector solve(BOR_CONST banded_lower_triangular_dvar_matrix& m,BOR_CONST dva
 }
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfbltsolve(void)
 {
   verify_identifier_string("ww");
@@ -133,5 +145,3 @@ void dfbltsolve(void)
   dfm.save_dmatrix_derivatives(mpos);
   dfv.save_dvector_derivatives(vpos);
 }
-
-

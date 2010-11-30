@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fnl.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 funnel_init_df1b2matrix::funnel_init_df1b2matrix(const df1b2matrix & _x)
 {
   //ADUNCONST(df1b2_init_matrix,x)
@@ -68,7 +76,10 @@ funnel_init_df1b2matrix::funnel_init_df1b2matrix(const df1b2matrix & _x)
   df1b2variable::noallocate=0;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 int funnel_init_df1b2matrix::nvar_calc(void)
 {
   int mmin=p->indexmin();
@@ -81,6 +92,10 @@ int funnel_init_df1b2matrix::nvar_calc(void)
   return n;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2matrix::xinit(init_df1b2vector& y,int& ii)
 { 
   df1b2_init_matrix * vp = (df1b2_init_matrix *) p;
@@ -99,7 +114,10 @@ void funnel_init_df1b2matrix::xinit(init_df1b2vector& y,int& ii)
   }
 }
 
-  
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2matrix::set_index(imatrix& y,int& ii)
 {
   
@@ -119,7 +137,11 @@ void funnel_init_df1b2matrix::set_index(imatrix& y,int& ii)
     }
   }
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2matrix::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& _pen)
 {

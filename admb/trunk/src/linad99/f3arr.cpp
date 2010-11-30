@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::initialize()
  {
    if (!(!(*this)))  // only initialize allocated objects
@@ -17,6 +25,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar3_array dvar3_array::sub(int nrl,int nrh)
  {
    if (allocated(*this))
@@ -34,11 +46,19 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar3_array::dvar3_array (int nrl,int nrh)
  {
    allocate(nrl,nrh);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar3_array::dvar3_array(int sl,int sh,int nrl,int nrh,int ncl,int nch)
  {
    if (sh<sl)
@@ -52,6 +72,10 @@
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch)
  {
    if (sh<sl)
@@ -79,6 +103,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh,int nrl,int nrh)
  {
    if (sh<sl)
@@ -106,6 +134,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh,
     const index_type& nrl,const index_type& nrh)
  {
@@ -134,8 +166,10 @@
    }
  }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh)
  {
    if (sh<sl)
@@ -163,7 +197,10 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar3_array::dvar3_array(int sl,int sh,int nrl,int nrh,
     _CONST ivector& ncl,int nch)
  {
@@ -178,6 +215,10 @@
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh,int nrl,int nrh,
    _CONST ivector& ncl,int nch)
  {
@@ -206,6 +247,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh,int nrl,int nrh,
    _CONST ivector& ncl,_CONST ivector& nch)
  {
@@ -240,6 +285,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh,int nrl,int nrh,
    int ncl,_CONST ivector& nch)
  {
@@ -272,6 +321,11 @@
      t[i].allocate(nrl,nrh,ncl,nch(i));
    }
  }
+
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar3_array::dvar3_array(_CONST d3_array& m1)
  {
    allocate(m1);
@@ -281,6 +335,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(_CONST d3_array& m1)
  {
    #ifdef DIAG
@@ -303,6 +361,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(_CONST dvar3_array& m1)
  {
    #ifdef DIAG
@@ -325,6 +387,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar3_array::dvar3_array(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
     ivector& ncl,_CONST ivector& nch)
  {
@@ -339,6 +405,10 @@
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
    _CONST ivector& ncl,_CONST ivector& nch)
  {
@@ -367,6 +437,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar3_array::dvar3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
     int ncl,_CONST ivector& nch)
  {
@@ -381,6 +455,10 @@
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
     int ncl,_CONST ivector& nch)
  {
@@ -409,6 +487,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar3_array::dvar3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
     int ncl,int nch)
  {
@@ -423,6 +505,10 @@
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
     int ncl,int nch)
  {
@@ -446,6 +532,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar3_array::dvar3_array(_CONST dvar3_array& m2)
  {
    shape=m2.shape;
@@ -453,6 +543,10 @@
    t = m2.t;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::shallow_copy(_CONST dvar3_array& m2)
  {
    shape=m2.shape;
@@ -460,6 +554,10 @@
    t = m2.t;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar3_array::~dvar3_array() 
  {
    if (shape)
@@ -481,6 +579,10 @@
 #  endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::deallocate()
  {
    if (shape)
@@ -500,6 +602,10 @@
 #  endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
     int ncl,int nch)
  {
@@ -526,6 +632,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(int sl,int sh,_CONST ivector& nrl,int nrh,
     int ncl,int nch)
  {
@@ -555,5 +665,3 @@
      t[i].allocate(nrl(i),nrh,ncl,nch);
    }
  }
-
-

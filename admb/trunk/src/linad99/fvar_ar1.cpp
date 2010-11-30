@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector::~dvar_vector()
  {
    if (shape)                  //if *ncopies == 0
@@ -25,6 +33,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_vector::deallocate()
  {
    if (shape)
@@ -48,7 +60,10 @@
    //}
  } 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector::dvar_vector(_CONST dvar_vector& t)
  {
    index_min=t.index_min;
@@ -63,6 +78,10 @@
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_vector::shallow_copy(const dvar_vector& t)
  {
    index_min=t.index_min;
@@ -77,6 +96,10 @@
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector::dvar_vector(_CONST predvar_vector& pdv)
  {
  #ifdef SAFE_ALL

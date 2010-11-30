@@ -4,11 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 #include <f1b2locl.h>
 class newadkludge;
 extern newadkludge * newadkl;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 local_dep_df1b2variable::local_dep_df1b2variable(void) :
   df1b2variable(newadkl)
 {
@@ -20,11 +28,20 @@ local_dep_df1b2variable::local_dep_df1b2variable(void) :
   //df1b2variable::pool=tmppool;
   //df1b2variable::nvar=tmpnvar;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 local_dep_df1b2variable::~local_dep_df1b2variable()
 {
   delete (df1b2variable *) p;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 local_dep_df1b2variable&  local_dep_df1b2variable::operator = 
   (const df1b2variable& x)  
 {
@@ -42,6 +59,10 @@ local_dep_df1b2variable&  local_dep_df1b2variable::operator =
   return *this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 local_dep_df1b2variable::local_dep_df1b2variable
   (double*  _xdot,double * _pxdot) : df1b2variable()
 {
@@ -50,7 +71,10 @@ local_dep_df1b2variable::local_dep_df1b2variable
   pxdot=_pxdot;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 local_dep_df1b2variable::local_dep_df1b2variable
   (const df1b2variable & _x) : df1b2variable(newadkl)
 {
@@ -59,6 +83,10 @@ local_dep_df1b2variable::local_dep_df1b2variable
   xu=*(x.get_u()); 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
 {
   ADUNCONST(df1b2vector,x)
@@ -94,6 +122,10 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
  // 
  // void  xxx(dep_df1b2vector & tmp,int x){;}
  // 
+/**
+ * Description not yet available.
+ * \param
+ */
   void local_dep_var::add_to_list(void)
   {
     index=num_vars;
@@ -112,12 +144,21 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
  //   index=-1;
  // }
  // 
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void local_dep_var::add_to_inactive_list(void)
   {
     index=-1;
     inactive_list[num_inactive_vars++]=this;
   }
- // 
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void local_init_var::end_local_calculations(void)
   {
     local_dep_var::deallocate_all();
@@ -127,7 +168,10 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
     df1b2variable::restore_adpool_pointer();
   }
 
-  
+/**
+ * Description not yet available.
+ * \param
+ */
   void local_dep_var::allocate_all(void)
   {
     for (int i=0;i<num_vars;i++)
@@ -135,6 +179,11 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
       list[i]->allocate();
     }
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void local_dep_var::deallocate_all(void)
   {
     for (int i=0;i<num_vars;i++)
@@ -142,17 +191,29 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
       list[i]->deallocate();
     }
   }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void local_dep_df1b2variable::allocate(void)
   {
     df1b2variable::allocate();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void local_dep_df1b2variable::deallocate(void)
   {
     df1b2variable::deallocate();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int local_dep_var::nvarcalc_all(void)
   {
     int n=0;
@@ -162,21 +223,31 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
     }
     return n;
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void local_dep_df1b2variable::set_index(imatrix& y,int& ii)
   {
-    //cout << "FUCK " << ind_index << " " << ii << endl;
     y(ii,1)= ind_index;
     y(ii,2)= ii;
     ii++;
   }
- //   
- // 
- // 
+
+/**
+ * Description not yet available.
+ * \param
+ */
   int local_dep_df1b2vector::nvar_calc(void)
   {
     return p->indexmax()-p->indexmin()+1;
   }
- // 
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void local_dep_df1b2vector::set_index(imatrix& y,int& ii)
   {
     
@@ -190,4 +261,3 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
       ii++;
     }
   }
-

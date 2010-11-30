@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable
 
@@ -20,6 +24,10 @@
 
 void dvcv_dot(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable operator * (_CONST dvar_vector& v2,_CONST dvector& cv1)
 {
   if (cv1.indexmin()!=v2.indexmin()||cv1.indexmax()!=v2.indexmax())
@@ -72,7 +80,10 @@ void dvcv_dot(void);
   return vtmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvcv_dot(void)
 {
   verify_identifier_string("uuuu");
@@ -102,5 +113,3 @@ void dvcv_dot(void)
 #endif
   dfv2.save_dvector_derivatives(v2pos);
 }
-
-

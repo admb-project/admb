@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -31,6 +35,11 @@ int laplace_approximation_calculator::where_are_we_flag=0;
 dvar_vector * 
   laplace_approximation_calculator::variance_components_vector=0;
 */
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::local_minimization
 (dvector& s,dmatrix& H,dvector& grad,double lambda)
 {
@@ -81,7 +90,10 @@ dvector laplace_approximation_calculator::local_minimization
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::local_minimization_routine
 (dvector& s,dmatrix& H,dvector& grad,double lambda)
 {

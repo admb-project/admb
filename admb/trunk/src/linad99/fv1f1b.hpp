@@ -38,9 +38,16 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class f1b1_data{
   {
   public:
@@ -53,6 +60,10 @@
     int nvar(void) {return udot.indexmax();}
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class single_f1b1_function
   {
   public:
@@ -71,7 +82,10 @@
     }
   }
       
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_f1b1_function
   {
   public:
@@ -92,6 +106,10 @@
     class single_f1b1_node : dep_data(f1b1_data);
   };
       
+/**
+ * Description not yet available.
+ * \param
+ */
   class dep_data
   {
   public:
@@ -99,7 +117,10 @@
     dep_data(f1b1_data * t) { dep=t;}
   };
 
-  
+/**
+ * Description not yet available.
+ * \param
+ */
   class single_f1b1_node : public dep_data {
   {
   public:
@@ -107,12 +128,13 @@
     single_f1b1_function * f;
   };
     
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_f1b1_node : public dep_data {
   {
     dep_data * ind1;
     dep_data * ind2;
     double_f1b1_function * f;
   };
-    
-
-  

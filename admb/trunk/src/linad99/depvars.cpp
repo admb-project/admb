@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable
 #include "fvar.hpp"
@@ -21,6 +25,10 @@
   #include <unistd.h>
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
   prevariable& operator << (BOR_CONST prevariable& _v1,_CONST prevariable& v2)
   {
     ADUNCONST(prevariable,v1)
@@ -29,6 +37,10 @@
     return (prevariable&)v1;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector& operator << (BOR_CONST dvar_vector& v1,_CONST dvar_vector& v2)
   {
     RETURN_ARRAYS_INCREMENT();
@@ -50,6 +62,10 @@
     return (dvar_vector&) v1;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_matrix& operator << (BOR_CONST dvar_matrix& v1,_CONST dvar_matrix& v2)
   {
     int mmin=v1.rowmin();
@@ -69,6 +85,10 @@
     return (dvar_matrix&)v1;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dependent_variables_information::dependent_variables_information(int ndv) :
     grad_buffer_position(1,ndv),
     cmpdif_buffer_position(1,ndv),
@@ -87,8 +107,10 @@
      cmpdif_file_position.initialize();
   }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
     void gradient_structure::save_dependent_variable_position(_CONST prevariable& v1)
     {
       int depvar_count=++DEPVARS_INFO->depvar_count;
@@ -113,5 +135,3 @@
       DEPVARS_INFO->cmpdif_file_position(depvar_count)
         =lseek(fp->file_ptr,0,SEEK_CUR);
     }
-
-

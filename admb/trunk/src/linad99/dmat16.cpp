@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix  operator - (_CONST dmatrix& m1,_CONST dmatrix& m2 )
  {
    if (m1.colmin() != m2.colmin() || m1.colmax() != m2.colmax())
@@ -24,6 +32,10 @@
    return(tmp);
  }      
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix  operator + (_CONST dmatrix& m1,_CONST dmatrix& m2 )
  {
    if (m1.colmin() != m2.colmin() || m1.colmax() != m2.colmax())
@@ -42,6 +54,10 @@
    return(tmp);
  }      
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix  operator + ( CGNU_DOUBLE d,_CONST dmatrix& m2 )
  {
    dmatrix tmp;
@@ -53,6 +69,10 @@
    return(tmp);
  }      
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix  operator - ( CGNU_DOUBLE d,_CONST dmatrix& m2 )
  {
    dmatrix tmp;
@@ -64,6 +84,10 @@
    return(tmp);
  }      
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix  operator * ( CGNU_DOUBLE d,_CONST dmatrix& m2 )
  {
    dmatrix tmp;
@@ -75,6 +99,10 @@
    return(tmp);
  }      
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix  operator + (_CONST dmatrix& m1, CGNU_DOUBLE d )
  {
    dmatrix tmp;
@@ -86,6 +114,10 @@
    return(tmp);
  }      
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix  operator - (_CONST dmatrix& m1, CGNU_DOUBLE d )
  {
    dmatrix tmp;
@@ -97,6 +129,10 @@
    return(tmp);
  }      
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix  operator * (_CONST dmatrix& m1, CGNU_DOUBLE d )
  {
    dmatrix tmp;
@@ -106,5 +142,4 @@
      tmp.elem(i)=m1.elem(i)*d;
    }
    return(tmp);
- }      
-
+ }

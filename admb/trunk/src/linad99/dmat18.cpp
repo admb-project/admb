@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix dmatrix::operator() (_CONST ivector& t)
 {
   dmatrix tmp(t.indexmin(), t.indexmax(), t.indexmin(), t.indexmax());

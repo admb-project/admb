@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #ifdef __ZTC__
@@ -45,6 +49,10 @@ const int MAX_NUMBER_ROWS = 6550;
 #define HUGE 1.e+100
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvector::fill(const char * s)
 {
   int n = strlen(s);

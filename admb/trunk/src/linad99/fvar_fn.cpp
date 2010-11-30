@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar_fn.cpp
 // math.h functions involving prevariables
 #include "fvar.hpp"
@@ -25,6 +29,10 @@
 
 void gradfree(dlink *);
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& pow(_CONST prevariable& v1, CGNU_DOUBLE u)
     {
       #ifdef SAFE_ARRAYS
@@ -45,13 +53,19 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void prevariable::initialize(void)
  {
    *this = 0.0;
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  prevariable& sin(_CONST prevariable& v1)
  {
    if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
@@ -62,6 +76,10 @@ void gradfree(dlink *);
    return(*gradient_structure::RETURN_PTR);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  prevariable& sigmoid(_CONST prevariable& v1)
  {
    if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
@@ -163,7 +181,10 @@ void gradfree(dlink *);
     }
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& cos(_CONST prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
@@ -174,6 +195,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& log(_CONST prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
@@ -184,6 +209,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& log10(_CONST prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
@@ -193,4 +222,3 @@ void gradfree(dlink *);
         &(gradient_structure::RETURN_PTR->v->x),&(v1.v->x),1./(v1.v->x)/2.3025851 );
       return(*gradient_structure::RETURN_PTR);
     }
-

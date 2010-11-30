@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fnl.h>
 #include <adrndeff.h>
   int pool_check_flag=0;
@@ -11,6 +15,10 @@
 
 extern int noboundepen_flag;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::do_separable_stuff(void)
 {
   df1b2variable& ff=  *re_objective_function_value::pobjfun;
@@ -123,6 +131,10 @@ void laplace_approximation_calculator::do_separable_stuff(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
   do_separable_stuff_newton_raphson_block_diagonal(df1b2variable& ff)
 {

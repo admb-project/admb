@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
   void DF_dv_dble_diff(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector operator - (_CONST dvar_vector& t1,_CONST prevariable& x)
   {
     RETURN_ARRAYS_INCREMENT();
@@ -27,6 +35,10 @@
     return(tmp);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void DF_dv_dble_diff(void)
  {
     verify_identifier_string("dduu");

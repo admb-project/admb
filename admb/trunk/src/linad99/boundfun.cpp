@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 //#ifdef __TURBOC__
 //#  pragma hdrstop
@@ -18,6 +22,10 @@
 double dmin(double,double);
 double dmax(double, double);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable dfatan1( dvariable x, double fmin, double fmax,BOR_CONST prevariable&  _fpen)
 {
   prevariable&  fpen=(prevariable&)  _fpen;
@@ -40,6 +48,10 @@ double dmax(double, double);
   return(t);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double dftinv(double x, double fmin, double fmax)
 {
   double tinv;
@@ -56,11 +68,19 @@ double dftinv(double x, double fmin, double fmax)
   return(tinv);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen,double s)
 {
   return boundp(x/s,fmin,fmax,_fpen);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen)
 {
   if (gradient_structure::Hybrid_bounded_flag==0)
@@ -122,6 +142,10 @@ dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariabl
 }
 void xxjunk10(double){;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable dfboundp(const prevariable& x, double fmin,double fmax)
 {
   if (gradient_structure::Hybrid_bounded_flag==0)
@@ -153,6 +177,10 @@ dvariable dfboundp(const prevariable& x, double fmin,double fmax)
   }
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ndfboundp( double x, double fmin, double fmax,const double& fpen)
 {
   if (gradient_structure::Hybrid_bounded_flag==0)
@@ -180,6 +208,10 @@ double ndfboundp( double x, double fmin, double fmax,const double& fpen)
   }
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double boundp(double x, double fmin, double fmax)
 {
   if (gradient_structure::Hybrid_bounded_flag==0)
@@ -208,6 +240,10 @@ double boundp(double x, double fmin, double fmax)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double nd2fboundp( double x, double fmin, double fmax,const double& fpen)
 {
   if (x<-0.99999)
@@ -227,6 +263,10 @@ double nd2fboundp( double x, double fmin, double fmax,const double& fpen)
   }
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double boundp( double x, double fmin, double fmax,const double& _fpen)
 {
   if (gradient_structure::Hybrid_bounded_flag==0)
@@ -286,11 +326,19 @@ double boundp( double x, double fmin, double fmax,const double& _fpen)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double boundpin(double x, double fmin, double fmax,double s)
 {
   return s*boundpin(x,fmin,fmax); 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double boundpin(double x, double fmin, double fmax)
 {
   double tinv;
@@ -327,11 +375,19 @@ double boundpin(double x, double fmin, double fmax)
   return(tinv);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double boundpin(const prevariable& x, double fmin, double fmax,double s)
 {
   return s*boundpin(x,fmin,fmax); 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double boundpin(const prevariable& xx, double fmin, double fmax)
 {
   double tinv;
@@ -370,6 +426,10 @@ double boundpin(const prevariable& xx, double fmin, double fmax)
   return(tinv);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double dmin(double x, double y)
 {
   if (x<y)
@@ -382,6 +442,10 @@ double dmin(double x, double y)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double dmax(double x, double y)
 {
   if (x>y)

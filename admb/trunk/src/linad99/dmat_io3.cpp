@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: dmat_io.cpp
 
 // i/o operations for class dmatrix
@@ -27,6 +31,11 @@
 #include <string.h>
 
 #ifdef __USE_IOSTREAM__
+
+/**
+ * Description not yet available.
+ * \param
+ */
 uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dmatrix& _z)
 {
   ADUNCONST(dmatrix,z)
@@ -35,6 +44,10 @@ uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dmatrix& _z)
   return (uistream&)istr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::read_from(BOR_CONST uistream& s)
 {
   int n = rowmin() + rowsize() - 1;
@@ -50,6 +63,10 @@ void dmatrix::read_from(BOR_CONST uistream& s)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 uostream& operator<<(BOR_CONST uostream& ostr,_CONST dmatrix& z)
 {
   z.write_on(ostr);
@@ -57,6 +74,10 @@ uostream& operator<<(BOR_CONST uostream& ostr,_CONST dmatrix& z)
   return (uostream&) ostr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::write_on(BOR_CONST uostream& s) _CONST
 {
   for (int i=rowmin(); i <= rowmax(); i++)
@@ -70,4 +91,3 @@ void dmatrix::write_on(BOR_CONST uostream& s) _CONST
   }
 }
 #endif
-

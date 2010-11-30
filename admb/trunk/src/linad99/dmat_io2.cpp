@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #if defined(__TURBOC__) && !defined(__linux__)
@@ -61,6 +65,10 @@ const int MAX_NUMBER_ROWS = 6550;
  int get_non_blank_line(BOR_CONST ifstream& infile,char * & line,
    const unsigned int& line_length);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  struct dvec_ptr_ptr
  {
    void ** m;
@@ -72,6 +80,10 @@ const int MAX_NUMBER_ROWS = 6550;
 
 const int MAXROWS = 5050;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix::dmatrix(char * s)
 {
   int i;
@@ -332,7 +344,10 @@ dmatrix::dmatrix(char * s)
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
    int get_non_blank_line(BOR_CONST ifstream& _infile,char * & line,
      const unsigned int& line_length)
    {
@@ -363,7 +378,10 @@ dmatrix::dmatrix(char * s)
      return tmp;
    }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
    int mystrlen(char * line)
    {
      long int ii=0;
@@ -374,6 +392,3 @@ dmatrix::dmatrix(char * s)
      }
      return(-1);
    }
-
-
-

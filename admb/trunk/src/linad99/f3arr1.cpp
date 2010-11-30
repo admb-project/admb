@@ -4,10 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
 #ifndef OPT_LIB
+
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable dvar3_array::operator () (int k, int i, int j)
     {
       #ifdef SAFE_ARRAYS
@@ -30,7 +39,10 @@
       #endif
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     dvar_vector& dvar3_array::operator () (int k, int i)
     {
       #ifdef SAFE_ARRAYS
@@ -46,8 +58,10 @@
       return ( (elem(k))(i) );
     }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix& dvar3_array::operator[] (int i)
  {
    #ifdef SAFE_ARRAYS
@@ -63,6 +77,10 @@
    return( t[i]);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix& dvar3_array::operator() (int i)
  {
    #ifdef SAFE_ARRAYS
@@ -85,6 +103,10 @@
 #endif
  void s9ee43q(void){/*int i=1;*/}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable sum(_CONST dvar3_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -96,5 +118,3 @@ dvariable sum(_CONST dvar3_array& m)
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
-
-

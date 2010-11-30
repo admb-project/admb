@@ -4,10 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
+
 
 void dfcholeski_decomp_banded_positive(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_lower_triangular_dvar_matrix choleski_decomp_positive(
   _CONST banded_symmetric_dvar_matrix& MM,double eps,
    dvariable& _fpen)
@@ -78,6 +87,10 @@ banded_lower_triangular_dvar_matrix choleski_decomp_positive(
   return L;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfcholeski_decomp_banded_positive(void)
 {
   verify_identifier_string("ro");
@@ -213,5 +226,3 @@ void dfcholeski_decomp_banded_positive(void)
 
   dfM.save_dmatrix_derivatives(MMpos);
 }
-
-

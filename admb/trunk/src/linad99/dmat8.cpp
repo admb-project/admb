@@ -4,10 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
 #if !defined(OPT_LIB)
+
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector& dmatrix::operator() (int i)
  {
 #  ifdef SAFE_ARRAYS
@@ -23,6 +32,10 @@
    return *(m+i);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  double& dmatrix::operator() (int i, int j)
  {
 #  ifdef SAFE_ARRAYS
@@ -59,6 +72,11 @@
  }
 
 #  ifdef USE_CONST
+
+/**
+ * Description not yet available.
+ * \param
+ */
  _CONST double& dmatrix::operator() (int i, int j)  _CONST
  {
 #    ifdef SAFE_ARRAYS
@@ -95,4 +113,3 @@
  }
 #  endif
 #endif
-

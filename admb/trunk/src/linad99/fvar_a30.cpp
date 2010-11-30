@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 void dv_xminuseq(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector& dvar_vector::operator-= (_CONST prevariable& d)
  {
    {
@@ -26,6 +34,10 @@ void dv_xminuseq(void);
    return(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dv_xminuseq(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -38,10 +50,12 @@ void dv_xminuseq(void)
   save_double_derivative(temp,d_pos);
 }
 
-
-
 void dv_xpluseq(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector& dvar_vector::operator+= (_CONST prevariable& d)
  {
    {
@@ -60,6 +74,10 @@ void dv_xpluseq(void);
    return(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dv_xpluseq(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -72,6 +90,10 @@ void dv_xpluseq(void)
   save_double_derivative(temp,d_pos);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector& dvar_vector::operator-= (double d)
  {
    {
@@ -84,6 +106,10 @@ void dv_xpluseq(void)
    return(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector& dvar_vector::operator+= (double d)
  {
    {

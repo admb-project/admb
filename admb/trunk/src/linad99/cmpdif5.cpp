@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 
@@ -21,6 +25,10 @@
 
 #include <string.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::save_dmatrix_value(void) _CONST
 {
   // saves the size, address, and value information for a dvar_matrix
@@ -32,9 +40,10 @@ void dmatrix::save_dmatrix_value(void) _CONST
   }
 }
 
-
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void d3_array::save_d3_array_value(void) const
 {
   // saves the size, address, and value information for a dvar_matrix
@@ -46,6 +55,10 @@ void d3_array::save_d3_array_value(void) const
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix restore_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
@@ -61,6 +74,10 @@ dmatrix restore_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos)
   return out;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix restore_dmatrix_value(BOR_CONST dmatrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
@@ -77,6 +94,10 @@ dmatrix restore_dmatrix_value(BOR_CONST dmatrix_position& mpos)
   return out;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 d3_array restore_d3_array_value(const d3_array_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
@@ -93,6 +114,10 @@ d3_array restore_d3_array_value(const d3_array_position& mpos)
   return out;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector restore_dvar_vector_derivatives(BOR_CONST dvar_vector_position& tmp)
 {
   // puts the derivative values from a dvar_vector's guts into a dvector
@@ -123,6 +148,10 @@ dvector restore_dvar_vector_derivatives(BOR_CONST dvar_vector_position& tmp)
   return tempvec;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector restore_dvar_vector_der_nozero(BOR_CONST dvar_vector_position& tmp)
 {
   // puts the derivative values from a dvar_vector's guts into a dvector
@@ -142,6 +171,10 @@ dvector restore_dvar_vector_der_nozero(BOR_CONST dvar_vector_position& tmp)
   return tempvec;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvector::save_dvector_derivatives(BOR_CONST dvar_vector_position& pos) _CONST
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
@@ -167,6 +200,10 @@ void dvector::save_dvector_derivatives(BOR_CONST dvar_vector_position& pos) _CON
   #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvector::save_dvector_derivatives_na(BOR_CONST dvar_vector_position& pos) _CONST
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
@@ -191,6 +228,10 @@ void dvector::save_dvector_derivatives_na(BOR_CONST dvar_vector_position& pos) _
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void save_dmatrix_derivatives(BOR_CONST dvar_matrix_position& _pos, CGNU_DOUBLE x,BOR_CONST int& i,
   int& j)
 {
@@ -207,8 +248,10 @@ void save_dmatrix_derivatives(BOR_CONST dvar_matrix_position& _pos, CGNU_DOUBLE 
   pos(i)(j)+=x;
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::save_dmatrix_derivatives(BOR_CONST dvar_matrix_position& _pos) _CONST
 {
   dvar_matrix_position& pos=(dvar_matrix_position&) _pos;
@@ -228,6 +271,10 @@ void dmatrix::save_dmatrix_derivatives(BOR_CONST dvar_matrix_position& _pos) _CO
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::save_dmatrix_derivatives_na(BOR_CONST dvar_matrix_position& _pos) _CONST
 {
   dvar_matrix_position& pos=(dvar_matrix_position&) _pos;
@@ -247,6 +294,10 @@ void dmatrix::save_dmatrix_derivatives_na(BOR_CONST dvar_matrix_position& _pos) 
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar_matrix::save_dvar_matrix_position(void) _CONST
 {
   // saves the size and address information for a dvar_vector

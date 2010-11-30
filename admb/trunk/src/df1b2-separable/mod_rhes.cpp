@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #include <admodel.h>
 #include <df1b2fun.h>
@@ -15,6 +19,10 @@
 void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
   uostream& ofs1,ofstream& ofs,int usize,int xsize,dvector& u);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_lower_triangular_dmatrix quiet_choleski_decomp(
   const banded_symmetric_dmatrix& _M,const int& _ierr)
 {
@@ -78,6 +86,11 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
 }
 
 void useless(BOR_CONST double& sdelta2);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::hess_routine_random_effects(void)
 {
 #if defined(USE_ADPVM)
@@ -104,6 +117,10 @@ void function_minimizer::hess_routine_random_effects(void)
 }
 dvector get_solution_vector(int npts);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::hess_routine_noparallel_random_effects(void)
 {
 
@@ -472,6 +489,11 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 }
 
 #if defined(USE_ADPVM)
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::hess_routine_slave_random_effects(void)
 {
 
@@ -533,6 +555,10 @@ void function_minimizer::hess_routine_slave_random_effects(void)
 }
 #endif // #if defined(USE_ADPVM)
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector get_solution_vector(int n)
 {
   int i;

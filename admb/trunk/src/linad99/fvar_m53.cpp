@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector lower_triangular_solve(const dvar_matrix& m,const dvar_vector&v)
 {
   int imin=m.indexmin();
@@ -30,14 +38,20 @@ dvar_vector lower_triangular_solve(const dvar_matrix& m,const dvar_vector&v)
   return x;
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable lower_triangular_ln_det(const dvar_matrix& m)
 {
   int sgn;
   return lower_triangular_ln_det(m,sgn);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable lower_triangular_ln_det(const dvar_matrix& m,int& sgn)
 {
   sgn=1;

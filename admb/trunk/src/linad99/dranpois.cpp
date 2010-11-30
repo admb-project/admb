@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2009, 2010 ADMB Foundation
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 /*
 #define IM1 2147483563
@@ -83,6 +87,3 @@ double randpoisson(double xm, BOR_CONST random_number_generator& rng)
       elem(i)=randpoisson(lambda,rng);
     }
   }
-
-
-

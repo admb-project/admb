@@ -38,11 +38,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(__DF33FUN__)
 #  define __DF33FUN__
 class df1b2variable;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class df3_three_variable
   {
     double v[20];
@@ -97,8 +104,16 @@ class df1b2variable;
     void initialize(void);
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   inline  double value(const df3_three_variable& x) { return double(*x.get_u()); }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class init_df3_three_variable : public df3_three_variable
   {
   public:
@@ -107,8 +122,10 @@ class df1b2variable;
     ~init_df3_three_variable();
   };
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class df3_three_vector
   {
     int index_min;
@@ -145,7 +162,11 @@ class df1b2variable;
  dvector second_derivatives(const df3_three_vector& v);
    
  dvector third_derivatives(const df3_three_vector& v);
-    
+
+/**
+ * Description not yet available.
+ * \param
+ */
   class df3_three_matrix
   {
     int index_min;
@@ -260,4 +281,3 @@ class df1b2variable;
 
   df3_three_variable gammln(const df3_three_variable& xx);
 #endif  // __DF32FUN__
-

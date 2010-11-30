@@ -4,12 +4,20 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
 void myderkludge(void);
 
 void ad_read_pass2_dvdv(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  int df1b2_gradlist::write_pass1(const df1b2variable * _px, 
    const df1b2variable * _py,df1b2variable * pz,double df_x,
    double df_y,
@@ -77,7 +85,11 @@ void ad_read_pass2_dvdv(void);
 void read_pass2_1_dvdv(void);
 void read_pass2_2_dvdv(void);
 void read_pass2_3_dvdv(void);
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_read_pass2_dvdv(void)
 {
   switch(df1b2variable::passnumber)
@@ -98,6 +110,10 @@ void ad_read_pass2_dvdv(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass2_1_dvdv(void)
 {
   // We are going backword for bptr and nbptr
@@ -347,6 +363,10 @@ void read_pass2_1_dvdv(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass2_2_dvdv(void)
 {
   //const int nlist_record_size=sizeof(int)+sizeof(char*);
@@ -606,6 +626,10 @@ void read_pass2_2_dvdv(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void read_pass2_3_dvdv(void)
 {
   // We are going backword for bptr and forward for bptr2

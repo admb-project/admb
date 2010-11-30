@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double inv_cumd_exponential(double y)
 {
   if (y<=0.5)
@@ -14,6 +22,10 @@ double inv_cumd_exponential(double y)
     return log(2.0*(1-y));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double cumd_exponential(double x)
 {
   if (x<=0.0)

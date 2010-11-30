@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #pragma hdrstop
 /*
 class fmmq : public fmm_control

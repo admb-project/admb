@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: fvar_ops.cpp
 // operators involving prevariables
 
@@ -23,6 +27,10 @@
 
   void df_minus_eq_pvpv(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
     void prevariable::operator -=(_CONST prevariable& v1)
     {
       (*v).x-=(*v1.v).x;
@@ -30,6 +38,10 @@
         &(v1.v->x));
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df_minus_eq_pvpv(void)
   {
     * gradient_structure::GRAD_STACK1->ptr->ind_addr1

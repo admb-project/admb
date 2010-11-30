@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector lower_triangular_solve_trans(const df1b2matrix& M,
   const df1b2vector& y)
 {
@@ -33,7 +41,10 @@ df1b2vector lower_triangular_solve_trans(const df1b2matrix& M,
   return x;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector lower_triangular_solve(const df1b2matrix& m,const df1b2vector& v)
 {
   int imin=m.indexmin();
@@ -57,12 +68,21 @@ df1b2vector lower_triangular_solve(const df1b2matrix& m,const df1b2vector& v)
   }
   return x;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable lower_triangular_ln_det(const df1b2matrix& m)
 {
   int sgn;
   return lower_triangular_ln_det(m,sgn);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable lower_triangular_ln_det(const df1b2matrix& m,int& sgn)
 {
   sgn=1;
@@ -83,4 +103,3 @@ df1b2variable lower_triangular_ln_det(const df1b2matrix& m,int& sgn)
   }
   return ssum;
 }
-

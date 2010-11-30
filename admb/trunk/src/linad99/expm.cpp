@@ -5,7 +5,10 @@
  * Aug. 2010
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
   #include "ludcmp.hpp"
   dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& zz);
@@ -14,6 +17,10 @@
 
 #define TINY 1.0e-20;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix fabs(const dmatrix & X){
   int rmin = X.rowmin();
   int rmax = X.rowmax();
@@ -34,7 +41,6 @@ dmatrix fabs(const dmatrix & X){
   \param A square dvar_matrix
   \returns The matrix exponentiel of A
   */
-
 dvar_matrix expm(const dvar_matrix & A)
 {
   RETURN_ARRAYS_INCREMENT();    

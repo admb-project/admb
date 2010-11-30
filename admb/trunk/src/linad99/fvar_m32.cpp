@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
 
@@ -24,6 +28,10 @@
 #endif
 #include <math.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix mfexp(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp;
@@ -35,6 +43,10 @@ dvar_matrix mfexp(_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix mfexp(_CONST dvar_matrix& m, CGNU_DOUBLE d)
 {
   dvar_matrix tmp;

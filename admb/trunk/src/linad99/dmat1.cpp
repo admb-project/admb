@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector  operator * (_CONST dvector& x,_CONST dmatrix& m)
  {
 #ifdef DIAG
@@ -47,6 +55,10 @@
    return(tmp);
  }      
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector  operator * (_CONST dmatrix& m,_CONST dvector& x )
  {
 #ifdef DIAG
@@ -88,6 +100,10 @@
    return(tmp);
  }      
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix  operator * (const dmatrix& m1,const dmatrix& m2 )
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())

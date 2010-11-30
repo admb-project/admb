@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -17,6 +21,10 @@
 
 #include <string.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void banded_symmetric_dvar_matrix::save_dvar_matrix_value(void) _CONST
 {
   // saves the size, address, and value information for a dvar_matrix
@@ -29,6 +37,10 @@ void banded_symmetric_dvar_matrix::save_dvar_matrix_value(void) _CONST
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value(void) _CONST
 {
   // saves the size, address, and value information for a dvar_matrix
@@ -41,6 +53,10 @@ void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value(void) _CONST
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void banded_symmetric_dmatrix::save_dmatrix_value(void) _CONST
 {
   // saves the size, address, and value information for a dvar_matrix
@@ -53,8 +69,10 @@ void banded_symmetric_dmatrix::save_dmatrix_value(void) _CONST
   }
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
@@ -70,6 +88,10 @@ banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(BOR_CONST dv
   return out;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_lower_triangular_dmatrix restore_banded_lower_triangular_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
@@ -85,6 +107,10 @@ banded_lower_triangular_dmatrix restore_banded_lower_triangular_dvar_matrix_valu
   return out;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void banded_symmetric_dvar_matrix::save_dvar_matrix_position(void) _CONST
 {
   // saves the size and address information for a dvar_vector
@@ -104,6 +130,10 @@ void banded_symmetric_dvar_matrix::save_dvar_matrix_position(void) _CONST
   gradient_structure::get_fp()->fwrite(&(tmp.row_max),wsize);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position(void) _CONST
 {
   // saves the size and address information for a dvar_vector
@@ -123,6 +153,10 @@ void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position(void) _CONST
   gradient_structure::get_fp()->fwrite(&(tmp.row_max),wsize);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void banded_symmetric_dmatrix::save_dmatrix_derivatives(_CONST dvar_matrix_position& pos) _CONST
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
@@ -152,6 +186,10 @@ void banded_symmetric_dmatrix::save_dmatrix_derivatives(_CONST dvar_matrix_posit
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(_CONST dvar_matrix_position& pos) _CONST
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
@@ -181,6 +219,10 @@ void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(_CONST dvar_matri
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_lower_triangular_dmatrix
   restore_banded_lower_triangular_dvar_matrix_derivatives
   (BOR_CONST dvar_matrix_position& _pos)
@@ -194,6 +236,10 @@ banded_lower_triangular_dmatrix
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 banded_symmetric_dmatrix restore_bounded_symmetric_dvar_matrix_derivatives
   (BOR_CONST dvar_matrix_position& _pos)
 {
@@ -205,4 +251,3 @@ banded_symmetric_dmatrix restore_bounded_symmetric_dvar_matrix_derivatives
   }
   return tmp;
 }
-

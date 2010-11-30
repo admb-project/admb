@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -11,6 +15,10 @@
   #include <iostream.h>
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dmatrix value(_CONST dvar_matrix& m)
   {
     int nrl=m.rowmin();

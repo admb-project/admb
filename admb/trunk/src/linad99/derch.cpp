@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #ifdef __ZTC__
   #include <conio.h>
 #endif
@@ -27,6 +31,10 @@ double derch_stepsize=0.0;
 
 static ofstream * pofs=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void derch(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST dvector& _gg,
        int n, BOR_CONST int & _ireturn)
 {
@@ -191,5 +199,3 @@ void derch(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST 
 //  ireturn = 2;
   ad_exit(0);
 }
-
-

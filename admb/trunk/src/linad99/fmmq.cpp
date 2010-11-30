@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 #pragma hdrstop
 #include "fmmq.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 fmmq::fmmq(int nv) : 
   h(1,(nv*(nv+1))/2),
   w(1,4*nv),

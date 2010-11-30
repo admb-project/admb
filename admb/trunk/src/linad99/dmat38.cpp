@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 
 #include <fvar.hpp>
 
@@ -98,6 +102,10 @@ dmatrix solve(const dmatrix & aa, const dmatrix & zz)
    return xx;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ln_det_choleski(
   const banded_symmetric_dmatrix& MM, const int& _ierr)
 {
@@ -113,11 +121,19 @@ double ln_det_choleski(
   return 2.0*ld;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double norm(const banded_symmetric_dmatrix& B)
 {
   return sqrt(norm2(B));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double norm2(const banded_symmetric_dmatrix& B)
 {
   double nm=0.0;

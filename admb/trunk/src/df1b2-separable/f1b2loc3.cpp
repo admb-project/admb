@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 #include <f1b2locl.h>
 class newadkludge;
@@ -14,6 +18,10 @@ local_init_pass1_var ** local_init_pass1_var::list=new PLOCAL_INIT_PASS1_VAR[200
 int local_init_pass1_var::num_active_parameters=0;
 int local_init_pass1_var::num_vars=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void local_init_pass1_var::allocate_all(void)
 {
   num_active_parameters=local_init_pass1_var::nvarcalc_all();
@@ -127,11 +135,19 @@ void local_init_pass1_var::allocate_all(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void local_init_pass1_var::add_to_list(void)
 {
   list[num_vars++]=this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void local_init_pass1_var::set_dot_all(void)
 {
   int ii=0;
@@ -141,6 +157,10 @@ void local_init_pass1_var::set_dot_all(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void local_init_pass1_df1b2variable::dot_calcs(local_dep_df1b2variable& v,int j)
 { 
   if (adpool_stack_pointer<1)
@@ -160,12 +180,20 @@ void local_init_pass1_df1b2variable::dot_calcs(local_dep_df1b2variable& v,int j)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void local_init_pass1_df1b2variable::allocate(void)
 {
   df1b2variable::allocate();
   *get_u()=xu;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int local_init_pass1_var::nvarcalc_all(void)
 {
   int n=0;
@@ -175,7 +203,11 @@ int local_init_pass1_var::nvarcalc_all(void)
   }
   return n;
 }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
 local_init_pass1_df1b2variable::local_init_pass1_df1b2variable(double _xu,double* _xudot) 
 {
   xu=_xu; 

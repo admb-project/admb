@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar3_array& dvar3_array::operator= (_CONST dvar3_array& m1)  
  {
    if (slicemin() != m1.slicemin() || slicemax() != m1.slicemax())

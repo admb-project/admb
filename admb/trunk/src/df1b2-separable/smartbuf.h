@@ -38,6 +38,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
+
+/**
+ * Description not yet available.
+ * \param
+ */
 class ad_sbuffer 
 {
 public:

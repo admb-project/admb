@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 //#define THREAD_SAFE
 #include <fvar.hpp>
 
@@ -37,6 +41,10 @@ ts_vector_shape_pool::ts_vector_shape_pool(int n) : tsdfpool(n)
 vector_shape_pool::vector_shape_pool(int n) : dfpool(n)
 { ;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void * vector_shape::operator new(size_t n)
 {  
   if (xpool==0) 
@@ -53,6 +61,10 @@ void * vector_shape::operator new(size_t n)
   return xpool->alloc(); 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void * arr_link::operator new(size_t n)
 {  
   if (xpool==0) 
@@ -69,6 +81,10 @@ void * arr_link::operator new(size_t n)
   return xpool->alloc(); 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void * vector_shapex::operator new(size_t n)
 {  
   if (xpool==0) 
@@ -86,6 +102,10 @@ void * vector_shapex::operator new(size_t n)
 }
 
 #if defined(__CHECK_MEMORY__)
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfpool::sanity_check(void)
 {
   link * p=head;
@@ -100,6 +120,10 @@ void dfpool::sanity_check(void)
   cout << "Depth = " << depth << endl;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfpool::sanity_check2(void)
 {
   link * p=head;
@@ -114,6 +138,10 @@ void dfpool::sanity_check2(void)
   cout << "Depth = " << depth << endl;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfpool::sanity_check(void * ptr)
 {
   link * p=head;
@@ -131,6 +159,10 @@ void dfpool::sanity_check(void * ptr)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfpool::write_pointers(int mmin,int mmax)
 {
   link * p=head;
@@ -147,7 +179,10 @@ void dfpool::write_pointers(int mmin,int mmax)
 
 dfpool::link ** global_p=0;
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void * dfpool::alloc(void)
 {
 #if defined(THREAD_SAFE)
@@ -186,6 +221,10 @@ void * dfpool::alloc(void)
   return p;
 }
 #if defined(THREAD_SAFE)
+/**
+ * Description not yet available.
+ * \param
+ */
 void * tsdfpool::alloc(void)
 {
 #if defined(THREAD_SAFE)
@@ -226,6 +265,11 @@ void * tsdfpool::alloc(void)
 #endif
 
 #if defined(__CHECK_MEMORY__)
+
+/**
+ * Description not yet available.
+ * \param
+ */
 int dfpool::bad(link * p)
 {
   int flag=1;
@@ -252,6 +296,10 @@ int dfpool::bad(link * p)
   return flag;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int dfpool::badaddress(link * p)
 {
   int flag=1;
@@ -269,6 +317,10 @@ int dfpool::badaddress(link * p)
 void * pchecker=0;
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfpool::free(void * b)
 {
 #if defined(SAFE_ALL)
@@ -296,6 +348,11 @@ void dfpool::free(void * b)
 #endif
 }
 #if defined(THREAD_SAFE)
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void tsdfpool::free(void * b)
 {
 #if defined(SAFE_ALL)
@@ -324,10 +381,19 @@ void tsdfpool::free(void * b)
 }
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dfpool::~dfpool(void)
 {
   deallocate();
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dfpool::dfpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
 {
   dfpool_vector_flag=0;
@@ -343,6 +409,10 @@ dfpool::dfpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dfpool::dfpool(void) 
 {
   dfpool_vector_flag=0;
@@ -358,6 +428,10 @@ dfpool::dfpool(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfpool::set_size(unsigned int sz)
 {
   if (size !=sz && size != 0)
@@ -369,6 +443,10 @@ void dfpool::set_size(unsigned int sz)
 
 //void xxiieeuu(void * tmp0){;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfpool::deallocate(void)
 {
 #if defined(__CHECK_MEMORY__)
@@ -402,6 +480,11 @@ void dfpool::deallocate(void)
 */
 
  const int pvalues_size=500000;
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfpool::grow(void)
 {
 #if defined(__CHECK_MEMORY__)
@@ -463,6 +546,11 @@ void dfpool::grow(void)
   head = (link*) start;
   first= (double*) start;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfpool::clean(void)
 {
   if (!size)
@@ -480,6 +568,5 @@ void dfpool::clean(void)
     ptr++;
   }
 }
-
 
 #endif  // #if defined(USE_VECTOR_SHAPE_POOL)

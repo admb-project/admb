@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(__ADPVM__)
 #  define __ADPVM__
 void adpvm_pack_number_derivative(void);

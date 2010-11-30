@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double sum(_CONST d3_array& m)
 {
   double tmp=0.;
@@ -16,6 +24,10 @@ double sum(_CONST d3_array& m)
   return tmp;
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array d3_array::sub(int nrl,int nrh)
  {
    if (allocated(*this))
@@ -32,6 +44,11 @@ double sum(_CONST d3_array& m)
      return *this;
    }
  }
+
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(const d3_array_position& tpos)
  {
    int nrl=tpos.indexmin();
@@ -39,11 +56,19 @@ double sum(_CONST d3_array& m)
    allocate(nrl,nrh);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(int nrl,int nrh)
  {
    allocate(nrl,nrh);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(int sl,int sh,int nrl,int nrh,int ncl,int nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
@@ -52,6 +77,10 @@ double sum(_CONST d3_array& m)
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(int sl,int sh,int nrl,int nrh,
     _CONST ivector& ncl,int nch)
  {
@@ -61,6 +90,10 @@ double sum(_CONST d3_array& m)
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(int sl,int sh,int nrl,int nrh,
     _CONST ivector& ncl,_CONST ivector& nch)
  {
@@ -70,6 +103,10 @@ double sum(_CONST d3_array& m)
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,int nrl,int nrh,
    _CONST ivector& ncl,int nch)
  {
@@ -98,6 +135,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,int nrl,int nrh,
    int ncl,_CONST ivector& nch)
  {
@@ -126,6 +167,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch)
  {
    if ( (shape=new three_array_shape(sl,sh)) == 0)
@@ -145,6 +190,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,int nrl,int nrh)
  {
    if ( (shape=new three_array_shape(sl,sh)) == 0)
@@ -164,6 +213,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,
   const index_type& nrl,const index_type& nrh)
  {
@@ -184,6 +237,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh)
  {
    if ( (shape=new three_array_shape(sl,sh)) == 0)
@@ -203,7 +260,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(_CONST d3_array& d3v)
  {
    int sl=d3v.slicemin();
@@ -229,6 +289,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
     _CONST imatrix& ncl,_CONST imatrix& nch)
  {
@@ -255,7 +319,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
     int ncl,int nch)
  {
@@ -282,6 +349,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,_CONST ivector& nrl,int nrh,
     int ncl,int nch)
  {
@@ -307,6 +378,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
     int ncl,int nch)
  {
@@ -332,7 +407,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
     int ncl,_CONST imatrix& nch)
  {
@@ -359,6 +437,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
     int ncl,_CONST imatrix& nch)
  {
@@ -384,6 +466,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
    _CONST ivector& ncl,_CONST ivector& nch)
  {
@@ -410,7 +496,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,int nrl,int nrh,
    _CONST ivector& ncl,_CONST ivector& nch)
  {
@@ -431,6 +520,10 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
     int ncl,_CONST ivector& nch)
  {
@@ -451,41 +544,60 @@ double sum(_CONST d3_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
     int ncl,_CONST ivector& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
     _CONST imatrix& ncl,_CONST imatrix& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
-
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
     int ncl,_CONST imatrix& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(int sl,int sh,int nrl,_CONST ivector& nrh,int ncl,
    _CONST imatrix& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
     int ncl,int nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(_CONST d3_array& m2)
  {
    shape=m2.shape;
@@ -502,6 +614,10 @@ double sum(_CONST d3_array& m)
    t = m2.t;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::shallow_copy(_CONST d3_array& m2)
  {
    shape=m2.shape;
@@ -518,6 +634,10 @@ double sum(_CONST d3_array& m)
    t = m2.t;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::initialize()
  {
    if (!(!(*this)))  // only initialize allocated objects
@@ -530,6 +650,10 @@ double sum(_CONST d3_array& m)
  }
 static int testflag=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::deallocate()
  {
    if (shape)
@@ -555,6 +679,10 @@ static int testflag=0;
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::~d3_array()
  {
    if (shape)
@@ -576,6 +704,10 @@ static int testflag=0;
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 three_array_shape::three_array_shape(int sl,int su)
 {
   slice_min=sl;
@@ -589,5 +721,3 @@ three_array_shape::three_array_shape(int sl,int su)
   //ncols=cu-cl+1;
   ncopies=0;
 }
-
-

@@ -4,11 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 double inv_cumd_norm(_CONST double& x);
 double cumd_norm(_CONST double& x);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double normal_tail_right(_CONST double& x)
 {
   const double a3=5;
@@ -25,7 +33,10 @@ double normal_tail_right(_CONST double& x)
   return tmp;
 }
   
-
+/**
+ * Description not yet available.
+ * \param
+ */
 double inv_cumd_norm_inner(double x)
 {
   const double c0=2.515517;
@@ -59,6 +70,11 @@ double inv_cumd_norm_inner(double x)
     return p;
   } 
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double inv_cumd_norm(_CONST double& x)
 {
   double y=inv_cumd_norm_inner(x);
@@ -96,6 +112,10 @@ double cumd_norm(_CONST double& x)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double bounded_cumd_norm(const double x,double beta)
 {
   const double b1=0.319381530;

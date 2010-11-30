@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 void DF_dvsquare(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector square(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -29,6 +37,10 @@ dvar_vector square(_CONST dvar_vector& v1)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvsquare(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -52,6 +64,10 @@ void DF_dvsquare(void)
 
 void DF_dvcube(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector cube(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -73,6 +89,10 @@ dvar_vector cube(_CONST dvar_vector& v1)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvcube(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -95,6 +115,10 @@ void DF_dvcube(void)
 
 void DF_dvfourth(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector fourth(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -117,6 +141,10 @@ dvar_vector fourth(_CONST dvar_vector& v1)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvfourth(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

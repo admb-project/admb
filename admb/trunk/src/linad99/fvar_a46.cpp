@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
 
@@ -21,6 +25,10 @@
 
 void dvdv_elem_div(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector elem_div(_CONST dvar_vector& v1,_CONST dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -57,6 +65,10 @@ dvar_vector elem_div(_CONST dvar_vector& v1,_CONST dvar_vector& v2)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvdv_elem_div(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -88,6 +100,10 @@ void dvdv_elem_div(void)
 
 void dvcv_elem_div(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector elem_div(_CONST dvar_vector& v1,_CONST dvector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -122,6 +138,10 @@ dvar_vector elem_div(_CONST dvar_vector& v1,_CONST dvector& v2)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvcv_elem_div(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -146,6 +166,10 @@ void dvcv_elem_div(void)
 
 void cvdv_elem_div(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector elem_div(_CONST dvector& v1,_CONST dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -180,6 +204,10 @@ dvar_vector elem_div(_CONST dvector& v1,_CONST dvar_vector& v2)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void cvdv_elem_div(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #define HOME_VERSION
 #include "df1b2fun.h"
   df3_two_variable cumd_exponential(const df3_two_variable& x,
@@ -18,6 +22,10 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
   df3_two_variable cumd_gamma(const df3_two_variable& x,
     const df3_two_variable& a);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1b2variable gamma_deviate(const df1b2variable& _x,const df1b2variable& _a)
   {
     df1b2variable& x= (df1b2variable&)(_x);
@@ -32,8 +40,10 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
     return z;
   }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df1b2variable inv_cumd_gamma(const df1b2variable& _y,const df1b2variable& _a)
   {
     df1b2variable& y= (df1b2variable&)(_y);
@@ -111,4 +121,3 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
      }
      return zz;
   }
-

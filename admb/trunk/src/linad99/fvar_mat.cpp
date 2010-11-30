@@ -4,10 +4,17 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "param_init_bounded_number_matrix.h"
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix::dvar_matrix(int nrl,int nrh,int ncl,int nch)
  {
    allocate(nrl,nrh,ncl,nch);
@@ -16,6 +23,10 @@
    #endif 
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix::dvar_matrix(int nrl,int nrh,kkludge_object kk)
  {
    allocate(nrl,nrh);
@@ -24,6 +35,10 @@
    #endif 
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix::dvar_matrix(int nrl,int nrh)
  {
    allocate(nrl,nrh);
@@ -32,6 +47,10 @@
    #endif 
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix::dvar_matrix(const param_init_bounded_number_matrix& pibnm)
  {
    int indexmin = pibnm.indexmin();
@@ -49,6 +68,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix dvar_matrix::sub(int nrl,int nrh)
  {
    if (allocated(*this))
@@ -66,6 +89,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::allocate(int nrl,int nrh)
  {
    if (nrl>nrh)
@@ -88,7 +115,10 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::allocate(int nrl,int nrh,int ncl,int nch)
  {
    if (nrl>nrh)
@@ -114,6 +144,11 @@
      }
    }
  }
+
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::allocate(ad_integer nrl,ad_integer nrh)
  {
    if (nrl>nrh)
@@ -135,7 +170,10 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::allocate(_CONST dmatrix& m1)
  {
    if (m1.shape)
@@ -168,6 +206,10 @@
    }
  }
  
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::allocate(_CONST dvar_matrix& m1)
  {
    if (m1.shape)
@@ -201,6 +243,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix::dvar_matrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
@@ -209,6 +255,10 @@
    #endif 
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::allocate(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
    if (nrl>nrh)
@@ -245,6 +295,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix::dvar_matrix(int nrl,int nrh,int ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
@@ -253,6 +307,10 @@
    #endif 
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::allocate(int nrl,int nrh,int ncl,_CONST ivector& nch)
  {  
    if (nrl>nrh)
@@ -288,6 +346,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::allocate(int nrl,int nrh,_CONST ivector& ncl,int nch)
  {
    if (nrl>nrh)
@@ -323,7 +385,10 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix::dvar_matrix(_CONST dvar_matrix& m2)
  {
    if (!(m2))
@@ -344,6 +409,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::shallow_copy(const dvar_matrix& m2)
  {
    if (!(m2))
@@ -364,6 +433,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::allocate(void)
  {
    index_min=1;
@@ -372,12 +445,19 @@
    m = NULL;
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix::dvar_matrix(void)
  {
    allocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix::dvar_matrix(_CONST dmatrix& m2)
  {
    index_min=m2.index_min;
@@ -401,7 +481,10 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix::~dvar_matrix()
  {
    if (shape)
@@ -417,7 +500,10 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::deallocate()
  {
    if (shape)
@@ -434,6 +520,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix& dvar_matrix::operator= (_CONST dvar_matrix& m1)
  {
    if (!allocated(*this))
@@ -460,6 +550,10 @@
    return(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix& dvar_matrix::operator= (_CONST dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
@@ -476,8 +570,10 @@
    return(*this);
  }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void copy_status(BOR_CONST ostream& _s,_CONST dvar_matrix& m1)
   {
     ostream& s= (ostream&) _s;

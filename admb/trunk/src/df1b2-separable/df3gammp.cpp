@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2009 ADMB Foundation
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 #include <df13fun.h>
 #include "mconf.h"

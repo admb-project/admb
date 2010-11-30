@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d7_array operator / (_CONST d7_array& m, CGNU_DOUBLE d)
    {
      d7_array tmp;
@@ -17,6 +25,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    void d7_array::operator /= ( CGNU_DOUBLE d)
    {
      for (int i=indexmin();i<=indexmax();i++)
@@ -25,6 +37,10 @@
      }
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
   double sum(_CONST d7_array& m)
   {
     RETURN_ARRAYS_INCREMENT();

@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 void DF_dvmfexp(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector mfexp(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -38,6 +46,10 @@ dvar_vector mfexp(_CONST dvar_vector& v1)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvmfexp(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: fvar_ops.cpp
 // operators involving prevariables
 
@@ -27,6 +31,10 @@
 
 #if defined(__BORLANDC__)
 #  if (__BORLANDC__  >= 0x0540) 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& prevariable::operator=( CGNU_DOUBLE t) _CONST
     {
       (*v).x=t;
@@ -35,6 +43,10 @@
       return((prevariable&)(*this));
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& prevariable::operator=(_CONST prevariable& t) _CONST
     {
       (*v).x=(*t.v).x;
@@ -45,6 +57,10 @@
 #  endif
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& prevariable::operator=(_CONST prevariable& t)
     {
       (*v).x=(*t.v).x;
@@ -53,6 +69,10 @@
       return(*this);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     dvariable& dvariable::operator=(_CONST prevariable& t)
     {
       (*v).x=(*t.v).x;
@@ -61,6 +81,10 @@
       return(*this);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     dvariable& dvariable::operator=( CGNU_DOUBLE t)
     {
       (*v).x=t;
@@ -69,6 +93,10 @@
       return(*this);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& prevariable::operator=( CGNU_DOUBLE t)
     {
       (*v).x=t;
@@ -77,7 +105,10 @@
       return(*this);
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void df_eq_pvdoub(void)
   {
     * gradient_structure::GRAD_STACK1->ptr->dep_addr=0.;

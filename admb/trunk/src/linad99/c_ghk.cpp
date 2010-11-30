@@ -4,7 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double ghk(const dvector& lower,const dvector& upper,const dmatrix& Sigma,
   const dmatrix& eps)
 {
@@ -40,6 +49,10 @@ double ghk(const dvector& lower,const dvector& upper,const dmatrix& Sigma,
   return ssum/m;  
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ghk_test(const dmatrix& eps,int i)
 {	
   if (i<eps.indexmin())
@@ -56,6 +69,10 @@ void ghk_test(const dmatrix& eps,int i)
   }   
 }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double ghk(const dvector& lower,const dvector& upper,const dmatrix& Sigma,
   const dmatrix& eps,int i)
 {

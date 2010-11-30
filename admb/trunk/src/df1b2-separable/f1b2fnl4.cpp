@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fnl.h>
 #include <adrndeff.h>
 
@@ -34,6 +38,10 @@ funnel_init_df1b2vector::funnel_init_df1b2vector
   void funnel_init_df1b2vector::set_index(imatrix&,int& ii){;}
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_init_df1b2vector::allocate(void)
 {
   int mmin=p->indexmin();
@@ -45,5 +53,4 @@ void funnel_init_df1b2vector::allocate(void)
     (*this)(i)=value((*p)(i));
   }
   //cout << "HERE" << endl;
-
 }

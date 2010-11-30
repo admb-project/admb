@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -26,6 +30,10 @@ void dfcholeski_decomp(void);
 // compute log of determinant of a spd matrix
 void df_ln_det_choleski(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable ln_det_choleski(_CONST dvar_matrix& MM)
 {
   // kludge to deal with constantness
@@ -124,6 +132,10 @@ dvariable ln_det_choleski(_CONST dvar_matrix& MM)
   return vlog_det;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df_ln_det_choleski(void)
 {
   verify_identifier_string("pa");
@@ -271,6 +283,11 @@ void df_ln_det_choleski(void)
 
   dfM.save_dmatrix_derivatives(MMpos);
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 static dvariable error_condition(int &onerror)
 {
   onerror=1;
@@ -278,8 +295,10 @@ static dvariable error_condition(int &onerror)
   return v;
 }
   
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
 {
   onerror=0;
@@ -374,4 +393,3 @@ dvariable ln_det_choleski_error(const dvar_matrix& MM,int & onerror)
       set_gradient_stack(df_ln_det_choleski);
   return vlog_det;
 }
-

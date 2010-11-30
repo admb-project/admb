@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -17,6 +21,10 @@
 
 #include <string.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvector::save_dvector_position(void) _CONST
 {
   // saves the size and address information for a dvar_vector
@@ -26,6 +34,10 @@ void dvector::save_dvector_position(void) _CONST
   gradient_structure::get_fp()->fwrite(&tmp,wsize);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ivector_position restore_ivector_position(void)
 {
   // reads back the size and address information for a ivector
@@ -37,7 +49,10 @@ ivector_position restore_ivector_position(void)
   return tmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector_position restore_dvar_vector_position(void)
 {
   // reads back the size and address information for a dvar_vector
@@ -48,6 +63,10 @@ dvar_vector_position restore_dvar_vector_position(void)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector_position restore_dvector_position(void)
 {
   // reads back the size and address information for a dvar_vector
@@ -58,6 +77,10 @@ dvector_position restore_dvector_position(void)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar_vector::save_dvar_vector_value(void) _CONST
 {
   //int ierr=save_dvar_vector_position();
@@ -74,7 +97,10 @@ void dvar_vector::save_dvar_vector_value(void) _CONST
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvector::save_dvector_value(void) _CONST
 {
   // saves the size, address, and value information for a dvar_vector
@@ -90,6 +116,10 @@ void dvector::save_dvector_value(void) _CONST
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ivector::save_ivector_value(void) _CONST
 {
   // saves the size, address, and value information for a ivector
@@ -104,7 +134,10 @@ void ivector::save_ivector_value(void) _CONST
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector restore_dvector_value(BOR_CONST dvector_position& tmp)
 {
   // restores the size, address, and value information for a dvar_vector
@@ -121,6 +154,10 @@ dvector restore_dvector_value(BOR_CONST dvector_position& tmp)
   return temp_vec;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ivector restore_ivector_value(BOR_CONST ivector_position& tmp)
 {
   // restores the size, address, and value information for a ivector
@@ -137,7 +174,10 @@ ivector restore_ivector_value(BOR_CONST ivector_position& tmp)
   // Back up the stream again for the next function
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector restore_dvar_vector_value(BOR_CONST dvar_vector_position& tmp)
 {
   // restores the size, address, and value information for a dvar_vector
@@ -155,6 +195,10 @@ dvector restore_dvar_vector_value(BOR_CONST dvar_vector_position& tmp)
   return temp_vec;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar_matrix::save_dvar_matrix_value(void) _CONST
 {
   // saves the size, address, and value information for a dvar_matrix
@@ -166,4 +210,3 @@ void dvar_matrix::save_dvar_matrix_value(void) _CONST
     ((*this)(i).save_dvar_vector_position());
   }
 }
-

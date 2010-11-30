@@ -4,8 +4,16 @@
  *
  * Copyright (c) 2009, 2010 ADMB Foundation
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix sort(_CONST dmatrix& m,int column,int NSTACK)
 {
   ivector ind(m.rowmin(),m.rowmax());

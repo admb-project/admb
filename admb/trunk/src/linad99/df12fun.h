@@ -38,11 +38,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(__DF12FUN__)
 #  define __DF12FUN__
 #include <fvar.hpp>
 //class df1b2variable;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1_two_variable
   {
     double v[3];
@@ -66,6 +74,10 @@
 
   inline  double value(const df1_two_variable& x) { return double(*x.get_u()); }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class init_df1_two_variable : public df1_two_variable
   {
   public:
@@ -75,8 +87,10 @@
     init_df1_two_variable(double );
   };
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1_two_vector
   {
     int index_min;
@@ -109,7 +123,10 @@
  dvector value(const df1_two_vector& v);
  dvector first_derivatives(const df1_two_vector& v);
 
-    
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1_two_matrix
   {
     int index_min;

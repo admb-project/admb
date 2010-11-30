@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 /** Cube of a number; variable object.
@@ -22,7 +26,6 @@ prevariable& cube(_CONST prevariable& v1)
      &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),3*x2 );
    return(*gradient_structure::RETURN_PTR);
  }
-
 
 /** Cube of a number; variable object.
 Optimized for derivative computations.

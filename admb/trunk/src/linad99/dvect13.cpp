@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix column_vector(_CONST dvector& v)
 {
   int min=v.indexmin();
@@ -18,6 +26,10 @@ dmatrix column_vector(_CONST dvector& v)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix row_vector(_CONST dvector& v)
 {
   int min=v.indexmin();
@@ -30,6 +42,10 @@ dmatrix row_vector(_CONST dvector& v)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix column_vector(_CONST dvar_vector& v)
 {
   int min=v.indexmin();
@@ -42,6 +58,10 @@ dvar_matrix column_vector(_CONST dvar_vector& v)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix row_vector(_CONST dvar_vector& v)
 {
   int min=v.indexmin();

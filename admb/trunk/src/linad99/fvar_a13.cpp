@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -14,7 +18,10 @@
    #include <alloc.h>
 #endif
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector::dvar_vector(int ncl,int nch,kkludge_object kg)
  {
    va=NULL;

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
 
@@ -23,6 +27,11 @@
 #ifndef __SUN__
 #endif
 #include <math.h>
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix& dvar_matrix::operator /= ( CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -34,6 +43,10 @@ dvar_matrix& dvar_matrix::operator /= ( CGNU_DOUBLE x)
   return (*this);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix& dvar_matrix::operator /= ( _CONST prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -45,6 +58,10 @@ dvar_matrix& dvar_matrix::operator /= ( _CONST prevariable& x)
   return (*this);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix& dvar_matrix::operator = ( CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -56,6 +73,10 @@ dvar_matrix& dvar_matrix::operator = ( CGNU_DOUBLE x)
   return (*this);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix& dvar_matrix::operator = (_CONST prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -67,6 +88,10 @@ dvar_matrix& dvar_matrix::operator = (_CONST prevariable& x)
   return (*this);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix& dvar_matrix::operator *= ( CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -78,6 +103,10 @@ dvar_matrix& dvar_matrix::operator *= ( CGNU_DOUBLE x)
   return (*this);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix& dvar_matrix::operator *= ( _CONST prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -88,4 +117,3 @@ dvar_matrix& dvar_matrix::operator *= ( _CONST prevariable& x)
   RETURN_ARRAYS_DECREMENT();
   return (*this);
 }
-

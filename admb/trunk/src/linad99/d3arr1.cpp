@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
 #ifndef OPT_LIB
+/**
+ * Description not yet available.
+ * \param
+ */
     double& d3_array::operator () (int k, int i, int j)
     {
       #ifdef SAFE_ARRAYS
@@ -23,7 +31,10 @@
       return ( (elem(k))(i,j) );
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     dvector& d3_array::operator () (int k, int i)
     {
       #ifdef SAFE_ARRAYS
@@ -39,9 +50,10 @@
       return ( (elem(k))(i) );
     }
 
-
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix& d3_array::operator[] (int i)
  {
    #ifdef SAFE_ARRAYS
@@ -57,6 +69,10 @@
    return(t[i]);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix& d3_array::operator() (int i)
  {
    #ifdef SAFE_ARRAYS

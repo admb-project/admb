@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -25,6 +29,10 @@ void dfcholeski_decomp_positive(void);
 dvar_matrix choleski_decomp_positive(_CONST dvar_matrix& MM,double eps,
   dvariable& _fpen);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix positive_definite_matrix(_CONST dvar_matrix& MM,double eps,
   dvariable& _fpen)
 {
@@ -32,6 +40,10 @@ dvar_matrix positive_definite_matrix(_CONST dvar_matrix& MM,double eps,
   return ch_m*trans(ch_m);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix choleski_decomp_positive(_CONST dvar_matrix& MM,double eps,
   dvariable& _fpen)
 {
@@ -105,6 +117,10 @@ dvar_matrix choleski_decomp_positive(_CONST dvar_matrix& MM,double eps,
   return vc;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfcholeski_decomp_positive(void)
 {
   verify_identifier_string("lo");

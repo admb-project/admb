@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class dvariable 
 
@@ -24,6 +28,10 @@
 #endif
 #include <math.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator / ( CGNU_DOUBLE e,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp;
@@ -35,6 +43,10 @@ dvar_matrix operator / ( CGNU_DOUBLE e,_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator / (_CONST prevariable& e,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp;
@@ -46,6 +58,10 @@ dvar_matrix operator / (_CONST prevariable& e,_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator / (_CONST prevariable& e,_CONST dmatrix& m)
 {
   dvar_matrix tmp;

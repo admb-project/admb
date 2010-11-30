@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream& operator << (_CONST ostream& _ofs,_CONST pre_column_print& p)
 {
   ostream& ofs= (ostream&) _ofs;
@@ -18,11 +26,19 @@ ostream& operator << (_CONST ostream& _ofs,_CONST pre_column_print& p)
   return ofs;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 pre_column_print column_print(_CONST dvector& v)
 {
   return pre_column_print(v); 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream& operator << (_CONST ostream& _ofs,_CONST pre_zero_print& p)
 {
   ostream& ofs= (ostream&) _ofs;
@@ -39,6 +55,10 @@ ostream& operator << (_CONST ostream& _ofs,_CONST pre_zero_print& p)
   return ofs;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 pre_zero_print zero_print(_CONST dvector& v)
 {
   return pre_zero_print(v); 

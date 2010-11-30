@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar_fn.cpp
 // math.h functions involving prevariables
 #include "fvar.hpp"
@@ -19,6 +23,10 @@ void gradfree(dlink *);
 //extern dlist * GRAD_LIST;          //js
 //extern grad_stack  * GRAD_STACK1;
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& exp(_CONST prevariable& v1)
     {
       double tmp;
@@ -30,6 +38,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& atan(_CONST prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -39,6 +51,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& ldexp(_CONST prevariable& v1, BOR_CONST int& exponent)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -48,7 +64,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& sqrt(_CONST prevariable& v1)
     {
       double tmp=v1.v->x;
@@ -66,6 +85,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& sqr(_CONST prevariable& v1)
     {
       double tmp=v1.v->x;
@@ -83,6 +106,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& tan(_CONST prevariable& v1)
     {
       double t = ::tan(v1.v->x);
@@ -93,6 +120,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& tanh(_CONST prevariable& v1)
     {
       double t = ::tanh(v1.v->x);
@@ -103,6 +134,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& acos(_CONST prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -112,6 +147,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& asin(_CONST prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -121,6 +160,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& pow(_CONST prevariable& v1,_CONST prevariable& v2)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -134,6 +177,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& pow( CGNU_DOUBLE u,_CONST prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -147,6 +194,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& sinh(_CONST prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -156,6 +207,10 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& cosh(_CONST prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -165,19 +220,30 @@ void gradfree(dlink *);
       return(*gradient_structure::RETURN_PTR);
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& atan2(_CONST prevariable& v1,_CONST prevariable& v2)
     {
   dvariable x = v1/v2;
       return atan(x);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& atan2(_CONST prevariable& v1, CGNU_DOUBLE v2)
     {
   dvariable x = v1/v2;
       return atan(x);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable& atan2( CGNU_DOUBLE v1,_CONST prevariable& v2)
     {
   dvariable x = v1/v2;

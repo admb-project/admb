@@ -4,13 +4,25 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  struct dvec_ptr_ptr
  {
    void ** m;
  };
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix::dmatrix(BOR_CONST dvar_matrix_position& pos)
  {
    int nrl=pos.row_min;
@@ -60,6 +72,10 @@
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix::dmatrix(BOR_CONST dmatrix_position& pos)
  {
    int nrl=pos.row_min;

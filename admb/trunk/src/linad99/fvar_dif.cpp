@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 void DF_first_diference(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector  first_difference(_CONST dvar_vector& x)
  {
    if (x.size()<=1)
@@ -35,6 +43,10 @@ void DF_first_diference(void);
    return(tmp);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_first_diference(void)
 {
   verify_identifier_string("CE1");

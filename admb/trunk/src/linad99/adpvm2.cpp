@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 //#if defined(__BORLANDC__) && !defined(__linux__)
 
 #include <stdio.h>
@@ -29,6 +33,10 @@ int ad_constant_flag=0;
 
 #define AD__PRELOAD
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int load_adpvm_library(void)
 { 
   int ierr=0;
@@ -38,6 +46,10 @@ int load_adpvm_library(void)
 
 #if defined(USE_ADPVM)
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack_number_derivative(void)
 {
   verify_identifier_string("D");
@@ -47,6 +59,10 @@ void adpvm_pack_number_derivative(void)
   verify_identifier_string("C");
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack_index_bounds(void)
 {
   verify_identifier_string("L");
@@ -57,6 +73,10 @@ void adpvm_pack_index_bounds(void)
   //pvm_pkint(&imax,1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const prevariable& _v)
 {
   dvariable& v = (dvariable&) _v;
@@ -68,18 +88,30 @@ void adpvm_unpack(const prevariable& _v)
             set_gradient_stack(adpvm_pack_number_derivative);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const double& _v)
 {
   double& v = (double&) _v;
   pvm_upkdouble(&v,1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const int& _v)
 {
   int& v = (int&) _v;
   pvm_upkint(&v,1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_send_derivatives(void)
 {
   verify_identifier_string("F");
@@ -90,6 +122,11 @@ void adpvm_send_derivatives(void)
 }
 
 #if defined(HAVE_PVM)
+
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpvm_recv(int id,int n)
 {
   int status=pvm_recv(id,n);
@@ -106,12 +143,21 @@ int adpvm_recv(int id,int n)
   return status;
 }
 #else
+
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpvm_recv(int id,int n)
 {
   return 0;
 }
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_receive_derivatives(void)
 {
   verify_identifier_string("H");
@@ -127,6 +173,11 @@ void adpvm_receive_derivatives(void)
 }
 
 #if defined(HAVE_PVM)
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_send(int id,int n)
 {
   int err=pvm_send(id,n);
@@ -142,11 +193,20 @@ void adpvm_send(int id,int n)
   }
 }
 #else
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_send(int id,int n)
 {
 }
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack_vector_derivatives(void)
 {
   kkludge_object kk;
@@ -158,6 +218,10 @@ void adpvm_unpack_vector_derivatives(void)
   v.save_dvector_derivatives(dvpos);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const dvar_vector& _v)
 {
   dvar_vector& v =(dvar_vector&) _v;
@@ -174,6 +238,10 @@ void adpvm_pack(const dvar_vector& _v)
             set_gradient_stack(adpvm_unpack_vector_derivatives);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const dvar_matrix & _m)
 {
   dvar_matrix& m = (dvar_matrix &) _m;
@@ -194,6 +262,10 @@ void adpvm_pack(const dvar_matrix & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const dvar3_array & _m)
 {
   dvar3_array& m = (dvar3_array &) _m;
@@ -213,7 +285,11 @@ void adpvm_pack(const dvar3_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const dvar4_array & _m)
 {
   dvar4_array& m = (dvar4_array &) _m;
@@ -234,6 +310,10 @@ void adpvm_pack(const dvar4_array & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const dvar5_array & _m)
 {
   dvar5_array& m = (dvar5_array &) _m;
@@ -254,27 +334,39 @@ void adpvm_pack(const dvar5_array & _m)
   }
 }
     
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void initialize_pvm_buffer(void)
 {
   int bufid = pvm_initsend( PvmDataDefault );
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpvm_initsend( int mode )
 {
   int bufid = pvm_initsend( mode );
   return bufid;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void  adpvm_end_receive(void)
 {
   gradient_structure::GRAD_STACK1->
             set_gradient_stack(initialize_pvm_buffer);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack_number_derivative(void)
 {
   verify_identifier_string("S");
@@ -285,7 +377,10 @@ void adpvm_unpack_number_derivative(void)
   save_double_derivative(dv,dvpos);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const prevariable& _v)
 {
   prevariable& v = (prevariable&) _v;
@@ -297,6 +392,10 @@ void adpvm_pack(const prevariable& _v)
             set_gradient_stack(adpvm_unpack_number_derivative);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack_vector_derivatives(void)
 {
   //int bufid = adpvm_initsend( PvmDataRaw );
@@ -309,6 +408,10 @@ void adpvm_pack_vector_derivatives(void)
   verify_identifier_string("B");
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const dvar_vector& _v)
 {
   dvar_vector& v = (dvar_vector&) _v;
@@ -343,6 +446,10 @@ void adpvm_unpack(const dvar_vector& _v)
             set_gradient_stack(adpvm_pack_vector_derivatives);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const dvar_matrix & _m)
 {
   dvar_matrix& m = (dvar_matrix &) _m;
@@ -373,6 +480,10 @@ void adpvm_unpack(const dvar_matrix & _m)
             set_gradient_stack(adpvm_pack_index_bounds);
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const dvar3_array & _m)
 {
   dvar3_array& m = (dvar3_array &) _m;
@@ -397,6 +508,10 @@ void adpvm_unpack(const dvar3_array & _m)
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const dvar4_array & _m)
 {
   dvar4_array& m = (dvar4_array &) _m;
@@ -421,6 +536,10 @@ void adpvm_unpack(const dvar4_array & _m)
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const dvar5_array & _m)
 {
   dvar5_array& m = (dvar5_array &) _m;
@@ -445,21 +564,37 @@ void adpvm_unpack(const dvar5_array & _m)
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(double v)
 {
   pvm_pkdouble(&v,1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(char * v,int n)
 {
   pvm_pkbyte(v,n,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(char * v,int n)
 {
   pvm_upkbyte(v,n,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const dvector& _v)
 {
   dvector& v =(dvector&) _v;
@@ -480,6 +615,10 @@ void adpvm_pack(const dvector& _v)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const dmatrix & _m)
 {
   dmatrix& m = (dmatrix &) _m;
@@ -500,6 +639,10 @@ void adpvm_pack(const dmatrix & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const d3_array & _m)
 {
   d3_array& m = (d3_array &) _m;
@@ -520,6 +663,10 @@ void adpvm_pack(const d3_array & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const d4_array & _m)
 {
   d4_array& m = (d4_array &) _m;
@@ -540,6 +687,10 @@ void adpvm_pack(const d4_array & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const d5_array & _m)
 {
   d5_array& m = (d5_array &) _m;
@@ -560,6 +711,10 @@ void adpvm_pack(const d5_array & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const dvector& _v)
 {
   dvector& v = (dvector&) _v;
@@ -584,7 +739,10 @@ void adpvm_unpack(const dvector& _v)
   pvm_upkdouble(&(v(imin)),imax-imin+1,1);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const dmatrix & _m)
 {
   dmatrix& m = (dmatrix &) _m;
@@ -609,6 +767,10 @@ void adpvm_unpack(const dmatrix & _m)
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const d3_array & _m)
 {
   d3_array& m = (d3_array &) _m;
@@ -633,6 +795,10 @@ void adpvm_unpack(const d3_array & _m)
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const d4_array & _m)
 {
   d4_array& m = (d4_array &) _m;
@@ -657,6 +823,10 @@ void adpvm_unpack(const d4_array & _m)
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const d5_array & _m)
 {
   d5_array& m = (d5_array &) _m;
@@ -681,11 +851,19 @@ void adpvm_unpack(const d5_array & _m)
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(int v)
 {
   pvm_pkint(&v,1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const ivector& _v)
 {
   ivector& v =(ivector&) _v;
@@ -696,6 +874,10 @@ void adpvm_pack(const ivector& _v)
   pvm_pkint(&(v(imin)),imax-imin+1,1);
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const imatrix & _m)
 {
   imatrix& m = (imatrix &) _m;
@@ -716,6 +898,10 @@ void adpvm_pack(const imatrix & _m)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_pack(const i3_array & _m)
 {
   i3_array& m = (i3_array &) _m;
@@ -757,6 +943,10 @@ void adpvm_pack(const i5_array & _m)
 }
 */
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const ivector& _v)
 {
   ivector& v = (ivector&) _v;
@@ -781,8 +971,10 @@ void adpvm_unpack(const ivector& _v)
   pvm_upkint(&(v(imin)),imax-imin+1,1);
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const imatrix & _m)
 {
   imatrix& m = (imatrix &) _m;
@@ -809,6 +1001,11 @@ void adpvm_unpack(const imatrix & _m)
     pvm_unpack(m(i));
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_unpack(const i3_array & _m)
 {
   i3_array& m = (i3_array &) _m;
@@ -884,24 +1081,40 @@ void adpvm_unpack(const i5_array & _m)
 // ************************************************************
 // ************************************************************
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const prevariable& _v)
 {
   dvariable& v = (dvariable&) _v;
   pvm_upkdouble((double*)(&(value(v))),1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const double& _v)
 {
   double& v = (double&) _v;
   pvm_upkdouble(&v,1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const int& _v)
 {
   int& v = (int&) _v;
   pvm_upkint(&v,1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const dvar_vector& _v)
 {
   dvar_vector& v =(dvar_vector&) _v;
@@ -912,6 +1125,10 @@ void pvm_pack(const dvar_vector& _v)
   pvm_pkdouble(&(value(v(imin))),imax-imin+1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const dvar_matrix & _m)
 {
   dvar_matrix& m = (dvar_matrix &) _m;
@@ -932,6 +1149,10 @@ void pvm_pack(const dvar_matrix & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const dvar3_array & _m)
 {
   dvar3_array& m = (dvar3_array &) _m;
@@ -952,6 +1173,10 @@ void pvm_pack(const dvar3_array & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const dvar4_array & _m)
 {
   dvar4_array& m = (dvar4_array &) _m;
@@ -972,6 +1197,10 @@ void pvm_pack(const dvar4_array & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const dvar5_array & _m)
 {
   dvar5_array& m = (dvar5_array &) _m;
@@ -996,14 +1225,20 @@ void pvm_pack(const dvar5_array & _m)
 
 void  pvm_end_receive(void) {; }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const prevariable& _v)
 {
   prevariable& v = (prevariable&) _v;
   pvm_pkdouble((double*)(&(value(v))),1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const dvar_vector& _v)
 {
   dvar_vector& v = (dvar_vector&) _v;
@@ -1033,6 +1268,10 @@ void pvm_unpack(const dvar_vector& _v)
   pvm_upkdouble(&(value(v(imin))),imax-imin+1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const dvar_matrix & _m)
 {
   dvar_matrix& m = (dvar_matrix &) _m;
@@ -1057,6 +1296,10 @@ void pvm_unpack(const dvar_matrix & _m)
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const dvar3_array & _m)
 {
   dvar3_array & m = (dvar3_array &) _m;
@@ -1081,6 +1324,10 @@ void pvm_unpack(const dvar3_array & _m)
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const dvar4_array & _m)
 {
   dvar4_array& m = (dvar4_array &) _m;
@@ -1105,6 +1352,10 @@ void pvm_unpack(const dvar4_array & _m)
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const dvar5_array & _m)
 {
   dvar5_array& m = (dvar5_array &) _m;
@@ -1129,11 +1380,19 @@ void pvm_unpack(const dvar5_array & _m)
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(double v)
 {
   pvm_pkdouble(&v,1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const dvector& _v)
 {
   dvector& v =(dvector&) _v;
@@ -1154,6 +1413,10 @@ void pvm_pack(const dvector& _v)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const dmatrix & _m)
 {
   dmatrix& m = (dmatrix &) _m;
@@ -1174,6 +1437,10 @@ void pvm_pack(const dmatrix & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const d3_array & _m)
 {
   d3_array& m = (d3_array &) _m;
@@ -1194,6 +1461,10 @@ void pvm_pack(const d3_array & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const d4_array & _m)
 {
   d4_array& m = (d4_array &) _m;
@@ -1214,6 +1485,10 @@ void pvm_pack(const d4_array & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const d5_array & _m)
 {
   d5_array& m = (d5_array &) _m;
@@ -1234,6 +1509,10 @@ void pvm_pack(const d5_array & _m)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const dvector& _v)
 {
   dvector& v = (dvector&) _v;
@@ -1258,7 +1537,10 @@ void pvm_unpack(const dvector& _v)
   pvm_upkdouble(&(v(imin)),imax-imin+1,1);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const dmatrix & _m)
 {
   dmatrix& m = (dmatrix &) _m;
@@ -1283,6 +1565,10 @@ void pvm_unpack(const dmatrix & _m)
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const d3_array & _m)
 {
   d3_array& m = (d3_array &) _m;
@@ -1307,6 +1593,10 @@ void pvm_unpack(const d3_array & _m)
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const d4_array & _m)
 {
   d4_array& m = (d4_array &) _m;
@@ -1331,6 +1621,10 @@ void pvm_unpack(const d4_array & _m)
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const d5_array & _m)
 {
   d5_array& m = (d5_array &) _m;
@@ -1355,11 +1649,19 @@ void pvm_unpack(const d5_array & _m)
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(int v)
 {
   pvm_pkint(&v,1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const ivector& _v)
 {
   ivector& v =(ivector&) _v;
@@ -1370,6 +1672,10 @@ void pvm_pack(const ivector& _v)
   pvm_pkint(&(v(imin)),imax-imin+1,1);
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const imatrix & _m)
 {
   imatrix& m = (imatrix &) _m;
@@ -1390,6 +1696,10 @@ void pvm_pack(const imatrix & _m)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_pack(const i3_array & _m)
 {
   i3_array& m = (i3_array &) _m;
@@ -1431,6 +1741,10 @@ void pvm_pack(const i5_array & _m)
 }
 */
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const ivector& _v)
 {
   ivector& v = (ivector&) _v;
@@ -1455,8 +1769,10 @@ void pvm_unpack(const ivector& _v)
   pvm_upkint(&(v(imin)),imax-imin+1,1);
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const imatrix & _m)
 {
   imatrix& m = (imatrix &) _m;
@@ -1483,6 +1799,11 @@ void pvm_unpack(const imatrix & _m)
     pvm_unpack(m(i));
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void pvm_unpack(const i3_array & _m)
 {
   i3_array& m = (i3_array &) _m;
@@ -1507,21 +1828,37 @@ void pvm_unpack(const i3_array & _m)
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpvm_slave_vinitsend(int mode)
 {
   return adpvm_initsend(mode);
 }
   
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpvm_slave_cinitsend(int mode)
 {
   return adpvm_initsend(mode);
 }
   
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_slave_vsend(int ptid)
 {
   adpvm_send(ptid, 2);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_slave_csend(int ptid)
 {
   ad_constant_flag=1;
@@ -1529,6 +1866,10 @@ void adpvm_slave_csend(int ptid)
   ad_constant_flag=0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpvm_slave_vrecv(int ptid)
 {
   int ierr=pvm_recv(ptid,-1);
@@ -1547,6 +1888,10 @@ int adpvm_slave_vrecv(int ptid)
   return ierr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpvm_slave_crecv(int ptid)
 {
   ad_constant_flag=1;
@@ -1555,7 +1900,10 @@ int adpvm_slave_crecv(int ptid)
   return ierr;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpvm_master_vinitsend(int mode)
 {
   int bufid = adpvm_initsend(mode);
@@ -1563,13 +1911,20 @@ int adpvm_master_vinitsend(int mode)
   return bufid;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpvm_master_cinitsend(int mode)
 {
   int bufid = adpvm_initsend(mode);
   return bufid;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_master_csend(int id)
 {
   ad_constant_flag=1;
@@ -1577,11 +1932,19 @@ void adpvm_master_csend(int id)
   ad_constant_flag=0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_master_vsend(int id)
 {
   adpvm_send(id,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpvm_master_vrecv(int id)
 {
   return adpvm_recv(id,2); 
@@ -1594,11 +1957,19 @@ int adpvm_master_crecv(int id)
   return status;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void  adpvm_master_end_vreceive(void)
 {
   adpvm_end_receive();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void  adpvm_slave_end_vreceive(void)
 {
   adpvm_end_receive();
@@ -1608,6 +1979,10 @@ void  adpvm_master_end_creceive(void) { }
 
 void  adpvm_slave_end_creceive(void) { }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector get_x_from_master(void)
 {
   dvar_vector x;
@@ -1620,6 +1995,10 @@ dvar_vector get_x_from_master(void)
   return x;
 }
   
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector get_dvector_from_master(void)
 {
   dvector x;
@@ -1632,6 +2011,10 @@ dvector get_dvector_from_master(void)
   return x;
 }
   
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix get_dmatrix_from_master(void)
 {
   dmatrix x;
@@ -1644,7 +2027,10 @@ dmatrix get_dmatrix_from_master(void)
   return x;
 }
   
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void send_f_to_master(const dvariable& f)
 {
   // ***************  begin send block ***********************************
@@ -1655,6 +2041,10 @@ void send_f_to_master(const dvariable& f)
   // ***************  end send block ***********************************
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void send_dv3_to_master(const dvar3_array& v)
 {
   // ***************  begin send block ***********************************
@@ -1664,6 +2054,11 @@ void send_dv3_to_master(const dvar3_array& v)
   adpvm_slave_vsend(ptid);/* send buffer to master */
   // ***************  end send block ***********************************
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void send_dvector_to_master(const dvector& v)
 {
   // ***************  begin send block ***********************************

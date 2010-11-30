@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 //class df1b2matrix;
 
 //#include <df1b2fun.h>
@@ -13,6 +17,10 @@
 
   int df1_two_variable::num_ind_var=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable::df1_two_variable(const df1_two_variable& x)
   {
     v[0]=x.v[0];
@@ -20,6 +28,10 @@
     v[2]=x.v[2];
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df1_two_vector::df1_two_vector(const df1_two_vector& m2)
  {
    index_min=m2.index_min;
@@ -32,11 +44,19 @@
    v = m2.v;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df1_two_vector::~df1_two_vector()
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df1_two_vector::deallocate(void)
  {
    if(shape)
@@ -56,6 +76,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector value(const df1_two_vector& v)
  {
    
@@ -69,7 +93,10 @@
    return cv;
  }
    
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1_two_vector::initialize(void)
   {
     int mmin=indexmin();
@@ -80,16 +107,28 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_vector::df1_two_vector(void)
   {
     allocate();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_vector::df1_two_vector(int min,int max)
   {
     allocate(min,max);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1_two_vector::allocate(int min,int max)
   {
     index_min=min;
@@ -109,6 +148,10 @@
     v-=min;
   }
   
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1_two_vector::allocate(void)
   {
     index_min=0;
@@ -117,7 +160,10 @@
     shape=0;
   }
     
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix value(const df1_two_matrix& v)
  {
    
@@ -137,7 +183,10 @@
    return cm;
  }
    
-
+/**
+ * Description not yet available.
+ * \param
+ */
  df1_two_matrix::df1_two_matrix(const df1_two_matrix& m2)
  {
    index_min=m2.index_min;
@@ -150,11 +199,19 @@
    v = m2.v;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  df1_two_matrix::~df1_two_matrix()
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void df1_two_matrix::deallocate(void)
  {
    if (shape)
@@ -174,7 +231,10 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void df1_two_matrix::initialize(void)
   {
     int mmin=indexmin();
@@ -185,7 +245,10 @@
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_matrix::df1_two_matrix(int rmin,int rmax,int cmin,int cmax)
   {
     index_min=rmin;
@@ -209,7 +272,10 @@
     }
   }
     
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable& df1_two_variable::operator -= (const df1_two_variable& v)
   {
     *get_u() -= *v.get_u();
@@ -218,6 +284,10 @@
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator - (const df1_two_variable& v)
   {
     df1_two_variable z;
@@ -229,6 +299,10 @@
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable& df1_two_variable::operator += (const df1_two_variable& v)
   {
     *get_u() += *v.get_u();
@@ -237,6 +311,10 @@
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable& df1_two_variable::operator *= (const df1_two_variable& v)
   {
     df1_two_variable x=*this * v;
@@ -244,6 +322,10 @@
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable& df1_two_variable::operator += (double v)
   {
     *get_u() += v;
@@ -251,6 +333,10 @@
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable& df1_two_variable::operator -= (double v)
   {
     *get_u() -= v;
@@ -258,6 +344,10 @@
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_derivatives( df1_two_variable& z,const df1_two_variable& x,double u,
   double zp)
 {
@@ -266,6 +356,10 @@ void set_derivatives( df1_two_variable& z,const df1_two_variable& x,double u,
     *z.get_u_y() = zp* *x.get_u_y();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   const df1_two_variable& y, double u,
   double f_u,double f_v)
@@ -280,6 +374,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable sqrt(const df1_two_variable& x)
   {
     df1_two_variable z;
@@ -294,8 +392,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable atan(const df1_two_variable& x)
   {
     df1_two_variable z;
@@ -310,6 +410,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable square(const df1_two_variable& x)
   {
     df1_two_variable z;
@@ -321,6 +425,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable tan(const df1_two_variable& x)
   {
     df1_two_variable z;
@@ -335,6 +443,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable sin(const df1_two_variable& x)
   {
     df1_two_variable z;
@@ -346,6 +458,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable log(const df1_two_variable& x)
   {
     df1_two_variable z;
@@ -357,6 +473,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable exp(const df1_two_variable& x)
   {
     df1_two_variable z;
@@ -368,6 +488,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable inv(const df1_two_variable& x)
   {
     df1_two_variable z;
@@ -379,6 +503,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable& df1_two_variable::operator = (const df1_two_variable& x)
   {
     *get_u() = *x.get_u();
@@ -387,6 +515,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return *this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable& df1_two_variable::operator = (double x)
   {
     *get_u() = x;
@@ -395,7 +527,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return *this;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator * (const df1_two_variable& x,
     const df1_two_variable& y)
   {
@@ -408,6 +543,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator * (double x,
     const df1_two_variable& y)
   {
@@ -418,6 +557,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator * (const df1_two_variable& y,
     double x)
   {
@@ -428,8 +571,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator / (const df1_two_variable& x,
     double y)
   {
@@ -437,6 +582,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return x*u;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator / (const df1_two_variable& x,
     const df1_two_variable& y)
   {
@@ -444,6 +593,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return x*u;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator / (const double x,
     const df1_two_variable& y)
   {
@@ -451,7 +604,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return x*u;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator + (const double x,const df1_two_variable& y)
   {
     df1_two_variable z;
@@ -461,6 +617,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator + (const df1_two_variable& x,const double y)
   {
     df1_two_variable z;
@@ -470,8 +630,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator + (const df1_two_variable& x,
     const df1_two_variable& y)
   {
@@ -482,6 +644,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator - (const df1_two_variable& x,
     const df1_two_variable& y)
   {
@@ -492,6 +658,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator - (double x,
     const df1_two_variable& y)
   {
@@ -502,6 +672,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator - (const df1_two_variable& x,
     double y)
   {
@@ -519,16 +693,28 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   df1_two_variable operator * (const df1_two_variable& x,
     const df1_two_variable& y);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df1_two_variable::~init_df1_two_variable()
   {
     deallocate();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void init_df1_two_variable::deallocate(void)
   {
     num_ind_var=0;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df1_two_variable::init_df1_two_variable(const prevariable& _v)
   {
     ADUNCONST(prevariable,v)
@@ -557,6 +743,10 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   init_df1_two_variable::init_df1_two_variable(double v)
   {
     *get_u() =  v;
@@ -564,13 +754,20 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     *get_u_y() = 0.0;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable::df1_two_variable(void)
   {
      
 
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1_two_matrix choleski_decomp(const df1_two_matrix& MM)
 {
   // kludge to deal with constantness

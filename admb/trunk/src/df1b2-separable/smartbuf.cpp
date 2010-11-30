@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #define HOME_VERSION
 #include "fvar.hpp"
 #include "smartbuf.h"
@@ -95,6 +99,10 @@
   void byte_copy(void * dest,void * source, unsigned num_bytes);
   extern char ad_random_part[6];
 
+/**
+ * Description not yet available.
+ * \param
+ */
   ad_sbuffer::ad_sbuffer(unsigned long int sz,const char * froot)
   {
     // need some code here to decide where to put the file
@@ -189,7 +197,10 @@
   }
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_sbuffer::fread(void* s,const size_t num_bytes)
 {
   if (toffset < num_bytes)
@@ -215,6 +226,10 @@ void ad_sbuffer::fread(void* s,const size_t num_bytes)
   offset=toffset;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_sbuffer::fwrite(void* s, const size_t num_bytes)
 {
   #ifdef NO_DERIVS
@@ -240,6 +255,10 @@ void ad_sbuffer::fwrite(void* s, const size_t num_bytes)
   offset=toffset;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
 {
   if (lpos == -1L)
@@ -262,6 +281,10 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void ad_sbuffer::write_cmpdif_stack_buffer(void)
   {
     //cout << " trying to write buff_size = " << buff_size 
@@ -286,6 +309,10 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
     //clogf << "offset after write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void byte_copy(void * dest,void * source, unsigned num_bytes)
 {
 #if !defined (__SUN__) && !defined (__WAT32__) && !defined(__ADSGI__) && !defined (__MSVC32__) && !defined(linux)

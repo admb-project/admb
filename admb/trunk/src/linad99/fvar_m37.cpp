@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix::dvar_matrix(const ad_integer& nrl,const ad_integer& nrh,
    const index_type& ncl,const index_type& nch)
  {
@@ -15,7 +23,10 @@
    #endif 
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar_matrix::allocate(const ad_integer& nrl,const ad_integer& nrh,
    const index_type& ncl,const index_type& nch)
  {

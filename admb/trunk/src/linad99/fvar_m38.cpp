@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator * (_CONST prevariable& x,_CONST dmatrix& m)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -31,6 +39,10 @@ dvar_matrix operator * (_CONST prevariable& x,_CONST dmatrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator * (_CONST dvar_matrix& m,CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -56,8 +68,10 @@ dvar_matrix operator * (_CONST dvar_matrix& m,CGNU_DOUBLE x)
   return tmp;
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator * ( CGNU_DOUBLE x,_CONST dvar_matrix& m)
 {
   RETURN_ARRAYS_INCREMENT();

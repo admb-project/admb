@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
 
@@ -62,6 +66,10 @@ dvar_matrix XXX(_CONST dvar_matrix& m)
 
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix use_shape(_CONST dvar_matrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -75,6 +83,10 @@ dvar_matrix use_shape(_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix use_shape(_CONST dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
@@ -88,6 +100,10 @@ dmatrix use_shape(_CONST dmatrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix pow(_CONST dvar_matrix& m,int e)
 {
   dvar_matrix tmp=use_shape(m);
@@ -98,6 +114,10 @@ dvar_matrix pow(_CONST dvar_matrix& m,int e)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix pow(_CONST dmatrix& m,_CONST prevariable& e)
 {
   dvar_matrix tmp=use_shape(m);
@@ -108,6 +128,10 @@ dvar_matrix pow(_CONST dmatrix& m,_CONST prevariable& e)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix pow(_CONST dvar_matrix& m,_CONST prevariable& e)
 {
   dvar_matrix tmp=use_shape(m);
@@ -118,6 +142,10 @@ dvar_matrix pow(_CONST dvar_matrix& m,_CONST prevariable& e)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix pow(_CONST dvar_matrix& m, CGNU_DOUBLE e)
 {
   dvar_matrix tmp=use_shape(m);
@@ -128,6 +156,10 @@ dvar_matrix pow(_CONST dvar_matrix& m, CGNU_DOUBLE e)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix tan(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -138,7 +170,10 @@ dvar_matrix tan(_CONST dvar_matrix& m)
   return tmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix cos(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -149,7 +184,10 @@ dvar_matrix cos(_CONST dvar_matrix& m)
   return tmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix sin(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -160,6 +198,10 @@ dvar_matrix sin(_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix log(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -170,6 +212,10 @@ dvar_matrix log(_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix sqrt(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -180,6 +226,10 @@ dvar_matrix sqrt(_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix sqr(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -190,6 +240,10 @@ dvar_matrix sqr(_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix exp(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -200,7 +254,10 @@ dvar_matrix exp(_CONST dvar_matrix& m)
   return tmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix elem_div(_CONST dvar_matrix& m,_CONST dvar_matrix& m2)
 {
   dvar_matrix tmp=use_shape(m);
@@ -211,6 +268,10 @@ dvar_matrix elem_div(_CONST dvar_matrix& m,_CONST dvar_matrix& m2)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix elem_div(_CONST dmatrix& m,_CONST dvar_matrix& m2)
 {
   dvar_matrix tmp=use_shape(m);
@@ -221,6 +282,10 @@ dvar_matrix elem_div(_CONST dmatrix& m,_CONST dvar_matrix& m2)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix elem_div(_CONST dvar_matrix& m,_CONST dmatrix& m2)
 {
   dvar_matrix tmp=use_shape(m);
@@ -231,6 +296,10 @@ dvar_matrix elem_div(_CONST dvar_matrix& m,_CONST dmatrix& m2)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix elem_prod(_CONST dvar_matrix& m,_CONST dvar_matrix& m2)
 {
   //dvar_matrix tmp=use_shape(m);
@@ -242,6 +311,10 @@ dvar_matrix elem_prod(_CONST dvar_matrix& m,_CONST dvar_matrix& m2)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix elem_prod(_CONST dmatrix& m,_CONST dvar_matrix& m2)
 {
   dvar_matrix tmp=use_shape(m);
@@ -252,6 +325,10 @@ dvar_matrix elem_prod(_CONST dmatrix& m,_CONST dvar_matrix& m2)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix elem_prod(_CONST dvar_matrix& m,_CONST dmatrix& m2)
 {
   dvar_matrix tmp=use_shape(m);
@@ -262,6 +339,10 @@ dvar_matrix elem_prod(_CONST dvar_matrix& m,_CONST dmatrix& m2)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator + ( CGNU_DOUBLE x,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -272,6 +353,10 @@ dvar_matrix operator + ( CGNU_DOUBLE x,_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator * (_CONST prevariable& x,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -282,6 +367,10 @@ dvar_matrix operator * (_CONST prevariable& x,_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator + (_CONST dvar_matrix& m, CGNU_DOUBLE x)
 {
   dvar_matrix tmp=use_shape(m);
@@ -292,6 +381,10 @@ dvar_matrix operator + (_CONST dvar_matrix& m, CGNU_DOUBLE x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator + (_CONST dvariable& x,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -302,6 +395,10 @@ dvar_matrix operator + (_CONST dvariable& x,_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator + (_CONST dvar_matrix& m,_CONST dvariable& x)
 {
   dvar_matrix tmp=use_shape(m);
@@ -312,6 +409,10 @@ dvar_matrix operator + (_CONST dvar_matrix& m,_CONST dvariable& x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator * (_CONST dvar_matrix& m,_CONST prevariable& x)
 {
   dvar_matrix tmp=use_shape(m);
@@ -322,6 +423,10 @@ dvar_matrix operator * (_CONST dvar_matrix& m,_CONST prevariable& x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator - (_CONST dvar_matrix& m, CGNU_DOUBLE x)
 {
   dvar_matrix tmp=use_shape(m);
@@ -333,6 +438,10 @@ dvar_matrix operator - (_CONST dvar_matrix& m, CGNU_DOUBLE x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator - ( CGNU_DOUBLE x,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -343,6 +452,10 @@ dvar_matrix operator - ( CGNU_DOUBLE x,_CONST dvar_matrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator - (_CONST dvar_matrix& m,_CONST dvariable& x)
 {
   dvar_matrix tmp=use_shape(m);
@@ -353,6 +466,10 @@ dvar_matrix operator - (_CONST dvar_matrix& m,_CONST dvariable& x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator - (_CONST dvariable& x,_CONST dvar_matrix& m)
 {
   dvar_matrix tmp=use_shape(m);
@@ -362,4 +479,3 @@ dvar_matrix operator - (_CONST dvariable& x,_CONST dvar_matrix& m)
   }
   return tmp;
 }
-

@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix& dvar_matrix::operator+= (_CONST dvar_matrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
@@ -21,6 +29,10 @@
    return(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix& dvar_matrix::operator+= (_CONST dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
@@ -36,7 +48,10 @@
    return(*this);
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix& dvar_matrix::operator-= (_CONST dvar_matrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
@@ -52,6 +67,10 @@
    return(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix& dvar_matrix::operator-= (_CONST dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
@@ -66,5 +85,3 @@
    }
    return(*this);
  }
-
-

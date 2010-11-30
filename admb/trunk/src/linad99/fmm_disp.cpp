@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(__SPDLL__)
 #  if !defined(linux)
 #    include <windows.h>
@@ -28,11 +32,19 @@
 
 //  #define if (ad_printf) (*ad_printf) disp_if (ad_printf) (*ad_printf)
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void gotoxy(int x, int y)
   {
     disp_move(y-1, x-1);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   struct text_info
   {
     unsigned char  winleft,   wintop;
@@ -44,6 +56,10 @@
     unsigned char  curx, cury;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void gettextinfo(struct text_info *r)
   {
      r->winleft = 1;
@@ -63,6 +79,10 @@
 #if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__)  
   void gotoxy(int x, int y) { ; }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   struct text_info
   {
     unsigned char  winleft,   wintop;
@@ -79,6 +99,10 @@
 
 #include <string.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void fmmdisp(_CONST dvector& x,_CONST dvector& g,
              const int& nvar, int scroll_flag,int noprintx)
 {
@@ -166,6 +190,10 @@ void fmmdisp(_CONST dvector& x,_CONST dvector& g,
   }
 } 
   
+/**
+ * Description not yet available.
+ * \param
+ */
 void fmmdisp(_CONST double * x,_CONST double * g,
              const int& nvar, int scroll_flag,int noprintx)
 {

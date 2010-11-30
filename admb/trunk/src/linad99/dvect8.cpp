@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector::dvector(_CONST ivector& u)
  {
    allocate(u.indexmin(),u.indexmax());
@@ -15,6 +23,10 @@
    }
  }    
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector::dvector(_CONST lvector& u)
  {
    allocate(u.indexmin(),u.indexmax());
@@ -24,6 +36,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector dvector::operator ()(_CONST ivector& u)
  {
    dvector tmp(u.indexmin(),u.indexmax());
@@ -35,7 +51,10 @@
    return tmp;
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector dvector::operator ()(_CONST lvector& u)
  {
    dvector tmp(u.indexmin(),u.indexmax());

@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 double inv_cumd_norm_inner(double x);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double cumd_logistic(_CONST double& x)
 {
   if (x>=0.0)	
@@ -21,12 +29,19 @@ double cumd_logistic(_CONST double& x)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double inv_cumd_logistic(_CONST double& x)
 {
   return log(x/(1.0-x));
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 double inv_cumd_norm_logistic(double x,double p)
 {
 #if defined(SAFE_ALL)
@@ -62,6 +77,10 @@ double inv_cumd_norm_logistic(double x,double p)
   return y;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double cumd_norm_logistic(double _x,double p)
 {
   return (1.0-p)*cumd_norm(_x)+p*cumd_logistic(_x);

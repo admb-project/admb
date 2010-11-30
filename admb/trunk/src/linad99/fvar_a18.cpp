@@ -4,9 +4,17 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 void cvdv_add(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector operator + (_CONST dvector& v1,_CONST dvar_vector& v2)
 {
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
@@ -34,6 +42,11 @@ dvar_vector operator + (_CONST dvector& v1,_CONST dvar_vector& v2)
             set_gradient_stack(cvdv_add);
   return vtmp;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void cvdv_add(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

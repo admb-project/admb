@@ -4,10 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 //#undef OPT_LIB
 #include "fvar.hpp"
 
 #if !defined(OPT_LIB)
+
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector& dvar_matrix::operator() (int i)
  {
    #ifdef SAFE_ARRAYS

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include <math.h>
 
@@ -49,7 +53,10 @@ const int MAX_NUMBER_ROWS = 6550;
 #define HUGE 1.e+100
 #endif
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector::dvector(const char * s)
 {
   int n = strlen(s);
@@ -250,6 +257,10 @@ dvector::dvector(const char * s)
  }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvector::allocate(const char * s)
 {
   int n = strlen(s);
@@ -447,4 +458,3 @@ void dvector::allocate(const char * s)
    field=0;
  }
 }
-

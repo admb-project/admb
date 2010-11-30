@@ -4,9 +4,17 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include <d4arr.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar4_array sqrt(_CONST dvar4_array& m)
 {
   dvar4_array tmp;
@@ -18,6 +26,10 @@ dvar4_array sqrt(_CONST dvar4_array& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar4_array exp(_CONST dvar4_array& m)
 {
   dvar4_array tmp;
@@ -29,6 +41,10 @@ dvar4_array exp(_CONST dvar4_array& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar4_array mfexp(_CONST dvar4_array& m)
 {
   dvar4_array tmp;
@@ -40,6 +56,10 @@ dvar4_array mfexp(_CONST dvar4_array& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar4_array log(_CONST dvar4_array& m)
 {
   dvar4_array tmp;
@@ -51,6 +71,10 @@ dvar4_array log(_CONST dvar4_array& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable sum(_CONST dvar4_array& m)
 {
   RETURN_ARRAYS_INCREMENT();

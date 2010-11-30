@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(__DF_POOL__)
 #define  __DF_POOL__ 
 #include <fvar.hpp>
@@ -45,6 +49,10 @@ extern void * pchecker;
 //#define __CHECK_MEMORY__
 class link;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dfpool
 {
   int dfpool_vector_flag;
@@ -88,6 +96,10 @@ public:
 #endif
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class tsdfpool : public dfpool
 {
 public:

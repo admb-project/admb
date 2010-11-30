@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 void dfempirical_covarv_partial(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix empirical_covariance(_CONST dvar_matrix& _v1,
   _CONST imatrix& _missflags)
  {
@@ -56,7 +64,12 @@ void dfempirical_covarv_partial(void);
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(dfempirical_covarv_partial);
    return(tmp);
- }      
+ }   
+
+/**
+ * Description not yet available.
+ * \param
+ */   
 void dfempirical_covarv_partial(void)
 {
   verify_identifier_string("rv");
@@ -106,6 +119,10 @@ void dfempirical_covarv_partial(void)
 
 void dfempirical_covarv(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix empirical_covariance(_CONST dvar_matrix& v1)
  {
    int mmin=v1(v1.indexmin()).indexmin();
@@ -144,6 +161,10 @@ void dfempirical_covarv(void);
    return(tmp);
  }      
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfempirical_covarv(void)
 {
   verify_identifier_string("rv");
@@ -185,6 +206,10 @@ void dfempirical_covarv(void)
 
 void dfouter_prodvv(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix outer_prod(_CONST dvar_vector& v1,_CONST dvar_vector& v2 )
  {
    dvar_matrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
@@ -208,6 +233,10 @@ void dfouter_prodvv(void);
    return(tmp);
  }      
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfouter_prodvv(void)
 {
   verify_identifier_string("tv");
@@ -235,7 +264,10 @@ void dfouter_prodvv(void)
   dfv2.save_dvector_derivatives(v2pos);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix outer_prod(_CONST dvector& v1,_CONST dvar_vector& v2 )
  {
    RETURN_ARRAYS_INCREMENT();
@@ -253,7 +285,10 @@ void dfouter_prodvv(void)
    return(tmp);
  }      
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_matrix outer_prod(_CONST dvar_vector& v1,_CONST dvector& v2 )
  {
    RETURN_ARRAYS_INCREMENT();
@@ -269,5 +304,4 @@ void dfouter_prodvv(void)
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
- }      
-
+ }

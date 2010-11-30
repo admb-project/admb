@@ -4,12 +4,20 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
 //#include <vmon.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::trust_region_update(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f)
 {

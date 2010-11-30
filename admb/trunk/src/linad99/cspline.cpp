@@ -23,6 +23,10 @@ double spline_cubic_val(int n, _CONST dvector& t, double tval,
 
 double splint(BOR_CONST dvector& xa,BOR_CONST dvector& ya,BOR_CONST dvector& y2a,double x);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 cubic_spline_function::cubic_spline_function(BOR_CONST dvector & _x,
   BOR_CONST dvector& _y,double yp1,double ypn) : x(_x) , y(_y)
 {
@@ -30,12 +34,20 @@ cubic_spline_function::cubic_spline_function(BOR_CONST dvector & _x,
   y2=spline(x,y,yp1,ypn);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double cubic_spline_function::operator () (double u)
 {
   // need to deal with u<x(1) or u>x(2)
   return splint(x,y,y2,u);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector cubic_spline_function::operator () (_CONST dvector& u)
 {
   int mmin=u.indexmin();

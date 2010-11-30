@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvector value(const df1b2vector& _t1)
   {
      ADUNCONST(df1b2vector,t1)
@@ -18,6 +26,10 @@
      return(tmp);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dmatrix value(const df1b2matrix& _m)
   {
     ADUNCONST(df1b2matrix,m)
@@ -39,6 +51,10 @@
     return tmp;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix&  df1b2matrix::operator = (const df1b2matrix& _M)
 {
   ADUNCONST(df1b2matrix,M)
@@ -51,6 +67,10 @@ df1b2matrix&  df1b2matrix::operator = (const df1b2matrix& _M)
   return *this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix&  df1b2matrix::operator = (const dmatrix& _M)
 {
   ADUNCONST(dmatrix,M)
@@ -63,6 +83,10 @@ df1b2matrix&  df1b2matrix::operator = (const dmatrix& _M)
   return *this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix&  df1b2matrix::operator = (double M)
 {
   int mmin=indexmin();
@@ -79,6 +103,10 @@ df1b2matrix&  df1b2matrix::operator = (double M)
   return *this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix&  df1b2matrix::operator = (const df1b2variable& _M)
 {
   ADUNCONST(df1b2variable,M)
@@ -96,7 +124,10 @@ df1b2matrix&  df1b2matrix::operator = (const df1b2variable& _M)
   return *this;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix square(const df1b2matrix& _M)
 {
   ADUNCONST(df1b2matrix,M)
@@ -117,6 +148,10 @@ df1b2matrix square(const df1b2matrix& _M)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2matrix::initialize(void)
 {
   int rmin=indexmin();
@@ -133,6 +168,10 @@ void df1b2matrix::initialize(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix mfexp(const df1b2matrix& _M)
 {
   ADUNCONST(df1b2matrix,M)
@@ -153,6 +192,10 @@ df1b2matrix mfexp(const df1b2matrix& _M)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix log(const df1b2matrix& _M)
 {
   ADUNCONST(df1b2matrix,M)
@@ -172,6 +215,11 @@ df1b2matrix log(const df1b2matrix& _M)
   }
   return tmp;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix sin(const df1b2matrix& _M)
 {
   ADUNCONST(df1b2matrix,M)
@@ -191,6 +239,11 @@ df1b2matrix sin(const df1b2matrix& _M)
   }
   return tmp;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix cos(const df1b2matrix& _M)
 {
   ADUNCONST(df1b2matrix,M)

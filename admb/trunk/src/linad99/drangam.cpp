@@ -4,6 +4,10 @@
  * Authors: H. H. Ahrens, U. Dieter and B. W. Brown.
  * License: Public domain.
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 /*
@@ -23,7 +27,10 @@ void main()
 }
 */
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 static double fsign( double num, double sign )
 /* Transfers sign of argument sign to argument num */
 {
@@ -32,7 +39,10 @@ if ( ( sign>0.0f && num<0.0f ) || ( sign<0.0f && num>0.0f ) )
 else return num;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 double sgamma(double a,const random_number_generator& _rng)
 /*
 **********************************************************************
@@ -278,7 +288,10 @@ S140:
     return sgamma;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 double gasdev(const random_number_generator& _rng)
 {
   random_number_generator& rng=(random_number_generator&) _rng;
@@ -294,7 +307,10 @@ double gasdev(const random_number_generator& _rng)
   return v1*fac;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 double expdev(const random_number_generator& _rng)
 {
   random_number_generator& rng=(random_number_generator&) _rng;

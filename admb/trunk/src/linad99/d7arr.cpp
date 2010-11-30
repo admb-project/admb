@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 //#include <d5arr.hpp>
 #include "admb_messages.h"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d7_array::initialize(void)
  {
    int mmin=indexmin();
@@ -18,7 +26,10 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  d7_array::d7_array(d7_array& m2)
  {
    if (m2.shape)
@@ -34,6 +45,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d7_array::deallocate()
  {
    if (shape)
@@ -59,11 +74,19 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d7_array::~d7_array() 
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d7_array& d7_array::operator =  (_CONST d7_array& m)
  {
    int mmin=indexmin();
@@ -82,6 +105,10 @@
    return *this;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d7_array::allocate(_CONST d7_array& m1)
  {
    if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
@@ -104,6 +131,10 @@
 
   #ifndef OPT_LIB
 
+/**
+ * Description not yet available.
+ * \param
+ */
     d6_array& d7_array::operator ( ) (int i)
     {
       #ifdef SAFE_ARRAYS
@@ -116,6 +147,10 @@
       return elem(i);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     d6_array& d7_array::operator [] (int i)
     {
       #ifdef SAFE_ARRAYS
@@ -127,7 +162,10 @@
       return t[i];
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     d5_array& d7_array::operator ( ) (int i ,int j)
     {
       #ifdef SAFE_ARRAYS
@@ -139,6 +177,10 @@
       return elem(i)(j);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     d4_array& d7_array::operator ( ) (int i,int j,int k)
     {
       #ifdef SAFE_ARRAYS
@@ -149,6 +191,11 @@
       #endif
       return elem(i)(j,k);
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
     d3_array& d7_array::operator ( ) (int i,int j,int k,int l)
     {
       #ifdef SAFE_ARRAYS
@@ -160,6 +207,10 @@
       return elem(i)(j,k,l);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     dmatrix& d7_array::operator ( ) (int i,int j,int k,int l,int m)
     {
       #ifdef SAFE_ARRAYS
@@ -171,6 +222,10 @@
       return elem(i)(j,k,l,m);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     dvector& d7_array::operator ( ) (int i,int j,int k,int l,int m,int n)
     {
       #ifdef SAFE_ARRAYS
@@ -182,6 +237,10 @@
       return elem(i)(j,k,l,m,n);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     double& d7_array::operator ( ) (int i,int j,int k,int l,int m,int n,int _p)
     {
       #ifdef SAFE_ARRAYS
@@ -195,6 +254,10 @@
 
    #ifdef USE_CONST
 
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST d6_array& d7_array::operator ( ) (int i) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -208,6 +271,10 @@
       return elem(i);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST d6_array& d7_array::operator [] (int i) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -220,7 +287,10 @@
       return t[i];
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST d5_array& d7_array::operator ( ) (int i ,int j) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -233,6 +303,10 @@
       return elem(i)(j);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST d4_array& d7_array::operator ( ) (int i,int j,int k) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -244,6 +318,11 @@
       #endif
       return elem(i)(j,k);
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST d3_array& d7_array::operator ( ) (int i,int j,int k,int l) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -256,6 +335,10 @@
       return elem(i)(j,k,l);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST dmatrix& d7_array::operator ( ) (int i,int j,int k,int l,int m) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -268,6 +351,10 @@
       return elem(i)(j,k,l,m);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST dvector& d7_array::operator ( ) (int i,int j,int k,int l,int m,int n) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -280,6 +367,10 @@
       return elem(i)(j,k,l,m,n);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST double& d7_array::operator ( ) (int i,int j,int k,int l,int m,int n,int _p) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -297,13 +388,20 @@
   #endif
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 d7_array::d7_array(int l7,int u7,int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch,int l5,int u5,int l6,int u6)
 {
   allocate(l7,u7,hsl,hsu,sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 d7_array::d7_array(const ad_integer& l7,const ad_integer& u7,
   const index_type& hsl,const index_type& hsu,
   const index_type& sl,const index_type& sh,const index_type& nrl,
@@ -314,6 +412,10 @@ d7_array::d7_array(const ad_integer& l7,const ad_integer& u7,
   allocate(l7,u7,hsl,hsu,sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void d7_array::allocate(int l7,int u7,int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch,int l5,int u5,int l6,int u6)
  {
@@ -335,6 +437,10 @@ void d7_array::allocate(int l7,int u7,int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void d7_array::allocate(int l7,int u7)
 {
   if ( (shape=new vector_shape(l7,u7)) == 0)
@@ -355,6 +461,10 @@ void d7_array::allocate(int l7,int u7)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d7_array::allocate(const ad_integer& l7,const ad_integer& u7,
    const index_type& hsl,const index_type& hsu,
    const index_type& sl,const index_type& sh,const index_type& nrl,

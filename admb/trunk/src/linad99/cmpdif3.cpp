@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -18,7 +22,10 @@
 #include <string.h>
 extern ofstream clogf;
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void report_gradstack_flag(void)
 {
   verify_identifier_string("stack");
@@ -33,6 +40,10 @@ void report_gradstack_flag(void)
 }
 
 #if defined(CHK_ID_STRING)
+/**
+ * Description not yet available.
+ * \param
+ */
 static void report_gradstack_flag2(void)
 {
   verify_identifier_string("stack");
@@ -52,6 +63,10 @@ static void report_gradstack_flag2(void)
 }
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_gradstack_flag(char* str)
 {
 #if defined(CHK_ID_STRING)
@@ -64,6 +79,11 @@ void set_gradstack_flag(char* str)
   save_identifier_string("stack");
 #endif
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_gradstack_flag(char* _str,int i,int j)
 {
 #if defined(CHK_ID_STRING)
@@ -112,6 +132,10 @@ void verify_identifier_string(const char* str1)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 adstring get_string_marker(void)
 {
   adstring str1;
@@ -128,6 +152,10 @@ adstring get_string_marker(void)
  return str1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ivector::save_ivector_position(void) _CONST
 {
   // saves the size and address information for a ivector
@@ -136,6 +164,10 @@ void ivector::save_ivector_position(void) _CONST
   gradient_structure::get_fp()->fwrite(&tmp,wsize);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar_vector::save_dvar_vector_position(void) _CONST
 {
   // saves the size and address information for a dvar_vector
@@ -144,6 +176,10 @@ void dvar_vector::save_dvar_vector_position(void) _CONST
   gradient_structure::get_fp()->fwrite(&tmp,size_t(wsize));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void save_ad_pointer(void * p) 
 {
   // saves the size and address information for a dvar_vector
@@ -151,6 +187,10 @@ void save_ad_pointer(void * p)
   gradient_structure::get_fp()->fwrite(&p,size_t(wsize));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void * restore_ad_pointer(void)
 {
   void * p=0;
@@ -159,4 +199,3 @@ void * restore_ad_pointer(void)
   gradient_structure::get_fp()->fread(&p,size_t(wsize));
   return p;
 }
-

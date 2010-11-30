@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
   double bounder(double x,double min,double max, double scale)
   {
     double y=x/scale;
@@ -21,6 +29,10 @@
     return min+(max-min)*z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable bounder(const prevariable&  x,double min,double max, double scale)
   {
     dvariable y=x/scale;

@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #ifndef D4ARR_HPP
   #define D4ARR_HPP
 #ifndef USE_CONST
@@ -48,6 +52,10 @@
   #define _CONST const
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class four_array_shape
   {
     unsigned int ncopies;
@@ -69,6 +77,10 @@
   }; // End of class four_array_shape
 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class d4_array
 {
   four_array_shape * shape;
@@ -173,6 +185,10 @@ public:
   void initialize(void);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dvar4_array
 {
   four_array_shape * shape;

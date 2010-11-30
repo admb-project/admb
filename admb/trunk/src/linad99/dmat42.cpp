@@ -28,6 +28,10 @@ int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
 
 static const int  maxiter = 40;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double pythag(double a, double b)
 {
   double fa=fabs(a);
@@ -52,6 +56,10 @@ public:
 };
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 sing_val_decomp::sing_val_decomp(const dmatrix& _a, const dvector & _w,
   const dmatrix& _v) :
     a(_a), w(_w), v(_v)
@@ -59,6 +67,7 @@ sing_val_decomp::sing_val_decomp(const dmatrix& _a, const dvector & _w,
 
 /**
  * Singular value decomposition.
+ * param _a
  */
 sing_val_decomp singval_decomp(const dmatrix &_a)
 {

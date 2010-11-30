@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array log(_CONST d3_array& m)
    {
      d3_array tmp;
@@ -17,6 +25,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array exp(_CONST d3_array& m)
    {
      d3_array tmp;
@@ -28,6 +40,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array sin(_CONST d3_array& m)
    {
      d3_array tmp;
@@ -39,7 +55,10 @@
      return tmp;
    }  
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array cos(_CONST d3_array& m)
    {
      d3_array tmp;
@@ -51,6 +70,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array tan(_CONST d3_array& m)
    {
      d3_array tmp;
@@ -62,6 +85,10 @@
      return tmp;
    } 
  
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array elem_prod(_CONST d3_array& m1,_CONST d3_array& m2)
    {
      d3_array tmp;
@@ -73,6 +100,10 @@
      return tmp;
    }
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array elem_div(_CONST d3_array& m1,_CONST d3_array& m2)
    {
      d3_array tmp;
@@ -84,6 +115,10 @@
      return tmp;
    }
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array operator + (_CONST d3_array& m1,_CONST d3_array& m2)
    {
      d3_array tmp;
@@ -95,6 +130,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array operator - (_CONST d3_array& m1,_CONST d3_array& m2)
    {
      d3_array tmp;
@@ -106,6 +145,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
     double norm(_CONST d3_array& m)
     {
       double tmp=0.0;
@@ -117,6 +160,10 @@
       return tmp;
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     double norm2(_CONST d3_array& m)
     {
       double tmp=0.0;
@@ -127,6 +174,10 @@
       return tmp;
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array operator + ( double d,_CONST d3_array& m2)
    {
      d3_array tmp;
@@ -138,6 +189,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array operator - ( double d,_CONST d3_array& m2)
    {
      d3_array tmp;
@@ -149,6 +204,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array operator + (_CONST d3_array& m1, double d)
    {
      d3_array tmp;
@@ -160,6 +219,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array operator - (_CONST d3_array& m1, double d)
    {
      d3_array tmp;
@@ -171,6 +234,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array operator * (_CONST d3_array& m1, double d)
    {
      d3_array tmp;
@@ -182,6 +249,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array operator * ( double d,_CONST d3_array& m2)
    {
      d3_array tmp;
@@ -191,5 +262,4 @@
        tmp(i)=d*m2(i);
      }
      return tmp;
-   }  
-
+   }

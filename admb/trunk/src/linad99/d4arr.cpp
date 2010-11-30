@@ -4,16 +4,27 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include <d4arr.hpp>
 #include "admb_messages.h"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d4_array::d4_array(int nrl,int nrh)
  {
    allocate(nrl,nrh);
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 four_array_shape::four_array_shape(int hsl,int hsu) //,int sl,int su,int rl,
  // int ru,int cl,int cu)
 {
@@ -28,6 +39,10 @@ four_array_shape::four_array_shape(int hsl,int hsu) //,int sl,int su,int rl,
   ncopies=0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double sum(_CONST d4_array& m)
 {
   double tmp=0.;
@@ -38,6 +53,10 @@ double sum(_CONST d4_array& m)
   return tmp;
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
  d4_array d4_array::sub(int nrl,int nrh)
  {
    if (allocated(*this))
@@ -55,6 +74,10 @@ double sum(_CONST d4_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d4_array::d4_array(const d4_array& m2)
  {
    if (m2.shape)
@@ -70,6 +93,10 @@ double sum(_CONST d4_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d4_array::shallow_copy(const d4_array& m2)
  {
    if (m2.shape)
@@ -85,6 +112,10 @@ double sum(_CONST d4_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d4_array::deallocate()
  {
    if (shape)
@@ -108,11 +139,19 @@ double sum(_CONST d4_array& m)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d4_array::~d4_array() 
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d4_array& d4_array::operator =  (_CONST d4_array& m)
  {
    int mmin=hslicemin();
@@ -131,6 +170,10 @@ double sum(_CONST d4_array& m)
    return *this;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d4_array::allocate(_CONST d4_array& m1)
  {
    if ( (shape=new four_array_shape(m1.hslicemin(),m1.hslicemax()))
@@ -153,6 +196,10 @@ double sum(_CONST d4_array& m)
 
   #ifndef OPT_LIB
 
+/**
+ * Description not yet available.
+ * \param
+ */
     d3_array& d4_array::operator () (int i)
     {
       #ifdef SAFE_ARRAYS
@@ -164,6 +211,10 @@ double sum(_CONST d4_array& m)
       return t[i];
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     d3_array& d4_array::operator [] (int i)
     {
       #ifdef SAFE_ARRAYS
@@ -175,7 +226,10 @@ double sum(_CONST d4_array& m)
       return t[i];
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     dmatrix& d4_array::operator ( ) (int i ,int j)
     {
       #ifdef SAFE_ARRAYS
@@ -186,6 +240,11 @@ double sum(_CONST d4_array& m)
       #endif
       return ((*this)(i))(j);
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
     dvector& d4_array::operator ( ) (int i,int j,int k)
     {
       #ifdef SAFE_ARRAYS
@@ -196,6 +255,11 @@ double sum(_CONST d4_array& m)
       #endif
       return (((*this)(i,j))(k));
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
     double& d4_array::operator ( ) (int i,int j,int k,int l)
     {
       #ifdef SAFE_ARRAYS
@@ -209,6 +273,10 @@ double sum(_CONST d4_array& m)
 
    #ifdef USE_CONST
 
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST d3_array& d4_array::operator ( ) (int i) _CONST
     {
       #ifdef SAFE_ARRAYS
@@ -221,6 +289,10 @@ double sum(_CONST d4_array& m)
       return t[i];
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST d3_array& d4_array::operator [] (int i) _CONST
     {
       #ifdef SAFE_ARRAYS
@@ -233,7 +305,10 @@ double sum(_CONST d4_array& m)
       return t[i];
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST dmatrix& d4_array::operator ( ) (int i ,int j) _CONST
     {
       #ifdef SAFE_ARRAYS
@@ -246,6 +321,10 @@ double sum(_CONST d4_array& m)
       return ((*this)(i))(j);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST dvector& d4_array::operator ( ) (int i,int j,int k) _CONST
     {
       #ifdef SAFE_ARRAYS
@@ -258,6 +337,10 @@ double sum(_CONST d4_array& m)
       return (((*this)(i,j))(k));
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST double& d4_array::operator ( ) (int i,int j,int k,int l) _CONST
     {
       #ifdef SAFE_ARRAYS
@@ -273,8 +356,10 @@ double sum(_CONST d4_array& m)
    #endif
   #endif
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch)
  {
@@ -296,6 +381,10 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
@@ -317,6 +406,10 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d4_array::allocate(int hsl,int hsu,int sl,int sh,_CONST ivector& nrl,
    _CONST ivector& nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
@@ -338,12 +431,20 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d4_array::d4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
    int nrl, _CONST imatrix& nrh,int ncl,int nch)
  {
    allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d4_array::allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
    int nrl, _CONST imatrix& nrh,int ncl,int nch)
  {
@@ -367,15 +468,20 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
  d4_array::d4_array(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch)
  {
    allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  d4_array::d4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
     ivector ncl,ivector nch)
  {
@@ -383,6 +489,10 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
 
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d4_array::initialize()
  {
    if (!(!(*this)))  // only initialize allocated objects
@@ -394,13 +504,20 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 d4_array::d4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
   _CONST imatrix& nrh,int ncl,_CONST i3_array& nch)
 {
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void d4_array::allocate(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
   _CONST imatrix& nrh,int ncl,_CONST i3_array& nch)
 {
@@ -425,6 +542,11 @@ void d4_array::allocate(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
     (*this)(i).allocate(sl,sh(i),nrl,nrh(i),ncl,nch(i));
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 d4_array::d4_array(int hsl,int hsu,const index_type& sl,
     const index_type& sh,const index_type& nrl,const index_type& nrh,
     const index_type& ncl,const index_type& nch)
@@ -432,6 +554,10 @@ d4_array::d4_array(int hsl,int hsu,const index_type& sl,
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
     const index_type& sh,const index_type& nrl,const index_type& nrh,
     const index_type& ncl,const index_type& nch)
@@ -471,6 +597,10 @@ void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void d4_array::allocate(int hsl,int hsu,const index_type& sl,
     const index_type& sh,const index_type& nrl,const index_type& nrh,
     const index_type& ncl,const index_type& nch)
@@ -510,6 +640,10 @@ void d4_array::allocate(int hsl,int hsu,const index_type& sl,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
     const index_type& sh,const index_type& nrl,const index_type& nrh)
 {
@@ -542,6 +676,10 @@ void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
     const index_type& sh)
 {
@@ -572,6 +710,10 @@ void d4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void d4_array::allocate(ad_integer hsl,ad_integer hsu)
 {
    if (hsl>hsu)
@@ -596,5 +738,3 @@ void d4_array::allocate(ad_integer hsl,ad_integer hsu)
     (*this)(i).allocate();
   }
 }
-
-

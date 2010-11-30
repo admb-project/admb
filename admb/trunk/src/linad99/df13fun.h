@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(__DF12FUN__)
 #  define __DF12FUN__
 #ifndef FVAR_HPP
@@ -45,6 +49,10 @@
 #endif
 //class df1b2variable;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1_three_variable
   {
     double v[4];
@@ -73,6 +81,10 @@
 
   inline  double value(const df1_three_variable& x) { return double(*x.get_u()); }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class init_df1_three_variable : public df1_three_variable
   {
   public:
@@ -82,8 +94,10 @@
     init_df1_three_variable(double );
   };
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1_three_vector
   {
     int index_min;
@@ -116,7 +130,10 @@
  dvector value(const df1_three_vector& v);
  dvector first_derivatives(const df1_three_vector& v);
 
-    
+/**
+ * Description not yet available.
+ * \param
+ */
   class df1_three_matrix
   {
     int index_min;

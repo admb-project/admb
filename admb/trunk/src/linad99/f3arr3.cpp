@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array value(_CONST dvar3_array& ar)
  { 
    d3_array tmp;
@@ -17,6 +25,10 @@
    return tmp;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(_CONST dvar3_array& d3v)
  {
    int sl=d3v.slicemin();
@@ -41,5 +53,3 @@
      t[i].allocate(d3v(i));
    }
  }
-
-

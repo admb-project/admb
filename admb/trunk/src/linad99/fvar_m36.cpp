@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class dvariable 
 
@@ -24,7 +28,10 @@
 #endif
 #include <math.h>
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 double dvar_matrix::fill_seqadd( CGNU_DOUBLE x, CGNU_DOUBLE d)
 {
   double x1=x;

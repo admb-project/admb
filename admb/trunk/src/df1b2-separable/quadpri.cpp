@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fnl.h>
 //#include <df1b2fun.h>
 
@@ -13,6 +17,10 @@ quadratic_prior * quadratic_prior::ptr[100]; // this should be a resizeable arra
 int quadratic_prior::num_quadratic_prior=0;
 const int quadratic_prior::max_num_quadratic_prior=100;
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void quadratic_prior::get_M_calculations(void)
  {
    for (int i=0;i<num_quadratic_prior;i++)
@@ -24,7 +32,10 @@ const int quadratic_prior::max_num_quadratic_prior=100;
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector evaluate_function_with_quadprior(const dvector& x,int usize,
   function_minimizer * pfmin)
 {
@@ -65,7 +76,10 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
   return g;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void quadratic_prior::add_to_list(void)
   {
     if (num_quadratic_prior>=max_num_quadratic_prior) ad_exit(1);
@@ -73,14 +87,28 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     ptr[num_quadratic_prior++]=this;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable quadratic_prior::get_function(void) 
   { 
     return (*pu)*((*pMinv)*(*pu));
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_matrix quadratic_prior::get_Hessian(void) 
   { 
     return *pMinv;
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   int quadratic_prior::get_offset(int xs)
   {
     df1b2_init_vector * fpu=df1b2quadratic_prior::ptr[get_myindex()]->pu;
@@ -88,6 +116,11 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     return mmin-xs-1;
   }
   //dmatrix quadratic_prior::get_cHessian(void) 
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void quadratic_prior::get_cHessian(dmatrix H,int xsize) 
   { 
     int offset=get_offset(xsize);
@@ -145,6 +178,10 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void quadratic_prior::get_cHessian(dvar_matrix H,int xsize) 
   { 
     int offset=get_offset(xsize);
@@ -202,6 +239,10 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void quadratic_prior::get_vHessian(dvar_matrix H,int xsize) 
   { 
     int offset=get_offset(xsize);
@@ -270,6 +311,11 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     //return value(*pMinv);
   }
  */
+
+/**
+ * Description not yet available.
+ * \param
+ */
    void quadratic_prior::get_cHessian_from_vHessian(dmatrix H,int xs) 
   { 
     int offset=get_offset(xs);
@@ -328,10 +374,20 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     }
     //return value(*dfpMinv);
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector quadratic_prior::get_gradient(void) 
   { 
     return ((*pMinv)*(*pu));
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void quadratic_prior::get_cgradient(dvector g,int xs) 
   { 
     int offset=get_offset(xs);
@@ -384,6 +440,11 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     }
     //return ((*pMinv)*value(*pu));
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   quadratic_prior::quadratic_prior(void)
   {
     pMinv=0; 
@@ -391,6 +452,11 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     pu=0; 
     add_to_list();
   } 
+
+/**
+ * Description not yet available.
+ * \param
+ */
   quadratic_prior::~quadratic_prior(void)
   {
     if (pMinv) delete pMinv;
@@ -400,10 +466,20 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     if (dfpMinv) delete pMinv;
     dfpMinv=0; 
   } 
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void quadratic_prior::allocate( const dvar_vector & _u,const char * s) 
   {
     allocate(_u);
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void quadratic_prior::allocate(const dvar_vector & _u) 
   {
     if (!allocated(_u))
@@ -414,11 +490,21 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     }
     pu = new dvar_vector((dvar_vector&)(_u));
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void quadratic_prior::allocate(const dvar_matrix & _M, 
     const dvar_vector & _u,const char * s) 
   {
     allocate(_M,_u);
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void quadratic_prior::allocate(const dvar_matrix & _M, 
     const dvar_vector & _u) 
   {
@@ -426,6 +512,10 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
     pu = new dvar_vector((dvar_vector&)(_u));
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvariable quadratic_prior::get_quadratic_priors(void)
  {
    dvariable f=0.0;
@@ -435,6 +525,11 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
    }
    return f;
  }
+
+/**
+ * Description not yet available.
+ * \param
+ */
  void quadratic_prior::get_cgradient_contribution(dvector g,int xs)
  {
    for (int i=0;i<num_quadratic_prior;i++)
@@ -463,6 +558,11 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
    //return f;
  }
 */
+
+/**
+ * Description not yet available.
+ * \param
+ */
  void quadratic_prior::get_cHessian_contribution(dmatrix H,int xsize)
  {
    for (int i=0;i<num_quadratic_prior;i++)
@@ -499,6 +599,11 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
    }
    //return f;
  }
+
+/**
+ * Description not yet available.
+ * \param
+ */
  void quadratic_prior::get_vHessian_contribution(dvar_matrix H,int xs)
  {
    for (int i=0;i<num_quadratic_prior;i++)
@@ -528,6 +633,10 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
  }
  */
  
+/**
+ * Description not yet available.
+ * \param
+ */
  void quadratic_prior::get_cHessian_contribution_from_vHessian(dmatrix Hess,int xsize)
  {
    for (int i=0;i<num_quadratic_prior;i++)
@@ -542,6 +651,10 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
    //return f;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void quadratic_prior::operator = (const dvar_matrix & _M)
  { 
    dvariable lndet;
@@ -640,6 +753,10 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void quadratic_prior::operator = (const dmatrix & _M)
  { 
    dvariable lndet;
@@ -700,48 +817,91 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 normal_quadratic_prior::normal_quadratic_prior(void) 
 { 
   set_old_style_flag();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void normal_quadratic_prior::set_old_style_flag(void)
 {
   old_style_flag=0;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void normal_quadratic_prior::operator = (const dvar_matrix & M) 
 { 
   quadratic_prior::operator = (M);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 quadratic_re_penalty::quadratic_re_penalty(void) 
 { 
   set_old_style_flag();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void quadratic_re_penalty::set_old_style_flag(void)
 {
   old_style_flag=2;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void quadratic_re_penalty::operator = (const dvar_matrix & M) 
 { 
   quadratic_prior::operator = (M);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void quadratic_re_penalty::operator = (const dmatrix & M) 
 { 
   quadratic_prior::operator = (M);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 constant_quadratic_re_penalty::constant_quadratic_re_penalty(void) 
 { 
   set_old_style_flag();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void constant_quadratic_re_penalty::set_old_style_flag(void)
 {
   old_style_flag=2;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void constant_quadratic_re_penalty::operator = (const dmatrix & M) 
 { 
   quadratic_prior::operator = (M);

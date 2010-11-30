@@ -4,11 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 void dvdm_prod(void);
 void dvcm_prod(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector  operator * (_CONST dvar_vector& x ,_CONST dvar_matrix& m )
  {
    RETURN_ARRAYS_INCREMENT();
@@ -48,6 +56,10 @@ void dvcm_prod(void);
    return(tmp);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvdm_prod(void)
 {
   verify_identifier_string("PLACE1");
@@ -85,6 +97,10 @@ void dvdm_prod(void)
    dfm.save_dmatrix_derivatives(m_pos);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector  operator * (_CONST dvar_vector& x ,_CONST dmatrix& m )
  {
    RETURN_ARRAYS_INCREMENT();
@@ -123,6 +139,10 @@ void dvdm_prod(void)
    return(tmp);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvcm_prod(void)
 {
   verify_identifier_string("PLACE1");

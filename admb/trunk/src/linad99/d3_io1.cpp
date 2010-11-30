@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: dmat_io.cpp
 
 // i/o operations for class dmatrix
@@ -29,7 +33,10 @@
 
 #ifdef __USE_IOSTREAM__
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 uostream& operator<<(BOR_CONST uostream& _ostr,_CONST d3_array& z)
 {
   uostream & ostr = (uostream&) _ostr;
@@ -40,6 +47,10 @@ uostream& operator<<(BOR_CONST uostream& _ostr,_CONST d3_array& z)
   return ostr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST d3_array& z)
 {
   uistream & istr = (uistream&) _istr;
@@ -50,6 +61,10 @@ uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST d3_array& z)
   return istr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 uostream& operator<<(BOR_CONST uostream& _ostr,_CONST dvar3_array& z)
 {
   uostream & ostr = (uostream&) _ostr;
@@ -60,6 +75,10 @@ uostream& operator<<(BOR_CONST uostream& _ostr,_CONST dvar3_array& z)
   return ostr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST dvar3_array& z)
 {
   uistream & istr = (uistream&) _istr;
@@ -71,6 +90,3 @@ uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST dvar3_array& z)
 }
 
 #endif
-
-
-

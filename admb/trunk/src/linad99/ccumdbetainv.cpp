@@ -3,8 +3,16 @@
  *
  * Author: Unknown
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double lnbeta(double a,double b)
 {
   return gammln(a)+gammln(b)-gammln(a+b);
@@ -20,7 +28,10 @@ static int sgn(double z)
 }
 */
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 double inv_cumd_beta_stable(double a,double b,double y,double eps)
 {
   //double u;

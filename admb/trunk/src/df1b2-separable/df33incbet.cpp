@@ -10,6 +10,10 @@
  * Copyright (c) 2009 ADMB Foundation
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 #include <df1b2fun.h>
 #include <df33fun.h>
@@ -147,8 +151,9 @@ static double MAXGAM = 171.624376956302725;
 static double LOGPI = 1.14472988584940017414;
 static double PI = 3.14159265358979323844;
 
-
-/* Stirling's formula for the gamma function */
+/**
+ * Stirling's formula for the gamma function.
+ */
 static double STIR[5] = {
    7.87311395793093628397E-4,
    -2.29549961613378126380E-4,
@@ -169,8 +174,9 @@ static df3_three_variable p1evl(const df3_three_variable &, void *, int);
 
 const double MYINF = 1.7976931348623158E+308;
 
-/* Gamma function computed by Stirling's formula.
- * The polynomial STIR is valid for 33 <= x <= 172.
+/**
+ * Gamma function computed by Stirling's formula.
+ * \param _x, \f$33 \le x \le 172\f$
  */
 static df3_three_variable stirf(const df3_three_variable & _x)
 {
@@ -191,8 +197,10 @@ static df3_three_variable stirf(const df3_three_variable & _x)
    return (y);
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 static df3_three_variable gamma(const df3_three_variable & xx1)
 {
    df3_three_variable x;
@@ -351,49 +359,82 @@ static double C[] = {
 static double LS2PI = 0.91893853320467274178;
 static double MAXLGM = 2.556348e305;
 
-/* Logarithm of gamma function */
-
+/**
+ * Description not yet available.
+ * \param
+ */
 int operator <(const df3_three_variable & x, double n)
 {
    return value(x) < n;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int operator >(const df3_three_variable & x, double n)
 {
    return value(x) > n;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int operator >=(const df3_three_variable & x, double n)
 {
    return value(x) >= n;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int operator ==(const df3_three_variable & x, const df3_three_variable & n)
 {
    return value(x) == value(n);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int operator ==(const df3_three_variable & x, double n)
 {
    return value(x) == n;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int operator ==(double x, const df3_three_variable & n)
 {
    return x == value(n);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int operator <(const df3_three_variable & x, const df3_three_variable & n)
 {
    return value(x) < value(n);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int operator >(const df3_three_variable & x, const df3_three_variable & n)
 {
    return value(x) > value(n);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df3_three_variable lgam(const df3_three_variable & _x)
 {
    df3_three_variable x, p, q, u, w, z, p1;
@@ -548,8 +589,11 @@ df3_three_variable lgam(const df3_three_variable & _x)
  * program in microcode or assembly language.
  *
  */
-
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static df3_three_variable polevl(const df3_three_variable & x, void *_coef,
 				 int N)
 {
@@ -596,6 +640,10 @@ double p1evl(double x, void *_coef, int N)
 }
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df3_three_variable p1evl(const df3_three_variable & x, void *_coef, int N)
 {
    double *coef = (double *) (_coef);
@@ -614,6 +662,10 @@ df3_three_variable p1evl(const df3_three_variable & x, void *_coef, int N)
    return (ans);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static int mtherr(char *s, int n)
 {
    cerr << "Error code " << n << "in " << *s << endl;
@@ -625,7 +677,10 @@ df3_three_variable incbet(const df3_three_variable & _aa,
 			  const df3_three_variable & _bb,
 			  const df3_three_variable & _xx);
 
-// this is the wrapper to call the main inbet function
+/**
+ * This is the wrapper to call the main inbet function.
+ * \param
+ */
 df1b2variable incbet(const df1b2variable & _a, const df1b2variable & _b,
 		     const df1b2variable & _x)
 {
@@ -726,7 +781,10 @@ df1b2variable incbet(const df1b2variable & _a, const df1b2variable & _b,
 static df3_three_variable igam(const df3_three_variable & a,
 			       const df3_three_variable & x);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df3_three_variable igamc(const df3_three_variable & _a,
 			 const df3_three_variable & _x)
 {
@@ -808,6 +866,10 @@ df3_three_variable igamc(const df3_three_variable & _a,
   //  *
   //  */
   // 
+/**
+ * Description not yet available.
+ * \param
+ */
 df3_three_variable igam(const df3_three_variable & _a,
 			const df3_three_variable & _x)
 {
@@ -922,6 +984,10 @@ static df3_three_variable incbd(const df3_three_variable & _a,
 				const df3_three_variable & _b,
 				const df3_three_variable & _x);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df3_three_variable incbet(const df3_three_variable & _aa,
 				 const df3_three_variable & _bb,
 				 const df3_three_variable & _xx)
@@ -1031,11 +1097,11 @@ df3_three_variable incbet(const df3_three_variable & _aa,
    return (t);
 }
 
- // 
- // /* Continued fraction expansion #1
- //  * for incomplete beta integral
- //  */
- // 
+/**
+ * Continued fraction expansion number 1
+ * for incomplete beta integral
+ * \param
+ */
 static df3_three_variable incbcf(const df3_three_variable & _a,
 				 const df3_three_variable & _b,
 				 const df3_three_variable & _x)
@@ -1126,11 +1192,11 @@ static df3_three_variable incbcf(const df3_three_variable & _a,
    return (ans);
 }
 
- // 
- // /* Continued fraction expansion #2
- //  * for incomplete beta integral
- //  */
- // 
+/**
+ * Continued fraction expansion number 2
+ * for incomplete beta integral
+ * \param
+ */
 static df3_three_variable incbd(const df3_three_variable & _a,
 				const df3_three_variable & _b,
 				const df3_three_variable & _x)
@@ -1221,9 +1287,11 @@ static df3_three_variable incbd(const df3_three_variable & _a,
    return (ans);
 }
 
- // /* Power series for incomplete beta integral.
- //    Use when b*x is small and x not too close to 1.  */
- // 
+/**
+ * Power series for incomplete beta integral.
+ * Use when b*x is small and x not too close to 1.
+ * \param
+ */
 df3_three_variable pseries(const df3_three_variable & _a,
 			   const df3_three_variable & _b,
 			   const df3_three_variable & _x)
@@ -1275,6 +1343,10 @@ df3_three_variable pseries(const df3_three_variable & _a,
    return (s);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double get_values(double a, double b, double x)
 {
    df3_three_variable va, vb, vx;
@@ -1291,6 +1363,10 @@ static double get_values(double a, double b, double x)
    return *vy.get_u();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static df3_three_variable df3_get_values(double a, double b, double x)
 {
    df3_three_variable va, vb, vx;

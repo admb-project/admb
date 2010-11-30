@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_vector::initialize(void)
   {
     if (!(!(*this)))  // only initialize allocated objects
@@ -24,6 +32,10 @@
   }
 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dv_init(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -41,7 +53,10 @@ void dv_init(void)
 }
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_vector::initialize(_CONST dvector& ww)
   {
     #ifdef SAFE_ARRAYS

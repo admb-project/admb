@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
@@ -12,6 +16,10 @@
 
 #include <stdlib.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector& dvar_vector::operator = (_CONST dvector& t)
  {
    if (indexmin() != t.indexmin() || indexmax() != t.indexmax())

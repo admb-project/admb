@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
@@ -18,6 +22,10 @@ void dv_assign(void);
 #include <memory.h>
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector& dvar_vector::operator = (_CONST dvar_vector& t)
  {
    if (!(*this))
@@ -75,6 +83,10 @@ void dv_assign(void);
 
 void dv_eqprev(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector& dvar_vector::operator = (_CONST prevariable& t)
  {
    int mmin=indexmin();
@@ -96,6 +108,10 @@ void dv_eqprev(void);
 
 void dv_eqdoub(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector& dvar_vector::operator = ( CGNU_DOUBLE t)
  {
    int mmin=indexmin();
@@ -113,6 +129,10 @@ void dv_eqdoub(void);
    return (*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dv_eqdoub(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -122,6 +142,10 @@ void dv_eqdoub(void)
   verify_identifier_string("trut");
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dv_eqprev(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -139,6 +163,10 @@ void dv_eqprev(void)
   save_double_derivative(dft,t_pos);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dv_assign(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

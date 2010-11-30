@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -22,6 +26,10 @@
 #include <iostream.h>
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix choleski_decomp_positive(const dmatrix& MM,double bound)
 {
   // kludge to deal with constantness
@@ -83,7 +91,10 @@ dmatrix choleski_decomp_positive(const dmatrix& MM,double bound)
   return L;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix choleski_decomp_positive(const dmatrix& MM,const int& _ierr)
 {
   // kludge to deal with constantness
@@ -152,6 +163,10 @@ dmatrix choleski_decomp_positive(const dmatrix& MM,const int& _ierr)
   return L;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 lower_triangular_dmatrix  lower_triangular_choleski_decomp_positive
   (const dmatrix& MM,const int& _ierr)
 {
@@ -217,4 +232,3 @@ lower_triangular_dmatrix  lower_triangular_choleski_decomp_positive
   }
   return L;
 }
-

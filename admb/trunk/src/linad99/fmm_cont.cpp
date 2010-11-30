@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -17,6 +21,10 @@
 #endif
 #include <math.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void fmm_control::set_defaults()
 {
   noprintx=0;
@@ -40,6 +48,10 @@ void fmm_control::set_defaults()
   use_control_c=1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 fmm_control::fmm_control(BOR_CONST fmm_control & t)
 {
   fringe = fringe;
@@ -60,12 +72,19 @@ fmm_control::fmm_control(BOR_CONST fmm_control & t)
   ireturn = t.ireturn;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 fmm_control::fmm_control()
 {
   set_defaults();
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 fmm_control::fmm_control(_CONST lvector& ipar)
 {
   set_defaults();
@@ -80,12 +99,20 @@ fmm_control::fmm_control(_CONST lvector& ipar)
   scroll_flag = ipar[5];
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream& operator<<(BOR_CONST ostream& s, const fmm_control& fmc)
 {
   fmc.writeon(s);
   return (ostream&)s;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void fmm_control::writeon(BOR_CONST ostream& _s) const
 {
   ostream& s = (ostream&) _s;

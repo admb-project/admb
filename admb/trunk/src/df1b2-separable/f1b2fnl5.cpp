@@ -4,9 +4,17 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fnl.h>
 #include <adrndeff.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
   get_block_diagonal_hessian(df1b2variable& ff)
 {
@@ -113,6 +121,10 @@ void laplace_approximation_calculator::
   funnel_init_var::num_inactive_vars=0; 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::
   do_separable_stuff_laplace_approximation_importance_sampling_adjoint
   (df1b2variable& ff)
@@ -229,4 +241,3 @@ void laplace_approximation_calculator::
   funnel_init_var::num_active_parameters=0;
   funnel_init_var::num_inactive_vars=0;
 }
-

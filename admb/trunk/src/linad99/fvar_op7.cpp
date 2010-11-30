@@ -4,13 +4,25 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double upick(double x)
 {
   return x*x;
 }
   
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable& square(_CONST prevariable& v1)
 {
   double& x=value(v1);
@@ -21,7 +33,10 @@ dvariable& square(_CONST prevariable& v1)
    return(*gradient_structure::RETURN_PTR);
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
    dvar_matrix square(_CONST dvar_matrix& m)
    {
      dvar_matrix tmp;

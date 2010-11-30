@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: dmat_io.cpp
 
 // i/o operations for class dmatrix
@@ -26,6 +30,10 @@
 
 #include <string.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dmatrix& z)
 {
   ostream& ostr = (ostream&) _ostr;
@@ -33,6 +41,10 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dmatrix& z)
   return ostr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::write_on(BOR_CONST ostream& _s) _CONST 
 {
  ostream& s=(ostream&) _s;
@@ -66,6 +78,10 @@ void dmatrix::write_on(BOR_CONST ostream& _s) _CONST
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dmatrix& _z)
 {
   dmatrix& z= (dmatrix&) _z; 
@@ -75,6 +91,10 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dmatrix& _z)
   return istr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::read_from(BOR_CONST istream& s)
 {
   for (int i=rowmin();i <= rowmax();i++)

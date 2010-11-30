@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: fvara_io.cpp
 
 // i/o operations for class fvar_arry
@@ -27,6 +31,11 @@
 
 
 #ifdef __USE_IOSTREAM__
+
+/**
+ * Description not yet available.
+ * \param
+ */
 uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvar_vector& _z)
 {
   ADUNCONST(dvar_vector,z)
@@ -35,6 +44,10 @@ uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvar_vector& _z)
   return (uistream&) istr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar_vector::read_from(BOR_CONST uistream& _s)
 {
   if (allocated(*this))
@@ -50,6 +63,10 @@ void dvar_vector::read_from(BOR_CONST uistream& _s)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvar_vector& z)
 {
   if (allocated(z))
@@ -57,6 +74,10 @@ uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvar_vector& z)
   return (uostream&) ostr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar_vector::write_on(BOR_CONST uostream& _s) _CONST
 {
   if (allocated(*this))

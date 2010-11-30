@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix outer_prod(_CONST dvector& v1,_CONST dvector& v2 )
  {
    dmatrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );

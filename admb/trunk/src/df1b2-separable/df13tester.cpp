@@ -1,9 +1,14 @@
 /*
- * $Id$
+ * $Id $
  *
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
+
 #include <admodel.h>
 //#include <df1b2fun.h>
 #include <df13fun.h>
@@ -316,8 +321,9 @@ double lgam();
 #endif
 const double MYINF=1.7976931348623158E+308;
 
-/* Gamma function computed by Stirling's formula.
- * The polynomial STIR is valid for 33 <= x <= 172.
+/**
+ * Gamma function computed by Stirling's formula.
+ * \param _x, \f$33\le x\le 172\f$
  */
 static df1_three_variable stirf(const df1_three_variable & _x)
 {
@@ -340,8 +346,10 @@ y = SQTPI * y * w;
 return( y );
 }
 
-
-
+/**
+ * The Gamma function.
+ * \param xx1
+ */
 static df1_three_variable gamma(const df1_three_variable & xx1)
 {
    df1_three_variable x;
@@ -610,7 +618,10 @@ int operator == (double x,const df1_three_variable& n) { return x==value(n); }
 int operator < (const df1_three_variable& x,const df1_three_variable& n) { return value(x)<value(n); }
 int operator > (const df1_three_variable& x,const df1_three_variable& n) { return value(x)>value(n); }
 
-
+/**
+ * The log-gamma function.
+ * \param _x
+ */
 df1_three_variable lgam(const df1_three_variable& _x)
 {
 df1_three_variable  x,p,q, u, w, z,p1;
@@ -774,7 +785,10 @@ Copyright 1984, 1987, 1988 by Stephen L. Moshier
 Direct inquiries to 30 Frost Street, Cambridge, MA 02140
 */
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 double polevl( double  x, void * _coef, int N )
 {
 double * coef=(double *)(_coef);
@@ -793,6 +807,10 @@ while( --i );
 return( ans );
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1_three_variable polevl( const df1_three_variable&  x, void * _coef, int N )
 {
 double * coef=(double *)(_coef);
@@ -811,13 +829,10 @@ while( --i );
 return( ans );
 }
 
-
-/*							p1evl()	*/
-/*                                          N
- * Evaluate polynomial when coefficient of x  is 1.0.
- * Otherwise same as polevl.
+/**
+ * Evaluate polynomial when leading coefficient is 1.0
+ * \param
  */
-
 double p1evl( double x, void * _coef, int N )
 {
 double * coef= (double*)(_coef);
@@ -835,7 +850,11 @@ while( --i );
 
 return( ans );
 }
- 
+
+/**
+ * Description not yet available.
+ * \param
+ */
 df1_three_variable p1evl(const df1_three_variable & x, void * _coef, int N )
 {
 double * coef= (double*)(_coef);
@@ -869,7 +888,12 @@ df1_three_variable incbet(const df1_three_variable & _aa,
 
 
 
-// this is the wrapper to call the main inbet function
+/**
+ * This is the wrapper to call the main inbet function.
+ * \param _a
+ * \param _b
+ * \param _x
+ */
 dvariable incbet(const dvariable& _a,const dvariable& _b,
   const dvariable& _x)
 {
@@ -912,6 +936,10 @@ dvariable incbet(const dvariable& _a,const dvariable& _b,
   //   }
   // }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double lgam(double x)
 {
 double p, q, u, w, z;
@@ -1104,6 +1132,10 @@ return( q );
 Cephes Math Library Release 2.8:  June, 2000
 Copyright 1985, 1987, 2000 by Stephen L. Moshier
 */
+/**
+ * Description not yet available.
+ * \param
+ */
 static df1_three_variable igam(const df1_three_variable & a,const df1_three_variable & x);
 
   // #include "mconf.h"
@@ -1203,6 +1235,10 @@ static df1_three_variable igam(const df1_three_variable & a,const df1_three_vari
   //  *
   //  */
   // 
+/**
+ * Description not yet available.
+ * \param
+ */
    df1_three_variable igam(const df1_three_variable & _a, 
     const df1_three_variable & _x )
    {
@@ -1341,6 +1377,10 @@ static   df1_three_variable incbcf(const df1_three_variable & _a, const df1_thre
 static   df1_three_variable pseries(const df1_three_variable & _a, const df1_three_variable & _b, const df1_three_variable & _x );
 static  df1_three_variable incbd(const df1_three_variable & _a, const df1_three_variable & _b, const df1_three_variable & _x );
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1_three_variable incbet(const df1_three_variable & _aa, 
                           const df1_three_variable & _bb,
                           const df1_three_variable & _xx )
@@ -1449,11 +1489,14 @@ df1_three_variable incbet(const df1_three_variable & _aa,
  	}
  return( t );
  }
- // 
- // /* Continued fraction expansion #1
- //  * for incomplete beta integral
- //  */
- // 
+
+/**
+ * Continued fraction expansion number 1
+ * for incomplete beta integral.
+ * \param _a
+ * \param _b
+ * \param _x
+ */
   static df1_three_variable incbcf(const df1_three_variable & _a, const df1_three_variable & _b, const df1_three_variable & _x )
   {
   ADUNCONST(df1_three_variable,a) 
@@ -1542,12 +1585,14 @@ df1_three_variable incbet(const df1_three_variable & _aa,
   cdone:
   return(ans);
   }
- // 
- // 
- // /* Continued fraction expansion #2
- //  * for incomplete beta integral
- //  */
- // 
+
+/**
+ * Continued fraction expansion number 2
+ * for incomplete beta integral.
+ * \param _a
+ * \param _b
+ * \param _x
+ */
  static  df1_three_variable incbd(const df1_three_variable & _a, const df1_three_variable & _b, const df1_three_variable & _x )
  {
   ADUNCONST(df1_three_variable,a) 
@@ -1637,10 +1682,14 @@ df1_three_variable incbet(const df1_three_variable & _aa,
   cdone:
   return(ans);
   }
- // 
- // /* Power series for incomplete beta integral.
- //    Use when b*x is small and x not too close to 1.  */
- // 
+
+/**
+ * Power series for incomplete beta integral.
+ * Use when b*x is small and x not too close to 1.
+ * \param _a
+ * \param _b
+ * \param _x
+ */
   df1_three_variable pseries(const df1_three_variable & _a, const df1_three_variable & _b, const df1_three_variable & _x )
  {
   df1_three_variable a; 
@@ -1691,6 +1740,10 @@ df1_three_variable incbet(const df1_three_variable & _aa,
  return(s);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double get_values(double a,double b,double x)
 {
    df1_three_variable va,vb,vx;
@@ -1707,6 +1760,10 @@ static double get_values(double a,double b,double x)
    return *vy.get_u();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static df1_three_variable df3_get_values(double a,double b,double x)
 {
    df1_three_variable va,vb,vx;

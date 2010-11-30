@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <fvar.hpp>
 #  include <admodel.h>
@@ -26,6 +30,10 @@ dmatrix choleski_decomp_positive(const dmatrix& M,double b);
 //dvector laplace_approximation_calculator::default_calculations
  // (const dvector& _x,const double& _f,function_minimizer * pfmin)
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::test_trust_region_method
   (const dvector& _x,const double& _f,function_minimizer * pfmin)
 {
@@ -196,6 +204,10 @@ dvector laplace_approximation_calculator::test_trust_region_method
   return xx;
 }
   
+/**
+ * Description not yet available.
+ * \param
+ */
 void laplace_approximation_calculator::get_complete_hessian
   (dmatrix& H,dvector& g,function_minimizer * pfmin)
 {
@@ -510,6 +522,10 @@ dvector laplace_approximation_calculator::lincg(dvector& x,
 }  
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double laplace_approximation_calculator::do_one_feval
   (const dvector& x,function_minimizer * pfmin)
 {
@@ -609,6 +625,10 @@ dvector laplace_approximation_calculator::lincg(dvector& xinit,
 }  
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::lincg(dvector& xinit, 
   dvector& c, dmatrix& H1,double tol,double Delta,function_minimizer * pfmin,
   double& truef,double& estdiff,double& truediff,double& bestf,

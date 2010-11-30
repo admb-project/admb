@@ -4,9 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #ifdef USE_CONST
   #ifndef OPT_LIB 
+
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST double& d3_array::operator () (int k, int i, int j) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -24,7 +33,10 @@
       return ( (elem(k))(i,j) );
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST dvector& d3_array::operator () (int k, int i) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -42,9 +54,10 @@
       return ( (elem(k))(i) );
     }
 
-
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
  _CONST  dmatrix& d3_array::operator[] (int i) _CONST 
  {
    #ifdef SAFE_ARRAYS
@@ -67,6 +80,10 @@
   #endif
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array& d3_array::operator= (_CONST d3_array& m1)
  {
    if (slicemin() != m1.slicemin() || slicemax() != m1.slicemax())
@@ -85,6 +102,10 @@
    return(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array& d3_array::operator= (double x)
  {
    for (int i=slicemin();i<=slicemax();i++)

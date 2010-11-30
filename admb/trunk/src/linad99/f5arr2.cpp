@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
    dvar5_array operator / (_CONST d5_array& m,_CONST prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
@@ -19,6 +27,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    dvar5_array operator / (_CONST dvar5_array& m, CGNU_DOUBLE d)
    {
      RETURN_ARRAYS_INCREMENT();
@@ -32,6 +44,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    dvar5_array operator / (_CONST dvar5_array& m,_CONST prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
@@ -45,6 +61,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    void dvar5_array::operator /=(_CONST prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
@@ -55,6 +75,10 @@
      RETURN_ARRAYS_DECREMENT();
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    void dvar5_array::operator /=(_CONST double& d)
    {
      RETURN_ARRAYS_INCREMENT();

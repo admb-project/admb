@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #if defined(__TURBOC__) && !defined(__linux__)
@@ -29,11 +33,19 @@ const int MAX_NUMBER_ROWS = 6550;
  int get_non_blank_line(BOR_CONST ifstream& infile,char * & line,
    const unsigned int& line_length);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  struct dvec_ptr_ptr
  {
    void ** m;
  };
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector::dvector(char * filename, const int& column)
  {
    ifstream infile(filename);

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 /// file ddlist.cpp
 #include "fvar.hpp"
 
@@ -38,7 +42,10 @@ extern char otter_address5[];
 char * ddlist_space;
 char * ddlist_spacea;
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dlist::dlist(void)
 {
   int on,nopt;
@@ -75,6 +82,10 @@ dlist::dlist(void)
   
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dlink * dlist::create()
 {
 
@@ -111,6 +122,10 @@ dlink * dlist::create()
   return(tmp);
 }
  
+/**
+ * Description not yet available.
+ * \param
+ */
 dlink* dlist::last_remove()
 {
   dlink * tmp;
@@ -126,7 +141,10 @@ dlink* dlist::last_remove()
   }
 }
 
-   
+/**
+ * Description not yet available.
+ * \param
+ */
 dlist::~dlist()
 {
   dlink * tmp;
@@ -159,6 +177,10 @@ dlist::~dlist()
   delete [] dlink_addresses;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dlist::check_list(void)
 {
   dlink * tmp;
@@ -185,7 +207,10 @@ void dlist::check_list(void)
   cerr << "In check_list() number of free links is " << count << endl;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dlink * dlist::append(dlink * app)
 {
   // cout << " In dlist::append\n";

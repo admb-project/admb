@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar_fn.cpp
 // math.h functions involving prevariables
 #include "fvar.hpp"
@@ -23,6 +27,10 @@
 #include <stdio.h>
 #include <math.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
  double sigmoid( CGNU_DOUBLE v1)
  {
    return(atan(v1)/2.8);

@@ -4,9 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #ifdef USE_CONST
   #ifndef OPT_LIB
+
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST prevariable dvar3_array::operator () (int k, int i, int j) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -32,6 +41,10 @@
       #endif
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST dvar_vector& dvar3_array::operator () (int k, int i) _CONST 
     {
       #ifdef SAFE_ARRAYS

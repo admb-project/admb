@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008,2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_ADPVM)
 #include "adpvm2.h"
 
@@ -34,6 +38,10 @@
   // 
 int adpvm_slave_args::get_num_args(void){return num_args;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_comm::get_slave_assignments(void)
 {
   // default slave assignment function
@@ -66,6 +74,10 @@ void ad_comm::get_slave_assignments(void)
   slave_assignments.fill_seqadd(1,1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_slave_args::operator -- (void)
 {
   if (counter>0) 
@@ -79,10 +91,20 @@ void adpvm_slave_args::operator -- (void)
     strcpy(argv[0],(char*)str(counter));
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 adpvm_slave_args::operator char ** ()
 {
   return argv;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void strcpy(const adpvm_slave_args& _a,const char * s)
 {
   adpvm_slave_args& a=(adpvm_slave_args&) _a;
@@ -102,6 +124,10 @@ void strcpy(const adpvm_slave_args& _a,const char * s)
   strcpy(((char**)(a))[0],(char*)str(a.counter));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void send_int_to_slaves(const ivector &  x)
 {
   // *********  begin constant send block  *************
@@ -131,6 +157,10 @@ void send_int_to_slaves(const ivector &  x)
 #endif
 #if defined(USE_ADPVM2)
 
+/**
+ * Description not yet available.
+ * \param
+ */
 adpvm_manager::adpvm_manager(int _mode)
 {
   cout << "calling load library" << endl;
@@ -185,6 +215,10 @@ adpvm_manager::adpvm_manager(int _mode)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 char * adpvm_slave_args::operator () (int i)
 {
   if (i>=num_args || i<0)
@@ -199,6 +233,10 @@ char * adpvm_slave_args::operator () (int i)
 }
 typedef char * charptr;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 adpvm_slave_args::adpvm_slave_args(int _num_args,int _length_args)
 {
   //char ** argv;
@@ -217,6 +255,10 @@ adpvm_slave_args::adpvm_slave_args(int _num_args,int _length_args)
   argv[num_args]=NULL;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 adpvm_slave_args::~adpvm_slave_args()
 {
   if (argv)
@@ -235,6 +277,10 @@ adpvm_slave_args::~adpvm_slave_args()
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int adpvm_manager::start_slave_processes(const ad_comm& _mp)
 {
   ad_comm& mp=(ad_comm&) _mp;
@@ -346,6 +392,10 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
   return check;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 adpvm_manager::~adpvm_manager(void)
 {
   int i;
@@ -362,6 +412,10 @@ adpvm_manager::~adpvm_manager(void)
   //slave_argv=NULL;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void send_cf_to_slaves(int nvar,int current_phase,const dvar_vector&  x)
 {
   // *********  begin constant send block  *************
@@ -381,9 +435,10 @@ void send_cf_to_slaves(int nvar,int current_phase,const dvar_vector&  x)
   // *********  end variable send block  *************
 }
 
-
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void send_x_to_slaves(const dvar_vector&  x)
 {
   // *********  begin variable send block  *************
@@ -400,6 +455,10 @@ void send_x_to_slaves(const dvar_vector&  x)
   // *********  end constant send block  *************
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 imatrix get_int_from_slaves(void)
 {
   imatrix fslave(1,ad_comm::pvm_manager->nhost,1,ad_comm::pvm_manager->num_per_host);
@@ -418,6 +477,10 @@ imatrix get_int_from_slaves(void)
   return fslave;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix get_f_from_slaves(void)
 {
   dvar_matrix fslave(1,ad_comm::pvm_manager->nhost,1,ad_comm::pvm_manager->num_per_host);
@@ -437,6 +500,10 @@ dvar_matrix get_f_from_slaves(void)
   return fslave;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int get_int_from_master(void)
 {
   int x;
@@ -449,6 +516,10 @@ int get_int_from_master(void)
   return x;
 }
   
+/**
+ * Description not yet available.
+ * \param
+ */
 void send_int_to_master(int i)
 {
   // ***************  begin send block ***********************************
@@ -459,7 +530,10 @@ void send_int_to_master(int i)
   // ***************  end send block ***********************************
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_manager::send_variable_values_to_slaves(void)
 {
   int i,j;
@@ -483,6 +557,10 @@ void adpvm_manager::send_variable_values_to_slaves(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void adpvm_manager::get_variable_values_from_master(void)
 {
   int i,j;
@@ -498,6 +576,10 @@ void adpvm_manager::get_variable_values_from_master(void)
   // ***************  end receive block ***********************************
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void admaster_slave_variable_interface(const ad_comm& mp)
 {
   if (ad_comm::pvm_manager)

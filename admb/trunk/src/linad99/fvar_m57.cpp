@@ -4,11 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
 
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator + (const dvariable& x,const dmatrix& m)
 {
   int mmin=m.indexmin();
@@ -21,6 +29,10 @@ dvar_matrix operator + (const dvariable& x,const dmatrix& m)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_matrix operator - (const dvariable& x,const dmatrix& m)
 {
   int mmin=m.indexmin();

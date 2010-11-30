@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar_fn.cpp
 // math.h functions involving prevariables
 #include "fvar.hpp"
@@ -13,11 +17,19 @@
 
 void gradfree(dlink *);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable avg( const prevariable& x,const prevariable& y)
 {
   return 0.5*(x+y);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   prevariable& daves_kludge1(const prevariable& v1)
   {
     if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
@@ -75,6 +87,3 @@ dvariable avg( const prevariable& x,const prevariable& y)
       &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),dftmp);
    return(*gradient_structure::RETURN_PTR);
  }
-
-
-

@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2matrix outer_prod(const df1b2vector& _MM,const df1b2vector& _NN)
 {
   df1b2vector& M = (df1b2vector&)_MM;
@@ -26,6 +34,10 @@ df1b2matrix outer_prod(const df1b2vector& _MM,const df1b2vector& _NN)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector mfexp(const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
@@ -40,6 +52,10 @@ df1b2vector mfexp(const df1b2vector& _x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator * (const df1b2variable& _v,const dvector& _x)
 {
   ADUNCONST(df1b2variable,v)
@@ -55,6 +71,10 @@ df1b2vector operator * (const df1b2variable& _v,const dvector& _x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator * (const df1b2vector& _x,const df1b2variable& _v)
 {
   ADUNCONST(df1b2variable,v)
@@ -70,6 +90,10 @@ df1b2vector operator * (const df1b2vector& _x,const df1b2variable& _v)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator * (const df1b2variable& _v,const df1b2vector& _x)
 {
   ADUNCONST(df1b2variable,v)
@@ -85,6 +109,10 @@ df1b2vector operator * (const df1b2variable& _v,const df1b2vector& _x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator + (const df1b2vector& _x,const df1b2variable& _v)
 {
   ADUNCONST(df1b2variable,v)
@@ -100,6 +128,10 @@ df1b2vector operator + (const df1b2vector& _x,const df1b2variable& _v)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator + (const df1b2variable& _v,const df1b2vector& _x)
 {
   ADUNCONST(df1b2variable,v)
@@ -115,6 +147,10 @@ df1b2vector operator + (const df1b2variable& _v,const df1b2vector& _x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator + (double v,const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
@@ -129,6 +165,10 @@ df1b2vector operator + (double v,const df1b2vector& _x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator + (const df1b2vector& _x,const double v)
 {
   ADUNCONST(df1b2vector,x)
@@ -143,6 +183,10 @@ df1b2vector operator + (const df1b2vector& _x,const double v)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator - (const df1b2vector& _x,const double& v)
 {
   ADUNCONST(df1b2vector,x)
@@ -173,6 +217,10 @@ df1b2variable operator * (const df1b2vector& _v,const df1b2vector& _x)
 }
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable operator * (const dvector& _v,const df1b2vector& _x)
 {
   ADUNCONST(dvector,v)
@@ -187,6 +235,10 @@ df1b2variable operator * (const dvector& _v,const df1b2vector& _x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2variable operator * (const df1b2vector& _v,const dvector& _x)
 {
   ADUNCONST(dvector,x)
@@ -201,12 +253,20 @@ df1b2variable operator * (const df1b2vector& _v,const dvector& _x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int size_count(const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
   return x.indexmax()-x.indexmin()+1;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int size_count(const df1b2matrix& _x)
 {
   ADUNCONST(df1b2matrix,x)
@@ -220,6 +280,10 @@ int size_count(const df1b2matrix& _x)
   return tmp;
 }
   
+/**
+ * Description not yet available.
+ * \param
+ */
 void df1b2vector::initialize(void)
 {
   int mmin=indexmin();
@@ -231,7 +295,10 @@ void df1b2vector::initialize(void)
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator * (double v,const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
@@ -246,6 +313,10 @@ df1b2vector operator * (double v,const df1b2vector& _x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator * (const df1b2vector& _v,double x)
 {
   ADUNCONST(df1b2vector,v)
@@ -259,4 +330,3 @@ df1b2vector operator * (const df1b2vector& _v,double x)
   }
   return tmp;
 }
-

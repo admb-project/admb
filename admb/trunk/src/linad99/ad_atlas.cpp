@@ -4,12 +4,20 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 
 #if defined USE_ATLAS
 
 #include <clapack.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector atlas_solve_spd(const dmatrix & M, const dvector & x)
 {
   int mmin=M.indexmin();
@@ -52,6 +60,10 @@ dvector atlas_solve_spd(const dmatrix & M, const dvector & x)
   return v;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector atlas_solve_spd(const dmatrix & M, const dvector & x, int& ierr)
 {
   int mmin=M.indexmin();
@@ -95,7 +107,10 @@ dvector atlas_solve_spd(const dmatrix & M, const dvector & x, int& ierr)
   return v;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix atlas_solve_spd(const dmatrix & M, const dmatrix & N)
 {
   int mmin=M.indexmin();
@@ -159,6 +174,10 @@ dmatrix atlas_solve_spd(const dmatrix & M, const dmatrix & N)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix atlas_solve_spd_trans(const dmatrix & M, const dmatrix & N)
 {
   int mmin=M.indexmin();

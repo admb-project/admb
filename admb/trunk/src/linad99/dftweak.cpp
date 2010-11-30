@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dfunction_tweaker::dfunction_tweaker(double _eps,double _mult) : 
   mult(mult), eps(_eps), coffs(1, 3)
 {
@@ -36,7 +44,10 @@ dfunction_tweaker::dfunction_tweaker(double _eps,double _mult) :
   coffs=solve(M,y);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable dfunction_tweaker::operator () (const prevariable& x)
 {
   if (x>=eps &&x<=1-eps)

@@ -4,9 +4,17 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar7_array::initialize(void)
  {
    int mmin=indexmin();
@@ -17,6 +25,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar7_array::allocate(int l7,int u7)
 {
   if ( (shape=new vector_shape(l7,u7)) == 0)
@@ -37,7 +49,10 @@ void dvar7_array::allocate(int l7,int u7)
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar7_array::dvar7_array(dvar7_array& m2)
  {
    if (m2.shape)
@@ -53,12 +68,20 @@ void dvar7_array::allocate(int l7,int u7)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar7_array::dvar7_array(d7_array& m2)
  {
    allocate(m2);
    (*this)=m2;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar7_array::deallocate()
  {
    if (shape)
@@ -84,11 +107,19 @@ void dvar7_array::allocate(int l7,int u7)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar7_array::~dvar7_array() 
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar7_array& dvar7_array::operator =  (_CONST dvar7_array& m)
  {
    int mmin=indexmin();
@@ -107,6 +138,10 @@ void dvar7_array::allocate(int l7,int u7)
    return *this;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar7_array& dvar7_array::operator =  (_CONST d7_array& m)
  {
    int mmin=indexmin();
@@ -125,6 +160,10 @@ void dvar7_array::allocate(int l7,int u7)
    return *this;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar7_array::allocate(_CONST dvar7_array& m1)
  {
    if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
@@ -145,6 +184,10 @@ void dvar7_array::allocate(int l7,int u7)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar7_array::allocate(_CONST d7_array& m1)
  {
    if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
@@ -167,6 +210,10 @@ void dvar7_array::allocate(int l7,int u7)
 
   #ifndef OPT_LIB
 
+/**
+ * Description not yet available.
+ * \param
+ */
     dvar6_array& dvar7_array::operator ( ) (int i)
     {
       #ifdef SAFE_ARRAYS
@@ -178,6 +225,10 @@ void dvar7_array::allocate(int l7,int u7)
       return t[i];
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     dvar6_array& dvar7_array::operator [] (int i)
     {
       #ifdef SAFE_ARRAYS
@@ -189,7 +240,10 @@ void dvar7_array::allocate(int l7,int u7)
       return t[i];
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     dvar5_array& dvar7_array::operator ( ) (int i ,int j)
     {
       #ifdef SAFE_ARRAYS
@@ -201,6 +255,10 @@ void dvar7_array::allocate(int l7,int u7)
       return elem(i)(j);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     dvar4_array& dvar7_array::operator ( ) (int i,int j,int k)
     {
       #ifdef SAFE_ARRAYS
@@ -211,6 +269,11 @@ void dvar7_array::allocate(int l7,int u7)
       #endif
       return elem(i)(j,k);
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
     dvar3_array& dvar7_array::operator ( ) (int i,int j,int k,int l)
     {
       #ifdef SAFE_ARRAYS
@@ -222,6 +285,10 @@ void dvar7_array::allocate(int l7,int u7)
       return elem(i)(j,k,l);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     dvar_matrix& dvar7_array::operator ( ) (int i,int j,int k,int l,int m)
     {
       #ifdef SAFE_ARRAYS
@@ -233,6 +300,10 @@ void dvar7_array::allocate(int l7,int u7)
       return elem(i)(j,k,l,m);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     dvar_vector& dvar7_array::operator ( ) (int i,int j,int k,int l,int m, int n)
     {
       #ifdef SAFE_ARRAYS
@@ -244,6 +315,10 @@ void dvar7_array::allocate(int l7,int u7)
       return elem(i)(j,k,l,m,n);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable dvar7_array::operator ( ) (int i,int j,int k,int l,int m, int n,int _p)
     {
       #ifdef SAFE_ARRAYS
@@ -256,6 +331,11 @@ void dvar7_array::allocate(int l7,int u7)
     }
 
    #ifdef USE_CONST
+
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST dvar6_array& dvar7_array::operator ( ) (int i) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -268,6 +348,10 @@ void dvar7_array::allocate(int l7,int u7)
       return t[i];
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST dvar6_array& dvar7_array::operator [] (int i) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -280,7 +364,10 @@ void dvar7_array::allocate(int l7,int u7)
       return t[i];
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST dvar5_array& dvar7_array::operator ( ) (int i ,int j) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -293,6 +380,10 @@ void dvar7_array::allocate(int l7,int u7)
       return elem(i)(j);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST dvar4_array& dvar7_array::operator ( ) (int i,int j,int k) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -304,6 +395,11 @@ void dvar7_array::allocate(int l7,int u7)
       #endif
       return elem(i)(j,k);
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST dvar3_array& dvar7_array::operator ( ) (int i,int j,int k,int l) _CONST 
     {
       #ifdef SAFE_ARRAYS
@@ -316,6 +412,10 @@ void dvar7_array::allocate(int l7,int u7)
       return elem(i)(j,k,l);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST dvar_matrix& dvar7_array::operator ( ) (int i,int j,int k,int l,int m) _CONST
     {
       #ifdef SAFE_ARRAYS
@@ -328,6 +428,10 @@ void dvar7_array::allocate(int l7,int u7)
       return elem(i)(j,k,l,m);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST dvar_vector& dvar7_array::operator ( ) (int i,int j,int k,int l,int m,
       int n) _CONST
     {
@@ -341,6 +445,10 @@ void dvar7_array::allocate(int l7,int u7)
       return elem(i)(j,k,l,m,n);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST prevariable dvar7_array::operator ( ) (int i,int j,int k,int l,int m,  
       int n,int _p) _CONST
     {
@@ -359,13 +467,20 @@ void dvar7_array::allocate(int l7,int u7)
   #endif
 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar7_array::dvar7_array(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch,int l5,int u5,int l6,int u6,int l7,int u7)
 {
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6,l7,u7);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar7_array::dvar7_array(const ad_integer& hsl,const ad_integer& hsu,
   const index_type& sl,const index_type& sh,const index_type& nrl,
   const index_type& nrh,const index_type& ncl,const index_type& nch,
@@ -376,6 +491,10 @@ dvar7_array::dvar7_array(const ad_integer& hsl,const ad_integer& hsu,
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6,l7,u7);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvar7_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch,int l5,int u5,int l6,int u6,int l7,int u7)
  {
@@ -397,6 +516,10 @@ void dvar7_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar7_array::allocate(const ad_integer& hsl,const ad_integer& hsu,
   const index_type& sl,const index_type& sh,const index_type& nrl,
    const index_type& nrh,const index_type& ncl,const index_type& nch,
@@ -424,5 +547,3 @@ void dvar7_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
         ncl(i),nch(i),l5(i),u5(i),l6(i),u6(i),l7(i),u7(i));
    }
  }
-
-

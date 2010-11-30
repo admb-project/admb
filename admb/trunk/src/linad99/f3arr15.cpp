@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar3_array::dvar3_array(ad_integer sl,ad_integer  sh,
      const index_type& nrl, const index_type& nrh,
      const index_type& ncl, const index_type& nch)
@@ -16,6 +24,10 @@
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(ad_integer sl,ad_integer  sh,
      const index_type& nrl, const index_type& nrh,
      const index_type& ncl, const index_type& nch)
@@ -62,6 +74,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(ad_integer sl,ad_integer  sh,
      const index_type& nrl, const index_type& nrh)
  {
@@ -105,6 +121,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvar3_array::allocate(ad_integer sl,ad_integer  sh)
  {
   
@@ -136,4 +156,3 @@
      }
    }
  }
-

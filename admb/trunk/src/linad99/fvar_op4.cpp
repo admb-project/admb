@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: fvar_ops.cpp
 // operators involving prevariables
 
@@ -25,12 +29,21 @@
 
 void gradfree(dlink *);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int xxx_uuu_a(void)
 {
   return 1;
 }
 
 #ifndef OPT_LIB
+
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable dvar_vector::operator[] (int i)
     {
       #ifdef SAFE_ARRAYS
@@ -50,6 +63,10 @@ int xxx_uuu_a(void)
 
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     prevariable dvar_vector::operator() (int i)
     {
       #ifdef SAFE_ARRAYS
@@ -72,6 +89,10 @@ int xxx_uuu_a(void)
 
 #ifdef USE_CONST
   #ifndef OPT_LIB
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST prevariable dvar_vector::operator[] (int i) _CONST
     {
       #ifdef SAFE_ARRAYS
@@ -91,6 +112,10 @@ int xxx_uuu_a(void)
 
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST prevariable dvar_vector::operator() (int i) _CONST
     {
       #ifdef SAFE_ARRAYS

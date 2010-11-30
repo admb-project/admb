@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 void dmcv_prod(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvector& x )
  {
    RETURN_ARRAYS_INCREMENT();
@@ -45,6 +53,10 @@ void dmcv_prod(void);
    return(tmp);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmcv_prod(void)
 {
   verify_identifier_string("PLX");

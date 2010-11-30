@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 extern  int ctlc_flag;
 fmmt1::fmmt1(int nvar,_CONST lvector& ipar)
 : fmm_control(ipar),
@@ -20,6 +28,10 @@ fmmt1::fmmt1(int nvar,_CONST lvector& ipar)
   n = nvar;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 fmmt1::fmmt1(int nvar,int _xm)
 : w(1,4*nvar),
   funval(1,10),

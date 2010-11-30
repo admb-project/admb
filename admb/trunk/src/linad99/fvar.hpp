@@ -259,6 +259,10 @@ extern exitptr ad_exit;
 void spdll_exit(int);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class smart_counter
   {
     int * ncopies;
@@ -269,6 +273,10 @@ void spdll_exit(int);
     ~smart_counter(void);
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_and_int
   {
   public:
@@ -555,6 +563,11 @@ uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST prevariable& z);
 ostream& setscientific(BOR_CONST ostream& s);
 
 //ostream& setshowpoint(BOR_CONST ostream& s);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 class preshowpoint
 {
   int x;
@@ -566,6 +579,11 @@ ostream& operator << (BOR_CONST ostream&,preshowpoint);
 #   define setfixed() std::fixed
 #else
   ostream& setfixed(BOR_CONST ostream& s);
+
+/**
+ * Description not yet available.
+ * \param
+ */
   class prefixed
   {
     int x;
@@ -577,6 +595,11 @@ ostream& operator << (BOR_CONST ostream&,preshowpoint);
 #if (__MSVC32__>=7 || __BORLANDC__  >= 0x0560) 
 #   define setscientific() std::scientific
 #else
+
+/**
+ * Description not yet available.
+ * \param
+ */
   class prescientific
   {
     int x;
@@ -591,11 +614,19 @@ istream& operator>>(BOR_CONST istream& istr,BOR_CONST i3_array& z);
 ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
   class grad_stack;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class kkludge_object
   {
     char u;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
       class humungous_pointer
       {
       public:
@@ -623,6 +654,11 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
 #ifndef _VECTOR_SHAPE
   #define _VECTOR_SHAPE
 #include <dfpool.h>
+
+/**
+ * Description not yet available.
+ * \param
+ */
   class vector_shape_pool : public dfpool
   {
   public:
@@ -630,6 +666,10 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
     vector_shape_pool(int);
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class ts_vector_shape_pool : public tsdfpool
   {
   public:
@@ -637,6 +677,10 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
     ts_vector_shape_pool(int);
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class vector_shape
   {
   public:
@@ -668,6 +712,10 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
   };
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class ptr_vector
   {
     void ** v;
@@ -697,6 +745,10 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
     void initialize();
  }; // end of class ptr_vector
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class preivector
   {
     ivector * p;
@@ -707,6 +759,11 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
   };
 
   class vector_shapex;
+
+/**
+ * Description not yet available.
+ * \param
+ */
   class ivector
   {
   protected:
@@ -836,6 +893,10 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
   ivector operator + (int v,_CONST ivector& w);
   ivector operator - (int v,_CONST ivector& w);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class lvector_position
 {
   int min;
@@ -847,6 +908,10 @@ public:
   lvector_position(BOR_CONST lvector_position& dvp);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class lvector
   {
      AD_LONG_INT * v;
@@ -927,7 +992,10 @@ public:
 
   AD_LONG_INT sum(_CONST lvector&);
 
-  
+/**
+ * Description not yet available.
+ * \param
+ */
   class dependent_variables_information
   {
     int max_num_dependent_variables;
@@ -946,6 +1014,10 @@ public:
   void arr_free(double_and_int *);
   double_and_int * arr_new(unsigned int sz); 
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class gradient_structure
   {
       static char cmpdif_file_name[61];
@@ -1088,10 +1160,20 @@ private:
     #pragma interface
   #endif
 #endif
+
+/**
+ * Description not yet available.
+ * \param
+ */
     class dvect_ptr_ptr
     {
       dvector ** m;
     };
+
+/**
+ * Description not yet available.
+ * \param
+ */
     class dlink
     {
        double_and_int  di;
@@ -1114,6 +1196,10 @@ private:
       friend void allocate_dvariable_space(void);
     };
 
+/**
+ * Description not yet available.
+ * \param
+ */
     class dlist
     {
       dlink * last;
@@ -1148,6 +1234,11 @@ private:
     };
 
     class indvar_offset_list;
+
+/**
+ * Description not yet available.
+ * \param
+ */
     class grad_stack_entry
     {
     public:
@@ -1168,6 +1259,10 @@ private:
     };
     void default_evaluation3ind(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
     class grad_stack
     {
       grad_stack_entry * true_ptr_first;
@@ -1259,7 +1354,10 @@ private:
 
 
 #ifdef OPT_LIB
-    
+/**
+ * Description not yet available.
+ * \param
+ */
     inline void grad_stack::set_gradient_stack(void (* func)(void),
       double * dep_addr,double * ind_addr1, double mult1, double * ind_addr2,
       double mult2)
@@ -1303,6 +1401,10 @@ private:
     //  double mult2);
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
     inline void grad_stack::set_gradient_stack(void (* func)(void),
       double * dep_addr,double * ind_addr1, double mult1, double * ind_addr2,
       double mult2,double * ind_addr3, double mult3)
@@ -1339,6 +1441,10 @@ private:
       #endif
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     inline void grad_stack::set_gradient_stack(void (* func)(void),
       double * dep_addr,double * ind_addr1, double mult1, double * ind_addr2,
       double mult2,double * ind_addr3, double mult3,double * ind_addr4,
@@ -1378,6 +1484,10 @@ private:
       #endif
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     inline void grad_stack::set_gradient_stack(void (* func)(void),
       double * dep_addr,double * ind_addr1,double * ind_addr2)
     {
@@ -1401,6 +1511,10 @@ private:
       #endif
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     inline void grad_stack::set_gradient_stack2(void (* func)(void),
       double * dep_addr,double * ind_addr1, double mult1)
     {
@@ -1424,6 +1538,10 @@ private:
       #endif
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     inline void grad_stack::set_gradient_stack4(void (* func)(void),
       double * dep_addr,double * ind_addr1, double * ind_addr2)
     {
@@ -1566,6 +1684,11 @@ private:
       #endif
     }
 */
+
+/**
+ * Description not yet available.
+ * \param
+ */
     inline void grad_stack::set_gradient_stack(void (*func)(void))
     {
       #ifdef NO_DERIVS
@@ -1589,6 +1712,10 @@ private:
       #endif
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     class indvar_offset_list
     {
       int nvar; // The number of independent variables
@@ -1608,6 +1735,10 @@ private:
 
   class prevariable_position;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class prevariable
   {
   protected:
@@ -1795,6 +1926,10 @@ private:
   class df1_two_variable;
   class df1_three_variable;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class dvariable : public prevariable
   {
   public:
@@ -1828,6 +1963,10 @@ private:
 #undef min
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class funnel_dvariable : public dvariable
   {
   public:
@@ -2035,6 +2174,10 @@ private:
 #define DVEC_ARR_HPP
 
 #if defined(THREAD_SAFE)
+/**
+ * Description not yet available.
+ * \param
+ */
   class ts_vector_shapex 
   {
   public:
@@ -2070,6 +2213,10 @@ private:
   };
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class vector_shapex 
   {
   public:
@@ -2102,6 +2249,11 @@ private:
     int indexmin(){return index_min;}
     int indexmax(){return index_max;}
   };
+
+/**
+ * Description not yet available.
+ * \param
+ */
   class predvector
   {
     dvector * p;
@@ -2111,6 +2263,10 @@ private:
     friend class dvector;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class predvar_vector
   {
     dvar_vector * p;
@@ -2353,6 +2509,10 @@ private:
 
  }; // end of class dvector
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class independent_variables : public dvector 
 {
   public:
@@ -2403,6 +2563,10 @@ double dmax(double i, double j);
 
    double sigmoid( double t1);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class mat_shape 
   {
     unsigned int ncopies;
@@ -2426,6 +2590,10 @@ double dmax(double i, double j);
     friend class i3_array;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class mat_shapex 
   {
   public:
@@ -2444,6 +2612,11 @@ double dmax(double i, double j);
   };
 
     class arr_link;
+
+/**
+ * Description not yet available.
+ * \param
+ */
     class arr_list
     {
       arr_link * last;
@@ -2476,6 +2649,10 @@ double dmax(double i, double j);
       friend void arr_free_remove(arr_link *);
     };
 
+/**
+ * Description not yet available.
+ * \param
+ */
     class arr_link
     {
 #if defined(USE_VECTOR_SHAPE_POOL)
@@ -2510,6 +2687,10 @@ double dmax(double i, double j);
   class param_init_bounded_vector_vector;
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
  class dvar_vector
  {
  public:
@@ -2748,12 +2929,20 @@ double dmax(double i, double j);
     dvar_vector& operator=(_CONST dvar_vector&);
  };
  */
+
+/**
+ * Description not yet available.
+ * \param
+ */
    class fvar_ptr
    {
      dvar_vector * p;
    };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  class dvar_matrix
  {
     int index_min;
@@ -3011,6 +3200,10 @@ imatrix sort(_CONST imatrix&,int column,int NSTACK=60);
  void gradcalc(int nvar,BOR_CONST dvector& g);
  void slave_gradcalc(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  class dmatrix
  {
  protected:
@@ -3272,7 +3465,10 @@ dvector sfabs(_CONST dvector& t1); //"smoothed absolute value function
 
 //// daves' addition to john's additions
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class imatrix_position
 {
 public:
@@ -3290,6 +3486,10 @@ public:
 imatrix_position restore_imatrix_position(void);
 imatrix restore_imatrix_value(BOR_CONST imatrix_position&);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  class imatrix
  {
   protected:
@@ -3404,6 +3604,10 @@ dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,_CONST 
 istream& operator >> (BOR_CONST istream& s,BOR_CONST ptr_vector& v);
 ostream& operator << (BOR_CONST ostream& s,BOR_CONST ptr_vector& v);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class fmm_control
 {
 public:
@@ -3434,6 +3638,10 @@ public:
   void writeon(BOR_CONST ostream& s) const;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class sdmatrix: public dmatrix
 {
   public:
@@ -3450,6 +3658,10 @@ class dfsdmat;
 uistream& operator >> (BOR_CONST uistream&,BOR_CONST dfsdmat&);
 uostream& operator << (BOR_CONST uostream&,BOR_CONST dfsdmat&);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dfsdmat
 {
   int tmp_file;
@@ -3487,6 +3699,10 @@ public:
   #endif
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class fmm : public fmm_control
 {
 private:
@@ -3526,6 +3742,10 @@ public:
 
 class function_minimizer;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class fmmt1 : public fmm_control
 {
 private:
@@ -3585,6 +3805,11 @@ void fmmdisp(_CONST double * x,_CONST double * g, const int& nvar,
 ostream& operator<<(BOR_CONST ostream& s, const fmm_control& fmc);
 
 // !!!! #ifndef __GNU__
+
+/**
+ * Description not yet available.
+ * \param
+ */
 class uostream : public ofstream
 {
 public:
@@ -3710,7 +3935,10 @@ virtual void sss(void);
  // #endif
  // }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class uistream :  public ifstream
 {
 public:
@@ -3832,6 +4060,10 @@ class fmmc;
 
 void derch(BOR_CONST double& f,BOR_CONST dvector& x,BOR_CONST dvector& gg,int n, BOR_CONST int & ireturn);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class fmmc
 {
 public:
@@ -3898,6 +4130,10 @@ public:
 
     class dd3_array;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class three_array_shape
   {
     //unsigned int nslices;
@@ -3921,16 +4157,28 @@ public:
 
   }; // End of class three_array_shape
 
+/**
+ * Description not yet available.
+ * \param
+ */
    class dmatrix_ptr
    {
      dmatrix * p;
    };
 
+/**
+ * Description not yet available.
+ * \param
+ */
    class dvar_matrix_ptr
    {
      dvar_matrix * p;
    };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class d3_array
   {
     dmatrix * t;
@@ -4107,6 +4355,10 @@ public:
 
   }; //end of class d3_array
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class i3_array
   {
     imatrix * t;
@@ -4275,6 +4527,10 @@ public:
       class param_init_bounded_matrix_vector;
 #   endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class dvar3_array
   {
 
@@ -4475,6 +4731,10 @@ prevariable& cumd_norm_logistic(_CONST prevariable& x,double);
 double inv_cumd_norm_logistic(double x,double);
 double cumd_norm_logistic(double x,double);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class prevariable_position
 {
   double_and_int * v;
@@ -4811,6 +5071,10 @@ dmatrix orthpoly(int n,int deg,int skip);
 dvar_vector gammln(_CONST dvar_vector& n);
 dvector gammln(_CONST dvector& n);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dvar_vector_position
 {
 public:
@@ -4826,6 +5090,10 @@ public:
   friend class dvar_matrix_position;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dvar_matrix_position
 {
 public:
@@ -4850,6 +5118,10 @@ public:
 dvar_matrix use_shape(_CONST dvar_matrix& m);
 dmatrix use_shape(_CONST dmatrix& m);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dmatrix_position
 {
 public:
@@ -4865,6 +5137,10 @@ public:
   friend class dmatrix;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class d3_array_position
 {
   int min;
@@ -4876,6 +5152,10 @@ public:
   int indexmax() _CONST {return max;}
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dvector_position
 {
   int min;
@@ -4890,6 +5170,10 @@ public:
   friend class dmatrix_position;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class ivector_position
 {
   int min;
@@ -4906,6 +5190,10 @@ public:
 ostream& operator << (BOR_CONST ostream& s,BOR_CONST ptr_vector& ptr);
 ostream& operator << (BOR_CONST ostream&,BOR_CONST dvar_matrix_position&);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class DF_FILE
 {
 public:
@@ -4936,6 +5224,10 @@ public:
 
 char which_library();
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class fmmq : public fmm_control
 {
 private:
@@ -4996,6 +5288,10 @@ public:
   void va13c (_CONST dvector& x, double f,_CONST dvector& g);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class vcubic_spline_function
 {
   dvector x;  // indep variables values
@@ -5013,6 +5309,10 @@ public:
   dvar_vector operator () (const dvar_vector& u);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class cubic_spline_function
 {
   dvector x;  // indep variables values
@@ -5064,6 +5364,10 @@ void ludcmp(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
 #if (__BCPLUSPLUS__ >= 2)
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class function_tweaker
   {
     double mult;
@@ -5074,6 +5378,10 @@ void ludcmp(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
     double operator () (double);
   };
     
+/**
+ * Description not yet available.
+ * \param
+ */
   class dfunction_tweaker
   {
     double mult;
@@ -5084,7 +5392,10 @@ void ludcmp(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
     dvariable operator () (const prevariable&);
   };
     
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class four_array_shape
   {
     unsigned int ncopies;
@@ -5105,7 +5416,10 @@ void ludcmp(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
 
   }; // End of class four_array_shape
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class d4_array
 {
   four_array_shape * shape;
@@ -5271,6 +5585,11 @@ public:
 #ifndef D4ARR_HPP
 #define D4ARR_HPP
 #endif
+
+/**
+ * Description not yet available.
+ * \param
+ */
 class dvar4_array
 {
   four_array_shape * shape;
@@ -5473,7 +5792,10 @@ istream& operator>>(BOR_CONST istream& istr, BOR_CONST dvar4_array & z);
 istream& operator>>(BOR_CONST istream& istr, BOR_CONST dvar5_array & z);
 istream& operator>>(BOR_CONST istream& istr, BOR_CONST dvar6_array & z);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class fmmt : public fmm_control
 {
 private:
@@ -5507,6 +5829,11 @@ public:
 
   dmatrix& hessian();
 };
+
+/**
+ * Description not yet available.
+ * \param
+ */
 class i4_array
 {
   vector_shapex * shape;
@@ -5644,6 +5971,11 @@ public:
 // ***************************************************************
 // ***************************************************************
 #  if defined(MFCL2_CONSTRUCTORS)
+
+/**
+ * Description not yet available.
+ * \param
+ */
 class i5_array
 {
   vector_shapex * shape;
@@ -5799,6 +6131,10 @@ istream& operator>>(BOR_CONST istream& istr,BOR_CONST i4_array& z);
 // ***************************************************************
 // ***************************************************************
 // ***************************************************************
+/**
+ * Description not yet available.
+ * \param
+ */
 class d5_array
 {
   vector_shape * shape;
@@ -5913,6 +6249,10 @@ public:
 
 d5_array operator / (_CONST d5_array& m, double d);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dvar5_array
 {
   vector_shape * shape;
@@ -6033,6 +6373,10 @@ dvar5_array operator / (_CONST d5_array& m,_CONST prevariable& d);
 dvar5_array operator / (_CONST dvar5_array& m, double d);
 dvar5_array operator / (_CONST dvar5_array& m,_CONST prevariable& d);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class d6_array
 {
   vector_shape * shape;
@@ -6162,6 +6506,10 @@ public:
 
 d6_array operator / (_CONST d6_array& m, double d);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dvar6_array
 {
   vector_shape * shape;
@@ -6298,6 +6646,10 @@ dvar6_array operator / (_CONST d6_array& m,_CONST prevariable& d);
 dvar6_array operator / (_CONST dvar6_array& m, double d);
 dvar6_array operator / (_CONST dvar6_array& m,_CONST prevariable& d);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class d7_array
 {
   vector_shape * shape;
@@ -6445,6 +6797,10 @@ public:
 
 d7_array operator / (_CONST d7_array& m, double d);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dvar7_array
 {
   vector_shape * shape;
@@ -6602,6 +6958,10 @@ dvar7_array operator / (_CONST dvar7_array& m,_CONST prevariable& d);
 
 class lmatrix;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class lmatrix_position
 {
 public:
@@ -6619,7 +6979,10 @@ public:
 lmatrix_position restore_lmatrix_position(void);
 lmatrix restore_lmatrix_value(BOR_CONST lmatrix_position&);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  class lmatrix
  {
   protected:
@@ -6710,11 +7073,19 @@ lmatrix restore_lmatrix_value(BOR_CONST lmatrix_position&);
   class matrix_index;
   class i3_index;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class adkludge
   {
     char x;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class pre_index_type
   {
     const index_type * a;
@@ -6726,6 +7097,10 @@ lmatrix restore_lmatrix_value(BOR_CONST lmatrix_position&);
 
 class data_int;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class ad_integer
   {
   protected:
@@ -6746,7 +7121,10 @@ class data_int;
 #endif
   };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class index_guts
   {
     friend class ad_integer;
@@ -6766,7 +7144,10 @@ class data_int;
     friend class index_type;
   };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class index_type : public smart_counter
   {
     index_guts * p;
@@ -6793,6 +7174,10 @@ class data_int;
     friend class ad_integer;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class number_index : public ad_integer, public index_guts
   {
   private:
@@ -6809,6 +7194,10 @@ class data_int;
     friend class index_type;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class vector_index : public ivector, public index_guts
   {
     virtual index_guts * operator [] (int i)
@@ -6825,6 +7214,10 @@ class data_int;
     friend class index_type;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class matrix_index : public imatrix, public index_guts
   {
   private:
@@ -6841,6 +7234,10 @@ class data_int;
     friend class index_type;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class i3_index : public i3_array, public index_guts
   {
     virtual index_guts * operator [] (int i)
@@ -6855,6 +7252,10 @@ class data_int;
     friend class index_type;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class i4_index : public i4_array, public index_guts
   {
     virtual index_guts * operator [] (int i)
@@ -6871,13 +7272,20 @@ class data_int;
 
   void ad_begin_funnel(void);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class vector_range_exception{
   vector_range_exception(int i,int imin,int imax);
   friend class dvector;
   friend class dvar_vector;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class spdll_exception
 {
 public:
@@ -6885,6 +7293,10 @@ public:
  spdll_exception(int _e=0){e=_e;}
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class random_number_generator /// Random number generator
 {
  unsigned long *mt; ///< the array for the state vector
@@ -6908,6 +7320,10 @@ double sgamma(double a,const random_number_generator& _rng);
 banded_symmetric_dmatrix value(_CONST banded_symmetric_dvar_matrix&v);
 banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class banded_symmetric_dmatrix
 {
   int bw;
@@ -6961,6 +7377,10 @@ public:
  friend double norm2(const banded_symmetric_dmatrix& B);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class banded_symmetric_dvar_matrix
 {
   int bw;
@@ -6992,6 +7412,10 @@ public:
   friend dvariable norm2(const banded_symmetric_dvar_matrix& B);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class banded_lower_triangular_dmatrix
 {
   int bw;
@@ -7036,6 +7460,10 @@ public:
     (_CONST banded_lower_triangular_dvar_matrix&v);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class banded_lower_triangular_dvar_matrix
 {
   int bw;
@@ -7163,9 +7591,10 @@ double log_density_poisson(double x,double mu);
 //double negbinomial_density(double x,double r, double mu);
     
     
-    
-    
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class pre_column_print
 {
   dvector * ptr;
@@ -7174,6 +7603,10 @@ public:
   friend ostream& operator << (_CONST ostream&,_CONST pre_column_print&);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class pre_zero_print
 {
   dvector * ptr;
@@ -7265,6 +7698,10 @@ extern "C" void exit_handler(int k);
   class double_matrix_index;
   class double_i3_index;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class pre_double_index_type
   {
     const double_index_type * a;
@@ -7274,7 +7711,10 @@ extern "C" void exit_handler(int k);
     friend class double_index_type;
   };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class ad_double
   {
   protected:
@@ -7288,7 +7728,10 @@ extern "C" void exit_handler(int k);
     ad_double& operator = (const ad_double&);
   };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_index_guts
   {
     friend class ad_double;
@@ -7307,7 +7750,10 @@ extern "C" void exit_handler(int k);
     friend class double_index_type;
   };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_index_type
   {
     double_index_guts * p;
@@ -7332,6 +7778,10 @@ extern "C" void exit_handler(int k);
     friend class ad_integer;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_index : public ad_double, public double_index_guts
   {
   private:
@@ -7347,6 +7797,10 @@ extern "C" void exit_handler(int k);
     friend class double_index_type;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class dvector_index : public dvector, public double_index_guts
   {
     virtual double_index_guts * operator [] (int i)
@@ -7362,6 +7816,10 @@ extern "C" void exit_handler(int k);
     friend class double_index_type;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class dmatrix_index : public dmatrix, public double_index_guts
   {
   private:
@@ -7377,6 +7835,10 @@ extern "C" void exit_handler(int k);
     friend class double_index_type;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class d3_index : public d3_array, public double_index_guts
   {
     virtual double_index_guts * operator [] (int i)
@@ -7432,6 +7894,10 @@ extern "C" void exit_handler(int k);
   dvariable ghk_choleski_m_logistic(const dvar_vector& upper,
     const dvar_matrix& ch, const dmatrix& eps);
   
+/**
+ * Description not yet available.
+ * \param
+ */
 class function_minimizer_exception
   {
   public:
@@ -7497,6 +7963,10 @@ class function_minimizer_exception
   class adpvm_manager;
   class adtimer;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class ad_comm
 {
 protected:
@@ -7560,6 +8030,11 @@ dvariable log_gamma_density(const dvariable& _x,const dvariable& _r,
 #if (defined(linux) || defined(__linux__)) && !defined(__WIN32)
 #include <sys/time.h>
 #include <iostream>
+
+/**
+ * Description not yet available.
+ * \param
+ */
   class adtimer
   {
     timeval tv;
@@ -7573,6 +8048,10 @@ dvariable log_gamma_density(const dvariable& _x,const dvariable& _r,
 #else
 #include <windows.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class adtimer
   {
     DWORD t;
@@ -7603,6 +8082,10 @@ dvector atlas_solve_spd(const dmatrix & M, const dvector & x, int& ierr);
 dmatrix atlas_solve_spd(const dmatrix & M, const dmatrix & x);
 dmatrix atlas_solve_spd_trans(const dmatrix & M, const dmatrix & x);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class lower_triangular_dmatrix : public dmatrix
 {
 public:
@@ -7802,6 +8285,10 @@ void test_the_pointer(void);
   dvariable dflogistic(double a,double b,const prevariable& x);
   double log_density_negbinomial(double x,double mu,double tau);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class sing_val_decomp 
   {
     dmatrix a;
@@ -7822,7 +8309,10 @@ void test_the_pointer(void);
   dvariable avg( const prevariable& x,const prevariable& y);
   double avg(double x,double y);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class multi_index
   {
     int mind;
@@ -7850,6 +8340,11 @@ void test_the_pointer(void);
   inline void ADMB_getcallindex(dvar4_array& v){;}
 
   void clean(ivector& v,int level);
+
+/**
+ * Description not yet available.
+ * \param
+ */
   class dvar_compressed_triplet
   {
     int n;
@@ -7871,6 +8366,10 @@ void test_the_pointer(void);
     int get_m(){return m;}
   };
   
+/**
+ * Description not yet available.
+ * \param
+ */
  class dcompressed_triplet
   {
     int n;  // number of rows
@@ -7902,6 +8401,11 @@ void test_the_pointer(void);
   */
 
   typedef struct cs_symbolic css;
+
+/**
+ * Description not yet available.
+ * \param
+ */
  class hs_symbolic     // Info for symbolic cholesky
   {
    public:

@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array mfexp(_CONST d3_array& m)
    {
      d3_array tmp;
@@ -17,6 +25,10 @@
      return tmp;
    }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
    d3_array mfexp(_CONST d3_array& m, CGNU_DOUBLE d)
    {
      d3_array tmp;
@@ -26,4 +38,4 @@
        tmp(i)=mfexp(m(i),d);
      }
      return tmp;
-   }  
+   }

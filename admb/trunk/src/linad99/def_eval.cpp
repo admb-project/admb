@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #include <sys/stat.h>
@@ -62,6 +66,10 @@
 
   //ofstream gradlog("grad.log");
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void default_evaluation(void)
   {
     // checks to see how many independent variables there are
@@ -90,6 +98,10 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void default_evaluation1(void)
   {
     // there is one independent variable
@@ -102,6 +114,10 @@
       //    cout << setscientific() <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void default_evaluation1m(void)
   {
     // there is one independent variable
@@ -114,12 +130,20 @@
       //    cout <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void default_evaluation0(void)
   {
     // there is one independent variable
     * gradient_structure::GRAD_STACK1->ptr->dep_addr=0.;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void default_evaluation2(void)
   {
     //char ch;
@@ -137,6 +161,10 @@
       //    cout <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void default_evaluation3(void)
   {
     // there are two independent variables
@@ -150,6 +178,10 @@
       //    cout <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void default_evaluation3ind(void)
   {
     // there are three independent variables
@@ -178,6 +210,10 @@
     * ind_addr3 += z * mult3 ;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void default_evaluation4ind(void)
   {
     // there are three independent variables
@@ -220,6 +256,10 @@
       //    cout <<  setprecision(13) << * ind_addr4  << endl;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void default_evaluation4(void)
   {
     // there are two independent variables
@@ -230,6 +270,10 @@
     * grad_ptr->ind_addr2 += z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void default_evaluation4m(void)
   {
     // there are two independent variables
@@ -239,4 +283,3 @@
     * grad_ptr->ind_addr1 += z;
     * grad_ptr->ind_addr2 -= z;
   }
-

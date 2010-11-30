@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -17,6 +21,10 @@
 
 #include <string.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void nograd_assign_row(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)
 {
   // cout << "Entering nograd assign"<<endl;
@@ -39,6 +47,10 @@ void nograd_assign_row(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii
     // out(i)=nograd_assign(m(i));
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable nograd_assign(double tmp)
 {
   kkludge_object kg;
@@ -46,4 +58,3 @@ void nograd_assign_row(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii
   value(tmpout)=tmp;
   return tmpout;
 }
-

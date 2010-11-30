@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
@@ -20,7 +24,10 @@
 void * farptr_norm(void *);
 long int farptr_tolong(void *) ;
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector& dvar_vector::shift(int min) 
 {
   va += indexmin()-min;
@@ -30,7 +37,10 @@ dvar_vector& dvar_vector::shift(int min)
   return *this;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector::dvar_vector(BOR_CONST independent_variables& t)
  {
    int i;
@@ -44,6 +54,10 @@ dvar_vector& dvar_vector::shift(int min)
    make_indvar_list(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector::dvar_vector(_CONST dvector& t)
  {
    int i;
@@ -68,7 +82,10 @@ dvar_vector& dvar_vector::shift(int min)
  //prevariable dvar_vector::elem(int i) { return (va+i); }
 //#endif
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector::dvar_vector( unsigned int sz, double * x )
  {
    allocate(0,sz-1);
@@ -78,6 +95,10 @@ dvar_vector& dvar_vector::shift(int min)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector::dvar_vector(int ncl,int nch)
  {
    if (ncl>nch)
@@ -112,11 +133,19 @@ dvar_vector& dvar_vector::shift(int min)
  }
  */
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvar_vector::dvar_vector(void)
  {
    allocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void make_indvar_list(_CONST dvar_vector& t)
 {
   if (!gradient_structure::instances)
@@ -161,6 +190,10 @@ void make_indvar_list(_CONST dvar_vector& t)
   gradient_structure::NVAR=t.indexmax()-t.indexmin()+1;
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
    void  copy_status(BOR_CONST ostream& _s,_CONST dvar_vector& v)
    {
      ostream& s= (ostream&) _s;
@@ -168,22 +201,38 @@ void make_indvar_list(_CONST dvar_vector& t)
      s <<"\n";
    }
 
+/**
+ * Description not yet available.
+ * \param
+ */
    void dvar_vector::allocate(void)
    {
      shape=NULL;
      va=NULL;
    }
  
+/**
+ * Description not yet available.
+ * \param
+ */
    void dvar_vector::allocate(_CONST dvector& v1)
    {
      allocate(v1.indexmin(),v1.indexmax());
    }
 
+/**
+ * Description not yet available.
+ * \param
+ */
    void dvar_vector::allocate(_CONST dvar_vector& v1)
    {
      allocate(v1.indexmin(),v1.indexmax());
    }
 
+/**
+ * Description not yet available.
+ * \param
+ */
    void dvar_vector::allocatec(_CONST dvar_vector& t)
    {
      if (!(*this)) 
@@ -208,6 +257,10 @@ void make_indvar_list(_CONST dvar_vector& t)
      }
    }
 
+/**
+ * Description not yet available.
+ * \param
+ */
    void dvar_vector::allocate(int ncl,int nch)
    {
      if (ncl>nch)
@@ -246,8 +299,11 @@ void make_indvar_list(_CONST dvar_vector& t)
      }
    }
 
+/**
+ * Description not yet available.
+ * \param
+ */
    void dvar_vector::allocate(const ad_integer& ncl,const ad_integer& nch)
    {
      allocate(int(ncl),int(nch));
    }
-

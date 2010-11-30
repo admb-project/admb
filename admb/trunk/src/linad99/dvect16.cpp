@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector& dvector::operator+= (_CONST dvector& v1)
  {
    if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
@@ -23,6 +31,10 @@
    return(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector& dvector::operator-= (_CONST dvector& v1)
  {
    if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
@@ -40,7 +52,10 @@
    return(*this);
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector& dvector::operator+= ( CGNU_DOUBLE d)
  {
    for (int i=indexmin();i<=indexmax();i++)
@@ -50,6 +65,10 @@
    return(*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector& dvector::operator-= ( CGNU_DOUBLE d)
  {
    for (int i=indexmin();i<=indexmax();i++)

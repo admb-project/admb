@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -17,6 +21,10 @@
 
 #include <math.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable var(_CONST dvar_vector& v)
   {
     dvariable tmp;
@@ -28,6 +36,10 @@
     return(tmp*tmp-tmp1*tmp1);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable std_dev(_CONST dvar_vector& v)
   {
     dvariable tmp;
@@ -39,6 +51,10 @@
     return(sqrt(tmp*tmp-tmp1*tmp1));
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable mean(_CONST dvar_vector& v)
   {
     dvariable tmp;

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #define SAFE_ARRAYS
 #include <fvar.hpp>
 
@@ -104,12 +108,20 @@ public:
 };
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dfsdmat::dfsdmat(void)
 {
   tmp_file=0;
   allocate();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfsdmat::allocate(void)
 {
   shared_memory=0;
@@ -120,12 +132,20 @@ void dfsdmat::allocate(void)
   n=0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dfsdmat::dfsdmat(int _n)
 {
   tmp_file=0;
   allocate(_n);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfsdmat::allocate(int _n)
 {
   n=_n;
@@ -166,6 +186,10 @@ void dfsdmat::allocate(int _n)
    */
 }  
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dfsdmat::dfsdmat(int _n, BOR_CONST gradient_structure& gs)
 {
   tmp_file=0;
@@ -173,6 +197,10 @@ dfsdmat::dfsdmat(int _n, BOR_CONST gradient_structure& gs)
   allocate(_n,gs);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfsdmat::allocate(int _n, BOR_CONST gradient_structure& gs)
 {
   n=_n;
@@ -190,11 +218,19 @@ void dfsdmat::allocate(int _n, BOR_CONST gradient_structure& gs)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dfsdmat::~dfsdmat()
 {
   deallocate();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfsdmat::deallocate()
 {
   if (ptr && !shared_memory) 
@@ -217,6 +253,11 @@ void dfsdmat::deallocate()
 }  
 
 #if !defined(OPT_LIB)
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double& dfsdmat::elem(int i,int j)
 {
   double * tmp= m[i]+j;
@@ -229,6 +270,10 @@ double& dfsdmat::elem(int i,int j)
   return *tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double& dfsdmat::operator () (int i,int j)
 {
   double * tmp= m[i]+j;
@@ -242,6 +287,10 @@ double& dfsdmat::operator () (int i,int j)
 }
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 uostream& operator << (BOR_CONST uostream& ofs,BOR_CONST dfsdmat& m)
 {
   double * p=((dfsdmat&)m).getminp();
@@ -254,6 +303,10 @@ uostream& operator << (BOR_CONST uostream& ofs,BOR_CONST dfsdmat& m)
   return (uostream&)ofs;
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 uistream& operator >> (BOR_CONST uistream& _ifs,BOR_CONST dfsdmat& _m)
 {
   uistream& ifs= (uistream&) _ifs;
@@ -268,6 +321,10 @@ uistream& operator >> (BOR_CONST uistream& _ifs,BOR_CONST dfsdmat& _m)
   return ifs;
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfsdmat::save()
 {
   if (!tmp_file) 
@@ -306,6 +363,10 @@ void dfsdmat::save()
  */
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dfsdmat::restore()
 {
   int _n=0;
@@ -322,5 +383,3 @@ void dfsdmat::restore()
   if (tmp_file) close(tmp_file);
   tmp_file=NULL;
 }
-
-

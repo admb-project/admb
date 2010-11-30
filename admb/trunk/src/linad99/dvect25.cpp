@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvector::fill_multinomial(BOR_CONST random_number_generator& rng,_CONST dvector& p)
   // Fils a dvector with random numbers drawn from a multinomial distribution
   {
@@ -36,6 +44,10 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void ivector::fill_multinomial(BOR_CONST random_number_generator& rng,_CONST dvector& p)
   // Fills a dvector with random numbers drawn from a multinomial distribution
   {
@@ -66,6 +78,10 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void lvector::fill_multinomial(BOR_CONST random_number_generator& rng,_CONST dvector& p)
   // Fils a dvector with random numbers drawn from a multinomial distribution
   {

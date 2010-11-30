@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
 #include "fvar.hpp"
@@ -25,6 +29,10 @@
 
 void gradfree(dlink *);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double_and_int * gradnew()
 {
   #if defined (SAFE_ARRAYS)
@@ -51,7 +59,10 @@ double_and_int * gradnew()
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void gradfree(dlink * v)
   {
     if (gradient_structure::instances)
@@ -71,6 +82,10 @@ double_and_int * gradnew()
 //     (*v).nc++;
 //  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     dvariable::dvariable(_CONST prevariable& t)
     {
       v=gradnew();
@@ -80,7 +95,10 @@ double_and_int * gradnew()
 	 set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     dvariable::dvariable(_CONST dvariable& t)
     {
       v=gradnew();
@@ -89,7 +107,10 @@ double_and_int * gradnew()
 	 set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     dvariable::dvariable()
     {
       v=gradnew();
@@ -100,21 +121,29 @@ double_and_int * gradnew()
       #endif
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     dvariable::dvariable(kkludge_object)
     {
       v=gradnew();
       //(*v).nc=0;
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
    dvariable::~dvariable()
    {
      gradfree( (dlink *) v );
    }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable::dvariable( CGNU_DOUBLE t)
   {
     v=gradnew();
@@ -123,6 +152,10 @@ double_and_int * gradnew()
     gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0, &(v->x) );
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable::dvariable(BOR_CONST int& t)
   {
     v=gradnew();
@@ -130,4 +163,3 @@ double_and_int * gradnew()
     //(*v).nc=0;
     gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0, &(v->x) );
   }
-

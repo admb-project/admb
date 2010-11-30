@@ -4,10 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
   void DF_cdble_dv_diveq(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector& dvar_vector::operator /= ( CGNU_DOUBLE x)
   {
     RETURN_ARRAYS_INCREMENT();
@@ -26,6 +34,10 @@
     return(*this);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void DF_cdble_dv_diveq(void)
  {
     verify_identifier_string("cmtu");
@@ -45,6 +57,10 @@
 
   void DF_vdble_dv_diveq(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvar_vector& dvar_vector::operator /= (_CONST prevariable& x)
   {
     RETURN_ARRAYS_INCREMENT();
@@ -65,6 +81,10 @@
     return(*this);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void DF_vdble_dv_diveq(void)
  {
     verify_identifier_string("cmtu");

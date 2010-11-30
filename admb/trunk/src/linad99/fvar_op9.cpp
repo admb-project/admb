@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: fvar_ops.cpp
 // operators involving prevariables
 
@@ -24,6 +28,10 @@
   void df_plus_eq_pvpv(void);
   //extern ofstream gradlog;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void prevariable::operator +=(_CONST prevariable& v1)
   {
     (*v).x+=(*v1.v).x;
@@ -31,6 +39,10 @@
       (df_plus_eq_pvpv,&(v->x),&(v1.v->x));
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void df_plus_eq_pvpv(void)
   {
     //cout <<  setprecision(13) << 
@@ -47,4 +59,3 @@
     //gradlog <<  setprecision(13) << 
      //  * gradient_structure::GRAD_STACK1->ptr->ind_addr1 << endl;
   }
-

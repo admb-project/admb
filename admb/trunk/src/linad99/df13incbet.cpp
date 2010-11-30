@@ -10,6 +10,10 @@
  * Copyright (c) 2009, 2010 ADMB Foundation
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df13fun.h>
 
 static int mtherr(char *s, int n);
@@ -168,8 +172,10 @@ static double lgam(double);
 
 const double MYINF = 1.7976931348623158E+308;
 
-/* Gamma function computed by Stirling's formula.
+/**
+ * Gamma function computed by Stirling's formula.
  * The polynomial STIR is valid for 33 <= x <= 172.
+ * \param _x \f$33 \le x \le 172 \f$
  */
 static df1_three_variable stirf(const df1_three_variable & _x)
 {
@@ -190,8 +196,10 @@ static df1_three_variable stirf(const df1_three_variable & _x)
    return (y);
 }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 static df1_three_variable gamma(const df1_three_variable & xx1)
 {
    df1_three_variable x;
@@ -393,7 +401,10 @@ int operator >(const df1_three_variable & x, const df1_three_variable & n)
    return value(x) > value(n);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1_three_variable lgam(const df1_three_variable & _x)
 {
    df1_three_variable x, p, q, u, w, z, p1;
@@ -548,8 +559,11 @@ df1_three_variable lgam(const df1_three_variable & _x)
  * program in microcode or assembly language.
  *
  */
-
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double polevl(double x, void *_coef, int N)
 {
    double *coef = (double *) (_coef);
@@ -568,6 +582,10 @@ static double polevl(double x, void *_coef, int N)
    return (ans);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static df1_three_variable polevl(const df1_three_variable & x, void *_coef,
 				 int N)
 {
@@ -587,13 +605,10 @@ static df1_three_variable polevl(const df1_three_variable & x, void *_coef,
    return (ans);
 }
 
-
-/*							p1evl()	*/
-/*                                          N
- * Evaluate polynomial when coefficient of x  is 1.0.
- * Otherwise same as polevl.
+/**
+ * Description not yet available.
+ * \param
  */
-
 static double p1evl(double x, void *_coef, int N)
 {
    double *coef = (double *) (_coef);
@@ -612,6 +627,10 @@ static double p1evl(double x, void *_coef, int N)
    return (ans);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static df1_three_variable p1evl(const df1_three_variable & x, void *_coef,
 				int N)
 {
@@ -631,6 +650,10 @@ static df1_three_variable p1evl(const df1_three_variable & x, void *_coef,
    return (ans);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static int mtherr(char *s, int n)
 {
    cerr << "Error code " << n << "in " << *s << endl;
@@ -642,7 +665,10 @@ df1_three_variable incbet(const df1_three_variable & _aa,
 				 const df1_three_variable & _bb,
 				 const df1_three_variable & _xx);
 
-// this is the wrapper to call the main inbet function
+/**
+ * This is the wrapper to call the main inbet function.
+ * \param
+ */
 dvariable incbet(const dvariable & _a, const dvariable & _b,
 		 const dvariable & _x)
 {
@@ -659,7 +685,10 @@ dvariable incbet(const dvariable & _a, const dvariable & _b,
    return z;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 static double lgam(double x)
 {
    double p, q, u, w, z;
@@ -850,6 +879,10 @@ static double lgam(double x)
 static df1_three_variable igam(const df1_three_variable & a,
 			       const df1_three_variable & x);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1_three_variable igamc(const df1_three_variable & _a,
 			 const df1_three_variable & _x)
 {
@@ -931,6 +964,11 @@ df1_three_variable igamc(const df1_three_variable & _a,
   //  *
   //  */
   // 
+
+/**
+ * Description not yet available.
+ * \param
+ */
 df1_three_variable igam(const df1_three_variable & _a,
 			const df1_three_variable & _x)
 {
@@ -1039,6 +1077,10 @@ static df1_three_variable incbd(const df1_three_variable & _a,
 				const df1_three_variable & _b,
 				const df1_three_variable & _x);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1_three_variable incbet(const df1_three_variable & _aa,
 				 const df1_three_variable & _bb,
 				 const df1_three_variable & _xx)
@@ -1148,11 +1190,11 @@ df1_three_variable incbet(const df1_three_variable & _aa,
    return (t);
 }
 
-
-  /* Continued fraction expansion #1
-   * for incomplete beta integral
-   */
-
+/**
+ * Continued fraction expansion number 1
+ * for incomplete beta integral
+ * \param
+ */
 static df1_three_variable incbcf(const df1_three_variable & _a,
 				 const df1_three_variable & _b,
 				 const df1_three_variable & _x)
@@ -1243,9 +1285,11 @@ static df1_three_variable incbcf(const df1_three_variable & _a,
    return (ans);
 }
 
-  /* Continued fraction expansion #2
-   * for incomplete beta integral
-   */
+/**
+ * Continued fraction expansion number 2
+ * for incomplete beta integral
+ * \param
+ */
 static df1_three_variable incbd(const df1_three_variable & _a,
 				const df1_three_variable & _b,
 				const df1_three_variable & _x)
@@ -1336,9 +1380,11 @@ static df1_three_variable incbd(const df1_three_variable & _a,
    return (ans);
 }
 
-  /* Power series for incomplete beta integral.
-     Use when b*x is small and x not too close to 1.  */
-
+/**
+ * Power series for incomplete beta integral.
+ * Use when b*x is small and x not too close to 1
+ * \param
+ */
 df1_three_variable pseries(const df1_three_variable & _a,
 			   const df1_three_variable & _b,
 			   const df1_three_variable & _x)
@@ -1390,6 +1436,10 @@ df1_three_variable pseries(const df1_three_variable & _a,
    return (s);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double get_values(double a, double b, double x)
 {
    df1_three_variable va, vb, vx;
@@ -1406,6 +1456,10 @@ static double get_values(double a, double b, double x)
    return *vy.get_u();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static df1_three_variable df3_get_values(double a, double b, double x)
 {
    df1_three_variable va, vb, vx;
@@ -1421,5 +1475,3 @@ static df1_three_variable df3_get_values(double a, double b, double x)
    df1_three_variable vy = incbet(va, vb, vx);
    return vy;
 }
-
-

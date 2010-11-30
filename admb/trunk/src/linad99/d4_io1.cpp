@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: dmat_io.cpp
 
 // i/o operations for class dmatrix
@@ -30,6 +34,10 @@
 
 #ifdef __USE_IOSTREAM__
 
+/**
+ * Description not yet available.
+ * \param
+ */
 uostream& operator<<(BOR_CONST uostream& _ostr,BOR_CONST d4_array & z)
 {
   uostream & ostr = (uostream&) _ostr;
@@ -40,6 +48,10 @@ uostream& operator<<(BOR_CONST uostream& _ostr,BOR_CONST d4_array & z)
   return ostr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST d4_array & z)
 {
   uistream & istr = (uistream&) _istr;

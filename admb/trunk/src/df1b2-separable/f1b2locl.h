@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(__F1B2LOCL__)
 # define __F1B2LOCL__
 #include <df1b2fun.h>
@@ -45,6 +49,10 @@
 
 class local_dep_df1b2variable;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class local_init_var
 {
 public:
@@ -85,7 +93,10 @@ public:
   static int nvarcalc_all(void);
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class local_init_df1b2variable : public local_init_var, public df1b2variable 
 {
 public:
@@ -114,7 +125,10 @@ public:
   virtual void dot_calcs(local_dep_df1b2variable&,int j);
 };
 
-  
+/**
+ * Description not yet available.
+ * \param
+ */
 class local_init_bounded_df1b2vector : public local_init_var, 
   public df1b2vector 
 {
@@ -131,8 +145,10 @@ public:
   virtual void set_index(imatrix&,int& ii);
 };
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class local_init_df1b2vector : public local_init_var, public df1b2vector 
 {
   const df1b2vector * p;
@@ -150,6 +166,11 @@ public:
 // ************************************************************
 // ************************************************************
 // ************************************************************
+
+/**
+ * Description not yet available.
+ * \param
+ */
 class local_dep_var
 {
 public:
@@ -187,7 +208,10 @@ public:
   static int nvarcalc_all(void);
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class local_dep_df1b2variable : public local_dep_var, public df1b2variable 
 {
 public:
@@ -218,7 +242,10 @@ public:
   virtual void set_index(imatrix&,int& ii);
 };
 
-  
+/**
+ * Description not yet available.
+ * \param
+ */
 class local_dep_df1b2vector : public local_dep_var, public df1b2vector 
 {
   const df1b2vector * p;
@@ -239,6 +266,10 @@ df1b2variable plocal_tester(int i,const df1b2variable& x,
 df1b2variable local_tester(int i,local_init_df1b2variable x,
   local_init_df1b2variable y);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class local_init_pass1_var
 {
 public:
@@ -259,6 +290,10 @@ public:
   static int nvarcalc_all(void);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class local_init_pass1_df1b2variable : public local_init_pass1_var, 
   public df1b2variable 
 {

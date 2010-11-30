@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
 
@@ -18,6 +22,10 @@
   #include <iostream.hpp>
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -68,6 +76,11 @@
   RETURN_ARRAYS_DECREMENT();
   return vtmp;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvdv_dot(void)
 {
   verify_identifier_string("aaaa");
@@ -106,6 +119,10 @@ void dvdv_dot(void)
 
 void X_dv_sum(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable sum(_CONST dvar_vector& v1)
 {
   if (allocated(v1))
@@ -135,6 +152,10 @@ dvariable sum(_CONST dvar_vector& v1)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void X_dv_sum(void)
 {
   verify_identifier_string("aaaa");
@@ -150,6 +171,10 @@ void X_dv_sum(void)
   dfv1.save_dvector_derivatives(v1pos);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable sum(_CONST dvar_matrix& m)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -161,4 +186,3 @@ dvariable sum(_CONST dvar_matrix& m)
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
-

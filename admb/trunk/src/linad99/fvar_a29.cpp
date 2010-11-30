@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 /*
@@ -52,6 +56,11 @@ void DF_dvXXX(void)
 
 
 void DF_dvsin(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector sin(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -71,6 +80,10 @@ dvar_vector sin(_CONST dvar_vector& v1)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvsin(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -91,6 +104,11 @@ void DF_dvsin(void)
 }
 
 void DF_dvexp(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector exp(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -110,6 +128,10 @@ dvar_vector exp(_CONST dvar_vector& v1)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvexp(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -131,6 +153,11 @@ void DF_dvexp(void)
 
 
 void DF_dvcos(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector cos(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -150,6 +177,10 @@ dvar_vector cos(_CONST dvar_vector& v1)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvcos(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -170,6 +201,11 @@ void DF_dvcos(void)
 }
 
 void DF_dvlog(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector log(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -191,6 +227,10 @@ dvar_vector log(_CONST dvar_vector& v1)
 
 int ad_debug_arithmetic=1;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvlog(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -219,6 +259,11 @@ void DF_dvlog(void)
 }
 
 void DF_dvtan(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector tan(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -238,6 +283,10 @@ dvar_vector tan(_CONST dvar_vector& v1)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvtan(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -258,6 +307,11 @@ void DF_dvtan(void)
 }
 
 void DF_dvatan(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector atan(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -277,6 +331,10 @@ dvar_vector atan(_CONST dvar_vector& v1)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvatan(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -297,6 +355,11 @@ void DF_dvatan(void)
 }
 
 void DF_dvsqrt(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector sqrt(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -316,6 +379,10 @@ dvar_vector sqrt(_CONST dvar_vector& v1)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector sqr(_CONST dvar_vector& v1)
 {
   //dvector cv1=value(v1);
@@ -335,6 +402,10 @@ dvar_vector sqr(_CONST dvar_vector& v1)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvsqrt(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -355,6 +426,11 @@ void DF_dvsqrt(void)
 }
 
 void DF_dvpow(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector pow(_CONST dvar_vector& v1, CGNU_DOUBLE e)
 {
   //dvector cv1=value(v1);
@@ -375,6 +451,10 @@ dvar_vector pow(_CONST dvar_vector& v1, CGNU_DOUBLE e)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -400,6 +480,11 @@ void DF_dvpow(void)
 //    prevariables as yet
 
 void DF_dvdvpow(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector pow(_CONST dvar_vector& v1,_CONST prevariable& e)
 {
   //dvector cv1=value(v1);
@@ -422,6 +507,10 @@ dvar_vector pow(_CONST dvar_vector& v1,_CONST prevariable& e)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvdvpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -449,6 +538,11 @@ void DF_dvdvpow(void)
 }
 
 void DF_dvcpow(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector pow(_CONST dvar_vector& v1,int e)
 {
   //dvector cv1=value(v1);
@@ -469,6 +563,10 @@ dvar_vector pow(_CONST dvar_vector& v1,int e)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_dvcpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
@@ -490,6 +588,11 @@ void DF_dvcpow(void)
 }
 
 void DF_cdvpow(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector pow(_CONST dvector& v1,_CONST prevariable& e)
 {
   //dvector cv1=value(v1);
@@ -512,6 +615,10 @@ dvar_vector pow(_CONST dvector& v1,_CONST prevariable& e)
   return vtmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void DF_cdvpow(void)
 {
   // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);

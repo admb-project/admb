@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -17,6 +21,10 @@
 
 #include <string.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void save_double_derivative( CGNU_DOUBLE x, BOR_CONST prevariable_position& _pos)
 {
   prevariable_position& pos= (prevariable_position&) _pos; 
@@ -24,6 +32,10 @@ void save_double_derivative( CGNU_DOUBLE x, BOR_CONST prevariable_position& _pos
   pos.xval()+=x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 prevariable_position restore_prevariable_position(void)
 {
   double_and_int * tmp;
@@ -31,6 +43,10 @@ prevariable_position restore_prevariable_position(void)
   return prevariable_position(tmp);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void prevariable::save_prevariable_position(void) _CONST
 {
   double_and_int * tmp=get_v();
@@ -38,6 +54,10 @@ void prevariable::save_prevariable_position(void) _CONST
   gradient_structure::get_fp()->fwrite(&tmp,size_t(wsize));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void prevariable::save_prevariable_value(void) _CONST
 {
   //double_and_int * tmp=get_v();
@@ -48,23 +68,39 @@ void prevariable::save_prevariable_value(void) _CONST
   gradient_structure::get_fp()->fwrite(x);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void save_double_value( CGNU_DOUBLE x)
 {
   //const unsigned wsize=sizeof(double);
   gradient_structure::get_fp()->fwrite(x);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void save_int_value( int x)
 {
   //const unsigned wsize=sizeof(double);
   gradient_structure::get_fp()->fwrite(x);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void save_pointer_value(void *ptr)
 {
   gradient_structure::get_fp()->fwrite(ptr);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double restore_prevariable_derivative(BOR_CONST prevariable_position& _pos)
 {
   prevariable_position& pos= (prevariable_position&) _pos; 
@@ -73,6 +109,10 @@ double restore_prevariable_derivative(BOR_CONST prevariable_position& _pos)
   return tmpout;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double restore_prevariable_derivative(void)
 {
   // Back up the stream and read the number of bytes written in the
@@ -84,6 +124,10 @@ double restore_prevariable_derivative(void)
   return tmpout;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double restore_prevariable_value(void)
 {
   // Back up the stream and read the number of bytes written in the
@@ -93,6 +137,10 @@ double restore_prevariable_value(void)
   return tmpout;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double restore_double_value(void)
 {
   double tmpout;
@@ -100,6 +148,10 @@ double restore_double_value(void)
   return tmpout;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int restore_int_value(void)
 {
   int tmpout;
@@ -107,6 +159,10 @@ int restore_int_value(void)
   return tmpout;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void* restore_pointer_value(void)
 {
   void* tmpout = NULL;

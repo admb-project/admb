@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::allocate(void)  //default constructor
 {
   index_min=1;
@@ -14,6 +22,10 @@ void dmatrix::allocate(void)  //default constructor
   shape=NULL;
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix::dmatrix()  //default constructor 
 {
   allocate();

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -16,6 +20,10 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
   (const dvector& x,function_minimizer * pfmin)
 {
@@ -52,6 +60,10 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
 
 #else
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
   (const dvector& x,function_minimizer * pfmin) 
 {

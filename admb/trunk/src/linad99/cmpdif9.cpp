@@ -4,12 +4,20 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
   #pragma hdrstop
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void imatrix::save_imatrix_value(void)
 {
   // saves the size, address, and value information for a imatrix
@@ -21,7 +29,10 @@ void imatrix::save_imatrix_value(void)
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void imatrix::save_imatrix_position(void)
 {
   // saves the size and address information for a ivector
@@ -41,6 +52,10 @@ void imatrix::save_imatrix_position(void)
   gradient_structure::get_fp()->fwrite(&(tmp.row_max),wsize);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 imatrix_position restore_imatrix_position(void)
 {
   // reads back the size and address information for a imatrix
@@ -60,6 +75,10 @@ imatrix_position restore_imatrix_position(void)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 imatrix restore_imatrix_value(BOR_CONST imatrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix

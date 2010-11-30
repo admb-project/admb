@@ -4,11 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar_fn.cpp
 // math.h functions involving prevariables
 #include "fvar.hpp"
 #include <stdio.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
  double sfabs( CGNU_DOUBLE v1)
  {
    #define cutoff 0.001
@@ -40,6 +48,10 @@
    return(return_value);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvector sfabs(_CONST dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());

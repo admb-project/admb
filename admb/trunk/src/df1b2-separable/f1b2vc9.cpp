@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator / (const df1b2vector& _v,const df1b2variable& x)
 {
   //check_shape(x,M,"operator *");
@@ -18,6 +26,10 @@ df1b2vector operator / (const df1b2vector& _v,const df1b2variable& x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator / (const df1b2variable& x,const df1b2vector& _v)
 {
   ADUNCONST(df1b2vector,v);
@@ -30,7 +42,10 @@ df1b2vector operator / (const df1b2variable& x,const df1b2vector& _v)
   return tmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator / (double x,const df1b2vector& _v)
 {
   ADUNCONST(df1b2vector,v);
@@ -44,6 +59,10 @@ df1b2vector operator / (double x,const df1b2vector& _v)
 }
 
 //*********************************************************
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator / (const dvector& v,const df1b2variable& x)
 {
   //check_shape(x,M,"operator *");
@@ -55,7 +74,10 @@ df1b2vector operator / (const dvector& v,const df1b2variable& x)
   return tmp;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator / (const df1b2vector& _v,double x)
 {
   ADUNCONST(df1b2vector,v);
@@ -68,6 +90,10 @@ df1b2vector operator / (const df1b2vector& _v,double x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector operator / (const double& x,const df1b2vector& _v)
 {
   ADUNCONST(df1b2vector,v);
@@ -80,4 +106,3 @@ df1b2vector operator / (const double& x,const df1b2vector& _v)
   for (int i=mmin;i<=mmax;i++) tmp(i)=x/v(i);
   return tmp;
 }
-

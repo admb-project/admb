@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: fvar_ops.cpp
 // operators involving prevariables
 
@@ -25,17 +29,28 @@
 
 void gradfree(dlink *);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void prevariable::operator +=( CGNU_DOUBLE uu)
  {
    (*v).x+=uu;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void prevariable::operator -=( CGNU_DOUBLE uu)
  {
    (*v).x-=uu;
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 prevariable& operator +(_CONST prevariable& v1,_CONST prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -47,6 +62,10 @@ prevariable& operator +(_CONST prevariable& v1,_CONST prevariable& v2)
   return(*gradient_structure::RETURN_PTR);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -56,34 +75,56 @@ prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2)
   return(*gradient_structure::RETURN_PTR);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator ==(_CONST prevariable& v1) _CONST
     {
       return(v->x==value(v1));
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator <=(_CONST prevariable& v1) _CONST
     {
       return(v->x<=value(v1));
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator <(_CONST prevariable& v1) _CONST
     {
       return(v->x<value(v1));
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator >(_CONST prevariable& v1) _CONST
     {
       return(v->x>value(v1));
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator >=(_CONST prevariable& v1) _CONST
     {
       return(v->x >=value(v1));
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     int prevariable::operator !=(_CONST prevariable& v1) _CONST
     {
       return(v->x!=value(v1));
     }
-

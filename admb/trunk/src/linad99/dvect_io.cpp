@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: dvect_io.cpp
 
 // i/o ooperations for class dvector
@@ -26,7 +30,10 @@
 
 #include <string.h>
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream& operator<<(BOR_CONST ostream& _ostr,const dvector& z)
 {
   ostream& ostr=(ostream&) _ostr;
@@ -35,6 +42,10 @@ ostream& operator<<(BOR_CONST ostream& _ostr,const dvector& z)
   return ostr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvector::write_on(BOR_CONST ostream& _s) _CONST
 {
   ostream& s=(ostream&) _s;
@@ -64,6 +75,10 @@ void dvector::write_on(BOR_CONST ostream& _s) _CONST
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvector& _z)
 {
   dvector& z = (dvector&)_z;
@@ -73,6 +88,10 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvector& _z)
   return istr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvector::read_from(BOR_CONST istream& _s)
 {
   istream& s= (istream&) _s;

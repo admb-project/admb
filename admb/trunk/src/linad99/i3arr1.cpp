@@ -4,11 +4,20 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "admb_messages.h"
 //#include "i3_array.h"
 
 #ifndef OPT_LIB
+
+/**
+ * Description not yet available.
+ * \param
+ */
     int& i3_array::operator () (int k, int i, int j)
     {
       #ifdef SAFE_ARRAYS
@@ -24,7 +33,10 @@
       return ( (elem(k))(i,j) );
     }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
     ivector& i3_array::operator () (int k, int i)
     {
       #ifdef SAFE_ARRAYS
@@ -40,6 +52,10 @@
       return ( (elem(k))(i) );
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix& i3_array::operator[] (int i)
  {
    #ifdef SAFE_ARRAYS
@@ -55,6 +71,10 @@
    return(t[i]);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix& i3_array::operator() (int i)
  {
    #ifdef SAFE_ARRAYS

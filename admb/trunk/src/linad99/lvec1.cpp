@@ -4,7 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
@@ -20,6 +23,10 @@
 #include <stdlib.h>
 
 #ifndef OPT_LIB
+/**
+ * Description not yet available.
+ * \param
+ */
  AD_LONG_INT& lvector::operator[] (int i)
  {
    #ifdef SAFE_ARRAYS
@@ -36,6 +43,10 @@
    return(*(v+i));
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  AD_LONG_INT& lvector::operator() (int i)
  {
    #ifdef SAFE_ARRAYS

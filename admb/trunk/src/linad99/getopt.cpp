@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int get_option_number(const char * option_name,const char * error_message,
   int& option_value)
 {

@@ -4,22 +4,45 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int * smart_counter::get_ncopies(void) 
   { 
     return ncopies;
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   smart_counter::smart_counter(void) 
   { 
     ncopies=new int; 
     *ncopies=0; 
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   smart_counter::smart_counter(const smart_counter & sc) 
   { 
     ncopies=sc.ncopies; 
     (*ncopies)++;
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   smart_counter::~smart_counter(void) 
   { 
     if (*ncopies==0) 
@@ -35,11 +58,19 @@
 
   ad_integer::ad_integer(const index_type& it) : d(it.integer()) {}
 
+/**
+ * Description not yet available.
+ * \param
+ */
   index_guts * matrix_index::operator [] (int i)
   {
     return new vector_index(imatrix::operator [](i));
   }
- 
+
+/**
+ * Description not yet available.
+ * \param
+ */ 
   int index_type::integer(void) const
   {
     return int(*p);
@@ -50,37 +81,74 @@
     p = new number_index(int(data_int(x)));
   }
    */
+
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type::index_type(const index_type & it) : smart_counter(it)
   {
     p = it.p;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type::index_type(int x)
   {
     p = new number_index(x);
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type::index_type(BOR_CONST ivector& x)
   {
     p = new vector_index((BOR_CONST ivector&)(x));
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type::index_type(BOR_CONST imatrix& x)
   {
     p = new matrix_index((BOR_CONST imatrix&)(x));
   }
-  
+
+/**
+ * Description not yet available.
+ * \param
+ */
   matrix_index::~matrix_index()
   {
     //cout << "in ~matrix_index()" << endl;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type::index_type(BOR_CONST  i3_array& x)
   {
     p = new i3_index((i3_array&)(x));
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type::index_type(BOR_CONST  i4_array& x)
   {
     p = new i4_index((i4_array&)(x));
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type::index_type(BOR_CONST pre_index_type& pit)
   { 
     p = (*(*(pit.a)).p)[pit.i];
@@ -88,18 +156,37 @@
    // (*p->ncopies)++;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type index_type::operator [] (int i) const 
   { 
     return pre_index_type(this,i);
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type index_type::operator () (int i) const 
   { 
     return pre_index_type(this,i);
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type index_type::operator [] (int i) 
   { 
     return pre_index_type(this,i);
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type index_type::operator () (int i) 
   { 
     return pre_index_type(this,i);
@@ -107,6 +194,10 @@
 
   vector_index::~vector_index() {}
 
+/**
+ * Description not yet available.
+ * \param
+ */
   index_type::~index_type () 
   { 
     if (*get_ncopies()==0)
@@ -130,12 +221,20 @@
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  dmatrix::dmatrix(const ad_integer& nrl,const ad_integer& nrh,
    const index_type& ncl,const index_type& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dmatrix::allocate(const ad_integer& nrl,const ad_integer& nrh,
    const index_type& ncl,const index_type& nch)
  {
@@ -173,6 +272,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  d3_array::d3_array(const ad_integer& sl,const ad_integer& sh,
    const index_type& nrl,const index_type& nrh,
    const index_type& ncl,const index_type& nch)
@@ -180,13 +283,20 @@
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  i3_array::i3_array(int sl,int sh,const index_type& nrl,const index_type& nrh,
    const index_type& ncl,const index_type& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void i3_array::allocate(int sl,int sh,const index_type& nrl,
   const index_type& nrh,const index_type& ncl,const index_type& nch)
  {
@@ -249,7 +359,10 @@
    } 
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
    _CONST index_type& nrl,_CONST index_type& nrh,_CONST index_type& ncl,
    _CONST index_type& nch)
@@ -288,7 +401,10 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void imatrix::allocate(const ad_integer& nrl,const ad_integer& nrh,
     const index_type& ncl,const index_type& nch)
  {
@@ -323,6 +439,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 index_guts::~index_guts()
 { 
   if (!(*ncopies)) 
@@ -332,12 +452,19 @@ index_guts::~index_guts()
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  dvector::dvector(const ad_integer& ncl,const index_type& nch)
  {
    allocate(ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void dvector::allocate(const ad_integer& _ncl,const index_type& _nch)
  {
    int ncl=_ncl;
@@ -374,12 +501,19 @@ index_guts::~index_guts()
    #endif
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector::ivector(const ad_integer& ncl,const index_type& nch)
  {
    allocate(ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void ivector::allocate(const ad_integer& _ncl,const index_type& _nch)
  {
    index_min=_ncl;
@@ -412,6 +546,10 @@ index_guts::~index_guts()
 
 void xxjj(void);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 vector_index::vector_index(BOR_CONST ivector& v) : ivector(v)
 {
   //xxjj();
@@ -419,18 +557,30 @@ vector_index::vector_index(BOR_CONST ivector& v) : ivector(v)
 
 void xxjj(void){;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 index_guts::index_guts()
 {
   ncopies = new int;
   *ncopies=0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 index_guts::index_guts(const index_guts& ig)
 {
   ncopies = ig.ncopies;
   (*ncopies)++;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 index_guts * number_index::operator [] (int i)
 {
   return new number_index(int(*this));

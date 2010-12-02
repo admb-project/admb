@@ -26,6 +26,11 @@
 cltudecomp ludecomp(const dmatrix & M);
 void dfinvpret(void);
 
+/**
+ * The minimum of an integer.
+ * \param a
+ * \param b
+ */
 int min(int a, int b)
 {
    if (a > b)

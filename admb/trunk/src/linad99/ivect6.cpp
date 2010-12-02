@@ -4,7 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
+
+/**
+ * Description not yet available.
+ * \param
+ */
   int sum(_CONST ivector&v)
   {
     int tmp=0;
@@ -15,6 +24,10 @@
     return tmp;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector pow(const ivector& v1, int x)  
  {
    ivector tmp(v1.indexmin(),v1.indexmax());
@@ -29,6 +42,10 @@
    return(tmp);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector pow(int x,const ivector& v1)  
  {
    ivector tmp(v1.indexmin(),v1.indexmax());

@@ -4,7 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #include <sys/stat.h>
@@ -72,11 +75,19 @@
 
 #include <math.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void jacobcalc(int nvar,BOR_CONST dmatrix& jac)
 {
   gradient_structure::jacobcalc(nvar,jac);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& _jac)
 {
   ADUNCONST(dmatrix,jac)
@@ -308,6 +319,3 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& _jac)
     gradient_structure::restore_variables();
   }
 }
-
-
-

@@ -68,7 +68,11 @@ cltudecomp ludecomp(const dmatrix & M)
    return clu;
 }
 
-// adjoint code
+/**
+ * Adjoint code for the ludecomp
+ * \param _M
+ * \param _dfclu
+ */
 dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
 {
    ADUNCONST(dmatrix, M)
@@ -439,6 +443,9 @@ cltudecomp xludecomp_pivot(const dvar_matrix & M)
   // *************************************************************8
   // *************************************************************8
 
+/**
+ * Adjoint code number 1 for the ludecomp with pivoting.
+ */
 void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_1(void)
 {
    int i = 0;
@@ -518,6 +525,9 @@ void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_1(void)
 
 }
 
+/**
+ * Ajoint code number 2 for the ludecomp with pivoting.
+ */
 void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_2(void)
 {
    int i = 0;

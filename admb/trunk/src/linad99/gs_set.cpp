@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -18,6 +22,10 @@ char otter_address4[]={" users@admb-project.org"};
 char otter_address5[]={" http://www.admb-project.org/"};
 char cannot_set[]=" You can not reset the number of independent variables in the Demonstration version";
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::check_set_error(const char* variable_name)
 {
   if (instances > 0)
@@ -28,18 +36,29 @@ void gradient_structure::check_set_error(const char* variable_name)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::set_RETURN_ARRAYS_SIZE(int i)
 {
   RETURN_ARRAYS_SIZE=i;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::set_NUM_RETURN_ARRAYS(int i)
 {
   check_set_error("NUM_RETURN_ARRAYS");
   NUM_RETURN_ARRAYS = i;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::set_ARRAY_MEMBLOCK_SIZE(unsigned long i)
 {
   cerr << " This is not the way to set the ARRAY_MEMBLOCK_SIZE -- sorry\n"
@@ -50,6 +69,10 @@ void gradient_structure::set_ARRAY_MEMBLOCK_SIZE(unsigned long i)
   check_set_error("ARRAY_MEMBLOCK_SIZE");
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::set_CMPDIF_BUFFER_SIZE(long int i)
 {
   if ( (unsigned long int) (UINT_MAX) < (unsigned long int)i)
@@ -67,6 +90,10 @@ void gradient_structure::set_CMPDIF_BUFFER_SIZE(long int i)
   CMPDIF_BUFFER_SIZE = i;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long int i)
 {
   unsigned long int gs_size=(unsigned long int) (sizeof(grad_stack_entry));
@@ -91,12 +118,20 @@ void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long int i)
   GRADSTACK_BUFFER_SIZE = i;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::set_MAX_NVAR_OFFSET(unsigned int i)
 {
   check_set_error("MAX_NVAR_OFFSET");
   MAX_NVAR_OFFSET = i;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::set_MAX_DLINKS(int i)
 {
   check_set_error("MAX_DLINKS");
@@ -104,5 +139,3 @@ void gradient_structure::set_MAX_DLINKS(int i)
   MAX_DLINKS = i;
 #endif
 }
-
-

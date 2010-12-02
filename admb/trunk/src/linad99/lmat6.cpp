@@ -4,13 +4,18 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 
 #include "fvar.hpp"
 
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void lmatrix::allocate(_CONST lmatrix& dm)
 {
   int nrl=dm.rowmin();

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -19,6 +23,11 @@
 
 #ifndef OPT_LIB
 #ifdef USE_CONST
+
+/**
+ * Description not yet available.
+ * \param
+ */
  _CONST AD_LONG_INT& lvector::operator[] (int i) _CONST 
  {
    #ifdef SAFE_ARRAYS
@@ -37,6 +46,10 @@
    return(*(v+i));
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   _CONST AD_LONG_INT& lvector::operator() (int i) _CONST 
  {
    #ifdef SAFE_ARRAYS

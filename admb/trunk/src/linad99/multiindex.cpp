@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp> 
  //   class multi_index
  //   {
@@ -18,6 +22,11 @@
  //     int get_depth(void) { return depth;}
  //   };
  // 
+
+/**
+ * Description not yet available.
+ * \param
+ */
   multi_index::multi_index(int min,int max,int dim) :
     mind(min),maxd(max),depth(min), index(1, dim)
   {
@@ -67,6 +76,10 @@
     return offset;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void multi_index::initialize(void)
   {
     index=mind;

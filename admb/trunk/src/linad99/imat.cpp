@@ -4,11 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #ifdef __TURBOC__
   #pragma hdrstop
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void imatrix::rowshift(int min )
 {
   m = m + rowmin() - min;
@@ -16,11 +24,19 @@ void imatrix::rowshift(int min )
   index_min=min;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix::imatrix(int nrl,int nrh)
  {
    allocate(nrl,nrh);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix imatrix::sub(int nrl,int nrh)
  {
    if (allocated(*this))
@@ -38,22 +54,38 @@ void imatrix::rowshift(int min )
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix::imatrix(int nrl, int nrh, int ncl, int nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix::imatrix(const ad_integer& nrl,const ad_integer& nrh,
    const index_type& ncl,const index_type& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix::imatrix(int nrl,int nrh,BOR_CONST ivector& iv)
  {
    allocate(nrl,nrh,iv);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void imatrix::allocate(int nrl,int nrh,BOR_CONST ivector& iv)
  {
    if (nrl>nrh)
@@ -93,6 +125,10 @@ void imatrix::rowshift(int min )
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void imatrix::allocate(int nrl,int nrh,int ncl,int nch)
  {
    if (nrl>nrh)
@@ -124,6 +160,10 @@ void imatrix::rowshift(int min )
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void imatrix::allocate(void)  //default constructor
  {
    index_min=0;
@@ -132,6 +172,10 @@ void imatrix::rowshift(int min )
    shape=NULL;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void imatrix::allocate(int nrl,int nrh,const ivector& ncl,const ivector& nch)
  {
    if (nrl>nrh)
@@ -167,6 +211,10 @@ void imatrix::rowshift(int min )
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void imatrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
  {
    if (nrl>nrh)
@@ -201,7 +249,10 @@ void imatrix::rowshift(int min )
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix::imatrix(_CONST imatrix& m2)
  {
    index_min=m2.index_min;
@@ -219,6 +270,10 @@ void imatrix::rowshift(int min )
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void imatrix::shallow_copy(_CONST imatrix& m2)
  {
    index_min=m2.index_min;
@@ -236,26 +291,46 @@ void imatrix::rowshift(int min )
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix::imatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix::imatrix(int nrl,int nrh,int ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix::imatrix(void)
  {
    allocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix::~imatrix()
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void imatrix::deallocate()
  {
    if (shape)
@@ -275,6 +350,10 @@ void imatrix::rowshift(int min )
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void imatrix::allocate(int nrl,int nrh)
  {
    if (nrl>nrh)
@@ -297,4 +376,3 @@ void imatrix::rowshift(int min )
      m -= indexmin();
    }
  }
-

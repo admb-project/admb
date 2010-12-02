@@ -4,13 +4,26 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 //#include "i3_array.h"
+
+/**
+ * Description not yet available.
+ * \param
+ */
  i3_array::i3_array(void)
  {
    allocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  i3_array::~i3_array()
  {
    if (shape)
@@ -30,6 +43,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void i3_array::allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch)
  {
    if ( (shape=new three_array_shape(sl,sh)) == 0)
@@ -49,6 +66,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void i3_array::allocate(int sl,int sh)
  {
    if ( (shape=new three_array_shape(sl,sh)) == 0)
@@ -68,23 +89,39 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  i3_array::i3_array(int sl,int sh,int nrl,int nrh,const ivector& ncl,
   const ivector& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  i3_array::i3_array(int sl,int sh)
  {
    allocate(sl,sh);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  i3_array::i3_array(int sl,int sh,int nrl,const ivector& nrh,int ncl,
    int nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void i3_array::allocate(int sl,int sh,int nrl,int nrh,const ivector& ncl,
   const ivector& nch)
  {
@@ -105,6 +142,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void i3_array::allocate(int sl,int sh,int nrl,const ivector& nrh,int ncl,
   int nch)
  {
@@ -125,18 +166,29 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  i3_array::i3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
       int ncl,_CONST imatrix& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  i3_array::i3_array(int sl,int sh,int nrl,int nrh, int ncl,int nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void i3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
       int ncl,_CONST imatrix& nch)
  {
@@ -161,7 +213,10 @@
    } 
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  i3_array::i3_array(int _sl,int _sh,_CONST imatrix& m1)
  {
    int sl=_sl;
@@ -198,6 +253,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void i3_array::allocate(_CONST i3_array& i3v)
  {
    int sl=i3v.slicemin();
@@ -224,12 +283,20 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void i3_array::allocate(void)
  {
    shape=NULL;
    t = NULL;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void i3_array::initialize()
  {
    if (!(!(*this)))  // only initialize allocated objects
@@ -241,6 +308,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  i3_array::i3_array(const i3_array& m2)
  {
    shape=m2.shape;
@@ -255,6 +326,10 @@
    t = m2.t;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void i3_array::deallocate()
  {
    if (shape)
@@ -271,4 +346,3 @@
      //cerr << "Warning -- trying to deallocate an unallocated imatrix"<<endl;
    }
  }
-

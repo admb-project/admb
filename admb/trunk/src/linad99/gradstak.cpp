@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include <adstring.hpp>
 
@@ -90,6 +94,11 @@
   char lastchar(char *);
 
   char ad_random_part[6]="tmp";
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void fill_ad_random_part(void)
   {
    /*
@@ -106,6 +115,10 @@
    */
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   grad_stack::grad_stack()
   {
     gradient_structure::TOTAL_BYTES = 0;
@@ -235,6 +248,10 @@
 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 grad_stack::~grad_stack()
 {
    // this->print();
@@ -283,7 +300,10 @@ grad_stack::~grad_stack()
    delete [] true_ptr_first;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void  grad_stack::write_grad_stack_buffer()
   {
     unsigned int ierr;
@@ -362,7 +382,10 @@ grad_stack::~grad_stack()
     ptr = ptr_first;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void grad_stack::create_gradfile()
 {
 
@@ -462,6 +485,10 @@ void grad_stack::create_gradfile()
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void grad_stack::increment_current_gradfile_ptr()
 {
   if (_GRADFILE_PTR == _GRADFILE_PTR2)
@@ -477,6 +504,10 @@ void grad_stack::increment_current_gradfile_ptr()
   _GRADFILE_PTR = _GRADFILE_PTR2;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int grad_stack::decrement_current_gradfile_ptr()
 // If there is a previous file set the handle to point to it otherwise
 // return a -1
@@ -499,11 +530,19 @@ int grad_stack::decrement_current_gradfile_ptr()
   return(_GRADFILE_PTR);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 char* grad_stack::get_gradfile_name()
 {
   return(gradfile_name);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void grad_stack::set_gbuffer_pointers()
 {
   if (length > 10000L)
@@ -515,6 +554,10 @@ void grad_stack::set_gbuffer_pointers()
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void grad_stack::set_gradient_stack0(void (* func)(void),double * dep_addr)
 {
   #ifdef NO_DERIVS
@@ -534,4 +577,3 @@ void grad_stack::set_gradient_stack0(void (* func)(void),double * dep_addr)
     }
   #endif
 }
-

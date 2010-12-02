@@ -4,18 +4,28 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #ifdef __TURBOC__
   #pragma hdrstop
 #endif
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  lmatrix::lmatrix(int nrl, int nrh, int ncl, int nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void lmatrix::allocate(int nrl,int nrh,int ncl,int nch)
  {
    if ( (shape = new mat_shape(nrl,nrh,ncl,nch))== 0)
@@ -38,6 +48,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void lmatrix::allocate(int nrl,int nrh,const ivector& ncl,const ivector& nch)
  {
    if ( (shape = new mat_shape(nrl,nrh,ncl(ncl.indexmin()),
@@ -65,6 +79,10 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void lmatrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
  {
    if (nrl !=nch.indexmin() || nrh !=nch.indexmax())
@@ -90,7 +108,10 @@
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  lmatrix::lmatrix(_CONST lmatrix& m2)
  {
    if (m2.shape)
@@ -106,27 +127,47 @@
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  lmatrix::lmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  lmatrix::lmatrix(int nrl,int nrh,int ncl,_CONST ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  lmatrix::lmatrix(void)
  {
    shape = NULL;
    m=NULL;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  lmatrix::~lmatrix()
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void lmatrix::deallocate()
  {
    if (shape)
@@ -150,4 +191,3 @@
      //cerr << "Warning -- trying to deallocate an unallocated lmatrix"<<endl;
    }
  }
-

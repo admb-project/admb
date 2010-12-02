@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #include <sys/stat.h>
@@ -64,6 +68,10 @@
 
 #include <math.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 #     if defined(__GNU__)
   int  grad_stack::read_grad_stack_buffer(my_off_t& lpos)
 #     else

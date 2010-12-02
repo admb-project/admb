@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -19,6 +23,10 @@
 
 void denormalize_ptr(void * ptr, unsigned int byte_offset);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  lvector::~lvector()
  {
    if (shape)
@@ -48,6 +56,10 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  lvector::lvector(_CONST lvector& t)
  {
    shape=t.shape;
@@ -55,11 +67,19 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
    v = t.v;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  lvector::lvector(void)
  {
    allocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  lvector::lvector(_CONST dvector& u)
  {
    if ( (shape=new vector_shape(u.indexmin(),u.indexmax()))==0 )
@@ -84,8 +104,10 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
    }
  }
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
  lvector& lvector::operator = (_CONST lvector& t)
  {
    if (v != t.v)
@@ -103,7 +125,10 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
    return (*this);
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  lvector::lvector( unsigned int sz, AD_LONG_INT * x )
  {
    if ( (shape=new vector_shape(0,sz-1))==0 )
@@ -123,11 +148,19 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void lvector::allocate(const lvector& lv)
  {
    allocate(lv.indexmin(),lv.indexmax());
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void lvector::allocate(int ncl,int nch)
  {
    if ( (shape=new vector_shape(ncl,nch))==0 )
@@ -150,17 +183,29 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void lvector::allocate(void)
  {
    shape=NULL;
    v = NULL;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  lvector::lvector(int ncl,int nch)
  {
    allocate(ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  lvector::lvector(_CONST ivector& u)
  {
    if ( (shape=new vector_shape(u.indexmin(),u.indexmax()))==0 )
@@ -181,6 +226,10 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void lvector::initialize(void)
  {
    for ( int i=indexmin(); i<=indexmax(); i++)

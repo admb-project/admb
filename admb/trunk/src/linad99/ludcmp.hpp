@@ -4,6 +4,7 @@
  * Copyright (c) 2009, 2010 ADMB Foundation
  */
 /**
+ * \file
  * LU Decomposition classes
  */
 
@@ -13,6 +14,10 @@
 
 const double eps = 1.e-25;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class cltudecomp
 {
    dmatrix L;
@@ -124,6 +129,10 @@ class cltudecomp
    }
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dvector_for_adjoint
 {
    dmatrix D;
@@ -168,6 +177,10 @@ double operator *
 
 dvector operator *(double x, const dvector_for_adjoint & w);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dmatrix_for_adjoint
 {
    d3_array D;
@@ -214,6 +227,10 @@ class dmatrix_for_adjoint
    }
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class cltudecomp_for_adjoint
 {
    dmatrix_for_adjoint L;

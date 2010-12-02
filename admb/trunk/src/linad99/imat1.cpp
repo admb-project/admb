@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "admb_messages.h"
 #ifdef __TURBOC__
@@ -11,6 +15,11 @@
 #endif
 
 #if !defined(OPT_LIB)
+
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector& imatrix::operator() (int i)
  {
    #ifdef SAFE_ARRAYS
@@ -28,6 +37,11 @@
 
 
 #ifdef USE_CONST
+
+/**
+ * Description not yet available.
+ * \param
+ */
  _CONST ivector& imatrix::operator() (int i) _CONST 
  {
    #ifdef SAFE_ARRAYS

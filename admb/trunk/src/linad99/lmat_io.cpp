@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 
 // file: dmat_io.cpp
 
@@ -27,6 +31,10 @@
 
 #include <string.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream& operator<<(BOR_CONST ostream& ostr,_CONST lmatrix& z)
 {
   int min=z.rowmin();
@@ -40,6 +48,10 @@ ostream& operator<<(BOR_CONST ostream& ostr,_CONST lmatrix& z)
   return (ostream&)ostr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 istream& operator>>(BOR_CONST istream& istr,BOR_CONST lmatrix& z)
 {
   int min=z.rowmin();

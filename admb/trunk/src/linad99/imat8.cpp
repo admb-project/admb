@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
   ivector colsum(_CONST imatrix&v)
   {
     int cmin=v.colmin();
@@ -25,6 +33,10 @@
     return tmp;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   ivector rowsum(_CONST imatrix&v)
   {
     int rmin=v.rowmin();
@@ -38,6 +50,10 @@
     return tmp;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void imatrix::fill_seqadd(int i2,int j)
   {
     int mmin=indexmin();

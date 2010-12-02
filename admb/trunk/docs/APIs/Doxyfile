@@ -924,8 +924,66 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/fvar_opr.cpp \
                          ../../src/linad99/fvma_acc.cpp \
                          ../../src/linad99/gaussher.cpp \
+                         ../../src/linad99/getopt.cpp \
+                         ../../src/linad99/gradchk.cpp \
+                         ../../src/linad99/gradstak.cpp \
+                         ../../src/linad99/gradstrc.cpp \
+                         ../../src/linad99/gs_set.cpp \
+                         ../../src/linad99/gst_read.cpp \
+                         ../../src/linad99/histgram.cpp \
+                         ../../src/linad99/humung.cpp \
+                         ../../src/linad99/i3arr.cpp \
+                         ../../src/linad99/i3arr1.cpp \
+                         ../../src/linad99/13arr8.cpp \
+                         ../../src/linad99/i3_io.cpp \
+                         ../../src/linad99/i4arr.cpp \
+                         ../../src/linad99/i4io.cpp \
+                         ../../src/linad99/i5arr.cpp \
+                         ../../src/linad99/i5io.cpp \
+                         ../../src/linad99/imat.cpp \
+                         ../../src/linad99/imat1.cpp \
+                         ../../src/linad99/imat2.cpp \
+                         ../../src/linad99/imat3.cpp \
+                         ../../src/linad99/imat4.cpp \
+                         ../../src/linad99/imat5.cpp \
+                         ../../src/linad99/imat6.cpp \
+                         ../../src/linad99/imat7.cpp \
+                         ../../src/linad99/imat8.cpp \
+                         ../../src/linad99/imat9.cpp \
+                         ../../src/linad99/imat10.cpp \
+                         ../../src/linad99/imat_a.cpp \
+                         ../../src/linad99/imat_io.cpp \
+                         ../../src/linad99/imsort.cpp \
+                         ../../src/linad99/indextyp.cpp \
+                         ../../src/linad99/ivec.cpp \
+                         ../../src/linad99/ivec2.cpp \
+                         ../../src/linad99/ivec3.cpp \
+                         ../../src/linad99/ivec4.cpp \
+                         ../../src/linad99/ivec7.cpp \
+                         ../../src/linad99/ivec8.cpp \
+                         ../../src/linad99/ivec9.cpp \
+                         ../../src/linad99/ivec_io1.cpp \
+                         ../../src/linad99/ivect6.cpp \
+                         ../../src/linad99/ivect10.cpp \
+                         ../../src/linad99/ivect11.cpp \
+                         ../../src/linad99/ivect_io.cpp \
+                         ../../src/linad99/ivector.cpp \
                          ../../src/linad99/ivsort.cpp \
+                         ../../src/linad99/jacob2.cpp \
+                         ../../src/linad99/jacob3.cpp \
+                         ../../src/linad99/jacobclc.cpp \
                          ../../src/linad99/libtype.cpp \
+                         ../../src/linad99/lmat.cpp \
+                         ../../src/linad99/lmat1.cpp \
+                         ../../src/linad99/lmat2.cpp \
+                         ../../src/linad99/lmat3.cpp \
+                         ../../src/linad99/lmat4.cpp \
+                         ../../src/linad99/lmat5.cpp \
+                         ../../src/linad99/lmat6.cpp \
+                         ../../src/linad99/lmat7.cpp \
+                         ../../src/linad99/lmat_a.cpp \
+                         ../../src/linad99/lmat_io.cpp \
+                         ../../src/linad99/logit.cpp \
                          ../../src/linad99/ludcmp.hpp \
                          ../../src/linad99/ludcmp.cpp \
                          ../../src/linad99/ludcmp_det.cpp \
@@ -933,6 +991,21 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/ludcmp_ln_det.cpp \
                          ../../src/linad99/ludcmp_operators.cpp \
                          ../../src/linad99/ludcmp_solve.cpp \
+                         ../../src/linad99/lvec1.cpp \
+                         ../../src/linad99/lvec2.cpp \
+                         ../../src/linad99/lvec_io1.cpp \
+                         ../../src/linad99/lvect_io.cpp \
+                         ../../src/linad99/lvector.cpp \
+                         ../../src/linad99/makesub.cpp \
+                         ../../src/linad99/manip.cpp \
+                         ../../src/linad99/maxmin.cpp \
+                         ../../src/linad99/mconf.h \
+                         ../../src/linad99/mfexp.cpp \
+                         ../../src/linad99/mfexpcon.cpp \
+                         ../../src/linad99/mfupper.cpp \
+                         ../../src/linad99/minim.cpp \
+                         ../../src/linad99/model49.cpp \
+                         ../../src/linad99/multiindex.cpp \
                          ../../src/linad99/ranfill.cpp \
                          ../../src/linad99/rngen.cpp \
                          ../../src/linad99/vbivnorm.cpp \

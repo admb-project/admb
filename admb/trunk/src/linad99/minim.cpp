@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double fmm::minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&))
 {  
   int nvar=x.size();

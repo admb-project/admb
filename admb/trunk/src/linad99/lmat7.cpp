@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
@@ -21,6 +25,10 @@ AD_LONG_INT sum(_CONST lmatrix& m)
 }
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 AD_LONG_INT colsum(_CONST lmatrix& m,int col)
 { 
   if (col < m.colmin() || col > m.colmax())
@@ -37,6 +45,10 @@ AD_LONG_INT colsum(_CONST lmatrix& m,int col)
   return isum;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 lvector column(_CONST lmatrix& m,int col)
 { 
   if (col < m.colmin() || col > m.colmax())

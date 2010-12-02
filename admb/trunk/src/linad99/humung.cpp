@@ -4,7 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
 #define DOS386
@@ -17,6 +20,10 @@
   long _cdecl _farptr_tolong(void _far *);
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void humungous_pointer::free(void)
 {
   ptr-=adjustment;
@@ -40,43 +47,86 @@ void humungous_pointer::free(void)
   #endif
   ptr=NULL;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void humungous_pointer::adjust(int a)
 {
   ptr+=a;
   adjustment=a;
   //ptr=NULL;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 humungous_pointer::humungous_pointer()
 {
   adjustment=0;
   //ptr=NULL;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 int humungous_pointer::operator == (void * p) 
 { 
   return (ptr==p);
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 int humungous_pointer::operator != (void * p) 
 {
   return (ptr!=p);
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 humungous_pointer::operator char* () 
 {
   return ptr;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 humungous_pointer::operator void* () 
 {
   return (void *) ptr;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 humungous_pointer::operator double_and_int* ()
 {
   return (double_and_int *)ptr;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 humungous_pointer::operator double* ()
 {
   return (double *)ptr;
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 humungous_pointer humungous_pointer::operator + (unsigned long int& offset)
 // Note that pointer addition is in bytes not the size of the
 // object pointed to
@@ -90,6 +140,10 @@ humungous_pointer humungous_pointer::operator + (unsigned long int& offset)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 humungous_pointer& humungous_pointer::operator += (unsigned long int& offset)
 // Note that pointer addition is in bytes not the size of the
 // object pointed to
@@ -103,6 +157,10 @@ humungous_pointer& humungous_pointer::operator += (unsigned long int& offset)
   return *this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 humungous_pointer& humungous_pointer::operator = (void * p)
 {
   #if defined(__BORLANDC__) && !defined(DOS386)
@@ -111,5 +169,4 @@ humungous_pointer& humungous_pointer::operator = (void * p)
     ptr = (char *) p;
   #endif
   return *this; 
-}  
-        
+}

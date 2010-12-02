@@ -3,9 +3,14 @@
  *
  * Copyright (c) 2009 ADMB Foundation
  */
-
+/**
+ * \file
+ * LU Decomposition operators.
+ */
 #include <ludcmp.hpp>
-
+/**
+ * Multiplication operator
+ */
 double operator *
    (const dvector_for_adjoint & v, const dvector_for_adjoint & w)
 {
@@ -19,6 +24,10 @@ double operator *
    return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector operator *(double x, const dvector_for_adjoint & w)
 {
    int mmin = w.indexmin();
@@ -32,6 +41,10 @@ dvector operator *(double x, const dvector_for_adjoint & w)
    return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix get_dmatrix(cltudecomp & clu)
 {
    int mmin = clu.indexmin();
@@ -48,6 +61,10 @@ dmatrix get_dmatrix(cltudecomp & clu)
    return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix get_dmatrix(cltudecomp_for_adjoint & clu)
 {
    int mmin = clu.indexmin();
@@ -64,6 +81,10 @@ dmatrix get_dmatrix(cltudecomp_for_adjoint & clu)
    return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix get_lower_matrix(cltudecomp_for_adjoint & clu)
 {
    int mmin = clu.indexmin();
@@ -81,6 +102,10 @@ dmatrix get_lower_matrix(cltudecomp_for_adjoint & clu)
    return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix get_upper_matrix(cltudecomp_for_adjoint & clu)
 {
    int mmin = clu.indexmin();

@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ivector::fill(const char * s)
 {
   dvector tmp(*this);
@@ -13,6 +21,10 @@ void ivector::fill(const char * s)
   *this=ivector(tmp);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void lvector::fill(const char * s)
 {
   dvector tmp(*this);

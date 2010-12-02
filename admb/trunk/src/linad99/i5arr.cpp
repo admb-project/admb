@@ -4,23 +4,45 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 #include "admb_messages.h"
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void i5_array::allocate(void)
 {
   t=0;
   shape=0;
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 i5_array::i5_array(void)
 {
   allocate();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 i5_array::i5_array(int hsl,int hsu)
 {
   allocate(hsl,hsu);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void i5_array::allocate(int hsl,int hsu)
 {
   int ss=hsu-hsl+1;
@@ -49,6 +71,10 @@ void i5_array::allocate(int hsl,int hsu)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch,int aa,int bb)
  {
@@ -77,6 +103,11 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
      shape=0;
    }
  }
+
+/**
+ * Description not yet available.
+ * \param
+ */
  void i5_array::allocate(const ad_integer& hsl,const ad_integer& hsu,
    const index_type& sl,const index_type& sh,
    const index_type& nrl,const index_type& nrh,
@@ -110,7 +141,10 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  i5_array::i5_array(_CONST i5_array& m2)
  {
    if (m2.shape)
@@ -126,11 +160,19 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  i5_array::~i5_array()
  {
    deallocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void i5_array::deallocate()
  {
    if (shape)
@@ -151,6 +193,11 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  }
 
 #if !defined (OPT_LIB)
+
+/**
+ * Description not yet available.
+ * \param
+ */
     i4_array& i5_array::operator ( ) (int i)
     {
 #     if defined(SAFE_ARRAYS)
@@ -162,6 +209,10 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
       return t[i];
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     i4_array& i5_array::operator [] (int i)
     {
 #     if defined(SAFE_ARRAYS)
@@ -172,26 +223,49 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
 #     endif
       return t[i];
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
     i3_array& i5_array::operator ( ) (int i ,int j)
     {
       return ((*this)(i))(j);
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     imatrix& i5_array::operator ( ) (int i,int j,int k)
     {
       return (((*this)(i,j))(k));
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
     ivector& i5_array::operator ( ) (int i,int j,int k,int l)
     {
       return ( ((*this)(i,j,k))(l));
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     int& i5_array::operator ( ) (int i,int j,int k,int l,int ll)
     {
       return ( ((*this)(i,j,k))(l,ll));
     }
 
 #if defined(USE_CONST)
+
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST i4_array& i5_array::operator ( ) (int i)   _CONST 
     {
 #     if defined(SAFE_ARRAYS)
@@ -205,6 +279,10 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
       return t[i];
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST i4_array& i5_array::operator [] (int i) _CONST
     {
 #     if defined(SAFE_ARRAYS)
@@ -217,18 +295,38 @@ void i5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
 #     endif
       return t[i];
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
      _CONST i3_array& i5_array::operator ( ) (int i ,int j) _CONST
     {
       return ((*this)(i))(j);
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST imatrix& i5_array::operator ( ) (int i,int j,int k) _CONST
     {
       return (((*this)(i,j))(k));
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST ivector&  i5_array::operator ( ) (int i,int j,int k,int l) _CONST
     {
       return ( ((*this)(i,j,k))(l));
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
     _CONST int&  i5_array::operator ( ) (int i,int j,int k,int l,int ll) _CONST
     {
       return ( ((*this)(i,j,k))(l,ll));

@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ivector diagonal(const imatrix& m)
 {
   if (m.indexmin() != m.colmin() || m.indexmax() != m.colmax())
@@ -21,6 +29,10 @@ ivector diagonal(const imatrix& m)
   return tmp;
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
  imatrix  operator * (const imatrix& m1,const imatrix& m2 )
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())

@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector ivector::operator ()(_CONST ivector& u)
  {
    ivector tmp(u.indexmin(),u.indexmax());
@@ -17,7 +25,10 @@
    return tmp;
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  lvector lvector::operator ()(_CONST lvector& u)
  {
    lvector tmp(u.indexmin(),u.indexmax());

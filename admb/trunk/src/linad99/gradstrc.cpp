@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 //#define THREAD_SAFE
@@ -132,7 +136,10 @@ void * farptr_norm(void *);
 long int farptr_tolong(void *) ;
 void memory_allocate_error(const char * s, void * ptr);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
 {
   long int tmp = TOTAL_BYTES - PREVIOUS_TOTAL_BYTES;
@@ -140,12 +147,20 @@ long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  char lastchar(char * s)
  {
    int k=strlen(s);
    return s[k-1];
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  long int gradient_structure::totalbytes(void)
  {
    return TOTAL_BYTES;
@@ -154,6 +169,10 @@ long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
  void fill_ad_random_part(void);
  extern char ad_random_part[7];
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void cleanup_temporary_files()
 {
    if (gradient_structure::fp)
@@ -195,6 +214,10 @@ void cleanup_temporary_files()
   #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void allocate_dvariable_space(void)
 {
   int on,nopt;
@@ -246,9 +269,10 @@ void allocate_dvariable_space(void)
   gradient_structure::GRAD_LIST->last=dl;  
 }
 
-
-  
-
+/**
+ * Description not yet available.
+ * \param
+ */
  gradient_structure::gradient_structure(long int _size)
  {
    gradient_structure::NVAR=0;
@@ -495,6 +519,10 @@ void allocate_dvariable_space(void)
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void RETURN_ARRAYS_INCREMENT(void)
 {
 #if defined(THREAD_SAFE)
@@ -517,6 +545,10 @@ void RETURN_ARRAYS_INCREMENT(void)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void RETURN_ARRAYS_DECREMENT(void)
 {
 #if defined(THREAD_SAFE)
@@ -538,7 +570,10 @@ void RETURN_ARRAYS_DECREMENT(void)
 #endif
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 gradient_structure::~gradient_structure()
 {
    gradient_structure::NVAR=0;
@@ -650,11 +685,19 @@ gradient_structure::~gradient_structure()
    fp = NULL;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void null_ptr_err_message(void)
 {
    cerr << "Trying to delete a NULL pointer in ~gradient_structure" << endl;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void memory_allocate_error(const char * s, void * ptr)
 {
   if (ptr == NULL)
@@ -665,26 +708,48 @@ void memory_allocate_error(const char * s, void * ptr)
 }
 
  #if defined(NO_DERIVS)
+
+/**
+ * Description not yet available.
+ * \param
+ */
     void gradient_structure::set_NO_DERIVATIVES(void)
     {
       no_derivatives=1;
     }
+
+/**
+ * Description not yet available.
+ * \param
+ */
     void gradient_structure::set_YES_DERIVATIVES(void)
     {
       no_derivatives=0;
     }
  #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
     void  gradient_structure::set_YES_SAVE_VARIABLES_VALUES(void)
     {
       save_var_flag=1;
     }
 
+/**
+ * Description not yet available.
+ * \param
+ */
     void  gradient_structure::set_NO_SAVE_VARIABLES_VALUES(void)
     {
       save_var_flag=0;
     }
       
+/**
+ * Description not yet available.
+ * \param
+ */
     void gradient_structure::set_NUM_DEPENDENT_VARIABLES(int i)
     {
       if (i<1)
@@ -696,7 +761,3 @@ void memory_allocate_error(const char * s, void * ptr)
       }
       NUM_DEPENDENT_VARIABLES=i;
     }
-
-
-
-;

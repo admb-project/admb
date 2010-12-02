@@ -4,9 +4,17 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #include "admb_messages.h"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int sum(_CONST imatrix& m)
 {
   int ssum=0;
@@ -19,6 +27,10 @@ int sum(_CONST imatrix& m)
   return ssum;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int colsum(_CONST imatrix& m,int col)
 { 
   if (col < m.colmin() || col > m.colmax())
@@ -36,6 +48,10 @@ int colsum(_CONST imatrix& m,int col)
   return isum;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ivector column(_CONST imatrix& m,int col)
 { 
   if (col < m.colmin() || col > m.colmax())

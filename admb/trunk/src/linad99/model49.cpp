@@ -4,11 +4,20 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 #include "admb_messages.h"
 
 
 #if !defined(OPT_LIB)
+
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_vector& param_init_vector_vector::operator [] (int i) 
    { 
      if (i<indexmin()) {
@@ -19,6 +28,11 @@
      }
      return v[i];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_vector& param_init_vector_vector::operator () (int i) 
    { 
      if (i<indexmin()) {
@@ -29,6 +43,11 @@
      }
      return v[i];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    prevariable param_init_vector_vector::operator () (int i,int j) 
    { 
      if (i<indexmin()) {
@@ -51,6 +70,11 @@
 #  endif
 #endif
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_matrix& param_init_matrix_vector::operator [] (int i) 
    {
      if (i<indexmin()) {
@@ -61,6 +85,11 @@
      }
      return v[i];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_matrix& param_init_matrix_vector::operator () (int i) 
    { 
      if (i<indexmin()) {
@@ -71,6 +100,11 @@
      }
      return v[i];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    dvar_vector& param_init_matrix_vector::operator () (int i,int j) 
    { 
      if (i<indexmin()) {
@@ -81,6 +115,11 @@
      }
      return v[i][j];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    prevariable param_init_matrix_vector::operator () (int i,int j,int k) 
    { 
      if (i<indexmin()) {
@@ -103,6 +142,11 @@
 #  endif
 #endif
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_bounded_vector& param_init_bounded_vector_vector::operator [] (int i) 
    { 
      if (i<indexmin()) {
@@ -113,6 +157,11 @@
      }
      return v[i];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_bounded_vector& param_init_bounded_vector_vector::operator () (int i) 
    { 
      if (i<indexmin()) {
@@ -123,6 +172,11 @@
      }
      return v[i];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    prevariable param_init_bounded_vector_vector::operator () (int i,int j) 
    { 
      if (i<indexmin()) {
@@ -146,6 +200,10 @@
 #endif
    }
 
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_bounded_matrix& param_init_bounded_matrix_vector::operator [] (int i) 
    {
      if (i<indexmin()) {
@@ -156,6 +214,11 @@
      }
      return v[i];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_bounded_matrix& param_init_bounded_matrix_vector::operator () (int i) 
    { 
      if (i<indexmin()) {
@@ -166,6 +229,11 @@
      }
      return v[i];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    dvar_vector& param_init_bounded_matrix_vector::operator () (int i,int j) 
    { 
      if (i<indexmin()) {
@@ -176,6 +244,11 @@
      }
      return v[i][j];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    prevariable param_init_bounded_matrix_vector::operator () (int i,int j,int k) 
    { 
      if (i<indexmin()) {
@@ -198,6 +271,11 @@
 #  endif
 #endif
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_number& param_init_number_vector::operator [] (int i) 
    { 
      if (i<indexmin()) {
@@ -208,6 +286,11 @@
      }
      return v[i];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_number& param_init_number_vector::operator () (int i) 
    { 
      if (i<indexmin()) {
@@ -218,6 +301,11 @@
      }
      return v[i];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_bounded_number& param_init_bounded_number_vector::operator [] (int i) 
    { 
      if (i<indexmin()) {
@@ -228,6 +316,11 @@
      }
      return v[i];
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    param_init_bounded_number& param_init_bounded_number_vector::operator () (int i) 
    { 
      if (i<indexmin()) {

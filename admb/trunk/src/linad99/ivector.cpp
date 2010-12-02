@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -21,6 +25,10 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
 long int _farptr_tolong(void * px);
 long int farptr_tolong(void *);
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector::~ivector()
  {
    if (shape)
@@ -41,7 +49,10 @@ long int farptr_tolong(void *);
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void ivector::safe_allocate(int ncl,int nch)
  {
    if (allocated())
@@ -55,7 +66,10 @@ long int farptr_tolong(void *);
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void ivector::safe_deallocate()
   {
     if (shape)
@@ -72,7 +86,10 @@ long int farptr_tolong(void *);
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  void ivector::deallocate()
  {
    if (shape)
@@ -90,6 +107,10 @@ long int farptr_tolong(void *);
    shape=NULL;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector::ivector(_CONST ivector& t)
  {
    index_min=t.index_min;
@@ -106,6 +127,10 @@ long int farptr_tolong(void *);
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void ivector::shallow_copy(_CONST ivector& t)
  {
    index_min=t.index_min;
@@ -122,6 +147,10 @@ long int farptr_tolong(void *);
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector& ivector::operator = (_CONST ivector& t)
  {
    // disconnect ivector  pointer  from old array
@@ -149,6 +178,10 @@ long int farptr_tolong(void *);
    return (*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector& ivector::operator = (int u)
  {
    for ( int i=indexmin(); i<=indexmax(); i++)
@@ -158,7 +191,10 @@ long int farptr_tolong(void *);
    return (*this);
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector::ivector( unsigned int sz, long int * x )
  {
    allocate(0,sz-1);
@@ -170,6 +206,10 @@ long int farptr_tolong(void *);
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector::ivector(_CONST dvector& u)
  {
    allocate(u);
@@ -179,17 +219,28 @@ long int farptr_tolong(void *);
    }
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector::ivector(int ncl,int nch)
  {
    allocate(ncl, nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector::ivector(void)
  {
    allocate();
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void ivector::allocate(int ncl,int nch)
  {
    int itemp=nch-ncl;
@@ -226,16 +277,28 @@ long int farptr_tolong(void *);
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ivector::allocate(_CONST dvector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ivector::allocate(_CONST ivector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ivector::allocate(void)
 {
   shape=NULL;
@@ -244,6 +307,10 @@ void ivector::allocate(void)
   v = NULL;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ivector::ivector(_CONST preivector& pdv)
  {
    #ifdef DIAG
@@ -263,6 +330,10 @@ void ivector::allocate(void)
    index_max=pdv.ub;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int  norm2(const ivector& t1)
   {
     int tmp=0;;
@@ -272,6 +343,11 @@ void ivector::allocate(void)
    }
     return(tmp);
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void clean(ivector& v,int level)
   {
     int mmax=v.indexmax();

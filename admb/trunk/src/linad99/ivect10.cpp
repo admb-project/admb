@@ -4,12 +4,25 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
+
+/**
+ * Description not yet available.
+ * \param
+ */
   int Max(_CONST ivector& t1)
   {
     return max(t1);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int max(_CONST ivector& t1)
   {
      int tmp;
@@ -23,6 +36,10 @@
      return(tmp);
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int min(_CONST ivector& t1)
   {
      int tmp;

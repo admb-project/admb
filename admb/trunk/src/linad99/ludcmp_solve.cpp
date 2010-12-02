@@ -219,6 +219,9 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
    return (x);
 }
 
+/**
+ * Adjoint code for the dvar_vector solve function
+ */
 static void df_solve(void)
 {
    verify_identifier_string("LAST");

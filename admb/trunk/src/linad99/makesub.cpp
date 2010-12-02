@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 #include <adstring.hpp>
 //#include <fstream.h>
@@ -37,6 +41,10 @@
 #include <unistd.h>
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int ad_chdir(const char * s)
 {
 #if defined(_WIN32) 
@@ -49,6 +57,10 @@ int ad_chdir(const char * s)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_getcd(const adstring& _s)
 {
   adstring& s=(adstring&) (_s);
@@ -68,7 +80,10 @@ void ad_getcd(const adstring& _s)
 #endif
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 int ad_mkdir(const char * s)
 {
 #if defined(_WIN32) 
@@ -81,6 +96,10 @@ int ad_mkdir(const char * s)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int make_sub_directory(const char * s)
 {
   adstring currdir;

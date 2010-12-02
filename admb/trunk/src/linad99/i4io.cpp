@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 
 // file: dmat_io.cpp
 
@@ -28,6 +32,10 @@
 #include <string.h>
 //#include "i3_array.h"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream& operator<<(BOR_CONST ostream& _ostr, _CONST i4_array& z)
 {
   ostream& ostr=(ostream&) _ostr;
@@ -45,6 +53,10 @@ ostream& operator<<(BOR_CONST ostream& _ostr, _CONST i4_array& z)
   return (ostream&) ostr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 istream& operator>>(BOR_CONST istream& istr,BOR_CONST i4_array& z)
 {
   for (int i=z.indexmin();i<=z.indexmax();i++)

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // file: dvect_io.cpp
 #include "fvar.hpp"
 
@@ -26,6 +30,10 @@
 
 #include <string.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 ostream& operator<<(BOR_CONST ostream& _ostr,_CONST lvector& z)
 {
   ostream & ostr = (ostream&) _ostr;
@@ -33,6 +41,10 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST lvector& z)
   return ostr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void lvector::write_on(BOR_CONST ostream& _s) _CONST
 {
   ostream & s = (ostream&) _s;
@@ -78,6 +90,10 @@ void lvector::write_on(BOR_CONST ostream& _s) _CONST
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 istream& operator>>(BOR_CONST istream& _istr,BOR_CONST lvector& _z)
 {
   ADUNCONST(lvector,z)
@@ -87,6 +103,10 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST lvector& _z)
   return istr;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void lvector::read_from(BOR_CONST istream& _s)
 {
   istream& s=(istream&) _s;

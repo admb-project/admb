@@ -1,5 +1,5 @@
 ADMB Project
-Version 10.0Beta2
+Version 10.0
 Released November 19, 2010
 
 Overview
@@ -90,18 +90,17 @@ Installation
 
 From Source Code
 ----------------
-Building form source code installation instructions can be found at 
-"http://www.admb-project.org/documention/".
+Below are procedures for installing ADMB from source code.
 
 Unix and GNU g++
 ----------------
 1. Extract source distribution
    
-   $ unzip admb-10.0Beta.zip
+   $ unzip admb-10.0.zip
 
 2. Change to distribution directory
 
-   $ cd admb-10.0Beta
+   $ cd admb-10.0
 
 3. Configure the build files
 
@@ -123,11 +122,11 @@ Unix and Sun Studio 12
 ----------------------
 1. Extract source distribution
    
-   $ unzip admb-10.0Beta.zip
+   $ unzip admb-10.0.zip
 
 2. Change to source directory
 
-   $ cd admb-10.0Beta/src
+   $ cd admb-10.0/src
 
 3. Build libraries 
   
@@ -145,11 +144,11 @@ Unix and Intel C++ Compiler
 ---------------------------
 1. Extract source distribution
    
-   $ unzip admb-10.0Beta.zip
+   $ unzip admb-10.0.zip
 
 2. Change to source directory
 
-   $ cd admb-10.0Beta/src
+   $ cd admb-10.0/src
 
 3. Build libraries 
   
@@ -171,7 +170,7 @@ Microsoft Windows and Visual C++
 
 3. Change directory to the "src" folder. 
 
-   > cd admb-10.0Beta\src
+   > cd admb-10.0\src
 
 4. Build libraries
 
@@ -195,20 +194,21 @@ Microsoft Windows and Borland C++ 5.5
 3. Add Borland to system PATH variable.
 
    > set PATH=%PATH%;c:\Borland\BCC551\Bin
+   > set BCC55_HOME=c:\Borland\BCC551\Bin
 
-3. Change directory to the "src" folder. 
+4. Change directory to the "src" folder. 
 
-   > cd admb-10.0Beta\src
+   > cd admb-10.0\src
 
-4. Build libraries
+5. Build libraries
 
    > make /fbcc.mak
 
-5. [Optional] Test build by running examples
+6. [Optional] Test build by running examples
 
    > make /fbcc.mak verify
 
-6. Install libraries to default location %ProgramFiles%\ADMB
+7. Install libraries to default location %ProgramFiles%\ADMB
    and adds ADMB shortcuts in the Start menu.
 
    > make /fbcc.mak install
@@ -219,11 +219,11 @@ Microsoft Windows and MinGW (gcc-4.5)
 
 2. Extract source distribution.
    
-   $ unzip admb-10.0Beta2.zip
+   $ unzip admb-10.0.zip
 
 2. Change to distribution directory
 
-   $ cd admb-10.0Beta
+   $ cd admb-10.0
 
 3. Configure the build files
 

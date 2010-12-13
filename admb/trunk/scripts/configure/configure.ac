@@ -44,7 +44,7 @@ then
   CXXFLAGS="-m64"
   MACOS_PRODUCT_VERSION=`sw_vers -productVersion`
   MACOS_XCODE_VERSION=`xcodebuild -version | grep Xcode | awk '{print $2}'`
-  ADMB_TARGET="admb${ADMB_VERSION}${ADMB_REVISION}-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
+  ADMB_TARGET="admb${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
   INSTALLER_PACKAGEMAKER="scripts/installers/packagemaker/GNUmakefile"
 fi
@@ -58,14 +58,14 @@ then
     CXXFLAGS="-m64"
   fi
   GCC_VERSION=`gcc -dumpversion`
-  ADMB_TARGET="admb${ADMB_VERSION}${ADMB_REVISION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  ADMB_TARGET="admb${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
 fi
 
 if test  "`uname -s`" =  "MINGW32_NT-6.1"
 then
   GCC_VERSION=`gcc -dumpversion`
-  ADMB_TARGET="admb${ADMB_VERSION}${ADMB_REVISION}-mingw-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  ADMB_TARGET="admb${ADMB_VERSION}-mingw-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
 fi
 

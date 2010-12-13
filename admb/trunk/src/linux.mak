@@ -41,9 +41,9 @@ dist:
 	$(MAKE) --directory=tools99 CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE ${DISK}
 	cp -vf ../README.txt ${DISK}
-	cp -vf ../scripts/bash/mygcc* ${DISK}/bin 
-	cp ../scripts/bash/link* ${DISK}/bin
-	cp ../scripts/bash/m* ${DISK}/bin
+	#cp -vf ../scripts/bash/mygcc* ${DISK}/bin 
+	#cp ../scripts/bash/link* ${DISK}/bin
+	#cp ../scripts/bash/m* ${DISK}/bin
 	cp ../scripts/bash/admb ${DISK}/bin
 	cp ../scripts/bash/adcomp ${DISK}/bin
 	cp ../scripts/bash/adlink ${DISK}/bin

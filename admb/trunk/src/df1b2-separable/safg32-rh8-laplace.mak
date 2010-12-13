@@ -1,4 +1,3 @@
-LIBPATH =gcc32-rh8slp
 LIBNAME = libdf1b2s.a
 SRCDIR =  src
 vpath %.obj $(LIBPATH)
@@ -8,14 +7,14 @@ vpath %.obj $(LIBPATH)
 .PHONY: disk
 include objects.lst
 
-$(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
-	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
+$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+	ar -rs $(LIBNAME) $(LIBPATH)/*.obj
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS)  $< -o $(LIBPATH)/$*.obj
 
-disk: $(LIBPATH)/$(LIBNAME) 
-	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/lib
+disk: $(LIBNAME) 
+	cp $(LIBNAME) $(DISKDIR)/lib
 	cp adpool.h $(DISKDIR)/include
 	cp adrndeff.h $(DISKDIR)/include
 	cp df1b2fun.h $(DISKDIR)/include

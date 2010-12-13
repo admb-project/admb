@@ -1,4 +1,4 @@
-.PHONY: disk
+.PHONY: disk tpl2cpp
 
 LIBPATH =gcc32-rh8olp
 STUBPATH =gcc32-rh8olp-stub
@@ -11,7 +11,7 @@ vpath %.obj $(LIBPATH)
 
 include objects.lst
 
-all: $(LIBPATH)/$(LIBNAME) tpl2cpp disk  
+all: $(LIBNAME) tpl2cpp disk  
 
 
 ifeq "CC" "$(CXX)"
@@ -20,8 +20,8 @@ else
 OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
 endif
 
-$(LIBPATH)/$(LIBNAME) :  $(OBJECTS) 
-	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
+$(LIBNAME) :  $(OBJECTS) 
+	ar -rs $(LIBNAME) $(LIBPATH)/*.obj
 
 model7.obj: model7.cpp
 ifdef ADMB_CONFIGURE
@@ -33,7 +33,7 @@ endif
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/$*.obj
 
-all: $(LIBPATH)/$(LIBNAME)  tpl2cpp disk  
+all: $(LIBNAME)  tpl2cpp disk  
 
 df1b2stub:
 	$(CXX) $(CXXFLAGS) -o $(STUBPATH)/df1b2stub.o df1b2stub.cpp
@@ -43,11 +43,11 @@ tpl2cpp.c: tpl2cpp.lex
 	flex -w tpl2cpp.lex
 	sed -f sedflex lex.yy.c > tpl2cpp.c
 
-tpl2cpp: tpl2cpp.c
+tpl2cpp:
 	$(CC) -Wno-format tpl2cpp.c -o $@
 
-disk: $(LIBPATH)/$(LIBNAME)  df1b2stub tpl2cpp
-	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/lib
+disk: $(LIBNAME)  df1b2stub tpl2cpp
+	cp $(LIBNAME) $(DISKDIR)/lib
 	cp admodel.h $(DISKDIR)/include
 	cp spcomm.h $(DISKDIR)/include
 	cp adsplus.h $(DISKDIR)/include
@@ -55,5 +55,5 @@ disk: $(LIBPATH)/$(LIBNAME)  df1b2stub tpl2cpp
 	cp param_init_bounded_number_matrix.h $(DISKDIR)/include
 	cp s.h $(DISKDIR)/include
 	cp tpl2cpp $(DISKDIR)/bin
-	cp sed* $(DISKDIR)/bin
+	cp sedflex $(DISKDIR)/bin
 	cp $(STUBPATH)/${STUBNAME} $(DISKDIR)/lib

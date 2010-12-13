@@ -9,13 +9,13 @@ vpath %.obj $(LIBPATH)
 
 include objects.lst
 
-all: $(LIBPATH)/$(LIBNAME)  disk
+all: $(LIBNAME)  disk
 
-$(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
-	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
+$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+	ar -rs $(LIBNAME) $(LIBPATH)/*.obj
 
-disk: $(LIBPATH)/$(LIBNAME) 
-	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/lib
+disk: $(LIBNAME) 
+	cp $(LIBNAME) $(DISKDIR)/lib
 	cp adoption.hpp $(DISKDIR)/include
 	cp adstring.hpp $(DISKDIR)/include
 	cp cifstrem.h $(DISKDIR)/include

@@ -5,17 +5,17 @@ vpath %.obj $(LIBPATH)
 
 .SUFFIXES: .obj .cpp
 
-.PHONY: disk
+.PHONY: disk tpl2rem
 include objects.lst
 
-$(LIBPATH)/$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
-	ar -rs $(LIBPATH)/$(LIBNAME) $(LIBPATH)/*.obj
+$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+	ar -rs $(LIBNAME) $(LIBPATH)/*.obj
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS)  $< -o $(LIBPATH)/$*.obj
 
-disk: $(LIBPATH)/$(LIBNAME) tpl2rem
-	cp $(LIBPATH)/$(LIBNAME) $(DISKDIR)/lib
+disk: $(LIBNAME) tpl2rem
+	cp $(LIBNAME) $(DISKDIR)/lib
 	cp adpool.h $(DISKDIR)/include
 	cp adrndeff.h $(DISKDIR)/include
 	cp df1b2fun.h $(DISKDIR)/include
@@ -25,12 +25,12 @@ disk: $(LIBPATH)/$(LIBNAME) tpl2rem
 	cp df1b2loc.h $(DISKDIR)/include
 	cp smartbuf.h $(DISKDIR)/include
 	cp tpl2rem $(DISKDIR)/bin
-	cp sed* $(DISKDIR)/bin
+	cp sedcmd sedcmd2 sedcmd3 seddf1b2 seddf1b3 seddf1b4 sedf1b2a sedf1b2c sedf1b2d sedflex $(DISKDIR)/bin
 
 tpl2rem.c: tpl2rem.lex
 	flex tpl2rem.lex
 	sed -f sedflex lex.yy.c > tpl2rem.c
 
-tpl2rem: tpl2rem.c
+tpl2rem:
 	$(CC) tpl2rem.c -o tpl2rem
 	cp sed* $(DISKDIR)/bin

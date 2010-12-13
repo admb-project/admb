@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #ifndef __ADMOD3D__
 #define __ADMOD3D__
 
@@ -51,6 +55,10 @@
 
 #include <admodel.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_init_d3array: public named_dvar3_array,public initial_params
 {
 public:
@@ -90,6 +98,10 @@ public:
   param_init_d3array(void);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_init_bounded_d3array: public param_init_d3array
 {
   double minb;

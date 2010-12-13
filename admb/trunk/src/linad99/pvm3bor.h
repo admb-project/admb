@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(__BORLANDC__)
 #  define ADDLL __declspec(dllexport)  
 //#  define ADDLL __declspec(dllexport) __stdcall 

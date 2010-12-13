@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const dvar_vector& m)
   {
     int iflag;
@@ -13,7 +21,10 @@
     return iflag;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const dvar_matrix& m)
   {
     int iflag=0;
@@ -40,6 +51,10 @@
     return iflag;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const dvar3_array& m)
   {
     int iflag=0;
@@ -65,6 +80,11 @@
     }
     return iflag;
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const dvar4_array& m)
   {
     int iflag=0;
@@ -91,6 +111,10 @@
     return iflag;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const dvar5_array& m)
   {
     int iflag=0;
@@ -117,6 +141,10 @@
     return iflag;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const dvector& m)
   {
     int iflag;
@@ -124,7 +152,10 @@
     return iflag;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const dmatrix& m)
   {
     int iflag=0;
@@ -146,6 +177,10 @@
     return iflag;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const d3_array& m)
   {
     int iflag=0;
@@ -166,6 +201,11 @@
     }
     return iflag;
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const d4_array& m)
   {
     int iflag=0;
@@ -187,6 +227,10 @@
     return iflag;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const d5_array& m)
   {
     int iflag=0;
@@ -208,6 +252,10 @@
     return iflag;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const ivector& m)
   {
     int iflag;
@@ -215,7 +263,10 @@
     return iflag;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const imatrix& m)
   {
     int iflag=0;
@@ -237,6 +288,10 @@
     return iflag;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const i3_array& m)
   {
     int iflag=0;
@@ -257,6 +312,11 @@
     }
     return iflag;
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   int sub_unallocated(const i4_array& m)
   {
     int iflag=0;
@@ -277,5 +337,3 @@
     }
     return iflag;
   }
-
-

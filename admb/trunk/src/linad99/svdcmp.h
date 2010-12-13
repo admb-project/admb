@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(_SVDCMP_)
 #define _SVDCMP_ 
 
@@ -54,6 +58,10 @@ dvariable pythag(_CONST prevariable& a, _CONST prevariable& b);
 dvariable fmax(BOR_CONST prevariable& a,BOR_CONST prevariable& b) { if (a>b) return a; else return b;}
 dvariable sign(BOR_CONST prevariable& a,BOR_CONST prevariable& b){ if (b>0) return fabs(a); else return -fabs(a);}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class d_singular_value_decomposition
 {
 public:
@@ -64,6 +72,10 @@ public:
     a(1,m,1,n), w(1,n), v(1,n,1,n) {}
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class dvar_singular_value_decomposition
 {
 public:

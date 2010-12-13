@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
   /**
@@ -68,5 +72,3 @@
     prevariable& mu= (prevariable&)(_mu);
     return exp(r*log(mu) + (r-1)*log(x)-mu*x-gammln(r));
   }
-    
-    

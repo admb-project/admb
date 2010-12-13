@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 /* eval_extern.f -- translated by f2c (version 19950110).
    You must link the resultinumberv object file with the libraries:
 	-lf2c -lm   (in that order)
@@ -29,8 +33,11 @@ int ehg_and_jacobian_hg(independent_variables& x, dvector& h,
   dvector& g,dmatrix& jacob_h);
 int ehg(independent_variables& x, dvector& h,dvector& g);
 
-
-/* Subroutine */ int eval_extern__(integer *mode)
+/**
+ * Description not yet available.
+ * \param
+ */
+int eval_extern__(integer *mode)
 {
     /* System generated locals */
     integer i__1, i__2;

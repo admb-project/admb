@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #ifndef _ADSPLUS_H_
   #define _ADSPLUS_H_
 #include <admodel.h>
@@ -46,6 +50,10 @@
 #pragma interface
 //#include <admodhd.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPparam_init_number: public param_init_number 
 {
 public:
@@ -56,6 +64,10 @@ protected:
   friend class model_parameters;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPparam_init_vector: public param_init_vector
 {
 public:
@@ -65,7 +77,10 @@ public:
   friend class model_parameters;
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPnamed_dvar_vector: public named_dvar_vector
 {
 public:
@@ -79,6 +94,10 @@ public:
   ~SPnamed_dvar_vector(void ); //{SPsend(*this);}
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPnamed_dvector: public named_dvector
 {
 public:
@@ -90,7 +109,10 @@ public:
   ~SPnamed_dvector(void ); //{SPsend(*this);}
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPnamed_dvariable : public named_dvariable
 {
 protected:
@@ -101,6 +123,10 @@ protected:
   friend class model_parameters;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPnamed_dvar_matrix : public named_dvar_matrix
 {
 protected:
@@ -113,6 +139,10 @@ public:
   ~SPnamed_dvar_matrix();
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPnamed_dmatrix : public named_dmatrix
 {
 protected:
@@ -124,7 +154,10 @@ public:
   ~SPnamed_dmatrix();
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPparam_init_bounded_number: public param_init_bounded_number
 {
 public:
@@ -135,7 +168,10 @@ protected:
   void allocate(double _minb,double _maxb,const char * s="UNNAMED");
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPparam_init_matrix: public param_init_matrix 
 {
 public:
@@ -145,6 +181,10 @@ protected:
   void allocate(const char * = "UNNAMED");
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPparam_init_bounded_matrix: public param_init_bounded_matrix 
 {
 public:
@@ -157,7 +197,10 @@ public:
   void allocate(double _minb,double _maxb,const char * = "UNNAMED");
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPdata_int : public data_int  
 {
 public:
@@ -166,6 +209,10 @@ public:
   void allocate(const char * s="UNNAMED");
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPdata_matrix : public data_matrix  
 {
 public:
@@ -173,6 +220,10 @@ public:
   void allocate(const char * = "UNNAMED");
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPdata_3array : public data_3array 
 {
 public:
@@ -194,6 +245,10 @@ public:
 */
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPdata_4array : public data_4array 
 {
 public:
@@ -201,6 +256,10 @@ public:
     int cmin,int cmax,const char * ="UNNAMED");
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPdata_imatrix : public data_imatrix 
 {
 public:
@@ -208,6 +267,10 @@ public:
   void allocate(const char * ="UNNAMED");
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPdata_vector : public data_vector
 {
 public:
@@ -215,6 +278,10 @@ public:
   void allocate(const char * ="UNNAMED");
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPdata_ivector : public data_ivector
 {
 public:
@@ -222,6 +289,10 @@ public:
   void allocate(int imin,int imax,const char * ="UNNAMED");
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPdata_number : public data_number 
 {
 public:
@@ -229,6 +300,10 @@ public:
   void allocate(const char * ="UNNAMED");
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class SPparam_init_bounded_vector: public param_init_bounded_vector
 {
 public:
@@ -238,4 +313,3 @@ public:
 };
 
 #endif
-

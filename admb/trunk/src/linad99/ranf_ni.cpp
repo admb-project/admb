@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -22,6 +26,10 @@ double auto_rand(long int& idum, int reset);
 void reinitialize_auto_rand();
 double randn(long int& n);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvector::fill_randbi_ni(long int& n, double p)
   {
     if ( p<0 || p>1)
@@ -45,7 +53,10 @@ double randn(long int& n);
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvector::fill_randu_ni(long int& n)
   {
     long int nn;
@@ -56,6 +67,10 @@ double randn(long int& n);
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::colfill_randu_ni(BOR_CONST int&j,long int&n)
   {
     long int nn;
@@ -66,7 +81,10 @@ double randn(long int& n);
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::rowfill_randu_ni(BOR_CONST int& i,long int& n)
   {
     long int nn;
@@ -77,7 +95,10 @@ double randn(long int& n);
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvector::fill_randn_ni(long int& n)
   {
     long int nn;
@@ -88,6 +109,10 @@ double randn(long int& n);
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::fill_randn_ni(long int& n)
   {
     long int nn=n;
@@ -98,6 +123,10 @@ double randn(long int& n);
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void d3_array::fill_randn_ni(long int& n)
   {
     long int nn;
@@ -109,6 +138,10 @@ double randn(long int& n);
     }
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void d3_array::fill_randu_ni(long int& n)
   {
     long int nn;
@@ -120,7 +153,10 @@ double randn(long int& n);
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::fill_randu_ni(long int& n)
   {
     long int nn;
@@ -132,7 +168,10 @@ double randn(long int& n);
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::colfill_randn_ni(BOR_CONST int&j,long int&n)
   {
     long int nn;
@@ -143,7 +182,10 @@ double randn(long int& n);
     }
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::rowfill_randn_ni(BOR_CONST int& i,long int& n)
   {
     long int nn;
@@ -153,4 +195,3 @@ double randn(long int& n);
       elem(i,j)=randn(nn);
     }
   }
-

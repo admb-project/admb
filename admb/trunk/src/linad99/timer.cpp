@@ -4,10 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 #if (defined(linux) || defined(__linux__)) && !defined(__WIN32)
 #include <sys/time.h>
 #include <iostream>
+
+/**
+ * Description not yet available.
+ * \param
+ */
   adtimer::adtimer (void)
   {
     gettimeofday(&tv,0);
@@ -17,6 +26,10 @@
 
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   double adtimer::get_elapsed_time_and_reset(void)
   {
     gettimeofday(&tv,0);
@@ -38,7 +51,10 @@
     return 1000.*nsec+nusec/1000.;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   double adtimer::get_elapsed_time(void)
   {
     int nsec=0; 
@@ -61,12 +77,20 @@
 #else
 #include <windows.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
   adtimer::adtimer (void)
   {
     t=GetCurrentTime(); 
     told=t;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   double adtimer::get_elapsed_time_and_reset(void)
   {
     t=GetCurrentTime(); 
@@ -76,6 +100,10 @@
     return diff;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   double adtimer::get_elapsed_time(void)
   {
     t=GetCurrentTime(); 
@@ -83,6 +111,5 @@
     double diff=t-told;
     return diff;
   }
-
 
 #endif

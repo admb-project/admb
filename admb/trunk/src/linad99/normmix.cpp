@@ -4,13 +4,20 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 static double cc=0.39894228040143267794;   // 1/sqrt(2*pi)
 
 typedef double (*pinit_f)(double y,double a); 
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 static double cumd_normal_mixture(double x,double a)
 {
   // "normal" value for a is 3.0
@@ -18,6 +25,10 @@ static double cumd_normal_mixture(double x,double a)
   return y;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double df_cumd_normal_mixture(double x,double a)
 {
   double x2=x*x;
@@ -26,6 +37,10 @@ static double df_cumd_normal_mixture(double x,double a)
   return dfx;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double cumd_normal_mixture_initx(double y,double a)
 {
   double x;
@@ -44,6 +59,10 @@ static double cumd_normal_mixture_initx(double y,double a)
   return x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double  nr_generic(double y,pinit_f p_get_initial_x,
   pinit_f pfun,pinit_f pdfun)
 {
@@ -68,9 +87,10 @@ double  nr_generic(double y,pinit_f p_get_initial_x,
   return x;
 }
 
-
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable inv_cumd_normal_mixture(const prevariable& _yy,double a)
 {
   ADUNCONST(dvariable,yy)
@@ -83,4 +103,3 @@ dvariable inv_cumd_normal_mixture(const prevariable& _yy,double a)
      &(value(z)), &(value(yy)),dfx);
   return z;
 }
-

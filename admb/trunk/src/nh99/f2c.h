@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 /* f2c.h  --  Standard Fortran to C header file */
 
 /**  barf  [ba:rf]  2.  "He suggested using FORTRAN, and everybody barfed."

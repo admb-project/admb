@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(__CONSTRUCTORS_H__)
 # define __CONSTRUCTORS_H__
  int constrained_munimxization(int,int,int,double *);
@@ -51,6 +55,10 @@
 //const int number31=number3+1;
 //const int inumber1=4000;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct doublestar
 {
   int index_max;
@@ -64,6 +72,10 @@ struct doublestar
   doublereal& operator[] (long int i){ return *(d+i);}
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg24 {
   doublereal uertte;
   integer itstep, phase;
@@ -74,6 +86,10 @@ struct gggg24 {
 
 #define gggg241 gggg24
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg25 {
     doublereal *x, *x0, *x1, *xmin, *resmin, *d, *d0,
 	     *dd, *difx, xnorm, x0norm, dnorm, d0norm, sig, sig0,
@@ -85,6 +101,10 @@ gggg25();
 
 #define gggg251 gggg25
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg26 {
     //doublereal *gradf, gfn, *qgf, *gres	/* was ** */,
 //	     *gresn, *gphi0, *gphi1;
@@ -96,6 +116,10 @@ gggg26();
 
 #define gggg261 gggg26
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg27 {
     doublereal *qr	/* was ** */, *betaq, *diag
 	    , *cscal, *colle;
@@ -105,6 +129,10 @@ struct gggg27 {
 
 #define gggg271 gggg27
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg00 {
     logical *val, *gconst;
     integer *gunit	/* was ** */;
@@ -114,6 +142,10 @@ struct gggg00 {
 
 #define gggg001 gggg00
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg01 {
     logical intakt, inx, std, te0, te1, te2, te3, sinumbervul, ident, eqres, 
 	    silent, wwuq3, cold;
@@ -123,6 +155,10 @@ struct gggg01 {
 
 #define gggg011 gggg01
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg02 {
     doublereal *a	/* was ** */, *diag0, scalm, scalm2, 
 	    matsc;
@@ -131,6 +167,10 @@ struct gggg02 {
 
 #define gggg021 gggg02
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg03 {
     integer *bind, *bind0, *violis, *alist__, *sort;
   gggg03();
@@ -138,6 +178,10 @@ struct gggg03 {
 
 #define gggg031 gggg03
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg04 {
     doublereal *res, *res0, *res1, *resst, *u, *u0,
 	     *w, *w1, *work, *yu, *slack, scf, 
@@ -147,6 +191,10 @@ struct gggg04 {
 
 #define gggg041 gggg04
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg05 {
     integer n, numberw, numberv, nr, nres;
     gggg05(int _n,int _numberw, int _hg);
@@ -154,12 +202,20 @@ struct gggg05 {
 
 #define gggg051 gggg05
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg06 {
     doublereal epsmac, tolmac, deldif;
 };
 
 #define gggg061 gggg06
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg07 {
     gggg07(doublereal _jgh4,doublereal _jgh5);
     doublereal jgh4, jgh41, del, delmin, jgh5, wdg5, wdg9, wdg10, wdg11, wdg111,
@@ -169,6 +225,10 @@ struct gggg07 {
 
 #define gggg071 gggg07
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg08 {
     doublereal alpha, beta, theta, wdg8, sigla, delta, stptrm, delta1, 
 	    stmaxl;
@@ -176,6 +236,10 @@ struct gggg08 {
 
 #define gggg081 gggg08
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg09 {
     integer icf, icgf, cfincr, *cres, *cgres;
   gggg09();
@@ -183,6 +247,10 @@ struct gggg09 {
 
 #define gggg091 gggg09
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg10 {
     logical ffuerr, *cfuerr;
   gggg10();
@@ -190,6 +258,10 @@ struct gggg10 {
 
 #define gggg101 gggg10
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg11 {
     doublereal wdg4;
     integer clow, lwdg2, wdg3, wdg1;
@@ -197,6 +269,10 @@ struct gggg11 {
 
 #define gggg111 gggg11
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg12 {
     char *name;
   gggg12();
@@ -204,18 +280,30 @@ struct gggg12 {
 
 #define gggg121 gggg12
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg13 {
     doublereal epsdif;
 };
 
 #define gggg131 gggg13
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg14 {
     integer jgh1, jgh2;
 };
 
 #define gggg141 gggg14
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg15 {
     doublereal *ug, *og, *delfac;
   gggg15();
@@ -223,12 +311,20 @@ struct gggg15 {
 
 #define gggg151 gggg15
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg16 {
     integer jgh3;
 };
 
 #define gggg161 gggg16
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg17 {
     doublereal *xst;
   gggg17();
@@ -236,6 +332,10 @@ struct gggg17 {
 
 #define gggg171 gggg17
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg18 {
     independent_variables xtr;
     doublereal *xsc, *fu, *fugrad	/* was *[
@@ -246,6 +346,10 @@ struct gggg18 {
 
 #define gggg181 gggg18
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg19 {
     logical wwuq2, wwuq4, corr;
     integer wwuq6;
@@ -254,12 +358,20 @@ struct gggg19 {
 
 #define gggg191 gggg19
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg20 {
     integer qpterm, fcount;
 };
 
 #define gggg201 gggg20
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg21 {
     doublereal sstr, riitr;
     integer iptr, iqtr, *aitr;
@@ -268,6 +380,10 @@ struct gggg21 {
 
 #define gggg211 gggg21
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg22 {
     doublereal rnorm, rlow;
     integer ndual, mi, me, iq;
@@ -275,6 +391,10 @@ struct gggg22 {
 
 #define gggg221 gggg22
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct gggg23 {
     doublereal *xj,*ddual,*r,*np,*ud,*ud1;
   gggg23();
@@ -351,7 +471,10 @@ extern "C" {
 	}
 #endif
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 struct intstar
 {
   int index_max;

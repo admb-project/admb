@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int size_count(_CONST dvar_vector& x)
 {
   if (!(x))
@@ -14,6 +22,10 @@ int size_count(_CONST dvar_vector& x)
     return x.size();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int size_count_partial(_CONST dvar_vector& x,int n)
 {
   if (!(x))
@@ -22,6 +34,10 @@ int size_count_partial(_CONST dvar_vector& x,int n)
     return max(0, n);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int size_count(_CONST dvar_matrix& x)
 {
   if (!(x))
@@ -39,6 +55,10 @@ int size_count(_CONST dvar_matrix& x)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int size_count_partial(_CONST dvar_matrix& x, int n)
 {
   if (!(x))
@@ -56,6 +76,10 @@ int size_count_partial(_CONST dvar_matrix& x, int n)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int size_count(_CONST dvar3_array& x)
 {
   if (!(x))
@@ -73,6 +97,10 @@ int size_count(_CONST dvar3_array& x)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int size_count(_CONST dvar4_array& x)
 {
   if (!(x))
@@ -90,6 +118,10 @@ int size_count(_CONST dvar4_array& x)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int size_count(_CONST d4_array& x)
 {
   if (!(x))
@@ -107,6 +139,10 @@ int size_count(_CONST d4_array& x)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 int size_count_partial(_CONST dvar3_array& x, int n)
 {
   if (!(x))

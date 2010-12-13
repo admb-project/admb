@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(__GNUC__)
   #if (__GNUC__ < 3)
     #pragma interface
@@ -93,6 +97,10 @@
 
 class model_data;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class label_class
 {
   const char * name;
@@ -103,6 +111,10 @@ public:
   label_class(const char * s){name=s;}
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class model_name_tag
 {
   const char * name;
@@ -113,6 +125,10 @@ public:
   label_class label(void){return name;}
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class named_dvar_vector : public dvar_vector, public model_name_tag
 {
 protected:
@@ -125,6 +141,10 @@ protected:
   void allocate(int mmin,int mmax,const char * s);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class named_dvariable : public dvariable, public model_name_tag
 {
   //named_dvariable& operator = (_CONST dvariable& m);
@@ -136,6 +156,10 @@ protected:
   friend class model_parameters;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class named_dvar_matrix : public dvar_matrix, public model_name_tag
 {
 protected:
@@ -148,6 +172,10 @@ public:
   friend class model_parameters;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class named_dvar3_array : public dvar3_array, public model_name_tag
 {
 protected:
@@ -171,6 +199,10 @@ protected:
   friend class model_parameters;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class named_dvar4_array : public dvar4_array, public model_name_tag
 {
 protected:
@@ -182,7 +214,10 @@ protected:
   friend class model_parameters;
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class named_dvector : public dvector, public model_name_tag
 {
 protected:
@@ -192,7 +227,10 @@ protected:
   named_dvector& operator = (CGNU_DOUBLE m);
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class named_ivector : public ivector, public model_name_tag
 {
 protected:
@@ -200,6 +238,10 @@ protected:
   void allocate(int mmin,int mmax,const char * s);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class named_dmatrix : public dmatrix, public model_name_tag
 {
 protected:
@@ -209,6 +251,10 @@ protected:
   named_dmatrix& operator = (CGNU_DOUBLE m);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class named_imatrix : public imatrix, public model_name_tag
 {
 protected:
@@ -218,6 +264,10 @@ protected:
   named_imatrix& operator = (_CONST int& m);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class named_d3_array : public d3_array, public model_name_tag
 {
 protected:
@@ -239,6 +289,10 @@ protected:
   named_d3_array& operator = (_CONST d3_array& m);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class named_d4_array : public d4_array, public model_name_tag
 {
 protected:
@@ -250,6 +304,10 @@ protected:
 
 class function_minimizer;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class initial_params
 {
 protected:
@@ -300,6 +358,10 @@ public:
   friend class function_minimizer;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_init_vector: public named_dvar_vector , public initial_params
 {
 public:
@@ -325,6 +387,10 @@ private:
   friend class model_parameters;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_init_bounded_vector: public named_dvar_vector,public initial_params
 {
   virtual void* parent_this(void){return this;}
@@ -353,11 +419,19 @@ private:
   //virtual void read_value(void);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_init_bounded_dev_vector: public param_init_bounded_vector
 {
   virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_init_number: public named_dvariable , public initial_params
 {
   virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
@@ -382,6 +456,10 @@ protected:
   param_init_number();
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_init_bounded_number: public param_init_number
 {
   double minb;
@@ -405,7 +483,10 @@ protected:
   param_init_bounded_number();
 };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_init_matrix: public named_dvar_matrix,public initial_params
 {
 public:
@@ -433,6 +514,10 @@ public:
   param_init_matrix(void);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_init_bounded_matrix: public param_init_matrix
 {
   double minb;
@@ -454,6 +539,10 @@ public:
   param_init_bounded_matrix(void);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class data_int : public model_name_tag
 {
   int val;
@@ -467,8 +556,10 @@ class data_int : public model_name_tag
   friend int operator + (data_int v,data_int n);
 };
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class data_matrix : public named_dmatrix
 {
   data_matrix(void) : named_dmatrix() {}
@@ -477,6 +568,10 @@ class data_matrix : public named_dmatrix
   friend class model_data;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class data_3array : public named_d3_array
 {
   data_3array(void) : named_d3_array() {}
@@ -497,6 +592,10 @@ class data_3array : public named_d3_array
   friend class model_data;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class data_4array : public named_d4_array
 {
   data_4array(void) : named_d4_array() {}
@@ -505,6 +604,10 @@ class data_4array : public named_d4_array
   friend class model_data;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class data_imatrix : public named_imatrix
 {
   data_imatrix(void) : named_imatrix() {}
@@ -512,6 +615,10 @@ class data_imatrix : public named_imatrix
   friend class model_data;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class data_vector : public named_dvector
 {
 public:
@@ -523,6 +630,10 @@ private:
   friend class model_data;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class data_ivector : public named_ivector
 {
   data_ivector(void) : named_ivector() {}
@@ -530,6 +641,10 @@ class data_ivector : public named_ivector
   friend class model_data;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class data_number : public model_name_tag
 {
   double val;
@@ -540,6 +655,10 @@ public:
   friend class model_data;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class function_minimizer
 {
 public:
@@ -628,7 +747,10 @@ cifstream& operator >> (BOR_CONST cifstream& s, BOR_CONST param_init_vector& v);
 cifstream& operator >> (BOR_CONST cifstream& s, BOR_CONST param_init_matrix& m);
 ostream& operator << (BOR_CONST ostream& s,BOR_CONST label_class& lc);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class stddev_params
 {
 protected:
@@ -648,6 +770,10 @@ public:
   friend class function_minimizer;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class likeprof_params 
 {
   double stepsize;
@@ -673,6 +799,10 @@ public:
   friend class function_minimizer;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_stddev_vector: public named_dvar_vector , stddev_params
 {
 	virtual int size_count(void); // get the number of active parameters
@@ -687,6 +817,10 @@ class param_stddev_vector: public named_dvar_vector , stddev_params
   param_stddev_vector& operator = (CGNU_DOUBLE m);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_stddev_number: public named_dvariable , public stddev_params
 {
 	void allocate(const char *s="UNNAMED");
@@ -701,6 +835,10 @@ protected:
 	param_stddev_number& operator = (CGNU_DOUBLE);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_likeprof_number: public param_stddev_number ,
 	public likeprof_params
 {
@@ -719,6 +857,10 @@ public:
 	param_likeprof_number& operator = (CGNU_DOUBLE);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_stddev_matrix: public named_dvar_matrix , stddev_params
 {
 	virtual int size_count(void);
@@ -735,6 +877,10 @@ class param_stddev_matrix: public named_dvar_matrix , stddev_params
   param_stddev_matrix& operator = (_CONST dvar_matrix& m);
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class ad_comm
 {
 protected:
@@ -751,8 +897,10 @@ public:
   static change_parfile_name;
 };
 
-
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class objective_function_value : public named_dvariable
   {
   public:
@@ -762,7 +910,10 @@ public:
     objective_function_value& operator = (CGNU_DOUBLE v);
   };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 class param_init_d3array: public named_dvar3_array,public initial_params
 {
 public:
@@ -791,4 +942,3 @@ public:
 };
 
 #endif
-

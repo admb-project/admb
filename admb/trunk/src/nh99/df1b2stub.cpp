@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <df1b2fun.h>
 
 re_objective_function_value * re_objective_function_value::pobjfun=0;
@@ -26,6 +30,10 @@ init_df1b2vector::init_df1b2vector(){;}
 void function_minimizer::trust_region_update(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f){;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvector laplace_approximation_calculator::operator () 
     (const dvector& _x,const double& _f, function_minimizer * pfmin)
 {
@@ -89,17 +97,28 @@ int df1b2_gradlist::no_derivatives=0;
 int df1b2variable::passnumber=0;
 int ad_dstar::n=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   int initial_params::nvarcalc_all()
   {
     int nvar=0;
     return nvar;
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void initial_params::xinit_all(const dvector& _x)
   {
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvariable initial_params::reset_all(const dvar_vector& x,const dvector& __pen)
   {
     dvariable pen=0.0;
@@ -117,7 +136,10 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
 {; }
 */
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 laplace_approximation_calculator::laplace_approximation_calculator
   (int _xsize,int _usize,int _minder,int _maxder,
   function_minimizer * _pmin) : 
@@ -139,6 +161,10 @@ laplace_approximation_calculator::laplace_approximation_calculator
 
 void adpool::deallocate(void){;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::quasi_newton_block(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f)
 {

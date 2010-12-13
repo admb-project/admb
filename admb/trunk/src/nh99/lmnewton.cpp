@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 
 #ifdef __cplusplus
@@ -17,6 +21,10 @@ extern "C" {
 	}
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::limited_memory_quasi_newton
   (BOR_CONST independent_variables& _x,int m)
 {
@@ -203,6 +211,10 @@ L50:
   objective_function_value::gmax=fabs(max(gbest));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::limited_memory_quasi_newton
   (double& f,BOR_CONST independent_variables& _x,int m,int noprintx,
   int maxfn,double crit)

@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double dfposfun(_CONST double&x,_CONST double eps)
 {
   if (x>=eps) 
@@ -22,6 +30,10 @@ double dfposfun(_CONST double&x,_CONST double eps)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double dfposfun1(_CONST double&x,_CONST double eps)
 {
   if (x>=eps) 
@@ -35,6 +47,10 @@ double dfposfun1(_CONST double&x,_CONST double eps)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double posfun(_CONST double&x,const double eps,BOR_CONST double& _pen)
 {
   double& pen=(double&)_pen;
@@ -49,6 +65,11 @@ double posfun(_CONST double&x,const double eps,BOR_CONST double& _pen)
     return eps/(2.0-x/eps);
   }
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 double posfun2(_CONST double&x,const double eps,BOR_CONST double& _pen)
 {
   double& pen=(double&)_pen;

@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #include <sys/stat.h>
@@ -67,6 +71,10 @@
 
 //void KLUDGEX(void * p);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void slave_gradcalc(void)
 {
   if (gradient_structure::no_derivatives)
@@ -203,5 +211,3 @@ void slave_gradcalc(void)
     }
   }
 }
-
-

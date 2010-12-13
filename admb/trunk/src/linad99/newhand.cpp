@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 #if !defined(__GNUG__) 
 #  include <new.h>
@@ -37,6 +41,10 @@ extern "C"  {
 }
 } // extern "C"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_set_new_handler (void)
 {
 #if defined(__MSVC32__)   // will need to deal with different VC versions

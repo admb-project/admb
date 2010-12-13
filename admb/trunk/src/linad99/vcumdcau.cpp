@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable cumd_cauchy(_CONST prevariable& x)
 {
   dvariable t;
@@ -14,6 +22,10 @@ dvariable cumd_cauchy(_CONST prevariable& x)
   return (0.5 + t/3.1415927);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable kludge_cumd_cauchy(_CONST prevariable& x)
 {
   const double r2=sqrt(2.0);
@@ -21,6 +33,10 @@ dvariable kludge_cumd_cauchy(_CONST prevariable& x)
   return (0.5 + t/3.1415927);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable inv_cumd_cauchy(_CONST prevariable& x)
 {
   const double r2=sqrt(2.0);

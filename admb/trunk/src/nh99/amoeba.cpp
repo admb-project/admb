@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2009, 2010 ADMB foundation
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 #include <math.h>
 #define NRANSI
@@ -103,6 +107,10 @@ void function_minimizer::adamoeba(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, 
 #undef NRANSI
 #define NRANSI
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double function_minimizer::amxxx(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, BOR_CONST dvector& _psum, int ndim,
   int ihi, double fac)
 {

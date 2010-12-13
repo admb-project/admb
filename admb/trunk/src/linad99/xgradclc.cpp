@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #include <sys/stat.h>
@@ -72,6 +76,10 @@ void funnel_derivatives(void);
   long _cdecl _farptr_tolong(void _far *);
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_gradcalc(void)
 {
 #  ifdef NO_DERIVS
@@ -299,6 +307,10 @@ do
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void funnel_derivatives(void)
 {
   verify_identifier_string("ae");
@@ -362,6 +374,10 @@ void funnel_derivatives(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable& funnel_dvariable::operator = (_CONST prevariable& t)
 {
   dvariable::operator = (t);
@@ -369,6 +385,10 @@ dvariable& funnel_dvariable::operator = (_CONST prevariable& t)
   return *this;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ad_begin_funnel(void)
 {
   gradient_structure::GRAD_STACK1->set_gradient_stack(NULL);

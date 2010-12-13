@@ -4,13 +4,20 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 
 #ifdef __GNUDOS__
   #include <gccmanip.h>
 #endif
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::mcmc_eval(void)
 {
   gradient_structure::set_NO_DERIVATIVES();

@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv( CGNU_DOUBLE x,const dvector& _v, const int& _ii)
 {
   dvector& v=(dvector&) _v;
@@ -13,6 +21,10 @@ void set_value_inv( CGNU_DOUBLE x,const dvector& _v, const int& _ii)
   v(ii++)=x;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv( CGNU_DOUBLE u,const dvector& _x,const int& _ii, CGNU_DOUBLE fmin,
   CGNU_DOUBLE fmax)
 {
@@ -21,6 +33,10 @@ void set_value_inv( CGNU_DOUBLE u,const dvector& _x,const int& _ii, CGNU_DOUBLE 
   x(ii++)=boundpin(u,fmin,fmax);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST prevariable& u,const dvector& _x,const int& _ii,CGNU_DOUBLE fmin,
   CGNU_DOUBLE fmax)
 {
@@ -29,6 +45,10 @@ void set_value_inv(_CONST prevariable& u,const dvector& _x,const int& _ii,CGNU_D
   x(ii++)=boundpin(u,fmin,fmax);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST dvector& x,const dvector& _v, const int& _ii)
 {
   int& ii=(int&) _ii;
@@ -41,6 +61,10 @@ void set_value_inv(_CONST dvector& x,const dvector& _v, const int& _ii)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(const dvector& x,const dvector& _v, const int& _ii,double s)
 {
   int& ii=(int&) _ii;
@@ -53,6 +77,10 @@ void set_value_inv(const dvector& x,const dvector& _v, const int& _ii,double s)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST dvector& x,const dvector& _v, const int& _ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
@@ -66,6 +94,10 @@ void set_value_inv(_CONST dvector& x,const dvector& _v, const int& _ii,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST dvar_vector& x,const dvector& _v, const int& _ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
@@ -79,6 +111,10 @@ void set_value_inv(_CONST dvar_vector& x,const dvector& _v, const int& _ii,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST dmatrix& x,const dvector& v, const int& ii)
 {
   int min=x.rowmin();
@@ -93,6 +129,10 @@ void set_value_inv(_CONST dmatrix& x,const dvector& v, const int& ii)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST dmatrix& x,const dvector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
@@ -108,6 +148,10 @@ void set_value_inv(_CONST dmatrix& x,const dvector& v, const int& ii,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST d3_array& x,const dvector& v, const int& ii)
 {
   int min=x.slicemin();
@@ -122,6 +166,10 @@ void set_value_inv(_CONST d3_array& x,const dvector& v, const int& ii)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST d3_array& x,const dvector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
@@ -137,6 +185,10 @@ void set_value_inv(_CONST d3_array& x,const dvector& v, const int& ii,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv_partial(_CONST dvector& x,const dvector& _v, const int& _ii, int n)
 {
   int& ii=(int&) _ii;
@@ -156,6 +208,10 @@ void set_value_inv_partial(_CONST dvector& x,const dvector& _v, const int& _ii, 
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv_partial(_CONST dvector& x,const dvector& _v, const int& _ii, int n,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
@@ -176,6 +232,10 @@ void set_value_inv_partial(_CONST dvector& x,const dvector& _v, const int& _ii, 
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv_partial(_CONST dvar_matrix& x,const dvector& _v, 
   const int& _ii, int n)
 {
@@ -187,6 +247,10 @@ void set_value_inv_partial(_CONST dvar_matrix& x,const dvector& _v,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv_partial(_CONST dvar_vector& x,const dvector& _v, 
   const int& _ii, int n)
 {
@@ -207,6 +271,10 @@ void set_value_inv_partial(_CONST dvar_vector& x,const dvector& _v,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv_partial(_CONST dvar_vector& x,const dvector& _v, const int& _ii, int n,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
@@ -227,6 +295,10 @@ void set_value_inv_partial(_CONST dvar_vector& x,const dvector& _v, const int& _
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST prevariable& x,const dvector& _v, const int& _ii)
 {
   int& ii=(int&) _ii;
@@ -234,6 +306,10 @@ void set_value_inv(_CONST prevariable& x,const dvector& _v, const int& _ii)
   v(ii++)=value(x);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST dvariable& u,const dvector& _x,const int& _ii,CGNU_DOUBLE fmin,
   CGNU_DOUBLE fmax)
 {
@@ -242,6 +318,10 @@ void set_value_inv(_CONST dvariable& u,const dvector& _x,const int& _ii,CGNU_DOU
   x(ii++)=boundpin(value(u),fmin,fmax);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST dvar_vector& x,const dvector& _v,const int& _ii)
 {
   int& ii=(int&) _ii;
@@ -257,6 +337,10 @@ void set_value_inv(_CONST dvar_vector& x,const dvector& _v,const int& _ii)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,
   double fmin,double fmax,double s)
 {
@@ -270,6 +354,10 @@ void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,
   double fmin,double fmax,double s,const ivector& flags)
 {
@@ -286,6 +374,10 @@ void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,double s)
 {
   int& ii=(int&) _ii;
@@ -301,6 +393,10 @@ void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,double 
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST dvar_matrix& x,const dvector& v, const int& ii)
 {
   if (!(!(x)))
@@ -315,6 +411,10 @@ void set_value_inv(_CONST dvar_matrix& x,const dvector& v, const int& ii)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(const dvar_matrix& x,const dvector& v, const int& ii,
   double s)
 {
@@ -330,6 +430,10 @@ void set_value_inv(const dvar_matrix& x,const dvector& v, const int& ii,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST dvar_matrix& x,const dvector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
@@ -345,6 +449,10 @@ void set_value_inv(_CONST dvar_matrix& x,const dvector& v, const int& ii,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(const dvar_matrix& x,const dvector& v, const int& ii,
   double fmin,double fmax,double s)
 {
@@ -360,6 +468,10 @@ void set_value_inv(const dvar_matrix& x,const dvector& v, const int& ii,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST dvar3_array& x,const dvector& v, const int& ii)
 {
   if (!(!(x)))
@@ -374,6 +486,10 @@ void set_value_inv(_CONST dvar3_array& x,const dvector& v, const int& ii)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void set_value_inv(_CONST dvar3_array& x,const dvector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {

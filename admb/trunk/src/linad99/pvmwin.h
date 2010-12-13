@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 /*
  *         PVM version 3.4:  Parallel Virtual Machine System
  *               University of Tennessee, Knoxville TN.
@@ -71,6 +75,7 @@
 *
 *  added __fortran stub    06/21/1997 	Fischer
 */
+
 
 #ifdef WIN32
 #define __fortran __stdcall

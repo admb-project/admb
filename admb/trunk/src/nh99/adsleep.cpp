@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 #include <stdlib.h>
 
@@ -14,6 +18,10 @@
 #  endif
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void ADSleep(int t)
 {
 #if !defined(linux) && !defined(__CYGWIN__) && !defined(__linux__)	

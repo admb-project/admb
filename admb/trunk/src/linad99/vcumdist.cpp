@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 dvariable inv_cumd_norm(_CONST prevariable& x);
@@ -26,7 +30,10 @@ double normal_tail_right(_CONST double& x)
 }
 */
   
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable inv_cumd_norm_inner(_CONST prevariable& x)
 {
  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
@@ -122,6 +129,10 @@ dvariable inv_cumd_norm_inner(_CONST prevariable& x)
   } 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable inv_cumd_norm(_CONST prevariable& x)
 {
   dvariable y=inv_cumd_norm_inner(x);
@@ -130,6 +141,10 @@ dvariable inv_cumd_norm(_CONST prevariable& x)
   return y;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable old_cumd_norm(_CONST prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -234,6 +249,11 @@ prevariable& cumd_norm(_CONST prevariable& _x)
   }
   return(*gradient_structure::RETURN_PTR);
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector inv_cumd_norm(_CONST dvar_vector& x)
 {
   int mmin=x.indexmin();
@@ -246,6 +266,10 @@ dvar_vector inv_cumd_norm(_CONST dvar_vector& x)
   return tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 prevariable& bounded_cumd_norm(_CONST prevariable& _x,double beta)
 {
  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
@@ -325,7 +349,10 @@ prevariable& bounded_cumd_norm(_CONST prevariable& _x,double beta)
   return(*gradient_structure::RETURN_PTR);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable inv_cumd_norm_logistic(_CONST prevariable& x,double p)
 {
 #if defined(SAFE_ALL)
@@ -342,6 +369,10 @@ dvariable inv_cumd_norm_logistic(_CONST prevariable& x,double p)
   return y;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 prevariable& cumd_norm_logistic(_CONST prevariable& _x,double p)
 {
   return (1.0-p)*cumd_norm(_x)+p*cumd_logistic(_x);

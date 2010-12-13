@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -91,6 +95,10 @@ void ad_update_mcmchist_report(dmatrix& mcmc_values,ivector& number_offsets,
 
 void ADSleep(int);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int restart_flag)
 {
@@ -711,6 +719,10 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double function_minimizer::get_hybrid_monte_carlo_value(int nvar, 
   const independent_variables& x,dvector& g)
 {
@@ -742,6 +754,3 @@ double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
 #endif
   return f;
 }
-
-
-

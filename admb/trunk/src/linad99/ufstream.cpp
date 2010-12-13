@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 void uistream::sss(void){}
@@ -42,6 +46,10 @@ uostream::uostream(const char* name, int  m, int prot)
 #  endif
 { }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void uistream::open(const char* name, int m, int prot)
 {
 #if defined(__TURBOC__) && (__BORLANDC__  <= 0x0520) 
@@ -58,6 +66,10 @@ void uistream::open(const char* name, int m, int prot)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void uostream::open(const char* name, int m, int prot)
 {
 #if defined (__TURBOC__) &&   (__BORLANDC__  <= 0x0520) 
@@ -96,6 +108,10 @@ void uostream::open(const char* name, int m, int prot)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 uistream::uistream(const char* name, int m, int prot)
 #  if (__BORLANDC__  > 0x0520  && __BORLANDC__  < 0x0560) 
   :ifstream(name, m | __BINFILE__ , prot) { }

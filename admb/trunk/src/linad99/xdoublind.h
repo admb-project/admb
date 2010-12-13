@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if !defined(_DOUBLE_IND_)
 #define _DOUBLE_IND_ 
   class double_index_guts;
@@ -47,6 +51,10 @@
   class double_matrix_index;
   class double_i3_index;
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class pre_double_index_type
   {
     const double_index_type * a;
@@ -56,7 +64,10 @@
     friend class double_index_type;
   };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class ad_double
   {
   protected:
@@ -70,7 +81,10 @@
     ad_double& operator = (const ad_double&);
   };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_index_guts
   {
     friend class ad_double;
@@ -89,7 +103,10 @@
     friend class double_index_type;
   };
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_index_type
   {
     double_index_guts * p;
@@ -114,6 +131,10 @@
     friend class ad_integer;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class double_index : public ad_double, public double_index_guts
   {
   private:
@@ -129,6 +150,10 @@
     friend class double_index_type;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class dvector_index : public dvector, public double_index_guts
   {
     virtual double_index_guts * operator [] (int i)
@@ -144,6 +169,10 @@
     friend class double_index_type;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class dmatrix_index : public dmatrix, public double_index_guts
   {
   private:
@@ -159,6 +188,10 @@
     friend class double_index_type;
   };
 
+/**
+ * Description not yet available.
+ * \param
+ */
   class d3_index : public d3_array, public double_index_guts
   {
     virtual double_index_guts * operator [] (int i)

@@ -21,8 +21,7 @@ void eigens (const dvar_matrix & m, const dvar_matrix & _evecs,
  * \return a variable vector containing the
  *         eigenvalues of \f$m\f$.
  */
-dvar_vector
-eigenvalues (_CONST dvar_matrix & m)
+dvar_vector eigenvalues (_CONST dvar_matrix & m)
 {
   if (m.rowsize () != m.colsize ())
     {
@@ -49,8 +48,7 @@ eigenvalues (_CONST dvar_matrix & m)
  * \return a variable matrix with the
  *         eigenvectors of \f$m\f$ stored in its columns.
  */
-dvar_matrix
-eigenvectors (_CONST dvar_matrix & m)
+dvar_matrix eigenvectors (_CONST dvar_matrix & m)
 {
   if (m.rowsize () != m.colsize ())
     {
@@ -87,8 +85,7 @@ eigenvectors (_CONST dvar_matrix & m)
  * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
  * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
  */
-void
-eigens (const dvar_matrix & m, const dvar_matrix & _evecs,
+void eigens (const dvar_matrix & m, const dvar_matrix & _evecs,
 	const dvar_vector & _evals)
 {
   ADUNCONST (dvar_matrix, evecs)

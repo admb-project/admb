@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 #ifdef __cplusplus
 extern "C" {
@@ -50,6 +54,10 @@ int inumber1=0;
 int number3=0;
 int number31=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg01::gggg01(logical _wwuq3, logical _te0, logical _te1,
   logical _te2, logical _te3, logical _cold) :
   te0(_te0),
@@ -61,10 +69,19 @@ gggg01::gggg01(logical _wwuq3, logical _te0, logical _te1,
 {
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg24::gggg24()
 {
   accinf = new doublereal[(inumber1+1)*32];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg25::gggg25()
 {
   x = new doublereal[nx];
@@ -77,6 +94,11 @@ gggg25::gggg25()
   dd = new doublereal[nx];
   difx = new doublereal[nx];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg26::gggg26() : gphi0(nx), gphi1(nx)
 {
   gradf = new doublereal[nx];
@@ -84,6 +106,11 @@ gggg26::gggg26() : gphi0(nx), gphi1(nx)
   gres = new doublereal[nx*number3];
   gresn = new doublereal[number3];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg27::gggg27()
 {
   qr = new doublereal[nx*number3];
@@ -95,6 +122,11 @@ gggg27::gggg27()
   perm = new integer[nx];
   perm1 = new integer[nx];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg00::gggg00()
 {
   val = new logical[number3+1];
@@ -104,11 +136,20 @@ gggg00::gggg00()
   lup = new integer[nx];
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg02::gggg02()
 {
   a = new doublereal[nx*nx];
   diag0 = new doublereal[nx];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg03::gggg03()
 {
   bind = new integer[number3];
@@ -118,12 +159,20 @@ gggg03::gggg03()
   sort = new integer[number3];
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg07::gggg07(double _jgh4,double _jgh5)
 {
   jgh4=_jgh4;
   jgh5=_jgh5;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg04::gggg04()
 {
   res = new doublereal[number3];
@@ -138,32 +187,66 @@ gggg04::gggg04()
   yu = new doublereal[nx+number3];
   slack = new doublereal[number3];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg05::gggg05(int _n,int _numberw,int _numberv) :
  n(_n), numberw(_numberw), numberv(_numberv) {}
  
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg09::gggg09()
 {
   cres = new integer[number3];
   cgres = new integer[number3];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg10::gggg10()
 {
   cfuerr = new logical[number3];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg12::gggg12()
 {
   name = new char[40];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg15::gggg15()
 {
   ug = new doublereal[nx];
   og = new doublereal[nx];
   delfac = new doublereal[number3];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg17::gggg17()
 {
   xst = new doublereal[nx];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg18::gggg18(int _nx, doublereal _wwuq5, doublereal _wdg5bnd) :
     xtr(0,_nx-1), wwuq5(_wwuq5), wdg5bnd(_wdg5bnd)
 {
@@ -174,14 +257,26 @@ gggg18::gggg18(int _nx, doublereal _wwuq5, doublereal _wdg5bnd) :
   fud = new doublereal[(number3+1)*6];
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg19::gggg19(logical _wwuq2,logical _wwuq4, integer _wwuq6) :
       wwuq2(_wwuq2), wwuq4(_wwuq4), wwuq6(_wwuq6){}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg21::gggg21()
 {
   aitr = new integer[2*number3];
 }
+
+/**
+ * Description not yet available.
+ * \param
+ */
 gggg23::gggg23()
 {
   xj = new doublereal[(nx+number3)*(nx+number3)];
@@ -260,6 +355,10 @@ gggg20 * gggg20_1 = 0;
 gggg21 * gggg21_1 = 0;
 gggg22 * gggg22_1 = 0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void make_all_classes(int _n,int _numberw,int _numberv)
 {
  nx=_n;
@@ -348,6 +447,10 @@ void make_all_classes(int _n,int _numberw,int _numberv)
 	}
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 doublestar::doublestar(integer n)
 {
   index_max=n;
@@ -363,6 +466,10 @@ doublestar::doublestar(integer n)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 doublestar::doublestar(integer m,integer n)
 {
   index_max=n;
@@ -378,6 +485,10 @@ doublestar::doublestar(integer m,integer n)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 doublestar::~doublestar()
 {
 #if defined(SAFE_ALL)
@@ -415,8 +526,16 @@ integer& intstar::operator[] (int i)
 }
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 doublestar::operator doublereal * () { return d;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 intstar::intstar(integer n)
 {
   index_max=n;
@@ -430,6 +549,10 @@ intstar::intstar(integer n)
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 intstar::~intstar()
 {
 #if defined(SAFE_ALL)
@@ -442,4 +565,3 @@ intstar::~intstar()
   delete [] d;
   d=0;
 }
-

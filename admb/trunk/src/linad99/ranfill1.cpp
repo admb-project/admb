@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -17,7 +21,10 @@
 
 #include <math.h>
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_vector::fill_seqadd( CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
     RETURN_ARRAYS_INCREMENT();
@@ -30,6 +37,10 @@
     RETURN_ARRAYS_DECREMENT();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_matrix::colfill_seqadd(BOR_CONST int& j, CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
     double temp=0;
@@ -42,7 +53,10 @@
     RETURN_ARRAYS_DECREMENT();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_matrix::rowfill_seqadd(BOR_CONST int& i, CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
     double temp=0;
@@ -55,6 +69,10 @@
     RETURN_ARRAYS_DECREMENT();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_matrix::colfill(int j,_CONST dvar_vector& v)
   {
     RETURN_ARRAYS_INCREMENT();
@@ -65,6 +83,10 @@
     RETURN_ARRAYS_DECREMENT();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_matrix::rowfill(int i,_CONST dvar_vector& v)
   {
     RETURN_ARRAYS_INCREMENT();
@@ -75,4 +97,3 @@
     (*this)[i]=v;
     RETURN_ARRAYS_DECREMENT();
   }
-

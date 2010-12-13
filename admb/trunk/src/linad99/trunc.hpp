@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(__BORLANDC__ )
   #if defined(__GNUC__)
     #if (__GNUC__ < 3)
@@ -82,6 +86,10 @@ public:
 };
 */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 class fmmt : public fmm_control
 {
 private:

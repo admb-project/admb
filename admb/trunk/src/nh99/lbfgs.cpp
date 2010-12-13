@@ -8,6 +8,10 @@
  * Translated from fortran and extensively modified for compliance with
  * ADMB.
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 /* lbfgs.f -- translated by f2c (version 19950110).
    You must link the resulting object file with the libraries:
         -lf2c -lm   (in that order)

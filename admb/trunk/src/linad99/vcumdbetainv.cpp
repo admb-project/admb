@@ -3,6 +3,10 @@
  *
  * Author: Unknown
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
@@ -13,6 +17,10 @@
 
 //#define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double lnbeta(double a,double b)
 {
   return gammln(a)+gammln(b)-gammln(a+b);
@@ -31,7 +39,10 @@ static int sgn(double z)
 df1_two_variable betai(const df1_two_variable& a,
   const df1_two_variable& b,double x,int maxit=100);
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable inv_cumd_beta_stable(const prevariable& _a,const prevariable& _b,
   const prevariable& _y,double eps)
 {
@@ -78,7 +89,10 @@ dvariable inv_cumd_beta_stable(const prevariable& _a,const prevariable& _b,
 df1_two_variable betacf(const df1_two_variable& a,const df1_two_variable& b, 
   double x);
   
-
+/**
+ * Description not yet available.
+ * \param
+ */
 df1_two_variable betai(const df1_two_variable& a,
   const df1_two_variable& b,double x,int maxit)
 {
@@ -153,6 +167,10 @@ const double tiny=1.0e-8;
 const double maxn=150;
 const double lowerbd=1.0e-40;
    
+/**
+ * Description not yet available.
+ * \param
+ */
 df1_two_variable betacf(const df1_two_variable& a, const df1_two_variable& b, 
   double x)
 {
@@ -224,7 +242,10 @@ df1_two_variable gammln(const df1_two_variable& xx)
 }
 */
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 static df1_two_variable gammlnguts(const df1_two_variable& _z)
 {
   df1_two_variable x;
@@ -253,6 +274,10 @@ static df1_two_variable gammlnguts(const df1_two_variable& _z)
   return(ans);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 df1_two_variable gammln(const df1_two_variable& z)
 {
   const double lpi =1.1447298858494001741434272;
@@ -266,4 +291,3 @@ df1_two_variable gammln(const df1_two_variable& z)
     return gammlnguts(z);
   }
 }
-

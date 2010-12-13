@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable cumd_logistic(_CONST prevariable& x)
 {
   if (value(x)>=0.0)	
@@ -19,6 +27,10 @@ dvariable cumd_logistic(_CONST prevariable& x)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable inv_cumd_logistic(_CONST prevariable& x)
 {
   return log(x/(1.0-x));

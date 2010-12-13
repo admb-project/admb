@@ -47,7 +47,10 @@
    Modified for AD Model Builder by Kasper Kristensen <kkr@aqua.dtu.dk> and 
    Anders Nielsen <an@aqua.dtu.dk> 2009     
 */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #define N 624
@@ -83,6 +86,10 @@ random_number_generator::random_number_generator(int seed)
   better_rand();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 random_number_generator::~random_number_generator()
 {
    delete [] mt;
@@ -198,7 +205,10 @@ double randu( BOR_CONST random_number_generator& rng)
   return(x);
 }
   
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvector::fill_randbi(double p, BOR_CONST random_number_generator& rng)
 {
   if ( p<0 || p>1)
@@ -220,7 +230,10 @@ void dvector::fill_randbi(double p, BOR_CONST random_number_generator& rng)
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvector::fill_randu( BOR_CONST random_number_generator& rng)
 {
   for (int i=indexmin(); i<=indexmax(); i++)
@@ -229,6 +242,10 @@ void dvector::fill_randu( BOR_CONST random_number_generator& rng)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::colfill_randu(BOR_CONST int&j, BOR_CONST random_number_generator& rng)
 {
   for (int i=rowmin(); i<=rowmax(); i++)
@@ -237,7 +254,10 @@ void dmatrix::colfill_randu(BOR_CONST int&j, BOR_CONST random_number_generator& 
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::rowfill_randu(BOR_CONST int& i, BOR_CONST random_number_generator& rng)
 {
   for (int j=colmin(); j<=colmax(); j++)
@@ -246,7 +266,10 @@ void dmatrix::rowfill_randu(BOR_CONST int& i, BOR_CONST random_number_generator&
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dvector::fill_randn( BOR_CONST random_number_generator& rng)
 {
   for (int i=indexmin(); i<=indexmax(); i++)
@@ -255,6 +278,10 @@ void dvector::fill_randn( BOR_CONST random_number_generator& rng)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::fill_randn( BOR_CONST random_number_generator& rng)
 {
   for (int i=rowmin(); i<=rowmax(); i++)
@@ -263,6 +290,10 @@ void dmatrix::fill_randn( BOR_CONST random_number_generator& rng)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void d3_array::fill_randn( BOR_CONST random_number_generator& rng)
 {
   for (int i=slicemin(); i<=slicemax(); i++)
@@ -271,6 +302,10 @@ void d3_array::fill_randn( BOR_CONST random_number_generator& rng)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void d3_array::fill_randu( BOR_CONST random_number_generator& rng)
 {
   for (int i=slicemin(); i<=slicemax(); i++)
@@ -279,6 +314,10 @@ void d3_array::fill_randu( BOR_CONST random_number_generator& rng)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::fill_randu( BOR_CONST random_number_generator& rng)
 {
   for (int i=rowmin(); i<=rowmax(); i++)
@@ -287,7 +326,10 @@ void dmatrix::fill_randu( BOR_CONST random_number_generator& rng)
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::colfill_randn(BOR_CONST int&j, BOR_CONST random_number_generator& rng)
 {
   for (int i=rowmin(); i<=rowmax(); i++)
@@ -296,7 +338,10 @@ void dmatrix::colfill_randn(BOR_CONST int&j, BOR_CONST random_number_generator& 
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void dmatrix::rowfill_randn(BOR_CONST int& i, BOR_CONST random_number_generator& rng)
 {
   for (int j=colmin(); j<=colmax(); j++)
@@ -304,4 +349,3 @@ void dmatrix::rowfill_randn(BOR_CONST int& i, BOR_CONST random_number_generator&
     elem(i,j)=randn(rng);
   }
 }
-

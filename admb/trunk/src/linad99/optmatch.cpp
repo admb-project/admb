@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
  int option_match(int argc,char * argv[],const char * string)
  {
    int rval=-1;
@@ -20,6 +28,10 @@
    return rval;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  int option_match(char * _s,const char * string)
  {
    adstring ss=_s;
@@ -41,7 +53,10 @@
    return rval;
  }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
  int option_match(char * _s, const char * string, BOR_CONST int& _nopt)
  {
    adstring ss=_s;
@@ -73,6 +88,10 @@
    return rval;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  int option_match(int argc,char * argv[],const char * string, BOR_CONST int& _nopt)
  {
    int& nopt = (int&) _nopt;
@@ -94,5 +113,3 @@
    }
    return rval;
  }
-
-

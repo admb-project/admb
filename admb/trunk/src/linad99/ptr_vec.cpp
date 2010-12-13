@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -21,11 +25,19 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
 long int _farptr_tolong(void * px);
 long int farptr_tolong(void *);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct void_ptr
 {
   void * t;
 };
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ptr_vector::~ptr_vector()
  {
    #ifdef DIAG
@@ -56,6 +68,10 @@ struct void_ptr
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ptr_vector::ptr_vector(BOR_CONST ptr_vector& t)
  {
    #ifdef DIAG
@@ -67,6 +83,10 @@ struct void_ptr
    v = t.v;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ptr_vector& ptr_vector::operator = (BOR_CONST ptr_vector& _t)
  {
    ADUNCONST(ptr_vector,t)
@@ -86,17 +106,29 @@ struct void_ptr
    return (*this);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ptr_vector::ptr_vector(int ncl,int nch)
  {
    allocate(ncl,nch);
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ptr_vector::ptr_vector()
  {
    shape=NULL;
    v=NULL;
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void ptr_vector::allocate(int ncl,int nch)
  {
    if ( (shape=new vector_shape(ncl,nch))==0 )
@@ -119,6 +151,10 @@ struct void_ptr
    #endif
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void ptr_vector::initialize(void)
  {
    for ( int i=indexmin(); i<=indexmax(); i++)
@@ -127,6 +163,10 @@ struct void_ptr
    }
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void*& ptr_vector::operator[] (int i)
  {
    #ifdef SAFE_ARRAYS
@@ -145,6 +185,10 @@ struct void_ptr
    return(*(v+i));
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  void*& ptr_vector::operator() (int i)
  {
    #ifdef SAFE_ARRAYS
@@ -163,6 +207,10 @@ struct void_ptr
    return(*(v+i));
  }
 
+/**
+ * Description not yet available.
+ * \param
+ */
  ostream& operator << (BOR_CONST ostream& _s,BOR_CONST ptr_vector& _v)
  {
    ADUNCONST(ptr_vector,v)
@@ -173,7 +221,4 @@ struct void_ptr
    }
    s << endl;
    return s;
- } 
-
-
-
+ }

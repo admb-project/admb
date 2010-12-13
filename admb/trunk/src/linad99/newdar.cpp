@@ -26,6 +26,10 @@ extern char otter_address4[];
 extern char otter_address5[];
 int ad_kill_flag=0;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 arr_link::arr_link()
 {
   prev=NULL;
@@ -38,6 +42,10 @@ arr_link::arr_link()
   offset=0;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void arr_free_remove(arr_link * tmp)
 {
   num_free_obj--;
@@ -58,6 +66,10 @@ void arr_free_remove(arr_link * tmp)
   }
 }
     
+/**
+ * Description not yet available.
+ * \param
+ */
 void arr_free_add(arr_link * tmp)
 {
   num_free_obj++;
@@ -68,6 +80,10 @@ void arr_free_add(arr_link * tmp)
   if (tmp->free_prev) tmp->free_prev->free_next = tmp;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double_and_int * arr_new(unsigned int sz)
 {
   if (!gradient_structure::instances)
@@ -232,7 +248,10 @@ double_and_int * arr_new(unsigned int sz)
 
 }
 
-     
+/**
+ * Description not yet available.
+ * \param
+ */
 void arr_free(double_and_int * varr)
 {
   // This routines frees up a memory block and
@@ -309,6 +328,10 @@ void arr_free(double_and_int * varr)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void check_derivative_values(const char * _s)
 {
   char * s = (char *) _s;
@@ -318,6 +341,10 @@ void check_derivative_values(const char * _s)
     set_gradient_stack(df_check_derivative_values);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void check_derivative_values(const char * _s,int i)
 {
   char * s = (char *) _s;
@@ -329,6 +356,11 @@ void check_derivative_values(const char * _s,int i)
 }
 
 void df_print_identifier_string(void);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void insert_identifier_string(const char * _s)
 {
   char * s = (char *) _s;
@@ -337,6 +369,10 @@ void insert_identifier_string(const char * _s)
     set_gradient_stack(df_print_identifier_string);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void check_derivative_values_break(const char * _s,int i,int b)
 {
   char * s = (char *) _s;
@@ -350,6 +386,10 @@ void check_derivative_values_break(const char * _s,int i,int b)
 
 void  rrkludge(double * temp_ptr){;}
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df_check_derivative_values(void)
 {
   //char label[20];
@@ -399,6 +439,10 @@ void df_check_derivative_values(void)
 
 //extern  ofstream gradlog;
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df_print_identifier_string(void)
 {
   adstring str=get_string_marker();
@@ -406,6 +450,10 @@ void df_print_identifier_string(void)
   //gradlog << "GS = " << str << endl;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df_check_derivative_values_indexed(void)
 {
   //char label[20];
@@ -451,6 +499,10 @@ void df_check_derivative_values_indexed(void)
   if (exit_flag) exit(1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void df_check_derivative_values_indexed_break(void)
 {
   //char label[20];
@@ -501,7 +553,10 @@ void df_check_derivative_values_indexed_break(void)
   if (exit_flag) exit(1);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void arr_remove(arr_link ** pptr)
 {
   arr_link * tmp = *pptr;
@@ -536,6 +591,3 @@ void arr_remove(arr_link ** pptr)
   gradient_structure::ARR_LIST1->number_arr_links -= 1;
   //cout <<  "after delete number_arr_links = "<<  gradient_structure::ARR_LIST1->number_arr_links <<"\n";
 }
-
-
-

@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable inv_cumd_t(const prevariable& n,const prevariable&  u,double eps)
 {
   double sgn;

@@ -2,6 +2,10 @@
  * $Id$
  * Author: Unknown
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
@@ -13,11 +17,19 @@
 df1_two_variable incbet(const df1_two_variable& a,
   const df1_two_variable& b,double x);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 static double lnbeta(double a,double b)
 {
   return gammln(a)+gammln(b)-gammln(a+b);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable inv_cumd_beta_stable(const prevariable& _a,const prevariable& _b,
   const prevariable& _y,double eps)
 {
@@ -60,4 +72,3 @@ dvariable inv_cumd_beta_stable(const prevariable& _a,const prevariable& _b,
 
   return tmp;
 }
-

@@ -59,6 +59,10 @@ dvariable splint(const dvector& _xa,const dvar_vector& _ya,
   return ret;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 vcubic_spline_function::vcubic_spline_function(const dvector & _x,
   const dvar_vector& _y,dvariable yp1,dvariable ypn) : x(_x) , y(_y)
 {
@@ -66,6 +70,10 @@ vcubic_spline_function::vcubic_spline_function(const dvector & _x,
   y2=spline(x,y,yp1,ypn);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 vcubic_spline_function::vcubic_spline_function(const dvector & _x,
   const dvar_vector& _y,double yp1,double ypn) : x(_x) , y(_y)
 {
@@ -73,12 +81,20 @@ vcubic_spline_function::vcubic_spline_function(const dvector & _x,
   y2=spline(x,y,yp1,ypn);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable vcubic_spline_function::operator () (double u)
 {
   // need to deal with u<x(1) or u>x(2)
   return splint(x,y,y2,u);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector vcubic_spline_function::operator () (const dvector& u)
 {
   int mmin=u.indexmin();
@@ -91,6 +107,10 @@ dvar_vector vcubic_spline_function::operator () (const dvector& u)
   return z;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvar_vector vcubic_spline_function::operator () (const dvar_vector& u)
 {
   int mmin=u.indexmin();
@@ -313,11 +333,17 @@ dvariable spline_cubic_val(int n, _CONST dvector& t, double tval,
 //    Output, double SPLINE_VAL, the value of the spline at TVAL.
 //
 {
-  dvariable dt;
-  dvariable h;
-  int i;
-  int ival;
-  dvariable yval;
+  dvariable dt = 0.0;
+  dvariable h = 0.0;
+  int i = 0;
+  int ival = 0;
+  dvariable yval = 0.0;
+  int lbt = t.indexmin();
+  t.shift(0);
+  int lby = y.indexmin();
+  y.shift(0);
+  int lbypp = ypp.indexmin();
+  ypp.shift(0);
 
   //  Determine the interval [ T(I), T(I+1) ] that contains TVAL.
   //  Values below T[0] or above T[N-1] use extrapolation.
@@ -349,6 +375,9 @@ dvariable spline_cubic_val(int n, _CONST dvector& t, double tval,
     + dt * ( 0.5 * ( ypp[ival+1] - ypp[ival] ) / h ) );
 
   *yppval = ypp[ival] + dt * ( ypp[ival+1] - ypp[ival] ) / h;*/
+  t.shift(lbt);
+  y.shift(lby);
+  ypp.shift(lbypp);
 
   return yval;
 }
@@ -425,11 +454,17 @@ dvariable spline_cubic_val2(int n, _CONST dvector& t, const prevariable tval,
 //    Output, double SPLINE_VAL, the value of the spline at TVAL.
 //
 {
-  dvariable dt;
-  dvariable h;
-  int i;
-  int ival;
-  dvariable yval;
+  dvariable dt = 0.0;
+  dvariable h = 0.0;
+  int i = 0;
+  int ival = 0;
+  dvariable yval = 0.0;
+  int lbt = t.indexmin();
+  t.shift(0);
+  int lby = y.indexmin();
+  y.shift(0);
+  int lbypp = ypp.indexmin();
+  ypp.shift(0);
 
   //  Determine the interval [ T(I), T(I+1) ] that contains TVAL.
   //  Values below T[0] or above T[N-1] use extrapolation.
@@ -461,6 +496,9 @@ dvariable spline_cubic_val2(int n, _CONST dvector& t, const prevariable tval,
     + dt * ( 0.5 * ( ypp[ival+1] - ypp[ival] ) / h ) );
 
   *yppval = ypp[ival] + dt * ( ypp[ival+1] - ypp[ival] ) / h;*/
+  t.shift(lbt);
+  y.shift(lby);
+  ypp.shift(lbypp);
 
   return yval;
 }

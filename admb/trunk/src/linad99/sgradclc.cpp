@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
 #include <sys/stat.h>
@@ -71,6 +75,11 @@
 #endif
 
 //void KLUDGEX(void * p);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradcalc(int nvar,BOR_CONST dvector& _g)
 {
   if (nvar!=0)
@@ -237,7 +246,10 @@ do
   }
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::save_arrays()
 {
   void * temp_ptr;
@@ -310,6 +322,10 @@ void gradient_structure::save_arrays()
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::restore_arrays()
 {
   long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
@@ -367,6 +383,10 @@ void gradient_structure::restore_arrays()
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::save_variables()
 {
   if ((variables_save = new double[gradient_structure::MAX_DLINKS])==NULL)
@@ -386,6 +406,10 @@ void gradient_structure::save_variables()
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void gradient_structure::restore_variables()
 {
   for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
@@ -400,7 +424,10 @@ void gradient_structure::restore_variables()
 
 void KLUDGEX(void * p){;}
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void reset_gradient_stack(void)
 {
   gradient_structure::GRAD_STACK1->ptr = 
@@ -413,6 +440,11 @@ void reset_gradient_stack(void)
 
 static int inner_count=0;
 //static grad_stack_entry * pgse = (grad_stack_entry*) (0x1498fffc);
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void grad_stack::set_gradient_stack1(void (* func)(void),
   double * dep_addr,double * ind_addr1)
 {
@@ -448,6 +480,10 @@ void grad_stack::set_gradient_stack1(void (* func)(void),
 #endif
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void test_the_pointer(void)
 {
  /*

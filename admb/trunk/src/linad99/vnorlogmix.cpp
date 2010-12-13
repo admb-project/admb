@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable robust_normal_logistic_mixture_deviate(const prevariable& x,
   double spread)
 {
@@ -16,6 +24,10 @@ dvariable robust_normal_logistic_mixture_deviate(const prevariable& x,
   return z;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable robust_normal_mixture_deviate(const prevariable& x,
   double spread)
 {

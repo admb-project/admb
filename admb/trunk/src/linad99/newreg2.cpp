@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,_CONST dvariable& a)
 {
   if (obs.indexmin() != pred.indexmin() || obs.indexmax() != pred.indexmax() )
@@ -35,7 +43,10 @@ dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,_CONST 
   return(log_likelihood);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred, 
   CGNU_DOUBLE a)
 {
@@ -65,5 +76,3 @@ dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,
 			     // caused by RETURN_ARRAYS_INCREMENT();
   return(log_likelihood);
 }
-
-

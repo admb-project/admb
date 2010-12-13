@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 #ifdef __ZTC__
 #include <iostream.hpp>
@@ -32,11 +36,19 @@ int aabbbcd(void)
   return( (void *) i);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 long int _farptr_tolong(void * ptr)
 {
   return( (long int) ptr);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void * _farptr_norm(void * ptr)
 {
   return(ptr);

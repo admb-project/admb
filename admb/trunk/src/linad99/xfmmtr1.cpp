@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 // this is to get UNIX systems to use getchar
 // #define UNIXKLUDGE
 
@@ -83,6 +87,10 @@ extern int ctlc_flag;
 #include <stdio.h>
 #include <ctype.h>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void do_evaluation(double& f,independent_variables& x,dvector& g,int nvar,
   function_minimizer * pmp)
 {
@@ -94,6 +102,10 @@ void do_evaluation(double& f,independent_variables& x,dvector& g,int nvar,
   f=value(vf);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double get_second_derivative(double f,independent_variables& x,
   dvector& g,dvector & r,int nvar,function_minimizer * pmp)
 {
@@ -116,6 +128,10 @@ double get_second_derivative(double f,independent_variables& x,
     dmatrix& y,BOR_CONST dvector& x,BOR_CONST dvector& xold,BOR_CONST dvector& gold,BOR_CONST dvector& xrho);
 double dafsqrt( double x );
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void fmmt1::fmin2(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST dvector& _g, function_minimizer * pmp)
 {
   //int itn=0; int bigbreak=0; int smallbreak=0; int midbreak=0;
@@ -183,6 +199,10 @@ void fmmt1::fmin2(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR
       exit(1);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   dvector update1(int nvar,int iter,int m,BOR_CONST dvector& g,BOR_CONST dmatrix& _s,
     dmatrix& y,BOR_CONST dvector& x,BOR_CONST dvector& _xold,BOR_CONST dvector& _gold,BOR_CONST dvector& _xrho)
   {
@@ -241,5 +261,3 @@ void fmmt1::fmin2(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR
     r/=norm(r);
     return -1.0*r;
   }
-
-

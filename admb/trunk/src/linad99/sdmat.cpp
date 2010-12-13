@@ -4,13 +4,25 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 sdmatrix::sdmatrix(int irh)
 {
   allocate(irh);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 sdmatrix::sdmatrix()
 {
    //unsigned nrl = 0;
@@ -19,6 +31,10 @@ sdmatrix::sdmatrix()
    m=NULL;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void sdmatrix::allocate(int irh)
 {
    unsigned nrl = 1;
@@ -55,6 +71,10 @@ void sdmatrix::allocate(int irh)
 
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 sdmatrix::~sdmatrix()
 {
   #ifdef DIAG
@@ -63,8 +83,11 @@ sdmatrix::~sdmatrix()
   deallocate();
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void sdmatrix::deallocate()
 {
   dmatrix::deallocate();
 }
-

@@ -41,7 +41,6 @@
  *
  */
 
-
 //class ran_number_generator
 //{
 //  long int idum;

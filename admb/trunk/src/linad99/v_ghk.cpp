@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include "fvar.hpp"
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
   const dvar_matrix& Sigma, const dmatrix& eps)
 {
@@ -43,6 +51,10 @@ dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
   return ssum/m;  
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable ghk_m(const dvar_vector& upper,const dvar_matrix& Sigma, const dmatrix& eps)
 {
   RETURN_ARRAYS_INCREMENT();	
@@ -74,6 +86,10 @@ dvariable ghk_m(const dvar_vector& upper,const dvar_matrix& Sigma, const dmatrix
   return ssum/m;  
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable ghk_choleski(const dvar_vector& lower,const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
@@ -110,6 +126,10 @@ dvariable ghk_choleski(const dvar_vector& lower,const dvar_vector& upper,
   return ssum/m;  
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable ghk_choleski_m(const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
@@ -143,6 +163,10 @@ dvariable ghk_choleski_m(const dvar_vector& upper,
 
 void ghk_test(const dmatrix& eps,int i);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
   const dvar_matrix& Sigma, const dmatrix& eps,int i)
 {
@@ -178,6 +202,11 @@ dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
   RETURN_ARRAYS_DECREMENT();	
   return weight;  
 } 
+
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable ghk_choleski_m_cauchy(const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
@@ -209,6 +238,10 @@ dvariable ghk_choleski_m_cauchy(const dvar_vector& upper,
   return ssum/m;  
 } 
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable ghk_choleski_m_logistic(const dvar_vector& upper,
   const dvar_matrix& ch, const dmatrix& eps)
 {
@@ -238,5 +271,4 @@ dvariable ghk_choleski_m_logistic(const dvar_vector& upper,
   }
   RETURN_ARRAYS_DECREMENT();	
   return ssum/m;  
-} 
-
+}

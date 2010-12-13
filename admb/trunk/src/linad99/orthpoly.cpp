@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix orthpoly(int n,int deg)
 {
   int j; int is; int ik;
@@ -32,6 +40,10 @@ dmatrix orthpoly(int n,int deg)
   return trans(ocoff);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix orthpoly(int n,int deg,int skip)
 {
   int j; int is; int ik;
@@ -58,6 +70,10 @@ dmatrix orthpoly(int n,int deg,int skip)
   return trans(ocoff.sub(skip,deg));
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix orthpoly_constant_begin(int n,int deg,int nconst)
 {
   int j; int is; int ik;
@@ -121,6 +137,10 @@ dmatrix orthpoly_constant_begin(int n,int deg,int nconst)
   return trans(ocoff);
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
   int end_degree,int nconst_end)
 {
@@ -195,7 +215,10 @@ dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
   return trans(ocoff);
 }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix seldif_basis(int n)
 {
 

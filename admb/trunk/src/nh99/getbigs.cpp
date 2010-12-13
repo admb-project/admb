@@ -4,12 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #endif
 #include <admodel.h>
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
   dmatrix& S,dmatrix& BS,dvector& scale)
 { 

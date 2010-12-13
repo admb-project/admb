@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -21,6 +25,10 @@ double auto_rand(long int& idum, int reset);
 void reinitialize_auto_rand();
 double randn(long int& n);
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_vector::fill_randu(long int& n)
   {
     long int nn;
@@ -34,7 +42,10 @@ double randn(long int& n);
     RETURN_ARRAYS_DECREMENT();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_vector::fill_randbi(long int& n, double p)
   {
     if ( p<0 || p>1)
@@ -61,6 +72,10 @@ double randn(long int& n);
     RETURN_ARRAYS_DECREMENT();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_matrix::colfill_randu(BOR_CONST int&j,long int&n)
   {
     long int nn;
@@ -74,7 +89,10 @@ double randn(long int& n);
     RETURN_ARRAYS_DECREMENT();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_matrix::rowfill_randu(BOR_CONST int& i,long int& n)
   {
     long int nn;
@@ -88,6 +106,10 @@ double randn(long int& n);
     reinitialize_auto_rand();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_vector::fill_randn(long int& n)
   {
     long int nn;
@@ -100,6 +122,11 @@ double randn(long int& n);
     reinitialize_auto_rand();
     RETURN_ARRAYS_DECREMENT();
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_matrix::colfill_randn(BOR_CONST int&j,long int&n)
   {
     long int nn;
@@ -113,7 +140,10 @@ double randn(long int& n);
     RETURN_ARRAYS_DECREMENT();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_matrix::rowfill_randn(BOR_CONST int& i,long int& n)
   {
     long int nn;
@@ -127,7 +157,10 @@ double randn(long int& n);
     RETURN_ARRAYS_DECREMENT();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_matrix::fill_randn(long int& n)
   {
     long int nn=n;
@@ -141,7 +174,10 @@ double randn(long int& n);
     RETURN_ARRAYS_DECREMENT();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar_matrix::fill_randu(long int& n)
   {
     long int nn=n;
@@ -154,6 +190,11 @@ double randn(long int& n);
     reinitialize_auto_rand();
     RETURN_ARRAYS_DECREMENT();
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar3_array::fill_randn(long int& n)
   {
     long int nn;
@@ -166,6 +207,10 @@ double randn(long int& n);
     reinitialize_auto_rand();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvar3_array::fill_randu(long int& n)
   {
     long int nn;
@@ -177,4 +222,3 @@ double randn(long int& n);
     }
     reinitialize_auto_rand();
   }
-

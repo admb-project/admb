@@ -38,6 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 /*
  * @(#)jni.h	1.44 98/09/15
  *
@@ -231,6 +235,10 @@ typedef JavaVM_ JavaVM;
 typedef const struct JNIInvokeInterface_ *JavaVM;
 #endif
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct JNINativeInterface_ {
     void *reserved0;
     void *reserved1;
@@ -787,6 +795,10 @@ struct JNINativeInterface_ {
  * in C.
  */
 
+/**
+ * Description not yet available.
+ * \param
+ */
 struct JNIEnv_ {
     const struct JNINativeInterface_ *functions;
 #ifdef __cplusplus

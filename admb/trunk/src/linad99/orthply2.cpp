@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 d4_array orthpoly2(int d1,int d2, int n,int m)
 {
   d4_array A(0,d1,0,d2,1,n,1,m);
@@ -75,6 +83,10 @@ d4_array orthpoly2(int d1,int d2, int n,int m)
   return B;
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double dot(const dmatrix& M,const dmatrix& N)
 {
   int mmin=M.indexmin();

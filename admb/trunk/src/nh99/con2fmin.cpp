@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 /* donlp2.f -- translated by f2c (version 19950110).
    You must link the resultinumberv object file with the libraries:
 	-lf2c -lm   (in that order)
@@ -55,12 +59,21 @@ void function_minimizer::constraints_minimize(void)
 //#define INCLUDE_CONSTRAINTS
 
 #if !defined(INCLUDE_CONSTRAINTS)
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::constraints_minimize(void)
 {
 }
 
 #else
 extern function_minimizer * pfm;
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::constraints_minimize(void)
 {
   //initial_params::read(); // read in the values for the initial parameters
@@ -217,6 +230,10 @@ void function_minimizer::constraints_minimize(void)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void function_minimizer::constraint_report()
 {
   adstring tmp;

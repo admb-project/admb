@@ -7,7 +7,10 @@
  * Adopted from GNU glibc by Mjt.
  * See stdlib/qsort.c in glibc
  */
-
+/**
+ * \file
+ * Header for qsort.
+ */
 /* Copyright (C) 1991, 1992, 1996, 1997, 1999 Free Software Foundation, Inc.
    This file is part of the GNU C Library.
    Written by Douglas C. Schmidt (schmidt@ics.uci.edu).

@@ -9,7 +9,10 @@
  * David Fournier. 
  *
  */
-
+/**
+ * \file
+ * Description not yet available.
+ */
 
 #include <fvar.hpp>
 #if defined(__SPDLL__)
@@ -89,6 +92,11 @@ double dafsqrt( double x );
   void tracing_message(int traceflag,const char *s,int *pn);
   void tracing_message(int traceflag,const char *s,double *pd);
   void tracing_message(int traceflag,const char *s,double d);
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void tracing_message(int traceflag,const char *s)
   {
     if (traceflag)
@@ -99,6 +107,11 @@ double dafsqrt( double x );
       ofs.close();
     }
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void tracing_message(int traceflag,const char *s,int *pn)
   {
     if (traceflag)
@@ -109,6 +122,11 @@ double dafsqrt( double x );
       ofs.close();
     }
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void tracing_message(int traceflag,const char *s,double *pd)
   {
     if (traceflag)
@@ -119,6 +137,11 @@ double dafsqrt( double x );
       ofs.close();
     }
   }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   void tracing_message(int traceflag,const char *s,double d)
   {
     if (traceflag)
@@ -131,6 +154,11 @@ double dafsqrt( double x );
   }
 int log_values_switch=0;
 ofstream logstream("fmin.log");
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void print_values(const double& f, const dvector & x,const dvector& g)
 {
   logstream << setprecision(13) << f << endl;
@@ -140,6 +168,11 @@ void print_values(const double& f, const dvector & x,const dvector& g)
 extern adtimer * pfmintime=0;
 extern int traceflag;
 #pragma warn -sig
+
+/**
+ * Description not yet available.
+ * \param
+ */
 void fmm::fmin(BOR_CONST double& _f, const dvector & _x,BOR_CONST dvector& _g)
 {
   if (log_values_switch)
@@ -806,6 +839,11 @@ label7020:
          #endif
          return;
    }
+
+/**
+ * Description not yet available.
+ * \param
+ */
    double dafsqrt( double x )
    {
    if (x>0)

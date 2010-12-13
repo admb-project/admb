@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2009, 2010 ADMB Foundation
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
 
@@ -34,6 +38,10 @@ double auto_rand(long int& idum, int reset);
 void reinitialize_auto_rand();
 double randn(long int& n);
 
+/**
+ * Description not yet available.
+ * \param
+ */
 void reinitialize_auto_rand()
 {
   long int One=1;
@@ -116,6 +124,10 @@ double auto_rand(long int& idum, int reset)
 #undef IA3
 #undef IC3
 
+/**
+ * Description not yet available.
+ * \param
+ */
 double randn(long int& n)
 {
   long int nn;
@@ -127,7 +139,10 @@ double randn(long int& n)
   return(u);
 }
   
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvector::fill_randbi(long int& n, double p)
   {
     if ( p<0 || p>1)
@@ -152,7 +167,10 @@ double randn(long int& n)
     reinitialize_auto_rand();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvector::fill_randu(long int& n)
   {
     long int nn;
@@ -164,6 +182,10 @@ double randn(long int& n)
     reinitialize_auto_rand();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::colfill_randu(BOR_CONST int&j,long int&n)
   {
     long int nn;
@@ -175,7 +197,10 @@ double randn(long int& n)
     reinitialize_auto_rand();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::rowfill_randu(BOR_CONST int& i,long int& n)
   {
     long int nn;
@@ -187,7 +212,10 @@ double randn(long int& n)
     reinitialize_auto_rand();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dvector::fill_randn(long int& n)
   {
     long int nn;
@@ -199,6 +227,10 @@ double randn(long int& n)
     reinitialize_auto_rand();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::fill_randn(long int& n)
   {
     long int nn=n;
@@ -210,6 +242,10 @@ double randn(long int& n)
     reinitialize_auto_rand();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void d3_array::fill_randn(long int& n)
   {
     long int nn;
@@ -222,6 +258,10 @@ double randn(long int& n)
     reinitialize_auto_rand();
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
   void d3_array::fill_randu(long int& n)
   {
     long int nn;
@@ -234,7 +274,10 @@ double randn(long int& n)
     reinitialize_auto_rand();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::fill_randu(long int& n)
   {
     long int nn;
@@ -247,7 +290,10 @@ double randn(long int& n)
     reinitialize_auto_rand();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::colfill_randn(BOR_CONST int&j,long int&n)
   {
     long int nn;
@@ -259,7 +305,10 @@ double randn(long int& n)
     reinitialize_auto_rand();
   }
 
-
+/**
+ * Description not yet available.
+ * \param
+ */
   void dmatrix::rowfill_randn(BOR_CONST int& i,long int& n)
   {
     long int nn;
@@ -270,4 +319,3 @@ double randn(long int& n)
     }
     reinitialize_auto_rand();
   }
-

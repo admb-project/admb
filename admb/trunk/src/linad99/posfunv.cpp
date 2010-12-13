@@ -4,8 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <fvar.hpp>
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable posfun(_CONST dvariable&x,const double eps,const prevariable& _pen)
 {
   dvariable& pen= (dvariable&) _pen;
@@ -21,6 +29,10 @@ dvariable posfun(_CONST dvariable&x,const double eps,const prevariable& _pen)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable posfun(_CONST dvariable&x,const double eps,const dvariable& _pen)
 {
   dvariable& pen= (dvariable&) _pen;
@@ -36,6 +48,10 @@ dvariable posfun(_CONST dvariable&x,const double eps,const dvariable& _pen)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable posfun2(_CONST dvariable&x,const double eps,const prevariable& _pen)
 {
   dvariable& pen= (dvariable&) _pen;
@@ -54,6 +70,10 @@ dvariable posfun2(_CONST dvariable&x,const double eps,const prevariable& _pen)
   }
 }
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dvariable dfposfun(const prevariable&x,const double eps)
 {
   if (x>=eps) 
@@ -67,4 +87,3 @@ dvariable dfposfun(const prevariable&x,const double eps)
     return dfx;
   }
 }
-

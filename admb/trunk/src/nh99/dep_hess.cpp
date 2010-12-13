@@ -4,6 +4,10 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
+/**
+ * \file
+ * Description not yet available.
+ */
 #include <admodel.h>
 
 #ifdef __GNUDOS__
@@ -13,6 +17,10 @@
 void useless(BOR_CONST double& sdelta2);
 // estimate the matrix of second derivatives
 
+/**
+ * Description not yet available.
+ * \param
+ */
 dmatrix function_minimizer::dep_hess_routine(BOR_CONST dvariable& dep)
 {
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
@@ -132,5 +140,3 @@ dmatrix function_minimizer::dep_hess_routine(BOR_CONST dvariable& dep)
  */
   return hess;
 }
-
-

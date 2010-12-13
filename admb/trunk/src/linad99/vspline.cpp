@@ -273,8 +273,8 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
  * \param ypp the second derivatives of the spline at the knots
  * \return the value of the spline at tval
 */
-dvariable spline_cubic_val(int n, _CONST dvector& t, double tval,
-    _CONST dvar_vector& y, _CONST dvar_vector& ypp)
+dvariable spline_cubic_val(int n, _CONST dvector& _t, double tval,
+    _CONST dvar_vector& _y, _CONST dvar_vector& _ypp)
 //
 //  Purpose:
 //
@@ -338,10 +338,13 @@ dvariable spline_cubic_val(int n, _CONST dvector& t, double tval,
   int i = 0;
   int ival = 0;
   dvariable yval = 0.0;
+  dvector& t = (dvector&)_t;
   int lbt = t.indexmin();
   t.shift(0);
+  dvar_vector& y = (dvar_vector&)_y;
   int lby = y.indexmin();
   y.shift(0);
+  dvar_vector& ypp = (dvar_vector&)_ypp;
   int lbypp = ypp.indexmin();
   ypp.shift(0);
 
@@ -394,8 +397,8 @@ dvariable spline_cubic_val(int n, _CONST dvector& t, double tval,
  * \param ypp the second derivatives of the spline at the knots
  * \return the value of the spline at tval
 */
-dvariable spline_cubic_val2(int n, _CONST dvector& t, const prevariable tval,
-  _CONST dvar_vector& y, _CONST dvar_vector& ypp)
+dvariable spline_cubic_val2(int n, _CONST dvector& _t, const prevariable tval,
+  _CONST dvar_vector& _y, _CONST dvar_vector& _ypp)
 //
 //  Purpose:
 //
@@ -459,10 +462,13 @@ dvariable spline_cubic_val2(int n, _CONST dvector& t, const prevariable tval,
   int i = 0;
   int ival = 0;
   dvariable yval = 0.0;
+  dvector& t = (dvector&)_t;
   int lbt = t.indexmin();
   t.shift(0);
+  dvar_vector& y = (dvar_vector&)_y;
   int lby = y.indexmin();
   y.shift(0);
+  dvar_vector& ypp = (dvar_vector&)_ypp;
   int lbypp = ypp.indexmin();
   ypp.shift(0);
 

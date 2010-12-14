@@ -187,7 +187,7 @@ employing them in a way that the user does
 not need to be aware of them), so that investigating
 nonlinear statical models becomes---so far as possible---as simple as for linear statistical models.
 
-\section{How to Obtain \ADM}
+\section{Installing the software}
 
 \ADM\ is available without charge from
 http://admb-project.org/downloads/.
@@ -197,90 +197,8 @@ architectures, operating systems, and compilers (including Windows,
 Linux, MacOS and OpenSolaris) and the complete source code are
 available.
 
-
-\section{Installing the software}
-
-This section contains a discussion of the installation issues
-that are common to all compilers and platforms. More specific
-instructions may be found with the binaries, which are supplied for 
-a particular compiler.
-The first thing to understand is that \ADMS is not a \textsc{gui}
-environment and there is no pointing or clicking. You will be
-using a text editor and command line tools. (It is, however,
-possible to use \ADMS from within an \textsc{ide}, such as that which comes with
-Visual \cplus.)
-\X{installation}
-\begin{enumerate}
-
-\item First you must decide what \cplus\ compiler you wish to use.
-There are several free ones for \textsc{win}32 on the \ADMS CD. Check to see
-that your compiler is supported---that is, that there are \ADMS
-binaries for it on the~CD.
-
-\item Decide in what directory you wish to put the \ADMS
-binaries. \texttt{C:\mybackslash ADMODEL} is the easiest to use,
-because then you will not need to edit the command line
-files as much.  Make the directory. On MS machines, this is
-done my changing to the \texttt{C:} directory by typing in the command window
-and then typing \texttt{mkdir C:\mybackslash ADMODEL}.
-
-\item Copy the file containing the \ADMS binaries from the
-CD to the directory you have chosen. For example, if you want the
-binaries for Visual \cplus\ Version 6.0, they are in the file
-\texttt{MSC6DISK.EXE}, in the directory \texttt{\mybackslash files\mybackslash vcpp.60}.
-Change to the directory where you copied the file and type
-\begin{lstlisting}
-  MSC6DISK.EXE -d
-\end{lstlisting}
-The \texttt{-d} is needed to create the
-necessary subdirectories. Of course, this is for MS users. If you
-are on Linux, etc., the binaries are in a gzipped or bzipped tar file; 
-you should uncompress them and use tar to extract them from the tar file. 
-
-\item You will now need to tell the operating system to look in the
-file \texttt{C:\mybackslash ADMODEL\mybackslash bin} for the
-\ADMS files. On Windows 95--98, this is done by editing the
-path statement in the \texttt{autoexec.bat} file. On NT, you edit
-the path environment string in the environment tab of the
-system window in the control panel. Once you have done this
-(and perhaps rebooted 25 times), you should be able to 
-type \texttt{tpl2cpp} and get an error message indicating that \texttt{tpl2cpp} can't find
-a file. If the system complains that it can't find \texttt{tpl2cpp}
-or doesn't recognize \texttt{tpl2cpp}, you have not done this right.
-
-\item  You will also need to tell the operating system
-where to find the command line compiler. If you are using
-Visual \cplus, the file is named \texttt{cl.exe}, so put the
-directory that contains this on your path, as above.
-Then you should be able to type something like \texttt{cl}
-or \texttt{bcc32} for the Borland compiler, or \texttt{gcc}
-for the Gnu compiler, and get some response. If not,
-the path is incorrect.  
-
-\item Now you need to tell the compiler where to find
-the \ADMS header files. These are the files in the
-directory \texttt{C:\mybackslash ADMODEL\mybackslash INCLUDE}.
-There are several ways to do this. With Visual \cplus,
-the easiest way is to use the \texttt{-I} command line option
-for the \texttt{.bat} file in
-\texttt{C:\mybackslash ADMODEL\mybackslash BIN},
-which invokes the compiler. For Visual \cplus, it is the file \texttt{myvcc.bat},
-which contains something like:
-\begin{smallcode}
-  cl /c -I. -D__MSVC32__ -DOPT_LIB /O2 -Ic:\admodel\include -Ic:\vc6\INCLUDE %1.cpp
-\end{smallcode}
-\item Now you will need to tell the linker where to find the \ADMS libraries.
-This can be done by using the \texttt{/link /libpath:} option in the \texttt{.bat} file, which does
-the linking. For Visual \cplus\ 6.0, this is in the file \texttt{LINKVCC.BAT},
-which contains
-\begin{smallcode}
-cl %1.obj admod32.lib adt32.lib ado32.lib libc.lib /link /libpath:c:\mybackslash admodel\mybackslash lib 
-\end{smallcode}
-For Borland and most compilers, this can be done with the \texttt{-L}
-option. There may be additional instructions on installation in the
-readme files that come with the \ADMS files for the various compilers.
-\end{enumerate}
-
+Installation instructions for different compilers are also available on-line at\\
+http://admb-project.org/documentation/installation
 
 \section{The sections in an \ADMS\ \textsc{tpl} file}
 \X{template sections}

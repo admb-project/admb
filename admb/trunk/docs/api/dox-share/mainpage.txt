@@ -1,12 +1,20 @@
-/** \mainpage API Documentation
- 
+/**
+ \mainpage Applications Programming Interface
 <br><center>
 \image html admb-logo-notext-72.png
 </center><br>
-
-This is preliminary version of the API documentation. No class is 
+Documentation of mathematical functions can be found on the "Modules" tab.
+<br>
+<br>
+Partial documentation of some of the AUTODIF Library and ADMB classes can
+found on the "Classes" tab. No class is 
 fully documented. See class \ref dvector for an example of 
 how it might look and how to insert documentation.
+<br>
+<br>
+This preliminary version of the API documentation is a work in progress.
+If you would like ton contribute you expertize to the enterprize please contact
+developers@admb-project.org.
 */
 
 /*

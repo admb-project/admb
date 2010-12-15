@@ -14,11 +14,11 @@ debug:
 
 dist:
 	mkdir -p build/dist
-	rm -rf build/dist/admb-@version@@revision@-src
-	svn export . build/dist/admb-@version@@revision@-src
-	rm -rf build/dist/admb-@version@@revision@-src/test
-	cp configure build/dist/admb-@version@@revision@-src
-	cd build/dist && zip -r admb-@version@@revision@-src.zip admb-@version@@revision@-src 
+	rm -rf build/dist/admb-@version@-src
+	svn export . build/dist/admb-@version@-src
+	rm -rf build/dist/admb-@version@-src/test
+	cp configure build/dist/admb-@version@-src
+	cd build/dist && zip -r admb-@version@-src.zip admb-@version@-src 
 
 verify:
 	DISK=@disk@ make --directory=src --file=@makefile@ verify

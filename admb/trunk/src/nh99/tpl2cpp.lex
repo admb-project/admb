@@ -26,10 +26,10 @@
   char reference_statements[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
   char class_instances[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
   char outcommand[100];
-  char infile_name[100];
-  char infile_root[100];
+  char infile_name[1000];
+  char infile_root[1000];
   char name_string[100];
-  char outfile_name[100];
+  char outfile_name[1000];
   char headerfile_name[100];
   int  num_spargs=0;
   int  pvmslaves_defined=0;

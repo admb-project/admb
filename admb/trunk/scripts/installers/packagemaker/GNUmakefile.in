@@ -23,4 +23,4 @@ all:
 	cp -vf build/@target@/installer/usr/local/admb/LICENSE build/@target@/Resources/License.txt
 	mkdir -p build/@target@/package
 	$(CC) --verbose --title $(DISTRIBUTION_NAME) --root build/@target@/installer --id www.admb-project.org --resources build/@target@/Resources --out build/@target@/package/@target@.pkg
-	hdiutil create build/@target@/@target@.dmg -volname "ADMB @version@@revision@" -srcfolder build/@target@/package
+	hdiutil create build/@target@/@target@.dmg -volname "ADMB @version@" -srcfolder build/@target@/package

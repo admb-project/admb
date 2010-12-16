@@ -28,10 +28,10 @@
   char outcommand7[250];
   char outcommand8[250];
   char * dirpath;
-  char infile_name[125];
-  char infile_root[125];
+  char infile_name[1000];
+  char infile_root[1000];
   char name_string[150];
-  char outfile_name[125];
+  char outfile_name[1000];
   char headerfile_name[125];
   char deffile_name[125];
   char headerfile_name2[125];

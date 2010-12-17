@@ -39,6 +39,7 @@ test:
 	export ADMB_HOME=${PWD}/build/@target@/dist; export PATH=${PWD}/build/@target@/dist/bin:$(PATH); make --directory=test
 
 clean:
+	rm -rvf build/@target@
 	make --directory=src --file=@makefile@ clean
 	make --directory=test clean
 	make --directory=scripts/configure clean

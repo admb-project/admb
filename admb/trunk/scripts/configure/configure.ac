@@ -1,4 +1,4 @@
-AC_INIT([ADMB], [9.1], [users@admb-project.org])
+AC_INIT([ADMB], [10.0], [users@admb-project.org])
 
 # Check for programs used in building ADMB.
 AC_PROG_CC
@@ -86,11 +86,17 @@ AC_SUBST(revision, ${ADMB_REVISION})
 AC_SUBST(lextargets, ${LEX_TARGETS})
 AC_SUBST(version, ${ADMB_VERSION})
 AC_SUBST(target, ${ADMB_TARGET})
-AC_SUBST(disk, ../build/${ADMB_TARGET}/dist)
+AC_SUBST(disk, ../build/${ADMB_TARGET}/${ADMB_TARGET})
 AC_SUBST(libpath, ../build/${ADMB_TARGET}/objects)
 AC_SUBST(arch_cxxflag, ${ARCH_CXXFLAG})
 AC_SUBST(cxx, ${CXX})
 AC_SUBST(makefile, ${MAKEFILE})
+if test  "`uname -s`" =  "Darwin"
+then
+AC_SUBST(dmgtask, "make --file=${INSTALLER_PACKAGEMAKER}")
+else
+AC_SUBST(dmgtask, "")
+fi
 
 PREFIX=${prefix}
 AC_SUBST(PREFIX)

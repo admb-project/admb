@@ -5,20 +5,20 @@ Released November 19, 2010
 Overview
 ========
 The ADMB(Automatic Differentiation Model Builder) software suite 
-is an environment for non-linear statistical modeling enabling rapid 
-model development, numerical stability, fast and efficient computation, 
-and high accuracy parameter estimates.  ADModel Builder is a high level 
-language built around the AUTODIF Library, a C++ language extension 
-which transparently implements reverse mode automatic differentiation. 
-A closely related software package, ADMB-RE, implements random effects 
-in non-linear models.
+is an environment for non-linear statistical modeling enabling
+rapid model development, numerical stability, fast and efficient 
+computation, and high accuracy parameter estimates.  ADModel Builder
+is a high level language built around the AUTODIF Library, a C++
+language extension which transparently implements reverse mode 
+automatic differentiation.  A closely related software package, 
+ADMB-RE, implements random effects in non-linear models.
 
 Donations
 =========
 ADMB is an open source project that is freely available for download.
 If you would like to contribute or donate funds, please contact 
-<users@admb-project.org>.  Cool ADMB T-shirts are also available for 
-purchase.
+<users@admb-project.org>.  Cool ADMB T-shirts are also available 
+for purchase.
 
 Table of Contents
 =================
@@ -37,9 +37,9 @@ Table of Contents
 
 Release Notes
 =============
-The goal for this release was to improve algorithms, add new requested
-features, correct defects (bugs), and streamline installation and build
-process.
+The goal for this release was to improve algorithms, add new 
+requested features, correct defects (bugs), and streamline 
+installation and build process.
 
 Below lists some of the changes.
 
@@ -65,9 +65,10 @@ Changes Beta
 
 Requirements
 ============
-ADMB has been tested and used on Windows and UNIX operating systems 
-in both 32 and 64 bit versions.  A C/C++ compiler must be be installed 
-on the local computer. Below lists some tested compilers.
+ADMB has been tested and used on Windows and UNIX operating 
+systems in both 32 and 64 bit versions.  A C/C++ compiler 
+must be be installed on the local computer. Below lists some 
+tested compilers.
 
 Several compilers are supported including 
  * GNU g++ 3.4 or newer

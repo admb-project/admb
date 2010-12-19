@@ -2,13 +2,13 @@
 
 all:
 	CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
-	rm -rf `find build/@target@/dist -type d -name .svn`
+	rm -rf `find build/@target@/@target@ -type d -name .svn`
 	@printf "\nBuild completed for @target@\n"
 	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
 
 debug:
 	DEBUG=1 CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
-	rm -rf `find build/@target@/dist -type d -name .svn`
+	rm -rf `find build/@target@/@target@ -type d -name .svn`
 	@printf "\nBuild completed for @target@\n"
 	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
 
@@ -25,18 +25,24 @@ verify:
 
 install:
 	install -d -m 555 @prefix@/admb/bin @prefix@/admb/include @prefix@/admb/lib @prefix@/admb/docs @prefix@/admb/examples
-	install -m 555 build/@target@/dist/bin/* @prefix@/admb/bin
-	install -m 444 build/@target@/dist/include/* @prefix@/admb/include
-	install -m 444 build/@target@/dist/lib/* @prefix@/admb/lib
+	install -m 555 build/@target@/@target@/bin/* @prefix@/admb/bin
+	install -m 444 build/@target@/@target@/include/* @prefix@/admb/include
+	install -m 444 build/@target@/@target@/lib/* @prefix@/admb/lib
 	install -m 444 LICENSE @prefix@/admb
-	install -m 444 README @prefix@/admb
+	install -m 444 README.txt @prefix@/admb
 	install -m 444 Makefile @prefix@/admb
 	install -m 555 scripts/bash/admb-bin @prefix@/bin/admb
-	cp -Rf build/@target@/dist/docs/* @prefix@/admb/docs
-	cp -Rf build/@target@/dist/examples/* @prefix@/admb/examples
+	cp -Rf build/@target@/@target@/docs/* @prefix@/admb/docs
+	cp -Rf build/@target@/@target@/examples/* @prefix@/admb/examples
+
+zip:
+	cd build/@target@; zip -r @target@.zip @target@
+
+dmg:
+	@dmgtask@
 
 test:
-	export ADMB_HOME=${PWD}/build/@target@/dist; export PATH=${PWD}/build/@target@/dist/bin:$(PATH); make --directory=test
+	export ADMB_HOME=${PWD}/build/@target@/@target@; export PATH=${PWD}/build/@target@/@target@/bin:$(PATH); make --directory=test
 
 clean:
 	rm -rvf build/@target@

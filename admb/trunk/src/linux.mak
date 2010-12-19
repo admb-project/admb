@@ -47,9 +47,11 @@ dist:
 	cp ../scripts/bash/admb ${DISK}/bin
 	cp ../scripts/bash/adcomp ${DISK}/bin
 	cp ../scripts/bash/adlink ${DISK}/bin
-	cp ../scripts/bash/Makefile ${DISK}
+	cp ../scripts/bash/Makefile ${DISK}/examples
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
+	rm -f ${DISK}/bin/sed.exe
+	rm -f ${DISK}/bin/sed1.exe
 
 
 	#make -C docs/manuals
@@ -65,10 +67,10 @@ dist-64bit: dist
 	cp ../scripts/bash/adlink-64bit ${DISK}/bin/adlink
 
 verify:
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK} all
-	-export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ${DISK}/examples > "../benchmarks-${NOW}-r${ADMB_REVISION}-opt.txt"
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); SAFE_OPTION=1 make -C ${DISK} all
-	-export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ${DISK}/examples > "../benchmarks-${NOW}-r${ADMB_REVISION}-saf.txt"
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK}/examples all
+	-export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-r${ADMB_REVISION}-opt.txt"
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); SAFE_OPTION=1 make -C ${DISK}/examples all
+	-export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-r${ADMB_REVISION}-saf.txt"
 
 check-admb2r:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ../test/admb2r gcc

@@ -14,7 +14,7 @@ all:
 	mkdir -p build/@target@/installer/usr/local/bin
 	mkdir -p build/@target@/installer/usr/local/admb
 
-	cp -Rvf build/@target@/dist/* build/@target@/installer/usr/local/admb
+	cp -Rvf build/@target@/@target@/* build/@target@/installer/usr/local/admb
 	rm -rvf `find build/@target@/installer -type d -name .svn`
 
 	cp -vf scripts/bash/admb-bin build/@target@/installer/usr/local/bin/admb

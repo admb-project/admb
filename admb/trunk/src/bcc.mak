@@ -42,12 +42,11 @@ dist:
 	copy ..\scripts\vc\Makefile $(DISK)\dist\examples
 
 verify:
-	cd $(DISK)\dist\examples
-	make all
-	-..\..\..\..\scripts\get-outputs.bat > "..\..\..\..\benchmarks-opt.txt"
-	make OPTION=-s all
-	-..\\..\..\..scripts\get-outputs.bat > "..\..\..\..\benchmarks-saf.txt"
-	cd ..\..\..\..\src
+	cd $(DISK)\dist
+	cmd /C "set BCC55_HOME=c:\Borland\BCC55& set ADMB_HOME=%CD%& set PATH=%CD%\bin;$(PATH)& cd examples& make all"
+	-..\..\..\scripts\get-outputs.bat > ..\..\..\benchmarks-opt.txt
+	cmd /C "set BCC55_HOME=c:\Borland\BCC55& set ADMB_HOME=%CD%& set PATH=%CD%\bin;$(PATH)& cd examples& make OPTION=-s all"
+	-..\..\..\scripts\get-outputs.bat > ..\..\..\benchmarks-saf.txt
 
 clean:
 	IF EXIST $(DISK) rmdir /S /Q $(DISK)

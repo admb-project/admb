@@ -79,7 +79,7 @@ fi
 ARCH_CXXFLAG=${CXXFLAGS}
 
 AC_CONFIG_FILES(
-  [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/bash/admb-bin ${INSTALLER_PACKAGEMAKER} ]
+  [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/${CXX}/admb-bin ${INSTALLER_PACKAGEMAKER} ]
 )
 
 AC_SUBST(revision, ${ADMB_REVISION})
@@ -90,6 +90,7 @@ AC_SUBST(disk, ../build/${ADMB_TARGET}/${ADMB_TARGET})
 AC_SUBST(libpath, ../build/${ADMB_TARGET}/objects)
 AC_SUBST(arch_cxxflag, ${ARCH_CXXFLAG})
 AC_SUBST(cxx, ${CXX})
+AC_SUBST(cc, ${CC})
 AC_SUBST(makefile, ${MAKEFILE})
 if test  "`uname -s`" =  "Darwin"
 then

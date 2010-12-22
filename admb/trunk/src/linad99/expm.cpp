@@ -13,7 +13,7 @@
   #include "ludcmp.hpp"
   dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& zz);
   dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z);
-  dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltudecomp & clu1);
+  dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltudecomp & _clu1);
   cltudecomp xludecomp_pivot_for_expm_solve(const dvar_matrix& M, const ivector& _index2);
   //static void df_mm_solve(void);
   static void df_solve(void);
@@ -174,7 +174,7 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& zz)
  *  \f$A\cdot X = B\f$, to be solved.
  *  \return A matrix containing solution \f$X\f$.
  */
-dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltudecomp & clu1)
+dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltudecomp & _clu1)
 {
    int n = aa.colsize();
    int lb = aa.colmin();
@@ -203,7 +203,7 @@ dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltu
       return (x);
    }
 
-   //cltudecomp clu1 = xludecomp_pivot(aa);
+   cltudecomp & clu1 = (cltudecomp &) _clu1;
    ivector index2 = clu1.get_index2();
    dmatrix & gamma = clu1.get_U();
    dmatrix & alpha = clu1.get_L();

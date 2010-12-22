@@ -355,5 +355,4 @@ dmatrix get_upper_matrix(cltudecomp_for_adjoint & clu);
 dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
 		  prevariable & ln_unsigned_det,
 		  const prevariable & _sign);
-
 #endif				//#ifndef __LUDCMP_HPP__

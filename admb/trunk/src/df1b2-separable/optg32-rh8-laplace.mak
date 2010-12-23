@@ -8,14 +8,9 @@ vpath %.obj $(LIBPATH)
 .PHONY: disk tpl2rem
 include objects.lst
 
-$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
-	ar -rs $(LIBNAME) $(LIBPATH)/*.obj
+all: disk
 
-%.obj: %.cpp
-	$(CXX) $(CXXFLAGS)  $< -o $(LIBPATH)/$*.obj
-
-disk: $(LIBNAME) tpl2rem
-	cp $(LIBNAME) $(DISKDIR)/lib
+disk: $(DISKDIR)/lib/$(LIBNAME) tpl2rem
 	cp adpool.h $(DISKDIR)/include
 	cp adrndeff.h $(DISKDIR)/include
 	cp df1b2fun.h $(DISKDIR)/include
@@ -27,10 +22,16 @@ disk: $(LIBNAME) tpl2rem
 	cp tpl2rem $(DISKDIR)/bin
 	cp sedcmd sedcmd2 sedcmd3 seddf1b2 seddf1b3 seddf1b4 sedf1b2a sedf1b2c sedf1b2d sedflex $(DISKDIR)/bin
 
-tpl2rem.c: tpl2rem.lex
-	flex tpl2rem.lex
-	sed -f sedflex lex.yy.c > tpl2rem.c
+$(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+	ar -rs $@ $(LIBPATH)/*.obj
 
 tpl2rem:
 	$(CC) tpl2rem.c -o tpl2rem
 	cp sed* $(DISKDIR)/bin
+
+tpl2rem.c: tpl2rem.lex
+	flex tpl2rem.lex
+	sed -f sedflex lex.yy.c > tpl2rem.c
+
+%.obj: %.cpp
+	$(CXX) $(CXXFLAGS)  $< -o $(LIBPATH)/$*.obj

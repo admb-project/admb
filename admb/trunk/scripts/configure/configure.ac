@@ -67,6 +67,7 @@ then
   GCC_VERSION=`gcc -dumpversion`
   ADMB_TARGET="admb-${ADMB_VERSION}-mingw-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
+  INSTALLER_MINGW="scripts/installers/innosetup/mingw.iss"
 fi
 
 if test  "`uname -s`" =  "SunOS"
@@ -79,7 +80,7 @@ fi
 ARCH_CXXFLAG=${CXXFLAGS}
 
 AC_CONFIG_FILES(
-  [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/${CXX}/admb-bin ${INSTALLER_PACKAGEMAKER} ]
+  [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/${CXX}/admb-bin ${INSTALLER_PACKAGEMAKER} ${INSTALLER_MINGW} ]
 )
 
 AC_SUBST(revision, ${ADMB_REVISION})
@@ -92,6 +93,7 @@ AC_SUBST(arch_cxxflag, ${ARCH_CXXFLAG})
 AC_SUBST(cxx, ${CXX})
 AC_SUBST(cc, ${CC})
 AC_SUBST(makefile, ${MAKEFILE})
+AC_SUBST(gccversion, ${GCC_VERSION})
 if test  "`uname -s`" =  "Darwin"
 then
 AC_SUBST(dmgtask, "make --file=${INSTALLER_PACKAGEMAKER}")

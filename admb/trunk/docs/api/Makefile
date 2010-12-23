@@ -23,8 +23,7 @@ endif
 
 default:
 	mkdir -vp dox/html
-	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo "GENERATE_XML = NO"; echo -n "PROJECT_NUMBER = ";svnversion ../..) | doxygen -
-	firefox ./dox/html/index.html&
+	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo "GENERATE_XML = NO"; echo -n "PROJECT_NUMBER = A";svnversion ../..) | doxygen -
 
 sunsys:
 	mkdir -vp sunsys-dox/html
@@ -37,7 +36,6 @@ sunsys:
 	cp -fv $(SUNSYS_SHARE)/resources/*.* sunsys-dox/html/resources
 	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = sunsys-dox/temp"; echo "GENERATE_XML = YES"; echo -n "PROJECT_NUMBER = ";svnversion ../..) | $(SUNSYS_PATH)/doxygen-nk -
 	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = sunsys-dox/temp"; echo "GENERATE_XML = YES"; echo -n "PROJECT_NUMBER = ";svnversion ../..) | $(SUNSYS_PATH)/dox sunsys-dox -
-	firefox ./sunsys-dox/html/index.html&
 
 all: default sunsys
 

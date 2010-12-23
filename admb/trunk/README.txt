@@ -27,8 +27,8 @@ Table of Contents
  * Requirements
  * Downloading
  * Installation
-   - From source code
-   - From precompiled libraries
+ * Installation from Source Distribution
+ * Installation from Binary Distribution
  * Documentation
  * Developing ADModel Builder
    - Version Control
@@ -86,11 +86,8 @@ Downloading
 Precompiled binaries and the source distribution can be downloaded
 from "http://www.admb-project.org/downloads/".
 
-Installation
-============
-
-From Source Code
-----------------
+Installation from Source Code
+=============================
 Below are procedures for installing ADMB from source code.
 
 Unix and GNU g++
@@ -190,33 +187,36 @@ Microsoft Windows and Borland C++ 5.5
 -------------------------------------
 1. Extract source distribution.
 
-2. Open Windows Command Prompt. 
+2. Open Windows Command Prompt in Start->All Programs->Accessories.
 
-3. Add Borland to system PATH variable.
+3. Set BCC55_HOME variable to location of BCC55 folder.
 
-   > set PATH=%PATH%;c:\Borland\BCC551\Bin
-   > set BCC55_HOME=c:\Borland\BCC551\Bin
+   > set BCC55_HOME=c:\Borland\BCC55
 
-4. Change directory to the "src" folder. 
+4. Add BCC55_HOME to system PATH variable.
+
+   > set PATH=c:\Borland\BCC55\Bin;%PATH%
+
+5. Change directory to the "src" folder. 
 
    > cd admb-10.0\src
 
-5. Build libraries
+6. Build libraries
 
    > make /fbcc.mak
 
-6. [Optional] Test build by running examples
+7. [Optional] Test build by running examples
 
    > make /fbcc.mak verify
 
-7. Install libraries to default location %ProgramFiles%\ADMB
+8. Install libraries to default location %ProgramFiles%\ADMB
    and adds ADMB shortcuts in the Start menu.
 
    > make /fbcc.mak install
 
-Microsoft Windows and MinGW (gcc-4.5)
--------------------------------------
-1. Open MinGW Shell located in Start->MinGW->"MinGW Shell"
+Microsoft Windows and MinGW (msys and gcc-4.5)
+----------------------------------------------
+1. Open MinGW Shell located in Start->MinGW->MinGW Shell.
 
 2. Extract source distribution.
    
@@ -242,8 +242,8 @@ Microsoft Windows and MinGW (gcc-4.5)
 
    $ make install
 
-From precompiled libraries
---------------------------
+Installation from Binary Distributions
+======================================
 Binary installation instructions can be found at 
 "http://www.admb-project.org/documention/".
 

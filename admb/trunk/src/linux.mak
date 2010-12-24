@@ -46,9 +46,9 @@ dist:
 	cp ../scripts/$(CXX)/admb ${DISK}/bin
 	cp ../scripts/$(CXX)/adcomp ${DISK}/bin
 	cp ../scripts/$(CXX)/adlink ${DISK}/bin
-	cp ../scripts/$(CXX)/admb.bat ${DISK}/bin
-	cp ../scripts/$(CXX)/adcomp.bat ${DISK}/bin
-	cp ../scripts/$(CXX)/adlink.bat ${DISK}/bin
+	-cp ../scripts/$(CXX)/admb.bat ${DISK}/bin
+	-cp ../scripts/$(CXX)/adcomp.bat ${DISK}/bin
+	-cp ../scripts/$(CXX)/adlink.bat ${DISK}/bin
 	cp ../scripts/g++/Makefile ${DISK}/examples
 	cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
 	cp -R ../examples/admb ${DISK}/examples/admb

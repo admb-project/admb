@@ -39,7 +39,7 @@ dist:
 	copy ..\scripts\mingw\admb.bat $(DISK)\dist\bin
 	IF NOT EXIST $(DISK)\dist\examples mkdir $(DISK)\dist\examples
 	xcopy ..\examples $(DISK)\dist\examples /S /Y
-	copy ..\scripts\vc\Makefile $(DISK)\dist\examples
+	copy ..\scripts\cl\Makefile $(DISK)\dist\examples
 
 verify:
 	cd $(DISK)\dist

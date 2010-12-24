@@ -88,7 +88,7 @@ fi
 ARCH_CXXFLAG=${CXXFLAGS}
 
 AC_CONFIG_FILES(
-  [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/${CXX}/admb-bin ${INSTALLER_PACKAGEMAKER} ${INSTALLER_MINGW} ]
+  [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/g++/admb-bin ${INSTALLER_PACKAGEMAKER} ${INSTALLER_MINGW} ]
 )
 
 AC_SUBST(revision, ${ADMB_REVISION})

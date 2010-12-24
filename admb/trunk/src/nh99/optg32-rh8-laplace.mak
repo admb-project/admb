@@ -17,14 +17,13 @@ endif
 
 all: disk  
 
-disk: $(DISKDIR)/lib/$(LIBNAME)  df1b2stub tpl2cpp
+disk: $(DISKDIR)/lib/$(LIBNAME)  $(DISKDIR)/bin/tpl2cpp.exe
 	cp admodel.h $(DISKDIR)/include
 	cp spcomm.h $(DISKDIR)/include
 	cp adsplus.h $(DISKDIR)/include
 	cp newredef.h $(DISKDIR)/include
 	cp param_init_bounded_number_matrix.h $(DISKDIR)/include
 	cp s.h $(DISKDIR)/include
-	cp tpl2cpp $(DISKDIR)/bin
 	cp sedflex $(DISKDIR)/bin
 
 $(DISKDIR)/lib/$(LIBNAME): $(OBJECTS) 
@@ -34,7 +33,7 @@ df1b2stub:
 	$(CXX) $(CXXFLAGS) -o $(STUBPATH)/df1b2stub.o df1b2stub.cpp
 	ar -rs $(STUBPATH)/${STUBNAME} $(STUBPATH)/df1b2stub.o
 
-tpl2cpp:
+$(DISKDIR)/bin/tpl2cpp.exe:
 	$(CC) -Wno-format tpl2cpp.c -o $@
 
 tpl2cpp.c: tpl2cpp.lex

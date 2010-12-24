@@ -35,8 +35,10 @@ dist:
 	cd ..
 	copy ..\LICENSE $(DISK)\dist
 	copy ..\README.txt $(DISK)\dist
-	copy ..\scripts\borland\*.bat $(DISK)\dist\bin
-	copy ..\scripts\mingw\admb.bat $(DISK)\dist\bin
+	copy ..\scripts\bcc32\adcomp.bat $(DISK)\dist\bin
+	copy ..\scripts\bcc32\adlink.bat $(DISK)\dist\bin
+	copy ..\scripts\bcc32\set-admb-bcc551.bat $(DISK)\dist\bin
+	copy ..\scripts\admb\admb.bat $(DISK)\dist\bin
 	IF NOT EXIST $(DISK)\dist\examples mkdir $(DISK)\dist\examples
 	xcopy ..\examples $(DISK)\dist\examples /S /Y
 	copy ..\scripts\cl\Makefile $(DISK)\dist\examples

@@ -17,7 +17,7 @@ endif
 
 all: disk  
 
-disk: $(DISKDIR)/lib/$(LIBNAME)  $(DISKDIR)/bin/tpl2cpp.exe
+disk: $(DISKDIR)/lib/$(LIBNAME)  $(DISKDIR)/bin/tpl2cpp
 	cp admodel.h $(DISKDIR)/include
 	cp spcomm.h $(DISKDIR)/include
 	cp adsplus.h $(DISKDIR)/include
@@ -33,7 +33,7 @@ df1b2stub:
 	$(CXX) $(CXXFLAGS) -o $(STUBPATH)/df1b2stub.o df1b2stub.cpp
 	ar -rs $(STUBPATH)/${STUBNAME} $(STUBPATH)/df1b2stub.o
 
-$(DISKDIR)/bin/tpl2cpp.exe:
+$(DISKDIR)/bin/tpl2cpp:
 	$(CC) -Wno-format tpl2cpp.c -o $@
 
 tpl2cpp.c: tpl2cpp.lex

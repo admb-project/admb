@@ -10,7 +10,7 @@ include objects.lst
 
 all: disk
 
-disk: $(DISKDIR)/lib/$(LIBNAME) $(DISKDIR)/bin/tpl2rem.exe
+disk: $(DISKDIR)/lib/$(LIBNAME) $(DISKDIR)/bin/tpl2rem
 	cp adpool.h $(DISKDIR)/include
 	cp adrndeff.h $(DISKDIR)/include
 	cp df1b2fun.h $(DISKDIR)/include
@@ -24,7 +24,7 @@ disk: $(DISKDIR)/lib/$(LIBNAME) $(DISKDIR)/bin/tpl2rem.exe
 $(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
 	ar -rs $@ $(LIBPATH)/*.obj
 
-$(DISKDIR)/bin/tpl2rem.exe:
+$(DISKDIR)/bin/tpl2rem:
 	$(CC) tpl2rem.c -o $@
 
 tpl2rem.c: tpl2rem.lex

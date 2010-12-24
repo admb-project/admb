@@ -43,13 +43,13 @@ dist:
 	#cp -vf ../scripts/bash/mygcc* ${DISK}/bin 
 	#cp ../scripts/bash/link* ${DISK}/bin
 	#cp ../scripts/bash/m* ${DISK}/bin
-	cp ../scripts/$(CXX)/admb ${DISK}/bin
+	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/$(CXX)/adcomp ${DISK}/bin
 	cp ../scripts/$(CXX)/adlink ${DISK}/bin
-	-cp ../scripts/$(CXX)/admb.bat ${DISK}/bin
-	-cp ../scripts/$(CXX)/adcomp.bat ${DISK}/bin
-	-cp ../scripts/$(CXX)/adlink.bat ${DISK}/bin
 	cp ../scripts/g++/Makefile ${DISK}/examples
+	cp ../scripts/admb/admb.bat ${DISK}/bin
+	cp ../scripts/g++/adcomp.bat ${DISK}/bin
+	cp ../scripts/g++/adlink.bat ${DISK}/bin
 	cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
@@ -65,14 +65,10 @@ dist:
 	#tar -cvf ${DISK}.tar ${DISK}
 	#bzip2 ${DISK}.tar 
 
-dist-64bit: dist
-	cp ../scripts/bash/adcomp-64bit ${DISK}/bin/adcomp
-	cp ../scripts/bash/adlink-64bit ${DISK}/bin/adlink
-
 verify:
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ${DISK}/examples all
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} make -C ${DISK}/examples all
 	-export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-r${ADMB_REVISION}-opt.txt"
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); SAFE_OPTION=1 make -C ${DISK}/examples all
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} SAFE_OPTION=1 make -C ${DISK}/examples all
 	-export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-r${ADMB_REVISION}-saf.txt"
 
 check-admb2r:

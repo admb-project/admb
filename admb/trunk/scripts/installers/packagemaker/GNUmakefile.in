@@ -17,11 +17,13 @@ all:
 	cp -Rvf build/@target@/@target@/* build/@target@/installer/usr/local/admb
 	rm -rvf `find build/@target@/installer -type d -name .svn`
 
-	cp -vf scripts/@cxx@/admb-bin build/@target@/installer/usr/local/bin/admb
+	cp -vf scripts/admb/admb-bin build/@target@/installer/usr/local/bin/admb
 
 	cp -vf build/@target@/installer/usr/local/admb/README.txt build/@target@/Resources/Welcome.txt
 	cp -vf build/@target@/installer/usr/local/admb/LICENSE build/@target@/Resources/License.txt
+	cp -vf scripts/installers/packagemaker/Resources/background.jpg  build/@target@/Resources/
 	mkdir -p build/@target@/package
-	cp -vf docs/install/install-macos.txt  build/@target@/package
+	cp -vf docs/install/readme-macos.txt  build/@target@/package
 	$(CC) --verbose --title $(DISTRIBUTION_NAME) --root build/@target@/installer --id www.admb-project.org --resources build/@target@/Resources --out build/@target@/package/@target@.pkg
+	rm -vf build/@target@/@target@.dmg
 	hdiutil create build/@target@/@target@.dmg -volname "ADMB @version@" -srcfolder build/@target@/package

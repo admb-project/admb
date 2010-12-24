@@ -21,7 +21,7 @@ dist:
 	cd build/dist && zip -r admb-@version@.zip admb-@version@
 
 verify:
-	DISK=@disk@ make --directory=src --file=@makefile@ verify
+	DISK=@disk@ ADMB_CXXFLAGS=@arch_cxxflag@ ADMB_LDFLAGS=@arch_cxxflag@ make --directory=src --file=@makefile@ verify
 
 install:
 	install -d -m 555 @prefix@/admb/bin @prefix@/admb/include @prefix@/admb/lib @prefix@/admb/docs @prefix@/admb/examples

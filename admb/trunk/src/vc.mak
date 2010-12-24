@@ -33,8 +33,9 @@ all:
 	cd nh99\$(CCVERSION)-$(OSVERSION)slp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\safmsc8-laplace.mak all
 	cd tools99\$(CCVERSION)-$(OSVERSION)olp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\optmsc8-laplace.mak all
 	cd tools99\$(CCVERSION)-$(OSVERSION)slp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\safmsc8-laplace.mak all
-	copy ..\scripts\vc\*.bat $(DISK)\bin
-	copy ..\scripts\mingw\admb.bat $(DISK)\bin
+	copy ..\scripts\cl\adlink.bat $(DISK)\bin
+	copy ..\scripts\cl\adcomp.bat $(DISK)\bin
+	copy ..\scripts\admb\admb.bat $(DISK)\bin
 	copy ..\LICENSE $(DISK)
 	copy ..\README.txt $(DISK)
 	IF NOT EXIST $(DISK)\examples mkdir $(DISK)\examples

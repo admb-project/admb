@@ -40,6 +40,11 @@ fi
 #)
 CXX_32OR64BIT="32bit"
 CXXFLAGS="-m32"
+if test "${BUILD_64BIT}" = "yes"
+then
+CXX_32OR64BIT="64bit"
+CXXFLAGS="-m64"
+fi
 
 #if "${enable_64bit}" = "yes" (
 #CXX_32OR64BIT="64bit"
@@ -88,7 +93,7 @@ fi
 ARCH_CXXFLAG=${CXXFLAGS}
 
 AC_CONFIG_FILES(
-  [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/g++/admb-bin ${INSTALLER_PACKAGEMAKER} ${INSTALLER_MINGW} ]
+  [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/admb/admb-bin ${INSTALLER_PACKAGEMAKER} ${INSTALLER_MINGW} ]
 )
 
 AC_SUBST(revision, ${ADMB_REVISION})

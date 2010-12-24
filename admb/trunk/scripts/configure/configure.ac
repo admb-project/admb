@@ -7,6 +7,9 @@ AC_LANG([C++])
 AC_CHECK_HEADERS(iostream)
 AC_PROG_LEX
 
+#AC_ARG_ENABLE(enable64,
+#    [AC_HELP_STRING([--enable-64bit], [Enable 64-bit compile])])
+
 ## Requires autoconf version 2.60 or newer
 #AC_PROG_SED
 AC_CHECK_PROG(HAS_SED,sed,[yes])
@@ -38,10 +41,15 @@ fi
 CXX_32OR64BIT="32bit"
 CXXFLAGS="-m32"
 
+#if "${enable_64bit}" = "yes" (
+#CXX_32OR64BIT="64bit"
+#CXXFLAGS="-m64"
+#)
+
 if test  "`uname -s`" =  "Darwin"
 then
-  CXX_32OR64BIT="64bit"
-  CXXFLAGS="-m64"
+  #CXX_32OR64BIT="64bit"
+  #CXXFLAGS="-m64"
   MACOS_PRODUCT_VERSION=`sw_vers -productVersion`
   MACOS_XCODE_VERSION=`xcodebuild -version | grep Xcode | awk '{print $2}'`
   ADMB_TARGET="admb-${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
@@ -52,11 +60,11 @@ fi
 if test  "`uname -s`" =  "Linux"
 then
 
-  if test  "`uname -m`" =  "x86_64"
-  then
-    CXX_32OR64BIT="64bit"
-    CXXFLAGS="-m64"
-  fi
+  #if test  "`uname -m`" =  "x86_64"
+  #then
+    #CXX_32OR64BIT="64bit"
+    #CXXFLAGS="-m64"
+  #fi
   GCC_VERSION=`gcc -dumpversion`
   ADMB_TARGET="admb-${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"

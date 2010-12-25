@@ -1,7 +1,7 @@
-DISK=..\build\admb_b502_win32
+DISK=..\build\admb-10.0-bcc5.5-32bit
 
-OPT_CXXFLAGS ="-q -Ic:\Borland\BCC55\Include -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DOPT_LIB -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
-SAFE_CXXFLAGS ="-q -Ic:\Borland\BCC55\Include -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DSAFE_ALL -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
+OPT_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DOPT_LIB -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
+SAFE_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DSAFE_ALL -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
 
 all: dist
 
@@ -45,9 +45,9 @@ dist:
 
 verify:
 	cd $(DISK)\dist
-	cmd /C "set BCC55_HOME=c:\Borland\BCC55& set ADMB_HOME=%CD%& set PATH=%CD%\bin;$(PATH)& cd examples& make all"
+	cmd /C "set ADMB_HOME=%CD%& set PATH=%CD%\bin;$(PATH)& cd examples& make all"
 	-..\..\..\scripts\get-outputs.bat > ..\..\..\benchmarks-opt.txt
-	cmd /C "set BCC55_HOME=c:\Borland\BCC55& set ADMB_HOME=%CD%& set PATH=%CD%\bin;$(PATH)& cd examples& make OPTION=-s all"
+	cmd /C "set ADMB_HOME=%CD%& set PATH=%CD%\bin;$(PATH)& cd examples& make OPTION=-s all"
 	-..\..\..\scripts\get-outputs.bat > ..\..\..\benchmarks-saf.txt
 
 clean:

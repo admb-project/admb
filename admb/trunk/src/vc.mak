@@ -1,63 +1,48 @@
-#.PHONY: dist verify
-
-DISK=..\build
-CCVERSION=vc
-OSVERSION=win
+DISK=..\build\admb-10.0-vc10-32bit
+#DISK=..\build\admb-10.0-vc10-64bit
 
 #ifdef MSSDK
 #PVMOPTION=-I"${MSSDK}/include"
 #export PVMOPTION
 #endif
 
-default: all
-
 all:
-	IF EXIST $(DISK) rmdir /S /Q $(DISK)
-	mkdir $(DISK)\bin
-	mkdir $(DISK)\lib
-	mkdir $(DISK)\include
-	IF NOT EXIST linad99\$(CCVERSION)-$(OSVERSION)olp mkdir linad99\$(CCVERSION)-$(OSVERSION)olp 
-	IF NOT EXIST linad99\$(CCVERSION)-$(OSVERSION)slp mkdir linad99\$(CCVERSION)-$(OSVERSION)slp 
-	IF NOT EXIST nh99\$(CCVERSION)-$(OSVERSION)olp mkdir nh99\$(CCVERSION)-$(OSVERSION)olp 
-	IF NOT EXIST nh99\$(CCVERSION)-$(OSVERSION)slp mkdir nh99\$(CCVERSION)-$(OSVERSION)slp 
-	IF NOT EXIST nh99\$(CCVERSION)-$(OSVERSION)olp-stub mkdir nh99\$(CCVERSION)-$(OSVERSION)olp-stub 
-	IF NOT EXIST tools99\$(CCVERSION)-$(OSVERSION)olp mkdir tools99\$(CCVERSION)-$(OSVERSION)olp 
-	IF NOT EXIST tools99\$(CCVERSION)-$(OSVERSION)slp mkdir tools99\$(CCVERSION)-$(OSVERSION)slp 
-	IF NOT EXIST df1b2-separable\$(CCVERSION)-$(OSVERSION)slp mkdir df1b2-separable\$(CCVERSION)-$(OSVERSION)slp 
-	IF NOT EXIST df1b2-separable\$(CCVERSION)-$(OSVERSION)olp mkdir df1b2-separable\$(CCVERSION)-$(OSVERSION)olp 
-	cd df1b2-separable\$(CCVERSION)-$(OSVERSION)olp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\optmsc8-laplace.mak all
-	cd df1b2-separable\$(CCVERSION)-$(OSVERSION)slp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\safmsc8-laplace.mak all
-	cd linad99\$(CCVERSION)-$(OSVERSION)olp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\optmsc8-laplace.mak all
-	cd linad99\$(CCVERSION)-$(OSVERSION)slp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\safmsc8-laplace.mak all
-	cd nh99\$(CCVERSION)-$(OSVERSION)olp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\optmsc8-laplace.mak all
-	cd nh99\$(CCVERSION)-$(OSVERSION)slp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\safmsc8-laplace.mak all
-	cd tools99\$(CCVERSION)-$(OSVERSION)olp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\optmsc8-laplace.mak all
-	cd tools99\$(CCVERSION)-$(OSVERSION)slp& $(MAKE) DISKDIR=..\..\$(DISK) /f ..\safmsc8-laplace.mak all
-	copy ..\scripts\cl\adlink.bat $(DISK)\bin
-	copy ..\scripts\cl\adcomp.bat $(DISK)\bin
-	copy ..\scripts\admb\admb.bat $(DISK)\bin
-	copy ..\LICENSE $(DISK)
-	copy ..\README.txt $(DISK)
-	IF NOT EXIST $(DISK)\examples mkdir $(DISK)\examples
-	xcopy ..\examples $(DISK)\examples /S
-	copy ..\scripts\vc\Makefile $(DISK)\examples
-	cd $(DISK)& cscript ..\scripts\create-admb-shortcut.vbs
+	mkdir $(DISK)\dist\bin
+	mkdir $(DISK)\dist\lib
+	mkdir $(DISK)\dist\include
+	IF NOT EXIST $(DISK)\objects\df1b2-separable-olp mkdir $(DISK)\objects\df1b2-separable-olp
+	IF NOT EXIST $(DISK)\objects\df1b2-separable-slp mkdir $(DISK)\objects\df1b2-separable-slp
+	cd df1b2-separable& $(MAKE) DISK=..\..\$(DISK) /f optmsc8-laplace.mak all
+	cd df1b2-separable& $(MAKE) DISK=..\..\$(DISK) /f safmsc8-laplace.mak all
+	IF NOT EXIST $(DISK)\objects\linad99-olp mkdir $(DISK)\objects\linad99-olp 
+	IF NOT EXIST $(DISK)\objects\linad99-slp mkdir $(DISK)\objects\linad99-slp 
+	cd linad99& $(MAKE) DISK=..\..\$(DISK) /f optmsc8-laplace.mak all
+	cd linad99& $(MAKE) DISK=..\..\$(DISK) /f safmsc8-laplace.mak all
+	IF NOT EXIST $(DISK)\objects\nh99-olp mkdir $(DISK)\objects\nh99-olp 
+	IF NOT EXIST $(DISK)\objects\nh99-slp mkdir $(DISK)\objects\nh99-slp 
+	cd nh99& $(MAKE) DISK=..\..\$(DISK) /f optmsc8-laplace.mak all
+	cd nh99& $(MAKE) DISK=..\..\$(DISK) /f safmsc8-laplace.mak all
+	IF NOT EXIST $(DISK)\objects\tools99-olp mkdir $(DISK)\objects\tools99-olp 
+	IF NOT EXIST $(DISK)\objects\tools99-slp mkdir $(DISK)\objects\tools99-slp 
+	cd tools99& $(MAKE) DISK=..\..\$(DISK) /f optmsc8-laplace.mak all
+	cd tools99& $(MAKE) DISK=..\..\$(DISK) /f safmsc8-laplace.mak all
+	copy ..\scripts\cl\adlink.bat $(DISK)\dist\bin
+	copy ..\scripts\cl\adcomp.bat $(DISK)\dist\bin
+	copy ..\scripts\admb\admb.bat $(DISK)\dist\bin
+	copy ..\LICENSE $(DISK)\dist
+	copy ..\README.txt $(DISK)\dist
+	IF NOT EXIST $(DISK)\dist\examples mkdir $(DISK)\dist\examples
+	xcopy ..\examples $(DISK)\dist\examples /S
+	copy ..\scripts\vc\Makefile $(DISK)\dist\examples
+	cd $(DISK)\dist& cscript ..\scripts\create-admb-shortcut.vbs
 
 verify:
-	set ADMB_HOME=$(MAKEDIR)\$(DISK)
-	set PATH=$(MAKEDIR)\$(DISK)\bin;$(PATH)
-	cd $(MAKEDIR)\$(DISK)\examples& nmake /f Makefile all
+	set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist
+	set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)
+	cd $(MAKEDIR)\$(DISK)\dist\examples& nmake /f Makefile all
 	-..\scripts\get-outputs.bat > "..\benchmarks-opt.txt"
-	cd $(MAKEDIR)\$(DISK)\examples& nmake /f Makefile OPTION=-s all
+	cd $(MAKEDIR)\$(DISK)\dist\examples& nmake /f Makefile OPTION=-s all
 	-..\scripts\get-outputs.bat > "..\benchmarks-saf.txt"
 
 clean:
-	IF EXIST linad99\$(CCVERSION)-$(OSVERSION)olp rmdir /S /Q linad99\$(CCVERSION)-$(OSVERSION)olp
-	IF EXIST linad99\$(CCVERSION)-$(OSVERSION)slp rmdir /S /Q linad99\$(CCVERSION)-$(OSVERSION)slp
-	IF EXIST nh99\$(CCVERSION)-$(OSVERSION)olp rmdir /S /Q nh99\$(CCVERSION)-$(OSVERSION)olp
-	IF EXIST nh99\$(CCVERSION)-$(OSVERSION)olp-stub rmdir /S /Q nh99\$(CCVERSION)-$(OSVERSION)olp-stub
-	IF EXIST nh99\$(CCVERSION)-$(OSVERSION)slp rmdir /S /Q nh99\$(CCVERSION)-$(OSVERSION)slp
-	IF EXIST tools99\$(CCVERSION)-$(OSVERSION)olp rmdir /S /Q tools99\$(CCVERSION)-$(OSVERSION)olp
-	IF EXIST tools99\$(CCVERSION)-$(OSVERSION)slp rmdir /S /Q tools99\$(CCVERSION)-$(OSVERSION)slp
-	IF EXIST df1b2-separable\$(CCVERSION)-$(OSVERSION)olp rmdir /S /Q df1b2-separable\$(CCVERSION)-$(OSVERSION)olp
-	IF EXIST df1b2-separable\$(CCVERSION)-$(OSVERSION)slp rmdir /S /Q df1b2-separable\$(CCVERSION)-$(OSVERSION)slp
+	IF EXIST $(DISK) rmdir /S /Q $(DISK)

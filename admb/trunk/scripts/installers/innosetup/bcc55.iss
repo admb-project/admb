@@ -19,7 +19,7 @@ LicenseFile=..\..\..\LICENSE
 Name: "bcc55"; Description: "ADMB (Borland 5.5)"
 
 [Files]
-Source: "..\..\..\build\admb_b502_win32\dist\*"; DestDir: "{app}"; Flags: recursesubdirs
+Source: "..\..\..\build\admb-10.0-bcc5.5-32bit\dist\*"; DestDir: "{app}"; Flags: recursesubdirs
 
 [Icons]
 Name: "{group}\ADMB Command Prompt (Borland 5.5)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-bcc551.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt"

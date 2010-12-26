@@ -56,5 +56,5 @@ if [[ -z $shared ]]; then out="-o $model"; else out="-o $model.so"; fi
 if [[ $adlib == "-lado" ]]; then df1b2lib=-ldf1b2o; fi
 if [[ $adlib == "-lads" ]]; then df1b2lib=-ldf1b2s; fi
 
-echo -e "icpc $s $shared -L$ADMB_HOME/lib $model.o $df1b2lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $out\n"
-         icpc $s $shared -L$ADMB_HOME/lib $model.o $df1b2lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $out
+echo -e "icc $s $shared -L$ADMB_HOME/lib $model.o $df1b2lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $out\n"
+         icc $s $shared -L$ADMB_HOME/lib $model.o $df1b2lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $out

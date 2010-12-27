@@ -1,27 +1,24 @@
 .SUFFIXES: .obj .cpp
 
-FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I.. /I..\..\linad99 /I..\..\nh99 /I..\..\tools99 /D__MSVC32__=8 /DSAFE_ALL /Ox
+FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-separable /I..\..\..\..\src\linad99 /I..\..\..\..\src\nh99 /I..\..\..\..\src\tools99 /D__MSVC32__=8 /DSAFE_ALL /Ox
 
-include ..\objects.lst
-
-OBJECTS=$(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+include ..\..\..\..\src\df1b2-separable\objects.lst
 
 LIBNAME=df1b2s.lib  
 
-$(LIBNAME): $(OBJECTS)
-	lib /OUT:$(LIBNAME) /NOLOGO /IGNORE:4006 *.obj
-	
-{..}.cpp.obj:
+OBJECTS=$(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+
+all: $(DISKDIR)\lib\$(LIBNAME)
+	copy ..\..\..\..\src\df1b2-separable\df1b2fun.h $(DISKDIR)\include
+	copy ..\..\..\..\src\df1b2-separable\adpool.h $(DISKDIR)\include
+	copy ..\..\..\..\src\df1b2-separable\adrndeff.h $(DISKDIR)\include
+	copy ..\..\..\..\src\df1b2-separable\df1b2fnl.h $(DISKDIR)\include
+	copy ..\..\..\..\src\df1b2-separable\df3fun.h $(DISKDIR)\include
+	copy ..\..\..\..\src\df1b2-separable\df32fun.h $(DISKDIR)\include
+	copy ..\..\..\..\src\df1b2-separable\df1b2loc.h $(DISKDIR)\include
+
+$(DISKDIR)\lib\$(LIBNAME): $(OBJECTS)
+	lib /OUT:$@ /NOLOGO /IGNORE:4006 *.obj
+
+{..\..\..\..\src\df1b2-separable}.cpp.obj:
 	$(CC) $(FLAGS) $<
-
-all: $(LIBNAME) disk
-
-disk: 
-	copy ..\df1b2fun.h $(DISKDIR)\include
-	copy ..\adpool.h $(DISKDIR)\include
-	copy ..\adrndeff.h $(DISKDIR)\include
-	copy ..\df1b2fnl.h $(DISKDIR)\include
-	copy ..\df3fun.h $(DISKDIR)\include
-	copy ..\df32fun.h $(DISKDIR)\include
-	copy ..\df1b2loc.h $(DISKDIR)\include
-	copy $(LIBNAME) $(DISKDIR)\lib

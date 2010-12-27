@@ -2,22 +2,19 @@
 
 CC = cl
 
-FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I.. /I..\..\df1b2-separable /I..\..\nh99 /I..\..\linad99 /D__MSVC32__=8  /DSAFE_ALL /Ox
+FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-separable /I..\..\..\..\src\nh99 /I..\..\..\..\src\linad99 /I..\..\..\..\src\tools99 /D__MSVC32__=8  /DSAFE_ALL /Ox
 
-include ..\objects.lst
+include ..\..\..\..\src\tools99\objects.lst
 
 LIBNAME = adt32s.lib 
 
-$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)  
-	lib /OUT:$(LIBNAME) /NOLOGO *.obj
+all: $(DISKDIR)\lib\$(LIBNAME)
+	copy ..\..\..\..\src\tools99\clist.h $(DISKDIR)\include
+	copy ..\..\..\..\src\tools99\cifstrem.h $(DISKDIR)\include
+	copy ..\..\..\..\src\tools99\adstring.hpp $(DISKDIR)\include
 
-{..}.cpp.obj:
+$(DISKDIR)\lib\$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)  
+	lib /OUT:$@ /NOLOGO *.obj
+
+{..\..\..\..\src\tools99}.cpp.obj:
 	$(CC) $(FLAGS) $<
-
-all: $(LIBNAME) disk
-
-disk: 
-	copy ..\clist.h $(DISKDIR)\include
-	copy ..\cifstrem.h $(DISKDIR)\include
-	copy ..\adstring.hpp $(DISKDIR)\include
-	copy $(LIBNAME) $(DISKDIR)\lib

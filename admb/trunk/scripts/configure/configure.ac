@@ -70,8 +70,16 @@ then
     #CXX_32OR64BIT="64bit"
     #CXXFLAGS="-m64"
   #fi
-  GCC_VERSION=`gcc -dumpversion`
-  ADMB_TARGET="admb-${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  if test "${CXX}" = "g++"
+  then
+    GCC_VERSION=`gcc -dumpversion`
+    ADMB_TARGET="admb-${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  fi
+  if test "${CXX}" = "icc"
+  then
+    ICC_VERSION=`icc -dumpversion`
+    ADMB_TARGET="admb-${ADMB_VERSION}-linux-icc${ICC_VERSION}-${CXX_32OR64BIT}"
+  fi
   MAKEFILE="linux.mak"
 fi
 

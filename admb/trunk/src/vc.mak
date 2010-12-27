@@ -1,5 +1,5 @@
-DISK=..\build\admb-10.0-vc10-64bit
-#DISK=..\build\admb-10.0-vc10-32bit
+DISK=..\build\admb-10.0-vc10-32bit
+#DISK=..\build\admb-10.0-vc10-64bit
 
 all:
 	IF NOT EXIST $(DISK) mkdir $(DISK)
@@ -34,11 +34,11 @@ all:
 	cd $(DISK)\dist& cscript ..\..\..\scripts\create-admb-shortcut.vbs
 
 verify:
-	set ADMB_HOME=$(MAKEDIR)\$(DISK)
-	set PATH=$(MAKEDIR)\$(DISK)\bin;$(PATH)
-	cd $(MAKEDIR)\$(DISK)\examples& nmake /f Makefile all
+	set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist
+	set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)
+	cd $(MAKEDIR)\$(DISK)\dist\examples& nmake /f Makefile all
 	-..\scripts\get-outputs.bat > "..\benchmarks-opt.txt"
-	cd $(MAKEDIR)\$(DISK)\examples& nmake /f Makefile OPTION=-s all
+	cd $(MAKEDIR)\$(DISK)\dist\examples& nmake /f Makefile OPTION=-s all
 	-..\scripts\get-outputs.bat > "..\benchmarks-saf.txt"
 
 clean:

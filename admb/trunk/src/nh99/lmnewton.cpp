@@ -4,10 +4,6 @@
  * Author: David Fournier
  * Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
-/**
- * \file
- * Description not yet available.
- */
 #include <admodel.h>
 
 #ifdef __cplusplus
@@ -21,10 +17,6 @@ extern "C" {
 	}
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
 void function_minimizer::limited_memory_quasi_newton
   (BOR_CONST independent_variables& _x,int m)
 {
@@ -124,6 +116,7 @@ void function_minimizer::limited_memory_quasi_newton
   xtol = 1e-16;
   icall = 0;
   iflag = 0;
+  long int linfo=0;
 
 L20:
   f = 0.;
@@ -179,7 +172,6 @@ L20:
   long int liprintx= *iprintx;
   long int liflag=iflag;
   long int lm=m;
-  long int linfo=0;
   lbfgs_(&lnvar, &lm, &(x[1]) , &f, &(g[1]), &diagco, &(diag[1]),
     &liprintx, &crit, &xtol, &(w[1]), &liflag,&litn,&linfo);
   itn=int(litn);
@@ -211,10 +203,6 @@ L50:
   objective_function_value::gmax=fabs(max(gbest));
 }
 
-/**
- * Description not yet available.
- * \param
- */
 void function_minimizer::limited_memory_quasi_newton
   (double& f,BOR_CONST independent_variables& _x,int m,int noprintx,
   int maxfn,double crit)
@@ -274,6 +262,7 @@ void function_minimizer::limited_memory_quasi_newton
   xtol = 1e-16;
   icall = 0;
   iflag = 0;
+  long int linfo=0;
 
 L20:
   f = 0.;
@@ -328,7 +317,6 @@ L20:
   long int liprintx= *iprintx;
   long int liflag=iflag;
   long int lm=m;
-  long int linfo=0;
   lbfgs_(&lnvar, &lm, &(x[1]) , &f, &(g[1]), &diagco, &(diag[1]),
     &liprintx, &crit, &xtol, &(w[1]), &liflag,&litn,&linfo);
   itn=int(litn);

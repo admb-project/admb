@@ -34,11 +34,9 @@ all:
 	cd $(DISK)\dist& cscript ..\..\..\scripts\create-admb-shortcut.vbs
 
 verify:
-	set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist
-	set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)
-	cd $(MAKEDIR)\$(DISK)\dist\examples& nmake /f Makefile all
+	set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake /f Makefile all
 	-..\scripts\get-outputs.bat > "..\benchmarks-opt.txt"
-	cd $(MAKEDIR)\$(DISK)\dist\examples& nmake /f Makefile OPTION=-s all
+	set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake /f Makefile OPTION=-s all
 	-..\scripts\get-outputs.bat > "..\benchmarks-saf.txt"
 
 clean:

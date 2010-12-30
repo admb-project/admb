@@ -75,7 +75,7 @@ then
     GCC_VERSION=`gcc -dumpversion`
     ADMB_TARGET="admb-${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   fi
-  if test "${CXX}" = "icc"
+  if test "${CXX}" = "icpc"
   then
     ICC_VERSION=`icc -dumpversion`
     ADMB_TARGET="admb-${ADMB_VERSION}-linux-icc${ICC_VERSION}-${CXX_32OR64BIT}"

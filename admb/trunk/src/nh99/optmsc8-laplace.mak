@@ -14,7 +14,7 @@ include ..\..\..\..\src\nh99\objects.lst
 
 OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
 
-all: $(DISKDIR)\lib\$(LIBNAME)
+all: $(DISKDIR)\lib\$(LIBNAME) $(DISKDIR)\bin\tpl2cpp.exe
 	copy ..\..\..\..\src\nh99\admodel.h $(DISKDIR)\include
 	copy ..\..\..\..\src\nh99\adsplus.h $(DISKDIR)\include
 	copy ..\..\..\..\src\nh99\spcomm.h $(DISKDIR)\include
@@ -29,7 +29,7 @@ $(STUBLIBNAME): ..\df1b2stub.cpp
 	$(CC) $(FLAGS) ..\df1b2stub.cpp
 	lib /OUT:$(STUBLIBNAME) /NOLOGO df1b2stub.obj
 
-$(DISKDIR)/bin/tpl2cpp.exe:
+$(DISKDIR)\bin\tpl2cpp.exe:
 	cl /nologo /wd4996 /Fe$@ ..\..\..\..\src\nh99\tpl2cpp-winflex.c
 
 tpl2cpp-winflex.c: tpl2cpp.lex 

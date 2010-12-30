@@ -1,5 +1,5 @@
-DISK=..\build\admb-10.0-vc10-32bit
-#DISK=..\build\admb-10.0-vc10-64bit
+#DISK=..\build\admb-10.0-vc10-32bit
+DISK=..\build\admb-10.0-vc10-64bit
 
 all:
 	IF NOT EXIST $(DISK) mkdir $(DISK)
@@ -34,10 +34,10 @@ all:
 	cd $(DISK)\dist& cscript ..\..\..\scripts\create-admb-shortcut.vbs
 
 verify:
-	set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake /f Makefile all
-	-..\scripts\get-outputs.bat > "..\benchmarks-opt.txt"
-	set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake /f Makefile OPTION=-s all
-	-..\scripts\get-outputs.bat > "..\benchmarks-saf.txt"
+	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake all"
+	-cd $(MAKEDIR)\$(DISK)\dist& ..\..\..\scripts\get-outputs.bat > "..\..\..\benchmarks-opt.txt"
+	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake OPTION=-s all"
+	-cd $(MAKEDIR)\$(DISK)\dist& ..\..\..\scripts\get-outputs.bat > "..\..\..\benchmarks-saf.txt"
 
 clean:
 	IF EXIST $(DISK) rmdir /S /Q $(DISK)

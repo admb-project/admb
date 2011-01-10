@@ -93,8 +93,13 @@ fi
 
 if test  "`uname -s`" =  "SunOS"
 then
-  GCC_VERSION=`gcc -dumpversion`
-  ADMB_TARGET="admb-${ADMB_VERSION}-opensolaris-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  if test "${CXX}" = "CC"
+  then
+    ADMB_TARGET="admb-${ADMB_VERSION}-opensolaris-sunstudio-${CXX_32OR64BIT}"
+  else
+    GCC_VERSION=`gcc -dumpversion`
+    ADMB_TARGET="admb-${ADMB_VERSION}-opensolaris-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  fi
   MAKEFILE="linux.mak"
 fi
 

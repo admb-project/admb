@@ -94,7 +94,7 @@ fi
 if test  "`uname -s`" =  "SunOS"
 then
   GCC_VERSION=`gcc -dumpversion`
-  ADMB_TARGET="admb-${ADMB_VERSION}-mingw-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  ADMB_TARGET="admb-${ADMB_VERSION}-opensolaris-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
 fi
 

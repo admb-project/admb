@@ -245,7 +245,7 @@ Microsoft Windows and MinGW (msys and gcc-4.5)
 Installation from Binary Distributions
 ======================================
 Binary installation instructions can be found at 
-"http://www.admb-project.org/documention/".
+"http://www.admb-project.org/documentation/".
 
 Documentation
 =============

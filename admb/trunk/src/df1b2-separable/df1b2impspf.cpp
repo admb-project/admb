@@ -2,7 +2,7 @@
  * $Id: df1b2impspf.cpp 447 2009-10-25 01:09:00Z skaug $
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009 Regents of the University of California 
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file

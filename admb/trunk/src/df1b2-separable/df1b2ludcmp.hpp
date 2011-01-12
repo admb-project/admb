@@ -1,7 +1,7 @@
 /*
  * $Id: df1b2ludcmp.hpp 778 2010-09-22 22:07:39Z dseiple $
  *
- * Copyright (c) 2010 ADMB Foundation
+ * Copyright (c) 2010-2011 ADMB Foundation
  */
 /**
  * LU Decomposition classes for random effects

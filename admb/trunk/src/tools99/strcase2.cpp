@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: John Sibert
- * Copyright (c) 2010 ADMB Foundation
+ * Copyright (c) 2010-2011 ADMB Foundation
  */
 #include "adstring.hpp"
 

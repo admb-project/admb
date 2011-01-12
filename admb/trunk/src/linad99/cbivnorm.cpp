@@ -2,7 +2,7 @@
  * $Id$
  *
  * Authors: Alan Genz and Yihong Ge
- * Copyright (c) 2009, 2010 ADMB foundation
+ * Copyright (c) 2009-2011 ADMB foundation
  *
  * Ported to C++ and extensively modified by David Fournier
  */

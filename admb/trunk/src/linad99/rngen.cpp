@@ -1,7 +1,7 @@
 /*
    $Id$
   
-   ADMB adaptations copyright (c) 2009, 2010 ADMB Foundation
+   ADMB adaptations Copyright (c) 2009-2011 ADMB Foundation
 
    A C-program for MT19937, with initialization improved 2002/1/26.
    Coded by Takuji Nishimura and Makoto Matsumoto.

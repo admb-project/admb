@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * copyright (c) 2009 ADMB foundation
+ * Copyright (c) 2009-2011 ADMB foundation
  */
 /**
  * \file

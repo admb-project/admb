@@ -2,7 +2,7 @@
  * $Id$
  * 
  * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB Foundation
+ * Copyright (c) 2009-2011 ADMB Foundation
  */
 /**
  * \file

@@ -1,9 +1,8 @@
 /*
  * $Id$
  *
- * For AD Model Builder by Anders Nielsen <anders@nielsensweb.org> and Casper Berg <cbe@aqua.dtu.dk> 
- * Aug. 2010
- * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
+ * Authors: Anders Nielsen <anders@nielsensweb.org> and Casper Berg <cbe@aqua.dtu.dk> 
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file

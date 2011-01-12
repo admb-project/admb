@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: Unknown
- * Copyright (c) 2009, 2010 ADMB Foundation
+ * Copyright (c) 2009-2011 ADMB Foundation
  *
  * This file was originally written in FORTRAN II by and unknown author.
  * In the 1980s, it was ported to C and C++ and extensively modified by

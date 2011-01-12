@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009 ADMB foundation
+ * Copyright (c) 2009-2011 ADMB foundation
  *
  * This code is inspired by the CSparse package written by Timothy A. Davis.
  * It has been extensively modified for compliance with ADMB.

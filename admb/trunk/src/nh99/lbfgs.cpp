@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: Jorge Nodecal
- * Copyright (c) 2009, 2010 ADMB Foundation
+ * Copyright (c) 2009-2011 ADMB Foundation
  *
  * License: Public domain
  * Translated from fortran and extensively modified for compliance with

@@ -97,9 +97,13 @@ Unix and GNU g++
 
    $ cd admb-10.0
 
-3. Configure the build files
+3. Configure the build files for 32-bit
 
    $ ./configure
+
+   or configure the build files for 64-bit.
+
+   $ ./configure BUILD_64BIT=yes
 
 4. Build libraries 
   
@@ -198,7 +202,7 @@ Microsoft Windows and Borland C++ 5.5
 
    > cd admb-10.0\src
 
-6. Build libraries
+6. Build 32-bit libraries
 
    > make /fbcc.mak
 
@@ -223,7 +227,7 @@ Microsoft Windows and MinGW (msys and gcc-4.5)
 
    $ cd admb-10.0
 
-3. Configure the build files
+3. Configure the build files for 32-bit
 
    $ ./configure
 

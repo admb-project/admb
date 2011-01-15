@@ -1,0 +1,62 @@
+1i\
+}; \
+ \
+class df1b2_parameters : public df1b2_pre_parameters \
+{ \
+public: \
+  static df1b2_parameters * df1b2_parameters_ptr;\
+  static df1b2_parameters * get_df1b2_parameters_ptr(void) \
+  { \
+    return df1b2_parameters_ptr; \
+  } \
+  df1b2_parameters(int sz,int argc, char * argv[]) : \
+    df1b2_pre_parameters(sz,argc,argv) \
+  { \
+    df1b2_parameters_ptr=this;\
+  }
+
+s/dll_param_init_number/df1b2_init_number/
+s/dll_param_init_bounded_number/df1b2_init_bounded_number/
+s/dll_param_init_bounded_dev_vector/df1b2_init_bounded_dev_vector/
+s/dll_param_init_bounded_vector/df1b2_init_bounded_vector/
+s/dll_param_init_vector/df1b2_init_vector/
+s/dll_param_init_matrix/df1b2_init_matrix/
+
+
+
+s/param_init_number/df1b2_init_number/
+s/param_init_bounded_number/df1b2_init_bounded_number/
+s/random_effects_vector/df1b2_init_vector/
+s/random_effects_matrix/df1b2_init_matrix/
+s/random_effects_bounded_matrix/df1b2_init_bounded_matrix/
+s/random_effects_bounded_vector/re_df1b2_init_bounded_vector/
+$a\
+  virtual void user_function(void); \
+  virtual void allocate(void); \
+ // void begin_df1b2_funnel(void); \
+ // void setup_quadprior_calcs(void); \
+ // void end_df1b2_funnel(void);
+# virtual void user_function(const init_df1b2vector& x,df1b2variable& f); \
+/df_normal_prior_/d
+#s/df_normal_prior_/df1b2_normal_prior_/g
+s/param_init_bounded_dev_vector/df1b2_init_bounded_dev_vector/
+s/param_init_bounded_vector/df1b2_init_bounded_vector/
+s/param_init_bounded_matrix/df1b2_init_bounded_matrix/
+s/param_init_vector/df1b2_init_vector/
+s/param_init_matrix/df1b2_init_matrix/
+s/param_vector/df1b2vector/
+s/param_stddev_number/df1b2variable/
+s/param_likeprof_number/df1b2variable/
+s/param_number/df1b2variable/
+s/param_stddev_vector/df1b2vector/
+s/param_stddev_matrix/df1b2matrix/
+s/param_matrix/df1b2matrix/
+s/param_3array/df1b23array/
+#/objective_function_value/d
+s=objective_function_value= // re_objective_function_value=
+s/quadratic_prior/df1b2quadratic_prior/g
+/normal_df1b2quadratic_prior/d
+/normal_quadratic_prior/d
+s/quadratic_re_penalty/df1b2quadratic_re_penalty/g
+/df1b2quadratic_re_penalty/d
+/void between_phases_calculations(void);/d

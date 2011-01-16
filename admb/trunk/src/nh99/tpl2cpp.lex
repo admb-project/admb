@@ -2720,10 +2720,7 @@ DATA_SECTION  {
     strcpy(tmp_string,yytext);  // get x in x(1,4)
     fprintf(fdat,"%s",tmp_string);
     fprintf(fall,"  %s",tmp_string);
-    fprintf(fall,"%s",".allocate");
-    after_part(tmp_string1,yytext,'(');  // get x in x(1,4)
-    before_part(tmp_string2,tmp_string1,')');
-    fprintf(fall,"%s)",tmp_string2);
+    fprintf(fall,"%s",".allocate()");
     fprintf(fdat,"%s",";\n");
     fprintf(fall,"%s",";\n");
     if (!params_defined)

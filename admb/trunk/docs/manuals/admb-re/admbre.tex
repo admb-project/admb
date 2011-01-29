@@ -21,10 +21,11 @@
 
 \title{%
     \largetitlepart{Random Effects in\\ \ADM}
-    \mediumtitlepart{ADMB-RE User Guide}
+    \smalltitlepart{ADMB-RE User Guide}
+    \vspace{4.5ex}\textsf{\textit{Version 10.0~~(2011-01-18)}}\vspace{3ex}
 }
 % Author definition.
-\author{Hans Skaug \& David Fournier}
+\author{\textsf{\textit{Hans Skaug \& David Fournier}}}
 \manualname{Admb-Re}
 
 \maketitle
@@ -678,9 +679,9 @@ corresponding \scAB\ code would be
   f += - 0.5*norm2(u);
   x = sigma_x*u + mu;
 \end{lstlisting}
-(This, of course, requires that we change the type of \texttt{x}
-from \texttt{\ random\_effects\_vector} to \texttt{vector}, and that \texttt{u}
-is declared as a \texttt{random\_effects\_vector}.)
+(This, of course, requires that we change the type of \texttt{x} from
+\texttt{random\_effects\_vector} to \texttt{vector}, and that \texttt{u} is
+declared as a \texttt{random\_effects\_vector}.)
 
 The trick here was to start with a $N(0,1)$ distributed random effect \texttt{u}
 and to generate random effects \texttt{x} with another distribution. This is a

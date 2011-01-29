@@ -25,11 +25,12 @@
 \begin{document}
 
 \title{%
-  \mediumtitlepart{An Introduction to}
-  \largetitlepart{AD MODEL BUILDER\\ Version 9.0.0}
-  \smalltitlepart{for Use in Nonlinear Modeling and Statistics}
+  \smalltitlepart{An Introduction to}
+  \largetitlepart{AD MODEL BUILDER}
+  \smalltitlepart{for Use in Nonlinear Modeling and Statistics\\[1.5em]
+    \normalsize Version 10.0~~(2011-01-18)}
 }
-\author{David Fournier}
+\author{\textsf{\textit{David Fournier}}}
 \manualname{AD Model Builder}
 \maketitle
 %%xx \htmlnewfile
@@ -49,7 +50,7 @@ difficulties in nonlinear modeling, such as restricting the values that
 parameters can assume, carrying out the optimization in a stepwise manner, and
 producing a report of the estimates of the standard deviations of the parameter
 estimates. In addition, these techniques scale up to models with at least 5000
-independent parameters on a 1000 MH Pentium III, and more on more powerful
+independent parameters on a 1000 MHz Pentium III, and more on more powerful
 platforms. So, if you are interested in a really powerful environment for
 nonlinear modeling---read on!
 \X{template}
@@ -516,7 +517,7 @@ PRELIMINARY_CALCS_SECTION
 \end{lstlisting}
 which may be more readable for some users. Notice that it is also possible to
 define \texttt{C}~objects, such as the object of type \texttt{int i} used as the
-index for the for loop, ``on the fly" in the
+index for the for loop, ``on the fly'' in the
 \texttt{PRELIMINARY\_CALCS\_SECTION} or the \texttt{PROCEDURE\_SECTION}.
 
 \section{The default output from \ADM}
@@ -1279,7 +1280,7 @@ to be rather unstable numerically. In addition, some of the model parameters are
 often poorly determined. Notwithstanding these difficulties, it is often
 necessary to make decisions about resource management based on the analysis
 provided by these models. This example provides a good opportunity for
-presenting some more advanced features of \ADM that are designed to overcome
+presenting some more advanced features of \ADM\ that are designed to overcome
 these difficulties.
 
 \X{Schaeffer-Pella-Tomlinson model}
@@ -3251,10 +3252,10 @@ Y_{ti}-f_1z_{t-1,j}-f_2z_{t-2,k}
 Notice that due to the lags, we can only begin to calculate values for the
 $e(t,i,j,k,l,m)$ in time period~$5$. It is assumed that the state transitions
 are given by a Markov process with transition matrix
-$P=(p_{ij})$\footnote{{Hamilton seems to index his matrices with the column
-    index first in some cases. We use the row index first. Thus, Hamilton's
-    $p_{ij}$ may correspond to our $p_{ji}$.}} If we are in state~$j$ at
-time~$t$, the probability of being in state~$i$ at time~$t+1$ is~$p_{ij}$.
+$P=(p_{ij})$.\footnote{Hamilton seems to index his matrices with the column
+  index first in some cases. We use the row index first. Thus, Hamilton's
+  $p_{ij}$ may correspond to our $p_{ji}$.} If we are in state~$j$ at time~$t$,
+the probability of being in state~$i$ at time~$t+1$ is~$p_{ij}$.
 
 If we consider the quintuple of the last 5 states to be the states of a new
 Markov process, then we can define the transition matrix for this process by
@@ -3694,7 +3695,8 @@ set the amount of memory that \ADM\ reserves for variable objects. Setting these
 is a matter of tuning for optimum performance. If you have a lot of memory
 available, making them larger may improve performance. However, models will run
 without including these statements, as long as there is enough memory for \ADM's
-temporary files. \X{\fontindexentry{tt}{ GLOBALS\_SECTION}}
+temporary files.
+\X{\fontindexentry{tt}{ GLOBALS\_SECTION}}
 \begin{lstlisting}
 GLOBALS_SECTION
   #include <admodel.h>
@@ -4318,7 +4320,8 @@ initial values. The actual default values used can be modified in the
 \texttt{INITIALIZATION\_SECTION}. From a mathematical point of view, objects
 declared with the \texttt{init\_} prefix are independent variables that are used
 to calculate the objective function being minimized.
-\X{\fontindexentry{tt}{INITIALIZATION\_SECTION}} \X{3-dimensional arrays}
+\X{\fontindexentry{tt}{INITIALIZATION\_SECTION}}
+\X{3-dimensional arrays}
 
 The prefixes \texttt{bounded\_} and \texttt{dev\_} can only be used in the \PS.
 The prefix \texttt{bounded\_} restricts the numerical values that an object can
@@ -4426,7 +4429,8 @@ mean~$\mu$ and variance~$\sigma^2$, has the form
   -n\log(\sigma)-\sum_{i=1}^n \frac{(Y_i-\mu_i)^2}{2\sigma^2}
 \label{ap:xx1}
 \end{equation}
-\X{concentrated likelihood}\XX{likelihood}{concentrated}
+\X{concentrated likelihood}
+\XX{likelihood}{concentrated}
 To find the maximum of this expression with respect to $\sigma$, take the
 derivative of expression~(\ref{ap:xx1}) with respect to $\sigma$ and set the
 resulting equation equal to zero.

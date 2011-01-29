@@ -1607,7 +1607,7 @@ iv = ivector(u); // iv will be filled with the integer parts of the
                  // components of u
 \end{lstlisting}
 or the conversion may be ``implicit,'' that is, supplied by the compiler.
-{implicit conversion}
+\X{implicit conversion}
 \XX{conversion}{implicit}
 \begin{lstlisting}
 dvector u(1,10);
@@ -3667,17 +3667,16 @@ while (fmc.ireturn >=0)
 The function prototype for \texttt{fmin} is:
 \begin{lstlisting}[escapechar=\%]
 void fmm::fmin(double& f, independent_variables & x, dvector & g);
-/*-----------------------------------------------------------------------*
- * Purpose: quasi-Newton numerical minimization                              *
- *  f       : current value of function to be minimized                      *
- *  x       : current values of the variables over which the minimization    *
- *            occurs; instance of class independent variables with elements  *
- *            from 1 to n                                                    *
- *  g       : current value of the gradient as returned by the function      *
- *            gradcalc( ... ); instance of class dvector with elements   *
- *            from 1 to n                                                    %
-%     *
- *-----------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------*
+ * Purpose: quasi-Newton numerical minimization                             *
+ *  f       : current value of function to be minimized                     *
+ *  x       : current values of the variables over which the minimization   *
+ *            occurs; instance of class independent variables with elements *
+ *            from 1 to n                                                   *
+ *  g       : current value of the gradient as returned by the function     *
+ *            gradcalc( ... ); instance of class dvector with elements      *
+ *            from 1 to n                                                   *
+ *--------------------------------------------------------------------------*/
 \end{lstlisting}
 
 The execution of \texttt{fmin} may be terminated by pressing the `Q' key on the
@@ -3834,22 +3833,21 @@ The derivative checker may also be invoked explicitly. Its function prototype is
 \begin{lstlisting}[escapechar=\%]
 void derch(double & f, independent_variables & x, dvector & g,
            const int n, int & ireturn);
-/*-----------------------------------------------------------------------*
- * Purpose: compare analytical derivative calculation with finite  *
- *          difference approximation                                         %
-%           *
- * Input:                                                                    *
- *  f       : current value of function                                      *
- *  x       : current values of the parameters of the function; instance of  *
- *            class independent_variables with elements ranging from 1 to n  *
- *  g       : current value of the gradient as returned by the function      *
- *            gradcalc( ... ); instance of class dvector with elements from  *
- *            1 to n                                                         *
- *  n       : number of variables                                            *
+/*--------------------------------------------------------------------------*
+ * Purpose: compare analytical derivative calculation with finite           *
+ *          difference approximation                                        *
+ * Input:                                                                   *
+ *  f       : current value of function                                     *
+ *  x       : current values of the parameters of the function; instance of *
+ *            class independent_variables with elements ranging from 1 to n *
+ *  g       : current value of the gradient as returned by the function     *
+ *            gradcalc( ... ); instance of class dvector with elements from *
+ *            1 to n                                                        *
+ *  n       : number of variables                                           *
  *  ireturn : return status; set ireturn = 3 prior to first call to derch() *
- * Output:                                                                   *
- *  ireturn : return status; ireturn = 4 or 5 on return from derch()         *
- *-----------------------------------------------------------------------*/
+ * Output:                                                                  *
+ *  ireturn : return status; ireturn = 4 or 5 on return from derch()        *
+ *--------------------------------------------------------------------------*/
 \end{lstlisting}
 
 The following code fragment will display the values of the function, the
@@ -4303,7 +4301,7 @@ for~$\alpha$ will lie between~$0$ and~$1$. The parameter~$\alpha$ can also be
 interpreted as a ``cutoff'' switch. As~$\alpha$ is made smaller, the influence
 of the larger residuals on the parameter estimates will be reduced. This is much
 like looking at the data and removing the data points that fit the model badly.
-X{outliers}{in robust regression}
+\X{outliers}{in robust regression}
 
 The code for the log-likelihood
 function~(\ref{eq:robust-nonlinear-regression-12}) % \number\mychapno.12

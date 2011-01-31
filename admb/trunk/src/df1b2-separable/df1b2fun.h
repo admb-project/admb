@@ -73,6 +73,7 @@ int withinbound(int lb,int n,int ub);
 class do_naught_kludge;
 class newadkludge;
 
+
 /**
  * Description not yet available.
  * \param
@@ -974,6 +975,7 @@ public:
   df1b2variable& operator () (int i) const;
   df1b2variable& operator [] (int i) const;
 #  endif
+  df1b2vector operator() (const ivector & iv);
   df1b2vector& operator += (const df1b2vector& x);
   df1b2vector& operator += (double x);
   df1b2vector& operator -= (const df1b2vector& x);

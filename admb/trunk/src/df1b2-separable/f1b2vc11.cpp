@@ -1,3 +1,10 @@
+/*
+ * $Id$
+ *
+ * Author: David Fournier
+ * Copyright (c) 2011 ADMB Foundation
+ */
+
 #include <df1b2fun.h>
 
 df1b2vector df1b2vector::operator() (const ivector & iv)

@@ -31,7 +31,7 @@ install:
 	install -m 444 LICENSE @prefix@/admb
 	install -m 444 README.txt @prefix@/admb
 	install -m 444 Makefile @prefix@/admb
-	install -m 555 scripts/@cxx@/admb-bin @prefix@/bin/admb
+	install -m 555 scripts/admb/admb-bin @prefix@/bin/admb
 	cp -Rf build/@target@/@target@/docs/* @prefix@/admb/docs
 	cp -Rf build/@target@/@target@/examples/* @prefix@/admb/examples
 

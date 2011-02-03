@@ -88,13 +88,13 @@
  * Description not yet available.
  * \param
  */
-  DF_FILE::DF_FILE(unsigned long int sz)
+  DF_FILE::DF_FILE(unsigned long long int sz)
   {
     const int us=sizeof(unsigned int);
-    if (sz > UINT_MAX)
+    if (sz > ULLONG_MAX)
     {
       cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
-        << INT_MAX<<endl;
+        << ULLONG_MAX<<endl;
     }
     if ( (buff=new char[sz])==NULL)
     {

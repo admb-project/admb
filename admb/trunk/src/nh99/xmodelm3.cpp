@@ -22,6 +22,9 @@
 
 int get_option_number(const char * option_name,const char * error_message,
   int& option_value);
+int get_option_number(const char * option_name,const char * error_message,
+  long long int& option_value);
+
 
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
@@ -560,17 +563,19 @@ void tracing_message(int traceflag,const char *s);
       sz=ssz;
     }
     
+    long long int lssz;
     nopt=get_option_number("-cbs",
-      "-cbs option needs positive integer -- ignored",ssz);
-    if (nopt>-1 && ssz>0) {
-      gradient_structure::set_CMPDIF_BUFFER_SIZE(ssz);
+      "-cbs option needs positive integer -- ignored",lssz);
+    if (nopt>-1 && lssz>0) {
+      gradient_structure::set_CMPDIF_BUFFER_SIZE(lssz);
     }
 
+    
     nopt=get_option_number("-gbs",
-      "-gbs option needs positive integer -- ignored",ssz);
-    if (nopt>-1 && ssz>0) {
+      "-gbs option needs positive integer -- ignored",lssz);
+    if (nopt>-1 && lssz>0) {
       gradient_structure::set_GRADSTACK_BUFFER_SIZE
-        (ssz/sizeof(grad_stack_entry));
+        (lssz/sizeof(grad_stack_entry));
     }
 
     if (!sz)
@@ -651,6 +656,29 @@ int get_option_number(const char * option_name,const char * error_message,
     else
     {   
       option_value=atoi(ad_comm::argv[on1+1]);
+    }
+  }
+  return on1;
+}
+
+int get_option_number(const char * option_name,const char * error_message,
+  long long int& option_value)
+{
+  int on1;
+  int nopt;
+  if ( (on1=option_match(ad_comm::argc,ad_comm::argv,option_name,nopt))>-1)
+  {
+    if (!nopt)
+    {
+      if (ad_printf)
+        (*ad_printf)("%s\n",error_message);
+      else
+        cerr << error_message << endl;
+      on1=-1;
+    }
+    else
+    {   
+      option_value=atoll(ad_comm::argv[on1+1]);
     }
   }
   return on1;

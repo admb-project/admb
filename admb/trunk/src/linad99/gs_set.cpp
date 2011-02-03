@@ -73,17 +73,17 @@ void gradient_structure::set_ARRAY_MEMBLOCK_SIZE(unsigned long i)
  * Description not yet available.
  * \param
  */
-void gradient_structure::set_CMPDIF_BUFFER_SIZE(long int i)
+void gradient_structure::set_CMPDIF_BUFFER_SIZE(long long int i)
 {
-  if ( (unsigned long int) (UINT_MAX) < (unsigned long int)i)
+  if ( (unsigned long int) (LLONG_MAX) < (unsigned long int)i)
   {
-    unsigned int max_size=UINT_MAX;
+    long long  int max_size=LLONG_MAX;
 
     cerr << "\n\n It appears that the size you are setting for "
-      "the\n CMPDIF_BUFFER is > 64K in a 16 bit word machine."
+      "the\n CMPDIF_BUFFER is > " <<  LLONG_MAX <<
       "This appears\n to be an error. The maximum size argument ";
     cerr << "for the function\n"
-      "--- gradient_structure::set_CMPDIF_BUFFER_SIZE(long int i) ---\n"
+      "--- gradient_structure::set_CMPDIF_BUFFER_SIZE(long long int i) ---\n"
       "should probably be  " << max_size << endl;
   }
   check_set_error("CMPDIF_BUFFER_SIZE");
@@ -94,21 +94,21 @@ void gradient_structure::set_CMPDIF_BUFFER_SIZE(long int i)
  * Description not yet available.
  * \param
  */
-void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long int i)
+void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i)
 {
-  unsigned long int gs_size=(unsigned long int) (sizeof(grad_stack_entry));
+  long long int gs_size=(long long int) (sizeof(grad_stack_entry));
 
-  if ( (unsigned long int) (UINT_MAX) < gs_size *i)
+  if ( (unsigned long int) (LLONG_MAX) < gs_size *i)
   {
-    unsigned int max_size=UINT_MAX/gs_size;
+    unsigned int max_size=LLONG_MAX/gs_size;
 
     cerr << "\n\n It appears that the size you are setting for "
-      "the\n GRADSTACK_BUFFER is > 64K in a 16 bit word machine."
+      "the\n GRADSTACK_BUFFER is > " << LLONG_MAX <<
       "This appears\n to be an error. The maximum size argument ";
     cerr << "for the function\n"
-      "--- gradient_structure::set_GRADSTACK_BUFFER_SIZE(long int i) ---\n"
+      "--- gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i) ---\n"
       "should probably be  " << max_size << endl;
-    cerr << "UINT_MAX = " << (unsigned long int) (UINT_MAX) << endl; 
+    cerr << "LLONG_MAX = " << (unsigned long int) (LLONG_MAX) << endl; 
     cerr << " i = " << i << endl; 
     cerr << " gs_size = " << gs_size << endl; 
     cerr << " i*gs_size = " << i*gs_size << endl; 

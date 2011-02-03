@@ -103,8 +103,8 @@ int gradient_structure::instances = 0;
 dvariable * gradient_structure::MAX_RETURN = NULL;
 dvariable * gradient_structure::MIN_RETURN = NULL;
 dvariable * gradient_structure::RETURN_PTR = NULL;
-long int gradient_structure::GRADSTACK_BUFFER_SIZE = 40000L;
-long int gradient_structure::CMPDIF_BUFFER_SIZE=1400000L;
+long long int gradient_structure::GRADSTACK_BUFFER_SIZE = 40000L;
+long long int gradient_structure::CMPDIF_BUFFER_SIZE=1400000L;
 
 dependent_variables_information * gradient_structure::DEPVARS_INFO=NULL;
 

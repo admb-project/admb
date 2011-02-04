@@ -23,7 +23,7 @@ endif
 
 default:
 	mkdir -vp dox/html
-	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo "GENERATE_XML = NO"; echo -n "PROJECT_NUMBER = A";svnversion ../..) | doxygen -
+	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo "GENERATE_XML = NO"; echo -n "PROJECT_NUMBER = 10.0.";svnversion ../..) | doxygen -
 
 sunsys:
 	mkdir -vp sunsys-dox/html

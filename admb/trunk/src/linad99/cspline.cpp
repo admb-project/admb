@@ -9,10 +9,6 @@
  * Contains routines for cubic spline interpolation
  * for constant types.
  */
-/**
- * \defgroup cub_spline
- */
-
 #include <fvar.hpp>
 
 dvector spline(BOR_CONST dvector &x,BOR_CONST dvector&y,double yp1,double ypn);

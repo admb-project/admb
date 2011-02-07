@@ -53,3 +53,16 @@ invoke custom adjoint code.
 /** \defgroup DEVEL Development Utilities
 \details ADMB functions of use to developers of ADMB code.
 */
+
+/**
+ * \defgroup gammafunc Gamma and related functions.
+ */
+
+/**
+ * \defgroup eigen Eigenvalues and eigenvectors.
+ */
+
+/**
+ * \defgroup cub_spline Class and methods for cubic splines.
+ */
+

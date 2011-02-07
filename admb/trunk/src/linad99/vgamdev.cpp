@@ -12,9 +12,6 @@
  * are included. They being: log gamma,
  * and some polynomial evaluation functions.
  */
-/**
- * \defgroup gammafunc
- */
 
 #include <fvar.hpp>
 

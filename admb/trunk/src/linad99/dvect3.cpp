@@ -27,7 +27,8 @@
   }
 
   /** \ingroup matop
-  Squared norm of a vector; constant objects.
+  Squared norm of a vector; constant objects. 
+  Computes the sum of squares of its vector argument.
   \param t1 A vector, \f$v\f$.
   \returns \f$||v||^2 = v\times v = \sum_i v_i^2\f$
   */

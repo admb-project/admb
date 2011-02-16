@@ -3,30 +3,6 @@ setlocal
 if [%1]==[] goto HELP
 if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
-REM #######################################################################################################################
-REM                                                                                                                       #
-REM Script:   admb [-d] [-g] [-r] [-s] model                                                                              #
-REM                                                                                                                       #
-REM Purpose:  Build ADMB executable from TPL, using tpl2cpp/tpl2rem, adcomp, and adlink                                   #
-REM                                                                                                                       #
-REM Args:     -d creates DLL                                                                                              #
-REM           -g inserts debugging symbols                                                                                #
-REM           -r creates ADMB-RE model                                                                                    #
-REM           -s creates model that enforces safe array bounds during runtime                                             #
-REM           model is the filename with or without extension, e.g. simple or simple.tpl                                  #
-REM                                                                                                                       #
-REM Notes:    The same admb.bat script is used for all Windows compilers: Borland, GCC, and Microsoft Visual C++          #
-REM                                                                                                                       #
-REM Requires: tpl2cpp, tpl2rem, adcomp, adlink                                                                            #
-REM                                                                                                                       #
-REM Returns:  Creates executable or DLL with same prefix                                                                  #
-REM                                                                                                                       #
-REM History:  24 May 2009  Arni Magnusson created                                                                         #
-REM           27 Nov 2009  Arni Magnusson added support for filename extension, e.g. simple.tpl                           #
-REM            8 Feb 2010  Johnoel Ancheta split the -s combo option into separate -g and -s options                      #
-REM           22 Feb 2010  Arni Magnusson merged forked versions                                                          #
-REM                                                                                                                       #
-REM #######################################################################################################################
 
 rem Pop args until model=%1
 set bounds=
@@ -36,58 +12,40 @@ set g=
 set r=
 set s=
 set tpl2cpp=tpl2cpp
+set i=0
 :STARTLOOP
 if [%2]==[] goto ENDLOOP
-if %1==-d set d=-d& set dll=-dll& shift
-if %1==-g set g=-g& shift
-if %1==-r set r=-r& set tpl2cpp=tpl2rem& shift
-if %1==-s set s=-s& set bounds=-bounds& shift
+if %1==-d set d=-d & set dll=-dll & shift
+if %1==-g set g=-g & shift
+if %1==-r set r=-r & set tpl2cpp=tpl2rem& shift
+if %1==-s set s=-s & set bounds=-bounds & shift
+set /a i=%i%+1
+if %i%==100 shift & set i=0 & echo.&echo Warning: illegal option %1 (discarded)
 goto STARTLOOP
 :ENDLOOP
 
 set model=%~n1
+if not exist %model%.tpl goto ERROR1
+del %model%.cpp %model%.htp %model%.obj %model%.exe 2> NUL
 
-if not exist %model%.tpl (
-  goto ERROR
-)
+set CMD=%tpl2cpp% %bounds%%dll%%model%
+echo.&echo *** %CMD%
+%CMD%
+if not exist %model%.cpp set ext=cpp& goto ERROR2
+if not exist %model%.htp set ext=htp& goto ERROR2
 
-if exist %model%.htp (
-  del /Q %model%.htp
-)
-if exist %model%.cpp (
-  del /Q %model%.cpp
-)
-if exist %model%.obj (
-  del /Q %model%.obj
-)
-if exist %model%.exe (
-  del /Q %model%.exe
-)
+set CMD=adcomp %d%%g%%r%%s%%model%
+echo.&echo *** %CMD%
+call %CMD%
+if not exist %model%.obj set ext=obj& goto ERROR2
 
-echo *** Parsing: %model%.tpl
-echo.
-%tpl2cpp% %bounds% %dll% %model%
-if not exist %model%.htp (
-  goto ERROR
-)
-if not exist %model%.cpp (
-  goto ERROR
-)
-echo.
-echo *** Compiling: adcomp %d% %g% %r% %s% %model%
-call adcomp %d% %g% %r% %s% %model%
-if not exist %model%.obj (
-  goto ERROR
-)
-echo.
-echo *** Linking: adlink %d% %g% %r% %s% %model%
-call adlink %d% %g% %r% %s% %model%
-if not exist %model%.exe (
-  goto ERROR
-)
-echo.
-echo Successful build of executable: %model%.exe
+set CMD=adlink %d%%g%%r%%s%%model%
+echo.&echo *** %CMD%
+call %CMD%
+if defined dll (if not exist %model%.dll set ext=dll& goto ERROR2)
+if not defined dll (if not exist %model%.exe set ext=exe& goto ERROR2)
 
+echo.&echo Done
 goto EOF
 
 :HELP
@@ -103,7 +61,26 @@ echo   model  Filename prefix, e.g. simple
 echo.
 goto EOF
 
-:ERROR
-echo.
-echo Error: Failed to build executable.
+:ERROR1
+echo.&echo Error: %model%.tpl not found
+goto EOF
+
+:ERROR2
+echo.&echo Error: could not create %model%.%ext%
+goto EOF
+
 :EOF
+
+REM r982 [2011-02-16] arnima  rewrite, fixed bug when user option is not
+REM                           recognized, fixed spaces, improved messages
+REM r927 [2010-12-24] johnoel moved to 'admb' dir
+REM r917 [2010-12-24] johnoel pruned 'mingw' dir
+REM r914 [2010-12-24] johnoel changed script so it deletes cpp/htp/obj/exe and
+REM                           reports error or success, moved to 'g++' dir
+REM r629 [2010-05-20] johnoel changed .o to .obj
+REM r623 [2010-05-20] johnoel changed script so it exits if tpl/cpp/htp/o/exe do
+REM                           not exist
+REM r525 [2009-08-07] arnima  added support for filename extension like
+REM                           simple.tpl
+REM                   johnoel split -s option into separate -g and -s options
+REM r244 [2009-05-28] arnima  created

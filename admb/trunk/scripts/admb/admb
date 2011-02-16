@@ -10,28 +10,6 @@ Build AD Model Builder executable from TPL.\n
 if [[ "$1" == "" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
-###########################################################################################################################
-###                                                                                                                       #
-### Script:   admb [-d] [-g] [-r] [-s] model                                                                              #
-###                                                                                                                       #
-### Purpose:  Build ADMB executable from TPL, using tpl2cpp/tpl2rem, adcomp, and adlink                                   #
-###                                                                                                                       #
-### Args:     -d creates DLL                                                                                              #
-###           -g inserts debugging symbols                                                                                #
-###           -r creates ADMB-RE model                                                                                    #
-###           -s creates model that enforces safe array bounds during runtime                                             #
-###           model is the filename with or without extension, e.g. simple or simple.tpl                                  #
-###                                                                                                                       #
-### Requires: tpl2cpp, tpl2rem, adcomp, adlink                                                                            #
-###                                                                                                                       #
-### Returns:  Creates executable or DLL with same prefix                                                                  #
-###                                                                                                                       #
-### History:  23 May 2009  Arni Magnusson created                                                                         #
-###           27 Nov 2009  Arni Magnusson added support for filename extension, e.g. simple.tpl                           #
-###            8 Feb 2010  Johnoel Ancheta split the -s combo option into separate -g and -s options                      #
-###           22 Feb 2010  Arni Magnusson merged forked versions                                                          #
-###                                                                                                                       #
-###########################################################################################################################
 
 # Pop args until model=$1
 unset bounds
@@ -43,51 +21,55 @@ unset s
 tpl2cpp=tpl2cpp
 while getopts "dgrs" A; do
   case $A in
-    d) d="-d "; dll="-dll ";;
-    g) g="-g ";;
-    r) r="-r "; tpl2cpp=tpl2rem;;
-    s) s="-s "; bounds="-bounds ";;
+    d) d=-d; dll=-dll;;
+    g) g=-g;;
+    r) r=-r; tpl2cpp=tpl2rem;;
+    s) s=-s; bounds=-bounds;;
   esac
 done
-shift $[OPTIND-1]
+shift $((OPTIND-1))
+
+ERROR1 ()
+{
+  echo -e \\nError: $model.tpl not found\\n
+  exit 1
+}
+ERROR2 ()
+{
+  echo -e \\nError: could not create $model$1\\n
+  exit 1
+}
 
 model="${1%.*}"
+if [[ ! -f $model.tpl ]]; then ERROR1; fi
+rm -f $model.cpp $model.htp $model.o $model
 
-rm -f ${model}.htp
-rm -f ${model}.cpp
-rm -f ${model}.o
-rm -f ${model}
+CMD="$tpl2cpp $bounds $dll $model"
+echo -e \\n\*\*\* $CMD
+eval $CMD
+if [[ ! -f $model.cpp ]]; then ERROR2 .cpp; fi
+if [[ ! -f $model.htp ]]; then ERROR2 .htp; fi
 
-if test -f ${model}.tpl ; then
-CMD1="$tpl2cpp ${bounds}${dll}$model"
-printf "\n*** Parsing: %s\n" "${CMD1}"
-eval ${CMD1}
-fi
+CMD="$CXXFLAGS adcomp $d $g $r $s $model"
+echo -e \\n\*\*\* $CMD
+eval $CMD
+if [[ ! -f $model.o ]]; then ERROR2 .o; fi
 
-if test -f ${model}.htp -a -f ${model}.cpp ; then
-  ARG1=
-  if test ! -z "${CXXFLAGS}" ; then
-    ARG1="CXXFLAGS=\"${CXXFLAGS}\" "
-  fi
-  CMD2="${ARG1}adcomp ${d}${g}${r}${s}$model"
-  printf "\n*** Compiling: %s\n" "${CMD2}"
-  eval ${CMD2}
-fi
+CMD="$LDFLAGS adlink $d $g $r $s $model"
+echo -e \\n\*\*\* $CMD
+eval $CMD
+if [[ -z $dll && ! -f $model ]]; then ERROR2; fi
+if [[ -n $dll && ! -f $model.so ]]; then ERROR2 .so; fi
 
-if test -f ${model}.o ; then
-  ARG2=
-  if test ! -z "${LDFLAGS}" ; then
-    ARG2="LDFLAGS=\"${LDFLAGS}\" "
-  fi
-  CMD3="${ARG2}adlink ${d}${g}${r}${s}$model"
-  printf "\n*** Linking: %s\n" "${CMD3}"
-  eval ${CMD3}
-fi
-
-if test -x ${model} ; then
-  printf "\nSuccessful build of executable: %s\n" "${model}"
-else
-  printf "\nError: Failed to build executable.\n"
-fi
-
+echo -e \\nDone\\n
 exit 0
+
+### r982 [2011-02-16] arnima  rewrite, improved messages
+### r927 [2010-12-24] johnoel moved to 'admb' dir
+### r901 [2010-12-22] johnoel moved to 'g++' dir
+### r662 [2010-06-17] johnoel changed script so it deletes cpp/htp/obj/exe and
+###                           reports error or success, added exit status
+### r524 [2010-03-17] arnima  added support for filename extension like
+###                           simple.tpl
+### r503 [2009-02-08] johnoel split -s option into separate -g and -s options
+### r243 [2009-05-27] arnima  created

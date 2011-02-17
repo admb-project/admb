@@ -8,12 +8,12 @@ rem Pop args until model=%1
 set adlib=-lado
 set df1b2lib=-ldf1b2o
 set linker=g++
-set sym=-s
+set sym=-s & rem space
 set i=0
 :STARTLOOP
 if [%2]==[] goto ENDLOOP
 if %1==-d set linker=dllwrap& shift
-if %1==-g set sym=-g& shift
+if %1==-g set sym=& shift
 if %1==-r shift
 if %1==-s set adlib=-lads& set df1b2lib=-ldf1b2s& shift
 set /a i=%i%+1
@@ -24,9 +24,9 @@ goto STARTLOOP
 set def=
 set model=%~n1
 if %linker%==g++ (set out=-o %model%) else (set def=-def %model%.def^
- --driver-name g++& set out=--output-lib lib%model%.a -o %model%.dll)
+ --driver-name g++ & set out=--output-lib lib%model%.a -o %model%.dll)
 
-set CMD=%linker% %sym% -static %def% -L"%ADMB_HOME%\lib" %model%.obj %df1b2lib%^
+set CMD=%linker% %sym%-static %def%-L"%ADMB_HOME%\lib" %model%.obj %df1b2lib%^
  -ladmod -ladt %adlib% %df1b2lib% -ladmod -ladt %adlib% %out%
 echo %CMD%
 %CMD%
@@ -48,6 +48,7 @@ echo.
 
 :EOF
 
+REM r985 [2011-02-17] arnima  changed sym=-g to sym=[space], fixed spaces
 REM r982 [2011-02-16] arnima  rewrite, fixed bug when user option is not
 REM                           recognized, enabled strip and debug, fixed spaces
 REM r917 [2010-12-24] johnoel pruned 'mingw' dir

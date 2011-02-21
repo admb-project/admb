@@ -157,19 +157,20 @@ static int ycounter=0;
     Invoked by the compiler in some circumstances such as function 
     call containing an argument of class %dvector passed by value. 
 
-    The following code segments creates the /dvector object x and fills it with
-    uniform random numbers (using the constant 79 as seed). The new /dvector 
-    object y will reference the same memory locations as x, and any changes in y
-    will also appear in x. The new /dvector object /z does not refer to the same    memory locations as x, and any changes in z will be unique to z.
+    The following code segments creates the \c dvector object \c x and fills it with
+    uniform random numbers (using the constant 79 as seed; \ref fill_randu). The new \c dvector 
+    object \c y will reference the same memory locations as \c x, and any changes in \c y
+    will also appear in \c x. The new \c dvector object \c z does not refer to 
+    the same memory locations as \c x, and any changes in \c z will be unique to \c z.
 
-    \verbatim
+    \code
     dvector x(1,10);
     y.fill_randu(79L);
-    dvector y = x;
+    dvector y = x; // shallow copy
     dvector z;
-    z = x;
-    \endverbatim
-    */
+    z = x;         // "deep" copy
+    \endcode
+  */
  dvector::dvector(_CONST dvector& t)
  {
    #ifdef DIAG

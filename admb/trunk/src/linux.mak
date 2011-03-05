@@ -66,6 +66,12 @@ dist:
 	#bzip2 ${DISK}.tar 
 
 verify:
+	cp ../scripts/admb/admb-r901 ${DISK}/bin/admb
+	cp ../scripts/g++/adcomp-r901 ${DISK}/bin/adcomp
+	cp ../scripts/g++/adlink-r901 ${DISK}/bin/adlink
+	cp ../scripts/admb/admb.bat-r901 ${DISK}/bin/admb.bat
+	cp ../scripts/g++/adcomp.bat-r901 ${DISK}/bin/adcomp.bat
+	cp ../scripts/g++/adlink.bat-r901 ${DISK}/bin/adlink.bat
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} make -C ${DISK}/examples all
 	-export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-r${ADMB_REVISION}-opt.txt"
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} SAFE_OPTION=1 make -C ${DISK}/examples all

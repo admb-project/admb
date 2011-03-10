@@ -224,28 +224,55 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-    prevariable& atan2(_CONST prevariable& v1,_CONST prevariable& v2)
-    {
-  dvariable x = v1/v2;
-      return atan(x);
-    }
+prevariable& atan2(_CONST prevariable& v1,_CONST prevariable& v2)
+{
+  if (value(v1) == 0 && value(v2) == 0)
+  {
+    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n"; 
+    ad_exit(1);
+  }
+  if (value(v1) == 0 && value(v2) > 0)
+  {
+    return atan(v1/v2);
+  }
+  dvariable x = (sqrt(v2 * v2 + v1 * v1) - v2)/v1;
+  return atan(x) * 2.0;
+}
 
 /**
  * Description not yet available.
  * \param
  */
-    prevariable& atan2(_CONST prevariable& v1, CGNU_DOUBLE v2)
-    {
-  dvariable x = v1/v2;
-      return atan(x);
-    }
+prevariable& atan2(_CONST prevariable& v1, CGNU_DOUBLE v2)
+{
+  if (value(v1) == 0 && v2 == 0)
+  {
+    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n"; 
+    ad_exit(1);
+  }
+  if (value(v1) == 0 && v2 > 0)
+  {
+    return atan(v1/v2);
+  }
+  dvariable x = (sqrt(v2 * v2 + v1 * v1) - v2)/v1;
+  return atan(x) * 2.0;
+}
 
 /**
  * Description not yet available.
  * \param
  */
-    prevariable& atan2( CGNU_DOUBLE v1,_CONST prevariable& v2)
-    {
-  dvariable x = v1/v2;
-      return atan(x);
-    }
+prevariable& atan2( CGNU_DOUBLE v1,_CONST prevariable& v2)
+{
+  if (v1 == 0 && value(v2) == 0)
+  {
+    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n"; 
+    ad_exit(1);
+  }
+  if (v1 == 0 && value(v2) > 0)
+  {
+    return atan(v1/v2);
+  }
+  dvariable x = (sqrt(v2 * v2 + v1 * v1) - v2)/v1;
+  return atan(x) * 2.0;
+}

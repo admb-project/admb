@@ -1,10 +1,15 @@
 .PHONY: tpl
 TARGET=test_atan2
+TPL_TARGET=atan2
 
 all: clean run
 
-run: $(TARGET)
+run: $(TPL_TARGET) $(TARGET)
+	./$(TPL_TARGET) -nohess
 	./$(TARGET)
+
+$(TPL_TARGET): $(TPL_TARGET).tpl
+	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -s $(TPL_TARGET)
 
 $(TARGET): $(TARGET).o
 	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=-I/usr/local/gtest-1.5.0/include LDFLAGS="-static -L/usr/local/gtest-1.5.0/lib -lgtest -lpthread " adlink -s ${OPTIONS} $(TARGET)

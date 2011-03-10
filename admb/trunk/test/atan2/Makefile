@@ -20,3 +20,16 @@ $(TARGET).o: $(TARGET).cpp
 clean:
 	@rm -vf  $(TARGET).o
 	@rm -vf  $(TARGET)
+	@rm -vf  $(TPL_TARGET)
+	@rm -vf atan2.eva
+	@rm -vf admodel.hes
+	@rm -vf atan2.log
+	@rm -vf atan2.par
+	@rm -vf atan2.cpp
+	@rm -vf variance
+	@rm -vf atan2.rep
+	@rm -vf eigv.rpt
+	@rm -vf atan2.htp
+	@rm -vf atan2.bar
+	@rm -vf fmin.log
+	@rm -vf admodel.dep

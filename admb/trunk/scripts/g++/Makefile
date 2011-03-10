@@ -159,4 +159,4 @@ weights: binomial binomial_w2
 binomial:
 	cd admb-re/weights;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
 binomial_w2:
-	-cd admb-re/weights;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
+	cd admb-re/weights;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@ -nohess

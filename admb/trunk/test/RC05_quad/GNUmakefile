@@ -9,7 +9,7 @@ $(TARGET): $(TARGET).tpl $(TARGET).dat
 
 run:
 	@printf "Started run:\n"
-	./$(TARGET)
+	./$(TARGET) -nohess
 	@printf "Finished run.\n"
 
 clean:

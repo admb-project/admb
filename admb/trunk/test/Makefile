@@ -1,8 +1,12 @@
-.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd
+.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd atan2
 
 #all: clean beta_regression hysimple simple_mcmc betareg gmrf
 #all: clean init_bounded_number_matrix admb_messages
-all: testminmax RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd
+all: clean atan2
+#all: testminmax RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd
+
+atan2:
+	OPTIONS=-s make --directory=$@
 
 testminmax:
 	OPTIONS=-s make --directory=$@

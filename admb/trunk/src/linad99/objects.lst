@@ -16,6 +16,7 @@ dmat43.obj \
 vtdev.obj \
 cbetdev.obj \
 vbetdev.obj \
+df11fun.obj \
 df12fun.obj \
 ccumdbetainv_incbet.obj \
 vcumdbetainv_incbet.obj \

@@ -19,10 +19,14 @@
 #else
 #  include <fvar.hpp>
 #endif
+#include <admodel.h>  
+#include <df11fun.h>
+#include <df12fun.h>
 
 double get_values(double x,double y,int print_switch);
 dvariable igam(const dvariable & _a, const dvariable & _x);
 dvariable igamc(const dvariable & _a, const dvariable & _x);
+dvariable lgam(_CONST prevariable& v1);
 extern int mtherr(char* s,int n);
 
 namespace Cephes
@@ -141,288 +145,6 @@ namespace Cephes
    }
 } // End Cephes namespace
 
-/**
- * \ingroup gammafunc
- * Gamma Function \f$\Gamma(x)\f$
- * \param xx1 \f$x\f$
- * \return The Gamma Function
- * 
- * \n\n Cephes Math Library Release 2.1:  December, 1988
- * Copyright 1984, 1987, 1988 by Stephen L. Moshier 
- * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
- */
-static dvariable gamma(const dvariable & xx1)
-{
-   using namespace Cephes;
-   dvariable x;
-   x = xx1;
-   dvariable MYBIG;
-   MYBIG = 1.e+300;
-   dvariable p, q, z, tmp;
-   dvariable zero;
-   zero = 0.0;
-   int i;
-
-   sgngam = 1;
-
-/*#ifdef NANS
-   if (isnan(value(x)))
-      return (x);
-#endif*/
-/*#ifdef INFINITIES
-#ifdef NANS
-   if (value(x) == MYINF)
-      return (x);
-   if (value(x) == -MYINF)
-   {
-      x = NAN;
-      return (x);
-   }
-#else
-   if (!isfinite(value(x)))
-      return (x);
-#endif
-#endif*/
-   q = fabs(x);
-
-   if (value(q) > 33.0)
-   {
-      if (value(x) < 0.0)
-      {
-	 p = floor(value(q));
-	 if (value(p) == value(q))
-	 {
-/*#ifdef NANS
-	  gamnan:
-	    cerr << "gamma DOMAIN" << endl;
-	    return (zero);
-#else*/
-	    goto goverf;
-//#endif
-	 }
-	 i = value(p);
-
-	 if ((i & 1) == 0)
-	    sgngam = -1;
-	 z = q - p;
-
-	 if (value(z) > 0.5)
-	 {
-	    p += 1.0;
-	    z = q - p;
-	 }
-	 z = q * sin(PI * z);
-
-	 if (value(z) == 0.0)
-	 {
-/*#ifdef INFINITIES
-	    tmp = sgngam * MYINF;
-	    return (tmp);
-#else*/
-	  goverf:
-	    //( "gamma", OVERFLOW );
-	    return (sgngam * MYBIG);
-	    //return( sgngam * MAXNUM);
-//#endif
-	 }
-	 z = fabs(z);
-	 z = PI / (z * stirf(q));
-      } else
-      {
-	 z = stirf(x);
-      }
-      return (sgngam * z);
-   }
-
-   z = 1.0;
-   while (value(x) >= 3.0)
-   {
-      x -= 1.0;
-      z *= x;
-   }
-
-   while (value(x) < 0.0)
-   {
-      if (value(x) > -1.E-9)
-	 goto SMALL;
-      z /= x;
-      x += 1.0;
-   }
-
-   while (value(x) < 2.0)
-   {
-      if (value(x) < 1.e-9)
-	 goto SMALL;
-      z /= x;
-      x += 1.0;
-   }
-
-   if (value(x) == 2.0)
-   {
-      //return(z);
-   }
-
-   x -= 2.0;
-   p = polevl(x, P, 6);
-   q = polevl(x, Q, 7);
-   z = z * p / q;
-   return (z);
-
- SMALL:
-   if (value(x) == 0.0)
-   {
-/*#ifdef INFINITIES
-#ifdef NANS
-      goto gamnan;
-#else
-      return (MYINF);
-#endif
-#else*/
-      cerr << "gamma SING " << endl;
-      return (MYBIG);
-//#endif
-   } else
-      return (z / ((1.0 + 0.5772156649015329 * x) * x));
-}
-
-/**
- * \ingroup gammafunc
- * Log-gamma function \f$\ln(|\Gamma(x)|)\f$
- * \param xx \f$x\f$
- * \return natural log of the absolute
- *   value of the gamma function
- *
- * \n\n Cephes Math Library Release 2.1:  December, 1988
- * Copyright 1984, 1987, 1988 by Stephen L. Moshier
- * Direct inquiries to 30 Frost Street, Cambridge, MA 02140
- */
-dvariable lgam(const dvariable & xx)
-{
-   using namespace Cephes;
-   dvariable x = xx;
-   dvariable p, q, u, w, z, tmp;
-   int i;
-
-   sgngam = 1;
-/*#ifdef NANS
-   if (isnan(value(x)))
-      return (x);
-#endif
-
-#ifdef INFINITIES
-   if (!isfinite(value(x)))
-   {
-      tmp = MYINF;
-      return (tmp);
-   }
-#endif*/
-
-   if (x < -34.0)
-   {
-      q = -x;
-      w = lgam(q);		// note this modifies sgngam! 
-      p = floor(value(q));
-      if (p == q)
-      {
-       lgsing:
-/*#ifdef INFINITIES
-	 mtherr("lgam", SING);
-	 tmp = MYINF;
-	 return (tmp);
-#else*/
-	 goto loverf;
-//#endif
-      }
-      i = value(p);
-
-      if ((i & 1) == 0)
-	 sgngam = -1;
-      else
-	 sgngam = 1;
-
-      z = q - p;
-
-      if (z > 0.5)
-      {
-	 p += 1.0;
-	 z = p - q;
-      }
-
-      z = q * sin(PI * z);
-
-      if (z == 0.0)
-	 goto lgsing;
-
-      //z = log(PI) - log( z ) - w;
-      z = LOGPI - log(z) - w;
-      return (z);
-   }
-
-   if (x < 13.0)
-   {
-      z = 1.0;
-      p = 0.0;
-      u = x;
-      while (u >= 3.0)
-      {
-	 p -= 1.0;
-	 u = x + p;
-	 z *= u;
-      }
-      while (u < 2.0)
-      {
-	 if (u == 0.0)
-	    goto lgsing;
-	 z /= u;
-	 p += 1.0;
-	 u = x + p;
-      }
-      if (z < 0.0)
-      {
-	 sgngam = -1;
-	 z = -z;
-      } else
-	 sgngam = 1;
-
-      if (u == 2.0)
-      {
-	 z = x;
-	 z = gamma(z);
-	 return (log(z));
-      }
-      p -= 2.0;
-      x = x + p;
-      p = x * polevl(x, B, 5) / p1evl(x, C, 6);
-      return (log(z) + p);
-   }
-
-   if (x > MAXLGM)
-   {
-/*#ifdef INFINITIES
-      tmp = sgngam * MYINF;
-      return (tmp);
-#else*/
-    loverf:
-      mtherr("lgam", OVERFLOW);
-      dvariable tmp;
-      tmp = sgngam * MAXNUM;
-      return tmp;
-//#endif
-   }
-
-   q = (x - 0.5) * log(x) - x + LS2PI;
-   if (x > 1.0e8)
-      return (q);
-
-   p = 1.0 / (x * x);
-   if (x >= 1000.0)
-      q += ((7.9365079365079365079365e-4 * p
-	     - 2.7777777777777777777778e-3) * p
-	    + 0.0833333333333333333333) / x;
-   else
-      q += polevl(p, A, 4) / x;
-   return (q);
-}
 
 /**
  * \ingroup gammafunc
@@ -567,6 +289,137 @@ dvariable igamc(const dvariable & aa, const dvariable & xx)
    while( fabs(t) > MACHEP );
 
    return (ans * ax);
+}
+
+
+dvariable private_lgam(const dvariable& v,const dvariable& kludge);
+
+/**
+ * Log Gamma Function
+ *
+ * Used to find the Natural log of the gamma function.
+ *
+ * \param _x the argument
+ *
+ */
+dvariable lgam(_CONST prevariable& v1)
+{
+  dvariable tmp;
+  static double phi = 0.5772156649015328606065121;
+
+
+  if (value(v1)==1.0)
+  {
+    // value of lgam(1.0) is 0 and derivative is -phi 
+    value(tmp)=0;
+    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(value(tmp)),
+                                &(value(v1)),-phi );
+  }
+  else if (value(v1)==2.0)
+  {
+    // value of lgam(2.0) is 0 and derivative is 1.0-phi 
+    value(tmp)=0;
+    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(value(tmp)),
+                                &(value(v1)),1.0-phi );
+  }
+  else
+  {
+    // need to deal with this case
+     dvariable kludge=0.0;
+     tmp=private_lgam(v1,kludge);
+  }
+  return(tmp);
+}
+
+
+/**
+ * Log Gamma Function
+ *
+ * Used to find the Natural log of the gamma function.
+ *
+ *
+ * \n\n Modified from lgamma.cpp (http://www.crbond.com/download/lgamma.cpp),
+ *      an algorithm that was translated by C. Bond
+ *      from "Computation of Special Functions", Zhang and Jin, John Wiley and Sons, 1996.
+ */
+df1_one_variable lgam(const df1_two_variable& _x)
+{
+   df1_one_variable&  x = (df1_one_variable&)_x;
+   df1_one_variable x0;
+   df1_one_variable x2;
+   df1_one_variable xp;
+   df1_one_variable gl;
+   df1_one_variable gl0;
+   x0 = 0.0;
+   x2 = 0.0;
+   xp = 0.0;
+   gl = 0.0;
+   gl0 = 0.0;
+   int n = 0;
+   int k = 0;
+   const double pi = 3.1415926535897932384626432;
+   static double a[] = {
+       8.333333333333333e-02,
+      -2.777777777777778e-03,
+       7.936507936507937e-04,
+      -5.952380952380952e-04,
+       8.417508417508418e-04,
+      -1.917526917526918e-03,
+       6.410256410256410e-03,
+      -2.955065359477124e-02,
+       1.796443723688307e-01,
+      -1.39243221690590};
+
+    x0 = x;
+    if (value(x) <= 0.0)
+    {
+       df1_one_variable ret;
+       ret = 1e308;
+       return ret;
+    }
+    else if (value(x) <= 7.0)
+    {
+        n = (int)(7-value(x));
+        x0 = x+n;
+    }
+    x2 = 1.0/(x0*x0);
+    xp = 2.0*pi;
+    gl0 = a[9];
+    for (k=8;k>=0;k--)
+    {
+        gl0 = gl0*x2 + a[k];
+    }
+    gl = gl0/x0+0.5*log(xp)+(x0-0.5)*log(x0)-x0;
+    if (value(x) <= 7.0)
+    {
+        for (k=1;k<=n;k++)
+        {
+            gl -= log(x0-1.0);
+            x0 -= 1.0;
+        }
+    }
+    return gl;
+}
+
+/**
+ * Used by dvariable lgam.
+ *
+ */
+dvariable private_lgam(const dvariable& v,const dvariable& kludge)
+{
+  init_df1_two_variable va(v);
+  init_df1_two_variable vb(kludge);
+
+  dvariable tmp;
+  df1_one_variable z;
+  z=lgam(va);
+  double dfz=*z.get_u_x();
+  value(tmp)=value(z);
+
+  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+    &(value(tmp)) ,&(value(v)),dfz);
+
+  return tmp;
 }
 
 /**

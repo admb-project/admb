@@ -17,7 +17,7 @@
     if (num_stddev_params>=150) 
     {
       cerr << "This version of ADMB only supports " << num_stddev_params
-           << endl;
+           << " stddev_params." << endl;
       exit(1);
     } 
     stddevptr[num_stddev_params++]= this; // this is the list of 
@@ -28,7 +28,7 @@
     if (num_stddev_number_params>=150) 
     {
       cerr << "This version of ADMB only supports " << num_stddev_params
-           << endl;
+           << " stddev_params." << endl;
       exit(1);
     } 
     stddev_number_ptr[num_stddev_number_params++]= this; // this is the list of 

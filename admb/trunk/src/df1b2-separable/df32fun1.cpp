@@ -377,8 +377,11 @@ void read_pass2_2_dvdv(void)
   int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list; 
 
+  // !!!!!!!!!!!!!!!!!!!!!! change here
   int total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
-    +2*(nvar+1)*sizeof(double);
+     +(2*nvar+11)*sizeof(double);
+  //int total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
+   // +2*(nvar+1)*sizeof(double);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="UZ";

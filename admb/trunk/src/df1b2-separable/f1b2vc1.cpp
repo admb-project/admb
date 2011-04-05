@@ -280,6 +280,25 @@ df1b2vector& df1b2vector::operator += (const df1b2vector& _x)
  * Description not yet available.
  * \param
  */
+df1b2vector& df1b2vector::operator += (const dvector& _x)
+{
+  ADUNCONST(dvector,x)
+  check_shape(*this,x,"operator +=");
+ 
+  int mmin=x.indexmin();
+  int mmax=x.indexmax();
+
+  for (int i=mmin;i<=mmax;i++)
+  {
+    (*this)(i)+=x(i);
+  }
+  return *this;
+}
+
+/**
+ * Description not yet available.
+ * \param
+ */
 df1b2vector& df1b2vector::operator -= (const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
@@ -293,6 +312,25 @@ df1b2vector& df1b2vector::operator -= (const df1b2vector& _x)
     (*this)(i)-=x(i);
   }
   return *this;
+}
+
+/**
+ * Description not yet available.
+ * \param
+ */
+df1b2vector& df1b2vector::operator -= (const dvector& _x)
+{
+   ADUNCONST(dvector,x)
+   check_shape(*this,x,"operator -");
+
+   int mmin=x.indexmin();
+   int mmax=x.indexmax();
+
+   for (int i=mmin;i<=mmax;i++)
+   {
+     (*this)(i)-=x(i);
+   }
+   return *this;
 }
 
 /**

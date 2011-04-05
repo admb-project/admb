@@ -977,8 +977,10 @@ public:
 #  endif
   df1b2vector operator() (const ivector & iv);
   df1b2vector& operator += (const df1b2vector& x);
+  df1b2vector& operator += (const dvector& x);
   df1b2vector& operator += (double x);
   df1b2vector& operator -= (const df1b2vector& x);
+  df1b2vector& operator -= (const dvector& x);
   df1b2vector& operator /= (const df1b2vector& x);
   df1b2vector& operator *= (const df1b2vector& x);
   df1b2vector& operator *= (const df1b2variable& x);

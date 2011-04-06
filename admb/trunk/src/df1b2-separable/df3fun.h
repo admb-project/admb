@@ -24,7 +24,7 @@
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -38,17 +38,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-/**
- * \file
- * Description not yet available.
- */
+
+
 #if !defined(__DF3FUN__)
 #  define __DF3FUN__
 
-/**
- * Description not yet available.
- * \param
- */
   class df3_one_variable
   {
     double v[4];
@@ -71,10 +65,6 @@
 
   inline  double value(const df3_one_variable& x) { return double(*x.get_u()); }
 
-/**
- * Description not yet available.
- * \param
- */
   class init_df3_one_variable : public df3_one_variable
   {
   public:
@@ -82,10 +72,8 @@
     init_df3_one_variable(double );
   };
 
-/**
- * Description not yet available.
- * \param
- */
+
+
   class df3_one_vector
   {
     int index_min;
@@ -122,11 +110,7 @@
  dvector second_derivatives(const df3_one_vector& v);
    
  dvector third_derivatives(const df3_one_vector& v);
-
-/**
- * Description not yet available.
- * \param
- */
+    
   class df3_one_matrix
   {
     int index_min;

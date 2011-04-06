@@ -905,6 +905,8 @@ df3_two_variable igamc(const df3_two_variable & aa,
    return (ans * ax);
 }
 
+
+
 df1b2variable log_negbinomial_density(double x, const df1b2variable & _xmu,
 				      const df1b2variable & _xtau)
 {

@@ -27,6 +27,9 @@ double get_values(double x,double y,int print_switch);
 dvariable igam(const dvariable & _a, const dvariable & _x);
 dvariable igamc(const dvariable & _a, const dvariable & _x);
 dvariable lgam(_CONST prevariable& v1);
+dvariable private_lgam(const dvariable& v);
+df3_one_variable lgam(const df3_one_variable& _x);
+
 extern int mtherr(char* s,int n);
 
 namespace Cephes
@@ -291,9 +294,6 @@ dvariable igamc(const dvariable & aa, const dvariable & xx)
    return (ans * ax);
 }
 
-
-dvariable private_lgam(const dvariable& v,const dvariable& kludge);
-
 /**
  * Log Gamma Function
  *
@@ -301,7 +301,7 @@ dvariable private_lgam(const dvariable& v,const dvariable& kludge);
  *
  * \param _x the argument
  *
- */
+ */  
 dvariable lgam(_CONST prevariable& v1)
 {
   dvariable tmp;
@@ -325,12 +325,10 @@ dvariable lgam(_CONST prevariable& v1)
   else
   {
     // need to deal with this case
-     dvariable kludge=0.0;
-     tmp=private_lgam(v1,kludge);
+     tmp=private_lgam(v1);
   }
   return(tmp);
 }
-
 
 /**
  * Log Gamma Function
@@ -341,8 +339,8 @@ dvariable lgam(_CONST prevariable& v1)
  * \n\n Modified from lgamma.cpp (http://www.crbond.com/download/lgamma.cpp),
  *      an algorithm that was translated by C. Bond
  *      from "Computation of Special Functions", Zhang and Jin, John Wiley and Sons, 1996.
- */
-df1_one_variable lgam(const df1_two_variable& _x)
+ */  
+df1_one_variable lgam(const df1_one_variable& _x)
 {
    df1_one_variable&  x = (df1_one_variable&)_x;
    df1_one_variable x0;
@@ -404,11 +402,10 @@ df1_one_variable lgam(const df1_two_variable& _x)
 /**
  * Used by dvariable lgam.
  *
- */
-dvariable private_lgam(const dvariable& v,const dvariable& kludge)
+ */  
+dvariable private_lgam(const dvariable& v)
 {
-  init_df1_two_variable va(v);
-  init_df1_two_variable vb(kludge);
+  init_df1_one_variable va(v);
 
   dvariable tmp;
   df1_one_variable z;
@@ -421,6 +418,7 @@ dvariable private_lgam(const dvariable& v,const dvariable& kludge)
 
   return tmp;
 }
+
 
 /**
  * A wrapper for igam

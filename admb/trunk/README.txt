@@ -1,5 +1,5 @@
 ADMB Project
-Version 10.0
+Version 10.1
 Released January 17, 2011
 
 Overview
@@ -45,20 +45,11 @@ Below lists some of the changes.
 
 Changes
 -------
- * Fixed MCMC issue
+ * Fixed gammln functions
  * Fixed configure script
- * Updated Manuals 
- * Fixed min and max functions
- * Updated API documentation
- * Improved algorithms
- * Matrix exponential
- * Hybrid MCMC
- * Sparse Hessian
- * Added more examples
- * Added support for Intel C++ compiler
- * Added Autoconf script
- * Streamlined source builds
- * Various bug fixes
+ * Fixed atan2 functions
+ * Documentation changes
+ * Script changes
 
 Requirements
 ============

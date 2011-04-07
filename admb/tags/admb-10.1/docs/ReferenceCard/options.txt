@@ -1,0 +1,59 @@
+\verb|-ainp NAME|      change default ascii input parameter file name to NAME
+\verb|-binp NAME|      change default binary input parameter file name to NAME
+\verb|-est|            only do the parameter estimation
+\verb|-noest|          do not do the parameter estimation (optimization) 
+\verb|-ind NAME|       change default input data file name to NAME
+\verb|-lmn N|          use limited memory quasi newton -- keep N steps
+\verb|-dd N|           check derivatives after n function evaluations
+\verb|-lprof|          perform profile likelihood calculations
+\verb|-maxph N|        increase the maximum phase number to N
+\verb|-mcdiag|         use diagonal covariance matrix for mcmc with diagonal values 1
+\verb|-mcmc [N]|       perform markov chain monte carlo with N simulations
+\verb|-mcmult N|       multiplier N for mcmc default
+\verb|-mcr|            resume previous mcmc
+\verb|-mcrb  N|        reduce the amount of correlation in the covariance matrix 1<=N<=9
+\verb|-mcnoscale|      don't rescale step size for mcmc depending on acceptance rate
+\verb|-nosdmcmc|       turn off mcmc histogram calcs to make mcsave run faster
+\verb|-mcgrope N|      use probing strategy for mcmc with factor N
+\verb|-mcseed N|       seed for random number generator for markov chain monte carlo
+\verb|-mcscale N|       rescale step size for first N evaluations
+\verb|-mcsave N|       save the parameters for every N'th simulation
+\verb|-mceval|         Go throught the saved mcmc values from a previous mcsave
+\verb|-crit N1,N2,...| set gradient magnitude convergence criterion to N
+\verb|-iprint N       print out function minimizer report every N iterations
+\verb|-maxfn N1,N2,...| set maximum number opf function eval's to N
+\verb|-rs|             if function minmimizer can't make progress rescale and try again
+\verb|-nox|            don't show vector and gradient values in function minimizer screen report
+\verb|-phase N|        start minimization in phase N
+\verb|-simple|x        use simplex algorithm for minimization (new test version)
+\verb|-nohess|         don't do hessian or delta method for std dev
+\verb|-eigvec|         calculate eigenvectors of the Hessian
+\verb|-sdonly|         do delta method for std dev estimates without redoing hessian
+\verb|-ams N|          set arrmblsize to N (ARRAY_MEMBLOCK_SIZE)
+\verb|-cbs N|          set CMPDIF_BUFFER_SIZE to N (ARRAY_MEMBLOCK_SIZE)
+\verb|-mno N|          set the maximum number of independent variables to N
+\verb|-mdl N|          set the maximum number of dvariables to N
+\verb|-master|         run as PVM master program
+\verb|-gbs N|          set GRADSTACK_BUFFER_SIZE to N (ARRAY_MEMBLOCK_SIZE)
+\verb|-master|         run as PVM master program
+\verb|-slave|          run as PVM slave program
+\verb|-pvmtime|        record timing information for PVM performance analysis
+\verb|-info|           Contributors acknowledgements
+\verb|-?|     list of options
+\verb|-help|     list of option
+\verb|-nr N|           maximum number of Newton-Raphson steps
+\verb|-imaxfn N|       maximum number of fevals in quasi-Newton inner optimization
+\verb|-is N|           set importance sampling size to n for random effects
+\verb|-isf N|          set importance sampling size funnel blocksto n for random effects
+\verb|-isdiag|         print importance sampling diagnostics
+\verb|-hybrid|         do hybrid Monte Carlo version of MCMC
+\verb|-hbf|            set the hybrid bounded flag for bounded parameters
+\verb|-hyeps|          mean step size for hybrid Monte Carlo
+\verb|-hynstep|        number of steps for hybrid Monte Carlo
+\verb|-noinit|         do not initialize random effects before inner optimzation
+\verb|-ndi N|          set maximum number of separable calls
+\verb|-ndb N|          set number of blocks for derivatives for random effects (reduces temporary file sizes)
+\verb|-ddnr|           use high precision Newton-Raphson for inner optimization for banded hessian case ONLY even if implemented
+\verb|-nrdbg|           verbose reporting for debugging newton-raphson
+\verb|-mm N|          do minimax optimization
+\verb|-shess|         use sparse Hessian structure inner optimzation

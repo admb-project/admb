@@ -50,6 +50,14 @@ Changes
  * Fixed atan2 functions
  * Documentation changes
  * Script changes
+ * Various bug fixes
+
+Thanks to the following people for providing fixes and
+suggestions.
+ * Dave Fournier
+ * Jan Jaap
+ * Gareth Williams
+ * Weihai Liu
 
 Requirements
 ============

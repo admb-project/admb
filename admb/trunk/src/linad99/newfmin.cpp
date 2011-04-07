@@ -525,48 +525,51 @@ label30:
           gbest.elem(i)=w.elem(i);
         }
       }
+      if (use_control_c==1)         
+      {
 #if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) || defined(linux)
-       if(ctlc_flag || ifn == dcheck_flag )
-#elif defined(__BORLANDC__)
-       if ( kbhit() || ctlc_flag|| ifn == dcheck_flag )
-#else
-       if ( kbhit() || ifn == dcheck_flag )
-#endif
-       {
-          int c=0;
-          if (ifn != dcheck_flag)
-          {
-          #if !defined(__GNUDOS__)  || defined(UNIXKLUDGE)  || defined(linux) \
-	      || defined(__CYGWIN32__) || defined(__MINGW32__)
-            c = toupper(getch());
-          #else
-            c = toupper(getxkey());
-          #endif
-          }
-          else
-            c='C';
-          if ( c == 'C')
-          {
-            for (i=1; i<=n; i++)
+         if(ctlc_flag || ifn == dcheck_flag )
+  #elif defined(__BORLANDC__)
+         if ( kbhit() || ctlc_flag|| ifn == dcheck_flag )
+  #else
+         if ( kbhit() || ifn == dcheck_flag )
+  #endif
+         {
+            int c=0;
+            if (ifn != dcheck_flag)
             {
-              x.elem(i)=xx.elem(i);
-            }
-            ireturn = 3;
-            derch(f, x , w, n, ireturn);
-            return;
-          }
-          else 
-          {
-            if ( c == 'Q'|| c == 'N') 
-            {
-              quit_flag=c;
-              goto label92;
+            #if !defined(__GNUDOS__)  || defined(UNIXKLUDGE)  || defined(linux) \
+  	      || defined(__CYGWIN32__) || defined(__MINGW32__)
+              c = toupper(getch());
+            #else
+              c = toupper(getxkey());
+            #endif
             }
             else
+              c='C';
+            if ( c == 'C')
             {
-              quit_flag=0;
+              for (i=1; i<=n; i++)
+              {
+                x.elem(i)=xx.elem(i);
+              }
+              ireturn = 3;
+              derch(f, x , w, n, ireturn);
+              return;
             }
-          }
+            else 
+            {
+              if ( c == 'Q'|| c == 'N') 
+              {
+                quit_flag=c;
+                goto label92;
+              }
+              else
+              {
+                quit_flag=0;
+              }
+            }
+         }
        }
        if (quit_flag)
        {

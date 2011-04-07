@@ -65,6 +65,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
   fmc1.ialph=0;
   fmc1.ihang=0;
   fmc1.ihflag=0;
+  fmc1.use_control_c=0;
   
   if (init_switch)
   {

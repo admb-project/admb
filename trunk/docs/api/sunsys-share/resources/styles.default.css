@@ -1,0 +1,185 @@
+/**
+ *  @file   styles.css
+ *
+ *  Sunsys Dox stylesheet, Modern theme (default).
+ *
+ *
+ *  Copyright (C) Supernar Systems, Ltd. 2000-2005
+ *  All Rights Reserved.
+ *
+ *  @author     Narech Koumar
+ *  @version    1.6.0
+ */
+
+
+a:hover
+{
+    color:                  #3366ff;
+}
+
+
+body, html
+{
+    scrollbar-face-color:       #aaaaaa !important;
+    scrollbar-shadow-color:     #ffffff !important;
+    scrollbar-highlight-color:  #ffffff !important;
+    scrollbar-3dlight-color:    #aaaaaa !important;
+    scrollbar-darkshadow-color: #aaaaaa !important;
+    scrollbar-track-color:      #f3f3f3 !important;
+    scrollbar-arrow-color:      #ffffff !important;
+}
+
+
+.doxTxt
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              10pt;
+    text-align:             justify;
+}
+.doxTxtBrief
+{
+    font-family:            Arial, Helvetica, sans-serif;
+    font-size:              10pt;
+    color:                  #003366;
+}
+.doxTxtDetail
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              10pt;
+    text-align:             justify;
+    margin-left:            30;
+}
+.doxTxtTH
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              10pt;
+    text-align:             left;
+    background-color:       #f3f3f3;
+}
+.doxTxtTD
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              10pt;
+    text-align:             left;
+    background-color:       #fcfcfc;
+}
+
+
+.doxFntTitle
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              13pt;
+    color:                  #990000;
+}
+.doxFntNavBar
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              7pt;
+}
+
+
+.doxFntPara
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              10pt;
+}
+.doxFntParaSml
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              8pt;
+}
+
+
+.doxFntCode
+{
+    font-family:            'Courier New', Courier, monospace;
+    font-size:              10pt;
+    color:                  #444444;
+}
+.doxFntCodeMed
+{
+    font-family:            'Courier New', Courier, monospace;
+    font-size:              9pt;
+    color:                  #444444;
+}
+.doxFntCodeSml
+{
+    font-family:            'Courier New', Courier, monospace;
+    font-size:              8pt;
+    color:                  #444444;
+}
+
+
+.doxTabRow1
+{
+    background-color:       #ffffff;
+}
+.doxTabRow2
+{
+    background-color:       #f3f3f3;
+}
+
+
+.doxTabBrdr1
+{
+    border-collapse:        collapse;
+    border-style:           solid;
+    border-color:           #cccccc;
+}
+.doxTabBrdr2
+{
+    border-collapse:        collapse;
+    border-left-style:      solid;
+    border-left-width:      1px;
+    border-right-style:     solid;
+    border-right-width:     1px;
+    border-top-style:       solid;
+    border-top-width:       1px;
+    border-bottom-style:    solid;
+    border-bottom-width:    1px;
+    border-color:           #ffffff;
+}
+
+
+.doxTabHdrTxtA
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              12pt;
+    font-weight:            bold;
+    color:                  #ffffff;
+}
+.doxTabHdrTxtB
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              10pt;
+    font-weight:            bold;
+    color:                  #ffffff;
+}
+.doxTabHdrTxtC
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              8pt;
+    font-weight:            bold;
+    color:                  #ffffff;
+}
+.doxTabHdrTxtCSml
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              7pt;
+    color:                  #333333;
+}
+.doxTabHdrBgA
+{
+    background-color:       #999999;
+}
+.doxTabHdrBgB
+{
+    background-color:       #cccccc;
+}
+.doxTabHdrBgC
+{
+    background-color:       #999999;
+}
+
+
+/* EOF */

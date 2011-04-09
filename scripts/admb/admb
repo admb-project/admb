@@ -1,0 +1,75 @@
+#!/bin/bash
+shopt -s expand_aliases
+alias help='echo -e "Usage: admb [-d] [-g] [-r] [-s] model\n
+Build AD Model Builder executable from TPL.\n
+  -d     Create DLL
+  -g     Insert debugging symbols
+  -r     Create ADMB-RE
+  -s     Enforce safe bounds
+  model  Filename prefix, e.g. simple\n"'
+if [[ "$1" == "" ]]; then help; exit; fi
+if [[ "$1" == "-help" ]]; then help; exit; fi
+if [[ "$1" == "--help" ]]; then help; exit; fi
+
+# Pop args until model=$1
+unset bounds
+unset d
+unset dll
+unset g
+unset r
+unset s
+tpl2cpp=tpl2cpp
+while getopts "dgrs" A; do
+  case $A in
+    d) d=-d; dll=-dll;;
+    g) g=-g;;
+    r) r=-r; tpl2cpp=tpl2rem;;
+    s) s=-s; bounds=-bounds;;
+  esac
+done
+shift $((OPTIND-1))
+
+ERROR1 ()
+{
+  echo -e \\nError: $model.tpl not found\\n
+  exit 1
+}
+ERROR2 ()
+{
+  echo -e \\nError: could not create $model$1\\n
+  exit 1
+}
+
+model="${1%.*}"
+if [[ ! -f $model.tpl ]]; then ERROR1; fi
+rm -f $model.cpp $model.htp $model.o $model
+
+CMD="$tpl2cpp $bounds $dll $model"
+echo -e \\n\*\*\* $CMD
+eval $CMD
+if [[ ! -f $model.cpp ]]; then ERROR2 .cpp; fi
+if [[ ! -f $model.htp ]]; then ERROR2 .htp; fi
+
+CMD="$CXXFLAGS adcomp $d $g $r $s $model"
+echo -e \\n\*\*\* $CMD
+eval $CMD
+if [[ ! -f $model.o ]]; then ERROR2 .o; fi
+
+CMD="$LDFLAGS adlink $d $g $r $s $model"
+echo -e \\n\*\*\* $CMD
+eval $CMD
+if [[ -z $dll && ! -f $model ]]; then ERROR2; fi
+if [[ -n $dll && ! -f $model.so ]]; then ERROR2 .so; fi
+
+echo -e \\nDone\\n
+exit 0
+
+### r982 [2011-02-16] arnima  rewrite, improved messages
+### r927 [2010-12-24] johnoel moved to 'admb' dir
+### r901 [2010-12-22] johnoel moved to 'g++' dir
+### r662 [2010-06-17] johnoel changed script so it deletes cpp/htp/obj/exe and
+###                           reports error or success, added exit status
+### r524 [2010-03-17] arnima  added support for filename extension like
+###                           simple.tpl
+### r503 [2009-02-08] johnoel split -s option into separate -g and -s options
+### r243 [2009-05-27] arnima  created

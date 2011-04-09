@@ -1,0 +1,55 @@
+#!/bin/bash
+shopt -s expand_aliases
+alias help='echo -e "Usage: adlink [-d] [-r] [-s] model\n
+Link AD Model Builder object code to executable.\n
+  -d creates DLL
+  -r creates ADMB-RE
+  -s uses safe bounds and debugging symbols
+  model is the filename prefix, e.g. simple\n"'
+if [[ "$1" == "" ]]; then help; exit; fi
+if [[ "$1" == "-help" ]]; then help; exit; fi
+if [[ "$1" == "--help" ]]; then help; exit; fi
+###########################################################################################################################
+###                                                                                                                       #
+### Script:   adlink [-d] [-r] [-s] model                                                                                 #
+###                                                                                                                       #
+### Purpose:  Link ADMB object code to executable                                                                         #
+###                                                                                                                       #
+### Args:     -d creates DLL                                                                                              #
+###           -r creates ADMB-RE                                                                                          #
+###           -s uses safe bounds and debugging symbols                                                                   #
+###           model is the filename prefix, e.g. simple                                                                   #
+###                                                                                                                       #
+### Requires: ADMB libraries, g++                                                                                         #
+###                                                                                                                       #
+### Returns:  Creates executable or DLL with same prefix                                                                  #
+###                                                                                                                       #
+### History:  23 May 2009  Arni Magnusson created                                                                         #
+###                                                                                                                       #
+###########################################################################################################################
+
+# Pop args until model=$1
+unset re
+s=-s
+unset shared
+df1b2lib=-ldf1b2stub
+adlib=-lado
+while getopts "drs" A; do
+  case $A in
+    d) shared=-shared;;
+    r) re=true;;
+    s) unset s; adlib=-lads;;
+  esac
+done
+shift $[OPTIND-1]
+if [[ -z $shared ]] ; then out="-o $1" ; else out="-o $1.so" ; fi
+
+if [ -n $re ] ; then
+  if [ "$adlib" = "-lado" ] ; then
+    df1b2lib=-ldf1b2o;
+  else
+    df1b2lib=-ldf1b2s;
+  fi
+fi
+
+CC $1.o -m64 -L$ADMB_HOME/lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $df1b2lib -o $1

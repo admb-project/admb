@@ -1,6 +1,0 @@
-#s/nlist\.bptr+=/nlist+=/g
-#s/nlist\.bptr-=/nlist-=/g
-#s/smartlist \& nlist=/test_smartlist \& nlist=/
-#s/smartlist\& nlist=/test_smartlist \& nlist=/
-#s/test_test_smartlist/test_smartlist/g
-s/test_smartlist \& nlist=/fixed_smartlist \& nlist=/

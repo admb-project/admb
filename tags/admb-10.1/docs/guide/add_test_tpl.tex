@@ -1,0 +1,170 @@
+\documentclass{article}
+  \usepackage{fullpage}
+  \usepackage{amssymb}
+  \usepackage{amsthm}
+  \usepackage{graphicx}
+  \usepackage{url}
+  \usepackage{pdfpages}
+
+\begin{document}
+\author{Derek Seiple}
+\title{How to Add a Test tpl to the ADMB Test Folder}
+\date{}
+\maketitle
+
+\section{Set-up}
+This guide will show you how to add a test tpl to the test folder in ADMB.
+For our purposes we will assume we have the following tpl that we want to add
+\begin{verbatim}
+solve.tpl
+\end{verbatim}
+along with all of its supporting files. In this example we only have one
+supporting file, \verb"solve.dat".
+
+In ADMB the test folder is located in the main parent directory. We want to
+make sure we are in that folder; that is maneuver to
+\begin{verbatim}
+~/admb/test$
+\end{verbatim}
+where \verb"admb" is the name of the parent ADMB directory.
+
+First, we create a folder for our tpl and supporting files (\verb"RC04\_solve" in this
+example). You can do this however is comfortable for you. To do it by command line type
+\begin{verbatim}
+~/admb/test$ mkdir RC04_solve
+\end{verbatim}
+Next, move the tpl file as well as any supporting files into the folder we just
+created.
+
+\section{Create the GNUmakefile}
+
+At this point we will need a make file. Inside the \verb"RC04_solve" folder
+create a file called \verb"GNUmakefile". Now you will have to edit that file and put
+the following in it (notice that make files use tabs).
+
+\begin{verbatim}
+.PHONY: run
+
+TARGET=solve
+
+all: clean $(TARGET) run
+
+$(TARGET): $(TARGET).tpl $(TARGET).dat
+        export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -s $(TARGET)
+
+run:
+        @printf "Started run:\n"
+        ./$(TARGET)
+        @printf "Finished run.\n"
+
+clean:
+        @rm -vf $(TARGET)
+        @rm -vf admodel.*
+        @rm -vf variance
+        @rm -vf fmin.log
+        @rm -vf $(TARGET).eva
+        @rm -vf $(TARGET).htp
+        @rm -vf $(TARGET).bar
+        @rm -vf $(TARGET).bgs
+        @rm -vf $(TARGET).cor
+        @rm -vf $(TARGET).cpp
+        @rm -vf $(TARGET).log
+        @rm -vf $(TARGET).o
+        @rm -vf $(TARGET).par
+        @rm -vf eigv.rpt
+\end{verbatim}
+
+The majority of this file will not change for most of the test tpls that you
+will add. But there are a couple things that will change.
+
+The line that contains \verb"TARGET=solve" will change depending on the name of the tpl.
+If your tpl file is \verb"your_tpl_file.tpl", then that line will read:
+\begin{verbatim}
+TARGET=your_tpl_file
+\end{verbatim}
+
+Also, if your tpl has random effects in it, then the end of line 8 will be
+\begin{verbatim}
+admb -r -s $(TARGET)
+\end{verbatim}
+instead of
+\begin{verbatim}
+admb -s $(TARGET)
+\end{verbatim}
+
+Lastly, you may need to add some more lines at the end of the \verb"clean:" section
+depending on your tpl file. If you run \verb"make" followed by \verb"make clean" and
+some extra files are there that were not before, then add those file names to the end.
+For example if \verb"extra.file" is left over then add
+\begin{verbatim}
+@rm -vf extra.file
+\end{verbatim}
+to the end of the clean section.
+
+\section{Edit Makefile}
+
+The last thing you will have to do is add this example to the main Makefile in
+\begin{verbatim}
+~/admb/test$
+\end{verbatim}
+
+When you open \verb"~/admb/test/Makefile" it will look something like this, but with a few more entries:
+\begin{verbatim}
+.PHONY: clean testminmax admb_messages 
+
+all: testminmax admb_messages
+
+testminmax:
+        OPTIONS=-s make --directory=$@
+
+admb_messages:
+        OPTIONS=-s make --directory=$@
+
+clean:
+        make --directory=testminmax clean
+        make --directory=admb_messages clean
+\end{verbatim}
+
+We will make the following changes:
+
+On the first line (contains \verb".PHONY:") we will add \verb"RC04_solve" (the name of the
+folder we created earlier) at the end.
+
+On the line with the \verb"all:" tag we will add \verb"RC04_solve" at the end.
+
+Right before we get to the \verb"clean:" tag we will put the following:
+\begin{verbatim}
+RC04_solve:
+        OPTIONS=-s make --directory=$@
+\end{verbatim}
+
+Lastly, we will add
+\begin{verbatim}
+make --directory=RC04_solve clean
+\end{verbatim}
+to the end of the \verb"clean:" section.
+
+So when it is all said and done the Makefile should look something like this:
+\begin{verbatim}
+.PHONY: clean testminmax admb_messages RC04_solve
+
+all: testminmax admb_messages RC04_solve
+
+testminmax:
+        OPTIONS=-s make --directory=$@
+
+admb_messages:
+        OPTIONS=-s make --directory=$@
+
+RC04_solve:
+        OPTIONS=-s make --directory=$@
+
+clean:
+        make --directory=testminmax clean
+        make --directory=admb_messages clean
+        make --directory=RC04_solve clean
+\end{verbatim}
+
+
+
+\end{document}

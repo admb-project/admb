@@ -1,0 +1,25 @@
+[Setup]
+PrivilegesRequired=none
+AppName=ADMB
+AppVerName=ADMB
+UsePreviousAppDir=no
+UsePreviousGroup=no
+DefaultDirName={pf}\ADMB
+DefaultGroupName=ADMB (MinGW GCC @gccversion@)
+UninstallDisplayIcon={app}\uninstall.exe
+OutputDir=..\..\..
+OutputBaseFilename=@target@
+AppPublisher=www.admb-project.org
+AppPublisherURL=http://www.admb-project.org/
+LicenseFile=..\..\..\LICENSE
+AlwaysShowComponentsList=no
+
+[Types]
+Name: "mingw"; Description: "ADMB (MinGW GCC @gccversion@)"
+
+[Files]
+Source: "..\..\..\build\@target@\@target@\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+
+[Icons]
+Name: "{group}\ADMB Command Prompt (MinGW GCC @gccversion@)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingw.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW GCC @gccversion@)"
+Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB"

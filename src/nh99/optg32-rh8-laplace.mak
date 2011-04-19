@@ -1,4 +1,4 @@
-.PHONY: disk tpl2cpp
+.PHONY: disk tpl2cpp tpl2cpp.c
 .SUFFIXES: .obj .cpp
 
 LIBPATH =gcc32-rh8olp

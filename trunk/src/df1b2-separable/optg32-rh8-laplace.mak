@@ -5,7 +5,7 @@ vpath %.obj $(LIBPATH)
 
 .SUFFIXES: .obj .cpp
 
-.PHONY: disk tpl2rem
+.PHONY: disk tpl2rem tpl2rem.c
 include objects.lst
 
 all: disk

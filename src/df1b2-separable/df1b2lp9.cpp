@@ -63,6 +63,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
     pfmc1[i]->ihflag=0;
     pfmc1[i]->maxfn=100;
     pfmc1[i]->gmax=1.e+100;
+    pfmc1[i].use_control_c=0;
     }
     else
     {

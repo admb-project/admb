@@ -98,6 +98,8 @@
   int filename_size;
 %}
 
+filename \"[^\"]*\"
+
 name [a-z_A-Z]+(->)?[a-z_A-Z0-9]*
 
 num_exp [a-z_A-Z0-9\+\-\*\/]+
@@ -109,7 +111,7 @@ float_num_exp [a-z_A-Z0-9\.\+\-\*]+
 %s DEFINE_DATA DEFINE_PARAMETERS DEFINE_PROCS IN_DATA_DEF IN_PARAM_DEF
 %s IN_NUMBER_DEF IN_SPNUMBER_DEF IN_VECTOR_DEF IN_VECTOR_VECTOR_DEF 
 %s IN_SPVECTOR_DEF 
-%s IN_MATRIX_DEF IN_SPMATRIX_DEF IN_THREE_ARRAY_DEF IN_SPTHREE_ARRAY_DEF
+%s IN_MATRIX_DEF IN_TABLE_DEF IN_SPMATRIX_DEF IN_THREE_ARRAY_DEF IN_SPTHREE_ARRAY_DEF
 %s IN_NAMED_NUMBER_DEF IN_NAMED_VECTOR_DEF IN_NAMED_MATRIX_DEF
 %s IN_NAMED_THREE_ARRAY_DEF IN_NAMED_FOUR_ARRAY_DEF DEFINE_AUX_PROC
 %s INIT_BOUNDED_NUMBER_DEF INIT_BOUNDED_VECTOR_DEF IN_BOUNDED_MATRIX_DEF
@@ -637,6 +639,11 @@ DATA_SECTION  {
 <DEFINE_DATA>init_matrix {
 
     BEGIN IN_MATRIX_DEF;
+    fprintf(fdat,"%s","  data_matrix ");
+                     }
+
+<DEFINE_DATA>init_table {
+    BEGIN IN_TABLE_DEF;
     fprintf(fdat,"%s","  data_matrix ");
                      }
 
@@ -2064,6 +2071,88 @@ DATA_SECTION  {
       BEGIN DEFINE_PARAMETERS;
     }
                             }
+
+<IN_TABLE_DEF>{name}\({filename}\) {
+
+    before_part(tmp_string,yytext,'(');  // get A in A("mat.tab")
+ 
+    fprintf(fdat,"%s",tmp_string);
+    fprintf(fdat,"%s",";\n");
+ 
+    fprintf(fall,"  %s",tmp_string);
+    fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",tmp_string);
+    after_part(tmp_string1,yytext,'\"');
+    fprintf(fall,"  dmatrix %s_tmp((adstring)%s;\n",tmp_string,tmp_string1);
+    fprintf(fall,"  %s = %s_tmp;\n",tmp_string,tmp_string);
+    if (needs_initialization)
+    {
+      needs_initialization=0;
+    }
+    if (!params_defined)
+    {
+      BEGIN DEFINE_DATA;
+    }
+    else
+    {
+      BEGIN DEFINE_PARAMETERS;
+    }
+                            }
+
+<IN_TABLE_DEF>{name} {
+    fprintf(fdat,"%s",yytext);
+    fprintf(fdat,"%s",";\n");
+ 
+    fprintf(fall,"  %s",yytext);
+    fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",yytext);
+    fprintf(fall,"  adstring datname;\n");
+    fprintf(fall,"  if(option_match(argc,argv,\"-ind\") > -1){ \n");
+    fprintf(fall,"    datname = argv[option_match(argc,argv,\"-ind\") + 1];\n");
+    fprintf(fall,"  }else{\n");
+    fprintf(fall,"    datname = \"%s.dat\";\n",infile_root);
+    fprintf(fall,"  }\n");
+    fprintf(fall,"  dmatrix %s_tmp(datname);\n",yytext);
+    fprintf(fall,"  %s = %s_tmp;\n",yytext,yytext);
+
+    if (needs_initialization)
+    {
+      needs_initialization=0;
+    }
+    if (!params_defined)
+    {
+      BEGIN DEFINE_DATA;
+    }
+    else
+    {
+      BEGIN DEFINE_PARAMETERS;
+    }
+                            }
+
+
+<IN_TABLE_DEF>{name}\({name}\) {
+    before_part(tmp_string,yytext,'(');  // get A in A(str1)
+    fprintf(fdat,"%s",tmp_string);
+    fprintf(fdat,"%s",";\n");
+ 
+    fprintf(fall,"  %s",tmp_string);
+    fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",tmp_string);
+
+    strict_after_part(tmp_string1, yytext,'(');
+    fprintf(fall,"  dmatrix %s_tmp((adstring)%s;\n",tmp_string,tmp_string1);
+    fprintf(fall,"  %s = %s_tmp;\n",tmp_string,tmp_string);
+    if (needs_initialization)
+    {
+      needs_initialization=0;
+    }
+    if (!params_defined)
+    {
+      BEGIN DEFINE_DATA;
+    }
+    else
+    {
+      BEGIN DEFINE_PARAMETERS;
+    }
+                            }
+
 
 <IN_SPMATRIX_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp}\) |
 <IN_SPMATRIX_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) {

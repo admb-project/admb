@@ -344,6 +344,13 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
             }
           }
           g=(*lapprox)(x,f,this);
+          if (bad_step_flag==1)
+          {
+            g=1.e+4;
+            f=2.*fmc.fbest;
+            bad_step_flag=0;
+          }
+
           if (lapprox->init_switch==0)
           {
             if (f<fmc.fbest)

@@ -107,7 +107,7 @@ void laplace_approximation_calculator::
         if (ierr && no_converge_flag ==0)
         {
           no_converge_flag=1;
-          break;
+          //break;
         }
         if (ierr)
         {
@@ -359,8 +359,10 @@ dvector laplace_approximation_calculator::banded_calculations
   // this is the main loop to do inner optimization
   do
   {
+    int icount=0;
     do
     {
+      icount++;
       // do the inner optimziation
       if (inner_maxfn>0)
       {
@@ -400,6 +402,7 @@ dvector laplace_approximation_calculator::banded_calculations
       {
         for (i=1;i<=usize;i++) { value(y(i+xsize))=uhat(i); }
       }
+      if (icount>2) pfmin->bad_step_flag=1;
       if (pfmin->bad_step_flag)
         return xadjoint;
     }
@@ -1099,13 +1102,13 @@ dvector laplace_approximation_calculator::
   double delta=5.e-5;
   //do
   dvector values(1,300);
-  //double oldfbest=pmin->lapprox->fmc1.fbest; 
-  //double best_value=oldfbest;
+  double oldfbest=pmin->lapprox->fmc1.fbest; 
+  double best_value=oldfbest;
   double newfbest;
   int have_value=0;
   //for (int jj=1;jj<=300;jj++)
   int jj=1;
-  double lastval=0.0;
+  double lastval=oldfbest;
   do 
   {
     jj++;
@@ -1170,12 +1173,12 @@ dvector laplace_approximation_calculator::
       delta*=2;
     }
   }
-  while(jj<1000);
+  while(jj<10);
   if (!have_value)
   {
     cerr << "can't improve function value in trust region calculations"
          << endl;
-    ad_exit(1);
+    //ad_exit(1);
   }
   return uhat_best;
   initial_params::set_active_only_random_effects(); 

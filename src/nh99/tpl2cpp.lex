@@ -6,6 +6,7 @@
    *
    * Author: David Fournier
    * Copyright (c) 2008-2011 Regents of the University of California
+   *
    */
 
   #define   MAX_TMP_STRING  501
@@ -99,6 +100,8 @@
 %}
 
 filename \"[^\"]*\"
+
+filenamesingle \'[^\']*\'
 
 name [a-z_A-Z]+(->)?[a-z_A-Z0-9]*
 
@@ -2096,6 +2099,11 @@ DATA_SECTION  {
     {
       BEGIN DEFINE_PARAMETERS;
     }
+                            }
+
+<IN_TABLE_DEF>{name}\({filenamesingle}\) {
+    fprintf(stderr,"%s %d %s","Error in line",nline,"while reading (use double instead of single quotes)\n");
+    exit(1);
                             }
 
 <IN_TABLE_DEF>{name} {

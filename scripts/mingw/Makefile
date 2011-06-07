@@ -179,7 +179,7 @@ union:
 	@REM cd examples/admb-re/$@ && admb.bat -r $@ && $@
 	@REM cd examples/admb-re/$@ && admb.bat -r -s $@ && $@
 
-weights: binomial binomial_w2
+weights: binomial
 binomial:
 	cd examples\\admb-re\\weights && admb.bat -r $@ && $@
 	cd examples\\admb-re\\weights && admb.bat -r -s $@ && $@

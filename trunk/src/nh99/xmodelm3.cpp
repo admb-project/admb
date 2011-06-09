@@ -23,10 +23,8 @@
 int get_option_number(const char * option_name,const char * error_message,
   int& option_value);
 
-#ifndef _MSC_VER
 int get_option_number(const char * option_name,const char * error_message,
   long long int& option_value);
-#endif
 
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
@@ -663,7 +661,6 @@ int get_option_number(const char * option_name,const char * error_message,
   return on1;
 }
 
-#ifndef _MSC_VER
 int get_option_number(const char * option_name,const char * error_message,
   long long int& option_value)
 {
@@ -681,12 +678,15 @@ int get_option_number(const char * option_name,const char * error_message,
     }
     else
     {   
+#ifdef _MSC_VER
+      option_value=atol(ad_comm::argv[on1+1]);
+#else
       option_value=atoll(ad_comm::argv[on1+1]);
+#endif
     }
   }
   return on1;
 }
-#endif
 
 #if defined(USE_LAPLACE)
 

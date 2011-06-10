@@ -46,11 +46,6 @@ CXX_32OR64BIT="64bit"
 CXXFLAGS="-m64"
 fi
 
-#if "${enable_64bit}" = "yes" (
-#CXX_32OR64BIT="64bit"
-#CXXFLAGS="-m64"
-#)
-
 if test  "`uname -s`" =  "Darwin"
 then
   #CXX_32OR64BIT="64bit"
@@ -77,6 +72,12 @@ then
   fi
   if test "${CXX}" = "icpc"
   then
+    CXX_32OR64BIT="32bit"
+    CXXFLAGS=""
+    if [[ "`icpc -V |&  head -n 1 | awk '{ print $4 }'`" = "64" ]]
+    then
+    CXX_32OR64BIT="64bit"
+    fi
     ICC_VERSION=`icc -dumpversion`
     ADMB_TARGET="admb-${ADMB_VERSION}-linux-icc${ICC_VERSION}-${CXX_32OR64BIT}"
   fi

@@ -45,13 +45,13 @@ dmatrix fabs(const dmatrix & X){
 
    
 The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems: 
-\[
-\frac{d}{dt}y(t) = Ay(t)\ , \ \mbox{where } y(0) = y_0
-\] 
-   \item where the solution becomes
-\[
+\f[
+\frac{d}{dt}y(t) = Ay(t)\ , \ \mbox{with } y(0) = y_0
+\f] 
+   \item then the solution becomes
+\f[
    y(t)=e^{At}y_0
-\]
+\f]
 
   \param A square dvar_matrix
   \returns The matrix exponentiel of A

@@ -165,29 +165,29 @@ developers@admb-project.org.
 * -------------------------------------
 * \subsection bor_step1 1. Extract source distribution.
 * 
-* \subsection bor_step1 2. Open Windows Command Prompt in Start->All Programs->Accessories.
+* \subsection bor_step2 2. Open Windows Command Prompt in Start->All Programs->Accessories.
 * 
-* \subsection bor_step1 3. Set BCC55_HOME variable to location of BCC55 folder.
+* \subsection bor_step3 3. Set BCC55_HOME variable to location of BCC55 folder.
 * 
-*    > set BCC55_HOME=c:\Borland\BCC55
+*    \verbatim > set BCC55_HOME=c:\Borland\BCC55 \endverbatim
 * 
-* \subsection bor_step1 4. Add BCC55_HOME to system PATH variable.
+* \subsection bor_step4 4. Add BCC55_HOME to system PATH variable.
 * 
-*    > set PATH=c:\Borland\BCC55\Bin;%PATH%
+*    \verbatim > set PATH=c:\Borland\BCC55\Bin;%PATH% \endverbatim
 * 
-* \subsection bor_step1 5. Change directory to the "src" folder. 
+* \subsection bor_step5 5. Change directory to the "src" folder. 
 * 
 *    > cd admb-10.0\src
 * 
-* \subsection bor_step1 6. Build 32-bit libraries
+* \subsection bor_step6 6. Build 32-bit libraries
 * 
 *    > make /fbcc.mak
 * 
-* \subsection bor_step1 7. [Optional] Test build by running examples
+* \subsection bor_step7 7. [Optional] Test build by running examples
 * 
 *    > make /fbcc.mak verify
 * 
-* \subsection bor_step1 8. Install libraries to default location %ProgramFiles%\ADMB
+* \subsection bor_step8 8. Install libraries to default location %ProgramFiles%\ADMB
 *    and adds ADMB shortcuts in the Start menu.
 * 
 *    > make /fbcc.mak install
@@ -241,13 +241,11 @@ developers@admb-project.org.
 * 
 * Version Control\n
 * ---------------\n
-* ADMB source version control is hosted at Code Google
-* http://code.google.com/p/admb-project/.\n  
+* ADMB source code is available for browsing and download at 
+* http://admb-project.org/svn/trunk/ 
 * 
-* The instructions for checking out source trunk is at 
-* http://code.google.com/p/admb-project/source/checkout.\n  
-* 
-* If you would like to write access, please email <users@admb-project.org>
+* If you would like to write access to the Subversion repository,
+ please email <users@admb-project.org>
 * to request an account.\n
 * 
 * Help and Support\n
@@ -269,15 +267,6 @@ developers@admb-project.org.
 * Derek Seiple <dseiple@hawaii.edu>\n
 * Johnoel Ancheta <johnoel@hawaii.edu>\n
 *
-*
-* etc...
-*/
-
-A computer lets you make more mistakes faster than any invention in human history - with the possible exceptions of handguns and tequila....
-
-
-
-
 */
 
 /*
@@ -304,7 +293,7 @@ Only the constant types are currently documented here.
 /**  \defgroup PDF Probability Density Functions.
 */
 
-/**  \defgr/oup RNG Random Numbers.
+/**  \defgroup RNG Random Numbers.
 */
 
 /**  \defgroup misc "Helper" Functions
@@ -331,7 +320,7 @@ invoke custom adjoint code.
 
 /**
   \defgroup RA RETURN_ARRAYS_INCREMENT() and RETURN_ARRAYS_DECREMENT().
-  These functions must be called in any functions that returns
+  These functions must be called in any function that returns
   a "variable" object, ie dvariable, dvar_vector, ...
  */
 

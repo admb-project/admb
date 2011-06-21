@@ -523,6 +523,7 @@ void allocate_dvariable_space(void)
   Increments gradient_structure::RETURN_ARRAYS_PTR. 
   Must be called on entry to any functiton that returns a 
   variable object.
+  Calls must balance calls to void RETURN_ARRAYS_DECREMENT(void).
   \ingroup RA
  */
 void RETURN_ARRAYS_INCREMENT(void)
@@ -549,8 +550,9 @@ void RETURN_ARRAYS_INCREMENT(void)
 
 /**
   Decrements gradient_structure::RETURN_ARRAYS_PTR. 
-  Must be called on exit from any functiton that returns a 
+  Must be called prior to exit from any functiton that returns a 
   variable object.
+  Calls must balance calls to void RETURN_ARRAYS_INCREMENT(void).
   \ingroup RA
  */
 void RETURN_ARRAYS_DECREMENT(void)

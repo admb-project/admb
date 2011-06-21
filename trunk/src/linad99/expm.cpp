@@ -39,7 +39,20 @@ dmatrix fabs(const dmatrix & X){
 
   /**
   \ingroup matop
-   Matrix exponential using (6,6) Padé approximation adapted from Moler and van Loan 
+   Matrix exponential. 
+   
+   The matrix exponential is calculated using the Padé approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
+
+   
+The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems: 
+\[
+\frac{d}{dt}y(t) = Ay(t)\ , \ \mbox{where } y(0) = y_0
+\] 
+   \item where the solution becomes
+\[
+   y(t)=e^{At}y_0
+\]
+
   \param A square dvar_matrix
   \returns The matrix exponentiel of A
   */

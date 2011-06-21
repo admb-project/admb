@@ -6,13 +6,15 @@
  */
 /**
  * \file
- * Description not yet available.
+ * Functions to compute minimum and maximum of a dvar_vector.
  */
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
+ * \ingroup misc
+ * Maximum of a dvar_vector. 
+ * \param A dvar_vector 
+ * \returns The maximum of the vector 
  */
   dvariable max(_CONST dvar_vector& t1)
   {
@@ -27,9 +29,12 @@
      return(tmp);
   }
 
+
 /**
- * Description not yet available.
- * \param
+ * \ingroup misc
+ * Minimum of a dvar_vector. 
+ * \param A dvar_vector 
+ * \returns The minimum of the vector 
  */
   dvariable min(_CONST dvar_vector& t1)
   {

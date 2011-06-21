@@ -6,7 +6,7 @@
  */
 /**
  * \file
- * Description not yet available.
+ * Matrix exponential function for dvar_matrix 
  */
 #include <fvar.hpp>
   #include "ludcmp.hpp"

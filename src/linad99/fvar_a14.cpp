@@ -6,7 +6,7 @@
  */
 /**
  * \file
- * Description not yet available.
+ * Dot-product fpor dvar_vector and sum for dvar_vector and dvar_matrix.
  */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable 
@@ -22,10 +22,16 @@
   #include <iostream.hpp>
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
+
+/** Compute the dot product of two variable type vectors. The minimum and maxium
+  legal subscripts of the arguments must agree; otherwize an error message
+   is printed and execution terminates.
+  \ingroup matop
+  \param v1 A dvar_vector, \f$a\f$.
+  \param v2 A dvar_vector, \f$b\f$.
+  \return A dvariable, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing 
+  the value of the dot product of the two arguments.
+*/
   dvariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
@@ -77,7 +83,7 @@
   return vtmp;
 }
 
-/**
+/*
  * Description not yet available.
  * \param
  */
@@ -119,10 +125,11 @@ void dvdv_dot(void)
 
 void X_dv_sum(void);
 
-/**
- * Description not yet available.
- * \param
- */
+/** Compute the sum of a variable type vector.
+  \ingroup matop
+  \param v1 A dvar_vector, \f$a\f$.
+  \return A dvariable, \f$s = \sum a \f$  containing the sum of the vector.
+*/
 dvariable sum(_CONST dvar_vector& v1)
 {
   if (allocated(v1))
@@ -152,9 +159,9 @@ dvariable sum(_CONST dvar_vector& v1)
   }
 }
 
-/**
+/*
  * Description not yet available.
- * \param
+ * 
  */
 void X_dv_sum(void)
 {
@@ -171,10 +178,12 @@ void X_dv_sum(void)
   dfv1.save_dvector_derivatives(v1pos);
 }
 
-/**
- * Description not yet available.
- * \param
- */
+/** Compute the sum of a variable type matrix.
+  \ingroup matop
+  \param v1 A dvar_matrix, \f$A\f$.
+  \return A dvariable, \f$s = \sum A \f$  containing the sum of the matrix.
+*/
+
 dvariable sum(_CONST dvar_matrix& m)
 {
   RETURN_ARRAYS_INCREMENT();

@@ -1,4 +1,4 @@
-.PHONY: tpl2cpp tpl2rem test
+.PHONY: tpl2cpp tpl2rem docs test
 
 all:
 	CC=@cc@ CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
@@ -17,6 +17,9 @@ debug:
 	rm -rf `find build/@target@/@target@ -type d -name .svn`
 	@printf "\nBuild completed for @target@\n"
 	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
+
+docs:
+	make --directory=docs
 
 dist:
 	mkdir -p build/dist

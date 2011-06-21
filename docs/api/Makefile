@@ -5,6 +5,8 @@
 #
 .PHONY: default sunsys all clean
 
+REV = `svnversion -n ../..`
+VER=`cat ../../VERSION`
 #location of the files downloaded from http://dox.narechk.net/content/main.html
 ifeq ($(HOSTNAME),kolea)
   # confugration on John's laptop
@@ -21,9 +23,10 @@ endif
 # from the doxygen manual; doxygen reads configure information from stdin
 #( cat Doxyfile ; echo "PROJECT_NUMBER=1.0" ) | doxygen -
 
-default:
+default: Doxyfile
 	mkdir -vp dox/html
-	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo "GENERATE_XML = NO"; echo -n "PROJECT_NUMBER = 10.0.";svnversion ../..) | doxygen -
+	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo "GENERATE_XML = NO"; echo -n "PROJECT_NUMBER = "$(VER).$(REV); ) | doxygen -
+#(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo "GENERATE_XML = NO"; echo -n "PROJECT_NUMBER = 10.0.";svnversion ../..) | doxygen -
 
 sunsys:
 	mkdir -vp sunsys-dox/html
@@ -37,7 +40,7 @@ sunsys:
 	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = sunsys-dox/temp"; echo "GENERATE_XML = YES"; echo -n "PROJECT_NUMBER = ";svnversion ../..) | $(SUNSYS_PATH)/doxygen-nk -
 	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = sunsys-dox/temp"; echo "GENERATE_XML = YES"; echo -n "PROJECT_NUMBER = ";svnversion ../..) | $(SUNSYS_PATH)/dox sunsys-dox -
 
-all: default sunsys
+all: default
 
 clean:
 	rm -rf dox

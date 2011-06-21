@@ -25,7 +25,7 @@ DOXYFILE_ENCODING      = UTF-8
 # The PROJECT_NAME tag is a single word (or a sequence of words surrounded
 # by quotes) that should identify the project.
 
-PROJECT_NAME           = "ADMB API"
+PROJECT_NAME           = "ADMB Documentation"
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number.
 # This could be handy for archiving the generated documentation or
@@ -527,7 +527,8 @@ SHOW_NAMESPACES        = YES
 # provided by doxygen. Whatever the program writes to standard output
 # is used as the file version. See the manual for examples.
 
-FILE_VERSION_FILTER    = ../../scripts/getVersionInfo.sh
+#FILE_VERSION_FILTER    = ../../scripts/getVersionInfo.sh
+FILE_VERSION_FILTER    = ./getID.sh
 
 # The LAYOUT_FILE tag can be used to specify a layout file which will be parsed
 # by doxygen. The layout file controls the global structure of the generated
@@ -668,7 +669,6 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/d4arr3.cpp \
                          ../../src/linad99/d4_io.cpp \
                          ../../src/linad99/d4_io1.cpp \
-                         ../../src/linad99/d5arr.cpp \
                          ../../src/linad99/d5arr1.cpp \
                          ../../src/linad99/d5arr2.cpp \
                          ../../src/linad99/d5arr3.cpp \
@@ -887,7 +887,6 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/fvar_ar8.cpp \
                          ../../src/linad99/fvar_arr.cpp \
                          ../../src/linad99/fvarb_io.cpp \
-                         ../../src/linad99/fvar_diff.cpp \
                          ../../src/linad99/fvar_fn.cpp \
                          ../../src/linad99/fvar_fn1.cpp \
                          ../../src/linad99/fvar_fn2.cpp \
@@ -961,7 +960,7 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/linad99/humung.cpp \
                          ../../src/linad99/i3arr.cpp \
                          ../../src/linad99/i3arr1.cpp \
-                         ../../src/linad99/13arr8.cpp \
+                         ../../src/linad99/i3arr8.cpp \
                          ../../src/linad99/i3_io.cpp \
                          ../../src/linad99/i4arr.cpp \
                          ../../src/linad99/i4io.cpp \

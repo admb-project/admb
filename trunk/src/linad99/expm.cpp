@@ -38,7 +38,7 @@ dmatrix fabs(const dmatrix & X){
 }
 
   /**
-  \ingroup PDF
+  \ingroup matop
    Matrix exponential using (6,6) Padé approximation adapted from Moler and van Loan 
   \param A square dvar_matrix
   \returns The matrix exponentiel of A

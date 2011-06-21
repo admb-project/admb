@@ -7,6 +7,7 @@
 
 REV = `svnversion -n ../..`
 VER=`cat ../../VERSION`
+
 #location of the files downloaded from http://dox.narechk.net/content/main.html
 ifeq ($(HOSTNAME),kolea)
   # confugration on John's laptop
@@ -26,7 +27,7 @@ endif
 default: Doxyfile
 	mkdir -vp dox/html
 	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo "GENERATE_XML = NO"; echo -n "PROJECT_NUMBER = "$(VER).$(REV); ) | doxygen -
-#(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo "GENERATE_XML = NO"; echo -n "PROJECT_NUMBER = 10.0.";svnversion ../..) | doxygen -
+#       (cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo "GENERATE_XML = NO"; echo -n "PROJECT_NUMBER = 10.0.";svnversion ../..) | doxygen -
 
 sunsys:
 	mkdir -vp sunsys-dox/html

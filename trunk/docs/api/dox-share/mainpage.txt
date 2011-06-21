@@ -301,10 +301,10 @@ types are optimized for efficient derivative computation.
 Only the constant types are currently documented here.
 */
 
-/**  \defgroup PDF Probability Distribution Functions.
+/**  \defgroup PDF Probability Density Functions.
 */
 
-/**  \defgroup RNG Random Numbers.
+/**  \defgr/oup RNG Random Numbers.
 */
 
 /**  \defgroup misc "Helper" Functions
@@ -327,5 +327,11 @@ invoke custom adjoint code.
 
 /**
  * \defgroup cub_spline Class and methods for cubic splines.
+ */
+
+/**
+  \defgroup RA RETURN_ARRAYS_INCREMENT() and RETURN_ARRAYS_DECREMENT().
+  These functions must be called in any functions that returns
+  a "variable" object, ie dvariable, dvar_vector, ...
  */
 

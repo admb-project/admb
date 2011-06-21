@@ -520,8 +520,10 @@ void allocate_dvariable_space(void)
  }
 
 /**
- * Description not yet available.
- * \param
+  Increments gradient_structure::RETURN_ARRAYS_PTR. 
+  Must be called on entry to any functiton that returns a 
+  variable object.
+  \ingroup RA
  */
 void RETURN_ARRAYS_INCREMENT(void)
 {
@@ -546,8 +548,10 @@ void RETURN_ARRAYS_INCREMENT(void)
 }
 
 /**
- * Description not yet available.
- * \param
+  Decrements gradient_structure::RETURN_ARRAYS_PTR. 
+  Must be called on exit from any functiton that returns a 
+  variable object.
+  \ingroup RA
  */
 void RETURN_ARRAYS_DECREMENT(void)
 {

@@ -274,13 +274,15 @@ void spdll_exit(int);
   };
 
 /**
- * Description not yet available.
- * \param
+ * Holds the data for the prevariable class.
  */
   class double_and_int
   {
   public:
-    double x;
+    double x; ///< value of the variable
+    /** Return the value of the variable.
+    \return double reference containing the value of the variable.
+    */
     inline double& xvalue(void){return x;}
   };
 
@@ -1736,7 +1738,7 @@ private:
   class prevariable_position;
 
 /**
- * Description not yet available.
+ * Base class for dvariable.
  * \param
  */
   class prevariable
@@ -1750,7 +1752,7 @@ private:
 #endif
 
   public:
-    double_and_int * v;
+    double_and_int * v; ///< the data
     friend class dvar_vector_iterator;
     friend class dvar_vector;
     friend class dvar_matrix;
@@ -1927,8 +1929,7 @@ private:
   class df1_three_variable;
 
 /**
- * Description not yet available.
- * \param
+ * Data type for derivative information.
  */
   class dvariable : public prevariable
   {

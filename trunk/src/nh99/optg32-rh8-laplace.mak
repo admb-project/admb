@@ -1,4 +1,4 @@
-.PHONY: disk tpl2cpp tpl2cpp.c
+.PHONY: disk
 .SUFFIXES: .obj .cpp
 
 LIBPATH =gcc32-rh8olp
@@ -33,12 +33,12 @@ df1b2stub:
 	$(CXX) $(CXXFLAGS) -o $(STUBPATH)/df1b2stub.o df1b2stub.cpp
 	ar -rs $(STUBPATH)/${STUBNAME} $(STUBPATH)/df1b2stub.o
 
-$(DISKDIR)/bin/tpl2cpp:
-	$(CC) -Wno-format tpl2cpp.c -o $@
+$(DISKDIR)/bin/tpl2cpp: tpl2cpp.c
+	$(CC) -Wno-format -o $@ $<
 
 tpl2cpp.c: tpl2cpp.lex
-	flex -w tpl2cpp.lex
-	sed -f sedflex lex.yy.c > tpl2cpp.c
+	flex -w $<
+	sed -f sedflex lex.yy.c > $@
 
 model7.obj: model7.cpp
 ifdef ADMB_CONFIGURE

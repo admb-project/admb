@@ -5,7 +5,7 @@ vpath %.obj $(LIBPATH)
 
 .SUFFIXES: .obj .cpp
 
-.PHONY: disk tpl2rem tpl2rem.c
+.PHONY: disk
 include objects.lst
 
 all: disk
@@ -24,12 +24,12 @@ disk: $(DISKDIR)/lib/$(LIBNAME) $(DISKDIR)/bin/tpl2rem
 $(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
 	ar -rs $@ $(LIBPATH)/*.obj
 
-$(DISKDIR)/bin/tpl2rem:
-	$(CC) tpl2rem.c -o $@
+$(DISKDIR)/bin/tpl2rem: tpl2rem.c
+	$(CC) -o $@ $<
 
 tpl2rem.c: tpl2rem.lex
-	flex tpl2rem.lex
-	sed -f sedflex lex.yy.c > tpl2rem.c
+	flex $<
+	sed -f sedflex lex.yy.c > $@
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS)  $< -o $(LIBPATH)/$*.obj

@@ -86,6 +86,8 @@ Installation from Source Code
 =============================
 Below are procedures for installing ADMB from source code.
 
+MacOS and XCode uses should follow "Unix and GNU g++" procedure.
+
 Unix and GNU g++
 ----------------
 1. Extract source distribution

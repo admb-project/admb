@@ -10,7 +10,7 @@
 
 #include <fvar.hpp>
 
-dvariable gammln(_CONST dvariable& xx);
+dvariable gammln(_CONST prevariable& xx);
 dvariable factln(_CONST dvariable& n);
 double factln(double n);
 

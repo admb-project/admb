@@ -1,6 +1,6 @@
 ADMB Project
 Version 10.1
-Released April 8, 2011
+Released January 17, 2011
 
 Overview
 ========
@@ -86,19 +86,21 @@ Installation from Source Code
 =============================
 Below are procedures for installing ADMB from source code.
 
-MacOS and XCode uses should follow "Unix and GNU g++" procedure.
-
 Unix and GNU g++
 ----------------
 1. Extract source distribution
    
-   $ unzip admb-10.2.zip
+   $ unzip admb-10.0.zip
 
 2. Change to distribution directory
 
-   $ cd admb-10.1
+   $ cd admb-10.0
 
-3. Configure the build files for 32-bit
+3. Create configure script  
+
+   $ make --directory=script/configure/
+
+4. Configure the build files for 32-bit
 
    $ ./configure
 
@@ -106,29 +108,27 @@ Unix and GNU g++
 
    $ ./configure BUILD_64BIT=yes
 
-4. Build libraries 
+5. Build libraries 
   
    $ make
 
-5. [Optional] Test build by running examples
+6. [Optional] Test build by running examples
 
    $ make verify
 
-6. Install libraries to default location /usr/local.
+7. Install libraries to default location /usr/local.
 
-   $ sudo make install
-
-   Type password when prompted.
+   $ make install
 
 Unix and Sun Studio 12
 ----------------------
 1. Extract source distribution
    
-   $ unzip admb-10.1.zip
+   $ unzip admb-10.0.zip
 
 2. Change to source directory
 
-   $ cd admb-10.1/src
+   $ cd admb-10.0/src
 
 3. Build libraries 
   
@@ -140,19 +140,17 @@ Unix and Sun Studio 12
 
 5. Install libraries to default location /usr/local.
 
-   $ sudo make install
-
-   Type password when prompted.
+   $ make install
 
 Unix and Intel C++ Compiler
 ---------------------------
 1. Extract source distribution
    
-   $ unzip admb-10.1.zip
+   $ unzip admb-10.0.zip
 
 2. Change to source directory
 
-   $ cd admb-10.1/src
+   $ cd admb-10.0/src
 
 3. Build libraries 
   
@@ -164,9 +162,7 @@ Unix and Intel C++ Compiler
 
 5. Install libraries to default location /usr/local.
 
-   $ sudo make install
-
-   Type password when prompted.
+   $ make install
 
 Microsoft Windows and Visual C++
 --------------------------------
@@ -176,7 +172,7 @@ Microsoft Windows and Visual C++
 
 3. Change directory to the "src" folder. 
 
-   > cd admb-10.1\src
+   > cd admb-10.0\src
 
 4. Build libraries
 
@@ -207,7 +203,7 @@ Microsoft Windows and Borland C++ 5.5
 
 5. Change directory to the "src" folder. 
 
-   > cd admb-10.1\src
+   > cd admb-10.0\src
 
 6. Build 32-bit libraries
 
@@ -228,25 +224,29 @@ Microsoft Windows and MinGW (msys and gcc-4.5)
 
 2. Extract source distribution.
    
-   $ unzip admb-10.1.zip
+   $ unzip admb-10.0.zip
 
 2. Change to distribution directory
 
-   $ cd admb-10.1
+   $ cd admb-10.0
 
-3. Configure the build files for 32-bit
+3. Create configure script
+
+   $ make --directory=script/configure/
+
+4. Configure the build files for 32-bit
 
    $ ./configure
 
-4. Build libraries 
+5. Build libraries 
   
    $ make
 
-5. [Optional] Test build by running examples
+6. [Optional] Test build by running examples
 
    $ make verify
 
-6. Install libraries to default location /usr/local.
+7. Install libraries to default location /usr/local.
 
    $ make install
 
@@ -272,10 +272,10 @@ ADModel Builder please contact <users@admb-project.org>.
 Version Control
 ---------------
 ADMB source version control is hosted at Code Google
-"http://www.admb-project.org/svn/".  
+"http://code.google.com/p/admb-project/".  
 
-To anonymously checkout the trunk, use the command below
-$ svn checkout http://www.admb-project.org/svn/trunk admb-trunk-read-only
+The instructions for checking out source trunk is at 
+"http://code.google.com/p/admb-project/source/checkout".  
 
 If you would like to write access, please email <users@admb-project.org>
 to request an account.

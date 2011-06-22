@@ -432,11 +432,11 @@ dvariable cumd_gamma(const dvariable& x, const dvariable& a)
 /**
  * A wrapper for lgam
  */
-/*dvariable gammln(_CONST dvariable& xx)
+dvariable gammln(_CONST dvariable& xx)
 {
    dvariable z=lgam(xx);
    return z;
-}*/
+}
 
 /**
  * A wrapper for lgam

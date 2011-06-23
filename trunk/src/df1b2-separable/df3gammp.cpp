@@ -31,7 +31,6 @@ namespace Cephes
    int sgngam = 0;
    extern const double MAXLOG = 200;
    extern const double MAXNUM = 1.7976931348623158E+308;
-   extern const double PI = 3.14159265358979323844;
    extern const double LOGPI = 1.14472988584940017414;
    extern const double big = 4.503599627370496e15;
    extern const double biginv = 2.22044604925031308085e-16;

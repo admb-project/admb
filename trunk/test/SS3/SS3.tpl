@@ -192,7 +192,7 @@ DATA_SECTION
   //  end reading  from Starter file
 
   number pi
-  !!  pi=3.14159265358979;
+  !!  pi=PI;
 
   number neglog19
   !!  neglog19 = -log(19.);

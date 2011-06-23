@@ -26,7 +26,6 @@ df1b2variable lgam(const df1b2variable& _v1)
   df1b2variable tmp;
   tmp = 0.0;
   const double phi = 0.5772156649015328606065121;
-  const double pi = 3.1415926535897932384626432;
   const double zeta = 1.2020569031595942853997382;
   init_df3_one_variable v1(_v1);
 
@@ -34,12 +33,12 @@ df1b2variable lgam(const df1b2variable& _v1)
   {
     // value of lgam(1.0) is 0
     // 1st derivative is -phi
-    // 2nd deriv is pi*pi/6
+    // 2nd deriv is PI*PI/6
     // 3rd deriv is -2*zeta
     df3_one_variable v;
     v = 0.0;
     *v.get_udot() = -phi; 
-    *v.get_udot2() = pi*pi/6;
+    *v.get_udot2() = PI*PI/6;
     *v.get_udot3() = -2*zeta;
     tmp=v;
 
@@ -48,12 +47,12 @@ df1b2variable lgam(const df1b2variable& _v1)
   {
     // value of lgam(2.0) is 0 and
     // 1st derivative is 1-phi
-    // 2nd deriv is pi*pi/6 - 1
+    // 2nd deriv is PI*PI/6 - 1
     // 3rd deriv is 2*(1-zeta)
     df3_one_variable v;
     v = 0.0;
     *v.get_udot() = 1 - phi; 
-    *v.get_udot2() = pi*pi/6 - 1;
+    *v.get_udot2() = PI*PI/6 - 1;
     *v.get_udot3() = -2*(1-zeta);
     tmp=v;
   }
@@ -89,7 +88,6 @@ df3_one_variable lgam(const df3_one_variable& _x)
    gl0 = 0.0;
    int n = 0;
    int k = 0;
-   const double pi = 3.1415926535897932384626432;
    static double a[] = {
        8.333333333333333e-02,
       -2.777777777777778e-03,
@@ -115,7 +113,7 @@ df3_one_variable lgam(const df3_one_variable& _x)
         x0 = x+n;
     }
     x2 = 1.0/(x0*x0);
-    xp = 2.0*pi;
+    xp = 2.0*PI;
     gl0 = a[9];
     for (k=8;k>=0;k--)
     {

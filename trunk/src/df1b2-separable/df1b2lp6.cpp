@@ -1065,7 +1065,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
    }
 
    vf+=ld;
-   const double ltp=0.5*log(2.0*3.1415926535);
+   const double ltp=0.5*log(2.0*PI);
    vf-=us*ltp;
    double f=value(vf);
    dvector g(1,nvar);

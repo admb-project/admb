@@ -1723,7 +1723,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
      vf+=ld;
    }
    double f=value(vf);
-   f-=us*0.5*log(2.0*3.1415927535);
+   f-=us*0.5*log(2.0*PI);
    dvector g(1,nvar);
    gradcalc(nvar,g);
   

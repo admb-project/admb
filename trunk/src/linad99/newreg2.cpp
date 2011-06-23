@@ -33,7 +33,7 @@ dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,_CONST 
   dvar_vector diff2 = pow(diff,2); // These are the squared residuals
   v_hat = mean(diff2)+1.e-80; // add 1.e-80 so that a perfect fit wont't
 			      // produce log(0).
-  double b=2.*pcon/(width*sqrt(3.14159));  // This is the weight for the
+  double b=2.*pcon/(width*sqrt(PI));  // This is the weight for the
 					   // "robustifying" term
   dvariable log_likelihood = -sum(log((1.-pcon)*exp(-diff2/(2.*a2*v_hat))
     + b/(1.+pow(diff2/(width2*a2*v_hat),2))));
@@ -67,7 +67,7 @@ dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,
   dvar_vector diff2 = square(diff); // These are the squared residuals
   v_hat = mean(diff2)+1.e-80; // add 1.e-80 so that a perfect fit wont't
 			      // produce log(0).
-  double b=2.*pcon/(width*sqrt(3.14159));  // This is the weight for the
+  double b=2.*pcon/(width*sqrt(PI));  // This is the weight for the
 					   // "robustifying" term
   dvariable log_likelihood = -sum(log((1.-pcon)*exp(-diff2/(2.*a2*v_hat))
     + b/(1.+pow(diff2/(a2*v_hat),2))));

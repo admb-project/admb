@@ -54,7 +54,7 @@ dvector bounded_multivariate_normal(int nvar, BOR_CONST dvector& a1, BOR_CONST d
   dmatrix& ch, BOR_CONST double& _wght, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
-  const double sqrt_tpi =sqrt(2*3.14159);
+  const double sqrt_tpi =sqrt(2*PI);
   dvector w(1,nvar);
   //dvector ty(1,nvar);
   dvector a(1,nvar);
@@ -128,7 +128,7 @@ dvector probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_C
   dmatrix& ch, BOR_CONST double& _wght, double pprobe, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
-  const double sqrt_tpi =sqrt(2*3.14159);
+  const double sqrt_tpi =sqrt(2*PI);
   dvector w(1,nvar);
   dvector a(1,nvar);
   dvector b(1,nvar);

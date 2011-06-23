@@ -16,7 +16,7 @@ void bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST d
 {
   double & wght=(double &) _wght;
   //cout << y << endl;
-  const double sqrt_tpi =sqrt(2*3.14159);
+  const double sqrt_tpi =sqrt(2*PI);
   dvector a(1,nvar);
   dvector b(1,nvar);
   dvector alpha(1,nvar);
@@ -81,7 +81,7 @@ void probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR
 {
   double & wght=(double &) _wght;
   //cout << y << endl;
-  const double sqrt_tpi =sqrt(2*3.14159);
+  const double sqrt_tpi =sqrt(2*PI);
   dvector a(1,nvar);
   dvector b(1,nvar);
   dvector alpha(1,nvar);

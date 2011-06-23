@@ -43,6 +43,14 @@ AUTODIF classes.
 A more detailed description might someday be written.
 */
 
+// Borrow definition of M_PI from GCC
+#ifndef M_PI
+  #define M_PI 3.14159265358979323846
+#endif
+#ifndef PI
+  #define PI 3.14159265358979323846
+#endif
+
 #if defined(__GNUDOS__)
   #if defined(__GNUC__)
     #if (__GNUC__ < 3)

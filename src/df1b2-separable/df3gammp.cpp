@@ -903,8 +903,15 @@ df3_two_variable igamc(const df3_two_variable & aa,
 
    return (ans * ax);
 }
-
-
+/** Log negative bionomial density; random effects objects. 
+ A local parameter r is used to make it robust.
+ \f$ r=\frac{\mu}{10.0^{-120}+\tau-1.0} \f$
+ \ingroup PDF
+ \param x
+ \param mu
+ \param tau
+ \return Log of NegativeBinomial density. \f$ log(\Gamma(x+r))-log(\Gamma(r))-log(x!)+rlog(r)+xlog(\mu)-(r+x)log(r+\mu) \f$
+ */
 
 df1b2variable log_negbinomial_density(double x, const df1b2variable & _xmu,
 				      const df1b2variable & _xtau)

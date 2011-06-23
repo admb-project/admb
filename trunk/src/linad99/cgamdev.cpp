@@ -30,7 +30,9 @@ namespace Cephes
    extern int sgngam;
    extern const double MAXLOG;
    extern const double MAXNUM;
+   #ifndef PI
    extern const double PI;
+   #endif
    extern const double LOGPI;
    extern const double big;
    extern const double biginv;

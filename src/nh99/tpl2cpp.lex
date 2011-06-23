@@ -16,7 +16,8 @@
   #include <string.h>
   #include <stdio.h>
   #if defined(_WIN32)
-  #  include <io.h>  fopen
+  #include <io.h>    /* fopen   */
+  #include <ctype.h> /* isalnum */
   #endif
   char tmp_string[MAX_TMP_STRING];
   char tmp_string1[MAX_TMP_STRING];
@@ -2236,8 +2237,7 @@ DATA_SECTION  {
 
 <IN_THREE_ARRAY_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) |
 <IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index},{index}\) |
-<IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index}\) |
-<IN_THREE_ARRAY_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) {
+<IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index}\) {
 
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)
     fprintf(fdat,"%s",tmp_string);
@@ -2986,7 +2986,7 @@ PARAMETER_SECTION {
                   }
 
 PROCEDURE_SECTION {
-    int i; 
+    /* int i; */
     if (!data_defined)
     {
       fprintf(stderr,"Error -- DATA_SECTION must be defined before"
@@ -3646,7 +3646,7 @@ int main(int argc, char * argv[])
     strcat(infile_name,".tpl");
     strcat(outfile_name,".cpp");
     strcat(headerfile_name,".htp");
-    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n","(debug)");
     yyin=fopen(infile_name,"r");
     if (!yyin)
     {
@@ -3654,7 +3654,7 @@ int main(int argc, char * argv[])
         infile_name);
       exit(1);
     }
-    if (debug_flag) fprintf(stderr,"Opened file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Opened file %s for input\n","(debug)");
     if (makedll) 
     {
       strcpy(tmp_string1,argv[ioff]);
@@ -3671,7 +3671,7 @@ int main(int argc, char * argv[])
   {
     strcpy(infile_name,"admodel.tpl");
     strcpy(outfile_name,"admodel.cpp");
-    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n","(debug)");
     yyin=fopen(infile_name,"r");
     if (!yyin)
     {
@@ -3679,7 +3679,7 @@ int main(int argc, char * argv[])
         infile_name);
       exit(1);
     }
-    if (debug_flag) fprintf(stderr,"Opened file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Opened file %s for input\n","(debug)");
   }
   conlist_ptr=&(conlist[0]);
   classlist_ptr=&(classlist[0]);

@@ -4,6 +4,11 @@
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
  */
+/**
+\file cifstrem.cpp
+Implementation of the cifstream class.
+*/
+
 #include <fvar.hpp>
 
 #pragma implementation "cifstrem.h"

@@ -10,12 +10,14 @@
  */
 #include "fvar.hpp"
 
-  /** Log negative bionomial density; constant objects.
+  /** Log negative bionomial density; constant objects. 
+   A local parameter r is used to make it robust.
+   \f$ r=\frac{\mu}{10.0^{-120}+\tau-1.0} \f$
   \ingroup PDF
   \param x
   \param mu
   \param tau
-  \return 
+  \return Log of NegativeBinomial density. \f$ log(\Gamma(x+r))-log(\Gamma(r))-log(x!)+rlog(r)+xlog(\mu)-(r+x)log(r+\mu) \f$
   */
   double log_density_negbinomial(double x,double mu,double tau)
   {
@@ -30,11 +32,13 @@
   }
 
   /** Negative bionomial density; constant objects.
+   A local parameter r is used to make it robust.
+   \f$ r=\frac{\mu}{10.0^{-120}+\tau-1.0} \f$
   \ingroup PDF
   \param x
   \param mu
   \param tau
-  \return 
+  \return NegativeBinomial density. \f$ \frac{\Gamma(x+r)}{\Gamma(r)x!}(\frac{r}{r+\mu})^r(\frac{\mu}{r+\mu})^x \f$
   */ 
   double density_negbinomial(double x,double mu,double tau)
   {

@@ -38,7 +38,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-
+/**
+\file cifstrem.h
+Definition of the cifstream class.
+*/
 
 #ifndef CIFSTREM_H
   #define CIFSTREM_H

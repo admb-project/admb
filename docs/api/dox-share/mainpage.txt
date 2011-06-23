@@ -3,10 +3,12 @@
 <br><center>
 \image html admb-logo-notext-72.png
 </center><br>
-<B><CENTER>
+<H1>
+<CENTER>
 Documentation of mathematical functions can be found on the 
 Modules tab.
-</CENTER></B>
+</CENTER>
+</H1>
 <br>
 <br>
 Partial documentation of some of the AUTODIF Library and ADMB classes can
@@ -16,257 +18,13 @@ how it might look and how to insert documentation.
 <br>
 <br>
 This preliminary version of the API documentation is a work in progress.
-If you would like ton contribute your expertize to the enterprize please contact
-developers@admb-project.org.
+If you would like ton contribute your expertize to the enterprize please 
+contact developers@admb-project.org.
 
-* \section Overview
-*
-* The ADMB(Automatic Differentiation Model Builder) software suite 
-* is an environment for non-linear statistical modeling enabling
-* rapid model development, numerical stability, fast and efficient 
-* computation, and high accuracy parameter estimates.  ADModel Builder
-* is a high level language built around the AUTODIF Library, a C++
-* language extension which transparently implements reverse mode 
-* automatic differentiation.  A closely related software package, 
-* ADMB-RE, implements random effects in non-linear models.
-* 
-* \section Donations
-*
-* ADMB is an open source project that is freely available for download.
-* If you would like to contribute or donate funds, please contact 
-* <users@admb-project.org>.  Cool ADMB T-shirts are also available 
-* for purchase.
-* 
-* 
-* \section Requirements
-*
-* ADMB has been tested and used on Windows and UNIX operating 
-* systems in both 32 and 64 bit versions.  A C/C++ compiler 
-* must be be installed on the local computer. Below lists some 
-* tested compilers.
-* 
-* Several compilers are supported including:\n 
-*  * GNU g++ 3.4 or newer\n
-*  * Microsoft Visual C++ 2003 or newer\n
-*  * MacOS XCode 3.2\n
-*  * Intel C++ Compiler 11\n
-*  * Sun Studio 12\n
-*  * Borland 5.5\n
-* 
-* If the compiler is not listed, build the source distribution or 
-* email user group <users@admb-project.org> for help.
-* 
-* \section Downloading
-*
-* Precompiled binaries and the source distribution can be downloaded
-* from <http://www.admb-project.org/downloads/>.
-* 
-* \section install_sec Installation from Source Code
-*
-* Below are procedures for installing ADMB from source code for each platform.
-* 
-* \section gcc_sec Unix and GNU g++
+For up-to-date information and download and installation instructions
+consult the 
+<a href=" http://admb-project.org/documentation/readme.txt">ADMB README</a>.
 
-* \subsection step1 1. Extract source distribution
-*    
-*    $ unzip admb-10.0.zip
-* 
-* \subsection step2 2. Change to distribution directory
-* 
-*    $ cd admb-10.0
-* 
-* \subsection step3 3. Configure the build files for 32-bit
-* 
-*    $ ./configure
-* 
-*    or configure the build files for 64-bit.
-* 
-*    $ ./configure BUILD_64BIT=yes
-* 
-* \subsection step4 4. Build libraries 
-*   
-*    $ make
-* 
-* \subsection step5 5. [Optional] Test build by running examples
-* 
-*    $ make verify
-* 
-* \subsection step6 6. Install libraries to default location /usr/local.
-* 
-*    $ make install
-* 
-* \section sun_sec Unix and Sun Studio 12
-* ----------------------
-* \subsection sun_step1 1. Extract source distribution
-*    
-*    $ unzip admb-10.0.zip
-* 
-* \subsection sun_step2 2. Change to source directory
-* 
-*    $ cd admb-10.0/src
-* 
-* \subsection sun_step3 3. Build libraries 
-*   
-*    $ make --file=sunstudio.mak
-* 
-* \subsection sun_step4 4. [Optional] Test build by running examples
-* 
-*    $ make verify
-* 
-* \subsection sun_step5 5. Install libraries to default location /usr/local.
-* 
-*    $ make install
-* 
-* \section cpp_sec Unix and Intel C++ Compiler
-* 
-* \subsection cpp_step1 1. Extract source distribution
-*    
-*    $ unzip admb-10.0.zip
-* 
-* \subsection cpp_step2 2. Change to source directory
-* 
-*    $ cd admb-10.0/src
-* 
-* \subsection cpp_step3 3. Build libraries 
-*   
-*    $ make --file=icc.mak
-* 
-* \subsection cpp_step4 4. [Optional] Test build by running examples
-* 
-*    $ make verify
-* 
-* \subsection cpp_step5 5. Install libraries to default location /usr/local.
-* 
-*    $ make install
-* 
-* \section vs_sec Microsoft Windows and Visual C++
-* 
-* \subsection vs_step1 1. Extract source distribution.
-* 
-* \subsection vs_step2 2. Open Visual C++ Command Prompt. 
-* 
-* \subsection vs_step3 3. Change directory to the "src" folder. 
-* 
-*    > cd admb-10.0\src
-* 
-* \subsection vs_step4 4. Build libraries
-* 
-*    > nmake /fvc.mak
-* 
-* \subsection vs_step5 5. [Optional] Test build by running examples
-* 
-*    > nmake /fvc.mak verify
-* 
-* \subsection vs_step6 6. Install libraries to default location %ProgramFiles%\ADMB and adds ADMB shortcuts in the Start menu.
-* 
-*    > nmake /fvc.mak install
-* 
-* \section bor_sec Microsoft Windows and Borland C++ 5.5
-* -------------------------------------
-* \subsection bor_step1 1. Extract source distribution.
-* 
-* \subsection bor_step2 2. Open Windows Command Prompt in Start->All Programs->Accessories.
-* 
-* \subsection bor_step3 3. Set BCC55_HOME variable to location of BCC55 folder.
-* 
-*    \verbatim > set BCC55_HOME=c:\Borland\BCC55 \endverbatim
-* 
-* \subsection bor_step4 4. Add BCC55_HOME to system PATH variable.
-* 
-*    \verbatim > set PATH=c:\Borland\BCC55\Bin;%PATH% \endverbatim
-* 
-* \subsection bor_step5 5. Change directory to the "src" folder. 
-* 
-*    > cd admb-10.0\src
-* 
-* \subsection bor_step6 6. Build 32-bit libraries
-* 
-*    > make /fbcc.mak
-* 
-* \subsection bor_step7 7. [Optional] Test build by running examples
-* 
-*    > make /fbcc.mak verify
-* 
-* \subsection bor_step8 8. Install libraries to default location %ProgramFiles%\ADMB
-*    and adds ADMB shortcuts in the Start menu.
-* 
-*    > make /fbcc.mak install
-* 
-* \section mingw_sec Microsoft Windows and MinGW (msys and gcc-4.5)
-* ----------------------------------------------
-* \subsection mingw_step1 1. Open MinGW Shell located in Start->MinGW->MinGW Shell.
-* 
-* \subsection mingw_step2 2. Extract source distribution.
-*    
-*    $ unzip admb-10.0.zip
-* 
-* \subsection mingw_step3 2. Change to distribution directory
-* 
-*    $ cd admb-10.0
-* 
-* \subsection mingw_step1 3. Configure the build files for 32-bit
-* 
-*    $ ./configure
-* 
-* \subsection mingw_step1 4. Build libraries 
-*   
-*    $ make
-* 
-* \subsection mingw_step1 5. [Optional] Test build by running examples
-*  
-*    $ make verify
-* 
-* \subsection mingw_step1 6. Install libraries to default location /usr/local.
-* 
-*    $ make install
-* 
-* Installation from Binary Distributions\n
-* ======================================\n
-* Binary installation instructions can be found at 
-* http://www.admb-project.org/documentation/.
-* 
-* Documentation\n
-* =============\n
-* User manuals for ADModel Builder, the AUTODIF library and the ADMB-RE
-* Nonlinear random effects module can be downloaded from 
-* http://www.admb-project.org/downloads/.\n
-* 
-* More documentation is also available on the main ADMB homepage 
-* http://www.admb-project.org/.\n
-* 
-* Developing ADModel Builder\n
-* ==========================\n
-* If you are interested in contributing to the further development of
-* ADModel Builder please contact <users@admb-project.org>.\n
-* 
-* Version Control\n
-* ---------------\n
-* ADMB source code is available for browsing and download at 
-* http://admb-project.org/svn/trunk/ 
-* 
-* If you would like to write access to the Subversion repository,
- please email <users@admb-project.org>
-* to request an account.\n
-* 
-* Help and Support\n
-* ================\n
-* For help and support, email the ADMB users group <users@admb-project.org>.\n
-* 
-* Contributors\n
-* ============\n
-* This software was originally developed by David Fournier of Otter Research, Ltd. \n
-* 
-* Several other folks have contributed to the ADMB Project:\n
-* 
-* David Fournier <davef@otter-rsch.com>\n
-* John Sibert <sibert@hawaii.edu>\n
-* Hans Skaug <Hans.Skaug@mi.uib.no>\n
-* Mark Maunder <mmaunder@iattc.org> \n
-* Anders Nielsen <anders@nielsensweb.org>\n
-* Arni Magnusson <arnima@hafro.is> \n
-* Derek Seiple <dseiple@hawaii.edu>\n
-* Johnoel Ancheta <johnoel@hawaii.edu>\n
-*
 */
 
 /*
@@ -319,8 +77,9 @@ invoke custom adjoint code.
  */
 
 /**
-  \defgroup RA RETURN_ARRAYS_INCREMENT() and RETURN_ARRAYS_DECREMENT().
+  \defgroup RA Cautions for functions that return variable objects.
   These functions must be called in any function that returns
-  a "variable" object, ie dvariable, dvar_vector, ...
+  a "variable" object, ie dvariable, dvar_vector, ... Failure to so
+  may generate an error message related to an overflow in the 
+  RETURN_ARRAYS stack, or even worse cause derivatives to be incorrect.
  */
-

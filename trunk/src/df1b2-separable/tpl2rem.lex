@@ -8,7 +8,7 @@
   #include <string.h>
   #include <stdio.h>
   #if defined(_WIN32)
-  #  include <io.h>  fopen
+  #include <io.h>  /* fopen */
   #endif
   char tmp_string[MAX_TMP_STRING];
   char tmp_string1[MAX_TMP_STRING];
@@ -2403,8 +2403,7 @@ DATA_SECTION  {
 
 <IN_THREE_ARRAY_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) |
 <IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index},{index}\) |
-<IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index}\) |
-<IN_THREE_ARRAY_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) {
+<IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index}\) {
 
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)
     fprintf(fdat,"%s",tmp_string);
@@ -3192,7 +3191,7 @@ PARAMETER_SECTION {
 
 PROCEDURE_SECTION {
 
-    int i; 
+    /* int i; */
 
     if (!data_defined)
     {
@@ -4307,7 +4306,7 @@ char * get_directory_name(const char * s)
   int len;
   int i,j;
   char * path1=getenv("ADMB_HOME");
-  char sed_file_separator='/';
+  /* char sed_file_separator='/'; */
 #if defined(WIN32)
   char file_separator='\\';
   char file_separator_string[]="\\";
@@ -4871,7 +4870,7 @@ void  get_next_argument(char * buffer,char * arg)
 void write_getindex_stuff(char *str)
 {
   int icount;
-  char * argptr;
+  /* char * argptr; */
   int paren_level=0;
   char * last_paren;
   char * first_paren;

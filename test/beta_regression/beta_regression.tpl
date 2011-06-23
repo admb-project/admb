@@ -55,7 +55,7 @@ SEPARABLE_FUNCTION void f1(int i,int subi,const dvar_vector& b,const dvar_vector
 
     dvariable mu;
     dvariable phi;
-    const double ltpi=0.5*log(2.0*3.1415927);
+    const double ltpi=0.5*log(2.0*PI);
     dvar_vector sigma=exp(log_sigma);
     
     dvariable bx=b(1)+sigma(1)*ui(1);

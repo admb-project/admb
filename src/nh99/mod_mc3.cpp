@@ -46,9 +46,9 @@ void multivariate_mixture(BOR_CONST dvector& _mix,int nvar,long int& iseed,
   double& log_density_normal=(double&) _log_density_normal;
   double& log_density_small_normal=(double&) _log_density_small_normal;
   const double r2=sqrt(2.0);
-  const double l2p=0.5*log(2*3.1415927);
-  const double l3p=0.5*log(2*3.1415927)-log(3.0);
-  const double pr2=log(3.1415927*r2);
+  const double l2p=0.5*log(2*PI);
+  const double l3p=0.5*log(2*PI)-log(3.0);
+  const double pr2=log(PI*r2);
   log_density_normal=0.0;
   log_density_cauchy=0.0;
   
@@ -118,24 +118,24 @@ void multivariate_mixture(BOR_CONST dvector& _mix,int nvar,long int& iseed,
 
 double set_value_inv_mc(const prevariable& z,double min, double max)
 {
-  return tan(3.1415927*( (value(z)-min)/(max-min)-0.5 ));
+  return tan(PI*( (value(z)-min)/(max-min)-0.5 ));
 }
 
 double set_value_inv_mc(double z,double min, double max)
 {
-  return tan(3.1415927*( (z-min)/(max-min)-0.5 ));
+  return tan(PI*( (z-min)/(max-min)-0.5 ));
 }
 
 dvariable set_value_mc(const prevariable& z,double min,double max)
 {
-  const double pinv=1./3.1415927;
+  const double pinv=1./PI;
   dvariable y=atan(z)*pinv+0.5;
   return min+(max-min)*y;
 }
 
 double set_value_mc(double z,double min,double max)
 {
-  const double pinv=1./3.1415927;
+  const double pinv=1./PI;
   double y=atan(z)*pinv+0.5;
   return min+(max-min)*y;
 }

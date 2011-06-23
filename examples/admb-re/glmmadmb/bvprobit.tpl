@@ -207,7 +207,7 @@ SEPARABLE_FUNCTION void bin_probit(int _i,const dvar_vector& tmpL,const dvar_vec
   }
 
 
-  g+=0.5*m*log(2.0*3.1415926535)+0.5*norm2(ui);
+  g+=0.5*m*log(2.0*PI)+0.5*norm2(ui);
 
   dvar_vector lui=L*ui;
 
@@ -239,7 +239,7 @@ SEPARABLE_FUNCTION void bin_probit(int _i,const dvar_vector& tmpL,const dvar_vec
     L(i,i)=exp(tmpL(i));
   }
 
-  g+=0.5*m*log(2.0*3.1415926535)+0.5*norm2(ui);
+  g+=0.5*m*log(2.0*PI)+0.5*norm2(ui);
 
   dvar_vector lui=L*ui;
 
@@ -329,7 +329,7 @@ SEPARABLE_FUNCTION void bin_logit(int _i,const dvar_vector& tmpL,const dvar_vect
   }
 
 
-  g+=0.5*m*log(2.0*3.1415926535)+0.5*norm2(ui);
+  g+=0.5*m*log(2.0*PI)+0.5*norm2(ui);
 
   dvar_vector lui=L*ui;
 
@@ -370,7 +370,7 @@ SEPARABLE_FUNCTION void bin_logit(int _i,const dvar_vector& tmpL,const dvar_vect
     L(i,i)=exp(tmpL(i));
   }
 
-  g+=0.5*m*log(2.0*3.1415926535)+0.5*norm2(ui);
+  g+=0.5*m*log(2.0*PI)+0.5*norm2(ui);
 
   dvar_vector lui=L*ui;
   for (j=group(_i);j<group(_i+1);j++)

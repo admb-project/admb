@@ -127,7 +127,7 @@ PROCEDURE_SECTION
     int sgn;
     f+=lmin(i)+0.5*ln_det(sh,sgn);
   }
-  f-=0.5*nobs*ndim*log(2.*3.14159);
+  f-=0.5*nobs*ndim*log(2.*PI);
   Omega=S;
 
 FUNCTION  dvar_vector update_the_means(dvar_vector& w,dvar_vector& m,dvector& e)

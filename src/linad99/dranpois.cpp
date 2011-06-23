@@ -26,7 +26,6 @@
 #define RNMX (1.0-EPS)
 */
           
-#define PI 3.141592654
 /** Poisson random deviates.
    \param xm Mean of Poisson distribution
    \param rng Instance of class random_number_generator.

@@ -230,7 +230,7 @@ double new_value_mc(BOR_CONST double& _jac,double x,double min,double max,double
     dvector tmp(mmin,mmax);
     int jj=1;
     set_value_inv(tmp,jj);
-    double hpi=.5*3.14159;
+    double hpi=.5*PI;
     for (int i=mmin;i<=mmax;i++)
     {
       tmp(i)=atan(y(ii)+ndev(ii))/hpi;
@@ -400,7 +400,7 @@ void param_init_d3array::add_value(BOR_CONST dvector& ndev,BOR_CONST int& _ii)
     dvector tmp(mmin,mmax);
     int jj=1;
     set_value_inv(tmp,jj);
-    double hpi=.5*3.14159;
+    double hpi=.5*PI;
     for (int i=mmin;i<=mmax;i++)
     {
       y(ii)=tan(hpi*tmp(i));

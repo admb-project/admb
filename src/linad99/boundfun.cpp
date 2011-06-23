@@ -31,10 +31,10 @@ double dmax(double, double);
   prevariable&  fpen=(prevariable&)  _fpen;
   dvariable t;
 
-  t= (atan(x)/3.1415926);
+  t= (atan(x)/PI);
   t=( t +.5 );
   t= t *( fmax-fmin ) + fmin;
-  t=( (atan(x)/3.1415926) +.5 )*( fmax-fmin ) + fmin;
+  t=( (atan(x)/PI) +.5 )*( fmax-fmin ) + fmin;
 
   if (x < -12.)
   {
@@ -64,7 +64,7 @@ double dftinv(double x, double fmin, double fmax)
     x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
 
-  tinv=tan( ((x-fmin)/(fmax-fmin) -.5) * 3.1415926);
+  tinv=tan( ((x-fmin)/(fmax-fmin) -.5) * PI);
   return(tinv);
 }
 

@@ -880,7 +880,7 @@ PRELIMINARY_CALCS_SECTION
   selpar_HB_D_age1=set_selpar_HB_D_age1;
   selpar_MRFSS_D_age1=set_selpar_MRFSS_D_age1;
 
- sqrt2pi=sqrt(2.*3.14159265);
+ sqrt2pi=sqrt(2.*PI);
  g2mt=0.000001;         //conversion of grams to metric tons
  g2kg=0.001;         //conversion of grams to kg
  mt2klb=2.20462;        //converstion of metric tons to 1000 lb

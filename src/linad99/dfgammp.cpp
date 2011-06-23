@@ -43,7 +43,6 @@ namespace Cephes
    extern int sgngam;
    extern const double MAXLOG;
    extern const double MAXNUM;
-   extern const double PI;
    extern const double LOGPI;
    extern const double big;
    extern const double biginv;
@@ -355,7 +354,6 @@ df1_one_variable lgam(const df1_one_variable& _x)
    gl0 = 0.0;
    int n = 0;
    int k = 0;
-   const double pi = 3.1415926535897932384626432;
    static double a[] = {
        8.333333333333333e-02,
       -2.777777777777778e-03,
@@ -381,7 +379,7 @@ df1_one_variable lgam(const df1_one_variable& _x)
         x0 = x+n;
     }
     x2 = 1.0/(x0*x0);
-    xp = 2.0*pi;
+    xp = 2.0*PI;
     gl0 = a[9];
     for (k=8;k>=0;k--)
     {

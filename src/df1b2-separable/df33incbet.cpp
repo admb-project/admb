@@ -148,7 +148,6 @@ static double Q[] = {
 };
 static double MAXGAM = 171.624376956302725;
 static double LOGPI = 1.14472988584940017414;
-static double PI = 3.14159265358979323844;
 
 /**
  * Stirling's formula for the gamma function.

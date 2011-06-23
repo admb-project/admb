@@ -158,7 +158,6 @@ static double Q[] = {
 #define MAXGAM 171.624376956302725
 static double LOGPI = 1.14472988584940017414;
 #endif
-static double PI = 3.14159265358979323844;
 
 #ifdef DEC
 static unsigned short P[] = {

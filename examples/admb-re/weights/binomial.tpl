@@ -22,7 +22,7 @@ PROCEDURE_SECTION
 
 SEPARABLE_FUNCTION void f1(const int& i, const prevariable & mu, const prevariable & sigma, const prevariable& ui)
 
-  g -= -0.5*log(2*3.1415927) - 0.5*square(ui);
+  g -= -0.5*log(2*PI) - 0.5*square(ui);
 
   dvariable  eta = mu + sigma*ui;
   dvariable  p = mfexp(eta)/(1.0 + mfexp(eta));

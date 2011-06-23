@@ -250,7 +250,6 @@ static df1_two_variable gammlnguts(const df1_two_variable& _z)
 {
   df1_two_variable x;
   //const double lpi =1.1447298858494001741434272;
-  //const double pi =3.1415926535897932384626432;
   const double lpp =0.9189385332046727417803297;
   int n=7;
   const double c[9]={0.99999999999980993, 
@@ -281,10 +280,9 @@ static df1_two_variable gammlnguts(const df1_two_variable& _z)
 df1_two_variable gammln(const df1_two_variable& z)
 {
   const double lpi =1.1447298858494001741434272;
-  const double pi =3.1415926535897932384626432;
   if (value(z)<0.5)
   {
-    return lpi - log(sin(pi*z)) - gammlnguts(1.0-z);
+    return lpi - log(sin(PI*z)) - gammlnguts(1.0-z);
   }
   else
   {

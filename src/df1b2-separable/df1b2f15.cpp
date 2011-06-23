@@ -425,7 +425,7 @@ void set_value_mc(const df1b2vector& _x,const init_df1b2vector& _v, const int& _
   for (int i=min;i<=max;i++)
   {
     //x(i)=boundp(v(ii++),fmin,fmax,fpen);
-    const double pinv=1./3.1415927;
+    const double pinv=1./PI;
     df1b2variable y=atan(v(ii++))*pinv+0.5;
     x(i)=fmin+(fmax-fmin)*y;
   }

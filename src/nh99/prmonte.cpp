@@ -16,7 +16,7 @@ dvector new_probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,B
 {
   double& wght=(double&) _wght;
   const double rob1=0.95;
-  const double sqrt_tpi =sqrt(2*3.14159);
+  const double sqrt_tpi =sqrt(2*PI);
   dvector w(1,nvar);
   dvector a(1,nvar);
   dvector b(1,nvar);
@@ -169,7 +169,7 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1
 {
   double& wght=(double&) _wght;
   const double rob1=0.95;
-  const double sqrt_tpi =sqrt(2*3.14159);
+  const double sqrt_tpi =sqrt(2*PI);
   dvector w(1,nvar);
   dvector a(1,nvar);
   dvector b(1,nvar);

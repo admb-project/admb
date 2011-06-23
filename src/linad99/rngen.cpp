@@ -187,7 +187,7 @@ double randn( BOR_CONST random_number_generator& rng)
   double x,y;
   x=((random_number_generator&) rng).better_rand();
   y=((random_number_generator&) rng).better_rand();
-  double u=sqrt(-2*log(x))*cos(2*3.14159*y);
+  double u=sqrt(-2*log(x))*cos(2*PI*y);
   return(u);
 }
   

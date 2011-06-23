@@ -53,8 +53,70 @@ The main use of the matrix exponential is to solve linear ordinary differential 
    y(t)=e^{At}y_0
 \f]
 
+  \param A square dmatrix
+  \returns The matrix exponential of A
+  */
+dmatrix expm(const dmatrix & A)
+{
+  int rmin = A.rowmin();
+  int rmax = A.rowmax();
+  if(rmax != A.colmax()){cout<<"Error: Not square matrix in expm."<<endl; ad_exit(1);}
+  if(rmin != A.colmin()){cout<<"Error: Not square matrix in expm."<<endl; ad_exit(1);}
+  dmatrix I(rmin,rmax,rmin,rmax);
+  dmatrix AA(rmin,rmax,rmin,rmax);
+  dmatrix X(rmin,rmax,rmin,rmax);
+  dmatrix E(rmin,rmax,rmin,rmax);
+  dmatrix D(rmin,rmax,rmin,rmax);
+  dmatrix cX(rmin,rmax,rmin,rmax);
+  I.initialize();
+  for(int i=rmin; i<=rmax; ++i){I(i,i)=1.0;}
+  double log2NormInf;
+  log2NormInf=log(max(rowsum(fabs(A))));
+  log2NormInf/=log(2.0);
+  int e = (int)log2NormInf + 1;
+  int s = e+1;
+  s = (s<0) ? 0 : s;
+  AA=1.0/pow(2.0,s)*A;
+  X=AA;
+  double c=0.5;
+
+  E=I+c*AA;
+  D=I-c*AA;
+  int q=6, p=1;
+  for(int k=2;  k<=q; ++k){
+    c*=((double)q-k+1.0)/((double)k*(2*q-k+1));
+    X=AA*X;
+    cX=c*X;
+    E+=cX;
+    if(p==1){D+=cX;}else{D-=cX;}
+    p = (p==1) ? 0 : 1;
+  }
+  //E=inv(D)*E;
+  E = solve(D,E);
+  for(int k=1; k<=s; ++k){
+    E=E*E;
+  }
+  return E;
+}
+
+  /**
+  \ingroup matop
+   Matrix exponential. 
+   
+   The matrix exponential is calculated using the Padé approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
+
+   
+The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems: 
+\f[
+\frac{d}{dt}y(t) = Ay(t)\ , \ \mbox{with } y(0) = y_0
+\f] 
+   \item then the solution becomes
+\f[
+   y(t)=e^{At}y_0
+\f]
+
   \param A square dvar_matrix
-  \returns The matrix exponentiel of A
+  \returns The matrix exponential of A
   */
 dvar_matrix expm(const dvar_matrix & A)
 {

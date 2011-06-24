@@ -12,7 +12,7 @@ command
        fruntrunc
 
 After you run the program you fill finsd the parameter 
-estimates togehtre with their estimated std devs in the
+estimates together with their estimated std devs in the
 file truncreg.std.
 
 A description of the truncated regression 

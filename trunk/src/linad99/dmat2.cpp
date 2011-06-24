@@ -2,7 +2,7 @@
  * $Id: dmat2.cpp 946 2011-01-12 23:52:45Z johnoel $
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2011 Regents of the University of California
  */
 /**
  * \file
@@ -60,3 +60,4 @@
       }
       return(tmp);
     }
+    double sumsq(_CONST dmatrix& m1) {return(norm2(m1));}

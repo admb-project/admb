@@ -741,3 +741,4 @@ dvariable norm2(const banded_symmetric_dvar_matrix& B)
   nm+=norm2(B.d(0));
   return nm;
 }
+dvariable sumsq(const banded_symmetric_dvar_matrix& B) {return(norm2(B));}

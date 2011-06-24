@@ -334,7 +334,7 @@ void ivector::allocate(void)
  * Description not yet available.
  * \param
  */
-  int  norm2(const ivector& t1)
+  int norm2(const ivector& t1)
   {
     int tmp=0;;
    for (int i=t1.indexmin();i<=t1.indexmax();i++)
@@ -343,6 +343,7 @@ void ivector::allocate(void)
    }
     return(tmp);
   }
+  int sumsq(const ivector& t1) {return(norm2(t1));}
 
 /**
  * Description not yet available.

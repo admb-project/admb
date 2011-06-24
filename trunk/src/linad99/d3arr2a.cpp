@@ -173,6 +173,7 @@
       }
       return tmp;
     }
+    double sumsq(_CONST d3_array& m) {return(norm2(m));}
 
 /**
  * Description not yet available.

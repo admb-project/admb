@@ -38,3 +38,4 @@
     tmp=t1*t1;
     return(tmp);
   }
+  double sumsq(_CONST dvector& t1) {return(norm2(t1));}

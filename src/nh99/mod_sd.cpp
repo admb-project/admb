@@ -385,8 +385,8 @@ void function_minimizer::sd_routine(void)
       ofs << " ";
       ofsd << " ";
     }
-    ofs << "  value      std dev   ";
-    ofsd << "  value      std dev   ";
+    ofs << "  value      std.dev   ";
+    ofsd << "  value      std.dev   ";
     for (i=1;i<=nvar+ndvar;i++)
     {
       ofs << " " << setw(4) << i << "   ";

@@ -145,3 +145,4 @@ double norm2(const banded_symmetric_dmatrix& B)
   nm+=norm2(B.d(0));
   return nm;
 }
+double sumsq(const banded_symmetric_dmatrix& B) {return(norm2(B));}

@@ -1238,9 +1238,11 @@ df1b2vector operator * (const dvector& x,const df1b2variable& y);
 df1b2variable sum(const df1b2vector& x);
 df1b2variable mean(const df1b2vector& x);
 df1b2variable norm2(const df1b2vector& x);
+df1b2variable sumsq(const df1b2vector& x);
 df1b2variable norm(const df1b2vector& x);
 
 df1b2variable norm2(const df1b2matrix& x);
+df1b2variable sumsq(const df1b2matrix& x);
 df1b2variable norm(const df1b2matrix& x);
 df1b2variable mean(const df1b2matrix& x);
 df1b2variable sum(const df1b2matrix& x);

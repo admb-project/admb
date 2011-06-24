@@ -829,6 +829,7 @@ df1b2variable norm2(const df1b2vector& _x)
   }
   return tmp;
 }
+df1b2variable sumsq(const df1b2vector& _x) {return(norm2(_x));}
 
 /**
  * Description not yet available.
@@ -865,6 +866,7 @@ df1b2variable norm2(const df1b2matrix& _x)
   }
   return tmp;
 }
+df1b2variable sumsq(const df1b2matrix& _x) {return(norm2(_x));}
 
 /**
  * Description not yet available.

@@ -42,6 +42,7 @@
       RETURN_ARRAYS_DECREMENT();
       return tmp;
     }
+    dvariable sumsq(_CONST dvar3_array& m) {return(norm2(m));}
 
 /**
  * Description not yet available.

@@ -75,6 +75,7 @@
     RETURN_ARRAYS_DECREMENT();
     return(tmp);
   }
+  dvariable sumsq(_CONST dvar_vector& t1) {return(norm2(t1));}
 
 /**
  * Description not yet available.

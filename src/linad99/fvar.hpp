@@ -2429,6 +2429,7 @@ private:
     friend class sdmatrix;
     friend double norm(_CONST dvector&);
     friend double norm2(_CONST dvector&);
+    friend double sumsq(_CONST dvector&);
     friend class dvar_vector;
     friend class dmatrix;
     friend class d3_array;
@@ -2909,7 +2910,7 @@ double dmax(double i, double j);
 
     friend dvariable norm(_CONST dvar_vector&);
     friend dvariable norm2(_CONST dvar_vector&);
-
+    friend dvariable sumsq(_CONST dvar_vector&);
 
     friend void copy_status(BOR_CONST ostream& s,_CONST dvar_vector& v);
 
@@ -3188,6 +3189,7 @@ friend class dvar3_array;
 
     friend dvariable norm(_CONST dvar_matrix&);
     friend dvariable norm2(_CONST dvar_matrix&);
+    friend dvariable sumsq(_CONST dvar_matrix&);
 
     friend void copy_status(BOR_CONST ostream& s,_CONST dvar_matrix& m1);
 
@@ -3402,6 +3404,7 @@ imatrix sort(_CONST imatrix&,int column,int NSTACK=60);
 
     friend double norm(_CONST dmatrix&);
     friend double norm2(_CONST dmatrix&);
+    friend double sumsq(_CONST dmatrix&);
 
     dmatrix& operator += (_CONST dmatrix& t);
     dmatrix& operator -= (_CONST dmatrix& t);
@@ -4778,6 +4781,7 @@ void save_double_value(double x);
    //const double& value(const double& u);
    double norm(_CONST d3_array&);
    double norm2(_CONST d3_array&);
+   double sumsq(_CONST d3_array&);
    d3_array exp(_CONST d3_array& m);
    d3_array mfexp(_CONST d3_array& m);
    d3_array mfexp(_CONST d3_array& m, double d);
@@ -4805,6 +4809,7 @@ void save_double_value(double x);
 
    dvariable norm(_CONST dvar3_array& m);
    dvariable norm2(_CONST dvar3_array& m);
+   dvariable sumsq(_CONST dvar3_array& m);
    dvar3_array exp(_CONST dvar3_array& m);
    dvar3_array mfexp(_CONST dvar3_array& m);
    dvar3_array mfexp(_CONST dvar3_array& m, double d);
@@ -7384,7 +7389,8 @@ public:
 #endif
   friend banded_symmetric_dmatrix value(_CONST banded_symmetric_dvar_matrix&v);
   friend banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos);
- friend double norm2(const banded_symmetric_dmatrix& B);
+  friend double norm2(const banded_symmetric_dmatrix& B);
+  friend double sumsq(const banded_symmetric_dmatrix& B);
 };
 
 /**
@@ -7420,6 +7426,7 @@ public:
   friend banded_symmetric_dmatrix value(_CONST banded_symmetric_dvar_matrix&v);
   friend dvariable norm(const banded_symmetric_dvar_matrix& B);
   friend dvariable norm2(const banded_symmetric_dvar_matrix& B);
+  friend dvariable sumsq(const banded_symmetric_dvar_matrix& B);
 };
 
 /**
@@ -8123,8 +8130,10 @@ double dot(const dmatrix& M,const dmatrix& d2);
 
 double norm(const banded_symmetric_dmatrix& B);
 double norm2(const banded_symmetric_dmatrix& B);
+double sumsq(const banded_symmetric_dmatrix& B);
 dvariable norm(const banded_symmetric_dvar_matrix& B);
 dvariable norm2(const banded_symmetric_dvar_matrix& B);
+dvariable sumsq(const banded_symmetric_dvar_matrix& B);
 
 double lower_triangular_ln_det(const dmatrix& m);
 double lower_triangular_ln_det(const dmatrix& m,int& sgn);
@@ -8477,6 +8486,7 @@ void test_the_pointer(void);
     dcompressed_triplet&);
 
   dmatrix make_dmatrix(dcompressed_triplet& M);
-     int norm2(const ivector&);
+  int norm2(const ivector&);
+  int sumsq(const ivector& v);
 
 #endif //#ifndef FVAR_HPP

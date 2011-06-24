@@ -99,6 +99,7 @@
       RETURN_ARRAYS_DECREMENT();
       return(tmp);
     }
+    dvariable sumsq(_CONST dvar_matrix& m1) {return(norm2(m1));}
 
    /*
     dvar_matrix trans(_CONST dvar_matrix& m1)

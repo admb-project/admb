@@ -162,7 +162,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
         //if (ad_comm::wd_flag)
         tmpstring = ad_comm::adprogram_name + ".rhes";
         ofstream ofs((char*)(tmpstring));
-            ofs << "   value      std dev" << endl;
+            ofs << "   value      std.dev" << endl;
         int mmin=lapprox->block_diagonal_hessian->indexmin();
         int mmax=lapprox->block_diagonal_hessian->indexmax();
         int i,j;
@@ -192,7 +192,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
         //if (ad_comm::wd_flag)
         tmpstring = ad_comm::adprogram_name + ".rhes";
         ofstream ofs((char*)(tmpstring));
-            ofs << "   value      std dev" << endl;
+            ofs << "   value      std.dev" << endl;
         int mmin=lapprox->bHess->indexmin();
         int mmax=lapprox->bHess->indexmax();
         //int i,j;
@@ -225,7 +225,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       dmatrix m;
       tmpstring = ad_comm::adprogram_name + ".rhes";
       ofstream ofs((char*)(tmpstring));
-          ofs << "   value      std dev" << endl;
+          ofs << "   value      std.dev" << endl;
       //int ii=1;
       tmpstring = ad_comm::adprogram_name + ".luu";
       uostream ofs1((char*)(tmpstring));

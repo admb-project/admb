@@ -83,8 +83,9 @@ double_and_int * gradnew()
 //  }
 
 /**
- * Description not yet available.
- * \param
+  Constructor for dvariable object from its base class; deep copy.
+  Allocates memory and assigns value of argument to new object.
+  \param t constant prevariable object
  */
     dvariable::dvariable(_CONST prevariable& t)
     {
@@ -96,8 +97,9 @@ double_and_int * gradnew()
     }
 
 /**
- * Description not yet available.
- * \param
+  Copy constructor for dvariable object; deep copy.
+  Allocates memory and assigns value of argument to new object.
+  \param t constant devariable object
  */
     dvariable::dvariable(_CONST dvariable& t)
     {
@@ -108,8 +110,9 @@ double_and_int * gradnew()
     }
 
 /**
- * Description not yet available.
- * \param
+   Null constructor. 
+   Creates new dvariable object,
+   sets value to zero and initializes derivatve information.
  */
     dvariable::dvariable()
     {
@@ -122,8 +125,7 @@ double_and_int * gradnew()
     }
 
 /**
- * Description not yet available.
- * \param
+   Phony constructor designed to avoid ambiguous references?
  */
     dvariable::dvariable(kkludge_object)
     {
@@ -132,8 +134,7 @@ double_and_int * gradnew()
     }
 
 /**
- * Description not yet available.
- * \param
+  Destructor; frees memory on gradient stack.
  */
    dvariable::~dvariable()
    {
@@ -141,8 +142,10 @@ double_and_int * gradnew()
    }
 
 /**
- * Description not yet available.
- * \param
+   Creates dvariable instance from a double constant.
+   Creates new dvariable object,
+   sets value to zero and initializes derivatve information.
+   \param t constant double passed by value.
  */
   dvariable::dvariable( CGNU_DOUBLE t)
   {
@@ -153,8 +156,10 @@ double_and_int * gradnew()
   }
 
 /**
- * Description not yet available.
- * \param
+   Creates dvariable instance from a int constant.
+   Creates new dvariable object,
+   sets value to zero and initializes derivatve information.
+   \param t constant int passed by reference.
  */
   dvariable::dvariable(BOR_CONST int& t)
   {

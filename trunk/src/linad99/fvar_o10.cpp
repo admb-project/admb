@@ -58,8 +58,9 @@
 #endif
 
 /**
- * Description not yet available.
- * \param
+  Assigns a value to a prevariable object.
+  \param t constant reference to an object of type prevariable.
+  \return prevariable reference
  */
     prevariable& prevariable::operator=(_CONST prevariable& t)
     {
@@ -70,8 +71,9 @@
     }
 
 /**
- * Description not yet available.
- * \param
+  Assigns a value to a dvariable object.
+  \param t constant reference to an object of type prevariable.
+  \return dvariable reference
  */
     dvariable& dvariable::operator=(_CONST prevariable& t)
     {
@@ -82,8 +84,9 @@
     }
 
 /**
- * Description not yet available.
- * \param
+  Assigns a value to a dvariable object.
+  \param t constant object of type double.
+  \return prevariable reference
  */
     dvariable& dvariable::operator=( CGNU_DOUBLE t)
     {
@@ -94,8 +97,9 @@
     }
 
 /**
- * Description not yet available.
- * \param
+  Assigns a value to a prevariable object.
+  \param t constant object of type double.
+  \return prevariable reference
  */
     prevariable& prevariable::operator=( CGNU_DOUBLE t)
     {
@@ -106,8 +110,7 @@
     }
 
 /**
- * Description not yet available.
- * \param
+  ?
  */
   void df_eq_pvdoub(void)
   {

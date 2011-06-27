@@ -78,8 +78,26 @@ invoke custom adjoint code.
 
 /**
   \defgroup RA Cautions for functions that return variable objects.
+   \details
   These functions must be called in any function that returns
-  a "variable" object, ie dvariable, dvar_vector, ... Failure to so
+  a "variable" object, ie dvariable, dvar_vector, ... Failure to do so
   may generate an error message related to an overflow in the 
   RETURN_ARRAYS stack, or even worse cause derivatives to be incorrect.
  */
+
+/**
+  \defgroup AD Classes for Automatic Differentiation.
+   \details
+   The algorithms for AD  in ADMB are invoked by declaring variables to be
+   instances of specific classes, usually of type dvariable. Operations on instances of these classes invoke specialized overloaded 
+   operators and functions to the required computations and to automatically 
+   compute the required deravitives.
+*/
+
+/** \defgroup BAD Reverse mode Automatic Differentiation.
+    \ingroup AD
+*/
+
+/** \defgroup FAD Forward mode Automatic Differentiation.
+     \ingroup AD
+*/

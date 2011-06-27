@@ -282,7 +282,8 @@ void spdll_exit(int);
   };
 
 /**
- * Holds the data for the prevariable class.
+  Holds the data for the prevariable class.
+  \ingroup BAD
  */
   class double_and_int
   {
@@ -1746,8 +1747,9 @@ private:
   class prevariable_position;
 
 /**
- * Base class for dvariable.
- * \param
+  Base class for dvariable.
+  Basis for reverse mode automatic differentiation.
+  \ingroup BAD
  */
   class prevariable
   {
@@ -1760,7 +1762,7 @@ private:
 #endif
 
   public:
-    double_and_int * v; ///< the data
+    double_and_int * v; ///< pointer to the data
     friend class dvar_vector_iterator;
     friend class dvar_vector;
     friend class dvar_matrix;
@@ -1936,8 +1938,9 @@ private:
   class df1_two_variable;
   class df1_three_variable;
 
-/**
- * Data type for derivative information.
+  /**
+  Fundamental data type for reverse mode automatic differentiation.
+  \ingroup BAD
  */
   class dvariable : public prevariable
   {

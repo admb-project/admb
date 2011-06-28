@@ -98,7 +98,7 @@ Unix and GNU g++
 
 3. Create configure script  
 
-   $ make --directory=script/configure/
+   $ make --directory=scripts/configure/
 
 4. Configure the build files for 32-bit
 
@@ -232,7 +232,7 @@ Microsoft Windows and MinGW (msys and gcc-4.5)
 
 3. Create configure script
 
-   $ make --directory=script/configure/
+   $ make --directory=scripts/configure/
 
 4. Configure the build files for 32-bit
 

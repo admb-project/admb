@@ -54,10 +54,10 @@ dist:
 	rm -f ${DISK}/bin/sed1.exe
 
 verify:
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} make -C ${DISK}/examples all
-	-export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-r${ADMB_REVISION}-opt.txt"
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} SAFE_OPTION=1 make -C ${DISK}/examples all
 	-export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-r${ADMB_REVISION}-saf.txt"
+	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} make -C ${DISK}/examples all
+	-export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-r${ADMB_REVISION}-opt.txt"
 
 check-admb2r:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ../test/admb2r gcc

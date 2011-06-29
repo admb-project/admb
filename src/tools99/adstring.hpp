@@ -122,6 +122,14 @@ public :
   _CONST unsigned char & operator[] (_CONST int i) _CONST;
 #endif
 
+#ifdef __INTEL_COMPILER
+  friend adstring operator + (_CONST adstring & u,_CONST char* v)
+  {
+    adstring a(v);
+    return u + a;
+  }
+#endif
+
   friend adstring operator + (_CONST adstring & u,_CONST adstring & v); 
 
   friend adstring operator + (_CONST adstring & u, _CONST unsigned char v);

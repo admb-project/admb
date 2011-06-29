@@ -90,11 +90,11 @@ Unix and GNU g++
 ----------------
 1. Extract source distribution
    
-   $ unzip admb-10.0.zip
+   $ unzip admb-10.1.zip
 
 2. Change to distribution directory
 
-   $ cd admb-10.0
+   $ cd admb-10.1
 
 3. Create configure script  
 
@@ -124,11 +124,11 @@ Unix and Sun Studio 12
 ----------------------
 1. Extract source distribution
    
-   $ unzip admb-10.0.zip
+   $ unzip admb-10.1.zip
 
 2. Change to source directory
 
-   $ cd admb-10.0/src
+   $ cd admb-10.1/src
 
 3. Build libraries 
   
@@ -146,15 +146,19 @@ Unix and Intel C++ Compiler
 ---------------------------
 1. Extract source distribution
    
-   $ unzip admb-10.0.zip
+   $ unzip admb-10.1.zip
 
-2. Change to source directory
+2. Change to distribution directory
 
-   $ cd admb-10.0/src
+   $ cd admb-10.1
 
-3. Build libraries 
+3. Configure the build files for Intel
+
+   $ ./configure CC=icc CXX=icpc
+
+4. Build libraries 
   
-   $ make --file=icc.mak
+   $ make
 
 4. [Optional] Test build by running examples
 
@@ -172,7 +176,7 @@ Microsoft Windows and Visual C++
 
 3. Change directory to the "src" folder. 
 
-   > cd admb-10.0\src
+   > cd admb-10.1\src
 
 4. Build libraries
 
@@ -203,7 +207,7 @@ Microsoft Windows and Borland C++ 5.5
 
 5. Change directory to the "src" folder. 
 
-   > cd admb-10.0\src
+   > cd admb-10.1\src
 
 6. Build 32-bit libraries
 
@@ -224,11 +228,11 @@ Microsoft Windows and MinGW (msys and gcc-4.5)
 
 2. Extract source distribution.
    
-   $ unzip admb-10.0.zip
+   $ unzip admb-10.1.zip
 
 2. Change to distribution directory
 
-   $ cd admb-10.0
+   $ cd admb-10.1
 
 3. Create configure script
 

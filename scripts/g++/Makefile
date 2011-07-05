@@ -68,6 +68,7 @@ admb-re:\
 bcb \
 biglog \
 bvprobit \
+glmmadmb \
 caest \
 gamma \
 kidney \
@@ -96,6 +97,9 @@ biglog:
 bvprobit:
 	@#Missing bvprobit.dat
 	-cd admb-re/glmmadmb;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
+
+glmmadmb:
+	-cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
 
 caest:
 	-cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@

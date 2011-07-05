@@ -92,6 +92,7 @@ admb-re:\
 bcb \
 biglog \
 bvprobit \
+glmmadmb \
 caest \
 gamma \
 kidney \
@@ -127,6 +128,12 @@ bvprobit:
 	cd admb-re\\glmmadmb
 	admb -r $(OPTION) $@
 	@REM $@
+	cd ..\\..
+
+glmmadmb:
+	cd admb-re\\glmmadmb
+	admb -r $(OPTION) $@
+	$@
 	cd ..\\..
 
 caest:

@@ -58,6 +58,10 @@ echo Example:admb-re:bvprobit.tpl
 cat $1admb-re/glmmadmb/bvprobit.par
 cat $1admb-re/glmmadmb/bvprobit.std
 
+echo Example:admb-re:glmmadmb.tpl
+cat $1admb-re/glmmadmb/glmmadmb.par
+cat $1admb-re/glmmadmb/glmmadmb.std
+
 echo Example:admb-re:caest.tpl
 cat $1admb-re/caest/caest.par
 cat $1admb-re/caest/caest.std

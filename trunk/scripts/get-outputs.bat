@@ -58,6 +58,10 @@
 @type examples\admb-re\glmmadmb\bvprobit.par
 @type examples\admb-re\glmmadmb\bvprobit.std
 
+@echo Example:admb-re:glmmadmb.tpl
+@type examples\admb-re\glmmadmb\glmmadmb.par
+@type examples\admb-re\glmmadmb\glmmadmb.std
+
 @echo Example:admb-re:caest.tpl
 @type examples\admb-re\caest\caest.par
 @type examples\admb-re\caest\caest.std

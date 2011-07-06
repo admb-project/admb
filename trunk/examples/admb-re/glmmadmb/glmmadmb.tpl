@@ -178,7 +178,8 @@ PROCEDURE_SECTION
 SEPARABLE_FUNCTION void n01_prior(const prevariable&  u)
  g -= -0.5*log(2.0*M_PI) - 0.5*square(u);
 
-SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& ui, const dvar_vector& beta,const prevariable& log_alpha, const prevariable& pz)
+SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& _ui, const dvar_vector& beta,const prevariable& log_alpha, const prevariable& pz)
+  dvar_vector& ui = (dvar_vector&)_ui;
   
   int i,j, i_m, Ni;
   double e1=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
@@ -216,14 +217,7 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
 
     int upper = sum(m(1,i_m));
     int lower = upper-m(i_m)+1;
-
-    dvar_vector tmp1(1,m(i_m));
-
-    tmp1 = ui(lower,upper).shift(1);
-    tmp1 = L*tmp1;
-    //    b(lower,upper) = (L*(ui(lower,upper).shift(1))).shift(lower);	// L*ui
-    b(lower,upper) = tmp1.shift(lower);
-
+    b(lower,upper) = (L*(ui(lower,upper).shift(1))).shift(lower);	// L*ui
   }
 
   // fudge factors for inverse link

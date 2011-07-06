@@ -256,8 +256,17 @@ Microsoft Windows and MinGW (msys and gcc-4.5)
 
 Installation from Binary Distributions
 ======================================
-Binary installation instructions can be found at 
-"http://www.admb-project.org/documentation/".
+
+MacOS10.6 and XCode3.2
+----------------------
+1. Download .dmg
+2. Double click .dmg file
+3. Double click the .pkg
+4. Follow the installation instructions
+
+If successful, the wizard will have installed admb 
+directory(/usr/local/admb) and script (/usr/local/bin/admb).
+
 
 Documentation
 =============
@@ -281,7 +290,6 @@ ADMB source version control URL is
 To download source files, use the command below
 
 $ svn checkout http://www.admb-project.org/svn/trunk admb-trunk
-
 
 If you would like to write access, please email <users@admb-project.org>
 to request an account.

@@ -275,11 +275,13 @@ ADModel Builder please contact <users@admb-project.org>.
 
 Version Control
 ---------------
-ADMB source version control is hosted at Code Google
-"http://code.google.com/p/admb-project/".  
+ADMB source version control URL is
+"http://www.admb-project.org/svn/trunk/".  
 
-The instructions for checking out source trunk is at 
-"http://code.google.com/p/admb-project/source/checkout".  
+To download source files, use the command below
+
+$ svn checkout http://www.admb-project.org/svn/trunk admb-trunk
+
 
 If you would like to write access, please email <users@admb-project.org>
 to request an account.

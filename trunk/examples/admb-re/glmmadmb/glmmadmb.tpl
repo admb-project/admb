@@ -217,7 +217,12 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
     int upper = sum(m(1,i_m));
     int lower = upper-m(i_m)+1;
 
-    b(lower,upper) = (L*(ui(lower,upper).shift(1))).shift(lower);	// L*ui
+    dvar_vector tmp1(1,m(i_m));
+
+    tmp1 = ui(lower,upper).shift(1);
+    tmp1 = L*tmp1;
+    //    b(lower,upper) = (L*(ui(lower,upper).shift(1))).shift(lower);	// L*ui
+    b(lower,upper) = tmp1.shift(lower);
 
   }
 

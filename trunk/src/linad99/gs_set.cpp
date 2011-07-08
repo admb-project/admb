@@ -73,8 +73,25 @@ void gradient_structure::set_ARRAY_MEMBLOCK_SIZE(unsigned long i)
  * Description not yet available.
  * \param
  */
+#ifdef __BORLANDC__
+void gradient_structure::set_CMPDIF_BUFFER_SIZE(long int i)
+#else
 void gradient_structure::set_CMPDIF_BUFFER_SIZE(long long int i)
+#endif
 {
+#ifdef __BORLANDC__
+  if ( (unsigned long int) (LONG_MAX) < (unsigned long int)i)
+  {
+    long int max_size=LONG_MAX;
+
+    cerr << "\n\n It appears that the size you are setting for "
+      "the\n CMPDIF_BUFFER is > " <<  LONG_MAX <<
+      "This appears\n to be an error. The maximum size argument ";
+    cerr << "for the function\n"
+      "--- gradient_structure::set_CMPDIF_BUFFER_SIZE(long long int i) ---\n"
+      "should probably be  " << max_size << endl;
+  }
+#else
   if ( (unsigned long int) (LLONG_MAX) < (unsigned long int)i)
   {
     long long  int max_size=LLONG_MAX;
@@ -86,6 +103,7 @@ void gradient_structure::set_CMPDIF_BUFFER_SIZE(long long int i)
       "--- gradient_structure::set_CMPDIF_BUFFER_SIZE(long long int i) ---\n"
       "should probably be  " << max_size << endl;
   }
+#endif
   check_set_error("CMPDIF_BUFFER_SIZE");
   CMPDIF_BUFFER_SIZE = i;
 }
@@ -94,8 +112,32 @@ void gradient_structure::set_CMPDIF_BUFFER_SIZE(long long int i)
  * Description not yet available.
  * \param
  */
+#ifdef __BORLANDC__
+void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long int i)
+#else
 void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i)
+#endif
 {
+#ifdef __BORLANDC__
+  long int gs_size=(long int) (sizeof(grad_stack_entry));
+
+  if ( (unsigned long int) (LONG_MAX) < gs_size *i)
+  {
+    unsigned int max_size=LONG_MAX/gs_size;
+
+    cerr << "\n\n It appears that the size you are setting for "
+      "the\n GRADSTACK_BUFFER is > " << LONG_MAX <<
+      "This appears\n to be an error. The maximum size argument ";
+    cerr << "for the function\n"
+      "--- gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i) ---\n"
+      "should probably be  " << max_size << endl;
+    cerr << "LONG_MAX = " << (unsigned long int) (LONG_MAX) << endl; 
+    cerr << " i = " << i << endl; 
+    cerr << " gs_size = " << gs_size << endl; 
+    cerr << " i*gs_size = " << i*gs_size << endl; 
+  
+  }
+#else
   long long int gs_size=(long long int) (sizeof(grad_stack_entry));
 
   if ( (unsigned long int) (LLONG_MAX) < gs_size *i)
@@ -114,6 +156,7 @@ void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i)
     cerr << " i*gs_size = " << i*gs_size << endl; 
   
   }
+#endif
   check_set_error("GRADSTACK_BUFFER_SIZE");
   GRADSTACK_BUFFER_SIZE = i;
 }

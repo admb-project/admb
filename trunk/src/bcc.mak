@@ -1,4 +1,4 @@
-DISK=..\build\admb-10.0-bcc5.5-32bit
+DISK=..\build\admb-10.1-bcc5.5-32bit
 
 OPT_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DOPT_LIB -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
 SAFE_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DSAFE_ALL -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"

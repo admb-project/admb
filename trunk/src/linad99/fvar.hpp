@@ -112,7 +112,11 @@ A more detailed description might someday be written.
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
 #define my_off_t long int
+#ifdef __BORLANDC__
+#define my_u_off_t unsigned long int
+#else
 #define my_u_off_t unsigned long long int
+#endif
 
 #define  MFCL2_CONSTRUCTORS
 
@@ -1057,8 +1061,13 @@ public:
       }
 private:
       static double * variables_save;
+#ifdef __BORLANDC__
+      static long int CMPDIF_BUFFER_SIZE;
+      static long int GRADSTACK_BUFFER_SIZE;
+#else
       static long long int CMPDIF_BUFFER_SIZE;
       static long long int GRADSTACK_BUFFER_SIZE;
+#endif
       static unsigned int MAX_NVAR_OFFSET;
       static int save_var_file_flag;
       static int save_var_flag;
@@ -1144,8 +1153,13 @@ private:
       static void set_NUM_DEPENDENT_VARIABLES(int i);
       static void set_RETURN_ARRAYS_SIZE(int i);
       static void set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
+#ifdef __BORLANDC__
+      static void set_CMPDIF_BUFFER_SIZE(long int i);
+      static void set_GRADSTACK_BUFFER_SIZE(long int i);
+#else
       static void set_CMPDIF_BUFFER_SIZE(long long int i);
       static void set_GRADSTACK_BUFFER_SIZE(long long int i);
+#endif
       static void set_MAX_NVAR_OFFSET(unsigned int i);
       static void set_MAX_DLINKS(int i);
       static long int NUM_GRADSTACK_BYTES_WRITTEN(void);
@@ -1279,8 +1293,13 @@ private:
       grad_stack_entry * true_ptr_first;
       grad_stack_entry * ptr_first;
       grad_stack_entry * ptr_last;
+#ifdef __BORLANDC__
+      long int length;
+      long int true_length;
+#else
       long long int length;
       long long int true_length;
+#endif
     public:
       grad_stack_entry * ptr;
     private:
@@ -1295,9 +1314,15 @@ private:
       char gradfile_name2[61];
       char var_store_file_name[61];
       void create_gradfile();
+#ifdef __BORLANDC__
+      long end_pos;
+      long end_pos1;
+      long end_pos2;
+#else
       long long end_pos;
       long long end_pos1;
       long long end_pos2;
+#endif
       dmatrix * table;
     public:
       friend void gradcalc(int nvar,BOR_CONST dvector& g);
@@ -5220,13 +5245,26 @@ class DF_FILE
 {
 public:
   char *        buff;
+#ifdef __BORLANDC__
+  unsigned long buff_end;
+  unsigned long buff_size;
+#else
   unsigned long long   buff_end;
   unsigned long long  buff_size;
+#endif
   union {
+#ifdef __BORLANDC__
+     unsigned long  offset;
+#else
      unsigned long long  offset;
+#endif
      char fourb[sizeof(unsigned int)];
   };
+#ifdef __BORLANDC__
+  unsigned long  toffset;
+#else
   unsigned long long  toffset;
+#endif
   char          cmpdif_file_name[81];
   int           file_ptr;
   DF_FILE(my_u_off_t);

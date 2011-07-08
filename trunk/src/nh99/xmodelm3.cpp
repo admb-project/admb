@@ -24,7 +24,11 @@ int get_option_number(const char * option_name,const char * error_message,
   int& option_value);
 
 int get_option_number(const char * option_name,const char * error_message,
+#ifdef __BORLANDC__
+  long int& option_value);
+#else
   long long int& option_value);
+#endif
 
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
@@ -563,7 +567,11 @@ void tracing_message(int traceflag,const char *s);
       sz=ssz;
     }
     
+#ifdef __BORLANDC__
+    long int lssz;
+#else
     long long int lssz;
+#endif
     nopt=get_option_number("-cbs",
       "-cbs option needs positive integer -- ignored",lssz);
     if (nopt>-1 && lssz>0) {
@@ -662,7 +670,11 @@ int get_option_number(const char * option_name,const char * error_message,
 }
 
 int get_option_number(const char * option_name,const char * error_message,
+#ifdef __BORLANDC__
+  long int& option_value)
+#else
   long long int& option_value)
+#endif
 {
   int on1;
   int nopt;
@@ -678,7 +690,7 @@ int get_option_number(const char * option_name,const char * error_message,
     }
     else
     {   
-#ifdef _MSC_VER
+#if defined(__BORLANDC__) || defined(_MSC_VER)
       option_value=atol(ad_comm::argv[on1+1]);
 #else
       option_value=atoll(ad_comm::argv[on1+1]);

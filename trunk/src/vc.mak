@@ -1,5 +1,4 @@
-DISK=..\build\admb-10.0-vc10-32bit
-#DISK=..\build\admb-10.0-vc10-64bit
+DISK=..\build\admb-10.1-vc10
 
 all:
 	IF NOT EXIST $(DISK) mkdir $(DISK)

@@ -1,0 +1,7 @@
+# s/\*(int\*)(nlist.bptr)/nlist.bptr->numbytes/
+# s/\*(char\*\*)(nlist.bptr)/nlist.bptr->pf/
+# s/nlist+=sizeof(char\*)/nlist++/
+# /nlist+=sizeof(int)/d
+# s/nlist.bptr->pf=(char\*)/nlist.bptr->pf=(ADrfptr)/ 
+#s/nlist-=sizeof(int);/ \/\/ nlist-=sizeof(int);/
+s/nlist+=nlist_record_size;/  \/\/ nlist+=nlist_record_size;/

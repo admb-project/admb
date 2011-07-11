@@ -1,0 +1,53 @@
+#!/bin/bash
+shopt -s expand_aliases
+alias help='echo -e "Usage: adcomp [-d] [-g] [-r] [-s] model\n
+Compile AD Model Builder C++ to object code.\n
+  -d     Create DLL
+  -g     Insert debugging symbols
+  -r     Create ADMB-RE
+  -s     Enforce safe bounds
+  model  Filename prefix, e.g. simple\n"'
+if [[ "$1" == "" ]]; then help; exit; fi
+if [[ "$1" == "-help" ]]; then help; exit; fi
+if [[ "$1" == "--help" ]]; then help; exit; fi
+###########################################################################################################################
+###                                                                                                                       #
+### Script:   adcomp [-d] [-g] [-r] [-s] model                                                                            #
+###                                                                                                                       #
+### Purpose:  Compile ADMB C++ to object code                                                                             #
+###                                                                                                                       #
+### Args:     -d creates object file for DLL                                                                              #
+###           -g inserts debugging symbols                                                                                #
+###           -r creates object file for ADMB-RE                                                                          #
+###           -s creates object file that enforces safe array bounds during runtime                                       #
+###           model is the filename with or without extension, e.g. simple or simple.cpp                                  #
+###                                                                                                                       #
+### Requires: ADMB header files, g++                                                                                      #
+###                                                                                                                       #
+### Returns:  Creates object file with same prefix                                                                        #
+###                                                                                                                       #
+### History:  23 May 2009  Arni Magnusson created                                                                         #
+###           27 Nov 2009  Arni Magnusson added support for filename extension, e.g. simple.cpp                           #
+###            8 Feb 2010  Johnoel Ancheta split the -s combo option into separate -g and -s options                      #
+###           22 Feb 2010  Arni Magnusson merged forked versions                                                          #
+###                                                                                                                       #
+###########################################################################################################################
+
+# Pop args until model=$1
+unset dll
+g=-O3
+opt=-DOPT_LIB
+while getopts "dgrs" A; do
+  case $A in
+    d) dll=-DBUILDING_DLL;;
+    g) g=-g;;
+    r) ;;
+    s) opt=;;
+  esac
+done
+shift $[OPTIND-1]
+
+model="${1%.*}"
+
+echo -e "icpc -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $model.cpp\n"
+         icpc -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $model.cpp

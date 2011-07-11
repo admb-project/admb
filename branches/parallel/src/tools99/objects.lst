@@ -1,0 +1,21 @@
+OBJ0 = \
+cifstrem.obj \
+strcase.obj \
+strcase2.obj \
+string6.obj \
+string.obj \
+str_aio.obj \
+string1.obj  \
+string2.obj \
+string2a.obj \
+clist.obj  \
+string3.obj \
+string4.obj \
+string5.obj \
+mem.obj  \
+string5a.obj \
+str.obj \
+val.obj  \
+atoi.obj  \
+ad_cif.obj \
+dfadcif.obj 

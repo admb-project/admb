@@ -1,0 +1,117 @@
+	<br>
+<table align="center" cellspacing="2" cellpadding="2" border="0">
+<tr>
+    <td colspan="2" align="center">
+	<h1>REML estimation; <br>
+	Assessment of BCB bowhead whales </h1>
+		<br><br>
+	</td>
+</tr>
+
+<tr>
+    <td width="30%">
+	<table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#359163">
+         <tr>
+           <td align="center">
+             <font face="Arial, Helvetica" color="White"><b>ADMB Files</b></font>
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <table cellspacing=0 cellpadding=3 width="100%" border=0 bgcolor="#ffffff">
+               <tr>
+			     <td>
+                     Code: <a href="bcb.tpl">bcb.tpl</a><br>
+                     Data: 		<a href="bcb.dat">bcb.dat</a><br>
+                     Initial values: <a href="bcb.pin">bcb.pin</a><br>
+<!--
+                     All required files (DOS): <a href="bcb.zip">bcb.zip</a><br>
+					 All required files (linux): <a href="bcb.tar.gz">bcb.tar.gz</a><br>					 
+-->
+                     Expected Results: <a href="bcb-expected-results.par">bcb.par</a><br>
+				   </font>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </table>
+<!--
+<br>
+
+	   
+	      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0>
+        <TR>
+          <TD align=middle><FONT face="Arial, Helvetica" 
+            color=white><B>Navigation</B></FONT> </TD></TR>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=3 width="100%" bgColor=#ffffff 
+            border=0>
+              <TBODY>
+              <TR>
+                <TD>			  
+				<A href="http://otter-rsch.com/admbre/admbre.html">ADMB-RE home</A> <br>
+                <A href="http://otter-rsch.com/">Otter Research</A> 
+        </FONT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0></TABLE>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+-->
+
+	   
+	</td>
+
+	
+ <td width="75%">
+<h3><strong>Model description</strong></h3>
+
+Restricted maximum likelihood estimation (REML) is often used to estimate variance parameters in the linear
+mixed-model:
+<br>
+<div align="center">
+	<em>y</em> = <em>X*b</em> + <em>Z*u</em> + <em>e</em>
+</div>
+where <em>X</em> and <em>Z</em> are covariate matrices, <em>b</em> are the fixed-effects, <em>u</em> are the
+random effects and <em>e</em> are the error terms. One way of defining the REML procedure is to:
+<ul>
+<li>Assign a flat prior to <em>b</em></li>.
+<li>Integrate the likelihood with respect to both <em>b</em> and <em>u</em>.</li>
+</ul>
+The resulting REML likelihood is then maximized with respect to the variance parameters
+(variances of <em>u</em> and <em>e</em>).<br>
+<br>
+To implement this in ADMB-RE we declare both <em>b</em> and <em>u</em> as random effects vectors.
+As a result, the likelihood is integrated with respect to both parameters. But,
+while there is a contribution to the objective function comming from the random effects distribution of <em>u</em>, 
+there should be no such contribution from <em>b</em> (i.e. a flat prior).
+<br><br>
+
+Using this procedure you do not have to derive the "REML correction" to the log-likelihood  function by hand.
+It is done automatically for you by ADMB-RE.
+
+
+<h3><strong>Example: BCB Bowheads</strong></h3>
+Punt and Zeh (2004, document SC/56/BRG1 presented to the SC of the IWC) combined data from two different counting
+methodologies in order to estimate the rate of increase of BCB bowhead whales. On a log-scale they
+fitted a linear mixed-effects models using REML estimates for the variance parameters. 
+This example (<a href="bcb.tpl">bcb.tpl</a>) shows how <TT>random_effects</TT> can be used to obtain
+REML estimates.
+<P>
+
+
+</table>
+

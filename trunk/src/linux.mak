@@ -25,7 +25,11 @@ else
 CXXFLAGS:=$(CXXFLAGS) -O3
 endif
 
+ifeq ($(CXX),CC)
+CXXFLAGS:=-c $(CXXFLAGS) -DUSE_LAPLACE -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux
+else
 CXXFLAGS:=-c $(CXXFLAGS) -Wall -Wno-deprecated -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux
+endif
 
 dist:
 	mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals,examples}

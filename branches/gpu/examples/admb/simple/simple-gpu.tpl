@@ -45,3 +45,39 @@ PROCEDURE_SECTION
   f=(norm2(pred_Y-Y)); 
   f=nobs/2.*log(f);    // make it a likelihood function so that
                        // covariance matrix is correct
+GLOBALS_SECTION
+  #include <adpar32.h>
+
+TOP_OF_MAIN_SECTION
+  time_t start,finish;
+  int mdim,matMultTest,deviceTest;
+  double elapsed_time,frac_second;
+  long hour,minute,second;
+
+  bool testGPUDevice = true;
+  bool testGPUMM = true; 
+  
+  if(testGPUDevice){
+    deviceTest = oclDeviceTest();
+	}
+  if(testGPUMM){
+    // ** GPU testing **
+    mdim = 1024;
+    ProfTimer t;
+    t.Start();
+    //matMultTest = oclMatMult(mdim,mdim,mdim,mdim,true);
+    matMultTest = oclMatMult(mdim,mdim,mdim,mdim,false);
+    t.Stop();
+    double dur = t.GetDurationInSecs();
+    cout<<"admb_tpl: GPU matrix multiplication runtime was "<<dur<<" seconds."<<endl<<endl;
+  
+    // ** CPU testing **
+    cout<<"admb_tpl: Starting CPU matrix multiplication....."<<endl;
+    t.Start();
+    //matMultTest = cpuMatMult(mdim,mdim,mdim,mdim,true);
+    matMultTest = cpuMatMult(mdim,mdim,mdim,mdim,false);
+    t.Stop();
+    dur = t.GetDurationInSecs();
+    cout<<"admb_tpl: CPU matrix multiplication runtime was "<<dur<<" seconds."<<endl<<endl;
+	}
+

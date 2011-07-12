@@ -1,0 +1,8 @@
+ADPAR = \
+adpar32.obj
+OCLUTILS = \
+oclutils32.obj
+SHRUTILS = \
+shrutils32.obj
+CMDARGREADER = \
+cmd_arg_reader32.obj

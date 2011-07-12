@@ -23,6 +23,12 @@ all:
 	IF NOT EXIST $(DISK)\objects\tools99-slp mkdir $(DISK)\objects\tools99-slp 
 	cd $(DISK)\objects\tools99-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\tools99\optmsc8-laplace.mak all
 	cd $(DISK)\objects\tools99-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\tools99\safmsc8-laplace.mak all
+
+	IF NOT EXIST $(DISK)\objects\openCL mkdir $(DISK)\objects\openCL
+	cd $(DISK)\objects\openCL& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\openCL\shrutils32.mak all
+	cd $(DISK)\objects\openCL& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\openCL\oclutils32.mak all
+	cd $(DISK)\objects\openCL& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\openCL\adpar32.mak all
+
 	copy ..\scripts\cl\*.bat $(DISK)\dist\bin
 	copy ..\scripts\admb\admb.bat $(DISK)\dist\bin
 	copy ..\LICENSE $(DISK)\dist

@@ -27,7 +27,7 @@ shift $((OPTIND-1))
 
 model="${1%.*}"
 
-CMD="g++ -c $CXXFLAGS $sym -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt\
+CMD="i586-mingw32msvc-g++ -c $CXXFLAGS $sym -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt\
  -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $model.cpp"
 echo $CMD
 eval $CMD

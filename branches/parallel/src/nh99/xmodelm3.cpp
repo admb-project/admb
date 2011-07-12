@@ -11,6 +11,7 @@
 #  include <adrndeff.h>
 #endif
 
+
   void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,int& next_flag);
 
   void ad_update_function_minimizer_report(int feval,int iter,int phase,double fval,
@@ -663,7 +664,25 @@ int get_option_number(const char * option_name,const char * error_message,
     }
     else
     {   
-      option_value=atoi(ad_comm::argv[on1+1]);
+      char * tmp=ad_comm::argv[on1+1];
+
+      int n=strlen(tmp);
+      adstring tmp1(n-1);
+      if (tmp[n-1]=='m' || tmp[n-1]=='M')
+      {
+        tmp1=adstring(tmp)(1,n-1);
+        option_value=atoi(tmp1);
+        option_value*=1000000;
+       cout << option_value << endl;
+       ad_exit(1);
+      }
+      else
+      {
+        option_value=atoi(ad_comm::argv[on1+1]);
+      }
+        
+
+
     }
   }
   return on1;

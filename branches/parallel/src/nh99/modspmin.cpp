@@ -431,16 +431,28 @@ int * kill_address;
       }
       */
 
+
       if (option_match(argc,argv,"-noest") == -1)
       {
-        if (!function_minimizer::have_constraints)
+        if (!ad_comm::mpi_manager)
         {
-          minimize();
+          if (!function_minimizer::have_constraints)
+            minimize();
+          else
+            constraints_minimize();
+        }
+        else if (ad_comm::mpi_manager->get_do_minimize())
+        {
+          if (!function_minimizer::have_constraints)
+            minimize();
+          else
+            constraints_minimize();
         }
         else
         {
-          constraints_minimize();
+          initial_params::current_phase=initial_params::max_number_phases;
         }
+
       }
       else
       {
@@ -515,11 +527,24 @@ int * kill_address;
             }
             else
             {
-              depvars_routine();
-              hess_inv();
-              if (spminflag==0)
+ #if defined(USE_ADMPI)
+              if (ad_comm::mpi_manager)
               {
-                sd_routine();
+                if (ad_comm::mpi_manager->is_master())
+                {
+                  depvars_routine();
+                  hess_inv();
+                  if (spminflag==0)
+                  {
+                    sd_routine();
+                  }
+                }
+              }
+              else
+              {
+  #endif // if defined(USE_ADMPI)
+                depvars_routine();
+                hess_inv();
               }
             }
           }

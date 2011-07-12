@@ -91,6 +91,12 @@
 #include <string.h>
 #include <time.h>
 
+#if defined(USE_ADMPI)
+  void add_slave_suffix(const adstring& tmp);
+  void report_file_opening(const adstring& tmp);
+#endif
+ 
+
   char lastchar(char *);
 
   char ad_random_part[6]="tmp";
@@ -192,7 +198,17 @@
     }
     else
     {
-      sprintf(&gradfile_name1[0],"gradfil1.%s",ad_random_part);
+      adstring tmpstring="gradfil1.tmp";
+#if defined(USE_ADMPI)
+      add_slave_suffix(tmpstring);
+#endif // #if defined(USE_ADMPI)
+      if (::length(tmpstring)>100)
+      {
+        cerr << "Need to increase length of gradfile_name1"
+             << endl;
+        ad_exit(1);
+      }
+      strncpy(&gradfile_name1[0],tmpstring,101);
     }
 
     path = getenv("ADTMP1"); // NULL if not defined
@@ -288,11 +304,11 @@ grad_stack::~grad_stack()
    }
 
   #if defined ( __SUN__) ||  defined ( __GNU__)
-   unlink(gradfile_name1);
+   //unlink(gradfile_name1);
    unlink(gradfile_name2);
    unlink(var_store_file_name);
   #else
-   remove(gradfile_name1);
+   //remove(gradfile_name1);
    remove(gradfile_name2);
    remove(var_store_file_name);
   #endif
@@ -407,6 +423,7 @@ void grad_stack::create_gradfile()
      _VARSSAV_PTR=creat(var_store_file_name, O_RDWR);
 
   #elif ( defined ( __SUN__) ||  defined ( __GNU__))
+     report_file_opening(gradfile_name1);
 
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);
@@ -414,6 +431,7 @@ void grad_stack::create_gradfile()
       O_CREAT | O_TRUNC | O_BINARY, 0777);
 
   #elif (defined (__GNUDOS__) && !defined(__GNU__))
+     report_file_opening(gradfile_name1);
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
 		O_BINARY ,   0777);
     _VARSSAV_PTR=open(var_store_file_name, O_RDWR | 

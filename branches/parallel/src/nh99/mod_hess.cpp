@@ -69,9 +69,28 @@ void function_minimizer::hess_routine_noparallel(void)
 {
 
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
-  //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
+#if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
+    {
+      if (ad_comm::mpi_manager->is_master())
+      {
+         // send variable assignement to slaves for hessian calcs
+         ad_comm::mpi_manager->send_slave_hessian_assignments(nvar);
+        for (int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+        {
+           ad_comm::mpi_manager->send_dvector_to_slave(x,i);
+        }
+      }
+      else
+      {
+         //get variable assignement for slaves for hessian calcs
+         ad_comm::mpi_manager->get_slave_hessian_assignments();
+         x=ad_comm::mpi_manager->get_dvector_from_master();
+      }
+    }
+#endif
   double f;
   double delta=1.e-5;
   dvector g1(1,nvar);
@@ -87,6 +106,17 @@ void function_minimizer::hess_routine_noparallel(void)
   adstring tmpstring="admodel.hes";
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".hes";
+#if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_slave())
+    {
+      tmpstring += "_";
+      tmpstring += str(ad_comm::mpi_manager->get_slave_number());
+    }
+  }
+#endif // #if defined(USE_ADMPI)
+
   uostream ofs((char*)tmpstring);
     
   ofs << nvar;
@@ -102,7 +132,23 @@ void function_minimizer::hess_routine_noparallel(void)
     }
     double sdelta1;
     double sdelta2;
-    for (int i=1;i<=nvar;i++)
+    int mmin=1;
+    int mmax=nvar;
+#if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
+    {
+      ivector hess_bounds=ad_comm::mpi_manager->get_hess_bounds();
+      if (hess_bounds(1)>0)
+      {
+        mmin=hess_bounds(1);
+        mmax=hess_bounds(2);
+        ofs << mmin << mmax;
+      }
+    }
+#endif
+
+
+    for (int i=mmin;i<=mmax;i++)
     {
 #if defined (__SPDLL__)
       hess_calcreport(i,nvar);
@@ -177,8 +223,37 @@ void function_minimizer::hess_routine_noparallel(void)
   }
   ofs << gradient_structure::Hybrid_bounded_flag;
   dvector tscale(1,nvar);   // need to get scale from somewhere
-  /*int check=*/initial_params::stddev_scale(tscale,x);
-  ofs << tscale;
+#if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_master())
+    {
+      ofs << gradient_structure::Hybrid_bounded_flag;
+      ofs << tscale;
+      for (int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+      {
+        int iconfirm;
+        ad_comm::mpi_manager->get_int_from_slave(iconfirm,i);
+        if (iconfirm != 2000+i)
+        {
+          cerr << "Error in slave " << i << "hessian confirmation" << endl;
+        }
+      }
+    }
+    if (ad_comm::mpi_manager->is_slave())
+    {
+      int slave_number=ad_comm::mpi_manager->get_slave_number();
+      ad_comm::mpi_manager->send_int_to_master(slave_number+2000);
+    }
+  }
+  else
+  {
+#endif // if defined(USE_ADMPI)
+    ofs << gradient_structure::Hybrid_bounded_flag;
+    ofs << tscale;
+#if defined(USE_ADMPI)
+  }
+#endif // if defined(USE_ADMPI)
 }
 
 void function_minimizer::hess_routine_and_constraint(int iprof,BOR_CONST dvector& g,
@@ -532,35 +607,71 @@ void function_minimizer::hess_inv(void)
   dmatrix hess(1,nvar,1,nvar);
   uistream ifs("admodel.hes");
   int file_nvar;
-  ifs  >> file_nvar;
-  if (nvar !=file_nvar)
+  int num_hess_slaves=0;
+#if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
   {
-    cerr << "Number of active variables in file mod_hess.rpt is wrong"
-	 << endl;
+    num_hess_slaves=ad_comm::mpi_manager->get_num_hess_slaves();
   }
+#endif 
 
-  int i;
-  for (i=1;i<=nvar;i++)
+  dvector sscale(1,nvar);
+  for (int is=0;is<=num_hess_slaves;is++)
   {
-    ifs >> hess(i);
+    adstring filename;
+    if (is==0) 
+    {
+      filename="admodel.hes";
+    }
+    else
+    {
+      filename=adstring("admodel.hes")+ "_" +str(is);
+    }
+    uistream ifs(filename);
     if (!ifs)
     {
-      cerr << "Error reading line " << i  << " of the hessian"
-	   << " in routine hess_inv()" << endl;
-      exit(1);
+      cerr << "Error opening file " << filename << endl;
+      ad_exit(1);
     }
-  }
-  int hybflag;
-  ifs >> hybflag;
-  dvector sscale(1,nvar);
-  ifs >> sscale;
-  if (!ifs)
-  {
-    cerr << "Error reading sscale" 
+    ifs  >> file_nvar;
+    if (nvar !=file_nvar)
+    {
+      cerr << "Number of active variables in file mod_hess.rpt is wrong"
+  	 << endl;
+    }
+
+    int mmin=1;
+    int mmax=nvar;
+    int i;
+    if (num_hess_slaves>0)
+    {
+      ifs  >> mmin >> mmax;
+    }
+    for (i=mmin;i<=mmax;i++)
+    {
+      ifs >> hess(i);
+      if (!ifs)
+      {
+        cerr << "Error reading line " << i  << " of the hessian"
+  	   << " in routine hess_inv()" << endl;
+        exit(1);
+      }
+    }
+    int hybflag;
+    if (is==0) // just get this stuff from the first file.
+    {
+      ifs >> hybflag;
+      ifs >> sscale;
+    }
+    if (!ifs)
+    {
+      cerr << "Error reading sscale" 
          << " in routine hess_inv()" << endl;
+    }
   }
 
   double maxerr=0.0;
+  int i;
   for (i=1;i<=nvar;i++)
   {
     for (int j=1;j<i;j++)

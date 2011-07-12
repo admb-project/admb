@@ -21,6 +21,386 @@ void vm_initialize(void);
 int have_jvm=0;
 
 
+#if defined(USE_ADMPI)
+const int admpi_manager::MAX_MPI_OFFSET=1000;
+dvector admpi_manager::get_dvector_from_master(void)
+{
+  MPI_Status status;
+  int mmin,mmax;
+  MPI_Recv(&mmin,1, MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
+  MPI_Recv(&mmax,1, MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
+  dvector tmp(mmin,mmax);
+  int size=mmax-mmin+1;
+  MPI_Recv(&(tmp(mmin)),size, MPI_DOUBLE,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
+  return tmp;
+}
+
+ivector admpi_manager::get_ivector_from_master(void)
+{
+  MPI_Status status;
+  int mmin,mmax;
+  MPI_Recv(&mmin,1, MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
+  MPI_Recv(&mmax,1, MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
+  ivector tmp(mmin,mmax);
+  int size=mmax-mmin+1;
+  MPI_Recv(&(tmp(mmin)),size,MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
+  //cout << "SCA" << tmp << endl;
+  return tmp;
+}
+
+void admpi_manager::send_slave_hessian_assignments(int nvar)
+{
+  int m=nvar/(1+num_hess_slaves);
+  int excess=nvar-m*(1+num_hess_slaves);
+  if (allocated(all_hess_bounds)) all_hess_bounds.deallocate();
+  all_hess_bounds.allocate(0,num_hess_slaves,1,2);
+  all_hess_bounds(0,1)=1;
+  all_hess_bounds(0,2)=m;
+  if (allocated(hess_bounds)) hess_bounds.deallocate();
+  hess_bounds.allocate(1,2);
+  hess_bounds=all_hess_bounds(0);
+  for (int i=1;i<=num_hess_slaves;i++)
+  {
+    all_hess_bounds(i,1)=all_hess_bounds(i-1,2)+1;
+    all_hess_bounds(i,2)=all_hess_bounds(i,1)+m-1;
+    if (excess>0) 
+    {
+      all_hess_bounds(i,2)+=1;
+      excess--;
+    }
+    //cout << "In send slave hess ass from master" << endl;
+    //cout << "sending " << hess_bounds << endl;
+    send_ivector_to_slave(all_hess_bounds(i),i);
+    //cout << "sent" << endl;
+  }
+}
+
+void admpi_manager::get_slave_hessian_assignments(void)
+{
+  //cout << "In get slave hess bounds from master" << endl;
+  hess_bounds=get_ivector_from_master();
+  //cout << "got hess_bounds = " << hess_bounds << endl;
+}
+
+void admpi_manager::get_int_from_slave(int &i,int _slave_number)
+{
+  int slave_number=_slave_number-1;
+  MPI_Status status;
+  MPI_Recv(&i,1,MPI_INT,slave_number,0,everyone,&status);
+}
+void admpi_manager::get_int_from_master(int &i)
+{
+  MPI_Status status;
+  MPI_Comm parent2; 
+  MPI_Comm_get_parent(&parent2);
+  // note this is a blocking receive
+  //cout << "SBA" << parent << endl;
+  //cout << "parent = " << parent << endl;
+  MPI_Recv(&i,1, MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent2,&status);
+  //cout << "SBB" << parent << endl;
+}
+
+int admpi_manager::is_master(void)
+{
+  return (parent==MPI_COMM_NULL);
+}
+
+int admpi_manager::is_slave(void)
+{
+  return (parent!=MPI_COMM_NULL);
+}
+admpi_manager::~admpi_manager()
+{
+  delete [] global_request;
+  global_request=0;
+  delete [] mpi_int;
+  mpi_int=0;
+  MPI_Finalize();
+}
+
+
+void admpi_manager::send_dvector_to_slave(const dvector& v,
+  int _slave_number)
+{
+  int slave_number=_slave_number-1;
+  MPI_Status myStatus;
+  /* make sure that the previous read using this memory area
+     has completed 
+  */
+  if(global_request[mpi_offset])  /* checks to see if has been used at least */
+                                  /* once */
+  {
+    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+  }
+  mpi_int[mpi_offset]=v.indexmin();
+  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
+    everyone,&(global_request[mpi_offset]));
+  increment_mpi_offset();
+  if(global_request[mpi_offset])  /* checks to see if has been used at least */
+                                  /* once */
+  {
+    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+  }
+  mpi_int[mpi_offset]=v.indexmax();
+
+  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
+    everyone,&(global_request[mpi_offset]));
+  increment_mpi_offset();
+  int mmin=v.indexmin();
+  int mmax=v.indexmax();
+  int size=mmax-mmin+1;
+  MPI_Request request;
+  MPI_Isend(&(v[mmin]),size,MPI_DOUBLE,slave_number,0,everyone,&request);
+}
+
+void admpi_manager::send_ivector_to_slave(const ivector& v,int _slave_number)
+{
+  int slave_number=_slave_number-1;
+  MPI_Status myStatus;
+  /* make sure that the previous read using this memory area
+     has completed 
+  */
+  if(global_request[mpi_offset])  /* checks to see if has been used at least */
+                                  /* once */
+  {
+    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+  }
+  mpi_int[mpi_offset]=v.indexmin();
+  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
+    everyone,&(global_request[mpi_offset]));
+  increment_mpi_offset();
+  if(global_request[mpi_offset])  /* checks to see if has been used at least */
+                                  /* once */
+  {
+    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+  }
+  mpi_int[mpi_offset]=v.indexmax();
+
+  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
+    everyone,&(global_request[mpi_offset]));
+  increment_mpi_offset();
+  int mmin=v.indexmin();
+  int mmax=v.indexmax();
+  int size=mmax-mmin+1;
+  MPI_Request request;
+  MPI_Isend(&(v[mmin]),size,MPI_INT,slave_number,0,everyone,&request);
+  //cout << "MBA" << endl;
+  //cout << "MCA" <<  v << endl;
+  // wiat remove 1
+  //MPI_Wait(&(request), &myStatus);
+  //cout << "MBB" << endl;
+}
+
+void admpi_manager::send_int_to_slave(int i,int _slave_number)
+{
+  int slave_number=_slave_number-1;
+  MPI_Status myStatus;
+  MPI_Request request;
+  /* make sure that the previous read using this memory area
+     has completed 
+  */
+  if(global_request[mpi_offset])  /* checks to see if has been used at least */
+                                  /* once */
+  {
+    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+  }
+  mpi_int[mpi_offset]=i;
+  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
+    everyone,&(global_request[mpi_offset]));
+  //sleep(1);
+  //MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+  increment_mpi_offset();
+}
+
+void admpi_manager::send_int_to_master(int i)
+{
+  MPI_Status myStatus;
+  MPI_Request request;
+  /* make sure that the previous read using this memory area
+     has completed 
+  */
+  if(global_request[mpi_offset])  /* checks to see if has been used at least */
+                                  /* once */
+  {
+    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+  }
+  mpi_int[mpi_offset]=i;
+  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,0,0,
+    parent,&(global_request[mpi_offset]));
+  //sleep(1);
+  // remove 2
+  //MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+  increment_mpi_offset();
+}
+
+void admpi_manager::increment_mpi_offset(void)
+{
+  mpi_offset++;
+  if (mpi_offset==MAX_MPI_OFFSET)
+  {
+    mpi_offset=0;
+  }
+}
+
+admpi_manager::admpi_manager(int m,int argc,char * argv[])
+{
+  parent=0;
+  global_request = new MPI_Request[MAX_MPI_OFFSET];
+  mpi_offset=0;
+  num_slaves=0;
+  num_hess_slaves=0;
+  do_minimize=0;
+  do_hess=0;
+  mpi_int = new int[MAX_MPI_OFFSET];
+ 
+  for (int i=0;i<MAX_MPI_OFFSET;i++)
+  {
+    global_request[i]=0;
+    //mpi_int[i]=0;
+  }
+ 
+  int rank,world_size, universe_size, *universe_sizep, flag;
+  if (strlen(argv[0])>150)
+  {
+    cerr << "program name too long for mpi manager" << endl;
+    ad_exit(1);
+  }
+  else
+  {
+    strncpy(worker_program,argv[0],151);
+  }
+
+  MPI_Init(&argc, &argv);
+  MPI_Comm_size(MPI_COMM_WORLD, &world_size);
+
+  cout << world_size << endl;
+
+  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+  cout << "master rank " << rank << endl;
+  MPI_Comm_get_parent(&parent);
+
+  //sleep(1);
+  if (is_master())
+  {
+    cout << "I am the master process" << endl;
+    do_minimize=1;
+    do_hess=1;
+    if (world_size != 1) 
+    {
+      cerr << "Error --can only have one MPI master process" << endl;
+      ad_exit(1);
+    }
+
+    //sleep(1);
+
+    // !!! need to pass this number in MPI options
+    int on=0; int nopt=0;
+    if ( (on=option_match(argc,argv,"-nslaves",nopt))>-1)
+    {
+      if (nopt ==1)	    
+      {	      
+        num_slaves=atoi(argv[on+1]);
+        num_hess_slaves=num_slaves;
+      }
+      else
+      {
+        cerr << "Wrong number of options to -nslaves -- must be 1"
+          " you have " << nopt << endl;		
+        ad_exit(1);
+      }	
+    }
+    else
+    {
+      num_slaves=1;
+      num_hess_slaves=1;
+    }
+   
+    if (num_slaves < 1) 
+    {
+      cerr << "Error --no room for slaves" << endl;
+      ad_exit(1);
+    }
+
+    //sleep(1);
+
+    /*
+     * Now spawn the slaves. Note that there is a run-time determination
+     * of what type of slaves to spawn, and presumably this calculation must
+
+     * be done at run time and cannot be calculated before starting
+     * the program. If everything is known when the application is
+     * first started, it is generally better to start them all at once
+     * in a single MPI_COMM_WORLD.
+     */
+  
+     fprintf(stderr, "will spawn %d slaves\n", num_slaves);
+     cout << "there are " << num_hess_slaves << " hess slaves" << endl;
+     int * ia=(int*)malloc(sizeof(int));
+     char **myargvs=0;  // = {"-slave", NULL};
+     myargvs=new char*[argc+3];
+     int ii=0;
+     myargvs[ii]=new char[strlen(argv[0])+1];
+     strcpy(myargvs[ii++],argv[0]);
+     myargvs[ii]=new char[strlen("-slave")+1];
+     strcpy(myargvs[ii++],"-slave");
+     for (int i=1;i<argc;i++)
+     {
+       if (strcmp(argv[i],"-master"))
+       {
+         myargvs[ii]=new char[strlen(argv[i])+1];
+         strcpy(myargvs[ii++],argv[i]);
+       }
+     }
+     myargvs[ii]=0;
+       
+
+     
+     ivector ierr(1,num_slaves);
+     ierr=-5555;
+     MPI_Comm_spawn(worker_program, myargvs, num_slaves,
+            MPI_INFO_NULL, 0, MPI_COMM_SELF, &everyone,
+            &(ierr(1)) );
+     for (int i=1;i<=num_slaves;i++)
+     {
+        if (ierr(i) != MPI_SUCCESS)
+        {
+          cerr << "Error spawning slave process " << i << endl;
+          ad_exit(1);
+        }
+     }
+     cout << "Error codes for spawn  " << ierr << endl;
+            //MPI_ERRCODES_IGNORE);
+     //cout << "enter 2" << endl;
+     //cin >> ia[0];
+     ia[0]=2;
+     // send an int to the slaves so that they will wait
+     // until they get it
+     for (int i=1;i<=num_slaves;i++)
+     {
+       send_int_to_slave(ia[0]+i,i);
+     }
+     //sleep(1);
+  }
+  if (is_slave())
+  {
+    //cout << "I am a slave process" << endl;
+    slave_number=rank+1;
+    //cout << "slave_number = " << slave_number << endl;
+    do_minimize=0;
+    do_hess=1;
+    int i=-1;
+    get_int_from_master(i);
+    //cout << "In slave i = " << i << endl;
+    //sleep(2);
+    cout << "I have " << argc << " argurments which are " << endl;
+    for (int i=0;i<argc;i++)
+    {
+      cout << argv[i] << endl;
+    }
+  }
+}
+
+#endif
 
 void  strip_full_path(BOR_CONST adstring& _s)
 {
@@ -72,6 +452,14 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   if (option_match(_argc,_argv,"-noatlas")>-1)  no_atlas_flag=1;
   if (option_match(_argc,_argv,"-slave")>-1)  pvm_flag=2;
   if (option_match(_argc,_argv,"-master")>-1) pvm_flag=1;
+
+#if defined(USE_ADMPI)
+  if (pvm_flag)
+    mpi_manager = new admpi_manager(pvm_flag,_argc,_argv);
+  else
+#endif
+    mpi_manager = NULL;
+
 
 #if defined(USE_ADPVM)
   if (pvm_flag)
@@ -470,6 +858,12 @@ void ad_comm::allocate(void)
 
 ad_comm::~ad_comm()
 {
+  if (mpi_manager)
+  {
+    delete mpi_manager;
+    mpi_manager=0;
+  }
+
   if (ptm)
   {
     delete ptm;
@@ -494,6 +888,41 @@ ad_comm::~ad_comm()
   {
     delete global_logfile;
     global_logfile=NULL;
+  }
+}
+
+void add_slave_suffix(const adstring& _tmpstring)
+{
+  ADUNCONST(adstring,tmpstring)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_slave())
+    {
+      tmpstring += "_";
+      tmpstring += str(ad_comm::mpi_manager->get_slave_number());
+       cout << "In slave " << tmpstring << endl;
+    }
+    else
+    {
+      tmpstring += "_master";
+       cout << "In master " << tmpstring << endl;
+    }
+  }
+}
+
+void report_file_opening(const adstring& _tmpstring)
+{
+  ADUNCONST(adstring,tmpstring)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_slave())
+    {
+       cout << "In slave opening file " << tmpstring << endl;
+    }
+    else
+    {
+       cout << "In master opening file " << tmpstring << endl;
+    }
   }
 }
 

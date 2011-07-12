@@ -70,7 +70,7 @@ extern "C"{
 int ctlc_flag = 0;
 int gradient_structure::Hybrid_bounded_flag=0;
 DF_FILE * gradient_structure::fp=NULL;
-char gradient_structure::cmpdif_file_name[61];
+char gradient_structure::cmpdif_file_name[101];
 //char gradient_structure::var_store_file_name[61];
 #if defined(AD_DEMO)
 int gradient_structure::NUM_RETURN_ARRAYS = 10;
@@ -203,7 +203,7 @@ void cleanup_temporary_files()
   #if defined ( __SUN__) ||  defined ( __GNU__)
    if (gradient_structure::GRAD_STACK1)
    {
-     unlink(gradient_structure::GRAD_STACK1->gradfile_name1);
+     //unlink(gradient_structure::GRAD_STACK1->gradfile_name1);
      unlink(gradient_structure::GRAD_STACK1->gradfile_name2);
      unlink(gradient_structure::GRAD_STACK1->var_store_file_name);
      //unlink(gradient_structure::cmpdif_file_name);
@@ -211,7 +211,7 @@ void cleanup_temporary_files()
   #else
    if (gradient_structure::GRAD_STACK1)
    {
-     remove(gradient_structure::GRAD_STACK1->gradfile_name1);
+     //remove(gradient_structure::GRAD_STACK1->gradfile_name1);
      remove(gradient_structure::GRAD_STACK1->gradfile_name2);
      remove(gradient_structure::GRAD_STACK1->var_store_file_name);
      //cout << remove(gradient_structure::cmpdif_file_name);

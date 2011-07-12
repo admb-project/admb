@@ -22,7 +22,7 @@ endif
 ifdef DEBUG
 CXXFLAGS:=$(CXXFLAGS) -g
 else
-CXXFLAGS:=$(CXXFLAGS) -O3
+CXXFLAGS:=$(CXXFLAGS) 
 endif
 
 CXXFLAGS:=-c $(CXXFLAGS) -Wall -Wno-deprecated -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux
@@ -45,8 +45,8 @@ dist:
 	cp -vf ../LICENSE ${DISK}
 	cp -vf ../README.txt ${DISK}
 	cp ../scripts/admb/admb ${DISK}/bin
-	cp ../scripts/$(CXX)/adcomp ${DISK}/bin
-	cp ../scripts/$(CXX)/adlink ${DISK}/bin
+	cp ../scripts/g++/adcomp ${DISK}/bin
+	cp ../scripts/g++/adlink ${DISK}/bin
 	cp ../scripts/g++/Makefile ${DISK}/examples
 	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp ../scripts/g++/adcomp.bat ${DISK}/bin

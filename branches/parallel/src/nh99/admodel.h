@@ -2792,6 +2792,51 @@ void read_covariance_matrix(BOR_CONST dmatrix& S,int nvar,int& hbf,
 
 dvector read_old_scale(int & old_nvar);
 
+#if defined(USE_ADMPI)
+#include "mpi.h"
+class admpi_manager
+{
+  static const int MAX_MPI_OFFSET;
+  MPI_Request * global_request;
+  int * mpi_int;
+  int num_slaves;
+  int num_hess_slaves; //the number of slaves for hessian may
+                    // be different from the number of slaves in future
+  int slave_number; // not zero offset
+  int mpi_offset;
+  MPI_Comm parent; /* so slave can communicate with master*/
+  MPI_Comm everyone; /* intercommunicator */
+  char worker_program[152];
+  int master_flag;
+  int do_minimize;
+  int do_hess;
+  imatrix all_hess_bounds;
+  ivector hess_bounds;
+public:
+  int get_num_slaves(void){ return num_slaves;}
+  int get_num_hess_slaves(void){ return num_hess_slaves;}
+  int get_slave_number(void){ return slave_number;}
+  int get_do_minimize(void){ return do_minimize;}
+  int get_do_hess(void){ return do_hess;}
+  admpi_manager(int m,int argc,char * argv[]);
+  ~admpi_manager();
+  int is_master(void);
+  void send_int_to_slave(int i,int slave_number);
+  void send_int_to_master(int i);
+  void increment_mpi_offset(void);
+  int is_slave(void);
+  dvector get_dvector_from_master(void);
+  ivector get_ivector_from_master(void);
+  ivector get_hess_bounds(void){ return hess_bounds;}
+  void send_dvector_to_slave(const dvector& v,int slave_number);
+  void send_ivector_to_slave(const ivector& v,int slave_number);
+  void get_int_from_master(int &i);
+  void get_int_from_slave(int &i,int slave_number);
+  void get_slave_hessian_assignments(void);
+  void send_slave_hessian_assignments(int);
+};
+#endif   // if defined(USE_ADMPI)
+
 int withinbound(int lb,int n,int ub);
 
 #if defined(__MSVC32__)

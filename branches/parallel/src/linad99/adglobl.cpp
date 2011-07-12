@@ -17,6 +17,7 @@
  adtimer * ad_comm::ptm1=0;
  int ad_comm::bandwidth=0;
  adpvm_manager * ad_comm::pvm_manager=NULL;
+ admpi_manager * ad_comm::mpi_manager=NULL;
 
  int ad_comm::time_flag=0;
  adstring ad_comm::subdir;

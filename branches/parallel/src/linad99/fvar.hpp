@@ -1035,7 +1035,7 @@ public:
  */
   class gradient_structure
   {
-      static char cmpdif_file_name[61];
+      static char cmpdif_file_name[101];
       static DF_FILE * fp;
 public:
       #if defined(NO_DERIVS)
@@ -1309,10 +1309,10 @@ private:
       int _GRADFILE_PTR1; // should be int gradfile_handle;
       int _GRADFILE_PTR2; // should be int gradfile_handle;
       int _VARSSAV_PTR; // should be int gradfile_handle;
-      char gradfile_name[61];
-      char gradfile_name1[61];
-      char gradfile_name2[61];
-      char var_store_file_name[61];
+      char gradfile_name[101];
+      char gradfile_name1[101];
+      char gradfile_name2[101];
+      char var_store_file_name[101];
       void create_gradfile();
 #ifdef __BORLANDC__
       long end_pos;
@@ -8023,12 +8023,16 @@ class function_minimizer_exception
 #include <adstring.hpp>
   adstring get_string_marker(void);
   class adpvm_manager;
+#if defined(USE_ADMPI)
+  class admpi_manager;
+#endif
   class adtimer;
 
 /**
  * Description not yet available.
  * \param
  */
+
 class ad_comm
 {
 protected:
@@ -8047,6 +8051,7 @@ public:
   static adtimer * ptm1;
   virtual void get_slave_assignments(void);
   static adpvm_manager * pvm_manager;
+  static admpi_manager * mpi_manager;
   static adstring subdir;
   static streampos change_datafile_name(_CONST adstring& s,const streampos& off=0);
   static streampos change_pinfile_name(_CONST adstring& s,const streampos& off=0);

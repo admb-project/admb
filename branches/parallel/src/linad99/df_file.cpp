@@ -79,6 +79,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+ 
+#if defined(USE_ADMPI)
+  void add_slave_suffix(const adstring& tmp);
+  void report_file_opening(const adstring& tmp);
+#endif
+
   char lastchar(char *);
 
   void byte_copy(void * dest,void * source, unsigned num_bytes);
@@ -176,6 +182,23 @@
     {
       sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
     }
+
+    adstring tmpstring=cmpdif_file_name;
+#if defined(USE_ADMPI)
+      add_slave_suffix(tmpstring);
+#endif // #if defined(USE_ADMPI)
+      if (::length(tmpstring)>100)
+      {
+        cerr << "Need to increase length of cmpdif_file_name"
+             << endl;
+        ad_exit(1);
+      }
+
+     strncpy(&cmpdif_file_name[0],tmpstring,101);
+
+
+
+
 #if defined (__MSVC32__) || defined (__WAT32__)
     file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
                      O_BINARY, S_IREAD | S_IWRITE);
@@ -231,14 +254,14 @@
       cerr << "Error closing file " << cmpdif_file_name << "\n";
     }
 #   if defined ( __SUN__) ||  defined ( __GNU__)
-      unlink(cmpdif_file_name);
+      //unlink(cmpdif_file_name);
 #else
       adstring currentdir;
       ad_getcd(currentdir);
       int xxx=remove(cmpdif_file_name);
       if (xxx) {
         cerr << "Error trying to delete file " << cmpdif_file_name << endl;
-        xxx=unlink(cmpdif_file_name);
+        //xxx=unlink(cmpdif_file_name);
         cout << xxx << endl;
       }
 #endif

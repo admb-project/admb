@@ -294,20 +294,20 @@ int oclMatMult(int wa, int ha, int wb, int hb, bool printMatrices){
 	char *clMatrixMul = oclLoadProgSource("C:\\admb-10.1\\src\\openCL\\adpar32.cl",
 																				"// My comment\n",
 																				&kernelLength);
-	shrCheckError(clMatrixMul != NULL, shrTRUE);
+	//shrCheckError(clMatrixMul != NULL, shrTRUE);
 	
 	clProgram = clCreateProgramWithSource(clGPUContext,
 																				1,
 																				(const char **)&clMatrixMul,
 																				&kernelLength,
 																				&errcode);
-	shrCheckError(errcode, CL_SUCCESS);
+	//shrCheckError(errcode, CL_SUCCESS);
 	
 	errcode = clBuildProgram(clProgram,0,NULL, NULL, NULL, NULL);
-	shrCheckError(errcode, CL_SUCCESS);
+	//shrCheckError(errcode, CL_SUCCESS);
 	
 	clKernel = clCreateKernel(clProgram,"matrixMul", &errcode);
-	shrCheckError(errcode, CL_SUCCESS);
+	//shrCheckError(errcode, CL_SUCCESS);
 	
   // 7. Launch OpenCL kernel
 	size_t localWorkSize[2], globalWorkSize[2];
@@ -329,7 +329,7 @@ int oclMatMult(int wa, int ha, int wb, int hb, bool printMatrices){
 	errcode |= clSetKernelArg(clKernel, 
 														4, 
 														sizeof(int), (void *)&wC);
-	shrCheckError(errcode, CL_SUCCESS);
+	//shrCheckError(errcode, CL_SUCCESS);
 	
 	localWorkSize[0] = 3;
 	localWorkSize[1] = 3;
@@ -345,7 +345,7 @@ int oclMatMult(int wa, int ha, int wb, int hb, bool printMatrices){
 																	 0, 
 																	 NULL, 
 																	 NULL);
-	shrCheckError(errcode, CL_SUCCESS);
+	//shrCheckError(errcode, CL_SUCCESS);
 	
 	// 8. Retrieve result from device
 	errcode = clEnqueueReadBuffer(clCommandQue, 
@@ -357,7 +357,7 @@ int oclMatMult(int wa, int ha, int wb, int hb, bool printMatrices){
 																0, 
 																NULL,
 																NULL);
-	shrCheckError(errcode, CL_SUCCESS);
+	//shrCheckError(errcode, CL_SUCCESS);
 	
 	// 9. print out the results
 	printf("oclMatMult: Done matrix multiplication\n");

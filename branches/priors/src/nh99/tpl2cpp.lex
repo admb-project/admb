@@ -111,6 +111,8 @@ name [a-z_A-Z]+(->)?[a-z_A-Z0-9]*
 
 name2 [(a-z_A-Z]+(->)?[a-z_A-Z0-9),]*
 
+prior_def [(a-z_A-Z]+(->)?[a-z_A-Z0-9\-\.),]*
+
 num_exp [a-z_A-Z0-9\+\-\*\/]+
 
 index ([a-z_A-Z]+(->)?[a-z_A-Z0-9]*)|([a-z_A-Z0-9\+\-\*\/]+)
@@ -2891,7 +2893,7 @@ DATA_SECTION  {
 
 
 
-<DEFINE_PRIORS>{name}[~]{name2} {
+<DEFINE_PRIORS>{name}[~]{prior_def} {
     before_part(tmp_string,yytext,'~');  // get x in x 10
     strict_after_part(tmp_string1,yytext,'~');  // get 10  in x  10
     before_part(tmp_string2,tmp_string1,'(');

@@ -21,7 +21,7 @@ disk: $(DISKDIR)/lib/$(LIBNAME) $(DISKDIR)/bin/tpl2rem
 	cp smartbuf.h $(DISKDIR)/include
 	cp sedcmd sedcmd2 sedcmd3 seddf1b2 seddf1b3 seddf1b4 sedf1b2a sedf1b2c sedf1b2d sedflex $(DISKDIR)/bin
 
-$(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+$(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJPRIORS)
 	ar -rs $@ $(LIBPATH)/*.obj
 
 $(DISKDIR)/bin/tpl2rem: tpl2rem.c

@@ -10,9 +10,9 @@ vpath %.obj $(LIBPATH)
 include objects.lst
 
 ifeq "CC" "$(CXX)"
-OBJECTS = $(filter-out dfqromb.obj, $(OBJ0)) $(OBJ1) $(OBJ2) $(OBJ3) 
+OBJECTS = $(filter-out dfqromb.obj, $(OBJ0)) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJPRIORS)
 else
-OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJPRIORS)
 endif
 
 all: disk  

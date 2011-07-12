@@ -105,6 +105,8 @@ profmin.obj \
 para3.obj 
 OBJSPLUS =   \
 spcomm.obj
+OBJPRIORS = \
+priors.obj
 #adsplus.obj \
 #usereval.obj \
 #dfqromo.obj \

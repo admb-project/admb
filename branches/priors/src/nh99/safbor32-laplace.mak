@@ -7,9 +7,10 @@ LIBNAME = admod32s.lib
 
 all: $(LIBNAME)
 
-$(LIBNAME): $(OBJ0)
+$(LIBNAME): $(OBJ0) $(OBJPRIORS)
 	cd $(LIBPATH)
 	tlib ..\..\dist\lib\$(LIBNAME) /a $(OBJ0)
+	tlib ..\..\dist\lib\$(LIBNAME) /a $(OBJPRIORS)
 	cd ..\..\..\..\src\nh99
 
 .cpp.obj:

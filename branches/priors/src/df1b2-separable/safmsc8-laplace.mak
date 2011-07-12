@@ -6,7 +6,7 @@ include ..\..\..\..\src\df1b2-separable\objects.lst
 
 LIBNAME=df1b2s.lib  
 
-OBJECTS=$(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+OBJECTS=$(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) $(OBJSPRIORS)
 
 all: $(DISKDIR)\lib\$(LIBNAME)
 	copy ..\..\..\..\src\df1b2-separable\df1b2fun.h $(DISKDIR)\include

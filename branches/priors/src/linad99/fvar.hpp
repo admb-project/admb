@@ -4775,6 +4775,33 @@ prevariable& cumd_norm_logistic(_CONST prevariable& x,double);
 double inv_cumd_norm_logistic(double x,double);
 double cumd_norm_logistic(double x,double);
 
+
+// priors.cpp distribution function headers
+dvariable plogis(const dvariable& x, const double& mu, const dvariable& std);
+dvar_vector plogis(const dvector& x, const dvariable& mu, const dvariable& std);
+dvector plogis(const dvector& x, const double& mu, const double& std);
+dvar_vector plogis(const dvar_vector& x, const dvariable& mu, const dvariable& std);
+
+dvariable dunif(const dvariable& x, const double min, const double max);
+dvariable dunif(const dvar_vector& x, const double min, const double max);
+
+dvariable dbeta(const dvariable& x, const double a, const double b);
+dvariable dinvgamma(const dvariable& x, const double a, const double b);
+dvariable dgamma(const dvariable &x, const double a, const double b);
+
+
+dvariable dnorm(const dvariable& x, const double& mu, const double& std);
+dvariable dnorm(const dvar_vector& residual, const dvariable std);
+dvariable dnorm(const dvar_vector& residual, const dvector std);
+dvariable dnorm(const dvar_vector& residual, const dvar_vector std);
+dvariable dlnorm(const dvariable& x, const double& mu, const double& std);
+dvariable dmultinom(const dvector& x, const dvar_vector& p);
+dvariable dpois(const double& x, const dvariable& lambda);
+dvar_vector eplogis(const dvar_vector& x, const dvariable& alpha, const dvariable& beta, const dvariable& gamma);
+dvector eplogis(const dvector& x, const double& alpha, const double& beta, const double& gamma);
+// priors.cpp distribution function headers
+
+
 /**
  * Description not yet available.
  * \param

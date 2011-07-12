@@ -12,7 +12,7 @@ LIBNAME = admod32.lib
 
 include ..\..\..\..\src\nh99\objects.lst
 
-OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) $(OBJPRIORS)
 
 all: $(DISKDIR)\lib\$(LIBNAME) $(DISKDIR)\bin\tpl2cpp.exe
 	copy ..\..\..\..\src\nh99\admodel.h $(DISKDIR)\include

@@ -5,7 +5,7 @@ LIBNAME = df1b2o.lib
 
 include ..\..\..\..\src\df1b2-separable\objects.lst
 
-OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) $(OBJPRIORS)
 
 all: $(DISKDIR)\lib\$(LIBNAME) $(DISKDIR)\bin\tpl2rem.exe
 	copy ..\..\..\..\src\df1b2-separable\df1b2fun.h $(DISKDIR)\include

@@ -7,7 +7,7 @@ LIBNAME = df1b2o.lib
 
 all: $(LIBNAME) $(DISKDIR)\dist\bin\tpl2rem.exe disk
 
-$(LIBNAME) :  $(OBJ0)
+$(LIBNAME) :  $(OBJ0) $(OBJPRIORS)
 	cd $(LIBPATH)
 	tlib /P128 ..\..\dist\lib\$(LIBNAME) /a $(OBJ0)
 	cd ..\..\..\..\src\df1b2-separable

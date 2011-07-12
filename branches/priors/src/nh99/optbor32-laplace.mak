@@ -7,9 +7,10 @@ LIBNAME = admod32.lib
 
 all: $(LIBNAME) $(DISKDIR)\dist\bin\tpl2cpp.exe disk
 
-$(LIBNAME): $(OBJ0)
+$(LIBNAME): $(OBJ0) $(OBJPRIORS)
 	cd $(LIBPATH)
 	tlib /P128 ..\..\dist\lib\$(LIBNAME) /a $(OBJ0)
+	tlib /P128 ..\..\dist\lib\$(LIBNAME) /a $(OBJPRIORS)
 	cd ..\..\..\..\src\nh99
 
 .cpp.obj:

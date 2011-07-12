@@ -41,7 +41,7 @@ vpath %.obj $(LIBPATH)
 
 include objects.lst
 
-$(LIBPATH)\\$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+$(LIBPATH)\\$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJPRIORS)
 	cmd /C "cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj"
 
 model52.obj hybmcmc.obj randeff.obj cnstrs.obj xmodelm3.obj xxmcmc.obj lmnewton.obj: %.obj: %.cpp
@@ -57,6 +57,9 @@ $(OBJ2): %.obj: %.cpp
 	$(CC) $(FLAGS) $< -o $(LIBPATH)\\$*.obj
 
 $(OBJ3): %.obj: %.cpp
+	$(CC) $(FLAGS) $< -o $(LIBPATH)\\$*.obj
+
+$(OBJPRIORS): %.obj: %.cpp
 	$(CC) $(FLAGS) $< -o $(LIBPATH)\\$*.obj
 
 all: $(LIBPATH)\\$(LIBNAME)  tpl2cpp disk  

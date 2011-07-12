@@ -19,7 +19,7 @@ disk: $(DISKDIR)/lib/$(LIBNAME)
 	cp df1b2loc.h $(DISKDIR)/include
 	cp smartbuf.h $(DISKDIR)/include
 
-$(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+$(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) $(OBJPRIORS)
 	ar -rs $@ $(LIBPATH)/*.obj
 
 %.obj: %.cpp

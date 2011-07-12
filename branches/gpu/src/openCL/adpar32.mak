@@ -2,7 +2,9 @@
 
 CC = cl
 
-FLAGS = /DWIN32 /D_WINDOWS /D_LIB /D_MBCS /D__MSVC32__=8  /DSAFE_ALL /c /I..\..\..\..\src\openCL /I"%GPU%/shared/inc/" /I"%GPU%/OpenCL/common/inc" /I"C:\admb-branches-gpu\src\linad99" /I"C:\admb-branches-gpu\src\tools99" /I"C:\admb-branches-gpu\src\nh99" /I"C:\admb-branches-gpu\src\df1b2-separable" /I"%MSSDK%/Include" /Ox /EHsc /nologo
+#FLAGS = /DWIN32 /D_WINDOWS /D_LIB /D_MBCS /D__MSVC32__=8  /DSAFE_ALL /c /I..\..\..\..\src\openCL /I"%GPU%/shared/inc/" /I"%GPU%/OpenCL/common/inc" /I"C:\admb-branches-gpu\src\linad99" /I"C:\admb-branches-gpu\src\tools99" /I"C:\admb-branches-gpu\src\nh99" /I"C:\admb-branches-gpu\src\df1b2-separable" /I"%MSSDK%/Include" /Ox /EHsc /nologo
+
+FLAGS = /DWIN32 /D_WINDOWS /D_LIB /D_MBCS /D__MSVC32__=8  /DSAFE_ALL /c /I..\..\..\..\src\openCL /I"%GPU%/shared/inc/" /I"%GPU%/OpenCL/common/inc" /I..\..\..\..\src\linad99 /I..\..\..\..\src\tools99 /I..\..\..\..\src\nh99 /I..\..\..\..\df1b2-separable /I"%MSSDK%/Include" /Ox /EHsc /nologo
 
 LIBNAME = adpar32.lib 
 

@@ -14,7 +14,6 @@ disk: $(DISKDIR)/lib/$(LIBNAME) $(DISKDIR)/bin/tpl2rem
 	cp adpool.h $(DISKDIR)/include
 	cp adrndeff.h $(DISKDIR)/include
 	cp df1b2fun.h $(DISKDIR)/include
-	cp df1fun.h $(DISKDIR)/include
 	cp df3fun.h $(DISKDIR)/include
 	cp df1b2fnl.h $(DISKDIR)/include
 	cp df1b2loc.h $(DISKDIR)/include

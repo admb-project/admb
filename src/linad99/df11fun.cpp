@@ -372,6 +372,52 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
     return z;
   }
 
+/**
+ * Description not yet available.
+ * \param
+ */
+ dvector first_derivatives(const df1_one_vector& v)
+ {
+   
+   int mmin=v.indexmin();
+   int mmax=v.indexmax();
+   dvector cv(mmin,mmax);
+   for (int i=mmin;i<=mmax;i++)
+   {
+     cv(i)=*(v(i).get_udot());
+   }
+   return cv;
+ }
+   
+
+/**
+ * Description not yet available.
+ * \param
+ */
+ dmatrix first_derivatives(const df1_one_matrix& v)
+ {
+   
+   int rmin=v.indexmin();
+   int rmax=v.indexmax();
+   dmatrix cm(rmin,rmax);
+   for (int i=rmin;i<=rmax;i++)
+   {
+     int cmin=v(i).indexmin();
+     int cmax=v(i).indexmax();
+     cm(i).allocate(cmin,cmax); 
+     cm(i)=first_derivatives(v(i));
+   }
+   return cm;
+ }
+   
+    
+
+
+
+
+
+
+
   df1_one_variable& df1_one_variable::operator = (const df1_one_variable& x)
   {
     *get_u() = *x.get_u();
@@ -407,6 +453,7 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
     *z.get_u_x() = x * *y.get_u_x();
     return z;
   }
+
 
   df1_one_variable operator * (const df1_one_variable& y,
     double x)
@@ -494,6 +541,7 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
     *z.get_u_x() = *x.get_u_x();
     return z;
   }
+
 
   df1_one_variable operator - (const df1_one_variable& x,
     const df1_one_variable& y);

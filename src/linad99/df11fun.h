@@ -52,6 +52,7 @@
     static int num_ind_var;
     double * get_u(void) const {return (double*) (&(v[0]));}
     double * get_u_x(void)const {return (double*) (&(v[1]));}
+    double * get_udot(void)const {return (double*) (&(v[1]));}
     df1_one_variable& operator = (const df1_one_variable& v);
     df1_one_variable& operator = (double v);
     df1_one_variable& operator += (const df1_one_variable& v);

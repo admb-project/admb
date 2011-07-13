@@ -5265,7 +5265,7 @@ public:
 #else
   unsigned long long  toffset;
 #endif
-  char          cmpdif_file_name[81];
+  char          cmpdif_file_name[101];
   int           file_ptr;
   DF_FILE(my_u_off_t);
   ~DF_FILE();

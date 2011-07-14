@@ -2,7 +2,7 @@
 /**
 * \file dgamma.cpp
 * \brief Gamma density functions.
-* \ingroup pdf
+* \ingroup STATLIB
 * \author Steven Martell
 * \date 2/28/2011
 * 

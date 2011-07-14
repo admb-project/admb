@@ -1,7 +1,4 @@
-/*
-	TODO class object for an age-length key
-	TODO class object for a length transition matrix
-*/
+
 
 #ifndef ADMODEL_H
 #define ADMODEL_H
@@ -71,7 +68,7 @@ const double pi=3.1415926535897932384626433832795;
 /**
 * @file statsLib.h
 * @brief Library of statistic functions
-* 
+* \ingroup STATLIB
 * This library contains numerous statistical functions
 * that can easily be used in ADMB templates. This is the
 * header file that contains preprocessor directive to 

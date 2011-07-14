@@ -7,7 +7,7 @@
 * This file contains the negative loglikelihood 
 * functions for the beta distribution. The function
 * dbeta is overloaded to accomodate single variables and vectors. 
-* 
+* \ingroup STATLIB
 * @author Steven Martell
 * 
 * @date 2/27/2011
@@ -21,7 +21,6 @@
 */
 
 /**
-* \ingroup pdf
 * @author Steven Martell
 * @param shape1 = a parameter (a > 0)
 * @param shape2 = b parameter (b > 0)

@@ -5,7 +5,7 @@
 * \brief Lognormal density functions.
 * \author Steven Martell
 * \date 2/05/2011
-* \ingroup pdf
+* \ingroup STATLIB
 * This file contains the negative loglikelihood 
 * functions for the lognormal distribution. The function
 * dlnorm is overloaded to accomodate single variables and vectors. 

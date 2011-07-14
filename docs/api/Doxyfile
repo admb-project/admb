@@ -607,7 +607,8 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/nh99 \
                          ../../src/df1b2-separable \
                          ../../src/tools99 \
-                         ../../src/sparse/hs_sparse.cpp
+                         ../../src/sparse/hs_sparse.cpp \
+                         ../../contrib/statslib
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is

@@ -3,7 +3,7 @@
 /**
 * @file fill.cpp
 * @brief Fills a matrix with a vector
-* 
+* \ingroup STATLIB
 * This function fills a matrix m with a vector v.  The matrix must
 * have the same number of elements as the vector.
 * eg. fill(m,v);          \n

@@ -4,7 +4,7 @@
 * 
 * \file dnorm.cpp
 * \brief Normal density functions.
-* \ingroup pdf
+* \ingroup STATLIB
 * \author Steven Martell
 * \date 2/05/2011
 * 

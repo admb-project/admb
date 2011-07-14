@@ -2,7 +2,7 @@
 /**
 * \file baranov.cpp
 * \brief Routines for iteratively solving the Baranov catch equation.
-* \ingroup fishtools
+* \ingroup STATLIB
 * \author Steven Martell
 * \date 2/28/2011
 * 

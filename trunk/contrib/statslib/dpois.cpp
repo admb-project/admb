@@ -3,7 +3,7 @@
 * 
 * \file dpois.cpp
 * \brief Poisson density functions.
-* \ingroup pdf
+* \ingroup STATLIB
 * \author Steven Martell
 * \date 24/06/2011
 * 

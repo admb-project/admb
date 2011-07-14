@@ -3,7 +3,7 @@
 * 
 * \file dbinom.cpp
 * \brief Binomial density functions.
-* \ingroup pdf
+* \ingroup STATLIB
 * \author Steven Martell
 * \date 2/05/2011
 * 

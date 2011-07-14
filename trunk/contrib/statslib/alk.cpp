@@ -14,7 +14,7 @@
 *  
 * 
 * @author Steven Martell
-* \ingroup ptm
+* \ingroup STATLIB
 * @date 2/27/2011
 * 
 * The function is implemented as

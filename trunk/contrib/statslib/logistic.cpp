@@ -3,7 +3,7 @@
 /**
 * @file logistic.cpp
 * @brief Logistic distrutions and densities.
-* 
+* \ingroup STATLIB
 * Density and distribution functions for the logistic 
 * distribution.  Common use is plogis for obtaining 
 * logistic selectivity curves based on location and 

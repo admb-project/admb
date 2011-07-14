@@ -4,7 +4,7 @@
 * 
 * \file dnbinom.cpp
 * \brief Negative binomial density functions.
-* \ingroup pdf
+* \ingroup STATLIB
 * \author Steven Martell
 * \date 2/05/2011
 * 

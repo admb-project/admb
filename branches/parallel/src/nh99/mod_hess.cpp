@@ -82,6 +82,7 @@ void function_minimizer::hess_routine_noparallel(void)
         {
            ad_comm::mpi_manager->send_dvector_to_slave(x,i);
         }
+        //sleep(2);
       }
       else
       {
@@ -230,6 +231,7 @@ void function_minimizer::hess_routine_noparallel(void)
     {
       ofs << gradient_structure::Hybrid_bounded_flag;
       ofs << tscale;
+      // wait until slaves are finished
       for (int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
       {
         int iconfirm;
@@ -240,6 +242,7 @@ void function_minimizer::hess_routine_noparallel(void)
         }
       }
     }
+    
     if (ad_comm::mpi_manager->is_slave())
     {
       int slave_number=ad_comm::mpi_manager->get_slave_number();

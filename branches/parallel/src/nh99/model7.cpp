@@ -119,117 +119,164 @@ admpi_manager::~admpi_manager()
 }
 
 
+ // void admpi_manager::send_dvector_to_slave(const dvector& v,
+ //   int _slave_number)
+ // {
+ //   int slave_number=_slave_number-1;
+ //   MPI_Status myStatus;
+ //   /* make sure that the previous read using this memory area
+ //      has completed 
+ //   */
+ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
+ //                                   /* once */
+ //   {
+ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+ //   }
+ //   mpi_int[mpi_offset]=v.indexmin();
+ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
+ //     everyone,&(global_request[mpi_offset]));
+ //   increment_mpi_offset();
+ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
+ //                                   /* once */
+ //   {
+ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+ //   }
+ //   mpi_int[mpi_offset]=v.indexmax();
+ // 
+ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
+ //     everyone,&(global_request[mpi_offset]));
+ //   increment_mpi_offset();
+ //   int mmin=v.indexmin();
+ //   int mmax=v.indexmax();
+ //   int size=mmax-mmin+1;
+ //   MPI_Request request;
+ //   MPI_Isend(&(v[mmin]),size,MPI_DOUBLE,slave_number,0,everyone,&request);
+ // }
+
 void admpi_manager::send_dvector_to_slave(const dvector& v,
   int _slave_number)
 {
   int slave_number=_slave_number-1;
-  MPI_Status myStatus;
-  /* make sure that the previous read using this memory area
-     has completed 
-  */
-  if(global_request[mpi_offset])  /* checks to see if has been used at least */
-                                  /* once */
-  {
-    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
-  }
-  mpi_int[mpi_offset]=v.indexmin();
-  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
-    everyone,&(global_request[mpi_offset]));
-  increment_mpi_offset();
-  if(global_request[mpi_offset])  /* checks to see if has been used at least */
-                                  /* once */
-  {
-    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
-  }
-  mpi_int[mpi_offset]=v.indexmax();
-
-  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
-    everyone,&(global_request[mpi_offset]));
-  increment_mpi_offset();
   int mmin=v.indexmin();
   int mmax=v.indexmax();
   int size=mmax-mmin+1;
-  MPI_Request request;
-  MPI_Isend(&(v[mmin]),size,MPI_DOUBLE,slave_number,0,everyone,&request);
+  mpi_int[mpi_offset]=v.indexmin();
+  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
+  increment_mpi_offset();
+  mpi_int[mpi_offset]=v.indexmax();
+  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
+  increment_mpi_offset();
+  MPI_Send(&(v[mmin]),size,MPI_DOUBLE,slave_number,0,everyone);
 }
 
-void admpi_manager::send_ivector_to_slave(const ivector& v,int _slave_number)
+void admpi_manager::send_ivector_to_slave(const ivector& v,
+  int _slave_number)
 {
   int slave_number=_slave_number-1;
-  MPI_Status myStatus;
-  /* make sure that the previous read using this memory area
-     has completed 
-  */
-  if(global_request[mpi_offset])  /* checks to see if has been used at least */
-                                  /* once */
-  {
-    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
-  }
-  mpi_int[mpi_offset]=v.indexmin();
-  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
-    everyone,&(global_request[mpi_offset]));
-  increment_mpi_offset();
-  if(global_request[mpi_offset])  /* checks to see if has been used at least */
-                                  /* once */
-  {
-    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
-  }
-  mpi_int[mpi_offset]=v.indexmax();
-
-  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
-    everyone,&(global_request[mpi_offset]));
-  increment_mpi_offset();
   int mmin=v.indexmin();
   int mmax=v.indexmax();
   int size=mmax-mmin+1;
-  MPI_Request request;
-  MPI_Isend(&(v[mmin]),size,MPI_INT,slave_number,0,everyone,&request);
-  //cout << "MBA" << endl;
-  //cout << "MCA" <<  v << endl;
-  // wiat remove 1
-  //MPI_Wait(&(request), &myStatus);
-  //cout << "MBB" << endl;
+  mpi_int[mpi_offset]=v.indexmin();
+  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
+  increment_mpi_offset();
+  mpi_int[mpi_offset]=v.indexmax();
+  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
+  increment_mpi_offset();
+  MPI_Send(&(v[mmin]),size,MPI_INT,slave_number,0,everyone);
 }
+
+ // void admpi_manager::send_ivector_to_slave(const ivector& v,int _slave_number)
+ // {
+ //   int slave_number=_slave_number-1;
+ //   MPI_Status myStatus;
+ //   /* make sure that the previous read using this memory area
+ //      has completed 
+ //   */
+ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
+ //                                   /* once */
+ //   {
+ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+ //   }
+ //   mpi_int[mpi_offset]=v.indexmin();
+ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
+ //     everyone,&(global_request[mpi_offset]));
+ //   increment_mpi_offset();
+ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
+ //                                   /* once */
+ //   {
+ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+ //   }
+ //   mpi_int[mpi_offset]=v.indexmax();
+ // 
+ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
+ //     everyone,&(global_request[mpi_offset]));
+ //   increment_mpi_offset();
+ //   int mmin=v.indexmin();
+ //   int mmax=v.indexmax();
+ //   int size=mmax-mmin+1;
+ //   MPI_Request request;
+ //   MPI_Isend(&(v[mmin]),size,MPI_INT,slave_number,0,everyone,&request);
+ //   //cout << "MBA" << endl;
+ //   //cout << "MCA" <<  v << endl;
+ //   // wiat remove 1
+ //   //MPI_Wait(&(request), &myStatus);
+ //   //cout << "MBB" << endl;
+ // }
+ // 
+ // void admpi_manager::send_int_to_slave(int i,int _slave_number)
+ // {
+ //   int slave_number=_slave_number-1;
+ //   MPI_Status myStatus;
+ //   MPI_Request request;
+ //   /* make sure that the previous read using this memory area
+ //      has completed 
+ //   */
+ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
+ //                                   /* once */
+ //   {
+ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+ //   }
+ //   mpi_int[mpi_offset]=i;
+ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
+ //     everyone,&(global_request[mpi_offset]));
+ //   //sleep(1);
+ //   //MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+ //   increment_mpi_offset();
+ // }
 
 void admpi_manager::send_int_to_slave(int i,int _slave_number)
 {
   int slave_number=_slave_number-1;
-  MPI_Status myStatus;
-  MPI_Request request;
-  /* make sure that the previous read using this memory area
-     has completed 
-  */
-  if(global_request[mpi_offset])  /* checks to see if has been used at least */
-                                  /* once */
-  {
-    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
-  }
   mpi_int[mpi_offset]=i;
-  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
-    everyone,&(global_request[mpi_offset]));
-  //sleep(1);
-  //MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
   increment_mpi_offset();
 }
 
+ // void admpi_manager::send_int_to_master(int i)
+ // {
+ //   MPI_Status myStatus;
+ //   MPI_Request request;
+ //   /* make sure that the previous read using this memory area
+ //      has completed 
+ //   */
+ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
+ //                                   /* once */
+ //   {
+ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+ //   }
+ //   mpi_int[mpi_offset]=i;
+ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,0,0,
+ //     parent,&(global_request[mpi_offset]));
+ //   //sleep(1);
+ //   // remove 2
+ //   //MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+ //   increment_mpi_offset();
+ // }
+
 void admpi_manager::send_int_to_master(int i)
 {
-  MPI_Status myStatus;
-  MPI_Request request;
-  /* make sure that the previous read using this memory area
-     has completed 
-  */
-  if(global_request[mpi_offset])  /* checks to see if has been used at least */
-                                  /* once */
-  {
-    MPI_Wait(&(global_request[mpi_offset]), &myStatus);
-  }
   mpi_int[mpi_offset]=i;
-  MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,0,0,
-    parent,&(global_request[mpi_offset]));
-  //sleep(1);
-  // remove 2
-  //MPI_Wait(&(global_request[mpi_offset]), &myStatus);
+  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,0,0,parent);
   increment_mpi_offset();
 }
 
@@ -375,10 +422,12 @@ admpi_manager::admpi_manager(int m,int argc,char * argv[])
      ia[0]=2;
      // send an int to the slaves so that they will wait
      // until they get it
+     /*  
      for (int i=1;i<=num_slaves;i++)
      {
        send_int_to_slave(ia[0]+i,i);
      }
+     */
      //sleep(1);
   }
   if (is_slave())
@@ -388,8 +437,8 @@ admpi_manager::admpi_manager(int m,int argc,char * argv[])
     //cout << "slave_number = " << slave_number << endl;
     do_minimize=0;
     do_hess=1;
-    int i=-1;
-    get_int_from_master(i);
+    //int i=-1;
+    //get_int_from_master(i);
     //cout << "In slave i = " << i << endl;
     //sleep(2);
     cout << "I have " << argc << " argurments which are " << endl;
@@ -457,8 +506,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   if (pvm_flag)
     mpi_manager = new admpi_manager(pvm_flag,_argc,_argv);
   else
-#endif
     mpi_manager = NULL;
+#endif
 
 
 #if defined(USE_ADPVM)
@@ -858,11 +907,13 @@ void ad_comm::allocate(void)
 
 ad_comm::~ad_comm()
 {
+#if defined(USE_ADMPI)
   if (mpi_manager)
   {
     delete mpi_manager;
     mpi_manager=0;
   }
+#endif
 
   if (ptm)
   {
@@ -891,6 +942,7 @@ ad_comm::~ad_comm()
   }
 }
 
+#if defined(USE_ADMPI)
 void add_slave_suffix(const adstring& _tmpstring)
 {
   ADUNCONST(adstring,tmpstring)
@@ -925,6 +977,7 @@ void report_file_opening(const adstring& _tmpstring)
     }
   }
 }
+#endif
 
 void function_minimizer::pre_userfunction(void)
 {

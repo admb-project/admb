@@ -2,8 +2,6 @@
 
 %{
   /**
-   * $Id: tpl2cpp.lex 945 2011-01-12 23:03:57Z johnoel $
-   *
    * Author: David Fournier
    * Copyright (c) 2008-2011 Regents of the University of California
    */
@@ -15,7 +13,7 @@
   #include <string.h>
   #include <stdio.h>
   #if defined(_WIN32)
-  #include <io.h>  fopen
+  #include <io.h>  //fopen
   #endif
   char tmp_string[MAX_TMP_STRING];
   char tmp_string1[MAX_TMP_STRING];
@@ -23,6 +21,7 @@
   char tmp_string3[MAX_TMP_STRING];
   char tmp_string4[MAX_TMP_STRING];
   char tmp_string5[MAX_TMP_STRING];
+
   char objective_function_name_string[MAX_TMP_STRING];
   char reference_statements[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
   char class_instances[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
@@ -45,7 +44,7 @@
   int makegaussdll=0;
   int no_userclass=0;
   int bound_flag=1;
-  int  num_user_classes=0;
+  int num_user_classes=0;
   int final_defined=0;
   int top_of_main_defined=0;
   int globals_section_defined=0;
@@ -102,16 +101,19 @@
   void call_destructors_for_user_classes(FILE * fall); 
   void marker(void);
   void write_unallocated(const char *);
+  
+  void add_prior_to_objective(void);
+  void trim(char * a);   
 
   int filename_index;
   int filename_size;
 %}
 
-name [a-z_A-Z]+(->)?[a-z_A-Z0-9]*
+name [a-z_A-Z]+(->)?[a-z_A-Z]*
 
-name2 [(a-z_A-Z]+(->)?[a-z_A-Z0-9),]*
+prior_name [a-z_A-Z]+(\([a-z_A-Z]+\))?(->)?[a-z_A-Z]*
 
-prior_def [(a-z_A-Z]+(->)?[a-z_A-Z0-9\-\.),]*
+prior_def [ \t(a-z_A-Z]+(->)?[ \ta-z_A-Z0-9),.-]*
 
 num_exp [a-z_A-Z0-9\+\-\*\/]+
 
@@ -132,8 +134,8 @@ float_num_exp [a-z_A-Z0-9\.\+\-\*]+
 %s DEFINE_BETWEEN_PHASES IN_FIVE_ARRAY_DEF IN_SIX_ARRAY_DEF IN_SEVEN_ARRAY_DEF 
 %s IN_NAMED_FIVE_ARRAY_DEF IN_NAMED_SIX_ARRAY_DEF IN_NAMED_SEVEN_ARRAY_DEF 
 %s IN_SPBOUNDED_NUMBER_DEF INIT_SPBOUNDED_VECTOR_DEF IN_PVM_SLAVE_SECTION
-%s PRIORS_SECTION DEFINE_PRIORS 
-%s LIKELIHOOD_SECTION DEFINE_LIKELIHOOD
+%s DEFINE_PRIORS DEFINE_LIKELIHOOD
+ 
 %%
 ;             /* ignore semi colons */ ;
 [ \t]+        /* ignore blanks */  ;
@@ -197,14 +199,7 @@ REPORT_SECTION  {
     BEGIN DEFINE_PROCS;
     report_defined=1;
 
-   if((priors_defined==1)&&(prior_done_once==0))
-   {
-   prior_done_once=1;	
-   fprintf(fall,"%s","  prior_function_value=0.0;\n");
-   fprintf(fall,"%s","  priorsfunction();\n");
-   fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");
-   }
-
+    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
 
     fprintf(fall,"%s","}\n\nvoid model_parameters::report()"
       "\n{\n");
@@ -241,6 +236,7 @@ FINAL_SECTION  {
   {
     BEGIN DEFINE_PROCS;
     final_defined=1;
+    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
     fprintf(fall,"%s","}\n\nvoid model_parameters::final_calcs()"
       "\n{\n");
   }
@@ -271,6 +267,7 @@ RUNTIME_SECTION  {
   {
     BEGIN DEFINE_RUNTIME;
     runtime_defined=1;
+    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
     fprintf(fall,"%s","}\n\nvoid model_parameters::set_runtime(void)"
       "\n{\n");
   }
@@ -328,14 +325,7 @@ PRELIMINARY_CALCS_SECTION  {
     BEGIN DEFINE_PRELIMINARY_CALCS;
     preliminary_calcs_defined=1;
 
-   if((priors_defined==1)&&(prior_done_once==0))
-   {
-   prior_done_once=1;	
-   fprintf(fall,"%s","  prior_function_value=0.0;\n");
-   fprintf(fall,"%s","  priorsfunction();\n");
-   fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");
-   }
-
+    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
 
     fprintf(fall,"%s","}\n\nvoid model_parameters::preliminary_calculations(void)"
       "\n{\n");
@@ -356,6 +346,7 @@ BETWEEN_PHASES_SECTION {
   {
     BEGIN DEFINE_BETWEEN_PHASES;
     between_phases_defined=1;
+    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
     fprintf(fall,"%s","}\n\nvoid model_parameters::between_phases_calculations(void)"
       "\n{\n");
     fprintf(fdat,"%s","  void between_phases_calculations(void);\n");
@@ -389,6 +380,7 @@ SLAVE_SECTION  {
     BEGIN IN_PVM_SLAVE_SECTION;
     pvmslaves_defined=1;
     fprintf(fdat,"  virtual imatrix get_slave_assignments(void);\n");
+    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
     fprintf(fall,"%s","}\n\nimatrix model_parameters::"
       "get_slave_assignments(void)\n{\n");
   }
@@ -2210,8 +2202,7 @@ DATA_SECTION  {
 
 <IN_THREE_ARRAY_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) |
 <IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index},{index}\) |
-<IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index}\) |
-<IN_THREE_ARRAY_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) {
+<IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index}\)  {
 
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)
     fprintf(fdat,"%s",tmp_string);
@@ -2892,18 +2883,17 @@ DATA_SECTION  {
                             }
 
 
-
-<DEFINE_PRIORS>{name}[~]{prior_def} {
-    before_part(tmp_string,yytext,'~');  // get x in x 10
-    strict_after_part(tmp_string1,yytext,'~');  // get 10  in x  10
-    before_part(tmp_string2,tmp_string1,'(');
-    strict_after_part(tmp_string3,tmp_string1,'(');
-    fprintf(fall,"  prior_function_value-=%s(%s,%s;\n",
-    tmp_string2,
-    tmp_string,
-    tmp_string3
-    );
-   }
+<DEFINE_PRIORS>{prior_name}[ \t]*[~][ \t]*{prior_def} {    //
+    before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
+    strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
+    before_part(tmp_string2,tmp_string1,'(');   //function name
+    strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.
+    trim(tmp_string2);  //function name
+    trim(tmp_string); 
+		trim(tmp_string3);
+    fprintf(fall,"  prior_function_value-=%s(%s,%s;\n",tmp_string2,tmp_string,tmp_string3);
+													 }
+                   
 
 
 .  {
@@ -2996,9 +2986,7 @@ PROCEDURE_SECTION {
         "and assign the approriate value to it in the\nPROCEDURE_SECTION");
       exit(1);
     }
-    BEGIN DEFINE_PROCS2;
-    //BEGIN 0;
-    //BEGIN DEFINE_PROCS3;
+    BEGIN DEFINE_PROCS;
 
     procedure_defined=1;
     in_procedure_def=1;
@@ -3027,20 +3015,6 @@ PROCEDURE_SECTION {
     {
       fprintf(fdat,"  virtual void initializationfunction(void);\n");
     }
-
-
-
-
-    if(!priors_defined)
-    {
-      fprintf(fdat,"  virtual void priorsfunction(void){}\n");
-    }
-    else
-    {
-      fprintf(fdat,"  virtual void priorsfunction(void);\n");
-    }
-
-
 
 
    /* fprintf(fdat,"%s","};\n");*/
@@ -3117,14 +3091,7 @@ FUNCTION[ ]*{name}[ ]*{name}\( {
 
  
 
-
-   if((priors_defined==1)&&(prior_done_once==0))
-   {
-   prior_done_once=1;	
-   fprintf(fall,"%s","  prior_function_value=0.0;\n");
-   fprintf(fall,"%s","  priorsfunction();\n");
-   fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");
-   }
+	if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
 
     fprintf(fall,"}\n\n%s ",tmp_string3);
 
@@ -3156,14 +3123,7 @@ FUNCTION[ ]*{name} {
 
     after_partb(tmp_string1,yytext,' ');  // get function name
 
-   if((priors_defined==1)&&(prior_done_once==0))
-   {
-   prior_done_once=1;	
-   fprintf(fall,"%s","  prior_function_value=0.0;\n");
-   fprintf(fall,"%s","  priorsfunction();\n");
-   fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");
-   }
-
+    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
 
     fprintf(fall,"}\n\nvoid model_parameters::%s(void)\n{\n",tmp_string1);
     fprintf(fdat,"  void %s(void);\n",tmp_string1);
@@ -3220,37 +3180,6 @@ FUNCTION_DECLARATION[ ]*{name} |
 
 
 <DEFINE_PROCS>^[ \t].* { fprintf(fall,"%s\n",yytext); }
-
-<DEFINE_PROCS2>^[ \t].* { fprintf(fall,"%s\n",yytext); 
-
-   //if(priors_defined==1)
-   //if((priors_defined==1)&&(prior_done_once==0))
-   //if((priors_defined==1)&&(yywrap()==1))
-   //{
-   //prior_done_once=1;	
-   //fprintf(fall,"%s","  prior_function_value=0.0;\n");
-   //fprintf(fall,"%s","  priorsfunction();\n");
-   //fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");
-   //}
-
-
-    //yymore();
-
-   }
-
- 
-
-<DEFINE_PROCS3>^[ \t].* { 
-
-   if((priors_defined==1)&&(prior_done_once==0))
-   {
-   //prior_done_once=1;	
-   //fprintf(fall,"%s","  prior_function_value=0.0;\n");
-   //fprintf(fall,"%s","  priorsfunction();\n");
-   //fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");
-   }
-
-   }
 
  
 <DEFINE_AUX_PROC>^\ +{name}\ +{name}\(.*$       {
@@ -3406,15 +3335,7 @@ TOP_OF_MAIN_SECTION {
 
 <<EOF>> {
 
-   if((priors_defined==1)&&(prior_done_once==0))
-   {
-   prior_done_once=1;	
-   fprintf(fall,"%s","  prior_function_value=0.0;\n");
-   fprintf(fall,"%s","  priorsfunction();\n");
-   fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");
-   }
-
-
+    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
 
     if (!data_defined)
     {
@@ -4134,4 +4055,39 @@ void marker(void){;}
  {
    fprintf(stderr,"warning -- creating unallocated %s at line %d\n",t,
      nline);
+ }
+
+
+  /* add prior to userfunctions from procedure_section, 
+  */
+  void add_prior_to_objective(void)
+  {  	
+	prior_done_once=1;
+	fprintf(fdat,"  virtual void priorsfunction(void);\n");  //add to .htp file, add by liu
+	fprintf(fall,"%s","  prior_function_value=0.0;\n");
+    fprintf(fall,"%s","  priorsfunction();\n");
+    fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");          
+  }
+
+
+
+ /* strip off the leading and trailing spaces from an input string, call it by trim(istring),
+    istring still use the same memory address, but the values being changed due to removed spaces, 
+    used to compare the function name for prior_section
+ */
+ void trim(char * a)
+ { 
+	size_t walker = strlen ( a );
+    //printf ( "Before: |%s|\n\n", a );
+
+    /* Trim trailing spaces */
+    while ( walker > 0 && isspace ( a[walker - 1] ) )
+      --walker;
+    a[walker] = '\0';
+ 
+    //printf ( "Trailing: |%s|\n\n", a );
+
+    /* Trim leading spaces */
+    walker = strspn ( a, " \t\n\v" );
+    memmove ( a, a + walker, strlen ( a + walker ) + 1 );
  }

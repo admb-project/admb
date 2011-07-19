@@ -117,3 +117,8 @@ invoke custom adjoint code.
     \ingroup CONTRIB
     \details Contributed by Mollie Brooks.
 */
+
+/** \defgroup QFC
+    \ingroup CONTRIB
+    \details Contributed by Weihai Liu
+*/

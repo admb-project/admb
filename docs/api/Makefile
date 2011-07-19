@@ -8,7 +8,7 @@
 REV = `svnversion -n ../..`
 VER=`cat ../../VERSION`
 
-default: Doxyfile
+default: Doxyfile ./dox-share/mainpage.txt 
 	mkdir -vp dox/html
 	(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo -n "PROJECT_NUMBER = "$(VER).$(REV); ) | doxygen -
 

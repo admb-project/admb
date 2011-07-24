@@ -7,22 +7,40 @@ all:
 	IF NOT EXIST $(DISK)\dist\lib mkdir $(DISK)\dist\lib
 	IF NOT EXIST $(DISK)\dist\include mkdir $(DISK)\dist\include
 	IF NOT EXIST $(DISK)\objects mkdir $(DISK)\objects
+
 	IF NOT EXIST $(DISK)\objects\df1b2-separable-slp mkdir $(DISK)\objects\df1b2-separable-slp 
 	IF NOT EXIST $(DISK)\objects\df1b2-separable-olp mkdir $(DISK)\objects\df1b2-separable-olp 
 	cd $(DISK)\objects\df1b2-separable-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\df1b2-separable\safmsc8-laplace.mak all
 	cd $(DISK)\objects\df1b2-separable-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\df1b2-separable\optmsc8-laplace.mak all
+
 	IF NOT EXIST $(DISK)\objects\linad99-olp mkdir $(DISK)\objects\linad99-olp 
 	IF NOT EXIST $(DISK)\objects\linad99-slp mkdir $(DISK)\objects\linad99-slp 
 	cd $(DISK)\objects\linad99-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\linad99\optmsc8-laplace.mak all
 	cd $(DISK)\objects\linad99-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\linad99\safmsc8-laplace.mak all
+
 	IF NOT EXIST $(DISK)\objects\nh99-olp mkdir $(DISK)\objects\nh99-olp 
 	IF NOT EXIST $(DISK)\objects\nh99-slp mkdir $(DISK)\objects\nh99-slp 
 	cd $(DISK)\objects\nh99-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\nh99\optmsc8-laplace.mak all
 	cd $(DISK)\objects\nh99-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\nh99\safmsc8-laplace.mak all
+
 	IF NOT EXIST $(DISK)\objects\tools99-olp mkdir $(DISK)\objects\tools99-olp 
 	IF NOT EXIST $(DISK)\objects\tools99-slp mkdir $(DISK)\objects\tools99-slp 
 	cd $(DISK)\objects\tools99-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\tools99\optmsc8-laplace.mak all
 	cd $(DISK)\objects\tools99-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\tools99\safmsc8-laplace.mak all
+
+	IF NOT EXIST $(DISK)\objects\stats-slp mkdir $(DISK)\objects\stats-slp 
+	cd $(DISK)\objects\stats-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\contrib\statslib\safmsc8-stats.mak all
+
+	IF NOT EXIST $(DISK)\objects\priors-slp mkdir $(DISK)\objects\priors-slp 
+	cd $(DISK)\objects\priors-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\contrib\priorslib\safmsc8-priors.mak all
+
+	copy ..\scripts\cl\admb32.bat $(DISK)\dist\bin
+	copy ..\scripts\cl\adlink32.bat $(DISK)\dist\bin
+	copy ..\scripts\cl\adcomp32.bat $(DISK)\dist\bin
+
+	copy ..\scripts\cl\admb32d.bat $(DISK)\dist\bin
+	copy ..\scripts\cl\adcomp32d.bat $(DISK)\dist\bin
+
 	copy ..\scripts\cl\*.bat $(DISK)\dist\bin
 	copy ..\scripts\admb\admb.bat $(DISK)\dist\bin
 	copy ..\LICENSE $(DISK)\dist
@@ -40,3 +58,5 @@ verify:
 
 clean:
 	IF EXIST $(DISK) rmdir /S /Q $(DISK)
+  rm ../src/nh99/tpl2cpp.c
+  rm ../src/nh99/tpl2cpp.exe

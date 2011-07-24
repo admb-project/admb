@@ -1,12 +1,12 @@
 .SUFFIXES: .obj .cpp
 
-FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-separable /I..\..\..\..\src\linad99 /I..\..\..\..\src\nh99 /I..\..\..\..\src\tools99 /D__MSVC32__=8 /DSAFE_ALL /Ox
+FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-separable /I..\..\..\..\src\linad99 /I..\..\..\..\src\nh99 /I..\..\..\..\src\tools99 /I..\..\..\..\contrib\statslib /I..\..\..\..\contrib\priorslib /D__MSVC32__=8 /DSAFE_ALL /Ox
 
 include ..\..\..\..\src\df1b2-separable\objects.lst
 
 LIBNAME=df1b2s.lib  
 
-OBJECTS=$(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) $(OBJSPRIORS)
+OBJECTS=$(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
 
 all: $(DISKDIR)\lib\$(LIBNAME)
 	copy ..\..\..\..\src\df1b2-separable\df1b2fun.h $(DISKDIR)\include

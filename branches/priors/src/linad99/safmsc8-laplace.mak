@@ -2,7 +2,7 @@
 
 CC = cl
 
-FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-separable /I..\..\..\..\src\linad99 /I..\..\..\..\src\nh99 /I..\..\..\..\src\tools99 /D__MSVC32__=8  /DSAFE_ALL /Ox /EHsc
+FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-separable /I..\..\..\..\src\linad99 /I..\..\..\..\src\nh99 /I..\..\..\..\src\tools99 /I..\..\..\..\contrib\statslib /I..\..\..\..\contrib\priorslib /D__MSVC32__=8  /DSAFE_ALL /Ox /EHsc
 
 LIBNAME = ads32.lib 
 

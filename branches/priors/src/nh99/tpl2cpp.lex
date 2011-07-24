@@ -2,6 +2,9 @@
 
 %{
   /**
+   *
+   * $Id: tpl2cpp.lex 945 2011-01-12 23:03:57Z johnoel $
+   *
    * Author: David Fournier
    * Copyright (c) 2008-2011 Regents of the University of California
    */
@@ -22,8 +25,13 @@
   char tmp_string4[MAX_TMP_STRING];
   char tmp_string5[MAX_TMP_STRING];
 
+	char prior_str[MAX_TMP_STRING];
+	char like_str[MAX_TMP_STRING];
+
   char objective_function_name_string[MAX_TMP_STRING];
-  char reference_statements[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
+  char reference_statements[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH
+];
+
   char class_instances[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
   char outcommand[100];
   char infile_name[1000];
@@ -55,6 +63,10 @@
   int priors_defined=0;
   int prior_done_once=0;
   int likelihood_defined=0;
+  int likelihood_done_once=0;
+  int procedure_done=0;
+  int likelihood_done=0;
+  int priors_done=0;
 
   int objective_function_defined=0;
   int report_defined=0;
@@ -103,15 +115,15 @@
   void write_unallocated(const char *);
   
   void add_prior_to_objective(void);
+  void add_likelihood_to_objective(void);
+  void setup_for_prior_likelihood(void);
   void trim(char * a);   
 
   int filename_index;
   int filename_size;
 %}
 
-name [a-z_A-Z]+(->)?[a-z_A-Z]*
-
-prior_name [a-z_A-Z]+(\([a-z_A-Z]+\))?(->)?[a-z_A-Z]*
+name [a-z_A-Z]+(->)?[a-z_A-Z0-9]*
 
 prior_def [ \t(a-z_A-Z]+(->)?[ \ta-z_A-Z0-9),.-]*
 
@@ -134,14 +146,12 @@ float_num_exp [a-z_A-Z0-9\.\+\-\*]+
 %s DEFINE_BETWEEN_PHASES IN_FIVE_ARRAY_DEF IN_SIX_ARRAY_DEF IN_SEVEN_ARRAY_DEF 
 %s IN_NAMED_FIVE_ARRAY_DEF IN_NAMED_SIX_ARRAY_DEF IN_NAMED_SEVEN_ARRAY_DEF 
 %s IN_SPBOUNDED_NUMBER_DEF INIT_SPBOUNDED_VECTOR_DEF IN_PVM_SLAVE_SECTION
-%s DEFINE_PRIORS DEFINE_LIKELIHOOD
+%s DEFINE_PRIORS DEFINE_LIKELIHOOD DEFINE_PROCEDURE
  
 %%
-;             /* ignore semi colons */ ;
-[ \t]+        /* ignore blanks */  ;
+
 \/\/.*$         /* ignore trailing comments */ ;
 
-\n    { nline++; }
 \r    { ; }
 
 INITIALIZATION_SECTION  {
@@ -199,7 +209,7 @@ REPORT_SECTION  {
     BEGIN DEFINE_PROCS;
     report_defined=1;
 
-    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
+    setup_for_prior_likelihood();
 
     fprintf(fall,"%s","}\n\nvoid model_parameters::report()"
       "\n{\n");
@@ -236,7 +246,8 @@ FINAL_SECTION  {
   {
     BEGIN DEFINE_PROCS;
     final_defined=1;
-    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
+    setup_for_prior_likelihood();
+    
     fprintf(fall,"%s","}\n\nvoid model_parameters::final_calcs()"
       "\n{\n");
   }
@@ -249,7 +260,7 @@ RUNTIME_SECTION  {
   if (!data_defined)
   {
     fprintf(stderr,"Error -- DATA_SECTION must be defined before"
-      " REPORT_SECTION \n");
+      " RUNTIME_SECTION \n");
     exit(1);
   }
   if (runtime_defined)
@@ -267,7 +278,7 @@ RUNTIME_SECTION  {
   {
     BEGIN DEFINE_RUNTIME;
     runtime_defined=1;
-    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
+    setup_for_prior_likelihood();
     fprintf(fall,"%s","}\n\nvoid model_parameters::set_runtime(void)"
       "\n{\n");
   }
@@ -325,7 +336,7 @@ PRELIMINARY_CALCS_SECTION  {
     BEGIN DEFINE_PRELIMINARY_CALCS;
     preliminary_calcs_defined=1;
 
-    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
+    setup_for_prior_likelihood();
 
     fprintf(fall,"%s","}\n\nvoid model_parameters::preliminary_calculations(void)"
       "\n{\n");
@@ -346,7 +357,7 @@ BETWEEN_PHASES_SECTION {
   {
     BEGIN DEFINE_BETWEEN_PHASES;
     between_phases_defined=1;
-    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
+    setup_for_prior_likelihood();
     fprintf(fall,"%s","}\n\nvoid model_parameters::between_phases_calculations(void)"
       "\n{\n");
     fprintf(fdat,"%s","  void between_phases_calculations(void);\n");
@@ -380,7 +391,7 @@ SLAVE_SECTION  {
     BEGIN IN_PVM_SLAVE_SECTION;
     pvmslaves_defined=1;
     fprintf(fdat,"  virtual imatrix get_slave_assignments(void);\n");
-    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
+    setup_for_prior_likelihood();
     fprintf(fall,"%s","}\n\nimatrix model_parameters::"
       "get_slave_assignments(void)\n{\n");
   }
@@ -867,6 +878,7 @@ DATA_SECTION  {
     }
     BEGIN IN_NUMBER_DEF2;
     fprintf(fdat,"%s","  param_number prior_function_value;\n");
+    fprintf(fdat,"%s","  param_number likelihood_function_value;\n");
     fprintf(fdat,"%s","  objective_function_value ");
 
                      }
@@ -1491,6 +1503,7 @@ DATA_SECTION  {
     fprintf(fall,".allocate(\"%s\");\n",yytext);
 
     fprintf(fall,"%s","  prior_function_value.allocate(\"prior_function_value\");\n");
+    fprintf(fall,"%s","  likelihood_function_value.allocate(\"likelihood_function_value\");\n");
 
     if (needs_initialization)
     {
@@ -2883,25 +2896,137 @@ DATA_SECTION  {
                             }
 
 
-<DEFINE_PRIORS>{prior_name}[ \t]*[~][ \t]*{prior_def} {    //
+<DEFINE_PRIORS>{prior_def}[ \t]*[~][ \t]*{prior_def} {    //for priors_section 
+    before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
+    strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
+    before_part(tmp_string2,tmp_string1,'(');   //function name
+    strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.   
+    
+    trim(tmp_string2); //function name
+		strcpy(prior_str,"prior_");
+    strcat(prior_str,tmp_string2); //define prior_** in priors.cpp file, should be neg.log.likelihood.form
+    trim(tmp_string); trim(tmp_string3);
+    
+    fprintf(fall,"  prior_function_value+=%s(%s,%s",prior_str,tmp_string,tmp_string3);
+                   }
+                   
+
+
+<DEFINE_LIKELIHOOD>{prior_def}[ \t]*[~][ \t]*{prior_def} { //for likelihood_section   
     before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
     strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
     before_part(tmp_string2,tmp_string1,'(');   //function name
     strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.
-    trim(tmp_string2);  //function name
-    trim(tmp_string); 
-		trim(tmp_string3);
-    fprintf(fall,"  prior_function_value-=%s(%s,%s;\n",tmp_string2,tmp_string,tmp_string3);
-													 }
+    
+    trim(tmp_string2); //function name
+    strcat(like_str,tmp_string2); //define like_** in priors.cpp file, should be neg.log.likelihood.form
+    trim(tmp_string); trim(tmp_string3);
+        
+    fprintf(fall,"  likelihood_function_value+=%s(%s,%s",like_str,tmp_string,tmp_string3);
+                   }
+
+
+<DEFINE_PROCEDURE>{prior_def}[ \t]*[~][ \t]*{prior_def} {    //for procedure_section 
+    before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
+    strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
+    before_part(tmp_string2,tmp_string1,'(');   //function name
+    strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.   
+    
+    trim(tmp_string2);  //function name, should be neg.log.likelihood.form
+    trim(tmp_string); trim(tmp_string3);
+    
+    fprintf(fall,"  %s +=%s(%s,%s",objective_function_name_string,tmp_string2,tmp_string,tmp_string3);
+                   }
+                   
                    
 
 
-.  {
-  fprintf(stderr,"%s %d %s","Error in line",nline,"while reading\n");
-  fprintf(stderr,"%s\n",yytext);
-  exit(1);
-     }
+; {
+  if(priors_defined && (!priors_done)){
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PRIORS;
+  }
+  if(likelihood_defined && (!likelihood_done)){
+   	if(priors_defined) priors_done=1; //turn off prior
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_LIKELIHOOD;
+  }
+  if(procedure_defined && (!procedure_done)){
+   	if(priors_defined) priors_done=1;
+   	if(likelihood_defined) likelihood_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PROCEDURE;
+  }
+  
+  //;             /* ignore semi colons */ ;
+  }
+  
 
+[ \t]+ {
+  if(priors_defined && (!priors_done)){
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PRIORS;
+  }
+  if(likelihood_defined && (!likelihood_done)){
+   	priors_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_LIKELIHOOD;
+  }
+  if(procedure_defined && (!procedure_done)){
+   	priors_done=1;likelihood_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PROCEDURE;
+  }
+  //[ \t]+        /* ignore blanks */  ;
+  }
+
+
+\n { 
+  if(priors_defined && (!priors_done)){
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PRIORS;
+  }
+  if(likelihood_defined && (!likelihood_done)){
+   	priors_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_LIKELIHOOD;
+  }
+  if(procedure_defined && (!procedure_done)){
+   	priors_done=1;likelihood_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PROCEDURE;
+  }
+  
+  nline++; 			
+  }
+  
+  
+  
+. {
+  if(priors_defined && (!priors_done)){
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PRIORS;
+  }
+  else if(likelihood_defined && (!likelihood_done)){
+   	priors_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_LIKELIHOOD;
+  }
+  else if(procedure_defined && (!procedure_done)){
+   	priors_done=1;likelihood_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PROCEDURE;
+  }
+  else{
+	fprintf(stderr,"%s %d %s","Error in line",nline,"while reading\n");
+	fprintf(stderr,"%s\n",yytext);
+	exit(1);
+  }
+  }
+     
+     
+   
+     
 PARAMETER_SECTION {
     if (!data_defined)
     {
@@ -2979,6 +3104,14 @@ PROCEDURE_SECTION {
         " PROCEDURE SECTION\n");
       exit(1);
     }
+    /*
+    if (likelihood_defined)
+    {
+      fprintf(stderr,"%s","Error -- PROCEDURE_SECTION must be defined before"
+        " LIKELIHOOD_SECTION \n");
+	    exit(1);
+    } 
+    */
     if (!objective_function_defined)
     {
       fprintf(stderr,"Error -- You must define an object of type objective"
@@ -2986,8 +3119,10 @@ PROCEDURE_SECTION {
         "and assign the approriate value to it in the\nPROCEDURE_SECTION");
       exit(1);
     }
-    BEGIN DEFINE_PROCS;
-
+        
+    //BEGIN DEFINE_PROCS;
+    BEGIN DEFINE_PROCEDURE;
+    
     procedure_defined=1;
     in_procedure_def=1;
     in_define_parameters=0;
@@ -3018,16 +3153,16 @@ PROCEDURE_SECTION {
 
 
    /* fprintf(fdat,"%s","};\n");*/
-    fprintf(fall,"%s","}\n\nvoid model_parameters::userfunction(void)"
-      "\n{\n");
+    fprintf(fall,"%s","}\n\nvoid model_parameters::userfunction(void)\n{\n");
+    fprintf(fall,"  %s%s",objective_function_name_string," =0.0;\n");
 
-    add_references_to_user_classes(fall);  
+    add_references_to_user_classes(fall); 
    
                   }
 
 
-PRIORS_SECTION {
-
+PRIORS_SECTION |
+PRIOR_SECTION {
   if (!data_defined)
   {
     fprintf(stderr,"Error -- DATA_SECTION must be defined before"
@@ -3040,25 +3175,100 @@ PRIORS_SECTION {
       " PRIORS_SECTION \n");
     exit(1);
   }
-  if (priors_defined)
+  if (likelihood_defined)
   {
-    fprintf(stderr,"%s","Error -- only one PRIORS_SECTION allowed\n");
-    exit(1);
-  }
+    fprintf(stderr,"%s","Error -- PRIORS_SECTION must be defined before"
+      " LIKELIHOOD_SECTION \n");
+	  exit(1);
+  } 
+  
   if (procedure_defined)
   {
     fprintf(stderr,"Error -- PRIOR_SECTION must be defined before"
       " PROCEDURE_SECTION \n");
     exit(1);
   }
+  if (priors_defined)
+  {
+    fprintf(stderr,"%s","Error -- only one PRIORS_SECTION allowed\n");
+    exit(1);
+  }  
   else
   {
-    BEGIN DEFINE_PRIORS;
+    BEGIN DEFINE_PRIORS; 
     priors_defined=1;
     fprintf(fall,"%s","}\n\nvoid model_parameters::priorsfunction(void)" "\n{\n");
   }
-
   }
+
+
+
+LIKELIHOODS_SECTION |
+LIKELIHOOD_SECTION {
+  if (!data_defined)
+  {
+    fprintf(stderr,"Error -- DATA_SECTION must be defined before"
+      " PRIORS_SECTION \n");
+    exit(1);
+  }
+  if (!params_defined)
+  {
+    fprintf(stderr,"Error -- PARAMETER_SECTION must be defined before"
+      " PRIORS_SECTION \n");
+    exit(1);
+  }
+  if (procedure_defined)
+  {
+    fprintf(stderr,"Error -- LIKELIHOOD_SECTION must be defined before"
+      " PROCEDURE_SECTION \n");
+    exit(1);
+  }
+  /*
+  if (in_aux_proc)
+  {
+    fprintf(stderr,"Error -- LIKELIHOOD_SECTION must be defined before"
+      " FUNCTION \n");
+    exit(1);
+  }
+  if (report_defined)
+  {
+    fprintf(stderr,"Error -- LIKELIHOOD_SECTION must be defined before"
+      " REPORT_SECTION \n");
+    exit(1);
+  } 
+  if (runtime_defined)
+  {
+    fprintf(stderr,"Error -- LIKELIHOOD_SECTION must be defined before"
+      " RUNTIME_SECTION \n");
+    exit(1);
+  }
+  if (final_defined)
+  {
+    fprintf(stderr,"Error -- LIKELIHOOD_SECTION must be defined before"
+      " FINAL_SECTION \n");
+    exit(1);
+  }  
+  if (between_phases_defined)
+  {
+    fprintf(stderr,"Error -- LIKELIHOOD_SECTION must be defined before"
+      " BETWEEN_PHASES_SECTION \n");
+    exit(1);
+  }  
+  */ 
+  if (likelihood_defined)
+  {
+    fprintf(stderr,"%s","Error -- only one LIKELIHOOD_SECTION allowed\n");
+    exit(1);
+  }  
+  else
+  {	
+    BEGIN DEFINE_LIKELIHOOD;
+    likelihood_defined=1;
+    //setup_for_prior_likelihood();
+    fprintf(fall,"%s","}\n\nvoid model_parameters::likelihoodfunction(void)" "\n{\n");
+  }
+  }
+
 
 
 FUNCTION[ ]*{name}[ ]*{name}\( {
@@ -3089,15 +3299,11 @@ FUNCTION[ ]*{name}[ ]*{name}\( {
     after_part(tmp_string4,tmp_string2,' ');  // get function name
     strip_leading_blanks(tmp_string1,tmp_string4); 
 
- 
-
-	if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
+    setup_for_prior_likelihood();
 
     fprintf(fall,"}\n\n%s ",tmp_string3);
 
-
     fprintf(fall,"model_parameters::%s%s\n{\n",tmp_string1,tmp_string5);
-
 
     fprintf(fdat," %s %s%s;\n",tmp_string3,tmp_string1,tmp_string5);
  
@@ -3123,7 +3329,7 @@ FUNCTION[ ]*{name} {
 
     after_partb(tmp_string1,yytext,' ');  // get function name
 
-    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
+    setup_for_prior_likelihood();
 
     fprintf(fall,"}\n\nvoid model_parameters::%s(void)\n{\n",tmp_string1);
     fprintf(fdat,"  void %s(void);\n",tmp_string1);
@@ -3132,7 +3338,7 @@ FUNCTION[ ]*{name} {
     
     in_aux_proc=1;
     BEGIN DEFINE_PROCS;
-   /*  BEGIN DEFINE_AUX_PROC; */
+    /*  BEGIN DEFINE_AUX_PROC; */
                               }
 
 FUNCTION_DECLARATION[ ]*{name}[ ]*{name}\(.*\) |
@@ -3224,6 +3430,9 @@ GLOBALS_SECTION {
       exit(1);
     }
     globals_section_defined=1;
+    
+    setup_for_prior_likelihood();
+    
     BEGIN IN_GLOBALS_SECTION;
     /*fglobals=fopen("xxglobal.tmp","w+");*/
     if (fglobals==NULL)
@@ -3246,6 +3455,9 @@ TOP_OF_MAIN_SECTION {
       exit(1);
     }
     top_of_main_defined=1;
+    
+    setup_for_prior_likelihood();
+    
     BEGIN IN_TOP_SECTION;
     ftopmain=fopen("xxtopm.tmp","w+");
     if (ftopmain==NULL)
@@ -3335,7 +3547,7 @@ TOP_OF_MAIN_SECTION {
 
 <<EOF>> {
 
-    if((priors_defined==1)&&(prior_done_once==0)) add_prior_to_objective();
+    setup_for_prior_likelihood();
 
     if (!data_defined)
     {
@@ -4062,13 +4274,41 @@ void marker(void){;}
   */
   void add_prior_to_objective(void)
   {  	
-	prior_done_once=1;
-	fprintf(fdat,"  virtual void priorsfunction(void);\n");  //add to .htp file, add by liu
-	fprintf(fall,"%s","  prior_function_value=0.0;\n");
+	  prior_done_once=1;priors_done=1;
+	  procedure_done=1;
+	  fprintf(fdat,"  virtual void priorsfunction(void);\n");  //add to .htp file
+	  fprintf(fall,"%s","  prior_function_value=0.0;\n");
     fprintf(fall,"%s","  priorsfunction();\n");
     fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");          
   }
 
+
+
+  /* add likelihood function value to userfunctions from procedure_section, 
+  */
+  void add_likelihood_to_objective(void)
+  {  	
+	  likelihood_done_once=1;likelihood_done=1;
+	  procedure_done=1;
+	  fprintf(fdat,"  virtual void likelihoodfunction(void);\n");  //add to .htp file
+	  fprintf(fall,"%s","  likelihood_function_value=0.0;\n");
+    fprintf(fall,"%s","  likelihoodfunction();\n");
+    fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=likelihood_function_value;\n");          
+  }
+
+
+
+  /* reset some control variable for prior and likelihood section, this will be repeated on multiple other sections, 
+  * so we organize them as a function 
+  */
+  void setup_for_prior_likelihood(void)
+  {  	
+	if(priors_defined) priors_done=1; 
+	if(likelihood_defined) likelihood_done=1;
+	if((procedure_defined)&&(!priors_defined)&&(!likelihood_defined)) procedure_done=1;
+	if((procedure_defined)&&(priors_defined)&&(!prior_done_once)) add_prior_to_objective();
+	if((procedure_defined)&&(likelihood_defined)&&(!likelihood_done_once)) add_likelihood_to_objective();
+  }
 
 
  /* strip off the leading and trailing spaces from an input string, call it by trim(istring),
@@ -4077,7 +4317,7 @@ void marker(void){;}
  */
  void trim(char * a)
  { 
-	size_t walker = strlen ( a );
+	  size_t walker = strlen ( a );
     //printf ( "Before: |%s|\n\n", a );
 
     /* Trim trailing spaces */

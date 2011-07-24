@@ -1,0 +1,11 @@
+OBJ0 = \
+alk.obj \
+baranov.obj \
+dbeta.obj \
+dbinom.obj \
+dgamma.obj \
+dlnorm.obj\
+dnorm.obj \
+dpois.obj \
+fill.obj \
+logistic.obj

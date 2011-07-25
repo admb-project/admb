@@ -26,7 +26,6 @@ dnorm.obj:
 dpois.obj:
 fill.obj:
 logistic.obj:
-priors.obj:
 
 {..\..\..\..\contrib\statslib}.cpp.obj:
 	$(CC) $(FLAGS) $<

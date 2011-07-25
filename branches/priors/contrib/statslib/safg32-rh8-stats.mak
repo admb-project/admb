@@ -1,7 +1,7 @@
 .PHONY: disk
 
 LIBNAME = libstats.a
-SRCDIR =  cotrib/statslib
+SRCDIR =  contrib/statslib
 .SUFFIXES: .obj .cpp
 vpath %.obj $(LIBPATH)
 

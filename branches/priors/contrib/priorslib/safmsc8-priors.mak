@@ -15,6 +15,7 @@ $(DISKDIR)\lib\$(LIBNAME): $(OBJ0)
 	lib /OUT:$@ /NOLOGO *.obj
 
 priors.obj:
+like.obj:
 
 {..\..\..\..\contrib\priorslib}.cpp.obj:
 	$(CC) $(FLAGS) $<

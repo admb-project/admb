@@ -2,7 +2,7 @@
 
 /**
 * 
-* \file priorsLib.cpp
+* \file priors.cpp
 * \brief Prior distribution functions
 * \ingroup STATLIB
 * \author Chris Grandin

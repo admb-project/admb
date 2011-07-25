@@ -1,2 +1,3 @@
 OBJ0 = \
-priors.obj
+priors.obj \
+like.obj

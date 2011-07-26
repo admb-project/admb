@@ -289,7 +289,7 @@ ADMB source version control URL is
 
 To download source files, use the command below
 
-$ svn checkout http://www.admb-project.org/svn/trunk admb-trunk
+$ svn checkout http://www.admb-project.org/svn/trunk admb-trunk-readonly
 
 If you would like to write access, please email <users@admb-project.org>
 to request an account.

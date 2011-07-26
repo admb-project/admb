@@ -609,6 +609,7 @@ INPUT                  = ./dox-share/mainpage.txt \
                          ../../src/tools99 \
                          ../../src/sparse/hs_sparse.cpp \
                          ../../contrib/statslib \
+                         ../../contrib/ecolib \
                          ../../contrib/qfc
 
 # This tag can be used to specify the character encoding of the source files

@@ -1,13 +1,14 @@
  /** 
-	* \file	qfc_sim.cpp
-	*	\date 7/18/2011
-	* \author Weihai Liu
-	* \ingroup QFC
-	*
+  * \file	qfc_sim.cpp
+  * \brief functions useful for simulation model in admb
+  * \date 7/28/2011
+  * \author Weihai Liu
+  * \ingroup QFC
+  *
   *  Following user defined functions are more useful for doing simulation model in admb, 
   *  the easy way to use these functions is put this cpp file in the same directory with your tpl file,
   *  and under the GLOBALS_SECTION , add a line on top as   #include "qfc_sim.cpp", 
-	*	 there is a testfunction.tpl file within this folder show how to use these functions.
+  *  there is a testfunction.tpl file within this folder show how to use these functions.
   *
   *  ================  brief list for usage  ============================\n
   *  1. return some values for the specific variable name in admb ouput file,
@@ -15,7 +16,7 @@
   *     use findValFromFile("test.std","linf",2), see findValFromFile()  \n
   *  2. doing random sampling with or without replacement, see sample()  \n 
   *  3. remove the duplicate values from a vector, see unique()  \n  
-  *  4. several random number generator, runif(), rgamma(), rdirichlet() \n
+  *  4. several random number generator, runif(), rnorm(), rgamma(), rdirichlet() \n
   *  5. round your matrix, vector, sclar to some specific decimals for display 
   *     in report_section, such as round(dmatrix,4), see round()  \n  
   *  6. convert vector to matrix by row or by column or its reverse form,  
@@ -27,22 +28,20 @@
   */
 
 
-#define __QFC_SIM__
-#if !defined(__QFC_EST__)  //only include the following header file and constants once
-  #include <math.h>
-  #include <admodel.h>
-  #include <df1b2fun.h>
-  #include <adrndeff.h>
-
-  // define constant variable
-  const double EPS = 1.e-30;          //tiny number to avoid 0 in log
-
-#endif
+  #define __QFC_SIM__
+  #if !defined(__QFC_EST__)  //only include the following header file and constants once
+    #include <math.h>
+    #include <admodel.h>
+    #include <df1b2fun.h>
+    #include <adrndeff.h>
+    // define constant variable
+    const double EPS = 1.e-30;          //tiny number to avoid 0 in log
+  #endif
 
 
   /** get how many rows for one specific variable(varName) in admb output file(filename)
    * \ingroup QFC
-	 * \param filename : search for admb output file name
+   * \param filename : search for admb output file name
    * \param varName : variable name being searched for
    * \return  return 1 for unique name or  many rows for same name , return 0 for not found
    */
@@ -74,7 +73,7 @@
 
   /** find the number of values(numVals) for one specific variable(varName) from an admb output file
    * \ingroup QFC
-	 * \param filename : search for admb output file name
+   * \param filename : search for admb output file name
    * \param varName : variable name being searched for
    * \param numVals : number of values following that specific variable names for return
    * \return  return the found number of values for that variable name, if having unique name, then return one row matrix
@@ -130,7 +129,7 @@
   /** find the unique values from input vector and only return the unique
    *  (by remove the duplicate) values in ascending order
    * \ingroup QFC
-	 * \param in : contain duplicate values in the input vector
+   * \param in : contain duplicate values in the input vector
    * \return return a vector comprised of unique values in ascending order and its index starting from 1 
    */
   dvector unique(const dvector& in)
@@ -170,7 +169,7 @@
   /** generate a random sample index(size is nSample) based on the input samples(source) 
    *  with or without replacement
    * \ingroup QFC
-	 * \param source : baseline samples as input
+   * \param source : baseline samples as input
    * \param nSample : random sample size for output
    * \param withReplace : if 0 for without replacement, nonzero  means with replacement
    * \param rnd :  admb build in random number generator
@@ -210,7 +209,7 @@
 
   /** convert the matrix as a vector eithter by row=1(default) or by column=0,
    * \ingroup QFC
-	 * \param input : the matrix being converted, can also be ragged matrix 
+   * \param input : the matrix being converted, can also be ragged matrix 
    * \param byrow : default as by row, use 1, anynumber other than 1 as by column
    * \return return a vector which index starting from 1 
    */
@@ -233,8 +232,8 @@
 
   /** convert the matrix as a vector eithter by row=1(default) or by column=0,
    * overloading function
-	 * \ingroup QFC
-	 * \param input : the matrix being converted, can also be ragged matrix 
+   * \ingroup QFC
+   * \param input : the matrix being converted, can also be ragged matrix 
    * \param byrow : default as by row, use 1, anynumber other than 1 as by column
    * \return return a vector which index starting from 1 
    */
@@ -256,9 +255,9 @@
   }
 
   /** convert the matrix as a vector eithter by row=1(default) or by column=0,
-	 * overloading function 
+   * overloading function 
    * \ingroup QFC
-	 * \param input : the matrix being converted, can also be ragged matrix 
+   * \param input : the matrix being converted, can also be ragged matrix 
    * \param byrow : default as by row, use 1, anynumber other than 1 as by column
    * \return return a vector which index starting from 1 
    */
@@ -285,7 +284,7 @@
 
   /** convert the Vector as a Matrix eithter by row=1(default) or by column=0,
    * \ingroup QFC
-	 * \param input : long vector/array being converted
+   * \param input : long vector/array being converted
    * \param nrow : the number of rows for output matrix 
    * \param ncol : the number of columns for output matrix 
    * \param byrow : default as by row, use 1, which fill the each row from top to bottom 
@@ -315,8 +314,8 @@
 
   /** convert the Vector as a Matrix eithter by row=1(default) or by column=0,
    * overloading function
-	 * \ingroup QFC
-	 * \param input : long vector/array being converted
+   * \ingroup QFC
+   * \param input : long vector/array being converted
    * \param nrow : the number of rows for output matrix 
    * \param ncol : the number of columns for output matrix 
    * \param byrow : default as by row, use 1, which fill the each row from top to bottom 
@@ -346,8 +345,8 @@
 
   /** convert the Vector as a Matrix eithter by row=1(default) or by column=0,
    * overloading function
-	 * \ingroup QFC
-	 * \param input : long vector/array being converted
+   * \ingroup QFC
+   * \param input : long vector/array being converted
    * \param nrow : the number of rows for output matrix 
    * \param ncol : the number of columns for output matrix 
    * \param byrow : default as by row, use 1, which fill the each row from top to bottom 
@@ -382,7 +381,7 @@
   /** rounding values as specified digits for scalar, vector, matrix, easy for display in report_section,
    * if input is variable type such as dvar_, use value(r) as input instead
    * \ingroup QFC
-	 * \param r : input values either for sclar, vector or matrix
+   * \param r : input values either for sclar, vector or matrix
    * \return return the same type and size as input with specified number of decimals 
    */
   double round(double r) {
@@ -391,9 +390,9 @@
 
   /** rounding values as specified digits for scalar, vector, matrix, easy for display in report_section,
    * if input is variable type such as dvar_, use value(r) as input instead,
-	 * overloading function
+   * overloading function
    * \ingroup QFC
-	 * \param r : input values either for sclar, vector or matrix
+   * \param r : input values either for sclar, vector or matrix
    * \param places : the number of decimals 
    * \return return the same type and size as input with specified number of decimals 
    */
@@ -404,13 +403,13 @@
 
   /** rounding values as specified digits for scalar, vector, matrix, easy for display in report_section,
    * if input is variable type such as dvar_, use value(r) as input instead,
-	 * overloading function
+   * overloading function
    * \ingroup QFC
-	 * \param r : input values either for sclar, vector or matrix
+   * \param r : input values either for sclar, vector or matrix
    * \param places : the number of decimals 
    * \return return the same type and size as input with specified number of decimals 
    */  
-	dvector round(const dvector & r, unsigned int places) {
+  dvector round(const dvector & r, unsigned int places) {
     dvector out(r.indexmin(),r.indexmax());
     for(int i=r.indexmin();i<=r.indexmax();i++)
       out(i)=round(r(i),places);
@@ -419,13 +418,13 @@
 
   /** rounding values as specified digits for scalar, vector, matrix, easy for display in report_section,
    * if input is variable type such as dvar_, use value(r) as input instead,
-	 * overloading function
+   * overloading function
    * \ingroup QFC
-	 * \param r : input values either for sclar, vector or matrix
+   * \param r : input values either for sclar, vector or matrix
    * \param places : the number of decimals 
    * \return return the same type and size as input with specified number of decimals 
    */
-	dmatrix round(const dmatrix & r, unsigned int places) {
+  dmatrix round(const dmatrix & r, unsigned int places) {
     dmatrix out(r.indexmin(),r.indexmax(),r.colmin(),r.colmax());
     for(int i=r.indexmin();i<=r.indexmax();i++) //row index
       out(i)=round(r(i),places); //call vector version
@@ -437,7 +436,7 @@
 
   /** determine if two double values are equal within some precision
    * \ingroup QFC
-	 * \param nVal1 : double value used for comparison
+   * \param nVal1 : double value used for comparison
    * \param nVal2 : another double value used for comparison
    * \param nPrecision : the number of decimals 
    * \return return true/false for two double values compare based on some specific number of decimals 
@@ -457,7 +456,7 @@
 
   /** generate random uniform from (low,upper)
    * \ingroup QFC
-	 * \param low : low range 
+   * \param low : low range 
    * \param upper : high range
    * \param rnd :  admb build in random number generator 
    * \return return uniform random number within range (low, upper) 
@@ -468,13 +467,24 @@
   }
 
 
+  /** generate random normal number N(mu,sigma)
+   * \ingroup QFC
+   * \param mu : mean
+   * \param sigma : std. deviation
+   * \param rnd :  admb build in random number generator 
+   * \return return normal random number N(mu,sigma) 
+   */
+  double rnorm(double mu, double sigma, random_number_generator & rnd)
+  {      
+    return mu + randn(rnd)*sigma; 
+  }
 
 
 
   /** generate random gamma number, pseudo code see http://en.wikipedia.org/wiki/Gamma_distribution ,
    * Gamma(alpha, belta)=x^(alpha-1)*belta^alpha*exp(-belta*x)/gamma(alpha)
    * \ingroup QFC
-	 * \param alpha : shape parameter, >0  =1/CV^2
+   * \param alpha : shape parameter, >0  =1/CV^2
    * \param rnd :  admb build in random number generator 
    * \return return gamma random number 
    */
@@ -521,7 +531,7 @@
   /** generate random gamma number, 
    * mean is alpha/belta,  variance is alpha/(belta^2)
    * \ingroup QFC
-	 * \param alpha : shape parameter, >0  =1/CV^2
+   * \param alpha : shape parameter, >0  =1/CV^2
    * \param beta : rate =1/scale,inverse of the scale parameter, >0  =1/(mean*CV^2)
    * \param rnd :  admb build in random number generator 
    * \return return gamma random number 
@@ -536,7 +546,7 @@
 
   /** generate random dirichlet number
    * \ingroup QFC
-	 * \param shape : shape parameter
+   * \param shape : shape parameter
    * \param rnd :  admb build in random number generator 
    * \return return dirichlet random number 
    */

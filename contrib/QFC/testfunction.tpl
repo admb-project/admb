@@ -21,6 +21,7 @@ PRELIMINARY_CALCS_SECTION
     cout<<endl<<"runif = "<<runif(0.5,10.5,rnd)<<endl; //random number
     cout<<"rgamma = "<<round(rgamma(2.5,2.5,rnd),3)<<endl; //using round()
     cout<<"rdirichlet = "<<round(rdirichlet(p,rnd),2)<<endl;
+    cout<<"rnorm = "<<rnorm(3,1.2,rnd)<<endl;
   }
 
   cout<<endl<<"found all values for mu parameter from std file"<<endl;

@@ -871,10 +871,10 @@ inline df1b2variable operator + (const df1b2variable& x,double y)
 }
 
 df1b2variable operator - (const df1b2variable& x,const df1b2variable& y);
-//df1b2variable operator - (double x,const df1b2variable& y);
+df1b2variable operator - (double x,const df1b2variable& y);
 df1b2variable operator / (const df1b2variable& x,const df1b2variable& y);
 df1b2variable operator / (const df1b2variable& x,double y);
-//df1b2variable operator - (const df1b2variable& x,double y);
+df1b2variable operator - (const df1b2variable& x,double y);
 df1b2variable operator / (double x,const df1b2variable& y);
 
 df1b2variable lgamma2(const df1b2variable& _x);  // new log gamma using forward AD

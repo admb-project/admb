@@ -109,6 +109,8 @@ df1b2prd.obj \
 df1b2prc.obj \
 df1b2prb.obj \
 df1b2min.obj \
+df1b2min2.obj \
+df1b2min3.obj \
 \
 f1b2vc1.obj  \
 nvarcall.obj \

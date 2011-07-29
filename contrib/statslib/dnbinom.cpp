@@ -1,5 +1,6 @@
 #include <admodel.h>
 
+
 /**
 * 
 * \file dnbinom.cpp
@@ -59,42 +60,3 @@ dvariable dnbinom(const double& x,const prevariable& size, const prevariable& mu
 
 
 
-/** \brief A negative binomial likelihood for tagging data.
-* 
-* This is a special case of the negative binomial distribution used 
-* primarily in the analysis of tagging data.  The likelihood is only evaluated
-* in cases where the number of observations \f$x_i>0\f$.
-	\author Steven James Dean Martell
-	\date 2011-06-23
-	\param  x a data vector of number of observations
-	\param  lambda is the predicted number of observations
-	\param  tau is the overdispersion parameter
-	\param residual is a modified vector of standardized residuals
-	\return returns the negative loglikelihood of the normal distribution
-	\sa
-**/
-dvariable dnbinom(const dvector& x, const dvar_vector& lambda, const prevariable& tau, dvector& residual)
-{
-	//the observed counts are in x
-	//lambda is the predicted count
-	//tau is the overdispersion parameter
-	RETURN_ARRAYS_INCREMENT();
-	int i,imin,imax;
-	double o=1.e-30;
-	imin=x.indexmin();
-	imax=x.indexmax();
-	dvariable loglike=0.;
-	residual.initialize();
-
-	for(i = imin; i<=imax; i++)
-		if(x(i)>0){
-			dvariable p=tau/(tau+lambda(i));
-			loglike += gammln(tau+x(i)) - gammln(tau) -factln(x(i))
-								+tau*log(p) + x(i)*log(1.-p);
-			residual(i) =value((x(i)-lambda(i))
-						/sqrt(o+lambda(i)+square(lambda(i))/tau)) ;
-		}
-	//cout<<"OK in dnbinom"<<endl;
-	RETURN_ARRAYS_DECREMENT();
-	return(-loglike);
-}

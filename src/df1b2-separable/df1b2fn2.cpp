@@ -8,6 +8,9 @@
  * \file
  * Description not yet available.
  */
+#if !defined(__BORLANDC__) && !defined(_MSC_VER)
+#include <inttypes.h>
+#endif
 #include <df1b2fun.h>
 #include "admb_messages.h"
 

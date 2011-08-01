@@ -8,7 +8,7 @@
 \param x observed counts
 \param lambda is the predicted mean
 \param k is the overdispersion parameter, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
-\return negative log likelihood \f$ -( log(\Gamma(x+r))-log(\Gamma(r))-log(x!)+rlog(r)+xlog(\mu)-(r+x)log(r+\mu) )\f$
+\return negative log likelihood \f$ -( \ln(\Gamma(x+k))-\ln(\Gamma(k))-\ln(x!)+k\ln(k)+x\ln(\lambda)-(k+x)\ln(k+\lambda) )\f$
 **/
 df1b2variable dnbinom_eco(const dvector& x, const df1b2vector& lambda, const df1b2variable& k)
 {
@@ -33,7 +33,7 @@ df1b2variable dnbinom_eco(const dvector& x, const df1b2vector& lambda, const df1
 \param x observed counts
 \param lambda is the predicted mean
 \param k is the overdispersion parameter, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
-\return negative log likelihood \f$ -( log(\Gamma(x+r))-log(\Gamma(r))-log(x!)+rlog(r)+xlog(\mu)-(r+x)log(r+\mu) )\f$
+\return negative log likelihood \f$ -( \ln(\Gamma(x+k))-\ln(\Gamma(k))-\ln(x!)+k\ln(k)+x\ln(\lambda)-(k+x)\ln(k+\lambda) )\f$
 **/
 df1b2variable dnbinom_eco(const dvector& x, const df1b2vector& lambda, const df1b2vector& k)
 {
@@ -59,7 +59,7 @@ df1b2variable dnbinom_eco(const dvector& x, const df1b2vector& lambda, const df1
 \param x observed counts
 \param lambda is the predicted mean
 \param k is the overdispersion parameter, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
-\return negative log likelihood \f$ -( log(\Gamma(x+r))-log(\Gamma(r))-log(x!)+rlog(r)+xlog(\mu)-(r+x)log(r+\mu) )\f$
+\return negative log likelihood \f$ -( \ln(\Gamma(x+k))-\ln(\Gamma(k))-\ln(x!)+k\ln(k)+x\ln(\lambda)-(k+x)\ln(k+\lambda) )\f$
 **/
 
 dvariable dnbinom_eco(const dvector& x, const dvar_vector& lambda, const prevariable& k)
@@ -85,7 +85,7 @@ dvariable dnbinom_eco(const dvector& x, const dvar_vector& lambda, const prevari
 \param x observed counts
 \param lambda is the predicted mean
 \param k is the overdispersion parameter, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
-\return negative log likelihood \f$ -( log(\Gamma(x+r))-log(\Gamma(r))-log(x!)+rlog(r)+xlog(\mu)-(r+x)log(r+\mu) )\f$
+\return negative log likelihood \f$ -( \ln(\Gamma(x+k))-\ln(\Gamma(k))-\ln(x!)+k\ln(k)+x\ln(\lambda)-(k+x)\ln(k+\lambda) )\f$
 **/
 dvariable dnbinom_eco(const dvector& x, const dvar_vector& lambda, const dvar_vector& k)
 {

@@ -245,7 +245,7 @@ REPORT_SECTION
   report<< "R " << endl;
   report<< R << endl;
 
-GLOBAL_SECTION
+GLOBALS_SECTION
   #define _USE_MATH_DEFINES
   #include <math.h>
 

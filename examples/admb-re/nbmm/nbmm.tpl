@@ -121,6 +121,7 @@ TOP_OF_MAIN_SECTION
   gradient_structure::set_MAX_NVAR_OFFSET(50000);
 
 GLOBALS_SECTION
+  #ifdef _WIN32 
   #include <windows.h>
   #include <admodel.h>
   #include <float.h>
@@ -133,6 +134,7 @@ GLOBALS_SECTION
      controlword=control87(0,0);
      return TRUE;
    }
+  #endif
   #if defined(PRINT_DEBUG)
     #include <admodel.h>
     ofstream ofs("model.out");
@@ -140,4 +142,6 @@ GLOBALS_SECTION
   
 
 FINAL_SECTION
+  #ifdef _WIN32 
    control87(controlword,0xfffff);
+  #endif

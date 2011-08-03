@@ -1,11 +1,12 @@
-OBJ0 = \
+OBJECTS = \
 alk.obj \
 baranov.obj \
 dbeta.obj \
 dbinom.obj \
 dgamma.obj \
-dlnorm.obj\
-dnorm.obj \
 dpois.obj \
 fill.obj \
-logistic 
+logistic.obj
+
+#dnorm.obj \
+#dlnorm.obj\

@@ -1,4 +1,4 @@
-.PHONY: tpl2cpp tpl2rem docs test
+.PHONY: tpl2cpp tpl2rem docs test contrib
 
 all:
 	CC=@cc@ CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
@@ -53,8 +53,12 @@ dmg:
 test:
 	export ADMB_HOME=${PWD}/build/@target@/@target@; export PATH=${PWD}/build/@target@/@target@/bin:$(PATH); make --directory=test
 
+contrib:
+	CC=@cc@ CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ make --directory=contrib
+
 clean:
 	rm -rvf build/@target@
 	make --directory=src --file=@makefile@ clean
 	make --directory=test clean
 	make --directory=scripts/configure clean
+	LIBPATH=@libpath@ DISK=@disk@ make --directory=contrib clean

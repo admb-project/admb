@@ -1,6 +1,7 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h> 
+#include "ecolib.h"
 
 /*---------------------------------------------------------3rd variable is a scalar*/
 /*---------------------------------------------2nd variable is a scalar*/

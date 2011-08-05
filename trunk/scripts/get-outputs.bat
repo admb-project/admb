@@ -141,7 +141,3 @@
 @echo Example:admb-re:binomial.tpl
 @type examples\admb-re\weights\binomial.par
 @type examples\admb-re\weights\binomial.std
-
-@echo Example:admb-re:binomial_w2.tpl
-@type examples\admb-re\weights\binomial_w2.par
-@type examples\admb-re\weights\binomial_w2.std

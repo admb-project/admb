@@ -137,7 +137,3 @@ cat $1admb-re/union/union.std
 echo Example:admb-re:binomial.tpl
 cat $1admb-re/weights/binomial.par
 cat $1admb-re/weights/binomial.std
-
-echo Example:admb-re:binomial_w2.tpl
-cat $1admb-re/weights/binomial_w2.par
-cat $1admb-re/weights/binomial_w2.std

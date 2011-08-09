@@ -321,13 +321,16 @@ void ad_comm::allocate(void)
 
 #endif
   // strip off the .exe if it is there
-  int n=adprogram_name.size();
-  if (adprogram_name(n - 3) == '.' 
-      && adprogram_name(n - 2) == 'e' 
-      && adprogram_name(n - 1) == 'x' 
-      && adprogram_name(n) == 'e') 
+  if(n>4)
   {
-    n -= 4;
+    int n=adprogram_name.size();
+    if (adprogram_name(n - 3) == '.' 
+        && adprogram_name(n - 2) == 'e' 
+        && adprogram_name(n - 1) == 'x' 
+        && adprogram_name(n) == 'e') 
+    {
+      n -= 4;
+    }
   }
   adprogram_name=adprogram_name(1,n);
 

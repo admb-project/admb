@@ -24,13 +24,8 @@
   char tmp_string3[MAX_TMP_STRING];
   char tmp_string4[MAX_TMP_STRING];
   char tmp_string5[MAX_TMP_STRING];
-
-	char prior_str[MAX_TMP_STRING];
-	char like_str[MAX_TMP_STRING];
-
   char objective_function_name_string[MAX_TMP_STRING];
-  char reference_statements[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH
-];
+  char reference_statements[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
 
   char class_instances[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
   char outcommand[100];
@@ -67,6 +62,7 @@
   int procedure_done=0;
   int likelihood_done=0;
   int priors_done=0;
+  int prior_function_toggle=0;
 
   int objective_function_defined=0;
   int report_defined=0;
@@ -123,9 +119,13 @@
   int filename_size;
 %}
 
+filename \"[^\"]*\"
+filenamesingle \'[^\']*\'
+
 name [a-z_A-Z]+(->)?[a-z_A-Z0-9]*
 
-prior_def [ \t(a-z_A-Z]+(->)?[ \ta-z_A-Z0-9),.-]*
+prior_name [ \t(a-z_A-Z]+(->)?[ \ta-z_A-Z0-9),.-]*
+prior_def [ \t(a-z_A-Z0-9]+(->)?[ \ta-z_A-Z0-9),.-]*
 
 num_exp [a-z_A-Z0-9\+\-\*\/]+
 
@@ -133,9 +133,9 @@ index ([a-z_A-Z]+(->)?[a-z_A-Z0-9]*)|([a-z_A-Z0-9\+\-\*\/]+)
 
 float_num_exp [a-z_A-Z0-9\.\+\-\*]+
 
-%s DEFINE_DATA DEFINE_PARAMETERS DEFINE_PROCS DEFINE_PROCS2 DEFINE_PROCS3 IN_DATA_DEF IN_PARAM_DEF
+%s DEFINE_DATA DEFINE_PARAMETERS DEFINE_PROCS DEFINE_PROCS2 IN_DATA_DEF IN_PARAM_DEF
 %s IN_NUMBER_DEF IN_NUMBER_DEF2 IN_SPNUMBER_DEF IN_VECTOR_DEF IN_VECTOR_VECTOR_DEF 
-%s IN_SPVECTOR_DEF 
+%s IN_SPVECTOR_DEF IN_TABLE_DEF
 %s IN_MATRIX_DEF IN_SPMATRIX_DEF IN_THREE_ARRAY_DEF IN_SPTHREE_ARRAY_DEF
 %s IN_NAMED_NUMBER_DEF IN_NAMED_VECTOR_DEF IN_NAMED_MATRIX_DEF
 %s IN_NAMED_THREE_ARRAY_DEF IN_NAMED_FOUR_ARRAY_DEF DEFINE_AUX_PROC
@@ -675,6 +675,10 @@ DATA_SECTION  {
 <DEFINE_DATA>init_matrix {
 
     BEGIN IN_MATRIX_DEF;
+    fprintf(fdat,"%s","  data_matrix ");
+                     }
+<DEFINE_DATA>init_table {
+    BEGIN IN_TABLE_DEF;
     fprintf(fdat,"%s","  data_matrix ");
                      }
 
@@ -2074,6 +2078,7 @@ DATA_SECTION  {
     }
                             }
 
+
 <IN_MATRIX_DEF>{name}\({num_exp},{num_exp}\) {
 
     if (warn_unallocated) write_unallocated("matrix(ix,iy)");
@@ -2130,6 +2135,92 @@ DATA_SECTION  {
       fprintf(fall,"  #endif\n");
       needs_initialization=0;
       */
+    }
+    if (!params_defined)
+    {
+      BEGIN DEFINE_DATA;
+    }
+    else
+    {
+      BEGIN DEFINE_PARAMETERS;
+    }
+                            }
+
+<IN_TABLE_DEF>{name}\({filename}\) {
+
+    before_part(tmp_string,yytext,'(');  // get A in A("mat.tab")
+ 
+    fprintf(fdat,"%s",tmp_string);
+    fprintf(fdat,"%s",";\n");
+ 
+    fprintf(fall,"  %s",tmp_string);
+    fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",tmp_string);
+    after_part(tmp_string1,yytext,'\"');
+    fprintf(fall,"  dmatrix %s_tmp((adstring)%s;\n",tmp_string,tmp_string1);
+    fprintf(fall,"  %s = %s_tmp;\n",tmp_string,tmp_string);
+    if (needs_initialization)
+    {
+      needs_initialization=0;
+    }
+    if (!params_defined)
+    {
+      BEGIN DEFINE_DATA;
+    }
+    else
+    {
+      BEGIN DEFINE_PARAMETERS;
+    }
+                            }
+
+<IN_TABLE_DEF>{name}\({filenamesingle}\) {
+    fprintf(stderr,"%s %d %s","Error in line",nline,"while reading (use double instead of single quotes)\n");
+    exit(1);
+                            }
+
+<IN_TABLE_DEF>{name} {
+    fprintf(fdat,"%s",yytext);
+    fprintf(fdat,"%s",";\n");
+ 
+    fprintf(fall,"  %s",yytext);
+    fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",yytext);
+    fprintf(fall,"  adstring datname;\n");
+    fprintf(fall,"  if(option_match(argc,argv,\"-ind\") > -1){ \n");
+    fprintf(fall,"    datname = argv[option_match(argc,argv,\"-ind\") + 1];\n");
+    fprintf(fall,"  }else{\n");
+    fprintf(fall,"    datname = \"%s.dat\";\n",infile_root);
+    fprintf(fall,"  }\n");
+    fprintf(fall,"  dmatrix %s_tmp(datname);\n",yytext);
+    fprintf(fall,"  %s = %s_tmp;\n",yytext,yytext);
+
+    if (needs_initialization)
+    {
+      needs_initialization=0;
+    }
+    if (!params_defined)
+    {
+      BEGIN DEFINE_DATA;
+    }
+    else
+    {
+      BEGIN DEFINE_PARAMETERS;
+    }
+                            }
+
+
+<IN_TABLE_DEF>{name}\({name}\) {
+    before_part(tmp_string,yytext,'(');  // get A in A(str1)
+    fprintf(fdat,"%s",tmp_string);
+    fprintf(fdat,"%s",";\n");
+ 
+    fprintf(fall,"  %s",tmp_string);
+    fprintf(fall,".allocate(0,-1,0,-1,\"%s\");\n",tmp_string);
+
+    strict_after_part(tmp_string1, yytext,'(');
+    fprintf(fall,"  dmatrix %s_tmp((adstring)%s;\n",tmp_string,tmp_string1);
+    fprintf(fall,"  %s = %s_tmp;\n",tmp_string,tmp_string);
+    if (needs_initialization)
+    {
+      needs_initialization=0;
     }
     if (!params_defined)
     {
@@ -2795,10 +2886,11 @@ DATA_SECTION  {
     strcpy(tmp_string,yytext);  // get x in x(1,4)
     fprintf(fdat,"%s",tmp_string);
     fprintf(fall,"  %s",tmp_string);
-    fprintf(fall,"%s",".allocate");
-    after_part(tmp_string1,yytext,'(');  // get x in x(1,4)
-    before_part(tmp_string2,tmp_string1,')');
-    fprintf(fall,"%s)",tmp_string2);
+    fprintf(fall,"%s",".allocate()");
+    //fprintf(fall,"%s",".allocate");
+    //after_part(tmp_string1,yytext,'(');  // get x in x(1,4)
+    //before_part(tmp_string2,tmp_string1,')');
+    //fprintf(fall,"%s)",tmp_string2);
     fprintf(fdat,"%s",";\n");
     fprintf(fall,"%s",";\n");
     if (!params_defined)
@@ -2896,37 +2988,54 @@ DATA_SECTION  {
                             }
 
 
-<DEFINE_PRIORS>{prior_def}[ \t]*[~][ \t]*{prior_def} {    //for priors_section 
+<DEFINE_PRIORS>{prior_name}[ \t]*[~][ \t]*{prior_def} {    //for priors_section 
     before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
     strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
     before_part(tmp_string2,tmp_string1,'(');   //function name
     strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.   
-    
+        
     trim(tmp_string2); //function name
-		strcpy(prior_str,"prior_");
-    strcat(prior_str,tmp_string2); //define prior_** in priors.cpp file, should be neg.log.likelihood.form
+    //strcpy(tmp_string4,"prior_");
+    //strcat(tmp_string4,tmp_string2); //define prior_** in priors.cpp file, should be neg.log.likelihood.form
     trim(tmp_string); trim(tmp_string3);
     
-    fprintf(fall,"  prior_function_value+=%s(%s,%s",prior_str,tmp_string,tmp_string3);
+    if(prior_function_toggle==0) 
+    { //left side of ~ go to first argument in function argu. list
+      fprintf(fall,"  prior_function_value+=%s(%s,%s",tmp_string2,tmp_string,tmp_string3);
+    }
+    else
+    { //left side of ~ go to the last argument in function argu. list
+      before_partb(tmp_string4,tmp_string3,')'); 
+      fprintf(fall,"  prior_function_value+=%s(%s,%s)",tmp_string2,tmp_string4,tmp_string);
+    }
+    
                    }
                    
 
 
-<DEFINE_LIKELIHOOD>{prior_def}[ \t]*[~][ \t]*{prior_def} { //for likelihood_section   
+<DEFINE_LIKELIHOOD>{prior_name}[ \t]*[~][ \t]*{prior_def} { //for likelihood_section   
     before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
     strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
     before_part(tmp_string2,tmp_string1,'(');   //function name
     strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.
     
     trim(tmp_string2); //function name
-    strcat(like_str,tmp_string2); //define like_** in priors.cpp file, should be neg.log.likelihood.form
+    //strcat(like_str,tmp_string2); //define like_** in priors.cpp file, should be neg.log.likelihood.form
     trim(tmp_string); trim(tmp_string3);
-        
-    fprintf(fall,"  likelihood_function_value+=%s(%s,%s",like_str,tmp_string,tmp_string3);
+    
+    if(prior_function_toggle==0) 
+    { //left side of ~ go to first argument in function argu. list
+      fprintf(fall,"  likelihood_function_value+=%s(%s,%s",tmp_string2,tmp_string,tmp_string3);
+    }
+    else
+    { //left side of ~ go to the last argument in function argu. list
+      before_partb(tmp_string4,tmp_string3,')'); 
+      fprintf(fall,"  likelihood_function_value+=%s(%s,%s)",tmp_string2,tmp_string4,tmp_string);
+    }
                    }
 
 
-<DEFINE_PROCEDURE>{prior_def}[ \t]*[~][ \t]*{prior_def} {    //for procedure_section 
+<DEFINE_PROCEDURE>{prior_name}[ \t]*[~][ \t]*{prior_def} {    //for procedure_section 
     before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
     strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
     before_part(tmp_string2,tmp_string1,'(');   //function name
@@ -2934,8 +3043,15 @@ DATA_SECTION  {
     
     trim(tmp_string2);  //function name, should be neg.log.likelihood.form
     trim(tmp_string); trim(tmp_string3);
-    
-    fprintf(fall,"  %s +=%s(%s,%s",objective_function_name_string,tmp_string2,tmp_string,tmp_string3);
+    if(prior_function_toggle==0) 
+    { //left side of ~ go to first argument in function argu. list
+      fprintf(fall,"  %s +=%s(%s,%s",objective_function_name_string,tmp_string2,tmp_string,tmp_string3);
+    }
+    else
+    { //left side of ~ go to the last argument in function argu. list
+      before_partb(tmp_string4,tmp_string3,')'); 
+      fprintf(fall,"  %s +=%s(%s,%s)",objective_function_name_string,tmp_string2,tmp_string4,tmp_string);
+    }
                    }
                    
                    

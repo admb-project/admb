@@ -99,7 +99,7 @@ void fixed_smartlist2::rewind(void)
   eof_flag=0;
   if (written_flag)
   {
-    lseek(fp,0,SEEK_SET);
+    lseek(fp,0L,SEEK_SET);
     // get the record size
     ::read(fp,&nbytes,sizeof(int));
     if (nbytes>bufsize)
@@ -115,7 +115,7 @@ void fixed_smartlist2::rewind(void)
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
-    lseek(fp,sizeof(off_t),SEEK_CUR);
+    lseek(fp,long(sizeof(off_t)),SEEK_CUR);
   }
 }
 
@@ -130,7 +130,7 @@ void fixed_smartlist2::initialize(void)
   bptr=buffer;
   //int nbytes=0;
   written_flag=0;
-  lseek(fp,0,SEEK_SET);
+  lseek(fp,0L,SEEK_SET);
   set_forward();
 }
 
@@ -292,7 +292,7 @@ void fixed_smartlist2::read_buffer(void)
   {
     if (direction ==-1) // we are going backwards
     {
-      off_t ipos=lseek(fp,0,SEEK_CUR);
+      off_t ipos=lseek(fp,0L,SEEK_CUR);
       if (ipos ==0)
       {
         eof_flag=-1;
@@ -300,7 +300,7 @@ void fixed_smartlist2::read_buffer(void)
       }
       // offset of the begining of the record is at the end
       // of the record
-      lseek(fp,-sizeof(off_t),SEEK_CUR);
+      lseek(fp,long(-sizeof(off_t)),SEEK_CUR);
       read(fp,&pos,sizeof(off_t));
       // back up to the beginning of the record (plus record size) 
       lseek(fp,pos,SEEK_SET);
@@ -346,7 +346,7 @@ void fixed_smartlist2::read_buffer(void)
     else  // we are going forward  
     {
       // skip over file postion entry in file
-      lseek(fp,sizeof(off_t),SEEK_CUR);
+      lseek(fp,long(sizeof(off_t)),SEEK_CUR);
     }
   }
 }

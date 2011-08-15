@@ -2,22 +2,23 @@
 
 %{
   /**
-   * $Id: tpl2cpp.lex 956 2011-01-16 21:17:44Z jsibert $
+   *
+   * $Id: tpl2cpp.lex 945 2011-01-12 23:03:57Z johnoel $
    *
    * Author: David Fournier
    * Copyright (c) 2008-2011 Regents of the University of California
-   *
    */
 
   #define   MAX_TMP_STRING  501
   #define   MAX_USER_CLASSES  501
   #define   MAX_USER_CLASSNAME_LENGTH  251
+  #define   MAX_PRIOR_CHECK  1000
+  #define   MAX_LIKE_CHECK  2000
   #include <stdlib.h>
   #include <string.h>
   #include <stdio.h>
   #if defined(_WIN32)
-  #include <io.h>    /* fopen   */
-  #include <ctype.h> /* isalnum */
+  #include <io.h>  //fopen
   #endif
   char tmp_string[MAX_TMP_STRING];
   char tmp_string1[MAX_TMP_STRING];
@@ -25,7 +26,9 @@
   char tmp_string3[MAX_TMP_STRING];
   char tmp_string4[MAX_TMP_STRING];
   char tmp_string5[MAX_TMP_STRING];
+  char objective_function_name_string[MAX_TMP_STRING];
   char reference_statements[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
+
   char class_instances[MAX_USER_CLASSES][MAX_USER_CLASSNAME_LENGTH];
   char outcommand[100];
   char infile_name[1000];
@@ -33,6 +36,8 @@
   char name_string[100];
   char outfile_name[1000];
   char headerfile_name[100];
+  
+
   int  num_spargs=0;
   int  pvmslaves_defined=0;
   int  splus_debug_flag=0;
@@ -44,13 +49,29 @@
   int makegaussdll=0;
   int no_userclass=0;
   int bound_flag=1;
-  int  num_user_classes=0;
+  int num_user_classes=0;
   int final_defined=0;
   int top_of_main_defined=0;
   int globals_section_defined=0;
   int in_define_parameters=0;
   int talk_to_splus=0;
   int initialization_defined=0;
+
+  int priors_defined=0;
+  int prior_done_once=0;
+  int likelihood_defined=0;
+  int likelihood_done_once=0;
+  int procedure_done=0;
+  int likelihood_done=0;
+  int priors_done=0;
+  int prior_function_toggle=0;
+  char prior_checker[MAX_PRIOR_CHECK][100];//container hold all parameters which being used for check the prior
+  int prior_counter=0; //index for prior_checker
+  int prior_found=0;
+  char likelihood_checker[MAX_LIKE_CHECK][100];
+  int likelihood_counter=0; //index for likelihood_checker
+  int likelihood_found=0;
+
   int objective_function_defined=0;
   int report_defined=0;
   int preliminary_calcs_defined=0;
@@ -90,18 +111,24 @@
   char * after_partb(char * d, char * s, char c);
   char * strip_leading_blanks(char * d, char * s);
   char * strip_leading_blanks_and_tabs(char * d, char * s);
+
   int count_paren(int num_paren,char * yytext);
   void add_references_to_user_classes(FILE * fall);  
   void call_destructors_for_user_classes(FILE * fall); 
   void marker(void);
   void write_unallocated(const char *);
+  
+  void add_prior_to_objective(void);
+  void add_likelihood_to_objective(void);
+  void setup_for_prior_likelihood(void);
+  void trim(char * a); 
+  int prior_check(char * parameter, char * prior);  
 
   int filename_index;
   int filename_size;
 %}
 
 filename \"[^\"]*\"
-
 filenamesingle \'[^\']*\'
 
 name [a-z_A-Z]+(->)?[a-z_A-Z0-9]*
@@ -112,10 +139,13 @@ index ([a-z_A-Z]+(->)?[a-z_A-Z0-9]*)|([a-z_A-Z0-9\+\-\*\/]+)
 
 float_num_exp [a-z_A-Z0-9\.\+\-\*]+
 
-%s DEFINE_DATA DEFINE_PARAMETERS DEFINE_PROCS IN_DATA_DEF IN_PARAM_DEF
-%s IN_NUMBER_DEF IN_SPNUMBER_DEF IN_VECTOR_DEF IN_VECTOR_VECTOR_DEF 
-%s IN_SPVECTOR_DEF 
-%s IN_MATRIX_DEF IN_TABLE_DEF IN_SPMATRIX_DEF IN_THREE_ARRAY_DEF IN_SPTHREE_ARRAY_DEF
+prior_name [ \t(a-z_A-Z]+(->)?[ \ta-z_A-Z0-9(),.-]*
+prior_def [ \t(a-z_A-Z0-9-]+(->)?[ \ta-z_A-Z0-9),.-]*
+
+%s DEFINE_DATA DEFINE_PARAMETERS DEFINE_PROCS DEFINE_PROCS2 IN_DATA_DEF IN_PARAM_DEF
+%s IN_NUMBER_DEF IN_NUMBER_DEF2 IN_SPNUMBER_DEF IN_VECTOR_DEF IN_VECTOR_VECTOR_DEF 
+%s IN_SPVECTOR_DEF IN_TABLE_DEF
+%s IN_MATRIX_DEF IN_SPMATRIX_DEF IN_THREE_ARRAY_DEF IN_SPTHREE_ARRAY_DEF
 %s IN_NAMED_NUMBER_DEF IN_NAMED_VECTOR_DEF IN_NAMED_MATRIX_DEF
 %s IN_NAMED_THREE_ARRAY_DEF IN_NAMED_FOUR_ARRAY_DEF DEFINE_AUX_PROC
 %s INIT_BOUNDED_NUMBER_DEF INIT_BOUNDED_VECTOR_DEF IN_BOUNDED_MATRIX_DEF
@@ -125,12 +155,12 @@ float_num_exp [a-z_A-Z0-9\.\+\-\*]+
 %s DEFINE_BETWEEN_PHASES IN_FIVE_ARRAY_DEF IN_SIX_ARRAY_DEF IN_SEVEN_ARRAY_DEF 
 %s IN_NAMED_FIVE_ARRAY_DEF IN_NAMED_SIX_ARRAY_DEF IN_NAMED_SEVEN_ARRAY_DEF 
 %s IN_SPBOUNDED_NUMBER_DEF INIT_SPBOUNDED_VECTOR_DEF IN_PVM_SLAVE_SECTION
+%s DEFINE_PRIORS DEFINE_LIKELIHOOD DEFINE_PROCEDURE
+ 
 %%
-;             /* ignore semi colons */ ;
-[ \t]+        /* ignore blanks */  ;
+
 \/\/.*$         /* ignore trailing comments */ ;
 
-\n    { nline++; }
 \r    { ; }
 
 INITIALIZATION_SECTION  {
@@ -187,6 +217,9 @@ REPORT_SECTION  {
   {
     BEGIN DEFINE_PROCS;
     report_defined=1;
+
+    setup_for_prior_likelihood();
+
     fprintf(fall,"%s","}\n\nvoid model_parameters::report()"
       "\n{\n");
     fprintf(fall," adstring ad_tmp=initial_params::get_reportfile_name();\n");
@@ -222,6 +255,8 @@ FINAL_SECTION  {
   {
     BEGIN DEFINE_PROCS;
     final_defined=1;
+    setup_for_prior_likelihood();
+    
     fprintf(fall,"%s","}\n\nvoid model_parameters::final_calcs()"
       "\n{\n");
   }
@@ -234,7 +269,7 @@ RUNTIME_SECTION  {
   if (!data_defined)
   {
     fprintf(stderr,"Error -- DATA_SECTION must be defined before"
-      " REPORT_SECTION \n");
+      " RUNTIME_SECTION \n");
     exit(1);
   }
   if (runtime_defined)
@@ -252,6 +287,7 @@ RUNTIME_SECTION  {
   {
     BEGIN DEFINE_RUNTIME;
     runtime_defined=1;
+    setup_for_prior_likelihood();
     fprintf(fall,"%s","}\n\nvoid model_parameters::set_runtime(void)"
       "\n{\n");
   }
@@ -308,6 +344,9 @@ PRELIMINARY_CALCS_SECTION  {
   {
     BEGIN DEFINE_PRELIMINARY_CALCS;
     preliminary_calcs_defined=1;
+
+    setup_for_prior_likelihood();
+
     fprintf(fall,"%s","}\n\nvoid model_parameters::preliminary_calculations(void)"
       "\n{\n");
     fprintf(fall,"%s","\n  admaster_slave_variable_interface(*this);\n");
@@ -327,6 +366,7 @@ BETWEEN_PHASES_SECTION {
   {
     BEGIN DEFINE_BETWEEN_PHASES;
     between_phases_defined=1;
+    setup_for_prior_likelihood();
     fprintf(fall,"%s","}\n\nvoid model_parameters::between_phases_calculations(void)"
       "\n{\n");
     fprintf(fdat,"%s","  void between_phases_calculations(void);\n");
@@ -360,6 +400,7 @@ SLAVE_SECTION  {
     BEGIN IN_PVM_SLAVE_SECTION;
     pvmslaves_defined=1;
     fprintf(fdat,"  virtual imatrix get_slave_assignments(void);\n");
+    setup_for_prior_likelihood();
     fprintf(fall,"%s","}\n\nimatrix model_parameters::"
       "get_slave_assignments(void)\n{\n");
   }
@@ -538,7 +579,7 @@ DATA_SECTION  {
                      }
 
 <DEFINE_DATA>init_number {
-
+    likelihood_found=1;
     BEGIN IN_NUMBER_DEF;
     fprintf(fdat,"%s","  data_number ");
                      }
@@ -556,7 +597,7 @@ DATA_SECTION  {
                      }
 
 <DEFINE_DATA>init_int {
-
+    likelihood_found=1;
     BEGIN IN_NUMBER_DEF;
     fprintf(fdat,"%s","  data_int ");
                      }
@@ -595,13 +636,13 @@ DATA_SECTION  {
                      }
 
 <DEFINE_DATA>init_vector {
-
+    likelihood_found=1;
     BEGIN IN_VECTOR_DEF;
     fprintf(fdat,"%s","  data_vector ");
                      }
 
 <DEFINE_DATA>init_ivector {
-
+    likelihood_found=1;
     BEGIN IN_VECTOR_DEF;
     fprintf(fdat,"%s","  data_ivector ");
                      }
@@ -625,7 +666,7 @@ DATA_SECTION  {
                      }
 
 <DEFINE_DATA>init_imatrix {
-
+    likelihood_found=1;
     //spnumber_flag=1;
     BEGIN IN_MATRIX_DEF;
     fprintf(fdat,"%s","  data_imatrix ");
@@ -641,113 +682,113 @@ DATA_SECTION  {
                      }
 
 <DEFINE_DATA>init_matrix {
-
+    likelihood_found=1;
     BEGIN IN_MATRIX_DEF;
     fprintf(fdat,"%s","  data_matrix ");
                      }
-
 <DEFINE_DATA>init_table {
+    likelihood_found=1;
     BEGIN IN_TABLE_DEF;
     fprintf(fdat,"%s","  data_matrix ");
                      }
 
 <DEFINE_DATA>init_3darray {
-
+    likelihood_found=1;
     BEGIN IN_THREE_ARRAY_DEF;
     fprintf(fdat,"%s","  data_3array ");
                      }
 
 
 <DEFINE_DATA>init_4darray {
-
+    likelihood_found=1;
     BEGIN IN_FOUR_ARRAY_DEF;
     fprintf(fdat,"%s","  data_4array ");
                      }
 
 <DEFINE_DATA>init_5darray {
-
+    likelihood_found=1;
     BEGIN IN_FIVE_ARRAY_DEF;
     fprintf(fdat,"%s","  data_5array ");
                      }
 
 
 <DEFINE_DATA>init_6darray {
-
+    likelihood_found=1;
     BEGIN IN_SIX_ARRAY_DEF;
     fprintf(fdat,"%s","  data_6array ");
                      }
 
 
 <DEFINE_DATA>init_7darray {
-
+    likelihood_found=1;
     BEGIN IN_SEVEN_ARRAY_DEF;
     fprintf(fdat,"%s","  data_4array ");
                      }
 
 
 <DEFINE_DATA>number {
-
+    likelihood_found=1;
     BEGIN IN_NAMED_NUMBER_DEF;
     fprintf(fdat,"%s","  double ");
 
                      }
 
 <DEFINE_DATA>int {
-
+    likelihood_found=1;
     BEGIN IN_NAMED_NUMBER_DEF;
     fprintf(fdat,"%s","  int ");
                      }
 
 <DEFINE_DATA>vector {
-
+    likelihood_found=1;
     BEGIN IN_NAMED_VECTOR_DEF;
     fprintf(fdat,"%s","  dvector ");
                      }
 
 <DEFINE_DATA>ivector {
-
+    likelihood_found=1;
     BEGIN IN_NAMED_VECTOR_DEF;
     fprintf(fdat,"%s","  ivector ");
                      }
 
 <DEFINE_DATA>matrix {
-
+    likelihood_found=1;
     BEGIN IN_NAMED_MATRIX_DEF;
     fprintf(fdat,"%s","  dmatrix ");
                      }
 
 <DEFINE_DATA>imatrix {
-
+    likelihood_found=1;
     BEGIN IN_NAMED_MATRIX_DEF;
     fprintf(fdat,"%s","  imatrix ");
                      }
 
 <DEFINE_DATA>3darray {
-
+    likelihood_found=1;
     BEGIN IN_NAMED_THREE_ARRAY_DEF;
     fprintf(fdat,"%s","  d3_array ");
                      }
 
 <DEFINE_DATA>4darray {
-
+    likelihood_found=1;
     BEGIN IN_NAMED_FOUR_ARRAY_DEF;
     fprintf(fdat,"%s","  d4_array ");
                      }
 
 <DEFINE_DATA>5darray {
-
+    likelihood_found=1;
     BEGIN IN_NAMED_FIVE_ARRAY_DEF;
     fprintf(fdat,"%s","  d5_array ");
                      }
 
 <DEFINE_DATA>6darray {
-
+    likelihood_found=1;
     BEGIN IN_NAMED_FIVE_ARRAY_DEF;
     fprintf(fdat,"%s","  d6_array ");
                      }
 
 <DEFINE_DATA>7darray {
-
+    likelihood_found=1;
     BEGIN IN_NAMED_FIVE_ARRAY_DEF;
     fprintf(fdat,"%s","  d7_array ");
                      }
@@ -849,8 +890,11 @@ DATA_SECTION  {
                      " may be declared\n");
       exit(1);
     }
-    BEGIN IN_NUMBER_DEF;
+    BEGIN IN_NUMBER_DEF2;
+    fprintf(fdat,"%s","  param_number prior_function_value;\n");
+    fprintf(fdat,"%s","  param_number likelihood_function_value;\n");
     fprintf(fdat,"%s","  objective_function_value ");
+
                      }
 
 <DEFINE_PARAMETERS>sdreport_number {
@@ -867,7 +911,7 @@ DATA_SECTION  {
                      }
 
 <DEFINE_PARAMETERS>init_int {
-
+	  prior_found=1;
     BEGIN IN_NUMBER_DEF;
     fprintf(fdat,"%s","  param_init_int ");
                      }
@@ -1122,30 +1166,30 @@ DATA_SECTION  {
                      }
 
 <DEFINE_PARAMETERS>init_number {
-
+	  prior_found=1;
     BEGIN IN_NUMBER_DEF;
     fprintf(fdat,"%s","  param_init_number ");
                      }
 
 <DEFINE_PARAMETERS>init_number_vector {
-
+	prior_found=1;
     BEGIN IN_VECTOR_DEF;
     fprintf(fdat,"%s","  param_init_number_vector ");
                      }
 
 <DEFINE_PARAMETERS>init_bounded_number {
-
+	prior_found=1;
     BEGIN INIT_BOUNDED_NUMBER_DEF;
     fprintf(fdat,"%s","  param_init_bounded_number ");
                      }
 
 <DEFINE_PARAMETERS>init_bounded_number_vector {
-
+	prior_found=1;
     BEGIN INIT_BOUNDED_VECTOR_DEF;
     fprintf(fdat,"%s","  param_init_bounded_number_vector ");
                      }
 <DEFINE_PARAMETERS>init_bounded_number_matrix {
-
+	  prior_found=1;
     BEGIN INIT_BOUNDED_MATRIX_DEF;
     fprintf(fdat,"%s","  param_init_bounded_number_matrix ");
                      }
@@ -1167,31 +1211,31 @@ DATA_SECTION  {
                      }
 
 <DEFINE_PARAMETERS>init_vector {
-
+	  prior_found=1;
     BEGIN IN_VECTOR_DEF;
     fprintf(fdat,"%s","  param_init_vector ");
                      }
 
 <DEFINE_PARAMETERS>init_vector_vector {
-
+	  prior_found=1;
     BEGIN IN_MATRIX_DEF;
     fprintf(fdat,"%s","  param_init_vector_vector ");
                      }
 
 <DEFINE_PARAMETERS>init_bounded_dev_vector {
-
+	  prior_found=1;
     BEGIN INIT_BOUNDED_VECTOR_DEF;
     fprintf(fdat,"%s","  param_init_bounded_dev_vector ");
                      }
 
 <DEFINE_PARAMETERS>init_bounded_vector {
-
+	prior_found=1;
     BEGIN INIT_BOUNDED_VECTOR_DEF;
     fprintf(fdat,"%s","  param_init_bounded_vector ");
                      }
 
 <DEFINE_PARAMETERS>init_bounded_vector_vector {
-
+	  prior_found=1;
     BEGIN INIT_BOUNDED_MATRIX_DEF;
     fprintf(fdat,"%s","  param_init_bounded_vector_vector ");
                      }
@@ -1221,25 +1265,25 @@ DATA_SECTION  {
                      }
 
 <DEFINE_PARAMETERS>init_matrix {
-
+	prior_found=1;
     BEGIN IN_MATRIX_DEF;
     fprintf(fdat,"%s","  param_init_matrix ");
                      }
 
 <DEFINE_PARAMETERS>init_matrix_vector {
-
+	prior_found=1;
     BEGIN IN_THREE_ARRAY_DEF;
     fprintf(fdat,"%s","  param_init_matrix_vector ");
                      }
 
 <DEFINE_PARAMETERS>init_bounded_matrix {
-
+	prior_found=1;
     BEGIN INIT_BOUNDED_MATRIX_DEF;
     fprintf(fdat,"%s","  param_init_bounded_matrix ");
                      }
 
 <DEFINE_PARAMETERS>init_bounded_matrix_vector {
-
+	prior_found=1;
     BEGIN INIT_BOUNDED_THREE_ARRAY_DEF;
     fprintf(fdat,"%s","  param_init_bounded_matrix_vector ");
                      }
@@ -1261,25 +1305,25 @@ DATA_SECTION  {
                      }
 
 <DEFINE_PARAMETERS>init_3darray {
-
+	prior_found=1;
     BEGIN IN_THREE_ARRAY_DEF;
     fprintf(fdat,"%s","  param_init_d3array ");
                      }
 
 <DEFINE_PARAMETERS>init_4darray {
-
+	prior_found=1;
     BEGIN IN_FOUR_ARRAY_DEF;
     fprintf(fdat,"%s","  param_init_4array ");
                      }
 
 <DEFINE_PARAMETERS>init_5darray {
-
+	prior_found=1;
     BEGIN IN_FIVE_ARRAY_DEF;
     fprintf(fdat,"%s","  param_init_5array ");
                      }
 
 <DEFINE_PARAMETERS>init_bounded_3darray {
-
+	prior_found=1;
     BEGIN INIT_BOUNDED_THREE_ARRAY_DEF;
     fprintf(fdat,"%s","  param_init_bounded_d3array ");
                      }
@@ -1438,11 +1482,52 @@ DATA_SECTION  {
 
 
 <IN_NUMBER_DEF>{name} {
+	
+    fprintf(fdat,"%s",yytext);
+    fprintf(fdat,"%s",";\n");
+    fprintf(fall,"  %s",yytext);
+    fprintf(fall,".allocate(\"%s\");\n",yytext);
+    if (needs_initialization)
+    {
+      fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
+      fprintf(fall,"  %s",yytext);
+      fprintf(fall,".initialize();\n");
+      fprintf(fall,"  #endif\n");
+      needs_initialization=0;
+    }
+    if (!params_defined)
+    {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",yytext);
+        likelihood_found=0;
+      }
+      BEGIN DEFINE_DATA;
+    }
+    else
+    {
+      //printf("IN_NUMBER_DEF %s\n",yytext);
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",yytext);
+        prior_found=0;
+      }
+      
+      BEGIN DEFINE_PARAMETERS;
+    }
+                            }
+
+
+<IN_NUMBER_DEF2>{name} {
+
+    strcpy(objective_function_name_string,yytext);  // get objective function name
 
     fprintf(fdat,"%s",yytext);
     fprintf(fdat,"%s",";\n");
     fprintf(fall,"  %s",yytext);
     fprintf(fall,".allocate(\"%s\");\n",yytext);
+
+    fprintf(fall,"%s","  prior_function_value.allocate(\"prior_function_value\");\n");
+    fprintf(fall,"%s","  likelihood_function_value.allocate(\"likelihood_function_value\");\n");
+
     if (needs_initialization)
     {
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
@@ -1463,12 +1548,19 @@ DATA_SECTION  {
                             }
 
 
+
+
+
 <IN_NAMED_NUMBER_DEF>{name} {
 
     fprintf(fdat,"%s",yytext);
     fprintf(fdat,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",yytext);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -1499,10 +1591,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
 
@@ -1526,6 +1626,10 @@ DATA_SECTION  {
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
 
@@ -1629,6 +1733,10 @@ DATA_SECTION  {
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
 
@@ -1660,10 +1768,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -1692,10 +1808,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -1722,10 +1846,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -1805,6 +1937,10 @@ DATA_SECTION  {
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -1905,6 +2041,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -1926,6 +2066,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -1952,6 +2096,10 @@ DATA_SECTION  {
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -1974,6 +2122,10 @@ DATA_SECTION  {
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2001,13 +2153,22 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
+
 
 <IN_MATRIX_DEF>{name}\({num_exp},{num_exp}\) {
 
@@ -2034,10 +2195,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2068,10 +2237,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2094,6 +2271,10 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2128,6 +2309,10 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",yytext);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2154,6 +2339,10 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2161,7 +2350,6 @@ DATA_SECTION  {
       BEGIN DEFINE_PARAMETERS;
     }
                             }
-
 
 <IN_SPMATRIX_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp}\) |
 <IN_SPMATRIX_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) {
@@ -2237,7 +2425,7 @@ DATA_SECTION  {
 
 <IN_THREE_ARRAY_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) |
 <IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index},{index}\) |
-<IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index}\) {
+<IN_THREE_ARRAY_DEF>{name}\({index},{index},{index},{index},{index},{index}\)  {
 
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)
     fprintf(fdat,"%s",tmp_string);
@@ -2259,10 +2447,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2293,10 +2489,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2326,10 +2530,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2427,10 +2639,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2461,10 +2681,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2493,10 +2721,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2523,10 +2759,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2553,10 +2797,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2583,10 +2835,18 @@ DATA_SECTION  {
     }
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2606,6 +2866,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2628,6 +2892,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2650,6 +2918,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2675,6 +2947,10 @@ DATA_SECTION  {
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
 			    }
@@ -2697,6 +2973,10 @@ DATA_SECTION  {
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2718,6 +2998,10 @@ DATA_SECTION  {
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
 			    }
@@ -2740,6 +3024,10 @@ DATA_SECTION  {
     }
     else
     {
+      if(prior_found) {
+        if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",tmp_string);
+        prior_found=0;
+      }
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -2759,6 +3047,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2781,6 +3073,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2803,6 +3099,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2818,10 +3118,18 @@ DATA_SECTION  {
     fprintf(fdat,"%s",tmp_string);
     fprintf(fall,"  %s",tmp_string);
     fprintf(fall,"%s",".allocate()");
+    //fprintf(fall,"%s",".allocate");
+    //after_part(tmp_string1,yytext,'(');  // get x in x(1,4)
+    //before_part(tmp_string2,tmp_string1,')');
+    //fprintf(fall,"%s)",tmp_string2);
     fprintf(fdat,"%s",";\n");
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2843,6 +3151,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2864,6 +3176,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2885,6 +3201,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2906,6 +3226,10 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (!params_defined)
     {
+      if(likelihood_found) {
+        if(likelihood_counter<MAX_LIKE_CHECK) sprintf(likelihood_checker[likelihood_counter++],"%s",tmp_string);
+        likelihood_found=0;
+      }
       BEGIN DEFINE_DATA;
     }
     else
@@ -2915,13 +3239,189 @@ DATA_SECTION  {
                             }
 
 
+<DEFINE_PRIORS>{prior_name}[ \t]*[~][ \t]*{prior_def} {    //for priors_section 
+    before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
+    strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
+    before_part(tmp_string2,tmp_string1,'(');   //function name
+    strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.   
+        
+    trim(tmp_string2); //function name
+    //strcpy(tmp_string4,"prior_");
+    //strcat(tmp_string4,tmp_string2); //define prior_** in priors.cpp file, should be neg.log.likelihood.form
+    trim(tmp_string); trim(tmp_string3);
+    
+    int i=0; //check if the prior variable from init_ parameter section
+    while(prior_check(prior_checker[i],tmp_string)!=0){
+      //printf(" idx %d tot %d, prior %s, parameter %s\n",i,prior_counter, tmp_string,prior_checker[i]);    
+      if(i == (prior_counter-1)){//still not found for the last one
+        printf("Warning: Prior ( %s ) is not defined on a parameter\n",tmp_string);
+        break;
+      }
+      i++;
+    }
+    
+    if(prior_function_toggle==0) 
+    { //left side of ~ go to first argument in function argu. list
+      fprintf(fall,"  tmp__prior=%s(%s,%s ;\n",tmp_string2,tmp_string,tmp_string3);
+      fprintf(fall,"  prior_function_value+=tmp__prior;\n ");
+      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__prior"); 
+    }
+    else
+    { //left side of ~ go to the last argument in function argu. list
+      before_partb(tmp_string4,tmp_string3,')'); 
+      fprintf(fall,"  tmp__prior=%s(%s,%s);\n",tmp_string2,tmp_string4,tmp_string);
+      fprintf(fall,"  prior_function_value+=tmp__prior;\n ");
+      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__prior"); 
+    }
+    
+                   }
+                   
 
-.  {
-  fprintf(stderr,"%s %d %s","Error in line",nline,"while reading\n");
-  fprintf(stderr,"%s\n",yytext);
-  exit(1);
-     }
 
+<DEFINE_LIKELIHOOD>{prior_name}[ \t]*[~][ \t]*{prior_def} { //for likelihood_section   
+    before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
+    strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
+    before_part(tmp_string2,tmp_string1,'(');   //function name
+    strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.
+    
+    trim(tmp_string2); //function name
+    //strcat(like_str,tmp_string2); //define like_** in priors.cpp file, should be neg.log.likelihood.form
+    trim(tmp_string); trim(tmp_string3);
+    
+    int i=0; //check if the likelihood variable from data section
+    while(prior_check(likelihood_checker[i],tmp_string)!=0){
+      //printf(" idx %d tot %d, %s, %s\n",i,likelihood_counter, tmp_string,likelihood_checker[i]);    
+      if(i == (likelihood_counter-1)){//still not found for the last one
+        printf("Warning: likelihood ( %s ) is not defined on a data_section variable\n",tmp_string);
+        break;
+      }
+      i++;
+    }
+    
+    if(prior_function_toggle==0) 
+    { //left side of ~ go to first argument in function argu. list
+      fprintf(fall,"  tmp__like=%s(%s,%s ;\n",tmp_string2,tmp_string,tmp_string3);
+      fprintf(fall,"  likelihood_function_value+=tmp__like;\n ");
+      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__like"); 
+    }
+    else
+    { //left side of ~ go to the last argument in function argu. list
+      before_partb(tmp_string4,tmp_string3,')'); 
+      fprintf(fall,"  tmp__like=%s(%s,%s);\n",tmp_string2,tmp_string4,tmp_string);
+      fprintf(fall,"  likelihood_function_value+=tmp__like;\n ");
+      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__like"); 
+    }
+                   }
+
+
+<DEFINE_PROCEDURE>{prior_name}[ \t]*[~][ \t]*{prior_def} {    //for procedure_section 
+    before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
+    strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
+    before_part(tmp_string2,tmp_string1,'(');   //function name
+    strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.   
+    
+    trim(tmp_string2);  //function name, should be neg.log.likelihood.form
+    trim(tmp_string); trim(tmp_string3);
+    if(prior_function_toggle==0) 
+    { //left side of ~ go to first argument in function argu. list
+      fprintf(fall,"  %s +=%s(%s,%s",objective_function_name_string,tmp_string2,tmp_string,tmp_string3);
+    }
+    else
+    { //left side of ~ go to the last argument in function argu. list
+      before_partb(tmp_string4,tmp_string3,')'); 
+      fprintf(fall,"  %s +=%s(%s,%s)",objective_function_name_string,tmp_string2,tmp_string4,tmp_string);
+    }
+                   }
+                   
+                   
+
+
+; {
+  if(priors_defined && (!priors_done)){
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PRIORS;
+  }
+  if(likelihood_defined && (!likelihood_done)){
+   	if(priors_defined) priors_done=1; //turn off prior
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_LIKELIHOOD;
+  }
+  if(procedure_defined && (!procedure_done)){
+   	if(priors_defined) priors_done=1;
+   	if(likelihood_defined) likelihood_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PROCEDURE;
+  }
+  
+  //;             /* ignore semi colons */ ;
+  }
+  
+
+[ \t]+ {
+  if(priors_defined && (!priors_done)){
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PRIORS;
+  }
+  if(likelihood_defined && (!likelihood_done)){
+   	priors_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_LIKELIHOOD;
+  }
+  if(procedure_defined && (!procedure_done)){
+   	priors_done=1;likelihood_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PROCEDURE;
+  }
+  //[ \t]+        /* ignore blanks */  ;
+  }
+
+
+\n { 
+  if(priors_defined && (!priors_done)){
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PRIORS;
+  }
+  if(likelihood_defined && (!likelihood_done)){
+   	priors_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_LIKELIHOOD;
+  }
+  if(procedure_defined && (!procedure_done)){
+   	priors_done=1;likelihood_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PROCEDURE;
+  }
+  
+  nline++; 			
+  }
+  
+  
+  
+. {
+  if(priors_defined && (!priors_done)){
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PRIORS;
+  }
+  else if(likelihood_defined && (!likelihood_done)){
+   	priors_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_LIKELIHOOD;
+  }
+  else if(procedure_defined && (!procedure_done)){
+   	priors_done=1;likelihood_done=1;
+   	fprintf(fall,"%s",yytext); 
+	BEGIN DEFINE_PROCEDURE;
+  }
+  else{
+	fprintf(stderr,"%s %d %s","Error in line",nline,"while reading\n");
+	fprintf(stderr,"%s\n",yytext);
+	exit(1);
+  }
+  }
+     
+     
+   
+     
 PARAMETER_SECTION {
     if (!data_defined)
     {
@@ -2965,6 +3465,8 @@ PARAMETER_SECTION {
     fprintf(fdat,"%s", "  static int last_phase(void)\n"
       "  {\n    return (initial_params::current_phase\n"
       "      >=initial_params::max_number_phases);\n  }\n");
+   fprintf(fdat,"%s", "  static prevariable current_feval(void)\n"
+      "  {\n    return *objective_function_value::pobjfun;\n  }\n");
     fprintf(fdat,"%s","private:\n");
     fprintf(fdat,"%s", "  ivector integer_control_flags;\n");
     fprintf(fdat,"%s", "  dvector double_control_flags;\n");
@@ -2986,7 +3488,7 @@ PARAMETER_SECTION {
                   }
 
 PROCEDURE_SECTION {
-    /* int i; */
+    int i; 
     if (!data_defined)
     {
       fprintf(stderr,"Error -- DATA_SECTION must be defined before"
@@ -2999,6 +3501,14 @@ PROCEDURE_SECTION {
         " PROCEDURE SECTION\n");
       exit(1);
     }
+    /*
+    if (likelihood_defined)
+    {
+      fprintf(stderr,"%s","Error -- PROCEDURE_SECTION must be defined before"
+        " LIKELIHOOD_SECTION \n");
+	    exit(1);
+    } 
+    */
     if (!objective_function_defined)
     {
       fprintf(stderr,"Error -- You must define an object of type objective"
@@ -3006,7 +3516,10 @@ PROCEDURE_SECTION {
         "and assign the approriate value to it in the\nPROCEDURE_SECTION");
       exit(1);
     }
-    BEGIN DEFINE_PROCS;
+        
+    //BEGIN DEFINE_PROCS;
+    BEGIN DEFINE_PROCEDURE;
+    
     procedure_defined=1;
     in_procedure_def=1;
     in_define_parameters=0;
@@ -3035,12 +3548,98 @@ PROCEDURE_SECTION {
       fprintf(fdat,"  virtual void initializationfunction(void);\n");
     }
 
+
    /* fprintf(fdat,"%s","};\n");*/
-    fprintf(fall,"%s","}\n\nvoid model_parameters::userfunction(void)"
-      "\n{\n");
-    add_references_to_user_classes(fall);  
+    fprintf(fall,"%s","}\n\nvoid model_parameters::userfunction(void)\n{\n");
+    fprintf(fall,"  %s%s",objective_function_name_string," =0.0;\n");
+
+    add_references_to_user_classes(fall); 
+   
                   }
 
+
+PRIORS_SECTION |
+PRIOR_SECTION {
+  if (!data_defined)
+  {
+    fprintf(stderr,"Error -- DATA_SECTION must be defined before"
+      " PRIORS_SECTION \n");
+    exit(1);
+  }
+  if (!params_defined)
+  {
+    fprintf(stderr,"Error -- PARAMETER_SECTION must be defined before"
+      " PRIORS_SECTION \n");
+    exit(1);
+  }
+  if (likelihood_defined)
+  {
+    fprintf(stderr,"%s","Error -- PRIORS_SECTION must be defined before"
+      " LIKELIHOOD_SECTION \n");
+	  exit(1);
+  } 
+  
+  if (procedure_defined)
+  {
+    fprintf(stderr,"Error -- PRIOR_SECTION must be defined before"
+      " PROCEDURE_SECTION \n");
+    exit(1);
+  }
+  if (priors_defined)
+  {
+    fprintf(stderr,"%s","Error -- only one PRIORS_SECTION allowed\n");
+    exit(1);
+  }  
+  else
+  {
+    BEGIN DEFINE_PRIORS; 
+    priors_defined=1;
+    fprintf(fall,"%s","}\n\nvoid model_parameters::priorsfunction(void)" "\n{\n");
+    fprintf(fall,"%s","  prior_function_value=0.0;\n");
+    fprintf(fall,"%s","  dvariable tmp__prior=0.0;\n");
+  }
+  }
+             
+
+
+LIKELIHOODS_SECTION |
+LIKELIHOOD_SECTION {
+  if (!data_defined)
+  {
+    fprintf(stderr,"Error -- DATA_SECTION must be defined before"
+      " PRIORS_SECTION \n");
+    exit(1);
+  }
+  if (!params_defined)
+  {
+    fprintf(stderr,"Error -- PARAMETER_SECTION must be defined before"
+      " PRIORS_SECTION \n");
+    exit(1);
+  }
+  if (procedure_defined)
+  {
+    fprintf(stderr,"Error -- LIKELIHOOD_SECTION must be defined before"
+      " PROCEDURE_SECTION \n");
+    exit(1);
+  }
+  if (likelihood_defined)
+  {
+    fprintf(stderr,"%s","Error -- only one LIKELIHOOD_SECTION allowed\n");
+    exit(1);
+  }  
+  else
+  {	
+    BEGIN DEFINE_LIKELIHOOD;
+    likelihood_defined=1;
+    //setup_for_prior_likelihood();
+    fprintf(fall,"%s","}\n\nvoid model_parameters::likelihoodfunction(void)" "\n{\n");
+    fprintf(fall,"%s","  likelihood_function_value=0.0;\n");
+    fprintf(fall,"%s","  dvariable tmp__like=0.0;\n");
+  }
+  }
+
+	  
+	  
 
 FUNCTION[ ]*{name}[ ]*{name}\( {
     char c;
@@ -3069,13 +3668,25 @@ FUNCTION[ ]*{name}[ ]*{name}\( {
     before_part(tmp_string3,tmp_string2,' '); 
     after_part(tmp_string4,tmp_string2,' ');  // get function name
     strip_leading_blanks(tmp_string1,tmp_string4); 
+
+    setup_for_prior_likelihood();
+
     fprintf(fall,"}\n\n%s ",tmp_string3);
+
     fprintf(fall,"model_parameters::%s%s\n{\n",tmp_string1,tmp_string5);
+
     fprintf(fdat," %s %s%s;\n",tmp_string3,tmp_string1,tmp_string5);
+ 
     add_references_to_user_classes(fall); 
+
     in_aux_proc=1;
     BEGIN DEFINE_PROCS;
-                              }
+ 
+
+
+
+
+                             }
 
 
 FUNCTION[ ]*{name} {
@@ -3087,6 +3698,9 @@ FUNCTION[ ]*{name} {
     }
 
     after_partb(tmp_string1,yytext,' ');  // get function name
+
+    setup_for_prior_likelihood();
+
     fprintf(fall,"}\n\nvoid model_parameters::%s(void)\n{\n",tmp_string1);
     fprintf(fdat,"  void %s(void);\n",tmp_string1);
     
@@ -3094,7 +3708,7 @@ FUNCTION[ ]*{name} {
     
     in_aux_proc=1;
     BEGIN DEFINE_PROCS;
-   /*  BEGIN DEFINE_AUX_PROC; */
+    /*  BEGIN DEFINE_AUX_PROC; */
                               }
 
 FUNCTION_DECLARATION[ ]*{name}[ ]*{name}\(.*\) |
@@ -3186,6 +3800,9 @@ GLOBALS_SECTION {
       exit(1);
     }
     globals_section_defined=1;
+    
+    setup_for_prior_likelihood();
+    
     BEGIN IN_GLOBALS_SECTION;
     /*fglobals=fopen("xxglobal.tmp","w+");*/
     if (fglobals==NULL)
@@ -3198,7 +3815,6 @@ GLOBALS_SECTION {
 <IN_GLOBALS_SECTION>^[ \t].*$ { 
 
         fprintf(fglobals,"%s\n",yytext);
-
                               }
 
 TOP_OF_MAIN_SECTION {
@@ -3209,6 +3825,9 @@ TOP_OF_MAIN_SECTION {
       exit(1);
     }
     top_of_main_defined=1;
+    
+    setup_for_prior_likelihood();
+    
     BEGIN IN_TOP_SECTION;
     ftopmain=fopen("xxtopm.tmp","w+");
     if (ftopmain==NULL)
@@ -3297,6 +3916,8 @@ TOP_OF_MAIN_SECTION {
 
 
 <<EOF>> {
+
+    setup_for_prior_likelihood();
 
     if (!data_defined)
     {
@@ -3520,6 +4141,7 @@ TOP_OF_MAIN_SECTION {
      fprintf(ftopmain,"    mp.computations(argc,argv);\n");
 
     fprintf(htop,"#include <admodel.h>\n\n");
+
     if (bound_flag)
     {
       fprintf(htop,"  extern \"C\"  {\n");
@@ -3646,7 +4268,7 @@ int main(int argc, char * argv[])
     strcat(infile_name,".tpl");
     strcat(outfile_name,".cpp");
     strcat(headerfile_name,".htp");
-    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n","(debug)");
+    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n");
     yyin=fopen(infile_name,"r");
     if (!yyin)
     {
@@ -3654,7 +4276,7 @@ int main(int argc, char * argv[])
         infile_name);
       exit(1);
     }
-    if (debug_flag) fprintf(stderr,"Opened file %s for input\n","(debug)");
+    if (debug_flag) fprintf(stderr,"Opened file %s for input\n");
     if (makedll) 
     {
       strcpy(tmp_string1,argv[ioff]);
@@ -3671,7 +4293,7 @@ int main(int argc, char * argv[])
   {
     strcpy(infile_name,"admodel.tpl");
     strcpy(outfile_name,"admodel.cpp");
-    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n","(debug)");
+    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n");
     yyin=fopen(infile_name,"r");
     if (!yyin)
     {
@@ -3679,7 +4301,7 @@ int main(int argc, char * argv[])
         infile_name);
       exit(1);
     }
-    if (debug_flag) fprintf(stderr,"Opened file %s for input\n","(debug)");
+    if (debug_flag) fprintf(stderr,"Opened file %s for input\n");
   }
   conlist_ptr=&(conlist[0]);
   classlist_ptr=&(classlist[0]);
@@ -3846,6 +4468,9 @@ char * strict_after_part(char * d, char * s, char c)
   }
   return d;
 }
+
+
+
 char * after_partb(char * d, char * s, char c)
 {
   int ipos=0;
@@ -4012,4 +4637,111 @@ void marker(void){;}
  {
    fprintf(stderr,"warning -- creating unallocated %s at line %d\n",t,
      nline);
+ }
+
+
+  /* add prior to userfunctions from procedure_section, 
+  */
+  void add_prior_to_objective(void)
+  {  	
+	  prior_done_once=1;priors_done=1;
+	  procedure_done=1;
+	  fprintf(fdat,"  virtual void priorsfunction(void);\n");  //add to .htp file
+	  //fprintf(fall,"%s","  prior_function_value=0.0;\n");
+      fprintf(fall,"%s","  priorsfunction();\n"); //append at the end of procedure section/userfunction()
+      //fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");          
+  }
+
+
+
+  /* add likelihood function value to userfunctions from procedure_section, 
+  */
+  void add_likelihood_to_objective(void)
+  {  	
+	  likelihood_done_once=1;likelihood_done=1;
+	  procedure_done=1;
+	  fprintf(fdat,"  virtual void likelihoodfunction(void);\n");  //add to .htp file
+	  //fprintf(fall,"%s","  likelihood_function_value=0.0;\n");
+      fprintf(fall,"%s","  likelihoodfunction();\n");
+      //fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=likelihood_function_value;\n");          
+  }
+
+
+
+  /* reset some control variable for prior and likelihood section, this will be repeated on multiple other sections, 
+  * so we organize them as a function 
+  */
+  void setup_for_prior_likelihood(void)
+  {  	
+	if(priors_defined) priors_done=1; 
+	if(likelihood_defined) likelihood_done=1;
+	if((procedure_defined)&&(!priors_defined)&&(!likelihood_defined)) procedure_done=1;
+	if((procedure_defined)&&(priors_defined)&&(!prior_done_once)) add_prior_to_objective();
+	if((procedure_defined)&&(likelihood_defined)&&(!likelihood_done_once)) add_likelihood_to_objective();
+  }
+
+
+ /* strip off the leading and trailing spaces from an input string, call it by trim(istring),
+    istring still use the same memory address, but the values being changed due to removed spaces, 
+    used to compare the function name for prior_section
+ */
+ void trim(char * a)
+ { 
+	size_t walker = strlen ( a );
+    //printf ( "Before: |%s|\n\n", a );
+
+    /* Trim trailing spaces */
+    while ( walker > 0 && isspace ( a[walker - 1] ) )
+      --walker;
+    a[walker] = '\0';
+ 
+    //printf ( "Trailing: |%s|\n\n", a );
+
+    /* Trim leading spaces */
+    walker = strspn ( a, " \t\n\v" );
+    memmove ( a, a + walker, strlen ( a + walker ) + 1 );
+ }
+ 
+ 
+ 
+ /* check the prior from parameter lists or not, if found it, return 0, ow return 1
+    not care about the position, 
+    it looks complicate because the prior has wider pattern than parameter,
+    such as for parameter a, we may get -log(a), or a(i) for its prior, so we need to tell if 
+    this prior come from parameter a, 
+ */
+ int prior_check(char * parameter, char * prior)
+ {
+   if(strlen(parameter)==strlen(prior)) 
+     return strcmp(parameter,prior); //0 is founded
+   else if (strlen(parameter)<strlen(prior))
+   {
+     int i=0;
+     int j=0;
+     int cnt=0;
+     int start_flag=0;
+     for(i=0;i<strlen(prior);i++)
+     {
+       //printf("%d,%s,%s\n",i,parameter, prior);
+       if(prior[i]==parameter[j]) { //found match
+         cnt++; 
+         if(i==0) start_flag=1;         
+         if(cnt<strlen(parameter)) j++;
+         //printf("* i=%d, cnt=%d, j=%d , flag=%d \n",i,cnt, j,start_flag);
+         if(i==(strlen(prior)-1) && cnt==strlen(parameter) && start_flag)//only return for the last found match
+           return 0; //found it            
+       }
+       else{ //not match
+         if(cnt==strlen(parameter)) {//take care for special character for not matched one
+           if(!isalnum(prior[i]) && start_flag)  return 0; //found it
+         }
+         if(!isalnum(prior[i])) start_flag=1;
+         else start_flag=0;
+         cnt=0;j=0; 
+         //printf("** i=%d, cnt=%d, j=%d , flag=%d \n",i,cnt, j,start_flag);
+       }
+       if(i==(strlen(prior)-1) && cnt<strlen(parameter)) return 1; //until the end still not found
+     } //end for loop
+   }
+   else return 1; //not found
  }

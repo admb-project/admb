@@ -14,13 +14,13 @@ vc-verify:
 	cd src& nmake /f vc.mak verify
 
 sunstudio:
-	ARCH_CXXFLAGS=-m32 make --directory=src --file=sunstudio.mak
+	ARCH_CXXFLAGS=-m32 make --directory=src --file=linux.mak CC=cc CXX=CC
 
 sunstudio-64bit:
-	ARCH_CXXFLAGS=-m64 make --directory=src --file=sunstudio.mak dist-64bit
+	ARCH_CXXFLAGS=-m64 make --directory=src --file=linux.mak CC=cc CXX=CC dist-64bit
 
 sunstudio-verify:
-	make --directory=src --file=sunstudio.mak verify
+	make --directory=src --file=sunstudio.mak CC=cc CXX=CC verify 
 
 icc:
 	make --directory=src --file=linux.mak CC=icc CXX=icpc

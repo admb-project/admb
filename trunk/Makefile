@@ -23,10 +23,10 @@ sunstudio-verify:
 	make --directory=src --file=sunstudio.mak verify
 
 icc:
-	make --directory=src --file=icc.mak
+	make --directory=src --file=linux.mak CC=icc CXX=icpc
 
 icc-verify:
-	make --directory=src --file=icc.mak verify
+	make --directory=src --file=linux.mak CC=icc CXX=icpc verify
 
 linux:
 	make --directory=src --file=linux.mak

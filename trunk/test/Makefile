@@ -1,9 +1,9 @@
-.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg expm gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd atan2
+.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd atan2 priors
 
-#all: clean beta_regression hysimple simple_mcmc betareg gmrf
-#all: clean init_bounded_number_matrix admb_messages
-all: clean atan2
-#all: testminmax RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd
+all: priors
+
+priors:
+	CXXFLAGS=${CXXFLAGS} OPTIONS=-s make --directory=$@
 
 atan2:
 	OPTIONS=-s make --directory=$@
@@ -30,9 +30,6 @@ simple_mcmc:
 	OPTIONS=-s make --directory=$@
 
 betareg:
-	OPTIONS=-s make --directory=$@
-
-expm:
 	OPTIONS=-s make --directory=$@
 
 gmrf:
@@ -75,12 +72,12 @@ RC01_svd:
 	OPTIONS=-s make --directory=$@
 
 clean:
+	make --directory=priors clean
 	make --directory=beta_regression clean
 	make --directory=hysimple clean
 	make --directory=admb_messages clean
 	make --directory=init_bounded_number_matrix clean
 	make --directory=betareg clean
-	make --directory=expm clean
 	make --directory=gmrf clean
 	make --directory=simple_mcmc clean
 	make --directory=testminmax clean

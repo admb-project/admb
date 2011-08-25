@@ -25,6 +25,7 @@ DATA_SECTION
   init_int zi_flag				// 1=zi, 0=no zi
   // TESTING: remove eventually?
   init_int zi_kluge				// apply zi=0.001?
+  init_int nbinom1_flag				// 1=NBinom1, 0=NBinom2
   init_int intermediate_maxfn
   init_int has_offset				// 0=no offset, 1=with offset
   init_vector offset(1,n)				// Offset vector
@@ -78,10 +79,11 @@ PARAMETER_SECTION
   //  ad_exit(1);
   // }
 
-  int alpha_phase = like_type_flag>1 ? 1 : -1;         // Phase 1 if active
-  int zi_phase = zi_flag ? 2 : -1;                      // Phase 2 if active
-  int rand_phase = no_rand_flag==0 ? 2+zi_flag : -1;    // Right after zi
-  int cor_phase = (rand_phase>0) && (sum(cor_flag)>0) ? rand_phase+1 : -1 ; // Right after rand_phase
+  int pctr = 2;
+  int alpha_phase = like_type_flag>1 ? pctr++ : -1;         // Phase 2 if active
+  int zi_phase = zi_flag ? pctr++ : -1;                      // Phase 3 if active
+  int rand_phase = no_rand_flag==0 ? pctr++ : -1;    // Right after zi
+  int cor_phase = (rand_phase>0) && (sum(cor_flag)>0) ? pctr++ : -1 ; // Right after rand_phase
   ivector ncolS(1,M);
   ncolS = m;                                            // Uncorrelated random effects
   for (int i=1;i<=M;i++)                                // Modifies the correlated ones
@@ -178,8 +180,7 @@ PROCEDURE_SECTION
 SEPARABLE_FUNCTION void n01_prior(const prevariable&  u)
  g -= -0.5*log(2.0*M_PI) - 0.5*square(u);
 
-SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& _ui, const dvar_vector& beta,const prevariable& log_alpha, const prevariable& pz)
-  dvar_vector& ui = (dvar_vector&)_ui;
+SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& ui, const dvar_vector& beta,const prevariable& log_alpha, const prevariable& pz)
   
   int i,j, i_m, Ni;
   double e1=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
@@ -217,7 +218,14 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
 
     int upper = sum(m(1,i_m));
     int lower = upper-m(i_m)+1;
-    b(lower,upper) = (L*(ui(lower,upper).shift(1))).shift(lower);	// L*ui
+
+    dvar_vector tmp1(1,m(i_m));
+
+    tmp1 = ui(lower,upper).shift(1);
+    tmp1 = L*tmp1;
+    //    b(lower,upper) = (L*(ui(lower,upper).shift(1))).shift(lower);	// L*ui
+    b(lower,upper) = tmp1.shift(lower);
+
   }
 
   // fudge factors for inverse link
@@ -286,7 +294,10 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
        ad_exit(1);
    }
 
-  dvariable tau = 1.0+e1+lambda/alpha;
+  // FIXME: can implement 'nbinom1' by modifying next line:
+  //     nbinom var = mu*tau
+  dvariable  tau = nbinom1_flag ? alpha : 1.0 + e1 + lambda/alpha ;
+  // dvariable tau = 1.0+e1+lambda/alpha;
   dvariable tmpl; 				// Log likelihood
 
   int cph=current_phase();
@@ -308,7 +319,7 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
       }
       break;
     case 2:   // neg binomial
-      if (cph<2)
+      if (cph<2)  // would like to use alpha_phase rather than 2 but it's in local_calcs
         tmpl = -square(log(1.0+y(_i,1))-log(1.0+lambda));
       else
         tmpl = log_negbinomial_density(y(_i,1),lambda,tau);

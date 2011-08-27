@@ -1,6 +1,6 @@
 echo Example:admb:ham4.tpl
 cat $1admb/buscycle/ham4.par
-cat admb/buscycle/ham4.std
+cat $1admb/buscycle/ham4.std
 
 echo Example:admb:ham5.tpl
 cat $1admb/buscycle/ham5.par

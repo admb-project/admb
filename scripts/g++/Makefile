@@ -12,6 +12,7 @@ PROG=time
 default: simple
 
 all: admb admb-re
+#all: simple forest
 
 admb: \
 buscycle\
@@ -36,13 +37,13 @@ catage:
 	cd admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
 
 chem-eng:
-	-cd admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	cd admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
 
 finance:
 	cd admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
 
 forest:
-	-cd admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	cd admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
 
 pella-t:
 	cd admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
@@ -62,7 +63,7 @@ truncreg:
 
 vol: n2mvol
 n2mvol:
-	-cd admb/vol;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	cd admb/vol;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
 
 admb-re:\
 bcb \
@@ -89,17 +90,16 @@ union \
 weights
 
 bcb:
-	-cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
+	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
 
 biglog:
 	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
 
 bvprobit:
-	@#Missing bvprobit.dat
-	-cd admb-re/glmmadmb;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
+	cd admb-re/glmmadmb;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
 
 glmmadmb:
-	-cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
+	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
 
 caest:
 	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
@@ -117,8 +117,7 @@ logistic:
 	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
 
 nbmm:
-	@#Missing .dat file
-	-cd admb-re/nbmm;rm -f @.par @.std;admb -r $(SAFE_OPTION) $@;$(PROG) ./$@
+	cd admb-re/nbmm;rm -f @.par @.std;admb -r $(SAFE_OPTION) $@;$(PROG) ./$@
 
 nested4:
 	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
@@ -130,7 +129,7 @@ orange2:
 	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
 
 orange_cor:
-	-cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
+	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
 
 pheno:
 	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@

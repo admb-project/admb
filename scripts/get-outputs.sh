@@ -83,8 +83,8 @@ cat $1admb-re/logistic/logistic.par
 cat $1admb-re/logistic/logistic.std
 
 echo Example:admb-re:nbmm.tpl
-cat $1admb-re/glmmadmb/nbmm.par
-cat $1admb-re/glmmadmb/nbmm.std
+cat $1admb-re/nbmm/nbmm.par
+cat $1admb-re/nbmm/nbmm.std
 
 echo Example:admb-re:nested4.tpl
 cat $1admb-re/nested4/nested4.par

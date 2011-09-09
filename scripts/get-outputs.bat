@@ -83,8 +83,8 @@
 @type examples\admb-re\logistic\logistic.std
 
 @echo Example:admb-re:nbmm.tpl
-@type examples\admb-re\glmmadmb\nbmm.par
-@type examples\admb-re\glmmadmb\nbmm.std
+@type examples\admb-re\nbmm\nbmm.par
+@type examples\admb-re\nbmm\nbmm.std
 
 @echo Example:admb-re:nested4.tpl
 @type examples\admb-re\nested4\nested4.par

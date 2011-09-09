@@ -79,7 +79,11 @@ dlist::dlist(void)
 #endif
   
   ddlist_spacea=ddlist_space+adjust;
-  
+
+  for (int i = 0; i < gradient_structure::MAX_DLINKS; ++i)
+  {
+    dlink_addresses[i] = 0;
+  }
 }
 
 /**
@@ -147,6 +151,7 @@ dlink* dlist::last_remove()
  */
 dlist::~dlist()
 {
+/*
   dlink * tmp;
 //   cout << "used the dlist destructor\n";
 //   cout << "entered ~dlist   last =" << _farptr_tolong(last) << "\n";
@@ -172,6 +177,7 @@ dlist::~dlist()
 	 << count << "\n";
     ad_exit(1);
   }
+*/
   ::free(ddlist_space);
   ddlist_space=NULL;
   delete [] dlink_addresses;

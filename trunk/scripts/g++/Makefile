@@ -12,7 +12,6 @@ PROG=time
 default: simple
 
 all: admb admb-re
-#all: simple forest
 
 admb: \
 buscycle\
@@ -43,7 +42,7 @@ finance:
 	cd admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
 
 forest:
-	cd admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	-cd admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
 
 pella-t:
 	cd admb/$@;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@

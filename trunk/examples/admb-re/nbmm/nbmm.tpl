@@ -121,7 +121,7 @@ TOP_OF_MAIN_SECTION
   gradient_structure::set_MAX_NVAR_OFFSET(50000);
 
 GLOBALS_SECTION
-  #ifdef _WIN32 
+  #if defined(_WIN32) && !defined(__GNUC__)
   #include <windows.h>
   #include <admodel.h>
   #include <float.h>

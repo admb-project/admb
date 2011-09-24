@@ -7743,6 +7743,8 @@ void gauss_legendre(const dvector& _x, const dvector& _w);
 //double betai(const double a,const double b,const double x, int maxit=100);
 
 //dvariable incbet(_CONST dvariable a,_CONST dvariable b,_CONST dvariable x);
+double betai(double _aa, double _bb, double _xx);
+dvariable betai(const dvariable& _a,const dvariable& _b,const dvariable& _x);
 double incbet(const double a,const double b,const double x);
 df1_three_variable incbet(const df1_three_variable & _aa,
 				 const df1_three_variable & _bb,

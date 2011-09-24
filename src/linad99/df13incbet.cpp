@@ -18,6 +18,8 @@
 static int mtherr(char *s, int n);
 static df1_three_variable igam(const df1_three_variable & a,
 			       const df1_three_variable & x);
+double pseries(const double & _a, const double & _b, const double & _x);
+double lgam(double x);
 
 static double MAXLOG = 200;
 static double MINLOG = -200;
@@ -166,7 +168,7 @@ static double polevl(double, void *, int);
 static  df1_three_variable polevl(const df1_three_variable &, void *, int);
 static  double p1evl(double, void *, int);
 static  df1_three_variable p1evl(const df1_three_variable &, void *, int);
-static double lgam(double);
+//static double lgam(double);
 
 const double MYINF = 1.7976931348623158E+308;
 
@@ -193,6 +195,27 @@ static df1_three_variable stirf(const df1_three_variable & _x)
    y = SQTPI * y * w;
    return (y);
 }
+
+static double stirf(double _x)
+{
+   double x = _x;
+   double y, w, v;
+
+   w = 1.0 / x;
+   w = 1.0 + w * polevl(w, STIR, 4);
+   y = exp(x);
+   if (x > MAXSTIR)
+   {				/* Avoid overflow in pow() */
+      v = pow(x, 0.5 * x - 0.25);
+      y = v * (v / y);
+   } else
+   {
+      y = pow(x, x - 0.5) / y;
+   }
+   y = SQTPI * y * w;
+   return (y);
+}
+
 
 /**
  * Description not yet available.
@@ -320,6 +343,129 @@ static df1_three_variable gamma(const df1_three_variable & xx1)
    } else
       return (z / ((1.0 + 0.5772156649015329 * x) * x));
 }
+
+
+static double gamma(double xx1)
+{
+   double x = xx1;
+   double MYBIG = 1.e+300;
+   double p, q, z;
+   double zero;
+   zero = 0.0;
+   int i;
+
+   sgngam = 1;
+
+#ifdef NANS
+   if (isnan(x))
+      return (x);
+#endif
+#ifdef INFINITIES
+#ifdef NANS
+   if (x == MYINF)
+      return (x);
+   if (x == -MYINF)
+      return (NAN);
+#else
+   if (!isfinite(x))
+      return (x);
+#endif
+#endif
+   q = fabs(x);
+
+   if (q > 33.0)
+   {
+      if (x < 0.0)
+      {
+	 p = floor(q);
+	 if (p == q)
+	 {
+#ifdef NANS
+	  gamnan:
+	    cerr << "gamma DOMAIN" << endl;
+	    return (zero);
+#else
+	    goto goverf;
+#endif
+	 }
+	 i = p;
+	 if ((i & 1) == 0)
+	    sgngam = -1;
+	 z = q - p;
+	 if (z > 0.5)
+	 {
+	    p += 1.0;
+	    z = q - p;
+	 }
+	 z = q * sin(PI * z);
+	 if (z == 0.0)
+	 {
+#ifdef INFINITIES
+	    return (sgngam * MYINF);
+#else
+	  goverf:
+	    mtherr("gamma", OVERFLOW);
+	    return (sgngam * MYBIG);
+	    //return( sgngam * MAXNUM);
+#endif
+	 }
+	 z = fabs(z);
+	 z = PI / (z * stirf(q));
+      } else
+      {
+	 z = stirf(x);
+      }
+      return (sgngam * z);
+   }
+
+   z = 1.0;
+   while (x >= 3.0)
+   {
+      x -= 1.0;
+      z *= x;
+   }
+
+   while (x < 0.0)
+   {
+      if (x > -1.E-9)
+	 goto SMALL;
+      z /= x;
+      x += 1.0;
+   }
+
+   while (x < 2.0)
+   {
+      if (x < 1.e-9)
+	 goto SMALL;
+      z /= x;
+      x += 1.0;
+   }
+
+   if (x == 2.0)
+      return (z);
+
+   x -= 2.0;
+   p = polevl(x, P, 6);
+   q = polevl(x, Q, 7);
+   return (z * p / q);
+
+ SMALL:
+   if (x == 0.0)
+   {
+#ifdef INFINITIES
+#ifdef NANS
+      goto gamnan;
+#else
+      return (MYINF);
+#endif
+#else
+      cerr << "gamma SING " << endl;
+      return (MYBIG);
+#endif
+   } else
+      return (z / ((1.0 + 0.5772156649015329 * x) * x));
+}
+
 
 
 
@@ -682,6 +828,321 @@ dvariable incbet(const dvariable & _a, const dvariable & _b,
    z = vy;
    return z;
 }
+
+  dvariable betai(const dvariable& _a,const dvariable& _b,const dvariable& _x)
+  {
+    ADUNCONST(dvariable, a) ADUNCONST(dvariable, b) ADUNCONST(dvariable, x)
+    return incbet(a,b,x);
+  }
+
+/**
+ * Continued fraction expansion number 1
+ * for incomplete beta integral
+ * \param
+ */
+double incbcf(double _a, double _b, double _x)
+{
+   double a;
+   double b;
+   double x;
+   a = _a;
+   b = _b;
+   x = _x;
+   double xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
+   double k1, k2, k3, k4, k5, k6, k7, k8;
+   double r, t, ans, thresh;
+   int n;
+
+   k1 = a;
+   k2 = a + b;
+   k3 = a;
+   k4 = a + 1.0;
+   k5 = 1.0;
+   k6 = b - 1.0;
+   k7 = k4;
+   k8 = a + 2.0;
+
+   pkm2 = 0.0;
+   qkm2 = 1.0;
+   pkm1 = 1.0;
+   qkm1 = 1.0;
+   ans = 1.0;
+   r = 1.0;
+   n = 0;
+   thresh = 3.0 * MACHEP;
+   do
+   {
+
+      xk = -(x * k1 * k2) / (k3 * k4);
+      pk = pkm1 + pkm2 * xk;
+      qk = qkm1 + qkm2 * xk;
+      pkm2 = pkm1;
+      pkm1 = pk;
+      qkm2 = qkm1;
+      qkm1 = qk;
+
+      xk = (x * k5 * k6) / (k7 * k8);
+      pk = pkm1 + pkm2 * xk;
+      qk = qkm1 + qkm2 * xk;
+      pkm2 = pkm1;
+      pkm1 = pk;
+      qkm2 = qkm1;
+      qkm1 = qk;
+
+      if (qk != 0)
+	 r = pk / qk;
+      if (r != 0)
+      {
+	 t = fabs((ans - r) / r);
+	 ans = r;
+      } else
+	 t = 1.0;
+
+      if (t < thresh)
+	 goto cdone;
+
+      k1 += 1.0;
+      k2 += 1.0;
+      k3 += 2.0;
+      k4 += 2.0;
+      k5 += 1.0;
+      k6 -= 1.0;
+      k7 += 2.0;
+      k8 += 2.0;
+
+      if ((fabs(qk) + fabs(pk)) > big)
+      {
+	 pkm2 *= biginv;
+	 pkm1 *= biginv;
+	 qkm2 *= biginv;
+	 qkm1 *= biginv;
+      }
+      if ((fabs(qk) < biginv) || (fabs(pk) < biginv))
+      {
+	 pkm2 *= big;
+	 pkm1 *= big;
+	 qkm2 *= big;
+	 qkm1 *= big;
+      }
+   }
+   while (++n < 300);
+
+ cdone:
+   return (ans);
+}
+
+/**
+ * Continued fraction expansion number 2
+ * for incomplete beta integral
+ * \param
+ */
+double incbd(double _a, double _b, double _x)
+{
+   double a=_a;
+   double b=_b;
+   double x=_x;
+
+   double xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
+   double k1, k2, k3, k4, k5, k6, k7, k8;
+   double r, t, ans, z, thresh;
+   int n;
+
+   k1 = a;
+   k2 = b - 1.0;
+   k3 = a;
+   k4 = a + 1.0;
+   k5 = 1.0;
+   k6 = a + b;
+   k7 = a + 1.0;;
+   k8 = a + 2.0;
+
+   pkm2 = 0.0;
+   qkm2 = 1.0;
+   pkm1 = 1.0;
+   qkm1 = 1.0;
+   z = x / (1.0 - x);
+   ans = 1.0;
+   r = 1.0;
+   n = 0;
+   thresh = 3.0 * MACHEP;
+   do
+   {
+
+      xk = -(z * k1 * k2) / (k3 * k4);
+      pk = pkm1 + pkm2 * xk;
+      qk = qkm1 + qkm2 * xk;
+      pkm2 = pkm1;
+      pkm1 = pk;
+      qkm2 = qkm1;
+      qkm1 = qk;
+
+      xk = (z * k5 * k6) / (k7 * k8);
+      pk = pkm1 + pkm2 * xk;
+      qk = qkm1 + qkm2 * xk;
+      pkm2 = pkm1;
+      pkm1 = pk;
+      qkm2 = qkm1;
+      qkm1 = qk;
+
+      if (qk != 0)
+	 r = pk / qk;
+      if (r != 0)
+      {
+	 t = fabs((ans - r) / r);
+	 ans = r;
+      } else
+	 t = 1.0;
+
+      if (t < thresh)
+	 goto cdone;
+
+      k1 += 1.0;
+      k2 -= 1.0;
+      k3 += 2.0;
+      k4 += 2.0;
+      k5 += 1.0;
+      k6 += 1.0;
+      k7 += 2.0;
+      k8 += 2.0;
+
+      if ((fabs(qk) + fabs(pk)) > big)
+      {
+	 pkm2 *= biginv;
+	 pkm1 *= biginv;
+	 qkm2 *= biginv;
+	 qkm1 *= biginv;
+      }
+      if ((fabs(qk) < biginv) || (fabs(pk) < biginv))
+      {
+	 pkm2 *= big;
+	 pkm1 *= big;
+	 qkm2 *= big;
+	 qkm1 *= big;
+      }
+   }
+   while (++n < 300);
+ cdone:
+   return (ans);
+}
+
+
+
+/**
+ * Description not yet available.
+ * \param
+ */
+double incbet(double _aa,double _bb,double _xx)
+{
+   double aa;
+   double bb;
+   double xx;
+   aa = _aa;
+   bb = _bb;
+   xx = _xx;
+
+   double a, b, t, x, xc, w, y;
+
+   int flag;
+   double one;
+   double zero;
+   one = 1.0;
+   zero = 0.0;
+
+   if (aa <= 0.0 || bb <= 0.0)
+      goto domerr;
+
+   if ((xx <= 0.0) || (xx >= 1.0))
+   {
+      if (xx == 0.0)
+	 return (zero);
+      if (xx == 1.0)
+	 return (one);
+    domerr:
+      cerr << "incbet DOMAIN " << endl;
+
+      return (zero);
+   }
+
+   flag = 0;
+   if ( (bb * xx) <= 1.0 && xx <= 0.95)
+   {
+      t = pseries(aa, bb, xx);
+      goto done;
+   }
+
+   w = 1.0 - xx;
+
+   // Reverse a and b if x is greater than the mean.
+   if (xx > aa / (aa + bb))
+   {
+      flag = 1;
+      a = bb;
+      b = aa;
+      xc = xx;
+      x = w;
+   } else
+   {
+      a = aa;
+      b = bb;
+      xc = w;
+      x = xx;
+   }
+
+   if (flag == 1 && (b * x) <= 1.0 && x <= 0.95)
+   {
+      t = pseries(a, b, x);
+      goto done;
+   }
+
+   // Choose expansion for better convergence.
+   y = x * (a + b - 2.0) - (a - 1.0);
+   if (y < 0.0)
+      w = incbcf(a, b, x);
+   else
+      w = incbd(a, b, x) / xc;
+
+   // Multiply w by the factor
+   // a      b   _             _     _
+   // x  (1-x)   | (a+b) / ( a | (a) | (b) ) .
+
+   y = a * log(x);
+   t = b * log(xc);
+   if ((a + b) < MAXGAM && fabs(y) < MAXLOG
+       && fabs(t) < MAXLOG)
+   {
+      t = pow(xc, b);
+      t *= pow(x, a);
+      t /= a;
+      t *= w;
+      t *= gamma(a + b) / (gamma(a) * gamma(b));
+      goto done;
+   }
+   // Resort to logarithms.
+   y += t + lgam(a + b) - lgam(a) - lgam(b);
+   y += log(w / a);
+   if (y < MINLOG)
+      t = 0.0;
+   else
+      t = exp(y);
+ 
+ done:
+
+   if (flag == 1)
+   {
+      if (t <= MACHEP)
+	 t = 1.0 - MACHEP;
+      else
+	 t = 1.0 - t;
+   }
+   return (t);
+}
+
+double betai(double _aa, double _bb, double _xx)
+{
+  double ret = incbet(_aa,_bb,_xx);
+  return ret;
+}
+
 
 /*							igam.c
  *
@@ -1361,3 +1822,56 @@ static df1_three_variable df3_get_values(double a, double b, double x)
    df1_three_variable vy = incbet(va, vb, vx);
    return vy;
 }
+
+/**
+ * Power series for incomplete beta integral.
+ * Use when b*x is small and x not too close to 1
+ * \param
+ */
+double pseries(const double & _a, const double & _b, const double & _x)
+{
+   double a=_a;
+   double b=_b;
+   double x=_x;
+
+   double s, t, u, v, n, t1, z, ai;
+
+   ai = 1.0 / a;
+   u = (1.0 - b) * x;
+   v = u / (a + 1.0);
+   t1 = v;
+   t = u;
+   n = 2.0;
+   s = 0.0;
+   z = MACHEP * ai;
+   while (fabs(v) > z)
+   {
+      u = (n - b) * x / n;
+      t *= u;
+      v = t / (a + n);
+      s += v;
+      n += 1.0;
+   }
+   s += t1;
+   s += ai;
+
+   //u = a * log(x);
+   if ((a + b) < MAXGAM && fabs(u) < MAXLOG)
+   {
+      //gamma(a + b);
+      //gamma(a);
+      //gamma(b);
+      //gamma(a) * gamma(b);
+      t = gamma(a + b) / (gamma(a) * gamma(b));
+      s = s * t * pow(x, a);
+   }/* else
+   {
+      t = lgam(a + b) - lgam(a) - lgam(b) + u + log(s);
+      if (t < MINLOG)
+	 s = 0.0;
+      else
+	 s = exp(t);
+   }*/
+   return (s);
+}
+

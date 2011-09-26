@@ -88,8 +88,6 @@ PROCEDURE_SECTION
   }
   f+=0.5*nobs*log(v)+0.5*r2/v;
 
-GLOBALS_SECTION
-  double incbet(double a, double b, double x);
 
 REPORT_SECTION
   report << "#u " << endl << u << endl;

@@ -46,6 +46,14 @@ void set_signal_handlers(void)
 
 ad_comm::ad_comm(int _argc,char * _argv[])
 {
+  if (option_match(_argc,_argv, "-version") > -1)
+  {
+    void banner(const adstring& program_name);
+    banner(__FILE__);
+
+    exit(0);
+  }
+
   ad_comm::argc=_argc;
   ad_comm::argv=_argv;
   int pvm_flag=0;

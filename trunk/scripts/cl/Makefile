@@ -19,6 +19,7 @@ buscycle: ham4 ham5
 ham4:
 	cd admb\\buscycle
 	admb $(OPTION) $@
+	$@ -version
 	$@
 	cd ..\\..
 

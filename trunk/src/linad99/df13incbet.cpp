@@ -345,7 +345,7 @@ static df1_three_variable gamma(const df1_three_variable & xx1)
 }
 
 
-static double gamma(double xx1)
+double gamma(double xx1)
 {
    double x = xx1;
    double MYBIG = 1.e+300;

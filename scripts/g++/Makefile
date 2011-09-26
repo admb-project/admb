@@ -27,7 +27,7 @@ vol
 
 buscycle: ham4 ham5
 ham4:
-	cd admb/buscycle;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	cd admb/buscycle;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@ -version;$(PROG) ./$@
 
 ham5:
 	cd admb/buscycle;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@

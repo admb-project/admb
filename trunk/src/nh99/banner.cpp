@@ -26,7 +26,12 @@ void banner(const adstring& program_name)
 {
   char s[500];
   std::ostrstream ss(s,500);
-  ss << program_name << ": ADMB " << "10.1";
+  ss << program_name << ": ADMB ";
+
+#if defined(ADMB_VERSION)
+  ss << ADMB_VERSION;
+#endif
+
   if (which_library() == 'o')
      ss << " optimized libraries";
   else

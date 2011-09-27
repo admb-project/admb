@@ -49,7 +49,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   if (option_match(_argc,_argv, "-version") > -1)
   {
     void banner(const adstring& program_name);
-    banner(__FILE__);
+    banner(_argv[0]);
 
     exit(0);
   }
@@ -170,7 +170,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     //  (*ad_printf)(" %s", (char*)admb_banner);
 #endif
       (*ad_printf)("\n");
-      (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California\n");
+      (*ad_printf)("Copyright (c) 2008-2011 Regents of the University of California\n");
       (*ad_printf)("\n");
 
       (*ad_printf)( "Usage: %s option(s)\n",(char*)(adprogram_name));

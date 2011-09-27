@@ -26,10 +26,13 @@ void banner(const adstring& program_name)
 {
   char s[500];
   std::ostrstream ss(s,500);
-  ss << program_name << ": ADMB ";
+
+  ss << "AD Model Builder(ADMB): Copyright (c) 2008-2011 Regents of the University of California\n\n";
+
+  ss << program_name << ": ADMB";
 
 #if defined(ADMB_VERSION)
-  ss << ADMB_VERSION;
+  ss << " " << ADMB_VERSION;
 #endif
 
   if (which_library() == 'o')
@@ -101,10 +104,11 @@ void banner(const adstring& program_name)
   ss <<  "(32bit)";
   #endif
 #else
-   ss << "unknown compiler.";
+  ss << "unknown compiler";
 #endif
+  ss << '.';
   
-  ss << '.' << '\0';
+  ss << '\0';
 
   cout << s << endl;
 }

@@ -4,12 +4,12 @@
 
 #include <fvar.hpp>
 #include <adstring.hpp>
-#if (__GNUC__ >=3)
-  #include <strstream>
-  using namespace std;
-#else
+#if defined(__BORLANDC__)
   #include <strstrea.h>
   #include <iomanip.h>
+#else
+  #include <strstream>
+  using namespace std;
 #endif
 
 

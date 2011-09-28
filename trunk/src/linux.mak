@@ -24,7 +24,7 @@ CXXFLAGS:=$(CXXFLAGS) -g -DADMB_VERSION=$(shell cat ../VERSION)
 else
 CXXFLAGS:=$(CXXFLAGS) -O3
 endif
-CXXFLAGS:=$(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION)
+CXXFLAGS:=$(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell svnversion ..)
 
 ifeq ($(CXX),CC)
 CXXFLAGS:=-c $(CXXFLAGS) -DUSE_LAPLACE -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux

@@ -27,18 +27,12 @@ void banner(const adstring& program_name)
   char s[500];
   std::ostrstream ss(s,500);
 
-  ss << "AD Model Builder(ADMB): Copyright (c) 2008-2011 Regents of the University of California\n\n";
+  ss << "ADMB Program: " << program_name << "\n\n";
 
-  ss << program_name << ": ADMB";
+  ss << "ADMB";
 
 #if defined(ADMB_VERSION)
-  ss << " " << ADMB_VERSION;
-#endif
-
-#if defined(ADMB_REVISION)
-  #define STR(x) #x
-  #define STR2(x) STR(x)
-  ss << "(Revision: " << STR2(ADMB_REVISION) << ")";
+  ss << "-" << ADMB_VERSION;
 #endif
 
   if (which_library() == 'o')
@@ -56,7 +50,7 @@ void banner(const adstring& program_name)
   ss <<  "(32bit)";
   #endif
 #elif defined(_MSC_VER)
-  ss << "Microsoft Visual C++";
+  ss << "Microsoft Visual C++ ";
   #if (_MSC_VER==1300) 
   ss << "7.0";
   #elif (_MSC_VER==1310) 
@@ -82,7 +76,7 @@ void banner(const adstring& program_name)
   #endif
   ss <<  "(32bit)";
 #elif defined(__SUNPRO_CC)
-  ss << "Sun Studio";
+  ss << "Solaris Studio";
   #if (__SUNPRO_CC==0x420)
   ss << "4.2";
   #elif (__SUNPRO_CC==0x500)
@@ -112,7 +106,16 @@ void banner(const adstring& program_name)
 #else
   ss << "unknown compiler";
 #endif
-  ss << '\n';
+  ss << "\n";
+  ss << "Build date: " << __DATE__ << "\n";
+#if defined(ADMB_REVISION)
+  #define STR(x) #x
+  #define STR2(x) STR(x)
+  ss << "Revision: " << STR2(ADMB_REVISION) << "\n";
+#endif
+  ss << "\n";
+
+  ss << "Copyright (c) 2008-2011 Regents of the University of California\n";
   
   ss << '\0';
 

@@ -140,8 +140,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 #endif
   adstring workdir;
   ad_getcd(workdir);
-#define STR(x) STR2(x)
-#define STR2(x) #x
+//#define STR(x) STR2(x)
+//#define STR2(x) #x
   if (_argc>1)
   {
     if (option_match(_argc,_argv,"-?")>-1

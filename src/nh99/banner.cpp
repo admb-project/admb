@@ -35,6 +35,12 @@ void banner(const adstring& program_name)
   ss << " " << ADMB_VERSION;
 #endif
 
+#if defined(ADMB_REVISION)
+  #define STR(x) #x
+  #define STR2(x) STR(x)
+  ss << "(Revision: " << STR2(ADMB_REVISION) << ")";
+#endif
+
   if (which_library() == 'o')
      ss << " optimized libraries";
   else
@@ -75,11 +81,11 @@ void banner(const adstring& program_name)
   ss << " 5.51";
   #endif
   ss <<  "(32bit)";
-#elif defined(__SUNPRO_C)
+#elif defined(__SUNPRO_CC)
   ss << "Sun Studio";
-  #if (__SUNPRO_C==0x420)
+  #if (__SUNPRO_CC==0x420)
   ss << "4.2";
-  #elif (__SUNPRO_C==0x500)
+  #elif (__SUNPRO_CC==0x500)
   ss << "5.0";
   #endif
   #if defined(__x86_64)

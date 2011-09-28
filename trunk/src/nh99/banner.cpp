@@ -106,7 +106,7 @@ void banner(const adstring& program_name)
 #else
   ss << "unknown compiler";
 #endif
-  ss << '.';
+  ss << '\n';
   
   ss << '\0';
 

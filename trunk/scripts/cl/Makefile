@@ -1,7 +1,6 @@
 default: simple
 
-#all: admb admb-re
-all: forest glmmadmb
+all: admb admb-re
 
 admb:\
 buscycle \

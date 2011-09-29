@@ -24,8 +24,7 @@
  */
 void banner(const adstring& program_name)
 {
-  char s[500];
-  std::ostrstream ss(s,500);
+  std::ostrstream ss;
 
   ss << "ADMB Program: " << program_name << "\n\n";
 
@@ -119,5 +118,5 @@ void banner(const adstring& program_name)
   
   ss << '\0';
 
-  cout << s << endl;
+  cout << ss.str() << endl;
 }

@@ -170,7 +170,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     //  (*ad_printf)(" %s", (char*)admb_banner);
 #endif
       (*ad_printf)("\n");
-      (*ad_printf)("Copyright (c) 2008-2011 Regents of the University of California\n");
+      (*ad_printf)("Copyright (c) 2008-2011 Regents of the University of California and ADMB Foundation\n");
       (*ad_printf)("\n");
 
       (*ad_printf)( "Usage: %s option(s)\n",(char*)(adprogram_name));
@@ -248,6 +248,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 #  endif
       (*ad_printf)( " -shess          use sparse Hessian structure"
            " inner optimzation\n");       
+      (*ad_printf)( " -version        see version information\n");
       (*ad_printf)("\n");
       (*ad_printf)("Read online documentation at http://www.admb-project.org/\n");
       (*ad_printf)("Contact <users@admb-project.org> for help.\n");
@@ -261,7 +262,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       //(*ad_printf)(" %s", (char*)admb_banner);
 #endif
       (*ad_printf)("\n");
-      (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California\n");
+      (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California and ADMB Foundation\n");
       (*ad_printf)("\n");
 
       (*ad_printf)("ADMB is free software and comes with ABSOLUTELY NO WARRANTY.\n");

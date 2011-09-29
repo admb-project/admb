@@ -114,7 +114,7 @@ void banner(const adstring& program_name)
 #endif
   ss << "\n";
 
-  ss << "Copyright (c) 2008-2011 Regents of the University of California\n";
+  ss << "Copyright (c) 2008-2011 Regents of the University of California and ADMB Foundation\n";
   
   ss << '\0';
 

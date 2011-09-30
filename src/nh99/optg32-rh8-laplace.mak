@@ -34,7 +34,11 @@ df1b2stub:
 	ar -rs $(STUBPATH)/${STUBNAME} $(STUBPATH)/df1b2stub.o
 
 $(DISKDIR)/bin/tpl2cpp:
+ifeq "gcc" "$(CC)"
 	$(CC) -Wno-format tpl2cpp.c -o $@
+else
+	$(CC) tpl2cpp.c -o $@
+endif
 
 tpl2cpp.c: tpl2cpp.lex
 	flex -w tpl2cpp.lex

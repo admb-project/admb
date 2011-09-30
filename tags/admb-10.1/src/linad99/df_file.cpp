@@ -88,14 +88,26 @@
  * Description not yet available.
  * \param
  */
+#ifdef __BORLANDC__
+  DF_FILE::DF_FILE(unsigned long int sz)
+#else
   DF_FILE::DF_FILE(unsigned long long int sz)
+#endif
   {
     const int us=sizeof(unsigned int);
+#ifdef __BORLANDC__
+    if (sz > ULONG_MAX)
+    {
+      cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
+        << ULONG_MAX<<endl;
+    }
+#else
     if (sz > ULLONG_MAX)
     {
       cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
         << ULLONG_MAX<<endl;
     }
+#endif
     if ( (buff=new char[sz])==NULL)
     {
       cerr << "Error trying to allocate memory for DF_FILE buffer"<<endl;

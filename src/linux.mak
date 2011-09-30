@@ -44,30 +44,16 @@ dist:
 	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE ${DISK}
 	cp -vf ../README.txt ${DISK}
-	#cp -vf ../scripts/bash/mygcc* ${DISK}/bin 
-	#cp ../scripts/bash/link* ${DISK}/bin
-	#cp ../scripts/bash/m* ${DISK}/bin
 	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/$(CXX)/adcomp ${DISK}/bin
 	cp ../scripts/$(CXX)/adlink ${DISK}/bin
 	cp ../scripts/g++/Makefile ${DISK}/examples
 	cp ../scripts/admb/admb.bat ${DISK}/bin
-	cp ../scripts/g++/adcomp.bat ${DISK}/bin
-	cp ../scripts/g++/adlink.bat ${DISK}/bin
 	cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 	rm -f ${DISK}/bin/sed.exe
 	rm -f ${DISK}/bin/sed1.exe
-
-
-	#make -C docs/manuals
-	#cp -vf docs/manuals/autodif.pdf ${DISK}/docs/manuals
-	#cp -vf docs/manuals/admb.pdf ${DISK}/docs/manuals
-	#cp -vf docs/manuals/admb-re.pdf ${DISK}/docs/manuals
-	#- rm -f ${DISK}.tar* 
-	#tar -cvf ${DISK}.tar ${DISK}
-	#bzip2 ${DISK}.tar 
 
 verify:
 	cp ../scripts/admb/admb-r901 ${DISK}/bin/admb

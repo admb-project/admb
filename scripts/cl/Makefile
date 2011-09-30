@@ -238,15 +238,9 @@ union:
 	$@
 	cd ..\\..
 
-weights: binomial binomial_w2
+weights: binomial
 binomial:
 	cd admb-re\\weights
 	admb -r $(OPTION) $@
 	$@
-	cd ..\\..
-
-binomial_w2:
-	cd admb-re\\weights
-	admb -r $(OPTION) $@
-	@REM $@
 	cd ..\\..

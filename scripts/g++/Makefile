@@ -155,8 +155,6 @@ union:
 	@#Runtime errors
 	-cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
 
-weights: binomial binomial_w2
+weights: binomial
 binomial:
 	cd admb-re/weights;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@
-binomial_w2:
-	cd admb-re/weights;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(SAFE_OPTION) $@;$(PROG) ./$@ -nohess

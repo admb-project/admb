@@ -44,9 +44,15 @@ dist:
 	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE ${DISK}
 	cp -vf ../README.txt ${DISK}
+ifeq ($(CXX),g++)
+	cp ../scripts/admb/admb-r901 ${DISK}/bin/admb
+	cp ../scripts/g++/adcomp-r901 ${DISK}/bin/adcomp
+	cp ../scripts/g++/adlink-r901 ${DISK}/bin/adlink
+else
 	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/$(CXX)/adcomp ${DISK}/bin
 	cp ../scripts/$(CXX)/adlink ${DISK}/bin
+endif
 	cp ../scripts/g++/Makefile ${DISK}/examples
 	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
@@ -56,12 +62,6 @@ dist:
 	rm -f ${DISK}/bin/sed1.exe
 
 verify:
-	cp ../scripts/admb/admb-r901 ${DISK}/bin/admb
-	cp ../scripts/g++/adcomp-r901 ${DISK}/bin/adcomp
-	cp ../scripts/g++/adlink-r901 ${DISK}/bin/adlink
-	cp ../scripts/admb/admb.bat-r901 ${DISK}/bin/admb.bat
-	cp ../scripts/g++/adcomp.bat-r901 ${DISK}/bin/adcomp.bat
-	cp ../scripts/g++/adlink.bat-r901 ${DISK}/bin/adlink.bat
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} make -C ${DISK}/examples all
 	-export ADMB_HOME=${PWD}/${DISK}; ../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-r${ADMB_REVISION}-opt.txt"
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} SAFE_OPTION=1 make -C ${DISK}/examples all

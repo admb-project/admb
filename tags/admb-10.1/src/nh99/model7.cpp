@@ -326,13 +326,14 @@ void ad_comm::allocate(void)
 #endif
   // strip off the .exe if it is there
   int n=adprogram_name.size();
-  for (i=1;i<=adprogram_name.size()-1;i++)
+  if(n>4)
   {
-    if ( adprogram_name(i)=='.' 
-      && adprogram_name(i+1) != directory_prefix ) 
+    if (adprogram_name(n - 3) == '.'
+        && adprogram_name(n - 2) == 'e'
+        && adprogram_name(n - 1) == 'x'
+        && adprogram_name(n) == 'e')
     {
-      n=i-1;
-      break;
+      n -= 4;
     }
   }
   adprogram_name=adprogram_name(1,n);

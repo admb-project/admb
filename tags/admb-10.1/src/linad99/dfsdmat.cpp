@@ -252,7 +252,7 @@ void dfsdmat::deallocate()
   }
 }  
 
-#if !defined(OPT_LIB)
+#if !defined(OPT_LIB) || defined(__INTEL_COMPILER)
 
 /**
  * Description not yet available.

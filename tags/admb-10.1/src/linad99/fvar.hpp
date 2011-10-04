@@ -3356,10 +3356,8 @@ imatrix sort(_CONST imatrix&,int column,int NSTACK=60);
 
 #ifdef OPT_LIB
       inline dvector& operator() (register int i) { return m[i]; }
-      inline double& operator() (register int i, register int j) {return(*(m[i].v+j));}
       inline dvector& operator[] (register int i) { return m[i]; }
 #else
-      double& operator() (int i, int j);
       dvector& operator() (int i);
       dvector& operator[] (int) ;
 #endif
@@ -3367,14 +3365,20 @@ imatrix sort(_CONST imatrix&,int column,int NSTACK=60);
 #ifdef USE_CONST
   #ifdef OPT_LIB
       inline _CONST dvector& operator() (register int i) _CONST { return m[i]; }
-      inline _CONST double& operator() (register int i, register int j) _CONST 
-      {return(*(m[i].v+j));}
       inline _CONST dvector& operator[] (register int i) _CONST  { return m[i]; }
 #else
-      _CONST double& operator() (int i, int j) _CONST;
       _CONST dvector& operator() (int i) _CONST;
       _CONST dvector& operator[] (int)  _CONST;
   #endif
+#endif
+
+#if defined(OPT_LIB) && !defined(__INTEL_COMPILER) 
+      inline double& operator() (register int i, register int j) {return(*(m[i].v+j));}
+      inline _CONST double& operator() (register int i, register int j) _CONST 
+      {return(*(m[i].v+j));}
+#else
+      double& operator() (int i, int j);
+      _CONST double& operator() (int i, int j) _CONST;
 #endif
 
     inline dvector& elem(int i) { return( *(m+i) ); }
@@ -3715,7 +3719,7 @@ public:
   friend uistream& operator >> (BOR_CONST uistream&,BOR_CONST dfsdmat&);
   friend uostream& operator << (BOR_CONST uostream&,BOR_CONST dfsdmat&);
 
-  #if defined(OPT_LIB)
+  #if defined(OPT_LIB) && !defined(__INTEL_COMPILER)
     double& elem(int i,int j){ return *(m[i]+j);}
     double& operator () (int i,int j){ return *(m[i]+j);}
   #else

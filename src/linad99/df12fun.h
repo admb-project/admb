@@ -63,6 +63,7 @@
     df1_two_variable& operator = (const df1_two_variable& v);
     df1_two_variable& operator = (double v);
     df1_two_variable& operator += (const df1_two_variable& v);
+    df1_two_variable& operator *= (double v);
     df1_two_variable& operator *= (const df1_two_variable& v);
     df1_two_variable& operator += (double v);
     df1_two_variable& operator -= (const df1_two_variable& v);
@@ -184,6 +185,7 @@
 
   df1_two_variable sin(const df1_two_variable& x);
   df1_two_variable sqrt(const df1_two_variable& x);
+  df1_two_variable fabs(const df1_two_variable& x);
   df1_two_variable atan(const df1_two_variable& x);
   df1_two_variable cos(const df1_two_variable& x);
   df1_two_variable tan(const df1_two_variable& x);
@@ -192,6 +194,7 @@
   df1_two_variable cube(const df1_two_variable& x);
   df1_two_variable pow(const df1_two_variable& x,
     const df1_two_variable& y);
+  df1_two_variable pow(double x,const df1_two_variable& y);
 
   df1_two_variable sqrt(const df1_two_variable& x);
   df1_two_variable exp(const df1_two_variable& x);

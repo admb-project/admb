@@ -31,7 +31,9 @@
 #  endif
    return *(m+i);
  }
+#endif
 
+#if !defined(OPT_LIB) || defined(__INTEL_COMPILER)
 /**
  * Description not yet available.
  * \param

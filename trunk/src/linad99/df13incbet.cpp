@@ -1423,7 +1423,6 @@ static df1_three_variable pseries(const df1_three_variable & _a,
 static df1_three_variable incbd(const df1_three_variable & _a,
 				const df1_three_variable & _b,
 				const df1_three_variable & _x);
-
 /**
  * Description not yet available.
  * \param

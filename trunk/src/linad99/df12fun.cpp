@@ -288,6 +288,25 @@
  * Description not yet available.
  * \param
  */
+  df1_two_variable& df1_two_variable::operator /= (const df1_two_variable& y)
+  {
+   /*
+    df1_three_variable x=*this * inv(y);
+    *this=x;
+    return *this;
+   */
+   // properly optimized code
+    double tmp=1.0/value(y);
+    *get_u()*=tmp;
+    *get_u_x() = *get_u_x()*tmp- *get_u()*tmp* *y.get_u_x();
+    *get_u_y() = *get_u_y()*tmp- *get_u()*tmp* *y.get_u_y();
+    return *this;
+  }
+
+/**
+ * Description not yet available.
+ * \param
+ */
   df1_two_variable operator - (const df1_two_variable& v)
   {
     df1_two_variable z;
@@ -310,6 +329,20 @@
     *get_u_y() += *v.get_u_y();
     return *this;
   }
+
+  df1_two_variable& df1_two_variable::operator *= (double v)
+  {
+   /*
+    df1_three_variable x=*this * v;
+    *this=x;
+    return *this;
+   */
+    *get_u()*=v;
+    *get_u_x() = *get_u_x()*v;
+    *get_u_y() = *get_u_y()*v;
+    return *this;
+  }
+
 
 /**
  * Description not yet available.
@@ -486,6 +519,24 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
 
     set_derivatives(z,x,u,zp);
     return z;
+  }
+
+/**
+ * Description not yet available.
+ * \param
+ */
+  df1_two_variable pow(const df1_two_variable& x,const df1_two_variable& y)
+  {
+    return exp(y*log(x));
+  }
+
+/**
+ * Description not yet available.
+ * \param
+ */
+  df1_two_variable pow(double x,const df1_two_variable& y)
+  {
+    return exp(y*log(x));
   }
 
 /**
@@ -841,3 +892,13 @@ df1_two_matrix choleski_decomp(const df1_two_matrix& MM)
 
   return L;
 }
+
+  df1_two_variable fabs(const df1_two_variable& x)
+  {
+    df1_two_variable z;
+    if (value(x)>=0.0)
+      z=x; 
+    else
+      z=-x;
+    return z;
+  }

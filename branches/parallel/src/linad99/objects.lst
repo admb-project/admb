@@ -490,7 +490,8 @@ expm.obj \
 orthpoly.obj \
 makesub.obj \
 fvar_a49.obj \
-adpvm2.obj 
+adpvm2.obj \
+gdbprint.obj
 OBJ4= \
 manip.obj \
 conjprod.obj 

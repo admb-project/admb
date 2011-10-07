@@ -255,6 +255,72 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   
     if (tmax< 1.e-4) break;
   }
+
+#if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    //double local_pobjfun=value(*objective_function_value::pobjfun);
+    if (ad_comm::mpi_manager->is_master())
+    {
+      //get dvectors from slaves and add into u
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        dvector slave_u = ad_comm::mpi_manager->
+            get_dvector_from_slave(si);
+        u+=slave_u;
+      }
+      //send u to slaves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        ad_comm::mpi_manager->send_dvector_to_slave(u,si);
+      }
+
+      // sync fb get fb from slaves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        double slave_fb = ad_comm::mpi_manager->
+            get_double_from_slave(si);
+        fb+=slave_fb;
+      }
+      // send fb to slaves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        ad_comm::mpi_manager->send_double_to_slave(fb,si);
+      }
+
+      /*// sync objective function
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        local_pobjfun+=ad_comm::mpi_manager->get_double_from_slave(si);
+      }
+      // send to slaves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        ad_comm::mpi_manager->send_double_to_slave(local_pobjfun,si);
+      }*/
+    }
+    else
+    {
+      //send dvector to master
+      ad_comm::mpi_manager->send_dvector_to_master(u);
+      //set step to value from master
+      u = ad_comm::mpi_manager->get_dvector_from_master();
+
+      //send fb to master
+      ad_comm::mpi_manager->send_double_to_master(fb);
+      //set fb from master
+      fb = ad_comm::mpi_manager->get_double_from_master();
+
+      /*// sync objective function
+      ad_comm::mpi_manager->send_double_to_master(local_pobjfun);
+      // get initial_df1b2params::cobjfun from master
+      local_pobjfun=ad_comm::mpi_manager->get_double_from_master();*/
+    }
+    //*objective_function_value::pobjfun=local_pobjfun;
+    //objective_function_value::fun_without_pen=local_pobjfun;
+  }
+#endif
+
   fmc1.ireturn=0;
   fmc1.fbest=fb;
   gradient_structure::set_NO_DERIVATIVES();

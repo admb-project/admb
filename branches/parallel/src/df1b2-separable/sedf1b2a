@@ -12,6 +12,10 @@ s/dvar_vector/df1b2vector/g
 s/dvar_matrix/df1b2matrix/g
 s/dvar3_array/df1b23array/g
 
+  s/begin_df1b2_funnel();/#if defined(USE_ADMPI)\
+  (lapprox->mpi_separable_calls_counter)++;\
+  #endif\
+  begin_df1b2_funnel();/g
 
 /SEPFUN1/{
   s/df1b2variable/funnel_init_df1b2variable/g
@@ -64,6 +68,27 @@ void model_parameters::end_df1b2_funnel(void) \
     end_df1b2_funnel_stuff();  \
   }  \
 } \
-
-
-
+\
+void model_parameters::set_bounds(separable_bounds& v) \
+{  \
+  if (lapprox)  \
+  {  \
+    v.model_parameters_flag=0;  \
+  }  \
+  else  \
+  {  \
+    v.model_parameters_flag=1;  \
+  }  \
+}  \
+\
+void df1b2_pre_parameters::set_bounds(separable_bounds& v) \
+{  \
+  if (lapprox)  \
+  {  \
+    v.model_parameters_flag=0;  \
+  }  \
+  else  \
+  {  \
+    v.model_parameters_flag=1;  \
+  }  \
+}  \

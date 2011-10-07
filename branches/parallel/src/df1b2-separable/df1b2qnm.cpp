@@ -16,6 +16,11 @@
 static int no_stuff=0;
 //static void xxxy(void) {}
 
+#if defined(USE_ADMPI)
+void sync_f(const double& _f);
+void sync_dvector(const dvector& _v);
+#endif
+
 /**
  * Description not yet available.
  * \param
@@ -260,6 +265,12 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       cerr << "Error allocating memory for lapprox" << endl;
       ad_exit(1);
     }
+#if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
+    {
+      (ad_comm::mpi_manager->sync_objfun_flag)=1;
+    }
+#endif
     initial_df1b2params::current_phase=initial_params::current_phase;
     
     initial_df1b2params::save_varsptr();
@@ -411,5 +422,68 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   quit_flag=fmc.quit_flag;
   objective_function_value::gmax=fabs(fmc.gmax);
 } // end block for quasi newton minimization
+
+#endif
+
+#if defined(USE_ADMPI)
+void sync_f(const double& _f)
+{
+  double & f= (double&)_f;
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_master())
+    {
+      // get f from slaves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        double local_f=ad_comm::mpi_manager->get_double_from_slave(si);
+        f+=local_f;
+      }
+      // send initial_df1b2params::cobjfun to slaves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        ad_comm::mpi_manager->send_double_to_slave(f,si);
+      }
+    }
+    else
+    {
+      //send f to master
+      ad_comm::mpi_manager->send_double_to_master(f);
+
+      // get f from master
+      f=ad_comm::mpi_manager->get_double_from_master();
+    }
+  }
+}
+
+void sync_dvector(const dvector& _v)
+{
+  dvector & v= (dvector&)_v;
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_master())
+    {
+      // get v from slaves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        dvector local_v=ad_comm::mpi_manager->get_dvector_from_slave(si);
+        v+=local_v;
+      }
+      // send initial_df1b2params::cobjfun to slaves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        ad_comm::mpi_manager->send_dvector_to_slave(v,si);
+      }
+    }
+    else
+    {
+      //send g to master
+      ad_comm::mpi_manager->send_dvector_to_master(v);
+
+      // get g from master
+      v=ad_comm::mpi_manager->get_dvector_from_master();
+    }
+  }
+}
 
 #endif

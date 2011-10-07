@@ -250,7 +250,8 @@ void laplace_approximation_calculator::
       //int i2=list(lrei,2);
       step(i1-xsize)=local_step(i); 
     }
-  } 
+
+  } //end if re
 
   f1b2gradlist->reset();
   f1b2gradlist->list.initialize();

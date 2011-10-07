@@ -2208,6 +2208,20 @@ void laplace_approximation_calculator::set_default_hessian_type(void )
 
 #  if defined(USE_LAPLACE)
 
+#if defined(USE_ADMPI)
+void laplace_approximation_calculator::mpi_set_separable_index(int min, int max)
+{
+  min_separable_index=min;
+  max_separable_index=max;
+}
+
+void laplace_approximation_calculator::set_separable_index(void)
+{
+  min_separable_index=1;
+  max_separable_index=num_separable_calls;
+}
+#endif
+
 /**
  * Description not yet available.
  * \param

@@ -108,7 +108,7 @@ void laplace_approximation_calculator::
   do_separable_stuff_laplace_approximation_block_diagonal(df1b2variable& ff)
 {
   set_dependent_variable(ff);
-  df1b2_gradlist::set_no_derivatives();
+  df1b2_gradlist::set_no_derivatives();    
   df1b2variable::passnumber=1;
   df1b2_gradcalc1();
    
@@ -130,7 +130,7 @@ void laplace_approximation_calculator::
       lfe_index(++xs)=i;
     }
   }
-  
+
   dvector local_xadjoint(1,xs);
   for (j=1;j<=xs;j++)
   {
@@ -169,16 +169,22 @@ void laplace_approximation_calculator::
         local_Dux(i,j)=locy(i2).u_bar[j2-1];
       }
     }
-  
-  
     //if (initial_df1b2params::separable_calculation_type==3)
     {
-  
+
     //int nvar=us*us;
     double f;
     dmatrix Hessadjoint=get_gradient_for_hessian_calcs(local_Hess,f);
     initial_df1b2params::cobjfun+=f;
-  
+#if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
+    {
+      if (ad_comm::mpi_manager->is_slave())
+      {
+        ad_comm::mpi_manager->increment_mpi_cobjfun(f);
+      }
+    }
+#endif
     for (i=1;i<=us;i++)
     {
       for (j=1;j<=us;j++)
@@ -188,10 +194,10 @@ void laplace_approximation_calculator::
         locy(i2).get_u_bar_tilde()[j2-1]=Hessadjoint(i,j);
       }
     }
-    
+
      df1b2variable::passnumber=2;
      df1b2_gradcalc1();
-  
+   
      df1b2variable::passnumber=3;
      df1b2_gradcalc1();
       dvector xtmp(1,xs);
@@ -214,11 +220,64 @@ void laplace_approximation_calculator::
         local_xadjoint -= local_uadjoint*inv(local_Hess)*local_Dux;
     }
   }
+        // assign separable calls to master and slaves
+ 
   for (i=1;i<=xs;i++)
   {
     int ii=lfe_index(i);
     xadjoint(list(ii,1))+=local_xadjoint(i);
   }
+#if defined(USE_ADMPI)  
+  if (ad_comm::mpi_manager)
+  {
+    if (mpi_separable_calls_counter == num_separable_calls)
+    {
+      if (ad_comm::mpi_manager->is_master())
+      {
+        //get dvectors from slaves and add into xadjoint
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          dvector slave_xadjoint =
+              ad_comm::mpi_manager->get_dvector_from_slave(si);
+          xadjoint+=slave_xadjoint;
+        }
+        //send xadjoint to slaves
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          ad_comm::mpi_manager->send_dvector_to_slave(xadjoint,si);
+        }
+
+        // get cobjfun from slaves
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          double local_cobjfun=ad_comm::mpi_manager->get_double_from_slave(si);
+          initial_df1b2params::cobjfun+=local_cobjfun;
+        }
+        // send initial_df1b2params::cobjfun to slaves
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          ad_comm::mpi_manager->
+            send_double_to_slave(initial_df1b2params::cobjfun,si);
+        }
+      }
+      else
+      {
+        //send dvector to master
+        ad_comm::mpi_manager->send_dvector_to_master(xadjoint);
+        //set xadjoint to value from master
+        xadjoint = ad_comm::mpi_manager->get_dvector_from_master();
+
+        //send cobjfun to master
+        double local_mpi_cobjfun=ad_comm::mpi_manager->get_mpi_cobjfun();
+        ad_comm::mpi_manager->send_double_to_master(local_mpi_cobjfun);
+
+        // get initial_df1b2params::cobjfun from master
+        initial_df1b2params::cobjfun=
+          ad_comm::mpi_manager->get_double_from_master();
+      }
+    }
+  }
+#endif
   f1b2gradlist->reset();
   f1b2gradlist->list.initialize();
   f1b2gradlist->list2.initialize();

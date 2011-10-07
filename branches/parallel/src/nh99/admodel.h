@@ -2812,12 +2812,22 @@ class admpi_manager
   int do_hess;
   imatrix all_hess_bounds;
   ivector hess_bounds;
+  int min_separable_index;
+  int max_separable_index;
+  double mpi_cobjfun;
 public:
+  int sync_objfun_flag;
   int get_num_slaves(void){ return num_slaves;}
   int get_num_hess_slaves(void){ return num_hess_slaves;}
+  void set_num_hess_slaves(int _num_hess_slaves){ num_hess_slaves = _num_hess_slaves; }
+  void reset_mpi_cobjfun(void){ mpi_cobjfun=0.0;}
+  void set_minimize_flag(void){ do_minimize=1; }
+  double get_mpi_cobjfun(void){ return mpi_cobjfun;}
   int get_slave_number(void){ return slave_number;}
   int get_do_minimize(void){ return do_minimize;}
   int get_do_hess(void){ return do_hess;}
+  int get_min_separable_index(void){ return min_separable_index;}
+  int get_max_separable_index(void){ return max_separable_index;}
   admpi_manager(int m,int argc,char * argv[]);
   ~admpi_manager();
   int is_master(void);
@@ -2834,8 +2844,29 @@ public:
   void get_int_from_slave(int &i,int slave_number);
   void get_slave_hessian_assignments(void);
   void send_slave_hessian_assignments(int);
+  dvector get_dvector_from_slave(int slave_number);
+  void send_dvector_to_master(const dvector& v);
+  void set_separable_assignments(const int _num_separable_calls);
+  void increment_mpi_cobjfun(const double& f);
+  double get_double_from_slave(int slave_number);
+  void send_double_to_master(const double v);
+  void send_double_to_slave(const double v,int slave_number);
+  double get_double_from_master(void);
 };
 #endif   // if defined(USE_ADMPI)
+
+class separable_bounds
+{
+  int min_index; //use with ADMPI
+  int max_index;
+  int min_bound; //use if no MPI or not syncing
+  int max_bound;
+public:
+  int model_parameters_flag;
+  int indexmin(void);
+  int indexmax(void);
+  separable_bounds(int min_bound,int max_bound);
+};
 
 int withinbound(int lb,int n,int ub);
 

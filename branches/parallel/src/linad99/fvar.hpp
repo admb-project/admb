@@ -8539,4 +8539,20 @@ void test_the_pointer(void);
   int norm2(const ivector&);
   int sumsq(const ivector& v);
 
+#if defined(USE_ADMPI)
+  void add_slave_suffix(const adstring& tmp);
+  void report_file_opening(const adstring& tmp);
+#endif
+
+void dp(const ivector& x);
+void dp(const dvar_vector& x);
+void dp(const dvector& x);
+void dp(int x);
+void dp(const prevariable& x);
+void dp(double x);
+void dp(const imatrix& x);
+void dp(const dvar_matrix& x);
+void dp(const dmatrix& x);
+
+
 #endif //#ifndef FVAR_HPP

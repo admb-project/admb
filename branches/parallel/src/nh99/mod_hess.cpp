@@ -76,6 +76,8 @@ void function_minimizer::hess_routine_noparallel(void)
     {
       if (ad_comm::mpi_manager->is_master())
       {
+         int set_hess_slaves=ad_comm::mpi_manager->get_num_slaves();
+         ad_comm::mpi_manager->set_num_hess_slaves(set_hess_slaves);
          // send variable assignement to slaves for hessian calcs
          ad_comm::mpi_manager->send_slave_hessian_assignments(nvar);
         for (int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)

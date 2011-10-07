@@ -28,12 +28,28 @@ static void xxx(ivector re_list,ivector fe_list){}
 dvector laplace_approximation_calculator::block_diagonal_calculations
   (const dvector& _x,const double& _f,function_minimizer * pfmin)
 {
+/*{
+static int stop_flag;
+if (stop_flag!=1)
+{
+#if defined(USE_ADMPI)
+ if (ad_comm::mpi_manager){
+  if(ad_comm::mpi_manager->is_slave())
+  {
+    cout << "PID " << getpid() << endl;
+  }
+ }
+#endif
+  stop_flag=0;
+}
+while(stop_flag==0)
+  sleep(5);
+}*/
   // for use when there is no separability
   ADUNCONST(dvector,x)
   ADUNCONST(double,f)
   //int i,j;
   int i;
-
   initial_params::set_inactive_only_random_effects(); 
   gradient_structure::set_NO_DERIVATIVES();
   initial_params::reset(x);    // get current x values into the model
@@ -101,7 +117,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     }
   }
   //cout << y << endl;
-        
+
   for(int ii=1;ii<=num_nr_iters;ii++)
   {  
     {   
@@ -115,7 +131,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       cout << "max separable g " << max_separable_g << endl; 
       cout << "Newton raphson " << ii << endl;
       uhat+=step;
-    
       evaluate_function(uhat,pfmin);
       pmin->inner_opt_flag=0;
     }
@@ -135,7 +150,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       }
     }
   }
- 
   cout << initial_df1b2params::cobjfun << endl;
   xadjoint.initialize();
   uadjoint.initialize();
@@ -154,7 +168,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     //cout << (*pfmin->lapprox->block_diagonal_hessian) << endl;
     block_diagonal_flag=2;
     initial_params::straight_through_flag=0;
- 
     // do importance sampling and get ders bakc to Hessian adjoint
     // new stuff for more than one random effect in each separable call
     //  Apr 17 07
@@ -181,7 +194,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     // derivatives from hessian adjoint back
     {
       x_con.initialize();
-      
       for (int i=1;i<=num_separable_calls;i++)
       {
         ivector& re_list=(*block_diagonal_re_list)(i);
@@ -191,7 +203,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
         xxx(re_list,fe_list);
         int mmax=re_list.indexmax();
         dvector tmp(1,mmax);
-        
         int j;
         for (j=1;j<=re_list.indexmax();j++)
         {
@@ -220,7 +231,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     // *******************************************************
     // *******************************************************
     // *******************************************************
-    
     block_diagonal_flag=3;
     //pfmin->lapprox->xadjoint.initialize();
     //pfmin->lapprox->uadjoint.initialize();
@@ -270,7 +280,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       f=calculate_importance_sample_block_diagonal_funnel(x,uhat,Hess,xadjoint,
         uadjoint,Hessadjoint,pfmin);
     }
-
     int xmax=xadjoint.indexmax();
     dvector x_con(1,xmax);
     x_con.initialize();
@@ -302,7 +311,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
           {
             tmp(j)=uadjoint(re_list(j)-xmax);
           } 
-  
           if (allocated(fe_list))
           {
             dvector tmp1=solve(H,tmp);
@@ -328,7 +336,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     // *******************************************************
     // *******************************************************
     // *******************************************************
-    
     block_diagonal_flag=3;
     //pfmin->lapprox->xadjoint.initialize();
     //pfmin->lapprox->uadjoint.initialize();
@@ -451,6 +458,33 @@ dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
     funnel_init_var::lapprox=0;
     block_diagonal_flag=0;
   }
+#if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_master())
+    {
+      //get dvectors from slaves and add into step
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        dvector slave_step = ad_comm::mpi_manager->
+            get_dvector_from_slave(si);
+        step+=slave_step;
+      }
+      //send step to slaves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        ad_comm::mpi_manager->send_dvector_to_slave(step,si);
+      }
+    }
+    else
+    {
+      //send dvector to master
+      ad_comm::mpi_manager->send_dvector_to_master(step);
+      //set step to value from master
+      step = ad_comm::mpi_manager->get_dvector_from_master();
+    }
+  }
+#endif
   return step;
 }
 

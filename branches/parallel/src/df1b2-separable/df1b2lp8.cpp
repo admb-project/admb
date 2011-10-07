@@ -376,8 +376,19 @@ void function_minimizer::pre_user_function(void)
     if (lapprox->hesstype==2) 
     {
       lapprox->separable_calls_counter=0;
+#if defined(USE_ADMPI)
+      lapprox->mpi_separable_calls_counter=0;
+      if (ad_comm::mpi_manager)
+      {
+        if (ad_comm::mpi_manager->is_slave())
+        {
+          ad_comm::mpi_manager->reset_mpi_cobjfun();
+        }
+      }
+#endif
     }
   }
+
   user_function();
  /* 
   if (lapprox)
@@ -825,8 +836,10 @@ void laplace_approximation_calculator::allocate_block_diagonal_stuff(void)
     delete block_diagonal_vch;
     block_diagonal_vch=0;
   }
+
   block_diagonal_vch = new dvar3_array(1,num_separable_calls,
           1,itmp,1,itmp);
+
   if (block_diagonal_ch)
   {
     delete block_diagonal_ch;
@@ -834,6 +847,7 @@ void laplace_approximation_calculator::allocate_block_diagonal_stuff(void)
   }
   block_diagonal_ch = new d3_array(1,num_separable_calls,
     1,itmp,1,itmp);
+
   if (block_diagonal_hessian)
   {
     delete block_diagonal_hessian;

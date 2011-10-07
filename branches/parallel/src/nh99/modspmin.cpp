@@ -320,6 +320,16 @@ int * kill_address;
   void function_minimizer::computations1(int argc,char * argv[])
   {
     tracing_message(traceflag,"B1");
+#if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
+    {
+      if (ad_comm::mpi_manager->is_slave())
+      {
+        if (initial_df1b2params::separable_flag)
+          ad_comm::mpi_manager->set_minimize_flag();
+      }
+    }
+#endif
 #if defined(__SPDLL__)
     //if (ad_printf) (*ad_printf)("entered void function_minimizer::computations1\n");
 #endif
@@ -530,6 +540,7 @@ int * kill_address;
  #if defined(USE_ADMPI)
               if (ad_comm::mpi_manager)
               {
+                (ad_comm::mpi_manager->sync_objfun_flag)=0;
                 if (ad_comm::mpi_manager->is_master())
                 {
                   depvars_routine();

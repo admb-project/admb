@@ -250,16 +250,48 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
       }
       u=ub;
     }
-    double tmax=max(gmax); 
+    double tmax=max(gmax);
+#if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_master())
+    {
+      dvector slave_max(0,ad_comm::mpi_manager->get_num_slaves());
+      slave_max(0)=tmax;
+      // get tmax from slaves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        slave_max(si)=ad_comm::mpi_manager->get_double_from_slave(si);
+      }
+      tmax=max(slave_max);
+      // send new tmax to salves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        ad_comm::mpi_manager->send_double_to_slave(tmax,si);
+      }
+      cout <<  " inner maxg = " << tmax << endl; 
+    }
+    else
+    {
+      // send tmax to master
+      ad_comm::mpi_manager->send_double_to_master(tmax);
+      // set new tmax
+      tmax = ad_comm::mpi_manager->get_double_from_master();
+    }
+  }
+  else
+  {
+#endif
     cout <<  " inner maxg = " << tmax << endl; 
-  
+#if defined(USE_ADMPI)
+  }
+#endif
     if (tmax< 1.e-4) break;
   }
 
 #if defined(USE_ADMPI)
   if (ad_comm::mpi_manager)
   {
-    //double local_pobjfun=value(*objective_function_value::pobjfun);
     if (ad_comm::mpi_manager->is_master())
     {
       //get dvectors from slaves and add into u
@@ -274,30 +306,6 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
       {
         ad_comm::mpi_manager->send_dvector_to_slave(u,si);
       }
-
-      // sync fb get fb from slaves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        double slave_fb = ad_comm::mpi_manager->
-            get_double_from_slave(si);
-        fb+=slave_fb;
-      }
-      // send fb to slaves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        ad_comm::mpi_manager->send_double_to_slave(fb,si);
-      }
-
-      /*// sync objective function
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        local_pobjfun+=ad_comm::mpi_manager->get_double_from_slave(si);
-      }
-      // send to slaves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        ad_comm::mpi_manager->send_double_to_slave(local_pobjfun,si);
-      }*/
     }
     else
     {
@@ -305,19 +313,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
       ad_comm::mpi_manager->send_dvector_to_master(u);
       //set step to value from master
       u = ad_comm::mpi_manager->get_dvector_from_master();
-
-      //send fb to master
-      ad_comm::mpi_manager->send_double_to_master(fb);
-      //set fb from master
-      fb = ad_comm::mpi_manager->get_double_from_master();
-
-      /*// sync objective function
-      ad_comm::mpi_manager->send_double_to_master(local_pobjfun);
-      // get initial_df1b2params::cobjfun from master
-      local_pobjfun=ad_comm::mpi_manager->get_double_from_master();*/
     }
-    //*objective_function_value::pobjfun=local_pobjfun;
-    //objective_function_value::fun_without_pen=local_pobjfun;
   }
 #endif
 

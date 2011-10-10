@@ -68,27 +68,4 @@ void model_parameters::end_df1b2_funnel(void) \
     end_df1b2_funnel_stuff();  \
   }  \
 } \
-\
-void model_parameters::set_bounds(separable_bounds& v) \
-{  \
-  if (lapprox)  \
-  {  \
-    v.model_parameters_flag=0;  \
-  }  \
-  else  \
-  {  \
-    v.model_parameters_flag=1;  \
-  }  \
-}  \
-\
-void df1b2_pre_parameters::set_bounds(separable_bounds& v) \
-{  \
-  if (lapprox)  \
-  {  \
-    v.model_parameters_flag=0;  \
-  }  \
-  else  \
-  {  \
-    v.model_parameters_flag=1;  \
-  }  \
-}  \
+

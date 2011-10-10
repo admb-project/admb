@@ -8,7 +8,6 @@ public: \
     model_parameters(sz,argc,argv){;}
 $a\
   void begin_df1b2_funnel(void); \
-  void set_bounds(separable_bounds& v); \
   void setup_quadprior_calcs(void); \
   void end_df1b2_funnel(void);
 # virtual void user_function(const init_df1b2vector& x,df1b2variable& f); \

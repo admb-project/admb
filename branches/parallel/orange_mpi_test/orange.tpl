@@ -30,7 +30,6 @@ GLOBALS_SECTION
 PROCEDURE_SECTION
 
   separable_bounds v(1,(int)M);
-  set_bounds(v);
   int i,ii;
 
   g = 0.0;

@@ -3108,7 +3108,7 @@ PARAMETER_SECTION {
       fprintf(fdat,"  model_data(int argc,char * argv[],dll_args&);\n  friend class model_parameters;\n");
     else  
       fprintf(fdat,"  model_data(int argc,char * argv[]);\n  friend class model_parameters;\n");
-    fprintf(fdat,"%s","};\n\nclass separable_bounds;\n\nclass model_parameters : "
+    fprintf(fdat,"%s","};\n\nclass model_parameters : "
       "public model_data ,"
       "\n  public function_minimizer\n{\n");
     
@@ -3123,7 +3123,6 @@ PARAMETER_SECTION {
     fprintf(fdat,"  ~model_parameters();\n");
 //    fprintf(fdat,"%s","  void admaster_slave_variable_interface(void);\n");
     fprintf(fdat,"%s","  void preliminary_calculations(void);\n");
-    fprintf(fdat,"%s","  void set_bounds(separable_bounds& v);\n");
     fprintf(fdat,"%s","  void set_runtime(void);\n");
     fprintf(fdat,"%s","  virtual void * mycast(void) {return (void*)this;}\n");
 

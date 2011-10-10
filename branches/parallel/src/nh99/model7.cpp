@@ -607,7 +607,7 @@ separable_bounds::separable_bounds(int _min_bound, int _max_bound)
 
 int separable_bounds::indexmin(void)
 {
-/*#if defined(USE_ADMPI)
+#if defined(USE_ADMPI)
   if (ad_comm::mpi_manager)
   {
     if (ad_comm::mpi_manager->sync_objfun_flag)
@@ -616,25 +616,21 @@ int separable_bounds::indexmin(void)
     }
     else
     {
-#endif
       return min_bound;
-#if defined(USE_ADMPI)
     }
-  }
-#endif*/
-  if(model_parameters_flag)
-  {
-    return min_bound;
   }
   else
   {
-    return min_index;
+#endif
+    return min_bound;
+#if defined(USE_ADMPI)
   }
+#endif
 }
 
 int separable_bounds::indexmax(void)
 {
-/*#if defined(USE_ADMPI)
+#if defined(USE_ADMPI)
   if (ad_comm::mpi_manager)
   {
     if (ad_comm::mpi_manager->sync_objfun_flag)
@@ -643,20 +639,16 @@ int separable_bounds::indexmax(void)
     }
     else
     {
-#endif
       return max_bound;
-#if defined(USE_ADMPI)
     }
-  }
-#endif*/
-  if(model_parameters_flag)
-  {
-    return max_bound;
   }
   else
   {
-    return max_index;
+#endif
+    return max_bound;
+#if defined(USE_ADMPI)
   }
+#endif
 }
 
 void  strip_full_path(BOR_CONST adstring& _s)

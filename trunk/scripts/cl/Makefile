@@ -49,7 +49,7 @@ finance:
 forest:
 	cd admb\\$@
 	admb $(OPTION) $@
-	REM $@
+	@REM $@
 	cd ..\\..
 
 
@@ -170,7 +170,7 @@ logistic:
 nbmm:
 	cd admb-re\\$@
 	admb -r $(OPTION) $@
-	$@
+	@REM $@
 	cd ..\\..
 
 nested4:

@@ -3915,11 +3915,15 @@ TOP_OF_MAIN_SECTION {
       fprintf(htop,"  extern \"C\"  {\n");
       fprintf(htop,"    void ad_boundf(int i);\n  }\n");
     }
-      
-    
+          
     if (talk_to_splus)
     {
       fprintf(htop,"#include <adsplus.h>\n\n");
+    }
+
+    if (have_separable_function)
+    {
+      fprintf(htop,"extern ad_separable_manager * separable_manager;\n\n");
     }
 
     if (makedll)

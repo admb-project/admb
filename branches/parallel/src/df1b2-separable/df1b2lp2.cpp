@@ -28,23 +28,6 @@ static void xxx(ivector re_list,ivector fe_list){}
 dvector laplace_approximation_calculator::block_diagonal_calculations
   (const dvector& _x,const double& _f,function_minimizer * pfmin)
 {
-/*{
-static int stop_flag;
-if (stop_flag!=1)
-{
-#if defined(USE_ADMPI)
- if (ad_comm::mpi_manager){
-  if(ad_comm::mpi_manager->is_slave())
-  {
-    cout << "PID " << getpid() << endl;
-  }
- }
-#endif
-  stop_flag=0;
-}
-while(stop_flag==0)
-  sleep(5);
-}*/
   // for use when there is no separability
   ADUNCONST(dvector,x)
   ADUNCONST(double,f)

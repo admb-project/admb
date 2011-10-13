@@ -20,6 +20,7 @@
 void vm_initialize(void);
 int have_jvm=0;
 
+ad_separable_manager * separable_manager;
 
 #if defined(USE_ADMPI)
 const int admpi_manager::MAX_MPI_OFFSET=1000;
@@ -553,59 +554,72 @@ admpi_manager::admpi_manager(int m,int argc,char * argv[])
 
 #endif
 
-separable_bounds::separable_bounds(int _min_bound, int _max_bound)
+ad_separable_manager::ad_separable_manager(void)
 {
-  min_bound=_min_bound;
-  max_bound=_max_bound;
-#if defined(USE_ADMPI)
-  if (ad_comm::mpi_manager)
+  min_bound=0;
+  max_bound=0;
+  min_index=0;
+  max_index=0;
+  initialize_flag=1;
+  model_parameters_flag=0;
+}
+
+void ad_separable_manager::init(int lb,int ub)
+{
+  if (initialize_flag)
   {
-    int num_separable_calls = max_bound-min_bound+1;
-    if(ad_comm::mpi_manager->is_master())
+    initialize_flag=0;
+    min_bound=lb;
+    max_bound=ub;
+#if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
     {
-      int local_num_slaves = ad_comm::mpi_manager->get_num_slaves()+1;
-      int nd=num_separable_calls/local_num_slaves;
-      int r= num_separable_calls - nd * local_num_slaves;
-      ivector mpi_partition(1,local_num_slaves);
-      mpi_partition=nd;
-      mpi_partition(1,r)+=1;
-
-      ivector minsep(1,local_num_slaves);
-      ivector maxsep(1,local_num_slaves);
-      minsep(1)=1;
-      maxsep(1)=mpi_partition(1);
-      for (int i=2;i<=local_num_slaves;i++)
+      int num_separable_calls = max_bound-min_bound+1;
+      if(ad_comm::mpi_manager->is_master())
       {
-        minsep(i)=maxsep(i-1)+1;
-        maxsep(i)=minsep(i)+mpi_partition(i)-1;
+        int local_num_slaves = ad_comm::mpi_manager->get_num_slaves()+1;
+        int nd=num_separable_calls/local_num_slaves;
+        int r= num_separable_calls - nd * local_num_slaves;
+        ivector mpi_partition(1,local_num_slaves);
+        mpi_partition=nd;
+        mpi_partition(1,r)+=1;
+
+        ivector minsep(1,local_num_slaves);
+        ivector maxsep(1,local_num_slaves);
+        minsep(1)=1;
+        maxsep(1)=mpi_partition(1);
+        for (int i=2;i<=local_num_slaves;i++)
+        {
+          minsep(i)=maxsep(i-1)+1;
+          maxsep(i)=minsep(i)+mpi_partition(i)-1;
+        }
+
+        min_index = minsep(1);
+        max_index = maxsep(1);
+        for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+        {
+          ad_comm::mpi_manager->send_int_to_slave(minsep(i+1),i);
+          ad_comm::mpi_manager->send_int_to_slave(maxsep(i+1),i);
+        }
       }
-
-      min_index = minsep(1);
-      max_index = maxsep(1);
-      for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+      else
       {
-        ad_comm::mpi_manager->send_int_to_slave(minsep(i+1),i);
-        ad_comm::mpi_manager->send_int_to_slave(maxsep(i+1),i);
+        ad_comm::mpi_manager->get_int_from_master(min_index);
+        ad_comm::mpi_manager->get_int_from_master(max_index);
       }
     }
     else
     {
-      ad_comm::mpi_manager->get_int_from_master(min_index);
-      ad_comm::mpi_manager->get_int_from_master(max_index);
-    }
-  }
-  else
-  {
 #endif
-    min_index=min_bound;
-    max_index=max_bound;
+      min_index=min_bound;
+      max_index=max_bound;
 #if defined(USE_ADMPI)
-  }
+    }
 #endif
-  model_parameters_flag=0;
+  }
 }
 
-int separable_bounds::indexmin(void)
+int ad_separable_manager::indexmin(void)
 {
 #if defined(USE_ADMPI)
   if (ad_comm::mpi_manager)
@@ -628,7 +642,7 @@ int separable_bounds::indexmin(void)
 #endif
 }
 
-int separable_bounds::indexmax(void)
+int ad_separable_manager::indexmax(void)
 {
 #if defined(USE_ADMPI)
   if (ad_comm::mpi_manager)
@@ -708,7 +722,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   else
     mpi_manager = NULL;
 #endif
-
+  separable_manager = new ad_separable_manager();
 
 #if defined(USE_ADPVM)
   if (pvm_flag)
@@ -1114,7 +1128,11 @@ ad_comm::~ad_comm()
     mpi_manager=0;
   }
 #endif
-
+  if (separable_manager)
+  {
+    delete separable_manager;
+    separable_manager=0;
+  }
   if (ptm)
   {
     delete ptm;

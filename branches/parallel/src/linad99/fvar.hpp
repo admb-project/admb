@@ -111,6 +111,10 @@ A more detailed description might someday be written.
 */
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
+#define separable_bounds(var,lb,ub) ad_separable_manager * var = \
+  separable_manager; \
+  sb->init(lb,ub);
+
 #define my_off_t long int
 #ifdef __BORLANDC__
 #define my_u_off_t unsigned long int

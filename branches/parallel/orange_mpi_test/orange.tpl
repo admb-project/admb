@@ -29,11 +29,11 @@ GLOBALS_SECTION
 
 PROCEDURE_SECTION
 
-  separable_bounds v(1,(int)M);
+  separable_bounds(sb,1,(int)M);
   int i,ii;
 
   g = 0.0;
-  for(i=v.indexmin();i<=v.indexmax();i++)
+  for(i=sb->indexmin();i<=sb->indexmax();i++)
   {
       ii = 0;
       for(int k=1;k<i;k++)

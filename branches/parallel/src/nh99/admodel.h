@@ -2855,17 +2855,19 @@ public:
 };
 #endif   // if defined(USE_ADMPI)
 
-class separable_bounds
+class ad_separable_manager
 {
   int min_index; //use with ADMPI
   int max_index;
   int min_bound; //use if no MPI or not syncing
   int max_bound;
+  int initialize_flag;
 public:
   int model_parameters_flag;
   int indexmin(void);
   int indexmax(void);
-  separable_bounds(int min_bound,int max_bound);
+  ad_separable_manager(void);
+  void init(int lb,int ub);
 };
 
 int withinbound(int lb,int n,int ub);

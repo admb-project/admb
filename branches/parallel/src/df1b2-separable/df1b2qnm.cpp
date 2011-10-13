@@ -16,10 +16,10 @@
 static int no_stuff=0;
 //static void xxxy(void) {}
 
-#if defined(USE_ADMPI)
+/*#if defined(USE_ADMPI)
 void sync_f(const double& _f);
 void sync_dvector(const dvector& _v);
-#endif
+#endif*/
 
 /**
  * Description not yet available.
@@ -271,6 +271,23 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       (ad_comm::mpi_manager->sync_objfun_flag)=1;
     }
 #endif
+/*{
+  static int stop_flag;
+  if (stop_flag!=1)
+  {
+#if defined(USE_ADMPI)
+   if (ad_comm::mpi_manager){
+    if(ad_comm::mpi_manager->is_slave())
+    {
+      cout << "PID " << getpid() << endl;
+    }
+   }
+#endif
+    stop_flag=0;
+  }
+  while(stop_flag==0)
+    sleep(5);
+}*/
     initial_df1b2params::current_phase=initial_params::current_phase;
     
     initial_df1b2params::save_varsptr();
@@ -425,7 +442,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
 
 #endif
 
-#if defined(USE_ADMPI)
+/*#if defined(USE_ADMPI)
 void sync_f(const double& _f)
 {
   double & f= (double&)_f;
@@ -486,4 +503,4 @@ void sync_dvector(const dvector& _v)
   }
 }
 
-#endif
+#endif*/

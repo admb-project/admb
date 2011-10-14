@@ -1,4 +1,4 @@
-AC_INIT([ADMB], [10.0], [users@admb-project.org])
+AC_INIT([ADMB], [10.1], [users@admb-project.org])
 
 # Check for programs used in building ADMB.
 AC_PROG_CC

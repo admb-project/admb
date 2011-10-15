@@ -148,6 +148,7 @@ float_num_exp [a-z_A-Z0-9\.\+\-\*]+
 \/\/.*$         /* ignore trailing comments */ ;
 
 \n    { nline++; }
+\r    { ; }
 
 INITIALIZATION_SECTION  {
 

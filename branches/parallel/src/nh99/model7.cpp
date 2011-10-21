@@ -314,43 +314,6 @@ void admpi_manager::increment_mpi_cobjfun(const double& f)
   mpi_cobjfun+=f;
 }
 
-void admpi_manager::set_separable_assignments(const int _num_separable_calls)
-{
-  int num_separable_calls = _num_separable_calls;
-  if(is_master())
-  {
-    int local_num_slaves = num_slaves+1;
-    int nd=num_separable_calls/local_num_slaves;
-    int r= num_separable_calls - nd * local_num_slaves;
-    ivector mpi_partition(1,local_num_slaves);
-    mpi_partition=nd;
-    mpi_partition(1,r)+=1;
-
-    ivector minsep(1,local_num_slaves);
-    ivector maxsep(1,local_num_slaves);
-    minsep(1)=1;
-    maxsep(1)=mpi_partition(1);
-    for (int i=2;i<=local_num_slaves;i++)
-    {
-      minsep(i)=maxsep(i-1)+1;
-      maxsep(i)=minsep(i)+mpi_partition(i)-1;
-    }
-
-    min_separable_index = minsep(1);
-    max_separable_index = maxsep(1);
-    for(int i=1;i<=num_slaves;i++)
-    {
-      send_int_to_slave(minsep(i+1),i);
-      send_int_to_slave(maxsep(i+1),i);
-    }
-  }
-  else
-  {
-    get_int_from_master(min_separable_index);
-    get_int_from_master(max_separable_index);
-  }
-}
-
  // void admpi_manager::send_int_to_master(int i)
  // {
  //   MPI_Status myStatus;
@@ -398,6 +361,7 @@ admpi_manager::admpi_manager(int m,int argc,char * argv[])
   do_minimize=0;
   do_hess=0;
   sync_objfun_flag=0;
+  sync_gradient_flag=0;
   mpi_int = new int[MAX_MPI_OFFSET];
  
   for (int i=0;i<MAX_MPI_OFFSET;i++)

@@ -9,6 +9,9 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
+#if defined(USE_ADMPI)
+  #include "admodel.h"
+#endif
 
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -199,8 +202,8 @@ do
 		grad_ptr_first)
     {
       //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
-      (*(gradient_structure::GRAD_STACK1->ptr->func))();
-      icount++;
+      (*(gradient_structure::GRAD_STACK1->ptr->func))(); // sync ptr->ind_addr1?
+      icount++;                                         // maybe below not need
       if (icount%1000==0)
       {
         //cout << "icount = " << icount << endl;
@@ -230,6 +233,47 @@ do
 				      << " bytes from the beginning\n";
    #endif
   }
+
+#if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->sync_gradient_flag)
+    {
+      dvector local_g(0,nvar);
+      for (i=0; i < (unsigned int)nvar; i++)
+      {
+        local_g(i)=* gradient_structure::INDVAR_LIST->get_address(i);
+      }
+
+      if (ad_comm::mpi_manager->is_master())
+      {
+        // sync 
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          local_g+=ad_comm::mpi_manager->get_dvector_from_slave(si);
+        }
+        // send to slaves
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          ad_comm::mpi_manager->send_dvector_to_slave(local_g,si);
+        }
+      }
+      else
+      {
+        // sync
+        ad_comm::mpi_manager->send_dvector_to_master(local_g);
+        // get from master
+        local_g=ad_comm::mpi_manager->get_dvector_from_master();
+      }
+
+      for (i=0; i < (unsigned int)nvar; i++)
+      {
+        gradient_structure::INDVAR_LIST->put_value(i,local_g(i));
+      }
+    }
+  }
+#endif
+
 
   int mindx = g.indexmin();
   for (i=0; i < (unsigned int)nvar; i++)

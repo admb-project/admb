@@ -206,11 +206,6 @@ public:
   int separable_calls_counter; // 1 in inner opt 2 in newton-raphson 3 in
 #if defined(USE_ADMPI)
   int mpi_separable_calls_counter;
-  int min_separable_index;
-  int max_separable_index;
-  void mpi_set_separable_index(int min, int max);
-  void set_separable_index(void);
-  //int check_separable_index_flag;
 #endif
   ivector nested_separable_calls_counter;
   ivector nested_tree_position;

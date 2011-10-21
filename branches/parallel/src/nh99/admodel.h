@@ -2817,6 +2817,7 @@ class admpi_manager
   double mpi_cobjfun;
 public:
   int sync_objfun_flag;
+  int sync_gradient_flag;
   int get_num_slaves(void){ return num_slaves;}
   int get_num_hess_slaves(void){ return num_hess_slaves;}
   void set_num_hess_slaves(int _num_hess_slaves){ num_hess_slaves = _num_hess_slaves; }

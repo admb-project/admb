@@ -1769,6 +1769,10 @@ private:
         address[i] = iaddress;
         //  cerr << "In put_address i = " << i << "\n";
       }
+      void put_value(unsigned int& i, double value)
+      {
+        *address[i] = value;
+      }
     };
 
     void gradfree(dlink *);

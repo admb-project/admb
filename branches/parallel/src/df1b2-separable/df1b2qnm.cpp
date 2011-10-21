@@ -16,6 +16,7 @@
 static int no_stuff=0;
 //static void xxxy(void) {}
 
+void set_gradient_sync(int flag);
 /*#if defined(USE_ADMPI)
 void sync_f(const double& _f);
 void sync_dvector(const dvector& _v);
@@ -28,6 +29,12 @@ void sync_dvector(const dvector& _v);
 void function_minimizer::quasi_newton_block(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f)
 {
+#if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager) //testing purposes
+    {
+      (ad_comm::mpi_manager->sync_objfun_flag)=1;
+    }
+#endif
   int ifn_trap=0;
   int itn_trap=0;
   int on=0;
@@ -158,7 +165,23 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       ad_exit(1);
     }
   }
-
+/*{
+  static int stop_flag;
+  if (stop_flag!=1)
+  {
+#if defined(USE_ADMPI)
+   if (ad_comm::mpi_manager){
+    if(ad_comm::mpi_manager->is_slave())
+    {
+      cout << "PID " << getpid() << endl;
+    }
+   }
+#endif
+    stop_flag=0;
+  }
+  while(stop_flag==0)
+    sleep(5);
+}*/
   if (!random_effects_flag || !unvar)
   {
     dvariable xf=initial_params::reset(dvar_vector(x));
@@ -181,7 +204,9 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           }
           vf+=*objective_function_value::pobjfun;
           f=value(vf);
-          gradcalc(nvar,g);
+          set_gradient_sync(1);
+          gradcalc(nvar,g); //gradstrc.cpp
+          set_gradient_sync(0);
         }
       }
     }
@@ -271,23 +296,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       (ad_comm::mpi_manager->sync_objfun_flag)=1;
     }
 #endif
-/*{
-  static int stop_flag;
-  if (stop_flag!=1)
-  {
-#if defined(USE_ADMPI)
-   if (ad_comm::mpi_manager){
-    if(ad_comm::mpi_manager->is_slave())
-    {
-      cout << "PID " << getpid() << endl;
-    }
-   }
-#endif
-    stop_flag=0;
-  }
-  while(stop_flag==0)
-    sleep(5);
-}*/
+
     initial_df1b2params::current_phase=initial_params::current_phase;
     
     initial_df1b2params::save_varsptr();
@@ -441,6 +450,17 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
 } // end block for quasi newton minimization
 
 #endif
+
+void set_gradient_sync(int flag)
+{
+#if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
+    {
+      (ad_comm::mpi_manager->sync_gradient_flag)=flag;
+    }
+#endif
+}
+
 
 /*#if defined(USE_ADMPI)
 void sync_f(const double& _f)

@@ -458,6 +458,23 @@ dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
       {
         ad_comm::mpi_manager->send_dvector_to_slave(step,si);
       }
+
+      // max_separable_g
+      // **** This syc might not be needed. If max_sep_g is just informative
+      // **** and not actually involved in calculation.
+      dvector slave_max_sep_g(0,ad_comm::mpi_manager->get_num_slaves());
+      slave_max_sep_g(0)=max_separable_g;
+      // get max from slaves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        slave_max_sep_g(si)=ad_comm::mpi_manager->get_double_from_slave(si);
+      }
+      max_separable_g=max(slave_max_sep_g);
+      // send new max to salves
+      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      {
+        ad_comm::mpi_manager->send_double_to_slave(max_separable_g,si);
+      }
     }
     else
     {
@@ -465,6 +482,13 @@ dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
       ad_comm::mpi_manager->send_dvector_to_master(step);
       //set step to value from master
       step = ad_comm::mpi_manager->get_dvector_from_master();
+
+      // send max_separable_g to master
+      // **** This syc might not be needed. If max_sep_g is just informative
+      // **** and not actually involved in calculation.
+      ad_comm::mpi_manager->send_double_to_master(max_separable_g);
+      // set new max_separable_g
+      max_separable_g = ad_comm::mpi_manager->get_double_from_master();
     }
   }
 #endif

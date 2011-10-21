@@ -4,6 +4,12 @@ TARGET=orange
 
 all: clean $(TARGET) run
 
+debug: clean $(TARGET)-g
+
+$(TARGET)-g: $(TARGET).tpl $(TARGET).dat
+	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -g -r $(TARGET)
+
+
 $(TARGET): $(TARGET).tpl $(TARGET).dat
 	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -s -r $(TARGET)
 

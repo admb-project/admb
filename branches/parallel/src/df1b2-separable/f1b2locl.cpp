@@ -176,8 +176,12 @@ local_init_df1b2vector::local_init_df1b2vector(const df1b2vector & _x)
     adpool * tmppool=df1b2variable::pool;
     if (!localf1b2gradlist)
     {
+    adstring localf1b2gradlist_name = "lf1b2list1";
+#if defined(USE_ADMPI)
+    add_slave_suffix(localf1b2gradlist_name);
+#endif // #if defined(USE_ADMPI)
       localf1b2gradlist = new df1b2_gradlist(400000U,20000U,800000U,40000U,
-        200000U,10000U,adstring("lf1b2list1"));
+        200000U,10000U,localf1b2gradlist_name);
       if (!localf1b2gradlist)
       {
         cerr << "Error allocating memory for local df1b2gradlist" << endl;

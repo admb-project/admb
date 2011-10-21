@@ -938,9 +938,13 @@ laplace_approximation_calculator::laplace_approximation_calculator
   }
   
   step.allocate(1,usize);
+  adstring f1b2gradlist_name = "f1b2list1";
+#if defined(USE_ADMPI)
+  add_slave_suffix(f1b2gradlist_name);
+#endif // #if defined(USE_ADMPI)
   // !!! nov 12
   f1b2gradlist = new df1b2_gradlist(4000000U,200000U,8000000U,400000U,
-    2000000U,100000U,adstring("f1b2list1"));
+    2000000U,100000U,f1b2gradlist_name);
 
   if (hesstype==2)
   {
@@ -2207,20 +2211,6 @@ void laplace_approximation_calculator::set_default_hessian_type(void )
 
 
 #  if defined(USE_LAPLACE)
-
-#if defined(USE_ADMPI)
-void laplace_approximation_calculator::mpi_set_separable_index(int min, int max)
-{
-  min_separable_index=min;
-  max_separable_index=max;
-}
-
-void laplace_approximation_calculator::set_separable_index(void)
-{
-  min_separable_index=1;
-  max_separable_index=num_separable_calls;
-}
-#endif
 
 /**
  * Description not yet available.

@@ -237,7 +237,8 @@ do
 #if defined(USE_ADMPI)
   if (ad_comm::mpi_manager)
   {
-    if (ad_comm::mpi_manager->sync_gradient_flag)
+    if (ad_comm::mpi_manager->sync_gradient_flag &&
+        function_minimizer::random_effects_flag)
     {
       dvector local_g(0,nvar);
       for (i=0; i < (unsigned int)nvar; i++)

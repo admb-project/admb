@@ -1219,7 +1219,8 @@ void function_minimizer::pre_userfunction(void)
 #if defined(USE_ADMPI)
   if (ad_comm::mpi_manager)
   {
-    if (ad_comm::mpi_manager->sync_objfun_flag)
+    if (ad_comm::mpi_manager->sync_objfun_flag &&
+        function_minimizer::random_effects_flag)
     {
       double local_pobjfun=value(*objective_function_value::pobjfun);
       if (ad_comm::mpi_manager->is_master())

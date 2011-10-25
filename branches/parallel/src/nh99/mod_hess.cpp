@@ -616,7 +616,14 @@ void function_minimizer::hess_inv(void)
 #if defined(USE_ADMPI)
   if (ad_comm::mpi_manager)
   {
-    num_hess_slaves=ad_comm::mpi_manager->get_num_hess_slaves();
+#if defined(USE_LAPLACE)
+    if (!lapprox)
+    {
+#endif
+      num_hess_slaves=ad_comm::mpi_manager->get_num_hess_slaves();
+#if defined(USE_LAPLACE)
+    }
+#endif
   }
 #endif 
 

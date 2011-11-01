@@ -349,23 +349,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       }
       lapprox->get_hessian_components_banded_lme(this);
     }
-/*{
-  static int stop_flag;
-  if (stop_flag!=1)
-  {
-#if defined(USE_ADMPI)
-   if (ad_comm::mpi_manager){
-    if(ad_comm::mpi_manager->is_slave())
-    {
-      cout << "PID " << getpid() << endl;
-    }
-   }
-#endif
-    stop_flag=0;
-  }
-  while(stop_flag==0)
-    sleep(5);
-}*/
+
     if (negdirections==0)
     {
       while (fmc.ireturn>=0)

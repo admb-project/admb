@@ -155,6 +155,34 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
           }
         }
       }
+      #if defined(USE_ADMPI)
+      if (ad_comm::mpi_manager)
+      {
+        if (ad_comm::mpi_manager->is_master())
+        {
+          ivector slave_converged(0,ad_comm::mpi_manager->get_num_slaves());
+          slave_converged(0)=converged;
+          // get converge from slaves
+          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          {
+            ad_comm::mpi_manager->get_int_from_slave(slave_converged(si),si);
+          }
+          converged=min(slave_converged);
+          // send new converged to salves
+          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          {
+            ad_comm::mpi_manager->send_int_to_slave(converged,si);
+          }
+        }
+        else
+        {
+          // send converged to master
+          ad_comm::mpi_manager->send_int_to_master(converged);
+          // set new converged
+          ad_comm::mpi_manager->get_int_from_master(converged);
+        }
+      }
+      #endif
       initrun_flag=0;
       for (int i2=1;i2<=num_separable_calls;i2++)
       {

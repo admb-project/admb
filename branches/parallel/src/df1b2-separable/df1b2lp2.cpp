@@ -37,6 +37,23 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
   gradient_structure::set_NO_DERIVATIVES();
   initial_params::reset(x);    // get current x values into the model
   gradient_structure::set_YES_DERIVATIVES();
+/*{
+  static int stop_flag;
+  if (stop_flag!=1)
+  {
+   #if defined(USE_ADMPI)
+   if (ad_comm::mpi_manager){
+     if(ad_comm::mpi_manager->is_slave())
+     {
+       cout << "PID " << getpid() << endl;
+     }
+    }
+   #endif
+    stop_flag=0;
+  }
+  while(stop_flag==0)
+    sleep(5);
+}*/
 
   initial_params::set_active_only_random_effects(); 
   //int lmn_flag=0;

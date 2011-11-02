@@ -35,6 +35,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       (ad_comm::mpi_manager->sync_objfun_flag)=1;
     }
 #endif
+
   int ifn_trap=0;
   int itn_trap=0;
   int on=0;

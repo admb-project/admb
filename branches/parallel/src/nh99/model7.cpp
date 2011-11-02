@@ -145,6 +145,7 @@ void admpi_manager::get_int_from_slave(int &i,int _slave_number)
   MPI_Status status;
   MPI_Recv(&i,1,MPI_INT,slave_number,0,everyone,&status);
 }
+
 void admpi_manager::get_int_from_master(int &i)
 {
   MPI_Status status;

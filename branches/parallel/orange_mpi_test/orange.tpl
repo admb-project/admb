@@ -38,7 +38,7 @@ PROCEDURE_SECTION
       ii = 0;
       for(int k=1;k<i;k++)
       {
-        ii+=ngroup(i);
+        ii+=ngroup(k);
       }
     fit_individual_tree(beta(1),beta(2),beta(3),u(i),i,ii,log_sigma,log_sigma_u);
   }

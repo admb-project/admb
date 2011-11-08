@@ -200,7 +200,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
         *objective_function_value::pobjfun=0.0;
   
         //num_separable_calls=0;
-  
+
         pmin->inner_opt_flag=1;
         pfmin->AD_uf_inner();
         pmin->inner_opt_flag=0;
@@ -316,34 +316,6 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
 #endif
     if (tmax< 1.e-4) break;
   }
-
-#if defined(USE_ADMPI)
-  if (ad_comm::mpi_manager)
-  {
-    if (ad_comm::mpi_manager->is_master())
-    {
-      //get dvectors from slaves and add into u
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        dvector slave_u = ad_comm::mpi_manager->
-            get_dvector_from_slave(si);
-        u+=slave_u;
-      }
-      //send u to slaves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        ad_comm::mpi_manager->send_dvector_to_slave(u,si);
-      }
-    }
-    else
-    {
-      //send dvector to master
-      ad_comm::mpi_manager->send_dvector_to_master(u);
-      //set step to value from master
-      u = ad_comm::mpi_manager->get_dvector_from_master();
-    }
-  }
-#endif
 
   fmc1.ireturn=0;
   fmc1.fbest=fb;

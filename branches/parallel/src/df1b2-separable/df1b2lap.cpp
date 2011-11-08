@@ -1923,6 +1923,26 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   dvector g(1,usize);
   independent_variables u(1,usize);
   u=x;
+  #if defined(USE_ADMPI)  
+    if (ad_comm::mpi_manager)
+    {
+      if (ad_comm::mpi_manager->is_master())
+      {
+        //get dvectors from slaves and add into xadjoint
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          dvector slave_u =
+              ad_comm::mpi_manager->get_dvector_from_slave(si);
+          u+=slave_u;
+        }
+      }
+      else
+      {
+        //send dvector to master
+        ad_comm::mpi_manager->send_dvector_to_master(u);
+      }
+    }
+  #endif
   dvariable vf=0.0;
   vf=initial_params::reset(dvar_vector(u));
   //vf=0.0;

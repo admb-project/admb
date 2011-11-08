@@ -17,10 +17,7 @@ static int no_stuff=0;
 //static void xxxy(void) {}
 
 void set_gradient_sync(int flag);
-/*#if defined(USE_ADMPI)
-void sync_f(const double& _f);
-void sync_dvector(const dvector& _v);
-#endif*/
+void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn);
 
 /**
  * Description not yet available.
@@ -275,12 +272,6 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       cerr << "Error allocating memory for lapprox" << endl;
       ad_exit(1);
     }
-/*#if defined(USE_ADMPI)
-    if (ad_comm::mpi_manager)
-    {
-      (ad_comm::mpi_manager->sync_objfun_flag)=1;
-    }
-#endif*/
 
     initial_df1b2params::current_phase=initial_params::current_phase;
     
@@ -351,11 +342,25 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       lapprox->get_hessian_components_banded_lme(this);
     }
 
+    int mpi_minimizer_flag=1;
+    int laplace_flag=1;
+    #if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
+    {
+      if (ad_comm::mpi_manager->is_slave())
+      {
+        mpi_minimizer_flag=0;
+      }
+    }
+    #endif
+
     if (negdirections==0)
     {
       while (fmc.ireturn>=0)
       {
-        fmc.fmin(f,x,g);
+        if (mpi_minimizer_flag)
+          fmc.fmin(f,x,g);
+        mpi_set_x_f_ireturn(x,f,fmc.ireturn);
         if (fmc.ireturn>0)
         {
           if (ifn_trap)
@@ -422,6 +427,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     delete funnel_init_var::py;
     funnel_init_var::py=0;
   }
+
   gradient_structure::set_NO_DERIVATIVES();
   ffbest=fmc.fbest;
   g=fmc.gbest(1,fmc.gbest.indexmax());
@@ -446,66 +452,26 @@ void set_gradient_sync(int flag)
 #endif
 }
 
-
-/*#if defined(USE_ADMPI)
-void sync_f(const double& _f)
+void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn)
 {
-  double & f= (double&)_f;
-  if (ad_comm::mpi_manager)
-  {
-    if (ad_comm::mpi_manager->is_master())
+#if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
     {
-      // get f from slaves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      if (ad_comm::mpi_manager->is_master())
       {
-        double local_f=ad_comm::mpi_manager->get_double_from_slave(si);
-        f+=local_f;
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          ad_comm::mpi_manager->send_dvector_to_slave(x,si);
+          ad_comm::mpi_manager->send_double_to_slave(f,si);
+          ad_comm::mpi_manager->send_int_to_slave(ireturn,si);
+        }
       }
-      // send initial_df1b2params::cobjfun to slaves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      else
       {
-        ad_comm::mpi_manager->send_double_to_slave(f,si);
+        x = ad_comm::mpi_manager->get_dvector_from_master();
+        f = ad_comm::mpi_manager->get_double_from_master();
+        ad_comm::mpi_manager->get_int_from_master(ireturn);
       }
     }
-    else
-    {
-      //send f to master
-      ad_comm::mpi_manager->send_double_to_master(f);
-
-      // get f from master
-      f=ad_comm::mpi_manager->get_double_from_master();
-    }
-  }
+#endif
 }
-
-void sync_dvector(const dvector& _v)
-{
-  dvector & v= (dvector&)_v;
-  if (ad_comm::mpi_manager)
-  {
-    if (ad_comm::mpi_manager->is_master())
-    {
-      // get v from slaves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        dvector local_v=ad_comm::mpi_manager->get_dvector_from_slave(si);
-        v+=local_v;
-      }
-      // send initial_df1b2params::cobjfun to slaves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        ad_comm::mpi_manager->send_dvector_to_slave(v,si);
-      }
-    }
-    else
-    {
-      //send g to master
-      ad_comm::mpi_manager->send_dvector_to_master(v);
-
-      // get g from master
-      v=ad_comm::mpi_manager->get_dvector_from_master();
-    }
-  }
-}
-
-#endif*/

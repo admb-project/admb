@@ -377,7 +377,7 @@ void function_minimizer::pre_user_function(void)
     {
       lapprox->separable_calls_counter=0;
 #if defined(USE_ADMPI)
-      lapprox->mpi_separable_calls_counter=0;
+      //lapprox->mpi_separable_calls_counter=0;
       if (ad_comm::mpi_manager)
       {
         if (ad_comm::mpi_manager->is_slave())

@@ -543,6 +543,15 @@ void ad_separable_manager::init(int lb,int ub)
       if(ad_comm::mpi_manager->is_master())
       {
         int local_num_slaves = ad_comm::mpi_manager->get_num_slaves()+1;
+        if (local_num_slaves > num_separable_calls)
+        {
+          cerr << "Number of slaves exceeds the number of separable "
+               << "calls." << endl;
+          cerr << "Number of separable calls=" << num_separable_calls << endl;
+          cerr << "Set -nslaves values to " << num_separable_calls-1
+               << " or smaller." << endl;
+          ad_exit(1);
+        }
         int nd=num_separable_calls/local_num_slaves;
         int r= num_separable_calls - nd * local_num_slaves;
         ivector mpi_partition(1,local_num_slaves);

@@ -227,57 +227,6 @@ void laplace_approximation_calculator::
     int ii=lfe_index(i);
     xadjoint(list(ii,1))+=local_xadjoint(i);
   }
-#if defined(USE_ADMPI)  
-  if (ad_comm::mpi_manager)
-  {
-    if (mpi_separable_calls_counter == num_separable_calls)
-    {
-      if (ad_comm::mpi_manager->is_master())
-      {
-        //get dvectors from slaves and add into xadjoint
-        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-        {
-          dvector slave_xadjoint =
-              ad_comm::mpi_manager->get_dvector_from_slave(si);
-          xadjoint+=slave_xadjoint;
-        }
-        //send xadjoint to slaves
-        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-        {
-          ad_comm::mpi_manager->send_dvector_to_slave(xadjoint,si);
-        }
-
-        // get cobjfun from slaves
-        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-        {
-          double local_cobjfun=ad_comm::mpi_manager->get_double_from_slave(si);
-          initial_df1b2params::cobjfun+=local_cobjfun;
-        }
-        // send initial_df1b2params::cobjfun to slaves
-        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-        {
-          ad_comm::mpi_manager->
-            send_double_to_slave(initial_df1b2params::cobjfun,si);
-        }
-      }
-      else
-      {
-        //send dvector to master
-        ad_comm::mpi_manager->send_dvector_to_master(xadjoint);
-        //set xadjoint to value from master
-        xadjoint = ad_comm::mpi_manager->get_dvector_from_master();
-
-        //send cobjfun to master
-        double local_mpi_cobjfun=ad_comm::mpi_manager->get_mpi_cobjfun();
-        ad_comm::mpi_manager->send_double_to_master(local_mpi_cobjfun);
-
-        // get initial_df1b2params::cobjfun from master
-        initial_df1b2params::cobjfun=
-          ad_comm::mpi_manager->get_double_from_master();
-      }
-    }
-  }
-#endif
   f1b2gradlist->reset();
   f1b2gradlist->list.initialize();
   f1b2gradlist->list2.initialize();

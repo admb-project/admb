@@ -510,12 +510,31 @@ void tracing_message(int traceflag,const char *s);
         print_is_diagnostics(lapprox);
       }
 #endif
-      initial_params::save();
-      report();
-      // in case the user changes some initial_params in the report section
-      // call reset again
-      initial_params::reset(dvar_vector(x));
-      report_function_minimizer_stats();
+      #if defined(USE_ADMPI)
+        if (ad_comm::mpi_manager)
+        {
+          if (ad_comm::mpi_manager->is_master())
+          {
+            initial_params::save();
+            report();
+            // in case the user changes some initial_params in the report
+            // section call reset again
+            initial_params::reset(dvar_vector(x));
+            report_function_minimizer_stats();
+          }
+        }
+        else
+        {
+      #endif
+          initial_params::save();
+          report();
+          // in case the user changes some initial_params in the report section
+          // call reset again
+          initial_params::reset(dvar_vector(x));
+          report_function_minimizer_stats();
+      #if defined(USE_ADMPI)
+        }
+      #endif
       if (quit_flag=='Q') break;
       if (!quit_flag || quit_flag == 'N')
       {

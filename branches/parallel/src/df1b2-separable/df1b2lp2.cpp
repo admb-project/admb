@@ -37,23 +37,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
   gradient_structure::set_NO_DERIVATIVES();
   initial_params::reset(x);    // get current x values into the model
   gradient_structure::set_YES_DERIVATIVES();
-/*{
-  static int stop_flag;
-  if (stop_flag!=1)
-  {
-   #if defined(USE_ADMPI)
-   if (ad_comm::mpi_manager){
-     if(ad_comm::mpi_manager->is_slave())
-     {
-       cout << "PID " << getpid() << endl;
-     }
-    }
-   #endif
-    stop_flag=0;
-  }
-  while(stop_flag==0)
-    sleep(5);
-}*/
 
   initial_params::set_active_only_random_effects(); 
   //int lmn_flag=0;
@@ -384,6 +367,27 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     initial_params::straight_through_flag=0;
     if (saddlepointflag!=2)
     {
+      #if defined(USE_ADMPI)
+        if (ad_comm::mpi_manager)
+        {
+          if (ad_comm::mpi_manager->is_master())
+          {
+            // get cobjfun from slaves
+            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+            {
+              double local_cobjfun=ad_comm::mpi_manager->
+                  get_double_from_slave(si);
+              initial_df1b2params::cobjfun+=local_cobjfun;
+            }
+          }
+          else
+          {
+            //send cobjfun to master
+            double local_mpi_cobjfun=ad_comm::mpi_manager->get_mpi_cobjfun();
+            ad_comm::mpi_manager->send_double_to_master(local_mpi_cobjfun);
+          }
+        }
+      #endif
       f=initial_df1b2params::cobjfun;
     }
     else
@@ -406,6 +410,26 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
   }
   //cout << initial_df1b2params::cobjfun << endl;
   //f=initial_df1b2params::cobjfun;
+  #if defined(USE_ADMPI)  
+    if (ad_comm::mpi_manager)
+    {
+      if (ad_comm::mpi_manager->is_master())
+      {
+        //get dvectors from slaves and add into xadjoint
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          dvector slave_xadjoint =
+              ad_comm::mpi_manager->get_dvector_from_slave(si);
+          xadjoint+=slave_xadjoint;
+        }
+      }
+      else
+      {
+        //send dvector to master
+        ad_comm::mpi_manager->send_dvector_to_master(xadjoint);
+      }
+    }
+  #endif
   return xadjoint;
 }
 
@@ -458,57 +482,7 @@ dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
     funnel_init_var::lapprox=0;
     block_diagonal_flag=0;
   }
-#if defined(USE_ADMPI)
-  if (ad_comm::mpi_manager)
-  {
-    if (ad_comm::mpi_manager->is_master())
-    {
-      //get dvectors from slaves and add into step
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        dvector slave_step = ad_comm::mpi_manager->
-            get_dvector_from_slave(si);
-        step+=slave_step;
-      }
-      //send step to slaves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        ad_comm::mpi_manager->send_dvector_to_slave(step,si);
-      }
 
-      // max_separable_g
-      // **** This syc might not be needed. If max_sep_g is just informative
-      // **** and not actually involved in calculation.
-      dvector slave_max_sep_g(0,ad_comm::mpi_manager->get_num_slaves());
-      slave_max_sep_g(0)=max_separable_g;
-      // get max from slaves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        slave_max_sep_g(si)=ad_comm::mpi_manager->get_double_from_slave(si);
-      }
-      max_separable_g=max(slave_max_sep_g);
-      // send new max to salves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-      {
-        ad_comm::mpi_manager->send_double_to_slave(max_separable_g,si);
-      }
-    }
-    else
-    {
-      //send dvector to master
-      ad_comm::mpi_manager->send_dvector_to_master(step);
-      //set step to value from master
-      step = ad_comm::mpi_manager->get_dvector_from_master();
-
-      // send max_separable_g to master
-      // **** This syc might not be needed. If max_sep_g is just informative
-      // **** and not actually involved in calculation.
-      ad_comm::mpi_manager->send_double_to_master(max_separable_g);
-      // set new max_separable_g
-      max_separable_g = ad_comm::mpi_manager->get_double_from_master();
-    }
-  }
-#endif
   return step;
 }
 

@@ -1823,6 +1823,7 @@ public:
   void hess_inv(void);
   void depvars_routine(void);
   void sd_routine(void);
+  void sd_routine_mpi_slave(void);
   int ef_(double * f, double * x);
   int constrained_minimization2(int _n,int _nh, int _ng,dvector& __x);
   static int constraint_exit_number;

@@ -368,7 +368,9 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     if (saddlepointflag!=2)
     {
       #if defined(USE_ADMPI)
-        if (ad_comm::mpi_manager)
+      if (ad_comm::mpi_manager)
+      {
+        if (ad_comm::mpi_manager->sync_objfun_flag)
         {
           if (ad_comm::mpi_manager->is_master())
           {
@@ -387,6 +389,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
             ad_comm::mpi_manager->send_double_to_master(local_mpi_cobjfun);
           }
         }
+      }
       #endif
       f=initial_df1b2params::cobjfun;
     }
@@ -411,7 +414,9 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
   //cout << initial_df1b2params::cobjfun << endl;
   //f=initial_df1b2params::cobjfun;
   #if defined(USE_ADMPI)  
-    if (ad_comm::mpi_manager)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->sync_objfun_flag)
     {
       if (ad_comm::mpi_manager->is_master())
       {
@@ -429,6 +434,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
         ad_comm::mpi_manager->send_dvector_to_master(xadjoint);
       }
     }
+  }
   #endif
   return xadjoint;
 }

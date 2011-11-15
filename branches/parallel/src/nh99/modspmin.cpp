@@ -550,12 +550,23 @@ int * kill_address;
                     sd_routine();
                   }
                 }
+                else
+                {
+                  if (spminflag==0)
+                  {
+                    sd_routine_mpi_slave();
+                  }
+                }
               }
               else
               {
   #endif // if defined(USE_ADMPI)
                 depvars_routine();
                 hess_inv();
+                if (spminflag==0)
+                {
+                  sd_routine();
+                }
               }
             }
           }

@@ -87,7 +87,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
       usize=lapprox->usize;
       // calculate uhat_prime from the block diagnal matrix
       d3_array & H=*(lapprox->block_diagonal_hessian); 
-      d3_array & Dux=*(lapprox->block_diagonal_Dux); 
+      d3_array & Dux=*(lapprox->block_diagonal_Dux);
       int mmin=H.indexmin();
       int mmax=H.indexmax();
       for (int i=mmin;i<=mmax;i++)
@@ -112,7 +112,43 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
           }
         }
       }
+      #if defined(USE_ADMPI)
+      if (ad_comm::mpi_manager)
+      {
+        int umin=uhat_prime.indexmin();
+        int umax=uhat_prime.indexmax();
+        if (ad_comm::mpi_manager->is_master())
+        {
+          for (int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          {
+            for (int i=umin;i<=umax;i++)
+            {
+              uhat_prime(i)+=ad_comm::mpi_manager->get_dvector_from_slave(si);
+            }
+          }
+        }
+        else
+        {
+          for (int i=umin;i<=umax;i++)
+          {
+            ad_comm::mpi_manager->send_dvector_to_master(uhat_prime(i));
+          }
+        }
+      }
+      #endif
       // rescale uhat_prime to be der wrt x
+      int master_only=1;
+      #if defined(USE_ADMPI)  
+      if (ad_comm::mpi_manager)
+      {
+        if (ad_comm::mpi_manager->is_slave())
+        {
+          master_only=0;
+        }
+      }
+      #endif
+
+      if (master_only)
       {
         int rmin=uhat_prime.indexmin();
         int rmax=uhat_prime.indexmax();
@@ -142,17 +178,78 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
     }
     else
     {
+      //send Suu to slaves
+      #if defined(USE_ADMPI)
+      if (ad_comm::mpi_manager)
+      {
+        int Suumin=Suu.indexmin();
+        int Suumax=Suu.indexmax();
+        if (ad_comm::mpi_manager->is_master())
+        {
+          for (int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          {
+            for (int i=Suumin;i<=Suumax;i++)
+            {
+              ad_comm::mpi_manager->send_dvector_to_slave(Suu(i),si);
+            }
+          }
+        }
+        else
+        {
+          for (int i=Suumin;i<=Suumax;i++)
+          {
+            Suu(i)=ad_comm::mpi_manager->get_dvector_from_master();
+          }
+        }
+      }
+      #endif
+
       d3_array & H=*(lapprox->block_diagonal_hessian); 
       int mmin=H.indexmin();
       int mmax=H.indexmax();
+      //send mmin mmax
+      #if defined(USE_ADMPI)
+      if (ad_comm::mpi_manager)
+      {
+        if (ad_comm::mpi_manager->is_slave())
+        {
+          ad_comm::mpi_manager->send_int_to_master(mmin);
+          ad_comm::mpi_manager->send_int_to_master(mmax);
+        }
+      }
+      #endif
+
       for (int i=mmin;i<=mmax;i++)
       {
-        if (allocated(H(i)))
+        int allocate_flag=allocated(H(i));
+        //send allocate_flag
+        #if defined(USE_ADMPI)
+        if (ad_comm::mpi_manager)
+        {
+          if (ad_comm::mpi_manager->is_slave())
+          {
+              ad_comm::mpi_manager->send_int_to_master(allocate_flag);
+          }
+        }
+        #endif
+
+        if (allocate_flag)
         {
           dmatrix tmp=inv(H(i));
           int rmin=H(i).indexmin();
           int rmax=H(i).indexmax();
-          
+          //send rmin rmax allocate flag
+          #if defined(USE_ADMPI)
+          if (ad_comm::mpi_manager)
+          {
+            if (ad_comm::mpi_manager->is_slave())
+            {
+              ad_comm::mpi_manager->send_int_to_master(rmin);
+              ad_comm::mpi_manager->send_int_to_master(rmax);
+            }
+          }
+          #endif
+
           for (int j=rmin;j<=rmax;j++)
           {
             for (int k=rmin;k<=rmax;k++)
@@ -167,42 +264,113 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
               {
                 Suu(j1,k1)+=tmp(j,k);
               }
+              //send j1,k1,Suu(j1,k1)
+              #if defined(USE_ADMPI)
+              if (ad_comm::mpi_manager)
+              {
+                if (ad_comm::mpi_manager->is_slave())
+                {
+                  ad_comm::mpi_manager->send_int_to_master(j1);
+                  ad_comm::mpi_manager->send_int_to_master(k1);
+                  ad_comm::mpi_manager->send_double_to_master(Suu(j1,k1));
+                }
+              }
+              #endif
             }
           }
         }
       }
+      // send Suu to master
+
+      #if defined(USE_ADMPI)
+      if (ad_comm::mpi_manager)
+      {
+        if (ad_comm::mpi_manager->is_master())
+        {
+          for (int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          {
+            //get mmin mmax
+            int mmmin,mmmax;
+            ad_comm::mpi_manager->get_int_from_slave(mmmin,si);
+            ad_comm::mpi_manager->get_int_from_slave(mmmax,si);
+
+            for (int i=mmmin;i<=mmmax;i++)
+            {
+              //get allocate_flag
+              int allocate_flag;
+              ad_comm::mpi_manager->get_int_from_slave(allocate_flag,si);
+              if (allocate_flag)
+              {
+                //get rmin rmax
+                int rmin,rmax;
+                ad_comm::mpi_manager->get_int_from_slave(rmin,si);
+                ad_comm::mpi_manager->get_int_from_slave(rmax,si);
+          
+                for (int j=rmin;j<=rmax;j++)
+                {
+                  for (int k=rmin;k<=rmax;k++)
+                  {
+                    //get ji k1 Suu(j1,k1)
+                    int j1,k1;
+                    ad_comm::mpi_manager->get_int_from_slave(j1,si);
+                    ad_comm::mpi_manager->get_int_from_slave(k1,si);
+                    Suu(j1,k1)=ad_comm::mpi_manager->get_double_from_slave(si);
+                  }
+                }
+              }
+            }
+
+          } //end for
+        }
+      }
+      #endif
     }
     minv.deallocate();
     BS.initialize();
     // random effects are never bounded?
     scale(xsize+1,Bnvar)=1.0;
 
-    int i;
+    int master_only=1;
+    #if defined(USE_ADMPI)  
+    if (ad_comm::mpi_manager)
+    {
+      if (ad_comm::mpi_manager->is_slave())
+      {
+        master_only=0;
+      }
+    }
+    #endif
 
-    for (i=1;i<=xsize;i++)
+    if (master_only)
     {
-      for (int j=1;j<=xsize;j++)
+      int i;
+
+      for (i=1;i<=xsize;i++)
       {
-        BS(i,j)=S(i,j);
+        for (int j=1;j<=xsize;j++)
+        {
+          BS(i,j)=S(i,j);
+        }
       }
-    }
    
-    for (i=xsize+1;i<=Bnvar;i++)
-    {
-      for (int j=1;j<=xsize;j++)
+      for (i=xsize+1;i<=Bnvar;i++)
       {
-        BS(i,j)=Sux(i-xsize,j);
-        BS(j,i)=BS(i,j);
+        for (int j=1;j<=xsize;j++)
+        {
+          BS(i,j)=Sux(i-xsize,j);
+          BS(j,i)=BS(i,j);
+        }
       }
-    }
     
-    for (i=xsize+1;i<=Bnvar;i++)
-    {
-      for (int j=xsize+1;j<=Bnvar;j++)
+      for (i=xsize+1;i<=Bnvar;i++)
       {
-        BS(i,j)=Suu(i-xsize,j-xsize);
+        for (int j=xsize+1;j<=Bnvar;j++)
+        {
+          BS(i,j)=Suu(i-xsize,j-xsize);
+        }
       }
-    }
+
+    } //end master_only
 #   endif
 
 

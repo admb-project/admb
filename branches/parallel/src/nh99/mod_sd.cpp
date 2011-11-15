@@ -36,6 +36,46 @@ void  set_covariance_matrix(const dmatrix& m)
   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
 }
  
+void function_minimizer::sd_routine_mpi_slave(void)
+{
+  int nvar,nvar1,ndvar;
+  #if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    ad_comm::mpi_manager->get_int_from_master(nvar);
+    ad_comm::mpi_manager->get_int_from_master(nvar1);
+    ad_comm::mpi_manager->get_int_from_master(ndvar);
+  }
+  #endif
+
+  if (nvar==nvar1)
+  {
+    //Do nothing
+  }
+  else
+  {
+#if   defined(USE_LAPLACE)
+
+    #if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
+    {
+      dmatrix S(1,nvar,1,nvar);
+      dmatrix BS(1,nvar1,1,nvar1);
+      BS.initialize();
+
+      for (int i=1; i<=nvar; i++)
+      {
+         S(i)=ad_comm::mpi_manager->get_dvector_from_master();
+      }
+      dvector scale=ad_comm::mpi_manager->get_dvector_from_master();
+    
+      get_bigS(ndvar,nvar1,nvar,S,BS,scale);
+    }
+    #endif
+
+#endif
+  }
+}
 
 void function_minimizer::sd_routine(void)
 {
@@ -92,6 +132,17 @@ void function_minimizer::sd_routine(void)
 
 
   int ndvar=stddev_params::num_stddev_calc();
+  #if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+    {
+      ad_comm::mpi_manager->send_int_to_slave(nvar,si);
+      ad_comm::mpi_manager->send_int_to_slave(nvar1,si);
+      ad_comm::mpi_manager->send_int_to_slave(ndvar,si);
+    }
+  }
+  #endif
   dvector scale(1,nvar1);   // need to get scale from somewhere
   dvector v(1,nvar);  // need to read in v from model.rep
   dmatrix S(1,nvar,1,nvar);
@@ -205,6 +256,26 @@ void function_minimizer::sd_routine(void)
 
         dmatrix BS(1,nvar1,1,nvar1);
         BS.initialize();
+
+
+        #if defined(USE_ADMPI)
+        if (ad_comm::mpi_manager)
+        {
+          //S,scale
+          for (int i=1; i<=nvar; i++)
+          {
+            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+            {
+              ad_comm::mpi_manager->send_dvector_to_slave(S(i),si);
+            }
+          }
+          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          {
+            ad_comm::mpi_manager->send_dvector_to_slave(scale,si);
+          }
+        }
+        #endif
+
         get_bigS(ndvar,nvar1,nvar,S,BS,scale);
         
         {

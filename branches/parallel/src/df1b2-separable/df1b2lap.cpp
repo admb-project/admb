@@ -1924,7 +1924,9 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   independent_variables u(1,usize);
   u=x;
   #if defined(USE_ADMPI)  
-    if (ad_comm::mpi_manager)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->sync_objfun_flag)
     {
       if (ad_comm::mpi_manager->is_master())
       {
@@ -1942,6 +1944,7 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
         ad_comm::mpi_manager->send_dvector_to_master(u);
       }
     }
+  }
   #endif
   dvariable vf=0.0;
   vf=initial_params::reset(dvar_vector(u));

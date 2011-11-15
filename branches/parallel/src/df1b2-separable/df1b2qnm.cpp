@@ -447,7 +447,10 @@ void set_gradient_sync(int flag)
 #if defined(USE_ADMPI)
     if (ad_comm::mpi_manager)
     {
-      (ad_comm::mpi_manager->sync_gradient_flag)=flag;
+      if (ad_comm::mpi_manager->sync_objfun_flag)
+      {
+        (ad_comm::mpi_manager->sync_gradient_flag)=flag;
+      }
     }
 #endif
 }
@@ -457,20 +460,23 @@ void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn)
 #if defined(USE_ADMPI)
     if (ad_comm::mpi_manager)
     {
-      if (ad_comm::mpi_manager->is_master())
+      if (ad_comm::mpi_manager->sync_objfun_flag)
       {
-        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        if (ad_comm::mpi_manager->is_master())
         {
-          ad_comm::mpi_manager->send_dvector_to_slave(x,si);
-          ad_comm::mpi_manager->send_double_to_slave(f,si);
-          ad_comm::mpi_manager->send_int_to_slave(ireturn,si);
+          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          {
+            ad_comm::mpi_manager->send_dvector_to_slave(x,si);
+            ad_comm::mpi_manager->send_double_to_slave(f,si);
+            ad_comm::mpi_manager->send_int_to_slave(ireturn,si);
+          }
         }
-      }
-      else
-      {
-        x = ad_comm::mpi_manager->get_dvector_from_master();
-        f = ad_comm::mpi_manager->get_double_from_master();
-        ad_comm::mpi_manager->get_int_from_master(ireturn);
+        else
+        {
+          x = ad_comm::mpi_manager->get_dvector_from_master();
+          f = ad_comm::mpi_manager->get_double_from_master();
+          ad_comm::mpi_manager->get_int_from_master(ireturn);
+        }
       }
     }
 #endif

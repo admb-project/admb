@@ -123,11 +123,26 @@ dvector get_solution_vector(int npts);
  */
 void function_minimizer::hess_routine_noparallel_random_effects(void)
 {
-
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
   initial_params::xinit(x);        // get the initial values into the x vector
+#if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
+    {
+      if (ad_comm::mpi_manager->is_master())
+      {
+        for (int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+        {
+           ad_comm::mpi_manager->send_dvector_to_slave(x,i);
+        }
+      }
+      else
+      {
+         x=ad_comm::mpi_manager->get_dvector_from_master();
+      }
+    }
+#endif
   double f;
   double delta=1.e-4;
   dvector g1(1,nvar);
@@ -141,7 +156,6 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
 
-    
   dvector ddd(1,nvar);
   gradcalc(0,ddd);
   adstring tmpstring;
@@ -155,8 +169,214 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     // modify so thaqt we have l_uu and dux for delta method
     // DF feb 15 05
     //if (lapprox->hesstype==2 || lapprox->hesstype==3)
+
+    if (lapprox->hesstype==2 ) 
+    {
+      if (lapprox->block_diagonal_hessian)
+      {
+        int evaluate_flag = 1;
+        #if defined(USE_ADMPI)  
+        if (ad_comm::mpi_manager)
+        {
+          if (ad_comm::mpi_manager->is_slave())
+          {
+            evaluate_flag=0;
+          }
+        }
+        #endif
+
+        //if (ad_comm::wd_flag)
+        tmpstring = ad_comm::adprogram_name + ".rhes";
+        ofstream ofs((char*)(tmpstring));
+          if(evaluate_flag)
+          {
+            ofs << "   value      std.dev" << endl;
+          }
+        int mmin=lapprox->block_diagonal_hessian->indexmin();
+        int mmax=lapprox->block_diagonal_hessian->indexmax();
+        int i,j;
+        int ii=1;
+
+        dvector & u= lapprox->uhat;
+        dvector dd(u.indexmin(),u.indexmax());
+        dd.initialize();
+
+        for (i=mmin;i<=mmax;i++)
+        {
+          if (allocated((*(lapprox->block_diagonal_hessian))(i)))
+          {
+            dmatrix m= inv((*(lapprox->block_diagonal_hessian))(i));
+            dvector d=sqrt(diagonal(m));
+            int jmin=d.indexmin();
+            int jmax=d.indexmax();
+            for (j=jmin;j<=jmax;j++)
+            {
+              //if (ii<=u.indexmax())
+              #if defined(USE_ADMPI)  
+              if (ad_comm::mpi_manager)
+              {
+                dd(ii++)=d(j);
+              }
+              else
+              #endif
+              {
+                ofs << setprecision(5) << setscientific() 
+                    << setw(14) << u(ii++) << " " << d(j) << endl;;
+              }
+            }
+          }
+        }
+        // send dd,ii, u to master.
+        #if defined(USE_ADMPI)  
+        if (ad_comm::mpi_manager)
+        {
+          if (ad_comm::mpi_manager->is_master())
+          {
+            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+            {
+              int ddmax;
+              ad_comm::mpi_manager->get_int_from_slave(ddmax,si);
+              dvector slave_dd=ad_comm::mpi_manager->
+                  get_dvector_from_slave(si);
+              u+=ad_comm::mpi_manager->get_dvector_from_slave(si);
+
+              for(int ddi=slave_dd.indexmin();ddi<ddmax;ddi++)
+              {
+                dd(ii++)=slave_dd(ddi);
+              }
+            }
+            //ofs
+            for (int j=u.indexmin();j<=u.indexmax();j++)
+            {
+                ofs << setprecision(5) << setscientific() 
+                    << setw(14) << u(j) << " " << dd(j) << endl;;
+            }
+
+          }
+          else
+          {
+            ad_comm::mpi_manager->send_int_to_master(ii);
+            ad_comm::mpi_manager->send_dvector_to_master(dd);
+            ad_comm::mpi_manager->send_dvector_to_master(u);
+          }
+        }
+        #endif
+  
+      }
+      else if (lapprox->bHess)
+      {
+        //if (ad_comm::wd_flag)
+        tmpstring = ad_comm::adprogram_name + ".rhes";
+        ofstream ofs((char*)(tmpstring));
+            ofs << "   value      std.dev" << endl;
+        int mmin=lapprox->bHess->indexmin();
+        int mmax=lapprox->bHess->indexmax();
+        //int i,j;
+        int i;
+        //int ii=1;
+        dvector & u= lapprox->uhat;
+        dvector e(mmin,mmax);
+        //choleski_decomp(*lapprox->bHess);
+        int ierr;
+        
+        banded_lower_triangular_dmatrix tmp=choleski_decomp(*lapprox->bHess,
+          ierr);
+        e.initialize();
+        for (i=mmin;i<=mmax;i++)
+        {
+          e(i)=1.0;
+          dvector v=solve(tmp,e);
+          e(i)=0;
+          
+          double d=sqrt(v*v);
+            ofs << setprecision(5) << setscientific() 
+                << setw(14) << u(i) << " " << d << endl;;
+        }
+      }
+    }
+    else
+    {
+      int i;
+      //if (ad_comm::wd_flag)
+      dmatrix m;
+      tmpstring = ad_comm::adprogram_name + ".rhes";
+      ofstream ofs((char*)(tmpstring));
+          ofs << "   value      std.dev" << endl;
+      //int ii=1;
+      tmpstring = ad_comm::adprogram_name + ".luu";
+      uostream ofs1((char*)(tmpstring));
+      dvector & u= lapprox->uhat;
+      if (lapprox->hesstype !=3)
+      {
+        if (allocated(lapprox->Hess))
+        {
+          m= inv(lapprox->Hess);
+          int mmin=m.indexmin();
+          int mmax=m.indexmax();
+          for (i=mmin;i<=mmax;i++)
+          {
+            ofs << setprecision(5) << setscientific() 
+                << setw(14) << u(i) << " " << sqrt(m(i,i)) << endl;;
+          }
+          // save l_uu and l_xu for covariance calculations
+          ofs1 << lapprox->usize << lapprox->xsize;
+          ofs1 << m;
+        }
+        else if (lapprox->sparse_triplet2)
+        {
+          dcompressed_triplet & st= *(lapprox->sparse_triplet2);
+          hs_symbolic& S= *(lapprox->sparse_symbolic2);
+          get_inverse_sparse_hessian(st,S,ofs1,ofs,lapprox->usize,
+            lapprox->xsize,u);
+          // save l_uu and l_xu for covariance calculations
+        }
+      }
+      else
+      {
+        if (lapprox->bHess)
+        {
+          int ierr=0;
+          int mmin=lapprox->bHess->indexmin();
+          int mmax=lapprox->bHess->indexmax();
+          const banded_lower_triangular_dmatrix& C=
+            quiet_choleski_decomp(*lapprox->bHess,ierr);
+          ivector e(mmin,mmax);
+          e.initialize();
+          if (ierr==0)
+          {
+            ofs1 << lapprox->usize << lapprox->xsize;
+            for (int i=mmin;i<=mmax;i++)
+            {
+              if (i>1) e(i-1)=0;
+              e(i)=1;
+              dvector w=solve_trans(C,solve(C,e));
+              ofs << setprecision(5) << setscientific() 
+                  << setw(14) << u(i) << " " << sqrt(w(i)) << endl;;
+              ofs1 << w;
+            }
+          }
+          else
+          {
+          }
+        }
+      }
+      if (!ofs)
+      {
+        cerr << "Error writing to file " << tmpstring << endl;
+        ad_exit(1);
+      }
+      // save l_uu and l_xu for covariance calculations
+      ofs1 << lapprox->Dux;
+      if (!ofs1)
+      {
+        cerr << "Error writing to file " << tmpstring << endl;
+        ad_exit(1);
+      }
+      ofs1.close();
+    }
+
     int evaluate_flag = 1;
-#if defined(USE_ADMPI)  
+    #if defined(USE_ADMPI)  
     if (ad_comm::mpi_manager)
     {
       if (ad_comm::mpi_manager->is_slave())
@@ -164,163 +384,16 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
         evaluate_flag=0;
       }
     }
-#endif
-    // Possibly change this so call to lapprox can be done serial or parallel
-    // then this can all be done in parallel like in mod_hess.cpp
-    if (evaluate_flag)
+    #endif
+    if(evaluate_flag)
     {
-      if (lapprox->hesstype==2 ) 
-      {
-        if (lapprox->block_diagonal_hessian)
-        {
-          //if (ad_comm::wd_flag)
-          tmpstring = ad_comm::adprogram_name + ".rhes";
-          ofstream ofs((char*)(tmpstring));
-              ofs << "   value      std.dev" << endl;
-          int mmin=lapprox->block_diagonal_hessian->indexmin();
-          int mmax=lapprox->block_diagonal_hessian->indexmax();
-          int i,j;
-          int ii=1;
-          dvector & u= lapprox->uhat;
-          for (i=mmin;i<=mmax;i++)
-          {
-            if (allocated((*(lapprox->block_diagonal_hessian))(i)))
-            {
-              dmatrix m= inv((*(lapprox->block_diagonal_hessian))(i));
-              dvector d=sqrt(diagonal(m));
-              int jmin=d.indexmin();
-              int jmax=d.indexmax();
-              for (j=jmin;j<=jmax;j++)
-              {
-                //if (ii<=u.indexmax())
-                {
-                  ofs << setprecision(5) << setscientific() 
-                      << setw(14) << u(ii++) << " " << d(j) << endl;;
-                }
-              }
-            }
-          }
-        }
-        else if (lapprox->bHess)
-        {
-          //if (ad_comm::wd_flag)
-          tmpstring = ad_comm::adprogram_name + ".rhes";
-          ofstream ofs((char*)(tmpstring));
-              ofs << "   value      std.dev" << endl;
-          int mmin=lapprox->bHess->indexmin();
-          int mmax=lapprox->bHess->indexmax();
-          //int i,j;
-          int i;
-          //int ii=1;
-          dvector & u= lapprox->uhat;
-          dvector e(mmin,mmax);
-          //choleski_decomp(*lapprox->bHess);
-          int ierr;
-          
-          banded_lower_triangular_dmatrix tmp=choleski_decomp(*lapprox->bHess,
-            ierr);
-          e.initialize();
-          for (i=mmin;i<=mmax;i++)
-          {
-            e(i)=1.0;
-            dvector v=solve(tmp,e);
-            e(i)=0;
-            
-            double d=sqrt(v*v);
-              ofs << setprecision(5) << setscientific() 
-                  << setw(14) << u(i) << " " << d << endl;;
-          }
-        }
-      }
-      else
-      {
-        int i;
-        //if (ad_comm::wd_flag)
-        dmatrix m;
-        tmpstring = ad_comm::adprogram_name + ".rhes";
-        ofstream ofs((char*)(tmpstring));
-            ofs << "   value      std.dev" << endl;
-        //int ii=1;
-        tmpstring = ad_comm::adprogram_name + ".luu";
-        uostream ofs1((char*)(tmpstring));
-        dvector & u= lapprox->uhat;
-        if (lapprox->hesstype !=3)
-        {
-          if (allocated(lapprox->Hess))
-          {
-            m= inv(lapprox->Hess);
-            int mmin=m.indexmin();
-            int mmax=m.indexmax();
-            for (i=mmin;i<=mmax;i++)
-            {
-              ofs << setprecision(5) << setscientific() 
-                  << setw(14) << u(i) << " " << sqrt(m(i,i)) << endl;;
-            }
-            // save l_uu and l_xu for covariance calculations
-            ofs1 << lapprox->usize << lapprox->xsize;
-            ofs1 << m;
-          }
-          else if (lapprox->sparse_triplet2)
-          {
-            dcompressed_triplet & st= *(lapprox->sparse_triplet2);
-            hs_symbolic& S= *(lapprox->sparse_symbolic2);
-            get_inverse_sparse_hessian(st,S,ofs1,ofs,lapprox->usize,
-              lapprox->xsize,u);
-            // save l_uu and l_xu for covariance calculations
-          }
-        }
-        else
-        {
-          if (lapprox->bHess)
-          {
-            int ierr=0;
-            int mmin=lapprox->bHess->indexmin();
-            int mmax=lapprox->bHess->indexmax();
-            const banded_lower_triangular_dmatrix& C=
-              quiet_choleski_decomp(*lapprox->bHess,ierr);
-            ivector e(mmin,mmax);
-            e.initialize();
-            if (ierr==0)
-            {
-              ofs1 << lapprox->usize << lapprox->xsize;
-              for (int i=mmin;i<=mmax;i++)
-              {
-                if (i>1) e(i-1)=0;
-                e(i)=1;
-                dvector w=solve_trans(C,solve(C,e));
-                ofs << setprecision(5) << setscientific() 
-                    << setw(14) << u(i) << " " << sqrt(w(i)) << endl;;
-                ofs1 << w;
-              }
-            }
-            else
-            {
-            }
-          }
-        }
-        if (!ofs)
-        {
-          cerr << "Error writing to file " << tmpstring << endl;
-          ad_exit(1);
-        }
-        // save l_uu and l_xu for covariance calculations
-        ofs1 << lapprox->Dux;
-        if (!ofs1)
-        {
-          cerr << "Error writing to file " << tmpstring << endl;
-          ad_exit(1);
-        }
-        ofs1.close();
-      }
-  
-      {
-        int i,j;
-        tmpstring = ad_comm::adprogram_name + ".luu";
-        uistream uis1((char*)(tmpstring));
-        uis1 >> i >> j;
-        cout << i << " " << j << endl;
-      }
-    } // end evaluate_flag
+      int i,j;
+      tmpstring = ad_comm::adprogram_name + ".luu";
+      uistream uis1((char*)(tmpstring));
+      uis1 >> i >> j;
+      cout << i << " " << j << endl;
+    }
+
 
     int npts=2;
     int on,nopt;
@@ -370,14 +443,41 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 
     {
       //
-      adstring tmpstring = "hessian.bin";
-      add_slave_suffix(tmpstring);
+      evaluate_flag=1;
+      #if defined(USE_ADMPI)  
+      if (ad_comm::mpi_manager)
+      {
+        if (ad_comm::mpi_manager->is_slave())
+        {
+          evaluate_flag=0;
+        }
+      }
+      #endif
+
+      adstring tmpstring="admodel.bin";
+      #if defined(USE_ADMPI)
+      if (ad_comm::mpi_manager)
+      {
+        if (ad_comm::mpi_manager->is_slave())
+        {
+          tmpstring += "_";
+          tmpstring += str(ad_comm::mpi_manager->get_slave_number());
+        }
+      }
+      #endif
       uostream uos(tmpstring);
-      uos << npts;
+      if (evaluate_flag)
+      {
+        uos << npts;
+      }
+
       for (int i=1;i<=nvar;i++)
       {
-          cout << "Estimating row " << i << " out of " << nvar
-  	     << " for hessian" << endl;
+        if (evaluate_flag)
+        {
+            cout << "Estimating row " << i << " out of " << nvar
+  	       << " for hessian" << endl;
+        }
 
         for (int j=-npts;j<=npts;j++)
         {
@@ -388,35 +488,33 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
             x(i)=xsave+j*sdelta;
             g1=(*lapprox)(x,f,this);
             x(i)=xsave;
-            uos << i << j << sdelta << g1;
+            if (evaluate_flag)
+            {
+              uos << i << j << sdelta << g1;
+            }
           }
           else
           {
-            uos << i << j << sdelta << g0;
+            if (evaluate_flag)
+            {
+              uos << i << j << sdelta << g0;
+            }
           }
         }
       }
     }
     // check for accuracy
-    evaluate_flag=1;
-#if defined(USE_ADMPI)  
-  if (ad_comm::mpi_manager)
-  {
-    if (ad_comm::mpi_manager->is_slave())
-    {
-      evaluate_flag=0;
-    }
-  }
-#endif
     if (evaluate_flag)
     {
       double sd;
-      uistream uis("hessian.bin");
+      adstring tmpstring="admodel.bin";
+      uistream uis(tmpstring);
       uis >> npts;
       dvector v=get_solution_vector(npts);
       v.shift(-npts);
       dmatrix tmp(-npts,npts,1,nvar);
       dmatrix hess(1,nvar,1,nvar);
+
       ivector iind(-npts,npts);
       ivector jind(-npts,npts);
       int i;

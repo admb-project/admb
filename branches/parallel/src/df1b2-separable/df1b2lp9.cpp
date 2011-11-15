@@ -158,28 +158,31 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
       #if defined(USE_ADMPI)
       if (ad_comm::mpi_manager)
       {
-        if (ad_comm::mpi_manager->is_master())
+        if (ad_comm::mpi_manager->sync_objfun_flag)
         {
-          ivector slave_converged(0,ad_comm::mpi_manager->get_num_slaves());
-          slave_converged(0)=converged;
-          // get converge from slaves
-          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          if (ad_comm::mpi_manager->is_master())
           {
-            ad_comm::mpi_manager->get_int_from_slave(slave_converged(si),si);
+            ivector slave_converged(0,ad_comm::mpi_manager->get_num_slaves());
+            slave_converged(0)=converged;
+            // get converge from slaves
+            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+            {
+              ad_comm::mpi_manager->get_int_from_slave(slave_converged(si),si);
+            }
+            converged=min(slave_converged);
+            // send new converged to salves
+            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+            {
+              ad_comm::mpi_manager->send_int_to_slave(converged,si);
+            }
           }
-          converged=min(slave_converged);
-          // send new converged to salves
-          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          else
           {
-            ad_comm::mpi_manager->send_int_to_slave(converged,si);
+            // send converged to master
+            ad_comm::mpi_manager->send_int_to_master(converged);
+            // set new converged
+            ad_comm::mpi_manager->get_int_from_master(converged);
           }
-        }
-        else
-        {
-          // send converged to master
-          ad_comm::mpi_manager->send_int_to_master(converged);
-          // set new converged
-          ad_comm::mpi_manager->get_int_from_master(converged);
         }
       }
       #endif
@@ -282,29 +285,36 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
 #if defined(USE_ADMPI)
   if (ad_comm::mpi_manager)
   {
-    if (ad_comm::mpi_manager->is_master())
+    if (ad_comm::mpi_manager->sync_objfun_flag)
     {
-      dvector slave_max(0,ad_comm::mpi_manager->get_num_slaves());
-      slave_max(0)=tmax;
-      // get tmax from slaves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      if (ad_comm::mpi_manager->is_master())
       {
-        slave_max(si)=ad_comm::mpi_manager->get_double_from_slave(si);
+        dvector slave_max(0,ad_comm::mpi_manager->get_num_slaves());
+        slave_max(0)=tmax;
+        // get tmax from slaves
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          slave_max(si)=ad_comm::mpi_manager->get_double_from_slave(si);
+        }
+        tmax=max(slave_max);
+        // send new tmax to salves
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          ad_comm::mpi_manager->send_double_to_slave(tmax,si);
+        }
+        cout <<  " inner maxg = " << tmax << endl; 
       }
-      tmax=max(slave_max);
-      // send new tmax to salves
-      for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+      else
       {
-        ad_comm::mpi_manager->send_double_to_slave(tmax,si);
+        // send tmax to master
+        ad_comm::mpi_manager->send_double_to_master(tmax);
+        // set new tmax
+        tmax = ad_comm::mpi_manager->get_double_from_master();
       }
-      cout <<  " inner maxg = " << tmax << endl; 
     }
     else
     {
-      // send tmax to master
-      ad_comm::mpi_manager->send_double_to_master(tmax);
-      // set new tmax
-      tmax = ad_comm::mpi_manager->get_double_from_master();
+      cout <<  " inner maxg = " << tmax << endl; 
     }
   }
   else

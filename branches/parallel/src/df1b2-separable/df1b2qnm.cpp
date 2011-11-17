@@ -163,6 +163,33 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       ad_exit(1);
     }
   }
+/*{
+  static int stop_flag;
+  if (stop_flag!=1)
+  {
+   #if defined(USE_ADMPI)
+   if (ad_comm::mpi_manager){
+     if(ad_comm::mpi_manager->is_slave())
+     {
+       cout << "PID " << getpid() << endl;
+     }
+    }
+   #endif
+    stop_flag=0;
+  }
+  while(stop_flag==0)
+    sleep(5);
+}*/
+  int mpi_minimizer_flag=1;
+  #if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_slave())
+    {
+      mpi_minimizer_flag=0;
+    }
+  }
+  #endif
 
   if (!random_effects_flag || !unvar)
   {
@@ -173,7 +200,9 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     {
       while (fmc.ireturn>=0)
       {
-        fmc.fmin(f,x,g);
+        if (mpi_minimizer_flag)
+          fmc.fmin(f,x,g);
+        mpi_set_x_f_ireturn(x,f,fmc.ireturn);
         if (fmc.ireturn>0)
         {
           dvariable vf=0.0;
@@ -301,6 +330,36 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           lapprox->check_hessian_type(this);
         }
 
+        int sep_calls = lapprox->num_separable_calls;
+        int master_only_flag=1;
+        if (lapprox->hesstype == 2)
+        {
+          #if defined(USE_ADMPI)
+          if (ad_comm::mpi_manager)
+          {
+            if (ad_comm::mpi_manager->sync_objfun_flag)
+            {
+              if (ad_comm::mpi_manager->is_master())
+              {
+                // get from slaves
+                for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+                {
+                  int tmp;
+                  ad_comm::mpi_manager->get_int_from_slave(tmp,si);
+                  sep_calls+=tmp;
+                }
+              }
+              else
+              {
+                //send to master
+                ad_comm::mpi_manager->send_int_to_master(sep_calls);
+                master_only_flag=0;
+              }
+            }
+          }
+          #endif
+        }
+
         // Print Hessian type and related info       
         switch(lapprox->hesstype)
         {
@@ -308,8 +367,9 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           cout << "Hessian type 1 " << endl;
           break;
         case 2:
-          cout << "\nBlock diagonal Hessian (Block size =" <<
-		 (lapprox->usize)/(lapprox->num_separable_calls) << ")\n" << endl;
+          if (master_only_flag)
+            cout << "\nBlock diagonal Hessian (Block size =" <<
+                (lapprox->usize)/(sep_calls) << ")\n" << endl;
           break;
         case 3:
           cout << "\nBanded Hessian (Band width = " << lapprox->bw << ")\n" << endl;
@@ -343,7 +403,6 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     }
 
     int mpi_minimizer_flag=1;
-    int laplace_flag=1;
     #if defined(USE_ADMPI)
     if (ad_comm::mpi_manager)
     {

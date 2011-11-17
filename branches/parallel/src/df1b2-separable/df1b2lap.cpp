@@ -1963,8 +1963,22 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   double maxg=max(fabs(g));
   if (!initial_params::mc_phase)
   {
-    cout << setprecision(16) << " f = " << vf  
-         << " max g = " << maxg << endl;
+    int master_only_flag=1;
+    #if defined(USE_ADMPI)
+    if (ad_comm::mpi_manager)
+    {
+      if (ad_comm::mpi_manager->is_slave())
+      {
+        master_only_flag=0;
+      }
+    }
+    #endif
+
+    if (master_only_flag)
+    {
+      cout << setprecision(16) << " f = " << vf  
+           << " max g = " << maxg << endl;
+    }
   }
   return maxg;
 }

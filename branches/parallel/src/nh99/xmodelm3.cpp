@@ -46,6 +46,7 @@ void tracing_message(int traceflag,const char *s);
   int function_minimizer::inner_opt_flag=0;
 #endif
 
+void update_pobjfun(void);
 
   int function_minimizer::bad_step_flag=0;  
 
@@ -496,6 +497,7 @@ void tracing_message(int traceflag,const char *s);
         {
 #endif  //#if defined(USE_ADPVM)
           userfunction();
+          update_pobjfun();
 #if defined(USE_ADPVM)
         }
 #endif  //#if defined(USE_ADPVM)
@@ -922,3 +924,37 @@ void print_is_diagnostics(laplace_approximation_calculator *lapprox)
 
 #endif // #if defined(USE_LAPLACE)
 
+void update_pobjfun(void)
+{
+#if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->sync_objfun_flag &&
+        function_minimizer::random_effects_flag)
+    {
+      double local_pobjfun=value(*objective_function_value::pobjfun);
+      if (ad_comm::mpi_manager->is_master())
+      {
+        // sync objective function
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          local_pobjfun+=ad_comm::mpi_manager->get_double_from_slave(si);
+        }
+        // send to slaves
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          ad_comm::mpi_manager->send_double_to_slave(local_pobjfun,si);
+        }
+      }
+      else
+      {
+        // sync objective function
+        ad_comm::mpi_manager->send_double_to_master(local_pobjfun);
+        // get initial_df1b2params::cobjfun from master
+        local_pobjfun=ad_comm::mpi_manager->get_double_from_master();
+      }
+      value(*objective_function_value::pobjfun)=local_pobjfun;
+    }
+  }
+#endif
+}

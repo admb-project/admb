@@ -101,6 +101,17 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
   }
   //cout << y << endl;
 
+  int master_only_flag=1;
+  #if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_slave())
+    {
+      master_only_flag=0;
+    }
+  }
+  #endif
+
   for(int ii=1;ii<=num_nr_iters;ii++)
   {  
     {   
@@ -111,8 +122,11 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       max_separable_g=0.0;
       pmin->inner_opt_flag=1;
       step=get_newton_raphson_info_block_diagonal(pfmin);
-      cout << "max separable g " << max_separable_g << endl; 
-      cout << "Newton raphson " << ii << endl;
+      if (master_only_flag)
+      {
+        cout << "max separable g " << max_separable_g << endl; 
+        cout << "Newton raphson " << ii << endl;
+      }
       uhat+=step;
       evaluate_function(uhat,pfmin);
       pmin->inner_opt_flag=0;
@@ -133,7 +147,8 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       }
     }
   }
-  cout << initial_df1b2params::cobjfun << endl;
+  if (master_only_flag)
+    cout << initial_df1b2params::cobjfun << endl;
   xadjoint.initialize();
   uadjoint.initialize();
   block_diagonal_flag=2;
@@ -479,7 +494,7 @@ dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
     // call function to do block diagonal newton-raphson
     // the step vector from the newton-raphson is in the vector step
     df1b2_gradlist::set_yes_derivatives();
-    
+
     funnel_init_var::lapprox=this;
     //cout << funnel_init_var::lapprox << endl;
     block_diagonal_flag=1;

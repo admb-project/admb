@@ -38,7 +38,7 @@ PROCEDURE_SECTION
   g = 0.0;
 
   separable_bounds(sb,1,m(1));
-  for(i=sb.indexmin();i<=sb.indexmax();i++)
+  for(i=sb->indexmin();i<=sb->indexmax();i++)
     fit_group_i(b,log_sigma,u(i),i);
 
 

@@ -172,7 +172,7 @@ long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
  }
 
  void fill_ad_random_part(void);
- extern char ad_random_part[7];
+ extern char ad_random_part[6];
 
 /**
  * Description not yet available.

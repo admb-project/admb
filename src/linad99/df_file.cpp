@@ -113,10 +113,20 @@
       cerr << "Error trying to allocate memory for DF_FILE buffer"<<endl;
       ad_exit(1);
     }
+    /*
+    // This initialization was used during original development
+    // and is not longer needed.
+    cout << "HERE 1" << endl;
+  #ifdef __BORLANDC__
     for (unsigned int i=0;i<sz;i++)
+  #else
+    for (long long int i=0;i<sz;i++)
+  #endif
     {
       buff[i]='\0';
     }
+    cout << "HERE 2" << endl;
+    */
     buff_size=sz;
     buff_end=sz-us-2;
     offset=0;

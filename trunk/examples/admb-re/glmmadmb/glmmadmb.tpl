@@ -14,12 +14,12 @@ DATA_SECTION
   init_int ncolZ
   init_matrix Z(1,n,1,ncolZ)			// Design matrix for random effects
   init_imatrix I(1,n,1,ncolZ)			// Index vectors into joint RE vector "u" for each
-  init_ivector cor_flag(1,M)			// Indicator for wether each RE block should be correlated
+  init_ivector cor_flag(1,M)			// Indicator for whether each RE block should be correlated
   init_ivector cor_block_start(1,M) 		// Indices for blocks of correlated random effects
   init_ivector cor_block_stop(1,M) 
   init_int numb_cor_params			// Total number of correlation parameters to be estimated
-  init_int like_type_flag   			// 0 poisson 1 binomial 2 negative binomial 3 Gamma 4 beta (?)
-  init_int link_type_flag   			// 0 log 1 logit 2 probit
+  init_int like_type_flag   			// 0 poisson 1 binomial 2 negative binomial 3 Gamma 4 beta 5 gaussian 6 truncated poisson
+  init_int link_type_flag   			// 0 log 1 logit 2 probit 3 inverse 4 cloglog 5 identity
   init_int rlinkflag                            // robust link function?
   init_int no_rand_flag   			// 0 have random effects 1 no random effects
   init_int zi_flag				// 1=zi, 0=no zi
@@ -85,6 +85,7 @@ PARAMETER_SECTION
   int rand_phase = no_rand_flag==0 ? pctr++ : -1;    // Right after zi
   int cor_phase = (rand_phase>0) && (sum(cor_flag)>0) ? pctr++ : -1 ; // Right after rand_phase
   ivector ncolS(1,M);
+  double log_alpha_lowerbound = nbinom1_flag==1 ? 0.001 : -5.0 ;
   ncolS = m;                                            // Uncorrelated random effects
   for (int i=1;i<=M;i++)                                // Modifies the correlated ones
     if(cor_flag(i))
@@ -97,7 +98,7 @@ PARAMETER_SECTION
   sdreport_vector real_beta(1,p)     
   init_bounded_vector tmpL(1,ncolZ,-10,10.5,rand_phase)		// Log standard deviations of random effects
   init_bounded_vector tmpL1(1,numb_cor_params,-10,10.5,cor_phase)	// Offdiagonal elements of cholesky-factor of correlation matrix
-  init_bounded_number log_alpha(-5.,6.,alpha_phase)	
+  init_bounded_number log_alpha(log_alpha_lowerbound,6.,alpha_phase)	
   sdreport_number alpha
   sdreport_vector S(1,nS)
   random_effects_vector u(1,sum_mq,rand_phase)    // Pool of random effects 
@@ -180,8 +181,7 @@ PROCEDURE_SECTION
 SEPARABLE_FUNCTION void n01_prior(const prevariable&  u)
  g -= -0.5*log(2.0*M_PI) - 0.5*square(u);
 
-SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& _ui, const dvar_vector& beta,const prevariable& log_alpha, const prevariable& pz)
-  dvar_vector& ui = (dvar_vector&)_ui;
+SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& ui, const dvar_vector& beta,const prevariable& log_alpha, const prevariable& pz)
   
   int i,j, i_m, Ni;
   double e1=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
@@ -232,6 +232,7 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
   // fudge factors for inverse link
   double eps=1.e-2;
   double eps1=1.e-2;
+  double eps2=1.e-4; // works on cloglog test in link.R; FAILS when eps2=1.e-6
   switch (current_phase())
   {
   case 1:
@@ -280,28 +281,52 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
        break;
      case 3:   // inverse link
        if (rlinkflag) {
-         lambda = 1.0/(eps+posfun(eta-eps,eps1,fpen));
+         lambda = 1.0/(eps+posfun(eta,eps1,fpen));
           g+=fpen;
         } else {
          lambda = 1.0/eta;
         }
        break;
      case 4: // cloglog
-       // pmax(pmin(-expm1(-exp(eta)), 1 - .Machine$double.eps), .Machine$double.eps)
-       cerr << "cloglog not yet implemented" << endl;
+	 {
+       // FIXME: document/clarify epsilon values  Add rlinkflag?
+       dvariable eeta;
+       
+       if (rlinkflag) {
+          eeta = -mfexp(eta);
+       } else {
+          eeta = -exp(eta);
+       }
+       // safe (1-exp()); tip from http://www.johndcook.com/cpp_expm1.html
+       if (fabs(value(eeta))<1e-5) {
+	   lambda = eeta + eeta*eeta*0.5;
+       } else {
+	   lambda = 1-mfexp(eeta);
+       }
+       // restrict to (0,1)
+       if (rlinkflag) {
+          lambda = posfun(lambda,eps2,fpen);
+          lambda = (1.0-posfun(1.0-lambda,eps2,fpen));
+       }
+       }
        break;
+     case 5: // identity
+        lambda = eta;
+	break;
      default:
        cerr << "Illegal value for link_type_flag" << endl;
        ad_exit(1);
-   }
+  }
 
-  // FIXME: can implement 'nbinom1' by modifying next line:
-  //     nbinom var = mu*tau
   dvariable  tau = nbinom1_flag ? alpha : 1.0 + e1 + lambda/alpha ;
-  // dvariable tau = 1.0+e1+lambda/alpha;
   dvariable tmpl; 				// Log likelihood
 
   int cph=current_phase();
+
+  // FIXME: does having lots of choices (for like_type_flag and link_flag) slow things down?
+  // Is there any advantage to doing this stuff in a vectorized way?
+  // Is there some other better approach to the per-point switch() ?
+
   switch(like_type_flag)
   {
     case 0:   // Poisson
@@ -332,6 +357,17 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
       // FIXME: "log_beta_density" seems more consistent but changing name
       //       causes problems -- already exists somewhere?
       tmpl = ln_beta_density(y(_i,1),lambda,alpha);
+      break;
+    case 5: // Gaussian
+      tmpl = 0.5*(log(2.0*M_PI*square(alpha)))+square((y(_i,1)-lambda)/alpha);
+      break;
+    case 6:   // truncated Poisson
+      // FIXME: check somewhere (here, or preferably in R code) for trunc poisson + not ZI + 0 in response
+      if (value(lambda) > 1.0e-10) {
+          tmpl = log_density_poisson(y(_i,1),lambda)-log(1.0-exp(-lambda));
+      } else {
+          tmpl = log_density_poisson(y(_i,1),lambda)-log(lambda);
+      }
       break;
     default:
       cerr << "Illegal value for like_type_flag" << endl;

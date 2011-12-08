@@ -80,7 +80,8 @@ PARAMETER_SECTION
   // }
 
   int pctr = 2;
-  int alpha_phase = like_type_flag>1 ? pctr++ : -1;         // Phase 2 if active
+  // FIXME: move trunc_poisson earlier in like_type hierarchy (or add a scale parameter flag vector)
+  int alpha_phase = like_type_flag>1 && like_type_flag!=6 ? pctr++ : -1;         // Phase 2 if active
   int zi_phase = zi_flag ? pctr++ : -1;                      // Phase 3 if active
   int rand_phase = no_rand_flag==0 ? pctr++ : -1;    // Right after zi
   int cor_phase = (rand_phase>0) && (sum(cor_flag)>0) ? pctr++ : -1 ; // Right after rand_phase
@@ -369,6 +370,7 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
           tmpl = log_density_poisson(y(_i,1),lambda)-log(lambda);
       }
       break;
+    // FIXME: truncated NB, NB1?
     default:
       cerr << "Illegal value for like_type_flag" << endl;
       ad_exit(1);

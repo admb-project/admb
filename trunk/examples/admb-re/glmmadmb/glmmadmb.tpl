@@ -18,7 +18,7 @@ DATA_SECTION
   init_ivector cor_block_start(1,M) 		// Indices for blocks of correlated random effects
   init_ivector cor_block_stop(1,M) 
   init_int numb_cor_params			// Total number of correlation parameters to be estimated
-  init_int like_type_flag   			// 0 poisson 1 binomial 2 negative binomial 3 Gamma 4 beta 5 gaussian 6 truncated poisson
+  init_int like_type_flag   			// 0 poisson 1 binomial 2 negative binomial 3 Gamma 4 beta 5 gaussian 6 truncated poisson 7 trunc NB
   init_int link_type_flag   			// 0 log 1 logit 2 probit 3 inverse 4 cloglog 5 identity
   init_int rlinkflag                            // robust link function?
   init_int no_rand_flag   			// 0 have random effects 1 no random effects
@@ -370,7 +370,14 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
           tmpl = log_density_poisson(y(_i,1),lambda)-log(lambda);
       }
       break;
-    // FIXME: truncated NB, NB1?
+    case 7:  // truncated NB
+    // NB(0) = p^alpha = (alpha/(alpha+lambda))^alpha = (1+lambda/alpha)^(-alpha)
+    //   -> exp(-lambda) as alpha -> infty
+      if (cph<2)  // ignore zero-inflation for first phase
+        tmpl = -square(log(1.0+y(_i,1))-log(1.0+lambda));
+      else
+        tmpl = log_negbinomial_density(y(_i,1),lambda,tau)-log(1.0-pow(1.0+lambda/alpha,-alpha));
+      break;
     default:
       cerr << "Illegal value for like_type_flag" << endl;
       ad_exit(1);

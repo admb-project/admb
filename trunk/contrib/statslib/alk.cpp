@@ -1,3 +1,4 @@
+#include "statsLib.h"
 
 /**
 * @file alk.cpp
@@ -25,7 +26,6 @@
 * for a given age \f$a\f$.
 */
 
-#include <admodel.h>
 
 /** \brief Age Length Key
 	
@@ -101,3 +101,30 @@ dmatrix ageLengthKey(const dvector& mu, const dvector& sig, const dvector& x)
 	RETURN_ARRAYS_DECREMENT();
 	return(pdf);
 }
+
+dvar_matrix ALK(dvar_vector mu, dvar_vector sig, dvector x)
+{
+	RETURN_ARRAYS_INCREMENT();
+	int i, j;
+	dvariable z1;
+	dvariable z2;
+	int si,ni; si=mu.indexmin(); ni=mu.indexmax();
+	int sj,nj; sj=x.indexmin(); nj=x.indexmax();
+	dvar_matrix pdf(si,ni,sj,nj);
+	pdf.initialize();
+	double xs=0.5*(x[sj+1]-x[sj]);
+	for(i=si;i<=ni;i++) //loop over ages
+	{
+		 for(j=sj;j<=nj;j++) //loop over length bins
+		{
+			z1=((x(j)-xs)-mu(i))/sig(i);
+			z2=((x(j)+xs)-mu(i))/sig(i);
+			pdf(i,j)=cumd_norm(z2)-cumd_norm(z1);
+		}//end nbins
+		pdf(i)/=sum(pdf(i));
+	}//end nage
+	//pdf/=sum(pdf);
+	RETURN_ARRAYS_DECREMENT();
+	return(pdf);
+}
+

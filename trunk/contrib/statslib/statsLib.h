@@ -1,87 +1,162 @@
+#ifndef _STATSLIB_H_
+#define _STATSLIB_H_
 
+#include <fvar.hpp>
+#include <admodel.h>
 
-#ifndef ADMODEL_H
-#define ADMODEL_H
-	#include <admodel.h>
-#endif
+dvar_matrix ageLengthKey( const dvar_vector& mu, const dvar_vector& sig, const dvector& x );
+dmatrix ageLengthKey( const dvector& mu, const dvector& sig, const dvector& x );
+dvar_matrix ALK(dvar_vector mu, dvar_vector sig, dvector x);
 
-/**
- * pi is a constant
-**/
-const double pi=3.1415926535897932384626433832795;
+void fill( const dmatrix& _d,const dvector& _v );
+void fill( const dvar_matrix& _d,const dvar_vector& _v );
 
-#ifndef DNORM_H
-#define DNORM_H
-	#include "dnorm.cpp"
-#endif
+double get_ft(const double& ct, const double& m, const dvector& va, const dvector& ba );
+dvector get_ft( dvector& ct,const double& m, const dmatrix& V,const dvector& ba );
+dvector get_ft( dvector& ct,const double& m, const dmatrix& V,const dvector& na, const dvector& wa );
 
-#ifndef DLNORM_H
-#define DLNORM_H
-	#include "dlnorm.cpp"
-#endif
+dvector pearson_residuals(long m, dvector obs_p, dvector pred_p);
 
-#ifndef DBINOM_H
-#define DBINOM_H
-	#include "dbinom.cpp"
-#endif
+// DISTRIBUTION FUNCTIONS
 
-#ifndef DNBINOM_H
-#define DNBINOM_H
-	#include "dnbinom.cpp"
-#endif
+// Uniform distribution
+dvariable dunif( const dvariable& x, const double min, const double max );
 
-#ifndef DPOIS_H
-#define DPOIS_H
-	#include "dpois.cpp"
-#endif
+// Inverse gamma distribution
+dvariable dinvgamma( const dvariable& x, const double a, const double b );
 
-#ifndef DGAMMA_H
-#define DGAMMA_H
-	#include "dgamma.cpp"
-#endif
+// Binomial distribution
+dvariable dbinom( const prevariable& x,const double& n,const double& p );
+dvariable dbinom( const prevariable& x,const prevariable& n,const double& p );
+dvariable dbinom( const prevariable& x,const prevariable& n,const prevariable& p );
 
-#ifndef LOGIS_H
-#define LOGIS_H
-	#include "logistic.cpp"
-#endif
+// Negative binomial distribution
+dvariable dnbinom( const double& x,const prevariable& size, const prevariable& mu );
 
-#ifndef DBETA_H
-#define DBETA_H
-	#include "dbeta.cpp"
-#endif
+// Gamma distribution
+dvariable dgamma( const dvariable &x, const double& a, const double& b );
+dvariable dgamma( const dvariable &x, const dvariable& a, const dvariable &b );
+dvariable dgamma( const dvector &x, const prevariable& a, const prevariable& b );
+dvariable dgamma( const dvector &x, const prevariable& a, const dvar_vector& b );
+dvariable dgamma( const dvector &x, const dvar_vector& a, const dvar_vector& b );
+dvariable dgamma( const dvector &x, const dvar_vector& a, const prevariable& b );
 
-#ifndef AGELENKEY_H
-#define AGELENKEY_H
-	#include "alk.cpp"
-#endif
-	
-#ifndef FILL_H
-#define FILL_H
-	#include "fill.cpp"
-#endif
+// Normal distribution
+dvariable dnorm( const prevariable& x, const double& mu, const double& std );
+dvariable dnorm( const dvar_vector& x, const double& mu, const double& std );
+dvariable dnorm( const dvector& x, const prevariable& mu, const prevariable& std );
+dvariable dnorm( const dvar_vector& residual, const prevariable& std );
+dvariable dnorm( const dvar_vector& residual, const double& std );
+dvariable dnorm( const dvar_vector& residual, const dvector& std );
+dvariable dnorm( const dvar_vector& residual, const dvar_vector std );
 
-#ifndef BARANOV_H
-#define BARANOV_H
-	#include "baranov.cpp"
-#endif
+// Plogis distribution
+dvariable plogis( const prevariable& x, const double& location, const double& scale );
+dvariable plogis( const prevariable& x, const prevariable& location, const prevariable& scale );
+dvar_vector plogis( const dvector& x, const prevariable& location, const prevariable& scale );
+dvector plogis( const dvector& x, const double& location, const double& scale );
+dvar_vector plogis( const dvar_vector& x, const prevariable& location, const prevariable& scale );
+
+// Exponential logistic distribution
+dvar_vector eplogis(const dvar_vector& x, const dvariable& alpha, const dvariable& beta, const dvariable& gamma);
+dvector eplogis(const dvector& x, const double& alpha, const double& beta, const double& gamma);
+
+// Beta distribution
+dvariable dbeta( const dvariable& x, const double& shape1, const double& shape2 );
+
+// Lognormal distribution
+dvariable dlnorm( const prevariable& x, const double& mu, const double& std );
+dvariable dlnorm( const prevariable& x, const prevariable& mu, const double& std );
+dvariable dlnorm( const prevariable& x, const prevariable& mu, const prevariable& std );
+dvariable dlnorm( const dvar_vector& x, const double& mu, const double& std );
+dvariable dlnorm( const dvar_vector& x, const prevariable& mu, const double& std );
+dvariable dlnorm( const dvar_vector& x, const prevariable& mu, const prevariable& std );
+
+// Poisson distribution
+dvariable dpois(const double& k, const prevariable& lambda);
+dvariable dpois(const prevariable& k, const prevariable& lambda);
+
+// Multinomial distribution
+dvariable dmultinom(const dvector& x, const dvar_vector& p);
+dvariable dmultinom(const dmatrix o, const dvar_matrix& p,dvar_matrix& nu,double& tau2,const double minp);
+double neff(const dvector& obs, const dvar_vector& pred);
+
+// Multivariate logistic negative log likelihood
+dvariable dmvlogistic(const dmatrix o, const dvar_matrix& p,dvar_matrix& nu, double& tau2,const double minp);
+dvariable dmvlogistic(const dmatrix o, const dvar_matrix& p, double& tau2); // *deprecated*
+
+// Random multivariate logistic negative log likelihood
+dvector rmvlogistic(const dvector& p, const double& tau2, const int& seed);
+
+// Robust normal approximation to the multinomial distribution
+dvariable multifan(const dmatrix oprop,const dvar_matrix& pprop, const int& Nsamp);
+dvariable multifan(const int& n, const dmatrix obs, const dvar_matrix pred,double& nef);
+dvariable multifan(const double& s,const dvector obsQ,const dvar_vector& preQ, double& nmle);
+
+// Ecologically paramaterized negative binomial
+/*
+df1b2variable dnbinom_eco(const dvector& x, const df1b2vector& lambda, const df1b2variable& k);
+df1b2variable dnbinom_eco(const dvector& x, const df1b2vector& lambda, const df1b2vector& k);
+dvariable dnbinom_eco(const dvector& x, const dvar_vector& lambda, const prevariable& k);
+dvariable dnbinom_eco(const dvector& x, const dvar_vector& lambda, const dvar_vector& k);
+*/
+// Ecologically paramaterized negative binomial with zero inflation
+/*
+df1b2variable dnbinom_eco_zi(const dvector& x, const df1b2vector& lambda, const df1b2variable& k, const df1b2variable& p);
+df1b2variable dnbinom_eco_zi(const dvector& x, const df1b2vector& lambda, const df1b2vector& k, const df1b2variable& p);
+dvariable dnbinom_eco_zi(const dvector& x, const dvar_vector& lambda, const prevariable& k, const prevariable& p);
+dvariable dnbinom_eco_zi(const dvector& x, const dvar_vector& lambda, const dvar_vector& k, const prevariable& p);
+df1b2variable dnbinom_eco_zi(const dvector& x, const df1b2vector& lambda, const df1b2variable& k, const df1b2vector& p);
+df1b2variable dnbinom_eco_zi(const dvector& x, const df1b2vector& lambda, const df1b2vector& k, const df1b2vector& p);
+dvariable dnbinom_eco_zi(const dvector& x, const dvar_vector& lambda, const prevariable& k, const dvar_vector& p);
+dvariable dnbinom_eco_zi(const dvector& x, const dvar_vector& lambda, const dvar_vector& k, const dvar_vector& p);
+*/
+
+// Spline class and functions
+typedef vcubic_spline_function * pvcubic_spline_function;
+
+class vcubic_spline_function_array
+{
+public:
+	// GET methods
+  int indexmin(void) {return index_min;}
+  int indexmax(void) {return index_max;}
+
+	// Constructors
+  vcubic_spline_function_array(int,int,const dvector & x, const dvar_matrix& _y);
+  vcubic_spline_function_array(const dvector & x);
+  vcubic_spline_function_array(const vcubic_spline_function_array&);
+
+	// Destructor
+  ~vcubic_spline_function_array();
+
+	// Operator overloads
+	vcubic_spline_function & operator () (int i);
+  dvar_matrix operator( ) (const dvector & v);
+
+private:
+  vcubic_spline_function ** ptr;
+  int index_min;
+  int index_max;
+};
+
+void bicubic_spline(const dvector& x, const dvector& y, dvar_matrix& knots, dvar_matrix& S);
+dvariable splin2(const dvector& _x1a,const dvector& _x2a, const dvar_matrix _ya,dvar_matrix& _y2a, const double& x1,const double& x2);
+dvar_matrix splie2(const dvector& _x1a,const dvector& _x2a,const dvar_matrix& _ya);
+dvar_vector spline(const dvector &_x,const dvar_vector&_y,double yp1,double ypn);
+dvariable splint(const dvector& _xa,const dvar_vector& _ya, const dvar_vector& _y2a,double x);
 
 /**
 * @file statsLib.h
 * @brief Library of statistic functions
 * \ingroup STATLIB
-* This library contains numerous statistical functions
-* that can easily be used in ADMB templates. This is the
-* header file that contains preprocessor directive to 
-* include all of the necessary files into the library.
+* This library contains declaratioins for
+* numerous statistical functions
+* that can be used in ADMB TPL files.
 * 
-* @author Steven Martell
+* @author Chris Grandin, Steve Martell
 * 
-* @date 2/05/2011
-*
-*
-*
-*
-*
+* @date 12/14/2011
 */
 
-
+#endif

@@ -1,4 +1,5 @@
-#include <admodel.h>
+#include "statsLib.h"
+
 /**
 * \file baranov.cpp
 * \brief Routines for iteratively solving the Baranov catch equation.
@@ -36,11 +37,6 @@
  * 
  * At present this function is only implemented for data-type variables.
 **/
-
-//Prototypes
-double get_ft(const double& ct, const double& m, const dvector& va, const dvector& ba);
-
-
 
 /** 
 	\author Steven James Dean Martell UBC Fisheries Centre

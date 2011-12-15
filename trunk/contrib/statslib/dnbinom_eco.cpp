@@ -1,7 +1,5 @@
 //Ecological parametarization of the negative log likelihood distribution
-#include <admodel.h>
-#include <df1b2fun.h>
-#include <adrndeff.h> 
+#include "statsLib.h"
 
 /** ecologically parametarized negative binomial
 \author Mollie Brooks

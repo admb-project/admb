@@ -1,4 +1,4 @@
-#include <admodel.h>
+#include "statsLib.h"
 
 /**
 * @file logistic.cpp

@@ -1,4 +1,4 @@
-#include <admodel.h>
+#include "statsLib.h"
 
 /**
 * @file dbeta.cpp
@@ -36,7 +36,7 @@
 * This function has nobt been overloaded for differentiable parameters
 * (shape1 and shape2) because the gammln function does not accept them.s
 */
-static dvariable dbeta( const dvariable& x, const double& shape1, const double& shape2 )
+dvariable dbeta( const dvariable& x, const double& shape1, const double& shape2 )
 {
 	if( x<=0 || x>=1.0 )
 	{

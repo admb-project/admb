@@ -1,3 +1,4 @@
+#include "statsLib.h"
 #include <admodel.h>
 
 /**
@@ -15,7 +16,7 @@
 * 
 * The function is implemented as:
 * \f[
-*  0.5\ln(2 \pi) + \ln(\sigma) + 0.5\frac{(x-\mu)^2}{\sigma^2}
+*  0.5\ln(2 \M_PI) + \ln(\sigma) + 0.5\frac{(x-\mu)^2}{\sigma^2}
 * \f]
 * where \f$\mu\f$ is the mean and \f$\sigma\f$
 * is the standard deviation.
@@ -23,11 +24,6 @@
 * 
 * 
 */
-
-
-
-
-
 
 /** 
 	\author Steven James Dean Martell
@@ -48,7 +44,7 @@ dvariable dnorm( const prevariable& x, const double& mu, const double& std )
 		return 0;
 	}
 
-	return 0.5*log(2.*pi)+log(std)+0.5*square(x-mu)/(std*std);
+	return 0.5*log(2.*M_PI)+log(std)+0.5*square(x-mu)/(std*std);
 }
 
 /** 
@@ -73,7 +69,7 @@ dvariable dnorm( const dvar_vector& x, const double& mu, const double& std )
 	RETURN_ARRAYS_INCREMENT();
 	long n=size_count(x);
 	dvariable SS=norm2(x-mu);
-	dvariable tmp=n*(0.5*log(2.*pi)+log(std))+0.5*SS/(std*std);
+	dvariable tmp=n*(0.5*log(2.*M_PI)+log(std))+0.5*SS/(std*std);
 	RETURN_ARRAYS_DECREMENT();
 	return( tmp );
 }
@@ -100,13 +96,10 @@ dvariable dnorm( const dvector& x, const prevariable& mu, const prevariable& std
 	RETURN_ARRAYS_INCREMENT();
 	long n=size_count(x);
 	dvariable SS=norm2(x-mu);
-	dvariable tmp=n*(0.5*log(2.*pi)+log(std))+0.5*SS/(std*std);
+	dvariable tmp=n*(0.5*log(2.*M_PI)+log(std))+0.5*SS/(std*std);
 	RETURN_ARRAYS_DECREMENT();
 	return( tmp );
 }
-
-
-
 
 /** 
 	\author Steven James Dean Martell
@@ -129,7 +122,7 @@ dvariable dnorm( const dvar_vector& residual, const prevariable& std )
 	RETURN_ARRAYS_INCREMENT();
 	long n=size_count(residual);
 	dvariable SS=norm2(residual);
-	dvariable tmp=n*(0.5*log(2.*pi)+log(std))+0.5*SS/(std*std);
+	dvariable tmp=n*(0.5*log(2.*M_PI)+log(std))+0.5*SS/(std*std);
 	RETURN_ARRAYS_DECREMENT();
 	return( tmp );
 }
@@ -155,7 +148,7 @@ dvariable dnorm( const dvar_vector& residual, const double& std )
 	RETURN_ARRAYS_INCREMENT();
 	long n=size_count(residual);
 	dvariable SS=norm2(residual);
-	dvariable tmp=n*(0.5*log(2.*pi)+log(std))+0.5*SS/(std*std);
+	dvariable tmp=n*(0.5*log(2.*M_PI)+log(std))+0.5*SS/(std*std);
 	RETURN_ARRAYS_DECREMENT();
 	return( tmp );
 }
@@ -188,7 +181,7 @@ dvariable dnorm( const dvar_vector& residual, const dvector& std )
 	int n=size_count(residual);
 	dvector var=elem_prod(std,std);
 	dvar_vector SS=elem_prod(residual,residual);
-	dvariable tmp = 0.5*n*log(2.*pi)+sum(log(std))+sum(elem_div(SS,2.*var));
+	dvariable tmp = 0.5*n*log(2.*M_PI)+sum(log(std))+sum(elem_div(SS,2.*var));
 	RETURN_ARRAYS_DECREMENT();
 	return( tmp );
 }
@@ -223,7 +216,7 @@ dvariable dnorm( const dvar_vector& residual, const dvar_vector std )
 	int n=size_count(residual);
 	dvar_vector var=elem_prod(std,std);
 	dvar_vector SS=elem_prod(residual,residual);
-	dvariable tmp=0.5*n*log(2.*pi)+sum(log(std))+sum(elem_div(SS,2.*var));
+	dvariable tmp=0.5*n*log(2.*M_PI)+sum(log(std))+sum(elem_div(SS,2.*var));
 	RETURN_ARRAYS_DECREMENT();
 	return( tmp );
 }

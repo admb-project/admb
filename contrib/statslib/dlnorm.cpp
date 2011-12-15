@@ -1,4 +1,4 @@
-#include <admodel.h>
+#include "statsLib.h"
 
 /**
 * \file dlnorm.cpp
@@ -12,7 +12,7 @@
 * 
 * * The function is implemented as:
 * \f[
-*  0.5\ln(2 \pi) + \ln(\sigma)+\ln(x) + 0.5\frac{(\ln(x)-\mu)^2}{\sigma^2}
+*  0.5\ln(2 \M_PI) + \ln(\sigma)+\ln(x) + 0.5\frac{(\ln(x)-\mu)^2}{\sigma^2}
 * \f]
 * where \f$\mu\f$ is the logmean and \f$\sigma\f$
 * is the log standard deviation.  The function returns an error
@@ -43,7 +43,7 @@ dvariable dlnorm( const prevariable& x, const double& mu, const double& std )
 		return 0;
 	}
 	
-	return 0.5*log(2.*pi)+log(std)+log(x)+square(log(x)-mu)/(2.*std*std);
+	return 0.5*log(2.*M_PI)+log(std)+log(x)+square(log(x)-mu)/(2.*std*std);
 }
 
 /** 
@@ -65,7 +65,7 @@ dvariable dlnorm( const prevariable& x, const prevariable& mu, const double& std
 		return 0;
 	}
 	
-	return 0.5*log(2.*pi)+log(std)+log(x)+square(log(x)-mu)/(2.*std*std);
+	return 0.5*log(2.*M_PI)+log(std)+log(x)+square(log(x)-mu)/(2.*std*std);
 }
 
 /** 
@@ -87,7 +87,7 @@ dvariable dlnorm( const prevariable& x, const prevariable& mu, const prevariable
 		return 0;
 	}
 	
-	return 0.5*log(2.*pi)+log(std)+log(x)+square(log(x)-mu)/(2.*std*std);
+	return 0.5*log(2.*M_PI)+log(std)+log(x)+square(log(x)-mu)/(2.*std*std);
 }
 
 /** 
@@ -112,7 +112,7 @@ dvariable dlnorm( const dvar_vector& x, const double& mu, const double& std )
 	RETURN_ARRAYS_INCREMENT();
 	long n=size_count(x);
 	dvariable ss = norm2( log(x)-mu );
-	dvariable t1 = n*(0.5*log(2*pi)+log(std));
+	dvariable t1 = n*(0.5*log(2*M_PI)+log(std));
 	dvariable nloglike = t1 + sum(log(x)) + ss/(2.*std*std);
 	RETURN_ARRAYS_DECREMENT();
 	return nloglike;	
@@ -140,7 +140,7 @@ dvariable dlnorm( const dvar_vector& x, const prevariable& mu, const double& std
 	RETURN_ARRAYS_INCREMENT();
 	long n=size_count(x);
 	dvariable ss = norm2( log(x)-mu );
-	dvariable t1 = n*(0.5*log(2*pi)+log(std));
+	dvariable t1 = n*(0.5*log(2*M_PI)+log(std));
 	dvariable nloglike = t1 + sum(log(x)) + ss/(2.*std*std);
 	RETURN_ARRAYS_DECREMENT();
 	return nloglike;	
@@ -168,7 +168,7 @@ dvariable dlnorm( const dvar_vector& x, const prevariable& mu, const prevariable
 	RETURN_ARRAYS_INCREMENT();
 	long n=size_count(x);
 	dvariable ss = norm2( log(x)-mu );
-	dvariable t1 = n*(0.5*log(2*pi)+log(std));
+	dvariable t1 = n*(0.5*log(2*M_PI)+log(std));
 	dvariable nloglike = t1 + sum(log(x)) + ss/(2.*std*std);
 	RETURN_ARRAYS_DECREMENT();
 	return nloglike;	

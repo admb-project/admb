@@ -4,9 +4,7 @@
 //0<x
 //Aug 1, 2011
 //Mollie Brooks
-#include <admodel.h>
-#include <df1b2fun.h>
-#include <adrndeff.h> 
+#include "statsLib.h"
 /** ecologically parametarized negative binomial with zero inflation
 \author Mollie Brooks
 \param x observed counts. should be >0.

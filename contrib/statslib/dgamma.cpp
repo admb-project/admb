@@ -1,4 +1,5 @@
-#include <admodel.h>
+#include "statsLib.h"
+
 /**
 * \file dgamma.cpp
 * \brief Gamma density functions.

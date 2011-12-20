@@ -20,6 +20,14 @@ If you would like to contribute or donate funds, please contact
 <users@admb-project.org>.  Cool ADMB T-shirts are also available 
 for purchase.
 
+How to Cite ADMB
+================
+Fournier, D. A., H. J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson,
+M. N. Maunder, A. Nielsen, and J. Sibert. in press, 2011. 
+AD Model Builder: using automatic differentiation for statistical 
+inference of highly parameterized complex nonlinear models. 
+Optimization Methods& Software. doi: 10.1080/10556788.2011.597854
+
 Table of Contents
 =================
  * Release Notes

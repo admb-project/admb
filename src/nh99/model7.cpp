@@ -220,7 +220,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -master         run as PVM master program\n");
       (*ad_printf)( " -slave          run as PVM slave program\n");
       (*ad_printf)( " -pvmtime        record timing information for PVM performance analysis\n");
-      (*ad_printf)( " -info           Contributors acknowledgements\n");
+      (*ad_printf)( " -info           How to Cite ADMB, License and contributors acknowledgements\n");
       (*ad_printf)( " -? or -help     this message\n");
       (*ad_printf)("\n");
       (*ad_printf)( " Random effects options if applicable\n");
@@ -257,13 +257,25 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     }
     else if (option_match(_argc,_argv,"-info") > -1)
     {
-      (*ad_printf)("AD Model Builder");
+      (*ad_printf)("ADMB Information\n");
+      (*ad_printf)("================\n\n");
+
+      (*ad_printf)("How to Cite ADMB\n");
+      (*ad_printf)("----------------\n\n");
+
+      (*ad_printf)("Fournier, D. A., H. J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson,\n");
+      (*ad_printf)("M. N. Maunder, A. Nielsen, and J. Sibert. in press, 2011.\n");
+      (*ad_printf)("AD Model Builder: using automatic differentiation for statistical\n");
+      (*ad_printf)("inference of highly parameterized complex nonlinear models.\n");
+      (*ad_printf)("Optimization Methods& Software. doi: 10.1080/10556788.2011.597854\n\n");
+
 #ifdef ADMB_CONFIGURE
       //(*ad_printf)(" %s", (char*)admb_banner);
 #endif
-      (*ad_printf)("\n");
-      (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California and ADMB Foundation\n");
-      (*ad_printf)("\n");
+      (*ad_printf)("License\n");
+      (*ad_printf)("-------\n\n");
+
+      (*ad_printf)("Copyright (c) 2008-2011 Regents of the University of California and ADMB Foundation\n\n");
 
       (*ad_printf)("ADMB is free software and comes with ABSOLUTELY NO WARRANTY.\n");
       (*ad_printf)("You are welcome to redistribute it under certain conditions.\n");

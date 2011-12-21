@@ -1669,11 +1669,11 @@ the code where \texttt{S} gets assigned its value must be placed in a
   $ is automatically subtracted from the objective function. Therefore, the
   objective function must hold the negative log-likelihood when using the
   \texttt{normal\_prior}.
-%  \item[$\bigstar$] To verify that your model really is partially separable, you
-%  should try replacing the \texttt{SEPARABLE\_FUNCTION} keyword with an ordinary
-%  \texttt{FUNCTION}. Then verify on a small subset of your data that the two
-%  versions of the program produce the same results. You should be able to
-%  observe that the \texttt{SEPARABLE\_FUNCTION} version runs faster.
+%  \item[$\bigstar$] To verify that your model really is partially separable,
+%  you should try replacing the \texttt{SEPARABLE\_FUNCTION} keyword with an
+%  ordinary \texttt{FUNCTION}. Then verify on a small subset of your data that
+%  the two versions of the program produce the same results. You should be able
+%  to observe that the \texttt{SEPARABLE\_FUNCTION} version runs faster.
 \end{itemize}
 See a full example
 \href{http://otter-rsch.com/admbre/examples/spatial/spatial.html}{here}.
@@ -1796,10 +1796,11 @@ effects, and thus GAMs fall naturally into the domain of \scAR.
 
 For each component $f_{j}$ in equation~(\ref{eqn:gam}), we construct a design
 matrix $\mathbf{X}$ such that $f_{j}(x_{i,j})=\mathbf{X}^{(i)}\mathbf{u}$, where
-$\mathbf{X}^{(i)}$ is the $i^{\textrm{th}}$ row of $\mathbf{X}$ and $\mathbf{u}$\
-is a coefficient vector. We use the R-function \texttt{splineDesign} (from the
-\texttt{splines} library) to construct a design matrix~$\mathbf{X}$. To avoid
-overfitting, we add a first-order difference penalty~\cite{eile:marx:1996}
+$\mathbf{X}^{(i)}$ is the $i^{\textrm{th}}$ row of $\mathbf{X}$ and
+$\mathbf{u}$\ is a coefficient vector. We use the R-function
+\texttt{splineDesign} (from the \texttt{splines} library) to construct a design
+matrix~$\mathbf{X}$. To avoid overfitting, we add a first-order difference
+penalty~\cite{eile:marx:1996}
 \index{splines!difference penalty}
 \begin{equation}
 -\lambda ^{2}\sum_{k=2}\left( u_{k}-u_{k-1}\right) ^{2},
@@ -2316,15 +2317,16 @@ item-response-theory-irt-and-the-multilevel-rasch-model-1}{here}.
 \item Profile likelihoods cannot be used.
 \item Certain functions, especially for matrix operations, have not been
 implemented.
-\item The assignment operator for \texttt{dvariable} behaves differently. The code
+\item The assignment operator for \texttt{dvariable} behaves differently. The
+code
 \begin{lstlisting}
      dvariable y = 1;
      dvariable x = y;
 \end{lstlisting}
-will make \texttt{x} and \texttt{y} point to the same memory location (shallow copy)
-in \scAR. Hence, changing the value of \texttt{x} automatically changes \texttt{y}.
-Under \scAB, on the other hand, \texttt{x} and \texttt{y} will refer to different memory 
-locations (deep copy). If you want to perform a deep copy
+will make \texttt{x} and \texttt{y} point to the same memory location (shallow
+copy) in \scAR. Hence, changing the value of \texttt{x} automatically changes
+\texttt{y}. Under \scAB, on the other hand, \texttt{x} and \texttt{y} will refer
+to different memory locations (deep copy). If you want to perform a deep copy
 in \scAR\ you should write:
 \begin{lstlisting}
      dvariable y = 1;

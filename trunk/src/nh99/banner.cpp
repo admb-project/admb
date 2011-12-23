@@ -118,5 +118,8 @@ void banner(const adstring& program_name)
   
   ss << '\0';
 
-  cout << ss.str() << endl;
+  char* str = ss.str();
+  cout << str << endl;
+  delete str;
+  str = 0;
 }

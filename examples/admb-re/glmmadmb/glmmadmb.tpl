@@ -3,32 +3,35 @@
 DATA_SECTION
 
   init_int n					// Number of observations
-  init_int p_y					// Number of fixed effects
+  init_int p_y					// Dimension of y(i) (multivariate response)
   init_matrix y(1,n,1,p_y)			// Observation matrix
   init_int p					// Number of fixed effects
   init_matrix X(1,n,1,p)			// Design matrix for fixed effects
   init_int M					// Number of RE blocks (crossed terms)
-  init_ivector q(1,M)				// Number of levels of each RE block
-  init_ivector m(1,M)				// Number of random effects within each block
-  int sum_mq
-  init_int ncolZ
+  init_ivector q(1,M)				// Number of levels of the grouping variable per RE block; Can be skipped
+  init_ivector m(1,M)				// Number of random effects parameters within each block
+  int sum_mq					// sum(m*q), calculated below: should be read from R
+  init_int ncolZ				
   init_matrix Z(1,n,1,ncolZ)			// Design matrix for random effects
   init_imatrix I(1,n,1,ncolZ)			// Index vectors into joint RE vector "u" for each
   init_ivector cor_flag(1,M)			// Indicator for whether each RE block should be correlated
-  init_ivector cor_block_start(1,M) 		// Indices for blocks of correlated random effects
-  init_ivector cor_block_stop(1,M) 
+  init_ivector cor_block_start(1,M) 		// Not used: remove
+  init_ivector cor_block_stop(1,M) 		// Not used: remove
   init_int numb_cor_params			// Total number of correlation parameters to be estimated
   init_int like_type_flag   			// 0 poisson 1 binomial 2 negative binomial 3 Gamma 4 beta 5 gaussian 6 truncated poisson 7 trunc NB
   init_int link_type_flag   			// 0 log 1 logit 2 probit 3 inverse 4 cloglog 5 identity
   init_int rlinkflag                            // robust link function?
   init_int no_rand_flag   			// 0 have random effects 1 no random effects
-  init_int zi_flag				// 1=zi, 0=no zi
+  init_int zi_flag				// Zero inflation (zi) flag: 1=zi, 0=no zi
   // TESTING: remove eventually?
   init_int zi_kluge				// apply zi=0.001?
   init_int nbinom1_flag				// 1=NBinom1, 0=NBinom2
-  init_int intermediate_maxfn
-  init_int has_offset				// 0=no offset, 1=with offset
-  init_vector offset(1,n)				// Offset vector
+  init_int intermediate_maxfn			// Not used
+  init_int has_offset				// Offset in linear predictor: 0=no offset, 1=with offset
+  init_vector offset(1,n)			// Offset vector
+
+
+  // Makes design matrix X orthogonal to improve numeric stability
   matrix rr(1,n,1,6)
   matrix phi(1,p,1,p)
  LOC_CALCS
@@ -79,19 +82,22 @@ PARAMETER_SECTION
   //  ad_exit(1);
   // }
 
-  int pctr = 2;
+  // Determines "phases", i.e. when the various parameters  becomes active in the optimization process
+  int pctr = 2;		// "Current phase" in the stagewise procedure
   // FIXME: move trunc_poisson earlier in like_type hierarchy (or add a scale parameter flag vector)
-  int alpha_phase = like_type_flag>1 && like_type_flag!=6 ? pctr++ : -1;         // Phase 2 if active
-  int zi_phase = zi_flag ? pctr++ : -1;                      // Phase 3 if active
-  int rand_phase = no_rand_flag==0 ? pctr++ : -1;    // Right after zi
-  int cor_phase = (rand_phase>0) && (sum(cor_flag)>0) ? pctr++ : -1 ; // Right after rand_phase
+  int alpha_phase = like_type_flag>1 && like_type_flag!=6 ? pctr++ : -1;        // Phase 2 if active
+  int zi_phase = zi_flag ? pctr++ : -1;                      			// After alpha
+  int rand_phase = no_rand_flag==0 ? pctr++ : -1;    				// SD of RE's
+  int cor_phase = (rand_phase>0) && (sum(cor_flag)>0) ? pctr++ : -1 ; 		// Correlations of RE's
+
+  // Count the number of variance/correlation parameters to be estimated
   ivector ncolS(1,M);
   double log_alpha_lowerbound = nbinom1_flag==1 ? 0.001 : -5.0 ;
-  ncolS = m;                                            // Uncorrelated random effects
-  for (int i=1;i<=M;i++)                                // Modifies the correlated ones
+  ncolS = m;                       	// Uncorrelated random effects
+  for (int i=1;i<=M;i++)                // Modifies the correlated ones
     if(cor_flag(i))
       ncolS(i) = m(i)*(m(i)+1)/2;
-  int nS = sum(ncolS);             
+  int nS = sum(ncolS);             	//  Total number
  END_CALCS
   
   init_bounded_number pz(.000001,0.999,zi_phase)
@@ -182,8 +188,7 @@ PROCEDURE_SECTION
 SEPARABLE_FUNCTION void n01_prior(const prevariable&  u)
  g -= -0.5*log(2.0*M_PI) - 0.5*square(u);
 
-SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& _ui, const dvar_vector& beta,const prevariable& log_alpha, const prevariable& pz)
-  dvar_vector& ui = (dvar_vector&)_ui;
+SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& ui, const dvar_vector& beta,const prevariable& log_alpha, const prevariable& pz)
   
   int i,j, i_m, Ni;
   double e1=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
@@ -226,7 +231,6 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
 
     tmp1 = ui(lower,upper).shift(1);
     tmp1 = L*tmp1;
-    //    b(lower,upper) = (L*(ui(lower,upper).shift(1))).shift(lower);	// L*ui
     b(lower,upper) = tmp1.shift(lower);
 
   }
@@ -378,6 +382,9 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
         tmpl = -square(log(1.0+y(_i,1))-log(1.0+lambda));
       else
         tmpl = log_negbinomial_density(y(_i,1),lambda,tau)-log(1.0-pow(1.0+lambda/alpha,-alpha));
+      break;
+    case 8: // logistic 
+      tmpl = -log(alpha) + (y(_i,1)-lambda)/alpha - 2*log(1+exp((y(_i,1)-lambda)/alpha));
       break;
     default:
       cerr << "Illegal value for like_type_flag" << endl;

@@ -188,8 +188,9 @@ PROCEDURE_SECTION
 SEPARABLE_FUNCTION void n01_prior(const prevariable&  u)
  g -= -0.5*log(2.0*M_PI) - 0.5*square(u);
 
-SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& ui, const dvar_vector& beta,const prevariable& log_alpha, const prevariable& pz)
+SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& _ui, const dvar_vector& beta,const prevariable& log_alpha, const prevariable& pz)
   
+  ADUNCONST(dvar_vector,ui)
   int i,j, i_m, Ni;
   double e1=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
   double e2=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
@@ -303,9 +304,10 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
        } else {
           eeta = -exp(eta);
        }
+       const double onesixth=1.0/6.0;
        // safe (1-exp()); tip from http://www.johndcook.com/cpp_expm1.html
-       if (fabs(value(eeta))<1e-5) {
-	   lambda = eeta + eeta*eeta*0.5;
+       if (fabs(value(eeta))<1e-6) {
+	   lambda = -eeta*(1.0+eeta*(0.5+onesixth*eeta));
        } else {
 	   lambda = 1-mfexp(eeta);
        }

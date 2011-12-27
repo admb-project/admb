@@ -16,7 +16,7 @@
 * 
 * The function is implemented as:
 * \f[
-*  0.5\ln(2 \M_PI) + \ln(\sigma) + 0.5\frac{(x-\mu)^2}{\sigma^2}
+*  0.5\ln(2 \pi) + \ln(\sigma) + 0.5\frac{(x-\mu)^2}{\sigma^2}
 * \f]
 * where \f$\mu\f$ is the mean and \f$\sigma\f$
 * is the standard deviation.

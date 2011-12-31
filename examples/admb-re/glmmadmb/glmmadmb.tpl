@@ -367,8 +367,8 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
       tmpl = ln_beta_density(y(_i,1),lambda,alpha);
       break;
     case 5: // Gaussian
-      tmpl = 0.5*(log(2.0*M_PI*square(alpha)))+square((y(_i,1)-lambda)/alpha);
-      break;
+      tmpl = -0.5*(log(2.0*M_PI))-log(alpha)-0.5*square((y(_i,1)-lambda)/alpha);	
+      break; 
     case 6:   // truncated Poisson
       // FIXME: check somewhere (here, or preferably in R code) for trunc poisson + not ZI + 0 in response
       if (value(lambda) > 1.0e-10) {

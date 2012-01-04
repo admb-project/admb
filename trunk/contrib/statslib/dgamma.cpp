@@ -4,7 +4,7 @@
 * \file dgamma.cpp
 * \brief Gamma density functions.
 * \ingroup STATLIB
-* \author Steven Martell
+* \author Steven Martell and Mollie Brooks
 * \date 2/28/2011
 * 
 * This file contains the negative loglikelihood 
@@ -108,7 +108,7 @@ dvariable dgamma( const dvector &x, const prevariable& a, const prevariable& b )
 	{
 		if ( x(i)<=0 )
 		{
-			cerr<<"The x parameter is less than or equal to 0 in"
+			cerr<<"The x("<<i<<") parameter is less than or equal to 0 in"
 				"dgamma( const dvariable &x, const double a, const double b )\n";
 			return 0;
 		}
@@ -134,7 +134,7 @@ dvariable dgamma( const dvector &x, const prevariable& a, const dvar_vector& b )
 	{
 		if ( a<= 0 || b(i)<=0 )
 		{
-			cerr<<"a or b parameters are less than or equal to 0 in"
+			cerr<<"a or b ("<<i<<") parameters are less than or equal to 0 in"
 				"dgamma( const dvariable &x, const double a, const double b )\n";
 			return 0;
 		}
@@ -143,7 +143,7 @@ dvariable dgamma( const dvector &x, const prevariable& a, const dvar_vector& b )
 	{
 		if ( x(i)<=0 )
 		{
-			cerr<<"The x parameter is less than or equal to 0 in"
+			cerr<<"The x ("<<i<<") parameter is less than or equal to 0 in"
 				"dgamma( const dvariable &x, const double a, const double b )\n";
 			return 0;
 		}
@@ -168,7 +168,7 @@ dvariable dgamma( const dvector &x, const dvar_vector& a, const dvar_vector& b )
 	{
 		if ( a(i)<= 0 || b(i)<=0 )
 		{
-			cerr<<"a or b parameters are less than or equal to 0 in"
+			cerr<<"a or b ("<<i<<") parameters are less than or equal to 0 in"
 				"dgamma( const dvariable &x, const double a, const double b )\n";
 			return 0;
 		}
@@ -177,7 +177,7 @@ dvariable dgamma( const dvector &x, const dvar_vector& a, const dvar_vector& b )
 	{
 		if ( x(i)<=0 )
 		{
-			cerr<<"The x parameter is less than or equal to 0 in"
+			cerr<<"The x ("<<i<<") parameter is less than or equal to 0 in"
 				"dgamma( const dvariable &x, const double a, const double b )\n";
 			return 0;
 		}
@@ -202,7 +202,7 @@ dvariable dgamma( const dvector &x, const dvar_vector& a, const prevariable& b )
 	{
 		if ( a(i)<= 0 || b<=0 )
 		{
-			cerr<<"a or b parameters are less than or equal to 0 in"
+			cerr<<"a or b ("<<i<<") parameters are less than or equal to 0 in"
 				"dgamma( const dvariable &x, const double a, const double b )\n";
 			return 0;
 		}
@@ -211,7 +211,7 @@ dvariable dgamma( const dvector &x, const dvar_vector& a, const prevariable& b )
 	{
 		if ( x(i)<=0 )
 		{
-			cerr<<"The x parameter is less than or equal to 0 in"
+			cerr<<"The x ("<<i<<") parameter is less than or equal to 0 in"
 				"dgamma( const dvariable &x, const double a, const double b )\n";
 			return 0;
 		}

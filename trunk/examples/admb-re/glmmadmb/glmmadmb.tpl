@@ -135,6 +135,11 @@ PROCEDURE_SECTION
     for (i=1;i<=sum_mq;i++)
       n01_prior(u(i));			// u's are N(0,1) distributed
 
+  if (rlinkflag && !last_phase()) 
+  {
+    betapen(beta);
+  }
+
   for(i=1;i<=n;i++)
     log_lik(i,tmpL,tmpL1,u(I(i)),beta,log_alpha,pz);
 
@@ -184,6 +189,12 @@ PROCEDURE_SECTION
     }
 
   }
+			
+SEPARABLE_FUNCTION void kludgepen(const prevariable&  v)
+ g +=.5*square(v);
+
+SEPARABLE_FUNCTION void betapen(const dvar_vector&  v)
+  g+=0.5*norm2(v);
 
 SEPARABLE_FUNCTION void n01_prior(const prevariable&  u)
  g -= -0.5*log(2.0*M_PI) - 0.5*square(u);
@@ -230,7 +241,19 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
 
     dvar_vector tmp1(1,m(i_m));
 
-    tmp1 = ui(lower,upper).shift(1);
+    //tmp1 = ui(lower,upper).shift(1);
+ 
+    if (rlinkflag && !last_phase()) 
+    {
+      tmp1 = random_bound(ui(lower,upper).shift(1),20);
+    }
+    else
+    {
+    
+      tmp1 = ui(lower,upper).shift(1);
+    }
+
+
     tmp1 = L*tmp1;
     b(lower,upper) = tmp1.shift(lower);
 
@@ -282,13 +305,17 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
        } else {
           lambda = 1.0/(1.0+exp(-eta));
        }
+       if (rlinkflag && !last_phase()) 
+       {
+         lambda=0.999999*lambda+0.0000005;
+       }
        break;
      case 2:   // probit (cum norm)
        lambda = cumd_norm(eta);
        break;
      case 3:   // inverse link
        if (rlinkflag) {
-         lambda = 1.0/(eps+posfun(eta,eps1,fpen));
+         lambda = 1.0/(eps+posfun(eta-eps,eps1,fpen));
           g+=fpen;
         } else {
          lambda = 1.0/eta;
@@ -452,3 +479,55 @@ GLOBALS_SECTION
     return d;
   }
 
+  dvariable random_bound(const prevariable& u,double a)
+  {
+    if (fabs(value(u))<=a)
+      return u;
+    else if (value(u)>a)
+    {
+      dvariable y=u-a;
+      return a+y/(1+y);
+    }
+    else if (value(u)<-a)
+    {
+      dvariable y=-a-u;
+      return -a-y/(1+y);
+    }
+  }
+  df1b2variable random_bound(const df1b2variable& u,double a)
+  {
+    if (fabs(value(u))<=a)
+      return u;
+    else if (value(u)>a)
+    {
+      df1b2variable y=u-a;
+      return a+y/(1+y);
+    }
+    else if (value(u)<-a)
+    {
+      df1b2variable y=-a-u;
+      return -a-y/(1+y);
+    }
+  }
+  dvar_vector random_bound(const dvar_vector& v,double a)
+  {
+    int mmin=v.indexmin();
+    int mmax=v.indexmax();
+    dvar_vector tmp(mmin,mmax);
+    for (int i=mmin;i<=mmax;i++)
+    {
+      tmp(i)=random_bound(v(i),a);
+    }
+    return tmp;
+  }
+  df1b2vector random_bound(const df1b2vector& v,double a)
+  {
+    int mmin=v.indexmin();
+    int mmax=v.indexmax();
+    df1b2vector tmp(mmin,mmax);
+    for (int i=mmin;i<=mmax;i++)
+    {
+      tmp(i)=random_bound(v(i),a);
+    }
+    return tmp;
+  }

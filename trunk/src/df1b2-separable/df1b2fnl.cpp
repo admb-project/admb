@@ -766,13 +766,16 @@ int funnel_init_df1b2vector::nvar_calc(void)
  */
 void funnel_init_df1b2vector::xinit(init_df1b2vector& y,int& ii)
 { 
-  df1b2_init_vector * vp = (df1b2_init_vector *) p;
-  int mmin=vp->indexmin();
-  int mmax=vp->indexmax();
+  //df1b2_init_vector * vp = (df1b2_init_vector *) p;
+  //int mmin=vp->indexmin();
+  //int mmax=vp->indexmax();
+  int mmin=p->indexmin();
+  int mmax=p->indexmax();
   int i;
   for (i=mmin;i<=mmax;i++)
   {
-    y(ii)= value((*vp)(i));
+    //y(ii)= value((*vp)(i));
+    y(ii)= value((*p)(i));
     ii++;
   }
 }

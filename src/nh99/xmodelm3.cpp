@@ -107,6 +107,10 @@ void tracing_message(int traceflag,const char *s);
           }
         }
       }
+      if (allphases>initial_params::max_number_phases)
+      {
+        initial_params::max_number_phases=allphases;
+      }
     }
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
     {
@@ -707,23 +711,27 @@ void function_minimizer::other_separable_stuff_begin(void)
   if (lapprox)
   {
     lapprox->separable_calls_counter++;
+    /*
     lapprox->separable_call_level++;
     //lapprox->build_up_nested_shape(); 
     lapprox->nested_separable_calls_counter
       (lapprox->separable_call_level)++;
     //clean(lapprox->nested_tree_position,lapprox->separable_call_level);
     lapprox->nested_tree_position(lapprox->separable_call_level)++;
+    */
   }
 }
 
 void function_minimizer::other_separable_stuff_end(void) 
 { 
+  /*
   if (lapprox)
   {
     lapprox->build_up_nested_shape(); 
     clean(lapprox->nested_tree_position,lapprox->separable_call_level);
     lapprox->separable_call_level--;
   }
+  */
 }
 
 

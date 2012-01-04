@@ -6,6 +6,7 @@ dbinom.obj \
 dgamma.obj \
 dlnorm.obj \
 dnbinom.obj \
+dzinbinom.obj \
 dnorm.obj \
 dpois.obj \
 fill.obj \

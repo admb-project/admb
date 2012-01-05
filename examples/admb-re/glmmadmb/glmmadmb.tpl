@@ -332,16 +332,25 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
           eeta = -exp(eta);
        }
        const double onesixth=1.0/6.0;
+       const double one24=1.0/24.0;
+       const double one120=1.0/120.0;
        // safe (1-exp()); tip from http://www.johndcook.com/cpp_expm1.html
-       if (fabs(value(eeta))<1e-6) {
-	   lambda = -eeta*(1.0+eeta*(0.5+onesixth*eeta));
+       if (fabs(value(eeta))<1e-5) {
+	   lambda = -eeta*
+             (1.0+eeta*(0.5+eeta*(onesixth+eeta*(one24+eeta*one120))));
        } else {
 	   lambda = 1-mfexp(eeta);
        }
        // restrict to (0,1)
+      /*
        if (rlinkflag) {
           lambda = posfun(lambda,eps2,fpen);
           lambda = (1.0-posfun(1.0-lambda,eps2,fpen));
+       }
+      */
+       if (rlinkflag && !last_phase()) 
+       {
+         lambda=0.999999*lambda+0.0000005;
        }
        }
        break;

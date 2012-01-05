@@ -257,9 +257,12 @@ void function_minimizer::sd_routine(void)
   
             if (diag(i+nvar1)<=0.0)
             {
-              cerr << "Estimated covariance matrix may not"
-               " be positive definite" << endl;
-              cerr << sort(eigenvalues(BS)) << endl;
+              if (norm(tv(i))>1.e-100)
+              {
+                cerr << "Estimated covariance matrix may not"
+                 " be positive definite" << endl;
+                cerr << sort(eigenvalues(BS)) << endl;
+              }
             }
             ofs << endl;
           }

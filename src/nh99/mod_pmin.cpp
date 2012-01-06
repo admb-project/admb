@@ -86,6 +86,11 @@ dmatrix trans(BOR_CONST dvector& x)
     }
     double relsig=.5;
     initial_params::current_phase = initial_params::max_number_phases;
+    // DF NOV 28 11
+    if (random_effects_flag)
+    {
+     initial_params::set_inactive_only_random_effects();
+    }
     int nvar=initial_params::nvarcalc();
     dvector xsave(1,nvar);
     int ii=1;

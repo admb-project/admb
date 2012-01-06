@@ -2314,7 +2314,9 @@ item-response-theory-irt-and-the-multilevel-rasch-model-1}{here}.
 \chapter{Differences between \scAB\ and \scAR?}
 
 \begin{itemize}
-\item Profile likelihoods cannot be used.
+\item Profile likelihoods are now implemented also in random effects models, but with
+     the limitation that the \texttt{likeprof\_number} can only depend on parameters,
+     not random effects. 
 \item Certain functions, especially for matrix operations, have not been
 implemented.
 \item The assignment operator for \texttt{dvariable} behaves differently. The

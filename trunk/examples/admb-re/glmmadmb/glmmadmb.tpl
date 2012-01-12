@@ -65,6 +65,17 @@ DATA_SECTION
   for (i=1;i<=M;i++)
     sum_mq += m(i)*q(i);
 
+  ofstream ofs("phi.rep");
+  for (i=1; i<=p; i++)
+  {
+    for (j=1; j<=p; j++)
+    {
+      ofs << phi(i,j) << " ";
+    }
+    ofs << endl;
+  }
+  ofs << endl;
+
 INITIALIZATION_SECTION
  tmpL 1.0
  tmpL1 0.0

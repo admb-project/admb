@@ -204,9 +204,6 @@ public:
                                 // laplace approximation
   int num_separable_calls; // 1 in inner opt 2 in newton-raphson 3 in
   int separable_calls_counter; // 1 in inner opt 2 in newton-raphson 3 in
-#if defined(USE_ADMPI)
-  int mpi_separable_calls_counter;
-#endif
   ivector nested_separable_calls_counter;
   ivector nested_tree_position;
   ivector * num_local_re_array; // 1 in inner opt 2 in newton-raphson 3 in

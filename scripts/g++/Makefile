@@ -7,7 +7,9 @@ ifdef SAFE_OPTION
 SAFE_OPTION=-s
 endif
 
-PROG=valgrind -v --leak-check=full --show-reachable=no --track-origins=yes
+#PROG=valgrind -v --leak-check=full --show-reachable=no --track-origins=yes
+PROG=time
+
 
 default: simple
 

@@ -25,7 +25,9 @@ PRELIMINARY_CALCS_SECTION
   }
 
   cout<<endl<<"found all values for mu parameter from std file"<<endl;
-  cout<<findValFromFile("test1.std","mu",2)<<endl;//change filename if needed
+  cout << __FILE__ << ':' << __LINE__ << endl;
+  //cout<<findValFromFile("test1.std","mu",2)<<endl;//change filename if needed
+  cout << __FILE__ << ':' << __LINE__ << endl;
   
  
   dvector v(1,10); 
@@ -35,13 +37,16 @@ PRELIMINARY_CALCS_SECTION
   //cout<<"unique vlaues "<<endl<<v(unique(v))<<endl<<endl;
 
 
+  cout << __FILE__ << ':' << __LINE__ << endl;
   cout<<"convert vector to matrix by row"<<endl<<vector2matrix(v,2,5)<<endl;  
   dmatrix m=vector2matrix(v,2,5);
   cout<<"convert matrix to vector by row"<<endl<< matrix2vector(m)<<endl<<endl;
+  cout << __FILE__ << ':' << __LINE__ << endl;
 
   ivector idx=sample(v,5,1,rnd); //random sample size 5 from v with replacement
   cout<<"random sample index "<<endl<<idx<<endl;
   cout<<"actual random sample value"<<endl<<v(idx)<<endl<<endl;
+  cout << __FILE__ << ':' << __LINE__ << endl;
 
   
 
@@ -68,5 +73,5 @@ PROCEDURE_SECTION
   cout<<nllLognormal(junk(1),junk(2),obs)<<endl;
   cout<<nllGamma(junk(1),junk(2),obs)<<endl;
   //*/
-  exit(8);
+  exit(0);
 

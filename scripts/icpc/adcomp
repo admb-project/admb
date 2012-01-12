@@ -49,5 +49,5 @@ shift $[OPTIND-1]
 
 model="${1%.*}"
 
-echo -e "icpc -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $model.cpp\n"
+echo -e "icpc -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include -I$ADMB_HOME/contrib $model.cpp\n"
          icpc -c $g -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $model.cpp

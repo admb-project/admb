@@ -1,8 +1,8 @@
-.PHONY: all statslib ecolib QFC libcontribo.a libcontribs.a clean
+.PHONY: all statslib ecolib qfclib libcontribo.a libcontribs.a test clean
 
 CXXFLAGS:=-c $(CXXFLAGS) -Wall -Wno-deprecated -DUSE_LAPLACE -fpermissive -I../${DISK}/include -D__SPDLL__ -D__GNUDOS__ -Dlinux
 
-all: disk statslib ecolib QFC libcontribo.a libcontribs.a
+all: disk statslib ecolib qfclib libcontribo.a libcontribs.a
 
 disk:
 	mkdir -p ${DISK}/contrib
@@ -18,7 +18,7 @@ ecolib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
 
-QFC:
+qfclib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
 
@@ -28,7 +28,14 @@ libcontribo.a:
 libcontribs.a:
 	ar -rs ${DISK}/contrib/$@ $(LIBPATH)/contrib-slp/*.obj
 
+test:
+	CXXFLAGS="" $(MAKE) --directory=ecolib test
+	CXXFLAGS="" $(MAKE) --directory=qfclib test
+
 clean:
+	$(MAKE) --directory=ecolib clean
+	$(MAKE) --directory=qfclib clean
+	$(MAKE) --directory=statslib clean
 	rm -rf ${DISK}/contrib
 	rm -rf ${LIBPATH}/contrib-olp
 	rm -rf ${LIBPATH}/contrib-slp

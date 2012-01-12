@@ -52,6 +52,4 @@ PROCEDURE_SECTION
   cout<<nllBinomial(tmp2(1),tmp1(4),junk)<<endl;
   cout<<nllBinomial(tmp2,tmp1(3),tmp2)<<endl;
 
-  exit(88);
- 
-
+  exit(0);

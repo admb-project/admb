@@ -13,8 +13,7 @@ PROG=time
 
 default: simple
 
-#all: admb admb-re
-all: buscycle
+all: admb admb-re
 
 admb: \
 buscycle\

@@ -254,7 +254,13 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
 
     //tmp1 = ui(lower,upper).shift(1);
  
-    if (rlinkflag && !last_phase()) 
+    // FIXME: re-introduce rlinkflag here?
+    if (initial_params::current_phase < initial_params::max_number_phases-1)
+    {
+      tmp1 = random_bound(ui(lower,upper).shift(1),5);
+    }
+    else if 
+      (initial_params::current_phase == initial_params::max_number_phases-1)
     {
       tmp1 = random_bound(ui(lower,upper).shift(1),20);
     }
@@ -316,7 +322,12 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
        } else {
           lambda = 1.0/(1.0+exp(-eta));
        }
-       if (rlinkflag && !last_phase()) 
+       if (initial_params::current_phase < initial_params::max_number_phases-1)
+       {
+         lambda=0.999*lambda+0.0005;
+       }
+       else if 
+         (initial_params::current_phase == initial_params::max_number_phases-1)
        {
          lambda=0.999999*lambda+0.0000005;
        }

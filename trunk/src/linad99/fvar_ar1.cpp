@@ -4,33 +4,16 @@
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
  */
-/**
- * \file
- * Description not yet available.
- */
 #include "fvar.hpp"
 
 /**
  * Description not yet available.
  * \param
  */
+
  dvar_vector::~dvar_vector()
  {
-   if (shape)                  //if *ncopies == 0
-   {
-     if (shape->ncopies)                  //if *ncopies == 0
-     {
-       #ifdef DIAG
-         cout << " Decrementing copy flag for dvar_vector with ptr_address\n "
-	   << &ptr << "  pointing at  " << (ptr+indexmin()) << "\n";
-       #endif
-       (shape->ncopies)--;
-     }
-     else
-     {
-       deallocate();
-     }
-   }
+   deallocate();
  }
 
 /**
@@ -45,19 +28,20 @@
        cout << " Deallocating dvar_vector with ptr_address\n  "
 	 << &ptr << "  pointing at  " << (ptr+indexmin()) << "\n";
      #endif
-
-     va = (double_and_int*) shape->trueptr;
-     * (arr_link **) va = link_ptr;
-     arr_free(va);
-     delete shape;
+     if (shape->ncopies)
+     {
+       (shape->ncopies)--;
+     }
+     else
+     {
+       va = (double_and_int*) shape->trueptr;
+       * (arr_link **) va = link_ptr;
+       arr_free(va);
+       delete shape;
+     }
      va=NULL;
      shape=NULL;
    }
-   //else
-   //{
-   //  cerr << "Warning -- trying to delete an unallocated dvar_vector"
-    //	  << endl;
-   //}
  } 
 
 /**
@@ -173,3 +157,4 @@
    #endif
  }
 */
+

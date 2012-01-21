@@ -16,15 +16,24 @@ endif
 
 ifndef ADMB_HOME
   ADMB_HOME=${PWD}/${DISK}
-  ADMB_REVISION=-r$(shell svnversion ..)
 endif
 
 ifdef DEBUG
-CXXFLAGS:=$(CXXFLAGS) -g -DADMB_VERSION=$(shell cat ../VERSION)
+CXXFLAGS:=$(CXXFLAGS) -g
 else
 CXXFLAGS:=$(CXXFLAGS) -O3
 endif
-CXXFLAGS:=$(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell svnversion ..)
+
+CXXFLAGS:=$(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION)
+
+ifndef ADMB_REVISION
+ADMB_REVISION=$(shell test -e ../REVISION && cat ../REVISION)
+endif
+
+ifneq ($(ADMB_REVISION),)
+CXXFLAGS:=$(CXXFLAGS) -DADMB_REVISION=$(ADMB_REVISION)
+ADMB_REVISION:=-r$(ADMB_REVISION)
+endif
 
 ifeq ($(CXX),CC)
 CXXFLAGS:=-c $(CXXFLAGS) -DUSE_LAPLACE -I../df1b2-separable -I../nh99 -I../linad99 -I../tools99 -D__SPDLL__ -D__GNUDOS__ -Dlinux
@@ -64,9 +73,9 @@ dist:
 
 verify:
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}"/bin:$(PATH) CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} SAFE_OPTION=1 make -C ${DISK}/examples all
-	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks${ADMB_REVISION}-saf.txt"
+	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-saf.txt"
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}"/bin:$(PATH) CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} make -C ${DISK}/examples all
-	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks${ADMB_REVISION}-opt.txt"
+	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-opt.txt"
 
 check-admb2r:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); make -C ../test/admb2r gcc

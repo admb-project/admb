@@ -29,6 +29,8 @@ then
   if test "${SVNVERSION}" != "exported"
   then
     ADMB_REVISION=".${SVNVERSION}"
+    printf "creating REVISION...\n"
+    echo ${SVNVERSION} > REVISION
   fi
 fi
 

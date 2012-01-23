@@ -8059,7 +8059,9 @@ public:
   static adtimer * ptm1;
   virtual void get_slave_assignments(void);
   static adpvm_manager * pvm_manager;
+#if defined(USE_ADMPI)
   static admpi_manager * mpi_manager;
+#endif
   static adstring subdir;
   static streampos change_datafile_name(_CONST adstring& s,const streampos& off=0);
   static streampos change_pinfile_name(_CONST adstring& s,const streampos& off=0);

@@ -423,7 +423,7 @@ void grad_stack::create_gradfile()
      _VARSSAV_PTR=creat(var_store_file_name, O_RDWR);
 
   #elif ( defined ( __SUN__) ||  defined ( __GNU__))
-     report_file_opening(gradfile_name1);
+     //report_file_opening(gradfile_name1);
 
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);

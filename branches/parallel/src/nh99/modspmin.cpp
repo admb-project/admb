@@ -14,6 +14,7 @@
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
 #  include <windows.h>
 #endif
+
 char banner0[56]={"*****************************************************"};
 char banner1[56]={"This is the open source version of AD Model Builder"};
 char banner1a[58]={"You can freely use AD Model Builder"};
@@ -444,12 +445,19 @@ int * kill_address;
 
       if (option_match(argc,argv,"-noest") == -1)
       {
+      #if defined(USE_ADMPI)
         if (!ad_comm::mpi_manager)
         {
+      #endif
           if (!function_minimizer::have_constraints)
+          {
             minimize();
+          }
           else
+          {
             constraints_minimize();
+          }
+      #if defined(USE_ADMPI)
         }
         else if (ad_comm::mpi_manager->get_do_minimize())
         {
@@ -462,7 +470,7 @@ int * kill_address;
         {
           initial_params::current_phase=initial_params::max_number_phases;
         }
-
+      #endif
       }
       else
       {
@@ -568,7 +576,9 @@ int * kill_address;
                   sd_routine();
                 }
               }
+  #if defined(USE_ADMPI)
             }
+  #endif
           }
           else
           {

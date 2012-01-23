@@ -44,6 +44,8 @@ dist:
 	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE ${DISK}
 	cp -vf ../README.txt ${DISK}
+	chmod 777 ../scripts/g++/adcomp
+	chmod 777 ../scripts/g++/adlink
 	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/g++/adcomp ${DISK}/bin
 	cp ../scripts/g++/adlink ${DISK}/bin

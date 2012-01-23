@@ -38,6 +38,13 @@ fi
 #  [CXXFLAGS="-m32"]
 #  [AC_MSG_RESULT([checking whether C++ compiler is 64-bit enabled... no])]
 #)
+
+# check for mpi flag
+AC_ARG_ENABLE([mpi],
+  AS_HELP_STRING([--enable-mpi],
+    [Enable Open MPI features. Allows running select models in parallel. Currently supported on Linux.]))
+
+
 CXX_32OR64BIT="32bit"
 CXXFLAGS="-m32"
 if test "${BUILD_64BIT}" = "yes"
@@ -65,10 +72,27 @@ then
     #CXX_32OR64BIT="64bit"
     #CXXFLAGS="-m64"
   #fi
+
   if test "${CXX}" = "g++"
   then
     GCC_VERSION=`gcc -dumpversion`
     ADMB_TARGET="admb-${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+    COMP="${CXX}"
+    AS_IF([test "x$enable_mpi" = "xyes"], [
+      dnl Do the stuff needed for enabling the feature
+      dnl check for open mpi packages openmpi-bin libopenmpi-dev
+      AC_CHECK_PROG(HAS_OPEN_MPI_BIN,ompi_info,[yes],[no])
+      if test "${HAS_OPEN_MPI_BIN}" = "no"
+      then
+        AC_MSG_ERROR([Open MPI not installed. Please install Open MPI before using the --enable-mpi option.])
+      fi
+
+      ADMPI="-DUSE_ADMPI"
+      COMP="mpicxx"
+    ])
+    AC_CONFIG_FILES(
+      [ scripts/${CXX}/adcomp scripts/${CXX}/adlink ]
+    )
   fi
   if test "${CXX}" = "icpc"
   then
@@ -81,6 +105,7 @@ then
     ICC_VERSION=`icc -dumpversion`
     ADMB_TARGET="admb-${ADMB_VERSION}-linux-icc${ICC_VERSION}-${CXX_32OR64BIT}"
   fi
+
   MAKEFILE="linux.mak"
 fi
 
@@ -116,6 +141,8 @@ AC_SUBST(version, ${ADMB_VERSION})
 AC_SUBST(target, ${ADMB_TARGET})
 AC_SUBST(disk, ../build/${ADMB_TARGET}/${ADMB_TARGET})
 AC_SUBST(libpath, ../build/${ADMB_TARGET}/objects)
+AC_SUBST(comp, ${COMP})
+AC_SUBST(admpi, ${ADMPI})
 AC_SUBST(arch_cxxflag, ${ARCH_CXXFLAG})
 AC_SUBST(cxx, ${CXX})
 AC_SUBST(cc, ${CC})

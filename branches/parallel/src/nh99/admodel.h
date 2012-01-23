@@ -2855,7 +2855,8 @@ public:
   void send_double_to_slave(const double v,int slave_number);
   double get_double_from_master(void);
 };
-#endif   // if defined(USE_ADMPI)
+#endif
+
 
 class ad_separable_manager
 {

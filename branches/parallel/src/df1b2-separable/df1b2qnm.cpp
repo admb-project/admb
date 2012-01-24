@@ -27,9 +27,12 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f)
 {
 #if defined(USE_ADMPI)
-    if (ad_comm::mpi_manager) //testing purposes
+    if (ad_comm::mpi_manager)
     {
-      (ad_comm::mpi_manager->sync_objfun_flag)=1;
+      if (random_effects_flag) // if random effects master & slaves make it here. have to sync
+      {
+        (ad_comm::mpi_manager->sync_objfun_flag)=1;
+      }
     }
 #endif
 

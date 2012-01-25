@@ -72,9 +72,9 @@ dist:
 	rm -f ${DISK}/bin/sed1.exe
 
 verify:
-	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}"/bin:$(PATH) CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} SAFE_OPTION=1 make -C ${DISK}/examples all
+	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}"/bin:$(PATH) CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 make -C ${DISK}/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-saf.txt"
-	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}"/bin:$(PATH) CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS=${ADMB_LDFLAGS} make -C ${DISK}/examples all
+	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}"/bin:$(PATH) CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" make -C ${DISK}/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-opt.txt"
 
 check-admb2r:

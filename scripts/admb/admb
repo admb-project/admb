@@ -50,12 +50,22 @@ eval $CMD
 if [[ ! -f $model.cpp ]]; then ERROR2 .cpp; fi
 if [[ ! -f $model.htp ]]; then ERROR2 .htp; fi
 
-CMD="CXXFLAGS=\"$CXXFLAGS\" adcomp $d $g $r $s $model"
+if [ -z "$CXXFLAGS" ]
+then
+  CMD="adcomp $d $g $r $s $model"
+else
+  CMD="CXXFLAGS=\"$CXXFLAGS\" adcomp $d $g $r $s $model"
+fi
 echo -e \\n\*\*\* $CMD
 eval $CMD
 if [[ ! -f $model.o ]]; then ERROR2 .o; fi
 
-CMD="LDFLAGS=\"$LDFLAGS $CXXFLAGS\" adlink $d $g $r $s $model"
+if [ -z "$LDFLAGS" ]
+then
+  CMD="adlink $d $g $r $s $model"
+else
+  CMD="LDFLAGS=\"$LDFLAGS\" adlink $d $g $r $s $model"
+fi
 echo -e \\n\*\*\* $CMD
 eval $CMD
 if [[ -z $dll && ! -f $model ]]; then ERROR2; fi

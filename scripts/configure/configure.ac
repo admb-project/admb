@@ -1,4 +1,4 @@
-AC_INIT([ADMB], [10.1], [users@admb-project.org])
+AC_INIT([ADMB], [10.1], [users@admb-project.org]): ${CXXFLAGS=""}
 
 # Check for programs used in building ADMB.
 AC_PROG_CC
@@ -34,18 +34,18 @@ then
   fi
 fi
 
-#AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])],
-#  [CXX_32OR64BIT="64bit"]
-#  [AC_MSG_RESULT([checking whether C++ compiler is 64-bit enabled... yes])],
-#  [CXXFLAGS="-m32"]
-#  [AC_MSG_RESULT([checking whether C++ compiler is 64-bit enabled... no])]
-#)
-CXX_32OR64BIT="32bit"
-CXXFLAGS="-m32"
 if test "${BUILD_64BIT}" = "yes"
 then
 CXX_32OR64BIT="64bit"
 CXXFLAGS="-m64"
+fi
+
+AC_CHECK_SIZEOF([int *])
+if test "${SIZEOF_INT_P}" = "4"
+then
+  CXX_32OR64BIT="32bit"
+else
+  CXX_32OR64BIT="64bit"
 fi
 
 if test  "`uname -s`" =  "Darwin"

@@ -47,8 +47,8 @@ dist:
 	chmod 777 ../scripts/g++/adcomp
 	chmod 777 ../scripts/g++/adlink
 	cp ../scripts/admb/admb ${DISK}/bin
-	cp ../scripts/g++/adcomp ${DISK}/bin
-	cp ../scripts/g++/adlink ${DISK}/bin
+	cp ../scripts/$(CXX)/adcomp ${DISK}/bin
+	cp ../scripts/$(CXX)/adlink ${DISK}/bin
 	cp ../scripts/g++/Makefile ${DISK}/examples
 	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp ../scripts/g++/adcomp.bat ${DISK}/bin

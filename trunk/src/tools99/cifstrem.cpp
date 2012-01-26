@@ -145,7 +145,7 @@ void cifstream::filter(void)
     // get first character in next line
     testc = bp->snextc();
 
-    while ( testc == ' ' || testc == '\n')
+    while (testc == ' ' || testc == '\n' || testc == '\r')
       testc = bp->snextc();
 
   }

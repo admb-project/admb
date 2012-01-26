@@ -108,13 +108,13 @@ Unix and GNU g++
 
    $ make --directory=scripts/configure/
 
-4. Configure the build files for 32-bit
+4. Configure the build files
 
    $ ./configure
 
-   or configure the build files for 64-bit.
+   To check options
 
-   $ ./configure BUILD_64BIT=yes
+   $ ./configure --help
 
 5. Build libraries 
   

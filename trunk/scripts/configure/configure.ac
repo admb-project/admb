@@ -1,4 +1,4 @@
-AC_INIT([ADMB], [10.1], [users@admb-project.org]): ${CXXFLAGS=""}
+AC_INIT([ADMB], [10.1], [users@admb-project.org]): ${CXXFLAGS="${CXXFLAGS}"}
 
 # Check for programs used in building ADMB.
 AC_PROG_CC
@@ -41,7 +41,7 @@ CXXFLAGS="-m64"
 fi
 
 AC_CHECK_SIZEOF([int *])
-if test "${SIZEOF_INT_P}" = "4"
+if test "$ac_cv_sizeof_int_p" = "4"
 then
   CXX_32OR64BIT="32bit"
 else

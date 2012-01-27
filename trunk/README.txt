@@ -77,7 +77,7 @@ tested compilers.
 Several compilers are supported including 
  * GNU g++ 3.4 or newer
  * Microsoft Visual C++ 2003 or newer
- * MacOS XCode 3.2
+ * MacOS XCode 3.2 and 4.x
  * Intel C++ Compiler 11
  * Sun Studio 12
  * Borland 5.5

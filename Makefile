@@ -37,5 +37,11 @@ linux-64bit:
 linux-verify:
 	make --directory=src --file=linux.mak verify
 
+it:
+	./configure CXXFLAGS="-m32 -mmacosx-version-min=10.5"
+
+it2:
+	make MACOSX_DEPLOYMENT_TARGET=10.5 CXXFLAGS="-m32 -mmacosx-version-min=10.5" LDFLAGS="-m32 -Wl,-macosx_version_min,10.5" verify
+
 clean:
 	rm -rvf build

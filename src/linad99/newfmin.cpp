@@ -169,6 +169,19 @@ extern adtimer * pfmintime=0;
 extern int traceflag;
 #pragma warn -sig
 
+#ifdef _MSC_VER
+BOOL CtrlHandler( DWORD fdwCtrlType ) 
+{
+  if (fdwCtrlType == CTRL_C_EVENT)
+  {
+    ctlc_flag = 1;
+    if (ad_printf) (*ad_printf)("\npress q to quit or c to invoke derivative checker: ");
+    return true;
+  }
+  return false;
+}
+#endif
+
 /**
  * Description not yet available.
  * \param
@@ -188,6 +201,11 @@ void fmm::fmin(BOR_CONST double& _f, const dvector & _x,BOR_CONST dvector& _g)
       cout << "On entry to fmin: " << *this << endl;
     #endif
   tracing_message(traceflag,"A4");
+
+#ifdef _MSC_VER
+  SetConsoleCtrlHandler((PHANDLER_ROUTINE)CtrlHandler, true);
+#endif
+
 #if !defined (__MSVC32__)
     #if defined( __SUN__) && !(defined __GNU__)
       #if defined( __HP__)
@@ -531,6 +549,8 @@ label30:
          if(ctlc_flag || ifn == dcheck_flag )
   #elif defined(__BORLANDC__)
          if ( kbhit() || ctlc_flag|| ifn == dcheck_flag )
+  #elif defined(_MSC_VER)
+         if ( kbhit() || ctlc_flag || ifn == dcheck_flag )
   #else
          if ( kbhit() || ifn == dcheck_flag )
   #endif

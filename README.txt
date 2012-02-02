@@ -302,6 +302,12 @@ $ svn checkout http://www.admb-project.org/svn/trunk admb-trunk-readonly
 If you would like to write access, please email <users@admb-project.org>
 to request an account.
 
+Developer Documentation
+-----------------------
+Developer documentation such as "ADMB Coding Standards" are available at
+
+http://www.admb-project.org/developers/
+
 Help and Support
 ================
 For help and support, email the ADMB users group <users@admb-project.org>.

@@ -235,10 +235,10 @@ class cltudecomp_for_adjoint
 {
    dmatrix_for_adjoint L;
    dmatrix_for_adjoint U;
-   cltudecomp dfclu;
-   dvar_matrix_position *pMpos;
    ivector indx;
    ivector indx2;
+   cltudecomp dfclu;
+   dvar_matrix_position *pMpos;
    int sign;
  public:
    void initialize(void)

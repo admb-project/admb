@@ -495,7 +495,7 @@ static df3_two_variable gamma(const df3_two_variable & xx1)
    if (!isfinite(value(x)))
       return (x);
 #endif
-#endif*/
+#endif
    q = fabs(x);
 
    if (value(q) > 33.0)
@@ -509,7 +509,7 @@ static df3_two_variable gamma(const df3_two_variable & xx1)
 	  gamnan:
 	    cerr << "gamma DOMAIN" << endl;
 	    return (zero);
-#else*/
+#else
 	    goto goverf;
 #endif
 	 }

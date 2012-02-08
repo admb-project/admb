@@ -94,10 +94,6 @@
 @type examples\admb-re\orange\orange.par
 @type examples\admb-re\orange\orange.std
 
-@echo Example:admb-re:orange.tpl
-@type examples\admb-re\orange\orange.par
-@type examples\admb-re\orange\orange.std
-
 @echo Example:admb-re:orange2.tpl
 @type examples\admb-re\orange2\orange2.par
 @type examples\admb-re\orange2\orange2.std

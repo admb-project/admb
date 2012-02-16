@@ -550,7 +550,7 @@ label30:
   #elif defined(__BORLANDC__)
          if ( kbhit() || ctlc_flag|| ifn == dcheck_flag )
   #elif defined(_MSC_VER)
-         if ( kbhit() || ctlc_flag || ifn == dcheck_flag )
+         if ( _kbhit() || ctlc_flag || ifn == dcheck_flag )
   #else
          if ( kbhit() || ifn == dcheck_flag )
   #endif

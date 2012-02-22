@@ -278,6 +278,7 @@ public:
   void to_lower(void);
   adstring_array to_upper(adstring_array& s);
   adstring_array to_lower(adstring_array& s); 
+  adstring_array& operator=(const adstring_array&);
 };   // end class adstring_array
 adstring_array to_lower(adstring_array& s);
 adstring_array to_upper(adstring_array& s);

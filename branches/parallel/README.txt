@@ -1,6 +1,4 @@
 ADMB Project
-Version 10.1
-Released January 17, 2011
 
 Overview
 ========

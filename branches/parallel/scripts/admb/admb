@@ -50,7 +50,7 @@ eval $CMD
 if [[ ! -f $model.cpp ]]; then ERROR2 .cpp; fi
 if [[ ! -f $model.htp ]]; then ERROR2 .htp; fi
 
-CMD="CXXFLAGS=\"$CXXFLAGS\" adcomp $d $g $r $s $model"
+CMD="CXX=\"$CXX\" CXXFLAGS=\"$CXXFLAGS\" adcomp $d $g $r $s $model"
 echo -e \\n\*\*\* $CMD
 eval $CMD
 if [[ ! -f $model.o ]]; then ERROR2 .o; fi

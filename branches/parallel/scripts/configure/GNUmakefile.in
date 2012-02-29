@@ -1,7 +1,7 @@
 .PHONY: tpl2cpp tpl2rem docs test
 
 all:
-	CC=@cc@ CXX=@comp@ CXXFLAGS="@arch_cxxflag@ @admpi@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
+	CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
 	rm -rf `find build/@target@/@target@ -type d -name .svn`
 	@printf "\nBuild completed for @target@\n"
 	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
@@ -13,7 +13,7 @@ tpl2rem:
 	make --directory=src/df1b2-separable --file=optg32-rh8-laplace.mak tpl2rem.c
 
 debug:
-	DEBUG=1 CC=@cc@ CXX=@comp@ CXXFLAGS="@arch_cxxflag@ @admpi@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
+	DEBUG=1 CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
 	rm -rf `find build/@target@/@target@ -type d -name .svn`
 	@printf "\nBuild completed for @target@\n"
 	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"

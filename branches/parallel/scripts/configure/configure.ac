@@ -77,7 +77,6 @@ then
   then
     GCC_VERSION=`gcc -dumpversion`
     ADMB_TARGET="admb-${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
-    COMP="${CXX}"
     AS_IF([test "x$enable_mpi" = "xyes"], [
       dnl Do the stuff needed for enabling the feature
       dnl check for open mpi packages openmpi-bin libopenmpi-dev
@@ -87,11 +86,11 @@ then
         AC_MSG_ERROR([Open MPI not installed. Please install Open MPI before using the --enable-mpi option.])
       fi
 
-      ADMPI="-DUSE_ADMPI"
-      COMP="mpicxx"
+      CXXFLAGS="${CXXFLAGS} -DUSE_ADMPI"
+      CXX="mpicxx"
     ])
     AC_CONFIG_FILES(
-      [ scripts/${CXX}/adcomp scripts/${CXX}/adlink ]
+      [ scripts/g++/adcomp scripts/g++/adlink ]
     )
   fi
   if test "${CXX}" = "icpc"
@@ -129,8 +128,6 @@ then
   MAKEFILE="linux.mak"
 fi
 
-ARCH_CXXFLAG=${CXXFLAGS}
-
 AC_CONFIG_FILES(
   [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/admb/admb-bin ${INSTALLER_PACKAGEMAKER} ${INSTALLER_MINGW} ]
 )
@@ -141,9 +138,7 @@ AC_SUBST(version, ${ADMB_VERSION})
 AC_SUBST(target, ${ADMB_TARGET})
 AC_SUBST(disk, ../build/${ADMB_TARGET}/${ADMB_TARGET})
 AC_SUBST(libpath, ../build/${ADMB_TARGET}/objects)
-AC_SUBST(comp, ${COMP})
-AC_SUBST(admpi, ${ADMPI})
-AC_SUBST(arch_cxxflag, ${ARCH_CXXFLAG})
+AC_SUBST(cxxflags, ${CXXFLAGS})
 AC_SUBST(cxx, ${CXX})
 AC_SUBST(cc, ${CC})
 AC_SUBST(makefile, ${MAKEFILE})

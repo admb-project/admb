@@ -27,7 +27,7 @@ shift $((OPTIND-1))
 
 model="${1%.*}"
 
-CMD="@CXX@ -c $CXXFLAGS $sym -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt\
+CMD="@cxx@ -c $CXXFLAGS $sym -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt\
  -DUSE_LAPLACE -fpermissive -I. -I$ADMB_HOME/include $model.cpp"
 echo $CMD
 eval $CMD

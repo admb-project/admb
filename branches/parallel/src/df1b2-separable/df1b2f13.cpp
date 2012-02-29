@@ -20,7 +20,7 @@ void fixed_smartlist::reset(void)
   bptr=buffer; 
   eof_flag=0;
   /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
-  endof_file_ptr=lseek(fp,0,SEEK_SET);
+  endof_file_ptr=lseek(fp,0L,SEEK_SET);
   written_flag=0;
 }
 
@@ -104,7 +104,7 @@ void fixed_smartlist::rewind(void)
   eof_flag=0;
   if (written_flag)
   {
-    lseek(fp,0,SEEK_SET);
+    lseek(fp,0L,SEEK_SET);
     // get the record size
     ::read(fp,&nbytes,sizeof(int));
     //cout << nbytes << endl;
@@ -121,7 +121,7 @@ void fixed_smartlist::rewind(void)
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
-    lseek(fp,sizeof(off_t),SEEK_CUR);
+    lseek(fp,long(sizeof(off_t)),SEEK_CUR);
   }
 }
 
@@ -136,7 +136,7 @@ void fixed_smartlist::initialize(void)
   bptr=buffer;
   //int nbytes=0;
   written_flag=0;
-  lseek(fp,0,SEEK_SET);
+  lseek(fp,0L,SEEK_SET);
   set_forward();
 }
 
@@ -174,7 +174,7 @@ void fixed_smartlist::restore_end(void)
   {
     if (end_saved)
     {
-      /*off_t ipos=*/lseek(fp,0,SEEK_END);
+      /*off_t ipos=*/lseek(fp,0L,SEEK_END);
       lseek(fp,endof_file_ptr,SEEK_SET);
       read_buffer();
       set_recend();
@@ -303,7 +303,7 @@ void fixed_smartlist::read_buffer(void)
   {
     if (direction ==-1) // we are going backwards
     {
-      off_t ipos=lseek(fp,0,SEEK_CUR);
+      off_t ipos=lseek(fp,0L,SEEK_CUR);
       if (ipos ==0)
       {
         eof_flag=-1;
@@ -311,7 +311,7 @@ void fixed_smartlist::read_buffer(void)
       }
       // offset of the begining of the record is at the end
       // of the record
-      lseek(fp,-sizeof(off_t),SEEK_CUR);
+      lseek(fp,long(-sizeof(off_t)),SEEK_CUR);
       read(fp,&pos,sizeof(off_t));
       // back up to the beginning of the record (plus record size) 
       lseek(fp,pos,SEEK_SET);
@@ -359,7 +359,7 @@ void fixed_smartlist::read_buffer(void)
     else  // we are going forward  
     {
       // skip over file postion entry in file
-      lseek(fp,sizeof(off_t),SEEK_CUR);
+      lseek(fp,long(sizeof(off_t)),SEEK_CUR);
     }
   }
 }

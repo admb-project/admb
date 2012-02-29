@@ -38,7 +38,6 @@ disk: $(LIBPATH)\$(LIBNAME) tpl2rem.exe
 	cmd /C "copy adpool.h $(DISKDIR)\\include"
 	cmd /C "copy adrndeff.h $(DISKDIR)\\include"
 	cmd /C "copy df1b2fun.h $(DISKDIR)\\include"
-	cmd /C "copy df1fun.h $(DISKDIR)\\include"
 	cmd /C "copy df3fun.h $(DISKDIR)\\include"
 	cmd /C "copy df1b2fnl.h $(DISKDIR)\\include"
 	cmd /C "copy df1b2loc.h $(DISKDIR)\\include"

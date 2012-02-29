@@ -9,7 +9,7 @@ vpath %.obj $(LIBPATH)
 
 include objects.lst
 
-ifeq "CC" "$(CXX)"
+ifeq ("$(CXX)","CC")
 OBJECTS = $(filter-out dfqromb.obj, $(OBJ0)) $(OBJ1) $(OBJ2) $(OBJ3) 
 else
 OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
@@ -34,7 +34,11 @@ df1b2stub:
 	ar -rs $(STUBPATH)/${STUBNAME} $(STUBPATH)/df1b2stub.o
 
 $(DISKDIR)/bin/tpl2cpp: tpl2cpp.c
+ifeq ("$(CC)","cc")
+	$(CC) -o $@ $<
+else
 	$(CC) -Wno-format -o $@ $<
+endif
 
 tpl2cpp.c: tpl2cpp.lex
 	flex -w $<

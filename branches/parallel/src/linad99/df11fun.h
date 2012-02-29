@@ -52,6 +52,7 @@
     static int num_ind_var;
     double * get_u(void) const {return (double*) (&(v[0]));}
     double * get_u_x(void)const {return (double*) (&(v[1]));}
+    double * get_udot(void)const {return (double*) (&(v[1]));}
     df1_one_variable& operator = (const df1_one_variable& v);
     df1_one_variable& operator = (double v);
     df1_one_variable& operator += (const df1_one_variable& v);
@@ -88,7 +89,7 @@
     int indexmax(void) const { return int(index_max); }
     df1_one_vector(int min,int max);
     df1_one_vector(void);
-    void df1_one_vector::allocate(void);
+    void allocate(void);
     void allocate(int min,int max);
     df1_one_variable& operator () (int i) const 
     { 
@@ -136,7 +137,7 @@
     //df1_one_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df1_one_matrix();
-    df1_one_matrix::df1_one_matrix(const df1_one_matrix& m2);
+    df1_one_matrix(const df1_one_matrix& m2);
   };
 
  dmatrix value(const df1_one_matrix& v);

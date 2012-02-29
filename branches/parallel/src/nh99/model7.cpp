@@ -663,6 +663,14 @@ void set_signal_handlers(void)
 
 ad_comm::ad_comm(int _argc,char * _argv[])
 {
+  if (option_match(_argc,_argv, "-version") > -1)
+  {
+    void banner(const adstring& program_name);
+    banner(_argv[0]);
+
+    exit(0);
+  }
+
   ad_comm::argc=_argc;
   ad_comm::argv=_argv;
   int pvm_flag=0;
@@ -757,8 +765,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 #endif
   adstring workdir;
   ad_getcd(workdir);
-#define STR(x) STR2(x)
-#define STR2(x) #x
+//#define STR(x) STR2(x)
+//#define STR2(x) #x
   if (_argc>1)
   {
     if (option_match(_argc,_argv,"-?")>-1
@@ -787,7 +795,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     //  (*ad_printf)(" %s", (char*)admb_banner);
 #endif
       (*ad_printf)("\n");
-      (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California\n");
+      (*ad_printf)("Copyright (c) 2008-2011 Regents of the University of California and ADMB Foundation\n");
       (*ad_printf)("\n");
 
       (*ad_printf)( "Usage: %s option(s)\n",(char*)(adprogram_name));
@@ -837,7 +845,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -master         run as PVM master program\n");
       (*ad_printf)( " -slave          run as PVM slave program\n");
       (*ad_printf)( " -pvmtime        record timing information for PVM performance analysis\n");
-      (*ad_printf)( " -info           Contributors acknowledgements\n");
+      (*ad_printf)( " -info           How to Cite ADMB, License and contributors acknowledgements\n");
       (*ad_printf)( " -? or -help     this message\n");
       (*ad_printf)("\n");
       (*ad_printf)( " Random effects options if applicable\n");
@@ -865,6 +873,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 #  endif
       (*ad_printf)( " -shess          use sparse Hessian structure"
            " inner optimzation\n");       
+      (*ad_printf)( " -version        see version information\n");
       (*ad_printf)("\n");
       (*ad_printf)("Read online documentation at http://www.admb-project.org/\n");
       (*ad_printf)("Contact <users@admb-project.org> for help.\n");
@@ -873,13 +882,25 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     }
     else if (option_match(_argc,_argv,"-info") > -1)
     {
-      (*ad_printf)("AD Model Builder");
+      (*ad_printf)("ADMB Information\n");
+      (*ad_printf)("================\n\n");
+
+      (*ad_printf)("How to Cite ADMB\n");
+      (*ad_printf)("----------------\n\n");
+
+      (*ad_printf)("Fournier, D. A., H. J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson,\n");
+      (*ad_printf)("M. N. Maunder, A. Nielsen, and J. Sibert. in press, 2011.\n");
+      (*ad_printf)("AD Model Builder: using automatic differentiation for statistical\n");
+      (*ad_printf)("inference of highly parameterized complex nonlinear models.\n");
+      (*ad_printf)("Optimization Methods& Software. doi: 10.1080/10556788.2011.597854\n\n");
+
 #ifdef ADMB_CONFIGURE
       //(*ad_printf)(" %s", (char*)admb_banner);
 #endif
-      (*ad_printf)("\n");
-      (*ad_printf)("Copyright (c) 2008, 2009, 2010 Regents of the University of California\n");
-      (*ad_printf)("\n");
+      (*ad_printf)("License\n");
+      (*ad_printf)("-------\n\n");
+
+      (*ad_printf)("Copyright (c) 2008-2011 Regents of the University of California and ADMB Foundation\n\n");
 
       (*ad_printf)("ADMB is free software and comes with ABSOLUTELY NO WARRANTY.\n");
       (*ad_printf)("You are welcome to redistribute it under certain conditions.\n");
@@ -947,12 +968,15 @@ void ad_comm::allocate(void)
 #endif
   // strip off the .exe if it is there
   int n=adprogram_name.size();
-  if (adprogram_name(n - 3) == '.' 
-      && adprogram_name(n - 2) == 'e' 
-      && adprogram_name(n - 1) == 'x' 
-      && adprogram_name(n) == 'e') 
+  if(n>4)
   {
-    n -= 4;
+    if (adprogram_name(n - 3) == '.' 
+        && adprogram_name(n - 2) == 'e' 
+        && adprogram_name(n - 1) == 'x' 
+        && adprogram_name(n) == 'e') 
+    {
+      n -= 4;
+    }
   }
   adprogram_name=adprogram_name(1,n);
 

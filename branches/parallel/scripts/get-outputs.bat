@@ -83,16 +83,12 @@
 @type examples\admb-re\logistic\logistic.std
 
 @echo Example:admb-re:nbmm.tpl
-@type examples\admb-re\glmmadmb\nbmm.par
-@type examples\admb-re\glmmadmb\nbmm.std
+@type examples\admb-re\nbmm\nbmm.par
+@type examples\admb-re\nbmm\nbmm.std
 
 @echo Example:admb-re:nested4.tpl
 @type examples\admb-re\nested4\nested4.par
 @type examples\admb-re\nested4\nested4.std
-
-@echo Example:admb-re:orange.tpl
-@type examples\admb-re\orange\orange.par
-@type examples\admb-re\orange\orange.std
 
 @echo Example:admb-re:orange.tpl
 @type examples\admb-re\orange\orange.par
@@ -141,7 +137,3 @@
 @echo Example:admb-re:binomial.tpl
 @type examples\admb-re\weights\binomial.par
 @type examples\admb-re\weights\binomial.std
-
-@echo Example:admb-re:binomial_w2.tpl
-@type examples\admb-re\weights\binomial_w2.par
-@type examples\admb-re\weights\binomial_w2.std

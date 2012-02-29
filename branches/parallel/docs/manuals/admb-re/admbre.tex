@@ -1,4 +1,4 @@
-% $Id: admbre.tex 439 2009-10-16 18:55:14Z jsibert $
+% $Id$
 % Author: Hans Skaug
 % Copyright (c) 2008 Regents of the University of California
 
@@ -24,7 +24,7 @@
 \title{%
     \largetitlepart{Random Effects in\\ \ADM}
     \smalltitlepart{ADMB-RE User Guide}
-    \vspace{4.5ex}\textsf{\textit{Version 10.0~~(2011-01-18)}}\vspace{3ex}
+    \vspace{4.5ex}\textsf{\textit{Version 10.0~~(2011-12-15)}}\vspace{3ex}
 }
 % Author definition.
 \author{\textsf{\textit{Hans Skaug \& David Fournier}}}
@@ -1454,7 +1454,7 @@ PROCEDURE_SECTION
   for(i=1;i<=q;i++)
     g_cluster(v(i),u(i),sigma,sigma_u,sigma_v,i);
 \end{lstlisting}
-Note that \texttt{u(i)} is the $i^\textrm{th}$ row of the matrix \texttt{u}
+Note that \texttt{u(i)} is the $i^{\textrm{th}}$ row of the matrix \texttt{u}
 (this is standard \scAB\ stuff), and it should be passed as a vector to the
 \texttt{SEPARABLE\_FUNCTION}, which we would implement as follows:
 \begin{lstlisting}
@@ -1655,7 +1655,7 @@ models. The construct used to declaring a correlated Gaussian prior~is
 \end{lstlisting}
 The first of these lines is an ordinary declaration of a random effects vector.
 The second line tells \scAB\ that \texttt{u} has a multivariate Gaussian
-distribution with zero expectation and covariance matrix~\texttt{S} , i.e., the
+distribution with zero expectation and covariance matrix~\texttt{S}, i.e., the
 probability density of $\mathbf{u}$~is
 \[
 h(\mathbf{u)=}\left( 2\pi \right) ^{-\dim(S)/2}\det (S)^{-1/2}\,
@@ -1669,12 +1669,11 @@ the code where \texttt{S} gets assigned its value must be placed in a
   $ is automatically subtracted from the objective function. Therefore, the
   objective function must hold the negative log-likelihood when using the
   \texttt{normal\_prior}.
-
-  \item[$\bigstar$] To verify that your model really is partially separable, you
-  should try replacing the \texttt{SEPARABLE\_FUNCTION} keyword with an ordinary
-  \texttt{FUNCTION}. Then verify on a small subset of your data that the two
-  versions of the program produce the same results. You should be able to
-  observe that the \texttt{SEPARABLE\_FUNCTION} version runs faster.
+%  \item[$\bigstar$] To verify that your model really is partially separable,
+%  you should try replacing the \texttt{SEPARABLE\_FUNCTION} keyword with an
+%  ordinary \texttt{FUNCTION}. Then verify on a small subset of your data that
+%  the two versions of the program produce the same results. You should be able
+%  to observe that the \texttt{SEPARABLE\_FUNCTION} version runs faster.
 \end{itemize}
 See a full example
 \href{http://otter-rsch.com/admbre/examples/spatial/spatial.html}{here}.
@@ -1719,7 +1718,7 @@ matrices~$\mathbf{X}$ and~$\mathbf{Z}$) is assumed:
   \log\left(\frac{\pi_i}{1-\pi_i}\right) = \mathbf{X}_i\mathbf{\beta} +
   \mathbf{Z}_i\mathbf{u},
 \]
-where $\mathbf{X}_i$ and $\mathbf{Z}_i$ are the $i^\textrm{th}$ rows of the
+where $\mathbf{X}_i$ and $\mathbf{Z}_i$ are the $i^{\textrm{th}}$ rows of the
 known covariates matrices $\mathbf{X}$ ($n\times p$) and $\mathbf{Z}$ ($n\times
 q$), respectively, and $\mathbf{\beta}$ is a $p$-vector of regression
 parameters. Thus, the vector of fixed-effects is
@@ -1797,10 +1796,11 @@ effects, and thus GAMs fall naturally into the domain of \scAR.
 
 For each component $f_{j}$ in equation~(\ref{eqn:gam}), we construct a design
 matrix $\mathbf{X}$ such that $f_{j}(x_{i,j})=\mathbf{X}^{(i)}\mathbf{u}$, where
-$\mathbf{X}^{(i)}$ is the $i^\textrm{th}$ row of $\mathbf{X}$ and $\mathbf{u}$\
-is a coefficient vector. We use the R-function \texttt{splineDesign} (from the
-\texttt{splines} library) to construct a design matrix~$\mathbf{X}$. To avoid
-overfitting, we add a first-order difference penalty~\cite{eile:marx:1996}
+$\mathbf{X}^{(i)}$ is the $i^{\textrm{th}}$ row of $\mathbf{X}$ and
+$\mathbf{u}$\ is a coefficient vector. We use the R-function
+\texttt{splineDesign} (from the \texttt{splines} library) to construct a design
+matrix~$\mathbf{X}$. To avoid overfitting, we add a first-order difference
+penalty~\cite{eile:marx:1996}
 \index{splines!difference penalty}
 \begin{equation}
 -\lambda ^{2}\sum_{k=2}\left( u_{k}-u_{k-1}\right) ^{2},
@@ -1948,13 +1948,13 @@ also define the cumulative hazard function $\Lambda(t)=\int_0^t \,
 h(s)\,\textrm{ds}$, implicitly assuming that the study started at time $t=0$.
 The log-likelihood contribution from our patient is $\delta\log(h(t))-H(t)$. A
 commonly used model for $h(t)$ is Cox's proportional hazard model, in which the
-hazard rate for the $i^\textrm{th}$ patient is assumed to be on the form
+hazard rate for the $i^{\textrm{th}}$ patient is assumed to be on the form
 \[
   h_it = h_0(t)\exp(\eta_i\mathbf), \qquad i=1,\ldots n.
 \]
 Here, $h_0(t)$ is the ``baseline'' hazard function (common to all patients) and
 $\eta_i=\mathbf{X}_i\mathbf{\beta}$, where $\mathbf{X}_i$ is a covariate vector
-specific to the $i^\textrm{th}$ patient and $\mathbf{\beta}$ is a vector of
+specific to the $i^{\textrm{th}}$ patient and $\mathbf{\beta}$ is a vector of
 regression parameters. In this example, we shall assume that the baseline hazard
 belongs to the Weibull family: $h_0(t)=rt^{r-1}$ for~$r>0$.
 
@@ -2019,7 +2019,7 @@ occasions for each of five orange trees. See Table~\ref{tab:orange-trees}.
 \begin{center}
 \begin{tabular}{ll}
 $t_{ij}$
-& Time point when the $j^\textrm{th}$ measurement was made on tree~$i$. \\
+& Time point when the $j^{\textrm{th}}$ measurement was made on tree~$i$. \\
 $y_{ij}$
 & Trunk circumference of tree $i$ when measured at time point~$t_{ij}$.
 \end{tabular}
@@ -2177,7 +2177,7 @@ In this model, the response variable $y$ takes on values from the ordered set
 $\{y^{(s)},s=1,\ldots,S-1\}$, where $y^{(1)}<y^{(2)}<\cdots<y^{(S)}$. For
 $s=1,\ldots,S-1$, define $P_s=P(y\leq y^{(s)})$ and $\kappa_s=\log
 [P_s/(1-P_s)]$. To allow $\kappa_s$ to depend on covariates specific to the
-$i^\textrm{th}$ observation ($i=1,\ldots,n$), we introduce a
+$i^{\textrm{th}}$ observation ($i=1,\ldots,n$), we introduce a
 disturbance~$\eta_i$ of~$\kappa_s$:
 \[
   P(y_i\leq y^{(s)}) =
@@ -2237,7 +2237,7 @@ poliomyelitis cases during the period 1970--1983 in the U.S. We make a
 comparison to the performance of the Monte Carlo Newton-Raphson method, as
 reported in~\citeasnoun{kuk:chen:1999}. We adopt their model formulation.
 
-Let $y_{i}$ denote the number of polio cases in the $i^\textrm{th}$ period
+Let $y_{i}$ denote the number of polio cases in the $i^{\textrm{th}}$ period
 $(i=1,\ldots,168)$. It is assumed that the distribution of~$y_{i}$ is governed
 by a latent stationary AR(1) process~$\{u_i\}$ satisfying
 \[
@@ -2311,16 +2311,33 @@ See the files \href{http://admb-project.org/community/tutorials-and-examples/%
 random-effects-example-collection/%
 item-response-theory-irt-and-the-multilevel-rasch-model-1}{here}.
 
-\chapter{What \scAB\ Features are Not in \scAR?}
+\chapter{Differences between \scAB\ and \scAR?}
 
 \begin{itemize}
-\item Profile likelihoods cannot be used.
+\item Profile likelihoods are now implemented also in random effects models, but with
+     the limitation that the \texttt{likeprof\_number} can only depend on parameters,
+     not random effects. 
 \item Certain functions, especially for matrix operations, have not been
 implemented.
+\item The assignment operator for \texttt{dvariable} behaves differently. The
+code
+\begin{lstlisting}
+     dvariable y = 1;
+     dvariable x = y;
+\end{lstlisting}
+will make \texttt{x} and \texttt{y} point to the same memory location (shallow
+copy) in \scAR. Hence, changing the value of \texttt{x} automatically changes
+\texttt{y}. Under \scAB, on the other hand, \texttt{x} and \texttt{y} will refer
+to different memory locations (deep copy). If you want to perform a deep copy
+in \scAR\ you should write:
+\begin{lstlisting}
+     dvariable y = 1;
+     dvariable x;
+     x = y;
+\end{lstlisting}
+For vector and matrix objects \scAB\ and \scAR\ behave identically in that
+a shallow copy is used.
 \end{itemize}
-
-You will find that not all the functionality of ordinary \scAB\ has yet been
-implemented in \scAR. Functions are being added all the time.
 
 \chapter{Command Line options}
 \label{sec:command_line_options}

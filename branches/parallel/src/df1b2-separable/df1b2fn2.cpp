@@ -8,6 +8,9 @@
  * \file
  * Description not yet available.
  */
+#if !defined(__BORLANDC__) && !defined(_MSC_VER)
+#include <inttypes.h>
+#endif
 #include <df1b2fun.h>
 #include "admb_messages.h"
 
@@ -100,10 +103,13 @@ int ad_dstar::n=0;
 
 void ad_read_pass2(void);
 // should inline this
-#if defined(__SUNPRO_CC) && defined(__x86_64)
-long adptr_diff(void * x, void * y) { return long(x)-long(y); }
-#else
-int adptr_diff(void * x, void * y) { return int(x)-int(y); }
+#if !defined(__BORLANDC__)
+ptrdiff_t adptr_diff(void* x, void* y) 
+{ 
+  uintptr_t uintptrx = (uintptr_t)x;
+  uintptr_t uintptry = (uintptr_t)y;
+  return uintptrx - uintptry; 
+}
 #endif
 
 #if defined(__CHECK_MEMORY__)

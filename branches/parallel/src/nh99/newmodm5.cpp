@@ -139,6 +139,10 @@
     // see what kind of hessian we are dealing with
     int on=0;
     int nopt=0;
+    //  DF Nov 27 11
+    initial_params::set_inactive_only_random_effects(); 
+    nvar=initial_params::nvarcalc(); // get the number of active
+
     if (lapprox->have_users_hesstype==0)
     {
       if (initial_df1b2params::separable_flag)
@@ -191,6 +195,23 @@
         dvariable vf=0.0;
         vf=initial_params::reset(dvar_vector(x));
         *objective_function_value::pobjfun=0.0;
+      //**********************************************************
+      //**********************************************************
+      //**********************************************************
+      #if defined(USE_LAPLACE)
+        if (lapprox)
+        {
+          if (lapprox->hesstype==2) 
+          {
+            //lapprox->num_separable_calls=0;
+            lapprox->separable_calls_counter=0;
+          }
+        }
+      #endif
+      //**********************************************************
+      //**********************************************************
+      //**********************************************************
+      //**********************************************************
         userfunction();
         dvariable tv=likeprof_params::likeprofptr[iprof]->variable();
         vf+=weight*square(new_value-tv);
@@ -220,6 +241,23 @@
        quit_flag=fmc.quit_flag;
        fprof=value(initial_params::reset(dvar_vector(x)));
        *objective_function_value::pobjfun=0.0;
+      //**********************************************************
+      //**********************************************************
+      //**********************************************************
+      #if defined(USE_LAPLACE)
+        if (lapprox)
+        {
+          if (lapprox->hesstype==2) 
+          {
+            //lapprox->num_separable_calls=0;
+            lapprox->separable_calls_counter=0;
+          }
+        }
+      #endif
+      //**********************************************************
+      //**********************************************************
+      //**********************************************************
+      //**********************************************************
        userfunction();
        double tv=value(likeprof_params::likeprofptr[iprof]->variable());
        fprof+=value(*objective_function_value::pobjfun);

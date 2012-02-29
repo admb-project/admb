@@ -1,25 +1,25 @@
-.PHONY: tpl2cpp tpl2rem docs test
+.PHONY: tpl2cpp tpl2rem docs test contrib
 
 all:
-	CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
+	CC=@cc@ CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
 	rm -rf `find build/@target@/@target@ -type d -name .svn`
 	@printf "\nBuild completed for @target@\n"
 	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
 
 tpl2cpp:
-	make --directory=src/nh99 --file=optg32-rh8-laplace.mak tpl2cpp.c
+	$(MAKE) --directory=src/nh99 --file=optg32-rh8-laplace.mak tpl2cpp.c
 
 tpl2rem:
-	make --directory=src/df1b2-separable --file=optg32-rh8-laplace.mak tpl2rem.c
+	$(MAKE) --directory=src/df1b2-separable --file=optg32-rh8-laplace.mak tpl2rem.c
 
 debug:
-	DEBUG=1 CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
+	DEBUG=1 CC=@cc@ CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 make --directory=src --file=@makefile@
 	rm -rf `find build/@target@/@target@ -type d -name .svn`
 	@printf "\nBuild completed for @target@\n"
 	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
 
 docs:
-	make --directory=docs
+	$(MAKE) --directory=docs
 
 dist:
 	mkdir -p build/dist
@@ -30,7 +30,7 @@ dist:
 	cd build/dist && zip -r admb-@version@.zip admb-@version@
 
 verify:
-	DISK=@disk@ ADMB_CXXFLAGS=@arch_cxxflag@ ADMB_LDFLAGS=@arch_cxxflag@ make --directory=src --file=@makefile@ verify
+	DISK=@disk@ ADMB_CXXFLAGS="@arch_cxxflag@" ADMB_LDFLAGS="@arch_cxxflag@" $(MAKE) --directory=src --file=@makefile@ verify
 
 install:
 	install -d -m 755 @prefix@/admb/bin @prefix@/admb/include @prefix@/admb/lib @prefix@/admb/docs @prefix@/admb/examples
@@ -51,10 +51,15 @@ dmg:
 	@dmgtask@
 
 test:
-	export ADMB_HOME=${PWD}/build/@target@/@target@; export PATH=${PWD}/build/@target@/@target@/bin:$(PATH); make --directory=test
+	export ADMB_HOME=${PWD}/build/@target@/@target@; export PATH=${PWD}/build/@target@/@target@/bin:$(PATH); CXXFLAGS="@arch_cxxflag@" $(MAKE) --directory=test
+	export ADMB_HOME=${PWD}/build/@target@/@target@; export PATH=${PWD}/build/@target@/@target@/bin:$(PATH); CXXFLAGS="@arch_cxxflag@" $(MAKE) --directory=contrib test
+
+contrib:
+	CC=@cc@ CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib
 
 clean:
 	rm -rvf build/@target@
-	make --directory=src --file=@makefile@ clean
-	make --directory=test clean
-	make --directory=scripts/configure clean
+	$(MAKE) --directory=src --file=@makefile@ clean
+	$(MAKE) --directory=test clean
+	$(MAKE) --directory=scripts/configure clean
+	LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib clean

@@ -66,12 +66,12 @@ void ad_getcd(const adstring& _s)
   adstring& s=(adstring&) (_s);
 #if defined(_WIN32) 
   char tmp[101];
-  tmp[100]=0;
+  tmp[0]='\0';
   GetCurrentDirectory(100,tmp);
   s=tmp;
 #elif (defined(__GNUDOS__) || defined(unix) || defined(__linux__) )
   char tmp[101];
-  tmp[100]=0;
+  tmp[0]='\0';
   getcwd(tmp,100);
   s=adstring(tmp);
 #else

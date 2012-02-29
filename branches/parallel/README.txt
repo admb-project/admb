@@ -1,5 +1,6 @@
 ADMB Project
-
+Version 10.2
+Released January 17, 2011
 
 Overview
 ========
@@ -18,6 +19,14 @@ ADMB is an open source project that is freely available for download.
 If you would like to contribute or donate funds, please contact 
 <users@admb-project.org>.  Cool ADMB T-shirts are also available 
 for purchase.
+
+How to Cite ADMB
+================
+Fournier, D. A., H. J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson,
+M. N. Maunder, A. Nielsen, and J. Sibert. in press, 2011. 
+AD Model Builder: using automatic differentiation for statistical 
+inference of highly parameterized complex nonlinear models. 
+Optimization Methods& Software. doi: 10.1080/10556788.2011.597854
 
 Table of Contents
 =================
@@ -68,7 +77,7 @@ tested compilers.
 Several compilers are supported including 
  * GNU g++ 3.4 or newer
  * Microsoft Visual C++ 2003 or newer
- * MacOS XCode 3.2
+ * MacOS XCode 3.2 and 4.x
  * Intel C++ Compiler 11
  * Sun Studio 12
  * Borland 5.5
@@ -99,13 +108,13 @@ Unix and GNU g++
 
    $ make --directory=scripts/configure/
 
-4. Configure the build files for 32-bit
+4. Configure the build files
 
    $ ./configure
 
-   or configure the build files for 64-bit.
+   To check options
 
-   $ ./configure BUILD_64BIT=yes
+   $ ./configure --help
 
 5. Build libraries 
   
@@ -288,10 +297,16 @@ ADMB source version control URL is
 
 To download source files, use the command below
 
-$ svn checkout http://www.admb-project.org/svn/trunk admb-trunk
+$ svn checkout http://www.admb-project.org/svn/trunk admb-trunk-readonly
 
 If you would like to write access, please email <users@admb-project.org>
 to request an account.
+
+Developer Documentation
+-----------------------
+Developer documentation such as "ADMB Coding Standards" are available at
+
+http://www.admb-project.org/developers/
 
 Help and Support
 ================

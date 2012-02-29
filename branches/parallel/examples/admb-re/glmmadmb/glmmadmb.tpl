@@ -3,31 +3,35 @@
 DATA_SECTION
 
   init_int n					// Number of observations
-  init_int p_y					// Number of fixed effects
+  init_int p_y					// Dimension of y(i) (multivariate response)
   init_matrix y(1,n,1,p_y)			// Observation matrix
   init_int p					// Number of fixed effects
   init_matrix X(1,n,1,p)			// Design matrix for fixed effects
   init_int M					// Number of RE blocks (crossed terms)
-  init_ivector q(1,M)				// Number of levels of each RE block
-  init_ivector m(1,M)				// Number of random effects within each block
-  int sum_mq
-  init_int ncolZ
+  init_ivector q(1,M)				// Number of levels of the grouping variable per RE block; Can be skipped
+  init_ivector m(1,M)				// Number of random effects parameters within each block
+  int sum_mq					// sum(m*q), calculated below: should be read from R
+  init_int ncolZ				
   init_matrix Z(1,n,1,ncolZ)			// Design matrix for random effects
   init_imatrix I(1,n,1,ncolZ)			// Index vectors into joint RE vector "u" for each
-  init_ivector cor_flag(1,M)			// Indicator for wether each RE block should be correlated
-  init_ivector cor_block_start(1,M) 		// Indices for blocks of correlated random effects
-  init_ivector cor_block_stop(1,M) 
+  init_ivector cor_flag(1,M)			// Indicator for whether each RE block should be correlated
+  init_ivector cor_block_start(1,M) 		// Not used: remove
+  init_ivector cor_block_stop(1,M) 		// Not used: remove
   init_int numb_cor_params			// Total number of correlation parameters to be estimated
-  init_int like_type_flag   			// 0 poisson 1 binomial 2 negative binomial 3 Gamma 4 beta (?)
-  init_int link_type_flag   			// 0 log 1 logit 2 probit
+  init_int like_type_flag   			// 0 poisson 1 binomial 2 negative binomial 3 Gamma 4 beta 5 gaussian 6 truncated poisson 7 trunc NB
+  init_int link_type_flag   			// 0 log 1 logit 2 probit 3 inverse 4 cloglog 5 identity
   init_int rlinkflag                            // robust link function?
   init_int no_rand_flag   			// 0 have random effects 1 no random effects
-  init_int zi_flag				// 1=zi, 0=no zi
+  init_int zi_flag				// Zero inflation (zi) flag: 1=zi, 0=no zi
   // TESTING: remove eventually?
   init_int zi_kluge				// apply zi=0.001?
-  init_int intermediate_maxfn
-  init_int has_offset				// 0=no offset, 1=with offset
-  init_vector offset(1,n)				// Offset vector
+  init_int nbinom1_flag				// 1=NBinom1, 0=NBinom2
+  init_int intermediate_maxfn			// Not used
+  init_int has_offset				// Offset in linear predictor: 0=no offset, 1=with offset
+  init_vector offset(1,n)			// Offset vector
+
+
+  // Makes design matrix X orthogonal to improve numeric stability
   matrix rr(1,n,1,6)
   matrix phi(1,p,1,p)
  LOC_CALCS
@@ -61,6 +65,17 @@ DATA_SECTION
   for (i=1;i<=M;i++)
     sum_mq += m(i)*q(i);
 
+  ofstream ofs("phi.rep");
+  for (i=1; i<=p; i++)
+  {
+    for (j=1; j<=p; j++)
+    {
+      ofs << phi(i,j) << " ";
+    }
+    ofs << endl;
+  }
+  ofs << endl;
+
 INITIALIZATION_SECTION
  tmpL 1.0
  tmpL1 0.0
@@ -78,16 +93,22 @@ PARAMETER_SECTION
   //  ad_exit(1);
   // }
 
-  int alpha_phase = like_type_flag>1 ? 1 : -1;         // Phase 1 if active
-  int zi_phase = zi_flag ? 2 : -1;                      // Phase 2 if active
-  int rand_phase = no_rand_flag==0 ? 2+zi_flag : -1;    // Right after zi
-  int cor_phase = (rand_phase>0) && (sum(cor_flag)>0) ? rand_phase+1 : -1 ; // Right after rand_phase
+  // Determines "phases", i.e. when the various parameters  becomes active in the optimization process
+  int pctr = 2;		// "Current phase" in the stagewise procedure
+  // FIXME: move trunc_poisson earlier in like_type hierarchy (or add a scale parameter flag vector)
+  int alpha_phase = like_type_flag>1 && like_type_flag!=6 ? pctr++ : -1;        // Phase 2 if active
+  int zi_phase = zi_flag ? pctr++ : -1;                      			// After alpha
+  int rand_phase = no_rand_flag==0 ? pctr++ : -1;    				// SD of RE's
+  int cor_phase = (rand_phase>0) && (sum(cor_flag)>0) ? pctr++ : -1 ; 		// Correlations of RE's
+
+  // Count the number of variance/correlation parameters to be estimated
   ivector ncolS(1,M);
-  ncolS = m;                                            // Uncorrelated random effects
-  for (int i=1;i<=M;i++)                                // Modifies the correlated ones
+  double log_alpha_lowerbound = nbinom1_flag==1 ? 0.001 : -5.0 ;
+  ncolS = m;                       	// Uncorrelated random effects
+  for (int i=1;i<=M;i++)                // Modifies the correlated ones
     if(cor_flag(i))
       ncolS(i) = m(i)*(m(i)+1)/2;
-  int nS = sum(ncolS);             
+  int nS = sum(ncolS);             	//  Total number
  END_CALCS
   
   init_bounded_number pz(.000001,0.999,zi_phase)
@@ -95,7 +116,7 @@ PARAMETER_SECTION
   sdreport_vector real_beta(1,p)     
   init_bounded_vector tmpL(1,ncolZ,-10,10.5,rand_phase)		// Log standard deviations of random effects
   init_bounded_vector tmpL1(1,numb_cor_params,-10,10.5,cor_phase)	// Offdiagonal elements of cholesky-factor of correlation matrix
-  init_bounded_number log_alpha(-5.,6.,alpha_phase)	
+  init_bounded_number log_alpha(log_alpha_lowerbound,6.,alpha_phase)	
   sdreport_number alpha
   sdreport_vector S(1,nS)
   random_effects_vector u(1,sum_mq,rand_phase)    // Pool of random effects 
@@ -124,6 +145,11 @@ PROCEDURE_SECTION
   if(!no_rand_flag)
     for (i=1;i<=sum_mq;i++)
       n01_prior(u(i));			// u's are N(0,1) distributed
+
+  if (rlinkflag && !last_phase()) 
+  {
+    betapen(beta);
+  }
 
   for(i=1;i<=n;i++)
     log_lik(i,tmpL,tmpL1,u(I(i)),beta,log_alpha,pz);
@@ -174,13 +200,19 @@ PROCEDURE_SECTION
     }
 
   }
+			
+SEPARABLE_FUNCTION void kludgepen(const prevariable&  v)
+ g +=.5*square(v);
+
+SEPARABLE_FUNCTION void betapen(const dvar_vector&  v)
+  g+=0.5*norm2(v);
 
 SEPARABLE_FUNCTION void n01_prior(const prevariable&  u)
  g -= -0.5*log(2.0*M_PI) - 0.5*square(u);
 
 SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector& tmpL1,const dvar_vector& _ui, const dvar_vector& beta,const prevariable& log_alpha, const prevariable& pz)
-  dvar_vector& ui = (dvar_vector&)_ui;
   
+  ADUNCONST(dvar_vector,ui)
   int i,j, i_m, Ni;
   double e1=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
   double e2=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
@@ -217,12 +249,37 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
 
     int upper = sum(m(1,i_m));
     int lower = upper-m(i_m)+1;
-    b(lower,upper) = (L*(ui(lower,upper).shift(1))).shift(lower);	// L*ui
+
+    dvar_vector tmp1(1,m(i_m));
+
+    //tmp1 = ui(lower,upper).shift(1);
+ 
+    // FIXME: re-introduce rlinkflag here?
+    if (initial_params::current_phase < initial_params::max_number_phases-1)
+    {
+      tmp1 = random_bound(ui(lower,upper).shift(1),5);
+    }
+    else if 
+      (initial_params::current_phase == initial_params::max_number_phases-1)
+    {
+      tmp1 = random_bound(ui(lower,upper).shift(1),20);
+    }
+    else
+    {
+    
+      tmp1 = ui(lower,upper).shift(1);
+    }
+
+
+    tmp1 = L*tmp1;
+    b(lower,upper) = tmp1.shift(lower);
+
   }
 
   // fudge factors for inverse link
   double eps=1.e-2;
   double eps1=1.e-2;
+  double eps2=1.e-4; // works on cloglog test in link.R; FAILS when eps2=1.e-6
   switch (current_phase())
   {
   case 1:
@@ -265,6 +322,15 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
        } else {
           lambda = 1.0/(1.0+exp(-eta));
        }
+       if (initial_params::current_phase < initial_params::max_number_phases-1)
+       {
+         lambda=0.999*lambda+0.0005;
+       }
+       else if 
+         (initial_params::current_phase == initial_params::max_number_phases-1)
+       {
+         lambda=0.999999*lambda+0.0000005;
+       }
        break;
      case 2:   // probit (cum norm)
        lambda = cumd_norm(eta);
@@ -278,18 +344,55 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
         }
        break;
      case 4: // cloglog
-       // pmax(pmin(-expm1(-exp(eta)), 1 - .Machine$double.eps), .Machine$double.eps)
-       cerr << "cloglog not yet implemented" << endl;
+	 {
+       // FIXME: document/clarify epsilon values  Add rlinkflag?
+       dvariable eeta;
+       
+       if (rlinkflag) {
+          eeta = -mfexp(eta);
+       } else {
+          eeta = -exp(eta);
+       }
+       const double onesixth=1.0/6.0;
+       const double one24=1.0/24.0;
+       const double one120=1.0/120.0;
+       // safe (1-exp()); tip from http://www.johndcook.com/cpp_expm1.html
+       if (fabs(value(eeta))<1e-5) {
+	   lambda = -eeta*
+             (1.0+eeta*(0.5+eeta*(onesixth+eeta*(one24+eeta*one120))));
+       } else {
+	   lambda = 1-mfexp(eeta);
+       }
+       // restrict to (0,1)
+      /*
+       if (rlinkflag) {
+          lambda = posfun(lambda,eps2,fpen);
+          lambda = (1.0-posfun(1.0-lambda,eps2,fpen));
+       }
+      */
+       if (rlinkflag && !last_phase()) 
+       {
+         lambda=0.999999*lambda+0.0000005;
+       }
+       }
        break;
+     case 5: // identity
+        lambda = eta;
+	break;
      default:
        cerr << "Illegal value for link_type_flag" << endl;
        ad_exit(1);
-   }
+  }
 
-  dvariable tau = 1.0+e1+lambda/alpha;
+  dvariable  tau = nbinom1_flag ? alpha : 1.0 + e1 + lambda/alpha ;
   dvariable tmpl; 				// Log likelihood
 
   int cph=current_phase();
+
+  // FIXME: does having lots of choices (for like_type_flag and link_flag) slow things down?
+  // Is there any advantage to doing this stuff in a vectorized way?
+  // Is there some other better approach to the per-point switch() ?
+
   switch(like_type_flag)
   {
     case 0:   // Poisson
@@ -308,7 +411,7 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
       }
       break;
     case 2:   // neg binomial
-      if (cph<2)
+      if (cph<2)  // would like to use alpha_phase rather than 2 but it's in local_calcs
         tmpl = -square(log(1.0+y(_i,1))-log(1.0+lambda));
       else
         tmpl = log_negbinomial_density(y(_i,1),lambda,tau);
@@ -320,6 +423,28 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
       // FIXME: "log_beta_density" seems more consistent but changing name
       //       causes problems -- already exists somewhere?
       tmpl = ln_beta_density(y(_i,1),lambda,alpha);
+      break;
+    case 5: // Gaussian
+      tmpl = -0.5*(log(2.0*M_PI))-log(alpha)-0.5*square((y(_i,1)-lambda)/alpha);	
+      break; 
+    case 6:   // truncated Poisson
+      // FIXME: check somewhere (here, or preferably in R code) for trunc poisson + not ZI + 0 in response
+      if (value(lambda) > 1.0e-10) {
+          tmpl = log_density_poisson(y(_i,1),lambda)-log(1.0-exp(-lambda));
+      } else {
+          tmpl = log_density_poisson(y(_i,1),lambda)-log(lambda);
+      }
+      break;
+    case 7:  // truncated NB
+    // NB(0) = p^alpha = (alpha/(alpha+lambda))^alpha = (1+lambda/alpha)^(-alpha)
+    //   -> exp(-lambda) as alpha -> infty
+      if (cph<2)  // ignore zero-inflation for first phase
+        tmpl = -square(log(1.0+y(_i,1))-log(1.0+lambda));
+      else
+        tmpl = log_negbinomial_density(y(_i,1),lambda,tau)-log(1.0-pow(1.0+lambda/alpha,-alpha));
+      break;
+    case 8: // logistic 
+      tmpl = -log(alpha) + (y(_i,1)-lambda)/alpha - 2*log(1+exp((y(_i,1)-lambda)/alpha));
       break;
     default:
       cerr << "Illegal value for like_type_flag" << endl;
@@ -385,3 +510,55 @@ GLOBALS_SECTION
     return d;
   }
 
+  dvariable random_bound(const prevariable& u,double a)
+  {
+    if (fabs(value(u))<=a)
+      return u;
+    else if (value(u)>a)
+    {
+      dvariable y=u-a;
+      return a+y/(1+y);
+    }
+    else if (value(u)<-a)
+    {
+      dvariable y=-a-u;
+      return -a-y/(1+y);
+    }
+  }
+  df1b2variable random_bound(const df1b2variable& u,double a)
+  {
+    if (fabs(value(u))<=a)
+      return u;
+    else if (value(u)>a)
+    {
+      df1b2variable y=u-a;
+      return a+y/(1+y);
+    }
+    else if (value(u)<-a)
+    {
+      df1b2variable y=-a-u;
+      return -a-y/(1+y);
+    }
+  }
+  dvar_vector random_bound(const dvar_vector& v,double a)
+  {
+    int mmin=v.indexmin();
+    int mmax=v.indexmax();
+    dvar_vector tmp(mmin,mmax);
+    for (int i=mmin;i<=mmax;i++)
+    {
+      tmp(i)=random_bound(v(i),a);
+    }
+    return tmp;
+  }
+  df1b2vector random_bound(const df1b2vector& v,double a)
+  {
+    int mmin=v.indexmin();
+    int mmax=v.indexmax();
+    df1b2vector tmp(mmin,mmax);
+    for (int i=mmin;i<=mmax;i++)
+    {
+      tmp(i)=random_bound(v(i),a);
+    }
+    return tmp;
+  }

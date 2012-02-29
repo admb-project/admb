@@ -154,10 +154,10 @@ void df1b2_gradcalc1(void);
 
 extern char AD_allocation_error_message[];
 
-#if defined(__SUNPRO_CC) && defined(__x86_64)
-long adptr_diff(void * x, void * y);
+#if defined(__BORLANDC__)
+int adptr_diff(void * x, void * y) { return int(x)-int(y); }
 #else
-int adptr_diff(void * x, void * y);
+ptrdiff_t adptr_diff(void* x, void* y);
 #endif
 
 void read_pass1_1(void);
@@ -871,10 +871,10 @@ inline df1b2variable operator + (const df1b2variable& x,double y)
 }
 
 df1b2variable operator - (const df1b2variable& x,const df1b2variable& y);
-//df1b2variable operator - (double x,const df1b2variable& y);
+df1b2variable operator - (double x,const df1b2variable& y);
 df1b2variable operator / (const df1b2variable& x,const df1b2variable& y);
 df1b2variable operator / (const df1b2variable& x,double y);
-//df1b2variable operator - (const df1b2variable& x,double y);
+df1b2variable operator - (const df1b2variable& x,double y);
 df1b2variable operator / (double x,const df1b2variable& y);
 
 df1b2variable lgamma2(const df1b2variable& _x);  // new log gamma using forward AD
@@ -1732,7 +1732,10 @@ int allocated(const df1b2vector&);
 int allocated(const df1b2_init_matrix&);
 #include <df3fun.h>
 
-//df1b2variable betai(_CONST df1b2variable& a,_CONST df1b2variable& b, double x, int maxit=100);
+df1b2variable betai(const df1b2variable & _a, const df1b2variable & _b,
+		     const df1b2variable & _x);
+df1b2variable betai(const df1b2variable & _a, const df1b2variable & _b,
+		     double _x);
 
 double do_gauss_hermite_block_diagonal(const dvector& x,
   const dvector& u0,const dmatrix& Hess,const dvector& _xadjoint,

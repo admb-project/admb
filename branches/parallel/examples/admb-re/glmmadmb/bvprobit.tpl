@@ -431,4 +431,7 @@ GLOBALS_SECTION
   #include <df1b2fun.h>
   #include <admodel.h>
   int global_rand_phase;
+  #ifndef PI
+    const double PI = 3.14159265358979323846;
+  #endif
 

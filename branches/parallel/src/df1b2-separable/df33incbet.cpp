@@ -676,7 +676,7 @@ df3_three_variable incbet(const df3_three_variable & _aa,
 			  const df3_three_variable & _xx);
 
 /**
- * This is the wrapper to call the main inbet function.
+ * This is the wrapper to call the main incbet function.
  * \param
  */
 df1b2variable incbet(const df1b2variable & _a, const df1b2variable & _b,
@@ -695,6 +695,35 @@ df1b2variable incbet(const df1b2variable & _a, const df1b2variable & _b,
    z = vy;
    return z;
 }
+
+/**
+ * This is the wrapper to the incbet functions to maintain
+ * backwards compatibility.
+ * \param
+ */
+df1b2variable betai(const df1b2variable & _a, const df1b2variable & _b,
+		     const df1b2variable & _x)
+{
+  ADUNCONST(df1b2variable, a) ADUNCONST(df1b2variable, b)
+  ADUNCONST(df1b2variable, x)
+  df1b2variable ret = incbet(a,b,x);
+  return ret;
+}
+
+/**
+ * This is the wrapper to the incbet functions to maintain
+ * backwards compatibility.
+ * \param
+ */
+df1b2variable betai(const df1b2variable & _a, const df1b2variable & _b,
+		     double _x)
+{
+  ADUNCONST(df1b2variable, a) ADUNCONST(df1b2variable, b)
+  df1b2variable x=_x;
+  df1b2variable ret = incbet(a,b,x);
+  return ret;
+}
+
 
 
 /*							igam.c
@@ -775,9 +804,7 @@ df1b2variable incbet(const df1b2variable & _a, const df1b2variable & _b,
  *    IEEE     0.5,100   0,100      200000       1.9e-14     1.7e-15
  *    IEEE     0.01,0.5  0,100      200000       1.4e-13     1.6e-15
  */
-
-static df3_three_variable igam(const df3_three_variable & a,
-			       const df3_three_variable & x);
+
 
 /**
  * Description not yet available.

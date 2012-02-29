@@ -16,27 +16,41 @@
  */
  imatrix& imatrix::operator= (_CONST imatrix& m1)
  {
-   if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
-     colmin() != m1.colmin() || colmax() != m1.colmax() )
+   if (allocated(*this))
    {
-     cerr << rowmin() << endl;
-     cerr << rowmax() << endl;
-     cerr << m1.rowmin() << endl;
-     cerr << m1.rowmax() << endl;
-     cerr << colmin() << endl;
-     cerr << colmax() << endl;
-     cerr << m1.colmin() << endl;
-     cerr << m1.colmax() << endl;
-     cerr << " Incompatible array bounds in imatrix& operator = (_CONST imatrix&)\n";
-     ad_exit(21);
-   }
-
-   if (m != m1.m)            // check for condition that both matrices
-   {                         // point to the same object
-     for (int i=rowmin();i<=rowmax();i++)
+     if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
+       colmin() != m1.colmin() || colmax() != m1.colmax() )
      {
-       *(m+i) = m1[i];
+       cerr << rowmin() << endl;
+       cerr << rowmax() << endl;
+       cerr << m1.rowmin() << endl;
+       cerr << m1.rowmax() << endl;
+       cerr << colmin() << endl;
+       cerr << colmax() << endl;
+       cerr << m1.colmin() << endl;
+       cerr << m1.colmax() << endl;
+       cerr << " Incompatible array bounds in imatrix& operator = (_CONST imatrix&)\n";
+       ad_exit(21);
      }
+  
+     if (m != m1.m)            // check for condition that both matrices
+     {                         // point to the same object
+       for (int i=rowmin();i<=rowmax();i++)
+       {
+         *(m+i) = m1[i];
+       }
+     }
+   }
+   else
+   {
+     index_min=m1.index_min;
+     index_max=m1.index_max;
+     shape=m1.shape;
+     if (shape)
+     {
+       (shape->ncopies)++;
+     }
+     m = m1.m;
    }
    return(*this);
  }

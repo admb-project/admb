@@ -11,7 +11,7 @@ Installation
   Procedure
   ---------
   1. Open ADMB dmg file. 
-  2. In the mounted disk image (ADMB 10.0), double click the 
+  2. In the mounted disk image (ADMB 10.1), double click the 
      pkg installer and follow the installation instructions.
   3. Once the installation is "Finished", follow the "Quick Start" 
      procedure below to build and run the simple example.

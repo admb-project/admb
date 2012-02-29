@@ -129,7 +129,7 @@ dvariable ln_det(const dvar_matrix & aa, const int &_sgn)
 double ln_det(const dmatrix & m1, const int &_sgn)
 {
    dmatrix M = m1;
-   int sign = _sgn;
+   int & sign = (int &)_sgn;
    cltudecomp clu1 = ludecomp_pivot(M);
 
    sign = clu1.get_sign();

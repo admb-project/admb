@@ -101,3 +101,24 @@ invoke custom adjoint code.
 /** \defgroup FAD Forward mode Automatic Differentiation.
      \ingroup AD
 */
+
+/** \defgroup CONTRIB User-Contributed Libraries.
+    \details 
+     Collections of C++ and source code for implementing specialized
+     models in ADMB. These modules are maintained by the original authors.
+*/
+
+/** \defgroup STATLIB Statistical Fuctions.
+    \ingroup CONTRIB
+    \details Contributed by Steven Martell.
+*/
+
+/** \defgroup ECOL Functions Useful in Ecology.
+    \ingroup CONTRIB
+    \details Contributed by Mollie Brooks.
+*/
+
+/** \defgroup QFC
+    \ingroup CONTRIB
+    \details Contributed by Weihai Liu
+*/

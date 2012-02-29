@@ -43,22 +43,19 @@ ivector sort(_CONST ivector & v, int NSTACK)
    int ub=v.indexmax();
    int size=v.size();
 
-   int *intarray;
-   intarray = new int[size];
+   ivector intarray(0,size-1);
    int i;
    for(i=0;i<size;i++)
    {
       intarray[i] = v(lb+i);
    }
 
-   int_qsort(intarray,size);
+   int_qsort(&(intarray(0)),size);
 
    ivector arr(lb, ub);
    for(i=0;i<size;i++) {
       arr(lb+i) = intarray[i];
    }
-
-   delete [] intarray;
 
    return arr;
 }
@@ -88,22 +85,20 @@ ivector sort(_CONST ivector & _v, BOR_CONST ivector & _index, int NSTACK)
    int ub=v.indexmax();
    int size=v.size();
 
-   int *intarray;
-   intarray = new int[size];
+   ivector intarray(0,size-1);
    int i;
    for(i=0;i<size;i++)
    {
       intarray[i] = v(lb+i);
    }
 
-   int *intarray2;
-   intarray2 = new int[size];
+   ivector intarray2(0,size-1);
    for(i=0;i<size;i++)
    {
       intarray2[i] = lb+i;
    }
 
-   int_qsort2(intarray,intarray2,size);
+   int_qsort2(&(intarray[0]),&(intarray2[0]),size);
 
    ivector arr(lb, ub);
    for(i=0;i<size;i++) {
@@ -113,9 +108,6 @@ ivector sort(_CONST ivector & _v, BOR_CONST ivector & _index, int NSTACK)
    for(i=0;i<size;i++) {
       index(index.indexmin()+i) = intarray2[i];
    }
-
-   delete intarray;
-   delete intarray2;
 
    return arr;
 }

@@ -63,7 +63,9 @@ double_and_int * gradnew()
  * Description not yet available.
  * \param
  */
-  void gradfree(dlink * v)
+void gradfree(dlink * v)
+{
+  if (gradient_structure::GRAD_LIST)
   {
     if (gradient_structure::instances)
     { 
@@ -75,6 +77,7 @@ double_and_int * gradnew()
       v=NULL;
     }
   }
+}
 
 //  prevariable::prevariable(_CONST prevariable& t)
 //  {

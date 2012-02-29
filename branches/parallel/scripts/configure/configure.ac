@@ -75,6 +75,7 @@ then
 
   if test "${CXX}" = "g++"
   then
+    CXX="g++"
     GCC_VERSION=`gcc -dumpversion`
     ADMB_TARGET="admb-${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
     AS_IF([test "x$enable_mpi" = "xyes"], [

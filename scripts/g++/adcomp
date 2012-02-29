@@ -34,6 +34,10 @@ eval $CMD
 
 exit 0
 
+### r259 [2012-02-29] arnima  logged revision history
+### r222 [2012-01-12] johnoel added $ADMB_HOME/contrib as include directory
+### r 42 [2011-06-22] arnima  improved handling of CXXFLAGS
+### r 39 [2011-06-22] johnoel improved handling of CXXFLAGS
 ### r982 [2010-02-16] arnima  rewrite, updated OPTIND structure, if -g then not
 ###                           -O3, fixed spaces, simplified echo
 ### r938 [2010-12-28] johnoel put CXXFLAGS before other options

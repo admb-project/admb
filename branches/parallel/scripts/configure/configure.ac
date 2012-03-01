@@ -92,9 +92,9 @@ then
       CXXFLAGS="${CXXFLAGS} -DUSE_ADMPI"
       CXX="mpicxx"
     ])
-    AC_CONFIG_FILES(
-      [ scripts/g++/adcomp scripts/g++/adlink ]
-    )
+    #AC_CONFIG_FILES(
+    #  [ scripts/g++/adcomp scripts/g++/adlink ]
+    #)
   fi
   if test "${CXX}" = "icpc"
   then

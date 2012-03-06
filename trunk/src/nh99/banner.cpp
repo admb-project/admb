@@ -12,10 +12,8 @@
   using namespace std;
 #endif
 
-#if defined(ADMB_REVISION)
-  #define STR(x) #x
-  #define STR2(x) STR(x)
-#endif
+#define STR(x) #x
+#define STR2(x) STR(x)
 
 //extern adstring copyright; ///< Text string containing copyright information; defined in the .tpl file
 
@@ -125,3 +123,5 @@ void banner(const adstring& program_name)
   delete str;
   str = 0;
 }
+#undef STR(x)
+#undef STR2(x)

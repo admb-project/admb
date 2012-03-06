@@ -12,6 +12,10 @@
   using namespace std;
 #endif
 
+#if defined(ADMB_REVISION)
+  #define STR(x) #x
+  #define STR2(x) STR(x)
+#endif
 
 //extern adstring copyright; ///< Text string containing copyright information; defined in the .tpl file
 
@@ -31,7 +35,7 @@ void banner(const adstring& program_name)
   ss << "ADMB";
 
 #if defined(ADMB_VERSION)
-  ss << "-" << ADMB_VERSION;
+  ss << "-" << STR2(ADMB_VERSION);
 #endif
 
   if (which_library() == 'o')
@@ -108,8 +112,6 @@ void banner(const adstring& program_name)
   ss << "\n";
   ss << "Build date: " << __DATE__ << "\n";
 #if defined(ADMB_REVISION)
-  #define STR(x) #x
-  #define STR2(x) STR(x)
   ss << "Revision: " << STR2(ADMB_REVISION) << "\n";
 #endif
   ss << "\n";

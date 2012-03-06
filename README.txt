@@ -1,6 +1,6 @@
 ADMB Project
-Version 10.2
-Released January 17, 2011
+Version trunk
+Release date
 
 Overview
 ========
@@ -98,11 +98,13 @@ Unix and GNU g++
 ----------------
 1. Extract source distribution
    
-   $ unzip admb-10.1.zip
+   $ unzip admb-'version'.zip
+   
+   where 'version' is the distribution version.
 
 2. Change to distribution directory
 
-   $ cd admb-10.1
+   $ cd admb-'version'
 
 3. Create configure script  
 
@@ -132,11 +134,13 @@ Unix and Sun Studio 12
 ----------------------
 1. Extract source distribution
    
-   $ unzip admb-10.1.zip
+   $ unzip admb-'version'.zip
+
+   where 'version' is the distribution version.
 
 2. Change to source directory
 
-   $ cd admb-10.1/src
+   $ cd admb-'version'/src
 
 3. Build libraries 
   
@@ -154,11 +158,13 @@ Unix and Intel C++ Compiler
 ---------------------------
 1. Extract source distribution
    
-   $ unzip admb-10.1.zip
+   $ unzip admb-'version'.zip
+
+   where 'version' is the distribution version.
 
 2. Change to distribution directory
 
-   $ cd admb-10.1
+   $ cd admb-'version'
 
 3. Configure the build files for Intel
 
@@ -184,7 +190,9 @@ Microsoft Windows and Visual C++
 
 3. Change directory to the "src" folder. 
 
-   > cd admb-10.1\src
+   > cd admb-'version'\src
+
+   where 'version' is the distribution version.
 
 4. Build libraries
 
@@ -215,7 +223,9 @@ Microsoft Windows and Borland C++ 5.5
 
 5. Change directory to the "src" folder. 
 
-   > cd admb-10.1\src
+   > cd admb-'version'\src
+
+   where 'version' is the distribution version.
 
 6. Build 32-bit libraries
 
@@ -234,13 +244,15 @@ Microsoft Windows and MinGW (msys and gcc-4.5)
 ----------------------------------------------
 1. Open MinGW Shell located in Start->MinGW->MinGW Shell.
 
-2. Extract source distribution.
+2. Extract source distribution
    
-   $ unzip admb-10.1.zip
+   $ unzip admb-'version'.zip
+
+   where 'version' is the distribution version.
 
 2. Change to distribution directory
 
-   $ cd admb-10.1
+   $ cd admb-'version'
 
 3. Create configure script
 
@@ -265,11 +277,11 @@ Microsoft Windows and MinGW (msys and gcc-4.5)
 Installation from Binary Distributions
 ======================================
 
-MacOS10.6 and XCode3.2
-----------------------
-1. Download .dmg
-2. Double click .dmg file
-3. Double click the .pkg
+MacOS and XCode
+---------------
+1. Download admb-'version'.dmg
+2. Double click admb-'version'.dmg file
+3. Double click the admb-'version'.pkg
 4. Follow the installation instructions
 
 If successful, the wizard will have installed admb 

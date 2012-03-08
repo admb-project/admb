@@ -1,4 +1,4 @@
-DISK=..\build\admb-trunk-bcc5.5-32bit
+DISK=..\build\admb-bcc5.5-32bit
 CXXFLAGS:=$(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION)
 
 OPT_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DADMB_VERSION=trunk -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DOPT_LIB -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"

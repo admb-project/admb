@@ -1,4 +1,4 @@
-DISK=..\build\admb-trunk-vc10
+DISK=..\build\admb-vc10
 
 all:
 	IF NOT EXIST $(DISK) mkdir $(DISK)

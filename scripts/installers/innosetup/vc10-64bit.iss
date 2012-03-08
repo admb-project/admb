@@ -8,7 +8,7 @@ DefaultDirName={pf}\ADMB
 DefaultGroupName=ADMB (Microsoft Visual C++ 2010 64Bit)
 UninstallDisplayIcon={app}\MyProg.exe
 OutputDir=..\..\..\
-OutputBaseFilename=admb-trunk-vc10-64bit
+OutputBaseFilename=admb-vc10-64bit
 AppPublisher=www.admb-project.org
 AppPublisherURL=http://www.admb-project.org/
 LicenseFile=..\..\..\LICENSE
@@ -17,7 +17,7 @@ LicenseFile=..\..\..\LICENSE
 Name: "vc10"; Description: "ADMB (Microsoft Visual C++ 2010 64Bit)"
 
 [Files]
-Source: "..\..\..\build\admb-trunk-vc10\dist\*"; DestDir: "{app}"; Flags: recursesubdirs
+Source: "..\..\..\build\admb-vc10\dist\*"; DestDir: "{app}"; Flags: recursesubdirs
 
 [Icons]
 Name: "{group}\ADMB Command Prompt (Microsoft Visual C++ 2010 64Bit)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-vc10-64bit.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (Microsoft Visual C++ 2010 64Bit)"

@@ -116,7 +116,7 @@ float_num_exp [a-z_A-Z0-9\.\+\-\*]+
 %s IN_NUMBER_DEF IN_SPNUMBER_DEF IN_VECTOR_DEF IN_VECTOR_VECTOR_DEF 
 %s IN_SPVECTOR_DEF 
 %s IN_MATRIX_DEF IN_TABLE_DEF IN_SPMATRIX_DEF IN_THREE_ARRAY_DEF IN_SPTHREE_ARRAY_DEF
-%s IN_NAMED_NUMBER_DEF IN_NAMED_VECTOR_DEF IN_NAMED_MATRIX_DEF
+%s IN_FACTOR_DEF IN_NAMED_NUMBER_DEF IN_NAMED_VECTOR_DEF IN_NAMED_MATRIX_DEF
 %s IN_NAMED_THREE_ARRAY_DEF IN_NAMED_FOUR_ARRAY_DEF DEFINE_AUX_PROC
 %s INIT_BOUNDED_NUMBER_DEF INIT_BOUNDED_VECTOR_DEF IN_BOUNDED_MATRIX_DEF
 %s DEFINE_INITIALIZATION DEFINE_PRELIMINARY_CALCS INIT_BOUNDED_MATRIX_DEF
@@ -1172,6 +1172,13 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  param_init_vector ");
                      }
 
+<DEFINE_PARAMETERS>init_factor {
+
+    BEGIN IN_FACTOR_DEF;
+    fprintf(fdat,"%s","  param_init_vector ");
+                     }
+
+
 <DEFINE_PARAMETERS>init_vector_vector {
 
     BEGIN IN_MATRIX_DEF;
@@ -1606,12 +1613,6 @@ DATA_SECTION  {
 
                             }
 
-
-
-
-
-
-
 <INIT_BOUNDED_NUMBER_DEF>({name}\({float_num_exp},{float_num_exp}\)) {
 
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)
@@ -1633,6 +1634,36 @@ DATA_SECTION  {
     }
 
                             }
+
+<IN_FACTOR_DEF>{name}\({name}\) {
+    before_part(tmp_string,yytext,'(');  // get x in x(v)
+    fprintf(fdat,"%s_levels;\n",tmp_string);
+    fprintf(fdat,"  factor %s;\n",tmp_string);
+    after_part(tmp_string1,yytext,'(');  // get (v in x(v)
+    before_part(tmp_string2,tmp_string1,')');
+    fprintf(fall,"  int %s_nlevels = count_factor",tmp_string);
+    fprintf(fall,"%s);\n",tmp_string2);
+    fprintf(fall,"  %s_levels.allocate(1,%s_nlevels,\"%s_levels\");\n",tmp_string,tmp_string,tmp_string);
+    fprintf(fall,"  %s.allocate%s,%s_levels);\n",tmp_string,tmp_string2,tmp_string);
+    if (needs_initialization)
+    {
+      before_part(tmp_string,yytext,'('); 
+      fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
+      fprintf(fall,"    %s",tmp_string);
+      fprintf(fall,".initialize();\n");
+      fprintf(fall,"  #endif\n");
+      needs_initialization=0;
+    }
+    if (!params_defined)
+    {
+      BEGIN DEFINE_DATA;
+    }
+    else
+    {
+      BEGIN DEFINE_PARAMETERS;
+    }
+                            }
+
 
 
 <IN_VECTOR_DEF>{name}\({num_exp},{num_exp}\) |

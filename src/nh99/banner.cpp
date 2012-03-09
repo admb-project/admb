@@ -123,5 +123,3 @@ void banner(const adstring& program_name)
   delete str;
   str = 0;
 }
-#undef STR(x)
-#undef STR2(x)

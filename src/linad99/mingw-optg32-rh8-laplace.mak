@@ -57,6 +57,7 @@ disk: $(LIBPATH)\\$(LIBNAME)
 	cmd /C "copy fvar.hpp $(DISKDIR)\\include"
 	cmd /C "copy dfpool.h $(DISKDIR)\\include"
 	cmd /C "copy trunc.hpp $(DISKDIR)\\include"
+	cmd /C "copy factors.h $(DISKDIR)\\include"
 
 clean:
 	if exist $(LIBPATH) rmdir /S /Q $(LIBPATH)

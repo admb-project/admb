@@ -314,7 +314,6 @@ class imatrix;
 class prevariable;
 class dvariable;
 class dvar_vector;
-class factor;
 class ivector;
 class lvector;
 class dvar_matrix;
@@ -2960,54 +2959,6 @@ double dmax(double i, double j);
 
  }; // end of class dvar_vector
 
-class factor
-{
-  int nlevels; 
-  ivector idx;
-  dvar_vector levels;
-public:  
-  factor(){
-    nlevels=0;
-  }
-  void allocate(const ivector& v, dvar_vector & par){
-    int from=v.indexmin();
-    int to=v.indexmax(); 
-
-    ivector idxlocal(from,to);
-    if(par.indexmin()!=1){cout<<"Error: par indexmin is not 1 in factor - something is wrong"<<endl; ad_exit(1);}
-    nlevels=par.indexmax();
-    ivector whichlevel(1,nlevels);
-    int  whichlevelindex=0; 
-    whichlevel(++whichlevelindex)=v(from);
-    int seenBefore;
-    for(int i=from+1; i<=to; ++i){
-      seenBefore=0; 
-      for(int j=1; j<=whichlevelindex; ++j){
-        if(whichlevel(j)==v(i)){
-          seenBefore=1; 
-          break;  
-        }
-      }
-      if(!seenBefore){
-        whichlevel(++whichlevelindex)=v(i);
-      }
-    }
-    for(int j=1; j<=nlevels; ++j){
-      for(int i=from; i<=to; ++i){
-        if(v(i)==whichlevel(j)){
-          idxlocal(i)=j;
-        };
-      }
-    }  
-    idx=idxlocal; 
-    levels=par;
-  }
-  dvariable operator () (int i){
-    return levels(idx(i));
-  }
-};
-
-
  /*
  class funnel_dvar_vector : public dvar_vector
  {
@@ -3284,6 +3235,8 @@ ivector sort(_CONST ivector&,BOR_CONST ivector& index,int NSTACK=60);
 dmatrix sort(_CONST dmatrix&,int column,int NSTACK=60);
 imatrix sort(_CONST imatrix&,int column,int NSTACK=60);
 
+
+#include "factors.h" 
 int count_factor(const dvector& v, const double& eps);
 ivector as_factor(const dvector& v, const double eps=1.0e-6);
 int count_factor(const ivector& v);

@@ -30,7 +30,7 @@ int count_factor(const dvector& v, const double& eps){
   return counter; 
 }
 
-ivector as_factor(const dvector& v, const double eps=1.0e-6){
+ivector as_factor(const dvector& v, const double eps){
   int from=v.indexmin();
   int to=v.indexmax();
   ivector idxlocal(from,to);

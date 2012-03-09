@@ -27,3 +27,4 @@ disk:
 	copy fvar.hpp $(DISKDIR)\dist\include
 	copy dfpool.h $(DISKDIR)\dist\include
 	copy d4arr.hpp $(DISKDIR)\dist\include
+	copy factors.h $(DISKDIR)\dist\include

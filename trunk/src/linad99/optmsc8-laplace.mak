@@ -15,6 +15,7 @@ all: $(DISKDIR)\lib\$(LIBNAME)
 	copy ..\..\..\..\src\linad99\fvar.hpp $(DISKDIR)\include
 	copy ..\..\..\..\src\linad99\d4arr.hpp $(DISKDIR)\include
 	copy ..\..\..\..\src\linad99\dfpool.h $(DISKDIR)\include
+	copy ..\..\..\..\src\linad99\factors.h $(DISKDIR)\include
 
 $(DISKDIR)\lib\$(LIBNAME): $(OBJECTS)
 	lib /OUT:$@ /NOLOGO *.obj

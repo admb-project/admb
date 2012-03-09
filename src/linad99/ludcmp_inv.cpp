@@ -87,20 +87,17 @@ dmatrix inv(_CONST dmatrix & aa)
    cltudecomp bb(lb, ub);
    bb = ludecomp(aa);
 
-   dmatrix alpha = bb.get_L();
-   dmatrix beta = bb.get_U();
+   dmatrix& alpha = bb.get_L();
+   dmatrix& beta = bb.get_U();
 
    //check if invertable
-   double det = 1.0;
    for (int i = lb; i <= ub; i++)
    {
-      det *= beta(i, i);
-   }
-   if (det == 0.0)
-   {
-      cerr <<
-	 "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
-      ad_exit(1);
+      if (beta(i, i) == 0.0)
+      {
+        cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
+        ad_exit(1);
+      }
    }
    // Find inverse of L
    for (int i = lb + 1; i <= ub; i++)

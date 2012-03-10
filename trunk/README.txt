@@ -66,6 +66,7 @@ suggestions.
  * Jan Jaap
  * Gareth Williams
  * Weihai Liu
+ * Barak A. Pearlmutter
 
 Requirements
 ============

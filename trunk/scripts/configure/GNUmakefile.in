@@ -45,7 +45,7 @@ install:
 	cp -Rf build/@target@/@target@/examples/* @prefix@/admb/examples
 
 zip:
-	cd build/@target@; zip -r @target@.zip @target@
+	cd build/@target@ && zip -r @target@.zip @target@
 
 dmg:
 	@dmgtask@

@@ -194,7 +194,7 @@ orange2:
 orange_cor:
 	cd admb-re\\$@
 	admb -r $(OPTION) $@
-	$@ -nohess
+	$@
 	cd ..\\..
 
 pheno:

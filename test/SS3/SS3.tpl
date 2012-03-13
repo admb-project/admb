@@ -7293,7 +7293,7 @@ FUNCTION get_selectivity
             for(j=j1+1;j<=j2;j++)
             {
               t1=len_bins_m(j)-peak;  t2=len_bins_m(j)-peak2;
-              join1=1.0/(1.0+mfexp(-(20.*t1/(1.0+fabs(t1)))));  //  note the logit transform on t1 causes range of mfexp to be over -20 to 20
+              join1=1.0/(1.0+mfexp(-(20.*t1/(1.0+fabs(t1)))));  //  -note the logit transform on t1 causes range of mfexp to be over -20 to 20
               join2=1.0/(1.0+mfexp(-(20.*t2/(1.0+fabs(t2)))));
               if(sp(5)>-999)
                 {asc=point1+(1.0-point1)*(mfexp(-square(t1)/upselex)-t1min)/(1.0-t1min);}

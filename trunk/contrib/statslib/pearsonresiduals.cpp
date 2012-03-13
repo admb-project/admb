@@ -9,6 +9,8 @@
 * 
 * @date 12/13/2011
 * @remarks
+* This function calculates the pearson residuals for a multinomial
+* distribution.
 */
 
 dvector pearson_residuals(long m, dvector obs_p, dvector pred_p)

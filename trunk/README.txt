@@ -22,11 +22,15 @@ for purchase.
 
 How to Cite ADMB
 ================
-Fournier, D. A., H. J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson,
-M. N. Maunder, A. Nielsen, and J. Sibert. in press, 2011. 
-AD Model Builder: using automatic differentiation for statistical 
-inference of highly parameterized complex nonlinear models. 
-Optimization Methods& Software. doi: 10.1080/10556788.2011.597854
+Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, 
+M.N. Maunder, A. Nielsen, and J. Sibert. 2012. AD Model Builder: 
+using automatic differentiation for statistical inference of highly 
+parameterized complex nonlinear models. Optim. Methods Softw. 27:233-249.
+
+It can be downloaded for free from the publisher:
+http://tandfonline.com/doi/abs/10.1080/10556788.2011.597854
+
+
 
 Table of Contents
 =================

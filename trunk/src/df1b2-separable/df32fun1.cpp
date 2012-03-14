@@ -1,5 +1,5 @@
 /*
- * $Id: df32fun1.cpp 998 2011-04-04 20:35:20Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

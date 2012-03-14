@@ -1,5 +1,5 @@
 /*
- * $Id: df1b2min3.cpp 2011-07-27 add by weihai,created by Dave $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

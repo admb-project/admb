@@ -1,5 +1,5 @@
 /*
- * $Id: safe_mem.h 801 2010-10-22 00:47:55Z johnoel $
+ * $Id$
  *
  * Author: Walter Bright
  *

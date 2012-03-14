@@ -1,5 +1,5 @@
 /*
- * $Id: df1b2invcumdbeta_incbet.cpp 855 2010-11-12 22:34:58Z dseiple $
+ * $Id$
  *
  */
 #include <df1b2fun.h>

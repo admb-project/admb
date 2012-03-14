@@ -1,5 +1,5 @@
 /*
- * $Id: fvar.hpp 965 2011-02-03 23:54:33Z itaylor $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California

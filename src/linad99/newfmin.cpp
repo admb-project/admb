@@ -1,5 +1,5 @@
 /*
- * $Id: newfmin.cpp 1001 2011-04-07 22:36:54Z johnoel $
+ * $Id$
  *
  * Author: Unknown
  * Copyright (c) 2009-2011 ADMB Foundation

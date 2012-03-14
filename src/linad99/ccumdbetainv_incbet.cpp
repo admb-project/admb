@@ -1,5 +1,5 @@
 /*
- * $Id: ccumdbetainv_incbet.cpp 872 2010-11-30 19:49:55Z dseiple $
+ * $Id$
  * Author: Unknown
  */
 /**

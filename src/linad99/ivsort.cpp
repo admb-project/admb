@@ -1,5 +1,5 @@
 /*
- * $Id: ivsort.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Copyright (c) 2009-2011 ADMB Foundation
  */

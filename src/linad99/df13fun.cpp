@@ -1,5 +1,5 @@
 /*
- * $Id:  $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2009-2011 ADMB Foundation

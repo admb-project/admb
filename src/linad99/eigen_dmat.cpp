@@ -1,5 +1,5 @@
 /*
- * $Id: eigen_dmat.cpp 969 2011-02-07 16:47:54Z jsibert $
+ * $Id$
  *
  * Copyright (c) 2009-2011 ADMB foundation
  */

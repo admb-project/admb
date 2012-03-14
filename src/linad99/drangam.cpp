@@ -1,5 +1,5 @@
 /*
- * $Id: drangam.cpp 872 2010-11-30 19:49:55Z dseiple $
+ * $Id$
  *
  * Authors: H. H. Ahrens, U. Dieter and B. W. Brown.
  * License: Public domain.

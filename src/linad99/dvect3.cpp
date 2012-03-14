@@ -1,5 +1,5 @@
 /*
- * $Id: dvect3.cpp 977 2011-02-09 17:31:22Z jsibert $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

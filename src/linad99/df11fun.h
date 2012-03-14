@@ -1,5 +1,5 @@
 /*
- * $Id: df11fun.h 996 2011-03-28 20:53:35Z dseiple $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California

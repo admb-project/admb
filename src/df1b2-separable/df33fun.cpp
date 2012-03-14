@@ -1,5 +1,5 @@
 /*
- * $Id: df33fun.cpp 944 2011-01-12 22:48:46Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2009-2011 ADMB Foundation

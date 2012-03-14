@@ -1,5 +1,5 @@
 /*
- * $Id: df1b2lap.cpp 1001 2011-04-07 22:36:54Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

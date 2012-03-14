@@ -1,5 +1,5 @@
 /*
- * $Id: hs_sparse.cpp 947 2011-01-12 23:56:42Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2009-2011 ADMB foundation

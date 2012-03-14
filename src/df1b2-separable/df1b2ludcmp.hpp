@@ -1,5 +1,5 @@
 /*
- * $Id: df1b2ludcmp.hpp 778 2010-09-22 22:07:39Z dseiple $
+ * $Id$
  *
  * Copyright (c) 2010-2011 ADMB Foundation
  */

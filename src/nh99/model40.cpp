@@ -1,5 +1,5 @@
 /*
- * $Id: model40.cpp 945 2011-01-12 23:03:57Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

@@ -1,5 +1,5 @@
 /*
- * $Id: bet_rand.cpp 945 2011-01-12 23:03:57Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2009-2011 ADMB foundation

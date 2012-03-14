@@ -1,5 +1,5 @@
 /*
- * $Id: strcase.cpp 948 2011-01-12 23:59:02Z johnoel $
+ * $Id$
  *
  * Author: John Sibert
  * Copyright (c) 2010-2011 ADMB Foundation

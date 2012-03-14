@@ -1,5 +1,5 @@
 /*
-   $Id: rngen.cpp 946 2011-01-12 23:52:45Z johnoel $
+   $Id$
   
    ADMB adaptations Copyright (c) 2009-2011 ADMB Foundation
 

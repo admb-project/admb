@@ -1,5 +1,5 @@
 /*
- * $Id: qsort.h 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Modified by Derek Seiple
  * Copyright (c) 2010-2011 ADMB Foundation

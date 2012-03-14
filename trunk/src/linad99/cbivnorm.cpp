@@ -1,5 +1,5 @@
 /*
- * $Id: cbivnorm.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Authors: Alan Genz and Yihong Ge
  * Copyright (c) 2009-2011 ADMB foundation

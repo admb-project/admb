@@ -1,5 +1,5 @@
 /*
- * $Id: cspline.cpp 969 2011-02-07 16:47:54Z jsibert $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2009-2011 ADMB Foundation

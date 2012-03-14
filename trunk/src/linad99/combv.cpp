@@ -1,5 +1,5 @@
 /*
- * $Id: combv.cpp 855 2010-11-12 22:34:58Z dseiple $
+ * $Id$
  * Author: Unknown
  */
 /**

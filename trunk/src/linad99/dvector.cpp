@@ -1,5 +1,5 @@
 /*
- * $Id: dvector.cpp 986 2011-02-21 18:54:51Z jsibert $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

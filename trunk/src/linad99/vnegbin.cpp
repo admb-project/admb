@@ -1,5 +1,5 @@
 /*
- * $Id: vnegbin.cpp 951 2011-01-14 21:26:28Z andersn $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

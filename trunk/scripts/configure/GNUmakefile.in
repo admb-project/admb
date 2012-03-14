@@ -1,6 +1,8 @@
 .PHONY: tpl2cpp tpl2rem docs test contrib
 
-all:
+all: admb contrib
+
+admb:
 	CC=@cc@ CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 $(MAKE) --directory=src --file=@makefile@
 	rm -rf `find build/@target@/@target@ -type d -name .svn`
 	@printf "\nBuild completed for @target@\n"

@@ -1,8 +1,8 @@
 mingw:
-	$(MAKE) --directory=src --file=linux.mak
+	$(MAKE) --directory=src --file=mingw.mak
 
 mingw-verify:
-	$(MAKE) --directory=src --file=linux.mak verify
+	$(MAKE) --directory=src --file=mingw.mak verify
 
 bcc:
 	$(MAKE) --directory=src --file=bcc.mak

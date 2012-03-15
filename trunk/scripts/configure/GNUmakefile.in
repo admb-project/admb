@@ -35,10 +35,11 @@ verify:
 	DISK=@disk@ ADMB_CXXFLAGS="@arch_cxxflag@" ADMB_LDFLAGS="@arch_cxxflag@" $(MAKE) --directory=src --file=@makefile@ verify
 
 install:
-	install -d -m 755 @prefix@/admb/bin @prefix@/admb/include @prefix@/admb/lib @prefix@/admb/docs @prefix@/admb/examples
+	install -d -m 755 @prefix@/admb/bin @prefix@/admb/include @prefix@/admb/lib @prefix@/admb/docs @prefix@/admb/examples @prefix@/admb/contrib
 	install -m 755 build/@target@/@target@/bin/* @prefix@/admb/bin
 	install -m 644 build/@target@/@target@/include/* @prefix@/admb/include
 	install -m 644 build/@target@/@target@/lib/* @prefix@/admb/lib
+	install -m 644 build/@target@/@target@/contrib/* @prefix@/admb/contrib
 	install -m 644 LICENSE @prefix@/admb
 	install -m 644 README.txt @prefix@/admb
 	install -m 644 Makefile @prefix@/admb

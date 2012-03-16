@@ -5,7 +5,7 @@
 //            (1) Converts file without user intervention
 //            (2) CSV lines do not end with a comma
 //          Binary files in ADMB include .cov, .hes, and .psv
-//          To build the ad2csv executable: adcomp ad2csv
+//          To build the ad2csv executable: 'adcomp ad2csv' and 'adlink ad2csv'
 // History: 2012-03-16 arnima added build instructions
 //          2012-03-13 arnima added -s and -t options
 //          2011-11-03 arnima fixed stream construction bug affecting GCC

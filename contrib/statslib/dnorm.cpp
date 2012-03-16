@@ -21,7 +21,11 @@
 * where \f$\mu\f$ is the mean and \f$\sigma\f$
 * is the standard deviation.
 * 
-* 
+* The concentrated likelihood is implemented as:
+* \f[
+*  0.5 n \ln(\sum_{i=1}^{n}\epsilon^2)
+* \f]
+* where \f$ \epsilon \f$ is a vector of residuals with an assumed mean 0.
 * 
 */
 
@@ -185,6 +189,43 @@ dvariable dnorm( const dvar_vector& residual, const dvector& std )
 	RETURN_ARRAYS_DECREMENT();
 	return( tmp );
 }
+
+
+
+/** 
+	\author Steven James Dean Martell
+	\date 2011-06-21
+	\param  residual a variable vector of residuals
+	\return returns the concentrated likelihood for the normal distribution.
+	\sa
+**/
+dvariable dnorm( const dvar_vector& residual )
+{
+	RETURN_ARRAYS_INCREMENT();
+	int n              = size_count(residual);
+	dvariable SS       = norm2(residual);
+	dvariable nloglike = 0.5*n*log(SS);
+	RETURN_ARRAYS_DECREMENT();
+	return(nloglike);
+}
+
+/** 
+	\author Steven James Dean Martell
+	\date 2011-06-21
+	\param  obs a matrix of observed values
+	\param  pred a variable matrix of predicted values
+	\return returns the concentrated likelihood for the normal distribution.
+	\sa
+**/
+dvariable dnorm( const dmatrix& obs, const dvar_matrix& pred)
+{
+	RETURN_ARRAYS_INCREMENT();
+	int n = size_count(obs);
+	dvariable SS = sum(elem_div(square(obs-pred),0.01+pred));
+	RETURN_ARRAYS_DECREMENT();
+	return 0.5*n*log(SS);
+}
+
 
 
 /** 

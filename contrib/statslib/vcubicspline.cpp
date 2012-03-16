@@ -78,6 +78,32 @@ vcubic_spline_function_array::~vcubic_spline_function_array()
    ptr=0;
  }
 
+
+
+
+/** 
+	\author Steven James Dean Martell
+	\date 2011-06-21
+	\brief A Wrapper for the vcubic_spline_function
+	\param  spline_nodes a vector of spline knots
+	\param  ip is a vector of interpreted points
+	\return returns a vector of interpreted points 
+	\sa
+**/
+dvar_vector cubic_spline(const dvar_vector& spline_nodes, const dvector& ip)
+{
+	RETURN_ARRAYS_INCREMENT();                                                              
+	int nodes=size_count(spline_nodes);
+	dvector ia(1,nodes);
+	ia.fill_seqadd(0,1./(nodes-1));
+	dvector fa = (ip-min(ip))/(max(ip)-min(ip));
+	vcubic_spline_function ffa(ia,spline_nodes);
+	RETURN_ARRAYS_DECREMENT();
+	return(ffa(fa));
+}
+
+
+
 void bicubic_spline(const dvector& x, const dvector& y, dvar_matrix& knots, dvar_matrix& S)
 {
 		/*

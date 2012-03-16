@@ -68,24 +68,28 @@
      v=NULL;
  }
 
-  dvector value(const param_init_number_vector& t)
+  dvector value(const param_init_number_vector& _t)
   {
-    dvector vt(t.indexmin(),t.indexmax());
-    for (int i = t.indexmin(); i <= t.indexmax(); i++)
+    ADUNCONST(param_init_number_vector, t);
+    const int min = t.indexmin();
+    const int max = t.indexmax();
+    dvector vt(min, max);
+    for (int i = min; i <= max; i++)
     {
        vt(i) = value(t(i));
     }
     return vt;
   }
 
-  dvector value(const param_init_bounded_number_vector& t)
+  dvector value(const param_init_bounded_number_vector& _t)
   {
-    dvector vt(t.indexmin(),t.indexmax());
-    for (int i = t.indexmin(); i <= t.indexmax(); i++)
+    ADUNCONST(param_init_bounded_number_vector, t);
+    const int min = t.indexmin();
+    const int max = t.indexmax();
+    dvector vt(min, max);
+    for (int i = min; i <= max; i++)
     {
        vt(i) = value(t(i));
     }
     return vt;
   }
-
-

@@ -154,12 +154,12 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
    df1b2matrix & alpha = dcmp.get_L();
 
    //check if invertable
-   df1b2variable det = 1.0;
+	df1b2variable ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
-      det *= dcmp(i, i);
+		 ln_det += log(dcmp(i, i));
    }
-   if (value(det) == 0.0)
+   if (exp(value(ln_det)) == 0.0)
    {
       cerr <<
 	 "Error in matrix inverse -- matrix singular in solve(df1b2matrix)\n";

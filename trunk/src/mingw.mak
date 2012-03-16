@@ -1,11 +1,11 @@
 .PHONY: dist verify
 
 SHELL:=$(COMSPEC)
-DISK=..\build\dists\admb_gcc345_mingw32
+DISK=..\build\dists\admb_gcc345_mingw
 PWD=$(shell pwd)
 
 CCVERSION=gcc345mingw
-OSVERSION=win32
+OSVERSION=win
 COMP=g++
 
 dist:
@@ -30,6 +30,8 @@ dist:
 	$(MAKE)  -C tools99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak  disk
 
 	copy ..\scripts\mingw\*.bat ${DISK}\bin
+	copy ..\scripts\admb\*.bat ${DISK}\bin
+	copy "..\scripts\g++\*.bat" ${DISK}\bin
 	copy ..\LICENSE ${DISK}
 	copy ..\README.txt ${DISK}
 	copy ..\scripts\mingw\Makefile ${DISK}

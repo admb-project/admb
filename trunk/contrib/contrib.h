@@ -40,3 +40,4 @@
  */
 #include "statsLib.h"
 #include "ecolib.h"
+#include "qfclib.h"

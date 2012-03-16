@@ -7,6 +7,9 @@ mingw-verify:
 bcc:
 	$(MAKE) --directory=src --file=bcc.mak
 
+clang:
+	$(MAKE) --directory=src --file=clang.mak
+
 vc:
 	cd src& nmake /f vc.mak
 

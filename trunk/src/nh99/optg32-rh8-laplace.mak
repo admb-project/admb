@@ -2,8 +2,6 @@
 .SUFFIXES: .obj .cpp
 
 LIBPATH =gcc32-rh8olp
-STUBPATH =gcc32-rh8olp-stub
-STUBNAME = libdf1b2stub.a
 LIBNAME = libadmod.a
 vpath %.obj $(LIBPATH)
 
@@ -28,10 +26,6 @@ disk: $(DISKDIR)/lib/$(LIBNAME)  $(DISKDIR)/bin/tpl2cpp
 
 $(DISKDIR)/lib/$(LIBNAME): $(OBJECTS) 
 	ar -rs $@ $(LIBPATH)/*.obj
-
-df1b2stub:
-	$(CXX) $(CXXFLAGS) -o $(STUBPATH)/df1b2stub.o df1b2stub.cpp
-	ar -rs $(STUBPATH)/${STUBNAME} $(STUBPATH)/df1b2stub.o
 
 $(DISKDIR)/bin/tpl2cpp: tpl2cpp.c
 ifeq ("$(CC)","cc")

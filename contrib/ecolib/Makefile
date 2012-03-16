@@ -4,7 +4,6 @@
 include objects.lst
 
 all: $(OBJECTS)
-  echo $(DISKDIR)
 	copy ..\..\..\..\contrib\ecolib\ecolib.h $(DISKDIR)
 
 clean:

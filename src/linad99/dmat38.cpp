@@ -54,12 +54,12 @@ dmatrix solve(const dmatrix & aa, const dmatrix & zz)
 
    //check if invertable
    int i;
-   double det = 1.0;
+   double ln_det = 0.0;
    for (i = lb; i <= ub; i++)
    {
-      det *= dcmp(i, i);
+      ln_det += log(dcmp(i, i));
    }
-   if (det == 0.0)
+   if (exp(ln_det) == 0.0)
    {
       cerr <<
 	 "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";

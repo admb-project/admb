@@ -69,12 +69,12 @@ dvector solve(const dmatrix & aa, const dvector & z)
    ivector index2 = dcmp.get_index2();
 
    //check if invertable
-   double det = 1.0;
+   double ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
-      det *= dcmp(i, i);
+      ln_det += log(dcmp(i, i));
    }
-   if (det == 0.0)
+   if (exp(ln_det) == 0.0)
    {
       cerr <<
 	 "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
@@ -148,12 +148,12 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
    dmatrix & alpha = clu1.get_L();
 
    //check if invertable
-   double det = 1.0;
+	double ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
-      det *= clu1(i, i);
+		ln_det += log(clu1(i, i));
    }
-   if (det == 0.0)
+	if(exp(ln_det)==0.0)
    {
       cerr <<
 	 "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";

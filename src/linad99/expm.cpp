@@ -218,12 +218,13 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& zz)
    cltudecomp clu = xludecomp_pivot_for_expm_solve(aa,index2);
 
    //check if invertable
-   double det = 1.0;
+	double ln_det = 0.0;
+
    for (int i = lb; i <= ub; i++)
    {
-      det *= clu(i, i);
+	ln_det += log(clu(i, i));
    }
-   if (det == 0.0)
+	if(exp(ln_det)==0.0)
    {
       cerr <<
 	 "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";
@@ -283,12 +284,12 @@ dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltu
    dmatrix & alpha = clu1.get_L();
 
    //check if invertable --- may be able to get rid of this check
-   double det = 1.0;
+	double ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
-      det *= clu1(i, i);
+		ln_det += log(clu1(i, i));
    }
-   if (det == 0.0)
+	if(exp(ln_det)==0.0)
    {
       cerr <<
 	 "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";

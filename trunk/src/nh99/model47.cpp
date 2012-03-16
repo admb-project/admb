@@ -68,4 +68,24 @@
      v=NULL;
  }
 
+  dvector value(const param_init_number_vector& t)
+  {
+    dvector vt(t.indexmin(),t.indexmax());
+    for (int i = t.indexmin(); i <= t.indexmax(); i++)
+    {
+       vt(i) = value(t(i));
+    }
+    return vt;
+  }
+
+  dvector value(const param_init_bounded_number_vector& t)
+  {
+    dvector vt(t.indexmin(),t.indexmax());
+    for (int i = t.indexmin(); i <= t.indexmax(); i++)
+    {
+       vt(i) = value(t(i));
+    }
+    return vt;
+  }
+
 

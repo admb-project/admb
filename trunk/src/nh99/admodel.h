@@ -180,6 +180,7 @@ public:
   model_name_tag(void){;}
   void allocate(const char * s);
   label_class label(void){return (char*)(name);}
+  const char * get_name(void) { return name;}
 };
 
 /**
@@ -2789,6 +2790,12 @@ void send_int_to_slaves(const ivector& x);
 int check_pvm_message(int i,int j);
 void read_covariance_matrix(BOR_CONST dmatrix& S,int nvar,int& hbf,
   dvector& sscale);
+
+dvector value(const param_init_number_vector& t);
+dvector value(const param_init_bounded_number_vector& t);
+//dvector value(const param_init_bounded_number_matrix& t);
+//dvector value(const param_init_vector_vector& t);
+//dvector value(const param_init_bounded_vector_vector& t);
 
 dvector read_old_scale(int & old_nvar);
 

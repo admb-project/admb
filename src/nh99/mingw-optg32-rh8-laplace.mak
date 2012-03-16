@@ -23,8 +23,6 @@ ifneq ($(strip $(ADMB_REVISION)),)
 endif
 
 LIBPATH =gcc32-rh8olp
-STUBPATH =gcc32-rh8olp-stub
-STUBNAME = libdf1b2stub.a
 LIBNAME = libadmod.a
 SRCDIR =  src
 vpath %.obj $(LIBPATH)
@@ -61,9 +59,6 @@ $(OBJ3): %.obj: %.cpp
 
 all: $(LIBPATH)\\$(LIBNAME)  tpl2cpp disk  
 
-df1b2stub:
-	$(CC) $(FLAGS) -o $(STUBPATH)\\df1b2stub.o df1b2stub.cpp
-	ar -rs $(STUBPATH)\\${STUBNAME} $(STUBPATH)\\df1b2stub.o
 
 tpl2cpp.c: tpl2cpp.lex
 	flex -w tpl2cpp.lex
@@ -72,7 +67,7 @@ tpl2cpp.c: tpl2cpp.lex
 tpl2cpp.exe: tpl2cpp.c
 	gcc -Wno-format tpl2cpp.c -o $@
 
-disk: $(LIBPATH)\\$(LIBNAME)  df1b2stub tpl2cpp.exe
+disk: $(LIBPATH)\\$(LIBNAME) tpl2cpp.exe
 	cmd /C "copy $(LIBPATH)\\$(LIBNAME) $(DISKDIR)\\lib"
 	cmd /C "copy admodel.h $(DISKDIR)\\include"
 	cmd /C "copy spcomm.h $(DISKDIR)\\include"
@@ -82,7 +77,6 @@ disk: $(LIBPATH)\\$(LIBNAME)  df1b2stub tpl2cpp.exe
 	cmd /C "copy param_init_bounded_number_matrix.h $(DISKDIR)\\include"
 	cmd /C "copy tpl2cpp.exe $(DISKDIR)\\bin"
 	cmd /C "copy sed* $(DISKDIR)\\bin"
-	cmd /C "copy $(STUBPATH)\\${STUBNAME} $(DISKDIR)\\bin"
 
 clean:
 	if exist $(LIBPATH) rmdir /S /Q $(LIBPATH)

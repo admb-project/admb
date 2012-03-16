@@ -1,7 +1,6 @@
 .SUFFIXES: .obj .cpp
 
 CC = cl
-STUBLIBNAME = df1b2stubs.lib
 FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-separable /I..\..\..\..\src\linad99 /I..\..\..\..\src\nh99 /I..\..\..\..\src\tools99 /D__MSVC32__=8  /DSAFE_ALL /Ox 
 #/DADMB_VERSION=$(ADMB_VERSION)
 LIBNAME = admod32s.lib 
@@ -20,10 +19,6 @@ all: $(DISKDIR)\lib\$(LIBNAME)
 
 $(DISKDIR)\lib\$(LIBNAME): $(OBJECTS)
 	lib /NOLOGO /OUT:$@ *.obj
-
-$(STUBLIBNAME): ..\df1b2stub.cpp
-	$(CC) $(FLAGS) ..\df1b2stub.cpp
-	lib /OUT:$(STUBLIBNAME) /NOLOGO df1b2stub.obj
 
 {..\..\..\..\src\nh99}.cpp.obj:
 	$(CC) $(FLAGS)  $<

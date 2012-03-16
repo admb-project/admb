@@ -8,7 +8,6 @@ include objects.lst
 all: $(OBJECTS)
 	cp qfc_est.cpp $(DISKDIR)
 	cp qfc_sim.cpp $(DISKDIR)
-	cp qfclib.h $(DISKDIR)
 
 test:
 	make --directory=test

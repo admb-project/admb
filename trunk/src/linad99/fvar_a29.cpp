@@ -644,3 +644,16 @@ void DF_cdvpow(void)
   save_double_derivative(dfe,epos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
+dvar_vector pow(const dvector& x,const dvar_vector& a)
+{
+    RETURN_ARRAYS_INCREMENT();	
+	dvar_vector y(x.indexmin(), x.indexmax());
+
+	for(int i=x.indexmin(); i<=x.indexmax(); i++)
+	{
+		y(i)=pow(x(i),a(i));
+	}	
+
+	RETURN_ARRAYS_DECREMENT();	
+    return(y);
+}

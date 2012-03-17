@@ -2157,6 +2157,7 @@ private:
      dvar_vector pow(_CONST dvar_vector& t1,_CONST prevariable&);
      dvar_vector pow(_CONST dvector& t1,_CONST prevariable&);
      dvar_vector pow(_CONST prevariable&,_CONST dvar_vector& t1);
+	dvar_vector pow(const dvector& x,const dvar_vector& a);
 
 // end of dvar_vector mathematical functions
 

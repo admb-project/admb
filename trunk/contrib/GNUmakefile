@@ -1,9 +1,9 @@
 .PHONY: all statslib ecolib qfclib libcontribo.a libcontribs.a test clean
 
 ifeq ($(CXX),CC)
-CXXFLAGS:=-c $(CXXFLAGS) -Wall -Wno-deprecated -DUSE_LAPLACE -fpermissive -I../${DISK}/include -D__SPDLL__ -D__GNUDOS__ -Dlinux
-else
 CXXFLAGS:=-c $(CXXFLAGS) -DUSE_LAPLACE -fpermissive -I../${DISK}/include -D__SPDLL__ -D__GNUDOS__ -Dlinux
+else
+CXXFLAGS:=-c $(CXXFLAGS) -Wall -Wno-deprecated -DUSE_LAPLACE -fpermissive -I../${DISK}/include -D__SPDLL__ -D__GNUDOS__ -Dlinux
 endif
 
 all: disk statslib ecolib qfclib libcontribo.a libcontribs.a

@@ -1,10 +1,10 @@
 .PHONY: dist verify
 
 SHELL:=$(COMSPEC)
-DISK=..\build\dists\admb_gcc345_mingw
+DISK=..\build\dists\admb_mingw
 PWD=$(shell pwd)
 
-CCVERSION=gcc345mingw
+CCVERSION=mingw
 OSVERSION=win
 COMP=g++
 
@@ -22,7 +22,7 @@ dist:
 	if not exist nh99\${CCVERSION}-${OSVERSION}olp-stub mkdir nh99\${CCVERSION}-${OSVERSION}olp-stub
 	if not exist tools99\${CCVERSION}-${OSVERSION}olp mkdir tools99\${CCVERSION}-${OSVERSION}olp
 
-	$(MAKE) -C df1b2-separable CC=g++ LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak disk
+	$(MAKE) -C df1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak disk
 	$(MAKE) -C df1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-safg32-rh8-laplace.mak disk
 	$(MAKE) -C linad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak disk
 	$(MAKE) -C linad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-safg32-rh8-laplace.mak disk
@@ -50,6 +50,9 @@ clean:
 	if exist nh99\${CCVERSION}-${OSVERSION}olp rmdir /S /Q nh99\${CCVERSION}-${OSVERSION}olp
 	if exist nh99\${CCVERSION}-${OSVERSION}olp-stub rmdir /S /Q nh99\${CCVERSION}-${OSVERSION}olp-stub
 	if exist tools99\${CCVERSION}-${OSVERSION}olp rmdir /S /Q tools99\${CCVERSION}-${OSVERSION}olp
+	if exist df1b2-separable\lex.yy.c del /Q df1b2-separable\lex.yy.c
+	if exist df1b2-separable\tpl2rem.c del /Q df1b2-separable\tpl2rem.c
 	if exist df1b2-separable\tpl2rem.exe del /Q df1b2-separable\tpl2rem.exe
-	if exist nh99\tpl2cpp.exe del /Q nh99\tpl2cpp.exe
 	if exist nh99\lex.yy.c del /Q nh99\lex.yy.c
+	if exist nh99\tpl2cpp.c del /Q nh99\tpl2cpp.c
+	if exist nh99\tpl2cpp.exe del /Q nh99\tpl2cpp.exe

@@ -245,25 +245,42 @@ Microsoft Windows and Borland C++ 5.5
 
    > make /fbcc.mak install
 
-Microsoft Windows and MinGW (msys and gcc-4.5)
-----------------------------------------------
-1. Open MinGW Shell located in Start->MinGW->MinGW Shell.
+Microsoft Windows and MinGW using MSYS linux emulation 
+------------------------------------------------------ 
+Notes:
+1. This method sees MSYS as a linux machine and uses only the linux.mak makefile, 
+   it does not use the mingw.mak makefile.
+2. The configure script must be run prior to the 'make' as described in the steps, 
+   if it is not, the user contributed libraries will not be built and the admb linker
+   will break on the -lcontribo or -lcontribs flags.
 
-2. Extract source distribution
+Prerequisites:
+1. MinGW, a linux shell emulator for Windows (Install first).
+2. MSYS, a toolset for building source using linux commands on Windows (Install second).
+   As of March 2012, MSYS can be downloaded from this link:
+   http://sourceforge.net/projects/mingw/files/MSYS/Base/msys-core/msys-1.0.11/MSYS-1.0.11.exe/download)
+
+Steps:
+1. Open MSYS shell, at C:\msys\1.0\msys.bat or in shortcut Start->MinGW->MinGW Shell.
+
+2. Extract source distribution if downloaded from website in ZIP format,
+   if the source was checked out through SVN, this step can be skipped.
    
    $ unzip admb-'version'.zip
 
    where 'version' is the distribution version.
 
-2. Change to distribution directory
+2. Change to the distribution or build directory, typically C:\admb-trunk.
+   The MSYS shell always starts in its own directory, so if MSYS was installed in C:\MSYS 
+   and the distribution directory name is admb-trunk then this command is:
 
-   $ cd admb-'version'
+   $ cd ../c/admb-trunk
 
-3. Create configure script
+3. Create configure script.
 
    $ make --directory=scripts/configure/
 
-4. Configure the build files for 32-bit
+4. Configure the build files for 32-bit.
 
    $ ./configure
 
@@ -271,13 +288,13 @@ Microsoft Windows and MinGW (msys and gcc-4.5)
   
    $ make
 
-6. [Optional] Test build by running examples
+6. [Optional] Test build by running examples.
 
    $ make verify
 
-7. Install libraries to default location /usr/local.
-
-   $ make install
+7. Set the environment variable ADMB_HOME to point to the distribution directory,
+   typically C:\admb-trunk and add the bin directory for the distribution to your
+   PATH environment variable, typically C:\admb-trunk\bin.
 
 Installation from Binary Distributions
 ======================================

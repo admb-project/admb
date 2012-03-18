@@ -2,7 +2,7 @@ mingw:
 	$(MAKE) --directory=src --file=mingw.mak
 
 mingw-clean:
-	rmdir /Q /S build
+	if exist build rmdir /Q /S build
 	$(MAKE) --directory=src --file=mingw.mak clean
 
 mingw-verify:

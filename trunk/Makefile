@@ -1,6 +1,10 @@
 mingw:
 	$(MAKE) --directory=src --file=mingw.mak
 
+mingw-clean:
+	rmdir /Q /S build
+	$(MAKE) --directory=src --file=mingw.mak clean
+
 mingw-verify:
 	$(MAKE) --directory=src --file=mingw.mak verify
 

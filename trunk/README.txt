@@ -4,28 +4,26 @@ Release date
 
 Overview
 ========
-The ADMB(Automatic Differentiation Model Builder) software suite 
-is an environment for non-linear statistical modeling enabling
-rapid model development, numerical stability, fast and efficient 
-computation, and high accuracy parameter estimates.  ADModel Builder
-is a high level language built around the AUTODIF Library, a C++
-language extension which transparently implements reverse mode 
-automatic differentiation.  A closely related software package, 
-ADMB-RE, implements random effects in non-linear models.
+The ADMB (Automatic Differentiation Model Builder) software suite is an
+environment for nonlinear statistical modeling enabling rapid model
+development, numerical stability, fast and efficient computation, and high
+accuracy parameter estimates. AD Model Builder is a high level language built
+around the AUTODIF Library, a C++ language extension which transparently
+implements reverse mode automatic differentiation. A closely related software
+package, ADMB-RE, implements random effects in nonlinear models.
 
 Donations
 =========
-ADMB is an open source project that is freely available for download.
-If you would like to contribute or donate funds, please contact 
-<users@admb-project.org>.  Cool ADMB T-shirts are also available 
-for purchase.
+ADMB is an open source project that is freely available for download. If you
+would like to contribute or donate funds, please contact users@admb-project.org.
+Cool ADMB T-shirts are also available for purchase.
 
 How to Cite ADMB
 ================
-Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, 
-M.N. Maunder, A. Nielsen, and J. Sibert. 2012. AD Model Builder: 
-using automatic differentiation for statistical inference of highly 
-parameterized complex nonlinear models. Optim. Methods Softw. 27:233-249.
+Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, M.N. Maunder,
+A. Nielsen, and J. Sibert. 2012. AD Model Builder: using automatic
+differentiation for statistical inference of highly parameterized complex
+nonlinear models. Optim. Methods Softw. 27:233-249.
 
 It can be downloaded for free from the publisher:
 http://tandfonline.com/doi/abs/10.1080/10556788.2011.597854
@@ -38,22 +36,25 @@ Table of Contents
    - Changes
  * Requirements
  * Downloading
- * Installation
- * Installation from Source Distribution
+ * Installation from Source Code
+   - Linux and GCC
+   - Linux/Solaris and Sun Studio
+   - Linux and Intel C++ Compiler
+   - MS Windows and Visual C++
+   - MS Windows and Borland C++
+   - MS Windows and MinGW using MSYS Linux emulation
  * Installation from Binary Distribution
  * Documentation
- * Developing ADModel Builder
+ * Developing AD Model Builder
    - Version Control
+   - Developer documentation
  * Help and Support
  * Contributors
 
 Release Notes
 =============
-The goal for this release was to improve algorithms, add new 
-requested features, correct defects (bugs), and streamline 
-installation and build process.
-
-Below lists some of the changes.
+The goal for this release was to improve algorithms, add new requested features,
+correct defects (bugs), and streamline installation and build process.
 
 Changes
 -------
@@ -64,8 +65,7 @@ Changes
  * Script changes
  * Various bug fixes
 
-Thanks to the following people for providing fixes and
-suggestions.
+Thanks to the following people for providing fixes and suggestions.
  * Dave Fournier
  * Jan Jaap
  * Gareth Williams
@@ -74,44 +74,43 @@ suggestions.
 
 Requirements
 ============
-ADMB has been tested and used on Windows and UNIX operating 
-systems in both 32 and 64 bit versions.  A C/C++ compiler 
-must be be installed on the local computer. Below lists some 
-tested compilers.
+ADMB has been tested and used on Windows and Linux operating systems in both 32
+and 64 bit versions. A C/C++ compiler must be be installed on the local
+computer.
 
-Several compilers are supported including 
- * GNU g++ 3.4 or newer
+Several compilers are supported, including
+ * GCC 3.4 or newer
  * Microsoft Visual C++ 2003 or newer
  * MacOS XCode 3.2 and 4.x
  * Intel C++ Compiler 11
  * Sun Studio 12
  * Borland 5.5
 
-If the compiler is not listed, build the source distribution or 
-email user group <users@admb-project.org> for help.
+If the compiler is not listed, build the source distribution or email
+users@admb-project.org for help.
 
 Downloading
 ===========
-Precompiled binaries and the source distribution can be downloaded
-from "http://www.admb-project.org/downloads/".
+Precompiled binaries and the source distribution can be downloaded from
+http://www.admb-project.org/downloads/.
 
 Installation from Source Code
 =============================
 Below are procedures for installing ADMB from source code.
 
-Unix and GNU g++
-----------------
+Linux and GCC
+-------------
 1. Extract source distribution
-   
+
    $ unzip admb-'version'.zip
-   
+
    where 'version' is the distribution version.
 
 2. Change to distribution directory
 
    $ cd admb-'version'
 
-3. Create configure script  
+3. Create configure script
 
    $ make --directory=scripts/configure/
 
@@ -123,22 +122,22 @@ Unix and GNU g++
 
    $ ./configure --help
 
-5. Build libraries 
-  
+5. Build binaries
+
    $ make
 
 6. [Optional] Test build by running examples
 
    $ make verify
 
-7. Install libraries to default location /usr/local.
+7. Install binaries to default location /usr/local.
 
    $ make install
 
-Unix and Sun Studio 12
-----------------------
+Linux/Solaris and Sun Studio
+----------------------------
 1. Extract source distribution
-   
+
    $ unzip admb-'version'.zip
 
    where 'version' is the distribution version.
@@ -147,22 +146,22 @@ Unix and Sun Studio 12
 
    $ cd admb-'version'/src
 
-3. Build libraries 
-  
+3. Build binaries
+
    $ make --file=sunstudio.mak
 
 4. [Optional] Test build by running examples
 
    $ make verify
 
-5. Install libraries to default location /usr/local.
+5. Install binaries to default location /usr/local.
 
    $ make install
 
-Unix and Intel C++ Compiler
----------------------------
+Linux and Intel C++ Compiler
+----------------------------
 1. Extract source distribution
-   
+
    $ unzip admb-'version'.zip
 
    where 'version' is the distribution version.
@@ -175,31 +174,31 @@ Unix and Intel C++ Compiler
 
    $ ./configure CC=icc CXX=icpc
 
-4. Build libraries 
-  
+4. Build binaries
+
    $ make
 
 4. [Optional] Test build by running examples
 
    $ make verify
 
-5. Install libraries to default location /usr/local.
+5. Install binaries to default location /usr/local.
 
    $ make install
 
-Microsoft Windows and Visual C++
---------------------------------
+MS Windows and Visual C++
+-------------------------
 1. Extract source distribution.
 
-2. Open Visual C++ Command Prompt. 
+2. Open Visual C++ Command Prompt.
 
-3. Change directory to the "src" folder. 
+3. Change directory to the "src" folder.
 
    > cd admb-'version'\src
 
    where 'version' is the distribution version.
 
-4. Build libraries
+4. Build binaries
 
    > nmake /fvc.mak
 
@@ -207,13 +206,13 @@ Microsoft Windows and Visual C++
 
    > nmake /fvc.mak verify
 
-6. Install libraries to default location %ProgramFiles%\ADMB
-   and adds ADMB shortcuts in the Start menu.
+6. Install binaries to default location %ProgramFiles%\ADMB and add ADMB
+   shortcuts in the Start Menu.
 
    > nmake /fvc.mak install
 
-Microsoft Windows and Borland C++ 5.5
--------------------------------------
+MS Windows and Borland C++
+--------------------------
 1. Extract source distribution.
 
 2. Open Windows Command Prompt in Start->All Programs->Accessories.
@@ -226,13 +225,13 @@ Microsoft Windows and Borland C++ 5.5
 
    > set PATH=c:\Borland\BCC55\Bin;%PATH%
 
-5. Change directory to the "src" folder. 
+5. Change directory to the "src" folder.
 
    > cd admb-'version'\src
 
    where 'version' is the distribution version.
 
-6. Build 32-bit libraries
+6. Build 32-bit binaries
 
    > make /fbcc.mak
 
@@ -240,32 +239,35 @@ Microsoft Windows and Borland C++ 5.5
 
    > make /fbcc.mak verify
 
-8. Install libraries to default location %ProgramFiles%\ADMB
-   and adds ADMB shortcuts in the Start menu.
+8. Install binaries to default location %ProgramFiles%\ADMB and add ADMB
+   shortcuts in the Start Menu.
 
    > make /fbcc.mak install
 
-Microsoft Windows and MinGW using MSYS linux emulation (32-bit only)
--------------------------------------------------------------------- 
+MS Windows and MinGW using MSYS Linux emulation
+-----------------------------------------------
 Notes:
-1. This method sees MSYS as a linux machine and uses only the linux.mak makefile, 
-   it does not use the mingw.mak makefile.
-2. The configure script must be run prior to the 'make' as described in the steps, 
-   if it is not, the user contributed libraries will not be built and the admb linker
-   will break on the -lcontribo or -lcontribs flags.
+1. This method sees MSYS as a Linux machine and uses only the linux.mak
+   makefile, it does not use the mingw.mak makefile.
+2. The configure script must be run prior to the 'make' as described below.
+   Otherwise the user contributed libraries will not be built, and the ADMB
+   linker will break on the -lcontribo or -lcontribs flags.
+3. Currently supports only 32-bit builds.
 
 Prerequisites:
-1. MinGW, a linux shell emulator for Windows (Install first).
-2. MSYS, a toolset for building source using linux commands on Windows (Install second).
-   As of March 2012, MSYS can be downloaded from this link:
-   http://sourceforge.net/projects/mingw/files/MSYS/Base/msys-core/msys-1.0.11/MSYS-1.0.11.exe/download)
+1. MinGW, a Linux shell emulator for Windows (install first).
+2. MSYS, a toolset for building source using Linux commands on Windows (install
+   second). As of March 2012, MSYS can be downloaded from this link:
+   http://sourceforge.net/projects/mingw/files/MSYS/Base/msys-core/msys-1.0.11/MSYS-1.0.11.exe/download
 
 Steps:
-1. Open MSYS shell, typically at C:\msys\1.0\msys.bat or in shortcut Start->MinGW->MinGW Shell.
+1. Open MSYS shell, typically at C:\msys\1.0\msys.bat or in shortcut
+   Start->MinGW->MinGW Shell.
 
 2. Change to the distribution or build directory, typically C:\admb-trunk.
-   The MSYS shell always starts in its own directory, so if MSYS was installed in C:\MSYS 
-   and the distribution directory name is admb-trunk then this command is:
+   The MSYS shell always starts in its own directory, so if MSYS was installed
+   in C:\MSYS and the distribution directory name is admb-trunk then this
+   command is:
 
    $ cd ../c/admb-trunk
 
@@ -277,17 +279,17 @@ Steps:
 
    $ ./configure
 
-5. Build libraries 
-  
+5. Build binaries.
+
    $ make
 
 6. [Optional] Test build by running examples.
 
    $ make verify
 
-7. Set the environment variable ADMB_HOME to point to the distribution directory,
-   typically C:\admb-trunk and add the bin directory for the distribution to your
-   PATH environment variable, typically C:\admb-trunk\bin.
+7. Set the environment variable ADMB_HOME to point to the distribution
+   directory, typically C:\admb-trunk and add the bin directory for the
+   distribution to your PATH environment variable, typically C:\admb-trunk\bin.
 
 Installation from Binary Distributions
 ======================================
@@ -299,35 +301,34 @@ MacOS and XCode
 3. Double click the admb-'version'.pkg
 4. Follow the installation instructions
 
-If successful, the wizard will have installed admb 
-directory(/usr/local/admb) and script (/usr/local/bin/admb).
+If successful, the wizard will have installed admb directory (/usr/local/admb)
+and script (/usr/local/bin/admb).
 
 
 Documentation
 =============
-User manuals for ADModel Builder, the AUTODIF library and the ADMB-RE
-Nonlinear random effects module can be downloaded from 
-"http://www.admb-project.org/downloads/".
+User manuals for AD Model Builder, the AUTODIF library and the ADMB-RE nonlinear
+random effects module can be downloaded from
+http://www.admb-project.org/downloads/.
 
-More documentation is also available on the main ADMB homepage 
-"http://www.admb-project.org/".
+More documentation is also available on the main ADMB homepage
+http://www.admb-project.org/.
 
-Developing ADModel Builder
-==========================
-If you are interested in contributing to the further development of
-ADModel Builder please contact <users@admb-project.org>.
+Developing AD Model Builder
+===========================
+If you are interested in contributing to the further development of AD Model
+Builder please contact users@admb-project.org.
 
 Version Control
 ---------------
-ADMB source version control URL is
-"http://www.admb-project.org/svn/trunk/".  
+ADMB source version control URL is http://www.admb-project.org/svn/trunk/.
 
-To download source files, use the command below
+To download source files, use the command
 
 $ svn checkout http://www.admb-project.org/svn/trunk admb-trunk-readonly
 
-If you would like to write access, please email <users@admb-project.org>
-to request an account.
+If you would like to write access, please email users@admb-project.org to
+request an account.
 
 Developer Documentation
 -----------------------
@@ -337,19 +338,19 @@ http://www.admb-project.org/developers/
 
 Help and Support
 ================
-For help and support, email the ADMB users group <users@admb-project.org>.
+For help and support, email users@admb-project.org.
 
 Contributors
 ============
-This software was originally developed by David Fournier of Otter Research, Ltd. 
+This software was originally developed by David Fournier of Otter Research Ltd.
 
 Several other folks have contributed to the ADMB Project:
 
 David Fournier <davef@otter-rsch.com>
 John Sibert <sibert@hawaii.edu>
 Hans Skaug <Hans.Skaug@mi.uib.no>
-Mark Maunder <mmaunder@iattc.org> 
+Mark Maunder <mmaunder@iattc.org>
 Anders Nielsen <anders@nielsensweb.org>
-Arni Magnusson <arnima@hafro.is> 
+Arni Magnusson <arnima@hafro.is>
 Derek Seiple <dseiple@hawaii.edu>
 Johnoel Ancheta <johnoel@hawaii.edu>

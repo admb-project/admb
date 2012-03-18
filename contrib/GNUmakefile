@@ -16,15 +16,15 @@ disk:
 
 statslib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
+	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
 
 ecolib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
+	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
 
 qfclib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
+	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
 
 libcontribo.a:
 	ar -rs ${DISK}/contrib/$@ $(LIBPATH)/contrib-olp/*.obj

@@ -263,13 +263,6 @@ Prerequisites:
 Steps:
 1. Open MSYS shell, at C:\msys\1.0\msys.bat or in shortcut Start->MinGW->MinGW Shell.
 
-2. Extract source distribution if downloaded from website in ZIP format,
-   if the source was checked out through SVN, this step can be skipped.
-   
-   $ unzip admb-'version'.zip
-
-   where 'version' is the distribution version.
-
 2. Change to the distribution or build directory, typically C:\admb-trunk.
    The MSYS shell always starts in its own directory, so if MSYS was installed in C:\MSYS 
    and the distribution directory name is admb-trunk then this command is:

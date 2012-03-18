@@ -382,9 +382,9 @@
    */
   bool doubleEqual(double nVal1, double nVal2, int nPrecision)
   {
-    bool bRet;  
+    const double base = 10; 
     // if want equal, you can define an arrange like 
-    bRet = (((nVal2 - pow(10,-nPrecision)) < nVal1) && (nVal1 < (nVal2 + pow(10,-nPrecision))));
+    bool bRet = (((nVal2 - pow(base,-nPrecision)) < nVal1) && (nVal1 < (nVal2 + pow(base,-nPrecision))));
    return bRet;
   }
 

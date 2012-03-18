@@ -245,8 +245,8 @@ Microsoft Windows and Borland C++ 5.5
 
    > make /fbcc.mak install
 
-Microsoft Windows and MinGW using MSYS linux emulation 
------------------------------------------------------- 
+Microsoft Windows and MinGW using MSYS linux emulation (32-bit only)
+-------------------------------------------------------------------- 
 Notes:
 1. This method sees MSYS as a linux machine and uses only the linux.mak makefile, 
    it does not use the mingw.mak makefile.
@@ -261,7 +261,7 @@ Prerequisites:
    http://sourceforge.net/projects/mingw/files/MSYS/Base/msys-core/msys-1.0.11/MSYS-1.0.11.exe/download)
 
 Steps:
-1. Open MSYS shell, at C:\msys\1.0\msys.bat or in shortcut Start->MinGW->MinGW Shell.
+1. Open MSYS shell, typically at C:\msys\1.0\msys.bat or in shortcut Start->MinGW->MinGW Shell.
 
 2. Change to the distribution or build directory, typically C:\admb-trunk.
    The MSYS shell always starts in its own directory, so if MSYS was installed in C:\MSYS 

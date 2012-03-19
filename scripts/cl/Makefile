@@ -86,7 +86,7 @@ vol: n2mvol
 n2mvol:
 	cd admb\\vol
 	admb $(OPTION) $@
-	$@
+	$@ -nohess
 	cd ..\\..
 
 admb-re:\

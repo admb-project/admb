@@ -64,7 +64,7 @@ truncreg:
 
 vol: n2mvol
 n2mvol:
-	cd admb/vol;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	cd admb/vol;rm -f @.par @.std;admb $(SAFE_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@ -nohess
 
 admb-re:\
 bcb \

@@ -42,7 +42,7 @@ Table of Contents
    - Linux and Intel C++ Compiler
    - MS Windows and Visual C++
    - MS Windows and Borland C++
-   - MS Windows and MinGW using MSYS Linux emulation
+   - MS Windows and GCC using MSYS Linux emulation
  * Installation from Binary Distribution
  * Documentation
  * Developing AD Model Builder
@@ -244,8 +244,8 @@ MS Windows and Borland C++
 
    > make /fbcc.mak install
 
-MS Windows and MinGW using MSYS Linux emulation
------------------------------------------------
+MS Windows and GCC using MSYS Linux emulation
+---------------------------------------------
 Notes:
 1. This method sees MSYS as a Linux machine and uses only the linux.mak
    makefile, it does not use the mingw.mak makefile.

@@ -70,7 +70,6 @@ dist:
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 	rm -f ${DISK}/bin/sed.exe
-	rm -f ${DISK}/bin/sed1.exe
 
 verify:
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}"/bin:$(PATH) CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C ${DISK}/examples all

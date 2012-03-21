@@ -40,6 +40,7 @@ Table of Contents
    - Linux and GCC
    - Linux/Solaris and Sun Studio
    - Linux and Intel C++ Compiler
+   - MacOS and Clang Compiler
    - MS Windows and Visual C++
    - MS Windows and Borland C++
    - MS Windows and GCC using MSYS Linux emulation
@@ -82,6 +83,7 @@ Several compilers are supported, including
  * GCC 3.4 or newer
  * Microsoft Visual C++ 2003 or newer
  * MacOS XCode 3.2 and 4.x
+ * Clang
  * Intel C++ Compiler 11
  * Sun Studio 12
  * Borland 5.5
@@ -158,7 +160,7 @@ Linux/Solaris and Sun Studio
 
    $ make install
 
-Linux and Intel C++ Compiler
+MacOS and Clang Compiler
 ----------------------------
 1. Extract source distribution
 
@@ -172,7 +174,7 @@ Linux and Intel C++ Compiler
 
 3. Configure the build files for Intel
 
-   $ ./configure CC=icc CXX=icpc
+   $ ./configure CC=clang CXX=clang++
 
 4. Build binaries
 

@@ -117,8 +117,8 @@ void df1b2_init_bounded_matrix::set_value(const init_df1b2vector& _x,
       int cmax=(*this)(i).indexmax();
       for (int j=cmin;j<=cmax;j++)
       {
-#if defined(__SUNPRO_CC) && defined(__x86_64)
-        long tmp= (long)( &((*this)(i,j)) );
+#if defined(__x86_64)
+        intptr_t tmp =(intptr_t)(&((*this)(i,j)));
 #else
         int tmp= (int)( &((*this)(i,j)) );
 #endif

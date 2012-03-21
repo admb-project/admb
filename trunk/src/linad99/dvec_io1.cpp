@@ -134,8 +134,8 @@ const int MAX_NUMBER_ROWS = 6550;
 
    if (sizeof(int)==sizeof(char*))
    {
-#if defined(__SUNPRO_CC) && defined(__x86_64)
-     if ( (long)v < indexmin() * sizeof(double) )
+#if defined(__x86_64)
+     if ((intptr_t)v < indexmin() * sizeof(double))
 #else
      if ( (unsigned) v < indexmin() * sizeof(double) )
 #endif

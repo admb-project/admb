@@ -19,14 +19,13 @@ dist:
 	if not exist linad99\${CCVERSION}-${OSVERSION}olp mkdir linad99\${CCVERSION}-${OSVERSION}olp
 	if not exist linad99\${CCVERSION}-${OSVERSION}slp mkdir linad99\${CCVERSION}-${OSVERSION}slp
 	if not exist nh99\${CCVERSION}-${OSVERSION}olp mkdir nh99\${CCVERSION}-${OSVERSION}olp
-	if not exist nh99\${CCVERSION}-${OSVERSION}olp-stub mkdir nh99\${CCVERSION}-${OSVERSION}olp-stub
 	if not exist tools99\${CCVERSION}-${OSVERSION}olp mkdir tools99\${CCVERSION}-${OSVERSION}olp
 
 	$(MAKE) -C df1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak disk
 	$(MAKE) -C df1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-safg32-rh8-laplace.mak disk
 	$(MAKE) -C linad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak disk
 	$(MAKE) -C linad99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-safg32-rh8-laplace.mak disk
-	$(MAKE) -C nh99 CC=${COMP} STUBPATH=${CCVERSION}-${OSVERSION}olp-stub LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak disk
+	$(MAKE) -C nh99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak disk
 	$(MAKE) -C tools99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak disk
 
 	copy ..\LICENSE ${DISK}
@@ -48,7 +47,6 @@ clean:
 	if exist linad99\\${CCVERSION}-${OSVERSION}olp rmdir /S /Q linad99\\${CCVERSION}-${OSVERSION}olp
 	if exist linad99\${CCVERSION}-${OSVERSION}slp rmdir /S /Q linad99\${CCVERSION}-${OSVERSION}slp
 	if exist nh99\${CCVERSION}-${OSVERSION}olp rmdir /S /Q nh99\${CCVERSION}-${OSVERSION}olp
-	if exist nh99\${CCVERSION}-${OSVERSION}olp-stub rmdir /S /Q nh99\${CCVERSION}-${OSVERSION}olp-stub
 	if exist tools99\${CCVERSION}-${OSVERSION}olp rmdir /S /Q tools99\${CCVERSION}-${OSVERSION}olp
 	if exist df1b2-separable\lex.yy.c del /Q df1b2-separable\lex.yy.c
 	if exist df1b2-separable\tpl2rem.c del /Q df1b2-separable\tpl2rem.c

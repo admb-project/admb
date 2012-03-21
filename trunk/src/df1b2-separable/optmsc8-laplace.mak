@@ -1,11 +1,11 @@
 .SUFFIXES: .obj .cpp
 
-FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-separable /I..\..\..\..\src\linad99 /I..\..\..\..\src\nh99 /I..\..\..\..\src\tools99 /D__MSVC32__=8  /DOPT_LIB /Ox
-LIBNAME = df1b2o.lib 
+FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-separable /I..\..\..\..\src\linad99 /I..\..\..\..\src\nh99 /I..\..\..\..\src\tools99 /D__MSVC32__=8 /DOPT_LIB /Ox
+LIBNAME = df1b2o.lib
 
 include ..\..\..\..\src\df1b2-separable\objects.lst
 
-OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS)
 
 all: $(DISKDIR)\lib\$(LIBNAME) $(DISKDIR)\bin\tpl2rem.exe
 	copy ..\..\..\..\src\df1b2-separable\df1b2fun.h $(DISKDIR)\include
@@ -19,7 +19,7 @@ all: $(DISKDIR)\lib\$(LIBNAME) $(DISKDIR)\bin\tpl2rem.exe
 
 $(DISKDIR)\lib\$(LIBNAME): $(OBJECTS)
 	lib /OUT:$@ /NOLOGO /IGNORE:4006 *.obj
-	
+
 {..\..\..\..\src\df1b2-separable}.cpp.obj:
 	$(CC) $(FLAGS) $<
 

@@ -1,7 +1,7 @@
 .SUFFIXES: .obj .cpp
 .PATH.obj = $(LIBPATH)
 
-LIBNAME = adt32.lib 
+LIBNAME = adt32.lib
 
 !include objects.lst
 
@@ -15,7 +15,7 @@ $(LIBNAME): $(OBJ0) $(OBJSPLUS)
 .cpp.obj:
 	$(CC) $(CXXFLAGS) -o$(.PATH.obj)\$*.obj $<
 
-disk: 
+disk:
 	copy adstring.hpp $(DISKDIR)\dist\include
 	copy cifstrem.h $(DISKDIR)\dist\include
 	copy clist.h $(DISKDIR)\dist\include

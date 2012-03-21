@@ -1,13 +1,13 @@
 .SUFFIXES: .obj .cpp
 .PATH.obj = $(LIBPATH)
 
-LIBNAME = df1b2o.lib 
+LIBNAME = df1b2o.lib
 
 !include objects.lst
 
 all: $(LIBNAME) $(DISKDIR)\dist\bin\tpl2rem.exe disk
 
-$(LIBNAME) :  $(OBJ0)
+$(LIBNAME): $(OBJ0)
 	cd $(LIBPATH)
 	tlib /P128 ..\..\dist\lib\$(LIBNAME) /a $(OBJ0)
 	cd ..\..\..\..\src\df1b2-separable
@@ -15,7 +15,7 @@ $(LIBNAME) :  $(OBJ0)
 .cpp.obj:
 	$(CC) $(CXXFLAGS) -o$(.PATH.obj)\$*.obj $<
 
-disk: 
+disk:
 	copy adpool.h $(DISKDIR)\dist\include
 	copy adrndeff.h $(DISKDIR)\dist\include
 	copy df1b2fun.h $(DISKDIR)\dist\include

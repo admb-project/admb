@@ -1,7 +1,7 @@
 .PHONY: disk
 
 LIBNAME = libads.a
-SRCDIR =  src
+SRCDIR = src
 .SUFFIXES: .obj .cpp
 vpath %.obj $(LIBPATH)
 
@@ -9,7 +9,7 @@ include objects.lst
 
 all: disk
 
-disk: $(DISKDIR)/lib/$(LIBNAME) 
+disk: $(DISKDIR)/lib/$(LIBNAME)
 	cp fvar.hpp $(DISKDIR)/include
 	cp trunc.hpp $(DISKDIR)/include
 	cp factors.h $(DISKDIR)/include
@@ -26,4 +26,3 @@ $(LIBPATH)/hs_sparse.obj: ../sparse/hs_sparse.cpp
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS) -o $(LIBPATH)/$(@F) $<
-

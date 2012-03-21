@@ -1,7 +1,7 @@
 .SUFFIXES: .obj .cpp
 .PATH.obj = $(LIBPATH)
 
-LIBNAME = admod32.lib 
+LIBNAME = admod32.lib
 
 !include objects.lst
 

@@ -10,20 +10,20 @@ admb:
 	IF NOT EXIST $(DISK)\dist\include mkdir $(DISK)\dist\include
 	IF NOT EXIST $(DISK)\objects mkdir $(DISK)\objects
 
-	IF NOT EXIST $(DISK)\objects\df1b2-separable-slp mkdir $(DISK)\objects\df1b2-separable-slp 
-	IF NOT EXIST $(DISK)\objects\df1b2-separable-olp mkdir $(DISK)\objects\df1b2-separable-olp 
+	IF NOT EXIST $(DISK)\objects\df1b2-separable-slp mkdir $(DISK)\objects\df1b2-separable-slp
+	IF NOT EXIST $(DISK)\objects\df1b2-separable-olp mkdir $(DISK)\objects\df1b2-separable-olp
 	cd $(DISK)\objects\df1b2-separable-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\df1b2-separable\safmsc8-laplace.mak all
 	cd $(DISK)\objects\df1b2-separable-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\df1b2-separable\optmsc8-laplace.mak all
-	IF NOT EXIST $(DISK)\objects\linad99-olp mkdir $(DISK)\objects\linad99-olp 
-	IF NOT EXIST $(DISK)\objects\linad99-slp mkdir $(DISK)\objects\linad99-slp 
+	IF NOT EXIST $(DISK)\objects\linad99-olp mkdir $(DISK)\objects\linad99-olp
+	IF NOT EXIST $(DISK)\objects\linad99-slp mkdir $(DISK)\objects\linad99-slp
 	cd $(DISK)\objects\linad99-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\linad99\optmsc8-laplace.mak all
 	cd $(DISK)\objects\linad99-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\linad99\safmsc8-laplace.mak all
-	IF NOT EXIST $(DISK)\objects\nh99-olp mkdir $(DISK)\objects\nh99-olp 
-	IF NOT EXIST $(DISK)\objects\nh99-slp mkdir $(DISK)\objects\nh99-slp 
+	IF NOT EXIST $(DISK)\objects\nh99-olp mkdir $(DISK)\objects\nh99-olp
+	IF NOT EXIST $(DISK)\objects\nh99-slp mkdir $(DISK)\objects\nh99-slp
 	cd $(DISK)\objects\nh99-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\nh99\optmsc8-laplace.mak all
 	cd $(DISK)\objects\nh99-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\nh99\safmsc8-laplace.mak all
-	IF NOT EXIST $(DISK)\objects\tools99-olp mkdir $(DISK)\objects\tools99-olp 
-	IF NOT EXIST $(DISK)\objects\tools99-slp mkdir $(DISK)\objects\tools99-slp 
+	IF NOT EXIST $(DISK)\objects\tools99-olp mkdir $(DISK)\objects\tools99-olp
+	IF NOT EXIST $(DISK)\objects\tools99-slp mkdir $(DISK)\objects\tools99-slp
 	cd $(DISK)\objects\tools99-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\tools99\optmsc8-laplace.mak all
 	cd $(DISK)\objects\tools99-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\src\tools99\safmsc8-laplace.mak all
 

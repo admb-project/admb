@@ -20,7 +20,7 @@ vpath %.obj $(LIBPATH)$
 .PHONY: disk
 include objects.lst
 
-$(LIBPATH)\$(LIBNAME) : $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
+$(LIBPATH)\$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
 	cmd /C "cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj"
 
 $(filter-out cifstrem.obj, $(OBJ0)): %.obj: %.cpp

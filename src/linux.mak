@@ -2,20 +2,20 @@
 SHELL = /bin/bash
 
 ifndef DISK
-  DISK=../build/dists/admb_gcc411_fedora8
+DISK=../build/dists/admb_gcc411_fedora8
 endif
 
 PWD=$(shell pwd)
 NOW=$(shell date)
 
 ifndef LIBPATH
-  CCVERSION=gcc411
-  OSVERSION=fedorar8
-  LIBPATH=../build/${CCVERSION}-${OSVERSION}
+CCVERSION=gcc411
+OSVERSION=fedorar8
+LIBPATH=../build/${CCVERSION}-${OSVERSION}
 endif
 
 ifndef ADMB_HOME
-  ADMB_HOME=${PWD}/${DISK}
+ADMB_HOME=${PWD}/${DISK}
 endif
 
 CXXFLAGS:=-DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS)
@@ -44,17 +44,17 @@ endif
 
 dist:
 	mkdir -p ${DISK}/{bin,lib,include,docs,docs/manuals,examples}
-	mkdir -p ${LIBPATH}/linad99-olp 
-	mkdir -p ${LIBPATH}/linad99-slp 
-	mkdir -p ${LIBPATH}/nh99-olp 
-	mkdir -p ${LIBPATH}/nh99-olp-stub 
-	mkdir -p ${LIBPATH}/tools99-olp 
-	mkdir -p ${LIBPATH}/df1b2-separable-slp 
-	mkdir -p ${LIBPATH}/df1b2-separable-olp 
+	mkdir -p ${LIBPATH}/linad99-olp
+	mkdir -p ${LIBPATH}/linad99-slp
+	mkdir -p ${LIBPATH}/nh99-olp
+	mkdir -p ${LIBPATH}/nh99-olp-stub
+	mkdir -p ${LIBPATH}/tools99-olp
+	mkdir -p ${LIBPATH}/df1b2-separable-slp
+	mkdir -p ${LIBPATH}/df1b2-separable-olp
 	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
+	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
 	$(MAKE) --directory=df1b2-separable CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=df1b2-separable CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk 
+	$(MAKE) --directory=df1b2-separable CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
 	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" STUBPATH=../${LIBPATH}/nh99-olp-stub LIBPATH=../${LIBPATH}/nh99-olp ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak  disk
 	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE ${DISK}

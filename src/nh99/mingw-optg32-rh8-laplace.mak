@@ -1,4 +1,4 @@
-#macros for making optimized library for DJGPP
+# Make library for MinGW (optimized)
 
 CC = g++
 
@@ -11,15 +11,15 @@ FLAGS:=-c $(CFLAGS) ${OPTIONS} -Wall -Wno-conversion -Wno-non-virtual-dtor -Wno-
 FLAGS1:=-c $(CFLAGS) ${OPTIONS} -w ${PVMOPTION} -DUSE_LAPLACE -fpermissive -I../df1b2-separable -I. -I..\linad99 -I..\tools99 -D__SPDLL__ -D__GNUDOS__ -DOPT_LIB -Dlinux
 
 ifneq ($(strip $(ADMB_VERSION)),)
-  FLAGS+=-DADMB_VERSION=${ADMB_VERSION}
-  FLAGS1+=-DADMB_VERSION=${ADMB_VERSION}
+FLAGS+=-DADMB_VERSION=${ADMB_VERSION}
+FLAGS1+=-DADMB_VERSION=${ADMB_VERSION}
 endif
 
 ifneq ($(strip $(ADMB_REVISION)),)
-  ifneq ('$(strip $(ADMB_REVISION))', 'exported')
-    FLAGS+=-DADMB_REVISION=${ADMB_REVISION}
-    FLAGS1+=-DADMB_REVISION=${ADMB_REVISION}
-  endif
+ifneq ('$(strip $(ADMB_REVISION))', 'exported')
+FLAGS+=-DADMB_REVISION=${ADMB_REVISION}
+FLAGS1+=-DADMB_REVISION=${ADMB_REVISION}
+endif
 endif
 
 LIBPATH =gcc32-rh8olp
@@ -39,7 +39,7 @@ vpath %.obj $(LIBPATH)
 
 include objects.lst
 
-$(LIBPATH)\$(LIBNAME) : $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
+$(LIBPATH)\$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
 	cmd /C "cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj"
 
 model52.obj hybmcmc.obj randeff.obj cnstrs.obj xmodelm3.obj xxmcmc.obj lmnewton.obj: %.obj: %.cpp

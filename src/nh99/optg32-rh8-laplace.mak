@@ -8,12 +8,12 @@ vpath %.obj $(LIBPATH)
 include objects.lst
 
 ifeq ("$(CXX)","CC")
-OBJECTS = $(filter-out dfqromb.obj, $(OBJ0)) $(OBJ1) $(OBJ2) $(OBJ3) 
+OBJECTS = $(filter-out dfqromb.obj, $(OBJ0)) $(OBJ1) $(OBJ2) $(OBJ3)
 else
-OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
 endif
 
-all: disk  
+all: disk
 
 disk: $(DISKDIR)/lib/$(LIBNAME)  $(DISKDIR)/bin/tpl2cpp
 	cp admodel.h $(DISKDIR)/include
@@ -24,7 +24,7 @@ disk: $(DISKDIR)/lib/$(LIBNAME)  $(DISKDIR)/bin/tpl2cpp
 	cp s.h $(DISKDIR)/include
 	cp sedflex $(DISKDIR)/bin
 
-$(DISKDIR)/lib/$(LIBNAME): $(OBJECTS) 
+$(DISKDIR)/lib/$(LIBNAME): $(OBJECTS)
 	ar -rs $@ $(LIBPATH)/*.obj
 
 $(DISKDIR)/bin/tpl2cpp: tpl2cpp.c

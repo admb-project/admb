@@ -3,9 +3,9 @@
 CC = cl
 LL = tlib
 
-FLAGS = /nologo /W4 $(OPTIONS) $(PVMOPTION) /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-separable /I..\..\..\..\src\linad99 /I..\..\..\..\src\nh99 /I..\..\..\..\src\tools99 /D__MSVC32__=8  /DOPT_LIB /Ox /EHsc
+FLAGS = /nologo /W4 $(OPTIONS) $(PVMOPTION) /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-separable /I..\..\..\..\src\linad99 /I..\..\..\..\src\nh99 /I..\..\..\..\src\tools99 /D__MSVC32__=8 /DOPT_LIB /Ox /EHsc
 
-LIBNAME = ado32.lib 
+LIBNAME = ado32.lib
 
 include ..\..\..\..\src\linad99\objects.lst
 

@@ -29,7 +29,6 @@ It can be downloaded for free from the publisher:
 http://tandfonline.com/doi/abs/10.1080/10556788.2011.597854
 
 
-
 Table of Contents
 =================
  * Release Notes
@@ -83,7 +82,7 @@ Several compilers are supported, including
  * GCC 3.4 or newer
  * Microsoft Visual C++ 2003 or newer
  * MacOS XCode 3.2 and 4.x
- * Clang
+ * Clang 3.0
  * Intel C++ Compiler 11
  * Sun Studio 12
  * Borland 5.5

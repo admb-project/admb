@@ -55,5 +55,5 @@ tpl2rem.exe: tpl2rem.c
 	gcc tpl2rem.c -o tpl2rem
 
 clean:
-	if exist $(LIBPATH) rmdir /S /Q $(LIBPATH)
-	del /Q /F tpl2rem.obj
+	if exist $(LIBPATH) rd /S /Q $(LIBPATH)
+	del tpl2rem.obj

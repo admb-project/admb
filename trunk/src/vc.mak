@@ -56,4 +56,4 @@ verify:
 	-cd $(MAKEDIR)\$(DISK)\dist& ..\..\..\scripts\get-outputs.bat > "..\..\..\benchmarks-saf.txt"
 
 clean:
-	IF EXIST $(DISK) rmdir /S /Q $(DISK)
+	IF EXIST $(DISK) rd /S /Q $(DISK)

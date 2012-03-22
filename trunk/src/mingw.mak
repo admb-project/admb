@@ -9,7 +9,7 @@ OSVERSION=win
 COMP=g++
 
 dist:
-	if exist ${DISK} rmdir /S /Q ${DISK}
+	if exist ${DISK} rd /S /Q ${DISK}
 	mkdir $(DISK)\bin
 	mkdir $(DISK)\include
 	mkdir $(DISK)\lib
@@ -42,15 +42,15 @@ verify:
 	set ADMB_HOME=%CD%\$(DISK)& set PATH=%CD%\$(DISK)\bin;$(PATH)& set& $(MAKE) -C ${DISK} all
 
 clean:
-	if exist df1b2-separable\${CCVERSION}-${OSVERSION}olp rmdir /S /Q df1b2-separable\${CCVERSION}-${OSVERSION}olp
-	if exist df1b2-separable\${CCVERSION}-${OSVERSION}slp rmdir /S /Q df1b2-separable\${CCVERSION}-${OSVERSION}slp
-	if exist linad99\\${CCVERSION}-${OSVERSION}olp rmdir /S /Q linad99\\${CCVERSION}-${OSVERSION}olp
-	if exist linad99\${CCVERSION}-${OSVERSION}slp rmdir /S /Q linad99\${CCVERSION}-${OSVERSION}slp
-	if exist nh99\${CCVERSION}-${OSVERSION}olp rmdir /S /Q nh99\${CCVERSION}-${OSVERSION}olp
-	if exist tools99\${CCVERSION}-${OSVERSION}olp rmdir /S /Q tools99\${CCVERSION}-${OSVERSION}olp
-	if exist df1b2-separable\lex.yy.c del /Q df1b2-separable\lex.yy.c
-	if exist df1b2-separable\tpl2rem.c del /Q df1b2-separable\tpl2rem.c
-	if exist df1b2-separable\tpl2rem.exe del /Q df1b2-separable\tpl2rem.exe
-	if exist nh99\lex.yy.c del /Q nh99\lex.yy.c
-	if exist nh99\tpl2cpp.c del /Q nh99\tpl2cpp.c
-	if exist nh99\tpl2cpp.exe del /Q nh99\tpl2cpp.exe
+	if exist df1b2-separable\${CCVERSION}-${OSVERSION}olp rd /S /Q df1b2-separable\${CCVERSION}-${OSVERSION}olp
+	if exist df1b2-separable\${CCVERSION}-${OSVERSION}slp rd /S /Q df1b2-separable\${CCVERSION}-${OSVERSION}slp
+	if exist linad99\\${CCVERSION}-${OSVERSION}olp rd /S /Q linad99\\${CCVERSION}-${OSVERSION}olp
+	if exist linad99\${CCVERSION}-${OSVERSION}slp rd /S /Q linad99\${CCVERSION}-${OSVERSION}slp
+	if exist nh99\${CCVERSION}-${OSVERSION}olp rd /S /Q nh99\${CCVERSION}-${OSVERSION}olp
+	if exist tools99\${CCVERSION}-${OSVERSION}olp rd /S /Q tools99\${CCVERSION}-${OSVERSION}olp
+	if exist df1b2-separable\lex.yy.c del df1b2-separable\lex.yy.c
+	if exist df1b2-separable\tpl2rem.c del df1b2-separable\tpl2rem.c
+	if exist df1b2-separable\tpl2rem.exe del df1b2-separable\tpl2rem.exe
+	if exist nh99\lex.yy.c del nh99\lex.yy.c
+	if exist nh99\tpl2cpp.c del nh99\tpl2cpp.c
+	if exist nh99\tpl2cpp.exe del nh99\tpl2cpp.exe

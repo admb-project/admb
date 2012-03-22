@@ -1030,8 +1030,8 @@ public:
   double_and_int * arr_new(unsigned int sz); 
 
 /**
- * Description not yet available.
- * \param
+ * class for things related to the gradient structures, including dimension of 
+ * arrays, size of buffers, etc.
  */
   class gradient_structure
   {
@@ -1156,9 +1156,11 @@ private:
 #ifdef __BORLANDC__
       static void set_CMPDIF_BUFFER_SIZE(long int i);
       static void set_GRADSTACK_BUFFER_SIZE(long int i);
+      static void set_GRADSTACK_BUFFER_BYTES(long int i);
 #else
       static void set_CMPDIF_BUFFER_SIZE(long long int i);
       static void set_GRADSTACK_BUFFER_SIZE(long long int i);
+      static void set_GRADSTACK_BUFFER_BYTES(long long int i);
 #endif
       static void set_MAX_NVAR_OFFSET(unsigned int i);
       static void set_MAX_DLINKS(int i);

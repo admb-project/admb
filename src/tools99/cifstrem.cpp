@@ -77,7 +77,11 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
 #elif defined (__INTEL_COMPILER)
  : ifstream(fn) , file_name(fn)
 #elif defined (__GNUDOS__)
+ #if defined(__SUNPRO_CC)
+ : ifstream(fn, ios::in | open_m) , file_name(fn)
+ #else
  : ifstream(fn, ios::in | std::_Ios_Openmode(open_m)) , file_name(fn)
+ #endif
 #elif defined (__ZTC__)
  : ios(&buffer), ifstream(fn, ios::in | open_m) , file_name(fn)
 #else

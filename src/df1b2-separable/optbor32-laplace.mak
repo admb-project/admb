@@ -25,9 +25,6 @@ disk:
 	copy df32fun.h $(DISKDIR)\dist\include
 	copy df3fun.h $(DISKDIR)\dist\include
 	copy f1b2locl.h $(DISKDIR)\dist\include
-	copy sedcmd $(DISKDIR)\dist\bin
-	copy sedcmd2 $(DISKDIR)\dist\bin
-	copy sedcmd3 $(DISKDIR)\dist\bin
 	copy seddf1b2 $(DISKDIR)\dist\bin
 	copy seddf1b3 $(DISKDIR)\dist\bin
 	copy seddf1b4 $(DISKDIR)\dist\bin

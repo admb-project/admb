@@ -43,7 +43,9 @@ disk: $(LIBPATH)\$(LIBNAME) tpl2rem.exe
 	cmd /C "copy df1b2loc.h $(DISKDIR)\include"
 	cmd /C "copy smartbuf.h $(DISKDIR)\include"
 	cmd /C "copy tpl2rem.exe $(DISKDIR)\bin"
-	cmd /C "copy sed* $(DISKDIR)\bin"
+	cmd /C "copy sed.exe $(DISKDIR)\bin"
+	cmd /C "copy seddf1b* $(DISKDIR)\bin"
+	cmd /C "copy sedf1b2* $(DISKDIR)\bin"
 
 tpl2rem.c: tpl2rem.lex
 	flex tpl2rem.lex

@@ -75,7 +75,9 @@ disk: $(LIBPATH)\$(LIBNAME) tpl2cpp.exe
 	cmd /C "copy s.h $(DISKDIR)\include"
 	cmd /C "copy param_init_bounded_number_matrix.h $(DISKDIR)\include"
 	cmd /C "copy tpl2cpp.exe $(DISKDIR)\bin"
-	cmd /C "copy sed* $(DISKDIR)\bin"
+	cmd /C "copy sed.exe $(DISKDIR)\bin"
+	cmd /C "copy seddf1b* $(DISKDIR)\bin"
+	cmd /C "copy sedf1b2* $(DISKDIR)\bin"
 
 clean:
 	if exist $(LIBPATH) rmdir /S /Q $(LIBPATH)

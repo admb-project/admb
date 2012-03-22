@@ -22,7 +22,6 @@ disk: $(DISKDIR)/lib/$(LIBNAME)  $(DISKDIR)/bin/tpl2cpp
 	cp newredef.h $(DISKDIR)/include
 	cp param_init_bounded_number_matrix.h $(DISKDIR)/include
 	cp s.h $(DISKDIR)/include
-	cp sedflex $(DISKDIR)/bin
 
 $(DISKDIR)/lib/$(LIBNAME): $(OBJECTS)
 	ar -rs $@ $(LIBPATH)/*.obj

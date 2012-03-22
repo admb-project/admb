@@ -193,7 +193,8 @@ void gradient_structure::set_GRADSTACK_BUFFER_BYTES(long long int i)
       "should probably be  " << max_size << endl;
     cerr << "LONG_MAX = " << (unsigned long int) (LONG_MAX) << endl; 
     cerr << " i = " << i << endl; 
-    cerr << "Note: long long integers don't work in the Borland compiler version of ADMB." << endl; 
+    cerr << "Note: the Borland compiler limit is a long integer\n"
+      "      other compilers allow long long integers" << endl;
   }
 #else
   long long int gs_size=(long long int) (sizeof(grad_stack_entry));

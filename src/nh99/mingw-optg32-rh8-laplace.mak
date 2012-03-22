@@ -80,4 +80,4 @@ disk: $(LIBPATH)\$(LIBNAME) tpl2cpp.exe
 	cmd /C "copy sedf1b2* $(DISKDIR)\bin"
 
 clean:
-	if exist $(LIBPATH) rmdir /S /Q $(LIBPATH)
+	if exist $(LIBPATH) rd /S /Q $(LIBPATH)

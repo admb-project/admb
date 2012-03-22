@@ -44,5 +44,5 @@ disk: $(LIBPATH)\$(LIBNAME)
 	cmd /C "copy smartbuf.h $(DISKDIR)\include"
 
 clean:
-	if exist $(LIBPATH) rmdir /S /Q $(LIBPATH)
+	if exist $(LIBPATH) rd /S /Q $(LIBPATH)
 	if exist tpl2rem.obj del tpl2rem.obj

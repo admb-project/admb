@@ -59,4 +59,4 @@ disk: $(LIBPATH)\$(LIBNAME)
 	cmd /C "copy factors.h $(DISKDIR)\include"
 
 clean:
-	if exist $(LIBPATH) rmdir /S /Q $(LIBPATH)
+	if exist $(LIBPATH) rd /S /Q $(LIBPATH)

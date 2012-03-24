@@ -10,16 +10,16 @@ COMP=g++
 
 dist:
 	if exist ${DISK} rd /S /Q ${DISK}
-	mkdir $(DISK)\bin
-	mkdir $(DISK)\include
-	mkdir $(DISK)\lib
+	md $(DISK)\bin
+	md $(DISK)\include
+	md $(DISK)\lib
 
-	if not exist df1b2-separable\${CCVERSION}-${OSVERSION}olp mkdir df1b2-separable\${CCVERSION}-${OSVERSION}olp
-	if not exist df1b2-separable\${CCVERSION}-${OSVERSION}slp mkdir df1b2-separable\${CCVERSION}-${OSVERSION}slp
-	if not exist linad99\${CCVERSION}-${OSVERSION}olp mkdir linad99\${CCVERSION}-${OSVERSION}olp
-	if not exist linad99\${CCVERSION}-${OSVERSION}slp mkdir linad99\${CCVERSION}-${OSVERSION}slp
-	if not exist nh99\${CCVERSION}-${OSVERSION}olp mkdir nh99\${CCVERSION}-${OSVERSION}olp
-	if not exist tools99\${CCVERSION}-${OSVERSION}olp mkdir tools99\${CCVERSION}-${OSVERSION}olp
+	if not exist df1b2-separable\${CCVERSION}-${OSVERSION}olp md df1b2-separable\${CCVERSION}-${OSVERSION}olp
+	if not exist df1b2-separable\${CCVERSION}-${OSVERSION}slp md df1b2-separable\${CCVERSION}-${OSVERSION}slp
+	if not exist linad99\${CCVERSION}-${OSVERSION}olp md linad99\${CCVERSION}-${OSVERSION}olp
+	if not exist linad99\${CCVERSION}-${OSVERSION}slp md linad99\${CCVERSION}-${OSVERSION}slp
+	if not exist nh99\${CCVERSION}-${OSVERSION}olp md nh99\${CCVERSION}-${OSVERSION}olp
+	if not exist tools99\${CCVERSION}-${OSVERSION}olp md tools99\${CCVERSION}-${OSVERSION}olp
 
 	$(MAKE) -C df1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak disk
 	$(MAKE) -C df1b2-separable CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}slp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-safg32-rh8-laplace.mak disk
@@ -35,7 +35,7 @@ dist:
 	copy ..\scripts\mingw\*.bat ${DISK}\bin
 	copy ..\scripts\mingw\Makefile ${DISK}
 
-	mkdir ${DISK}\examples
+	md ${DISK}\examples
 	xcopy ..\examples ${DISK}\examples /S
 
 verify:

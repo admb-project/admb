@@ -55,8 +55,8 @@ const int MAX_NUMBER_ROWS = 6550;
       << "dmatrix::dmatrix(char * filename)\n";
       ad_exit(1);
    }
-   char * line=new char [MAX_LINE_LENGTH+2];
-   char * field=new char [MAX_FIELD_LENGTH+1];
+   char *line = new char[MAX_LINE_LENGTH + 2];
+   char *field = new char[MAX_FIELD_LENGTH + 1];
 
    int i=0;
    ivector nc(1,MAX_NUMBER_ROWS);
@@ -204,7 +204,8 @@ const int MAX_NUMBER_ROWS = 6550;
    // Need to check error status f
  }
 
- delete line;
- delete field;
-
+ delete[] line;
+ line = 0;
+ delete[] field;
+ field = 0;
 }

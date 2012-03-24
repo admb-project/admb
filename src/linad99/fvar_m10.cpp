@@ -155,6 +155,7 @@ void dvar_matrix::fill( const char * s)
 
     (*this)(i)=tt;
 
-    delete t;
+    delete[] t;
+    t = 0;
   }
 }

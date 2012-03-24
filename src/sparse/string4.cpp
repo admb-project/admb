@@ -20,7 +20,8 @@ istream & operator >> (istream & c, adstring & t)
     exit(1);
   }
   t=tmp;
-  delete tmp;
+  delete[] tmp;
+  tmp = 0;
   return (c);
 }
 
@@ -48,7 +49,8 @@ istream & operator >> (istream & c, line_adstring & t)
   }
   tmp[ii]='\0';
   t=tmp;
-  delete tmp;
+  delete[] tmp;
+  tmp = 0;
   return (c);
 }
 

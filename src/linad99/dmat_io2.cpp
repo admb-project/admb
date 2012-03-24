@@ -181,7 +181,7 @@ dmatrix::dmatrix(char * s)
 
     k = 0;
     //char * t = (char*) new[strlen(s)+1];
-    char * t = new char[strlen(s)+1];
+    char *t = new char[strlen(s)+1];
     for (i=rowmin(); i<=rowmax(); i++)
     {
       for (k = k1[i]; k <= k2[i]; k++)
@@ -192,7 +192,8 @@ dmatrix::dmatrix(char * s)
 
       m[i].allocate(t);
     }
-    delete t;
+    delete[] t;
+    t = 0;
   }
   else // no rows implies s is a file name
   {
@@ -204,8 +205,8 @@ dmatrix::dmatrix(char * s)
             << "dmatrix::dmatrix(char * filename)\n";
        ad_exit(1);
     }
-    char * line=new char [MAX_LINE_LENGTH+2];
-    char * field=new char [MAX_FIELD_LENGTH+1];
+    char *line = new char [MAX_LINE_LENGTH+2];
+    char *field = new char [MAX_FIELD_LENGTH+1];
 
     int i=0;
     ivector nc(1,MAX_NUMBER_ROWS);
@@ -339,8 +340,10 @@ dmatrix::dmatrix(char * s)
      }
      // Need to check error status f
    }
-   delete line;
-   delete field;
+   delete[] line;
+   line = 0;
+   delete[] field;
+   field = 0;
   }
 }
 

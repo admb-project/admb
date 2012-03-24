@@ -114,8 +114,8 @@ dvector::dvector(const char * s)
 
     istrstream ss(t);
 
-   char * field =  new char[size_t(MAX_FIELD_LENGTH+1)];
-   char * err_ptr;
+   char *field =  new char[size_t(MAX_FIELD_LENGTH+1)];
+   char *err_ptr;
 
    for (int i=ncl;i<=nch;i++)
    {
@@ -252,8 +252,8 @@ dvector::dvector(const char * s)
        ad_exit(1);
      }
    }
-   delete field;
-   field=0;
+   delete[] field;
+   field = 0;
  }
 }
 

@@ -91,7 +91,7 @@ void parse_dll_options(char * pname,BOR_CONST int& _nopt,char * sp_options,
       }
     }
     while(ptmp);
-    delete p;
+    delete[] p;
     p=NULL;
   }
   else

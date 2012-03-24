@@ -161,8 +161,10 @@ void dvector::fill(const char * s)
        ad_exit(1);
      }
    }
-   delete field;
+   delete[] field;
+   field = 0;
 
-   delete t;
+   delete[] t;
+   t = 0;
   }
 }

@@ -297,7 +297,8 @@ grad_stack::~grad_stack()
    remove(var_store_file_name);
   #endif
 
-   delete [] true_ptr_first;
+   delete[] true_ptr_first;
+   true_ptr_first = 0;
 }
 
 /**

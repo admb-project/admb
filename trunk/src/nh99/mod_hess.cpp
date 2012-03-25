@@ -579,7 +579,7 @@ void function_minimizer::hess_inv(void)
   }
  */
 
-  for (i=1;i<=nvar;i++)
+  for (int i = 1;i <= nvar; i++)
   {
     int zero_switch=0;
     for (int j=1;j<=nvar;j++)
@@ -699,7 +699,7 @@ void function_minimizer::hess_inv(void)
   {
     if (on1<0)
     {
-      for (i=1;i<=nvar;i++)
+      for (int i = 1;i <= nvar; i++)
       {
         if (hess(i,i) <= 0.0)
         {

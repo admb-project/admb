@@ -37,7 +37,6 @@ cltudecomp ludecomp_pivot(const dmatrix & M);
 */
 dmatrix solve(const dmatrix & aa, const dmatrix & zz)
 {
-   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    if (lb != aa.rowmin() || ub != aa.colmax())

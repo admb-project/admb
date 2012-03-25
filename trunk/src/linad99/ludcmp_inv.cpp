@@ -46,9 +46,7 @@ int min(int a, int b)
 */
 dmatrix inv(_CONST dmatrix & aa)
 {
-   int imax = 0;
-   int n = 0;
-   n = aa.colsize();
+   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    dmatrix vc(lb, ub, lb, ub);
@@ -202,12 +200,8 @@ dmatrix inv(_CONST dmatrix & aa)
 */
 dvar_matrix inv(_CONST dvar_matrix & aa)
 {
-   int i = 0;
    int imax = 0;
-   int j = 0;
-   int k = 0;
-   int n = 0;
-   n = aa.colsize();
+   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    dvar_matrix vc(lb, ub, lb, ub);

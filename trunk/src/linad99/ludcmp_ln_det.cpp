@@ -43,7 +43,6 @@ dvariable my_ln_det(const dvar_matrix & M, int &sign)
    int mmax = M.indexmax();
    double lndet = 0.0;
    dmatrix & gamma = clu1.get_U();
-   dmatrix & alpha = clu1.get_L();
 
    // only need to save the diagonal of gamma
    for (int i = mmin; i <= mmax; i++)
@@ -138,7 +137,6 @@ double ln_det(const dmatrix & m1, const int &_sgn)
    int mmax = M.indexmax();
    double lndet = 0.0;
    dmatrix & gamma = clu1.get_U();
-   dmatrix & alpha = clu1.get_L();
 
    // only need to save the diagonal of gamma
    for (int i = mmin; i <= mmax; i++)

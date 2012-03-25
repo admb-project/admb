@@ -329,9 +329,8 @@ void ad_comm::allocate(void)
 #endif
   adstring tmpstring;
   // remove the first part of the path if present
-  unsigned int i;
 #if !defined(__SPDLL__)
-  for (i=adprogram_name.size();i>=1;i--)
+  for (int i = adprogram_name.size(); i >= 1; i--)
   {
     if (adprogram_name(i)==directory_prefix)
     {

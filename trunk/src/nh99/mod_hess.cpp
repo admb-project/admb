@@ -539,8 +539,7 @@ void function_minimizer::hess_inv(void)
 	 << endl;
   }
 
-  int i;
-  for (i=1;i<=nvar;i++)
+  for (int i = 1;i <= nvar; i++)
   {
     ifs >> hess(i);
     if (!ifs)
@@ -561,7 +560,7 @@ void function_minimizer::hess_inv(void)
   }
 
   double maxerr=0.0;
-  for (i=1;i<=nvar;i++)
+  for (int i = 1;i <= nvar; i++)
   {
     for (int j=1;j<i;j++)
     {
@@ -660,7 +659,7 @@ void function_minimizer::hess_inv(void)
         if (on2>-1)  
         {                                     // saddle point
           dmatrix cross(1,ev.indexmax(),1,ev.indexmax());
-          for (i=1;i<=ev.indexmax();i++)
+          for (int i = 1;i <= ev.indexmax(); i++)
           {
             for (int j=1;j<=ev.indexmax();j++)
             {

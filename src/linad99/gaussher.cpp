@@ -210,7 +210,6 @@ void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts 
     ad_exit(-1);
   }
 
-  int lb = t.indexmin();
   t.shift(0);
   wts.shift(0);
   int nt = t.indexmax() + 1;

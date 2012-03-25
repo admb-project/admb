@@ -115,7 +115,6 @@ dvector solve(const dmatrix & aa, const dvector & z)
 */
 dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
 {
-   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    if (lb != aa.rowmin() || ub != aa.colmax())
@@ -315,7 +314,6 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
 		  const prevariable & _sign)
 {
    dvariable& sign = (dvariable&) _sign;
-   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    if (lb != aa.rowmin() || ub != aa.colmax())

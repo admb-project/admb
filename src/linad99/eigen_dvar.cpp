@@ -112,9 +112,8 @@ void eigens (const dvar_matrix & m, const dvar_matrix & _evecs,
       ad_exit (1);
     }
 
-  int mlb = m.rowmin ();
-  int evecslb = evecs.rowmin ();
-  int evalslb = evals.indexmin ();
+  int evecslb = evecs.rowmin();
+  int evalslb = evals.indexmin();
 
   int N = m.colsize ();
 

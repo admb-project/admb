@@ -141,7 +141,6 @@ void eigens(const dmatrix & m, const dmatrix & _evecs,
       ad_exit(1);
    }
 
-   int mlb = m.rowmin();
    int evecslb = evecs.rowmin();
    int evalslb = evals.indexmin();
 

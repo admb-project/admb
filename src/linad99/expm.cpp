@@ -251,7 +251,6 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& zz)
  */
 dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltudecomp & _clu1)
 {
-   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    if (lb != aa.rowmin() || ub != aa.colmax())

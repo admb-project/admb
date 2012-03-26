@@ -145,7 +145,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   if (_argc>1)
   {
     if (option_match(_argc,_argv,"-?")>-1
-      || option_match(_argc,_argv,"-help")>-1 )
+      || option_match(_argc,_argv,"-help")>-1
+      || option_match(_argc,_argv,"--help")>-1)
     {
       // remove the first part of the path if present
       unsigned int i;
@@ -221,7 +222,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -slave          run as PVM slave program\n");
       (*ad_printf)( " -pvmtime        record timing information for PVM performance analysis\n");
       (*ad_printf)( " -info           How to Cite ADMB, License and contributors acknowledgements\n");
-      (*ad_printf)( " -? or -help     this message\n");
+      (*ad_printf)( " -? -help --help this message\n");
       (*ad_printf)("\n");
       (*ad_printf)( " Random effects options if applicable\n");
     //if (function_minimizer::random_effects_flag)

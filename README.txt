@@ -40,9 +40,9 @@ Table of Contents
    - Linux/Solaris and Sun Studio
    - Linux and Intel C++ Compiler
    - MacOS and Clang Compiler
-   - MS Windows and Visual C++
-   - MS Windows and Borland C++
-   - MS Windows and GCC using MSYS Linux emulation
+   - Windows and Visual C++
+   - Windows and Borland C++
+   - Windows and GCC using MSYS Linux emulation
  * Installation from Binary Distribution
  * Documentation
  * Developing AD Model Builder
@@ -187,8 +187,8 @@ MacOS and Clang Compiler
 
    $ make install
 
-MS Windows and Visual C++
--------------------------
+Windows and Visual C++
+----------------------
 1. Extract source distribution.
 
 2. Open Visual C++ Command Prompt.
@@ -212,8 +212,8 @@ MS Windows and Visual C++
 
    > nmake /fvc.mak install
 
-MS Windows and Borland C++
---------------------------
+Windows and Borland C++
+-----------------------
 1. Extract source distribution.
 
 2. Open Windows Command Prompt in Start->All Programs->Accessories.
@@ -245,8 +245,8 @@ MS Windows and Borland C++
 
    > make /fbcc.mak install
 
-MS Windows and GCC using MSYS Linux emulation
----------------------------------------------
+Windows and GCC using MSYS Linux emulation
+------------------------------------------
 Notes:
 1. This method sees MSYS as a Linux machine and uses only the linux.mak
    makefile, it does not use the mingw.mak makefile.

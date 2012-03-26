@@ -167,7 +167,7 @@ void print_values(const double& f, const dvector & x,const dvector& g)
 }
 extern adtimer * pfmintime=0;
 extern int traceflag;
-#pragma warn -sig
+//#pragma warn -sig
 
 #ifdef _MSC_VER
 BOOL CtrlHandler( DWORD fdwCtrlType ) 

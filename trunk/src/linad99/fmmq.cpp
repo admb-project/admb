@@ -9,7 +9,7 @@
  * Description not yet available.
  */
 #include <fvar.hpp>
-#pragma hdrstop
+//#pragma hdrstop
 #include "fmmq.hpp"
 
 /**

@@ -1103,7 +1103,6 @@ dvector laplace_approximation_calculator::
   //do
   dvector values(1,300);
   double oldfbest=pmin->lapprox->fmc1.fbest; 
-  double best_value=oldfbest;
   double newfbest;
   int have_value=0;
   //for (int jj=1;jj<=300;jj++)

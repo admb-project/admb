@@ -379,7 +379,6 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     
     // for hybrid mcmc option always save output
     //if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)
-    int mcsave_flag=1;
     if ( mcrestart_flag>-1)
     {
       // check that nvar is correct

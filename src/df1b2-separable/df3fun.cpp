@@ -789,10 +789,6 @@ df1b2variable cumd_norm(const df1b2variable& _x)
   const double b3=1.781477937;
   const double b4=-1.821255978;
   const double b5=1.330274429;
-  const double b55=b5*5;
-  const double b44=b4*4;
-  const double b33=b3*3;
-  const double b22=b2*2;
   const double p=.2316419;
   
   if (value(x)>=0)
@@ -825,10 +821,6 @@ df1b2variable bounded_cumd_norm(const df1b2variable& _x, double beta)
   const double b3=1.781477937;
   const double b4=-1.821255978;
   const double b5=1.330274429;
-  const double b55=b5*5;
-  const double b44=b4*4;
-  const double b33=b3*3;
-  const double b22=b2*2;
   const double p=.2316419;
   
   if (value(x)>=0)

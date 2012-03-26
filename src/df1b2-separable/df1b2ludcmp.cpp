@@ -128,7 +128,6 @@
 */
 df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
 {
-   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    if (lb != aa.rowmin() || ub != aa.colmax())
@@ -230,7 +229,6 @@ df1b2variable ln_det(const df1b2matrix & m1)
    ivector index2 = clu1.get_index2();
    df1b2variable lndet = 0.0;
    df1b2matrix & gamma = clu1.get_U();
-   df1b2matrix & alpha = clu1.get_L();
 
    // only need to save the diagonal of gamma
    for (int i = mmin; i <= mmax; i++)

@@ -42,7 +42,7 @@
  * \file
  * Description not yet available.
  */
-#pragma hdrstop
+//#pragma hdrstop
 /*
 class fmmq : public fmm_control
 {

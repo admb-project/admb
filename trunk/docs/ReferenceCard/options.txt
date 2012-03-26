@@ -39,8 +39,7 @@
 \verb|-slave|          run as PVM slave program
 \verb|-pvmtime|        record timing information for PVM performance analysis
 \verb|-info|           Contributors acknowledgements
-\verb|-?|     list of options
-\verb|-help|     list of option
+\verb|-? -help --help| list of options
 \verb|-nr N|           maximum number of Newton-Raphson steps
 \verb|-imaxfn N|       maximum number of fevals in quasi-Newton inner optimization
 \verb|-is N|           set importance sampling size to n for random effects

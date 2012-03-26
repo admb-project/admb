@@ -28,7 +28,6 @@ nonlinear models. Optim. Methods Softw. 27:233-249.
 It can be downloaded for free from the publisher:
 http://tandfonline.com/doi/abs/10.1080/10556788.2011.597854
 
-
 Table of Contents
 =================
  * Release Notes
@@ -36,13 +35,13 @@ Table of Contents
  * Requirements
  * Downloading
  * Installation from Source Code
-   - Linux and GCC
-   - Linux/Solaris and Sun Studio
+   - Linux and GNU g++
+   - Linux/Solaris and Solaris Studio
    - Linux and Intel C++ Compiler
    - MacOS and Clang Compiler
    - Windows and Visual C++
    - Windows and Borland C++
-   - Windows and GCC using MSYS Linux emulation
+   - Windows and GNU g++ using MSYS Unix emulation
  * Installation from Binary Distribution
  * Documentation
  * Developing AD Model Builder
@@ -79,7 +78,7 @@ and 64 bit versions. A C/C++ compiler must be be installed on the local
 computer.
 
 Several compilers are supported, including
- * GCC 3.4 or newer
+ * GNU g++ 3.4 or newer
  * Microsoft Visual C++ 2003 or newer
  * MacOS XCode 3.2 and 4.x
  * Clang 3.0
@@ -99,8 +98,8 @@ Installation from Source Code
 =============================
 Below are procedures for installing ADMB from source code.
 
-Linux and GCC
--------------
+Linux and GNU g++
+-----------------
 1. Extract source distribution
 
    $ unzip admb-'version'.zip
@@ -160,7 +159,7 @@ Linux/Solaris and Sun Studio
    $ make install
 
 MacOS and Clang Compiler
-----------------------------
+------------------------
 1. Extract source distribution
 
    $ unzip admb-'version'.zip
@@ -171,9 +170,37 @@ MacOS and Clang Compiler
 
    $ cd admb-'version'
 
-3. Configure the build files for Intel
+3. Configure the build files for Clang
 
    $ ./configure CC=clang CXX=clang++
+
+4. Build binaries
+
+   $ make
+
+4. [Optional] Test build by running examples
+
+   $ make verify
+
+5. Install binaries to default location /usr/local.
+
+   $ make install
+
+Linux/Solaris and Intel C++ Compiler
+------------------------------------
+1. Extract source distribution
+
+   $ unzip admb-'version'.zip
+
+   where 'version' is the distribution version.
+
+2. Change to distribution directory
+
+   $ cd admb-'version'
+
+3. Configure the build files for Intel C++ Compiler
+
+   $ ./configure CC=icc CXX=icpc
 
 4. Build binaries
 
@@ -245,8 +272,8 @@ Windows and Borland C++
 
    > make /fbcc.mak install
 
-Windows and GCC using MSYS Linux emulation
-------------------------------------------
+Windows and GNU g++ using MSYS Unix emulation
+---------------------------------------------
 Notes:
 1. This method sees MSYS as a Linux machine and uses only the linux.mak
    makefile, it does not use the mingw.mak makefile.

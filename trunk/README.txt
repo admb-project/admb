@@ -34,6 +34,10 @@ Table of Contents
    - Changes
  * Requirements
  * Downloading
+ * Installation from Binary Distribution
+   - Linux and GCC
+   - MacOS and XCode
+   - Windows and GCC
  * Installation from Source Code
    - Linux and GCC
    - Linux and Intel Compiler
@@ -41,8 +45,6 @@ Table of Contents
    - MacOS and Clang
    - Windows and GCC using MSYS Linux emulation
    - Windows and MSVC
- * Installation from Binary Distribution
-   - MacOS and XCode
  * Documentation
  * Developing AD Model Builder
    - Version Control
@@ -92,6 +94,72 @@ Downloading
 ===========
 Precompiled binaries and the source distribution can be downloaded from
 http://www.admb-project.org/downloads/.
+
+Installation from Binary Distributions
+======================================
+Note: illustrated instructions for installation from binary distributions are
+      available at http://admb-project.org/documentation/installation/
+
+Linux and GCC
+-------------
+Note: additional information about running ADMB in linux, especially for
+   linux beginners, is available at 
+   http://admb-project.org/community/tutorials-and-examples/using-admb-on-linux
+
+1. Download and extract ADMB Linux binaries from 
+   http://admb-project.org/downloads. 
+
+2. Open a bash shell, change to extracted Linux ADMB Home directory, then type
+   the following commands.
+
+      #Change to ADMB folder.
+      $ cd ~/admb
+      # Sets ADMB Home directory.
+      $ export ADMB_HOME=~/admb
+      # Adds ADMB bin to $PATH
+      $ export PATH=$ADMB_HOME/bin:$PATH
+
+3. Change into ADMB Home directory, then run examples for verification.
+      $ cd $ADMB_HOME
+      $ chmod -R u+w examples
+      $ cd examples
+      $ make
+
+
+MacOS and XCode
+---------------
+1. Download admb-'version'.dmg
+2. Double click admb-'version'.dmg file
+3. Double click the admb-'version'.pkg
+4. Follow the installation instructions
+
+If successful, the wizard will have installed admb directory (/usr/local/admb)
+and script (/usr/local/bin/admb).
+
+Windows and GCC
+---------------
+1. Download the executable installer for Windows GCC from 
+   http://admb-project.org/downloads. The GCC compiler is included with 
+   this installer.
+
+2. Double click the installer and follow the instructions. If you have 
+   administrative privileges, the default installation in Program Files should
+   be fine. If you DO NOT have administrative privileges, choose a location 
+   like c:\ADMB. This might be preferable regardless.
+
+3. Once the installer is Finished, open the ADMB Command Prompt located in 
+   Start -> All Programs -> ADMB (MinGW GCC-4.5.2)
+     -> ADMB Command Prompt (MinGW GCC-4.5.2)
+
+4. In the Command prompt, type the command below to build and run the 
+   simple example.
+
+     c:\ADMB> cd examples\admb\simple
+     c:\ADMB\examples\admb\simple> admb simple
+     c:\ADMB\examples\admb\simple> simple
+
+   Those commands should compile and run the simple model, producing output 
+   ending with the line "Estimating row 2 out of 2 for hessian".
 
 Installation from Source Code
 =============================
@@ -284,19 +352,6 @@ Windows and MSVC
    shortcuts in the Start Menu.
 
    > nmake /fvc.mak install
-
-Installation from Binary Distributions
-======================================
-
-MacOS and XCode
----------------
-1. Download admb-'version'.dmg
-2. Double click admb-'version'.dmg file
-3. Double click the admb-'version'.pkg
-4. Follow the installation instructions
-
-If successful, the wizard will have installed admb directory (/usr/local/admb)
-and script (/usr/local/bin/admb).
 
 Documentation
 =============

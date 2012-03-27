@@ -35,14 +35,15 @@ Table of Contents
  * Requirements
  * Downloading
  * Installation from Source Code
-   - Linux and GNU g++
-   - Linux/Solaris and Solaris Studio
-   - Linux and Intel C++ Compiler
-   - MacOS and Clang Compiler
-   - Windows and Visual C++
-   - Windows and Borland C++
-   - Windows and GNU g++ using MSYS Unix emulation
+   - Linux and GCC
+   - Linux and Intel Compiler
+   - Linux and Solaris Studio
+   - MacOS and Clang
+   - Windows and GCC using MSYS Linux emulation
+   - Windows and MSVC
+   - Windows and Borland
  * Installation from Binary Distribution
+   - MacOS and XCode
  * Documentation
  * Developing AD Model Builder
    - Version Control
@@ -78,12 +79,12 @@ and 64 bit versions. A C/C++ compiler must be be installed on the local
 computer.
 
 Several compilers are supported, including
- * GNU g++ 3.4 or newer
+ * GCC 3.4 or newer
  * Microsoft Visual C++ 2003 or newer
  * MacOS XCode 3.2 and 4.x
  * Clang 3.0
  * Intel C++ Compiler 11
- * Sun Studio 12
+ * Solaris Studio 12
  * Borland 5.5
 
 If the compiler is not listed, build the source distribution or email
@@ -98,8 +99,8 @@ Installation from Source Code
 =============================
 Below are procedures for installing ADMB from source code.
 
-Linux and GNU g++
------------------
+Linux and GCC
+-------------
 1. Extract source distribution
 
    $ unzip admb-'version'.zip
@@ -134,60 +135,8 @@ Linux and GNU g++
 
    $ make install
 
-Linux/Solaris and Sun Studio
-----------------------------
-1. Extract source distribution
-
-   $ unzip admb-'version'.zip
-
-   where 'version' is the distribution version.
-
-2. Change to source directory
-
-   $ cd admb-'version'/src
-
-3. Build binaries
-
-   $ make --file=sunstudio.mak
-
-4. [Optional] Test build by running examples
-
-   $ make verify
-
-5. Install binaries to default location /usr/local.
-
-   $ make install
-
-MacOS and Clang Compiler
+Linux and Intel Compiler
 ------------------------
-1. Extract source distribution
-
-   $ unzip admb-'version'.zip
-
-   where 'version' is the distribution version.
-
-2. Change to distribution directory
-
-   $ cd admb-'version'
-
-3. Configure the build files for Clang
-
-   $ ./configure CC=clang CXX=clang++
-
-4. Build binaries
-
-   $ make
-
-4. [Optional] Test build by running examples
-
-   $ make verify
-
-5. Install binaries to default location /usr/local.
-
-   $ make install
-
-Linux/Solaris and Intel C++ Compiler
-------------------------------------
 1. Extract source distribution
 
    $ unzip admb-'version'.zip
@@ -214,8 +163,107 @@ Linux/Solaris and Intel C++ Compiler
 
    $ make install
 
-Windows and Visual C++
-----------------------
+Linux and Solaris Studio
+------------------------
+1. Extract source distribution
+
+   $ unzip admb-'version'.zip
+
+   where 'version' is the distribution version.
+
+2. Change to source directory
+
+   $ cd admb-'version'/src
+
+3. Build binaries
+
+   $ make --file=sunstudio.mak
+
+4. [Optional] Test build by running examples
+
+   $ make verify
+
+5. Install binaries to default location /usr/local.
+
+   $ make install
+
+MacOS and Clang
+---------------
+1. Extract source distribution
+
+   $ unzip admb-'version'.zip
+
+   where 'version' is the distribution version.
+
+2. Change to distribution directory
+
+   $ cd admb-'version'
+
+3. Configure the build files for Clang
+
+   $ ./configure CC=clang CXX=clang++
+
+4. Build binaries
+
+   $ make
+
+4. [Optional] Test build by running examples
+
+   $ make verify
+
+5. Install binaries to default location /usr/local.
+
+   $ make install
+
+Windows and GCC using MSYS Linux emulation
+------------------------------------------
+Notes:
+1. This method sees MSYS as a Linux machine and uses only the linux.mak
+   makefile, it does not use the mingw.mak makefile.
+2. The configure script must be run prior to the 'make' as described below.
+   Otherwise the user contributed libraries will not be built, and the ADMB
+   linker will break on the -lcontribo or -lcontribs flags.
+3. Currently supports only 32-bit builds.
+
+Prerequisites:
+1. MinGW, a Linux shell emulator for Windows (install first).
+2. MSYS, a toolset for building source using Linux commands on Windows (install
+   second). As of March 2012, MSYS can be downloaded from this link:
+   http://sourceforge.net/projects/mingw/files/MSYS/Base/msys-core/msys-1.0.11/MSYS-1.0.11.exe/download
+
+Steps:
+1. Open MSYS shell, typically at C:\msys\1.0\msys.bat or in shortcut
+   Start->MinGW->MinGW Shell.
+
+2. Change to the distribution or build directory, typically C:\admb-trunk.
+   The MSYS shell always starts in its own directory, so if MSYS was installed
+   in C:\MSYS and the distribution directory name is admb-trunk then this
+   command is:
+
+   $ cd ../c/admb-trunk
+
+3. Create configure script.
+
+   $ make --directory=scripts/configure/
+
+4. Configure the build files.
+
+   $ ./configure
+
+5. Build binaries.
+
+   $ make
+
+6. [Optional] Test build by running examples.
+
+   $ make verify
+
+7. Set the environment variable ADMB_HOME to point to the distribution
+   directory, typically C:\admb-trunk and add the bin directory for the
+   distribution to your PATH environment variable, typically C:\admb-trunk\bin.
+
+Windows and MSVC
+----------------
 1. Extract source distribution.
 
 2. Open Visual C++ Command Prompt.
@@ -239,8 +287,8 @@ Windows and Visual C++
 
    > nmake /fvc.mak install
 
-Windows and Borland C++
------------------------
+Windows and Borland
+-------------------
 1. Extract source distribution.
 
 2. Open Windows Command Prompt in Start->All Programs->Accessories.
@@ -272,53 +320,6 @@ Windows and Borland C++
 
    > make /fbcc.mak install
 
-Windows and GNU g++ using MSYS Unix emulation
----------------------------------------------
-Notes:
-1. This method sees MSYS as a Linux machine and uses only the linux.mak
-   makefile, it does not use the mingw.mak makefile.
-2. The configure script must be run prior to the 'make' as described below.
-   Otherwise the user contributed libraries will not be built, and the ADMB
-   linker will break on the -lcontribo or -lcontribs flags.
-3. Currently supports only 32-bit builds.
-
-Prerequisites:
-1. MinGW, a Linux shell emulator for Windows (install first).
-2. MSYS, a toolset for building source using Linux commands on Windows (install
-   second). As of March 2012, MSYS can be downloaded from this link:
-   http://sourceforge.net/projects/mingw/files/MSYS/Base/msys-core/msys-1.0.11/MSYS-1.0.11.exe/download
-
-Steps:
-1. Open MSYS shell, typically at C:\msys\1.0\msys.bat or in shortcut
-   Start->MinGW->MinGW Shell.
-
-2. Change to the distribution or build directory, typically C:\admb-trunk.
-   The MSYS shell always starts in its own directory, so if MSYS was installed
-   in C:\MSYS and the distribution directory name is admb-trunk then this
-   command is:
-
-   $ cd ../c/admb-trunk
-
-3. Create configure script.
-
-   $ make --directory=scripts/configure/
-
-4. Configure the build files for 32-bit.
-
-   $ ./configure
-
-5. Build binaries.
-
-   $ make
-
-6. [Optional] Test build by running examples.
-
-   $ make verify
-
-7. Set the environment variable ADMB_HOME to point to the distribution
-   directory, typically C:\admb-trunk and add the bin directory for the
-   distribution to your PATH environment variable, typically C:\admb-trunk\bin.
-
 Installation from Binary Distributions
 ======================================
 
@@ -331,7 +332,6 @@ MacOS and XCode
 
 If successful, the wizard will have installed admb directory (/usr/local/admb)
 and script (/usr/local/bin/admb).
-
 
 Documentation
 =============

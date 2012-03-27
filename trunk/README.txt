@@ -41,7 +41,6 @@ Table of Contents
    - MacOS and Clang
    - Windows and GCC using MSYS Linux emulation
    - Windows and MSVC
-   - Windows and Borland
  * Installation from Binary Distribution
    - MacOS and XCode
  * Documentation
@@ -85,7 +84,6 @@ Several compilers are supported, including
  * Clang 3.0
  * Intel C++ Compiler 11
  * Solaris Studio 12
- * Borland 5.5
 
 If the compiler is not listed, build the source distribution or email
 users@admb-project.org for help.
@@ -286,39 +284,6 @@ Windows and MSVC
    shortcuts in the Start Menu.
 
    > nmake /fvc.mak install
-
-Windows and Borland
--------------------
-1. Extract source distribution.
-
-2. Open Windows Command Prompt in Start->All Programs->Accessories.
-
-3. Set BCC55_HOME variable to location of BCC55 folder.
-
-   > set BCC55_HOME=c:\Borland\BCC55
-
-4. Add BCC55_HOME to system PATH variable.
-
-   > set PATH=c:\Borland\BCC55\Bin;%PATH%
-
-5. Change directory to the "src" folder.
-
-   > cd admb-'version'\src
-
-   where 'version' is the distribution version.
-
-6. Build 32-bit binaries
-
-   > make /fbcc.mak
-
-7. [Optional] Test build by running examples
-
-   > make /fbcc.mak verify
-
-8. Install binaries to default location %ProgramFiles%\ADMB and add ADMB
-   shortcuts in the Start Menu.
-
-   > make /fbcc.mak install
 
 Installation from Binary Distributions
 ======================================

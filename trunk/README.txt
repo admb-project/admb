@@ -184,15 +184,14 @@ Windows and MSVC
    C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE
    C:\admb\bin
 
-4. Add the following environment variables:
-   MSSDK = C:\Program Files\Microsoft SDKs\Windows\v7.1
+4. Add the following environment variable:
    ADMB_HOME = C:\admb
 
-5. Modify line 44 in C:\admb\bin\adlink.bat so that your code will link to the
-   right libraries, Intel 64-bit in this example:
+5. You must use the Windows SDK 7.1 command prompt to compile your code.  This
+   should be a shortcut in the Start menu but the shortcut is this:
 
-   /libpath:"%MSSDK%"\lib\x64 
-	 for 64-bit build.
+   C:\Windows\System32\cmd.exe /E:ON /V:ON /T:0E /K 
+   "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd"
 
 Installation from Source Code
 =============================

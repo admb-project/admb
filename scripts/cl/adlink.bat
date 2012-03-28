@@ -41,7 +41,7 @@ if %adlib%==ads32.lib set df1b2lib=df1b2s.lib
 set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
-cl  %1.obj %df1b2lib% admod32%s%.lib %adlib% adt32%s%.lib %contrib% /link /libpath:"%ADMB_HOME%"\lib /libpath:"%ADMB_HOME%"\contrib /libpath:"%MSSDK%"\lib
+cl  %1.obj %df1b2lib% admod32%s%.lib %adlib% adt32%s%.lib %contrib% /link /libpath:"%ADMB_HOME%"\lib /libpath:"%ADMB_HOME%"\contrib
 @echo off
 
 goto EOF

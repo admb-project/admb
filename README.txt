@@ -170,9 +170,8 @@ Windows and MSVC
    C. Microsoft Visual Studio 2010
 
 2. Download the executable installer for Windows MSVC from 
-   http://admb-project.org/downloads.
-
-3. Make sure to choose the install location as C:\admb.
+   http://admb-project.org/downloads and run it.  Make sure to choose the
+   install location as C:\admb.
 
 3. Add the following to the PATH, in the order given, the second path must
    reflect which architecture you want to compile for, this example is for 

@@ -161,6 +161,39 @@ Windows and GCC
    Those commands should compile and run the simple model, producing output 
    ending with the line "Estimating row 2 out of 2 for hessian".
 
+Windows and MSVC
+----------------
+1. Download and install the following software, install them in their default
+   locations:
+   A. Microsoft .NET 4
+   B. Microsoft Windows SDK 7.1
+   C. Microsoft Visual Studio 2010
+
+2. Download the executable installer for Windows MSVC from 
+   http://admb-project.org/downloads.
+
+3. Make sure to choose the install location as C:\admb.
+
+3. Add the following to the PATH, in the order given, the second path must
+   reflect which architecture you want to compile for, this example is for 
+   Intel 64-bit processors:
+
+   C:\Program Files\Microsoft SDKs\Windows\v7.1
+   C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_ia64
+   C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin
+   C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE
+   C:\admb\bin
+
+4. Add the following environment variables:
+   MSSDK = C:\Program Files\Microsoft SDKs\Windows\v7.1
+   ADMB_HOME = C:\admb
+
+5. Modify line 44 in C:\admb\bin\adlink.bat so that your code will link to the
+   right libraries, Intel 64-bit in this example:
+
+   /libpath:"%MSSDK%"\lib\x64 
+	 for 64-bit build.
+
 Installation from Source Code
 =============================
 Below are procedures for installing ADMB from source code.
@@ -281,55 +314,22 @@ MacOS and Clang
 
    $ make install
 
-Windows and GCC using MSYS Linux emulation
-------------------------------------------
-Notes:
-1. This method sees MSYS as a Linux machine and uses only the linux.mak
-   makefile, it does not use the mingw.mak makefile.
-2. The configure script must be run prior to the 'make' as described below.
-   Otherwise the user contributed libraries will not be built, and the ADMB
-   linker will break on the -lcontribo or -lcontribs flags.
-3. Currently supports only 32-bit builds.
-
-Prerequisites:
-1. MinGW, a Linux shell emulator for Windows (install first).
-2. MSYS, a toolset for building source using Linux commands on Windows (install
-   second). As of March 2012, MSYS can be downloaded from this link:
-   http://sourceforge.net/projects/mingw/files/MSYS/Base/msys-core/msys-1.0.11/MSYS-1.0.11.exe/download
-
-Steps:
-1. Open MSYS shell, typically at C:\msys\1.0\msys.bat or in shortcut
-   Start->MinGW->MinGW Shell.
-
-2. Change to the distribution or build directory, typically C:\admb-trunk.
-   The MSYS shell always starts in its own directory, so if MSYS was installed
-   in C:\MSYS and the distribution directory name is admb-trunk then this
-   command is:
-
-   $ cd ../c/admb-trunk
-
-3. Create configure script.
-
-   $ make --directory=scripts/configure/
-
-4. Configure the build files.
-
-   $ ./configure
-
-5. Build binaries.
-
-   $ make
-
-6. [Optional] Test build by running examples.
-
-   $ make verify
-
-7. Set the environment variable ADMB_HOME to point to the distribution
-   directory, typically C:\admb-trunk and add the bin directory for the
-   distribution to your PATH environment variable, typically C:\admb-trunk\bin.
-
 Windows and MSVC
 ----------------
+Prerequisites (Install all of these in their default locations):
+1. Microsoft .NET 4
+2. Microsoft Windows SDK 7.1
+3. Microsoft Visual Studio 2010
+
+Add the following to the PATH, in the order given, the second path must
+reflect which architecture you want to compile for, here it is for Intel 64:
+
+C:\Program Files\Microsoft SDKs\Windows\v7.1
+C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_ia64
+C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin
+C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE
+
+Steps:
 1. Extract source distribution.
 
 2. Open Visual C++ Command Prompt.
@@ -347,11 +347,6 @@ Windows and MSVC
 5. [Optional] Test build by running examples
 
    > nmake /fvc.mak verify
-
-6. Install binaries to default location %ProgramFiles%\ADMB and add ADMB
-   shortcuts in the Start Menu.
-
-   > nmake /fvc.mak install
 
 Documentation
 =============

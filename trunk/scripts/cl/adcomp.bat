@@ -35,7 +35,7 @@ goto STARTLOOP
 :ENDLOOP
 
 @echo on
-cl -c /EHsc -DUSE_LAPLACE -DWIN32 %opt% /Ox -D__MSVC32__=8 -I. -I"%ADMB_HOME%"\include -I"%ADMB_HOME%"\contrib -I"%MSSDK%"\include %1.cpp
+cl -c /EHsc -DUSE_LAPLACE -DWIN32 %opt% /Ox -D__MSVC32__=8 -I. -I"%ADMB_HOME%"\include -I"%ADMB_HOME%"\contrib %1.cpp
 @echo off
 
 goto EOF

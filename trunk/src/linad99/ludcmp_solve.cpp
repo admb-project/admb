@@ -72,12 +72,11 @@ dvector solve(const dmatrix & aa, const dvector & z)
    double ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
-      ln_det += log(dcmp(i, i));
+      ln_det += log(fabs(dcmp(i, i)));
    }
    if (exp(ln_det) == 0.0)
    {
-      cerr <<
-	 "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
+      cerr << "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
       ad_exit(1);
    }
    //Solve L*y=b with forward-substitution (before solving Ux=y)
@@ -99,7 +98,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
       double tmp = 0.0;
       for (int j = ub; j > i; j--)
       {
-	 tmp += dcmp(i, j) * x(j);
+        tmp += dcmp(i, j) * x(j);
       }
       x(i) = (y(i) - tmp) / dcmp(i, i);
    }
@@ -168,7 +167,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
    {
       for (int j = lb; j < i; j++)
       {
-	 tmp1(i) += alpha(i, j) * y(j);
+        tmp1(i) += alpha(i, j) * y(j);
       }
       y(i) = value(z(index2(i))) - tmp1(i);
    }
@@ -263,8 +262,7 @@ static void df_solve(void)
    for (int i = lb; i <= ub; i++)
    {
       //value(x(i))=(y(i)-tmp2(i))/gamma(i,i);
-      dfgamma(i, i) =
-	 ((tmp2(i) - y(i)) * dfx(i)) / (gamma(i, i) * gamma(i, i));
+      dfgamma(i, i) = ((tmp2(i) - y(i)) * dfx(i)) / (gamma(i, i) * gamma(i, i));
       dftmp2(i) = -dfx(i) / gamma(i, i);
       dfy(i) = dfx(i) / gamma(i, i);
       for (int j = i + 1; j <= ub; j++)

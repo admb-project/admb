@@ -143,19 +143,18 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
 
    cltudecomp clu1 = xludecomp_pivot(aa);
    ivector index2 = clu1.get_index2();
-   dmatrix & gamma = clu1.get_U();
-   dmatrix & alpha = clu1.get_L();
+   dmatrix &gamma = clu1.get_U();
+   dmatrix &alpha = clu1.get_L();
 
    //check if invertable
-	double ln_det = 0.0;
+   double ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
-		ln_det += log(clu1(i, i));
+     ln_det += log(fabs(clu1(i, i)));
    }
-	if(exp(ln_det)==0.0)
+   if(exp(ln_det) == 0.0)
    {
-      cerr <<
-	 "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";
+      cerr << "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";
       ad_exit(1);
    }
 

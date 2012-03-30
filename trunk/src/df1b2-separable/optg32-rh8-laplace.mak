@@ -24,7 +24,7 @@ $(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
 	ar -rs $@ $(LIBPATH)/*.obj
 
 $(DISKDIR)/bin/tpl2rem: tpl2rem.c
-	$(CC) -o $@ $<
+	$(CC) $(CFLAGS) -o $@ $<
 
 tpl2rem.c: tpl2rem.lex
 	flex $<

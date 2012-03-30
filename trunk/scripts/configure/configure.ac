@@ -1,4 +1,4 @@
-AC_INIT([ADMB], [trunk], [users@admb-project.org]): ${CXXFLAGS="${CXXFLAGS}"}
+AC_INIT([ADMB], [trunk], [users@admb-project.org]): ${CXXFLAGS="${CXXFLAGS}"} ${CFLAGS="${CFLAGS}"} 
 
 # Check for programs used in building ADMB.
 AC_PROG_CC
@@ -112,7 +112,7 @@ then
   MAKEFILE="linux.mak"
 fi
 
-ARCH_CXXFLAG=${CXXFLAGS}
+CXXFLAGS=${CXXFLAGS}
 
 AC_CONFIG_FILES(
   [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/admb/admb-bin ${INSTALLER_PACKAGEMAKER} ${INSTALLER_MINGW} ]
@@ -124,7 +124,8 @@ AC_SUBST(version, ${ADMB_VERSION})
 AC_SUBST(target, ${ADMB_TARGET})
 AC_SUBST(disk, ../build/${ADMB_TARGET}/${ADMB_TARGET})
 AC_SUBST(libpath, ../build/${ADMB_TARGET}/objects)
-AC_SUBST(arch_cxxflag, ${ARCH_CXXFLAG})
+AC_SUBST(cxxflags, ${CXXFLAGS})
+AC_SUBST(cflags, ${CFLAGS})
 AC_SUBST(cxx, ${CXX})
 AC_SUBST(cc, ${CC})
 AC_SUBST(makefile, ${MAKEFILE})

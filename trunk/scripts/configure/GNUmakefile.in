@@ -3,16 +3,16 @@
 all: admb contrib
 
 admb:
-	CC=@cc@ CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 $(MAKE) --directory=src --file=@makefile@
+	CC=@cc@ CFLAGS="@cflags@" CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 $(MAKE) --directory=src --file=@makefile@
 	rm -rf `find build/@target@/@target@ -type d -name .svn`
 	@printf "\nBuild completed for @target@\n"
 	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
 
 tpl2cpp:
-	$(MAKE) --directory=src/nh99 --file=optg32-rh8-laplace.mak tpl2cpp.c
+	$(MAKE) --directory=src/nh99 --file=optg32-rh8-laplace.mak $@.c $@
 
 tpl2rem:
-	$(MAKE) --directory=src/df1b2-separable --file=optg32-rh8-laplace.mak tpl2rem.c
+	$(MAKE) --directory=src/df1b2-separable --file=optg32-rh8-laplace.mak $@.c $@
 
 debug:
 	DEBUG=1 CC=@cc@ CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 $(MAKE) --directory=src --file=@makefile@

@@ -45,10 +45,10 @@ linux-verify:
 	$(MAKE) --directory=src --file=linux.mak verify
 
 it:
-	./configure CXXFLAGS="-m32 -mmacosx-version-min=10.5"
+	./configure CFLAGS=-m32 CXXFLAGS="-m32 -mmacosx-version-min=10.5"
 
 it2:
-	$(MAKE) MACOSX_DEPLOYMENT_TARGET=10.5 CXXFLAGS="-m32 -mmacosx-version-min=10.5" LDFLAGS="-m32 -Wl,-macosx_version_min,10.5" verify
+	$(MAKE) MACOSX_DEPLOYMENT_TARGET=10.5 CFLAGS=-m32 CXXFLAGS="-m32 -mmacosx-version-min=10.5" LDFLAGS="-m32 -Wl,-macosx_version_min,10.5" verify
 
 clean:
 	rm -rvf build

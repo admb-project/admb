@@ -243,8 +243,8 @@ int pos(_CONST adstring& substr,_CONST adstring& s);
     friend class ptr_vector;
   public:
     vector_shape(int& lb, int& lu) {index_min=lb;index_max=lu;ncopies=0;}
-    _CONST int indexmin(void) _CONST {return index_min;}
-    _CONST int indexmax(void) _CONST {return index_max;}
+    int indexmin(void) const {return index_min;}
+    int indexmax(void) const {return index_max;}
   };
 #endif
 

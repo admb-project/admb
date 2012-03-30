@@ -38,12 +38,12 @@ Table of Contents
    - Linux and GCC
    - MacOS and XCode
    - Windows and GCC
+   - Windows and MSVC
  * Installation from Source Code
    - Linux and GCC
    - Linux and Intel Compiler
    - Linux and Solaris Studio
    - MacOS and Clang
-   - Windows and GCC using MSYS Linux emulation
    - Windows and MSVC
  * Documentation
  * Developing AD Model Builder
@@ -167,15 +167,18 @@ Windows and MSVC
    locations:
    A. Microsoft .NET 4
    B. Microsoft Windows SDK 7.1
-   C. Microsoft Visual Studio 2010
+   C. Microsoft Visual Studio 2010 Express
 
 2. Download the executable installer for Windows MSVC from 
    http://admb-project.org/downloads and run it.  Make sure to choose the
-   install location as C:\admb.
+   install location as C:\admb and not the default in 'Program Files'.
 
-3. Add the following to the PATH, in the order given, the second path must
+3. Add the following to the PATH in the order given. Only enter the second
+   path is you are compiling for a 64-bit processor.  If so, this path must
    reflect which architecture you want to compile for, this example is for 
-   Intel 64-bit processors:
+   Intel 64-bit processors.  This was tested on a 64-bit machine which
+   has a folder called 'Program Files (x86)'.  If you are on a 32-bit machine,
+   remove the '(x86)' from these paths.
 
    C:\Program Files\Microsoft SDKs\Windows\v7.1
    C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_ia64
@@ -183,11 +186,18 @@ Windows and MSVC
    C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE
    C:\admb\bin
 
-4. Add the following environment variable:
+4. Add the following environment variables:
    ADMB_HOME = C:\admb
+   INCLUDE   = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include;
+               C:\Program Files\Microsoft SDKs\Windows\v7.1\Include
+   LIB       = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib;
+               C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib 
 
-5. You must use the Windows SDK 7.1 command prompt to compile your code.  This
-   should be a shortcut in the Start menu but the shortcut is this:
+5. Logout and login again to make the environment variable changes take effect.
+
+6. For a 32-bit build, open any DOS window and you may compile your code.
+   For a 64-bit build, you must use the Windows SDK 7.1 command prompt to
+   compile. This should be a shortcut in the Start menu which is:
 
    C:\Windows\System32\cmd.exe /E:ON /V:ON /T:0E /K 
    "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd"
@@ -314,23 +324,11 @@ MacOS and Clang
 
 Windows and MSVC
 ----------------
-Prerequisites (Install all of these in their default locations):
-1. Microsoft .NET 4
-2. Microsoft Windows SDK 7.1
-3. Microsoft Visual Studio 2010
-
-Add the following to the PATH, in the order given, the second path must
-reflect which architecture you want to compile for, here it is for Intel 64:
-
-C:\Program Files\Microsoft SDKs\Windows\v7.1
-C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_ia64
-C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin
-C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE
-
 Steps:
-1. Extract source distribution.
+1. Follow the same directions given above in the 'Installation from Binary
+   Distributions' section to set up the compilers.
 
-2. Open Visual C++ Command Prompt.
+2. Extract source distribution.
 
 3. Change directory to the "src" folder.
 
@@ -341,10 +339,6 @@ Steps:
 4. Build binaries
 
    > nmake /fvc.mak
-
-5. [Optional] Test build by running examples
-
-   > nmake /fvc.mak verify
 
 Documentation
 =============

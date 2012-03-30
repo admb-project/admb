@@ -30,7 +30,7 @@ $(DISKDIR)/bin/tpl2cpp: tpl2cpp.c
 ifeq ("$(CC)","cc")
 	$(CC) -o $@ $<
 else
-	$(CC) -Wno-format -o $@ $<
+	$(CC) $(CFLAGS) -Wno-format -o $@ $<
 endif
 
 tpl2cpp.c: tpl2cpp.lex

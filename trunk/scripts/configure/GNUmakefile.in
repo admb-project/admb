@@ -15,7 +15,7 @@ tpl2rem:
 	$(MAKE) --directory=src/df1b2-separable --file=optg32-rh8-laplace.mak $@.c $@
 
 debug:
-	DEBUG=1 CC=@cc@ CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 $(MAKE) --directory=src --file=@makefile@
+	DEBUG=1 CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 $(MAKE) --directory=src --file=@makefile@
 	rm -rf `find build/@target@/@target@ -type d -name .svn`
 	@printf "\nBuild completed for @target@\n"
 	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
@@ -32,7 +32,7 @@ dist:
 	cd build/dist && zip -r admb-@version@.zip admb-@version@
 
 verify:
-	DISK=@disk@ ADMB_CXXFLAGS="@arch_cxxflag@" ADMB_LDFLAGS="@arch_cxxflag@" $(MAKE) --directory=src --file=@makefile@ verify
+	DISK=@disk@ ADMB_CXXFLAGS="@cxxflags@" ADMB_LDFLAGS="@cxxflags@" $(MAKE) --directory=src --file=@makefile@ verify
 
 install:
 	install -d -m 755 @prefix@/admb/bin @prefix@/admb/include @prefix@/admb/lib @prefix@/admb/docs @prefix@/admb/examples @prefix@/admb/contrib
@@ -58,7 +58,7 @@ test:
 	export ADMB_HOME=${PWD}/build/@target@/@target@; export PATH=${PWD}/build/@target@/@target@/bin:$(PATH); CXXFLAGS="@arch_cxxflag@" $(MAKE) --directory=contrib test
 
 contrib:
-	CC=@cc@ CXX=@cxx@ CXXFLAGS="@arch_cxxflag@" LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib
+	CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib
 
 clean:
 	rm -rvf build/@target@

@@ -158,7 +158,7 @@ class dvector_for_adjoint
    {
       return D(i, count(i));
    }
-   double& operator () (int i) const
+   const double& operator () (int i) const
    {
       return D(i, count(i));
    }

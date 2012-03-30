@@ -929,7 +929,7 @@ public:
   { 
     index_min++;index_max++;v--; return *this;
   }
-  virtual const int pointersize(void) const { return sizeof(df1b2variable); }
+  virtual int pointersize(void) const { return sizeof(df1b2variable); }
   inline df1b2variable * getv(void) {return v;}
   int allocated(void){return v!=0;}
   int indexmin(void)const {return index_min;}

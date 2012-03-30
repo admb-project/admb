@@ -6309,9 +6309,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /= ( double d);
@@ -6430,9 +6430,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /=(_CONST prevariable& d);
@@ -6566,9 +6566,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /= ( double d);
@@ -6703,9 +6703,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /=(_CONST prevariable& d);
@@ -6857,9 +6857,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /= ( double d);
@@ -7010,9 +7010,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /=(_CONST prevariable& d);

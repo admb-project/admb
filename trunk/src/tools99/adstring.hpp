@@ -255,8 +255,8 @@ class adstring_array : public clist
   adstring ** ptr;
 public:
   int size() _CONST { return shape->indexmax()-shape->indexmin()+1;}
-  _CONST int indexmin(void) _CONST { return shape->indexmin();}
-  _CONST int indexmax(void) _CONST { return shape->indexmax();}
+  int indexmin(void) const { return shape->indexmin();}
+  int indexmax(void) const { return shape->indexmax();}
   adstring_array(_CONST adstring_array& sa);
   ~adstring_array();
   adstring_array(int min,int max);

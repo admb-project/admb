@@ -276,8 +276,4 @@ dvariable 	nllInverseGamma (const dvar_vector &x, const dvariable &a, const dvar
 df1b2variable 	nllInverseGamma (const dvector &x, const df1b2variable &a, const df1b2variable &b);
 df1b2variable 	nllInverseGamma (const df1b2vector &x, const double a, const double b);
 df1b2variable 	nllInverseGamma (const df1b2vector &x, const df1b2variable &a, const df1b2variable &b);
-
-
-
-
 #endif

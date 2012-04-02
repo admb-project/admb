@@ -55,6 +55,9 @@
 #include <string.h>
 #include <ctype.h>
 
+#include <sstream>
+using std::istringstream;
+
 int mystrlen(char * line);
 
 const unsigned int MAX_LINE_LENGTH = 10000;

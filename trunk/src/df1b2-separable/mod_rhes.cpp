@@ -8,6 +8,9 @@
  * \file
  * Description not yet available.
  */
+#include <sstream>
+using std::istringstream;
+
 #if defined(USE_LAPLACE)
 #include <admodel.h>
 #include <df1b2fun.h>

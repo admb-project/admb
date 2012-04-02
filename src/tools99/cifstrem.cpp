@@ -8,6 +8,8 @@
 \file cifstrem.cpp
 Implementation of the cifstream class.
 */
+#include <sstream>
+using std::istringstream;
 
 #include <fvar.hpp>
 

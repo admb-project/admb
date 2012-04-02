@@ -4,6 +4,9 @@
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
  */
+#include <sstream>
+using std::istringstream;
+
 #include <admodel.h>
 
 #if defined(USE_LAPLACE)

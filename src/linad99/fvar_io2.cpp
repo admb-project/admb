@@ -43,6 +43,10 @@
 
 #include <string.h>
 #include <ctype.h>
+
+#include <sstream>
+using std::istringstream;
+
 const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;

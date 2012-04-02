@@ -61,12 +61,8 @@ dist:
 	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/$(CXX)/adcomp ${DISK}/bin
 	cp ../scripts/$(CXX)/adlink ${DISK}/bin
-        ifeq ($(CXX),CC)
-	  cp ../scripts/g++/Makefile ${DISK}/examples
-        else
-	  cp ../scripts/$(CXX)/Makefile ${DISK}/examples
-        endif
-        ifneq ($(CXX),CC)
+	cp ../scripts/g++/Makefile ${DISK}/examples
+        ifeq ($(CXX),g++)
 	  cp ../scripts/admb/admb.bat ${DISK}/bin
 	  cp ../scripts/$(CXX)/adcomp.bat ${DISK}/bin
 	  cp ../scripts/$(CXX)/adlink.bat ${DISK}/bin

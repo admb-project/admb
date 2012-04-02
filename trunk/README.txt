@@ -171,7 +171,8 @@ Windows and MSVC
 
 2. Download the executable installer for Windows MSVC from 
    http://admb-project.org/downloads and run it.  Make sure to choose the
-   install location as C:\admb and not the default in 'Program Files'.
+   install location as the default C:\ADMB or another location without spaces in
+   the name.
 
 3. Add the following to the PATH in the order given. Only enter the second
    path is you are compiling for a 64-bit processor.  If so, this path must

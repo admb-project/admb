@@ -224,7 +224,7 @@ dmatrix::dmatrix(char * s)
       }
 
       int j=0;              // j counts columns
-      istrstream f(line);
+      istringstream f(line);
       while ( (f >> field).good() )
       {
        //char * err_ptr;
@@ -300,7 +300,7 @@ dmatrix::dmatrix(char * s)
      i++;
 
      int j=0;              // j counts columns
-     istrstream f(line);
+     istringstream f(line);
      while ( (f >> field).good() )
      {
        char * err_ptr;

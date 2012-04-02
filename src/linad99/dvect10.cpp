@@ -126,7 +126,7 @@ void dvector::fill(const char * s)
         ad_exit(1);
       }
     }
-    istrstream ss(t);
+    istringstream ss(t);
 
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];
    char * field = new char[size_t(MAX_FIELD_LENGTH+1)];

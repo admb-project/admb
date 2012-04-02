@@ -163,7 +163,7 @@ void tracing_message(int traceflag,const char *s);
       else
       {   
     
-        istrstream ist(ad_comm::argv[on+1]);
+        istringstream ist(ad_comm::argv[on+1]);
         ist >> _crit;
     
         if (_crit<=0)
@@ -183,7 +183,7 @@ void tracing_message(int traceflag,const char *s);
       else
       {   
     
-        istrstream ist(ad_comm::argv[on+1]);
+        istringstream ist(ad_comm::argv[on+1]);
         ist >> bandwidth;
     
         if (bandwidth<=0)

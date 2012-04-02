@@ -253,7 +253,7 @@ cifstream& cifstream::operator >> (BOR_CONST long& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
-  istrstream is(s, strlen(s));
+  istringstream is(s);
   is >> (long&) i;
 #ifdef __NDPX__
   if (is.eof()) is.clear();
@@ -281,7 +281,7 @@ cifstream& cifstream::operator >> (long long & i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
-  istrstream is(s, strlen(s));
+  istringstream is(s);
   is >> i;
 #ifdef __NDPX__
   if (is.eof()) is.clear();
@@ -315,7 +315,7 @@ cifstream& cifstream::operator >> (BOR_CONST int& i)
   //cout << "cifstream& cifstream::operator >> (int& i) s = '" << s 
   //     << "'" << endl;
   js_strip_leading_zeros(s);
-  istrstream is(s, strlen(s));
+  istringstream is(s);
   is >> (int&)i;
 #ifdef __NDPX__
   if (is.eof()) is.clear();
@@ -339,7 +339,7 @@ cifstream& cifstream::operator >> (BOR_CONST double& _x)
     get_field(s);
 
 #if !defined(__BORLANDC__)
-  istrstream is(s, strlen(s));
+  istringstream is(s);
   if (!is)
   {
     this->clear(is.rdstate());
@@ -369,7 +369,7 @@ cifstream& cifstream::operator >> (BOR_CONST float& x)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
-  istrstream is(s, strlen(s));
+  istringstream is(s);
   is >> (float&)x;
 #ifdef __NDPX__
   if (is.eof()) is.clear();

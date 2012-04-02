@@ -75,7 +75,7 @@ const int MAX_NUMBER_ROWS = 6550;
      int j=0;              // j counts columns
 
      #ifndef __ZTC__
-       istrstream f(line);
+       istringstream f(line);
        while ( (f >> field).good() )
      #else
        while( sscanf(line,"%s",field)) // reads a field from line into field
@@ -159,7 +159,7 @@ const int MAX_NUMBER_ROWS = 6550;
    i++;
    int j=0;              // j counts columns
    #ifndef __ZTC__
-     istrstream f(line);
+     istringstream f(line);
      while ( (f >> field).good() )
    #else
      while( sscanf(line,"%s",field)) // reads a field from line into field

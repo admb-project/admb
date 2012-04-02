@@ -108,7 +108,7 @@ dvar_vector::dvar_vector(const char * s)
     int nch = commas + 1;
 
     allocate(ncl,nch);
-    istrstream ss(t);
+    istringstream ss(t);
 
     for (k = ncl; k <= nch; k++)
     {

@@ -102,7 +102,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     else
     {   
   
-      istrstream ist(ad_comm::argv[on+1]);
+      istringstream ist(ad_comm::argv[on+1]);
       ist >> _dfn;
   
       if (_dfn<=0)

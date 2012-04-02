@@ -589,7 +589,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
     else
     {   
   
-      istrstream ist(ad_comm::argv[on+1]);
+      istringstream ist(ad_comm::argv[on+1]);
       ist >> _nr_crit;
   
       if (_nr_crit<=0)
@@ -635,7 +635,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
     else
     {   
   
-      istrstream ist(ad_comm::argv[on+1]);
+      istringstream ist(ad_comm::argv[on+1]);
       ist >> _inner_crit;
   
       if (_inner_crit<=0)
@@ -851,7 +851,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
       else
       {   
     
-        istrstream ist(ad_comm::argv[on+1]);
+        istringstream ist(ad_comm::argv[on+1]);
         ist >> eps_mult;
     
         if (eps_mult<=0.0 || eps_mult>1.0)

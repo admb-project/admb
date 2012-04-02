@@ -112,7 +112,7 @@ dvector::dvector(const char * s)
 
     allocate(ncl,nch);
 
-    istrstream ss(t);
+    istringstream ss(t);
 
    char *field =  new char[size_t(MAX_FIELD_LENGTH+1)];
    char *err_ptr;
@@ -316,7 +316,7 @@ void dvector::allocate(const char * s)
 
     allocate(ncl,nch);
 
-    istrstream ss(t);
+    istringstream ss(t);
 
    char * field =  new char[size_t(MAX_FIELD_LENGTH+1)];
    char * err_ptr;

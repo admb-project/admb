@@ -8,7 +8,7 @@
   #include <strstrea.h>
   #include <iomanip.h>
 #else
-  #include <strstream>
+  #include <sstream>
   using namespace std;
 #endif
 
@@ -26,7 +26,7 @@
  */
 void banner(const adstring& program_name)
 {
-  std::ostrstream ss;
+  std::ostringstream ss;
 
   ss << "ADMB Program: " << program_name << "\n\n";
 
@@ -118,8 +118,5 @@ void banner(const adstring& program_name)
   
   ss << '\0';
 
-  char* str = ss.str();
-  cout << str << endl;
-  delete str;
-  str = 0;
+  cout << ss.str() << endl;
 }

@@ -332,7 +332,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       else
       {   
     
-        istrstream ist(ad_comm::argv[on+1]);
+        istringstream ist(ad_comm::argv[on+1]);
         ist >> _delta;
     
         if (_delta<=0)

@@ -472,12 +472,12 @@ int getch(void);
 #  include <iomanip>
 #  include <sstream>
 #  include <istream>
-#  include <strstream>
+#  include <sstream>
      using std::ofstream;
      using std::ostream;
      using std::ifstream;
      using std::istream;
-     using std::istrstream;
+     using std::istringstream;
      using std::streampos;
      using std::streambuf;
      using std::setw;

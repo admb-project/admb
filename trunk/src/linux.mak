@@ -33,7 +33,7 @@ CXXFLAGS_INCLUDES:=-I../df1b2-separable -I../nh99 -I../linad99 -I../tools99
 ifeq ($(CXX),CC)
 CXXFLAGS:=-DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux $(CXXFLAGS)
 else
-CXXFLAGS:=-Wall -Wno-deprecated -fpermissive -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux $(CXXFLAGS)
+CXXFLAGS:=-Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux $(CXXFLAGS)
 endif
 
 ifdef DEBUG

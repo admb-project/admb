@@ -233,7 +233,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       else
       {   
     
-        istrstream ist(ad_comm::argv[on+1]);
+        istringstream ist(ad_comm::argv[on+1]);
         ist >> _hybeps;
     
         if (_hybeps<=0)

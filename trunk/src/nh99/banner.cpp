@@ -12,6 +12,9 @@
   using namespace std;
 #endif
 
+#include <sstream>
+using std::ostringstream;
+
 #define STR(x) #x
 #define STR2(x) STR(x)
 
@@ -26,7 +29,7 @@
  */
 void banner(const adstring& program_name)
 {
-  std::ostringstream ss;
+  ostringstream ss;
 
   ss << "ADMB Program: " << program_name << "\n\n";
 

@@ -7,23 +7,23 @@ DISTRIBUTION_NAME=ADMB
 CC=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
 
 all:
-	rm -rvf build/@target@/Resources
-	mkdir -p build/@target@/Resources
+	rm -rvf build/dmg/@target@/Resources
+	mkdir -p build/dmg/@target@/Resources
 
-	rm -rvf build/@target@/installer
-	mkdir -p build/@target@/installer/usr/local/bin
-	mkdir -p build/@target@/installer/usr/local/admb
+	rm -rvf build/dmg/@target@/installer
+	mkdir -p build/dmg/@target@/installer/usr/local/bin
+	mkdir -p build/dmg/@target@/installer/usr/local/admb
 
-	cp -Rvf build/@target@/@target@/* build/@target@/installer/usr/local/admb
-	rm -rvf `find build/@target@/installer -type d -name .svn`
+	cp -Rvf build/@target@/* build/dmg/@target@/installer/usr/local/admb
+	rm -rvf `find build/dmg/@target@/installer -type d -name .svn`
 
-	cp -vf scripts/admb/admb-bin build/@target@/installer/usr/local/bin/admb
+	cp -vf scripts/admb/admb-bin build/dmg/@target@/installer/usr/local/bin/admb
 
-	cp -vf build/@target@/installer/usr/local/admb/README.txt build/@target@/Resources/Welcome.txt
-	cp -vf build/@target@/installer/usr/local/admb/LICENSE build/@target@/Resources/License.txt
-	cp -vf scripts/installers/packagemaker/Resources/background.jpg  build/@target@/Resources/
-	mkdir -p build/@target@/package
-	cp -vf docs/install/readme-macos.txt  build/@target@/package
-	$(CC) --verbose --title $(DISTRIBUTION_NAME) --root build/@target@/installer --id www.admb-project.org --resources build/@target@/Resources --out build/@target@/package/@target@.pkg
+	cp -vf build/dmg/@target@/installer/usr/local/admb/README.txt build/dmg/@target@/Resources/Welcome.txt
+	cp -vf build/dmg/@target@/installer/usr/local/admb/LICENSE build/dmg/@target@/Resources/License.txt
+	cp -vf scripts/installers/packagemaker/Resources/background.jpg  build/dmg/@target@/Resources/
+	mkdir -p build/dmg/@target@/package
+	cp -vf docs/install/readme-macos.txt  build/dmg/@target@/package
+	$(CC) --verbose --title $(DISTRIBUTION_NAME) --root build/dmg/@target@/installer --id www.admb-project.org --resources build/@target@/Resources --out build/dmg/@target@/package/@target@.pkg
 	rm -vf build/@target@/@target@.dmg
-	hdiutil create build/@target@/@target@.dmg -volname "ADMB @version@" -srcfolder build/@target@/package
+	hdiutil create build/@target@/@target@.dmg -volname "ADMB @version@" -srcfolder build/dmg/@target@/package

@@ -38,13 +38,14 @@ Table of Contents
    - Linux and GCC
    - MacOS and XCode
    - Windows and GCC
-   - Windows and MSVC
+   - Windows and Microsoft Visual C++ 2010 Express
  * Installation from Source Code
    - Linux and GCC
    - Linux and Intel Compiler
    - Linux and Solaris Studio
    - MacOS and Clang
-   - Windows and MSVC
+   - Windows and GCC
+   - Windows and Microsoft Visual C++ 2010 Express
  * Documentation
  * Developing AD Model Builder
    - Version Control
@@ -137,7 +138,7 @@ If successful, the wizard will have installed admb directory (/usr/local/admb)
 and script (/usr/local/bin/admb).
 
 Windows and GCC
----------------
+--------------------------------
 1. Download the executable installer for Windows GCC from 
    http://admb-project.org/downloads. The GCC compiler is included with 
    this installer.
@@ -161,8 +162,11 @@ Windows and GCC
    Those commands should compile and run the simple model, producing output 
    ending with the line "Estimating row 2 out of 2 for hessian".
 
-Windows and MSVC
-----------------
+Windows and Microsoft Visual C++ 2010 Express
+--------------------------------------------------------------
+For HTML directions, go to:
+http://admb-project.org/documentation/installation/admb-installation-visual-c
+
 1. Download and install the following software, install them in their default
    locations:
    A. Microsoft .NET 4
@@ -174,34 +178,45 @@ Windows and MSVC
    install location as the default C:\ADMB or another location without spaces in
    the name.
 
-3. Add the following to the PATH in the order given. Only enter the second
-   path is you are compiling for a 64-bit processor.  If so, this path must
-   reflect which architecture you want to compile for, this example is for 
-   Intel 64-bit processors.  This was tested on a 64-bit machine which
-   has a folder called 'Program Files (x86)'.  If you are on a 32-bit machine,
-   remove the '(x86)' from these paths.
+3. Add the following to the PATH in the order given. If you are using a 32-bit
+   machine, enter only the first, third, fourth, and fifth path listed in that
+   order.  If you are using a 64-bit machine, enter all five paths in the order
+   listed.  If you are compiling for a 64-bit machine, the second path listed
+   here must reflect which architecture you want to compile for, this example
+   is for Intel 64-bit processors - for most people this should not be changed.
+   Also, if you are on a 32-bit machine, remove the ' (x86)' from these paths.
 
    C:\Program Files\Microsoft SDKs\Windows\v7.1
-   C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_ia64
+   C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64
    C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin
    C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE
-   C:\admb\bin
+   C:\ADMB\bin
 
 4. Add the following environment variables:
-   ADMB_HOME = C:\admb
+   ADMB_HOME = C:\ADMB
    INCLUDE   = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include;
                C:\Program Files\Microsoft SDKs\Windows\v7.1\Include
+
+   For the LIB variable, choose either 32-bit or 64-bit.
+   32-bit LIB:
    LIB       = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib;
                C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib 
 
+   64-bit LIB:
+   LIB       = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\amd64;
+               C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64 
+
 5. Logout and login again to make the environment variable changes take effect.
 
-6. For a 32-bit build, open any DOS window and you may compile your code.
-   For a 64-bit build, you must use the Windows SDK 7.1 command prompt to
-   compile. This should be a shortcut in the Start menu which is:
+6. You may now open any command shell (DOS window) or call admb from within an
+   editor window using whatever compile command you would like. Try this using
+   the "Simple" example.  Open a command window,  by clicking Start->Run then
+   typing cmd.exe and enter the following commands in the window:
 
-   C:\Windows\System32\cmd.exe /E:ON /V:ON /T:0E /K 
-   "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd"
+   > C:
+   > cd ADMB\examples\admb\simple
+   > admb simple
+   > simple
 
 Installation from Source Code
 =============================
@@ -323,7 +338,7 @@ MacOS and Clang
 
    $ make install
 
-Windows and MSVC
+Windows and Microsoft Visual C++ 2010 Express
 ----------------
 Steps:
 1. Follow the same directions given above in the 'Installation from Binary

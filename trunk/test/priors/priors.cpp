@@ -30,15 +30,15 @@
   *  Quantitative Fisheries Center(QFC), Michigan State University
   */
 
+  #if !defined(__QFC_EST__)
   #define __QFC_EST__
-  #if !defined(__QFC_SIM__) //only include the following header file and constants once
     #include <math.h>
     #include <admodel.h>
     #include <df1b2fun.h>
     #include <adrndeff.h>
     // define constant variable
     const double EPS = 1.e-30;          //tiny number to avoid 0 in log
-  #endif
+  
 
 
 
@@ -2194,3 +2194,5 @@
     nll= - n*a*log(b)+ n*gammln(a)  -(a-1.)*sum(log(x+EPS)) + b/sum(x+EPS);
     return nll;
   }
+
+  #endif

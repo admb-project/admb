@@ -683,7 +683,9 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
            pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
          }
          if ((is%50)==1)
-           cout << iaccept/is << " " << Hbegin-Ham << " " << Ham << endl;
+           //  cout << iaccept/is << " " << Hbegin-Ham << " " << Ham << endl;
+           cout << " hybrid sim " << is <<  "  accept rate " << iaccept/is 
+                << "  Hbegin-Ham " << Hbegin-Ham << "  Ham " << Ham << endl;
          if (rr<pp)
          {
            iaccept++;

@@ -18,7 +18,7 @@ AlwaysShowComponentsList=no
 Name: "mingw"; Description: "ADMB (MinGW GCC-4.5.2)"
 
 [Files]
-Source: "..\..\..\build\admb-trunk-mingw-gcc4.5.2-32bit\admb-trunk-mingw-gcc4.5.2-32bit\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\build\admb-trunk-mingw-gcc4.5.2-32bit\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 
 [Icons]
 Name: "{group}\ADMB Command Prompt (MinGW GCC-4.5.2)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingw.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW GCC-4.5.2)"

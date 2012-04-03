@@ -6,7 +6,7 @@ all: admb contrib
 
 admb:
 	CC=@cc@ CFLAGS="@cflags@" CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 $(MAKE) --directory=src --file=@makefile@
-	rm -rf `find build/@target@/@target@ -type d -name .svn`
+	rm -rf `find build/@target@ -type d -name .svn`
 
 tpl2cpp:
 	$(MAKE) --directory=src/nh99 --file=optg32-rh8-laplace.mak $@.c $@
@@ -16,7 +16,7 @@ tpl2rem:
 
 debug:
 	DEBUG=1 CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 $(MAKE) --directory=src --file=@makefile@
-	rm -rf `find build/@target@/@target@ -type d -name .svn`
+	rm -rf `find build/@target@ -type d -name .svn`
 	@printf "\nBuild completed for @target@\n"
 	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
 
@@ -36,32 +36,33 @@ verify:
 
 install:
 	install -d -m 755 @prefix@/admb/bin @prefix@/admb/include @prefix@/admb/lib @prefix@/admb/docs @prefix@/admb/examples @prefix@/admb/contrib
-	install -m 755 build/@target@/@target@/bin/* @prefix@/admb/bin
-	install -m 644 build/@target@/@target@/include/* @prefix@/admb/include
-	install -m 644 build/@target@/@target@/lib/* @prefix@/admb/lib
-	install -m 644 build/@target@/@target@/contrib/* @prefix@/admb/contrib
+	install -m 755 build/@target@/bin/* @prefix@/admb/bin
+	install -m 644 build/@target@/include/* @prefix@/admb/include
+	install -m 644 build/target@/lib/* @prefix@/admb/lib
+	install -m 644 build/@target@/contrib/* @prefix@/admb/contrib
 	install -m 644 LICENSE @prefix@/admb
 	install -m 644 README.txt @prefix@/admb
 	install -m 644 Makefile @prefix@/admb
 	install -m 644 scripts/admb/admb-bin @prefix@/admb/bin
-	cp -Rf build/@target@/@target@/docs/* @prefix@/admb/docs
-	cp -Rf build/@target@/@target@/examples/* @prefix@/admb/examples
+	cp -Rf build/@target@/docs/* @prefix@/admb/docs
+	cp -Rf build/@target@/examples/* @prefix@/admb/examples
 
 zip:
-	cd build/@target@ && zip -r @target@.zip @target@
+	cd build && zip -r @target@.zip @target@
 
 dmg:
 	@dmgtask@
 
 test:
-	export ADMB_HOME=${PWD}/build/@target@/@target@; export PATH=${PWD}/build/@target@/@target@/bin:$(PATH); CXXFLAGS="@arch_cxxflag@" $(MAKE) --directory=test
-	export ADMB_HOME=${PWD}/build/@target@/@target@; export PATH=${PWD}/build/@target@/@target@/bin:$(PATH); CXXFLAGS="@arch_cxxflag@" $(MAKE) --directory=contrib test
+	export ADMB_HOME=${PWD}/build/@target@; export PATH=${PWD}/build/@target@/bin:$(PATH); CXXFLAGS="@arch_cxxflag@" $(MAKE) --directory=test
+	export ADMB_HOME=${PWD}/build/@target@; export PATH=${PWD}/build/@target@/bin:$(PATH); CXXFLAGS="@arch_cxxflag@" $(MAKE) --directory=contrib test
 
 contrib:
 	CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib
 
 clean:
 	rm -rvf build/@target@
+	rm -rvf build/objects/@target@
 	$(MAKE) --directory=src --file=@makefile@ clean
 	$(MAKE) --directory=test clean
 	$(MAKE) --directory=scripts/configure clean

@@ -1,12 +1,12 @@
 .PHONY: tpl2cpp tpl2rem docs test contrib
 
 all: admb contrib
+	@printf "\nADMB build completed in 'build/@target@'.\n"
+	@printf "To install, read README.txt.\n"
 
 admb:
 	CC=@cc@ CFLAGS="@cflags@" CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 $(MAKE) --directory=src --file=@makefile@
 	rm -rf `find build/@target@/@target@ -type d -name .svn`
-	@printf "\nBuild completed for @target@\n"
-	@printf "To install ADMB to '@prefix@/bin' and '@prefix@/admb', type 'make install'\n"
 
 tpl2cpp:
 	$(MAKE) --directory=src/nh99 --file=optg32-rh8-laplace.mak $@.c $@

@@ -61,7 +61,7 @@ dist:
 	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/$(CXX)/adcomp ${DISK}/bin
 	cp ../scripts/$(CXX)/adlink ${DISK}/bin
-	cp ../scripts/g++/Makefile ${DISK}/examples
+	cp -vf ../scripts/g++/Makefile ${DISK}/examples
         ifeq ($(CXX),g++)
 	  cp ../scripts/admb/admb.bat ${DISK}/bin
 	  cp ../scripts/$(CXX)/adcomp.bat ${DISK}/bin

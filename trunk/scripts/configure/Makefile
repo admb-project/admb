@@ -1,5 +1,7 @@
 all:
 	autoconf --verbose --output=../../configure
+	@printf "\nCreated configure.\n"
+	@printf "To configure, type './configure'.\n"
 
 clean:
 	@rm -vrf autom4te.cache/

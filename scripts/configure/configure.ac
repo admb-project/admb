@@ -122,8 +122,8 @@ AC_SUBST(revision, ${ADMB_REVISION})
 AC_SUBST(lextargets, ${LEX_TARGETS})
 AC_SUBST(version, ${ADMB_VERSION})
 AC_SUBST(target, ${ADMB_TARGET})
-AC_SUBST(disk, ../build/${ADMB_TARGET}/${ADMB_TARGET})
-AC_SUBST(libpath, ../build/${ADMB_TARGET}/objects)
+AC_SUBST(disk, ../build/${ADMB_TARGET})
+AC_SUBST(libpath, ../build/objects/${ADMB_TARGET})
 AC_SUBST(cxxflags, ${CXXFLAGS})
 AC_SUBST(cflags, ${CFLAGS})
 AC_SUBST(cxx, ${CXX})
@@ -141,5 +141,5 @@ PREFIX=${prefix}
 AC_SUBST(PREFIX)
 
 AC_OUTPUT
-printf "\nConfigure completed for ${ADMB_TARGET}\n"
-printf "To build ADMB, type 'make'\n"
+printf "\nConfigure completed for '${ADMB_TARGET}'.\n"
+printf "To build ADMB, type 'make'.\n"

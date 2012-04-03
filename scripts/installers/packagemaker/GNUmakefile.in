@@ -25,5 +25,5 @@ all:
 	mkdir -p build/dmg/@target@/package
 	cp -vf docs/install/readme-macos.txt  build/dmg/@target@/package
 	$(CC) --verbose --title $(DISTRIBUTION_NAME) --root build/dmg/@target@/installer --id www.admb-project.org --resources build/dmg/@target@/Resources --out build/dmg/@target@/package/@target@.pkg
-	rm -vf build/@target@/@target@.dmg
-	hdiutil create build/@target@/@target@.dmg -volname "ADMB @version@" -srcfolder build/dmg/@target@/package
+	rm -vf build/@target@.dmg
+	hdiutil create build/@target@.dmg -volname "ADMB @version@" -srcfolder build/dmg/@target@/package

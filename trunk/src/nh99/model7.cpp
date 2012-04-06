@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2011 Regents of the University of California
  */
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
@@ -24,7 +24,7 @@ int have_jvm=0;
 
 void  strip_full_path(BOR_CONST adstring& _s)
 {
-  adstring& s = (adstring&) _s; 
+  adstring& s = (adstring&) _s;
   int n=s.size();
   int i=0;
   for (i=n-1;i>=1;i--)
@@ -32,7 +32,7 @@ void  strip_full_path(BOR_CONST adstring& _s)
     if ( s(i)=='\\' || s(i) == '/' || s(i)==':') break;
   }
   s=s(i+1,n);
-}  
+}
 
 void set_signal_handlers(void)
 {
@@ -57,7 +57,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   ad_comm::argc=_argc;
   ad_comm::argv=_argv;
   int pvm_flag=0;
-  if (option_match(_argc,_argv,"-time")>-1)  
+  if (option_match(_argc,_argv,"-time")>-1)
   {
     time_flag=1;
   }
@@ -88,7 +88,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 #endif
     pvm_manager = NULL;
 
-  
+
 #if defined(USE_ADPVM)
   if (pvm_manager)
   {
@@ -97,29 +97,29 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       int on=0; int nopt=0;
       if ( (on=option_match(_argc,_argv,"-slave",nopt))>-1)
       {
-        if (nopt ==1)	    
-        {	      
+        if (nopt ==1)
+        {
           pvm_manager->slave_number=atoi(ad_comm::argv[on+1]);
         }
         else
         {
           cerr << "Wrong number of options to -slave -- must be 1"
-            " you have " << nopt << endl;		
+            " you have " << nopt << endl;
           ad_exit(1);
-        }	
-      }   
+        }
+      }
       if ( (on=option_match(_argc,_argv,"-slavedir",nopt))>-1)
       {
-        if (nopt ==1)	    
-        {	      
+        if (nopt ==1)
+        {
           ad_chdir(_argv[on+1]);
         }
         else
         {
           cerr << "Wrong number of options to -slavedir -- must be 1"
-            " you have " << nopt << endl;		
-        }	
-      }   
+            " you have " << nopt << endl;
+        }
+      }
     }
   }
 #endif
@@ -227,28 +227,28 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " Random effects options if applicable\n");
     //if (function_minimizer::random_effects_flag)
     {
-      (*ad_printf)( " -nr N           maximum number of Newton-Raphson steps\n");       
-      (*ad_printf)( " -imaxfn N       maximum number of fevals in quasi-Newton inner optimization\n");       
-      (*ad_printf)( " -is N           set importance sampling size to n for random effects\n");       
-      (*ad_printf)( " -isf N          set importance sampling size funnel blocksto n for random effects\n");       
+      (*ad_printf)( " -nr N           maximum number of Newton-Raphson steps\n");
+      (*ad_printf)( " -imaxfn N       maximum number of fevals in quasi-Newton inner optimization\n");
+      (*ad_printf)( " -is N           set importance sampling size to n for random effects\n");
+      (*ad_printf)( " -isf N          set importance sampling size funnel blocksto n for random effects\n");
       (*ad_printf)( " -isdiag         print importance sampling diagnostics\n");
       (*ad_printf)( " -hybrid         do hybrid Monte Carlo version of MCMC\n");
       (*ad_printf)( " -hbf            set the hybrid bounded flag for bounded parameters\n");
       (*ad_printf)( " -hyeps          mean step size for hybrid Monte Carlo\n");
       (*ad_printf)( " -hynstep        number of steps for hybrid Monte Carlo\n");
       (*ad_printf)( " -noinit         do not initialize random effects before"
-           " inner optimzation\n");       
-      (*ad_printf)( " -ndi N          set maximum number of separable calls\n");       
+           " inner optimzation\n");
+      (*ad_printf)( " -ndi N          set maximum number of separable calls\n");
       (*ad_printf)( " -ndb N          set number of blocks for derivatives for"
-           " random effects (reduces temporary file sizes)\n");       
+           " random effects (reduces temporary file sizes)\n");
       (*ad_printf)( " -ddnr           use high precision Newton-Raphson for"
-           " inner optimization for banded hessian case ONLY even if implemented\n");       
-      (*ad_printf)( " -nrdbg          verbose reporting for debugging newton-raphson\n");       
+           " inner optimization for banded hessian case ONLY even if implemented\n");
+      (*ad_printf)( " -nrdbg          verbose reporting for debugging newton-raphson\n");
 #  if defined(__MINI_MAX__)
       (*ad_printf)( " -mm N           do minimax optimization\n");
 #  endif
       (*ad_printf)( " -shess          use sparse Hessian structure"
-           " inner optimzation\n");       
+           " inner optimzation\n");
       (*ad_printf)( " -version        see version information\n");
       (*ad_printf)("\n");
       (*ad_printf)("Read online documentation at http://www.admb-project.org/\n");
@@ -280,11 +280,11 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 
       (*ad_printf)("ADMB is free software and comes with ABSOLUTELY NO WARRANTY.\n");
       (*ad_printf)("You are welcome to redistribute it under certain conditions.\n");
-      //(*ad_printf)("Use the –license command line option for distribution details.\n");
+      //(*ad_printf)("Use the -license command line option for distribution details.\n");
       (*ad_printf)("\n");
       (*ad_printf)("AD Model Builder, or ADMB, was developed by David Fournier of Otter\n");
       (*ad_printf)("Research Ltd, Sidney, B.C., Canada. In 2007, scientists from the University\n");
-      (*ad_printf)("of Hawai’i at Mānoa Pelagic Fisheries Research Program (John Sibert and\n");
+      (*ad_printf)("of Hawai'i at Manoa Pelagic Fisheries Research Program (John Sibert and\n");
       (*ad_printf)("Anders Nielsen) and the Inter-American Tropical Tuna Commission (Mark\n");
       (*ad_printf)("Maunder), in consultation with scientists from NOAA Fisheries (Richard\n");
       (*ad_printf)("Methot), created the non-profit ADMB Foundation (admb-foundation.org) with\n");
@@ -345,10 +345,10 @@ void ad_comm::allocate(void)
   int n=adprogram_name.size();
   if(n>4)
   {
-    if (adprogram_name(n - 3) == '.' 
-        && adprogram_name(n - 2) == 'e' 
-        && adprogram_name(n - 1) == 'x' 
-        && adprogram_name(n) == 'e') 
+    if (adprogram_name(n - 3) == '.'
+        && adprogram_name(n - 2) == 'e'
+        && adprogram_name(n - 1) == 'x'
+        && adprogram_name(n) == 'e')
     {
       n -= 4;
     }
@@ -361,10 +361,10 @@ void ad_comm::allocate(void)
     int on=0;
     if ( (on=option_match(argc,argv,"-wd"))>-1)
     {
-      if (on>argc-2 || argv[on+1][0] == '-') 
-      { 
+      if (on>argc-2 || argv[on+1][0] == '-')
+      {
         cerr << "Invalid input data command line option"
-           " -- ignored" << endl;  
+           " -- ignored" << endl;
       }
       else
       {
@@ -386,17 +386,17 @@ void ad_comm::allocate(void)
       working_directory_path = tmpstring + directory_prefix;
     }
   }
-  
+
   tmpstring=adprogram_name + adstring(".dat");
   if (argc > 1)
   {
     int on=0;
     if ( (on=option_match(argc,argv,"-ind"))>-1)
     {
-      if (on>argc-2 || argv[on+1][0] == '-') 
-      { 
+      if (on>argc-2 || argv[on+1][0] == '-')
+      {
         cerr << "Invalid input data command line option"
-           " -- ignored" << endl;  
+           " -- ignored" << endl;
       }
       else
       {
@@ -434,9 +434,9 @@ void ad_comm::allocate(void)
     if (biopt>-1)
     {
       if (biopt>argc-2 || argv[biopt+1][0] == '-')
-      { 
+      {
         cerr << "Invalid input parameter file command line option"
-           " -- ignored" << endl;  
+           " -- ignored" << endl;
       }
       else
       {
@@ -465,9 +465,9 @@ void ad_comm::allocate(void)
     if (aiopt>-1)
     {
       if (aiopt>argc-2 || argv[aiopt+1][0] == '-')
-      { 
+      {
         cerr << "Invalid input parameter file command line option"
-           " -- ignored" << endl;  
+           " -- ignored" << endl;
       }
       else
       {
@@ -526,7 +526,7 @@ void function_minimizer::pre_userfunction(void)
 #if defined(USE_LAPLACE)
   if (lapprox)
   {
-    if (lapprox->hesstype==2) 
+    if (lapprox->hesstype==2)
     {
       //lapprox->num_separable_calls=0;
       lapprox->separable_calls_counter=0;
@@ -538,7 +538,7 @@ void function_minimizer::pre_userfunction(void)
   int i;
   if (lapprox)
   {
-    if (lapprox->hesstype==2) 
+    if (lapprox->hesstype==2)
     {
       lapprox->num_separable_calls=lapprox->separable_calls_counter;
 
@@ -567,4 +567,3 @@ void function_minimizer::pre_userfunction(void)
   }
 #endif
 }
-

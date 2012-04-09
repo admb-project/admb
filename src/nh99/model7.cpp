@@ -164,9 +164,6 @@ ad_comm::ad_comm(int _argc,char * _argv[])
         }
       }
 
-      int n = adprogram_name.size() - 1;
-      adprogram_name=adprogram_name(1,n);
-
 #ifdef ADMB_CONFIGURE
     //(*ad_printf)(" %s", (char*)admb_banner);
 #endif

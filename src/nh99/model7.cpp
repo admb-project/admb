@@ -22,7 +22,7 @@ int have_jvm=0;
 
 
 
-void  strip_full_path(BOR_CONST adstring& _s)
+void strip_full_path(BOR_CONST adstring& _s)
 {
   adstring& s = (adstring&) _s;
   int n=s.size();
@@ -47,7 +47,7 @@ void set_signal_handlers(void)
 ad_comm::ad_comm(int _argc,char * _argv[])
 {
   if (option_match(_argc,_argv,"-version") > -1
-    || option_match(_argc,_argv,"--version") > -1)
+   || option_match(_argc,_argv,"--version") > -1)
   {
     void banner(const adstring& program_name);
     banner(_argv[0]);
@@ -78,7 +78,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     }
   }
   no_atlas_flag=0;
-  if (option_match(_argc,_argv,"-noatlas")>-1)  no_atlas_flag=1;
+  if (option_match(_argc,_argv,"-noatlas")>-1) no_atlas_flag=1;
   if (option_match(_argc,_argv,"-slave")>-1)  pvm_flag=2;
   if (option_match(_argc,_argv,"-master")>-1) pvm_flag=1;
 
@@ -93,7 +93,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 #if defined(USE_ADPVM)
   if (pvm_manager)
   {
-    if (pvm_manager->mode==2)   //slave
+    if (pvm_manager->mode==2)  //slave
     {
       int on=0; int nopt=0;
       if ( (on=option_match(_argc,_argv,"-slave",nopt))>-1)
@@ -105,7 +105,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
         else
         {
           cerr << "Wrong number of options to -slave -- must be 1"
-            " you have " << nopt << endl;
+                  " you have " << nopt << endl;
           ad_exit(1);
         }
       }
@@ -118,7 +118,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
         else
         {
           cerr << "Wrong number of options to -slavedir -- must be 1"
-            " you have " << nopt << endl;
+                  " you have " << nopt << endl;
         }
       }
     }
@@ -127,11 +127,11 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 
 
   /*
-  if (option_match(_argc,_argv,"-gui")>-1)
-  {
-    vm_initialize();
-  }
- */
+    if (option_match(_argc,_argv,"-gui")>-1)
+    {
+      vm_initialize();
+    }
+  */
   set_signal_handlers();
   adprogram_name=_argv[0];
   int len=strlen(_argv[0]);
@@ -146,10 +146,10 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   if (_argc>1)
   {
     if (option_match(_argc,_argv,"-?")>-1
-      || option_match(_argc,_argv,"-help")>-1
-      || option_match(_argc,_argv,"--help")>-1)
+     || option_match(_argc,_argv,"-help")>-1
+     || option_match(_argc,_argv,"--help")>-1)
     {
-      // remove the first part of the path if present
+      // remove path (if user runs -help)
       unsigned int i;
       for (i=adprogram_name.size();i>=1;i--)
       {
@@ -168,7 +168,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       adprogram_name=adprogram_name(1,n);
 
 #ifdef ADMB_CONFIGURE
-    //  (*ad_printf)(" %s", (char*)admb_banner);
+    //(*ad_printf)(" %s", (char*)admb_banner);
 #endif
       (*ad_printf)( "Usage: %s [options]\n\n",(char*)(adprogram_name));
 
@@ -195,12 +195,12 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -mcscale N      rescale step size for first N evaluations\n");
       (*ad_printf)( " -mcsave N       save the parameters for every Nth simulation\n");
       (*ad_printf)( " -mceval         go through the saved mcmc values from a previous mcsave\n");
-//      (*ad_printf)( " -mcu            use uniformaly distributed steps for mcmc\n");
+    //(*ad_printf)( " -mcu            use uniformaly distributed steps for mcmc\n");
       (*ad_printf)( " -crit N1,N2,... set gradient magnitude convergence criterion to N\n");
       (*ad_printf)( " -iprint N       print out function minimizer report every N iterations\n");
       (*ad_printf)( " -maxfn N1,N2,.. set maximum number opf function eval's to N\n");
       (*ad_printf)( " -rs             if function minimizer can't make progress rescale and try again\n");
-//      (*ad_printf)( " -sp             for DLL running from splus write to command window\n");
+    //(*ad_printf)( " -sp             for DLL running from splus write to command window\n");
       (*ad_printf)( " -nox            suppress vector and gradient values in minimizer screen report\n");
       (*ad_printf)( " -phase N        start minimization in phase N\n");
       (*ad_printf)( " -simplex        use simplex for minimization -- deprecated, use -neldmead\n");
@@ -221,7 +221,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -version        show version information\n");
       (*ad_printf)( " -help           show this message\n\n");
     //if (function_minimizer::random_effects_flag)
-    {
+    //{
       (*ad_printf)( "Random effects options if applicable\n");
       (*ad_printf)( " -nr N           maximum number of Newton-Raphson steps\n");
       (*ad_printf)( " -imaxfn N       maximum number of evals in quasi-Newton inner optimization\n");
@@ -244,7 +244,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 
       (*ad_printf)("Read online documentation at http://admb-project.org\n");
       (*ad_printf)("Contact <users@admb-project.org> for help.\n");
-    }
+    //}
       ad_exit(0);
     }
     else if (option_match(_argc,_argv,"-info") > -1)
@@ -323,12 +323,12 @@ ad_comm::ad_comm(void)
 void ad_comm::allocate(void)
 {
 #if defined (_WIN32)
- directory_prefix='\\';
+  directory_prefix='\\';
 #else
- directory_prefix='/';
+  directory_prefix='/';
 #endif
   adstring tmpstring;
-  // remove the first part of the path if present
+  // remove path (if __SPDLL__ is not defined)
 #if !defined(__SPDLL__)
   for (int i = adprogram_name.size(); i >= 1; i--)
   {
@@ -363,7 +363,7 @@ void ad_comm::allocate(void)
       if (on>argc-2 || argv[on+1][0] == '-')
       {
         cerr << "Invalid input data command line option"
-           " -- ignored" << endl;
+                " -- ignored" << endl;
       }
       else
       {
@@ -395,7 +395,7 @@ void ad_comm::allocate(void)
       if (on>argc-2 || argv[on+1][0] == '-')
       {
         cerr << "Invalid input data command line option"
-           " -- ignored" << endl;
+                " -- ignored" << endl;
       }
       else
       {
@@ -407,14 +407,14 @@ void ad_comm::allocate(void)
   if (!global_datafile)
   {
     cerr << "Error trying to open data input file "
-         <<  tmpstring << endl;
+         << tmpstring << endl;
   }
   else
   {
     if (!(*global_datafile))
     {
       cerr << "Error trying to open data input file "
-         <<  tmpstring << endl;
+           << tmpstring << endl;
       delete global_datafile;
       global_datafile=NULL;
     }
@@ -435,7 +435,7 @@ void ad_comm::allocate(void)
       if (biopt>argc-2 || argv[biopt+1][0] == '-')
       {
         cerr << "Invalid input parameter file command line option"
-           " -- ignored" << endl;
+                " -- ignored" << endl;
       }
       else
       {
@@ -466,7 +466,7 @@ void ad_comm::allocate(void)
       if (aiopt>argc-2 || argv[aiopt+1][0] == '-')
       {
         cerr << "Invalid input parameter file command line option"
-           " -- ignored" << endl;
+                " -- ignored" << endl;
       }
       else
       {

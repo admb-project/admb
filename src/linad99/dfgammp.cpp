@@ -335,7 +335,7 @@ dvariable lgam(_CONST prevariable& v1)
  * Used to find the Natural log of the gamma function.
  *
  *
- * \n\n Modified from lgamma.cpp (http:// www.crbond.com/download/lgamma.cpp),
+ * \n\n Modified from lgamma.cpp (http://www.crbond.com/download/lgamma.cpp),
  *      an algorithm that was translated by C. Bond
  *      from "Computation of Special Functions", Zhang and Jin, John Wiley and Sons, 1996.
  */  

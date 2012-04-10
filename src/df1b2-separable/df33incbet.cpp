@@ -3,8 +3,8 @@
  *
  * Based on code from Cephes C and C++ language special functions math library
  * and adapeted for automatic differentiation.
- * http:// www.moshier.net/#Cephes or
- * http:// www.netlib.org/cephes/
+ * http://www.moshier.net/#Cephes or
+ * http://www.netlib.org/cephes/
  *
  * Author: David Fournier
  * Copyright (c) 2009-2011 ADMB Foundation

@@ -1,4 +1,4 @@
-#!/usr/bin/python2.4
+# Modified for ADMB style checking.
 #
 # Copyright (c) 2009 Google Inc. All rights reserved.
 #
@@ -3250,7 +3250,7 @@ def ProcessFile(filename, vlevel, extra_check_functions=[]):
   # When reading from stdin, the extension is unknown, so no cpplint tests
   # should rely on the extension.
   if (filename != '-' and file_extension != 'cc' and file_extension != 'h'
-      and file_extension != 'cpp'):
+      and file_extension != 'hpp' and file_extension != 'cpp'):
     sys.stderr.write('Ignoring %s; not a .cc or .h file\n' % filename)
   else:
     ProcessFileData(filename, file_extension, lines, Error,

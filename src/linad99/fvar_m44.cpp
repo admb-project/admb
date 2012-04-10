@@ -18,17 +18,17 @@ void dfmattrans(void);
  */
 dvar_matrix trans(_CONST dvar_matrix& m1)
 {
-  int rmin=m1.indexmin();
-  int rmax=m1.indexmax();
-  int cmin=m1.colmin();
-  int cmax=m1.colmax();
+  int rmin = m1.indexmin();
+  int rmax = m1.indexmax();
+  int cmin = m1.colmin();
+  int cmax = m1.colmax();
   dvar_matrix t1(cmin,cmax,rmin,rmax);
 
-  for (int i=rmin; i<=rmax; i++)
+  for (int i = rmin; i<=rmax; i++)
   {
-    for (int j=cmin; j<=cmax; j++)
+    for (int j = cmin; j<=cmax; j++)
     {
-      t1.elem_value(j,i)=m1.elem_value(i,j);
+      t1.elem_value(j,i) = m1.elem_value(i,j);
     }
   }
   save_identifier_string("uu");
@@ -47,22 +47,22 @@ dvar_matrix trans(_CONST dvar_matrix& m1)
 void dfmattrans(void)
 {
   verify_identifier_string("vv");
-  dvar_matrix_position t1pos=restore_dvar_matrix_position();
-  dvar_matrix_position m1pos=restore_dvar_matrix_position();
+  dvar_matrix_position t1pos = restore_dvar_matrix_position();
+  dvar_matrix_position m1pos = restore_dvar_matrix_position();
   verify_identifier_string("uu");
-  dmatrix dftmp=restore_dvar_matrix_derivatives(t1pos);
+  dmatrix dftmp = restore_dvar_matrix_derivatives(t1pos);
   dmatrix dfm1(m1pos);
-  int rmin=dfm1.indexmin();
-  int rmax=dfm1.indexmax();
-  int cmin=dfm1.colmin();
-  int cmax=dfm1.colmax();
+  int rmin = dfm1.indexmin();
+  int rmax = dfm1.indexmax();
+  int cmin = dfm1.colmin();
+  int cmax = dfm1.colmax();
 
-  for (int i=rmin; i<=rmax; i++)
+  for (int i = rmin; i<=rmax; i++)
   {
-    for (int j=cmin; j<=cmax; j++)
+    for (int j = cmin; j<=cmax; j++)
     {
-      //t1.elem_value(j,i)=m1.elem_value(i,j);
-      dfm1(i,j)=dftmp(j,i);
+      // t1.elem_value(j,i) = m1.elem_value(i,j);
+      dfm1(i,j) = dftmp(j,i);
     }
   }
   dfm1.save_dmatrix_derivatives(m1pos);

@@ -19,5 +19,5 @@
   {
     dvector tmp(indexmin(),indexmax());
     tmp.fill_multinomial(rng,p);
-    *(this)=tmp;
+    *(this) = tmp;
   }

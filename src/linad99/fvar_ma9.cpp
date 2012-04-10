@@ -18,7 +18,7 @@ void dvar_matrix::rowshift(int min )
 {
   m = m + rowmin() - min;
   index_max+=min-index_min;
-  index_min=min;
+  index_min = min;
 }
 
 /**
@@ -27,9 +27,9 @@ void dvar_matrix::rowshift(int min )
  */
  void dvar_matrix::colshift( int min)
  {
-   for (int i=rowmin(); i<=rowmax(); i++)
+   for (int i = rowmin(); i<=rowmax(); i++)
    {
      this->elem(i).shift(min);
    }
-   //shape->colshift(min);
+   // shape->colshift(min);
  }

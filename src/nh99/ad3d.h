@@ -61,7 +61,7 @@ public:
   virtual void save_value(BOR_CONST ofstream& ofs,int prec);
   virtual void restore_value(BOR_CONST ifstream& ifs);
   void report_value(void);
-  //virtual void read_value(void);
+  // virtual void read_value(void);
   virtual const char * label(void);
   virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
   virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){};
@@ -69,7 +69,7 @@ public:
 public:
 
   void allocate(int smin,int smax,int rmin,int rmax,int cmin,int cmax,
-    int phase_start=1,const char * = "UNNAMED");
+    int phase_start = 1,const char * = "UNNAMED");
   void allocate(int smin,int smax,int rmin,int rmax,int cmin,int cmax,
     const char * = "UNNAMED");
   param_init_d3array(void);
@@ -127,7 +127,7 @@ public:
     }
     else
     {
-      dvar3_array::operator=(initial_value);
+      dvar3_array::operator = (initial_value);
     }
   }
 
@@ -137,19 +137,19 @@ public:
  */
   void param_init_d3array::hess_scale(BOR_CONST dvector& v,BOR_CONST dvector& x,BOR_CONST int& ii)
   {
-    int smin=slicemin();
-    int smax=slicemax();
-    for (int k=smin;k<=smax;i++)
+    int smin = slicemin();
+    int smax = slicemax();
+    for (int k = smin;k<=smax;i++)
     {
-      int mmin=(*this(k)).rowmin();
-      int mmax=(*this(k)).rowmax();
-      for (int i=mmin;i<=mmax;i++)
+      int mmin = (*this(k)).rowmin();
+      int mmax = (*this(k)).rowmax();
+      for (int i = mmin;i<=mmax;i++)
       {
-        int cmin=((*this)(k,i)).indexmin();
-        int cmax=((*this)(k,i)).indexmax();
-        for (int j=cmin;j<=cmax;j++)
+        int cmin = ((*this)(k,i)).indexmin();
+        int cmax = ((*this)(k,i)).indexmax();
+        for (int j = cmin;j<=cmax;j++)
         {
-          v(ii++)=0.;
+          v(ii++) = 0.;
         }
       }
     }
@@ -161,19 +161,19 @@ public:
  */
   void param_init_d3array::sd_scale(BOR_CONST dvector& v,BOR_CONST dvector& x,BOR_CONST int& ii)
   {
-    int smin=slicemin();
-    int smax=slicemax();
-    for (int k=smin;k<=smax;i++)
+    int smin = slicemin();
+    int smax = slicemax();
+    for (int k = smin;k<=smax;i++)
     {
-      int mmin=(*this(k)).rowmin();
-      int mmax=(*this(k)).rowmax();
-      for (int i=mmin;i<=mmax;i++)
+      int mmin = (*this(k)).rowmin();
+      int mmax = (*this(k)).rowmax();
+      for (int i = mmin;i<=mmax;i++)
       {
-        int cmin=((*this)(k,i)).indexmin();
-        int cmax=((*this)(k,i)).indexmax();
-        for (int j=cmin;j<=cmax;j++)
+        int cmin = ((*this)(k,i)).indexmin();
+        int cmax = ((*this)(k,i)).indexmax();
+        for (int j = cmin;j<=cmax;j++)
         {
-          v(ii++)=1.;
+          v(ii++) = 1.;
         }
       }
     }

@@ -16,7 +16,7 @@
  */
   double_index_type::double_index_type(const double_index_type& pit)
   {
-    p=pit.p;
+    p = pit.p;
     (*(p->ncopies))++;
   }
 
@@ -79,7 +79,7 @@
  */
   dmatrix_index::~dmatrix_index()
   {
-    //cout << "in ~matrix_index()" << endl;
+    // cout << "in ~matrix_index()" << endl;
   }
 
 /**
@@ -173,7 +173,7 @@ double_index_guts::~double_index_guts()
   if (!(*ncopies)) 
   {
     delete ncopies; 
-    ncopies=NULL;
+    ncopies = NULL;
   }
 }
 
@@ -183,7 +183,7 @@ double_index_guts::~double_index_guts()
  */
 dvector_index::dvector_index(BOR_CONST dvector& v) : dvector(v)
 {
-  //xxjj();
+  // xxjj();
 }
 
 /**
@@ -193,7 +193,7 @@ dvector_index::dvector_index(BOR_CONST dvector& v) : dvector(v)
 double_index_guts::double_index_guts()
 {
   ncopies = new int;
-  *ncopies=0;
+  *ncopies = 0;
 }
 
 /**

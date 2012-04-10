@@ -35,7 +35,7 @@
 dvar_matrix& dvar_matrix::operator /= ( CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
-  for (int i=rowmin();i<=rowmax();i++)
+  for (int i = rowmin();i<=rowmax();i++)
   {
     elem(i)/=x;
   }
@@ -50,7 +50,7 @@ dvar_matrix& dvar_matrix::operator /= ( CGNU_DOUBLE x)
 dvar_matrix& dvar_matrix::operator /= ( _CONST prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
-  for (int i=rowmin();i<=rowmax();i++)
+  for (int i = rowmin();i<=rowmax();i++)
   {
     elem(i)/=x;
   }
@@ -65,9 +65,9 @@ dvar_matrix& dvar_matrix::operator /= ( _CONST prevariable& x)
 dvar_matrix& dvar_matrix::operator = ( CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
-  for (int i=rowmin();i<=rowmax();i++)
+  for (int i = rowmin();i<=rowmax();i++)
   {
-    elem(i)=x;
+    elem(i) = x;
   }
   RETURN_ARRAYS_DECREMENT();
   return (*this);
@@ -80,9 +80,9 @@ dvar_matrix& dvar_matrix::operator = ( CGNU_DOUBLE x)
 dvar_matrix& dvar_matrix::operator = (_CONST prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
-  for (int i=rowmin();i<=rowmax();i++)
+  for (int i = rowmin();i<=rowmax();i++)
   {
-    elem(i)=x;
+    elem(i) = x;
   }
   RETURN_ARRAYS_DECREMENT();
   return (*this);
@@ -95,7 +95,7 @@ dvar_matrix& dvar_matrix::operator = (_CONST prevariable& x)
 dvar_matrix& dvar_matrix::operator *= ( CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
-  for (int i=rowmin();i<=rowmax();i++)
+  for (int i = rowmin();i<=rowmax();i++)
   {
     elem(i)*=x;
   }
@@ -110,7 +110,7 @@ dvar_matrix& dvar_matrix::operator *= ( CGNU_DOUBLE x)
 dvar_matrix& dvar_matrix::operator *= ( _CONST prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
-  for (int i=rowmin();i<=rowmax();i++)
+  for (int i = rowmin();i<=rowmax();i++)
   {
     elem(i)*=x;
   }

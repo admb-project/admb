@@ -24,7 +24,7 @@ void named_i3_array::allocate(int hsl,int hsu,_CONST index_type& rmin,
 
 named_i3_array& named_i3_array::operator = (_CONST i3_array& m)
 {
-  i3_array::operator=(m);
+  i3_array::operator = (m);
   return *this;
 }
 

@@ -49,10 +49,10 @@ extern "C" {
 
 #include "constructors.h"
 
-int nx=0;
-int inumber1=0;
-int number3=0;
-int number31=0;
+int nx = 0;
+int inumber1 = 0;
+int number3 = 0;
+int number31 = 0;
 
 /**
  * Description not yet available.
@@ -349,8 +349,8 @@ gggg03::~gggg03()
  */
 gggg07::gggg07(double _jgh4,double _jgh5)
 {
-  jgh4=_jgh4;
-  jgh5=_jgh5;
+  jgh4 = _jgh4;
+  jgh5 = _jgh5;
 }
 
 /**
@@ -535,7 +535,7 @@ gggg17::~gggg17()
 gggg18::gggg18(int _nx, doublereal _wwuq5, doublereal _wdg5bnd) :
     xtr(0,_nx-1), wwuq5(_wwuq5), wdg5bnd(_wdg5bnd)
 {
-  //xtr = new doublereal[nx];
+  // xtr = new doublereal[nx];
   xsc = new doublereal[_nx];
   fu = new doublereal[number3+1];
   fugrad = new doublereal[_nx*(number3+1)];	
@@ -704,24 +704,24 @@ gggg22 *gggg22_1 = 0;
  */
 void make_all_classes(int _n,int _numberw,int _numberv)
 {
- nx=_n;
- number3=_numberw+_numberv;
- number31=number3;
- inumber1=3500;
+ nx = _n;
+ number3 = _numberw+_numberv;
+ number31 = number3;
+ inumber1 = 3500;
 
- doublereal _jgh4=0.1;
- int _jgh5=1.e+4;
- logical _wwuq3=TRUE_;
- logical _te0=FALSE_;
- logical _te1=FALSE_;
- logical _te2=FALSE_;
- logical _te3=FALSE_;
- logical _cold=TRUE_;
- doublereal _wwuq5=1.e-16;
- doublereal _wdg5bnd=1.0;
- logical _wwuq2=TRUE_;
- logical _wwuq4=FALSE_;
- integer _wwuq6=3;
+ doublereal _jgh4 = 0.1;
+ int _jgh5 = 1.e+4;
+ logical _wwuq3 = TRUE_;
+ logical _te0 = FALSE_;
+ logical _te1 = FALSE_;
+ logical _te2 = FALSE_;
+ logical _te3 = FALSE_;
+ logical _cold = TRUE_;
+ doublereal _wwuq5 = 1.e-16;
+ doublereal _wdg5bnd = 1.0;
+ logical _wwuq2 = TRUE_;
+ logical _wwuq4 = FALSE_;
+ integer _wwuq6 = 3;
  gggg23_1 = new gggg23;
  gggg24_1 = new gggg24;
  gggg25_1 = new gggg25;
@@ -757,7 +757,7 @@ void make_all_classes(int _n,int _numberw,int _numberv)
   stj5 = 0;
   stj23 = 13;
   stj210 = nx;
- //logical stj8 = FALSE_;
+ // logical stj8 = FALSE_;
   stj9 = 5;
   stj2800 = number3;
   stj21 = 11;
@@ -796,12 +796,12 @@ void make_all_classes(int _n,int _numberw,int _numberv)
  */
 doublestar::doublestar(integer n)
 {
-  index_max=n;
-  index_min=0;
+  index_max = n;
+  index_min = 0;
 #if defined(SAFE_ALL)
   d =new doublereal[n+2];
-  d[0]=123456789.12;
-  d[n+1]=123456789.12;
+  d[0] = 123456789.12;
+  d[n+1] = 123456789.12;
   d+=1-index_min;
 #else
   d =new doublereal[n];
@@ -815,12 +815,12 @@ doublestar::doublestar(integer n)
  */
 doublestar::doublestar(integer m,integer n)
 {
-  index_max=n;
-  index_min=m;
+  index_max = n;
+  index_min = m;
 #if defined(SAFE_ALL)
   d =new doublereal[n-m+2];
-  d[0]=123456789.12;
-  d[n-m+1]=123456789.12;
+  d[0] = 123456789.12;
+  d[n-m+1] = 123456789.12;
   d+=1-index_min;
 #else
   d =new doublereal[n-m];
@@ -845,7 +845,7 @@ doublestar::~doublestar()
   d+=index_min;
 #endif
   delete [] d;
-  d=0;
+  d = 0;
 }
 
 /*
@@ -881,11 +881,11 @@ doublestar::operator doublereal * () { return d;}
  */
 intstar::intstar(integer n)
 {
-  index_max=n;
+  index_max = n;
 #if defined(SAFE_ALL)
   d =new integer[n+2];
-  d[0]=123456789;
-  d[n+1]=123456789;
+  d[0] = 123456789;
+  d[n+1] = 123456789;
   d+=1;
 #else
   d =new integer[n];
@@ -906,5 +906,5 @@ intstar::~intstar()
   }
 #endif
   delete [] d;
-  d=0;
+  d = 0;
 }

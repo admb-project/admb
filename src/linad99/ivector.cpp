@@ -96,15 +96,15 @@ long int farptr_tolong(void *);
    {
      v = (int*) (shape->trueptr);
      delete [] v;
-     v=NULL;
+     v = NULL;
      delete  shape;
    }
    else
    {
-     //cerr << "Warning -- trying to deallocate an unitialized ivector"
+     // cerr << "Warning -- trying to deallocate an unitialized ivector"
 //	   << endl;
    }
-   shape=NULL;
+   shape = NULL;
  }
 
 /**
@@ -113,13 +113,13 @@ long int farptr_tolong(void *);
  */
  ivector::ivector(_CONST ivector& t)
  {
-   index_min=t.index_min;
-   index_max=t.index_max;
+   index_min = t.index_min;
+   index_max = t.index_max;
    #ifdef DIAG
     cout << "Copy constructor called for ivector with address "
 	 << _farptr_tolong(t.v) <<"\n";
    #endif
-   shape=t.shape;
+   shape = t.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -133,13 +133,13 @@ long int farptr_tolong(void *);
  */
  void ivector::shallow_copy(_CONST ivector& t)
  {
-   index_min=t.index_min;
-   index_max=t.index_max;
+   index_min = t.index_min;
+   index_max = t.index_max;
    #ifdef DIAG
     cout << "Copy constructor called for ivector with address "
 	 << _farptr_tolong(t.v) <<"\n";
    #endif
-   shape=t.shape;
+   shape = t.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -165,7 +165,7 @@ long int farptr_tolong(void *);
          ad_exit(1);
        }
   
-       for ( int i=indexmin(); i<=indexmax(); i++)
+       for ( int i = indexmin(); i<=indexmax(); i++)
        {
          elem(i) = t.elem(i);
        }
@@ -184,7 +184,7 @@ long int farptr_tolong(void *);
  */
  ivector& ivector::operator = (int u)
  {
-   for ( int i=indexmin(); i<=indexmax(); i++)
+   for ( int i = indexmin(); i<=indexmax(); i++)
    {
      elem(i) = u;
    }
@@ -199,7 +199,7 @@ long int farptr_tolong(void *);
  {
    allocate(0,sz-1);
 
-   for (unsigned int i=0; i<sz; i++)
+   for (unsigned int i = 0; i<sz; i++)
    {
      cout << "Doing the assignment in constructor\n";
      v[i] = x[i];
@@ -213,9 +213,9 @@ long int farptr_tolong(void *);
  ivector::ivector(_CONST dvector& u)
  {
    allocate(u);
-   for (int i=indexmin();i<=indexmax();i++)
+   for (int i = indexmin();i<=indexmax();i++)
    {
-     elem(i)=int(u.elem(i));
+     elem(i) = int(u.elem(i));
    }
  }
 
@@ -243,12 +243,12 @@ long int farptr_tolong(void *);
  */
  void ivector::allocate(int ncl,int nch)
  {
-   int itemp=nch-ncl;
+   int itemp = nch-ncl;
    if (itemp<0)
    {
-     //cerr << "Error in ivector constructor max index must be >= minindex\n"
+     // cerr << "Error in ivector constructor max index must be >= minindex\n"
 	//  << "minindex = " << ncl << " maxindex = " << nch <<endl;
-     //ad_exit(1);
+     // ad_exit(1);
      allocate();
    }
    else
@@ -259,19 +259,19 @@ long int farptr_tolong(void *);
        ad_exit(21);
      }
 
-     if ( (shape=new vector_shapex(ncl,nch,v)) == NULL)
+     if ( (shape = new vector_shapex(ncl,nch,v)) == NULL)
      {
        cerr << "Error trying to allocate memory for ivector\n";
        ad_exit(1);
      }
 
-     index_min=ncl;
-     index_max=nch;
+     index_min = ncl;
+     index_max = nch;
      v -= indexmin();
      #ifdef SAFE_INITIALIZE
-       for ( int i=indexmin(); i<=indexmax(); i++)
+       for ( int i = indexmin(); i<=indexmax(); i++)
        {
-         v[i]=0.;
+         v[i] = 0.;
        }
      #endif
    }
@@ -301,8 +301,8 @@ void ivector::allocate(_CONST ivector& dv)
  */
 void ivector::allocate(void)
 {
-  shape=NULL;
-  index_min=1;
+  shape = NULL;
+  index_min = 1;
   index_max=-1;
   v = NULL;
 }
@@ -316,7 +316,7 @@ void ivector::allocate(void)
    #ifdef DIAG
     // cout << "starting out in dvector contructor\n";
    #endif
-   shape=pdv.p->shape;
+   shape = pdv.p->shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -326,8 +326,8 @@ void ivector::allocate(void)
      cerr << "Taking a subvector  of an unallocated ivector"<<endl;
    }
    v = pdv.p->v;
-   index_min=pdv.lb;
-   index_max=pdv.ub;
+   index_min = pdv.lb;
+   index_max = pdv.ub;
  }
 
 /**
@@ -336,8 +336,8 @@ void ivector::allocate(void)
  */
   int norm2(const ivector& t1)
   {
-    int tmp=0;;
-   for (int i=t1.indexmin();i<=t1.indexmax();i++)
+    int tmp = 0;;
+   for (int i = t1.indexmin();i<=t1.indexmax();i++)
    {
      tmp+=t1(i)*t1(i);
    }
@@ -351,9 +351,9 @@ void ivector::allocate(void)
  */
   void clean(ivector& v,int level)
   {
-    int mmax=v.indexmax();
-    for (int i=level+1;i<=mmax;i++)
+    int mmax = v.indexmax();
+    for (int i = level+1;i<=mmax;i++)
     {
-      v(i)=0;
+      v(i) = 0;
     }
   }

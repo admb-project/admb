@@ -29,9 +29,9 @@
    {
      dvector tmp;
      tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
+     for (int i = tmp.indexmin();i<=tmp.indexmax();i++)
      {
-       tmp(i)=square(m(i));
+       tmp(i) = square(m(i));
      }
      return tmp;
    }  
@@ -45,9 +45,9 @@
    {
      dmatrix tmp;
      tmp.allocate(m);
-     for (int i=tmp.rowmin();i<=tmp.rowmax();i++)
+     for (int i = tmp.rowmin();i<=tmp.rowmax();i++)
      {
-       tmp(i)=square(m(i));
+       tmp(i) = square(m(i));
      }
      return tmp;
    }  
@@ -61,9 +61,9 @@
    {
      d3_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=square(m(i));
+       tmp(i) = square(m(i));
      }
      return tmp;
    }

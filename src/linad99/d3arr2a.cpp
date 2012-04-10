@@ -18,9 +18,9 @@
    {
      d3_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=log(m(i));
+       tmp(i) = log(m(i));
      }
      return tmp;
    }  
@@ -33,9 +33,9 @@
    {
      d3_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=exp(m(i));
+       tmp(i) = exp(m(i));
      }
      return tmp;
    }  
@@ -48,9 +48,9 @@
    {
      d3_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=sin(m(i));
+       tmp(i) = sin(m(i));
      }
      return tmp;
    }  
@@ -63,9 +63,9 @@
    {
      d3_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=cos(m(i));
+       tmp(i) = cos(m(i));
      }
      return tmp;
    }  
@@ -78,9 +78,9 @@
    {
      d3_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=tan(m(i));
+       tmp(i) = tan(m(i));
      }
      return tmp;
    } 
@@ -93,9 +93,9 @@
    {
      d3_array tmp;
      tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=elem_prod(m1(i),m2(i));
+       tmp(i) = elem_prod(m1(i),m2(i));
      }
      return tmp;
    }
@@ -108,9 +108,9 @@
    {
      d3_array tmp;
      tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=elem_div(m1(i),m2(i));
+       tmp(i) = elem_div(m1(i),m2(i));
      }
      return tmp;
    }
@@ -123,9 +123,9 @@
    {
      d3_array tmp;
      tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=m1(i)+m2(i);
+       tmp(i) = m1(i)+m2(i);
      }
      return tmp;
    }  
@@ -138,9 +138,9 @@
    {
      d3_array tmp;
      tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=m1(i)-m2(i);
+       tmp(i) = m1(i)-m2(i);
      }
      return tmp;
    }  
@@ -151,12 +151,12 @@
  */
     double norm(_CONST d3_array& m)
     {
-      double tmp=0.0;
-      for (int k=m.slicemin();k<=m.slicemax();k++)
+      double tmp = 0.0;
+      for (int k = m.slicemin();k<=m.slicemax();k++)
       {
 	tmp+=norm2(m(k));
       }
-      tmp=sqrt(tmp);
+      tmp = sqrt(tmp);
       return tmp;
     }
 
@@ -166,8 +166,8 @@
  */
     double norm2(_CONST d3_array& m)
     {
-      double tmp=0.0;
-      for (int k=m.slicemin();k<=m.slicemax();k++)
+      double tmp = 0.0;
+      for (int k = m.slicemin();k<=m.slicemax();k++)
       {
 	tmp+=norm2(m(k));
       }
@@ -183,9 +183,9 @@
    {
      d3_array tmp;
      tmp.allocate(m2);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=d+m2(i);
+       tmp(i) = d+m2(i);
      }
      return tmp;
    }  
@@ -198,9 +198,9 @@
    {
      d3_array tmp;
      tmp.allocate(m2);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=d-m2(i);
+       tmp(i) = d-m2(i);
      }
      return tmp;
    }  
@@ -213,9 +213,9 @@
    {
      d3_array tmp;
      tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=m1(i)+d;
+       tmp(i) = m1(i)+d;
      }
      return tmp;
    }  
@@ -228,9 +228,9 @@
    {
      d3_array tmp;
      tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=m1(i)-d;
+       tmp(i) = m1(i)-d;
      }
      return tmp;
    }  
@@ -243,9 +243,9 @@
    {
      d3_array tmp;
      tmp.allocate(m1);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=m1(i)*d;
+       tmp(i) = m1(i)*d;
      }
      return tmp;
    }  
@@ -258,9 +258,9 @@
    {
      d3_array tmp;
      tmp.allocate(m2);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=d*m2(i);
+       tmp(i) = d*m2(i);
      }
      return tmp;
    }

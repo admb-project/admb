@@ -59,28 +59,28 @@ public:
   static df1b2variable * funnel_constraints_penalty;
   static void reset_counters(void) { num_vars=0; /*num_all_vars=0;*/}
   static int num_vars;
-  //static int num_all_vars;
+  // static int num_all_vars;
   static int num_inactive_vars;
   static int num_active_parameters;
   static init_df1b2vector * py;
   static imatrix * plist;
   int index;
   static   funnel_init_var ** list;
-  //static   funnel_init_var ** all_list;
+  // static   funnel_init_var ** all_list;
   static   funnel_init_var ** inactive_list;
   funnel_init_var(void) { /*add_to_list();*/ }
   void add_to_list(void);
   void delete_from_list(void);
   void add_to_inactive_list(void);
   virtual void allocate(void);
-  //virtual void xinit(void);
-  virtual void xinit(init_df1b2vector&,int& ii)=0;
-  virtual void xinit(dvector&,int& ii)=0;
+  // virtual void xinit(void);
+  virtual void xinit(init_df1b2vector&,int& ii) = 0;
+  virtual void xinit(dvector&,int& ii) = 0;
   virtual void set_value(const init_df1b2vector&,const int& ii,
-    const df1b2variable&)=0;
-  virtual void set_value(const init_df1b2vector&,const int& ii)=0;
-  virtual void set_index(imatrix&,int& ii)=0;
-  virtual int nvar_calc(void)=0;
+    const df1b2variable&) = 0;
+  virtual void set_value(const init_df1b2vector&,const int& ii) = 0;
+  virtual void set_index(imatrix&,int& ii) = 0;
+  virtual int nvar_calc(void) = 0;
 
   static void reset(init_df1b2vector& x);
     
@@ -103,7 +103,7 @@ public:
     ad_exit(1);
   }
   funnel_dependent_df1b2variable(const df1b2variable&); 
-  //virtual void allocate_all(init_df1b2vector&,int& ii);
+  // virtual void allocate_all(init_df1b2vector&,int& ii);
 };
 
 /**
@@ -161,10 +161,10 @@ public:
 class funnel_init_df1b2vector : public funnel_init_var, public df1b2vector 
 {
   const df1b2vector * p;
-  //const df1b2_init_vector * p;
+  // const df1b2_init_vector * p;
 public:
   int nvar_calc(void);
-  //funnel_init_df1b2vector(const df1b2_init_vector & x);
+  // funnel_init_df1b2vector(const df1b2_init_vector & x);
   funnel_init_df1b2vector(const df1b2vector & x);
   virtual void xinit(init_df1b2vector&,int& ii);
   virtual void xinit(dvector&,int& ii){ cout << "here"<< endl;}
@@ -183,10 +183,10 @@ public:
 class funnel_init_df1b2matrix : public funnel_init_var, public df1b2matrix 
 {
   const df1b2matrix* p;
-  //const df1b2_init_vector * p;
+  // const df1b2_init_vector * p;
 public:
   int nvar_calc(void);
-  //funnel_init_df1b2vector(const df1b2_init_vector & x);
+  // funnel_init_df1b2vector(const df1b2_init_vector & x);
   funnel_init_df1b2matrix(const df1b2matrix & x);
   virtual void xinit(init_df1b2vector&,int& ii);
   virtual void xinit(dvector&,int& ii){ cout << "here"<< endl;}

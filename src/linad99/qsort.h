@@ -296,11 +296,11 @@ typedef struct {
         while ( (_trav >= _run_ptr) ) {	                                \
           QSORT_TYPE *_hi; QSORT_TYPE *_lo;				\
           _hold = *_trav;						\
-          _hi=_lo=_trav;						\
+          _hi = _lo = _trav;						\
           _lo--; 							\
           while(_lo>=_tmp_ptr) {					\
             *_hi = *_lo;						\
-            _hi=_lo;							\
+            _hi = _lo;							\
             _lo--;							\
           }						                \
           *_hi = _hold;							\
@@ -313,7 +313,7 @@ typedef struct {
 									\
 }
 
-//modified by Derek Seiple
+// modified by Derek Seiple
 #define QSORT2(QSORT_TYPE,QSORT_TYPE2,QSORT_BASE,QSORT_BASE2,QSORT_NELT,QSORT_LT)	\
 {									\
   QSORT_TYPE *const _base = (QSORT_BASE);				\
@@ -538,16 +538,16 @@ typedef struct {
           QSORT_TYPE2 *_hi2; QSORT_TYPE2 *_lo2;				\
           _hold = *_trav;						\
           _hold2 = *_trav2;						\
-          _hi=_lo=_trav;						\
-          _hi2=_lo2=_trav2;						\
+          _hi = _lo = _trav;						\
+          _hi2 = _lo2 = _trav2;						\
           _lo--; 							\
           _lo2--; 							\
           while(_lo>=_tmp_ptr)						\
           {								\
             *_hi = *_lo;						\
             *_hi2 = *_lo2;						\
-            _hi=_lo;							\
-            _hi2=_lo2;							\
+            _hi = _lo;							\
+            _hi2 = _lo2;							\
             _lo--;							\
             _lo2--;							\
           }						                \

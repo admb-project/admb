@@ -18,9 +18,9 @@
    {
      d3_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=sqrt(m(i));
+       tmp(i) = sqrt(m(i));
      }
      return tmp;
    }  
@@ -33,9 +33,9 @@
    {
      d3_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=sqrt(m(i));
+       tmp(i) = sqrt(m(i));
      }
      return tmp;
    }

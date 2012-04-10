@@ -18,12 +18,12 @@
   {
     if (value(x)>-20.)
     {
-      df1b2variable tmp=exp(-x);
+      df1b2variable tmp = exp(-x);
       return a+(b-a)*1.0/(1.0+tmp);
     }
     else
     {
-      df1b2variable tmp=exp(x);
+      df1b2variable tmp = exp(x);
       return a+(b-a)*tmp/(1.0+tmp);
     }
   }
@@ -36,12 +36,12 @@
   {
     if (value(x)>-20.)
     {
-      df1b2variable tmp=exp(-x);
+      df1b2variable tmp = exp(-x);
       return log((b-a)*tmp/square(1.0+tmp));
     }
     else
     {
-      df1b2variable tmp=exp(x);
+      df1b2variable tmp = exp(x);
       return log((b-a)*tmp/square(1.0+tmp));
     }
   }
@@ -54,12 +54,12 @@
   {
     if (value(x)>-20.)
     {
-      df1b2variable tmp=exp(-x);
+      df1b2variable tmp = exp(-x);
       return (b-a)*tmp/square(1.0+tmp);
     }
     else
     {
-      df1b2variable tmp=exp(x);
+      df1b2variable tmp = exp(x);
       return (b-a)*tmp/square(1.0+tmp);
     }
   }

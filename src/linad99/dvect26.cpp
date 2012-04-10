@@ -19,10 +19,10 @@
     if (::allocated(*this))
     {
       dvector tmp(indexmin(),indexmax());
-      tmp=(*this);
+      tmp = (*this);
       deallocate();
       allocate(indexmin(),int(s*indexmax()));
-      *this=tmp;
+      *this = tmp;
     }
     else
     {

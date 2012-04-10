@@ -17,17 +17,17 @@
 //#include <ddesp.h>
 
 
-DWORD DDEspclient::idInst=0;
-DWORD DDEspclient::sleeptime=0; 
-HCONV DDEspclient::cstatus=NULL;
-UINT  DDEspclient::status=0;
+DWORD DDEspclient::idInst = 0;
+DWORD DDEspclient::sleeptime = 0; 
+HCONV DDEspclient::cstatus = NULL;
+UINT  DDEspclient::status = 0;
 
 void check_when_finished(void);
 void open_the_file(ifstream*& pifs,BOR_CONST int& waitflag,BOR_CONST int& numwaits);
 void open_the_file_when_finished(ifstream*& pifs,BOR_CONST int& waitflag,BOR_CONST int& numwaits);
 
 # if defined(STUPID_DDL_FUNCTIONS)
-HDDEDATA CALLBACK mycallback(       //DdeCallback(
+HDDEDATA CALLBACK mycallback(       // DdeCallback(
 	 UINT  uType,	// transaction type
 	 UINT  uFmt,	// clipboard data format
 	 HCONV  hconv,	// handle of the conversation
@@ -41,19 +41,19 @@ HDDEDATA CALLBACK mycallback(       //DdeCallback(
 
 DDEspclient::DDEspclient(DWORD _sleeptime)
 {
-  status=DdeInitialize(&idInst, mycallback,CBF_FAIL_EXECUTES | 
+  status = DdeInitialize(&idInst, mycallback,CBF_FAIL_EXECUTES | 
     CBF_SKIP_ALLNOTIFICATIONS,0);
-  HSZ  hszService=DdeCreateStringHandle(idInst,"SPLUS", CP_WINANSI);
-  HSZ  hszTopic=DdeCreateStringHandle(idInst,"SCommand", CP_WINANSI);
+  HSZ  hszService = DdeCreateStringHandle(idInst,"SPLUS", CP_WINANSI);
+  HSZ  hszTopic = DdeCreateStringHandle(idInst,"SCommand", CP_WINANSI);
 
   if (status !=DMLERR_NO_ERROR)
   {
     printInitializestatus(status);
-    cstatus=NULL;
+    cstatus = NULL;
   }
   else
   {
-    cstatus=DdeConnect(idInst,hszService,hszTopic, NULL);
+    cstatus = DdeConnect(idInst,hszService,hszTopic, NULL);
   }
 }
 
@@ -106,12 +106,12 @@ void SPsend(BOR_CONST named_dvariable& _x)
 
 void SPsend(BOR_CONST dmatrix& x,BOR_CONST adstring& name) 
 {
-  int i1=x.rowmin();
-  int ncol=x(i1).indexmax()-x(i1).indexmin()+1;
+  int i1 = x.rowmin();
+  int ncol = x(i1).indexmax()-x(i1).indexmin()+1;
   ofstream ofs("c:\\tmp.spl");
 
   adstring command = name + adstring(" <- matrix(scan(\"c:\\\\tmp.spl\")"
-   ",byrow=T,ncol=") + str(ncol) + adstring(")");
+   ",byrow = T,ncol=") + str(ncol) + adstring(")");
 
   ofs << x;
   ofs << endl;
@@ -124,7 +124,7 @@ void SPreceive(BOR_CONST dvector& _x,BOR_CONST adstring& name)
 {
   ADUNCONST(dvector,x) 
 
-  //adstring command = name + adstring(" <- scan(\"c:\\\\tmp.spl\")");
+  // adstring command = name + adstring(" <- scan(\"c:\\\\tmp.spl\")");
   // tell splus to send the size of the vector
   adstring command = adstring(" write(length(") + name
     + adstring("),\"c:\\\\tmp.spl\")");
@@ -132,14 +132,14 @@ void SPreceive(BOR_CONST dvector& _x,BOR_CONST adstring& name)
   Sleep(200);
   // now send the vector
   command = adstring(" write(") + name
-    + adstring(",\"c:\\\\tmp.spl\",append=T)");
+    + adstring(",\"c:\\\\tmp.spl\",append = T)");
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
   Sleep(200);
 
 
-  ifstream * pifs=NULL;
-  int waitflag=0;
-  int numwaits=0;
+  ifstream * pifs = NULL;
+  int waitflag = 0;
+  int numwaits = 0;
   do
   {
     open_the_file_when_finished(pifs,waitflag,numwaits);
@@ -179,9 +179,9 @@ void SPreceive(BOR_CONST dvector& _x,BOR_CONST adstring& name)
   if (pifs)
   {
     delete pifs;
-    pifs=NULL;
+    pifs = NULL;
   }
-  //DeleteFile("c:\\tmp.spl");
+  // DeleteFile("c:\\tmp.spl");
   
 }
 
@@ -201,7 +201,7 @@ void SPreceive(BOR_CONST dvar_vector& _x,BOR_CONST adstring& name)
 {
   ADUNCONST(dvar_vector,x) 
 
-  //adstring command = name + adstring(" <- scan(\"c:\\\\tmp.spl\")");
+  // adstring command = name + adstring(" <- scan(\"c:\\\\tmp.spl\")");
   // tell splus to send the size of the vector
   adstring command = adstring(" write(length(") + name
     + adstring("),\"c:\\\\tmp.spl\")");
@@ -209,14 +209,14 @@ void SPreceive(BOR_CONST dvar_vector& _x,BOR_CONST adstring& name)
   Sleep(200);
   // now send the vector
   command = adstring(" write(") + name
-    + adstring(",\"c:\\\\tmp.spl\",append=T)");
+    + adstring(",\"c:\\\\tmp.spl\",append = T)");
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
   Sleep(200);
 
 
-  ifstream * pifs=NULL;
-  int waitflag=0;
-  int numwaits=0;
+  ifstream * pifs = NULL;
+  int waitflag = 0;
+  int numwaits = 0;
   do
   {
     open_the_file_when_finished(pifs,waitflag,numwaits);
@@ -256,9 +256,9 @@ void SPreceive(BOR_CONST dvar_vector& _x,BOR_CONST adstring& name)
   if (pifs)
   {
     delete pifs;
-    pifs=NULL;
+    pifs = NULL;
   }
-  //DeleteFile("c:\\tmp.spl");
+  // DeleteFile("c:\\tmp.spl");
   
 }
 
@@ -282,24 +282,24 @@ void SPreceive(BOR_CONST dmatrix& _x,BOR_CONST adstring& name)
 
   // tell splus to send the number of columns in the matrix
   command = adstring(" write(ncol(") + name
-    + adstring("),\"c:\\\\tmp.spl\",append=T)");
+    + adstring("),\"c:\\\\tmp.spl\",append = T)");
 
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
   Sleep(200);
 
   // now send the matrix
   command = adstring(" write(t(") + name
-    + adstring("),\"c:\\\\tmp.spl\", append=T)");
+    + adstring("),\"c:\\\\tmp.spl\", append = T)");
 
-  //command = adstring(" write(t(") + name
-  //  + adstring("),\"c:\\\\tmp.spl\",ncol=ncol(") + name 
-  //  + adstring("),append=T)");
+  // command = adstring(" write(t(") + name
+  //  + adstring("),\"c:\\\\tmp.spl\",ncol = ncol(") + name 
+  //  + adstring("),append = T)");
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
   Sleep(200);
 
-  ifstream * pifs=NULL;
-  int waitflag=0;
-  int numwaits=0;
+  ifstream * pifs = NULL;
+  int waitflag = 0;
+  int numwaits = 0;
   do
   {
     open_the_file_when_finished(pifs,waitflag,numwaits);
@@ -327,7 +327,7 @@ void SPreceive(BOR_CONST dmatrix& _x,BOR_CONST adstring& name)
     }
     else
     {
-      int r1=x.rowmin();
+      int r1 = x.rowmin();
       if ( ((x.rowmax()-x.rowmin()+1) != nrows) ||
          ( (x(r1).indexmax()-x(r1).indexmin()+1) != ncols) )
       {
@@ -348,7 +348,7 @@ void SPreceive(BOR_CONST dmatrix& _x,BOR_CONST adstring& name)
   if (pifs)
   {
     delete pifs;
-    pifs=NULL;
+    pifs = NULL;
   }
   DeleteFile("c:\\tmp.spl");
   
@@ -375,24 +375,24 @@ void SPreceive(BOR_CONST dvar_matrix& _x,BOR_CONST adstring& name)
 
   // tell splus to send the number of columns in the matrix
   command = adstring(" write(ncol(") + name
-    + adstring("),\"c:\\\\tmp.spl\",append=T)");
+    + adstring("),\"c:\\\\tmp.spl\",append = T)");
 
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
   Sleep(200);
 
   // now send the matrix
   command = adstring(" write(t(") + name
-    + adstring("),\"c:\\\\tmp.spl\", append=T)");
+    + adstring("),\"c:\\\\tmp.spl\", append = T)");
 
-  //command = adstring(" write(t(") + name
-  //  + adstring("),\"c:\\\\tmp.spl\",ncol=ncol(") + name 
-  //  + adstring("),append=T)");
+  // command = adstring(" write(t(") + name
+  //  + adstring("),\"c:\\\\tmp.spl\",ncol = ncol(") + name 
+  //  + adstring("),append = T)");
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
   Sleep(200);
 
-  ifstream * pifs=NULL;
-  int waitflag=0;
-  int numwaits=0;
+  ifstream * pifs = NULL;
+  int waitflag = 0;
+  int numwaits = 0;
   do
   {
     open_the_file_when_finished(pifs,waitflag,numwaits);
@@ -420,7 +420,7 @@ void SPreceive(BOR_CONST dvar_matrix& _x,BOR_CONST adstring& name)
     }
     else
     {
-      int r1=x.rowmin();
+      int r1 = x.rowmin();
       if ( ((x.rowmax()-x.rowmin()+1) != nrows) ||
          ( (x(r1).indexmax()-x(r1).indexmin()+1) != ncols) )
       {
@@ -441,7 +441,7 @@ void SPreceive(BOR_CONST dvar_matrix& _x,BOR_CONST adstring& name)
   if (pifs)
   {
     delete pifs;
-    pifs=NULL;
+    pifs = NULL;
   }
   DeleteFile("c:\\tmp.spl");
   
@@ -467,7 +467,7 @@ void SPreceive(BOR_CONST dvariable& x,BOR_CONST adstring& name)
 void SPreceive(BOR_CONST double& x,BOR_CONST adstring& name) 
 {
 
-  //adstring command = name + adstring(" <- scan(\"c:\\\\tmp.spl\")");
+  // adstring command = name + adstring(" <- scan(\"c:\\\\tmp.spl\")");
   // tell splus to send the size of the vector
   adstring command = adstring(" write(") + name 
     + adstring(",\"c:\\\\tmp.spl\")");
@@ -478,9 +478,9 @@ void SPreceive(BOR_CONST double& x,BOR_CONST adstring& name)
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
   Sleep(500);
 
-  ifstream * pifs=NULL;
-  int waitflag=0;
-  int numwaits=0;
+  ifstream * pifs = NULL;
+  int waitflag = 0;
+  int numwaits = 0;
   do
   {
     open_the_file_when_finished(pifs,waitflag,numwaits);
@@ -500,7 +500,7 @@ void SPreceive(BOR_CONST double& x,BOR_CONST adstring& name)
   if (pifs)
   {
     delete pifs;
-    pifs=NULL;
+    pifs = NULL;
   }
   DeleteFile("c:\\tmp.spl");
 }
@@ -531,7 +531,7 @@ void SPplot(BOR_CONST dvector& x,BOR_CONST adstring& name)
   ofs.close();
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
   Sleep(500);
-  command = adstring("win3(\"spadcln\",multi=T,minimized=T)");
+  command = adstring("win3(\"spadcln\",multi = T,minimized = T)");
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
   Sleep(500);
   command = adstring("plot(") + name + adstring(")");
@@ -572,7 +572,7 @@ void SPexecute( LPBYTE  cbuff, // address of data to pass to server
   HCONV   cstatus  /* handle of conversation */ )
 {
 
-  DWORD  dwResult=0; // address of transaction result
+  DWORD  dwResult = 0; // address of transaction result
 
   DdeClientTransaction(
 	 cbuff,	// address of data to pass to server
@@ -581,13 +581,13 @@ void SPexecute( LPBYTE  cbuff, // address of data to pass to server
 	 NULL,	// handle of item name string
 	 0,	// clipboard data format
 	 XTYP_EXECUTE,	// transaction type
-	 1000, //TIMEOUT_ASYNC,	// time-out duration
+	 1000, // TIMEOUT_ASYNC,	// time-out duration
 	 &dwResult 	// address of transaction result
 	);
 }
 
 
-HDDEDATA CALLBACK mycallback(       //DdeCallback(
+HDDEDATA CALLBACK mycallback(       // DdeCallback(
 	 UINT  uType,	// transaction type
 	 UINT  uFmt,	// clipboard data format
 	 HCONV  hconv,	// handle of the conversation
@@ -613,35 +613,35 @@ void check_when_finished(void)
   adstring command = adstring(" write(1,\"c:\\\\tmp1.spl\")");
 
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
-  int nn=0;
-  int numwaits=0;
-  int waitflag=0;
-  ifstream * pifs=NULL;
+  int nn = 0;
+  int numwaits = 0;
+  int waitflag = 0;
+  ifstream * pifs = NULL;
   do
   {
-    pifs=new ifstream("c:\\tmp1.spl");
+    pifs = new ifstream("c:\\tmp1.spl");
     if ((!pifs) || (!(*pifs)) )
     {
-      //cout << "Error opening semaphore file ... will retry " << endl;
-      waitflag=1;
+      // cout << "Error opening semaphore file ... will retry " << endl;
+      waitflag = 1;
       numwaits++;
       Sleep(500);
       if (pifs)
       {
         delete pifs;
-        pifs=NULL;
+        pifs = NULL;
       }
     }
     else
     {
-      waitflag=0;
+      waitflag = 0;
     }
   }
   while (waitflag==1);
   if (pifs)
   {
     delete pifs;
-    pifs=NULL;
+    pifs = NULL;
   }
   DeleteFile("c:\\tmp1.spl");
 }
@@ -649,108 +649,108 @@ void check_when_finished(void)
 
 void open_the_file_when_finished(ifstream*& pifs,BOR_CONST int& _waitflag,BOR_CONST int& _numwaits)
 { 
-  int& waitflag=(int&) _waitflag;
-  int& numwaits=(int&) _numwaits;
+  int& waitflag = (int&) _waitflag;
+  int& numwaits = (int&) _numwaits;
   // tell us when splus is finished writing the matrix
   DeleteFile("c:\\tmp1.spl");
   adstring command = adstring(" write(1,\"c:\\\\tmp1.spl\")");
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
-  int nn=0;
+  int nn = 0;
   do
   {
-    pifs=new ifstream("c:\\tmp1.spl");
+    pifs = new ifstream("c:\\tmp1.spl");
     //(*pifs) >> nn;
     if ((!pifs) || (!(*pifs)) )
     {
-      //cout << "Error opening semaphore file ... will retry " << endl;
-      waitflag=1;
+      // cout << "Error opening semaphore file ... will retry " << endl;
+      waitflag = 1;
       numwaits++;
       Sleep(1000*numwaits);
       if (pifs)
       {
         delete pifs;
-        pifs=NULL;
+        pifs = NULL;
       }
     }
     else
     {
-      waitflag=0;
+      waitflag = 0;
     }
   }
   while (waitflag==1);
   if (pifs)
   {
     delete pifs;
-    pifs=NULL;
+    pifs = NULL;
   }
   DeleteFile("c:\\tmp1.spl");
-  pifs=new ifstream("c:\\tmp.spl");
+  pifs = new ifstream("c:\\tmp.spl");
   if ((!pifs) || (!(*pifs)) )
   {
     cout << "Eror opening file ... will retry " << endl;
-    waitflag=1;
+    waitflag = 1;
     numwaits++;
     Sleep(500);
     if (pifs)
     {
       delete pifs;
-      pifs=NULL;
+      pifs = NULL;
     }
   }
   else
   {
-    waitflag=0;
+    waitflag = 0;
   }
 }
 
 void open_the_file(ifstream*& pifs,BOR_CONST int& _waitflag,BOR_CONST int& _numwaits)
 { 
-  int& waitflag=(int&) _waitflag;
-  int& numwaits=(int&) _numwaits;
-  int nn=0;
+  int& waitflag = (int&) _waitflag;
+  int& numwaits = (int&) _numwaits;
+  int nn = 0;
   do
   {
-    pifs=new ifstream("c:\\tmp1.spl");
+    pifs = new ifstream("c:\\tmp1.spl");
     //(*pifs) >> nn;
     if ((!pifs) || (!(*pifs)) )
     {
-      //cout << "Error opening semaphore file ... will retry " << endl;
-      waitflag=1;
+      // cout << "Error opening semaphore file ... will retry " << endl;
+      waitflag = 1;
       numwaits++;
       Sleep(1000*numwaits);
       if (pifs)
       {
         delete pifs;
-        pifs=NULL;
+        pifs = NULL;
       }
     }
     else
     {
-      waitflag=0;
+      waitflag = 0;
     }
   }
   while (waitflag==1);
   if (pifs)
   {
     delete pifs;
-    pifs=NULL;
+    pifs = NULL;
   }
   DeleteFile("c:\\tmp1.spl");
-  pifs=new ifstream("c:\\tmp.spl");
+  pifs = new ifstream("c:\\tmp.spl");
   if ((!pifs) || (!(*pifs)) )
   {
     cout << "Eror opening file ... will retry " << endl;
-    waitflag=1;
+    waitflag = 1;
     numwaits++;
     Sleep(500);
     if (pifs)
     {
       delete pifs;
-      pifs=NULL;
+      pifs = NULL;
     }
   }
   else
   {
-    waitflag=0;
+    waitflag = 0;
   }
 }

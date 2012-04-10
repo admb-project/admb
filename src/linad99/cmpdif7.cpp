@@ -28,7 +28,7 @@
 void nograd_assign_row(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)
 {
   // cout << "Entering nograd assign"<<endl;
-  //kkludge_object kg;
+  // kkludge_object kg;
   if (ii<m.rowmin()||ii>m.rowmax()  ||
    (v.indexmin()!=m(ii).indexmin()) ||
    (v.indexmax()!=m(ii).indexmax()) )
@@ -38,13 +38,13 @@ void nograd_assign_row(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii
       << endl;
     ad_exit(1);
   }
-  int min=v.indexmin();
-  int max=v.indexmax();
-  for (int j=min;j<=max;j++)
+  int min = v.indexmin();
+  int max = v.indexmax();
+  for (int j = min;j<=max;j++)
   {
-    value(m(ii,j))=v(j);
+    value(m(ii,j)) = v(j);
   }
-    // out(i)=nograd_assign(m(i));
+    // out(i) = nograd_assign(m(i));
   }
 
 /**
@@ -55,6 +55,6 @@ void nograd_assign_row(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii
 {
   kkludge_object kg;
   dvariable tmpout(kg);
-  value(tmpout)=tmp;
+  value(tmpout) = tmp;
   return tmpout;
 }

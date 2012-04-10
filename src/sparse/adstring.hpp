@@ -105,7 +105,7 @@ public :
   adstring(int lb, int ub);
   adstring(_CONST adstring & v);
   void realloc(const char * t);
-  //adstring(_CONST unsigned char v);
+  // adstring(_CONST unsigned char v);
   adstring(_CONST char v);
   adstring(void);
   ~adstring();
@@ -175,7 +175,7 @@ public :
   friend int val(const adstring& s);
 };
 
-adstring str(double x, int minwidth=17, int decplaces=-1);
+adstring str(double x, int minwidth = 17, int decplaces=-1);
 adstring str(_CONST int x);
 void val(_CONST adstring& s, int& v, int& code);
 int val(const adstring& s);
@@ -199,7 +199,7 @@ adstring chr(int c);
 int length(_CONST adstring& t);
 int pos(_CONST adstring& substr,_CONST adstring& s);
 
-//adstring operator + (_CONST char u, _CONST char v)
+// adstring operator + (_CONST char u, _CONST char v)
 //  { return (adstring(u) + adstring(v) ); }
 #if defined(__BORLANDC__)
 #  if (__BORLANDC__  <= 0x0520) 
@@ -223,7 +223,7 @@ int pos(_CONST adstring& substr,_CONST adstring& s);
     friend class lvector;
     friend class ptr_vector;
   public:
-    vector_shape(int& lb, int& lu) {index_min=lb;index_max=lu;ncopies=0;}
+    vector_shape(int& lb, int& lu) {index_min = lb;index_max = lu;ncopies = 0;}
     _CONST int indexmin(void) _CONST {return index_min;}
     _CONST int indexmax(void) _CONST {return index_max;}
   };

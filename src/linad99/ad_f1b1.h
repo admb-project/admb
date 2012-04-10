@@ -81,9 +81,9 @@
   public:
     double * ptr;
     f1b1_stack(int n) { ptr = new double[n]; }
-    ~f1b1_stack() { delete ptr; ptr=NULL; deassign();}
-    void assign(void) { f1b1_variable::f1b1_stack_ptr=ptr;}
-    void deassign(void) { f1b1_variable::f1b1_stack_ptr=NULL;}
+    ~f1b1_stack() { delete ptr; ptr = NULL; deassign();}
+    void assign(void) { f1b1_variable::f1b1_stack_ptr = ptr;}
+    void deassign(void) { f1b1_variable::f1b1_stack_ptr = NULL;}
   };
 
 /**
@@ -94,7 +94,7 @@
   {
   public:
     f1b1_init_data();
-    void kludge(double x,int i){*u=x;udot[i]=1;}
+    void kludge(double x,int i){*u = x;udot[i] = 1;}
   };
 
 /**
@@ -105,7 +105,7 @@
   {
   public:
     f1b1_variable * dep;
-    dep_data(f1b1_variable * t) { dep=t;}
+    dep_data(f1b1_variable * t) { dep = t;}
   };
 
   class single_f1b1_function;
@@ -181,10 +181,10 @@
   {
   public:
   //  virtual double_f1b1_node operator () 
-  //    (virtual_f1b1_node& v, virtual_f1b1_node& w)=0;
+  //    (virtual_f1b1_node& v, virtual_f1b1_node& w) = 0;
   //  virtual double_f1b1_node operator () 
-  //    (f1b1_init_data& v,f1b1_init_data& w)=0;
-    virtual void node_evaluate(void)=0;
+  //    (f1b1_init_data& v,f1b1_init_data& w) = 0;
+    virtual void node_evaluate(void) = 0;
   };
 
 /**
@@ -217,10 +217,10 @@
   class plus_function : public virtual_double_f1b1_function
   {
   public:
-    //virtual double_f1b1_node operator () (virtual_f1b1_node& v, 
+    // virtual double_f1b1_node operator () (virtual_f1b1_node& v, 
     //  virtual_f1b1_node& w);
 
-    //virtual double_f1b1_node operator () (f1b1_init_data& v,f1b1_init_data& w);
+    // virtual double_f1b1_node operator () (f1b1_init_data& v,f1b1_init_data& w);
     void node_evaluate(void);
   };
 
@@ -231,10 +231,10 @@
   class times_function : public virtual_double_f1b1_function
   {
   public:
-    //virtual double_f1b1_node operator () (virtual_f1b1_node& v, 
+    // virtual double_f1b1_node operator () (virtual_f1b1_node& v, 
     //  virtual_f1b1_node& w);
 
-    //virtual double_f1b1_node operator () (f1b1_init_data& v,f1b1_init_data& w);
+    // virtual double_f1b1_node operator () (f1b1_init_data& v,f1b1_init_data& w);
     void node_evaluate(void);
   };
 

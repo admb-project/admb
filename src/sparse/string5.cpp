@@ -10,8 +10,8 @@
   adstring_array::adstring_array(_CONST adstring_array& sa) :
     clist(sa)
   {
-    shape=sa.shape;
-    ptr=sa.ptr;
+    shape = sa.shape;
+    ptr = sa.ptr;
   }
 
   adstring_array::~adstring_array()
@@ -20,9 +20,9 @@
     {
       if (next==this)
       {
-        int min=indexmin();
-        int max=indexmax();
-        for(int i=min;i<=max;i++)
+        int min = indexmin();
+        int max = indexmax();
+        for(int i = min;i<=max;i++)
         {
           if (ptr[i])
           {
@@ -32,16 +32,16 @@
         ptr+=indexmin();
         delete [] ptr;
         delete shape;
-        shape=NULL;
-        ptr=NULL;
+        shape = NULL;
+        ptr = NULL;
       }
     }
   }
 
   adstring_array::adstring_array(void)
   {
-    shape=NULL;
-    ptr=NULL;
+    shape = NULL;
+    ptr = NULL;
   }
 
   adstring_array::adstring_array(int min,int max) 
@@ -57,18 +57,18 @@
               " max must be >= min" << endl;
       exit(1);
     }
-    if (!(shape=new vector_shape(min,max)))
+    if (!(shape = new vector_shape(min,max)))
     {
       cerr << "Error allocating memory in adstring_array" << endl;
     }
-    if (!(ptr=new adstring* [max-min+1]))
+    if (!(ptr = new adstring* [max-min+1]))
     {
       cerr << "Error allocating memory in adstring_array" << endl;
     }
     ptr-=indexmin();
-    for (int i=min;i<=max;i++)
+    for (int i = min;i<=max;i++)
     {
-      ptr[i]=new adstring;
+      ptr[i] = new adstring;
     }
   }
 

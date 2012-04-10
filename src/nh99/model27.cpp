@@ -56,18 +56,18 @@ void named_d6_array::allocate(int l5,int h5,int hhsl,int hhsu,int hsl,
 
 named_d6_array& named_d6_array::operator = (_CONST d6_array& m)
 {
-  this->d6_array::operator=(m);
+  this->d6_array::operator = (m);
   return *this;
 }
 
 named_dvar6_array& named_dvar6_array::operator = (_CONST dvar6_array& m)
 {
-  this->dvar6_array::operator=(m);
+  this->dvar6_array::operator = (m);
   return *this;
 }
 
 named_dvar6_array& named_dvar6_array::operator = (_CONST d6_array& m)
 {
-  this->dvar6_array::operator=(m);
+  this->dvar6_array::operator = (m);
   return *this;
 }

@@ -18,7 +18,7 @@ void ivector::fill(const char * s)
 {
   dvector tmp(*this);
   tmp.fill(s);
-  *this=ivector(tmp);
+  *this = ivector(tmp);
 }
 
 /**
@@ -29,5 +29,5 @@ void lvector::fill(const char * s)
 {
   dvector tmp(*this);
   tmp.fill(s);
-  *this=lvector(tmp);
+  *this = lvector(tmp);
 }

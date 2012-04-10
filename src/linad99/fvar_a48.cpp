@@ -20,8 +20,8 @@
   {
     RETURN_ARRAYS_INCREMENT();
     save_identifier_string("wctf");
-    double xinv=1./x;
-    for (int i=indexmin(); i<=indexmax(); i++)
+    double xinv = 1./x;
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
       elem_value(i)*=xinv;
     }
@@ -41,14 +41,14 @@
  void DF_cdble_dv_diveq(void)
  {
     verify_identifier_string("cmtu");
-    double x=restore_double_value();
-    dvar_vector_position this_pos=restore_dvar_vector_position();
-    dvector dfthis=restore_dvar_vector_derivatives(this_pos);
+    double x = restore_double_value();
+    dvar_vector_position this_pos = restore_dvar_vector_position();
+    dvector dfthis = restore_dvar_vector_derivatives(this_pos);
     verify_identifier_string("wctf");
-    double xinv=1./x;
-    for (int i=dfthis.indexmax(); i>=dfthis.indexmin(); i--)
+    double xinv = 1./x;
+    for (int i = dfthis.indexmax(); i>=dfthis.indexmin(); i--)
     {
-      // elem_value(i)=elem_value(i)/x;
+      // elem_value(i) = elem_value(i)/x;
       dfthis(i)*=xinv;
     }
     dfthis.save_dvector_derivatives(this_pos);
@@ -64,10 +64,10 @@
   dvar_vector& dvar_vector::operator /= (_CONST prevariable& x)
   {
     RETURN_ARRAYS_INCREMENT();
-    double xinv=1./value(x);
-    for (int i=indexmin(); i<=indexmax(); i++)
+    double xinv = 1./value(x);
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
-      elem_value(i)=elem_value(i)*xinv;
+      elem_value(i) = elem_value(i)*xinv;
     }
     save_identifier_string("wctg");
     save_dvar_vector_value();
@@ -88,26 +88,26 @@
  void DF_vdble_dv_diveq(void)
  {
     verify_identifier_string("cmtu");
-    prevariable_position x_pos=restore_prevariable_position();
-    double dfx=restore_prevariable_derivative(x_pos);
-    double x=restore_prevariable_value();
-    dvar_vector_position this_pos=restore_dvar_vector_position();
-    dvector tmp=restore_dvar_vector_value(this_pos);
-    dvector dfthis=restore_dvar_vector_derivatives(this_pos);
+    prevariable_position x_pos = restore_prevariable_position();
+    double dfx = restore_prevariable_derivative(x_pos);
+    double x = restore_prevariable_value();
+    dvar_vector_position this_pos = restore_dvar_vector_position();
+    dvector tmp = restore_dvar_vector_value(this_pos);
+    dvector dfthis = restore_dvar_vector_derivatives(this_pos);
     verify_identifier_string("wctg");
-    double tmp1=0.;
-    double xinv=1./x;
+    double tmp1 = 0.;
+    double xinv = 1./x;
     int i;
-    for (i=dfthis.indexmax(); i>=dfthis.indexmin(); i--)
+    for (i = dfthis.indexmax(); i>=dfthis.indexmin(); i--)
     {
-      // elem_value(i)=elem_value(i)/x;
+      // elem_value(i) = elem_value(i)/x;
       tmp1+=dfthis(i)*tmp(i);
     }
     tmp1*=-xinv;
 
-    for (i=dfthis.indexmax(); i>=dfthis.indexmin(); i--)
+    for (i = dfthis.indexmax(); i>=dfthis.indexmin(); i--)
     {
-      // elem_value(i)=elem_value(i)/x;
+      // elem_value(i) = elem_value(i)/x;
       dfthis(i)*=xinv;
     }
     dfthis.save_dvector_derivatives(this_pos);

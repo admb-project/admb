@@ -42,7 +42,7 @@ void null_ptr_err_message(void);
   #endif
 #endif
 
-//void adwait(double);
+// void adwait(double);
 
 extern ofstream clogf;
 #ifndef __SUNPRO_CC
@@ -57,27 +57,27 @@ extern "C"{
   {
     if (ad_printf) (*ad_printf) (" Exception -- error code %d\n",ierr);
     if (ad_printf) (*ad_printf) (" Pause");
-    //adwait(4.0);
+    // adwait(4.0);
 #if defined(USE_EXCEPTIONS)
     throw spdll_exception(ierr);
 #endif
   }
 }
 
-//char * MY_BUF=NULL;
+// char * MY_BUF = NULL;
 // *************************************************************
 // *************************************************************
 int ctlc_flag = 0;
-int gradient_structure::Hybrid_bounded_flag=0;
-DF_FILE * gradient_structure::fp=NULL;
+int gradient_structure::Hybrid_bounded_flag = 0;
+DF_FILE * gradient_structure::fp = NULL;
 char gradient_structure::cmpdif_file_name[61];
-//char gradient_structure::var_store_file_name[61];
+// char gradient_structure::var_store_file_name[61];
 #if defined(AD_DEMO)
 int gradient_structure::NUM_RETURN_ARRAYS = 10;
 #else
 int gradient_structure::NUM_RETURN_ARRAYS = 25;
 #endif
-double * gradient_structure::hessian_ptr=NULL;
+double * gradient_structure::hessian_ptr = NULL;
 int gradient_structure::NUM_DEPENDENT_VARIABLES = 200;
 #if (defined(NO_DERIVS))
   int gradient_structure::no_derivatives = 0;
@@ -98,30 +98,30 @@ int gradient_structure::RETURN_ARRAYS_SIZE = 70;
 #endif
 
 int gradient_structure::instances = 0;
-//int gradient_structure::RETURN_INDEX = 0;
-//dvariable * gradient_structure::FRETURN = NULL;
+// int gradient_structure::RETURN_INDEX = 0;
+// dvariable * gradient_structure::FRETURN = NULL;
 dvariable * gradient_structure::MAX_RETURN = NULL;
 dvariable * gradient_structure::MIN_RETURN = NULL;
 dvariable * gradient_structure::RETURN_PTR = NULL;
 #ifdef __BORLANDC__
 long int gradient_structure::GRADSTACK_BUFFER_SIZE = 40000L;
-long int gradient_structure::CMPDIF_BUFFER_SIZE=1400000L;
+long int gradient_structure::CMPDIF_BUFFER_SIZE = 1400000L;
 #else
 long long int gradient_structure::GRADSTACK_BUFFER_SIZE = 40000L;
-long long int gradient_structure::CMPDIF_BUFFER_SIZE=1400000L;
+long long int gradient_structure::CMPDIF_BUFFER_SIZE = 1400000L;
 #endif
 
-dependent_variables_information * gradient_structure::DEPVARS_INFO=NULL;
+dependent_variables_information * gradient_structure::DEPVARS_INFO = NULL;
 
-int gradient_structure::save_var_flag=0;
-int gradient_structure::save_var_file_flag=0;
-//int gradient_structure::_GRADFILE_PTR = NULL; // should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR1 = NULL; // should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR2 = NULL; // should be int gradfile_handle;
-//int gradient_structure::_VARSSAV_PTR = 0; // should be int gradfile_handle;
+int gradient_structure::save_var_flag = 0;
+int gradient_structure::save_var_file_flag = 0;
+// int gradient_structure::_GRADFILE_PTR = NULL; // should be int gradfile_handle;
+// int gradient_structure::_GRADFILE_PTR1 = NULL; // should be int gradfile_handle;
+// int gradient_structure::_GRADFILE_PTR2 = NULL; // should be int gradfile_handle;
+// int gradient_structure::_VARSSAV_PTR = 0; // should be int gradfile_handle;
 
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 500;
-unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
+unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; // js
 dlist * gradient_structure::GRAD_LIST;
 grad_stack * gradient_structure::GRAD_STACK1;
 indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
@@ -132,11 +132,11 @@ int gradient_structure::MAX_DLINKS = 900;
 #else
 int gradient_structure::MAX_DLINKS = 5000;
 #endif
-//unsigned long int gradient_structure::ARRAY_MEMBLOCK_BASE = 0L;
+// unsigned long int gradient_structure::ARRAY_MEMBLOCK_BASE = 0L;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASE;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASEA;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_SAVE;
-double * gradient_structure::variables_save=NULL;
+double * gradient_structure::variables_save = NULL;
 void * farptr_norm(void *);
 long int farptr_tolong(void *) ;
 void memory_allocate_error(const char * s, void * ptr);
@@ -158,7 +158,7 @@ long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
  */
  char lastchar(char * s)
  {
-   int k=strlen(s);
+   int k = strlen(s);
    return s[k-1];
  }
 
@@ -183,7 +183,7 @@ void cleanup_temporary_files()
    if (gradient_structure::fp)
    {
      delete gradient_structure::fp;
-     gradient_structure::fp=NULL;
+     gradient_structure::fp = NULL;
    }
    if (gradient_structure::GRAD_STACK1)
    {
@@ -206,7 +206,7 @@ void cleanup_temporary_files()
      unlink(gradient_structure::GRAD_STACK1->gradfile_name1);
      unlink(gradient_structure::GRAD_STACK1->gradfile_name2);
      unlink(gradient_structure::GRAD_STACK1->var_store_file_name);
-     //unlink(gradient_structure::cmpdif_file_name);
+     // unlink(gradient_structure::cmpdif_file_name);
    }
   #else
    if (gradient_structure::GRAD_STACK1)
@@ -214,7 +214,7 @@ void cleanup_temporary_files()
      remove(gradient_structure::GRAD_STACK1->gradfile_name1);
      remove(gradient_structure::GRAD_STACK1->gradfile_name2);
      remove(gradient_structure::GRAD_STACK1->var_store_file_name);
-     //cout << remove(gradient_structure::cmpdif_file_name);
+     // cout << remove(gradient_structure::cmpdif_file_name);
    }
   #endif
 }
@@ -226,11 +226,11 @@ void cleanup_temporary_files()
 void allocate_dvariable_space(void)
 {
   int on,nopt;
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
+  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
   {
     if (nopt ==1)	    
     {	      
-      gradient_structure::MAX_DLINKS=atoi(ad_comm::argv[on+1]);
+      gradient_structure::MAX_DLINKS = atoi(ad_comm::argv[on+1]);
     }
     else
     {
@@ -239,7 +239,7 @@ void allocate_dvariable_space(void)
       ad_exit(1);
     }	
   }   
-  int numlinks=gradient_structure::MAX_DLINKS;
+  int numlinks = gradient_structure::MAX_DLINKS;
   cout << sizeof(dlink) << endl;
 
   if (sizeof(char)!=1)
@@ -253,25 +253,25 @@ void allocate_dvariable_space(void)
        " need to modify allocate_dvariable_space in gradstrc.cpp" << endl;
   }
   char * tmp= (char*) malloc(2.0*sizeof(double)*(numlinks+1));
-  char * tmp1=tmp;
+  char * tmp1 = tmp;
 
-  dlink * dl=(dlink*)tmp1;
+  dlink * dl = (dlink*)tmp1;
   tmp1+=2*sizeof(double);
-  dl->prev=NULL;
-  dlink * prev=dl;
-  int& nlinks=(int&)gradient_structure::GRAD_LIST->nlinks;  
-  gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl; 
-  for (int i=1;i<=numlinks;i++)
+  dl->prev = NULL;
+  dlink * prev = dl;
+  int& nlinks = (int&)gradient_structure::GRAD_LIST->nlinks;  
+  gradient_structure::GRAD_LIST->dlink_addresses[nlinks++] = dl; 
+  for (int i = 1;i<=numlinks;i++)
   {
-    dl=(dlink*)tmp1;
-    dl->prev=prev;
-    prev=dl;
+    dl = (dlink*)tmp1;
+    dl->prev = prev;
+    prev = dl;
     tmp1+=2*sizeof(double);
 
-    gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl; 
+    gradient_structure::GRAD_LIST->dlink_addresses[nlinks++] = dl; 
       // keep track of the links so you can 
   }                               // zero them out
-  gradient_structure::GRAD_LIST->last=dl;  
+  gradient_structure::GRAD_LIST->last = dl;  
 }
 
 /**
@@ -280,14 +280,14 @@ void allocate_dvariable_space(void)
  */
  gradient_structure::gradient_structure(long int _size)
  {
-   gradient_structure::NVAR=0;
+   gradient_structure::NVAR = 0;
    atexit(cleanup_temporary_files);
    fill_ad_random_part();
    long int size;
 #if !defined(AD_DEMO)
-     size=_size;
+     size = _size;
 #else
-     size=12000L;
+     size = 12000L;
 #endif
    if (instances++ > 0)
    {
@@ -296,7 +296,7 @@ void allocate_dvariable_space(void)
           << "  of the objects declared.\n";
      ad_exit(1);
    }
-   gradient_structure::ARRAY_MEMBLOCK_SIZE=size; //js
+   gradient_structure::ARRAY_MEMBLOCK_SIZE = size; // js
 
    char * path = getenv("ADTMP1"); // NULL if not defined
    if (path != NULL)
@@ -330,7 +330,7 @@ void allocate_dvariable_space(void)
    else
    {
      int on,nopt;
-     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
+     if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
      {
        if (!nopt)
        {
@@ -338,7 +338,7 @@ void allocate_dvariable_space(void)
        }
        else
        {   
-         int jj=atoi(ad_comm::argv[on+1]);
+         int jj = atoi(ad_comm::argv[on+1]);
          if (jj<=0)
          {
            cerr << "Usage -ndv option needs positive integer"
@@ -346,11 +346,11 @@ void allocate_dvariable_space(void)
          } 
          else
          {
-           NUM_DEPENDENT_VARIABLES=jj;
+           NUM_DEPENDENT_VARIABLES = jj;
          }
        }
      }
-     DEPVARS_INFO=new dependent_variables_information(NUM_DEPENDENT_VARIABLES);
+     DEPVARS_INFO = new dependent_variables_information(NUM_DEPENDENT_VARIABLES);
      memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
    }
 
@@ -361,7 +361,7 @@ void allocate_dvariable_space(void)
    }
    else
    {
-     fp=new DF_FILE(CMPDIF_BUFFER_SIZE);
+     fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
      memory_allocate_error("fp", (void *) fp);
    }
 
@@ -426,16 +426,16 @@ void allocate_dvariable_space(void)
 
    ARRAY_MEMBLOCK_BASE = temp_ptr;
   
-   //cout << (void*) ARRAY_MEMBLOCK_BASE.ptr  << "   ";
-   //cout << (int) ARRAY_MEMBLOCK_BASE.ptr  << endl;
+   // cout << (void*) ARRAY_MEMBLOCK_BASE.ptr  << "   ";
+   // cout << (int) ARRAY_MEMBLOCK_BASE.ptr  << endl;
 #if defined(__x86_64)
-   intptr_t adjustment=(8-((intptr_t)ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
+   intptr_t adjustment = (8-((intptr_t)ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
 #else
-   int adjustment=(8-((int) ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
+   int adjustment = (8-((int) ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
 #endif
-   //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
+   // cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
    ARRAY_MEMBLOCK_BASE.adjust(adjustment);
-   //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
+   // cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
   
    if (GRAD_STACK1 != NULL)
    {
@@ -466,14 +466,14 @@ void allocate_dvariable_space(void)
      memory_allocate_error("INDVAR_LIST",INDVAR_LIST);
  // ****************************************************************
  // ****************************************************************
-      int nopt=0;
-      int on=0;
+      int nopt = 0;
+      int on = 0;
 
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mno",nopt))>-1)
+      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mno",nopt))>-1)
       {
         if (nopt ==1)	    
         {	      
-          MAX_NVAR_OFFSET=atoi(ad_comm::argv[on+1]);
+          MAX_NVAR_OFFSET = atoi(ad_comm::argv[on+1]);
         }
         else
         {
@@ -490,7 +490,7 @@ void allocate_dvariable_space(void)
      memory_allocate_error("INDVAR_LIST->address",INDVAR_LIST->address);
    }
 
-   //allocate_dvariable_space();
+   // allocate_dvariable_space();
 
    if ( RETURN_ARRAYS!= NULL)
    {
@@ -502,25 +502,25 @@ void allocate_dvariable_space(void)
       RETURN_ARRAYS = new dvariable*[NUM_RETURN_ARRAYS];
       memory_allocate_error("RETURN_ARRAYS",RETURN_ARRAYS);
 
-      //allocate_dvariable_space();
-      for (i=0; i< NUM_RETURN_ARRAYS; i++)
+      // allocate_dvariable_space();
+      for (i = 0; i< NUM_RETURN_ARRAYS; i++)
       {
-	 RETURN_ARRAYS[i]=new dvariable[RETURN_ARRAYS_SIZE];
+	 RETURN_ARRAYS[i] = new dvariable[RETURN_ARRAYS_SIZE];
 	 memory_allocate_error("RETURN_ARRAYS[i]",RETURN_ARRAYS[i]);
       }
-      RETURN_ARRAYS_PTR=0;
+      RETURN_ARRAYS_PTR = 0;
       MIN_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR];
       MAX_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR]+RETURN_ARRAYS_SIZE-1;
       RETURN_PTR = MIN_RETURN;
    }
-   //RETURN_INDEX = 0;
+   // RETURN_INDEX = 0;
 
-   RETURN_PTR_CONTAINER=new dvariable*[NUM_RETURN_ARRAYS];
+   RETURN_PTR_CONTAINER = new dvariable*[NUM_RETURN_ARRAYS];
    memory_allocate_error("RETURN_INDICES_CONTAINER",RETURN_PTR_CONTAINER);
 
-   for (i=0; i< NUM_RETURN_ARRAYS; i++)
+   for (i = 0; i< NUM_RETURN_ARRAYS; i++)
    {
-     RETURN_PTR_CONTAINER[i]=0;
+     RETURN_PTR_CONTAINER[i] = 0;
    }
  }
 
@@ -536,7 +536,7 @@ void RETURN_ARRAYS_INCREMENT(void)
 #if defined(THREAD_SAFE)
   pthread_mutex_lock(&mutex_return_arrays);
 #endif
-  gradient_structure::RETURN_PTR_CONTAINER[gradient_structure::RETURN_ARRAYS_PTR]=gradient_structure::RETURN_PTR;
+  gradient_structure::RETURN_PTR_CONTAINER[gradient_structure::RETURN_ARRAYS_PTR] = gradient_structure::RETURN_PTR;
   if (++gradient_structure::RETURN_ARRAYS_PTR==gradient_structure::NUM_RETURN_ARRAYS)
   {
     cerr << " Overflow in RETURN_ARRAYS stack -- Increase NUM_RETURN_ARRAYS\n";
@@ -587,7 +587,7 @@ void RETURN_ARRAYS_DECREMENT(void)
  */
 gradient_structure::~gradient_structure()
 {
-   gradient_structure::NVAR=0;
+   gradient_structure::NVAR = 0;
    if (RETURN_ARRAYS == NULL)
    {
      null_ptr_err_message();
@@ -595,10 +595,10 @@ gradient_structure::~gradient_structure()
    }
    else
    {
-     for (int i=0; i< NUM_RETURN_ARRAYS; i++)
+     for (int i = 0; i< NUM_RETURN_ARRAYS; i++)
      {
 	delete [] RETURN_ARRAYS[i];
-	RETURN_ARRAYS[i]=NULL;
+	RETURN_ARRAYS[i] = NULL;
      }
      delete [] RETURN_ARRAYS;
      RETURN_ARRAYS = NULL;
@@ -683,7 +683,7 @@ gradient_structure::~gradient_structure()
      ad_exit(1);
    }
    delete DEPVARS_INFO;
-   DEPVARS_INFO=NULL;
+   DEPVARS_INFO = NULL;
 
    if (fp == NULL)
    {
@@ -726,7 +726,7 @@ void memory_allocate_error(const char * s, void * ptr)
  */
     void gradient_structure::set_NO_DERIVATIVES(void)
     {
-      no_derivatives=1;
+      no_derivatives = 1;
     }
 
 /**
@@ -735,7 +735,7 @@ void memory_allocate_error(const char * s, void * ptr)
  */
     void gradient_structure::set_YES_DERIVATIVES(void)
     {
-      no_derivatives=0;
+      no_derivatives = 0;
     }
  #endif
 
@@ -745,7 +745,7 @@ void memory_allocate_error(const char * s, void * ptr)
  */
     void  gradient_structure::set_YES_SAVE_VARIABLES_VALUES(void)
     {
-      save_var_flag=1;
+      save_var_flag = 1;
     }
 
 /**
@@ -754,7 +754,7 @@ void memory_allocate_error(const char * s, void * ptr)
  */
     void  gradient_structure::set_NO_SAVE_VARIABLES_VALUES(void)
     {
-      save_var_flag=0;
+      save_var_flag = 0;
     }
       
 /**
@@ -768,7 +768,7 @@ void memory_allocate_error(const char * s, void * ptr)
         cerr << " Error in "
                 "gradient_structure::set_NUM_DEPENDENT_VARIABLES(int i)"
              << endl << " value of i must be >= 1" << endl; 
-        i=1;
+        i = 1;
       }
-      NUM_DEPENDENT_VARIABLES=i;
+      NUM_DEPENDENT_VARIABLES = i;
     }

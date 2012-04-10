@@ -60,8 +60,8 @@ class possible_option
   ivector _num_arguments;
   possible_option(adstring_array& _option_flags,ivector _num_arguments)
   {
-    option_flags=_option_flags;
-    num_arguments=_num_arguments;
+    option_flags = _option_flags;
+    num_arguments = _num_arguments;
   }
 }
 
@@ -72,9 +72,9 @@ class command_line_options_list
   command_line_options_list(int argc, char * argv[],  
     possible_options& po)
   {
-    int i=1;
+    int i = 1;
     {
-      adstring tmp=argv[i];
+      adstring tmp = argv[i];
       if (tmp(1)!= '-')  // this identifies it as an option
       {
           cerr << "Unrecognized command line option " << tmp << endl;
@@ -88,8 +88,8 @@ class command_line_options_list
           cerr << "Unrecognized command line option " << tmp << endl;
           exit(1);
         }
-        int no=po.num_arguments(optno);
-        for (int j=1;j<=po.num_arguments;j++)
+        int no = po.num_arguments(optno);
+        for (int j = 1;j<=po.num_arguments;j++)
         {
           if (++i > argc)
           {
@@ -99,7 +99,7 @@ class command_line_options_list
           }
           else
           {
-            adstring tmp1=argv[i];
+            adstring tmp1 = argv[i];
             if (tmp1(i)= '-')  // this identifies it as an option
             {
               cerr << "Not enough arguments passed to command line option "

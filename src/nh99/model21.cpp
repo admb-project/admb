@@ -29,7 +29,7 @@ const char * param_init_d3array::label(void)
 param_init_d3array::param_init_d3array() : named_dvar3_array() ,
   initial_params()
 {
-  //add_to_list();
+  // add_to_list();
 }
 
 int param_init_d3array::size_count(void)
@@ -76,7 +76,7 @@ void param_init_d3array::bsave_value(void)
 
   void param_init_d3array::save_value(BOR_CONST ofstream& _ofs,int prec)
   {
-    ofstream& ofs=(ofstream&) _ofs;
+    ofstream& ofs = (ofstream&) _ofs;
     ofs << setw(prec+6) << setprecision(prec) << dvar3_array(*this) << endl;
   }
 
@@ -102,11 +102,11 @@ void param_init_d3array::bsave_value(void)
     initial_params::allocate(phase_start);
     if (!(!(*this)))
     {
-      for (int i=indexmin();i<=indexmax();i++)
+      for (int i = indexmin();i<=indexmax();i++)
       {
 	if (allocated((*this)(i)))
 	{  
-          for (int j=(*this)(i).indexmin();j<=(*this)(i).indexmax();j++)
+          for (int j = (*this)(i).indexmin();j<=(*this)(i).indexmax();j++)
           {
             if (allocated((*this)(i,j)))
 	    {  
@@ -120,7 +120,7 @@ void param_init_d3array::bsave_value(void)
               }
               else
               {
-                (*this)(i,j)=(initial_value);
+                (*this)(i,j) = (initial_value);
 	      }
 	    }
 	  }  
@@ -136,7 +136,7 @@ void param_init_d3array::bsave_value(void)
     initial_params::allocate(phase_start);
     if (!(!(*this)))
     {
-      for (int i=indexmin();i<=indexmax();i++)
+      for (int i = indexmin();i<=indexmax();i++)
       {
 	if (allocated((*this)(i)))
 	{
@@ -150,7 +150,7 @@ void param_init_d3array::bsave_value(void)
           }
           else
           {
-            (*this)(i)=(initial_value);
+            (*this)(i) = (initial_value);
           }
         }
       }
@@ -159,21 +159,21 @@ void param_init_d3array::bsave_value(void)
 
   void param_init_d3array::curv_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {
-    int& ii=(int&) _ii;
-    dvector& v=(dvector&) _v;
-    int smin=slicemin();
-    int smax=slicemax();
-    for (int k=smin;k<=smax;k++)
+    int& ii = (int&) _ii;
+    dvector& v = (dvector&) _v;
+    int smin = slicemin();
+    int smax = slicemax();
+    for (int k = smin;k<=smax;k++)
     {
-      int mmin=(*this)(k).rowmin();
-      int mmax=(*this)(k).rowmax();
-      for (int i=mmin;i<=mmax;i++)
+      int mmin = (*this)(k).rowmin();
+      int mmax = (*this)(k).rowmax();
+      for (int i = mmin;i<=mmax;i++)
       {
-        int cmin=((*this)(k,i)).indexmin();
-        int cmax=((*this)(k,i)).indexmax();
-        for (int j=cmin;j<=cmax;j++)
+        int cmin = ((*this)(k,i)).indexmin();
+        int cmax = ((*this)(k,i)).indexmax();
+        for (int j = cmin;j<=cmax;j++)
         {
-          v(ii++)=0.;
+          v(ii++) = 0.;
         }
       }
     }
@@ -181,21 +181,21 @@ void param_init_d3array::bsave_value(void)
 
   void param_init_d3array::hess_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {
-    int& ii=(int&) _ii;
-    dvector& v=(dvector&) _v;
-    int smin=slicemin();
-    int smax=slicemax();
-    for (int k=smin;k<=smax;k++)
+    int& ii = (int&) _ii;
+    dvector& v = (dvector&) _v;
+    int smin = slicemin();
+    int smax = slicemax();
+    for (int k = smin;k<=smax;k++)
     {
-      int mmin=(*this)(k).rowmin();
-      int mmax=(*this)(k).rowmax();
-      for (int i=mmin;i<=mmax;i++)
+      int mmin = (*this)(k).rowmin();
+      int mmax = (*this)(k).rowmax();
+      for (int i = mmin;i<=mmax;i++)
       {
-        int cmin=((*this)(k,i)).indexmin();
-        int cmax=((*this)(k,i)).indexmax();
-        for (int j=cmin;j<=cmax;j++)
+        int cmin = ((*this)(k,i)).indexmin();
+        int cmax = ((*this)(k,i)).indexmax();
+        for (int j = cmin;j<=cmax;j++)
         {
-          v(ii++)=0.;
+          v(ii++) = 0.;
         }
       }
     }
@@ -203,27 +203,27 @@ void param_init_d3array::bsave_value(void)
 
   void param_init_d3array::sd_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
   {
-    int& ii=(int&) _ii;
-    dvector& v=(dvector&) _v;
+    int& ii = (int&) _ii;
+    dvector& v = (dvector&) _v;
     if (allocated(*this))
     {
-      int smin=slicemin();
-      int smax=slicemax();
-      for (int k=smin;k<=smax;k++)
+      int smin = slicemin();
+      int smax = slicemax();
+      for (int k = smin;k<=smax;k++)
       {
         if (allocated((*this)(k)))
         {
-          int mmin=(*this)(k).rowmin();
-          int mmax=(*this)(k).rowmax();
-          for (int i=mmin;i<=mmax;i++)
+          int mmin = (*this)(k).rowmin();
+          int mmax = (*this)(k).rowmax();
+          for (int i = mmin;i<=mmax;i++)
           {
             if (allocated((*this)(k,i)))
             {
-              int cmin=((*this)(k,i)).indexmin();
-              int cmax=((*this)(k,i)).indexmax();
-              for (int j=cmin;j<=cmax;j++)
+              int cmin = ((*this)(k,i)).indexmin();
+              int cmax = ((*this)(k,i)).indexmax();
+              for (int j = cmin;j<=cmax;j++)
               {
-                v(ii++)=1.;
+                v(ii++) = 1.;
               }
 	    }
 	  }
@@ -234,7 +234,7 @@ void param_init_d3array::bsave_value(void)
 
 cifstream& operator >> (BOR_CONST cifstream& _s, param_init_d3array& m)
 {
-  cifstream&  s=(cifstream&) _s;
+  cifstream&  s = (cifstream&) _s;
   s >> dvar3_array(m);
   return s;
 }

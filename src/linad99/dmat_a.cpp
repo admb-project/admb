@@ -25,10 +25,10 @@
  */
  dmatrix::dmatrix(BOR_CONST dvar_matrix_position& pos)
  {
-   int nrl=pos.row_min;
-   int nrh=pos.row_max;
-   const ivector& ncl=pos.lb;
-   const ivector& nch=pos.ub;
+   int nrl = pos.row_min;
+   int nrh = pos.row_max;
+   const ivector& ncl = pos.lb;
+   const ivector& nch = pos.ub;
    #ifdef DIAG
      myheapcheck("Entering dmatrix(nrl,nrh,ncl,nch)" );
    #endif
@@ -38,10 +38,10 @@
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
-   index_min=nrl;
-   index_max=nrh;
+   index_min = nrl;
+   index_max = nrh;
 
-   int rs=rowsize();
+   int rs = rowsize();
    if ( (m = new dvector [rs]) == 0)
    {
      cerr << " Error allocating memory in dmatrix contructor\n";
@@ -60,7 +60,7 @@
 
    m -= rowmin();
 
-   for (int i=rowmin(); i<=rowmax(); i++)
+   for (int i = rowmin(); i<=rowmax(); i++)
    {
      m[i].allocate(ncl[i],nch[i]);
      #ifdef DIAG
@@ -78,10 +78,10 @@
  */
  dmatrix::dmatrix(BOR_CONST dmatrix_position& pos)
  {
-   int nrl=pos.row_min;
-   int nrh=pos.row_max;
-   const ivector& ncl=pos.lb;
-   const ivector& nch=pos.ub;
+   int nrl = pos.row_min;
+   int nrh = pos.row_max;
+   const ivector& ncl = pos.lb;
+   const ivector& nch = pos.ub;
    #ifdef DIAG
      myheapcheck("Entering dmatrix(nrl,nrh,ncl,nch)" );
    #endif
@@ -91,10 +91,10 @@
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
-   index_min=nrl;
-   index_max=nrh;
+   index_min = nrl;
+   index_max = nrh;
 
-   int rs=rowsize();
+   int rs = rowsize();
    if ( (m = new dvector [rs]) == 0)
    {
      cerr << " Error allocating memory in dmatrix contructor\n";
@@ -113,7 +113,7 @@
 
    m -= rowmin();
 
-   for (int i=rowmin(); i<=rowmax(); i++)
+   for (int i = rowmin(); i<=rowmax(); i++)
    {
      m[i].allocate(ncl[i],nch[i]);
    }

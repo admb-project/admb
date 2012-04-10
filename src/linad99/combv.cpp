@@ -69,8 +69,8 @@ dvariable factln(_CONST dvariable& n)
 dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvar_vector& r)
 {
     RETURN_ARRAYS_INCREMENT();
-    int mmin=n.indexmin();
-    int mmax=n.indexmax();
+    int mmin = n.indexmin();
+    int mmax = n.indexmax();
     if (mmin != r.indexmin() || mmax != r.indexmax()) 
     {
       cerr << "Incompatible array bounds in function "
@@ -78,9 +78,9 @@ dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvar_vector& r)
       ad_exit(1);
     } 
     dvar_vector tmp(mmin,mmax);
-    for (int i=mmin;i<=mmax;i++)
+    for (int i = mmin;i<=mmax;i++)
     {
-      tmp(i)=log_comb(n(i),r(i));
+      tmp(i) = log_comb(n(i),r(i));
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
@@ -95,8 +95,8 @@ dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvar_vector& r)
 dvar_vector log_comb(_CONST dvector& n,_CONST dvar_vector& r)
 {
     RETURN_ARRAYS_INCREMENT();
-    int mmin=n.indexmin();
-    int mmax=n.indexmax();
+    int mmin = n.indexmin();
+    int mmax = n.indexmax();
     if (mmin != r.indexmin() || mmax != r.indexmax()) 
     {
       cerr << "Incompatible array bounds in function "
@@ -104,9 +104,9 @@ dvar_vector log_comb(_CONST dvector& n,_CONST dvar_vector& r)
       ad_exit(1);
     } 
     dvar_vector tmp(mmin,mmax);
-    for (int i=mmin;i<=mmax;i++)
+    for (int i = mmin;i<=mmax;i++)
     {
-      tmp(i)=log_comb(n(i),r(i));
+      tmp(i) = log_comb(n(i),r(i));
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
@@ -121,8 +121,8 @@ dvar_vector log_comb(_CONST dvector& n,_CONST dvar_vector& r)
 dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvector& r)
 {
     RETURN_ARRAYS_INCREMENT();
-    int mmin=n.indexmin();
-    int mmax=n.indexmax();
+    int mmin = n.indexmin();
+    int mmax = n.indexmax();
     if (mmin != r.indexmin() || mmax != r.indexmax()) 
     {
       cerr << "Incompatible array bounds in function "
@@ -130,9 +130,9 @@ dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvector& r)
       ad_exit(1);
     } 
     dvar_vector tmp(mmin,mmax);
-    for (int i=mmin;i<=mmax;i++)
+    for (int i = mmin;i<=mmax;i++)
     {
-      tmp(i)=log_comb(n(i),r(i));
+      tmp(i) = log_comb(n(i),r(i));
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
@@ -147,12 +147,12 @@ dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvector& r)
 dvar_vector log_comb(_CONST dvariable& n,_CONST dvector& r)
 {
     RETURN_ARRAYS_INCREMENT();
-    int mmin=r.indexmin();
-    int mmax=r.indexmax();
+    int mmin = r.indexmin();
+    int mmax = r.indexmax();
     dvar_vector tmp(mmin,mmax);
-    for (int i=mmin;i<=mmax;i++)
+    for (int i = mmin;i<=mmax;i++)
     {
-      tmp(i)=log_comb(n,r(i));
+      tmp(i) = log_comb(n,r(i));
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
@@ -167,12 +167,12 @@ dvar_vector log_comb(_CONST dvariable& n,_CONST dvector& r)
 dvar_vector log_comb(_CONST dvariable& n,_CONST dvar_vector& r)
 {
     RETURN_ARRAYS_INCREMENT();
-    int mmin=r.indexmin();
-    int mmax=r.indexmax();
+    int mmin = r.indexmin();
+    int mmax = r.indexmax();
     dvar_vector tmp(mmin,mmax);
-    for (int i=mmin;i<=mmax;i++)
+    for (int i = mmin;i<=mmax;i++)
     {
-      tmp(i)=log_comb(n,r(i));
+      tmp(i) = log_comb(n,r(i));
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
@@ -186,12 +186,12 @@ dvar_vector log_comb(_CONST dvariable& n,_CONST dvar_vector& r)
 dvar_vector factln(_CONST dvar_vector& r)
 {
     RETURN_ARRAYS_INCREMENT();
-    int mmin=r.indexmin();
-    int mmax=r.indexmax();
+    int mmin = r.indexmin();
+    int mmax = r.indexmax();
     dvar_vector tmp(mmin,mmax);
-    for (int i=mmin;i<=mmax;i++)
+    for (int i = mmin;i<=mmax;i++)
     {
-      tmp(i)=gammln(r(i)+1.0);
+      tmp(i) = gammln(r(i)+1.0);
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
@@ -206,12 +206,12 @@ dvar_vector factln(_CONST dvar_vector& r)
 dvar_vector log_comb(double n,_CONST dvar_vector& r)
 {
     RETURN_ARRAYS_INCREMENT();
-    int mmin=r.indexmin();
-    int mmax=r.indexmax();
+    int mmin = r.indexmin();
+    int mmax = r.indexmax();
     dvar_vector tmp(mmin,mmax);
-    for (int i=mmin;i<=mmax;i++)
+    for (int i = mmin;i<=mmax;i++)
     {
-      tmp(i)=log_comb(n,r(i));
+      tmp(i) = log_comb(n,r(i));
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
@@ -225,12 +225,12 @@ dvar_vector log_comb(double n,_CONST dvar_vector& r)
 dvar_vector gammln(_CONST dvar_vector& v)
 {
   RETURN_ARRAYS_INCREMENT();
-  int mmin=v.indexmin();
-  int mmax=v.indexmax();
+  int mmin = v.indexmin();
+  int mmax = v.indexmax();
   dvar_vector tmp(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
+  for (int i = mmin;i<=mmax;i++)
   {
-    tmp(i)=gammln(v(i));
+    tmp(i) = gammln(v(i));
   }
   RETURN_ARRAYS_DECREMENT();
   return tmp;

@@ -17,9 +17,9 @@
  dvector::dvector(_CONST ivector& u)
  {
    allocate(u.indexmin(),u.indexmax());
-   for ( int i=indexmin(); i<=indexmax(); i++)
+   for ( int i = indexmin(); i<=indexmax(); i++)
    {
-     elem(i)=u.elem(i);
+     elem(i) = u.elem(i);
    }
  }    
 
@@ -30,9 +30,9 @@
  dvector::dvector(_CONST lvector& u)
  {
    allocate(u.indexmin(),u.indexmax());
-   for ( int i=indexmin(); i<=indexmax(); i++)
+   for ( int i = indexmin(); i<=indexmax(); i++)
    {
-     elem(i)=u.elem(i);
+     elem(i) = u.elem(i);
    }
  }
 
@@ -44,9 +44,9 @@
  {
    dvector tmp(u.indexmin(),u.indexmax());
 
-   for ( int i=u.indexmin(); i<=u.indexmax(); i++)
+   for ( int i = u.indexmin(); i<=u.indexmax(); i++)
    {
-     tmp(i)=(*this)(u(i));
+     tmp(i) = (*this)(u(i));
    }
    return tmp;
  }
@@ -59,9 +59,9 @@
  {
    dvector tmp(u.indexmin(),u.indexmax());
 
-   for ( int i=u.indexmin(); i<=u.indexmax(); i++)
+   for ( int i = u.indexmin(); i<=u.indexmax(); i++)
    {
-     tmp(i)=(*this)(u(i));
+     tmp(i) = (*this)(u(i));
    }
    return tmp;
  }

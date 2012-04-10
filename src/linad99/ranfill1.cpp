@@ -28,11 +28,11 @@
   void dvar_vector::fill_seqadd( CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
     RETURN_ARRAYS_INCREMENT();
-    double temp=0;
-    for (int i=indexmin(); i<=indexmax(); i++)
+    double temp = 0;
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
-       elem(i)=base+temp;
-       temp=temp+offset;
+       elem(i) = base+temp;
+       temp = temp+offset;
     }
     RETURN_ARRAYS_DECREMENT();
   }
@@ -43,12 +43,12 @@
  */
   void dvar_matrix::colfill_seqadd(BOR_CONST int& j, CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
-    double temp=0;
+    double temp = 0;
     RETURN_ARRAYS_INCREMENT();
-    for (int i=rowmin(); i<=rowmax(); i++)
+    for (int i = rowmin(); i<=rowmax(); i++)
     {
-      elem(i,j)=base+temp;
-      temp=temp+offset;
+      elem(i,j) = base+temp;
+      temp = temp+offset;
     }
     RETURN_ARRAYS_DECREMENT();
   }
@@ -59,12 +59,12 @@
  */
   void dvar_matrix::rowfill_seqadd(BOR_CONST int& i, CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
-    double temp=0;
+    double temp = 0;
     RETURN_ARRAYS_INCREMENT();
-    for (int j=colmin(); j<=colmax(); j++)
+    for (int j = colmin(); j<=colmax(); j++)
     {
-      elem(i,j)=base+temp;
-      temp=temp+offset;
+      elem(i,j) = base+temp;
+      temp = temp+offset;
     }
     RETURN_ARRAYS_DECREMENT();
   }
@@ -76,9 +76,9 @@
   void dvar_matrix::colfill(int j,_CONST dvar_vector& v)
   {
     RETURN_ARRAYS_INCREMENT();
-    for (int i=rowmin(); i<=rowmax(); i++)
+    for (int i = rowmin(); i<=rowmax(); i++)
     {
-      (*this)[i][j]=v[i];
+      (*this)[i][j] = v[i];
     }
     RETURN_ARRAYS_DECREMENT();
   }
@@ -90,10 +90,10 @@
   void dvar_matrix::rowfill(int i,_CONST dvar_vector& v)
   {
     RETURN_ARRAYS_INCREMENT();
-    // for (int j=colmin(); j<=colmax(); j++)
+    // for (int j = colmin(); j<=colmax(); j++)
     // {
-    //   (*this)[i][j]=v[j];
+    //   (*this)[i][j] = v[j];
     // }
-    (*this)[i]=v;
+    (*this)[i] = v;
     RETURN_ARRAYS_DECREMENT();
   }

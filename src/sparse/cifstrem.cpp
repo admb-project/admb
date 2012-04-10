@@ -31,7 +31,7 @@ char* cifstream::signature()
   if (strlen(signature_line) <= 0)
   {
     char c = bp->sgetc();
-    //COUT_TRACE(c)
+    // COUT_TRACE(c)
     int n = 0;
     while ( (n < SIGNATURE_LENGTH) && (c != '\n') )
     {
@@ -46,7 +46,7 @@ char* cifstream::signature()
     while (c != '\n')
     {
       c = bp->snextc();
-      //cout << "in sig testc= " << c << endl; 
+      // cout << "in sig testc= " << c << endl; 
     }
 
     // position buffer to first character of next  line
@@ -103,8 +103,8 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
 
 void cifstream::filter(void)
 {
-  //HERE
-  //char testc = bp->NEXTCHAR();
+  // HERE
+  // char testc = bp->NEXTCHAR();
   char testc = bp->sgetc();
  // cout << "in filter testc= " << testc << endl; 
   while (isspace(testc))
@@ -123,7 +123,7 @@ void cifstream::filter(void)
 	comment_line[n++] = testc;
 
       testc = bp->snextc();
-      //cout << "in filter testc= " << testc << endl; 
+      // cout << "in filter testc= " << testc << endl; 
       if (testc == '\n')
       {
 	comment_line[n++] = '\0';
@@ -261,7 +261,7 @@ istream& istream::operator >> (long long & x)
 {
   long int i;
   (*this) >> i;
-  x=i;
+  x = i;
   return *this;
 }
 #endif
@@ -300,7 +300,7 @@ cifstream& cifstream::operator >> (BOR_CONST int& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
-  //cout << "cifstream& cifstream::operator >> (int& i) s = '" << s 
+  // cout << "cifstream& cifstream::operator >> (int& i) s = '" << s 
   //     << "'" << endl;
   js_strip_leading_zeros(s);
   istrstream is(s, strlen(s));
@@ -320,7 +320,7 @@ cifstream& cifstream::operator >> (BOR_CONST int& i)
 cifstream& cifstream::operator >> (BOR_CONST double& _x)
 {
   double& x = (double&)(_x);
-  //char * s = new char[FILTER_BUF_SIZE];
+  // char * s = new char[FILTER_BUF_SIZE];
   char * s = (char*) malloc(8000*sizeof(char));
   get_field(s);
   if (s[0]=='#' && s[1] == '\0')
@@ -343,10 +343,10 @@ cifstream& cifstream::operator >> (BOR_CONST double& _x)
     this->clear(is.rdstate());
     report_error("double extraction operator");
   }
-  //delete []s;
+  // delete []s;
 #else
-  char * end=0;
-  x=strtod(s,&end);
+  char * end = 0;
+  x = strtod(s,&end);
 #endif
 
   free(s);
@@ -392,15 +392,15 @@ cifstream& cifstream::getline(char* s, int k, char d)
 void cifstream::report_error(const char * msg)
 {
   int ss  = rdstate();
-  //cout << "stream state = " << ss << endl;
+  // cout << "stream state = " << ss << endl;
 #ifdef __BCPLUSPLUS___
   int end = eof();
 #endif
 #ifdef __ZTC__
   int end = (ss < 4);
 #endif
-  //cout << "eof() = " << end << endl;
-  //cout << "ignore_eof = " << ignore_eof << endl;
+  // cout << "eof() = " << end << endl;
+  // cout << "ignore_eof = " << ignore_eof << endl;
 
   if (!end || (end && ignore_eof))
   {
@@ -412,7 +412,7 @@ void cifstream::report_error(const char * msg)
       cerr << "   " << msg << endl;
     if (end)
       cerr << "   end of file" << endl;
-    //exit(1);
+    // exit(1);
   }
 }
 */
@@ -428,10 +428,10 @@ void cifstream::report_error(const char * msg) {;}
 #  endif
   {
     unsigned int tlen;
-    //len=100;
-    //tlen=strlen(comment_line);
-    tlen=strlen("x");
-    if (tlen>len)tlen=len;
+    // len = 100;
+    // tlen = strlen(comment_line);
+    tlen = strlen("x");
+    if (tlen>len)tlen = len;
     memset(comment_line,x,tlen);
   }
 #endif

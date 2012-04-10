@@ -29,10 +29,10 @@
 
 void gradfree(dlink *);
 
-//extern prevariable * FRETURN;
-//extern int RETURN_INDEX;
-//extern dlist * GRAD_LIST; //js
-//extern grad_stack  * gradient_structure::GRAD_STACK1; //js
+// extern prevariable * FRETURN;
+// extern int RETURN_INDEX;
+// extern dlist * GRAD_LIST; // js
+// extern grad_stack  * gradient_structure::GRAD_STACK1; // js
 
 /**
  * Description not yet available.
@@ -55,7 +55,7 @@ prevariable& operator +(_CONST prevariable& v1, CGNU_DOUBLE x)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
 
-  gradient_structure::RETURN_PTR->v->x=v1.v->x+ x;
+  gradient_structure::RETURN_PTR->v->x = v1.v->x+ x;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation1,&(gradient_structure::RETURN_PTR->v->x),&(v1.v->x));
   return(*gradient_structure::RETURN_PTR);
 }
@@ -67,7 +67,7 @@ prevariable& operator +(_CONST prevariable& v1, CGNU_DOUBLE x)
 prevariable& operator -(_CONST prevariable& v1,_CONST prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
-  gradient_structure::RETURN_PTR->v->x=v1.v->x - v2.v->x;
+  gradient_structure::RETURN_PTR->v->x = v1.v->x - v2.v->x;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation4m,
     &(gradient_structure::RETURN_PTR->v->x),&(v1.v->x),&(v2.v->x));
   return(*gradient_structure::RETURN_PTR);
@@ -80,7 +80,7 @@ prevariable& operator -(_CONST prevariable& v1,_CONST prevariable& v2)
 prevariable& operator -(_CONST prevariable& v1, CGNU_DOUBLE x)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
-  gradient_structure::RETURN_PTR->v->x=v1.v->x - x;
+  gradient_structure::RETURN_PTR->v->x = v1.v->x - x;
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation1,&(gradient_structure::RETURN_PTR->v->x),
                                      &(v1.v->x));
   return(*gradient_structure::RETURN_PTR);

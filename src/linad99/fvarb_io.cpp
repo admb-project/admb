@@ -56,7 +56,7 @@ void dvar_vector::read_from(BOR_CONST uistream& _s)
     int n = indexmax() - indexmin() + 1;
     double_and_int * p = va + indexmin();
 
-    for (int i=1; i <= n; i++)
+    for (int i = 1; i <= n; i++)
     {
        s >> (p++)->x;
     }
@@ -86,7 +86,7 @@ void dvar_vector::write_on(BOR_CONST uostream& _s) _CONST
     int n = indexmax() - indexmin() + 1;
     double_and_int * p = va + indexmin();
 
-    for (int i=1; i <= n; i++)
+    for (int i = 1; i <= n; i++)
     {
        s << (p++)->x;
     }

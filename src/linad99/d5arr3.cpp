@@ -26,6 +26,6 @@
  */
 void d5_array::allocate(void)
  {
-   shape=NULL;
+   shape = NULL;
    t = NULL;
  }

@@ -16,14 +16,14 @@
  */
 void imatrix::allocate(_CONST imatrix& dm)
 {
-  int nrl=dm.rowmin();
-  int nrh=dm.rowmax();
-  //int ncl=dm.colmin();
-  //int nch=dm.colmax();
-  index_min=nrl;
-  index_max=nrh;
+  int nrl = dm.rowmin();
+  int nrh = dm.rowmax();
+  // int ncl = dm.colmin();
+  // int nch = dm.colmax();
+  index_min = nrl;
+  index_max = nrh;
 
-  int rs=rowsize();
+  int rs = rowsize();
   if ( (m = new ivector [rs]) == 0)
   {
     cerr << " Error allocating memory in imatrix contructor" << endl;
@@ -36,7 +36,7 @@ void imatrix::allocate(_CONST imatrix& dm)
   }
 
   m -= rowmin();
-  for (int i=rowmin(); i<=rowmax(); i++)
+  for (int i = rowmin(); i<=rowmax(); i++)
   {
     m[i].allocate(dm(i));
   }

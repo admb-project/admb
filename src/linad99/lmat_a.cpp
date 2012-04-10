@@ -16,10 +16,10 @@
  */
  lmatrix::lmatrix(BOR_CONST lmatrix_position& pos)
  {
-   int nrl=pos.row_min;
-   int nrh=pos.row_max;
-   ivector& ncl=(ivector&) pos.lb;
-   ivector& nch=(ivector&) pos.ub;
+   int nrl = pos.row_min;
+   int nrh = pos.row_max;
+   ivector& ncl = (ivector&) pos.lb;
+   ivector& nch = (ivector&) pos.ub;
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
@@ -33,7 +33,7 @@
      ad_exit(21);
    }
 
-   int rs=rowsize();
+   int rs = rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
@@ -46,7 +46,7 @@
 
    m -= rowmin();
 
-   for (int i=rowmin(); i<=rowmax(); i++)
+   for (int i = rowmin(); i<=rowmax(); i++)
    {
      m[i].allocate(ncl[i],nch[i]);
    }

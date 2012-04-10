@@ -1,6 +1,6 @@
 #include "adstring.hpp"
 
-adstring_array& adstring_array::operator=(const adstring_array& a)
+adstring_array& adstring_array::operator = (const adstring_array& a)
 {
   if (this != &a)
   {

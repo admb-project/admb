@@ -77,7 +77,7 @@
    if (allocated(*this))
    {
      dvar_matrix tmp(nrl,nrh);
-     for (int i=nrl; i<=nrh; i++)
+     for (int i = nrl; i<=nrh; i++)
      {
        tmp[i].shallow_copy((*this)(i));
      }
@@ -99,15 +99,15 @@
      allocate();
    else
    {
-     index_min=nrl;
-     index_max=nrh;
-     int rs=rowsize();
+     index_min = nrl;
+     index_max = nrh;
+     int rs = rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor\n";
        ad_exit(21);
      }
-     if ( (shape=new mat_shapex(m)) == 0)
+     if ( (shape = new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor\n";
      }
@@ -125,20 +125,20 @@
      allocate();
    else
    {
-     index_min=nrl;
-     index_max=nrh;
-     int rs=rowsize();
+     index_min = nrl;
+     index_max = nrh;
+     int rs = rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor\n";
        ad_exit(21);
      }
-     if ( (shape=new mat_shapex(m)) == 0)
+     if ( (shape = new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor\n";
      }
      m -= rowmin();
-     for (int i=nrl; i<=nrh; i++)
+     for (int i = nrl; i<=nrh; i++)
      {
        m[i].allocate(ncl,nch);
      }
@@ -155,14 +155,14 @@
      allocate();
    else
    {
-     index_min=nrl;
-     index_max=nrh;
+     index_min = nrl;
+     index_max = nrh;
      if ( (m = new dvar_vector [rowsize()]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor\n";
        ad_exit(21);
      }
-     if ( (shape=new mat_shapex(m)) == 0)
+     if ( (shape = new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor\n";
      }
@@ -178,29 +178,29 @@
  {
    if (m1.shape)
    {
-     int nrl=m1.rowmin();
-     int nrh=m1.rowmax();
-     index_min=nrl;
-     index_max=nrh;
-     int rs=rowsize();
+     int nrl = m1.rowmin();
+     int nrh = m1.rowmax();
+     index_min = nrl;
+     index_max = nrh;
+     int rs = rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor\n";
        ad_exit(21);
      }
-     if ( (shape=new mat_shapex(m)) == 0)
+     if ( (shape = new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor\n";
      }
      m -= rowmin();
-     for (int i=nrl; i<=nrh; i++)
+     for (int i = nrl; i<=nrh; i++)
      {
        m[i].allocate(m1(i));
      }
    }
    else
    {
-     //cerr << "Warning -- trying to make a dvar_matrix copy of an "
+     // cerr << "Warning -- trying to make a dvar_matrix copy of an "
       // " unallocated dmatrix" << endl;
      allocate();
    }
@@ -214,30 +214,30 @@
  {
    if (m1.shape)
    {
-     int nrl=m1.rowmin();
-     int nrh=m1.rowmax();
-     index_min=nrl;
-     index_max=nrh;
-     int rs=rowsize();
-     //if ( (m = new dvar_vector [rowsize()]) == 0)
+     int nrl = m1.rowmin();
+     int nrh = m1.rowmax();
+     index_min = nrl;
+     index_max = nrh;
+     int rs = rowsize();
+     // if ( (m = new dvar_vector [rowsize()]) == 0)
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
       ad_exit(21);
      }
-     if ( (shape=new mat_shapex(m)) == 0)
+     if ( (shape = new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
      }
      m -= rowmin();
-     for (int i=nrl; i<=nrh; i++)
+     for (int i = nrl; i<=nrh; i++)
      {
        m[i].allocate(m1(i));
      }
    }
    else
    {
-     //cerr << "Warning -- trying to make a dvar_matrix copy of an "
+     // cerr << "Warning -- trying to make a dvar_matrix copy of an "
      //  "unallocated dvar_matrix" << endl;
      allocate();
    }
@@ -272,23 +272,23 @@
   	  << endl ;
        ad_exit(1);
      }
-     index_min=nrl;
-     index_max=nrh;
+     index_min = nrl;
+     index_max = nrh;
   
-     int rs=rowsize();
+     int rs = rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
        ad_exit(21);
      }
-     if ( (shape=new mat_shapex(m)) == 0)
+     if ( (shape = new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
      }
   
      m -= rowmin();
   
-     for (int i=nrl; i<=nrh; i++)
+     for (int i = nrl; i<=nrh; i++)
      {
        m[i].allocate(ncl[i],nch[i]);
      }
@@ -323,23 +323,23 @@
   	  << endl;
        ad_exit(1);
      }
-     index_min=nrl;
-     index_max=nrh;
+     index_min = nrl;
+     index_max = nrh;
   
-     int rs=rowsize();
+     int rs = rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
        ad_exit(21);
      }
   
-     if ( (shape=new mat_shapex(m)) == 0)
+     if ( (shape = new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
      }
      m -= rowmin();
   
-     for (int i=nrl; i<=nrh; i++)
+     for (int i = nrl; i<=nrh; i++)
      {
        m[i].allocate(ncl,nch[i]);
      }
@@ -362,23 +362,23 @@
   	  << endl;
        ad_exit(1);
      }
-     index_min=nrl;
-     index_max=nrh;
+     index_min = nrl;
+     index_max = nrh;
   
-     int rs=rowsize();
+     int rs = rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
        ad_exit(21);
      }
   
-     if ( (shape=new mat_shapex(m)) == 0)
+     if ( (shape = new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
      }
      m -= rowmin();
   
-     for (int i=nrl; i<=nrh; i++)
+     for (int i = nrl; i<=nrh; i++)
      {
        m[i].allocate(ncl[i],nch);
      }
@@ -393,17 +393,17 @@
  {
    if (!(m2))
    {
-     //cerr << "Making a copy of an unallocated dvar_matrix" << endl;
-     index_min=0;
+     // cerr << "Making a copy of an unallocated dvar_matrix" << endl;
+     index_min = 0;
      index_max=-1;
-     shape=NULL;
-     m=NULL;
+     shape = NULL;
+     m = NULL;
    }
    else
    {
-     index_min=m2.index_min;
-     index_max=m2.index_max;
-     shape=m2.shape;
+     index_min = m2.index_min;
+     index_max = m2.index_max;
+     shape = m2.shape;
      (shape->ncopies)++;
      m = m2.m;
    }
@@ -417,17 +417,17 @@
  {
    if (!(m2))
    {
-     //cerr << "Making a copy of an unallocated dvar_matrix" << endl;
-     index_min=0;
+     // cerr << "Making a copy of an unallocated dvar_matrix" << endl;
+     index_min = 0;
      index_max=-1;
-     shape=NULL;
-     m=NULL;
+     shape = NULL;
+     m = NULL;
    }
    else
    {
-     index_min=m2.index_min;
-     index_max=m2.index_max;
-     shape=m2.shape;
+     index_min = m2.index_min;
+     index_max = m2.index_max;
+     shape = m2.shape;
      (shape->ncopies)++;
      m = m2.m;
    }
@@ -439,9 +439,9 @@
  */
  void dvar_matrix::allocate(void)
  {
-   index_min=1;
-   index_max=0;
-   shape=NULL;
+   index_min = 1;
+   index_max = 0;
+   shape = NULL;
    m = NULL;
  }
 
@@ -460,9 +460,9 @@
  */
  dvar_matrix::dvar_matrix(_CONST dmatrix& m2)
  {
-   index_min=m2.index_min;
-   index_max=m2.index_max;
-   int rs=rowsize();
+   index_min = m2.index_min;
+   index_max = m2.index_max;
+   int rs = rowsize();
    if ( (m = new dvar_vector [rs]) == 0)
    {
      cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
@@ -474,10 +474,10 @@
    }
 
    m -= rowmin();
-   for (int i=rowmin(); i<=rowmax(); i++)
+   for (int i = rowmin(); i<=rowmax(); i++)
    {
      m[i].allocate(m2(i).indexmin(),m2(i).indexmax());
-     elem(i)=m2.elem(i);
+     elem(i) = m2.elem(i);
    }
  }
 
@@ -508,15 +508,15 @@
  {
    if (shape)
    {
-     m=(dvar_vector*)(shape->get_pointer());
+     m = (dvar_vector*)(shape->get_pointer());
      delete [] m;
      delete shape;
-     m=NULL;
-     shape=NULL;
+     m = NULL;
+     shape = NULL;
    }
    else
    {
-     //cerr << "Warning -- trying to delete an unallocated dvar_matrix"<<endl;
+     // cerr << "Warning -- trying to delete an unallocated dvar_matrix"<<endl;
    }
  }
 
@@ -541,7 +541,7 @@
   
      if (m != m1.m)            // check for condition that both matrices
      {                         // don't point to the same object
-       for (int i=rowmin(); i<=rowmax(); i++)
+       for (int i = rowmin(); i<=rowmax(); i++)
        {
          (*this)[i]= m1[i];
        }
@@ -563,7 +563,7 @@
      ad_exit(21);
    }
 
-   for (int i=rowmin(); i<=rowmax(); i++)
+   for (int i = rowmin(); i<=rowmax(); i++)
    {
      (*this)[i]= m1[i];
    }
@@ -579,7 +579,7 @@
     ostream& s= (ostream&) _s;
     s << " matrix_copy flags \n";
 
-    for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
+    for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
     {
       copy_status(s,m1[i]);
     }

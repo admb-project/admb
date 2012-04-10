@@ -6,10 +6,10 @@
  */
   #include <admodel.h>
 
-  objective_function_value * objective_function_value::pobjfun=NULL;
-  double objective_function_value::gmax=0;
+  objective_function_value * objective_function_value::pobjfun = NULL;
+  double objective_function_value::gmax = 0;
 
-  objective_function_value::objective_function_value() {pobjfun=this;}
+  objective_function_value::objective_function_value() {pobjfun = this;}
   objective_function_value& objective_function_value::operator =
     (_CONST prevariable& v)
   {

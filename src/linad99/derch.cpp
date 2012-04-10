@@ -26,10 +26,10 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-int derchflag=0;
-double derch_stepsize=0.0;
+int derchflag = 0;
+double derch_stepsize = 0.0;
 
-static ofstream * pofs=0;
+static ofstream * pofs = 0;
 
 /**
  * Description not yet available.
@@ -38,8 +38,8 @@ static ofstream * pofs=0;
 void derch(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST dvector& _gg,
        int n, BOR_CONST int & _ireturn)
 {
-  dvector& gg=(dvector&) _gg;
-  double& f=(double&) _f;
+  dvector& gg = (dvector&) _gg;
+  double& f = (double&) _f;
   int& ireturn = (int&) _ireturn;
   independent_variables& x= (independent_variables&) _x;
   static long int i, n1 ,n2,ii;
@@ -48,39 +48,39 @@ void derch(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST 
   static double s, f1, f2, g2, xsave;
   static long int j = 1;
   static int si;
-  si=gg.indexmax();
+  si = gg.indexmax();
   static dvector g(1,si);
   static dvector index(1,si);
 
   if (ireturn == 4 ) goto label4;
   else if (ireturn == 5) goto label5;
-  g=gg;
+  g = gg;
   {
-    int maxind=0;
+    int maxind = 0;
     double  maxg;
-    maxind=g.indexmin();
-    maxg=fabs(g(maxind));
+    maxind = g.indexmin();
+    maxg = fabs(g(maxind));
     dmatrix tmp(1,3,g.indexmin(),g.indexmax());
     tmp(1).fill_seqadd(1,1);
-    tmp(2)=g;
+    tmp(2) = g;
     tmp(3)=-fabs(g);
     ofstream ofs("derivatives");
-    dmatrix dtmp=sort(trans(tmp),3);
+    dmatrix dtmp = sort(trans(tmp),3);
     ofs << dtmp << endl;
-    for (int i=g.indexmin();i<=g.indexmax();i++)
+    for (int i = g.indexmin();i<=g.indexmax();i++)
     {
       if (fabs(g(i))>maxg)
       {
-        maxg=fabs(g(i));
-        maxind=i;
+        maxg = fabs(g(i));
+        maxind = i;
       }  
     }
     cout << "maxind = " << maxind << " maxg = " << maxg << endl;
-    index=ivector(column(dtmp,1));
+    index = ivector(column(dtmp,1));
   }
   while (j > 0)
   {
-    //cout << "\nEntering derivative checker.\n";
+    // cout << "\nEntering derivative checker.\n";
     cout << "\n Enter index (1 ... "<< n <<") of derivative to check.";
     cout << "  To check all derivatives, enter 0: ";
     cout << "  To quit  enter -1: ";
@@ -95,7 +95,7 @@ void derch(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST 
     {
       cout << "\n   Checking all derivatives. Press X to terminate checking.\n";
       flush(cout);
-      pofs=new ofstream("ders.dat");
+      pofs = new ofstream("ders.dat");
       (*pofs) << "      index  analytical        finite     % error " << endl;
       (*pofs) << "                              difference " << endl;
       n1 = 1;
@@ -111,7 +111,7 @@ void derch(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST 
 #   if defined(__BORLANDC__)
       char mystring[1000];
       cin >> mystring;
-      s=atof(mystring);
+      s = atof(mystring);
 #   else
       cin >> s;
 #   endif
@@ -123,45 +123,45 @@ void derch(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST 
       cout << endl << "   If you want the derivatives approximated in order"
         << endl << "   of decreasing magnitude enter 1" 
         << endl << "   Else enter 0" << endl;
-      int tmpint=0;
+      int tmpint = 0;
       cin >> tmpint;
       if (tmpint==1)
-        order_flag=1;
+        order_flag = 1;
       else
-        order_flag=0;
+        order_flag = 0;
     }
     cout << "\n       X           Function     Analytical     Finite Diff;  Index"
          << endl;
 
-    for (ii=n1; ii<=n2; ii++)
+    for (ii = n1; ii<=n2; ii++)
     {
       if (order_flag==1)
-        i=index(ii);
+        i = index(ii);
       else
-        i=ii;
+        i = ii;
 
-      derch_stepsize=s;
-      derchflag=1;
-      xsave=x(i);
-      x(i)=xsave+s;
+      derch_stepsize = s;
+      derchflag = 1;
+      xsave = x(i);
+      x(i) = xsave+s;
       fsave = f;
       ireturn = 4; // fgcomp(&f1,x,g1,n, params, vars);
       return;
 
     label4:
-      derch_stepsize=s;
+      derch_stepsize = s;
       derchflag=-1;
       f1 = f; 
-      x(i)=xsave-s;
-      ireturn= 5; //fgcomp(&f2,x,g1,n, params, vars);
+      x(i) = xsave-s;
+      ireturn= 5; // fgcomp(&f2,x,g1,n, params, vars);
       return;
   
     label5:
       f2 = f; 
       f = fsave;
-      x(i)=xsave;
-      g2=(f1-f2)/(2.*s);
-      derchflag=0;
+      x(i) = xsave;
+      g2 = (f1-f2)/(2.*s);
+      derchflag = 0;
       double perr= fabs(g2-g(i))/(fabs(g(i))+1.e-6);
 
       if (pofs)

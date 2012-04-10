@@ -22,9 +22,9 @@ double randnegbinomial(double mu,double tau,
     cerr << "Error in randnegbinomial overdispersion must be >=1" << endl;
     ad_exit(1);
   }
-  double r=mu/(tau-1);
-  double c=r/mu;
-  double z=sgamma(r,rng);
-  double lambda=z/c;
+  double r = mu/(tau-1);
+  double c = r/mu;
+  double z = sgamma(r,rng);
+  double lambda = z/c;
   return randpoisson(lambda,rng); 
 }

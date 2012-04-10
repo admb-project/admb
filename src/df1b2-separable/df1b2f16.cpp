@@ -36,9 +36,9 @@
   {
     ADUNCONST(ostream,os)
     ADUNCONST(df1b2vector,x)
-    int mmin=x.indexmin();
-    int mmax=x.indexmax();
-    for (int i=mmin;i<=mmax;i++)
+    int mmin = x.indexmin();
+    int mmax = x.indexmax();
+    for (int i = mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
     }  
@@ -53,9 +53,9 @@
   {
     ADUNCONST(ostream,os)
     ADUNCONST(df1b2matrix,x)
-    int mmin=x.indexmin();
-    int mmax=x.indexmax();
-    for (int i=mmin;i<=mmax;i++)
+    int mmin = x.indexmin();
+    int mmax = x.indexmax();
+    for (int i = mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
       if (i<mmax) os << endl;
@@ -71,9 +71,9 @@
   {
     ADUNCONST(ostream,os)
     ADUNCONST(df1b2_init_number_vector,x)
-    int mmin=x.indexmin();
-    int mmax=x.indexmax();
-    for (int i=mmin;i<=mmax;i++)
+    int mmin = x.indexmin();
+    int mmax = x.indexmax();
+    for (int i = mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
     }  
@@ -89,9 +89,9 @@
   {
     ADUNCONST(ostream,os)
     ADUNCONST(df1b2_init_number_vector,x)
-    int mmin=x.indexmin();
-    int mmax=x.indexmax();
-    for (int i=mmin;i<=mmax;i++)
+    int mmin = x.indexmin();
+    int mmax = x.indexmax();
+    for (int i = mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
     }  
@@ -107,9 +107,9 @@
   {
     ADUNCONST(ostream,os)
     ADUNCONST(init_df1b2vector,x)
-    int mmin=x.indexmin();
-    int mmax=x.indexmax();
-    for (int i=mmin;i<=mmax;i++)
+    int mmin = x.indexmin();
+    int mmax = x.indexmax();
+    for (int i = mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
     }  

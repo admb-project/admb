@@ -49,7 +49,7 @@ ostream& operator<<(BOR_CONST ostream& _s,_CONST d3_array& z)
   char new_fill = s.fill();
 #endif
 
-  for (int i=z.slicemin();i<=z.slicemax();i++)
+  for (int i = z.slicemin();i<=z.slicemax();i++)
   {
   #ifdef __USE_IOSTREAM__
      s.width(new_w);
@@ -73,7 +73,7 @@ ostream& operator<<(BOR_CONST ostream& _s,_CONST d3_array& z)
 istream& operator>>(BOR_CONST istream& _istr,BOR_CONST d3_array& z)
 {
   istream& istr = (istream&) _istr;
-  for (int i=z.slicemin();i<=z.slicemax();i++)
+  for (int i = z.slicemin();i<=z.slicemax();i++)
   {
     istr >> z[i];
   }

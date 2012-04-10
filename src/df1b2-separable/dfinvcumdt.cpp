@@ -21,15 +21,15 @@ df1b2variable inv_cumd_t(const df1b2variable& n,const df1b2variable&  u,
   df1b2variable v;
   if (value(u)<0.5)
   {
-    v=2.0*u;
+    v = 2.0*u;
     sgn=-1.0;
   }
   else
   {
-    v=2.0*(1.0-u);
-    sgn=1.0;
+    v = 2.0*(1.0-u);
+    sgn = 1.0;
   }
-  df1b2variable pfive=0.5;
-  df1b2variable w=inv_cumd_beta_stable(0.5*n,pfive,v,eps);
+  df1b2variable pfive = 0.5;
+  df1b2variable w = inv_cumd_beta_stable(0.5*n,pfive,v,eps);
   return sgn*sqrt(n*(1.0/w-1.0));
 }

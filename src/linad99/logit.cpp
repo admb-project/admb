@@ -18,12 +18,12 @@
   {
     if (value(x)>-20.)
     {
-      dvariable tmp=exp(-x);
+      dvariable tmp = exp(-x);
       return a+(b-a)*1.0/(1.0+tmp);
     }
     else
     {
-      dvariable tmp=exp(x);
+      dvariable tmp = exp(x);
       return a+(b-a)*tmp/(1.0+tmp);
     }
   }
@@ -36,12 +36,12 @@
   {
     if (value(x)>-20.)
     {
-      dvariable tmp=exp(-x);
+      dvariable tmp = exp(-x);
       return log((b-a)*tmp/square(1.0+tmp));
     }
     else
     {
-      dvariable tmp=exp(x);
+      dvariable tmp = exp(x);
       return log((b-a)*tmp/square(1.0+tmp));
     }
   }
@@ -54,12 +54,12 @@
   {
     if (value(x)>-20.)
     {
-      dvariable tmp=exp(-x);
+      dvariable tmp = exp(-x);
       return (b-a)*tmp/square(1.0+tmp);
     }
     else
     {
-      dvariable tmp=exp(x);
+      dvariable tmp = exp(x);
       return (b-a)*tmp/square(1.0+tmp);
     }
   }

@@ -18,9 +18,9 @@
  */
  void d6_array::initialize(void)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   for (int i=mmin; i<=mmax; i++)
+   int mmin = indexmin();
+   int mmax = indexmax();
+   for (int i = mmin; i<=mmax; i++)
    {
      (*this)(i).initialize();
    }
@@ -32,17 +32,17 @@
  */
  d6_array::d6_array(const d6_array& _m2)
  {
-   d6_array& m2=(d6_array&) _m2;
+   d6_array& m2 = (d6_array&) _m2;
    if (m2.shape)
    {
-     shape=m2.shape;
+     shape = m2.shape;
      (shape->ncopies)++;
      t = m2.t;
    }
    else
    {
-     shape=NULL;
-     t=NULL;
+     shape = NULL;
+     t = NULL;
    }
  }
 
@@ -62,9 +62,9 @@
      {
        t += indexmin();
        delete [] t;
-       t=NULL;
+       t = NULL;
        delete shape;
-       shape=NULL;
+       shape = NULL;
      }
    }
    else
@@ -90,8 +90,8 @@
  */
  d6_array& d6_array::operator =  (_CONST d6_array& m)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
+   int mmin = indexmin();
+   int mmax = indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
    { 
      cerr << "Incompatible bounds in"
@@ -99,9 +99,9 @@
       << endl;
      ad_exit(1);
     }
-   for (int i=mmin; i<=mmax; i++)
+   for (int i = mmin; i<=mmax; i++)
    {
-     (*this)(i)=m(i);
+     (*this)(i) = m(i);
    }
    return *this;
  }
@@ -112,19 +112,19 @@
  */
  void d6_array::allocate(_CONST d6_array& m1)
  {
-   if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
+   if ( (shape = new vector_shape(m1.indexmin(),m1.indexmax()))
        == 0)
    {
      cerr << " Error allocating memory in d5_array contructor" << endl;
    }
-   int ss=size();
+   int ss = size();
    if ( (t = new d5_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor" << endl;
      ad_exit(21);
    }
    t -= indexmin();
-   for (int i=indexmin(); i<=indexmax(); i++)
+   for (int i = indexmin(); i<=indexmax(); i++)
    {
      t[i].allocate(m1[i]);
    }
@@ -144,7 +144,7 @@
         ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "d5_array& d6_array::operator()(int i)", indexmin(), indexmax(), i);
       }
       #endif
-      //return t[i];
+      // return t[i];
       return elem(i);
     }
 
@@ -253,7 +253,7 @@
           ad_exit(1);
         }
       #endif
-      //return t[i];
+      // return t[i];
       return elem(i);
     }
 
@@ -388,19 +388,19 @@ d6_array::d6_array(const ad_integer& hsl,const ad_integer& hsu,
 void d6_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch,int l5,int u5,int l6,int u6)
  {
-   if ( (shape=new vector_shape(hsl,hsu)) == 0)
+   if ( (shape = new vector_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor\n";
      ad_exit(21);
    }
-   int ss=size();
+   int ss = size();
    if ( (t = new d5_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor\n";
      ad_exit(21);
    }
    t -= indexmin();
-   for (int i=hsl; i<=hsu; i++)
+   for (int i = hsl; i<=hsu; i++)
    {
      t[i].allocate(sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6);
    }
@@ -416,21 +416,21 @@ void d6_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    const index_type& l5,const index_type& u5,
    const index_type& l6,const index_type& u6)
  {
-   if ( (shape=new vector_shape (hsl,hsu)) == 0)
+   if ( (shape = new vector_shape (hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor\n";
    }
 
-   int ss=size();
+   int ss = size();
    if ( (t = new d5_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor\n";
      ad_exit(21);
    }
    t -= indexmin();
-   int i1=hsl;
-   int i2=hsu;
-   for (int i=i1; i<=i2; i++)
+   int i1 = hsl;
+   int i2 = hsu;
+   for (int i = i1; i<=i2; i++)
    {
      (*this)(i).allocate(ad_integer(sl(i)),ad_integer(sh(i)),nrl(i),nrh(i),ncl(i),nch(i),
        l5(i),u5(i),l6(i),u6(i));
@@ -443,8 +443,8 @@ void d6_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  */
 double sum(_CONST d6_array& m)
 {
-  double tmp=0.;
-  for (int i=m.indexmin();i<=m.indexmax();i++)
+  double tmp = 0.;
+  for (int i = m.indexmin();i<=m.indexmax();i++)
   {
     tmp+=sum(m.elem(i));
   }

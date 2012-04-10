@@ -17,18 +17,18 @@
  * \param max
  * \param mscale
  */
-df1b2variable bounder(const df1b2variable&  x,double min,double max, 
-    double scale)
+df1b2variable bounder(const df1b2variable&  x,double min,double max,
+double scale)
 {
-  df1b2variable y=x/scale;
+  df1b2variable y = x/scale;
   df1b2variable z;
-  if (value(y)<20.0)
+  if (value(y) < 20.0)
   {
-    z=exp(y)/(1.0+exp(y));
+    z = exp(y)/(1.0+exp(y));
   }
   else
   {
-    z=1.0/(1+exp(-y));
+    z = 1.0/(1+exp(-y));
   }
   return min+(max-min)*z;
 }

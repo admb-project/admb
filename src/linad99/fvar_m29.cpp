@@ -17,6 +17,6 @@
  dvariable mean(_CONST dvar_matrix& m)
  {
    dvariable tmp;
-   tmp=sum(m)/double(size_count(m));
+   tmp = sum(m)/double(size_count(m));
    return tmp;
  }

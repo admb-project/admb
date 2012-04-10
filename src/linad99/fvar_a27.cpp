@@ -28,9 +28,9 @@
      ad_exit(21);
    }
 
-   for ( int i=indexmin(); i<=indexmax(); i++)
+   for ( int i = indexmin(); i<=indexmax(); i++)
    {
-     va[i].x=t[i];
+     va[i].x = t[i];
    }
    save_identifier_string("b");
    this->save_dvar_vector_position();

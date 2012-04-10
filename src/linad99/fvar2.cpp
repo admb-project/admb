@@ -49,7 +49,7 @@ double_and_int * gradnew()
     tmp = gradient_structure::GRAD_LIST->last_remove();
     if (!tmp)
     {
-      tmp=gradient_structure::GRAD_LIST->create();
+      tmp = gradient_structure::GRAD_LIST->create();
     }
 
     //  cout << "In gradnew the address of the double * ptr is "
@@ -74,14 +74,14 @@ void gradfree(dlink * v)
     else
     {
       delete (double_and_int *) v;
-      v=NULL;
+      v = NULL;
     }
   }
 }
 
 //  prevariable::prevariable(_CONST prevariable& t)
 //  {
-//     v=t.v;
+//     v = t.v;
 //     (*v).nc++;
 //  }
 
@@ -92,9 +92,9 @@ void gradfree(dlink * v)
  */
     dvariable::dvariable(_CONST prevariable& t)
     {
-      v=gradnew();
-      //(*v).nc=0;
-      v->x=t.v->x;
+      v = gradnew();
+      //(*v).nc = 0;
+      v->x = t.v->x;
       gradient_structure::GRAD_STACK1->
 	 set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
     }
@@ -106,8 +106,8 @@ void gradfree(dlink * v)
  */
     dvariable::dvariable(_CONST dvariable& t)
     {
-      v=gradnew();
-      v->x=t.v->x;
+      v = gradnew();
+      v->x = t.v->x;
       gradient_structure::GRAD_STACK1->
 	 set_gradient_stack(default_evaluation1,&(v->x),&(t.v->x));
     }
@@ -119,10 +119,10 @@ void gradfree(dlink * v)
  */
     dvariable::dvariable()
     {
-      v=gradnew();
-      //(*v).nc=0;
+      v = gradnew();
+      //(*v).nc = 0;
       #ifdef SAFE_INITIALIZE
-	(*v).x=0;
+	(*v).x = 0;
 	gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0,&((*v).x));
       #endif
     }
@@ -132,8 +132,8 @@ void gradfree(dlink * v)
  */
     dvariable::dvariable(kkludge_object)
     {
-      v=gradnew();
-      //(*v).nc=0;
+      v = gradnew();
+      //(*v).nc = 0;
     }
 
 /**
@@ -152,9 +152,9 @@ void gradfree(dlink * v)
  */
   dvariable::dvariable( CGNU_DOUBLE t)
   {
-    v=gradnew();
-    v->x=t;
-    //(*v).nc=0;
+    v = gradnew();
+    v->x = t;
+    //(*v).nc = 0;
     gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0, &(v->x) );
   }
 
@@ -166,8 +166,8 @@ void gradfree(dlink * v)
  */
   dvariable::dvariable(BOR_CONST int& t)
   {
-    v=gradnew();
-    v->x=t;
-    //(*v).nc=0;
+    v = gradnew();
+    v->x = t;
+    //(*v).nc = 0;
     gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0, &(v->x) );
   }

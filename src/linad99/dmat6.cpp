@@ -39,13 +39,13 @@
     {
       ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix column specified", "dvector extract_column(_CONST dmatrix& m,int j)", m.colmin(), m.colmax(), j);
     }  
-    int mmin=m.rowmin();
-    int mmax=m.rowmax();
+    int mmin = m.rowmin();
+    int mmax = m.rowmax();
     dvector tmp(mmin,mmax);
 
-    for (int i=mmin; i<=mmax; i++)
+    for (int i = mmin; i<=mmax; i++)
     {
-      tmp.elem(i)=m.elem(i,j);
+      tmp.elem(i) = m.elem(i,j);
     }
     return(tmp);
   }
@@ -62,9 +62,9 @@
     }  
     dvector tmp(m.colmin(),m.colmax());
 
-    for (int j=m.colmin(); j<=m.colmax(); j++)
+    for (int j = m.colmin(); j<=m.colmax(); j++)
     {
-      tmp.elem(j)=m.elem(i,j);
+      tmp.elem(j) = m.elem(i,j);
     }
     return(tmp);
   }

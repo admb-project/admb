@@ -21,10 +21,10 @@ dvar_vector diagonal(const dvar_matrix& m)
     cerr << "Error matrix not square in function diagonal" << endl;
     exit(21);
   }
-  int mmin=m.indexmin();
-  int mmax=m.indexmax();
+  int mmin = m.indexmin();
+  int mmax = m.indexmax();
   dvar_vector tmp(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
-    tmp(i)=m(i,i);
+  for (int i = mmin;i<=mmax;i++)
+    tmp(i) = m(i,i);
   return tmp;
 } 

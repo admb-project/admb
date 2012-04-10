@@ -88,8 +88,8 @@ static void df_my_ln_det(void)
    {
       if (gamma(i, i) < 0)
       {
-	 //sign=-sign;
-	 //lndet+=log(-gamma(i,i));
+	 // sign=-sign;
+	 // lndet+=log(-gamma(i,i));
 	 dfgamma(i, i) = dflndet / gamma(i, i);
       } else
       {

@@ -16,10 +16,10 @@
  */
 dvector dvector::operator - (void)
 {
-  int mmin=indexmin();
-  int mmax=indexmax();
+  int mmin = indexmin();
+  int mmax = indexmax();
   dvector tmp(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
+  for (int i = mmin;i<=mmax;i++)
   {
     tmp(i)=-elem(i);  
   }

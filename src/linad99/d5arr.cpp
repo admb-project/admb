@@ -18,8 +18,8 @@
  */
 double sum(_CONST d5_array& m)
 {
-  double tmp=0.;
-  for (int i=m.indexmin();i<=m.indexmax();i++)
+  double tmp = 0.;
+  for (int i = m.indexmin();i<=m.indexmax();i++)
   {
     tmp+=sum(m.elem(i));
   }
@@ -32,17 +32,17 @@ double sum(_CONST d5_array& m)
  */
  d5_array::d5_array(const d5_array& _m2)
  {
-   d5_array& m2=(d5_array&)_m2;
+   d5_array& m2 = (d5_array&)_m2;
    if (m2.shape)
    {
-     shape=m2.shape;
+     shape = m2.shape;
      (shape->ncopies)++;
      t = m2.t;
    }
    else
    {
-     shape=NULL;
-     t=NULL;
+     shape = NULL;
+     t = NULL;
    }
  }
 
@@ -62,9 +62,9 @@ double sum(_CONST d5_array& m)
      {
        t += indexmin();
        delete [] t;
-       t=NULL;
+       t = NULL;
        delete shape;
-       shape=NULL;
+       shape = NULL;
      }
    }
    else
@@ -90,8 +90,8 @@ double sum(_CONST d5_array& m)
  */
  d5_array& d5_array::operator =  (_CONST d5_array& m)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
+   int mmin = indexmin();
+   int mmax = indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
    { 
      cerr << "Incompatible bounds in"
@@ -99,9 +99,9 @@ double sum(_CONST d5_array& m)
       << endl;
      ad_exit(1);
     }
-   for (int i=mmin; i<=mmax; i++)
+   for (int i = mmin; i<=mmax; i++)
    {
-     (*this)(i)=m(i);
+     (*this)(i) = m(i);
    }
    return *this;
  }
@@ -112,9 +112,9 @@ double sum(_CONST d5_array& m)
  */
  void d5_array::initialize(void)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   for (int i=mmin; i<=mmax; i++)
+   int mmin = indexmin();
+   int mmax = indexmax();
+   for (int i = mmin; i<=mmax; i++)
    {
      (*this)(i).initialize();
    }
@@ -126,19 +126,19 @@ double sum(_CONST d5_array& m)
  */
  void d5_array::allocate(_CONST d5_array& m1)
  {
-   if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
+   if ( (shape = new vector_shape(m1.indexmin(),m1.indexmax()))
        == 0)
    {
      cerr << " Error allocating memory in d5_array contructor" << endl;
    }
-   int ss=size();
+   int ss = size();
    if ( (t = new d4_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor" << endl;
      ad_exit(21);
    }
    t -= indexmin();
-   for (int i=indexmin(); i<=indexmax(); i++)
+   for (int i = indexmin(); i<=indexmax(); i++)
    {
      t[i].allocate(m1[i]);
    }
@@ -158,7 +158,7 @@ double sum(_CONST d5_array& m)
         ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "d4_array& d5_array::operator()(int i)", indexmin(), indexmax(), i);
       }
       #endif
-      //return t[i];
+      // return t[i];
       return elem(i);
     }
 
@@ -367,19 +367,19 @@ d5_array::d5_array(const ad_integer& hsl,const ad_integer& hsu,
 void d5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch,int l5,int u5)
  {
-   if ( (shape=new vector_shape(hsl,hsu)) == 0)
+   if ( (shape = new vector_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor\n";
      ad_exit(21);
    }
-   int ss=size();
+   int ss = size();
    if ( (t = new d4_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor\n";
      ad_exit(21);
    }
    t -= indexmin();
-   for (int i=hsl; i<=hsu; i++)
+   for (int i = hsl; i<=hsu; i++)
    {
      t[i].allocate(sl,sh,nrl,nrh,ncl,nch,l5,u5);
    }
@@ -400,12 +400,12 @@ void d5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  */
  void d5_array::allocate(int hsl,int hsu)
  {
-   if ( (shape=new vector_shape(hsl,hsu)) == 0)
+   if ( (shape = new vector_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor\n";
      ad_exit(21);
    }
-   int ss=size();
+   int ss = size();
    if ( (t = new d4_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor\n";
@@ -423,21 +423,21 @@ void d5_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    const index_type& nrh,const index_type& ncl,const index_type& nch,
    const index_type& l5,const index_type& u5)
  {
-   if ( (shape=new vector_shape (hsl,hsu)) == 0)
+   if ( (shape = new vector_shape (hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor\n";
    }
 
-   int ss=size();
+   int ss = size();
    if ( (t = new d4_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d5_array contructor\n";
      ad_exit(21);
    }
    t -= indexmin();
-   int il=hsl;
-   int iu=hsu;
-   for (int i=il; i<=iu; i++)
+   int il = hsl;
+   int iu = hsu;
+   for (int i = il; i<=iu; i++)
    {
      (*this)(i).allocate(ad_integer(sl(i)),ad_integer(sh(i)),nrl(i),nrh(i),ncl(i),nch(i),
        l5(i),u5(i));

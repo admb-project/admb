@@ -41,11 +41,11 @@
       "prevariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
-  double tmp=0;
+  double tmp = 0;
  
   #ifndef USE_ASSEMBLER
-    int mmin=v1.indexmin();
-    int mmax=v1.indexmax();
+    int mmin = v1.indexmin();
+    int mmax = v1.indexmax();
   #ifdef OPT_LIB
     double * pt1=&v1.elem_value(mmin);
     double * pt1m=&v1.elem_value(mmax);
@@ -56,18 +56,18 @@
     }
     while (pt1<=pt1m);
   #else
-    for (int i=mmin;i<=mmax;i++)
+    for (int i = mmin;i<=mmax;i++)
     {
       tmp+=v1.elem_value(i)*v2.elem_value(i);
     }
   #endif
   #else
-    int mmin=v1.indexmin();
-    int n=v1.indexmax()-mmin+1;
+    int mmin = v1.indexmin();
+    int n = v1.indexmax()-mmin+1;
     dp_dotproduct(&tmp,&(v1.elem_value(mmin)),&(v2.elem_value(mmin)),n);
   #endif
   
-  dvariable vtmp=nograd_assign(tmp);
+  dvariable vtmp = nograd_assign(tmp);
 
   // The derivative list considerations
   save_identifier_string("bbbb");
@@ -90,11 +90,11 @@
 void dvdv_dot(void)
 {
   verify_identifier_string("aaaa");
-  double dftmp=restore_prevariable_derivative();
-  dvar_vector_position v2pos=restore_dvar_vector_position();
-  dvector cv2=restore_dvar_vector_value(v2pos);
-  dvar_vector_position v1pos=restore_dvar_vector_position();
-  dvector cv1=restore_dvar_vector_value(v1pos);
+  double dftmp = restore_prevariable_derivative();
+  dvar_vector_position v2pos = restore_dvar_vector_position();
+  dvector cv2 = restore_dvar_vector_value(v2pos);
+  dvar_vector_position v1pos = restore_dvar_vector_position();
+  dvector cv1 = restore_dvar_vector_value(v1pos);
   verify_identifier_string("bbbb");
   dvector dfv1(cv1.indexmin(),cv1.indexmax());
   dvector dfv2(cv2.indexmin(),cv2.indexmax());
@@ -112,11 +112,11 @@ void dvdv_dot(void)
   }
   while (pdf1<=pdf1m);
 #else
-  for (int i=cv1.indexmin();i<=cv1.indexmax();i++)
+  for (int i = cv1.indexmin();i<=cv1.indexmax();i++)
   {
-    //tmp+=cv1(i)*cv2(i);
-    dfv1(i)=dftmp*cv2.elem(i);
-    dfv2(i)=dftmp*cv1.elem(i);
+    // tmp+=cv1(i)*cv2(i);
+    dfv1(i) = dftmp*cv2.elem(i);
+    dfv2(i) = dftmp*cv1.elem(i);
   }
 #endif
   dfv1.save_dvector_derivatives(v1pos);
@@ -134,14 +134,14 @@ dvariable sum(_CONST dvar_vector& v1)
 {
   if (allocated(v1))
   {
-    dvector cv1=value(v1);
-    double tmp=0;
-    for (int i=cv1.indexmin();i<=cv1.indexmax();i++)
+    dvector cv1 = value(v1);
+    double tmp = 0;
+    for (int i = cv1.indexmin();i<=cv1.indexmax();i++)
     {
       tmp+=cv1.elem(i);
     }
   
-    dvariable vtmp=nograd_assign(tmp);
+    dvariable vtmp = nograd_assign(tmp);
   
     // The derivative list considerations
     save_identifier_string("bbbb");
@@ -154,7 +154,7 @@ dvariable sum(_CONST dvar_vector& v1)
   }
   else
   {
-    dvariable vtmp=0.0;
+    dvariable vtmp = 0.0;
     return vtmp;
   }
 }
@@ -166,14 +166,14 @@ dvariable sum(_CONST dvar_vector& v1)
 void X_dv_sum(void)
 {
   verify_identifier_string("aaaa");
-  double dftmp=restore_prevariable_derivative();
-  dvar_vector_position v1pos=restore_dvar_vector_position();
+  double dftmp = restore_prevariable_derivative();
+  dvar_vector_position v1pos = restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   dvector dfv1(v1pos.indexmin(),v1pos.indexmax());
-  for (int i=dfv1.indexmin();i<=dfv1.indexmax();i++)
+  for (int i = dfv1.indexmin();i<=dfv1.indexmax();i++)
   {
-    //tmp+=cv1(i)*cv2(i);
-    dfv1(i)=dftmp;
+    // tmp+=cv1(i)*cv2(i);
+    dfv1(i) = dftmp;
   }
   dfv1.save_dvector_derivatives(v1pos);
 }
@@ -187,8 +187,8 @@ void X_dv_sum(void)
 dvariable sum(_CONST dvar_matrix& m)
 {
   RETURN_ARRAYS_INCREMENT();
-  dvariable tmp=0.;
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  dvariable tmp = 0.;
+  for (int i = m.rowmin();i<=m.rowmax();i++)
   {
     tmp+=sum(m.elem(i));
   }

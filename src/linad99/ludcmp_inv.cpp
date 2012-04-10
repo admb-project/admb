@@ -88,7 +88,7 @@ dmatrix inv(_CONST dmatrix & aa)
    dmatrix& alpha = bb.get_L();
    dmatrix& beta = bb.get_U();
 
-   //check if invertable
+   // check if invertable
    for (int i = lb; i <= ub; i++)
    {
       if (beta(i, i) == 0.0)
@@ -117,7 +117,7 @@ dmatrix inv(_CONST dmatrix & aa)
       }
    }
 
-   //Put L^-1 in Matrix to multiply with U^-1
+   // Put L^-1 in Matrix to multiply with U^-1
    dmatrix Low(lb, ub, lb, ub);
    Low.initialize();
    for (int i = lb + 1; i <= ub; i++)
@@ -170,7 +170,7 @@ dmatrix inv(_CONST dmatrix & aa)
       }
    }
 
-   //Put U^-1 in Matrix to multiply with U^-1
+   // Put U^-1 in Matrix to multiply with U^-1
    dmatrix Up(lb, ub, lb, ub);
    Up.initialize();
    for (int i = lb; i <= ub; i++)
@@ -189,7 +189,7 @@ dmatrix inv(_CONST dmatrix & aa)
    }
    Up = trans(Up);
 
-   //compute inverese by U^-1*L^-1
+   // compute inverese by U^-1*L^-1
    vc = Up * Low;
    return vc;
 }
@@ -245,9 +245,9 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
    double ssum = 0.0;
    double temp = 0.0;
    dvar_matrix_position dmp(aa, 0);
-   //dmatrix bb=value(aa);
+   // dmatrix bb = value(aa);
    cltudecomp bb(lb, ub);
-   //bb=value(aa);   // bad because it creates an extra copy of aa
+   // bb = value(aa);   // bad because it creates an extra copy of aa
    bb.assign_value(aa);
    dvector vv(lb, ub);
    vv.initialize();
@@ -316,13 +316,13 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
 	 d = -1. * d;
 	 vv[imax] = vv[j];
 
-	 //if (j<ub)
+	 // if (j<ub)
 	 {
 	    int itemp = indx.elem(imax);
 	    indx.elem(imax) = indx.elem(j);
 	    indx.elem(j) = itemp;
 	 }
-	 //cout << "indx= " <<indx<<endl;
+	 // cout << "indx= " <<indx<<endl;
       }
 
       if (bb.elem(j, j) == 0.0)
@@ -358,7 +358,7 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
       y(indxinv(ii)) = 1.;
       for (int i = indxinv(ii); i <= ub; i++)
       {
-	 // ssum=y(ii,i);
+	 // ssum = y(ii,i);
 	 if (i == indxinv(ii))
 	 {
 	    ssum = 1.;
@@ -440,14 +440,14 @@ void dfinvpret(void)
 #endif
    for (int ii = ub; ii >= lb; ii--)
    {
-      //x.save_dvector_value();
+      // x.save_dvector_value();
       dvector x = restore_dvector_value(x_pos);
-      //y.save_dvector_value();
+      // y.save_dvector_value();
       dvector y = restore_dvector_value(y_pos);
       dvector dfx = restore_dvar_matrix_derivative_column(v_pos, ii);
       for (int i = lb; i <= ub; i++)
       {
-	 // x.elem(i)=ssum/b.elem(i,i);
+	 // x.elem(i) = ssum/b.elem(i,i);
 	 dfssum += dfx.elem(i) / b.elem(i, i);
 	 dfb.elem(i, i) -= dfx.elem(i) * x.elem(i) / b.elem(i, i);
 	 dfx.elem(i) = 0.;
@@ -457,31 +457,31 @@ void dfinvpret(void)
 	    dfb.elem(i, j) -= dfssum * x.elem(j);
 	    dfx.elem(j) -= dfssum * b.elem(i, j);
 	 }
-	 // ssum=y.elem(i);
+	 // ssum = y.elem(i);
 	 dfy.elem(i) += dfssum;
 	 dfssum = 0.;
       }
 
-      //for (i=ub;i>=lb;i--)
+      // for (i = ub;i>=lb;i--)
       int i2;
       for (i2 = ub; i2 >= indxinv(ii); i2--)
       {
-	 // y.elem(i)=ssum;
+	 // y.elem(i) = ssum;
 	 dfssum += dfy.elem(i2);
 	 dfy.elem(i2) = 0.;
-	 // for (int j=i-1;j>=lb;j--)
+	 // for (int j = i-1;j>=lb;j--)
 	 for (int j = i2 - 1; j >= indxinv(ii); j--)
 	 {
 	    // ssum-=b.elem(i,j)*y.elem(j);
 	    dfb.elem(i2, j) -= dfssum * y.elem(j);
 	    dfy.elem(j) -= dfssum * b.elem(i2, j);
 	 }
-	 //ssum=y.elem(i);
+	 // ssum = y.elem(i);
 	 dfy.elem(i2) = dfssum;
 	 dfssum = 0.;
       }
-      //x.initialize()
-      //y.initialize()
+      // x.initialize()
+      // y.initialize()
       dfx.initialize();
       dfy.initialize();
    }
@@ -492,12 +492,12 @@ void dfinvpret(void)
       {
 	 if (i <= j)
 	 {
-	    // b.elem(i,j)=ssum;
+	    // b.elem(i,j) = ssum;
 	    dfssum += dfb.elem(i, j);
 	    dfb.elem(i, j) = 0.;
 	 } else
 	 {
-	    // b.elem(i,j)=ssum/b.elem(j,j);
+	    // b.elem(i,j) = ssum/b.elem(j,j);
 	    dfssum += dfb.elem(i, j) / b.elem(j, j);
 	    dfb.elem(j, j) -= dfb.elem(i, j) * b.elem(i, j) / b.elem(j, j);
 	    dfb.elem(i, j) = 0.;
@@ -509,7 +509,7 @@ void dfinvpret(void)
 	    dfb.elem(i, k) -= dfssum * b.elem(k, j);
 	    dfb.elem(k, j) -= dfssum * b.elem(i, k);
 	 }
-	 // ssum=value(a(indx.elem(i),j);
+	 // ssum = value(a(indx.elem(i),j);
 	 save_dmatrix_derivatives(a_pos, dfssum, indx.elem(i), j);	// like this
 	 dfssum = 0.;
       }

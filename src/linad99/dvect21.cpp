@@ -27,9 +27,9 @@
         ad_exit(1);
       }
       dvector tmp(low,high);
-      for (int i=low;i<=high;i++)
+      for (int i = low;i<=high;i++)
       {
-        tmp(i)=(*this)(i);
+        tmp(i) = (*this)(i);
       }
       return tmp;
     }

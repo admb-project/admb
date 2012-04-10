@@ -136,10 +136,10 @@ void dvector::fill(const char * s)
    char * field = new char[size_t(MAX_FIELD_LENGTH+1)];
    char * err_ptr;
 
-   for (int i=indexmin();i<=indexmax();i++)
+   for (int i = indexmin();i<=indexmax();i++)
    {
      ss >> field;
-     elem(i)=strtod(field,&err_ptr); // increment column counter
+     elem(i) = strtod(field,&err_ptr); // increment column counter
 
      if (isalpha(err_ptr[0]))
      {

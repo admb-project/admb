@@ -41,7 +41,7 @@
 
 
    Any feedback is very welcome.
-   http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
+   http:// www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
    email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
 
    Modified for AD Model Builder by Kasper Kristensen <kkr@aqua.dtu.dk> and 
@@ -69,12 +69,12 @@
 */
 random_number_generator::random_number_generator(int seed) 
 {
-  unsigned long s=seed;
+  unsigned long s = seed;
   mt=new unsigned long [N]; /* the array for the state vector  */
   mti=N+1; /* mti==N+1 means mt[N] is not initialized */
 
   mt[0]= s & 0xffffffffUL;
-  for (mti=1; mti<N; mti++) {
+  for (mti = 1; mti<N; mti++) {
     mt[mti] = (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti); 
     /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
     /* In the previous versions, MSBs of the seed affect   */
@@ -93,7 +93,7 @@ random_number_generator::random_number_generator(int seed)
 random_number_generator::~random_number_generator()
 {
    delete [] mt;
-   mt=0;  // not  necessary but habit.
+   mt = 0;  // not  necessary but habit.
 }
 
 /**
@@ -106,9 +106,9 @@ random_number_generator::~random_number_generator()
 */
 void random_number_generator::reinitialize(int seed)
 {
-  unsigned long s=seed;
+  unsigned long s = seed;
   mt[0]= s & 0xffffffffUL;
-  for (mti=1; mti<N; mti++) {
+  for (mti = 1; mti<N; mti++) {
       mt[mti] = 
   	    (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti); 
       /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
@@ -145,7 +145,7 @@ double random_number_generator::better_rand()
       //if (mti == N+1)   /* if init_genrand() has not been called, */
       //    init_genrand(5489UL); /* a default initial seed is used */
 
-      for (kk=0;kk<N-M;kk++) {
+      for (kk = 0;kk<N-M;kk++) {
           y = (mt[kk]&UPPER_MASK)|(mt[kk+1]&LOWER_MASK);
           mt[kk] = mt[kk+M] ^ (y >> 1) ^ mag01[y & 0x1UL];
       }
@@ -185,9 +185,9 @@ double random_number_generator::better_rand()
 double randn( BOR_CONST random_number_generator& rng)
 {
   double x,y;
-  x=((random_number_generator&) rng).better_rand();
-  y=((random_number_generator&) rng).better_rand();
-  double u=sqrt(-2*log(x))*cos(2*PI*y);
+  x = ((random_number_generator&) rng).better_rand();
+  y = ((random_number_generator&) rng).better_rand();
+  double u = sqrt(-2*log(x))*cos(2*PI*y);
   return(u);
 }
   
@@ -201,7 +201,7 @@ double randn( BOR_CONST random_number_generator& rng)
 double randu( BOR_CONST random_number_generator& rng)
 {
   double x;
-  x=((random_number_generator&) rng).better_rand();
+  x = ((random_number_generator&) rng).better_rand();
   return(x);
 }
   
@@ -217,15 +217,15 @@ void dvector::fill_randbi(double p, BOR_CONST random_number_generator& rng)
      " successes must lie between 0 and 1\n";
     ad_exit(1);
   }
-  for (int i=indexmin(); i<=indexmax(); i++)
+  for (int i = indexmin(); i<=indexmax(); i++)
   {
     if ( ((random_number_generator&) rng).better_rand()<=p)
     {
-      elem(i)=1;
+      elem(i) = 1;
     }
     else
     {
-      elem(i)=0;
+      elem(i) = 0;
     } 
   }
 }
@@ -236,9 +236,9 @@ void dvector::fill_randbi(double p, BOR_CONST random_number_generator& rng)
  */
 void dvector::fill_randu( BOR_CONST random_number_generator& rng)
 {
-  for (int i=indexmin(); i<=indexmax(); i++)
+  for (int i = indexmin(); i<=indexmax(); i++)
   {
-    elem(i)=((random_number_generator&) rng).better_rand();
+    elem(i) = ((random_number_generator&) rng).better_rand();
   }
 }
 
@@ -248,9 +248,9 @@ void dvector::fill_randu( BOR_CONST random_number_generator& rng)
  */
 void dmatrix::colfill_randu(BOR_CONST int&j, BOR_CONST random_number_generator& rng)
 {
-  for (int i=rowmin(); i<=rowmax(); i++)
+  for (int i = rowmin(); i<=rowmax(); i++)
   {
-    elem(i,j)=((random_number_generator&) rng).better_rand();
+    elem(i,j) = ((random_number_generator&) rng).better_rand();
   }
 }
 
@@ -260,9 +260,9 @@ void dmatrix::colfill_randu(BOR_CONST int&j, BOR_CONST random_number_generator& 
  */
 void dmatrix::rowfill_randu(BOR_CONST int& i, BOR_CONST random_number_generator& rng)
 {
-  for (int j=colmin(); j<=colmax(); j++)
+  for (int j = colmin(); j<=colmax(); j++)
   {
-    elem(i,j)=((random_number_generator&) rng).better_rand();
+    elem(i,j) = ((random_number_generator&) rng).better_rand();
   }
 }
 
@@ -272,9 +272,9 @@ void dmatrix::rowfill_randu(BOR_CONST int& i, BOR_CONST random_number_generator&
  */
 void dvector::fill_randn( BOR_CONST random_number_generator& rng)
 {
-  for (int i=indexmin(); i<=indexmax(); i++)
+  for (int i = indexmin(); i<=indexmax(); i++)
   {
-    (*this)(i)=randn(rng);
+    (*this)(i) = randn(rng);
   }
 }
 
@@ -284,7 +284,7 @@ void dvector::fill_randn( BOR_CONST random_number_generator& rng)
  */
 void dmatrix::fill_randn( BOR_CONST random_number_generator& rng)
 {
-  for (int i=rowmin(); i<=rowmax(); i++)
+  for (int i = rowmin(); i<=rowmax(); i++)
   {
     elem(i).fill_randn(rng);
   }
@@ -296,7 +296,7 @@ void dmatrix::fill_randn( BOR_CONST random_number_generator& rng)
  */
 void d3_array::fill_randn( BOR_CONST random_number_generator& rng)
 {
-  for (int i=slicemin(); i<=slicemax(); i++)
+  for (int i = slicemin(); i<=slicemax(); i++)
   {
     elem(i).fill_randn(rng);
   }
@@ -308,7 +308,7 @@ void d3_array::fill_randn( BOR_CONST random_number_generator& rng)
  */
 void d3_array::fill_randu( BOR_CONST random_number_generator& rng)
 {
-  for (int i=slicemin(); i<=slicemax(); i++)
+  for (int i = slicemin(); i<=slicemax(); i++)
   {
     elem(i).fill_randu(rng);
   }
@@ -320,7 +320,7 @@ void d3_array::fill_randu( BOR_CONST random_number_generator& rng)
  */
 void dmatrix::fill_randu( BOR_CONST random_number_generator& rng)
 {
-  for (int i=rowmin(); i<=rowmax(); i++)
+  for (int i = rowmin(); i<=rowmax(); i++)
   {
     elem(i).fill_randu(rng);
   }
@@ -332,9 +332,9 @@ void dmatrix::fill_randu( BOR_CONST random_number_generator& rng)
  */
 void dmatrix::colfill_randn(BOR_CONST int&j, BOR_CONST random_number_generator& rng)
 {
-  for (int i=rowmin(); i<=rowmax(); i++)
+  for (int i = rowmin(); i<=rowmax(); i++)
   {
-    elem(i,j)=randn(rng);
+    elem(i,j) = randn(rng);
   }
 }
 
@@ -344,8 +344,8 @@ void dmatrix::colfill_randn(BOR_CONST int&j, BOR_CONST random_number_generator& 
  */
 void dmatrix::rowfill_randn(BOR_CONST int& i, BOR_CONST random_number_generator& rng)
 {
-  for (int j=colmin(); j<=colmax(); j++)
+  for (int j = colmin(); j<=colmax(); j++)
   {
-    elem(i,j)=randn(rng);
+    elem(i,j) = randn(rng);
   }
 }

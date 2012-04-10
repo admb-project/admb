@@ -19,7 +19,7 @@ void dv_xminuseq(void);
  dvar_vector& dvar_vector::operator-= (_CONST prevariable& d)
  {
    {
-     for (int i=indexmin();i<=indexmax();i++)
+     for (int i = indexmin();i<=indexmax();i++)
      {
        elem_value(i) -= value(d);
      }
@@ -40,12 +40,12 @@ void dv_xminuseq(void);
  */
 void dv_xminuseq(void)
 {
-  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("Pxx");
-  prevariable_position d_pos=restore_prevariable_position();
-  dvar_vector_position this_pos=restore_dvar_vector_position();
+  prevariable_position d_pos = restore_prevariable_position();
+  dvar_vector_position this_pos = restore_dvar_vector_position();
   verify_identifier_string("Pvv");
-  dvector dfthis=restore_dvar_vector_der_nozero(this_pos);
+  dvector dfthis = restore_dvar_vector_der_nozero(this_pos);
   double temp=-sum(dfthis);
   save_double_derivative(temp,d_pos);
 }
@@ -59,7 +59,7 @@ void dv_xpluseq(void);
  dvar_vector& dvar_vector::operator+= (_CONST prevariable& d)
  {
    {
-     for (int i=indexmin();i<=indexmax();i++)
+     for (int i = indexmin();i<=indexmax();i++)
      {
        elem_value(i) += value(d);
      }
@@ -80,13 +80,13 @@ void dv_xpluseq(void);
  */
 void dv_xpluseq(void)
 {
-  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("Qxx");
-  prevariable_position d_pos=restore_prevariable_position();
-  dvar_vector_position this_pos=restore_dvar_vector_position();
+  prevariable_position d_pos = restore_prevariable_position();
+  dvar_vector_position this_pos = restore_dvar_vector_position();
   verify_identifier_string("Qvv");
-  dvector dfthis=restore_dvar_vector_der_nozero(this_pos);
-  double temp=sum(dfthis);
+  dvector dfthis = restore_dvar_vector_der_nozero(this_pos);
+  double temp = sum(dfthis);
   save_double_derivative(temp,d_pos);
 }
 
@@ -97,7 +97,7 @@ void dv_xpluseq(void)
  dvar_vector& dvar_vector::operator-= (double d)
  {
    {
-     for (int i=indexmin();i<=indexmax();i++)
+     for (int i = indexmin();i<=indexmax();i++)
      {
        elem_value(i) -= d;
      }
@@ -113,7 +113,7 @@ void dv_xpluseq(void)
  dvar_vector& dvar_vector::operator+= (double d)
  {
    {
-     for (int i=indexmin();i<=indexmax();i++)
+     for (int i = indexmin();i<=indexmax();i++)
      {
        elem_value(i) += d;
      }

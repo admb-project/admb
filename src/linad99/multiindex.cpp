@@ -30,15 +30,15 @@
   multi_index::multi_index(int min,int max,int dim) :
     mind(min),maxd(max),depth(min), index(1, dim)
   {
-    index=min;
+    index = min;
   }
   void multi_index::operator ++ (void)
   {
-    int imin=index.indexmin();
-    int imax=index.indexmax();
+    int imin = index.indexmin();
+    int imax = index.indexmax();
     index(imin)++;
-    int tmpdepth=1;
-    for (int i=imin;i<=imax;i++)
+    int tmpdepth = 1;
+    for (int i = imin;i<=imax;i++)
     {
       if (index(i)>maxd)
       {
@@ -46,8 +46,8 @@
         {
           index(i+1)++;
         }
-        index(i)=mind;
-        tmpdepth=i+1;
+        index(i) = mind;
+        tmpdepth = i+1;
       }
       else
       {
@@ -60,12 +60,12 @@
   }    
   int multi_index::get_offset(void) 
   {
-    int imin=index.indexmin();
-    int imax=index.indexmax();
-    int offset=index(imin)-mind;
-    int mx=min(depth,imax);
-    int sz=maxd-mind+1;
-    for (int i=imin+1;i<=mx;i++)
+    int imin = index.indexmin();
+    int imax = index.indexmax();
+    int offset = index(imin)-mind;
+    int mx = min(depth,imax);
+    int sz = maxd-mind+1;
+    for (int i = imin+1;i<=mx;i++)
     {
 #  if (__MSVC32__>=8) || defined(__SUNPRO_CC)
       offset+=int(pow(double(sz),i-imin))*(index(i)-mind);
@@ -82,8 +82,8 @@
  */
   void multi_index::initialize(void)
   {
-    index=mind;
-    depth=mind;
+    index = mind;
+    depth = mind;
   }
     
  
@@ -92,7 +92,7 @@
  //   {
  //     multi_index mi(1,3,4);
  // 
- //     mi()=3;
+ //     mi() = 3;
  //     do
  //     {
  //       cout << mi() << "   " << mi.get_depth() << endl;

@@ -16,7 +16,7 @@
  */
   dvector& dvector::operator /= ( CGNU_DOUBLE x)
   {
-    for (int i=indexmin(); i<=indexmax(); i++)
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
       elem(i)/=x;
     }
@@ -29,7 +29,7 @@
  */
   dvector& dvector::operator *= ( CGNU_DOUBLE x)
   {
-    for (int i=indexmin(); i<=indexmax(); i++)
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
       elem(i)*=x;
     }

@@ -8,7 +8,7 @@
 
   void stddev_params::copy_all_values(BOR_CONST dvector& x,BOR_CONST int& ii)
   {
-    for (int i=0;i< stddev_params::num_stddev_params;i++)
+    for (int i = 0;i< stddev_params::num_stddev_params;i++)
     {
       (stddevptr[i])->copy_value_to_vector(x,ii);
     }
@@ -16,7 +16,7 @@
 
   void stddev_params::copy_all_number_values(BOR_CONST dvector& x,BOR_CONST int& ii)
   {
-    for (int i=0;i< stddev_params::num_stddev_number_params;i++)
+    for (int i = 0;i< stddev_params::num_stddev_number_params;i++)
     {
       (stddev_number_ptr[i])->copy_value_to_vector(x,ii);
     }

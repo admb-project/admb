@@ -59,7 +59,7 @@ class SPparam_init_number: public param_init_number
 public:
   SPparam_init_number(void ): param_init_number() {;} 
 protected:
-  void allocate(int phase_start=1,const char *s="UNNAMED");
+  void allocate(int phase_start = 1,const char *s="UNNAMED");
   void allocate(const char *s="UNNAMED");
   friend class model_parameters;
 };
@@ -72,7 +72,7 @@ class SPparam_init_vector: public param_init_vector
 {
 public:
   SPparam_init_vector(void ): param_init_vector() {;} 
-  void allocate(int phasestart=1,const char * s="UNNAMED");
+  void allocate(int phasestart = 1,const char * s="UNNAMED");
   void allocate(const char * s="UNNAMED");
   friend class model_parameters;
 };
@@ -90,7 +90,7 @@ public:
   SPnamed_dvar_vector& operator = (CGNU_DOUBLE m);
   SPnamed_dvar_vector& operator = (_CONST prevariable& m);
   friend class model_parameters;
-  //void allocate(int mmin,int mmax,const char * s);
+  // void allocate(int mmin,int mmax,const char * s);
   ~SPnamed_dvar_vector(void ); //{SPsend(*this);}
 };
 
@@ -163,7 +163,7 @@ class SPparam_init_bounded_number: public param_init_bounded_number
 public:
   SPparam_init_bounded_number(void ): param_init_bounded_number() {;} 
 protected:
-  void allocate(double _minb,double _maxb,int phase_start=1,
+  void allocate(double _minb,double _maxb,int phase_start = 1,
     const char * s="UNNAMED");
   void allocate(double _minb,double _maxb,const char * s="UNNAMED");
 };
@@ -177,7 +177,7 @@ class SPparam_init_matrix: public param_init_matrix
 public:
   SPparam_init_matrix(void ): param_init_matrix() {;} 
 protected:
-  void allocate(int phase_start=1,const char * = "UNNAMED");
+  void allocate(int phase_start = 1,const char * = "UNNAMED");
   void allocate(const char * = "UNNAMED");
 };
 
@@ -193,7 +193,7 @@ public:
 public:
 
   void allocate(double _minb,double _maxb,
-    int phase_start=1,const char * = "UNNAMED");
+    int phase_start = 1,const char * = "UNNAMED");
   void allocate(double _minb,double _maxb,const char * = "UNNAMED");
 };
 
@@ -263,7 +263,7 @@ public:
 class SPdata_imatrix : public data_imatrix 
 {
 public:
-  //void allocate(int rmin,int rmax,int cmin,int cmax,const char * ="UNNAMED");
+  // void allocate(int rmin,int rmax,int cmin,int cmax,const char * ="UNNAMED");
   void allocate(const char * ="UNNAMED");
 };
 
@@ -307,7 +307,7 @@ public:
 class SPparam_init_bounded_vector: public param_init_bounded_vector
 {
 public:
-  void allocate(double _minb,double _maxb,int phasestart=1,
+  void allocate(double _minb,double _maxb,int phasestart = 1,
    const char * name="UNNAMED");
   void allocate(double _minb,double _maxb,const char * name="UNNAMED");
 };

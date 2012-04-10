@@ -121,16 +121,16 @@ public:
                           const int upper_bounds,
                           const int index)
   {
-    //tools99/string1.cpp
-    //cerr << "First index out of bounds in adstring::operator () (int,int)\n"
+    // tools99/string1.cpp
+    // cerr << "First index out of bounds in adstring::operator () (int,int)\n"
     //<< "Index value was " << i << " The size of this adstring is "
     //<< shape->size() << "\n";
-    //cerr << "Index out of bounds in adstring::operator () (const int)\n"
+    // cerr << "Index out of bounds in adstring::operator () (const int)\n"
     //<< "Index value was " << i << " The size of this adstring is "
     //<< shape->size() << "\n";
-    //tools99/string5.cpp
-    //cerr << "Error index too low in adstring& operator [] (int i)" << endl;
-    //cerr << "value was " << i << " minimum valid index is "
+    // tools99/string5.cpp
+    // cerr << "Error index too low in adstring& operator [] (int i)" << endl;
+    // cerr << "value was " << i << " minimum valid index is "
     /*
     adstring m = message + " in \"" + function +  "\"\n"
                  + adstring("Index value was ")

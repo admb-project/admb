@@ -17,9 +17,9 @@
 dvar_vector solve_trans(const banded_lower_triangular_dvar_matrix& M,
   const dvector& y)
 {
-  int mmin=M.indexmin();
-  int mmax=M.indexmax();
-  int bw=M.bandwidth();
+  int mmin = M.indexmin();
+  int mmax = M.indexmax();
+  int bw = M.bandwidth();
 
   if (y.indexmin() !=mmin || y.indexmax() !=mmax)
   {
@@ -29,15 +29,15 @@ dvar_vector solve_trans(const banded_lower_triangular_dvar_matrix& M,
   dvar_vector x(mmin,mmax);
   int i,j;
 
-  for (i=mmax;i>=mmin;i--)
+  for (i = mmax;i>=mmin;i--)
   {
-    dvariable sum=0.0;
-    int jmax=admin(mmax,i+bw-1);
-    for (j=i+1;j<=jmax;j++)
+    dvariable sum = 0.0;
+    int jmax = admin(mmax,i+bw-1);
+    for (j = i+1;j<=jmax;j++)
     {
       sum+=M(j,i)*x(j);
     }
-    x(i)=(y(i)-sum)/M(i,i);
+    x(i) = (y(i)-sum)/M(i,i);
   }
 
   return x;

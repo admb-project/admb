@@ -96,8 +96,8 @@
         }
         else
         {
-          ptr_first=true_ptr_first;
-          length=true_length;
+          ptr_first = true_ptr_first;
+          length = true_length;
           return 1;
         }
       }

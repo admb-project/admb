@@ -55,7 +55,7 @@ extern int ctlc_flag;
   {
     unsigned char  winleft,   wintop;
     unsigned char  winright,  winbottom;
-  //unsigned char  attribute, normattr;
+  // unsigned char  attribute, normattr;
     unsigned char  currmode;
     unsigned char  screenheight;
     unsigned char  screenwidth;
@@ -94,8 +94,8 @@ extern int ctlc_flag;
   {
     unsigned char  winleft,   wintop;
     unsigned char  winright,  winbottom;
-  //unsigned char  attribute, normattr;
-  //unsigned char  currmode;
+  // unsigned char  attribute, normattr;
+  // unsigned char  currmode;
     unsigned char  screenheight;
     unsigned char  screenwidth;
     unsigned char  curx, cury;
@@ -147,10 +147,10 @@ double max( BOR_CONST double&, BOR_CONST double&);
  */
 void fmmc::fmin( BOR_CONST double& fret,BOR_CONST dvector& p,BOR_CONST dvector& gg)
 {
-  dfn=0.0;;
-  maxfn_flag=0;
-  iexit=0;
-  ihflag=0;
+  dfn = 0.0;;
+  maxfn_flag = 0;
+  iexit = 0;
+  ihflag = 0;
 #ifdef __ZTC__
     if (disp_inited == 0)
     {
@@ -158,13 +158,13 @@ void fmmc::fmin( BOR_CONST double& fret,BOR_CONST dvector& p,BOR_CONST dvector& 
        disp_usebios();
     }
 #endif
-  int n=p.size();
+  int n = p.size();
   dvector& xi=*(this->xi);
   dvector& h=*(this->h);
   dvector& g=*(this->g);
-  double& fp=this->fp;
-  //int& its=this->its;
-  int& J=this->J;
+  double& fp = this->fp;
+  // int& its = this->its;
+  int& J = this->J;
   if (this->frp_flag > 0) this->ifn++;
 
   if (ireturn >= 3)
@@ -185,12 +185,12 @@ void fmmc::fmin( BOR_CONST double& fret,BOR_CONST dvector& p,BOR_CONST dvector& 
 #endif
 
       int con_flag;
-      for (int jj=gg.indexmin();jj<=gg.indexmax();jj++)
+      for (int jj = gg.indexmin();jj<=gg.indexmax();jj++)
       {
-        con_flag=1;
+        con_flag = 1;
         if (fabs(gg(jj)) > crit)
         {
-          con_flag=0;
+          con_flag = 0;
           break;
         }
       }
@@ -206,14 +206,14 @@ void fmmc::fmin( BOR_CONST double& fret,BOR_CONST dvector& p,BOR_CONST dvector& 
               n, iter, ifn);
             if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
                fret, max(fabs(gg)) );
-            fmmdisp(p, gg, n, this->scroll_flag); //fmc);
+            fmmdisp(p, gg, n, this->scroll_flag); // fmc);
           }
         }
         return;
       }
-      fbest=fret;
-      *xbest=p;
-      *gbest=gg;
+      fbest = fret;
+      *xbest = p;
+      *gbest = gg;
     }
   }
 
@@ -233,23 +233,23 @@ void fmmc::fmin( BOR_CONST double& fret,BOR_CONST dvector& p,BOR_CONST dvector& 
 #if (defined(__GNU_) && !defined(__GNUDOS__)) || defined(UNIXKLUDGE)
   signal(SIGINT, &onintr);
 #endif
-  this->J=1;
-  this->rho_min=1.e-10;
-  this->converge_flag=0;
+  this->J = 1;
+  this->rho_min = 1.e-10;
+  this->converge_flag = 0;
 
-  this->frp_flag=1;
-  this->ireturn=1;
+  this->frp_flag = 1;
+  this->ireturn = 1;
   return;
 label800:
 
-  fbest=fret;
-  *xbest=p;
-  *gbest=gg;
+  fbest = fret;
+  *xbest = p;
+  *gbest = gg;
 
-  this->frp_flag=0;
-  this->ireturn=0;
-  xi=gg;
-  this->fp=fret;
+  this->frp_flag = 0;
+  this->ireturn = 0;
+  xi = gg;
+  this->fp = fret;
   //(*dfunc)(p,xi);
 
   if (iprint>0)
@@ -264,21 +264,21 @@ label800:
        n, iter, ifn);
       if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
        fbest, max(fabs(*gbest)) );
-      fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
+      fmmdisp(*xbest, *gbest, n, this->scroll_flag); // fmc);
     }
   }
 
   {
-    for (int j=1;j<=n;j++)
+    for (int j = 1;j<=n;j++)
     {
       g[j] = -xi[j];
-      xi[j]=h[j]=g[j];
+      xi[j] = h[j] = g[j];
     }
   }
 
-  this->ifnex=0;
+  this->ifnex = 0;
 
-  //this->its=1;
+  // this->its = 1;
 
 label1000:
     iter++;
@@ -302,7 +302,7 @@ label1000:
       {
         if ( c == 'Q' || c == 'N' )
         {
-          quit_flag=c;
+          quit_flag = c;
           this->ireturn=-1;
           {
 	    if (iprint>0)
@@ -313,7 +313,7 @@ label1000:
                 n, iter, ifn);
               if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
                 fbest, max(fabs(*gbest)) );
-              fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
+              fmmdisp(*xbest, *gbest, n, this->scroll_flag); // fmc);
             }
           }
           p=*xbest;
@@ -322,7 +322,7 @@ label1000:
         }
         else
         {
-          quit_flag=0;
+          quit_flag = 0;
         }
       }
     }
@@ -332,23 +332,23 @@ label1000:
     if (this->lin_flag ==0) goto label10;
 
       p=*(this->extx);
-      this->frp_flag=2;
-      this->ireturn=1;
+      this->frp_flag = 2;
+      this->ireturn = 1;
       return;
 
 
     label2000:
-      this->ireturn=0;
-      this->frp_flag=0;
-      //this->extf=fcomp( *(this->extx),*(this->extg) );
-      this->extf=fret;
-      *(this->extx)=p;
-      *(this->extg)=gg;
+      this->ireturn = 0;
+      this->frp_flag = 0;
+      // this->extf = fcomp( *(this->extx),*(this->extg) );
+      this->extf = fret;
+      *(this->extx) = p;
+      *(this->extg) = gg;
       goto label5;
   label10:
 
     {
-      for ( int i=1; i<=9; i++)
+      for ( int i = 1; i<=9; i++)
       {
         (*funval)[i]= (*funval)[i+1];
       }
@@ -367,7 +367,7 @@ label1000:
             n, iter, ifn);
           if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
              fbest, max(fabs(*gbest)) );
-          fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
+          fmmdisp(*xbest, *gbest, n, this->scroll_flag); // fmc);
         }
       }
       p=*xbest;
@@ -379,12 +379,12 @@ label1000:
   /*  Moved this up to entry point
     {
       int con_flag;
-      for (int jj=gg.indexmin();jj<=gg.indexmax();jj++)
+      for (int jj = gg.indexmin();jj<=gg.indexmax();jj++)
       {
-        con_flag=1;
+        con_flag = 1;
         if (fabs(g(jj)) > crit)
         {
-          con_flag=0;
+          con_flag = 0;
           break;
         }
       }
@@ -400,7 +400,7 @@ label1000:
               n, iter, ifn);
             if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
              fbest, max(fabs(*gbest)) );
-            fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
+            fmmdisp(*xbest, *gbest, n, this->scroll_flag); // fmc);
           }
         }
         p= *xbest;
@@ -421,7 +421,7 @@ label1000:
             n, iter, ifn);
           if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
              fbest, max(fabs(*gbest)) );
-          fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
+          fmmdisp(*xbest, *gbest, n, this->scroll_flag); // fmc);
         }
       }
       p=*xbest;
@@ -444,24 +444,24 @@ label1000:
 	 n, iter, ifn);
 	if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
 	     fbest, max(fabs(*gbest)) );
-	  fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
+	  fmmdisp(*xbest, *gbest, n, this->scroll_flag); // fmc);
       }
     }
 
-    this->frp_flag=3;
-    this->ireturn=1;
+    this->frp_flag = 3;
+    this->ireturn = 1;
     // return;
   label3000:
-    this->frp_flag=0;
-    this->ireturn=0;
-    xi=gg;
-    this->fp=fret;
+    this->frp_flag = 0;
+    this->ireturn = 0;
+    xi = gg;
+    this->fp = fret;
 
-    //fp=fcomp(p,xi);
+    // fp = fcomp(p,xi);
 
-    this->dgg=this->gg=0.0;
+    this->dgg = this->gg = 0.0;
     {
-      for (int j=1;j<=n;j++)
+      for (int j = 1;j<=n;j++)
       {
         this->gg += g[j]*g[j];
 /*      dgg += xi[j]*xi[j];  */
@@ -473,12 +473,12 @@ label1000:
       this->ireturn=-1;
       return;
     }
-    this->gam=this->dgg/this->gg;
+    this->gam = this->dgg/this->gg;
     {
-      for (int j=1;j<=n;j++)
+      for (int j = 1;j<=n;j++)
       {
         g[j] = -xi[j]; // g seems to hold the negative gradient
-        xi[j]=h[j]=g[j]+this->gam*h[j];
+        xi[j] = h[j] = g[j]+this->gam*h[j];
       }
     }
 //  if (this->iter <= ITMAX) goto label1000;
@@ -510,30 +510,30 @@ double mylinmin( BOR_CONST double& fret, BOR_CONST double& Phi_i, BOR_CONST dvec
   {
     *(cs.theta) = theta1;
     *(cs.d)=*(cs.xi);
-    cs.rho_0=pow(2.,-cs.J)/norm(q_i);
-    cs.gamma=q_i* *(cs.d);
-    cs.lin_flag=1;
-    *(cs.extx)=theta+cs.rho_0* *(cs.d);
+    cs.rho_0 = pow(2.,-cs.J)/norm(q_i);
+    cs.gamma = q_i* *(cs.d);
+    cs.lin_flag = 1;
+    *(cs.extx) = theta+cs.rho_0* *(cs.d);
   }
   return 0;
 label1:
   {
-    cs.lin_flag=0;
-    cs.Psi_0=cs.extf;
+    cs.lin_flag = 0;
+    cs.Psi_0 = cs.extf;
     *(cs.g2)=*(cs.extg);
 
-    //double rho_star=gamma*rho_0*rho_0/(2*(gamma*rho_0+Phi_i-Psi_0));
+    // double rho_star = gamma*rho_0*rho_0/(2*(gamma*rho_0+Phi_i-Psi_0));
 
-    cs.ext_flag=0;
-    cs.int_flag=0;
+    cs.ext_flag = 0;
+    cs.int_flag = 0;
     cs.dir_deriv=*(cs.d)* *(cs.g2);
-    cs.left_bracket_value=Phi_i;
-    *(cs.left_bracket_gradient)=q_i;
-    cs.left_bracket=0;
+    cs.left_bracket_value = Phi_i;
+    *(cs.left_bracket_gradient) = q_i;
+    cs.left_bracket = 0;
   }
 
 
-  //cout << "Check " << cs.Psi_0 << " " << Phi_i << "  " << cs.dir_deriv << "\n";
+  // cout << "Check " << cs.Psi_0 << " " << Phi_i << "  " << cs.dir_deriv << "\n";
 
   if (!(cs.Psi_0 < Phi_i && cs.dir_deriv < 0)) goto label555;
   // Extrapolate to get a right bracket
@@ -557,31 +557,31 @@ label1:
     else
     {
       {
-       cs.lin_flag=2;
-       *(cs.extx)=theta+cs.rho_1* *(cs.d);
-       //extx=theta+rho_1*d;
+       cs.lin_flag = 2;
+       *(cs.extx) = theta+cs.rho_1* *(cs.d);
+       // extx = theta+rho_1*d;
       }
       return 0;
     label2:
-      cs.lin_flag=0;
-      //Psi_1=fcomp(theta+rho_1*d,grad);
-      cs.Psi_1=cs.extf;
+      cs.lin_flag = 0;
+      // Psi_1 = fcomp(theta+rho_1*d,grad);
+      cs.Psi_1 = cs.extf;
       *(cs.grad)= *(cs.extg);
     }
     goto label100;
 
-  //label120:
-  //  int itemp=1;
+  // label120:
+  //  int itemp = 1;
 
 label555:
-  //else
+  // else
   // We have a bracket
   {
 #ifdef DIAG
         cerr << "We have a right bracket\n";
 #endif
-     cs.right_bracket=cs.rho_0;
-     cs.right_bracket_value=cs.Psi_0;
+     cs.right_bracket = cs.rho_0;
+     cs.right_bracket_value = cs.Psi_0;
      *(cs.right_bracket_gradient)=*(cs.g2);
   }
  label120:
@@ -592,8 +592,8 @@ label555:
   {
   label1100:
    {
-    //cout << "Intrap\n";
-    cs.rho_i=do_interpolate(fret,cs.left_bracket,cs.left_bracket_value,
+    // cout << "Intrap\n";
+    cs.rho_i = do_interpolate(fret,cs.left_bracket,cs.left_bracket_value,
       *(cs.left_bracket_gradient),cs.right_bracket,cs.right_bracket_value,
       *(cs.right_bracket_gradient),theta,*(cs.d),cs.J,cs.ifn,cs.crit1,
       cs.int_flag,cs.rho_1,cs.Psi_1,*(cs.grad) );
@@ -605,23 +605,23 @@ label555:
     else
     {
      {
-      cs.lin_flag=3;
-      *(cs.extx)=theta+cs.rho_1* *(cs.d) ;
+      cs.lin_flag = 3;
+      *(cs.extx) = theta+cs.rho_1* *(cs.d) ;
      }
       return 0;
     label3:
-      cs.lin_flag=0;
-      //Psi_1=fcomp(theta+rho_1*d,grad);
-      cs.Psi_1=cs.extf;
+      cs.lin_flag = 0;
+      // Psi_1 = fcomp(theta+rho_1*d,grad);
+      cs.Psi_1 = cs.extf;
       *(cs.grad)=*(cs.extg);
     }
     goto label1100;
 
   label1120:
-    int itemp=1;;
+    int itemp = 1;;
 
   }
-  theta=theta+cs.rho_i* *(cs.d) ;
+  theta = theta+cs.rho_i* *(cs.d) ;
   return cs.converge_flag;
 }
 
@@ -636,12 +636,12 @@ double do_interpolate( BOR_CONST double& fret, BOR_CONST double& left_bracket,
   long int& ifn, BOR_CONST double& crit1,
   int& int_flag,BOR_CONST double& rho_1, BOR_CONST double& Psi_2, BOR_CONST dvector& g1)
 {
-  double rho_min=1.e-10;
+  double rho_min = 1.e-10;
   int& J = (int&) _J;
   static double rho_star;
   static double dir_deriv;
-  //double Psi_2;
-  //dvector g1(1,d.size());
+  // double Psi_2;
+  // dvector g1(1,d.size());
   static double gamma;
   static double gamma1;
   static double rho_0;
@@ -650,11 +650,11 @@ double do_interpolate( BOR_CONST double& fret, BOR_CONST double& left_bracket,
 label120:
   // do
   //{
-    gamma=left_bracket_gradient*d;
+    gamma = left_bracket_gradient*d;
 #ifdef CUBIC_INTERPOLATION
-      gamma1=right_bracket_gradient*d;
+      gamma1 = right_bracket_gradient*d;
 #endif
-    rho_0=right_bracket-left_bracket;
+    rho_0 = right_bracket-left_bracket;
 
 
 #ifdef DIAG
@@ -670,22 +670,22 @@ label120:
 
     if (gamma==0.0)
     {
-      rho_star=0.;
+      rho_star = 0.;
     }
     else
     {
 #ifdef CUBIC_INTERPOLATION
-        rho_star=cubic_interpolation(left_bracket,right_bracket,
+        rho_star = cubic_interpolation(left_bracket,right_bracket,
           left_bracket_value,right_bracket_value,gamma,gamma1);
 #else
-        double step=gamma*rho_0*rho_0/
+        double step = gamma*rho_0*rho_0/
           (2*(gamma*rho_0+left_bracket_value-right_bracket_value));
-         // rho_star=left_bracket+gamma*rho_0*rho_0/
+         // rho_star = left_bracket+gamma*rho_0*rho_0/
 	 //(2*(gamma*rho_0+left_bracket_value-right_bracket_value));
-         double width=right_bracket-left_bracket;
+         double width = right_bracket-left_bracket;
          if (step<.25*width)step=.25*width;
          if (step>.75*width)step=.75*width;
-         rho_star=left_bracket+step;
+         rho_star = left_bracket+step;
 
 #endif
     }
@@ -705,18 +705,18 @@ label120:
     {
       return rho_min;
     }
-    int_flag=1;
-    rho_1=rho_star;
+    int_flag = 1;
+    rho_1 = rho_star;
     return rho_min;
 label200:
-    int_flag=0;
-    rho_1=rho_star;
-    //Psi_2=fcomp(theta+rho_star*d,g1);
-    //J+=1;
+    int_flag = 0;
+    rho_1 = rho_star;
+    // Psi_2 = fcomp(theta+rho_star*d,g1);
+    // J+=1;
 
-    dir_deriv=d*g1;
+    dir_deriv = d*g1;
 
-    //cout << "Check2 " << Psi_2 << " " << left_bracket_value << "  " <<
+    // cout << "Check2 " << Psi_2 << " " << left_bracket_value << "  " <<
     //   d*g1 << "\n";
 
     if (Psi_2 < left_bracket_value && (d*g1) < 0)
@@ -728,8 +728,8 @@ label200:
 #endif
 
       left_bracket =rho_star;
-      left_bracket_value=Psi_2;
-      left_bracket_gradient=g1;
+      left_bracket_value = Psi_2;
+      left_bracket_gradient = g1;
 
 #ifdef DIAG
         cout << " After interpolation -- new left side\n";
@@ -744,8 +744,8 @@ label200:
         bracket_report( theta,left_bracket,right_bracket,d);
 #endif
       right_bracket =rho_star;
-      right_bracket_value=Psi_2;
-      right_bracket_gradient=g1;
+      right_bracket_value = Psi_2;
+      right_bracket_gradient = g1;
 
 
 #ifdef DIAG
@@ -754,10 +754,10 @@ label200:
 #endif
     }
 
-  //while (dir_deriv > crit1
+  // while (dir_deriv > crit1
   //   && (right_bracket-left_bracket)> 1.e-10);
 
-   double cos_theta=d*g1/(norm(d)*norm(g1));
+   double cos_theta = d*g1/(norm(d)*norm(g1));
 #ifdef DIAG
      cerr << " The cosine of angle between the search direction and \n"
        " the gradient is " << cos_theta << "\n";
@@ -788,7 +788,7 @@ label200:
 #endif
 
 
-  fret=Psi_2;
+  fret = Psi_2;
   return rho_star;
 }
 
@@ -803,34 +803,34 @@ void do_extrapolate( BOR_CONST double& left_bracket, BOR_CONST double& left_brac
   int& ext_flag,BOR_CONST double& rho_1, BOR_CONST double& rf, BOR_CONST dvector& g1)
 {
   if (ext_flag==1) goto label1500;
-  J=J/2;
-  rho_1=4.*rho_0;
-  //dvector g1(1,d.size());
+  J = J/2;
+  rho_1 = 4.*rho_0;
+  // dvector g1(1,d.size());
 #ifndef __NDPX__
   double Psi_1;
 #endif
 label1000:
-    ext_flag=1;
+    ext_flag = 1;
     return;
 label1500:
 #ifdef __NDPX__
   double Psi_1;
 #endif
-    ext_flag=0;
-    //Psi_1=fcomp(theta+rho_1*d,g1);
-    Psi_1=rf;
+    ext_flag = 0;
+    // Psi_1 = fcomp(theta+rho_1*d,g1);
+    Psi_1 = rf;
     ifnex++;
     if (Psi_1 >= left_bracket_value || d*g1 >0) goto label2000;
-    left_bracket_value=Psi_1;
-    left_bracket_gradient=g1;
-    left_bracket=rho_1;
-    rho_1=4*rho_1;
+    left_bracket_value = Psi_1;
+    left_bracket_gradient = g1;
+    left_bracket = rho_1;
+    rho_1 = 4*rho_1;
     goto label1000;
 label2000:
 
-  right_bracket=rho_1;
-  right_bracket_value=Psi_1;
-  right_bracket_gradient=g1;
+  right_bracket = rho_1;
+  right_bracket_value = Psi_1;
+  right_bracket_gradient = g1;
 }
 
 /**
@@ -840,13 +840,13 @@ label2000:
 void  bracket_report( BOR_CONST dvector& theta, BOR_CONST double& left_bracket,
   double& right_bracket, BOR_CONST dvector& d)
 {
-  double f=0;
-  double fp1=0;
-  double fp2=0;
+  double f = 0;
+  double fp1 = 0;
+  double fp2 = 0;
   dvector g(1,d.size());
   dvector u(1,d.size());
   ivector ii(1,3);
-  int one=1;
+  int one = 1;
   ii.fill_seqadd(one,one);
 
 #ifdef DIAG
@@ -863,56 +863,56 @@ void  bracket_report( BOR_CONST dvector& theta, BOR_CONST double& left_bracket,
 double cubic_interpolation( BOR_CONST double& u, BOR_CONST double& v, BOR_CONST double& aa, BOR_CONST double& bb,
   double& ap, BOR_CONST double& bp)
 {
-  //cout <<"Begin cube\n";
+  // cout <<"Begin cube\n";
   dmatrix M(1,4,1,4);
 
-  M(1,1)=1;M(2,1)=0;M(3,1)=1;M(4,1)=0; // First column
+  M(1,1) = 1;M(2,1) = 0;M(3,1) = 1;M(4,1) = 0; // First column
 
-  M(1,2)=u;M(2,2)=1;M(3,2)=v;M(4,2)=1; // Second column
+  M(1,2) = u;M(2,2) = 1;M(3,2) = v;M(4,2) = 1; // Second column
 
-  for (int i=3;i<=4;i++)
+  for (int i = 3;i<=4;i++)
   {
-    M(1,i)=u*M(1,i-1);
-    M(2,i)=(i-1)*M(1,i-1);
-    M(3,i)=v*M(3,i-1);
-    M(4,i)=(i-1)*M(3,i-1);
+    M(1,i) = u*M(1,i-1);
+    M(2,i) = (i-1)*M(1,i-1);
+    M(3,i) = v*M(3,i-1);
+    M(4,i) = (i-1)*M(3,i-1);
   }
 
   dvector d(1,4);
-  d(1)=aa;
-  d(2)=ap;
-  d(3)=bb;
-  d(4)=bp;
+  d(1) = aa;
+  d(2) = ap;
+  d(3) = bb;
+  d(4) = bp;
 
   dvector e = inv(M)*d;
   double a,b,c;
 
-  a=3*e(4);
-  b=2*e(3);
-  c=e(2);
+  a = 3*e(4);
+  b = 2*e(3);
+  c = e(2);
 
   double q;
   if (a !=0)
   {
     if (b>0)
     {
-      double y=b*b-4*a*c;
+      double y = b*b-4*a*c;
       if (y<0) return (u+v)/2.;
       q=-.5*(b+sqrt(y));
     }
     else
     {
-      double y=b*b-4*a*c;
+      double y = b*b-4*a*c;
       if (y<0) return (u+v)/2.;
       q=-.5*(b-sqrt(b*b-4*a*c));
     }
     double x1,x2;
-    x1=q/a;       // x1 and x2 are the two roots of the quadratic
-    x2=c/q;       // equation that is the max andmin of the cubic
+    x1 = q/a;       // x1 and x2 are the two roots of the quadratic
+    x2 = c/q;       // equation that is the max andmin of the cubic
                   // polynomial
     double sgn1,sgn2;
-    sgn1=b+2*a*x1;
-    sgn2=b+2*a*x2;
+    sgn1 = b+2*a*x1;
+    sgn2 = b+2*a*x2;
     if (sgn1>0)
     {
       return x1;
@@ -927,7 +927,7 @@ double cubic_interpolation( BOR_CONST double& u, BOR_CONST double& v, BOR_CONST 
     // coeffcient of the quadratic term = 0
     return -c/b;
   }
-    //cout <<"end cube\n";
+    // cout <<"end cube\n";
 }
 
 #undef CUBIC_INTERPOLATION
@@ -939,41 +939,41 @@ double cubic_interpolation( BOR_CONST double& u, BOR_CONST double& v, BOR_CONST 
 fmmc::fmmc(BOR_CONST int& n)
 {
   ctlc_flag = 0;
-  maxfn=500;
-  lin_flag=0;
-  ext_flag=0;
-  int_flag=0;
-  ifnex=0;
-  frp_flag=0;
-  quit_flag=0;
+  maxfn = 500;
+  lin_flag = 0;
+  ext_flag = 0;
+  int_flag = 0;
+  ifnex = 0;
+  frp_flag = 0;
+  quit_flag = 0;
   #ifdef __ZTC__
-    scroll_flag=0;
+    scroll_flag = 0;
   #else
-    scroll_flag=1;
+    scroll_flag = 1;
   #endif
-  crit=1.e-4;
-  crit1=1.e-2;
-  min_improve=1.e-6;
-  ireturn=0;
-  iprint=1;
-  imax=30;
-  ihang=0;
-  iter=0;
-  ifn=0;
-  left_bracket_gradient=new dvector(1,n);
-  right_bracket_gradient=new dvector(1,n);
-  funval=new dvector(1,10);
-  g=new dvector(1,n);
-  h=new dvector(1,n);
-  xi=new dvector(1,n);
-  d=new dvector(1,n);
-  extx=new dvector(1,n);
-  g2=new dvector(1,n);
-  grad=new dvector(1,n);
-  extg=new dvector(1,n);
-  theta=new dvector(1,n);
-  xbest=new dvector(1,n);
-  gbest=new dvector(1,n);
+  crit = 1.e-4;
+  crit1 = 1.e-2;
+  min_improve = 1.e-6;
+  ireturn = 0;
+  iprint = 1;
+  imax = 30;
+  ihang = 0;
+  iter = 0;
+  ifn = 0;
+  left_bracket_gradient = new dvector(1,n);
+  right_bracket_gradient = new dvector(1,n);
+  funval = new dvector(1,10);
+  g = new dvector(1,n);
+  h = new dvector(1,n);
+  xi = new dvector(1,n);
+  d = new dvector(1,n);
+  extx = new dvector(1,n);
+  g2 = new dvector(1,n);
+  grad = new dvector(1,n);
+  extg = new dvector(1,n);
+  theta = new dvector(1,n);
+  xbest = new dvector(1,n);
+  gbest = new dvector(1,n);
 }
 
 /**
@@ -1004,7 +1004,7 @@ fmmc::~fmmc(void)
  */
 void derch(BOR_CONST double& f,BOR_CONST dvector& _x,BOR_CONST dvector& _gg,int n,BOR_CONST int & _ireturn)
 {
-  int& ireturn=(int&) _ireturn;
+  int& ireturn = (int&) _ireturn;
   dvector& x = (dvector&) _x;
   dvector& gg = (dvector&) _gg;
   static long int i, n1 ,n2;
@@ -1012,15 +1012,15 @@ void derch(BOR_CONST double& f,BOR_CONST dvector& _x,BOR_CONST dvector& _gg,int 
   static double s, f1, f2, g2, xsave;
   static long int j = 1;
   static int si;
-  si=gg.indexmax();
+  si = gg.indexmax();
   static dvector g(1,si);
 
   if (ireturn == 4 ) goto label4;
   else if (ireturn == 5) goto label5;
-  g=gg;
+  g = gg;
   while (j > 0)
   {
-    //cout << "\nEntering derivative checker.\n";
+    // cout << "\nEntering derivative checker.\n";
     cout << "\n Enter index (1 ... "<< n <<") of derivative to check.";
     cout << "  To check all derivatives, enter 0: ";
     cin >> j;
@@ -1041,25 +1041,25 @@ void derch(BOR_CONST double& f,BOR_CONST dvector& _x,BOR_CONST dvector& _gg,int 
 
     if (s <= 0) ad_exit(0);
 
-    for (i=n1; i<=n2; i++)
+    for (i = n1; i<=n2; i++)
     {
-      xsave=x(i);
-      x(i)=xsave+s;
+      xsave = x(i);
+      x(i) = xsave+s;
       fsave = f;
       ireturn = 4; // fgcomp(&f1,x,g1,n, params, vars);
       return;
 
     label4:
       f1 = f;
-      x(i)=xsave-s;
-      ireturn= 5; //fgcomp(&f2,x,g1,n, params, vars);
+      x(i) = xsave-s;
+      ireturn= 5; // fgcomp(&f2,x,g1,n, params, vars);
       return;
 
     label5:
       f2 = f;
       f = fsave;
-      x(i)=xsave;
-      g2=(f1-f2)/(2.*s);
+      x(i) = xsave;
+      g2 = (f1-f2)/(2.*s);
 
       if (ad_printf) (*ad_printf)("  %12.5e  %12.5e  %12.5e  %12.5e ; %5d \n",
               x(i), f, g(i), g2, i);

@@ -35,18 +35,18 @@ void double_qsort2(double *arr, int *arr2, unsigned n)
  * \param NSTACK Not used.
  * \return dvector object containing the input vector sorted in ascending order.
  *
- * \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
+ * \n\n Adopted from the GNU C Library. http:// www.corpit.ru/mjt/qsort.html
  */
 dvector sort(_CONST dvector & v, int NSTACK)
 {
-   int lb=v.indexmin();
-   int ub=v.indexmax();
-   int size=v.size();
+   int lb = v.indexmin();
+   int ub = v.indexmax();
+   int size = v.size();
 
    double *doublearray;
    doublearray = new double[size];
    int i;
-   for(i=0;i<size;i++)
+   for(i = 0;i<size;i++)
    {
       doublearray[i] = v(lb+i);
    }
@@ -54,7 +54,7 @@ dvector sort(_CONST dvector & v, int NSTACK)
    double_qsort(doublearray,size);
 
    dvector arr(lb, ub);
-   for(i=0;i<size;i++) {
+   for(i = 0;i<size;i++) {
       arr(lb+i) = doublearray[i];
    }
 
@@ -70,7 +70,7 @@ dvector sort(_CONST dvector & v, int NSTACK)
  * \param NSTACK Not used.
  * \return ivector object containing the input vector sorted in ascending order.
  *
- * \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
+ * \n\n Adopted from the GNU C Library. http:// www.corpit.ru/mjt/qsort.html
  */   
 dvector sort(_CONST dvector & _v, BOR_CONST ivector & _index, int NSTACK)
 {
@@ -84,9 +84,9 @@ dvector sort(_CONST dvector & _v, BOR_CONST ivector & _index, int NSTACK)
       ad_exit(1);
    }
 
-   int lb=v.indexmin();
-   int ub=v.indexmax();
-   int size=v.size();
+   int lb = v.indexmin();
+   int ub = v.indexmax();
+   int size = v.size();
 
    double *doublearray = new double[size];
    for(int i = 0;i < size; i++)
@@ -95,7 +95,7 @@ dvector sort(_CONST dvector & _v, BOR_CONST ivector & _index, int NSTACK)
    }
 
    int *intarray = new int[size];
-   for(int i=0;i<size;i++)
+   for(int i = 0;i<size;i++)
    {
       intarray[i] = lb + i;
    }

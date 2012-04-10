@@ -577,7 +577,7 @@ uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST prevariable& z);
 
 ostream& setscientific(BOR_CONST ostream& s);
 
-//ostream& setshowpoint(BOR_CONST ostream& s);
+// ostream& setshowpoint(BOR_CONST ostream& s);
 
 /**
  * Description not yet available.
@@ -702,7 +702,7 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
 #if defined(USE_VECTOR_SHAPE_POOL)
     static vector_shape_pool * xpool;
     void * operator new(size_t);
-    void operator delete(void * ptr,size_t n)
+    void operator delete(void * ptr, size_t)
     {  xpool->free(ptr); }
 #endif
     unsigned int ncopies;
@@ -711,7 +711,7 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
     int index_max;
   private:
     friend class dvector;
-    //friend class tdvector;
+    // friend class tdvector;
     friend class subdvector;
     friend class dvar_vector;
     friend class ivector;
@@ -721,7 +721,7 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
     int decr_ncopies(void) {return --ncopies;}
     int get_ncopies(void) {return ncopies;}
     int incr_ncopies(void) {return ++ncopies;}
-    vector_shape(int lb, int lu) {index_min=lb;index_max=lu;ncopies=0;}
+    vector_shape(int lb, int lu) {index_min = lb;index_max = lu;ncopies = 0;}
     int indexmin(){return index_min;}
     int indexmax(){return index_max;}
   };
@@ -746,11 +746,11 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
     ptr_vector( int ncl,  int ncu);
     ptr_vector();
     void allocate(int,int);
-    //operator void ** ();
+    // operator void ** ();
    ~ptr_vector();
     void*& operator[] (int i);
     void*& operator() (int i);
-    //void*& elem(int i);
+    // void*& elem(int i);
     void*& elem(int i) { return(*(v+i)); }
     int operator ! (void) _CONST {return (shape == NULL);}
     int operator () (void) _CONST {return (shape != NULL);}
@@ -769,7 +769,7 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
     ivector * p;
     int lb;
     int ub;
-    inline preivector(ivector * _p,int _lb,int _ub) {p=_p;lb=_lb,ub=_ub;}
+    inline preivector(ivector * _p,int _lb,int _ub) {p = _p;lb = _lb,ub = _ub;}
     friend class ivector;
   };
 
@@ -812,8 +812,8 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
     int size() _CONST {return index_max - index_min+1;} // returns the maximum allowable index
     int * get_v(void) _CONST {return v;}
     ivector& shift(int min);
-    //ivector(unsigned int sz); //makes an array [0..sz]
-    //inline allocated(void) {return ::allocated(this);}
+    // ivector(unsigned int sz); // makes an array [0..sz]
+    // inline allocated(void) {return ::allocated(this);}
     ivector(_CONST lvector&);
     ivector(void);
 
@@ -839,7 +839,7 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
       void deallocate(void);
       void safe_deallocate(void);
 
-    //operator int* () {return v;}
+    // operator int* () {return v;}
 
    ~ivector();
 
@@ -949,7 +949,7 @@ public:
     void fill_multinomial(BOR_CONST int& seed,_CONST dvector& p);
     void fill_multinomial(BOR_CONST random_number_generator& rng,_CONST dvector& p);
 
-    //lvector(unsigned int sz); //makes an array [0..sz]
+    // lvector(unsigned int sz); // makes an array [0..sz]
 
     lvector(_CONST lvector&);
 
@@ -1050,7 +1050,7 @@ private:
       static dvariable ** RETURN_PTR_CONTAINER;
       static long int TOTAL_BYTES;
       static long int PREVIOUS_TOTAL_BYTES;
-      static unsigned long ARRAY_MEMBLOCK_SIZE; //js
+      static unsigned long ARRAY_MEMBLOCK_SIZE; // js
       static humungous_pointer ARRAY_MEMBLOCK_BASE;
       static humungous_pointer ARRAY_MEMBLOCK_BASEA;
       static humungous_pointer ARRAY_MEMBLOCK_SAVE;
@@ -1090,9 +1090,9 @@ private:
       static int Hybrid_bounded_flag;
       static double * hessian_ptr;
       static int get_USE_FOR_HESSIAN(void) {return USE_FOR_HESSIAN;}
-      static void set_USE_FOR_HESSIAN(int i) {USE_FOR_HESSIAN=i;}
+      static void set_USE_FOR_HESSIAN(int i) {USE_FOR_HESSIAN = i;}
       friend class dfsdmat;
-      gradient_structure(long int size=100000L);  // constructor
+      gradient_structure(long int size = 100000L);  // constructor
       ~gradient_structure(void); // destructor
       static void save_variables(void);
       static void restore_variables(void);
@@ -1101,18 +1101,18 @@ private:
       static long int totalbytes(void);
       friend dvector restore_dvar_vector_value(BOR_CONST dvar_vector_position& tmp);
       friend void cleanup_temporary_files();
-      //friend dvector restore_dvar_vector_value(BOR_CONST dvar_vector_position&);
+      // friend dvector restore_dvar_vector_value(BOR_CONST dvar_vector_position&);
       friend dvector restore_dvar_vector_derivatives(void);
       friend dmatrix restore_dvar_matrix_derivatives(void);
       friend dmatrix restore_dvar_matrix_value(void);
-      //friend dmatrix restore_derivatives(void);
+      // friend dmatrix restore_derivatives(void);
       friend void gradfree(dlink * v);
-      friend double_and_int * arr_new(unsigned int sz); //js
+      friend double_and_int * arr_new(unsigned int sz); // js
       friend void arr_free(double_and_int *);
       friend void RETURN_ARRAYS_DECREMENT(void);
       friend void RETURN_ARRAYS_INCREMENT(void);
       friend void make_indvar_list(_CONST dvar_vector& t);
-      //friend void gradcalc( int , double *);
+      // friend void gradcalc( int , double *);
       friend void gradcalc(int nvar,BOR_CONST dvector& g);
       friend void slave_gradcalc(void);
       friend void funnel_gradcalc(void);
@@ -1123,19 +1123,19 @@ private:
       friend double_and_int * gradnew();
       static dlist * GRAD_LIST;
       static int RETURN_ARRAYS_SIZE;
-      //static int RETURN_INDEX;
+      // static int RETURN_INDEX;
       static dvariable * RETURN_PTR;
       static dvariable * MIN_RETURN;
       static dvariable * MAX_RETURN;
       static arr_list * ARR_LIST1;
       static arr_list * ARR_FREE_LIST1;
-      //static void funnel_jacobcalc(void);
+      // static void funnel_jacobcalc(void);
       static void jacobcalc(int nvar,BOR_CONST dmatrix& jac);
       static void jacobcalc(int nvar,BOR_CONST ofstream& jac);
       static void jacobcalc(int nvar,BOR_CONST uostream& jac);
 
       friend void default_evaluation(void);
-      //access functions
+      // access functions
 
       friend class DF_FILE;
       static DF_FILE * get_fp(void){return fp;}
@@ -1146,10 +1146,10 @@ private:
      #endif
       static void set_YES_SAVE_VARIABLES_VALUES();
       static void set_NO_SAVE_VARIABLES_VALUES();
-      //static int _GRADFILE_PTR; // should be int gradfile_handle;
-      //static int _GRADFILE_PTR1; // should be int gradfile_handle;
-      //static int _GRADFILE_PTR2; // should be int gradfile_handle;
-      //static int _VARSSAV_PTR; // should be int gradfile_handle;
+      // static int _GRADFILE_PTR; // should be int gradfile_handle;
+      // static int _GRADFILE_PTR1; // should be int gradfile_handle;
+      // static int _GRADFILE_PTR2; // should be int gradfile_handle;
+      // static int _VARSSAV_PTR; // should be int gradfile_handle;
       static void set_NUM_DEPENDENT_VARIABLES(int i);
       static void set_RETURN_ARRAYS_SIZE(int i);
       static void set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
@@ -1210,11 +1210,11 @@ private:
       inline double_and_int * get_address()
       {
         return &di;
-      } //access function
+      } // access function
 
-      //friend tempvar();
-      //friend class prevariable;
-      //friend class tempvar;
+      // friend tempvar();
+      // friend class prevariable;
+      // friend class tempvar;
       friend class dlist;
       friend void gradcalc(int nvar,BOR_CONST dvector& g);
       friend void slave_gradcalc(void);
@@ -1242,7 +1242,7 @@ private:
       dlist();  // constructor
       void check_list(void);  // check list integrity
      ~dlist();  // destructor
-      dlink * create();     //create a new link 
+      dlink * create();     // create a new link 
       void free_remove(dlink * rem);
       dlink * append(dlink *);  // add a link
       dlink* last_remove();
@@ -1254,7 +1254,7 @@ private:
       friend void gradient_structure::save_variables();
       friend void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& jac);
       friend void allocate_dvariable_space(void);
-      //friend void gradient_structure::funnel_jacobcalc(void);
+      // friend void gradient_structure::funnel_jacobcalc(void);
       friend void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& jac);
       friend void gradient_structure::jacobcalc(int nvar,BOR_CONST uostream& jac);
       friend void funnel_derivatives(void);
@@ -1282,7 +1282,7 @@ private:
       friend void default_evaluation(void);
       friend class grad_stack;
       friend void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& jac);
-      //friend void gradient_structure::funnel_jacobcalc(void);
+      // friend void gradient_structure::funnel_jacobcalc(void);
     };
     void default_evaluation3ind(void);
 
@@ -1305,7 +1305,7 @@ private:
     public:
       grad_stack_entry * ptr;
     private:
-      //lvector * table;
+      // lvector * table;
       // js
       int _GRADFILE_PTR; // should be int gradfile_handle;
       int _GRADFILE_PTR1; // should be int gradfile_handle;
@@ -1344,8 +1344,8 @@ private:
       void write_grad_stack_buffer(void);
 
        void set_gradient_stack(void (* func) (void),
-	 double * dep_addr,double * ind_addr1=NULL, double mult1=0,
-	 double * ind_addr2=NULL, double mult2=0);
+	 double * dep_addr,double * ind_addr1 = NULL, double mult1 = 0,
+	 double * ind_addr2 = NULL, double mult2 = 0);
 
        void set_gradient_stack(void (* func) (void),
 	 double * dep_addr,double * ind_addr1,double * ind_addr2);
@@ -1375,11 +1375,11 @@ private:
       int read_grad_stack_buffer(my_off_t& lpos);
       void set_gradient_stack(void (*ptr)(void));
       void set_gbuffer_pointers(void);
-       //js
+       // js
       void increment_current_gradfile_ptr(void);
       int decrement_current_gradfile_ptr(void);
-      //void open_gradfile();
-      //void close_gradfile();
+      // void open_gradfile();
+      // void close_gradfile();
       #ifndef __MSC__
 	int& gradfile_handle();
       #else
@@ -1387,7 +1387,7 @@ private:
       #endif
       char* get_gradfile_name();
       friend class gradient_structure;
-      //int get_ngradfiles();
+      // int get_ngradfiles();
     }; // end of grad_stack
 
 
@@ -1405,7 +1405,7 @@ private:
 	{
       #endif
 #     if defined(MYDEBUG)
-          int wrote_buffer=0;
+          int wrote_buffer = 0;
 #     endif
 	  if (ptr > ptr_last)
 	  {
@@ -1413,7 +1413,7 @@ private:
 	     // and counter
 	     this->write_grad_stack_buffer();
 #     if defined(MYDEBUG)
-             wrote_buffer=1;
+             wrote_buffer = 1;
 #     endif
 	  }
 #     if defined(MYDEBUG)
@@ -1425,9 +1425,9 @@ private:
 	  ptr->func = func;
 	  ptr->dep_addr = dep_addr;
 	  ptr->ind_addr1 = ind_addr1;
-	  ptr->mult1=mult1;
+	  ptr->mult1 = mult1;
 	  ptr->ind_addr2 = ind_addr2;
-	  ptr->mult2=mult2;
+	  ptr->mult2 = mult2;
 	  ptr++;
       #ifdef NO_DERIVS
 	}
@@ -1460,9 +1460,9 @@ private:
 	  ptr->func = NULL;
 	  ptr->dep_addr = dep_addr;
 	  ptr->ind_addr1 = ind_addr1;
-	  ptr->mult1=mult1;
+	  ptr->mult1 = mult1;
 	  ptr->ind_addr2 = ind_addr2;
-	  ptr->mult2=mult2;
+	  ptr->mult2 = mult2;
 	  ptr++;
 	  if (ptr > ptr_last)
 	  {
@@ -1472,7 +1472,7 @@ private:
 	  }
 	  ptr->func = func;
 	  ptr->ind_addr1 = ind_addr3;
-	  ptr->mult1=mult3;
+	  ptr->mult1 = mult3;
 	  ptr++;
       #ifdef NO_DERIVS
 	}
@@ -1501,9 +1501,9 @@ private:
 	  ptr->func = NULL;
 	  ptr->dep_addr = dep_addr;
 	  ptr->ind_addr1 = ind_addr1;
-	  ptr->mult1=mult1;
+	  ptr->mult1 = mult1;
 	  ptr->ind_addr2 = ind_addr2;
-	  ptr->mult2=mult2;
+	  ptr->mult2 = mult2;
 	  ptr++;
 	  if (ptr > ptr_last)
 	  {
@@ -1513,9 +1513,9 @@ private:
 	  }
 	  ptr->func = func;
 	  ptr->ind_addr1 = ind_addr3;
-	  ptr->mult1=mult3;
+	  ptr->mult1 = mult3;
 	  ptr->ind_addr2 = ind_addr4;
-	  ptr->mult2=mult4;
+	  ptr->mult2 = mult4;
 	  ptr++;
       #ifdef NO_DERIVS
 	}
@@ -1569,7 +1569,7 @@ private:
           ptr->func = func;
           ptr->dep_addr = dep_addr;
           ptr->ind_addr1 = ind_addr1;
-          ptr->mult1=mult1;
+          ptr->mult1 = mult1;
           ptr++;
       #ifdef NO_DERIVS
         }
@@ -1622,7 +1622,7 @@ private:
 	  ptr->func = func;
 	  ptr->dep_addr = dep_addr;
 	  ptr->ind_addr1 = ind_addr1;
-	  ptr->mult1=mult1;
+	  ptr->mult1 = mult1;
           ptr++;
       #ifdef NO_DERIVS
         }
@@ -1742,8 +1742,8 @@ private:
 
           ptr->dep_addr = NULL;
           ptr->func = func;
-          ptr->ind_addr2 = NULL ;// want to put a long int                                            //into the memory space of a double
-          ptr->mult2=0;
+          ptr->ind_addr2 = NULL ;// want to put a long int                                            // into the memory space of a double
+          ptr->mult2 = 0;
           ptr++;
       #ifdef NO_DERIVS
         }
@@ -1785,7 +1785,7 @@ private:
     prevariable(void) { }
 #endif
 #ifndef __NDPX__
-    prevariable(double_and_int * u) {v=u;}
+    prevariable(double_and_int * u) {v = u;}
 #endif
 
   public:
@@ -1794,7 +1794,7 @@ private:
     friend class dvar_vector;
     friend class dvar_matrix;
     friend class dvar3_array;
-    //shclass sc;
+    // shclass sc;
     friend class indvar_offset_list;
     friend class gradient_structure;
     friend double_and_int * gradnew();
@@ -1806,7 +1806,7 @@ private:
 
     friend double * address(_CONST prevariable& v1);
 
-    //void gradfree(dlink * v)
+    // void gradfree(dlink * v)
 
     friend prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2);
 
@@ -1878,11 +1878,11 @@ private:
      }
    #endif
 
-   prevariable& operator=(_CONST prevariable&);
-   prevariable& operator=( double );
+   prevariable& operator = (_CONST prevariable&);
+   prevariable& operator = ( double );
 #if (__BORLANDC__  >= 0x0540) 
-   prevariable& operator=(_CONST prevariable&)_CONST ;
-   prevariable& operator=( double )_CONST ;
+   prevariable& operator = (_CONST prevariable&)_CONST ;
+   prevariable& operator = ( double )_CONST ;
 #endif
 
    int operator ==(_CONST prevariable& v1) _CONST;
@@ -1912,7 +1912,7 @@ private:
     prevariable(void) { }
 #endif
 #ifdef __NDPX__
-    prevariable(double_and_int * u) {v=u;}
+    prevariable(double_and_int * u) {v = u;}
 #endif
 
     void initialize(void);
@@ -1978,14 +1978,14 @@ private:
      dvariable(BOR_CONST int& t);
      dvariable(kkludge_object);
      dvariable(_CONST prevariable&);
-     dvariable& operator=(_CONST prevariable&);
+     dvariable& operator = (_CONST prevariable&);
      dvariable& operator = (const df1_one_variable& v);
      dvariable& operator = (const df1_two_variable& v);
      dvariable& operator = (const df1_three_variable& v);
-     dvariable& operator=( double);
+     dvariable& operator = ( double);
 #if defined(USE_DDOUBLE)
 #  undef double
-     dvariable& operator=( double);
+     dvariable& operator = ( double);
 #  define double dd_real
 #endif
      dvariable(_CONST dvariable&);
@@ -2009,7 +2009,7 @@ private:
   class funnel_dvariable : public dvariable
   {
   public:
-     dvariable& operator=(_CONST prevariable&);
+     dvariable& operator = (_CONST prevariable&);
   };
 
  // spreadsheet like element wise operations
@@ -2062,8 +2062,8 @@ private:
   dvar_matrix outer_prod(_CONST dvar_vector& t1 ,_CONST dvar_vector& t2 );
   dvar_matrix outer_prod(_CONST dvector& t1 ,_CONST dvar_vector& t2 );
   dvar_matrix outer_prod(_CONST dvar_vector& t1 ,_CONST dvector& t2 );
-  //double trace(_CONST dmatrix&);
-  //dvariable trace(_CONST dvar_matrix&);
+  // double trace(_CONST dmatrix&);
+  // dvariable trace(_CONST dvar_matrix&);
   dmatrix operator * ( double x,_CONST dmatrix& m);
   dmatrix operator * (_CONST dmatrix& m, double d);
   dmatrix operator / (_CONST dmatrix& m, double d);
@@ -2225,9 +2225,9 @@ private:
     ts_vector_shapex(int lb,int ub,void * p) : index_min(lb), 
       index_max(ub), ncopies(0), trueptr(p) {}
     void * get_truepointer(void){ return trueptr; }
-    //friend class dvector;
+    // friend class dvector;
     friend class ivector;
-    //friend class tdvector;
+    // friend class tdvector;
     friend class dvar_vector;
 
 #if defined(USE_VECTOR_SHAPE_POOL)
@@ -2265,12 +2265,12 @@ private:
     void * get_truepointer(void){ return trueptr; }
     friend class dvector;
     friend class ivector;
-    //friend class tdvector;
+    // friend class tdvector;
     friend class dvar_vector;
 #if defined(USE_VECTOR_SHAPE_POOL)
     static vector_shape_pool * xpool;
     void * operator new(size_t);
-    void operator delete(void * ptr,size_t n)
+    void operator delete(void * ptr,size_t)
     {  xpool->free(ptr); }
 #endif
     void shift(int min);
@@ -2299,7 +2299,7 @@ private:
     dvector * p;
     int lb;
     int ub;
-    inline predvector(dvector * _p,int _lb,int _ub) {p=_p;lb=_lb,ub=_ub;}
+    inline predvector(dvector * _p,int _lb,int _ub) {p = _p;lb = _lb,ub = _ub;}
     friend class dvector;
   };
 
@@ -2312,7 +2312,7 @@ private:
     dvar_vector * p;
     int lb;
     int ub;
-    inline predvar_vector(dvar_vector * _p,int _lb,int _ub) {p=_p;lb=_lb,ub=_ub;}
+    inline predvar_vector(dvar_vector * _p,int _lb,int _ub) {p = _p;lb = _lb,ub = _ub;}
     friend class dvar_vector;
   };
 
@@ -2351,7 +2351,7 @@ private:
     return predvector(this,lb,ub);
   }
   dvector(const predvector& pd);
-  //virtual void write_message(void) { cout << " This is a dvector" << endl; }
+  // virtual void write_message(void) { cout << " This is a dvector" << endl; }
   
   void fill_randpoisson(double lambda, BOR_CONST random_number_generator& rng);
   void fill_randnegbinomial(double lambda,double tau,
@@ -2419,7 +2419,7 @@ private:
     void allocate(const ad_integer&,const index_type&);
     dvector(void);
     dvector(_CONST dvector&);
-    //dvector(_CONST dvector&,int lb,int ub);
+    // dvector(_CONST dvector&,int lb,int ub);
 
     dvector(_CONST ivector&);
 
@@ -2434,7 +2434,7 @@ private:
 
     dvector(char * filename, const int& column);
 
-    //operator double* () { return v;}
+    // operator double* () { return v;}
 
    ~dvector();
 
@@ -2444,7 +2444,7 @@ private:
     void save_dvector_derivatives(void) _CONST;
     void save_dvector_value(void) _CONST;
 
-    //dvector operator()(int,int);
+    // dvector operator()(int,int);
     dvector operator()(_CONST lvector&);
     dvector operator ()(_CONST ivector& u);
 
@@ -2617,12 +2617,12 @@ double dmax(double i, double j);
     int row_max;
     int col_min;
     int col_max;
-    mat_shape(int rl,int ru,int cl=0,int cu=-1);
+    mat_shape(int rl,int ru,int cl = 0,int cu=-1);
     mat_shape(){};
     void colshift(int min);
     void rowshift(int min);
 
-    //friend class const_dmatrix;
+    // friend class const_dmatrix;
     friend class dmatrix;
     friend class sdmatrix;
     friend class dvar_matrix;
@@ -2640,8 +2640,8 @@ double dmax(double i, double j);
   public:
     void * trueptr;
     unsigned int ncopies;
-    mat_shapex(_CONST void * m) { trueptr=(void*)m;ncopies=0;}
-    mat_shapex(){trueptr=NULL;ncopies=0;};
+    mat_shapex(_CONST void * m) { trueptr = (void*)m;ncopies = 0;}
+    mat_shapex(){trueptr = NULL;ncopies = 0;};
 
     void * get_pointer (void) {return trueptr;}
     friend class dmatrix;
@@ -2681,7 +2681,7 @@ double dmax(double i, double j);
       unsigned long int get_last_offset() { return last_offset;}
       unsigned long int get_number_arr_links(){ return(number_arr_links);}
       unsigned long int get_max_last_offset() { return (max_last_offset);}
-      void reset_max_last_offset() {max_last_offset=0;}
+      void reset_max_last_offset() {max_last_offset = 0;}
       friend double_and_int * arr_new(unsigned int);
       friend void arr_free(double_and_int *);
       friend void arr_remove(arr_link **);
@@ -2699,7 +2699,7 @@ double dmax(double i, double j);
 #if defined(USE_VECTOR_SHAPE_POOL)
     static vector_shape_pool * xpool;
     void * operator new(size_t);
-    void operator delete(void * ptr,size_t n) 
+    void operator delete(void * ptr, size_t) 
     {  xpool->free(ptr); }
 #endif
        arr_link *          prev;
@@ -2795,7 +2795,7 @@ double dmax(double i, double j);
     dvar_vector(int ncl,int ncu); // makes an array [ncl..ncu]
     dvar_vector(int ncl,int ncu,kkludge_object);
 
-    //dvar_vector(const ad_integer&,const ad_integer&);
+    // dvar_vector(const ad_integer&,const ad_integer&);
     dvar_vector( unsigned int sz, double * x);
     dvar_vector(BOR_CONST independent_variables&);
     friend char* fform(const char*,_CONST dvar_vector& );
@@ -2856,12 +2856,12 @@ double dmax(double i, double j);
     _CONST double* initpointer(void) _CONST { return ((double *)(va+indexmin())); }
 #endif
     dvar_vector operator()(_CONST lvector&);
-    //dvar_vector operator()(int,int);
+    // dvar_vector operator()(int,int);
     dvar_vector operator ()(_CONST ivector& u);
     dvar_vector& operator+= (_CONST prevariable& d);
     dvar_vector& operator+= (double d);
     dvar_vector& operator/= (_CONST prevariable& d);
-    //dvar_vector& operator*= (_CONST dvariable& d);
+    // dvar_vector& operator*= (_CONST dvariable& d);
     dvar_vector& operator*= (_CONST prevariable& d);
     dvar_vector& operator*= ( double d);
     dvar_vector& operator/= ( double d);
@@ -2929,7 +2929,7 @@ double dmax(double i, double j);
     friend dvar_vector first_difference(_CONST dvar_vector&);
     friend dvar_vector second_difference(_CONST dvar_vector&);
 
-    //friend dvar_vector elem_div(_CONST dvar_vector& ,_CONST dvar_vector& ); // js, see above
+    // friend dvar_vector elem_div(_CONST dvar_vector& ,_CONST dvar_vector& ); // js, see above
 
     friend dvar_vector elem_prod(_CONST dvector& ,_CONST dvar_vector& );
 
@@ -2967,7 +2967,7 @@ double dmax(double i, double j);
  {
  public:
     funnel_dvar_vector(int l,int u);
-    dvar_vector& operator=(_CONST dvar_vector&);
+    dvar_vector& operator = (_CONST dvar_vector&);
  };
  */
 
@@ -3075,7 +3075,7 @@ friend class dvar3_array;
 
     dvar_matrix(_CONST dmatrix&);
 
-    //dvar_matrix(char *);
+    // dvar_matrix(char *);
 
    ~dvar_matrix();
 
@@ -3083,8 +3083,8 @@ friend class dvar3_array;
     void save_dvar_matrix_value(void) _CONST;
 
     void fill(const char *);
-    //void colfill(BOR_CONST int&n,...);
-    //void rowfill(BOR_CONST int&n,...);
+    // void colfill(BOR_CONST int&n,...);
+    // void rowfill(BOR_CONST int&n,...);
 
     void colfill_randu(BOR_CONST int&j,long int&n);
     void rowfill_randu(BOR_CONST int& i,long int& n);
@@ -3214,7 +3214,7 @@ friend class dvar3_array;
     friend dvariable det(_CONST dvar_matrix&);
     friend dvariable ln_det(const dvar_matrix&,const int& sgn);
 
-    //friend dvar_matrix testsub(dvar_matrix);
+    // friend dvar_matrix testsub(dvar_matrix);
 
     friend  dvar_matrix trans(_CONST dvar_matrix&);
 
@@ -3230,21 +3230,21 @@ dvariable ln_det(const dvar_matrix&);
 dvar_matrix operator * (const dvar_matrix& t1, double x);
 dmatrix value(_CONST dvar_matrix& m);
 d3_array value(_CONST dvar3_array& a);
-dvar_vector sort(_CONST dvar_vector&,int NSTACK=60);
-dvector sort(_CONST dvector&,int NSTACK=60);
-ivector sort(_CONST ivector&,int NSTACK=60);
-dvector sort(_CONST dvector&,BOR_CONST ivector& index,int NSTACK=60);
-ivector sort(_CONST ivector&,BOR_CONST ivector& index,int NSTACK=60);
-dmatrix sort(_CONST dmatrix&,int column,int NSTACK=60);
-imatrix sort(_CONST imatrix&,int column,int NSTACK=60);
+dvar_vector sort(_CONST dvar_vector&,int NSTACK = 60);
+dvector sort(_CONST dvector&,int NSTACK = 60);
+ivector sort(_CONST ivector&,int NSTACK = 60);
+dvector sort(_CONST dvector&,BOR_CONST ivector& index,int NSTACK = 60);
+ivector sort(_CONST ivector&,BOR_CONST ivector& index,int NSTACK = 60);
+dmatrix sort(_CONST dmatrix&,int column,int NSTACK = 60);
+imatrix sort(_CONST imatrix&,int column,int NSTACK = 60);
 
 
 #include "factors.h" 
 int count_factor(const dvector& v, const double& eps);
-ivector as_factor(const dvector& v, const double eps=1.0e-6);
+ivector as_factor(const dvector& v, const double eps = 1.0e-6);
 int count_factor(const ivector& v);
 
- //void gradcalc( int , double *);
+ // void gradcalc( int , double *);
  void gradcalc(int nvar,BOR_CONST dvector& g);
  void slave_gradcalc(void);
 
@@ -3285,7 +3285,7 @@ int count_factor(const ivector& v);
     void allocate(int nrl,int nrh);
     void allocate(ad_integer nrl,ad_integer nrh);
     void allocate(int nrl,int nrh,int ncl,const ivector& nch);
-    //void allocate(int nrl,int nrh,
+    // void allocate(int nrl,int nrh,
     // const index_type& ncl,const index_type& nch);
     void allocate(int nrl,int nrh,const ivector& ncl,int nch);
     void deallocate();
@@ -3325,7 +3325,7 @@ int count_factor(const ivector& v);
     void save_dmatrix_derivatives_na(BOR_CONST dvar_matrix_position& pos) _CONST;
     void save_dmatrix_value(void) _CONST;
     void save_dmatrix_position(void) _CONST;
-    //void save_dmatrix_derivatives(void);
+    // void save_dmatrix_derivatives(void);
 
     int indexmin(void) _CONST { return index_min;}
     int indexmax(void) _CONST { return index_max;}
@@ -3343,8 +3343,8 @@ int count_factor(const ivector& v);
     void read_from(BOR_CONST istream&);
     void read_from(BOR_CONST uistream&);
 
-    //void colfill(BOR_CONST int&n,...);
-    //void rowfill(BOR_CONST int&n,...);
+    // void colfill(BOR_CONST int&n,...);
+    // void rowfill(BOR_CONST int&n,...);
 
     void colfill_randu(BOR_CONST int&j,long int&n);
     void rowfill_randu(BOR_CONST int& i,long int& n);
@@ -3634,15 +3634,15 @@ imatrix restore_imatrix_value(BOR_CONST imatrix_position&);
     void initialize(void);
     friend class i3_array;
     void fill_seqadd(int,int);
-}; //end of class imatrix
+}; // end of class imatrix
 
 dvariable regression(_CONST dvector& obs,_CONST dvar_vector& pred);
 double regression(_CONST dvector& obs,_CONST dvector& pred);
 
 dvariable robust_regression_fixed(_CONST dvector& obs,_CONST dvar_vector& pred,
-  double a=0.7);
+  double a = 0.7);
 dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,
-  double a=0.7);
+  double a = 0.7);
 
 dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,_CONST dvariable& cutoff);
 
@@ -3780,14 +3780,14 @@ public:
   int disk_save;
 
 public:
-  fmm(int nvar,int disk_save=0);
-  fmm(int nvar,_CONST lvector& ipar,int disk_save=0);
+  fmm(int nvar,int disk_save = 0);
+  fmm(int nvar,_CONST lvector& ipar,int disk_save = 0);
   double minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&));
 
   double minimize(BOR_CONST independent_variables & x,BOR_CONST dvector& c,
         double (*pf)(BOR_CONST dvar_vector&,BOR_CONST dvector&) );
 
-  //void fmin(BOR_CONST double& f, BOR_CONST independent_variables & x,BOR_CONST dvector& g);
+  // void fmin(BOR_CONST double& f, BOR_CONST independent_variables & x,BOR_CONST dvector& g);
   void fmin(BOR_CONST double& f, const dvector& x,BOR_CONST dvector& g);
 
   dmatrix& hessian();
@@ -3828,7 +3828,7 @@ public:
   int n;
 
 public:
-  fmmt1(int nvar,int _xm=7);
+  fmmt1(int nvar,int _xm = 7);
   fmmt1(int nvar,_CONST lvector& ipar);
   double minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&));
 
@@ -3850,10 +3850,10 @@ void fmin( double f, BOR_CONST independent_variables & x,_CONST dvector& g,
             const int& n,_CONST dvector& w,_CONST dvector& h, BOR_CONST fmm_control & fmc);
 
 void fmmdisp(_CONST dvector& x,_CONST dvector& g, const int& nvar,
-             int scroll_flag,int noprintx=0);
+             int scroll_flag,int noprintx = 0);
 
 void fmmdisp(_CONST double * x,_CONST double * g, const int& nvar,
-             int scroll_flag,int noprintx=0);
+             int scroll_flag,int noprintx = 0);
 
 ostream& operator<<(BOR_CONST ostream& s, const fmm_control& fmc);
 
@@ -3876,7 +3876,7 @@ public:
   uostream(const char*, int = ios::out | ios::binary,
                        int protection= 666);
   void open(const char*, int = ios::out | ios::binary,
-                    int protection=666);
+                    int protection = 666);
 #endif
 #if defined (__MSVC32__) || defined (__WAT32__) 
 #  if (__MSVC32__ <7)
@@ -3886,9 +3886,9 @@ public:
                     int = filebuf::openprot);
 #  else
   uostream(const char*, int = ios::out | ios::binary,
-                       int prot=0664);
+                       int prot = 0664);
   void open(const char*, int = ios::out | ios::binary,
-                    int prot=0664);
+                    int prot = 0664);
 #  endif
 #endif
 
@@ -3903,22 +3903,22 @@ public:
 #endif
 
 #ifdef __SUN__
-  //uostream(const char*, int = ios::out, int = openprot);
-  //void open(const char*, int = ios::out, int = openprot);
+  // uostream(const char*, int = ios::out, int = openprot);
+  // void open(const char*, int = ios::out, int = openprot);
 #endif
 
 #if defined(__GNUDOS__) 
 #  if !defined(__ADSGI__)
 #    if (__GNUC__  < 3) && !defined(__SUNPRO_CC) 
-  uostream(const char* name, int mode = ios::out | ios::bin,int prot=0664);
-  void open(const char* name, int mode = ios::out | ios::bin,int prot=0664);
+  uostream(const char* name, int mode = ios::out | ios::bin,int prot = 0664);
+  void open(const char* name, int mode = ios::out | ios::bin,int prot = 0664);
 #    else  
-  uostream(const char* name, int mode = ios::out | ios::binary,int prot=0664);
-  void open(const char* name, int mode = ios::out | ios::binary,int prot=0664);
+  uostream(const char* name, int mode = ios::out | ios::binary,int prot = 0664);
+  void open(const char* name, int mode = ios::out | ios::binary,int prot = 0664);
 #    endif
 #  else
-  uostream(const char* name, int mode = ios::out,int prot=0664);
-  void open(const char* name, int mode = ios::out,int prot=0664);
+  uostream(const char* name, int mode = ios::out,int prot = 0664);
+  void open(const char* name, int mode = ios::out,int prot = 0664);
 #  endif
 #endif
 
@@ -3973,7 +3973,7 @@ virtual void sss(void);
  // #  if (__MSVC32__>=8)
  //   ofstream::open(name, m);
  // #  else
- //   //fstreambase::open(name, m, prot);
+ //   // fstreambase::open(name, m, prot);
  //   ofstream::open(name, m, prot);
  // #  endif
  // #endif
@@ -4015,9 +4015,9 @@ public:
                     int = filebuf::openprot);
 #else
   uistream(const char*, int = ios::in | ios::binary,
-                       int prot=0664);
+                       int prot = 0664);
   void   open(const char*, int = ios::in | ios::binary,
-                    int prot=0664);
+                    int prot = 0664);
 #endif
 #endif
 #ifdef __ZTC__
@@ -4031,23 +4031,23 @@ public:
 #endif
 
 #ifdef __SUN__
- // uistream(const char* name, int mode = ios::in, int prot=0664);
- // void open(const char* name, int mode = ios::in, int prot=0664);
+ // uistream(const char* name, int mode = ios::in, int prot = 0664);
+ // void open(const char* name, int mode = ios::in, int prot = 0664);
 #endif
 
 
 #if defined(__GNUDOS__) 
 #  if !defined(__ADSGI__)
 #    if (__GNUC__  < 3) && !defined(__SUNPRO_CC) 
-       uistream(const char* name, int mode = ios::in | ios::bin, int prot=0664);
-       void open(const char* name, int mode = ios::in | ios::bin, int prot=0664);
+       uistream(const char* name, int mode = ios::in | ios::bin, int prot = 0664);
+       void open(const char* name, int mode = ios::in | ios::bin, int prot = 0664);
 #    else  
-       uistream(const char* name, int mode = ios::in | ios::binary, int prot=0664);
-       void open(const char* name, int mode = ios::in | ios::binary, int prot=0664);
+       uistream(const char* name, int mode = ios::in | ios::binary, int prot = 0664);
+       void open(const char* name, int mode = ios::in | ios::binary, int prot = 0664);
 #    endif
 #  else
-  uistream(const char* name, int mode = ios::in, int prot=0664);
-  void open(const char* name, int mode = ios::in, int prot=0664);
+  uistream(const char* name, int mode = ios::in, int prot = 0664);
+  void open(const char* name, int mode = ios::in, int prot = 0664);
 #  endif
 #endif
 
@@ -4189,18 +4189,18 @@ public:
  */
   class three_array_shape
   {
-    //unsigned int nslices;
+    // unsigned int nslices;
     unsigned int ncopies;
-    //unsigned int nrows;
-    //unsigned int ncols;
+    // unsigned int nrows;
+    // unsigned int ncols;
      int slice_min;
      int slice_max;
     // int row_min;
     // int row_max;
-     //int col_min;
-     //int col_max;
+     // int col_min;
+     // int col_max;
     three_array_shape(int sl,int sh);
-    //mat_shape(){};
+    // mat_shape(){};
 
     friend class i3_array;
     friend class d3_array;
@@ -4312,7 +4312,7 @@ public:
     void initialize(int sl,int sh,int nrl,_CONST ivector& nrh,
       int ncl,_CONST ivector& nch);
 
-    //access functions
+    // access functions
     int indexmin(void) _CONST { return(shape->slice_min);}
     int indexmax(void) _CONST { return(shape->slice_max);}
     int slicemin(void) _CONST { return(shape->slice_min);}
@@ -4406,7 +4406,7 @@ public:
     double fill_seqadd(double,double);
     void operator /= (double d);
 
-  }; //end of class d3_array
+  }; // end of class d3_array
 
 /**
  * Description not yet available.
@@ -4472,7 +4472,7 @@ public:
       int ncl,int nch);
    void allocate(int sl,int sh,_CONST ivector& nrl,int nrh,
       int ncl,int nch);
-   //void allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
+   // void allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
     //  int ncl,int nch);
    void allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
       _CONST ivector& ncl,_CONST ivector& nch);
@@ -4487,7 +4487,7 @@ public:
     void initialize(int sl,int sh,int nrl,_CONST ivector& nrh,
       int ncl,_CONST ivector& nch);
 
-    //access functions
+    // access functions
     int indexmin(void) _CONST { return(shape->slice_min);}
     int indexmax(void) _CONST { return(shape->slice_max);}
     int slicemin(void) _CONST { return(shape->slice_min);}
@@ -4573,7 +4573,7 @@ public:
     void fill_randu_ni(long int& n);
     void fill_randn_ni(long int& n);
 
-  }; //end of class i3_array
+  }; // end of class i3_array
 
 #   if defined(__NUMBERVECTOR__)
       class param_init_matrix_vector;
@@ -4662,7 +4662,7 @@ public:
 
     d3_array value(_CONST dvar3_array&);
 
-    //access functions
+    // access functions
     int indexmin(void) _CONST { return(shape->slice_min);}
     int indexmax(void) _CONST { return(shape->slice_max);}
     int slicemin(void) _CONST { return(shape->slice_min);}
@@ -4755,7 +4755,7 @@ public:
     void operator /=(_CONST prevariable&);
     void operator /=(double);
 
-  }; //end of class dvar3_array
+  }; // end of class dvar3_array
 
 dvariable inv_cumd_exponential(const prevariable& y);
 dvariable cumd_exponential(const prevariable& x);
@@ -4776,7 +4776,7 @@ dvar_vector inv_cumd_norm(_CONST dvar_vector& x);
 prevariable& cumd_norm(_CONST prevariable& x);
 prevariable& bounded_cumd_norm(const prevariable& x,double);
 double bounded_cumd_norm(double x,double);
-//dvariable& old_cumd_norm(_CONST prevariable& x);
+// dvariable& old_cumd_norm(_CONST prevariable& x);
 double normal_tail_right(_CONST double& x);
 
 dvariable inv_cumd_norm_logistic(_CONST prevariable& x,double);
@@ -4792,8 +4792,8 @@ class prevariable_position
 {
   double_and_int * v;
 public:
-  prevariable_position(_CONST prevariable& x){v=x.get_v();}
-  prevariable_position(double_and_int * p){v=p;}
+  prevariable_position(_CONST prevariable& x){v = x.get_v();}
+  prevariable_position(double_and_int * p){v = p;}
   double& xval() { return( (v->x) ); }
 };
 
@@ -4818,8 +4818,8 @@ void save_double_value(double x);
    dvariable sum(_CONST dvar7_array&);
 
    dmatrix fabs(const dmatrix& m);
-   //double& value(BOR_CONST double& u);
-   //const double& value(const double& u);
+   // double& value(BOR_CONST double& u);
+   // const double& value(const double& u);
    double norm(_CONST d3_array&);
    double norm2(_CONST d3_array&);
    double sumsq(_CONST d3_array&);
@@ -5079,7 +5079,7 @@ dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z);
 dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
   prevariable& ln_unsigned_det,BOR_CONST prevariable& sign);
 
-//dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
+// dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
  // prevariable& ln_unsigned_det,BOR_CONST prevariable& sign);
 
 dvector csolve(_CONST dmatrix& aa,_CONST dvector& z);
@@ -5369,7 +5369,7 @@ class vcubic_spline_function
   dvar_vector y2; // second derivatives
 public:
   vcubic_spline_function(const dvector & _x,const dvar_vector& _y,
-    double yp1=0.0,double ypn=0.0);
+    double yp1 = 0.0,double ypn = 0.0);
   vcubic_spline_function(const dvector & _x,const dvar_vector& _y,
     dvariable yp1,dvariable ypn);
   vcubic_spline_function(const dvector & _x,const dvar_vector& _y,
@@ -5390,7 +5390,7 @@ class cubic_spline_function
   dvector y2; // second derivatives
 public:
   cubic_spline_function(BOR_CONST dvector & _x,BOR_CONST dvector& _y,
-    double yp1=0.0,double ypn=0.0);
+    double yp1 = 0.0,double ypn = 0.0);
   double operator () (double u);
   dvector operator () (_CONST dvector& u);
 };
@@ -5471,15 +5471,15 @@ void ludcmp(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
     unsigned int ncopies;
     int hslice_min;
     int hslice_max;
-    //int slice_min;
-    //int slice_max;
-    //int row_min;
-    //int row_max;
-    //int col_min;
-    //int col_max;
+    // int slice_min;
+    // int slice_max;
+    // int row_min;
+    // int row_max;
+    // int col_min;
+    // int col_max;
     four_array_shape(int hsl,int hsu); //, int sl,int sh,int rl,
       // int ru,int cl,int cu);
-    //mat_shape(){};
+    // mat_shape(){};
 
     friend class d4_array;
     friend class dvar4_array;
@@ -5540,7 +5540,7 @@ public:
   d4_array& operator = (_CONST d4_array&);
   d4_array(const d4_array& m2);
   d4_array(int,int,int,int,int,int,int,int);
-  //d4_array(int,int,int,ivector,int,imatrix,int,int);
+  // d4_array(int,int,int,ivector,int,imatrix,int,int);
   d4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
    int nrl, _CONST imatrix& nrh,int ncl,int nch);
   d4_array();
@@ -5592,7 +5592,7 @@ public:
     dvector& operator ( ) (int,int,int);
     double& operator ( ) (int,int,int,int);
   #endif
-  //access functions
+  // access functions
   friend class four_array_shape;
 
   int indexmin(void) { return(shape->hslice_min);}
@@ -5634,14 +5634,14 @@ public:
     return((*this)(hslicemin(),slicemin(),rowmax()).indexmax());
   }
 
-  //int hslicemin(void) _CONST { return(shape->hslice_min);}
-  //int hslicemax(void) _CONST { return(shape->hslice_max);}
-  //int slicemin(void) _CONST { return(shape->slice_min);}
-  //int slicemax(void) _CONST { return(shape->slice_max);}
-  //int colmin(void) _CONST { return(shape->col_min);}
-  //int colmax(void) _CONST { return(shape->col_max);}
-  //int rowmin(void) _CONST { return(shape->row_min);}
-  //int rowmax(void) _CONST { return(shape->row_max);}
+  // int hslicemin(void) _CONST { return(shape->hslice_min);}
+  // int hslicemax(void) _CONST { return(shape->hslice_max);}
+  // int slicemin(void) _CONST { return(shape->slice_min);}
+  // int slicemax(void) _CONST { return(shape->slice_max);}
+  // int colmin(void) _CONST { return(shape->col_min);}
+  // int colmax(void) _CONST { return(shape->col_max);}
+  // int rowmin(void) _CONST { return(shape->row_min);}
+  // int rowmax(void) _CONST { return(shape->row_max);}
   int hslicesize() _CONST {return (hslicemax()-hslicemin()+1);} // returns the number of rows
   int slicesize() _CONST {return (slicemax()-slicemin()+1);} // returns the number of rows
   int rowsize() _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
@@ -5700,7 +5700,7 @@ public:
    int nrl, _CONST imatrix& nrh,int ncl,int nch);
   void allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
    int nrl, _CONST imatrix& nrh,int ncl,int nch);
-  //dvar4_array(int,int,int,ivector,int,imatrix,int,int);
+  // dvar4_array(int,int,int,ivector,int,imatrix,int,int);
   dvar4_array();
   ~dvar4_array();
    dvar3_array& elem(int i) { return t[i];}
@@ -5718,7 +5718,7 @@ public:
    {
      return ( ((*this)(i,j,k))(l));
    }
-   #endif //USE_CONST
+   #endif // USE_CONST
   
   d4_array vale(d4_array&);
   dvar4_array& operator = (_CONST d4_array&);
@@ -5756,7 +5756,7 @@ public:
     dvar_vector& operator ( ) (int,int,int);
     prevariable operator ( ) (int,int,int,int);
   #endif
-  //access functions
+  // access functions
   friend class four_array_shape;
   int indexmin(void) { return(shape->hslice_min);}
   int indexmax(void) { return(shape->hslice_max);}
@@ -5775,14 +5775,14 @@ public:
     return((*this)(hslicemin(),slicemin(),rowmax()).indexmax());
   }
 
-  //int hslicemin(void) { return(shape->hslice_min);}
-  //int hslicemax(void) { return(shape->hslice_max);}
-  //int slicemin(void) { return(shape->slice_min);}
-  //int slicemax(void) { return(shape->slice_max);}
-  //int colmin(void) { return(shape->col_min);}
-  //int colmax(void) { return(shape->col_max);}
-  //int rowmin(void) { return(shape->row_min);}
-  //int rowmax(void) { return(shape->row_max);}
+  // int hslicemin(void) { return(shape->hslice_min);}
+  // int hslicemax(void) { return(shape->hslice_max);}
+  // int slicemin(void) { return(shape->slice_min);}
+  // int slicemax(void) { return(shape->slice_max);}
+  // int colmin(void) { return(shape->col_min);}
+  // int colmax(void) { return(shape->col_max);}
+  // int rowmin(void) { return(shape->row_min);}
+  // int rowmax(void) { return(shape->row_max);}
   int hslicesize() {return (hslicemax()-hslicemin()+1);} // returns the number of rows
   int slicesize() {return (slicemax()-slicemin()+1);} // returns the number of rows
   int rowsize() {return (rowmax()-rowmin()+1);} // returns the number of rows
@@ -5805,14 +5805,14 @@ public:
   { 
     return((*this)(hslicemin(),slicemin(),rowmax()).indexmax());
   }
-  //int hslicemin(void) _CONST { return(shape->hslice_min);}
-  //int hslicemax(void) _CONST { return(shape->hslice_max);}
-  //int slicemin(void) _CONST { return(shape->slice_min);}
-  //int slicemax(void) _CONST { return(shape->slice_max);}
-  //int colmin(void) _CONST { return(shape->col_min);}
-  //int colmax(void) _CONST { return(shape->col_max);}
-  //int rowmin(void) _CONST { return(shape->row_min);}
-  //int rowmax(void) _CONST { return(shape->row_max);}
+  // int hslicemin(void) _CONST { return(shape->hslice_min);}
+  // int hslicemax(void) _CONST { return(shape->hslice_max);}
+  // int slicemin(void) _CONST { return(shape->slice_min);}
+  // int slicemax(void) _CONST { return(shape->slice_max);}
+  // int colmin(void) _CONST { return(shape->col_min);}
+  // int colmax(void) _CONST { return(shape->col_max);}
+  // int rowmin(void) _CONST { return(shape->row_min);}
+  // int rowmax(void) _CONST { return(shape->row_max);}
   int hslicesize() _CONST {return (hslicemax()-hslicemin()+1);} // returns the number of rows
   int slicesize() _CONST {return (slicemax()-slicemin()+1);} // returns the number of rows
   int rowsize() _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
@@ -5890,7 +5890,7 @@ public:
 
 public:
   double minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&));
-  fmmt(int _nvar,int _m=7);
+  fmmt(int _nvar,int _m = 7);
 
   double minimize(BOR_CONST independent_variables & x,BOR_CONST dvector& c,
         double (*pf)(BOR_CONST dvar_vector&,BOR_CONST dvector&) );
@@ -5939,7 +5939,7 @@ public:
   i4_array& operator = (_CONST i4_array&);
   i4_array(const i4_array& m2);
   i4_array(int,int,int,int,int,int,int,int);
-  //i4_array(int,int,int,ivector,int,imatrix,int,int);
+  // i4_array(int,int,int,ivector,int,imatrix,int,int);
   i4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
    int nrl, _CONST imatrix& nrh,int ncl,int nch);
   i4_array();
@@ -5984,7 +5984,7 @@ public:
     ivector& operator ( ) (int,int,int);
     int& operator ( ) (int,int,int,int);
   #endif
-  //access functions
+  // access functions
   friend class four_array_shape;
 
   int hslicemin(void) { return(shape->indexmin());}
@@ -6066,7 +6066,7 @@ public:
   void deallocate(void);
   void allocate(void);
   void allocate(_CONST i5_array&);
-  //void allocate(_CONST dvar4_array&);
+  // void allocate(_CONST dvar4_array&);
   int operator ! (void) _CONST {return (shape == NULL);}
   i5_array(int hsl,int hsu);
   i5_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
@@ -6084,19 +6084,19 @@ public:
   i5_array& operator = (_CONST i5_array&);
   i5_array(const i5_array& m2);
   i5_array(int,int,int,int,int,int,int,int);
-  //i5_array(int,int,int,ivector,int,imatrix,int,int);
+  // i5_array(int,int,int,ivector,int,imatrix,int,int);
   i5_array(int hsl,int hsu,int sl,_CONST ivector& sh,
    int nrl, _CONST imatrix& nrh,int ncl,int nch);
   i5_array();
   ~i5_array();
-   //i4_array& elem(int i) { return t[i];}
-   //i3_array& elem (int i ,int j) {return ((*this)(i))(j);}
+   // i4_array& elem(int i) { return t[i];}
+   // i3_array& elem (int i ,int j) {return ((*this)(i))(j);}
    int iop(void);
-   //imatrix& elem(int i,int j,int k) {return (((*this)(i,j))(k));}
+   // imatrix& elem(int i,int j,int k) {return (((*this)(i,j))(k));}
    int xxx(void);
-   //ivector& elem(int i,int j,int k,int l)
+   // ivector& elem(int i,int j,int k,int l)
    int yyy(void);
-   //int& elem(int i,int j,int k,int l,int ll) {return( ((*this)(i,j,k))(l,ll));}
+   // int& elem(int i,int j,int k,int l,int ll) {return( ((*this)(i,j,k))(l,ll));}
   #ifdef OPT_LIB
     i4_array& operator ( ) (int i) { return t[i];}
     i4_array& operator [] (int i) { return t[i];}
@@ -6140,7 +6140,7 @@ public:
     ivector& operator ( ) (int,int,int,int);
     int& operator ( ) (int,int,int,int,int);
   #endif
-  //access functions
+  // access functions
   friend class four_array_shape;
 
   int hslicemin(void) { return(shape->indexmin());}
@@ -6232,7 +6232,7 @@ public:
   void deallocate(void);
   void allocate(void);
   void allocate(_CONST d5_array&);
-  //void allocate(_CONST dvar5_array&);
+  // void allocate(_CONST dvar5_array&);
   int operator ! (void) _CONST {return (shape == NULL);}
 
   d5_array& operator = (_CONST d5_array&);
@@ -6304,7 +6304,7 @@ public:
     dvector& operator ( ) (int,int,int,int);
     double& operator ( ) (int,int,int,int,int);
   #endif
-  //access functions
+  // access functions
   int indexmin(void) { return (shape->indexmin());}
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
@@ -6425,7 +6425,7 @@ public:
     dvar_vector& operator ( ) (int,int,int,int);
     prevariable operator ( ) (int,int,int,int,int);
   #endif
-  //access functions
+  // access functions
   int indexmin(void) { return (shape->indexmin());}
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
@@ -6473,7 +6473,7 @@ public:
   void deallocate(void);
   void allocate(void);
   void allocate(_CONST d6_array&);
-  //void allocate(_CONST dvar5_array&);
+  // void allocate(_CONST dvar5_array&);
   int operator ! (void) _CONST {return (shape == NULL);}
 
   d6_array& operator = (_CONST d6_array&);
@@ -6561,7 +6561,7 @@ public:
     dvector& operator ( ) (int,int,int,int,int);
     double& operator ( ) (int,int,int,int,int,int);
   #endif
-  //access functions
+  // access functions
   int indexmin(void) { return (shape->indexmin());}
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
@@ -6698,7 +6698,7 @@ public:
     dvar_vector& operator ( ) (int,int,int,int,int);
     prevariable operator ( ) (int,int,int,int,int,int);
   #endif
-  //access functions
+  // access functions
   int indexmin(void) { return (shape->indexmin());}
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
@@ -6748,7 +6748,7 @@ public:
   void deallocate(void);
   void allocate(void);
   void allocate(_CONST d7_array&);
-  //void allocate(_CONST dvar5_array&);
+  // void allocate(_CONST dvar5_array&);
   int operator ! (void) _CONST {return (shape == NULL);}
 
   d7_array& operator = (_CONST d7_array&);
@@ -6852,7 +6852,7 @@ public:
     dvector& operator ( ) (int,int,int,int,int,int);
     double& operator ( ) (int,int,int,int,int,int,int);
   #endif
-  //access functions
+  // access functions
   int indexmin(void) { return (shape->indexmin());}
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
@@ -7005,7 +7005,7 @@ public:
     dvar_vector& operator ( ) (int,int,int,int,int,int);
     prevariable operator ( ) (int,int,int,int,int,int,int);
   #endif
-  //access functions
+  // access functions
   int indexmin(void) { return (shape->indexmin());}
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
@@ -7132,7 +7132,7 @@ lmatrix restore_lmatrix_value(BOR_CONST lmatrix_position&);
     void read_from(BOR_CONST uistream&);
     void initialize(void);
     friend class i3_array;
-}; //end of class lmatrix
+}; // end of class lmatrix
 
 // void dmatrix::allocate(int nrl,int nrh,const index_type& ncl,
   // const index_type& nch)
@@ -7177,11 +7177,11 @@ class data_int;
     int d;
   public:
     operator int () const { return d;}
-    //operator int () { return d;}
-    ad_integer(BOR_CONST int& _d, BOR_CONST adkludge& k) : d(_d) {}
+    // operator int () { return d;}
+    ad_integer(BOR_CONST int& _d, BOR_CONST adkludge&) : d(_d) {}
     ad_integer(int _d) : d(_d) {}
     ad_integer(const index_type& it);
-    ad_integer make_ad_integer(int _d) { adkludge adk; return ad_integer(d, adk);}
+    ad_integer make_ad_integer(int) { adkludge adk; return ad_integer(d, adk);}
 #if defined(_MSC_VER)
 //#  if (_MSC_VER  < 1200)
     ad_integer(_CONST data_int& _d);
@@ -7206,8 +7206,8 @@ class data_int;
     virtual int  dimension (void) const { return -1;}
     virtual operator int () { cerr << "Error in index_type"
      " -- object not dereferenced enough" << endl; ad_exit(1); return 1;}
-    virtual int indexmin(void)=0;
-    virtual int indexmax(void)=0;
+    virtual int indexmin(void) = 0;
+    virtual int indexmax(void) = 0;
     index_guts(); 
     index_guts(const index_guts& ig);
     virtual ~index_guts();
@@ -7226,14 +7226,14 @@ class data_int;
     int isinteger(void) const { return p->isinteger();}
     int dimension(void) const { return p->dimension();}
     index_type(int x);
-    //index_type(const data_int& x);
+    // index_type(const data_int& x);
     index_type(BOR_CONST ivector& x);
     index_type(BOR_CONST imatrix& x);
     index_type(BOR_CONST i3_array& x);
     index_type(BOR_CONST i4_array& x);
     index_type(BOR_CONST pre_index_type& pit);
     index_type(BOR_CONST index_type& pit);
-    //index_type (i4_array& x) { p = new i4_index(x);}
+    // index_type (i4_array& x) { p = new i4_index(x);}
     ~index_type ();
     index_type operator [] (int i);
     index_type operator () (int i);
@@ -7276,7 +7276,7 @@ class data_int;
     }
   public:
     virtual int  dimension(void) const { return 1;}
-    //vector_index(BOR_CONST ivector& v) : ivector(v){}
+    // vector_index(BOR_CONST ivector& v) : ivector(v){}
     vector_index(BOR_CONST ivector& v);
     virtual ~vector_index();
     virtual int indexmin(void){return ivector::indexmin();}
@@ -7360,7 +7360,7 @@ class spdll_exception
 {
 public:
  int e;
- spdll_exception(int _e=0){e=_e;}
+ spdll_exception(int _e = 0){e = _e;}
 };
 
 /**
@@ -7660,7 +7660,7 @@ dvariable log_density_poisson(double x,const prevariable& mu);
 double log_density_poisson(double x,double mu);
 
 
-//double negbinomial_density(double x,double r, double mu);
+// double negbinomial_density(double x,double r, double mu);
     
     
 /**
@@ -7671,7 +7671,7 @@ class pre_column_print
 {
   dvector * ptr;
 public:
-  pre_column_print(_CONST dvector& v) {ptr=(dvector*)(&v);}
+  pre_column_print(_CONST dvector& v) {ptr = (dvector*)(&v);}
   friend ostream& operator << (_CONST ostream&,_CONST pre_column_print&);
 };
 
@@ -7683,7 +7683,7 @@ class pre_zero_print
 {
   dvector * ptr;
 public:
-  pre_zero_print(_CONST dvector& v) {ptr=(dvector*)(&v);}
+  pre_zero_print(_CONST dvector& v) {ptr = (dvector*)(&v);}
   friend ostream& operator << (_CONST ostream&,_CONST pre_zero_print&);
 };
 
@@ -7743,14 +7743,14 @@ void normalized_gauss_hermite(const dvector& _x,const dvector& _w);
 void gauss_legendre(double x1, double x2, const dvector& _x, const dvector& _w);
 void gauss_legendre(const dvector& _x, const dvector& _w);
 
-//dvariable beta(const prevariable&,const prevariable&);
+// dvariable beta(const prevariable&,const prevariable&);
 
-//dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b, _CONST dvariable& _x,int maxit=100);
+// dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b, _CONST dvariable& _x,int maxit = 100);
 
-//double betacf(_CONST double& _a,_CONST double& _b,_CONST double& _x,int maxit=100);
+// double betacf(_CONST double& _a,_CONST double& _b,_CONST double& _x,int maxit = 100);
 
-//dvariable betai(_CONST dvariable a,_CONST dvariable b,_CONST dvariable x, int maxit=100);
-//double betai(const double a,const double b,const double x, int maxit=100);
+// dvariable betai(_CONST dvariable a,_CONST dvariable b,_CONST dvariable x, int maxit = 100);
+// double betai(const double a,const double b,const double x, int maxit = 100);
 
 double betai(double _aa, double _bb, double _xx);
 dvariable betai(const dvariable& _a,const dvariable& _b,const dvariable& _x);
@@ -7795,10 +7795,10 @@ extern "C" void exit_handler(int k);
     double d;
   public:
     operator double () const { return d;}
-    ad_double(BOR_CONST double& _d, BOR_CONST adkludge& k) : d(_d) {}
+    ad_double(BOR_CONST double& _d, BOR_CONST adkludge&) : d(_d) {}
     ad_double(double _d) : d(_d) {}
     ad_double(const double_index_type& it);
-    ad_double make_ad_double(double _d) {adkludge adk; return ad_double(d,adk);}
+    ad_double make_ad_double(double) {adkludge adk; return ad_double(d,adk);}
     ad_double& operator = (const ad_double&);
   };
 
@@ -7816,8 +7816,8 @@ extern "C" void exit_handler(int k);
     virtual int  isdouble(void) const { return 1;}
     virtual operator double () { cerr << "Error in double_index_type"
      " -- object not dereferenced enough" << endl; ad_exit(1); return 1;}
-    virtual int indexmin(void)=0;
-    virtual int indexmax(void)=0;
+    virtual int indexmin(void) = 0;
+    virtual int indexmax(void) = 0;
     double_index_guts(); 
     double_index_guts(const double_index_guts& ig);
     virtual ~double_index_guts();
@@ -7835,13 +7835,13 @@ extern "C" void exit_handler(int k);
     double ddouble(void) const;
     int isdouble(void) const { return p->isdouble();}
     double_index_type(double x);
-    //index_type(const data_int& x);
+    // index_type(const data_int& x);
     double_index_type(BOR_CONST dvector& x);
     double_index_type(BOR_CONST dmatrix& x);
     double_index_type(BOR_CONST d3_array& x);
     double_index_type(BOR_CONST pre_double_index_type& pit);
     double_index_type(const double_index_type& pit);
-    //index_type (i4_array& x) { p = new i4_index(x);}
+    // index_type (i4_array& x) { p = new i4_index(x);}
     ~double_index_type ();
     double_index_type operator [] (int i);
     double_index_type operator () (int i);
@@ -7882,7 +7882,7 @@ extern "C" void exit_handler(int k);
       return new double_index(dvector::operator [](i));
     }
   public:
-    //vector_index(BOR_CONST ivector& v) : ivector(v){}
+    // vector_index(BOR_CONST ivector& v) : ivector(v){}
     dvector_index(BOR_CONST dvector& v);
     virtual ~dvector_index();
     virtual int indexmin(void){return dvector::indexmin();}
@@ -7899,7 +7899,7 @@ extern "C" void exit_handler(int k);
   private:
     virtual double_index_guts * operator [] (int i);
     //{
-      //return new dvector_index(dmatrix::operator [](i));
+      // return new dvector_index(dmatrix::operator [](i));
     //}
   public:
     virtual ~dmatrix_index();
@@ -8060,8 +8060,8 @@ public:
   virtual void get_slave_assignments(void);
   static adpvm_manager * pvm_manager;
   static adstring subdir;
-  static streampos change_datafile_name(_CONST adstring& s,const streampos& off=0);
-  static streampos change_pinfile_name(_CONST adstring& s,const streampos& off=0);
+  static streampos change_datafile_name(_CONST adstring& s,const streampos& off = 0);
+  static streampos change_pinfile_name(_CONST adstring& s,const streampos& off = 0);
   static cifstream * global_datafile;
   static cifstream * global_parfile;
   static ofstream *  global_savefile;
@@ -8274,9 +8274,9 @@ double inv_cumd_pareto(double _y,double alpha,double xm);
 double cumd_pareto(double _y,double alpha,double xm);
 
 
-double robust_normal_logistic_mixture_deviate(double x,double spread=3.0);
-double robust_normal_mixture_deviate(double x,double spread=3.0);
-dvariable robust_normal_mixture_deviate(const prevariable& x,double spread=3.0);
+double robust_normal_logistic_mixture_deviate(double x,double spread = 3.0);
+double robust_normal_mixture_deviate(double x,double spread = 3.0);
+dvariable robust_normal_mixture_deviate(const prevariable& x,double spread = 3.0);
 
 dvector lower_triagnular_solve_trans(const dmatrix& M,const dvector& y);
 dvector lower_triagular_solve(const dmatrix& m,const dvector&v);
@@ -8298,19 +8298,19 @@ dvariable inv_cumd_normal_logistic_mixture(const prevariable& _x,double _a);
 double inv_cumd_normal_mixture(double _x,double _a);
 double inv_cumd_normal_logistic_mixture(double _x,double _a);
 
-double inv_cumd_t(double n,double y,double eps=1.e-7);
+double inv_cumd_t(double n,double y,double eps = 1.e-7);
 
 dvariable inv_cumd_t(const prevariable& n,const prevariable& y,
-  double eps=1.e-7);
+  double eps = 1.e-7);
 
-double inv_cumd_beta_stable(double a,double b,double y,double eps=1.e-7);
+double inv_cumd_beta_stable(double a,double b,double y,double eps = 1.e-7);
 dvariable inv_cumd_beta_stable(const prevariable& _a,const prevariable& _b,
-  const prevariable& _y,double eps=1.e-7);
+  const prevariable& _y,double eps = 1.e-7);
 
 dvariable norm_to_gamma(const prevariable & v,const prevariable& alpha,
-  double bound=0.999999);
+  double bound = 0.999999);
 
-double norm_to_gamma(double v,double alpha,double bound=0.999999);
+double norm_to_gamma(double v,double alpha,double bound = 0.999999);
 
 dmatrix eigenvectors(const banded_symmetric_dmatrix& _SS,const dvector& e);
 dvector eigenvalues(const banded_symmetric_dmatrix& _SS);
@@ -8319,8 +8319,8 @@ dvar_vector get_eigen_values(const dvar_vector& _d,const dvar_vector& _e);
 dvector get_eigen_values(const dvector& _d,const dvector& _e,const dmatrix&_z);
 
 dvariable beta_deviate(const prevariable& _x,const prevariable& _a,
-  const prevariable& _b,double eps=1.e-7);
-double beta_deviate(double x,double a,double b,double eps=1.e-7);
+  const prevariable& _b,double eps = 1.e-7);
+double beta_deviate(double x,double a,double b,double eps = 1.e-7);
 
 #ifdef __cplusplus
 extern "C" {
@@ -8403,17 +8403,17 @@ void test_the_pointer(void);
     int get_offset(void);
     void initialize();
   };
-  inline void ADMB_getcallindex(int x){;}
-  inline void ADMB_getcallindex(double x){;}
-  inline void ADMB_getcallindex(const dvector& v){;}
-  inline void ADMB_getcallindex(const dmatrix& v){;}
-  inline void ADMB_getcallindex(const d3_array& v){;}
-  inline void ADMB_getcallindex(const d4_array& v){;}
+  inline void ADMB_getcallindex(int){;}
+  inline void ADMB_getcallindex(double){;}
+  inline void ADMB_getcallindex(const dvector&){;}
+  inline void ADMB_getcallindex(const dmatrix&){;}
+  inline void ADMB_getcallindex(const d3_array&){;}
+  inline void ADMB_getcallindex(const d4_array&){;}
   inline void ADMB_getcallindex(const prevariable&){;}
-  inline void ADMB_getcallindex(const dvar_vector& v){;}
-  inline void ADMB_getcallindex(const dvar_matrix& v){;}
-  inline void ADMB_getcallindex(const dvar3_array& v){;}
-  inline void ADMB_getcallindex(dvar4_array& v){;}
+  inline void ADMB_getcallindex(const dvar_vector&){;}
+  inline void ADMB_getcallindex(const dvar_matrix&){;}
+  inline void ADMB_getcallindex(const dvar3_array&){;}
+  inline void ADMB_getcallindex(dvar4_array&){;}
 
   void clean(ivector& v,int level);
 
@@ -8459,7 +8459,7 @@ void test_the_pointer(void);
     double& operator () (int i) { return x(i);}
     int& operator () (int i,int j) { return coords(i,j);}
     dcompressed_triplet(int mmin,int mmax,int n,int m);
-    //dcompressed_triplet make_dcompressed_triplet(const dmatrix & );
+    // dcompressed_triplet make_dcompressed_triplet(const dmatrix & );
     void allocate(int mmin,int mmax,int n,int m);
     void deallocate(void);
     imatrix& get_coords(void)  { return coords; }

@@ -21,9 +21,9 @@
     RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("ecbb");
-    for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
+    for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
     {
-      tmp.elem_value(i)=x-t1.elem_value(i);
+      tmp.elem_value(i) = x-t1.elem_value(i);
     }
     tmp.save_dvar_vector_position();
     t1.save_dvar_vector_position();
@@ -41,16 +41,16 @@
  void DF_cdble_dv_diff(void)
  {
     verify_identifier_string("druu");
-    dvar_vector_position t1_pos=restore_dvar_vector_position();
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
-    dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
+    dvar_vector_position t1_pos = restore_dvar_vector_position();
+    dvar_vector_position tmp_pos = restore_dvar_vector_position();
+    dvector dftmp = restore_dvar_vector_derivatives(tmp_pos);
     dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());
     verify_identifier_string("ecbb");
-    //double xinv=1./x;
-    for (int i=t1_pos.indexmax(); i>=t1_pos.indexmin(); i--)
+    // double xinv = 1./x;
+    for (int i = t1_pos.indexmax(); i>=t1_pos.indexmin(); i--)
     {
-       // tmp.elem_value(i)=t1.elem_value(i)-value(x);
-      //tmp.elem_value(i)=value(x)*t1.elem_value(i)/value(x);
+       // tmp.elem_value(i) = t1.elem_value(i)-value(x);
+      // tmp.elem_value(i) = value(x)*t1.elem_value(i)/value(x);
       dft1(i)=-dftmp(i);
     }
     dft1.save_dvector_derivatives(t1_pos);
@@ -67,7 +67,7 @@
     RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
     save_identifier_string("vcbb");
-    for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
+    for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
     {
       tmp.elem_value(i)=-t1.elem_value(i);
     }
@@ -87,16 +87,16 @@
  void DF_dv_minus(void)
  {
     verify_identifier_string("tduu");
-    dvar_vector_position t1_pos=restore_dvar_vector_position();
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
-    dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
+    dvar_vector_position t1_pos = restore_dvar_vector_position();
+    dvar_vector_position tmp_pos = restore_dvar_vector_position();
+    dvector dftmp = restore_dvar_vector_derivatives(tmp_pos);
     dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());
     verify_identifier_string("vcbb");
-    //double xinv=1./x;
-    for (int i=t1_pos.indexmax(); i>=t1_pos.indexmin(); i--)
+    // double xinv = 1./x;
+    for (int i = t1_pos.indexmax(); i>=t1_pos.indexmin(); i--)
     {
-       // tmp.elem_value(i)=t1.elem_value(i)-value(x);
-      //tmp.elem_value(i)=value(x)*t1.elem_value(i)/value(x);
+       // tmp.elem_value(i) = t1.elem_value(i)-value(x);
+      // tmp.elem_value(i) = value(x)*t1.elem_value(i)/value(x);
       dft1(i)=-dftmp(i);
     }
     dft1.save_dvector_derivatives(t1_pos);

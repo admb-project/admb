@@ -33,10 +33,10 @@ double randn(long int& n);
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
-    nn=n;
-    for (int i=indexmin(); i<=indexmax(); i++)
+    nn = n;
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
-      elem(i)=auto_rand(nn,1);
+      elem(i) = auto_rand(nn,1);
     }
     reinitialize_auto_rand();
     RETURN_ARRAYS_DECREMENT();
@@ -56,16 +56,16 @@ double randn(long int& n);
     }
     long int nn;
     RETURN_ARRAYS_INCREMENT();
-    nn=n;
-    for (int i=indexmin(); i<=indexmax(); i++)
+    nn = n;
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
       if (auto_rand(nn,1)<=p)
       {
-        elem(i)=1.;
+        elem(i) = 1.;
       }
       else
       {
-        elem(i)=0.;
+        elem(i) = 0.;
       } 
     }
     reinitialize_auto_rand();
@@ -80,10 +80,10 @@ double randn(long int& n);
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
-    nn=n;
-    for (int i=rowmin(); i<=rowmax(); i++)
+    nn = n;
+    for (int i = rowmin(); i<=rowmax(); i++)
     {
-      elem(i,j)=auto_rand(nn,1);
+      elem(i,j) = auto_rand(nn,1);
     }
     reinitialize_auto_rand();
     RETURN_ARRAYS_DECREMENT();
@@ -97,10 +97,10 @@ double randn(long int& n);
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
-    nn=n;
-    for (int j=colmin(); j<=colmax(); j++)
+    nn = n;
+    for (int j = colmin(); j<=colmax(); j++)
     {
-      elem(i,j)=auto_rand(nn,1);
+      elem(i,j) = auto_rand(nn,1);
     }
     RETURN_ARRAYS_DECREMENT();
     reinitialize_auto_rand();
@@ -114,10 +114,10 @@ double randn(long int& n);
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
-    nn=n;
-    for (int i=indexmin(); i<=indexmax(); i++)
+    nn = n;
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
-      elem(i)=randn(nn);
+      elem(i) = randn(nn);
     }
     reinitialize_auto_rand();
     RETURN_ARRAYS_DECREMENT();
@@ -131,10 +131,10 @@ double randn(long int& n);
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
-    nn=n;
-    for (int i=rowmin(); i<=rowmax(); i++)
+    nn = n;
+    for (int i = rowmin(); i<=rowmax(); i++)
     {
-      elem(i,j)=randn(nn);
+      elem(i,j) = randn(nn);
     }
     reinitialize_auto_rand();
     RETURN_ARRAYS_DECREMENT();
@@ -148,10 +148,10 @@ double randn(long int& n);
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
-    nn=n;
-    for (int j=colmin(); j<=colmax(); j++)
+    nn = n;
+    for (int j = colmin(); j<=colmax(); j++)
     {
-      elem(i,j)=randn(nn);
+      elem(i,j) = randn(nn);
     }
     reinitialize_auto_rand();
     RETURN_ARRAYS_DECREMENT();
@@ -163,9 +163,9 @@ double randn(long int& n);
  */
   void dvar_matrix::fill_randn(long int& n)
   {
-    long int nn=n;
+    long int nn = n;
     RETURN_ARRAYS_INCREMENT();
-    for (int i=rowmin(); i<=rowmax(); i++)
+    for (int i = rowmin(); i<=rowmax(); i++)
     {
       elem(i).fill_randn_ni(nn);
       nn+=2;
@@ -180,9 +180,9 @@ double randn(long int& n);
  */
   void dvar_matrix::fill_randu(long int& n)
   {
-    long int nn=n;
+    long int nn = n;
     RETURN_ARRAYS_INCREMENT();
-    for (int i=rowmin(); i<=rowmax(); i++)
+    for (int i = rowmin(); i<=rowmax(); i++)
     {
       elem(i).fill_randn_ni(nn);
       nn+=2;
@@ -198,8 +198,8 @@ double randn(long int& n);
   void dvar3_array::fill_randn(long int& n)
   {
     long int nn;
-    nn=n;
-    for (int i=slicemin(); i<=slicemax(); i++)
+    nn = n;
+    for (int i = slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randn_ni(nn);
       nn+=2;  
@@ -214,8 +214,8 @@ double randn(long int& n);
   void dvar3_array::fill_randu(long int& n)
   {
     long int nn;
-    nn=n;
-    for (int i=slicemin(); i<=slicemax(); i++)
+    nn = n;
+    for (int i = slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randu_ni(nn);
       nn+=2;  

@@ -156,14 +156,14 @@ dmatrix::dmatrix(char * s)
   {
     ivector ub(1,nrow);
     ivector lb(1,nrow);
-    for (i=1; i<=nrow; i++)
+    for (i = 1; i<=nrow; i++)
     {
        ub[i] = columns[i];
        lb[i] = 1;
     }
-    index_min=1;
-    index_max=nrow;
-    int rs=rowsize();
+    index_min = 1;
+    index_max = nrow;
+    int rs = rowsize();
     if ( (m = new dvector [rs]) == 0)
     {
       cerr << " Error allocating memory in dmatrix contructor\n";
@@ -183,9 +183,9 @@ dmatrix::dmatrix(char * s)
     m -= rowmin();
 
     k = 0;
-    //char * t = (char*) new[strlen(s)+1];
+    // char * t = (char*) new[strlen(s)+1];
     char *t = new char[strlen(s)+1];
-    for (i=rowmin(); i<=rowmax(); i++)
+    for (i = rowmin(); i<=rowmax(); i++)
     {
       for (k = k1[i]; k <= k2[i]; k++)
       {
@@ -211,10 +211,10 @@ dmatrix::dmatrix(char * s)
     char *line = new char [MAX_LINE_LENGTH+2];
     char *field = new char [MAX_FIELD_LENGTH+1];
 
-    int i=0;
+    int i = 0;
     ivector nc(1,MAX_NUMBER_ROWS);
 
-    //while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
+    // while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
     while ( get_non_blank_line(infile,line,MAX_LINE_LENGTH) )
     {
       strcat(line," ");
@@ -226,11 +226,11 @@ dmatrix::dmatrix(char * s)
         ad_exit(21);
       }
 
-      int j=0;              // j counts columns
+      int j = 0;              // j counts columns
       istringstream f(line);
       while ( (f >> field).good() )
       {
-       //char * err_ptr;
+       // char * err_ptr;
        // increment row counter
        if ( ++j > MAX_NUMBER_COLUMNS)
        {
@@ -240,9 +240,9 @@ dmatrix::dmatrix(char * s)
        }
      }
      // Need to check error status f
-     nc[i]=j;
+     nc[i] = j;
    }
-   int nr=i;
+   int nr = i;
    if (nr == 0)
    {
      cerr << "Error in dmatrix constructor There doesn't seem to be any data\n"
@@ -255,18 +255,18 @@ dmatrix::dmatrix(char * s)
 
    ivector index_up(1,nr);
    ivector index_down(1,nr);
-     int One=1;
-     int Zero=0;
+     int One = 1;
+     int Zero = 0;
    index_down.fill_seqadd(One,Zero);
 
-   for (i=1;i<=nr;i++)
+   for (i = 1;i<=nr;i++)
    {
-     index_up[i]=nc[i];
+     index_up[i] = nc[i];
    }
-   index_min=1;
-   index_max=nr;
+   index_min = 1;
+   index_max = nr;
 
-   int rs=rowsize();
+   int rs = rowsize();
    if ( (m = new dvector [rs]) == 0)
    {
      cerr << " Error allocating memory in dmatrix contructor\n";
@@ -284,7 +284,7 @@ dmatrix::dmatrix(char * s)
 
    m -= rowmin();
 
-   for (i=rowmin(); i<=rowmax(); i++)
+   for (i = rowmin(); i<=rowmax(); i++)
    {
      m[i].allocate(index_down[i],index_up[i]);
      #ifdef DIAG
@@ -295,21 +295,21 @@ dmatrix::dmatrix(char * s)
      myheapcheck("Leaving dmatrix(nrl,nrh,ncl,nch)" );
    #endif
 
-   i=0;
+   i = 0;
    while (get_non_blank_line(infile,line,MAX_LINE_LENGTH) )
    {
      strcat(line," ");
      // increment row counter
      i++;
 
-     int j=0;              // j counts columns
+     int j = 0;              // j counts columns
      istringstream f(line);
      while ( (f >> field).good() )
      {
        char * err_ptr;
        // increment row counter
        j++;
-       elem(i,j)=strtod(field,&err_ptr); // increment column counter
+       elem(i,j) = strtod(field,&err_ptr); // increment column counter
 
        if (isalpha(err_ptr[0]))
        {
@@ -357,23 +357,23 @@ dmatrix::dmatrix(char * s)
    int get_non_blank_line(BOR_CONST ifstream& _infile,char * & line,
      const unsigned int& line_length)
    {
-     ifstream& infile=(ifstream&) _infile;
+     ifstream& infile = (ifstream&) _infile;
      char ch;
      int tmp;
-     while ( (tmp=(infile.get(line,line_length)).good()) !=0)
+     while ( (tmp = (infile.get(line,line_length)).good()) !=0)
      {
-       //cout << line << endl;
+       // cout << line << endl;
        infile >> ch; // get rid of the terminating character
        if (ch != '\0') infile.putback(ch); // If character is not null 
                                            // put if back
-       int length=mystrlen(line);
+       int length = mystrlen(line);
        if (length == -1)
        {
          cerr << "Error computing input line length field reading file\n";
          ad_exit(1);
        }
 
-       for (int i=0;i<length;i++)
+       for (int i = 0;i<length;i++)
        {
          if (line[i] != ' ')
          {
@@ -390,7 +390,7 @@ dmatrix::dmatrix(char * s)
  */
    int mystrlen(char * line)
    {
-     long int ii=0;
+     long int ii = 0;
      while(ii<1000000L)
      {
        if (line[ii]=='\0') return(ii);

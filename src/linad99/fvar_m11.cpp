@@ -22,7 +22,7 @@
      ad_exit(21);
    }
 
-   for (int i=rowmin();i<=rowmax();i++)
+   for (int i = rowmin();i<=rowmax();i++)
    {
      elem(i) += m1.elem(i);
    }
@@ -41,7 +41,7 @@
      ad_exit(21);
    }
 
-   for (int i=rowmin();i<=rowmax();i++)
+   for (int i = rowmin();i<=rowmax();i++)
    {
      elem(i) += m1.elem(i);
    }
@@ -60,7 +60,7 @@
      ad_exit(21);
    }
 
-   for (int i=rowmin();i<=rowmax();i++)
+   for (int i = rowmin();i<=rowmax();i++)
    {
      elem(i) -= m1.elem(i);
    }
@@ -79,7 +79,7 @@
      ad_exit(21);
    }
 
-   for (int i=rowmin();i<=rowmax();i++)
+   for (int i = rowmin();i<=rowmax();i++)
    {
      elem(i) -= m1.elem(i);
    }

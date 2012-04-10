@@ -36,9 +36,9 @@ dvar_matrix mfexp(_CONST dvar_matrix& m)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  for (int i = m.rowmin();i<=m.rowmax();i++)
   {
-    tmp(i)=mfexp(m(i));
+    tmp(i) = mfexp(m(i));
   }
   return tmp;
 }
@@ -51,9 +51,9 @@ dvar_matrix mfexp(_CONST dvar_matrix& m, CGNU_DOUBLE d)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
-  for (int i=m.rowmin();i<=m.rowmax();i++)
+  for (int i = m.rowmin();i<=m.rowmax();i++)
   {
-    tmp(i)=mfexp(m(i),d);
+    tmp(i) = mfexp(m(i),d);
   }
   return tmp;
 }

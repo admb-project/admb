@@ -14,19 +14,19 @@
  * Description not yet available.
  * \param
  */
-void dmatrix::allocate(void)  //default constructor
+void dmatrix::allocate(void)  // default constructor
 {
-  index_min=1;
-  index_max=0;
-  m=NULL;
-  shape=NULL;
+  index_min = 1;
+  index_max = 0;
+  m = NULL;
+  shape = NULL;
 } 
 
 /**
  * Description not yet available.
  * \param
  */
-dmatrix::dmatrix()  //default constructor 
+dmatrix::dmatrix()  // default constructor 
 {
   allocate();
 } 

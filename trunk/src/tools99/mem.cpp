@@ -7,7 +7,7 @@
  * published in the March-April 1990 edition of Micro Cornucopia magazine.
  * The MEM package was freely distributed with the Zortech compiler.
  * Bright contributed an updated version of the MEM package to the
- * Public Domain. It can be downladed from http:// snippets.snippets.org/
+ * Public Domain. It can be downladed from http://snippets.snippets.org/
  */
 #include <stdio.h>
 #include  <stdlib.h>

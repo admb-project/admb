@@ -239,7 +239,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 #  endif
       (*ad_printf)( " -shess          use sparse Hessian structure inner optimzation\n\n");
 
-      (*ad_printf)("Read online documentation at http:// admb-project.org\n");
+      (*ad_printf)("Read online documentation at http://admb-project.org\n");
       (*ad_printf)("Contact <users@admb-project.org> for help.\n");
     //}
       ad_exit(0);

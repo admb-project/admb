@@ -163,7 +163,7 @@ int svd(int m,int n,int withu,int withv,double eps,double tol,
  *
  * Used to find the svd of a matrix when \f$m<n\f$.
  *
- * \n\n Modified from svd.c (http:// www.crbond.com/download/misc/svd.c),
+ * \n\n Modified from svd.c (http://www.crbond.com/download/misc/svd.c),
  *      an algorithm that was translated by C. Bond
  *      to 'C' from the original Algol code in "Handbook for
  *      Automatic Computation, vol. II, Linear Algebra", Springer-Verlag.
@@ -441,7 +441,7 @@ convergence:
  *
  * Used to find the svd of a matrix when \f$m\ge n\f$.
  *
- * \n\n Modified from svd.c (http:// www.crbond.com/download/misc/svd.c),
+ * \n\n Modified from svd.c (http://www.crbond.com/download/misc/svd.c),
  *      an algorithm that was translated by C. Bond
  *      to 'C' from the original Algol code in "Handbook for
  *      Automatic Computation, vol. II, Linear Algebra", Springer-Verlag.

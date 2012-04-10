@@ -16,10 +16,10 @@
 
 #include <stdlib.h>
 
-//extern double * NULL_ADDRESS;
-//extern grad_stack  * GRAD_STACK1; //js
-//extern indvar_offset_list * INDVAR_LIST;
-//extern unsigned  MAX_NVAR_OFFSET;
+// extern double * NULL_ADDRESS;
+// extern grad_stack  * GRAD_STACK1; // js
+// extern indvar_offset_list * INDVAR_LIST;
+// extern unsigned  MAX_NVAR_OFFSET;
 
 void * farptr_norm(void *);
 long int farptr_tolong(void *) ;
@@ -31,8 +31,8 @@ long int farptr_tolong(void *) ;
 dvar_vector& dvar_vector::shift(int min) 
 {
   va += indexmin()-min;
-  index_max=index_max-index_min+min;
-  index_min=min;
+  index_max = index_max-index_min+min;
+  index_min = min;
   shape->shift(min);
   return *this;
 }
@@ -46,9 +46,9 @@ dvar_vector& dvar_vector::shift(int min)
    int i;
    allocate(t.indexmin(),t.indexmax());
 
-   for ( i=indexmin(); i<=indexmax(); i++)
+   for ( i = indexmin(); i<=indexmax(); i++)
    {
-     va[i].x=(t.v)[i];
+     va[i].x = (t.v)[i];
    }
 
    make_indvar_list(*this);
@@ -67,19 +67,19 @@ dvar_vector& dvar_vector::shift(int min)
    }
    else
    {
-     va=NULL;
+     va = NULL;
      allocate(t.indexmin(),t.indexmax());
      initialize();
-     for ( i=indexmin(); i<=indexmax(); i++)
+     for ( i = indexmin(); i<=indexmax(); i++)
      {
-       va[i].x=(t.v)[i];
+       va[i].x = (t.v)[i];
      }
    }
  }
 
 
 //#ifdef __BORLANDC__
- //prevariable dvar_vector::elem(int i) { return (va+i); }
+ // prevariable dvar_vector::elem(int i) { return (va+i); }
 //#endif
 
 /**
@@ -89,7 +89,7 @@ dvar_vector& dvar_vector::shift(int min)
  dvar_vector::dvar_vector( unsigned int sz, double * x )
  {
    allocate(0,sz-1);
-   for (unsigned int i=0; i<sz; i++)
+   for (unsigned int i = 0; i<sz; i++)
    {
      va[i].x = x[i];
    }
@@ -105,7 +105,7 @@ dvar_vector& dvar_vector::shift(int min)
      allocate();
    else
    {
-     va=NULL;
+     va = NULL;
      allocate(ncl,nch);
    }
    #ifdef SAFE_INITIALIZE
@@ -182,12 +182,12 @@ void make_indvar_list(_CONST dvar_vector& t)
       ad_exit(21);
   }
 
-  for (int i=t.indexmin(); i<=t.indexmax(); i++)
+  for (int i = t.indexmin(); i<=t.indexmax(); i++)
   {
-    unsigned int tmp=i-t.indexmin();
+    unsigned int tmp = i-t.indexmin();
     gradient_structure::INDVAR_LIST->put_address(tmp,&(t.va[i].x));
   }
-  gradient_structure::NVAR=t.indexmax()-t.indexmin()+1;
+  gradient_structure::NVAR = t.indexmax()-t.indexmin()+1;
 } 
 
 /**
@@ -207,8 +207,8 @@ void make_indvar_list(_CONST dvar_vector& t)
  */
    void dvar_vector::allocate(void)
    {
-     shape=NULL;
-     va=NULL;
+     shape = NULL;
+     va = NULL;
    }
  
 /**
@@ -239,16 +239,16 @@ void make_indvar_list(_CONST dvar_vector& t)
      {
        if (t.shape)
        {
-         shape=t.shape;
+         shape = t.shape;
          (shape->ncopies)++;
        }
        else
        {
-         //cerr << "Making a copy of an unallocated dvar_vector"<<endl;
+         // cerr << "Making a copy of an unallocated dvar_vector"<<endl;
        }
-       link_ptr=t.link_ptr;
-       index_min=t.index_min;
-       index_max=t.index_max;
+       link_ptr = t.link_ptr;
+       index_min = t.index_min;
+       index_max = t.index_max;
        va = t.va;
      }
      else
@@ -267,9 +267,9 @@ void make_indvar_list(_CONST dvar_vector& t)
        allocate();
      else
      {  
-       index_min=ncl;
-       index_max=nch;
-       int itemp=nch-ncl+1;
+       index_min = ncl;
+       index_max = nch;
+       int itemp = nch-ncl+1;
        if (itemp<=0)
        {
          cerr << "Error in dvar_vector constructor max index must be"
@@ -283,7 +283,7 @@ void make_indvar_list(_CONST dvar_vector& t)
          ad_exit(1);
        }
   
-       if ( (shape=new vector_shapex(ncl,nch,va)) == NULL)
+       if ( (shape = new vector_shapex(ncl,nch,va)) == NULL)
        {
          cerr << "Error trying to allocate memory for dvar_vector\n";
          ad_exit(1);

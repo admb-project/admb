@@ -124,7 +124,7 @@ class random_effects_bounded_matrix : public param_init_bounded_matrix
 class gauss_hermite_stuff;
 
 class nested_calls_shape;
-//class sparse_symbolic; 
+// class sparse_symbolic; 
 
 /**
  * Description not yet available.
@@ -287,7 +287,7 @@ public:
   dmatrix get_gradient_for_hessian_calcs(const dmatrix& local_Hess,
     double & f);
   fmm fmc1;
-  //fmmt1 fmc1;
+  // fmmt1 fmc1;
   fmm fmc;
   dvector scale;
   dvector curv;

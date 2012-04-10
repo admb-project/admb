@@ -8,9 +8,9 @@
 
   void initial_params::copy_all_values(BOR_CONST dvector& x,BOR_CONST int& ii)
   {
-    for (int i=0;i<num_initial_params;i++)
+    for (int i = 0;i<num_initial_params;i++)
     {
-      //if ((varsptr[i])->phase_start <= current_phase)
+      // if ((varsptr[i])->phase_start <= current_phase)
       if (withinbound(0,(varsptr[i])->phase_start,current_phase))
       {
         (varsptr[i])->copy_value_to_vector(x,ii);
@@ -44,22 +44,22 @@
 
   void copy_value_to_vector(_CONST prevariable& x,BOR_CONST dvector& _v,BOR_CONST int& _ii)
   {
-    dvector& v=(dvector&) _v;
-    int& ii=(int&) _ii;
-    v(ii++)=value(x);
+    dvector& v = (dvector&) _v;
+    int& ii = (int&) _ii;
+    v(ii++) = value(x);
   }
 
   void copy_value_to_vector(_CONST dvar_vector& x,BOR_CONST dvector& _v,BOR_CONST int& _ii)
   {
-    dvector& v=(dvector&) _v;
-    int& ii=(int&) _ii;
+    dvector& v = (dvector&) _v;
+    int& ii = (int&) _ii;
     if (!(!(x)))
     {
-      int mmin=x.indexmin();
-      int mmax=x.indexmax();
-      for (int i=mmin;i<=mmax;i++)
+      int mmin = x.indexmin();
+      int mmax = x.indexmax();
+      for (int i = mmin;i<=mmax;i++)
       {
-        v(ii++)=value(x(i));
+        v(ii++) = value(x(i));
       }
     }
   }
@@ -68,9 +68,9 @@
   {
     if (!(!(x)))
     {
-      int mmin=x.rowmin();
-      int mmax=x.rowmax();
-      for (int i=mmin;i<=mmax;i++)
+      int mmin = x.rowmin();
+      int mmax = x.rowmax();
+      for (int i = mmin;i<=mmax;i++)
       {
         copy_value_to_vector(x(i),v,ii);
       }
@@ -80,9 +80,9 @@
   {
     if (!(!(x)))
     {
-      int mmin=x.slicemin();
-      int mmax=x.slicemax();
-      for (int i=mmin;i<=mmax;i++)
+      int mmin = x.slicemin();
+      int mmax = x.slicemax();
+      for (int i = mmin;i<=mmax;i++)
       {
         copy_value_to_vector(x(i),v,ii);
       }
@@ -90,9 +90,9 @@
   }
   void initial_params::restore_all_values(BOR_CONST dvector& x,BOR_CONST int& ii)
   {
-    for (int i=0;i<num_initial_params;i++)
+    for (int i = 0;i<num_initial_params;i++)
     {
-      //if ((varsptr[i])->phase_start <= current_phase)
+      // if ((varsptr[i])->phase_start <= current_phase)
       if (withinbound(0,(varsptr[i])->phase_start,current_phase))
       {
         (varsptr[i])->restore_value_from_vector(x,ii);
@@ -127,23 +127,23 @@
   void restore_value_from_vector(BOR_CONST prevariable& _x,_CONST dvector& v,BOR_CONST int& _ii)
   {
     ADUNCONST(prevariable,x)
-    int& ii=(int&) _ii;
-    //v(ii++)=value(x);
-    x=v(ii++);
+    int& ii = (int&) _ii;
+    // v(ii++) = value(x);
+    x = v(ii++);
   }
 
   void restore_value_from_vector(BOR_CONST dvar_vector& _x,_CONST dvector& v,BOR_CONST int& _ii)
   {
     ADUNCONST(dvar_vector,x)
-    int& ii=(int&) _ii;
+    int& ii = (int&) _ii;
     if (!(!(x)))
     {
-      int mmin=x.indexmin();
-      int mmax=x.indexmax();
-      for (int i=mmin;i<=mmax;i++)
+      int mmin = x.indexmin();
+      int mmax = x.indexmax();
+      for (int i = mmin;i<=mmax;i++)
       {
-        //v(ii++)=value(x(i));
-        x(i)=v(ii++);
+        // v(ii++) = value(x(i));
+        x(i) = v(ii++);
       }
     }
   }
@@ -152,9 +152,9 @@
   {
     if (!(!(x)))
     {
-      int mmin=x.rowmin();
-      int mmax=x.rowmax();
-      for (int i=mmin;i<=mmax;i++)
+      int mmin = x.rowmin();
+      int mmax = x.rowmax();
+      for (int i = mmin;i<=mmax;i++)
       {
         restore_value_from_vector(x(i),v,ii);
       }
@@ -165,9 +165,9 @@
   {
     if (!(!(x)))
     {
-      int mmin=x.slicemin();
-      int mmax=x.slicemax();
-      for (int i=mmin;i<=mmax;i++)
+      int mmin = x.slicemin();
+      int mmax = x.slicemax();
+      for (int i = mmin;i<=mmax;i++)
       {
         restore_value_from_vector(x(i),v,ii);
       }

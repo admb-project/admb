@@ -11,12 +11,12 @@
 #if defined(USE_ADPVM)
 #include "adpvm2.h"
 
-//adstring ad_comm::subdir;
+// adstring ad_comm::subdir;
 
   // dvar_vector get_x_from_master(void)
   // {
   //   dvar_vector x;
-  //   int ptid=pvm_parent();
+  //   int ptid = pvm_parent();
   //   // ***************  begin variable receive block *********************
   //   adpvm_slave_vrecv(ptid);
   //   adpvm_unpack(x);  
@@ -29,7 +29,7 @@
   // void send_f_to_master(const dvariable& f)
   // {
   //   // ***************  begin send block ***********************************
-  //   int ptid=pvm_parent();
+  //   int ptid = pvm_parent();
   //   adpvm_slave_vinitsend(PvmDataDefault);/* allocate message buffer */	
   //   adpvm_pack(f);
   //   adpvm_slave_vsend(ptid);/* send buffer to master */
@@ -46,25 +46,25 @@ void ad_comm::get_slave_assignments(void)
 {
   // default slave assignment function
   // starts 1 slave on each host
-  int nhost=pvm_manager->nhost;
-  ivector & num_per_host=pvm_manager->num_per_host;
+  int nhost = pvm_manager->nhost;
+  ivector & num_per_host = pvm_manager->num_per_host;
   if (allocated(num_per_host))
   {
     num_per_host.deallocate();
   }
   num_per_host.allocate(1,nhost);
   int i;
-  pvm_manager->num_slave_processes=0;
-  for (i=1;i<=nhost;i++)
+  pvm_manager->num_slave_processes = 0;
+  for (i = 1;i<=nhost;i++)
   {
-    int speed=pvm_manager->hostp[i-1].hi_speed;
-    int nsprocs=speed%10;
+    int speed = pvm_manager->hostp[i-1].hi_speed;
+    int nsprocs = speed%10;
     if (i>1) nsprocs+=1;
     cout << nsprocs << endl;
-    num_per_host(i)=nsprocs;
+    num_per_host(i) = nsprocs;
     pvm_manager->num_slave_processes+=nsprocs;
   }
-  imatrix & slave_assignments=pvm_manager->slave_assignments;
+  imatrix & slave_assignments = pvm_manager->slave_assignments;
   if (allocated(slave_assignments))
   {
     slave_assignments.deallocate();
@@ -85,7 +85,7 @@ void adpvm_slave_args::operator -- (void)
     if (argv[counter])
     {
       delete [] argv[counter];
-      argv[counter]=NULL;
+      argv[counter] = NULL;
     }
     counter--;
     strcpy(argv[0],(char*)str(counter));
@@ -107,13 +107,13 @@ adpvm_slave_args::operator char ** ()
  */
 void strcpy(const adpvm_slave_args& _a,const char * s)
 {
-  adpvm_slave_args& a=(adpvm_slave_args&) _a;
+  adpvm_slave_args& a = (adpvm_slave_args&) _a;
   if (((char**)(a))[a.counter])
   {
     delete [] (((char**)(a))[a.counter]);
   }
-  int len=strlen(s);
-  if (len>1000) len=1000;
+  int len = strlen(s);
+  if (len>1000) len = 1000;
   ((char**)(a))[a.counter] = new char[len+1];
   if (a.counter>=a.get_num_args()-1)
   {
@@ -131,19 +131,19 @@ void strcpy(const adpvm_slave_args& _a,const char * s)
 void send_int_to_slaves(const ivector &  x)
 {
   // *********  begin constant send block  *************
-  int sz=x.size();
+  int sz = x.size();
   if (sz != ad_comm::pvm_manager->num_slave_processes)
   {
     cerr << "wrong shape for ivector in send_int_to_slaves" << endl;
     ad_exit(1);
   }
 
-  int ii=x.indexmin();
-  for (int i=1; i<=ad_comm::pvm_manager-> nhost; i++)
+  int ii = x.indexmin();
+  for (int i = 1; i<=ad_comm::pvm_manager-> nhost; i++)
   {
     if (allocated(ad_comm::pvm_manager->slave_assignments(i)))
     {
-      for (int j=ad_comm::pvm_manager->slave_assignments(i).indexmin();
+      for (int j = ad_comm::pvm_manager->slave_assignments(i).indexmin();
                j<=ad_comm::pvm_manager->slave_assignments(i).indexmax();j++)
       {
         int bufid = adpvm_master_cinitsend( PvmDataRaw );
@@ -185,14 +185,14 @@ adpvm_manager::adpvm_manager(int _mode)
   { 
     printf("    %s\n", hostp[i].hi_name);
   }
-  //id.allocate(0,nhost);
-  mode=_mode;
+  // id.allocate(0,nhost);
+  mode = _mode;
   if (mode == 1)  // master
   {
     slave_argv = new adpvm_slave_args(20,20);
     strcpy(*slave_argv,"progname");
     int on1,nopt1;
-    if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-exec",nopt1))>-1)
+    if ( (on1 = option_match(ad_comm::argc,ad_comm::argv,"-exec",nopt1))>-1)
     {
       if (nopt1 !=1 && nopt1 !=2)	    
       {
@@ -239,20 +239,20 @@ typedef char * charptr;
  */
 adpvm_slave_args::adpvm_slave_args(int _num_args,int _length_args)
 {
-  //char ** argv;
-  counter=1;
-  num_args=_num_args;
+  // char ** argv;
+  counter = 1;
+  num_args = _num_args;
   if (allocated(length_args)) 
     length_args.deallocate();
   length_args.allocate(0,num_args-1);
-  length_args=_length_args;
+  length_args = _length_args;
   argv = new charptr[num_args+1];
   argv[0] = new char[20];
   for (int i = 1; i < num_args; i++)
   {
     argv[i] = NULL;
   }
-  argv[num_args]=NULL;
+  argv[num_args] = NULL;
 }
 
 /**
@@ -268,12 +268,12 @@ adpvm_slave_args::~adpvm_slave_args()
       if (argv[i])
       {
         delete [] argv[i];
-        argv[i]=NULL;
+        argv[i] = NULL;
       }
     }
     delete [] argv;
     argv = NULL;
-    num_args=0;
+    num_args = 0;
   }
 }
 
@@ -283,17 +283,17 @@ adpvm_slave_args::~adpvm_slave_args()
  */
 int adpvm_manager::start_slave_processes(const ad_comm& _mp)
 {
-  ad_comm& mp=(ad_comm&) _mp;
+  ad_comm& mp = (ad_comm&) _mp;
   int i,j,check;
   mp.get_slave_assignments();
   if (allocated(id)) id.deallocate();
   id.allocate(1,nhost,1,num_per_host);
   adstring slavedir;
-  int on=0;
-  int noptslave=0;
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-dbg"))>-1)
+  int on = 0;
+  int noptslave = 0;
+  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-dbg"))>-1)
      strcpy(*slave_argv,"-dbg");
-  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-slavedir",noptslave))>-1)
+  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-slavedir",noptslave))>-1)
   {
     if (noptslave !=1)	    
     {
@@ -304,10 +304,10 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
   }   
   else
   {
-    noptslave=0;
+    noptslave = 0;
   }
   int on1,nopt1;
-  if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-mcmc",nopt1))>-1)
+  if ( (on1 = option_match(ad_comm::argc,ad_comm::argv,"-mcmc",nopt1))>-1)
   {
     if (nopt1 !=1)	    
     {
@@ -319,20 +319,20 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
     strcpy((*slave_argv),ad_comm::argv[on1+1]);
   }   
 
-  if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-nohess"))>-1)
+  if ( (on1 = option_match(ad_comm::argc,ad_comm::argv,"-nohess"))>-1)
   {
     strcpy((*slave_argv),"-nohess");
   }   
 
-  if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-lprof"))>-1)
+  if ( (on1 = option_match(ad_comm::argc,ad_comm::argv,"-lprof"))>-1)
   {
     strcpy((*slave_argv),"-lprof");
   }   
-  int gdbflag=option_match(ad_comm::argc,ad_comm::argv,"-gdb");
+  int gdbflag = option_match(ad_comm::argc,ad_comm::argv,"-gdb");
 
   for (i=0; i<nhost; i++)	/* spawn processes on */			
   {				/* all physical machines */
-    for (j=slave_assignments(i+1).indexmin();j<=slave_assignments(i+1).indexmax();
+    for (j = slave_assignments(i+1).indexmin();j<=slave_assignments(i+1).indexmax();
       j++)
     {
       strcpy((*slave_argv),"-slavename");
@@ -345,30 +345,30 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
         strcpy((*slave_argv),ad_comm::argv[on+1]);
       }
 
-      if ( (on1=option_match(ad_comm::argc,ad_comm::argv,
+      if ( (on1 = option_match(ad_comm::argc,ad_comm::argv,
         "-slaveargs",nopt1))>-1)
       {
-        for (int i=on1;i<ad_comm::argc;i++)
+        for (int i = on1;i<ad_comm::argc;i++)
         {
           strcpy(*slave_argv,ad_comm::argv[i]);
         }
       }   
       if (gdbflag<0)
       {
-        check=pvm_spawn(slave_names[1],*slave_argv ,
+        check = pvm_spawn(slave_names[1],*slave_argv ,
           PvmTaskHost /* | PvmTaskDebug */ ,
           hostp[i].hi_name, 1, &(id(i+1,j)));
       }
       else
       {
-        check=pvm_spawn(slave_names[1],*slave_argv ,
+        check = pvm_spawn(slave_names[1],*slave_argv ,
           PvmTaskHost | PvmTaskDebug ,
           hostp[i].hi_name, 1, &(id(i+1,j)));
       }
-      if ( (on1=option_match(ad_comm::argc,ad_comm::argv,
+      if ( (on1 = option_match(ad_comm::argc,ad_comm::argv,
         "-slaveargs",nopt1))>-1)
       {
-        for (int i=on1;i<ad_comm::argc;i++)
+        for (int i = on1;i<ad_comm::argc;i++)
         {
           (*slave_argv)--;
         }
@@ -402,14 +402,14 @@ adpvm_manager::~adpvm_manager(void)
   // clean up slaves -- this stops all the slave processes
   for (i=1; i<=nhost; i++)	/* spawn processes on */			
   {				/* all physical machines */
-    for (int j=slave_assignments(i).indexmin();
+    for (int j = slave_assignments(i).indexmin();
              j<=slave_assignments(i).indexmax();j++)
     {
       pvm_kill(id(i,j));
     }
   }
-  //delete [] slave_argv;
-  //slave_argv=NULL;
+  // delete [] slave_argv;
+  // slave_argv = NULL;
 }
 
 /**
@@ -419,11 +419,11 @@ adpvm_manager::~adpvm_manager(void)
 void send_cf_to_slaves(int nvar,int current_phase,const dvar_vector&  x)
 {
   // *********  begin constant send block  *************
-  //for (int i=1;i<=ad_comm::pvm_manager->nhost;i++)
+  // for (int i = 1;i<=ad_comm::pvm_manager->nhost;i++)
   //{
-  for (int i=1; i<=ad_comm::pvm_manager-> nhost; i++)
+  for (int i = 1; i<=ad_comm::pvm_manager-> nhost; i++)
   {
-    for (int j=ad_comm::pvm_manager->slave_assignments(i+1).indexmin();
+    for (int j = ad_comm::pvm_manager->slave_assignments(i+1).indexmin();
              j<=ad_comm::pvm_manager->slave_assignments(i+1).indexmax();j++)
     {
       int bufid = adpvm_master_cinitsend( PvmDataRaw );
@@ -442,9 +442,9 @@ void send_cf_to_slaves(int nvar,int current_phase,const dvar_vector&  x)
 void send_x_to_slaves(const dvar_vector&  x)
 {
   // *********  begin variable send block  *************
-  for (int i=1; i<=ad_comm::pvm_manager-> nhost; i++)
+  for (int i = 1; i<=ad_comm::pvm_manager-> nhost; i++)
   {
-    for (int j=ad_comm::pvm_manager->slave_assignments(i).indexmin();
+    for (int j = ad_comm::pvm_manager->slave_assignments(i).indexmin();
              j<=ad_comm::pvm_manager->slave_assignments(i).indexmax();j++)
     {
       int bufid = adpvm_master_vinitsend( PvmDataRaw );
@@ -462,13 +462,13 @@ void send_x_to_slaves(const dvar_vector&  x)
 imatrix get_int_from_slaves(void)
 {
   imatrix fslave(1,ad_comm::pvm_manager->nhost,1,ad_comm::pvm_manager->num_per_host);
-  for (int i=1; i<=ad_comm::pvm_manager-> nhost; i++)
+  for (int i = 1; i<=ad_comm::pvm_manager-> nhost; i++)
   {
-    for (int j=ad_comm::pvm_manager->slave_assignments(i).indexmin();
+    for (int j = ad_comm::pvm_manager->slave_assignments(i).indexmin();
              j<=ad_comm::pvm_manager->slave_assignments(i).indexmax();j++)
     {
       // *********  begin constant receive block  *************
-      adpvm_master_crecv(ad_comm::pvm_manager->id(i,j)); //get the values from slave
+      adpvm_master_crecv(ad_comm::pvm_manager->id(i,j)); // get the values from slave
       adpvm_unpack(fslave(i,j));
       adpvm_master_end_creceive();  // have got all the values
     }
@@ -485,13 +485,13 @@ dvar_matrix get_f_from_slaves(void)
 {
   dvar_matrix fslave(1,ad_comm::pvm_manager->nhost,1,ad_comm::pvm_manager->num_per_host);
   // *********  begin variable send block  *************
-  for (int i=1; i<=ad_comm::pvm_manager-> nhost; i++)
+  for (int i = 1; i<=ad_comm::pvm_manager-> nhost; i++)
   {
-    for (int j=ad_comm::pvm_manager->slave_assignments(i).indexmin();
+    for (int j = ad_comm::pvm_manager->slave_assignments(i).indexmin();
              j<=ad_comm::pvm_manager->slave_assignments(i).indexmax();j++)
     {
       // *********  begin variable receive block  *************
-      adpvm_master_vrecv(ad_comm::pvm_manager->id(i,j)); //get the values from slave
+      adpvm_master_vrecv(ad_comm::pvm_manager->id(i,j)); // get the values from slave
       adpvm_unpack(fslave(i,j));
       adpvm_master_end_vreceive();  // have got all the values
     }
@@ -507,7 +507,7 @@ dvar_matrix get_f_from_slaves(void)
 int get_int_from_master(void)
 {
   int x;
-  int ptid=pvm_parent();
+  int ptid = pvm_parent();
   // ***************  begin constant receive block *********************
   adpvm_slave_crecv(ptid);
   adpvm_unpack(x);  
@@ -523,7 +523,7 @@ int get_int_from_master(void)
 void send_int_to_master(int i)
 {
   // ***************  begin send block ***********************************
-  int ptid=pvm_parent();
+  int ptid = pvm_parent();
   adpvm_slave_cinitsend(PvmDataDefault);/* allocate message buffer */	
   adpvm_pack(i);
   adpvm_slave_csend(ptid);/* send buffer to master */
@@ -537,17 +537,17 @@ void send_int_to_master(int i)
 void adpvm_manager::send_variable_values_to_slaves(void)
 {
   int i,j;
-  //for (i=ad_comm::pvm_manager->nhost;i>=1;i--) 
+  // for (i = ad_comm::pvm_manager->nhost;i>=1;i--) 
   //{
-  for (i=1; i<=ad_comm::pvm_manager-> nhost; i++)
+  for (i = 1; i<=ad_comm::pvm_manager-> nhost; i++)
   {
-    for (int j=ad_comm::pvm_manager->slave_assignments(i).indexmin();
+    for (int j = ad_comm::pvm_manager->slave_assignments(i).indexmin();
              j<=ad_comm::pvm_manager->slave_assignments(i).indexmax();j++)
     {
       // *********  begin constant send block  *************
       int bufid = adpvm_master_cinitsend( PvmDataRaw );
       // pack all the variables
-      for (int jj=1;jj<=initial_params::num_initial_params;jj++)
+      for (int jj = 1;jj<=initial_params::num_initial_params;jj++)
       {
         initial_params::varsptr[jj-1]->pvm_pack(); 
       }
@@ -565,10 +565,10 @@ void adpvm_manager::get_variable_values_from_master(void)
 {
   int i,j;
   // ***************  begin constant receive block *************************
-  int ptid=pvm_parent();
+  int ptid = pvm_parent();
   adpvm_slave_crecv(ptid);
   // unpack all the variables
-  for (j=1;j<=initial_params::num_initial_params;j++)
+  for (j = 1;j<=initial_params::num_initial_params;j++)
   {
     initial_params::varsptr[j-1]->pvm_unpack(); 
   }

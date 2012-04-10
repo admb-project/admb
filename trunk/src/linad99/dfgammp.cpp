@@ -310,21 +310,21 @@ dvariable lgam(_CONST prevariable& v1)
   if (value(v1)==1.0)
   {
     // value of lgam(1.0) is 0 and derivative is -phi 
-    value(tmp)=0;
+    value(tmp) = 0;
     gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(value(tmp)),
                                 &(value(v1)),-phi );
   }
   else if (value(v1)==2.0)
   {
     // value of lgam(2.0) is 0 and derivative is 1.0-phi 
-    value(tmp)=0;
+    value(tmp) = 0;
     gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(value(tmp)),
                                 &(value(v1)),1.0-phi );
   }
   else
   {
     // need to deal with this case
-     tmp=private_lgam(v1);
+     tmp = private_lgam(v1);
   }
   return(tmp);
 }
@@ -335,7 +335,7 @@ dvariable lgam(_CONST prevariable& v1)
  * Used to find the Natural log of the gamma function.
  *
  *
- * \n\n Modified from lgamma.cpp (http://www.crbond.com/download/lgamma.cpp),
+ * \n\n Modified from lgamma.cpp (http:// www.crbond.com/download/lgamma.cpp),
  *      an algorithm that was translated by C. Bond
  *      from "Computation of Special Functions", Zhang and Jin, John Wiley and Sons, 1996.
  */  
@@ -381,14 +381,14 @@ df1_one_variable lgam(const df1_one_variable& _x)
     x2 = 1.0/(x0*x0);
     xp = 2.0*PI;
     gl0 = a[9];
-    for (k=8;k>=0;k--)
+    for (k = 8;k>=0;k--)
     {
         gl0 = gl0*x2 + a[k];
     }
     gl = gl0/x0+0.5*log(xp)+(x0-0.5)*log(x0)-x0;
     if (value(x) <= 7.0)
     {
-        for (k=1;k<=n;k++)
+        for (k = 1;k<=n;k++)
         {
             gl -= log(x0-1.0);
             x0 -= 1.0;
@@ -407,9 +407,9 @@ dvariable private_lgam(const dvariable& v)
 
   dvariable tmp;
   df1_one_variable z;
-  z=lgam(va);
+  z = lgam(va);
   double dfz=*z.get_u_x();
-  value(tmp)=value(z);
+  value(tmp) = value(z);
 
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
     &(value(tmp)) ,&(value(v)),dfz);
@@ -423,7 +423,7 @@ dvariable private_lgam(const dvariable& v)
  */
 dvariable cumd_gamma(const dvariable& x, const dvariable& a)
 {
-   dvariable z=igam(a,x);
+   dvariable z = igam(a,x);
    return z;
 }
 
@@ -432,7 +432,7 @@ dvariable cumd_gamma(const dvariable& x, const dvariable& a)
  */
 dvariable gammln(_CONST dvariable& xx)
 {
-   dvariable z=lgam(xx);
+   dvariable z = lgam(xx);
    return z;
 }
 
@@ -441,6 +441,6 @@ dvariable gammln(_CONST dvariable& xx)
  */
 dvariable gammln(const prevariable& z)
 {
-   dvariable y=lgam(z);
+   dvariable y = lgam(z);
    return y;
 }

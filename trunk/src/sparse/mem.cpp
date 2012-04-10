@@ -21,9 +21,9 @@
 #endif
 
 //#else
-  //extern void *malloc();
-  //extern void *calloc();
-  //extern void *realloc();
+  // extern void *malloc();
+  // extern void *calloc();
+  // extern void *realloc();
 //#endif
 
 #ifndef SAFE_MEM_H

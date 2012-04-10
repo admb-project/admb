@@ -34,37 +34,37 @@
 double randpoisson(double xm, BOR_CONST random_number_generator& rng)
 {
   double gammln(double xx);
-  static double sq,alxm,g,oldm=(-1.0);
+  static double sq,alxm,g,oldm = (-1.0);
   
   double em,t,y;
 
   if (xm < 12.0) {
     if (xm != oldm) {
-      oldm=xm;
-      g=exp(-xm);
+      oldm = xm;
+      g = exp(-xm);
     }
     em = -1;
-    t=1.0;
+    t = 1.0;
     do {
       ++em;
-      //t *= ran1(idum);
-      t*=  y=((random_number_generator&) rng).better_rand();
+      // t *= ran1(idum);
+      t*=  y = ((random_number_generator&) rng).better_rand();
     } while (t > g);
   } else {
     if (xm != oldm) {
-      oldm=xm;
-      sq=sqrt(2.0*xm);
-      alxm=log(xm);
-      g=xm*alxm-gammln(xm+1.0);
+      oldm = xm;
+      sq = sqrt(2.0*xm);
+      alxm = log(xm);
+      g = xm*alxm-gammln(xm+1.0);
     }
     do {
       do {
-        //y=tan(PI*ran1(idum));
-        y=tan(PI*((random_number_generator&) rng).better_rand());
-        em=sq*y+xm;
+        // y = tan(PI*ran1(idum));
+        y = tan(PI*((random_number_generator&) rng).better_rand());
+        em = sq*y+xm;
       } while (em < 0.0);
-      em=floor(em);
-      t=0.9*(1.0+y*y)*exp(em*alxm-gammln(em+1.0)-g);
+      em = floor(em);
+      t = 0.9*(1.0+y*y)*exp(em*alxm-gammln(em+1.0)-g);
     } while (((random_number_generator&) rng).better_rand() > t);
     //} while (ran1(idum) > t);
   }
@@ -81,8 +81,8 @@ double randpoisson(double xm, BOR_CONST random_number_generator& rng)
 */
   void dvector::fill_randpoisson(double lambda,BOR_CONST random_number_generator& rng)
   {
-    for (int i=indexmin(); i<=indexmax(); i++)
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
-      elem(i)=randpoisson(lambda,rng);
+      elem(i) = randpoisson(lambda,rng);
     }
   }

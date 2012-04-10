@@ -25,8 +25,8 @@
  */
   smart_counter::smart_counter(void) 
   { 
-    ncopies=new int; 
-    *ncopies=0; 
+    ncopies = new int; 
+    *ncopies = 0; 
   }
 
 /**
@@ -35,7 +35,7 @@
  */
   smart_counter::smart_counter(const smart_counter & sc) 
   { 
-    ncopies=sc.ncopies; 
+    ncopies = sc.ncopies; 
     (*ncopies)++;
   }
 
@@ -48,7 +48,7 @@
     if (*ncopies==0) 
     {
       delete ncopies;
-      ncopies=0;
+      ncopies = 0;
     }
     else
     {
@@ -124,7 +124,7 @@
  */
   matrix_index::~matrix_index()
   {
-    //cout << "in ~matrix_index()" << endl;
+    // cout << "in ~matrix_index()" << endl;
   }
 
 /**
@@ -251,10 +251,10 @@
       "_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   index_min=int(nrl);
-   index_max=int(nrh);
+   index_min = int(nrl);
+   index_max = int(nrh);
 
-   int rs=rowsize();
+   int rs = rowsize();
    if ( (m = new dvector [rs]) == 0)
    {
      cerr << " Error allocating memory in dmatrix contructor" << endl;
@@ -266,7 +266,7 @@
      ad_exit(21);
    }
    m -= int(nrl);
-   for (int i=nrl; i<=nrh; i++)
+   for (int i = nrl; i<=nrh; i++)
    {
      m[i].allocate(ncl[i],nch[i]);
    }
@@ -307,9 +307,9 @@
      return;
    }
 
-   //int imin=nrh.indexmin();
-   //int rmin=nch.rowmin();
-   //int cmin=nch(rmin).indexmin();
+   // int imin = nrh.indexmin();
+   // int rmin = nch.rowmin();
+   // int cmin = nch(rmin).indexmin();
    if ( (nrl.isinteger() && (sl !=nrl.indexmin() || sh !=nrl.indexmax())) ||
        (nch.isinteger() && (sl !=nch.indexmin() || sh !=nch.indexmax())) ||
        (ncl.isinteger() && (sl !=ncl.indexmin() || sh !=ncl.indexmax())) ||
@@ -342,18 +342,18 @@
      ad_exit(1);
    }
 
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new imatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl(i),nrh(i),ncl(i),nch(i));  
    } 
@@ -383,19 +383,19 @@
      ad_exit(1);
    }
 
-   if ( (shape=new three_array_shape(sl,sh))== 0)
+   if ( (shape = new three_array_shape(sl,sh))== 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
 
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= indexmin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl[i],nrh[i],ncl[i],nch[i]);
    }
@@ -413,15 +413,15 @@
      allocate();
      return;
    }
-   index_min=nrl;
-   index_max=nrh;
+   index_min = nrl;
+   index_max = nrh;
    if ( (ncl.isinteger() && (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())) ||
      (nch.isinteger() && (nrl !=nch.indexmin() || nrh !=nch.indexmax())))
    {
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
-   int ss=nrh-nrl+1;
+   int ss = nrh-nrl+1;
    if ( (m = new ivector [ss]) == 0)
    {
      cerr << " Error allocating memory in imatrix contructor\n";
@@ -433,7 +433,7 @@
      ad_exit(21);
    }
    m -= int(nrl);
-   for (int i=nrl; i<=nrh; i++)
+   for (int i = nrl; i<=nrh; i++)
    {
      m[i].allocate(ncl(i),nch(i));
    }
@@ -448,7 +448,7 @@ index_guts::~index_guts()
   if (!(*ncopies)) 
   {
     delete ncopies; 
-    ncopies=NULL;
+    ncopies = NULL;
   }
 }
 
@@ -467,9 +467,9 @@ index_guts::~index_guts()
  */
  void dvector::allocate(const ad_integer& _ncl,const index_type& _nch)
  {
-   int ncl=_ncl;
-   int nch=ad_integer(_nch);
-   int itemp=nch-ncl;
+   int ncl = _ncl;
+   int nch = ad_integer(_nch);
+   int itemp = nch-ncl;
    if (itemp<0)
    {
      allocate();
@@ -481,22 +481,22 @@ index_guts::~index_guts()
      ad_exit(21);
    }
 #if defined(THREAD_SAFE)
-   if ( (shape=new ts_vector_shapex(ncl,nch,v)) == NULL)
+   if ( (shape = new ts_vector_shapex(ncl,nch,v)) == NULL)
 #else
-   if ( (shape=new vector_shapex(ncl,nch,v)) == NULL)
+   if ( (shape = new vector_shapex(ncl,nch,v)) == NULL)
 #endif
    {
      cerr << "Error trying to allocate memory for dvector\n";
      ad_exit(1);
    }
 
-   index_min=ncl;
-   index_max=nch;
+   index_min = ncl;
+   index_max = nch;
    v -= indexmin();
    #ifdef SAFE_INITIALIZE
-     for ( int i=indexmin(); i<=indexmax(); i++)
+     for ( int i = indexmin(); i<=indexmax(); i++)
      {
-       v[i]=0.;
+       v[i] = 0.;
      }
    #endif
  }
@@ -516,9 +516,9 @@ index_guts::~index_guts()
  */
  void ivector::allocate(const ad_integer& _ncl,const index_type& _nch)
  {
-   index_min=_ncl;
-   index_max=ad_integer(_nch);
-   int itemp=index_max-index_min;
+   index_min = _ncl;
+   index_max = ad_integer(_nch);
+   int itemp = index_max-index_min;
    if (itemp<0)
    {
      allocate();
@@ -529,7 +529,7 @@ index_guts::~index_guts()
      cerr << " Error trying to allocate memory for dvector\n";
      ad_exit(21);
    }
-   if ( (shape=new vector_shapex(index_min,index_max,v)) == NULL)
+   if ( (shape = new vector_shapex(index_min,index_max,v)) == NULL)
    {
      cerr << "Error trying to allocate memory for dvector\n";
      ad_exit(1);
@@ -537,9 +537,9 @@ index_guts::~index_guts()
 
    v -= indexmin();
    #ifdef SAFE_INITIALIZE
-     for ( int i=indexmin(); i<=indexmax(); i++)
+     for ( int i = indexmin(); i<=indexmax(); i++)
      {
-       v[i]=0.;
+       v[i] = 0.;
      }
    #endif
  }
@@ -552,7 +552,7 @@ void xxjj(void);
  */
 vector_index::vector_index(BOR_CONST ivector& v) : ivector(v)
 {
-  //xxjj();
+  // xxjj();
 }
 
 void xxjj(void){;}
@@ -564,7 +564,7 @@ void xxjj(void){;}
 index_guts::index_guts()
 {
   ncopies = new int;
-  *ncopies=0;
+  *ncopies = 0;
 }
 
 /**

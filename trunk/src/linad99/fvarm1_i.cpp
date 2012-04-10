@@ -54,7 +54,7 @@ void dvar_matrix::read_from(BOR_CONST uistream& s)
   {  
     int n = rowmin() + rowsize() - 1;
 
-    for (int i=rowmin(); i <= n; i++)
+    for (int i = rowmin(); i <= n; i++)
     {
       s >> (*this)[i];
       if (!s.good()) 
@@ -87,7 +87,7 @@ void dvar_matrix::write_on(BOR_CONST uostream& s) _CONST
   if (allocated(*this))
   {  
     int n = rowmin() + rowsize() - 1;
-    for (int i=rowmin(); i <= n; i++)
+    for (int i = rowmin(); i <= n; i++)
     {
       s << (*this)[i];
       if (!s.good()) 

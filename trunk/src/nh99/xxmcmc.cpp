@@ -9,7 +9,7 @@
 #include <admodel.h>
 
 
-//ofstream tmpof("testmc");
+// ofstream tmpof("testmc");
 
 #if defined(__GNU__) || defined(UNIXKLUDGE) || defined(__SUN__) \
   || defined(__linux__)
@@ -50,11 +50,11 @@ int read_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dvector& h,
   dvector& m,BOR_CONST dvector& s,BOR_CONST dvector& parsave,long int& iseed,BOR_CONST double& size_scale);
 
 void make_preliminary_hist(BOR_CONST dvector& s,BOR_CONST dvector& m,int nsim,BOR_CONST dmatrix& values,
-  dmatrix& hist,BOR_CONST dvector& h,int slots,double total_spread,int probflag=0);
+  dmatrix& hist,BOR_CONST dvector& h,int slots,double total_spread,int probflag = 0);
 
 void add_hist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,BOR_CONST dmatrix& hist,
   dvector& mcmc_values,double llc,BOR_CONST dvector& h,int nslots,
-  double total_spreadd,int probflag=0);
+  double total_spreadd,int probflag = 0);
 
 void add_guihist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,
   BOR_CONST dmatrix& _hist,dvector& mcmcnumber_values,double llc,
@@ -81,7 +81,7 @@ dvector new_probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,B
 void new_probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
   dmatrix& ch, BOR_CONST double& wght,BOR_CONST dvector& _y,double pprobe, random_number_generator& rng);
 
-//void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,double d);
+// void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,double d);
 void  newton_raftery_bayes_estimate_new(double cbf,int ic,BOR_CONST dvector& lk,double d);
 
 void ad_update_mcmc_stats_report
@@ -89,33 +89,33 @@ void ad_update_mcmc_stats_report
 
 void ad_update_function_minimizer_report(int feval,int iter,int phase,
   double fval,double gmax,const char * cbuf);
-void ad_update_mcmc_report(dmatrix& m,int i,int j,int ff=0);
+void ad_update_mcmc_report(dmatrix& m,int i,int j,int ff = 0);
 void ad_update_mcmchist_report(dmatrix& mcmc_values,ivector& number_offsets,
-  dvector& mean_mcmc_values,dvector& h,int ff=0);
+  dvector& mean_mcmc_values,dvector& h,int ff = 0);
 
 void ADSleep(int);
 
 void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
   int restart_flag)
 {
-  uostream * pofs_psave=NULL;
+  uostream * pofs_psave = NULL;
   dmatrix mcmc_display_matrix;
-  //int mcmc_save_index=1; 
-  //int mcmc_wrap_flag=0;
-  //int mcmc_gui_length=10000;
-  int no_sd_mcmc=0;
+  // int mcmc_save_index = 1; 
+  // int mcmc_wrap_flag = 0;
+  // int mcmc_gui_length = 10000;
+  int no_sd_mcmc = 0;
   
   int on2=-1;
-  int nvar1=0;
-  if ( (on2=option_match(ad_comm::argc,ad_comm::argv,"-nosdmcmc"))>-1)
+  int nvar1 = 0;
+  if ( (on2 = option_match(ad_comm::argc,ad_comm::argv,"-nosdmcmc"))>-1)
   {
-    no_sd_mcmc=1;
+    no_sd_mcmc = 1;
     
   }
   if (mcmc2_flag==1)
   {
     initial_params::restore_start_phase();
-    nvar1=initial_params::nvarcalc(); // get the number of active parameters
+    nvar1 = initial_params::nvarcalc(); // get the number of active parameters
   }
 
   if (stddev_params::num_stddev_params==0) 
@@ -125,99 +125,99 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
      return;
   }
   {
-    //ofstream of_bf("testbf");
+    // ofstream of_bf("testbf");
     
-    //if (adjm_ptr) set_labels_for_mcmc();
+    // if (adjm_ptr) set_labels_for_mcmc();
     
     ivector number_offsets;
     dvector lkvector;
-    //double current_bf=0;
+    // double current_bf = 0;
 #if defined(USE_BAYES_FACTORS)
-    double lcurrent_bf=0;
+    double lcurrent_bf = 0;
 #endif
-    double size_scale=1.0;
-    double total_spread=200;
-    //double total_spread=2500;
+    double size_scale = 1.0;
+    double total_spread = 200;
+    // double total_spread = 2500;
     uostream * pofs_sd = NULL;
 
 
-    int nvar_x=0;
+    int nvar_x = 0;
 #if defined(USE_LAPLACE)
     initial_params::set_inactive_random_effects();
-    nvar_x=initial_params::nvarcalc(); 
+    nvar_x = initial_params::nvarcalc(); 
     initial_params::set_active_random_effects();
-    int nvar_re=initial_params::nvarcalc(); 
+    int nvar_re = initial_params::nvarcalc(); 
 #endif
 
 
-    int nvar=initial_params::nvarcalc(); // get the number of active parameters
-    int scov_option=0;
+    int nvar = initial_params::nvarcalc(); // get the number of active parameters
+    int scov_option = 0;
     dmatrix s_covar;
     dvector s_mean;
     int on=-1;
-    int nslots=800;
-    //int nslots=3600;
-    int initial_nsim=4800;
-    int ncor=0;
-    double bfsum=0;
-    int ibfcount=0;
+    int nslots = 800;
+    // int nslots = 3600;
+    int initial_nsim = 4800;
+    int ncor = 0;
+    double bfsum = 0;
+    int ibfcount = 0;
     double llbest;
     double lbmax;
   
-    //int ntmp=0;
-    //if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcscov",ntmp))>-1)
+    // int ntmp = 0;
+    // if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcscov",ntmp))>-1)
     //{
-    scov_option=1;
+    scov_option = 1;
     s_covar.allocate(1,nvar,1,nvar);
     s_mean.allocate(1,nvar);
     s_mean.initialize();
     s_covar.initialize();
 
-    int ndvar=stddev_params::num_stddev_calc();
-    int numdvar=stddev_params::num_stddev_number_calc();
+    int ndvar = stddev_params::num_stddev_calc();
+    int numdvar = stddev_params::num_stddev_number_calc();
     /*
     if (adjm_ptr) 
     {
       mcmc_display_matrix.allocate(1,numdvar,1,mcmc_gui_length);
       number_offsets.allocate(1,numdvar);
-      number_offsets=stddev_params::copy_all_number_offsets();
+      number_offsets = stddev_params::copy_all_number_offsets();
     }
     */
 #if defined(USE_LAPLACE)
     if (mcmc2_flag==0)
     {
       initial_params::set_inactive_random_effects();
-      nvar=initial_params::nvarcalc(); // get the number of active parameters
+      nvar = initial_params::nvarcalc(); // get the number of active parameters
     }
 #endif
     dvector x(1,nvar);
     dvector scale(1,nvar);
     dmatrix values;
-    int have_hist_flag=0;
+    int have_hist_flag = 0;
     initial_params::xinit(x); 
     dvector pen_vector(1,nvar);
     {
       initial_params::reset(dvar_vector(x),pen_vector); 
-      //cout << pen_vector << endl << endl;
+      // cout << pen_vector << endl << endl;
     }
       
-    initial_params::mc_phase=0;
+    initial_params::mc_phase = 0;
     initial_params::stddev_scale(scale,x);
-    initial_params::mc_phase=1;
+    initial_params::mc_phase = 1;
     dvector bmn(1,nvar);
     dvector mean_mcmc_values(1,ndvar);
     dvector s(1,ndvar);
     dvector h(1,ndvar);
-    //dvector h;
+    // dvector h;
     dvector square_mcmc_values(1,ndvar);
     square_mcmc_values.initialize();
     mean_mcmc_values.initialize();
     bmn.initialize();
-    int use_empirical_flag=0;
-    int diag_option=0;
-    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
+    int use_empirical_flag = 0;
+    int diag_option = 0;
+    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
     {
-      diag_option=1;
+      diag_option = 1;
       cout << " Setting covariance matrix to diagonal with entries " << dscale
            << endl;  
     }
@@ -226,31 +226,31 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
     if (!diag_option)
     {
       int on,nopt;
-      int rescale_bounded_flag=0;
-      double rescale_bounded_power=0.5;
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcrb",nopt))>-1)
+      int rescale_bounded_flag = 0;
+      double rescale_bounded_power = 0.5;
+      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcrb",nopt))>-1)
       {
         if (nopt)
         {
-          int iii=atoi(ad_comm::argv[on+1]);
+          int iii = atoi(ad_comm::argv[on+1]);
           if (iii < 1 || iii > 9)
           {
             cerr << " -mcrb argument must be integer between 1 and 9 --"
                     " using default of 5" << endl;
-            rescale_bounded_power=0.5;
+            rescale_bounded_power = 0.5;
           }
           else
-            rescale_bounded_power=iii/10.0;
+            rescale_bounded_power = iii/10.0;
         }
         else
         {
-          rescale_bounded_power=0.5;
+          rescale_bounded_power = 0.5;
         }
-        rescale_bounded_flag=1;
+        rescale_bounded_flag = 1;
       }
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcec"))>-1)
+      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcec"))>-1)
       {
-        use_empirical_flag=1;
+        use_empirical_flag = 1;
       }
       if (use_empirical_flag)
       { 
@@ -296,42 +296,42 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
       {
         read_hessian_matrix_and_scale1(nvar,S,rescale_bounded_power,
           mcmc2_flag);
-        //read_hessian_matrix_and_scale(nvar,S,pen_vector);
+        // read_hessian_matrix_and_scale(nvar,S,pen_vector);
       }
 
       {  // scale covariance matrix for model space
         dmatrix tmp(1,nvar,1,nvar);
-        for (int i=1;i<=nvar;i++)
+        for (int i = 1;i<=nvar;i++)
         {
-          tmp(i,i)=S(i,i)*(scale(i)*scale(i));
-          for (int j=1;j<i;j++)
+          tmp(i,i) = S(i,i)*(scale(i)*scale(i));
+          for (int j = 1;j<i;j++)
           {
-            tmp(i,j)=S(i,j)*(scale(i)*scale(j));
-            tmp(j,i)=tmp(i,j);
+            tmp(i,j) = S(i,j)*(scale(i)*scale(j));
+            tmp(j,i) = tmp(i,j);
           }
         }
-        S=tmp;
+        S = tmp;
       }
     }
     else
     {
       S.initialize();
-      for (int i=1;i<=nvar;i++)
+      for (int i = 1;i<=nvar;i++)
       {
-        S(i,i)=dscale;
+        S(i,i) = dscale;
       }
     }
     
     cout << sort(eigenvalues(S)) << endl;
     dmatrix chd = choleski_decomp( (dscale*2.4/sqrt(double(nvar))) * S);
-    dmatrix chdinv=inv(chd);
+    dmatrix chdinv = inv(chd);
   
     dmatrix symbds(1,2,1,nvar);
     initial_params::set_all_simulation_bounds(symbds);
     ofstream ofs_sd1((char*)(ad_comm::adprogram_name + adstring(".mc2")));
   
     {
-      long int iseed=0;
+      long int iseed = 0;
       int number_sims;
       if (nmcmc<=0)
       {
@@ -341,7 +341,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
       {
         number_sims=  nmcmc;
       }
-      //cin >> iseed;
+      // cin >> iseed;
       if (iseed0<=0)
       {
         iseed=-36519;
@@ -357,8 +357,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
       cout << "Initial seed value " << iseed << endl;
       random_number_generator rng(iseed);
       rng.better_rand();   
-      double lprob=0.0;
-      double lpinv=0.0;
+      double lprob = 0.0;
+      double lpinv = 0.0;
       // get lower and upper bounds
   
       independent_variables y(1,nvar);
@@ -370,17 +370,17 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
 #endif
   
       // read in the mcmc values to date
-      int ii=1;
+      int ii = 1;
       dmatrix hist;
       if (restart_flag)
       {
-        int tmp=0;
+        int tmp = 0;
         if (!no_sd_mcmc) {
           hist.allocate(1,ndvar,-nslots,nslots);
-          tmp=read_hist_data(hist,h,mean_mcmc_values,s,parsave,iseed,
+          tmp = read_hist_data(hist,h,mean_mcmc_values,s,parsave,iseed,
             size_scale);
           values.allocate(1,ndvar,-nslots,nslots);
-          for (int i=1;i<=ndvar;i++)
+          for (int i = 1;i<=ndvar;i++)
           {
             values(i).fill_seqadd(mean_mcmc_values(i)-0.5*total_spread*s(i)
               +.5*h(i),h(i));
@@ -390,16 +390,16 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         {
           iseed=-iseed;
         }
-        double br=rng.better_rand();
-        if (tmp) have_hist_flag=1;
-        chd=size_scale*chd;
-        chdinv=chdinv/size_scale;
+        double br = rng.better_rand();
+        if (tmp) have_hist_flag = 1;
+        chd = size_scale*chd;
+        chdinv = chdinv/size_scale;
       }
       else
       {
         int on=-1;
-        int nopt=0;
-        if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcpin",nopt))>-1)
+        int nopt = 0;
+        if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcpin",nopt))>-1)
         {
           if (nopt)
           {
@@ -425,12 +425,12 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         }
         else
         {
-          ii=1;
+          ii = 1;
           initial_params::copy_all_values(parsave,ii);
         }
       }    
 
-      ii=1;
+      ii = 1;
       initial_params::restore_all_values(parsave,ii);
 
 #if defined(USE_LAPLACE)
@@ -446,61 +446,61 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
       initial_params::xinit(y);   
       double llc=-get_monte_carlo_value(nvar,y);
       llbest=-get_monte_carlo_value(nvar,y);
-      lbmax=llbest;
+      lbmax = llbest;
       // store current mcmc variable values in param_values
-      //dmatrix store_mcmc_values(1,number_sims,1,ndvar);
+      // dmatrix store_mcmc_values(1,number_sims,1,ndvar);
 #if defined(USE_BAYES_FACTORS)
       lkvector.allocate(1,number_sims);
 #endif
       dvector mcmc_values(1,ndvar);
       dvector mcmc_number_values;
-      //if (adjm_ptr) mcmc_number_values.allocate(1,numdvar);
-      int offs=1;
+      // if (adjm_ptr) mcmc_number_values.allocate(1,numdvar);
+      int offs = 1;
       stddev_params::copy_all_values(mcmc_values,offs);
 
       /*
       if (adjm_ptr) 
       {
-        offs=1;
+        offs = 1;
         stddev_params::copy_all_number_values(mcmc_number_values,offs);
       }
       */
-      int change_ball=2500;
+      int change_ball = 2500;
       int nopt;
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcscale",nopt))>-1)
+      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcscale",nopt))>-1)
       {
         if (nopt)
         {
-          int iii=atoi(ad_comm::argv[on+1]);
+          int iii = atoi(ad_comm::argv[on+1]);
           if (iii <=0)
           {
             cerr << " Invalid option following command line option -mcball -- "
               << endl << " ignored" << endl;
           }
           else
-            change_ball=iii;
+            change_ball = iii;
         }
       }
-      int iac=0;
-      int liac=0;
-      int isim=0;
-      int itmp=0;
+      int iac = 0;
+      int liac = 0;
+      int isim = 0;
+      int itmp = 0;
       double logr;
-      int u_option=0;
+      int u_option = 0;
       double ll;
-      int s_option=1;
-      int psvflag=0;
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcu"))>-1)
+      int s_option = 1;
+      int psvflag = 0;
+      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcu"))>-1)
       {
-        u_option=1;
+        u_option = 1;
       }
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcnoscale"))>-1)
+      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcnoscale"))>-1)
       {
-        s_option=0;
+        s_option = 0;
       }
-      //cout << llc << " " << llc << endl;
-      int iac_old=0;
-      int i_old=0;
+      // cout << llc << " " << llc << endl;
+      int iac_old = 0;
+      int i_old = 0;
       
       {
        if (!restart_flag)
@@ -509,12 +509,12 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
            new uostream((char*)(ad_comm::adprogram_name + adstring(".mcm")));
        }
 
-      int mcsave_flag=0;
-      int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
+      int mcsave_flag = 0;
+      int mcrestart_flag = option_match(ad_comm::argc,ad_comm::argv,"-mcr");
 
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)
+      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)
       {
-        int jj=(int)atof(ad_comm::argv[on+1]);
+        int jj = (int)atof(ad_comm::argv[on+1]);
         if (jj <=0)
         {
           cerr << " Invalid option following command line option -mcsave -- " 
@@ -522,7 +522,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         }
         else
         {
-          mcsave_flag=jj;
+          mcsave_flag = jj;
           if ( mcrestart_flag>-1)
           {
             // check that nvar is correct
@@ -534,7 +534,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
                   ad_comm::adprogram_name + adstring(".psv") <<
                   " for mcrestart" <<   endl;
                 cerr << " I am starting a new file " << endl;
-                psvflag=1;
+                psvflag = 1;
               }
               else
               {
@@ -545,7 +545,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
                   cerr << "wrong number of independent variables in" <<
                     ad_comm::adprogram_name + adstring(".psv") <<
                   cerr << " I am starting a new file " << endl;
-                  psvflag=1;
+                  psvflag = 1;
                 }
               }
             }
@@ -567,11 +567,11 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
           {
             cerr << "Error trying to open file" << 
               ad_comm::adprogram_name + adstring(".psv") << endl;
-            mcsave_flag=0;
+            mcsave_flag = 0;
             if (pofs_psave)
             {
               delete pofs_psave;
-              pofs_psave=NULL;
+              pofs_psave = NULL;
             }
           }
           else
@@ -588,27 +588,27 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         }
       }
 
-      double pprobe=0.05;
-      int probe_flag=0;
-      int nopt=0;
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcgrope",nopt))>-1)
+      double pprobe = 0.05;
+      int probe_flag = 0;
+      int nopt = 0;
+      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcgrope",nopt))>-1)
       {
-        probe_flag=1;
+        probe_flag = 1;
         if (nopt)
         {
           char * end;
-          pprobe=strtod(ad_comm::argv[on+1],&end);
+          pprobe = strtod(ad_comm::argv[on+1],&end);
           if (pprobe<=0.00001 || pprobe > .499) 
           {
             cerr << "Invalid argument to option -mcgrope" << endl;
             pprobe=-1.0;
-            probe_flag=0;
+            probe_flag = 0;
           }
         }
       }    
 
-       int java_quit_flag=0;
-       for (int i=1;i<=number_sims;i++)
+       int java_quit_flag = 0;
+       for (int i = 1;i<=number_sims;i++)
        {
          if (user_stop()) break;
          if (java_quit_flag) break;
@@ -616,11 +616,11 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         if (!((i-1)%200))
         {
           double ratio = double(iac)/i;
-          iac_old=iac-iac_old;
-          i_old=i-i_old;
+          iac_old = iac-iac_old;
+          i_old = i-i_old;
           cout << llc << " " << llc << endl;
-          double tratio=double(liac)/200;
-          liac=0;
+          double tratio = double(liac)/200;
+          liac = 0;
           cout << " mcmc sim " << i <<  "  acceptance rate "  
                << ratio << " " << tratio << endl;
 
@@ -648,33 +648,33 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
             {
               chd=.2*chd;
               size_scale*=0.2;
-              chdinv=chdinv/0.2;
+              chdinv = chdinv/0.2;
               cout << "decreasing step size " << ln_det(chd,itmp) << endl;
             }
             if (tratio > .6)  
             {
-              chd=2.*chd;
+              chd = 2.*chd;
               size_scale*=2.0;
-              chdinv=chdinv/2.;
+              chdinv = chdinv/2.;
               cout << "increasing step size " << ln_det(chd,itmp) << endl;
             }
             else if (tratio > .5)  
             {
-              chd=1.5*chd;
+              chd = 1.5*chd;
               size_scale*=1.5;
-              chdinv=chdinv/1.5;
+              chdinv = chdinv/1.5;
               cout << "increasing step size " << ln_det(chd,itmp) << endl;
             }
             else if (tratio > .4)  
             {
-              chd=1.2*chd;
+              chd = 1.2*chd;
               size_scale*=1.2;
-              chdinv=chdinv/1.2;
+              chdinv = chdinv/1.2;
               cout << "increasing step size " << ln_det(chd,itmp) << endl;
             }
           }
         }
-        ii=1;
+        ii = 1;
 #if defined(USE_LAPLACE)
         if (random_effects_flag)
         {
@@ -699,10 +699,10 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         if (!u_option)
         {
           if (!probe_flag)
-            bmn1=bounded_multivariate_normal(nvar,symbds(1),symbds(2),
+            bmn1 = bounded_multivariate_normal(nvar,symbds(1),symbds(2),
               chd,lprob,rng);
           else
-            bmn1=new_probing_bounded_multivariate_normal(
+            bmn1 = new_probing_bounded_multivariate_normal(
 	      nvar,symbds(1),symbds(2),chd,lprob,pprobe,rng);
 
           initial_params::add_random_vector(bmn1);
@@ -723,13 +723,13 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
             initial_params::restore_start_phase(); 
           }
 #endif
-          //cout << ll << " " << llc << endl;
-          double ldiff=lprob-lpinv;
+          // cout << ll << " " << llc << endl;
+          double ldiff = lprob-lpinv;
           logr= ll - ldiff - llc;         
         }
         else
         {
-          dvector bmn1=bounded_multivariate_uniform(nvar,symbds(1),symbds(2),chd,
+          dvector bmn1 = bounded_multivariate_uniform(nvar,symbds(1),symbds(2),chd,
 	    lprob,rng);
           initial_params::add_random_vector(bmn1);
           initial_params::xinit(y);   
@@ -738,19 +738,19 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
           bounded_multivariate_uniform_mcmc(nvar,symbds(1),symbds(2),chd,
 					    lpinv,-1*(chdinv*bmn1),rng);
           ll=-get_monte_carlo_value(nvar,y);
-          double ldiff=lprob-lpinv;
+          double ldiff = lprob-lpinv;
           logr= ll - ldiff - llc;         
         }
-        //cout << logr << endl;
+        // cout << logr << endl;
         // decide whether to accept the new point
         isim++;
-        double br=rng.better_rand();
+        double br = rng.better_rand();
         if (logr>=0 || br< exp(logr) )
         {
-          ii=1;
+          ii = 1;
           // save current parameter values
           initial_params::copy_all_values(parsave,ii);
-          ii=1;
+          ii = 1;
           // save current mcmc values
           stddev_params::copy_all_values(mcmc_values,ii);
 #         if defined(USE_LAPLACE)
@@ -767,16 +767,16 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
           liac++;
           iac++;
         }
-        int mmin=mcmc_values.indexmin();
-        int mmax=mcmc_values.indexmax();
-        double lbf=llbest-llc;
-        if (lbf>lbmax) lbmax=lbf;
-        //of_bf << lbf << endl;
+        int mmin = mcmc_values.indexmin();
+        int mmax = mcmc_values.indexmax();
+        double lbf = llbest-llc;
+        if (lbf>lbmax) lbmax = lbf;
+        // of_bf << lbf << endl;
         bfsum+=exp(lbf);
         ibfcount+=1;
 #if defined(USE_BAYES_FACTORS)
-        lkvector(ibfcount)=llc;
-        //current_bf=1.0/(bfsum/double(ibfcount))*exp(llbest);
+        lkvector(ibfcount) = llc;
+        // current_bf = 1.0/(bfsum/double(ibfcount))*exp(llbest);
         lcurrent_bf=-1.*log(bfsum/double(ibfcount))+llbest;
 #endif
         if (mcsave_flag && (!((i-1)%mcsave_flag)))
@@ -794,7 +794,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         {
           if (!have_hist_flag)
           { 
-            for (ii=mmin;ii<=mmax;ii++)
+            for (ii = mmin;ii<=mmax;ii++)
             {
               (*pofs_sd) << float(mcmc_values(ii));
             }
@@ -808,7 +808,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
               h,nslots,total_spread);
           }
         }
-        //if (scov_option)
+        // if (scov_option)
         {
           ncor++;
           s_mean+=parsave;
@@ -818,15 +818,15 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         {
           if (!have_hist_flag)
           {
-            have_hist_flag=1;
+            have_hist_flag = 1;
             delete pofs_sd;
-            pofs_sd=NULL;
+            pofs_sd = NULL;
             mean_mcmc_values/=double(isim);
             square_mcmc_values/=double(isim);
 #if defined(USE_DDOUBLE)
-            s=2.*sqrt(double(1.e-20)+square_mcmc_values-square(mean_mcmc_values));
+            s = 2.*sqrt(double(1.e-20)+square_mcmc_values-square(mean_mcmc_values));
 #else
-            s=2.*sqrt(1.e-20+square_mcmc_values-square(mean_mcmc_values));
+            s = 2.*sqrt(1.e-20+square_mcmc_values-square(mean_mcmc_values));
 #endif
             make_preliminary_hist(s,mean_mcmc_values,isim,values,hist,h,
               nslots,total_spread);
@@ -836,15 +836,15 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
       if (!no_sd_mcmc && !have_hist_flag)
       {
-        have_hist_flag=1;
+        have_hist_flag = 1;
         delete pofs_sd;
-        pofs_sd=NULL;
+        pofs_sd = NULL;
         mean_mcmc_values/=double(isim);
         square_mcmc_values/=double(isim);
 #if defined(USE_DDOUBLE)
-        s=2.*sqrt(double(1.e-20)+square_mcmc_values-square(mean_mcmc_values));
+        s = 2.*sqrt(double(1.e-20)+square_mcmc_values-square(mean_mcmc_values));
 #else
-        s=2.*sqrt(1.e-20+square_mcmc_values-square(mean_mcmc_values));
+        s = 2.*sqrt(1.e-20+square_mcmc_values-square(mean_mcmc_values));
 #endif
         make_preliminary_hist(s,mean_mcmc_values,isim,values,hist,h,nslots,
           total_spread);
@@ -854,7 +854,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
           print_hist_data(hist,values,h,mean_mcmc_values,s,parsave,iseed,
             size_scale);
       cout << iac/double(isim) << endl;
-      initial_params::mc_phase=0;
+      initial_params::mc_phase = 0;
      /*
       if (adjm_ptr)
       {
@@ -869,7 +869,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
              
     write_empirical_covariance_matrix(ncor,s_mean,s_covar,
       ad_comm::adprogram_name);
-    //newton_raftery_bayes_estimate(current_bf,ibfcount,exp(lkvector),.01);
+    // newton_raftery_bayes_estimate(current_bf,ibfcount,exp(lkvector),.01);
 #if defined(USE_BAYES_FACTORS)
     cout << "log current bayes factor " << lcurrent_bf << endl;
     newton_raftery_bayes_estimate_new(lcurrent_bf,ibfcount,lkvector,.01);
@@ -877,7 +877,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
     if (pofs_psave)
     {
       delete pofs_psave;
-      pofs_psave=NULL;
+      pofs_psave = NULL;
     }
   }
 }
@@ -886,29 +886,29 @@ void write_empirical_covariance_matrix(int ncor,BOR_CONST dvector& s_mean,
   BOR_CONST dmatrix& s_covar,adstring& prog_name)
 {
   uostream ofs((char*)(ad_comm::adprogram_name + adstring(".ecm")));
-  dvector tmp=s_mean/ncor;
-  int nvar=s_mean.indexmax();
-  //ofs << ncor << " " << nvar << endl;
-  dmatrix sigma=s_covar/ncor -outer_prod(tmp,tmp);
+  dvector tmp = s_mean/ncor;
+  int nvar = s_mean.indexmax();
+  // ofs << ncor << " " << nvar << endl;
+  dmatrix sigma = s_covar/ncor -outer_prod(tmp,tmp);
   cout << "In write empirical covariance matrix" << endl;
   cout << sort(eigenvalues(sigma)) << endl;
   dvector std(1,nvar);
   ofs << sigma;
   /*
   int i;
-  for (i=1;i<=nvar;i++)
+  for (i = 1;i<=nvar;i++)
   {
-    std(i)=sigma(i,i);
-    for (int j=1;j<=i;j++)
+    std(i) = sigma(i,i);
+    for (int j = 1;j<=i;j++)
     {
       sigma(i,j)/=sqrt(std(i)*std(j));
-      sigma(j,i)=sigma(i,j);
+      sigma(j,i) = sigma(i,j);
     }
   }
-  for (i=1;i<=nvar;i++)
+  for (i = 1;i<=nvar;i++)
   {
     ofs << setw(10) << setscientific() << std(i);
-    for (int j=1;j<=i;j++)
+    for (int j = 1;j<=i;j++)
     {
       ofs << " " << setfixed() << setw(7) << setprecision(4)
            << sigma(i,j);
@@ -920,7 +920,7 @@ void write_empirical_covariance_matrix(int ncor,BOR_CONST dvector& s_mean,
 
 void read_empirical_covariance_matrix(int nvar,BOR_CONST dmatrix& S,BOR_CONST adstring& prog_name)
 {
-  adstring infile_name=ad_comm::adprogram_name + adstring(".ecm");
+  adstring infile_name = ad_comm::adprogram_name + adstring(".ecm");
   uistream ifs((char*)(infile_name));
   if (!ifs)
   {
@@ -928,8 +928,8 @@ void read_empirical_covariance_matrix(int nvar,BOR_CONST dmatrix& S,BOR_CONST ad
   }
   ifs  >> S;
   /*
-  int ncor=0;
-  int _nvar=0;
+  int ncor = 0;
+  int _nvar = 0;
   ifs >> ncor >> _nvar;
   if (nvar != _nvar)
   {
@@ -938,25 +938,25 @@ void read_empirical_covariance_matrix(int nvar,BOR_CONST dmatrix& S,BOR_CONST ad
   }
   dvector std(1,nvar);
   int i;
-  for (i=1;i<=nvar;i++)
+  for (i = 1;i<=nvar;i++)
   {
     ifs >> std(i);
-    for (int j=1;j<=i;j++)
+    for (int j = 1;j<=i;j++)
     {
       ifs  >> S(i,j);
-      S(j,i)=S(i,j);
+      S(j,i) = S(i,j);
     }
   }
   if (!ifs)
   {
     cerr << "Error reading from file " << infile_name << endl;
   }
-  for (i=1;i<=nvar;i++)
+  for (i = 1;i<=nvar;i++)
   {
-    for (int j=1;j<=i;j++)
+    for (int j = 1;j<=i;j++)
     {
       S(i,j)*=sqrt(std(i)*std(j));
-      S(j,i)=S(i,j);
+      S(j,i) = S(i,j);
     }
   }
  */
@@ -966,13 +966,13 @@ void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST
   dvector& m,BOR_CONST dvector& s,BOR_CONST dvector& parsave,long int iseed,double size_scale)
 {
   ofstream ofs((char*)(ad_comm::adprogram_name + adstring(".hst")));
-  int nsdvars=stddev_params::num_stddev_calc();
+  int nsdvars = stddev_params::num_stddev_calc();
   adstring_array param_labels(1,nsdvars);
   ivector param_size(1,nsdvars);
-  int ii=1;
-  int max_name_length=0;
+  int ii = 1;
+  int max_name_length = 0;
   int i;
-  for (i=0;i< stddev_params::num_stddev_params;i++)
+  for (i = 0;i< stddev_params::num_stddev_params;i++)
   {
     param_labels[ii]=
       stddev_params::stddevptr[i]->label();
@@ -980,23 +980,23 @@ void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST
       stddev_params::stddevptr[i]->size_count();
     if (max_name_length<param_labels[ii].size())
     {
-      max_name_length=param_labels[ii].size();
+      max_name_length = param_labels[ii].size();
     }
     ii++;
   }
-  //int end_stdlabels=ii-1;
+  // int end_stdlabels = ii-1;
 
-  int lc=1;
-  int ic=1;
+  int lc = 1;
+  int ic = 1;
   int nsim;
   ivector mmin(1,nsdvars);
   ivector mmax(1,nsdvars);
 
-  nsim=sum(hist(1));
-  for (i=1;i<=nsdvars;i++)
+  nsim = sum(hist(1));
+  for (i = 1;i<=nsdvars;i++)
   {
-    mmin(i)=minnz(hist(i));
-    mmax(i)=maxnz(hist(i));
+    mmin(i) = minnz(hist(i));
+    mmax(i) = maxnz(hist(i));
   }
   ofs << "# samples sizes" << endl;
   ofs << nsim << endl;
@@ -1018,7 +1018,7 @@ void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST
   ofs << parsave << endl;
   ofs << "#random number seed" << endl;
   ofs << iseed << endl;
-  for (i=1;i<=nsdvars;i++)
+  for (i = 1;i<=nsdvars;i++)
   {
     ofs << "#" << param_labels[lc];
     if (param_size[lc]>1) 
@@ -1030,9 +1030,9 @@ void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST
     if (++ic> param_size[lc])
     {
       lc++;
-      ic=1;
+      ic = 1;
     }
-    for (ii=mmin(i);ii<=mmax(i);ii++)
+    for (ii = mmin(i);ii<=mmax(i);ii++)
     {
       ofs << values(i,ii) << " " << hist(i,ii)/(nsim*h(i)) << endl;
     }
@@ -1046,43 +1046,43 @@ int read_hist_data(BOR_CONST dmatrix& _hist,BOR_CONST dvector& h,
 {
   dmatrix& hist= (dmatrix&) _hist;
   cifstream cif((char*)(ad_comm::adprogram_name + adstring(".hst")));
-  int nsdvars=stddev_params::num_stddev_calc();
-  int nsim=0;
-  int ii=1;
+  int nsdvars = stddev_params::num_stddev_calc();
+  int nsim = 0;
+  int ii = 1;
   int i;
   ivector mmin(1,nsdvars);
   ivector mmax(1,nsdvars);
-  //ofs << # samples sizes << endl;
+  // ofs << # samples sizes << endl;
   cif >> nsim;
   cif >> size_scale;
-  //ofs << # step sizes << endl;
+  // ofs << # step sizes << endl;
   cif >> h;
-  //ofs << # means << endl;
+  // ofs << # means << endl;
   cif >> m;
-  //ofs << # standard devs << endl;
+  // ofs << # standard devs << endl;
   cif >> s;
-  //ofs << # lower bounds << endl;
+  // ofs << # lower bounds << endl;
   cif >> mmin;
-  //ofs << # upper bounds << endl;
+  // ofs << # upper bounds << endl;
   cif >> mmax;
-  int num_vars=0;
+  int num_vars = 0;
   cif >> num_vars;
-  int flag=1;
+  int flag = 1;
   if (num_vars!=parsave.indexmax())
   {
     cerr << "wrong number of independent variables in file"
        << ad_comm::adprogram_name + adstring(".hst") << endl;
-    flag=0;
+    flag = 0;
   }
   if (flag)
   {
   cif >> parsave;
     cif >> iseed;
-    double tmp=0.0;
+    double tmp = 0.0;
     hist.initialize();
-    for (i=1;i<=nsdvars;i++)
+    for (i = 1;i<=nsdvars;i++)
     {
-      for (ii=mmin(i);ii<=mmax(i);ii++)
+      for (ii = mmin(i);ii<=mmax(i);ii++)
       {
         cif >> tmp >> hist(i,ii);
       }
@@ -1094,14 +1094,14 @@ int read_hist_data(BOR_CONST dmatrix& _hist,BOR_CONST dvector& h,
 
 int minnz(BOR_CONST dvector& x)
 {
-  int mmin=x.indexmin();
-  int mmax=x.indexmax();
-  int m=mmin;
-  for (int ii=mmin;ii<=mmax;ii++)
+  int mmin = x.indexmin();
+  int mmax = x.indexmax();
+  int m = mmin;
+  for (int ii = mmin;ii<=mmax;ii++)
   {
     if (x(ii))
     {
-      m=ii;
+      m = ii;
       if (m>mmin) m--;
       break;
     }
@@ -1111,14 +1111,14 @@ int minnz(BOR_CONST dvector& x)
 
 int maxnz(BOR_CONST dvector& x)
 {
-  int mmin=x.indexmin();
-  int mmax=x.indexmax();
-  int m=mmax;
-  for (int ii=mmax;ii>=mmin;ii--)
+  int mmin = x.indexmin();
+  int mmax = x.indexmax();
+  int m = mmax;
+  for (int ii = mmax;ii>=mmin;ii--)
   {
     if (x(ii))
     {
-      m=ii;
+      m = ii;
       if (m<mmax) m++;
       break;
     }
@@ -1132,15 +1132,15 @@ void add_hist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,BOR_CONST dmatrix
   double total_spread,int probflag)
 {
   dmatrix& hist= (dmatrix&) _hist;
-  int nsdvars=stddev_params::num_stddev_calc();
-  for (int ii=1;ii<=nsdvars;ii++)
+  int nsdvars = stddev_params::num_stddev_calc();
+  for (int ii = 1;ii<=nsdvars;ii++)
   {
     int x;
-    double xx=(mcmc_values(ii)-m(ii))/h(ii);
+    double xx = (mcmc_values(ii)-m(ii))/h(ii);
     if (xx>0.0) 
-      x=int (xx+0.5);
+      x = int (xx+0.5);
     else
-      x=int(xx-0.5);
+      x = int(xx-0.5);
   
     if (x<-nslots)
     {
@@ -1148,7 +1148,7 @@ void add_hist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,BOR_CONST dmatrix
     }
     if (x>nslots)
     {
-      x=nslots;
+      x = nslots;
     }
     if (!probflag)
     {
@@ -1167,13 +1167,13 @@ void add_guihist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,
   BOR_CONST dvector& h,int nslots,double total_spread)
 {
   dmatrix& hist= (dmatrix&) _hist;
-  int nsdvars=stddev_params::num_stddev_number_calc();
-  for (int ii=1;ii<=nsdvars;ii++)
+  int nsdvars = stddev_params::num_stddev_number_calc();
+  for (int ii = 1;ii<=nsdvars;ii++)
   {
-    int x=int((mcmcnumber_values(ii)-m(ii))/h(ii));
-    //cout << "xxx = " << xxx << endl;
+    int x = int((mcmcnumber_values(ii)-m(ii))/h(ii));
+    // cout << "xxx = " << xxx << endl;
     char ch;
-    //cin >> ch;
+    // cin >> ch;
   
     if (x<1)
     {
@@ -1181,7 +1181,7 @@ void add_guihist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,
     }
     if (x>nslots)
     {
-      x=nslots;
+      x = nslots;
     }
     {
       hist(ii,x)+=1;
@@ -1195,16 +1195,16 @@ void make_preliminary_hist(BOR_CONST dvector& s,BOR_CONST dvector& m,int nsim,BO
 {
   ADUNCONST(dmatrix,values)
   dvector& h = (dvector&) _h;
-  int nsdvars=stddev_params::num_stddev_calc();
+  int nsdvars = stddev_params::num_stddev_calc();
   dvector mcmc_values(1,nsdvars);
   values.allocate(1,nsdvars,-nslots,nslots);
-  h=total_spread/(2*nslots+1)*s;
+  h = total_spread/(2*nslots+1)*s;
   hist.allocate(1,nsdvars,-nslots,nslots);
   hist.initialize();
   uistream ifs((char*)(ad_comm::adprogram_name + adstring(".mcm")));
   int i;
   double llc;
-  for (i=1;i<=nsdvars;i++)
+  for (i = 1;i<=nsdvars;i++)
   {
     values(i).fill_seqadd(m(i)-.5*total_spread*s(i)+.5*h(i),h(i));
   }
@@ -1221,34 +1221,34 @@ void make_preliminary_hist(BOR_CONST dvector& s,BOR_CONST dvector& m,int nsim,BO
          << ad_comm::adprogram_name + adstring(".mcm");
     return;
   }
-  for (i=1;i<=nsim;i++)
+  for (i = 1;i<=nsim;i++)
   {
     float ftmp;
     int ii;
-    int mmin=mcmc_values.indexmin();
-    int mmax=mcmc_values.indexmax();
-    for (ii=mmin;ii<=mmax;ii++)
+    int mmin = mcmc_values.indexmin();
+    int mmax = mcmc_values.indexmax();
+    for (ii = mmin;ii<=mmax;ii++)
     {
       ifs >>  ftmp;
-      mcmc_values(ii)=double(ftmp);
+      mcmc_values(ii) = double(ftmp);
     }
     ifs >>  ftmp;
-    llc=double(ftmp);
-    for (ii=1;ii<=nsdvars;ii++)
+    llc = double(ftmp);
+    for (ii = 1;ii<=nsdvars;ii++)
     {
       int x;
-      double xx=(mcmc_values(ii)-m(ii))/h(ii);
+      double xx = (mcmc_values(ii)-m(ii))/h(ii);
       if (xx>0.0) 
-        x=int (xx+0.5);
+        x = int (xx+0.5);
       else
-        x=int(xx-0.5);
+        x = int(xx-0.5);
       if (x<-nslots)
       {
         x=-nslots;
       }
       if (x>nslots)
       {
-        x=nslots;
+        x = nslots;
       }
       if (!probflag)
       {
@@ -1340,13 +1340,13 @@ void read_hessian_matrix_and_scale(int nvar, BOR_CONST dmatrix& _SS,BOR_CONST dv
   cifstream cifs((char*)(ad_comm::adprogram_name + adstring(".bvs")));
   dvector tmp(1,nvar);
   cifs >> tmp;
-  dvector wts=pen_vector/.16;
+  dvector wts = pen_vector/.16;
   dvector diag_save(1,nvar);
-  //int neg_flag;
-  //double base=5.0;
-  double dmin=min(eigenvalues(S));
+  // int neg_flag;
+  // double base = 5.0;
+  double dmin = min(eigenvalues(S));
   cout << "Smallest eigenvalue = " << dmin << endl;
-  for (int i=1;i<=nvar;i++)
+  for (int i = 1;i<=nvar;i++)
   {
     if (tmp(i)>0)
     {
@@ -1357,7 +1357,7 @@ void read_hessian_matrix_and_scale(int nvar, BOR_CONST dmatrix& _SS,BOR_CONST dv
 #endif
     }
   }
-  dmin=min(eigenvalues(S));
+  dmin = min(eigenvalues(S));
   if (dmin<0)
   {
     cout << "Smallest eigenvalue = " << dmin << endl;
@@ -1367,37 +1367,37 @@ void read_hessian_matrix_and_scale(int nvar, BOR_CONST dmatrix& _SS,BOR_CONST dv
   do
   {
     cout << wts << endl << endl;
-    for (int i=1;i<=nvar;i++)
+    for (int i = 1;i<=nvar;i++)
     {
-      diag_save(i)=S(i,i);
+      diag_save(i) = S(i,i);
       if (wts(i)>0)
       {
         S(i,i)/=pow(base,wts(i));
         cout << "  wts(" << i << ") = " << wts(i) << endl;
       }
     }
-    dmin=min(eigenvalues(S));
+    dmin = min(eigenvalues(S));
     if (dmin<0)
     {
       cout << "Smallest eigenvalue = " << dmin << endl;
-      neg_flag=1;
-      base=sqrt(base);
+      neg_flag = 1;
+      base = sqrt(base);
       cout << "base = " << base << endl;
-      for (int i=1;i<=nvar;i++)
+      for (int i = 1;i<=nvar;i++)
       {
-        S(i,i)=diag_save(i);
+        S(i,i) = diag_save(i);
       } 
-      dmin=min(eigenvalues(S));
+      dmin = min(eigenvalues(S));
       cout << "XX Smallest eigenvalue = " << dmin << endl;
     }
     else
     {
-      neg_flag=0;
+      neg_flag = 0;
     }
   }
   while (neg_flag);
  */
-  S=inv(S);
+  S = inv(S);
 }
 
 void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& _SS,
@@ -1435,25 +1435,25 @@ void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& _SS,
     cerr << "error reading covariance matrix from model.cov" << endl;
     exit(1);
   }
-  dmatrix Save=1*S;
+  dmatrix Save = 1*S;
   // for mcmc2 option Hessian is already inverted.
   if (mcmc2_flag==0)
   {
-    S=inv(S);
+    S = inv(S);
   }
-  int mmin=S.indexmin();
-  int mmax=S.indexmax();
+  int mmin = S.indexmin();
+  int mmax = S.indexmax();
   dvector diag(mmin,mmax);
   int i,j;
-  for (i=mmin;i<=mmax;i++)
+  for (i = mmin;i<=mmax;i++)
   {
-    diag(i)=sqrt(S(i,i));
+    diag(i) = sqrt(S(i,i));
   }
-  for (i=mmin;i<=mmax;i++)
-    for (j=mmin;j<=mmax;j++)
+  for (i = mmin;i<=mmax;i++)
+    for (j = mmin;j<=mmax;j++)
       S(i,j)/=diag(i)*diag(j);
 
-  dmatrix ch=choleski_decomp(S);
+  dmatrix ch = choleski_decomp(S);
   ofstream ofs("corrtest");
   ofs << "corr matrix" << endl;
   ofs << S << endl;
@@ -1461,42 +1461,42 @@ void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& _SS,
   ofs << ch << endl;
   dmatrix tmp(mmin,mmax,mmin,mmax);
 
-  for (i=mmin;i<=mmax;i++)
-    tmp(i)=ch(i)/norm(ch(i));
+  for (i = mmin;i<=mmax;i++)
+    tmp(i) = ch(i)/norm(ch(i));
   ofs << "tmp" << endl;
   ofs << tmp << endl;
 
-  for (i=mmin;i<=mmax;i++)
+  for (i = mmin;i<=mmax;i++)
     tmp(i)/=tmp(i,i);
  
 
   if (rbp<=0.0 || rbp >= 1.0)
-    rbp=0.5;
-  for (i=mmin;i<=mmax;i++)
+    rbp = 0.5;
+  for (i = mmin;i<=mmax;i++)
   {
-    for (j=mmin;j<=mmax;j++)
+    for (j = mmin;j<=mmax;j++)
     {
       if (tmp(i,j)>=1)
-         tmp(i,j)=pow(tmp(i,j),rbp);
+         tmp(i,j) = pow(tmp(i,j),rbp);
       else if (tmp(i,j)<-1)
          tmp(i,j)=-pow(-tmp(i,j),rbp);
     }
   }      
 
  
-  for (i=mmin;i<=mmax;i++)
+  for (i = mmin;i<=mmax;i++)
     tmp(i)/=norm(tmp(i));
  
-  dmatrix T=tmp*trans(tmp);
+  dmatrix T = tmp*trans(tmp);
 
   ofs << "T-S" << endl;
   ofs << T-S << endl;
 
-  S=T;
+  S = T;
   ofs << "modified corr matrix" << endl;
   ofs << S << endl;
-  for (i=mmin;i<=mmax;i++)
-    for (j=mmin;j<=mmax;j++)
+  for (i = mmin;i<=mmax;i++)
+    for (j = mmin;j<=mmax;j++)
       S(i,j)*=diag(i)*diag(j);
 
   ofs << "modified S" << endl;
@@ -1509,7 +1509,7 @@ void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& _SS,
 
 int user_stop(void)
 {
-  int quit_flag=0;
+  int quit_flag = 0;
 #if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) || defined(linux) || defined(__CYGWIN__)
   if(ctlc_flag)
 #else
@@ -1524,7 +1524,7 @@ int user_stop(void)
     #endif
     if ( c == 'Q') 
     {
-      quit_flag=1;
+      quit_flag = 1;
     }
   }
   return quit_flag;
@@ -1533,15 +1533,15 @@ int user_stop(void)
 /*
 void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,double d)
 {
-  double d1=1.0-d;
-  double cbold=cbf;
+  double d1 = 1.0-d;
+  double cbold = cbf;
   do
   {
     cout << "initial bayes factor" << cbf << endl;
-    double sum1=0;
-    double sum2=0;
+    double sum1 = 0;
+    double sum2 = 0;
 
-    for (int i=1;i<=ic;i++)
+    for (int i = 1;i<=ic;i++)
     {
       sum1+=1./(d1/cbf+d/lk(i));
 
@@ -1550,10 +1550,10 @@ void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,doub
     sum1+=d*ic*cbf;
     sum2+=d*ic;
 
-    cbf=sum1/sum2;
-    double diff=log(cbf)-log(cbold);
+    cbf = sum1/sum2;
+    double diff = log(cbf)-log(cbold);
     if (fabs(diff)<1.e-5) break;
-    cbold=cbf;
+    cbold = cbf;
  }
  while(1);
 }
@@ -1561,26 +1561,26 @@ void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,doub
   
 void  newton_raftery_bayes_estimate_new(double lcbf,int ic,BOR_CONST dvector& lk,double d)
 {
-  double d1=1.0-d;
-  double lcbold=lcbf;
+  double d1 = 1.0-d;
+  double lcbold = lcbf;
   do
   {
     cout << "initial log bayes factor" << lcbf << endl;
-    double sum1=0;
-    double sum2=0;
+    double sum1 = 0;
+    double sum2 = 0;
 
-    for (int i=1;i<=ic;i++)
+    for (int i = 1;i<=ic;i++)
     {
-      double dtmp=exp(lcbf-lk(i));
+      double dtmp = exp(lcbf-lk(i));
       sum1+=1./(d1+d*dtmp);
       sum2+=1./(d1/dtmp+d);
     }
     sum1+=d*ic;
     sum2+=d*ic;
-    lcbf=lcbf+log(sum1)-log(sum2);
-    double diff=lcbf-lcbold;
+    lcbf = lcbf+log(sum1)-log(sum2);
+    double diff = lcbf-lcbold;
     if (fabs(diff)<1.e-5) break;
-    lcbold=lcbf;
+    lcbold = lcbf;
   }
   while(1);
 }
@@ -1589,11 +1589,11 @@ void  newton_raftery_bayes_estimate_new(double lcbf,int ic,BOR_CONST dvector& lk
 void save_mcmc_for_gui(const dvector& mcmc_number_values,
   dmatrix &mdm,int& ids)
 {
-  int imax=mdm.colmax();
-  if (ids>imax) ids=1;
-  int rmax=mcmc_number_values.indexmax();
-  for (int i=1;i<=rmax;i++)
-    mdm(i,ids)=mcmc_number_values(i);
+  int imax = mdm.colmax();
+  if (ids>imax) ids = 1;
+  int rmax = mcmc_number_values.indexmax();
+  for (int i = 1;i<=rmax;i++)
+    mdm(i,ids) = mcmc_number_values(i);
   ids++;
 }
 */
@@ -1601,15 +1601,15 @@ void save_mcmc_for_gui(const dvector& mcmc_number_values,
 void save_mcmc_for_gui1(const dvector& mcmc_values,
   dmatrix &mdm,int& ids,int& iwrap,ivector& no)
 {
-  int rmax=no.indexmax();
-  int imax=mdm.colmax();
+  int rmax = no.indexmax();
+  int imax = mdm.colmax();
   if (ids>imax) 
   {
-    ids=1;
-    iwrap=1;
+    ids = 1;
+    iwrap = 1;
   }
-  for (int i=1;i<=rmax;i++)
-    mdm(i,ids)=mcmc_values(no(i));
+  for (int i = 1;i<=rmax;i++)
+    mdm(i,ids) = mcmc_values(no(i));
   ids++;
 }
 

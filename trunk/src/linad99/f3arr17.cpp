@@ -25,6 +25,6 @@
  */
  void dvar3_array::allocate(void)
  {
-   shape=NULL;
+   shape = NULL;
    t = NULL;
  }

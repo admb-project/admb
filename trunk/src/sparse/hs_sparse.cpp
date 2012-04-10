@@ -16,7 +16,7 @@
 //#include <adrndeff.h>
 #define XCONST const
 #include "hs.h"        
-//pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
+// pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
 
 #define USE_ADJOINT_CODE
 void report_derivatives(const dvar_vector& x);
@@ -25,9 +25,9 @@ static void xxx(int i){;}
 static void xxx(ivector& i){;}
 static void xxxv(ivector& x)
 {
-  int mmin=x.indexmin();
-  int mmax=x.indexmax();
-  for (int i=mmin;i<=mmax;i++)
+  int mmin = x.indexmin();
+  int mmax = x.indexmax();
+  for (int i = mmin;i<=mmax;i++)
   {
     switch (x(i))
     {
@@ -43,8 +43,8 @@ static void xxxv(ivector& x)
     }
   }
 }
-//int varchol(XCONST dvar_hs_smatrix &A, XCONST hs_symbolic &S,dvar_hs_smatrix &L,
- //laplace_approximation_calculator * );
+// int varchol(XCONST dvar_hs_smatrix &A, XCONST hs_symbolic &S,dvar_hs_smatrix &L,
+ // laplace_approximation_calculator * );
 int varchol(XCONST dvar_hs_smatrix &A, XCONST hs_symbolic &S,dvar_hs_smatrix &L,
  dcompressed_triplet & sparse_triplet2);
 
@@ -90,13 +90,13 @@ int cholnew(XCONST hs_smatrix &A, XCONST hs_symbolic &S, hs_smatrix &L);
 
     int n = A.n ; 
     int m = n; 
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
-    dvector & Ax=A.x;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
+    dvector & Ax = A.x;
 
-    ivector & Cp=C.p;
-    ivector & Ci=C.i;
-    dvector & Cx=C.x;
+    ivector & Cp = C.p;
+    ivector & Ci = C.i;
+    dvector & Cx = C.x;
 
     ivector w(0,n-1);                                      // workspace
     w.initialize();
@@ -122,13 +122,13 @@ int cholnew(XCONST hs_smatrix &A, XCONST hs_symbolic &S, hs_smatrix &L);
 
     int n = A.n ; 
     int m = n; 
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
-    dvar_vector & Ax=A.x;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
+    dvar_vector & Ax = A.x;
 
-    ivector & Cp=C.p;
-    ivector & Ci=C.i;
-    dvar_vector & Cx=C.x;
+    ivector & Cp = C.p;
+    ivector & Ci = C.i;
+    dvar_vector & Cx = C.x;
 
     ivector w(0,n-1);                                      // workspace
     w.initialize();
@@ -154,12 +154,12 @@ dmatrix make_dmatrix(dcompressed_triplet& M,int n,int m)
   dmatrix tmp(1,n,1,m);
   tmp.initialize();
   int nz = M.indexmax()- M.indexmin() + 1;
-  for (int i=1;i<=nz;i++)
+  for (int i = 1;i<=nz;i++)
   {
-    tmp(M(1,i),M(2,i))=M(i);
+    tmp(M(1,i),M(2,i)) = M(i);
     if (M(1,i) != M(2,i))
     {
-      tmp(M(2,i),M(1,i))=M(i);
+      tmp(M(2,i),M(1,i)) = M(i);
     }
   }
   return tmp;
@@ -167,17 +167,17 @@ dmatrix make_dmatrix(dcompressed_triplet& M,int n,int m)
 
 dvar_matrix make_sdvar_matrix(dvar_compressed_triplet& M)
 {
-  int n=M.get_n();
-  int m=M.get_m();
+  int n = M.get_n();
+  int m = M.get_m();
   dvar_matrix tmp(1,n,1,m);
   tmp.initialize();
   int nz = M.indexmax()- M.indexmin() + 1;
-  for (int i=1;i<=nz;i++)
+  for (int i = 1;i<=nz;i++)
   {
-    tmp(M(1,i),M(2,i))=M(i);
+    tmp(M(1,i),M(2,i)) = M(i);
     if (M(1,i) != M(2,i))
     {
-      tmp(M(2,i),M(1,i))=M(i);
+      tmp(M(2,i),M(1,i)) = M(i);
     }
   }
   return tmp;
@@ -185,14 +185,14 @@ dvar_matrix make_sdvar_matrix(dvar_compressed_triplet& M)
 
 dvar_matrix make_dvar_matrix(dvar_compressed_triplet& M)
 {
-  int n=M.get_n();
-  int m=M.get_m();
+  int n = M.get_n();
+  int m = M.get_m();
   dvar_matrix tmp(1,n,1,m);
   tmp.initialize();
   int nz = M.indexmax()- M.indexmin() + 1;
-  for (int i=1;i<=nz;i++)
+  for (int i = 1;i<=nz;i++)
   {
-    tmp(M(1,i),M(2,i))=M(i);
+    tmp(M(1,i),M(2,i)) = M(i);
   }
   return tmp;
 }
@@ -200,31 +200,31 @@ dvar_matrix make_dvar_matrix(dvar_compressed_triplet& M)
 
 dmatrix make_dmatrix(dcompressed_triplet& M)
 {
-  int n=M.get_n();
-  int m=M.get_m();
+  int n = M.get_n();
+  int m = M.get_m();
   dmatrix tmp(1,n,1,m);
   tmp.initialize();
   int nz = M.indexmax()- M.indexmin() + 1;
-  for (int i=1;i<=nz;i++)
+  for (int i = 1;i<=nz;i++)
   {
-    tmp(M(1,i),M(2,i))=M(i);
+    tmp(M(1,i),M(2,i)) = M(i);
   }
   return tmp;
 }
 
 dmatrix make_sdmatrix(dcompressed_triplet& M)
 {
-  int n=M.get_n();
-  int m=M.get_m();
+  int n = M.get_n();
+  int m = M.get_m();
   dmatrix tmp(1,n,1,m);
   tmp.initialize();
   int nz = M.indexmax()- M.indexmin() + 1;
-  for (int i=1;i<=nz;i++)
+  for (int i = 1;i<=nz;i++)
   {
-    tmp(M(1,i),M(2,i))=M(i);
+    tmp(M(1,i),M(2,i)) = M(i);
     if (M(1,i) != M(2,i))
     {
-      tmp(M(2,i),M(1,i))=M(i);
+      tmp(M(2,i),M(1,i)) = M(i);
     }
   }
   return tmp;
@@ -234,12 +234,12 @@ dvar_matrix make_dvar_matrix(dvar_compressed_triplet& M,int n,int m)
 {
   dvar_matrix tmp(1,n,1,m);
   int nz = M.indexmax()- M.indexmin() + 1;
-  for (int i=1;i<=nz;i++)
+  for (int i = 1;i<=nz;i++)
   {
-    tmp(M(1,i),M(2,i))=M(i);
+    tmp(M(1,i),M(2,i)) = M(i);
     if (M(1,i) != M(2,i))
     {
-      tmp(M(2,i),M(1,i))=M(i);
+      tmp(M(2,i),M(1,i)) = M(i);
     }
   }
   return tmp;
@@ -260,14 +260,14 @@ hs_smatrix::hs_smatrix(int _n, XCONST dcompressed_triplet &_M)
 
     // Matrix in triplet format
     ivector Ti(1,nz);
-    ivector tmp=(M.get_coords())(1);
-    Ti=tmp-1;
+    ivector tmp = (M.get_coords())(1);
+    Ti = tmp-1;
     Ti.shift(0);
 
 
     ivector Tj(1,nz);
-    ivector tmp1=(M.get_coords())(2);
-    Tj=tmp1-1;
+    ivector tmp1 = (M.get_coords())(2);
+    Tj = tmp1-1;
     Tj.shift(0);
 
     dvector Tx(1,nz);
@@ -277,7 +277,7 @@ hs_smatrix::hs_smatrix(int _n, XCONST dcompressed_triplet &_M)
     if( min(Ti)<0 || max(Ti)>(n-1) || max(Tj)>(n-1) || min(Tj)<0) 
       cout << "Error #2 in hs_smatrix::hs_smatrix" << endl;
 
-    int lower_tri=0;
+    int lower_tri = 0;
     for (k = 0 ; k < nz ; k++)
       lower_tri += Ti[k]>Tj[k];
     if(lower_tri) 
@@ -288,9 +288,9 @@ hs_smatrix::hs_smatrix(int _n, XCONST dcompressed_triplet &_M)
     p = 0;
     i.allocate(0,nzmax-1);
     x.allocate(0,nzmax-1);
-    ivector & Cp=p; 
-    ivector & Ci=i; 
-    dvector & Cx=x; 
+    ivector & Cp = p; 
+    ivector & Ci = i; 
+    dvector & Cx = x; 
 
     ivector w(0,n-1);                                        // get workspace 
     w.initialize();
@@ -321,14 +321,14 @@ hs_smatrix::hs_smatrix(const dcompressed_triplet &_M)
 
     // Matrix in triplet format
     ivector Ti(1,nz);
-    ivector tmp=(M.get_coords())(1);
-    Ti=tmp-1;
+    ivector tmp = (M.get_coords())(1);
+    Ti = tmp-1;
     Ti.shift(0);
 
 
     ivector Tj(1,nz);
-    ivector tmp1=(M.get_coords())(2);
-    Tj=tmp1-1;
+    ivector tmp1 = (M.get_coords())(2);
+    Tj = tmp1-1;
     Tj.shift(0);
 
     dvector Tx(1,nz);
@@ -338,7 +338,7 @@ hs_smatrix::hs_smatrix(const dcompressed_triplet &_M)
     if( min(Ti)<0 || max(Ti)>(n-1) || max(Tj)>(m-1) || min(Tj)<0) 
       cout << "Error #2 in hs_smatrix::hs_smatrix" << endl;
 
-    int lower_tri=0;
+    int lower_tri = 0;
     for (k = 0 ; k < nz ; k++)
       lower_tri += Ti[k]>Tj[k];
     if(lower_tri) 
@@ -349,9 +349,9 @@ hs_smatrix::hs_smatrix(const dcompressed_triplet &_M)
     p = 0;
     i.allocate(0,nzmax-1);
     x.allocate(0,nzmax-1);
-    ivector & Cp=p; 
-    ivector & Ci=i; 
-    dvector & Cx=x; 
+    ivector & Cp = p; 
+    ivector & Ci = i; 
+    dvector & Cx = x; 
 
     ivector w(0,m-1);                                        // get workspace 
     w.initialize();
@@ -381,14 +381,14 @@ dvar_hs_smatrix::dvar_hs_smatrix(int _n, XCONST dvar_compressed_triplet &_M)
 
     // Matrix in triplet format
     ivector Ti(1,nz);
-    ivector tmp=(M.get_coords())(1);
-    Ti=tmp-1;
+    ivector tmp = (M.get_coords())(1);
+    Ti = tmp-1;
     Ti.shift(0);
 
 
     ivector Tj(1,nz);
-    ivector tmp1=(M.get_coords())(2);
-    Tj=tmp1-1;
+    ivector tmp1 = (M.get_coords())(2);
+    Tj = tmp1-1;
     Tj.shift(0);
 
     dvar_vector Tx(1,nz);
@@ -398,7 +398,7 @@ dvar_hs_smatrix::dvar_hs_smatrix(int _n, XCONST dvar_compressed_triplet &_M)
     if( min(Ti)<0 || max(Ti)>(n-1) || max(Tj)>(n-1) || min(Tj)<0) 
       cout << "Error #2 in dvar_hs_smatrix::dvar_hs_smatrix" << endl;
 
-    int lower_tri=0;
+    int lower_tri = 0;
     for (k = 0 ; k < nz ; k++)
       lower_tri += Ti[k]>Tj[k];
     if(lower_tri) 
@@ -409,9 +409,9 @@ dvar_hs_smatrix::dvar_hs_smatrix(int _n, XCONST dvar_compressed_triplet &_M)
     p = 0;
     i.allocate(0,nzmax-1);
     x.allocate(0,nzmax-1);
-    ivector & Cp=p; 
-    ivector & Ci=i; 
-    dvar_vector & Cx=x; 
+    ivector & Cp = p; 
+    ivector & Ci = i; 
+    dvar_vector & Cx = x; 
 
     ivector w(0,n-1);                                        // get workspace 
     w.initialize();
@@ -482,14 +482,14 @@ void hs_smatrix::reallocate(int _nzmax)         //
 {
 
     ivector tmp(0,nzmax-1);
-    tmp=i;
+    tmp = i;
     i.deallocate();
     i.allocate(0,_nzmax-1);             
     i(nzmax,_nzmax-1) = 0;
     i(0,nzmax-1) = tmp;
 
     dvector tmpx(0,nzmax-1);
-    tmpx=x;
+    tmpx = x;
     x.deallocate();
     x.allocate(0,_nzmax-1);             
     x(nzmax,_nzmax-1) = 0.0;
@@ -502,14 +502,14 @@ void dvar_hs_smatrix::reallocate(int _nzmax)         //
 {
 
     ivector tmp(0,nzmax-1);
-    tmp=i;
+    tmp = i;
     i.deallocate();
     i.allocate(0,_nzmax-1);             
     i(nzmax,_nzmax-1) = 0;
     i(0,nzmax-1) = tmp;
 
     dvar_vector tmpx(0,nzmax-1);
-    tmpx=x;
+    tmpx = x;
     x.deallocate();
     x.allocate(0,_nzmax-1);             
     x(nzmax,_nzmax-1) = 0.0;
@@ -546,7 +546,7 @@ hs_smatrix::hs_smatrix(XCONST hs_smatrix &A)         //
     x = A.x;    
 }
 
-hs_smatrix& hs_smatrix::operator=(XCONST hs_smatrix &A)         
+hs_smatrix& hs_smatrix::operator = (XCONST hs_smatrix &A)         
 {
     if((n != A.n)||(nzmax != A.nzmax))
       cout << "hs_smatrix&: lhs and rhs dimensions differ" << endl; 
@@ -560,7 +560,7 @@ hs_smatrix& hs_smatrix::operator=(XCONST hs_smatrix &A)
     return *this;
 }
 
-dvar_hs_smatrix& dvar_hs_smatrix::operator=(XCONST dvar_hs_smatrix &A)         
+dvar_hs_smatrix& dvar_hs_smatrix::operator = (XCONST dvar_hs_smatrix &A)         
 {
     if((n != A.n)||(nzmax != A.nzmax))
       cout << "dvar_hs_smatrix&: lhs and rhs dimensions differ" << endl; 
@@ -600,7 +600,7 @@ dvar_hs_smatrix::dvar_hs_smatrix(XCONST hs_symbolic &S)
 // For determinant calculations: sum(log(diag(L)). 
 double hs_smatrix::trace_log(int & sgn)  
 {
-  sgn=0;
+  sgn = 0;
   double ret = 0.0;
   for (int j = 0 ; j < n ; j++)
   {
@@ -608,7 +608,7 @@ double hs_smatrix::trace_log(int & sgn)
     {
       if(j==i[k])
       {
-        //cout << " k = "  << k << "  x[k] = " << x[k] << endl;
+        // cout << " k = "  << k << "  x[k] = " << x[k] << endl;
         if(x[k]>0.0)
           ret += log(x[k]);
         else if (x[k]<0.0)
@@ -627,13 +627,13 @@ double hs_smatrix::trace_log(int & sgn)
     }
     if (sgn==-1) break;
   }
-  sgn=sgn%2; 
+  sgn = sgn%2; 
   return(ret);
 }
 
 dvariable dvar_hs_smatrix::trace_log(int & sgn)  
 {
-  sgn=0;
+  sgn = 0;
   dvariable ret = 0.0;
   for (int j = 0 ; j < n ; j++)
   {
@@ -641,7 +641,7 @@ dvariable dvar_hs_smatrix::trace_log(int & sgn)
     {
       if(j==i[k])
       {
-        //cout << " k = "  << k << "  x[k] = " << x[k] << endl;
+        // cout << " k = "  << k << "  x[k] = " << x[k] << endl;
         if(x[k]>0.0)
           ret += log(x[k]);
         else if (x[k]<0.0)
@@ -660,7 +660,7 @@ dvariable dvar_hs_smatrix::trace_log(int & sgn)
     }
     if (sgn==-1) break;
   }
-  sgn=sgn%2; 
+  sgn = sgn%2; 
   return(ret);
 }
 dvariable ln_det(XCONST dvar_hs_smatrix& M)
@@ -707,7 +707,7 @@ int hs_smatrix::print_pattern()
     {
       for (int k = 0 ; k < n ; k++)
       {
-        int tmp=0;
+        int tmp = 0;
         for (int kk = p[k] ; kk < p[k+1] ; kk++)
           tmp += (i[kk]==j); 
         if(tmp)        
@@ -748,8 +748,8 @@ int hs_smatrix::print_trans_zeros()
     n = A.n;
     top = n;
 
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
 
     CS_MARK (w, k) ;                    /* mark node k as visited */
     for (p = Ap [k] ; p < Ap [k+1] ; p++)
@@ -776,8 +776,8 @@ int hs_smatrix::print_trans_zeros()
     n = A.n;
     top = n;
 
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
 
     CS_MARK (w, k) ;                    /* mark node k as visited */
     for (p = Ap [k] ; p < Ap [k+1] ; p++)
@@ -803,14 +803,14 @@ void hs_symperm(XCONST hs_smatrix &_A, XCONST ivector &pinv, hs_smatrix &C)
     int i, j, p, q, i2, j2;
 
     int n = A.n ; 
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
-    dvector & Ax=A.x;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
+    dvector & Ax = A.x;
     ivector w(0,n-1);                        /* get workspace */
     w.initialize();
-    ivector & Cp=C.p; 
-    ivector & Ci=C.i; 
-    dvector & Cx=C.x; 
+    ivector & Cp = C.p; 
+    ivector & Ci = C.i; 
+    dvector & Cx = C.x; 
 
     for (j = 0 ; j < n ; j++)                /* count entries in each column of C */
     {
@@ -845,14 +845,14 @@ void hs_symperm(XCONST dvar_hs_smatrix &_A, XCONST ivector &pinv, dvar_hs_smatri
     int i, j, p, q, i2, j2;
 
     int n = A.n ; 
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
-    dvar_vector & Ax=A.x;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
+    dvar_vector & Ax = A.x;
     ivector w(0,n-1);                        /* get workspace */
     w.initialize();
-    ivector & Cp=C.p; 
-    ivector & Ci=C.i; 
-    dvar_vector & Cx=C.x; 
+    ivector & Cp = C.p; 
+    ivector & Ci = C.i; 
+    dvar_vector & Cx = C.x; 
 
     for (j = 0 ; j < n ; j++)                /* count entries in each column of C */
     {
@@ -896,7 +896,7 @@ int chol(XCONST hs_smatrix& A,
          XCONST hs_symbolic& T,
          hs_smatrix& L)
 {
-    //ADUNCONST(hs_symbolic,S)
+    // ADUNCONST(hs_symbolic,S)
     hs_symbolic& S = (hs_symbolic&)T;
     double d, lki;
     int top, i, p, k, n;
@@ -907,22 +907,22 @@ int chol(XCONST hs_smatrix& A,
     ivector s(0,n-1);                                   // int workspace
     dvector x(0,n-1) ;                        // double workspace
 
-    ivector & cp=S.cp;
-    ivector & pinv=S.pinv;
-    ivector & parent=S.parent;
+    ivector & cp = S.cp;
+    ivector & pinv = S.pinv;
+    ivector & parent = S.parent;
 
     hs_smatrix C(A);
     C = A;                        
     if(S.pinv[0]!=-1)
       hs_symperm(A,pinv,C);
 
-    ivector & Cp=C.p;
-    ivector & Ci=C.i;
-    dvector & Cx=C.x;
+    ivector & Cp = C.p;
+    ivector & Ci = C.i;
+    dvector & Cx = C.x;
 
-    ivector & Lp=L.p;
-    ivector & Li=L.i;
-    dvector & Lx=L.x;
+    ivector & Lp = L.p;
+    ivector & Li = L.i;
+    dvector & Lx = L.x;
 
     for (k = 0 ; k < n ; k++) 
       Lp [k] = c [k] = cp [k] ;
@@ -946,8 +946,8 @@ int chol(XCONST hs_smatrix& A,
             x [i] = 0 ;                        // clear x for k+1st iteration
 
 
-            int Lpi1=Lp[i]+1;
-            int ci=c[i];
+            int Lpi1 = Lp[i]+1;
+            int ci = c[i];
             for (p = Lpi1; p < ci ; p++)
             {
                 x [Li [p]] -= Lx [p] * lki ;
@@ -976,7 +976,7 @@ int chol(XCONST hs_smatrix& A,
 int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
   ivector & nxcount)
 {
-    //ADUNCONST(hs_symbolic,S)
+    // ADUNCONST(hs_symbolic,S)
     hs_symbolic& S = (hs_symbolic&)T;
     double d, lki;
     int top, i, p, k, n;
@@ -988,22 +988,22 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
     //dvector x(0,n-1) ;                        /* double workspace */
     dmatrix x(0,n-1,1,nxcount) ;                        /* double workspace */
 
-    ivector & cp=S.cp;
-    ivector & pinv=S.pinv;
-    ivector & parent=S.parent;
+    ivector & cp = S.cp;
+    ivector & pinv = S.pinv;
+    ivector & parent = S.parent;
 
     hs_smatrix C(A);
     C = A;                        
     if(S.pinv[0]!=-1)
       hs_symperm(A,pinv,C);
 
-    ivector & Cp=C.p;
-    ivector & Ci=C.i;
-    dvector & Cx=C.x;
+    ivector & Cp = C.p;
+    ivector & Ci = C.i;
+    dvector & Cx = C.x;
 
-    ivector & Lp=L.p;
-    ivector & Li=L.i;
-    dvector & Lx=L.x;
+    ivector & Lp = L.p;
+    ivector & Li = L.i;
+    dvector & Lx = L.x;
 
   // counters
     ivector Licount(Li.indexmin(),Li.indexmax());
@@ -1013,10 +1013,10 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
     ivector xcount(x.indexmin(),x.indexmax());
     xcount.initialize();
 
-    int dcount=0;
-    int pcount=0;
-    int icount=0;
-    int lkicount=0;
+    int dcount = 0;
+    int pcount = 0;
+    int icount = 0;
+    int lkicount = 0;
 
     for (k = 0 ; k < n ; k++) 
     {
@@ -1148,17 +1148,17 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
 /* solve Lx=b where x and b are dense.  x=b on input, solution on output. */
  dvector cs_lsolve (XCONST hs_smatrix & LL, XCONST dvector &y)
 {
-    //ADUNCONST(hs_smatrix,L)
+    // ADUNCONST(hs_smatrix,L)
     hs_smatrix& L = (hs_smatrix&)LL;
     int p, j, n;
 
     n = L.n; 
     dvector x(0,n-1);
-    x=y;
+    x = y;
 
-    ivector & Lp=L.p;
-    ivector & Li=L.i;
-    dvector & Lx=L.x;
+    ivector & Lp = L.p;
+    ivector & Li = L.i;
+    dvector & Lx = L.x;
 
     for (j = 0 ; j < n ; j++)
     {
@@ -1173,17 +1173,17 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
 
  dvar_vector cs_lsolve (XCONST dvar_hs_smatrix & LL, XCONST dvar_vector &y)
 {
-    //ADUNCONST(dvar_hs_smatrix,L)
+    // ADUNCONST(dvar_hs_smatrix,L)
     dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
     int p, j, n;
 
     n = L.n; 
     dvar_vector x(0,n-1);
-    x=y;
+    x = y;
 
-    ivector & Lp=L.p;
-    ivector & Li=L.i;
-    dvar_vector & Lx=L.x;
+    ivector & Lp = L.p;
+    ivector & Li = L.i;
+    dvar_vector & Lx = L.x;
 
     for (j = 0 ; j < n ; j++)
     {
@@ -1198,17 +1198,17 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
 
  dvar_vector cs_lsolve (XCONST dvar_hs_smatrix & LL, XCONST dvector &y)
 {
-    //ADUNCONST(dvar_hs_smatrix,L)
+    // ADUNCONST(dvar_hs_smatrix,L)
     dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
     int p, j, n;
 
     n = L.n; 
     dvar_vector x(0,n-1);
-    x=y;
+    x = y;
 
-    ivector & Lp=L.p;
-    ivector & Li=L.i;
-    dvar_vector & Lx=L.x;
+    ivector & Lp = L.p;
+    ivector & Li = L.i;
+    dvar_vector & Lx = L.x;
 
     for (j = 0 ; j < n ; j++)
     {
@@ -1224,16 +1224,16 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
 /* solve L'x=b where x and b are dense.  x=b on input, solution on output. */
  dvector cs_ltsolve (XCONST hs_smatrix &LL, XCONST dvector &y)
 {
-    //ADUNCONST(hs_smatrix,L)
+    // ADUNCONST(hs_smatrix,L)
     hs_smatrix& L = (hs_smatrix&)LL;
     int p, j, n;
 
     n = L.n; 
     dvector x(0,n-1);
-    x=y;
-    ivector & Lp=L.p;
-    ivector & Li=L.i;
-    dvector & Lx=L.x;
+    x = y;
+    ivector & Lp = L.p;
+    ivector & Li = L.i;
+    dvector & Lx = L.x;
 
     for (j = n-1 ; j >= 0 ; j--)
     {
@@ -1248,16 +1248,16 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
 
  dvar_vector cs_ltsolve (XCONST dvar_hs_smatrix &LL, XCONST dvar_vector &y)
 {
-    //ADUNCONST(dvar_hs_smatrix,L)
+    // ADUNCONST(dvar_hs_smatrix,L)
     dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
     int p, j, n;
 
     n = L.n; 
     dvar_vector x(0,n-1);
-    x=y;
-    ivector & Lp=L.p;
-    ivector & Li=L.i;
-    dvar_vector & Lx=L.x;
+    x = y;
+    ivector & Lp = L.p;
+    ivector & Li = L.i;
+    dvar_vector & Lx = L.x;
 
     for (j = n-1 ; j >= 0 ; j--)
     {
@@ -1280,9 +1280,9 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
     int j, p, nz = 0 ;
 
     int n = A.n ; 
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
-    dvector & Ax=A.x;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
+    dvector & Ax = A.x;
 
     for (j = 0 ; j < n ; j++)
     {
@@ -1306,9 +1306,9 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
     int j, p, nz = 0 ;
 
     int n = A.n ; 
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
-    dvar_vector & Ax=A.x;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
+    dvar_vector & Ax = A.x;
 
     for (j = 0 ; j < n ; j++)
     {
@@ -1331,13 +1331,13 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
  int cs_scatter(XCONST hs_smatrix &AA, int j, double beta, ivector &w, dvector &x, int mark,
     hs_smatrix &C, int nz)
 {
-    //ADUNCONST(hs_smatrix,A)
+    // ADUNCONST(hs_smatrix,A)
     hs_smatrix& A = (hs_smatrix&)AA;
     int i, p;
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
-    dvector & Ax=A.x;
-    ivector & Ci=C.i;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
+    dvector & Ax = A.x;
+    ivector & Ci = C.i;
     for (p = Ap [j] ; p < Ap [j+1] ; p++)
     {
         i = Ai [p] ;                            /* A(i,j) is nonzero */
@@ -1353,14 +1353,14 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
 }
 
 
- //int cs_scatter(XCONST hs_smatrix &A, int j, double beta, ivector &w, dvector &x, int mark,
+ // int cs_scatter(XCONST hs_smatrix &A, int j, double beta, ivector &w, dvector &x, int mark,
  //    hs_smatrix &C, int nz)
  //{
  //    int i, p;
- //    ivector & Ap=A.p;
- //    ivector & Ai=A.i;
- //    dvector & Ax=A.x;
- //    ivector & Ci=C.i;
+ //    ivector & Ap = A.p;
+ //    ivector & Ai = A.i;
+ //    dvector & Ax = A.x;
+ //    ivector & Ci = C.i;
  //    for (p = Ap [j] ; p < Ap [j+1] ; p++)
  //    {
  //        i = Ai [p] ;                            /* A(i,j) is nonzero */
@@ -1380,13 +1380,13 @@ int tmpxchol1(XCONST hs_smatrix &A, XCONST hs_symbolic& T, hs_smatrix &L,
 int cs_scatter(XCONST dvar_hs_smatrix &AA, int j, double beta, ivector &w, dvar_vector &x, int mark,
     dvar_hs_smatrix &C, int nz)
 {
-    //ADUNCONST(dvar_hs_smatrix,A)
+    // ADUNCONST(dvar_hs_smatrix,A)
     dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
     int i, p;
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
-    dvar_vector & Ax=A.x;
-    ivector & Ci=C.i;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
+    dvar_vector & Ax = A.x;
+    ivector & Ci = C.i;
     for (p = Ap [j] ; p < Ap [j+1] ; p++)
     {
         i = Ai [p] ;                            /* A(i,j) is nonzero */
@@ -1404,8 +1404,8 @@ int cs_scatter(XCONST dvar_hs_smatrix &AA, int j, double beta, ivector &w, dvar_
 /* C = alpha*A + beta*B */
 hs_smatrix cs_add(XCONST hs_smatrix &AA, XCONST hs_smatrix &BB, double alpha, double beta)
 {
-    //ADUNCONST(hs_smatrix,A)
-    //ADUNCONST(hs_smatrix,B)
+    // ADUNCONST(hs_smatrix,A)
+    // ADUNCONST(hs_smatrix,B)
     hs_smatrix& A = (hs_smatrix&)AA;
     hs_smatrix& B = (hs_smatrix&)BB;
     int p, j, nz = 0, anz,m, n, bnz;
@@ -1419,7 +1419,7 @@ hs_smatrix cs_add(XCONST hs_smatrix &AA, XCONST hs_smatrix &BB, double alpha, do
     m = A.m ; anz = A.p [A.n] ;
     n = B.n ; 
 
-    ivector & Bp=B.p;
+    ivector & Bp = B.p;
     bnz = Bp [n] ;
     ivector w(0,m-1);                                             // Workspace
     w.initialize();
@@ -1429,9 +1429,9 @@ hs_smatrix cs_add(XCONST hs_smatrix &AA, XCONST hs_smatrix &BB, double alpha, do
     x.initialize();
 
     hs_smatrix C(n,anz + bnz);
-    ivector & Cp=C.p;
-    ivector & Ci=C.i;
-    dvector & Cx=C.x;
+    ivector & Cp = C.p;
+    ivector & Ci = C.i;
+    dvector & Cx = C.x;
 
     for (j = 0 ; j < n ; j++)
     {
@@ -1442,15 +1442,15 @@ hs_smatrix cs_add(XCONST hs_smatrix &AA, XCONST hs_smatrix &BB, double alpha, do
           Cx [p] = x [Ci [p]] ;
     }
     Cp [n] = nz ;                       /* finalize the last column of C */
-    //cs_sprealloc (C, 0) ;               Ignoring this. Must be picked up
+    // cs_sprealloc (C, 0) ;               Ignoring this. Must be picked up
     return (C) ;     
 }
 
 
 dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &AA, XCONST dvar_hs_smatrix &BB, double alpha, double beta)
 {
-    //ADUNCONST(dvar_hs_smatrix,A)
-    //ADUNCONST(dvar_hs_smatrix,B)
+    // ADUNCONST(dvar_hs_smatrix,A)
+    // ADUNCONST(dvar_hs_smatrix,B)
     dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
     dvar_hs_smatrix& B = (dvar_hs_smatrix&)BB;
     int p, j, nz = 0, anz,m, n, bnz;
@@ -1464,7 +1464,7 @@ dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &AA, XCONST dvar_hs_smatrix &BB, d
     m = A.m ; anz = A.p [A.n] ;
     n = B.n ; 
 
-    ivector & Bp=B.p;
+    ivector & Bp = B.p;
     bnz = Bp [n] ;
     ivector w(0,m-1);                                             // Workspace
     w.initialize();
@@ -1474,9 +1474,9 @@ dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &AA, XCONST dvar_hs_smatrix &BB, d
     x.initialize();
 
     dvar_hs_smatrix C(n,anz + bnz);
-    ivector & Cp=C.p;
-    ivector & Ci=C.i;
-    dvar_vector & Cx=C.x;
+    ivector & Cp = C.p;
+    ivector & Ci = C.i;
+    dvar_vector & Cx = C.x;
 
     for (j = 0 ; j < n ; j++)
     {
@@ -1487,7 +1487,7 @@ dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &AA, XCONST dvar_hs_smatrix &BB, d
           Cx [p] = x [Ci [p]] ;
     }
     Cp [n] = nz ;                       /* finalize the last column of C */
-    //cs_sprealloc (C, 0) ;               Ignoring this. Must be picked up
+    // cs_sprealloc (C, 0) ;               Ignoring this. Must be picked up
     return (C) ;     
 }
 
@@ -1539,7 +1539,7 @@ ivector cs_amd (XCONST hs_smatrix &A)  /* Implements only order == 1: Chol*/
     
     t = cnz + cnz/5 + 2*n ;                    // add elbow room to C 
     C.reallocate(t);
-    ivector & Cp=C.p;
+    ivector & Cp = C.p;
 
     ivector len(0,n);
     len.initialize();
@@ -1557,7 +1557,7 @@ ivector cs_amd (XCONST hs_smatrix &A)  /* Implements only order == 1: Chol*/
     for (k = 0 ; k < n ; k++) len [k] = Cp [k+1] - Cp [k] ;
     len [n] = 0 ;
     nzmax = C.nzmax ;
-    ivector & Ci=C.i;
+    ivector & Ci = C.i;
     for (i = 0 ; i <= n ; i++)
     {
         head [i] = -1 ;                            /* degree list i is empty */
@@ -1872,7 +1872,7 @@ ivector cs_amd (XCONST dvar_hs_smatrix &A)  /* Implements only order == 1: Chol*
     
     t = cnz + cnz/5 + 2*n ;                    // add elbow room to C 
     C.reallocate(t);
-    ivector & Cp=C.p;
+    ivector & Cp = C.p;
 
     ivector len(0,n);
     len.initialize();
@@ -1890,7 +1890,7 @@ ivector cs_amd (XCONST dvar_hs_smatrix &A)  /* Implements only order == 1: Chol*
     for (k = 0 ; k < n ; k++) len [k] = Cp [k+1] - Cp [k] ;
     len [n] = 0 ;
     nzmax = C.nzmax ;
-    ivector & Ci=C.i;
+    ivector & Ci = C.i;
     for (i = 0 ; i <= n ; i++)
     {
         head [i] = -1 ;                            /* degree list i is empty */
@@ -2189,8 +2189,8 @@ ivector cs_etree (XCONST hs_smatrix &_A)
     int i, k, p, inext;
 
     int n = A.n ;
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
 
     ivector parent(0,n-1);
     parent.initialize();
@@ -2221,8 +2221,8 @@ ivector cs_etree (XCONST dvar_hs_smatrix &_A)
     int i, k, p, inext;
 
     int n = A.n ;
-    ivector & Ap=A.p;
-    ivector & Ai=A.i;
+    ivector & Ap = A.p;
+    ivector & Ai = A.i;
 
     ivector parent(0,n-1);
     parent.initialize();
@@ -2326,8 +2326,8 @@ ivector cs_counts (XCONST hs_smatrix &A, XCONST ivector &parent, XCONST ivector 
         for ( ; j != -1 && first [j] == -1 ; j = parent [j]) first [j] = k ;
     }
 
-    ivector & ATp=AT.p;
-    ivector & ATi=AT.i;
+    ivector & ATp = AT.p;
+    ivector & ATi = AT.i;
 
     for (i = 0 ; i < n ; i++) ancestor [i] = i ; /* each node in its own set */
     for (k = 0 ; k < n ; k++)
@@ -2381,8 +2381,8 @@ ivector cs_counts (XCONST dvar_hs_smatrix &A, XCONST ivector &parent, XCONST ive
         for ( ; j != -1 && first [j] == -1 ; j = parent [j]) first [j] = k ;
     }
 
-    ivector & ATp=AT.p;
-    ivector & ATi=AT.i;
+    ivector & ATp = AT.p;
+    ivector & ATi = AT.i;
 
     for (i = 0 ; i < n ; i++) ancestor [i] = i ; /* each node in its own set */
     for (k = 0 ; k < n ; k++)
@@ -2420,7 +2420,7 @@ ivector cs_pinv (XCONST ivector &p, int n)
 }
 
 /* Constructor that does symbolic Cholesky  */
- //hs_symbolic::hs_symbolic(int _n, XCONST dmatrix &T, int order)                
+ // hs_symbolic::hs_symbolic(int _n, XCONST dmatrix &T, int order)                
  //{
  //
  //    if (order != 0 && order != 1 )
@@ -2473,7 +2473,7 @@ hs_symbolic::hs_symbolic(void)
 hs_symbolic::hs_symbolic(XCONST dcompressed_triplet &_T, int order)                
 {
   ADUNCONST(dcompressed_triplet,T)
-  int _n=T.get_n();
+  int _n = T.get_n();
 
     if (order != 0 && order != 1 )
     {
@@ -2514,7 +2514,7 @@ hs_symbolic::hs_symbolic(XCONST dcompressed_triplet &_T, int order)
 hs_symbolic::hs_symbolic(XCONST dvar_compressed_triplet &_T, int order)                
 {
   ADUNCONST(dvar_compressed_triplet,T)
-  int _n=T.get_n();
+  int _n = T.get_n();
 
     if (order != 0 && order != 1 )
     {
@@ -2569,8 +2569,8 @@ dcompressed_triplet::dcompressed_triplet(int mmin,int mmax,int _n,int _m)
 
 void dvar_compressed_triplet::allocate(int mmin,int mmax,int _n,int _m)
 {
-  n=_n;
-  m=_m;
+  n = _n;
+  m = _m;
   coords.allocate(1,2,mmin,mmax);
   x.allocate(mmin,mmax);
 }
@@ -2585,8 +2585,8 @@ void dvar_compressed_triplet::deallocate(void)
 
 void dcompressed_triplet::allocate(int mmin,int mmax,int _n,int _m)
 {
-  n=_n;
-  m=_m;
+  n = _n;
+  m = _m;
   coords.allocate(1,2,mmin,mmax);
   x.allocate(mmin,mmax);
 }
@@ -2602,9 +2602,9 @@ void dcompressed_triplet::deallocate(void)
 
 istream & operator >> (istream & is,dcompressed_triplet & M)
 {
-  int mmin=M.indexmin();
-  int mmax=M.indexmax();
-  for (int i=mmin;i<=mmax;i++)
+  int mmin = M.indexmin();
+  int mmax = M.indexmax();
+  for (int i = mmin;i<=mmax;i++)
   {
     is >> M(i,1);
     is >> M(i,2);
@@ -2615,9 +2615,9 @@ istream & operator >> (istream & is,dcompressed_triplet & M)
 
 istream & operator >> (istream & is,dvar_compressed_triplet & M)
 {
-  int mmin=M.indexmin();
-  int mmax=M.indexmax();
-  for (int i=mmin;i<=mmax;i++)
+  int mmin = M.indexmin();
+  int mmax = M.indexmax();
+  for (int i = mmin;i<=mmax;i++)
   {
     is >> M(i,1);
     is >> M(i,2);
@@ -2628,15 +2628,15 @@ istream & operator >> (istream & is,dvar_compressed_triplet & M)
 
 hs_smatrix * return_choleski_decomp(dcompressed_triplet & st)
 {
-  //ADUNCONST(dmatrix,st)
-  int n=st.get_n();
+  // ADUNCONST(dmatrix,st)
+  int n = st.get_n();
 
   hs_smatrix HS(n,st);  // Convert triplet to working format
 
   hs_symbolic S(st,1);         // Fill reducing row-col permutation                 
   hs_smatrix * PL = new hs_smatrix(S);              // Allocates cholesky factor
 
-  int ierr=chol(HS,S,*PL);                  // Does numeric factorization
+  int ierr = chol(HS,S,*PL);                  // Does numeric factorization
 
   PL->set_symbolic(S);
 
@@ -2645,15 +2645,15 @@ hs_smatrix * return_choleski_decomp(dcompressed_triplet & st)
 
 dvar_hs_smatrix * return_choleski_decomp(dvar_compressed_triplet & st)
 {
-  //ADUNCONST(dmatrix,st)
-  int n=st.get_n();
+  // ADUNCONST(dmatrix,st)
+  int n = st.get_n();
 
   dvar_hs_smatrix HS(n,st);  // Convert triplet to working format
 
   hs_symbolic S(st,1);         // Fill reducing row-col permutation                 
   dvar_hs_smatrix * PL = new dvar_hs_smatrix(S);              // Allocates cholesky factor
 
-  int ierr=chol(HS,S,*PL);                  // Does numeric factorization
+  int ierr = chol(HS,S,*PL);                  // Does numeric factorization
 
   PL->set_symbolic(S);
 
@@ -2662,22 +2662,22 @@ dvar_hs_smatrix * return_choleski_decomp(dvar_compressed_triplet & st)
 
 dvector return_choleski_decomp_solve(dcompressed_triplet & st,dvector& eps)
 {
-  //ADUNCONST(dmatrix,st)
-  int n=st.get_n();
+  // ADUNCONST(dmatrix,st)
+  int n = st.get_n();
 
   hs_smatrix HS(n,st);  // Convert triplet to working format
 
   hs_symbolic S(st,1);         // Fill reducing row-col permutation                 
   hs_smatrix L(S);              // Allocates cholesky factor
 
-  int ierr=chol(HS,S,L);                  // Does numeric factorization
+  int ierr = chol(HS,S,L);                  // Does numeric factorization
 
   dvector x(0,n-1);
   eps.shift(0);
   x = cs_ipvec(S.pinv, eps);
   eps.shift(1);
   x = cs_lsolve(L,x);
-  //x = cs_ltsolve(L,x);
+  // x = cs_ltsolve(L,x);
   x = cs_pvec(S.pinv,x);
   x.shift(1);
   return x;
@@ -2685,16 +2685,16 @@ dvector return_choleski_decomp_solve(dcompressed_triplet & st,dvector& eps)
 
 dvector return_choleski_factor_solve(hs_smatrix * PL,dvector& eps)
 {
-  //ADUNCONST(dmatrix,st)
+  // ADUNCONST(dmatrix,st)
   hs_smatrix& L= *PL;
-  int n=L.m;
+  int n = L.m;
   hs_symbolic & S = L.sym; 
   dvector x(0,n-1);
   eps.shift(0);
   x = cs_ipvec(S.pinv, eps);
   eps.shift(1);
   x = cs_lsolve(L,x);
-  //x = cs_ltsolve(L,x);
+  // x = cs_ltsolve(L,x);
   x = cs_pvec(S.pinv,x);
   x.shift(1);
   return x;
@@ -2702,16 +2702,16 @@ dvector return_choleski_factor_solve(hs_smatrix * PL,dvector& eps)
 
 dvar_vector return_choleski_factor_solve(dvar_hs_smatrix * PL,dvector& eps)
 {
-  //ADUNCONST(dmatrix,st)
+  // ADUNCONST(dmatrix,st)
   dvar_hs_smatrix& L= *PL;
-  int n=L.m;
+  int n = L.m;
   hs_symbolic & S = L.sym; 
   dvar_vector x(0,n-1);
   eps.shift(0);
   x = cs_ipvec(S.pinv, eps);
   eps.shift(1);
   x = cs_lsolve(L,x);
-  //x = cs_ltsolve(L,x);
+  // x = cs_ltsolve(L,x);
   x = cs_pvec(S.pinv,x);
   x.shift(1);
   return x;
@@ -2721,13 +2721,13 @@ dvar_vector return_choleski_factor_solve(dvar_hs_smatrix * PL,dvector& eps)
 dvector solve(dcompressed_triplet & st,dmatrix & Hess,
   dvector& grad)
 {
-  //ADUNCONST(dmatrix,st)
-  int nz=st.indexmax();
-  int n=Hess.indexmax();
+  // ADUNCONST(dmatrix,st)
+  int nz = st.indexmax();
+  int n = Hess.indexmax();
   // fill up compressed triplet with nonzero entries of the Hessian
-  for (int i=1;i<=nz;i++)
+  for (int i = 1;i<=nz;i++)
   {
-    st(i)=Hess(st(1,i),st(2,i));
+    st(i) = Hess(st(1,i),st(2,i));
   }
 
   hs_smatrix HS(n,st);  // Convert triplet to working format
@@ -2751,27 +2751,27 @@ dvector solve(dcompressed_triplet & st,dmatrix & Hess,
 dvector solve(dcompressed_triplet & st,dmatrix & Hess,
   dvector& grad,hs_symbolic& S)
 {
-  //ADUNCONST(dmatrix,st)
-  int nz=st.indexmax();
-  int n=Hess.indexmax();
+  // ADUNCONST(dmatrix,st)
+  int nz = st.indexmax();
+  int n = Hess.indexmax();
   // fill up compressed triplet with nonzero entries of the Hessian
-  for (int i=1;i<=nz;i++)
+  for (int i = 1;i<=nz;i++)
   {
-    st(i)=Hess(st(1,i),st(2,i));
+    st(i) = Hess(st(1,i),st(2,i));
   }
 
   hs_smatrix HS(n,st);  // Convert triplet to working format
 
-  //hs_symbolic S(st,1);         // Fill reducing row-col permutation                 
+  // hs_symbolic S(st,1);         // Fill reducing row-col permutation                 
   hs_smatrix L(S);              // Allocates cholesky factor
-  //hs_smatrix L1(S);              // Allocates cholesky factor
+  // hs_smatrix L1(S);              // Allocates cholesky factor
 
-  //chol(HS,S,L);                  // Does numeric factorization
+  // chol(HS,S,L);                  // Does numeric factorization
   ivector nxcount;
   chol(HS,S,L);                  // Does numeric factorization
-  //tmpxchol(HS,S,L,nxcount);                  // Does numeric factorization
+  // tmpxchol(HS,S,L,nxcount);                  // Does numeric factorization
 
-  //cout << norm2(L.get_x()-L1.get_x()) << endl;
+  // cout << norm2(L.get_x()-L1.get_x()) << endl;
   dvector x(0,n-1);
   grad.shift(0);
   x = cs_ipvec(S.pinv, grad);
@@ -2787,8 +2787,8 @@ dvector solve(dcompressed_triplet & st,dmatrix & Hess,
   {
     ADUNCONST(dcompressed_triplet,st)
     ADUNCONST(dvector,grad)
-    int n=st.get_n();
-    //int n=Hess.indexmax();
+    int n = st.get_n();
+    // int n = Hess.indexmax();
     // fill up compressed triplet with nonzero entries of the Hessian
   
     hs_smatrix HS(n,st);  // Convert triplet to working format
@@ -2813,8 +2813,8 @@ dvector solve(dcompressed_triplet & st,dmatrix & Hess,
   {
     ADUNCONST(dcompressed_triplet,st)
     ADUNCONST(dvector,grad)
-    int n=st.get_n();
-    //int n=Hess.indexmax();
+    int n = st.get_n();
+    // int n = Hess.indexmax();
     // fill up compressed triplet with nonzero entries of the Hessian
   
     hs_smatrix HS(n,st);  // Convert triplet to working format
@@ -2822,7 +2822,7 @@ dvector solve(dcompressed_triplet & st,dmatrix & Hess,
     hs_smatrix L(S);              // Allocates cholesky factor
   
     ivector nxcount;
-    ierr=chol(HS,S,L);     // 0 error 1 OK        Does numeric factorization
+    ierr = chol(HS,S,L);     // 0 error 1 OK        Does numeric factorization
   
     dvector x(0,n-1);
   if (ierr)
@@ -2855,116 +2855,116 @@ int allocated(const dvar_compressed_triplet & _st)
 }
 dvariable ln_det(dvar_compressed_triplet& VM)
 {
-  int n=VM.get_n();
+  int n = VM.get_n();
   dvar_hs_smatrix H(n,VM);  
   hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
   dvar_hs_smatrix L(S);              // Allocates cholesky factor
-  int ierr=chol(H,S,L);                  // Does numeric factorization
+  int ierr = chol(H,S,L);                  // Does numeric factorization
   if (ierr==0)
   {
     cerr << "Error matrix not positrive definite in chol" << endl;
     ad_exit(1);
   }
   return 2.0*ln_det(L);
-  //return L.x(0);
+  // return L.x(0);
 }
 
 
 dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S)
 {
-  int n=VM.get_n();
+  int n = VM.get_n();
   dvar_hs_smatrix H(n,VM);  
-  //hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
+  // hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
   dvar_hs_smatrix L(S);              // Allocates cholesky factor
-  int ierr=chol(H,S,L);                  // Does numeric factorization
+  int ierr = chol(H,S,L);                  // Does numeric factorization
   if (ierr==0)
   {
     cerr << "Error matrix not positive definite in chol" << endl;
     ad_exit(1);
   }
   return 2.0*ln_det(L);
-  //return L.x(0);
+  // return L.x(0);
 }
 
 
- int check_flag=0;
+ int check_flag = 0;
 
 dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S,
   dcompressed_triplet& s)
 {
   RETURN_ARRAYS_INCREMENT(); 
-  int n=VM.get_n();
+  int n = VM.get_n();
   dvar_hs_smatrix H(n,VM);  
-  //hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
+  // hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
   dvar_hs_smatrix L(S);              // Allocates cholesky factor
   int ierr;
   if (check_flag==0)
   {
-    ierr=varchol(H,S,L,s);   
+    ierr = varchol(H,S,L,s);   
   }
   else
   {
-    ierr=chol(H,S,L);   
+    ierr = chol(H,S,L);   
   }
   if (ierr==0)
   {
     cerr << "Error matrix not positive definite in chol" << endl;
     ad_exit(1);
   }
-  //set_gradstack_flag("AAC");
+  // set_gradstack_flag("AAC");
   dvariable tmp= 2.0*ln_det(L);
   RETURN_ARRAYS_DECREMENT(); 
   return tmp;
-  //return L.x(0);
+  // return L.x(0);
 }
 
 
 double ln_det(const dcompressed_triplet& VVM,
               const hs_symbolic& T)
 {
-  //ADUNCONST(dcompressed_triplet,VM)
-  //ADUNCONST(hs_symbolic,S)
+  // ADUNCONST(dcompressed_triplet,VM)
+  // ADUNCONST(hs_symbolic,S)
   dcompressed_triplet& VM = (dcompressed_triplet&)VVM;
   hs_symbolic& S = (hs_symbolic&)T;
-  int n=VM.get_n();
+  int n = VM.get_n();
   hs_smatrix H(n,VM);  
-  //hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
+  // hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
   hs_smatrix L(S);              // Allocates cholesky factor
-  int ierr=chol(H,S,L);                  // Does numeric factorization
+  int ierr = chol(H,S,L);                  // Does numeric factorization
   if (ierr==0)
   {
     cerr << "Error matrix not positrive definite in chol" << endl;
     ad_exit(1);
   }
   return 2.0*ln_det(L);
-  //return L.x(0);
+  // return L.x(0);
 }
 
 
 double ln_det(const dcompressed_triplet& VVM)
 {
-  //ADUNCONST(dcompressed_triplet,VM)
+  // ADUNCONST(dcompressed_triplet,VM)
   dcompressed_triplet& VM = (dcompressed_triplet&)VVM;
-  int n=VM.get_n();
+  int n = VM.get_n();
   hs_smatrix H(n,VM);  
   hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
   hs_smatrix L(S);              // Allocates cholesky factor
-  int ierr=chol(H,S,L);                  // Does numeric factorization
+  int ierr = chol(H,S,L);                  // Does numeric factorization
   if (ierr==0)
   {
     cerr << "Error matrix not positrive definite in chol" << endl;
     ad_exit(1);
   }
   return 2.0*ln_det(L);
-  //return L.x(0);
+  // return L.x(0);
 }
 
 
 int cholnew(XCONST hs_smatrix &AA, XCONST hs_symbolic &T, hs_smatrix &LL)
 {
-    //ADUNCONST(hs_symbolic,S)
-    //ADUNCONST(hs_smatrix,L)
-    //ADUNCONST(hs_smatrix,A)
+    // ADUNCONST(hs_symbolic,S)
+    // ADUNCONST(hs_smatrix,L)
+    // ADUNCONST(hs_smatrix,A)
     hs_symbolic& S = (hs_symbolic&)T;
     hs_smatrix& A = (hs_smatrix&)AA;
     hs_smatrix& L = (hs_smatrix&)LL;
@@ -2978,22 +2978,22 @@ int cholnew(XCONST hs_smatrix &AA, XCONST hs_symbolic &T, hs_smatrix &LL)
     dvector x(0,n-1) ;                        /* double workspace */
     double xcount=0.0;                        /* double workspace */
 
-    ivector & cp=S.cp;
-    ivector & pinv=S.pinv;
-    ivector & parent=S.parent;
+    ivector & cp = S.cp;
+    ivector & pinv = S.pinv;
+    ivector & parent = S.parent;
 
     hs_smatrix C(A);
     C = A;                        
     if(S.pinv[0]!=-1)
       hs_symperm(A,pinv,C);
 
-    ivector & Cp=C.p;
-    ivector & Ci=C.i;
-    dvector & Cx=C.x;
+    ivector & Cp = C.p;
+    ivector & Ci = C.i;
+    dvector & Cx = C.x;
 
-    ivector & Lp=L.p;
-    ivector & Li=L.i;
-    dvector & Lx=L.x;
+    ivector & Lp = L.p;
+    ivector & Li = L.i;
+    dvector & Lx = L.x;
 
     for (k = 0 ; k < n ; k++) 
       Lp [k] = c [k] = cp [k] ;
@@ -3018,8 +3018,8 @@ int cholnew(XCONST hs_smatrix &AA, XCONST hs_symbolic &T, hs_smatrix &LL)
             x [i] = 0 ;                        /* clear x for k+1st iteration */
 
 
-            int Lpi1=Lp[i]+1;
-            int ci=c[i];
+            int Lpi1 = Lp[i]+1;
+            int ci = c[i];
             if (Lpi1<ci)
             {
               myacc(p,Lpi1,ci,Li,x,Lx,lki);
@@ -3050,16 +3050,16 @@ static void dfcholeski_sparse(void);
 
 int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,dvar_hs_smatrix &LL,
  dcompressed_triplet & sparse_triplet2)
- //laplace_approximation_calculator * lapprox)
+ // laplace_approximation_calculator * lapprox)
 {
-  RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
-  //ADUNCONST(hs_symbolic,S)
-  //ADUNCONST(dvar_hs_smatrix,L)
-  //ADUNCONST(dvar_hs_smatrix,A)
+  RETURN_ARRAYS_INCREMENT(); // Need this statement because the function
+  // ADUNCONST(hs_symbolic,S)
+  // ADUNCONST(dvar_hs_smatrix,L)
+  // ADUNCONST(dvar_hs_smatrix,A)
     hs_symbolic& S = (hs_symbolic&)T;
     dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
     dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
-  int icount=0;
+  int icount = 0;
   double lki;
   double d;
   int top, i, p, k, n;
@@ -3068,25 +3068,25 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,dvar_hs_smatrix &L
   ivector s(0,n-1);                                   /* int workspace */
   dvector x(0,n-1) ;                        /* double workspace */
 
-  ivector & cp=S.cp;
-  ivector & pinv=S.pinv;
-  ivector & parent=S.parent;
+  ivector & cp = S.cp;
+  ivector & pinv = S.pinv;
+  ivector & parent = S.parent;
 
   dvar_hs_smatrix C(A);
   C = A;                        
   if(S.pinv[0]!=-1)
     hs_symperm(A,pinv,C);
 
-  ivector & Cp=C.p;
-  ivector & Ci=C.i;
-  dvector Cx=value(C.x);
+  ivector & Cp = C.p;
+  ivector & Ci = C.i;
+  dvector Cx = value(C.x);
 
-  ivector & Lp=L.p;
-  ivector & Li=L.i;
-  dvector Lx=value(L.x);
-  int txcount=0;
-  int lkicount=0;
-  int tccount=0;
+  ivector & Lp = L.p;
+  ivector & Li = L.i;
+  dvector Lx = value(L.x);
+  int txcount = 0;
+  int lkicount = 0;
+  int tccount = 0;
 
   for (k = 0 ; k < n ; k++) 
   {
@@ -3129,15 +3129,15 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,dvar_hs_smatrix &L
   }
   Lp [n] = cp [n] ;          
   xxx(txcount);
-  int mmin=Lx.indexmin();
-  int mmax=Lx.indexmax();
-  for (int ii=mmin;ii<=mmax;ii++)
+  int mmin = Lx.indexmin();
+  int mmax = Lx.indexmax();
+  for (int ii = mmin;ii<=mmax;ii++)
   {
-    value(L.x(ii))=Lx(ii);
+    value(L.x(ii)) = Lx(ii);
   }
-  int nxcount=txcount;
-  int nccount=tccount;
-  int nlkicount=lkicount;
+  int nxcount = txcount;
+  int nccount = tccount;
+  int nlkicount = lkicount;
   save_identifier_string("ty");
 
   save_int_value(nxcount);
@@ -3154,7 +3154,7 @@ int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,dvar_hs_smatrix &L
   save_identifier_string("dg");
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(dfcholeski_sparse);
-  RETURN_ARRAYS_DECREMENT(); //Need this statement because the function
+  RETURN_ARRAYS_DECREMENT(); // Need this statement because the function
   return (1) ; 
 }
 
@@ -3166,26 +3166,26 @@ static void dfcholeski_sparse(void)
   hs_symbolic & S  =
     *( hs_symbolic * ) restore_ad_pointer();
   verify_identifier_string("iy");
-  dvar_vector_position dpos=restore_dvar_vector_position();
+  dvar_vector_position dpos = restore_dvar_vector_position();
   verify_identifier_string("wy");
-  dvar_vector_position cpos=restore_dvar_vector_position();
+  dvar_vector_position cpos = restore_dvar_vector_position();
   verify_identifier_string("tu");
 
-  int nccount=restore_int_value();
-  int nlkicount=restore_int_value();
-  int nxcount=restore_int_value();
+  int nccount = restore_int_value();
+  int nlkicount = restore_int_value();
+  int nxcount = restore_int_value();
 
   verify_identifier_string("ty");
 
-    dvector  dfLx=restore_dvar_vector_derivatives(dpos);
+    dvector  dfLx = restore_dvar_vector_derivatives(dpos);
     hs_smatrix A(sparse_triplet2->get_n(),
       *(sparse_triplet2) );
 
-    //hs_symbolic& S=*(lapprox->sparse_symbolic2);
+    // hs_symbolic& S=*(lapprox->sparse_symbolic2);
     double d;
-    double lki=0;
-    double dfd=0.0;
-    double dflki=0.0;
+    double lki = 0;
+    double dfd = 0.0;
+    double dflki = 0.0;
     int top, i, p, k, n;
     int p2; 
     n = A.n ;
@@ -3198,9 +3198,9 @@ static void dfcholeski_sparse(void)
     dvector dfx(0,n-1) ;                        /* double workspace */
     dfx.initialize();
 
-    ivector & cp=S.cp;
-    ivector & pinv=S.pinv;
-    ivector & parent=S.parent;
+    ivector & cp = S.cp;
+    ivector & pinv = S.pinv;
+    ivector & parent = S.parent;
 
     hs_smatrix C(A);
     C = A;                        
@@ -3209,19 +3209,19 @@ static void dfcholeski_sparse(void)
 
     hs_smatrix L(S);              // Allocates cholesky factor
 
-    ivector & Cp=C.p;
-    ivector & Ci=C.i;
-    dvector & Cx=C.x;
+    ivector & Cp = C.p;
+    ivector & Ci = C.i;
+    dvector & Cx = C.x;
     dvector dfCx(C.x.indexmin(),Cx.indexmax());
     dfCx.initialize();
 
-    ivector & Lp=L.p;
-    ivector & Li=L.i;
-    dvector & Lx=L.x;
+    ivector & Lp = L.p;
+    ivector & Li = L.i;
+    dvector & Lx = L.x;
 
   // counters
-    int tccount=0;
-    int txcount=0;
+    int tccount = 0;
+    int txcount = 0;
     ivector ccount(c.indexmin(),c.indexmax());
     ccount.initialize();
     ivector Licount(Li.indexmin(),Li.indexmax());
@@ -3231,31 +3231,31 @@ static void dfcholeski_sparse(void)
     ivector xcount(x.indexmin(),x.indexmax());
     xcount.initialize();
 
-    int pcount=0;
-    int icount=0;
-    int lkicount=0;
+    int pcount = 0;
+    int icount = 0;
+    int lkicount = 0;
 
-    int p1=0;
+    int p1 = 0;
 
     dvector xsave(0,nxcount);
     dvector csave(0,nccount);
     dvector lkisave(0,nlkicount);
 
-    tccount=0;
-    txcount=0;
-    pcount=0;
+    tccount = 0;
+    txcount = 0;
+    pcount = 0;
     ccount.initialize();
     Licount.initialize();
     Lxcount.initialize();
     xcount.initialize();
-    lkicount=0;
+    lkicount = 0;
 
     // do it again -- this oulod be the frist time in the adjoint code
     for (k = 0 ; k < n ; k++) 
     {
       Lp [k] = c [k] = cp [k] ;
-      //ccount[k]++;
-      //tccount++;
+      // ccount[k]++;
+      // tccount++;
     }
     ivector Top(0,n);
 
@@ -3264,7 +3264,7 @@ static void dfcholeski_sparse(void)
         /* --- Nonzero pattern of L(k,:) ------------------------------------ */
         Top(k) = cs_ereach (C, k, parent, s, c) ; 
        
-        //ssave(k)=s;
+        // ssave(k) = s;
         if (allocated(ssave(k)))
         {
           cerr << "This can't happen" << endl;
@@ -3274,9 +3274,9 @@ static void dfcholeski_sparse(void)
         {
           ssave(k).allocate(Top(k),n-1);
         }
-        ssave(k)=s(Top(k),n-1);
+        ssave(k) = s(Top(k),n-1);
         x [k] = 0 ;                                    /* x (0:k) is now zero */
-        //xcount[k]++;
+        // xcount[k]++;
         for (p = Cp [k] ; p < Cp [k+1] ; p++)            /* x = full(triu(C(:,k))) */
         {
           if (Ci [p] <= k) 
@@ -3286,27 +3286,27 @@ static void dfcholeski_sparse(void)
           }
         }
         d = x [k] ;                        /* d = C(k,k) */
-        //dcount++;
+        // dcount++;
         x [k] = 0 ;                        /* clear x for k+1st iteration */
-        //xcount[k]++;
+        // xcount[k]++;
         /* --- Triangular solve --------------------------------------------- */
-        top=Top(k);
+        top = Top(k);
         for ( ; top < n ; top++)    /* solve L(0:k-1,0:k-1) * x = C(:,k) */
         {
             i = s [top] ;  
             icount++;
-            lkisave(lkicount++)=lki;
+            lkisave(lkicount++) = lki;
             lki = x [i] / Lx [Lp [i]] ; /* L(k,i) = x (i) / L(i,i) */
-            xsave(txcount++)=x(i);
+            xsave(txcount++) = x(i);
             x [i] = 0 ;                        /* clear x for k+1st iteration */
             for (p1 = Lp [i] + 1 ; p1 < c [i] ; p1++)
             {
                x [Li [p1]] -= Lx [p1] * lki ;
             }
             d -= lki * lki ;                /* d = d - L(k,i)*L(k,i) */
-            csave(tccount++)=c[i];
+            csave(tccount++) = c[i];
             p2 = c [i] ;
-            //ofs << ttc++ << " " << p2 << " 2" << endl;
+            // ofs << ttc++ << " " << p2 << " 2" << endl;
             c[i]++;
             ccount[i]++;
             Li [p2] = k ;                /* store L(k,i) in column i */
@@ -3325,11 +3325,11 @@ static void dfcholeski_sparse(void)
         }
         /* --- Compute L(k,k) ----------------------------------------------- */
         if (d <= 0) return ; /* not pos def */
-        csave(tccount++)=c[k];
+        csave(tccount++) = c[k];
         p = c [k];
-        //ofs << ttc++ << " " << p << " 1"<< endl;
+        // ofs << ttc++ << " " << p << " 1"<< endl;
         c[k]++;
-        //ccount[k]++;
+        // ccount[k]++;
         pcount++;
         Li [p] = k ;                    /* store L(k,k) = sqrt (d) in column k */
         Licount[p]++;
@@ -3352,63 +3352,63 @@ static void dfcholeski_sparse(void)
 
     for (k = n-1 ; k >=0 ; k--)   
     {
-      c[k]=csave(--tccount);
-      p=c[k];
-      s(ssave(k).indexmin(),ssave(k).indexmax())=ssave(k);
-      //if (k==3)
+      c[k] = csave(--tccount);
+      p = c[k];
+      s(ssave(k).indexmin(),ssave(k).indexmax()) = ssave(k);
+      // if (k==3)
        // cout << "HERE2" << endl;
       // Lx [p] = sqrt (d) ;
-      //ofs << --ttc << " " << p << " 1" << endl;
+      // ofs << --ttc << " " << p << " 1" << endl;
       
       dfd+=dfLx(p)/(2.0*Lx(p));
-      dfLx(p)=0.0;
+      dfLx(p) = 0.0;
 
-      //c[k]=csave(--tccount);
-      //p=c[k];
+      // c[k] = csave(--tccount);
+      // p = c[k];
 
-      for (top=n-1 ; top >=Top[k] ; top--)  
+      for (top = n-1 ; top >=Top[k] ; top--)  
       {
-        i=s(top);
-        //Lx [p] = lki ;
-        c[i]=csave(--tccount);
-        p2=c[i];
-        //ofs << --ttc << " " << p2 << " 2" << endl;
+        i = s(top);
+        // Lx [p] = lki ;
+        c[i] = csave(--tccount);
+        p2 = c[i];
+        // ofs << --ttc << " " << p2 << " 2" << endl;
         dflki+=dfLx[p2];
-        dfLx[p2]=0.0;
+        dfLx[p2] = 0.0;
         //d -= lki * lki ;                /* d = d - L(k,i)*L(k,i) */
         dflki-=2.0*dfd*lki;
         for (p1 = Lp [i] + 1 ; p1 < c [i] ; p1++)
         {
-          //x [Li [p1]] -= Lx [p1] * lki ;
+          // x [Li [p1]] -= Lx [p1] * lki ;
           dflki-=dfx(Li(p1))*Lx(p1);
           dfLx(p1)-=dfx(Li(p1))*lki;
         }
-        dfx[i]=0.0;
+        dfx[i] = 0.0;
         // maybe not here
-        x(i)=xsave(--txcount);
+        x(i) = xsave(--txcount);
         // lki = x[i] / Lx[Lp[i]] ; 
         dfx(i)+=dflki/Lx(Lp(i));
         dfLx(Lp(i))-=dflki*x(i)/square(Lx(Lp(i)));
         // but here
-        dflki=0.0;
-        lki=lkisave(--lkicount);
+        dflki = 0.0;
+        lki = lkisave(--lkicount);
       }
-      // x[k]=0.0;
-      dfx[k]=0.0;
+      // x[k] = 0.0;
+      dfx[k] = 0.0;
       //d = x [k] ;                        /* d = C(k,k) */
       dfx(k)+=dfd;
-      dfd=0.0;
+      dfd = 0.0;
       for (p1 = Cp [k+1]-1 ; p1 >= Cp [k] ; p1--)   
       {
         if (Ci [p1] <= k) 
         {
-          //x[Ci[p1]] = Cx[p1] ;
+          // x[Ci[p1]] = Cx[p1] ;
           dfCx[p1]+=dfx[Ci[p1]];
-          dfx[Ci[p1]]=0.0;
+          dfx[Ci[p1]] = 0.0;
         }
       }
       //x [k] = 0 ;                        /* clear x for k+1st iteration */
-      dfx(k)=0.0;
+      dfx(k) = 0.0;
     }
 
     dfCx.save_dvector_derivatives(cpos);
@@ -3419,13 +3419,13 @@ static void dfcholeski_sparse(void)
 int chol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   dvar_hs_smatrix &LL)
 {
-  //ADUNCONST(hs_symbolic,S)
-  //ADUNCONST(dvar_hs_smatrix,L)
-  //ADUNCONST(dvar_hs_smatrix,A)
+  // ADUNCONST(hs_symbolic,S)
+  // ADUNCONST(dvar_hs_smatrix,L)
+  // ADUNCONST(dvar_hs_smatrix,A)
   dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
   hs_symbolic& S = (hs_symbolic&)T;
   dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
-  int icount=0;
+  int icount = 0;
   dvariable lki;
   dvariable d;
   int top, i, p, k, n;
@@ -3435,24 +3435,24 @@ int chol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   ivector s(0,n-1);                                   /* int workspace */
   dvar_vector x(0,n-1) ;                        /* double workspace */
 
-  ivector & cp=S.cp;
-  ivector & pinv=S.pinv;
-  ivector & parent=S.parent;
+  ivector & cp = S.cp;
+  ivector & pinv = S.pinv;
+  ivector & parent = S.parent;
 
   dvar_hs_smatrix C(A);
   C = A;                        
   if(S.pinv[0]!=-1)
     hs_symperm(A,pinv,C);
 
-  //dvar_hs_smatrix & E = C;                        
+  // dvar_hs_smatrix & E = C;                        
 
-  ivector & Cp=C.p;
-  ivector & Ci=C.i;
-  dvar_vector & Cx=C.x;
+  ivector & Cp = C.p;
+  ivector & Ci = C.i;
+  dvar_vector & Cx = C.x;
 
-  ivector & Lp=L.p;
-  ivector & Li=L.i;
-  dvar_vector & Lx=L.x;
+  ivector & Lp = L.p;
+  ivector & Li = L.i;
+  dvar_vector & Lx = L.x;
 
   for (k = 0 ; k < n ; k++) 
   {
@@ -3493,7 +3493,7 @@ int chol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
   xxx(icount);
   return (1) ; 
 }
- //class hs_symbolic    	// Info for symbolic cholesky
+ // class hs_symbolic    	// Info for symbolic cholesky
  //{
  //    public:
  //
@@ -3514,33 +3514,33 @@ int chol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
 
 void hs_smatrix::set_symbolic(hs_symbolic& s)
 {
-  sym.n=s.n;
+  sym.n = s.n;
   sym.pinv.allocate(s.pinv.indexmin(),s.pinv.indexmax());
-  sym.pinv=s.pinv;
+  sym.pinv = s.pinv;
   sym.parent.allocate(s.parent.indexmin(),s.parent.indexmax());
-  sym.parent=s.parent;
+  sym.parent = s.parent;
   sym.cp.allocate( s.cp.indexmin(),s.cp.indexmax());
-  sym.cp=s.cp;
-  sym.lnz=s.lnz;
+  sym.cp = s.cp;
+  sym.lnz = s.lnz;
 }
 
 void dvar_hs_smatrix::set_symbolic(hs_symbolic& s)
 {
-  sym.n=s.n;
+  sym.n = s.n;
   sym.pinv.allocate(s.pinv.indexmin(),s.pinv.indexmax());
-  sym.pinv=s.pinv;
+  sym.pinv = s.pinv;
   sym.parent.allocate(s.parent.indexmin(),s.parent.indexmax());
-  sym.parent=s.parent;
+  sym.parent = s.parent;
   sym.cp.allocate( s.cp.indexmin(),s.cp.indexmax());
-  sym.cp=s.cp;
-  sym.lnz=s.lnz;
+  sym.cp = s.cp;
+  sym.lnz = s.lnz;
 }
 
 void report_dvar_vector_derivatives(void)
 {
   verify_identifier_string("jr");
-  dvar_vector_position dpos=restore_dvar_vector_position();
-  //dvector  dfLx=restore_dvar_vector_derivatives(dpos);
+  dvar_vector_position dpos = restore_dvar_vector_position();
+  // dvector  dfLx = restore_dvar_vector_derivatives(dpos);
   verify_identifier_string("jx");
 }
 
@@ -3558,7 +3558,7 @@ void report_derivatives(const dvar_vector& x)
 void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
   uostream& ofs1,ofstream& ofs,int usize,int xsize,dvector& u)
 {
-  int n=st.get_n();
+  int n = st.get_n();
   hs_smatrix HS(n,st); 
   hs_smatrix L(S);   
   chol(HS,S,L);  
@@ -3567,11 +3567,11 @@ void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
   gr.initialize();
   ofs1 << usize << xsize;
   int i;
-  for (i=1;i<=n;i++)
+  for (i = 1;i<=n;i++)
   {
-    gr(i-1)=1.0;
+    gr(i-1) = 1.0;
     x = cs_ipvec(S.pinv, gr);
-    gr(i-1)=0.0;
+    gr(i-1) = 0.0;
     x = cs_lsolve(L,x);
     x = cs_ltsolve(L,x);
     x = cs_pvec(S.pinv,x);
@@ -3587,14 +3587,14 @@ void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
 /* C = A*B */
 hs_smatrix cs_multiply(const hs_smatrix &AA, const hs_smatrix  &BB)
 {
-    //ADUNCONST(hs_smatrix,A) 
-    //ADUNCONST(hs_smatrix,B)
+    // ADUNCONST(hs_smatrix,A) 
+    // ADUNCONST(hs_smatrix,B)
     hs_smatrix& A = (hs_smatrix&)AA;
     hs_smatrix& B = (hs_smatrix&)BB;
     int p, j, nz = 0, anz,  m, n, bnz;
-    //hs_smatrix *pC ;
-    //hs_smatrix C(n,anz + bnz);
-    //hs_smatrix& C=*pC ;
+    // hs_smatrix *pC ;
+    // hs_smatrix C(n,anz + bnz);
+    // hs_smatrix& C=*pC ;
     
    
      //  if (!CS_CSC (A) || !CS_CSC (B)) return (NULL) ;      /* check inputs */
@@ -3604,17 +3604,17 @@ hs_smatrix cs_multiply(const hs_smatrix &AA, const hs_smatrix  &BB)
        dvector & Bx = B.x ; bnz = Bp[n] ;
        //w = cs_calloc (m, sizeof (int)) ;                    /* get workspace */
        ivector w(0,m);                    /* get workspace */
-       //values = (A.x != NULL) && (Bx != NULL) ;
+       // values = (A.x != NULL) && (Bx != NULL) ;
        //x = values ? cs_malloc (m, sizeof (double)) : NULL ; /* get workspace */
        dvector x(0,m);  /* get workspace */
        hs_smatrix C(n,anz + bnz) ;        /* allocate result */
-       //if (!C || !w || (values && !x)) return (cs_done (C, w, x, 0)) ;
+       // if (!C || !w || (values && !x)) return (cs_done (C, w, x, 0)) ;
        ivector & Cp = C.p ;
        for (j = 0 ; j < n ; j++)
        {
            C.reallocate(2*(C.nzmax)+m);
 
-           //if (nz + m > C.nzmax && !cs_sprealloc (C, 2*(C.nzmax)+m))
+           // if (nz + m > C.nzmax && !cs_sprealloc (C, 2*(C.nzmax)+m))
            //{
            //    return (cs_done (C, w, x, 0)) ;             /* out of memory */
            //} 
@@ -3640,37 +3640,37 @@ hs_smatrix operator * (const hs_smatrix &A, const hs_smatrix  &B)
 }
 dcompressed_triplet make_dcompressed_triplet(const dmatrix & M)
 {
-  int mmin=M.indexmin();
-  int mmax=M.indexmax();
-  int n=mmax-mmin+1;
-  int jmin=M(mmin).indexmin();
-  int jmax=M(mmax).indexmax();
-  int m=jmax-jmin+1;
-  int ii=0;
+  int mmin = M.indexmin();
+  int mmax = M.indexmax();
+  int n = mmax-mmin+1;
+  int jmin = M(mmin).indexmin();
+  int jmax = M(mmax).indexmax();
+  int m = jmax-jmin+1;
+  int ii = 0;
   int i,j;
-  for (i=mmin;i<=mmax;i++)
+  for (i = mmin;i<=mmax;i++)
   {
-    int jmin=M(i).indexmin();
-    int jmax=M(i).indexmax();
-    for (j=jmin;j<=jmax;j++)
+    int jmin = M(i).indexmin();
+    int jmax = M(i).indexmax();
+    for (j = jmin;j<=jmax;j++)
     {
       if (M(i,j) !=0) ii++;
     }
   }
   dcompressed_triplet dct(1,ii,n,m);
-  ii=0;
-  for (i=mmin;i<=mmax;i++)
+  ii = 0;
+  for (i = mmin;i<=mmax;i++)
   {
-    int jmin=M(i).indexmin();
-    int jmax=M(i).indexmax();
-    for (j=jmin;j<=jmax;j++)
+    int jmin = M(i).indexmin();
+    int jmax = M(i).indexmax();
+    for (j = jmin;j<=jmax;j++)
     {
       if (M(i,j) !=0) 
       {
         ii++;
-        dct(ii)=M(i,j);
-        dct(1,ii)=i;
-        dct(2,ii)=j;
+        dct(ii) = M(i,j);
+        dct(1,ii) = i;
+        dct(2,ii) = j;
       }
     }
   }
@@ -3704,16 +3704,16 @@ ostream& operator << (const ostream& _ofs,const hs_smatrix& M)
 
 dmatrix make_dmatrix(const hs_smatrix& M)
 {
-  int n=M.m; 
-  int m=M.n; 
+  int n = M.m; 
+  int m = M.n; 
   dmatrix tmp(1,n,1,m);
   tmp.initialize();
-  int ii=0;
-  for (int j=1;j<=m;j++)
+  int ii = 0;
+  for (int j = 1;j<=m;j++)
   {
-    for (int i=M.p(j-1);i<M.p(j);i++)
+    for (int i = M.p(j-1);i<M.p(j);i++)
     {
-      tmp(M.i(ii)+1,j)=M.x(ii);
+      tmp(M.i(ii)+1,j) = M.x(ii);
       ii++;
     }
   }
@@ -3722,102 +3722,102 @@ dmatrix make_dmatrix(const hs_smatrix& M)
 
 
  //
- //main()
+ // main()
  //{
  //  
  //  ad_exit=&ad_boundf;
  //  int i,j;
- //  int n=20;
- //  int n2=n*n;
- //  double alpha=0.3;
- //  double beta=0.4;
+ //  int n = 20;
+ //  int n2 = n*n;
+ //  double alpha = 0.3;
+ //  double beta = 0.4;
  // /*
  //  dmatrix X(1,6,1,5);
  //  X.initialize();
- //  X(1,1)=1.;
- //  X(2,1)=2.;
- //  X(6,1)=3.;
- //  X(1,3)=4.;
- //  X(2,3)=5.;
- //  X(6,3)=6.;
- //  X(5,4)=7.;
- //  dcompressed_triplet dct1=make_dcompressed_triplet(X);
- //  hs_smatrix Z0=hs_smatrix(dct1);
+ //  X(1,1) = 1.;
+ //  X(2,1) = 2.;
+ //  X(6,1) = 3.;
+ //  X(1,3) = 4.;
+ //  X(2,3) = 5.;
+ //  X(6,3) = 6.;
+ //  X(5,4) = 7.;
+ //  dcompressed_triplet dct1 = make_dcompressed_triplet(X);
+ //  hs_smatrix Z0 = hs_smatrix(dct1);
  //  cout << Z0 << endl;
  //  cout << X << endl;
  //  cout << norm2(X-make_dmatrix(Z0)) << endl;
  //  cout << make_dmatrix(dct1) << endl;
  //  X.initialize();
- //  X(1,1)=1.;
- //  X(2,2)=2.;
- //  X(3,3)=3.;
- //  X(3,1)=5.;
- //  X(3,2)=9.;
- //  X(3,4)=7.;
- //  dcompressed_triplet dct2=make_dcompressed_triplet(X);
- //  hs_smatrix Z2=hs_smatrix(dct2);
+ //  X(1,1) = 1.;
+ //  X(2,2) = 2.;
+ //  X(3,3) = 3.;
+ //  X(3,1) = 5.;
+ //  X(3,2) = 9.;
+ //  X(3,4) = 7.;
+ //  dcompressed_triplet dct2 = make_dcompressed_triplet(X);
+ //  hs_smatrix Z2 = hs_smatrix(dct2);
  //  cout << X << endl;
  //  cout << make_dmatrix(dct2) << endl;
  // */
  //  
  //  dmatrix M(1,n2,1,n2);
- //  M(1,1)=1;
- //  M(1,2)=beta;
- //  for (i=2;i<n2;i++)
+ //  M(1,1) = 1;
+ //  M(1,2) = beta;
+ //  for (i = 2;i<n2;i++)
  //  {
- //    M(i,i-1)=alpha;
- //    M(i,i)=1;
- //    M(i,i+1)=beta;
+ //    M(i,i-1) = alpha;
+ //    M(i,i) = 1;
+ //    M(i,i+1) = beta;
  //  }
- //  M(n2,n2-1)=alpha;
- //  M(n2,n2)=1;
- //  //dcompressed_triplet dct=make_dcompressed_triplet(M);
- //  hs_smatrix SM=make_hs_smatrix(M);
- //  //cout << norm2(make_dmatrix(dct)-M) << endl;
+ //  M(n2,n2-1) = alpha;
+ //  M(n2,n2) = 1;
+ //  // dcompressed_triplet dct = make_dcompressed_triplet(M);
+ //  hs_smatrix SM = make_hs_smatrix(M);
+ //  // cout << norm2(make_dmatrix(dct)-M) << endl;
  //
  //  dmatrix L(1,n2,1,n2);
  //  L.initialize();
- //  int ii=1;
- //  for (i=1;i<=n;i++)
+ //  int ii = 1;
+ //  for (i = 1;i<=n;i++)
  //  {
- //    for (j=1;j<=n;j++)
+ //    for (j = 1;j<=n;j++)
  //    {
- //       L(ii,(j-1)*n+i)=1;
+ //       L(ii,(j-1)*n+i) = 1;
  //       ii++;
  //    }
  //  }
- //  hs_smatrix SL=make_hs_smatrix(L);
- //  dmatrix Y=make_dmatrix(SM*SL);
+ //  hs_smatrix SL = make_hs_smatrix(L);
+ //  dmatrix Y = make_dmatrix(SM*SL);
  //    
  //  cout << norm2(Y-M*L) << endl;
  //  exit(2);
- //  //cout << L << endl;
+ //  // cout << L << endl;
  //
- //  //cout <<  M << endl;
- //  //cout << trans(L) * M * L << endl;
+ //  // cout <<  M << endl;
+ //  // cout << trans(L) * M * L << endl;
  //  dmatrix N= M * trans(L) * M * L;
- //  dmatrix N2=N*trans(N);
- //  ii=0;
- //  for (i=1;i<=n2;i++)
+ //  dmatrix N2 = N*trans(N);
+ //  ii = 0;
+ //  for (i = 1;i<=n2;i++)
  //  {
- //    for (j=1;j<=n2;j++)
+ //    for (j = 1;j<=n2;j++)
  //    {       
  //      if (fabs(N(i,j))>1.e-8) ii++; 
  //    }
  //  }
  //  cout << "N num no zero " << ii << " percentage full " 
  //       << ii/double(n2*n2) << endl;
- //  ii=0;
- //  for (i=1;i<=n2;i++)
+ //  ii = 0;
+ //  for (i = 1;i<=n2;i++)
  //  {
- //    for (j=1;j<=n2;j++)
+ //    for (j = 1;j<=n2;j++)
  //    {       
  //      if (fabs(N2(i,j))>1.e-8) ii++; 
  //    }
  //  }
  //  cout << "N*trans(N) num no zero " << ii << " percentage full " 
  //       << ii/double(n2*n2) << endl;
- //  //cout << setfixed() << setprecision(2) << setw(5) << N << endl;
+ //  // cout << setfixed() << setprecision(2) << setw(5) << N << endl;
  //}
  //
   

@@ -17,8 +17,8 @@
 ivector& ivector::shift(int min)
 {
   v += indexmin()-min;
-  index_max=index_max+min-index_min;
-  index_min=min;
+  index_max = index_max+min-index_min;
+  index_min = min;
   shape->shift(min);
   return *this;
 }

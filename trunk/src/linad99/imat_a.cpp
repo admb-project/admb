@@ -16,12 +16,12 @@
  */
  imatrix::imatrix(BOR_CONST imatrix_position& pos)
  {
-   int nrl=pos.row_min;
-   int nrh=pos.row_max;
-   index_min=nrl;
-   index_max=nrh;
-   const ivector& ncl=pos.lb;
-   const ivector& nch=pos.ub;
+   int nrl = pos.row_min;
+   int nrh = pos.row_max;
+   index_min = nrl;
+   index_max = nrh;
+   const ivector& ncl = pos.lb;
+   const ivector& nch = pos.ub;
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
@@ -29,7 +29,7 @@
      ad_exit(1);
    }
 
-   int rs=rowsize();
+   int rs = rowsize();
 
    if ( (m = new ivector [rs]) == 0)
    {
@@ -49,7 +49,7 @@
 
    m -= rowmin();
 
-   for (int i=rowmin(); i<=rowmax(); i++)
+   for (int i = rowmin(); i<=rowmax(); i++)
    {
      m[i].allocate(ncl[i],nch[i]);
    }

@@ -51,7 +51,7 @@ dvector laplace_approximation_calculator::default_calculations
   gradient_structure::set_YES_DERIVATIVES();
 
   initial_params::set_active_only_random_effects(); 
-  //int lmn_flag=0;
+  // int lmn_flag = 0;
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm1)
@@ -67,7 +67,7 @@ dvector laplace_approximation_calculator::default_calculations
   {
     if (ad_comm::ptm)
     {
-      double time=ad_comm::ptm->get_elapsed_time();
+      double time = ad_comm::ptm->get_elapsed_time();
       if (ad_comm::global_logfile)
       {
         (*ad_comm::global_logfile) << " Time pos 0 "
@@ -76,33 +76,33 @@ dvector laplace_approximation_calculator::default_calculations
     }
   }
   
-  double maxg=1.e+200;
-  //double maxg_save;
+  double maxg = 1.e+200;
+  // double maxg_save;
   dvector uhat_old(1,usize);
-  double f_from_1=0.0;
+  double f_from_1 = 0.0;
   if (inner_maxfn>0)
   {
     if (!inner_lmnflag)
     {
       if (!ADqd_flag)
       {
-        uhat=get_uhat_quasi_newton(x,pfmin);
-        maxg=fabs(fmc1.gmax);
-        f_from_1=fmc1.fbest;
+        uhat = get_uhat_quasi_newton(x,pfmin);
+        maxg = fabs(fmc1.gmax);
+        f_from_1 = fmc1.fbest;
       }
       else
-        uhat=get_uhat_quasi_newton_qd(x,pfmin);
+        uhat = get_uhat_quasi_newton_qd(x,pfmin);
     }
     else
     {
-      uhat=get_uhat_lm_newton(x,pfmin);
+      uhat = get_uhat_lm_newton(x,pfmin);
     }
   
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
       {
-        double time=ad_comm::ptm->get_elapsed_time_and_reset();
+        double time = ad_comm::ptm->get_elapsed_time_and_reset();
         if (ad_comm::global_logfile)
         {
           (*ad_comm::global_logfile) << " Time in inner optimization "
@@ -112,26 +112,26 @@ dvector laplace_approximation_calculator::default_calculations
     }
   }
 
-  for (i=1;i<=xsize;i++)
+  for (i = 1;i<=xsize;i++)
   {
-    y(i)=x(i);
+    y(i) = x(i);
   }
-  for (i=1;i<=usize;i++)
+  for (i = 1;i<=usize;i++)
   {
-    y(i+xsize)=uhat(i);
+    y(i+xsize) = uhat(i);
   }
         
-  int ierr=0;
-  int niters=0;
+  int ierr = 0;
+  int niters = 0;
   if (function_minimizer::first_hessian_flag)
-    niters=num_nr_iters+1;
+    niters = num_nr_iters+1;
   else
-    niters=num_nr_iters;
+    niters = num_nr_iters;
 
-  int nv=0;
+  int nv = 0;
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
-    nv=initial_df1b2params::set_index();
+    nv = initial_df1b2params::set_index();
     if (allocated(used_flags))
     {
       if (used_flags.indexmax() != nv)
@@ -145,7 +145,7 @@ dvector laplace_approximation_calculator::default_calculations
     }
   }
   
-  for(int ii=1;ii<=niters;ii++)
+  for(int ii = 1;ii<=niters;ii++)
   {  
     if (quadratic_prior::get_num_quadratic_prior()>0)
     {
@@ -155,15 +155,15 @@ dvector laplace_approximation_calculator::default_calculations
       // test newton raphson
       Hess.initialize();
      cout << "Newton raphson " << ii << endl;
-      pmin->inner_opt_flag=1;
+      pmin->inner_opt_flag = 1;
       get_newton_raphson_info(pfmin);
-      pmin->inner_opt_flag=0;
+      pmin->inner_opt_flag = 0;
 
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {
-        laplace_approximation_calculator::where_are_we_flag=2; 
+        laplace_approximation_calculator::where_are_we_flag = 2; 
         /*double maxg=*/fabs(evaluate_function_quiet(uhat,pfmin));
-        laplace_approximation_calculator::where_are_we_flag=0; 
+        laplace_approximation_calculator::where_are_we_flag = 0; 
         quadratic_prior::get_cHessian_contribution(Hess,xsize);
         quadratic_prior::get_cgradient_contribution(grad,xsize);
       }
@@ -181,7 +181,7 @@ dvector laplace_approximation_calculator::default_calculations
             << setprecision(15) << objective_function_value::fun_without_pen
             << " diff = "
             << diff  << endl;
-          //ad_exit(1);
+          // ad_exit(1);
         }
        */
       }
@@ -190,7 +190,7 @@ dvector laplace_approximation_calculator::default_calculations
       {
         if (ad_comm::ptm)
         {
-          double time=ad_comm::ptm->get_elapsed_time_and_reset();
+          double time = ad_comm::ptm->get_elapsed_time_and_reset();
           if (ad_comm::global_logfile)
           {
             (*ad_comm::global_logfile) << " Time in newton-raphson " <<  ii << "  "
@@ -200,7 +200,7 @@ dvector laplace_approximation_calculator::default_calculations
       }
    
       dvector step;
-      int print_hess_in_newton_raphson_flag=0;
+      int print_hess_in_newton_raphson_flag = 0;
       if (print_hess_in_newton_raphson_flag)
       {
         cout << norm2(Hess-trans(Hess)) << endl;
@@ -220,11 +220,11 @@ dvector laplace_approximation_calculator::default_calculations
       }
       else
       {
-        dmatrix A=choleski_decomp_positive(Hess,ierr);
+        dmatrix A = choleski_decomp_positive(Hess,ierr);
         if (!ierr)
         {
           step=-solve(Hess,grad);
-          //step=-solve(A*trans(A),grad);
+          // step=-solve(A*trans(A),grad);
         }
       }
       if (ierr)
@@ -239,16 +239,16 @@ dvector laplace_approximation_calculator::default_calculations
         break;
       }
 #else
-      //step=-solve(Hess,grad);
-      int ierror=0;
-      int icount=0;
-      int trust_update_flag=0;
+      // step=-solve(Hess,grad);
+      int ierror = 0;
+      int icount = 0;
+      int trust_update_flag = 0;
       do
       {
         icount++;
         if (saddlepointflag==1 || saddlepointflag==2)
         {
-          step=choleski_solve_neghess_error(Hess,grad,ierror);
+          step = choleski_solve_neghess_error(Hess,grad,ierror);
         }
         else
         {
@@ -256,29 +256,29 @@ dvector laplace_approximation_calculator::default_calculations
         }
         if (ierror==1)
         {
-          trust_update_flag=1;
-          uhat_old=uhat;
-          dvector vv=sort(eigenvalues(Hess));
+          trust_update_flag = 1;
+          uhat_old = uhat;
+          dvector vv = sort(eigenvalues(Hess));
           // matrix is not positive definite
           // do minimization
           dvector s(grad.indexmin(),grad.indexmax());
-          double lambda=0.01;
+          double lambda = 0.01;
           if (saddlepointflag==2) // max not min 
           {
             const dmatrix  & cmHess=-Hess;
             const dvector & cmgrad = -grad;
             dmatrix  & mHess = (dmatrix  &) (cmHess);
             dvector & mgrad = (dvector &) (cmgrad);
-            step=local_minimization(s,mHess,mgrad,lambda);
+            step = local_minimization(s,mHess,mgrad,lambda);
           }
           else
           {
-            step=local_minimization(s,Hess,grad,lambda);
+            step = local_minimization(s,Hess,grad,lambda);
           }
           uhat+=step;
-          for (i=1;i<=usize;i++)
+          for (i = 1;i<=usize;i++)
           {
-            y(i+xsize)=uhat(i);
+            y(i+xsize) = uhat(i);
           }
 
           f1b2gradlist->reset();
@@ -293,9 +293,9 @@ dvector laplace_approximation_calculator::default_calculations
 
           if (quadratic_prior::get_num_quadratic_prior()>0)
           {
-            laplace_approximation_calculator::where_are_we_flag=2; 
+            laplace_approximation_calculator::where_are_we_flag = 2; 
             /*double maxg=*/fabs(evaluate_function_quiet(uhat,pfmin));
-            laplace_approximation_calculator::where_are_we_flag=0; 
+            laplace_approximation_calculator::where_are_we_flag = 0; 
             quadratic_prior::get_cHessian_contribution(Hess,xsize);
             quadratic_prior::get_cgradient_contribution(grad,xsize);
           }
@@ -319,7 +319,7 @@ dvector laplace_approximation_calculator::default_calculations
       {
         if (ad_comm::ptm)
         {
-          double time=ad_comm::ptm->get_elapsed_time_and_reset();
+          double time = ad_comm::ptm->get_elapsed_time_and_reset();
           if (ad_comm::global_logfile)
           {
             (*ad_comm::global_logfile) << " time_in solve " <<  ii << "  "
@@ -339,20 +339,20 @@ dvector laplace_approximation_calculator::default_calculations
     
       if (trust_update_flag==0)
       {
-        uhat_old=uhat;
+        uhat_old = uhat;
         uhat+=step;
       }
       else
       {
-        trust_update_flag=0;
+        trust_update_flag = 0;
       }
     
-      double maxg_old=maxg;
-      pmin->inner_opt_flag=1;
-      maxg=fabs(evaluate_function(uhat,pfmin));
+      double maxg_old = maxg;
+      pmin->inner_opt_flag = 1;
+      maxg = fabs(evaluate_function(uhat,pfmin));
       if (maxg>maxg_old)
       {
-        uhat=uhat_old;
+        uhat = uhat_old;
         evaluate_function(uhat,pfmin);
         break;
       }
@@ -361,9 +361,9 @@ dvector laplace_approximation_calculator::default_calculations
         break;
       }
     }
-    for (i=1;i<=usize;i++)
+    for (i = 1;i<=usize;i++)
     {
-      y(i+xsize)=uhat(i);
+      y(i+xsize) = uhat(i);
     }
   }
     
@@ -373,9 +373,9 @@ dvector laplace_approximation_calculator::default_calculations
     evaluate_function(uhat,pfmin);
   }
   
-  for (i=1;i<=usize;i++)
+  for (i = 1;i<=usize;i++)
   {
-    y(i+xsize)=uhat(i);
+    y(i+xsize) = uhat(i);
   }
  
 
@@ -383,7 +383,7 @@ dvector laplace_approximation_calculator::default_calculations
   {
     if (ad_comm::ptm)
     {
-      double time=ad_comm::ptm->get_elapsed_time_and_reset();
+      double time = ad_comm::ptm->get_elapsed_time_and_reset();
       if (ad_comm::global_logfile)
       {
         (*ad_comm::global_logfile) << " Time in reset and evaluate function"
@@ -391,23 +391,23 @@ dvector laplace_approximation_calculator::default_calculations
       }
     }
   }
-  pmin->inner_opt_flag=0;
+  pmin->inner_opt_flag = 0;
 
 
   if (saddlepointflag==2)  
   {
     dvector localx(1,xsize+usize);
-    for (int i=1;i<=xsize+usize;i++)
+    for (int i = 1;i<=xsize+usize;i++)
     {
-      localx(i)=value(y(i));
+      localx(i) = value(y(i));
     }
     initial_params::set_inactive_only_random_effects(); 
     initial_params::set_active_random_effects(); 
     /*int nnn=*/initial_params::nvarcalc();  
     evaluate_function_gradient(f,localx,pfmin,xadjoint,uadjoint);
-    pmin->inner_opt_flag=1;
+    pmin->inner_opt_flag = 1;
     get_second_ders(xsize,usize,y,Hess,Dux,f1b2gradlist,pfmin,this);
-    pmin->inner_opt_flag=0;
+    pmin->inner_opt_flag = 0;
     xadjoint -= solve(Hess,uadjoint)*Dux;
     f1b2gradlist->reset();
     f1b2gradlist->list.initialize();
@@ -420,13 +420,13 @@ dvector laplace_approximation_calculator::default_calculations
   else // don't need this for minimax calculations
   {
     get_second_ders(xsize,usize,y,Hess,Dux,f1b2gradlist,pfmin,this);
-    //int sgn=0;
+    // int sgn = 0;
     
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
       {
-        double time=ad_comm::ptm->get_elapsed_time_and_reset();
+        double time = ad_comm::ptm->get_elapsed_time_and_reset();
         if (ad_comm::global_logfile)
         {
           (*ad_comm::global_logfile) << " Time in dget second ders "
@@ -438,34 +438,34 @@ dvector laplace_approximation_calculator::default_calculations
     {
       if (num_importance_samples==0)
       {
-        //cout << "Hess " << endl << Hess << endl;
-        f=calculate_laplace_approximation(x,uhat,Hess,xadjoint,uadjoint,
+        // cout << "Hess " << endl << Hess << endl;
+        f = calculate_laplace_approximation(x,uhat,Hess,xadjoint,uadjoint,
           Hessadjoint,pfmin);
       }
       else
       {
         if (isfunnel_flag==0)
         {
-          f=calculate_importance_sample(x,uhat,Hess,xadjoint,uadjoint,
+          f = calculate_importance_sample(x,uhat,Hess,xadjoint,uadjoint,
             Hessadjoint,pfmin);
         }
         else
         {
-          f=calculate_importance_sample_funnel(x,uhat,Hess,xadjoint,uadjoint,
+          f = calculate_importance_sample_funnel(x,uhat,Hess,xadjoint,uadjoint,
             Hessadjoint,pfmin);
         }
       }
     }
     else
     {
-      f=1.e+30;
+      f = 1.e+30;
     }
    
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
       {
-        double time=ad_comm::ptm->get_elapsed_time_and_reset();
+        double time = ad_comm::ptm->get_elapsed_time_and_reset();
         if (ad_comm::global_logfile)
         {
           (*ad_comm::global_logfile) << " Time in calculate laplace approximation "
@@ -474,30 +474,30 @@ dvector laplace_approximation_calculator::default_calculations
       }
     }
   
-    for (int ip=num_der_blocks;ip>=1;ip--)
+    for (int ip = num_der_blocks;ip>=1;ip--)
     {
-      df1b2variable::minder=minder(ip);
-      df1b2variable::maxder=maxder(ip);
-      int mind=y(1).minder;
-      int jmin=max(mind,xsize+1);
-      int jmax=min(y(1).maxder,xsize+usize);
-      for (i=1;i<=usize;i++)
+      df1b2variable::minder = minder(ip);
+      df1b2variable::maxder = maxder(ip);
+      int mind = y(1).minder;
+      int jmin = max(mind,xsize+1);
+      int jmax = min(y(1).maxder,xsize+usize);
+      for (i = 1;i<=usize;i++)
       {
-        for (j=jmin;j<=jmax;j++)
+        for (j = jmin;j<=jmax;j++)
         {
-          //Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
-          y(i+xsize).get_u_bar_tilde()[j-mind]=Hessadjoint(i,j-xsize);
+          // Hess(i,j-xsize) = y(i+xsize).u_bar[j-mind];
+          y(i+xsize).get_u_bar_tilde()[j-mind] = Hessadjoint(i,j-xsize);
         }
       }
     
       if (initial_df1b2params::separable_flag)
       {
-        for (j=1;j<=xsize+usize;j++) 
+        for (j = 1;j<=xsize+usize;j++) 
         {
-          *y(j).get_u_tilde()=0;
+          *y(j).get_u_tilde() = 0;
         }
         Hess.initialize();
-        initial_df1b2params::separable_calculation_type=3;
+        initial_df1b2params::separable_calculation_type = 3;
         pfmin->user_function();
       }
       else
@@ -507,9 +507,9 @@ dvector laplace_approximation_calculator::default_calculations
           f1b2gradlist->reset();
           set_u_dot(ip);
           df1b2_gradlist::set_yes_derivatives();
-          (*re_objective_function_value::pobjfun)=0;
-          df1b2variable pen=0.0;
-          df1b2variable zz=0.0;
+          (*re_objective_function_value::pobjfun) = 0;
+          df1b2variable pen = 0.0;
+          df1b2variable zz = 0.0;
      
           initial_df1b2params::reset(y,pen);
           pfmin->user_function();
@@ -522,24 +522,24 @@ dvector laplace_approximation_calculator::default_calculations
     
           set_dependent_variable(*re_objective_function_value::pobjfun);
           df1b2_gradlist::set_no_derivatives();
-          df1b2variable::passnumber=1;
+          df1b2variable::passnumber = 1;
           df1b2_gradcalc1();
         }
   
-        for (i=1;i<=usize;i++)
+        for (i = 1;i<=usize;i++)
         {
-          for (j=jmin;j<=jmax;j++)
+          for (j = jmin;j<=jmax;j++)
           {
-            //Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
-            y(i+xsize).get_u_bar_tilde()[j-mind]=Hessadjoint(i,j-xsize);
+            // Hess(i,j-xsize) = y(i+xsize).u_bar[j-mind];
+            y(i+xsize).get_u_bar_tilde()[j-mind] = Hessadjoint(i,j-xsize);
           }
         }
       
-        //int mind=y(1).minder;
-        df1b2variable::passnumber=2;
+        // int mind = y(1).minder;
+        df1b2variable::passnumber = 2;
         df1b2_gradcalc1();
       
-        df1b2variable::passnumber=3;
+        df1b2variable::passnumber = 3;
         df1b2_gradcalc1();
       
         f1b2gradlist->reset();
@@ -555,7 +555,7 @@ dvector laplace_approximation_calculator::default_calculations
       {
         if (ad_comm::ptm)
         {
-          double time=ad_comm::ptm->get_elapsed_time_and_reset();
+          double time = ad_comm::ptm->get_elapsed_time_and_reset();
           if (ad_comm::global_logfile)
           {
             (*ad_comm::global_logfile) << " time for 3rd derivatives "
@@ -565,7 +565,7 @@ dvector laplace_approximation_calculator::default_calculations
       }
   
       dvector dtmp(1,xsize);
-      for (i=1;i<=xsize;i++)
+      for (i = 1;i<=xsize;i++)
       {
         dtmp(i)=*y(i).get_u_tilde();
       }
@@ -573,66 +573,66 @@ dvector laplace_approximation_calculator::default_calculations
       {
         dvector scale(1,nvar);   // need to get scale from somewhere
         /*int check=*/initial_params::stddev_scale(scale,x);
-        dvector sscale=scale(1,Dux(1).indexmax());
-        for (i=1;i<=usize;i++)
+        dvector sscale = scale(1,Dux(1).indexmax());
+        for (i = 1;i<=usize;i++)
         {
-          Dux(i)=elem_prod(Dux(i),sscale);
+          Dux(i) = elem_prod(Dux(i),sscale);
         }
-        dtmp=elem_prod(dtmp,sscale);
+        dtmp = elem_prod(dtmp,sscale);
       }
     
-      for (i=1;i<=xsize;i++)
+      for (i = 1;i<=xsize;i++)
       {
         xadjoint(i)+=dtmp(i);
       }
-      for (i=1;i<=usize;i++)
+      for (i = 1;i<=usize;i++)
         uadjoint(i)+=*y(xsize+i).get_u_tilde();
     }
    // *****************************************************************
    // new stuff to deal with quadraticprior
    // *****************************************************************
   
-      int xstuff=3;
+      int xstuff = 3;
       if (xstuff && df1b2quadratic_prior::get_num_quadratic_prior()>0)
       {
-        initial_params::straight_through_flag=0;
-        funnel_init_var::lapprox=0;
-        block_diagonal_flag=0;
+        initial_params::straight_through_flag = 0;
+        funnel_init_var::lapprox = 0;
+        block_diagonal_flag = 0;
         dvector scale1(1,nvar);   // need to get scale from somewhere
         initial_params::set_inactive_only_random_effects(); 
-        int check=initial_params::stddev_scale(scale1,x);
+        int check = initial_params::stddev_scale(scale1,x);
       
-        laplace_approximation_calculator::where_are_we_flag=3; 
-        quadratic_prior::in_qp_calculations=1;
-        funnel_init_var::lapprox=this;
+        laplace_approximation_calculator::where_are_we_flag = 3; 
+        quadratic_prior::in_qp_calculations = 1;
+        funnel_init_var::lapprox = this;
         df1b2_gradlist::set_no_derivatives();
         dvector scale(1,nvar);   // need to get scale from somewhere
-        check=initial_params::stddev_scale(scale,x);
-        dvector sscale=scale(1,Dux(1).indexmax());
+        check = initial_params::stddev_scale(scale,x);
+        dvector sscale = scale(1,Dux(1).indexmax());
   
-        for (i=1;i<=usize;i++)
+        for (i = 1;i<=usize;i++)
         {
-          Dux(i)=elem_div(Dux(i),sscale);
+          Dux(i) = elem_div(Dux(i),sscale);
         }
   
         if (xstuff>1)
         {
           df1b2quadratic_prior::get_Lxu_contribution(Dux);
         }
-        quadratic_prior::in_qp_calculations=0;
-        funnel_init_var::lapprox=0;
-        laplace_approximation_calculator::where_are_we_flag=0; 
+        quadratic_prior::in_qp_calculations = 0;
+        funnel_init_var::lapprox = 0;
+        laplace_approximation_calculator::where_are_we_flag = 0; 
      
-        for (i=1;i<=usize;i++)
+        for (i = 1;i<=usize;i++)
         {
-          Dux(i)=elem_prod(Dux(i),sscale);
+          Dux(i) = elem_prod(Dux(i),sscale);
         }
-        //local_dtemp=elem_prod(local_dtemp,sscale);
+        // local_dtemp = elem_prod(local_dtemp,sscale);
     
         if (xstuff>2)
         {
-          dvector tmp=evaluate_function_with_quadprior(x,usize,pfmin);
-          for (i=1;i<=xsize;i++)
+          dvector tmp = evaluate_function_with_quadprior(x,usize,pfmin);
+          for (i = 1;i<=xsize;i++)
           {
             xadjoint(i)+=tmp(i);
           }
@@ -655,23 +655,23 @@ dvector laplace_approximation_calculator::default_calculations
   #if defined(USE_ATLAS)   
         if (!ad_comm::no_atlas_flag) 
         {
-          //xadjoint -= uadjoint*atlas_solve_spd_trans(Hess,Dux);
+          // xadjoint -= uadjoint*atlas_solve_spd_trans(Hess,Dux);
           xadjoint -= atlas_solve_spd_trans(Hess,uadjoint)*Dux;
         }
         else
         {
-          //xadjoint -= uadjoint*solve(Hess,Dux);
+          // xadjoint -= uadjoint*solve(Hess,Dux);
           xadjoint -= solve(Hess,uadjoint)*Dux;
         }
   #else
-        //xadjoint -= uadjoint*solve(Hess,Dux);
+        // xadjoint -= uadjoint*solve(Hess,Dux);
         xadjoint -= solve(Hess,uadjoint)*Dux;
   #endif
   
   
     if (ad_comm::ptm)
     {
-      double time=ad_comm::ptm->get_elapsed_time_and_reset();
+      double time = ad_comm::ptm->get_elapsed_time_and_reset();
       if (ad_comm::global_logfile)
       {
         (*ad_comm::global_logfile) << " Time in second solve "
@@ -680,7 +680,7 @@ dvector laplace_approximation_calculator::default_calculations
     }
     if (ad_comm::ptm1)
     {
-      double time=ad_comm::ptm1->get_elapsed_time_and_reset();
+      double time = ad_comm::ptm1->get_elapsed_time_and_reset();
       if (ad_comm::global_logfile)
       {
         (*ad_comm::global_logfile) << " Total time in function evaluation "
@@ -709,23 +709,23 @@ void laplace_approximation_calculator::get_newton_raphson_info
     }
   }
 
-  for (ip=1;ip<=num_der_blocks;ip++)
+  for (ip = 1;ip<=num_der_blocks;ip++)
   {
-    df1b2variable::minder=minder(ip);
-    df1b2variable::maxder=maxder(ip);
+    df1b2variable::minder = minder(ip);
+    df1b2variable::maxder = maxder(ip);
 
     set_u_dot(ip);
 
     // do we need to reallocate memory for df1b2variables?
     check_for_need_to_reallocate(ip);
     df1b2_gradlist::set_yes_derivatives();
-    //cout << re_objective_function_value::pobjfun << endl;
-    //cout << re_objective_function_value::pobjfun->ptr << endl;
-    (*re_objective_function_value::pobjfun)=0;
-    df1b2variable pen=0.0;
-    df1b2variable zz=0.0;
+    // cout << re_objective_function_value::pobjfun << endl;
+    // cout << re_objective_function_value::pobjfun->ptr << endl;
+    (*re_objective_function_value::pobjfun) = 0;
+    df1b2variable pen = 0.0;
+    df1b2variable zz = 0.0;
     initial_df1b2params::reset(y,pen);
-     //cout << setprecision(15) << y << endl;
+     // cout << setprecision(15) << y << endl;
     if (initial_df1b2params::separable_flag)
     {
       Hess.initialize();
@@ -748,7 +748,7 @@ void laplace_approximation_calculator::get_newton_raphson_info
     {
       if (ad_comm::ptm)
       {
-        double time=ad_comm::ptm->get_elapsed_time();
+        double time = ad_comm::ptm->get_elapsed_time();
         if (ad_comm::global_logfile)
         {
           (*ad_comm::global_logfile) << "       Time in user_function() " <<  ip << "  "
@@ -763,20 +763,20 @@ void laplace_approximation_calculator::get_newton_raphson_info
     (*re_objective_function_value::pobjfun)+=pen;
     (*re_objective_function_value::pobjfun)+=zz;
   
-    //cout << setprecision(15) << *re_objective_function_value::pobjfun << endl;
-    //cout << setprecision(15) << pen << endl;
+    // cout << setprecision(15) << *re_objective_function_value::pobjfun << endl;
+    // cout << setprecision(15) << pen << endl;
     if (!initial_df1b2params::separable_flag)
     {
       set_dependent_variable(*re_objective_function_value::pobjfun);
       df1b2_gradlist::set_no_derivatives();
-      df1b2variable::passnumber=1;
+      df1b2variable::passnumber = 1;
       df1b2_gradcalc1();
-      int mind=y(1).minder;
-      int jmin=max(mind,xsize+1);
-      int jmax=min(y(1).maxder,xsize+usize);
-      for (i=1;i<=usize;i++)
-        for (j=jmin;j<=jmax;j++)
-          Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
+      int mind = y(1).minder;
+      int jmin = max(mind,xsize+1);
+      int jmax = min(y(1).maxder,xsize+usize);
+      for (i = 1;i<=usize;i++)
+        for (j = jmin;j<=jmax;j++)
+          Hess(i,j-xsize) = y(i+xsize).u_bar[j-mind];
      /*
       {
         ofstream ofs("hessreport"); 
@@ -791,26 +791,26 @@ void laplace_approximation_calculator::get_newton_raphson_info
     // ****************************************************************
     // temporary shit  
      /*
-      for (i=1;i<=usize;i++)
+      for (i = 1;i<=usize;i++)
       {
-        for (j=jmin;j<=jmax;j++)
+        for (j = jmin;j<=jmax;j++)
         {
-          //Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
-          y(i+xsize).get_u_bar_tilde()[j-mind]=Hessadjoint(i,j-xsize);
+          // Hess(i,j-xsize) = y(i+xsize).u_bar[j-mind];
+          y(i+xsize).get_u_bar_tilde()[j-mind] = Hessadjoint(i,j-xsize);
         }
       }
       cout << Hess << endl;
-      df1b2variable::passnumber=2;
+      df1b2variable::passnumber = 2;
       df1b2_gradcalc1();
     
-      df1b2variable::passnumber=3;
+      df1b2variable::passnumber = 3;
       df1b2_gradcalc1();
      */
     // ****************************************************************
     // ****************************************************************
     // ****************************************************************
     // ****************************************************************
-      for (j=jmin;j<=jmax;j++)
+      for (j = jmin;j<=jmax;j++)
         grad(j-xsize)= re_objective_function_value::pobjfun->u_dot[j-mind];
     }
     if (ip<num_der_blocks)
@@ -834,10 +834,10 @@ void laplace_approximation_calculator::get_newton_raphson_info
  */
 void laplace_approximation_calculator::set_u_dot(int ip)
 {
-  int mmin=y.indexmin(); 
-  int mmax=y.indexmax(); 
+  int mmin = y.indexmin(); 
+  int mmax = y.indexmax(); 
 
-  for (int i=mmin;i<=mmax;i++)
+  for (int i = mmin;i<=mmax;i++)
   {
     y(i).set_u_dot();
   }
@@ -849,31 +849,31 @@ void laplace_approximation_calculator::set_u_dot(int ip)
  */
 void laplace_approximation_calculator::check_pool_size(void)
 {
-  int num_active_parameters=nvar;
+  int num_active_parameters = nvar;
   f1b2gradlist->reset();
 
-  adpool * tmppool=df1b2variable::pool;
+  adpool * tmppool = df1b2variable::pool;
   if (tmppool)
   {
-    //cout << tmppool << endl;
+    // cout << tmppool << endl;
     // check if current pool is the right size
     if (tmppool->nvar != num_active_parameters)
     {
       // check sizes of other pools
-      int found_pool_flag=0;
-      for (int i=0;i<df1b2variable::adpool_counter;i++)
+      int found_pool_flag = 0;
+      for (int i = 0;i<df1b2variable::adpool_counter;i++)
       {
         if (df1b2variable::adpool_vector[i]->nvar == num_active_parameters)
         {
           adpool * tmp = df1b2variable::pool;
-          //cout << "Old Depth = " << df1b2variable::pool->depth_check() 
+          // cout << "Old Depth = " << df1b2variable::pool->depth_check() 
            //    << "  "  << df1b2variable::pool  << "  ";
-          df1b2variable::pool=df1b2variable::adpool_vector[i];
-          //cout << "Depth = " << df1b2variable::pool->depth_check() 
+          df1b2variable::pool = df1b2variable::adpool_vector[i];
+          // cout << "Depth = " << df1b2variable::pool->depth_check() 
            //    << "  "  << df1b2variable::pool  << endl;
-          df1b2variable::adpool_vector[i]=tmp;
-          df1b2variable::nvar_vector[i]=df1b2variable::pool->nvar;
-          found_pool_flag=1;
+          df1b2variable::adpool_vector[i] = tmp;
+          df1b2variable::nvar_vector[i] = df1b2variable::pool->nvar;
+          found_pool_flag = 1;
           break;
         }
       }
@@ -888,9 +888,9 @@ void laplace_approximation_calculator::check_pool_size(void)
           df1b2variable::pool;
         df1b2variable::nvar_vector[df1b2variable::adpool_counter]=
           df1b2variable::pool->nvar;
-        //df1b2variable::adpool_counter++;
+        // df1b2variable::adpool_counter++;
         df1b2variable::increment_adpool_counter();
-        df1b2variable::pool=new adpool();
+        df1b2variable::pool = new adpool();
         if (!df1b2variable::pool)
         {
           cerr << "Memory allocation error" << endl;
@@ -901,14 +901,14 @@ void laplace_approximation_calculator::check_pool_size(void)
   }
   else
   {
-    df1b2variable::pool=new adpool();
+    df1b2variable::pool = new adpool();
     if (!df1b2variable::pool)
     {
       cerr << "Memory allocation error" << endl;
       ad_exit(1);
     } 
   }
-  df1b2variable::nvar=num_active_parameters;
+  df1b2variable::nvar = num_active_parameters;
   df1b2variable::set_blocksize();
 }
 

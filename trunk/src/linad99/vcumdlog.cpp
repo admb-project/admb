@@ -22,7 +22,7 @@ dvariable cumd_logistic(_CONST prevariable& x)
   }
   else  
   {	  
-    dvariable y=exp(x);	   
+    dvariable y = exp(x);	   
     return y/(1.0+y);
   }
 }

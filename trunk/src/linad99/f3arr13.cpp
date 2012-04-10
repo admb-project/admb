@@ -22,9 +22,9 @@
      ad_exit(21);
    }
 
-   for (int i=slicemin();i<=slicemax();i++)
+   for (int i = slicemin();i<=slicemax();i++)
    {
-     elem(i)=m1.elem(i);
+     elem(i) = m1.elem(i);
    }
    return(*this);
  }
@@ -35,9 +35,9 @@
  */
  dvar3_array& dvar3_array::operator= (double x)
  {
-   for (int i=slicemin();i<=slicemax();i++)
+   for (int i = slicemin();i<=slicemax();i++)
    {
-     elem(i)=x;
+     elem(i) = x;
    }
    return(*this);
  }

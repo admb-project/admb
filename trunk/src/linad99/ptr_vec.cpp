@@ -57,7 +57,7 @@ struct void_ptr
      }
      v += indexmin();
      delete [] v;
-     v=NULL;
+     v = NULL;
      #ifdef DIAG
        cout << "Really deleting an ivector with address "
             << _farptr_tolong(v) <<"\n";
@@ -78,7 +78,7 @@ struct void_ptr
     cout << "Copy constructor called for ivector with address "
          << _farptr_tolong(t.v) <<"\n";
    #endif
-   shape=t.shape;
+   shape = t.shape;
    (shape->ncopies)++;
    v = t.v;
  }
@@ -98,7 +98,7 @@ struct void_ptr
        cerr << " Array sizes do not match in ptr_vector operator =(_CONST ivector&)\n";
      }
 
-     for ( int i=indexmin(); i<=indexmax(); i++)
+     for ( int i = indexmin(); i<=indexmax(); i++)
      {
        elem(i) = t.elem(i);
      }
@@ -121,8 +121,8 @@ struct void_ptr
  */
  ptr_vector::ptr_vector()
  {
-   shape=NULL;
-   v=NULL;
+   shape = NULL;
+   v = NULL;
  }
 
 /**
@@ -131,7 +131,7 @@ struct void_ptr
  */
  void ptr_vector::allocate(int ncl,int nch)
  {
-   if ( (shape=new vector_shape(ncl,nch))==0 )
+   if ( (shape = new vector_shape(ncl,nch))==0 )
    {
      cerr << " Error trying to allocate memory for ivector\n";
    }
@@ -157,9 +157,9 @@ struct void_ptr
  */
  void ptr_vector::initialize(void)
  {
-   for ( int i=indexmin(); i<=indexmax(); i++)
+   for ( int i = indexmin(); i<=indexmax(); i++)
    {
-     v[i]=NULL;
+     v[i] = NULL;
    }
  }
 
@@ -215,7 +215,7 @@ struct void_ptr
  {
    ADUNCONST(ptr_vector,v)
    ostream & s = (ostream&) _s;
-   for (int i=v.indexmin();i<=v.indexmax();i++)
+   for (int i = v.indexmin();i<=v.indexmax();i++)
    {
      s << v.elem(i) << " ";
    }

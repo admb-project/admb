@@ -34,7 +34,7 @@
 ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dvar3_array& z)
 {
   ostream& ostr= (ostream&) _ostr;
-  for (int i=z.slicemin();i<=z.slicemax();i++)
+  for (int i = z.slicemin();i<=z.slicemax();i++)
   {
     ostr << z[i];
     if (i<z.slicemax())
@@ -52,7 +52,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dvar3_array& z)
 istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvar3_array& z)
 {
   istream& istr= (istream&) _istr;
-  for (int i=z.slicemin();i<=z.slicemax();i++)
+  for (int i = z.slicemin();i<=z.slicemax();i++)
   {
     istr >> z[i];
   }

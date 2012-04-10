@@ -76,4 +76,4 @@
     df1b2variable operator () (double x,const df1b2variable& y);
   }; 
 
-#endif   //if !defined(__DF1B2TEST__)
+#endif   // if !defined(__DF1B2TEST__)

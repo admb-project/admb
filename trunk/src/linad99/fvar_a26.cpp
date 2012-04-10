@@ -25,7 +25,7 @@ void dv_minuseq(void);
    }
 
    {
-     for (int i=indexmin();i<=indexmax();i++)
+     for (int i = indexmin();i<=indexmax();i++)
      {
        elem_value(i) -= v1.elem_value(i);
      }
@@ -46,10 +46,10 @@ void dv_minuseq(void);
  */
 void dv_minuseq(void)
 {
-  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("wwxx");
-  dvar_vector_position v1_pos=restore_dvar_vector_position();
-  dvar_vector_position this_pos=restore_dvar_vector_position();
+  dvar_vector_position v1_pos = restore_dvar_vector_position();
+  dvar_vector_position this_pos = restore_dvar_vector_position();
   verify_identifier_string("uuvv");
   dvector dfthis=-1.*restore_dvar_vector_der_nozero(this_pos);
   dfthis.save_dvector_derivatives(v1_pos);
@@ -68,7 +68,7 @@ void dv_minuseq(void)
    }
 
    {
-     for (int i=indexmin();i<=indexmax();i++)
+     for (int i = indexmin();i<=indexmax();i++)
      {
        elem_value(i) -= v1.elem(i);
      }

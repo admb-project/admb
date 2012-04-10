@@ -20,9 +20,9 @@
  {
    dvar_vector tmp(u.indexmin(),u.indexmax());
 
-   for (int i=u.indexmin();i<=u.indexmax();i++)
+   for (int i = u.indexmin();i<=u.indexmax();i++)
    {
-     tmp.elem_value(i)=elem_value(u(i));
+     tmp.elem_value(i) = elem_value(u(i));
    }
    save_identifier_string("by");
    save_dvar_vector_position();
@@ -41,21 +41,21 @@
  */
 void dv_subassign(void)
 {
-  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ay");
-  ivector_position u_pos=restore_ivector_position();
-  ivector u=restore_ivector_value(u_pos);
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
-  dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position t_pos=restore_dvar_vector_position();
+  ivector_position u_pos = restore_ivector_position();
+  ivector u = restore_ivector_value(u_pos);
+  dvar_vector_position tmp_pos = restore_dvar_vector_position();
+  dvector dftmp = restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position t_pos = restore_dvar_vector_position();
   dvector dft(t_pos.indexmin(),t_pos.indexmax());
   verify_identifier_string("by");
   dft.initialize();
-  int mmin=dftmp.indexmin();
-  int mmax=dftmp.indexmax();
-  for (int i=mmin;i<=mmax;i++)
+  int mmin = dftmp.indexmin();
+  int mmax = dftmp.indexmax();
+  for (int i = mmin;i<=mmax;i++)
   {
-     //tmp.elem_value(i)=this->elem_value(u(i));
+     // tmp.elem_value(i) = this->elem_value(u(i));
      dft.elem(u(i))+=dftmp.elem(i);
   }
   dft.save_dvector_derivatives(t_pos);
@@ -69,9 +69,9 @@ void dv_subassign(void)
  {
    dvar_vector tmp(u.indexmin(),u.indexmax());
 
-   for ( int i=u.indexmin(); i<=u.indexmax(); i++)
+   for ( int i = u.indexmin(); i<=u.indexmax(); i++)
    {
-     tmp(i)=(*this)(u(i));
+     tmp(i) = (*this)(u(i));
    }
    return tmp;
  }

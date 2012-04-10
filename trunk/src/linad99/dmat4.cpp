@@ -36,7 +36,7 @@
   
      if (m != m1.m)            // check for condition that both matrices
      {                         // point to the same object
-       for (int i=rowmin();i<=rowmax();i++)
+       for (int i = rowmin();i<=rowmax();i++)
        {
          *(m+i) = m1[i];
        }
@@ -44,9 +44,9 @@
    }
    else
    {
-     index_min=m1.index_min;
-     index_max=m1.index_max;
-     shape=m1.shape;
+     index_min = m1.index_min;
+     index_max = m1.index_max;
+     shape = m1.shape;
      if (shape)
      {
        (shape->ncopies)++;
@@ -68,7 +68,7 @@
      ad_exit(21);
    }
 
-   for (int i=rowmin();i<=rowmax();i++)
+   for (int i = rowmin();i<=rowmax();i++)
    {
      elem(i) += m1.elem(i);
    }
@@ -87,7 +87,7 @@
      ad_exit(21);
    }
 
-   for (int i=rowmin();i<=rowmax();i++)
+   for (int i = rowmin();i<=rowmax();i++)
    {
      elem(i) -= m1.elem(i);
    }

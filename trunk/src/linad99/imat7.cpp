@@ -17,10 +17,10 @@
  */
 int sum(_CONST imatrix& m)
 {
-  int ssum=0;
-  int mmin=m.rowmin();
-  int mmax=m.rowmax();
-  for (int i=mmin;i<=mmax;i++)
+  int ssum = 0;
+  int mmin = m.rowmin();
+  int mmax = m.rowmax();
+  for (int i = mmin;i<=mmax;i++)
   {
     ssum+=sum(m(i));
   }
@@ -35,13 +35,13 @@ int colsum(_CONST imatrix& m,int col)
 { 
   if (col < m.colmin() || col > m.colmax())
   {
-    //JCA: Should be Column out of bounds
+    // JCA: Should be Column out of bounds
     ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "int colsum(_CONST imatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
-  int isum=0;
-  int mmin=m.rowmin();
-  int mmax=m.rowmax();
-  for (int i=mmin;i<=mmax;i++)
+  int isum = 0;
+  int mmin = m.rowmin();
+  int mmax = m.rowmax();
+  for (int i = mmin;i<=mmax;i++)
   {
     isum+=m(i,col);
   }
@@ -56,15 +56,15 @@ ivector column(_CONST imatrix& m,int col)
 { 
   if (col < m.colmin() || col > m.colmax())
   {
-    //JCA: Should be Column out of bounds
+    // JCA: Should be Column out of bounds
     ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "int colsum(_CONST imatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
-  int mmin=m.rowmin();
-  int mmax=m.rowmax();
+  int mmin = m.rowmin();
+  int mmax = m.rowmax();
   ivector tmp(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
+  for (int i = mmin;i<=mmax;i++)
   {
-    tmp(i)=m(i,col);
+    tmp(i) = m(i,col);
   }
   return tmp;
 }

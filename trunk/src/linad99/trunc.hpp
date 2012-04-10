@@ -114,7 +114,7 @@ public:
 
 public:
   double minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&));
-  fmmt(int _nvar,int _m=7);
+  fmmt(int _nvar,int _m = 7);
 
   double minimize(BOR_CONST independent_variables & x,BOR_CONST dvector& c,
         double (*pf)(BOR_CONST dvar_vector&,BOR_CONST dvector&) );

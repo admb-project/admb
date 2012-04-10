@@ -34,7 +34,7 @@ extern "C" {
 #endif
 typedef long int integer;
 typedef unsigned long int uinteger;
-//typedef char *address;
+// typedef char *address;
 typedef short int shortint;
 typedef float real;
 typedef double doublereal;
@@ -268,7 +268,7 @@ double cumbvn(const double& x,const double& y,const double& rho)
   double retval;
   double mx=-x;
   double my=-y;
-  retval=cmvbvu_(&mx,&my,&rho);
+  retval = cmvbvu_(&mx,&my,&rho);
   RETURN_ARRAYS_DECREMENT();
   return retval;
 }
@@ -286,7 +286,7 @@ double cumbvn(const double& xl,const double& yl,
   const double& xu,const double& yu,const double& rho)
 {
   RETURN_ARRAYS_INCREMENT();
-  double my=cumbvn(xl,yl,rho);
+  double my = cumbvn(xl,yl,rho);
   my+=cumbvn(xu,yu,rho);
   my-=cumbvn(xl,yu,rho);
   my-=cumbvn(xu,yl,rho);
@@ -343,17 +343,17 @@ double cmvbvu_(const double *sh,const double *sk,const double *r__)
     double  ret_val, d__1, d__2,d__3,d__4;
 
     /* Builtin functions */
-    //double asin(doublereal), sin(doublereal), exp(doublereal), sqrt(
+    // double asin(doublereal), sin(doublereal), exp(doublereal), sqrt(
 //	    doublereal);
 
     /* Local variables */
     static double  a, b, c__, d__, h__;
     static integer i__;
-    //static doublereal k;
+    // static doublereal k;
     static double k;
     extern double cmvphi_(double *);
     static integer lg;
-    //static doublereal as;
+    // static doublereal as;
     static double as;
     static integer ng;
     static double  bs,rs,xs;

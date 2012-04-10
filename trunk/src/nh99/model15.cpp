@@ -138,19 +138,19 @@ void named_d4_array::allocate(ad_integer hhsl,ad_integer hhsu,_CONST index_type&
 
 named_d4_array& named_d4_array::operator = (_CONST d4_array& m)
 {
-  this->d4_array::operator=(m);
+  this->d4_array::operator = (m);
   return *this;
 }
 
 named_dvar4_array& named_dvar4_array::operator = (_CONST dvar4_array& m)
 {
-  this->dvar4_array::operator=(m);
+  this->dvar4_array::operator = (m);
   return *this;
 }
 
 named_dvar4_array& named_dvar4_array::operator = (_CONST d4_array& m)
 {
-  this->dvar4_array::operator=(m);
+  this->dvar4_array::operator = (m);
   return *this;
 }
 

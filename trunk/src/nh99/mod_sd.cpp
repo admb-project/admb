@@ -39,24 +39,24 @@ void  set_covariance_matrix(const dmatrix& m)
 
 void function_minimizer::sd_routine(void)
 {
-  int nvar=initial_params::nvarcalc(); // get the number of active parameters
+  int nvar = initial_params::nvarcalc(); // get the number of active parameters
   dvector x(1,nvar);
   initial_params::xinit(x); // get the number of active parameters
 
   initial_params::restore_start_phase();
-  int nvar1=initial_params::nvarcalc(); // get the number of active parameters
-  int num_sdrep_types=stddev_params::num_stddev_params +
+  int nvar1 = initial_params::nvarcalc(); // get the number of active parameters
+  int num_sdrep_types = stddev_params::num_stddev_params +
     initial_params::num_active_calc();
 
   param_labels.allocate(1,num_sdrep_types);
   param_size.allocate(1,num_sdrep_types);
 
-  int ii=1;
-  int max_name_length=0;
+  int ii = 1;
+  int max_name_length = 0;
   int i;
-  for (i=0;i<initial_params::num_initial_params;i++)
+  for (i = 0;i<initial_params::num_initial_params;i++)
   {
-    //if ((initial_params::varsptr[i])->phase_start
+    // if ((initial_params::varsptr[i])->phase_start
      // <= initial_params::current_phase)
     if (withinbound(0,(initial_params::varsptr[i])->phase_start,
       initial_params::current_phase))
@@ -67,14 +67,14 @@ void function_minimizer::sd_routine(void)
        (initial_params::varsptr[i])->size_count();
       if (max_name_length<param_labels[ii].size())
       {
-        max_name_length=param_labels[ii].size();
+        max_name_length = param_labels[ii].size();
       }
       ii++;
     }
   }
 
-  int start_stdlabels=ii;
-  for (i=0;i< stddev_params::num_stddev_params;i++)
+  int start_stdlabels = ii;
+  for (i = 0;i< stddev_params::num_stddev_params;i++)
   {
     param_labels[ii]=
       stddev_params::stddevptr[i]->label();
@@ -82,16 +82,16 @@ void function_minimizer::sd_routine(void)
       stddev_params::stddevptr[i]->size_count();
     if (max_name_length<param_labels[ii].size())
     {
-      max_name_length=param_labels[ii].size();
+      max_name_length = param_labels[ii].size();
     }
     ii++;
   }
-  int end_stdlabels=ii-1;
+  int end_stdlabels = ii-1;
 
 
 
 
-  int ndvar=stddev_params::num_stddev_calc();
+  int ndvar = stddev_params::num_stddev_calc();
   dvector scale(1,nvar1);   // need to get scale from somewhere
   dvector v(1,nvar);  // need to read in v from model.rep
   dmatrix S(1,nvar,1,nvar);
@@ -113,10 +113,10 @@ void function_minimizer::sd_routine(void)
     }
   }
   int sgn;
-  int check=initial_params::stddev_scale(scale,x);
+  int check = initial_params::stddev_scale(scale,x);
   double lndet=-ln_det(S,sgn)-2.0*sum(log(scale));
   initial_params::set_active_random_effects(); 
-  //int nvar1=initial_params::nvarcalc(); 
+  // int nvar1 = initial_params::nvarcalc(); 
   dvector diag(1,nvar1+ndvar);
   dvector tmp(1,nvar1+ndvar);
 
@@ -131,15 +131,15 @@ void function_minimizer::sd_routine(void)
       
       if (nvar==nvar1)  // no random effects
       { 
-        for (i=1;i<=nvar;i++)
+        for (i = 1;i<=nvar;i++)
         {
-          for (int j=1;j<=i;j++)
+          for (int j = 1;j<=i;j++)
           {
-            tmp(j)=S(i,j)*scale(i)*scale(j);
+            tmp(j) = S(i,j)*scale(i)*scale(j);
             ofs << tmp(j) << " ";
           }
           ofs << endl;
-          diag(i)=tmp(i);
+          diag(i) = tmp(i);
         }
         dmatrix tv(1,ndvar,1,nvar1);
         adstring tmpstring="admodel.dep";
@@ -159,21 +159,21 @@ void function_minimizer::sd_routine(void)
         {
           cif >> tv;
           dvector tmpsub(1,nvar);
-          for (i=1;i<=ndvar;i++)
+          for (i = 1;i<=ndvar;i++)
           {
             int j;
-            for (j=1;j<=nvar;j++)
+            for (j = 1;j<=nvar;j++)
             {
-              tmpsub(j)=(tv(i)*S(j))*scale(j);
+              tmpsub(j) = (tv(i)*S(j))*scale(j);
             }
             ofs << tmpsub << "  ";
-            tmpsub=tv(i)*S;
-            for (j=1;j<=i;j++)
+            tmpsub = tv(i)*S;
+            for (j = 1;j<=i;j++)
             {
-              tmp(nvar+j)=tmpsub*tv(j);
+              tmp(nvar+j) = tmpsub*tv(j);
               ofs << tmp(nvar+j) << " ";
             }
-            diag(i+nvar)=tmp(i+nvar);
+            diag(i+nvar) = tmp(i+nvar);
   
             if (diag(i+nvar)<=0.0)
             {
@@ -224,36 +224,36 @@ void function_minimizer::sd_routine(void)
           }
         }
 
-        for (i=1;i<=nvar1;i++)
+        for (i = 1;i<=nvar1;i++)
         {
-          for (int j=1;j<=i;j++)
+          for (int j = 1;j<=i;j++)
           {
-            tmp(j)=BS(i,j)*scale(i)*scale(j);
+            tmp(j) = BS(i,j)*scale(i)*scale(j);
             ofs << tmp(j) << " ";
           }
           ofs << endl;
-          diag(i)=tmp(i);
+          diag(i) = tmp(i);
         }
 
         if (ndvar>0)
         {
           cif >> tv;
           dvector tmpsub(1,nvar1);
-          for (i=1;i<=ndvar;i++)
+          for (i = 1;i<=ndvar;i++)
           {
             int j;
-            for (j=1;j<=nvar1;j++)
+            for (j = 1;j<=nvar1;j++)
             {
-              tmpsub(j)=(tv(i)*BS(j))*scale(j);
+              tmpsub(j) = (tv(i)*BS(j))*scale(j);
             }
             ofs << tmpsub << "  ";
-            tmpsub=tv(i)*BS;
-            for (j=1;j<=i;j++)
+            tmpsub = tv(i)*BS;
+            for (j = 1;j<=i;j++)
             {
-              tmp(nvar1+j)=tmpsub*tv(j);
+              tmp(nvar1+j) = tmpsub*tv(j);
               ofs << tmp(nvar1+j) << " ";
             }
-            diag(i+nvar1)=tmp(i+nvar1);
+            diag(i+nvar1) = tmp(i+nvar1);
   
             if (diag(i+nvar1)<=0.0)
             {
@@ -274,15 +274,15 @@ void function_minimizer::sd_routine(void)
     #else
     // *******************************************************
     {
-      for (i=1;i<=nvar;i++)
+      for (i = 1;i<=nvar;i++)
       {
-        for (int j=1;j<=i;j++)
+        for (int j = 1;j<=i;j++)
         {
-          tmp(j)=S(i,j)*scale(i)*scale(j);
+          tmp(j) = S(i,j)*scale(i)*scale(j);
           ofs << tmp(j) << " ";
         }
         ofs << endl;
-        diag(i)=tmp(i);
+        diag(i) = tmp(i);
       }
       dvector tv(1,nvar);
       adstring tmpstring="admodel.dep";
@@ -292,24 +292,24 @@ void function_minimizer::sd_routine(void)
       int tmp_nvar,tmp_ndvar;
       cif >> tmp_nvar >> tmp_ndvar;
       dvector tmpsub(1,nvar);
-      for (i=1;i<=ndvar;i++)
+      for (i = 1;i<=ndvar;i++)
       {
         cif >> tv;  // v(i)
-        for (int j=1;j<=nvar;j++)
+        for (int j = 1;j<=nvar;j++)
         {
-          tmpsub(j)=(tv*S(j))*scale(j);
+          tmpsub(j) = (tv*S(j))*scale(j);
         }
         ofs << tmpsub << "  ";
-        tmpsub=tv*S;
+        tmpsub = tv*S;
         cif.seekg(0,ios::beg);
         cif >> tmp_nvar >> tmp_ndvar;
-        for (j=1;j<=i;j++)
+        for (j = 1;j<=i;j++)
         {
           cif >> v;
-          tmp(nvar+j)=tmpsub*v;
+          tmp(nvar+j) = tmpsub*v;
           ofs << tmp(nvar+j) << " ";
         }
-        diag(i+nvar)=tmp(i+nvar);
+        diag(i+nvar) = tmp(i+nvar);
 
         if (diag(i+nvar)<=0.0)
         {
@@ -327,17 +327,17 @@ void function_minimizer::sd_routine(void)
 
   {
     cifstream cif("admodel.tmp");
-    //ofstream ofs("admodel.cor");
+    // ofstream ofs("admodel.cor");
     ofstream ofs((char*)(ad_comm::adprogram_name + adstring(".cor")));
     ofstream ofsd((char*)(ad_comm::adprogram_name + adstring(".std")));
 
-    int offset=1;
+    int offset = 1;
     dvector param_values(1,nvar1+ndvar);
     initial_params::copy_all_values(param_values,offset);
     stddev_params::copy_all_values(param_values,offset);
 
     int i;
-    for (i=1;i<=nvar1;i++)
+    for (i = 1;i<=nvar1;i++)
     {
       if (diag(i)<=0.0)
       {
@@ -347,10 +347,10 @@ void function_minimizer::sd_routine(void)
       }
       else
       {
-        diag(i)=sqrt(diag(i));
+        diag(i) = sqrt(diag(i));
       }
     }
-    for (i=nvar1+1;i<=nvar1+ndvar;i++)
+    for (i = nvar1+1;i<=nvar1+ndvar;i++)
     {
       if (diag(i)<0.0)
       {
@@ -360,37 +360,37 @@ void function_minimizer::sd_routine(void)
       }
       else if (diag(i)==0.0)
       {
-        diag(i)=0.0;
+        diag(i) = 0.0;
       }
       else
       {
-        diag(i)=sqrt(diag(i));
+        diag(i) = sqrt(diag(i));
       }
     }
 
     {
-      dvector dd=diag(nvar1+1,nvar1+ndvar);
+      dvector dd = diag(nvar1+1,nvar1+ndvar);
       dd.shift(1);
-      int ii=0;
+      int ii = 0;
       stddev_params::get_all_sd_values(dd,ii);
     }
 
-    int lc=1;
-    int ic=1;
+    int lc = 1;
+    int ic = 1;
     ofs << " The logarithm of the determinant of the hessian = " << lndet
         << endl;
     ofs << " index  ";
     ofsd << " index  ";
     ofs << " name  ";
     ofsd << " name ";
-    for (int in=1;in<=max_name_length-5;in++)
+    for (int in = 1;in<=max_name_length-5;in++)
     {
       ofs << " ";
       ofsd << " ";
     }
     ofs << "  value      std.dev   ";
     ofsd << "  value      std.dev   ";
-    for (i=1;i<=nvar+ndvar;i++)
+    for (i = 1;i<=nvar+ndvar;i++)
     {
       ofs << " " << setw(4) << i << "   ";
     }
@@ -399,18 +399,18 @@ void function_minimizer::sd_routine(void)
 
     if (GAUSS_varcovariance_matrix) (*GAUSS_varcovariance_matrix).initialize();
 
-    for (i=1;i<=nvar1+ndvar;i++)
+    for (i = 1;i<=nvar1+ndvar;i++)
     {
       int j;
-      for (j=1;j<=i;j++)
+      for (j = 1;j<=i;j++)
       {
         cif >> tmp(j);
       }
-      for (j=1;j<=i;j++)
+      for (j = 1;j<=i;j++)
       {
         if (diag(i)==0.0 || diag(j)==0.0)
         {
-          tmp(j)=0.0;
+          tmp(j) = 0.0;
         }
         else
         {
@@ -420,7 +420,7 @@ void function_minimizer::sd_routine(void)
           }
           else
           {
-            tmp(j)=1;
+            tmp(j) = 1;
           }
         }
       }
@@ -431,16 +431,16 @@ void function_minimizer::sd_routine(void)
 // get the std dev of profiles likelihood variables into the right slots
       if (start_stdlabels <= lc && end_stdlabels >= lc)
       {
-        for (int ix=0;ix<likeprof_params::num_likeprof_params;ix++)
+        for (int ix = 0;ix<likeprof_params::num_likeprof_params;ix++)
         {
           if (param_labels[lc]==likeprof_params::likeprofptr[ix]->label())
           {
-            likeprof_params::likeprofptr[ix]->get_sigma()=diag(i);
+            likeprof_params::likeprofptr[ix]->get_sigma() = diag(i);
           }
         }
       }
 
-      for (int in=1;in<=max_name_length+1-param_labels[lc].size();in++)
+      for (int in = 1;in<=max_name_length+1-param_labels[lc].size();in++)
       {
         ofs << " ";
         ofsd << " ";
@@ -448,7 +448,7 @@ void function_minimizer::sd_routine(void)
       if (++ic> param_size[lc])
       {
         lc++;
-        ic=1;
+        ic = 1;
       }
       ofs << setscientific() << setw(11) << setprecision(4) << param_values(i)
           << " ";
@@ -457,13 +457,13 @@ void function_minimizer::sd_routine(void)
       if (GAUSS_varcovariance_matrix)
       {
         if (GAUSS_varcovariance_matrix->indexmax()>=i)
-          (*GAUSS_varcovariance_matrix) (i,1)=diag(i);
+          (*GAUSS_varcovariance_matrix) (i,1) = diag(i);
       }
 
       ofsd << setscientific() << setw(11) << setprecision(4) << param_values(i)
            << " ";
       ofsd << setscientific() << setw(10) << setprecision(4) << diag(i);
-      for (j=1;j<=i;j++)
+      for (j = 1;j<=i;j++)
       {
         ofs << " " << setfixed() << setprecision(4) << setw(7) 
             << tmp(j);
@@ -472,7 +472,7 @@ void function_minimizer::sd_routine(void)
           if (GAUSS_varcovariance_matrix->indexmax()>=i  &&
             (*GAUSS_varcovariance_matrix)(i).indexmax()>j)
           {
-            (*GAUSS_varcovariance_matrix) (i,j+1)=tmp(j);
+            (*GAUSS_varcovariance_matrix) (i,j+1) = tmp(j);
           }
         }
       }
@@ -480,8 +480,8 @@ void function_minimizer::sd_routine(void)
       ofsd << endl;
     }
   }
-  //cout << "GAUSS_varcovariance_matrix"<< endl;
-  //cout << *GAUSS_varcovariance_matrix << endl;
+  // cout << "GAUSS_varcovariance_matrix"<< endl;
+  // cout << *GAUSS_varcovariance_matrix << endl;
 
   char msg[40]={"Error trying to delete temporary file "};
   #if !defined(__GNUDOS__) && !defined(__GNU__)

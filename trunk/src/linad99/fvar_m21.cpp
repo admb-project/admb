@@ -27,9 +27,9 @@
    dvar_matrix tmp;
    tmp.allocate(m1.indexmin(),m1.indexmax());
 
-   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     tmp[i]=m1[i]-m2[i];
+     tmp[i] = m1[i]-m2[i];
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -52,9 +52,9 @@
    dvar_matrix tmp;
    tmp.allocate(m1.indexmin(),m1.indexmax());
 
-   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     tmp[i]=m1[i]-m2[i];
+     tmp[i] = m1[i]-m2[i];
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -77,9 +77,9 @@
    dvar_matrix tmp;
    tmp.allocate(m2.indexmin(),m2.indexmax());
 
-   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     tmp[i]=m1[i]-m2[i];
+     tmp[i] = m1[i]-m2[i];
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);

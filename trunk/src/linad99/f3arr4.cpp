@@ -19,9 +19,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m2);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=d-m2(i);
+       tmp(i) = d-m2(i);
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -34,6 +34,6 @@
    dvariable mean(_CONST dvar3_array& m)
    {
      dvariable tmp;
-     tmp=sum(m)/double(size_count(m));
+     tmp = sum(m)/double(size_count(m));
      return tmp;
    }

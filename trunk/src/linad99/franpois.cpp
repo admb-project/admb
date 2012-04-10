@@ -17,8 +17,8 @@
   void dvar_vector::fill_randpoisson( double lambda,
     BOR_CONST random_number_generator& rng)
   {
-    for (int i=indexmin(); i<=indexmax(); i++)
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
-      elem(i)=randpoisson(lambda,rng);
+      elem(i) = randpoisson(lambda,rng);
     }
   }

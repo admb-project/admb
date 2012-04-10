@@ -8,15 +8,15 @@
 
 #if defined(USE_ADPVM)
 
- int pvm_params::num_pvm_params=0;
- const int pvm_params::maxnum_pvm_params=50;
+ int pvm_params::num_pvm_params = 0;
+ const int pvm_params::maxnum_pvm_params = 50;
  pvm_params * pvm_params::varsptr[pvm_params::maxnum_pvm_params+1];
     
   void pvm_int::assign(const ivector& u)
   {
     if(ad_comm::pvm_manager)
     {
-      int nsp=ad_comm::pvm_manager->num_slave_processes;
+      int nsp = ad_comm::pvm_manager->num_slave_processes;
       if (u.indexmin() !=0 || u.indexmax() != nsp)
       {
         cerr << "Error in pvm_int::assign  validindex bounds must be 0 "
@@ -26,8 +26,8 @@
       if (allocated(v))
         v.deallocate();
       v.allocate(0,nsp);
-      v=u;
-      d=u(0);
+      v = u;
+      d = u(0);
     }
   }
   pvm_int::operator int() 
@@ -40,7 +40,7 @@
   {
     if(ad_comm::pvm_manager)
     {
-      int nsp=ad_comm::pvm_manager->num_slave_processes;
+      int nsp = ad_comm::pvm_manager->num_slave_processes;
       if (u.indexmin() !=0 || u.indexmax() != nsp)
       {
         cerr << "Error in pvm_number::assign  valid index bounds must be 0 "
@@ -50,14 +50,14 @@
       if (allocated(v))
         v.deallocate();
       v.allocate(0,nsp);
-      v=u;
-      d=u(0);
+      v = u;
+      d = u(0);
     }
   }
 
   void pvm_params::send_all_to_slaves(void)
   {
-    for (int i=0;i<num_pvm_params;i++)
+    for (int i = 0;i<num_pvm_params;i++)
     { 
       varsptr[i]->send_to_slaves();
     }
@@ -65,7 +65,7 @@
 
   void pvm_params::get_all_from_master(void)
   {
-    for (int i=0;i<num_pvm_params;i++)
+    for (int i = 0;i<num_pvm_params;i++)
     { 
       varsptr[i]->get_from_master();
     }
@@ -100,10 +100,10 @@
 void pvm_int::send_to_slaves(void)
 {
   // *********  begin constant send block  *************
-  int ii=1;
-  for (int i=1; i<=ad_comm::pvm_manager-> nhost; i++)
+  int ii = 1;
+  for (int i = 1; i<=ad_comm::pvm_manager-> nhost; i++)
   {
-    for (int j=ad_comm::pvm_manager->slave_assignments(i).indexmin();
+    for (int j = ad_comm::pvm_manager->slave_assignments(i).indexmin();
              j<=ad_comm::pvm_manager->slave_assignments(i).indexmax();j++)
     {
       int bufid = adpvm_master_cinitsend( PvmDataRaw );
@@ -118,10 +118,10 @@ void pvm_int::send_to_slaves(void)
 void pvm_number::send_to_slaves(void)
 {
   // *********  begin constant send block  *************
-  int ii=1;
-  for (int i=1; i<=ad_comm::pvm_manager-> nhost; i++)
+  int ii = 1;
+  for (int i = 1; i<=ad_comm::pvm_manager-> nhost; i++)
   {
-    for (int j=ad_comm::pvm_manager->slave_assignments(i).indexmin();
+    for (int j = ad_comm::pvm_manager->slave_assignments(i).indexmin();
              j<=ad_comm::pvm_manager->slave_assignments(i).indexmax();j++)
     {
       int bufid = adpvm_master_cinitsend( PvmDataRaw );
@@ -137,25 +137,25 @@ void pvm_number::send_to_slaves(void)
 void pvm_int::get_from_master(void)
 {
   int x;
-  int ptid=pvm_parent();
+  int ptid = pvm_parent();
   // ***************  begin constant receive block *********************
   adpvm_slave_crecv(ptid);
   adpvm_unpack(x);  
   adpvm_slave_end_creceive();
   // ***************  end receive block ***********************************
-  d=x;
+  d = x;
 }
   
 void pvm_number::get_from_master(void)
 {
   double x;
-  int ptid=pvm_parent();
+  int ptid = pvm_parent();
   // ***************  begin constant receive block *********************
   adpvm_slave_crecv(ptid);
   adpvm_unpack(x);  
   adpvm_slave_end_creceive();
   // ***************  end receive block ***********************************
-  d=x;
+  d = x;
 }
   
 #endif //  #if defined(USE_ADPVM)

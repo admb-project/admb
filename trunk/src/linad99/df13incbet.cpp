@@ -3,8 +3,8 @@
  *
  * Based on code from Cephes C and C++ language special functions math library
  * and adapeted for automatic differentiation.
- * http://www.moshier.net/#Cephes or
- * http://www.netlib.org/cephes/
+ * http:// www.moshier.net/#Cephes or
+ * http:// www.netlib.org/cephes/
  *
  * Author: David Fournier
  * Copyright (c) 2009-2011 ADMB Foundation
@@ -168,7 +168,7 @@ static double polevl(double, void *, int);
 static  df1_three_variable polevl(const df1_three_variable &, void *, int);
 static  double p1evl(double, void *, int);
 static  df1_three_variable p1evl(const df1_three_variable &, void *, int);
-//static double lgam(double);
+// static double lgam(double);
 
 const double MYINF = 1.7976931348623158E+308;
 
@@ -284,7 +284,7 @@ static df1_three_variable gamma(const df1_three_variable & xx1)
 	  goverf:
 	    mtherr("gamma", OVERFLOW);
 	    return (sgngam * MYBIG);
-	    //return( sgngam * MAXNUM);
+	    // return( sgngam * MAXNUM);
 #endif
 	 }
 	 z = fabs(z);
@@ -406,7 +406,7 @@ double gamma(double xx1)
 	  goverf:
 	    mtherr("gamma", OVERFLOW);
 	    return (sgngam * MYBIG);
-	    //return( sgngam * MAXNUM);
+	    // return( sgngam * MAXNUM);
 #endif
 	 }
 	 z = fabs(z);
@@ -938,9 +938,9 @@ double incbcf(double _a, double _b, double _x)
  */
 double incbd(double _a, double _b, double _x)
 {
-   double a=_a;
-   double b=_b;
-   double x=_x;
+   double a = _a;
+   double b = _b;
+   double x = _x;
 
    double xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
    double k1, k2, k3, k4, k5, k6, k7, k8;
@@ -1307,7 +1307,7 @@ df1_three_variable igamc(const df1_three_variable & _a,
   //  *   a  -x   -       x
   //  *  x  e     >   ----------
   //  *           -     -
-  //  *          k=0   | (a+k+1)
+  //  *          k = 0   | (a+k+1)
   //  *
   //  */
   // 
@@ -1642,7 +1642,7 @@ static df1_three_variable incbd(const df1_three_variable & _a,
 {
    ADUNCONST(df1_three_variable, a)
       ADUNCONST(df1_three_variable, b) ADUNCONST(df1_three_variable, x)
-      //df1_three_variable s, t, u, v, n, t1, z, ai;
+      // df1_three_variable s, t, u, v, n, t1, z, ai;
    df1_three_variable xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
    df1_three_variable k1, k2, k3, k4, k5, k6, k7, k8;
    df1_three_variable r, t, ans, z, thresh;
@@ -1829,9 +1829,9 @@ static df1_three_variable df3_get_values(double a, double b, double x)
  */
 double pseries(const double & _a, const double & _b, const double & _x)
 {
-   double a=_a;
-   double b=_b;
-   double x=_x;
+   double a = _a;
+   double b = _b;
+   double x = _x;
 
    double s, t, u, v, n, t1, z, ai;
 
@@ -1854,13 +1854,13 @@ double pseries(const double & _a, const double & _b, const double & _x)
    s += t1;
    s += ai;
 
-   //u = a * log(x);
+   // u = a * log(x);
    if ((a + b) < MAXGAM && fabs(u) < MAXLOG)
    {
-      //gamma(a + b);
-      //gamma(a);
-      //gamma(b);
-      //gamma(a) * gamma(b);
+      // gamma(a + b);
+      // gamma(a);
+      // gamma(b);
+      // gamma(a) * gamma(b);
       t = gamma(a + b) / (gamma(a) * gamma(b));
       s = s * t * pow(x, a);
    }/* else

@@ -18,7 +18,7 @@
  {
    if (!(!(*this)))  // only initialize allocated objects
    {
-     for (int i=slicemin();i<=slicemax();i++)
+     for (int i = slicemin();i<=slicemax();i++)
      {
        elem(i).initialize();
      }
@@ -34,7 +34,7 @@
    if (allocated(*this))
    {
      dvar3_array tmp(nrl,nrh);
-     for (int i=nrl; i<=nrh; i++)
+     for (int i = nrl; i<=nrh; i++)
      {
        tmp[i].shallow_copy((*this)(i));
      }
@@ -86,18 +86,18 @@
    #ifdef DIAG
      myheapcheck("Entering dvar3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
    #endif
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh,ncl,nch);
    }
@@ -117,18 +117,18 @@
    #ifdef DIAG
      myheapcheck("Entering dvar3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
    #endif
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh);
    }
@@ -149,18 +149,18 @@
    #ifdef DIAG
      myheapcheck("Entering dvar3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
    #endif
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl(i),nrh(i));
    }
@@ -180,18 +180,18 @@
    #ifdef DIAG
      myheapcheck("Entering dvar3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
    #endif
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate();
    }
@@ -230,18 +230,18 @@
    #ifdef DIAG
      myheapcheck("Entering dvar3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
    #endif
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh,ncl(i),nch);
    }
@@ -268,18 +268,18 @@
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh,ncl(i),nch(i));
    }
@@ -305,18 +305,18 @@
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,int ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh,ncl,nch(i));
    }
@@ -329,9 +329,9 @@
  dvar3_array::dvar3_array(_CONST d3_array& m1)
  {
    allocate(m1);
-   for (int i=slicemin(); i<=slicemax(); i++)
+   for (int i = slicemin(); i<=slicemax(); i++)
    {
-     t[i]=m1[i];
+     t[i] = m1[i];
    }
  }
 
@@ -344,18 +344,18 @@
    #ifdef DIAG
      myheapcheck("Entering dvar3_array matrix(_CONST d3_array& m1)" );
    #endif
-   if ( (shape=new three_array_shape(m1.indexmin(),m1.indexmax())) == 0)
+   if ( (shape = new three_array_shape(m1.indexmin(),m1.indexmax())) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=slicemin(); i<=slicemax(); i++)
+   for (int i = slicemin(); i<=slicemax(); i++)
    {
      t[i].allocate(m1[i]);
    }
@@ -370,18 +370,18 @@
    #ifdef DIAG
      myheapcheck("Entering dvar3_array matrix(_CONST d3_array& m1)" );
    #endif
-   if ( (shape=new three_array_shape(m1.slicemin(),m1.slicemax())) == 0)
+   if ( (shape = new three_array_shape(m1.slicemin(),m1.slicemax())) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=slicemin(); i<=slicemax(); i++)
+   for (int i = slicemin(); i<=slicemax(); i++)
    {
      t[i].allocate(m1[i]);
    }
@@ -420,18 +420,18 @@
    #ifdef DIAG
      myheapcheck("Entering d3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
    #endif
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl[i],nrh[i],ncl[i],nch[i]);
    }
@@ -470,18 +470,18 @@
    #ifdef DIAG
      myheapcheck("Entering d3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
    #endif
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh[i],ncl,nch[i]);
    }
@@ -515,18 +515,18 @@
    #ifdef DIAG
      myheapcheck("Entering d3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
    #endif
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix [ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh[i],ncl,nch);
    }
@@ -538,7 +538,7 @@
  */
  dvar3_array::dvar3_array(_CONST dvar3_array& m2)
  {
-   shape=m2.shape;
+   shape = m2.shape;
    if (shape) (shape->ncopies)++;
    t = m2.t;
  }
@@ -549,7 +549,7 @@
  */
  void dvar3_array::shallow_copy(_CONST dvar3_array& m2)
  {
-   shape=m2.shape;
+   shape = m2.shape;
    if (shape) (shape->ncopies)++;
    t = m2.t;
  }
@@ -574,7 +574,7 @@
 #  ifdef SAFE_ARRAYS
    else
    {
-     //cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
+     // cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
    }
 #  endif
  }
@@ -588,16 +588,16 @@
    if (shape)
    {
      t += slicemin();
-     //int ss=slicesize();
+     // int ss = slicesize();
      delete [] t;
      delete shape;
-     t=NULL;
-     shape=NULL;
+     t = NULL;
+     shape = NULL;
    }
 #  ifdef SAFE_ARRAYS
    else
    {
-     //cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
+     // cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
    }
 #  endif
  }
@@ -615,18 +615,18 @@
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl(i),nrh(i),ncl,nch);
    }
@@ -649,18 +649,18 @@
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape=new three_array_shape(sl,sh)) == 0)
+   if ( (shape = new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
    }
-   int ss=slicesize();
+   int ss = slicesize();
    if ( (t = new dvar_matrix[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i=sl; i<=sh; i++)
+   for (int i = sl; i<=sh; i++)
    {
      t[i].allocate(nrl(i),nrh,ncl,nch);
    }

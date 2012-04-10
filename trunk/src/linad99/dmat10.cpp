@@ -42,8 +42,8 @@ void dmatrix::fill( const char * s)
   int braces = 0;
   int nrow = 0;
   int ncol = 0;
-  int mincolumn=colmin();
-  int minrow=rowmin();
+  int mincolumn = colmin();
+  int minrow = rowmin();
   rowshift(1);
   colshift(1);
 
@@ -115,7 +115,7 @@ void dmatrix::fill( const char * s)
   }
 
   int i;
-  for (i=1; i<=nrow; i++)
+  for (i = 1; i<=nrow; i++)
   {
     cout << "row  " << i << " matrix  "
        << ((*this)[rowmin()+i-1]).size()
@@ -139,10 +139,10 @@ void dmatrix::fill( const char * s)
   }
     
   k = 0;
-  for (i=rowmin(); i<=rowmax(); i++)
+  for (i = rowmin(); i<=rowmax(); i++)
   {
     char *t = new char[strlen(s)+1];
-    //t = (char*) new[strlen(s)+1];
+    // t = (char*) new[strlen(s)+1];
 
     for (k = k1[i]; k <= k2[i]; k++)
     {
@@ -153,8 +153,8 @@ void dmatrix::fill( const char * s)
     dvector tt(t);
     tt.shift(( (*this)(i)).indexmin() );
 
-   //    (*this)(i)=dvector(tt);
-    (*this)(i)=tt;
+   //    (*this)(i) = dvector(tt);
+    (*this)(i) = tt;
 
     delete[] t;
     t = 0;

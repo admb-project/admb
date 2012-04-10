@@ -16,13 +16,13 @@ funnel_init_df1b2vector::funnel_init_df1b2vector
   (const df1b2_init_bounded_vector & _x) 
 {
   ADUNCONST(df1b2_init_bounded_vector,x)
-  type=1;
+  type = 1;
   pointer=&x;
-  int mmin=x.indexmin();
-  int mmax=x.indexmin();
-  ind_index=x(mmin).get_ind_index();
+  int mmin = x.indexmin();
+  int mmax = x.indexmin();
+  ind_index = x(mmin).get_ind_index();
   vxu.allocate(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
+  for (int i = mmin;i<=mmax;i++)
   {
     vxu(i)=*(x(i).get_u());
   }
@@ -44,13 +44,13 @@ funnel_init_df1b2vector::funnel_init_df1b2vector
  */
 void funnel_init_df1b2vector::allocate(void)
 {
-  int mmin=p->indexmin();
-  int mmax=p->indexmax();
+  int mmin = p->indexmin();
+  int mmax = p->indexmax();
 
   df1b2vector::allocate(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
+  for (int i = mmin;i<=mmax;i++)
   {
-    (*this)(i)=value((*p)(i));
+    (*this)(i) = value((*p)(i));
   }
-  //cout << "HERE" << endl;
+  // cout << "HERE" << endl;
 }

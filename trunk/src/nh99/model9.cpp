@@ -23,7 +23,7 @@ int operator + (data_int v,data_int n)
 
 data_int& data_int::operator = (_CONST int xx)
 {
-  val=xx;
+  val = xx;
   return *this;
 }
  

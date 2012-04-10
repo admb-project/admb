@@ -18,9 +18,9 @@
  */
  void d7_array::initialize(void)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   for (int i=mmin; i<=mmax; i++)
+   int mmin = indexmin();
+   int mmax = indexmax();
+   for (int i = mmin; i<=mmax; i++)
    {
      (*this)(i).initialize();
    }
@@ -34,14 +34,14 @@
  {
    if (m2.shape)
    {
-     shape=m2.shape;
+     shape = m2.shape;
      (shape->ncopies)++;
      t = m2.t;
    }
    else
    {
-     shape=NULL;
-     t=NULL;
+     shape = NULL;
+     t = NULL;
    }
  }
 
@@ -61,9 +61,9 @@
      {
        t += indexmin();
        delete [] t;
-       t=NULL;
+       t = NULL;
        delete shape;
-       shape=NULL;
+       shape = NULL;
      }
    }
    else
@@ -89,8 +89,8 @@
  */
  d7_array& d7_array::operator =  (_CONST d7_array& m)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
+   int mmin = indexmin();
+   int mmax = indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
    { 
      cerr << "Incompatible bounds in"
@@ -98,9 +98,9 @@
       << endl;
      ad_exit(1);
     }
-   for (int i=mmin; i<=mmax; i++)
+   for (int i = mmin; i<=mmax; i++)
    {
-     (*this)(i)=m(i);
+     (*this)(i) = m(i);
    }
    return *this;
  }
@@ -111,19 +111,19 @@
  */
  void d7_array::allocate(_CONST d7_array& m1)
  {
-   if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
+   if ( (shape = new vector_shape(m1.indexmin(),m1.indexmax()))
        == 0)
    {
      cerr << " Error allocating memory in d6_array contructor" << endl;
    }
-   int ss=size();
+   int ss = size();
    if ( (t = new d6_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d6_array contructor" << endl;
      ad_exit(21);
    }
    t -= indexmin();
-   for (int i=indexmin(); i<=indexmax(); i++)
+   for (int i = indexmin(); i<=indexmax(); i++)
    {
      t[i].allocate(m1[i]);
    }
@@ -143,7 +143,7 @@
         ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "d6_array& d7_array::operator()(int i)", indexmin(), indexmax(), i);
       }
       #endif
-      //return t[i];
+      // return t[i];
       return elem(i);
     }
 
@@ -267,7 +267,7 @@
           ad_exit(1);
         }
       #endif
-      //return t[i];
+      // return t[i];
       return elem(i);
     }
 
@@ -419,19 +419,19 @@ d7_array::d7_array(const ad_integer& l7,const ad_integer& u7,
 void d7_array::allocate(int l7,int u7,int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch,int l5,int u5,int l6,int u6)
  {
-   if ( (shape=new vector_shape(l7,u7)) == 0)
+   if ( (shape = new vector_shape(l7,u7)) == 0)
    {
      cerr << " Error allocating memory in d6_array contructor\n";
      ad_exit(21);
    }
-   int ss=size();
+   int ss = size();
    if ( (t = new d6_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d6_array contructor\n";
      ad_exit(21);
    }
    t -= indexmin();
-   for (int i=l7; i<=u7; i++)
+   for (int i = l7; i<=u7; i++)
    {
      t[i].allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6);
    }
@@ -443,19 +443,19 @@ void d7_array::allocate(int l7,int u7,int hsl,int hsu,int sl,int sh,int nrl,
  */
 void d7_array::allocate(int l7,int u7)
 {
-  if ( (shape=new vector_shape(l7,u7)) == 0)
+  if ( (shape = new vector_shape(l7,u7)) == 0)
   {
     cerr << " Error allocating memory in d6_array contructor\n";
     ad_exit(21);
   }
-  int ss=size();
+  int ss = size();
   if ( (t = new d6_array[ss]) == 0)
   {
     cerr << " Error allocating memory in d6_array contructor\n";
     ad_exit(21);
   }
   t -= indexmin();
-  for (int i=l7; i<=u7; i++)
+  for (int i = l7; i<=u7; i++)
   {
     t[i].allocate();
   }
@@ -472,21 +472,21 @@ void d7_array::allocate(int l7,int u7)
    const index_type& l5,const index_type& u5,
    const index_type& l6,const index_type& u6)
  {
-   if ( (shape=new vector_shape (l7,u7)) == 0)
+   if ( (shape = new vector_shape (l7,u7)) == 0)
    {
      cerr << " Error allocating memory in d6_array contructor\n";
    }
 
-   int ss=size();
+   int ss = size();
    if ( (t = new d6_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d6_array contructor\n";
      ad_exit(21);
    }
    t -= indexmin();
-   int i1=l7;
-   int iu=u7;
-   for (int i=i1; i<=iu; i++)
+   int i1 = l7;
+   int iu = u7;
+   for (int i = i1; i<=iu; i++)
    {
      (*this)(i).allocate(ad_integer(hsl(i)),ad_integer(hsu(i)),
        sl(i),sh(i),nrl(i),nrh(i),ncl(i),nch(i),l5(i),u5(i),l6(i),u6(i));

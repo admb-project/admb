@@ -59,7 +59,7 @@ void dvar_vector::write_on(BOR_CONST ostream& _s) _CONST
   char new_fill = s.fill();
 #endif
 
-  for (int i=indexmin(); i <= indexmax(); i++)
+  for (int i = indexmin(); i <= indexmax(); i++)
   {
   #ifdef __USE_IOSTREAM__
      s.width(0);
@@ -94,7 +94,7 @@ istream& operator>>(BOR_CONST istream& istr,BOR_CONST dvar_vector& _z)
 void dvar_vector::read_from(BOR_CONST istream& s)
 {
   if (allocated(*this))
-    for (int i=indexmin(); i <= indexmax(); i++)
+    for (int i = indexmin(); i <= indexmax(); i++)
     {
        s >> elem(i); 
     }

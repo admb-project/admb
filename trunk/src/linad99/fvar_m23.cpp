@@ -30,15 +30,15 @@ void dvcm_prod(void);
    kkludge_object kkk;
    dvar_vector tmp(m.colmin(),m.colmax(),kkk);
    double sum;
-   for (int j=m.colmin(); j<=m.colmax(); j++)
+   for (int j = m.colmin(); j<=m.colmax(); j++)
    {
-     sum=0.0;
-     for (int i=x.indexmin(); i<=x.indexmax(); i++)
+     sum = 0.0;
+     for (int i = x.indexmin(); i<=x.indexmax(); i++)
      {
-       //sum+=x[i]*m[i][j];
+       // sum+=x[i]*m[i][j];
        sum+=x.elem_value(i)*(m.elem(i)).elem_value(j);
      }
-     tmp.elem_value(j)=sum;
+     tmp.elem_value(j) = sum;
    }
 
   save_identifier_string("PLACE4");
@@ -63,15 +63,15 @@ void dvcm_prod(void);
 void dvdm_prod(void)
 {
   verify_identifier_string("PLACE1");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos = restore_dvar_vector_position();
   verify_identifier_string("PLACE2");
-  dvar_matrix_position m_pos=restore_dvar_matrix_position();
-  dmatrix m=restore_dvar_matrix_value(m_pos);
+  dvar_matrix_position m_pos = restore_dvar_matrix_position();
+  dmatrix m = restore_dvar_matrix_value(m_pos);
   verify_identifier_string("PLACE3");
-  dvar_vector_position x_pos=restore_dvar_vector_position();
-  dvector x=restore_dvar_vector_value(x_pos);
+  dvar_vector_position x_pos = restore_dvar_vector_position();
+  dvector x = restore_dvar_vector_value(x_pos);
   verify_identifier_string("PLACE4");
-  dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvector dftmp = restore_dvar_vector_derivatives(tmp_pos);
   
   dmatrix dfm(m_pos);
   dvector dfx(x_pos.indexmin(),x_pos.indexmax());
@@ -79,19 +79,19 @@ void dvdm_prod(void)
   dfx.initialize();
   
    double dfsum;
-   for (int j=m.colmax(); j>=m.colmin(); j--)
+   for (int j = m.colmax(); j>=m.colmin(); j--)
    {
-     //tmp.elem_value(j)=sum;
-     dfsum=dftmp.elem(j);
-     for (int i=x.indexmax(); i>=x.indexmin(); i--)
+     // tmp.elem_value(j) = sum;
+     dfsum = dftmp.elem(j);
+     for (int i = x.indexmax(); i>=x.indexmin(); i--)
      {
-       //sum+=x[i]*m[i][j];
-       //sum+=x.elem_value(i)*(m.elem(i)).elem_value(j);
+       // sum+=x[i]*m[i][j];
+       // sum+=x.elem_value(i)*(m.elem(i)).elem_value(j);
        dfm.elem(i,j)+=dfsum*x.elem(i);
        dfx.elem(i)+=dfsum*m.elem(i,j);
      }
-     //sum=0.0;
-     dfsum=0.0;
+     // sum = 0.0;
+     dfsum = 0.0;
    }
    dfx.save_dvector_derivatives(x_pos);
    dfm.save_dmatrix_derivatives(m_pos);
@@ -114,15 +114,15 @@ void dvdm_prod(void)
    kkludge_object kkk;
    dvar_vector tmp(m.colmin(),m.colmax(),kkk);
    double sum;
-   for (int j=m.colmin(); j<=m.colmax(); j++)
+   for (int j = m.colmin(); j<=m.colmax(); j++)
    {
-     sum=0.0;
-     for (int i=x.indexmin(); i<=x.indexmax(); i++)
+     sum = 0.0;
+     for (int i = x.indexmin(); i<=x.indexmax(); i++)
      {
-       //sum+=x[i]*m[i][j];
+       // sum+=x[i]*m[i][j];
        sum+=x.elem_value(i)*(m.elem(i)).elem(j);
      }
-     tmp.elem_value(j)=sum;
+     tmp.elem_value(j) = sum;
    }
 
   save_identifier_string("P4");
@@ -146,33 +146,33 @@ void dvdm_prod(void)
 void dvcm_prod(void)
 {
   verify_identifier_string("PLACE1");
-  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvar_vector_position tmp_pos = restore_dvar_vector_position();
   verify_identifier_string("PLACE2");
-  dvar_matrix_position m_pos=restore_dvar_matrix_position();
-  dmatrix m=restore_dvar_matrix_value(m_pos);
+  dvar_matrix_position m_pos = restore_dvar_matrix_position();
+  dmatrix m = restore_dvar_matrix_value(m_pos);
   verify_identifier_string("PLACE3");
-  dvar_vector_position x_pos=restore_dvar_vector_position();
+  dvar_vector_position x_pos = restore_dvar_vector_position();
   verify_identifier_string("P4");
-  dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvector dftmp = restore_dvar_vector_derivatives(tmp_pos);
   
   dvector dfx(x_pos.indexmin(),x_pos.indexmax());
   dfx.initialize();
   
    double dfsum;
-   int imax=dfx.indexmax();
-   int imin=dfx.indexmin();
-   for (int j=m.colmax(); j>=m.colmin(); j--)
+   int imax = dfx.indexmax();
+   int imin = dfx.indexmin();
+   for (int j = m.colmax(); j>=m.colmin(); j--)
    {
-     //tmp.elem_value(j)=sum;
-     dfsum=dftmp.elem(j);
-     for (int i=imax; i>=imin; i--)
+     // tmp.elem_value(j) = sum;
+     dfsum = dftmp.elem(j);
+     for (int i = imax; i>=imin; i--)
      {
-       //sum+=x[i]*m[i][j];
-       //sum+=x.elem_value(i)*(m.elem(i)).elem_value(j);
+       // sum+=x[i]*m[i][j];
+       // sum+=x.elem_value(i)*(m.elem(i)).elem_value(j);
        dfx.elem(i)+=dfsum*m.elem(i,j);
      }
-     //sum=0.0;
-     dfsum=0.0;
+     // sum = 0.0;
+     dfsum = 0.0;
    }
    dfx.save_dvector_derivatives(x_pos);
 }

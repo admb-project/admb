@@ -22,10 +22,10 @@ double colsum(_CONST dmatrix& m,int col)
             " colsum(_CONST imatrix& m,int col)" << endl;
     ad_exit(1);
   }
-  double isum=0;
-  int mmin=m.rowmin();
-  int mmax=m.rowmax();
-  for (int i=mmin;i<=mmax;i++)
+  double isum = 0;
+  int mmin = m.rowmin();
+  int mmax = m.rowmax();
+  for (int i = mmin;i<=mmax;i++)
   {
     isum+=m(i,col);
   }

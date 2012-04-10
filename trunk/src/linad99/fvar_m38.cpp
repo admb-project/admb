@@ -17,23 +17,23 @@
 dvar_matrix operator * (_CONST prevariable& x,_CONST dmatrix& m)
 {
   RETURN_ARRAYS_INCREMENT();
-  int rmin=m.rowmin();
-  int rmax=m.rowmax();
+  int rmin = m.rowmin();
+  int rmax = m.rowmax();
 
   ivector cmin(rmin,rmax);
   ivector cmax(rmin,rmax);
 
   int i;
-  for (i=rmin;i<=rmax;i++)
+  for (i = rmin;i<=rmax;i++)
   {
-    cmin(i)=(m(i)).indexmin();  
-    cmax(i)=(m(i)).indexmax();  
+    cmin(i) = (m(i)).indexmin();  
+    cmax(i) = (m(i)).indexmax();  
   }
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
-  for (i=rmin;i<=rmax;i++)
+  for (i = rmin;i<=rmax;i++)
   {
-    tmp(i)=x*m(i);
+    tmp(i) = x*m(i);
   }
   RETURN_ARRAYS_DECREMENT();
   return tmp;
@@ -46,23 +46,23 @@ dvar_matrix operator * (_CONST prevariable& x,_CONST dmatrix& m)
 dvar_matrix operator * (_CONST dvar_matrix& m,CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
-  int rmin=m.rowmin();
-  int rmax=m.rowmax();
+  int rmin = m.rowmin();
+  int rmax = m.rowmax();
 
   ivector cmin(rmin,rmax);
   ivector cmax(rmin,rmax);
 
   int i;
-  for (i=rmin;i<=rmax;i++)
+  for (i = rmin;i<=rmax;i++)
   {
-    cmin(i)=(m(i)).indexmin();  
-    cmax(i)=(m(i)).indexmax();  
+    cmin(i) = (m(i)).indexmin();  
+    cmax(i) = (m(i)).indexmax();  
   }
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
-  for (i=rmin;i<=rmax;i++)
+  for (i = rmin;i<=rmax;i++)
   {
-    tmp(i)=x*m(i);
+    tmp(i) = x*m(i);
   }
   RETURN_ARRAYS_DECREMENT();
   return tmp;
@@ -75,23 +75,23 @@ dvar_matrix operator * (_CONST dvar_matrix& m,CGNU_DOUBLE x)
 dvar_matrix operator * ( CGNU_DOUBLE x,_CONST dvar_matrix& m)
 {
   RETURN_ARRAYS_INCREMENT();
-  int rmin=m.rowmin();
-  int rmax=m.rowmax();
+  int rmin = m.rowmin();
+  int rmax = m.rowmax();
 
   ivector cmin(rmin,rmax);
   ivector cmax(rmin,rmax);
 
   int i;
-  for (i=rmin;i<=rmax;i++)
+  for (i = rmin;i<=rmax;i++)
   {
-    cmin(i)=(m(i)).indexmin();  
-    cmax(i)=(m(i)).indexmax();  
+    cmin(i) = (m(i)).indexmin();  
+    cmax(i) = (m(i)).indexmax();  
   }
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
-  for (i=rmin;i<=rmax;i++)
+  for (i = rmin;i<=rmax;i++)
   {
-    tmp(i)=x*m(i);
+    tmp(i) = x*m(i);
   }
   RETURN_ARRAYS_DECREMENT();
   return tmp;

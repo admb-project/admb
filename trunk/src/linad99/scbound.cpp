@@ -29,18 +29,18 @@ double dmax(double, double);
   dvariable boundp( dvariable xx, double fmin, double fmax, const prevariable& _fpen,
     const double& s)
 {
-  prevariable& fpen=(prevariable&) _fpen;
+  prevariable& fpen = (prevariable&) _fpen;
   
   dvariable t,y,x;
-  x=xx/s;
-  const double l4=log(4.0);
-  dvariable ss=(sin(x*1.57079632679489661)+1.)/2.;
-  double diff=fmax-fmin;
-  t=fmin + diff*ss;
+  x = xx/s;
+  const double l4 = log(4.0);
+  dvariable ss = (sin(x*1.57079632679489661)+1.)/2.;
+  double diff = fmax-fmin;
+  t = fmin + diff*ss;
 #ifdef USE_BARD_PEN
-  //cout << "xxxxx" << endl;
+  // cout << "xxxxx" << endl;
   double pen=.00001/diff;
-  fpen=fpen-pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4); 
+  fpen = fpen-pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4); 
 #else 
 
   if (x < -.9999)
@@ -75,13 +75,13 @@ double boundp( double xx, double fmin, double fmax, const double& _fpen,
 {
   double& fpen = (double&)_fpen;
   double t,x;
-  x=xx/s;
-  const double l4=log(4.0);
-  double ss=(sin(x*1.57079632679489661)+1.)/2.;
-  double diff=fmax-fmin;
-  t=fmin + diff*ss;
+  x = xx/s;
+  const double l4 = log(4.0);
+  double ss = (sin(x*1.57079632679489661)+1.)/2.;
+  double diff = fmax-fmin;
+  t = fmin + diff*ss;
 #ifdef USE_BARD_PEN
-  //cout << "xxxxx" << endl;
+  // cout << "xxxxx" << endl;
   double pen=.00001/diff;
   fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4); 
 #else 
@@ -122,7 +122,7 @@ double boundpin(double x, double fmin, double fmax,const double& s)
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
-    x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
+    x = dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
 
   if (x > fmax)
@@ -131,7 +131,7 @@ double boundpin(double x, double fmin, double fmax,const double& s)
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
-    x=dmax(fmax-.001,fmax-.01*(fmax-fmin));
+    x = dmax(fmax-.001,fmax-.01*(fmax-fmin));
   }
 
   tinv=::asin(2.*(x-fmin)/(fmax-fmin)-1.)/1.57079632679489661;
@@ -142,7 +142,7 @@ double boundpin(double x, double fmin, double fmax,const double& s)
 double boundpin(BOR_CONST prevariable& xx, double fmin, double fmax,_CONST double& s)
 {
   double tinv;
-  double x=value(xx);
+  double x = value(xx);
 
   if (x < fmin)
   {
@@ -150,7 +150,7 @@ double boundpin(BOR_CONST prevariable& xx, double fmin, double fmax,_CONST doubl
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
-    x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
+    x = dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
 
   if (x > fmax)
@@ -159,7 +159,7 @@ double boundpin(BOR_CONST prevariable& xx, double fmin, double fmax,_CONST doubl
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
-    x=dmax(fmax-.001,fmax-.01*(fmax-fmin));
+    x = dmax(fmax-.001,fmax-.01*(fmax-fmin));
   }
 
   tinv=::asin(2.*(x-fmin)/(fmax-fmin)-1.)/1.57079632679489661;

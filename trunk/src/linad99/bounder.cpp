@@ -16,15 +16,15 @@
  */
   double bounder(double x,double min,double max, double scale)
   {
-    double y=x/scale;
+    double y = x/scale;
     double z;
     if (y<20.0)
     {
-      z=exp(y)/(1.0+exp(y));
+      z = exp(y)/(1.0+exp(y));
     }
     else
     {
-      z=1.0/(1+exp(-y));
+      z = 1.0/(1+exp(-y));
     }
     return min+(max-min)*z;
   }
@@ -35,15 +35,15 @@
  */
   dvariable bounder(const prevariable&  x,double min,double max, double scale)
   {
-    dvariable y=x/scale;
+    dvariable y = x/scale;
     dvariable z;
     if (y<20.0)
     {
-      z=exp(y)/(1.0+exp(y));
+      z = exp(y)/(1.0+exp(y));
     }
     else
     {
-      z=1.0/(1+exp(-y));
+      z = 1.0/(1+exp(-y));
     }
     return min+(max-min)*z;
   }

@@ -34,9 +34,9 @@
  */
 double dvar_matrix::fill_seqadd( CGNU_DOUBLE x, CGNU_DOUBLE d)
 {
-  double x1=x;
-  double d1=d;
-  for (int i=rowmin();i<=rowmax();i++)
+  double x1 = x;
+  double d1 = d;
+  for (int i = rowmin();i<=rowmax();i++)
   {
     elem(i).fill_seqadd(x1,d1);
     x1+=elem(i).size()*d1;

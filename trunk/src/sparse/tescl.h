@@ -47,7 +47,7 @@ public :
   int length(const int & max = 1000);
 protected :
   clist * next;
-  virtual here()=0;
+  virtual here() = 0;
   clist() { next = here(); }
   clist(const clist & pt);
   clist * prev(void);
@@ -80,7 +80,7 @@ int  clist::length(const int & max)
 
 clist::clist(const clist & t)
 {
-  clist& tmp=t.here(); 
+  clist& tmp = t.here(); 
   next = t.next;
   tmp.next = this;
 }

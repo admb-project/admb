@@ -52,8 +52,8 @@ double AD_pow_22(double x,double y)
  */
 double AD_pow_122(double x,double y)
 {
-  double xy1=pow(x,y-1.0);
-  double lx=log(x);
+  double xy1 = pow(x,y-1.0);
+  double lx = log(x);
   return xy1*lx*(y*lx + 2.0);
 }
 
@@ -63,7 +63,7 @@ double AD_pow_122(double x,double y)
  */
 double AD_pow_12(double x,double y)
 {
-  double xy1=pow(x,y-1.0);
+  double xy1 = pow(x,y-1.0);
   return xy1*(1.0 + y*log(x));
 }
 

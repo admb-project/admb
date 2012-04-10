@@ -14,10 +14,10 @@
 /* JCA: Need sum(lvector)
 AD_LONG_INT sum(_CONST lmatrix& m)
 {
-  AD_LONG_INT ssum=0;
-  int mmin=m.rowmin();
-  int mmax=m.rowmax();
-  for (int i=mmin;i<=mmax;i++)
+  AD_LONG_INT ssum = 0;
+  int mmin = m.rowmin();
+  int mmax = m.rowmax();
+  for (int i = mmin;i<=mmax;i++)
   {
     ssum+=sum(m(i));
   }
@@ -35,10 +35,10 @@ AD_LONG_INT colsum(_CONST lmatrix& m,int col)
   {
     ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "AD_LONG_INT colsum(_CONST lmatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
-  AD_LONG_INT isum=0;
-  int mmin=m.rowmin();
-  int mmax=m.rowmax();
-  for (int i=mmin;i<=mmax;i++)
+  AD_LONG_INT isum = 0;
+  int mmin = m.rowmin();
+  int mmax = m.rowmax();
+  for (int i = mmin;i<=mmax;i++)
   {
     isum+=m(i,col);
   }
@@ -55,12 +55,12 @@ lvector column(_CONST lmatrix& m,int col)
   {
     ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "lvector column(_CONST lmatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
-  int mmin=m.rowmin();
-  int mmax=m.rowmax();
+  int mmin = m.rowmin();
+  int mmax = m.rowmax();
   lvector tmp(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
+  for (int i = mmin;i<=mmax;i++)
   {
-    tmp(i)=m(i,col);
+    tmp(i) = m(i,col);
   }
   return tmp;
 }

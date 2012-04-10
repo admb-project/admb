@@ -41,7 +41,7 @@
 uostream& operator<<(BOR_CONST uostream& _ostr,BOR_CONST d4_array & z)
 {
   uostream & ostr = (uostream&) _ostr;
-  for (int i=z.hslicemin();i<=z.hslicemax();i++)
+  for (int i = z.hslicemin();i<=z.hslicemax();i++)
   {
     ostr << z[i];
   }
@@ -55,7 +55,7 @@ uostream& operator<<(BOR_CONST uostream& _ostr,BOR_CONST d4_array & z)
 uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST d4_array & z)
 {
   uistream & istr = (uistream&) _istr;
-  for (int i=z.hslicemin();i<=z.hslicemax();i++)
+  for (int i = z.hslicemin();i<=z.hslicemax();i++)
   {
     istr >> z[i];
   }

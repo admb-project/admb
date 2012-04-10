@@ -35,7 +35,7 @@
   
      if (m != m1.m)            // check for condition that both matrices
      {                         // point to the same object
-       for (int i=rowmin();i<=rowmax();i++)
+       for (int i = rowmin();i<=rowmax();i++)
        {
          *(m+i) = m1[i];
        }
@@ -43,9 +43,9 @@
    }
    else
    {
-     index_min=m1.index_min;
-     index_max=m1.index_max;
-     shape=m1.shape;
+     index_min = m1.index_min;
+     index_max = m1.index_max;
+     shape = m1.shape;
      if (shape)
      {
        (shape->ncopies)++;
@@ -61,9 +61,9 @@
  */
  imatrix& imatrix::operator= (const int n)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   for (int i=mmin;i<=mmax;i++)
+   int mmin = indexmin();
+   int mmax = indexmax();
+   for (int i = mmin;i<=mmax;i++)
    {
      (*this)(i) = n;
    }

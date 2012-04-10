@@ -20,7 +20,7 @@ void set_value(const prevariable& _x,_CONST dvar_vector& v, const int& _ii)
 {
   int& ii = (int&) _ii;
   prevariable& x= (prevariable&)( _x);
-  x=v(ii++);
+  x = v(ii++);
 }
 
 /**
@@ -31,8 +31,8 @@ void set_value(const prevariable& _x,const dvar_vector& v, const int& _ii,
   double s)
 {
   prevariable& x= (prevariable&)( _x);
-  int& ii=(int&)(_ii);
-  x=v(ii++)/s;
+  int& ii = (int&)(_ii);
+  x = v(ii++)/s;
 }
 
 /**
@@ -42,9 +42,9 @@ void set_value(const prevariable& _x,const dvar_vector& v, const int& _ii,
 void set_value_inv(const prevariable& x,const dvector& _v,const int& _ii,
   double s)
 {
-  dvector& v=(dvector&)(_v);
-  int& ii=(int&)(_ii);
-  v(ii++)=s*value(x);
+  dvector& v = (dvector&)(_v);
+  int& ii = (int&)(_ii);
+  v(ii++) = s*value(x);
 }
 
 /**
@@ -54,10 +54,10 @@ void set_value_inv(const prevariable& x,const dvector& _v,const int& _ii,
 void set_value(const prevariable& _x,const dvar_vector& v,const int& _ii, 
   double fmin, double fmax,const dvariable& _fpen,double s)
 {
-  int& ii=(int&)_ii; 
-  prevariable& x=(prevariable&) _x;
-  dvariable& fpen=(dvariable&) _fpen;
-  x=boundp(v(ii++),fmin,fmax,fpen,s);
+  int& ii = (int&)_ii; 
+  prevariable& x = (prevariable&) _x;
+  dvariable& fpen = (dvariable&) _fpen;
+  x = boundp(v(ii++),fmin,fmax,fpen,s);
 }
 
 /**
@@ -67,9 +67,9 @@ void set_value(const prevariable& _x,const dvar_vector& v,const int& _ii,
 void set_value_inv(const prevariable& x,const dvector& _v,const int& _ii,
   double fmin, double fmax,double s)
 {
-  dvector& v=(dvector&)(_v);
-  int& ii=(int&)(_ii);
-  v(ii++)=boundpin(x,fmin,fmax,s);
+  dvector& v = (dvector&)(_v);
+  int& ii = (int&)(_ii);
+  v(ii++) = boundpin(x,fmin,fmax,s);
 }
 
 /**
@@ -84,17 +84,17 @@ void set_value(const prevariable& _u,_CONST dvar_vector& x,const int& _ii,
   dvariable& fpen= (dvariable&) _fpen;
   if (!initial_params::straight_through_flag)
   {
-    u=boundp(x(ii++),fmin,fmax,fpen);
+    u = boundp(x(ii++),fmin,fmax,fpen);
   }
   else
   {
-    u=x(ii);
-    value(u)=boundp(value(x(ii++)),fmin,fmax);
-    double diff=fmax-fmin;
-    //t=fmin + diff*ss;
-    dvariable ss=(u-fmin)/diff;
+    u = x(ii);
+    value(u) = boundp(value(x(ii++)),fmin,fmax);
+    double diff = fmax-fmin;
+    // t = fmin + diff*ss;
+    dvariable ss = (u-fmin)/diff;
 #   ifdef USE_BARD_PEN
-      const double l4=log(4.0);
+      const double l4 = log(4.0);
       double pen=.000001/diff;
       fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
 #   else 
@@ -112,11 +112,11 @@ void set_value(const dvar_vector& x,_CONST dvar_vector& v, const int& _ii)
   int& ii = (int&) _ii;
   if (!(!(x)))
   {
-    int min=x.indexmin();
-    int max=x.indexmax();
-    for (int i=min;i<=max;i++)
+    int min = x.indexmin();
+    int max = x.indexmax();
+    for (int i = min;i<=max;i++)
     {
-      ((dvar_vector&)x)(i)=v(ii++);
+      ((dvar_vector&)x)(i) = v(ii++);
     }
   }
 }
@@ -127,15 +127,15 @@ void set_value(const dvar_vector& x,_CONST dvar_vector& v, const int& _ii)
  */
 void set_value(const dvar_vector& _x,const dvar_vector& v, const int& _ii,double s)
 {
-  dvar_vector& x=(dvar_vector&) _x;
+  dvar_vector& x = (dvar_vector&) _x;
   int& ii = (int&) _ii;
   if (!(!(x)))
   {
-    int min=x.indexmin();
-    int max=x.indexmax();
-    for (int i=min;i<=max;i++)
+    int min = x.indexmin();
+    int max = x.indexmax();
+    for (int i = min;i<=max;i++)
     {
-      x(i)=v(ii++)/s;
+      x(i) = v(ii++)/s;
     }
   }
 }
@@ -150,15 +150,15 @@ void set_value(const dvar_vector& x,_CONST dvar_vector& v, const int& _ii,
   int& ii = (int&) _ii;
   if (!(!(x)))
   {
-    int min=x.indexmin();
-    int max=x.indexmax();
-    for (int i=min;i<=max;i++)
+    int min = x.indexmin();
+    int max = x.indexmax();
+    for (int i = min;i<=max;i++)
     {
-      ((dvar_vector&)(x))(i)=boundp(v(ii++),fmin,fmax,fpen);
+      ((dvar_vector&)(x))(i) = boundp(v(ii++),fmin,fmax,fpen);
     }
   }
 }
-//dvariable boundp(const prevariable &,double fmin,double fmax,
+// dvariable boundp(const prevariable &,double fmin,double fmax,
 //  const dvariable& fpen);
 
 /**
@@ -168,15 +168,15 @@ void set_value(const dvar_vector& x,_CONST dvar_vector& v, const int& _ii,
 void set_value(const dvar_vector& _x,const dvar_vector& v,const int& _ii,
   double fmin,double fmax,const dvariable& fpen,double s)
 {
-  dvar_vector& x=(dvar_vector&)(_x);
+  dvar_vector& x = (dvar_vector&)(_x);
   int& ii = (int&) _ii;
   if (!(!(x)))
   {
-    int min=x.indexmin();
-    int max=x.indexmax();
-    for (int i=min;i<=max;i++)
+    int min = x.indexmin();
+    int max = x.indexmax();
+    for (int i = min;i<=max;i++)
     {
-      ((dvar_vector&)(x))(i)=boundp(v(ii++)/s,fmin,fmax,fpen);
+      ((dvar_vector&)(x))(i) = boundp(v(ii++)/s,fmin,fmax,fpen);
     }
   }
 }
@@ -189,21 +189,21 @@ void set_value(const dvar_vector& _x,const dvar_vector& v,const int& _ii,
   double fmin,double fmax,const dvariable& fpen,double s,const ivector& flags,
   double off_value)
 {
-  dvar_vector& x=(dvar_vector&)(_x);
+  dvar_vector& x = (dvar_vector&)(_x);
   int& ii = (int&) _ii;
   if (!(!(x)))
   {
-    int min=x.indexmin();
-    int max=x.indexmax();
-    for (int i=min;i<=max;i++)
+    int min = x.indexmin();
+    int max = x.indexmax();
+    for (int i = min;i<=max;i++)
     {
       if (flags(i))
       {
-        x(i)=boundp(v(ii++)/s,fmin,fmax,fpen);
+        x(i) = boundp(v(ii++)/s,fmin,fmax,fpen);
       }
       else
       {
-        x(i)=off_value;
+        x(i) = off_value;
       }
     }
   }
@@ -218,9 +218,9 @@ void set_value(const dvar_matrix& x,_CONST dvar_vector& v, const int& _ii)
   int& ii = (int&) _ii;
   if (!(!(x)))
   {
-    int min=x.rowmin();
-    int max=x.rowmax();
-    for (int i=min;i<=max;i++)
+    int min = x.rowmin();
+    int max = x.rowmax();
+    for (int i = min;i<=max;i++)
     {
       set_value(x(i),v,ii);
     }
@@ -237,9 +237,9 @@ void set_value(const dvar_matrix& x,const dvar_vector& v,const int& _ii,
   int& ii = (int&) _ii;
   if (!(!(x)))
   {
-    int min=x.rowmin();
-    int max=x.rowmax();
-    for (int i=min;i<=max;i++)
+    int min = x.rowmin();
+    int max = x.rowmax();
+    for (int i = min;i<=max;i++)
     {
       set_value(x(i),v,ii,s);
     }
@@ -255,9 +255,9 @@ void set_value(const dvar_matrix& x,_CONST dvar_vector& v, const int& ii,
 {
   if (!(!(x)))
   {
-    int min=x.rowmin();
-    int max=x.rowmax();
-    for (int i=min;i<=max;i++)
+    int min = x.rowmin();
+    int max = x.rowmax();
+    for (int i = min;i<=max;i++)
     {
       set_value(x(i),v,ii,fmin,fmax,fpen);
     }
@@ -273,9 +273,9 @@ void set_value(const dvar_matrix& x,const dvar_vector& v, const int& ii,
 {
   if (!(!(x)))
   {
-    int min=x.rowmin();
-    int max=x.rowmax();
-    for (int i=min;i<=max;i++)
+    int min = x.rowmin();
+    int max = x.rowmax();
+    for (int i = min;i<=max;i++)
     {
       set_value(x(i),v,ii,fmin,fmax,fpen,s);
     }
@@ -291,9 +291,9 @@ void set_value(dvar3_array& x,_CONST dvar_vector& v, const int& ii,
 {
   if (!(!(x)))
   {
-    int min=x.slicemin();
-    int max=x.slicemax();
-    for (int i=min;i<=max;i++)
+    int min = x.slicemin();
+    int max = x.slicemax();
+    for (int i = min;i<=max;i++)
     {
       set_value(x(i),v,ii,fmin,fmax,fpen);
     }
@@ -306,9 +306,9 @@ void set_value(dvar3_array& x,_CONST dvar_vector& v, const int& ii,
  */
 void set_value_partial(const dvar_matrix& x,_CONST dvar_vector& v, const int& _ii, int n)
 {
-  int mmin=x.indexmin();
-  int mmax=x.indexmax();
-  for (int i=mmin;i<=mmax;i++)
+  int mmin = x.indexmin();
+  int mmax = x.indexmax();
+  for (int i = mmin;i<=mmax;i++)
   {
     set_value_partial(x(i),v,_ii,n);
   }
@@ -323,8 +323,8 @@ void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& _i
   int& ii = (int&) _ii;
   if (!(!(x)))
   {
-    int min=x.indexmin();
-    int max=min+n-1;
+    int min = x.indexmin();
+    int max = min+n-1;
     #ifdef SAFE_ARRAYS
       if (max >x.indexmax())
       {
@@ -332,9 +332,9 @@ void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& _i
              << endl;
       }
     #endif
-    for (int i=min;i<=max;i++)
+    for (int i = min;i<=max;i++)
     {
-      ((dvar_vector&)(x))(i)=v(ii++);
+      ((dvar_vector&)(x))(i) = v(ii++);
     }
   }
 }
@@ -349,8 +349,8 @@ void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& _i
   int& ii = (int&) _ii;
   if (!(!(x)))
   {
-    int min=x.indexmin();
-    int max=min+n-1;
+    int min = x.indexmin();
+    int max = min+n-1;
     #ifdef SAFE_ARRAYS
       if (max >x.indexmax())
       {
@@ -358,9 +358,9 @@ void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& _i
              << endl;
       }
     #endif
-    for (int i=min;i<=max;i++)
+    for (int i = min;i<=max;i++)
     {
-      ((dvar_vector&)(x))(i)=boundp(v(ii++),fmin,fmax,fpen);
+      ((dvar_vector&)(x))(i) = boundp(v(ii++),fmin,fmax,fpen);
     }
   }
 }
@@ -373,9 +373,9 @@ void set_value(dvar3_array& x,_CONST dvar_vector& v, const int& ii)
 {
   if (!(!(x)))
   {
-    int min=x.slicemin();
-    int max=x.slicemax();
-    for (int i=min;i<=max;i++)
+    int min = x.slicemin();
+    int max = x.slicemax();
+    for (int i = min;i<=max;i++)
     {
       set_value(x(i),v,ii);
     }

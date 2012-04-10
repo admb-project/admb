@@ -40,7 +40,7 @@
 	{
       #endif
 #     if defined(MYDEBUG)
-          int wrote_buffer=0;
+          int wrote_buffer = 0;
 	  if (ptr < ptr_first)
           {
             cerr << "Illegal ptr value" << endl;
@@ -53,7 +53,7 @@
 	     // and counter
 	     this->write_grad_stack_buffer();
 #     if defined(MYDEBUG)
-             wrote_buffer=1;
+             wrote_buffer = 1;
 #     endif
 	  }
 #     if defined(MYDEBUG)
@@ -61,9 +61,9 @@
 	  ptr->func = func;
 	  ptr->dep_addr = dep_addr;
 	  ptr->ind_addr1 = ind_addr1;
-	  ptr->mult1=mult1;
+	  ptr->mult1 = mult1;
 	  ptr->ind_addr2 = ind_addr2;
-	  ptr->mult2=mult2;
+	  ptr->mult2 = mult2;
 	  ptr++;
       #ifdef NO_DERIVS
 	}
@@ -103,7 +103,7 @@ prevariable& operator *(_CONST prevariable& v1, CGNU_DOUBLE x)
  */
     void prevariable::operator /=(_CONST prevariable& v1)
     {
-      double tmp=1./(v1.v->x);
+      double tmp = 1./(v1.v->x);
       v->x *= tmp;
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(v->x),
 		&(v->x),tmp,&(v1.v->x),-(v->x)*tmp);
@@ -115,7 +115,7 @@ prevariable& operator *(_CONST prevariable& v1, CGNU_DOUBLE x)
  */
     void prevariable::operator /=( CGNU_DOUBLE v1)
     {
-      double tmp=1./v1;
+      double tmp = 1./v1;
       v->x *= tmp;
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(v->x),
 		&(v->x),tmp);

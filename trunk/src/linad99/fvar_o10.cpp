@@ -35,9 +35,9 @@
  * Description not yet available.
  * \param
  */
-    prevariable& prevariable::operator=( CGNU_DOUBLE t) _CONST
+    prevariable& prevariable::operator = ( CGNU_DOUBLE t) _CONST
     {
-      (*v).x=t;
+      (*v).x = t;
       gradient_structure::GRAD_STACK1->
         set_gradient_stack0(df_eq_pvdoub,&(v->x));
       return((prevariable&)(*this));
@@ -47,9 +47,9 @@
  * Description not yet available.
  * \param
  */
-    prevariable& prevariable::operator=(_CONST prevariable& t) _CONST
+    prevariable& prevariable::operator = (_CONST prevariable& t) _CONST
     {
-      (*v).x=(*t.v).x;
+      (*v).x = (*t.v).x;
       gradient_structure::GRAD_STACK1->
         set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
       return((prevariable&)(*this));
@@ -62,9 +62,9 @@
   \param t constant reference to an object of type prevariable.
   \return prevariable reference
  */
-    prevariable& prevariable::operator=(_CONST prevariable& t)
+    prevariable& prevariable::operator = (_CONST prevariable& t)
     {
-      (*v).x=(*t.v).x;
+      (*v).x = (*t.v).x;
       gradient_structure::GRAD_STACK1->
         set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
       return(*this);
@@ -75,9 +75,9 @@
   \param t constant reference to an object of type prevariable.
   \return dvariable reference
  */
-    dvariable& dvariable::operator=(_CONST prevariable& t)
+    dvariable& dvariable::operator = (_CONST prevariable& t)
     {
-      (*v).x=(*t.v).x;
+      (*v).x = (*t.v).x;
       gradient_structure::GRAD_STACK1->
         set_gradient_stack1(default_evaluation1,&(v->x),&(t.v->x));
       return(*this);
@@ -88,9 +88,9 @@
   \param t constant object of type double.
   \return prevariable reference
  */
-    dvariable& dvariable::operator=( CGNU_DOUBLE t)
+    dvariable& dvariable::operator = ( CGNU_DOUBLE t)
     {
-      (*v).x=t;
+      (*v).x = t;
       gradient_structure::GRAD_STACK1->
         set_gradient_stack0(df_eq_pvdoub,&(v->x));
       return(*this);
@@ -101,9 +101,9 @@
   \param t constant object of type double.
   \return prevariable reference
  */
-    prevariable& prevariable::operator=( CGNU_DOUBLE t)
+    prevariable& prevariable::operator = ( CGNU_DOUBLE t)
     {
-      (*v).x=t;
+      (*v).x = t;
       gradient_structure::GRAD_STACK1->
         set_gradient_stack0(df_eq_pvdoub,&(v->x));
       return(*this);
@@ -114,6 +114,6 @@
  */
   void df_eq_pvdoub(void)
   {
-    * gradient_structure::GRAD_STACK1->ptr->dep_addr=0.;
+    * gradient_structure::GRAD_STACK1->ptr->dep_addr = 0.;
   }
 

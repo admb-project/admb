@@ -17,8 +17,8 @@
  */
 void i4_array::allocate(void)
 {
-  t=0;
-  shape=0;
+  t = 0;
+  shape = 0;
 }
 
 /**
@@ -29,9 +29,9 @@ void i4_array::initialize(void)
 {
   if (allocated(*this))
   {
-    int mmin=indexmin();
-    int mmax=indexmax();
-    for (int i=mmin;i<=mmax;i++)
+    int mmin = indexmin();
+    int mmax = indexmax();
+    for (int i = mmin;i<=mmax;i++)
     {
       (*this)(i).initialize();
     }
@@ -62,7 +62,7 @@ i4_array::i4_array(int hsl,int hsu)
  */
 void i4_array::allocate(int hsl,int hsu)
 {
-  int ss=hsu-hsl+1;
+  int ss = hsu-hsl+1;
   if (ss>0)
   {
     if ( (t = new i3_array[ss]) == 0)
@@ -70,21 +70,21 @@ void i4_array::allocate(int hsl,int hsu)
       cerr << " Error allocating memory in i4_array contructor\n";
       ad_exit(21);
     }
-    if ( (shape=new vector_shapex(hsl,hsu,t)) == 0)
+    if ( (shape = new vector_shapex(hsl,hsu,t)) == 0)
     {
       cerr << " Error allocating memory in i4_array contructor\n";
       ad_exit(21);
     }
     t -= indexmin();
-    for (int i=hsl; i<=hsu; i++)
+    for (int i = hsl; i<=hsu; i++)
     {
       (*this)(i).allocate();
     }
   }
   else
   {
-    t=0;
-    shape=0;
+    t = 0;
+    shape = 0;
   }
 }
 
@@ -105,7 +105,7 @@ i4_array::i4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
 void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch)
  {
-   int ss=hsu-hsl+1;
+   int ss = hsu-hsl+1;
    if (ss>0)
    {
      if ( (t = new i3_array[ss]) == 0)
@@ -113,21 +113,21 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
        cerr << " Error allocating memory in i4_array contructor\n";
        ad_exit(21);
      }
-     if ( (shape=new vector_shapex(hsl,hsu,t)) == 0)
+     if ( (shape = new vector_shapex(hsl,hsu,t)) == 0)
      {
        cerr << " Error allocating memory in i4_array contructor\n";
        ad_exit(21);
      }
      t -= indexmin();
-     for (int i=hsl; i<=hsu; i++)
+     for (int i = hsl; i<=hsu; i++)
      {
        (*this)(i).allocate(sl,sh,nrl,nrh,ncl,nch);
      }
    }
    else
    {
-     t=0;
-     shape=0;
+     t = 0;
+     shape = 0;
    }
  }
 
@@ -139,7 +139,7 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    const index_type& sl,const index_type& sh,const index_type& nrl,
    const index_type& nrh,const index_type& ncl,const index_type& nch)
  {
-   int ss=hsu-hsl+1;
+   int ss = hsu-hsl+1;
    if (ss>0)
    {
      if ( (t = new i3_array[ss]) == 0)
@@ -147,13 +147,13 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
        cerr << " Error allocating memory in i4_array contructor\n";
        ad_exit(21);
      }
-     if ( (shape=new vector_shapex(hsl,hsu,t)) == 0)
+     if ( (shape = new vector_shapex(hsl,hsu,t)) == 0)
      {
        cerr << " Error allocating memory in i4_array contructor\n";
        ad_exit(21);
      }
      t -= indexmin();
-     for (int i=hsl; i<=hsu; i++)
+     for (int i = hsl; i<=hsu; i++)
      {
        (*this)(i).allocate(ad_integer(sl(i)),ad_integer(sh(i)),nrl(i),nrh(i),
          ncl(i),nch(i));
@@ -161,8 +161,8 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    }
    else
    {
-     t=0;
-     shape=0;
+     t = 0;
+     shape = 0;
    }
  }
 
@@ -174,14 +174,14 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  {
    if (m2.shape)
    {
-     shape=m2.shape;
+     shape = m2.shape;
      (shape->ncopies)++;
      t = m2.t;
    }
    else
    {
-     shape=NULL;
-     t=NULL;
+     shape = NULL;
+     t = NULL;
    }
  }
 
@@ -210,9 +210,9 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
      {
        t= (i3_array*) (shape->get_truepointer());
        delete [] t;
-       t=NULL;
+       t = NULL;
        delete shape;
-       shape=NULL;
+       shape = NULL;
      }
    }
  }

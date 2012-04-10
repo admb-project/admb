@@ -97,4 +97,4 @@ public:
 #endif
 };
 
-#endif //defined(__AD_POOL__)
+#endif // defined(__AD_POOL__)

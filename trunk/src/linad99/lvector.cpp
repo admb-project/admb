@@ -44,7 +44,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
        }
        v += indexmin();
        delete []v;
-       v=NULL;
+       v = NULL;
      
        delete  shape;
        shape = NULL;
@@ -62,7 +62,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
  */
  lvector::lvector(_CONST lvector& t)
  {
-   shape=t.shape;
+   shape = t.shape;
    (shape->ncopies)++;
    v = t.v;
  }
@@ -82,7 +82,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
  */
  lvector::lvector(_CONST dvector& u)
  {
-   if ( (shape=new vector_shape(u.indexmin(),u.indexmax()))==0 )
+   if ( (shape = new vector_shape(u.indexmin(),u.indexmax()))==0 )
    {
      cerr << " Error trying to allocate memory for ivector\n";
    }
@@ -94,7 +94,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
    }
 
    v -= indexmin();
-   for ( int i=indexmin(); i<=indexmax(); i++)
+   for ( int i = indexmin(); i<=indexmax(); i++)
    {
    #if !defined(USE_DDOUBLE)
      v[i]= (AD_LONG_INT) u.elem(i);
@@ -117,7 +117,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
        cerr << " Array sizes do not match in lvector operator =(_CONST lvector&)\n";
      }
 
-     for ( int i=indexmin(); i<=indexmax(); i++)
+     for ( int i = indexmin(); i<=indexmax(); i++)
      {
        elem(i) = t.elem(i);
      }
@@ -131,7 +131,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
  */
  lvector::lvector( unsigned int sz, AD_LONG_INT * x )
  {
-   if ( (shape=new vector_shape(0,sz-1))==0 )
+   if ( (shape = new vector_shape(0,sz-1))==0 )
    {
      cerr << " Error trying to allocate memory for lvector\n";
    }
@@ -141,7 +141,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
      ad_exit(1);
    }
 
-   for (unsigned int i=0; i<sz; i++)
+   for (unsigned int i = 0; i<sz; i++)
    {
      cout << "Doing the assignment in constructor\n";
      v[i] = x[i];
@@ -163,7 +163,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
  */
  void lvector::allocate(int ncl,int nch)
  {
-   if ( (shape=new vector_shape(ncl,nch))==0 )
+   if ( (shape = new vector_shape(ncl,nch))==0 )
    {
      cerr << " Error trying to allocate memory for lvector\n";
    }
@@ -176,9 +176,9 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
 
    v -= indexmin();
    #ifdef SAFE_ARRAYS
-     for ( int i=indexmin(); i<=indexmax(); i++)
+     for ( int i = indexmin(); i<=indexmax(); i++)
      {
-       v[i]=0.;
+       v[i] = 0.;
      }
    #endif
  }
@@ -189,7 +189,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
  */
  void lvector::allocate(void)
  {
-   shape=NULL;
+   shape = NULL;
    v = NULL;
  }
 
@@ -208,7 +208,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
  */
  lvector::lvector(_CONST ivector& u)
  {
-   if ( (shape=new vector_shape(u.indexmin(),u.indexmax()))==0 )
+   if ( (shape = new vector_shape(u.indexmin(),u.indexmax()))==0 )
    {
      cerr << " Error trying to allocate memory for lvector\n";
    }
@@ -220,9 +220,9 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
    }
 
    v -= indexmin();
-   for ( int i=indexmin(); i<=indexmax(); i++)
+   for ( int i = indexmin(); i<=indexmax(); i++)
    {
-     elem(i)=u.elem(i);
+     elem(i) = u.elem(i);
    }
  }
 
@@ -232,8 +232,8 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
  */
  void lvector::initialize(void)
  {
-   for ( int i=indexmin(); i<=indexmax(); i++)
+   for ( int i = indexmin(); i<=indexmax(); i++)
    {
-     elem(i)=0;
+     elem(i) = 0;
    }
  }

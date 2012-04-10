@@ -9,11 +9,11 @@
 double function_minimizer::projected_hess_determinant(BOR_CONST dvector& g,
   const int underflow_flag,BOR_CONST dvector& xscale, BOR_CONST double& _ln_det_proj_jac)
 {
- double& ln_det_proj_jac=(double&) _ln_det_proj_jac;
+ double& ln_det_proj_jac = (double&) _ln_det_proj_jac;
  int ibreak=-1;
- int sgn=0;
- double lndet=0.0;
- //char ch;
+ int sgn = 0;
+ double lndet = 0.0;
+ // char ch;
  if (!underflow_flag)
  {
   uistream ifs("admodel.hes");
@@ -41,101 +41,101 @@ double function_minimizer::projected_hess_determinant(BOR_CONST dvector& g,
     {
       cerr << "Error reading the hessian from file admodel.hes" << endl;
     }
-    dvector n=g/norm(g);
+    dvector n = g/norm(g);
     // project the standard basis vectors onto the tangent space
     int i;
-    for (i=1;i<=nvar;i++)
+    for (i = 1;i<=nvar;i++)
     {
       p(i)=-n(i)*n;
       p(i,i)+=1;
     }
 
-    for (i=1;i<=nvar;i++)
+    for (i = 1;i<=nvar;i++)
     {
-      ss(i)=norm(p(i));
+      ss(i) = norm(p(i));
     }
-    minsize=min(ss);
+    minsize = min(ss);
 
   
-    for (i=1;i<=nvar;i++)
+    for (i = 1;i<=nvar;i++)
     {
       if (ss(i)==minsize) 
       {
         ibreak = i;
         break;
       }
-      p1(i)=p(i); 
+      p1(i) = p(i); 
     }
 
     int ii;
-    for (ii=i+1;ii<=nvar;ii++)
+    for (ii = i+1;ii<=nvar;ii++)
     {
-      p1(ii-1)=p(ii);
+      p1(ii-1) = p(ii);
     }
     
     dmatrix tmpS(1,nvar-1,1,nvar-1);
     
-    //for (ii=1;ii<=nvar-1;ii++)
+    // for (ii = 1;ii<=nvar-1;ii++)
     //{
-      //for (i=1;i<=nvar;i++)
+      // for (i = 1;i<=nvar;i++)
       //{
-        //p1(ii,i)*=xscale(i);
+        // p1(ii,i)*=xscale(i);
       //}
     //}
    
-    for (i=1;i<=nvar-1;i++)
+    for (i = 1;i<=nvar-1;i++)
     {
-      tmpS(i,i)=p1(i)*p1(i);
-      for (int j=1;j<i;j++)
+      tmpS(i,i) = p1(i)*p1(i);
+      for (int j = 1;j<i;j++)
       {
-        tmpS(i,j)=p1(i)*p1(j);
-        tmpS(j,i)=tmpS(i,j);
+        tmpS(i,j) = p1(i)*p1(j);
+        tmpS(j,i) = tmpS(i,j);
       }
     }
-    ln_det_proj_jac=ln_det(tmpS,sgn);
+    ln_det_proj_jac = ln_det(tmpS,sgn);
  
     // reset the p1 basis
-    for (i=1;i<=nvar;i++)
+    for (i = 1;i<=nvar;i++)
     {
       if (i==ibreak) break;
-      p1(i)=p(i); 
+      p1(i) = p(i); 
     }
 
-    for (ii=i+1;ii<=nvar;ii++)
+    for (ii = i+1;ii<=nvar;ii++)
     {
-      p1(ii-1)=p(ii);
+      p1(ii-1) = p(ii);
     }
     
-    for (i=1;i<=nvar;i++)
+    for (i = 1;i<=nvar;i++)
     {
-      for (int j=1;j<i;j++)
+      for (int j = 1;j<i;j++)
       {
-        double tmp=(h(i,j)+h(j,i))/2.;
-        h(i,j)=tmp;
-	h(j,i)=tmp;
+        double tmp = (h(i,j)+h(j,i))/2.;
+        h(i,j) = tmp;
+	h(j,i) = tmp;
       }
     }
 
     // move to "model space"
-    for (i=1;i<=nvar;i++)
+    for (i = 1;i<=nvar;i++)
     {
-      for (int j=1;j<=nvar;j++)
+      for (int j = 1;j<=nvar;j++)
       {
         h(i,j)/=(xscale(i)*xscale(j));
       }
     }
 
-    for (i=1;i<nvar;i++)
+    for (i = 1;i<nvar;i++)
     {
       dvector tmp = h*p1(i);
-      tmpS(i,i)=tmp*p1(i);
-      for (int j=1;j<i;j++)
+      tmpS(i,i) = tmp*p1(i);
+      for (int j = 1;j<i;j++)
       {
-        tmpS(i,j)=tmp*p1(j);
-        tmpS(j,i)=tmpS(i,j);
+        tmpS(i,j) = tmp*p1(j);
+        tmpS(j,i) = tmpS(i,j);
       }
     }
-    lndet=ln_det(tmpS,sgn);
+    lndet = ln_det(tmpS,sgn);
   }
   if (sgn <= 0)
   {

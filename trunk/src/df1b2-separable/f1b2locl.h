@@ -60,32 +60,32 @@ public:
   static void reset_counters(void) { num_vars=0; /*num_all_vars=0;*/}
   static void end_local_calculations(void);
   static int num_vars;
-  //static int num_all_vars;
+  // static int num_all_vars;
   static int num_inactive_vars;
   static int num_active_parameters;
   static init_df1b2vector * py;
   static imatrix * plist;
   int index;
   static   local_init_var ** list;
-  //static   local_init_var ** all_list;
+  // static   local_init_var ** all_list;
   static   local_init_var ** inactive_list;
   local_init_var(void) { add_to_list(); }
   void add_to_list(void);
   void delete_from_list(void);
   void add_to_inactive_list(void);
   virtual void allocate(void);
-  //virtual void xinit(void);
+  // virtual void xinit(void);
   static void dot_calcs_all(local_dep_df1b2variable&);
-  virtual void dot_calcs(local_dep_df1b2variable&,int j)=0;
-  virtual void set_dot(int)=0;
+  virtual void dot_calcs(local_dep_df1b2variable&,int j) = 0;
+  virtual void set_dot(int) = 0;
   static void set_dot_all(void);
-  virtual void xinit(init_df1b2vector&,int& ii)=0;
-  virtual void xinit(dvector&,int& ii)=0;
+  virtual void xinit(init_df1b2vector&,int& ii) = 0;
+  virtual void xinit(dvector&,int& ii) = 0;
   virtual void set_value(const init_df1b2vector&,const int& ii,
-    const df1b2variable&)=0;
-  virtual void set_value(const init_df1b2vector&,const int& ii)=0;
-  virtual void set_index(imatrix&,int& ii)=0;
-  virtual int nvar_calc(void)=0;
+    const df1b2variable&) = 0;
+  virtual void set_value(const init_df1b2vector&,const int& ii) = 0;
+  virtual void set_index(imatrix&,int& ii) = 0;
+  virtual int nvar_calc(void) = 0;
 
   static void reset(init_df1b2vector& x);
     
@@ -107,7 +107,7 @@ public:
   double xu;
   int ind_index;
   int nvar_calc(void){return 1;}
-  virtual void set_dot(int ii){*(get_u_dot()+ii)=1;ii++;}
+  virtual void set_dot(int ii){*(get_u_dot()+ii) = 1;ii++;}
   local_init_df1b2variable(const df1b2_init_number & x); 
   local_init_df1b2variable(const df1b2variable & x); 
   local_init_df1b2variable(double xu,double * xdot); 
@@ -177,31 +177,31 @@ public:
   static df1b2variable * funnel_constraints_penalty;
   static void reset_counters(void) { num_vars=0; /*num_all_vars=0;*/}
   static int num_vars;
-  //static int num_all_vars;
+  // static int num_all_vars;
   static int num_inactive_vars;
   static int num_active_parameters;
-  //static dep_df1b2vector * py;
+  // static dep_df1b2vector * py;
   static imatrix * plist;
   int index;
   static   local_dep_var ** list;
-  //static   local_dep_var ** all_list;
+  // static   local_dep_var ** all_list;
   static   local_dep_var ** inactive_list;
   local_dep_var(void) { add_to_list(); }
   void add_to_list(void);
   void delete_from_list(void);
   void add_to_inactive_list(void);
-  virtual void allocate(void)=0;
-  virtual void deallocate(void)=0;
-  //virtual void xdep(void);
-  //virtual void xinit(dep_df1b2vector&,int& ii)=0;
-  //virtual void xdep(dvector&,int& ii)=0;
-  //virtual void set_value(const dep_df1b2vector&,const int& ii,
-   // const df1b2variable&)=0;
-  //virtual void set_value(const dep_df1b2vector&,const int& ii)=0;
-  virtual void set_index(imatrix&,int& ii)=0;
-  virtual int nvar_calc(void)=0;
+  virtual void allocate(void) = 0;
+  virtual void deallocate(void) = 0;
+  // virtual void xdep(void);
+  // virtual void xinit(dep_df1b2vector&,int& ii) = 0;
+  // virtual void xdep(dvector&,int& ii) = 0;
+  // virtual void set_value(const dep_df1b2vector&,const int& ii,
+   // const df1b2variable&) = 0;
+  // virtual void set_value(const dep_df1b2vector&,const int& ii) = 0;
+  virtual void set_index(imatrix&,int& ii) = 0;
+  virtual int nvar_calc(void) = 0;
 
-  //static void reset(dep_df1b2vector& x);
+  // static void reset(dep_df1b2vector& x);
     
   static void deallocate_all(void);
   static void allocate_all(void);
@@ -224,20 +224,20 @@ public:
   double xu;
   int ind_index;
   int nvar_calc(void){return 1;}
-  //local_dep_df1b2variable(const df1b2_dep_number & x); 
+  // local_dep_df1b2variable(const df1b2_dep_number & x); 
   local_dep_df1b2variable(const df1b2variable & x); 
   local_dep_df1b2variable(void);
   local_dep_df1b2variable(double * xdot,double * pxdot);
-  //local_dep_df1b2variable(const random_effects_bounded_vector_info&); 
+  // local_dep_df1b2variable(const random_effects_bounded_vector_info&); 
   local_dep_df1b2variable&  operator = (const df1b2variable&);  
   virtual void allocate(void);
   virtual void deallocate(void);
-  //virtual void allocate(const df1b2variable&);
-  //virtual void preallocate(const df1b2variable&);
-  //virtual void xdep(dep_df1b2vector&,int& ii);
-  //virtual void xdep(dvector&,int& ii);
-  //virtual void set_value(const dep_df1b2vector&,const int& ii);
-  //virtual void set_value(const dep_df1b2vector&,const int& ii,
+  // virtual void allocate(const df1b2variable&);
+  // virtual void preallocate(const df1b2variable&);
+  // virtual void xdep(dep_df1b2vector&,int& ii);
+  // virtual void xdep(dvector&,int& ii);
+  // virtual void set_value(const dep_df1b2vector&,const int& ii);
+  // virtual void set_value(const dep_df1b2vector&,const int& ii,
    // const df1b2variable&);
   virtual void set_index(imatrix&,int& ii);
 };
@@ -252,11 +252,11 @@ class local_dep_df1b2vector : public local_dep_var, public df1b2vector
 public:
   int nvar_calc(void);
   local_dep_df1b2vector(const df1b2vector & x);
-  //virtual void xdep(dep_df1b2vector&,int& ii);
-  //virtual void xdep(dvector&,int& ii){ cout << "here"<< endl;}
-  //virtual void set_value(const dep_df1b2vector&,const int& ii,
+  // virtual void xdep(dep_df1b2vector&,int& ii);
+  // virtual void xdep(dvector&,int& ii){ cout << "here"<< endl;}
+  // virtual void set_value(const dep_df1b2vector&,const int& ii,
   //  const df1b2variable&);
-  //virtual void set_value(const dep_df1b2vector&,const int& ii);
+  // virtual void set_value(const dep_df1b2vector&,const int& ii);
   virtual void set_index(imatrix&,int& ii);
 };
 
@@ -280,12 +280,12 @@ public:
   static   local_init_pass1_var ** list;
   local_init_pass1_var(void) { add_to_list(); }
   void add_to_list(void);
-  virtual void allocate(void)=0;
+  virtual void allocate(void) = 0;
   static void dot_calcs_all(local_dep_df1b2variable&);
-  virtual void dot_calcs(local_dep_df1b2variable&,int j)=0;
-  virtual void set_dot(int)=0;
+  virtual void dot_calcs(local_dep_df1b2variable&,int j) = 0;
+  virtual void set_dot(int) = 0;
   static void set_dot_all(void);
-  virtual int nvar_calc(void)=0;
+  virtual int nvar_calc(void) = 0;
   static void allocate_all(void);
   static int nvarcalc_all(void);
 };
@@ -300,7 +300,7 @@ class local_init_pass1_df1b2variable : public local_init_pass1_var,
   double xu;
   double * xudot;
 public:
-  virtual void set_dot(int ii){*(get_u_dot()+ii)=1;ii++;}
+  virtual void set_dot(int ii){*(get_u_dot()+ii) = 1;ii++;}
   virtual void dot_calcs(local_dep_df1b2variable&,int j);
   void allocate(void);
   int nvar_calc(void){return 1;}

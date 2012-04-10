@@ -16,8 +16,8 @@
  */
 void ivector::initialize(void)
 {
-  for (int i=indexmin();i<=indexmax();i++)
+  for (int i = indexmin();i<=indexmax();i++)
   {
-    elem(i)=0;
+    elem(i) = 0;
   }
 }

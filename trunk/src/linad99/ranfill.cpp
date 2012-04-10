@@ -44,7 +44,7 @@ double randn(long int& n);
  */
 void reinitialize_auto_rand()
 {
-  long int One=1;
+  long int One = 1;
   auto_rand(One,-One);
 }
 
@@ -61,7 +61,7 @@ double auto_rand(long int& idum, int reset)
   static long ix1,ix2,ix3;
   static float r[108];
   double temp;
-  static int iff=0;
+  static int iff = 0;
   int j;
   long int iu;
 
@@ -73,42 +73,42 @@ double auto_rand(long int& idum, int reset)
 
   if (idum < 0 || iff == 0)
   {
-    iff=2;
-    ix1=(IC1-(idum))%M1;
-    ix1=ix1 % M1;
+    iff = 2;
+    ix1 = (IC1-(idum))%M1;
+    ix1 = ix1 % M1;
 
 
-    ix1=(IA1*ix1+IC1);
-    ix1=ix1 % M1;
+    ix1 = (IA1*ix1+IC1);
+    ix1 = ix1 % M1;
 
-    ix2=ix1 % M2;
-    ix1=(IA1*ix1+IC1);
-    ix1=ix1 % M1;
-    ix3=ix1 % M3;
-    for (j=1;j<=107;j++) 
+    ix2 = ix1 % M2;
+    ix1 = (IA1*ix1+IC1);
+    ix1 = ix1 % M1;
+    ix3 = ix1 % M3;
+    for (j = 1;j<=107;j++) 
     {
-      ix2=(IA2*ix2+IC2) % M2;
-      ix1=(IA1*ix1+IC1);
-              ix1=ix1 % M1;
+      ix2 = (IA2*ix2+IC2) % M2;
+      ix1 = (IA1*ix1+IC1);
+              ix1 = ix1 % M1;
           
       iu= (long int) (ix2*RM2);
-      r[j]=(ix1+iu)*RM1;
+      r[j] = (ix1+iu)*RM1;
     }
     idum =6;
   }
 
-  ix3=(IA3*ix3+IC3) % M3;
-  ix3=ix3 % M3;
-  ix1=(IA1*ix1+IC1) % M1;
-  ix1=ix1 % M1;
-  ix2=(IA2*ix2+IC2) % M2;
-  ix2=ix2 % M2;
-  j=1 + ((107*ix3)/M3);
+  ix3 = (IA3*ix3+IC3) % M3;
+  ix3 = ix3 % M3;
+  ix1 = (IA1*ix1+IC1) % M1;
+  ix1 = ix1 % M1;
+  ix2 = (IA2*ix2+IC2) % M2;
+  ix2 = ix2 % M2;
+  j = 1 + ((107*ix3)/M3);
   if (j > 107 || j < 1) cerr << " Error in random number generator\n"; 
-  temp=r[j];
-  r[j]=ix2*RM2;
-  r[j]=(ix1+r[j]);
-  r[j]=r[j]*RM1;
+  temp = r[j];
+  r[j] = ix2*RM2;
+  r[j] = (ix1+r[j]);
+  r[j] = r[j]*RM1;
   return temp;
 }
 
@@ -131,11 +131,11 @@ double auto_rand(long int& idum, int reset)
 double randn(long int& n)
 {
   long int nn;
-  nn=n;
+  nn = n;
   double x,y;
-  x=auto_rand(nn,1);
-  y=auto_rand(nn,1);
-  double u=sqrt(-2*log(x))*cos(2*PI*y);
+  x = auto_rand(nn,1);
+  y = auto_rand(nn,1);
+  double u = sqrt(-2*log(x))*cos(2*PI*y);
   return(u);
 }
   
@@ -152,16 +152,16 @@ double randn(long int& n)
       ad_exit(1);
     }
     long int nn;
-    nn=n;
-    for (int i=indexmin(); i<=indexmax(); i++)
+    nn = n;
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
       if (auto_rand(nn,1)<=p)
       {
-        elem(i)=1;
+        elem(i) = 1;
       }
       else
       {
-        elem(i)=0;
+        elem(i) = 0;
       } 
     }
     reinitialize_auto_rand();
@@ -174,10 +174,10 @@ double randn(long int& n)
   void dvector::fill_randu(long int& n)
   {
     long int nn;
-    nn=n;
-    for (int i=indexmin(); i<=indexmax(); i++)
+    nn = n;
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
-      elem(i)=auto_rand(nn,1);
+      elem(i) = auto_rand(nn,1);
     }
     reinitialize_auto_rand();
   }
@@ -189,10 +189,10 @@ double randn(long int& n)
   void dmatrix::colfill_randu(BOR_CONST int&j,long int&n)
   {
     long int nn;
-    nn=n;
-    for (int i=rowmin(); i<=rowmax(); i++)
+    nn = n;
+    for (int i = rowmin(); i<=rowmax(); i++)
     {
-      elem(i,j)=auto_rand(nn,1);
+      elem(i,j) = auto_rand(nn,1);
     }
     reinitialize_auto_rand();
   }
@@ -204,10 +204,10 @@ double randn(long int& n)
   void dmatrix::rowfill_randu(BOR_CONST int& i,long int& n)
   {
     long int nn;
-    nn=n;
-    for (int j=colmin(); j<=colmax(); j++)
+    nn = n;
+    for (int j = colmin(); j<=colmax(); j++)
     {
-      elem(i,j)=auto_rand(nn,1);
+      elem(i,j) = auto_rand(nn,1);
     }
     reinitialize_auto_rand();
   }
@@ -219,10 +219,10 @@ double randn(long int& n)
   void dvector::fill_randn(long int& n)
   {
     long int nn;
-    nn=n;
-    for (int i=indexmin(); i<=indexmax(); i++)
+    nn = n;
+    for (int i = indexmin(); i<=indexmax(); i++)
     {
-      (*this)(i)=randn(nn);
+      (*this)(i) = randn(nn);
     }
     reinitialize_auto_rand();
   }
@@ -233,8 +233,8 @@ double randn(long int& n)
  */
   void dmatrix::fill_randn(long int& n)
   {
-    long int nn=n;
-    for (int i=rowmin(); i<=rowmax(); i++)
+    long int nn = n;
+    for (int i = rowmin(); i<=rowmax(); i++)
     {
       elem(i).fill_randn_ni(nn);
       nn+=2;
@@ -249,8 +249,8 @@ double randn(long int& n)
   void d3_array::fill_randn(long int& n)
   {
     long int nn;
-    nn=n;
-    for (int i=slicemin(); i<=slicemax(); i++)
+    nn = n;
+    for (int i = slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randn_ni(nn);
       nn+=2;  
@@ -265,8 +265,8 @@ double randn(long int& n)
   void d3_array::fill_randu(long int& n)
   {
     long int nn;
-    nn=n;
-    for (int i=slicemin(); i<=slicemax(); i++)
+    nn = n;
+    for (int i = slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randu_ni(nn);
       nn+=2;  
@@ -281,8 +281,8 @@ double randn(long int& n)
   void dmatrix::fill_randu(long int& n)
   {
     long int nn;
-    nn=n;
-    for (int i=rowmin(); i<=rowmax(); i++)
+    nn = n;
+    for (int i = rowmin(); i<=rowmax(); i++)
     {
       elem(i).fill_randu_ni(nn);
       nn+=2;  
@@ -297,10 +297,10 @@ double randn(long int& n)
   void dmatrix::colfill_randn(BOR_CONST int&j,long int&n)
   {
     long int nn;
-    nn=n;
-    for (int i=rowmin(); i<=rowmax(); i++)
+    nn = n;
+    for (int i = rowmin(); i<=rowmax(); i++)
     {
-      elem(i,j)=randn(nn);
+      elem(i,j) = randn(nn);
     }
     reinitialize_auto_rand();
   }
@@ -312,10 +312,10 @@ double randn(long int& n)
   void dmatrix::rowfill_randn(BOR_CONST int& i,long int& n)
   {
     long int nn;
-    nn=n;
-    for (int j=colmin(); j<=colmax(); j++)
+    nn = n;
+    for (int j = colmin(); j<=colmax(); j++)
     {
-      elem(i,j)=randn(nn);
+      elem(i,j) = randn(nn);
     }
     reinitialize_auto_rand();
   }

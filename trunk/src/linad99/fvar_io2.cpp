@@ -117,14 +117,14 @@ dvar_vector::dvar_vector(const char * s)
     for (k = ncl; k <= nch; k++)
     {
       ss >> this->elem(k);
-      //va[k].nc=0.;
+      // va[k].nc = 0.;
     }
     delete[] t;
     t = 0;
   }
   else
   {
-    const char * filename=s;
+    const char * filename = s;
     ifstream infile(filename);
     if (!infile)
     {
@@ -133,11 +133,11 @@ dvar_vector::dvar_vector(const char * s)
       ad_exit(1);
    }
 
-   int i=0;
+   int i = 0;
 
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];
    char * field = new char[size_t(MAX_FIELD_LENGTH+1)];
-   int count=0;
+   int count = 0;
    do
    {
      infile >> field;
@@ -175,10 +175,10 @@ dvar_vector::dvar_vector(const char * s)
      ad_exit(21);
    }
    char * err_ptr;
-   for (i=1;i<=count;i++)
+   for (i = 1;i<=count;i++)
    {
      infile >> field;
-     elem(i)=strtod(field,&err_ptr); // increment column counter
+     elem(i) = strtod(field,&err_ptr); // increment column counter
 
      if (isalpha(err_ptr[0]))
      {

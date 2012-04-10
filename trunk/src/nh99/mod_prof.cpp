@@ -6,14 +6,14 @@
  */
 #include <admodel.h>
 
- int likeprof_params::num_likeprof_params=0;
+ int likeprof_params::num_likeprof_params = 0;
  likeprof_params * likeprof_params::likeprofptr[500]; // this should be 
                                                  // a resizeable array
 
   likeprof_params::likeprof_params(void)
   { 
-    stepsize=0.5;
-    stepnumber=8;
+    stepsize = 0.5;
+    stepnumber = 8;
   }
 
   void likeprof_params::add_to_list(void)
@@ -25,7 +25,7 @@
   param_likeprof_number::param_likeprof_number() : param_stddev_number() ,
     likeprof_params()
   {
-    sigma=0.0;
+    sigma = 0.0;
     likeprof_params::add_to_list();
     // stddev_params::add_to_list(); // don't think we need this here
   }
@@ -73,8 +73,8 @@
   /*
   int likeprof_params::num_likeprof_calc(void)
   {
-    int nvar=0;
-    for (int i=0;i<num_likeprof_params;i++)
+    int nvar = 0;
+    for (int i = 0;i<num_likeprof_params;i++)
     {
       nvar+= (likeprofptr[i])->size_count();
     }

@@ -26,23 +26,23 @@
 
    double tmp,tmp1,t2;
    double return_value;
-   tmp1=v1;
+   tmp1 = v1;
    tmp=::fabs(tmp1);
    if (tmp > cutoff)
    {
-        return_value=tmp;
+        return_value = tmp;
    }
    else
    {
-     t2=tmp*tmp;
+     t2 = tmp*tmp;
 
      if (tmp1 >=0)
      {
-       return_value=t2*(a-b*tmp1);
+       return_value = t2*(a-b*tmp1);
      }
      else
      {
-       return_value=t2*(a+b*tmp1);
+       return_value = t2*(a+b*tmp1);
      }
    }
    return(return_value);
@@ -56,9 +56,9 @@
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
-     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp.elem(i)=sfabs(t1.elem(i));
+       tmp.elem(i) = sfabs(t1.elem(i));
      }
      return(tmp);
   }

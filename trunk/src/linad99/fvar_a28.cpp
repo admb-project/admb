@@ -25,9 +25,9 @@
     RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(m.rowmin(),m.rowmax());
 
-    for (int i=m.rowmin(); i<=m.rowmax(); i++)
+    for (int i = m.rowmin(); i<=m.rowmax(); i++)
     {
-      tmp.elem(i)=m.elem(i,i);
+      tmp.elem(i) = m.elem(i,i);
     }
     RETURN_ARRAYS_DECREMENT();
     return(tmp);

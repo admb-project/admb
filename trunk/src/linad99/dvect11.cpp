@@ -17,30 +17,30 @@
   void dvector::fill_multinomial(BOR_CONST int& seed,_CONST dvector& p)
   // Fils a dvector with random numbers drawn from a multinomial distribution
   {
-    double sum=mean(p)*p.size();
-    int pmin=p.indexmin();
-    int pmax=p.indexmax();
+    double sum = mean(p)*p.size();
+    int pmin = p.indexmin();
+    int pmax = p.indexmax();
     dvector tmp(pmin,pmax);
     dvector tmp1(pmin,pmax);
     dvector choose(indexmin(),indexmax());
     choose.fill_randu((BOR_CONST long&)seed);
-    tmp=p/sum;
-    tmp1(pmin)=tmp(pmin);
+    tmp = p/sum;
+    tmp1(pmin) = tmp(pmin);
     int j;
-    for (j=pmin+1;j<=pmax-1;j++)
+    for (j = pmin+1;j<=pmax-1;j++)
     {
-      tmp1(j)=tmp1(j-1)+tmp(j);
+      tmp1(j) = tmp1(j-1)+tmp(j);
     }
-    tmp1(pmax)=1.0;
+    tmp1(pmax) = 1.0;
 
-    for (int i=indexmin();i<=indexmax();i++)
+    for (int i = indexmin();i<=indexmax();i++)
     {
-      j=pmin;
+      j = pmin;
       while (choose(i)>tmp1(j))
       {
         j++;
       }
-      (*this)(i)=j;
+      (*this)(i) = j;
     }
   }
 
@@ -51,30 +51,30 @@
   void ivector::fill_multinomial(BOR_CONST int& seed,_CONST dvector& p)
   // Fills a dvector with random numbers drawn from a multinomial distribution
   {
-    double sum=mean(p)*p.size();
-    int pmin=p.indexmin();
-    int pmax=p.indexmax();
+    double sum = mean(p)*p.size();
+    int pmin = p.indexmin();
+    int pmax = p.indexmax();
     dvector tmp(pmin,pmax);
     dvector tmp1(pmin,pmax);
     dvector choose(indexmin(),indexmax());
     choose.fill_randu((BOR_CONST long&)seed);
-    tmp=p/sum;
-    tmp1(pmin)=tmp(pmin);
+    tmp = p/sum;
+    tmp1(pmin) = tmp(pmin);
     int j;
-    for (j=pmin+1;j<=pmax-1;j++)
+    for (j = pmin+1;j<=pmax-1;j++)
     {
-      tmp1(j)=tmp1(j-1)+tmp(j);
+      tmp1(j) = tmp1(j-1)+tmp(j);
     }
-    tmp1(pmax)=1.0;
+    tmp1(pmax) = 1.0;
 
-    for (int i=indexmin();i<=indexmax();i++)
+    for (int i = indexmin();i<=indexmax();i++)
     {
-      j=pmin;
+      j = pmin;
       while (choose(i)>tmp1(j))
       {
         j++;
       }
-      (*this)(i)=j;
+      (*this)(i) = j;
     }
   }
 
@@ -85,29 +85,29 @@
   void lvector::fill_multinomial(BOR_CONST int& seed,_CONST dvector& p)
   // Fils a dvector with random numbers drawn from a multinomial distribution
   {
-    double sum=mean(p)*p.size();
-    int pmin=p.indexmin();
-    int pmax=p.indexmax();
+    double sum = mean(p)*p.size();
+    int pmin = p.indexmin();
+    int pmax = p.indexmax();
     dvector tmp(pmin,pmax);
     dvector tmp1(pmin,pmax);
     dvector choose(indexmin(),indexmax());
     choose.fill_randu((BOR_CONST long&)seed);
-    tmp=p/sum;
-    tmp1(pmin)=tmp(pmin);
+    tmp = p/sum;
+    tmp1(pmin) = tmp(pmin);
     int j;
-    for (j=pmin+1;j<=pmax-1;j++)
+    for (j = pmin+1;j<=pmax-1;j++)
     {
-      tmp1(j)=tmp1(j-1)+tmp(j);
+      tmp1(j) = tmp1(j-1)+tmp(j);
     }
-    tmp1(pmax)=1.0;
+    tmp1(pmax) = 1.0;
 
-    for (int i=indexmin();i<=indexmax();i++)
+    for (int i = indexmin();i<=indexmax();i++)
     {
-      j=pmin;
+      j = pmin;
       while (choose(i)>tmp1(j))
       {
         j++;
       }
-      (*this)(i)=j;
+      (*this)(i) = j;
     }
   }

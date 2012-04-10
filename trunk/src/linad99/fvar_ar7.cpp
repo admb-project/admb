@@ -41,9 +41,9 @@
     }  
     dvar_vector tmp(m.rowmin(),m.rowmax());
 
-    for (int i=m.rowmin(); i<=m.rowmax(); i++)
+    for (int i = m.rowmin(); i<=m.rowmax(); i++)
     {
-      tmp.elem(i)=m.elem(i,j);
+      tmp.elem(i) = m.elem(i,j);
     }
     return(tmp);
   }
@@ -60,9 +60,9 @@
     }  
     dvector tmp(m.rowmin(),m.rowmax());
 
-    for (int i=m.rowmin(); i<=m.rowmax(); i++)
+    for (int i = m.rowmin(); i<=m.rowmax(); i++)
     {
-      tmp.elem(i)=m.elem_value(i,j);
+      tmp.elem(i) = m.elem_value(i,j);
     }
     return(tmp);
   }
@@ -79,9 +79,9 @@
     }  
     dvar_vector tmp(m.colmin(),m.colmax());
 
-    for (int j=m.colmin(); j<=m.colmax(); j++)
+    for (int j = m.colmin(); j<=m.colmax(); j++)
     {
-      tmp.elem(j)=m.elem(i,j);
+      tmp.elem(j) = m.elem(i,j);
     }
     return(tmp);
   }

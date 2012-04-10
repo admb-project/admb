@@ -36,13 +36,13 @@ void dvcv_dot(void);
       "prevariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
-  //dvector cv1;
-  //dvector cv2=value(v2);
-  double tmp=0;
+  // dvector cv1;
+  // dvector cv2 = value(v2);
+  double tmp = 0;
 
 #ifdef OPT_LIB
-    int mmin=cv1.indexmin();
-    int mmax=cv1.indexmax();
+    int mmin = cv1.indexmin();
+    int mmax = cv1.indexmax();
     const double * pt1=&cv1.elem(mmin);
     const double * pt1m=&cv1.elem(mmax);
     const double * pt2=&v2.elem_value(mmin);
@@ -53,20 +53,20 @@ void dvcv_dot(void);
     while (pt1<=pt1m);
 #else
   #ifndef USE_ASSEMBLER
-    int mmin=cv1.indexmin();
-    int mmax=cv1.indexmax();
-    for (int i=mmin;i<=mmax;i++)
+    int mmin = cv1.indexmin();
+    int mmax = cv1.indexmax();
+    for (int i = mmin;i<=mmax;i++)
     {
       tmp+=cv1.elem(i)*v2.elem_value(i);
     }
   #else
-    int min=cv1.indexmin();
-    int n=cv1.indexmax()-min+1;
+    int min = cv1.indexmin();
+    int n = cv1.indexmax()-min+1;
     dp_dotproduct(&tmp,&(cv1.elem(min)),&(v2.elem_value(min)),n);
   #endif
 #endif
 
-  dvariable vtmp=nograd_assign(tmp);
+  dvariable vtmp = nograd_assign(tmp);
 
   // The derivative list considerations
   save_identifier_string("yyyy");
@@ -87,10 +87,10 @@ void dvcv_dot(void);
 void dvcv_dot(void)
 {
   verify_identifier_string("uuuu");
-  double dftmp=restore_prevariable_derivative();
-  dvar_vector_position v2pos=restore_dvar_vector_position();
-  dvector_position dpos=restore_dvector_position();
-  dvector cv1=restore_dvector_value(dpos);
+  double dftmp = restore_prevariable_derivative();
+  dvar_vector_position v2pos = restore_dvar_vector_position();
+  dvector_position dpos = restore_dvector_position();
+  dvector cv1 = restore_dvector_value(dpos);
   verify_identifier_string("yyyy");
 
   dvector dfv2(cv1.indexmin(),cv1.indexmax());
@@ -105,10 +105,10 @@ void dvcv_dot(void)
   }
   while (pc1 <=pc1m);
 #else
-  for (int i=cv1.indexmin();i<=cv1.indexmax();i++)
+  for (int i = cv1.indexmin();i<=cv1.indexmax();i++)
   {
-    //tmp+=cv1(i)*cv2(i);
-    dfv2.elem(i)=dftmp*cv1.elem(i);
+    // tmp+=cv1(i)*cv2(i);
+    dfv2.elem(i) = dftmp*cv1.elem(i);
   }
 #endif
   dfv2.save_dvector_derivatives(v2pos);

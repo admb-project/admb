@@ -17,9 +17,9 @@
  */
  void dvar7_array::initialize(void)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   for (int i=mmin; i<=mmax; i++)
+   int mmin = indexmin();
+   int mmax = indexmax();
+   for (int i = mmin; i<=mmax; i++)
    {
      (*this)(i).initialize();
    }
@@ -31,19 +31,19 @@
  */
 void dvar7_array::allocate(int l7,int u7)
 {
-  if ( (shape=new vector_shape(l7,u7)) == 0)
+  if ( (shape = new vector_shape(l7,u7)) == 0)
   {
     cerr << " Error allocating memory in d6_array contructor\n";
     ad_exit(21);
   }
-  int ss=size();
+  int ss = size();
   if ( (t = new dvar6_array[ss]) == 0)
   {
     cerr << " Error allocating memory in d6_array contructor\n";
     ad_exit(21);
   }
   t -= indexmin();
-  for (int i=l7; i<=u7; i++)
+  for (int i = l7; i<=u7; i++)
   {
     t[i].allocate();
   }
@@ -57,14 +57,14 @@ void dvar7_array::allocate(int l7,int u7)
  {
    if (m2.shape)
    {
-     shape=m2.shape;
+     shape = m2.shape;
      (shape->ncopies)++;
      t = m2.t;
    }
    else
    {
-     shape=NULL;
-     t=NULL;
+     shape = NULL;
+     t = NULL;
    }
  }
 
@@ -75,7 +75,7 @@ void dvar7_array::allocate(int l7,int u7)
  dvar7_array::dvar7_array(d7_array& m2)
  {
    allocate(m2);
-   (*this)=m2;
+   (*this) = m2;
  }
 
 /**
@@ -94,15 +94,15 @@ void dvar7_array::allocate(int l7,int u7)
      {
        t += indexmin();
        delete [] t;
-       t=NULL;
+       t = NULL;
        delete shape;
-       shape=NULL;
+       shape = NULL;
      }
    }
    else
    { 
 #    if defined(SAFE_ALL)
-     //cerr << "Warning -- trying to deallocate an unallocated dvar5_array"<<endl;
+     // cerr << "Warning -- trying to deallocate an unallocated dvar5_array"<<endl;
 #    endif
    }
  }
@@ -122,8 +122,8 @@ void dvar7_array::allocate(int l7,int u7)
  */
  dvar7_array& dvar7_array::operator =  (_CONST dvar7_array& m)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
+   int mmin = indexmin();
+   int mmax = indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
    { 
      cerr << "Incompatible bounds in"
@@ -131,9 +131,9 @@ void dvar7_array::allocate(int l7,int u7)
       << endl;
      ad_exit(1);
     }
-   for (int i=mmin; i<=mmax; i++)
+   for (int i = mmin; i<=mmax; i++)
    {
-     (*this)(i)=m(i);
+     (*this)(i) = m(i);
    }
    return *this;
  }
@@ -144,8 +144,8 @@ void dvar7_array::allocate(int l7,int u7)
  */
  dvar7_array& dvar7_array::operator =  (_CONST d7_array& m)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
+   int mmin = indexmin();
+   int mmax = indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
    { 
      cerr << "Incompatible bounds in"
@@ -153,9 +153,9 @@ void dvar7_array::allocate(int l7,int u7)
       << endl;
      ad_exit(1);
     }
-   for (int i=mmin; i<=mmax; i++)
+   for (int i = mmin; i<=mmax; i++)
    {
-     (*this)(i)=m(i);
+     (*this)(i) = m(i);
    }
    return *this;
  }
@@ -166,19 +166,19 @@ void dvar7_array::allocate(int l7,int u7)
  */
  void dvar7_array::allocate(_CONST dvar7_array& m1)
  {
-   if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
+   if ( (shape = new vector_shape(m1.indexmin(),m1.indexmax()))
        == 0)
    {
      cerr << " Error allocating memory in dvar6_array contructor" << endl;
    }
-   int ss=size();
+   int ss = size();
    if ( (t = new dvar6_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar6_array contructor" << endl;
      ad_exit(21);
    }
    t -= indexmin();
-   for (int i=indexmin(); i<=indexmax(); i++)
+   for (int i = indexmin(); i<=indexmax(); i++)
    {
      t[i].allocate(m1[i]);
    }
@@ -190,19 +190,19 @@ void dvar7_array::allocate(int l7,int u7)
  */
  void dvar7_array::allocate(_CONST d7_array& m1)
  {
-   if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
+   if ( (shape = new vector_shape(m1.indexmin(),m1.indexmax()))
        == 0)
    {
      cerr << " Error allocating memory in dvar6_array contructor" << endl;
    }
-   int ss=size();
+   int ss = size();
    if ( (t = new dvar6_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar6_array contructor" << endl;
      ad_exit(21);
    }
    t -= indexmin();
-   for (int i=indexmin(); i<=indexmax(); i++)
+   for (int i = indexmin(); i<=indexmax(); i++)
    {
      t[i].allocate(m1[i]);
    }
@@ -498,19 +498,19 @@ dvar7_array::dvar7_array(const ad_integer& hsl,const ad_integer& hsu,
 void dvar7_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch,int l5,int u5,int l6,int u6,int l7,int u7)
  {
-   if ( (shape=new vector_shape(hsl,hsu)) == 0)
+   if ( (shape = new vector_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in dvar6_array contructor\n";
      ad_exit(21);
    }
-   int ss=size();
+   int ss = size();
    if ( (t = new dvar6_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar6_array contructor\n";
      ad_exit(21);
    }
    t -= indexmin();
-   for (int i=hsl; i<=hsu; i++)
+   for (int i = hsl; i<=hsu; i++)
    {
      (*this)(i).allocate(sl,sh,nrl,nrh,ncl,nch,l5,u5,l6,u6,l7,u7);
    }
@@ -527,21 +527,21 @@ void dvar7_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    const index_type& l6,const index_type& u6,
    const index_type& l7,const index_type& u7)
  {
-   if ( (shape=new vector_shape (hsl,hsu)) == 0)
+   if ( (shape = new vector_shape (hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in dvar6_array contructor\n";
    }
 
-   int ss=size();
+   int ss = size();
    if ( (t = new dvar6_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar6_array contructor\n";
      ad_exit(21);
    }
    t -= indexmin();
-   int il=hsl;
-   int iu=hsu;
-   for (int i=il; i<=iu; i++)
+   int il = hsl;
+   int iu = hsu;
+   for (int i = il; i<=iu; i++)
    {
      t[i].allocate(ad_integer(sl(i)),ad_integer(sh(i)),nrl(i),nrh(i),
         ncl(i),nch(i),l5(i),u5(i),l6(i),u6(i),l7(i),u7(i));

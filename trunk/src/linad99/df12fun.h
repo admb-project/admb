@@ -45,7 +45,7 @@
 #if !defined(__DF12FUN__)
 #  define __DF12FUN__
 #include <fvar.hpp>
-//class df1b2variable;
+// class df1b2variable;
 
 /**
  * Description not yet available.
@@ -151,7 +151,7 @@
       return (df1_two_variable&) (*(v+i))(j); 
     }
     void initialize(void);
-    //df1_two_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
+    // df1_two_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df1_two_matrix();
     df1_two_matrix(const df1_two_matrix& m2);

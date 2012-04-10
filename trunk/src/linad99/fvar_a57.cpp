@@ -19,11 +19,11 @@
   dvar_vector dvar_vector::operator- (void)
   {
     RETURN_ARRAYS_INCREMENT();
-    int mmin=indexmin();
-    int mmax=indexmax();
+    int mmin = indexmin();
+    int mmax = indexmax();
     dvar_vector tmp(mmin,mmax);
     save_identifier_string("ec");
-    for (int i=mmin; i<=mmax; i++)
+    for (int i = mmin; i<=mmax; i++)
     {
       tmp.elem_value(i)=-elem_value(i);
     }
@@ -43,16 +43,16 @@
  void DF_unary_diff(void)
  {
     verify_identifier_string("d");
-    dvar_vector_position t1_pos=restore_dvar_vector_position();
-    dvar_vector_position tmp_pos=restore_dvar_vector_position();
-    dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
+    dvar_vector_position t1_pos = restore_dvar_vector_position();
+    dvar_vector_position tmp_pos = restore_dvar_vector_position();
+    dvector dftmp = restore_dvar_vector_derivatives(tmp_pos);
     dvector dft1(t1_pos.indexmin(),t1_pos.indexmax());
     verify_identifier_string("ec");
-    //double xinv=1./x;
-    for (int i=t1_pos.indexmax(); i>=t1_pos.indexmin(); i--)
+    // double xinv = 1./x;
+    for (int i = t1_pos.indexmax(); i>=t1_pos.indexmin(); i--)
     {
-       // tmp.elem_value(i)=t1.elem_value(i)-value(x);
-      //tmp.elem_value(i)=value(x)*t1.elem_value(i)/value(x);
+       // tmp.elem_value(i) = t1.elem_value(i)-value(x);
+      // tmp.elem_value(i) = value(x)*t1.elem_value(i)/value(x);
       dft1(i)=-dftmp(i);
     }
     dft1.save_dvector_derivatives(t1_pos);

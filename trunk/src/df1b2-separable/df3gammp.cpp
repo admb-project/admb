@@ -452,7 +452,7 @@ namespace Cephes
       return (ans);
    }
 
-} //end namespace Cephes
+} // end namespace Cephes
 
 /**
  * \ingroup gammafunc
@@ -535,7 +535,7 @@ static df3_two_variable gamma(const df3_two_variable & xx1)
 	  goverf:
 	    //( "gamma", OVERFLOW );
 	    return (sgngam * MYBIG);
-	    //return( sgngam * MAXNUM);
+	    // return( sgngam * MAXNUM);
 #endif
 	 }
 	 z = fabs(z);
@@ -572,7 +572,7 @@ static df3_two_variable gamma(const df3_two_variable & xx1)
 
    if (value(x) == 2.0)
    {
-      //return(z);
+      // return(z);
    }
 
    x -= 2.0;
@@ -666,7 +666,7 @@ df3_two_variable lgam(const df3_two_variable & xx)
       if (z == 0.0)
 	 goto lgsing;
 
-      //z = log(PI) - log( z ) - w;
+      // z = log(PI) - log( z ) - w;
       z = LOGPI - log(z) - w;
       return (z);
    }

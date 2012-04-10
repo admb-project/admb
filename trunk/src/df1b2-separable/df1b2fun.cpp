@@ -15,22 +15,22 @@ extern "C"
   int kbhit(void) { return 0;}
 }
 
-int global_nvar=0;
+int global_nvar = 0;
 class df1b2_gradlist;
-//df1b2_gradlist * f1b2gradlist = NULL;
+// df1b2_gradlist * f1b2gradlist = NULL;
 
-//int df1b2variable::noallocate=0;
+// int df1b2variable::noallocate = 0;
 
-//initial_df1b2params ** initial_df1b2params::varsptr 
+// initial_df1b2params ** initial_df1b2params::varsptr 
 //  =new P_INITIAL_DF1B2PARAMS[1000];
-//int initial_df1b2params::num_initial_df1b2params=0;         // array
+// int initial_df1b2params::num_initial_df1b2params = 0;         // array
 
-//int initial_df1b2params::num_initial_df1b2params_sav=0;         // array
-//initial_df1b2params ** initial_df1b2params::varsptr_sav=0; 
+// int initial_df1b2params::num_initial_df1b2params_sav = 0;         // array
+// initial_df1b2params ** initial_df1b2params::varsptr_sav = 0; 
 
-//int initial_df1b2params::current_phase=0;
+// int initial_df1b2params::current_phase = 0;
 
-int mydercheckercounter=0;
+int mydercheckercounter = 0;
 
 /**
  * Description not yet available.
@@ -43,8 +43,8 @@ void df1b2variable::save_adpool_pointer(void)
     cerr << "overflow in save_adpool_pointer" << endl;
     ad_exit(1);
   }
-  adpool_stack[adpool_stack_pointer]=pool;
-  adpool_nvar_stack[adpool_stack_pointer++]=nvar;
+  adpool_stack[adpool_stack_pointer] = pool;
+  adpool_nvar_stack[adpool_stack_pointer++] = nvar;
 }
 
 /**
@@ -58,8 +58,8 @@ void df1b2variable::restore_adpool_pointer(void)
     cerr << "underflow in save_adpool_pointer" << endl;
     ad_exit(1);
   }
-  pool=adpool_stack[--adpool_stack_pointer];
-  nvar=adpool_nvar_stack[adpool_stack_pointer];
+  pool = adpool_stack[--adpool_stack_pointer];
+  nvar = adpool_nvar_stack[adpool_stack_pointer];
 }
 
 /**
@@ -68,9 +68,9 @@ void df1b2variable::restore_adpool_pointer(void)
  */
 void initial_df1b2params::save_varsptr(void)
 {
-  initial_df1b2params::varsptr_sav=initial_df1b2params::varsptr;
+  initial_df1b2params::varsptr_sav = initial_df1b2params::varsptr;
 
-  varsptr=new P_INITIAL_DF1B2PARAMS[1000];
+  varsptr = new P_INITIAL_DF1B2PARAMS[1000];
   if (varsptr == 0)
   {
     cerr << "error allocating memory for " 
@@ -78,7 +78,7 @@ void initial_df1b2params::save_varsptr(void)
     ad_exit(1);
   }
 
-  num_initial_df1b2params_sav=num_initial_df1b2params; 
+  num_initial_df1b2params_sav = num_initial_df1b2params; 
   num_initial_df1b2params =0;
 }
 
@@ -93,13 +93,13 @@ void initial_df1b2params::restore_varsptr(void)
     if (varsptr)
     {
       delete [] varsptr;
-      varsptr=0;
+      varsptr = 0;
     }
-    varsptr=initial_df1b2params::varsptr_sav;
-    varsptr_sav=0;
+    varsptr = initial_df1b2params::varsptr_sav;
+    varsptr_sav = 0;
 
     num_initial_df1b2params= num_initial_df1b2params_sav; 
-    num_initial_df1b2params_sav=0; 
+    num_initial_df1b2params_sav = 0; 
   }
   else
   {
@@ -112,14 +112,14 @@ void initial_df1b2params::restore_varsptr(void)
       ad_exit(1);
     }
  
-    for (int i=0;i<num_initial_df1b2params_sav;i++)
+    for (int i = 0;i<num_initial_df1b2params_sav;i++)
     {
-      varsptr[i+num_initial_df1b2params]=varsptr_sav[i];
+      varsptr[i+num_initial_df1b2params] = varsptr_sav[i];
     }
     num_initial_df1b2params+=num_initial_df1b2params_sav; 
     delete varsptr_sav;
-    varsptr_sav=0;
-    num_initial_df1b2params_sav=0; 
+    varsptr_sav = 0;
+    num_initial_df1b2params_sav = 0; 
   }
 }
    
@@ -129,9 +129,9 @@ void initial_df1b2params::restore_varsptr(void)
  */
 initial_df1b2params::initial_df1b2params(void) : ind_index(0)
 {
-  scalefactor=0.0;
-  phase_start=1;
-  phase_save=1;
+  scalefactor = 0.0;
+  phase_start = 1;
+  phase_save = 1;
   add_to_list();
 }
 
@@ -149,15 +149,15 @@ typedef void (*ADrfptr)(void);
  */
 void df1b2_gradcalc1(void)
 {
-  //smartlist & list=f1b2gradlist->list;
-  fixed_smartlist & nlist=f1b2gradlist->nlist;
-  int ncount=f1b2gradlist->ncount;
-  //ADrfptr rf2;
-  int xcount=0;
+  // smartlist & list = f1b2gradlist->list;
+  fixed_smartlist & nlist = f1b2gradlist->nlist;
+  int ncount = f1b2gradlist->ncount;
+  // ADrfptr rf2;
+  int xcount = 0;
   int tmpcount;
-  int tcount=f1b2gradlist->ncount;
+  int tcount = f1b2gradlist->ncount;
   
-  //int check_pool_flag3=0;
+  // int check_pool_flag3 = 0;
   switch (df1b2variable::passnumber)
   {
   case 1:
@@ -165,8 +165,8 @@ void df1b2_gradcalc1(void)
     f1b2gradlist->nlist.save_end();
   case 3:
 #if defined(__DERCHECK__)
-    //  derchecker->counter=f1b2gradlist->ncount;
-      mydercheckercounter=f1b2gradlist->ncount;
+    //  derchecker->counter = f1b2gradlist->ncount;
+      mydercheckercounter = f1b2gradlist->ncount;
 #   endif
     f1b2gradlist->list.set_reverse();
     f1b2gradlist->list.restore_end();
@@ -182,7 +182,7 @@ void df1b2_gradcalc1(void)
       f1b2gradlist->list3.set_reverse();
       f1b2gradlist->list3.restore_end();
     }
-    tmpcount=ncount;
+    tmpcount = ncount;
     do
     {
       tmpcount--;
@@ -196,11 +196,11 @@ void df1b2_gradcalc1(void)
         cout << "B " << tmpcount << endl;
       }
       */
-      //nlist-=sizeof(char*);
+      // nlist-=sizeof(char*);
       --nlist;
       if (nlist.eof()) 
         break;
-      ADrfptr rf=nlist.bptr->pf;
+      ADrfptr rf = nlist.bptr->pf;
       (*rf)();
      /*
       if (check_pool_flag3)
@@ -208,19 +208,19 @@ void df1b2_gradcalc1(void)
         if (xcount > 722)
         {
           cout << xcount << "  ";
-          //check_pool_depths();
+          // check_pool_depths();
         }
       }
      */
 #if   defined(__DERCHECK__)
-        //derchecker->counter--;
+        // derchecker->counter--;
       mydercheckercounter--;
        // stupid_xxx(derchecker->counter);
 #     endif
         xcount++;
           tcount--;
        if (xcount > 99999999) cout << xcount << endl;
-       //if (tcount == 6599 ) 
+       // if (tcount == 6599 ) 
         //  cout << tcount << endl;
       /*
         if (initial_df1b2params::current_phase==2)
@@ -244,25 +244,25 @@ void df1b2_gradcalc1(void)
       f1b2gradlist->nlist2.set_reverse();
       f1b2gradlist->nlist2.restore_end();
 #if   defined(__DERCHECK__)
-      //  derchecker->counter=0;
-      mydercheckercounter=0;
+      //  derchecker->counter = 0;
+      mydercheckercounter = 0;
 #     endif
       f1b2gradlist->list.set_forward();
       f1b2gradlist->list.rewind();
       f1b2gradlist->nlist.set_forward();
       f1b2gradlist->nlist.rewind();
 
-      //nlist.reset();  // set pointer to beginning of list
+      // nlist.reset();  // set pointer to beginning of list
       --(f1b2gradlist->nlist2);  // backup one record
-      int icount=0;
+      int icount = 0;
       do
       {
 #if     defined(__DERCHECK__)
          // derchecker->counter++;
           mydercheckercounter++;
 #       endif
-        //ADrfptr rf=*ADprfptr(nlist.bptr);
-        ADrfptr rf=nlist.bptr->pf;
+        // ADrfptr rf=*ADprfptr(nlist.bptr);
+        ADrfptr rf = nlist.bptr->pf;
         (*rf)();
         ++nlist;
         
@@ -284,7 +284,7 @@ void df1b2_gradcalc1(void)
       while(++icount<ncount); 
       // need this to get pointer right for step 3?
        // nlist-=sizeof(int); // set nlist to point to second record;
-      //nlist++;
+      // nlist++;
    
       break;
     }
@@ -338,7 +338,7 @@ double AD_df1_tan(double x)
  */
 double AD_df2_tan(double x)
 {
-  double y=tan(x);
+  double y = tan(x);
   return double(2.0)*y*(double(1.0)+square(y));
 }
 
@@ -357,7 +357,7 @@ double AD_df3_atan(double x)
  */
 double AD_df3_tan(double x)
 {
-  double y=square(tan(x));
+  double y = square(tan(x));
  
   return double(2.0) * (double(1.0)+double(3.0)*y) * (double(1) + y);
 }
@@ -475,7 +475,7 @@ df1b2variable exp(const df1b2variable& x)
  */
 df1b2variable mfexp(const df1b2variable& x) 
 {
-  double b=60;
+  double b = 60;
   if (value(x)<=b && value(x)>=-b) 
   {
     return ADf1b2_exp(x);
@@ -863,15 +863,15 @@ df1b2variable fourth(const df1b2variable& _z)
   ADUNCONST(df1b2variable,z)
   df1b2variable u;
   double x=*z.get_u();
-  tmp.get_u()=x3*x.get_u();
-  double dfx=4.0*cube(x);
-  double d2fx=12.0*square(x);
-  double d3fx=24.0*x;
+  tmp.get_u() = x3*x.get_u();
+  double dfx = 4.0*cube(x);
+  double d2fx = 12.0*square(x);
+  double d3fx = 24.0*x;
   
-  double * xd=z.get_u_dot();
-  double * zd=u.get_u_dot();
-  *u.get_u()=f;
-  for (int i=0;i<df1b2variable::nvar;i++)
+  double * xd = z.get_u_dot();
+  double * zd = u.get_u_dot();
+  *u.get_u() = f;
+  for (int i = 0;i<df1b2variable::nvar;i++)
   {
     *zd++ =dfx * *xd++;
   }

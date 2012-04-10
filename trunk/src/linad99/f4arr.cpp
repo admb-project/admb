@@ -29,14 +29,14 @@
  {
    if (m2.shape)
    {
-     shape=m2.shape;
+     shape = m2.shape;
      (shape->ncopies)++;
      t = m2.t;
    }
    else
    {
-     shape=NULL;
-     t=NULL;
+     shape = NULL;
+     t = NULL;
    }
  }
 
@@ -48,14 +48,14 @@
  {
    if (m2.shape)
    {
-     shape=m2.shape;
+     shape = m2.shape;
      (shape->ncopies)++;
      t = m2.t;
    }
    else
    {
-     shape=NULL;
-     t=NULL;
+     shape = NULL;
+     t = NULL;
    }
  }
 
@@ -68,7 +68,7 @@
    if (allocated(*this))
    {
      dvar4_array tmp(nrl,nrh);
-     for (int i=nrl; i<=nrh; i++)
+     for (int i = nrl; i<=nrh; i++)
      {
        tmp[i].shallow_copy((*this)(i));
      }
@@ -96,15 +96,15 @@
      {
        t += hslicemin();
        delete [] t;
-       t=NULL;
+       t = NULL;
        delete shape;
-       shape=NULL;
+       shape = NULL;
      }
    }
    else
    { 
 #    if defined(SAKE_ARRAYS)
-       //cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
+       // cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
 #    endif
    }
  }
@@ -287,8 +287,8 @@
  */
  dvar4_array& dvar4_array:: operator =  (_CONST d4_array& m)
  {
-   int mmin=hslicemin();
-   int mmax=hslicemax();
+   int mmin = hslicemin();
+   int mmax = hslicemax();
    if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
    { 
      cerr << "Incompatible bounds in"
@@ -296,9 +296,9 @@
       << endl;
      ad_exit(1);
     }
-   for (int i=mmin; i<=mmax; i++)
+   for (int i = mmin; i<=mmax; i++)
    {
-     (*this)(i)=m(i);
+     (*this)(i) = m(i);
    }
    return *this;
  }
@@ -309,8 +309,8 @@
  */
  dvar4_array& dvar4_array:: operator =  (_CONST dvar4_array& m)
  {
-   int mmin=hslicemin();
-   int mmax=hslicemax();
+   int mmin = hslicemin();
+   int mmax = hslicemax();
    if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
    { 
      cerr << "Incompatible bounds in"
@@ -318,9 +318,9 @@
       << endl;
      ad_exit(1);
     }
-   for (int i=mmin; i<=mmax; i++)
+   for (int i = mmin; i<=mmax; i++)
    {
-     (*this)(i)=m(i);
+     (*this)(i) = m(i);
    }
    return *this;
  }
@@ -332,18 +332,18 @@
 void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,int ncl,int nch)
  {
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+   if ( (shape = new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor\n";
    }
-   int ss=hslicesize();
+   int ss = hslicesize();
    if ( (t = new dvar3_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor\n";
      ad_exit(21);
    }
    t -= hslicemin();
-   for (int i=hsl; i<=hsu; i++)
+   for (int i = hsl; i<=hsu; i++)
    {
      (*this)(i).allocate(sl,sh,nrl,nrh,ncl,nch);
    }
@@ -356,19 +356,19 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+   if ( (shape = new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in dvar4_array contructor\n";
    }
 
-   int ss=hslicesize();
+   int ss = hslicesize();
    if ( (t = new dvar3_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor\n";
      ad_exit(21);
    }
    t -= hslicemin();
-   for (int i=hsl; i<=hsu; i++)
+   for (int i = hsl; i<=hsu; i++)
    {
      (*this)(i).allocate(sl,sh,nrl,nrh,ncl,nch);
    }
@@ -382,20 +382,20 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    const index_type& sh,const index_type& nrl,
    const index_type& nrh, const index_type& ncl,const index_type& nch)
  {
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+   if ( (shape = new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in dvar4_array contructor\n";
    }
-   int ss=hslicesize();
+   int ss = hslicesize();
    if ( (t = new dvar3_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor\n";
      ad_exit(21);
    }
    t -= hslicemin();
-   int il=hsl;
-   int iu=hsu;
-   for (int i=il; i<=iu; i++)
+   int il = hsl;
+   int iu = hsu;
+   for (int i = il; i<=iu; i++)
    {
      (*this)(i).allocate(sl(i),sh(i),nrl(i),nrh(i),ncl(i),nch(i));
    }
@@ -409,20 +409,20 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    const index_type& sh,const index_type& nrl,
    const index_type& nrh)
  {
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+   if ( (shape = new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in dvar4_array contructor\n";
    }
-   int ss=hslicesize();
+   int ss = hslicesize();
    if ( (t = new dvar3_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor\n";
      ad_exit(21);
    }
    t -= hslicemin();
-   int il=hsl;
-   int iu=hsu;
-   for (int i=il; i<=iu; i++)
+   int il = hsl;
+   int iu = hsu;
+   for (int i = il; i<=iu; i++)
    {
      (*this)(i).allocate(sl(i),sh(i),nrl(i),nrh(i));
    }
@@ -435,20 +435,20 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  void dvar4_array::allocate(ad_integer hsl,ad_integer hsu,const index_type& sl,
    const index_type& sh)
  {
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+   if ( (shape = new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in dvar4_array contructor\n";
    }
-   int ss=hslicesize();
+   int ss = hslicesize();
    if ( (t = new dvar3_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor\n";
      ad_exit(21);
    }
    t -= hslicemin();
-   int il=hsl;
-   int iu=hsu;
-   for (int i=il; i<=iu; i++)
+   int il = hsl;
+   int iu = hsu;
+   for (int i = il; i<=iu; i++)
    {
      (*this)(i).allocate(sl(i),sh(i));
    }
@@ -460,20 +460,20 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  */
  void dvar4_array::allocate(ad_integer hsl,ad_integer hsu)
  {
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+   if ( (shape = new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in dvar4_array contructor\n";
    }
-   int ss=hslicesize();
+   int ss = hslicesize();
    if ( (t = new dvar3_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor\n";
      ad_exit(21);
    }
    t -= hslicemin();
-   int il=hsl;
-   int iu=hsu;
-   for (int i=il; i<=iu; i++)
+   int il = hsl;
+   int iu = hsu;
+   for (int i = il; i<=iu; i++)
    {
      (*this)(i).allocate();
    }
@@ -486,18 +486,18 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,_CONST ivector& nrl,
    _CONST ivector& nrh,_CONST ivector& ncl,_CONST ivector& nch)
  {
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+   if ( (shape = new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in dvar4_array contructor\n";
    }
-   int ss=hslicesize();
+   int ss = hslicesize();
    if ( (t = new dvar3_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor\n";
      ad_exit(21);
    }
    t -= hslicemin();
-   for (int i=hsl; i<=hsu; i++)
+   for (int i = hsl; i<=hsu; i++)
    {
      (*this)(i).allocate(sl,sh,nrl(i),nrh(i),ncl(i),nch(i));
    }
@@ -542,7 +542,7 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  {
    if (!(!(*this)))  // only initialize allocated objects
    {
-     for (int i=hslicemin();i<=hslicemax();i++)
+     for (int i = hslicemin();i<=hslicemax();i++)
      {
        elem(i).initialize();
      }
@@ -566,21 +566,21 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  void dvar4_array::allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
    int nrl, _CONST imatrix& nrh,int ncl,int nch)
  {
-   //int rmin=nrh.rowmin();
-   //int cmin=nrh(rmin).indexmin();
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+   // int rmin = nrh.rowmin();
+   // int cmin = nrh(rmin).indexmin();
+   if ( (shape = new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in d4_array contructor\n";
    }
 
-   int ss=hslicesize();
+   int ss = hslicesize();
    if ( (t = new dvar3_array[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor\n";
      ad_exit(21);
    }
    t -= hslicemin();
-   for (int i=hsl; i<=hsu; i++)
+   for (int i = hsl; i<=hsu; i++)
    {
      (*this)(i).allocate(sl,sh(i),nrl,nrh(i),ncl,nch);
    }
@@ -593,9 +593,9 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  dvar4_array::dvar4_array(const d4_array& m1)
  {
    allocate(m1);
-   for (int i=hslicemin(); i<=hslicemax(); i++)
+   for (int i = hslicemin(); i<=hslicemax(); i++)
    {
-     t[i]=m1[i];
+     t[i] = m1[i];
    }
  }
 
@@ -605,19 +605,19 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  */
  void dvar4_array::allocate(_CONST d4_array& m1)
  {
-   if ( (shape=new four_array_shape(m1.hslicemin(),m1.hslicemax()))
+   if ( (shape = new four_array_shape(m1.hslicemin(),m1.hslicemax()))
        == 0)
    {
      cerr << " Error allocating memory in dvar4_array contructor" << endl;
    }
-   int ss=hslicesize();
+   int ss = hslicesize();
    if ( (t = new dvar3_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar4_array contructor" << endl;
      ad_exit(21);
    }
    t -= hslicemin();
-   for (int i=hslicemin(); i<=hslicemax(); i++)
+   for (int i = hslicemin(); i<=hslicemax(); i++)
    {
      t[i].allocate(m1[i]);
    }
@@ -629,19 +629,19 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  */
  void dvar4_array::allocate(_CONST dvar4_array& m1)
  {
-   if ( (shape=new four_array_shape(m1.hslicemin(),m1.hslicemax()))
+   if ( (shape = new four_array_shape(m1.hslicemin(),m1.hslicemax()))
        == 0)
    {
      cerr << " Error allocating memory in dvar4_array contructor" << endl;
    }
-   int ss=hslicesize();
+   int ss = hslicesize();
    if ( (t = new dvar3_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar4_array contructor" << endl;
      ad_exit(21);
    }
    t -= hslicemin();
-   for (int i=hslicemin(); i<=hslicemax(); i++)
+   for (int i = hslicemin(); i<=hslicemax(); i++)
    {
      t[i].allocate(m1[i]);
    }
@@ -657,20 +657,20 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
   void dvar4_array::allocate(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
     _CONST imatrix& nrh,int ncl,int nch)
   {
-   int rmin=nrh.rowmin();
-   int cmin=nrh(nrh.rowmin()).indexmin;
-   if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+   int rmin = nrh.rowmin();
+   int cmin = nrh(nrh.rowmin()).indexmin;
+   if ( (shape = new four_array_shape(hsl,hsu)) == 0)
    {
      cerr << " Error allocating memory in dvar4_array contructor\n";
    }
-   int ss=hslicesize();
+   int ss = hslicesize();
    if ( (t = new dvar3_array[ss]) == 0)
    {
      cerr << " Error allocating memory in dvar3_array contructor\n";
      ad_exit(21);
    }
    t -= hslicemin();
-   for (int i=hsl; i<=hsu; i++)
+   for (int i = hsl; i<=hsu; i++)
    {
      (*this)(i).allocate(sl,sh(i),nrl,nrh(i),ncl,nch(i));
    }

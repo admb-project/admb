@@ -10,7 +10,7 @@
 #define __DF1B2LUDCMP_HPP__
 #include <df1b2fun.h>
 
-  //class stuff
+  // class stuff
   class df1b2ludecomp
   {
      df1b2matrix L;
@@ -121,7 +121,7 @@
   	 return U(j, i);
      }
   };
-  //end class stuff
+  // end class stuff
 
 df1b2ludecomp ludecomp_pivot(const df1b2matrix & M);
 df1b2vector solve(const df1b2matrix& aa,const dvector& z);

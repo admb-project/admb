@@ -37,15 +37,15 @@ dmatrix mfexp(_CONST dmatrix& m)
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
   int i;
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  for (i = m.rowmin();i<=m.rowmax();i++)
   {
-    cmin(i)=m(i).indexmin();
-    cmax(i)=m(i).indexmax();
+    cmin(i) = m(i).indexmin();
+    cmax(i) = m(i).indexmax();
   }
   dmatrix tmp(m.rowmin(),m.rowmax(),cmin,cmax);
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  for (i = m.rowmin();i<=m.rowmax();i++)
   {
-    tmp(i)=mfexp(m(i));
+    tmp(i) = mfexp(m(i));
   }
   return tmp;
 }
@@ -59,15 +59,15 @@ dmatrix mfexp(_CONST dmatrix& m, CGNU_DOUBLE d)
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
   int i;
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  for (i = m.rowmin();i<=m.rowmax();i++)
   {
-    cmin(i)=m(i).indexmin();
-    cmax(i)=m(i).indexmax();
+    cmin(i) = m(i).indexmin();
+    cmax(i) = m(i).indexmax();
   }
   dmatrix tmp(m.rowmin(),m.rowmax(),cmin,cmax);
-  for (i=m.rowmin();i<=m.rowmax();i++)
+  for (i = m.rowmin();i<=m.rowmax();i++)
   {
-    tmp(i)=mfexp(m(i),d);
+    tmp(i) = mfexp(m(i),d);
   }
   return tmp;
 }

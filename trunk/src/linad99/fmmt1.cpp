@@ -48,7 +48,7 @@ fmmt1::fmmt1(int nvar,int _xm)
 {
   ctlc_flag = 0;
   n = nvar;
-  xm=_xm;
+  xm = _xm;
   xrho.initialize();
 //  cout << " In fmm::fmm(int nvar) nvar = " << nvar 
 //       << " and n = " << n << "\n";

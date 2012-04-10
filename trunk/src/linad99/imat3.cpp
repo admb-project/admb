@@ -19,7 +19,7 @@
  */
  void imatrix::initialize (void)
  {
-   for (int i=rowmin();i<=rowmax();i++)
+   for (int i = rowmin();i<=rowmax();i++)
    {
      (*this)(i).initialize();
    }
@@ -33,11 +33,11 @@
  {
    imatrix tmp(m1.colmin(),m1.colmax(),m1.rowmin(),m1.rowmax());
 
-   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     for (int j=m1.colmin(); j<=m1.colmax(); j++)
+     for (int j = m1.colmin(); j<=m1.colmax(); j++)
      {
-       tmp[j][i]=m1[i][j];
+       tmp[j][i] = m1[i][j];
      }
    }
    return (tmp);

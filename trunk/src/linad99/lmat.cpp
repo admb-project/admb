@@ -34,7 +34,7 @@
      ad_exit(21);
    }
 
-   int rs=rowsize();
+   int rs = rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
@@ -42,7 +42,7 @@
    }
 
    m -= rowmin();
-   for (int i=rowmin(); i<=rowmax(); i++)
+   for (int i = rowmin(); i<=rowmax(); i++)
    {
      m[i].allocate(ncl,nch);
    }
@@ -66,14 +66,14 @@
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
      ad_exit(1);
    }
-   int rs=rowsize();
+   int rs = rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
      ad_exit(21);
    }
    m -= rowmin();
-   for (int i=rowmin(); i<=rowmax(); i++)
+   for (int i = rowmin(); i<=rowmax(); i++)
    {
      m[i].allocate(ncl(i),nch(i));
    }
@@ -95,14 +95,14 @@
      cerr << " Error allocating memory in lmatrix contructor\n";
      ad_exit(21);
    }
-   int rs=rowsize();
+   int rs = rowsize();
    if ( (m = new lvector [rs]) == 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
      ad_exit(21);
    }
    m -= rowmin();
-   for (int i=rowmin(); i<=rowmax(); i++)
+   for (int i = rowmin(); i<=rowmax(); i++)
    {
      m[i].allocate(ncl,nch(i));
    }
@@ -116,14 +116,14 @@
  {
    if (m2.shape)
    {
-     shape=m2.shape;
+     shape = m2.shape;
      (shape->ncopies)++;
      m = m2.m;
    }
    else
    {
-     shape=NULL;
-     m=NULL;
+     shape = NULL;
+     m = NULL;
    }
  }
 
@@ -152,7 +152,7 @@
  lmatrix::lmatrix(void)
  {
    shape = NULL;
-   m=NULL;
+   m = NULL;
  }
 
 /**
@@ -178,16 +178,16 @@
      }
      else
      {
-       //int offset = rowmin();   
+       // int offset = rowmin();   
        m += rowmin();
        delete [] m;
-       m=NULL;
+       m = NULL;
        delete shape;
-       shape=NULL;
+       shape = NULL;
      }
    }
    else
    {
-     //cerr << "Warning -- trying to deallocate an unallocated lmatrix"<<endl;
+     // cerr << "Warning -- trying to deallocate an unallocated lmatrix"<<endl;
    }
  }

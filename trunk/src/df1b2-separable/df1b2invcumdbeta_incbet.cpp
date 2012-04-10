@@ -42,11 +42,11 @@
     ADUNCONST(df1b2variable,b);
     ADUNCONST(df1b2variable,y);
   
-    double eps1=1.0-eps;
+    double eps1 = 1.0-eps;
     // this gets the inverse without derivatives
-    double ca=value(a);
-    double cb=value(b);
-    double cx=inv_cumd_beta_stable(ca,cb,value(y),eps);
+    double ca = value(a);
+    double cb = value(b);
+    double cx = inv_cumd_beta_stable(ca,cb,value(y),eps);
   
     init_df3_three_variable vx(cx);
     init_df3_three_variable va(_a);
@@ -54,11 +54,11 @@
   
     // this gets the derivatives for the function itself
   
-    df3_three_variable z=(incbet(va,vb,vx)-incbet(va,vb,eps))/
+    df3_three_variable z = (incbet(va,vb,vx)-incbet(va,vb,eps))/
       (incbet(va,vb,eps1)-incbet(va,vb,eps));
      
     // now solve for the derivatves of the inverse function
-    double F_x=1.0/(*z.get_u_x());
+    double F_x = 1.0/(*z.get_u_x());
     double F_y=-F_x* *z.get_u_y();
     double F_z=-F_x* *z.get_u_z();
    
@@ -163,12 +163,12 @@
                  +F_x * *z.get_u_zzz());
   
      df1b2variable tmp;
-     double * xd=_y.get_u_dot();
-     double * yd=_a.get_u_dot();
-     double * zd=_b.get_u_dot();
-     double * tmpd=tmp.get_u_dot();
-     *tmp.get_u()=cx;
-     for (int i=0;i<df1b2variable::nvar;i++)
+     double * xd = _y.get_u_dot();
+     double * yd = _a.get_u_dot();
+     double * zd = _b.get_u_dot();
+     double * tmpd = tmp.get_u_dot();
+     *tmp.get_u() = cx;
+     for (int i = 0;i<df1b2variable::nvar;i++)
      {
        *tmpd++ = F_x * *xd++ + F_y * *yd++ + F_z * *zd++;
      }
@@ -189,7 +189,7 @@ static df3_three_variable gammlnguts(const df3_three_variable& _z)
   df3_three_variable x;
   const double lpi =1.1447298858494001741434272;
   const double lpp =0.9189385332046727417803297;
-  int n=7;
+  int n = 7;
   const double c[9]={0.99999999999980993, 
     676.5203681218851, 
     -1259.1392167224028,
@@ -199,14 +199,14 @@ static df3_three_variable gammlnguts(const df3_three_variable& _z)
      -0.13857109526572012, 
     9.9843695780195716e-6, 
     1.5056327351493116e-7};
-  df3_three_variable z=_z-1.0;
-  x=c[0];
-  for (int i=1;i<=n+1;i++)
+  df3_three_variable z = _z-1.0;
+  x = c[0];
+  for (int i = 1;i<=n+1;i++)
   {
-    df3_three_variable zinv=1.0/(z+i);
+    df3_three_variable zinv = 1.0/(z+i);
     x+=c[i]*zinv;
   }    
-  df3_three_variable t=z+n+0.5;
+  df3_three_variable t = z+n+0.5;
   df3_three_variable ans= lpp + (z+0.5)*log(t) -t + log(x);
   return(ans);
 }

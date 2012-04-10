@@ -32,7 +32,7 @@
   prevariable& operator << (BOR_CONST prevariable& _v1,_CONST prevariable& v2)
   {
     ADUNCONST(prevariable,v1)
-    v1=v2;
+    v1 = v2;
     gradient_structure::save_dependent_variable_position(v1);
     return (prevariable&)v1;
   }
@@ -45,8 +45,8 @@
   {
     RETURN_ARRAYS_INCREMENT();
     
-    int mmin=v1.indexmin();
-    int mmax=v1.indexmax();
+    int mmin = v1.indexmin();
+    int mmax = v1.indexmax();
     if (mmin != v2.indexmin() || mmax != v2.indexmax())
     {
       cerr << " Incompatible bounds in dvar_vector& operator"
@@ -54,7 +54,7 @@
       ad_exit(21);
     }
 
-    for (int i=mmin;i<=mmax;i++)
+    for (int i = mmin;i<=mmax;i++)
     {
       v1(i) << v2(i);
     }
@@ -68,8 +68,8 @@
  */
   dvar_matrix& operator << (BOR_CONST dvar_matrix& v1,_CONST dvar_matrix& v2)
   {
-    int mmin=v1.rowmin();
-    int mmax=v1.rowmax();
+    int mmin = v1.rowmin();
+    int mmax = v1.rowmax();
     RETURN_ARRAYS_INCREMENT();
     if (mmin != v2.rowmin() || mmax != v2.rowmax())
     {
@@ -77,7 +77,7 @@
         " << (BOR_CONST dvar_matrix& v1,_CONST dvar_matrix& v2)" << endl;
       ad_exit(21);
     }
-    for (int i=mmin;i<=mmax;i++)
+    for (int i = mmin;i<=mmax;i++)
     {
       v1(i) << v2(i);
     }
@@ -97,8 +97,8 @@
     grad_file_count(1,ndv),
     cmpdif_file_count(1,ndv)
   {
-     max_num_dependent_variables=ndv;
-     depvar_count=0;
+     max_num_dependent_variables = ndv;
+     depvar_count = 0;
      grad_buffer_position.initialize();
      cmpdif_buffer_position.initialize();
      grad_file_count.initialize();
@@ -114,7 +114,7 @@
     void gradient_structure::save_dependent_variable_position(_CONST prevariable& v1)
     {
       int depvar_count=++DEPVARS_INFO->depvar_count;
-      //max_num_dependent_variables=ndv;
+      // max_num_dependent_variables = ndv;
       if (depvar_count>DEPVARS_INFO->max_num_dependent_variables)
       {
         cout << "maximum number of depdendent variables of "
@@ -125,11 +125,11 @@
            << endl;
         ad_exit(1);
       }
-      DEPVARS_INFO->grad_buffer_position(depvar_count)=GRAD_STACK1->ptr;
-      DEPVARS_INFO->cmpdif_buffer_position(depvar_count)=fp->offset;
+      DEPVARS_INFO->grad_buffer_position(depvar_count) = GRAD_STACK1->ptr;
+      DEPVARS_INFO->cmpdif_buffer_position(depvar_count) = fp->offset;
       DEPVARS_INFO->grad_file_count(depvar_count)=
                                 GRAD_STACK1->_GRADFILE_PTR;
-      DEPVARS_INFO->cmpdif_file_count(depvar_count)=fp->file_ptr;
+      DEPVARS_INFO->cmpdif_file_count(depvar_count) = fp->file_ptr;
       DEPVARS_INFO->grad_file_position(depvar_count)
         =lseek(GRAD_STACK1->_GRADFILE_PTR,0,SEEK_CUR);
       DEPVARS_INFO->cmpdif_file_position(depvar_count)

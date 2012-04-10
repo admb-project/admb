@@ -104,12 +104,12 @@
    /*
     time_t t,tt;
     time(&t);
-    tt=t;
-    int div=1;
-    for (int i=0;i<6;i++)
+    tt = t;
+    int div = 1;
+    for (int i = 0;i<6;i++)
     {
       
-      ad_random_part[i]=(tt/div)%10+48;
+      ad_random_part[i] = (tt/div)%10+48;
       div*=10;
     }
    */
@@ -122,7 +122,7 @@
   grad_stack::grad_stack()
   {
     gradient_structure::TOTAL_BYTES = 0;
-    gradient_structure::PREVIOUS_TOTAL_BYTES=0;
+    gradient_structure::PREVIOUS_TOTAL_BYTES = 0;
     true_length = gradient_structure::GRADSTACK_BUFFER_SIZE;
     length = true_length;
     if ( (true_ptr_first = new  grad_stack_entry [(size_t)length]) == 0)
@@ -135,10 +135,10 @@
 
     test_the_pointer();
 
-    ptr_first=true_ptr_first;
+    ptr_first = true_ptr_first;
     ptr = ptr_first;
-    ptr_last=ptr_first+(length-1);
-//    table=new lvector(-128,250);
+    ptr_last = ptr_first+(length-1);
+//    table = new lvector(-128,250);
 
     _GRADFILE_PTR = -1; // set to illegal value for later checking
     end_pos  = 0;
@@ -148,22 +148,22 @@
     char* path = getenv("ADTMP"); // NULL if not defined
 #if defined(USE_ADPVM)
     adstring string_path;
-    if (path) string_path=path;
-    int on=0;
-    int nopt=0;
+    if (path) string_path = path;
+    int on = 0;
+    int nopt = 0;
     adstring currdir;
     ad_getcd(currdir);
     if (ad_comm::pvm_manager)
     {
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-slave",nopt))>-1)
+      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-slave",nopt))>-1)
       {
         if (nopt ==1)	    
         {	      
           {
-            int ierr=make_sub_directory(ad_comm::argv[on+1]);
-            ad_comm::subdir=ad_comm::argv[on+1];
+            int ierr = make_sub_directory(ad_comm::argv[on+1]);
+            ad_comm::subdir = ad_comm::argv[on+1];
             string_path+=ad_comm::subdir;
-            path=(char*) string_path;
+            path = (char*) string_path;
           }
         }
         else
@@ -198,9 +198,9 @@
     path = getenv("ADTMP1"); // NULL if not defined
 #if defined(USE_ADPVM)
     adstring string_path2;
-    if (path) string_path2=path;
+    if (path) string_path2 = path;
     string_path2+=ad_comm::subdir;
-    path=(char*) string_path2;
+    path = (char*) string_path2;
 #endif
     if (path != NULL)
     {
@@ -256,20 +256,20 @@ grad_stack::~grad_stack()
 {
    // this->print();
 
-   int repfs=option_match(ad_comm::argc,ad_comm::argv,"-fsize");
+   int repfs = option_match(ad_comm::argc,ad_comm::argv,"-fsize");
     
    if (ad_comm::global_logfile && repfs)
    {
      int pos;
-     pos=lseek(_GRADFILE_PTR1,0,SEEK_END);
+     pos = lseek(_GRADFILE_PTR1,0,SEEK_END);
      *ad_comm::global_logfile << "size of file " << gradfile_name1
       << " = " << pos << endl;
 
-     pos=lseek(_GRADFILE_PTR2,0,SEEK_END);
+     pos = lseek(_GRADFILE_PTR2,0,SEEK_END);
      *ad_comm::global_logfile << "size of file " << gradfile_name2
       << " = " << pos << endl;
 
-     pos=lseek(_VARSSAV_PTR,0,SEEK_END);
+     pos = lseek(_VARSSAV_PTR,0,SEEK_END);
      *ad_comm::global_logfile << "size of file " << var_store_file_name
       << " = " << pos << endl;
    }
@@ -343,7 +343,7 @@ grad_stack::~grad_stack()
     {
        cout << "Wrote " << ierr <<" not " << nbw << endl;
       lseek(_GRADFILE_PTR,end_pos,SEEK_SET);
-      //save the end of file for this file so we can reposition later
+      // save the end of file for this file so we can reposition later
       end_pos1 = end_pos;
       increment_current_gradfile_ptr();
       #if !defined(__NDPX__ ) && !defined(__SUN__)   && !defined(__GNU__)
@@ -379,7 +379,7 @@ grad_stack::~grad_stack()
 				      << " bytes from the beginning\n";
     }
     #endif
-    gradient_structure::TOTAL_BYTES+=nbw; //keep track of the size of the grad_stack
+    gradient_structure::TOTAL_BYTES+=nbw; // keep track of the size of the grad_stack
     ptr = ptr_first;
   }
 
@@ -391,46 +391,46 @@ void grad_stack::create_gradfile()
 {
 
   #if defined (__TURBOC__)
-   _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
+   _GRADFILE_PTR1 = open(gradfile_name1, O_RDWR | O_CREAT |
        O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
 
-   _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT |
+   _VARSSAV_PTR = open(var_store_file_name, O_RDWR | O_CREAT |
        O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
 
   #elif defined (__ZTC__)
-    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
+    _GRADFILE_PTR1 = open(gradfile_name1, O_RDWR | O_CREAT |
 	O_TRUNC , S_IREAD | S_IWRITE);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT
+    _VARSSAV_PTR = open(var_store_file_name, O_RDWR | O_CREAT
 	| O_TRUNC,  S_IREAD | S_IWRITE);
 
   #elif defined (__NDPX__)
-    _GRADFILE_PTR1=creat(gradfile_name1, O_RDWR);
-     _VARSSAV_PTR=creat(var_store_file_name, O_RDWR);
+    _GRADFILE_PTR1 = creat(gradfile_name1, O_RDWR);
+     _VARSSAV_PTR = creat(var_store_file_name, O_RDWR);
 
   #elif ( defined ( __SUN__) ||  defined ( __GNU__))
 
-    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
+    _GRADFILE_PTR1 = open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | 
+    _VARSSAV_PTR = open(var_store_file_name, O_RDWR | 
       O_CREAT | O_TRUNC | O_BINARY, 0777);
 
   #elif (defined (__GNUDOS__) && !defined(__GNU__))
-    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
+    _GRADFILE_PTR1 = open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
 		O_BINARY ,   0777);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | 
+    _VARSSAV_PTR = open(var_store_file_name, O_RDWR | 
       O_CREAT | O_TRUNC | O_BINARY, 0777);
 
   #elif defined (__MSVC32__)
-    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
+    _GRADFILE_PTR1 = open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
 		O_BINARY ,   0777);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | 
+    _VARSSAV_PTR = open(var_store_file_name, O_RDWR | 
       O_CREAT | O_TRUNC | O_BINARY, 0777);
 
   #elif defined (__WAT32__)
-   _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
+   _GRADFILE_PTR1 = open(gradfile_name1, O_RDWR | O_CREAT |
        O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
 
-   _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT |
+   _VARSSAV_PTR = open(var_store_file_name, O_RDWR | O_CREAT |
        O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
   #else
     xxxxx   // need to define this for thei compiler!
@@ -451,28 +451,28 @@ void grad_stack::create_gradfile()
   }
 
   #if defined (__TURBOC__)
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
+    _GRADFILE_PTR2 = open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
 		     O_BINARY, S_IREAD | S_IWRITE);
   #elif defined (__ZTC__)
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC ,
+    _GRADFILE_PTR2 = open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC ,
 		     S_IREAD | S_IWRITE);
   #elif defined (__NDPX__)
-    _GRADFILE_PTR2=creat(gradfile_name2, O_RDWR);
+    _GRADFILE_PTR2 = creat(gradfile_name2, O_RDWR);
 
   #elif ( defined (__SUN__) ||  defined (__GNU__) ) 
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
+    _GRADFILE_PTR2 = open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
 		O_BINARY , 0777);
 
   #elif (defined (__GNUDOS__) && !defined (__GNU__))
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
+    _GRADFILE_PTR2 = open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
 		O_BINARY , 0777);
 
   #elif defined (__MSVC32__)
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
+    _GRADFILE_PTR2 = open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
 		     O_BINARY, S_IREAD | S_IWRITE);
 
   #elif defined (__WAT32__)
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
+    _GRADFILE_PTR2 = open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
 		     O_BINARY, S_IREAD | S_IWRITE);
   #else
     xxxx  // need to define this for this compiler
@@ -548,10 +548,10 @@ void grad_stack::set_gbuffer_pointers()
 {
   if (length > 10000L)
   {
-    //make the buffer end_buf_size
-    unsigned int end_buf_size=5000L;
+    // make the buffer end_buf_size
+    unsigned int end_buf_size = 5000L;
     ptr_first+=length-end_buf_size;
-    length=end_buf_size;
+    length = end_buf_size;
   }
 }
 

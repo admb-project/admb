@@ -18,13 +18,13 @@
 #if defined(THREAD_SAFE)
   extern pthread_mutex_t mutex_dfpool;
   extern pthread_key_t admb_pthread_key;
-  //pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
-  //pthread_key_t admb_pthread_key;
+  // pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
+  // pthread_key_t admb_pthread_key;
 #endif
 
 tsdfpool::tsdfpool(int n) : dfpool(n) {}
 
-//ofstream xofs("allocation");
+// ofstream xofs("allocation");
 typedef ts_vector_shape_pool * pts_vector_shape_pool;
 
 
@@ -38,11 +38,11 @@ ts_vector_shape_pool ** ts_vector_shapex::xpool = 0;
  */
   void ts_vector_shapex::shift(int min)
   {
-    index_max=index_max-index_min+min;
-    index_min=min;
+    index_max = index_max-index_min+min;
+    index_min = min;
   }
 
-const int max_number_threads=10;
+const int max_number_threads = 10;
 
 /**
  * Description not yet available.
@@ -58,7 +58,7 @@ const int max_number_threads=10;
     }
     else
     {
-      tmp=0;
+      tmp = 0;
     }
     return tmp;
   }
@@ -77,18 +77,18 @@ void * ts_vector_shapex::operator new(size_t n)
     if (xpool==0)
     {
       xpool = new pts_vector_shape_pool[max_number_threads];
-      for (int i=0;i<max_number_threads;i++)
+      for (int i = 0;i<max_number_threads;i++)
       {
-        xpool[i]=0;
+        xpool[i] = 0;
       }
       pthread_mutex_unlock(&mutex_dfpool);
     }
   }
 
-  int pnum=get_pthread_number();
+  int pnum = get_pthread_number();
   if (xpool[pnum]==0) 
   {
-    xpool[pnum]=new ts_vector_shape_pool(sizeof(ts_vector_shapex));
+    xpool[pnum] = new ts_vector_shape_pool(sizeof(ts_vector_shapex));
   }
 # if defined(SAFE_ALL)
   if (n != xpool[pnum]->size)

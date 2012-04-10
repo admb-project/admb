@@ -18,9 +18,9 @@
    {
      dvar3_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=mfexp(m(i));
+       tmp(i) = mfexp(m(i));
      }
      return tmp;
    }  
@@ -33,9 +33,9 @@
    {
      dvar3_array tmp;
      tmp.allocate(m);
-     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i)=mfexp(m(i),d);
+       tmp(i) = mfexp(m(i),d);
      }
      return tmp;
    }

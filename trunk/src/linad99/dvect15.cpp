@@ -18,19 +18,19 @@
   {
     int size =t1.size()+t2.size();
     dvector tmp(1,size);
-    int min=t1.indexmin();
-    int max=t1.indexmax();
-    int ii=0;
+    int min = t1.indexmin();
+    int max = t1.indexmax();
+    int ii = 0;
     int i;
-    for (i=min;i<=max;i++)
+    for (i = min;i<=max;i++)
     {
-      tmp(++ii)=t1(i);
+      tmp(++ii) = t1(i);
     }
-    min=t2.indexmin();
-    max=t2.indexmax();
-    for (i=min;i<=max;i++)
+    min = t2.indexmin();
+    max = t2.indexmax();
+    for (i = min;i<=max;i++)
     {
-      tmp(++ii)=t2(i);
+      tmp(++ii) = t2(i);
     }
     return tmp;
   }
@@ -43,19 +43,19 @@
   {
     int size =t1.size()+t2.size();
     dvar_vector tmp(1,size);
-    int min=t1.indexmin();
-    int max=t1.indexmax();
-    int ii=0;
+    int min = t1.indexmin();
+    int max = t1.indexmax();
+    int ii = 0;
     int i;
-    for (i=min;i<=max;i++)
+    for (i = min;i<=max;i++)
     {
-      tmp(++ii)=t1(i);
+      tmp(++ii) = t1(i);
     }
-    min=t2.indexmin();
-    max=t2.indexmax();
-    for (i=min;i<=max;i++)
+    min = t2.indexmin();
+    max = t2.indexmax();
+    for (i = min;i<=max;i++)
     {
-      tmp(++ii)=t2(i);
+      tmp(++ii) = t2(i);
     }
     return tmp;
   }

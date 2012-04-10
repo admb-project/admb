@@ -198,12 +198,12 @@
 df1b2vector posfun(const df1b2vector& x,double eps,
   const df1b2variable& _pen)
 {
-  int mmin=x.indexmin();
-  int mmax=x.indexmax();
+  int mmin = x.indexmin();
+  int mmax = x.indexmax();
   df1b2vector tmp(mmin,mmax);
-  for (int i=mmin;i<=mmax;i++)
+  for (int i = mmin;i<=mmax;i++)
   {
-    tmp(i)=posfun(x(i),eps,_pen);
+    tmp(i) = posfun(x(i),eps,_pen);
   }
   return tmp;
 }
@@ -239,8 +239,8 @@ df1b2variable dfposfun(const df1b2variable&x,const double eps)
   }
   else
   {
-    //double z=eps/(2-x/eps);
-    df1b2variable dfx=1.0/square(2-x/eps);
+    // double z = eps/(2-x/eps);
+    df1b2variable dfx = 1.0/square(2-x/eps);
     return dfx;
   }
 }
@@ -275,10 +275,10 @@ df1b2variable posfun2(const df1b2variable&x,const double eps,
   }
   else
   {
-    df1b2variable y=eps-x;
-    df1b2variable  tmp=y/eps;
-    df1b2variable  tmp2=tmp*tmp;
-    df1b2variable  tmp3=tmp2*tmp;
+    df1b2variable y = eps-x;
+    df1b2variable  tmp = y/eps;
+    df1b2variable  tmp2 = tmp*tmp;
+    df1b2variable  tmp3 = tmp2*tmp;
     pen+=.01*tmp3;
     return eps/(1.0+tmp+tmp2+tmp3);
   }

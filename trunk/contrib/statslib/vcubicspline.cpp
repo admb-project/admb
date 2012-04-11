@@ -264,7 +264,7 @@ void bicubic_spline(const dvector& x, const dvector& y, dvar_matrix& knots, dvar
 		void spline(float x[], float y[], int n, float yp1, float ypn, float y2[]);
 		int j;
 		for (j=1;j<=m;j++)
-		spline(x2a,ya[j],n,1.0e30,1.0e30,y2a[j]); Values 1×1030 signal a nat-
+		spline(x2a,ya[j],n,1.0e30,1.0e30,y2a[j]); Values 1x1030 signal a nat-
 		}	*/
 		RETURN_ARRAYS_INCREMENT();
 		dvector& x1a=(dvector&) _x1a;

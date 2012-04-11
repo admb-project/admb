@@ -41,7 +41,7 @@ dmatrix fabs(const dmatrix & X){
   \ingroup matop
    Matrix exponential. 
    
-   The matrix exponential is calculated using the Padé approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
+   The matrix exponential is calculated using the Pade approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
 
    
 The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems: 
@@ -103,7 +103,7 @@ dmatrix expm(const dmatrix & A)
   \ingroup matop
    Matrix exponential. 
    
-   The matrix exponential is calculated using the Padé approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
+   The matrix exponential is calculated using the Pade approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
 
    
 The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems: 

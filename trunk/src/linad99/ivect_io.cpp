@@ -58,7 +58,7 @@ void ivector::write_on(BOR_CONST ostream& _s) _CONST
 #endif
   char new_fill = s.fill();
 #endif
-  for (int i = indexmin(); i <= indexmax(); i++)
+  for (int i=indexmin(); i <= indexmax(); i++)
   {
   #ifdef __USE_IOSTREAM__
      s.width(0);
@@ -103,11 +103,11 @@ istream& operator>>(BOR_CONST istream& istr,BOR_CONST ivector& _z)
  */
 void ivector::read_from(BOR_CONST istream& _s)
 {
-  istream& s = (istream&) _s;
-  int mmin = indexmin();
-  int mmax = indexmax();
+  istream& s=(istream&) _s;
+  int mmin=indexmin();
+  int mmax=indexmax();
 
-  for (int i = mmin; i <= mmax; i++)
+  for (int i=mmin; i <= mmax; i++)
   {
      s >> (*this)[i];
   }

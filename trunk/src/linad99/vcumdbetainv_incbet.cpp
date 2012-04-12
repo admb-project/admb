@@ -37,35 +37,35 @@ dvariable inv_cumd_beta_stable(const prevariable& _a,const prevariable& _b,
   ADUNCONST(prevariable,b);
   ADUNCONST(prevariable,y);
 
-  double eps1 = 1.0-eps;
+  double eps1=1.0-eps;
   // this gets the inverse without derivatives
-  double ca = value(a);
-  double cb = value(b);
-  double cx = inv_cumd_beta_stable(ca,cb,value(y),eps);
+  double ca=value(a);
+  double cb=value(b);
+  double cx=inv_cumd_beta_stable(ca,cb,value(y),eps);
 
   init_df1_two_variable va(_a);
   init_df1_two_variable vb(_b);
 
   // this gets the derivatives for the function itself
 
-  df1_two_variable z = (incbet(va,vb,cx)-incbet(va,vb,eps))/
+  df1_two_variable z=(incbet(va,vb,cx)-incbet(va,vb,eps))/
     (incbet(va,vb,eps1)-incbet(va,vb,eps));
    
   double dga=*z.get_u_x();
   double dgb=*z.get_u_y();
 
-  double denom = 1.0/(incbet(ca,cb,eps1)-incbet(ca,cb,eps));
-  double dgx = pow(cx,value(a)-1.0)*pow(1.0-cx,value(b)-1.0)/
+  double denom=1.0/(incbet(ca,cb,eps1)-incbet(ca,cb,eps));
+  double dgx=pow(cx,value(a)-1.0)*pow(1.0-cx,value(b)-1.0)/
     exp(lnbeta(value(a),value(b)))*denom;
 
   // now solve for the derivatves of the inverse function
 
-  double dfx = 1.0/dgx;
+  double dfx=1.0/dgx;
   double dfa=-dfx*dga;
   double dfb=-dfx*dgb;
 
   dvariable tmp;
-  value(tmp) = cx;
+  value(tmp)=cx;
 
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3ind,
     &(value(tmp)) ,&(value(_a)),dfa ,&(value(_b)),dfb ,&(value(_y)),dfx);
@@ -217,7 +217,7 @@ static df1_two_variable gamma(const df1_two_variable & xx1)
 	  goverf:
 	    mtherr("gamma", OVERFLOW);
 	    return (sgngam * MYBIG);
-	    // return( sgngam * MAXNUM);
+	    //return( sgngam * MAXNUM);
 #endif
 	 }
 	 z = fabs(z);
@@ -585,7 +585,7 @@ static df1_two_variable incbd(const df1_two_variable & _a,
 {
    ADUNCONST(df1_two_variable, a)
       ADUNCONST(df1_two_variable, b) ADUNCONST(df1_two_variable, x)
-      // df1_two_variable s, t, u, v, n, t1, z, ai;
+      //df1_two_variable s, t, u, v, n, t1, z, ai;
    df1_two_variable xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
    df1_two_variable k1, k2, k3, k4, k5, k6, k7, k8;
    df1_two_variable r, t, ans, z, thresh;

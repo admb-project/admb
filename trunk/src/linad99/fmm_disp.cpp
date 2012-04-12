@@ -49,7 +49,7 @@
   {
     unsigned char  winleft,   wintop;
     unsigned char  winright,  winbottom;
-  // unsigned char  attribute, normattr;
+  //unsigned char  attribute, normattr;
     unsigned char  currmode;
     unsigned char  screenheight;
     unsigned char  screenwidth;
@@ -66,7 +66,7 @@
      r->wintop = 1;
      r->winright = disp_numcols;
      r->winbottom = disp_numrows-1;
-     // attribute , normattr;
+     //attribute , normattr;
      r->currmode = disp_mode;;
      r->screenheight = disp_numrows;
      r->screenwidth = disp_numcols;
@@ -87,7 +87,7 @@
   {
     unsigned char  winleft,   wintop;
     unsigned char  winright,  winbottom;
-  // unsigned char  attribute, normattr;
+  //unsigned char  attribute, normattr;
     unsigned char  currmode;
     unsigned char  screenheight;
     unsigned char  screenwidth;
@@ -155,9 +155,9 @@ void fmmdisp(_CONST dvector& x,_CONST dvector& g,
     rownum = headings;
   
     
-    for (i = 1; i<=imax; i++)
+    for (i=1; i<=imax; i++)
     {
-      for (j = 0; j<cols; j++)
+      for (j=0; j<cols; j++)
       {
         ij = cols*(i-1)+(j+1);
         if (ij <= nvar)
@@ -246,9 +246,9 @@ void fmmdisp(_CONST double * x,_CONST double * g,
     rownum = headings;
   
     
-    for (i = 1; i<=imax; i++)
+    for (i=1; i<=imax; i++)
     {
-      for (j = 0; j<cols; j++)
+      for (j=0; j<cols; j++)
       {
         ij = cols*(i-1)+(j+1);
         if (ij <= nvar)
@@ -282,7 +282,7 @@ void fmmdisp(_CONST double * x,_CONST double * g,
 } 
   
   
-// void fmmdisp(_CONST dvector& x,_CONST dvector& g,
+//void fmmdisp(_CONST dvector& x,_CONST dvector& g,
 //             const int& nvar, int scroll_flag)
 //{
 //  int      headings = 3;     /* number of heading lines */
@@ -341,7 +341,7 @@ void fmmdisp(_CONST double * x,_CONST double * g,
 //
 //  rownum = headings;
 //
-//  for (i = 1; i<=imax; i++)
+//  for (i=1; i<=imax; i++)
 //  {
 //#if !defined(__NDPX__) && !defined(__SUN__) && !defined(__GNU__) && !defined(_Windows)
 //    rownum++;
@@ -353,7 +353,7 @@ void fmmdisp(_CONST double * x,_CONST double * g,
 //    }
 //#endif
 //
-//    for (j = 0; j<cols; j++)
+//    for (j=0; j<cols; j++)
 //    {
 //      ij = cols*(i-1)+(j+1);
 //      if (ij <= nvar)

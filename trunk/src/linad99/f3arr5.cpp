@@ -19,9 +19,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = m(i)/d;
+       tmp(i)=m(i)/d;
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -36,9 +36,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = m(i)/d;
+       tmp(i)=m(i)/d;
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -53,9 +53,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = m(i)/d;
+       tmp(i)=m(i)/d;
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -68,7 +68,7 @@
    void dvar3_array::operator /=(_CONST prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
-     for (int i = slicemin();i<=slicemax();i++)
+     for (int i=slicemin();i<=slicemax();i++)
      {
        (*this)(i)/=d;
      }
@@ -82,7 +82,7 @@
    void dvar3_array::operator /=(CGNU_DOUBLE d)
    {
      RETURN_ARRAYS_INCREMENT();
-     for (int i = slicemin();i<=slicemax();i++)
+     for (int i=slicemin();i<=slicemax();i++)
      {
        (*this)(i)/=d;
      }

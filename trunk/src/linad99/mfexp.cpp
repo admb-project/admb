@@ -20,7 +20,7 @@
  */
   dvariable mfexp(_CONST prevariable& x)
   {
-    double b = 60;
+    double b=60;
     if (x<=b && x>=-b) 
     {
       return exp(x);

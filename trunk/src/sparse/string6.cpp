@@ -23,13 +23,13 @@
 
   adstring operator + (_CONST char * v,_CONST adstring & u)
   {
-      adstring vv = v;
+      adstring vv=v;
       return (vv+u);
   }
 
   adstring operator + (_CONST unsigned char u,_CONST  adstring & v)
   {
-    adstring uu = u;
+    adstring uu=u;
     return (uu + v);
   }
 

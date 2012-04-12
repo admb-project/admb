@@ -34,8 +34,8 @@ static const int  maxiter = 40;
  */
 static double pythag(double a, double b)
 {
-  double fa = fabs(a);
-  double fb = fabs(b);
+  double fa=fabs(a);
+  double fb=fabs(b);
   if (fa>fb)
     return fa*sqrt(1.0+square(fb/fa));
   else
@@ -79,7 +79,7 @@ sing_val_decomp singval_decomp(const dmatrix &_a)
   int m = _a.indexmax();
   int n = _a(1).indexmax();
   dmatrix a(1,m,1,n);
-  a = _a;
+  a=_a;
   dvector w(1,n);
   dmatrix u(1,m,1,n);
   dmatrix v(1,n,1,n);
@@ -101,8 +101,8 @@ sing_val_decomp singval_decomp(const dmatrix &_a)
  *
  * \param m \f$m\f$ the number of rows of \f$A\f$
  * \param n \f$n\f$ the number of columns of \f$A\f$
- * \param withu true if the \f$U\f$-part is wanted (true = 1, false = 0)
- * \param withv true if the \f$V\f$-part is wanted (true = 1, false = 0)
+ * \param withu true if the \f$U\f$-part is wanted (true=1, false=0)
+ * \param withv true if the \f$V\f$-part is wanted (true=1, false=0)
  * \param eps i.e Epsilon
  * \param tol the tolerance used
  * \param aa \f$A\f$
@@ -124,19 +124,19 @@ int svd(int m,int n,int withu,int withv,double eps,double tol,
   ADUNCONST(dmatrix,v)
   ADUNCONST(dvector,q)
 
-  int urlb = u.rowmin();
-  int uclb = u.colmin();
+  int urlb=u.rowmin();
+  int uclb=u.colmin();
   u.rowshift(0);
   u.colshift(0);
-  int vrlb = v.rowmin();
-  int vclb = v.colmin();
+  int vrlb=v.rowmin();
+  int vclb=v.colmin();
   v.rowshift(0);
   v.colshift(0);
-  int qlb = q.indexmin();
+  int qlb=q.indexmin();
   q.shift(0);
-  dmatrix a = aa;
-  int arlb = a.rowmin();
-  int aclb = a.colmin();
+  dmatrix a=aa;
+  int arlb=a.rowmin();
+  int aclb=a.colmin();
   a.rowshift(0);
   a.colshift(0);
 
@@ -183,18 +183,18 @@ int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
   e = (double *)calloc(n,sizeof(double));
   retval = 0;
 
-  u = aa;
+  u=aa;
 
 /* Householder's reduction to bidiagonal form. */
   g = x = 0.0;    
-  for (i = 0;i<n;i++)
+  for (i=0;i<n;i++)
   {
     e[i] = g;
     s = g = 0.0;
     l = i+1;
     if( i<m )
     {
-      for (j = i;j<m;j++)
+      for (j=i;j<m;j++)
       {
         s += (u[j][i]*u[j][i]);
       }
@@ -206,15 +206,15 @@ int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
         g = (f < 0) ? sqrt(s) : -sqrt(s);
         h = f * g - s;
         u[i][i] = f - g;
-        for (j = l;j<n;j++)
+        for (j=l;j<n;j++)
         {
           s = 0.0;
-          for (k = i;k<m;k++)
+          for (k=i;k<m;k++)
           {
             s += (u[k][i] * u[k][j]);
           }
           f = s / h;
-          for (k = i;k<m;k++)
+          for (k=i;k<m;k++)
           {
             u[k][j] += (f * u[k][i]);
           }
@@ -225,7 +225,7 @@ int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
     s = g = 0.0;
     if( i<m && i!=n-1 )
     {
-      for (j = l;j<n;j++)
+      for (j=l;j<n;j++)
       {
         s += (u[i][j] * u[i][j]);
       }
@@ -237,18 +237,18 @@ int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
         g = (f < 0) ? sqrt(s) : -sqrt(s);
         h = f * g - s;
         u[i][i+1] = f - g;
-        for (j = l;j<n;j++)
+        for (j=l;j<n;j++)
         {
           e[j] = u[i][j]/h;
         }
-        for (j = l;j<m;j++)
+        for (j=l;j<m;j++)
         {
           s = 0.0;
-          for (k = l;k<n;k++)
+          for (k=l;k<n;k++)
           {
             s += (u[j][k] * u[i][k]);
           }
-          for (k = l;k<n;k++)
+          for (k=l;k<n;k++)
           {
             u[j][k] += (s * e[k]);
           }
@@ -265,32 +265,32 @@ int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
 /* accumulation of right-hand transformations */
   if (withv)
   {
-    for (i = n-1;i>=0;i--)
+    for (i=n-1;i>=0;i--)
     {
       if ( i < n-2 )
       {
         if (g != 0.0)
         {
           h = u[i][i+1] * g;
-          for (j = l;j<n;j++)
+          for (j=l;j<n;j++)
           {
             v[j][i] = u[i][j]/h;
           }
-          for (j = l;j<n;j++)
+          for (j=l;j<n;j++)
           {
             s = 0.0;
-            for (k = l;k<n;k++)
+            for (k=l;k<n;k++)
             {
               s += (u[i][k] * v[k][j]);
             }
-            for (k = l;k<n;k++)
+            for (k=l;k<n;k++)
             {
               v[k][j] += (s * v[k][i]);
             }
 
           } /* end j */
         } /* end g */
-        for (j = l;j<n;j++)
+        for (j=l;j<n;j++)
         {
           v[i][j] = v[j][i] = 0.0;
         }
@@ -304,7 +304,7 @@ int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
 
 /* accumulation of left-hand transformations */
   if (withu) {
-    for (i = min(m,n)-1;i>=0;i--) {
+    for (i=min(m,n)-1;i>=0;i--) {
       l = i + 1;
       g = q[i];
       for (j=l;j<n;j++)  /* upper limit was 'n' */
@@ -313,17 +313,17 @@ int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
         h = u[i][i] * g;
         for (j=l;j<n;j++) { /* upper limit was 'n' */
           s = 0.0;
-          for (k = l;k<m;k++)
+          for (k=l;k<m;k++)
             s += (u[k][i] * u[k][j]);
           f = s / h;
-          for (k = i;k<m;k++) 
+          for (k=i;k<m;k++) 
             u[k][j] += (f * u[k][i]);
         } /* end j */
-        for (j = i;j<m;j++) 
+        for (j=i;j<m;j++) 
           u[j][i] /= g;
       } /* end g */
       else {
-        for (j = i;j<m;j++)
+        for (j=i;j<m;j++)
           u[j][i] = 0.0;
       }
       u[i][i] += 1.0;
@@ -332,10 +332,10 @@ int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
 
 /* diagonalization of the bidiagonal form */
   eps *= x;
-  for (k = n-1;k>=0;k--) {
+  for (k=n-1;k>=0;k--) {
     iter = 0;
 test_f_splitting:
-    for (l = k;l>=0;l--) {
+    for (l=k;l>=0;l--) {
       if (fabs(e[l]) <= eps) goto test_f_convergence;
       if (fabs(q[l-1]) <= eps) goto cancellation;
     } /* end l */
@@ -345,7 +345,7 @@ cancellation:
     c = 0.0;
     s = 1.0;
     l1 = l - 1;
-    for (i = l;i<=k;i++) {
+    for (i=l;i<=k;i++) {
       f = s * e[i];
       e[i] *= c;
       if (fabs(f) <= eps) goto test_f_convergence;
@@ -354,7 +354,7 @@ cancellation:
       c = g / h;
       s = -f / h;
       if (withu) {
-        for (j = 0;j<m;j++) {
+        for (j=0;j<m;j++) {
           y = u[j][l1];
           z = u[j][i];
           u[j][l1] = y * c + z * s;
@@ -381,7 +381,7 @@ test_f_convergence:
     f = ((x-z)*(x+z) + h*(y/((f<0)?(f-g):(f+g))-h))/x;
 /* next QR transformation */
     c = s = 1.0;
-    for (i = l+1;i<=k;i++) {
+    for (i=l+1;i<=k;i++) {
       g = e[i];
       y = q[i];
       h = s * g;
@@ -394,7 +394,7 @@ test_f_convergence:
       h = y * s;
       y *= c;
       if (withv) {
-        for (j = 0;j<n;j++) {
+        for (j=0;j<n;j++) {
           x = v[j][i-1];
           z = v[j][i];
           v[j][i-1] = x * c + z * s;
@@ -407,7 +407,7 @@ test_f_convergence:
       f = c * g + s * y;
       x = -s * g + c * y;
       if (withu) {
-        for (j = 0;j<m;j++) {
+        for (j=0;j<m;j++) {
           y = u[j][i-1];
           z = u[j][i];
           u[j][i-1] = y * c + z * s;
@@ -424,7 +424,7 @@ convergence:
 /* q[k] is made non-negative */
       q[k] = - z;
       if (withv) {
-        for (j = 0;j<n;j++)
+        for (j=0;j<n;j++)
           v[j][k] = -v[j][k];
       } /* end withv, parens added for clarity */
     } /* end z */
@@ -462,15 +462,15 @@ int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
   e = (double *)calloc(n,sizeof(double));
   retval = 0;
 
-  u = aa;
+  u=aa;
 /* Householder's reduction to bidiagonal form. */
   g = x = 0.0;    
-  for (i = 0;i<n;i++)
+  for (i=0;i<n;i++)
   {
     e[i] = g;
     s = 0.0;
     l = i+1;
-    for (j = i;j<m;j++)
+    for (j=i;j<m;j++)
     {
       s += (u[j][i]*u[j][i]);
     }
@@ -482,15 +482,15 @@ int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
       g = (f < 0) ? sqrt(s) : -sqrt(s);
       h = f * g - s;
       u[i][i] = f - g;
-      for (j = l;j<n;j++)
+      for (j=l;j<n;j++)
       {
         s = 0.0;
-        for (k = i;k<m;k++)
+        for (k=i;k<m;k++)
         {
           s += (u[k][i] * u[k][j]);
         }
         f = s / h;
-        for (k = i;k<m;k++)
+        for (k=i;k<m;k++)
         {
           u[k][j] += (f * u[k][i]);
         }
@@ -498,7 +498,7 @@ int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
     } /* end s */
     q[i] = g;
     s = 0.0;
-    for (j = l;j<n;j++)
+    for (j=l;j<n;j++)
     {
       s += (u[i][j] * u[i][j]);
     }
@@ -510,18 +510,18 @@ int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
       g = (f < 0) ? sqrt(s) : -sqrt(s);
       h = f * g - s;
       u[i][i+1] = f - g;
-      for (j = l;j<n;j++)
+      for (j=l;j<n;j++)
       {
         e[j] = u[i][j]/h;
       }
-      for (j = l;j<m;j++)
+      for (j=l;j<m;j++)
       {
         s = 0.0;
-        for (k = l;k<n;k++)
+        for (k=l;k<n;k++)
         {
           s += (u[j][k] * u[i][k]);
         }
-        for (k = l;k<n;k++)
+        for (k=l;k<n;k++)
         {
           u[j][k] += (s * e[k]);
         }
@@ -537,30 +537,30 @@ int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
 /* accumulation of right-hand transformations */
   if (withv)
   {
-    for (i = n-1;i>=0;i--)
+    for (i=n-1;i>=0;i--)
     {
       if (g != 0.0)
       {
         h = u[i][i+1] * g;
-        for (j = l;j<n;j++)
+        for (j=l;j<n;j++)
         {
           v[j][i] = u[i][j]/h;
         }
-        for (j = l;j<n;j++)
+        for (j=l;j<n;j++)
         {
           s = 0.0;
-          for (k = l;k<n;k++)
+          for (k=l;k<n;k++)
           {
             s += (u[i][k] * v[k][j]);
           }
-          for (k = l;k<n;k++)
+          for (k=l;k<n;k++)
           {
             v[k][j] += (s * v[k][i]);
           }
 
         } /* end j */
       } /* end g */
-      for (j = l;j<n;j++)
+      for (j=l;j<n;j++)
       {
         v[i][j] = v[j][i] = 0.0;
       }
@@ -573,7 +573,7 @@ int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
 
 /* accumulation of left-hand transformations */
   if (withu) {
-    for (i = n-1;i>=0;i--) {
+    for (i=n-1;i>=0;i--) {
       l = i + 1;
       g = q[i];
       for (j=l;j<n;j++)  /* upper limit was 'n' */
@@ -582,17 +582,17 @@ int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
         h = u[i][i] * g;
         for (j=l;j<n;j++) { /* upper limit was 'n' */
           s = 0.0;
-          for (k = l;k<m;k++)
+          for (k=l;k<m;k++)
             s += (u[k][i] * u[k][j]);
           f = s / h;
-          for (k = i;k<m;k++) 
+          for (k=i;k<m;k++) 
             u[k][j] += (f * u[k][i]);
         } /* end j */
-        for (j = i;j<m;j++) 
+        for (j=i;j<m;j++) 
           u[j][i] /= g;
       } /* end g */
       else {
-        for (j = i;j<m;j++)
+        for (j=i;j<m;j++)
           u[j][i] = 0.0;
       }
       u[i][i] += 1.0;
@@ -601,10 +601,10 @@ int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
 
 /* diagonalization of the bidiagonal form */
   eps *= x;
-  for (k = n-1;k>=0;k--) {
+  for (k=n-1;k>=0;k--) {
     iter = 0;
 test_f_splitting:
-    for (l = k;l>=0;l--) {
+    for (l=k;l>=0;l--) {
       if (fabs(e[l]) <= eps) goto test_f_convergence;
       if (fabs(q[l-1]) <= eps) goto cancellation;
     } /* end l */
@@ -614,7 +614,7 @@ cancellation:
     c = 0.0;
     s = 1.0;
     l1 = l - 1;
-    for (i = l;i<=k;i++) {
+    for (i=l;i<=k;i++) {
       f = s * e[i];
       e[i] *= c;
       if (fabs(f) <= eps) goto test_f_convergence;
@@ -623,7 +623,7 @@ cancellation:
       c = g / h;
       s = -f / h;
       if (withu) {
-        for (j = 0;j<m;j++) {
+        for (j=0;j<m;j++) {
           y = u[j][l1];
           z = u[j][i];
           u[j][l1] = y * c + z * s;
@@ -650,7 +650,7 @@ test_f_convergence:
     f = ((x-z)*(x+z) + h*(y/((f<0)?(f-g):(f+g))-h))/x;
 /* next QR transformation */
     c = s = 1.0;
-    for (i = l+1;i<=k;i++) {
+    for (i=l+1;i<=k;i++) {
       g = e[i];
       y = q[i];
       h = s * g;
@@ -663,7 +663,7 @@ test_f_convergence:
       h = y * s;
       y *= c;
       if (withv) {
-        for (j = 0;j<n;j++) {
+        for (j=0;j<n;j++) {
           x = v[j][i-1];
           z = v[j][i];
           v[j][i-1] = x * c + z * s;
@@ -676,7 +676,7 @@ test_f_convergence:
       f = c * g + s * y;
       x = -s * g + c * y;
       if (withu) {
-        for (j = 0;j<m;j++) {
+        for (j=0;j<m;j++) {
           y = u[j][i-1];
           z = u[j][i];
           u[j][i-1] = y * c + z * s;
@@ -693,7 +693,7 @@ convergence:
 /* q[k] is made non-negative */
       q[k] = - z;
       if (withv) {
-        for (j = 0;j<n;j++)
+        for (j=0;j<n;j++)
           v[j][k] = -v[j][k];
       } /* end withv, parens added for clarity */
     } /* end z */

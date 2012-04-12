@@ -26,7 +26,7 @@
       cerr << "tau <=1 in log_negbinomial_density " << endl;
       ad_exit(1);
     }
-    double r = mu/(1.e-120+(tau-1.0));
+    double r=mu/(1.e-120+(tau-1.0));
     return gammln(x+r)-gammln(r)-gammln(x+1)
       +r*log(r)+x*log(mu)-(r+x)*log(r+mu);
   }
@@ -47,7 +47,7 @@
       cerr << "tau <=1 in negbinomial_density " << endl;
       ad_exit(1);
     }
-    double r = mu/(1.e-120+(tau-1.0));
+    double r=mu/(1.e-120+(tau-1.0));
     return exp(gammln(x+r)-gammln(r)-gammln(x+1)
       +r*log(r)+x*log(mu)-(r+x)*log(r+mu));
   }

@@ -19,7 +19,7 @@ class factor
   ivector idx;
   dvar_vector levels;
 public:  
-  factor(){nlevels = 0;}
+  factor(){nlevels=0;}
   void allocate(const ivector& v, dvar_vector & par);
   dvariable operator () (int i);
 };

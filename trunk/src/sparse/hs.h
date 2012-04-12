@@ -47,7 +47,7 @@ extern "C"
 class dcompressed_triplet;
 class dvar_compressed_triplet;
 
- // class hs_symbolic    	// Info for symbolic cholesky
+ //class hs_symbolic    	// Info for symbolic cholesky
  //{
  //    public:
  //
@@ -72,13 +72,13 @@ class hs_smatrix    	// matrix in compressed-column, 0 offset
 
     int nzmax ;     	// maximum number of entries; in practice nzmax= # non-zero
     int m ;         	// number of rows 
-    int n ;         	// number of columns; m = n for symmetric matrix 
+    int n ;         	// number of columns; m=n for symmetric matrix 
     ivector p ;        	// column pointers (size n+1) or col indices; size nzmax 
     ivector i ;        	// row indices, size nzmax 
     dvector x ;     	// numerical values, size nzmax 
     hs_symbolic sym;
 
-    // hs_smatrix(int ,XCONST dmatrix &); 			// Initialization
+    //hs_smatrix(int ,XCONST dmatrix &); 			// Initialization
     hs_smatrix(int ,XCONST dcompressed_triplet &); 			// Initialization
     hs_smatrix(const dcompressed_triplet &); 			// Initialization
     hs_smatrix(int n, int nzmax); 			// Initialization
@@ -105,7 +105,7 @@ class dvar_hs_smatrix    	// matrix in compressed-column, 0 offset
 
     int nzmax ;     	// maximum number of entries; in practice nzmax= # non-zero
     int m ;         	// number of rows 
-    int n ;         	// number of columns; m = n for symmetric matrix 
+    int n ;         	// number of columns; m=n for symmetric matrix 
     ivector p ;        	// column pointers (size n+1) or col indices; size nzmax 
     ivector i ;        	// row indices, size nzmax 
     dvar_vector x ;     	// numerical values, size nzmax 
@@ -153,8 +153,8 @@ int 	cs_fkeep (hs_smatrix &A, int (*fkeep) (int, int, double, void *), void *oth
 int 	cs_fkeep (dvar_hs_smatrix &A, int (*fkeep) (int, int, const prevariable& , void *), void *other);
 int 	cs_scatter(XCONST hs_smatrix &A, int j, double beta, ivector &w, dvector &x, int mark,hs_smatrix &C, int nz);
 int 	cs_scatter(XCONST dvar_hs_smatrix &A, int j, double beta, ivector &w, dvar_vector &x, int mark,hs_smatrix &C, int nz);
-hs_smatrix cs_add(XCONST hs_smatrix &A, XCONST hs_smatrix &B, double alpha = 1.0, double beta = 1.0);
-dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &A, XCONST dvar_hs_smatrix &B, double alpha = 1.0, double beta = 1.0);
+hs_smatrix cs_add(XCONST hs_smatrix &A, XCONST hs_smatrix &B, double alpha=1.0, double beta=1.0);
+dvar_hs_smatrix cs_add(XCONST dvar_hs_smatrix &A, XCONST dvar_hs_smatrix &B, double alpha=1.0, double beta=1.0);
 int 	cs_tdfs (int j, int k, ivector &head, XCONST ivector &next, ivector &post, ivector &stack);
 ivector cs_amd (XCONST hs_smatrix &A);
 ivector cs_amd (XCONST dvar_hs_smatrix &A);

@@ -41,8 +41,8 @@ void dv_assign(void);
 #  endif
    else
    {
-     int mmin = indexmin();
-     int mmax = indexmax();
+     int mmin=indexmin();
+     int mmax=indexmax();
      if (mmin != t.indexmin() || mmax != t.indexmax())
      {
        cerr << " Incompatible bounds in dvar_vector& dvar_vector::operator ="
@@ -52,19 +52,19 @@ void dv_assign(void);
      if (va != t.va)
      {
      #ifdef OPT_LIB
-       int mmin = indexmin();
-       int mmax = indexmax();
+       int mmin=indexmin();
+       int mmax=indexmax();
        memcpy(&elem_value(mmin),&t.elem_value(mmin),
          (mmax-mmin+1)*sizeof(double));
      #else 
        #ifndef USE_ASSEMBLER
-         for (int i = mmin; i<=mmax; i++)
+         for (int i=mmin; i<=mmax; i++)
          {
            va[i].x = (t.va[i]).x;
          }
        #else
-         int min = t.indexmin();
-         int n = t.indexmax()-min+1;
+         int min=t.indexmin();
+         int n=t.indexmax()-min+1;
          dw_block_move(&(this->elem_value(min)),&(t.elem_value(min)),n);
        #endif
       #endif
@@ -89,9 +89,9 @@ void dv_eqprev(void);
  */
  dvar_vector& dvar_vector::operator = (_CONST prevariable& t)
  {
-   int mmin = indexmin();
-   int mmax = indexmax();
-   for (int i = mmin; i<=mmax; i++)
+   int mmin=indexmin();
+   int mmax=indexmax();
+   for (int i=mmin; i<=mmax; i++)
    {
      va[i].x = value(t);
    }
@@ -114,9 +114,9 @@ void dv_eqdoub(void);
  */
  dvar_vector& dvar_vector::operator = ( CGNU_DOUBLE t)
  {
-   int mmin = indexmin();
-   int mmax = indexmax();
-   for (int i = mmin; i<=mmax; i++)
+   int mmin=indexmin();
+   int mmax=indexmax();
+   for (int i=mmin; i<=mmax; i++)
    {
      va[i].x = t;
    }
@@ -135,10 +135,10 @@ void dv_eqdoub(void);
  */
 void dv_eqdoub(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ssss");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dftmp = restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
   verify_identifier_string("trut");
 }
 
@@ -148,16 +148,16 @@ void dv_eqdoub(void)
  */
 void dv_eqprev(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("ssss");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dftmp = restore_dvar_vector_derivatives(tmp_pos);
-  prevariable_position t_pos = restore_prevariable_position();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
+  prevariable_position t_pos=restore_prevariable_position();
   verify_identifier_string("dddd");
-  double dft = 0.;
-  for (int i = dftmp.indexmin();i<=dftmp.indexmax();i++)
+  double dft=0.;
+  for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
   {
-    // vtmp.elem(i) = t;
+    //vtmp.elem(i)=t;
     dft+=dftmp.elem(i);
   }
   save_double_derivative(dft,t_pos);
@@ -169,30 +169,30 @@ void dv_eqprev(void)
  */
 void dv_assign(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dftmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position t_pos = restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position t_pos=restore_dvar_vector_position();
   verify_identifier_string("bbbb");
   dvector dft(dftmp.indexmin(),dftmp.indexmax());
 #ifdef OPT_LIB
-  int mmin = dftmp.indexmin();
-  int mmax = dftmp.indexmax();
+  int mmin=dftmp.indexmin();
+  int mmax=dftmp.indexmax();
   memcpy(&dft.elem(mmin),&dftmp.elem(mmin),(mmax-mmin+1)*sizeof(double));
 
 #else
 #ifndef USE_ASSEMBLER
-  int mmin = dftmp.indexmin();
-  int mmax = dftmp.indexmax();
-  for (int i = mmin;i<=mmax;i++)
+  int mmin=dftmp.indexmin();
+  int mmax=dftmp.indexmax();
+  for (int i=mmin;i<=mmax;i++)
   {
-    // vtmp.elem(i) = value(v1.elem(i))+value(v2.elem(i));
-    dft.elem(i) = dftmp.elem(i);
+    //vtmp.elem(i)=value(v1.elem(i))+value(v2.elem(i));
+    dft.elem(i)=dftmp.elem(i);
   }
 #else
-  int mmin = dftmp.indexmin();
-  int n = dftmp.indexmax()-mmin+1;
+  int mmin=dftmp.indexmin();
+  int n=dftmp.indexmax()-mmin+1;
      dw_block_move(&(dft.elem(mmin)),&(dftmp.elem(mmin)),n);
 #endif
 #endif

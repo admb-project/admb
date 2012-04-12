@@ -27,7 +27,7 @@ cubic_spline_function::cubic_spline_function(BOR_CONST dvector & _x,
   BOR_CONST dvector& _y,double yp1,double ypn) : x(_x) , y(_y)
 {
   y2.allocate(x);
-  y2 = spline(x,y,yp1,ypn);
+  y2=spline(x,y,yp1,ypn);
 }
 
 /**
@@ -46,12 +46,12 @@ double cubic_spline_function::operator () (double u)
  */
 dvector cubic_spline_function::operator () (_CONST dvector& u)
 {
-  int mmin = u.indexmin();
-  int mmax = u.indexmax();
+  int mmin=u.indexmin();
+  int mmax=u.indexmax();
   dvector z(mmin,mmax);
-  for (int i = mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
-    z(i) = splint(x,y,y2,u(i));
+    z(i)=splint(x,y,y2,u(i));
   }
   return z;
 }
@@ -60,7 +60,7 @@ dvector cubic_spline_function::operator () (_CONST dvector& u)
  *  Cubic spline interpolation.
  *
  * \param _x array of abscissa
- * \param _y array of corresponding values \f$y_i = f(x_i)\f$
+ * \param _y array of corresponding values \f$y_i=f(x_i)\f$
  * \param yp1 value of the first derivative of \f$f\f$ at the left
  *        end point
  * \param ypn value of the first derivative of \f$f\f$ at the right
@@ -104,7 +104,7 @@ dvector spline(BOR_CONST dvector& _x,BOR_CONST dvector& _y,double yp1,double ypn
  *  Cubic spline interpolation.
  * \ingroup cub_spline
  * \param _xa array of abscissa
- * \param _ya array of corresponding values \f$y_i = f(x_i)\f$
+ * \param _ya array of corresponding values \f$y_i=f(x_i)\f$
  * \param _y2a array of 2nd derivatives computed from dvector spline()
  * \param x the input coordinate to be used in the interpolation
  * \return a cubic-spline interpolation to \f$f(x)\f$
@@ -479,7 +479,7 @@ dvector spline_cubic_set(int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
     cout << "SPLINE_CUBIC_SET - Fatal error!\n";
     cout << "  The number of data points N must be at least 2.\n";
     cout << "  The input value is " << n << ".\n";
-    // return NULL;
+    //return NULL;
   }
 
   for ( i = 0; i < n - 1; i++ )
@@ -576,7 +576,7 @@ dvector spline_cubic_set(int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
       cout << "SPLINE_CUBIC_SET - Fatal error!\n";
       cout << "  The linear system could not be solved.\n";
     }
-    for(i = 0;i<n;i++)
+    for(i=0;i<n;i++)
     {
        ret(i) =ypp[i];
     }

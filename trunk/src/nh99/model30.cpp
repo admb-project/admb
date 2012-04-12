@@ -24,9 +24,9 @@
     else
     {
       if (allocated(*this))	
-      for (int i = indexmin();i<=indexmax();i++)
+      for (int i=indexmin();i<=indexmax();i++)
         if (allocated((*this)(i)))
-          (*this)(i) = (initial_value);
+          (*this)(i)=(initial_value);
     }
   }
 

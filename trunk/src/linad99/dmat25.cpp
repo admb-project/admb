@@ -36,9 +36,9 @@ dmatrix operator / (_CONST dmatrix& m, CGNU_DOUBLE e)
 {
   dmatrix tmp;
   tmp.allocate(m);
-  for (int i = m.rowmin();i<=m.rowmax();i++)
+  for (int i=m.rowmin();i<=m.rowmax();i++)
   {
-    tmp(i) = m(i)/e;
+    tmp(i)=m(i)/e;
   }
   return tmp;
 }
@@ -51,9 +51,9 @@ dmatrix operator / ( CGNU_DOUBLE e,_CONST dmatrix& m)
 {
   dmatrix tmp;
   tmp.allocate(m);
-  for (int i = m.rowmin();i<=m.rowmax();i++)
+  for (int i=m.rowmin();i<=m.rowmax();i++)
   {
-    tmp(i) = e/m(i);
+    tmp(i)=e/m(i);
   }
   return tmp;
 }

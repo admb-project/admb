@@ -60,7 +60,7 @@ class DDEspclient
   static HCONV cstatus;
   static UINT status;
 public:
-  DDEspclient(DWORD sleeptime = 1000); 
+  DDEspclient(DWORD sleeptime=1000); 
   static HCONV get_cstatus(void){return cstatus;}
   static DWORD get_idInst(void){return idInst;}
   static DWORD get_sleeptime(void){return sleeptime;}
@@ -124,7 +124,7 @@ class DDEspclient
   static HCONV cstatus;
   static UINT status;
 public:
-  DDEspclient(DWORD sleeptime = 1000); 
+  DDEspclient(DWORD sleeptime=1000); 
   static HCONV get_cstatus(void){return cstatus;}
   static DWORD get_idInst(void){return idInst;}
   static DWORD get_sleeptime(void){return sleeptime;}

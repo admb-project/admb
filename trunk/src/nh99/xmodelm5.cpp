@@ -20,10 +20,10 @@ dvariable function_minimizer::do_gauss_hermite_integration(void)
   }
   else
   {
-    dvariable fun = 0.0;
-    int nsc = lapprox->num_separable_calls;
-    dvector& w = lapprox->gh->w;
-    for (int is = 1;is<=nsc;is++)
+    dvariable fun=0.0;
+    int nsc=lapprox->num_separable_calls;
+    dvector& w=lapprox->gh->w;
+    for (int is=1;is<=nsc;is++)
     {
       fun-=log(1.e-50+exp(-lapprox->gh->gauss_hermite_values(is))*w);
     }
@@ -34,24 +34,24 @@ dvariable function_minimizer::do_gauss_hermite_integration(void)
 dvariable function_minimizer::do_gauss_hermite_integration_multi(void)
 {
   multi_index mi=*(lapprox->gh->mi);
-  dvariable fun = 0.0;
-  int nsc = lapprox->num_separable_calls;
-  dvector& w = lapprox->gh->w;
+  dvariable fun=0.0;
+  int nsc=lapprox->num_separable_calls;
+  dvector& w=lapprox->gh->w;
   ivector& lrea = *(lapprox->num_local_re_array);
-  for (int isc = 1;isc<=nsc;isc++)
+  for (int isc=1;isc<=nsc;isc++)
   {
-    dvariable ftmp = 0.0;
-    int lus = lrea(isc);
+    dvariable ftmp=0.0;
+    int lus=lrea(isc);
     mi.initialize();
     double ww;
     do
     {
-      ww = 1.0;
-      for (int iu = 1;iu<=lus;iu++)
+      ww=1.0;
+      for (int iu=1;iu<=lus;iu++)
       {
         ww*= w(mi()(iu));
       }
-      int is = mi.get_offset()+1;
+      int is=mi.get_offset()+1;
       ftmp+=exp(-lapprox->gh->gauss_hermite_values(isc,is))*ww;
       ++mi;
     }

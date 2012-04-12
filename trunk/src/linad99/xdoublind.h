@@ -95,8 +95,8 @@
     virtual int  isdouble(void) const { return 1;}
     virtual operator double () { cerr << "Error in index_type"
      " -- object not dereferenced enough" << endl; exit(1); return 1;}
-    virtual int indexmin(void) = 0;
-    virtual int indexmax(void) = 0;
+    virtual int indexmin(void)=0;
+    virtual int indexmax(void)=0;
     double_index_guts(); 
     double_index_guts(const double_index_guts& ig);
     virtual ~double_index_guts();
@@ -114,13 +114,13 @@
     double ddouble(void) const;
     int isdouble(void) const { return p->isdouble();}
     double_index_type(double x);
-    // index_type(const data_int& x);
+    //index_type(const data_int& x);
     double_index_type(BOR_CONST dvector& x);
     double_index_type(BOR_CONST dmatrix& x);
     double_index_type(BOR_CONST d3_array& x);
     double_index_type(BOR_CONST pre_double_index_type& pit);
     double_index_type(const double_index_type& pit);
-    // index_type (i4_array& x) { p = new i4_index(x);}
+    //index_type (i4_array& x) { p = new i4_index(x);}
     ~double_index_type ();
     double_index_type operator [] (int i);
     double_index_type operator () (int i);
@@ -161,7 +161,7 @@
       return new double_index(dvector::operator [](i));
     }
   public:
-    // vector_index(BOR_CONST ivector& v) : ivector(v){}
+    //vector_index(BOR_CONST ivector& v) : ivector(v){}
     dvector_index(BOR_CONST dvector& v);
     virtual ~dvector_index();
     virtual int indexmin(void){return dvector::indexmin();}
@@ -178,7 +178,7 @@
   private:
     virtual double_index_guts * operator [] (int i);
     //{
-      // return new dvector_index(dmatrix::operator [](i));
+      //return new dvector_index(dmatrix::operator [](i));
     //}
   public:
     virtual ~dmatrix_index();

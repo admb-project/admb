@@ -52,7 +52,7 @@ void dmatrix::read_from(BOR_CONST uistream& s)
 {
   int n = rowmin() + rowsize() - 1;
 
-  for (int i = rowmin(); i <= n; i++)
+  for (int i=rowmin(); i <= n; i++)
   {
      s >> (*this)[i];
      if (!s.good()) 
@@ -80,7 +80,7 @@ uostream& operator<<(BOR_CONST uostream& ostr,_CONST dmatrix& z)
  */
 void dmatrix::write_on(BOR_CONST uostream& s) _CONST
 {
-  for (int i = rowmin(); i <= rowmax(); i++)
+  for (int i=rowmin(); i <= rowmax(); i++)
   {
      s << (*this)[i];
      if (!s.good()) 

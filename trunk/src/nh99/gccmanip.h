@@ -52,8 +52,8 @@
 //   public:
 //       smanip_int(BOR_CONST ios &(*f)(BOR_CONST ios&, int), int v) 
 //       {
-//         func = f;
-//         val = v;
+//         func=f;
+//         val=v;
 //       } 
 //       friend istream &operator>>(BOR_CONST istream&, BOR_CONST smanip_int&); 
 //       friend ostream &operator<<(BOR_CONST ostream&, BOR_CONST smanip_int&); 

@@ -40,7 +40,7 @@ df1b2variable lgam(const df1b2variable& _v1)
     *v.get_udot() = -phi; 
     *v.get_udot2() = PI*PI/6;
     *v.get_udot3() = -2*zeta;
-    tmp = v;
+    tmp=v;
 
   }
   else if (value(v1)==2.0)
@@ -54,11 +54,11 @@ df1b2variable lgam(const df1b2variable& _v1)
     *v.get_udot() = 1 - phi; 
     *v.get_udot2() = PI*PI/6 - 1;
     *v.get_udot3() = -2*(1-zeta);
-    tmp = v;
+    tmp=v;
   }
   else
   {
-     tmp = lgam(v1);
+     tmp=lgam(v1);
   }
   return(tmp);
 }
@@ -115,14 +115,14 @@ df3_one_variable lgam(const df3_one_variable& _x)
     x2 = 1.0/(x0*x0);
     xp = 2.0*PI;
     gl0 = a[9];
-    for (k = 8;k>=0;k--)
+    for (k=8;k>=0;k--)
     {
         gl0 = gl0*x2 + a[k];
     }
     gl = gl0/x0+0.5*log(xp)+(x0-0.5)*log(x0)-x0;
     if (value(x) <= 7.0)
     {
-        for (k = 1;k<=n;k++)
+        for (k=1;k<=n;k++)
         {
             gl -= log(x0-1.0);
             x0 -= 1.0;
@@ -143,11 +143,11 @@ df1b2variable gammln(const df1b2variable& z)
  * \param
  */
 df1b2vector gammln(const df1b2vector&  z){
-  int from = z.indexmin();
-  int to = z.indexmax();
+  int from=z.indexmin();
+  int to=z.indexmax();
   df1b2vector ret(from,to);
-  for(int i = from; i<=to; ++i){
-    ret(i) = gammln(z(i));
+  for(int i=from; i<=to; ++i){
+    ret(i)=gammln(z(i));
  }
  return(ret);
 }

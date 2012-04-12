@@ -10,7 +10,7 @@ void adstring_array::to_lower(void)
 {
   int i1 = indexmin();
   int i2 = indexmax();
-  for (int i = i1; i <= i2; i++)
+  for (int i=i1; i <= i2; i++)
   {
     (ptr[i])->to_lower(); 
     //(*this[i]).adstring::to_lower(); 
@@ -21,7 +21,7 @@ void adstring_array::to_upper(void)
 {
   int i1 = indexmin();
   int i2 = indexmax();
-  for (int i = i1; i <= i2; i++)
+  for (int i=i1; i <= i2; i++)
   {
     (ptr[i])->to_upper(); 
   }

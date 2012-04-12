@@ -22,12 +22,12 @@
              " in first_difference(_CONST dvector&)" << endl;
      ad_exit(1);
    }
-   int mmin = x.indexmin();
-   int mmax = x.indexmax()-1;
+   int mmin=x.indexmin();
+   int mmax=x.indexmax()-1;
    dvector tmp(mmin,mmax);
-   for (int i = mmin; i<=mmax; i++)
+   for (int i=mmin; i<=mmax; i++)
    {
-     tmp.elem(i) = x.elem(i+1)-x.elem(i);
+     tmp.elem(i)=x.elem(i+1)-x.elem(i);
    }
    return(tmp);
  }

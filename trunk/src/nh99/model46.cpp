@@ -8,12 +8,12 @@
 
  void param_init_bounded_matrix_vector::set_initial_value(const double_index_type& _it)
  {
-    it = new double_index_type(_it);
+    it=new double_index_type(_it);
  }
      
  param_init_bounded_matrix_vector::param_init_bounded_matrix_vector()
  {
-   it = NULL;
+   it=NULL;
  }
 
  void param_init_bounded_matrix_vector::allocate(int min1,int max1,
@@ -31,22 +31,22 @@
    const double_index_type& dmax, const index_type& phase_start,
    const char * s)
  {
-   index_min = min1;
-   index_max = max1;
-   int size = indexmax()-indexmin()+1;
+   index_min=min1;
+   index_max=max1;
+   int size=indexmax()-indexmin()+1;
    if (size>0)
    {
-     if (!(v = new param_init_bounded_matrix[size]))
+     if (!(v=new param_init_bounded_matrix[size]))
      {
         cerr << " error trying to allocate memory in "
           "param_init_vector_vector " << endl;
         exit(1);
      }
      v-=indexmin();
-     for (int i = indexmin();i<=indexmax();i++)
+     for (int i=indexmin();i<=indexmax();i++)
      {
        if (it) v[i].set_initial_value(ad_double((*it)[i]));
-       adstring ss = s + adstring("[") + str(i) + adstring("]");
+       adstring ss=s + adstring("[") + str(i) + adstring("]");
        v[i].allocate(
           min[i],
           max[i],
@@ -59,7 +59,7 @@
      }
    }
    else
-     v = NULL;
+     v=NULL;
  }
 
  void param_init_bounded_matrix::allocate(const ad_integer& imin,
@@ -68,8 +68,8 @@
    const ad_double& _bmax, const ad_integer& phase_start,
    const char * s)
  {
-   minb = _bmin;
-   maxb = _bmax;
+   minb=_bmin;
+   maxb=_bmax;
    named_dvar_matrix::allocate(imin,imax,imin2,imax2,s);
    if (!(!(*this)))
    {
@@ -87,10 +87,10 @@
        if ((!initial_value_flag) || initial_value <=minb 
             || initial_value >= maxb)
        {
-         // cerr << "Initial value out of bounds -- using halfway value" << endl;
-         initial_value = (minb+maxb)/2.; 
+         //cerr << "Initial value out of bounds -- using halfway value" << endl;
+         initial_value=(minb+maxb)/2.; 
        } 
-       dvar_matrix::operator = (initial_value);
+       dvar_matrix::operator=(initial_value);
      }
    }
    else
@@ -111,12 +111,12 @@
      if(it)
      {
        delete it;
-       it = NULL;
+       it=NULL;
      }
      if (v)
      {
        v+=indexmin();
        delete [] v;
-       v = NULL;
+       v=NULL;
      }
    }

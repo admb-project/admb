@@ -8,7 +8,7 @@
 
   void stddev_params::get_all_sd_values(BOR_CONST dvector& x,BOR_CONST int& ii)
   {
-    for (int i = 0;i< stddev_params::num_stddev_params;i++)
+    for (int i=0;i< stddev_params::num_stddev_params;i++)
     {
       (stddevptr[i])->get_sd_values(x,ii);
     }

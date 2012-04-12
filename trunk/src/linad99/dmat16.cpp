@@ -25,9 +25,9 @@
    dmatrix tmp;
    tmp.allocate(m1.rowmin(),m1.rowmax());
 
-   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     tmp.elem(i) = m1.elem(i)-m2.elem(i);
+     tmp.elem(i)=m1.elem(i)-m2.elem(i);
    }
    return(tmp);
  }      
@@ -47,9 +47,9 @@
    dmatrix tmp;
    tmp.allocate(m1.rowmin(),m1.rowmax());
 
-   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     tmp.elem(i) = m1.elem(i)+m2.elem(i);
+     tmp.elem(i)=m1.elem(i)+m2.elem(i);
    }
    return(tmp);
  }      
@@ -62,9 +62,9 @@
  {
    dmatrix tmp;
    tmp.allocate(m2.rowmin(),m2.rowmax());
-   for (int i = m2.rowmin(); i<=m2.rowmax(); i++)
+   for (int i=m2.rowmin(); i<=m2.rowmax(); i++)
    {
-     tmp.elem(i) = d+m2.elem(i);
+     tmp.elem(i)=d+m2.elem(i);
    }
    return(tmp);
  }      
@@ -77,9 +77,9 @@
  {
    dmatrix tmp;
    tmp.allocate(m2.rowmin(),m2.rowmax());
-   for (int i = m2.rowmin(); i<=m2.rowmax(); i++)
+   for (int i=m2.rowmin(); i<=m2.rowmax(); i++)
    {
-     tmp.elem(i) = d-m2.elem(i);
+     tmp.elem(i)=d-m2.elem(i);
    }
    return(tmp);
  }      
@@ -92,9 +92,9 @@
  {
    dmatrix tmp;
    tmp.allocate(m2.rowmin(),m2.rowmax());
-   for (int i = m2.rowmin(); i<=m2.rowmax(); i++)
+   for (int i=m2.rowmin(); i<=m2.rowmax(); i++)
    {
-     tmp.elem(i) = d*m2.elem(i);
+     tmp.elem(i)=d*m2.elem(i);
    }
    return(tmp);
  }      
@@ -107,9 +107,9 @@
  {
    dmatrix tmp;
    tmp.allocate(m1.rowmin(),m1.rowmax());
-   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     tmp.elem(i) = m1.elem(i)+d;
+     tmp.elem(i)=m1.elem(i)+d;
    }
    return(tmp);
  }      
@@ -122,9 +122,9 @@
  {
    dmatrix tmp;
    tmp.allocate(m1.rowmin(),m1.rowmax());
-   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     tmp.elem(i) = m1.elem(i)-d;
+     tmp.elem(i)=m1.elem(i)-d;
    }
    return(tmp);
  }      
@@ -137,9 +137,9 @@
  {
    dmatrix tmp;
    tmp.allocate(m1.rowmin(),m1.rowmax());
-   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     tmp.elem(i) = m1.elem(i)*d;
+     tmp.elem(i)=m1.elem(i)*d;
    }
    return(tmp);
  }

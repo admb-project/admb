@@ -6,8 +6,8 @@
  */
 #include <admodel.h>
 
- int stddev_params::num_stddev_params = 0;
- int stddev_params::num_stddev_number_params = 0;
+ int stddev_params::num_stddev_params=0;
+ int stddev_params::num_stddev_number_params=0;
  stddev_params * stddev_params::stddev_number_ptr[150]; // this should be a resizeable array
 
  stddev_params * stddev_params::stddevptr[150]; // this should be a resizeable array
@@ -36,11 +36,11 @@
 
   ivector stddev_params::copy_all_number_offsets(void)
   {
-    int ndv = stddev_params::num_stddev_number_calc();
+    int ndv=stddev_params::num_stddev_number_calc();
     ivector no(1,ndv);
-    for (int i = 0;i<ndv;i++)
+    for (int i=0;i<ndv;i++)
     {
-      no(i+1) = stddev_number_ptr[i]->getindex();
+      no(i+1)=stddev_number_ptr[i]->getindex();
     }
     return no;
   }
@@ -48,8 +48,8 @@
 
   int stddev_params::num_stddev_calc(void)
   {
-    int nvar = 0;
-    for (int i = 0;i<num_stddev_params;i++)
+    int nvar=0;
+    for (int i=0;i<num_stddev_params;i++)
     {
       nvar+= (stddevptr[i])->size_count();
     }
@@ -65,14 +65,14 @@
   }
   void param_stddev_number::setindex(int _index)
   {
-    index = _index;
+    index=_index;
   }
 
   void stddev_params::get_stddev_number_offset(void)
   {
-    int offset = 1;
-    int ii = 0;
-    for (int i = 0;i<num_stddev_params;i++)
+    int offset=1;
+    int ii=0;
+    for (int i=0;i<num_stddev_params;i++)
     {
       if (stddevptr[i]==stddev_number_ptr[ii])
       {
@@ -168,9 +168,9 @@
 /*
 dvar_vector& operator << (BOR_CONST dvar_vector& v,_CONST dvar_vector& w)
 {
-  int mmin = v.indexmin();
-  int mmax = v.indexmax();
-  for (int i = mmin;i<=mmax;i++)
+  int mmin=v.indexmin();
+  int mmax=v.indexmax();
+  for (int i=mmin;i<=mmax;i++)
   {
     v[i] << w[i];
   }
@@ -179,9 +179,9 @@ dvar_vector& operator << (BOR_CONST dvar_vector& v,_CONST dvar_vector& w)
 
 dvar_matrix& operator << (BOR_CONST dvar_matrix& v,_CONST dvar_matrix& w)
 {
-  int mmin = v.rowmin();
-  int mmax = v.rowmax();
-  for (int i = mmin;i<=mmax;i++)
+  int mmin=v.rowmin();
+  int mmax=v.rowmax();
+  for (int i=mmin;i<=mmax;i++)
   {
     v[i] << w[i];
   }
@@ -220,7 +220,7 @@ class param_stddev_number: public named_dvariable , stddev_params
 class param_stddev_matrix: public named_dvar_matrix , stddev_params
 {
   virtual int size_count(void);
-  // virtual void read_value(void);
+  //virtual void read_value(void);
   virtual const char * label(void);
   void allocate(int rmin,int rmax,int cmin,int cmax,
     const char * s="UNNAMED");

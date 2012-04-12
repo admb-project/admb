@@ -93,7 +93,7 @@ void uostream::open(const char* name, int m, int prot)
 #  if (__MSVC32__>=8)
   ofstream::open(name, m);
 #  else
-  // fstreambase::open(name, m, prot);
+  //fstreambase::open(name, m, prot);
   ofstream::open(name, m, prot);
 #  endif
 #endif

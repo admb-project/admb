@@ -84,22 +84,22 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
   dvector jac(1,nvar);
   unsigned int i;
   my_off_t lpos;
-  int depvar_count = DEPVARS_INFO->depvar_count;
+  int depvar_count=DEPVARS_INFO->depvar_count;
 
-  int& _GRADFILE_PTR = GRAD_STACK1->_GRADFILE_PTR;
+  int& _GRADFILE_PTR=GRAD_STACK1->_GRADFILE_PTR;
   // check to see if anything has been written into the file
-  my_off_t last_gpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+  my_off_t last_gpos=lseek(_GRADFILE_PTR,0L,SEEK_CUR);
 
-  // save current contents of the buffer so we can get them later
+  //save current contents of the buffer so we can get them later
   if (last_gpos)
   {
     GRAD_STACK1->write_grad_stack_buffer();
   }
 
   // check to see if anything has been written into the file
-  my_off_t last_cpos = lseek(fp->file_ptr,0L,SEEK_CUR);
+  my_off_t last_cpos=lseek(fp->file_ptr,0L,SEEK_CUR);
 
-  // save current contents of the buffer so we can get them later
+  //save current contents of the buffer so we can get them later
   if (last_cpos)
   {
     fp->write_cmpdif_stack_buffer();
@@ -113,10 +113,10 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
     save_variables();
   }
   // now evalueate the jacobian
-  for (int ijac = 1;ijac<=depvar_count;ijac++)
+  for (int ijac=1;ijac<=depvar_count;ijac++)
   {
-    dvector& g = jac;
-    // max_num_dependent_variables = ndv;
+    dvector& g=jac;
+    //max_num_dependent_variables=ndv;
     if (depvar_count>DEPVARS_INFO->max_num_dependent_variables)
     {
       cout << "maximum number of depdendent variables of "
@@ -128,15 +128,15 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
       ad_exit(1);
     }
 
-    fp->offset = DEPVARS_INFO->cmpdif_buffer_position(ijac);
-    fp->toffset = fp->offset;
-    _GRADFILE_PTR = DEPVARS_INFO->grad_file_count(ijac);
-    fp->file_ptr = DEPVARS_INFO->cmpdif_file_count(ijac);
-    lpos = DEPVARS_INFO->grad_file_position(ijac);
+    fp->offset=DEPVARS_INFO->cmpdif_buffer_position(ijac);
+    fp->toffset=fp->offset;
+    _GRADFILE_PTR=DEPVARS_INFO->grad_file_count(ijac);
+    fp->file_ptr=DEPVARS_INFO->cmpdif_file_count(ijac);
+    lpos=DEPVARS_INFO->grad_file_position(ijac);
     // position the cmpdif file correctly;
     if (last_cpos)
     {
-      int cmp_lpos = DEPVARS_INFO->cmpdif_file_position(ijac);
+      int cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
       lseek(fp->file_ptr,cmp_lpos,SEEK_SET);
       #if !defined(__MSVC32__) && !defined(__GNUDOS__) && !defined (__WAT32__)
         fp->read_cmpdif_stack_buffer(cmp_lpos);
@@ -158,7 +158,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
       {
         // get the next file
         GRAD_STACK1->increment_current_gradfile_ptr();
-        lpos = 0;
+        lpos=0;
       }
       // and position the file to the begginig of the buffer image
       lseek(_GRADFILE_PTR,lpos,SEEK_SET);
@@ -181,7 +181,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
 
     gradient_structure::GRAD_STACK1->ptr--;
 
-    for (i = 0; i< GRAD_LIST->nlinks; i++)
+    for (i=0; i< GRAD_LIST->nlinks; i++)
     {
       * (double*) (GRAD_LIST->dlink_addresses[i]) = 0;
     }
@@ -205,7 +205,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
 
     double * zptr;
 
-    for (i = 0 ; i< (max_last_offset/size) ; i++ )
+    for (i=0 ; i< (max_last_offset/size) ; i++ )
     {
       tmp->x = 0;
       #if defined (__ZTC__)
@@ -226,8 +226,8 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
     * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
-    // double z;
-    int break_flag = 1;
+    //double z;
+    int break_flag=1;
 
     do
     {
@@ -235,7 +235,7 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
       #ifdef FAST_ASSEMBLER
         gradloop();
       #else
-        // int counter = 0;
+        //int counter=0;
       while (gradient_structure::GRAD_STACK1->ptr-- >
     		gradient_structure::GRAD_STACK1->ptr_first)
       {
@@ -251,23 +251,23 @@ void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
         -((long int)(sizeof(grad_stack_entry)*gradient_structure::
         GRAD_STACK1->length)),SEEK_CUR);
 
-       break_flag = gradient_structure::
+       break_flag=gradient_structure::
                   GRAD_STACK1->read_grad_stack_buffer(lpos);
 
     }  while (break_flag); // do
 
     int mindx = g.indexmin();
-    for (i = 0; i<(unsigned int)nvar; i++)
+    for (i=0; i<(unsigned int)nvar; i++)
     {
       g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
     }
     gradient_structure::GRAD_STACK1->ptr =
          gradient_structure::GRAD_STACK1->ptr_first;
-    // ofs << setprecision(10) << g << endl;
+    //ofs << setprecision(10) << g << endl;
     ofs.precision(10);
     ofs << g << endl;
   }// loop over dep vars
-  DEPVARS_INFO->depvar_count = 0;
+  DEPVARS_INFO->depvar_count=0;
   if (gradient_structure::save_var_flag)
   {
     gradient_structure::restore_arrays();

@@ -151,7 +151,7 @@ class cifstream : public ifstream
   int  ignore_eof;
 
   void filter(void);
-  void get_field(char * s,int space_flag = 0);
+  void get_field(char * s,int space_flag=0);
   void report_error(const char* s = NULL);
   void set_eof_bit(void);
 
@@ -160,7 +160,7 @@ public:
   ~cifstream(){/*cout << "In cifstream destructor" << endl;*/}
 #if defined(__BORLANDC__)
 #  if (__BORLANDC__  > 0x0520) 
-      cifstream(const char*, int = 0 , char cc = '#');
+      cifstream(const char*, int=0 , char cc = '#');
 #  else
       cifstream(const char*, int = ios::nocreate, char cc = '#');
 #  endif
@@ -236,7 +236,7 @@ public:
 
   cifstream& operator>>(BOR_CONST dvar_vector& z);
   cifstream& operator>>(BOR_CONST dvector& z);
-  // cifstream& operator>>(svector& z);
+  //cifstream& operator>>(svector& z);
   cifstream& operator>>(BOR_CONST lvector& z);
   cifstream& operator>>(BOR_CONST ivector& z);
 
@@ -252,12 +252,12 @@ cifstream& operator>>(cifstream& istr,BOR_CONST  d5_array& z);
 cifstream& operator>>(cifstream& istr,BOR_CONST  dvar3_array& z);
 cifstream& operator>>(cifstream& istr,BOR_CONST  dvar4_array& z);
 cifstream& operator>>(cifstream& istr,BOR_CONST  dvar5_array& z);
-// cifstream& operator>>(cifstream& istr, s3_array& z);
+//cifstream& operator>>(cifstream& istr, s3_array& z);
 cifstream& operator>>(cifstream& istr,BOR_CONST  dmatrix& z);
-// cifstream& operator>>(cifstream& istr,smatrix& z);
+//cifstream& operator>>(cifstream& istr,smatrix& z);
 cifstream& operator>>(cifstream& istr,BOR_CONST  imatrix& z);
 cifstream& operator>>(cifstream& istr,BOR_CONST  i3_array& z);
 cifstream& operator>>(cifstream& istr,BOR_CONST  i4_array& z);
-// cifstream& operator>>(cifstream& istr, lmatrix& z);
+//cifstream& operator>>(cifstream& istr, lmatrix& z);
 
 #endif //#define CIFSTREM_H

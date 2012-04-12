@@ -47,18 +47,18 @@ void named_d5_array::allocate(int l5,int h5,int hhsl,int hhsu,int hsl,
 
 named_d5_array& named_d5_array::operator = (_CONST d5_array& m)
 {
-  this->d5_array::operator = (m);
+  this->d5_array::operator=(m);
   return *this;
 }
 
 named_dvar5_array& named_dvar5_array::operator = (_CONST dvar5_array& m)
 {
-  this->dvar5_array::operator = (m);
+  this->dvar5_array::operator=(m);
   return *this;
 }
 
 named_dvar5_array& named_dvar5_array::operator = (_CONST d5_array& m)
 {
-  this->dvar5_array::operator = (m);
+  this->dvar5_array::operator=(m);
   return *this;
 }

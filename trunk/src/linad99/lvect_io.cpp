@@ -60,7 +60,7 @@ void lvector::write_on(BOR_CONST ostream& _s) _CONST
 
   char new_fill = s.fill();
 #endif
-  for (int i = indexmin(); i <= indexmax(); i++)
+  for (int i=indexmin(); i <= indexmax(); i++)
   {
   #ifdef __USE_IOSTREAM__
      s.width(0);
@@ -109,11 +109,11 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST lvector& _z)
  */
 void lvector::read_from(BOR_CONST istream& _s)
 {
-  istream& s = (istream&) _s;
+  istream& s=(istream&) _s;
   int n = indexmax() - indexmin() + 1;
   AD_LONG_INT * p = v + indexmin();
 
-  for (int i = 1; i <= n; i++)
+  for (int i=1; i <= n; i++)
   {
      s >> *(p++);
   }

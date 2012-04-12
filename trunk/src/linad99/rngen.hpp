@@ -41,7 +41,7 @@
  *
  */
 
-// class ran_number_generator
+//class ran_number_generator
 //{
 //  long int idum;
 //  long idum2;
@@ -52,5 +52,5 @@
 //  reinitialize(int seed);
 //};
 //
-// double randn(_CONST random_number_gnerator& rng);
+//double randn(_CONST random_number_gnerator& rng);
 

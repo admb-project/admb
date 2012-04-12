@@ -16,8 +16,8 @@
  */
 double sum(_CONST d3_array& m)
 {
-  double tmp = 0.;
-  for (int i = m.indexmin();i<=m.indexmax();i++)
+  double tmp=0.;
+  for (int i=m.indexmin();i<=m.indexmax();i++)
   {
     tmp+=sum(m.elem(i));
   }
@@ -33,7 +33,7 @@ double sum(_CONST d3_array& m)
    if (allocated(*this))
    {
      d3_array tmp(nrl,nrh);
-     for (int i = nrl; i<=nrh; i++)
+     for (int i=nrl; i<=nrh; i++)
      {
        tmp[i].shallow_copy((*this)(i));
      }
@@ -51,8 +51,8 @@ double sum(_CONST d3_array& m)
  */
  d3_array::d3_array(const d3_array_position& tpos)
  {
-   int nrl = tpos.indexmin();
-   int nrh = tpos.indexmax();
+   int nrl=tpos.indexmin();
+   int nrh=tpos.indexmax();
    allocate(nrl,nrh);
  }
 
@@ -118,18 +118,18 @@ double sum(_CONST d3_array& m)
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh,ncl(i),nch);
    }
@@ -150,18 +150,18 @@ double sum(_CONST d3_array& m)
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh,ncl,nch(i));
    }
@@ -173,18 +173,18 @@ double sum(_CONST d3_array& m)
  */
  void d3_array::allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch)
  {
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh,ncl,nch);
    }
@@ -196,18 +196,18 @@ double sum(_CONST d3_array& m)
  */
  void d3_array::allocate(int sl,int sh,int nrl,int nrh)
  {
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh);
    }
@@ -220,18 +220,18 @@ double sum(_CONST d3_array& m)
  void d3_array::allocate(int sl,int sh,
   const index_type& nrl,const index_type& nrh)
  {
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl(i),nrh(i));
    }
@@ -243,18 +243,18 @@ double sum(_CONST d3_array& m)
  */
  void d3_array::allocate(int sl,int sh)
  {
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate();
    }
@@ -266,24 +266,24 @@ double sum(_CONST d3_array& m)
  */
  void d3_array::allocate(_CONST d3_array& d3v)
  {
-   int sl = d3v.slicemin();
-   int sh = d3v.slicemax();
-   // int nrl = d3v.rowmin();
-   // int nrh = d3v.rowmax();
-   // int ncl = d3v.colmin();
-   // int nch = d3v.colmax();
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   int sl=d3v.slicemin();
+   int sh=d3v.slicemax();
+   //int nrl=d3v.rowmin();
+   //int nrh=d3v.rowmax();
+   //int ncl=d3v.colmin();
+   //int nch=d3v.colmax();
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(d3v(i));
    }
@@ -302,18 +302,18 @@ double sum(_CONST d3_array& m)
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl(i),nrh(i),ncl(i),nch(i));
    }
@@ -332,18 +332,18 @@ double sum(_CONST d3_array& m)
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl(i),nrh(i),ncl,nch);
    }
@@ -361,18 +361,18 @@ double sum(_CONST d3_array& m)
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl(i),nrh,ncl,nch);
    }
@@ -390,18 +390,18 @@ double sum(_CONST d3_array& m)
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh(i),ncl,nch);
    }
@@ -420,18 +420,18 @@ double sum(_CONST d3_array& m)
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,int ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl(i),nrh(i),ncl,nch(i));
    }
@@ -449,18 +449,18 @@ double sum(_CONST d3_array& m)
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,int ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh(i),ncl,nch(i));
    }
@@ -479,18 +479,18 @@ double sum(_CONST d3_array& m)
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
      ad_exit(1);
    }
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl(i),nrh(i),ncl(i),nch(i));
    }
@@ -503,18 +503,18 @@ double sum(_CONST d3_array& m)
  void d3_array::allocate(int sl,int sh,int nrl,int nrh,
    _CONST ivector& ncl,_CONST ivector& nch)
  {
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh,ncl(i),nch(i));
    }
@@ -527,18 +527,18 @@ double sum(_CONST d3_array& m)
  void d3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
     int ncl,_CONST ivector& nch)
  {
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new dmatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in d3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh(i),ncl,nch(i));
    }
@@ -600,7 +600,7 @@ double sum(_CONST d3_array& m)
  */
  d3_array::d3_array(_CONST d3_array& m2)
  {
-   shape = m2.shape;
+   shape=m2.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -620,7 +620,7 @@ double sum(_CONST d3_array& m)
  */
  void d3_array::shallow_copy(_CONST d3_array& m2)
  {
-   shape = m2.shape;
+   shape=m2.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -642,13 +642,13 @@ double sum(_CONST d3_array& m)
  {
    if (!(!(*this)))  // only initialize allocated objects
    {
-     for (int i = slicemin();i<=slicemax();i++)
+     for (int i=slicemin();i<=slicemax();i++)
      {
        elem(i).initialize();
      }
    }
  }
-static int testflag = 0;
+static int testflag=0;
 
 /**
  * Description not yet available.
@@ -661,15 +661,15 @@ static int testflag = 0;
      if (testflag)
        test_the_pointer();
      t += slicemin();
-     // int ss = slicesize();
+     //int ss=slicesize();
      delete [] t;
      if (testflag)
        test_the_pointer();
      delete shape;
      if (testflag)
        test_the_pointer();
-     t = NULL;
-     shape = NULL;
+     t=NULL;
+     shape=NULL;
    }
    else
    {
@@ -710,14 +710,14 @@ static int testflag = 0;
  */
 three_array_shape::three_array_shape(int sl,int su)
 {
-  slice_min = sl;
-  slice_max = su;
-  // row_min = rl;
-  // row_max = ru;
-  // col_min = cl;
-  // col_max = cu;
-  // nslices = su-sl+1;
-  // nrows = ru-rl+1;
-  // ncols = cu-cl+1;
-  ncopies = 0;
+  slice_min=sl;
+  slice_max=su;
+  //row_min=rl;
+  //row_max=ru;
+  //col_min=cl;
+  //col_max=cu;
+  //nslices=su-sl+1;
+  //nrows=ru-rl+1;
+  //ncols=cu-cl+1;
+  ncopies=0;
 }

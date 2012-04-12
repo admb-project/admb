@@ -23,7 +23,7 @@
    }
 
    {    
-     for (int i = indexmin();i<=indexmax();i++)
+     for (int i=indexmin();i<=indexmax();i++)
      {
        elem(i) += v1.elem(i);
      }
@@ -44,7 +44,7 @@
    }
 
    {    
-     for (int i = indexmin();i<=indexmax();i++)
+     for (int i=indexmin();i<=indexmax();i++)
      {
        elem(i) -= v1.elem(i);
      }
@@ -58,7 +58,7 @@
  */
  dvector& dvector::operator+= ( CGNU_DOUBLE d)
  {
-   for (int i = indexmin();i<=indexmax();i++)
+   for (int i=indexmin();i<=indexmax();i++)
    {
      elem(i) += d;
    }
@@ -71,7 +71,7 @@
  */
  dvector& dvector::operator-= ( CGNU_DOUBLE d)
  {
-   for (int i = indexmin();i<=indexmax();i++)
+   for (int i=indexmin();i<=indexmax();i++)
    {
      elem(i) -= d;
    }

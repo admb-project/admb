@@ -31,9 +31,9 @@ void reset_gs_stack(long int);
  */
 dvar_vector_position::dvar_vector_position(_CONST dvar_vector& v)
 {
-  min = v.indexmin();
-  max = v.indexmax();
-  va = v.get_va();
+  min=v.indexmin();
+  max=v.indexmax();
+  va=v.get_va();
 }
 
 /**
@@ -42,9 +42,9 @@ dvar_vector_position::dvar_vector_position(_CONST dvar_vector& v)
  */
 dvector_position::dvector_position(_CONST dvector& vv)
 {
-  min = vv.indexmin();
-  max = vv.indexmax();
-  v = vv.get_v();
+  min=vv.indexmin();
+  max=vv.indexmax();
+  v=vv.get_v();
 }
 
 /**
@@ -53,9 +53,9 @@ dvector_position::dvector_position(_CONST dvector& vv)
  */
 dvar_vector_position::dvar_vector_position(BOR_CONST dvar_vector_position& dvp)
 {
-  min = dvp.min;
-  max = dvp.max;
-  va = dvp.va;
+  min=dvp.min;
+  max=dvp.max;
+  va=dvp.va;
 }
 
 /**
@@ -64,9 +64,9 @@ dvar_vector_position::dvar_vector_position(BOR_CONST dvar_vector_position& dvp)
  */
 dvector_position::dvector_position(BOR_CONST dvector_position& dvp)
 {
-  min = dvp.min;
-  max = dvp.max;
-  v = dvp.v;
+  min=dvp.min;
+  max=dvp.max;
+  v=dvp.v;
 }
 
 /**
@@ -75,9 +75,9 @@ dvector_position::dvector_position(BOR_CONST dvector_position& dvp)
  */
 dvar_vector_position::dvar_vector_position(void)
 {
-  min = 0;
+  min=0;
   max=-1;
-  va = 0;
+  va=0;
 }
 
 /**
@@ -86,9 +86,9 @@ dvar_vector_position::dvar_vector_position(void)
  */
 dvector_position::dvector_position(void)
 {
-  min = 0;
+  min=0;
   max=-1;
-  v = 0;
+  v=0;
 }
 
 /**
@@ -97,9 +97,9 @@ dvector_position::dvector_position(void)
  */
 ivector_position::ivector_position(_CONST ivector& iv)
 {
-  min = iv.indexmin();
-  max = iv.indexmax();
-  v = iv.get_v();
+  min=iv.indexmin();
+  max=iv.indexmax();
+  v=iv.get_v();
 }
 
 /**
@@ -108,9 +108,9 @@ ivector_position::ivector_position(_CONST ivector& iv)
  */
 ivector_position::ivector_position(BOR_CONST ivector_position& dvp)
 {
-  min = dvp.min;
-  max = dvp.max;
-  v = dvp.v;
+  min=dvp.min;
+  max=dvp.max;
+  v=dvp.v;
 }
 
 /**
@@ -119,9 +119,9 @@ ivector_position::ivector_position(BOR_CONST ivector_position& dvp)
  */
 ivector_position::ivector_position(void)
 {
-  min = 0;
+  min=0;
   max=-1;
-  v = 0;
+  v=0;
 }
 
 /**
@@ -153,9 +153,9 @@ dvar_vector_position dvar_matrix_position::operator () (int i)
       << endl;
   }
   dvar_vector_position tmp;
-  tmp.min = lb(i);
-  tmp.max = ub(i);
-  tmp.va = (double_and_int *) ptr(i);
+  tmp.min=lb(i);
+  tmp.max=ub(i);
+  tmp.va=(double_and_int *) ptr(i);
   return tmp;
 }
 
@@ -172,9 +172,9 @@ dvector_position dmatrix_position::operator () (int i)
       << endl;
   }
   dvector_position tmp;
-  tmp.min = lb(i);
-  tmp.max = ub(i);
-  tmp.v = (double *) ptr(i);
+  tmp.min=lb(i);
+  tmp.max=ub(i);
+  tmp.v=(double *) ptr(i);
   return tmp;
 }
 
@@ -187,21 +187,21 @@ dvar_matrix_position::dvar_matrix_position(_CONST dvar_matrix& m,int x)
   ptr(m.rowmin(),m.rowmax())
 
 {
-  row_min = m.rowmin();
-  row_max = m.rowmax();
-  for (int i = row_min;i<=row_max;i++)
+  row_min=m.rowmin();
+  row_max=m.rowmax();
+  for (int i=row_min;i<=row_max;i++)
   {
     if (allocated(m(i)))
     {
-      lb(i) = m(i).indexmin();
-      ub(i) = m(i).indexmax();
-      ptr(i) = m(i).get_va();
+      lb(i)=m(i).indexmin();
+      ub(i)=m(i).indexmax();
+      ptr(i)=m(i).get_va();
     }
     else
     {
-      lb(i) = 0;
+      lb(i)=0;
       ub(i)=-1;
-      ptr(i) = 0;
+      ptr(i)=0;
     }
   }
 }
@@ -214,13 +214,13 @@ dmatrix_position::dmatrix_position(_CONST dmatrix& m)
   : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
 {
-  row_min = m.rowmin();
-  row_max = m.rowmax();
-  for (int i = row_min;i<=row_max;i++)
+  row_min=m.rowmin();
+  row_max=m.rowmax();
+  for (int i=row_min;i<=row_max;i++)
   {
-    lb(i) = m(i).indexmin();
-    ub(i) = m(i).indexmax();
-    ptr(i) = m(i).get_v();
+    lb(i)=m(i).indexmin();
+    ub(i)=m(i).indexmax();
+    ptr(i)=m(i).get_v();
   }
 }
 
@@ -231,13 +231,13 @@ dmatrix_position::dmatrix_position(_CONST dmatrix& m)
 dvar_matrix_position::dvar_matrix_position(int min,int max)
   : lb(min,max), ub(min,max), ptr(min,max)
 {
-  row_min = min;
-  row_max = max;
-  for (int i = row_min;i<=row_max;i++)
+  row_min=min;
+  row_max=max;
+  for (int i=row_min;i<=row_max;i++)
   {
-    lb(i) = 0;
+    lb(i)=0;
     ub(i)=-1;
-    ptr(i) = 0;
+    ptr(i)=0;
   }
 }
 
@@ -248,13 +248,13 @@ dvar_matrix_position::dvar_matrix_position(int min,int max)
 dmatrix_position::dmatrix_position(int min,int max)
   : lb(min,max), ub(min,max), ptr(min,max)
 {
-  row_min = min;
-  row_max = max;
-  for (int i = row_min;i<=row_max;i++)
+  row_min=min;
+  row_max=max;
+  for (int i=row_min;i<=row_max;i++)
   {
-    lb(i) = 0;
+    lb(i)=0;
     ub(i)=-1;
-    ptr(i) = 0;
+    ptr(i)=0;
   }
 }
 
@@ -266,11 +266,11 @@ dvar_matrix_position::dvar_matrix_position(BOR_CONST dvar_matrix_position& p)
   : lb(p.row_min,p.row_max), ub(p.row_min,p.row_max),
     ptr(p.row_min,p.row_max)
 {
-  row_min = p.row_min;
-  row_max = p.row_max;
-  lb = p.lb;
-  ub = p.ub;
-  ptr = p.ptr;
+  row_min=p.row_min;
+  row_max=p.row_max;
+  lb=p.lb;
+  ub=p.ub;
+  ptr=p.ptr;
   // cout << "ptr= " << ptr ;
 }
 
@@ -282,11 +282,11 @@ dmatrix_position::dmatrix_position(BOR_CONST dmatrix_position& p)
   : lb(p.row_min,p.row_max), ub(p.row_min,p.row_max),
     ptr(p.row_min,p.row_max)
 {
-  row_min = p.row_min;
-  row_max = p.row_max;
-  lb = p.lb;
-  ub = p.ub;
-  ptr = p.ptr;
+  row_min=p.row_min;
+  row_max=p.row_max;
+  lb=p.lb;
+  ub=p.ub;
+  ptr=p.ptr;
   // cout << "ptr= " << ptr ;
 }
 
@@ -301,8 +301,8 @@ Used primarily for debugging adjoint coide.
 int save_identifier_string(const char* str)
 {
 #if defined(CHK_ID_STRING)
-  // int wsize = sizeof(char);
-  int length = strlen(str);
+  //int wsize=sizeof(char);
+  int length=strlen(str);
   gradient_structure::get_fp()->fwrite(str,length);
 #endif
   return 0;

@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <math.h>
 #ifdef __NDPX__
-  #include <dos.h> // itoa
+  #include <dos.h> //itoa
 #endif
 
 adstring str(double x, int minwidth, int decplaces)
@@ -39,8 +39,8 @@ adstring str(double x, int minwidth, int decplaces)
      if (d>10)
        d = 10;
 
-     // tmp = new adstring(1,w-1);
-     // sprintf(tmp->s,"%*.*e",w,d,x);
+     //tmp = new adstring(1,w-1);
+     //sprintf(tmp->s,"%*.*e",w,d,x);
      sprintf(buffer,"%*.*e",w,d,x);
    }
    else // decplaces specified
@@ -57,20 +57,20 @@ adstring str(double x, int minwidth, int decplaces)
      w += d;//+3;
      if (x < 0)
        w++;
-     // tmp = new adstring(1,w-1);
+     //tmp = new adstring(1,w-1);
 
      if (d>=0)
      {
-       // sprintf(tmp->s,"%*.*f",w,d,x);
+       //sprintf(tmp->s,"%*.*f",w,d,x);
        sprintf(buffer,"%*.*f",w,d,x);
      }
      else
      {
-       // sprintf(tmp->s,"%*.f",w,x);
+       //sprintf(tmp->s,"%*.f",w,x);
        sprintf(buffer,"%*.f",w,x);
      }
    }
-   // return (*tmp);
+   //return (*tmp);
    adstring tmp(buffer);
    return (tmp);
 }
@@ -91,7 +91,7 @@ adstring str(_CONST int a)
  #if !defined(__GNUDOS__) && !defined(linux)
   char  buffer[50];
   itoa(a, buffer, 10);
-  // adstring* tmp = new adstring(1,strlen(buffer));
+  //adstring* tmp = new adstring(1,strlen(buffer));
   //*tmp = adstring(buffer);
   adstring tmp((char*)buffer);
 #else

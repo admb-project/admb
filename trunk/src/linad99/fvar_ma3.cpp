@@ -22,14 +22,14 @@
    }
    dvar_vector tmp(m.colmin(),m.colmax());
 
-   for (int j = m.colmin(); j<=m.colmax(); j++)
+   for (int j=m.colmin(); j<=m.colmax(); j++)
    {
-     tmp[j] = 0.0;
-     for (int i = x.indexmin(); i<=x.indexmax(); i++)
+     tmp[j]=0.0;
+     for (int i=x.indexmin(); i<=x.indexmax(); i++)
      {
        tmp[j]+=x[i]*m[i][j];
      }
-     // cout << "tmp[j]= "<< value(tmp[j])<<"\n";
+     //cout << "tmp[j]= "<< value(tmp[j])<<"\n";
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -47,10 +47,10 @@
 
    dvar_vector tmp(m.rowmin(),m.rowmax());
 
-   for (int i = m.rowmin(); i<=m.rowmax(); i++)
+   for (int i=m.rowmin(); i<=m.rowmax(); i++)
    {
-     tmp[i] = 0.0;
-     for (int j = x.indexmin(); j<=x.indexmax(); j++)
+     tmp[i]=0.0;
+     for (int j=x.indexmin(); j<=x.indexmax(); j++)
      {
        tmp[i]+=m[i][j]*x[j];
      }
@@ -69,18 +69,18 @@
       RETURN_ARRAYS_INCREMENT();
 
       dvariable tmp;
-      tmp = 0.0;
-      for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+      tmp=0.0;
+      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
       {
         tmp+=norm2(m1.elem(i));
       }
       if (tmp>0.)
       {
-        tmp = pow(tmp,.5);
+        tmp=pow(tmp,.5);
       }
       else
       {
-        tmp = 0.0;
+        tmp=0.0;
       }
       RETURN_ARRAYS_DECREMENT();
       return(tmp);
@@ -91,8 +91,8 @@
       RETURN_ARRAYS_INCREMENT();
 
       dvariable tmp;
-      tmp = 0.0;
-      for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+      tmp=0.0;
+      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
       {
         tmp+=norm2(m1.elem(i));
       }
@@ -108,11 +108,11 @@
 
       dvar_matrix tmp(m1.colmin(),m1.colmax(),m1.rowmin(),m1.rowmax());
 
-      for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
       {
-        for (int j = m1.colmin(); j<=m1.colmax(); j++)
+        for (int j=m1.colmin(); j<=m1.colmax(); j++)
         {
-          tmp.elem(j,i) = m1.elem(i,j);
+          tmp.elem(j,i)=m1.elem(i,j);
         }
       }
       RETURN_ARRAYS_DECREMENT();

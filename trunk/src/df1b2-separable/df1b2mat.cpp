@@ -19,10 +19,10 @@ df1b2matrix choleski_decomp(const df1b2matrix& MM)
 {
   // kludge to deal with constantness
   df1b2matrix & M= * (df1b2matrix *) &MM;
-  int rmin = M.indexmin();
-  int cmin = M(rmin).indexmin();
-  int rmax = M.indexmax();
-  int cmax = M(rmin).indexmax();
+  int rmin=M.indexmin();
+  int cmin=M(rmin).indexmin();
+  int rmax=M.indexmax();
+  int cmax=M(rmin).indexmax();
  
   if (rmin != cmin )
   {
@@ -39,7 +39,7 @@ df1b2matrix choleski_decomp(const df1b2matrix& MM)
   }
  
 
-  // int n = rmax;
+  //int n=rmax;
   df1b2matrix L(rmin,rmax,rmin,rmax);
 #ifndef SAFE_INITIALIZE
     L.initialize();
@@ -54,25 +54,25 @@ df1b2matrix choleski_decomp(const df1b2matrix& MM)
       ad_exit(1);
     }
 
-  L(rmin,rmin) = sqrt(M(rmin,rmin));
-  for (i = rmin+1;i<=rmax;i++)
+  L(rmin,rmin)=sqrt(M(rmin,rmin));
+  for (i=rmin+1;i<=rmax;i++)
   {
-    L(i,rmin) = M(i,rmin)/L(rmin,rmin);
+    L(i,rmin)=M(i,rmin)/L(rmin,rmin);
   }
 
-  for (i = rmin+1;i<=rmax;i++)
+  for (i=rmin+1;i<=rmax;i++)
   {
-    for (j = rmin+1;j<=i-1;j++)
+    for (j=rmin+1;j<=i-1;j++)
     {
-      tmp = M(i,j);
-      for (k = rmin;k<=j-1;k++)
+      tmp=M(i,j);
+      for (k=rmin;k<=j-1;k++)
       {
         tmp-=L(i,k)*L(j,k);
       }
-      L(i,j) = tmp/L(j,j);
+      L(i,j)=tmp/L(j,j);
     }
-    tmp = M(i,i);
-    for (k = rmin;k<=i-1;k++)
+    tmp=M(i,i);
+    for (k=rmin;k<=i-1;k++)
     {
       tmp-=L(i,k)*L(i,k);
     }
@@ -82,7 +82,7 @@ df1b2matrix choleski_decomp(const df1b2matrix& MM)
         <<endl;
       ad_exit(1);
     }
-    L(i,i) = sqrt(tmp);
+    L(i,i)=sqrt(tmp);
   }
   return L;
 }

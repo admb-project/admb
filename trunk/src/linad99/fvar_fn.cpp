@@ -46,8 +46,8 @@ void gradfree(dlink *);
 	gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       double x,y;
       x=::pow(v1.v->x,u-1);
-      y = x* v1.v->x;
-      gradient_structure::RETURN_PTR->v->x = y;
+      y=x* v1.v->x;
+      gradient_structure::RETURN_PTR->v->x=y;
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
 		       &(v1.v->x), u * x );
       return(*gradient_structure::RETURN_PTR);
@@ -84,9 +84,9 @@ void gradfree(dlink *);
  {
    if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
      gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
-   double tmp = v1.v->x;
+   double tmp=v1.v->x;
 
-   // gradient_structure::RETURN_PTR->v->x = atan(tmp)/1.5708;
+   //gradient_structure::RETURN_PTR->v->x=atan(tmp)/1.5708;
       gradient_structure::RETURN_PTR->v->x=::atan(tmp)/2.8;
 
    gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),
@@ -110,8 +110,8 @@ void gradfree(dlink *);
 
      if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
        gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
-      tmp = v1.v->x;
-      (gradient_structure::RETURN_PTR->v)->x = fabs(tmp);
+      tmp=v1.v->x;
+      (gradient_structure::RETURN_PTR->v)->x=fabs(tmp);
       if (tmp >=0)
       {
 	gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
@@ -144,11 +144,11 @@ void gradfree(dlink *);
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
 	gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
 
-      tmp1 = v1.v->x;
+      tmp1=v1.v->x;
       tmp=::fabs(tmp1);
       if (tmp > cutoff)
       {
-	gradient_structure::RETURN_PTR->v->x = tmp;
+	gradient_structure::RETURN_PTR->v->x=tmp;
 	if (tmp1 >=0)
 	{
 	  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
@@ -162,17 +162,17 @@ void gradfree(dlink *);
       }
       else
       {
-	t2 = tmp*tmp;
+	t2=tmp*tmp;
 
 	if (tmp1 >=0)
 	{
-	  gradient_structure::RETURN_PTR->v->x = t2*(a-b*tmp1);
+	  gradient_structure::RETURN_PTR->v->x=t2*(a-b*tmp1);
 	  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
 			 &(v1.v->x),tmp*(2*a-3*b*tmp1) );
 	}
 	else
 	{
-	  gradient_structure::RETURN_PTR->v->x = t2*(a+b*tmp1);
+	  gradient_structure::RETURN_PTR->v->x=t2*(a+b*tmp1);
 	  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
 			&(v1.v->x),tmp1*(2*a+3*b*tmp1) );
 	}

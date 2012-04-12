@@ -20,10 +20,10 @@
     df1b2variable& x= (df1b2variable&)(_x);
     df1b2variable& a= (df1b2variable&)(_a);
 
-    df1b2variable y = cumd_norm(x);
+    df1b2variable y=cumd_norm(x);
     y=.9999*y+.00005;
 
-    df1b2variable z = inv_cumd_t(y,a);
+    df1b2variable z=inv_cumd_t(y,a);
 
     return z;
   }

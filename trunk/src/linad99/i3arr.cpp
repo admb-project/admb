@@ -49,18 +49,18 @@
  */
  void i3_array::allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch)
  {
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new imatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh,ncl,nch);
    }
@@ -72,18 +72,18 @@
  */
  void i3_array::allocate(int sl,int sh)
  {
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new imatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate();
    }
@@ -125,18 +125,18 @@
  void i3_array::allocate(int sl,int sh,int nrl,int nrh,const ivector& ncl,
   const ivector& nch)
  {
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new imatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh,ncl(i),nch(i));
    }
@@ -149,18 +149,18 @@
  void i3_array::allocate(int sl,int sh,int nrl,const ivector& nrh,int ncl,
   int nch)
  {
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new imatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh(i),ncl,nch);
    }
@@ -192,22 +192,22 @@
  void i3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
       int ncl,_CONST imatrix& nch)
  {
-   // int imin = nrh.indexmin();
-   // int rmin = nch.rowmin();
-   // int cmin = nch(rmin).indexmin();
+   //int imin=nrh.indexmin();
+   //int rmin=nch.rowmin();
+   //int cmin=nch(rmin).indexmin();
 
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new imatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(nrl,nrh(i),ncl,nch(i));  
    } 
@@ -219,36 +219,36 @@
  */
  i3_array::i3_array(int _sl,int _sh,_CONST imatrix& m1)
  {
-   int sl = _sl;
-   int sh = _sh;
-   // int nrl = m1.rowmin();
-   // int nrh = m1.rowmax();
-   // int ncl = m1.colmin();
-   // int nch = m1.colmax();
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   int sl=_sl;
+   int sh=_sh;
+   //int nrl=m1.rowmin();
+   //int nrh=m1.rowmax();
+   //int ncl=m1.colmin();
+   //int nch=m1.colmax();
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new imatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      if (m1.shape)
      {
-       t[i].shape = m1.shape;
+       t[i].shape=m1.shape;
        (t[i].shape->ncopies)++;
        t[i].m = m1.m;
      }
      else
      {
 
-       t[i].shape = NULL;
-       t[i].m = NULL;
+       t[i].shape=NULL;
+       t[i].m=NULL;
      }
    }
  }
@@ -259,27 +259,27 @@
  */
  void i3_array::allocate(_CONST i3_array& i3v)
  {
-   int sl = i3v.slicemin();
-   int sh = i3v.slicemax();
-   // int nrl = i3v.rowmin();
-   // int nrh = i3v.rowmax();
-   // int ncl = i3v.colmin();
-   // int nch = i3v.colmax();
-   if ( (shape = new three_array_shape(sl,sh)) == 0)
+   int sl=i3v.slicemin();
+   int sh=i3v.slicemax();
+   //int nrl=i3v.rowmin();
+   //int nrh=i3v.rowmax();
+   //int ncl=i3v.colmin();
+   //int nch=i3v.colmax();
+   if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
    }
-   int ss = slicesize();
+   int ss=slicesize();
    if ( (t = new imatrix[ss]) == 0)
    {
      cerr << " Error allocating memory in i3_array contructor" << endl;
      ad_exit(21);
    }
    t -= slicemin();
-   for (int i = sl; i<=sh; i++)
+   for (int i=sl; i<=sh; i++)
    {
      t[i].allocate(i3v[i]);
-     // elem(i).initialize();
+     //elem(i).initialize();
    }
  }
 
@@ -289,7 +289,7 @@
  */
  void i3_array::allocate(void)
  {
-   shape = NULL;
+   shape=NULL;
    t = NULL;
  }
 
@@ -301,7 +301,7 @@
  {
    if (!(!(*this)))  // only initialize allocated objects
    {
-     for (int i = slicemin();i<=slicemax();i++)
+     for (int i=slicemin();i<=slicemax();i++)
      {
        elem(i).initialize();
      }
@@ -314,7 +314,7 @@
  */
  i3_array::i3_array(const i3_array& m2)
  {
-   shape = m2.shape;
+   shape=m2.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -335,14 +335,14 @@
    if (shape)
    {
      t += slicemin();
-     // int ss = slicesize();
+     //int ss=slicesize();
      delete [] t;
      delete shape;
-     t = NULL;
-     shape = NULL;
+     t=NULL;
+     shape=NULL;
    }
    else
    {
-     // cerr << "Warning -- trying to deallocate an unallocated imatrix"<<endl;
+     //cerr << "Warning -- trying to deallocate an unallocated imatrix"<<endl;
    }
  }

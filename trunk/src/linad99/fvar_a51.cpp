@@ -18,17 +18,17 @@ void DF_dvexp(void);
  */
 dvar_vector mfexp(_CONST dvar_vector& v1, CGNU_DOUBLE d)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
     if (v1.elem_value(i)<d)
     {
-      vtmp.elem_value(i) = exp(v1.elem_value(i));
+      vtmp.elem_value(i)=exp(v1.elem_value(i));
     }
     else
     {
-      vtmp.elem_value(i) = exp(d);
+      vtmp.elem_value(i)=exp(d);
       cout << "In mfexp d =" << d << " mfexp(x) = " << vtmp(i)  << endl;
     }
   }

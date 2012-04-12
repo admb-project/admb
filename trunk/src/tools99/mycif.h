@@ -144,7 +144,7 @@ public:
 
   cifstream& operator>>(dvar_vector& z);
   cifstream& operator>>(dvector& z);
-  // cifstream& operator>>(svector& z);
+  //cifstream& operator>>(svector& z);
   cifstream& operator>>(lvector& z);
   cifstream& operator>>(ivector& z);
 
@@ -154,10 +154,10 @@ public:
 
 cifstream& operator>>(cifstream& istr, dvar_matrix& z);
 cifstream& operator>>(cifstream& istr, d3_array& z);
-// cifstream& operator>>(cifstream& istr, s3_array& z);
+//cifstream& operator>>(cifstream& istr, s3_array& z);
 cifstream& operator>>(cifstream& istr, dmatrix& z);
-// cifstream& operator>>(cifstream& istr, smatrix& z);
+//cifstream& operator>>(cifstream& istr, smatrix& z);
 cifstream& operator>>(cifstream& istr, imatrix& z);
-// cifstream& operator>>(cifstream& istr, lmatrix& z);
+//cifstream& operator>>(cifstream& istr, lmatrix& z);
 
 #endif //#define CIFSTREM_H

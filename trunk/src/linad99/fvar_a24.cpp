@@ -18,10 +18,10 @@
   {
     if (!(!(*this)))  // only initialize allocated objects
     {
-      for (int i = indexmin();i<=indexmax();i++)
+      for (int i=indexmin();i<=indexmax();i++)
       {
-        // this->elem(i) = 0.0;
-        va[i].x = 0.0;
+        //this->elem(i)=0.0;
+        va[i].x=0.0;
       }
       save_identifier_string("b");
       this->save_dvar_vector_position();
@@ -38,18 +38,18 @@
  */
 void dv_init(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("a");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
   verify_identifier_string("b");
   dvector dftmp(tmp_pos.indexmin(),tmp_pos.indexmax());
-  for (int i = dftmp.indexmin();i<=dftmp.indexmax();i++)
+  for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
   {
-    // vtmp.elem(i) = value(v1.elem(i))+value(v2.elem(i));
-    dftmp.elem(i) = 0.0;
+    //vtmp.elem(i)=value(v1.elem(i))+value(v2.elem(i));
+    dftmp.elem(i)=0.0;
   }
   dftmp.save_dvector_derivatives_na(tmp_pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 
@@ -68,10 +68,10 @@ void dv_init(void)
       }
     #endif
      
-    for (int i = indexmin();i<=indexmax();i++)
+    for (int i=indexmin();i<=indexmax();i++)
     {
-      // this->elem(i) = 0.0;
-      va[i].x = ww.elem(i);
+      //this->elem(i)=0.0;
+      va[i].x=ww.elem(i);
     }
     save_identifier_string("b");
     this->save_dvar_vector_position();

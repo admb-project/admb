@@ -26,12 +26,12 @@
   int max(_CONST ivector& t1)
   {
      int tmp;
-     int mmin = t1.indexmin();
-     int mmax = t1.indexmax();
-     tmp = t1.elem(mmin);
-     for (int i = mmin+1; i<=mmax; i++)
+     int mmin=t1.indexmin();
+     int mmax=t1.indexmax();
+     tmp=t1.elem(mmin);
+     for (int i=mmin+1; i<=mmax; i++)
      {
-       if (tmp<t1.elem(i)) tmp = t1.elem(i);
+       if (tmp<t1.elem(i)) tmp=t1.elem(i);
      }
      return(tmp);
   }
@@ -43,12 +43,12 @@
   int min(_CONST ivector& t1)
   {
      int tmp;
-     int mmin = t1.indexmin();
-     int mmax = t1.indexmax();
-     tmp = t1.elem(mmin);
-     for (int i = mmin+1; i<=mmax; i++)
+     int mmin=t1.indexmin();
+     int mmax=t1.indexmax();
+     tmp=t1.elem(mmin);
+     for (int i=mmin+1; i<=mmax; i++)
      {
-       if (tmp>t1.elem(i)) tmp = t1.elem(i);
+       if (tmp>t1.elem(i)) tmp=t1.elem(i);
      }
      return(tmp);
   }

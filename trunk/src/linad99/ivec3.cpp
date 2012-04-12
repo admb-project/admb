@@ -18,9 +18,9 @@
  {
    ivector tmp(u.indexmin(),u.indexmax());
 
-   for ( int i = u.indexmin(); i<=u.indexmax(); i++)
+   for ( int i=u.indexmin(); i<=u.indexmax(); i++)
    {
-     tmp(i) = (*this)(u(i));
+     tmp(i)=(*this)(u(i));
    }
    return tmp;
  }
@@ -33,9 +33,9 @@
  {
    lvector tmp(u.indexmin(),u.indexmax());
 
-   for ( int i = u.indexmin(); i<=u.indexmax(); i++)
+   for ( int i=u.indexmin(); i<=u.indexmax(); i++)
    {
-     tmp(i) = (*this)(u(i));
+     tmp(i)=(*this)(u(i));
    }
    return tmp;
  }

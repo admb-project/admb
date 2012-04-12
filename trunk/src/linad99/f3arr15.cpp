@@ -56,18 +56,18 @@
        ad_exit(1);
      }
   
-     if ( (shape = new three_array_shape(sl,sh)) == 0)
+     if ( (shape=new three_array_shape(sl,sh)) == 0)
      {
        cerr << " Error allocating memory in dvar3_array contructor" << endl;
      }
-     int ss = slicesize();
+     int ss=slicesize();
      if ( (t = new dvar_matrix[ss]) == 0)
      {
        cerr << " Error allocating memory in dvar3_array contructor" << endl;
        ad_exit(21);
      }
      t -= slicemin();
-     for (int i = sl; i<=sh; i++)
+     for (int i=sl; i<=sh; i++)
      {
        t[i].allocate(nrl[i],nrh[i],ncl[i],nch[i]);
      }
@@ -103,18 +103,18 @@
        ad_exit(1);
      }
   
-     if ( (shape = new three_array_shape(sl,sh)) == 0)
+     if ( (shape=new three_array_shape(sl,sh)) == 0)
      {
        cerr << " Error allocating memory in dvar3_array contructor" << endl;
      }
-     int ss = slicesize();
+     int ss=slicesize();
      if ( (t = new dvar_matrix[ss]) == 0)
      {
        cerr << " Error allocating memory in dvar3_array contructor" << endl;
        ad_exit(21);
      }
      t -= slicemin();
-     for (int i = sl; i<=sh; i++)
+     for (int i=sl; i<=sh; i++)
      {
        t[i].allocate(nrl[i],nrh[i]);
      }
@@ -139,18 +139,18 @@
        myheapcheck("Entering d3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
      #endif
   
-     if ( (shape = new three_array_shape(sl,sh)) == 0)
+     if ( (shape=new three_array_shape(sl,sh)) == 0)
      {
        cerr << " Error allocating memory in dvar3_array contructor" << endl;
      }
-     int ss = slicesize();
+     int ss=slicesize();
      if ( (t = new dvar_matrix[ss]) == 0)
      {
        cerr << " Error allocating memory in dvar3_array contructor" << endl;
        ad_exit(21);
      }
      t -= slicemin();
-     for (int i = sl; i<=sh; i++)
+     for (int i=sl; i<=sh; i++)
      {
        t[i].allocate();
      }

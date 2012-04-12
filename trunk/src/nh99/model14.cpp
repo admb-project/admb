@@ -10,7 +10,7 @@
   {
     if ( x>0)
     {
-      stepsize = x;
+      stepsize=x;
     }
     else
     {
@@ -23,7 +23,7 @@
   {
     if ( n>0)
     {
-      stepnumber = n;
+      stepnumber=n;
     }
     else
     {

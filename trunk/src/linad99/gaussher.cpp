@@ -12,9 +12,9 @@
  */
 
 #include <fvar.hpp>
-static double eps = 3.0e-14;
-static double pim = 0.7511255444649427;
-static int maxit = 50;
+static double eps=3.0e-14;
+static double pim=0.7511255444649427;
+static int maxit=50;
 
 void imtqlx ( const dvector& _d, const dvector& _e, const dvector& _z );
 
@@ -87,8 +87,8 @@ void gauss_hermite (const dvector& _t,const dvector& _wts)
 //    Output, double WTS[NT], the weights.
 //
 {
-  dvector t = (dvector&) _t;
-  dvector wts = (dvector&) _wts;
+  dvector t=(dvector&) _t;
+  dvector wts=(dvector&) _wts;
 
   if( t.indexmax()!=wts.indexmax() )
   {
@@ -200,8 +200,8 @@ void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts 
 //    Output, double WTS[NT], the weights.
 //
 {
-  dvector t = (dvector&) _t;
-  dvector wts = (dvector&) _wts;
+  dvector t=(dvector&) _t;
+  dvector wts=(dvector&) _wts;
 
   if( t.indexmax()!=wts.indexmax() )
   {
@@ -322,7 +322,7 @@ void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts 
     }
   }
 
-  for(i = 0;i<nt;i++)
+  for(i=0;i<nt;i++)
   {
     t(i) = st(ub-i);
     wts(i) = swts(ub-i);
@@ -350,10 +350,10 @@ void gauss_legendre(const dvector& _x, const dvector& _w)
  */
 void normalized_gauss_hermite(const dvector& _x, const dvector& _w)
 {
-  dvector& x = (dvector&) _x;
-  dvector& w = (dvector&) _w;
+  dvector& x=(dvector&) _x;
+  dvector& w=(dvector&) _w;
   gauss_hermite(x,w);
-  w = elem_prod(w,exp(square(x)));
+  w=elem_prod(w,exp(square(x)));
   x*=sqrt(2.0);
   w*=sqrt(2.0);
 }
@@ -423,9 +423,9 @@ void imtqlx( const dvector& _d, const dvector& _e, const dvector& _z )
 //    input symmetric tridiagonal matrix.
 //
 {
-  dvector d = (dvector&) _d;
-  dvector e = (dvector&) _e;
-  dvector z = (dvector&) _z;
+  dvector d=(dvector&) _d;
+  dvector e=(dvector&) _e;
+  dvector z=(dvector&) _z;
   if( d.indexmax()!=e.indexmax() || d.indexmax()!=z.indexmax() || z.indexmax()!=e.indexmax() )
   {
     cerr << "Incompatible sizes in void "

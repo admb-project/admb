@@ -16,11 +16,11 @@
  */
 void dmatrix::allocate(_CONST dvar_matrix& dm)
 {
-  int nrl = dm.rowmin();
-  int nrh = dm.rowmax();
+  int nrl=dm.rowmin();
+  int nrh=dm.rowmax();
 
-  index_min = nrl;
-  index_max = nrh;
+  index_min=nrl;
+  index_max=nrh;
   if ( (m = new dvector [rowsize()]) == 0)
   {
     cerr << " Error allocating memory in dmatrix contructor\n";
@@ -33,7 +33,7 @@ void dmatrix::allocate(_CONST dvar_matrix& dm)
   }
 
   m -= rowmin();
-  for (int i = rowmin(); i<=rowmax(); i++)
+  for (int i=rowmin(); i<=rowmax(); i++)
   {
     m[i].allocate(dm(i));
   }

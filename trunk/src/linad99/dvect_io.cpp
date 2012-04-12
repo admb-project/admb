@@ -36,7 +36,7 @@
  */
 ostream& operator<<(BOR_CONST ostream& _ostr,const dvector& z)
 {
-  ostream& ostr = (ostream&) _ostr;
+  ostream& ostr=(ostream&) _ostr;
   z.write_on(ostr);
 
   return ostr;
@@ -48,7 +48,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,const dvector& z)
  */
 void dvector::write_on(BOR_CONST ostream& _s) _CONST
 {
-  ostream& s = (ostream&) _s;
+  ostream& s=(ostream&) _s;
 #ifdef __USE_IOSTREAM__
   int new_w = s.width();
   int new_p = s.precision();
@@ -59,7 +59,7 @@ void dvector::write_on(BOR_CONST ostream& _s) _CONST
 #endif
   char new_fill = s.fill();
 #endif
-  for (int i = indexmin(); i <= indexmax(); i++)
+  for (int i=indexmin(); i <= indexmax(); i++)
   {
   #ifdef __USE_IOSTREAM__
      s.width(0);
@@ -95,7 +95,7 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvector& _z)
 void dvector::read_from(BOR_CONST istream& _s)
 {
   istream& s= (istream&) _s;
-  for (int i = indexmin(); i <= indexmax(); i++)
+  for (int i=indexmin(); i <= indexmax(); i++)
   {
      s >> elem(i);
   }

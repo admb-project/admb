@@ -190,7 +190,7 @@ class df1b2variable;
       return (df3_three_variable&) (*(v+i))(j); 
     }
     void initialize(void);
-    // df3_three_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
+    //df3_three_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df3_three_matrix();
     df3_three_matrix(const df3_three_matrix& m2);

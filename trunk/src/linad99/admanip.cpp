@@ -14,14 +14,14 @@
 /*
 ostream& setfixed(BOR_CONST ostream& _s)
 {
-  ostream& s = (ostream&)(_s);
+  ostream& s=(ostream&)(_s);
   s.setf(ios::fixed,ios::floatfield);
   return s;
 }
 
 ostream& setscientific(BOR_CONST ostream& _s)
 {
-  ostream& s = (ostream&)(_s);
+  ostream& s=(ostream&)(_s);
   s.setf(ios::scientific,ios::floatfield);
   return s;
 }
@@ -29,7 +29,7 @@ ostream& setscientific(BOR_CONST ostream& _s)
 
 ostream& setshowpoint(BOR_CONST ostream& _s)
 {
-  ostream& s = (ostream&)(_s);
+  ostream& s=(ostream&)(_s);
   s.setf(ios::showpoint);
   return s;
 }
@@ -51,7 +51,7 @@ preshowpoint setshowpoint(void)
  */
 ostream& operator << (BOR_CONST ostream& _s,preshowpoint p)
 {
-  ostream& s = (ostream&)(_s);
+  ostream& s=(ostream&)(_s);
   s.setf(ios::showpoint);
   return s;
 }
@@ -74,7 +74,7 @@ prefixed setfixed(void)
  */
 ostream& operator << (BOR_CONST ostream& _s,prefixed p)
 {
-  ostream& s = (ostream&)(_s);
+  ostream& s=(ostream&)(_s);
   s.setf(ios::fixed,ios::floatfield);
   return s;
 }
@@ -95,7 +95,7 @@ prescientific setscientific(void)
  */
 ostream& operator << (BOR_CONST ostream& _s,prescientific p)
 {
-  ostream& s = (ostream&)(_s);
+  ostream& s=(ostream&)(_s);
   s.setf(ios::scientific,ios::floatfield);
   return s;
 }

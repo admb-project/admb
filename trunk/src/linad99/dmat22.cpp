@@ -34,9 +34,9 @@
  */
 dmatrix& dmatrix::operator = ( CGNU_DOUBLE x)
 {
-  for (int i = rowmin();i<=rowmax();i++)
+  for (int i=rowmin();i<=rowmax();i++)
   {
-    elem(i) = x;
+    elem(i)=x;
   }
   return (*this);
 }
@@ -47,7 +47,7 @@ dmatrix& dmatrix::operator = ( CGNU_DOUBLE x)
  */
 dmatrix& dmatrix::operator /= ( CGNU_DOUBLE x)
 {
-  for (int i = rowmin();i<=rowmax();i++)
+  for (int i=rowmin();i<=rowmax();i++)
   {
     elem(i)/=x;
   }
@@ -60,7 +60,7 @@ dmatrix& dmatrix::operator /= ( CGNU_DOUBLE x)
  */
 dmatrix& dmatrix::operator *= ( CGNU_DOUBLE x)
 {
-  for (int i = rowmin();i<=rowmax();i++)
+  for (int i=rowmin();i<=rowmax();i++)
   {
     elem(i)*=x;
   }

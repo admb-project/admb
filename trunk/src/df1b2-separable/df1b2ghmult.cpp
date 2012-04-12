@@ -24,14 +24,14 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
 {
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)
-  // ADUNCONST(dmatrix,Hessadjoint)
-  const int xs = x.size();
-  const int us = u0.size();
+  //ADUNCONST(dmatrix,Hessadjoint)
+  const int xs=x.size();
+  const int us=u0.size();
   gradient_structure::set_NO_DERIVATIVES();
-  int nsc = pmin->lapprox->num_separable_calls;
+  int nsc=pmin->lapprox->num_separable_calls;
   const ivector lrea = (*pmin->lapprox->num_local_re_array)(1,nsc);
   int hroom =  sum(square(lrea));
-  int nvar = x.size()+u0.size()+hroom;
+  int nvar=x.size()+u0.size()+hroom;
   independent_variables y(1,nvar);
   
   // need to set random effects active together with whatever
@@ -41,14 +41,14 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
   /*int onvar=*/initial_params::nvarcalc(); 
   initial_params::xinit(y);    // get the initial values into the
   // do we need this next line?
-  y(1,xs) = x;
+  y(1,xs)=x;
 
   int i,j;
 
   // contribution for quadratic prior
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
-    // Hess+=quadratic_prior::get_cHessian_contribution();
+    //Hess+=quadratic_prior::get_cHessian_contribution();
     int & vxs = (int&)(xs);
     quadratic_prior::get_cHessian_contribution(Hess,vxs);
   }
@@ -59,24 +59,24 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
   block_diagonal_vhessian.initialize();
   dvar3_array& block_diagonal_ch=
     *pmin->lapprox->block_diagonal_vch;
-    // dvar3_array(*pmin->lapprox->block_diagonal_ch);
-  int ii = xs+us+1;
-  d3_array& bdH = (*pmin->lapprox->block_diagonal_hessian);
+    //dvar3_array(*pmin->lapprox->block_diagonal_ch);
+  int ii=xs+us+1;
+  d3_array& bdH=(*pmin->lapprox->block_diagonal_hessian);
   int ic;
-  for (ic = 1;ic<=nsc;ic++)
+  for (ic=1;ic<=nsc;ic++)
   {
-    int lus = lrea(ic);
-    for (i = 1;i<=lus;i++)
-      for (j = 1;j<=lus;j++)
-        y(ii++) = bdH(ic)(i,j);
+    int lus=lrea(ic);
+    for (i=1;i<=lus;i++)
+      for (j=1;j<=lus;j++)
+        y(ii++)=bdH(ic)(i,j);
   }
 
   dvector g(1,nvar);
   gradcalc(0,g);
   gradient_structure::set_YES_DERIVATIVES();
-  dvar_vector vy = dvar_vector(y); 
-  // initial_params::stddev_vscale(d,vy);
-  ii = xs+us+1;
+  dvar_vector vy=dvar_vector(y); 
+  //initial_params::stddev_vscale(d,vy);
+  ii=xs+us+1;
   if (initial_df1b2params::have_bounded_random_effects)
   {
     cerr << "can't do importance sampling with bounded random effects"
@@ -85,16 +85,16 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
   }
   else
   {
-    for (int ic = 1;ic<=nsc;ic++)
+    for (int ic=1;ic<=nsc;ic++)
     {
-      int lus = lrea(ic);
+      int lus=lrea(ic);
       if (lus>0)
       {
-        for (i = 1;i<=lus;i++)
+        for (i=1;i<=lus;i++)
         {
-          for (j = 1;j<=lus;j++)
+          for (j=1;j<=lus;j++)
           {
-            block_diagonal_vhessian(ic,i,j) = vy(ii++);
+            block_diagonal_vhessian(ic,i,j)=vy(ii++);
           }
         }
         block_diagonal_ch(ic)=
@@ -103,8 +103,8 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
     }
   }
 
-   int nsamp = pmin->lapprox->use_gauss_hermite;
-   pmin->lapprox->in_gauss_hermite_phase = 1;
+   int nsamp=pmin->lapprox->use_gauss_hermite;
+   pmin->lapprox->in_gauss_hermite_phase=1;
    dvar_vector sample_value(1,nsamp);
    sample_value.initialize();
 
@@ -115,35 +115,35 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
    if (pmin->lapprox->gh->mi)
    {
      delete pmin->lapprox->gh->mi;
-     pmin->lapprox->gh->mi = 0;
+     pmin->lapprox->gh->mi=0;
    }
    
-   pmin->lapprox->gh->mi = new multi_index(1,nsamp,
+   pmin->lapprox->gh->mi=new multi_index(1,nsamp,
     pmin->lapprox->multi_random_effects);
 
    multi_index & mi = *(pmin->lapprox->gh->mi);
 
-   // for (int is = 1;is<=nsamp;is++)
-   dvector& xx = pmin->lapprox->gh->x;
+   //for (int is=1;is<=nsamp;is++)
+   dvector& xx=pmin->lapprox->gh->x;
    do
    {
-     int offset = 0;
-     pmin->lapprox->num_separable_calls = 0;
-     // pmin->lapprox->gh->is = is;
-     for (ic = 1;ic<=nsc;ic++)
+     int offset=0;
+     pmin->lapprox->num_separable_calls=0;
+     //pmin->lapprox->gh->is=is;
+     for (ic=1;ic<=nsc;ic++)
      {
-       int lus = lrea(ic);
+       int lus=lrea(ic);
        // will need vector stuff here when more than one random effect
        if (lus>0)
        {
-         // tau(offset+1,offset+lus).shift(1) = block_diagonal_ch(ic)(1,1)*
+         //tau(offset+1,offset+lus).shift(1)=block_diagonal_ch(ic)(1,1)*
          //  pmin->lapprox->gh->x(is);
          dvector xv(1,lus);
-         for (int iu = 1;iu<=lus;iu++)
+         for (int iu=1;iu<=lus;iu++)
          {
            xv(iu)= xx(mi()(iu));
          }
-         tau(offset+1,offset+lus).shift(1) = block_diagonal_ch(ic)*xv;
+         tau(offset+1,offset+lus).shift(1)=block_diagonal_ch(ic)*xv;
            
          offset+=lus;
        }
@@ -151,16 +151,16 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
     
      // have to reorder the terms to match the block diagonal hessian
      imatrix & ls=*(pmin->lapprox->block_diagonal_re_list);
-     int mmin = ls.indexmin();
-     int mmax = ls.indexmax();
+     int mmin=ls.indexmin();
+     int mmax=ls.indexmax();
     
-     int ii = 1;
+     int ii=1;
      int i;
-     for (i = mmin;i<=mmax;i++)
+     for (i=mmin;i<=mmax;i++)
      {
-       int cmin = ls(i).indexmin();
-       int cmax = ls(i).indexmax();
-       for (int j = cmin;j<=cmax;j++)
+       int cmin=ls(i).indexmin();
+       int cmax=ls(i).indexmax();
+       for (int j=cmin;j<=cmax;j++)
        {
          vy(ls(i,j))+=tau(ii++);
        }
@@ -171,33 +171,33 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
        ad_exit(1);
      }
      initial_params::reset(vy);    // get the values into the model
-     ii = 1;
-     for (i = mmin;i<=mmax;i++)
+     ii=1;
+     for (i=mmin;i<=mmax;i++)
      {
-       int cmin = ls(i).indexmin();
-       int cmax = ls(i).indexmax();
-       for (int j = cmin;j<=cmax;j++)
+       int cmin=ls(i).indexmin();
+       int cmax=ls(i).indexmax();
+       for (int j=cmin;j<=cmax;j++)
        {
          vy(ls(i,j))-=tau(ii++);
        }
      }
 
-     *objective_function_value::pobjfun = 0.0;
+     *objective_function_value::pobjfun=0.0;
      pmin->AD_uf_outer();
      ++mi;
 
    }
    while(mi.get_depth()<=pmin->lapprox->multi_random_effects);
 
-   nsc = pmin->lapprox->num_separable_calls;
+   nsc=pmin->lapprox->num_separable_calls;
 
-   dvariable vf = pmin->do_gauss_hermite_integration();
+   dvariable vf=pmin->do_gauss_hermite_integration();
 
-   int sgn = 0;
-   dvariable ld = 0.0;
+   int sgn=0;
+   dvariable ld=0.0;
    if (ad_comm::no_ln_det_choleski_flag)
    {
-     for (int ic = 1;ic<=nsc;ic++)
+     for (int ic=1;ic<=nsc;ic++)
      {
        if (allocated(block_diagonal_vhessian(ic)))
        {
@@ -208,7 +208,7 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
    }
    else
    {
-     for (int ic = 1;ic<=nsc;ic++)
+     for (int ic=1;ic<=nsc;ic++)
      {
        if (allocated(block_diagonal_vhessian(ic)))
        {
@@ -219,32 +219,32 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
    }
 
    vf+=ld;
-   // vf+=us*0.91893853320467241; 
+   //vf+=us*0.91893853320467241; 
 
-   double f = value(vf);
+   double f=value(vf);
    gradcalc(nvar,g);
 
    // put uhat back into the model
    gradient_structure::set_NO_DERIVATIVES();
-   vy(xs+1,xs+us).shift(1) = u0;
+   vy(xs+1,xs+us).shift(1)=u0;
    initial_params::reset(vy);    // get the values into the model
    gradient_structure::set_YES_DERIVATIVES();
   
-   pmin->lapprox->in_gauss_hermite_phase = 0;
+   pmin->lapprox->in_gauss_hermite_phase=0;
   
-  ii = 1;
-  for (i = 1;i<=xs;i++)
-    xadjoint(i) = g(ii++);
-  for (i = 1;i<=us;i++)
-    uadjoint(i) = g(ii++);
-  for (ic = 1;ic<=nsc;ic++)
+  ii=1;
+  for (i=1;i<=xs;i++)
+    xadjoint(i)=g(ii++);
+  for (i=1;i<=us;i++)
+    uadjoint(i)=g(ii++);
+  for (ic=1;ic<=nsc;ic++)
   {
-    int lus = lrea(ic);
-    for (i = 1;i<=lus;i++)
+    int lus=lrea(ic);
+    for (i=1;i<=lus;i++)
     {
-      for (j = 1;j<=lus;j++)
+      for (j=1;j<=lus;j++)
       {
-        (*pmin->lapprox->block_diagonal_vhessianadjoint)(ic)(i,j) = g(ii++);
+        (*pmin->lapprox->block_diagonal_vhessianadjoint)(ic)(i,j)=g(ii++);
       }
     }
   }

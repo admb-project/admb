@@ -105,7 +105,7 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
       for (i = mmin + 1; i < j; i++)
       {
 	 // using subvector here
-	 // clu(i,j)-=alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
+	 //clu(i,j)-=alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
 	 double tmp =
 	    clu(i, j) - alpha(i) (mmin, i - 1) * gamma(j) (mmin, i - 1);
 	 clu.increment(i, j);
@@ -117,7 +117,7 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
 	 // using subvector here
 	 if (j > 1)
 	 {
-	    // clu(i,j)-=alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
+	    //clu(i,j)-=alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
 	    double tmp =
 	       clu(i, j) - alpha(i) (mmin, j - 1) * gamma(j) (mmin, j - 1);
 	    clu.increment(i, j);
@@ -138,7 +138,7 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
    }
 
    // OUTER LOOP2
-   // for (int j = mmin;j<=mmax;j++)
+   //for (int j=mmin;j<=mmax;j++)
    for (j = mmax; j >= mmin; j--)
    {
       int i = 0;
@@ -147,7 +147,7 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
       {
 	 // need to keep this line for  z
 	 double z = 1.0 / gamma(j, j);
-	 // for (i = j+1;i<=mmax;i++)
+	 //for (i=j+1;i<=mmax;i++)
 	 double dftmp = 0.0;
 	 double dfz = 0.0;
 	 for (i = mmax; i >= j + 1; i--)
@@ -155,31 +155,31 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
 	    // need to keep this line for tmp 
 	    clu.decrement(i, j);
 	    double tmp = alpha(i, j);
-	    // alpha(i,j) = tmp*z;
+	    //alpha(i,j)=tmp*z;
 	    dftmp += dfalpha(i, j) * z;
 	    dfz += dfalpha(i, j) * tmp;
 	    dfalpha(i, j) = 0.0;
-	    // double tmp = alpha(i,j);
+	    //double tmp=alpha(i,j);
 	    dfalpha(i, j) = dftmp;
 	    dftmp = 0.0;
 	 }
-	 // double z= 1.0/gamma(j,j);
+	 //double z= 1.0/gamma(j,j);
 	 dfgamma(j, j) -= dfz / square(gamma(j, j));
 	 dfz = 0.0;
 
       }
       // INNER LOOP 2 2
-      // for (i = j;i<=mmax;i++)
+      //for (i=j;i<=mmax;i++)
       double dftmp = 0.0;
       for (i = mmax; i >= j; i--)
       {
 	 // using subvector here
 	 if (j > 1)
 	 {
-	    // clu(i,j)-=alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
-	    // double tmp = clu(i,j)-alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
-	    // clu.increment(i,j);
-	    // clu(i,j) = tmp;
+	    //clu(i,j)-=alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
+	    //double tmp=clu(i,j)-alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
+	    //clu.increment(i,j);
+	    //clu(i,j)=tmp;
 	    clu.decrement(i, j);
 	    dftmp = dfclu(i, j);
 	    dfclu(i, j) = 0.0;
@@ -190,18 +190,18 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
 	 }
       }
       // INNER LOOP 2 1
-      // for (i = mmin+1;i<j;i++)
+      //for (i=mmin+1;i<j;i++)
       for (i = j - 1; i >= mmin + 1; i--)
       {
 	 // using subvector here
-	 // clu(i,j)-=alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
-	 // double tmp = clu(i,j)-alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
-	 // clu.increment(i,j);
-	 // clu(i,j) = tmp;
+	 //clu(i,j)-=alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
+	 //double tmp=clu(i,j)-alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
+	 //clu.increment(i,j);
+	 //clu(i,j)=tmp;
 	 clu.decrement(i, j);
 	 dftmp = dfclu(i, j);
 	 dfclu(i, j) = 0.0;
-	 // double tmp = clu(i,j)-alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
+	 //double tmp=clu(i,j)-alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
 	 dfclu(i, j) = dftmp;
 	 dfalpha(i) (mmin, i - 1) -= dftmp * gamma(j) (mmin, i - 1);
 	 dfgamma(j) (mmin, i - 1) -= dftmp * alpha(i) (mmin, i - 1);
@@ -214,7 +214,7 @@ dmatrix ludecomp_for_adjoint(const dmatrix & _M, const cltudecomp & _dfclu)
    {
       for (int j = mmin; j <= mmax; j++)
       {
-	 // clu(i,j) = M(i,j);
+	 //clu(i,j)=M(i,j);
 	 dfM(i, j) = dfclu(i, j);
       }
    }
@@ -345,7 +345,7 @@ cltudecomp xludecomp_pivot_for_expm_solve(const dvar_matrix& M, const ivector& _
    int k = 0;
    int mmin = M.indexmin();
    int mmax = M.indexmax();
-   // int imax = mmin - 1;
+   //int imax = mmin - 1;
    int imax = mmax - 1;
    cltudecomp clu(mmin, mmax);
    dvector scale(mmin, mmax);
@@ -452,7 +452,7 @@ cltudecomp xludecomp_pivot(const dvar_matrix & M)
    int k = 0;
    int mmin = M.indexmin();
    int mmax = M.indexmax();
-   // int imax = mmin - 1;
+   //int imax = mmin - 1;
    int imax = mmax - 1;
    cltudecomp clu(mmin, mmax);
    dvector scale(mmin, mmax);
@@ -550,7 +550,7 @@ cltudecomp xludecomp_pivot(const dvar_matrix & M)
 
   // *************************************************************8
   // *************************************************************8
-  // split  ludecomp_pivot_for_adjoint into two parts
+  //split  ludecomp_pivot_for_adjoint into two parts
   // *************************************************************8
   // *************************************************************8
 
@@ -603,7 +603,7 @@ void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_1(void)
       for (i = mmin + 1; i < j; i++)
       {
 	 // using subvector here
-	 // clu(i,j)-=alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
+	 //clu(i,j)-=alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
 	 double tmp =
 	    clu(i, j) - alpha(i) (mmin, i - 1) * gamma(j) (mmin, i - 1);
 	 clu.increment(i, j);
@@ -615,7 +615,7 @@ void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_1(void)
 	 // using subvector here
 	 if (j > 1)
 	 {
-	    // clu(i,j)-=alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
+	    //clu(i,j)-=alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
 	    double tmp =
 	       clu(i, j) - alpha(i) (mmin, j - 1) * gamma(j) (mmin, j - 1);
 	    clu.increment(i, j);
@@ -661,7 +661,7 @@ void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_2(void)
       {
 	 // need to keep this line for  z
 	 double z = 1.0 / gamma(j, j);
-	 // for (i = j+1;i<=mmax;i++)
+	 //for (i=j+1;i<=mmax;i++)
 	 double dftmp = 0.0;
 	 double dfz = 0.0;
 	 for (i = mmax; i >= j + 1; i--)
@@ -669,31 +669,31 @@ void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_2(void)
 	    // need to keep this line for tmp 
 	    clu.decrement(i, j);
 	    double tmp = alpha(i, j);
-	    // alpha(i,j) = tmp*z;
+	    //alpha(i,j)=tmp*z;
 	    dftmp += dfalpha(i, j) * z;
 	    dfz += dfalpha(i, j) * tmp;
 	    dfalpha(i, j) = 0.0;
-	    // double tmp = alpha(i,j);
+	    //double tmp=alpha(i,j);
 	    dfalpha(i, j) = dftmp;
 	    dftmp = 0.0;
 	 }
-	 // double z= 1.0/gamma(j,j);
+	 //double z= 1.0/gamma(j,j);
 	 dfgamma(j, j) -= dfz / square(gamma(j, j));
 	 dfz = 0.0;
 
       }
       // INNER LOOP 2 2
-      // for (i = j;i<=mmax;i++)
+      //for (i=j;i<=mmax;i++)
       double dftmp = 0.0;
       for (i = mmax; i >= j; i--)
       {
 	 // using subvector here
 	 if (j > 1)
 	 {
-	    // clu(i,j)-=alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
-	    // double tmp = clu(i,j)-alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
-	    // clu.increment(i,j);
-	    // clu(i,j) = tmp;
+	    //clu(i,j)-=alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
+	    //double tmp=clu(i,j)-alpha(i)(mmin,j-1)*gamma(j)(mmin,j-1);
+	    //clu.increment(i,j);
+	    //clu(i,j)=tmp;
 	    clu.decrement(i, j);
 	    dftmp = dfclu(i, j);
 	    dfclu(i, j) = 0.0;
@@ -704,18 +704,18 @@ void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_2(void)
 	 }
       }
       // INNER LOOP 2 1
-      // for (i = mmin+1;i<j;i++)
+      //for (i=mmin+1;i<j;i++)
       for (i = j - 1; i >= mmin + 1; i--)
       {
 	 // using subvector here
-	 // clu(i,j)-=alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
-	 // double tmp = clu(i,j)-alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
-	 // clu.increment(i,j);
-	 // clu(i,j) = tmp;
+	 //clu(i,j)-=alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
+	 //double tmp=clu(i,j)-alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
+	 //clu.increment(i,j);
+	 //clu(i,j)=tmp;
 	 clu.decrement(i, j);
 	 dftmp = dfclu(i, j);
 	 dfclu(i, j) = 0.0;
-	 // double tmp = clu(i,j)-alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
+	 //double tmp=clu(i,j)-alpha(i)(mmin,i-1)*gamma(j)(mmin,i-1);
 	 dfclu(i, j) = dftmp;
 	 dfalpha(i) (mmin, i - 1) -= dftmp * gamma(j) (mmin, i - 1);
 	 dfgamma(j) (mmin, i - 1) -= dftmp * alpha(i) (mmin, i - 1);
@@ -730,7 +730,7 @@ void cltudecomp_for_adjoint::ludecomp_pivot_for_adjoint_2(void)
       int i1 = indx2(i);
       for (int j = mmin; j <= mmax; j++)
       {
-	 // clu(i,j) = M(i1,j);
+	 // clu(i,j)=M(i1,j);
 	 dfM(i1, j) = dfclu(i, j);
       }
    }

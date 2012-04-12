@@ -80,16 +80,16 @@
  * Increased default PVMTMPNAMLEN to 64...
  * 	- suggested by BEOSCYLD / Joe Vitale <vitale@scyld.com>
  * 	- seems like a good idea.  :-)
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.50  2001/09/27 18:24:39  pvmsrc
  * Upped version to 3.4.4.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.49  2001/09/26 21:55:51  pvmsrc
  * Oops...  fixed function proto for pvmtmpnam()...
  * 	- leftover bogus cruft...
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.48  2001/09/25 21:17:49  pvmsrc
  * Minor TMPNAMFUN()/tmpnam() cleanup.
@@ -98,20 +98,20 @@
  * 	- mostly a huge waste of time, since *both* tmpnam() & mktemp()
  * 		produce the same "dangerous" warning message in Linux/gcc...
  * 	- damn.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.47  2001/06/18 18:38:23  pvmsrc
  * Added missing function prototype for pvm_freezegroup()...
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.46  2000/02/16 22:50:01  pvmsrc
  * Upped version to 3.4.3 so I don't forget later.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.45  2000/02/10 23:53:09  pvmsrc
  * Added new PvmIPLoopback error code.
  * 	- Master Host IP Address tied to Loopback.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.44  1999/11/08 17:21:32  pvmsrc
  * Added PvmMboxDirectIndex stuff:
@@ -120,26 +120,26 @@
  * 	- PvmMboxMaxDirectIndex: max direct index value, for error checking
  * 	- PvmMboxDirectIndex(): macro to convert direct index into flag bits
  * 	- PvmMboxDirectIndexOf(): macro to decode direct index from flags
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.43  1999/10/27 18:48:40  pvmsrc
  * Fixed (yet again) the prototype for pvm_recvf().
  * 	- hopefully got it right this time...  :-Q
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.42  1999/10/22 13:34:55  pvmsrc
  * Fixed prototype for pvm_recvf().
  * 	- reported by "Ed D'Azevedo" <efdazedo@alcor.epm.ornl.gov>.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.41  1999/10/18 21:22:00  pvmsrc
  * Added function prototypes for:
  * 	- pvm_pkmesg(), pvm_pkmesgbody(), pvm_upkmesg().
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.40  1999/08/19 16:07:14  pvmsrc
  * Upped version to 3.4.2.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.39  1999/07/08 18:59:47  kohl
  * Fixed "Log" keyword placement.
@@ -147,17 +147,17 @@
  *
  * Revision 1.38  1999/06/07 20:06:53  pvmsrc
  * Upped version to 3.4.1.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  * 
  * Revision 1.37  1999/03/03  19:00:36  pvmsrc
  * Added new define PVM_PATCH_VERSION.
  * 	- the "0" in "3.4.0".
  * 	- to go along with PVM_MAJOR_VERSION & PVM_MINOR_VERSION.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.36  1999/01/19  18:02:17  pvmsrc
  * Bumped PVM_VER to 3.4.0.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.35  1999/01/13  00:03:19  pvmsrc
  * Fixed backwards compat.
@@ -165,30 +165,30 @@
  * 		* PvmNoEntry -> PvmNotFound
  * 		* PvmDupEntry -> PvmDenied
  * 	- remove #ifdef PVM33COMPAT...  O.K. in general.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.34  1998/08/27  15:17:14  pvmsrc
  * Time to bump up to beta 7...
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.33  1997/12/30  18:15:32  pvmsrc
  * Oops...  better skip directly to beta 6 instead of beta 5...
  * 	- separate WIN32 release is beta 5...
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.32  1997/12/29  19:53:51  pvmsrc
  * Upgraded from beta4 to beta5.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.31  1997/09/15  20:54:29  pvmsrc
  * Fixed PVM_MAJOR_VERSION and PVM_MINOR_VERSION defines.
  * 	- VER -> VERSION.
  * 	- MAJOR = 3, MINOR = 4 (3.4.*).
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.30  1997/09/02  13:05:37  pvmsrc
  * Upgraded PVM_VER to 3.4 beta 4.
- * (Spanker = kohl)
+ * (Spanker=kohl)
  *
  * Revision 1.29  1997/07/09  13:29:36  pvmsrc
  * Fixed Author Header.

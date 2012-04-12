@@ -45,36 +45,36 @@ void tracing_message(int traceflag,const char *s);
     return inner_opt_flag;
   }
 
-  int function_minimizer::inner_opt_flag = 0;
+  int function_minimizer::inner_opt_flag=0;
 #endif
 
 
-  int function_minimizer::bad_step_flag = 0;  
+  int function_minimizer::bad_step_flag=0;  
 
   void function_minimizer::minimize(void)
   {
-    int nopt = 0;
-    int on = 0;
+    int nopt=0;
+    int on=0;
 #   if defined(USE_LAPLACE)
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-shess"))>-1)
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-shess"))>-1)
     {
-      laplace_approximation_calculator::sparse_hessian_flag = 1;
+      laplace_approximation_calculator::sparse_hessian_flag=1;
     }
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-pis"))>-1)
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-pis"))>-1)
     {
-      laplace_approximation_calculator::print_importance_sampling_weights_flag = 1;
+      laplace_approximation_calculator::print_importance_sampling_weights_flag=1;
     }
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-sp"))>-1)
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-sp"))>-1)
     {
-      laplace_approximation_calculator::saddlepointflag = 1;
+      laplace_approximation_calculator::saddlepointflag=1;
     }
 #    if defined(__MINI_MAX__)
-        if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mm"))>-1)
+        if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mm"))>-1)
         {
-          laplace_approximation_calculator::saddlepointflag = 2;
+          laplace_approximation_calculator::saddlepointflag=2;
         }
 #    else
-        if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mm"))>-1)
+        if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mm"))>-1)
         {
            cerr << "option -mm MINI_MAX not defined " << endl;
            ad_exit(1);
@@ -82,14 +82,14 @@ void tracing_message(int traceflag,const char *s);
 #    endif
      
 #   endif
-    // initial_params::read(); // read in the values for the initial parameters
+    //initial_params::read(); // read in the values for the initial parameters
     if (initial_params::restart_phase)
     {
       initial_params::current_phase = initial_params::restart_phase;
-      initial_params::restart_phase = 0;
+      initial_params::restart_phase=0;
     }
-    int allphases = initial_params::max_number_phases;
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-maxph",nopt))>-1)
+    int allphases=initial_params::max_number_phases;
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-maxph",nopt))>-1)
     {
       if (!nopt)
       {
@@ -97,7 +97,7 @@ void tracing_message(int traceflag,const char *s);
       }
       else
       {   
-        int jj = atoi(ad_comm::argv[on+1]);
+        int jj=atoi(ad_comm::argv[on+1]);
         if (jj<=0)
         {
           cerr << "Usage -maxph option needs positive integer  -- ignored" << endl;
@@ -106,16 +106,16 @@ void tracing_message(int traceflag,const char *s);
         {
           if (jj>allphases)
           {
-            allphases = jj;
+            allphases=jj;
           }
         }
       }
       if (allphases>initial_params::max_number_phases)
       {
-        initial_params::max_number_phases = allphases;
+        initial_params::max_number_phases=allphases;
       }
     }
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
     {
       if (!nopt)
       {
@@ -123,20 +123,20 @@ void tracing_message(int traceflag,const char *s);
       }
       else
       {   
-        int jj = atoi(ad_comm::argv[on+1]);
+        int jj=atoi(ad_comm::argv[on+1]);
         if (jj<=0)
         {
           cerr << "Usage -ndv option needs positive integer  -- ignored" << endl;
         } 
         else
         {
-          gradient_structure::NUM_DEPENDENT_VARIABLES = jj;
+          gradient_structure::NUM_DEPENDENT_VARIABLES=jj;
         }
       }
     }
 
     // set the maximum number of function evaluations by command line
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-maxfn",nopt))>-1)
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-maxfn",nopt))>-1)
     {
       if (!nopt)
       {
@@ -144,20 +144,20 @@ void tracing_message(int traceflag,const char *s);
       }
       else
       {   
-        int _maxfn = atoi(ad_comm::argv[on+1]);
+        int _maxfn=atoi(ad_comm::argv[on+1]);
         if (_maxfn<0)
         {
           cerr << "Usage -maxfn option needs positive integer  -- ignored" << endl;
         } 
         else
         {
-          maxfn = _maxfn;
+          maxfn=_maxfn;
         }
       }
     }
-    double _crit = 0;
+    double _crit=0;
     // set the maximum number of function evaluations by command line
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
     {
       if (!nopt)
       {
@@ -172,12 +172,12 @@ void tracing_message(int traceflag,const char *s);
         if (_crit<=0)
         {
           cerr << "Usage -crit option needs positive number  -- ignored" << endl;
-          _crit = 0.0;
+          _crit=0.0;
         } 
       }
     }
-    int bandwidth = 0;
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-bw",nopt))>-1)
+    int bandwidth=0;
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-bw",nopt))>-1)
     {
       if (!nopt)
       {
@@ -192,17 +192,17 @@ void tracing_message(int traceflag,const char *s);
         if (bandwidth<=0)
         {
           cerr << "Usage -bw option needs positive number  -- ignored" << endl;
-          bandwidth = 0.0;
+          bandwidth=0.0;
         } 
         else
         {
-          ad_comm::bandwidth = bandwidth;
+          ad_comm::bandwidth=bandwidth;
         }
       }
     }
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-phase"))>-1)
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-phase"))>-1)
     {
-      int jj = atoi(ad_comm::argv[on+1]);
+      int jj=atoi(ad_comm::argv[on+1]);
       if (jj <=0)
       {
         cerr << " Invalid option following command line option -phase -- " 
@@ -210,18 +210,18 @@ void tracing_message(int traceflag,const char *s);
       }
       if (jj>allphases)
       {
-        jj = allphases;
+        jj=allphases;
       }
       if (jj<=0)
       {
-        jj = 1;
+        jj=1;
       }
       initial_params::current_phase = jj;
       cout << "Set current phase to " << jj << endl;
     }
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-lapqd"))>-1)
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-lapqd"))>-1)
     {
-      ADqd_flag = 1;
+      ADqd_flag=1;
     }
     
     tracing_message(traceflag,"A2");
@@ -234,7 +234,7 @@ void tracing_message(int traceflag,const char *s);
         initial_params::set_inactive_random_effects(); 
 #endif
 
-      int nvar = initial_params::nvarcalc(); // get the number of active
+      int nvar=initial_params::nvarcalc(); // get the number of active
              // parameters
       if (!nvar)
       {
@@ -248,14 +248,14 @@ void tracing_message(int traceflag,const char *s);
       initial_params::xinit(x);    // get the initial values into the
       dvector zz(1,x.indexmax());
       dvector xsave(1,x.indexmax());
-      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-uhess"))>-1)
+      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-uhess"))>-1)
       {
-        int ierr = 0;
+        int ierr=0;
         ifstream ifs("vector");
         if (!ifs) 
         {
           cerr << "couldn't open file vector" << endl;
-          ierr = 1;
+          ierr=1;
         }
         if(ierr==0)
         { 
@@ -263,56 +263,56 @@ void tracing_message(int traceflag,const char *s);
           if (!ifs) 
           {
             cerr << "couldn't read vector" << endl;
-            ierr = 1;
+            ierr=1;
           }
         }   
         if (ierr==0)
         {
           do 
           {
-            double delta = 0;
+            double delta=0;
             cout << "enter delta" << endl;
             cin >> delta;
-            xsave = x;   
+            xsave=x;   
             x+=delta*zz;
             initial_params::reset(x);    // get the initial values into the
             userfunction();
-            x = xsave;
+            x=xsave;
           }
           while(1);
         }
       } 
 
    
-      double f = 0.0;
+      double f=0.0;
 
       int lmnflag = -1;
       int simpflag = -1;
-      int lmnsteps = 10;
-      if ( (simpflag = option_match(ad_comm::argc,ad_comm::argv,"-simplex"))>-1)
+      int lmnsteps=10;
+      if ( (simpflag=option_match(ad_comm::argc,ad_comm::argv,"-simplex"))>-1)
       {
         gradient_structure::set_NO_DERIVATIVES();
-        double delta = 1.e-4;
-        double ftol = 1.e-16;
+        double delta=1.e-4;
+        double ftol=1.e-16;
         dmatrix p(1,nvar+1,1,nvar);
         dvector y(1,nvar+1);
         set_initial_simplex(p,y,nvar,x,delta);
         adamoeba(p,y,nvar,ftol,maxfn);
-        double ymin = min(y);
-        for (int i = 1;i<=nvar+1;i++)
+        double ymin=min(y);
+        for (int i=1;i<=nvar+1;i++)
         if (ymin==y(i))
         {
-          x = p(i);
+          x=p(i);
           break;
         }
         cerr << "The -simplex option is deprecated. The user should port "
              << "to the -neldmead option." << endl;
       }
-      if ( (simpflag = option_match(ad_comm::argc,ad_comm::argv,"-neldmead"))>-1)
+      if ( (simpflag=option_match(ad_comm::argc,ad_comm::argv,"-neldmead"))>-1)
       {
         gradient_structure::set_NO_DERIVATIVES();
-        double delta = 1.e-4;
-        double ftol = 1.e-16;
+        double delta=1.e-4;
+        double ftol=1.e-16;
         dvector mincords = x;
         double ynewlo;
         double* pynewlo = &ynewlo;
@@ -323,7 +323,7 @@ void tracing_message(int traceflag,const char *s);
         neldmead(nvar,mincords,mincords,pynewlo,ftol,delta,picount,pnumres,pifault);
         x = mincords;
       }
-      if ( (lmnflag = option_match(ad_comm::argc,ad_comm::argv,"-lmn",nopt))>-1)
+      if ( (lmnflag=option_match(ad_comm::argc,ad_comm::argv,"-lmn",nopt))>-1)
       {
 #if   defined(USE_LAPLACE)
         if (random_effects_flag)
@@ -339,14 +339,14 @@ void tracing_message(int traceflag,const char *s);
         }
         else
         {   
-          int jj = atoi(ad_comm::argv[lmnflag+1]);
+          int jj=atoi(ad_comm::argv[lmnflag+1]);
           if (jj<=0)
           {
             cerr << "Usage -lmn option needs positive integer  -- set to defalt 10" << endl;
           }
           else
           {
-            lmnsteps = jj;
+            lmnsteps=jj;
           }
         }
       }
@@ -359,25 +359,25 @@ void tracing_message(int traceflag,const char *s);
         {
           trust_region_update(nvar,_crit,x,g,f);
         }
-#endif   // defined(USE_LAPLACE)
+#endif   //defined(USE_LAPLACE)
         if (!ad_comm::pvm_manager)
         {
           do
           {
             if (spminflag)
             {
-              repeatminflag = 1;
-              spminflag = 0;
+              repeatminflag=1;
+              spminflag=0;
             }
             else
             {
-              repeatminflag = 0;
+              repeatminflag=0;
             }
             if (maxfn>0)
             {
               int lmnflag=-1;
-              int nsteps = 5;
-              if ( (lmnflag = option_match(ad_comm::argc,ad_comm::argv,
+              int nsteps=5;
+              if ( (lmnflag=option_match(ad_comm::argc,ad_comm::argv,
                  "-lmn2",nopt))>-1)
               {
                 if (!nopt)
@@ -387,7 +387,7 @@ void tracing_message(int traceflag,const char *s);
                 }
                 else
                 {   
-                  int jj = atoi(ad_comm::argv[lmnflag+1]);
+                  int jj=atoi(ad_comm::argv[lmnflag+1]);
                   if (jj<=0)
                   {
                     cerr << "Usage -lmn option needs positive integer "
@@ -395,7 +395,7 @@ void tracing_message(int traceflag,const char *s);
                   }
                   else
                   {
-                    nsteps = jj;
+                    nsteps=jj;
                   }
                 }
               }
@@ -475,7 +475,7 @@ void tracing_message(int traceflag,const char *s);
 
       gradient_structure::set_NO_DERIVATIVES();
       initial_params::reset(dvar_vector(x));
-      *objective_function_value::pobjfun = 0.0;
+      *objective_function_value::pobjfun=0.0;
 #if defined(USE_LAPLACE)
       if (!random_effects_flag || !lapprox)
       {
@@ -488,7 +488,7 @@ void tracing_message(int traceflag,const char *s);
           {
           case 1:
             pvm_master_function_evaluation_no_derivatives(f,x,nvar);
-            *objective_function_value::pobjfun = f;
+            *objective_function_value::pobjfun=f;
             break;
           case 2:
             pvm_slave_function_evaluation_no_derivatives();
@@ -511,7 +511,7 @@ void tracing_message(int traceflag,const char *s);
       else
       {
         (*lapprox)(x,f,this);
-        *objective_function_value::pobjfun = f;
+        *objective_function_value::pobjfun=f;
         initial_params::set_inactive_only_random_effects(); 
         print_is_diagnostics(lapprox);
       }
@@ -539,16 +539,16 @@ void tracing_message(int traceflag,const char *s);
 #  if defined(USE_LAPLACE)
   void function_minimizer::set_multinomial_weights(dvector& d)
   {
-    multinomial_weights = new dvector(d);
+    multinomial_weights=new dvector(d);
   }
 #endif
 
   function_minimizer::function_minimizer(long int sz)
   {
 #  if defined(USE_LAPLACE)
-    lapprox = 0;
-    multinomial_weights = 0;
-    // cout << lapprox << endl;
+    lapprox=0;
+    multinomial_weights=0;
+    //cout << lapprox << endl;
 #  endif
     maxfn  = 1000;
     iprint = 1;
@@ -559,19 +559,19 @@ void tracing_message(int traceflag,const char *s);
     ihflag = 0;
     ihang  = 0;
     scroll_flag = 1;
-    maxfn_flag = 0;
-    quit_flag = 0;
+    maxfn_flag=0;
+    quit_flag=0;
     min_improve=.0;
-    negdirections = 0;
-    spminflag = 0;
-    repeatminflag = 0;
+    negdirections=0;
+    spminflag=0;
+    repeatminflag=0;
 
     int ssz;
 
-    int nopt = get_option_number("-ams",
+    int nopt=get_option_number("-ams",
       "-ams option needs positive integer -- ignored",ssz);
     if (nopt>-1 && ssz>0) {
-      sz = ssz;
+      sz=ssz;
     }
     
 #ifdef __BORLANDC__
@@ -579,14 +579,14 @@ void tracing_message(int traceflag,const char *s);
 #else
     long long int lssz;
 #endif
-    nopt = get_option_number("-cbs",
+    nopt=get_option_number("-cbs",
       "-cbs option needs positive integer -- ignored",lssz);
     if (nopt>-1 && lssz>0) {
       gradient_structure::set_CMPDIF_BUFFER_SIZE(lssz);
     }
 
     
-    nopt = get_option_number("-gbs",
+    nopt=get_option_number("-gbs",
       "-gbs option needs positive integer -- ignored",lssz);
     if (nopt>-1 && lssz>0) {
       gradient_structure::set_GRADSTACK_BUFFER_SIZE
@@ -609,46 +609,46 @@ void tracing_message(int traceflag,const char *s);
     if(multinomial_weights)
     {
       delete multinomial_weights;
-      multinomial_weights = 0;
+      multinomial_weights=0;
     }
 
     if (lapprox)
     {
       delete lapprox;
-      lapprox = 0;
+      lapprox=0;
     }
 #  endif
     delete pgs;
-    pgs = NULL;
+    pgs=NULL;
     if (negdirections)
     {
       delete negdirections;
-      negdirections = 0;
+      negdirections=0;
     }
   }
 
   void function_minimizer::set_initial_simplex(BOR_CONST dmatrix& _p,BOR_CONST dvector& _y,int nvar,BOR_CONST dvector& x,
     double delta)
   {
-    dvector& y = (dvector&) _y;
-    dmatrix& p = (dmatrix&) _p;
+    dvector& y=(dvector&) _y;
+    dmatrix& p=(dmatrix&) _p;
     int i;
-    p(1) = x;
-    for (i = 2;i<=nvar+1;i++)
+    p(1)=x;
+    for (i=2;i<=nvar+1;i++)
     {
-      p(i) = x;
+      p(i)=x;
       p(i,i-1)+=delta;
     }
     dvector xx(1,nvar);
-    double vf = 0;
-    for (i = 1;i<=nvar+1;i++)
+    double vf=0;
+    for (i=1;i<=nvar+1;i++)
     {
-      xx = p(i);
-      vf = value(initial_params::reset(dvar_vector(xx)));
-      *objective_function_value::pobjfun = 0.0;
+      xx=p(i);
+      vf=value(initial_params::reset(dvar_vector(xx)));
+      *objective_function_value::pobjfun=0.0;
       userfunction();
       vf+=value(*objective_function_value::pobjfun);
-      y(i) = vf;
+      y(i)=vf;
     }
   }    
 
@@ -658,7 +658,7 @@ int get_option_number(const char * option_name,const char * error_message,
 {
   int on1;
   int nopt;
-  if ( (on1 = option_match(ad_comm::argc,ad_comm::argv,option_name,nopt))>-1)
+  if ( (on1=option_match(ad_comm::argc,ad_comm::argv,option_name,nopt))>-1)
   {
     if (!nopt)
     {
@@ -670,7 +670,7 @@ int get_option_number(const char * option_name,const char * error_message,
     }
     else
     {   
-      option_value = atoi(ad_comm::argv[on1+1]);
+      option_value=atoi(ad_comm::argv[on1+1]);
     }
   }
   return on1;
@@ -685,7 +685,7 @@ int get_option_number(const char * option_name,const char * error_message,
 {
   int on1;
   int nopt;
-  if ( (on1 = option_match(ad_comm::argc,ad_comm::argv,option_name,nopt))>-1)
+  if ( (on1=option_match(ad_comm::argc,ad_comm::argv,option_name,nopt))>-1)
   {
     if (!nopt)
     {
@@ -698,9 +698,9 @@ int get_option_number(const char * option_name,const char * error_message,
     else
     {   
 #if defined(__BORLANDC__) || defined(_MSC_VER)
-      option_value = atol(ad_comm::argv[on1+1]);
+      option_value=atol(ad_comm::argv[on1+1]);
 #else
-      option_value = atoll(ad_comm::argv[on1+1]);
+      option_value=atoll(ad_comm::argv[on1+1]);
 #endif
     }
   }
@@ -716,10 +716,10 @@ void function_minimizer::other_separable_stuff_begin(void)
     lapprox->separable_calls_counter++;
     /*
     lapprox->separable_call_level++;
-    // lapprox->build_up_nested_shape(); 
+    //lapprox->build_up_nested_shape(); 
     lapprox->nested_separable_calls_counter
       (lapprox->separable_call_level)++;
-    // clean(lapprox->nested_tree_position,lapprox->separable_call_level);
+    //clean(lapprox->nested_tree_position,lapprox->separable_call_level);
     lapprox->nested_tree_position(lapprox->separable_call_level)++;
     */
   }
@@ -740,15 +740,15 @@ void function_minimizer::other_separable_stuff_end(void)
 
 void function_minimizer::begin_gauss_hermite_stuff(void)
 {
-  int nsc = lapprox->separable_calls_counter;
-  int is = 0;
+  int nsc=lapprox->separable_calls_counter;
+  int is=0;
   if (lapprox->gh->mi==0)
   {
-    is = lapprox->gh->is;
+    is=lapprox->gh->is;
   }
   else
   {
-    is = lapprox->gh->mi->get_offset()+1;
+    is=lapprox->gh->mi->get_offset()+1;
   }
   lapprox->gh->gauss_hermite_values(nsc,is)=
     *objective_function_value::pobjfun;
@@ -756,16 +756,16 @@ void function_minimizer::begin_gauss_hermite_stuff(void)
 
 void function_minimizer::start_get_importance_sampling_comnponent(void)
 {
-  int nsc = lapprox->separable_calls_counter;
-  int isc = lapprox->importance_sampling_counter;
+  int nsc=lapprox->separable_calls_counter;
+  int isc=lapprox->importance_sampling_counter;
   (*lapprox->importance_sampling_components)(nsc,isc)=
      *objective_function_value::pobjfun;
 }
 
 void function_minimizer::end_get_importance_sampling_comnponent(void)
 {
-  int nsc = lapprox->separable_calls_counter;
-  int is = lapprox->importance_sampling_counter;
+  int nsc=lapprox->separable_calls_counter;
+  int is=lapprox->importance_sampling_counter;
   if (lapprox->saddlepointflag==2)
   {
     (*lapprox->importance_sampling_components)(nsc,is)=
@@ -802,10 +802,10 @@ void function_minimizer::begin_funnel_stuff(void)
 
 void function_minimizer::get_function_difference(void)
 {
-  int nsc = lapprox->separable_calls_counter;
+  int nsc=lapprox->separable_calls_counter;
   (*(lapprox->separable_function_difference))(nsc)=
     value(*objective_function_value::pobjfun);
-    value(*objective_function_value::pobjfun) = 0.0;
+    value(*objective_function_value::pobjfun)=0.0;
 
 }
 void function_minimizer::end_df1b2_funnel_stuff(void) 
@@ -844,15 +844,15 @@ void function_minimizer::end_df1b2_funnel_stuff(void)
 
 void function_minimizer::end_gauss_hermite_stuff(void)
 {
-  int nsc = lapprox->separable_calls_counter;
-  int is = 0;
+  int nsc=lapprox->separable_calls_counter;
+  int is=0;
   if (lapprox->gh->mi==0)
   {
-    is = lapprox->gh->is;
+    is=lapprox->gh->is;
   }
   else
   {
-    is = lapprox->gh->mi->get_offset()+1;
+    is=lapprox->gh->mi->get_offset()+1;
   }
   lapprox->gh->gauss_hermite_values(nsc,is)=
     *objective_function_value::pobjfun-
@@ -865,13 +865,13 @@ void print_is_diagnostics(laplace_approximation_calculator *lapprox)
   {
     if (lapprox->importance_sampling_values)
     {
-      int mmin = lapprox->importance_sampling_values->indexmin();
-      int mmax = lapprox->importance_sampling_values->indexmax();
+      int mmin=lapprox->importance_sampling_values->indexmin();
+      int mmax=lapprox->importance_sampling_values->indexmax();
       double mn= mean(*lapprox->importance_sampling_values);
       dmatrix tmp(1,2,mmin,mmax);
       tmp(2)=*lapprox->importance_sampling_values-mn;
       tmp(1).fill_seqadd(1,1);
-      tmp = trans(sort(trans(tmp),2));
+      tmp=trans(sort(trans(tmp),2));
       ofstream ofs("is_diagnostics");
       ofs << "number of importance samples " 
           << lapprox->num_importance_samples << endl;

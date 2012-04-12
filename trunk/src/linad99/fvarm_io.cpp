@@ -48,7 +48,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dvar_matrix& z)
  */
 void dvar_matrix::write_on(BOR_CONST ostream& _s) _CONST
 {
-  ostream& s = (ostream&) _s;
+  ostream& s=(ostream&) _s;
 #ifdef __USE_IOSTREAM__
   int new_w = s.width();
   int new_p = s.precision();
@@ -60,7 +60,7 @@ void dvar_matrix::write_on(BOR_CONST ostream& _s) _CONST
   char new_fill = s.fill();
 #endif
 
-  for (int i = rowmin(); i <= rowmax(); i++)
+  for (int i=rowmin(); i <= rowmax(); i++)
   {
   #ifdef __USE_IOSTREAM__
     s.width(new_w);
@@ -97,7 +97,7 @@ void dvar_matrix::read_from(BOR_CONST istream& s)
 {
   int n = rowmin() + rowsize() - 1;
 
-  for (int i = rowmin(); i <= n; i++)
+  for (int i=rowmin(); i <= n; i++)
   {
     s >> (*this)[i];
     /*

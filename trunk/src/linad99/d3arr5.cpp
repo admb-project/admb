@@ -18,9 +18,9 @@
    {
      d3_array tmp;
      tmp.allocate(m);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = cube(m(i));
+       tmp(i)=cube(m(i));
      }
      return tmp;
    }

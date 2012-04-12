@@ -16,14 +16,14 @@
  */
   ivector& ivector::operator +=(const ivector& j)
   {
-     int mmin = indexmin();
-     int mmax = indexmax();
+     int mmin=indexmin();
+     int mmax=indexmax();
      if (mmin != j.indexmin() || mmax != j.indexmax())
      {
        cerr << " Incompatible array sizes in ivector::operator +=" << endl;
        exit(1);
      }    
-     for (int i = mmin; i<=mmax; i++)
+     for (int i=mmin; i<=mmax; i++)
      {
        (*this)(i)+=j(i);
      }
@@ -36,9 +36,9 @@
  */
   ivector& ivector::operator +=(int j)
   {
-     int mmin = indexmin();
-     int mmax = indexmax();
-     for (int i = mmin; i<=mmax; i++)
+     int mmin=indexmin();
+     int mmax=indexmax();
+     for (int i=mmin; i<=mmax; i++)
      {
        (*this)(i)+=j;
      }

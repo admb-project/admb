@@ -69,7 +69,7 @@
     int col_max;
     four_array_shape(int hsl,int hsu, int sl,int sh,int rl,
       int ru,int cl,int cu);
-    // mat_shape(){};
+    //mat_shape(){};
 
     friend class d4_array;
     friend class dvar4_array;
@@ -109,7 +109,7 @@ public:
   d4_array& operator = (_CONST d4_array&);
   d4_array(d4_array& m2);
   d4_array(int,int,int,int,int,int,int,int);
-  // d4_array(int,int,int,ivector,int,imatrix,int,int);
+  //d4_array(int,int,int,ivector,int,imatrix,int,int);
   d4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
    int nrl, _CONST imatrix& nrh,int ncl,int nch);
   d4_array();
@@ -154,7 +154,7 @@ public:
     dvector& operator ( ) (int,int,int);
     double& operator ( ) (int,int,int,int);
   #endif
-  // access functions
+  //access functions
   friend class four_array_shape;
   int hslicemin(void) { return(shape->hslice_min);}
   int hslicemax(void) { return(shape->hslice_max);}
@@ -213,7 +213,7 @@ public:
    int nrl, _CONST imatrix& nrh,int ncl,int nch);
   void allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
    int nrl, _CONST imatrix& nrh,int ncl,int nch);
-  // dvar4_array(int,int,int,ivector,int,imatrix,int,int);
+  //dvar4_array(int,int,int,ivector,int,imatrix,int,int);
   dvar4_array();
   ~dvar4_array();
    dvar3_array& elem(int i) { return t[i];}
@@ -260,7 +260,7 @@ public:
     dvar_vector& operator ( ) (int,int,int);
     prevariable operator ( ) (int,int,int,int);
   #endif
-  // access functions
+  //access functions
   friend class four_array_shape;
   int hslicemin(void) { return(shape->hslice_min);}
   int hslicemax(void) { return(shape->hslice_max);}

@@ -261,7 +261,7 @@ static df3_three_variable gamma(const df3_three_variable & xx1)
 	  goverf:
 	    mtherr("gamma", OVERFLOW);
 	    return (sgngam * MYBIG);
-	    // return( sgngam * MAXNUM);
+	    //return( sgngam * MAXNUM);
 #endif
 	 }
 	 z = fabs(z);
@@ -719,7 +719,7 @@ df1b2variable betai(const df1b2variable & _a, const df1b2variable & _b,
 		     double _x)
 {
   ADUNCONST(df1b2variable, a) ADUNCONST(df1b2variable, b)
-  df1b2variable x = _x;
+  df1b2variable x=_x;
   df1b2variable ret = incbet(a,b,x);
   return ret;
 }
@@ -887,7 +887,7 @@ df3_three_variable igamc(const df3_three_variable & _a,
   //  *   a  -x   -       x
   //  *  x  e     >   ----------
   //  *           -     -
-  //  *          k = 0   | (a+k+1)
+  //  *          k=0   | (a+k+1)
   //  *
   //  */
   // 
@@ -1228,7 +1228,7 @@ static df3_three_variable incbd(const df3_three_variable & _a,
 {
    ADUNCONST(df3_three_variable, a)
       ADUNCONST(df3_three_variable, b) ADUNCONST(df3_three_variable, x)
-      // df3_three_variable s, t, u, v, n, t1, z, ai;
+      //df3_three_variable s, t, u, v, n, t1, z, ai;
    df3_three_variable xk, pk, pkm1, pkm2, qk, qkm1, qkm2;
    df3_three_variable k1, k2, k3, k4, k5, k6, k7, k8;
    df3_three_variable r, t, ans, z, thresh;

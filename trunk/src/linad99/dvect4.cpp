@@ -19,9 +19,9 @@
 
      dvector tmp(t1.indexmin(),t1.indexmax());
 
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp.elem(i) = x*t1.elem(i);
+       tmp.elem(i)=x*t1.elem(i);
      }
      return(tmp);
   }
@@ -34,9 +34,9 @@
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp.elem(i) = x/t1.elem(i);
+       tmp.elem(i)=x/t1.elem(i);
      }
      return(tmp);
   }
@@ -49,9 +49,9 @@
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp.elem(i) = t1.elem(i)/x;
+       tmp.elem(i)=t1.elem(i)/x;
      }
      return(tmp);
   }
@@ -64,9 +64,9 @@
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp.elem(i) = x+t1.elem(i);
+       tmp.elem(i)=x+t1.elem(i);
      }
      return(tmp);
   }
@@ -79,9 +79,9 @@
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp.elem(i) = t1.elem(i)+x;
+       tmp.elem(i)=t1.elem(i)+x;
      }
      return(tmp);
   }
@@ -94,9 +94,9 @@
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp.elem(i) = x-t1.elem(i);
+       tmp.elem(i)=x-t1.elem(i);
      }
      return(tmp);
   }
@@ -109,9 +109,9 @@
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp.elem(i) = t1.elem(i)-x;
+       tmp.elem(i)=t1.elem(i)-x;
      }
      return(tmp);
   }

@@ -38,14 +38,14 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   int MAXN = min(JMAX, ns);
   dvar_vector s(1,MAXN+1);
 
-  for(int j = 1; j<=MAXN+1; j++)
+  for(int j=1; j<=MAXN+1; j++)
   {
     s[j] = trapzd(func,a,b,j);
   }
 
-  for(int iter = 1; iter<=MAXN+1; iter++)
+  for(int iter=1; iter<=MAXN+1; iter++)
   {
-    for(int j = 1; j<=MAXN+1-iter; j++)
+    for(int j=1; j<=MAXN+1-iter; j++)
     {
       s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
     }
@@ -68,14 +68,14 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   int MAXN = min(JMAX, ns);
   dvar_vector s(1,MAXN+1);
 
-  for(int j = 1; j<=MAXN+1; j++)
+  for(int j=1; j<=MAXN+1; j++)
   {
     s[j] = trapzd(func,a,b,j);
   }
 
-  for(int iter = 1; iter<=MAXN+1; iter++)
+  for(int iter=1; iter<=MAXN+1; iter++)
   {
-    for(int j = 1; j<=MAXN+1-iter; j++)
+    for(int j=1; j<=MAXN+1-iter; j++)
     {
       s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
     }
@@ -98,14 +98,14 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   int MAXN = min(JMAX, ns);
   dvar_vector s(1,MAXN+1);
 
-  for(int j = 1; j<=MAXN+1; j++)
+  for(int j=1; j<=MAXN+1; j++)
   {
     s[j] = trapzd(func,a,b,j);
   }
 
-  for(int iter = 1; iter<=MAXN+1; iter++)
+  for(int iter=1; iter<=MAXN+1; iter++)
   {
-    for(int j = 1; j<=MAXN+1-iter; j++)
+    for(int j=1; j<=MAXN+1-iter; j++)
     {
       s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
     }
@@ -128,14 +128,14 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   int MAXN = min(JMAX, ns);
   dvar_vector s(1,MAXN+1);
 
-  for(int j = 1; j<=MAXN+1; j++)
+  for(int j=1; j<=MAXN+1; j++)
   {
     s[j] = trapzd(func,a,b,j);
   }
 
-  for(int iter = 1; iter<=MAXN+1; iter++)
+  for(int iter=1; iter<=MAXN+1; iter++)
   {
-    for(int j = 1; j<=MAXN+1-iter; j++)
+    for(int j=1; j<=MAXN+1-iter; j++)
     {
       s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
     }
@@ -160,15 +160,15 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
   int j;
   model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
-    interval = 1;
-    return (s = 0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
+    interval=1;
+    return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    num_interval = interval;
-    hn = (b-a)/num_interval;
-    x = a+0.5*hn;
-    for (sum = 0.0,j = 1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    num_interval=interval;
+    hn=(b-a)/num_interval;
+    x=a+0.5*hn;
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
     interval *= 2;
-    s = 0.5*(s+(b-a)*sum/num_interval);
+    s=0.5*(s+(b-a)*sum/num_interval);
     return s;
   }
 }
@@ -189,15 +189,15 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
   int j;
   model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
-    interval = 1;
-    return (s = 0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
+    interval=1;
+    return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    num_interval = interval;
-    hn = (b-a)/num_interval;
-    x = a+0.5*hn;
-    for (sum = 0.0,j = 1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    num_interval=interval;
+    hn=(b-a)/num_interval;
+    x=a+0.5*hn;
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
     interval *= 2;
-    s = 0.5*(s+(b-a)*sum/num_interval);
+    s=0.5*(s+(b-a)*sum/num_interval);
     return s;
   }
 }
@@ -220,15 +220,15 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
 
   model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
-    interval = 1;
-    return (s = 0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
+    interval=1;
+    return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    num_interval = interval;
-    hn = (b-a)/num_interval;
-    x = a+0.5*hn;
-    for (sum = 0.0,j = 1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    num_interval=interval;
+    hn=(b-a)/num_interval;
+    x=a+0.5*hn;
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
     interval *= 2;
-    s = 0.5*(s+(b-a)*sum/num_interval);
+    s=0.5*(s+(b-a)*sum/num_interval);
     return s;
   }
 }
@@ -250,15 +250,15 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
 
   model_parameters * ptr= (model_parameters *) mycast();
   if (n == 1) {
-    interval = 1;
-    return (s = 0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
+    interval=1;
+    return (s=0.5*(b-a)*((ptr->*func)(a)+(ptr->*func)(b)));
   } else {
-    num_interval = interval;
-    hn = (b-a)/num_interval;
-    x = a+0.5*hn;
-    for (sum = 0.0,j = 1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    num_interval=interval;
+    hn=(b-a)/num_interval;
+    x=a+0.5*hn;
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
     interval *= 2;
-    s = 0.5*(s+(b-a)*sum/num_interval);
+    s=0.5*(s+(b-a)*sum/num_interval);
     return s;
   }
 }
@@ -267,42 +267,42 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
 //#undef JMAXP
 //#undef K
 
- // Not used elsewhere
+ //Not used elsewhere
 void polint(BOR_CONST dvector& xa,BOR_CONST dvar_vector& ya,int n,double x,BOR_CONST dvariable& _y,BOR_CONST dvariable& _dy)
 {
-  dvariable& y = (dvariable&) _y;
-  dvariable& dy = (dvariable&) _dy;
-  int i,m,ns = 1;
+  dvariable& y=(dvariable&) _y;
+  dvariable& dy=(dvariable&) _dy;
+  int i,m,ns=1;
   double dif,dift,ho,hp;
   dvariable den,w;
 
-  dif = fabs(x-xa[1]);
+  dif=fabs(x-xa[1]);
   dvar_vector c(1,n);
   dvar_vector d(1,n);
-  for (i = 1;i<=n;i++) {
-    if ( (dift = fabs(x-xa[i])) < dif) {
-      ns = i;
-      dif = dift;
+  for (i=1;i<=n;i++) {
+    if ( (dift=fabs(x-xa[i])) < dif) {
+      ns=i;
+      dif=dift;
     }
-    c[i] = ya[i];
-    d[i] = ya[i];
+    c[i]=ya[i];
+    d[i]=ya[i];
   }
-  y = ya[ns--];
-  for (m = 1;m<n;m++) {
-    for (i = 1;i<=n-m;i++) {
-      ho = xa[i]-x;
-      hp = xa[i+m]-x;
-      w = c[i+1]-d[i];
-      if ( (den = ho-hp) == 0.0) 
+  y=ya[ns--];
+  for (m=1;m<n;m++) {
+    for (i=1;i<=n-m;i++) {
+      ho=xa[i]-x;
+      hp=xa[i+m]-x;
+      w=c[i+1]-d[i];
+      if ( (den=ho-hp) == 0.0) 
       {
         cerr << "Error in routine POLINT" << endl;
         exit(1);
       }
-      den = w/den;
-      d[i] = hp*den;
-      c[i] = ho*den;
+      den=w/den;
+      d[i]=hp*den;
+      c[i]=ho*den;
     }
-    y += (dy = (2*ns < (n-m) ? c[ns+1] : d[ns--]));
+    y += (dy=(2*ns < (n-m) ? c[ns+1] : d[ns--]));
   }
 }
 

@@ -10,7 +10,7 @@
  */
 #include <fvar.hpp>
 
-static double cc = 0.39894228040143267794;
+static double cc=0.39894228040143267794;
 
 typedef double (*pinit_f)(double y,double a); 
 
@@ -24,11 +24,11 @@ static double cumd_normal_logistic_mixture(double x,double a)
   double y;
   if (x>-20.0)
   {
-    y = 0.95*cumd_norm(x)+0.05/(1.0+exp(-x/a));
+    y=0.95*cumd_norm(x)+0.05/(1.0+exp(-x/a));
   }
   else
   {
-    y = 0.95*cumd_norm(x)+0.05/(1.0+exp(-x/a));
+    y=0.95*cumd_norm(x)+0.05/(1.0+exp(-x/a));
   }
   return y;
 }
@@ -40,16 +40,16 @@ static double cumd_normal_logistic_mixture(double x,double a)
 static double df_cumd_normal_logistic_mixture(double x,double a)
 {
   // "normal" value for a is 3.0
-  // double y = 0.95*cumd_norm(x)+0.05*cumd_norm(x/a)
-  double x2 = x*x;
+  //double y=0.95*cumd_norm(x)+0.05*cumd_norm(x/a)
+  double x2=x*x;
   double dfx;
   if (x>-20.0)
   {
-    dfx = cc*0.95*exp(-0.5*x2)+0.05/a*exp(-x/a)/square(1.0+exp(-x/a));
+    dfx=cc*0.95*exp(-0.5*x2)+0.05/a*exp(-x/a)/square(1.0+exp(-x/a));
   }
   else
   {
-    dfx = cc*0.95*exp(-0.5*x2)+0.05/a*exp(-x/a)/square(1.0+exp(-x/a));
+    dfx=cc*0.95*exp(-0.5*x2)+0.05/a*exp(-x/a)/square(1.0+exp(-x/a));
   }
 
   return dfx;
@@ -72,7 +72,7 @@ static double cumd_normal_logistic_mixture_initx(double y,double a)
   }
   else
   {
-    x = inv_cumd_norm(y);
+    x=inv_cumd_norm(y);
   }
   return x;
 }
@@ -87,11 +87,11 @@ double  nr_generic(double y,double a,pinit_f p_get_initial_x,
 dvariable inv_cumd_normal_logistic_mixture(const prevariable& _yy,double a)
 {
   ADUNCONST(dvariable,yy)
-  double  x = nr_generic(value(yy),a,cumd_normal_logistic_mixture_initx,
+  double  x=nr_generic(value(yy),a,cumd_normal_logistic_mixture_initx,
     cumd_normal_logistic_mixture,df_cumd_normal_logistic_mixture);
   dvariable z;
-  value(z) = x;
-  double dfx = 1.0/df_cumd_normal_logistic_mixture(x,a);
+  value(z)=x;
+  double dfx=1.0/df_cumd_normal_logistic_mixture(x,a);
   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
      &(value(z)), &(value(yy)),dfx);
   return z;
@@ -103,7 +103,7 @@ main()
   gradient_structure gs(10000);
   dvariable y;
   cin >> y;
-  dvariable x = inv_cumd_normal_logistic_mixture(y,3.0);
+  dvariable x=inv_cumd_normal_logistic_mixture(y,3.0);
 }
 */
 //********************************************************
@@ -118,7 +118,7 @@ main()
 double robust_normal_logistic_mixture_deviate(double x,double spread)
 {
 
-  double y = cumd_norm(x);
+  double y=cumd_norm(x);
   y = 0.99999999*y + 0.000000005; // To gain numerical stability
   double z = inv_cumd_normal_logistic_mixture(y,spread);
   return z;
@@ -130,7 +130,7 @@ double robust_normal_logistic_mixture_deviate(double x,double spread)
  */
 double robust_normal_mixture_deviate(double x,double spread)
 {
-  double y = cumd_norm(x);
+  double y=cumd_norm(x);
   y = 0.99999999*y + 0.000000005; // To gain numerical stability
   double z = inv_cumd_normal_mixture(y,spread);
   return z;
@@ -142,7 +142,7 @@ double robust_normal_mixture_deviate(double x,double spread)
  */
 double inv_cumd_normal_logistic_mixture(double yy,double a)
 {
-  double  x = nr_generic(yy,a,cumd_normal_logistic_mixture_initx,
+  double  x=nr_generic(yy,a,cumd_normal_logistic_mixture_initx,
     cumd_normal_logistic_mixture,df_cumd_normal_logistic_mixture);
   return x;
 }

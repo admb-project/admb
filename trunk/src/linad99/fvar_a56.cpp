@@ -16,7 +16,7 @@
  */
   dvar_vector& dvar_vector::operator *= ( CGNU_DOUBLE x)
   {
-    for (int i = indexmin(); i<=indexmax(); i++)
+    for (int i=indexmin(); i<=indexmax(); i++)
     {
       elem(i)*=x;
     }
@@ -29,7 +29,7 @@
  */
   dvar_vector& dvar_vector::operator *= ( _CONST prevariable& x)
   {
-    for (int i = indexmin(); i<=indexmax(); i++)
+    for (int i=indexmin(); i<=indexmax(); i++)
     {
       elem(i)*=x;
     }

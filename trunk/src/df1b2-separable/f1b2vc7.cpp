@@ -17,9 +17,9 @@
 df1b2vector& df1b2vector::shift(int min)
 {
   v += indexmin()-min;
-  index_max = index_max-index_min+min;
-  index_min = min;
-  // shape->shift(min);
+  index_max=index_max-index_min+min;
+  index_min=min;
+  //shape->shift(min);
   return *this;
 }
 
@@ -47,9 +47,9 @@ df1b2vector& df1b2vector::shift(int min)
      ad_exit (1);
    }
   #endif
-   index_min = pdv.lb;
-   index_max = pdv.ub;
-   shape = pdv.p->shape;
+   index_min=pdv.lb;
+   index_max=pdv.ub;
+   shape=pdv.p->shape;
    (shape->ncopies)++;
    v = pdv.p->v;
  }

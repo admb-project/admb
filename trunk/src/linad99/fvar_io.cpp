@@ -35,7 +35,7 @@
  */
 ostream& operator<<(BOR_CONST ostream& _ostr,_CONST prevariable& f)
 {
-  ostream& ostr = (ostream&) _ostr;
+  ostream& ostr=(ostream&) _ostr;
   ostr << value(f);
   return ostr;
 }
@@ -47,10 +47,10 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST prevariable& f)
 istream& operator>>(BOR_CONST istream& _istr,BOR_CONST prevariable& _f)
 {
   prevariable& f = (prevariable&)_f;
-  istream& istr = (istream&) _istr;
+  istream& istr=(istream&) _istr;
   double tmp;
   istr >> tmp;
-  f = tmp;
+  f=tmp;
   return istr;
 }
 
@@ -62,7 +62,7 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST prevariable& _f)
  */
 uostream& operator<<(BOR_CONST uostream& _ostr,_CONST prevariable& f)
 {
-  uostream& ostr = (uostream&) _ostr;
+  uostream& ostr=(uostream&) _ostr;
   ostr << value(f);
   return ostr;
 }
@@ -74,10 +74,10 @@ uostream& operator<<(BOR_CONST uostream& _ostr,_CONST prevariable& f)
 uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST prevariable& _f)
 {
   prevariable& f = (prevariable&)_f;
-  uistream& istr = (uistream&) _istr;
+  uistream& istr=(uistream&) _istr;
   double tmp;
   istr >> tmp;
-  f = tmp;
+  f=tmp;
   return istr;
 }
 #endif

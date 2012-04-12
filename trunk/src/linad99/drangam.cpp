@@ -13,15 +13,15 @@
 /*
 void main()
 {
-  int n = 1000;
+  int n=1000;
   dvector v(1,n);
   random_number_generator rng(1011);
 
-  v(1) = sgamma(18.0,rng);
-  for (int i = 1;i<=n;i++)
+  v(1)=sgamma(18.0,rng);
+  for (int i=1;i<=n;i++)
   {
-    // v(i) = sgamma(double(i),rng);
-    v(i) = sgamma(.5,rng);
+    //v(i)=sgamma(double(i),rng);
+    v(i)=sgamma(.5,rng);
   }
   cout << mean(v) << endl;
 }
@@ -96,7 +96,7 @@ double sgamma(double a,const random_number_generator& _rng)
      SQRT32 IS THE SQUAREROOT OF 32 = 5.656854249492380
 */
 {
-  random_number_generator& rng = (random_number_generator&) _rng;
+  random_number_generator& rng=(random_number_generator&) _rng;
 extern double fsign( double num, double sign );
 static double q1 = 4.166669E-2;
 static double q2 = 2.083148E-2;
@@ -133,8 +133,8 @@ static double sgamma,s2,s,d,t,x,u,r,q0,b,b0,si,c,v,q,e,w,p;
     d = sqrt32-12.0*s;
 S10:
 /*
-     STEP  2:  T = STANDARD NORMAL DEVIATE,
-               X = (S,1/2)-NORMAL DEVIATE.
+     STEP  2:  T=STANDARD NORMAL DEVIATE,
+               X=(S,1/2)-NORMAL DEVIATE.
                IMMEDIATE ACCEPTANCE (I)
 */
     t = gasdev(rng);
@@ -146,7 +146,7 @@ S10:
      STEP  3:  U= 0,1 -UNIFORM SAMPLE. SQUEEZE ACCEPTANCE (S)
 */
     u = rng.better_rand();
-    // u = ranf();
+    //u=ranf();
     if(d*u <= t*t*t) return sgamma;
 /*
      STEP  4:  RECALCULATIONS OF Q0,B,SI,C IF NECESSARY
@@ -205,9 +205,9 @@ S60:
     if(log(1.0-u) <= q) return sgamma;
 S70:
 /*
-     STEP  8:  E = STANDARD EXPONENTIAL DEVIATE
+     STEP  8:  E=STANDARD EXPONENTIAL DEVIATE
                U= 0,1 -UNIFORM DEVIATE
-               T = (B,SI)-DOUBLE EXPONENTIAL (LAPLACE) SAMPLE
+               T=(B,SI)-DOUBLE EXPONENTIAL (LAPLACE) SAMPLE
 */
     e = expdev(rng);
     u = rng.better_rand();
@@ -262,7 +262,7 @@ S115:
     return sgamma;
 S120:
 /*
-     ALTERNATE METHOD FOR PARAMETERS A BELOW 1  (.3678794 = EXP(-1.))
+     ALTERNATE METHOD FOR PARAMETERS A BELOW 1  (.3678794=EXP(-1.))
 
      JJV changed B to B0 (which was added to declarations for this)
      JJV in 120 to END to fix rare and subtle bug.
@@ -294,16 +294,16 @@ S140:
  */
 double gasdev(const random_number_generator& _rng)
 {
-  random_number_generator& rng = (random_number_generator&) _rng;
+  random_number_generator& rng=(random_number_generator&) _rng;
   double fac,rsq,v1,v2;
 
   do 
   {
-    v1 = 2.0* rng.better_rand() -1.0;
-    v2 = 2.0*rng.better_rand()-1.0;
-    rsq = v1*v1+v2*v2;
+    v1=2.0* rng.better_rand() -1.0;
+    v2=2.0*rng.better_rand()-1.0;
+    rsq=v1*v1+v2*v2;
   } while (rsq >= 1.0 || rsq == 0.0);
-  fac = sqrt(-2.0*log(rsq)/rsq);
+  fac=sqrt(-2.0*log(rsq)/rsq);
   return v1*fac;
 }
 
@@ -313,11 +313,11 @@ double gasdev(const random_number_generator& _rng)
  */
 double expdev(const random_number_generator& _rng)
 {
-  random_number_generator& rng = (random_number_generator&) _rng;
+  random_number_generator& rng=(random_number_generator&) _rng;
   double dum;
 
   do
-    dum = rng.better_rand();
+    dum=rng.better_rand();
   while (dum == 0.0);
   return -log(dum);
 }

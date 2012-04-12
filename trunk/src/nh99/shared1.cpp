@@ -21,10 +21,10 @@
       share_flags->get_inv_matrix_shared(current_phase);
     }
     i3_array & bmap = share_flags->get_bmap();
-    int  mmin = bmap.indexmin();
-    int  mmax = bmap.indexmax();
-    int nv = 0;
-    for (int i = mmin;i<=mmax;i++)
+    int  mmin=bmap.indexmin();
+    int  mmax=bmap.indexmax();
+    int nv=0;
+    for (int i=mmin;i<=mmax;i++)
     {
       nv+=::size_count((*this)(bmap(i,1,1),bmap(i,1,2)));
     }
@@ -37,19 +37,19 @@
     ADUNCONST(int,ii)
     ADUNCONST(dvector,x)
     index_type& it=*(share_flags->get_invflags());
-    // int mmin = share_flags->invflags->indexmin();
-    // int mmax = share_flags->invflags->indexmax();
-    int mmin = it.indexmin();
-    int mmax = it.indexmax();
+    //int mmin=share_flags->invflags->indexmin();
+    //int mmax=share_flags->invflags->indexmax();
+    int mmin=it.indexmin();
+    int mmax=it.indexmax();
     int i;
-    for (i = mmin;i<=mmax;i++)
+    for (i=mmin;i<=mmax;i++)
     {
-      int k1 = it(i)(1).integer();
-      int k2 = it(i)(2).integer();
-      const dvar_vector & v = (*this)(k1,k2);
-      int kmin = v.indexmin();
-      int kmax = v.indexmax();
-      for (int k = kmin;k<=kmax;k++)
+      int k1=it(i)(1).integer();
+      int k2=it(i)(2).integer();
+      const dvar_vector & v=(*this)(k1,k2);
+      int kmin=v.indexmin();
+      int kmax=v.indexmax();
+      for (int k=kmin;k<=kmax;k++)
       {
         x(ii++)=::value(v(k));
       }
@@ -62,28 +62,28 @@
     ADUNCONST(int,ii)
     ADUNCONST(dvar_vector,x)
     i3_array & bmap = share_flags->get_bmap();
-    int  mmin = bmap.indexmin();
-    int  mmax = bmap.indexmax();
-    for (int i = mmin;i<=mmax;i++)
+    int  mmin=bmap.indexmin();
+    int  mmax=bmap.indexmax();
+    for (int i=mmin;i<=mmax;i++)
     {
-      int  jmin = bmap(i).indexmin();
-      int  jmax = bmap(i).indexmax();
+      int  jmin=bmap(i).indexmin();
+      int  jmax=bmap(i).indexmax();
   
       int ii1;
-      for (int j = jmin;j<=jmax;j++)
+      for (int j=jmin;j<=jmax;j++)
       {
-        dvar_vector& v = (*this)(bmap(i,j,1),bmap(i,j,2));
+        dvar_vector& v=(*this)(bmap(i,j,1),bmap(i,j,2));
   
-        int kmin = v.indexmin();
-        int kmax = v.indexmax();
+        int kmin=v.indexmin();
+        int kmax=v.indexmax();
   
-        ii1 = ii;
-        for (int k = kmin;k<=kmax;k++)
+        ii1=ii;
+        for (int k=kmin;k<=kmax;k++)
         {
-          v(k) = x(ii1++);
+          v(k)=x(ii1++);
         }
       }
-      ii = ii1;
+      ii=ii1;
     }
   }
 
@@ -92,7 +92,7 @@
   {
     share_flags = new shareinfo(sf,af);
     int idim1= share_flags->get_shareflags()->dimension();
-    share_flags->get_dimension() = idim1;
+    share_flags->get_dimension()=idim1;
     int idim2= share_flags->get_activeflags()->dimension();
     switch (idim1)
     {
@@ -107,8 +107,8 @@
         int mmax1= share_flags->get_shareflags()->indexmax();
         int mmin2= share_flags->get_activeflags()->indexmin();
         int mmax2= share_flags->get_activeflags()->indexmax();
-        int mmin = indexmin();
-        int mmax = indexmax();
+        int mmin=indexmin();
+        int mmax=indexmax();
         if (mmin1 != mmin || mmax1 != mmax ||
           mmin2 != mmin || mmax2 != mmax)
         {

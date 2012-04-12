@@ -18,7 +18,7 @@ adstring::adstring(_CONST char * t) : clist()
   }
   else
   {
-    sz = 0;
+    sz=0;
   }
 //  shape = new adstring_shape(sz);
 //  s = new char[size_t(sz + 1)];
@@ -31,7 +31,7 @@ adstring::adstring(_CONST char * t) : clist()
   s[sz + 1] = '\0';
 }
 
-// js
+//js
 adstring::adstring(void) : clist()
 {
   unsigned int sz = 0;

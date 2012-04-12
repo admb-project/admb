@@ -10,7 +10,7 @@ cifstream&  operator >>(BOR_CONST cifstream &,BOR_CONST prevariable &);
 
 cifstream& operator >> (BOR_CONST cifstream& _s, BOR_CONST param_init_number& x)
 {
-  cifstream&  s = (cifstream&) _s;
+  cifstream&  s=(cifstream&) _s;
   s >> value(x);
   return s;
 }
@@ -18,10 +18,10 @@ cifstream& operator >> (BOR_CONST cifstream& _s, BOR_CONST param_init_number& x)
 cifstream& operator >> (BOR_CONST cifstream& _s, BOR_CONST param_init_vector& _v)
 {
   ADUNCONST(param_init_vector,v)
-  cifstream&  s = (cifstream&) _s;
-  int mmin = v.indexmin();
-  int mmax = v.indexmax();
-  for (int i = mmin;i<=mmax;i++)
+  cifstream&  s=(cifstream&) _s;
+  int mmin=v.indexmin();
+  int mmax=v.indexmax();
+  for (int i=mmin;i<=mmax;i++)
   {
     s >> v(i);
     if (!s)
@@ -35,14 +35,14 @@ cifstream& operator >> (BOR_CONST cifstream& _s, BOR_CONST param_init_vector& _v
 
 cifstream& operator >> (BOR_CONST cifstream& _s, BOR_CONST param_init_matrix& m)
 {
-  cifstream&  s = (cifstream&) _s;
+  cifstream&  s=(cifstream&) _s;
   s >> dvar_matrix(m);
   return s;
 }
 
 ostream& operator << (BOR_CONST ostream& _s,BOR_CONST label_class& lc)
 {
-  ostream&  s = (ostream&) _s;
+  ostream&  s=(ostream&) _s;
   s << "# " << lc.name <<":" << endl;
   return s;
 }
@@ -76,126 +76,126 @@ void named_dvar_matrix::allocate(int rmin,int rmax,const index_type& cmin,
 
 named_dvar_matrix& named_dvar_matrix::operator = (_CONST dvar_matrix& m)
 {
-  this->dvar_matrix::operator = (m);
+  this->dvar_matrix::operator=(m);
   return *this;
 }
 named_dvar_matrix& named_dvar_matrix::operator = (_CONST dmatrix& m)
 {
-  this->dvar_matrix::operator = (m);
+  this->dvar_matrix::operator=(m);
   return *this;
 }
 named_dvar_matrix& named_dvar_matrix::operator = (CGNU_DOUBLE m)
 {
-  this->dvar_matrix::operator = (m);
+  this->dvar_matrix::operator=(m);
   return *this;
 }
 
 named_dvar_matrix& named_dvar_matrix::operator = (_CONST dvariable& m)
 {
-  this->dvar_matrix::operator = (m);
+  this->dvar_matrix::operator=(m);
   return *this;
 }
 
 
 param_stddev_matrix& param_stddev_matrix::operator = (_CONST dvar_matrix& m)
 {
-  this->dvar_matrix::operator = (m);
+  this->dvar_matrix::operator=(m);
   return *this;
 }
 param_stddev_matrix& param_stddev_matrix::operator = (_CONST dmatrix& m)
 {
-  this->dvar_matrix::operator = (m);
+  this->dvar_matrix::operator=(m);
   return *this;
 }
 param_stddev_matrix& param_stddev_matrix::operator = (CGNU_DOUBLE m)
 {
-  this->dvar_matrix::operator = (m);
+  this->dvar_matrix::operator=(m);
   return *this;
 }
 
 param_stddev_vector& param_stddev_vector::operator = (_CONST dvar_vector& m)
 {
-  this->dvar_vector::operator = (m);
+  this->dvar_vector::operator=(m);
   return *this;
 }
 
 named_dvar_vector& named_dvar_vector::operator = (_CONST dvar_vector& m)
 {
-  this->dvar_vector::operator = (m);
+  this->dvar_vector::operator=(m);
   return *this;
 }
 named_dvar_vector& named_dvar_vector::operator = (_CONST dvector& m)
 {
-  this->dvar_vector::operator = (m);
+  this->dvar_vector::operator=(m);
   return *this;
 }
 named_dvar_vector& named_dvar_vector::operator = (CGNU_DOUBLE m)
 {
-  this->dvar_vector::operator = (m);
+  this->dvar_vector::operator=(m);
   return *this;
 }
 
 named_dvar_vector& named_dvar_vector::operator = (_CONST prevariable& m)
 {
-  this->dvar_vector::operator = (m);
+  this->dvar_vector::operator=(m);
   return *this;
 }
 
 named_dvector& named_dvector::operator = (_CONST dvector& m)
 {
-  this->dvector::operator = (m);
+  this->dvector::operator=(m);
   return *this;
 }
 named_dvector& named_dvector::operator = (CGNU_DOUBLE m)
 {
-  this->dvector::operator = (m);
+  this->dvector::operator=(m);
   return *this;
 }
 
 data_vector& data_vector::operator = (_CONST dvector& m)
 {
-  this->dvector::operator = (m);
+  this->dvector::operator=(m);
   return *this;
 }
 data_vector& data_vector::operator = (CGNU_DOUBLE m)
 {
-  this->dvector::operator = (m);
+  this->dvector::operator=(m);
   return *this;
 }
 
 
 param_stddev_vector& param_stddev_vector::operator = (_CONST dvector& m)
 {
-  this->dvar_vector::operator = (m);
+  this->dvar_vector::operator=(m);
   return *this;
 }
 param_stddev_vector& param_stddev_vector::operator = (CGNU_DOUBLE m)
 {
-  this->dvar_vector::operator = (m);
+  this->dvar_vector::operator=(m);
   return *this;
 }
 
 param_init_number& param_init_number::operator = (CGNU_DOUBLE m)
 {
-  this->dvariable::operator = (m);
+  this->dvariable::operator=(m);
   return *this;
 }
 
 param_init_number& param_init_number::operator = (_CONST prevariable& m)
 {
-  this->dvariable::operator = (m);
+  this->dvariable::operator=(m);
   return *this;
 }
 
 param_init_bounded_number& param_init_bounded_number::operator = (CGNU_DOUBLE m)
 {
-  this->dvariable::operator = (m);
+  this->dvariable::operator=(m);
   return *this;
 }
 
 param_init_bounded_number& param_init_bounded_number::operator = (_CONST prevariable& m)
 {
-  this->dvariable::operator = (m);
+  this->dvariable::operator=(m);
   return *this;
 }
 
@@ -307,7 +307,7 @@ void named_dvar3_array::allocate(int hsl,int hsu,int rmin,int rmax,
 
 named_dvar3_array& named_dvar3_array::operator = (_CONST dvar3_array& m)
 {
-  this->dvar3_array::operator = (m);
+  this->dvar3_array::operator=(m);
   return *this;
 }
 
@@ -315,7 +315,7 @@ named_dvar3_array& named_dvar3_array::operator = (_CONST dvar3_array& m)
 
 named_dvar3_array& named_dvar3_array::operator = (_CONST d3_array& m)
 {
-  this->dvar3_array::operator = (m);
+  this->dvar3_array::operator=(m);
   return *this;
 }
 void named_dmatrix::allocate(int rmin,int rmax,int cmin,int cmax,
@@ -364,36 +364,36 @@ void named_dmatrix::allocate(int rmin,int rmax,const ivector& cmin,
 
 named_dmatrix& named_dmatrix::operator = (_CONST dmatrix& m)
 {
-  dmatrix::operator = (m);
+  dmatrix::operator=(m);
   return *this;
 }
 named_dmatrix& named_dmatrix::operator = (CGNU_DOUBLE m)
 {
-  dmatrix::operator = (m);
+  dmatrix::operator=(m);
   return *this;
 }
 
 param_stddev_number& param_stddev_number::operator = (_CONST prevariable& m)
 {
-  prevariable::operator = (m);
+  prevariable::operator=(m);
   return *this;
 }
 
 param_stddev_number& param_stddev_number::operator = (CGNU_DOUBLE m)
 {
-  prevariable::operator = (m);
+  prevariable::operator=(m);
   return *this;
 }
 
 named_dvariable& named_dvariable::operator = (CGNU_DOUBLE m)
 {
-  prevariable::operator = (m);
+  prevariable::operator=(m);
   return *this;
 }
 
 named_dvariable& named_dvariable::operator = (_CONST prevariable& m)
 {
-  prevariable::operator = (m);
+  prevariable::operator=(m);
   return *this;
 }
 
@@ -482,7 +482,7 @@ void named_d3_array::allocate(int hsl,int hsu,int rmin,int rmax,
 
 named_d3_array& named_d3_array::operator = (_CONST d3_array& m)
 {
-  d3_array::operator = (m);
+  d3_array::operator=(m);
   return *this;
 }
 

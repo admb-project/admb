@@ -110,8 +110,8 @@
 dvariable sum(_CONST dvar3_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
-  dvariable tmp = 0.;
-  for (int i = m.indexmin();i<=m.indexmax();i++)
+  dvariable tmp=0.;
+  for (int i=m.indexmin();i<=m.indexmax();i++)
   {
     tmp+=sum(m.elem(i));
   }

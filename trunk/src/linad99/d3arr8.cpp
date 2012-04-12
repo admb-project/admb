@@ -94,9 +94,9 @@
 
    if (t != m1.t)            // check for condition that both matrices
    {                         // don't point to the same object
-     for (int i = slicemin();i<=slicemax();i++)
+     for (int i=slicemin();i<=slicemax();i++)
      {
-       elem(i) = m1.elem(i);
+       elem(i)=m1.elem(i);
      }
    }
    return(*this);
@@ -108,9 +108,9 @@
  */
  d3_array& d3_array::operator= (double x)
  {
-   for (int i = slicemin();i<=slicemax();i++)
+   for (int i=slicemin();i<=slicemax();i++)
    {
-     elem(i) = x;
+     elem(i)=x;
    }
    return(*this);
  }

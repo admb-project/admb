@@ -63,17 +63,17 @@ int ad_chdir(const char * s)
  */
 void ad_getcd(const adstring& _s)
 {
-  adstring& s = (adstring&) (_s);
+  adstring& s=(adstring&) (_s);
 #if defined(_WIN32) 
   char tmp[101];
   tmp[0]='\0';
   GetCurrentDirectory(100,tmp);
-  s = tmp;
+  s=tmp;
 #elif (defined(__GNUDOS__) || defined(unix) || defined(__linux__) )
   char tmp[101];
   tmp[0]='\0';
   getcwd(tmp,100);
-  s = adstring(tmp);
+  s=adstring(tmp);
 #else
   xxx
   // not defined for this compiler
@@ -105,12 +105,12 @@ int make_sub_directory(const char * s)
   adstring currdir;
   adstring currdir1;
   ad_getcd(currdir);
-  // const int len = 100;
-  // char dirname[len+1];
+  //const int len=100;
+  //char dirname[len+1];
 #if defined(_WIN32)
-  int ierr = SetCurrentDirectory(s);
+  int ierr=SetCurrentDirectory(s);
 #else
-  DIR * ierr = opendir(s);
+  DIR * ierr=opendir(s);
 #endif
   if (!ierr) // NULL means failed
   {

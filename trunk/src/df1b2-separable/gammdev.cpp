@@ -31,11 +31,11 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
     df1b2variable& x= (df1b2variable&)(_x);
     df1b2variable& a= (df1b2variable&)(_a);
 
-    df1b2variable y = cumd_norm(x);
+    df1b2variable y=cumd_norm(x);
     y=.9999*y+.00005;
 
-    // df1b2variable z = inv_cumd_gamma(y,a);
-    df1b2variable z = inv_cumd_gamma(y,a);
+    //df1b2variable z=inv_cumd_gamma(y,a);
+    df1b2variable z=inv_cumd_gamma(y,a);
 
     return z;
   }
@@ -49,23 +49,23 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
     df1b2variable& y= (df1b2variable&)(_y);
     df1b2variable& a= (df1b2variable&)(_a);
     // get the inverse values
-    double x = inv_cumd_gamma(value(y),value(_a));
+    double x=inv_cumd_gamma(value(y),value(_a));
 
     init_df3_two_variable xx(value(x));
     init_df3_two_variable aa(value(a));
-    // init_df3_two_variable xx(1.0);
-    // init_df3_two_variable aa(2.0);
-    *xx.get_u_x() = 1.0;
-    *aa.get_u_y() = 1.0;
+    //init_df3_two_variable xx(1.0);
+    //init_df3_two_variable aa(2.0);
+    *xx.get_u_x()=1.0;
+    *aa.get_u_y()=1.0;
     
-    df3_two_variable z = cumd_gamma(xx,aa);
+    df3_two_variable z=cumd_gamma(xx,aa);
 
     // now use the derivatives of z to get the
-    // derivatives of x wrt y,a and save them
+    //derivatives of x wrt y,a and save them
 
-    // double ca = value(a);
+    //double ca=value(a);
 
-    double F_x = 1.0/(*z.get_u_x());
+    double F_x=1.0/(*z.get_u_x());
    
     double F_y=-F_x* *z.get_u_y();
     double F_xx=-F_x* *z.get_u_xx()/square(*z.get_u_x());
@@ -103,12 +103,12 @@ df3_two_variable cumd_cauchy(const df3_two_variable& x,
                  +F_x * *z.get_u_yyy());
 
      df1b2variable zz;
-     double * xd = _y.get_u_dot();
-     double * yd = _a.get_u_dot();
-     double * zd = zz.get_u_dot();
-     *zz.get_u() = x;
+     double * xd=_y.get_u_dot();
+     double * yd=_a.get_u_dot();
+     double * zd=zz.get_u_dot();
+     *zz.get_u()=x;
 
-     for (int i = 0;i<df1b2variable::nvar;i++)
+     for (int i=0;i<df1b2variable::nvar;i++)
      {
        *zd++ = F_x * *xd++ + F_y * *yd++;
      }

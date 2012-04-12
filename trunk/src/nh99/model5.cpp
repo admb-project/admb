@@ -18,7 +18,7 @@
     {
       ::set_value(*this,x,ii,minb,maxb,pen);
     }
-    dvariable s = mean(*this);
+    dvariable s=mean(*this);
     pen+=10000.0*s*s;
     if (!initial_params::mc_phase)
     {

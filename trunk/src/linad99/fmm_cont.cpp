@@ -27,7 +27,7 @@
  */
 void fmm_control::set_defaults()
 {
-  noprintx = 0;
+  noprintx=0;
   fringe = 0.0;
   maxfn  = 500;
   iprint = 1;
@@ -40,12 +40,12 @@ void fmm_control::set_defaults()
   ihflag = 0;
   ihang  = 0;
   scroll_flag = 1;
-  maxfn_flag = 0;
-  quit_flag = 0;
+  maxfn_flag=0;
+  quit_flag=0;
   min_improve=.0000001;
   ireturn = 0;
   dcheck_flag = -1;
-  use_control_c = 1;
+  use_control_c=1;
 }
 
 /**

@@ -17,9 +17,9 @@
   {
     if (!(!(*this)))  // only initialize allocated objects
     {
-      for (int i = indexmin();i<=indexmax();i++)
+      for (int i=indexmin();i<=indexmax();i++)
       {
-        elem(i) = 0.0;
+        elem(i)=0.0;
       }
     }
   }

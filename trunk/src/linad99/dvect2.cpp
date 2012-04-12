@@ -27,13 +27,13 @@
      dvector tmp(t1.indexmin(),t1.indexmax());
 
 #ifndef USE_ASSEMBLER
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp[i] = t1[i]*t2[i];
+       tmp[i]=t1[i]*t2[i];
      }
 #else
-     int min = t1.indexmin();
-     int n = t1.indexmax()-min+1;
+     int min=t1.indexmin();
+     int n=t1.indexmax()-min+1;
      dp_vector_elem_prod(&(tmp(min)),&(t1(min)),&(t2(min)),n);
 #endif
      
@@ -58,13 +58,13 @@
      dvector tmp(t1.indexmin(),t1.indexmax());
 
 #ifndef USE_ASSEMBLER
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp[i] = t1[i]/t2[i];
+       tmp[i]=t1[i]/t2[i];
      }
 #else
-     int min = t1.indexmin();
-     int n = t1.indexmax()-min+1;
+     int min=t1.indexmin();
+     int n=t1.indexmax()-min+1;
      dp_vector_elem_prod(&(tmp(min)),&(t1(min)),&(t2(min)),n);
 #endif
      

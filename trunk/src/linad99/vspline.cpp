@@ -27,7 +27,7 @@ dvar_vector spline_cubic_set (int n,_CONST dvector& t,_CONST dvar_vector& y,
  *  Cubic spline interpolation.
  *
  * \param _xa array of abscissa
- * \param _ya array of corresponding values \f$y_i = f(x_i)\f$
+ * \param _ya array of corresponding values \f$y_i=f(x_i)\f$
  * \param _y2a array of 2nd derivatives computed from dvar_vector spline()
  * \param x the input coordinate to be used in the interpolation
  * \return a cubic-spline interpolation to \f$f(x)\f$
@@ -45,7 +45,7 @@ dvariable splint(const dvector& _xa,const dvar_vector& _ya,
  *  Cubic spline interpolation.
  *
  * \param _xa array of abscissa
- * \param _ya array of corresponding values \f$y_i = f(x_i)\f$
+ * \param _ya array of corresponding values \f$y_i=f(x_i)\f$
  * \param _y2a array of 2nd derivatives computed from dvar_vector spline()
  * \param x the input coordinate to be used in the interpolation
  * \return a cubic-spline interpolation to \f$f(x)\f$
@@ -67,7 +67,7 @@ vcubic_spline_function::vcubic_spline_function(const dvector & _x,
   const dvar_vector& _y,dvariable yp1,dvariable ypn) : x(_x) , y(_y)
 {
   y2.allocate(x);
-  y2 = spline(x,y,yp1,ypn);
+  y2=spline(x,y,yp1,ypn);
 }
 
 /**
@@ -78,7 +78,7 @@ vcubic_spline_function::vcubic_spline_function(const dvector & _x,
   const dvar_vector& _y,double yp1,double ypn) : x(_x) , y(_y)
 {
   y2.allocate(x);
-  y2 = spline(x,y,yp1,ypn);
+  y2=spline(x,y,yp1,ypn);
 }
 
 /**
@@ -97,12 +97,12 @@ dvariable vcubic_spline_function::operator () (double u)
  */
 dvar_vector vcubic_spline_function::operator () (const dvector& u)
 {
-  int mmin = u.indexmin();
-  int mmax = u.indexmax();
+  int mmin=u.indexmin();
+  int mmax=u.indexmax();
   dvar_vector z(mmin,mmax);
-  for (int i = mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
-    z(i) = splint(x,y,y2,u(i));
+    z(i)=splint(x,y,y2,u(i));
   }
   return z;
 }
@@ -113,12 +113,12 @@ dvar_vector vcubic_spline_function::operator () (const dvector& u)
  */
 dvar_vector vcubic_spline_function::operator () (const dvar_vector& u)
 {
-  int mmin = u.indexmin();
-  int mmax = u.indexmax();
+  int mmin=u.indexmin();
+  int mmax=u.indexmax();
   dvar_vector z(mmin,mmax);
-  for (int i = mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
-    z(i) = splint(x,y,y2,u(i));
+    z(i)=splint(x,y,y2,u(i));
   }
   return z;
 }
@@ -127,7 +127,7 @@ dvar_vector vcubic_spline_function::operator () (const dvar_vector& u)
  *  Cubic spline interpolation.
  *
  * \param _x array of abscissa
- * \param _y array of corresponding values \f$y_i = f(x_i)\f$
+ * \param _y array of corresponding values \f$y_i=f(x_i)\f$
  * \param yp1 value of the first derivative of \f$f\f$ at the left
  *        end point
  * \param ypn value of the first derivative of \f$f\f$ at the right
@@ -173,7 +173,7 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
  *  Cubic spline interpolation.
  *
  * \param _x array of abscissa
- * \param _y array of corresponding values \f$y_i = f(x_i)\f$
+ * \param _y array of corresponding values \f$y_i=f(x_i)\f$
  * \param yp1 value of the first derivative of \f$f\f$ at the left
  *        end point
  * \param ypn value of the first derivative of \f$f\f$ at the right
@@ -219,7 +219,7 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,double yp1,
  *  Cubic spline interpolation.
  *
  * \param _x array of abscissa
- * \param _y array of corresponding values \f$y_i = f(x_i)\f$
+ * \param _y array of corresponding values \f$y_i=f(x_i)\f$
  * \param yp1 value of the first derivative of \f$f\f$ at the left
  *        end point
  * \param ypn value of the first derivative of \f$f\f$ at the right
@@ -760,7 +760,7 @@ dvar_vector spline_cubic_set (int n,_CONST dvector& t,_CONST dvar_vector& y,
     cout << "SPLINE_CUBIC_SET - Fatal error!\n";
     cout << "  The number of data points N must be at least 2.\n";
     cout << "  The input value is " << n << ".\n";
-    // return NULL;
+    //return NULL;
   }
 
   for ( i = 0; i < n - 1; i++ )

@@ -130,7 +130,7 @@ CTIONS*/
   
       i__1 = gggg05_1->numberw;
       for (j = 1; j <= i__1; ++j) {
-  	gggg18_1->fu[j] = h(j);
+  	gggg18_1->fu[j]=h(j);
   	if (gunit_ref(1, j) != 1 && *mode == 2) {
   	    if (gggg01_1->wwuq3) {
   		i__2 = gggg05_1->n;
@@ -142,8 +142,8 @@ CTIONS*/
       }
       i__1 = gggg05_1->numberv;
       for (j = 1; j <= i__1; ++j) {
-  	// eg_(&j, gggg18_1->xtr, &gggg18_1->fu[gggg05_1->numberw + j]);
-  	gggg18_1->fu[gggg05_1->numberw + j] = g(j);
+  	//eg_(&j, gggg18_1->xtr, &gggg18_1->fu[gggg05_1->numberw + j]);
+  	gggg18_1->fu[gggg05_1->numberw + j]=g(j);
   	if (gunit_ref(1, j + gggg05_1->numberw) != 1 && *mode == 2) {
   	    if (gggg01_1->wwuq3) {
   		i__2 = gggg05_1->n;
@@ -163,11 +163,11 @@ CTIONS*/
   
       i__1 = gggg05_1->numberw;
       for (j = 1; j <= i__1; ++j) {
-  	gggg18_1->fu[j] = h(j);
+  	gggg18_1->fu[j]=h(j);
       }
       i__1 = gggg05_1->numberv;
       for (j = 1; j <= i__1; ++j) {
-  	gggg18_1->fu[gggg05_1->numberw + j] = g(j);
+  	gggg18_1->fu[gggg05_1->numberw + j]=g(j);
       }
     } 
 

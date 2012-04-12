@@ -52,7 +52,7 @@
 #define F2C_INCLUDE
 
 typedef long int integer;
-// typedef char *address;
+//typedef char *address;
 typedef short int shortint;
 typedef float real;
 typedef double doublereal;

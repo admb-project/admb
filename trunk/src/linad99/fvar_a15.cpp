@@ -37,9 +37,9 @@ void cvdv_dot(void);
       "prevariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
-    double tmp = 0;
-    int mmin = cv1.indexmin();
-    int mmax = cv1.indexmax();
+    double tmp=0;
+    int mmin=cv1.indexmin();
+    int mmax=cv1.indexmax();
 #ifdef OPT_LIB
     const double * pt1=&cv1.elem(mmin);
     const double * pt1m=&cv1.elem(mmax);
@@ -51,17 +51,17 @@ void cvdv_dot(void);
     while (pt1<=pt1m);
 #else
   #ifndef USE_ASSEMBLER
-    for (int i = mmin;i<=mmax;i++)
+    for (int i=mmin;i<=mmax;i++)
     {
       tmp+=cv1.elem(i)*v2.elem_value(i);
     }
   #else
-    int min = cv1.indexmin();
-    int n = cv1.indexmax()-min+1;
+    int min=cv1.indexmin();
+    int n=cv1.indexmax()-min+1;
     dp_dotproduct(&tmp,&(cv1.elem(min)),&(v2.elem_value(min)),n);
   #endif
 #endif
-  dvariable vtmp = nograd_assign(tmp);
+  dvariable vtmp=nograd_assign(tmp);
 
   // The derivative list considerations
   save_identifier_string("bbbb");
@@ -82,10 +82,10 @@ void cvdv_dot(void);
 void cvdv_dot(void)
 {
   verify_identifier_string("aaaa");
-  double dftmp = restore_prevariable_derivative();
-  dvar_vector_position v2pos = restore_dvar_vector_position();
-  dvector_position dpos = restore_dvector_position();
-  dvector cv1 = restore_dvector_value(dpos);
+  double dftmp=restore_prevariable_derivative();
+  dvar_vector_position v2pos=restore_dvar_vector_position();
+  dvector_position dpos=restore_dvector_position();
+  dvector cv1=restore_dvector_value(dpos);
   dvector dfv2(cv1.indexmin(),cv1.indexmax());
   verify_identifier_string("bbbb");
 #ifdef OPT_LIB
@@ -98,13 +98,13 @@ void cvdv_dot(void)
   }
   while (pc1 <=pc1m);
 #else
-  for (int i = cv1.indexmin();i<=cv1.indexmax();i++)
+  for (int i=cv1.indexmin();i<=cv1.indexmax();i++)
   {
-    // tmp+=cv1(i)*cv2(i);
-    // dfv1(i) = dftmp*cv2(i);
-    dfv2.elem(i) = dftmp*cv1.elem(i);
+    //tmp+=cv1(i)*cv2(i);
+    //dfv1(i)=dftmp*cv2(i);
+    dfv2.elem(i)=dftmp*cv1.elem(i);
   }
 #endif
-  // dfv1.save_dvector_derivatives(v1pos);
+  //dfv1.save_dvector_derivatives(v1pos);
   dfv2.save_dvector_derivatives(v2pos);
 }

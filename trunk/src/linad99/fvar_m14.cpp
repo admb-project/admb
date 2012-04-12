@@ -30,39 +30,39 @@
      cerr << " Incompatible array bounds in dmatrix  operator * (_CONST dmatrix& x,_CONST dmatrix& m)\n";
      ad_exit(21);
    }
-   // dmatrix cm1 = value(m1);
-   // dmatrix cm2 = value(m2);
+   //dmatrix cm1=value(m1);
+   //dmatrix cm2=value(m2);
    dmatrix tmp(m1.rowmin(),m1.rowmax(), m2.colmin(), m2.colmax());
    double sum;
-   double ** temp_col = (double **) malloc(m2.rowsize()*sizeof(double*));
+   double ** temp_col=(double **) malloc(m2.rowsize()*sizeof(double*));
    temp_col-=m2.rowmin();
 
 
-   for (int j = m2.colmin(); j<=m2.colmax(); j++)
+   for (int j=m2.colmin(); j<=m2.colmax(); j++)
    {
 
-     for (int k = m2.rowmin(); k<=m2.rowmax(); k++)
+     for (int k=m2.rowmin(); k<=m2.rowmax(); k++)
      {
        temp_col[k] = (double*) &m2.elem_value(k,j);
      }
 
-     for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+     for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
      {
-       sum = 0.0;
+       sum=0.0;
        const dvar_vector& temp_row = m1(i);
-       for (int k = m1.colmin(); k<=m1.colmax(); k++)
+       for (int k=m1.colmin(); k<=m1.colmax(); k++)
        {
           sum+=temp_row.elem_value(k) * (*temp_col[k]);
          // sum+=temp_row(k) * cm2(k,j);
        }
-       tmp(i,j) = sum;
+       tmp(i,j)=sum;
      }
    }
 
 
    temp_col+=m2.rowmin();
    free ((char*)temp_col);
-   dvar_matrix vtmp = nograd_assign(tmp);
+   dvar_matrix vtmp=nograd_assign(tmp);
    save_identifier_string("TEST1");
    m1.save_dvar_matrix_value();
    m1.save_dvar_matrix_position();
@@ -87,25 +87,25 @@
      cerr << " Incompatible array bounds in dmatrix  operator * (_CONST dmatrix& x,_CONST dmatrix& m)\n";
      ad_exit(21);
    }
-   // dmatrix cm1 = value(m1);
-   // dmatrix cm2 = value(m2);
+   //dmatrix cm1=value(m1);
+   //dmatrix cm2=value(m2);
    dmatrix tmp(m1.rowmin(),m1.rowmax(), m2.colmin(), m2.colmax());
    double sum;
 
 
-   for (int j = m2.colmin(); j<=m2.colmax(); j++)
+   for (int j=m2.colmin(); j<=m2.colmax(); j++)
    {
 
-     dvector m2col = column_value(m2,j);
+     dvector m2col=column_value(m2,j);
      
-     for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+     for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
      {
-       sum = value(m1(i))*m2col;
-       tmp(i,j) = sum;
+       sum=value(m1(i))*m2col;
+       tmp(i,j)=sum;
      }
    }
 
-   dvar_matrix vtmp = nograd_assign(tmp);
+   dvar_matrix vtmp=nograd_assign(tmp);
    save_identifier_string("TEST1");
    m1.save_dvar_matrix_value();
    m1.save_dvar_matrix_position();
@@ -125,27 +125,27 @@
 void dmdm_prod(void)
 {
   verify_identifier_string("TEST6");
-  dvar_matrix_position vpos = restore_dvar_matrix_position();
-  dmatrix dftmp = restore_dvar_matrix_derivatives(vpos);
-  dvar_matrix_position m2pos = restore_dvar_matrix_position();
-  dmatrix cm2 = restore_dvar_matrix_value(m2pos);
-  dvar_matrix_position m1pos = restore_dvar_matrix_position();
-  dmatrix cm1 = restore_dvar_matrix_value(m1pos);
+  dvar_matrix_position vpos=restore_dvar_matrix_position();
+  dmatrix dftmp=restore_dvar_matrix_derivatives(vpos);
+  dvar_matrix_position m2pos=restore_dvar_matrix_position();
+  dmatrix cm2=restore_dvar_matrix_value(m2pos);
+  dvar_matrix_position m1pos=restore_dvar_matrix_position();
+  dmatrix cm1=restore_dvar_matrix_value(m1pos);
   verify_identifier_string("TEST1");
   dmatrix dfm1(m1pos);
   dmatrix dfm2(m2pos);
   double dfsum;
   dfm1.initialize();
   dfm2.initialize();
-  for (int j = cm2.colmin(); j<=cm2.colmax(); j++)
+  for (int j=cm2.colmin(); j<=cm2.colmax(); j++)
   {
-    for (int i = cm1.rowmin(); i<=cm1.rowmax(); i++)
+    for (int i=cm1.rowmin(); i<=cm1.rowmax(); i++)
     {
-      // tmp.elem(i,j) = sum;
-      dfsum = dftmp.elem(i,j);
-      for (int k = cm1.colmin(); k<=cm1.colmax(); k++)
+      //tmp.elem(i,j)=sum;
+      dfsum=dftmp.elem(i,j);
+      for (int k=cm1.colmin(); k<=cm1.colmax(); k++)
       {
-        // sum+=cm1(i,k) * cm2(k,j);
+        //sum+=cm1(i,k) * cm2(k,j);
         dfm1.elem(i,k)+=dfsum * cm2.elem(k,j);
         dfm2.elem(k,j)+=dfsum * cm1.elem(i,k);
       }

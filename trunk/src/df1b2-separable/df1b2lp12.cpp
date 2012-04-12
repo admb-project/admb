@@ -17,12 +17,12 @@ dvector solve(const dmatrix & _st,const dmatrix & Hess,
   const dvector& grad)
 {
   ADUNCONST(dmatrix,st)
-  int nz = st.indexmax();
-  int n = Hess.indexmax();
+  int nz=st.indexmax();
+  int n=Hess.indexmax();
   // fill up compressed triplet with nonzero entries of the Hessian
-  for (int i = 1;i<=nz;i++)
+  for (int i=1;i<=nz;i++)
   {
-    st(i,3) = Hess(st(i,1),st(i,2));
+    st(i,3)=Hess(st(i,1),st(i,2));
   }
 
   hs_smatrix HS(n,st);  // Convert triplet to working format

@@ -11,8 +11,8 @@
 #include <df1b2fun.h>
 #include <df33fun.h>
   df1b2variable * df3_three_variable::ind_var[3];
-  int df3_three_variable::num_ind_var = 0;
-  int df3_three_variable::num_local_ind_var = 0;
+  int df3_three_variable::num_ind_var=0;
+  int df3_three_variable::num_local_ind_var=0;
 
 /**
  * Description not yet available.
@@ -29,9 +29,9 @@
  */
  df3_three_vector::df3_three_vector(const df3_three_vector& m2)
  {
-   index_min = m2.index_min;
-   index_max = m2.index_max;
-   shape = m2.shape;
+   index_min=m2.index_min;
+   index_max=m2.index_max;
+   shape=m2.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -45,23 +45,23 @@
  */
 df1b2variable& df1b2variable::operator = (const df3_three_variable& v)
 {
-  df1b2variable * px = df3_three_variable::ind_var[0];
-  df1b2variable * py = df3_three_variable::ind_var[1];
-  df1b2variable * pv = df3_three_variable::ind_var[2];
-  df3_three_variable::num_ind_var = 0;
-  df3_three_variable::ind_var[0] = 0;
-  df3_three_variable::ind_var[1] = 0;
-  df3_three_variable::ind_var[2] = 0;
-  // df1b2variable * px = 0;
+  df1b2variable * px=df3_three_variable::ind_var[0];
+  df1b2variable * py=df3_three_variable::ind_var[1];
+  df1b2variable * pv=df3_three_variable::ind_var[2];
+  df3_three_variable::num_ind_var=0;
+  df3_three_variable::ind_var[0]=0;
+  df3_three_variable::ind_var[1]=0;
+  df3_three_variable::ind_var[2]=0;
+  //df1b2variable * px=0;
   double  dfx= *v.get_u_x();
   double  dfy= *v.get_u_y();
   double  dfz= *v.get_u_z();
-  double * xd = px->get_u_dot();
-  double * yd = py->get_u_dot();
-  double * vd = pv->get_u_dot();
-  double * zd = get_u_dot();
+  double * xd=px->get_u_dot();
+  double * yd=py->get_u_dot();
+  double * vd=pv->get_u_dot();
+  double * zd=get_u_dot();
   *get_u()=*v.get_u();
-  for (int i = 0;i<df1b2variable::nvar;i++)
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ = dfx * *xd++ + dfy * *yd++ + dfz * *vd++;
   }
@@ -104,8 +104,8 @@ df1b2variable& df1b2variable::operator = (const df3_three_variable& v)
  */
 void df3_three_variable::initialize(void) 
 {
-  for (int i = 0;i<20;i++)
-    v[i] = 0.0;
+  for (int i=0;i<20;i++)
+    v[i]=0.0;
 }
 
 /**
@@ -135,7 +135,7 @@ void df3_three_variable::initialize(void)
        delete [] v;
        v = NULL;
        delete shape;
-       shape = 0;
+       shape=0;
      }
    }
  }
@@ -147,12 +147,12 @@ void df3_three_variable::initialize(void)
  dvector value(const df3_three_vector& v)
  {
    
-   int mmin = v.indexmin();
-   int mmax = v.indexmax();
+   int mmin=v.indexmin();
+   int mmax=v.indexmax();
    dvector cv(mmin,mmax);
-   for (int i = mmin;i<=mmax;i++)
+   for (int i=mmin;i<=mmax;i++)
    {
-     cv(i) = value(v(i));
+     cv(i)=value(v(i));
    }
    return cv;
  }
@@ -163,11 +163,11 @@ void df3_three_variable::initialize(void)
  */
   void df3_three_vector::initialize(void)
   {
-    int mmin = indexmin();
-    int mmax = indexmax();
-    for (int i = mmin;i<=mmax;i++)
+    int mmin=indexmin();
+    int mmax=indexmax();
+    for (int i=mmin;i<=mmax;i++)
     {
-      (*this)(i) = 0.0;
+      (*this)(i)=0.0;
     }
   }
 
@@ -195,15 +195,15 @@ void df3_three_variable::initialize(void)
  */
   void df3_three_vector::allocate(int min,int max)
   {
-    index_min = min;
-    index_max = max;
-    v = new df3_three_variable[max-min+1];
+    index_min=min;
+    index_max=max;
+    v=new df3_three_variable[max-min+1];
     if (v==0)
     {
       cerr << "error allocating memory in df3_three_vector" << endl;
       ad_exit(1);
     }
-    if ( (shape = new vector_shapex(min,max,v)) == NULL)
+    if ( (shape=new vector_shapex(min,max,v)) == NULL)
     {
       cerr << "Error trying to allocate memory for df3_three_vector" 
            << endl;;
@@ -218,10 +218,10 @@ void df3_three_variable::initialize(void)
  */ 
   void df3_three_vector::allocate(void)
   {
-    index_min = 0;
+    index_min=0;
     index_max=-1;
-    v = 0;
-    shape = 0;
+    v=0;
+    shape=0;
   }
     
 /**
@@ -231,17 +231,17 @@ void df3_three_variable::initialize(void)
  dmatrix value(const df3_three_matrix& v)
  {
    
-   int rmin = v.indexmin();
-   int rmax = v.indexmax();
+   int rmin=v.indexmin();
+   int rmax=v.indexmax();
    dmatrix cm(rmin,rmax);
-   for (int i = rmin;i<=rmax;i++)
+   for (int i=rmin;i<=rmax;i++)
    {
-     int cmin = v(i).indexmin();
-     int cmax = v(i).indexmax();
+     int cmin=v(i).indexmin();
+     int cmax=v(i).indexmax();
      cm(i).allocate(cmin,cmax); 
-     for (int j = cmin;j<=cmax;j++)
+     for (int j=cmin;j<=cmax;j++)
      {
-       cm(i,j) = value(v(i,j));
+       cm(i,j)=value(v(i,j));
      }
    }
    return cm;
@@ -253,9 +253,9 @@ void df3_three_variable::initialize(void)
  */
  df3_three_matrix::df3_three_matrix(const df3_three_matrix& m2)
  {
-   index_min = m2.index_min;
-   index_max = m2.index_max;
-   shape = m2.shape;
+   index_min=m2.index_min;
+   index_max=m2.index_max;
+   shape=m2.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -288,9 +288,9 @@ void df3_three_variable::initialize(void)
      {
        v = (df3_three_vector*) (shape->get_pointer());
        delete [] v;
-       v = 0;
+       v=0;
        delete shape;
-       shape = 0;
+       shape=0;
      }
    }
  }
@@ -301,9 +301,9 @@ void df3_three_variable::initialize(void)
  */
   void df3_three_matrix::initialize(void)
   {
-    int mmin = indexmin();
-    int mmax = indexmax();
-    for (int i = mmin;i<=mmax;i++)
+    int mmin=indexmin();
+    int mmax=indexmax();
+    for (int i=mmin;i<=mmax;i++)
     {
       (*this)(i).initialize();
     }
@@ -315,22 +315,22 @@ void df3_three_variable::initialize(void)
  */
   df3_three_matrix::df3_three_matrix(int rmin,int rmax,int cmin,int cmax)
   {
-    index_min = rmin;
-    index_max = rmax;
-    v = new df3_three_vector[rmax-rmin+1];
+    index_min=rmin;
+    index_max=rmax;
+    v=new df3_three_vector[rmax-rmin+1];
     if (v==0)
     {
       cerr << "error allocating memory in df3_three_matrix" << endl;
       ad_exit(1);
     }
-    if ( (shape = new mat_shapex(v)) == NULL)
+    if ( (shape=new mat_shapex(v)) == NULL)
     {
       cerr << "Error trying to allocate memory for df3_three_vector" 
            << endl;;
     }
     v-=rmin;
     
-    for (int i = rmin;i<=rmax;i++)
+    for (int i=rmin;i<=rmax;i++)
     {
       v[i].allocate(cmin,cmax);
     }
@@ -472,7 +472,7 @@ void df3_three_variable::initialize(void)
   df3_three_variable& df3_three_variable::operator *= (const df3_three_variable& v)
   {
     df3_three_variable x=*this * v;
-    *this = x;
+    *this=x;
     return *this;
   }
 
@@ -483,7 +483,7 @@ void df3_three_variable::initialize(void)
   df3_three_variable& df3_three_variable::operator /= (const df3_three_variable& v)
   {
     df3_three_variable x=*this / v;
-    *this = x;
+    *this=x;
     return *this;
   }
 
@@ -832,9 +832,9 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   {
     df3_three_variable z;
     double u=::sqrt(*x.get_u());
-    *z.get_u() = u;
-    double xinv = 1.0/(*x.get_u());
-    double zp = 0.5/u;
+    *z.get_u()=u;
+    double xinv=1.0/(*x.get_u());
+    double zp=0.5/u;
     double zp2=-0.5*zp*xinv;
     double zp3=-1.5*zp2*xinv;
 
@@ -851,12 +851,12 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   df3_three_variable atan(const df3_three_variable& x)
   {
     df3_three_variable z;
-    double cx = value(x);
-    double d = 1.0/(1+square(cx));
-    double d2 = square(d);
+    double cx=value(x);
+    double d=1.0/(1+square(cx));
+    double d2=square(d);
     double u=::atan(cx);
-    *z.get_u() = u;
-    double zp = d;
+    *z.get_u()=u;
+    double zp=d;
     double zp2=-2.0*cx*d2;
     double zp3=-2.0*d2+8*cx*cx*d*d2;
 
@@ -872,7 +872,7 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     const df3_three_variable& y)
   {
     df3_three_variable z;
-    z = exp(y*log(x));
+    z=exp(y*log(x));
     return z;
   }
 
@@ -883,11 +883,11 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   df3_three_variable square(const df3_three_variable& x)
   {
     df3_three_variable z;
-    double u = value(x);
-    *z.get_u() = u*u;
-    double zp = 2.0*u;
-    double zp2 = 2.0;
-    double zp3 = 0.0;
+    double u=value(x);
+    *z.get_u()=u*u;
+    double zp=2.0*u;
+    double zp2=2.0;
+    double zp3=0.0;
 
     set_derivatives(z,x,u,zp,zp2,zp3);
     return z;
@@ -901,13 +901,13 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   {
     df3_three_variable z;
     double u=::tan(*x.get_u());
-    *z.get_u() = u;
-    double v = 1.0/::cos(*x.get_u());
+    *z.get_u()=u;
+    double v=1.0/::cos(*x.get_u());
     double w=::sin(*x.get_u());
-    double v2 = v*v;
-    double zp = v2;
-    double zp2 = 2.0*w*v2*v;
-    double zp3 = (4.0*w*w+2.0)*v2*v2;
+    double v2=v*v;
+    double zp=v2;
+    double zp2=2.0*w*v2*v;
+    double zp3=(4.0*w*w+2.0)*v2*v2;
 
     set_derivatives(z,x,u,zp,zp2,zp3);
     return z;
@@ -921,7 +921,7 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   {
     df3_three_variable z;
     double u=::sin(*x.get_u());
-    *z.get_u() = u;
+    *z.get_u()=u;
     double zp=::cos(*x.get_u());
     double zp2=-u;
     double zp3=-zp;
@@ -938,8 +938,8 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   {
     df3_three_variable z;
     double u=::log(*x.get_u());
-    *z.get_u() = u;
-    double zp = 1/(*x.get_u());
+    *z.get_u()=u;
+    double zp=1/(*x.get_u());
     double zp2=-zp*zp;
     double zp3=-2.0*zp*zp2;
 
@@ -955,10 +955,10 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   {
     df3_three_variable z;
     double u=::exp(*x.get_u());
-    *z.get_u() = u;
-    double zp = u;
-    double zp2 = u;
-    double zp3 = u;
+    *z.get_u()=u;
+    double zp=u;
+    double zp2=u;
+    double zp3=u;
 
     set_derivatives(z,x,u,zp,zp2,zp3);
     return z;
@@ -971,8 +971,8 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   df3_three_variable inv(const df3_three_variable& x)
   {
     df3_three_variable z;
-    double xinv = 1.0/(*x.get_u());
-    *z.get_u() = xinv;
+    double xinv=1.0/(*x.get_u());
+    *z.get_u()=xinv;
     double zp=-xinv*xinv;
     double zp2=-2.0*zp*xinv;
     double zp3=-3.0*zp2*xinv;
@@ -1058,13 +1058,13 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     *z.get_u() = u;
     double f_u=*y.get_u();
     double f_v=*x.get_u();
-    double f_uu = 0.0;
-    double f_uv = 1.0;
-    double f_vv = 0.0;
-    double f_uuu = 0.0;
-    double f_uuv = 0.0;
-    double f_uvv = 0.0;
-    double f_vvv = 0.0;
+    double f_uu=0.0;
+    double f_uv=1.0;
+    double f_vv=0.0;
+    double f_uuu=0.0;
+    double f_uuv=0.0;
+    double f_uvv=0.0;
+    double f_vvv=0.0;
     set_derivatives(z,x,y,u,
       f_u, f_v,
       f_uu, f_uv, f_vv,
@@ -1202,7 +1202,7 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   df3_three_variable operator / (const df3_three_variable& x,
     double y)
   {
-    double u = 1/y;
+    double u=1/y;
     return x*u;
   }
 
@@ -1213,7 +1213,7 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   df3_three_variable operator / (const df3_three_variable& x,
     const df3_three_variable& y)
   {
-    df3_three_variable u = inv(y);
+    df3_three_variable u=inv(y);
     return x*u;
   }
 
@@ -1224,7 +1224,7 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
   df3_three_variable operator / (const double x,
     const df3_three_variable& y)
   {
-    df3_three_variable u = inv(y);
+    df3_three_variable u=inv(y);
     return x*u;
   }
 
@@ -1470,7 +1470,7 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
     }
     if (num_local_ind_var==0)
     {
-      num_ind_var = 0;
+      num_ind_var=0;
     }
   }
 
@@ -1592,10 +1592,10 @@ df3_three_matrix choleski_decomp(const df3_three_matrix& MM)
 {
   // kludge to deal with constantness
   df3_three_matrix & M= (df3_three_matrix &) MM;
-  int rmin = M.indexmin();
-  int cmin = M(rmin).indexmin();
-  int rmax = M.indexmax();
-  int cmax = M(rmin).indexmax();
+  int rmin=M.indexmin();
+  int cmin=M(rmin).indexmin();
+  int rmax=M.indexmax();
+  int cmax=M(rmin).indexmax();
   if (rmin !=1 || cmin !=1)
   {
     cerr << "minimum row and column inidices must equal 1 in "
@@ -1610,7 +1610,7 @@ df3_three_matrix choleski_decomp(const df3_three_matrix& MM)
     ad_exit(1);
   }
 
-  int n = rmax-rmin+1;
+  int n=rmax-rmin+1;
   df3_three_matrix L(1,n,1,n);
 #ifndef SAFE_INITIALIZE
     L.initialize();
@@ -1626,25 +1626,25 @@ df3_three_matrix choleski_decomp(const df3_three_matrix& MM)
       ad_exit(1);
     }
    
-  L(1,1) = sqrt(M(1,1));
-  for (i = 2;i<=n;i++)
+  L(1,1)=sqrt(M(1,1));
+  for (i=2;i<=n;i++)
   {
-    L(i,1) = M(i,1)/L(1,1);
+    L(i,1)=M(i,1)/L(1,1);
   }
 
-  for (i = 2;i<=n;i++)
+  for (i=2;i<=n;i++)
   {
-    for (j = 2;j<=i-1;j++)
+    for (j=2;j<=i-1;j++)
     {
-      tmp = M(i,j);
-      for (k = 1;k<=j-1;k++)
+      tmp=M(i,j);
+      for (k=1;k<=j-1;k++)
       {
         tmp-=L(i,k)*L(j,k);
       }
-      L(i,j) = tmp/L(j,j);
+      L(i,j)=tmp/L(j,j);
     }
-    tmp = M(i,i);
-    for (k = 1;k<=i-1;k++)
+    tmp=M(i,i);
+    for (k=1;k<=i-1;k++)
     {
       tmp-=L(i,k)*L(i,k);
     }
@@ -1656,7 +1656,7 @@ df3_three_matrix choleski_decomp(const df3_three_matrix& MM)
       ad_exit(1);
     }
    
-    L(i,i) = sqrt(tmp);
+    L(i,i)=sqrt(tmp);
   }
 
   return L;

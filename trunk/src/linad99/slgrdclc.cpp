@@ -69,7 +69,7 @@
   long _cdecl _farptr_tolong(void _far *);
 #endif
 
-// void KLUDGEX(void * p);
+//void KLUDGEX(void * p);
 
 /**
  * Description not yet available.
@@ -84,14 +84,14 @@ void slave_gradcalc(void)
   else
   {
     gradient_structure::TOTAL_BYTES = 0;
-    gradient_structure::PREVIOUS_TOTAL_BYTES = 0;
+    gradient_structure::PREVIOUS_TOTAL_BYTES=0;
     unsigned int i;
     my_off_t lpos;
   
      gradient_structure::GRAD_STACK1->_GRADFILE_PTR =
                 gradient_structure::GRAD_STACK1->gradfile_handle();
   
-    int& _GRADFILE_PTR = gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
+    int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
   
     lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
   
@@ -115,7 +115,7 @@ void slave_gradcalc(void)
   
     gradient_structure::GRAD_STACK1->ptr--;
   
-    for (i = 0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+    for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
     {
       * (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i]) = 0;
     }
@@ -138,7 +138,7 @@ void slave_gradcalc(void)
   
     double * zptr;
   
-    for (i = 0 ; i< (max_last_offset/size) ; i++ )
+    for (i=0 ; i< (max_last_offset/size) ; i++ )
     {
       tmp->x = 0;
       #if defined (__ZTC__)
@@ -159,8 +159,8 @@ void slave_gradcalc(void)
     //* gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
   
-    // double z;
-    int break_flag = 1;
+    //double z;
+    int break_flag=1;
     
     do
     {
@@ -173,20 +173,20 @@ void slave_gradcalc(void)
         while (gradient_structure::GRAD_STACK1->ptr-- >
     		grad_ptr_first)
         {
-          // KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
+          //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
           (*(gradient_structure::GRAD_STACK1->ptr->func))();
         }
     
       #endif
     
       // back up the file one buffer size and read forward
-      // KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
+      //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
       lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
           -((long int)(sizeof(grad_stack_entry)*gradient_structure::
             GRAD_STACK1->length)),SEEK_CUR);
-      // KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
+      //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
     
-      break_flag = gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
+      break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
     
     }  while (break_flag); // do
   

@@ -33,11 +33,11 @@ fmmq::fmmq(int nv) :
 {
   mode = 1;
   igwindow = 2;
-  n = nv;
+  n=nv;
   scale.fill_seqadd(1.,0.);
-  maxfn = 500;
-  iprint = 1;
-  imax = 30;
+  maxfn=500;
+  iprint=1;
+  imax=30;
   iexit = 0;
   ifn = 0;
   itn = 0;
@@ -47,6 +47,6 @@ fmmq::fmmq(int nv) :
   gmax = 0;
   istop = 0;
   crit=.0001;
-  min_improve = 1.e-6;
+  min_improve=1.e-6;
   funval.initialize();
 }

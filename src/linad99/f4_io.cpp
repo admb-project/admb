@@ -38,7 +38,7 @@
 ostream& operator<<(BOR_CONST ostream& _ostr,BOR_CONST  dvar4_array & z)
 {
   ostream& ostr= (ostream&) _ostr;
-  for (int i = z.hslicemin();i<=z.hslicemax();i++)
+  for (int i=z.hslicemin();i<=z.hslicemax();i++)
   {
     ostr << z[i];
     if (i<z.hslicemax()) ostr << endl;
@@ -52,7 +52,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,BOR_CONST  dvar4_array & z)
  */
 istream& operator>>(BOR_CONST istream& istr,BOR_CONST  dvar4_array & z)
 {
-  for (int i = z.hslicemin();i<=z.hslicemax();i++)
+  for (int i=z.hslicemin();i<=z.hslicemax();i++)
   {
     istr >> z[i];
   }
@@ -65,7 +65,7 @@ istream& operator>>(BOR_CONST istream& istr,BOR_CONST  dvar4_array & z)
  */
 ostream& operator<<(BOR_CONST ostream& ostr,BOR_CONST  dvar5_array & z)
 {
-  for (int i = z.indexmin();i<=z.indexmax();i++)
+  for (int i=z.indexmin();i<=z.indexmax();i++)
   {
     ostr << z[i];
   }
@@ -78,7 +78,7 @@ ostream& operator<<(BOR_CONST ostream& ostr,BOR_CONST  dvar5_array & z)
  */
 istream& operator>>(BOR_CONST istream& istr,BOR_CONST  dvar5_array & z)
 {
-  for (int i = z.indexmin();i<=z.indexmax();i++)
+  for (int i=z.indexmin();i<=z.indexmax();i++)
   {
     istr >> z[i];
   }
@@ -91,7 +91,7 @@ istream& operator>>(BOR_CONST istream& istr,BOR_CONST  dvar5_array & z)
  */
 ostream& operator<<(BOR_CONST ostream& ostr,BOR_CONST  dvar6_array & z)
 {
-  for (int i = z.indexmin();i<=z.indexmax();i++)
+  for (int i=z.indexmin();i<=z.indexmax();i++)
   {
     ostr << z[i];
   }
@@ -104,7 +104,7 @@ ostream& operator<<(BOR_CONST ostream& ostr,BOR_CONST  dvar6_array & z)
  */
 istream& operator>>(BOR_CONST istream& istr,BOR_CONST  dvar6_array & z)
 {
-  for (int i = z.indexmin();i<=z.indexmax();i++)
+  for (int i=z.indexmin();i<=z.indexmax();i++)
   {
     istr >> z[i];
   }

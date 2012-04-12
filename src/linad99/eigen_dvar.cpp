@@ -119,7 +119,7 @@ void eigens (const dvar_matrix & m, const dvar_matrix & _evecs,
 
   dvar_matrix mat = symmetrize (m);
 
-  // shift m, evecs, and evals so they are compatible with algorithm
+  //shift m, evecs, and evals so they are compatible with algorithm
   mat.rowshift (0);
   mat.colshift (0);
   evecs.rowshift (0);
@@ -127,7 +127,7 @@ void eigens (const dvar_matrix & m, const dvar_matrix & _evecs,
   evals.shift (0);
 
 
-  // mat[ row, column ] = A[ (row*row+row)/2 + column ]
+  //mat[ row, column ] = A[ (row*row+row)/2 + column ]
   dvar_vector A (0, N * (N + 1) / 2);
 
   for (int i = 0; i < N; i++)
@@ -267,8 +267,8 @@ done:;
   // end of cephes code
 
 
-  // put data into evecs and evals
-  // EV[ n*i+j ] = evecs[i][j]
+  //put data into evecs and evals
+  //EV[ n*i+j ] = evecs[i][j]
   for (int i = 0; i < N; i++)
     {
       for (int j = 0; j < N; j++)
@@ -279,7 +279,7 @@ done:;
 
   evals = E;
 
-  // shift evecs and evals back
+  //shift evecs and evals back
   evecs.rowshift (evecslb);
   evecs.colshift (evecslb);
   evals.shift (evalslb);

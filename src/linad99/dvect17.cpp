@@ -24,9 +24,9 @@
     }
     dvector tmp(m.rowmin(),m.rowmax());
 
-    for (int i = m.rowmin(); i<=m.rowmax(); i++)
+    for (int i=m.rowmin(); i<=m.rowmax(); i++)
     {
-      tmp.elem(i) = m.elem(i,i);
+      tmp.elem(i)=m.elem(i,i);
     }
     return(tmp);
   }

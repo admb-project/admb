@@ -77,9 +77,9 @@ double dafsqrt( double x );
  */
 void fmmt1::fmin(BOR_CONST double& _f, BOR_CONST dvector & _x,BOR_CONST dvector& _g)
 {
-  double& f = (double&) _f;
-  independent_variables & x = (independent_variables &) _x;
-  dvector& g = (dvector&) _g;
+  double& f=(double&) _f;
+  independent_variables & x=(independent_variables &) _x;
+  dvector& g=(dvector&) _g;
     #ifdef DIAG
       cout << "On entry to fmin: " << *this << endl;
     #endif
@@ -127,7 +127,7 @@ void fmmt1::fmin(BOR_CONST double& _f, BOR_CONST dvector & _x,BOR_CONST dvector&
       }
       if (ireturn == 1) goto call1;
       if (ireturn == 2) goto call2;
-      ihflag = 0;
+      ihflag=0;
      if (n==0) 
      { 
        cerr << "Error -- the number of active parameters"
@@ -162,61 +162,61 @@ void fmmt1::fmin(BOR_CONST double& _f, BOR_CONST dvector & _x,BOR_CONST dvector&
         << " the number of independent variables in fmin\n";
         ad_exit(1);
      } 
-     for (i = 1; i<=n; i++)
-           xx.elem(i) = x.elem(i); 
-      itn = 0;
-      icc = 0;
-       for (i = 1; i< 11; i++)
-          funval.elem(i) = 0.;
+     for (i=1; i<=n; i++)
+           xx.elem(i)=x.elem(i); 
+      itn=0;
+      icc=0;
+       for (i=1; i< 11; i++)
+          funval.elem(i)=0.;
       ihang = 0;
-      llog = 1;
-      np = n+1;
-      n1 = n-1;
-      nn = n*np/2;
-      is = n;
-      iu = n;
-      iv = n+n;
-      ib = iv+n;
-      iexit = 0;
-      dmin = 1;
+      llog=1;
+      np=n+1;
+      n1=n-1;
+      nn=n*np/2;
+      is=n;
+      iu=n;
+      iv=n+n;
+      ib=iv+n;
+      iexit=0;
+      dmin=1;
       if (dmin <= 0.)
          goto label7020;
       if(dfn == 0.)
          z = 0.0; 
-      for (i = 1; i<=n; i++)
+      for (i=1; i<=n; i++)
       {
-        xsave.elem(i) = x.elem(i);
-        x.elem(i) = xx.elem(i);
+        xsave.elem(i)=x.elem(i);
+        x.elem(i)=xx.elem(i);
       }
-      ireturn = 1;
+      ireturn=1;
       return;
   call1:
-      for (i = 1; i<=n; i++)
+      for (i=1; i<=n; i++)
       {
-        x.elem(i) = xsave.elem(i);
+        x.elem(i)=xsave.elem(i);
       }
-      ireturn = 3;
+      ireturn=3;
       fbest = f;
-      for ( i = 1; i<=n; i++)
-         gbest.elem(i) = g.elem(i);
+      for ( i=1; i<=n; i++)
+         gbest.elem(i)=g.elem(i);
       funval.elem(10) = f;
-      df = dfn;
+      df=dfn;
       if(dfn == 0.0)
          df = f - z;
       if(dfn < 0.0)
-         df = fabs(df * f);
+         df=fabs(df * f);
       if(df <= 0.0)
-         df = 1.;
+         df=1.;
 label20:
-      ic = 0;
+      ic=0;
       iconv = 1;
-      for ( i = 1; i<=9; i++)
+      for ( i=1; i<=9; i++)
          funval.elem(i)= funval.elem(i+1);
       funval.elem(10) = f;
       if ( itn>15 && fabs( funval.elem(1)-funval.elem(10))< min_improve )
          ihang = 1;
       gmax = 0;
-      for ( i = 1; i<=n; i++)
+      for ( i=1; i<=n; i++)
       {
         if(fabs(g.elem(i)) > crit) iconv = 2;
         if(fabs(g.elem(i)) > fabs(gmax) ) gmax = g.elem(i);
@@ -251,28 +251,28 @@ label7002:
       }
 label21 :
       itn++;
-      rrr = update(n,itn-1,xm,g,xstep,xy,x,xold,gold,xrho);
-      for (i = 1; i<=n; i++)
-         x.elem(i) = xx.elem(i);
-      for (i = 1; i<=n; i++)
+      rrr=update(n,itn-1,xm,g,xstep,xy,x,xold,gold,xrho);
+      for (i=1; i<=n; i++)
+         x.elem(i)=xx.elem(i);
+      for (i=1; i<=n; i++)
       {
         w.elem(i)=-g.elem(i);
       }
-      for (i = 1; i<=n; i++)
+      for (i=1; i<=n; i++)
       {
-        w(n+i) = rrr(i);
+        w(n+i)=rrr(i);
       }
-      gs = 0.0;
-      for (i = 1; i<=n; i++)
+      gs=0.0;
+      for (i=1; i<=n; i++)
          gs+=w.elem(is+i)*g.elem(i);
-      iexit = 2;
+      iexit=2;
       if(gs >= 0.0)
       {
-        double a = 1.1*gs/norm2(g);
-        for (i = 1; i<=n; i++)
+        double a=1.1*gs/norm2(g);
+        for (i=1; i<=n; i++)
            w.elem(is+i)-=a*g.elem(i);
-        gs = 0.0;
-        for (i = 1; i<=n; i++)
+        gs=0.0;
+        for (i=1; i<=n; i++)
           gs+=w.elem(is+i)*g.elem(i);
         if(gs >= 0.0)
         {
@@ -280,57 +280,57 @@ label21 :
           goto label92;
         }
       }
-      gso = gs;
+      gso=gs;
       alpha=-2.0*df/gs;
       if(alpha > 1.0)
-        alpha = 1.0;
-      df = f;
-      tot = 0.0;
+        alpha=1.0;
+      df=f;
+      tot=0.0;
 label30:
-      iexit = 3;
+      iexit=3;
       if( ifn >= maxfn)
       {
-         maxfn_flag = 1;
+         maxfn_flag=1;
          goto label92;
       }
       else
       {
-         maxfn_flag = 0;
-         iexit = 1;
+         maxfn_flag=0;
+         iexit=1;
       }
       if(quit_flag && use_control_c) goto label92;
-      for (i = 1; i<=n; i++)
+      for (i=1; i<=n; i++)
       {
-        z = alpha*w.elem(is+i);
+        z=alpha*w.elem(is+i);
         xx.elem(i)+=z;
       }
-      for (i = 1; i<=n; i++)
+      for (i=1; i<=n; i++)
       {
-        xsave.elem(i) = x.elem(i);
-        gsave.elem(i) = g.elem(i);
-        x.elem(i) = xx.elem(i);
+        xsave.elem(i)=x.elem(i);
+        gsave.elem(i)=g.elem(i);
+        x.elem(i)=xx.elem(i);
         fsave = f;
       }
       fsave = f;
-      ireturn = 2;
+      ireturn=2;
       return;
   call2:
-      for (i = 1; i<=n; i++)
+      for (i=1; i<=n; i++)
       {
-        x.elem(i) = xsave.elem(i);
-        w.elem(i) = g.elem(i);
-        g.elem(i) = gsave.elem(i);
+        x.elem(i)=xsave.elem(i);
+        w.elem(i)=g.elem(i);
+        g.elem(i)=gsave.elem(i);
       }
       fy = f;
       f = fsave;
       ireturn=-1;
       if (fy < fbest)
       {
-        fbest = fy;
-        for (i = 1; i<=n; i++)
+        fbest=fy;
+        for (i=1; i<=n; i++)
         {
-          x.elem(i) = xx.elem(i);
-          gbest.elem(i) = w.elem(i);
+          x.elem(i)=xx.elem(i);
+          gbest.elem(i)=w.elem(i);
         }
       }
 #if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) || defined(linux)
@@ -347,9 +347,9 @@ label30:
           #endif
           if ( c == 'C')
           {
-            for (i = 1; i<=n; i++)
+            for (i=1; i<=n; i++)
             {
-              x.elem(i) = xx.elem(i);
+              x.elem(i)=xx.elem(i);
             }
             ireturn = 3;
             derch(f, x , w, n, ireturn);
@@ -359,18 +359,18 @@ label30:
           {
             if ( c == 'Q'|| c == 'N') 
             {
-              quit_flag = c;
+              quit_flag=c;
               goto label92;
             }
             else
             {
-              quit_flag = 0;
+              quit_flag=0;
             }
           }
        }
        icc+=1;
        if( icc >= 5)
-          icc = 0;
+          icc=0;
       ic++;
       if( ic >imax)
       {
@@ -379,13 +379,13 @@ label30:
            if (ad_printf) (*ad_printf)("  ic > imax  in fminim is answer attained ?\n" );
            fmmdisp(x, g, n, this->scroll_flag,noprintx);
          }
-         ihflag = 1;
-         ihang = 1;
+         ihflag=1;
+         ihang=1;
          goto label92;
       }
       ifn++;
-      gys = 0.0;
-      for (i = 1; i<= n; i++)
+      gys=0.0;
+      for (i=1; i<= n; i++)
          gys+=w.elem(i)*w.elem(is+i);
       if(fy>=f)
          goto label40;
@@ -396,15 +396,15 @@ label30:
       if(gys>0.0)
          goto  label40;
       tot+=alpha;
-      z = 10.0;
+      z=10.0;
       if(gs<gys)
-         z = gys/(gs-gys);
+         z=gys/(gs-gys);
       if(z>10.0)
-         z = 10.0;
-      alpha = alpha*z;
+         z=10.0;
+      alpha=alpha*z;
       if (alpha == 0.)
       {
-         ialph = 1;
+         ialph=1;
          #ifdef __ZTC__
          if (ireturn <= 0)
          {
@@ -413,26 +413,26 @@ label30:
          #endif
          return;
       }
-      f = fy;
-      gs = gys;
+      f=fy;
+      gs=gys;
       goto label30;
 label40:
-      for (i = 1;i<=n;i++)
+      for (i=1;i<=n;i++)
          xx.elem(i)-=alpha*w.elem(is+i);
-      z = 3.0*(f-fy)/alpha+gys+gs;
-      zz = dafsqrt(z*z-gs*gys);
-      z = 1.0-(gys+zz-z)/(2.0*zz+gys-gs);
+      z=3.0*(f-fy)/alpha+gys+gs;
+      zz=dafsqrt(z*z-gs*gys);
+      z=1.0-(gys+zz-z)/(2.0*zz+gys-gs);
       if (fabs(fy-1.e+95) < 1.e-66)
       {
         alpha*=.001;
       }
       else
       {
-        alpha = alpha*z;
+        alpha=alpha*z;
       }
       if (alpha == 0.)
       {
-         ialph = 1;
+         ialph=1;
          #ifdef __ZTC__
          if (ireturn <= 0)
          {
@@ -444,44 +444,44 @@ label40:
       goto label30;
 label50:
       alpha+=tot;
-      f = fy;
+      f=fy;
       df-=f;
-      dgs = gys-gso;
-      link = 1;
+      dgs=gys-gso;
+      link=1;
       if(dgs+alpha*gso>0.0)
          goto label52;
-      for (i = 1;i<=n;i++)
-         w.elem(iu+i) = w.elem(i)-g.elem(i);
-      sig = 1.0/(alpha*dgs);
+      for (i=1;i<=n;i++)
+         w.elem(iu+i)=w.elem(i)-g.elem(i);
+      sig=1.0/(alpha*dgs);
       goto label70;
 label52:
-      zz = alpha/(dgs-alpha*gso);
-      z = dgs*zz-1.0;
-      for (i = 1;i<=n;i++)
-         w.elem(iu+i) = z*g.elem(i)+w.elem(i);
-      sig = 1.0/(zz*dgs*dgs);
+      zz=alpha/(dgs-alpha*gso);
+      z=dgs*zz-1.0;
+      for (i=1;i<=n;i++)
+         w.elem(iu+i)=z*g.elem(i)+w.elem(i);
+      sig=1.0/(zz*dgs*dgs);
       goto label70;
 label60:
-      link = 2;
-      for (i = 1;i<=n;i++)
-         w.elem(iu+i) = g.elem(i);
+      link=2;
+      for (i=1;i<=n;i++)
+         w.elem(iu+i)=g.elem(i);
       if(dgs+alpha*gso>0.0)
          goto label62;
-      sig = 1.0/gso;
+      sig=1.0/gso;
       goto  label70;
 label62:
       sig=-zz;
       goto label70;
 label65:
-      for (i = 1;i<=n;i++)
-         g.elem(i) = w.elem(i);
+      for (i=1;i<=n;i++)
+         g.elem(i)=w.elem(i);
       goto  label20;
 label70:
       if (link == 1) goto label60;
       if (link == 2) goto label65;
 label90:
-      for (i = 1;i<=n;i++)
-         g.elem(i) = w.elem(i);
+      for (i=1;i<=n;i++)
+         g.elem(i)=w.elem(i);
 label92:
       if (iprint>0)
       {
@@ -549,7 +549,7 @@ label7010:
 #endif
      if (ad_printf) (*ad_printf)("Intermediate statistics: ");
    }
-   llog = 0;
+   llog=0;
    goto label7003;
 label7020:
    if (iprint>0)
@@ -575,44 +575,44 @@ label7020:
     dvector& xold= (dvector&) _xold;
     dmatrix& s= (dmatrix&) _s;
     dvector& gold= (dvector&) _gold;
-    dvector& xrho = (dvector&)_xrho;
+    dvector& xrho=(dvector&)_xrho;
     dvector beta(1,nvar);
     dvector alpha(0,m);
     dvector r(1,nvar);
     dvector t(1,nvar);
-    int m1 = m+1;
+    int m1=m+1;
     if (iter<1)
     {
-      xold = x;
-      gold = g;
-      r = g;
+      xold=x;
+      gold=g;
+      r=g;
     }
     else
     {
-      int k = iter-1;
-      int k1 = k%(m1);
-      y(k1) = g-gold;
-      s(k1) = x-xold;
-      xrho(k1) = 1./(y(k1)*s(k1));
-      xold = x;
-      gold = g;
+      int k=iter-1;
+      int k1=k%(m1);
+      y(k1)=g-gold;
+      s(k1)=x-xold;
+      xrho(k1)=1./(y(k1)*s(k1));
+      xold=x;
+      gold=g;
       int i;
-      int lb = k-m+1;
-      if (lb <0) lb = 0;
-      t = g;
-      for (i = k;i>=lb;i--)
+      int lb=k-m+1;
+      if (lb <0) lb=0;
+      t=g;
+      for (i=k;i>=lb;i--)
       {
-        int i1 = i%(m1);
-        // int i2 = (i+1)%(m1);
+        int i1=i%(m1);
+        //int i2=(i+1)%(m1);
         {
-          alpha(i-lb) = xrho(i1)*(s(i1)*t);
+          alpha(i-lb)=xrho(i1)*(s(i1)*t);
         }
         t-=alpha(i-lb)*y(i1);
       }
-      r = t;
-      for (i = lb;i<=k;i++)
+      r=t;
+      for (i=lb;i<=k;i++)
       {
-        int i1 = i%(m1);
+        int i1=i%(m1);
         r+= (alpha(i-lb)-xrho(i1)*(y(i1)*r)) * s(i1);
       }
     }

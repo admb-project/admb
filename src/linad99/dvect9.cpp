@@ -69,7 +69,7 @@ dvector::dvector(const char * s)
   int commas  = 0;
 
   char *t = new char[n+1];
-  t[n] = 0;
+  t[n]=0;
 
   int k;
   for (k = 0; k < n; k++)
@@ -121,10 +121,10 @@ dvector::dvector(const char * s)
    char *field =  new char[size_t(MAX_FIELD_LENGTH+1)];
    char *err_ptr;
 
-   for (int i = ncl;i<=nch;i++)
+   for (int i=ncl;i<=nch;i++)
    {
      ss >> field;
-     v[i] = strtod(field,&err_ptr); // increment column counter
+     v[i]=strtod(field,&err_ptr); // increment column counter
 
      if (isalpha(err_ptr[0]))
      {
@@ -151,14 +151,14 @@ dvector::dvector(const char * s)
      }
    }
    delete [] field;
-   field = 0;
+   field=0;
 
     delete [] t;
-    t = 0;
+    t=0;
   }
   else // if lbraces == 0
   {
-   const char * filename = s;
+   const char * filename=s;
    ifstream infile(filename);
    if (!infile)
    {
@@ -167,11 +167,11 @@ dvector::dvector(const char * s)
       ad_exit(1);
    }
 
-   int i = 0;
+   int i=0;
 
 //   char * field = (char*) new[size_t(MAX_FIELD_LENGTH+1)];
    char * field = new char[size_t(MAX_FIELD_LENGTH+1)];
-   int count = 0;
+   int count=0;
    do
    {
      infile >> field;
@@ -202,9 +202,9 @@ dvector::dvector(const char * s)
       ad_exit(21);
     }
  #if defined(THREAD_SAFE)
-  if ( (shape = new ts_vector_shapex(1,count,v)) == NULL)
+  if ( (shape=new ts_vector_shapex(1,count,v)) == NULL)
  #else
-  if ( (shape = new vector_shapex(1,count,v)) == NULL)
+  if ( (shape=new vector_shapex(1,count,v)) == NULL)
  #endif
     {
       cerr << "Error trying to allocate memory for dvector\n";
@@ -212,8 +212,8 @@ dvector::dvector(const char * s)
     }
 
 
-    index_min = 1;
-    index_max = count;
+    index_min=1;
+    index_max=count;
     v -= indexmin();
 
    #ifdef DIAG
@@ -221,10 +221,10 @@ dvector::dvector(const char * s)
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
    char * err_ptr;
-   for (i = 1;i<=count;i++)
+   for (i=1;i<=count;i++)
    {
      infile >> field;
-     elem(i) = strtod(field,&err_ptr); // increment column counter
+     elem(i)=strtod(field,&err_ptr); // increment column counter
 
      if (isalpha(err_ptr[0]))
      {
@@ -273,7 +273,7 @@ void dvector::allocate(const char * s)
   int commas  = 0;
 
   char *t = new char[n+1];
-  t[n+1] = 0;
+  t[n+1]=0;
 
   int k;
   for (k = 0; k < n; k++)
@@ -325,10 +325,10 @@ void dvector::allocate(const char * s)
    char * field =  new char[size_t(MAX_FIELD_LENGTH+1)];
    char * err_ptr;
 
-   for (int i = ncl;i<=nch;i++)
+   for (int i=ncl;i<=nch;i++)
    {
      ss >> field;
-     v[i] = strtod(field,&err_ptr); // increment column counter
+     v[i]=strtod(field,&err_ptr); // increment column counter
 
      if (isalpha(err_ptr[0]))
      {
@@ -356,14 +356,14 @@ void dvector::allocate(const char * s)
      }
    }
    delete [] field;
-   field = 0;
+   field=0;
 
     delete [] t;
-    t = 0;
+    t=0;
   }
   else // if lbraces == 0
   {
-   const char * filename = s;
+   const char * filename=s;
    ifstream infile(filename);
    if (!infile)
    {
@@ -372,11 +372,11 @@ void dvector::allocate(const char * s)
       ad_exit(1);
    }
 
-   int i = 0;
+   int i=0;
 
 //   char * field = (char*) new[size_t(MAX_FIELD_LENGTH+1)];
    char * field = new char[size_t(MAX_FIELD_LENGTH+1)];
-   int count = 0;
+   int count=0;
    do
    {
      infile >> field;
@@ -407,9 +407,9 @@ void dvector::allocate(const char * s)
      ad_exit(21);
    }
 #if defined(THREAD_SAFE)
-   if ( (shape = new ts_vector_shapex(1,count,v)) == NULL)
+   if ( (shape=new ts_vector_shapex(1,count,v)) == NULL)
 #else
-   if ( (shape = new vector_shapex(1,count,v)) == NULL)
+   if ( (shape=new vector_shapex(1,count,v)) == NULL)
 #endif
    {
      cerr << "Error trying to allocate memory for dvector\n";
@@ -422,10 +422,10 @@ void dvector::allocate(const char * s)
    #endif
    v -= indexmin();
    char * err_ptr;
-   for (i = 1;i<=count;i++)
+   for (i=1;i<=count;i++)
    {
      infile >> field;
-     elem(i) = strtod(field,&err_ptr); // increment column counter
+     elem(i)=strtod(field,&err_ptr); // increment column counter
 
      if (isalpha(err_ptr[0]))
      {
@@ -459,6 +459,6 @@ void dvector::allocate(const char * s)
      }
    }
    delete [] field;
-   field = 0;
+   field=0;
  }
 }

@@ -16,12 +16,12 @@
  */
 void fixed_smartlist::reset(void)
 {
-  end_saved = 0;
-  bptr = buffer; 
-  eof_flag = 0;
+  end_saved=0;
+  bptr=buffer; 
+  eof_flag=0;
   /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
-  endof_file_ptr = lseek(fp,0L,SEEK_SET);
-  written_flag = 0;
+  endof_file_ptr=lseek(fp,0L,SEEK_SET);
+  written_flag=0;
 }
 
 /**
@@ -30,12 +30,12 @@ void fixed_smartlist::reset(void)
  */
 fixed_smartlist::fixed_smartlist(void) 
 {
-  nentries = 0;
-  bufsize = 0;
-  buffer = 0;
-  true_buffer = 0;
-  buffend = 0; 
-  bptr = 0;
+  nentries=0;
+  bufsize=0;
+  buffer=0;
+  true_buffer=0;
+  buffend=0; 
+  bptr=0;
   fp=-1;
 }
 
@@ -49,25 +49,25 @@ fixed_smartlist::fixed_smartlist(unsigned int _bufsize,const adstring& _filename
 }
 void fixed_smartlist::allocate(unsigned int _bufsize,const adstring& _filename) 
 {
-  nentries = _bufsize/sizeof(fixed_list_entry);
-  end_saved = 0;
-  eof_flag = 0;
-  noreadflag = 0;
-  written_flag = 0;
-  direction = 0;
-  bufsize = _bufsize;
-  filename = _filename;
+  nentries=_bufsize/sizeof(fixed_list_entry);
+  end_saved=0;
+  eof_flag=0;
+  noreadflag=0;
+  written_flag=0;
+  direction=0;
+  bufsize=_bufsize;
+  filename=_filename;
   AD_ALLOCATE(true_buffer,fixed_list_entry,nentries+2,df1b2_gradlist) 
-  doubleptr = (double*)true_buffer;
-  true_buffend = true_buffer+nentries+1;
-  buffer = true_buffer+1;
-  buffend = true_buffend-2;
-  bptr = buffer;
-  true_buffer->numbytes = 5678;
-  // int(true_buffer->pf) = 1234;
-  true_buffend->numbytes = 9999;
-  // int(true_buffend->pf) = 6666;
-  fp = open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
+  doubleptr=(double*)true_buffer;
+  true_buffend=true_buffer+nentries+1;
+  buffer=true_buffer+1;
+  buffend=true_buffend-2;
+  bptr=buffer;
+  true_buffer->numbytes=5678;
+  //int(true_buffer->pf)=1234;
+  true_buffend->numbytes=9999;
+  //int(true_buffend->pf)=6666;
+  fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
                    O_BINARY, S_IREAD | S_IWRITE);
   if (fp == -1)
   {
@@ -99,15 +99,15 @@ void fixed_smartlist::write(int n)
  */
 void fixed_smartlist::rewind(void)
 {
-  bptr = buffer;
-  unsigned int nbytes = 0;
-  eof_flag = 0;
+  bptr=buffer;
+  unsigned int nbytes=0;
+  eof_flag=0;
   if (written_flag)
   {
     lseek(fp,0L,SEEK_SET);
     // get the record size
     ::read(fp,&nbytes,sizeof(int));
-    // cout << nbytes << endl;
+    //cout << nbytes << endl;
     if (nbytes>bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
@@ -118,7 +118,7 @@ void fixed_smartlist::rewind(void)
     }
     // now read the record into the buffer
     /*int nr=*/::read(fp,buffer,nbytes);
-    // cout << "Number of bytes read " << nr << endl;
+    //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
     lseek(fp,long(sizeof(off_t)),SEEK_CUR);
@@ -131,11 +131,11 @@ void fixed_smartlist::rewind(void)
  */   
 void fixed_smartlist::initialize(void)
 {
-  end_saved = 0;
-  eof_flag = 0;
-  bptr = buffer;
-  // int nbytes = 0;
-  written_flag = 0;
+  end_saved=0;
+  eof_flag=0;
+  bptr=buffer;
+  //int nbytes=0;
+  written_flag=0;
   lseek(fp,0L,SEEK_SET);
   set_forward();
 }
@@ -193,7 +193,7 @@ void fixed_smartlist::save_end(void)
     if (!end_saved)
     {
       write_buffer_one_less();
-      end_saved = 1;
+      end_saved=1;
     }
   }
 }
@@ -204,38 +204,38 @@ void fixed_smartlist::save_end(void)
  */
 void fixed_smartlist::write_buffer_one_less(void)
 {
-  int nbytes = adptr_diff(bptr,buffer);
+  int nbytes=adptr_diff(bptr,buffer);
   if (nbytes)
   {
-    written_flag = 1;
+    written_flag=1;
     // get the current file position
-    off_t pos = lseek(fp,0L,SEEK_CUR);
+    off_t pos=lseek(fp,0L,SEEK_CUR);
   
     // write the size of the next record into the file
-    // cout << nbytes << endl;
+    //cout << nbytes << endl;
     ::write(fp,&nbytes,sizeof(int));
   
     // write the record into the file
     int nw=::write(fp,buffer,nbytes);
-    // cout << "Number of bytes written 1less " << nw 
+    //cout << "Number of bytes written 1less " << nw 
      //    << " bptr value =  " << bptr << endl; 
-    // for (int ii = 0;ii<=25;ii++)
+    //for (int ii=0;ii<=25;ii++)
     //  cout << int (*(buffer+ii)) << " ";
-    // cout << endl;
+    //cout << endl;
     if (nw<nbytes)
     {
       cerr << "Error writing to file " << filename << endl;
       ad_exit(1);
     }
     // reset the pointer to the beginning of the buffer
-    bptr = buffer;
+    bptr=buffer;
   
     // now write the previous file position into the file so we can back up
     // when we want to.
     ::write(fp,&pos,sizeof(off_t));
   
-    endof_file_ptr = lseek(fp,0L,SEEK_CUR);
-    // cout << lseek(fp,0L,SEEK_CUR) << endl;
+    endof_file_ptr=lseek(fp,0L,SEEK_CUR);
+    //cout << lseek(fp,0L,SEEK_CUR) << endl;
   }
 }
 
@@ -245,7 +245,7 @@ void fixed_smartlist::write_buffer_one_less(void)
  */
 void fixed_smartlist::write_buffer(void)
 {
-  unsigned int nbytes = adptr_diff(bptr+1,buffer);
+  unsigned int nbytes=adptr_diff(bptr+1,buffer);
   if (nbytes>bufsize)
   {
     cerr << "n bytes > bufsize in "
@@ -253,34 +253,34 @@ void fixed_smartlist::write_buffer(void)
   }
   if (nbytes)
   {
-    written_flag = 1;
+    written_flag=1;
     // get the current file position
-    off_t pos = lseek(fp,0L,SEEK_CUR);
+    off_t pos=lseek(fp,0L,SEEK_CUR);
   
     // write the size of the next record into the file
     ::write(fp,&nbytes,sizeof(int));
   
     // write the record into the file
     unsigned int nw=::write(fp,buffer,nbytes);
-    // cout << "Number of bytes written " << nw 
+    //cout << "Number of bytes written " << nw 
      //    << " bptr value =  " << bptr << endl; 
-    // for (int ii = 0;ii<=25;ii++)
+    //for (int ii=0;ii<=25;ii++)
     //  cout << int (*(buffer+ii)) << " ";
-    // cout << endl;
+    //cout << endl;
     if (nw<nbytes)
     {
       cerr << "Error writing to file " << filename << endl;
       ad_exit(1);
     }
     // reset the pointer to the beginning of the buffer
-    bptr = buffer;
+    bptr=buffer;
   
     // now write the previous file position into the file so we can back up
     // when we want to.
     ::write(fp,&pos,sizeof(off_t));
   
-    endof_file_ptr = lseek(fp,0L,SEEK_CUR);
-    // cout << lseek(fp,0L,SEEK_CUR) << endl;
+    endof_file_ptr=lseek(fp,0L,SEEK_CUR);
+    //cout << lseek(fp,0L,SEEK_CUR) << endl;
   }
 }
 
@@ -297,13 +297,13 @@ void fixed_smartlist::read_buffer(void)
     if (direction ==-1) 
       eof_flag=-1;
     else
-      eof_flag = 1;
+      eof_flag=1;
   }
   else
   {
     if (direction ==-1) // we are going backwards
     {
-      off_t ipos = lseek(fp,0L,SEEK_CUR);
+      off_t ipos=lseek(fp,0L,SEEK_CUR);
       if (ipos ==0)
       {
         eof_flag=-1;
@@ -336,25 +336,25 @@ void fixed_smartlist::read_buffer(void)
     }
    
    
-    // cout << "Number of bytes read " << nr << endl;
+    //cout << "Number of bytes read " << nr << endl;
    /*
     cout << "buffer value = ";
-    for (int ii = 0;ii<=2;ii++)
+    for (int ii=0;ii<=2;ii++)
       cout << *(buffer+ii) << " ";
     cout << endl;
     */
     
     // reset the pointer to the beginning of the buffer
-    bptr = buffer;
-    int ns = nbytes/sizeof(fixed_list_entry);
-    recend = bptr+ns-1;
-    // cout << "Number of bytes read " << nr 
+    bptr=buffer;
+    int ns=nbytes/sizeof(fixed_list_entry);
+    recend=bptr+ns-1;
+    //cout << "Number of bytes read " << nr 
      //    << "  recend value = " << recend << endl;
     if (direction ==-1) // we are going backwards
     {
       // backup the file pointer again
       lseek(fp,pos,SEEK_SET);
-      // *(off_t*)(bptr) = lseek(fp,pos,SEEK_SET);
+      // *(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     else  // we are going forward  
     {
@@ -409,7 +409,7 @@ void memcpy(void * p,const fixed_smartlist & _list,int nsize)
 	    {
 	      // get previous record from the file
 	      read_buffer();
-	      bptr = recend-n+1;
+	      bptr=recend-n+1;
 	    }
 	  }
 	  else
@@ -431,8 +431,8 @@ void memcpy(void * p,const fixed_smartlist & _list,int nsize)
 	    {
 	      // get previous record from the file
 	      read_buffer();
-	      // bptr = recend+1;
-	      bptr = recend;
+	      //bptr=recend+1;
+	      bptr=recend;
 	    }
 	  }
 	  else
@@ -494,14 +494,14 @@ void fixed_smartlist::operator ++ (void)
  */   
 void fixed_smartlist::read_file(void)
 {
-  // rewind the file
-  off_t pos = lseek(fp,0L,SEEK_SET);
-  int nbytes = 0;
+  //rewind the file
+  off_t pos=lseek(fp,0L,SEEK_SET);
+  int nbytes=0;
   char buffer[50000];
-  int offset = 0;
+  int offset=0;
   fixed_list_entry * b= (fixed_list_entry*) &(buffer[0]);
   cout << b << endl;
-  int nw = 0;
+  int nw=0;
   do
   {
     nw=::read(fp,&nbytes,sizeof(int));

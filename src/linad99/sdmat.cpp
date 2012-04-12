@@ -25,10 +25,10 @@ sdmatrix::sdmatrix(int irh)
  */
 sdmatrix::sdmatrix()
 {
-   // unsigned nrl = 0;
-   // unsigned nrh = 0;
-   shape = NULL;
-   m = NULL;
+   //unsigned nrl = 0;
+   //unsigned nrh = 0;
+   shape=NULL;
+   m=NULL;
 }
 
 /**
@@ -38,9 +38,9 @@ sdmatrix::sdmatrix()
 void sdmatrix::allocate(int irh)
 {
    unsigned nrl = 1;
-   // unsigned nrh = irh;
-   index_min = nrl;
-   index_max = nrl;
+   //unsigned nrh = irh;
+   index_min=nrl;
+   index_max=nrl;
 
    #ifdef DIAG
      myheapcheck("Entering sdmatrix(nrh)" );
@@ -58,7 +58,7 @@ void sdmatrix::allocate(int irh)
    shape= new mat_shapex(m);
    m -= rowmin();
 
-   for (int i = rowmin(); i<=rowmax(); i++)
+   for (int i=rowmin(); i<=rowmax(); i++)
    {
      m[i].allocate(1, i);
      #ifdef DIAG

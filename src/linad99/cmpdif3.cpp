@@ -70,8 +70,8 @@ static void report_gradstack_flag2(void)
 void set_gradstack_flag(char* str)
 {
 #if defined(CHK_ID_STRING)
-  // int wsize = sizeof(char);
-  int length = strlen(str);
+  //int wsize=sizeof(char);
+  int length=strlen(str);
   gradient_structure::get_fp()->fwrite(str,length);
   gradient_structure::get_fp()->fwrite(&length,sizeof(int));
   gradient_structure::GRAD_STACK1-> 
@@ -87,14 +87,14 @@ void set_gradstack_flag(char* str)
 void set_gradstack_flag(char* _str,int i,int j)
 {
 #if defined(CHK_ID_STRING)
-  adstring ads = _str;
+  adstring ads=_str;
   ads+=" ";
   ads+=str(i);
   ads+=" ";
   ads+=str(j);
-  // int wsize = sizeof(char);
-  char * str = (char*)(ads);
-  int length = strlen(str);
+  //int wsize=sizeof(char);
+  char * str=(char*)(ads);
+  int length=strlen(str);
   gradient_structure::get_fp()->fwrite(&i,sizeof(int));
   gradient_structure::get_fp()->fwrite(&j,sizeof(int));
   gradient_structure::get_fp()->fwrite(str,length);
@@ -119,11 +119,11 @@ void verify_identifier_string(const char* str1)
 #if defined(CHK_ID_STRING)
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
-  long int num_bytes = strlen(str1);
+  long int num_bytes=strlen(str1);
   char str[10];
   str[num_bytes]='\0';
   gradient_structure::get_fp()->fread(str,num_bytes);
-  // clogf << "in verify_id_string " << str1 << endl;
+  //clogf << "in verify_id_string " << str1 << endl;
   if(strcmp(str1,str))
   {
     cerr << "Error reading stack identifer for " << str1 << endl;
@@ -142,12 +142,12 @@ adstring get_string_marker(void)
 #if defined(CHK_ID_STRING)
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
-  long int num_bytes = 5;
+  long int num_bytes=5;
   char str[10];
   str[num_bytes]='\0';
   gradient_structure::get_fp()->fread(str,num_bytes);
-  // clogf << "in verify_id_string " << str1 << endl;
-  str1 = str;
+  //clogf << "in verify_id_string " << str1 << endl;
+  str1=str;
 #endif
  return str1;
 }
@@ -159,7 +159,7 @@ adstring get_string_marker(void)
 void ivector::save_ivector_position(void) _CONST
 {
   // saves the size and address information for a ivector
-  unsigned wsize = sizeof(ivector_position);
+  unsigned wsize=sizeof(ivector_position);
   ivector_position tmp(*this);
   gradient_structure::get_fp()->fwrite(&tmp,wsize);
 }
@@ -171,7 +171,7 @@ void ivector::save_ivector_position(void) _CONST
 void dvar_vector::save_dvar_vector_position(void) _CONST
 {
   // saves the size and address information for a dvar_vector
-  unsigned wsize = sizeof(dvar_vector_position);
+  unsigned wsize=sizeof(dvar_vector_position);
   dvar_vector_position tmp(*this);
   gradient_structure::get_fp()->fwrite(&tmp,size_t(wsize));
 }
@@ -183,7 +183,7 @@ void dvar_vector::save_dvar_vector_position(void) _CONST
 void save_ad_pointer(void * p) 
 {
   // saves the size and address information for a dvar_vector
-  unsigned wsize = sizeof(void *);
+  unsigned wsize=sizeof(void *);
   gradient_structure::get_fp()->fwrite(&p,size_t(wsize));
 }
 
@@ -193,9 +193,9 @@ void save_ad_pointer(void * p)
  */
 void * restore_ad_pointer(void)
 {
-  void * p = 0;
+  void * p=0;
   // saves the size and address information for a dvar_vector
-  unsigned wsize = sizeof(void *);
+  unsigned wsize=sizeof(void *);
   gradient_structure::get_fp()->fread(&p,size_t(wsize));
   return p;
 }

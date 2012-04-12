@@ -39,13 +39,13 @@ void int_qsort2(int *arr, int *arr2, unsigned n)
  */
 ivector sort(_CONST ivector & v, int NSTACK)
 {
-   int lb = v.indexmin();
-   int ub = v.indexmax();
-   int size = v.size();
+   int lb=v.indexmin();
+   int ub=v.indexmax();
+   int size=v.size();
 
    ivector intarray(0,size-1);
    int i;
-   for(i = 0;i<size;i++)
+   for(i=0;i<size;i++)
    {
       intarray[i] = v(lb+i);
    }
@@ -53,7 +53,7 @@ ivector sort(_CONST ivector & v, int NSTACK)
    int_qsort(&(intarray(0)),size);
 
    ivector arr(lb, ub);
-   for(i = 0;i<size;i++) {
+   for(i=0;i<size;i++) {
       arr(lb+i) = intarray[i];
    }
 
@@ -81,19 +81,19 @@ ivector sort(_CONST ivector & _v, BOR_CONST ivector & _index, int NSTACK)
       ad_exit(1);
    }
 
-   int lb = v.indexmin();
-   int ub = v.indexmax();
-   int size = v.size();
+   int lb=v.indexmin();
+   int ub=v.indexmax();
+   int size=v.size();
 
    ivector intarray(0,size-1);
    int i;
-   for(i = 0;i<size;i++)
+   for(i=0;i<size;i++)
    {
       intarray[i] = v(lb+i);
    }
 
    ivector intarray2(0,size-1);
-   for(i = 0;i<size;i++)
+   for(i=0;i<size;i++)
    {
       intarray2[i] = lb+i;
    }
@@ -101,11 +101,11 @@ ivector sort(_CONST ivector & _v, BOR_CONST ivector & _index, int NSTACK)
    int_qsort2(&(intarray[0]),&(intarray2[0]),size);
 
    ivector arr(lb, ub);
-   for(i = 0;i<size;i++) {
+   for(i=0;i<size;i++) {
       arr(lb+i) = intarray[i];
    }
 
-   for(i = 0;i<size;i++) {
+   for(i=0;i<size;i++) {
       index(index.indexmin()+i) = intarray2[i];
    }
 

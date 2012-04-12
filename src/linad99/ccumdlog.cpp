@@ -24,7 +24,7 @@ double cumd_logistic(_CONST double& x)
   }
   else  
   {	  
-    double y = exp(x);	   
+    double y=exp(x);	   
     return y/(1.0+y);
   }
 }
@@ -53,22 +53,22 @@ double inv_cumd_norm_logistic(double x,double p)
   }    
 #endif   
   cout << log(x) << " ";
-  double y = inv_cumd_logistic(x);
+  double y=inv_cumd_logistic(x);
   cout << log(cumd_norm_logistic(y,p)) << " ";	   
   if (y>0)
   {	  
-    for (int i = 1;i<=10;i++)
+    for (int i=1;i<=10;i++)
     {	    
-      double yp = (1.0-p)*0.39894228*exp(-.5*y*y) + p*exp(-y)/square(1.0+exp(-y));
+      double yp=(1.0-p)*0.39894228*exp(-.5*y*y) + p*exp(-y)/square(1.0+exp(-y));
       y+= 1/yp* (x-cumd_norm_logistic(y,p));
       cout << cumd_norm_logistic(y,p) << " ";	   
     }  
   }  
   else
   {
-    for (int i = 1;i<=10;i++)
+    for (int i=1;i<=10;i++)
     {	    
-      double yp = (1.0-p)*0.39894228*exp(-.5*y*y) + p*exp(y)/square(1.0+exp(y));
+      double yp=(1.0-p)*0.39894228*exp(-.5*y*y) + p*exp(y)/square(1.0+exp(y));
       y+= 1/yp* (x-cumd_norm_logistic(y,p));
       cout << cumd_norm_logistic(y,p) << " ";	   
     }  

@@ -27,7 +27,7 @@
 
 #define HAVE_PVM
 
-int ad_constant_flag = 0;
+int ad_constant_flag=0;
 
 //#define  __declspec(dllexport) 
 
@@ -39,7 +39,7 @@ int ad_constant_flag = 0;
  */
 int load_adpvm_library(void)
 { 
-  int ierr = 0;
+  int ierr=0;
   return ierr;
 }
 
@@ -53,8 +53,8 @@ int load_adpvm_library(void)
 void adpvm_pack_number_derivative(void)
 {
   verify_identifier_string("D");
-  prevariable_position dvpos = restore_prevariable_position();
-  double dv = restore_prevariable_derivative(dvpos);
+  prevariable_position dvpos=restore_prevariable_position();
+  double dv=restore_prevariable_derivative(dvpos);
   pvm_pack(dv);
   verify_identifier_string("C");
 }
@@ -66,11 +66,11 @@ void adpvm_pack_number_derivative(void)
 void adpvm_pack_index_bounds(void)
 {
   verify_identifier_string("L");
-  int imax = restore_int_value();
-  int imin = restore_int_value();
+  int imax=restore_int_value();
+  int imin=restore_int_value();
   verify_identifier_string("K");
-  // pvm_pkint(&imin,1,1);
-  // pvm_pkint(&imax,1,1);
+  //pvm_pkint(&imin,1,1);
+  //pvm_pkint(&imax,1,1);
 }
 
 /**
@@ -115,8 +115,8 @@ void adpvm_unpack(const int& _v)
 void adpvm_send_derivatives(void)
 {
   verify_identifier_string("F");
-  int n = restore_int_value();
-  int id = restore_int_value();
+  int n=restore_int_value();
+  int id=restore_int_value();
   verify_identifier_string("E");
   int icheck =pvm_send(id,2);
 }
@@ -129,8 +129,8 @@ void adpvm_send_derivatives(void)
  */
 int adpvm_recv(int id,int n)
 {
-  int status = pvm_recv(id,n);
-  // cout << status << endl;
+  int status=pvm_recv(id,n);
+  //cout << status << endl;
   if (!ad_constant_flag)
   {
     save_identifier_string("E");
@@ -161,11 +161,11 @@ int adpvm_recv(int id,int n)
 void adpvm_receive_derivatives(void)
 {
   verify_identifier_string("H");
-  int n = restore_int_value();
-  int id = restore_int_value();
+  int n=restore_int_value();
+  int id=restore_int_value();
   verify_identifier_string("G");
-  int bid = 0;
-  if ( (bid = pvm_recv(id,2))<0)
+  int bid=0;
+  if ( (bid=pvm_recv(id,2))<0)
   {
     cerr << "error in adpvm_receive_derivatvies" << endl;
     ad_exit(1);
@@ -180,8 +180,8 @@ void adpvm_receive_derivatives(void)
  */
 void adpvm_send(int id,int n)
 {
-  int err = pvm_send(id,n);
-  // cout << err << endl;
+  int err=pvm_send(id,n);
+  //cout << err << endl;
   if (!ad_constant_flag)
   {
     save_identifier_string("G");
@@ -211,7 +211,7 @@ void adpvm_unpack_vector_derivatives(void)
 {
   kkludge_object kk;
   verify_identifier_string("Y");
-  dvar_vector_position dvpos = restore_dvar_vector_position();
+  dvar_vector_position dvpos=restore_dvar_vector_position();
   verify_identifier_string("X");
   dvector v(dvpos,kk);
   pvm_unpack(v);
@@ -225,8 +225,8 @@ void adpvm_unpack_vector_derivatives(void)
 void adpvm_pack(const dvar_vector& _v)
 {
   dvar_vector& v =(dvar_vector&) _v;
-  int imin = v.indexmin();
-  int imax = v.indexmax();
+  int imin=v.indexmin();
+  int imax=v.indexmax();
   pvm_pkint(&imin,1,1);
   pvm_pkint(&imax,1,1);
   pvm_pkdouble(&(value(v(imin))),imax-imin+1,1);
@@ -247,15 +247,15 @@ void adpvm_pack(const dvar_matrix & _m)
   dvar_matrix& m = (dvar_matrix &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -271,15 +271,15 @@ void adpvm_pack(const dvar3_array & _m)
   dvar3_array& m = (dvar3_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -295,15 +295,15 @@ void adpvm_pack(const dvar4_array & _m)
   dvar4_array& m = (dvar4_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -319,15 +319,15 @@ void adpvm_pack(const dvar5_array & _m)
   dvar5_array& m = (dvar5_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -372,7 +372,7 @@ void adpvm_unpack_number_derivative(void)
   verify_identifier_string("S");
   double dv;
   pvm_upkdouble(&dv,1,1);;
-  prevariable_position dvpos = restore_prevariable_position();
+  prevariable_position dvpos=restore_prevariable_position();
   verify_identifier_string("R");
   save_double_derivative(dv,dvpos);
 }
@@ -398,12 +398,12 @@ void adpvm_pack(const prevariable& _v)
  */
 void adpvm_pack_vector_derivatives(void)
 {
-  // int bufid = adpvm_initsend( PvmDataRaw );
+  //int bufid = adpvm_initsend( PvmDataRaw );
   verify_identifier_string("D");
-  dvar_vector_position dvpos = restore_dvar_vector_position();
-  dvector dv = restore_dvar_vector_derivatives(dvpos);
-  int imin = dv.indexmin();
-  int imax = dv.indexmax();
+  dvar_vector_position dvpos=restore_dvar_vector_position();
+  dvector dv=restore_dvar_vector_derivatives(dvpos);
+  int imin=dv.indexmin();
+  int imax=dv.indexmax();
   pvm_pack(dv);
   verify_identifier_string("B");
 }
@@ -471,7 +471,7 @@ void adpvm_unpack(const dvar_matrix & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) adpvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
   save_identifier_string("K");
   save_int_value(imin);
   save_int_value(imax);
@@ -505,7 +505,7 @@ void adpvm_unpack(const dvar3_array & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) adpvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
 /**
@@ -533,7 +533,7 @@ void adpvm_unpack(const dvar4_array & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) adpvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
 /**
@@ -561,7 +561,7 @@ void adpvm_unpack(const dvar5_array & _m)
   } else {
       m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) adpvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
 
 /**
@@ -600,15 +600,15 @@ void adpvm_pack(const dvector& _v)
   dvector& v =(dvector&) _v;
   if (allocated(v))
   {
-    int imin = v.indexmin();
-    int imax = v.indexmax();
+    int imin=v.indexmin();
+    int imax=v.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
     pvm_pkdouble(&(v(imin)),imax-imin+1,1);
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -624,15 +624,15 @@ void adpvm_pack(const dmatrix & _m)
   dmatrix& m = (dmatrix &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -648,15 +648,15 @@ void adpvm_pack(const d3_array & _m)
   d3_array& m = (d3_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -672,15 +672,15 @@ void adpvm_pack(const d4_array & _m)
   d4_array& m = (d4_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -696,15 +696,15 @@ void adpvm_pack(const d5_array & _m)
   d5_array& m = (d5_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -764,7 +764,7 @@ void adpvm_unpack(const dmatrix & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) adpvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
 /**
@@ -792,7 +792,7 @@ void adpvm_unpack(const d3_array & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) adpvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
 /**
@@ -820,7 +820,7 @@ void adpvm_unpack(const d4_array & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) adpvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
 /**
@@ -848,7 +848,7 @@ void adpvm_unpack(const d5_array & _m)
   } else {
       m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) adpvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
 /**
@@ -867,8 +867,8 @@ void adpvm_pack(int v)
 void adpvm_pack(const ivector& _v)
 {
   ivector& v =(ivector&) _v;
-  int imin = v.indexmin();
-  int imax = v.indexmax();
+  int imin=v.indexmin();
+  int imax=v.indexmax();
   pvm_pkint(&imin,1,1);
   pvm_pkint(&imax,1,1);
   pvm_pkint(&(v(imin)),imax-imin+1,1);
@@ -883,15 +883,15 @@ void adpvm_pack(const imatrix & _m)
   imatrix& m = (imatrix &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -907,15 +907,15 @@ void adpvm_pack(const i3_array & _m)
   i3_array& m = (i3_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -925,21 +925,21 @@ void adpvm_pack(const i3_array & _m)
 void adpvm_pack(const i4_array & _m)
 {
   i4_array& m = (i4_array &) _m;
-  int imin = m.indexmin();
-  int imax = m.indexmax();
+  int imin=m.indexmin();
+  int imax=m.indexmax();
   pvm_pkint(&imin,1,1);
   pvm_pkint(&imax,1,1);
-  for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
 }
     
 void adpvm_pack(const i5_array & _m)
 {
   i5_array& m = (i5_array &) _m;
-  int imin = m.indexmin();
-  int imax = m.indexmax();
+  int imin=m.indexmin();
+  int imax=m.indexmax();
   pvm_pkint(&imin,1,1);
   pvm_pkint(&imax,1,1);
-  for (int i = imin;i<=imax;i++) adpvm_pack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
 }
 */
     
@@ -996,7 +996,7 @@ void adpvm_unpack(const imatrix & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) 
+  for (int i=imin;i<=imax;i++) 
   {
     pvm_unpack(m(i));
   }
@@ -1027,7 +1027,7 @@ void adpvm_unpack(const i3_array & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) adpvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
 /*    
 void adpvm_unpack(const i4_array & _m)
@@ -1051,7 +1051,7 @@ void adpvm_unpack(const i4_array & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) adpvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
     
 void adpvm_unpack(const i5_array & _m)
@@ -1075,7 +1075,7 @@ void adpvm_unpack(const i5_array & _m)
   } else {
       m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) adpvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
 */  
 // ************************************************************
@@ -1118,8 +1118,8 @@ void pvm_unpack(const int& _v)
 void pvm_pack(const dvar_vector& _v)
 {
   dvar_vector& v =(dvar_vector&) _v;
-  int imin = v.indexmin();
-  int imax = v.indexmax();
+  int imin=v.indexmin();
+  int imax=v.indexmax();
   pvm_pkint(&imin,1,1);
   pvm_pkint(&imax,1,1);
   pvm_pkdouble(&(value(v(imin))),imax-imin+1,1);
@@ -1134,15 +1134,15 @@ void pvm_pack(const dvar_matrix & _m)
   dvar_matrix& m = (dvar_matrix &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) pvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -1158,15 +1158,15 @@ void pvm_pack(const dvar3_array & _m)
   dvar3_array& m = (dvar3_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) pvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -1182,15 +1182,15 @@ void pvm_pack(const dvar4_array & _m)
   dvar4_array& m = (dvar4_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) pvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -1206,15 +1206,15 @@ void pvm_pack(const dvar5_array & _m)
   dvar5_array& m = (dvar5_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) pvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -1293,7 +1293,7 @@ void pvm_unpack(const dvar_matrix & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) pvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
 /**
@@ -1321,7 +1321,7 @@ void pvm_unpack(const dvar3_array & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) pvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
 /**
@@ -1349,7 +1349,7 @@ void pvm_unpack(const dvar4_array & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) pvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
 /**
@@ -1377,7 +1377,7 @@ void pvm_unpack(const dvar5_array & _m)
   } else {
       m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) pvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
 
 /**
@@ -1398,15 +1398,15 @@ void pvm_pack(const dvector& _v)
   dvector& v =(dvector&) _v;
   if (allocated(v))
   {
-    int imin = v.indexmin();
-    int imax = v.indexmax();
+    int imin=v.indexmin();
+    int imax=v.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
     pvm_pkdouble(&(v(imin)),imax-imin+1,1);
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -1422,15 +1422,15 @@ void pvm_pack(const dmatrix & _m)
   dmatrix& m = (dmatrix &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) pvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -1446,15 +1446,15 @@ void pvm_pack(const d3_array & _m)
   d3_array& m = (d3_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) pvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -1470,15 +1470,15 @@ void pvm_pack(const d4_array & _m)
   d4_array& m = (d4_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) pvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -1494,15 +1494,15 @@ void pvm_pack(const d5_array & _m)
   d5_array& m = (d5_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) pvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -1562,7 +1562,7 @@ void pvm_unpack(const dmatrix & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) pvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
 /**
@@ -1590,7 +1590,7 @@ void pvm_unpack(const d3_array & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) pvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
 /**
@@ -1618,7 +1618,7 @@ void pvm_unpack(const d4_array & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) pvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
 /**
@@ -1646,7 +1646,7 @@ void pvm_unpack(const d5_array & _m)
   } else {
       m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) pvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
     
 /**
@@ -1665,8 +1665,8 @@ void pvm_pack(int v)
 void pvm_pack(const ivector& _v)
 {
   ivector& v =(ivector&) _v;
-  int imin = v.indexmin();
-  int imax = v.indexmax();
+  int imin=v.indexmin();
+  int imax=v.indexmax();
   pvm_pkint(&imin,1,1);
   pvm_pkint(&imax,1,1);
   pvm_pkint(&(v(imin)),imax-imin+1,1);
@@ -1681,15 +1681,15 @@ void pvm_pack(const imatrix & _m)
   imatrix& m = (imatrix &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) pvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -1705,15 +1705,15 @@ void pvm_pack(const i3_array & _m)
   i3_array& m = (i3_array &) _m;
   if (allocated(m))
   {
-    int imin = m.indexmin();
-    int imax = m.indexmax();
+    int imin=m.indexmin();
+    int imax=m.indexmax();
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
-    for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+    for (int i=imin;i<=imax;i++) pvm_pack(m(i));
   }
   else
   {
-    int imin = 0;
+    int imin=0;
     int imax=-1;
     pvm_pkint(&imin,1,1);
     pvm_pkint(&imax,1,1);
@@ -1723,21 +1723,21 @@ void pvm_pack(const i3_array & _m)
 void pvm_pack(const i4_array & _m)
 {
   i4_array& m = (i4_array &) _m;
-  int imin = m.indexmin();
-  int imax = m.indexmax();
+  int imin=m.indexmin();
+  int imax=m.indexmax();
   pvm_pkint(&imin,1,1);
   pvm_pkint(&imax,1,1);
-  for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+  for (int i=imin;i<=imax;i++) pvm_pack(m(i));
 }
     
 void pvm_pack(const i5_array & _m)
 {
   i5_array& m = (i5_array &) _m;
-  int imin = m.indexmin();
-  int imax = m.indexmax();
+  int imin=m.indexmin();
+  int imax=m.indexmax();
   pvm_pkint(&imin,1,1);
   pvm_pkint(&imax,1,1);
-  for (int i = imin;i<=imax;i++) pvm_pack(m(i));
+  for (int i=imin;i<=imax;i++) pvm_pack(m(i));
 }
 */
     
@@ -1794,7 +1794,7 @@ void pvm_unpack(const imatrix & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) 
+  for (int i=imin;i<=imax;i++) 
   {
     pvm_unpack(m(i));
   }
@@ -1825,7 +1825,7 @@ void pvm_unpack(const i3_array & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i = imin;i<=imax;i++) pvm_unpack(m(i));
+  for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
 
 /**
@@ -1861,9 +1861,9 @@ void adpvm_slave_vsend(int ptid)
  */
 void adpvm_slave_csend(int ptid)
 {
-  ad_constant_flag = 1;
+  ad_constant_flag=1;
   adpvm_send(ptid, 2);
-  ad_constant_flag = 0;
+  ad_constant_flag=0;
 }
 
 /**
@@ -1872,7 +1872,7 @@ void adpvm_slave_csend(int ptid)
  */
 int adpvm_slave_vrecv(int ptid)
 {
-  int ierr = pvm_recv(ptid,-1);
+  int ierr=pvm_recv(ptid,-1);
   adpvm_unpack(gradient_structure::no_derivatives); 
   
   if (!gradient_structure::no_derivatives) 
@@ -1894,9 +1894,9 @@ int adpvm_slave_vrecv(int ptid)
  */
 int adpvm_slave_crecv(int ptid)
 {
-  ad_constant_flag = 1;
-  int ierr = adpvm_recv(ptid,-1);
-  ad_constant_flag = 0;
+  ad_constant_flag=1;
+  int ierr=adpvm_recv(ptid,-1);
+  ad_constant_flag=0;
   return ierr;
 }
 
@@ -1927,9 +1927,9 @@ int adpvm_master_cinitsend(int mode)
  */
 void adpvm_master_csend(int id)
 {
-  ad_constant_flag = 1;
+  ad_constant_flag=1;
   adpvm_send(id,1);
-  ad_constant_flag = 0;
+  ad_constant_flag=0;
 }
 
 /**
@@ -1951,9 +1951,9 @@ int adpvm_master_vrecv(int id)
 }
 int adpvm_master_crecv(int id) 
 {
-  ad_constant_flag = 1;
-  int status = adpvm_recv(id,2); 
-  ad_constant_flag = 0;
+  ad_constant_flag=1;
+  int status=adpvm_recv(id,2); 
+  ad_constant_flag=0;
   return status;
 }
 
@@ -1986,7 +1986,7 @@ void  adpvm_slave_end_creceive(void) { }
 dvar_vector get_x_from_master(void)
 {
   dvar_vector x;
-  int ptid = pvm_parent();
+  int ptid=pvm_parent();
   // ***************  begin variable receive block *********************
   adpvm_slave_vrecv(ptid);
   adpvm_unpack(x);  
@@ -2002,7 +2002,7 @@ dvar_vector get_x_from_master(void)
 dvector get_dvector_from_master(void)
 {
   dvector x;
-  int ptid = pvm_parent();
+  int ptid=pvm_parent();
   // ***************  begin variable receive block *********************
   adpvm_slave_crecv(ptid);
   adpvm_unpack(x);  
@@ -2018,7 +2018,7 @@ dvector get_dvector_from_master(void)
 dmatrix get_dmatrix_from_master(void)
 {
   dmatrix x;
-  int ptid = pvm_parent();
+  int ptid=pvm_parent();
   // ***************  begin variable receive block *********************
   adpvm_slave_crecv(ptid);
   adpvm_unpack(x);  
@@ -2034,7 +2034,7 @@ dmatrix get_dmatrix_from_master(void)
 void send_f_to_master(const dvariable& f)
 {
   // ***************  begin send block ***********************************
-  int ptid = pvm_parent();
+  int ptid=pvm_parent();
   adpvm_slave_vinitsend(PvmDataDefault);/* allocate message buffer */	
   adpvm_pack(f);
   adpvm_slave_vsend(ptid);/* send buffer to master */
@@ -2048,7 +2048,7 @@ void send_f_to_master(const dvariable& f)
 void send_dv3_to_master(const dvar3_array& v)
 {
   // ***************  begin send block ***********************************
-  int ptid = pvm_parent();
+  int ptid=pvm_parent();
   adpvm_slave_vinitsend(PvmDataDefault);/* allocate message buffer */	
   adpvm_pack(v);
   adpvm_slave_vsend(ptid);/* send buffer to master */
@@ -2062,7 +2062,7 @@ void send_dv3_to_master(const dvar3_array& v)
 void send_dvector_to_master(const dvector& v)
 {
   // ***************  begin send block ***********************************
-  int ptid = pvm_parent();
+  int ptid=pvm_parent();
   adpvm_slave_cinitsend(PvmDataDefault);/* allocate message buffer */	
   adpvm_pack(v);
   adpvm_slave_csend(ptid);/* send buffer to master */

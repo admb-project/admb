@@ -19,9 +19,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = elem_prod(m1(i),m2(i));
+       tmp(i)=elem_prod(m1(i),m2(i));
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -36,9 +36,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = elem_div(m1(i),m2(i));
+       tmp(i)=elem_div(m1(i),m2(i));
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -53,9 +53,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = m1(i)+m2(i);
+       tmp(i)=m1(i)+m2(i);
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -70,9 +70,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = m1(i)-m2(i);
+       tmp(i)=m1(i)-m2(i);
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -87,9 +87,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m2);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = d+m2(i);
+       tmp(i)=d+m2(i);
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -104,9 +104,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m2);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = d-m2(i);
+       tmp(i)=d-m2(i);
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -121,9 +121,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m2);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = d*m2(i);
+       tmp(i)=d*m2(i);
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -138,9 +138,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m2);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = d*m2(i);
+       tmp(i)=d*m2(i);
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -155,9 +155,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m2);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = d*m2(i);
+       tmp(i)=d*m2(i);
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -172,9 +172,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = m1(i)-d;
+       tmp(i)=m1(i)-d;
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -189,9 +189,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = m1(i)+d;
+       tmp(i)=m1(i)+d;
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -206,9 +206,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = d+m1(i);
+       tmp(i)=d+m1(i);
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -223,9 +223,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
      tmp.allocate(m1);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = m1(i)*d;
+       tmp(i)=m1(i)*d;
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -241,9 +241,9 @@
      dvar3_array tmp;
      tmp.allocate(m1);
 
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = m1(i)+d1;
+       tmp(i)=m1(i)+d1;
      }
 
      RETURN_ARRAYS_DECREMENT();

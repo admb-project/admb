@@ -21,7 +21,7 @@ void imatrix::rowshift(int min )
 {
   m = m + rowmin() - min;
   index_max+=min-index_min;
-  index_min = min;
+  index_min=min;
 }
 
 /**
@@ -42,7 +42,7 @@ void imatrix::rowshift(int min )
    if (allocated(*this))
    {
      imatrix tmp(nrl,nrh);
-     for (int i = nrl; i<=nrh; i++)
+     for (int i=nrl; i<=nrh; i++)
      {
        tmp[i].shallow_copy((*this)(i));
      }
@@ -94,10 +94,10 @@ void imatrix::rowshift(int min )
    }
    else
    { 
-     index_min = nrl;
-     index_max = nrh;
+     index_min=nrl;
+     index_max=nrh;
      
-     int rs = rowsize();
+     int rs=rowsize();
      if ( (m = new ivector [rs]) == 0)
      {
        cerr << " Error allocating memory in imatrix contructor\n";
@@ -111,11 +111,11 @@ void imatrix::rowshift(int min )
      }
   
      m -= rowmin();
-     for (int i = rowmin(); i<=rowmax(); i++)
+     for (int i=rowmin(); i<=rowmax(); i++)
      {
-       m[i].index_min = iv.index_min;
-       m[i].index_max = iv.index_max;
-       m[i].shape = iv.shape;
+       m[i].index_min=iv.index_min;
+       m[i].index_max=iv.index_max;
+       m[i].shape=iv.shape;
        if (m[i].shape)
        {
          (m[i].shape->ncopies)++;
@@ -137,9 +137,9 @@ void imatrix::rowshift(int min )
    }
    else
    { 
-     index_min = nrl;
-     index_max = nrh;
-     int rs = rowsize();
+     index_min=nrl;
+     index_max=nrh;
+     int rs=rowsize();
      if ( (m = new ivector [rs]) == 0)
      {
        cerr << " Error allocating memory in imatrix contructor\n";
@@ -153,7 +153,7 @@ void imatrix::rowshift(int min )
      }
   
      m -= rowmin();
-     for (int i = rowmin(); i<=rowmax(); i++)
+     for (int i=rowmin(); i<=rowmax(); i++)
      {
        m[i].allocate(ncl,nch);
      }
@@ -164,12 +164,12 @@ void imatrix::rowshift(int min )
  * Description not yet available.
  * \param
  */
- void imatrix::allocate(void)  // default constructor
+ void imatrix::allocate(void)  //default constructor
  {
-   index_min = 0;
+   index_min=0;
    index_max=-1;
-   m = NULL;
-   shape = NULL;
+   m=NULL;
+   shape=NULL;
  }
 
 /**
@@ -184,9 +184,9 @@ void imatrix::rowshift(int min )
    }
    else
    { 
-     index_min = nrl;
-     index_max = nrh;
-     int rs = rowsize();
+     index_min=nrl;
+     index_max=nrh;
+     int rs=rowsize();
      if ( (m = new ivector [rs]) == 0)
      {
        cerr << " Error allocating memory in imatrix contructor\n";
@@ -204,7 +204,7 @@ void imatrix::rowshift(int min )
        ad_exit(1);
      }
      m -= rowmin();
-     for (int i = rowmin(); i<=rowmax(); i++)
+     for (int i=rowmin(); i<=rowmax(); i++)
      {
        m[i].allocate(ncl(i),nch(i));
      }
@@ -223,9 +223,9 @@ void imatrix::rowshift(int min )
    }
    else
    { 
-     index_min = nrl;
-     index_max = nrh;
-     int rs = rowsize();
+     index_min=nrl;
+     index_max=nrh;
+     int rs=rowsize();
      if ( (m = new ivector [rs]) == 0)
      {
        cerr << " Error allocating memory in imatrix contructor\n";
@@ -242,7 +242,7 @@ void imatrix::rowshift(int min )
        ad_exit(21);
      }
      m -= rowmin();
-     for (int i = rowmin(); i<=rowmax(); i++)
+     for (int i=rowmin(); i<=rowmax(); i++)
      {
        m[i].allocate(ncl,nch(i));
      }
@@ -255,18 +255,18 @@ void imatrix::rowshift(int min )
  */
  imatrix::imatrix(_CONST imatrix& m2)
  {
-   index_min = m2.index_min;
-   index_max = m2.index_max;
+   index_min=m2.index_min;
+   index_max=m2.index_max;
    if (m2.shape)
    {
-     shape = m2.shape;
+     shape=m2.shape;
      (shape->ncopies)++;
      m = m2.m;
    }
    else
    {
-     shape = NULL;
-     m = NULL;
+     shape=NULL;
+     m=NULL;
    }
  }
 
@@ -276,18 +276,18 @@ void imatrix::rowshift(int min )
  */
  void imatrix::shallow_copy(_CONST imatrix& m2)
  {
-   index_min = m2.index_min;
-   index_max = m2.index_max;
+   index_min=m2.index_min;
+   index_max=m2.index_max;
    if (m2.shape)
    {
-     shape = m2.shape;
+     shape=m2.shape;
      (shape->ncopies)++;
      m = m2.m;
    }
    else
    {
-     shape = NULL;
-     m = NULL;
+     shape=NULL;
+     m=NULL;
    }
  }
 
@@ -343,9 +343,9 @@ void imatrix::rowshift(int min )
      {
        m= (ivector*) (shape->get_pointer());
        delete [] m;
-       m = NULL;
+       m=NULL;
        delete shape;
-       shape = NULL;
+       shape=NULL;
      }
    }
  }
@@ -360,9 +360,9 @@ void imatrix::rowshift(int min )
      allocate();
    else
    {
-     index_min = nrl;
-     index_max = nrh;
-     int rs = rowsize();
+     index_min=nrl;
+     index_max=nrh;
+     int rs=rowsize();
      if ( (m = new ivector [rs]) == 0)
      {
        cerr << " Error allocating memory in imatrix contructor\n";

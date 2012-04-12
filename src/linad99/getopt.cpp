@@ -19,7 +19,7 @@ int get_option_number(const char * option_name,const char * error_message,
 {
   int on1;
   int nopt;
-  if ( (on1 = option_match(ad_comm::argc,ad_comm::argv,option_name,nopt))>-1)
+  if ( (on1=option_match(ad_comm::argc,ad_comm::argv,option_name,nopt))>-1)
   {
     if (!nopt)
     {
@@ -31,7 +31,7 @@ int get_option_number(const char * option_name,const char * error_message,
     }
     else
     {   
-      option_value = atoi(ad_comm::argv[on1+1]);
+      option_value=atoi(ad_comm::argv[on1+1]);
     }
   }
   return on1;

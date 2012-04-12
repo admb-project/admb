@@ -80,16 +80,16 @@ adstring operator + (_CONST adstring & u, _CONST adstring & v)
 adstring itoa(int n,int r)
 {
   char buf[50];
-  int ii = 0;
+  int ii=0;
   do
   {
-    buf[ii++] = n%r;
+    buf[ii++]=n%r;
   } while (n/=r);
 
   adstring s(1,ii);
-  for (int i = 0;i<ii;i++)
+  for (int i=0;i<ii;i++)
   {
-    s[ii-i] = buf[i]+48;
+    s[ii-i]=buf[i]+48;
   }
   return s;
 }

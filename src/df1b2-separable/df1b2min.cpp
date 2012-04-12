@@ -19,11 +19,11 @@
     ADUNCONST(df1b2variable,x)
     ADUNCONST(df1b2variable,y)
     df1b2variable z;
-    double * xd = x.get_u_dot();
-    double * yd = y.get_u_dot();
-    double * zd = z.get_u_dot();
+    double * xd=x.get_u_dot();
+    double * yd=y.get_u_dot();
+    double * zd=z.get_u_dot();
     *z.get_u()=*x.get_u()-*y.get_u();
-    for (int i = 0;i<df1b2variable::nvar;i++)
+    for (int i=0;i<df1b2variable::nvar;i++)
     {
       *zd++ = *xd++ - *yd++;
     }
@@ -50,17 +50,17 @@ void ad_read_pass2_minus(void);
   if (ncount >= ncount_check)
     cout << ncount << endl;
 #endif
-   // int nvar = df1b2variable::nvar;
+   //int nvar=df1b2variable::nvar;
 
-   int total_bytes = 3*sizeof(df1b2_header);
+   int total_bytes=3*sizeof(df1b2_header);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="TU";
-  int slen = strlen(ids);
+  int slen=strlen(ids);
   total_bytes+=slen;
 #endif
   list.check_buffer_size(total_bytes);
-  void * tmpptr = list.bptr;
+  void * tmpptr=list.bptr;
 #if defined(SAFE_ALL)
   memcpy(list,ids,slen);
 #endif
@@ -70,8 +70,8 @@ void ad_read_pass2_minus(void);
    memcpy(list,(df1b2_header*)(py),sizeof(df1b2_header));
    memcpy(list,(df1b2_header*)(pz),sizeof(df1b2_header));
    // ***** write  record size
-   nlist.bptr->numbytes = adptr_diff(list.bptr,tmpptr);
-   nlist.bptr->pf = (ADrfptr)(&ad_read_pass2_minus);
+   nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
+   nlist.bptr->pf=(ADrfptr)(&ad_read_pass2_minus);
       ++nlist;
    return 0;
  }
@@ -115,9 +115,9 @@ void read_pass2_1_minus(void)
   // and  forward for bptr2 and nbptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar = df1b2variable::nvar;
-  test_smartlist& list = f1b2gradlist->list; 
-  int num_bytes = f1b2gradlist->nlist.bptr->numbytes;
+  int nvar=df1b2variable::nvar;
+  test_smartlist& list=f1b2gradlist->list; 
+  int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
 
@@ -125,12 +125,12 @@ void read_pass2_1_minus(void)
 #if defined(SAFE_ARRAYS)
   checkidentiferstring("TU",f1b2gradlist->list);
 #endif
-  char * bptr = f1b2gradlist->list.bptr;
-  df1b2_header * px = (df1b2_header *) bptr;
+  char * bptr=f1b2gradlist->list.bptr;
+  df1b2_header * px=(df1b2_header *) bptr;
   bptr+=sizeof(df1b2_header);
-  df1b2_header * py = (df1b2_header *) bptr;
+  df1b2_header * py=(df1b2_header *) bptr;
   bptr+=sizeof(df1b2_header);
-  df1b2_header * pz = (df1b2_header *) bptr;
+  df1b2_header * pz=(df1b2_header *) bptr;
 
   list.restoreposition(); // save pointer to beginning of record;
  
@@ -142,31 +142,31 @@ void read_pass2_1_minus(void)
   // save identifier 1
 
   int i;
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
     px->u_bar[i]+=pz->u_bar[i];
   }
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
     py->u_bar[i]-=pz->u_bar[i];
   }
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
     px->u_dot_bar[i]+=pz->u_dot_bar[i];
   }
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
     py->u_dot_bar[i]-=pz->u_dot_bar[i];
   }
   
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
-    pz->u_bar[i] = 0;
+    pz->u_bar[i]=0;
   }
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
-    pz->u_dot_bar[i] = 0;
+    pz->u_dot_bar[i]=0;
   }
 }
 
@@ -176,72 +176,72 @@ void read_pass2_1_minus(void)
  */
 void read_pass2_2_minus(void)
 {
-  // const int nlist_record_size = sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1
   //
-  int nvar = df1b2variable::nvar;
-  test_smartlist & list = f1b2gradlist->list; 
+  int nvar=df1b2variable::nvar;
+  test_smartlist & list=f1b2gradlist->list; 
 
-  int total_bytes = 3*sizeof(df1b2_header);
+  int total_bytes=3*sizeof(df1b2_header);
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="BY";
-  int slen = strlen(ids);
+  int slen=strlen(ids);
   total_bytes+=slen;
 #endif
   list.check_buffer_size(total_bytes);
 // end of string identifier debug stuff
 
   list.saveposition(); // save pointer to beginning of record;
-  fixed_smartlist & nlist = f1b2gradlist->nlist; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist; 
   // get record size
-  int num_bytes = nlist.bptr->numbytes;
+  int num_bytes=nlist.bptr->numbytes;
   // get info from tape1
 #if defined(SAFE_ARRAYS)
   checkidentiferstring("TU",list);
 #endif
-  df1b2_header * px = (df1b2_header *) list.bptr;
+  df1b2_header * px=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  df1b2_header * py = (df1b2_header *) list.bptr;
+  df1b2_header * py=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  df1b2_header * pz = (df1b2_header *) list.bptr;
+  df1b2_header * pz=(df1b2_header *) list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
   
-  double * x_bar_tilde = px->get_u_bar_tilde();
-  double * x_dot_bar_tilde = px->get_u_dot_bar_tilde();
-  double * y_bar_tilde = py->get_u_bar_tilde();
-  double * y_dot_bar_tilde = py->get_u_dot_bar_tilde();
-  double * z_bar_tilde = pz->get_u_bar_tilde();
-  double * z_dot_bar_tilde = pz->get_u_dot_bar_tilde();
+  double * x_bar_tilde=px->get_u_bar_tilde();
+  double * x_dot_bar_tilde=px->get_u_dot_bar_tilde();
+  double * y_bar_tilde=py->get_u_bar_tilde();
+  double * y_dot_bar_tilde=py->get_u_dot_bar_tilde();
+  double * z_bar_tilde=pz->get_u_bar_tilde();
+  double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
   int i;
   
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
-    z_bar_tilde[i] = 0;
-    z_dot_bar_tilde[i] = 0;
+    z_bar_tilde[i]=0;
+    z_dot_bar_tilde[i]=0;
   }
   
   // start with x and add y
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
     z_bar_tilde[i]+=x_bar_tilde[i];
   }
 
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
     z_dot_bar_tilde[i]+=x_dot_bar_tilde[i];
   }
 
   // start with y and add x
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
     z_bar_tilde[i]-=y_bar_tilde[i];
   }
 
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
     z_dot_bar_tilde[i]-=y_dot_bar_tilde[i];
   }
@@ -256,28 +256,28 @@ void read_pass2_3_minus(void)
   // We are going backword for bptr and forward for bptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  int nvar = df1b2variable::nvar;
-  fixed_smartlist & nlist = f1b2gradlist->nlist; 
-  test_smartlist& list = f1b2gradlist->list; 
+  int nvar=df1b2variable::nvar;
+  fixed_smartlist & nlist=f1b2gradlist->nlist; 
+  test_smartlist& list=f1b2gradlist->list; 
    // nlist-=sizeof(int);
   // get record size
-  int num_bytes = nlist.bptr->numbytes;
+  int num_bytes=nlist.bptr->numbytes;
   // backup the size of the record
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
-  // df1b2_header x,z;
+  //df1b2_header x,z;
 
   // get info from tape1
   // get info from tape1
 #if defined(SAFE_ARRAYS)
   checkidentiferstring("TU",list);
 #endif
-  df1b2_header * px = (df1b2_header *) list.bptr;
+  df1b2_header * px=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  df1b2_header * py = (df1b2_header *) list.bptr;
+  df1b2_header * py=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  df1b2_header * pz = (df1b2_header *) list.bptr;
+  df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
 
   list.restoreposition(); // save pointer to beginning of record;
@@ -285,14 +285,14 @@ void read_pass2_3_minus(void)
   
   *(px->u_tilde)+=*(pz->u_tilde);
   *(py->u_tilde)-=*(pz->u_tilde);
-  for (i = 0;i<nvar;i++)
+  for (i=0;i<nvar;i++)
   {
     px->u_dot_tilde[i]+=pz->u_dot_tilde[i];
     py->u_dot_tilde[i]-=pz->u_dot_tilde[i];
   }
-  *(pz->u_tilde) = 0;
-  for (i = 0;i<nvar;i++)
+  *(pz->u_tilde)=0;
+  for (i=0;i<nvar;i++)
   {
-    pz->u_dot_tilde[i] = 0;
+    pz->u_dot_tilde[i]=0;
   }
 }

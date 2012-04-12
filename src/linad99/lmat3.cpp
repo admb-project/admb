@@ -19,7 +19,7 @@
  */
  void lmatrix::initialize (void)
  {
-   for (int i = rowmin();i<=rowmax();i++)
+   for (int i=rowmin();i<=rowmax();i++)
    {
      (*this)(i).initialize();
    }

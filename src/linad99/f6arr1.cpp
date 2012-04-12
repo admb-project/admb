@@ -19,9 +19,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar6_array tmp;
      tmp.allocate(m);
-     for (int i = tmp.indexmin();i<=tmp.indexmax();i++)
+     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
      {
-       tmp(i) = m(i)/d;
+       tmp(i)=m(i)/d;
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -36,9 +36,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar6_array tmp;
      tmp.allocate(m);
-     for (int i = tmp.indexmin();i<=tmp.indexmax();i++)
+     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
      {
-       tmp(i) = m(i)/d;
+       tmp(i)=m(i)/d;
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -53,9 +53,9 @@
      RETURN_ARRAYS_INCREMENT();
      dvar6_array tmp;
      tmp.allocate(m);
-     for (int i = tmp.indexmin();i<=tmp.indexmax();i++)
+     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
      {
-       tmp(i) = m(i)/d;
+       tmp(i)=m(i)/d;
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
@@ -68,7 +68,7 @@
    void dvar6_array::operator /=(_CONST prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
-     for (int i = indexmin();i<=indexmax();i++)
+     for (int i=indexmin();i<=indexmax();i++)
      {
        (*this)(i)/=d;
      }
@@ -82,7 +82,7 @@
    void dvar6_array::operator /=(_CONST double& d)
    {
      RETURN_ARRAYS_INCREMENT();
-     for (int i = indexmin();i<=indexmax();i++)
+     for (int i=indexmin();i<=indexmax();i++)
      {
        (*this)(i)/=d;
      }
@@ -96,8 +96,8 @@
 dvariable sum(_CONST dvar6_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
-  dvariable tmp = 0.;
-  for (int i = m.indexmin();i<=m.indexmax();i++)
+  dvariable tmp=0.;
+  for (int i=m.indexmin();i<=m.indexmax();i++)
   {
     tmp+=sum(m.elem(i));
   }

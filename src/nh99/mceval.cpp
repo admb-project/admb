@@ -21,7 +21,7 @@
 void function_minimizer::mcmc_eval(void)
 {
   gradient_structure::set_NO_DERIVATIVES();
-  initial_params::current_phase = initial_params::max_number_phases;
+  initial_params::current_phase=initial_params::max_number_phases;
   uistream * pifs_psave = NULL;
 
 #if defined(USE_LAPLACE)
@@ -29,9 +29,9 @@ void function_minimizer::mcmc_eval(void)
 
 #if defined(USE_LAPLACE)
     initial_params::set_active_random_effects();
-    int nvar1 = initial_params::nvarcalc(); 
+    int nvar1=initial_params::nvarcalc(); 
 #else
-  int nvar1 = initial_params::nvarcalc(); // get the number of active parameters
+  int nvar1=initial_params::nvarcalc(); // get the number of active parameters
 #endif
   int nvar;
   
@@ -45,7 +45,7 @@ void function_minimizer::mcmc_eval(void)
     if (pifs_psave)
     {
       delete pifs_psave;
-      pifs_psave = NULL;
+      pifs_psave=NULL;
       return;
     }
   }
@@ -59,7 +59,7 @@ void function_minimizer::mcmc_eval(void)
       if (pifs_psave)
       {
         delete pifs_psave;
-        pifs_psave = NULL;
+        pifs_psave=NULL;
       }
       return;
     }
@@ -81,7 +81,7 @@ void function_minimizer::mcmc_eval(void)
 
         break;
       }
-      int ii = 1;
+      int ii=1;
       initial_params::restore_all_values(y,ii);
       initial_params::xinit(y);   
       /*double ll=-*/get_monte_carlo_value(nvar,y);
@@ -91,7 +91,7 @@ void function_minimizer::mcmc_eval(void)
   if (pifs_psave)
   {
     delete pifs_psave;
-    pifs_psave = NULL;
+    pifs_psave=NULL;
   }
   return;
 }

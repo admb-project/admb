@@ -11,9 +11,9 @@
  {
    if (sa.ptr)
    {
-     int min = sa.indexmin();
-     int max = sa.indexmax();
-     for (int i = min;i<=max;i++)
+     int min=sa.indexmin();
+     int max=sa.indexmax();
+     for (int i=min;i<=max;i++)
      {
        ifs >> sa[i];
      }
@@ -26,9 +26,9 @@
    ostream& ofs = (ostream&) _ofs;
    if (sa.ptr)
    {
-     int min = sa.indexmin();
-     int max = sa.indexmax();
-     for (int i = min;i<=max;i++)
+     int min=sa.indexmin();
+     int max=sa.indexmax();
+     for (int i=min;i<=max;i++)
      {
        ofs << sa[i];
        if (i<max) ofs << endl;
@@ -40,9 +40,9 @@
  {
    if (sa.ptr)
    {
-     int min = sa.indexmin();
-     int max = sa.indexmax();
-     for (int i = min;i<=max;i++)
+     int min=sa.indexmin();
+     int max=sa.indexmax();
+     for (int i=min;i<=max;i++)
      {
        ifs >> sa[i];
      }

@@ -64,7 +64,7 @@
 #include <math.h>
 #define XXX 3.70255042e-17
 
-  // ofstream gradlog("grad.log");
+  //ofstream gradlog("grad.log");
 
 /**
  * Description not yet available.
@@ -81,8 +81,8 @@
     if  ( grad_ptr->ind_addr1 )
     {
       * grad_ptr->ind_addr1 += z * grad_ptr->mult1 ;
-        // gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
-        // if (fabs(* grad_ptr->ind_addr1+XXX)<1.e-16)
+        //gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
+        //if (fabs(* grad_ptr->ind_addr1+XXX)<1.e-16)
          // cout <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
 #if defined(USE_DDOUBLE)
       if  ( grad_ptr->mult2 !=0)
@@ -91,8 +91,8 @@
 #endif
       {
         * grad_ptr->ind_addr2 += z * grad_ptr->mult2 ;
-        // gradlog <<  setprecision(13) << * grad_ptr->ind_addr2  << endl;
-        // if (fabs(* grad_ptr->ind_addr2+XXX)<1.e-16)
+        //gradlog <<  setprecision(13) << * grad_ptr->ind_addr2  << endl;
+        //if (fabs(* grad_ptr->ind_addr2+XXX)<1.e-16)
          // cout <<  setprecision(13) << * grad_ptr->ind_addr2  << endl;
       }
     }
@@ -107,9 +107,9 @@
     // there is one independent variable
     grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
-    * grad_ptr->dep_addr = 0.;
+    * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z;
-    // gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
+    //gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
      //   if (fabs(* grad_ptr->ind_addr1+XXX)<1.e-16)
       //    cout << setscientific() <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
@@ -123,9 +123,9 @@
     // there is one independent variable
     grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
-    * grad_ptr->dep_addr = 0.;
+    * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 -= z;
-    // gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
+    //gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
      //   if (fabs(* grad_ptr->ind_addr1+XXX)<1.e-16)
       //    cout <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
@@ -137,7 +137,7 @@
   void default_evaluation0(void)
   {
     // there is one independent variable
-    * gradient_structure::GRAD_STACK1->ptr->dep_addr = 0.;
+    * gradient_structure::GRAD_STACK1->ptr->dep_addr=0.;
   }
 
 /**
@@ -146,17 +146,17 @@
  */
   void default_evaluation2(void)
   {
-    // char ch;
+    //char ch;
     // there is one independent variable
     grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
-    // cout << setprecision(16) << *grad_ptr->dep_addr << endl;
-    // cout << setprecision(16) << *grad_ptr->ind_addr1 << endl;
-    // cout << setprecision(16) << grad_ptr->mult1 << endl;
-    // cin >> ch;
+    //cout << setprecision(16) << *grad_ptr->dep_addr << endl;
+    //cout << setprecision(16) << *grad_ptr->ind_addr1 << endl;
+    //cout << setprecision(16) << grad_ptr->mult1 << endl;
+    //cin >> ch;
     double z = * grad_ptr->dep_addr;
-    * grad_ptr->dep_addr = 0.;
+    * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z * grad_ptr->mult1 ;
-    // gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
+    //gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
      //   if (fabs(* grad_ptr->ind_addr1+XXX)<1.e-16)
       //    cout <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
@@ -170,10 +170,10 @@
     // there are two independent variables
     grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
-    * grad_ptr->dep_addr = 0.;
+    * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z * grad_ptr->mult1 ;
     * grad_ptr->ind_addr2 += z * grad_ptr->mult2 ;
-    // gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
+    //gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
      //   if (fabs(* grad_ptr->ind_addr1+XXX)<1.e-16)
       //    cout <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
   }
@@ -187,24 +187,24 @@
     // there are three independent variables
     grad_stack_entry *  grad_ptr = gradient_structure::GRAD_STACK1->ptr;
 
-    double mult3 = grad_ptr->mult1 ;
-    double * ind_addr3 = grad_ptr->ind_addr1;
+    double mult3=grad_ptr->mult1 ;
+    double * ind_addr3=grad_ptr->ind_addr1;
     if (gradient_structure::GRAD_STACK1->ptr-- == 
       gradient_structure::GRAD_STACK1->ptr_first)
     {
       // back up the file one buffer size and read forward
      
-      my_off_t lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+      my_off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
         -((long int)(sizeof(grad_stack_entry)*gradient_structure::
         GRAD_STACK1->length)),SEEK_CUR);
 
       gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
-      // gradient_structure::GRAD_STACK1->ptr++;
+      //gradient_structure::GRAD_STACK1->ptr++;
     }
 
     grad_ptr = gradient_structure::GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
-    * grad_ptr->dep_addr = 0.;
+    * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z * grad_ptr->mult1 ;
     * grad_ptr->ind_addr2 += z * grad_ptr->mult2 ;
     * ind_addr3 += z * mult3 ;
@@ -219,39 +219,39 @@
     // there are three independent variables
     grad_stack_entry *  grad_ptr = gradient_structure::GRAD_STACK1->ptr;
 
-    double * ind_addr3 = grad_ptr->ind_addr1;
-    double mult3 = grad_ptr->mult1 ;
-    double * ind_addr4 = grad_ptr->ind_addr2;
-    double mult4 = grad_ptr->mult2 ;
+    double * ind_addr3=grad_ptr->ind_addr1;
+    double mult3=grad_ptr->mult1 ;
+    double * ind_addr4=grad_ptr->ind_addr2;
+    double mult4=grad_ptr->mult2 ;
     if (gradient_structure::GRAD_STACK1->ptr-- == 
       gradient_structure::GRAD_STACK1->ptr_first)
     {
       // back up the file one buffer size and read forward
-      my_off_t lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+      my_off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
         -((long int)(sizeof(grad_stack_entry)*gradient_structure::
         GRAD_STACK1->length)),SEEK_CUR);
 
       gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
-      // gradient_structure::GRAD_STACK1->ptr++;
+      //gradient_structure::GRAD_STACK1->ptr++;
     }
 
     grad_ptr = gradient_structure::GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
-    * grad_ptr->dep_addr = 0.;
+    * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z * grad_ptr->mult1 ;
     * grad_ptr->ind_addr2 += z * grad_ptr->mult2 ;
     * ind_addr3 += z * mult3 ;
     * ind_addr4 += z * mult4 ;
-    // gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
+    //gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
      //   if (fabs(* grad_ptr->ind_addr1+XXX)<1.e-16)
       //    cout <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
-    // gradlog <<  setprecision(13) << * grad_ptr->ind_addr2  << endl;
+    //gradlog <<  setprecision(13) << * grad_ptr->ind_addr2  << endl;
      //   if (fabs(* grad_ptr->ind_addr2+XXX)<1.e-16)
       //    cout <<  setprecision(13) << * grad_ptr->ind_addr2  << endl;
-    // gradlog <<  setprecision(13) << * ind_addr3  << endl;
+    //gradlog <<  setprecision(13) << * ind_addr3  << endl;
      //   if (fabs(* ind_addr3+XXX)<1.e-16)
       //    cout <<  setprecision(13) << * ind_addr3  << endl;
-    // gradlog <<  setprecision(13) << * ind_addr4  << endl;
+    //gradlog <<  setprecision(13) << * ind_addr4  << endl;
      //   if (fabs(* ind_addr4+XXX)<1.e-16)
       //    cout <<  setprecision(13) << * ind_addr4  << endl;
   }
@@ -265,7 +265,7 @@
     // there are two independent variables
     grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
-    * grad_ptr->dep_addr = 0.;
+    * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z;
     * grad_ptr->ind_addr2 += z;
   }
@@ -279,7 +279,7 @@
     // there are two independent variables
     grad_stack_entry * grad_ptr = gradient_structure::GRAD_STACK1->ptr;
     double z = * grad_ptr->dep_addr;
-    * grad_ptr->dep_addr = 0.;
+    * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z;
     * grad_ptr->ind_addr2 -= z;
   }

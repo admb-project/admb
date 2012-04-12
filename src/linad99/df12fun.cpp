@@ -8,14 +8,14 @@
  * \file
  * Description not yet available.
  */
-// class df1b2matrix;
+//class df1b2matrix;
 
 //#include <df1b2fun.h>
 #include <df12fun.h>
 
   prevariable * df1_two_variable::ind_var[2];
 
-  int df1_two_variable::num_ind_var = 0;
+  int df1_two_variable::num_ind_var=0;
 
 /**
  * Description not yet available.
@@ -23,9 +23,9 @@
  */
   df1_two_variable::df1_two_variable(const df1_two_variable& x)
   {
-    v[0] = x.v[0];
-    v[1] = x.v[1];
-    v[2] = x.v[2];
+    v[0]=x.v[0];
+    v[1]=x.v[1];
+    v[2]=x.v[2];
   }
 
 /**
@@ -34,9 +34,9 @@
  */
  df1_two_vector::df1_two_vector(const df1_two_vector& m2)
  {
-   index_min = m2.index_min;
-   index_max = m2.index_max;
-   shape = m2.shape;
+   index_min=m2.index_min;
+   index_max=m2.index_max;
+   shape=m2.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -71,7 +71,7 @@
        delete [] v;
        v = NULL;
        delete shape;
-       shape = 0;
+       shape=0;
      }
    }
  }
@@ -83,12 +83,12 @@
  dvector value(const df1_two_vector& v)
  {
    
-   int mmin = v.indexmin();
-   int mmax = v.indexmax();
+   int mmin=v.indexmin();
+   int mmax=v.indexmax();
    dvector cv(mmin,mmax);
-   for (int i = mmin;i<=mmax;i++)
+   for (int i=mmin;i<=mmax;i++)
    {
-     cv(i) = value(v(i));
+     cv(i)=value(v(i));
    }
    return cv;
  }
@@ -99,11 +99,11 @@
  */
   void df1_two_vector::initialize(void)
   {
-    int mmin = indexmin();
-    int mmax = indexmax();
-    for (int i = mmin;i<=mmax;i++)
+    int mmin=indexmin();
+    int mmax=indexmax();
+    for (int i=mmin;i<=mmax;i++)
     {
-      (*this)(i) = 0.0;
+      (*this)(i)=0.0;
     }
   }
 
@@ -131,15 +131,15 @@
  */
   void df1_two_vector::allocate(int min,int max)
   {
-    index_min = min;
-    index_max = max;
-    v = new df1_two_variable[max-min+1];
+    index_min=min;
+    index_max=max;
+    v=new df1_two_variable[max-min+1];
     if (v==0)
     {
       cerr << "error allocating memory in df1_two_vector" << endl;
       ad_exit(1);
     }
-    if ( (shape = new vector_shapex(min,max,v)) == NULL)
+    if ( (shape=new vector_shapex(min,max,v)) == NULL)
     {
       cerr << "Error trying to allocate memory for df1_two_vector" 
            << endl;;
@@ -154,10 +154,10 @@
  */
   void df1_two_vector::allocate(void)
   {
-    index_min = 0;
+    index_min=0;
     index_max=-1;
-    v = 0;
-    shape = 0;
+    v=0;
+    shape=0;
   }
     
 /**
@@ -167,17 +167,17 @@
  dmatrix value(const df1_two_matrix& v)
  {
    
-   int rmin = v.indexmin();
-   int rmax = v.indexmax();
+   int rmin=v.indexmin();
+   int rmax=v.indexmax();
    dmatrix cm(rmin,rmax);
-   for (int i = rmin;i<=rmax;i++)
+   for (int i=rmin;i<=rmax;i++)
    {
-     int cmin = v(i).indexmin();
-     int cmax = v(i).indexmax();
+     int cmin=v(i).indexmin();
+     int cmax=v(i).indexmax();
      cm(i).allocate(cmin,cmax); 
-     for (int j = cmin;j<=cmax;j++)
+     for (int j=cmin;j<=cmax;j++)
      {
-       cm(i,j) = value(v(i,j));
+       cm(i,j)=value(v(i,j));
      }
    }
    return cm;
@@ -189,9 +189,9 @@
  */
  df1_two_matrix::df1_two_matrix(const df1_two_matrix& m2)
  {
-   index_min = m2.index_min;
-   index_max = m2.index_max;
-   shape = m2.shape;
+   index_min=m2.index_min;
+   index_max=m2.index_max;
+   shape=m2.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -224,9 +224,9 @@
      {
        v = (df1_two_vector*) (shape->get_pointer());
        delete [] v;
-       v = 0;
+       v=0;
        delete shape;
-       shape = 0;
+       shape=0;
      }
    }
  }
@@ -237,9 +237,9 @@
  */
   void df1_two_matrix::initialize(void)
   {
-    int mmin = indexmin();
-    int mmax = indexmax();
-    for (int i = mmin;i<=mmax;i++)
+    int mmin=indexmin();
+    int mmax=indexmax();
+    for (int i=mmin;i<=mmax;i++)
     {
       (*this)(i).initialize();
     }
@@ -251,22 +251,22 @@
  */
   df1_two_matrix::df1_two_matrix(int rmin,int rmax,int cmin,int cmax)
   {
-    index_min = rmin;
-    index_max = rmax;
-    v = new df1_two_vector[rmax-rmin+1];
+    index_min=rmin;
+    index_max=rmax;
+    v=new df1_two_vector[rmax-rmin+1];
     if (v==0)
     {
       cerr << "error allocating memory in df1_two_matrix" << endl;
       ad_exit(1);
     }
-    if ( (shape = new mat_shapex(v)) == NULL)
+    if ( (shape=new mat_shapex(v)) == NULL)
     {
       cerr << "Error trying to allocate memory for df1_two_vector" 
            << endl;;
     }
     v-=rmin;
     
-    for (int i = rmin;i<=rmax;i++)
+    for (int i=rmin;i<=rmax;i++)
     {
       v[i].allocate(cmin,cmax);
     }
@@ -292,11 +292,11 @@
   {
    /*
     df1_three_variable x=*this * inv(y);
-    *this = x;
+    *this=x;
     return *this;
    */
    // properly optimized code
-    double tmp = 1.0/value(y);
+    double tmp=1.0/value(y);
     *get_u()*=tmp;
     *get_u_x() = *get_u_x()*tmp- *get_u()*tmp* *y.get_u_x();
     *get_u_y() = *get_u_y()*tmp- *get_u()*tmp* *y.get_u_y();
@@ -334,7 +334,7 @@
   {
    /*
     df1_three_variable x=*this * v;
-    *this = x;
+    *this=x;
     return *this;
    */
     *get_u()*=v;
@@ -351,7 +351,7 @@
   df1_two_variable& df1_two_variable::operator *= (const df1_two_variable& v)
   {
     df1_two_variable x=*this * v;
-    *this = x;
+    *this=x;
     return *this;
   }
 
@@ -415,9 +415,9 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   {
     df1_two_variable z;
     double u=::sqrt(*x.get_u());
-    *z.get_u() = u;
-    // double xinv = 1.0/(*x.get_u());
-    double zp = 0.5/u;
+    *z.get_u()=u;
+    //double xinv=1.0/(*x.get_u());
+    double zp=0.5/u;
 
 
     set_derivatives(z,x,u,zp);
@@ -432,12 +432,12 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   df1_two_variable atan(const df1_two_variable& x)
   {
     df1_two_variable z;
-    double cx = value(x);
-    double d = 1.0/(1+square(cx));
-    // double d2 = square(d);
+    double cx=value(x);
+    double d=1.0/(1+square(cx));
+    //double d2=square(d);
     double u=::atan(cx);
-    *z.get_u() = u;
-    double zp = d;
+    *z.get_u()=u;
+    double zp=d;
 
     set_derivatives(z,x,u,zp);
     return z;
@@ -450,9 +450,9 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   df1_two_variable square(const df1_two_variable& x)
   {
     df1_two_variable z;
-    double u = value(x);
-    *z.get_u() = u*u;
-    double zp = 2.0*u;
+    double u=value(x);
+    *z.get_u()=u*u;
+    double zp=2.0*u;
 
     set_derivatives(z,x,u,zp);
     return z;
@@ -466,11 +466,11 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   {
     df1_two_variable z;
     double u=::tan(*x.get_u());
-    *z.get_u() = u;
-    double v = 1.0/::cos(*x.get_u());
-    // double w=::sin(*x.get_u());
-    double v2 = v*v;
-    double zp = v2;
+    *z.get_u()=u;
+    double v=1.0/::cos(*x.get_u());
+    //double w=::sin(*x.get_u());
+    double v2=v*v;
+    double zp=v2;
 
     set_derivatives(z,x,u,zp);
     return z;
@@ -484,7 +484,7 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   {
     df1_two_variable z;
     double u=::sin(*x.get_u());
-    *z.get_u() = u;
+    *z.get_u()=u;
     double zp=::cos(*x.get_u());
 
     set_derivatives(z,x,u,zp);
@@ -499,8 +499,8 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   {
     df1_two_variable z;
     double u=::log(*x.get_u());
-    *z.get_u() = u;
-    double zp = 1/(*x.get_u());
+    *z.get_u()=u;
+    double zp=1/(*x.get_u());
 
     set_derivatives(z,x,u,zp);
     return z;
@@ -514,8 +514,8 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   {
     df1_two_variable z;
     double u=::exp(*x.get_u());
-    *z.get_u() = u;
-    double zp = u;
+    *z.get_u()=u;
+    double zp=u;
 
     set_derivatives(z,x,u,zp);
     return z;
@@ -546,8 +546,8 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   df1_two_variable inv(const df1_two_variable& x)
   {
     df1_two_variable z;
-    double xinv = 1.0/(*x.get_u());
-    *z.get_u() = xinv;
+    double xinv=1.0/(*x.get_u());
+    *z.get_u()=xinv;
     double zp=-xinv*xinv;
     set_derivatives(z,x,xinv,zp);
 
@@ -629,7 +629,7 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   df1_two_variable operator / (const df1_two_variable& x,
     double y)
   {
-    double u = 1/y;
+    double u=1/y;
     return x*u;
   }
 
@@ -640,7 +640,7 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   df1_two_variable operator / (const df1_two_variable& x,
     const df1_two_variable& y)
   {
-    df1_two_variable u = inv(y);
+    df1_two_variable u=inv(y);
     return x*u;
   }
 
@@ -651,7 +651,7 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   df1_two_variable operator / (const double x,
     const df1_two_variable& y)
   {
-    df1_two_variable u = inv(y);
+    df1_two_variable u=inv(y);
     return x*u;
   }
 
@@ -759,7 +759,7 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
  */
   void init_df1_two_variable::deallocate(void)
   {
-    num_ind_var = 0;
+    num_ind_var=0;
   }
 
 /**
@@ -823,10 +823,10 @@ df1_two_matrix choleski_decomp(const df1_two_matrix& MM)
 {
   // kludge to deal with constantness
   df1_two_matrix & M= (df1_two_matrix &) MM;
-  int rmin = M.indexmin();
-  int cmin = M(rmin).indexmin();
-  int rmax = M.indexmax();
-  int cmax = M(rmin).indexmax();
+  int rmin=M.indexmin();
+  int cmin=M(rmin).indexmin();
+  int rmax=M.indexmax();
+  int cmax=M(rmin).indexmax();
   if (rmin !=1 || cmin !=1)
   {
     cerr << "minimum row and column inidices must equal 1 in "
@@ -841,7 +841,7 @@ df1_two_matrix choleski_decomp(const df1_two_matrix& MM)
     ad_exit(1);
   }
 
-  int n = rmax-rmin+1;
+  int n=rmax-rmin+1;
   df1_two_matrix L(1,n,1,n);
 #ifndef SAFE_INITIALIZE
     L.initialize();
@@ -857,25 +857,25 @@ df1_two_matrix choleski_decomp(const df1_two_matrix& MM)
       ad_exit(1);
     }
    
-  L(1,1) = sqrt(M(1,1));
-  for (i = 2;i<=n;i++)
+  L(1,1)=sqrt(M(1,1));
+  for (i=2;i<=n;i++)
   {
-    L(i,1) = M(i,1)/L(1,1);
+    L(i,1)=M(i,1)/L(1,1);
   }
 
-  for (i = 2;i<=n;i++)
+  for (i=2;i<=n;i++)
   {
-    for (j = 2;j<=i-1;j++)
+    for (j=2;j<=i-1;j++)
     {
-      tmp = M(i,j);
-      for (k = 1;k<=j-1;k++)
+      tmp=M(i,j);
+      for (k=1;k<=j-1;k++)
       {
         tmp-=L(i,k)*L(j,k);
       }
-      L(i,j) = tmp/L(j,j);
+      L(i,j)=tmp/L(j,j);
     }
-    tmp = M(i,i);
-    for (k = 1;k<=i-1;k++)
+    tmp=M(i,i);
+    for (k=1;k<=i-1;k++)
     {
       tmp-=L(i,k)*L(i,k);
     }
@@ -887,7 +887,7 @@ df1_two_matrix choleski_decomp(const df1_two_matrix& MM)
       ad_exit(1);
     }
    
-    L(i,i) = sqrt(tmp);
+    L(i,i)=sqrt(tmp);
   }
 
   return L;
@@ -897,7 +897,7 @@ df1_two_matrix choleski_decomp(const df1_two_matrix& MM)
   {
     df1_two_variable z;
     if (value(x)>=0.0)
-      z = x; 
+      z=x; 
     else
       z=-x;
     return z;

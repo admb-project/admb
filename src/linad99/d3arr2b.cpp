@@ -18,9 +18,9 @@
    {
      d3_array tmp;
      tmp.allocate(m);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = m(i)/d;
+       tmp(i)=m(i)/d;
      }
      return tmp;
    }  
@@ -31,7 +31,7 @@
  */
    void d3_array::operator /= ( CGNU_DOUBLE d)
    {
-     for (int i = slicemin();i<=slicemax();i++)
+     for (int i=slicemin();i<=slicemax();i++)
      {
        (*this)(i)/=d;
      }

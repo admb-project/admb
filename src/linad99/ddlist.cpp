@@ -27,8 +27,8 @@ dlink * dlink::previous(){return prev;}
 //////////////////////////////
 // global list names
 
-// dlist * GRAD_LIST;
-// extern dlist * GRAD_LIST; // js
+//dlist * GRAD_LIST;
+//extern dlist * GRAD_LIST; //js
 /////////////////////////////
 extern char demo_capacity[];
 extern char please_buy[];
@@ -49,11 +49,11 @@ char* ddlist_spacea;
 dlist::dlist(void)
 {
   int on,nopt;
-  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
   {
     if (nopt ==1)	    
     {	      
-      gradient_structure::MAX_DLINKS = atoi(ad_comm::argv[on+1]);
+      gradient_structure::MAX_DLINKS=atoi(ad_comm::argv[on+1]);
     }
     else
     {
@@ -69,15 +69,15 @@ dlist::dlist(void)
   nlinks = 0;
   dlink_addresses = new dlink*[gradient_structure::MAX_DLINKS];
   ddlist_space = (char*)malloc(2 * sizeof(double) * (gradient_structure::MAX_DLINKS + 1));
-  // cout << (int) (ddlist_space) << endl;
-  // cout << ((int) (ddlist_space))%8 << endl;
+  //cout << (int) (ddlist_space) << endl;
+  //cout << ((int) (ddlist_space))%8 << endl;
 #if defined(__x86_64)
-  intptr_t adjust = (8 - ((intptr_t)(ddlist_space))%8)%8;
+  intptr_t adjust=(8 - ((intptr_t)(ddlist_space))%8)%8;
 #else
-  int adjust = (8- ((int) (ddlist_space))%8)%8;
+  int adjust=(8- ((int) (ddlist_space))%8)%8;
 #endif
   
-  ddlist_spacea = ddlist_space+adjust;
+  ddlist_spacea=ddlist_space+adjust;
 
   for (int i = 0; i < gradient_structure::MAX_DLINKS; ++i)
   {
@@ -101,7 +101,7 @@ dlink * dlist::create()
   }
  */
 
-  dlink_addresses[nlinks] = tmp;   // keep track of the links so you can 
+  dlink_addresses[nlinks]=tmp;   // keep track of the links so you can 
                                  // zero them out
   nlinks+=1;
 
@@ -120,7 +120,7 @@ dlink * dlist::create()
     ad_exit(1);
   }
 
-  tmp->prev = 0;
+  tmp->prev=0;
   // cout << "Made a dlink with address " << _farptr_tolong(tmp) <<"\n";
   return(tmp);
 }
@@ -134,8 +134,8 @@ dlink* dlist::last_remove()
   dlink * tmp;
   if (last)
   {
-    tmp = last;
-    last = last->prev;
+    tmp=last;
+    last=last->prev;
     return(tmp);
   }
   else
@@ -155,19 +155,19 @@ dlist::~dlist()
 //   cout << "used the dlist destructor\n";
 //   cout << "entered ~dlist   last =" << _farptr_tolong(last) << "\n";
 
-  unsigned int count = 0;
+  unsigned int count=0;
   
   while(last)
   {
     count+=1;
-    tmp = last->prev;
+    tmp=last->prev;
 
 //  cout << "last =" << _farptr_tolong(last) << "\n";
 //  cout << "last->prev =" << _farptr_tolong(last->prev) << "\n";
 //  cout << "deleted dlink with address" << _farptr_tolong(last) << "\n";
 
-    // delete last;
-    last = tmp;
+    //delete last;
+    last=tmp;
   }
   if (count != nlinks)
   {
@@ -178,7 +178,7 @@ dlist::~dlist()
   }
 */
   ::free(ddlist_space);
-  ddlist_space = NULL;
+  ddlist_space=NULL;
   delete [] dlink_addresses;
 }
 
@@ -189,9 +189,9 @@ dlist::~dlist()
 void dlist::check_list(void)
 {
   dlink * tmp;
-  dlink * tmp_last = last;
+  dlink * tmp_last=last;
 
-  unsigned int count = 0;
+  unsigned int count=0;
   while(tmp_last && count <=nlinks)
   {
     count+=1;
@@ -201,13 +201,13 @@ void dlist::check_list(void)
       cerr << " The number created was "<< nlinks << endl;
     }
 
-    tmp = tmp_last->prev;
+    tmp=tmp_last->prev;
 
 //  cout << "last =" << _farptr_tolong(last) << "\n";
 //  cout << "last->prev =" << _farptr_tolong(last->prev) << "\n";
 //  cout << "deleted dlink with address" << _farptr_tolong(last) << "\n";
 
-    tmp_last = tmp;
+    tmp_last=tmp;
   }
   cerr << "In check_list() number of free links is " << count << endl;
 }

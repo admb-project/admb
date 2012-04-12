@@ -32,7 +32,7 @@ extern "C" {
 
 typedef long int integer;
 typedef unsigned long int uinteger;
-// typedef char *address;
+//typedef char *address;
 typedef short int shortint;
 typedef double real;
 typedef double doublereal;
@@ -264,7 +264,7 @@ dvariable cumbvn(const dvariable& x,const dvariable& y,const dvariable& rho)
   dvariable retval;
   dvariable mx=-x;
   dvariable my=-y;
-  retval = mvbvu_(&mx,&my,&rho);
+  retval=mvbvu_(&mx,&my,&rho);
   RETURN_ARRAYS_DECREMENT();
   return retval;
 }
@@ -282,7 +282,7 @@ dvariable cumbvn(const dvariable& xl,const dvariable& yl,
   const dvariable& xu,const dvariable& yu,const dvariable& rho)
 {
   RETURN_ARRAYS_INCREMENT();
-  dvariable my = cumbvn(xl,yl,rho);
+  dvariable my=cumbvn(xl,yl,rho);
   my+=cumbvn(xu,yu,rho);
   my-=cumbvn(xl,yu,rho);
   my-=cumbvn(xu,yl,rho);
@@ -296,16 +296,16 @@ extern "C" {
 #endif
 dvariable mvbvu_(const dvariable *sh,const dvariable *sk,const dvariable *r__)
 {
-  // cout << " " << *r__;
+  //cout << " " << *r__;
   RETURN_ARRAYS_INCREMENT();
-    // dvariable pr;
-    // if (*zz>0)
-     // pr = sfabs(*zz);
-    // else
+    //dvariable pr;
+    //if (*zz>0)
+     // pr=sfabs(*zz);
+    //else
     //  pr=-sfabs(*zz);
-    // dvariable * r__=&pr;
+    //dvariable * r__=&pr;
     /* Initialized data */
-    // if (abs(*r__)<1.e-6)
+    //if (abs(*r__)<1.e-6)
       // cout << " " << *r__ << endl;
 
     static struct {
@@ -346,17 +346,17 @@ dvariable mvbvu_(const dvariable *sh,const dvariable *sk,const dvariable *r__)
     dvariable  ret_val, d__1, d__2,d__3,d__4;
 
     /* Builtin functions */
-    // double asin(doublereal), sin(doublereal), exp(doublereal), sqrt(
+    //double asin(doublereal), sin(doublereal), exp(doublereal), sqrt(
 //	    doublereal);
 
     /* Local variables */
     /*static*/ dvariable  a, b, c__, d__, h__;
     static integer i__;
-    // static doublereal k;
+    //static doublereal k;
     /*static*/ dvariable k;
     extern dvariable mvphi_(dvariable *);
     static integer lg;
-    // static doublereal as;
+    //static doublereal as;
     /*static*/ dvariable as;
     static integer ng;
     /*static*/ dvariable  bs,rs,xs;
@@ -491,11 +491,11 @@ dvariable mvbvu_(const dvariable *sh,const dvariable *sk,const dvariable *r__)
 #undef x
 #undef w
 
-// dvariable mvphi_(dvariable *z__)
+//dvariable mvphi_(dvariable *z__)
 //{
 //  return cumd_norm(*z__);
 //}
-int debug_switch = 0;
+int debug_switch=0;
 
 dvariable mvphi_(dvariable *z__)
 {
@@ -505,7 +505,7 @@ dvariable mvphi_(dvariable *z__)
     dvariable d__1,ret_val;
 
     /* Builtin functions */
-    // double exp(doublereal);
+    //double exp(doublereal);
 
     /* Local variables */
     /*static*/ dvariable zabs, expntl,p;
@@ -527,7 +527,7 @@ dvariable mvphi_(dvariable *z__)
     else
       zabs = -*z__;
     
-    // zabs = abs(*z__);
+    //zabs = abs(*z__);
 
 /*     |Z| > 37 */
     /*

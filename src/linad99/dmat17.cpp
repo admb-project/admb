@@ -21,9 +21,9 @@
      tmp.initialize();
    #endif
 
-   for (int i = min; i<=max; i++)
+   for (int i=min; i<=max; i++)
    {
-     tmp.elem(i,i) = 1;
+     tmp.elem(i,i)=1;
    }
    return(tmp);
  }      

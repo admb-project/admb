@@ -18,8 +18,8 @@
  */
   df1b2_header_ptr_vector::df1b2_header_ptr_vector(int mmin,int mmax)
   {
-    index_min = mmin;
-    index_max = mmax;
+    index_min=mmin;
+    index_max=mmax;
     v = new ad_df1b2_header_ptr[mmax-mmin+1];
     if (v ==0)
     {
@@ -40,8 +40,8 @@
     {
       v+=indexmin();
       delete [] v;
-      v = 0;
-      index_min = 0;
+      v=0;
+      index_min=0;
       index_max=-1;
     }
   }
@@ -52,8 +52,8 @@
  */
   double_ptr_vector::double_ptr_vector(int mmin,int mmax)
   {
-    index_min = mmin;
-    index_max = mmax;
+    index_min=mmin;
+    index_max=mmax;
     v = new ad_double_ptr[mmax-mmin+1];
     if (v ==0)
     {
@@ -74,8 +74,8 @@
     {
       v+=indexmin();
       delete [] v;
-      v = 0;
-      index_min = 0;
+      v=0;
+      index_min=0;
       index_max=-1;
     }
   }

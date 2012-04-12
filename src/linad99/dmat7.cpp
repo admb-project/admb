@@ -18,7 +18,7 @@ void dmatrix::initialize(void)
 {
   if (!(!(*this)))  // only initialize allocated objects
   {
-    for (int i = rowmin();i<=rowmax();i++)
+    for (int i=rowmin();i<=rowmax();i++)
     {
       elem(i).initialize();
     }

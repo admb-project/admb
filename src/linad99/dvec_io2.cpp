@@ -64,7 +64,7 @@ void dvector::write_on(BOR_CONST uostream& _s) _CONST
   ADUNCONST(uostream,s)
   int mmin = indexmin();
   int mmax = indexmax();
-  for (int i = mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
     s.write((char*)&((*this)[i]), sizeof(double) );
   }
@@ -79,7 +79,7 @@ void dvector::read_from(BOR_CONST uistream& _s)
   ADUNCONST(uistream,s) 
   int mmin = indexmin();
   int mmax = indexmax();
-  for (int i = mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
     s.read((char*)&((*this)[i]), sizeof(double) );
   }

@@ -74,7 +74,7 @@
   long _cdecl _farptr_tolong(void _far *);
 #endif
 
-// void KLUDGEX(void * p);
+//void KLUDGEX(void * p);
 
 /**
  * Description not yet available.
@@ -96,7 +96,7 @@ void gradcalc(int nvar,BOR_CONST dvector& _g)
   }
   dvector& g= (dvector&) _g;
   gradient_structure::TOTAL_BYTES = 0;
-  gradient_structure::PREVIOUS_TOTAL_BYTES = 0;
+  gradient_structure::PREVIOUS_TOTAL_BYTES=0;
   unsigned int i;
   long int lpos;
   if(!gradient_structure::instances)
@@ -114,7 +114,7 @@ void gradcalc(int nvar,BOR_CONST dvector& _g)
    gradient_structure::GRAD_STACK1->_GRADFILE_PTR =
               gradient_structure::GRAD_STACK1->gradfile_handle();
 
-  int& _GRADFILE_PTR = gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
+  int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
   lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
 
@@ -139,7 +139,7 @@ void gradcalc(int nvar,BOR_CONST dvector& _g)
 
   gradient_structure::GRAD_STACK1->ptr--;
 
-  for (i = 0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+  for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
     * (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i]) = 0;
   }
@@ -162,7 +162,7 @@ void gradcalc(int nvar,BOR_CONST dvector& _g)
 
   double * zptr;
 
-   for (i = 0 ; i< (max_last_offset/size) ; i++ )
+   for (i=0 ; i< (max_last_offset/size) ; i++ )
    {
      tmp->x = 0;
      #if defined (__ZTC__)
@@ -183,9 +183,9 @@ void gradcalc(int nvar,BOR_CONST dvector& _g)
     * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
-// double z;
-int break_flag = 1;
-int icount = 0;
+//double z;
+int break_flag=1;
+int icount=0;
 
 do
 {
@@ -198,25 +198,25 @@ do
     while (gradient_structure::GRAD_STACK1->ptr-- >
 		grad_ptr_first)
     {
-      // KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
+      //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
       (*(gradient_structure::GRAD_STACK1->ptr->func))();
       icount++;
       if (icount%1000==0)
       {
-        // cout << "icount = " << icount << endl;
+        //cout << "icount = " << icount << endl;
       }
     }
 
   #endif
 
   // back up the file one buffer size and read forward
-  // KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
+  //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
   lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
       -((long int)(sizeof(grad_stack_entry)*gradient_structure::
         GRAD_STACK1->length)),SEEK_CUR);
-  // KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
+  //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
 
-  break_flag = gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
+  break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
 
 }  while (break_flag); // do
 
@@ -232,7 +232,7 @@ do
   }
 
   int mindx = g.indexmin();
-  for (i = 0; i < (unsigned int)nvar; i++)
+  for (i=0; i < (unsigned int)nvar; i++)
   {
     g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
   }
@@ -253,9 +253,9 @@ do
 void gradient_structure::save_arrays()
 {
   void * temp_ptr;
-  long bytes_needed = min(gradient_structure::ARR_LIST1->get_last_offset()+1,
+  long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
     ARRAY_MEMBLOCK_SIZE);
-  gradient_structure::save_var_file_flag = 0;
+  gradient_structure::save_var_file_flag=0;
   //#if DOS386==1
   #if defined(DOS386)
    if ( (temp_ptr = (void *) malloc(bytes_needed )) == 0)
@@ -268,7 +268,7 @@ void gradient_structure::save_arrays()
   #define __USE_IOSTREAM__
   #endif
    {
-     gradient_structure::save_var_file_flag = 1;
+     gradient_structure::save_var_file_flag=1;
      cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCK"
 	  << " save buffer " << endl;
    }
@@ -285,8 +285,8 @@ void gradient_structure::save_arrays()
            (double*)ARRAY_MEMBLOCK_BASE,bytes_needed/8);
        #endif
      #else
-     unsigned long int max_move = 50000;
-     unsigned long int left_to_move = bytes_needed;
+     unsigned long int max_move=50000;
+     unsigned long int left_to_move=bytes_needed;
      humungous_pointer dest = ARRAY_MEMBLOCK_SAVE;
      humungous_pointer src = ARRAY_MEMBLOCK_BASE;
      while(left_to_move > max_move)
@@ -308,8 +308,8 @@ void gradient_structure::save_arrays()
        write(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
          (char*)src,bytes_needed);
      #else
-     unsigned long int max_move = 500;
-     unsigned long int left_to_move = bytes_needed;
+     unsigned long int max_move=500;
+     unsigned long int left_to_move=bytes_needed;
      while(left_to_move > max_move)
      {
        write(_VARSSAV_PTR,(char*)src,max_move);
@@ -328,7 +328,7 @@ void gradient_structure::save_arrays()
  */
 void gradient_structure::restore_arrays()
 {
-  long bytes_needed = min(gradient_structure::ARR_LIST1->get_last_offset()+1,
+  long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
     ARRAY_MEMBLOCK_SIZE);
   if (gradient_structure::save_var_file_flag==0)
   {
@@ -342,9 +342,9 @@ void gradient_structure::restore_arrays()
            (double*)ARRAY_MEMBLOCK_SAVE,bytes_needed/8);
        #endif
      #else
-     unsigned long max_move = 50000;
+     unsigned long max_move=50000;
 
-     long int left_to_move = bytes_needed;
+     long int left_to_move=bytes_needed;
      humungous_pointer src = ARRAY_MEMBLOCK_SAVE;
      humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
      while(left_to_move > max_move)
@@ -367,9 +367,9 @@ void gradient_structure::restore_arrays()
       read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
        (char*)dest,bytes_needed);
     #else
-     unsigned long int max_move = 50000;
+     unsigned long int max_move=50000;
 
-     long int left_to_move = bytes_needed;
+     long int left_to_move=bytes_needed;
      while(left_to_move > max_move)
      {
        read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
@@ -391,15 +391,15 @@ void gradient_structure::save_variables()
 {
   if ((variables_save = new double[gradient_structure::MAX_DLINKS])==NULL)
   {
-    // _VARSSAV_PTR = open(var_store_file_name, O_RDWR | O_CREAT | O_TRUNC ,
+    //_VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT | O_TRUNC ,
     //		     S_IREAD | S_IWRITE);
     cerr << "insufficient memory to allocate space for dvariables"
 	 << " save buffer " << endl;
     ad_exit(1);
   }
-  for (unsigned int i = 0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
-    // variables_save[i]= * (double*)
+    //variables_save[i]= * (double*)
     //	  (gradient_structure::GRAD_LIST->dlink_addresses[i]);
     memcpy(&(variables_save[i]),
        gradient_structure::GRAD_LIST->dlink_addresses[i],sizeof(double));
@@ -412,7 +412,7 @@ void gradient_structure::save_variables()
  */
 void gradient_structure::restore_variables()
 {
-  for (unsigned int i = 0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+  for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
      //* (double*)(gradient_structure::GRAD_LIST->dlink_addresses[i])
      //	= variables_save[i];
@@ -433,13 +433,13 @@ void reset_gradient_stack(void)
   gradient_structure::GRAD_STACK1->ptr = 
     gradient_structure::GRAD_STACK1->ptr_first;
 
-  int& _GRADFILE_PTR = gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
+  int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
   lseek(_GRADFILE_PTR,0L,SEEK_SET);
 }
 
-static int inner_count = 0;
-// static grad_stack_entry * pgse = (grad_stack_entry*) (0x1498fffc);
+static int inner_count=0;
+//static grad_stack_entry * pgse = (grad_stack_entry*) (0x1498fffc);
 
 /**
  * Description not yet available.

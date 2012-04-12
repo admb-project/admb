@@ -27,9 +27,9 @@
    kkludge_object kk;
    dvar_matrix tmp(m1.rowmin(),m1.rowmax(),kk);
 
-   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     tmp(i) = m1(i)+m2(i);
+     tmp(i)=m1(i)+m2(i);
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -50,12 +50,12 @@
    }
    kkludge_object kk;
    dvar_matrix tmp(m1.rowmin(),m1.rowmax(),kk);
-   // dvar_matrix tmp;
-   // tmp.allocate(m1);
+   //dvar_matrix tmp;
+   //tmp.allocate(m1);
 
-   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     tmp(i) = m1(i)+m2(i);
+     tmp(i)=m1(i)+m2(i);
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -77,9 +77,9 @@
    kkludge_object kk;
    dvar_matrix tmp(m1.rowmin(),m1.rowmax(),kk);
    
-   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     tmp(i) = m1(i)+m2(i);
+     tmp(i)=m1(i)+m2(i);
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);

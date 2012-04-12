@@ -49,8 +49,8 @@ prevariable_position restore_prevariable_position(void)
  */
 void prevariable::save_prevariable_position(void) _CONST
 {
-  double_and_int * tmp = get_v();
-  int wsize = sizeof(double_and_int*);
+  double_and_int * tmp=get_v();
+  int wsize=sizeof(double_and_int*);
   gradient_structure::get_fp()->fwrite(&tmp,size_t(wsize));
 }
 
@@ -60,11 +60,11 @@ void prevariable::save_prevariable_position(void) _CONST
  */
 void prevariable::save_prevariable_value(void) _CONST
 {
-  // double_and_int * tmp = get_v();
-  // const unsigned wsize = sizeof(double_and_int*);
-  // gradient_structure::get_fp()->fwrite(&tmp,wsize);
-  double x = value(*this);
-  // const unsigned dsize = sizeof(double);
+  //double_and_int * tmp=get_v();
+  //const unsigned wsize=sizeof(double_and_int*);
+  //gradient_structure::get_fp()->fwrite(&tmp,wsize);
+  double x=value(*this);
+  //const unsigned dsize=sizeof(double);
   gradient_structure::get_fp()->fwrite(x);
 }
 
@@ -74,7 +74,7 @@ void prevariable::save_prevariable_value(void) _CONST
  */
 void save_double_value( CGNU_DOUBLE x)
 {
-  // const unsigned wsize = sizeof(double);
+  //const unsigned wsize=sizeof(double);
   gradient_structure::get_fp()->fwrite(x);
 }
 
@@ -84,7 +84,7 @@ void save_double_value( CGNU_DOUBLE x)
  */
 void save_int_value( int x)
 {
-  // const unsigned wsize = sizeof(double);
+  //const unsigned wsize=sizeof(double);
   gradient_structure::get_fp()->fwrite(x);
 }
 
@@ -104,8 +104,8 @@ void save_pointer_value(void *ptr)
 double restore_prevariable_derivative(BOR_CONST prevariable_position& _pos)
 {
   prevariable_position& pos= (prevariable_position&) _pos; 
-  double tmpout = pos.xval();
-  pos.xval() = 0.0;
+  double tmpout=pos.xval();
+  pos.xval()=0.0;
   return tmpout;
 }
 
@@ -119,8 +119,8 @@ double restore_prevariable_derivative(void)
   // ``write function'' corresponding to this ``read function''
   double_and_int * tmp;
   gradient_structure::get_fp()->fread(&tmp,sizeof(double_and_int *));
-  double tmpout = tmp->x;
-  tmp->x = 0.0;
+  double tmpout=tmp->x;
+  tmp->x=0.0;
   return tmpout;
 }
 

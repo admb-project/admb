@@ -40,7 +40,7 @@
  */
 uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST ivector& _z)
 {
-  ivector& z = (ivector& )_z;
+  ivector& z=(ivector& )_z;
   uistream& istr= (uistream&) _istr;
   z.read_from(istr);
   return istr;

@@ -10,38 +10,38 @@
 #include <adrndeff.h>
   void random_effects_number::set_only_random_effects_active(void)
   {
-    // phase_start = 1;
-    phase_start = phase_save;
+    //phase_start=1;
+    phase_start=phase_save;
   }
 
 
   void random_effects_vector::set_only_random_effects_active(void)
   {
-    // phase_start = 1;
-    phase_start = phase_save;
+    //phase_start=1;
+    phase_start=phase_save;
   }
 
   void random_effects_matrix::set_only_random_effects_active(void)
   {
-    phase_start = phase_save;
+    phase_start=phase_save;
   }
 
   void random_effects_bounded_number::set_only_random_effects_active(void)
   {
-    // phase_start = 1;
-    phase_start = phase_save;
+    //phase_start=1;
+    phase_start=phase_save;
   }
 
 
   void random_effects_bounded_vector::set_only_random_effects_active(void)
   {
-    // phase_start = 1;
-    phase_start = phase_save;
+    //phase_start=1;
+    phase_start=phase_save;
   }
 
   void random_effects_bounded_matrix::set_only_random_effects_active(void)
   {
-    phase_start = phase_save;
+    phase_start=phase_save;
   }
 
   void random_effects_number::set_only_random_effects_inactive(void)
@@ -76,32 +76,32 @@
 
   void random_effects_number::set_random_effects_active(void)
   {
-    phase_start = phase_save;
+    phase_start=phase_save;
   }
 
   void random_effects_vector::set_random_effects_active(void)
   {
-    phase_start = phase_save;
+    phase_start=phase_save;
   }
 
   void random_effects_matrix::set_random_effects_active(void)
   {
-    phase_start = phase_save;
+    phase_start=phase_save;
   }
 
   void random_effects_bounded_number::set_random_effects_active(void)
   {
-    phase_start = phase_save;
+    phase_start=phase_save;
   }
 
   void random_effects_bounded_vector::set_random_effects_active(void)
   {
-    phase_start = phase_save;
+    phase_start=phase_save;
   }
 
   void random_effects_bounded_matrix::set_random_effects_active(void)
   {
-    phase_start = phase_save;
+    phase_start=phase_save;
   }
 
   void random_effects_number::set_random_effects_inactive(void)

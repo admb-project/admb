@@ -28,13 +28,13 @@ double dmax(double, double);
  */
   dvariable dfatan1( dvariable x, double fmin, double fmax,BOR_CONST prevariable&  _fpen)
 {
-  prevariable&  fpen = (prevariable&)  _fpen;
+  prevariable&  fpen=(prevariable&)  _fpen;
   dvariable t;
 
   t= (atan(x)/PI);
-  t = ( t +.5 );
+  t=( t +.5 );
   t= t *( fmax-fmin ) + fmin;
-  t = ( (atan(x)/PI) +.5 )*( fmax-fmin ) + fmin;
+  t=( (atan(x)/PI) +.5 )*( fmax-fmin ) + fmin;
 
   if (x < -12.)
   {
@@ -61,10 +61,10 @@ double dftinv(double x, double fmin, double fmax)
     if (ad_printf) (*ad_printf)("lower bound = %lg", fmin);
     if (ad_printf) (*ad_printf)("upper bound = %lg\n", fmax);
 
-    x = dmin(fmin+.001,fmin+.01*(fmax-fmin));
+    x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
 
-  tinv = tan( ((x-fmin)/(fmax-fmin) -.5) * PI);
+  tinv=tan( ((x-fmin)/(fmax-fmin) -.5) * PI);
   return(tinv);
 }
 
@@ -85,12 +85,12 @@ dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariabl
 {
   if (gradient_structure::Hybrid_bounded_flag==0)
   {
-    prevariable&  fpen = (prevariable&)  _fpen;
+    prevariable&  fpen=(prevariable&)  _fpen;
     dvariable t,y;
-    double diff = fmax-fmin;
-    const double l4 = log(4.0);
-    dvariable ss = 0.4999999999999999*sin(x*1.57079632679489661)+0.50;
-    t = fmin + diff*ss;
+    double diff=fmax-fmin;
+    const double l4=log(4.0);
+    dvariable ss=0.4999999999999999*sin(x*1.57079632679489661)+0.50;
+    t=fmin + diff*ss;
   
   #ifdef USE_BARD_PEN
     double pen=.000001/diff;
@@ -125,18 +125,18 @@ dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariabl
   }
   else
   {
-    double diff = fmax-fmin;
+    double diff=fmax-fmin;
     dvariable t,y;
     if (x>-20)
     {
-      y = 1.0/(1+exp(-x));
+      y=1.0/(1+exp(-x));
     }
     else
     {
-      dvariable u = exp(x);
-      y = u/(1.0+u);
+      dvariable u=exp(x);
+      y=u/(1.0+u);
     }
-    t = fmin + diff*y;
+    t=fmin + diff*y;
     return(t);
   }
 }
@@ -155,19 +155,19 @@ dvariable dfboundp(const prevariable& x, double fmin,double fmax)
   }
   else
   {
-    double diff = fmax-fmin;
+    double diff=fmax-fmin;
     dvariable dfy;
     if (x>-20)
     {
-      dvariable u = exp(-x);
-      // y = 1.0/(1+u);
-      dfy = u/square(1.0+u);
+      dvariable u=exp(-x);
+      //y=1.0/(1+u);
+      dfy=u/square(1.0+u);
     }
     else
     {
-      dvariable u = exp(x);
-      // y = u/(1.0+u);
-      dfy = u/square(1.0+u);
+      dvariable u=exp(x);
+      //y=u/(1.0+u);
+      dfy=u/square(1.0+u);
     }
     if (dfy==0)
     {
@@ -190,19 +190,19 @@ double ndfboundp( double x, double fmin, double fmax,const double& fpen)
   }
   else
   {
-    double diff = fmax-fmin;
+    double diff=fmax-fmin;
     double dfy;
     if (x>-20)
     {
-      double u = exp(-x);
-      // y = 1.0/(1+u);
-      dfy = u/square(1.0+u);
+      double u=exp(-x);
+      //y=1.0/(1+u);
+      dfy=u/square(1.0+u);
     }
     else
     {
-      double u = exp(x);
-      // y = u/(1.0+u);
-      dfy = u/square(1.0+u);
+      double u=exp(x);
+      //y=u/(1.0+u);
+      dfy=u/square(1.0+u);
     }
     return diff*dfy;
   }
@@ -217,25 +217,25 @@ double boundp(double x, double fmin, double fmax)
   if (gradient_structure::Hybrid_bounded_flag==0)
   {
     double t;
-    double diff = fmax-fmin;
-    double ss = 0.49999999999999999*sin(x*1.57079632679489661)+0.50;
-    t = fmin + diff*ss;
+    double diff=fmax-fmin;
+    double ss=0.49999999999999999*sin(x*1.57079632679489661)+0.50;
+    t=fmin + diff*ss;
     return(t);
   }
   else
   {
-    double diff = fmax-fmin;
+    double diff=fmax-fmin;
     double t,y;
     if (x>-20)
     {
-      y = 1.0/(1+exp(-x));
+      y=1.0/(1+exp(-x));
     }
     else
     {
-      double u = exp(x);
-      y = u/(1.0+u);
+      double u=exp(x);
+      y=u/(1.0+u);
     }
-    t = fmin + diff*y;
+    t=fmin + diff*y;
     return(t);
   }
 }
@@ -272,11 +272,11 @@ double boundp( double x, double fmin, double fmax,const double& _fpen)
   if (gradient_structure::Hybrid_bounded_flag==0)
   {
     double t;
-    double& fpen = (double&) _fpen;
-    double diff = fmax-fmin;
-    const double l4 = log(4.0);
-    double ss = 0.499999999999999*sin(x*1.57079632679489661)+0.50;
-    t = fmin + diff*ss;
+    double& fpen=(double&) _fpen;
+    double diff=fmax-fmin;
+    const double l4=log(4.0);
+    double ss=0.499999999999999*sin(x*1.57079632679489661)+0.50;
+    t=fmin + diff*ss;
   #ifdef USE_BARD_PEN
     double pen=.001/diff;
     fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4); 
@@ -310,18 +310,18 @@ double boundp( double x, double fmin, double fmax,const double& _fpen)
   }
   else
   {
-    double diff = fmax-fmin;
+    double diff=fmax-fmin;
     double t,y;
     if (x>-20)
     {
-      y = 1.0/(1+exp(-x));
+      y=1.0/(1+exp(-x));
     }
     else
     {
-      double u = exp(x);
-      y = u/(1.0+u);
+      double u=exp(x);
+      y=u/(1.0+u);
     }
-    t = fmin + diff*y;
+    t=fmin + diff*y;
     return(t);
   }
 }
@@ -349,7 +349,7 @@ double boundpin(double x, double fmin, double fmax)
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
-    x = dmin(fmin+.001,fmin+.01*(fmax-fmin));
+    x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
 
   if (x > fmax)
@@ -358,7 +358,7 @@ double boundpin(double x, double fmin, double fmax)
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
-    x = dmax(fmax-.001,fmax-.01*(fmax-fmin));
+    x=dmax(fmax-.001,fmax-.01*(fmax-fmin));
   }
 
   if (gradient_structure::Hybrid_bounded_flag==0)
@@ -367,9 +367,9 @@ double boundpin(double x, double fmin, double fmax)
   }
   else
   {
-    // double y = (x-fmin)/(fmax-fmin);
-    // double u = 1.e-20+y/(1.e-20+(1.0-y));
-    double y = 1.e-20+(fmax-x)/(1.e-20+(x-fmin));
+    //double y=(x-fmin)/(fmax-fmin);
+    //double u=1.e-20+y/(1.e-20+(1.0-y));
+    double y=1.e-20+(fmax-x)/(1.e-20+(x-fmin));
     tinv=-log(y);
   }
   return(tinv);
@@ -391,7 +391,7 @@ double boundpin(const prevariable& x, double fmin, double fmax,double s)
 double boundpin(const prevariable& xx, double fmin, double fmax)
 {
   double tinv;
-  double x = value(xx);
+  double x=value(xx);
 
   if (x < fmin)
   {
@@ -399,7 +399,7 @@ double boundpin(const prevariable& xx, double fmin, double fmax)
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
-    x = dmin(fmin+.001,fmin+.01*(fmax-fmin));
+    x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
 
   if (x > fmax)
@@ -408,7 +408,7 @@ double boundpin(const prevariable& xx, double fmin, double fmax)
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
-    x = dmax(fmax-.001,fmax-.01*(fmax-fmin));
+    x=dmax(fmax-.001,fmax-.01*(fmax-fmin));
   }
   if (gradient_structure::Hybrid_bounded_flag==0)
   {
@@ -416,10 +416,10 @@ double boundpin(const prevariable& xx, double fmin, double fmax)
   }
   else
   {
-    // double y = (x-fmin)/(fmax-fmin);
-    // double u = 1.e-20+y/(1.e-20+(1.0-y));
-    // tinv=-log(u);
-    double y = 1.e-20+(fmax-x)/(1.e-20+(x-fmin));
+    //double y=(x-fmin)/(fmax-fmin);
+    //double u=1.e-20+y/(1.e-20+(1.0-y));
+    //tinv=-log(u);
+    double y=1.e-20+(fmax-x)/(1.e-20+(x-fmin));
     tinv=-log(y);
   }
 

@@ -24,7 +24,7 @@ static void df_solve(void);
 dvar_vector solve(const dvar_matrix& aa,const dvector& z)
 {
   dvar_vector zz(z.indexmin(),z.indexmax());
-  zz = z;
+  zz=z;
   return solve(aa,zz);
 }
 
@@ -68,7 +68,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
    dcmp = ludecomp_pivot(bb);
    ivector index2 = dcmp.get_index2();
 
-   // check if invertable
+   //check if invertable
    double ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
@@ -79,7 +79,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
       cerr << "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
       ad_exit(1);
    }
-   // Solve L*y = b with forward-substitution (before solving Ux = y)
+   //Solve L*y=b with forward-substitution (before solving Ux=y)
    dvector y(lb, ub);
    y.initialize();
    for (int i = lb; i <= ub; i++)
@@ -92,7 +92,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
       y(i) = z(index2(i)) - tmp;
    }
 
-   // Now solve U*x = y with back substitution
+   //Now solve U*x=y with back substitution
    for (int i = ub; i >= lb; i--)
    {
       double tmp = 0.0;
@@ -145,7 +145,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
    dmatrix &gamma = clu1.get_U();
    dmatrix &alpha = clu1.get_L();
 
-   // check if invertable
+   //check if invertable
    double ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
@@ -157,7 +157,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
       ad_exit(1);
    }
 
-   // Solve L*y = b with forward-substitution (before solving Ux = y)
+   //Solve L*y=b with forward-substitution (before solving Ux=y)
    dvector y(lb, ub);
    dvector tmp1(lb, ub);
    y.initialize();
@@ -172,7 +172,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
       y(i) = value(z(index2(i))) - tmp1(i);
    }
 
-   // Now solve U*x = y with back substitution
+   //Now solve U*x=y with back substitution
    dvector tmp2(lb, ub);
    tmp2.initialize();
    for (int i = ub; i >= lb; i--)
@@ -247,7 +247,7 @@ static void df_solve(void)
    dftmp1.initialize();
    dftmp2.initialize();
 
-   // adjoint code for solve calc
+   //adjoint code for solve calc
    cltudecomp_for_adjoint clu1;
    clu1.ludecomp_pivot_for_adjoint_1();
    cltudecomp dfclu1 = clu1.get_dfclu();
@@ -261,33 +261,33 @@ static void df_solve(void)
    int ub = clu1.indexmax();
    for (int i = lb; i <= ub; i++)
    {
-      // value(x(i)) = (y(i)-tmp2(i))/gamma(i,i);
+      //value(x(i))=(y(i)-tmp2(i))/gamma(i,i);
       dfgamma(i, i) = ((tmp2(i) - y(i)) * dfx(i)) / (gamma(i, i) * gamma(i, i));
       dftmp2(i) = -dfx(i) / gamma(i, i);
       dfy(i) = dfx(i) / gamma(i, i);
       for (int j = i + 1; j <= ub; j++)
       {
-	 // tmp2(i)+=gamma(j,i)*value(x(j));
+	 //tmp2(i)+=gamma(j,i)*value(x(j));
 	 dfgamma(j, i) = dfgamma(j, i) + dftmp2(i) * x(j);
 	 dfx(j) += dftmp2(i) * gamma(j, i);
       }
    }
-   // tmp2.initialize();
+   //tmp2.initialize();
    dftmp2.initialize();
 
    for (int i = ub; i >= lb; i--)
    {
-      // y(i) = value(z(index2(i)))-tmp1(i);
+      //y(i)=value(z(index2(i)))-tmp1(i);
       dftmp1(i) = -dfy(i);
       dfz(index2(i)) = dfy(i);
       for (int j = i - 1; j >= lb; j--)
       {
-	 // tmp1(i)+=alpha(i,j)*y(j);
+	 //tmp1(i)+=alpha(i,j)*y(j);
 	 dfalpha(i, j) += dftmp1(i) * y(j);
 	 dfy(j) += dftmp1(i) * alpha(i, j);
       }
    }
-   // tmp1.initialize();
+   //tmp1.initialize();
    dftmp1.initialize();
 
    clu1.ludecomp_pivot_for_adjoint_2();
@@ -361,14 +361,14 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
    ln_unsigned_det  = nograd_assign(lndet);
 
 
-   // check if invertable
+   //check if invertable
    if (lndet < -1.e300)
    {
       cerr << "Error: matrix singular in solve" << endl;
    }
 
 
-   // Solve L*y = b with forward-substitution (before solving Ux = y)
+   //Solve L*y=b with forward-substitution (before solving Ux=y)
    dvector y(lb, ub);
    dvector tmp1(lb, ub);
    y.initialize();
@@ -383,7 +383,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
       y(i) = value(z(index2(i))) - tmp1(i);
    }
 
-   // Now solve U*x = y with back substitution
+   //Now solve U*x=y with back substitution
    dvector tmp2(lb, ub);
    tmp2.initialize();
    for (int i = ub; i >= lb; i--)
@@ -461,7 +461,7 @@ static void df_solve2(void)
    dftmp1.initialize();
    dftmp2.initialize();
 
-   // adjoint code for solve calc
+   //adjoint code for solve calc
    cltudecomp_for_adjoint clu1;
    clu1.ludecomp_pivot_for_adjoint_1();
    cltudecomp dfclu1 = clu1.get_dfclu();
@@ -475,34 +475,34 @@ static void df_solve2(void)
    int ub = clu1.indexmax();
    for (int i = lb; i <= ub; i++)
    {
-      // value(x(i)) = (y(i)-tmp2(i))/gamma(i,i);
+      //value(x(i))=(y(i)-tmp2(i))/gamma(i,i);
       dfgamma(i, i) =
 	 ((tmp2(i) - y(i)) * dfx(i)) / (gamma(i, i) * gamma(i, i));
       dftmp2(i) = -dfx(i) / gamma(i, i);
       dfy(i) = dfx(i) / gamma(i, i);
       for (int j = i + 1; j <= ub; j++)
       {
-	 // tmp2(i)+=gamma(j,i)*value(x(j));
+	 //tmp2(i)+=gamma(j,i)*value(x(j));
 	 dfgamma(j, i) = dfgamma(j, i) + dftmp2(i) * x(j);
 	 dfx(j) += dftmp2(i) * gamma(j, i);
       }
    }
-   // tmp2.initialize();
+   //tmp2.initialize();
    dftmp2.initialize();
 
    for (int i = ub; i >= lb; i--)
    {
-      // y(i) = value(z(index2(i)))-tmp1(i);
+      //y(i)=value(z(index2(i)))-tmp1(i);
       dftmp1(i) = -dfy(i);
       dfz(index2(i)) = dfy(i);
       for (int j = i - 1; j >= lb; j--)
       {
-	 // tmp1(i)+=alpha(i,j)*y(j);
+	 //tmp1(i)+=alpha(i,j)*y(j);
 	 dfalpha(i, j) += dftmp1(i) * y(j);
 	 dfy(j) += dftmp1(i) * alpha(i, j);
       }
    }
-   // tmp1.initialize();
+   //tmp1.initialize();
    dftmp1.initialize();
 
 
@@ -510,8 +510,8 @@ static void df_solve2(void)
    {
       if (gamma(i, i) < 0)
       {
-	 // sign=-sign;
-	 // lndet+=log(-gamma(i,i));
+	 //sign=-sign;
+	 //lndet+=log(-gamma(i,i));
 	 dfgamma(i, i) += dflndet / gamma(i, i);
       } else
       {

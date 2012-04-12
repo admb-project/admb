@@ -114,7 +114,7 @@ public:
  */
 dfsdmat::dfsdmat(void)
 {
-  tmp_file = 0;
+  tmp_file=0;
   allocate();
 }
 
@@ -124,12 +124,12 @@ dfsdmat::dfsdmat(void)
  */
 void dfsdmat::allocate(void)
 {
-  shared_memory = 0;
-  ptr = NULL;
-  m = NULL;
-  minp = NULL;
-  maxp = NULL;
-  n = 0;
+  shared_memory=0;
+  ptr=NULL;
+  m=NULL;
+  minp=NULL;
+  maxp=NULL;
+  n=0;
 }
 
 /**
@@ -138,7 +138,7 @@ void dfsdmat::allocate(void)
  */
 dfsdmat::dfsdmat(int _n)
 {
-  tmp_file = 0;
+  tmp_file=0;
   allocate(_n);
 }
 
@@ -148,34 +148,34 @@ dfsdmat::dfsdmat(int _n)
  */
 void dfsdmat::allocate(int _n)
 {
-  n = _n;
+  n=_n;
   if (gradient_structure::get_USE_FOR_HESSIAN())
   {
-    ptr = gradient_structure::hessian_ptr;
-    shared_memory = 1;
-    disk_save_flag = 1;
+    ptr=gradient_structure::hessian_ptr;
+    shared_memory=1;
+    disk_save_flag=1;
   }
   else
   {
     ptr= new double [(n*(n+1))/2];
-    shared_memory = 0;
-    disk_save_flag = 0;
+    shared_memory=0;
+    disk_save_flag=0;
   }
-  minp = ptr;
-  maxp = ptr+((n*(n+1))/2-1);
-  m = new double * [n];
+  minp=ptr;
+  maxp=ptr+((n*(n+1))/2-1);
+  m=new double * [n];
   m-=1;
   double * tmp =ptr;
-  for (int i = 1;i<=n;i++)
+  for (int i=1;i<=n;i++)
   {
-    m[i] = tmp-1;
+    m[i]=tmp-1;
     tmp+=i;
   }
-  tmp_file = NULL; 
+  tmp_file=NULL; 
   /*
   if (!tmp_file) 
   {
-    tmp_file = open("fmm_tmp.tmp", O_RDWR | O_CREAT | O_TRUNC |
+    tmp_file=open("fmm_tmp.tmp", O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);
     if (tmp_file == -1)
     {
@@ -192,8 +192,8 @@ void dfsdmat::allocate(int _n)
  */
 dfsdmat::dfsdmat(int _n, BOR_CONST gradient_structure& gs)
 {
-  tmp_file = 0;
-  disk_save_flag = 1;
+  tmp_file=0;
+  disk_save_flag=1;
   allocate(_n,gs);
 }
 
@@ -203,17 +203,17 @@ dfsdmat::dfsdmat(int _n, BOR_CONST gradient_structure& gs)
  */
 void dfsdmat::allocate(int _n, BOR_CONST gradient_structure& gs)
 {
-  n = _n;
+  n=_n;
   ptr= (double *) gs.ARRAY_MEMBLOCK_BASE;
-  shared_memory = 1;
-  minp = ptr;
-  maxp = ptr+((n*(n+1))/2-1);
-  m = new double * [n];
+  shared_memory=1;
+  minp=ptr;
+  maxp=ptr+((n*(n+1))/2-1);
+  m=new double * [n];
   m-=1;
   double * tmp =ptr;
-  for (int i = 1;i<=n;i++)
+  for (int i=1;i<=n;i++)
   {
-    m[i] = tmp-1;
+    m[i]=tmp-1;
     tmp+=i;
   }
 }
@@ -236,19 +236,19 @@ void dfsdmat::deallocate()
   if (ptr && !shared_memory) 
   {
     delete [] ptr;
-    ptr = NULL;
+    ptr=NULL;
   }
   if (m)
   {
     m+=1;
     delete [] m;
-    m = NULL;
+    m=NULL;
   }
-  n = 0;
+  n=0;
   if (tmp_file)
   {
     close(tmp_file);
-    tmp_file = 0;
+    tmp_file=0;
   }
 }  
 
@@ -293,10 +293,10 @@ double& dfsdmat::operator () (int i,int j)
  */
 uostream& operator << (BOR_CONST uostream& ofs,BOR_CONST dfsdmat& m)
 {
-  double * p = ((dfsdmat&)m).getminp();
-  int nn = ((dfsdmat&)m).size();
-  nn = (nn*(nn+1))/2;
-  for (int i = 1;i<=nn;i++)
+  double * p=((dfsdmat&)m).getminp();
+  int nn=((dfsdmat&)m).size();
+  nn=(nn*(nn+1))/2;
+  for (int i=1;i<=nn;i++)
   {
     (uostream&)ofs << *p++;
   }
@@ -310,11 +310,11 @@ uostream& operator << (BOR_CONST uostream& ofs,BOR_CONST dfsdmat& m)
 uistream& operator >> (BOR_CONST uistream& _ifs,BOR_CONST dfsdmat& _m)
 {
   uistream& ifs= (uistream&) _ifs;
-  dfsdmat& m = (dfsdmat&) _m;
-  double * p = m.getminp();
-  int nn = m.size();
-  nn = (nn*(nn+1))/2;
-  for (int i = 1;i<=nn;i++)
+  dfsdmat& m=(dfsdmat&) _m;
+  double * p=m.getminp();
+  int nn=m.size();
+  nn=(nn*(nn+1))/2;
+  for (int i=1;i<=nn;i++)
   {
     ifs >> *p++;
   }
@@ -329,7 +329,7 @@ void dfsdmat::save()
 {
   if (!tmp_file) 
   {
-    tmp_file = open("fmm_tmp.tmp", O_RDWR | O_CREAT | O_TRUNC |
+    tmp_file=open("fmm_tmp.tmp", O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);
     if (tmp_file == -1)
     {
@@ -337,11 +337,11 @@ void dfsdmat::save()
       ad_exit(1);
     }
   }
-  int _n = size();
-  int nn = (_n*(_n+1))/2;
+  int _n=size();
+  int nn=(_n*(_n+1))/2;
   lseek(tmp_file,0L,SEEK_SET);
   write(tmp_file,&_n,sizeof(int));
-  int num_bytes = write(tmp_file,ptr,nn*sizeof(double));
+  int num_bytes=write(tmp_file,ptr,nn*sizeof(double));
   if (num_bytes < nn) 
   {
     cerr << "Error writing to temporary hess file in dfsdmat::save()"
@@ -351,15 +351,15 @@ void dfsdmat::save()
   if (BOR_CONST ptr && !shared_memory) 
   {
     delete [] ptr;
-    ptr = NULL;
+    ptr=NULL;
   }
   if (m)
   {
     m+=1;
     delete [] m;
-    m = NULL;
+    m=NULL;
   }
-  n = 0;
+  n=0;
  */
 }
 
@@ -369,17 +369,17 @@ void dfsdmat::save()
  */
 void dfsdmat::restore()
 {
-  int _n = 0;
+  int _n=0;
   lseek(tmp_file,0L,SEEK_SET);
   read(tmp_file,&_n,sizeof(int));
-  int nn = (_n*(_n+1))/2;
-  // if (!shared_memory) allocate(_n);
-  int num_bytes = read(tmp_file,ptr,nn*sizeof(double));
+  int nn=(_n*(_n+1))/2;
+  //if (!shared_memory) allocate(_n);
+  int num_bytes=read(tmp_file,ptr,nn*sizeof(double));
   if (num_bytes < nn) 
   {
     cerr << "Error reading from temporary hess file in dfsdmat::save()"
          << endl;
   }
   if (tmp_file) close(tmp_file);
-  tmp_file = NULL;
+  tmp_file=NULL;
 }

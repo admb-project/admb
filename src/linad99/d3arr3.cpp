@@ -17,6 +17,6 @@
    double mean(_CONST d3_array& m)
    {
      double tmp;
-     tmp = sum(m)/size_count(m);
+     tmp=sum(m)/size_count(m);
      return tmp;
    }  

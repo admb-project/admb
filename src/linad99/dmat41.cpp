@@ -16,7 +16,7 @@
  */
 void banded_symmetric_dmatrix::initialize(void)
 {
-  for (int i = rowmin();i<=rowmax();i++)
+  for (int i=rowmin();i<=rowmax();i++)
   {
     (*this)(i).initialize();
   }
@@ -28,7 +28,7 @@ void banded_symmetric_dmatrix::initialize(void)
  */
 void banded_lower_triangular_dmatrix::initialize(void)
 {
-  for (int i = rowmin();i<=rowmax();i++)
+  for (int i=rowmin();i<=rowmax();i++)
   {
     (*this)(i).initialize();
   }

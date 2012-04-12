@@ -19,11 +19,11 @@
  {
    dmatrix tmp(m1.colmin(),m1.colmax(),m1.rowmin(),m1.rowmax());
 
-   for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+   for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
    {
-     for (int j = m1.colmin(); j<=m1.colmax(); j++)
+     for (int j=m1.colmin(); j<=m1.colmax(); j++)
      {
-       tmp[j][i] = m1[i][j];
+       tmp[j][i]=m1[i][j];
      }
    }
    return (tmp);
@@ -38,8 +38,8 @@
     double norm(_CONST dmatrix& m1)
     {
       double tmp = 0;
-      // double tmp1;
-      for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+      //double tmp1;
+      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
       {
         tmp+=norm2(m1.elem(i));
       }
@@ -54,7 +54,7 @@
     double norm2(_CONST dmatrix& m1)
     {
       double tmp = 0;
-      for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
       {
         tmp+=norm2(m1.elem(i));
       }

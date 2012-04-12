@@ -21,11 +21,11 @@ ivector diagonal(const imatrix& m)
     cerr << "Error matrix not square in function diagonal" << endl;
     exit(21);
   }
-  int mmin = m.indexmin();
-  int mmax = m.indexmax();
+  int mmin=m.indexmin();
+  int mmax=m.indexmax();
   ivector tmp(mmin,mmax);
-  for (int i = mmin;i<=mmax;i++)
-    tmp(i) = m(i,i);
+  for (int i=mmin;i<=mmax;i++)
+    tmp(i)=m(i,i);
   return tmp;
 } 
 
@@ -41,13 +41,13 @@ ivector diagonal(const imatrix& m)
      ad_exit(21);
    }
    imatrix tmp(m1.rowmin(),m1.rowmax(), m2.colmin(), m2.colmax());
-   // double sum;
-   for (int j = m2.colmin(); j<=m2.colmax(); j++)
+   //double sum;
+   for (int j=m2.colmin(); j<=m2.colmax(); j++)
    {
-     dvector m2col = column(m2,j);
-     for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+     dvector m2col=column(m2,j);
+     for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
      {
-       tmp(i,j) = m1(i) * m2col;
+       tmp(i,j)=m1(i) * m2col;
      }
    }
    return(tmp);

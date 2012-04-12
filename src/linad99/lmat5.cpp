@@ -26,7 +26,7 @@
 
    if (m != m1.m)            // check for condition that both matrices
    {                         // point to the same object
-     for (int i = rowmin();i<=rowmax();i++)
+     for (int i=rowmin();i<=rowmax();i++)
      {
        *(m+i) = m1[i];
      }
@@ -47,7 +47,7 @@
      ad_exit(21);
    }
 
-   for (int i = rowmin();i<=rowmax();i++)
+   for (int i=rowmin();i<=rowmax();i++)
    {
      *(m+i) = m1[i];
    }

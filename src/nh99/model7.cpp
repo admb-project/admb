@@ -18,20 +18,20 @@
 #endif
 
 void vm_initialize(void);
-int have_jvm = 0;
+int have_jvm=0;
 
 
 
 void strip_full_path(BOR_CONST adstring& _s)
 {
   adstring& s = (adstring&) _s;
-  int n = s.size();
-  int i = 0;
-  for (i = n-1;i>=1;i--)
+  int n=s.size();
+  int i=0;
+  for (i=n-1;i>=1;i--)
   {
     if ( s(i)=='\\' || s(i) == '/' || s(i)==':') break;
   }
-  s = s(i+1,n);
+  s=s(i+1,n);
 }
 
 void set_signal_handlers(void)
@@ -55,32 +55,32 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     exit(0);
   }
 
-  ad_comm::argc = _argc;
-  ad_comm::argv = _argv;
-  int pvm_flag = 0;
+  ad_comm::argc=_argc;
+  ad_comm::argv=_argv;
+  int pvm_flag=0;
   if (option_match(_argc,_argv,"-time")>-1)
   {
-    time_flag = 1;
+    time_flag=1;
   }
   else
   {
-    time_flag = 0;
+    time_flag=0;
   }
   if (time_flag)
   {
     if (!ptm)
     {
-      ptm = new adtimer();
+      ptm=new adtimer();
     }
     if (!ptm1)
     {
-      ptm1 = new adtimer();
+      ptm1=new adtimer();
     }
   }
-  no_atlas_flag = 0;
-  if (option_match(_argc,_argv,"-noatlas")>-1) no_atlas_flag = 1;
-  if (option_match(_argc,_argv,"-slave")>-1)  pvm_flag = 2;
-  if (option_match(_argc,_argv,"-master")>-1) pvm_flag = 1;
+  no_atlas_flag=0;
+  if (option_match(_argc,_argv,"-noatlas")>-1) no_atlas_flag=1;
+  if (option_match(_argc,_argv,"-slave")>-1)  pvm_flag=2;
+  if (option_match(_argc,_argv,"-master")>-1) pvm_flag=1;
 
 #if defined(USE_ADPVM)
   if (pvm_flag)
@@ -93,14 +93,14 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 #if defined(USE_ADPVM)
   if (pvm_manager)
   {
-    if (pvm_manager->mode==2)  // slave
+    if (pvm_manager->mode==2)  //slave
     {
-      int on = 0; int nopt = 0;
-      if ( (on = option_match(_argc,_argv,"-slave",nopt))>-1)
+      int on=0; int nopt=0;
+      if ( (on=option_match(_argc,_argv,"-slave",nopt))>-1)
       {
         if (nopt ==1)
         {
-          pvm_manager->slave_number = atoi(ad_comm::argv[on+1]);
+          pvm_manager->slave_number=atoi(ad_comm::argv[on+1]);
         }
         else
         {
@@ -109,7 +109,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
           ad_exit(1);
         }
       }
-      if ( (on = option_match(_argc,_argv,"-slavedir",nopt))>-1)
+      if ( (on=option_match(_argc,_argv,"-slavedir",nopt))>-1)
       {
         if (nopt ==1)
         {
@@ -133,9 +133,9 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     }
   */
   set_signal_handlers();
-  adprogram_name = _argv[0];
-  int len = strlen(_argv[0]);
-  for (int i = 1;i<=len;i++) adprogram_name[i] = tolower(adprogram_name[i]);
+  adprogram_name=_argv[0];
+  int len=strlen(_argv[0]);
+  for (int i=1;i<=len;i++) adprogram_name[i]=tolower(adprogram_name[i]);
 #if !defined(__SPDLL__)
   strip_full_path(adprogram_name);
 #endif
@@ -151,7 +151,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     {
       // remove path (if user runs -help)
       unsigned int i;
-      for (i = adprogram_name.size();i>=1;i--)
+      for (i=adprogram_name.size();i>=1;i--)
       {
 #ifdef _WIN32
         if (adprogram_name(i) == '\\')
@@ -159,7 +159,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
         if (adprogram_name(i) == '/')
 #endif
         {
-          adprogram_name = adprogram_name(i+1,adprogram_name.size());
+          adprogram_name=adprogram_name(i+1,adprogram_name.size());
           break;
         }
       }
@@ -217,7 +217,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -info           show how to cite ADMB, license, and acknowledgements\n");
       (*ad_printf)( " -version        show version information\n");
       (*ad_printf)( " -help           show this message\n\n");
-    // if (function_minimizer::random_effects_flag)
+    //if (function_minimizer::random_effects_flag)
     //{
       (*ad_printf)( "Random effects options if applicable\n");
       (*ad_printf)( " -nr N           maximum number of Newton-Raphson steps\n");
@@ -331,14 +331,14 @@ void ad_comm::allocate(void)
   {
     if (adprogram_name(i)==directory_prefix)
     {
-      adprogram_name = adprogram_name(i+1,adprogram_name.size());
+      adprogram_name=adprogram_name(i+1,adprogram_name.size());
       break;
     }
   }
 
 #endif
   // strip off the .exe if it is there
-  int n = adprogram_name.size();
+  int n=adprogram_name.size();
   if(n>4)
   {
     if (adprogram_name(n - 3) == '.'
@@ -349,13 +349,13 @@ void ad_comm::allocate(void)
       n -= 4;
     }
   }
-  adprogram_name = adprogram_name(1,n);
+  adprogram_name=adprogram_name(1,n);
 
   // change the working directory name
   if (argc > 1)
   {
-    int on = 0;
-    if ( (on = option_match(argc,argv,"-wd"))>-1)
+    int on=0;
+    if ( (on=option_match(argc,argv,"-wd"))>-1)
     {
       if (on>argc-2 || argv[on+1][0] == '-')
       {
@@ -365,7 +365,7 @@ void ad_comm::allocate(void)
       else
       {
         tmpstring = adstring(argv[on+1]);
-	wd_flag = 1;
+	wd_flag=1;
       }
     }
   }
@@ -373,21 +373,21 @@ void ad_comm::allocate(void)
   {
     if (tmpstring(length(tmpstring)) == directory_prefix)
     {
-      adprogram_name = tmpstring + adprogram_name;
+      adprogram_name=tmpstring + adprogram_name;
       working_directory_path = tmpstring;
     }
     else
     {
-      adprogram_name = tmpstring + directory_prefix + adprogram_name;
+      adprogram_name=tmpstring + directory_prefix + adprogram_name;
       working_directory_path = tmpstring + directory_prefix;
     }
   }
 
-  tmpstring = adprogram_name + adstring(".dat");
+  tmpstring=adprogram_name + adstring(".dat");
   if (argc > 1)
   {
-    int on = 0;
-    if ( (on = option_match(argc,argv,"-ind"))>-1)
+    int on=0;
+    if ( (on=option_match(argc,argv,"-ind"))>-1)
     {
       if (on>argc-2 || argv[on+1][0] == '-')
       {
@@ -413,18 +413,18 @@ void ad_comm::allocate(void)
       cerr << "Error trying to open data input file "
            << tmpstring << endl;
       delete global_datafile;
-      global_datafile = NULL;
+      global_datafile=NULL;
     }
   }
-  adstring ts = adprogram_name + adstring(".log");
+  adstring ts=adprogram_name + adstring(".log");
   global_logfile= new ofstream( (char*)ts);
 
   int biopt=-1;
   int aiopt=-1;
-  biopt = option_match(argc,argv,"-binp");
-  aiopt = option_match(argc,argv,"-ainp");
+  biopt=option_match(argc,argv,"-binp");
+  aiopt=option_match(argc,argv,"-ainp");
 
-  tmpstring = adprogram_name + adstring(".bin");
+  tmpstring=adprogram_name + adstring(".bin");
   if (!global_bparfile && aiopt == -1)
   {
     if (biopt>-1)
@@ -451,11 +451,11 @@ void ad_comm::allocate(void)
 	  exit(1);
 	}
         delete global_bparfile;
-        global_bparfile = NULL;
+        global_bparfile=NULL;
       }
     }
   }
-  tmpstring = adprogram_name + adstring(".pin");
+  tmpstring=adprogram_name + adstring(".pin");
   if (!global_parfile)
   {
     if (aiopt>-1)
@@ -482,7 +482,7 @@ void ad_comm::allocate(void)
 	  exit(1);
 	}
         delete global_parfile;
-        global_parfile = NULL;
+        global_parfile=NULL;
       }
     }
   }
@@ -493,27 +493,27 @@ ad_comm::~ad_comm()
   if (ptm)
   {
     delete ptm;
-    ptm = 0;
+    ptm=0;
   }
   if (ptm1)
   {
     delete ptm1;
-    ptm1 = 0;
+    ptm1=0;
   }
   if (global_datafile)
   {
     delete global_datafile;
-    global_datafile = NULL;
+    global_datafile=NULL;
   }
   if (global_parfile)
   {
     delete global_parfile;
-    global_parfile = NULL;
+    global_parfile=NULL;
   }
   if (global_logfile)
   {
     delete global_logfile;
-    global_logfile = NULL;
+    global_logfile=NULL;
   }
 }
 
@@ -524,8 +524,8 @@ void function_minimizer::pre_userfunction(void)
   {
     if (lapprox->hesstype==2)
     {
-      // lapprox->num_separable_calls = 0;
-      lapprox->separable_calls_counter = 0;
+      //lapprox->num_separable_calls=0;
+      lapprox->separable_calls_counter=0;
     }
   }
 #endif
@@ -536,28 +536,28 @@ void function_minimizer::pre_userfunction(void)
   {
     if (lapprox->hesstype==2)
     {
-      lapprox->num_separable_calls = lapprox->separable_calls_counter;
+      lapprox->num_separable_calls=lapprox->separable_calls_counter;
 
-      double tmp = 0.0;
-      int inner_opt_value = inner_opt();
+      double tmp=0.0;
+      int inner_opt_value=inner_opt();
       if (lapprox->saddlepointflag==2)
       {
         if (inner_opt_value !=0 )
         {
-          for (i = 1;i<=lapprox->num_separable_calls;i++)
+          for (i=1;i<=lapprox->num_separable_calls;i++)
           {
             tmp-=(*lapprox->separable_function_difference)(i);
           }
-          value(*objective_function_value::pobjfun) = tmp;
+          value(*objective_function_value::pobjfun)=tmp;
         }
       }
       else
       {
-        for (i = 1;i<=lapprox->num_separable_calls;i++)
+        for (i=1;i<=lapprox->num_separable_calls;i++)
         {
           tmp+=(*lapprox->separable_function_difference)(i);
         }
-        value(*objective_function_value::pobjfun) = tmp;
+        value(*objective_function_value::pobjfun)=tmp;
       }
     }
   }

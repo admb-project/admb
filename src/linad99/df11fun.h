@@ -42,7 +42,7 @@
 #if !defined(__DF11FUN__)
 #  define __DF11FUN__
 #include <fvar.hpp>
-// class df1b2variable;
+//class df1b2variable;
 
   class df1_one_variable
   {
@@ -134,7 +134,7 @@
       return (df1_one_variable&) (*(v+i))(j); 
     }
     void initialize(void);
-    // df1_one_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
+    //df1_one_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df1_one_matrix();
     df1_one_matrix(const df1_one_matrix& m2);

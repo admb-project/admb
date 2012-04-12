@@ -26,7 +26,7 @@
 #include <math.h>
 
   void df_plus_eq_pvpv(void);
-  // extern ofstream gradlog;
+  //extern ofstream gradlog;
 
 /**
  * Description not yet available.
@@ -45,17 +45,17 @@
  */
   void df_plus_eq_pvpv(void)
   {
-    // cout <<  setprecision(13) << 
+    //cout <<  setprecision(13) << 
      //  * gradient_structure::GRAD_STACK1->ptr->ind_addr1 << endl;
 
-    // cout <<  setprecision(13) << 
+    //cout <<  setprecision(13) << 
      //  * gradient_structure::GRAD_STACK1->ptr->dep_addr << endl;
 
-    // gradlog <<  setprecision(13) << 
+    //gradlog <<  setprecision(13) << 
      //  * gradient_structure::GRAD_STACK1->ptr->ind_addr1 << endl;
 
     * gradient_structure::GRAD_STACK1->ptr->ind_addr1
                += * gradient_structure::GRAD_STACK1->ptr->dep_addr;
-    // gradlog <<  setprecision(13) << 
+    //gradlog <<  setprecision(13) << 
      //  * gradient_structure::GRAD_STACK1->ptr->ind_addr1 << endl;
   }

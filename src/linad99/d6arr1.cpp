@@ -18,9 +18,9 @@
    {
      d6_array tmp;
      tmp.allocate(m);
-     for (int i = tmp.indexmin();i<=tmp.indexmax();i++)
+     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
      {
-       tmp(i) = m(i)/d;
+       tmp(i)=m(i)/d;
      }
      return tmp;
    }  
@@ -31,7 +31,7 @@
  */
    void d6_array::operator /= ( CGNU_DOUBLE d)
    {
-     for (int i = indexmin();i<=indexmax();i++)
+     for (int i=indexmin();i<=indexmax();i++)
      {
        (*this)(i)/=d;
      }

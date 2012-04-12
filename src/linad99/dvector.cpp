@@ -42,8 +42,8 @@ double avg(double x,double y)
 dvector& dvector::shift(int min)
 {
   v += indexmin()-min;
-  index_max = index_max-index_min+min;
-  index_min = min;
+  index_max=index_max-index_min+min;
+  index_min=min;
   shape->shift(min);
   return *this;
 }
@@ -77,8 +77,8 @@ dvector& dvector::shift(int min)
    }
  }
 
-static int testflag = 0;
-static int ycounter = 0;
+static int testflag=0;
+static int ycounter=0;
   /** Deallocates memory for a dvector object.
   Called by the ~dvector(); produces an error if the double * member
   is NULL.
@@ -111,7 +111,7 @@ static int ycounter = 0;
       }
       else
       {
-        cerr << "error in dvector shape not zero but v = 0" << endl;
+        cerr << "error in dvector shape not zero but v=0" << endl;
       }
       delete shape;
       if (testflag)
@@ -121,10 +121,10 @@ static int ycounter = 0;
     }
     else
     {
-      // cerr << "Warning -- trying to deallocate an unitialized dvector"
+      //cerr << "Warning -- trying to deallocate an unitialized dvector"
        //    << endl;
     }
-    shape = NULL;
+    shape=NULL;
    if (testflag)
    {
      cout << " D " << ycounter << endl;
@@ -176,7 +176,7 @@ static int ycounter = 0;
    #ifdef DIAG
     // cout << "starting out in dvector contructor\n";
    #endif
-   shape = t.shape;
+   shape=t.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -186,8 +186,8 @@ static int ycounter = 0;
      cerr << "Making a copy of an unallocated dvector"<<endl;
    }
    v = t.v;
-   index_min = t.index_min;
-   index_max = t.index_max;
+   index_min=t.index_min;
+   index_max=t.index_max;
  }
 
  /**
@@ -199,7 +199,7 @@ static int ycounter = 0;
    #ifdef DIAG
     // cout << "starting out in dvector contructor\n";
    #endif
-   shape = t.shape;
+   shape=t.shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -209,8 +209,8 @@ static int ycounter = 0;
      cerr << "Making a copy of an unallocated dvector"<<endl;
    }
    v = t.v;
-   index_min = t.index_min;
-   index_max = t.index_max;
+   index_min=t.index_min;
+   index_max=t.index_max;
  }
 
  /**
@@ -223,7 +223,7 @@ static int ycounter = 0;
    #ifdef DIAG
     // cout << "starting out in dvector contructor\n";
    #endif
-   shape = pdv.p->shape;
+   shape=pdv.p->shape;
    if (shape)
    {
      (shape->ncopies)++;
@@ -233,8 +233,8 @@ static int ycounter = 0;
      cerr << "Taking a subvector  of an unallocated dvector"<<endl;
    }
    v = pdv.p->v;
-   index_min = pdv.lb;
-   index_max = pdv.ub;
+   index_min=pdv.lb;
+   index_max=pdv.ub;
  }
 
  /**
@@ -252,9 +252,9 @@ static int ycounter = 0;
    #endif
 
    {
-     for (int i = indexmin();i<=indexmax();i++)
+     for (int i=indexmin();i<=indexmax();i++)
      {
-       elem(i) = x;
+       elem(i)=x;
      }
    }
    #ifdef DIAG
@@ -295,8 +295,8 @@ static int ycounter = 0;
 
      if (v != t.v)
      {
-         int min = indexmin();
-         int max = indexmax();
+         int min=indexmin();
+         int max=indexmax();
          memcpy(&elem(min),&t.elem(min),(max-min+1)*sizeof(double));
      }
    }
@@ -324,13 +324,13 @@ static int ycounter = 0;
      cerr << "Index bounds do not match in dvector& operator = (_CONST dvector&)\n";
      ad_exit(1);
    }
-     // double tmp;
+     //double tmp;
    // disconnect dvector  pointer  from old array
    if (v != t.address())
    {
-     for (int i = indexmin();i<=indexmax();i++)
+     for (int i=indexmin();i<=indexmax();i++)
      {
-       (*this)[i] = t[i];
+       (*this)[i]=t[i];
      }
    }
    #ifdef DIAG
@@ -349,7 +349,7 @@ static int ycounter = 0;
  {
    allocate(0,sz-1);
 
-   for (unsigned int i = 0; i<sz; i++)
+   for (unsigned int i=0; i<sz; i++)
    {
      cout << "Doing the assignment in constructor\n";
      v[i] = x[i];
@@ -427,7 +427,7 @@ static int ycounter = 0;
      allocate();
    else
    {
-     int itemp = nch-ncl;
+     int itemp=nch-ncl;
      if (itemp<0)
      {
        cerr << "Error in dvector constructor max index must be >= minindex\n"
@@ -440,29 +440,29 @@ static int ycounter = 0;
        ad_exit(21);
      }
 #if defined(THREAD_SAFE)
-   if ( (shape = new ts_vector_shapex(ncl,nch,v)) == NULL)
+   if ( (shape=new ts_vector_shapex(ncl,nch,v)) == NULL)
 #else
-   if ( (shape = new vector_shapex(ncl,nch,v)) == NULL)
+   if ( (shape=new vector_shapex(ncl,nch,v)) == NULL)
 #endif
      {
        cerr << "Error trying to allocate memory for dvector\n";
        ad_exit(1);
      }
   
-     // int align= ((int) v)%8 ;
-     // if (align)
+     //int align= ((int) v)%8 ;
+     //if (align)
      //{
-     //  int diff = (8-align)%8;
-     //  v = (double*)( ((char*)v)+diff);
+     //  int diff=(8-align)%8;
+     //  v=(double*)( ((char*)v)+diff);
      //}     
 
-     index_min = ncl;
-     index_max = nch;
+     index_min=ncl;
+     index_max=nch;
      v -= indexmin();
      #ifdef SAFE_INITIALIZE
-       for ( int i = indexmin(); i<=indexmax(); i++)
+       for ( int i=indexmin(); i<=indexmax(); i++)
        {
-         v[i] = 0.;
+         v[i]=0.;
        }
      #endif
    }
@@ -497,12 +497,12 @@ void dvector::allocatec(_CONST dvector& t)
   {
     if (t.shape)
     {
-      shape = t.shape;
+      shape=t.shape;
       (shape->ncopies)++;
     }
     v = t.v;
-    index_min = t.index_min;
-    index_max = t.index_max;
+    index_min=t.index_min;
+    index_max=t.index_max;
   }
   else
   {
@@ -516,10 +516,10 @@ void dvector::allocatec(_CONST dvector& t)
  */
  void dvector::allocate(void)
  {
-   shape = NULL;
+   shape=NULL;
    v = NULL;
-  index_min = 1;
-  index_max = 0;
+  index_min=1;
+  index_max=0;
  }
 
   /** Compute the dot product of two vectors. The minimum and maxium
@@ -539,7 +539,7 @@ void dvector::allocatec(_CONST dvector& t)
        ad_exit(1);
      }
      double tmp;
-     tmp = 0;
+     tmp=0;
    #ifdef OPT_LIB
      const double * pt1=&t1[t1.indexmin()];
      const double * pt1m=&t1[t1.indexmax()];
@@ -552,15 +552,15 @@ void dvector::allocatec(_CONST dvector& t)
 
    #else
      #ifndef USE_ASSEMBLER
-       int min = t1.indexmin();
-       int max = t1.indexmax();
-       for (int i = min; i<=max; i++)
+       int min=t1.indexmin();
+       int max=t1.indexmax();
+       for (int i=min; i<=max; i++)
        {
          tmp+=t1[i]*t2[i];
        }
      #else
-       int min = t1.indexmin();
-       int n = t1.indexmax()-min+1;
+       int min=t1.indexmin();
+       int n=t1.indexmax()-min+1;
        dp_dotproduct(&tmp,&(t1(min)),&(t2(min)),n);
      #endif
    #endif
@@ -598,9 +598,9 @@ void dvector::allocatec(_CONST dvector& t)
 
    #else
 
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp[i] = t1[i]+t2[i];
+       tmp[i]=t1[i]+t2[i];
      }
    #endif
      return(tmp);
@@ -636,9 +636,9 @@ void dvector::allocatec(_CONST dvector& t)
 
    #else
 
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp[i] = t1[i]-t2[i];
+       tmp[i]=t1[i]-t2[i];
      }
    #endif
      return(tmp);
@@ -666,9 +666,9 @@ void dvector::allocatec(_CONST dvector& t)
 
    #else
 
-     for (int i = t1.indexmin(); i<=t1.indexmax(); i++)
+     for (int i=t1.indexmin(); i<=t1.indexmax(); i++)
      {
-       tmp[i] = x*t1[i];
+       tmp[i]=x*t1[i];
      }
    #endif
      return(tmp);
@@ -729,7 +729,7 @@ double cube( CGNU_DOUBLE m)
 */
 double fourth( CGNU_DOUBLE m)
 {
-  double m2 = m*m;
+  double m2=m*m;
   return m2*m2;
 }
 

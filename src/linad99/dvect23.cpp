@@ -17,9 +17,9 @@
 ostream& operator << (_CONST ostream& _ofs,_CONST pre_column_print& p)
 {
   ostream& ofs= (ostream&) _ofs;
-  int mmin = p.ptr->indexmin();
-  int mmax = p.ptr->indexmax();
-  for (int i = mmin;i<=mmax;i++)
+  int mmin=p.ptr->indexmin();
+  int mmax=p.ptr->indexmax();
+  for (int i=mmin;i<=mmax;i++)
   {
     ofs << double((*(p.ptr))[i]) << endl;
   }
@@ -42,9 +42,9 @@ pre_column_print column_print(_CONST dvector& v)
 ostream& operator << (_CONST ostream& _ofs,_CONST pre_zero_print& p)
 {
   ostream& ofs= (ostream&) _ofs;
-  int mmin = p.ptr->indexmin();
-  int mmax = p.ptr->indexmax();
-  for (int i = mmin;i<=mmax;i++)
+  int mmin=p.ptr->indexmin();
+  int mmax=p.ptr->indexmax();
+  for (int i=mmin;i<=mmax;i++)
   {
     double tmp= double((*(p.ptr))[i]);
     if (tmp ==0)

@@ -118,7 +118,7 @@ void dvar_matrix::fill( const char * s)
   }
 
   int i;
-  for (i = 1; i<=nrow; i++)
+  for (i=1; i<=nrow; i++)
   {
     if ( ((*this)[rowmin()+i-1]).size() != columns[i])
     {
@@ -138,7 +138,7 @@ void dvar_matrix::fill( const char * s)
   }
     
   k = 0;
-  for (i = rowmin(); i<=rowmax(); i++)
+  for (i=rowmin(); i<=rowmax(); i++)
   {
     char * t;
 //    t = (char*) new[strlen(s)+1];
@@ -153,7 +153,7 @@ void dvar_matrix::fill( const char * s)
     dvector tt(t);
     tt.shift(( (*this)(i)).indexmin() );
 
-    (*this)(i) = tt;
+    (*this)(i)=tt;
 
     delete[] t;
     t = 0;

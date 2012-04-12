@@ -16,7 +16,7 @@
  */
 double fmm::minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&))
 {  
-  int nvar = x.size();
+  int nvar=x.size();
   double f;
   dvector g(1,nvar);
 #ifndef SAFE_INITIALIZE
@@ -30,7 +30,7 @@ double fmm::minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dva
       if(ireturn > 0)
       {
         {
-          f = (*pf)(x);
+          f=(*pf)(x);
         }
         gradcalc(nvar,g);
       }

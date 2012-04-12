@@ -11,10 +11,10 @@ void function_minimizer::pvm_slave_mcmc_routine(void){}
 #else
 void function_minimizer::pvm_slave_mcmc_routine(void)
 {
-  int nvar = initial_params::nvarcalc();
+  int nvar=initial_params::nvarcalc();
   do
   {
-    int iflag = get_int_from_master();
+    int iflag=get_int_from_master();
     if (!iflag) break;
     pvm_slave_get_monte_carlo_value(nvar); 
   }

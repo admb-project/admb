@@ -18,7 +18,7 @@ using std::ostringstream;
 #define STR(x) #x
 #define STR2(x) STR(x)
 
-// extern adstring copyright; ///< Text string containing copyright information; defined in the .tpl file
+//extern adstring copyright; ///< Text string containing copyright information; defined in the .tpl file
 
 /*! \brief Generates a boast.
      Provides information on SVN revision number, compiler and operating system.

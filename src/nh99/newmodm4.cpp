@@ -37,18 +37,18 @@ double function_minimizer::unrestricted_hess_determinant(void)
       cerr << "Error reading the hessian from file admodel.hes" << endl;
     }
 
-    for (int i = 1;i<=nvar;i++)
+    for (int i=1;i<=nvar;i++)
     {
-      for (int j = 1;j<i;j++)
+      for (int j=1;j<i;j++)
       {
-        double tmp = (h(i,j)+h(j,i))/2.;
-        h(i,j) = tmp;
-        h(j,i) = tmp;
+        double tmp=(h(i,j)+h(j,i))/2.;
+        h(i,j)=tmp;
+        h(j,i)=tmp;
       }
     }
 
-    int sgn = 0;
-    double lndet = ln_det(h,sgn);
+    int sgn=0;
+    double lndet=ln_det(h,sgn);
     if (sgn <= 0)
     {
       cerr << "sgn = " << sgn << endl;

@@ -29,9 +29,9 @@
 
 void gradfree(dlink *);
 
-// extern prevariable * FRETURN;
-// extern int RETURN_INDEX;
-// extern dlist * GRAD_LIST; // js
+//extern prevariable * FRETURN;
+//extern int RETURN_INDEX;
+//extern dlist * GRAD_LIST; //js
 
  void shape_check(_CONST dvar_vector& v1,_CONST dvar_vector& v2, const char * function_name);
  void shape_check(_CONST dvector& v1,_CONST dvar_vector& v2, const char * function_name);
@@ -46,9 +46,9 @@ void gradfree(dlink *);
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
-   for (int i = v1.indexmin();i<=v1.indexmax();i++)
+   for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
-     tmp.elem(i) = sinh(v1.elem(i));             // ***
+     tmp.elem(i)=sinh(v1.elem(i));             // ***
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -62,9 +62,9 @@ void gradfree(dlink *);
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
-   for (int i = v1.indexmin();i<=v1.indexmax();i++)
+   for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
-     tmp.elem(i) = cosh(v1.elem(i));             // ***
+     tmp.elem(i)=cosh(v1.elem(i));             // ***
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -78,9 +78,9 @@ void gradfree(dlink *);
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
-   for (int i = v1.indexmin();i<=v1.indexmax();i++)
+   for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
-     tmp.elem(i) = tanh(v1.elem(i));             // ***
+     tmp.elem(i)=tanh(v1.elem(i));             // ***
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -96,9 +96,9 @@ void gradfree(dlink *);
 
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
-   for (int i = v1.indexmin();i<=v1.indexmax();i++)
+   for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
-     tmp.elem(i) = pow(v1.elem(i),v2.elem(i));             // ***
+     tmp.elem(i)=pow(v1.elem(i),v2.elem(i));             // ***
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -112,9 +112,9 @@ void gradfree(dlink *);
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v2.indexmin(),v2.indexmax());
-   for (int i = v2.indexmin();i<=v2.indexmax();i++)
+   for (int i=v2.indexmin();i<=v2.indexmax();i++)
    {
-     tmp.elem(i) = pow(x,v2.elem(i));             // ***
+     tmp.elem(i)=pow(x,v2.elem(i));             // ***
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -128,9 +128,9 @@ void gradfree(dlink *);
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
-   for (int i = v1.indexmin();i<=v1.indexmax();i++)
+   for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
-     tmp.elem(i) = asin(v1.elem(i));             // ***
+     tmp.elem(i)=asin(v1.elem(i));             // ***
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -144,9 +144,9 @@ void gradfree(dlink *);
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
-   for (int i = v1.indexmin();i<=v1.indexmax();i++)
+   for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
-     tmp.elem(i) = acos(v1.elem(i));             // ***
+     tmp.elem(i)=acos(v1.elem(i));             // ***
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
@@ -160,9 +160,9 @@ void gradfree(dlink *);
  {
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
-   for (int i = v1.indexmin();i<=v1.indexmax();i++)
+   for (int i=v1.indexmin();i<=v1.indexmax();i++)
    {
-     tmp.elem(i) = log10(v1.elem(i));             // ***
+     tmp.elem(i)=log10(v1.elem(i));             // ***
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);

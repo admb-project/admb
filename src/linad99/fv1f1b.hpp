@@ -72,10 +72,10 @@
     double (*d11f)(double);
     single_f1b1_node operator () (dep_data& v)
     {
-      f1b1_data * dep = v->dep;
+      f1b1_data * dep=v->dep;
       f1b_data tmp(dep->nvar());
-      tmp.u = f(dep->u);
-      udot = d1f(dep->u)*dep->udot;
+      tmp.u=f(dep->u);
+      udot=d1f(dep->u)*dep->udot;
       single_f1b1_node node : ;
       node.ind=*v;
       
@@ -96,11 +96,11 @@
     double (*d22f)(double,double);
     double_f1b1_node operator () (dep_data& v,dep_data& w)
     {
-      f1b1_data * dep1 = v->dep;
-      f1b1_data * dep2 = w->dep;
+      f1b1_data * dep1=v->dep;
+      f1b1_data * dep2=w->dep;
       f1b1_data * = new f1b1_data(tmp(dep->nvar()));
-      tmp.u = f(dep1->u,dep2->u);
-      udot = d1f(dep1->u)*dep1->udot;
+      tmp.u=f(dep1->u,dep2->u);
+      udot=d1f(dep1->u)*dep1->udot;
       udot+=d2f(dep1->u)*dep1->udot;
     }
     class single_f1b1_node : dep_data(f1b1_data);
@@ -114,7 +114,7 @@
   {
   public:
     f1b1_data * dep;
-    dep_data(f1b1_data * t) { dep = t;}
+    dep_data(f1b1_data * t) { dep=t;}
   };
 
 /**

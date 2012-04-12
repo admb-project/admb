@@ -24,7 +24,7 @@
  */
  dvar_vector::dvar_vector(int ncl,int nch,kkludge_object kg)
  {
-   va = NULL;
+   va=NULL;
    allocate(ncl,nch);
 
    #ifdef DIAG

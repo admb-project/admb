@@ -116,17 +116,17 @@ public:
   double fd;
   double delta;
   dercheck_info(int _node_number,double _delta,int _index); 
-  void set_delta(double d){delta = d;}
-  void set_node_number(int n){node_number = n;}
-  void set_pass_number(int n){pass_number = n;}
-  void set_index(int n){index = n;}
-  void set_dotflag(int n){dotflag = n;}
-  void set_vartype(int n){vartype = n;}
-  void set_counter(int n){counter = n;}
-  void set_f1(double d){f1 = d;}
-  void set_f2(double d){f2 = d;}
-  void set_f3(double d){f3 = d;}
-  void set_fd(void){fd = (f2-f3)/(2.0*delta);}
+  void set_delta(double d){delta=d;}
+  void set_node_number(int n){node_number=n;}
+  void set_pass_number(int n){pass_number=n;}
+  void set_index(int n){index=n;}
+  void set_dotflag(int n){dotflag=n;}
+  void set_vartype(int n){vartype=n;}
+  void set_counter(int n){counter=n;}
+  void set_f1(double d){f1=d;}
+  void set_f2(double d){f2=d;}
+  void set_f3(double d){f3=d;}
+  void set_fd(void){fd=(f2-f3)/(2.0*delta);}
 };
 extern dercheck_info * derchecker;
 #endif
@@ -181,7 +181,7 @@ void read_pass1_2(void);
  */
   struct df1b2_header 
   {
-    // double * ptr;
+    //double * ptr;
     double * u;
     double * u_dot;
     double * u_bar;
@@ -192,7 +192,7 @@ void read_pass1_2(void);
     double * u_dot_bar_tilde;
     int indindex;
 
-    // double * get_ptr(void){return ptr;}
+    //double * get_ptr(void){return ptr;}
 
 
     double * get_u(void) const {return (double *) u;}
@@ -218,7 +218,7 @@ void read_pass1_2(void);
     int lb;
     int ub;
     inline predf1b2vector(df1b2vector * _p,int _lb,int _ub) 
-      {p = _p;lb = _lb,ub = _ub;}
+      {p=_p;lb=_lb,ub=_ub;}
     friend class df1b2vector;
   };
 
@@ -263,10 +263,10 @@ void read_pass1_2(void);
     static int noallocate;
     
     static int get_passnumber(void){return passnumber;}
-    static void set_nvar(int n){nvar = n;}
+    static void set_nvar(int n){nvar=n;}
     static int get_nvar(void){return nvar;}
-    static void set_minder(int n){minder = n;}
-    static void set_maxder(int n){maxder = n;}
+    static void set_minder(int n){minder=n;}
+    static void set_maxder(int n){maxder=n;}
     static void set_blocksize(void);
     static int get_blocksize(void);
     static int get_blocksize(int n);
@@ -279,7 +279,7 @@ void read_pass1_2(void);
     void initialize(void);
     void initialize(int n);
         
-    df1b2variable(const do_naught_kludge& a){ptr = 0;}
+    df1b2variable(const do_naught_kludge& a){ptr=0;}
 
 #if defined(USE_DDOUBLE)
 #undef double
@@ -315,13 +315,13 @@ void read_pass1_2(void);
   
 void print_dot_derivatives(df1b2_header * px,const char * s);
 void print_derivatives(const adstring&, double f, double df,
-  double d2f,double d3f,int bflag = 0);
+  double d2f,double d3f,int bflag=0);
 void print_derivatives(const adstring&, double f, double df1,
   double df2,double df11,double df12, double df22,
-  double df111, double df112, double df122, double df222,int bflag = 0);
+  double df111, double df112, double df122, double df222,int bflag=0);
 
 void print_derivatives(df1b2_header * px,const char * s,
-  int bflag = 0);
+  int bflag=0);
 
 /**
  * Description not yet available.
@@ -334,7 +334,7 @@ void print_derivatives(df1b2_header * px,const char * s,
     int get_index(void){return ind_index;}
     static int num_variables;
     static init_df1b2variable ** list;  
-    init_df1b2variable(double v = 0.0);
+    init_df1b2variable(double v=0.0);
     void operator = (double x);
     void set_u_dot(void); 
   };
@@ -392,7 +392,7 @@ void print_derivatives(df1b2_header * px,const char * s,
       const adstring& s="unnamed");
 
     df1b2variable operator () (const df1b2variable& x);
-    // df1b2variable& operator () (const df1b2variable& z,const df1b2variable& x);
+    //df1b2variable& operator () (const df1b2variable& z,const df1b2variable& x);
     df1b2variable& operator () (const df1b2variable& z,const df1b2variable& x,
        int s); // s is a switch for picking special function for simple
                // operations like +=
@@ -482,10 +482,10 @@ void print_derivatives(df1b2_header * px,const char * s,
     unsigned int bufsize;
     adstring filename;
     int fp;
-    void saveposition(void){sbptr = bptr;}
-    void reset(void){bptr = buffer;}
-    void restoreposition(void){bptr = sbptr;}
-    void restoreposition(int offset){bptr = sbptr+offset;}
+    void saveposition(void){sbptr=bptr;}
+    void reset(void){bptr=buffer;}
+    void restoreposition(void){bptr=sbptr;}
+    void restoreposition(int offset){bptr=sbptr+offset;}
     smartlist(unsigned int bufsize,const adstring& filename);
     double report_usage(void) 
     { 
@@ -518,22 +518,22 @@ void print_derivatives(df1b2_header * px,const char * s,
     unsigned int bufsize;
     adstring filename;
     int fp;
-    void saveposition(void){sbptr = bptr;}
-    void set_recend(){bptr = recend+1;} // one passed the end so that when
+    void saveposition(void){sbptr=bptr;}
+    void set_recend(){bptr=recend+1;} // one passed the end so that when
                                       // you back up n bytes it points to the
                                       // beginning of an n byte record
     void reset(void);
     int eof(void){ return eof_flag;}
     int get_noreadflag(void){ return noreadflag; }
-    void set_noreadflag(int n){ noreadflag = n; }
-    void restoreposition(void){bptr = sbptr;}
-    void restoreposition(int offset){bptr = sbptr+offset;}
+    void set_noreadflag(int n){ noreadflag=n; }
+    void restoreposition(void){bptr=sbptr;}
+    void restoreposition(int offset){bptr=sbptr+offset;}
     test_smartlist(unsigned int bufsize,const adstring& filename);
     void allocate(unsigned int bufsize,const adstring& filename);
     test_smartlist(void);
     ~test_smartlist();
     void read_buffer(void);
-    void set_forward(void){direction = 0;}
+    void set_forward(void){direction=0;}
     void set_backword(void){direction=-1;}
     void set_reverse(void){direction=-1;}
     void rewind(void);
@@ -595,22 +595,22 @@ void print_derivatives(df1b2_header * px,const char * s,
     unsigned int bufsize;
     adstring filename;
     int fp;
-    void saveposition(void){sbptr = bptr;}
-    void set_recend(){bptr = recend+1;} // one passed the end so that when
+    void saveposition(void){sbptr=bptr;}
+    void set_recend(){bptr=recend+1;} // one passed the end so that when
                                       // you back up n bytes it points to the
                                       // beginning of an n byte record
     void reset(void);
     int eof(void){ return eof_flag;}
     void read_file(void);
     int get_noreadflag(void){ return noreadflag; }
-    void set_noreadflag(int n){ noreadflag = n; }
-    void restoreposition(void){bptr = sbptr;}
-    void restoreposition(int offset){bptr = sbptr+offset;}
+    void set_noreadflag(int n){ noreadflag=n; }
+    void restoreposition(void){bptr=sbptr;}
+    void restoreposition(int offset){bptr=sbptr+offset;}
     fixed_smartlist(unsigned int bufsize,const adstring& filename);
     void allocate(unsigned int bufsize,const adstring& filename);
     fixed_smartlist(void);
     void read_buffer(void);
-    void set_forward(void){direction = 0;}
+    void set_forward(void){direction=0;}
     void set_backword(void){direction=-1;}
     void set_reverse(void){direction=-1;}
     void rewind(void);
@@ -660,23 +660,23 @@ void print_derivatives(df1b2_header * px,const char * s,
     unsigned int bufsize;
     adstring filename;
     int fp;
-    void saveposition(void){sbptr = bptr;}
-    void set_recend(){bptr = recend+1;} // one passed the end so that when
+    void saveposition(void){sbptr=bptr;}
+    void set_recend(){bptr=recend+1;} // one passed the end so that when
                                       // you back up n bytes it points to the
                                       // beginning of an n byte record
-    void reset(void){bptr = buffer;}
+    void reset(void){bptr=buffer;}
     int eof(void){ return eof_flag; /*eof_flag=0;*/}
   
     void read_file(void);
     int get_noreadflag(void){ return noreadflag; }
-    void set_noreadflag(int n){ noreadflag = n; }
-    void restoreposition(void){bptr = sbptr;}
-    void restoreposition(int offset){bptr = sbptr+offset;}
+    void set_noreadflag(int n){ noreadflag=n; }
+    void restoreposition(void){bptr=sbptr;}
+    void restoreposition(int offset){bptr=sbptr+offset;}
     fixed_smartlist2(unsigned int bufsize,const adstring& filename);
     void allocate(unsigned int bufsize,const adstring& filename);
     fixed_smartlist2(void);
     void read_buffer(void);
-    void set_forward(void){direction = 0;}
+    void set_forward(void){direction=0;}
     void set_backword(void){direction=-1;}
     void set_reverse(void){direction=-1;}
     void rewind(void);
@@ -713,7 +713,7 @@ void print_derivatives(df1b2_header * px,const char * s,
   public:
 #if defined(CHECK_COUNT)
     static int ncount_check;
-    static set_ncount_check(int n){ncount_check = n;}
+    static set_ncount_check(int n){ncount_check=n;}
 #endif
     int ncount;
     test_smartlist list; 
@@ -723,8 +723,8 @@ void print_derivatives(df1b2_header * px,const char * s,
     test_smartlist list3; 
     fixed_smartlist2 nlist3; 
     static int no_derivatives;
-    static void set_no_derivatives(void) {no_derivatives = 1;}
-    static void set_yes_derivatives(void) {no_derivatives = 0;}
+    static void set_no_derivatives(void) {no_derivatives=1;}
+    static void set_yes_derivatives(void) {no_derivatives=0;}
     df1b2_gradlist(unsigned int bufsize,unsigned int nbufsize,
      unsigned int bufsize1, unsigned int nbufsize1,
      unsigned int bufsize2, unsigned int nbufsize2,const adstring& filename);
@@ -820,7 +820,7 @@ typedef void (*ADrfptr)(void);
 void set_dependent_variable(const df1b2variable& _x);
 
 dmatrix get_hessian(const init_df1b2vector& x);
-// df1b2variable user_function(const init_df1b2vector& x);
+//df1b2variable user_function(const init_df1b2vector& x);
 
 dmatrix check_second_derivatives(const init_df1b2vector& x);
 d3_array check_third_derivatives(const init_df1b2vector& x);
@@ -908,7 +908,7 @@ class df3_two_vector;
  //   df1b2vector * p;
  //   int lb;
  //   int ub;
- //   inline predf1b2vector(df1b2vector * _p,int _lb,int _ub) {p = _p;lb = _lb,ub = _ub;}
+ //   inline predf1b2vector(df1b2vector * _p,int _lb,int _ub) {p=_p;lb=_lb,ub=_ub;}
  //   friend class df1b2vector;
  // };
 
@@ -970,8 +970,8 @@ public:
  //  }
  // df1b2vector(const predf1b2vector&);
 #  else
-  // df1b2vector operator () (int i,int j);
-  // df1b2variable& operator () const (int i);
+  //df1b2vector operator () (int i,int j);
+  //df1b2variable& operator () const (int i);
   df1b2variable& operator () (int i) const;
   df1b2variable& operator [] (int i) const;
 #  endif
@@ -995,7 +995,7 @@ public:
   friend class random_effects_bounded_vector_info;
   friend class df1b2variable;
   friend class xf_df1b2vector;
-  // df1b2vector(const funnel_init_df1b2vector& _s);
+  //df1b2vector(const funnel_init_df1b2vector& _s);
 };
 class df3_one_matrix;
 class df3_two_matrix;
@@ -1082,7 +1082,7 @@ public:
   df1b23array(int nrl,int nrh);
   df1b23array(int nrl,int nrh,int,int);
   df1b23array(const df1b23array&);
-  // df1b23array& operator =(const df3_one_matrix&);
+  //df1b23array& operator =(const df3_one_matrix&);
 
   df1b23array& operator =(const df1b23array&);
   df1b23array& operator =(const df1b2variable&);
@@ -1301,18 +1301,18 @@ public:
   static initial_df1b2params **  varsptr_sav;  // this should be a resizeable
   static int num_initial_df1b2params;         // array
   static int num_initial_df1b2params_sav;         // array
-  virtual void set_value(const dvector&,const int& ii) = 0;
-  virtual void set_index(int aflag,const int& ii) = 0;
+  virtual void set_value(const dvector&,const int& ii)=0;
+  virtual void set_index(int aflag,const int& ii)=0;
   static int set_index(void);
   virtual void set_value(const init_df1b2vector&,const int& ii,
-    const df1b2variable&) = 0;
+    const df1b2variable&)=0;
   static void reset(const init_df1b2vector&,const df1b2variable&); 
   static void reset_all(const dvector&); 
   static void reset(const df1b2vector&,const df1b2variable&); 
   virtual void add_to_list(void);
   initial_df1b2params(void);
-  void set_phase_start(int n){phase_start = n; phase_save = n;}
-  virtual void sd_scale(const dvector& d,const dvector& x,const int& ii) = 0;
+  void set_phase_start(int n){phase_start=n; phase_save=n;}
+  virtual void sd_scale(const dvector& d,const dvector& x,const int& ii)=0;
 };
 
 typedef initial_df1b2params * P_INITIAL_DF1B2PARAMS;
@@ -1333,7 +1333,7 @@ class df1b2_init_vector : public df1b2vector, public initial_df1b2params
 {
 public:
   virtual void sd_scale(const dvector& d,const dvector& x,const int& ii);
-  void set_phase_start(int n){phase_start = n; phase_save = n;}
+  void set_phase_start(int n){phase_start=n; phase_save=n;}
   virtual void set_value(const dvector& x,const int& _ii);
   virtual void set_value(const init_df1b2vector& x,const int& _ii,
     const df1b2variable& pen);
@@ -1383,7 +1383,7 @@ public:
   {
     df1b2matrix::allocate(rmin,rmax,cmin,cmax,s);
   }
-  void set_phase_start(int n){phase_start = n; phase_save = n;}
+  void set_phase_start(int n){phase_start=n; phase_save=n;}
   virtual void set_value(const dvector& x,const int& _ii);
   virtual void set_value(const init_df1b2vector& x,const int& _ii,
     const df1b2variable& pen);
@@ -1401,7 +1401,7 @@ class df1b2_init_number : public df1b2variable, public initial_df1b2params
 public:
   virtual void sd_scale(const dvector& d,const dvector& x,const int& ii);
   virtual int & get_ind_index(void) { return ind_index; }
-  void set_phase_start(int n){phase_start = n; phase_save = n;}
+  void set_phase_start(int n){phase_start=n; phase_save=n;}
   virtual void set_value(const dvector& x,const int& _ii);
   virtual void set_value(const init_df1b2vector&,const int& ii,
     const df1b2variable&);
@@ -1461,7 +1461,7 @@ public:
   virtual void sd_scale(const dvector& d,const dvector& x,const int& ii);
   
   void allocate(double _minb,double _maxb,const char * s="UNNAMED");
-  // void allocate(const ad_double& _minb,const ad_double& _maxb,
+  //void allocate(const ad_double& _minb,const ad_double& _maxb,
    // const char * s="UNNAMED");
   
   virtual void set_value(const dvector& x,const int& _ii);
@@ -1480,7 +1480,7 @@ class df1b2_init_bounded_number_vector
   int index_max;
   double_index_type * it;
 public:
-  // virtual void sd_scale(const dvector& d,const dvector& x,const int& ii);
+  //virtual void sd_scale(const dvector& d,const dvector& x,const int& ii);
   df1b2_init_bounded_number_vector(); 
 
 #if defined(OPT_LIB)
@@ -1519,7 +1519,7 @@ public:
   void allocate(int,int,double,double,int,const char *);
   void allocate(int,int,double,double,const char *);
   void allocate(int,int,double,double);
-  // void allocate(int,int);
+  //void allocate(int,int);
   virtual void set_value(const dvector& x,const int& _ii);
   virtual void set_value(const init_df1b2vector& x,const int& _ii,
     const df1b2variable& pen);
@@ -1579,7 +1579,7 @@ public:
   void allocate(int,int,int,int,double,double,const char *);
   void allocate(int,int,const index_type& ,const index_type& ,double,double,const char *);
   void allocate(int,int,int,int,double,double);
-  // void allocate(int,int);
+  //void allocate(int,int);
   virtual void set_value(const dvector& x,const int& _ii);
   virtual void set_value(const init_df1b2vector& x,const int& _ii,
     const df1b2variable& pen);
@@ -1710,12 +1710,12 @@ class adkludge1;
 int active(const df1b2_init_vector& x);
 int active(const df1b2_init_number& x);
 int active(const df1b2_init_matrix& x);
-// int active(const df1b2_init_bounded_vector& x);
+//int active(const df1b2_init_bounded_vector& x);
 
-// int active (const df1b2_init_vector &);
-// int active(const initial_df1b2params& x);
-// int active(const df1b2vector& x);
-// int active(const df1b2matrix& x);
+//int active (const df1b2_init_vector &);
+//int active(const initial_df1b2params& x);
+//int active(const df1b2vector& x);
+//int active(const df1b2matrix& x);
 
 double evaluate_function_quiet(const dvector& x,function_minimizer * pfmin);
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
@@ -1792,8 +1792,8 @@ class style_flag_class
 {
 public:
   int old_style_flag;
-  virtual void set_old_style_flag(void) = 0;
-  // style_flag_class(void) {set_old_style_flag();}
+  virtual void set_old_style_flag(void)=0;
+  //style_flag_class(void) {set_old_style_flag();}
 };
 
 /**
@@ -1832,7 +1832,7 @@ public:
   void allocate(const dvar_vector & _u);
   void allocate(const dvar_matrix & _M, const dvar_vector & _u,const char * s);
   void allocate(const dvar_matrix & _M, const dvar_vector & _u);
-  // dmatrix get_cHessian(void);
+  //dmatrix get_cHessian(void);
   void get_cHessian(dmatrix,int);
   void get_cHessian(dvar_matrix,int);
   void get_cHessian_from_vHessian(dmatrix ,int);
@@ -1847,7 +1847,7 @@ public:
   static void get_vHessian_contribution(dvar_matrix  ,int );
   static void get_cHessian_contribution_from_vHessian(dmatrix,int);
   friend class df1b2quadratic_prior;
-  virtual void get_cM(void) = 0;
+  virtual void get_cM(void)=0;
 };
 
 /**
@@ -1894,7 +1894,7 @@ public:
   static dvector get_cgradient_contribution(void);
   static dmatrix get_cHessian_contribution(void);
   static void get_Lxu_contribution(dmatrix&);
-  virtual void get_Lxu(dmatrix&) = 0;
+  virtual void get_Lxu(dmatrix&)=0;
   friend class quadratic_prior;
   friend class df1b2_parameters;
 };
@@ -1986,7 +1986,7 @@ df1b2variable ln_det(df1b2matrix& M);
 
 df1b2variable ln_det(df1b2matrix& M,int & sgn);
 
-// df1b2vector solve(df1b2matrix& M,df1b2vector& v);
+//df1b2vector solve(df1b2matrix& M,df1b2vector& v);
 
 df1b2matrix expm(const df1b2matrix & A);
 df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,df1b2variable ln_unsigned_det,df1b2variable& sign);
@@ -2000,7 +2000,7 @@ df1b2variable bounder(const df1b2variable&  x,double min,double max,
   double scale);
 
 df1b2variable inv_cumd_beta_stable(const df1b2variable& a,
-  const df1b2variable& b,const df1b2variable& x,double eps = 1.e-7);
+  const df1b2variable& b,const df1b2variable& x,double eps=1.e-7);
 
 df1b2variable bounded_cumd_norm(const df1b2variable& _x,double beta);
 df1b2variable cumd_norm(const df1b2variable& _x);
@@ -2012,11 +2012,11 @@ df1b2variable inv_cumd_normal_mixture(const df1b2variable& _x,double _a);
 df1b2variable inv_cumd_normal_logistic_mixture(const df1b2variable& _x,double _a);
 
 df1b2variable beta_deviate(const df1b2variable& _x,const df1b2variable& _a,
-  const df1b2variable& _b,double eps = 1.e-7);
+  const df1b2variable& _b,double eps=1.e-7);
 df1b2variable robust_normal_logistic_mixture_deviate(const df1b2variable& x,
-  double spread = 3.0);
+  double spread=3.0);
 df1b2variable robust_normal_mixture_deviate(const df1b2variable& x,
-  double spread = 3.0);
+  double spread=3.0);
 
 df1b2variable gamma_deviate(const df1b2variable& _x,const df1b2variable& _a);
 df1b2variable inv_cumd_gamma(const df1b2variable& _y,const df1b2variable& _a);
@@ -2024,7 +2024,7 @@ double inv_cumd_gamma(double y,double _a);
 
 df1b2variable inv_cumd_cauchy(const df1b2variable& n);
 df1b2variable inv_cumd_t(const df1b2variable& n,const df1b2variable&  u,
-  double eps = 1.e-7);
+  double eps=1.e-7);
 
 /**
  * Description not yet available.
@@ -2044,7 +2044,7 @@ df1b2vector posfun(const df1b2vector& x,double eps,
   const df1b2variable& _pen);
 
 df1b2variable norm_to_gamma(const df1b2variable & v,const df1b2variable& alpha,
-  double bound = 0.999999);
+  double bound=0.999999);
 
 void print_is_diagnostics(laplace_approximation_calculator *lapprox);
 

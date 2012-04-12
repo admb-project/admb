@@ -51,7 +51,7 @@ dmatrix solve(const dmatrix & aa, const dmatrix & zz)
    dcmp = ludecomp_pivot(bb);
    ivector index2 = dcmp.get_index2();
 
-   // check if invertable
+   //check if invertable
    int i;
    double ln_det = 0.0;
    for (i = lb; i <= ub; i++)
@@ -65,13 +65,13 @@ dmatrix solve(const dmatrix & aa, const dmatrix & zz)
       ad_exit(1);
    }
 
-   // for each column of X and B solve A*x_i = b_i
+   //for each column of X and B solve A*x_i = b_i
    dmatrix xx(lb,ub,lb,ub);
-   for(int k = lb;k<=ub;k++)
+   for(int k=lb;k<=ub;k++)
    {
      dvector z = column(zz,k);
 
-     // Solve L*y = b with forward-substitution (before solving Ux = y)
+     //Solve L*y=b with forward-substitution (before solving Ux=y)
      dvector y(lb, ub);
      for (i = lb; i <= ub; i++)
      {
@@ -83,7 +83,7 @@ dmatrix solve(const dmatrix & aa, const dmatrix & zz)
         y(i) = z(index2(i)) - tmp;
      }
 
-     // Now solve U*x = y with back substitution
+     //Now solve U*x=y with back substitution
      dvector x(lb, ub);
      for (i = ub; i >= lb; i--)
      {
@@ -108,12 +108,12 @@ dmatrix solve(const dmatrix & aa, const dmatrix & zz)
 double ln_det_choleski(
   const banded_symmetric_dmatrix& MM, const int& _ierr)
 {
-  banded_lower_triangular_dmatrix tmp = choleski_decomp(MM,_ierr);
+  banded_lower_triangular_dmatrix tmp=choleski_decomp(MM,_ierr);
   
-  int mmin = tmp.indexmin();
-  int mmax = tmp.indexmax();
-  double ld = 0.0;
-  for (int i = mmin;i<=mmax;i++)
+  int mmin=tmp.indexmin();
+  int mmax=tmp.indexmax();
+  double ld=0.0;
+  for (int i=mmin;i<=mmax;i++)
   {
     ld+=log(tmp(i,i));
   }
@@ -135,8 +135,8 @@ double norm(const banded_symmetric_dmatrix& B)
  */
 double norm2(const banded_symmetric_dmatrix& B)
 {
-  double nm = 0.0;
-  for (int i = 1;i<=B.bw-1;i++)
+  double nm=0.0;
+  for (int i=1;i<=B.bw-1;i++)
   {
     nm+=norm2(B.d(i));
   }

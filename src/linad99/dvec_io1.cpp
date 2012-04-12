@@ -62,10 +62,10 @@ const int MAX_NUMBER_ROWS = 6550;
    char *line = new char[MAX_LINE_LENGTH + 2];
    char *field = new char[MAX_FIELD_LENGTH + 1];
 
-   int i = 0;
+   int i=0;
    ivector nc(1,MAX_NUMBER_ROWS);
 
-   // while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
+   //while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
    while ( get_non_blank_line(infile,line,MAX_LINE_LENGTH) )
    {
      strcat(line," ");
@@ -76,7 +76,7 @@ const int MAX_NUMBER_ROWS = 6550;
                " dmatrix::dmatrix(char * filename)\n";
        ad_exit(21);
      }
-     int j = 0;              // j counts columns
+     int j=0;              // j counts columns
 
      #ifndef __ZTC__
        istringstream f(line);
@@ -87,7 +87,7 @@ const int MAX_NUMBER_ROWS = 6550;
      {
        // f >> field;      // Need to derive a class so that this thing stops at
                            // , or maybe deals with strings
-       // char * err_ptr;
+       //char * err_ptr;
        // increment row counter
        if ( ++j > MAX_NUMBER_COLUMNS)
        {
@@ -106,7 +106,7 @@ const int MAX_NUMBER_ROWS = 6550;
        ad_exit(1);
      }
    }
-   int nr = i;
+   int nr=i;
    if (nr == 0)
    {
      cerr << "Error in dvector constructor There doesn't seem to be any data\n"
@@ -122,9 +122,9 @@ const int MAX_NUMBER_ROWS = 6550;
      ad_exit(21);
    }
 #if defined(THREAD_SAFE)
-   if ( (shape = new ts_vector_shapex(1,nr,v)) == NULL)
+   if ( (shape=new ts_vector_shapex(1,nr,v)) == NULL)
 #else
-   if ( (shape = new vector_shapex(1,nr,v)) == NULL)
+   if ( (shape=new vector_shapex(1,nr,v)) == NULL)
 #endif
    {
      cerr << "Error trying to allocate memory for dvector\n";
@@ -144,8 +144,8 @@ const int MAX_NUMBER_ROWS = 6550;
      if ( (unsigned) v < indexmin() * sizeof(double) )
 #endif
      {
-        // cerr << "Pointer wrap in dvector(unsigned int ncl, unsigned int nch)\n";
-        // cerr << "pointer = "<< (unsigned int) v <<
+        //cerr << "Pointer wrap in dvector(unsigned int ncl, unsigned int nch)\n";
+        //cerr << "pointer = "<< (unsigned int) v <<
                          //" indexmin() = "<<indexmin()<<"\n";
         denormalize_ptr(&v, indexmin() * sizeof(double));
      }
@@ -154,14 +154,14 @@ const int MAX_NUMBER_ROWS = 6550;
    v -= indexmin();
 
 
- i = 0;
+ i=0;
  // while ( (infile.getline(line,MAX_LINE_LENGTH)).good() )
  while ( get_non_blank_line(infile,line,MAX_LINE_LENGTH) )
  {
    strcat(line," ");
    // increment row counter
    i++;
-   int j = 0;              // j counts columns
+   int j=0;              // j counts columns
    #ifndef __ZTC__
      istringstream f(line);
      while ( (f >> field).good() )
@@ -177,7 +177,7 @@ const int MAX_NUMBER_ROWS = 6550;
 
      if (j==column)
      {
-       elem(i) = strtod(field,&err_ptr); // increment column counter
+       elem(i)=strtod(field,&err_ptr); // increment column counter
 
        if (isalpha(err_ptr[0]))
        {

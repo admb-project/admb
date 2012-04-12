@@ -16,11 +16,11 @@
 void DF_dvXXX(void);
 dvar_vector XXX(_CONST dvar_vector& v1)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = XXX(v1.elem_value(i));
+    vtmp.elem_value(i)=XXX(v1.elem_value(i));
   }
 
   save_identifier_string("ddd");
@@ -35,21 +35,21 @@ dvar_vector XXX(_CONST dvar_vector& v1)
 
 void DF_dvXXX(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos = restore_dvar_vector_position();
-  dvector v1 = restore_dvar_vector_value(v1pos);
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
-    // vtmp.elem(i) = sin(value(v1.elem(i))));
-    dfv1(i) = dfvtmp(i)*YYY(v1.elem(i));
+    //vtmp.elem(i)=sin(value(v1.elem(i))));
+    dfv1(i)=dfvtmp(i)*YYY(v1.elem(i));
   }
   dfv1.save_dvector_derivatives(v1pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 */
@@ -63,11 +63,11 @@ void DF_dvsin(void);
  */
 dvar_vector sin(_CONST dvar_vector& v1)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = sin(v1.elem_value(i));
+    vtmp.elem_value(i)=sin(v1.elem_value(i));
   }
 
   save_identifier_string("ddd");
@@ -86,21 +86,21 @@ dvar_vector sin(_CONST dvar_vector& v1)
  */
 void DF_dvsin(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos = restore_dvar_vector_position();
-  dvector v1 = restore_dvar_vector_value(v1pos);
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
-    // vtmp.elem(i) = sin(value(v1.elem(i))));
-    dfv1(i) = dfvtmp(i)*cos(v1.elem(i));
+    //vtmp.elem(i)=sin(value(v1.elem(i))));
+    dfv1(i)=dfvtmp(i)*cos(v1.elem(i));
   }
   dfv1.save_dvector_derivatives(v1pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 void DF_dvexp(void);
@@ -111,11 +111,11 @@ void DF_dvexp(void);
  */
 dvar_vector exp(_CONST dvar_vector& v1)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = exp(v1.elem_value(i));
+    vtmp.elem_value(i)=exp(v1.elem_value(i));
   }
 
   save_identifier_string("ddd");
@@ -134,21 +134,21 @@ dvar_vector exp(_CONST dvar_vector& v1)
  */
 void DF_dvexp(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("hee");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvector vtmp = restore_dvar_vector_value(tmp_pos);
-  dvar_vector_position v1pos = restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvector vtmp=restore_dvar_vector_value(tmp_pos);
+  dvar_vector_position v1pos=restore_dvar_vector_position();
   verify_identifier_string("ddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
-    // vtmp.elem(i) = sin(value(v1.elem(i))));
-    dfv1(i) = dfvtmp(i)*vtmp.elem(i);
+    //vtmp.elem(i)=sin(value(v1.elem(i))));
+    dfv1(i)=dfvtmp(i)*vtmp.elem(i);
   }
   dfv1.save_dvector_derivatives(v1pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 
@@ -160,11 +160,11 @@ void DF_dvcos(void);
  */
 dvar_vector cos(_CONST dvar_vector& v1)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = cos(v1.elem_value(i));
+    vtmp.elem_value(i)=cos(v1.elem_value(i));
   }
 
   save_identifier_string("ddd");
@@ -183,21 +183,21 @@ dvar_vector cos(_CONST dvar_vector& v1)
  */
 void DF_dvcos(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("cee");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos = restore_dvar_vector_position();
-  dvector v1 = restore_dvar_vector_value(v1pos);
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
-    // vtmp.elem(i) = sin(value(v1.elem(i))));
+    //vtmp.elem(i)=sin(value(v1.elem(i))));
     dfv1(i)=-dfvtmp(i)*sin(v1.elem(i));
   }
   dfv1.save_dvector_derivatives(v1pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 void DF_dvlog(void);
@@ -208,11 +208,11 @@ void DF_dvlog(void);
  */
 dvar_vector log(_CONST dvar_vector& v1)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = log(v1.elem_value(i));
+    vtmp.elem_value(i)=log(v1.elem_value(i));
   }
 
   save_identifier_string("cdd");
@@ -225,7 +225,7 @@ dvar_vector log(_CONST dvar_vector& v1)
   return vtmp;
 }
 
-int ad_debug_arithmetic = 1;
+int ad_debug_arithmetic=1;
 
 /**
  * Description not yet available.
@@ -233,15 +233,15 @@ int ad_debug_arithmetic = 1;
  */
 void DF_dvlog(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos = restore_dvar_vector_position();
-  dvector v1 = restore_dvar_vector_value(v1pos);
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("cdd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
 #    ifndef OPT_LIB
      if (ad_debug_arithmetic==1)
@@ -252,10 +252,10 @@ void DF_dvlog(void)
       }
       
 #    endif
-    dfv1(i) = dfvtmp(i)/(v1.elem(i));
+    dfv1(i)=dfvtmp(i)/(v1.elem(i));
   }
   dfv1.save_dvector_derivatives(v1pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 void DF_dvtan(void);
@@ -266,11 +266,11 @@ void DF_dvtan(void);
  */
 dvar_vector tan(_CONST dvar_vector& v1)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = tan(v1.elem_value(i));
+    vtmp.elem_value(i)=tan(v1.elem_value(i));
   }
 
   save_identifier_string("ddd");
@@ -289,21 +289,21 @@ dvar_vector tan(_CONST dvar_vector& v1)
  */
 void DF_dvtan(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("xee");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos = restore_dvar_vector_position();
-  dvector v1 = restore_dvar_vector_value(v1pos);
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
-    // vtmp.elem(i) = tan(value(v1.elem(i))));
-    dfv1(i) = dfvtmp(i)/pow(cos(v1.elem(i)),2);
+    //vtmp.elem(i)=tan(value(v1.elem(i))));
+    dfv1(i)=dfvtmp(i)/pow(cos(v1.elem(i)),2);
   }
   dfv1.save_dvector_derivatives(v1pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 void DF_dvatan(void);
@@ -314,11 +314,11 @@ void DF_dvatan(void);
  */
 dvar_vector atan(_CONST dvar_vector& v1)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = atan(v1.elem_value(i));
+    vtmp.elem_value(i)=atan(v1.elem_value(i));
   }
 
   save_identifier_string("udd");
@@ -337,21 +337,21 @@ dvar_vector atan(_CONST dvar_vector& v1)
  */
 void DF_dvatan(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eee");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos = restore_dvar_vector_position();
-  dvector v1 = restore_dvar_vector_value(v1pos);
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("udd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
-    // vtmp.elem(i) = sin(value(v1.elem(i))));
-    dfv1(i) = dfvtmp(i)/(1.+pow(v1.elem(i),2));
+    //vtmp.elem(i)=sin(value(v1.elem(i))));
+    dfv1(i)=dfvtmp(i)/(1.+pow(v1.elem(i),2));
   }
   dfv1.save_dvector_derivatives(v1pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 void DF_dvsqrt(void);
@@ -362,11 +362,11 @@ void DF_dvsqrt(void);
  */
 dvar_vector sqrt(_CONST dvar_vector& v1)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = sqrt(v1.elem_value(i));
+    vtmp.elem_value(i)=sqrt(v1.elem_value(i));
   }
 
   save_identifier_string("ddd");
@@ -385,11 +385,11 @@ dvar_vector sqrt(_CONST dvar_vector& v1)
  */
 dvar_vector sqr(_CONST dvar_vector& v1)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = sqrt(v1.elem_value(i));
+    vtmp.elem_value(i)=sqrt(v1.elem_value(i));
   }
 
   save_identifier_string("ddd");
@@ -408,21 +408,21 @@ dvar_vector sqr(_CONST dvar_vector& v1)
  */
 void DF_dvsqrt(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eve");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos = restore_dvar_vector_position();
-  dvector v1 = restore_dvar_vector_value(v1pos);
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddd");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
-    // vtmp.elem(i) = sin(value(v1.elem(i))));
-    dfv1(i) = dfvtmp(i)/(2*sqrt(v1.elem(i)));
+    //vtmp.elem(i)=sin(value(v1.elem(i))));
+    dfv1(i)=dfvtmp(i)/(2*sqrt(v1.elem(i)));
   }
   dfv1.save_dvector_derivatives(v1pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 void DF_dvpow(void);
@@ -433,11 +433,11 @@ void DF_dvpow(void);
  */
 dvar_vector pow(_CONST dvar_vector& v1, CGNU_DOUBLE e)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = pow(v1.elem_value(i),e);
+    vtmp.elem_value(i)=pow(v1.elem_value(i),e);
   }
 
   save_identifier_string("ddf");
@@ -457,22 +457,22 @@ dvar_vector pow(_CONST dvar_vector& v1, CGNU_DOUBLE e)
  */
 void DF_dvpow(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eef");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos = restore_dvar_vector_position();
-  double e = restore_double_value();
-  dvector v1 = restore_dvar_vector_value(v1pos);
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position v1pos=restore_dvar_vector_position();
+  double e=restore_double_value();
+  dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddf");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
-    // vtmp.elem(i) = sin(value(v1.elem(i))));
-    dfv1(i) = dfvtmp(i)*e*pow(v1.elem(i),e-1);
+    //vtmp.elem(i)=sin(value(v1.elem(i))));
+    dfv1(i)=dfvtmp(i)*e*pow(v1.elem(i),e-1);
   }
   dfv1.save_dvector_derivatives(v1pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 
@@ -487,12 +487,12 @@ void DF_dvdvpow(void);
  */
 dvar_vector pow(_CONST dvar_vector& v1,_CONST prevariable& e)
 {
-  // dvector cv1 = value(v1);
-  double ce = value(e);
+  //dvector cv1=value(v1);
+  double ce=value(e);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = pow(v1.elem_value(i),ce);
+    vtmp.elem_value(i)=pow(v1.elem_value(i),ce);
   }
 
   save_identifier_string("ddg");
@@ -513,28 +513,28 @@ dvar_vector pow(_CONST dvar_vector& v1,_CONST prevariable& e)
  */
 void DF_dvdvpow(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 
   verify_identifier_string("eeg");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos = restore_dvar_vector_position();
-  dvector v1 = restore_dvar_vector_value(v1pos);
-  prevariable_position epos = restore_prevariable_position();
-  double e = restore_prevariable_value();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position v1pos=restore_dvar_vector_position();
+  dvector v1=restore_dvar_vector_value(v1pos);
+  prevariable_position epos=restore_prevariable_position();
+  double e=restore_prevariable_value();
   verify_identifier_string("ddg");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  double dfe = 0.;
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  double dfe=0.;
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
-    double tmp = pow(v1.elem(i),e-1);
-    // vtmp.elem(i) = pow(value(v1.elem(i)),e);
-    dfv1(i) = dfvtmp(i)*e*tmp;
+    double tmp=pow(v1.elem(i),e-1);
+    //vtmp.elem(i)=pow(value(v1.elem(i)),e);
+    dfv1(i)=dfvtmp(i)*e*tmp;
     dfe+=dfvtmp(i)*v1.elem(i)*tmp*log(v1.elem(i));
   }
   dfv1.save_dvector_derivatives(v1pos);
   save_double_derivative(dfe,epos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 void DF_dvcpow(void);
@@ -545,11 +545,11 @@ void DF_dvcpow(void);
  */
 dvar_vector pow(_CONST dvar_vector& v1,int e)
 {
-  // dvector cv1 = value(v1);
+  //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = pow(v1.elem_value(i),e);
+    vtmp.elem_value(i)=pow(v1.elem_value(i),e);
   }
 
   save_identifier_string("ddf");
@@ -569,22 +569,22 @@ dvar_vector pow(_CONST dvar_vector& v1,int e)
  */
 void DF_dvcpow(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("eef");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v1pos = restore_dvar_vector_position();
-  double e = restore_double_value();
-  dvector v1 = restore_dvar_vector_value(v1pos);
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position v1pos=restore_dvar_vector_position();
+  double e=restore_double_value();
+  dvector v1=restore_dvar_vector_value(v1pos);
   verify_identifier_string("ddf");
   dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
-    // vtmp.elem(i) = sin(value(v1.elem(i))));
-    dfv1(i) = dfvtmp(i)*e*pow(v1.elem(i),e-1);
+    //vtmp.elem(i)=sin(value(v1.elem(i))));
+    dfv1(i)=dfvtmp(i)*e*pow(v1.elem(i),e-1);
   }
   dfv1.save_dvector_derivatives(v1pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 
 void DF_cdvpow(void);
@@ -595,12 +595,12 @@ void DF_cdvpow(void);
  */
 dvar_vector pow(_CONST dvector& v1,_CONST prevariable& e)
 {
-  // dvector cv1 = value(v1);
-  double ce = value(e);
+  //dvector cv1=value(v1);
+  double ce=value(e);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
-  for (int i = v1.indexmin();i<=v1.indexmax();i++)
+  for (int i=v1.indexmin();i<=v1.indexmax();i++)
   {
-    vtmp.elem_value(i) = pow(v1.elem(i),ce);
+    vtmp.elem_value(i)=pow(v1.elem(i),ce);
   }
 
   save_identifier_string("eddg");
@@ -621,37 +621,37 @@ dvar_vector pow(_CONST dvector& v1,_CONST prevariable& e)
  */
 void DF_cdvpow(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 
   verify_identifier_string("feeg");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dfvtmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvector_position v1pos = restore_dvector_position();
-  dvector v1 = restore_dvector_value(v1pos);
-  prevariable_position epos = restore_prevariable_position();
-  double e = restore_prevariable_value();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dfvtmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvector_position v1pos=restore_dvector_position();
+  dvector v1=restore_dvector_value(v1pos);
+  prevariable_position epos=restore_prevariable_position();
+  double e=restore_prevariable_value();
   verify_identifier_string("eddg");
-  // dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
-  double dfe = 0.;
-  for (int i = dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
+  //dvector dfv1(dfvtmp.indexmin(),dfvtmp.indexmax());
+  double dfe=0.;
+  for (int i=dfvtmp.indexmin();i<=dfvtmp.indexmax();i++)
   {
-    double tmp = pow(v1.elem(i),e);
-    // vtmp.elem(i) = pow(value(v1.elem(i)),e);
-    // dfv1(i) = dfvtmp(i)*e*tmp;
+    double tmp=pow(v1.elem(i),e);
+    //vtmp.elem(i)=pow(value(v1.elem(i)),e);
+    //dfv1(i)=dfvtmp(i)*e*tmp;
     dfe+=dfvtmp(i)*tmp*log(v1.elem(i));
   }
-  // dfv1.save_dvector_derivatives(v1pos);
+  //dfv1.save_dvector_derivatives(v1pos);
   save_double_derivative(dfe,epos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }
 dvar_vector pow(const dvector& x,const dvar_vector& a)
 {
     RETURN_ARRAYS_INCREMENT();	
 	dvar_vector y(x.indexmin(), x.indexmax());
 
-	for(int i = x.indexmin(); i<=x.indexmax(); i++)
+	for(int i=x.indexmin(); i<=x.indexmax(); i++)
 	{
-		y(i) = pow(x(i),a(i));
+		y(i)=pow(x(i),a(i));
 	}	
 
 	RETURN_ARRAYS_DECREMENT();	

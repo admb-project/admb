@@ -18,14 +18,14 @@
   Computes psum.
 */
 #define GET_PSUM \
-          for (j = 1;j<=ndim;j++) {\
-          for (sum = 0.0,i = 1;i<=mpts;i++) sum += p[i][j];\
-          psum[j] = sum;}
+          for (j=1;j<=ndim;j++) {\
+          for (sum=0.0,i=1;i<=mpts;i++) sum += p[i][j];\
+          psum[j]=sum;}
 
 /** \def SWAP(a,b)
   Reverses a and b
 */
-#define SWAP(a,b) {swap = (a);(a) = (b);(b) = swap;}
+#define SWAP(a,b) {swap=(a);(a)=(b);(b)=swap;}
 
 
 /** Nelder-Mead simplex alogrithm.
@@ -44,28 +44,28 @@
 void function_minimizer::adamoeba(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, int ndim,
   double ftol,int nfunk)
 {
-  dmatrix& p = (dmatrix&) _p;
-  dvector& y = (dvector&) _y;
-  int i,ihi,ilo,inhi,j,mpts = ndim+1;
+  dmatrix& p=(dmatrix&) _p;
+  dvector& y=(dvector&) _y;
+  int i,ihi,ilo,inhi,j,mpts=ndim+1;
   double rtol,sum,swap,ysave,ytry;
 
   dvector psum(1,ndim);
-  nfunk = 0;
+  nfunk=0;
   GET_PSUM
   for (;;) {
-    ilo = 1;
-    ihi = y[1]>y[2] ? (inhi = 2,1) : (inhi = 1,2);
-    for (i = 1;i<=mpts;i++) {
-      if (y[i] <= y[ilo]) ilo = i;
+    ilo=1;
+    ihi = y[1]>y[2] ? (inhi=2,1) : (inhi=1,2);
+    for (i=1;i<=mpts;i++) {
+      if (y[i] <= y[ilo]) ilo=i;
       if (y[i] > y[ihi]) {
-        inhi = ihi;
-        ihi = i;
-      } else if (y[i] > y[inhi] && i != ihi) inhi = i;
+        inhi=ihi;
+        ihi=i;
+      } else if (y[i] > y[inhi] && i != ihi) inhi=i;
     }
-    rtol = 2.0*fabs(y[ihi]-y[ilo])/(fabs(y[ihi])+fabs(y[ilo]));
+    rtol=2.0*fabs(y[ihi]-y[ilo])/(fabs(y[ihi])+fabs(y[ilo]));
     if (rtol < ftol) {
       SWAP(y[1],y[ilo])
-      for (i = 1;i<=ndim;i++) SWAP(p[1][i],p[ilo][i])
+      for (i=1;i<=ndim;i++) SWAP(p[1][i],p[ilo][i])
       break;
     }
     if (nfunk >= NMAX)
@@ -73,25 +73,25 @@ void function_minimizer::adamoeba(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, 
 	cerr << "NMAX exceeded" << endl;
     }
     nfunk += 2;
-    ytry = amxxx(p,y,psum,ndim,ihi,-1.0);
+    ytry=amxxx(p,y,psum,ndim,ihi,-1.0);
     if (ytry <= y[ilo])
-      ytry = amxxx(p,y,psum,ndim,ihi,2.0);
+      ytry=amxxx(p,y,psum,ndim,ihi,2.0);
     else if (ytry >= y[inhi]) {
-      ysave = y[ihi];
-      ytry = amxxx(p,y,psum,ndim,ihi,0.5);
+      ysave=y[ihi];
+      ytry=amxxx(p,y,psum,ndim,ihi,0.5);
       if (ytry >= ysave) {
-        for (i = 1;i<=mpts;i++) {
+        for (i=1;i<=mpts;i++) {
           if (i != ilo) {
-            for (j = 1;j<=ndim;j++)
-              p[i][j] = psum[j] = 0.5*(p[i][j]+p[ilo][j]);
+            for (j=1;j<=ndim;j++)
+              p[i][j]=psum[j]=0.5*(p[i][j]+p[ilo][j]);
 
-            dvariable vf = 0.0;
-            vf = initial_params::reset(dvar_vector(psum));
-            *objective_function_value::pobjfun = 0.0;
+            dvariable vf=0.0;
+            vf=initial_params::reset(dvar_vector(psum));
+            *objective_function_value::pobjfun=0.0;
             userfunction();
             vf+=*objective_function_value::pobjfun;
 
-            y[i] = value(vf);
+            y[i]=value(vf);
 
           }
         }
@@ -114,30 +114,30 @@ void function_minimizer::adamoeba(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, 
 double function_minimizer::amxxx(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, BOR_CONST dvector& _psum, int ndim,
   int ihi, double fac)
 {
-  dmatrix& p = (dmatrix&) _p;
-  dvector& y = (dvector&) _y;
-  dvector& psum = (dvector&) _psum;
+  dmatrix& p=(dmatrix&) _p;
+  dvector& y=(dvector&) _y;
+  dvector& psum=(dvector&) _psum;
 	int j;
 	double fac1,fac2,ytry;
 
 	dvector ptry(1,ndim);
-	fac1 = (1.0-fac)/ndim;
-	fac2 = fac1-fac;
-	for (j = 1;j<=ndim;j++) ptry[j] = psum[j]*fac1-p[ihi][j]*fac2;
+	fac1=(1.0-fac)/ndim;
+	fac2=fac1-fac;
+	for (j=1;j<=ndim;j++) ptry[j]=psum[j]*fac1-p[ihi][j]*fac2;
 
 
-        dvariable vf = 0.0;
-        vf = initial_params::reset(dvar_vector(ptry));
-        *objective_function_value::pobjfun = 0.0;
+        dvariable vf=0.0;
+        vf=initial_params::reset(dvar_vector(ptry));
+        *objective_function_value::pobjfun=0.0;
         userfunction();
         vf+=*objective_function_value::pobjfun;
-	ytry = value(vf);
+	ytry=value(vf);
 
 	if (ytry < y[ihi]) {
-		y[ihi] = ytry;
-		for (j = 1;j<=ndim;j++) {
+		y[ihi]=ytry;
+		for (j=1;j<=ndim;j++) {
 			psum[j] += ptry[j]-p[ihi][j];
-			p[ihi][j] = ptry[j];
+			p[ihi][j]=ptry[j];
 		}
 	}
 	return ytry;
@@ -228,8 +228,8 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
 //    2, iteration terminated because KCOUNT was exceeded without convergence.
 //
 {
-  dvector& start = (dvector&) _start;
-  dvector& xmin = (dvector&) _xmin;
+  dvector& start=(dvector&) _start;
+  dvector& xmin=(dvector&) _xmin;
   int slb = start.indexmin();
   int xlb = xmin.indexmin();
   start.shift(0);
@@ -237,9 +237,9 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
 
   int i;
   dvector step(0,n-1);
-  for(i = 0;i<n;i++)
+  for(i=0;i<n;i++)
   {
-    step(i) = delta;
+    step(i)=delta;
   }
 
   int konvge = 10;
@@ -301,7 +301,7 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
   rq = reqmin * dn;
 
   // Initial or restarted loop.
-  dvariable vf = 0.0;
+  dvariable vf=0.0;
 
   for ( ; ; )
   {
@@ -310,9 +310,9 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
       p[i+n*n] = start[i];
     }
     start.shift(1);
-    vf = 0.0;
-    vf = initial_params::reset(dvar_vector(start));
-    *objective_function_value::pobjfun = 0.0;
+    vf=0.0;
+    vf=initial_params::reset(dvar_vector(start));
+    *objective_function_value::pobjfun=0.0;
     userfunction();
     vf+=*objective_function_value::pobjfun;
     y[n] = value(vf);
@@ -329,12 +329,12 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
         p[i+j*n] = start[i];
       }
       start.shift(1);
-      vf = 0.0;
-      vf = initial_params::reset(dvar_vector(start));
-      *objective_function_value::pobjfun = 0.0;
+      vf=0.0;
+      vf=initial_params::reset(dvar_vector(start));
+      *objective_function_value::pobjfun=0.0;
       userfunction();
       vf+=*objective_function_value::pobjfun;
-      y[j] = value(vf);
+      y[j]=value(vf);
       start.shift(0);
 
       *icount = *icount + 1;
@@ -394,9 +394,9 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
         pstar[i] = pbar[i] + rcoeff * ( pbar[i] - p[i+ihi*n] );
       }
       pstar.shift(1);
-      vf = 0.0;
-      vf = initial_params::reset(dvar_vector(pstar));
-      *objective_function_value::pobjfun = 0.0;
+      vf=0.0;
+      vf=initial_params::reset(dvar_vector(pstar));
+      *objective_function_value::pobjfun=0.0;
       userfunction();
       vf+=*objective_function_value::pobjfun;
       ystar = value(vf);
@@ -412,9 +412,9 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
           p2star[i] = pbar[i] + ecoeff * ( pstar[i] - pbar[i] );
         }
         p2star.shift(1);
-        vf = 0.0;
-        vf = initial_params::reset(dvar_vector(p2star));
-        *objective_function_value::pobjfun = 0.0;
+        vf=0.0;
+        vf=initial_params::reset(dvar_vector(p2star));
+        *objective_function_value::pobjfun=0.0;
         userfunction();
         vf+=*objective_function_value::pobjfun;
         y2star = value(vf);
@@ -472,9 +472,9 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
             p2star[i] = pbar[i] + ccoeff * ( p[i+ihi*n] - pbar[i] );
           }
           p2star.shift(1);
-          vf = 0.0;
-          vf = initial_params::reset(dvar_vector(p2star));
-          *objective_function_value::pobjfun = 0.0;
+          vf=0.0;
+          vf=initial_params::reset(dvar_vector(p2star));
+          *objective_function_value::pobjfun=0.0;
           userfunction();
           vf+=*objective_function_value::pobjfun;
           y2star = value(vf);
@@ -493,9 +493,9 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
                 xmin[i] = p[i+j*n];
               }
               xmin.shift(1);
-              vf = 0.0;
-              vf = initial_params::reset(dvar_vector(xmin));
-              *objective_function_value::pobjfun = 0.0;
+              vf=0.0;
+              vf=initial_params::reset(dvar_vector(xmin));
+              *objective_function_value::pobjfun=0.0;
               userfunction();
               vf+=*objective_function_value::pobjfun;
               y[j] = value(vf);
@@ -536,9 +536,9 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
             p2star[i] = pbar[i] + ccoeff * ( pstar[i] - pbar[i] );
           }
           p2star.shift(1);
-          vf = 0.0;
-          vf = initial_params::reset(dvar_vector(p2star));
-          *objective_function_value::pobjfun = 0.0;
+          vf=0.0;
+          vf=initial_params::reset(dvar_vector(p2star));
+          *objective_function_value::pobjfun=0.0;
           userfunction();
           vf+=*objective_function_value::pobjfun;
           y2star = value(vf);
@@ -624,9 +624,9 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
       del = step[i] * eps;
       xmin[i] = xmin[i] + del;
       xmin.shift(1);
-      vf = 0.0;
-      vf = initial_params::reset(dvar_vector(xmin));
-      *objective_function_value::pobjfun = 0.0;
+      vf=0.0;
+      vf=initial_params::reset(dvar_vector(xmin));
+      *objective_function_value::pobjfun=0.0;
       userfunction();
       vf+=*objective_function_value::pobjfun;
       z = value(vf);
@@ -640,9 +640,9 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
       }
       xmin[i] = xmin[i] - del - del;
       xmin.shift(1);
-      vf = 0.0;
-      vf = initial_params::reset(dvar_vector(xmin));
-      *objective_function_value::pobjfun = 0.0;
+      vf=0.0;
+      vf=initial_params::reset(dvar_vector(xmin));
+      *objective_function_value::pobjfun=0.0;
       userfunction();
       vf+=*objective_function_value::pobjfun;
       z = value(vf);

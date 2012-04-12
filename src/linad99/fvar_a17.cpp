@@ -27,13 +27,13 @@ dvar_vector operator + (_CONST dvar_vector& v1,_CONST dvar_vector& v2)
       "prevariable operator + (_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
     ad_exit(1);
   }
-  // dvector cv1 = value(v1);
-  // dvector cv2 = value(v2);
+  //dvector cv1=value(v1);
+  //dvector cv2=value(v2);
   kkludge_object kkk;
   dvar_vector vtmp(v1.indexmin(),v1.indexmax(),kkk);
 #ifdef OPT_LIB
-    int mmin = v1.indexmin();
-    int mmax = v1.indexmax();
+    int mmin=v1.indexmin();
+    int mmax=v1.indexmax();
     const double * pv1=&v1.elem_value(mmin);
     const double * pv1m=&v1.elem_value(mmax);
     const double * pv2=&v2.elem_value(mmin);
@@ -46,21 +46,21 @@ dvar_vector operator + (_CONST dvar_vector& v1,_CONST dvar_vector& v2)
 
 #else
   #ifndef USE_ASSEMBLER
-    int mmin = v1.indexmin();
-    int mmax = v1.indexmax();
-    for (int i = mmin;i<=mmax;i++)
+    int mmin=v1.indexmin();
+    int mmax=v1.indexmax();
+    for (int i=mmin;i<=mmax;i++)
     {
-      vtmp.elem_value(i) = v1.elem_value(i)+v2.elem_value(i);
+      vtmp.elem_value(i)=v1.elem_value(i)+v2.elem_value(i);
     }
   #else
-    int min = v1.indexmin();
-    int n = v1.indexmax()-min+1;
+    int min=v1.indexmin();
+    int n=v1.indexmax()-min+1;
     dp_vector_add(&(vtmp.elem_value(min)),&(v1.elem_value(min)),
       &(v2.elem_value(min)),n);
   #endif
 #endif
 
-  // dvar_vector vtmp = nograd_assign(tmp);
+  //dvar_vector vtmp=nograd_assign(tmp);
 
   // The derivative list considerations
   save_identifier_string("bbbb");
@@ -79,29 +79,29 @@ dvar_vector operator + (_CONST dvar_vector& v1,_CONST dvar_vector& v2)
  */
 void dvdv_add(void)
 {
-  // int ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  // int ierr=fsetpos(gradient_structure::get_fp(),&filepos);
   verify_identifier_string("aaaa");
-  dvar_vector_position tmp_pos = restore_dvar_vector_position();
-  dvector dftmp = restore_dvar_vector_derivatives(tmp_pos);
-  dvar_vector_position v2pos = restore_dvar_vector_position();
-  dvar_vector_position v1pos = restore_dvar_vector_position();
+  dvar_vector_position tmp_pos=restore_dvar_vector_position();
+  dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
+  dvar_vector_position v2pos=restore_dvar_vector_position();
+  dvar_vector_position v1pos=restore_dvar_vector_position();
   verify_identifier_string("bbbb");
-  int mmin = dftmp.indexmin();
-  int mmax = dftmp.indexmax();
+  int mmin=dftmp.indexmin();
+  int mmax=dftmp.indexmax();
   dvector dfv1(mmin,mmax);
   dvector dfv2(mmin,mmax);
 #ifdef OPT_LIB
   memcpy(&dfv1.elem(mmin),&dftmp.elem(mmin),(mmax-mmin+1)*sizeof(double));
   memcpy(&dfv2.elem(mmin),&dftmp.elem(mmin),(mmax-mmin+1)*sizeof(double));
 #else
-  for (int i = dftmp.indexmin();i<=dftmp.indexmax();i++)
+  for (int i=dftmp.indexmin();i<=dftmp.indexmax();i++)
   {
-    // vtmp.elem(i) = value(v1.elem(i))+value(v2.elem(i));
-    dfv1(i) = dftmp.elem(i);
-    dfv2(i) = dftmp.elem(i);
+    //vtmp.elem(i)=value(v1.elem(i))+value(v2.elem(i));
+    dfv1(i)=dftmp.elem(i);
+    dfv2(i)=dftmp.elem(i);
   }
 #endif
   dfv1.save_dvector_derivatives(v1pos);
   dfv2.save_dvector_derivatives(v2pos);
-  // ierr = fsetpos(gradient_structure::get_fp(),&filepos);
+  //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
 }

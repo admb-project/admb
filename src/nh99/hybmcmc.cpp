@@ -54,11 +54,11 @@ int read_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dvector& h,
   dvector& m,BOR_CONST dvector& s,BOR_CONST dvector& parsave,long int& iseed,BOR_CONST double& size_scale);
 
 void make_preliminary_hist(BOR_CONST dvector& s,BOR_CONST dvector& m,int nsim,BOR_CONST dmatrix& values,
-  dmatrix& hist,BOR_CONST dvector& h,int slots,double total_spread,int probflag = 0);
+  dmatrix& hist,BOR_CONST dvector& h,int slots,double total_spread,int probflag=0);
 
 void add_hist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,BOR_CONST dmatrix& hist,
   dvector& mcmc_values,double llc,BOR_CONST dvector& h,int nslots,
-  double total_spreadd,int probflag = 0);
+  double total_spreadd,int probflag=0);
 
 void add_guihist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,
   BOR_CONST dmatrix& _hist,dvector& mcmcnumber_values,double llc,
@@ -84,7 +84,7 @@ dvector new_probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,B
 void new_probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
   dmatrix& ch,BOR_CONST double& wght,BOR_CONST dvector& _y,double pprobe, random_number_generator& rng);
 
-// void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,double d);
+//void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,double d);
 void  newton_raftery_bayes_estimate_new(double cbf,int ic,BOR_CONST dvector& lk,double d);
 
 void ad_update_mcmc_stats_report
@@ -92,9 +92,9 @@ void ad_update_mcmc_stats_report
 
 void ad_update_function_minimizer_report(int feval,int iter,int phase,
   double fval,double gmax,const char * cbuf);
-void ad_update_mcmc_report(dmatrix& m,int i,int j,int ff = 0);
+void ad_update_mcmc_report(dmatrix& m,int i,int j,int ff=0);
 void ad_update_mcmchist_report(dmatrix& mcmc_values,ivector& number_offsets,
-  dvector& mean_mcmc_values,dvector& h,int ff = 0);
+  dvector& mean_mcmc_values,dvector& h,int ff=0);
 
 void ADSleep(int);
 
@@ -105,26 +105,26 @@ void ADSleep(int);
 void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
   int restart_flag)
 {
-  robust_hybrid_flag = 0;
-  uostream * pofs_psave = NULL;
+  robust_hybrid_flag=0;
+  uostream * pofs_psave=NULL;
   dmatrix mcmc_display_matrix;
-  // int mcmc_save_index = 1; 
-  // int mcmc_wrap_flag = 0;
-  // int mcmc_gui_length = 10000;
-  int no_sd_mcmc = 0;
+  //int mcmc_save_index=1; 
+  //int mcmc_wrap_flag=0;
+  //int mcmc_gui_length=10000;
+  int no_sd_mcmc=0;
 
   
   int on2=-1;
-  int nvar1 = 0;
-  if ( (on2 = option_match(ad_comm::argc,ad_comm::argv,"-nosdmcmc"))>-1)
+  int nvar1=0;
+  if ( (on2=option_match(ad_comm::argc,ad_comm::argv,"-nosdmcmc"))>-1)
   {
-    no_sd_mcmc = 1;
+    no_sd_mcmc=1;
     
   }
   if (mcmc2_flag==1)
   {
     initial_params::restore_start_phase();
-    nvar1 = initial_params::nvarcalc(); // get the number of active parameters
+    nvar1=initial_params::nvarcalc(); // get the number of active parameters
   }
 
   if (stddev_params::num_stddev_params==0) 
@@ -134,58 +134,58 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
      return;
   }
   {
-    // ofstream of_bf("testbf");
+    //ofstream of_bf("testbf");
     
-    // if (adjm_ptr) set_labels_for_mcmc();
+    //if (adjm_ptr) set_labels_for_mcmc();
     
     ivector number_offsets;
     dvector lkvector;
-    // double current_bf = 0;
-    // double lcurrent_bf = 0;
-    // double size_scale = 1.0;
-    // double total_spread = 200;
-    // double total_spread = 2500;
-    // uostream * pofs_sd = NULL;
+    //double current_bf=0;
+    //double lcurrent_bf=0;
+    //double size_scale=1.0;
+    //double total_spread=200;
+    //double total_spread=2500;
+    //uostream * pofs_sd = NULL;
 
 
-    int nvar_x = 0;
+    int nvar_x=0;
 #if defined(USE_LAPLACE)
     initial_params::set_inactive_random_effects();
-    nvar_x = initial_params::nvarcalc(); 
+    nvar_x=initial_params::nvarcalc(); 
     initial_params::set_active_random_effects();
-    int nvar_re = initial_params::nvarcalc(); 
+    int nvar_re=initial_params::nvarcalc(); 
 #endif
 
 
-    int nvar = initial_params::nvarcalc(); // get the number of active parameters
-    int scov_option = 0;
+    int nvar=initial_params::nvarcalc(); // get the number of active parameters
+    int scov_option=0;
     dmatrix s_covar;
     dvector s_mean;
-    // int ncsim = 25000;
-    // int nslots = 800;
-    // int nslots = 3600;
-    // int initial_nsim = 4800;
-    // int ntmp = 0;
-    // int ncor = 0;
-    // double bfsum = 0;
-    // int ibfcount = 0;
+    //int ncsim=25000;
+    //int nslots=800;
+    //int nslots=3600;
+    //int initial_nsim=4800;
+    //int ntmp=0;
+    //int ncor=0;
+    //double bfsum=0;
+    //int ibfcount=0;
     double llbest;
     double lbmax;
   
-    scov_option = 1;
+    scov_option=1;
     s_covar.allocate(1,nvar,1,nvar);
     s_mean.allocate(1,nvar);
     s_mean.initialize();
     s_covar.initialize();
 
-    int ndvar = stddev_params::num_stddev_calc();
+    int ndvar=stddev_params::num_stddev_calc();
     /*int numdvar=*/stddev_params::num_stddev_number_calc();
 
 #if defined(USE_LAPLACE)
     if (mcmc2_flag==0)
     {
       initial_params::set_inactive_random_effects();
-      nvar = initial_params::nvarcalc(); // get the number of active parameters
+      nvar=initial_params::nvarcalc(); // get the number of active parameters
     }
 #endif
 
@@ -196,38 +196,38 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       independent_variables parsave(1,nvar);
 #endif
     dvector x(1,nvar);
-    // dvector scale(1,nvar);
+    //dvector scale(1,nvar);
     dmatrix values;
-    // int have_hist_flag = 0;
+    //int have_hist_flag=0;
     initial_params::xinit(x); 
     dvector pen_vector(1,nvar);
     {
       initial_params::reset(dvar_vector(x),pen_vector); 
-      // cout << pen_vector << endl << endl;
+      //cout << pen_vector << endl << endl;
     }
       
-    initial_params::mc_phase = 0;
-    // initial_params::stddev_scale(scale,x);
-    initial_params::mc_phase = 1;
+    initial_params::mc_phase=0;
+    //initial_params::stddev_scale(scale,x);
+    initial_params::mc_phase=1;
     dvector bmn(1,nvar);
     dvector mean_mcmc_values(1,ndvar);
     dvector s(1,ndvar);
     dvector h(1,ndvar);
-    // dvector h;
+    //dvector h;
     dvector square_mcmc_values(1,ndvar);
     square_mcmc_values.initialize();
     mean_mcmc_values.initialize();
     bmn.initialize();
-    int use_empirical_flag = 0;
-    int diag_option = 0;
-    // int topt = 0;
-    int hybnstep = 10;
-    double hybeps = 0.1;
+    int use_empirical_flag=0;
+    int diag_option=0;
+    //int topt=0;
+    int hybnstep=10;
+    double hybeps=0.1;
     double _hybeps=-1.0;
     int old_Hybrid_bounded_flag=-1;
 
     int on,nopt;
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-hyeps",nopt))>-1)
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hyeps",nopt))>-1)
     {
       if (!nopt)
       {
@@ -247,13 +247,13 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
     }
     if (_hybeps>0.0)
-      hybeps = _hybeps;
+      hybeps=_hybeps;
 
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1)
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hynstep",nopt))>-1)
     {
       if (nopt)
       {
-        int iii = atoi(ad_comm::argv[on+1]);
+        int iii=atoi(ad_comm::argv[on+1]);
         if (iii < 1 )
         {
           cerr << " -hynstep argument must be integer between > 0 --"
@@ -261,49 +261,49 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
         }
         else
         {
-          hybnstep = iii;
+          hybnstep=iii;
         }
       }
     }
 
-    if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
+    if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcdiag"))>-1)
     {
-      diag_option = 1;
+      diag_option=1;
       cout << " Setting covariance matrix to diagonal with entries " << dscale
            << endl;  
     }
-    int mcrestart_flag = option_match(ad_comm::argc,ad_comm::argv,"-mcr");
+    int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
     dmatrix S(1,nvar,1,nvar);
     dvector old_scale(1,nvar);
     int old_nvar;
     if (!diag_option)
     {
       int on,nopt;
-      int rescale_bounded_flag = 0;
-      double rescale_bounded_power = 0.5;
-      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcrb",nopt))>-1)
+      int rescale_bounded_flag=0;
+      double rescale_bounded_power=0.5;
+      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcrb",nopt))>-1)
       {
         if (nopt)
         {
-          int iii = atoi(ad_comm::argv[on+1]);
+          int iii=atoi(ad_comm::argv[on+1]);
           if (iii < 1 || iii > 9)
           {
             cerr << " -mcrb argument must be integer between 1 and 9 --"
                     " using default of 5" << endl;
-            rescale_bounded_power = 0.5;
+            rescale_bounded_power=0.5;
           }
           else
-            rescale_bounded_power = iii/10.0;
+            rescale_bounded_power=iii/10.0;
         }
         else
         {
-          rescale_bounded_power = 0.5;
+          rescale_bounded_power=0.5;
         }
-        rescale_bounded_flag = 1;
+        rescale_bounded_flag=1;
       }
-      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcec"))>-1)
+      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcec"))>-1)
       {
-        use_empirical_flag = 1;
+        use_empirical_flag=1;
       }
       if (use_empirical_flag)
       { 
@@ -342,46 +342,46 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
             cerr << "error reading from file " << tmpstring << endl;
             ad_exit(1);
           }
-          dvector tmp = read_old_scale(old_nvar);
-          old_scale = 1.0;
-          old_scale(1,old_nvar) = tmp;
+          dvector tmp=read_old_scale(old_nvar);
+          old_scale=1.0;
+          old_scale(1,old_nvar)=tmp;
         }
       }
       else
       {
         read_hessian_matrix_and_scale1(nvar,S,rescale_bounded_power,
           mcmc2_flag);
-        // read_hessian_matrix_and_scale(nvar,S,pen_vector);
+        //read_hessian_matrix_and_scale(nvar,S,pen_vector);
       }
 
       // maybe we dont want to do this?
       /*
       {  // scale covariance matrix for model space
         dmatrix tmp(1,nvar,1,nvar);
-        for (int i = 1;i<=nvar;i++)
+        for (int i=1;i<=nvar;i++)
         {
-          tmp(i,i) = S(i,i)*(scale(i)*scale(i));
-          for (int j = 1;j<i;j++)
+          tmp(i,i)=S(i,i)*(scale(i)*scale(i));
+          for (int j=1;j<i;j++)
           {
-            tmp(i,j) = S(i,j)*(scale(i)*scale(j));
-            tmp(j,i) = tmp(i,j);
+            tmp(i,j)=S(i,j)*(scale(i)*scale(j));
+            tmp(j,i)=tmp(i,j);
           }
         }
-        S = tmp;
+        S=tmp;
       }
       */
     }
     else
     {
       S.initialize();
-      for (int i = 1;i<=nvar;i++)
+      for (int i=1;i<=nvar;i++)
       {
-        S(i,i) = dscale;
+        S(i,i)=dscale;
       }
     }
     
     // for hybrid mcmc option always save output
-    // if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)
+    //if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)
     if ( mcrestart_flag>-1)
     {
       // check that nvar is correct
@@ -402,7 +402,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
           ad_exit(1);
         }
         // get last x vector from file
-        int sz = parsave.size()*sizeof(double);
+        int sz=parsave.size()*sizeof(double);
         // backup from end of file
         uis.seekg(-sz,ios::end);
         uis >> parsave;
@@ -414,14 +414,14 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
             << ad_comm::adprogram_name + adstring(".psv") << endl;
           ad_exit(1);
         }
-        int ii = 1;
+        int ii=1;
         dvector x0(1,nvar);
         initial_params::restore_all_values(parsave,ii);
-        // x0.initialize();
-        // dvector pen_vector(1,nvar);
-        // initial_params::reset(dvar_vector(parsave),pen_vector); 
-        // initial_params::xinit(x0);   
-        // cout << " x0 " << x0(x0.indexmin()) << endl;
+        //x0.initialize();
+        //dvector pen_vector(1,nvar);
+        //initial_params::reset(dvar_vector(parsave),pen_vector); 
+        //initial_params::xinit(x0);   
+        //cout << " x0 " << x0(x0.indexmin()) << endl;
       }
     } 
 
@@ -477,41 +477,41 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       initial_params::xinit(x0);   
       // cout << "starting with " << x0(x0.indexmin()) << " "
         //    << x0(x0.indexmax()) << endl;
-      int mctmp = initial_params::mc_phase;
-      initial_params::mc_phase = 0;
+      int mctmp=initial_params::mc_phase;
+      initial_params::mc_phase=0;
       initial_params::stddev_scale(current_scale,x);
-      initial_params::mc_phase = mctmp;
+      initial_params::mc_phase=mctmp;
       int i;
-      for (i = 1;i<=nvar;i++)
+      for (i=1;i<=nvar;i++)
       {
-        for (int j = 1;j<=nvar;j++)
+        for (int j=1;j<=nvar;j++)
         {
           S(i,j)*=old_scale(i)*old_scale(j);
         }
       }
-      for (i = 1;i<=nvar;i++)
+      for (i=1;i<=nvar;i++)
       {
-        for (int j = 1;j<=nvar;j++)
+        for (int j=1;j<=nvar;j++)
         {
           S(i,j)/=current_scale(i)*current_scale(j);
         }
       }
 
-      // cout << sort(eigenvalues(S)) << endl;
+      //cout << sort(eigenvalues(S)) << endl;
       dmatrix chd = choleski_decomp(S);
-      // dmatrix tchd = trans(chd);
-      // dmatrix chdinv = inv(chd);
-      // int sgn;
+      //dmatrix tchd = trans(chd);
+      //dmatrix chdinv=inv(chd);
+      //int sgn;
       // ***************************************************************
       // ***************************************************************
       // NEW HYBRID MCMC
       // ***************************************************************
       // ***************************************************************
       independent_variables z(1,nvar);
-      z = x0;
+      z=x0;
       gradient_structure::set_NO_DERIVATIVES();
       dvector g(1,nvar);
-      // cout << "initial ll value " << get_hybrid_monte_carlo_value(nvar,z,g)
+      //cout << "initial ll value " << get_hybrid_monte_carlo_value(nvar,z,g)
       //     << endl;
       dvector y(1,nvar);
       y.initialize();
@@ -524,8 +524,8 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
 #endif
 
       dvector p(1,nvar);  // momentum
-      int iseed = 2197;
-      if (iseed0) iseed = iseed0;
+      int iseed=2197;
+      if (iseed0) iseed=iseed0;
       if ( mcrestart_flag>-1)
       {
         ifstream ifs("hybrid_seed");
@@ -540,10 +540,10 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       ofstream ogs("sims");
       initial_params::xinit(x0);   
       
-      z = x0+chd*y;
+      z=x0+chd*y;
       /*double llc=*/get_hybrid_monte_carlo_value(nvar,z,g);
-      llbest = get_hybrid_monte_carlo_value(nvar,z,g);
-      lbmax = llbest;
+      llbest=get_hybrid_monte_carlo_value(nvar,z,g);
+      lbmax=llbest;
 
 
        int number_sims;
@@ -555,17 +555,17 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
        {
          number_sims=  nmcmc;
        }
-       // double hybeps2 = 0.5*hybeps;
-       double beginprior = get_hybrid_monte_carlo_value(nvar,z,g);
-       dvector Fbegin = g*chd;
+       //double hybeps2=0.5*hybeps;
+       double beginprior=get_hybrid_monte_carlo_value(nvar,z,g);
+       dvector Fbegin=g*chd;
        // use trand(chd) ?
-       // dvector Fbegin = tchd*g;
+       //dvector Fbegin=tchd*g;
        dvector F(1,nvar);
-       F = Fbegin;
+       F=Fbegin;
        p.fill_randn(rng);
        if (robust_hybrid_flag)
        {
-         double choice = randu(rng);
+         double choice=randu(rng);
          if (choice<0.05) 
          {
            p*=3.0;
@@ -573,101 +573,101 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
        }
        dmatrix xvalues(1,number_sims,1,nvar);
        dvector yold(1,nvar);
-       yold = y;
+       yold=y;
        double pprob;
        if (robust_hybrid_flag==0)
        {
-         pprob = 0.5*norm2(p);
+         pprob=0.5*norm2(p);
        }
        else
        {
-         double r2 = 0.5*norm2(p);
+         double r2=0.5*norm2(p);
          pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
        }
-       double Hbegin = beginprior+pprob;
+       double Hbegin=beginprior+pprob;
        double tmpprior;
-       int ii = 1;
+       int ii=1;
        initial_params::copy_all_values(parsave,ii);
        // detmine whether to go forward or backward
        
-       double iaccept = 0.0;
-       for (int is = 1;is<=number_sims;is++)
+       double iaccept=0.0;
+       for (int is=1;is<=number_sims;is++)
        {
-         int forflag = 1;
-         // double rnd = randu(rng);
-         // if (rnd<0.5) forflag = 0;
+         int forflag=1;
+         //double rnd=randu(rng);
+         //if (rnd<0.5) forflag=0;
          double hstep,hstep2;
-         // if (forflag)
-           hstep = hybeps;
-         // else
+         //if (forflag)
+           hstep=hybeps;
+         //else
          // hstep=-hybeps;
-         hstep2 = 0.5*hstep;
+         hstep2=0.5*hstep;
          // randomize the number of steps
-         double rnd2 = randn(rng);
-         int hnsteps = hybnstep*exp(.2*rnd2);
+         double rnd2=randn(rng);
+         int hnsteps=hybnstep*exp(.2*rnd2);
          
-         for (int i = 1;i<=hnsteps;i++)
+         for (int i=1;i<=hnsteps;i++)
          {
            if (forflag==1)
            {
-             dvector phalf = p-hstep2*F;
+             dvector phalf=p-hstep2*F;
              if (robust_hybrid_flag==0)
              {
                y+=hstep*phalf;
              }
              else
              {
-               // pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
-               double r2 = 0.5*norm2(phalf);
-               double z = 0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0);
-               double xx = (0.95*exp(-r2)+0.05/27.0*exp(-r2/9.0))/z;
-               dvector zz = xx*phalf;
+               //pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
+               double r2=0.5*norm2(phalf);
+               double z=0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0);
+               double xx=(0.95*exp(-r2)+0.05/27.0*exp(-r2/9.0))/z;
+               dvector zz=xx*phalf;
                y+=hstep*zz;
              }
-             z = x0+chd*y;
-             tmpprior = get_hybrid_monte_carlo_value(nvar,z,g);
-             F = g*chd;
-             // F = tchd*g;
-             p = phalf-hstep2*F;
+             z=x0+chd*y;
+             tmpprior=get_hybrid_monte_carlo_value(nvar,z,g);
+             F=g*chd;
+             //F=tchd*g;
+             p=phalf-hstep2*F;
            }
            else
            {
-             dvector phalf = p+hstep2*F;
+             dvector phalf=p+hstep2*F;
              if (robust_hybrid_flag==0)
              {
                y-=hstep*phalf;
              }
              else
              {
-               double r2 = 0.5*norm2(phalf);
-               double z = 0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0);
-               dvector zz = (0.95*exp(-r2)+0.05/27.0*exp(-r2/9.0))/z*phalf;
+               double r2=0.5*norm2(phalf);
+               double z=0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0);
+               dvector zz=(0.95*exp(-r2)+0.05/27.0*exp(-r2/9.0))/z*phalf;
                y-=hstep*phalf;
              }
-             z = x0+chd*y;
-             tmpprior = get_hybrid_monte_carlo_value(nvar,z,g);
-             F = g*chd;
-             // F = tchd*g;
-             p = phalf+hstep2*F;
+             z=x0+chd*y;
+             tmpprior=get_hybrid_monte_carlo_value(nvar,z,g);
+             F=g*chd;
+             //F=tchd*g;
+             p=phalf+hstep2*F;
            }
          }
          if (robust_hybrid_flag==0)
          {
-           pprob = 0.5*norm2(p);
+           pprob=0.5*norm2(p);
          }
          else
          {
-           double r2 = 0.5*norm2(p);
+           double r2=0.5*norm2(p);
            pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
          }
-         double Ham = tmpprior+pprob;
-         double rr = randu(rng);
-         double pp = exp(Hbegin-Ham);
+         double Ham=tmpprior+pprob;
+         double rr=randu(rng);
+         double pp=exp(Hbegin-Ham);
          p.fill_randn(rng); 
-         // p*=1.2;
+         //p*=1.2;
          if (robust_hybrid_flag)
          {
-           double choice = randu(rng);
+           double choice=randu(rng);
            if (choice<0.05) 
            {
              p*=3.0;
@@ -675,11 +675,11 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
          }
          if (robust_hybrid_flag==0)
          {
-           pprob = 0.5*norm2(p);
+           pprob=0.5*norm2(p);
          }
          else
          {
-           double r2 = 0.5*norm2(p);
+           double r2=0.5*norm2(p);
            pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
          }
          if ((is%50)==1)
@@ -689,36 +689,36 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
          if (rr<pp)
          {
            iaccept++;
-           yold = y;
-           beginprior = tmpprior;
-           Hbegin = beginprior+pprob;
-           Fbegin = F;
-           ii = 1;
+           yold=y;
+           beginprior=tmpprior;
+           Hbegin=beginprior+pprob;
+           Fbegin=F;
+           ii=1;
            initial_params::copy_all_values(parsave,ii);
          }
          else
          {
-           y = yold;
-           z = x0+chd*y;
-           Hbegin = beginprior+pprob;
-           F = Fbegin;
+           y=yold;
+           z=x0+chd*y;
+           Hbegin=beginprior+pprob;
+           F=Fbegin;
          }
          (*pofs_psave) << parsave;
        }
       // cout << " saved  " << parsave(parsave.indexmin()) << " "
         //    << parsave(parsave.indexmax()) << endl;
-       // double ll = get_hybrid_monte_carlo_value(nvar,parsave,g);
-       // cout << "ll  " << ll << endl;
+       //double ll=get_hybrid_monte_carlo_value(nvar,parsave,g);
+       //cout << "ll  " << ll << endl;
     // ***************************************************************
     // ***************************************************************
     // ***************************************************************
     ofstream ofs("hybrid_seed");
-    int seed = (int) (10000*randu(rng));
+    int seed=(int) (10000*randu(rng));
     ofs << seed;
     if (pofs_psave)
     {
       delete pofs_psave;
-      pofs_psave = NULL;
+      pofs_psave=NULL;
     }
   }
 }
@@ -730,28 +730,28 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
 double function_minimizer::get_hybrid_monte_carlo_value(int nvar, 
   const independent_variables& x,dvector& g)
 {
-  // initial_params::xinit(x);   
-  double f = 0.0;
+  //initial_params::xinit(x);   
+  double f=0.0;
 #if defined(USE_LAPLACE)
   if (mcmc2_flag==0 && lapprox)
   {
     cerr << "error not implemented" << endl;
     ad_exit(1);
-    g = (*lapprox)(x,f,this);
+    g=(*lapprox)(x,f,this);
   }
   else
   {
 #endif
-    dvariable vf = 0.0;
-    dvar_vector vx = dvar_vector(x);
-    vf = initial_params::reset(vx);
-    *objective_function_value::pobjfun = 0.0;
+    dvariable vf=0.0;
+    dvar_vector vx=dvar_vector(x);
+    vf=initial_params::reset(vx);
+    *objective_function_value::pobjfun=0.0;
     userfunction();
     dvar_vector d(1,nvar);
     initial_params::stddev_vscale(d,vx);
     vf-=sum(log(d));
     vf+=*objective_function_value::pobjfun;
-    f = value(vf);
+    f=value(vf);
     gradcalc(nvar,g);
 #if defined(USE_LAPLACE)
   }

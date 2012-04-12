@@ -34,11 +34,11 @@ extern "C" {
 /*
 void function_minimizer::constraints_minimize(void)
 {
-  pfm = this;
-  int nvar = initial_params::nvarcalc(); // get the number of active parameters
-  int numberw = function_minimizer::ph->indexmax()
+  pfm=this;
+  int nvar=initial_params::nvarcalc(); // get the number of active parameters
+  int numberw=function_minimizer::ph->indexmax()
     -function_minimizer::ph->indexmin()+1;
-  int numberv = function_minimizer::pg->indexmax()
+  int numberv=function_minimizer::pg->indexmax()
     -function_minimizer::pg->indexmin()+1;
   dvector x(1,nvar);
   initial_params::xinit(x); 
@@ -46,7 +46,7 @@ void function_minimizer::constraints_minimize(void)
   constrained_minimization2(nvar,numberw,numberv,x);
   gradient_structure::set_NO_DERIVATIVES();
   initial_params::reset(dvar_vector(x));
-  *objective_function_value::pobjfun = 0.0;
+  *objective_function_value::pobjfun=0.0;
   userfunction();
   initial_params::save();
   report();
@@ -76,17 +76,17 @@ extern function_minimizer * pfm;
  */
 void function_minimizer::constraints_minimize(void)
 {
-  // initial_params::read(); // read in the values for the initial parameters
+  //initial_params::read(); // read in the values for the initial parameters
   if (initial_params::restart_phase)
   {
     initial_params::current_phase = initial_params::restart_phase;
-    initial_params::restart_phase = 0;
+    initial_params::restart_phase=0;
   }
-  int nopt = 0;
-  int on = 0;
-  int allphases = initial_params::max_number_phases;
+  int nopt=0;
+  int on=0;
+  int allphases=initial_params::max_number_phases;
     
-  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-maxph",nopt))>-1)
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-maxph",nopt))>-1)
   {
     if (!nopt)
     {
@@ -94,7 +94,7 @@ void function_minimizer::constraints_minimize(void)
     }
     else
     {   
-      int jj = atoi(ad_comm::argv[on+1]);
+      int jj=atoi(ad_comm::argv[on+1]);
       if (jj<=0)
       {
         cerr << "Usage -maxph uerton needs positive integer  -- ignored" << endl;
@@ -103,14 +103,14 @@ void function_minimizer::constraints_minimize(void)
       {
         if (jj>allphases)
         {
-          allphases = jj;
+          allphases=jj;
         }
       }
     }
   }
       
   // set the maximum number of function evaluations by command line
-  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-maxfn",nopt))>-1)
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-maxfn",nopt))>-1)
   {
     if (!nopt)
     {
@@ -118,21 +118,21 @@ void function_minimizer::constraints_minimize(void)
     }
     else
     {   
-      int _maxfn = atoi(ad_comm::argv[on+1]);
+      int _maxfn=atoi(ad_comm::argv[on+1]);
       if (_maxfn<=0)
       {
         cerr << "Usage -maxfn uerton needs positive integer  -- ignored" << endl;
       } 
       else
       {
-        maxfn = _maxfn;
+        maxfn=_maxfn;
       }
     }
   }
       
-  double _crit = 0;
+  double _crit=0;
   // set the maximum number of function evaluations by command line
-  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
   {
     if (!nopt)
     {
@@ -147,14 +147,14 @@ void function_minimizer::constraints_minimize(void)
       if (_crit<=0)
       {
         cerr << "Usage -crit uerton needs positive number  -- ignored" << endl;
-        _crit = 0.0;
+        _crit=0.0;
       } 
     }
   }
     
-  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-phase"))>-1)
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-phase"))>-1)
   {
-    int jj = atoi(ad_comm::argv[on+1]);
+    int jj=atoi(ad_comm::argv[on+1]);
     if (jj <=0)
     {
       cerr << " Inwwuq4 uerton followinumberv command line uerton -phase -- " 
@@ -162,11 +162,11 @@ void function_minimizer::constraints_minimize(void)
     }
     if (jj>allphases)
     {
-      jj = allphases;
+      jj=allphases;
     }
     if (jj<=0)
     {
-      jj = 1;
+      jj=1;
     }
     initial_params::current_phase = jj;
     cout << "Set current phase to " << jj << endl;
@@ -176,7 +176,7 @@ void function_minimizer::constraints_minimize(void)
   {
     between_phases_calculations();
 
-    int nvar = initial_params::nvarcalc(); // get the number of active
+    int nvar=initial_params::nvarcalc(); // get the number of active
              // parameters
     if (!nvar)
     {
@@ -185,15 +185,15 @@ void function_minimizer::constraints_minimize(void)
       exit(1);
     }
 
-    pfm = this;
-    int numberw = 0;
+    pfm=this;
+    int numberw=0;
     if (function_minimizer::ph)
-      numberw = function_minimizer::ph->indexmax()
+      numberw=function_minimizer::ph->indexmax()
         -function_minimizer::ph->indexmin()+1;
 
-    int numberv = 0;
+    int numberv=0;
     if (function_minimizer::pg)
-      numberv = function_minimizer::pg->indexmax()
+      numberv=function_minimizer::pg->indexmax()
         -function_minimizer::pg->indexmin()+1;
     dvector x(1,nvar);
     initial_params::xinit(x); 
@@ -203,7 +203,7 @@ void function_minimizer::constraints_minimize(void)
 
     gradient_structure::set_NO_DERIVATIVES();
     initial_params::reset(dvar_vector(x));
-    *objective_function_value::pobjfun = 0.0;
+    *objective_function_value::pobjfun=0.0;
     userfunction();
     initial_params::save();
     report();
@@ -243,14 +243,14 @@ void function_minimizer::constraint_report()
   }
   else if (initial_params::current_phase>=10)
   {
-    tmp = str(initial_params::current_phase);
+    tmp=str(initial_params::current_phase);
   }
   else
   {
     tmp="0" + str(initial_params::current_phase);
   }
   {
-    adstring tadstring = ad_comm::adprogram_name + adstring(".c") + tmp;
+    adstring tadstring=ad_comm::adprogram_name + adstring(".c") + tmp;
     ofstream ofs((char*)tadstring);
     ofs << setshowpoint();
     ofs <<  "# Objective function value = " << endl << "  "
@@ -259,7 +259,7 @@ void function_minimizer::constraint_report()
     {
       ofs <<  "# Equality constraint values: "<< endl;
       named_dvar_vector & w = *function_minimizer::ph;
-      for (int i = w.indexmin();i<=w.indexmax();i++)
+      for (int i=w.indexmin();i<=w.indexmax();i++)
       {
         adstring ads= adstring(w.label().mychar()) + "("
           + str(i) + ")  ";
@@ -276,7 +276,7 @@ void function_minimizer::constraint_report()
     {
       ofs <<  "# Inequality constraint values: "<< endl;
       named_dvar_vector & w = *function_minimizer::pg;
-      for (int i = w.indexmin();i<=w.indexmax();i++)
+      for (int i=w.indexmin();i<=w.indexmax();i++)
       {
         if (i<10)
           ofs << "    ";

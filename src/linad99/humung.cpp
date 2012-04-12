@@ -27,7 +27,7 @@
 void humungous_pointer::free(void)
 {
   ptr-=adjustment;
-  adjustment = 0;
+  adjustment=0;
   #if (defined(__BORLANDC__))
     #if (!defined(DOSX286) && !defined(DOS386))
       farfree(ptr);
@@ -45,7 +45,7 @@ void humungous_pointer::free(void)
   #if (!defined(__BORLANDC__)&& !defined(__ZTC__))
     ::free(ptr);
   #endif
-  ptr = NULL;
+  ptr=NULL;
 }
 
 /**
@@ -55,8 +55,8 @@ void humungous_pointer::free(void)
 void humungous_pointer::adjust(int a)
 {
   ptr+=a;
-  adjustment = a;
-  // ptr = NULL;
+  adjustment=a;
+  //ptr=NULL;
 }
 
 /**
@@ -65,8 +65,8 @@ void humungous_pointer::adjust(int a)
  */
 humungous_pointer::humungous_pointer()
 {
-  adjustment = 0;
-  // ptr = NULL;
+  adjustment=0;
+  //ptr=NULL;
 }
 
 /**
@@ -133,9 +133,9 @@ humungous_pointer humungous_pointer::operator + (unsigned long int& offset)
 {
   humungous_pointer tmp;
   #if (defined(__ZTC__) && !defined(DOS386))
-    tmp.ptr = (char*)(_farptr_fromlong(_farptr_tolong(ptr)+offset));
+    tmp.ptr=(char*)(_farptr_fromlong(_farptr_tolong(ptr)+offset));
   #else
-    tmp.ptr = (ptr+offset);
+    tmp.ptr=(ptr+offset);
   #endif
   return tmp;
 }
@@ -148,11 +148,11 @@ humungous_pointer& humungous_pointer::operator += (unsigned long int& offset)
 // Note that pointer addition is in bytes not the size of the
 // object pointed to
 {
-  // char * tmp;
+  //char * tmp;
   #if (defined(__ZTC__) && !defined(DOS386))
-    ptr = (char*)(_farptr_fromlong(_farptr_tolong(ptr)+offset));
+    ptr=(char*)(_farptr_fromlong(_farptr_tolong(ptr)+offset));
   #else
-    ptr = (ptr+offset);
+    ptr=(ptr+offset);
   #endif
   return *this;
 }

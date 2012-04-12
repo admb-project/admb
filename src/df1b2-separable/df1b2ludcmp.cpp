@@ -118,7 +118,7 @@
      }
      return clu;
   }
-  // end ludcmp pivoting
+  //end ludcmp pivoting
 
 /** Solve a linear system using LU decomposition.
     \param aa A df1b2matrix \f$A\f$. 
@@ -146,13 +146,13 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
    }
 
    df1b2matrix MC(lb,ub,lb,ub);
-   MC = aa;
+   MC=aa;
    df1b2ludecomp dcmp = ludecomp_pivot(MC);
    ivector index2 = dcmp.get_index2();
    df1b2matrix & gamma = dcmp.get_U();
    df1b2matrix & alpha = dcmp.get_L();
 
-   // check if invertable
+   //check if invertable
 	df1b2variable ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
@@ -165,7 +165,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
       ad_exit(1);
    }
 
-   // Solve L*y = b with forward-substitution (before solving Ux = y)
+   //Solve L*y=b with forward-substitution (before solving Ux=y)
    df1b2vector y(lb, ub);
    y.initialize();
 
@@ -179,7 +179,7 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
       y(i) = z(index2(i)) - tmp;
    }
 
-   // Now solve U*x = y with back substitution
+   //Now solve U*x=y with back substitution
    for (int i = ub; i >= lb; i--)
    {
       df1b2variable tmp = 0.0;
@@ -261,8 +261,8 @@ df1b2vector solve(const df1b2matrix & aa, const df1b2vector & z,
    sign = 0.0;
    df1b2variable lndet = ln_det(aa);
    ln_unsigned_det = lndet;
-   // df1b2variable sign = 0.0;
-   // _sign = sign;
+   //df1b2variable sign = 0.0;
+   //_sign = sign;
 
    df1b2vector sol = solve(aa, z);
    return sol;

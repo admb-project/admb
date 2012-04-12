@@ -16,11 +16,11 @@
  */
 void test_smartlist::reset(void)
 {
-  bptr = buffer; 
-  eof_flag = 0;
+  bptr=buffer; 
+  eof_flag=0;
   /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
-  written_flag = 0;
-  end_saved = 0;
+  written_flag=0;
+  end_saved=0;
 }
 
 void xxx_yyy(df1b2variable * tmp){;}
@@ -31,11 +31,11 @@ void xxx_yyy(df1b2variable * tmp){;}
  */
 test_smartlist::test_smartlist(void) 
 {
-  bufsize = 0;
-  buffer = 0;
-  true_buffer = 0;
-  buffend = 0; 
-  bptr = 0;
+  bufsize=0;
+  buffer=0;
+  true_buffer=0;
+  buffend=0; 
+  bptr=0;
   fp=-1;
 }
 
@@ -59,28 +59,28 @@ void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
     cerr << "need to modify test_smartlist class for multibyte char" << endl;
     exit(1);
   }
-  end_saved = 0;
-  eof_flag = 0;
-  noreadflag = 0;
-  written_flag = 0;
-  direction = 0;
-  bufsize = _bufsize;
-  filename = _filename;
-  // AD_ALLOCATE(true_buffer,char,bufsize+2*sizeof(double),df1b2_gradlist) 
-  if ((true_buffer = new char[(bufsize+2)*sizeof(double) ])==0)
+  end_saved=0;
+  eof_flag=0;
+  noreadflag=0;
+  written_flag=0;
+  direction=0;
+  bufsize=_bufsize;
+  filename=_filename;
+  //AD_ALLOCATE(true_buffer,char,bufsize+2*sizeof(double),df1b2_gradlist) 
+  if ((true_buffer=new char[(bufsize+2)*sizeof(double) ])==0)
   {
     cerr << "Allocation error in df1b2_gradlist" << endl;
     ad_exit(1);
   }
-  doubleptr = (double*)true_buffer;
-  true_buffend = true_buffer+bufsize+2*sizeof(double)-1;
-  buffer = true_buffer+sizeof(double);
-  *(double*)(true_buffer) = 5678.9;
-  *(double*)(true_buffer+bufsize+sizeof(double)) = 9876.5;
-  // buffend = true_buffer+bufsize-1+sizeof(double);
-  buffend = true_buffer+bufsize-1;
-  bptr = buffer;
-  fp = open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
+  doubleptr=(double*)true_buffer;
+  true_buffend=true_buffer+bufsize+2*sizeof(double)-1;
+  buffer=true_buffer+sizeof(double);
+  *(double*)(true_buffer)=5678.9;
+  *(double*)(true_buffer+bufsize+sizeof(double))=9876.5;
+  //buffend=true_buffer+bufsize-1+sizeof(double);
+  buffend=true_buffer+bufsize-1;
+  bptr=buffer;
+  fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
                    O_BINARY, S_IREAD | S_IWRITE);
   if (fp == -1)
   {
@@ -112,8 +112,8 @@ void test_smartlist::write(int n)
  */
 void test_smartlist::rewind(void)
 {
-  bptr = buffer;
-  unsigned int nbytes = 0;
+  bptr=buffer;
+  unsigned int nbytes=0;
   if (written_flag)
   {
     lseek(fp,0L,SEEK_SET);
@@ -128,7 +128,7 @@ void test_smartlist::rewind(void)
     }
     // now read the record into the buffer
     /*int nr=*/::read(fp,buffer,nbytes);
-    // cout << "Number of bytes read " << nr << endl;
+    //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
     lseek(fp,long(sizeof(off_t)),SEEK_CUR);
@@ -141,10 +141,10 @@ void test_smartlist::rewind(void)
  */
 void test_smartlist::initialize(void)
 {
-  end_saved = 0;
-  bptr = buffer;
-  // int nbytes = 0;
-  written_flag = 0;
+  end_saved=0;
+  bptr=buffer;
+  //int nbytes=0;
+  written_flag=0;
   lseek(fp,0L,SEEK_SET);
   set_forward();
 }
@@ -200,7 +200,7 @@ void test_smartlist::save_end(void)
     if (!end_saved)
     {
       write_buffer();
-      end_saved = 1;
+      end_saved=1;
     }
   }
 }
@@ -211,36 +211,36 @@ void test_smartlist::save_end(void)
  */
 void test_smartlist::write_buffer(void)
 {
-  int nbytes = adptr_diff(bptr,buffer);
+  int nbytes=adptr_diff(bptr,buffer);
   if (nbytes)
   {
-    written_flag = 1;
+    written_flag=1;
     // get the current file position
-    off_t pos = lseek(fp,0L,SEEK_CUR);
+    off_t pos=lseek(fp,0L,SEEK_CUR);
   
     // write the size of the next record into the file
     ::write(fp,&nbytes,sizeof(int));
   
     // write the record into the file
     int nw=::write(fp,buffer,nbytes);
-    // cout << "Number of bytes written " << nw << endl;
-    // cout << "buffer value = "; 
-    // for (int ii = 0;ii<=25;ii++)
+    //cout << "Number of bytes written " << nw << endl;
+    //cout << "buffer value = "; 
+    //for (int ii=0;ii<=25;ii++)
     //  cout << int (*(buffer+ii)) << " ";
-    // cout << endl;
+    //cout << endl;
     if (nw<nbytes)
     {
       cerr << "Error writing to file " << filename << endl;
       ad_exit(1);
     }
     // reset the pointer to the beginning of the buffer
-    bptr = buffer;
+    bptr=buffer;
   
     // now write the previous file position into the file so we can back up
     // when we want to.
     ::write(fp,&pos,sizeof(off_t));
   
-    // cout << lseek(fp,0L,SEEK_CUR) << endl;
+    //cout << lseek(fp,0L,SEEK_CUR) << endl;
   }
 }
 
@@ -257,7 +257,7 @@ void test_smartlist::read_buffer(void)
     if (direction ==-1) 
       eof_flag=-1;
     else
-      eof_flag = 1;
+      eof_flag=1;
   }
   else
   {
@@ -290,18 +290,18 @@ void test_smartlist::read_buffer(void)
    /*
     cout << "Number of bytes read " << nr << endl;
     cout << "buffer value = ";
-    for (int ii = 0;ii<=25;ii++)
+    for (int ii=0;ii<=25;ii++)
       cout << int (*(buffer+ii)) << " ";
     cout << endl;
     */
     // reset the pointer to the beginning of the buffer
-    bptr = buffer;
-    recend = bptr+nbytes-1;
+    bptr=buffer;
+    recend=bptr+nbytes-1;
     if (direction ==-1) // we are going backwards
     {
       // backup the file pointer again
       lseek(fp,pos,SEEK_SET);
-      // *(off_t*)(bptr) = lseek(fp,pos,SEEK_SET);
+      // *(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     else  // we are going forward  
     {
@@ -360,7 +360,7 @@ void test_smartlist::operator -= (int n)
     {
       // get previous record from the file
       read_buffer();
-      bptr = recend-n+1;
+      bptr=recend-n+1;
     }
   }
   else
@@ -403,23 +403,23 @@ void test_smartlist::operator += (int nsize)
  */
 test_smartlist::~test_smartlist() 
 {
-  end_saved = 0;
-  eof_flag = 0;
-  noreadflag = 0;
-  written_flag = 0;
-  direction = 0;
-  bufsize = 0;
+  end_saved=0;
+  eof_flag=0;
+  noreadflag=0;
+  written_flag=0;
+  direction=0;
+  bufsize=0;
 
-  // delete true_buffer;
+  //delete true_buffer;
   delete [] true_buffer;
-  true_buffer = 0;
-  true_buffend = 0;
-  buffer = 0;
-  buffend = 0;
-  bptr = 0;
-  off_t pos = lseek(fp,0L,SEEK_END);
+  true_buffer=0;
+  true_buffend=0;
+  buffer=0;
+  buffend=0;
+  bptr=0;
+  off_t pos=lseek(fp,0L,SEEK_END);
   int on1=-1;
-  if ( (on1 = option_match(ad_comm::argc,ad_comm::argv,"-fsize"))>-1)
+  if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-fsize"))>-1)
   {
     if (ad_comm::global_logfile)
     {
@@ -428,7 +428,7 @@ test_smartlist::~test_smartlist()
     }
   }
   close(fp);
-  fp = 0;
+  fp=0;
   #if defined ( __SUN__) ||  defined ( __GNU__)
    unlink(filename);
   #else

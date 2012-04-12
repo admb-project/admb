@@ -106,44 +106,44 @@
   ad_sbuffer::ad_sbuffer(unsigned long int sz,const char * froot)
   {
     // need some code here to decide where to put the file
-    file_name = froot;
+    file_name=froot;
 
-    const int us = sizeof(unsigned int);
+    const int us=sizeof(unsigned int);
     if (sz > UINT_MAX)
     {
       cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
         << INT_MAX<<endl;
     }
-    if ( (buff = new char[sz])==NULL)
+    if ( (buff=new char[sz])==NULL)
     {
       cerr << "Error trying to allocate memory for ad_sbuffer buffer"<<endl;
       ad_exit(1);
     }
-    buff_size = sz;
-    buff_end = sz-us-2;
-    offset = 0;
-    toffset = 0;
+    buff_size=sz;
+    buff_end=sz-us-2;
+    offset=0;
+    toffset=0;
 
 
 #if defined(USE_ADPVM)
     char * path = getenv("ADTMP1"); // NULL if not defined
     adstring string_path;
-    if (path) string_path = path;
-    int on = 0;
-    int nopt = 0;
+    if (path) string_path=path;
+    int on=0;
+    int nopt=0;
     adstring currdir;
     ad_getcd(currdir);
     if (ad_comm::pvm_manager)
     {
-      if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-slave",nopt))>-1)
+      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-slave",nopt))>-1)
       {
         if (nopt ==1)	    
         {	      
           {
-            int ierr = make_sub_directory(ad_comm::argv[on+1]);
-            ad_comm::subdir = ad_comm::argv[on+1];
+            int ierr=make_sub_directory(ad_comm::argv[on+1]);
+            ad_comm::subdir=ad_comm::argv[on+1];
             string_path+=ad_comm::subdir;
-            path = (char*) string_path;
+            path=(char*) string_path;
           }
         }
         else
@@ -157,9 +157,9 @@
 #endif
 
   #ifdef __GNU__
-    file_ptr = open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777 );
+    file_ptr=open(file_name, O_RDWR | O_CREAT | O_TRUNC, 0777 );
   #else
-    file_ptr = open(file_name, O_RDWR | O_CREAT | O_TRUNC );
+    file_ptr=open(file_name, O_RDWR | O_CREAT | O_TRUNC );
   #endif
 
     if (file_ptr == -1)
@@ -175,8 +175,8 @@
   ad_sbuffer::~ad_sbuffer()
   {
     delete buff;
-    buff = 0;
-    buff_end = 0;
+    buff=0;
+    buff_end=0;
 
     if (close(file_ptr))
     {
@@ -187,10 +187,10 @@
 #else
       adstring currentdir;
       ad_getcd(currentdir);
-      int xxx = remove(cmpdif_file_name);
+      int xxx=remove(cmpdif_file_name);
       if (xxx) {
         cerr << "Error trying to delete file " << cmpdif_file_name << endl;
-        xxx = unlink(cmpdif_file_name);
+        xxx=unlink(cmpdif_file_name);
         cout << xxx << endl;
       }
 #endif
@@ -206,10 +206,10 @@ void ad_sbuffer::fread(void* s,const size_t num_bytes)
   if (toffset < num_bytes)
   {
     long lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
-    // cout << "In fread filepos = " << lpos << endl;
+    //cout << "In fread filepos = " << lpos << endl;
     read_cmpdif_stack_buffer(lpos);
 /*
-    for(int i = 0;i<sizeof(unsigned int);i++)
+    for(int i=0;i<sizeof(unsigned int);i++)
     {
        fourb[i] = *(buff+buff_end+1+i);
     }
@@ -220,10 +220,10 @@ void ad_sbuffer::fread(void* s,const size_t num_bytes)
   }
   else
   {
-    toffset-=num_bytes; // decrement the temporary offset count
+    toffset-=num_bytes; //decrement the temporary offset count
   }
   byte_copy((char *)s,buff+toffset,num_bytes);
-  offset = toffset;
+  offset=toffset;
 }
 
 /**
@@ -238,21 +238,21 @@ void ad_sbuffer::fwrite(void* s, const size_t num_bytes)
       return;
     }
   #endif
-  toffset+=num_bytes; // increment the temporary offset count
+  toffset+=num_bytes; //increment the temporary offset count
   if (toffset>buff_end)
   {
     if (num_bytes > buff_end)
     {
-      const int us = sizeof(unsigned int);
+      const int us=sizeof(unsigned int);
       cerr << "Need to increase gradient_structure::CMPDIF_BUFFER_SIZE "
        "to at least" << long (toffset)+long(us)+2L << endl;
     }
     write_cmpdif_stack_buffer();
-    toffset = num_bytes;
-    offset = 0;
+    toffset=num_bytes;
+    offset=0;
   }
   byte_copy(buff+offset,(char *) s,num_bytes);
-  offset = toffset;
+  offset=toffset;
 }
 
 /**
@@ -265,17 +265,17 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
   { cerr << "Error rewinding file in ad_sbuffer:fread"<<endl;
     ad_exit(1);
   }
-    // cout << " trying to read buff_size = " << buff_size 
+    //cout << " trying to read buff_size = " << buff_size 
       //   << " from cmpdif file" << endl;
-  // cout << "offset before read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
+  //cout << "offset before read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
   if (read(file_ptr,buff,buff_size)<buff_size)
   {
     cerr << "End of file trying to read "<< cmpdif_file_name << endl;
     ad_exit(1);
   }
   lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
-  // cout << "offset after read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
-  for(unsigned int i = 0;i<sizeof(unsigned int);i++)
+  //cout << "offset after read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
+  for(unsigned int i=0;i<sizeof(unsigned int);i++)
   {
      fourb[i] = *(buff+buff_end+1+i);
   }
@@ -287,16 +287,16 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
  */
   void ad_sbuffer::write_cmpdif_stack_buffer(void)
   {
-    // cout << " trying to write buff_size = " << buff_size 
+    //cout << " trying to write buff_size = " << buff_size 
       //   << " into cmpdif file" << endl;
-    // clogf << " trying to write buff_size = " << buff_size 
+    //clogf << " trying to write buff_size = " << buff_size 
          //<< " into cmpdif file" << endl;
-    // cout << "offset before write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
-    // if (write(file_ptr,buff,buff_size)<buff_size)
-    for(unsigned int i = 0;i<sizeof(unsigned int);i++)
+    //cout << "offset before write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
+    //if (write(file_ptr,buff,buff_size)<buff_size)
+    for(unsigned int i=0;i<sizeof(unsigned int);i++)
     {
-	 *(buff+buff_end+1+i) = fourb[i]; // save the offset at the
-			// end of the used part of the buffer
+	 *(buff+buff_end+1+i)=fourb[i]; // save the offset at the
+			//end of the used part of the buffer
     }
     if (write(file_ptr,buff,buff_size)<buff_size)
     {
@@ -305,8 +305,8 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
       "If possible set TMP1 environment string to a device with more room\n";
       ad_exit(1);
     }
-    // cout << "offset after write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
-    // clogf << "offset after write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
+    //cout << "offset after write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
+    //clogf << "offset after write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
   }
 
 /**
@@ -318,7 +318,7 @@ void byte_copy(void * dest,void * source, unsigned num_bytes)
 #if !defined (__SUN__) && !defined (__WAT32__) && !defined(__ADSGI__) && !defined (__MSVC32__) && !defined(linux)
   char* pdest = (char*)dest;
   char* psource = (char*)source;
-  int ii = 0;
+  int ii=0;
   while (ii < num_bytes)
   {
     //*((char *)dest)++ = *((char *)source)++;

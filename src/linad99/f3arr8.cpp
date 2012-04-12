@@ -18,9 +18,9 @@
    {
      dvar3_array tmp;
      tmp.allocate(m);
-     for (int i = tmp.slicemin();i<=tmp.slicemax();i++)
+     for (int i=tmp.slicemin();i<=tmp.slicemax();i++)
      {
-       tmp(i) = pow(m(i),e);
+       tmp(i)=pow(m(i),e);
      }
      return tmp;
    }

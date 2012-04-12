@@ -7,13 +7,13 @@
 #include <fvar.hpp>
 #include "cifstrem.h"
 
-// VECTOR_OPERATOR_DEFINE(dvector)
-// VECTOR_OPERATOR_DEFINE(ivector)
-// VECTOR_OPERATOR_DEFINE(lvector)
+//VECTOR_OPERATOR_DEFINE(dvector)
+//VECTOR_OPERATOR_DEFINE(ivector)
+//VECTOR_OPERATOR_DEFINE(lvector)
 
-// MATRIX_OPERATOR_DEFINE(dmatrix)
-// MATRIX_OPERATOR_DEFINE(imatrix)
-// MATRIX_OPERATOR_DEFINE(lmatrix)
+//MATRIX_OPERATOR_DEFINE(dmatrix)
+//MATRIX_OPERATOR_DEFINE(imatrix)
+//MATRIX_OPERATOR_DEFINE(lmatrix)
 
 cifstream& cifstream::operator>>(BOR_CONST ivector& z)
 {

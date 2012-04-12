@@ -6,11 +6,11 @@
  */
 #include <admodel.h>
 
-// double ndfboundp( double x, double fmin, double fmax,BOR_CONST double& fpen);
+//double ndfboundp( double x, double fmin, double fmax,BOR_CONST double& fpen);
 
   void param_init_bounded_number::set_maxb(double x)
   {
-    maxb = x;
+    maxb=x;
   }
 
   double param_init_bounded_number::get_maxb(void)
@@ -20,7 +20,7 @@
 
   void param_init_bounded_vector::set_maxb(double x)
   {
-    maxb = x;
+    maxb=x;
   }
 
   double param_init_bounded_vector::get_maxb(void)
@@ -30,7 +30,7 @@
 
   void param_init_bounded_matrix::set_maxb(double x)
   {
-    maxb = x;
+    maxb=x;
   }
 
   double param_init_bounded_matrix::get_maxb(void)

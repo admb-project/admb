@@ -34,10 +34,10 @@
    }
    dvector tmp(m.colmin(),m.colmax());
 
-   for (int j = m.colmin(); j<=m.colmax(); j++)
+   for (int j=m.colmin(); j<=m.colmax(); j++)
    {
-     tmp[j] = 0;
-     for (int i = x.indexmin(); i<=x.indexmax(); i++)
+     tmp[j]=0;
+     for (int i=x.indexmin(); i<=x.indexmax(); i++)
      {
        tmp[j]+=x[i]*m[i][j];
      }
@@ -79,10 +79,10 @@
 
    dvector tmp(m.rowmin(),m.rowmax());
 
-   for (int i = m.rowmin(); i<=m.rowmax(); i++)
+   for (int i=m.rowmin(); i<=m.rowmax(); i++)
    {
-     tmp[i] = 0;
-     for (int j = x.indexmin(); j<=x.indexmax(); j++)
+     tmp[i]=0;
+     for (int j=x.indexmin(); j<=x.indexmax(); j++)
      {
        tmp[i]+=m[i][j]*x[j];
      }
@@ -113,15 +113,15 @@
    }
    dmatrix tmp(m1.rowmin(),m1.rowmax(), m2.colmin(), m2.colmax());
    double sum;
-   for (int j = m2.colmin(); j<=m2.colmax(); j++)
+   for (int j=m2.colmin(); j<=m2.colmax(); j++)
    {
-     dvector m2col = column(m2,j);
-     for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+     dvector m2col=column(m2,j);
+     for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
      {
-       sum = 0;
-       // const dvector& temp_row = m1.elem(i);
-       sum = m1.elem(i) * m2col;
-       tmp.elem(i,j) = sum;
+       sum=0;
+       //const dvector& temp_row = m1.elem(i);
+       sum=m1.elem(i) * m2col;
+       tmp.elem(i,j)=sum;
      }
    }
    return(tmp);
@@ -145,24 +145,24 @@
    temp_col-=m2.rowmin();
 
 
-   for (int j = m2.colmin(); j<=m2.colmax(); j++)
+   for (int j=m2.colmin(); j<=m2.colmax(); j++)
    {
-     for (int k = m2.rowmin(); k<=m2.rowmax(); k++)
+     for (int k=m2.rowmin(); k<=m2.rowmax(); k++)
      {
        temp_col[k]=&(m2.elem(k,j));
      }
 
-     for (int i = m1.rowmin(); i<=m1.rowmax(); i++)
+     for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
      {
-       sum = 0;
+       sum=0;
 
        _CONST dvector& temp_row = m1.elem(i);
 
-       for (k = m1.colmin(); k<=m1.colmax(); k++)
+       for (k=m1.colmin(); k<=m1.colmax(); k++)
        {
          sum+=temp_row.elem(k) * *(temp_col[k]);
        }
-       tmp.elem(i,j) = sum;
+       tmp.elem(i,j)=sum;
      }
    }
    temp_col+=m2.rowmin();

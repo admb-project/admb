@@ -18,10 +18,10 @@
 
 void gradfree(dlink *);
 
-// extern prevariable * FRETURN;
-// extern int RETURN_INDEX;
-// extern dlist * GRAD_LIST;          // js
-// extern grad_stack  * GRAD_STACK1;
+//extern prevariable * FRETURN;
+//extern int RETURN_INDEX;
+//extern dlist * GRAD_LIST;          //js
+//extern grad_stack  * GRAD_STACK1;
 
 /**
  * Description not yet available.
@@ -32,7 +32,7 @@ void gradfree(dlink *);
       double tmp;
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       tmp=::exp(v1.v->x);
-      gradient_structure::RETURN_PTR->v->x = tmp;
+      gradient_structure::RETURN_PTR->v->x=tmp;
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
                                     &(v1.v->x),tmp );
       return(*gradient_structure::RETURN_PTR);
@@ -70,16 +70,16 @@ void gradfree(dlink *);
  */
     prevariable& sqrt(_CONST prevariable& v1)
     {
-      double tmp = v1.v->x;
+      double tmp=v1.v->x;
       if (tmp==0.0) 
       {
         cerr << "Attempting to take the derivative of sqrt(prevariable x)"
-         " at x = 0\n";
+         " at x=0\n";
         ad_exit(1);
       }
       tmp=::sqrt(tmp);
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
-      gradient_structure::RETURN_PTR->v->x = tmp;
+      gradient_structure::RETURN_PTR->v->x=tmp;
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
                                     &(v1.v->x),1./(2.*tmp) );
       return(*gradient_structure::RETURN_PTR);
@@ -91,16 +91,16 @@ void gradfree(dlink *);
  */
     prevariable& sqr(_CONST prevariable& v1)
     {
-      double tmp = v1.v->x;
+      double tmp=v1.v->x;
       if (tmp==0.0) 
       {
         cerr << "Attempting to take the derivative of sqrt(prevariable x)"
-         " at x = 0\n";
+         " at x=0\n";
         ad_exit(1);
       }
       tmp=::sqrt(tmp);
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
-      gradient_structure::RETURN_PTR->v->x = tmp;
+      gradient_structure::RETURN_PTR->v->x=tmp;
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
                                     &(v1.v->x),1./(2.*tmp) );
       return(*gradient_structure::RETURN_PTR);
@@ -169,8 +169,8 @@ void gradfree(dlink *);
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       double x,y;
       x=::pow(v1.v->x,(v2.v->x)-1);
-      y = x* v1.v->x;
-      gradient_structure::RETURN_PTR->v->x = y;
+      y=x* v1.v->x;
+      gradient_structure::RETURN_PTR->v->x=y;
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
                             &(v1.v->x), v2.v->x * x  ,&(v2.v->x), 
                                      y * ::log(v1.v->x) );
@@ -187,7 +187,7 @@ void gradfree(dlink *);
       double y;
       y=::pow(u,(v1.v->x));
 
-      gradient_structure::RETURN_PTR->v->x = y;
+      gradient_structure::RETURN_PTR->v->x=y;
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
                        &(v1.v->x), y * ::log(u) );
  

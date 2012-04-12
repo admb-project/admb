@@ -8,7 +8,7 @@
 
   void initial_params::restore(BOR_CONST ifstream& ofs)
   {
-    for (int i = 0;i<num_initial_params;i++)
+    for (int i=0;i<num_initial_params;i++)
     {
 		 (varsptr[i])->restore_value(ofs);
     }

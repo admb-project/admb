@@ -26,24 +26,24 @@ void function_minimizer::limited_memory_quasi_newton
     cerr << "illegal value for number of steps in limited memory"
       " quasi-newton method -- set equal to 10" << endl;
   }
-  int noprintx = 0;
+  int noprintx=0;
   int on;
-  int maxfn_option = 0;
-  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-maxfn"))>-1)
+  int maxfn_option=0;
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-maxfn"))>-1)
   {
-    maxfn_option = 1;
+    maxfn_option=1;
   }
-  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-nox"))>-1)
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-nox"))>-1)
   {
-    noprintx = 1;
+    noprintx=1;
   }
-  int nvar = initial_params::nvarcalc(); // get the number of active
-  double _crit = 0;
-  int itn = 0;
-  int ifn = 0;
+  int nvar=initial_params::nvarcalc(); // get the number of active
+  double _crit=0;
+  int itn=0;
+  int ifn=0;
   int nopt;
   // set the convergence criterion by command line
-  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
   {
     if (!nopt)
     {
@@ -52,11 +52,11 @@ void function_minimizer::limited_memory_quasi_newton
     else
     {   
       char * end;
-      _crit = strtod(ad_comm::argv[on+1],&end);
+      _crit=strtod(ad_comm::argv[on+1],&end);
       if (_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
-        _crit = 0.0;
+        _crit=0.0;
       } 
     }
   }
@@ -65,9 +65,9 @@ void function_minimizer::limited_memory_quasi_newton
   // set convergence criterion for this phase
   if (!(!convergence_criteria))
   {
-    int ind = min(convergence_criteria.indexmax(),
+    int ind=min(convergence_criteria.indexmax(),
     initial_params::current_phase);
-    crit = convergence_criteria(ind);
+    crit=convergence_criteria(ind);
   }
   if (_crit)
   {
@@ -75,30 +75,30 @@ void function_minimizer::limited_memory_quasi_newton
   } 
   if (!(!maximum_function_evaluations) && !maxfn_option)
   {
-    int ind = min(maximum_function_evaluations.indexmax(),
+    int ind=min(maximum_function_evaluations.indexmax(),
       initial_params::current_phase);
     maxfn= (int) maximum_function_evaluations(ind);
   }
-  dvariable vf = 0.0;
+  dvariable vf=0.0;
 
   double xtol, f;
   dvector diag(1,nvar);
-  // int j, n, iflag, icall;
+  //int j, n, iflag, icall;
   int iflag, icall;
-  double fbest = 1.e+100;
+  double fbest=1.e+100;
   dvector g(1,nvar);
   g.initialize();
   dvector xbest(1,nvar);
   dvector gbest(1,nvar);
-  // double t1, t2;
-  long int diagco = 0.0;
+  //double t1, t2;
+  long int diagco=0.0;
   int iprintx[2];
-  // double epsx;
-  // m = 35;
+  //double epsx;
+  //m = 35;
   dvector w(1,nvar+2*m+2*nvar*m);
-  nopt = 0;
+  nopt=0;
   int on1;
-  if ( (on1 = option_match(ad_comm::argc,ad_comm::argv,"-iprint",nopt))>-1)
+  if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-iprint",nopt))>-1)
   {
     if (!nopt)
     {
@@ -106,8 +106,8 @@ void function_minimizer::limited_memory_quasi_newton
     }
     else
     {   
-      int jj = atoi(ad_comm::argv[on1+1]);
-      iprint = jj;
+      int jj=atoi(ad_comm::argv[on1+1]);
+      iprint=jj;
     }
   }
   iprintx[0] = iprint;
@@ -116,21 +116,21 @@ void function_minimizer::limited_memory_quasi_newton
   xtol = 1e-16;
   icall = 0;
   iflag = 0;
-  long int linfo = 0;
+  long int linfo=0;
 
 L20:
   f = 0.;
-  vf = initial_params::reset(dvar_vector(x));
-  *objective_function_value::pobjfun = 0.0;
+  vf=initial_params::reset(dvar_vector(x));
+  *objective_function_value::pobjfun=0.0;
   userfunction();
   vf+=*objective_function_value::pobjfun;
-  f = value(vf);
+  f=value(vf);
   ifn++;
   if (f<fbest)
   {
-    fbest = f;
-    xbest = x;
-    gbest = g;
+    fbest=f;
+    xbest=x;
+    gbest=g;
   }
   
   gradcalc(nvar,g);
@@ -167,15 +167,15 @@ L20:
     }
   }
   
-  long int lnvar = nvar;
-  long int litn = itn;
+  long int lnvar=nvar;
+  long int litn=itn;
   long int liprintx= *iprintx;
-  long int liflag = iflag;
-  long int lm = m;
+  long int liflag=iflag;
+  long int lm=m;
   lbfgs_(&lnvar, &lm, &(x[1]) , &f, &(g[1]), &diagco, &(diag[1]),
     &liprintx, &crit, &xtol, &(w[1]), &liflag,&litn,&linfo);
-  itn = int(litn);
-  iflag = int(liflag);
+  itn=int(litn);
+  iflag=int(liflag);
 
   if (iflag <= 0)
   {
@@ -199,8 +199,8 @@ L50:
     fmmdisp(x, g, nvar, 0,noprintx);
   }
   gradient_structure::set_NO_DERIVATIVES();
-  x = xbest;
-  objective_function_value::gmax = fabs(max(gbest));
+  x=xbest;
+  objective_function_value::gmax=fabs(max(gbest));
 }
 
 void function_minimizer::limited_memory_quasi_newton
@@ -215,13 +215,13 @@ void function_minimizer::limited_memory_quasi_newton
   }
   int on;
 
-  int nvar = initial_params::nvarcalc(); // get the number of active
-  double _crit = 0;
-  int itn = 0;
-  int ifn = 0;
+  int nvar=initial_params::nvarcalc(); // get the number of active
+  double _crit=0;
+  int itn=0;
+  int ifn=0;
   int nopt;
   // set the convergence criterion by command line
-  if ( (on = option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
   {
     if (!nopt)
     {
@@ -230,31 +230,31 @@ void function_minimizer::limited_memory_quasi_newton
     else
     {   
       char * end;
-      _crit = strtod(ad_comm::argv[on+1],&end);
+      _crit=strtod(ad_comm::argv[on+1],&end);
       if (_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
-        _crit = 0.0;
+        _crit=0.0;
       } 
     }
   }
   gradient_structure::set_YES_DERIVATIVES();
-  dvariable vf = 0.0;
+  dvariable vf=0.0;
 
   double xtol;
   dvector diag(1,nvar);
-  // int j, n, iflag, icall;
+  //int j, n, iflag, icall;
   int iflag, icall;
-  double fbest = 1.e+100;
+  double fbest=1.e+100;
   dvector g(1,nvar);
   g.initialize();
   dvector xbest(1,nvar);
   dvector gbest(1,nvar);
-  // double t1, t2;
-  long int diagco = 0;
+  //double t1, t2;
+  long int diagco=0;
   int iprintx[2];
-  // double epsx;
-  // m = 35;
+  //double epsx;
+  //m = 35;
   dvector w(1,nvar+2*m+2*nvar*m);
   iprintx[0] = iprint;
   iprintx[1] = 0;
@@ -262,21 +262,21 @@ void function_minimizer::limited_memory_quasi_newton
   xtol = 1e-16;
   icall = 0;
   iflag = 0;
-  long int linfo = 0;
+  long int linfo=0;
 
 L20:
   f = 0.;
-  vf = initial_params::reset(dvar_vector(x));
-  *objective_function_value::pobjfun = 0.0;
+  vf=initial_params::reset(dvar_vector(x));
+  *objective_function_value::pobjfun=0.0;
   userfunction();
   vf+=*objective_function_value::pobjfun;
-  f = value(vf);
+  f=value(vf);
   ifn++;
   if (f<fbest)
   {
-    fbest = f;
-    xbest = x;
-    gbest = g;
+    fbest=f;
+    xbest=x;
+    gbest=g;
   }
   
   gradcalc(nvar,g);
@@ -312,15 +312,15 @@ L20:
       }
     }
   }
-  long int lnvar = nvar;
-  long int litn = itn;
+  long int lnvar=nvar;
+  long int litn=itn;
   long int liprintx= *iprintx;
-  long int liflag = iflag;
-  long int lm = m;
+  long int liflag=iflag;
+  long int lm=m;
   lbfgs_(&lnvar, &lm, &(x[1]) , &f, &(g[1]), &diagco, &(diag[1]),
     &liprintx, &crit, &xtol, &(w[1]), &liflag,&litn,&linfo);
-  itn = int(litn);
-  iflag = int(liflag);
+  itn=int(litn);
+  iflag=int(liflag);
 
   if (iflag <= 0)
   {
@@ -343,9 +343,9 @@ L50:
       f, max(g));
     fmmdisp(x, g, nvar, 0,noprintx);
   }
-  // gradient_structure::set_NO_DERIVATIVES();
-  x = xbest;
-  f = fbest;
-  objective_function_value::gmax = fabs(max(gbest));
+  //gradient_structure::set_NO_DERIVATIVES();
+  x=xbest;
+  f=fbest;
+  objective_function_value::gmax=fabs(max(gbest));
 }
 

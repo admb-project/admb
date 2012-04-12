@@ -54,8 +54,8 @@ double gammln(double xx)
  */
 dvector log_comb(_CONST dvector& n,_CONST dvector& r)
 {
-  int mmin = n.indexmin();
-  int mmax = n.indexmax();
+  int mmin=n.indexmin();
+  int mmax=n.indexmax();
   if (mmin != r.indexmin() || mmax != r.indexmax()) 
   {
     cerr << "Incompatible array bounds in function "
@@ -63,9 +63,9 @@ dvector log_comb(_CONST dvector& n,_CONST dvector& r)
     ad_exit(1);
   } 
   dvector tmp(mmin,mmax);
-  for (int i = mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
-    tmp(i) = log_comb(n(i),r(i));
+    tmp(i)=log_comb(n(i),r(i));
   }
   return tmp;
 } 
@@ -78,12 +78,12 @@ dvector log_comb(_CONST dvector& n,_CONST dvector& r)
  */
 dvector log_comb(double n,_CONST dvector& r)
 {
-  int mmin = r.indexmin();
-  int mmax = r.indexmax();
+  int mmin=r.indexmin();
+  int mmax=r.indexmax();
   dvector tmp(mmin,mmax);
-  for (int i = mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
-    tmp(i) = log_comb(n,r(i));
+    tmp(i)=log_comb(n,r(i));
   }
   return tmp;
 } 
@@ -95,12 +95,12 @@ dvector log_comb(double n,_CONST dvector& r)
  */
 dvector gammln(_CONST dvector& v)
 {
-  int mmin = v.indexmin();
-  int mmax = v.indexmax();
+  int mmin=v.indexmin();
+  int mmax=v.indexmax();
   dvector tmp(mmin,mmax);
-  for (int i = mmin;i<=mmax;i++)
+  for (int i=mmin;i<=mmax;i++)
   {
-    tmp(i) = gammln(v(i));
+    tmp(i)=gammln(v(i));
   }
   return tmp;
 }
@@ -112,12 +112,12 @@ dvector gammln(_CONST dvector& v)
  */
 dvector factln(_CONST dvector& r)
 {
-    int mmin = r.indexmin();
-    int mmax = r.indexmax();
+    int mmin=r.indexmin();
+    int mmax=r.indexmax();
     dvector tmp(mmin,mmax);
-    for (int i = mmin;i<=mmax;i++)
+    for (int i=mmin;i<=mmax;i++)
     {
-      tmp(i) = gammln(r(i)+1.0);
+      tmp(i)=gammln(r(i)+1.0);
     }
     return tmp;
 }

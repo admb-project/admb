@@ -22,8 +22,8 @@
  */
   void vector_shape::shift(int min)
   {
-    index_max = index_max-index_min+min;
-    index_min = min;
+    index_max=index_max-index_min+min;
+    index_min=min;
   }
 
 /**
@@ -32,6 +32,6 @@
  */
   void vector_shapex::shift(int min)
   {
-    index_max = index_max-index_min+min;
-    index_min = min;
+    index_max=index_max-index_min+min;
+    index_min=min;
   }

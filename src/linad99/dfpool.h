@@ -108,4 +108,4 @@ public:
   void free(void * b);
 };
 
-#endif // defined(__DF_POOL__)
+#endif //defined(__DF_POOL__)

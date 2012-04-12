@@ -152,7 +152,7 @@ double dafsqrt( double x );
       ofs.close();
     }
   }
-int log_values_switch = 0;
+int log_values_switch=0;
 ofstream logstream("fmin.log");
 
 /**
@@ -165,7 +165,7 @@ void print_values(const double& f, const dvector & x,const dvector& g)
   logstream << setprecision(13) << x << endl;
   logstream << setprecision(13) << g << endl;
 }
-extern adtimer * pfmintime = 0;
+extern adtimer * pfmintime=0;
 extern int traceflag;
 //#pragma warn -sig
 
@@ -192,10 +192,10 @@ void fmm::fmin(BOR_CONST double& _f, const dvector & _x,BOR_CONST dvector& _g)
   {
     print_values(_f,_x,_g);
   }
-  if (pfmintime==0) pfmintime = new adtimer;
+  if (pfmintime==0) pfmintime=new adtimer;
   tracing_message(traceflag,"A3");
-  dvector& g = (dvector&) _g;
-  double& f = (double&) _f;
+  dvector& g=(dvector&) _g;
+  double& f=(double&) _f;
   independent_variables& x= (independent_variables&) _x;
     #ifdef DIAG
       cout << "On entry to fmin: " << *this << endl;
@@ -249,12 +249,12 @@ void fmm::fmin(BOR_CONST double& _f, const dvector & _x,BOR_CONST dvector& _g)
       }
       if (ireturn == 1) goto call1;
       if (ireturn == 2) goto call2;
-      fbest = 1.e+100;
+      fbest=1.e+100;
   tracing_message(traceflag,"A6");
       if (!h) h.allocate(n);
       w.initialize();
-      alpha = 1.0;
-      ihflag = 0;
+      alpha=1.0;
+      ihflag=0;
      if (n==0) 
      { 
        cerr << "Error -- the number of active parameters"
@@ -292,52 +292,52 @@ void fmm::fmin(BOR_CONST double& _f, const dvector & _x,BOR_CONST dvector& _g)
         ad_exit(1);
      } 
   tracing_message(traceflag,"A9");
-     for (i = 1; i<=n; i++)
-           xx.elem(i) = x.elem(i); 
+     for (i=1; i<=n; i++)
+           xx.elem(i)=x.elem(i); 
   tracing_message(traceflag,"A10");
-      itn = 0;
-      icc = 0;
-       for (i = 1; i< 11; i++)
-          funval.elem(i) = 0.;
+      itn=0;
+      icc=0;
+       for (i=1; i< 11; i++)
+          funval.elem(i)=0.;
   tracing_message(traceflag,"A11");
       ihang = 0;
-      llog = 1;
-      np = n+1;
-      n1 = n-1;
-      nn = n*np/2;
-      is = n;
-      iu = n;
-      iv = n+n;
-      ib = iv+n;
-      iexit = 0;
+      llog=1;
+      np=n+1;
+      n1=n-1;
+      nn=n*np/2;
+      is=n;
+      iu=n;
+      iv=n+n;
+      ib=iv+n;
+      iexit=0;
   tracing_message(traceflag,"A12");
       h.elem(1,1) = 1;
-      for (i = 2; i<=n; i++)
+      for (i=2; i<=n; i++)
       {
-        for ( j = 1; j<i; j++)
+        for ( j=1; j<i; j++)
         {
-           h.elem(i,j) = 0;
+           h.elem(i,j)=0;
         }
-        h.elem(i,i) = 1;
+        h.elem(i,i)=1;
       }
   tracing_message(traceflag,"A13");
-      dmin = h.elem(1,1);
-      for ( i = 2; i<=n; i++)
+      dmin=h.elem(1,1);
+      for ( i=2; i<=n; i++)
       {
          if(h.elem(i,i)<dmin)
-            dmin = h.elem(i,i);
+            dmin=h.elem(i,i);
       }
       if (dmin <= 0.)
          goto label7020;
       if(dfn == 0.)
          z = 0.0; 
   tracing_message(traceflag,"A14");
-      for (i = 1; i<=n; i++)
+      for (i=1; i<=n; i++)
       {
-        xsave.elem(i) = x.elem(i);
-        x.elem(i) = xx.elem(i);
+        xsave.elem(i)=x.elem(i);
+        x.elem(i)=xx.elem(i);
       }
-      ireturn = 1;
+      ireturn=1;
   tracing_message(traceflag,"A15");
       if (h.disk_save())
       {
@@ -356,35 +356,35 @@ void fmm::fmin(BOR_CONST double& _f, const dvector & _x,BOR_CONST dvector& _g)
         cout << "finished hessian restore" << endl;
       }
   tracing_message(traceflag,"A18");
-      for (i = 1; i<=n; i++)
+      for (i=1; i<=n; i++)
       {
-        x.elem(i) = xsave.elem(i);
+        x.elem(i)=xsave.elem(i);
       }
-      ireturn = 3;
+      ireturn=3;
   tracing_message(traceflag,"A19");
       {
       }
-      for ( i = 1; i<=n; i++)
-         gbest.elem(i) = g.elem(i);
+      for ( i=1; i<=n; i++)
+         gbest.elem(i)=g.elem(i);
   tracing_message(traceflag,"A20");
       funval.elem(10) = f;
-      df = dfn;
+      df=dfn;
       if(dfn == 0.0)
          df = f - z;
       if(dfn < 0.0)
-         df = fabs(df * f);
+         df=fabs(df * f);
       if(df <= 0.0)
-         df = 1.;
+         df=1.;
 label20:
-      ic = 0;
+      ic=0;
       iconv = 1;
-      for ( i = 1; i<=9; i++)
+      for ( i=1; i<=9; i++)
          funval.elem(i)= funval.elem(i+1);
       funval.elem(10) = f;
       if ( itn>15 && fabs( funval.elem(1)-funval.elem(10))< min_improve )
          ihang = 1;
       gmax = 0;
-      for ( i = 1; i<=n; i++)
+      for ( i=1; i<=n; i++)
       {
         if(fabs(g.elem(i)) > crit) iconv = 2;
         if(fabs(g.elem(i)) > fabs(gmax) ) gmax = g.elem(i);
@@ -437,80 +437,80 @@ label7002:
         fmmdisp(x, g, n, this->scroll_flag,noprintx);
       }
 label21 :
-      itn = itn+1;
-      for (i = 1; i<=n; i++)
-         x.elem(i) = xx.elem(i);
+      itn=itn+1;
+      for (i=1; i<=n; i++)
+         x.elem(i)=xx.elem(i);
       w.elem(1)=-g.elem(1);
       pfmintime->get_elapsed_time_and_reset();
-      for (i = 2; i<=n; i++)
+      for (i=2; i<=n; i++)
       {
-	 i1 = i-1;
+	 i1=i-1;
          z=-g.elem(i);
          double * pd=&(h.elem(i,1));
          double * pw=&(w.elem(1));
-         for (j = 1; j<=i1; j++)
+         for (j=1; j<=i1; j++)
          {
             z-=*pd++ * *pw++;
          }
-         w.elem(i) = z;
+         w.elem(i)=z;
       }
-      w.elem(is+n) = w.elem(n)/h.elem(n,n);
+      w.elem(is+n)=w.elem(n)/h.elem(n,n);
       {
         dvector tmp(1,n);
         tmp.initialize();
-        for (i = 1; i<=n1; i++)
+        for (i=1; i<=n1; i++)
         {
-          j = i;
+          j=i;
           double * pd=&(h.elem(n-j+1,n-1));
-          double qd = w.elem(is+np-j);
+          double qd=w.elem(is+np-j);
           double * pt=&(tmp(1));
-          for (int ii = 1; ii<=n1; ii++)
+          for (int ii=1; ii<=n1; ii++)
           {
             *pt++ +=*pd-- * qd;
           }
-          w.elem(is+n-i) = w.elem(n-i)/h.elem(n-i,n-i)-tmp(i);
+          w.elem(is+n-i)=w.elem(n-i)/h.elem(n-i,n-i)-tmp(i);
         }
       }
-      gs = 0.0;
-      for (i = 1; i<=n; i++)
+      gs=0.0;
+      for (i=1; i<=n; i++)
          gs+=w.elem(is+i)*g.elem(i);
-      iexit = 2;
+      iexit=2;
       if(gs >= 0.0)
          goto label92;
-      gso = gs;
+      gso=gs;
       alpha=-2.0*df/gs;
       if(alpha > 1.0)
-        alpha = 1.0;
-      df = f;
-      tot = 0.0;
+        alpha=1.0;
+      df=f;
+      tot=0.0;
 label30:
-      iexit = 3;
+      iexit=3;
       if (ialph) { goto label92; }
       if( ifn >= maxfn)
       {
-         maxfn_flag = 1;
+         maxfn_flag=1;
          goto label92;
       }
       else
       {
-         maxfn_flag = 0;
-         iexit = 1;
+         maxfn_flag=0;
+         iexit=1;
       }
       if(quit_flag) goto label92;
-      for (i = 1; i<=n; i++)
+      for (i=1; i<=n; i++)
          {
-         z = alpha*w.elem(is+i);
+         z=alpha*w.elem(is+i);
          xx.elem(i)+=z;
          }
-      for (i = 1; i<=n; i++)
+      for (i=1; i<=n; i++)
       {
-        xsave.elem(i) = x.elem(i);
-        gsave.elem(i) = g.elem(i);
-        x.elem(i) = xx.elem(i);
+        xsave.elem(i)=x.elem(i);
+        gsave.elem(i)=g.elem(i);
+        x.elem(i)=xx.elem(i);
         fsave = f;
       }
       fsave = f;
-      ireturn = 2;
+      ireturn=2;
       if (h.disk_save())
       {
         cout << "starting hessian save" << endl;
@@ -525,22 +525,22 @@ label30:
         h.restore();
         cout << "finished hessian restore" << endl;
       }
-      for (i = 1; i<=n; i++)
+      for (i=1; i<=n; i++)
       {
-        x.elem(i) = xsave.elem(i);
-        w.elem(i) = g.elem(i);
-        g.elem(i) = gsave.elem(i);
+        x.elem(i)=xsave.elem(i);
+        w.elem(i)=g.elem(i);
+        g.elem(i)=gsave.elem(i);
       }
       fy = f;
       f = fsave;
       ireturn=-1;
       if (fy <= fbest)
       {
-        fbest = fy;
-        for (i = 1; i<=n; i++)
+        fbest=fy;
+        for (i=1; i<=n; i++)
         {
-          x.elem(i) = xx.elem(i);
-          gbest.elem(i) = w.elem(i);
+          x.elem(i)=xx.elem(i);
+          gbest.elem(i)=w.elem(i);
         }
       }
       if (use_control_c==1)         
@@ -555,7 +555,7 @@ label30:
          if ( kbhit() || ifn == dcheck_flag )
   #endif
          {
-            int c = 0;
+            int c=0;
             if (ifn != dcheck_flag)
             {
             #if !defined(__GNUDOS__)  || defined(UNIXKLUDGE)  || defined(linux) \
@@ -570,9 +570,9 @@ label30:
             if ( c == 'C')
             {
 	      
-              for (i = 1; i<=n; i++)
+              for (i=1; i<=n; i++)
               {
-                x.elem(i) = xx.elem(i);
+                x.elem(i)=xx.elem(i);
               }
               ireturn = 3;
               derch(f, x , w, n, ireturn);
@@ -580,20 +580,20 @@ label30:
             } 
             else if(c=='S')
             {
-	      // set convergence criteria to something high to stop now
-	      crit = 100000.0;
+	      //set convergence criteria to something high to stop now
+	      crit=100000.0;
 	      return;
 	    }
             else 
             {
               if ( c == 'Q'|| c == 'N') 
               {
-                quit_flag = c;
+                quit_flag=c;
                 goto label92;
               }
               else
               {
-                quit_flag = 0;
+                quit_flag=0;
               }
             }
          }
@@ -606,7 +606,7 @@ label30:
        }
        icc+=1;
        if( icc >= 5)
-          icc = 0;
+          icc=0;
       ic++;
       if( ic >imax)
       {
@@ -615,13 +615,13 @@ label30:
            if (ad_printf) (*ad_printf)("  ic > imax  in fminim is answer attained ?\n" );
            fmmdisp(x, g, n, this->scroll_flag,noprintx);
          }
-         ihflag = 1;
-         ihang = 1;
+         ihflag=1;
+         ihang=1;
          goto label92;
       }
       ifn++;
-      gys = 0.0;
-      for (i = 1; i<= n; i++)
+      gys=0.0;
+      for (i=1; i<= n; i++)
          gys+=w.elem(i)*w.elem(is+i);
       if(fy>f+fringe)
       {
@@ -634,15 +634,15 @@ label30:
       if(gys>0.0)
          goto  label40;
       tot+=alpha;
-      z = 10.0;
+      z=10.0;
       if(gs<gys)
-         z = gys/(gs-gys);
+         z=gys/(gs-gys);
       if(z>10.0)
-         z = 10.0;
-      alpha = alpha*z;
+         z=10.0;
+      alpha=alpha*z;
       if (alpha == 0.)
       {
-         ialph = 1;
+         ialph=1;
          #ifdef __ZTC__
          if (ireturn <= 0)
          {
@@ -651,20 +651,20 @@ label30:
          #endif
          return;
       }
-      f = fy;
-      gs = gys;
+      f=fy;
+      gs=gys;
       goto label30;
 label40:
-      for (i = 1;i<=n;i++)
+      for (i=1;i<=n;i++)
          xx.elem(i)-=alpha*w.elem(is+i);
       if (alpha == 0.)
       {
-        ialph = 1;
+        ialph=1;
         return;
       }
-      z = 3.0*(f-fy)/alpha+gys+gs;
-      zz = dafsqrt(z*z-gs*gys);
-      z = 1.0-(gys+zz-z)/(2.0*zz+gys-gs);
+      z=3.0*(f-fy)/alpha+gys+gs;
+      zz=dafsqrt(z*z-gs*gys);
+      z=1.0-(gys+zz-z)/(2.0*zz+gys-gs);
       if (fabs(fy-1.e+95) < 1.e-66)
       {
         alpha*=.001;
@@ -674,88 +674,88 @@ label40:
         if (z>10.0) 
         {
           cout << "large z" << z << endl;
-          z = 10.0;
+          z=10.0;
         }
-        alpha = alpha*z;
+        alpha=alpha*z;
       }
       if (alpha == 0.)
       {
-         ialph = 1;
+         ialph=1;
         if (ialph)
         {
 	   if (ad_printf) (*ad_printf)("\nFunction minimizer: Step size"
-            "  too small -- ialph = 1");
+            "  too small -- ialph=1");
         }
          return;
       }
       goto label30;
 label50:
       alpha+=tot;
-      f = fy;
+      f=fy;
       df-=f;
-      dgs = gys-gso;
-      xxlink = 1;
+      dgs=gys-gso;
+      xxlink=1;
       if(dgs+alpha*gso>0.0)
          goto label52;
-      for (i = 1;i<=n;i++)
-         w.elem(iu+i) = w.elem(i)-g.elem(i);
-      sig = 1.0/(alpha*dgs);
+      for (i=1;i<=n;i++)
+         w.elem(iu+i)=w.elem(i)-g.elem(i);
+      sig=1.0/(alpha*dgs);
       goto label70;
 label52:
-      zz = alpha/(dgs-alpha*gso);
-      z = dgs*zz-1.0;
-      for (i = 1;i<=n;i++)
-         w.elem(iu+i) = z*g.elem(i)+w.elem(i);
-      sig = 1.0/(zz*dgs*dgs);
+      zz=alpha/(dgs-alpha*gso);
+      z=dgs*zz-1.0;
+      for (i=1;i<=n;i++)
+         w.elem(iu+i)=z*g.elem(i)+w.elem(i);
+      sig=1.0/(zz*dgs*dgs);
       goto label70;
 label60:
-      xxlink = 2;
-      for (i = 1;i<=n;i++)
-         w.elem(iu+i) = g.elem(i);
+      xxlink=2;
+      for (i=1;i<=n;i++)
+         w.elem(iu+i)=g.elem(i);
       if(dgs+alpha*gso>0.0)
          goto label62;
-      sig = 1.0/gso;
+      sig=1.0/gso;
       goto  label70;
 label62:
       sig=-zz;
       goto label70;
 label65:
-      for (i = 1;i<=n;i++)
-         g.elem(i) = w.elem(i);
+      for (i=1;i<=n;i++)
+         g.elem(i)=w.elem(i);
       goto  label20;
 label70:
-      w.elem(iv+1) = w.elem(iu+1);
+      w.elem(iv+1)=w.elem(iu+1);
       pfmintime->get_elapsed_time_and_reset();
-      for (i = 2;i<=n;i++)
+      for (i=2;i<=n;i++)
       {
-         i1 = i-1;
-         z = w.elem(iu+i);
+         i1=i-1;
+         z=w.elem(iu+i);
          double * pd=&(h.elem(i,1));
          double * pw=&(w.elem(iv+1));
-         for (j = 1;j<=i1;j++)
+         for (j=1;j<=i1;j++)
          {
            z-=*pd++ * *pw++;
          }
-         w.elem(iv+i) = z;
+         w.elem(iv+i)=z;
       }
       pfmintime->get_elapsed_time_and_reset();
-      for (i = 1;i<=n;i++)
+      for (i=1;i<=n;i++)
       {
-         z = h.elem(i,i)+sig*w.elem(iv+i)*w.elem(iv+i);
+         z=h.elem(i,i)+sig*w.elem(iv+i)*w.elem(iv+i);
          if(z <= 0.0)
-            z = dmin;
+            z=dmin;
          if(z<dmin)
-            dmin = z;
-         h.elem(i,i) = z;
-         w.elem(ib+i) = w.elem(iv+i)*sig/z;
+            dmin=z;
+         h.elem(i,i)=z;
+         w.elem(ib+i)=w.elem(iv+i)*sig/z;
          sig-=w.elem(ib+i)*w.elem(ib+i)*z;
        }
-      for (j = 2;j<=n;j++)
+      for (j=2;j<=n;j++)
       {
          double * pd=&(h.elem(j,1));
          double * qd=&(w.elem(iu+j));
          double * rd=&(w.elem(iv+1));
-         for (i = 1;i<j;i++)
+         for (i=1;i<j;i++)
          {
             *qd-=*pd * *rd++;
             *pd++ +=w.elem(ib+i)* *qd;
@@ -764,14 +764,14 @@ label70:
       if (xxlink == 1) goto label60;
       if (xxlink == 2) goto label65;
 label90:
-      for (i = 1;i<=n;i++)
-         g.elem(i) = w.elem(i);
+      for (i=1;i<=n;i++)
+         g.elem(i)=w.elem(i);
 label92:
       if (iprint>0)
       {
         if (ialph)
         {
-	   if (ad_printf) (*ad_printf)("\nFunction minimizer: Step size too small -- ialph = 1");
+	   if (ad_printf) (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
         }
         if (ihang == 1)
         {
@@ -854,7 +854,7 @@ label7010:
 #endif
      if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
    }
-   llog = 0;
+   llog=0;
    goto label7003;
 label7020:
    if (iprint>0)

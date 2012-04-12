@@ -25,14 +25,14 @@
    dvar_vector tmp(m.colmin(),m.colmax());
    dvariable sum;
 
-   for (int j = m.colmin(); j<=m.colmax(); j++)
+   for (int j=m.colmin(); j<=m.colmax(); j++)
    {
-     sum = 0.0;
-     for (int i = x.indexmin(); i<=x.indexmax(); i++)
+     sum=0.0;
+     for (int i=x.indexmin(); i<=x.indexmax(); i++)
      {
        sum+=x.elem(i)*m.elem(i,j);
      }
-     tmp[j] = sum;
+     tmp[j]=sum;
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);

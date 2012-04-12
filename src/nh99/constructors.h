@@ -50,10 +50,10 @@
  extern int number3;
  extern int number31;
 // 
-// const int nx = 10;
-// const int number3 = 31;
-// const int number31 = number3+1;
-// const int inumber1 = 4000;
+//const int nx=10;
+//const int number3=31;
+//const int number31=number3+1;
+//const int inumber1=4000;
 
 /**
  * Description not yet available.
@@ -352,7 +352,7 @@ struct gggg17 {
 struct gggg18 {
   independent_variables xtr;
   doublereal *xsc, *fu, *fugrad	/* was *[
-  // doublereal *xtr, *xsc, *fu, *fugrad	/ * was *[
+  //doublereal *xtr, *xsc, *fu, *fugrad	/ * was *[
 	    number3+1] */, *fud	/* was ** */, wwuq5, wdg5bnd;
   gggg18(int nvar,doublereal _wwuq5, doublereal _wdg5bnd);
   ~gggg18();

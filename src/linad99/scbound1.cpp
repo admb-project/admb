@@ -29,7 +29,7 @@ double dmax(double, double);
 double boundpin(const prevariable& xx, double fmin, double fmax,const double& s)
 {
   double tinv;
-  double x = value(xx);
+  double x=value(xx);
 
   if (x < fmin)
   {
@@ -37,7 +37,7 @@ double boundpin(const prevariable& xx, double fmin, double fmax,const double& s)
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
-    x = dmin(fmin+.001,fmin+.01*(fmax-fmin));
+    x=dmin(fmin+.001,fmin+.01*(fmax-fmin));
   }
 
   if (x > fmax)
@@ -46,7 +46,7 @@ double boundpin(const prevariable& xx, double fmin, double fmax,const double& s)
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
-    x = dmax(fmax-.001,fmax-.01*(fmax-fmin));
+    x=dmax(fmax-.001,fmax-.01*(fmax-fmin));
   }
 
   tinv=::asin(2.*(x-fmin)/(fmax-fmin)-1.)/1.57079632679489661;

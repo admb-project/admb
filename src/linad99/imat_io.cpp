@@ -37,9 +37,9 @@
 ostream& operator<<(BOR_CONST ostream& _ostr,_CONST imatrix& z)
 {
   ostream& ostr= (ostream&) _ostr;
-  int min = z.rowmin();
-  int max = z.rowmax();
-  for (int i = min;i<=max-1;i++)
+  int min=z.rowmin();
+  int max=z.rowmax();
+  for (int i=min;i<=max-1;i++)
   {
      ostr << z[i] << endl;
   }
@@ -54,9 +54,9 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST imatrix& z)
 istream& operator>>(BOR_CONST istream& _istr,BOR_CONST imatrix& z)
 {
   istream& istr= (istream&) _istr;
-  int min = z.rowmin();
-  int max = z.rowmax();
-  for (int i = min;i<=max;i++)
+  int min=z.rowmin();
+  int max=z.rowmax();
+  for (int i=min;i<=max;i++)
   {
      istr >> z[i];
   }

@@ -9,7 +9,7 @@
 void named_adstring::allocate(const char * s1,const char * _s)
 {
   model_name_tag::allocate(_s);
-  (*this) = s1;
+  (*this)=s1;
 }
 
 void named_adstring::operator = (const char * _s)

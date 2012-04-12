@@ -291,9 +291,9 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
     doublereal d__1;
 
     /* Builtin functions */
-    // integer // s_wsfe(cilist *), e_wsfe();
+    //integer //s_wsfe(cilist *), e_wsfe();
     double sqrt(doublereal);
-    // integer // do_fio(integer *, char *, ftnlen);
+    //integer // do_fio(integer *, char *, ftnlen);
 
     /* Local variables */
     static doublereal beta;
@@ -615,15 +615,15 @@ t*/
         case 2:  goto L100;
     }
 L10:
-    // iter = 0;
+    //iter = 0;
     if (*n <= 0 || *m <= 0) {
         goto L196;
     }
     if (lb3_1.gtol <= 1e-4) {
         if (lb3_1.lp > 0) {
             io___4.ciunit = lb3_1.lp;
-            // s_wsfe(&io___4);
-            // e_wsfe();
+            //s_wsfe(&io___4);
+            //e_wsfe();
         }
         lb3_1.gtol = .9;
     }
@@ -700,7 +700,7 @@ L80:
 
     ys = ddot_(n, &w[iypt + npt + 1], &c__1, &w[ispt + npt + 1], &c__1);
     if (ys==0.0)
-        ys = 1.e-10;
+        ys=1.e-10;
     if (! (*diagco)) {
         yy = ddot_(n, &w[iypt + npt + 1], &c__1, &w[iypt + npt + 1], &c__1);
         i__1 = *n;
@@ -855,26 +855,26 @@ L190:
     *iflag = -1;
     if (lb3_1.lp > 0) {
         io___30.ciunit = lb3_1.lp;
-        // s_wsfe(&io___30);
+        //s_wsfe(&io___30);
         //// do_fio(&c__1, (char *)&info, (ftnlen)sizeof(integer));
-        // e_wsfe();
+        //e_wsfe();
     }
     return 0;
 L195:
     *iflag = -2;
     if (lb3_1.lp > 0) {
         io___31.ciunit = lb3_1.lp;
-        // s_wsfe(&io___31);
+        //s_wsfe(&io___31);
         //// do_fio(&c__1, (char *)&i, (ftnlen)sizeof(integer));
-        // e_wsfe();
+        //e_wsfe();
     }
     return 0;
 L196:
     *iflag = -3;
     if (lb3_1.lp > 0) {
         io___32.ciunit = lb3_1.lp;
-        // s_wsfe(&io___32);
-        // e_wsfe();
+        //s_wsfe(&io___32);
+        //e_wsfe();
     }
 
 /*     FORMATS */
@@ -912,7 +912,7 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
     integer i__1;
 
     /* Builtin functions */
-    // integer // s_wsfe(cilist *), e_wsfe(), // do_fio(integer *, char *, ftnlen);
+    //integer //s_wsfe(cilist *), e_wsfe(), // do_fio(integer *, char *, ftnlen);
 
     /* Local variables */
     static integer i;
@@ -968,20 +968,20 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
         // e_wsfe();
         if (iprint[2] >= 1) {
             io___36.ciunit = lb3_1.mp;
-            // s_wsfe(&io___36);
+            //s_wsfe(&io___36);
             // e_wsfe();
             io___37.ciunit = lb3_1.mp;
-            // s_wsfe(&io___37);
+            //s_wsfe(&io___37);
             i__1 = *n;
             for (i = 1; i <= i__1; ++i) {
                 // do_fio(&c__1, (char *)&x[i], (ftnlen)sizeof(doublereal));
             }
             // e_wsfe();
             io___39.ciunit = lb3_1.mp;
-            // s_wsfe(&io___39);
+            //s_wsfe(&io___39);
             // e_wsfe();
             io___40.ciunit = lb3_1.mp;
-            // s_wsfe(&io___40);
+            //s_wsfe(&io___40);
             i__1 = *n;
             for (i = 1; i <= i__1; ++i) {
                 // do_fio(&c__1, (char *)&g[i], (ftnlen)sizeof(doublereal));
@@ -1002,7 +1002,7 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
             if ((*iter - 1) % iprint[1] == 0 || *finish) {
                 if (iprint[2] > 1 && *iter > 1) {
                     io___43.ciunit = lb3_1.mp;
-                    // s_wsfe(&io___43);
+                    //s_wsfe(&io___43);
                     // e_wsfe();
                 }
                 io___44.ciunit = lb3_1.mp;
@@ -1023,7 +1023,7 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
                 // e_wsfe();
             }
             io___46.ciunit = lb3_1.mp;
-            // s_wsfe(&io___46);
+            //s_wsfe(&io___46);
             // do_fio(&c__1, (char *)&(*iter), (ftnlen)sizeof(integer));
             // do_fio(&c__1, (char *)&(*nfun), (ftnlen)sizeof(integer));
             // do_fio(&c__1, (char *)&(*f), (ftnlen)sizeof(doublereal));
@@ -1042,7 +1042,7 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
                 // e_wsfe();
             }
             io___49.ciunit = lb3_1.mp;
-            // s_wsfe(&io___49);
+            //s_wsfe(&io___49);
             i__1 = *n;
             for (i = 1; i <= i__1; ++i) {
                 // do_fio(&c__1, (char *)&x[i], (ftnlen)sizeof(doublereal));
@@ -1063,7 +1063,7 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
         }
         if (*finish) {
             io___52.ciunit = lb3_1.mp;
-            // s_wsfe(&io___52);
+            //s_wsfe(&io___52);
             // e_wsfe();
         }
     }
@@ -1280,7 +1280,7 @@ RECTION\002)";
     doublereal d__1;
 
     /* Builtin functions */
-    // integer // s_wsfe(cilist *), e_wsfe();
+    //integer //s_wsfe(cilist *), e_wsfe();
 
     /* Local variables */
     static doublereal dgxm, dgym;

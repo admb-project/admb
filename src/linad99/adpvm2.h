@@ -115,15 +115,15 @@ void pvm_pack(int v);
 void pvm_pack(const ivector& _v);
 void pvm_pack(const imatrix & _m);
 void pvm_pack(const i3_array & _m);
-// void pvm_pack(const i4_array & _m);
-// void pvm_pack(const i5_array & _m);
+//void pvm_pack(const i4_array & _m);
+//void pvm_pack(const i5_array & _m);
 
 void pvm_unpack(const int& _v);
 void pvm_unpack(const ivector& _v);
 void pvm_unpack(const imatrix & _m);
 void pvm_unpack(const i3_array & _m);
-// void pvm_unpack(const i4_array & _m);
-// void pvm_unpack(const i5_array & _m);
+//void pvm_unpack(const i4_array & _m);
+//void pvm_unpack(const i5_array & _m);
     
 void adpvm_pack(const prevariable& _v);
 void adpvm_pack(const dvar_vector& _v);
@@ -158,8 +158,8 @@ void adpvm_pack(int v);
 void adpvm_pack(const ivector& _v);
 void adpvm_pack(const imatrix & _m);
 void adpvm_pack(const i3_array & _m);
-// void adpvm_pack(const i4_array & _m);
-// void adpvm_pack(const i5_array & _m);
+//void adpvm_pack(const i4_array & _m);
+//void adpvm_pack(const i5_array & _m);
 
 void adpvm_unpack(const int& _v);
 void adpvm_unpack(const ivector& _v);

@@ -75,18 +75,18 @@ void named_d7_array::allocate(
 
 named_d7_array& named_d7_array::operator = (_CONST d7_array& m)
 {
-  this->d7_array::operator = (m);
+  this->d7_array::operator=(m);
   return *this;
 }
 
 named_dvar7_array& named_dvar7_array::operator = (_CONST dvar7_array& m)
 {
-  this->dvar7_array::operator = (m);
+  this->dvar7_array::operator=(m);
   return *this;
 }
 
 named_dvar7_array& named_dvar7_array::operator = (_CONST d7_array& m)
 {
-  this->dvar7_array::operator = (m);
+  this->dvar7_array::operator=(m);
   return *this;
 }

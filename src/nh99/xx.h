@@ -46,10 +46,10 @@
  extern int nresm;
  extern int nresm1;
 // 
-// const int nx = 10;
-// const int nresm = 31;
-// const int nresm1 = nresm+1;
-// const int maxit = 4000;
+//const int nx=10;
+//const int nresm=31;
+//const int nresm1=nresm+1;
+//const int maxit=4000;
 
 struct doublestar
 {

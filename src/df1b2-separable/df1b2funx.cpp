@@ -18,15 +18,15 @@ df1b2variable sin(const df1b2variable& _xx)
 {
   ADUNCONST(df1b2variable,xx)
   df1b2variable z;
-  double x = value(_xx);
-  double f = sin(x);
-  double dfx = cos(x);
+  double x=value(_xx);
+  double f=sin(x);
+  double dfx=cos(x);
   double d2f=-f;
   double d3f=-dfx;
-  double * xd = xx.get_u_dot();
-  double * zd = z.get_u_dot();
-  *z.get_u() = f;
-  for (int i = 0;i<df1b2variable::nvar;i++)
+  double * xd=xx.get_u_dot();
+  double * zd=z.get_u_dot();
+  *z.get_u()=f;
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =dfx * *xd++;
   }
@@ -44,15 +44,15 @@ df1b2variable cos(const df1b2variable& _xx)
 {
   ADUNCONST(df1b2variable,xx)
   df1b2variable z;
-  double x = value(_xx);
-  double f = cos(x);
+  double x=value(_xx);
+  double f=cos(x);
   double dfx=-sin(x);
   double d2f=-f;
   double d3f=-dfx;
-  double * xd = xx.get_u_dot();
-  double * zd = z.get_u_dot();
-  *z.get_u() = f;
-  for (int i = 0;i<df1b2variable::nvar;i++)
+  double * xd=xx.get_u_dot();
+  double * zd=z.get_u_dot();
+  *z.get_u()=f;
+  for (int i=0;i<df1b2variable::nvar;i++)
   {
     *zd++ =dfx * *xd++;
   }

@@ -39,8 +39,8 @@
        arr_free(va);
        delete shape;
      }
-     va = NULL;
-     shape = NULL;
+     va=NULL;
+     shape=NULL;
    }
  } 
 
@@ -50,10 +50,10 @@
  */
  dvar_vector::dvar_vector(_CONST dvar_vector& t)
  {
-   index_min = t.index_min;
-   index_max = t.index_max;
-   shape = t.shape;
-   link_ptr = t.link_ptr;
+   index_min=t.index_min;
+   index_max=t.index_max;
+   shape=t.shape;
+   link_ptr=t.link_ptr;
    if (shape) (shape->ncopies)++;
    va = t.va;
    #ifdef DIAG
@@ -68,10 +68,10 @@
  */
  void dvar_vector::shallow_copy(const dvar_vector& t)
  {
-   index_min = t.index_min;
-   index_max = t.index_max;
-   shape = t.shape;
-   link_ptr = t.link_ptr;
+   index_min=t.index_min;
+   index_max=t.index_max;
+   shape=t.shape;
+   link_ptr=t.link_ptr;
    if (shape) (shape->ncopies)++;
    va = t.va;
    #ifdef DIAG
@@ -107,10 +107,10 @@
      ad_exit (1);
    }
   #endif
-   index_min = pdv.lb;
-   index_max = pdv.ub;
-   shape = pdv.p->shape;
-   link_ptr = pdv.p->link_ptr;
+   index_min=pdv.lb;
+   index_max=pdv.ub;
+   shape=pdv.p->shape;
+   link_ptr=pdv.p->link_ptr;
    (shape->ncopies)++;
    va = pdv.p->va;
    #ifdef DIAG
@@ -145,10 +145,10 @@
   #endif
   
 
-   index_min = lb;
-   index_max = ub;
-   shape = t.shape;
-   link_ptr = t.link_ptr;
+   index_min=lb;
+   index_max=ub;
+   shape=t.shape;
+   link_ptr=t.link_ptr;
    (shape->ncopies)++;
    va = t.va;
    #ifdef DIAG

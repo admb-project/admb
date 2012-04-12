@@ -35,7 +35,7 @@
      allocate();
    else
    {
-     // if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
+     //if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      //  nrl !=nch.indexmin() || nrh !=nch.indexmax())
      if ( (ncl.isinteger() && (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())) ||
        (nch.isinteger() && (nrl !=nch.indexmin() || nrh !=nch.indexmax())))
@@ -44,10 +44,10 @@
         "_CONST ivector& ncl,_CONST ivector& nch)" << endl;
        ad_exit(1);
      }
-     index_min = int(nrl);
-     index_max = int(nrh);
+     index_min=int(nrl);
+     index_max=int(nrh);
   
-     int rs = rowsize();
+     int rs=rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dmatrix contructor" << endl;
@@ -59,7 +59,7 @@
        ad_exit(21);
      }
      m -= int(nrl);
-     for (int i = nrl; i<=nrh; i++)
+     for (int i=nrl; i<=nrh; i++)
      {
        m[i].allocate(ncl[i],nch[i]);
      }

@@ -29,9 +29,9 @@
   {
     dvariable tmp;
     RETURN_ARRAYS_INCREMENT();
-    tmp = norm(v)/sqrt(double(v.size()));
+    tmp=norm(v)/sqrt(double(v.size()));
     dvariable tmp1;
-    tmp1 = mean(v);
+    tmp1=mean(v);
     RETURN_ARRAYS_DECREMENT();
     return(tmp*tmp-tmp1*tmp1);
   }
@@ -44,9 +44,9 @@
   {
     dvariable tmp;
     RETURN_ARRAYS_INCREMENT();
-    tmp = norm(v)/sqrt(double(v.size()));
+    tmp=norm(v)/sqrt(double(v.size()));
     dvariable tmp1;
-    tmp1 = mean(v);
+    tmp1=mean(v);
     RETURN_ARRAYS_DECREMENT();
     return(sqrt(tmp*tmp-tmp1*tmp1));
   }
@@ -59,7 +59,7 @@
   {
     dvariable tmp;
     RETURN_ARRAYS_INCREMENT();
-    tmp = sum(v)/double(v.size());
+    tmp=sum(v)/double(v.size());
     RETURN_ARRAYS_DECREMENT();
     return(tmp);
   }

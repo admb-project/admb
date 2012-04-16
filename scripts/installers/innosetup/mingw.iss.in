@@ -11,7 +11,7 @@ OutputDir=..\..\..\build
 OutputBaseFilename=@target@
 AppPublisher=www.admb-project.org
 AppPublisherURL=http://www.admb-project.org/
-LicenseFile=..\..\..\LICENSE
+LicenseFile=..\..\..\LICENSE.txt
 AlwaysShowComponentsList=no
 
 [Types]

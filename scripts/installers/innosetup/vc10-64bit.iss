@@ -11,7 +11,7 @@ OutputDir=..\..\..\
 OutputBaseFilename=admb-vc10
 AppPublisher=www.admb-project.org
 AppPublisherURL=http://www.admb-project.org/
-LicenseFile=..\..\..\LICENSE
+LicenseFile=..\..\..\LICENSE.txt
 
 [Types]
 Name: "vc10"; Description: "ADMB (Microsoft Visual C++ 2010 64Bit)"

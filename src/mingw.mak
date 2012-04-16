@@ -28,7 +28,8 @@ dist:
 	$(MAKE) -C nh99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak disk
 	$(MAKE) -C tools99 CC=${COMP} LIBPATH=${CCVERSION}-${OSVERSION}olp DISKDIR=..\${DISK} PVMOPTION=-Dlinux -f mingw-optg32-rh8-laplace.mak disk
 
-	copy ..\LICENSE ${DISK}
+	copy ..\LICENSE.txt ${DISK}
+	copy ..\NEWS.txt ${DISK}
 	copy ..\README.txt ${DISK}
 	copy ..\scripts\admb\*.bat ${DISK}\bin
 	copy "..\scripts\g++\*.bat" ${DISK}\bin

@@ -13,7 +13,7 @@ OutputBaseFilename=admb-bcc55-32bit
 AppPublisher=www.admb-project.org
 AppPublisherURL=http://www.admb-project.org/
 
-LicenseFile=..\..\..\LICENSE
+LicenseFile=..\..\..\LICENSE.txt
 
 [Types]
 Name: "bcc55"; Description: "ADMB (Borland 5.5)"

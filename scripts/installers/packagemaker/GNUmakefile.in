@@ -20,7 +20,7 @@ all:
 	cp -vf scripts/admb/admb-bin build/dmg/@target@/installer/usr/local/bin/admb
 
 	cp -vf build/dmg/@target@/installer/usr/local/admb/README.txt build/dmg/@target@/Resources/Welcome.txt
-	cp -vf build/dmg/@target@/installer/usr/local/admb/LICENSE build/dmg/@target@/Resources/License.txt
+	cp -vf build/dmg/@target@/installer/usr/local/admb/LICENSE.txt build/dmg/@target@/Resources/License.txt
 	cp -vf scripts/installers/packagemaker/Resources/background.jpg  build/dmg/@target@/Resources/
 	mkdir -p build/dmg/@target@/package
 	cp -vf docs/install/readme-macos.txt  build/dmg/@target@/package

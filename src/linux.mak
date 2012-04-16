@@ -56,8 +56,9 @@ dist:
 	$(MAKE) --directory=df1b2-separable CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
 	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/nh99-olp ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	cp -vf ../LICENSE ${DISK}
+	cp -vf ../LICENSE.txt ${DISK}
 	cp -vf ../README.txt ${DISK}
+	cp -vf ../NEWS.txt ${DISK}
 	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/$(CXX)/adcomp ${DISK}/bin
 	cp ../scripts/$(CXX)/adlink ${DISK}/bin

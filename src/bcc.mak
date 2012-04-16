@@ -34,8 +34,9 @@ dist:
 	$(MAKE) CC=bcc32 CXXFLAGS=$(OPT_CXXFLAGS) LIBPATH=..\$(DISK)\objects\nh99-olp DISKDIR=..\$(DISK) -f optbor32-laplace.mak all
 	$(MAKE) CC=bcc32 CXXFLAGS=$(SAFE_CXXFLAGS) LIBPATH=..\$(DISK)\objects\nh99-slp DISKDIR=..\$(DISK) -f safbor32-laplace.mak all
 	cd ..
-	copy ..\LICENSE $(DISK)\dist
+	copy ..\LICENSE.txt $(DISK)\dist
 	copy ..\README.txt $(DISK)\dist
+	copy ..\NEWS.txt $(DISK)\dist
 	copy ..\scripts\bcc32\adcomp.bat $(DISK)\dist\bin
 	copy ..\scripts\bcc32\adlink.bat $(DISK)\dist\bin
 	copy ..\scripts\bcc32\set-admb-bcc551.bat $(DISK)\dist\bin

@@ -11,7 +11,7 @@ OutputDir=..\..\..
 OutputBaseFilename=admb-trunk-mingw-gcc4.5.2-32bit
 AppPublisher=www.admb-project.org
 AppPublisherURL=http://www.admb-project.org/
-LicenseFile=..\..\..\LICENSE
+LicenseFile=..\..\..\LICENSE.txt
 AlwaysShowComponentsList=no
 
 [Types]

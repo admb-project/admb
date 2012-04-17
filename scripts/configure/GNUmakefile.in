@@ -43,7 +43,7 @@ install:
 	install -m 644 build/@target@/include/* @prefix@/admb/include
 	install -m 644 build/@target@/lib/* @prefix@/admb/lib
 	install -m 644 build/@target@/contrib/* @prefix@/admb/contrib
-	install -m 644 LICENSE @prefix@/admb
+	install -m 644 LICENSE.txt @prefix@/admb
 	install -m 644 README.txt @prefix@/admb
 	install -m 644 Makefile @prefix@/admb
 	install -m 644 scripts/admb/admb-bin @prefix@/admb/bin

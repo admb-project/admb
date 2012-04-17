@@ -30,7 +30,7 @@ admb:
 	copy ..\scripts\cl\*.bat $(DISK)\dist\bin
 	copy ..\scripts\admb\admb.bat $(DISK)\dist\bin
 	copy ..\LICENSE.txt $(DISK)\dist
-	copy ..\NEWS.txt$(DISK)\dist
+	copy ..\NEWS.txt $(DISK)\dist
 	copy ..\README.txt $(DISK)\dist
 	IF NOT EXIST $(DISK)\dist\examples md $(DISK)\dist\examples
 	xcopy ..\examples $(DISK)\dist\examples /S /Y

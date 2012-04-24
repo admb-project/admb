@@ -17,7 +17,7 @@ run:
 	@printf "Started run:\n"
 	./$(TARGET)
 	@printf "Finished run.\n"
-	@printf "Type './orange -master' to run using MPI.\n"
+	@printf "Type './nested4 -master' or './nested4 -master -nslaves <num>' to run using MPI.\n"
 
 clean:
 	@rm -vf $(TARGET)

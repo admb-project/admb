@@ -78,7 +78,7 @@ int gradient_structure::NUM_RETURN_ARRAYS = 10;
 int gradient_structure::NUM_RETURN_ARRAYS = 25;
 #endif
 double * gradient_structure::hessian_ptr=NULL;
-int gradient_structure::NUM_DEPENDENT_VARIABLES = 200;
+int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #if (defined(NO_DERIVS))
   int gradient_structure::no_derivatives = 0;
 #endif
@@ -104,11 +104,11 @@ dvariable * gradient_structure::MAX_RETURN = NULL;
 dvariable * gradient_structure::MIN_RETURN = NULL;
 dvariable * gradient_structure::RETURN_PTR = NULL;
 #ifdef __BORLANDC__
-long int gradient_structure::GRADSTACK_BUFFER_SIZE = 40000L;
-long int gradient_structure::CMPDIF_BUFFER_SIZE=1400000L;
+long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
+long int gradient_structure::CMPDIF_BUFFER_SIZE=140000000L;
 #else
-long long int gradient_structure::GRADSTACK_BUFFER_SIZE = 40000L;
-long long int gradient_structure::CMPDIF_BUFFER_SIZE=1400000L;
+long long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
+long long int gradient_structure::CMPDIF_BUFFER_SIZE=140000000L;
 #endif
 
 dependent_variables_information * gradient_structure::DEPVARS_INFO=NULL;
@@ -120,7 +120,7 @@ int gradient_structure::save_var_file_flag=0;
 //int gradient_structure::_GRADFILE_PTR2 = NULL; // should be int gradfile_handle;
 //int gradient_structure::_VARSSAV_PTR = 0; // should be int gradfile_handle;
 
-unsigned int gradient_structure::MAX_NVAR_OFFSET = 500;
+unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
 dlist * gradient_structure::GRAD_LIST;
 grad_stack * gradient_structure::GRAD_STACK1;

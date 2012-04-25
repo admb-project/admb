@@ -7,7 +7,7 @@ UsePreviousGroup=no
 DefaultDirName={pf}\ADMB
 DefaultGroupName=ADMB (Borland 5.5)
 UninstallDisplayIcon={app}\MyProg.exe
-OutputDir=..\..\..
+OutputDir=..\..\..\build
 OutputBaseFilename=admb-bcc55-32bit
 
 AppPublisher=www.admb-project.org

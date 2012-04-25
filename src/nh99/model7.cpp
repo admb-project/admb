@@ -531,7 +531,6 @@ void function_minimizer::pre_userfunction(void)
 #endif
   userfunction();
 #if defined(USE_LAPLACE)
-  int i;
   if (lapprox)
   {
     if (lapprox->hesstype==2)
@@ -544,7 +543,7 @@ void function_minimizer::pre_userfunction(void)
       {
         if (inner_opt_value !=0 )
         {
-          for (i=1;i<=lapprox->num_separable_calls;i++)
+          for (int i = 1; i <= lapprox->num_separable_calls; i++)
           {
             tmp-=(*lapprox->separable_function_difference)(i);
           }
@@ -553,7 +552,7 @@ void function_minimizer::pre_userfunction(void)
       }
       else
       {
-        for (i=1;i<=lapprox->num_separable_calls;i++)
+        for (int i = 1; i <= lapprox->num_separable_calls; i++)
         {
           tmp+=(*lapprox->separable_function_difference)(i);
         }

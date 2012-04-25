@@ -24,17 +24,16 @@
    double a = 2./cutoff;
    double b = 1./cutoff2;     
 
-   double tmp,tmp1,t2;
    double return_value;
-   tmp1=v1;
-   tmp=::fabs(tmp1);
+   double tmp1 = v1;
+   double tmp = ::fabs(tmp1);
    if (tmp > cutoff)
    {
         return_value=tmp;
    }
    else
    {
-     t2=tmp*tmp;
+     double t2 = tmp * tmp;
 
      if (tmp1 >=0)
      {

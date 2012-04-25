@@ -63,7 +63,6 @@ double auto_rand(long int& idum, int reset)
   double temp;
   static int iff=0;
   int j;
-  long int iu;
 
   if (reset < 0) 
   {
@@ -91,7 +90,7 @@ double auto_rand(long int& idum, int reset)
       ix1=(IA1*ix1+IC1);
               ix1=ix1 % M1;
           
-      iu= (long int) (ix2*RM2);
+      long int iu = (long int)(ix2 * RM2);
       r[j]=(ix1+iu)*RM1;
     }
     idum =6;

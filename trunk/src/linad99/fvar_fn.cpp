@@ -139,7 +139,7 @@ void gradfree(dlink *);
       double a = 2./cutoff; // 2.0/h
       double b = 1./cutoff2; // 1.0/(h*h)
 
-      double tmp,tmp1,t2;
+      double tmp,tmp1;
 
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
 	gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -162,7 +162,7 @@ void gradfree(dlink *);
       }
       else
       {
-	t2=tmp*tmp;
+	double t2 = tmp * tmp;
 
 	if (tmp1 >=0)
 	{

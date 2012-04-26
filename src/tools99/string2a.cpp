@@ -9,13 +9,13 @@
 #include <stdlib.h>
 #include <safe_mem.h>
 
-  line_adstring& line_adstring::operator = (_CONST adstring& s)
+line_adstring& line_adstring::operator=(const adstring& s)
   {
    this->adstring::operator =(s);
    return *this;
   }
 
-  line_adstring& line_adstring::operator = (_CONST char * s)
+line_adstring& line_adstring::operator=(const char* s)
   {
     this->adstring::operator =(s);
     return *this;

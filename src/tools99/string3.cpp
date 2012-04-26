@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <safe_mem.h>
 
-adstring::adstring(_CONST char * t) : clist()
+adstring::adstring(const char * t) : clist()
 {
   unsigned int sz = 0;
   if (t)
@@ -38,7 +38,7 @@ adstring::adstring(void) : clist()
   s[sz + 1] = '\0';
 }
 
-int adstring::pos(_CONST adstring& substr) _CONST
+int adstring::pos(const adstring& substr) const
 {
 #if (defined __ZTC__) || (defined __NDPX__)
   char* ptr = strstr(*this, substr);
@@ -54,7 +54,7 @@ int adstring::pos(_CONST adstring& substr) _CONST
   return i;
 }
 
-int pos(_CONST adstring& substr,_CONST  adstring& s)
+int pos(const adstring& substr, const adstring& s)
 {
   return(s.pos(substr));
 }

@@ -8,8 +8,7 @@
 #include <stdlib.h>
 #include "admb_messages.h"
 
-  adstring_array::adstring_array(_CONST adstring_array& sa) :
-    clist(sa)
+adstring_array::adstring_array(const adstring_array& sa):clist(sa)
   {
     shape=sa.shape;
     ptr=sa.ptr;
@@ -114,7 +113,7 @@
 
 #ifdef USE_CONST
 
-  _CONST adstring& adstring_array::operator [] (int i) _CONST
+const adstring& adstring_array::operator[](int i) const
   {
     if (!shape)
     {
@@ -125,16 +124,16 @@
 
     if (i<indexmin())
     {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator [] (int i) _CONST", indexmin(), indexmax(), i);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator [] (int i) const ", indexmin(), indexmax(), i);
     }
     if (i>indexmax())
     {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator [] (int i) _CONST", indexmin(), indexmax(), i);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator [] (int i) const ", indexmin(), indexmax(), i);
     }
     return *(ptr[i]);
   }
 
-  _CONST adstring& adstring_array::operator () (int i) _CONST
+const adstring& adstring_array::operator()(int i) const
   {
     if (!shape)
     {
@@ -144,11 +143,11 @@
     }
     if (i<indexmin())
     {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator () (int i) _CONST", indexmin(), indexmax(), i);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator () (int i) const", indexmin(), indexmax(), i);
     }
     if (i>indexmax())
     {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator () (int i) _CONST", indexmin(), indexmax(), i);
+      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator () (int i) const", indexmin(), indexmax(), i);
     }
     return *(ptr[i]);
   }

@@ -35,18 +35,18 @@ adstring::operator char * ()
 }
 
 #ifdef USE_CONST
-adstring::operator _CONST unsigned char * () _CONST
+adstring::operator const unsigned char * () const
 {
-  return (_CONST unsigned char*)s + 1;
+  return (const unsigned char*)s + 1;
 }
 
-adstring::operator _CONST char * () _CONST
+adstring::operator const char * () const
 {
-  return (_CONST char*)(s + 1);
+  return (const char*)(s + 1);
 }
 #endif
 
-  unsigned int adstring::size(void) _CONST
+  unsigned int adstring::size(void) const
   {
     if (!s) return 0;
     return (strlen((char*)(s+1)));
@@ -57,7 +57,7 @@ adstring::operator _CONST char * () _CONST
     return (shape->size());
   }
 
-ostream & operator << (ostream & c, _CONST adstring & t)
+ostream& operator<<(ostream& c, const adstring& t)
 {
   for (unsigned int i = 1; i <= t.size(); i++)
   {
@@ -70,7 +70,7 @@ ostream & operator << (ostream & c, _CONST adstring & t)
   return (c);
 }
 
-adstring & adstring::operator = (_CONST char t)
+adstring& adstring::operator=(const char t)
 { 
   return (*this = adstring(t)); 
 }

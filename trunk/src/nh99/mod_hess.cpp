@@ -21,7 +21,7 @@ void set_labels_for_hess(int);
 
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
-void useless(BOR_CONST double& sdelta2);
+void useless(const double& sdelta2);
 // estimate the matrix of second derivatives
 void ad_update_hess_stats_report(int i,int nvar);
 
@@ -181,7 +181,7 @@ void function_minimizer::hess_routine_noparallel(void)
   ofs << tscale;
 }
 
-void function_minimizer::hess_routine_and_constraint(int iprof,BOR_CONST dvector& g,
+void function_minimizer::hess_routine_and_constraint(int iprof, const dvector& g,
   dvector& fg)
 {
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
@@ -722,7 +722,7 @@ void function_minimizer::hess_inv(void)
   }
 }
 
-void useless(BOR_CONST double& sdelta2){/*int i=0;*/}
+void useless(const double& sdelta2){/*int i=0;*/}
 
 #if defined (__SPDLL__)
  void hess_calcreport(int i,int nvar)

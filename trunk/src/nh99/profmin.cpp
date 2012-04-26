@@ -61,9 +61,9 @@ void function_minimizer::pvm_master_function_evaluation_profile(double& f,
 
 
   void function_minimizer::pvm_master_prof_minimize(int iprof, double sigma,
-    double new_value, BOR_CONST double& _fprof,const int underflow_flag,
-    double global_min,BOR_CONST double& _penalties,
-    BOR_CONST double& _final_weight)
+    double new_value, const double& _fprof,const int underflow_flag,
+    double global_min, const double& _penalties,
+    const double& _final_weight)
   {
     double& penalties=(double&) _penalties;
     double& fprof=(double&) _fprof;

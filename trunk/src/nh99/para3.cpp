@@ -16,7 +16,7 @@ void set_labels_for_hess(int);
 
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
-void useless(BOR_CONST double& sdelta2);
+void useless(const double& sdelta2);
 // estimate the matrix of second derivatives
 void ad_update_hess_stats_report(int i,int nvar);
 

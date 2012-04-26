@@ -6,8 +6,8 @@
  */
 #include <admodel.h>
 
-  void param_init_bounded_matrix::set_value(const dvar_vector& x,
-    BOR_CONST int& ii,BOR_CONST dvariable& pen)
+void param_init_bounded_matrix::set_value(const dvar_vector& x,
+  const int& ii, const dvariable& pen)
   {
     if (allocated(*this))
     {
@@ -19,7 +19,7 @@
   }
 
 
-  void param_init_bounded_matrix::set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii)
+void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
   {
     if (allocated(*this))
     {
@@ -117,9 +117,9 @@
     }
   }
 
-  void param_init_bounded_matrix::allocate(const ad_integer& rmin,
-    const ad_integer& rmax,_CONST index_type& cmin,
-    _CONST index_type& cmax, double _minb,double _maxb,
+void param_init_bounded_matrix::allocate(const ad_integer& rmin,
+  const ad_integer& rmax, const index_type& cmin,
+  const index_type& cmax, double _minb,double _maxb,
     int _phase_start,const char * s)
   {
     minb=_minb;
@@ -161,10 +161,10 @@
   }
 
 
-  void param_init_bounded_matrix::allocate(const ad_integer& rmin,
-    const ad_integer& rmax,_CONST index_type& cmin,
-    _CONST index_type& cmax, double _minb,double _maxb,
-    const char * s)
+void param_init_bounded_matrix::allocate(const ad_integer& rmin,
+  const ad_integer& rmax, const index_type& cmin,
+  const index_type& cmax, double _minb, double _maxb,
+  const char* s)
   {
     minb=_minb;
     maxb=_maxb;

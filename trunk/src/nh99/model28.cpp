@@ -73,19 +73,19 @@ void named_d7_array::allocate(
   model_name_tag::allocate(s);
 }
 
-named_d7_array& named_d7_array::operator = (_CONST d7_array& m)
+named_d7_array& named_d7_array::operator=(const d7_array& m)
 {
   this->d7_array::operator=(m);
   return *this;
 }
 
-named_dvar7_array& named_dvar7_array::operator = (_CONST dvar7_array& m)
+named_dvar7_array& named_dvar7_array::operator=(const dvar7_array& m)
 {
   this->dvar7_array::operator=(m);
   return *this;
 }
 
-named_dvar7_array& named_dvar7_array::operator = (_CONST d7_array& m)
+named_dvar7_array& named_dvar7_array::operator=(const d7_array& m)
 {
   this->dvar7_array::operator=(m);
   return *this;

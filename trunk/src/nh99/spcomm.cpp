@@ -23,8 +23,8 @@ HCONV DDEspclient::cstatus=NULL;
 UINT  DDEspclient::status=0;
 
 void check_when_finished(void);
-void open_the_file(ifstream*& pifs,BOR_CONST int& waitflag,BOR_CONST int& numwaits);
-void open_the_file_when_finished(ifstream*& pifs,BOR_CONST int& waitflag,BOR_CONST int& numwaits);
+void open_the_file(ifstream*& pifs, const int& waitflag, const int& numwaits);
+void open_the_file_when_finished(ifstream*& pifs, const int& waitflag, const int& numwaits);
 
 # if defined(STUPID_DDL_FUNCTIONS)
 HDDEDATA CALLBACK mycallback(       //DdeCallback(
@@ -58,7 +58,7 @@ DDEspclient::DDEspclient(DWORD _sleeptime)
 }
 
 
-void SPsend(BOR_CONST double& x,BOR_CONST adstring& name)
+void SPsend(const double& x, const adstring& name)
 {
   ofstream ofs("c:\\tmp.spl");
 
@@ -71,7 +71,7 @@ void SPsend(BOR_CONST double& x,BOR_CONST adstring& name)
   check_when_finished();
 }
 
-void SPsend(BOR_CONST dvector& x,BOR_CONST adstring& name) 
+void SPsend(const dvector& x, const adstring& name) 
 {
   ofstream ofs("c:\\tmp.spl");
 
@@ -84,27 +84,27 @@ void SPsend(BOR_CONST dvector& x,BOR_CONST adstring& name)
   check_when_finished();
 }
 
-void SPsend(BOR_CONST named_dmatrix& _x)
+void SPsend(const named_dmatrix& _x)
 {
   ADUNCONST(named_dmatrix,x)
   SPsend(x,adstring(x.label().mychar())); 
 }
 
 
-void SPsend(BOR_CONST named_dvar_matrix& _x) 
+void SPsend(const named_dvar_matrix& _x) 
 {
   ADUNCONST(named_dvar_matrix,x) 
   SPsend(value(x),adstring(x.label().mychar())); 
 }
 
-void SPsend(BOR_CONST named_dvariable& _x)
+void SPsend(const named_dvariable& _x)
 {
   ADUNCONST(named_dvariable,x)
   SPsend(value(x),adstring(x.label().mychar())); 
 }
 
 
-void SPsend(BOR_CONST dmatrix& x,BOR_CONST adstring& name) 
+void SPsend(const dmatrix& x, const adstring& name) 
 {
   int i1=x.rowmin();
   int ncol=x(i1).indexmax()-x(i1).indexmin()+1;
@@ -120,7 +120,7 @@ void SPsend(BOR_CONST dmatrix& x,BOR_CONST adstring& name)
   check_when_finished();
 }
 
-void SPreceive(BOR_CONST dvector& _x,BOR_CONST adstring& name) 
+void SPreceive(const dvector& _x, const adstring& name) 
 {
   ADUNCONST(dvector,x) 
 
@@ -163,7 +163,7 @@ void SPreceive(BOR_CONST dvector& _x,BOR_CONST adstring& name)
       if ( (x.indexmax()-x.indexmin()+1) != n)
       {
         cerr << "Error allocated dvector of the wrong size in"
-           "SPreceive(BOR_CONST dvector& x,BOR_CONST adstring& name)";
+           "SPreceive(const dvector& x, const adstring& name)";
       }
       else
       {
@@ -185,19 +185,19 @@ void SPreceive(BOR_CONST dvector& _x,BOR_CONST adstring& name)
   
 }
 
-void SPreceive(BOR_CONST named_dvector& _x) 
+void SPreceive(const named_dvector& _x) 
 {
   ADUNCONST(named_dvector,x) 
   SPreceive(x,adstring(x.label().mychar()));
 }
 
-void SPreceive(BOR_CONST named_dvar_vector& _x) 
+void SPreceive(const named_dvar_vector& _x) 
 {
   ADUNCONST(named_dvar_vector,x) 
   SPreceive(x,adstring(x.label().mychar()));
 }
 
-void SPreceive(BOR_CONST dvar_vector& _x,BOR_CONST adstring& name) 
+void SPreceive(const dvar_vector& _x,const adstring& name) 
 {
   ADUNCONST(dvar_vector,x) 
 
@@ -240,7 +240,7 @@ void SPreceive(BOR_CONST dvar_vector& _x,BOR_CONST adstring& name)
       if ( (x.indexmax()-x.indexmin()+1) != n)
       {
         cerr << "Error allocated dvector of the wrong size in"
-           "SPreceive(BOR_CONST dvector& x,BOR_CONST adstring& name)";
+           "SPreceive(const dvector& x,const adstring& name)";
       }
       else
       {
@@ -262,14 +262,14 @@ void SPreceive(BOR_CONST dvar_vector& _x,BOR_CONST adstring& name)
   
 }
 
-void SPreceive(BOR_CONST dmatrix& _x,BOR_CONST adstring& name);
-void SPreceive(BOR_CONST named_dmatrix& _x) 
+void SPreceive(const dmatrix& _x, const adstring& name);
+void SPreceive(const named_dmatrix& _x) 
 {
   ADUNCONST(named_dmatrix,x) 
   SPreceive(x,adstring(x.label().mychar()));
 }
 
-void SPreceive(BOR_CONST dmatrix& _x,BOR_CONST adstring& name) 
+void SPreceive(const dmatrix& _x, const adstring& name) 
 {
   ADUNCONST(dmatrix,x)
 
@@ -332,7 +332,7 @@ void SPreceive(BOR_CONST dmatrix& _x,BOR_CONST adstring& name)
          ( (x(r1).indexmax()-x(r1).indexmin()+1) != ncols) )
       {
         cerr << "Error --  allocated dimatrix is  the wrong size in"
-           "SPreceive(BOR_CONST dvector& x,BOR_CONST adstring& name)";
+           "SPreceive(const dvector& x, const adstring& name)";
       }
       else
       {
@@ -354,15 +354,15 @@ void SPreceive(BOR_CONST dmatrix& _x,BOR_CONST adstring& name)
   
 }
 
-void SPreceive(BOR_CONST dvar_matrix& x,BOR_CONST adstring& name);
+void SPreceive(const dvar_matrix& x, const adstring& name);
 
-void SPreceive(BOR_CONST named_dvar_matrix& _x) 
+void SPreceive(const named_dvar_matrix& _x) 
 {
   ADUNCONST(named_dvar_matrix,x) 
   SPreceive(x,adstring(x.label().mychar())); 
 }
 
-void SPreceive(BOR_CONST dvar_matrix& _x,BOR_CONST adstring& name) 
+void SPreceive(const dvar_matrix& _x, const adstring& name) 
 {
   ADUNCONST(dvar_matrix,x)
 
@@ -425,7 +425,7 @@ void SPreceive(BOR_CONST dvar_matrix& _x,BOR_CONST adstring& name)
          ( (x(r1).indexmax()-x(r1).indexmin()+1) != ncols) )
       {
         cerr << "Error --  allocated dimatrix is  the wrong size in"
-           "SPreceive(BOR_CONST dvector& x,BOR_CONST adstring& name)";
+           "SPreceive(const dvector& x, const adstring& name)";
       }
       else
       {
@@ -447,24 +447,24 @@ void SPreceive(BOR_CONST dvar_matrix& _x,BOR_CONST adstring& name)
   
 }
 
-void SPreceive(BOR_CONST named_dvariable& _x)
+void SPreceive(const named_dvariable& _x)
 {
   ADUNCONST(named_dvariable,x)
   SPreceive(value(x),adstring(x.label().mychar())); 
 }
 
-void SPreceive(BOR_CONST data_number& _x)
+void SPreceive(const data_number& _x)
 {
   ADUNCONST(data_number,x)
   SPreceive(x.value(),adstring(x.label().mychar())); 
 }
 
-void SPreceive(BOR_CONST dvariable& x,BOR_CONST adstring& name) 
+void SPreceive(const dvariable& x, const adstring& name) 
 {
   SPreceive(value(x),name); 
 }
 
-void SPreceive(BOR_CONST double& x,BOR_CONST adstring& name) 
+void SPreceive(const double& x, const adstring& name) 
 {
 
   //adstring command = name + adstring(" <- scan(\"c:\\\\tmp.spl\")");
@@ -507,19 +507,19 @@ void SPreceive(BOR_CONST double& x,BOR_CONST adstring& name)
 
 
 
-void SPsend(BOR_CONST named_dvector& _x) 
+void SPsend(const named_dvector& _x) 
 {
   ADUNCONST(named_dvector,x) 
   SPsend(x,adstring(x.label().mychar()));
 } 
 
-void SPsend(BOR_CONST named_dvar_vector& _x) 
+void SPsend(const named_dvar_vector& _x) 
 {
   ADUNCONST(named_dvar_vector,x) 
    SPsend(value(x),adstring(x.label().mychar()));
 } 
 
-void SPplot(BOR_CONST dvector& x,BOR_CONST adstring& name)
+void SPplot(const dvector& x, const adstring& name)
 {
 
   ofstream ofs("c:\\tmp.spl");
@@ -539,7 +539,7 @@ void SPplot(BOR_CONST dvector& x,BOR_CONST adstring& name)
   Sleep(500);
 }
 
-void SPplot(BOR_CONST named_dvector& _x) 
+void SPplot(const named_dvector& _x) 
 {
   ADUNCONST(named_dvector,x) 
   SPplot(x,adstring(x.label().mychar())); 
@@ -647,7 +647,7 @@ void check_when_finished(void)
 }
 
 
-void open_the_file_when_finished(ifstream*& pifs,BOR_CONST int& _waitflag,BOR_CONST int& _numwaits)
+void open_the_file_when_finished(ifstream*& pifs, const int& _waitflag, const int& _numwaits)
 { 
   int& waitflag=(int&) _waitflag;
   int& numwaits=(int&) _numwaits;
@@ -703,7 +703,7 @@ void open_the_file_when_finished(ifstream*& pifs,BOR_CONST int& _waitflag,BOR_CO
   }
 }
 
-void open_the_file(ifstream*& pifs,BOR_CONST int& _waitflag,BOR_CONST int& _numwaits)
+void open_the_file(ifstream*& pifs, const int& _waitflag, const int& _numwaits)
 { 
   int& waitflag=(int&) _waitflag;
   int& numwaits=(int&) _numwaits;

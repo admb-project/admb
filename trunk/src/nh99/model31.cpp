@@ -20,12 +20,12 @@ void dll_data_number::allocate(double *_pd,const char * _s)
   val=*_pd;
 }
 
-dll_data_number& dll_data_number::operator =(_CONST double& v)
+dll_data_number& dll_data_number::operator=(const double& v)
 {
   data_number::operator =(v);
   return *this;
 }
-dll_param_number& dll_param_number::operator = (_CONST prevariable& m)
+dll_param_number& dll_param_number::operator=(const prevariable& m)
 {
   dvariable::operator = (m);
   return *this;
@@ -67,7 +67,7 @@ dll_param_init_number& dll_param_init_number::operator = (CGNU_DOUBLE m)
   return *this;
 }
 
-dll_param_init_number& dll_param_init_number::operator = (_CONST prevariable& m)
+dll_param_init_number& dll_param_init_number::operator=(const prevariable& m)
 {
   dvariable::operator = (m);
   return *this;
@@ -114,15 +114,13 @@ void dll_param_init_vector::allocate(double * _pd,int imin,int imax,
   }
 }
 
-dll_param_vector& dll_param_vector::operator =
-  (_CONST dvar_vector& m)
+dll_param_vector& dll_param_vector::operator=(const dvar_vector& m)
 {
   dvar_vector::operator = (m);
   return *this;
 }
 
-dll_param_vector& dll_param_vector::operator =
-  (_CONST dvector& m)
+dll_param_vector& dll_param_vector::operator=(const dvector& m)
 {
   dvar_vector::operator = (m);
   return *this;
@@ -135,8 +133,7 @@ dll_param_vector& dll_param_vector::operator =
   return *this;
 }
 
-dll_param_vector& dll_param_vector::operator =
-  (_CONST prevariable& m)
+dll_param_vector& dll_param_vector::operator=(const prevariable& m)
 {
   dvar_vector::operator = (m);
   return *this;
@@ -219,13 +216,13 @@ void dll_data_matrix::allocate(double * _d,int rmin,int rmax,
 }
 
 
-dll_data_matrix& dll_data_matrix::operator = (_CONST dmatrix& m)
+dll_data_matrix& dll_data_matrix::operator=(const dmatrix& m)
 {
   data_matrix::operator = (m);
   return *this;
 }
 
-dll_data_matrix& dll_data_matrix::operator = (_CONST double& m)
+dll_data_matrix& dll_data_matrix::operator=(const double& m)
 {
   data_matrix::operator = (m);
   return *this;

@@ -57,7 +57,7 @@
     return model_name_tag::label().mychar();
   }
 
-	param_likeprof_number& param_likeprof_number::operator = (_CONST prevariable& v)
+param_likeprof_number& param_likeprof_number::operator=(const prevariable& v)
 	{
 		this->param_stddev_number::operator = (v);
 		return *this;

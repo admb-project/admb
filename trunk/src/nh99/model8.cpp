@@ -11,7 +11,7 @@
 
   objective_function_value::objective_function_value() {pobjfun=this;}
   objective_function_value& objective_function_value::operator =
-    (_CONST prevariable& v)
+    (const prevariable& v)
   {
     prevariable::operator = (v);
     return *this;

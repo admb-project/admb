@@ -14,14 +14,14 @@
   #include <gccmanip.h>
 #endif
 
-void useless(BOR_CONST double& sdelta2);
+void useless(const double& sdelta2);
 // estimate the matrix of second derivatives
 
 /**
  * Description not yet available.
  * \param
  */
-dmatrix function_minimizer::dep_hess_routine(BOR_CONST dvariable& dep)
+dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
 {
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   independent_variables x(1,nvar);

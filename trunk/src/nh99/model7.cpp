@@ -22,7 +22,7 @@ int have_jvm=0;
 
 
 
-void strip_full_path(BOR_CONST adstring& _s)
+void strip_full_path(const adstring& _s)
 {
   adstring& s = (adstring&) _s;
   int n=s.size();

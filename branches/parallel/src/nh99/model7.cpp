@@ -36,7 +36,6 @@ dvector admpi_manager::get_dvector_from_master(void)
   return tmp;
 }
 
-<<<<<<< .working
 dvector admpi_manager::get_dvector_from_slave(int _slave_number)
 {
   int slave_number=_slave_number-1;

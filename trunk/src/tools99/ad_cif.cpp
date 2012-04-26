@@ -15,7 +15,7 @@
 //MATRIX_OPERATOR_DEFINE(imatrix)
 //MATRIX_OPERATOR_DEFINE(lmatrix)
 
-cifstream& cifstream::operator>>(BOR_CONST ivector& z)
+cifstream& cifstream::operator>>(const ivector& z)
 {
   if (allocated(z))
   for (int i= z.indexmin(); i <= z.indexmax(); i++)
@@ -25,13 +25,13 @@ cifstream& cifstream::operator>>(BOR_CONST ivector& z)
   return *this;
 }
 
-cifstream& operator>>(cifstream& istr,BOR_CONST prevariable& z)
+cifstream& operator>>(cifstream& istr, const prevariable& z)
 {
   istr >> value(z);
   return istr;
 }
 
-cifstream& cifstream::operator>>(BOR_CONST lvector& z)
+cifstream& cifstream::operator>>(const lvector& z)
 {
   if (allocated(z))
   for (int i= z.indexmin(); i <= z.indexmax(); i++)
@@ -42,7 +42,7 @@ cifstream& cifstream::operator>>(BOR_CONST lvector& z)
 }
 
 
-cifstream& operator>>(cifstream& istr,BOR_CONST imatrix& z)
+cifstream& operator>>(cifstream& istr, const imatrix& z)
 { 
   if (allocated(z))
   for (int i= z.rowmin(); i <= z.rowmax(); i++)
@@ -52,7 +52,7 @@ cifstream& operator>>(cifstream& istr,BOR_CONST imatrix& z)
   return istr;
 }
 
-cifstream& cifstream::operator>>(BOR_CONST dvector& z)
+cifstream& cifstream::operator>>(const dvector& z)
 {
   if (allocated(z))
   for (int i= z.indexmin(); i <= z.indexmax(); i++)
@@ -62,7 +62,7 @@ cifstream& cifstream::operator>>(BOR_CONST dvector& z)
   return *this;
 }
 
-cifstream& operator>>(cifstream& istr,BOR_CONST  dmatrix& z)
+cifstream& operator>>(cifstream& istr, const dmatrix& z)
 { 
   if (allocated(z))
   for (int i= z.rowmin(); i <= z.rowmax(); i++)
@@ -72,7 +72,7 @@ cifstream& operator>>(cifstream& istr,BOR_CONST  dmatrix& z)
   return istr;
 }
 
-cifstream& operator>>(cifstream& istr,BOR_CONST  d3_array& z)
+cifstream& operator>>(cifstream& istr, const d3_array& z)
 { 
   if (allocated(z))
   for (int i= z.slicemin(); i <= z.slicemax(); i++)
@@ -82,7 +82,7 @@ cifstream& operator>>(cifstream& istr,BOR_CONST  d3_array& z)
   return istr;
 }
 
-cifstream& operator>>(cifstream& istr,BOR_CONST  d5_array& z)
+cifstream& operator>>(cifstream& istr, const d5_array& z)
 { 
   if (allocated(z))
   for (int i= z.indexmin(); i <= z.indexmax(); i++)
@@ -92,7 +92,7 @@ cifstream& operator>>(cifstream& istr,BOR_CONST  d5_array& z)
   return istr;
 }
 
-cifstream& operator>>(cifstream& istr,BOR_CONST  i4_array& z)
+cifstream& operator>>(cifstream& istr, const i4_array& z)
 { 
   if (allocated(z))
   for (int i= z.indexmin(); i <= z.indexmax(); i++)
@@ -102,7 +102,7 @@ cifstream& operator>>(cifstream& istr,BOR_CONST  i4_array& z)
   return istr;
 }
 
-cifstream& operator>>(cifstream& istr,BOR_CONST  i3_array& z)
+cifstream& operator>>(cifstream& istr, const i3_array& z)
 { 
   if (allocated(z))
   for (int i= z.indexmin(); i <= z.indexmax(); i++)
@@ -112,7 +112,7 @@ cifstream& operator>>(cifstream& istr,BOR_CONST  i3_array& z)
   return istr;
 }
 
-cifstream& operator>>(cifstream& istr,BOR_CONST  d4_array& z)
+cifstream& operator>>(cifstream& istr, const d4_array& z)
 { 
   if (allocated(z))
   for (int i= z.hslicemin(); i <= z.hslicemax(); i++)

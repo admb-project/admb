@@ -20,7 +20,7 @@ using std::istringstream;
     double gmax,const char * cbuf);
   void vm_initialize(void);
 
-  void set_initial_simplex(BOR_CONST dmatrix& p,BOR_CONST dvector& y,int nvar,BOR_CONST dvector& x,
+  void set_initial_simplex(const tdmatrix& p, const dvector& y,int nvar, const dvector& x,
     double delta);
 
 int get_option_number(const char * option_name,const char * error_message,
@@ -627,7 +627,7 @@ void tracing_message(int traceflag,const char *s);
     }
   }
 
-  void function_minimizer::set_initial_simplex(BOR_CONST dmatrix& _p,BOR_CONST dvector& _y,int nvar,BOR_CONST dvector& x,
+  void function_minimizer::set_initial_simplex(const dmatrix& _p, const dvector& _y, int nvar, const dvector& x,
     double delta)
   {
     dvector& y=(dvector&) _y;

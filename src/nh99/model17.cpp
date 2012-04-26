@@ -6,7 +6,7 @@
  */
 #include <admodel.h>
 
-streampos ad_comm::change_datafile_name(_CONST adstring& s,
+streampos ad_comm::change_datafile_name(const adstring& s,
   const streampos& off)
 {
   streampos tmp=0;
@@ -35,7 +35,7 @@ streampos ad_comm::change_datafile_name(_CONST adstring& s,
   return tmp;
 }
 
-streampos ad_comm::change_pinfile_name(_CONST adstring& s,
+streampos ad_comm::change_pinfile_name(const adstring& s,
   const streampos& off)
 {
   streampos tmp=0;

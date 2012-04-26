@@ -47,7 +47,7 @@ void ad_make_code_reentrant(void)
 
 void ssbul_l(char * ptmp){;}
     
-void parse_dll_options(char * pname,BOR_CONST int& _nopt,char * sp_options,
+void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
   char *** pargv)
 {
   int& nopt=(int&) _nopt;
@@ -105,7 +105,7 @@ void parse_dll_options(char * pname,BOR_CONST int& _nopt,char * sp_options,
   //return a;
 }
 
-char ** no_dll_options(char * pname,BOR_CONST int& _nopt)
+char** no_dll_options(char *pname, const int& _nopt)
 {
   int& nopt=(int&) _nopt;
   nopt=1;
@@ -167,7 +167,7 @@ void do_dll_housekeeping(int argc,char ** argv)
 }
 
 /*
-char ** parse_dll_options(char * pname,BOR_CONST int& _nopt,char * sp_options)
+char ** parse_dll_options(char * pname, const int& _nopt,char * sp_options)
 {
   int& nopt=(int&) _nopt;
   nopt=1;
@@ -305,7 +305,7 @@ char * string_parser::get_next_option(int & n)
   return rs;
 }
 
-char ** parse_dll_options(char * pname,BOR_CONST int& _nopt,char * sp_options)
+char** parse_dll_options(char *pname, const int& _nopt, char *sp_options)
 {
   int& nopt=(int&) _nopt;
   nopt=1;
@@ -414,7 +414,7 @@ void davesnobullshitstrncpy(char * a,const char * b, int n)
   a[n]=0;
 }
 
-char ** parse_dll_options(char * pname,BOR_CONST int& _argc,char * s)
+char** parse_dll_options(char *pname, const int& _argc, char *s)
 {
   int& argc=(int&)(_argc);
   char ** a;

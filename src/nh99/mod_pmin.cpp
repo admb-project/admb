@@ -6,22 +6,22 @@
  */
 #include <admodel.h>
 
-void get_confidence_interval(BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd,
-  dmatrix& ms,BOR_CONST dvector& xs,BOR_CONST dvector& siglevel,BOR_CONST int& level_index,
+void get_confidence_interval(const dvector& left_bd, const dvector& right_bd,
+  dmatrix& ms, const dvector& xs, const dvector& siglevel, const int& level_index,
   dvector& xdist,int index);
-void get_onesided_intervals(BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd,
-  dmatrix& ms,BOR_CONST dvector& xs,BOR_CONST dvector& siglevel,BOR_CONST int& level_index,
+void get_onesided_intervals(const dvector& left_bd, const dvector& right_bd,
+  dmatrix& ms, const dvector& xs, const dvector& siglevel, const int& level_index,
   dvector& xdist,int index);
-void report_confidence_limits(BOR_CONST ofstream& ofs3,int numsig_levels,
-  dvector& siglevel,BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd);
-void report_onesided_confidence_limits(BOR_CONST ofstream& ofs3,int numsig_levels,
-  dvector& siglevel,BOR_CONST dvector& left_bd,BOR_CONST dvector& right_bd,int ip);
+void report_confidence_limits(const ofstream& ofs3,int numsig_levels,
+  dvector& siglevel, const dvector& left_bd, const dvector& right_bd);
+void report_onesided_confidence_limits(const ofstream& ofs3,int numsig_levels,
+  dvector& siglevel, const dvector& left_bd, const dvector& right_bd,int ip);
 
-void get_ee(BOR_CONST dmatrix& hh,BOR_CONST ofstream& of5); 
+void get_ee(const dmatrix& hh, const ofstream& of5); 
 
 ofstream of5("eigv.rpt");
 
-dmatrix trans(BOR_CONST dvector& x)
+dmatrix trans(const dvector& x)
 {
   int mmin=x.indexmin();
   int mmax=x.indexmax();
@@ -405,7 +405,7 @@ dmatrix trans(BOR_CONST dvector& x)
 #endif
   }
 
-void get_ee(BOR_CONST dmatrix& hh,BOR_CONST ofstream& _of5) 
+void get_ee(const dmatrix& hh, const ofstream& _of5) 
 {
   ofstream& of5= (ofstream&) _of5; 
   int mmin=hh.rowmin();

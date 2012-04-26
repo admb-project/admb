@@ -6,7 +6,7 @@
  */
 #include <admodel.h>
 
-//double ndfboundp( double x, double fmin, double fmax,BOR_CONST double& fpen);
+//double ndfboundp( double x, double fmin, double fmax, const double& fpen);
 
   void param_init_number::sd_vscale(const dvar_vector& _d,const dvar_vector& x,
     const int& _ii)

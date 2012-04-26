@@ -6,13 +6,13 @@
  */
 #include <admodel.h>
 
-double inv_cumd_norm(_CONST double& x);
-double cumd_norm(_CONST double& x);
+double inv_cumd_norm(const double& x);
+double cumd_norm(const double& x);
 double myran1(long int&);
 //double better_rand(long int&);
 
-dvector new_probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& _wght,double pprobe, random_number_generator& rng)
+dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& _wght,double pprobe, random_number_generator& rng)
 {
   double& wght=(double&) _wght;
   const double rob1=0.95;
@@ -164,8 +164,8 @@ dvector new_probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,B
 }
 
 
-void new_probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch, BOR_CONST double& _wght,BOR_CONST dvector& _y,double pprobe, random_number_generator& rng)
+void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& _wght, const dvector& _y,double pprobe, random_number_generator& rng)
 {
   double& wght=(double&) _wght;
   const double rob1=0.95;
@@ -289,5 +289,4 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1
   }
 }
 
-void sobseq(int*,BOR_CONST dvector&);
-
+void sobseq(int*, const dvector&);

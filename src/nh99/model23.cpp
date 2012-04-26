@@ -18,37 +18,37 @@ int adkdelta(int i,int j)
   }
 }
 
-void param_init_number::dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& _ii)
+void param_init_number::dev_correction(const dmatrix& H, const int& _ii)
 {
   int& ii=(int&) _ii;
   ii++;
 }
 
-void param_init_matrix::dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& _ii)
+void param_init_matrix::dev_correction(const dmatrix& H, const int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();
 }
 
-void param_init_d3array::dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& _ii)
+void param_init_d3array::dev_correction(const dmatrix& H, const int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();
 }
 
-void param_init_vector::dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& _ii)
+void param_init_vector::dev_correction(const dmatrix& H, const int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();
 }
 
-void param_init_bounded_vector::dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& _ii)
+void param_init_bounded_vector::dev_correction(const dmatrix& H, const int& _ii)
 {
   int& ii=(int&) _ii;
   ii+=size_count();
 }
 
-void param_init_bounded_dev_vector::dev_correction(BOR_CONST dmatrix& _H,BOR_CONST int& _ii)
+void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H, const int& _ii)
 {
   dmatrix& H=(dmatrix&) _H;
   int& ii=(int&) _ii;

@@ -7,8 +7,8 @@
 
 #include <admodel.h>
 
-double inv_cumd_norm(_CONST double& x);
-double cumd_norm(_CONST double& x);
+double inv_cumd_norm(const double& x);
+double cumd_norm(const double& x);
 double myran1(long int&);
 //double better_rand(long int&);
 double ffmax(double a,double b)
@@ -50,8 +50,8 @@ double cumd_exp(double x)
   }                  
 }
 
-dvector bounded_multivariate_normal(int nvar, BOR_CONST dvector& a1, BOR_CONST dvector& b1,
-  dmatrix& ch, BOR_CONST double& _wght, random_number_generator & rng)
+dvector bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& _wght, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   const double sqrt_tpi =sqrt(2*PI);
@@ -124,8 +124,8 @@ dvector bounded_multivariate_normal(int nvar, BOR_CONST dvector& a1, BOR_CONST d
 }
 
 
-dvector probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1, 
-  dmatrix& ch, BOR_CONST double& _wght, double pprobe, random_number_generator & rng)
+dvector probing_bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1, 
+  dmatrix& ch, const double& _wght, double pprobe, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   const double sqrt_tpi =sqrt(2*PI);
@@ -202,8 +202,8 @@ dvector probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_C
   return w; 
 }
 
-dvector bounded_multivariate_uniform(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch, BOR_CONST double& _wght, random_number_generator & rng)
+dvector bounded_multivariate_uniform(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& _wght, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   dvector a(1,nvar);
@@ -241,8 +241,8 @@ dvector bounded_multivariate_uniform(int nvar,BOR_CONST dvector& a1,BOR_CONST dv
   return w;
 }
 
-dvector bounded_robust_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST dmatrix& ch3, double contaminant,BOR_CONST double& _wght, 
+dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const dmatrix& ch3, double contaminant, const double& _wght, 
   random_number_generator & rng)
 {
   double& wght= (double&) _wght;
@@ -311,6 +311,4 @@ dvector bounded_robust_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CO
   }
   return w; 
 }
-void sobseq(int*,BOR_CONST dvector&);
-
-
+void sobseq(int*, const dvector&);

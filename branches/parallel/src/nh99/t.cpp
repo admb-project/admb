@@ -1,5 +1,5 @@
 /*
- * $Id: t.cpp 945 2011-01-12 23:03:57Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -296,7 +296,7 @@ struct lb4_1_ {
 struct {
     integer e_1[2];
     double e_2[3];
-    } lb4_ = { 6, 6, .9, 1e-20, 1e20 };
+    } lb4_ = { {6, 6}, {.9, 1e-20, 1e20}};
 #ifdef __cplusplus
 }
 #endif

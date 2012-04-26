@@ -1,5 +1,5 @@
 /*
- * $Id: hybmcmc.cpp 945 2011-01-12 23:03:57Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California
@@ -8,6 +8,9 @@
  * \file
  * Description not yet available.
  */
+#include <sstream>
+using std::istringstream;
+
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
@@ -233,7 +236,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       else
       {   
     
-        istrstream ist(ad_comm::argv[on+1]);
+        istringstream ist(ad_comm::argv[on+1]);
         ist >> _hybeps;
     
         if (_hybeps<=0)
@@ -379,7 +382,6 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     
     // for hybrid mcmc option always save output
     //if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)
-    int mcsave_flag=1;
     if ( mcrestart_flag>-1)
     {
       // check that nvar is correct
@@ -681,7 +683,9 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
            pprob=-log(0.95*exp(-r2)+0.05/3.0*exp(-r2/9.0));
          }
          if ((is%50)==1)
-           cout << iaccept/is << " " << Hbegin-Ham << " " << Ham << endl;
+           //  cout << iaccept/is << " " << Hbegin-Ham << " " << Ham << endl;
+           cout << " hybrid sim " << is <<  "  accept rate " << iaccept/is 
+                << "  Hbegin-Ham " << Hbegin-Ham << "  Ham " << Ham << endl;
          if (rr<pp)
          {
            iaccept++;

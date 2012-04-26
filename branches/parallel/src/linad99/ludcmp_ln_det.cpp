@@ -1,5 +1,5 @@
 /*
- * $Id: ludcmp_ln_det.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Copyright (c) 2009-2011 ADMB Foundation
  */
@@ -43,7 +43,6 @@ dvariable my_ln_det(const dvar_matrix & M, int &sign)
    int mmax = M.indexmax();
    double lndet = 0.0;
    dmatrix & gamma = clu1.get_U();
-   dmatrix & alpha = clu1.get_L();
 
    // only need to save the diagonal of gamma
    for (int i = mmin; i <= mmax; i++)
@@ -138,7 +137,6 @@ double ln_det(const dmatrix & m1, const int &_sgn)
    int mmax = M.indexmax();
    double lndet = 0.0;
    dmatrix & gamma = clu1.get_U();
-   dmatrix & alpha = clu1.get_L();
 
    // only need to save the diagonal of gamma
    for (int i = mmin; i <= mmax; i++)

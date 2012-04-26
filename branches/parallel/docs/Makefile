@@ -4,4 +4,4 @@ all:\
 api
 
 api:
-	make --directory=api
+	$(MAKE) --directory=api

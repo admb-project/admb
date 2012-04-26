@@ -27,10 +27,12 @@ set re=0
 set s=
 set df1b2lib=df1b2stubo.lib
 set adlib=ado32.lib
+set contrib=contribo.lib
+
 :STARTLOOP
 if [%2]==[] goto ENDLOOP
 if %1==-r set re=1& shift
-if %1==-s set adlib=ads32.lib& set s=s& shift
+if %1==-s set adlib=ads32.lib& set s=s& contrib=contribs.lib& shift
 goto STARTLOOP
 :ENDLOOP
 
@@ -39,7 +41,7 @@ if %adlib%==ads32.lib set df1b2lib=df1b2s.lib
 set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
-cl  %1.obj %df1b2lib% admod32%s%.lib %adlib% adt32%s%.lib /link /libpath:"%ADMB_HOME%"\lib /libpath:"%MSSDK%"\lib
+cl  %1.obj %df1b2lib% admod32%s%.lib %adlib% adt32%s%.lib %contrib% /link /libpath:"%ADMB_HOME%"\lib /libpath:"%ADMB_HOME%"\contrib
 @echo off
 
 goto EOF

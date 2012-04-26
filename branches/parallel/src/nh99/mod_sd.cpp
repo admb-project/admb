@@ -1,5 +1,5 @@
 /*
- * $Id: mod_sd.cpp 945 2011-01-12 23:03:57Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -460,7 +460,7 @@ void function_minimizer::sd_routine(void)
       ofsd << " ";
     }
     ofs << "  value      std.dev   ";
-    ofsd << "  value      std.dev   ";
+    ofsd << "  value      std.dev";
     for (i=1;i<=nvar+ndvar;i++)
     {
       ofs << " " << setw(4) << i << "   ";

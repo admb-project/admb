@@ -1,5 +1,5 @@
 /*
- * $Id: fvar_arr.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -60,7 +60,6 @@ dvar_vector& dvar_vector::shift(int min)
  */
  dvar_vector::dvar_vector(_CONST dvector& t)
  {
-   int i;
    if (!t)
    {
      allocate();
@@ -70,7 +69,7 @@ dvar_vector& dvar_vector::shift(int min)
      va=NULL;
      allocate(t.indexmin(),t.indexmax());
      initialize();
-     for ( i=indexmin(); i<=indexmax(); i++)
+     for (int i = indexmin(); i <= indexmax(); i++)
      {
        va[i].x=(t.v)[i];
      }

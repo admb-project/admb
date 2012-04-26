@@ -1,5 +1,5 @@
 /*
- * $Id: df1b2fn2.cpp 944 2011-01-12 22:48:46Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -266,7 +266,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     *get_u()=v;
     if (num_variables>=minder && num_variables<=maxder)
     {
-      int offset= num_variables-minder;
+      //int offset= num_variables-minder;
       //u_dot[offset]=1.0;
     }
   }

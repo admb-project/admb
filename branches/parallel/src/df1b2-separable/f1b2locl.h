@@ -1,5 +1,5 @@
 /*
- * $Id: f1b2locl.h 944 2011-01-12 22:48:46Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California

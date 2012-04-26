@@ -1,5 +1,5 @@
 /*
- * $Id: fvar.hpp 965 2011-02-03 23:54:33Z itaylor $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California
@@ -476,12 +476,12 @@ int getch(void);
 #  include <iomanip>
 #  include <sstream>
 #  include <istream>
-#  include <strstream>
+#  include <sstream>
      using std::ofstream;
      using std::ostream;
      using std::ifstream;
      using std::istream;
-     using std::istrstream;
+     using std::istringstream;
      using std::streampos;
      using std::streambuf;
      using std::setw;
@@ -1034,8 +1034,8 @@ public:
   double_and_int * arr_new(unsigned int sz); 
 
 /**
- * Description not yet available.
- * \param
+ * class for things related to the gradient structures, including dimension of 
+ * arrays, size of buffers, etc.
  */
   class gradient_structure
   {
@@ -1160,9 +1160,11 @@ private:
 #ifdef __BORLANDC__
       static void set_CMPDIF_BUFFER_SIZE(long int i);
       static void set_GRADSTACK_BUFFER_SIZE(long int i);
+      static void set_GRADSTACK_BUFFER_BYTES(long int i);
 #else
       static void set_CMPDIF_BUFFER_SIZE(long long int i);
       static void set_GRADSTACK_BUFFER_SIZE(long long int i);
+      static void set_GRADSTACK_BUFFER_BYTES(long long int i);
 #endif
       static void set_MAX_NVAR_OFFSET(unsigned int i);
       static void set_MAX_DLINKS(int i);
@@ -2165,6 +2167,7 @@ private:
      dvar_vector pow(_CONST dvar_vector& t1,_CONST prevariable&);
      dvar_vector pow(_CONST dvector& t1,_CONST prevariable&);
      dvar_vector pow(_CONST prevariable&,_CONST dvar_vector& t1);
+	dvar_vector pow(const dvector& x,const dvar_vector& a);
 
 // end of dvar_vector mathematical functions
 
@@ -3242,6 +3245,12 @@ dvector sort(_CONST dvector&,BOR_CONST ivector& index,int NSTACK=60);
 ivector sort(_CONST ivector&,BOR_CONST ivector& index,int NSTACK=60);
 dmatrix sort(_CONST dmatrix&,int column,int NSTACK=60);
 imatrix sort(_CONST imatrix&,int column,int NSTACK=60);
+
+
+#include "factors.h" 
+int count_factor(const dvector& v, const double& eps);
+ivector as_factor(const dvector& v, const double eps=1.0e-6);
+int count_factor(const ivector& v);
 
  //void gradcalc( int , double *);
  void gradcalc(int nvar,BOR_CONST dvector& g);
@@ -6308,9 +6317,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /= ( double d);
@@ -6429,9 +6438,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /=(_CONST prevariable& d);
@@ -6565,9 +6574,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /= ( double d);
@@ -6702,9 +6711,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /=(_CONST prevariable& d);
@@ -6856,9 +6865,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /= ( double d);
@@ -7009,9 +7018,9 @@ public:
   int indexmax(void) { return (shape->indexmax());}
   int size(void) { return (indexmax()-indexmin()+1);}
  #ifdef USE_CONST
-  const int indexmin(void) const { return (shape->indexmin());}
-  const int indexmax(void) const { return (shape->indexmax());}
-  const int size(void) const { return (indexmax()-indexmin()+1);}
+  int indexmin(void) const { return (shape->indexmin());}
+  int indexmax(void) const { return (shape->indexmax());}
+  int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
   void operator /=(_CONST prevariable& d);

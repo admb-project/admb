@@ -147,7 +147,7 @@ template <class out_type, class in_value>
 out_type convert(const in_value & t) {
     my_sstream stream;
     stream << t; // insert value to stream
-    out_type result; // store conversion’s result here
+    out_type result; // store conversion's result here
     stream >> result; // write value to result
     return result;
 } // end convert

@@ -12,7 +12,7 @@ FLAGS1 = $(CFLAGS) -w ${PVMOPTION} -DUSE_LAPLACE -fpermissive -c -I. -I..\linad9
 
 LIBPATH =gcc32-rh8olp
 LIBNAME = libadt.a
-SRCDIR =  src
+SRCDIR = src
 vpath %.obj $(LIBPATH)$
 
 .SUFFIXES: .obj .cpp
@@ -20,7 +20,7 @@ vpath %.obj $(LIBPATH)$
 .PHONY: disk
 include objects.lst
 
-$(LIBPATH)\$(LIBNAME) :  $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+$(LIBPATH)\$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
 	cmd /C "cd $(LIBPATH)& ar -rs $(LIBNAME) *.obj"
 
 $(filter-out cifstrem.obj, $(OBJ0)): %.obj: %.cpp
@@ -39,15 +39,15 @@ $(OBJ3): %.obj: %.cpp
 	$(CC) $(FLAGS) $< -o $(LIBPATH)\$*.obj
 
 
-all: $(LIBPATH)\$(LIBNAME)  disk
+all: $(LIBPATH)\$(LIBNAME) disk
 
 
-disk: $(LIBPATH)\$(LIBNAME) 
-	cmd /C "copy $(LIBPATH)\\$(LIBNAME) $(DISKDIR)\lib"
+disk: $(LIBPATH)\$(LIBNAME)
+	cmd /C "copy $(LIBPATH)\$(LIBNAME) $(DISKDIR)\lib"
 	cmd /C "copy adoption.hpp $(DISKDIR)\include"
 	cmd /C "copy adstring.hpp $(DISKDIR)\include"
 	cmd /C "copy cifstrem.h $(DISKDIR)\include"
 	cmd /C "copy clist.h $(DISKDIR)\include"
 
 clean:
-	if exist $(LIBPATH) rmdir /S /Q $(LIBPATH)
+	if exist $(LIBPATH) rd /S /Q $(LIBPATH)

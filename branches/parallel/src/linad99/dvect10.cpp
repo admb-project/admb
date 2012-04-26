@@ -1,5 +1,5 @@
 /*
- * $Id: dvect10.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -41,6 +41,10 @@
 
 #include <string.h>
 #include <ctype.h>
+
+#include <sstream>
+using std::istringstream;
+
 const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
@@ -126,7 +130,7 @@ void dvector::fill(const char * s)
         ad_exit(1);
       }
     }
-    istrstream ss(t);
+    istringstream ss(t);
 
 //   char * field = (char *) new[size_t(MAX_FIELD_LENGTH+1)];
    char * field = new char[size_t(MAX_FIELD_LENGTH+1)];
@@ -161,8 +165,10 @@ void dvector::fill(const char * s)
        ad_exit(1);
      }
    }
-   delete field;
+   delete[] field;
+   field = 0;
 
-   delete t;
+   delete[] t;
+   t = 0;
   }
 }

@@ -24,7 +24,7 @@ set model=%~n1
 if defined CXXFLAGS (set CXXFLAGS=%CXXFLAGS% )
 
 set CMD=g++ -c %CXXFLAGS%%sym% -Wno-deprecated -D__GNUDOS__ %dll%-Dlinux %opt%^
- -DUSE_LAPLACE -fpermissive -I. -I"%ADMB_HOME%\include" -o %model%.obj^
+ -DUSE_LAPLACE -fpermissive -I. -I"%ADMB_HOME%\include" -I"%ADMB_HOME%\contrib" -o %model%.obj^
  %model%.cpp
 echo %CMD%
 %CMD%

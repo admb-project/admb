@@ -1,5 +1,5 @@
 /*
- * $Id: fvar_io2.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -43,6 +43,10 @@
 
 #include <string.h>
 #include <ctype.h>
+
+#include <sstream>
+using std::istringstream;
+
 const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
@@ -108,14 +112,15 @@ dvar_vector::dvar_vector(const char * s)
     int nch = commas + 1;
 
     allocate(ncl,nch);
-    istrstream ss(t);
+    istringstream ss(t);
 
     for (k = ncl; k <= nch; k++)
     {
       ss >> this->elem(k);
       //va[k].nc=0.;
     }
-    delete t;
+    delete[] t;
+    t = 0;
   }
   else
   {
@@ -200,6 +205,7 @@ dvar_vector::dvar_vector(const char * s)
        ad_exit(1);
      }
    }
-   delete field;
+   delete[] field;
+   field = 0;
  }
 }

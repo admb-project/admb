@@ -1,7 +1,7 @@
 /*
- * $Id: f1b2v10.cpp 944 2011-01-12 22:48:46Z johnoel $
+ * $Id$
  *
- * Author: David Fournier
+ * Author: David Fournier and Mollie Brooks
  * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
@@ -99,7 +99,42 @@ df1b2vector pow(const double v,const df1b2vector& _x)
   }
   return tmp;
 }
+/**
+ \brief raise x to the power a.
+ \param x vector of bases
+ \param a the exponent	
+ */
+df1b2vector pow(const dvector& x,  const df1b2variable& a)
+{
+    RETURN_ARRAYS_INCREMENT();	
+	df1b2vector y(x.indexmin(), x.indexmax());
+	
+	for(int i=x.indexmin(); i<=x.indexmax(); i++)
+	{
+		y(i)=pow(x(i),a);
+	}	
 
+	RETURN_ARRAYS_DECREMENT();	
+    return(y);
+}
+/**
+ \brief raise x to the power a.
+ \param x vector of bases
+ \param a vector of exponents	
+ */
+df1b2vector pow(const dvector& x,  const df1b2vector& a)
+{
+    RETURN_ARRAYS_INCREMENT();	
+	df1b2vector y(x.indexmin(), x.indexmax());
+
+	for(int i=x.indexmin(); i<=x.indexmax(); i++)
+	{
+		y(i)=pow(x(i),a(i));
+	}	
+
+	RETURN_ARRAYS_DECREMENT();	
+    return(y);
+}
 /**
  * Description not yet available.
  * \param

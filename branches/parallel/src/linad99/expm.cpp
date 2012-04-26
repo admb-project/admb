@@ -14,7 +14,7 @@
   dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z);
   dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltudecomp & _clu1);
   cltudecomp xludecomp_pivot_for_expm_solve(const dvar_matrix& M, const ivector& _index2);
-  //static void df_mm_solve(void);
+  // static void df_mm_solve(void);
   static void df_solve(void);
 
 //#define TINY 1.0e-20;
@@ -29,9 +29,9 @@ dmatrix fabs(const dmatrix & X){
   int cmin = X.colmin();
   int cmax = X.colmax(); 
   dmatrix ret(rmin,rmax,cmin,cmax);
-  for(int i=rmin; i<=rmax; ++i){
-    for(int j=cmin; j<=cmax; ++j){
-      ret(i,j)=fabs(X(i,j));
+  for(int i = rmin; i<=rmax; ++i){
+    for(int j = cmin; j<=cmax; ++j){
+      ret(i,j) = fabs(X(i,j));
     }
   }
   return ret;
@@ -41,7 +41,7 @@ dmatrix fabs(const dmatrix & X){
   \ingroup matop
    Matrix exponential. 
    
-   The matrix exponential is calculated using the Padé approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
+   The matrix exponential is calculated using the Pade approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
 
    
 The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems: 
@@ -50,7 +50,7 @@ The main use of the matrix exponential is to solve linear ordinary differential 
 \f] 
    \item then the solution becomes
 \f[
-   y(t)=e^{At}y_0
+   y(t) = e^{At}y_0
 \f]
 
   \param A square dmatrix
@@ -69,32 +69,32 @@ dmatrix expm(const dmatrix & A)
   dmatrix D(rmin,rmax,rmin,rmax);
   dmatrix cX(rmin,rmax,rmin,rmax);
   I.initialize();
-  for(int i=rmin; i<=rmax; ++i){I(i,i)=1.0;}
+  for(int i = rmin; i<=rmax; ++i){I(i,i) = 1.0;}
   double log2NormInf;
-  log2NormInf=log(max(rowsum(fabs(A))));
+  log2NormInf = log(max(rowsum(fabs(A))));
   log2NormInf/=log(2.0);
   int e = (int)log2NormInf + 1;
   int s = e+1;
   s = (s<0) ? 0 : s;
-  AA=1.0/pow(2.0,s)*A;
-  X=AA;
-  double c=0.5;
+  AA = 1.0/pow(2.0,s)*A;
+  X = AA;
+  double c = 0.5;
 
-  E=I+c*AA;
-  D=I-c*AA;
-  int q=6, p=1;
-  for(int k=2;  k<=q; ++k){
+  E = I+c*AA;
+  D = I-c*AA;
+  int q = 6, p = 1;
+  for(int k = 2;  k<=q; ++k){
     c*=((double)q-k+1.0)/((double)k*(2*q-k+1));
-    X=AA*X;
-    cX=c*X;
+    X = AA*X;
+    cX = c*X;
     E+=cX;
     if(p==1){D+=cX;}else{D-=cX;}
     p = (p==1) ? 0 : 1;
   }
-  //E=inv(D)*E;
+  // E = inv(D)*E;
   E = solve(D,E);
-  for(int k=1; k<=s; ++k){
-    E=E*E;
+  for(int k = 1; k<=s; ++k){
+    E = E*E;
   }
   return E;
 }
@@ -103,7 +103,7 @@ dmatrix expm(const dmatrix & A)
   \ingroup matop
    Matrix exponential. 
    
-   The matrix exponential is calculated using the Padé approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
+   The matrix exponential is calculated using the Pade approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
 
    
 The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems: 
@@ -112,7 +112,7 @@ The main use of the matrix exponential is to solve linear ordinary differential 
 \f] 
    \item then the solution becomes
 \f[
-   y(t)=e^{At}y_0
+   y(t) = e^{At}y_0
 \f]
 
   \param A square dvar_matrix
@@ -135,34 +135,34 @@ dvar_matrix expm(const dvar_matrix & A)
   dvar_matrix cX(rmin,rmax,rmin,rmax);
 
   I.initialize();
-  for(int i=rmin; i<=rmax; ++i){I(i,i)=1.0;}
+  for(int i = rmin; i<=rmax; ++i){I(i,i) = 1.0;}
 
   dvariable log2NormInf;
-  log2NormInf=log(max(rowsum(fabs(value(A)))));
+  log2NormInf = log(max(rowsum(fabs(value(A)))));
   log2NormInf/=log(2.0);
   int e = (int)value(log2NormInf) + 1;
   int s = e+1;
   s = (s<0) ? 0 : s;
-  AA=1.0/pow(2.0,s)*A;
+  AA = 1.0/pow(2.0,s)*A;
 
-  X=AA;
-  dvariable c=0.5;
+  X = AA;
+  dvariable c = 0.5;
 
-  E=I+c*AA;
-  D=I-c*AA;
-  int q=6, p=1, k;
-  for(k=2;  k<=q; ++k){
+  E = I+c*AA;
+  D = I-c*AA;
+  int q = 6, p = 1, k;
+  for(k = 2;  k<=q; ++k){
     c*=((double)q-k+1.0)/((double)k*(2*q-k+1));
-    X=AA*X;
-    cX=c*X;
+    X = AA*X;
+    cX = c*X;
     E+=cX;
     if(p==1){D+=cX;}else{D-=cX;}
     p = (p==1) ? 0 : 1;
   }
-  //E=inv(D)*E;
+  // E = inv(D)*E;
   E = solve(D,E);
-  for(k=1; k<=s; ++k){
-    E=E*E;
+  for(k = 1; k<=s; ++k){
+    E = E*E;
   }
   RETURN_ARRAYS_DECREMENT();
   return E;
@@ -190,9 +190,9 @@ void savetostack(const dvar_matrix& M, const ivector& index2)
  */
 dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& zz)
 {
-  //int n=aa.colsize();
-   int lb=aa.colmin();
-   int ub=aa.colmax();
+  // int n = aa.colsize();
+   int lb = aa.colmin();
+   int ub = aa.colmax();
    if (lb!=aa.rowmin()||ub!=aa.colmax())
    {
      cerr << "Error matrix not square in "
@@ -210,27 +210,28 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& zz)
 
    if(ub==lb)
    {
-     xx=zz*inv(aa);
+     xx = zz*inv(aa);
      return(xx);
    }
     
    ivector index2(lb,ub);
    cltudecomp clu = xludecomp_pivot_for_expm_solve(aa,index2);
 
-   //check if invertable
-   double det = 1.0;
+   // check if invertable
+	double ln_det = 0.0;
+
    for (int i = lb; i <= ub; i++)
    {
-      det *= clu(i, i);
+	ln_det += log(clu(i, i));
    }
-   if (det == 0.0)
+	if(exp(ln_det)==0.0)
    {
       cerr <<
 	 "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";
       ad_exit(1);
    }
 
-   for(int k=lb;k<=ub;k++)
+   for(int k = lb;k<=ub;k++)
    {
       savetostack(aa,index2);
       dvar_vector z = column(zz,k);
@@ -250,7 +251,6 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& zz)
  */
 dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltudecomp & _clu1)
 {
-   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    if (lb != aa.rowmin() || ub != aa.colmax())
@@ -282,20 +282,20 @@ dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltu
    dmatrix & gamma = clu1.get_U();
    dmatrix & alpha = clu1.get_L();
 
-   //check if invertable --- may be able to get rid of this check
-   double det = 1.0;
+   // check if invertable --- may be able to get rid of this check
+	double ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
-      det *= clu1(i, i);
+		ln_det += log(clu1(i, i));
    }
-   if (det == 0.0)
+	if(exp(ln_det)==0.0)
    {
       cerr <<
 	 "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";
       ad_exit(1);
    }
 
-   //Solve L*y=b with forward-substitution (before solving Ux=y)
+   // Solve L*y = b with forward-substitution (before solving Ux = y)
    dvector y(lb, ub);
    dvector tmp1(lb, ub);
    y.initialize();
@@ -310,7 +310,7 @@ dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltu
       y(i) = value(z(index2(i))) - tmp1(i);
    }
 
-   //Now solve U*x=y with back substitution
+   // Now solve U*x = y with back substitution
    dvector tmp2(lb, ub);
    tmp2.initialize();
    for (int i = ub; i >= lb; i--)
@@ -387,7 +387,7 @@ static void df_solve(void)
    dftmp1.initialize();
    dftmp2.initialize();
 
-   //adjoint code for solve calc
+   // adjoint code for solve calc
    cltudecomp_for_adjoint clu1;
    clu1.ludecomp_pivot_for_adjoint_1();
    cltudecomp dfclu1 = clu1.get_dfclu();
@@ -401,34 +401,34 @@ static void df_solve(void)
    int ub = clu1.indexmax();
    for (int i = lb; i <= ub; i++)
    {
-      //value(x(i))=(y(i)-tmp2(i))/gamma(i,i);
+      // value(x(i)) = (y(i)-tmp2(i))/gamma(i,i);
       dfgamma(i, i) =
 	 ((tmp2(i) - y(i)) * dfx(i)) / (gamma(i, i) * gamma(i, i));
       dftmp2(i) = -dfx(i) / gamma(i, i);
       dfy(i) = dfx(i) / gamma(i, i);
       for (int j = i + 1; j <= ub; j++)
       {
-	 //tmp2(i)+=gamma(j,i)*value(x(j));
+	 // tmp2(i)+=gamma(j,i)*value(x(j));
 	 dfgamma(j, i) = dfgamma(j, i) + dftmp2(i) * x(j);
 	 dfx(j) += dftmp2(i) * gamma(j, i);
       }
    }
-   //tmp2.initialize();
+   // tmp2.initialize();
    dftmp2.initialize();
 
    for (int i = ub; i >= lb; i--)
    {
-      //y(i)=value(z(index2(i)))-tmp1(i);
+      // y(i) = value(z(index2(i)))-tmp1(i);
       dftmp1(i) = -dfy(i);
       dfz(index2(i)) = dfy(i);
       for (int j = i - 1; j >= lb; j--)
       {
-	 //tmp1(i)+=alpha(i,j)*y(j);
+	 // tmp1(i)+=alpha(i,j)*y(j);
 	 dfalpha(i, j) += dftmp1(i) * y(j);
 	 dfy(j) += dftmp1(i) * alpha(i, j);
       }
    }
-   //tmp1.initialize();
+   // tmp1.initialize();
    dftmp1.initialize();
 
    clu1.ludecomp_pivot_for_adjoint_2();

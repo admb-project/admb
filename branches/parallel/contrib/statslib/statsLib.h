@@ -31,23 +31,7 @@ dvariable dbinom( const prevariable& x,const prevariable& n,const double& p );
 dvariable dbinom( const prevariable& x,const prevariable& n,const prevariable& p );
 
 // Negative binomial distribution
-dvariable dnbinom( const double& x,const prevariable& mu, const prevariable& size );
-df1b2variable dnbinom( const dvector& x, const df1b2vector& mu, const df1b2variable& k);
-df1b2variable dnbinom( const dvector& x, const df1b2vector& mu, const df1b2vector& k);
-dvariable dnbinom( const dvector& x, const dvar_vector& mu, const prevariable& k);
-dvariable dnbinom( const dvector& x, const dvar_vector& mu, const dvar_vector& k);
-
-//Zero Inflated Negative binomial distribution
-df1b2variable dzinbinom(const double& x, const df1b2variable& mu, const df1b2variable& k, const df1b2variable& p);
-dvariable dzinbinom(const double& x, const prevariable& mu, const prevariable& k, const prevariable& p);
-df1b2variable dzinbinom(const dvector& x, const df1b2vector& lambda, const df1b2variable& k, const df1b2variable& p);
-df1b2variable dzinbinom(const dvector& x, const df1b2vector& lambda, const df1b2vector& k, const df1b2variable& p);
-dvariable dzinbinom(const dvector& x, const dvar_vector& lambda, const prevariable& k, const prevariable& p);
-dvariable dzinbinom(const dvector& x, const dvar_vector& lambda, const dvar_vector& k, const prevariable& p);
-df1b2variable dzinbinom(const dvector& x, const df1b2vector& lambda, const df1b2variable& k, const df1b2vector& p);
-df1b2variable dzinbinom(const dvector& x, const df1b2vector& lambda, const df1b2vector& k, const df1b2vector& p);
-dvariable dzinbinom(const dvector& x, const dvar_vector& lambda, const prevariable& k, const dvar_vector& p);
-dvariable dzinbinom(const dvector& x, const dvar_vector& lambda, const dvar_vector& k, const dvar_vector& p);
+dvariable dnbinom( const double& x,const prevariable& size, const prevariable& mu );
 
 // Gamma distribution
 dvariable dgamma( const dvariable &x, const double& a, const double& b );
@@ -65,6 +49,8 @@ dvariable dnorm( const dvar_vector& residual, const prevariable& std );
 dvariable dnorm( const dvar_vector& residual, const double& std );
 dvariable dnorm( const dvar_vector& residual, const dvector& std );
 dvariable dnorm( const dvar_vector& residual, const dvar_vector std );
+dvariable dnorm( const dvar_vector& residual );
+dvariable dnorm( const dmatrix& obs, const dvar_matrix& pred );
 
 // Plogis distribution
 dvariable plogis( const prevariable& x, const double& location, const double& scale );
@@ -109,7 +95,24 @@ dvariable multifan(const dmatrix oprop,const dvar_matrix& pprop, const int& Nsam
 dvariable multifan(const int& n, const dmatrix obs, const dvar_matrix pred,double& nef);
 dvariable multifan(const double& s,const dvector obsQ,const dvar_vector& preQ, double& nmle);
 
-
+// Ecologically paramaterized negative binomial
+/*
+df1b2variable dnbinom_eco(const dvector& x, const df1b2vector& lambda, const df1b2variable& k);
+df1b2variable dnbinom_eco(const dvector& x, const df1b2vector& lambda, const df1b2vector& k);
+dvariable dnbinom_eco(const dvector& x, const dvar_vector& lambda, const prevariable& k);
+dvariable dnbinom_eco(const dvector& x, const dvar_vector& lambda, const dvar_vector& k);
+*/
+// Ecologically paramaterized negative binomial with zero inflation
+/*
+df1b2variable dnbinom_eco_zi(const dvector& x, const df1b2vector& lambda, const df1b2variable& k, const df1b2variable& p);
+df1b2variable dnbinom_eco_zi(const dvector& x, const df1b2vector& lambda, const df1b2vector& k, const df1b2variable& p);
+dvariable dnbinom_eco_zi(const dvector& x, const dvar_vector& lambda, const prevariable& k, const prevariable& p);
+dvariable dnbinom_eco_zi(const dvector& x, const dvar_vector& lambda, const dvar_vector& k, const prevariable& p);
+df1b2variable dnbinom_eco_zi(const dvector& x, const df1b2vector& lambda, const df1b2variable& k, const df1b2vector& p);
+df1b2variable dnbinom_eco_zi(const dvector& x, const df1b2vector& lambda, const df1b2vector& k, const df1b2vector& p);
+dvariable dnbinom_eco_zi(const dvector& x, const dvar_vector& lambda, const prevariable& k, const dvar_vector& p);
+dvariable dnbinom_eco_zi(const dvector& x, const dvar_vector& lambda, const dvar_vector& k, const dvar_vector& p);
+*/
 
 // Spline class and functions
 typedef vcubic_spline_function * pvcubic_spline_function;
@@ -140,6 +143,8 @@ private:
 };
 
 void bicubic_spline(const dvector& x, const dvector& y, dvar_matrix& knots, dvar_matrix& S);
+dvar_vector cubic_spline(const dvar_vector& spline_nodes, const dvar_vector& ip);
+dvar_vector cubic_spline(const dvar_vector& spline_nodes, const dvector& ip);
 dvariable splin2(const dvector& _x1a,const dvector& _x2a, const dvar_matrix _ya,dvar_matrix& _y2a, const double& x1,const double& x2);
 dvar_matrix splie2(const dvector& _x1a,const dvector& _x2a,const dvar_matrix& _ya);
 dvar_vector spline(const dvector &_x,const dvar_vector&_y,double yp1,double ypn);

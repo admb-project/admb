@@ -1,5 +1,5 @@
 /*
- * $Id: dfgammp.cpp 1000 2011-04-06 00:07:26Z dseiple $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2009-2011 ADMB Foundation

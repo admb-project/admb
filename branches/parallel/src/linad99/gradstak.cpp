@@ -1,5 +1,5 @@
 /*
- * $Id: gradstak.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -313,7 +313,8 @@ grad_stack::~grad_stack()
    remove(var_store_file_name);
   #endif
 
-   delete [] true_ptr_first;
+   delete[] true_ptr_first;
+   true_ptr_first = 0;
 }
 
 /**

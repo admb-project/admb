@@ -1,5 +1,5 @@
 /*
- * $Id: ludcmp_inv.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Copyright (c) 2009-2011 ADMB Foundation
  */
@@ -46,9 +46,7 @@ int min(int a, int b)
 */
 dmatrix inv(_CONST dmatrix & aa)
 {
-   int imax = 0;
-   int n = 0;
-   n = aa.colsize();
+   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    dmatrix vc(lb, ub, lb, ub);
@@ -87,20 +85,17 @@ dmatrix inv(_CONST dmatrix & aa)
    cltudecomp bb(lb, ub);
    bb = ludecomp(aa);
 
-   dmatrix alpha = bb.get_L();
-   dmatrix beta = bb.get_U();
+   dmatrix& alpha = bb.get_L();
+   dmatrix& beta = bb.get_U();
 
    //check if invertable
-   double det = 1.0;
    for (int i = lb; i <= ub; i++)
    {
-      det *= beta(i, i);
-   }
-   if (det == 0.0)
-   {
-      cerr <<
-	 "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
-      ad_exit(1);
+      if (beta(i, i) == 0.0)
+      {
+        cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
+        ad_exit(1);
+      }
    }
    // Find inverse of L
    for (int i = lb + 1; i <= ub; i++)
@@ -205,12 +200,8 @@ dmatrix inv(_CONST dmatrix & aa)
 */
 dvar_matrix inv(_CONST dvar_matrix & aa)
 {
-   int i = 0;
    int imax = 0;
-   int j = 0;
-   int k = 0;
-   int n = 0;
-   n = aa.colsize();
+   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    dvar_matrix vc(lb, ub, lb, ub);

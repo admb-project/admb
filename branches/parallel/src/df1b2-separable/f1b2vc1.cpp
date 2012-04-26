@@ -1,5 +1,5 @@
 /*
- * $Id: f1b2vc1.cpp 999 2011-04-05 16:26:48Z skaug $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

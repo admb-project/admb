@@ -1,5 +1,5 @@
 /*
- * $Id: cs.h 423 2009-10-06 15:55:57Z jsibert $
+ * $Id$
  *
  * Author: Timothy A. Davis
  * Copyright (c) Timothy A. Davis, 2006-2007

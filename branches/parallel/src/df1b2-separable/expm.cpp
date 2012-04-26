@@ -37,100 +37,100 @@ df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
 {
   RETURN_ARRAYS_INCREMENT();
   int i,imax,j,k,n;
-  n=aa.colsize();
-  int lb=aa.colmin();
-  int ub=aa.colmax();
+  n = aa.colsize();
+  int lb = aa.colmin();
+  int ub = aa.colmax();
   if (lb!=aa.rowmin()||ub!=aa.colmax())
   {
     cerr << "Error matrix not square in solve()"<<endl;
     ad_exit(1);
   }
   df1b2matrix bb(lb,ub,lb,ub);
-  bb=aa;
+  bb = aa;
   ivector indx(lb,ub);
-  int One=1;
+  int One = 1;
   indx.fill_seqadd(lb,One);
   df1b2variable d;
   df1b2variable big,dum,sum,temp;
   kkludge_object kkk;
   df1b2vector vv(lb,ub);
 
-  d=1.0;
-  for (i=lb;i<=ub;i++)
+  d = 1.0;
+  for (i = lb;i<=ub;i++)
   {
-    big=0.0;
-    for (j=lb;j<=ub;j++)
+    big = 0.0;
+    for (j = lb;j<=ub;j++)
     {
-      temp=fabs(bb(i,j));
+      temp = fabs(bb(i,j));
       if (value(temp) > value(big))
       {
-        big=temp;
+        big = temp;
       }
     }
     if (value(big) == 0.0)
     {
       cerr << "Error in matrix inverse -- matrix singular in inv(df1b2matrix)\n";
     }
-    vv[i]=1.0/big;
+    vv[i] = 1.0/big;
   }
 
-  for (j=lb;j<=ub;j++)
+  for (j = lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++)
+    for (i = lb;i<j;i++)
     {
-      sum=bb(i,j);
-      for (k=lb;k<i;k++)
+      sum = bb(i,j);
+      for (k = lb;k<i;k++)
       {
 	sum -= bb(i,k)*bb(k,j);
       }
-      //a[i][j]=sum;
-      bb(i,j)=sum;
+      // a[i][j] = sum;
+      bb(i,j) = sum;
     }
-    big=0.0;
-    for (i=j;i<=ub;i++)
+    big = 0.0;
+    for (i = j;i<=ub;i++)
     {
-      sum=bb(i,j);
-      for (k=lb;k<j;k++)
+      sum = bb(i,j);
+      for (k = lb;k<j;k++)
       {
 	sum -= bb(i,k)*bb(k,j);
       }
-      bb(i,j)=sum;
-      dum=vv[i]*fabs(sum);
+      bb(i,j) = sum;
+      dum = vv[i]*fabs(sum);
       if ( value(dum) >= value(big))
       {
-        big=dum;
-        imax=i;
+        big = dum;
+        imax = i;
       }
     }
     if (j != imax)
     {
-      for (k=lb;k<=ub;k++)
+      for (k = lb;k<=ub;k++)
       {
-        dum=bb(imax,k);
-        bb(imax,k)=bb(j,k);
-        bb(j,k)=dum;
+        dum = bb(imax,k);
+        bb(imax,k) = bb(j,k);
+        bb(j,k) = dum;
       }
       d = -1.*d;
-      vv[imax]=vv[j];
+      vv[imax] = vv[j];
 
-      //if (j<ub)
+      // if (j<ub)
       {
-        int itemp=indx(imax);
-        indx(imax)=indx(j);
-        indx(j)=itemp;
+        int itemp = indx(imax);
+        indx(imax) = indx(j);
+        indx(j) = itemp;
       }
-      //cout << "indx= " <<indx<<endl;
+      // cout << "indx= " <<indx<<endl;
     }
 
     if (value(bb(j,j)) == value(0.0))
     {
-      bb(j,j)=TINY;
+      bb(j,j) = TINY;
     }
 
     if (j != n)
     {
-      dum=1.0/bb(j,j);
-      for (i=j+1;i<=ub;i++)
+      dum = 1.0/bb(j,j);
+      for (i = j+1;i<=ub;i++)
       {
 	bb(i,j) = bb(i,j) * dum;
       }
@@ -138,56 +138,56 @@ df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
   }
 
   // get the determinant
-  sign=d;
+  sign = d;
   df1b2vector part_prod(lb,ub);
-  part_prod(lb)=log(fabs(bb(lb,lb)));
+  part_prod(lb) = log(fabs(bb(lb,lb)));
   if (value(bb(lb,lb))<0) sign=-sign;
-  for (j=lb+1;j<=ub;j++)
+  for (j = lb+1;j<=ub;j++)
   {
       if (value(bb(j,j))<0) sign=-sign;
-    part_prod(j)=part_prod(j-1)+log(fabs(bb(j,j)));
+    part_prod(j) = part_prod(j-1)+log(fabs(bb(j,j)));
   }
-  ln_unsigned_det=part_prod(ub);
+  ln_unsigned_det = part_prod(ub);
 
-  df1b2matrix z=trans(tz);
-  int mmin=z.indexmin();
-  int mmax=z.indexmax();
+  df1b2matrix z = trans(tz);
+  int mmin = z.indexmin();
+  int mmax = z.indexmax();
   df1b2matrix x(mmin,mmax,lb,ub);
-  //df1b2vector x(lb,ub);
+  // df1b2vector x(lb,ub);
 
   df1b2vector y(lb,ub);
-  //int lb=rowmin;
-  //int ub=rowmax;
-  df1b2matrix& b=bb;
+  // int lb = rowmin;
+  // int ub = rowmax;
+  df1b2matrix& b = bb;
   ivector indxinv(lb,ub);
-  for (i=lb;i<=ub;i++)
+  for (i = lb;i<=ub;i++)
   {
-    indxinv(indx(i))=i;
+    indxinv(indx(i)) = i;
   }
-  for (int kk=mmin;kk<=mmax;kk++)
+  for (int kk = mmin;kk<=mmax;kk++)
   {
-    for (i=lb;i<=ub;i++)
+    for (i = lb;i<=ub;i++)
     {
-      y(indxinv(i))=z(kk)(i);
+      y(indxinv(i)) = z(kk)(i);
     }
 
-    for (i=lb;i<=ub;i++)
+    for (i = lb;i<=ub;i++)
     {
-      sum=y(i);
-      for (int j=lb;j<=i-1;j++)
+      sum = y(i);
+      for (int j = lb;j<=i-1;j++)
       {
         sum-=b(i,j)*y(j);
       }
-      y(i)=sum;
+      y(i) = sum;
     }
-    for (i=ub;i>=lb;i--)
+    for (i = ub;i>=lb;i--)
     {
-      sum=y(i);
-      for (int j=i+1;j<=ub;j++)
+      sum = y(i);
+      for (int j = i+1;j<=ub;j++)
       {
         sum-=b(i,j)*x(kk)(j);
       }
-      x(kk)(i)=sum/b(i,i);
+      x(kk)(i) = sum/b(i,i);
     }
 
   }
@@ -199,7 +199,7 @@ df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
   \ingroup matop
    Matrix exponential. 
    
-   The matrix exponential is calculated using the Padé approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
+   The matrix exponential is calculated using the Pade approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
 
    
 The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems: 
@@ -208,7 +208,7 @@ The main use of the matrix exponential is to solve linear ordinary differential 
 \f] 
    \item then the solution becomes
 \f[
-   y(t)=e^{At}y_0
+   y(t) = e^{At}y_0
 \f]
 
   \param A square df1b2matrix
@@ -231,34 +231,34 @@ df1b2matrix expm(const df1b2matrix & A)
   df1b2matrix cX(rmin,rmax,rmin,rmax);
 
   I.initialize();
-  for(int i=rmin; i<=rmax; ++i){I(i,i)=1.0;}
+  for(int i = rmin; i<=rmax; ++i){I(i,i) = 1.0;}
 
   df1b2variable log2NormInf;
-  log2NormInf=log(max(rowsum(fabs(value(A)))));
+  log2NormInf = log(max(rowsum(fabs(value(A)))));
   log2NormInf/=log(2.0);
   int e = (int)value(log2NormInf) + 1;
   int s = e+1;
   s = (s<0) ? 0 : s;
-  AA=1.0/pow(2.0,s)*A;
+  AA = 1.0/pow(2.0,s)*A;
 
-  X=AA;
-  df1b2variable c=0.5;
+  X = AA;
+  df1b2variable c = 0.5;
 
-  E=I+c*AA;
-  D=I-c*AA;
-  int q=6, p=1;
-  for(int k=2;  k<=q; ++k){
+  E = I+c*AA;
+  D = I-c*AA;
+  int q = 6, p = 1;
+  for(int k = 2;  k<=q; ++k){
     c*=((double)q-k+1.0)/((double)k*(2*q-k+1));
-    X=AA*X;
-    cX=c*X;
+    X = AA*X;
+    cX = c*X;
     E+=cX;
     if(p==1){D+=cX;}else{D-=cX;}
     p = (p==1) ? 0 : 1;
   }
-  //E=inv(D)*E;
+  // E = inv(D)*E;
   E = solve(D,E);
-  for(int k=1; k<=s; ++k){
-    E=E*E;
+  for(int k = 1; k<=s; ++k){
+    E = E*E;
   }
   RETURN_ARRAYS_DECREMENT();
   return E;

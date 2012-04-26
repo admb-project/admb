@@ -487,6 +487,7 @@ f4arr.obj
 OBJ3= \
 mfexp.obj \
 expm.obj \
+factors.obj \
 orthpoly.obj \
 makesub.obj \
 fvar_a49.obj \

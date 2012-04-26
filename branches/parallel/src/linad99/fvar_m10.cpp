@@ -1,5 +1,5 @@
 /*
- * $Id: fvar_m10.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -155,6 +155,7 @@ void dvar_matrix::fill( const char * s)
 
     (*this)(i)=tt;
 
-    delete t;
+    delete[] t;
+    t = 0;
   }
 }

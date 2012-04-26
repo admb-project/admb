@@ -1,5 +1,5 @@
 /*
- * $Id: eigen_dmat.cpp 969 2011-02-07 16:47:54Z jsibert $
+ * $Id$
  *
  * Copyright (c) 2009-2011 ADMB foundation
  */
@@ -141,7 +141,6 @@ void eigens(const dmatrix & m, const dmatrix & _evecs,
       ad_exit(1);
    }
 
-   int mlb = m.rowmin();
    int evecslb = evecs.rowmin();
    int evalslb = evals.indexmin();
 

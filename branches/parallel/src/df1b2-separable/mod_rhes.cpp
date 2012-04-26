@@ -1,5 +1,5 @@
 /*
- * $Id: mod_rhes.cpp 944 2011-01-12 22:48:46Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -8,6 +8,9 @@
  * \file
  * Description not yet available.
  */
+#include <sstream>
+using std::istringstream;
+
 #if defined(USE_LAPLACE)
 #include <admodel.h>
 #include <df1b2fun.h>
@@ -420,7 +423,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       else
       {   
     
-        istrstream ist(ad_comm::argv[on+1]);
+        istringstream ist(ad_comm::argv[on+1]);
         ist >> _delta;
     
         if (_delta<=0)

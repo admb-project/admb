@@ -1,5 +1,5 @@
 /*
- * $Id:  $
+ * $Id$
  *
  * Based on code from Cephes C and C++ language special functions math library
  * and adapeted for automatic differentiation.

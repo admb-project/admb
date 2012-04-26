@@ -143,8 +143,8 @@ orange2:
 	cd examples\\admb-re\\$@ && admb.bat -r -s $@ && $@
 
 orange_cor:
-	@REM cd examples/admb-re/$@ && admb.bat -r $@ && $@
-	@REM cd examples/admb-re/$@ && admb.bat -r -s $@ && $@
+	@cd examples/admb-re/$@ && admb.bat -r $@ && $@
+	@cd examples/admb-re/$@ && admb.bat -r -s $@ && $@
 
 pheno:
 	cd examples\\admb-re\\$@ && admb.bat -r $@ && $@

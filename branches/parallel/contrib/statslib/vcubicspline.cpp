@@ -78,6 +78,32 @@ vcubic_spline_function_array::~vcubic_spline_function_array()
    ptr=0;
  }
 
+
+
+
+/** 
+	\author Steven James Dean Martell
+	\date 2011-06-21
+	\brief A Wrapper for the vcubic_spline_function
+	\param  spline_nodes a vector of spline knots
+	\param  ip is a vector of interpreted points
+	\return returns a vector of interpreted points 
+	\sa
+**/
+dvar_vector cubic_spline(const dvar_vector& spline_nodes, const dvector& ip)
+{
+	RETURN_ARRAYS_INCREMENT();                                                              
+	int nodes=size_count(spline_nodes);
+	dvector ia(1,nodes);
+	ia.fill_seqadd(0,1./(nodes-1));
+	dvector fa = (ip-min(ip))/(max(ip)-min(ip));
+	vcubic_spline_function ffa(ia,spline_nodes);
+	RETURN_ARRAYS_DECREMENT();
+	return(ffa(fa));
+}
+
+
+
 void bicubic_spline(const dvector& x, const dvector& y, dvar_matrix& knots, dvar_matrix& S)
 {
 		/*
@@ -238,7 +264,7 @@ void bicubic_spline(const dvector& x, const dvector& y, dvar_matrix& knots, dvar
 		void spline(float x[], float y[], int n, float yp1, float ypn, float y2[]);
 		int j;
 		for (j=1;j<=m;j++)
-		spline(x2a,ya[j],n,1.0e30,1.0e30,y2a[j]); Values 1×1030 signal a nat-
+		spline(x2a,ya[j],n,1.0e30,1.0e30,y2a[j]); Values 1x1030 signal a nat-
 		}	*/
 		RETURN_ARRAYS_INCREMENT();
 		dvector& x1a=(dvector&) _x1a;

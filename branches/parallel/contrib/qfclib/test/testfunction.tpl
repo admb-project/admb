@@ -1,6 +1,5 @@
 GLOBALS_SECTION
-  #include "qfc_sim.cpp"
-  #include "qfc_est.cpp"
+  #include "qfclib.h"
 
 
 DATA_SECTION
@@ -12,7 +11,8 @@ PARAMETER_SECTION
  //random_effects_vector tmp(1,3)
  objective_function_value nll
 
-PRELIMINARY_CALCS_SECTION  
+PRELIMINARY_CALCS_SECTION
+
   //following are testing for functions defined in qfc_sim.cpp file
   //================================================================
   random_number_generator rnd(12345);
@@ -25,9 +25,7 @@ PRELIMINARY_CALCS_SECTION
   }
 
   cout<<endl<<"found all values for mu parameter from std file"<<endl;
-  cout << __FILE__ << ':' << __LINE__ << endl;
   //cout<<findValFromFile("test1.std","mu",2)<<endl;//change filename if needed
-  cout << __FILE__ << ':' << __LINE__ << endl;
   
  
   dvector v(1,10); 
@@ -37,21 +35,17 @@ PRELIMINARY_CALCS_SECTION
   //cout<<"unique vlaues "<<endl<<v(unique(v))<<endl<<endl;
 
 
-  cout << __FILE__ << ':' << __LINE__ << endl;
   cout<<"convert vector to matrix by row"<<endl<<vector2matrix(v,2,5)<<endl;  
   dmatrix m=vector2matrix(v,2,5);
   cout<<"convert matrix to vector by row"<<endl<< matrix2vector(m)<<endl<<endl;
-  cout << __FILE__ << ':' << __LINE__ << endl;
 
   ivector idx=sample(v,5,1,rnd); //random sample size 5 from v with replacement
   cout<<"random sample index "<<endl<<idx<<endl;
   cout<<"actual random sample value"<<endl<<v(idx)<<endl<<endl;
-  cout << __FILE__ << ':' << __LINE__ << endl;
 
   
 
 PROCEDURE_SECTION
-  ///*
   //following are testing for functions defined in qfc_est.cpp file
   //================================================================
   junk.fill("{1.2, 3, 5}");
@@ -67,11 +61,10 @@ PROCEDURE_SECTION
   cout<<"old value "<<junk<<endl<<"new value "<<dv<<endl<<"penalty = "<<fpen<<endl;
 
   dvector obs(1,4); obs.fill("{12, 3, 5,20}");
-  cout<<nllNegativeBinomial(1.2,3,junk(2))<<" "<<nllNegativeBinomial(junk(1),junk(2),3)<<endl;
-  cout<<nllMultiNomial(dp,obs)<<endl;
-  cout<<nllPoisson(dp(1),obs(1))<<endl;
-  cout<<nllLognormal(junk(1),junk(2),obs)<<endl;
-  cout<<nllGamma(junk(1),junk(2),obs)<<endl;
-  //*/
-  exit(0);
+  cout<<nllNegativeBinomial(junk(2),1.2,3)<<" "<<nllNegativeBinomial(3,junk(1),junk(2))<<endl;
+  cout<<nllMultiNomial(obs,dp)<<endl;
+  cout<<nllPoisson(obs(1),dp(1))<<endl;
+  cout<<nllLognormal(obs,junk(1),junk(2))<<endl;
+  cout<<nllGamma(obs,junk(1),junk(2))<<endl;
 
+  exit(8);

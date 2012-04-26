@@ -1,5 +1,5 @@
 /*
- * $Id: model2.cpp 997 2011-03-29 01:14:01Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

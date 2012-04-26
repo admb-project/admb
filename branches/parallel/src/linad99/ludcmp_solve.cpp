@@ -1,5 +1,5 @@
 /*
- * $Id: ludcmp_solve.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Copyright (c) 2009-2011 ADMB Foundation
  */
@@ -69,15 +69,14 @@ dvector solve(const dmatrix & aa, const dvector & z)
    ivector index2 = dcmp.get_index2();
 
    //check if invertable
-   double det = 1.0;
+   double ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
-      det *= dcmp(i, i);
+      ln_det += log(fabs(dcmp(i, i)));
    }
-   if (det == 0.0)
+   if (exp(ln_det) == 0.0)
    {
-      cerr <<
-	 "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
+      cerr << "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";
       ad_exit(1);
    }
    //Solve L*y=b with forward-substitution (before solving Ux=y)
@@ -99,7 +98,7 @@ dvector solve(const dmatrix & aa, const dvector & z)
       double tmp = 0.0;
       for (int j = ub; j > i; j--)
       {
-	 tmp += dcmp(i, j) * x(j);
+        tmp += dcmp(i, j) * x(j);
       }
       x(i) = (y(i) - tmp) / dcmp(i, i);
    }
@@ -115,7 +114,6 @@ dvector solve(const dmatrix & aa, const dvector & z)
 */
 dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
 {
-   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    if (lb != aa.rowmin() || ub != aa.colmax())
@@ -144,19 +142,18 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
 
    cltudecomp clu1 = xludecomp_pivot(aa);
    ivector index2 = clu1.get_index2();
-   dmatrix & gamma = clu1.get_U();
-   dmatrix & alpha = clu1.get_L();
+   dmatrix &gamma = clu1.get_U();
+   dmatrix &alpha = clu1.get_L();
 
    //check if invertable
-   double det = 1.0;
+   double ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
-      det *= clu1(i, i);
+     ln_det += log(fabs(clu1(i, i)));
    }
-   if (det == 0.0)
+   if(exp(ln_det) == 0.0)
    {
-      cerr <<
-	 "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";
+      cerr << "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";
       ad_exit(1);
    }
 
@@ -170,7 +167,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z)
    {
       for (int j = lb; j < i; j++)
       {
-	 tmp1(i) += alpha(i, j) * y(j);
+        tmp1(i) += alpha(i, j) * y(j);
       }
       y(i) = value(z(index2(i))) - tmp1(i);
    }
@@ -265,8 +262,7 @@ static void df_solve(void)
    for (int i = lb; i <= ub; i++)
    {
       //value(x(i))=(y(i)-tmp2(i))/gamma(i,i);
-      dfgamma(i, i) =
-	 ((tmp2(i) - y(i)) * dfx(i)) / (gamma(i, i) * gamma(i, i));
+      dfgamma(i, i) = ((tmp2(i) - y(i)) * dfx(i)) / (gamma(i, i) * gamma(i, i));
       dftmp2(i) = -dfx(i) / gamma(i, i);
       dfy(i) = dfx(i) / gamma(i, i);
       for (int j = i + 1; j <= ub; j++)
@@ -315,7 +311,6 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
 		  const prevariable & _sign)
 {
    dvariable& sign = (dvariable&) _sign;
-   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    if (lb != aa.rowmin() || ub != aa.colmax())

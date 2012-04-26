@@ -1,5 +1,5 @@
 /*
- * $Id: df1b2ludcmp.cpp 944 2011-01-12 22:48:46Z johnoel $
+ * $Id$
  *
  * Copyright (c) 2010-2011 ADMB Foundation
  */
@@ -128,7 +128,6 @@
 */
 df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
 {
-   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    if (lb != aa.rowmin() || ub != aa.colmax())
@@ -154,12 +153,12 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
    df1b2matrix & alpha = dcmp.get_L();
 
    //check if invertable
-   df1b2variable det = 1.0;
+	df1b2variable ln_det = 0.0;
    for (int i = lb; i <= ub; i++)
    {
-      det *= dcmp(i, i);
+		 ln_det += log(dcmp(i, i));
    }
-   if (value(det) == 0.0)
+   if (exp(value(ln_det)) == 0.0)
    {
       cerr <<
 	 "Error in matrix inverse -- matrix singular in solve(df1b2matrix)\n";
@@ -230,7 +229,6 @@ df1b2variable ln_det(const df1b2matrix & m1)
    ivector index2 = clu1.get_index2();
    df1b2variable lndet = 0.0;
    df1b2matrix & gamma = clu1.get_U();
-   df1b2matrix & alpha = clu1.get_L();
 
    // only need to save the diagonal of gamma
    for (int i = mmin; i <= mmax; i++)

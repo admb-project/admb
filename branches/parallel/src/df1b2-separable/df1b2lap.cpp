@@ -1,5 +1,5 @@
 /*
- * $Id: df1b2lap.cpp 1001 2011-04-07 22:36:54Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -8,6 +8,9 @@
  * \file
  * Description not yet available.
  */
+#include <sstream>
+using std::istringstream;
+
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
@@ -589,7 +592,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
     else
     {   
   
-      istrstream ist(ad_comm::argv[on+1]);
+      istringstream ist(ad_comm::argv[on+1]);
       ist >> _nr_crit;
   
       if (_nr_crit<=0)
@@ -635,7 +638,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
     else
     {   
   
-      istrstream ist(ad_comm::argv[on+1]);
+      istringstream ist(ad_comm::argv[on+1]);
       ist >> _inner_crit;
   
       if (_inner_crit<=0)
@@ -851,7 +854,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
       else
       {   
     
-        istrstream ist(ad_comm::argv[on+1]);
+        istringstream ist(ad_comm::argv[on+1]);
         ist >> eps_mult;
     
         if (eps_mult<=0.0 || eps_mult>1.0)

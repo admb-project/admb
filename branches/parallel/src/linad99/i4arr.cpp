@@ -1,5 +1,5 @@
 /*
- * $Id: i4arr.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -155,7 +155,7 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
      t -= indexmin();
      for (int i=hsl; i<=hsu; i++)
      {
-       (*this)(i).allocate(ad_integer(sl),ad_integer(sh),nrl(i),nrh(i),
+       (*this)(i).allocate(ad_integer(sl(i)),ad_integer(sh(i)),nrl(i),nrh(i),
          ncl(i),nch(i));
      }
    }

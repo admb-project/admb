@@ -1,6 +1,10 @@
 .PHONY: all statslib ecolib qfclib libcontribo.a libcontribs.a test clean
 
-CXXFLAGS:=-c $(CXXFLAGS) -Wall -Wno-deprecated -DUSE_LAPLACE -fpermissive -I../${DISK}/include -D__SPDLL__ -D__GNUDOS__ -Dlinux
+ifeq ($(CXX),CC)
+CXXFLAGS:=-c $(CXXFLAGS) -DUSE_LAPLACE -I../${DISK}/include -D__SPDLL__ -D__GNUDOS__ -Dlinux -I../${DISK}/include
+else
+CXXFLAGS:=-c $(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I../${DISK}/include
+endif
 
 all: disk statslib ecolib qfclib libcontribo.a libcontribs.a
 
@@ -12,15 +16,15 @@ disk:
 
 statslib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
+	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
 
 ecolib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
+	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
 
 qfclib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
+	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-slp DISKDIR=../${DISK}/contrib
 
 libcontribo.a:
 	ar -rs ${DISK}/contrib/$@ $(LIBPATH)/contrib-olp/*.obj

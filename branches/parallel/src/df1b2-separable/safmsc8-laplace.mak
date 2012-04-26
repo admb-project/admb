@@ -4,9 +4,9 @@ FLAGS = /nologo /W4 /GF /EHsc /DUSE_LAPLACE /DWIN32 /c /I..\..\..\..\src\df1b2-s
 
 include ..\..\..\..\src\df1b2-separable\objects.lst
 
-LIBNAME=df1b2s.lib  
+LIBNAME=df1b2s.lib
 
-OBJECTS=$(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS) 
+OBJECTS=$(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(OBJSPLUS)
 
 all: $(DISKDIR)\lib\$(LIBNAME)
 	copy ..\..\..\..\src\df1b2-separable\df1b2fun.h $(DISKDIR)\include

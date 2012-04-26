@@ -1,14 +1,17 @@
 /*
- * $Id: atoi.cpp 948 2011-01-12 23:59:02Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
  */
+#include <sstream>
+using std::istringstream;
+
 #include <fvar.hpp>
 
 int atoi(adstring& s)
 {
-  istrstream is((char*)s);
+  istringstream is((char*)s);
   int i;
   is >> i;
   return i;

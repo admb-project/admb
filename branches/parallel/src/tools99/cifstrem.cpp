@@ -1,5 +1,5 @@
 /*
- * $Id: cifstrem.cpp 948 2011-01-12 23:59:02Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -8,6 +8,8 @@
 \file cifstrem.cpp
 Implementation of the cifstream class.
 */
+#include <sstream>
+using std::istringstream;
 
 #include <fvar.hpp>
 
@@ -77,7 +79,11 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
 #elif defined (__INTEL_COMPILER)
  : ifstream(fn) , file_name(fn)
 #elif defined (__GNUDOS__)
+ #if defined(__SUNPRO_CC)
  : ifstream(fn, ios::in | open_m) , file_name(fn)
+ #else
+ : ifstream(fn, ios::in | std::_Ios_Openmode(open_m)) , file_name(fn)
+ #endif
 #elif defined (__ZTC__)
  : ios(&buffer), ifstream(fn, ios::in | open_m) , file_name(fn)
 #else
@@ -249,7 +255,7 @@ cifstream& cifstream::operator >> (BOR_CONST long& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
-  istrstream is(s, strlen(s));
+  istringstream is(s);
   is >> (long&) i;
 #ifdef __NDPX__
   if (is.eof()) is.clear();
@@ -277,7 +283,7 @@ cifstream& cifstream::operator >> (long long & i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
-  istrstream is(s, strlen(s));
+  istringstream is(s);
   is >> i;
 #ifdef __NDPX__
   if (is.eof()) is.clear();
@@ -311,7 +317,7 @@ cifstream& cifstream::operator >> (BOR_CONST int& i)
   //cout << "cifstream& cifstream::operator >> (int& i) s = '" << s 
   //     << "'" << endl;
   js_strip_leading_zeros(s);
-  istrstream is(s, strlen(s));
+  istringstream is(s);
   is >> (int&)i;
 #ifdef __NDPX__
   if (is.eof()) is.clear();
@@ -335,7 +341,7 @@ cifstream& cifstream::operator >> (BOR_CONST double& _x)
     get_field(s);
 
 #if !defined(__BORLANDC__)
-  istrstream is(s, strlen(s));
+  istringstream is(s);
   if (!is)
   {
     this->clear(is.rdstate());
@@ -365,7 +371,7 @@ cifstream& cifstream::operator >> (BOR_CONST float& x)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
-  istrstream is(s, strlen(s));
+  istringstream is(s);
   is >> (float&)x;
 #ifdef __NDPX__
   if (is.eof()) is.clear();

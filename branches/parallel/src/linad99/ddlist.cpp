@@ -1,5 +1,5 @@
 /*
- * $Id: ddlist.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -39,8 +39,8 @@ extern char otter_address4[];
 extern char otter_address5[];
 
 
-char * ddlist_space;
-char * ddlist_spacea;
+char* ddlist_space;
+char* ddlist_spacea;
 
 /**
  * Description not yet available.
@@ -67,13 +67,12 @@ dlist::dlist(void)
   last = 0;
   last_offset = 0;
   nlinks = 0;
-  dlink_addresses = new dlink *[gradient_structure::MAX_DLINKS];
-  ddlist_space= (char *) malloc(2*sizeof(double)*
-   (gradient_structure::MAX_DLINKS+1));
+  dlink_addresses = new dlink*[gradient_structure::MAX_DLINKS];
+  ddlist_space = (char*)malloc(2 * sizeof(double) * (gradient_structure::MAX_DLINKS + 1));
   //cout << (int) (ddlist_space) << endl;
   //cout << ((int) (ddlist_space))%8 << endl;
-#if defined(__SUNPRO_CC) && defined(__x86_64)
-  long adjust=(8 - ((long)(ddlist_space))%8)%8;
+#if defined(__x86_64)
+  intptr_t adjust=(8 - ((intptr_t)(ddlist_space))%8)%8;
 #else
   int adjust=(8- ((int) (ddlist_space))%8)%8;
 #endif

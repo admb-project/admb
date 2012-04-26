@@ -1,5 +1,5 @@
 /*
- * $Id: fvar_fn1.cpp 992 2011-03-10 21:09:54Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

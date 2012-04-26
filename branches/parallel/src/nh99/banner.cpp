@@ -8,10 +8,15 @@
   #include <strstrea.h>
   #include <iomanip.h>
 #else
-  #include <strstream>
+  #include <sstream>
   using namespace std;
 #endif
 
+#include <sstream>
+using std::ostringstream;
+
+#define STR(x) #x
+#define STR2(x) STR(x)
 
 //extern adstring copyright; ///< Text string containing copyright information; defined in the .tpl file
 
@@ -24,14 +29,14 @@
  */
 void banner(const adstring& program_name)
 {
-  std::ostrstream ss;
+  ostringstream ss;
 
   ss << "ADMB Program: " << program_name << "\n\n";
 
   ss << "ADMB";
 
 #if defined(ADMB_VERSION)
-  ss << "-" << ADMB_VERSION;
+  ss << "-" << STR2(ADMB_VERSION);
 #endif
 
   if (which_library() == 'o')
@@ -108,8 +113,6 @@ void banner(const adstring& program_name)
   ss << "\n";
   ss << "Build date: " << __DATE__ << "\n";
 #if defined(ADMB_REVISION)
-  #define STR(x) #x
-  #define STR2(x) STR(x)
   ss << "Revision: " << STR2(ADMB_REVISION) << "\n";
 #endif
   ss << "\n";
@@ -118,8 +121,5 @@ void banner(const adstring& program_name)
   
   ss << '\0';
 
-  char* str = ss.str();
-  cout << str << endl;
-  delete str;
-  str = 0;
+  cout << ss.str() << endl;
 }

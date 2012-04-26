@@ -1,9 +1,12 @@
 /*
- * $Id: xmodelm3.cpp 965 2011-02-03 23:54:33Z itaylor $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
  */
+#include <sstream>
+using std::istringstream;
+
 #include <admodel.h>
 
 #if defined(USE_LAPLACE)
@@ -165,7 +168,7 @@ void update_pobjfun(void);
       else
       {   
     
-        istrstream ist(ad_comm::argv[on+1]);
+        istringstream ist(ad_comm::argv[on+1]);
         ist >> _crit;
     
         if (_crit<=0)
@@ -185,7 +188,7 @@ void update_pobjfun(void);
       else
       {   
     
-        istrstream ist(ad_comm::argv[on+1]);
+        istringstream ist(ad_comm::argv[on+1]);
         ist >> bandwidth;
     
         if (bandwidth<=0)

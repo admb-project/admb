@@ -1,5 +1,5 @@
 /*
- * $Id: model33.cpp 945 2011-01-12 23:03:57Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -91,7 +91,7 @@ void parse_dll_options(char * pname,BOR_CONST int& _nopt,char * sp_options,
       }
     }
     while(ptmp);
-    delete p;
+    delete[] p;
     p=NULL;
   }
   else

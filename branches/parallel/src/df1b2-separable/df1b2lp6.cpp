@@ -1,5 +1,5 @@
 /*
- * $Id: df1b2lp6.cpp 944 2011-01-12 22:48:46Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -1103,7 +1103,6 @@ dvector laplace_approximation_calculator::
   //do
   dvector values(1,300);
   double oldfbest=pmin->lapprox->fmc1.fbest; 
-  double best_value=oldfbest;
   double newfbest;
   int have_value=0;
   //for (int jj=1;jj<=300;jj++)

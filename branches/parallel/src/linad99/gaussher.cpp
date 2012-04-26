@@ -1,5 +1,5 @@
 /*
- * $Id: gaussher.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  * 
  * Author: David Fournier
  * Copyright (c) 2009-2011 ADMB Foundation
@@ -210,7 +210,6 @@ void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts 
     ad_exit(-1);
   }
 
-  int lb = t.indexmin();
   t.shift(0);
   wts.shift(0);
   int nt = t.indexmax() + 1;

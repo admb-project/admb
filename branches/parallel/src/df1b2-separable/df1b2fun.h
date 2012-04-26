@@ -1,5 +1,5 @@
 /*
- * $Id: df1b2fun.h 999 2011-04-05 16:26:48Z skaug $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California
@@ -929,7 +929,7 @@ public:
   { 
     index_min++;index_max++;v--; return *this;
   }
-  virtual const int pointersize(void) const { return sizeof(df1b2variable); }
+  virtual int pointersize(void) const { return sizeof(df1b2variable); }
   inline df1b2variable * getv(void) {return v;}
   int allocated(void){return v!=0;}
   int indexmin(void)const {return index_min;}
@@ -1228,6 +1228,8 @@ df1b2vector pow(const df1b2vector& v,const df1b2variable & x);
 df1b2vector pow(const df1b2vector& v,const df1b2vector & x);
 df1b2vector pow(const df1b2variable& v,const df1b2vector & x);
 df1b2vector pow(double v,const df1b2vector & x);
+df1b2vector pow(const dvector& x,  const df1b2vector& a);
+df1b2vector pow(const dvector& x,  const df1b2variable& a);
 
 df1b2vector operator / (const dvector& x,const df1b2variable& y);
 df1b2vector operator + (const dvector& x,const df1b2variable& y);

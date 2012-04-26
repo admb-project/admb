@@ -1,46 +1,47 @@
-DISK=..\build\admb-10.1-bcc5.5-32bit
+DISK=..\build\admb-bcc5.5-32bit
 CXXFLAGS:=$(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION)
 
-OPT_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DADMB_VERSION=10.1 -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DOPT_LIB -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
-SAFE_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DADMB_VERSION=10.1 -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DSAFE_ALL -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
+OPT_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DADMB_VERSION=trunk -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DOPT_LIB -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
+SAFE_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DADMB_VERSION=trunk -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DSAFE_ALL -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
 
 all: dist
 
 dist:
-	IF NOT EXIST $(DISK)\dist\bin mkdir $(DISK)\dist\bin
-	IF NOT EXIST $(DISK)\dist\lib mkdir $(DISK)\dist\lib
-	IF NOT EXIST $(DISK)\dist\include mkdir $(DISK)\dist\include
-	IF NOT EXIST $(DISK)\objects\linad99-olp mkdir $(DISK)\objects\linad99-olp
-	IF NOT EXIST $(DISK)\objects\linad99-slp mkdir $(DISK)\objects\linad99-slp
+	IF NOT EXIST $(DISK)\dist\bin md $(DISK)\dist\bin
+	IF NOT EXIST $(DISK)\dist\lib md $(DISK)\dist\lib
+	IF NOT EXIST $(DISK)\dist\include md $(DISK)\dist\include
+	IF NOT EXIST $(DISK)\objects\linad99-olp md $(DISK)\objects\linad99-olp
+	IF NOT EXIST $(DISK)\objects\linad99-slp md $(DISK)\objects\linad99-slp
 	cd linad99
 	$(MAKE) CC=bcc32 CXXFLAGS=$(OPT_CXXFLAGS) LIBPATH=..\$(DISK)\objects\linad99-olp DISKDIR=..\$(DISK) -f optbor32-laplace.mak all
 	$(MAKE) CC=bcc32 CXXFLAGS=$(SAFE_CXXFLAGS) LIBPATH=..\$(DISK)\objects\linad99-slp DISKDIR=..\$(DISK) -f safbor32-laplace.mak all
 	cd ..
-	IF NOT EXIST $(DISK)\objects\tools99-olp mkdir $(DISK)\objects\tools99-olp
-	IF NOT EXIST $(DISK)\objects\tools99-slp mkdir $(DISK)\objects\tools99-slp
+	IF NOT EXIST $(DISK)\objects\tools99-olp md $(DISK)\objects\tools99-olp
+	IF NOT EXIST $(DISK)\objects\tools99-slp md $(DISK)\objects\tools99-slp
 	cd tools99
 	$(MAKE) CC=bcc32 CXXFLAGS=$(OPT_CXXFLAGS) LIBPATH=..\$(DISK)\objects\tools99-olp DISKDIR=..\$(DISK) -f optbor32-laplace.mak all
 	$(MAKE) CC=bcc32 CXXFLAGS=$(SAFE_CXXFLAGS) LIBPATH=..\$(DISK)\objects\tools99-slp DISKDIR=..\$(DISK) -f safbor32-laplace.mak all
 	cd ..
-	IF NOT EXIST $(DISK)\objects\df1b2-separable-olp mkdir $(DISK)\objects\df1b2-separable-olp
-	IF NOT EXIST $(DISK)\objects\df1b2-separable-slp mkdir $(DISK)\objects\df1b2-separable-slp
+	IF NOT EXIST $(DISK)\objects\df1b2-separable-olp md $(DISK)\objects\df1b2-separable-olp
+	IF NOT EXIST $(DISK)\objects\df1b2-separable-slp md $(DISK)\objects\df1b2-separable-slp
 	cd df1b2-separable
 	$(MAKE) CC=bcc32 CXXFLAGS=$(OPT_CXXFLAGS) LIBPATH=..\$(DISK)\objects\df1b2-separable-olp DISKDIR=..\$(DISK) -f optbor32-laplace.mak all
 	$(MAKE) CC=bcc32 CXXFLAGS=$(SAFE_CXXFLAGS) LIBPATH=..\$(DISK)\objects\df1b2-separable-slp DISKDIR=..\$(DISK) -f safbor32-laplace.mak all
 	cd ..
-	IF NOT EXIST $(DISK)\objects\nh99-olp mkdir $(DISK)\objects\nh99-olp
-	IF NOT EXIST $(DISK)\objects\nh99-slp mkdir $(DISK)\objects\nh99-slp
+	IF NOT EXIST $(DISK)\objects\nh99-olp md $(DISK)\objects\nh99-olp
+	IF NOT EXIST $(DISK)\objects\nh99-slp md $(DISK)\objects\nh99-slp
 	cd nh99
 	$(MAKE) CC=bcc32 CXXFLAGS=$(OPT_CXXFLAGS) LIBPATH=..\$(DISK)\objects\nh99-olp DISKDIR=..\$(DISK) -f optbor32-laplace.mak all
 	$(MAKE) CC=bcc32 CXXFLAGS=$(SAFE_CXXFLAGS) LIBPATH=..\$(DISK)\objects\nh99-slp DISKDIR=..\$(DISK) -f safbor32-laplace.mak all
 	cd ..
-	copy ..\LICENSE $(DISK)\dist
+	copy ..\LICENSE.txt $(DISK)\dist
 	copy ..\README.txt $(DISK)\dist
+	copy ..\NEWS.txt $(DISK)\dist
 	copy ..\scripts\bcc32\adcomp.bat $(DISK)\dist\bin
 	copy ..\scripts\bcc32\adlink.bat $(DISK)\dist\bin
 	copy ..\scripts\bcc32\set-admb-bcc551.bat $(DISK)\dist\bin
 	copy ..\scripts\admb\admb.bat $(DISK)\dist\bin
-	IF NOT EXIST $(DISK)\dist\examples mkdir $(DISK)\dist\examples
+	IF NOT EXIST $(DISK)\dist\examples md $(DISK)\dist\examples
 	xcopy ..\examples $(DISK)\dist\examples /S /Y
 	copy ..\scripts\cl\Makefile $(DISK)\dist\examples
 
@@ -52,4 +53,4 @@ verify:
 	-..\..\..\scripts\get-outputs.bat > ..\..\..\benchmarks-saf.txt
 
 clean:
-	IF EXIST $(DISK) rmdir /S /Q $(DISK)
+	IF EXIST $(DISK) rd /S /Q $(DISK)

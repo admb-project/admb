@@ -6,8 +6,8 @@
   * \ingroup QFC
   *
   *  Following user defined functions are more useful for doing simulation model in admb, 
-  *  the easy way to use these functions is put this cpp file in the same directory with your tpl file,
-  *  and under the GLOBALS_SECTION , add a line on top as   #include "qfc_sim.cpp", 
+  *  the easy way to use these functions is with your tpl file
+  *  under the GLOBALS_SECTION , add a line on top as   #include "qfclib.h", 
   *  there is a testfunction.tpl file within this folder show how to use these functions.
   *
   *  ================  brief list for usage  ============================\n
@@ -28,16 +28,8 @@
   */
 
 
-  #define __QFC_SIM__
-  #if !defined(__QFC_EST__)  //only include the following header file and constants once
-    #include <math.h>
-    #include <admodel.h>
-    #include <df1b2fun.h>
-    #include <adrndeff.h>
-    // define constant variable
-    const double EPS = 1.e-30;          //tiny number to avoid 0 in log
-  #endif
-
+  #include "qfclib.h"
+ 
 
   /** get how many rows for one specific variable(varName) in admb output file(filename)
    * \ingroup QFC
@@ -172,11 +164,11 @@
    * \param source : baseline samples as input
    * \param nSample : random sample size for output
    * \param withReplace : if 0 for without replacement, nonzero  means with replacement
-   * \param rnd :  admb build in random number generator
+   * \param rng :  admb build in random number generator
    * \return return an index vector which are the index from the samples, 
    * if want to access the values, use return dvector version 
   */
-  ivector sample(const dvector& source,int nSample,int withReplace,const random_number_generator& rnd)
+  ivector sample(const dvector& source,int nSample,int withReplace,const random_number_generator& rng)
   {
     int totN=source.size();
     dvector lookup(source.indexmin(),source.indexmax());
@@ -184,19 +176,19 @@
     ivector out(1,nSample);
   
     if(withReplace==0){  //sampling without replacement, all unique site index
-      out(1)=source.indexmin()+int(totN*randu(rnd)); 
+      out(1)=source.indexmin()+int(totN*randu(rng)); 
       lookup(out(1))=0;//if selected, then mark lookup as 0
   
       for(int i=2;i<=nSample;i++){ 
-        out(i)=source.indexmin()+int(totN*randu(rnd)); 
+        out(i)=source.indexmin()+int(totN*randu(rng)); 
         while(lookup(out(i))==0){ //which means already being selected
-          out(i)=source.indexmin()+int(totN*randu(rnd));
+          out(i)=source.indexmin()+int(totN*randu(rng));
         }
         lookup(out(i))=0;//if selected, then mark lookup as 0
       }
     }else{  //with replacement,allow repeat sampling    
       for(int i=1;i<=nSample;i++) 
-        out(i)=source.indexmin()+int(totN*randu(rnd)); 
+        out(i)=source.indexmin()+int(totN*randu(rng)); 
     }
 
     return out;  //you can use source(out) to access the sample
@@ -378,62 +370,9 @@
 
 
 
-  /** rounding values as specified digits for scalar, vector, matrix, easy for display in report_section,
-   * if input is variable type such as dvar_, use value(r) as input instead
-   * \ingroup QFC
-   * \param r : input values either for sclar, vector or matrix
-   * \return return the same type and size as input with specified number of decimals 
-   */
-  double round(double r) {
-    return double((r > 0.0) ? floor(r + 0.5) : ceil(r - 0.5));
-  }
+  
 
-  /** rounding values as specified digits for scalar, vector, matrix, easy for display in report_section,
-   * if input is variable type such as dvar_, use value(r) as input instead,
-   * overloading function
-   * \ingroup QFC
-   * \param r : input values either for sclar, vector or matrix
-   * \param places : the number of decimals 
-   * \return return the same type and size as input with specified number of decimals 
-   */
-  double round(double r, unsigned int places){
-    double off=pow(10,places);
-    return round(r*off)/off;
-  }
-
-  /** rounding values as specified digits for scalar, vector, matrix, easy for display in report_section,
-   * if input is variable type such as dvar_, use value(r) as input instead,
-   * overloading function
-   * \ingroup QFC
-   * \param r : input values either for sclar, vector or matrix
-   * \param places : the number of decimals 
-   * \return return the same type and size as input with specified number of decimals 
-   */  
-  dvector round(const dvector & r, unsigned int places) {
-    dvector out(r.indexmin(),r.indexmax());
-    for(int i=r.indexmin();i<=r.indexmax();i++)
-      out(i)=round(r(i),places);
-    return out;
-  }
-
-  /** rounding values as specified digits for scalar, vector, matrix, easy for display in report_section,
-   * if input is variable type such as dvar_, use value(r) as input instead,
-   * overloading function
-   * \ingroup QFC
-   * \param r : input values either for sclar, vector or matrix
-   * \param places : the number of decimals 
-   * \return return the same type and size as input with specified number of decimals 
-   */
-  dmatrix round(const dmatrix & r, unsigned int places) {
-    dmatrix out(r.indexmin(),r.indexmax(),r.colmin(),r.colmax());
-    for(int i=r.indexmin();i<=r.indexmax();i++) //row index
-      out(i)=round(r(i),places); //call vector version
-    return out;
-  }
-
-
-
-
+  
   /** determine if two double values are equal within some precision
    * \ingroup QFC
    * \param nVal1 : double value used for comparison
@@ -443,9 +382,9 @@
    */
   bool doubleEqual(double nVal1, double nVal2, int nPrecision)
   {
-    bool bRet;  
+    const double base = 10; 
     // if want equal, you can define an arrange like 
-    bRet = (((nVal2 - pow(10,-nPrecision)) < nVal1) && (nVal1 < (nVal2 + pow(10,-nPrecision))));
+    bool bRet = (((nVal2 - pow(base,-nPrecision)) < nVal1) && (nVal1 < (nVal2 + pow(base,-nPrecision))));
    return bRet;
   }
 
@@ -454,30 +393,49 @@
 
 
 
-  /** generate random uniform from (low,upper)
+  /** generate one random uniform from (low,upper)
    * \ingroup QFC
    * \param low : low range 
    * \param upper : high range
-   * \param rnd :  admb build in random number generator 
+   * \param rng :  admb build in random number generator 
    * \return return uniform random number within range (low, upper) 
    */
-  double runif(double low, double upper, random_number_generator & rnd)
+  double runif(double low, double upper, random_number_generator & rng)
   {      
-    return low+ randu(rnd)*(upper-low);  //randu() get (0,1)
+    return low+ randu(rng)*(upper-low);  //randu() get (0,1)
   }
 
 
-  /** generate random normal number N(mu,sigma)
+
+
+  /** generate one random normal number N(mu,sigma)
    * \ingroup QFC
    * \param mu : mean
    * \param sigma : std. deviation
-   * \param rnd :  admb build in random number generator 
+   * \param rng :  admb build in random number generator 
    * \return return normal random number N(mu,sigma) 
    */
-  double rnorm(double mu, double sigma, random_number_generator & rnd)
+  double rnorm(double mu, double sigma, random_number_generator & rng)
   {      
-    return mu + randn(rnd)*sigma; 
+    return mu + randn(rng)*sigma; 
   }
+
+
+
+
+  /** generate one random lognormal number LN(mu,sigma)
+   * \ingroup QFC
+   * \param mu : mean
+   * \param sigma : std. deviation
+   * \param rng :  admb build in random number generator 
+   * \return return lognormal random number LN(mu,sigma) 
+   */
+  double rlnorm(double mu, double sigma, random_number_generator & rng)
+  {      
+    return mfexp(mu + randn(rng)*sigma); 
+  }
+
+
 
 
 
@@ -485,10 +443,10 @@
    * Gamma(alpha, belta)=x^(alpha-1)*belta^alpha*exp(-belta*x)/gamma(alpha)
    * \ingroup QFC
    * \param alpha : shape parameter, >0  =1/CV^2
-   * \param rnd :  admb build in random number generator 
+   * \param rng :  admb build in random number generator 
    * \return return gamma random number 
    */
-  double rgamma(double alpha, random_number_generator& rnd) 
+  double rgamma(double alpha, random_number_generator& rng) 
   {
     double  v0, v1, v2, fract, em, qm, tmp, gam_n1; 
     int i; 
@@ -499,7 +457,7 @@
         gam_n1 = 0;
     else{
         for( i = 1;i<=int(alpha);i++)
-            tmp *= randu(rnd);   //using modified rnd()
+            tmp *= randu(rng);   //using modified rnd()
         
         gam_n1 = -1. * log(tmp);
     }
@@ -509,8 +467,8 @@
 
     //calculate the fractional gamma(fract,1)
     while(1){
-        v1 =  randu(rnd);
-        v2 =  randu(rnd);
+        v1 =  randu(rng);
+        v2 =  randu(rng);
         if (v1 <= v0){
             em = pow(v1 / (v0 + EPS), 1. / fract);
             qm = v2 * pow(em, fract - 1.);
@@ -533,12 +491,25 @@
    * \ingroup QFC
    * \param alpha : shape parameter, >0  =1/CV^2
    * \param beta : rate =1/scale,inverse of the scale parameter, >0  =1/(mean*CV^2)
-   * \param rnd :  admb build in random number generator 
+   * \param rng :  admb build in random number generator 
    * \return return gamma random number 
    */
-  double rgamma(double alpha, double beta, random_number_generator& rnd) 
-  {return rgamma(alpha,rnd)/beta; }
+  double rgamma(double alpha, double beta, random_number_generator& rng) 
+  {return rgamma(alpha,rng)/beta; }
 
+
+
+
+
+  /** generate random beta(alpha, beta) number, 
+   * \ingroup QFC
+   * \param alpha : alpha parameter
+   * \param beta : beta parameter
+   * \param rng :  admb build in random number generator 
+   * \return return beta random number 
+   */
+  double rbeta(double alpha, double beta, random_number_generator& rng) 
+  {return rgamma(alpha,rng)/(rgamma(alpha,rng)+rgamma(beta,rng)); }
 
 
 
@@ -547,10 +518,10 @@
   /** generate random dirichlet number
    * \ingroup QFC
    * \param shape : shape parameter
-   * \param rnd :  admb build in random number generator 
+   * \param rng :  admb build in random number generator 
    * \return return dirichlet random number 
    */
-  dvector rdirichlet(const dvector& shape,random_number_generator& rnd)
+  dvector rdirichlet(const dvector& shape,random_number_generator& rng)
   {
     double tot=0;
     int ncat=shape.size();
@@ -560,7 +531,7 @@
   
     //generate gamma random number first
     for (i=shape.indexmin(); i<=shape.indexmax(); i++) {
-      gam[i]=rgamma(shape[i],rnd);        
+      gam[i]=rgamma(shape[i],rng);        
     }
   
     tot=sum(gam);

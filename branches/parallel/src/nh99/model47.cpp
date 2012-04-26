@@ -1,5 +1,5 @@
 /*
- * $Id: model47.cpp 945 2011-01-12 23:03:57Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -68,4 +68,28 @@
      v=NULL;
  }
 
+  dvector value(const param_init_number_vector& _t)
+  {
+    ADUNCONST(param_init_number_vector, t);
+    const int min = t.indexmin();
+    const int max = t.indexmax();
+    dvector vt(min, max);
+    for (int i = min; i <= max; i++)
+    {
+       vt(i) = value(t(i));
+    }
+    return vt;
+  }
 
+  dvector value(const param_init_bounded_number_vector& _t)
+  {
+    ADUNCONST(param_init_bounded_number_vector, t);
+    const int min = t.indexmin();
+    const int max = t.indexmax();
+    dvector vt(min, max);
+    for (int i = min; i <= max; i++)
+    {
+       vt(i) = value(t(i));
+    }
+    return vt;
+  }

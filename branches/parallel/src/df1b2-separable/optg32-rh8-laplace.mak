@@ -18,13 +18,13 @@ disk: $(DISKDIR)/lib/$(LIBNAME) $(DISKDIR)/bin/tpl2rem
 	cp df1b2fnl.h $(DISKDIR)/include
 	cp df1b2loc.h $(DISKDIR)/include
 	cp smartbuf.h $(DISKDIR)/include
-	cp sedcmd sedcmd2 sedcmd3 seddf1b2 seddf1b3 seddf1b4 sedf1b2a sedf1b2c sedf1b2d sedflex $(DISKDIR)/bin
+	cp seddf1b* sedf1b2* $(DISKDIR)/bin
 
-$(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) 
+$(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
 	ar -rs $@ $(LIBPATH)/*.obj
 
 $(DISKDIR)/bin/tpl2rem: tpl2rem.c
-	$(CC) -o $@ $<
+	$(CC) $(CFLAGS) -o $@ $<
 
 tpl2rem.c: tpl2rem.lex
 	flex $<

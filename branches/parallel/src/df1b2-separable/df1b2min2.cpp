@@ -39,7 +39,7 @@ void ad_read_pass2_minuscv(void);
   if (ncount >= ncount_check)
     cout << ncount << endl;
 #endif
-   int nvar=df1b2variable::nvar;
+   //int nvar=df1b2variable::nvar;
 
    int total_bytes=2*sizeof(df1b2_header);
 // string identifier debug stuff
@@ -142,7 +142,7 @@ void read_pass2_1_minuscv(void)
 
 void read_pass2_2_minuscv(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1

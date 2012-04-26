@@ -1,5 +1,5 @@
 /*
- * $Id: dfadcif.cpp 948 2011-01-12 23:59:02Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

@@ -1,5 +1,5 @@
 /*
- * $Id: mod_hess.cpp 945 2011-01-12 23:03:57Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -683,8 +683,7 @@ void function_minimizer::hess_inv(void)
   }
 
   double maxerr=0.0;
-  int i;
-  for (i=1;i<=nvar;i++)
+  for (int i = 1;i <= nvar; i++)
   {
     for (int j=1;j<i;j++)
     {
@@ -703,7 +702,7 @@ void function_minimizer::hess_inv(void)
   }
  */
 
-  for (i=1;i<=nvar;i++)
+  for (int i = 1;i <= nvar; i++)
   {
     int zero_switch=0;
     for (int j=1;j<=nvar;j++)
@@ -783,7 +782,7 @@ void function_minimizer::hess_inv(void)
         if (on2>-1)  
         {                                     // saddle point
           dmatrix cross(1,ev.indexmax(),1,ev.indexmax());
-          for (i=1;i<=ev.indexmax();i++)
+          for (int i = 1;i <= ev.indexmax(); i++)
           {
             for (int j=1;j<=ev.indexmax();j++)
             {
@@ -823,7 +822,7 @@ void function_minimizer::hess_inv(void)
   {
     if (on1<0)
     {
-      for (i=1;i<=nvar;i++)
+      for (int i = 1;i <= nvar; i++)
       {
         if (hess(i,i) <= 0.0)
         {

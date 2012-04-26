@@ -1,7 +1,7 @@
 .SUFFIXES: .obj .cpp
 .PATH.obj = $(LIBPATH)
 
-LIBNAME = admod32.lib 
+LIBNAME = admod32.lib
 
 !include objects.lst
 
@@ -14,9 +14,6 @@ $(LIBNAME): $(OBJ0)
 
 .cpp.obj:
 	$(CC) $(CXXFLAGS) -o$(.PATH.obj)\$*.obj $<
-
-stub: df1b2stub.cpp
-	$(CC) $(FLAGS) -o$(STUBPATH)\df1b2stub.obj df1b2stub.cpp
 
 $(DISKDIR)\dist\bin\tpl2cpp.exe: tpl2cpp-winflex.c
 	bcc32 -Ic:\\Borland\\BCC55\\Include -Lc:\\Borland\\BCC55\\Lib -e$(DISKDIR)\dist\bin\tpl2cpp.exe tpl2cpp-winflex.c

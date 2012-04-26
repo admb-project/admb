@@ -1,5 +1,5 @@
 /*
- * $Id: fvar_a29.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -643,4 +643,17 @@ void DF_cdvpow(void)
   //dfv1.save_dvector_derivatives(v1pos);
   save_double_derivative(dfe,epos);
   //ierr=fsetpos(gradient_structure::get_fp(),&filepos);
+}
+dvar_vector pow(const dvector& x,const dvar_vector& a)
+{
+    RETURN_ARRAYS_INCREMENT();	
+	dvar_vector y(x.indexmin(), x.indexmax());
+
+	for(int i=x.indexmin(); i<=x.indexmax(); i++)
+	{
+		y(i)=pow(x(i),a(i));
+	}	
+
+	RETURN_ARRAYS_DECREMENT();	
+    return(y);
 }

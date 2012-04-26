@@ -1,5 +1,5 @@
 /*
- * $Id: newfmin.cpp 1001 2011-04-07 22:36:54Z johnoel $
+ * $Id$
  *
  * Author: Unknown
  * Copyright (c) 2009-2011 ADMB Foundation
@@ -69,7 +69,7 @@ extern int ctlc_flag;
   {
     signal(SIGINT, exit_handler);
     ctlc_flag = 1;
-    if (ad_printf) (*ad_printf)("\npress q to quit or c to invoke derivative checker: ");
+    if (ad_printf) (*ad_printf)("\npress q to quit or c to invoke derivative checker or s to stop optimizing: ");
   }
 #ifdef __NDPX__
   #include <iostream.hxx>
@@ -167,7 +167,7 @@ void print_values(const double& f, const dvector & x,const dvector& g)
 }
 extern adtimer * pfmintime=0;
 extern int traceflag;
-#pragma warn -sig
+//#pragma warn -sig
 
 #ifdef _MSC_VER
 BOOL CtrlHandler( DWORD fdwCtrlType ) 
@@ -569,6 +569,7 @@ label30:
               c='C';
             if ( c == 'C')
             {
+	      
               for (i=1; i<=n; i++)
               {
                 x.elem(i)=xx.elem(i);
@@ -576,7 +577,13 @@ label30:
               ireturn = 3;
               derch(f, x , w, n, ireturn);
               return;
-            }
+            } 
+            else if(c=='S')
+            {
+	      //set convergence criteria to something high to stop now
+	      crit=100000.0;
+	      return;
+	    }
             else 
             {
               if ( c == 'Q'|| c == 'N') 

@@ -1,5 +1,5 @@
 /*
- * $Id: dvect14.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -24,17 +24,16 @@
    double a = 2./cutoff;
    double b = 1./cutoff2;     
 
-   double tmp,tmp1,t2;
    double return_value;
-   tmp1=v1;
-   tmp=::fabs(tmp1);
+   double tmp1 = v1;
+   double tmp = ::fabs(tmp1);
    if (tmp > cutoff)
    {
         return_value=tmp;
    }
    else
    {
-     t2=tmp*tmp;
+     double t2 = tmp * tmp;
 
      if (tmp1 >=0)
      {

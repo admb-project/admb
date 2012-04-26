@@ -1,5 +1,5 @@
 /*
- * $Id: lbfgs.cpp 945 2011-01-12 23:03:57Z johnoel $
+ * $Id$
  *
  * Author: Jorge Nodecal
  * Copyright (c) 2009-2011 ADMB Foundation
@@ -249,7 +249,7 @@ struct lb3_1_ {
 struct {
     integer e_1[2];
     doublereal e_2[3];
-    } lb3_ = { 6, 6, .9, 1e-20, 1e20 };
+    } lb3_ = { {6, 6}, {.9, 1e-20, 1e20}};
 
 
 /* Table of constant values */

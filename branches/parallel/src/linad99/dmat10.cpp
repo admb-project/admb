@@ -1,5 +1,5 @@
 /*
- * $Id: dmat10.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -141,9 +141,8 @@ void dmatrix::fill( const char * s)
   k = 0;
   for (i=rowmin(); i<=rowmax(); i++)
   {
-    char * t;
+    char *t = new char[strlen(s)+1];
     //t = (char*) new[strlen(s)+1];
-    t = new char[strlen(s)+1];
 
     for (k = k1[i]; k <= k2[i]; k++)
     {
@@ -157,8 +156,8 @@ void dmatrix::fill( const char * s)
    //    (*this)(i)=dvector(tt);
     (*this)(i)=tt;
 
-    delete t;
-
+    delete[] t;
+    t = 0;
   }
   rowshift(minrow);
   colshift(mincolumn);

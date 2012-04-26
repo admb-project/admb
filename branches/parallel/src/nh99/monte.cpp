@@ -1,5 +1,5 @@
 /**
- * $Id: monte.cpp 945 2011-01-12 23:03:57Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -148,8 +148,6 @@ dvector probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_C
   double diff1;
   int expflag;
   double y;
-  int in=0;
-  int ie=0;
   for (int i=1;i<=nvar;i++)
   {
     ah=a(i)/ch(i,i); 

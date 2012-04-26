@@ -1,5 +1,5 @@
 /*
- * $Id: vgamdev.cpp 969 2011-02-07 16:47:54Z jsibert $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 

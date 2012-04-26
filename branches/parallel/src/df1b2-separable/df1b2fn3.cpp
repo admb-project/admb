@@ -1,5 +1,5 @@
 /*
- * $Id: df1b2fn3.cpp 944 2011-01-12 22:48:46Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -161,7 +161,7 @@ int df1b2_gradlist::write_pass1_pluseq(const df1b2variable * _px,
   if (ncount >= ncount_check)
     ncount_checker(ncount,ncount_check);
 #endif
-  int nvar=df1b2variable::nvar;
+  //int nvar=df1b2variable::nvar;
   ADUNCONST(df1b2variable*,px) 
   fixed_smartlist & nlist=f1b2gradlist->nlist; 
   test_smartlist& list=f1b2gradlist->list; 
@@ -296,7 +296,7 @@ void read_pass1_plus_eq_1(void)
  */
 void read_pass1_plus_eq_2(void)
 {
-  const int nlist_record_size=sizeof(int)+sizeof(char*);
+  //const int nlist_record_size=sizeof(int)+sizeof(char*);
   // We are going forward for bptr and backword for bptr2
   //
   // list 1

@@ -8,10 +8,11 @@ include objects.lst
 
 all: disk
 
-disk: $(DISKDIR)/lib/$(LIBNAME) 
+disk: $(DISKDIR)/lib/$(LIBNAME)
 	cp fvar.hpp $(DISKDIR)/include
 	cp dfpool.h $(DISKDIR)/include
 	cp trunc.hpp $(DISKDIR)/include
+	cp factors.h $(DISKDIR)/include
 
 $(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(LIBPATH)/hs_sparse.obj
 	ar -rs $@ $(addprefix $(LIBPATH)/, $(OBJ0))

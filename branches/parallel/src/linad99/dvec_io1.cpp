@@ -1,5 +1,5 @@
 /*
- * $Id: dvec_io1.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -21,6 +21,10 @@
 
 #include <string.h>
 #include <ctype.h>
+
+#include <sstream>
+using std::istringstream;
+
 const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
@@ -55,8 +59,8 @@ const int MAX_NUMBER_ROWS = 6550;
       << "dmatrix::dmatrix(char * filename)\n";
       ad_exit(1);
    }
-   char * line=new char [MAX_LINE_LENGTH+2];
-   char * field=new char [MAX_FIELD_LENGTH+1];
+   char *line = new char[MAX_LINE_LENGTH + 2];
+   char *field = new char[MAX_FIELD_LENGTH + 1];
 
    int i=0;
    ivector nc(1,MAX_NUMBER_ROWS);
@@ -75,7 +79,7 @@ const int MAX_NUMBER_ROWS = 6550;
      int j=0;              // j counts columns
 
      #ifndef __ZTC__
-       istrstream f(line);
+       istringstream f(line);
        while ( (f >> field).good() )
      #else
        while( sscanf(line,"%s",field)) // reads a field from line into field
@@ -134,8 +138,8 @@ const int MAX_NUMBER_ROWS = 6550;
 
    if (sizeof(int)==sizeof(char*))
    {
-#if defined(__SUNPRO_CC) && defined(__x86_64)
-     if ( (long)v < indexmin() * sizeof(double) )
+#if defined(__x86_64)
+     if ((intptr_t)v < indexmin() * sizeof(double))
 #else
      if ( (unsigned) v < indexmin() * sizeof(double) )
 #endif
@@ -159,7 +163,7 @@ const int MAX_NUMBER_ROWS = 6550;
    i++;
    int j=0;              // j counts columns
    #ifndef __ZTC__
-     istrstream f(line);
+     istringstream f(line);
      while ( (f >> field).good() )
    #else
      while( sscanf(line,"%s",field)) // reads a field from line into field
@@ -204,7 +208,8 @@ const int MAX_NUMBER_ROWS = 6550;
    // Need to check error status f
  }
 
- delete line;
- delete field;
-
+ delete[] line;
+ line = 0;
+ delete[] field;
+ field = 0;
 }

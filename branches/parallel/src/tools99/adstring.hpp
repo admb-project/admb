@@ -1,5 +1,5 @@
 /*
- * $Id: adstring.hpp 948 2011-01-12 23:59:02Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -243,8 +243,8 @@ int pos(_CONST adstring& substr,_CONST adstring& s);
     friend class ptr_vector;
   public:
     vector_shape(int& lb, int& lu) {index_min=lb;index_max=lu;ncopies=0;}
-    _CONST int indexmin(void) _CONST {return index_min;}
-    _CONST int indexmax(void) _CONST {return index_max;}
+    int indexmin(void) const {return index_min;}
+    int indexmax(void) const {return index_max;}
   };
 #endif
 
@@ -255,8 +255,8 @@ class adstring_array : public clist
   adstring ** ptr;
 public:
   int size() _CONST { return shape->indexmax()-shape->indexmin()+1;}
-  _CONST int indexmin(void) _CONST { return shape->indexmin();}
-  _CONST int indexmax(void) _CONST { return shape->indexmax();}
+  int indexmin(void) const { return shape->indexmin();}
+  int indexmax(void) const { return shape->indexmax();}
   adstring_array(_CONST adstring_array& sa);
   ~adstring_array();
   adstring_array(int min,int max);

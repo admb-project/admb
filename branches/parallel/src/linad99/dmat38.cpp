@@ -1,5 +1,5 @@
 /*
- * $Id: dmat38.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -37,7 +37,6 @@ cltudecomp ludecomp_pivot(const dmatrix & M);
 */
 dmatrix solve(const dmatrix & aa, const dmatrix & zz)
 {
-   int n = aa.colsize();
    int lb = aa.colmin();
    int ub = aa.colmax();
    if (lb != aa.rowmin() || ub != aa.colmax())
@@ -54,12 +53,12 @@ dmatrix solve(const dmatrix & aa, const dmatrix & zz)
 
    //check if invertable
    int i;
-   double det = 1.0;
+   double ln_det = 0.0;
    for (i = lb; i <= ub; i++)
    {
-      det *= dcmp(i, i);
+      ln_det += log(dcmp(i, i));
    }
-   if (det == 0.0)
+   if (exp(ln_det) == 0.0)
    {
       cerr <<
 	 "Error in matrix inverse -- matrix singular in solve(dmatrix)\n";

@@ -1,5 +1,5 @@
 /*
- * $Id: ludcmp.hpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Copyright (c) 2009-2011 ADMB Foundation
  */
@@ -146,11 +146,11 @@ class dvector_for_adjoint
    {
       return D.indexmax();
    }
-   const int indexmin() const
+   int indexmin() const
    {
       return D.indexmin();
    }
-   const int indexmax() const
+   int indexmax() const
    {
       return D.indexmax();
    }
@@ -158,7 +158,7 @@ class dvector_for_adjoint
    {
       return D(i, count(i));
    }
-   const double &operator () (int i) const
+   const double& operator () (int i) const
    {
       return D(i, count(i));
    }

@@ -1,5 +1,5 @@
 /*
- * $Id: eigen_dvar.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Copyright (c) 2009-2011 ADMB foundation
  */
@@ -112,9 +112,8 @@ void eigens (const dvar_matrix & m, const dvar_matrix & _evecs,
       ad_exit (1);
     }
 
-  int mlb = m.rowmin ();
-  int evecslb = evecs.rowmin ();
-  int evalslb = evals.indexmin ();
+  int evecslb = evecs.rowmin();
+  int evalslb = evals.indexmin();
 
   int N = m.colsize ();
 

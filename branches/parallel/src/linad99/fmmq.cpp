@@ -1,5 +1,5 @@
 /*
- * $Id: fmmq.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Author: David Fournier
  * Copyright (c) 2008-2011 Regents of the University of California 
@@ -9,7 +9,7 @@
  * Description not yet available.
  */
 #include <fvar.hpp>
-#pragma hdrstop
+//#pragma hdrstop
 #include "fmmq.hpp"
 
 /**

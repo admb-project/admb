@@ -1,5 +1,5 @@
 /*
- * $Id: dvsort.cpp 946 2011-01-12 23:52:45Z johnoel $
+ * $Id$
  *
  * Copyright (c) 2009-2011 ADMB Foundation
  */
@@ -88,34 +88,34 @@ dvector sort(_CONST dvector & _v, BOR_CONST ivector & _index, int NSTACK)
    int ub=v.indexmax();
    int size=v.size();
 
-   double *doublearray;
-   doublearray = new double[size];
-   int i;
-   for(i=0;i<size;i++)
+   double *doublearray = new double[size];
+   for(int i = 0;i < size; i++)
    {
       doublearray[i] = v(lb+i);
    }
 
-   int *intarray;
-   intarray = new int[size];
-   for(i=0;i<size;i++)
+   int *intarray = new int[size];
+   for(int i=0;i<size;i++)
    {
-      intarray[i] = lb+i;
+      intarray[i] = lb + i;
    }
 
    double_qsort2(doublearray,intarray,size);
 
    dvector arr(lb, ub);
-   for(i=0;i<size;i++) {
+   for(int i = 0;i < size; i++) {
       arr(lb+i) = doublearray[i];
    }
 
-   for(i=0;i<size;i++) {
+   for(int i = 0; i < size; i++) {
       index(index.indexmin()+i) = intarray[i];
    }
 
-   delete doublearray;
-   delete intarray;
+   delete[] doublearray;
+   doublearray = 0;
+
+   delete[] intarray;
+   intarray = 0;
 
    return arr;
 }

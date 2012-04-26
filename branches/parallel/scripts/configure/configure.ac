@@ -1,4 +1,4 @@
-AC_INIT([ADMB], [10.1], [users@admb-project.org]): ${CXXFLAGS="${CXXFLAGS}"}
+AC_INIT([ADMB], [trunk], [users@admb-project.org]): ${CXXFLAGS="${CXXFLAGS}"} ${CFLAGS="${CFLAGS}"} 
 
 # Check for programs used in building ADMB.
 AC_PROG_CC
@@ -60,11 +60,17 @@ if test  "`uname -s`" =  "Darwin"
 then
   #CXX_32OR64BIT="64bit"
   #CXXFLAGS="-m64"
+  MAKEFILE="linux.mak"
   MACOS_PRODUCT_VERSION=`sw_vers -productVersion`
   MACOS_XCODE_VERSION=`xcodebuild -version | grep Xcode | awk '{print $2}'`
-  ADMB_TARGET="admb-${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
-  MAKEFILE="linux.mak"
   INSTALLER_PACKAGEMAKER="scripts/installers/packagemaker/GNUmakefile"
+  CLANG_VERSION=`clang++ --version | head -n 1 | awk '{print $4}'`
+  if test "${CXX}" = "clang++"
+  then
+    ADMB_TARGET="admb-${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-clang${CLANG_VERSION}-${CXX_32OR64BIT}"
+  else
+    ADMB_TARGET="admb-${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
+  fi
 fi
 
 if test  "`uname -s`" =  "Linux"
@@ -131,7 +137,7 @@ then
   MAKEFILE="linux.mak"
 fi
 
-ARCH_CXXFLAG=${CXXFLAGS}
+CXXFLAGS=${CXXFLAGS}
 
 AC_CONFIG_FILES(
   [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/admb/admb-bin ${INSTALLER_PACKAGEMAKER} ${INSTALLER_MINGW} ]
@@ -141,10 +147,10 @@ AC_SUBST(revision, ${ADMB_REVISION})
 AC_SUBST(lextargets, ${LEX_TARGETS})
 AC_SUBST(version, ${ADMB_VERSION})
 AC_SUBST(target, ${ADMB_TARGET})
-AC_SUBST(disk, ../build/${ADMB_TARGET}/${ADMB_TARGET})
-AC_SUBST(libpath, ../build/${ADMB_TARGET}/objects)
+AC_SUBST(disk, ../build/${ADMB_TARGET})
+AC_SUBST(libpath, ../build/objects/${ADMB_TARGET})
 AC_SUBST(cxxflags, ${CXXFLAGS})
-AC_SUBST(arch_cxxflag, ${ARCH_CXXFLAG})
+AC_SUBST(cflags, ${CFLAGS})
 AC_SUBST(cxx, ${CXX})
 AC_SUBST(cc, ${CC})
 AC_SUBST(makefile, ${MAKEFILE})
@@ -160,5 +166,5 @@ PREFIX=${prefix}
 AC_SUBST(PREFIX)
 
 AC_OUTPUT
-printf "\nConfigure completed for ${ADMB_TARGET}\n"
-printf "To build ADMB, type 'make'\n"
+printf "\nConfigure completed for '${ADMB_TARGET}'.\n"
+printf "To build ADMB, type 'make'.\n"

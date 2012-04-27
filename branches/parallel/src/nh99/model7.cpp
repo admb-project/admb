@@ -60,7 +60,7 @@ void admpi_manager::send_dvector_to_master(const dvector& v)
   mpi_int[mpi_offset]=v.indexmax();
   MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,0,0,parent);
   increment_mpi_offset();
-  MPI_Send(&(v[mmin]),size,MPI_DOUBLE,0,0,parent);
+  MPI_Send((void*)&(v[mmin]),size,MPI_DOUBLE,0,0,parent);
 }
 
 double admpi_manager::get_double_from_slave(int _slave_number)
@@ -74,14 +74,14 @@ double admpi_manager::get_double_from_slave(int _slave_number)
 
 void admpi_manager::send_double_to_master(const double v)
 {
-  MPI_Send(&v,1,MPI_DOUBLE,0,0,parent);
+  MPI_Send((void*)&v,1,MPI_DOUBLE,0,0,parent);
 }
 
 void admpi_manager::send_double_to_slave(const double v,
   int _slave_number)
 {
   int slave_number=_slave_number-1;
-  MPI_Send(&v,1,MPI_DOUBLE,slave_number,0,everyone);
+  MPI_Send((void*)&v,1,MPI_DOUBLE,slave_number,0,everyone);
 }
 
 double admpi_manager::get_double_from_master(void)
@@ -224,7 +224,7 @@ void admpi_manager::send_dvector_to_slave(const dvector& v,
   mpi_int[mpi_offset]=v.indexmax();
   MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
   increment_mpi_offset();
-  MPI_Send(&(v[mmin]),size,MPI_DOUBLE,slave_number,0,everyone);
+  MPI_Send((void*)&(v[mmin]),size,MPI_DOUBLE,slave_number,0,everyone);
 }
 
 void admpi_manager::send_ivector_to_slave(const ivector& v,
@@ -240,7 +240,7 @@ void admpi_manager::send_ivector_to_slave(const ivector& v,
   mpi_int[mpi_offset]=v.indexmax();
   MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
   increment_mpi_offset();
-  MPI_Send(&(v[mmin]),size,MPI_INT,slave_number,0,everyone);
+  MPI_Send((void*)&(v[mmin]),size,MPI_INT,slave_number,0,everyone);
 }
 
  // void admpi_manager::send_ivector_to_slave(const ivector& v,int _slave_number)

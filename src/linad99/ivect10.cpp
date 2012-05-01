@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  int Max(_CONST ivector& t1)
+int Max(const ivector& t1)
   {
     return max(t1);
   }
@@ -23,7 +23,7 @@
  * Description not yet available.
  * \param
  */
-  int max(_CONST ivector& t1)
+int max(const ivector& t1)
   {
      int tmp;
      int mmin=t1.indexmin();
@@ -40,7 +40,7 @@
  * Description not yet available.
  * \param
  */
-  int min(_CONST ivector& t1)
+int min(const ivector& t1)
   {
      int tmp;
      int mmin=t1.indexmin();

@@ -35,8 +35,8 @@ static ofstream * pofs=0;
  * Description not yet available.
  * \param
  */
-void derch(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST dvector& _gg,
-       int n, BOR_CONST int & _ireturn)
+void derch(const double& _f, const independent_variables & _x, const dvector& _gg,
+           int n, const int & _ireturn)
 {
   dvector& gg=(dvector&) _gg;
   double& f=(double&) _f;

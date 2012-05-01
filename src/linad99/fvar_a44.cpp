@@ -16,7 +16,7 @@ void DF_dvsquare(void);
  * Description not yet available.
  * \param
  */
-dvar_vector square(_CONST dvar_vector& v1)
+dvar_vector square(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
 
@@ -68,7 +68,7 @@ void DF_dvcube(void);
  * Description not yet available.
  * \param
  */
-dvar_vector cube(_CONST dvar_vector& v1)
+dvar_vector cube(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
 
@@ -119,7 +119,7 @@ void DF_dvfourth(void);
  * Description not yet available.
  * \param
  */
-dvar_vector fourth(_CONST dvar_vector& v1)
+dvar_vector fourth(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
 

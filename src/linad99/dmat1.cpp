@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
- dvector  operator * (_CONST dvector& x,_CONST dmatrix& m)
+dvector operator*(const dvector& x, const dmatrix& m)
  {
 #ifdef DIAG
      if( heapcheck() == _HEAPCORRUPT )
@@ -29,7 +29,7 @@
 
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
    {
-     cerr << " Incompatible array bounds in dvector  operator * (_CONST dvector& x,_CONST dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dvector  operator * (const dvector& x,const dmatrix& m)\n";
      ad_exit(21);
    }
    dvector tmp(m.colmin(),m.colmax());
@@ -59,7 +59,7 @@
  * Description not yet available.
  * \param
  */
- dvector  operator * (_CONST dmatrix& m,_CONST dvector& x )
+dvector operator*(const dmatrix& m, const dvector& x)
  {
 #ifdef DIAG
      if( heapcheck() == _HEAPCORRUPT )
@@ -73,7 +73,7 @@
 #endif
    if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
    {
-     cerr << " Incompatible array bounds in dvector  operator * (_CONST dvector& x,_CONST dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dvector  operator * (const dvector& x, const dmatrix& m)\n";
      ad_exit(21);
    }
 
@@ -108,7 +108,7 @@
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator * (_CONST dmatrix& x,_CONST dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dmatrix  operator * (const dmatrix& x, const dmatrix& m)\n";
      ad_exit(21);
    }
    dmatrix tmp(m1.rowmin(),m1.rowmax(), m2.colmin(), m2.colmax());
@@ -129,11 +129,11 @@
 
 /*
 
- dmatrix  operator * (_CONST dmatrix& m1,_CONST dmatrix& m2 )
+dmatrix operator*(const dmatrix& m1, const dmatrix& m2 )
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator * (_CONST dmatrix& x,_CONST dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dmatrix  operator * (const dmatrix& x, const dmatrix& m)\n";
      ad_exit(21);
    }
 
@@ -156,7 +156,7 @@
      {
        sum=0;
 
-       _CONST dvector& temp_row = m1.elem(i);
+       const dvector& temp_row = m1.elem(i);
 
        for (k=m1.colmin(); k<=m1.colmax(); k++)
        {

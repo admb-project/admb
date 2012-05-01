@@ -25,7 +25,7 @@
  * Description not yet available.
  * \param
  */
-void nograd_assign_row(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)
+void nograd_assign_row(const dvar_matrix& m, const dvector& v, const int& ii)
 {
   // cout << "Entering nograd assign"<<endl;
   //kkludge_object kg;
@@ -34,7 +34,7 @@ void nograd_assign_row(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii
    (v.indexmax()!=m(ii).indexmax()) )
   {
     cerr << "Error -- Index out of bounds in\n"
-      "void nograd_assign(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)"
+      "void nograd_assign(const dvar_matrix& m, const dvector& v, const int& ii)"
       << endl;
     ad_exit(1);
   }

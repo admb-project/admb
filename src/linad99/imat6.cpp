@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-void imatrix::allocate(_CONST imatrix& dm)
+void imatrix::allocate(const imatrix& dm)
 {
   int nrl=dm.rowmin();
   int nrh=dm.rowmax();

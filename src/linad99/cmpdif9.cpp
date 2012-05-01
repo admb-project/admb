@@ -79,7 +79,7 @@ imatrix_position restore_imatrix_position(void)
  * Description not yet available.
  * \param
  */
-imatrix restore_imatrix_value(BOR_CONST imatrix_position& mpos)
+imatrix restore_imatrix_value(const imatrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
   //  the size, address, and value information for a dvar_matrix

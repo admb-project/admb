@@ -30,17 +30,17 @@
 #include <math.h>
 
 // dmatrix mathematical functions
-    dmatrix exp(_CONST dmatrix& m);
-    dmatrix log(_CONST dmatrix& m);
-    dmatrix sin(_CONST dmatrix& m);
-    dmatrix cos(_CONST dmatrix& m);
-    dmatrix tan(_CONST dmatrix& m);
-    dmatrix pow(_CONST dmatrix& m, CGNU_DOUBLE e);
-    dmatrix pow(_CONST dmatrix& m,int e);
+dmatrix exp(const dmatrix& m);
+dmatrix log(const dmatrix& m);
+dmatrix sin(const dmatrix& m);
+dmatrix cos(const dmatrix& m);
+dmatrix tan(const dmatrix& m);
+dmatrix pow(const dmatrix& m, CGNU_DOUBLE e);
+dmatrix pow(const dmatrix& m,int e);
 // end of dvar_vector mathematical functions
 
 /*  "template form for editor
-dmatrix XXX(_CONST dmatrix& m)
+dmatrix XXX(const dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -63,7 +63,7 @@ dmatrix XXX(_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-dmatrix pow(_CONST dmatrix& m,int e)
+dmatrix pow(const dmatrix& m,int e)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -85,7 +85,7 @@ dmatrix pow(_CONST dmatrix& m,int e)
  * Description not yet available.
  * \param
  */
-dmatrix pow(_CONST dmatrix& m, CGNU_DOUBLE e)
+dmatrix pow(const dmatrix& m, CGNU_DOUBLE e)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -107,7 +107,7 @@ dmatrix pow(_CONST dmatrix& m, CGNU_DOUBLE e)
  * Description not yet available.
  * \param
  */
-dmatrix tan(_CONST dmatrix& m)
+dmatrix tan(const dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -129,7 +129,7 @@ dmatrix tan(_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-dmatrix cos(_CONST dmatrix& m)
+dmatrix cos(const dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -151,7 +151,7 @@ dmatrix cos(_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-dmatrix sin(_CONST dmatrix& m)
+dmatrix sin(const dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -173,7 +173,7 @@ dmatrix sin(_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-dmatrix elem_prod(_CONST dmatrix& m,_CONST dmatrix& m2)
+dmatrix elem_prod(const dmatrix& m, const dmatrix& m2)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -195,7 +195,7 @@ dmatrix elem_prod(_CONST dmatrix& m,_CONST dmatrix& m2)
  * Description not yet available.
  * \param
  */
-dmatrix log(_CONST dmatrix& m)
+dmatrix log(const dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -217,7 +217,7 @@ dmatrix log(_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-dmatrix sqrt(_CONST dmatrix& m)
+dmatrix sqrt(const dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -239,7 +239,7 @@ dmatrix sqrt(_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-dmatrix sqr(_CONST dmatrix& m)
+dmatrix sqr(const dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -261,7 +261,7 @@ dmatrix sqr(_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-dmatrix exp(_CONST dmatrix& m)
+dmatrix exp(const dmatrix& m)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());
@@ -283,7 +283,7 @@ dmatrix exp(_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-dmatrix elem_div(_CONST dmatrix& m,_CONST dmatrix& m2)
+dmatrix elem_div(const dmatrix& m, const dmatrix& m2)
 {
   ivector cmin(m.rowmin(),m.rowmax());
   ivector cmax(m.rowmin(),m.rowmax());

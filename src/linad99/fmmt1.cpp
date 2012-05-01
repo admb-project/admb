@@ -15,7 +15,7 @@
  * \param
  */
 extern  int ctlc_flag;
-fmmt1::fmmt1(int nvar,_CONST lvector& ipar)
+fmmt1::fmmt1(int nvar, const lvector& ipar)
 : fmm_control(ipar),
   w(1,4*nvar),
   funval(1,10),

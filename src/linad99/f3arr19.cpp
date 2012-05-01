@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-  _CONST dvar_matrix& dvar3_array::operator[] (int i) _CONST 
+const dvar_matrix& dvar3_array::operator[] (int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i<slicemin())

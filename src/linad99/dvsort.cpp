@@ -37,7 +37,7 @@ void double_qsort2(double *arr, int *arr2, unsigned n)
  *
  * \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
  */
-dvector sort(_CONST dvector & v, int NSTACK)
+dvector sort(const dvector & v, int NSTACK)
 {
    int lb=v.indexmin();
    int ub=v.indexmax();
@@ -72,7 +72,7 @@ dvector sort(_CONST dvector & v, int NSTACK)
  *
  * \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
  */   
-dvector sort(_CONST dvector & _v, BOR_CONST ivector & _index, int NSTACK)
+dvector sort(const dvector &_v, const ivector &_index, int NSTACK)
 {
    ivector & index = (ivector &) _index;
    dvector & v = (dvector &) _v;
@@ -80,7 +80,7 @@ dvector sort(_CONST dvector & _v, BOR_CONST ivector & _index, int NSTACK)
    if (v.size() != index.size())
    {
       cerr << " Incompatible array sizes in vector v and ivector index\n"
-	 << " in ivector sort(_CONST ivector& v,_CONST ivector& index)\n";
+	 << " in ivector sort(const ivector& v,const ivector& index)\n";
       ad_exit(1);
    }
 

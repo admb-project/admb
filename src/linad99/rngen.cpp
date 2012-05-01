@@ -182,7 +182,7 @@ double random_number_generator::better_rand()
   \returns N(0,1) double containing Normally distributed pseudorandom number 
    with mean zero and standard deviation one.
 */
-double randn( BOR_CONST random_number_generator& rng)
+double randn(const random_number_generator& rng)
 {
   double x,y;
   x=((random_number_generator&) rng).better_rand();
@@ -198,7 +198,7 @@ double randn( BOR_CONST random_number_generator& rng)
   \returns double containing uniformly distributed pseudorandom number 
    between zero and one.
 */
-double randu( BOR_CONST random_number_generator& rng)
+double randu(const random_number_generator& rng)
 {
   double x;
   x=((random_number_generator&) rng).better_rand();
@@ -209,7 +209,7 @@ double randu( BOR_CONST random_number_generator& rng)
  * Description not yet available.
  * \param
  */
-void dvector::fill_randbi(double p, BOR_CONST random_number_generator& rng)
+void dvector::fill_randbi(double p, const random_number_generator& rng)
 {
   if ( p<0 || p>1)
   {
@@ -234,7 +234,7 @@ void dvector::fill_randbi(double p, BOR_CONST random_number_generator& rng)
  * Description not yet available.
  * \param
  */
-void dvector::fill_randu( BOR_CONST random_number_generator& rng)
+void dvector::fill_randu(const random_number_generator& rng)
 {
   for (int i=indexmin(); i<=indexmax(); i++)
   {
@@ -246,7 +246,7 @@ void dvector::fill_randu( BOR_CONST random_number_generator& rng)
  * Description not yet available.
  * \param
  */
-void dmatrix::colfill_randu(BOR_CONST int&j, BOR_CONST random_number_generator& rng)
+void dmatrix::colfill_randu(const int&j, const random_number_generator& rng)
 {
   for (int i=rowmin(); i<=rowmax(); i++)
   {
@@ -258,7 +258,7 @@ void dmatrix::colfill_randu(BOR_CONST int&j, BOR_CONST random_number_generator& 
  * Description not yet available.
  * \param
  */
-void dmatrix::rowfill_randu(BOR_CONST int& i, BOR_CONST random_number_generator& rng)
+void dmatrix::rowfill_randu(const int& i, const random_number_generator& rng)
 {
   for (int j=colmin(); j<=colmax(); j++)
   {
@@ -270,7 +270,7 @@ void dmatrix::rowfill_randu(BOR_CONST int& i, BOR_CONST random_number_generator&
  * Description not yet available.
  * \param
  */
-void dvector::fill_randn( BOR_CONST random_number_generator& rng)
+void dvector::fill_randn(const random_number_generator& rng)
 {
   for (int i=indexmin(); i<=indexmax(); i++)
   {
@@ -282,7 +282,7 @@ void dvector::fill_randn( BOR_CONST random_number_generator& rng)
  * Description not yet available.
  * \param
  */
-void dmatrix::fill_randn( BOR_CONST random_number_generator& rng)
+void dmatrix::fill_randn(const random_number_generator& rng)
 {
   for (int i=rowmin(); i<=rowmax(); i++)
   {
@@ -294,7 +294,7 @@ void dmatrix::fill_randn( BOR_CONST random_number_generator& rng)
  * Description not yet available.
  * \param
  */
-void d3_array::fill_randn( BOR_CONST random_number_generator& rng)
+void d3_array::fill_randn(const random_number_generator& rng)
 {
   for (int i=slicemin(); i<=slicemax(); i++)
   {
@@ -306,7 +306,7 @@ void d3_array::fill_randn( BOR_CONST random_number_generator& rng)
  * Description not yet available.
  * \param
  */
-void d3_array::fill_randu( BOR_CONST random_number_generator& rng)
+void d3_array::fill_randu(const random_number_generator& rng)
 {
   for (int i=slicemin(); i<=slicemax(); i++)
   {
@@ -318,7 +318,7 @@ void d3_array::fill_randu( BOR_CONST random_number_generator& rng)
  * Description not yet available.
  * \param
  */
-void dmatrix::fill_randu( BOR_CONST random_number_generator& rng)
+void dmatrix::fill_randu(const random_number_generator& rng)
 {
   for (int i=rowmin(); i<=rowmax(); i++)
   {
@@ -330,7 +330,7 @@ void dmatrix::fill_randu( BOR_CONST random_number_generator& rng)
  * Description not yet available.
  * \param
  */
-void dmatrix::colfill_randn(BOR_CONST int&j, BOR_CONST random_number_generator& rng)
+void dmatrix::colfill_randn(const int&j, const random_number_generator& rng)
 {
   for (int i=rowmin(); i<=rowmax(); i++)
   {
@@ -342,7 +342,7 @@ void dmatrix::colfill_randn(BOR_CONST int&j, BOR_CONST random_number_generator& 
  * Description not yet available.
  * \param
  */
-void dmatrix::rowfill_randn(BOR_CONST int& i, BOR_CONST random_number_generator& rng)
+void dmatrix::rowfill_randn(const int& i, const random_number_generator& rng)
 {
   for (int j=colmin(); j<=colmax(); j++)
   {

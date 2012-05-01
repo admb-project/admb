@@ -11,13 +11,13 @@
 #include "fvar.hpp"
 
 /*
- dvar_vector  operator * (_CONST dvar_vector& x,_CONST dmatrix& m)
+dvar_vector operator*(const dvar_vector& x, const dmatrix& m)
  {
    RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
    {
-     cerr << " Incompatible array bounds in dvar_vector  operator * (_CONST dvar_vector& x,_CONST dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dvar_vector  operator * (const dvar_vector& x,const dmatrix& m)\n";
      ad_exit(21);
    }
    dvar_vector tmp(m.colmin(),m.colmax());
@@ -35,13 +35,13 @@
    return(tmp);
  }      
 
- dvar_vector  operator * (_CONST dmatrix& m,_CONST dvar_vector& x )
+dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
  {
    RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
    {
-     cerr << " Incompatible array bounds in dvar_vector  operator * (_CONST dvar_vector& x,_CONST dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dvar_vector  operator*(const dvar_vector& x, const dmatrix& m)\n";
      ad_exit(21);
    }
 
@@ -64,7 +64,7 @@
  * Description not yet available.
  * \param
  */
-  dvariable norm(_CONST dvar_matrix& m1)
+dvariable norm(const dvar_matrix& m1)
     {
       RETURN_ARRAYS_INCREMENT();
 
@@ -86,7 +86,7 @@
       return(tmp);
     }
 
-    dvariable norm2(_CONST dvar_matrix& m1)
+dvariable norm2(const dvar_matrix& m1)
     {
       RETURN_ARRAYS_INCREMENT();
 
@@ -99,10 +99,10 @@
       RETURN_ARRAYS_DECREMENT();
       return(tmp);
     }
-    dvariable sumsq(_CONST dvar_matrix& m1) {return(norm2(m1));}
+dvariable sumsq(const dvar_matrix& m1) {return(norm2(m1));}
 
    /*
-    dvar_matrix trans(_CONST dvar_matrix& m1)
+    dvar_matrix trans(const dvar_matrix& m1)
     {
       RETURN_ARRAYS_INCREMENT();
 

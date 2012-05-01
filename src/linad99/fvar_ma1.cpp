@@ -14,12 +14,12 @@
  * Description not yet available.
  * \param
  */
- dvar_vector  operator * (_CONST dvector& x,_CONST dvar_matrix& m)
+dvar_vector operator*(const dvector& x, const dvar_matrix& m)
  {
    RETURN_ARRAYS_INCREMENT();
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
    {
-     cerr << " Incompatible array bounds in dvar_vector  operator * (_CONST dvector& x,_CONST dvar_matrix& m)\n";
+     cerr << " Incompatible array bounds in dvar_vector  operator*(const dvector& x, const dvar_matrix& m)\n";
      ad_exit(21);
    }
    dvar_vector tmp(m.colmin(),m.colmax());

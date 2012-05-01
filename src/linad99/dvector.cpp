@@ -171,7 +171,7 @@ static int ycounter=0;
     z = x;         // "deep" copy
     \endcode
   */
- dvector::dvector(_CONST dvector& t)
+dvector::dvector(const dvector& t)
  {
    #ifdef DIAG
     // cout << "starting out in dvector contructor\n";
@@ -194,7 +194,7 @@ static int ycounter=0;
  Explicit shallow copy.
  \param t %dvecotor to be copied
  */
- void dvector::shallow_copy(_CONST dvector& t)
+void dvector::shallow_copy(const dvector& t)
  {
    #ifdef DIAG
     // cout << "starting out in dvector contructor\n";
@@ -218,7 +218,7 @@ static int ycounter=0;
  Creates a shallow copy.
  \param pdv an instance of class %predvector.
  */
- dvector::dvector(_CONST predvector& pdv)
+dvector::dvector(const predvector& pdv)
  {
    #ifdef DIAG
     // cout << "starting out in dvector contructor\n";
@@ -272,7 +272,7 @@ static int ycounter=0;
   \param t A %dvector constant
   \return Reference to a %dvector object.
  */
- dvector& dvector::operator = (_CONST dvector& t)
+dvector& dvector::operator=(const dvector& t)
  {
    if (!(*this))
    {
@@ -289,7 +289,7 @@ static int ycounter=0;
    {
      if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
      {
-       cerr << "Index bounds do not match in dvector& operator = (_CONST dvector&)\n";
+       cerr << "Index bounds do not match in dvector& operator = (const dvector&)\n";
        ad_exit(1);
      }
 
@@ -312,7 +312,7 @@ static int ycounter=0;
   \param t A %dvector constant
   \return Reference to a %independent_variables object.
  */
- independent_variables& independent_variables::operator = (_CONST dvector& t)
+ independent_variables& independent_variables::operator=(const dvector& t)
  {
 
    #ifdef DIAG
@@ -321,7 +321,7 @@ static int ycounter=0;
 
    if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
    {
-     cerr << "Index bounds do not match in dvector& operator = (_CONST dvector&)\n";
+     cerr << "Index bounds do not match in dvector& operator = (const dvector&)\n";
      ad_exit(1);
    }
      //double tmp;
@@ -369,7 +369,7 @@ static int ycounter=0;
  \param dvp Reference to a %dvar_vector_position object (usually read from stack)
  \param kk Kludge to avoid ambiguous function references
  */
- dvector::dvector(BOR_CONST dvar_vector_position& dvp,BOR_CONST kkludge_object& kk)
+dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
  {
    allocate(dvp.indexmin(),dvp.indexmax());
  }
@@ -472,7 +472,7 @@ static int ycounter=0;
  Allocate memory for a %dvector the same size as it's argument.
  \param dv Reference to a %dvector.
  */
-void dvector::allocate(_CONST dvector& dv)
+void dvector::allocate(const dvector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
@@ -481,7 +481,7 @@ void dvector::allocate(_CONST dvector& dv)
  Allocate memory for a %dvector the same size as it's argument.
  \param dv Reference to a dvar_vector.
  */
-void dvector::allocate(_CONST dvar_vector& dv)
+void dvector::allocate(const dvar_vector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
@@ -491,7 +491,7 @@ Make shallow copy of %dvector shape.
 Copies the shape of its argument.
 \param t Reference to a %dvector.
 */
-void dvector::allocatec(_CONST dvector& t)
+void dvector::allocatec(const dvector& t)
 {
   if (!(*this)) 
   {
@@ -531,11 +531,11 @@ void dvector::allocatec(_CONST dvector& t)
   \return A double, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing 
   the value of the dot product of the two arguments.
   */
-  double operator * (_CONST dvector& t1,_CONST dvector& t2)
+double operator*(const dvector& t1, const dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
      {
-       cerr << "Index bounds do not match in dvector operator * (_CONST dvector&,_CONST dvector&)\n";
+       cerr << "Index bounds do not match in dvector operator * (const dvector&, const dvector&)\n";
        ad_exit(1);
      }
      double tmp;
@@ -577,11 +577,11 @@ void dvector::allocatec(_CONST dvector& t)
   \return A %dvector, \f$z_i = a_i + b_i\f$  containing 
   the value of the sum of the two arguments.
   */
-  dvector operator + (_CONST dvector& t1,_CONST dvector& t2)
+dvector operator+(const dvector& t1, const dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  
      {
-       cerr << "Index bounds do not match in dvector operator + (_CONST dvector&,_CONST dvector&)\n";
+       cerr << "Index bounds do not match in dvector operator+(const dvector&, const dvector&)\n";
        ad_exit(1);
      }
      dvector tmp(t1.indexmin(),t1.indexmax());
@@ -615,11 +615,11 @@ void dvector::allocatec(_CONST dvector& t)
   \return A %dvector, \f$z_i = a_i - b_i\f$  containing 
   the value of the difference of the two arguments.
   */
-  dvector operator - (_CONST dvector& t1,_CONST dvector& t2)
+dvector operator-(const dvector& t1, const dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  
      {
-       cerr << "Index bounds do not match in dvector operator - (_CONST dvector&,_CONST dvector&)\n";
+       cerr << "Index bounds do not match in dvector operator - (const dvector&, const dvector&)\n";
        ad_exit(1);
      }
      dvector tmp(t1.indexmin(),t1.indexmax());
@@ -651,7 +651,7 @@ void dvector::allocatec(_CONST dvector& t)
   \param t1 %dvector reference, \f$y\f$.
   \return A %dvector \f$z_i = x*y_i\f$.
   */
-  dvector operator * ( CGNU_DOUBLE x,_CONST dvector& t1)
+dvector operator*(CGNU_DOUBLE x, const dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
    #ifdef OPT_LIB

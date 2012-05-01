@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-double trace(_CONST dmatrix& M)
+double trace(const dmatrix& M)
 {
   double tmp;
   tmp=0.0;

@@ -16,7 +16,7 @@ void DF_dvexp(void);
  * Description not yet available.
  * \param
  */
-dvar_vector mfexp(_CONST dvar_vector& v1, CGNU_DOUBLE d)
+dvar_vector mfexp(const dvar_vector& v1, CGNU_DOUBLE d)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());

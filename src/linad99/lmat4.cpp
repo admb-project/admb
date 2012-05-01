@@ -41,7 +41,7 @@
  * Description not yet available.
  * \param
  */
- _CONST lvector& lmatrix::operator [] (int i) _CONST 
+const lvector& lmatrix::operator[](int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i<rowmin())

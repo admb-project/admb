@@ -35,7 +35,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& ostr,_CONST lmatrix& z)
+ostream& operator<<(const ostream& ostr, const lmatrix& z)
 {
   int min=z.rowmin();
   int max=z.rowmax();
@@ -52,7 +52,7 @@ ostream& operator<<(BOR_CONST ostream& ostr,_CONST lmatrix& z)
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST lmatrix& z)
+istream& operator>>(const istream& istr, const lmatrix& z)
 {
   int min=z.rowmin();
   int max=z.rowmax();

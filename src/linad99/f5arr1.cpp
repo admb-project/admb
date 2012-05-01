@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvariable sum(_CONST dvar5_array& m)
+dvariable sum(const dvar5_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;
@@ -31,7 +31,7 @@ dvariable sum(_CONST dvar5_array& m)
  * Description not yet available.
  * \param
  */
-dvar5_array sqrt(_CONST dvar5_array& m)
+dvar5_array sqrt(const dvar5_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;
@@ -48,7 +48,7 @@ dvar5_array sqrt(_CONST dvar5_array& m)
  * Description not yet available.
  * \param
  */
-dvar5_array exp(_CONST dvar5_array& m)
+dvar5_array exp(const dvar5_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;
@@ -65,7 +65,7 @@ dvar5_array exp(_CONST dvar5_array& m)
  * Description not yet available.
  * \param
  */
-dvar5_array mfexp(_CONST dvar5_array& m)
+dvar5_array mfexp(const dvar5_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;
@@ -82,7 +82,7 @@ dvar5_array mfexp(_CONST dvar5_array& m)
  * Description not yet available.
  * \param
  */
-dvar5_array log(_CONST dvar5_array& m)
+dvar5_array log(const dvar5_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvar5_array tmp;

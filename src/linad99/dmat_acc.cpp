@@ -38,7 +38,7 @@
  * Description not yet available.
  * \param
  */
- _CONST dvector& dmatrix::operator[] (int i) _CONST
+const dvector& dmatrix::operator[](int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i<rowmin())

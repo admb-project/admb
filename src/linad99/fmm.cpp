@@ -16,7 +16,7 @@ extern  int ctlc_flag;
  * Description not yet available.
  * \param
  */
-fmm::fmm(int nvar,_CONST lvector& ipar,int _disk_save)
+fmm::fmm(int nvar, const lvector& ipar, int _disk_save)
 : fmm_control(ipar),
   w(1,4*nvar), funval(1,10),
   xx(0,nvar), gbest(0,nvar), xsave(0,nvar), gsave(0,nvar)

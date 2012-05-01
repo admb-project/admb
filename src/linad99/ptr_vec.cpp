@@ -72,7 +72,7 @@ struct void_ptr
  * Description not yet available.
  * \param
  */
- ptr_vector::ptr_vector(BOR_CONST ptr_vector& t)
+ptr_vector::ptr_vector(const ptr_vector& t)
  {
    #ifdef DIAG
     cout << "Copy constructor called for ivector with address "
@@ -87,7 +87,7 @@ struct void_ptr
  * Description not yet available.
  * \param
  */
- ptr_vector& ptr_vector::operator = (BOR_CONST ptr_vector& _t)
+ptr_vector& ptr_vector::operator=(const ptr_vector& _t)
  {
    ADUNCONST(ptr_vector,t)
    // disconnect ivector  pointer  from old array
@@ -95,7 +95,7 @@ struct void_ptr
    {
      if (indexmin() != t.indexmin() || indexmax() != t.indexmax())
      {
-       cerr << " Array sizes do not match in ptr_vector operator =(_CONST ivector&)\n";
+       cerr << " Array sizes do not match in ptr_vector operator =(const ivector&)\n";
      }
 
      for ( int i=indexmin(); i<=indexmax(); i++)
@@ -211,7 +211,7 @@ struct void_ptr
  * Description not yet available.
  * \param
  */
- ostream& operator << (BOR_CONST ostream& _s,BOR_CONST ptr_vector& _v)
+ostream& operator<<(const ostream& _s, const ptr_vector& _v)
  {
    ADUNCONST(ptr_vector,v)
    ostream & s = (ostream&) _s;

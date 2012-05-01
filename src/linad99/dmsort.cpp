@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dmatrix sort(_CONST dmatrix& m,int column,int NSTACK)
+dmatrix sort(const dmatrix& m, int column, int NSTACK)
 {
   ivector ind(m.rowmin(),m.rowmax());
   ivector ind1(m.rowmin(),m.rowmax());

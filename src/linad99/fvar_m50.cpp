@@ -18,8 +18,8 @@ void dfcholeski_decomp_banded_positive(void);
  * \param
  */
 banded_lower_triangular_dvar_matrix choleski_decomp_positive(
-  _CONST banded_symmetric_dvar_matrix& MM,double eps,
-   dvariable& _fpen)
+  const banded_symmetric_dvar_matrix& MM, double eps,
+  dvariable& _fpen)
 {
   // kludge to deal with constantness
   banded_symmetric_dvar_matrix& M = (banded_symmetric_dvar_matrix&) MM;

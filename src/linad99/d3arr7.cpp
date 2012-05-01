@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   d3_array mfexp(_CONST d3_array& m)
+d3_array mfexp(const d3_array& m)
    {
      d3_array tmp;
      tmp.allocate(m);
@@ -29,7 +29,7 @@
  * Description not yet available.
  * \param
  */
-   d3_array mfexp(_CONST d3_array& m, CGNU_DOUBLE d)
+d3_array mfexp(const d3_array& m, CGNU_DOUBLE d)
    {
      d3_array tmp;
      tmp.allocate(m);

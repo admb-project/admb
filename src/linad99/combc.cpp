@@ -52,14 +52,14 @@ double gammln(double xx)
  * \param r an array
  * \return log of the binomial coefficent
  */
-dvector log_comb(_CONST dvector& n,_CONST dvector& r)
+dvector log_comb(const dvector& n, const dvector& r)
 {
   int mmin=n.indexmin();
   int mmax=n.indexmax();
   if (mmin != r.indexmin() || mmax != r.indexmax()) 
   {
     cerr << "Incompatible array bounds in function "
-      "dvector log_comb(_CONST dvector& n, _CONST dvector& r)" << endl;
+      "dvector log_comb(const dvector& n, const dvector& r)" << endl;
     ad_exit(1);
   } 
   dvector tmp(mmin,mmax);
@@ -76,7 +76,7 @@ dvector log_comb(_CONST dvector& n,_CONST dvector& r)
  * \param r an array
  * \return log of the binomial coefficent
  */
-dvector log_comb(double n,_CONST dvector& r)
+dvector log_comb(double n, const dvector& r)
 {
   int mmin=r.indexmin();
   int mmax=r.indexmax();
@@ -93,7 +93,7 @@ dvector log_comb(double n,_CONST dvector& r)
  * \param v an array
  * \return log of the factorial
  */
-dvector gammln(_CONST dvector& v)
+dvector gammln(const dvector& v)
 {
   int mmin=v.indexmin();
   int mmax=v.indexmax();
@@ -110,7 +110,7 @@ dvector gammln(_CONST dvector& v)
  * \param r an array
  * \return log of the factorial
  */
-dvector factln(_CONST dvector& r)
+dvector factln(const dvector& r)
 {
     int mmin=r.indexmin();
     int mmax=r.indexmax();

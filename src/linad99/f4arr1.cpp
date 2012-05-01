@@ -15,7 +15,7 @@
  * Description not yet available.
  * \param
  */
-dvar4_array sqrt(_CONST dvar4_array& m)
+dvar4_array sqrt(const dvar4_array& m)
 {
   dvar4_array tmp;
   tmp.allocate(m);
@@ -30,7 +30,7 @@ dvar4_array sqrt(_CONST dvar4_array& m)
  * Description not yet available.
  * \param
  */
-dvar4_array exp(_CONST dvar4_array& m)
+dvar4_array exp(const dvar4_array& m)
 {
   dvar4_array tmp;
   tmp.allocate(m);
@@ -45,7 +45,7 @@ dvar4_array exp(_CONST dvar4_array& m)
  * Description not yet available.
  * \param
  */
-dvar4_array mfexp(_CONST dvar4_array& m)
+dvar4_array mfexp(const dvar4_array& m)
 {
   dvar4_array tmp;
   tmp.allocate(m);
@@ -60,7 +60,7 @@ dvar4_array mfexp(_CONST dvar4_array& m)
  * Description not yet available.
  * \param
  */
-dvar4_array log(_CONST dvar4_array& m)
+dvar4_array log(const dvar4_array& m)
 {
   dvar4_array tmp;
   tmp.allocate(m);
@@ -75,7 +75,7 @@ dvar4_array log(_CONST dvar4_array& m)
  * Description not yet available.
  * \param
  */
-dvariable sum(_CONST dvar4_array& m)
+dvariable sum(const dvar4_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;

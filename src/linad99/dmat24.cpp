@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
- double mean(_CONST dmatrix& m)
+double mean(const dmatrix& m)
  {
    double tmp;
    tmp=sum(m)/size_count(m);

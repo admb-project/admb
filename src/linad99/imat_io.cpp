@@ -34,7 +34,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& _ostr,_CONST imatrix& z)
+ostream& operator<<(const ostream& _ostr, const imatrix& z)
 {
   ostream& ostr= (ostream&) _ostr;
   int min=z.rowmin();
@@ -51,7 +51,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST imatrix& z)
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& _istr,BOR_CONST imatrix& z)
+istream& operator>>(const istream& _istr,const imatrix& z)
 {
   istream& istr= (istream&) _istr;
   int min=z.rowmin();

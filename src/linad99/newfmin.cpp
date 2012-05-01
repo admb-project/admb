@@ -186,7 +186,7 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
  * Description not yet available.
  * \param
  */
-void fmm::fmin(BOR_CONST double& _f, const dvector & _x,BOR_CONST dvector& _g)
+void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
 {
   if (log_values_switch)
   {

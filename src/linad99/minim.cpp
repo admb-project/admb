@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-double fmm::minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&))
+double fmm::minimize(const independent_variables & x, double (*pf)(const dvar_vector&))
 {  
   int nvar=x.size();
   double f;

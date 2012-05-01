@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvector mfexp(_CONST dvector& v1)
+dvector mfexp(const dvector& v1)
 {
   int mmin=v1.indexmin();
   int mmax=v1.indexmax();
@@ -38,7 +38,7 @@ dvector mfexp(_CONST dvector& v1)
  * Description not yet available.
  * \param
  */
-dvector mfexp(_CONST dvector& v1, CGNU_DOUBLE d)
+dvector mfexp(const dvector& v1, CGNU_DOUBLE d)
 {
   int mmin=v1.indexmin();
   int mmax=v1.indexmax();

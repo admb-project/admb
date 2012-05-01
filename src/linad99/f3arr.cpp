@@ -201,8 +201,8 @@
  * Description not yet available.
  * \param
  */
- dvar3_array::dvar3_array(int sl,int sh,int nrl,int nrh,
-    _CONST ivector& ncl,int nch)
+dvar3_array::dvar3_array(int sl, int sh, int nrl, int nrh,
+  const ivector& ncl, int nch)
  {
    if (sh<sl)
    {
@@ -219,8 +219,8 @@
  * Description not yet available.
  * \param
  */
- void dvar3_array::allocate(int sl,int sh,int nrl,int nrh,
-   _CONST ivector& ncl,int nch)
+void dvar3_array::allocate(int sl, int sh, int nrl, int nrh,
+  const ivector& ncl, int nch)
  {
    if (sh<sl)
    {
@@ -251,8 +251,8 @@
  * Description not yet available.
  * \param
  */
- void dvar3_array::allocate(int sl,int sh,int nrl,int nrh,
-   _CONST ivector& ncl,_CONST ivector& nch)
+void dvar3_array::allocate(int sl, int sh, int nrl, int nrh,
+  const ivector& ncl, const ivector& nch)
  {
    if (sh<sl)
    {
@@ -265,7 +265,7 @@
    if (sl !=ncl.indexmin() || sh !=ncl.indexmax() ||
        sl !=nch.indexmin() || sh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
+     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)" << endl;
      ad_exit(1);
    }
    if ( (shape=new three_array_shape(sl,sh)) == 0)
@@ -289,8 +289,8 @@
  * Description not yet available.
  * \param
  */
- void dvar3_array::allocate(int sl,int sh,int nrl,int nrh,
-   int ncl,_CONST ivector& nch)
+void dvar3_array::allocate(int sl, int sh, int nrl, int nrh,
+  int ncl, const ivector& nch)
  {
    if (sh<sl)
    {
@@ -302,7 +302,7 @@
    #endif
    if (sl !=nch.indexmin() || sh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,int ncl,_CONST ivector& nch)" << endl;
+     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,int ncl, const ivector& nch)" << endl;
      ad_exit(1);
    }
    if ( (shape=new three_array_shape(sl,sh)) == 0)
@@ -326,7 +326,7 @@
  * Description not yet available.
  * \param
  */
- dvar3_array::dvar3_array(_CONST d3_array& m1)
+dvar3_array::dvar3_array(const d3_array& m1)
  {
    allocate(m1);
    for (int i=slicemin(); i<=slicemax(); i++)
@@ -339,10 +339,10 @@
  * Description not yet available.
  * \param
  */
- void dvar3_array::allocate(_CONST d3_array& m1)
+void dvar3_array::allocate(const d3_array& m1)
  {
    #ifdef DIAG
-     myheapcheck("Entering dvar3_array matrix(_CONST d3_array& m1)" );
+     myheapcheck("Entering dvar3_array matrix(const d3_array& m1)" );
    #endif
    if ( (shape=new three_array_shape(m1.indexmin(),m1.indexmax())) == 0)
    {
@@ -365,10 +365,10 @@
  * Description not yet available.
  * \param
  */
- void dvar3_array::allocate(_CONST dvar3_array& m1)
+void dvar3_array::allocate(const dvar3_array& m1)
  {
    #ifdef DIAG
-     myheapcheck("Entering dvar3_array matrix(_CONST d3_array& m1)" );
+     myheapcheck("Entering dvar3_array matrix(const d3_array& m1)" );
    #endif
    if ( (shape=new three_array_shape(m1.slicemin(),m1.slicemax())) == 0)
    {
@@ -391,8 +391,8 @@
  * Description not yet available.
  * \param
  */
- dvar3_array::dvar3_array(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-    ivector& ncl,_CONST ivector& nch)
+dvar3_array::dvar3_array(int sl, int sh, const ivector& nrl, const ivector& nrh,
+  ivector& ncl, const ivector& nch)
  {
    if (sh<sl)
    {
@@ -409,8 +409,8 @@
  * Description not yet available.
  * \param
  */
- void dvar3_array::allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-   _CONST ivector& ncl,_CONST ivector& nch)
+void dvar3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+  const ivector& ncl, const ivector& nch)
  {
    if (sh<sl)
    {
@@ -441,8 +441,8 @@
  * Description not yet available.
  * \param
  */
- dvar3_array::dvar3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
-    int ncl,_CONST ivector& nch)
+dvar3_array::dvar3_array(int sl, int sh, int nrl, const ivector& nrh,
+  int ncl, const ivector& nch)
  {
    if (sh<sl)
    {
@@ -459,8 +459,8 @@
  * Description not yet available.
  * \param
  */
- void dvar3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
-    int ncl,_CONST ivector& nch)
+void dvar3_array::allocate(int sl, int sh, int nrl, const ivector& nrh,
+  int ncl, const ivector& nch)
  {
    if (sh<sl)
    {
@@ -491,8 +491,8 @@
  * Description not yet available.
  * \param
  */
- dvar3_array::dvar3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
-    int ncl,int nch)
+dvar3_array::dvar3_array(int sl, int sh, int nrl, const ivector& nrh,
+  int ncl,int nch)
  {
    if (sh<sl)
    {
@@ -509,7 +509,7 @@
  * Description not yet available.
  * \param
  */
- void dvar3_array::allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
+void dvar3_array::allocate(int sl, int sh, int nrl, const ivector& nrh,
     int ncl,int nch)
  {
    #ifdef DIAG
@@ -536,7 +536,7 @@
  * Description not yet available.
  * \param
  */
- dvar3_array::dvar3_array(_CONST dvar3_array& m2)
+dvar3_array::dvar3_array(const dvar3_array& m2)
  {
    shape=m2.shape;
    if (shape) (shape->ncopies)++;
@@ -547,7 +547,7 @@
  * Description not yet available.
  * \param
  */
- void dvar3_array::shallow_copy(_CONST dvar3_array& m2)
+void dvar3_array::shallow_copy(const dvar3_array& m2)
  {
    shape=m2.shape;
    if (shape) (shape->ncopies)++;
@@ -606,13 +606,13 @@
  * Description not yet available.
  * \param
  */
- void dvar3_array::allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-    int ncl,int nch)
+void dvar3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+  int ncl, int nch)
  {
    if (sl !=nrl.indexmin() || sh !=nrl.indexmax() ||
        sl !=nrh.indexmin() || sh !=nrh.indexmax())
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
+     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)" << endl;
      ad_exit(1);
    }
    if ( (shape=new three_array_shape(sl,sh)) == 0)
@@ -636,8 +636,8 @@
  * Description not yet available.
  * \param
  */
- void dvar3_array::allocate(int sl,int sh,_CONST ivector& nrl,int nrh,
-    int ncl,int nch)
+void dvar3_array::allocate(int sl, int sh, const ivector& nrl, int nrh,
+  int ncl, int nch)
  {
    if (sh<sl)
    {
@@ -646,7 +646,7 @@
    }
    if (sl !=nrl.indexmin() || sh !=nrl.indexmax()) 
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)" << endl;
+     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)" << endl;
      ad_exit(1);
    }
    if ( (shape=new three_array_shape(sl,sh)) == 0)

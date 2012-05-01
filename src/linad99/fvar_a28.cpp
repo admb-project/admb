@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_vector extract_diagonal(_CONST dvar_matrix& m)
+  dvar_vector extract_diagonal(const dvar_matrix& m)
   {
     if ( (m.rowmin()!=m.colmin()) || (m.rowmax()!=m.colmax()))
     {

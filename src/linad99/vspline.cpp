@@ -15,12 +15,12 @@
 dvar_vector spline(const dvector &x,const dvar_vector&y,double yp1,double ypn);
 dvar_vector spline(const dvector &x,const dvar_vector&y,dvariable yp1,
   dvariable ypn);
-dvariable spline_cubic_val2(int n, _CONST dvector& t, const prevariable tval,
-  _CONST dvar_vector& y, _CONST dvar_vector& ypp);
-dvariable spline_cubic_val(int n, _CONST dvector& t, double tval,
-  _CONST dvar_vector& y, _CONST dvar_vector& ypp);
+dvariable spline_cubic_val2(int n, const dvector& t, const prevariable tval,
+  const dvar_vector& y, const dvar_vector& ypp);
+dvariable spline_cubic_val(int n, const dvector& t, double tval,
+  const dvar_vector& y, const dvar_vector& ypp);
 
-dvar_vector spline_cubic_set (int n,_CONST dvector& t,_CONST dvar_vector& y,
+dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
   int ibcbeg, dvariable ybcbeg, int ibcend, dvariable ybcend );
 
 /** \ingroup cub_spline
@@ -273,8 +273,8 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
  * \param ypp the second derivatives of the spline at the knots
  * \return the value of the spline at tval
 */
-dvariable spline_cubic_val(int n, _CONST dvector& _t, double tval,
-    _CONST dvar_vector& _y, _CONST dvar_vector& _ypp)
+dvariable spline_cubic_val(int n,  const dvector& _t, double tval,
+  const dvar_vector& _y, const dvar_vector& _ypp)
 //
 //  Purpose:
 //
@@ -397,8 +397,8 @@ dvariable spline_cubic_val(int n, _CONST dvector& _t, double tval,
  * \param ypp the second derivatives of the spline at the knots
  * \return the value of the spline at tval
 */
-dvariable spline_cubic_val2(int n, _CONST dvector& _t, const prevariable tval,
-  _CONST dvar_vector& _y, _CONST dvar_vector& _ypp)
+dvariable spline_cubic_val2(int n, const dvector& _t, const prevariable tval,
+  const dvar_vector& _y, const dvar_vector& _ypp)
 //
 //  Purpose:
 //
@@ -517,7 +517,7 @@ dvariable spline_cubic_val2(int n, _CONST dvector& _t, const prevariable tval,
  * \param _b the right hand side
  * \return the solution of the linear system
  */
-dvar_vector d3_np_fs ( int n, _CONST dvar_vector& _a, _CONST dvar_vector& _b)
+dvar_vector d3_np_fs ( int n, const dvar_vector& _a, const dvar_vector& _b)
 //
 //  Purpose:
 //
@@ -630,7 +630,7 @@ dvar_vector d3_np_fs ( int n, _CONST dvar_vector& _a, _CONST dvar_vector& _b)
  * \param ybcend the values to be used in the boundary conditions
  * \return the second derivatives of the cubic spline
  */
-dvar_vector spline_cubic_set (int n,_CONST dvector& t,_CONST dvar_vector& y,
+dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
   int ibcbeg, dvariable ybcbeg, int ibcend, dvariable ybcend )
 //
 //  Purpose:

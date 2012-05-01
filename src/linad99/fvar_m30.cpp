@@ -32,7 +32,7 @@
  * Description not yet available.
  * \param
  */
-dvar_matrix operator / (_CONST dvar_matrix& m, CGNU_DOUBLE e)
+dvar_matrix operator/(const dvar_matrix& m, CGNU_DOUBLE e)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
@@ -47,7 +47,7 @@ dvar_matrix operator / (_CONST dvar_matrix& m, CGNU_DOUBLE e)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator / (_CONST dvar_matrix& m,_CONST prevariable& e)
+dvar_matrix operator/(const dvar_matrix& m, const prevariable& e)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
@@ -62,7 +62,7 @@ dvar_matrix operator / (_CONST dvar_matrix& m,_CONST prevariable& e)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator / (_CONST dmatrix& m,_CONST prevariable& e)
+dvar_matrix operator/(const dmatrix& m, const prevariable& e)
 {
   dvar_matrix tmp;
   tmp.allocate(m.indexmin(),m.indexmax());
@@ -77,7 +77,7 @@ dvar_matrix operator / (_CONST dmatrix& m,_CONST prevariable& e)
  * Description not yet available.
  * \param
  */
-dvar_matrix symmetrize(_CONST dvar_matrix& m)
+dvar_matrix symmetrize(const dvar_matrix& m)
 {
   if (m.rowmin() != m.colmin() || m.rowmax() != m.colmax() )
   {

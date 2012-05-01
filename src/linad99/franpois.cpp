@@ -14,8 +14,7 @@
  * Description not yet available.
  * \param
  */
-  void dvar_vector::fill_randpoisson( double lambda,
-    BOR_CONST random_number_generator& rng)
+void dvar_vector::fill_randpoisson(double lambda, const random_number_generator& rng)
   {
     for (int i=indexmin(); i<=indexmax(); i++)
     {

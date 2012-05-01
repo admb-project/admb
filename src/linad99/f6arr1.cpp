@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   dvar6_array operator / (_CONST d6_array& m,_CONST prevariable& d)
+dvar6_array operator/(const d6_array& m, const prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar6_array tmp;
@@ -31,7 +31,7 @@
  * Description not yet available.
  * \param
  */
-   dvar6_array operator / (_CONST dvar6_array& m, CGNU_DOUBLE d)
+dvar6_array operator/(const dvar6_array& m, CGNU_DOUBLE d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar6_array tmp;
@@ -48,7 +48,7 @@
  * Description not yet available.
  * \param
  */
-   dvar6_array operator / (_CONST dvar6_array& m,_CONST prevariable& d)
+dvar6_array operator/(const dvar6_array& m, const prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar6_array tmp;
@@ -65,7 +65,7 @@
  * Description not yet available.
  * \param
  */
-   void dvar6_array::operator /=(_CONST prevariable& d)
+void dvar6_array::operator/=(const prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
@@ -79,7 +79,7 @@
  * Description not yet available.
  * \param
  */
-   void dvar6_array::operator /=(_CONST double& d)
+void dvar6_array::operator/=(const double& d)
    {
      RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
@@ -93,7 +93,7 @@
  * Description not yet available.
  * \param
  */
-dvariable sum(_CONST dvar6_array& m)
+dvariable sum(const dvar6_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;

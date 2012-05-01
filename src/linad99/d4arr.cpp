@@ -43,7 +43,7 @@ four_array_shape::four_array_shape(int hsl,int hsu) //,int sl,int su,int rl,
  * Description not yet available.
  * \param
  */
-double sum(_CONST d4_array& m)
+double sum(const d4_array& m)
 {
   double tmp=0.;
   for (int i=m.indexmin();i<=m.indexmax();i++)
@@ -152,14 +152,14 @@ double sum(_CONST d4_array& m)
  * Description not yet available.
  * \param
  */
- d4_array& d4_array::operator =  (_CONST d4_array& m)
+d4_array& d4_array::operator=(const d4_array& m)
  {
    int mmin=hslicemin();
    int mmax=hslicemax();
    if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
    { 
      cerr << "Incompatible bounds in"
-      " d4_array& d4_array:: operator =  (_CONST d4_array& m)"
+      " d4_array& d4_array:: operator =  (const d4_array& m)"
       << endl;
      ad_exit(1);
     }
@@ -174,7 +174,7 @@ double sum(_CONST d4_array& m)
  * Description not yet available.
  * \param
  */
- void d4_array::allocate(_CONST d4_array& m1)
+void d4_array::allocate(const d4_array& m1)
  {
    if ( (shape=new four_array_shape(m1.hslicemin(),m1.hslicemax()))
        == 0)
@@ -277,7 +277,7 @@ double sum(_CONST d4_array& m)
  * Description not yet available.
  * \param
  */
-    _CONST d3_array& d4_array::operator ( ) (int i) _CONST
+const d3_array& d4_array::operator()(int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
@@ -293,7 +293,7 @@ double sum(_CONST d4_array& m)
  * Description not yet available.
  * \param
  */
-    _CONST d3_array& d4_array::operator [] (int i) _CONST
+const d3_array& d4_array::operator[](int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
@@ -309,7 +309,7 @@ double sum(_CONST d4_array& m)
  * Description not yet available.
  * \param
  */
-    _CONST dmatrix& d4_array::operator ( ) (int i ,int j) _CONST
+const dmatrix& d4_array::operator()(int i, int j) const
     {
       #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
@@ -325,7 +325,7 @@ double sum(_CONST d4_array& m)
  * Description not yet available.
  * \param
  */
-    _CONST dvector& d4_array::operator ( ) (int i,int j,int k) _CONST
+const dvector& d4_array::operator()(int i, int j, int k) const
     {
       #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
@@ -341,7 +341,7 @@ double sum(_CONST d4_array& m)
  * Description not yet available.
  * \param
  */
-    _CONST double& d4_array::operator ( ) (int i,int j,int k,int l) _CONST
+const double& d4_array::operator()(int i, int j, int k, int l) const
     {
       #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
@@ -386,7 +386,7 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * \param
  */
  void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
-   int nrh,_CONST ivector& ncl,_CONST ivector& nch)
+   int nrh, const ivector& ncl, const ivector& nch)
  {
    if ( (shape=new four_array_shape (hsl,hsu)) == 0)
    {
@@ -410,8 +410,8 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
- void d4_array::allocate(int hsl,int hsu,int sl,int sh,_CONST ivector& nrl,
-   _CONST ivector& nrh,_CONST ivector& ncl,_CONST ivector& nch)
+void d4_array::allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
+                        const ivector& nrh, const ivector& ncl, const ivector& nch)
  {
    if ( (shape=new four_array_shape(hsl,hsu)) == 0)
    {
@@ -435,8 +435,8 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
- d4_array::d4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch)
+d4_array::d4_array(int hsl, int hsu, int sl, const ivector& sh,
+                   int nrl, const imatrix& nrh, int ncl, int nch)
  {
    allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
  }
@@ -445,8 +445,8 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
- void d4_array::allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch)
+void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh,
+                        int nrl, const imatrix& nrh, int ncl, int nch)
  {
    //int rmin=nrh.rowmin();
    //int cmin=nrh(rmin).indexmin();
@@ -508,8 +508,8 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
-d4_array::d4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-  _CONST imatrix& nrh,int ncl,_CONST i3_array& nch)
+d4_array::d4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
+                   const imatrix& nrh, int ncl, const i3_array& nch)
 {
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
 }
@@ -518,8 +518,8 @@ d4_array::d4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
  * Description not yet available.
  * \param
  */
-void d4_array::allocate(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-  _CONST imatrix& nrh,int ncl,_CONST i3_array& nch)
+void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh, int nrl,
+                        const imatrix& nrh, int ncl, const i3_array& nch)
 {
   //int rmin=nrh.rowmin();
   //int cmin=nrh(rmin).indexmin();

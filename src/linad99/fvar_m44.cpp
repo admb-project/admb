@@ -16,7 +16,7 @@ void dfmattrans(void);
  * Description not yet available.
  * \param
  */
-dvar_matrix trans(_CONST dvar_matrix& m1)
+dvar_matrix trans(const dvar_matrix& m1)
 {
   int rmin=m1.indexmin();
   int rmax=m1.indexmax();

@@ -77,7 +77,7 @@ void imatrix::rowshift(int min )
  * Description not yet available.
  * \param
  */
- imatrix::imatrix(int nrl,int nrh,BOR_CONST ivector& iv)
+imatrix::imatrix(int nrl, int nrh, const ivector& iv)
  {
    allocate(nrl,nrh,iv);
  }
@@ -86,7 +86,7 @@ void imatrix::rowshift(int min )
  * Description not yet available.
  * \param
  */
- void imatrix::allocate(int nrl,int nrh,BOR_CONST ivector& iv)
+void imatrix::allocate(int nrl, int nrh, const ivector& iv)
  {
    if (nrl>nrh)
    {
@@ -200,7 +200,7 @@ void imatrix::rowshift(int min )
      if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
        nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
-       cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
+       cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
        ad_exit(1);
      }
      m -= rowmin();
@@ -233,7 +233,7 @@ void imatrix::rowshift(int min )
      }
      if (nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
-       cerr << "Incompatible array bounds in imatrix::allocate(int nrl,int nrh,int ncl,_CONST ivector& nch)\n";
+       cerr << "Incompatible array bounds in imatrix::allocate(int nrl,int nrh,int ncl, const ivector& nch)\n";
        ad_exit(1);
      }
      if ( (shape = new mat_shapex(m))== 0)
@@ -253,7 +253,7 @@ void imatrix::rowshift(int min )
  * Description not yet available.
  * \param
  */
- imatrix::imatrix(_CONST imatrix& m2)
+imatrix::imatrix(const imatrix& m2)
  {
    index_min=m2.index_min;
    index_max=m2.index_max;
@@ -274,7 +274,7 @@ void imatrix::rowshift(int min )
  * Description not yet available.
  * \param
  */
- void imatrix::shallow_copy(_CONST imatrix& m2)
+void imatrix::shallow_copy(const imatrix& m2)
  {
    index_min=m2.index_min;
    index_max=m2.index_max;
@@ -295,7 +295,7 @@ void imatrix::rowshift(int min )
  * Description not yet available.
  * \param
  */
- imatrix::imatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)
+imatrix::imatrix(int nrl, int nrh, const ivector& ncl, const ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
@@ -304,7 +304,7 @@ void imatrix::rowshift(int min )
  * Description not yet available.
  * \param
  */
- imatrix::imatrix(int nrl,int nrh,int ncl,_CONST ivector& nch)
+imatrix::imatrix(int nrl, int nrh, int ncl, const ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }

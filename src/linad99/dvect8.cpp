@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
- dvector::dvector(_CONST ivector& u)
+dvector::dvector(const ivector& u)
  {
    allocate(u.indexmin(),u.indexmax());
    for ( int i=indexmin(); i<=indexmax(); i++)
@@ -27,7 +27,7 @@
  * Description not yet available.
  * \param
  */
- dvector::dvector(_CONST lvector& u)
+dvector::dvector(const lvector& u)
  {
    allocate(u.indexmin(),u.indexmax());
    for ( int i=indexmin(); i<=indexmax(); i++)
@@ -40,7 +40,7 @@
  * Description not yet available.
  * \param
  */
- dvector dvector::operator ()(_CONST ivector& u)
+dvector dvector::operator ()(const ivector& u)
  {
    dvector tmp(u.indexmin(),u.indexmax());
 
@@ -55,7 +55,7 @@
  * Description not yet available.
  * \param
  */
- dvector dvector::operator ()(_CONST lvector& u)
+dvector dvector::operator ()(const lvector& u)
  {
    dvector tmp(u.indexmin(),u.indexmax());
 

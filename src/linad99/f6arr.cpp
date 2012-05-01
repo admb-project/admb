@@ -98,14 +98,14 @@
  * Description not yet available.
  * \param
  */
- dvar6_array& dvar6_array::operator =  (_CONST dvar6_array& m)
+ dvar6_array& dvar6_array::operator=(const dvar6_array& m)
  {
    int mmin=indexmin();
    int mmax=indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
    { 
      cerr << "Incompatible bounds in"
-      " dvar4_array& dvar4_array:: operator =  (_CONST dvar4_array& m)"
+      " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
       << endl;
      ad_exit(1);
     }
@@ -120,14 +120,14 @@
  * Description not yet available.
  * \param
  */
- dvar6_array& dvar6_array::operator =  (_CONST d6_array& m)
+ dvar6_array& dvar6_array::operator=(const d6_array& m)
  {
    int mmin=indexmin();
    int mmax=indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
    { 
      cerr << "Incompatible bounds in"
-      " dvar6_array& dvar6_array:: operator =  (_CONST d6_array& m)"
+      " dvar6_array& dvar6_array:: operator=(const d6_array& m)"
       << endl;
      ad_exit(1);
     }
@@ -142,7 +142,7 @@
  * Description not yet available.
  * \param
  */
- void dvar6_array::allocate(_CONST dvar6_array& m1)
+ void dvar6_array::allocate(const dvar6_array& m1)
  {
    if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
        == 0)
@@ -166,7 +166,7 @@
  * Description not yet available.
  * \param
  */
- void dvar6_array::allocate(_CONST d6_array& m1)
+ void dvar6_array::allocate(const d6_array& m1)
  {
    if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
        == 0)
@@ -300,7 +300,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST dvar5_array& dvar6_array::operator ( ) (int i) _CONST 
+const dvar5_array& dvar6_array::operator()(int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -316,7 +316,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST dvar5_array& dvar6_array::operator [] (int i) _CONST 
+const dvar5_array& dvar6_array::operator[](int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -332,7 +332,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST dvar4_array& dvar6_array::operator ( ) (int i ,int j) _CONST 
+const dvar4_array& dvar6_array::operator()(int i ,int j) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -348,7 +348,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST dvar3_array& dvar6_array::operator ( ) (int i,int j,int k) _CONST 
+const dvar3_array& dvar6_array::operator()(int i, int j, int k) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -364,7 +364,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST dvar_matrix& dvar6_array::operator ( ) (int i,int j,int k,int l) _CONST 
+const dvar_matrix& dvar6_array::operator()(int i, int j, int k, int l) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -380,7 +380,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST dvar_vector& dvar6_array::operator ( ) (int i,int j,int k,int l,int m) _CONST
+const dvar_vector& dvar6_array::operator()(int i, int j, int k, int l, int m) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -396,8 +396,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST prevariable dvar6_array::operator ( ) (int i,int j,int k,int l,int m,  
-      int n) _CONST
+const prevariable dvar6_array::operator()(int i, int j, int k, int l, int m, int n) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())

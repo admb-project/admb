@@ -29,7 +29,7 @@ void reset_gs_stack(long int);
  * Description not yet available.
  * \param
  */
-dvar_vector_position::dvar_vector_position(_CONST dvar_vector& v)
+dvar_vector_position::dvar_vector_position(const dvar_vector& v)
 {
   min=v.indexmin();
   max=v.indexmax();
@@ -40,7 +40,7 @@ dvar_vector_position::dvar_vector_position(_CONST dvar_vector& v)
  * Description not yet available.
  * \param
  */
-dvector_position::dvector_position(_CONST dvector& vv)
+dvector_position::dvector_position(const dvector& vv)
 {
   min=vv.indexmin();
   max=vv.indexmax();
@@ -51,7 +51,7 @@ dvector_position::dvector_position(_CONST dvector& vv)
  * Description not yet available.
  * \param
  */
-dvar_vector_position::dvar_vector_position(BOR_CONST dvar_vector_position& dvp)
+dvar_vector_position::dvar_vector_position(const dvar_vector_position& dvp)
 {
   min=dvp.min;
   max=dvp.max;
@@ -62,7 +62,7 @@ dvar_vector_position::dvar_vector_position(BOR_CONST dvar_vector_position& dvp)
  * Description not yet available.
  * \param
  */
-dvector_position::dvector_position(BOR_CONST dvector_position& dvp)
+dvector_position::dvector_position(const dvector_position& dvp)
 {
   min=dvp.min;
   max=dvp.max;
@@ -95,7 +95,7 @@ dvector_position::dvector_position(void)
  * Description not yet available.
  * \param
  */
-ivector_position::ivector_position(_CONST ivector& iv)
+ivector_position::ivector_position(const ivector& iv)
 {
   min=iv.indexmin();
   max=iv.indexmax();
@@ -106,7 +106,7 @@ ivector_position::ivector_position(_CONST ivector& iv)
  * Description not yet available.
  * \param
  */
-ivector_position::ivector_position(BOR_CONST ivector_position& dvp)
+ivector_position::ivector_position(const ivector_position& dvp)
 {
   min=dvp.min;
   max=dvp.max;
@@ -128,12 +128,12 @@ ivector_position::ivector_position(void)
  * Description not yet available.
  * \param
  */
-double& dvar_vector_position::operator () (BOR_CONST int& i)
+double& dvar_vector_position::operator()(const int& i)
 {
   if (i<min||i>max)
   {
     cerr << "Error -- Index out of bounds in\n"
-     "double_and_int& dvar_vector_position::operator () (BOR_CONST int& i)"
+     "double_and_int& dvar_vector_position::operator()(const int& i)"
      << endl;
      ad_exit(1);
    }
@@ -182,7 +182,7 @@ dvector_position dmatrix_position::operator () (int i)
  * Description not yet available.
  * \param
  */
-dvar_matrix_position::dvar_matrix_position(_CONST dvar_matrix& m,int x)
+dvar_matrix_position::dvar_matrix_position(const dvar_matrix& m,int x)
   : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
 
@@ -210,7 +210,7 @@ dvar_matrix_position::dvar_matrix_position(_CONST dvar_matrix& m,int x)
  * Description not yet available.
  * \param
  */
-dmatrix_position::dmatrix_position(_CONST dmatrix& m)
+dmatrix_position::dmatrix_position(const dmatrix& m)
   : lb(m.rowmin(),m.rowmax()), ub(m.rowmin(),m.rowmax()),
   ptr(m.rowmin(),m.rowmax())
 {
@@ -262,7 +262,7 @@ dmatrix_position::dmatrix_position(int min,int max)
  * Description not yet available.
  * \param
  */
-dvar_matrix_position::dvar_matrix_position(BOR_CONST dvar_matrix_position& p)
+dvar_matrix_position::dvar_matrix_position(const dvar_matrix_position& p)
   : lb(p.row_min,p.row_max), ub(p.row_min,p.row_max),
     ptr(p.row_min,p.row_max)
 {
@@ -278,7 +278,7 @@ dvar_matrix_position::dvar_matrix_position(BOR_CONST dvar_matrix_position& p)
  * Description not yet available.
  * \param
  */
-dmatrix_position::dmatrix_position(BOR_CONST dmatrix_position& p)
+dmatrix_position::dmatrix_position(const dmatrix_position& p)
   : lb(p.row_min,p.row_max), ub(p.row_min,p.row_max),
     ptr(p.row_min,p.row_max)
 {

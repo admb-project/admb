@@ -69,7 +69,7 @@
  * Description not yet available.
  * \param
  */
-void jacobcalc(int nvar,BOR_CONST ofstream& ofs)
+void jacobcalc(int nvar, const ofstream& ofs)
 {
   gradient_structure::jacobcalc(nvar,ofs);
 }
@@ -78,7 +78,7 @@ void jacobcalc(int nvar,BOR_CONST ofstream& ofs)
  * Description not yet available.
  * \param
  */
-void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& _ofs)
+void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
 {
   ADUNCONST(ofstream,ofs)
   dvector jac(1,nvar);

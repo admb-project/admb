@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  ivector operator + (int v,_CONST ivector& w)
+ivector operator+(int v, const ivector& w)
   {
      int mmin=w.indexmin();
      int mmax=w.indexmax();
@@ -30,7 +30,7 @@
  * Description not yet available.
  * \param
  */
-  ivector operator - (int v,_CONST ivector& w)
+ivector operator-(int v, const ivector& w)
   {
      int mmin=w.indexmin();
      int mmax=w.indexmax();
@@ -46,7 +46,7 @@
  * Description not yet available.
  * \param
  */
-  ivector operator + (_CONST ivector& v,_CONST ivector& w)
+ivector operator+(const ivector& v, const ivector& w)
   {
      int mmin=v.indexmin();
      int mmax=v.indexmax();
@@ -62,7 +62,7 @@
  * Description not yet available.
  * \param
  */
-  ivector operator - (_CONST ivector& v,_CONST ivector& w)
+ivector operator-(const ivector& v, const ivector& w)
   {
      int mmin=v.indexmin();
      int mmax=v.indexmax();
@@ -78,7 +78,7 @@
  * Description not yet available.
  * \param
  */
-  ivector operator + (_CONST ivector& v,int w)
+ivector operator+(const ivector& v, int w)
   {
      int mmin=v.indexmin();
      int mmax=v.indexmax();
@@ -94,7 +94,7 @@
  * Description not yet available.
  * \param
  */
-  ivector operator - (_CONST ivector& v,int w)
+ivector operator-(const ivector& v, int w)
   {
      int mmin=v.indexmin();
      int mmax=v.indexmax();

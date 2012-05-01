@@ -41,7 +41,7 @@
  * Description not yet available.
  * \param
  */
- _CONST ivector& imatrix::operator [] (int i) _CONST 
+const ivector& imatrix::operator[](int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i<rowmin())

@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  ivector colsum(_CONST imatrix&v)
+ivector colsum(const imatrix &v)
   {
     int cmin=v.colmin();
     int cmax=v.colmax();
@@ -37,7 +37,7 @@
  * Description not yet available.
  * \param
  */
-  ivector rowsum(_CONST imatrix&v)
+ivector rowsum(const imatrix &v)
   {
     int rmin=v.rowmin();
     int rmax=v.rowmax();

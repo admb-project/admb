@@ -27,7 +27,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_vector& dvar_vector::operator *= ( _CONST prevariable& x)
+dvar_vector& dvar_vector::operator*=(const prevariable& x)
   {
     for (int i=indexmin(); i<=indexmax(); i++)
     {

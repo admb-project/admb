@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_vector VEC(_CONST dvar_matrix& _m)
+dvar_vector VEC(const dvar_matrix& _m)
   {
     dvar_matrix& m= (dvar_matrix&) _m;
     int i;
@@ -41,7 +41,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_matrix MAT(_CONST dvar_vector& v, int n,int m)
+dvar_matrix MAT(const dvar_vector& v, int n, int m)
   {
     dvar_matrix tmp(1,n,1,m);
     int mmin=v.indexmin();

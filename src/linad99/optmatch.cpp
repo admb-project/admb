@@ -57,7 +57,7 @@
  * Description not yet available.
  * \param
  */
- int option_match(char * _s, const char * string, BOR_CONST int& _nopt)
+int option_match(char *_s, const char *string, const int& _nopt)
  {
    adstring ss=_s;
    char * s=(char*)ss;
@@ -92,7 +92,7 @@
  * Description not yet available.
  * \param
  */
- int option_match(int argc,char * argv[],const char * string, BOR_CONST int& _nopt)
+int option_match(int argc, char *argv[],const char *string, const int& _nopt)
  {
    int& nopt = (int&) _nopt;
    int rval=-1;

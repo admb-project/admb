@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dmatrix symmetrize(_CONST dmatrix& m)
+dmatrix symmetrize(const dmatrix& m)
 {
   if (m.rowmin() != m.colmin() || m.rowmax() != m.colmax() )
   {

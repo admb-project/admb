@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator - ( CGNU_DOUBLE d,_CONST dvar3_array& m2)
+dvar3_array operator-(CGNU_DOUBLE d, const dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -31,7 +31,7 @@
  * Description not yet available.
  * \param
  */
-   dvariable mean(_CONST dvar3_array& m)
+dvariable mean(const dvar3_array& m)
    {
      dvariable tmp;
      tmp=sum(m)/double(size_count(m));

@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvariable trace(_CONST dvar_matrix& M)
+dvariable trace(const dvar_matrix& M)
 {
   dvariable tmp;
   tmp=0.0;

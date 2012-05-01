@@ -185,7 +185,7 @@ double randn(long int& n)
  * Description not yet available.
  * \param
  */
-  void dmatrix::colfill_randu(BOR_CONST int&j,long int&n)
+void dmatrix::colfill_randu(const int &j, long int &n)
   {
     long int nn;
     nn=n;
@@ -200,7 +200,7 @@ double randn(long int& n)
  * Description not yet available.
  * \param
  */
-  void dmatrix::rowfill_randu(BOR_CONST int& i,long int& n)
+void dmatrix::rowfill_randu(const int& i, long int& n)
   {
     long int nn;
     nn=n;
@@ -293,7 +293,7 @@ double randn(long int& n)
  * Description not yet available.
  * \param
  */
-  void dmatrix::colfill_randn(BOR_CONST int&j,long int&n)
+void dmatrix::colfill_randn(const int &j,long int &n)
   {
     long int nn;
     nn=n;
@@ -308,7 +308,7 @@ double randn(long int& n)
  * Description not yet available.
  * \param
  */
-  void dmatrix::rowfill_randn(BOR_CONST int& i,long int& n)
+void dmatrix::rowfill_randn(const int& i, long int& n)
   {
     long int nn;
     nn=n;

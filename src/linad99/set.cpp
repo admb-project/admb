@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-void set_value(const prevariable& _x,_CONST dvar_vector& v, const int& _ii)
+void set_value(const prevariable& _x, const dvar_vector& v, const int& _ii)
 {
   int& ii = (int&) _ii;
   prevariable& x= (prevariable&)( _x);
@@ -76,7 +76,7 @@ void set_value_inv(const prevariable& x,const dvector& _v,const int& _ii,
  * Description not yet available.
  * \param
  */
-void set_value(const prevariable& _u,_CONST dvar_vector& x,const int& _ii, 
+void set_value(const prevariable& _u, const dvar_vector& x, const int& _ii, 
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax,const dvariable& _fpen)
 {
   int& ii = (int&) _ii;
@@ -107,7 +107,7 @@ void set_value(const prevariable& _u,_CONST dvar_vector& x,const int& _ii,
  * Description not yet available.
  * \param
  */
-void set_value(const dvar_vector& x,_CONST dvar_vector& v, const int& _ii)
+void set_value(const dvar_vector& x, const dvar_vector& v, const int& _ii)
 {
   int& ii = (int&) _ii;
   if (!(!(x)))
@@ -144,7 +144,7 @@ void set_value(const dvar_vector& _x,const dvar_vector& v, const int& _ii,double
  * Description not yet available.
  * \param
  */
-void set_value(const dvar_vector& x,_CONST dvar_vector& v, const int& _ii,
+void set_value(const dvar_vector& x, const dvar_vector& v, const int& _ii,
   double fmin,double fmax,const dvariable& fpen)
 {
   int& ii = (int&) _ii;
@@ -213,7 +213,7 @@ void set_value(const dvar_vector& _x,const dvar_vector& v,const int& _ii,
  * Description not yet available.
  * \param
  */
-void set_value(const dvar_matrix& x,_CONST dvar_vector& v, const int& _ii)
+void set_value(const dvar_matrix& x, const dvar_vector& v, const int& _ii)
 {
   int& ii = (int&) _ii;
   if (!(!(x)))
@@ -250,7 +250,7 @@ void set_value(const dvar_matrix& x,const dvar_vector& v,const int& _ii,
  * Description not yet available.
  * \param
  */
-void set_value(const dvar_matrix& x,_CONST dvar_vector& v, const int& ii, 
+void set_value(const dvar_matrix& x, const dvar_vector& v, const int& ii, 
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax,const dvariable& fpen)
 {
   if (!(!(x)))
@@ -286,7 +286,7 @@ void set_value(const dvar_matrix& x,const dvar_vector& v, const int& ii,
  * Description not yet available.
  * \param
  */
-void set_value(dvar3_array& x,_CONST dvar_vector& v, const int& ii,
+void set_value(dvar3_array& x, const dvar_vector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax,const dvariable& fpen)
 {
   if (!(!(x)))
@@ -304,7 +304,7 @@ void set_value(dvar3_array& x,_CONST dvar_vector& v, const int& ii,
  * Description not yet available.
  * \param
  */
-void set_value_partial(const dvar_matrix& x,_CONST dvar_vector& v, const int& _ii, int n)
+void set_value_partial(const dvar_matrix& x, const dvar_vector& v, const int& _ii, int n)
 {
   int mmin=x.indexmin();
   int mmax=x.indexmax();
@@ -318,7 +318,7 @@ void set_value_partial(const dvar_matrix& x,_CONST dvar_vector& v, const int& _i
  * Description not yet available.
  * \param
  */
-void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& _ii, int n)
+void set_value_partial(const dvar_vector& x, const dvar_vector& v, const int& _ii, int n)
 {
   int& ii = (int&) _ii;
   if (!(!(x)))
@@ -328,7 +328,7 @@ void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& _i
     #ifdef SAFE_ARRAYS
       if (max >x.indexmax())
       {
-        cerr << "index out of range in set_value_patial(_CONST dvar_vector&, ... "
+        cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
              << endl;
       }
     #endif
@@ -343,7 +343,7 @@ void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& _i
  * Description not yet available.
  * \param
  */
-void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& _ii, int n,
+void set_value_partial(const dvar_vector& x, const dvar_vector& v, const int& _ii, int n,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax,const dvariable& fpen)
 {
   int& ii = (int&) _ii;
@@ -354,7 +354,7 @@ void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& _i
     #ifdef SAFE_ARRAYS
       if (max >x.indexmax())
       {
-        cerr << "index out of range in set_value_patial(_CONST dvar_vector&, ... "
+        cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
              << endl;
       }
     #endif
@@ -369,7 +369,7 @@ void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& _i
  * Description not yet available.
  * \param
  */
-void set_value(dvar3_array& x,_CONST dvar_vector& v, const int& ii)
+void set_value(dvar3_array& x, const dvar_vector& v, const int& ii)
 {
   if (!(!(x)))
   {

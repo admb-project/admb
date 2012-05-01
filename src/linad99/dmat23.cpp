@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
- dmatrix outer_prod(_CONST dvector& v1,_CONST dvector& v2 )
+dmatrix outer_prod(const dvector& v1, const dvector& v2)
  {
    dmatrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
 

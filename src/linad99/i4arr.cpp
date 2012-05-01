@@ -92,8 +92,8 @@ void i4_array::allocate(int hsl,int hsu)
  * Description not yet available.
  * \param
  */
-i4_array::i4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-    _CONST imatrix& nrh,int ncl,_CONST i3_array& nch)
+i4_array::i4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
+  const imatrix& nrh, int ncl, const i3_array& nch)
 {
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
 }
@@ -170,7 +170,7 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
- i4_array::i4_array(_CONST i4_array& m2)
+i4_array::i4_array(const i4_array& m2)
  {
    if (m2.shape)
    {
@@ -282,7 +282,7 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
-    _CONST i3_array& i4_array::operator ( ) (int i)   _CONST 
+const i3_array& i4_array::operator()(int i) const
     {
 #     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
@@ -299,7 +299,7 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
-    _CONST i3_array& i4_array::operator [] (int i) _CONST
+const i3_array& i4_array::operator[](int i) const
     {
 #     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
@@ -316,7 +316,7 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
-     _CONST imatrix& i4_array::operator ( ) (int i ,int j) _CONST
+const imatrix& i4_array::operator()(int i, int j) const
     {
       return ((*this)(i))(j);
     }
@@ -325,7 +325,7 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
-    _CONST ivector& i4_array::operator ( ) (int i,int j,int k) _CONST
+const ivector& i4_array::operator()(int i, int j, int k) const
     {
       return (((*this)(i,j))(k));
     }
@@ -334,7 +334,7 @@ void i4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
-    _CONST int& i4_array::operator ( ) (int i,int j,int k,int l) _CONST
+const int& i4_array::operator()(int i, int j, int k, int l) const
     {
       return ( ((*this)(i,j,k))(l));
     }

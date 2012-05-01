@@ -26,7 +26,7 @@ double dmax(double, double);
  * Description not yet available.
  * \param
  */
-  dvariable dfatan1( dvariable x, double fmin, double fmax,BOR_CONST prevariable&  _fpen)
+dvariable dfatan1(dvariable x, double fmin, double fmax, const prevariable&  _fpen)
 {
   prevariable&  fpen=(prevariable&)  _fpen;
   dvariable t;

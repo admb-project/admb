@@ -87,14 +87,14 @@
  * Description not yet available.
  * \param
  */
- d7_array& d7_array::operator =  (_CONST d7_array& m)
+d7_array& d7_array::operator=(const d7_array& m)
  {
    int mmin=indexmin();
    int mmax=indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
    { 
      cerr << "Incompatible bounds in"
-      " d7_array& d7_array:: operator =  (_CONST d7_array& m)"
+      " d7_array& d7_array:: operator =  (const d7_array& m)"
       << endl;
      ad_exit(1);
     }
@@ -109,7 +109,7 @@
  * Description not yet available.
  * \param
  */
- void d7_array::allocate(_CONST d7_array& m1)
+void d7_array::allocate(const d7_array& m1)
  {
    if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
        == 0)
@@ -258,7 +258,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST d6_array& d7_array::operator ( ) (int i) _CONST 
+const d6_array& d7_array::operator()(int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -275,7 +275,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST d6_array& d7_array::operator [] (int i) _CONST 
+const d6_array& d7_array::operator[](int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -291,7 +291,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST d5_array& d7_array::operator ( ) (int i ,int j) _CONST 
+const d5_array& d7_array::operator()(int i,int j) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -307,7 +307,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST d4_array& d7_array::operator ( ) (int i,int j,int k) _CONST 
+const d4_array& d7_array::operator()(int i, int j, int k) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -323,7 +323,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST d3_array& d7_array::operator ( ) (int i,int j,int k,int l) _CONST 
+const d3_array& d7_array::operator()(int i, int j, int k, int l) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -339,7 +339,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST dmatrix& d7_array::operator ( ) (int i,int j,int k,int l,int m) _CONST 
+const dmatrix& d7_array::operator()(int i, int j, int k, int l, int m) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -355,7 +355,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST dvector& d7_array::operator ( ) (int i,int j,int k,int l,int m,int n) _CONST 
+const dvector& d7_array::operator()(int i, int j, int k, int l, int m, int n) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -371,7 +371,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST double& d7_array::operator ( ) (int i,int j,int k,int l,int m,int n,int _p) _CONST 
+const double& d7_array::operator()(int i, int j, int k, int l, int m, int n, int _p) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())

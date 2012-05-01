@@ -107,7 +107,7 @@
  * Description not yet available.
  * \param
  */
-dvariable sum(_CONST dvar3_array& m)
+dvariable sum(const dvar3_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;

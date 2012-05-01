@@ -16,7 +16,7 @@ void dv_xminuseq(void);
  * Description not yet available.
  * \param
  */
- dvar_vector& dvar_vector::operator-= (_CONST prevariable& d)
+dvar_vector& dvar_vector::operator-=(const prevariable& d)
  {
    {
      for (int i=indexmin();i<=indexmax();i++)
@@ -56,7 +56,7 @@ void dv_xpluseq(void);
  * Description not yet available.
  * \param
  */
- dvar_vector& dvar_vector::operator+= (_CONST prevariable& d)
+dvar_vector& dvar_vector::operator+=(const prevariable& d)
  {
    {
      for (int i=indexmin();i<=indexmax();i++)

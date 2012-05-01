@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvariable posfun(_CONST dvariable&x,const double eps,const prevariable& _pen)
+dvariable posfun(const dvariable &x, const double eps, const prevariable& _pen)
 {
   dvariable& pen= (dvariable&) _pen;
   if (x>=eps) 
@@ -33,7 +33,7 @@ dvariable posfun(_CONST dvariable&x,const double eps,const prevariable& _pen)
  * Description not yet available.
  * \param
  */
-dvariable posfun(_CONST dvariable&x,const double eps,const dvariable& _pen)
+dvariable posfun(const dvariable &x, const double eps, const dvariable& _pen)
 {
   dvariable& pen= (dvariable&) _pen;
   if (x>=eps) 
@@ -52,7 +52,7 @@ dvariable posfun(_CONST dvariable&x,const double eps,const dvariable& _pen)
  * Description not yet available.
  * \param
  */
-dvariable posfun2(_CONST dvariable&x,const double eps,const prevariable& _pen)
+dvariable posfun2(const dvariable &x, const double eps, const prevariable& _pen)
 {
   dvariable& pen= (dvariable&) _pen;
   if (x>=eps) 

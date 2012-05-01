@@ -25,7 +25,7 @@
  * Description not yet available.
  * \param
  */
-  dvariable var(_CONST dvar_vector& v)
+dvariable var(const dvar_vector& v)
   {
     dvariable tmp;
     RETURN_ARRAYS_INCREMENT();
@@ -40,7 +40,7 @@
  * Description not yet available.
  * \param
  */
-  dvariable std_dev(_CONST dvar_vector& v)
+dvariable std_dev(const dvar_vector& v)
   {
     dvariable tmp;
     RETURN_ARRAYS_INCREMENT();
@@ -55,7 +55,7 @@
  * Description not yet available.
  * \param
  */
-  dvariable mean(_CONST dvar_vector& v)
+dvariable mean(const dvar_vector& v)
   {
     dvariable tmp;
     RETURN_ARRAYS_INCREMENT();

@@ -79,7 +79,7 @@
  * Description not yet available.
  * \param
  */
- _CONST double& dmatrix::operator() (int i, int j)  _CONST
+const double& dmatrix::operator()(int i, int j) const
  {
 #    ifdef SAFE_ARRAYS
      if (i<rowmin())

@@ -18,7 +18,7 @@
   \return \f$e^x\f$
   \ingroup misc
  */
-  dvariable mfexp(_CONST prevariable& x)
+dvariable mfexp(const prevariable& x)
   {
     double b=60;
     if (x<=b && x>=-b) 
@@ -43,7 +43,7 @@
   \return \f$e^x\f$
   \ingroup misc
  */
-  dvariable mfexp(_CONST prevariable& x,double b)
+dvariable mfexp(const prevariable& x, double b)
   {
     if (x<=b && x>=-b) 
     {

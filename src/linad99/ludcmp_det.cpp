@@ -12,7 +12,7 @@
 #include <fvar.hpp>
 
 dvariable ln_det(const dvar_matrix & aa, const int &_sgn);
-double ln_det(_CONST dmatrix & m1, BOR_CONST int &_sgn);
+double ln_det(const dmatrix & m1, const int &_sgn);
 
 
 /** Determinaant of matrix.
@@ -37,7 +37,7 @@ dvariable det(const dvar_matrix & aa)
     \param m1 A dmatrix, \f$M\f$, for which the determinant is computed.
     \return A double containing \f$|M|\f$.
 */
-double det(_CONST dmatrix & m1)
+double det(const dmatrix &m1)
 {
    int sign = 0;
    double lndet = 0.0;

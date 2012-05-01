@@ -25,7 +25,7 @@
 \param m vector of numbers to be squared.
 \return vector of the same length ad #x containing \f$m_i^2\f$
 */
-   dvector square(_CONST dvector& m)
+dvector square(const dvector& m)
    {
      dvector tmp;
      tmp.allocate(m);
@@ -41,7 +41,7 @@
 \param m matrix of numbers to be squared.
 \return A matrix of the same rank as #m containing \f$m_{ij}^2\f$
 */
-   dmatrix square(_CONST dmatrix& m)
+dmatrix square(const dmatrix& m)
    {
      dmatrix tmp;
      tmp.allocate(m);
@@ -57,7 +57,7 @@
 \param m d3_array of numbers to be squared.
 \return A d3_array of the same shape as #m containing \f$m_{ijk}^2\f$
 */
-   d3_array square(_CONST d3_array& m)
+d3_array square(const d3_array& m)
    {
      d3_array tmp;
      tmp.allocate(m);

@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   d3_array cube(_CONST d3_array& m)
+d3_array cube(const d3_array& m)
    {
      d3_array tmp;
      tmp.allocate(m);

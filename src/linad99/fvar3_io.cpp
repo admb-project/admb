@@ -31,7 +31,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dvar3_array& z)
+ostream& operator<<(const ostream& _ostr, const dvar3_array& z)
 {
   ostream& ostr= (ostream&) _ostr;
   for (int i=z.slicemin();i<=z.slicemax();i++)
@@ -49,7 +49,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dvar3_array& z)
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvar3_array& z)
+istream& operator>>(const istream& _istr,const dvar3_array& z)
 {
   istream& istr= (istream&) _istr;
   for (int i=z.slicemin();i<=z.slicemax();i++)

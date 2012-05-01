@@ -25,11 +25,11 @@ void cmdm_prod(void);
  * Description not yet available.
  * \param
  */
- dvar_matrix  operator * (_CONST dmatrix& cm1,_CONST dvar_matrix& m2 )
+dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
  {
    if (cm1.colmin() != m2.rowmin() || cm1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator * (_CONST dmatrix& x,_CONST dvar_matrix& m)\n";
+     cerr << " Incompatible array bounds in dmatrix operator*(const dmatrix& x, const dvar_matrix& m)\n";
      ad_exit(21);
    }
    dmatrix cm2=value(m2);
@@ -49,7 +49,7 @@ void cmdm_prod(void);
      for (int i=cm1.rowmin(); i<=cm1.rowmax(); i++)
      {
        sum=0.0;
-       _CONST dvector& temp_row = cm1(i);
+       const dvector& temp_row = cm1(i);
        for (int k=cm1.colmin(); k<=cm1.colmax(); k++)
        {
           sum+=temp_row(k) * (temp_col[k]);

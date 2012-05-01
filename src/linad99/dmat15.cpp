@@ -30,7 +30,7 @@
  * Description not yet available.
  * \param
  */
-dmatrix choleski_decomp(_CONST dmatrix& MM)
+dmatrix choleski_decomp(const dmatrix& MM)
 {
   // kludge to deal with constantness
   dmatrix & M= * (dmatrix *) &MM;
@@ -108,7 +108,7 @@ static dmatrix onerror(dmatrix& L,int & ierror)
  * Description not yet available.
  * \param
  */
-dmatrix choleski_decomp_error(_CONST dmatrix& MM,int& ierror)
+dmatrix choleski_decomp_error(const dmatrix& MM,int& ierror)
 {
   ierror=0;
   // kludge to deal with constantness
@@ -173,7 +173,7 @@ dmatrix choleski_decomp_error(_CONST dmatrix& MM,int& ierror)
  * Description not yet available.
  * \param
  */
-dmatrix choleski_decomp_neghess_error(_CONST dmatrix& MM,int& ierror)
+dmatrix choleski_decomp_neghess_error(const dmatrix& MM, int& ierror)
 {
   ierror=0;
   // kludge to deal with constantness

@@ -14,11 +14,11 @@
  * Description not yet available.
  * \param
  */
- dvector& dvector::operator+= (_CONST dvector& v1)
+dvector& dvector::operator+=(const dvector& v1)
  {
    if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
    {
-     cerr << " Incompatible array bounds in dvector& operator += (_CONST dvector&)\n";
+     cerr << " Incompatible array bounds in dvector& operator += (const dvector&)\n";
      ad_exit(21);
    }
 
@@ -35,11 +35,11 @@
  * Description not yet available.
  * \param
  */
- dvector& dvector::operator-= (_CONST dvector& v1)
+dvector& dvector::operator-=(const dvector& v1)
  {
    if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
    {
-     cerr << " Incompatible array bounds in dvector& operator -= (_CONST dvector&)\n";
+     cerr << " Incompatible array bounds in dvector& operator -= (const dvector&)\n";
      ad_exit(21);
    }
 

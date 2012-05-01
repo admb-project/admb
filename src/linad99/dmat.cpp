@@ -159,7 +159,7 @@ double min(const dmatrix& m)
  * Description not yet available.
  * \param
  */
-double max(_CONST dmatrix& m)
+double max(const dmatrix& m)
 {
   double tmp=max(m(m.rowmin()));
   for (int i=m.rowmin()+1;i<=m.rowmax();i++)
@@ -174,7 +174,7 @@ double max(_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-void dmatrix::allocate(_CONST dmatrix& dm)
+void dmatrix::allocate(const dmatrix& dm)
 {
   int nrl=dm.rowmin();
   int nrh=dm.rowmax();
@@ -203,7 +203,7 @@ void dmatrix::allocate(_CONST dmatrix& dm)
  * Description not yet available.
  * \param
  */
-  int ivector_check(_CONST ivector& v,int l,int u)
+int ivector_check(const ivector& v, int l, int u)
   {
     if (v.indexmin()!=l||v.indexmax()!=u) return 1;
     return 0;
@@ -224,7 +224,7 @@ void dmatrix::allocate(_CONST dmatrix& dm)
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
+     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,const ivector& ncl,const ivector& nch)\n";
      ad_exit(1);
    }
    index_min=nrl;
@@ -261,7 +261,7 @@ void dmatrix::allocate(_CONST dmatrix& dm)
    if (nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,"
-       "int ncl,_CONST ivector& nch)\n";
+       "int ncl,const ivector& nch)\n";
      ad_exit(1);
    }
    index_min=nrl;
@@ -297,7 +297,7 @@ void dmatrix::allocate(_CONST dmatrix& dm)
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())
    {
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,"
-       " int ncl,_CONST ivector& nch)\n";
+       " int ncl,const ivector& nch)\n";
      ad_exit(1);
    }
    index_min=nrl;
@@ -335,7 +335,7 @@ void dmatrix::allocate(_CONST dmatrix& dm)
  * Description not yet available.
  * \param
  */
- dmatrix::dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)
+dmatrix::dmatrix(int nrl, int nrh, const ivector& ncl, const ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
@@ -344,7 +344,7 @@ void dmatrix::allocate(_CONST dmatrix& dm)
  * Description not yet available.
  * \param
  */
- dmatrix::dmatrix(int nrl,int nrh,int ncl,_CONST ivector& nch)
+dmatrix::dmatrix(int nrl, int nrh, int ncl, const ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
@@ -353,7 +353,7 @@ void dmatrix::allocate(_CONST dmatrix& dm)
  * Description not yet available.
  * \param
  */
- dmatrix::dmatrix(_CONST dmatrix& m2)
+dmatrix::dmatrix(const dmatrix& m2)
  {
    index_min=m2.index_min;
    index_max=m2.index_max;
@@ -375,7 +375,7 @@ void dmatrix::allocate(_CONST dmatrix& dm)
  * Description not yet available.
  * \param
  */
- void dmatrix::shallow_copy(_CONST dmatrix& m2)
+void dmatrix::shallow_copy(const dmatrix& m2)
  {
    index_min=m2.index_min;
    index_max=m2.index_max;
@@ -408,7 +408,7 @@ static int ycounter=0;
  * Description not yet available.
  * \param
  */
-   dvector cube(_CONST dvector& m)
+dvector cube(const dvector& m)
    {
      dvector tmp;
      tmp.allocate(m);
@@ -423,7 +423,7 @@ static int ycounter=0;
  * Description not yet available.
  * \param
  */
-   dmatrix cube(_CONST dmatrix& m)
+dmatrix cube(const dmatrix& m)
    {
      dmatrix tmp;
      tmp.allocate(m);

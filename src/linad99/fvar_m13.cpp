@@ -19,7 +19,7 @@
  * Description not yet available.
  * \param
  */
-  dmatrix value(_CONST dvar_matrix& m)
+dmatrix value(const dvar_matrix& m)
   {
     int nrl=m.rowmin();
     int nrh=m.rowmax();

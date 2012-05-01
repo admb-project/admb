@@ -10,10 +10,10 @@
  */
 #include <fvar.hpp>
 
-dvariable inv_cumd_norm(_CONST prevariable& x);
-prevariable& cumd_norm(_CONST prevariable& x);
+dvariable inv_cumd_norm(const prevariable& x);
+prevariable& cumd_norm(const prevariable& x);
 /*
-double normal_tail_right(_CONST double& x)
+double normal_tail_right(const double& x)
 {
   const double a3=5;
   const double a4=9;
@@ -34,7 +34,7 @@ double normal_tail_right(_CONST double& x)
  * Description not yet available.
  * \param
  */
-dvariable inv_cumd_norm_inner(_CONST prevariable& x)
+dvariable inv_cumd_norm_inner(const prevariable& x)
 {
  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
    gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -133,7 +133,7 @@ dvariable inv_cumd_norm_inner(_CONST prevariable& x)
  * Description not yet available.
  * \param
  */
-dvariable inv_cumd_norm(_CONST prevariable& x)
+dvariable inv_cumd_norm(const prevariable& x)
 {
   dvariable y=inv_cumd_norm_inner(x);
   if (x>1.e-30)
@@ -145,7 +145,7 @@ dvariable inv_cumd_norm(_CONST prevariable& x)
  * Description not yet available.
  * \param
  */
-dvariable old_cumd_norm(_CONST prevariable& x)
+dvariable old_cumd_norm(const prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
   const double b1=0.319381530;
@@ -178,7 +178,7 @@ dvariable old_cumd_norm(_CONST prevariable& x)
 \return Probablity that of an observation will exceed the argument.
 \ingroup PDF
 */
-prevariable& cumd_norm(_CONST prevariable& _x)
+prevariable& cumd_norm(const prevariable& _x)
 {
  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
    gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -254,7 +254,7 @@ prevariable& cumd_norm(_CONST prevariable& _x)
  * Description not yet available.
  * \param
  */
-dvar_vector inv_cumd_norm(_CONST dvar_vector& x)
+dvar_vector inv_cumd_norm(const dvar_vector& x)
 {
   int mmin=x.indexmin();
   int mmax=x.indexmax();
@@ -270,7 +270,7 @@ dvar_vector inv_cumd_norm(_CONST dvar_vector& x)
  * Description not yet available.
  * \param
  */
-prevariable& bounded_cumd_norm(_CONST prevariable& _x,double beta)
+prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
 {
  if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
    gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -353,7 +353,7 @@ prevariable& bounded_cumd_norm(_CONST prevariable& _x,double beta)
  * Description not yet available.
  * \param
  */
-dvariable inv_cumd_norm_logistic(_CONST prevariable& x,double p)
+dvariable inv_cumd_norm_logistic(const prevariable& x,double p)
 {
 #if defined(SAFE_ALL)
   if (0.0<p || 1.0>p)
@@ -373,7 +373,7 @@ dvariable inv_cumd_norm_logistic(_CONST prevariable& x,double p)
  * Description not yet available.
  * \param
  */
-prevariable& cumd_norm_logistic(_CONST prevariable& _x,double p)
+prevariable& cumd_norm_logistic(const prevariable& _x,double p)
 {
   return (1.0-p)*cumd_norm(_x)+p*cumd_logistic(_x);
 }  

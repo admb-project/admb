@@ -60,7 +60,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
  * Description not yet available.
  * \param
  */
- lvector::lvector(_CONST lvector& t)
+lvector::lvector(const lvector& t)
  {
    shape=t.shape;
    (shape->ncopies)++;
@@ -80,7 +80,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
  * Description not yet available.
  * \param
  */
- lvector::lvector(_CONST dvector& u)
+lvector::lvector(const dvector& u)
  {
    if ( (shape=new vector_shape(u.indexmin(),u.indexmax()))==0 )
    {
@@ -108,13 +108,13 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
  * Description not yet available.
  * \param
  */
- lvector& lvector::operator = (_CONST lvector& t)
+lvector& lvector::operator=(const lvector& t)
  {
    if (v != t.v)
    {
      if (indexmin() != t.indexmin() || indexmax() != t.indexmax())
      {
-       cerr << " Array sizes do not match in lvector operator =(_CONST lvector&)\n";
+       cerr << " Array sizes do not match in lvector operator =(const lvector&)\n";
      }
 
      for ( int i=indexmin(); i<=indexmax(); i++)
@@ -206,7 +206,7 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
  * Description not yet available.
  * \param
  */
- lvector::lvector(_CONST ivector& u)
+lvector::lvector(const ivector& u)
  {
    if ( (shape=new vector_shape(u.indexmin(),u.indexmax()))==0 )
    {

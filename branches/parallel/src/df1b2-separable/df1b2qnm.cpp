@@ -29,7 +29,7 @@ void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn);
 void function_minimizer::quasi_newton_block(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f)
 {
-{
+/*{
   static int stop_flag;
   if (stop_flag!=1)
   {
@@ -45,7 +45,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   }
   while(stop_flag==0)
     sleep(5);
-}
+}*/
 #if defined(USE_ADMPI)
     if (ad_comm::mpi_manager)
     {

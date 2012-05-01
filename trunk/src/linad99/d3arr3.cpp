@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   double mean(_CONST d3_array& m)
+double mean(const d3_array& m)
    {
      double tmp;
      tmp=sum(m)/size_count(m);

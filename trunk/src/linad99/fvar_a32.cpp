@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
- dvar_vector dvar_vector::operator ()(_CONST ivector& u)
+dvar_vector dvar_vector::operator()(const ivector& u)
  {
    dvar_vector tmp(u.indexmin(),u.indexmax());
 
@@ -65,7 +65,7 @@ void dv_subassign(void)
  * Description not yet available.
  * \param
  */
- dvar_vector dvar_vector::operator ()(_CONST lvector& u)
+dvar_vector dvar_vector::operator()(const lvector& u)
  {
    dvar_vector tmp(u.indexmin(),u.indexmax());
 

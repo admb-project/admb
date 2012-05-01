@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   d3_array sqrt(_CONST d3_array& m)
+d3_array sqrt(const d3_array& m)
    {
      d3_array tmp;
      tmp.allocate(m);
@@ -29,7 +29,7 @@
  * Description not yet available.
  * \param
  */
-   d3_array sqr(_CONST d3_array& m)
+d3_array sqr(const d3_array& m)
    {
      d3_array tmp;
      tmp.allocate(m);

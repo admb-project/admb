@@ -156,7 +156,7 @@ adstring get_string_marker(void)
  * Description not yet available.
  * \param
  */
-void ivector::save_ivector_position(void) _CONST
+void ivector::save_ivector_position(void) const
 {
   // saves the size and address information for a ivector
   unsigned wsize=sizeof(ivector_position);
@@ -168,7 +168,7 @@ void ivector::save_ivector_position(void) _CONST
  * Description not yet available.
  * \param
  */
-void dvar_vector::save_dvar_vector_position(void) _CONST
+void dvar_vector::save_dvar_vector_position(void) const
 {
   // saves the size and address information for a dvar_vector
   unsigned wsize=sizeof(dvar_vector_position);

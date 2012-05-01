@@ -93,7 +93,7 @@ int xxx_uuu_a(void)
  * Description not yet available.
  * \param
  */
-    _CONST prevariable dvar_vector::operator[] (int i) _CONST
+const prevariable dvar_vector::operator[](int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin())
@@ -116,7 +116,7 @@ int xxx_uuu_a(void)
  * Description not yet available.
  * \param
  */
-    _CONST prevariable dvar_vector::operator() (int i) _CONST
+const prevariable dvar_vector::operator()(int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin())

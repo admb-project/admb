@@ -14,8 +14,7 @@
  * Description not yet available.
  * \param
  */
-  void dvar_vector::fill_multinomial(BOR_CONST random_number_generator& rng,
-    _CONST dvector& p)
+void dvar_vector::fill_multinomial(const random_number_generator& rng, const dvector& p)
   {
     dvector tmp(indexmin(),indexmax());
     tmp.fill_multinomial(rng,p);

@@ -18,7 +18,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST int& i3_array::operator () (int k, int i, int j) _CONST
+const int& i3_array::operator()(int k, int i, int j) const
     {
       #ifdef SAFE_ARRAYS
         if (k<slicemin())
@@ -39,7 +39,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST ivector& i3_array::operator () (int k, int i) _CONST
+const ivector& i3_array::operator()(int k, int i) const
     {
       #ifdef SAFE_ARRAYS
         if (k<slicemin())
@@ -60,7 +60,7 @@
  * Description not yet available.
  * \param
  */
- _CONST  imatrix& i3_array::operator[] (int i) _CONST
+const imatrix& i3_array::operator[](int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i<slicemin())
@@ -83,7 +83,7 @@
  * Description not yet available.
  * \param
  */
-  _CONST imatrix& i3_array::operator() (int i) _CONST
+const imatrix& i3_array::operator()(int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i<slicemin())
@@ -108,11 +108,11 @@
  * Description not yet available.
  * \param
  */
- i3_array& i3_array::operator= (_CONST i3_array& m1)
+i3_array& i3_array::operator=(const i3_array& m1)
  {
    if (slicemin() != m1.slicemin() || slicemax() != m1.slicemax())
    {
-     cerr << " Incompatible array bounds in i3_array& operator = (_CONST i3_array&)\n";
+     cerr << " Incompatible array bounds in i3_array& operator = (const i3_array&)\n";
      ad_exit(21);
    }
 

@@ -52,7 +52,7 @@ void fmm_control::set_defaults()
  * Description not yet available.
  * \param
  */
-fmm_control::fmm_control(BOR_CONST fmm_control & t)
+fmm_control::fmm_control(const fmm_control & t)
 {
   fringe = fringe;
   maxfn  = t.maxfn;
@@ -85,7 +85,7 @@ fmm_control::fmm_control()
  * Description not yet available.
  * \param
  */
-fmm_control::fmm_control(_CONST lvector& ipar)
+fmm_control::fmm_control(const lvector& ipar)
 {
   set_defaults();
   maxfn  = ipar[1];
@@ -103,7 +103,7 @@ fmm_control::fmm_control(_CONST lvector& ipar)
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& s, const fmm_control& fmc)
+ostream& operator<<(const ostream& s, const fmm_control& fmc)
 {
   fmc.writeon(s);
   return (ostream&)s;
@@ -113,7 +113,7 @@ ostream& operator<<(BOR_CONST ostream& s, const fmm_control& fmc)
  * Description not yet available.
  * \param
  */
-void fmm_control::writeon(BOR_CONST ostream& _s) const
+void fmm_control::writeon(const ostream& _s) const
 {
   ostream& s = (ostream&) _s;
   s << "values of fmm_control structure:\n";

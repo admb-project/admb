@@ -25,7 +25,7 @@
  * Description not yet available.
  * \param
  */
-void dvector::save_dvector_position(void) _CONST
+void dvector::save_dvector_position(void) const
 {
   // saves the size and address information for a dvar_vector
   const unsigned wsize=sizeof(dvector_position);
@@ -81,7 +81,7 @@ dvector_position restore_dvector_position(void)
  * Description not yet available.
  * \param
  */
-void dvar_vector::save_dvar_vector_value(void) _CONST
+void dvar_vector::save_dvar_vector_value(void) const
 {
   //int ierr=save_dvar_vector_position();
   // saves the size, address, and value information for a dvar_vector
@@ -101,7 +101,7 @@ void dvar_vector::save_dvar_vector_value(void) _CONST
  * Description not yet available.
  * \param
  */
-void dvector::save_dvector_value(void) _CONST
+void dvector::save_dvector_value(void) const
 {
   // saves the size, address, and value information for a dvar_vector
   // int ierr=save_dvector_position();
@@ -120,7 +120,7 @@ void dvector::save_dvector_value(void) _CONST
  * Description not yet available.
  * \param
  */
-void ivector::save_ivector_value(void) _CONST
+void ivector::save_ivector_value(void) const
 {
   // saves the size, address, and value information for a ivector
   // int ierr=save_ivector_position();
@@ -138,7 +138,7 @@ void ivector::save_ivector_value(void) _CONST
  * Description not yet available.
  * \param
  */
-dvector restore_dvector_value(BOR_CONST dvector_position& tmp)
+dvector restore_dvector_value(const dvector_position& tmp)
 {
   // restores the size, address, and value information for a dvar_vector
   // restores the size, address, and value information for a ivector
@@ -158,7 +158,7 @@ dvector restore_dvector_value(BOR_CONST dvector_position& tmp)
  * Description not yet available.
  * \param
  */
-ivector restore_ivector_value(BOR_CONST ivector_position& tmp)
+ivector restore_ivector_value(const ivector_position& tmp)
 {
   // restores the size, address, and value information for a ivector
   // Back up the stream and read the number of bytes written in the
@@ -178,7 +178,7 @@ ivector restore_ivector_value(BOR_CONST ivector_position& tmp)
  * Description not yet available.
  * \param
  */
-dvector restore_dvar_vector_value(BOR_CONST dvar_vector_position& tmp)
+dvector restore_dvar_vector_value(const dvar_vector_position& tmp)
 {
   // restores the size, address, and value information for a dvar_vector
   // Back up the stream and read the number of bytes written in the
@@ -199,7 +199,7 @@ dvector restore_dvar_vector_value(BOR_CONST dvar_vector_position& tmp)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::save_dvar_matrix_value(void) _CONST
+void dvar_matrix::save_dvar_matrix_value(void) const
 {
   // saves the size, address, and value information for a dvar_matrix
   int min=rowmin();

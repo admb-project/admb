@@ -65,7 +65,7 @@ const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
 const int MAX_NUMBER_ROWS = 6550;
 
- int get_non_blank_line(BOR_CONST ifstream& infile,char * & line,
+int get_non_blank_line(const ifstream& infile,char * & line,
    const unsigned int& line_length);
 
 /**
@@ -354,7 +354,7 @@ dmatrix::dmatrix(char * s)
  * Description not yet available.
  * \param
  */
-   int get_non_blank_line(BOR_CONST ifstream& _infile,char * & line,
+int get_non_blank_line(const ifstream& _infile,char * & line,
      const unsigned int& line_length)
    {
      ifstream& infile=(ifstream&) _infile;

@@ -30,7 +30,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-    int prevariable::operator ==( CGNU_DOUBLE v1) _CONST
+int prevariable::operator==(CGNU_DOUBLE v1) const
     {
       return(v->x==v1);
     }
@@ -39,7 +39,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-    int prevariable::operator <=( CGNU_DOUBLE v1) _CONST
+int prevariable::operator<=(CGNU_DOUBLE v1) const
     {
       return(v->x<=v1);
     }
@@ -48,7 +48,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-    int prevariable::operator <( CGNU_DOUBLE v1) _CONST
+    int prevariable::operator <( CGNU_DOUBLE v1) const
     {
       return(v->x<v1);
     }
@@ -57,7 +57,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-    int prevariable::operator >( CGNU_DOUBLE v1) _CONST
+    int prevariable::operator >( CGNU_DOUBLE v1) const
     {
       return(v->x>v1);
     }
@@ -66,7 +66,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-    int prevariable::operator >=( CGNU_DOUBLE v1) _CONST
+    int prevariable::operator >=( CGNU_DOUBLE v1) const
     {
       return(v->x >=v1);
     }
@@ -75,7 +75,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-    int prevariable::operator !=( CGNU_DOUBLE v1) _CONST
+    int prevariable::operator !=( CGNU_DOUBLE v1) const
     {
       return(v->x!=v1);
     }

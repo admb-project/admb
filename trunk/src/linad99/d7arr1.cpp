@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   d7_array operator / (_CONST d7_array& m, CGNU_DOUBLE d)
+d7_array operator/(const d7_array& m, CGNU_DOUBLE d)
    {
      d7_array tmp;
      tmp.allocate(m);
@@ -41,7 +41,7 @@
  * Description not yet available.
  * \param
  */
-  double sum(_CONST d7_array& m)
+double sum(const d7_array& m)
   {
     RETURN_ARRAYS_INCREMENT();
     double tmp=0.;

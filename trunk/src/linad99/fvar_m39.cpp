@@ -31,7 +31,7 @@ void dfcholeski_decomp(void);
  * Description not yet available.
  * \param
  */
-dvar_matrix choleski_decomp(_CONST dvar_matrix& MM)
+dvar_matrix choleski_decomp(const dvar_matrix& MM)
 {
   // kludge to deal with constantness
   if (MM.colsize() != MM.rowsize())

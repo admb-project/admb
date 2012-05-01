@@ -34,7 +34,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& _ostr,const dvector& z)
+ostream& operator<<(const ostream& _ostr,const dvector& z)
 {
   ostream& ostr=(ostream&) _ostr;
   z.write_on(ostr);
@@ -46,7 +46,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,const dvector& z)
  * Description not yet available.
  * \param
  */
-void dvector::write_on(BOR_CONST ostream& _s) _CONST
+void dvector::write_on(const ostream& _s) const
 {
   ostream& s=(ostream&) _s;
 #ifdef __USE_IOSTREAM__
@@ -79,7 +79,7 @@ void dvector::write_on(BOR_CONST ostream& _s) _CONST
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvector& _z)
+istream& operator>>(const istream& _istr, const dvector& _z)
 {
   dvector& z = (dvector&)_z;
   istream& istr= (istream&) _istr;
@@ -92,7 +92,7 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvector& _z)
  * Description not yet available.
  * \param
  */
-void dvector::read_from(BOR_CONST istream& _s)
+void dvector::read_from(const istream& _s)
 {
   istream& s= (istream&) _s;
   for (int i=indexmin(); i <= indexmax(); i++)

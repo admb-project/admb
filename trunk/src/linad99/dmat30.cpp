@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dmatrix operator - (_CONST dmatrix & m)
+dmatrix operator-(const dmatrix & m)
 {
   return -1.0*m;
 }

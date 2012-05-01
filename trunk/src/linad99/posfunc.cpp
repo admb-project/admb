@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-double dfposfun(_CONST double&x,_CONST double eps)
+double dfposfun(const double &x, const double eps)
 {
   if (x>=eps) 
   {
@@ -34,7 +34,7 @@ double dfposfun(_CONST double&x,_CONST double eps)
  * Description not yet available.
  * \param
  */
-double dfposfun1(_CONST double&x,_CONST double eps)
+double dfposfun1(const double &x, const double eps)
 {
   if (x>=eps) 
   {
@@ -51,7 +51,7 @@ double dfposfun1(_CONST double&x,_CONST double eps)
  * Description not yet available.
  * \param
  */
-double posfun(_CONST double&x,const double eps,BOR_CONST double& _pen)
+double posfun(const double &x, const double eps, const double& _pen)
 {
   double& pen=(double&)_pen;
   if (x>=eps) 
@@ -70,7 +70,7 @@ double posfun(_CONST double&x,const double eps,BOR_CONST double& _pen)
  * Description not yet available.
  * \param
  */
-double posfun2(_CONST double&x,const double eps,BOR_CONST double& _pen)
+double posfun2(const double &x, const double eps, const double& _pen)
 {
   double& pen=(double&)_pen;
   if (x>=eps) 

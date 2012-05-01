@@ -139,7 +139,7 @@ double boundpin(double x, double fmin, double fmax,const double& s)
 }
 
 /*
-double boundpin(BOR_CONST prevariable& xx, double fmin, double fmax,_CONST double& s)
+double boundpin(const prevariable& xx, double fmin, double fmax, const double& s)
 {
   double tinv;
   double x=value(xx);

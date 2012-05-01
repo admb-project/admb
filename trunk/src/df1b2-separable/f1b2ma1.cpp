@@ -38,7 +38,7 @@ df1b2vector column(const df1b2matrix& _M,int n)
  * Description not yet available.
  * \param
  */
- df1b2matrix trans(_CONST df1b2matrix& _m1)
+ df1b2matrix trans(const df1b2matrix& _m1)
  {
    ADUNCONST(df1b2matrix,m1)
    int rmin=m1.indexmin();

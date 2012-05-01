@@ -37,7 +37,7 @@
  * Description not yet available.
  * \param
  */
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvar_matrix& _z)
+uistream& operator>>(const uistream& istr, const dvar_matrix& _z)
 {
   ADUNCONST(dvar_matrix,z)
   z.read_from(istr);
@@ -48,7 +48,7 @@ uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvar_matrix& _z)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::read_from(BOR_CONST uistream& s)
+void dvar_matrix::read_from(const uistream& s)
 {
   if (allocated(*this))
   {  
@@ -70,7 +70,7 @@ void dvar_matrix::read_from(BOR_CONST uistream& s)
  * Description not yet available.
  * \param
  */
-uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvar_matrix& z)
+uostream& operator<<(const uostream& ostr, const dvar_matrix& z)
 {
   if (allocated(z))
     z.write_on(ostr);
@@ -82,7 +82,7 @@ uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvar_matrix& z)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::write_on(BOR_CONST uostream& s) _CONST
+void dvar_matrix::write_on(const uostream& s) const
 {
   if (allocated(*this))
   {  

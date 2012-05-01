@@ -80,7 +80,7 @@
  * Description not yet available.
  * \param
  */
- _CONST int& ivector::operator[] (int i) _CONST
+const int& ivector::operator[](int i) const
  {
    #ifdef SAFE_ARRAYS
      if (!v)
@@ -111,7 +111,7 @@
  * Description not yet available.
  * \param
  */
-  _CONST int& ivector::operator() (int i) _CONST
+const int& ivector::operator()(int i) const
  {
    #ifdef SAFE_ARRAYS
      if (!v)

@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
- dvariable mean(_CONST dvar_matrix& m)
+dvariable mean(const dvar_matrix& m)
  {
    dvariable tmp;
    tmp=sum(m)/double(size_count(m));

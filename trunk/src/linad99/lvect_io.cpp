@@ -34,7 +34,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& _ostr,_CONST lvector& z)
+ostream& operator<<(const ostream& _ostr, const lvector& z)
 {
   ostream & ostr = (ostream&) _ostr;
   z.write_on(ostr);
@@ -45,7 +45,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST lvector& z)
  * Description not yet available.
  * \param
  */
-void lvector::write_on(BOR_CONST ostream& _s) _CONST
+void lvector::write_on(const ostream& _s) const
 {
   ostream & s = (ostream&) _s;
 #ifdef __USE_IOSTREAM__
@@ -94,7 +94,7 @@ void lvector::write_on(BOR_CONST ostream& _s) _CONST
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& _istr,BOR_CONST lvector& _z)
+istream& operator>>(const istream& _istr, const lvector& _z)
 {
   ADUNCONST(lvector,z)
   istream & istr = (istream&) _istr;
@@ -107,7 +107,7 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST lvector& _z)
  * Description not yet available.
  * \param
  */
-void lvector::read_from(BOR_CONST istream& _s)
+void lvector::read_from(const istream& _s)
 {
   istream& s=(istream&) _s;
   int n = indexmax() - indexmin() + 1;

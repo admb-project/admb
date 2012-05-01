@@ -10,8 +10,8 @@
 
 #include <fvar.hpp>
 
-dvariable gammln(_CONST dvariable& xx);
-dvariable factln(_CONST dvariable& n);
+dvariable gammln(const dvariable& xx);
+dvariable factln(const dvariable& n);
 double factln(double n);
 
 /**
@@ -21,7 +21,7 @@ double factln(double n);
  * \param k a number
  * \return log of the binomial coefficent
  */
-dvariable log_comb(_CONST dvariable& n,double k)
+dvariable log_comb(const dvariable& n, double k)
 {
   return factln(n)-factln(k)-factln(n-k);
 }
@@ -33,7 +33,7 @@ dvariable log_comb(_CONST dvariable& n,double k)
  * \param k a number
  * \return log of the binomial coefficent
  */
-dvariable log_comb(_CONST dvariable& n,_CONST dvariable& k)
+dvariable log_comb(const dvariable& n, const dvariable& k)
 {
   return factln(n)-factln(k)-factln(n-k);
 }
@@ -45,7 +45,7 @@ dvariable log_comb(_CONST dvariable& n,_CONST dvariable& k)
  * \param n a number
  * \param k a number
  * \return log of the binomial coefficent
- */dvariable log_comb(double n,_CONST dvariable& k)
+ */dvariable log_comb(double n, const dvariable& k)
 {
   return factln(n)-factln(k)-factln(n-k);
 }
@@ -55,7 +55,7 @@ dvariable log_comb(_CONST dvariable& n,_CONST dvariable& k)
  * \param n a number
  * \return log of the factorial
  */
-dvariable factln(_CONST dvariable& n)
+dvariable factln(const dvariable& n)
 {
   return gammln(n+1.0);
 }
@@ -66,7 +66,7 @@ dvariable factln(_CONST dvariable& n)
  * \param r an array
  * \return log of the binomial coefficent
  */
-dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvar_vector& r)
+dvar_vector log_comb(const dvar_vector& n, const dvar_vector& r)
 {
     RETURN_ARRAYS_INCREMENT();
     int mmin=n.indexmin();
@@ -74,7 +74,7 @@ dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvar_vector& r)
     if (mmin != r.indexmin() || mmax != r.indexmax()) 
     {
       cerr << "Incompatible array bounds in function "
-        "dvar_vector log_comb(BOR_CONST dvar_vector& n, BOR_CONST dvector& r)" << endl;
+        "dvar_vector log_comb(const dvar_vector& n, const dvector& r)" << endl;
       ad_exit(1);
     } 
     dvar_vector tmp(mmin,mmax);
@@ -92,7 +92,7 @@ dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvar_vector& r)
  * \param r an array
  * \return log of the binomial coefficent
  */
-dvar_vector log_comb(_CONST dvector& n,_CONST dvar_vector& r)
+dvar_vector log_comb(const dvector& n, const dvar_vector& r)
 {
     RETURN_ARRAYS_INCREMENT();
     int mmin=n.indexmin();
@@ -100,7 +100,7 @@ dvar_vector log_comb(_CONST dvector& n,_CONST dvar_vector& r)
     if (mmin != r.indexmin() || mmax != r.indexmax()) 
     {
       cerr << "Incompatible array bounds in function "
-        "dvar_vector log_comb(BOR_CONST dvar_vector& n, BOR_CONST dvector& r)" << endl;
+        "dvar_vector log_comb(const dvar_vector& n, const dvector& r)" << endl;
       ad_exit(1);
     } 
     dvar_vector tmp(mmin,mmax);
@@ -118,7 +118,7 @@ dvar_vector log_comb(_CONST dvector& n,_CONST dvar_vector& r)
  * \param r an array
  * \return log of the binomial coefficent
  */
-dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvector& r)
+dvar_vector log_comb(const dvar_vector& n, const dvector& r)
 {
     RETURN_ARRAYS_INCREMENT();
     int mmin=n.indexmin();
@@ -126,7 +126,7 @@ dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvector& r)
     if (mmin != r.indexmin() || mmax != r.indexmax()) 
     {
       cerr << "Incompatible array bounds in function "
-        "dvar_vector log_comb(BOR_CONST dvar_vector& n, BOR_CONST dvector& r)" << endl;
+        "dvar_vector log_comb(const dvar_vector& n, const dvector& r)" << endl;
       ad_exit(1);
     } 
     dvar_vector tmp(mmin,mmax);
@@ -144,7 +144,7 @@ dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvector& r)
  * \param r an array
  * \return log of the binomial coefficent
  */
-dvar_vector log_comb(_CONST dvariable& n,_CONST dvector& r)
+dvar_vector log_comb(const dvariable& n, const dvector& r)
 {
     RETURN_ARRAYS_INCREMENT();
     int mmin=r.indexmin();
@@ -164,7 +164,7 @@ dvar_vector log_comb(_CONST dvariable& n,_CONST dvector& r)
  * \param r an array
  * \return log of the binomial coefficent
  */
-dvar_vector log_comb(_CONST dvariable& n,_CONST dvar_vector& r)
+dvar_vector log_comb(const dvariable& n, const dvar_vector& r)
 {
     RETURN_ARRAYS_INCREMENT();
     int mmin=r.indexmin();
@@ -183,7 +183,7 @@ dvar_vector log_comb(_CONST dvariable& n,_CONST dvar_vector& r)
  * \param r an array
  * \return log of the factorial
  */
-dvar_vector factln(_CONST dvar_vector& r)
+dvar_vector factln(const dvar_vector& r)
 {
     RETURN_ARRAYS_INCREMENT();
     int mmin=r.indexmin();
@@ -203,7 +203,7 @@ dvar_vector factln(_CONST dvar_vector& r)
  * \param r an array
  * \return log of the binomial coefficent
  */
-dvar_vector log_comb(double n,_CONST dvar_vector& r)
+dvar_vector log_comb(double n, const dvar_vector& r)
 {
     RETURN_ARRAYS_INCREMENT();
     int mmin=r.indexmin();
@@ -222,7 +222,7 @@ dvar_vector log_comb(double n,_CONST dvar_vector& r)
  * \param v an array
  * \return log of the factorial
  */
-dvar_vector gammln(_CONST dvar_vector& v)
+dvar_vector gammln(const dvar_vector& v)
 {
   RETURN_ARRAYS_INCREMENT();
   int mmin=v.indexmin();

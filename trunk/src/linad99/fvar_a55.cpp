@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_vector operator * (_CONST dvector& t1,_CONST prevariable& x)
+dvar_vector operator*(const dvector& t1, const prevariable& x)
   {
     RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());
@@ -41,7 +41,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_vector operator * (_CONST prevariable& x,_CONST dvector& t1)
+dvar_vector operator*(const prevariable& x, const dvector& t1)
   {
     RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());

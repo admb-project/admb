@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-void lmatrix::allocate(_CONST lmatrix& dm)
+void lmatrix::allocate(const lmatrix& dm)
 {
   int nrl=dm.rowmin();
   int nrh=dm.rowmax();

@@ -28,7 +28,7 @@
  * Description not yet available.
  * \param
  */
-static ios &sfill(BOR_CONST ios &s, int c)
+static ios &sfill(const ios &s, int c)
 {
     s.fill(c);
     return s;
@@ -47,7 +47,7 @@ SMANIP(int) setfill(int c)
  * Description not yet available.
  * \param
  */
-static ios &swidth(BOR_CONST ios &s, int w)
+static ios &swidth(const ios &s, int w)
 {
     s.width(w);
     return s;
@@ -66,7 +66,7 @@ SMANIP(int) setw(int w)
  * Description not yet available.
  * \param
  */
-static ios &sprec(BOR_CONST ios &s, int p)
+static ios &sprec(const ios &s, int p)
 {
     s.precision(p);
     return s;
@@ -85,7 +85,7 @@ SMANIP(int) setprecision(int p)
  * Description not yet available.
  * \param
  */
-static ios &rsf(BOR_CONST ios& s, long v)
+static ios &rsf(const ios& s, long v)
 {
     s.unsetf(v);
     return s;
@@ -104,7 +104,7 @@ SMANIP(long) resetiosflags(long v)
  * Description not yet available.
  * \param
  */
-static ios &sf(BOR_CONST ios& s, long v)
+static ios &sf(const ios& s, long v)
 {
     s.flags(v|s.flags());
     return s;

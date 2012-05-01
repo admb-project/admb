@@ -16,11 +16,11 @@ void dv_minuseq(void);
  * Description not yet available.
  * \param
  */
- dvar_vector& dvar_vector::operator-= (_CONST dvar_vector& v1)
+ dvar_vector& dvar_vector::operator-=(const dvar_vector& v1)
  {
    if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
    {
-     cerr << " Incompatible array bounds in dvector& operator += (_CONST dvar_vector&)\n";
+     cerr << " Incompatible array bounds in dvector& operator += (const dvar_vector&)\n";
      ad_exit(21);
    }
 
@@ -59,11 +59,11 @@ void dv_minuseq(void)
  * Description not yet available.
  * \param
  */
- dvar_vector& dvar_vector::operator-= (_CONST dvector& v1)
+dvar_vector& dvar_vector::operator-=(const dvector& v1)
  {
    if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
    {
-     cerr << " Incompatible array bounds in dvector& operator += (_CONST dvar_vector&)\n";
+     cerr << " Incompatible array bounds in dvector& operator += (const dvar_vector&)\n";
      ad_exit(21);
    }
 

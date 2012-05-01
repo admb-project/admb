@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  dvariable mf_upper_bound(_CONST prevariable& x,double M,prevariable& fpen)
+dvariable mf_upper_bound(const prevariable& x, double M, prevariable& fpen)
   {
     if (x<=M) 
     {

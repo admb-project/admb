@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator / (_CONST prevariable& d,_CONST dvar3_array& m)
+dvar3_array operator/(const prevariable& d, const dvar3_array& m)
    {
      dvar3_array tmp;
      tmp.allocate(m);
@@ -29,7 +29,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator / (_CONST prevariable& d,_CONST d3_array& m)
+dvar3_array operator/(const prevariable& d, const d3_array& m)
    {
      dvar3_array tmp;
      tmp.allocate(m);
@@ -44,7 +44,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator / ( CGNU_DOUBLE d,_CONST dvar3_array& m)
+dvar3_array operator/(CGNU_DOUBLE d, const dvar3_array& m)
    {
      dvar3_array tmp;
      tmp.allocate(m);

@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array square(_CONST dvar3_array& m)
+dvar3_array square(const dvar3_array& m)
    {
      dvar3_array tmp;
      tmp.allocate(m);

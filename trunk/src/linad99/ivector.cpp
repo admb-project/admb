@@ -111,7 +111,7 @@ long int farptr_tolong(void *);
  * Description not yet available.
  * \param
  */
- ivector::ivector(_CONST ivector& t)
+ivector::ivector(const ivector& t)
  {
    index_min=t.index_min;
    index_max=t.index_max;
@@ -131,7 +131,7 @@ long int farptr_tolong(void *);
  * Description not yet available.
  * \param
  */
- void ivector::shallow_copy(_CONST ivector& t)
+void ivector::shallow_copy(const ivector& t)
  {
    index_min=t.index_min;
    index_max=t.index_max;
@@ -151,7 +151,7 @@ long int farptr_tolong(void *);
  * Description not yet available.
  * \param
  */
- ivector& ivector::operator = (_CONST ivector& t)
+ivector& ivector::operator=(const ivector& t)
  {
    // disconnect ivector  pointer  from old array
    if (::allocated(*this))
@@ -161,7 +161,7 @@ long int farptr_tolong(void *);
        if (indexmin() != t.indexmin() || indexmax() != t.indexmax())
        {
          cerr << " Array sizes do not match in ivector operator"
-                 " =(_CONST ivector&)" << endl;
+                 " =(const ivector&)" << endl;
          ad_exit(1);
        }
   
@@ -210,7 +210,7 @@ long int farptr_tolong(void *);
  * Description not yet available.
  * \param
  */
- ivector::ivector(_CONST dvector& u)
+ivector::ivector(const dvector& u)
  {
    allocate(u);
    for (int i=indexmin();i<=indexmax();i++)
@@ -281,7 +281,7 @@ long int farptr_tolong(void *);
  * Description not yet available.
  * \param
  */
-void ivector::allocate(_CONST dvector& dv)
+void ivector::allocate(const dvector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
@@ -290,7 +290,7 @@ void ivector::allocate(_CONST dvector& dv)
  * Description not yet available.
  * \param
  */
-void ivector::allocate(_CONST ivector& dv)
+void ivector::allocate(const ivector& dv)
 {
   allocate(dv.indexmin(),dv.indexmax());
 }
@@ -311,7 +311,7 @@ void ivector::allocate(void)
  * Description not yet available.
  * \param
  */
- ivector::ivector(_CONST preivector& pdv)
+ivector::ivector(const preivector& pdv)
  {
    #ifdef DIAG
     // cout << "starting out in dvector contructor\n";

@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_vector colsum(_CONST dvar_matrix&v)
+dvar_vector colsum(const dvar_matrix &v)
   {
     int cmin=v.colmin();
     int cmax=v.colmax();
@@ -37,7 +37,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_vector rowsum(_CONST dvar_matrix&v)
+dvar_vector rowsum(const dvar_matrix &v)
   {
     //int cmin=v.colmin();
     //int cmax=v.colmax();

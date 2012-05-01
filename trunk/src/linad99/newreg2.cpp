@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,_CONST dvariable& a)
+dvariable robust_regression(const dvector& obs, const dvar_vector& pred, const dvariable& a)
 {
   if (obs.indexmin() != pred.indexmin() || obs.indexmax() != pred.indexmax() )
   {
@@ -47,7 +47,7 @@ dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,_CONST 
  * Description not yet available.
  * \param
  */
-dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred, 
+dvariable robust_regression(const dvector& obs, const dvar_vector& pred, 
   CGNU_DOUBLE a)
 {
   if (obs.indexmin() != pred.indexmin() || obs.indexmax() != pred.indexmax() )

@@ -26,7 +26,7 @@
 double get_values(double x,double y,int print_switch);
 dvariable igam(const dvariable & _a, const dvariable & _x);
 dvariable igamc(const dvariable & _a, const dvariable & _x);
-dvariable lgam(_CONST prevariable& v1);
+dvariable lgam(const prevariable& v1);
 dvariable private_lgam(const dvariable& v);
 df3_one_variable lgam(const df3_one_variable& _x);
 
@@ -301,7 +301,7 @@ dvariable igamc(const dvariable & aa, const dvariable & xx)
  * \param _x the argument
  *
  */  
-dvariable lgam(_CONST prevariable& v1)
+dvariable lgam(const prevariable& v1)
 {
   dvariable tmp;
   static double phi = 0.5772156649015328606065121;
@@ -430,7 +430,7 @@ dvariable cumd_gamma(const dvariable& x, const dvariable& a)
 /**
  * A wrapper for lgam
  */
-dvariable gammln(_CONST dvariable& xx)
+dvariable gammln(const dvariable& xx)
 {
    dvariable z=lgam(xx);
    return z;

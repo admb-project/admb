@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dmatrix dmatrix::operator() (_CONST ivector& t)
+dmatrix dmatrix::operator()(const ivector& t)
 {
   dmatrix tmp(t.indexmin(), t.indexmax(), t.indexmin(), t.indexmax());
 

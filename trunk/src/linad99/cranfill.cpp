@@ -25,7 +25,7 @@
  * Description not yet available.
  * \param
  */
-  double var(_CONST dvector& v)
+double var(const dvector& v)
   {
     double tmp;
     tmp=norm(v)/sqrt(double(v.size()));
@@ -38,7 +38,7 @@
  * Description not yet available.
  * \param
  */
-  double std_dev(_CONST dvector& v)
+double std_dev(const dvector& v)
   {
     double tmp;
     tmp=norm(v)/sqrt(double(v.size()));
@@ -51,7 +51,7 @@
  * Description not yet available.
  * \param
  */
-  double mean(_CONST dvector& v)
+double mean(const dvector& v)
   {
     double tmp=0;
     for (int i=v.indexmin(); i<=v.indexmax(); i++)
@@ -93,7 +93,7 @@
  * Description not yet available.
  * \param
  */
-  void lvector::fill_seqadd(BOR_CONST AD_LONG_INT& base,BOR_CONST AD_LONG_INT& offset)
+void lvector::fill_seqadd(const AD_LONG_INT& base, const AD_LONG_INT& offset)
   {
     long int temp=0;
     for (int i=indexmin(); i<=indexmax(); i++)
@@ -107,7 +107,7 @@
  * Description not yet available.
  * \param
  */
-  void dmatrix::colfill_seqadd(BOR_CONST int& j, CGNU_DOUBLE base, CGNU_DOUBLE offset)
+void dmatrix::colfill_seqadd(const int& j, CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
     double temp=0;
     for (int i=rowmin(); i<=rowmax(); i++)
@@ -121,7 +121,7 @@
  * Description not yet available.
  * \param
  */
-  void dmatrix::colfill(int j,_CONST dvector& v)
+void dmatrix::colfill(int j, const dvector& v)
   {
     for (int i=rowmin(); i<=rowmax(); i++)
     {
@@ -133,7 +133,7 @@
  * Description not yet available.
  * \param
  */
-  void dmatrix::rowfill(int i,_CONST dvector& v)
+void dmatrix::rowfill(int i, const dvector& v)
   {
     for (int j=colmin(); j<=colmax(); j++)
     {
@@ -145,7 +145,7 @@
  * Description not yet available.
  * \param
  */
-  void dmatrix::rowfill_seqadd(BOR_CONST int& i, CGNU_DOUBLE base, CGNU_DOUBLE offset)
+void dmatrix::rowfill_seqadd(const int& i, CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
     double temp=0;
     for (int j=colmin(); j<=colmax(); j++)

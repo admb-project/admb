@@ -75,7 +75,7 @@
  * Description not yet available.
  * \param
  */
-prevariable& operator *( CGNU_DOUBLE x,_CONST prevariable& v2)
+prevariable& operator*( CGNU_DOUBLE x, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   gradient_structure::RETURN_PTR->v->x = x * v2.v->x;
@@ -88,7 +88,7 @@ prevariable& operator *( CGNU_DOUBLE x,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& operator *(_CONST prevariable& v1, CGNU_DOUBLE x)
+prevariable& operator*(const prevariable& v1, CGNU_DOUBLE x)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   gradient_structure::RETURN_PTR->v->x= v1.v->x * x;
@@ -101,7 +101,7 @@ prevariable& operator *(_CONST prevariable& v1, CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-    void prevariable::operator /=(_CONST prevariable& v1)
+void prevariable::operator/=(const prevariable& v1)
     {
       double tmp=1./(v1.v->x);
       v->x *= tmp;
@@ -125,7 +125,7 @@ prevariable& operator *(_CONST prevariable& v1, CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-    void prevariable::operator *=(_CONST prevariable& v1)
+void prevariable::operator*=(const prevariable& v1)
     {
       double * tmp=&((v1.v)->x);
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(v->x),

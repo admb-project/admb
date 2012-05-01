@@ -26,7 +26,7 @@
  * Description not yet available.
  * \param
  */
-   d4_array operator / (_CONST d4_array& m, CGNU_DOUBLE d)
+d4_array operator/(const d4_array& m, CGNU_DOUBLE d)
    {
      d4_array tmp;
      tmp.allocate(m);
@@ -41,7 +41,7 @@
  * Description not yet available.
  * \param
  */
-   d4_array operator / ( CGNU_DOUBLE d,_CONST d4_array& m)
+d4_array operator/(CGNU_DOUBLE d, const d4_array& m)
    {
      d4_array tmp;
      tmp.allocate(m);

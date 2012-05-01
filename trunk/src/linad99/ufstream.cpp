@@ -21,7 +21,7 @@ uostream& uostream::operator<< (TYPE x) \
 }
 
 #define EXTRACT_IMPLEMENT(TYPE) \
-uistream& uistream::operator>> (BOR_CONST TYPE& x) \
+uistream& uistream::operator>> (const TYPE& x) \
 { \
   read((char*)&x, sizeof(TYPE)); \
   return *this; \
@@ -163,16 +163,16 @@ EXTRACT_IMPLEMENT(unsigned long)
 EXTRACT_IMPLEMENT(float)
 EXTRACT_IMPLEMENT(double)
  // #  else
- // EXTRACT_IMPLEMENT(BOR_CONST signed char)
- // EXTRACT_IMPLEMENT(BOR_CONST unsigned char)
- // EXTRACT_IMPLEMENT(BOR_CONST char)
- // EXTRACT_IMPLEMENT(BOR_CONST short)
- // EXTRACT_IMPLEMENT(BOR_CONST int)
- // EXTRACT_IMPLEMENT(BOR_CONST long)
- // EXTRACT_IMPLEMENT(BOR_CONST unsigned short)
- // EXTRACT_IMPLEMENT(BOR_CONST unsigned long)
- // EXTRACT_IMPLEMENT(BOR_CONST float)
- // EXTRACT_IMPLEMENT(BOR_CONST double)
+ // EXTRACT_IMPLEMENT(const signed char)
+ // EXTRACT_IMPLEMENT(const unsigned char)
+ // EXTRACT_IMPLEMENT(const char)
+ // EXTRACT_IMPLEMENT(const short)
+ // EXTRACT_IMPLEMENT(const int)
+ // EXTRACT_IMPLEMENT(const long)
+ // EXTRACT_IMPLEMENT(const unsigned short)
+ // EXTRACT_IMPLEMENT(const unsigned long)
+ // EXTRACT_IMPLEMENT(const float)
+ // EXTRACT_IMPLEMENT(const double)
  // #  endif
 #endif
 
@@ -180,7 +180,7 @@ EXTRACT_IMPLEMENT(double)
 #  if (__BORLANDC__  > 0x0520) 
 EXTRACT_IMPLEMENT(long double)
 #  else
-EXTRACT_IMPLEMENT(BOR_CONST long double)
+EXTRACT_IMPLEMENT(const long double)
 #endif
 #endif
 

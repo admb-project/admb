@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  int sum(_CONST ivector&v)
+int sum(const ivector &v)
   {
     int tmp=0;
     for (int i=v.indexmin(); i<=v.indexmax(); i++)

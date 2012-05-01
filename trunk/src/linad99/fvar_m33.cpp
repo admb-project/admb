@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-void dmatrix::allocate(_CONST dvar_matrix& dm)
+void dmatrix::allocate(const dvar_matrix& dm)
 {
   int nrl=dm.rowmin();
   int nrh=dm.rowmax();

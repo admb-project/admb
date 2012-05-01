@@ -51,7 +51,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-prevariable& operator +(_CONST prevariable& v1,_CONST prevariable& v2)
+prevariable& operator+(const prevariable& v1, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
 
@@ -66,7 +66,7 @@ prevariable& operator +(_CONST prevariable& v1,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2)
+prevariable& operator*(const prevariable& v1, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   gradient_structure::RETURN_PTR->v->x= (*v1.v).x * (*v2.v).x;
@@ -79,7 +79,7 @@ prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-    int prevariable::operator ==(_CONST prevariable& v1) _CONST
+int prevariable::operator==(const prevariable& v1) const
     {
       return(v->x==value(v1));
     }
@@ -88,7 +88,7 @@ prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-    int prevariable::operator <=(_CONST prevariable& v1) _CONST
+int prevariable::operator <=(const prevariable& v1) const
     {
       return(v->x<=value(v1));
     }
@@ -97,7 +97,7 @@ prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-    int prevariable::operator <(_CONST prevariable& v1) _CONST
+int prevariable::operator<(const prevariable& v1) const
     {
       return(v->x<value(v1));
     }
@@ -106,7 +106,7 @@ prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-    int prevariable::operator >(_CONST prevariable& v1) _CONST
+int prevariable::operator>(const prevariable& v1) const
     {
       return(v->x>value(v1));
     }
@@ -115,7 +115,7 @@ prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-    int prevariable::operator >=(_CONST prevariable& v1) _CONST
+int prevariable::operator>=(const prevariable& v1) const
     {
       return(v->x >=value(v1));
     }
@@ -124,7 +124,7 @@ prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-    int prevariable::operator !=(_CONST prevariable& v1) _CONST
+int prevariable::operator!=(const prevariable& v1) const
     {
       return(v->x!=value(v1));
     }

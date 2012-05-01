@@ -33,13 +33,13 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-    prevariable& pow(_CONST prevariable& v1, CGNU_DOUBLE u)
+prevariable& pow(const prevariable& v1, CGNU_DOUBLE u)
     {
       #ifdef SAFE_ARRAYS
         if (v1.v->x == 0)
         {
           cerr << "Error -- base = 0 in function"
-            " prevariable& pow(_CONST prevariable& v1, CGNU_DOUBLE u)" << endl;
+            " prevariable& pow(const prevariable& v1, CGNU_DOUBLE u)" << endl;
         }
       #endif
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
@@ -66,7 +66,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
- prevariable& sin(_CONST prevariable& v1)
+ prevariable& sin(const prevariable& v1)
  {
    if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
      gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -80,7 +80,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
- prevariable& sigmoid(_CONST prevariable& v1)
+prevariable& sigmoid(const prevariable& v1)
  {
    if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
      gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -104,7 +104,7 @@ void gradfree(dlink *);
     \param v1 Indpendent variable \f$x\f$
     \return \f$|x|\f$
     */
-    prevariable& fabs(_CONST prevariable& v1)
+prevariable& fabs(const prevariable& v1)
     {
       double tmp;
 
@@ -132,7 +132,7 @@ void gradfree(dlink *);
     \param v1 Indpendent variable \f$x\f$
     \return \f$|x|\f$
     */
-    prevariable& sfabs(_CONST prevariable& v1)
+prevariable& sfabs(const prevariable& v1)
     {
       #define cutoff 0.001 //  h
       #define cutoff2 0.000001
@@ -185,7 +185,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-    prevariable& cos(_CONST prevariable& v1)
+prevariable& cos(const prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
 	gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -199,7 +199,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-    prevariable& log(_CONST prevariable& v1)
+prevariable& log(const prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
 	gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -213,7 +213,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-    prevariable& log10(_CONST prevariable& v1)
+prevariable& log10(const prevariable& v1)
     {
       if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
 	gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;

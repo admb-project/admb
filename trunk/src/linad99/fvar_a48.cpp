@@ -61,7 +61,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_vector& dvar_vector::operator /= (_CONST prevariable& x)
+dvar_vector& dvar_vector::operator/=(const prevariable& x)
   {
     RETURN_ARRAYS_INCREMENT();
     double xinv=1./value(x);

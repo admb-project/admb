@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  ivector sgn(_CONST dvar_vector& v)
+ivector sgn(const dvar_vector& v)
   {
     int mmin=v.indexmin();
     int mmax=v.indexmax();

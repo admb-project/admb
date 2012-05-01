@@ -34,7 +34,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& _s,_CONST d3_array& z)
+ostream& operator<<(const ostream& _s, const d3_array& z)
 {
   ostream& s = (ostream&) _s;
 #ifdef __USE_IOSTREAM__
@@ -70,7 +70,7 @@ ostream& operator<<(BOR_CONST ostream& _s,_CONST d3_array& z)
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& _istr,BOR_CONST d3_array& z)
+istream& operator>>(const istream& _istr, const d3_array& z)
 {
   istream& istr = (istream&) _istr;
   for (int i=z.slicemin();i<=z.slicemax();i++)

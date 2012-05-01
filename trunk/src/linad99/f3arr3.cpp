@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
- d3_array value(_CONST dvar3_array& ar)
+d3_array value(const dvar3_array& ar)
  { 
    d3_array tmp;
    tmp.allocate(ar);
@@ -29,7 +29,7 @@
  * Description not yet available.
  * \param
  */
- void d3_array::allocate(_CONST dvar3_array& d3v)
+void d3_array::allocate(const dvar3_array& d3v)
  {
    int sl=d3v.slicemin();
    int sh=d3v.slicemax();

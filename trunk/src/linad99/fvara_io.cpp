@@ -33,7 +33,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& ostr,_CONST dvar_vector& z)
+ostream& operator<<(const ostream& ostr, const dvar_vector& z)
 {
   if (allocated(z))  
     z.write_on(ostr);
@@ -45,7 +45,7 @@ ostream& operator<<(BOR_CONST ostream& ostr,_CONST dvar_vector& z)
  * Description not yet available.
  * \param
  */
-void dvar_vector::write_on(BOR_CONST ostream& _s) _CONST
+void dvar_vector::write_on(const ostream& _s) const
 {
   ostream& s =(ostream&) _s;
 #ifdef __USE_IOSTREAM__
@@ -79,7 +79,7 @@ void dvar_vector::write_on(BOR_CONST ostream& _s) _CONST
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST dvar_vector& _z)
+istream& operator>>(const istream& istr, const dvar_vector& _z)
 {
   ADUNCONST(dvar_vector,z)
   if (allocated(z))
@@ -91,7 +91,7 @@ istream& operator>>(BOR_CONST istream& istr,BOR_CONST dvar_vector& _z)
  * Description not yet available.
  * \param
  */
-void dvar_vector::read_from(BOR_CONST istream& s)
+void dvar_vector::read_from(const istream& s)
 {
   if (allocated(*this))
     for (int i=indexmin(); i <= indexmax(); i++)

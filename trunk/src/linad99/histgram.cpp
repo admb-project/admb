@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-ivector histogram(double min,double max,int nbin,_CONST dvector& v)
+ivector histogram(double min, double max, int nbin, const dvector& v)
 {
   ivector tmp(1,nbin);
   int mmin=v.indexmin();

@@ -35,7 +35,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& _ostr, _CONST i5_array& z)
+ostream& operator<<(const ostream& _ostr, const i5_array& z)
 {
   ostream& ostr=(ostream&) _ostr;
   for (int i=z.indexmin();i<=z.indexmax();i++)
@@ -56,7 +56,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr, _CONST i5_array& z)
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST i5_array& z)
+istream& operator>>(const istream& istr, const i5_array& z)
 {
   for (int i=z.indexmin();i<=z.indexmax();i++)
   {

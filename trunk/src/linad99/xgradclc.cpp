@@ -378,7 +378,7 @@ void funnel_derivatives(void)
  * Description not yet available.
  * \param
  */
-dvariable& funnel_dvariable::operator = (_CONST prevariable& t)
+dvariable& funnel_dvariable::operator=(const prevariable& t)
 {
   dvariable::operator = (t);
   funnel_gradcalc();

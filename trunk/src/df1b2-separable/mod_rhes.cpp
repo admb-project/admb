@@ -88,7 +88,7 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
   return L;
 }
 
-void useless(BOR_CONST double& sdelta2);
+void useless(const double& sdelta2);
 
 /**
  * Description not yet available.

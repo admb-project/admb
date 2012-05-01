@@ -156,7 +156,7 @@ df1b2vector gammln(const df1b2vector&  z){
  * Description not yet available.
  * \param
  */
-df1b2variable log_comb(_CONST df1b2variable& n,double k)
+df1b2variable log_comb(const df1b2variable& n, double k)
 {
   return factln(n)-factln(k)-factln(n-k);
 }
@@ -165,7 +165,7 @@ df1b2variable log_comb(_CONST df1b2variable& n,double k)
  * Description not yet available.
  * \param
  */
-df1b2variable log_comb(_CONST df1b2variable& n,_CONST df1b2variable& k)
+df1b2variable log_comb(const df1b2variable& n, const df1b2variable& k)
 {
   return factln(n)-factln(k)-factln(n-k);
 }
@@ -174,7 +174,7 @@ df1b2variable log_comb(_CONST df1b2variable& n,_CONST df1b2variable& k)
  * Description not yet available.
  * \param
  */
-df1b2variable log_comb(double n,_CONST df1b2variable& k)
+df1b2variable log_comb(double n, const df1b2variable& k)
 {
   return factln(n)-factln(k)-factln(n-k);
 }
@@ -183,7 +183,7 @@ df1b2variable log_comb(double n,_CONST df1b2variable& k)
  * Description not yet available.
  * \param
  */
-df1b2variable factln(_CONST df1b2variable& n)
+df1b2variable factln(const df1b2variable& n)
 {
   return gammln(n+1.0);
 }

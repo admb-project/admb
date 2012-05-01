@@ -28,7 +28,7 @@
  * Description not yet available.
  * \param
  */
- _CONST AD_LONG_INT& lvector::operator[] (int i) _CONST 
+const AD_LONG_INT& lvector::operator[](int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i>indexmax())
@@ -50,7 +50,7 @@
  * Description not yet available.
  * \param
  */
-  _CONST AD_LONG_INT& lvector::operator() (int i) _CONST 
+const AD_LONG_INT& lvector::operator()(int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i>indexmax())

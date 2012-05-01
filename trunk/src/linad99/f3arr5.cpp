@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator / (_CONST d3_array& m,_CONST prevariable& d)
+dvar3_array operator/(const d3_array& m, const prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -31,7 +31,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator / (_CONST dvar3_array& m, CGNU_DOUBLE d)
+dvar3_array operator/(const dvar3_array& m, CGNU_DOUBLE d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -48,7 +48,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator / (_CONST dvar3_array& m,_CONST prevariable& d)
+dvar3_array operator/(const dvar3_array& m, const prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -65,7 +65,7 @@
  * Description not yet available.
  * \param
  */
-   void dvar3_array::operator /=(_CONST prevariable& d)
+void dvar3_array::operator/=(const prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      for (int i=slicemin();i<=slicemax();i++)

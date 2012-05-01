@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-double regression(_CONST dvector& obs,_CONST dvector& pred)
+double regression(const dvector& obs, const dvector& pred)
 {
   double nobs=double(size_count(obs));
   double vhat=norm2(obs-pred);

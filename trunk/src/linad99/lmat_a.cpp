@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
- lmatrix::lmatrix(BOR_CONST lmatrix_position& pos)
+lmatrix::lmatrix(const lmatrix_position& pos)
  {
    int nrl=pos.row_min;
    int nrh=pos.row_max;
@@ -23,7 +23,7 @@
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in lmatrix(int nrl,int nrh,BOR_CONST ivector& ncl,BOR_CONST ivector& nch)\n";
+     cerr << "Incompatible array bounds in lmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
      ad_exit(1);
    }
 

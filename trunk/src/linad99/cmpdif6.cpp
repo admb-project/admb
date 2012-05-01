@@ -25,7 +25,7 @@
  * Description not yet available.
  * \param
  */
-void dmatrix::save_dmatrix_position(void) _CONST
+void dmatrix::save_dmatrix_position(void) const
 {
   // saves the size and address information for a dvar_vector
   dmatrix_position tmp(*this);
@@ -135,7 +135,7 @@ dmatrix_position restore_dmatrix_position(void)
  * Description not yet available.
  * \param
  */
-dmatrix restore_dvar_matrix_derivatives(BOR_CONST dvar_matrix_position& _pos)
+dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position& _pos)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
   dmatrix tmp(pos);
@@ -150,7 +150,7 @@ dmatrix restore_dvar_matrix_derivatives(BOR_CONST dvar_matrix_position& _pos)
  * Description not yet available.
  * \param
  */
-dmatrix restore_dvar_matrix_der_nozero(BOR_CONST dvar_matrix_position& _pos)
+dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position& _pos)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
   dmatrix tmp(pos);
@@ -165,7 +165,7 @@ dmatrix restore_dvar_matrix_der_nozero(BOR_CONST dvar_matrix_position& _pos)
  * Description not yet available.
  * \param
  */
-dvector restore_dvar_matrix_derivative_row(BOR_CONST dvar_matrix_position& _pos,BOR_CONST int& ii)
+dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& _pos, const int& ii)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
   dvector tmp=restore_dvar_vector_derivatives(pos(ii));
@@ -176,7 +176,7 @@ dvector restore_dvar_matrix_derivative_row(BOR_CONST dvar_matrix_position& _pos,
  * Description not yet available.
  * \param
  */
-dvector restore_dvar_matrix_derivative_column(BOR_CONST dvar_matrix_position& _pos,BOR_CONST int& ii)
+dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& _pos, const int& ii)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
   dvector tmpvec(pos.rowmin(),pos.rowmax());
@@ -212,7 +212,7 @@ dvar_vector nograd_assign(dvector tmp)
  * Description not yet available.
  * \param
  */
-dvar_matrix nograd_assign(_CONST dmatrix& m)
+dvar_matrix nograd_assign(const dmatrix& m)
 {
   // cout << "Entering nograd assign"<<endl;
   //kkludge_object kg;
@@ -244,7 +244,7 @@ dvar_matrix nograd_assign(_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix nograd_assign_trans(_CONST dmatrix& m)
+dvar_matrix nograd_assign_trans(const dmatrix& m)
 {
   // cout << "Entering nograd assign"<<endl;
   //kkludge_object kg;
@@ -276,7 +276,7 @@ dvar_matrix nograd_assign_trans(_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-void nograd_assign_column(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)
+void nograd_assign_column(const dvar_matrix& m, const dvector& v, const int& ii)
 {
   // cout << "Entering nograd assign"<<endl;
   //kkludge_object kg;
@@ -285,7 +285,7 @@ void nograd_assign_column(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int&
    (v.indexmax()!=m.rowmax()) )
   {
     cerr << "Error -- Index out of bounds in\n"
-      "void nograd_assign(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii)"
+      "void nograd_assign(const dvar_matrix& m,const dvector& v, const int& ii)"
       << endl;
     ad_exit(1);
   }

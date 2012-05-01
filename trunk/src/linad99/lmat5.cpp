@@ -15,12 +15,12 @@
  * Description not yet available.
  * \param
  */
- lmatrix& lmatrix::operator= (_CONST lmatrix& m1)
+lmatrix& lmatrix::operator=(const lmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
      colmin() != m1.colmin() || colmax() != m1.colmax() )
    {
-     cerr << " Incompatible array bounds in imatrix& operator = (_CONST imatrix&)\n";
+     cerr << " Incompatible array bounds in imatrix& operator = (const imatrix&)\n";
      ad_exit(21);
    }
 
@@ -38,12 +38,12 @@
  * Description not yet available.
  * \param
  */
- lmatrix& lmatrix::operator= (_CONST imatrix& m1)
+lmatrix& lmatrix::operator=(const imatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
      colmin() != m1.colmin() || colmax() != m1.colmax() )
    {
-     cerr << " Incompatible array bounds in imatrix& operator = (_CONST imatrix&)\n";
+     cerr << " Incompatible array bounds in imatrix& operator=(const imatrix&)\n";
      ad_exit(21);
    }
 

@@ -80,7 +80,7 @@
  * Description not yet available.
  * \param
  */
-void gradcalc(int nvar,BOR_CONST dvector& _g)
+void gradcalc(int nvar, const dvector& _g)
 {
   if (nvar!=0)
   {

@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  dvector log(_CONST dvector& t1)
+dvector log(const dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -29,7 +29,7 @@
  * Description not yet available.
  * \param
  */
-  dvector exp(_CONST dvector& t1)
+dvector exp(const dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -44,7 +44,7 @@
  * Description not yet available.
  * \param
  */
-  dvector fabs(_CONST dvector& t1)
+dvector fabs(const dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 
@@ -59,7 +59,7 @@
  * Description not yet available.
  * \param
  */
-  double max(_CONST dvector& t1)
+double max(const dvector& t1)
   {
      double tmp;
      int mmin=t1.indexmin();
@@ -76,7 +76,7 @@
  * Description not yet available.
  * \param
  */
-  double min(_CONST dvector& t1)
+double min(const dvector& t1)
   {
      double tmp;
      int mmin=t1.indexmin();

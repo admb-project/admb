@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-dvar_matrix operator * (_CONST prevariable& x,_CONST dmatrix& m)
+dvar_matrix operator*(const prevariable& x, const dmatrix& m)
 {
   RETURN_ARRAYS_INCREMENT();
   int rmin=m.rowmin();
@@ -43,7 +43,7 @@ dvar_matrix operator * (_CONST prevariable& x,_CONST dmatrix& m)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator * (_CONST dvar_matrix& m,CGNU_DOUBLE x)
+dvar_matrix operator*(const dvar_matrix& m,CGNU_DOUBLE x)
 {
   RETURN_ARRAYS_INCREMENT();
   int rmin=m.rowmin();
@@ -72,7 +72,7 @@ dvar_matrix operator * (_CONST dvar_matrix& m,CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-dvar_matrix operator * ( CGNU_DOUBLE x,_CONST dvar_matrix& m)
+dvar_matrix operator*(CGNU_DOUBLE x, const dvar_matrix& m)
 {
   RETURN_ARRAYS_INCREMENT();
   int rmin=m.rowmin();

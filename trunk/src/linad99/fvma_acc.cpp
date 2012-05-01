@@ -65,7 +65,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST prevariable dvar_matrix::operator () (int i, int j) _CONST
+const prevariable dvar_matrix::operator()(int i, int j) const
     {
       #ifdef SAFE_ARRAYS
         if (i<rowmin())
@@ -100,7 +100,7 @@
  * Description not yet available.
  * \param
  */
-  _CONST dvar_vector& dvar_matrix::operator[] (int i) _CONST
+const dvar_vector& dvar_matrix::operator[](int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i<rowmin())

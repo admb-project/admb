@@ -28,11 +28,11 @@ void dmcm_prod(void);
  * Description not yet available.
  * \param
  */
- dvar_matrix  operator * (_CONST dvar_matrix& m1,_CONST dmatrix& cm2 )
+dvar_matrix operator*(const dvar_matrix& m1, const dmatrix& cm2)
  {
    if (m1.colmin() != cm2.rowmin() || m1.colmax() != cm2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator * (_CONST dvar_matrix& x,_CONST dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dmatrix operator*(const dvar_matrix& x, const dmatrix& m)\n";
      ad_exit(21);
    }
    dmatrix cm1=value(m1);

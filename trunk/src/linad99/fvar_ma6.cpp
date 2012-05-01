@@ -16,8 +16,7 @@ void dfempirical_covarv_partial(void);
  * Description not yet available.
  * \param
  */
- dvar_matrix empirical_covariance(_CONST dvar_matrix& _v1,
-  _CONST imatrix& _missflags)
+dvar_matrix empirical_covariance(const dvar_matrix& _v1, const imatrix& _missflags)
  {
    dvar_matrix& v1 = (dvar_matrix&) (_v1);
    imatrix& missflags=(imatrix&) (_missflags);
@@ -123,7 +122,7 @@ void dfempirical_covarv(void);
  * Description not yet available.
  * \param
  */
- dvar_matrix empirical_covariance(_CONST dvar_matrix& v1)
+dvar_matrix empirical_covariance(const dvar_matrix& v1)
  {
    int mmin=v1(v1.indexmin()).indexmin();
    int mmax=v1(v1.indexmin()).indexmax();
@@ -210,7 +209,7 @@ void dfouter_prodvv(void);
  * Description not yet available.
  * \param
  */
- dvar_matrix outer_prod(_CONST dvar_vector& v1,_CONST dvar_vector& v2 )
+dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
  {
    dvar_matrix tmp(v1.indexmin(),v1.indexmax(), v2.indexmin(), v2.indexmax() );
 
@@ -268,7 +267,7 @@ void dfouter_prodvv(void)
  * Description not yet available.
  * \param
  */
- dvar_matrix outer_prod(_CONST dvector& v1,_CONST dvar_vector& v2 )
+dvar_matrix outer_prod(const dvector& v1, const dvar_vector& v2)
  {
    RETURN_ARRAYS_INCREMENT();
 
@@ -289,7 +288,7 @@ void dfouter_prodvv(void)
  * Description not yet available.
  * \param
  */
- dvar_matrix outer_prod(_CONST dvar_vector& v1,_CONST dvector& v2 )
+dvar_matrix outer_prod(const dvar_vector& v1, const dvector& v2)
  {
    RETURN_ARRAYS_INCREMENT();
 

@@ -76,7 +76,7 @@ double randn(long int& n);
  * Description not yet available.
  * \param
  */
-  void dvar_matrix::colfill_randu(BOR_CONST int&j,long int&n)
+void dvar_matrix::colfill_randu(const int &j, long int &n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
@@ -93,7 +93,7 @@ double randn(long int& n);
  * Description not yet available.
  * \param
  */
-  void dvar_matrix::rowfill_randu(BOR_CONST int& i,long int& n)
+void dvar_matrix::rowfill_randu(const int& i, long int& n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
@@ -127,7 +127,7 @@ double randn(long int& n);
  * Description not yet available.
  * \param
  */
-  void dvar_matrix::colfill_randn(BOR_CONST int&j,long int&n)
+void dvar_matrix::colfill_randn(const int &j, long int &n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();
@@ -144,7 +144,7 @@ double randn(long int& n);
  * Description not yet available.
  * \param
  */
-  void dvar_matrix::rowfill_randn(BOR_CONST int& i,long int& n)
+void dvar_matrix::rowfill_randn(const int& i, long int& n)
   {
     long int nn;
     RETURN_ARRAYS_INCREMENT();

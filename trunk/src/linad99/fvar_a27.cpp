@@ -20,11 +20,11 @@
  * Description not yet available.
  * \param
  */
- dvar_vector& dvar_vector::operator = (_CONST dvector& t)
+ dvar_vector& dvar_vector::operator=(const dvector& t)
  {
    if (indexmin() != t.indexmin() || indexmax() != t.indexmax())
    {
-     cerr << " Incompatible bounds in dvar_vector& dvar_vector::operator = (_CONST dvector& t)\n";
+     cerr << " Incompatible bounds in dvar_vector& dvar_vector::operator = (const dvector& t)\n";
      ad_exit(21);
    }
 

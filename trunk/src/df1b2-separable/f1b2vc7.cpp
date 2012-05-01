@@ -24,7 +24,7 @@ df1b2vector& df1b2vector::shift(int min)
 }
 
 /*
- df1b2vector::df1b2vector(_CONST predf1b2vector& pdv)
+ df1b2vector::df1b2vector(const predf1b2vector& pdv)
  {
  #ifdef SAFE_ALL
    if (pdv.ub<pdv.lb) 

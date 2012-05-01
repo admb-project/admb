@@ -531,7 +531,8 @@ ad_separable_manager::ad_separable_manager(void)
 
 void ad_separable_manager::init(int lb,int ub)
 {
-  if (initialize_flag)
+  //if (initialize_flag)
+  if (initialize_flag || lb!=min_bound || ub!=max_bound) // just for now will set up and array of separable bounds managers
   {
     initialize_flag=0;
     min_bound=lb;
@@ -540,6 +541,20 @@ void ad_separable_manager::init(int lb,int ub)
     if (ad_comm::mpi_manager)
     {
       int num_separable_calls = max_bound-min_bound+1;
+      if (num_separable_calls == 1) 
+      {
+        if(ad_comm::mpi_manager->is_master())
+        {
+          min_index = min_bound;
+          max_index = max_bound;
+        }
+        else
+        {
+          min_index = 0;
+          max_index = -1;
+        }
+        return;
+      }
       if(ad_comm::mpi_manager->is_master())
       {
         int local_num_slaves = ad_comm::mpi_manager->get_num_slaves()+1;

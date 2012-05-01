@@ -548,7 +548,7 @@ int * kill_address;
  #if defined(USE_ADMPI)
               if (ad_comm::mpi_manager)
               {
-                (ad_comm::mpi_manager->sync_objfun_flag)=0;
+                ad_comm::mpi_manager->set_sync_objfun_flag(0);
                 if (ad_comm::mpi_manager->is_master())
                 {
                   depvars_routine();

@@ -113,7 +113,8 @@ A more detailed description might someday be written.
 
 #define separable_bounds(var,lb,ub) ad_separable_manager * var = \
   separable_manager; \
-  sb->init(lb,ub);
+  var->init(lb,ub);
+#define reset_separable_bounds(var,lb,ub) var->init(lb,ub);
 
 #define my_off_t long int
 #ifdef __BORLANDC__

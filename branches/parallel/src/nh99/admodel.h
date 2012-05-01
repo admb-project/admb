@@ -2810,6 +2810,7 @@ class admpi_manager
   int num_slaves;
   int num_hess_slaves; //the number of slaves for hessian may
                     // be different from the number of slaves in future
+  int num_separable_slaves;
   int slave_number; // not zero offset
   int mpi_offset;
   MPI_Comm parent; /* so slave can communicate with master*/
@@ -2825,10 +2826,13 @@ class admpi_manager
   double mpi_cobjfun;
 public:
   int sync_objfun_flag;
+  void set_sync_objfun_flag(int _flag){ sync_objfun_flag = _flag; }
   int sync_gradient_flag;
   int get_num_slaves(void){ return num_slaves;}
   int get_num_hess_slaves(void){ return num_hess_slaves;}
+  int get_num_separable_slaves(void){ return num_separable_slaves;}
   void set_num_hess_slaves(int _num_hess_slaves){ num_hess_slaves = _num_hess_slaves; }
+  void set_num_separable_slaves(int _num_separable_slaves){ num_separable_slaves = _num_separable_slaves; }
   void reset_mpi_cobjfun(void){ mpi_cobjfun=0.0;}
   void set_minimize_flag(void){ do_minimize=1; }
   double get_mpi_cobjfun(void){ return mpi_cobjfun;}

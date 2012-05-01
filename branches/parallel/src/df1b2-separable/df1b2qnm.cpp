@@ -29,12 +29,30 @@ void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn);
 void function_minimizer::quasi_newton_block(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f)
 {
+{
+  static int stop_flag;
+  if (stop_flag!=1)
+  {
+#if defined(USE_ADMPI)
+   if (ad_comm::mpi_manager){
+    if(ad_comm::mpi_manager->is_slave())
+    {
+      cout << "PID " << getpid() << endl;
+    }
+   }
+#endif
+    stop_flag=0;
+  }
+  while(stop_flag==0)
+    sleep(5);
+}
 #if defined(USE_ADMPI)
     if (ad_comm::mpi_manager)
     {
       if (random_effects_flag) // if random effects master & slaves make it here. have to sync
       {
-        (ad_comm::mpi_manager->sync_objfun_flag)=1;
+        //(ad_comm::mpi_manager->sync_objfun_flag)=1;
+        ad_comm::mpi_manager->set_sync_objfun_flag(1);
       }
     }
 #endif

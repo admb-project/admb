@@ -141,7 +141,7 @@ adstring::adstring(const unsigned char ub) : clist()
 }
 */
 
-adstring::adstring(_CONST char ub) : clist()
+adstring::adstring(const char ub) : clist()
 {
   unsigned int sz = 1;
 //  shape = new adstring_shape(sz);
@@ -152,14 +152,14 @@ adstring::adstring(_CONST char ub) : clist()
   s[2] = '\0';
 }
 
-adstring::adstring(_CONST adstring & v) : clist(v)
+adstring::adstring(const adstring & v) : clist(v)
 {
   shape = v.shape;
   s = v.s;
 }
  
  
-adstring operator + (_CONST adstring & u, _CONST adstring & v)
+adstring operator+(const adstring & u, const adstring & v)
 {
   int us = u.size ();
   int vs = v.size ();

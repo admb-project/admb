@@ -52,5 +52,5 @@
 //  reinitialize(int seed);
 //};
 //
-//double randn(_CONST random_number_gnerator& rng);
+//double randn(const random_number_gnerator& rng);
 

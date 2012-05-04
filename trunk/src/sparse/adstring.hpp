@@ -97,87 +97,87 @@ class adstring : public clist
   void allocate(int sz);
   friend class adstring_array;
 public :
-  friend ostream & operator << (ostream & c, _CONST adstring & t);
+  friend ostream & operator<<(ostream & c, const adstring &t);
   friend istream & operator >> (istream & c, adstring & t);
 
-  adstring(_CONST char * t);
-  void allocate(_CONST char * t);
+  adstring(const char *t);
+  void allocate(const char *t);
   adstring(int lb, int ub);
-  adstring(_CONST adstring & v);
+  adstring(const adstring &v);
   void realloc(const char * t);
-  //adstring(_CONST unsigned char v);
-  adstring(_CONST char v);
+  //adstring(const unsigned char v);
+  adstring(const char v);
   adstring(void);
   ~adstring();
-  unsigned int size(void) _CONST;
+  unsigned int size(void) const;
   unsigned int buff_size(void);
-  unsigned char & operator()(_CONST int i);
-  unsigned char & operator[] (_CONST int i);
+  unsigned char& operator()(const int i);
+  unsigned char& operator[](const int i);
 #ifdef USE_CONST
-   const unsigned char & operator()(_CONST int i) _CONST;
-  _CONST unsigned char & operator[] (_CONST int i) _CONST;
+   const unsigned char& operator()(const int i) const;
+   const unsigned char& operator[](const int i) const;
 #endif
 
-  friend adstring operator + (_CONST adstring & u,_CONST adstring & v); 
+  friend adstring operator+(const adstring &u, const adstring &v); 
 
-  friend adstring operator + (_CONST adstring & u, _CONST unsigned char v);
+  friend adstring operator+(const adstring &u, const unsigned char v);
 
-  friend adstring operator + (_CONST adstring & u, _CONST signed char v);
+  friend adstring operator+(const adstring &u, const signed char v);
 
-  friend adstring operator + (_CONST adstring & u, _CONST unsigned char * v);
+  friend adstring operator+(const adstring &u, const unsigned char *v);
 
-  friend adstring operator + (_CONST adstring & u, _CONST signed char * v);
+  friend adstring operator+(const adstring &u, const signed char *v);
 
-  friend adstring operator + (_CONST unsigned char * v,_CONST adstring& u);
+  friend adstring operator+(const unsigned char *v, const adstring& u);
 
-  friend adstring operator + (_CONST char * v,_CONST adstring & u);
+  friend adstring operator+(const char *v, const adstring &u);
 
-  friend adstring operator + (_CONST unsigned char u,_CONST  adstring & v);
+  friend adstring operator+(const unsigned char u, const adstring &v);
 
-  adstring & operator += (_CONST adstring & u);
-  inline adstring & operator += (_CONST char u)
+  adstring& operator+=(const adstring &u);
+  inline adstring& operator+=(const char u)
     { return(*this += adstring(u)); }
 
-  int operator == (_CONST adstring & u) ;
+  int operator==(const adstring &u);
 
   inline int operator == (const char* u)
     { return *this == adstring(u); }
 
-  inline int operator != (_CONST adstring & u);
+  inline int operator!=(const adstring &u);
 
   adstring operator()(int i, int j);
   #if defined(USE_CONST)
-  int operator == (_CONST char* u) _CONST;
+  int operator==(const char* u) const;
 
-  int operator == (_CONST adstring & u)_CONST;
-    adstring operator() (int i, int j) _CONST;
+  int operator==(const adstring &u) const;
+  adstring operator()(int i, int j) const;
   #endif 
 
-  adstring & operator = (_CONST adstring & t);
-  adstring & operator = (_CONST char t);
+  adstring& operator=(const adstring &t);
+  adstring& operator=(const char t);
    // { return (*this = adstring(t)); }
 
   operator unsigned char * ();
   operator char * ();
 #ifdef USE_CONST
-  operator _CONST unsigned char * () _CONST;
-   operator _CONST char * () _CONST;
+  operator const unsigned char*() const;
+  operator const char*() const;
 #endif
 
   // Pascal-like adstring functions
 
-  int pos(_CONST adstring& substr) _CONST;  // returns the starting position of substr
+  int pos(const adstring& substr) const;  // returns the starting position of substr
 
   // converts a double into a adstring
   friend adstring str(double x, int minwidth, int decplaces);
-  friend adstring str(_CONST int x);
-  friend void val(_CONST adstring& s, int& v, int& code);
+  friend adstring str(const int x);
+  friend void val(const adstring& s, int& v, int& code);
   friend int val(const adstring& s);
 };
 
 adstring str(double x, int minwidth=17, int decplaces=-1);
-adstring str(_CONST int x);
-void val(_CONST adstring& s, int& v, int& code);
+adstring str(const int x);
+void val(const adstring& s, int& v, int& code);
 int val(const adstring& s);
 
 class cifstream;
@@ -186,20 +186,20 @@ class line_adstring : public adstring
 {
 public:
   line_adstring(void) : adstring() {}
-  line_adstring(_CONST adstring& s) : adstring(s) {}
-  line_adstring& operator = (_CONST adstring& s);
-  line_adstring& operator = (_CONST char * s);
+  line_adstring(const adstring& s) : adstring(s) {}
+  line_adstring& operator=(const adstring& s);
+  line_adstring& operator=(const char *s);
   friend istream & operator >> (istream & c, line_adstring & t);
 };
 
 adstring itoa(int n,int d);
 
-void str(_CONST int, adstring&);
+void str(const int, adstring&);
 adstring chr(int c);
-int length(_CONST adstring& t);
-int pos(_CONST adstring& substr,_CONST adstring& s);
+int length(const adstring& t);
+int pos(const adstring& substr, const adstring& s);
 
-//adstring operator + (_CONST char u, _CONST char v)
+//adstring operator+(const char u, const char v)
 //  { return (adstring(u) + adstring(v) ); }
 #if defined(__BORLANDC__)
 #  if (__BORLANDC__  <= 0x0520) 
@@ -224,8 +224,8 @@ int pos(_CONST adstring& substr,_CONST adstring& s);
     friend class ptr_vector;
   public:
     vector_shape(int& lb, int& lu) {index_min=lb;index_max=lu;ncopies=0;}
-    _CONST int indexmin(void) _CONST {return index_min;}
-    _CONST int indexmax(void) _CONST {return index_max;}
+    const int indexmin(void) const { return index_min; }
+    const int indexmax(void) const { return index_max; }
   };
 #endif
 
@@ -235,28 +235,28 @@ class adstring_array : public clist
   vector_shape * shape;
   adstring ** ptr;
 public:
-  int size() _CONST { return shape->indexmax()-shape->indexmin()+1;}
-  _CONST int indexmin(void) _CONST { return shape->indexmin();}
-  _CONST int indexmax(void) _CONST { return shape->indexmax();}
-  adstring_array(_CONST adstring_array& sa);
+  int size() const { return shape->indexmax()-shape->indexmin() + 1; }
+  const int indexmin(void) const { return shape->indexmin(); }
+  const int indexmax(void) const { return shape->indexmax(); }
+  adstring_array(const adstring_array& sa);
   ~adstring_array();
   adstring_array(int min,int max);
   void allocate(int min,int max);
   adstring_array(void); 
   #ifdef USE_CONST
-  _CONST adstring& operator [] (int i) _CONST;
-  _CONST adstring& operator () (int i) _CONST;
+  const adstring& operator[](int i) const;
+  const adstring& operator()(int i) const;
   #endif
   adstring& operator [] (int i);
   adstring& operator () (int i);
   adstring_array& adstring_array::operator += (const adstring& s);
   adstring_array& adstring_array::append_distinct(const adstring& s);
   friend ifstream& operator >> (ifstream& ifs,adstring_array& sa);
-  friend ostream& operator << (BOR_CONST ostream& ifs,_CONST adstring_array& sa);
+  friend ostream& operator<<(const ostream& ifs, const adstring_array& sa);
   friend cifstream& operator >> (cifstream& ifs,adstring_array& sa);
 };   // end class adstring_array
 
-ostream& operator << (BOR_CONST ostream& ifs,_CONST adstring_array& sa);
+ostream& operator<<(const ostream& ifs, const adstring_array& sa);
 
 
 int atoi(adstring& s);

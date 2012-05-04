@@ -529,55 +529,55 @@ void denormalize_ptr(void * , unsigned int byte_offset);
 
 class i3_array;
 
-ostream& operator<<(BOR_CONST ostream& ostr,_CONST dmatrix& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST dmatrix& z);
-uostream& operator<<(BOR_CONST uostream& ostr,_CONST dmatrix& z);
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dmatrix& z);
+ostream& operator<<(const ostream& ostr, const dmatrix& z);
+istream& operator>>(const istream& istr, const dmatrix& z);
+uostream& operator<<(const uostream& ostr, const dmatrix& z);
+uistream& operator>>(const uistream& istr, const dmatrix& z);
 
-ostream& operator<<(BOR_CONST ostream& ostr,_CONST d3_array& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST d3_array& z);
-uostream& operator<<(BOR_CONST uostream& ostr,_CONST d3_array& z);
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST d3_array& z);
+ostream& operator<<(const ostream& ostr, const d3_array& z);
+istream& operator>>(const istream& istr, const d3_array& z);
+uostream& operator<<(const uostream& ostr, const d3_array& z);
+uistream& operator>>(const uistream& istr, const d3_array& z);
 
-ostream& operator<<(BOR_CONST ostream& ostr,_CONST dvar3_array& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST dvar3_array& z);
-uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvar3_array& z);
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvar3_array& z);
+ostream& operator<<(const ostream& ostr, const dvar3_array& z);
+istream& operator>>(const istream& istr, const dvar3_array& z);
+uostream& operator<<(const uostream& ostr, const dvar3_array& z);
+uistream& operator>>(const uistream& istr, const dvar3_array& z);
 
-ostream& operator<<(BOR_CONST ostream& ostr,_CONST ivector& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST ivector& z);
-uostream& operator<<(BOR_CONST uostream& ostr,_CONST ivector& z);
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST ivector& z);
+ostream& operator<<(const ostream& ostr, const ivector& z);
+istream& operator>>(const istream& istr, const ivector& z);
+uostream& operator<<(const uostream& ostr, const ivector& z);
+uistream& operator>>(const uistream& istr, const ivector& z);
 
-ostream& operator<<(BOR_CONST ostream& ostr,_CONST lvector& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST lvector& z);
-uostream& operator<<(BOR_CONST uostream& ostr,_CONST lvector& z);
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST lvector& z);
+ostream& operator<<(const ostream& ostr, const lvector& z);
+istream& operator>>(const istream& istr, const lvector& z);
+uostream& operator<<(const uostream& ostr, const lvector& z);
+uistream& operator>>(const uistream& istr, const lvector& z);
 
-ostream& operator<<(BOR_CONST ostream& ostr,const dvector& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST dvector& z);
-uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvector& z);
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvector& z);
+ostream& operator<<(const ostream& ostr, const dvector& z);
+istream& operator>>(const istream& istr, const dvector& z);
+uostream& operator<<(const uostream& ostr, const dvector& z);
+uistream& operator>>(const uistream& istr, const dvector& z);
 
-ostream& operator<<(BOR_CONST ostream& ostr,_CONST dvar_vector& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST dvar_vector& z);
-uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvar_vector& z);
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvar_vector& z);
+ostream& operator<<(const ostream& ostr, const dvar_vector& z);
+istream& operator>>(const istream& istr, const dvar_vector& z);
+uostream& operator<<(const uostream& ostr, const dvar_vector& z);
+uistream& operator>>(const uistream& istr, const dvar_vector& z);
 
-ostream& operator<<(BOR_CONST ostream& ostr,_CONST dvar_matrix& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST dvar_matrix& z);
-uostream& operator<<(BOR_CONST uostream& ostr,_CONST dvar_matrix& z);
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dvar_matrix& z);
+ostream& operator<<(const ostream& ostr, const dvar_matrix& z);
+istream& operator>>(const istream& istr,const dvar_matrix& z);
+uostream& operator<<(const uostream& ostr, const dvar_matrix& z);
+uistream& operator>>(const uistream& istr, const dvar_matrix& z);
 
 
-ostream& operator<<(BOR_CONST ostream& ostr,_CONST prevariable& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST prevariable& z);
-uostream& operator<<(BOR_CONST uostream& ostr,_CONST prevariable& z);
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST prevariable& z);
+ostream& operator<<(const ostream& ostr, const prevariable& z);
+istream& operator>>(const istream& istr, const prevariable& z);
+uostream& operator<<(const uostream& ostr, const prevariable& z);
+uistream& operator>>(const uistream& istr, const prevariable& z);
 
-ostream& setscientific(BOR_CONST ostream& s);
+ostream& setscientific(const ostream& s);
 
-//ostream& setshowpoint(BOR_CONST ostream& s);
+//ostream& setshowpoint(const ostream& s);
 
 /**
  * Description not yet available.
@@ -588,12 +588,12 @@ class preshowpoint
   int x;
 };
 preshowpoint  setshowpoint(void);
-ostream& operator << (BOR_CONST ostream&,preshowpoint);
+ostream& operator << (const ostream&, preshowpoint);
 
 #if (__MSVC32__>=7 || __BORLANDC__  >= 0x0560) 
 #   define setfixed() std::fixed
 #else
-  ostream& setfixed(BOR_CONST ostream& s);
+  ostream& setfixed(const ostream& s);
 
 /**
  * Description not yet available.
@@ -604,7 +604,7 @@ ostream& operator << (BOR_CONST ostream&,preshowpoint);
     int x;
   };
   prefixed  setfixed(void);
-  ostream& operator << (BOR_CONST ostream&,prefixed);
+  ostream& operator<<(const ostream&, prefixed);
 #endif
   
 #if (__MSVC32__>=7 || __BORLANDC__  >= 0x0560) 
@@ -620,13 +620,13 @@ ostream& operator << (BOR_CONST ostream&,preshowpoint);
     int x;
   };
   prescientific  setscientific(void);
-  ostream& operator << (BOR_CONST ostream&,prescientific);
+  ostream& operator<<(const ostream&, prescientific);
 #endif
 
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST imatrix& z);
-ostream& operator<<(BOR_CONST ostream& istr,_CONST imatrix& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST i3_array& z);
-ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
+istream& operator>>(const istream& istr, const imatrix& z);
+ostream& operator<<(const ostream& istr, const imatrix& z);
+istream& operator>>(const istream& istr, const i3_array& z);
+ostream& operator<<(const ostream& istr, const i3_array& z);
   class grad_stack;
 
 /**
@@ -738,9 +738,9 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
 
   public:
 
-    int indexmin() _CONST {return shape->index_min;} // returns the minimum allowable index
-    int indexmax() _CONST  {return shape->index_max;} // returns the maximum allowable index
-    int size() _CONST {return shape->index_max - shape->index_min+1;} // returns the maximum allowable index
+    int indexmin() const { return shape->index_min; } // returns the minimum allowable index
+    int indexmax() const { return shape->index_max; } // returns the maximum allowable index
+    int size() const { return shape->index_max - shape->index_min + 1; } // returns the maximum allowable index
 
     void shift(int min);
     ptr_vector( int ncl,  int ncu);
@@ -752,11 +752,11 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
     void*& operator() (int i);
     //void*& elem(int i);
     void*& elem(int i) { return(*(v+i)); }
-    int operator ! (void) _CONST {return (shape == NULL);}
-    int operator () (void) _CONST {return (shape != NULL);}
+    int operator!(void) const { return (shape == NULL); }
+    int operator()(void) const { return (shape != NULL); }
 
-    ptr_vector(BOR_CONST ptr_vector& t);
-    ptr_vector& operator = (BOR_CONST ptr_vector& t);
+    ptr_vector(const ptr_vector& t);
+    ptr_vector& operator=(const ptr_vector& t);
     void initialize();
  }; // end of class ptr_vector
 
@@ -788,7 +788,7 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
     vector_shapex * shape;
 
   public:
-    int allocated(void) _CONST {return (shape != NULL);}
+    int allocated(void) const { return (shape != NULL); }
 
     ivector& operator -- (void) 
     { 
@@ -801,28 +801,28 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
       index_min++;index_max++;v--; return *this;
     }
     friend class vector_index;
-    int operator ! (void) _CONST {return (shape == NULL);}
+    int operator!(void) const { return (shape == NULL); }
 
         int& elem(int i) { return(v[i]); }
 #ifdef USE_CONST
-        _CONST int& elem(int i) _CONST { return(v[i]); }
+    const int& elem(int i) const { return v[i]; }
 #endif
-    int indexmin()_CONST  {return index_min;} // returns the minimum allowable index
-    int indexmax()_CONST  {return index_max;} // returns the maximum allowable index
-    int size() _CONST {return index_max - index_min+1;} // returns the maximum allowable index
-    int * get_v(void) _CONST {return v;}
+    int indexmin() const { return index_min; } // returns the minimum allowable index
+    int indexmax() const { return index_max; } // returns the maximum allowable index
+    int size() const { return index_max - index_min + 1; } // returns the maximum allowable index
+    int* get_v(void) const { return v; }
     ivector& shift(int min);
     //ivector(unsigned int sz); //makes an array [0..sz]
     //inline allocated(void) {return ::allocated(this);}
-    ivector(_CONST lvector&);
+    ivector(const lvector&);
     ivector(void);
 
-    ivector(_CONST dvector&);
+    ivector(const dvector&);
 
     void fill(const char * s);
     void fill_seqadd(int, int);
-    void fill_multinomial(BOR_CONST int& seed,_CONST dvector& p);
-    void fill_multinomial(BOR_CONST random_number_generator& rng,_CONST dvector& p);
+    void fill_multinomial(const int& seed, const dvector& p);
+    void fill_multinomial(const random_number_generator& rng, const dvector& p);
     ivector( int ncl,  int ncu);
     ivector(const ad_integer& ncl,const index_type& ncu);
     void allocate(const ad_integer& ncl,const index_type& ncu);
@@ -832,8 +832,8 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
 
       void safe_allocate(int ncl,int ncu);
       void allocate(int ncl,int ncu);
-      void allocate(_CONST ivector& iv);
-      void allocate(_CONST dvector& dv);
+      void allocate(const ivector& iv);
+      void allocate(const dvector& dv);
       void allocate(const char *);
       void allocate(void);
       void deallocate(void);
@@ -843,17 +843,17 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
 
    ~ivector();
 
-    void save_ivector_position(void) _CONST;
+    void save_ivector_position(void) const;
 
-    void save_ivector_value(void) _CONST;
+    void save_ivector_value(void) const;
 
-    void write_on(BOR_CONST ostream& s) _CONST;
+    void write_on(const ostream& s) const;
 
-    void read_from(BOR_CONST istream& s);
+    void read_from(const istream& s);
 
-    void write_on(BOR_CONST uostream& s) _CONST;
+    void write_on(const uostream& s) const;
 
-    void read_from(BOR_CONST uistream& s);
+    void read_from(const uistream& s);
 
  #ifdef OPT_LIB
     inline int& operator[] (int i) {return(*(v+i));}
@@ -865,11 +865,11 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
 
 #ifdef USE_CONST
  #ifdef OPT_LIB
-    inline _CONST int& operator[] (int i) _CONST {return(*(v+i));}
-    inline _CONST int& operator() (int i) _CONST {return(*(v+i));}
+    inline const int& operator[](int i) const { return (*(v+i)); }
+    inline const int& operator() (int i) const { return (*(v+i)) ; }
  #else
-    _CONST int& operator[] (int i) _CONST;
-    _CONST int& operator() (int i) _CONST;
+    const int& operator[](int i) const;
+    const int& operator()(int i) const;
  #endif
 #endif
 
@@ -883,30 +883,30 @@ ostream& operator<<(BOR_CONST ostream& istr,_CONST i3_array& z);
     }
     ivector(const preivector& pd);
 
-    ivector operator ()(_CONST ivector& u);
+    ivector operator()(const ivector& u);
 
-    ivector(_CONST ivector& t);
-    void shallow_copy(_CONST ivector& t);
+    ivector(const ivector& t);
+    void shallow_copy(const ivector& t);
 
-    ivector& operator = (_CONST ivector& t);
+    ivector& operator=(const ivector& t);
     ivector& operator = (int t);
 
-    ivector& operator = (_CONST lvector& t);
+    ivector& operator=(const lvector& t);
 
     friend class imatrix;
     friend class i3_array;
     void initialize(void);
-    ivector& operator += (_CONST ivector& t);
+    ivector& operator+=(const ivector& t);
     ivector& operator += (int t);
 
  }; // end of class ivector
 
-  ivector operator + (_CONST ivector& v,_CONST ivector& w);
-  ivector operator - (_CONST ivector& v,_CONST ivector& w);
-  ivector operator + (_CONST ivector& v,int w);
-  ivector operator - (_CONST ivector& v,int w);
-  ivector operator + (int v,_CONST ivector& w);
-  ivector operator - (int v,_CONST ivector& w);
+  ivector operator+(const ivector& v, const ivector& w);
+  ivector operator-(const ivector& v, const ivector& w);
+  ivector operator+(const ivector& v, int w);
+  ivector operator-(const ivector& v, int w);
+  ivector operator+(int v, const ivector& w);
+  ivector operator-(int v, const ivector& w);
 
 /**
  * Description not yet available.
@@ -919,8 +919,8 @@ class lvector_position
   int * v;
 public:
   lvector_position(void);
-  lvector_position(_CONST lvector& v);
-  lvector_position(BOR_CONST lvector_position& dvp);
+  lvector_position(const lvector& v);
+  lvector_position(const lvector_position& dvp);
 };
 
 /**
@@ -933,35 +933,35 @@ public:
     vector_shape * shape;
 
   public:
-    int operator ! (void) _CONST {return (shape == NULL);}
+    int operator!(void) const { return (shape == NULL); }
 
         inline AD_LONG_INT& elem(int i) { return(v[i]); }
 #ifdef USE_CONST
-        inline _CONST AD_LONG_INT& elem(int i) _CONST { return(v[i]); }
+    inline const AD_LONG_INT& elem(int i) const { return v[i]; }
 #endif
-    int indexmin() _CONST  {return shape->index_min;} // returns the minimum allowable index
-    int indexmax() _CONST {return shape->index_max;} // returns the maximum allowable index
-    int size() _CONST {return shape->index_max - shape->index_min+1;} // returns the maximum allowable index
+    int indexmin() const { return shape->index_min; } // returns the minimum allowable index
+    int indexmax() const { return shape->index_max; } // returns the maximum allowable index
+    int size() const { return shape->index_max - shape->index_min + 1; } // returns the maximum allowable index
     void shift(int min);
 
     void fill(const char * s);
-    void fill_seqadd( BOR_CONST AD_LONG_INT&,  BOR_CONST AD_LONG_INT&);
-    void fill_multinomial(BOR_CONST int& seed,_CONST dvector& p);
-    void fill_multinomial(BOR_CONST random_number_generator& rng,_CONST dvector& p);
+    void fill_seqadd(const AD_LONG_INT&, const AD_LONG_INT&);
+    void fill_multinomial(const int& seed, const dvector& p);
+    void fill_multinomial(const random_number_generator& rng, const dvector& p);
 
     //lvector(unsigned int sz); //makes an array [0..sz]
 
-    lvector(_CONST lvector&);
+    lvector(const lvector&);
 
-    lvector(_CONST dvector&);
+    lvector(const dvector&);
 
-    lvector(_CONST ivector&);
+    lvector(const ivector&);
 
     lvector(void);
 
     lvector( int ncl,  int ncu);
     void allocate( int ncl,  int ncu);
-    void allocate(_CONST lvector&);
+    void allocate(const lvector&);
     void allocate(void);
                                            // makes an array [ncl..ncu]
 
@@ -971,13 +971,13 @@ public:
 
    ~lvector();
 
-    void write_on(BOR_CONST ostream& s) _CONST;
+    void write_on(const ostream& s) const;
 
-    void read_from(BOR_CONST istream& s);
+    void read_from(const istream& s);
 
-    void write_on(BOR_CONST uostream& s) _CONST;
+    void write_on(const uostream& s) const;
 
-    void read_from(BOR_CONST uistream& s);
+    void read_from(const uistream& s);
 
 #ifdef OPT_LIB
     inline  AD_LONG_INT& operator[] (int i) {return v[i];}
@@ -989,23 +989,23 @@ public:
 
 #ifdef USE_CONST
 #ifdef OPT_LIB
-    inline _CONST  AD_LONG_INT& operator[] (int i) _CONST {return v[i];}
-    inline _CONST  AD_LONG_INT& operator() (int i) _CONST {return v[i];}
+    inline const AD_LONG_INT& operator[](int i) const { return v[i]; }
+    inline const AD_LONG_INT& operator()(int i) const { return v[i]; }
 #else
-    _CONST  AD_LONG_INT& operator[] (int i) _CONST ;
-    _CONST  AD_LONG_INT& operator() (int i) _CONST ;
+    const AD_LONG_INT& operator[](int i) const;
+    const AD_LONG_INT& operator()(int i) const;
 #endif
 #endif
 
-    lvector operator ()(_CONST lvector& u);
+    lvector operator()(const lvector& u);
 
-    lvector& operator = (_CONST lvector& t);
+    lvector& operator=(const lvector& t);
 
     void initialize(void);
     friend class lmatrix;
  }; // end of class lvector
 
-  AD_LONG_INT sum(_CONST lvector&);
+  AD_LONG_INT sum(const lvector&);
 
 /**
  * Description not yet available.
@@ -1025,7 +1025,7 @@ public:
     friend class gradient_structure;
   };
   dvar_vector_position restore_dvar_vector_position(void);
-  dvector restore_dvar_vector_value(BOR_CONST dvar_vector_position& tmp);
+  dvector restore_dvar_vector_value(const dvar_vector_position& tmp);
   void arr_free(double_and_int *);
   double_and_int * arr_new(unsigned int sz); 
 
@@ -1099,9 +1099,9 @@ private:
       static void save_arrays(void);
       static void restore_arrays(void);
       static long int totalbytes(void);
-      friend dvector restore_dvar_vector_value(BOR_CONST dvar_vector_position& tmp);
+      friend dvector restore_dvar_vector_value(const dvar_vector_position& tmp);
       friend void cleanup_temporary_files();
-      //friend dvector restore_dvar_vector_value(BOR_CONST dvar_vector_position&);
+      //friend dvector restore_dvar_vector_value(const dvar_vector_position&);
       friend dvector restore_dvar_vector_derivatives(void);
       friend dmatrix restore_dvar_matrix_derivatives(void);
       friend dmatrix restore_dvar_matrix_value(void);
@@ -1111,9 +1111,9 @@ private:
       friend void arr_free(double_and_int *);
       friend void RETURN_ARRAYS_DECREMENT(void);
       friend void RETURN_ARRAYS_INCREMENT(void);
-      friend void make_indvar_list(_CONST dvar_vector& t);
+      friend void make_indvar_list(const dvar_vector& t);
       //friend void gradcalc( int , double *);
-      friend void gradcalc(int nvar,BOR_CONST dvector& g);
+      friend void gradcalc(int nvar, const dvector& g);
       friend void slave_gradcalc(void);
       friend void funnel_gradcalc(void);
       friend void allocate_dvariable_space(void);
@@ -1130,9 +1130,9 @@ private:
       static arr_list * ARR_LIST1;
       static arr_list * ARR_FREE_LIST1;
       //static void funnel_jacobcalc(void);
-      static void jacobcalc(int nvar,BOR_CONST dmatrix& jac);
-      static void jacobcalc(int nvar,BOR_CONST ofstream& jac);
-      static void jacobcalc(int nvar,BOR_CONST uostream& jac);
+      static void jacobcalc(int nvar, const dmatrix& jac);
+      static void jacobcalc(int nvar, const ofstream& jac);
+      static void jacobcalc(int nvar, const uostream& jac);
 
       friend void default_evaluation(void);
       //access functions
@@ -1168,15 +1168,15 @@ private:
       friend class dlist;
       friend class grad_stack;
       static void save_dependent_variable_position
-        (_CONST prevariable& v1);
+        (const prevariable& v1);
       static long int max_last_offset;
       friend class function_minimizer;
       friend void funnel_derivatives(void);
   };
 
-  void jacobcalc(int nvar,BOR_CONST dmatrix& g);
-  void jacobcalc(int nvar,BOR_CONST ofstream& ofs);
-  void jacobcalc(int nvar,BOR_CONST uostream& ofs);
+  void jacobcalc(int nvar, const dmatrix& g);
+  void jacobcalc(int nvar, const ofstream& ofs);
+  void jacobcalc(int nvar, const uostream& ofs);
 
 #if defined(__BORLANDC__ )
   #if defined(__GNUC__)
@@ -1216,7 +1216,7 @@ private:
       //friend class prevariable;
       //friend class tempvar;
       friend class dlist;
-      friend void gradcalc(int nvar,BOR_CONST dvector& g);
+      friend void gradcalc(int nvar, const dvector& g);
       friend void slave_gradcalc(void);
       friend void gradloop();
       friend double_and_int * gradnew();
@@ -1248,15 +1248,15 @@ private:
       dlink* last_remove();
       friend void funnel_gradcalc(void);
       friend void slave_gradcalc(void);
-      friend void gradcalc(int nvar,BOR_CONST dvector& g);
+      friend void gradcalc(int nvar, const dvector& g);
       friend void gradloop();
       friend void gradient_structure::restore_variables();
       friend void gradient_structure::save_variables();
-      friend void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& jac);
+      friend void gradient_structure::jacobcalc(int nvar, const dmatrix& jac);
       friend void allocate_dvariable_space(void);
       //friend void gradient_structure::funnel_jacobcalc(void);
-      friend void gradient_structure::jacobcalc(int nvar,BOR_CONST ofstream& jac);
-      friend void gradient_structure::jacobcalc(int nvar,BOR_CONST uostream& jac);
+      friend void gradient_structure::jacobcalc(int nvar, const ofstream& jac);
+      friend void gradient_structure::jacobcalc(int nvar, const uostream& jac);
       friend void funnel_derivatives(void);
     };
 
@@ -1276,12 +1276,12 @@ private:
       double * ind_addr2;
       double  mult2;
     public:
-      friend void gradcalc(int nvar,BOR_CONST dvector& g);
+      friend void gradcalc(int nvar, const dvector& g);
       friend void slave_gradcalc(void);
       friend void gradloop();
       friend void default_evaluation(void);
       friend class grad_stack;
-      friend void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& jac);
+      friend void gradient_structure::jacobcalc(int nvar, const dmatrix& jac);
       //friend void gradient_structure::funnel_jacobcalc(void);
     };
     void default_evaluation3ind(void);
@@ -1327,7 +1327,7 @@ private:
 #endif
       dmatrix * table;
     public:
-      friend void gradcalc(int nvar,BOR_CONST dvector& g);
+      friend void gradcalc(int nvar, const dvector& g);
       friend void slave_gradcalc(void);
       friend void funnel_gradcalc(void);
       friend void default_evaluation(void);
@@ -1761,7 +1761,7 @@ private:
   
     public:
       friend class gradient_structure;
-      inline double * get_address(BOR_CONST int& i) { return(address[i]);}
+      inline double* get_address(const int& i) { return address[i]; }
       void put_address(unsigned int& i, double * iaddress) 
       { 
         address[i] = iaddress;
@@ -1802,64 +1802,64 @@ private:
 
     friend class banded_symmetric_dvar_matrix;
     friend class banded_lower_triangular_dvar_matrix;
-    friend double& value(_CONST prevariable& v1);
+    friend double& value(const prevariable& v1);
 
-    friend double * address(_CONST prevariable& v1);
+    friend double* address(const prevariable& v1);
 
     //void gradfree(dlink * v)
 
-    friend prevariable& operator *(_CONST prevariable& v1,_CONST prevariable& v2);
+    friend prevariable& operator*(const prevariable& v1, const prevariable& v2);
 
-    friend prevariable& operator *( double v1,_CONST prevariable& v2);
+    friend prevariable& operator*(double v1, const prevariable& v2);
 
-    friend prevariable& operator *(_CONST prevariable& v1, double v2);
+    friend prevariable& operator*(const prevariable& v1, double v2);
 
-    friend prevariable& operator / (_CONST prevariable& t1,_CONST prevariable& t2);
+    friend prevariable& operator/(const prevariable& t1, const prevariable& t2);
 
-    friend prevariable& operator / ( double t1,_CONST prevariable& t2);
+    friend prevariable& operator/(double t1, const prevariable& t2);
 
-    friend prevariable& operator / (_CONST prevariable& t1, double t2);
+    friend prevariable& operator/(const prevariable& t1, double t2);
 
-    friend prevariable& sin(_CONST prevariable& t1);
+    friend prevariable& sin(const prevariable& t1);
 
-    friend prevariable& fabs(_CONST prevariable& t1);
-    friend prevariable& sigmoid(_CONST prevariable& t1);
+    friend prevariable& fabs(const prevariable& t1);
+    friend prevariable& sigmoid(const prevariable& t1);
 
-    friend prevariable& sfabs(_CONST prevariable& t1); //"smoothed absolute value function
+    friend prevariable& sfabs(const prevariable& t1); //"smoothed absolute value function
 
-    friend prevariable& sqrt(_CONST prevariable& t1);
-    friend prevariable& sqr(_CONST prevariable& t1);
+    friend prevariable& sqrt(const prevariable& t1);
+    friend prevariable& sqr(const prevariable& t1);
 
-    friend prevariable& exp(_CONST prevariable& t1);
+    friend prevariable& exp(const prevariable& t1);
 
-    friend prevariable& atan(_CONST prevariable& t1);
+    friend prevariable& atan(const prevariable& t1);
 
-    friend prevariable& tan(_CONST prevariable& t1);
-    friend prevariable& tanh(_CONST prevariable& t1);
+    friend prevariable& tan(const prevariable& t1);
+    friend prevariable& tanh(const prevariable& t1);
 
-    friend prevariable& atan2(_CONST prevariable& t1,_CONST prevariable& t2);
-    friend prevariable& atan2(_CONST prevariable& t1, double t2);
-    friend prevariable& atan2( double t1,_CONST prevariable& t2);
+    friend prevariable& atan2(const prevariable& t1, const prevariable& t2);
+    friend prevariable& atan2(const prevariable& t1, double t2);
+    friend prevariable& atan2(double t1, const prevariable& t2);
 
-    friend prevariable& acos(_CONST prevariable& t1);
+    friend prevariable& acos(const prevariable& t1);
 
-    friend prevariable& asin(_CONST prevariable& t1);
+    friend prevariable& asin(const prevariable& t1);
 
-    friend prevariable& cos(_CONST prevariable& t1);
-    friend prevariable& sinh(_CONST prevariable& t1);
-    friend prevariable& cosh(_CONST prevariable& t1);
+    friend prevariable& cos(const prevariable& t1);
+    friend prevariable& sinh(const prevariable& t1);
+    friend prevariable& cosh(const prevariable& t1);
 
-    friend prevariable& log(_CONST prevariable& t1);
-    friend prevariable& log10(_CONST prevariable& t1);
+    friend prevariable& log(const prevariable& t1);
+    friend prevariable& log10(const prevariable& t1);
 
-    friend prevariable& ldexp(_CONST prevariable&, BOR_CONST int&);
+    friend prevariable& ldexp(const prevariable&, const int&);
 
 
   public:
 
-   void save_prevariable_position(void) _CONST;
+   void save_prevariable_position(void) const;
    prevariable_position restore_prevariable_position(void);
-   void save_prevariable_value(void) _CONST;
+   void save_prevariable_value(void) const;
    double restore_prevariable_value(void);
    double restore_prevariable_derivative(void);
 
@@ -1872,39 +1872,39 @@ private:
      return v;
    }
    #ifdef USE_CONST
-     inline double_and_int *  get_v() _CONST 
+     inline double_and_int* get_v() const 
      {
        return v;
      }
    #endif
 
-   prevariable& operator=(_CONST prevariable&);
+   prevariable& operator=(const prevariable&);
    prevariable& operator=( double );
 #if (__BORLANDC__  >= 0x0540) 
-   prevariable& operator=(_CONST prevariable&)_CONST ;
-   prevariable& operator=( double )_CONST ;
+   prevariable& operator=(const prevariable&) const;
+   prevariable& operator=(double) const;
 #endif
 
-   int operator ==(_CONST prevariable& v1) _CONST;
-   int operator <=(_CONST prevariable& v1) _CONST;
-   int operator >=(_CONST prevariable& v1) _CONST;
-   int operator >(_CONST prevariable& v1) _CONST;
-   int operator <(_CONST prevariable& v1) _CONST;
-   int operator !=(_CONST prevariable& v1) _CONST;
+   int operator==(const prevariable& v1) const;
+   int operator<=(const prevariable& v1) const;
+   int operator>=(const prevariable& v1) const;
+   int operator>(const prevariable& v1) const;
+   int operator<(const prevariable& v1) const;
+   int operator!=(const prevariable& v1) const;
 
-   int operator ==( double v1) _CONST;
-   int operator <=( double v1) _CONST;
-   int operator >=( double v1) _CONST;
-   int operator >( double v1) _CONST;
-   int operator <( double v1) _CONST;
-   int operator !=( double v1) _CONST;
+   int operator==(double v1) const;
+   int operator<=(double v1) const;
+   int operator>=(double v1) const;
+   int operator>(double v1) const;
+   int operator<(double v1) const;
+   int operator!=(double v1) const;
 #if defined(USE_DDOUBLE)
-   int operator ==( int v1) _CONST;
-   int operator <=( int v1) _CONST;
-   int operator >=( int v1) _CONST;
-   int operator >( int v1) _CONST;
-   int operator <( int v1) _CONST;
-   int operator !=( int v1) _CONST;
+   int operator==(int v1) const;
+   int operator<=(int v1) const;
+   int operator>=(int v1) const;
+   int operator>(int v1) const;
+   int operator<(int v1) const;
+   int operator!=(int v1) const;
 #endif
 
   public:
@@ -1917,49 +1917,49 @@ private:
 
     void initialize(void);
 
-    friend char* fform(const char*,_CONST prevariable&);
+    friend char* fform(const char*, const prevariable&);
 
-    void operator +=(_CONST prevariable& t1);
+    void operator+=(const prevariable& t1);
     void operator +=( double t1);
 
-    void operator -=(_CONST prevariable& t1);
+    void operator-=(const prevariable& t1);
     void operator -=( double t1);
 
-    void operator /=(_CONST prevariable& v1);
+    void operator/=(const prevariable& v1);
     void operator /=( double v1);
 
-    void operator *=(_CONST prevariable& v1);
+    void operator*=(const prevariable& v1);
     void operator *=( double v1);
 
-    friend prevariable& operator +(_CONST prevariable& v1,_CONST prevariable& v2);
+    friend prevariable& operator+(const prevariable& v1, const prevariable& v2);
 
-    friend prevariable& operator +( double v1,_CONST prevariable& v2);
+    friend prevariable& operator+(double v1, const prevariable& v2);
 
-    friend prevariable& operator +(_CONST prevariable& v1, double v2);
+    friend prevariable& operator+(const prevariable& v1, double v2);
 
-    friend prevariable& operator -(_CONST prevariable& v1);
+    friend prevariable& operator-(const prevariable& v1);
 
-    friend prevariable& operator -(_CONST prevariable& v1,_CONST prevariable& v2);
+    friend prevariable& operator-(const prevariable& v1, const prevariable& v2);
 
-    friend prevariable& operator -( double v1,_CONST prevariable& v2);
+    friend prevariable& operator-(double v1, const prevariable& v2);
 
-    friend prevariable& operator -(_CONST prevariable& v1, double v2);
+    friend prevariable& operator-(const prevariable& v1, double v2);
 
-    friend prevariable& pow(_CONST prevariable& t1,_CONST prevariable& t2);
+    friend prevariable& pow(const prevariable& t1, const prevariable& t2);
 
-    friend prevariable& pow(_CONST prevariable& t1, double t2);
+    friend prevariable& pow(const prevariable& t1, double t2);
 
-    friend prevariable& pow( double t1,_CONST prevariable& t2);
+    friend prevariable& pow(double t1, const prevariable& t2);
 
   }; // end of class prevariable
 
-  inline double& value(_CONST prevariable& v1) { return(v1.v->x); }
-  inline double * address(_CONST prevariable& v1) { return(&(v1.v->x)); }
+  inline double& value(const prevariable& v1) { return v1.v->x; }
+  inline double* address(const prevariable& v1) { return(&(v1.v->x)); }
 
 
-  prevariable& operator << (BOR_CONST prevariable& v1,_CONST prevariable& v2);
-  dvar_vector& operator << (BOR_CONST dvar_vector& v1,_CONST dvar_vector& v2);
-  dvar_matrix& operator << (BOR_CONST dvar_matrix& v1,_CONST dvar_matrix& v2);
+  prevariable& operator<<(const prevariable& v1, const prevariable& v2);
+  dvar_vector& operator<<(const dvar_vector& v1, const dvar_vector& v2);
+  dvar_matrix& operator<<(const dvar_matrix& v1, const dvar_matrix& v2);
 
   class df1_one_variable;
   class df1_two_variable;
@@ -1975,10 +1975,10 @@ private:
      dvariable();
      ~dvariable();
      dvariable( double t);
-     dvariable(BOR_CONST int& t);
+     dvariable(const int& t);
      dvariable(kkludge_object);
-     dvariable(_CONST prevariable&);
-     dvariable& operator=(_CONST prevariable&);
+     dvariable(const prevariable&);
+     dvariable& operator=(const prevariable&);
      dvariable& operator = (const df1_one_variable& v);
      dvariable& operator = (const df1_two_variable& v);
      dvariable& operator = (const df1_three_variable& v);
@@ -1988,9 +1988,9 @@ private:
      dvariable& operator=( double);
 #  define double dd_real
 #endif
-     dvariable(_CONST dvariable&);
+     dvariable(const dvariable&);
 //#  if (__BORLANDC__  > 0x0520) 
-//     dvariable& operator+=(_CONST prevariable&);
+//     dvariable& operator+=(const prevariable&);
 //#  endif
 
   }; // end of class dvariable
@@ -2009,121 +2009,121 @@ private:
   class funnel_dvariable : public dvariable
   {
   public:
-     dvariable& operator=(_CONST prevariable&);
+     dvariable& operator=(const prevariable&);
   };
 
  // spreadsheet like element wise operations
 
-  dvar_vector operator * (_CONST dvar_vector& t1, double x);
-  dvar_vector operator / ( double x,_CONST dvar_vector& t1);
-  dvar_vector operator / (_CONST dvar_vector& t1, double x);
-  dvar_vector operator + ( double x,_CONST dvar_vector& t1);
-  dvar_vector operator + (_CONST dvar_vector& t1, double x);
-  dvar_vector operator - ( double x,_CONST dvar_vector& t1);
-  dvar_vector operator - (_CONST dvar_vector& t1, double x);
-  dvar_vector operator - (_CONST dvar_vector& t1);
-  dvar_vector operator * (_CONST dvar_vector& t1,_CONST prevariable& x);
-  dvar_vector operator / (_CONST prevariable& x,_CONST dvar_vector& t1);
-  dvar_vector operator / (_CONST dvar_vector& t1,_CONST prevariable& x);
-  dvar_vector operator + (_CONST prevariable& x,_CONST dvar_vector& t1);
-  dvar_vector operator + (_CONST dvar_vector& t1,_CONST prevariable& x);
-  dvar_vector operator - (_CONST prevariable& x,_CONST dvar_vector& t1);
-  dvar_vector operator - (_CONST dvar_vector& t1,_CONST prevariable& x);
-  dvar_vector operator - (_CONST dvector& t1,_CONST prevariable& x);
-  dvar_vector operator * (_CONST dvector& t1,_CONST prevariable& x);
-  dvar_vector operator * (_CONST prevariable& x,_CONST dvector& t1);
+  dvar_vector operator*(const dvar_vector& t1, double x);
+  dvar_vector operator/(double x, const dvar_vector& t1);
+  dvar_vector operator/(const dvar_vector& t1, double x);
+  dvar_vector operator+(double x, const dvar_vector& t1);
+  dvar_vector operator+(const dvar_vector& t1, double x);
+  dvar_vector operator-(double x, const dvar_vector& t1);
+  dvar_vector operator-(const dvar_vector& t1, double x);
+  dvar_vector operator-(const dvar_vector& t1);
+  dvar_vector operator*(const dvar_vector& t1, const prevariable& x);
+  dvar_vector operator/(const prevariable& x, const dvar_vector& t1);
+  dvar_vector operator/(const dvar_vector& t1, const prevariable& x);
+  dvar_vector operator+(const prevariable& x, const dvar_vector& t1);
+  dvar_vector operator+(const dvar_vector& t1, const prevariable& x);
+  dvar_vector operator-(const prevariable& x, const dvar_vector& t1);
+  dvar_vector operator-(const dvar_vector& t1, const prevariable& x);
+  dvar_vector operator-(const dvector& t1, const prevariable& x);
+  dvar_vector operator*(const dvector& t1, const prevariable& x);
+  dvar_vector operator*(const prevariable& x, const dvector& t1);
 
-  dvector operator * (_CONST dvector& t1, double x);
-  dvector operator / ( double x,_CONST dvector& t1);
-  dvector operator / (_CONST dvector& t1, double x);
-  dvector operator + ( double x,_CONST dvector& t1);
-  dvector operator + (_CONST dvector& t1, double x);
-  dvector operator - ( double x,_CONST dvector& t1);
-  dvector operator - (_CONST  dvector& t1, double x);
-  dvector operator - (_CONST dvector& t1);
+  dvector operator*(const dvector& t1, double x);
+  dvector operator/(double x, const dvector& t1);
+  dvector operator/(const dvector& t1, double x);
+  dvector operator+(double x, const dvector& t1);
+  dvector operator+(const dvector& t1, double x);
+  dvector operator-(double x, const dvector& t1);
+  dvector operator-(const dvector& t1, double x);
+  dvector operator-(const dvector& t1);
 
-  double min(_CONST dmatrix&);
-  double max(_CONST dmatrix&);
+  double min(const dmatrix&);
+  double max(const dmatrix&);
   int max(const imatrix&);
-  double max(_CONST dvector&);
-  dvariable max(_CONST dvar_vector&);
-  dvariable min(_CONST dvar_vector&);
+  double max(const dvector&);
+  dvariable max(const dvar_vector&);
+  dvariable min(const dvar_vector&);
 
-  dmatrix symmetrize(_CONST dmatrix& m1);
-  dvector eigenvalues(_CONST dmatrix& m1);
-  dmatrix eigenvectors(_CONST dmatrix& m1);
-  dmatrix eigenvectors(_CONST dmatrix& m1,BOR_CONST dvector& eigenvalues);
+  dmatrix symmetrize(const dmatrix& m1);
+  dvector eigenvalues(const dmatrix& m1);
+  dmatrix eigenvectors(const dmatrix& m1);
+  dmatrix eigenvectors(const dmatrix& m1, const dvector& eigenvalues);
 
-  dvar_matrix symmetrize(_CONST dvar_matrix& m1);
-  dvar_vector eigenvalues(_CONST dvar_matrix& m1);
-  dvar_matrix eigenvectors(_CONST dvar_matrix& m1);
+  dvar_matrix symmetrize(const dvar_matrix& m1);
+  dvar_vector eigenvalues(const dvar_matrix& m1);
+  dvar_matrix eigenvectors(const dvar_matrix& m1);
 
-  dmatrix outer_prod(_CONST dvector& t1 ,_CONST dvector& t2 );
-  dvar_matrix outer_prod(_CONST dvar_vector& t1 ,_CONST dvar_vector& t2 );
-  dvar_matrix outer_prod(_CONST dvector& t1 ,_CONST dvar_vector& t2 );
-  dvar_matrix outer_prod(_CONST dvar_vector& t1 ,_CONST dvector& t2 );
-  //double trace(_CONST dmatrix&);
-  //dvariable trace(_CONST dvar_matrix&);
-  dmatrix operator * ( double x,_CONST dmatrix& m);
-  dmatrix operator * (_CONST dmatrix& m, double d);
-  dmatrix operator / (_CONST dmatrix& m, double d);
-  dmatrix operator / ( double d,_CONST dmatrix& m);
-  dmatrix operator + ( double x,_CONST dmatrix& m);
+  dmatrix outer_prod(const dvector& t1, const dvector& t2 );
+  dvar_matrix outer_prod(const dvar_vector& t1, const dvar_vector& t2);
+  dvar_matrix outer_prod(const dvector& t1, const dvar_vector& t2);
+  dvar_matrix outer_prod(const dvar_vector& t1, const dvector& t2);
+  //double trace(const dmatrix&);
+  //dvariable trace(const dvar_matrix&);
+  dmatrix operator*(double x, const dmatrix& m);
+  dmatrix operator*(const dmatrix& m, double d);
+  dmatrix operator/(const dmatrix& m, double d);
+  dmatrix operator/(double d, const dmatrix& m);
+  dmatrix operator+(double x, const dmatrix& m);
   dvar_matrix operator + ( const dvariable& x,const dmatrix& m);
   dvar_matrix operator - ( const dvariable& x,const dmatrix& m);
-  dmatrix operator + (_CONST dmatrix& m, double d);
-  dmatrix operator - ( double x,_CONST dmatrix& m);
-  dmatrix operator - (_CONST dmatrix& m, double d);
-  dvar_matrix operator / (_CONST dvar_matrix& m,_CONST prevariable& x);
-  dvar_matrix operator / (_CONST dmatrix& m,_CONST prevariable& x);
-  dvar_matrix operator / (_CONST dvar_matrix& m, double x);
-  dvar_matrix operator / ( double x,_CONST dvar_matrix& m);
-  dvar_matrix operator / (_CONST prevariable& x,_CONST dvar_matrix& m);
+  dmatrix operator+(const dmatrix& m, double d);
+  dmatrix operator-(double x, const dmatrix& m);
+  dmatrix operator-(const dmatrix& m, double d);
+  dvar_matrix operator/(const dvar_matrix& m, const prevariable& x);
+  dvar_matrix operator/(const dmatrix& m, const prevariable& x);
+  dvar_matrix operator/(const dvar_matrix& m, double x);
+  dvar_matrix operator/(double x, const dvar_matrix& m);
+  dvar_matrix operator/(const prevariable& x, const dvar_matrix& m);
 
-  dvar_matrix operator * (_CONST prevariable& x,_CONST dmatrix& m);
-  dvar_matrix operator * (_CONST dvar_matrix& m,_CONST prevariable& x);
-  dvar_matrix operator * (_CONST prevariable& x,_CONST dvar_matrix& m);
-  dvar_matrix operator * ( double x,_CONST dvar_matrix& m);
+  dvar_matrix operator*(const prevariable& x, const dmatrix& m);
+  dvar_matrix operator*(const dvar_matrix& m, const prevariable& x);
+  dvar_matrix operator*(const prevariable& x, const dvar_matrix& m);
+  dvar_matrix operator*(double x, const dvar_matrix& m);
 
-  dvector operator & (_CONST dvector& t1,_CONST dvector& t2);
-  dvar_vector operator & (_CONST dvar_vector& t1,_CONST dvar_vector& t2);
+  dvector operator&(const dvector& t1, const dvector& t2);
+  dvar_vector operator&(const dvar_vector& t1, const dvar_vector& t2);
 
 
-  ivector column(_CONST imatrix& m,int i);
-  dvector extract_column(_CONST dmatrix& m,int i);
-  dvector column(_CONST dmatrix& m,int i);
-  dvector extract_row(_CONST dmatrix& m, int j);
-  dvector row(_CONST dmatrix& m, int j);
-  dvar_vector extract_column(_CONST dvar_matrix& m, int i);
-  dvar_vector column(_CONST dvar_matrix& m, int i);
+  ivector column(const imatrix& m, int i);
+  dvector extract_column(const dmatrix& m, int i);
+  dvector column(const dmatrix& m, int i);
+  dvector extract_row(const dmatrix& m, int j);
+  dvector row(const dmatrix& m, int j);
+  dvar_vector extract_column(const dvar_matrix& m, int i);
+  dvar_vector column(const dvar_matrix& m, int i);
   dvector column_value(const dvar_matrix& m, int i);
-  dvar_vector extract_row(_CONST dvar_matrix& m, int j);
-  dvar_vector row(_CONST dvar_matrix& m, int j);
+  dvar_vector extract_row(const dvar_matrix& m, int j);
+  dvar_vector row(const dvar_matrix& m, int j);
 
 // dvector mathematical functions
 
-     dvector sin(_CONST dvector& t1);
-     dvector sqrt(_CONST dvector& t1);
-     dvector sqr(_CONST dvector& t1);
-     dvector exp(_CONST dvector& t1);
-     dvector mfexp(_CONST dvector& t1);
-     dvector mfexp(_CONST dvector& t1, double d);
-     dvector atan(_CONST dvector& t1);
-     dvector tan(_CONST dvector& t1);
-     dvector tanh(_CONST dvector& t1);
-     dvector atan2(_CONST dvector& t1,_CONST dvector& t2);
-     dvector atan2(_CONST dvector& t1, double t2);
-     dvector atan2( double t1,_CONST dvector& t2);
-     dvector acos(_CONST dvector& t1);
-     dvector asin(_CONST dvector& t1);
-     dvector cos(_CONST dvector& t1);
-     dvector sinh(_CONST dvector& t1);
-     dvector cosh(_CONST dvector& t1);
-     dvector log(_CONST dvector& t1);
-     dvector log10(_CONST dvector& t1);
-     dvector pow(_CONST dvector& t1, double);
-     dvector pow(_CONST dvector& t1,int);
-     dvector pow( double,_CONST dvector& t1);
+     dvector sin(const dvector& t1);
+     dvector sqrt(const dvector& t1);
+     dvector sqr(const dvector& t1);
+     dvector exp(const dvector& t1);
+     dvector mfexp(const dvector& t1);
+     dvector mfexp(const dvector& t1, double d);
+     dvector atan(const dvector& t1);
+     dvector tan(const dvector& t1);
+     dvector tanh(const dvector& t1);
+     dvector atan2(const dvector& t1, const dvector& t2);
+     dvector atan2(const dvector& t1, double t2);
+     dvector atan2(double t1, const dvector& t2);
+     dvector acos(const dvector& t1);
+     dvector asin(const dvector& t1);
+     dvector cos(const dvector& t1);
+     dvector sinh(const dvector& t1);
+     dvector cosh(const dvector& t1);
+     dvector log(const dvector& t1);
+     dvector log10(const dvector& t1);
+     dvector pow(const dvector& t1, double);
+     dvector pow(const dvector& t1, int);
+     dvector pow(double, const dvector& t1);
      ivector pow(const ivector& v1, int x); 
      ivector pow(int x,const ivector& v1); 
 
@@ -2131,79 +2131,79 @@ private:
 
 // dvar_vector mathematical functions
 
-     dvar_vector sin(_CONST dvar_vector& t1);
-     dvar_vector sqrt(_CONST dvar_vector& t1);
-     dvar_vector sqr(_CONST dvar_vector& t1);
-     dvar_vector exp(_CONST dvar_vector& t1);
-     dvar_vector mfexp(_CONST dvar_vector& t1);
-     dvar_vector mfexp(_CONST dvar_vector& t1, double d);
-     dvar_vector atan(_CONST dvar_vector& t1);
-     dvar_vector tan(_CONST dvar_vector& t1);
-     dvar_vector tanh(_CONST dvar_vector& t1);
-     dvar_vector atan2(_CONST dvar_vector& t1,_CONST dvar_vector& t2);
-     dvar_vector atan2(_CONST dvar_vector& t1, double t2);
-     dvar_vector atan2( double t1,_CONST dvar_vector& t2);
-     dvar_vector acos(_CONST dvar_vector& t1);
-     dvar_vector asin(_CONST dvar_vector& t1);
-     dvar_vector cos(_CONST dvar_vector& t1);
-     dvar_vector sinh(_CONST dvar_vector& t1);
-     dvar_vector cosh(_CONST dvar_vector& t1);
-     dvar_vector log(_CONST dvar_vector& t1);
-     dvar_vector log10(_CONST dvar_vector& t1);
-     dvar_vector pow(_CONST dvar_vector&,_CONST dvar_vector& t1);
-     dvar_vector pow(_CONST dvar_vector&,_CONST dvector& t1);
-     dvar_vector pow(_CONST dvector&,_CONST dvar_vector& t1);
-     dvector pow(_CONST dvector&,_CONST dvector& t1);
-     dvar_vector pow(_CONST dvar_vector& t1, double);
-     dvar_vector pow(_CONST dvar_vector& t1,int);
-     dvar_vector pow(_CONST dvar_vector& t1,_CONST prevariable&);
-     dvar_vector pow(_CONST dvector& t1,_CONST prevariable&);
-     dvar_vector pow(_CONST prevariable&,_CONST dvar_vector& t1);
+     dvar_vector sin(const dvar_vector& t1);
+     dvar_vector sqrt(const dvar_vector& t1);
+     dvar_vector sqr(const dvar_vector& t1);
+     dvar_vector exp(const dvar_vector& t1);
+     dvar_vector mfexp(const dvar_vector& t1);
+     dvar_vector mfexp(const dvar_vector& t1, double d);
+     dvar_vector atan(const dvar_vector& t1);
+     dvar_vector tan(const dvar_vector& t1);
+     dvar_vector tanh(const dvar_vector& t1);
+     dvar_vector atan2(const dvar_vector& t1, const dvar_vector& t2);
+     dvar_vector atan2(const dvar_vector& t1, double t2);
+     dvar_vector atan2(double t1, const dvar_vector& t2);
+     dvar_vector acos(const dvar_vector& t1);
+     dvar_vector asin(const dvar_vector& t1);
+     dvar_vector cos(const dvar_vector& t1);
+     dvar_vector sinh(const dvar_vector& t1);
+     dvar_vector cosh(const dvar_vector& t1);
+     dvar_vector log(const dvar_vector& t1);
+     dvar_vector log10(const dvar_vector& t1);
+     dvar_vector pow(const dvar_vector&, const dvar_vector& t1);
+     dvar_vector pow(const dvar_vector&, const dvector& t1);
+     dvar_vector pow(const dvector&, const dvar_vector& t1);
+     dvector pow(const dvector&, const dvector& t1);
+     dvar_vector pow(const dvar_vector& t1, double);
+     dvar_vector pow(const dvar_vector& t1, int);
+     dvar_vector pow(const dvar_vector& t1, const prevariable&);
+     dvar_vector pow(const dvector& t1, const prevariable&);
+     dvar_vector pow(const prevariable&, const dvar_vector& t1);
 	dvar_vector pow(const dvector& x,const dvar_vector& a);
 
 // end of dvar_vector mathematical functions
 
 // dmatrix mathematical functions
-    dmatrix exp(_CONST dmatrix& m);
-    dmatrix mfexp(_CONST dmatrix& m);
-    dmatrix mfexp(_CONST dmatrix& m, double d);
-    dmatrix sqrt(_CONST dmatrix& m);
-    dmatrix sqr(_CONST dmatrix& m);
-    dmatrix pow(_CONST dmatrix& m, double e);
-    dmatrix pow(_CONST dmatrix& m,int e);
-    dmatrix log(_CONST dmatrix& m);
-    dmatrix sin(_CONST dmatrix& m);
-    dmatrix cos(_CONST dmatrix& m);
-    dmatrix tan(_CONST dmatrix& m);
-    dmatrix elem_div(_CONST dmatrix& m,_CONST dmatrix& m2);
-    dmatrix elem_prod(_CONST dmatrix& m,_CONST dmatrix& m2);
+    dmatrix exp(const dmatrix& m);
+    dmatrix mfexp(const dmatrix& m);
+    dmatrix mfexp(const dmatrix& m, double d);
+    dmatrix sqrt(const dmatrix& m);
+    dmatrix sqr(const dmatrix& m);
+    dmatrix pow(const dmatrix& m, double e);
+    dmatrix pow(const dmatrix& m, int e);
+    dmatrix log(const dmatrix& m);
+    dmatrix sin(const dmatrix& m);
+    dmatrix cos(const dmatrix& m);
+    dmatrix tan(const dmatrix& m);
+    dmatrix elem_div(const dmatrix& m, const dmatrix& m2);
+    dmatrix elem_prod(const dmatrix& m, const dmatrix& m2);
 // end of dmatrix mathematical functions
 
 //  dvar_matrix mathematical functions
-    dvar_matrix exp(_CONST dvar_matrix& m);
-    dvar_matrix mfexp(_CONST dvar_matrix& m);
-    dvar_matrix mfexp(_CONST dvar_matrix& m, double d);
-    dvar_matrix sqrt(_CONST dvar_matrix& m);
-    dvar_matrix sqr(_CONST dvar_matrix& m);
-    dvar_matrix log(_CONST dvar_matrix& m);
-    dvar_matrix sin(_CONST dvar_matrix& m);
-    dvar_matrix cos(_CONST dvar_matrix& m);
-    dvar_matrix tan(_CONST dvar_matrix& m);
-    dvar_matrix pow(_CONST dvar_matrix& m, double e);
-    dvar_matrix pow(_CONST dvar_matrix& m,_CONST prevariable& e);
-    dvar_matrix pow(_CONST dmatrix& m,_CONST prevariable& e);
-    dvar_matrix pow(_CONST dvar_matrix& m,int e);
-    dvar_matrix elem_prod(_CONST dvar_matrix& m,_CONST dvar_matrix& m2);
-    dvar_matrix elem_prod(_CONST dvar_matrix& m,_CONST dmatrix& m2);
-    dvar_matrix elem_prod(_CONST dmatrix& m,_CONST dvar_matrix& m2);
-    dvar_matrix elem_div(_CONST dvar_matrix& m,_CONST dvar_matrix& m2);
-    dvar_matrix elem_div(_CONST dvar_matrix& m,_CONST dmatrix& m2);
-    dvar_matrix elem_div(_CONST dmatrix& m,_CONST dvar_matrix& m2);
+    dvar_matrix exp(const dvar_matrix& m);
+    dvar_matrix mfexp(const dvar_matrix& m);
+    dvar_matrix mfexp(const dvar_matrix& m, double d);
+    dvar_matrix sqrt(const dvar_matrix& m);
+    dvar_matrix sqr(const dvar_matrix& m);
+    dvar_matrix log(const dvar_matrix& m);
+    dvar_matrix sin(const dvar_matrix& m);
+    dvar_matrix cos(const dvar_matrix& m);
+    dvar_matrix tan(const dvar_matrix& m);
+    dvar_matrix pow(const dvar_matrix& m, double e);
+    dvar_matrix pow(const dvar_matrix& m, const prevariable& e);
+    dvar_matrix pow(const dmatrix& m, const prevariable& e);
+    dvar_matrix pow(const dvar_matrix& m, int e);
+    dvar_matrix elem_prod(const dvar_matrix& m, const dvar_matrix& m2);
+    dvar_matrix elem_prod(const dvar_matrix& m, const dmatrix& m2);
+    dvar_matrix elem_prod(const dmatrix& m, const dvar_matrix& m2);
+    dvar_matrix elem_div(const dvar_matrix& m, const dvar_matrix& m2);
+    dvar_matrix elem_div(const dvar_matrix& m, const dmatrix& m2);
+    dvar_matrix elem_div(const dmatrix& m, const dvar_matrix& m2);
 //  end of dvar_matrix mathematical functions
 
-  int min(_CONST ivector& t1);
-  int max(_CONST ivector& t1);
-  int Max(_CONST ivector& t1);
+  int min(const ivector& t1);
+  int max(const ivector& t1);
+  int Max(const ivector& t1);
 
      double mfexp(double);
      double mfexp(double,double bound);
@@ -2331,8 +2331,8 @@ private:
 
   public:
     dvector operator -();
-    int operator ! (void) _CONST {return (shape == NULL);}
-    int allocated(void) _CONST {return (shape != NULL);}
+    int operator!(void) const { return (shape == NULL); }
+    int allocated(void) const { return (shape != NULL); }
     dvector& operator -- (void) 
     { 
       index_min--;index_max--;v++; return *this;
@@ -2353,7 +2353,7 @@ private:
   dvector(const predvector& pd);
   //virtual void write_message(void) { cout << " This is a dvector" << endl; }
   
-  void fill_randpoisson(double lambda, BOR_CONST random_number_generator& rng);
+  void fill_randpoisson(double lambda, const random_number_generator& rng);
   void fill_randnegbinomial(double lambda,double tau,
    const random_number_generator& rng);
   void shallow_copy(const dvector&);
@@ -2364,23 +2364,23 @@ private:
     friend class banded_lower_triangular_dmatrix;
     
       void allocate(int ncl,int ncu);
-      void allocate(_CONST dvector& dv);
-      void allocatec(_CONST dvector& dv);
-      void allocate(_CONST dvar_vector&);
+      void allocate(const dvector& dv);
+      void allocatec(const dvector& dv);
+      void allocate(const dvar_vector&);
       void allocate(const char *);
       void allocate(void);
       void deallocate(void);
       void safe_deallocate(void);
       void safe_allocate(int,int);
 
-    _CONST double * address() _CONST { return (v); }
+    const double* address() const { return v; }
     double*& get_v(void) { return (v); }
     double& elem(int i) { return(v[i]); }
     double* initpointer(void) { return (v+indexmin()); }
     #ifdef USE_CONST
-      _CONST double* initpointer(void) _CONST { return (v+indexmin()); }
-      double* get_v(void) _CONST { return (v); }
-      _CONST double& elem(int i) _CONST { return(v[i]); }
+      const double* initpointer(void) const { return (v + indexmin()); }
+      double* get_v(void) const { return v; }
+      const double& elem(int i) const { return v[i]; }
     #endif
 
     void fill(const char * s);
@@ -2393,37 +2393,37 @@ private:
     void fill_randbi(long int& n,double);
 
 
-    void fill_randbi(double p,BOR_CONST random_number_generator& rng);
-    void fill_randu(BOR_CONST random_number_generator& rng);
-    void fill_randn(BOR_CONST random_number_generator& rng);
-    void fill_randcau(BOR_CONST random_number_generator& rng);
+    void fill_randbi(double p, const random_number_generator& rng);
+    void fill_randu(const random_number_generator& rng);
+    void fill_randn(const random_number_generator& rng);
+    void fill_randcau(const random_number_generator& rng);
 
     void fill_seqadd( double, double);
-    void fill_multinomial(BOR_CONST int& seed,_CONST dvector& p);
-    void fill_multinomial(BOR_CONST random_number_generator& rng,_CONST dvector& p);
+    void fill_multinomial(const int& seed, const dvector& p);
+    void fill_multinomial(const random_number_generator& rng, const dvector& p);
     void initialize(void);
 
     int& testmin()  {return shape->index_min;} // returns the minimum allowable index
 
     int& testmax() {return shape->index_max;} // returns the minimum allowable index
 
-    int indexmin() _CONST {return index_min;} // returns the minimum allowable index
+    int indexmin() const { return index_min; } // returns the minimum allowable index
 
-    int indexmax() _CONST {return index_max;} // returns the maximum allowable index
-    int size() _CONST {return (index_max - index_min+1);} // returns the number of elements
+    int indexmax() const { return index_max; } // returns the maximum allowable index
+    int size() const { return (index_max - index_min + 1); } // returns the number of elements
     dvector& shift(int min);
 
-    dvector(BOR_CONST dvar_vector_position& dvp,BOR_CONST kkludge_object&);
+    dvector(const dvar_vector_position& dvp, const kkludge_object&);
 
     dvector(const ad_integer&,const index_type&);
     void allocate(const ad_integer&,const index_type&);
     dvector(void);
-    dvector(_CONST dvector&);
-    //dvector(_CONST dvector&,int lb,int ub);
+    dvector(const dvector&);
+    //dvector(const dvector&,int lb,int ub);
 
-    dvector(_CONST ivector&);
+    dvector(const ivector&);
 
-    dvector(_CONST lvector&);
+    dvector(const lvector&);
 
     dvector(const char *);
 
@@ -2438,81 +2438,81 @@ private:
 
    ~dvector();
 
-    void save_dvector_position(void) _CONST;
-    void save_dvector_derivatives(BOR_CONST dvar_vector_position& pos) _CONST;
-    void save_dvector_derivatives_na(BOR_CONST dvar_vector_position& pos) _CONST;
-    void save_dvector_derivatives(void) _CONST;
-    void save_dvector_value(void) _CONST;
+    void save_dvector_position(void) const;
+    void save_dvector_derivatives(const dvar_vector_position& pos) const;
+    void save_dvector_derivatives_na(const dvar_vector_position& pos) const;
+    void save_dvector_derivatives(void) const;
+    void save_dvector_value(void) const;
 
     //dvector operator()(int,int);
-    dvector operator()(_CONST lvector&);
-    dvector operator ()(_CONST ivector& u);
+    dvector operator()(const lvector&);
+    dvector operator()(const ivector& u);
 
-    dvector& operator += (_CONST dvector& v1);
-    dvector& operator -= (_CONST dvector& v1);
+    dvector& operator+=(const dvector& v1);
+    dvector& operator-=(const dvector& v1);
     dvector& operator += ( double v1);
     dvector& operator /= ( double v1);
     dvector& operator *= ( double v1);
     dvector& operator -= ( double v1);
 
-    void read_from(BOR_CONST uistream&);
+    void read_from(const uistream&);
 
     friend class sdmatrix;
-    friend double norm(_CONST dvector&);
-    friend double norm2(_CONST dvector&);
-    friend double sumsq(_CONST dvector&);
+    friend double norm(const dvector&);
+    friend double norm2(const dvector&);
+    friend double sumsq(const dvector&);
     friend class dvar_vector;
     friend class dmatrix;
     friend class d3_array;
-    friend char* fform(const char*,_CONST dvector&);
+    friend char* fform(const char*, const dvector&);
 
-    void write_on(BOR_CONST ostream&) _CONST;
-    void write_on(BOR_CONST uostream&) _CONST;
-    void read_from(BOR_CONST istream&);
-    friend double operator * (_CONST dvector& ,_CONST dvector& );
+    void write_on(const ostream&) const;
+    void write_on(const uostream&) const;
+    void read_from(const istream&);
+    friend double operator*(const dvector&, const dvector&);
 
-    friend dvariable operator * (_CONST dvector& ,_CONST dvar_vector& );
+    friend dvariable operator*(const dvector&, const dvar_vector&);
 
-    friend dvariable operator * (_CONST dvar_vector& ,_CONST dvector& );
+    friend dvariable operator*(const dvar_vector&, const dvector&);
 
-    friend dvar_vector operator * (_CONST prevariable& ,_CONST dvector& );
+    friend dvar_vector operator*(const prevariable&, const dvector&);
 
-    friend dvector operator * ( double ,_CONST dvector& );
+    friend dvector operator*(double, const dvector&);
 
-    friend dvector operator + (_CONST dvector& ,_CONST dvector& );
+    friend dvector operator+(const dvector&, const dvector&);
 
-    friend dvector elem_prod(_CONST dvector& ,_CONST dvector& );
+    friend dvector elem_prod(const dvector&, const dvector&);
 
-    friend dvector first_difference(_CONST dvector&);
-    friend dvector second_difference(_CONST dvector&);
+    friend dvector first_difference(const dvector&);
+    friend dvector second_difference(const dvector&);
 
-    friend dvector elem_div(_CONST dvector& ,_CONST dvector& );
+    friend dvector elem_div(const dvector&, const dvector&);
 
-    friend dvar_vector elem_prod(_CONST dvector& ,_CONST dvar_vector& );
+    friend dvar_vector elem_prod(const dvector&, const dvar_vector&);
 
-    friend dvar_vector elem_div(_CONST dvector&,_CONST dvar_vector&);
+    friend dvar_vector elem_div(const dvector&, const dvar_vector&);
 
-    friend dvar_vector elem_prod(_CONST dvar_vector&,_CONST dvector& );
+    friend dvar_vector elem_prod(const dvar_vector&, const dvector&);
 
-    friend dvar_vector elem_div(_CONST dvar_vector& ,_CONST dvector& );
+    friend dvar_vector elem_div(const dvar_vector&, const dvector&);
 
-    friend dvar_vector operator + (_CONST dvar_vector& ,_CONST dvector& );
+    friend dvar_vector operator+(const dvar_vector&, const dvector&);
 
-    friend dvar_vector operator + (_CONST dvector& ,_CONST dvar_vector& );
+    friend dvar_vector operator+(const dvector&, const dvar_vector&);
 
-    friend dvector operator - (_CONST dvector& ,_CONST dvector& );
+    friend dvector operator-(const dvector&, const dvector&);
 
-    friend dvar_vector operator - (_CONST dvar_vector& ,_CONST dvector& );
+    friend dvar_vector operator-(const dvar_vector&, const dvector&);
 
-    friend dvar_vector operator - (_CONST dvector& ,_CONST dvar_vector& );
+    friend dvar_vector operator-(const dvector&, const dvar_vector&);
 
-    friend dvector  operator * (_CONST dvector& x,_CONST dmatrix& m);
+    friend dvector operator*(const dvector& x, const dmatrix& m);
 
-    friend dvector  operator * (_CONST dmatrix& x,_CONST dvector& m);
+    friend dvector operator*(const dmatrix& x, const dvector& m);
 
-    friend dvar_vector  operator * (_CONST dvector& x,_CONST dvar_matrix& m);
+    friend dvar_vector operator*(const dvector& x, const dvar_matrix& m);
 
-    friend dvar_vector  operator * (_CONST dvar_matrix& x,_CONST dvector& m);
+    friend dvar_vector operator*(const dvar_matrix& x, const dvector& m);
 
 
 #ifdef OPT_LIB
@@ -2525,28 +2525,28 @@ private:
 
 #ifdef USE_CONST
   #ifdef OPT_LIB
-    inline _CONST double& operator[] (register int i) _CONST { return(*(v+i)); }
-    inline _CONST double& operator() (register int i) _CONST { return(*(v+i)); }
+    inline const double& operator[](register int i) const { return(*(v+i)); }
+    inline const double& operator()(register int i) const { return(*(v+i)); }
   #else
-      _CONST double& operator[] (int i) _CONST;
-      _CONST double& operator() (int i) _CONST;
+      const double& operator[](int i) const;
+      const double& operator()(int i) const;
   #endif
 #endif
 
 
-    dvector& operator = (_CONST dvector& t);
+    dvector& operator=(const dvector& t);
 
     dvector& operator = ( double x);
 
-    friend dvector exp(_CONST dvector&);
+    friend dvector exp(const dvector&);
 
-    friend dvector log(_CONST dvector&);
+    friend dvector log(const dvector&);
 
-    friend dvector fabs(_CONST dvector&);
+    friend dvector fabs(const dvector&);
 
-    friend double max(_CONST dvector&);
+    friend double max(const dvector&);
 
-    friend double min(_CONST dvector&);
+    friend double min(const dvector&);
 
  }; // end of class dvector
 
@@ -2558,7 +2558,7 @@ class independent_variables : public dvector
 {
   public:
 
-    independent_variables(BOR_CONST independent_variables& v) : dvector(v) {}
+    independent_variables(const independent_variables& v) : dvector(v) {}
 
     independent_variables( int ncl,  int ncu) :
       dvector(ncl,ncu) {}
@@ -2567,14 +2567,14 @@ class independent_variables : public dvector
     independent_variables( unsigned int sz, double * x) :
       dvector(sz, x) {}
 
-    independent_variables& operator = (_CONST dvector& t);
+    independent_variables& operator=(const dvector& t);
 
 };
      
 
 #endif
 
-dvariable dfatan1( dvariable , double , double ,BOR_CONST prevariable&fpen);
+dvariable dfatan1(dvariable, double, double, const prevariable &fpen);
 
 double boundp( double x, double fmin, double fmax,const double& fpen);
 double boundp( double x, double fmin, double fmax);
@@ -2640,7 +2640,7 @@ double dmax(double i, double j);
   public:
     void * trueptr;
     unsigned int ncopies;
-    mat_shapex(_CONST void * m) { trueptr=(void*)m;ncopies=0;}
+    mat_shapex(const void *m) { trueptr = (void*)m; ncopies = 0;}
     mat_shapex(){trueptr=NULL;ncopies=0;};
 
     void * get_pointer (void) {return trueptr;}
@@ -2760,7 +2760,7 @@ double dmax(double i, double j);
     return predvar_vector(this,lb,ub);
   }
   void shallow_copy(const dvar_vector&);
- int operator ! (void) _CONST {return (shape == NULL);}
+ int operator!(void) const { return (shape == NULL); }
  friend class dvar_matrix;
  friend class dvar3_array;
     friend class banded_symmetric_dvar_matrix;
@@ -2768,7 +2768,7 @@ double dmax(double i, double j);
     friend class banded_symmetric_dmatrix;
     friend class banded_lower_triangular_dmatrix;
 
- void fill_randpoisson(double lambda, BOR_CONST random_number_generator& rng);
+ void fill_randpoisson(double lambda, const random_number_generator& rng);
  void fill_randnegbinomial(double lambda,double tau,
   const random_number_generator& rng);
  prevariable elem(int i) { return (va+i); }
@@ -2778,18 +2778,18 @@ double dmax(double i, double j);
  double_and_int * get_va(){return va;}
 
 #ifdef USE_CONST
-  prevariable elem(int i) _CONST { return (va+i); }
+  prevariable elem(int i) const { return (va + i); }
 
-  double& elem_value(int i) _CONST { return (va[i].x); }
+  double& elem_value(int i) const { return (va[i].x); }
 
-  double_and_int * get_va() _CONST {return va;}
+  double_and_int* get_va() const { return va; }
 #endif
 
 
-    friend dvar_matrix  operator * (_CONST dvar_matrix& m1,_CONST dmatrix& m2 );
+    friend dvar_matrix operator*(const dvar_matrix& m1, const dmatrix& m2);
 
     void deallocate();
-    dvar_vector(_CONST dvar_vector&);
+    dvar_vector(const dvar_vector&);
     dvar_vector(const predvar_vector&);
     dvar_vector();
     dvar_vector(int ncl,int ncu); // makes an array [ncl..ncu]
@@ -2797,33 +2797,33 @@ double dmax(double i, double j);
 
     //dvar_vector(const ad_integer&,const ad_integer&);
     dvar_vector( unsigned int sz, double * x);
-    dvar_vector(BOR_CONST independent_variables&);
-    friend char* fform(const char*,_CONST dvar_vector& );
+    dvar_vector(const independent_variables&);
+    friend char* fform(const char*, const dvar_vector&);
 #   if defined(__NUMBERVECTOR__)
     dvar_vector(const param_init_number_vector&);
     dvar_vector(const param_init_bounded_number_vector&);
 #   endif
-    dvar_vector(_CONST dvector&);
+    dvar_vector(const dvector&);
     dvar_vector(const char *);
    ~dvar_vector();
     void allocate(int,int);
     void allocate(void);
-    void allocate(_CONST dvector&);
-    void allocatec(_CONST dvar_vector&);
-    void allocate(_CONST dvar_vector&);
+    void allocate(const dvector&);
+    void allocatec(const dvar_vector&);
+    void allocate(const dvar_vector&);
 
     void allocate(const ad_integer&,const ad_integer&);
-    void initialize(_CONST dvector& ww);
+    void initialize(const dvector& ww);
     void initialize(void);
-    void save_dvar_vector_position(void) _CONST;
-    void save_dvar_vector_value(void) _CONST;
-    void write_on(BOR_CONST ostream&) _CONST;
-    void write_on(BOR_CONST uostream&) _CONST;
-    void read_from(BOR_CONST istream&);
-    void read_from(BOR_CONST uistream&);
-    int indexmin() _CONST {return index_min;} // returns the minimum allowable index
-    int indexmax() _CONST {return index_max;} // returns the maximum allowable index
-    int size() _CONST {return (index_max - index_min+1);} // returns the number of elements
+    void save_dvar_vector_position(void) const;
+    void save_dvar_vector_value(void) const;
+    void write_on(const ostream&) const;
+    void write_on(const uostream&) const;
+    void read_from(const istream&);
+    void read_from(const uistream&);
+    int indexmin() const { return index_min; } // returns the minimum allowable index
+    int indexmax() const { return index_max; } // returns the maximum allowable index
+    int size() const { return (index_max - index_min + 1); } // returns the number of elements
     dvar_vector& shift(int min);
 
 #ifdef OPT_LIB
@@ -2831,50 +2831,50 @@ double dmax(double i, double j);
 	inline prevariable operator() (register int i) { return (va+i); }
 	inline prevariable operator[] (register int i) { return (va+i); }
       #ifdef USE_CONST
-	inline _CONST prevariable operator() (int i) _CONST { return (va+i); }
-	inline _CONST prevariable operator[] (int i) _CONST { return (va+i); }
+	inline const prevariable operator()(int i) const { return (va + i); }
+	inline const prevariable operator[] (int i) const { return (va + i); }
       #endif
  #else
 	inline prevariable operator() (int i) { return (va+i); }
 	inline prevariable operator[] (int i) { return (va+i); }
   #ifdef USE_CONST
-	inline _CONST prevariable operator() (int i) _CONST { return (va+i); }
-	inline _CONST prevariable operator[] (int i) _CONST { return (va+i); }
+	inline const prevariable operator()(int i) const { return (va + i); }
+	inline const prevariable operator[](int i) const { return (va + i); }
   #endif
  #endif
 #else
 	prevariable operator[] (int i);
 	prevariable operator() (int i);
   #ifdef USE_CONST
-	_CONST prevariable operator[] (int i) _CONST;
-	_CONST prevariable operator() (int i) _CONST;
+	const prevariable operator[](int i) const;
+	const prevariable operator()(int i) const;
   #endif
 #endif
 
     double* initpointer(void) { return ((double*)(va+indexmin())); }
   #ifdef USE_CONST
-    _CONST double* initpointer(void) _CONST { return ((double *)(va+indexmin())); }
+    const double* initpointer(void) const { return ((double*)(va + indexmin())); }
 #endif
-    dvar_vector operator()(_CONST lvector&);
+    dvar_vector operator()(const lvector&);
     //dvar_vector operator()(int,int);
-    dvar_vector operator ()(_CONST ivector& u);
-    dvar_vector& operator+= (_CONST prevariable& d);
+    dvar_vector operator ()(const ivector& u);
+    dvar_vector& operator+=(const prevariable& d);
     dvar_vector& operator+= (double d);
-    dvar_vector& operator/= (_CONST prevariable& d);
-    //dvar_vector& operator*= (_CONST dvariable& d);
-    dvar_vector& operator*= (_CONST prevariable& d);
+    dvar_vector& operator/=(const prevariable& d);
+    //dvar_vector& operator*=(const dvariable& d);
+    dvar_vector& operator*=(const prevariable& d);
     dvar_vector& operator*= ( double d);
     dvar_vector& operator/= ( double d);
-    dvar_vector& operator-= (_CONST prevariable& d);
+    dvar_vector& operator-=(const prevariable& d);
     dvar_vector& operator-= (double d);
-    dvar_vector& operator+= (_CONST dvector& v1);
-    dvar_vector& operator-= (_CONST dvector& v1);
-    dvar_vector& operator+= (_CONST dvar_vector& v1);
-    dvar_vector& operator-= (_CONST dvar_vector& v1);
-    dvar_vector& operator = (_CONST dvar_vector& t);
-    dvar_vector& operator = (_CONST dvector& t);
+    dvar_vector& operator+=(const dvector& v1);
+    dvar_vector& operator-=(const dvector& v1);
+    dvar_vector& operator+=(const dvar_vector& v1);
+    dvar_vector& operator-=(const dvar_vector& v1);
+    dvar_vector& operator=(const dvar_vector& t);
+    dvar_vector& operator=(const dvector& t);
     dvar_vector& operator = ( double t);
-    dvar_vector& operator = (_CONST prevariable& t);
+    dvar_vector& operator=(const prevariable& t);
     void fill(const char *);
     void fill_randu(long int& n);
     void fill_randn(long int& n);
@@ -2885,79 +2885,79 @@ double dmax(double i, double j);
     void fill_randbi_ni(long int& n,double);
 
     void fill_seqadd( double, double);
-    void fill_multinomial(BOR_CONST int& seed,_CONST dvector& p);
-    void fill_multinomial(BOR_CONST random_number_generator& rng,_CONST dvector& p);
-    friend dvar_vector operator + (_CONST dvar_vector& ,_CONST dvar_vector&);
-    friend dvar_vector operator + (_CONST dvar_vector& ,_CONST dvector&);
-    friend dvar_vector operator + (_CONST dvector& ,_CONST dvar_vector&);
-    friend dvar_vector operator - (_CONST dvar_vector& ,_CONST dvar_vector&);
+    void fill_multinomial(const int& seed, const dvector& p);
+    void fill_multinomial(const random_number_generator& rng, const dvector& p);
+    friend dvar_vector operator+(const dvar_vector&, const dvar_vector&);
+    friend dvar_vector operator+(const dvar_vector&, const dvector&);
+    friend dvar_vector operator+(const dvector&, const dvar_vector&);
+    friend dvar_vector operator-(const dvar_vector&, const dvar_vector&);
 
-    friend dvar_vector operator - (_CONST dvector& ,_CONST dvar_vector&);
+    friend dvar_vector operator-(const dvector&, const dvar_vector&);
 
-    friend dvar_vector operator - (_CONST dvar_vector& ,_CONST dvector&);
+    friend dvar_vector operator-(const dvar_vector&, const dvector&);
 
-    friend dvar_vector sigmoid(_CONST dvar_vector& t1);
+    friend dvar_vector sigmoid(const dvar_vector& t1);
 
-    friend dvariable operator * (_CONST dvar_vector& ,_CONST dvar_vector&);
+    friend dvariable operator*(const dvar_vector&, const dvar_vector&);
 
-    friend dvar_vector elem_div(_CONST dvar_vector& ,_CONST dvar_vector&);
+    friend dvar_vector elem_div(const dvar_vector&, const dvar_vector&);
 
-    friend dvariable operator * (_CONST dvector& ,_CONST dvar_vector&);
+    friend dvariable operator*(const dvector&, const dvar_vector&);
 
-    friend dvariable operator * (_CONST dvar_vector& ,_CONST dvector&);
+    friend dvariable operator*(const dvar_vector&, const dvector&);
 
-    friend dvar_vector operator * (_CONST prevariable& ,_CONST dvar_vector&);
+    friend dvar_vector operator*(const prevariable&, const dvar_vector&);
 
-    friend dvar_vector operator * (_CONST prevariable& ,_CONST dvector& );
+    friend dvar_vector operator*(const prevariable&, const dvector&);
 
-    friend dvar_vector operator * ( double ,_CONST dvar_vector&);
+    friend dvar_vector operator*(double, const dvar_vector&);
 
-    friend dvar_vector operator * (_CONST dvar_vector& ,_CONST dmatrix& );
+    friend dvar_vector operator*(const dvar_vector&, const dmatrix&);
 
-    friend dvar_vector operator * (_CONST dmatrix& ,_CONST dvar_vector& );
+    friend dvar_vector operator*(const dmatrix&, const dvar_vector&);
 
-    friend dvar_vector operator * (_CONST dvar_vector& ,_CONST dvar_matrix& );
+    friend dvar_vector operator*(const dvar_vector&, const dvar_matrix&);
 
-    friend dvar_vector operator * (_CONST dvar_matrix& ,_CONST dvar_vector& );
+    friend dvar_vector operator*(const dvar_matrix&, const dvar_vector&);
 
-    friend dvar_matrix operator * (_CONST dvar_matrix& ,_CONST dvar_matrix& );
+    friend dvar_matrix operator*(const dvar_matrix&, const dvar_matrix&);
 
-    friend dvar_matrix operator * (_CONST dmatrix& , _CONST dvar_matrix& );
+    friend dvar_matrix operator*(const dmatrix&, const dvar_matrix&);
 
-    friend dvar_vector elem_prod(_CONST dvar_vector&,_CONST dvar_vector& );
+    friend dvar_vector elem_prod(const dvar_vector&, const dvar_vector&);
 
-    friend dvar_vector first_difference(_CONST dvar_vector&);
-    friend dvar_vector second_difference(_CONST dvar_vector&);
+    friend dvar_vector first_difference(const dvar_vector&);
+    friend dvar_vector second_difference(const dvar_vector&);
 
-    //friend dvar_vector elem_div(_CONST dvar_vector& ,_CONST dvar_vector& ); // js, see above
+    //friend dvar_vector elem_div(const dvar_vector&, const dvar_vector&); // js, see above
 
-    friend dvar_vector elem_prod(_CONST dvector& ,_CONST dvar_vector& );
+    friend dvar_vector elem_prod(const dvector&, const dvar_vector&);
 
-    friend dvar_vector elem_div(_CONST dvector&,_CONST dvar_vector&);
+    friend dvar_vector elem_div(const dvector&, const dvar_vector&);
 
-    friend dvar_vector elem_prod(_CONST dvar_vector&,_CONST dvector& );
+    friend dvar_vector elem_prod(const dvar_vector&, const dvector&);
 
-    friend dvar_vector elem_div(_CONST dvar_vector& ,_CONST dvector& );
+    friend dvar_vector elem_div(const dvar_vector&, const dvector&);
 
-    friend dvariable norm(_CONST dvar_vector&);
-    friend dvariable norm2(_CONST dvar_vector&);
-    friend dvariable sumsq(_CONST dvar_vector&);
+    friend dvariable norm(const dvar_vector&);
+    friend dvariable norm2(const dvar_vector&);
+    friend dvariable sumsq(const dvar_vector&);
 
-    friend void copy_status(BOR_CONST ostream& s,_CONST dvar_vector& v);
+    friend void copy_status(const ostream& s, const dvar_vector& v);
 
-    friend dvar_vector exp(_CONST dvar_vector&);
+    friend dvar_vector exp(const dvar_vector&);
 
-    friend dvar_vector log(_CONST dvar_vector&);
+    friend dvar_vector log(const dvar_vector&);
 
-    friend dvar_vector sin(_CONST dvar_vector&);
+    friend dvar_vector sin(const dvar_vector&);
 
-    friend dvar_vector fabs(_CONST dvar_vector&);
+    friend dvar_vector fabs(const dvar_vector&);
 
-    friend dvector value(_CONST dvar_vector& v1);
+    friend dvector value(const dvar_vector& v1);
 
-    friend dvar_vector sfabs(_CONST dvar_vector&);
+    friend dvar_vector sfabs(const dvar_vector&);
 
-    friend void make_indvar_list(_CONST dvar_vector&);
+    friend void make_indvar_list(const dvar_vector&);
     friend class array_size;
 
  }; // end of class dvar_vector
@@ -2967,7 +2967,7 @@ double dmax(double i, double j);
  {
  public:
     funnel_dvar_vector(int l,int u);
-    dvar_vector& operator=(_CONST dvar_vector&);
+    dvar_vector& operator=(const dvar_vector&);
  };
  */
 
@@ -3001,7 +3001,7 @@ double dmax(double i, double j);
       index_min++;index_max++;m--; return *this;
     }
   
-    int operator ! (void) _CONST {return (shape == NULL);}
+    int operator!(void) const { return (shape == NULL); }
   inline dvar_vector& elem(int i) { return (m[i]); }
   inline prevariable elem(int i, int j) { return (elem(i).elem(j) ) ; }
   #ifdef USE_CONST
@@ -3019,15 +3019,15 @@ friend class dvar3_array;
   void allocate(int nrl,int nrh,int ncl,int nch);
   void allocate(int nrl,int nrh);
   void allocate(ad_integer nrl,ad_integer nrh);
-  void allocate(_CONST dmatrix& m1);
-  void allocate(_CONST dvar_matrix& m1);
-  void allocate(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch);
-  void allocate(int nrl,int nrh,int ncl,_CONST ivector& nch);
-  void allocate(int nrl,int nrh,_CONST ivector& ncl,int nch);
+  void allocate(const dmatrix& m1);
+  void allocate(const dvar_matrix& m1);
+  void allocate(int nrl, int nrh, const ivector& ncl, const ivector& nch);
+  void allocate(int nrl, int nrh, int ncl, const ivector& nch);
+  void allocate(int nrl, int nrh, const ivector& ncl, int nch);
   void allocate(void);
   void deallocate();
-  dvar_matrix(_CONST banded_symmetric_dvar_matrix&v);
-  dvar_matrix(_CONST banded_lower_triangular_dvar_matrix&v);
+  dvar_matrix(const banded_symmetric_dvar_matrix &v);
+  dvar_matrix(const banded_lower_triangular_dvar_matrix &v);
 # if defined(__NUMBERVECTOR__)
     dvar_matrix(const param_init_vector_vector& );
     dvar_matrix(const param_init_bounded_vector_vector&);
@@ -3037,18 +3037,18 @@ friend class dvar3_array;
 
     double fill_seqadd( double, double);
 
-    int colmin(void) _CONST { return((*this)(indexmin()).indexmin());}
-    int colmax(void) _CONST { return((*this)(indexmin()).indexmax());}
-    int rowmin(void) _CONST { return(index_min);}
-    int rowmax(void) _CONST { return(index_max);}
-    int indexmin(void) _CONST { return(index_min);}
-    int indexmax(void) _CONST { return(index_max);}
-    int rowsize() _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
-    int colsize() _CONST {return (colmax()-colmin()+1);} // returns the number of columns
+    int colmin(void) const { return ((*this)(indexmin()).indexmin()); }
+    int colmax(void) const { return((*this)(indexmin()).indexmax()); }
+    int rowmin(void) const { return(index_min); }
+    int rowmax(void) const { return(index_max); }
+    int indexmin(void) const { return(index_min); }
+    int indexmax(void) const { return(index_max); }
+    int rowsize() const {return (rowmax() - rowmin() + 1); } // returns the number of rows
+    int colsize() const {return (colmax() - colmin() + 1); } // returns the number of columns
     void colshift(int min);
     void rowshift(int min);
 
-    friend char* fform(const char*,_CONST dvar_matrix&);
+    friend char* fform(const char*, const dvar_matrix&);
 
     friend class dvar_vector;
 
@@ -3063,53 +3063,53 @@ friend class dvar3_array;
     dvar_matrix( int,  int, kkludge_object kk);
              // makes a matrix [nrl..nrh][ncl..nch]
 
-    dvar_matrix(int,int,_CONST ivector&,_CONST ivector&);
+    dvar_matrix(int, int, const ivector&, const ivector&);
              // makes a ragged dvar_matrix [nrl..nrh][ncl..nch]
 
-    dvar_matrix(int,int,int,_CONST ivector&);
+    dvar_matrix(int, int, int, const ivector&);
              // makes a ragged dvar_matrix [nrl..nrh][ncl..nch]
 
-    dvar_matrix(_CONST dvar_matrix&);
+    dvar_matrix(const dvar_matrix&);
              // copy initializer
     void initialize(void);
 
-    dvar_matrix(_CONST dmatrix&);
+    dvar_matrix(const dmatrix&);
 
     //dvar_matrix(char *);
 
    ~dvar_matrix();
 
-    void save_dvar_matrix_position(void) _CONST;
-    void save_dvar_matrix_value(void) _CONST;
+    void save_dvar_matrix_position(void) const;
+    void save_dvar_matrix_value(void) const;
 
     void fill(const char *);
-    //void colfill(BOR_CONST int&n,...);
-    //void rowfill(BOR_CONST int&n,...);
+    //void colfill(const int&n,...);
+    //void rowfill(const int&n,...);
 
-    void colfill_randu(BOR_CONST int&j,long int&n);
-    void rowfill_randu(BOR_CONST int& i,long int& n);
-    void colfill_randn(BOR_CONST int&j,long int&n);
-    void rowfill_randn(BOR_CONST int& i,long int& n);
+    void colfill_randu(const int &j, long int &n);
+    void rowfill_randu(const int &i, long int &n);
+    void colfill_randn(const int &j, long int &n);
+    void rowfill_randn(const int& i, long int& n);
     void fill_randn(long int&n);
     void fill_randu(long int&n);
 
-    void colfill_seqadd_ni(BOR_CONST int&, double, double);
-    void colfill_randu_ni(BOR_CONST int&j,long int&n);
-    void rowfill_randu_ni(BOR_CONST int& i,long int& n);
-    void colfill_randn_ni(BOR_CONST int&j,long int&n);
-    void rowfill_randn_ni(BOR_CONST int& i,long int& n);
+    void colfill_seqadd_ni(const int&, double, double);
+    void colfill_randu_ni(const int &j, long int &n);
+    void rowfill_randu_ni(const int& i, long int& n);
+    void colfill_randn_ni(const int &j, long int &n);
+    void rowfill_randn_ni(const int& i, long int& n);
     void fill_randn_ni(long int&n);
     void fill_randu_ni(long int&n);
 
-    void colfill_seqadd(BOR_CONST int&, double, double);
-    void rowfill_seqadd(BOR_CONST int&, double, double);
-    void colfill(int j,_CONST dvar_vector& v);
-    void rowfill(int j,_CONST dvar_vector& v);
+    void colfill_seqadd(const int&, double, double);
+    void rowfill_seqadd(const int&, double, double);
+    void colfill(int j, const dvar_vector& v);
+    void rowfill(int j, const dvar_vector& v);
 
-    void write_on(BOR_CONST ostream&) _CONST;
-    void write_on(BOR_CONST uostream&) _CONST;
-    void read_from(BOR_CONST istream&);
-    void read_from(BOR_CONST uistream&);
+    void write_on(const ostream&) const;
+    void write_on(const uostream&) const;
+    void read_from(const istream&);
+    void read_from(const uistream&);
 
 #ifdef OPT_LIB
       inline dvar_vector& operator[] (register int i) { return (m[i]); }
@@ -3121,11 +3121,11 @@ friend class dvar3_array;
 
 #ifdef USE_CONST
   #ifdef OPT_LIB
-      inline _CONST dvar_vector& operator[] (register int i) _CONST { return (m[i]); }
-      inline _CONST dvar_vector& operator() (register int i) _CONST { return (m[i]); }
+      inline const dvar_vector& operator[](register int i) const { return m[i]; }
+      inline const dvar_vector& operator()(register int i) const { return m[i]; }
   #else
-      _CONST dvar_vector& operator () (int i) _CONST;
-      _CONST dvar_vector& operator[] (int) _CONST ;
+      const dvar_vector& operator()(int i) const;
+      const dvar_vector& operator[](int) const;
   #endif
 #endif
 
@@ -3145,98 +3145,98 @@ friend class dvar3_array;
 	  { return * (double*) ((m[i]).va+j); }
 
 #ifdef USE_CONST
-  inline _CONST double& elem_value (register int i, register int j) _CONST
+  inline const double& elem_value(register int i, register int j) const 
     { return * (double*) ((m[i]).va+j); }
   #ifdef OPT_LIB
     #ifdef __NDPX__
-	prevariable operator () (register int i, register int j) _CONST
+	prevariable operator()(register int i, register int j) const 
 	  { return ( prevariable((m[i]).va+j) ); }
     #else
-	inline prevariable operator () (register int i, register int j) _CONST
+	inline prevariable operator()(register int i, register int j) const 
 	  { return ( (m[i]).va+j ); }
     #endif
   #else
-      _CONST prevariable operator () (int i, int j) _CONST;
+      const prevariable operator()(int i, int j) const;
   #endif
 #endif
 
-    dvar_matrix& operator+= (_CONST dvar_matrix& x);
-    dvar_matrix& operator-= (_CONST dvar_matrix& x);
-    dvar_matrix& operator+= (_CONST dmatrix& x);
-    dvar_matrix& operator-= (_CONST dmatrix& x);
+    dvar_matrix& operator+=(const dvar_matrix& x);
+    dvar_matrix& operator-=(const dvar_matrix& x);
+    dvar_matrix& operator+=(const dmatrix& x);
+    dvar_matrix& operator-=(const dmatrix& x);
 
 
-    dvar_matrix& operator = (_CONST dvar_matrix& );
+    dvar_matrix& operator=(const dvar_matrix&);
 
-    dvar_matrix& operator = (_CONST dmatrix& );
+    dvar_matrix& operator=(const dmatrix&);
     dvar_matrix& operator = ( double t);
-    dvar_matrix& operator = (_CONST prevariable& t);
+    dvar_matrix& operator=(const prevariable& t);
 
-    dvar_matrix& operator *= (_CONST prevariable& t);
+    dvar_matrix& operator*=(const prevariable& t);
     dvar_matrix& operator *= ( double t);
-    dvar_matrix& operator /= (_CONST prevariable& t);
+    dvar_matrix& operator/=(const prevariable& t);
     dvar_matrix& operator /= ( double t);
 
-    friend dvar_vector operator * (_CONST dvar_vector& ,_CONST dvar_matrix& );
+    friend dvar_vector operator*(const dvar_vector&, const dvar_matrix&);
 
-    friend dvar_vector operator * (_CONST dvar_matrix& ,_CONST dvar_vector& );
+    friend dvar_vector operator*(const dvar_matrix&, const dvar_vector&);
 
-    friend dvar_vector operator * (_CONST dvector& ,_CONST dvar_matrix& );
+    friend dvar_vector operator*(const dvector&, const dvar_matrix&);
 
-    friend dvar_vector operator * (_CONST dvar_matrix& ,_CONST dvector& );
+    friend dvar_vector operator*(const dvar_matrix&, const dvector&);
 
-    friend dvar_matrix operator * (_CONST dvar_matrix& , _CONST dvar_matrix& );
+    friend dvar_matrix operator*(const dvar_matrix&, const dvar_matrix&);
 
-    friend dvar_matrix operator * (_CONST dvar_matrix& , _CONST dmatrix& );
+    friend dvar_matrix operator*(const dvar_matrix&, const dmatrix&);
 
-    friend dvar_matrix operator * (_CONST dmatrix& , _CONST dvar_matrix& );
+    friend dvar_matrix operator*(const dmatrix&, const dvar_matrix&);
 
-    friend dvar_matrix operator + (_CONST dvar_matrix& ,_CONST dvar_matrix& );
-    friend dvar_matrix operator + (_CONST dvar_matrix& ,_CONST dmatrix& );
-    friend dvar_matrix operator + (_CONST dmatrix& ,_CONST dvar_matrix& );
+    friend dvar_matrix operator+(const dvar_matrix&, const dvar_matrix&);
+    friend dvar_matrix operator+(const dvar_matrix&, const dmatrix&);
+    friend dvar_matrix operator+(const dmatrix&, const dvar_matrix&);
 
-    friend dvar_matrix operator + ( double ,_CONST dvar_matrix& );
-    friend dvar_matrix operator + (_CONST dvar_matrix& , double );
-    friend dvar_matrix operator - ( double ,_CONST dvar_matrix& );
-    friend dvar_matrix operator - (_CONST dvar_matrix& , double );
+    friend dvar_matrix operator+(double, const dvar_matrix&);
+    friend dvar_matrix operator+(const dvar_matrix&, double);
+    friend dvar_matrix operator-(double, const dvar_matrix&);
+    friend dvar_matrix operator-(const dvar_matrix&, double);
 
-    friend dvar_matrix operator + (_CONST dvariable& ,_CONST dvar_matrix& );
-    friend dvar_matrix operator + (_CONST dvar_matrix& ,_CONST dvariable& );
-    friend dvar_matrix operator - (_CONST dvariable& ,_CONST dvar_matrix& );
-    friend dvar_matrix operator - (_CONST dvar_matrix& ,_CONST dvariable& );
+    friend dvar_matrix operator+(const dvariable&, const dvar_matrix&);
+    friend dvar_matrix operator+(const dvar_matrix&, const dvariable&);
+    friend dvar_matrix operator-(const dvariable&, const dvar_matrix&);
+    friend dvar_matrix operator-(const dvar_matrix&, const dvariable&);
 
-    friend dvar_matrix operator - (_CONST dvar_matrix& ,_CONST dvar_matrix& );
-    friend dvar_matrix operator - (_CONST dvar_matrix& ,_CONST dmatrix& );
-    friend dvar_matrix operator - (_CONST dmatrix& ,_CONST dvar_matrix& );
+    friend dvar_matrix operator-(const dvar_matrix&, const dvar_matrix&);
+    friend dvar_matrix operator-(const dvar_matrix&, const dmatrix&);
+    friend dvar_matrix operator-(const dmatrix&, const dvar_matrix&);
 
-    friend dvar_matrix inv(_CONST dvar_matrix&);
+    friend dvar_matrix inv(const dvar_matrix&);
 
-    friend dvariable det(_CONST dvar_matrix&);
+    friend dvariable det(const dvar_matrix&);
     friend dvariable ln_det(const dvar_matrix&,const int& sgn);
 
     //friend dvar_matrix testsub(dvar_matrix);
 
-    friend  dvar_matrix trans(_CONST dvar_matrix&);
+    friend dvar_matrix trans(const dvar_matrix&);
 
-    friend dvariable norm(_CONST dvar_matrix&);
-    friend dvariable norm2(_CONST dvar_matrix&);
-    friend dvariable sumsq(_CONST dvar_matrix&);
+    friend dvariable norm(const dvar_matrix&);
+    friend dvariable norm2(const dvar_matrix&);
+    friend dvariable sumsq(const dvar_matrix&);
 
-    friend void copy_status(BOR_CONST ostream& s,_CONST dvar_matrix& m1);
+    friend void copy_status(const ostream& s, const dvar_matrix& m1);
 
  }; // end of class dvar_matrix
 
 dvariable ln_det(const dvar_matrix&);
 dvar_matrix operator * (const dvar_matrix& t1, double x);
-dmatrix value(_CONST dvar_matrix& m);
-d3_array value(_CONST dvar3_array& a);
-dvar_vector sort(_CONST dvar_vector&,int NSTACK=60);
-dvector sort(_CONST dvector&,int NSTACK=60);
-ivector sort(_CONST ivector&,int NSTACK=60);
-dvector sort(_CONST dvector&,BOR_CONST ivector& index,int NSTACK=60);
-ivector sort(_CONST ivector&,BOR_CONST ivector& index,int NSTACK=60);
-dmatrix sort(_CONST dmatrix&,int column,int NSTACK=60);
-imatrix sort(_CONST imatrix&,int column,int NSTACK=60);
+dmatrix value(const dvar_matrix& m);
+d3_array value(const dvar3_array& a);
+dvar_vector sort(const dvar_vector&, int NSTACK = 60);
+dvector sort(const dvector&, int NSTACK = 60);
+ivector sort(const ivector&, int NSTACK = 60);
+dvector sort(const dvector&, const ivector& index, int NSTACK = 60);
+ivector sort(const ivector&, const ivector& index, int NSTACK = 60);
+dmatrix sort(const dmatrix&, int column, int NSTACK = 60);
+imatrix sort(const imatrix&, int column, int NSTACK = 60);
 
 
 #include "factors.h" 
@@ -3245,7 +3245,7 @@ ivector as_factor(const dvector& v, const double eps=1.0e-6);
 int count_factor(const ivector& v);
 
  //void gradcalc( int , double *);
- void gradcalc(int nvar,BOR_CONST dvector& g);
+ void gradcalc(int nvar, const dvector& g);
  void slave_gradcalc(void);
 
 /**
@@ -3259,7 +3259,7 @@ int count_factor(const ivector& v);
    int index_max;
     dvector * m;
     mat_shapex * shape;
-    friend char* fform(const char*,_CONST dmatrix&);
+    friend char* fform(const char*, const dmatrix&);
     friend class dvar_matrix;
  public:
  
@@ -3272,15 +3272,15 @@ int count_factor(const ivector& v);
       index_min++;index_max++;m--; return *this;
     }
     void shallow_copy(const dmatrix&);
-    int operator ! (void) _CONST {return (shape == NULL);}
+    int operator!(void) const { return (shape == NULL); }
 
     dmatrix sub(int,int);
     dmatrix(void); 
     dmatrix(int,int,kkludge_object); 
     dmatrix(int,int); 
     void allocate(void);
-    void allocate(_CONST dmatrix& dm);
-    void allocate(_CONST dvar_matrix&);
+    void allocate(const dmatrix& dm);
+    void allocate(const dvar_matrix&);
     void allocate(int nrl,int nrh,int ncl,int nch);
     void allocate(int nrl,int nrh);
     void allocate(ad_integer nrl,ad_integer nrh);
@@ -3301,19 +3301,19 @@ int count_factor(const ivector& v);
     dmatrix(const ad_integer& nrl,const ad_integer& nrh,
       const index_type& ncl,const index_type& nch);
 
-    dmatrix(int,int,_CONST ivector& coll,_CONST ivector& colh);
+    dmatrix(int, int, const ivector& coll, const ivector& colh);
              // makes a ragged dmatrix[nrl..nrh][ncl..nch]
 
-    dmatrix(int,int,int coll,_CONST ivector& colh);
+    dmatrix(int, int, int coll, const ivector& colh);
              // makes a ragged dmatrix[nrl..nrh][ncl..nch]
 
-    dmatrix(BOR_CONST dvar_matrix_position&);
+    dmatrix(const dvar_matrix_position&);
 
-    dmatrix(BOR_CONST dmatrix_position&);
+    dmatrix(const dmatrix_position&);
 
-    dmatrix(_CONST dmatrix&);
-    dmatrix(_CONST banded_symmetric_dmatrix&);
-    dmatrix(_CONST banded_lower_triangular_dmatrix&);
+    dmatrix(const dmatrix&);
+    dmatrix(const banded_symmetric_dmatrix&);
+    dmatrix(const banded_lower_triangular_dmatrix&);
     dmatrix(char *);
     void fill(const char *);
     double fill_seqadd( double, double);
@@ -3321,61 +3321,61 @@ int count_factor(const ivector& v);
              // copy initializer
 
    ~dmatrix();
-    void save_dmatrix_derivatives(BOR_CONST dvar_matrix_position& pos) _CONST;
-    void save_dmatrix_derivatives_na(BOR_CONST dvar_matrix_position& pos) _CONST;
-    void save_dmatrix_value(void) _CONST;
-    void save_dmatrix_position(void) _CONST;
+    void save_dmatrix_derivatives(const dvar_matrix_position& pos) const;
+    void save_dmatrix_derivatives_na(const dvar_matrix_position& pos) const;
+    void save_dmatrix_value(void) const;
+    void save_dmatrix_position(void) const;
     //void save_dmatrix_derivatives(void);
 
-    int indexmin(void) _CONST { return index_min;}
-    int indexmax(void) _CONST { return index_max;}
-    int rowmin(void) _CONST { return index_min;}
-    int rowmax(void) _CONST { return index_max;}
-    int colmin(void) _CONST { return((*this)(indexmin()).indexmin());}
-    int colmax(void) _CONST { return((*this)(indexmin()).indexmax());}
-    int rowsize() _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
-    int colsize() _CONST {return (colmax()-colmin()+1);} // returns the number of columns
+    int indexmin(void) const { return index_min; }
+    int indexmax(void) const { return index_max; }
+    int rowmin(void) const { return index_min; }
+    int rowmax(void) const { return index_max; }
+    int colmin(void) const { return((*this)(indexmin()).indexmin()); }
+    int colmax(void) const { return((*this)(indexmin()).indexmax()); }
+    int rowsize() const { return (rowmax() - rowmin() + 1); } // returns the number of rows
+    int colsize() const { return (colmax() - colmin() + 1); } // returns the number of columns
     void rowshift(int min);
     void colshift(int min);
 
-    void write_on(BOR_CONST ostream&) _CONST;
-    void write_on(BOR_CONST uostream&) _CONST;
-    void read_from(BOR_CONST istream&);
-    void read_from(BOR_CONST uistream&);
+    void write_on(const ostream&) const;
+    void write_on(const uostream&) const;
+    void read_from(const istream&);
+    void read_from(const uistream&);
 
-    //void colfill(BOR_CONST int&n,...);
-    //void rowfill(BOR_CONST int&n,...);
+    //void colfill(const int&n,...);
+    //void rowfill(const int&n,...);
 
-    void colfill_randu(BOR_CONST int&j,long int&n);
-    void rowfill_randu(BOR_CONST int& i,long int& n);
-    void colfill_randn(BOR_CONST int&j,long int&n);
+    void colfill_randu(const int &j, long int &n);
+    void rowfill_randu(const int& i, long int& n);
+    void colfill_randn(const int &j,long int &n);
     void fill_randn(long int&n);
     void fill_randu(long int&n);
-    void rowfill_randn(BOR_CONST int& i,long int& n);
+    void rowfill_randn(const int& i,long int& n);
 
 
 
-    void colfill_randu(BOR_CONST int&j,BOR_CONST random_number_generator& rng);
-    void rowfill_randu(BOR_CONST int& i,BOR_CONST random_number_generator& rng);
-    void fill_randn(BOR_CONST random_number_generator& rng);
-    void fill_randcau(BOR_CONST random_number_generator& rng);
-    void fill_randu(BOR_CONST random_number_generator& rng);
-    void colfill_randn(BOR_CONST int&j,BOR_CONST random_number_generator& rng);
-    void rowfill_randn(BOR_CONST int& i,BOR_CONST random_number_generator& rng);
+    void colfill_randu(const int &j, const random_number_generator& rng);
+    void rowfill_randu(const int& i, const random_number_generator& rng);
+    void fill_randn(const random_number_generator& rng);
+    void fill_randcau(const random_number_generator& rng);
+    void fill_randu(const random_number_generator& rng);
+    void colfill_randn(const int &j, const random_number_generator& rng);
+    void rowfill_randn(const int& i, const random_number_generator& rng);
 
-    void colfill_randu_ni(BOR_CONST int&j,long int&n);
-    void rowfill_randu_ni(BOR_CONST int& i,long int& n);
-    void colfill_randn_ni(BOR_CONST int&j,long int&n);
+    void colfill_randu_ni(const int &j, long int &n);
+    void rowfill_randu_ni(const int& i, long int& n);
+    void colfill_randn_ni(const int &j, long int &n);
     void fill_randn_ni(long int&n);
     void fill_randu_ni(long int&n);
-    void rowfill_randn_ni(BOR_CONST int& i,long int& n);
+    void rowfill_randn_ni(const int& i, long int& n);
 
 
 
-    void colfill_seqadd(BOR_CONST int&, double, double);
-    void rowfill_seqadd(BOR_CONST int&, double, double);
-    void colfill(int j,_CONST dvector& v);
-    void rowfill(int j,_CONST dvector& v);
+    void colfill_seqadd(const int&, double, double);
+    void rowfill_seqadd(const int&, double, double);
+    void colfill(int j, const dvector& v);
+    void rowfill(int j, const dvector& v);
 
 #if defined(OPT_LIB)
       inline dvector& operator() (register int i) { return m[i]; }
@@ -3387,86 +3387,86 @@ int count_factor(const ivector& v);
 
 #ifdef USE_CONST
   #if defined(OPT_LIB)
-      inline _CONST dvector& operator() (register int i) _CONST { return m[i]; }
-      inline _CONST dvector& operator[] (register int i) _CONST  { return m[i]; }
+      inline const dvector& operator()(register int i) const { return m[i]; }
+      inline const dvector& operator[](register int i) const { return m[i]; }
 #else
-      _CONST dvector& operator() (int i) _CONST;
-      _CONST dvector& operator[] (int)  _CONST;
+      const dvector& operator()(int i) const;
+      const dvector& operator[](int) const;
   #endif
 #endif
 
 #if defined(OPT_LIB) && !defined(__INTEL_COMPILER) 
       inline double& operator() (register int i, register int j) {return(*(m[i].v+j));}
-      inline _CONST double& operator() (register int i, register int j) _CONST 
+      inline const double& operator() (register int i, register int j) const 
       {return(*(m[i].v+j));}
 #else
-      double& operator() (int i, int j);
-      _CONST double& operator() (int i, int j) _CONST;
+      double& operator()(int i, int j);
+      const double& operator()(int i, int j) const;
 #endif
 
     inline dvector& elem(int i) { return( *(m+i) ); }
     inline double& elem(int i,int j) { return( *((*(m+i)).v+j) ); }
     #ifdef USE_CONST
-      inline _CONST dvector& elem(int i) _CONST { return( *(m+i) ); }
-      inline _CONST double& elem(int i,int j) _CONST 
+      inline const dvector& elem(int i) const { return (*(m + i)); }
+      inline const double& elem(int i, int j) const 
         { return( *((*(m+i)).v+j) ); }
     #endif
     friend class d3_array;
-    friend dvector operator * (_CONST dvector& ,_CONST dmatrix& );
+    friend dvector operator*(const dvector&, const dmatrix& );
 
-    friend dvector operator * (_CONST dmatrix& ,_CONST dvector& );
+    friend dvector operator*(const dmatrix&, const dvector&);
 
-    friend dvar_vector operator * (_CONST dvar_vector& ,_CONST dmatrix& );
+    friend dvar_vector operator*(const dvar_vector&, const dmatrix&);
 
-    friend dvar_vector operator * (_CONST dmatrix& ,_CONST dvar_vector& );
+    friend dvar_vector operator*(const dmatrix&, const dvar_vector&);
 
-    friend dmatrix operator * (_CONST dmatrix& , _CONST dmatrix& );
+    friend dmatrix operator*(const dmatrix&, const dmatrix&);
 
-    friend dvar_matrix operator * (_CONST dvar_matrix& ,_CONST dmatrix& );
+    friend dvar_matrix operator*(const dvar_matrix&, const dmatrix&);
 
-    friend dvar_matrix operator * (_CONST dmatrix& , _CONST  dvar_matrix& );
+    friend dvar_matrix operator*(const dmatrix&, const dvar_matrix&);
 
-    friend dvar_matrix::dvar_matrix(_CONST dmatrix&);
+    friend dvar_matrix::dvar_matrix(const dmatrix&);
 
-    friend dmatrix operator - (_CONST dmatrix& ,_CONST dmatrix& );
-    friend dmatrix operator + (_CONST dmatrix& ,_CONST dmatrix& );
+    friend dmatrix operator-(const dmatrix&, const dmatrix&);
+    friend dmatrix operator+(const dmatrix&, const dmatrix&);
 
-    friend dvar_matrix operator + (_CONST dvar_matrix& ,_CONST dmatrix& );
+    friend dvar_matrix operator+(const dvar_matrix&, const dmatrix&);
 
-    friend dvar_matrix operator + (_CONST dmatrix& ,_CONST dvar_matrix& );
+    friend dvar_matrix operator+(const  dmatrix&, const dvar_matrix&);
 
-    friend dmatrix  trans(_CONST dmatrix& m1);
+    friend dmatrix trans(const dmatrix& m1);
 
-    friend dmatrix inv(_CONST dmatrix&);
-    friend dmatrix inv(_CONST dmatrix& m1,const double& _ln_det, const int& _sgn);
+    friend dmatrix inv(const dmatrix&);
+    friend dmatrix inv(const dmatrix& m1, const double& _ln_det, const int& _sgn);
 
-    friend double det(_CONST dmatrix&);
-    friend double ln_det(_CONST dmatrix& m1,BOR_CONST int& sgn);
+    friend double det(const dmatrix&);
+    friend double ln_det(const dmatrix& m1, const int& sgn);
 
-    friend double norm(_CONST dmatrix&);
-    friend double norm2(_CONST dmatrix&);
-    friend double sumsq(_CONST dmatrix&);
+    friend double norm(const dmatrix&);
+    friend double norm2(const dmatrix&);
+    friend double sumsq(const dmatrix&);
 
-    dmatrix& operator += (_CONST dmatrix& t);
-    dmatrix& operator -= (_CONST dmatrix& t);
+    dmatrix& operator+=(const dmatrix& t);
+    dmatrix& operator-=(const dmatrix& t);
 
     dmatrix& operator = (const dmatrix& t);
     dmatrix& operator = ( double t);
 
-    dmatrix operator() (_CONST ivector& t);
+    dmatrix operator()(const ivector& t);
 
-    friend dvar_matrix& dvar_matrix::operator = (_CONST dmatrix& );
+    friend dvar_matrix& dvar_matrix::operator=(const dmatrix&);
 
-    dmatrix(BOR_CONST tdmatrix& t);
+    dmatrix(const tdmatrix& t);
 
     dmatrix& operator /= (double d);
     dmatrix& operator *= (double d);
 
  }; // end of class dmatrix
 
-imatrix operator * (_CONST imatrix& , _CONST imatrix& );
+imatrix operator*(const imatrix&, const imatrix&);
 
-dmatrix  trans(_CONST dmatrix& m1);
+dmatrix trans(const dmatrix& m1);
 
 imatrix  trans(const imatrix& m1);
 
@@ -3479,40 +3479,40 @@ dvariable boundp( double , double , double , double * );
 dvariable dfboundp( double , double , double , double *);
 dvariable dfboundp( const prevariable& , double , double);
 
-double mean(_CONST dvector&);
-double mean(_CONST dmatrix&);
-double mean(_CONST d3_array&);
+double mean(const dvector&);
+double mean(const dmatrix&);
+double mean(const d3_array&);
 
-double std_dev(_CONST dvector&);
-double var(_CONST dvector&);
+double std_dev(const dvector&);
+double var(const dvector&);
 
-dvariable mean(_CONST dvar_vector&);
-dvariable mean(_CONST dvar_matrix&);
-dvariable mean(_CONST dvar3_array&);
+dvariable mean(const dvar_vector&);
+dvariable mean(const dvar_matrix&);
+dvariable mean(const dvar3_array&);
 
-dvariable std_dev(_CONST dvar_vector&);
-dvariable var(_CONST dvar_vector&);
+dvariable std_dev(const dvar_vector&);
+dvariable var(const dvar_vector&);
 
-dvariable sum(_CONST dvar_vector&);
-double sum(_CONST dvector&);
-int sum(_CONST ivector&);
+dvariable sum(const dvar_vector&);
+double sum(const dvector&);
+int sum(const ivector&);
 
-dvar_vector rowsum(_CONST dvar_matrix&);
-dvar_vector colsum(_CONST dvar_matrix&);
+dvar_vector rowsum(const dvar_matrix&);
+dvar_vector colsum(const dvar_matrix&);
 
-dvector colsum(_CONST dmatrix&);
-dvector rowsum(_CONST dmatrix&);
+dvector colsum(const dmatrix&);
+dvector rowsum(const dmatrix&);
 
-ivector colsum(_CONST imatrix&);
-ivector rowsum(_CONST imatrix&);
+ivector colsum(const imatrix&);
+ivector rowsum(const imatrix&);
 
-int colsum(_CONST imatrix&,int column);
-double colsum(_CONST dmatrix&,int column);
-dvariable colsum(_CONST dvar_matrix&,int column);
+int colsum(const imatrix&, int column);
+double colsum(const dmatrix&, int column);
+dvariable colsum(const dvar_matrix&, int column);
 
 double sfabs( double t1); //"smoothed absolute value function
 
-dvector sfabs(_CONST dvector& t1); //"smoothed absolute value function
+dvector sfabs(const dvector& t1); //"smoothed absolute value function
 
 
 
@@ -3530,14 +3530,14 @@ public:
   ivector lb;
   ivector ub;
   ptr_vector ptr;
-  imatrix_position(BOR_CONST imatrix&);
+  imatrix_position(const imatrix&);
   imatrix_position(int min,int max);
-  imatrix_position(BOR_CONST imatrix_position&);
+  imatrix_position(const imatrix_position&);
   ivector_position operator () (int i);
 };
 
 imatrix_position restore_imatrix_position(void);
-imatrix restore_imatrix_value(BOR_CONST imatrix_position&);
+imatrix restore_imatrix_value(const imatrix_position&);
 
 /**
  * Description not yet available.
@@ -3550,31 +3550,31 @@ imatrix restore_imatrix_value(BOR_CONST imatrix_position&);
     int index_max;
     ivector * m;
     mat_shapex * shape;
-    friend char* fform(const char*,_CONST dmatrix&);
+    friend char* fform(const char*, const dmatrix&);
 
  public:
 
-    int operator ! (void) _CONST {return (shape == NULL);}
+    int operator!(void) const { return (shape == NULL); }
 
     imatrix( int ,  int );
               // makes a matrix [0..nr][0..nc]
 
-    imatrix(int nrl,int nrh,BOR_CONST ivector& iv);
-    void allocate(int nrl,int nrh,BOR_CONST ivector& iv);
+    imatrix(int nrl, int nrh, const ivector& iv);
+    void allocate(int nrl, int nrh, const ivector& iv);
 
     imatrix( int,  int,  int,  int );
              // makes a matrix [nrl..nrh][ncl..nch]
-    imatrix( int,  int,  int,_CONST ivector& );
+    imatrix(int, int, int, const ivector&);
     imatrix sub( int,  int);
-    imatrix( int,  int,_CONST ivector&,_CONST ivector& );
+    imatrix(int, int, const ivector&, const ivector&);
     imatrix(const ad_integer& nrl,const ad_integer& nrh,
       const index_type& ncl,const index_type& nch);
 
-    imatrix& operator = (_CONST imatrix& t);
+    imatrix& operator=(const imatrix& t);
     imatrix& operator = (const int);
-    imatrix(_CONST imatrix&);
+    imatrix(const imatrix&);
              // copy initializer
-    imatrix(BOR_CONST imatrix_position&);
+    imatrix(const imatrix_position&);
     imatrix(void);
 
    ~imatrix();
@@ -3582,11 +3582,11 @@ imatrix restore_imatrix_value(BOR_CONST imatrix_position&);
 
     void save_imatrix_value(void);
     void save_imatrix_position(void);
-    imatrix restore_imatrix_value(BOR_CONST imatrix_position& mpos);
+    imatrix restore_imatrix_value(const imatrix_position& mpos);
     imatrix_position restore_imatrix_position(void);
 
     void allocate(void);
-    void allocate(_CONST imatrix& dm);
+    void allocate(const imatrix& dm);
     void allocate(int nrl,int nrh,int ncl,int nch);
     void allocate(int nrl,int nrh);
     void allocate(int nrl,int nrh,int ncl,const ivector& nch);
@@ -3607,55 +3607,55 @@ imatrix restore_imatrix_value(BOR_CONST imatrix_position&);
 
 #ifdef USE_CONST
  #ifdef OPT_LIB
-  inline _CONST ivector& operator() (int i) _CONST {return m[i];}
-  inline _CONST int& operator() (int i,int j) _CONST 
+  inline const ivector& operator()(int i) const { return m[i]; }
+  inline const int& operator()(int i, int j) const
     {return(*((*(m+i)).v+j));}
-  inline _CONST ivector& operator[] (int i) _CONST {return m[i];}
+  inline const ivector& operator[](int i) const { return m[i]; }
  #else
-    _CONST ivector& operator [] (int) _CONST ;
-    _CONST ivector& operator () (int) _CONST ;
-    _CONST int& operator () (int,int) _CONST ;
+    const ivector& operator[](int) const;
+    const ivector& operator()(int) const;
+    const int& operator()(int, int) const;
 #endif
 #endif
-    int indexmin(void) _CONST { return index_min;}
-    int indexmax(void) _CONST { return index_max;}
-    int rowmin(void) _CONST { return index_min;}
-    int rowmax(void) _CONST { return index_max;}
-    int colmin(void) _CONST { return((*this)(indexmin()).indexmin());}
-    int colmax(void) _CONST { return((*this)(indexmin()).indexmax());}
-    int rowsize() _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
-    int colsize() _CONST {return (colmax()-colmin()+1);} // returns the number of columns
+    int indexmin(void) const { return index_min; }
+    int indexmax(void) const { return index_max; }
+    int rowmin(void) const { return index_min; }
+    int rowmax(void) const { return index_max; }
+    int colmin(void) const { return((*this)(indexmin()).indexmin()); }
+    int colmax(void) const { return((*this)(indexmin()).indexmax()); }
+    int rowsize() const { return (rowmax() - rowmin() + 1); } // returns the number of rows
+    int colsize() const { return (colmax() - colmin() + 1); } // returns the number of columns
     void rowshift(int min);
 
-    void write_on(BOR_CONST ostream&) _CONST;
-    void write_on(BOR_CONST uostream&) _CONST;
-    void read_from(BOR_CONST istream&);
-    void read_from(BOR_CONST uistream&);
+    void write_on(const ostream&) const;
+    void write_on(const uostream&) const;
+    void read_from(const istream&);
+    void read_from(const uistream&);
     void initialize(void);
     friend class i3_array;
     void fill_seqadd(int,int);
 }; //end of class imatrix
 
-dvariable regression(_CONST dvector& obs,_CONST dvar_vector& pred);
-double regression(_CONST dvector& obs,_CONST dvector& pred);
+dvariable regression(const dvector& obs, const dvar_vector& pred);
+double regression(const dvector& obs, const dvector& pred);
 
-dvariable robust_regression_fixed(_CONST dvector& obs,_CONST dvar_vector& pred,
+dvariable robust_regression_fixed(const dvector& obs, const dvar_vector& pred,
   double a=0.7);
-dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,
+dvariable robust_regression(const dvector& obs, const dvar_vector& pred,
   double a=0.7);
 
-dvariable robust_regression(_CONST dvector& obs,_CONST dvar_vector& pred,_CONST dvariable& cutoff);
+dvariable robust_regression(const dvector& obs, const dvar_vector& pred, const dvariable& cutoff);
 
- dmatrix column_vector(_CONST dvector&);
- dmatrix row_vector(_CONST dvector&);
+ dmatrix column_vector(const dvector&);
+ dmatrix row_vector(const dvector&);
 
- dvar_matrix column_vector(_CONST dvar_vector&);
- dvar_matrix row_vector(_CONST dvar_vector&);
+ dvar_matrix column_vector(const dvar_vector&);
+ dvar_matrix row_vector(const dvar_vector&);
 
  dmatrix identity_matrix(int min,int max); 
 
-istream& operator >> (BOR_CONST istream& s,BOR_CONST ptr_vector& v);
-ostream& operator << (BOR_CONST ostream& s,BOR_CONST ptr_vector& v);
+istream& operator>>(const istream& s, const ptr_vector& v);
+ostream& operator<<(const ostream& s, const ptr_vector& v);
 
 /**
  * Description not yet available.
@@ -3686,9 +3686,9 @@ public:
 
   void set_defaults();
   fmm_control();
-  fmm_control(BOR_CONST fmm_control& );
-  fmm_control(_CONST lvector& ipar);
-  void writeon(BOR_CONST ostream& s) const;
+  fmm_control(const fmm_control& );
+  fmm_control(const lvector& ipar);
+  void writeon(const ostream& s) const;
 };
 
 /**
@@ -3708,8 +3708,8 @@ class sdmatrix: public dmatrix
 
 class dfsdmat;
 
-uistream& operator >> (BOR_CONST uistream&,BOR_CONST dfsdmat&);
-uostream& operator << (BOR_CONST uostream&,BOR_CONST dfsdmat&);
+uistream& operator>>(const uistream&, const dfsdmat&);
+uostream& operator<<(const uostream&, const dfsdmat&);
 
 /**
  * Description not yet available.
@@ -3730,18 +3730,18 @@ public:
   void save(void);
   void restore(void);
   double * getminp(void){ return minp;}
-  int operator ! (void) _CONST {return (ptr == NULL);}
+  int operator!(void) const { return (ptr == NULL); }
   int size(void) {return n;} 
   dfsdmat(int n);
   dfsdmat();
-  dfsdmat(int n,BOR_CONST gradient_structure& gs);
+  dfsdmat(int n, const gradient_structure& gs);
   void allocate(int n);
-  void allocate(int n,BOR_CONST gradient_structure& gs);
+  void allocate(int n, const gradient_structure& gs);
   void allocate(void);
   ~dfsdmat();
   void deallocate(void);
-  friend uistream& operator >> (BOR_CONST uistream&,BOR_CONST dfsdmat&);
-  friend uostream& operator << (BOR_CONST uostream&,BOR_CONST dfsdmat&);
+  friend uistream& operator>>(const uistream&, const dfsdmat&);
+  friend uostream& operator<<(const uostream&, const dfsdmat&);
 
   #if defined(OPT_LIB) && !defined(__INTEL_COMPILER) 
     double& elem(int i,int j){ return *(m[i]+j);}
@@ -3781,14 +3781,14 @@ public:
 
 public:
   fmm(int nvar,int disk_save=0);
-  fmm(int nvar,_CONST lvector& ipar,int disk_save=0);
-  double minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&));
+  fmm(int nvar, const lvector& ipar, int disk_save = 0);
+  double minimize(const independent_variables &x, double (*pf)(const dvar_vector&));
 
-  double minimize(BOR_CONST independent_variables & x,BOR_CONST dvector& c,
-        double (*pf)(BOR_CONST dvar_vector&,BOR_CONST dvector&) );
+  double minimize(const independent_variables & x, const dvector& c,
+        double (*pf)(const dvar_vector&, const dvector&));
 
-  //void fmin(BOR_CONST double& f, BOR_CONST independent_variables & x,BOR_CONST dvector& g);
-  void fmin(BOR_CONST double& f, const dvector& x,BOR_CONST dvector& g);
+  //void fmin(const double& f, const independent_variables &x, const dvector& g);
+  void fmin(const double& f, const dvector& x, const dvector& g);
 
   dmatrix& hessian();
 };
@@ -3829,33 +3829,33 @@ public:
 
 public:
   fmmt1(int nvar,int _xm=7);
-  fmmt1(int nvar,_CONST lvector& ipar);
-  double minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&));
+  fmmt1(int nvar, const lvector& ipar);
+  double minimize(const independent_variables & x,double (*pf)(const dvar_vector&));
 
-  double minimize(BOR_CONST independent_variables & x,BOR_CONST dvector& c,
-        double (*pf)(BOR_CONST dvar_vector&,BOR_CONST dvector&) );
+  double minimize(const independent_variables & x, const dvector& c,
+        double (*pf)(const dvar_vector&, const dvector&));
 
-  void fmin2(BOR_CONST double& f, BOR_CONST independent_variables & x,BOR_CONST dvector& g, function_minimizer *);
+  void fmin2(const double& f, const independent_variables & x, const dvector& g, function_minimizer*);
 
-  void fmin(BOR_CONST double& f, const dvector & x,BOR_CONST dvector& g);
+  void fmin(const double& f, const dvector & x, const dvector& g);
 
 //  dmatrix& hessian();
 };
 
 
-void derch(BOR_CONST double& f, BOR_CONST independent_variables & x,BOR_CONST dvector& g,
-     int n, BOR_CONST int & ireturn);
+void derch(const double& f, const independent_variables &x, const dvector& g,
+     int n, const int &ireturn);
 
-void fmin( double f, BOR_CONST independent_variables & x,_CONST dvector& g,
-            const int& n,_CONST dvector& w,_CONST dvector& h, BOR_CONST fmm_control & fmc);
+void fmin(double f, const independent_variables &x, const dvector& g,
+            const int& n, const dvector& w, const dvector& h, const fmm_control &fmc);
 
-void fmmdisp(_CONST dvector& x,_CONST dvector& g, const int& nvar,
+void fmmdisp(const dvector& x, const dvector& g, const int& nvar,
              int scroll_flag,int noprintx=0);
 
-void fmmdisp(_CONST double * x,_CONST double * g, const int& nvar,
+void fmmdisp(const double *x, const double *g, const int& nvar,
              int scroll_flag,int noprintx=0);
 
-ostream& operator<<(BOR_CONST ostream& s, const fmm_control& fmc);
+ostream& operator<<(const ostream& s, const fmm_control& fmc);
 
 // !!!! #ifndef __GNU__
 
@@ -4069,24 +4069,24 @@ public:
   uistream&  ignore(int = 1, int = EOF);
 
 #ifndef __SUN__
-  uistream&  operator>> (BOR_CONST signed char*);
+  uistream&  operator>>(const signed char*);
 #endif
-  uistream&  operator>> (BOR_CONST unsigned char*);
-  uistream&  operator>> (BOR_CONST unsigned char&);
+  uistream&  operator>>(const unsigned char*);
+  uistream&  operator>>(const unsigned char&);
 #ifndef __SUN__
-  uistream&  operator>> (BOR_CONST signed char&);
+  uistream&  operator>>(const signed char&);
 #endif
-  uistream&  operator>> (BOR_CONST short&);
-  uistream&  operator>> (BOR_CONST int&);
-  uistream&  operator>> (BOR_CONST long&);
-  uistream&  operator>> (BOR_CONST unsigned short&);
-  uistream&  operator>> (BOR_CONST unsigned int&);
-  uistream&  operator>> (BOR_CONST unsigned long&);
-  uistream&  operator>> (BOR_CONST float&);
-  uistream&  operator>> (BOR_CONST double&);
-  uistream&  operator>> (BOR_CONST char&);
+  uistream&  operator>>(const short&);
+  uistream&  operator>>(const int&);
+  uistream&  operator>>(const long&);
+  uistream&  operator>>(const unsigned short&);
+  uistream&  operator>>(const unsigned int&);
+  uistream&  operator>>(const unsigned long&);
+  uistream&  operator>>(const float&);
+  uistream&  operator>>(const double&);
+  uistream&  operator>>(const char&);
 #if defined(__TURBOC__) || defined (__MSVC32__)  
-  uistream&  operator>> (BOR_CONST long double&);
+  uistream&  operator>>(const long double&);
 #endif
 virtual void sss(void);
 };
@@ -4111,7 +4111,7 @@ virtual void sss(void);
 class fmmc;
 
 
-void derch(BOR_CONST double& f,BOR_CONST dvector& x,BOR_CONST dvector& gg,int n, BOR_CONST int & ireturn);
+void derch(const double& f, const dvector& x, const dvector& gg, int n, const int &ireturn);
 
 /**
  * Description not yet available.
@@ -4172,9 +4172,9 @@ public:
   double right_bracket_value;
   double rho_0;
   double fbest;
-  fmmc(BOR_CONST int& n);
+  fmmc(const int& n);
   ~fmmc();
-   void fmin(BOR_CONST double& f,BOR_CONST dvector& p,BOR_CONST dvector& gg);
+  void fmin(const double& f, const dvector& p, const dvector& gg);
   double dfn;
   int maxfn_flag;
   int iexit;
@@ -4238,7 +4238,7 @@ public:
     three_array_shape * shape;
     friend class d4_array;
   public:
-    int operator ! (void) _CONST {return (shape == NULL);}
+    int operator!(void) const { return (shape == NULL); }
     // conclass cgors
     d3_array(void);
     void save_d3_array_value(void) const;
@@ -4252,107 +4252,103 @@ public:
 
     void save_d3_array_position(void) const;
 
-    d3_array(int sl,int sh,int nrl,int nrh,_CONST ivector& ncl,int nch);
+    d3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch);
 
-    d3_array(const ad_integer& sl,const ad_integer& sh,
-      _CONST index_type& nrl,_CONST index_type& nrh,
-      _CONST index_type& ncl,_CONST index_type& nch);
+    d3_array(const ad_integer& sl, const ad_integer& sh,
+             const index_type& nrl, const index_type& nrh,
+             const index_type& ncl, const index_type& nch);
 
-    void allocate(const ad_integer& sl,const ad_integer& sh,
-      _CONST index_type& nrl,_CONST index_type& nrh,
-      _CONST index_type& ncl,_CONST index_type& nch);
+    void allocate(const ad_integer& sl, const ad_integer& sh,
+                  const index_type& nrl, const index_type& nrh,
+                  const index_type& ncl, const index_type& nch);
 
-    d3_array(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      _CONST imatrix& ncl,_CONST imatrix& nch);
-    d3_array(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      int ncl,_CONST imatrix& nch);
-    d3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,_CONST imatrix& nch);
-    d3_array(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      _CONST ivector& ncl,_CONST ivector& nch);
-    d3_array(int sl,int sh,int nrl,int nrh,_CONST ivector& ncl,
-      _CONST ivector& nch);
-    d3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,_CONST ivector& nch);
-    d3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,int nch);
-    d3_array(_CONST d3_array& m2);
+    d3_array(int sl, int sh, const ivector& nrl, const ivector& nrh,
+             const imatrix& ncl, const imatrix& nch);
+    d3_array(int sl, int sh, const ivector& nrl, const ivector& nrh,
+             int ncl, const imatrix& nch);
+    d3_array(int sl, int sh, int nrl, const ivector& nrh,
+             int ncl, const imatrix& nch);
+    d3_array(int sl, int sh, const ivector& nrl, const ivector& nrh,
+             const ivector& ncl, const ivector& nch);
+    d3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl,
+             const ivector& nch);
+    d3_array(int sl, int sh, int nrl, const ivector& nrh,
+             int ncl, const ivector& nch);
+    d3_array(int sl, int sh, int nrl, const ivector& nrh,
+             int ncl, int nch);
+    d3_array(const d3_array& m2);
     ~d3_array();
 
-    void allocate(_CONST dvar3_array&);
-    void allocate(_CONST d3_array& d3v);
+    void allocate(const dvar3_array&);
+    void allocate(const d3_array& d3v);
     void allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch);
     void allocate(int sl,int sh,int nrl,int nrh);
     void allocate(int sl,int sh,const index_type& nrl,const index_type& nrh);
     void allocate(int sl,int sh);
 
-    void allocate(int sl,int sh,int nrl,int nrh,_CONST ivector& ncl,int nch);
-   void allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      _CONST imatrix& ncl,_CONST imatrix& nch);
-   void allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,_CONST imatrix& nch);
-   void allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      int ncl,_CONST imatrix& nch);
-   void allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
+    void allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch);
+   void allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+                 const imatrix& ncl, const imatrix& nch);
+   void allocate(int sl, int sh, int nrl, const ivector& nrh,
+                 int ncl, const imatrix& nch);
+   void allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+                 int ncl, const imatrix& nch);
+   void allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
       int ncl,int nch);
-   void allocate(int sl,int sh,_CONST ivector& nrl,int nrh,
+   void allocate(int sl, int sh, const ivector& nrl, int nrh,
       int ncl,int nch);
-   void allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
+   void allocate(int sl, int sh, int nrl, const ivector& nrh,
       int ncl,int nch);
-   void allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      _CONST ivector& ncl,_CONST ivector& nch);
-    void allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,_CONST ivector& nch);
+   void allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+                 const ivector& ncl, const ivector& nch);
+   void allocate(int sl, int sh, int nrl, const ivector& nrh,
+                 int ncl, const ivector& nch);
+   void allocate(int sl, int sh, int nrl, int nrh,
+                 const ivector& ncl, const ivector& nch);
     void allocate(int sl,int sh,int nrl,int nrh,
-      _CONST ivector& ncl,_CONST ivector& nch);
-    void allocate(int sl,int sh,int nrl,int nrh,
-      int ncl,_CONST ivector& nch);
+      int ncl, const ivector& nch);
     void allocate(void);
     void deallocate(void);
-    void initialize(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,_CONST ivector& nch);
+    void initialize(int sl, int sh, int nrl, const ivector& nrh,
+                    int ncl, const ivector& nch);
 
     //access functions
-    int indexmin(void) _CONST { return(shape->slice_min);}
-    int indexmax(void) _CONST { return(shape->slice_max);}
-    int slicemin(void) _CONST { return(shape->slice_min);}
-    int slicemax(void) _CONST { return(shape->slice_max);}
-    int colmin(void) _CONST { return( (*this)(slicemin()).colmin());}
-    int colmax(void) _CONST { return((*this)(slicemin()).colmax());}
-    int rowmin(void) _CONST { return((*this)(slicemin()).rowmin());}
-    int rowmax(void) _CONST { return((*this)(slicemin()).rowmax());}
+    int indexmin(void) const { return shape->slice_min; }
+    int indexmax(void) const { return shape->slice_max; }
+    int slicemin(void) const { return shape->slice_min; }
+    int slicemax(void) const { return shape->slice_max; }
+    int colmin(void) const { return ((*this)(slicemin()).colmin()); }
+    int colmax(void) const { return ((*this)(slicemin()).colmax()); }
+    int rowmin(void) const { return ((*this)(slicemin()).rowmin()); }
+    int rowmax(void) const { return ((*this)(slicemin()).rowmax()); }
 
-    int slicesize(void) _CONST {return (slicemax()-slicemin()+1);} // returns the number of rows
-    int rowsize(void) _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
-    int colsize(void) _CONST {return (colmax()-colmin()+1);} // returns the number of columns
+    int slicesize(void) const { return (slicemax() - slicemin() + 1); } // returns the number of rows
+    int rowsize(void) const { return (rowmax() - rowmin() + 1); } // returns the number of rows
+    int colsize(void) const { return (colmax() - colmin() + 1); } // returns the number of columns
     void initialize(void);
 
    dmatrix& elem(int k) { return(t[k]); }
 #ifdef USE_CONST
-   _CONST dmatrix& elem(int k) _CONST { return(t[k]); }
+   const dmatrix& elem(int k) const { return t[k]; }
 #endif
 #ifdef OPT_LIB
   #ifdef USE_CONST
-    inline _CONST double& operator () (int k, int i, int j)
-      _CONST
+    inline const double& operator()(int k, int i, int j) const
     {
       return ( ((t[k].m[i]).v)[j] );
     }
 
-    inline _CONST dvector& operator () (int k, int i)
-      _CONST
+    inline const dvector& operator()(int k, int i) const
     {
       return ( t[k].m[i]);
     }
 
-    inline _CONST dmatrix& operator() (int i)
-      _CONST
+    inline const dmatrix& operator()(int i) const
     {
       return( t[i]);
     }
 
-    inline _CONST dmatrix& operator[] (int i)
-      _CONST
+    inline const dmatrix& operator[](int i) const
     {
       return( t[i]);
     }
@@ -4383,20 +4379,20 @@ public:
     dmatrix& operator[] (int i);
     dmatrix& operator() (int i);
   #ifdef USE_CONST
-    _CONST double& operator () (int k, int i, int j) _CONST;
-    _CONST dvector& operator () (int k, int i) _CONST;
-    _CONST dmatrix& operator[] (int i) _CONST; 
-    _CONST dmatrix& operator() (int i) _CONST;
+    const double& operator()(int k, int i, int j) const;
+    const dvector& operator()(int k, int i) const;
+    const dmatrix& operator[](int i) const; 
+    const dmatrix& operator()(int i) const;
   #endif
 #endif
 
-    d3_array& operator= (_CONST d3_array& m1);
+    d3_array& operator=(const d3_array& m1);
     d3_array& operator= (double x);
-    friend d3_array value(_CONST dvar3_array& ar);
+    friend d3_array value(const dvar3_array& ar);
 
-    void fill_randn(BOR_CONST random_number_generator& rng);
-    void fill_randcau(BOR_CONST random_number_generator& rng);
-    void fill_randu(BOR_CONST random_number_generator& rng);
+    void fill_randn(const random_number_generator& rng);
+    void fill_randcau(const random_number_generator& rng);
+    void fill_randu(const random_number_generator& rng);
 
     void fill_randu(long int& n);
     void fill_randn(long int& n);
@@ -4421,119 +4417,115 @@ public:
     i3_array(int sl,int sh,int nrl,int nrh,const ivector& nc);
     void allocate(int sl,int sh,int nrl,int nrh,const ivector& nc);
 #  endif
-    int operator ! (void) _CONST {return (shape == NULL);}
+    int operator!(void) const { return (shape == NULL); }
     // conclass cgors
     void shallow_copy(const i3_array&);
     i3_array(void);
-    i3_array(int sl,int sh,_CONST index_type& nrl,_CONST index_type& nrh,
-      _CONST index_type& ncl,_CONST index_type& nch);
+    i3_array(int sl, int sh, const index_type& nrl, const index_type& nrh,
+             const index_type& ncl, const index_type& nch);
 
-    i3_array(int _sl,int _sh,_CONST imatrix& m1);
+    i3_array(int _sl, int _sh, const imatrix& m1);
 
     i3_array(int sl,int sh);
     i3_array(int sl,int sh,int nrl,int nrh,int ncl,int nch);
-    i3_array(int sl,int sh,int nrl,int nrh,_CONST ivector& ncl,int nch);
+    i3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch);
 
-    i3_array(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      _CONST imatrix& ncl,_CONST imatrix& nch);
-    i3_array(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      int ncl,_CONST imatrix& nch);
-    i3_array(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      _CONST ivector& ncl,_CONST ivector& nch);
-    i3_array(int sl,int sh,int nrl,int nrh,_CONST ivector& ncl,
-      _CONST ivector& nch);
-    i3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,_CONST ivector& nch);
-    i3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
+    i3_array(int sl, int sh, const ivector& nrl, const ivector& nrh,
+             const imatrix& ncl, const imatrix& nch);
+    i3_array(int sl, int sh, const ivector& nrl, const ivector& nrh,
+             int ncl, const imatrix& nch);
+    i3_array(int sl, int sh, const ivector& nrl, const ivector& nrh,
+             const ivector& ncl, const ivector& nch);
+    i3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl,
+             const ivector& nch);
+    i3_array(int sl, int sh, int nrl, const ivector& nrh,
+             int ncl, const ivector& nch);
+    i3_array(int sl, int sh, int nrl, const ivector& nrh,
       int ncl,int nch);
-    i3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,_CONST imatrix& nch);
+    i3_array(int sl, int sh, int nrl, const ivector& nrh,
+             int ncl, const imatrix& nch);
     i3_array(const i3_array& m2);
     ~i3_array();
 
     void allocate(int sl,int sh,int nrl,const ivector& nrh,int ncl,int nch);
-    void allocate(_CONST dvar3_array&);
-    void allocate(_CONST i3_array& i3v);
+    void allocate(const dvar3_array&);
+    void allocate(const i3_array& i3v);
     void allocate(int sl,int sh,int nrl,int nrh,int ncl,int nch);
     void allocate(int sl,int sh);
 
-    void allocate(int sl,int sh,int nrl,int nrh,_CONST ivector& ncl,int nch);
+    void allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch);
 
-   void allocate(int sl,int sh,_CONST index_type& nrl,_CONST index_type& nrh,
-      _CONST index_type& ncl,_CONST index_type& nch);
+   void allocate(int sl, int sh, const index_type& nrl, const index_type& nrh,
+                 const index_type& ncl, const index_type& nch);
 
-   void allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      _CONST imatrix& ncl,_CONST imatrix& nch);
-   void allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,_CONST imatrix& nch);
-   void allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      int ncl,_CONST imatrix& nch);
-   void allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
+   void allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+                 const imatrix& ncl, const imatrix& nch);
+   void allocate(int sl, int sh, int nrl, const ivector& nrh,
+                 int ncl, const imatrix& nch);
+   void allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+                 int ncl, const imatrix& nch);
+   void allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
       int ncl,int nch);
-   void allocate(int sl,int sh,_CONST ivector& nrl,int nrh,
+   void allocate(int sl, int sh, const ivector& nrl, int nrh,
       int ncl,int nch);
-   //void allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
+   //void allocate(int sl, int sh, int nrl, const ivector& nrh,
     //  int ncl,int nch);
-   void allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      _CONST ivector& ncl,_CONST ivector& nch);
-    void allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,_CONST ivector& nch);
+   void allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+                 const ivector& ncl, const ivector& nch);
+    void allocate(int sl, int sh, int nrl, const ivector& nrh,
+                  int ncl, const ivector& nch);
     void allocate(int sl,int sh,int nrl,int nrh,
-      _CONST ivector& ncl,_CONST ivector& nch);
+                  const ivector& ncl, const ivector& nch);
     void allocate(int sl,int sh,int nrl,int nrh,
-      int ncl,_CONST ivector& nch);
+                  int ncl, const ivector& nch);
     void allocate(void);
     void deallocate(void);
-    void initialize(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,_CONST ivector& nch);
+    void initialize(int sl, int sh, int nrl, const ivector& nrh,
+                    int ncl, const ivector& nch);
 
     //access functions
-    int indexmin(void) _CONST { return(shape->slice_min);}
-    int indexmax(void) _CONST { return(shape->slice_max);}
-    int slicemin(void) _CONST { return(shape->slice_min);}
-    int slicemax(void) _CONST { return(shape->slice_max);}
-    int colmin(void) _CONST { return((*this)(slicemin()).colmin());}
-    int colmax(void) _CONST { return((*this)(slicemin()).colmax());}
-    int rowmin(void) _CONST { return((*this)(slicemin()).rowmin());}
-    int rowmax(void) _CONST { return((*this)(slicemin()).rowmax());}
+    int indexmin(void) const { return shape->slice_min; }
+    int indexmax(void) const { return shape->slice_max; }
+    int slicemin(void) const { return shape->slice_min; }
+    int slicemax(void) const { return shape->slice_max; }
+    int colmin(void) const { return ((*this)(slicemin()).colmin()); }
+    int colmax(void) const { return ((*this)(slicemin()).colmax()); }
+    int rowmin(void) const { return ((*this)(slicemin()).rowmin()); }
+    int rowmax(void) const { return ((*this)(slicemin()).rowmax()); }
 
-    int slicesize() _CONST {return (slicemax()-slicemin()+1);} // returns the number of rows
-    int rowsize() _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
-    int colsize() _CONST {return (colmax()-colmin()+1);} // returns the number of columns
+    int slicesize() const { return (slicemax() - slicemin() + 1); } // returns the number of rows
+    int rowsize() const { return (rowmax() - rowmin() + 1); } // returns the number of rows
+    int colsize() const { return (colmax() - colmin() + 1); } // returns the number of columns
     void initialize(void);
 
    imatrix& elem(int k) { return(t[k]); }
 #ifdef USE_CONST
-   _CONST imatrix& elem(int k) _CONST { return(t[k]); }
+   const imatrix& elem(int k) const { return t[k]; }
 #endif
 #ifdef OPT_LIB
   #ifdef USE_CONST
-    inline _CONST int& operator () (int k, int i, int j)
-      _CONST
+    inline const int& operator()(int k, int i, int j) const
     {
       return ( ((t[k].m[i]).v)[j] );
     }
 
-    inline _CONST ivector& operator () (int k, int i)
-      _CONST
+    inline const ivector& operator()(int k, int i) const
     {
       return ( t[k].m[i]);
     }
 
-    inline _CONST imatrix& operator() (int i)
-      _CONST
+    inline const imatrix& operator()(int i) const
     {
       return( t[i]);
     }
 
-    inline _CONST imatrix& operator[] (int i)
-      _CONST
+    inline const imatrix& operator[](int i) const
     {
       return( t[i]);
     }
   #endif
 
-    inline int& operator () (int k, int i, int j)
+    inline int& operator()(int k, int i, int j)
     {
       return ( ((t[k].m[i]).v)[j] );
     }
@@ -4558,14 +4550,14 @@ public:
     imatrix& operator[] (int i);
     imatrix& operator() (int i);
   #ifdef USE_CONST
-    _CONST int& operator () (int k, int i, int j) _CONST;
-    _CONST ivector& operator () (int k, int i) _CONST;
-    _CONST imatrix& operator[] (int i) _CONST; 
-    _CONST imatrix& operator() (int i) _CONST;
+    const int& operator()(int k, int i, int j) const;
+    const ivector& operator()(int k, int i) const;
+    const imatrix& operator[](int i) const; 
+    const imatrix& operator()(int i) const;
   #endif
 #endif
 
-    i3_array& operator= (_CONST i3_array& m1);
+    i3_array& operator=(const i3_array& m1);
     i3_array& operator= (int x);
 
     void fill_randu(long int& n);
@@ -4595,7 +4587,7 @@ public:
     void shallow_copy(const dvar3_array&);
     dvar3_array sub(int,int);
     dvar3_array(int,int);
-    int operator ! (void) _CONST {return (shape == NULL);}
+    int operator!(void) const { return (shape == NULL); }
     // conclass cgors
 
     void initialize(void);
@@ -4605,106 +4597,102 @@ public:
       void allocate(int sl,int sh);
 
 
-      void allocate(int sl,int sh,int nrl,int nrh,_CONST ivector& ncl,int nch);
-      void allocate(_CONST d3_array& m1);
+      void allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch);
+      void allocate(const d3_array& m1);
       void allocate(void);
-      void allocate(_CONST dvar3_array& m1);
+      void allocate(const dvar3_array& m1);
       void allocate(int sl,int sh,int nrl,int nrh,
-	_CONST ivector& ncl,_CONST ivector& nch);
-      void allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-	_CONST ivector& ncl,_CONST ivector& nch);
-      void allocate(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
+	            const ivector& ncl, const ivector& nch);
+      void allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+                    const ivector& ncl, const ivector& nch);
+      void allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
 	int ncl,int nch);
-      void allocate(int sl,int sh,_CONST ivector& nrl,int nrh,
+      void allocate(int sl, int sh, const ivector& nrl, int nrh,
 	int ncl,int nch);
-      void allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
+      void allocate(int sl, int sh, int nrl, const ivector& nrh,
 	int ncl,int nch);
-      void allocate(int sl,int sh,int nrl,_CONST ivector& nrh,
-	int ncl,_CONST ivector& nch);
+      void allocate(int sl, int sh, int nrl, const ivector& nrh,
+	            int ncl, const ivector& nch);
       void allocate(int sl,int sh,int nrl,int nrh,
-	int ncl,_CONST ivector& nch);
-      void allocate(ad_integer sl,ad_integer sh,
-        _CONST index_type& nrl,_CONST index_type& nrh,
-        _CONST index_type& ncl,_CONST index_type& nch);
-      void allocate(ad_integer sl,ad_integer sh,
-        _CONST index_type& nrl,_CONST index_type& nrh);
+                    int ncl, const ivector& nch);
+      void allocate(ad_integer sl, ad_integer sh,
+                    const index_type& nrl, const index_type& nrh,
+                    const index_type& ncl, const index_type& nch);
+      void allocate(ad_integer sl, ad_integer sh,
+                   const index_type& nrl, const index_type& nrh);
       void allocate(ad_integer sl,ad_integer sh);
 
       void deallocate();
     dvar3_array(int sl,int sh,int nrl,int nrh,int ncl,int nch);
-    dvar3_array(int sl,int sh,int nrl,int nrh,_CONST ivector& ncl,int nch);
+    dvar3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch);
 
-    dvar3_array(int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,
-      ivector& ncl,_CONST ivector& nch);
+    dvar3_array(int sl, int sh, const ivector& nrl, const ivector& nrh,
+                ivector& ncl, const ivector& nch);
 
-    dvar3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
-      int ncl,_CONST ivector& nch);
+    dvar3_array(int sl, int sh, int nrl, const ivector& nrh,
+                int ncl, const ivector& nch);
 
-    dvar3_array(int sl,int sh,int nrl,_CONST ivector& nrh,
+    dvar3_array(int sl, int sh, int nrl, const ivector& nrh,
       int ncl,int nch);
 
-    dvar3_array(ad_integer sl,ad_integer sh,
-      _CONST index_type& nrl,_CONST index_type& nrh,
-      _CONST index_type& ncl,_CONST index_type& nch);
+    dvar3_array(ad_integer sl, ad_integer sh,
+                const index_type& nrl, const index_type& nrh,
+                const index_type& ncl, const index_type& nch);
 
 
-    dvar3_array(_CONST d3_array& m2);
+    dvar3_array(const d3_array& m2);
 #   if defined(__NUMBERVECTOR__)
       dvar3_array(const param_init_matrix_vector& m2);
       dvar3_array(const param_init_bounded_matrix_vector& m2);
 #   endif
 
-    dvar3_array(_CONST dvar3_array& m2);
+    dvar3_array(const dvar3_array& m2);
 
     dvar3_array(void);
 
     ~dvar3_array();
 
-    d3_array value(_CONST dvar3_array&);
+    d3_array value(const dvar3_array&);
 
     //access functions
-    int indexmin(void) _CONST { return(shape->slice_min);}
-    int indexmax(void) _CONST { return(shape->slice_max);}
-    int slicemin(void) _CONST { return(shape->slice_min);}
-    int slicemax(void) _CONST { return(shape->slice_max);}
-    int colmin(void) _CONST { return((*this)(slicemin()).colmin());}
-    int colmax(void) _CONST { return((*this)(slicemin()).colmax());}
-    int rowmin(void) _CONST { return((*this)(slicemin()).rowmin());}
-    int rowmax(void) _CONST { return((*this)(slicemin()).rowmax());}
+    int indexmin(void) const { return shape->slice_min; }
+    int indexmax(void) const { return shape->slice_max; }
+    int slicemin(void) const { return shape->slice_min; }
+    int slicemax(void) const { return (shape->slice_max); }
+    int colmin(void) const { return ((*this)(slicemin()).colmin()); }
+    int colmax(void) const { return ((*this)(slicemin()).colmax()); }
+    int rowmin(void) const { return ((*this)(slicemin()).rowmin()); }
+    int rowmax(void) const { return ((*this)(slicemin()).rowmax()); }
 
-    int slicesize() _CONST {return (slicemax()-slicemin()+1);} // returns the number of rows
-    int rowsize() _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
-    int colsize() _CONST {return (colmax()-colmin()+1);} // returns the number of columns
+    int slicesize() const { return (slicemax() - slicemin() + 1); } // returns the number of rows
+    int rowsize() const { return (rowmax() - rowmin() + 1); } // returns the number of rows
+    int colsize() const { return (colmax() - colmin() + 1); } // returns the number of columns
 
     dvar_matrix& elem(int k) { return( t[k] ); }
     prevariable elem(int i,int j,int k) { return( t[k].elem(i,j) ); }
     #ifdef USE_CONST
-       _CONST dvar_matrix& elem(int k) _CONST { return( t[k] ); }
-       _CONST prevariable elem(int i,int j,int k) _CONST { return( t[k].elem(i,j) ); }
+       const dvar_matrix& elem(int k) const { return t[k]; }
+       const prevariable elem(int i,int j,int k) const { return t[k].elem(i,j); }
     #endif
 
 #ifdef OPT_LIB
   #ifdef USE_CONST
-    inline _CONST prevariable operator () (int k, int i, int j)
-      _CONST
+    inline const prevariable operator()(int k, int i, int j) const
     {
       return ( ((t[k].m[i]).va)+j );
     }
 
-    inline _CONST dvar_vector& operator () (int k, int i)
-      _CONST
+    inline const dvar_vector& operator()(int k, int i) const
     {
       return ( t[k].m[i]);
     }
 
-    inline _CONST dvar_matrix& operator() (int i)
-      _CONST
+    inline const dvar_matrix& operator()(int i) const
     {
       return( t[i]);
     }
 
-    inline _CONST dvar_matrix& operator[] (int i)
-      _CONST
+    inline const dvar_matrix& operator[](int i) const
     {
       return( t[i]);
     }
@@ -4735,16 +4723,16 @@ public:
     dvar_matrix& operator[] (int i);
     dvar_matrix& operator() (int i);
   #ifdef USE_CONST
-    _CONST prevariable operator () (int k, int i, int j) _CONST;
-    _CONST dvar_vector& operator () (int k, int i) _CONST;
-    _CONST dvar_matrix& operator[] (int i) _CONST; 
-    _CONST dvar_matrix& operator() (int i) _CONST;
+    const prevariable operator()(int k, int i, int j) const;
+    const dvar_vector& operator()(int k, int i) const;
+    const dvar_matrix& operator[](int i) const; 
+    const dvar_matrix& operator()(int i) const;
   #endif
 #endif
 
-    dvar3_array& operator= (_CONST d3_array& m1);
+    dvar3_array& operator=(const d3_array& m1);
     dvar3_array& operator= (double x);
-    dvar3_array& operator= (_CONST dvar3_array& m1);
+    dvar3_array& operator=(const dvar3_array& m1);
 
     void fill_randu(long int& n);
     void fill_randn(long int& n);
@@ -4752,7 +4740,7 @@ public:
     void fill_randu_ni(long int& n);
     void fill_randn_ni(long int& n);
     double fill_seqadd(double,double);
-    void operator /=(_CONST prevariable&);
+    void operator/=(const prevariable&);
     void operator /=(double);
 
   }; //end of class dvar3_array
@@ -4763,24 +4751,24 @@ dvariable cumd_exponential(const prevariable& x);
 double inv_cumd_exponential(double y);
 double cumd_exponential(double x);
 
-double cumd_logistic(_CONST double& x);
-double inv_cumd_logistic(_CONST double& x);
+double cumd_logistic(const double& x);
+double inv_cumd_logistic(const double& x);
 
-dvariable cumd_logistic(_CONST prevariable& x);
-dvariable inv_cumd_logistic(_CONST prevariable& x);
-double inv_cumd_norm(_CONST double& x);
-double cumd_norm(_CONST double& x);
-double cumd_norm(_CONST double& x,double);
-dvariable inv_cumd_norm(_CONST prevariable& x);
-dvar_vector inv_cumd_norm(_CONST dvar_vector& x);
-prevariable& cumd_norm(_CONST prevariable& x);
+dvariable cumd_logistic(const prevariable& x);
+dvariable inv_cumd_logistic(const prevariable& x);
+double inv_cumd_norm(const double& x);
+double cumd_norm(const double& x);
+double cumd_norm(const double& x,double);
+dvariable inv_cumd_norm(const prevariable& x);
+dvar_vector inv_cumd_norm(const dvar_vector& x);
+prevariable& cumd_norm(const prevariable& x);
 prevariable& bounded_cumd_norm(const prevariable& x,double);
 double bounded_cumd_norm(double x,double);
-//dvariable& old_cumd_norm(_CONST prevariable& x);
-double normal_tail_right(_CONST double& x);
+//dvariable& old_cumd_norm(const prevariable& x);
+double normal_tail_right(const double& x);
 
-dvariable inv_cumd_norm_logistic(_CONST prevariable& x,double);
-prevariable& cumd_norm_logistic(_CONST prevariable& x,double);
+dvariable inv_cumd_norm_logistic(const prevariable& x, double);
+prevariable& cumd_norm_logistic(const prevariable& x, double);
 double inv_cumd_norm_logistic(double x,double);
 double cumd_norm_logistic(double x,double);
 
@@ -4792,133 +4780,133 @@ class prevariable_position
 {
   double_and_int * v;
 public:
-  prevariable_position(_CONST prevariable& x){v=x.get_v();}
+  prevariable_position(const prevariable& x) { v = x.get_v(); }
   prevariable_position(double_and_int * p){v=p;}
   double& xval() { return( (v->x) ); }
 };
 
-double restore_prevariable_derivative(BOR_CONST prevariable_position& pre);
+double restore_prevariable_derivative(const prevariable_position& pre);
 double restore_prevariable_derivative(void);
 prevariable_position restore_prevariable_position(void);
-void save_double_derivative(double x, BOR_CONST prevariable_position& pos);
+void save_double_derivative(double x, const prevariable_position& pos);
 double restore_prevariable_value(void);
 void save_double_value(double x);
-   int sum(_CONST imatrix&);
-   double sum(_CONST dmatrix&);
-   double sum(_CONST d3_array&);
-   double sum(_CONST d4_array&);
-   double sum(_CONST d5_array&);
-   double sum(_CONST d6_array&);
-   double sum(_CONST d7_array&);
-   dvariable sum(_CONST dvar_matrix&);
-   dvariable sum(_CONST dvar3_array&);
-   dvariable sum(_CONST dvar4_array&);
-   dvariable sum(_CONST dvar5_array&);
-   dvariable sum(_CONST dvar6_array&);
-   dvariable sum(_CONST dvar7_array&);
+int sum(const imatrix&);
+double sum(const dmatrix&);
+double sum(const d3_array&);
+double sum(const d4_array&);
+double sum(const d5_array&);
+double sum(const d6_array&);
+double sum(const d7_array&);
+dvariable sum(const dvar_matrix&);
+dvariable sum(const dvar3_array&);
+dvariable sum(const dvar4_array&);
+dvariable sum(const dvar5_array&);
+dvariable sum(const dvar6_array&);
+dvariable sum(const dvar7_array&);
 
    dmatrix fabs(const dmatrix& m);
-   //double& value(BOR_CONST double& u);
+//double& value(const  double& u);
    //const double& value(const double& u);
-   double norm(_CONST d3_array&);
-   double norm2(_CONST d3_array&);
-   double sumsq(_CONST d3_array&);
-   d3_array exp(_CONST d3_array& m);
-   d3_array mfexp(_CONST d3_array& m);
-   d3_array mfexp(_CONST d3_array& m, double d);
-   d3_array log(_CONST d3_array& m);
-   d3_array fabs(_CONST d3_array& m);
-   d3_array sin(_CONST d3_array& m);
-   d3_array cos(_CONST d3_array& m);
-   d3_array tan(_CONST d3_array& m);
-   d3_array sqrt(_CONST d3_array& m);
-   d3_array sqr(_CONST d3_array& m);
-   d3_array elem_prod(_CONST d3_array& m1,_CONST d3_array& m2);
-   d3_array elem_div(_CONST d3_array& m1,_CONST d3_array& m2);
-   d3_array operator + (_CONST d3_array& m1,_CONST d3_array& m2);
-   d3_array operator + (_CONST d3_array& m1, double m2);
-   d3_array operator / (_CONST d3_array& m1, double m2);
-   d3_array operator / ( double m2,_CONST d3_array& m1);
-   d3_array operator + ( double m1,_CONST d3_array& m2);
-   d3_array operator - (_CONST d3_array& m1,_CONST d3_array& m2);
-   d3_array operator - (_CONST d3_array& m1, double m2);
-   d3_array operator - ( double m1,_CONST d3_array& m2);
-   d3_array operator * (_CONST d3_array& m1,_CONST d3_array& m2);
+double norm(const d3_array&);
+double norm2(const d3_array&);
+double sumsq(const d3_array&);
+d3_array exp(const d3_array& m);
+d3_array mfexp(const d3_array& m);
+d3_array mfexp(const d3_array& m, double d);
+   d3_array log(const d3_array& m);
+d3_array fabs(const d3_array& m);
+d3_array sin(const d3_array& m);
+d3_array cos(const d3_array& m);
+d3_array tan(const d3_array& m);
+d3_array sqrt(const d3_array& m);
+d3_array sqr(const d3_array& m);
+d3_array elem_prod(const d3_array& m1, const d3_array& m2);
+d3_array elem_div(const d3_array& m1, const d3_array& m2);
+d3_array operator+(const d3_array& m1, const d3_array& m2);
+d3_array operator+(const d3_array& m1, double m2);
+d3_array operator/(const d3_array& m1, double m2);
+   d3_array operator/(double m2, const d3_array& m1);
+   d3_array operator+(double m1, const d3_array& m2);
+   d3_array operator-(const d3_array& m1, const d3_array& m2);
+   d3_array operator-(const d3_array& m1, double m2);
+   d3_array operator-(double m1, const d3_array& m2);
+   d3_array operator*(const d3_array& m1, const d3_array& m2);
    dmatrix operator * (const d3_array& m1,const dvector& m2);
-   d3_array operator * (_CONST d3_array& m1, double m2);
-   d3_array operator * ( double m1,_CONST d3_array& m2);
+   d3_array operator*(const d3_array& m1, double m2);
+   d3_array operator*(double m1, const d3_array& m2);
 
-   dvariable norm(_CONST dvar3_array& m);
-   dvariable norm2(_CONST dvar3_array& m);
-   dvariable sumsq(_CONST dvar3_array& m);
-   dvar3_array exp(_CONST dvar3_array& m);
-   dvar3_array mfexp(_CONST dvar3_array& m);
-   dvar3_array mfexp(_CONST dvar3_array& m, double d);
-   dvar3_array log(_CONST dvar3_array& m);
-   dvar3_array fabs(_CONST dvar3_array& m);
-   dvar3_array sin(_CONST dvar3_array& m);
-   dvar3_array cos(_CONST dvar3_array& m);
-   dvar3_array tan(_CONST dvar3_array& m);
-   dvar3_array sqrt(_CONST dvar3_array& m);
-   dvar3_array sqr(_CONST dvar3_array& m);
-   dvar3_array elem_prod(_CONST dvar3_array& m1,_CONST dvar3_array& m2);
-   dvar3_array elem_div(_CONST dvar3_array& m1,_CONST dvar3_array& m2);
-   dvar3_array operator + (_CONST dvar3_array& m1,_CONST dvar3_array& m2);
-   dvar3_array operator - (_CONST dvar3_array& m1,_CONST dvar3_array& m2);
-   dvar3_array elem_prod(_CONST d3_array& m1,_CONST dvar3_array& m2);
-   dvar3_array elem_div(_CONST d3_array& m1,_CONST dvar3_array& m2);
-   dvar3_array operator + (_CONST d3_array& m1,_CONST dvar3_array& m2);
-   dvar3_array operator - (_CONST d3_array& m1,_CONST dvar3_array& m2);
-   dvar3_array elem_prod(_CONST dvar3_array& m1,_CONST d3_array& m2);
-   dvar3_array elem_div(_CONST dvar3_array& m1,_CONST d3_array& m2);
-   dvar3_array operator + (_CONST dvar3_array& m1,_CONST d3_array& m2);
-   dvar3_array operator + (_CONST dvar3_array& m1,_CONST dvariable& m2);
-   dvar3_array operator + (_CONST dvariable& d1, _CONST dvar3_array& m1);
+   dvariable norm(const dvar3_array& m);
+   dvariable norm2(const dvar3_array& m);
+   dvariable sumsq(const dvar3_array& m);
+   dvar3_array exp(const dvar3_array& m);
+   dvar3_array mfexp(const dvar3_array& m);
+   dvar3_array mfexp(const dvar3_array& m, double d);
+   dvar3_array log(const dvar3_array& m);
+   dvar3_array fabs(const dvar3_array& m);
+   dvar3_array sin(const dvar3_array& m);
+   dvar3_array cos(const dvar3_array& m);
+   dvar3_array tan(const dvar3_array& m);
+   dvar3_array sqrt(const dvar3_array& m);
+   dvar3_array sqr(const dvar3_array& m);
+   dvar3_array elem_prod(const dvar3_array& m1, const dvar3_array& m2);
+   dvar3_array elem_div(const dvar3_array& m1, const dvar3_array& m2);
+   dvar3_array operator+(const dvar3_array& m1, const dvar3_array& m2);
+   dvar3_array operator-(const dvar3_array& m1, const dvar3_array& m2);
+   dvar3_array elem_prod(const d3_array& m1, const dvar3_array& m2);
+   dvar3_array elem_div(const d3_array& m1, const dvar3_array& m2);
+   dvar3_array operator+(const d3_array& m1, const dvar3_array& m2);
+   dvar3_array operator-(const d3_array& m1, const dvar3_array& m2);
+   dvar3_array elem_prod(const dvar3_array& m1, const d3_array& m2);
+   dvar3_array elem_div(const dvar3_array& m1, const d3_array& m2);
+   dvar3_array operator+(const dvar3_array& m1, const d3_array& m2);
+   dvar3_array operator+(const dvar3_array& m1, const dvariable& m2);
+   dvar3_array operator+(const dvariable& d1, const dvar3_array& m1);
   
-   dvar3_array operator / (_CONST prevariable& m2,_CONST dvar3_array& m1);
-   dvar3_array operator / (_CONST prevariable& m2,_CONST d3_array& m1);
-   dvar3_array operator / ( double m2,_CONST dvar3_array& m1);
+   dvar3_array operator/(const prevariable& m2, const dvar3_array& m1);
+   dvar3_array operator/(const prevariable& m2, const d3_array& m1);
+   dvar3_array operator/(double m2, const dvar3_array& m1);
 
-   dvar3_array operator / (_CONST dvar3_array& m1,_CONST prevariable& m2);
-   dvar3_array operator / (_CONST d3_array& m1,_CONST prevariable& m2);
-   dvar3_array operator / (_CONST dvar3_array& m1, double m2);
+   dvar3_array operator/(const dvar3_array& m1, const prevariable& m2);
+   dvar3_array operator/(const d3_array& m1, const prevariable& m2);
+   dvar3_array operator/(const dvar3_array& m1, double m2);
 
-   dvar3_array operator + (_CONST dvariable& m1,_CONST d3_array& m2);
-   dvar3_array operator + ( double m1,_CONST dvar3_array& m2);
-   dvar3_array operator - (_CONST dvar3_array& m1,_CONST d3_array& m2);
-   dvar3_array operator - (_CONST dvar3_array& m1,_CONST dvariable& m2);
-   dvar3_array operator - (_CONST dvariable& m1,_CONST d3_array& m2);
-   dvar3_array operator - (_CONST dvariable& m1,_CONST dvar3_array& m2);
-   dvar3_array operator - ( double m1,_CONST dvar3_array& m2);
-   dvar3_array operator * (_CONST dvar3_array& m1,_CONST d3_array& m2);
-   dvar3_array operator * (_CONST dvar3_array& m1,_CONST dvariable& m2);
-   dvar3_array operator * (_CONST dvariable& m1,_CONST d3_array& m2);
-   dvar3_array operator * (_CONST dvariable& m1,_CONST dvar3_array& m2);
-   dvar3_array operator * (double m1,_CONST dvar3_array& m2);
+   dvar3_array operator+(const dvariable& m1, const d3_array& m2);
+   dvar3_array operator+(double m1, const dvar3_array& m2);
+   dvar3_array operator-(const dvar3_array& m1, const d3_array& m2);
+   dvar3_array operator-(const dvar3_array& m1, const dvariable& m2);
+   dvar3_array operator-(const dvariable& m1, const d3_array& m2);
+   dvar3_array operator-(const dvariable& m1, const dvar3_array& m2);
+   dvar3_array operator-(double m1, const dvar3_array& m2);
+   dvar3_array operator*(const dvar3_array& m1, const d3_array& m2);
+   dvar3_array operator*(const dvar3_array& m1, const dvariable& m2);
+   dvar3_array operator*(const dvariable& m1, const d3_array& m2);
+   dvar3_array operator*(const dvariable& m1, const dvar3_array& m2);
+   dvar3_array operator*(double m1, const dvar3_array& m2);
 
    double square( double x);
-   dvector square(_CONST dvector& x);
-   dmatrix square(_CONST dmatrix& x);
-   d3_array square(_CONST d3_array& x);
+   dvector square(const dvector& x);
+   dmatrix square(const dmatrix& x);
+   d3_array square(const d3_array& x);
 
-   dvariable& square(_CONST prevariable& x);
-   dvar_vector square(_CONST dvar_vector& x);
-   dvar_matrix square(_CONST dvar_matrix& x);
-   dvar3_array square(_CONST dvar3_array& x);
+   dvariable& square(const prevariable& x);
+   dvar_vector square(const dvar_vector& x);
+   dvar_matrix square(const dvar_matrix& x);
+   dvar3_array square(const dvar3_array& x);
 
    double cube( double x);
    double fourth( double x);
-   dvector cube(_CONST dvector& x);
-   dmatrix cube(_CONST dmatrix& x);
-   d3_array cube(_CONST d3_array& x);
+   dvector cube(const dvector& x);
+   dmatrix cube(const dmatrix& x);
+   d3_array cube(const d3_array& x);
 
-   d3_array pow(_CONST d3_array& x,int e);
-   dvar3_array pow(_CONST dvar3_array& x,int e);
+   d3_array pow(const d3_array& x, int e);
+   dvar3_array pow(const dvar3_array& x, int e);
 
-   prevariable& cube(_CONST prevariable& x);
-   dvar_vector cube(_CONST dvar_vector& x);
-   dvar_matrix cube(_CONST dvar_matrix& x);
-   dvar3_array cube(_CONST dvar3_array& x);
+   prevariable& cube(const prevariable& x);
+   dvar_vector cube(const dvar_vector& x);
+   dvar_matrix cube(const dvar_matrix& x);
+   dvar3_array cube(const dvar3_array& x);
 
 void set_value(const dvar_matrix& x,const dvar_vector& v,const int& _ii,
   double s);
@@ -4934,16 +4922,16 @@ void set_value(const dvar_vector& _x,const dvar_vector& v,const int& _ii,
 void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,double s);
 void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,
   double fmin,double fmax,double s);
-void set_value_inv(_CONST dvar_matrix& x,const dvector& v, const int& ii);
+void set_value_inv(const dvar_matrix& x,const dvector& v, const int& ii);
  void set_value_inv(const prevariable& x,const dvector& v,const int& ii,
     double s);
- void set_value_inv(_CONST prevariable& x,const dvector& v, const int& ii);
- void set_value_inv(_CONST dvar_matrix& x,const dvector& v, const int& ii);
- void set_value_inv(_CONST dvar_matrix& u,const dvector& x,const int& ii,
+ void set_value_inv(const prevariable& x, const dvector& v, const int& ii);
+ void set_value_inv(const dvar_matrix& x, const dvector& v, const int& ii);
+ void set_value_inv(const dvar_matrix& u, const dvector& x, const int& ii,
   double fmin,double fmax);
- void set_value_inv(_CONST dvar3_array& u,const dvector& x,const int& ii,
+ void set_value_inv(const dvar3_array& u, const dvector& x, const int& ii,
   double fmin,double fmax);
- void set_value_inv(_CONST dvar3_array& u,const dvector& x,const int& ii);
+ void set_value_inv(const dvar3_array& u, const dvector& x, const int& ii);
 
   void set_value_inv( double x,const dvector& v, const int& ii);
 
@@ -4953,74 +4941,74 @@ void set_value_inv(_CONST dvar_matrix& x,const dvector& v, const int& ii);
   void set_value_inv(const prevariable& x,const dvector& _v,const int& _ii,
     double fmin, double fmax,double s);
 
-  void set_value_inv(_CONST prevariable& u,const dvector& x,const int& ii,
+  void set_value_inv(const prevariable& u, const dvector& x, const int& ii,
     double fmin,double fmax);
   void set_value_inv( double u,const dvector& x,const int& ii, double fmin,
     double fmax);
-  void set_value_inv(_CONST dvector& x,const dvector& v, const int& ii);
-  void set_value_inv(_CONST dvar_vector& x,const dvector& v, const int& ii);
-  void set_value_inv(_CONST dvar_vector& x,const dvector& v, const int& ii,
+  void set_value_inv(const dvector& x, const dvector& v, const int& ii);
+  void set_value_inv(const dvar_vector& x, const dvector& v, const int& ii);
+  void set_value_inv(const dvar_vector& x, const dvector& v, const int& ii,
     double fmin,double fmax);
-  void set_value_inv(_CONST dvector& x,const dvector& v, const int& ii,
+  void set_value_inv(const dvector& x, const dvector& v, const int& ii,
     double fmin,double fmax);
-  void set_value_inv(_CONST dmatrix& x,const dvector& v, const int& ii);
-  void set_value_inv(_CONST dmatrix& x,const dvector& v, const int& ii,
+  void set_value_inv(const dmatrix& x, const dvector& v, const int& ii);
+  void set_value_inv(const dmatrix& x, const dvector& v, const int& ii,
     double fmin,double fmax);
-  void set_value_inv(_CONST d3_array& x,const dvector& v, const int& ii);
-  void set_value_inv(_CONST d3_array& x,const dvector& v, const int& ii,
+  void set_value_inv(const d3_array& x, const dvector& v, const int& ii);
+  void set_value_inv(const d3_array& x, const dvector& v, const int& ii,
     double fmin,double fmax);
   void set_value(const prevariable& x,const dvar_vector& v, const int& ii);
   void set_value(const prevariable& x,const dvar_vector& v, const int& ii,double s);
-  void set_value(const dvar_vector& x,_CONST dvar_vector& v, const int& ii);
+  void set_value(const dvar_vector& x, const dvar_vector& v, const int& ii);
 
 void set_value_exp(const prevariable& _x,const dvar_vector& v,const int& _ii, 
   double fmin, double fmax,const dvariable& fpen,double s);
 void set_value(const prevariable& _x,const dvar_vector& v,const int& _ii, 
   double fmin, double fmax,const dvariable& fpen,double s);
 
-  void set_value(const prevariable& x,_CONST dvar_vector& v, const int& ii,
+  void set_value(const prevariable& x, const dvar_vector& v, const int& ii,
     double fmin,double fmax,const dvariable& fpen);
-  void set_value(const dvar_vector& x,_CONST dvar_vector& v, const int& ii,
+  void set_value(const dvar_vector& x, const dvar_vector& v, const int& ii,
     double fmin,double fmax,const dvariable& fpen);
-  void set_value(const dvar_matrix& x,_CONST dvar_vector& v, const int& ii);
-  void set_value(const dvar_matrix& x,_CONST dvar_vector& v, const int& ii,
+  void set_value(const dvar_matrix& x, const dvar_vector& v, const int& ii);
+  void set_value(const dvar_matrix& x, const dvar_vector& v, const int& ii,
     double fmin,double fmax,const dvariable& fpen);
-  void set_value(dvar3_array& x,_CONST dvar_vector& v, const int& ii);
-  void set_value(dvar3_array& x,_CONST dvar_vector& v, const int& ii, 
+  void set_value(dvar3_array& x, const dvar_vector& v, const int& ii);
+  void set_value(dvar3_array& x, const dvar_vector& v, const int& ii, 
     double fmin,double fmax,const dvariable& fpen);
 
-  void set_value_inv_partial(_CONST dvector& x,const dvector& v, const int& ii,int n);
-  void set_value_inv_partial(_CONST dvector& x,const dvector& v, const int& ii, int n,
+  void set_value_inv_partial(const dvector& x, const dvector& v, const int& ii, int n);
+  void set_value_inv_partial(const dvector& x, const dvector& v, const int& ii, int n,
     double fmin,double fmax);
-  void set_value_inv_partial(_CONST dmatrix& x,const dvector& v, const int& ii,int n);
+  void set_value_inv_partial(const dmatrix& x, const dvector& v, const int& ii,int n);
   void set_value_inv_partial(const dvar_matrix& x,const dvector& v, const int& ii,int n);
-  void set_value_inv_partial(_CONST d3_array& x,const dvector& v, const int& ii,int n);
+  void set_value_inv_partial(const d3_array& x, const dvector& v, const int& ii, int n);
 
-  void set_value_inv_partial(_CONST dvar_vector& x,const dvector& v, const int& ii,int n);
-  void set_value_inv_partial(_CONST dvar_vector& x,const dvector& v, const int& ii, int n,
+  void set_value_inv_partial(const dvar_vector& x, const dvector& v, const int& ii, int n);
+  void set_value_inv_partial(const dvar_vector& x, const dvector& v, const int& ii, int n,
     double fmin,double fmax);
 
-  void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& ii,int n);
-  void set_value_partial(const dvar_vector& x,_CONST dvar_vector& v, const int& ii, int n,
+  void set_value_partial(const dvar_vector& x, const dvar_vector& v, const int& ii,int n);
+  void set_value_partial(const dvar_vector& x, const dvar_vector& v, const int& ii, int n,
     double fmin,double fmax,const dvariable& fpen);
-  void set_value_partial(const dvar_matrix& x,_CONST dvar_vector& v, const int& ii,int n);
-  void set_value_partial(dvar3_array& x,_CONST dvar_vector& v, const int& ii,int n);
+  void set_value_partial(const dvar_matrix& x, const dvar_vector& v, const int& ii, int n);
+  void set_value_partial(dvar3_array& x, const dvar_vector& v, const int& ii, int n);
 
-  int size_count(_CONST dvar_vector& x);
-  int size_count(_CONST dvar_matrix& x);
-  int size_count(_CONST dvar3_array& x);
-  int size_count(_CONST dvar4_array& x);
-  int size_count(_CONST dvector& x);
-  int size_count(_CONST dmatrix& x);
-  int size_count(_CONST d3_array& x);
-  int size_count(_CONST d4_array& x);
+  int size_count(const dvar_vector& x);
+  int size_count(const dvar_matrix& x);
+  int size_count(const dvar3_array& x);
+  int size_count(const dvar4_array& x);
+  int size_count(const dvector& x);
+  int size_count(const dmatrix& x);
+  int size_count(const d3_array& x);
+  int size_count(const d4_array& x);
 
-  int size_count_partial(_CONST dvar_vector& x,int);
-  int size_count_partial(_CONST dvar_matrix& x,int);
-  int size_count_partial(_CONST dvar3_array& x,int);
-  int size_count_partial(_CONST dvector& x,int);
-  int size_count_partial(_CONST dmatrix& x,int);
-  int size_count_partial(_CONST d3_array& x,int);
+  int size_count_partial(const dvar_vector& x, int);
+  int size_count_partial(const dvar_matrix& x, int);
+  int size_count_partial(const dvar3_array& x, int);
+  int size_count_partial(const dvector& x, int);
+  int size_count_partial(const dmatrix& x, int);
+  int size_count_partial(const d3_array& x, int);
 
 int min(int,int);
 // ********************************************************
@@ -5037,12 +5025,12 @@ void insert_identifier_string(const char * s);
 void verify_identifier_string(const char*);
 
 
-ivector restore_ivector_value(BOR_CONST ivector_position&);
+ivector restore_ivector_value(const ivector_position&);
 ivector_position restore_ivector_position(void);
 dvar_matrix_position restore_dvar_matrix_position(void);
-dvector restore_dvar_matrix_derivative_row(BOR_CONST dvar_matrix_position& pos,BOR_CONST int& ii);
-dvector restore_dvar_matrix_derivative_column(BOR_CONST dvar_matrix_position& pos,BOR_CONST int& ii);
-dmatrix restore_dvar_matrix_derivatives(BOR_CONST dvar_matrix_position& pos);
+dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& pos, const int& ii);
+dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& pos, const int& ii);
+dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position& pos);
 dmatrix restore_dvar_matrix_derivatives(void);
 double restore_prevariable_derivative(void);
 double restore_double_value(void);
@@ -5051,82 +5039,82 @@ void save_double_value( double x);
 void save_int_value(int x);
 void save_pointer_value(void * ptr);
 void* restore_pointer_value(void);
-dvar_matrix nograd_assign_trans(_CONST dmatrix& m);
-dvar_matrix nograd_assign(_CONST dmatrix&);
+dvar_matrix nograd_assign_trans(const dmatrix& m);
+dvar_matrix nograd_assign(const dmatrix&);
 dvariable nograd_assign(double tmp);
 dvar_vector nograd_assign(dvector tmp);
-dmatrix restore_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos);
+dmatrix restore_dvar_matrix_value(const dvar_matrix_position& mpos);
 dmatrix_position restore_dmatrix_position(void);
 dvector_position restore_dvector_position(void);
-dvector restore_dvector_value(BOR_CONST dvector_position&);
-dmatrix restore_dmatrix_value(BOR_CONST dmatrix_position&);
-dvector restore_dvar_matrix_derivatives(BOR_CONST dvar_matrix_position& pos,BOR_CONST int& ii);
-dvector restore_dvar_vector_derivatives(BOR_CONST dvar_vector_position& tmp);
-dmatrix restore_dvar_matrix_derivatives(BOR_CONST dvar_matrix_position& pos);
-void save_dmatrix_derivatives(BOR_CONST dvar_matrix_position& pos, double x,BOR_CONST int& i,
+dvector restore_dvector_value(const dvector_position&);
+dmatrix restore_dmatrix_value(const dmatrix_position&);
+dvector restore_dvar_matrix_derivatives(const dvar_matrix_position& pos, const int& ii);
+dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp);
+dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position& pos);
+void save_dmatrix_derivatives(const dvar_matrix_position& pos, double x, const int& i,
   int& j);
-dmatrix restore_dvar_matrix_der_nozero(BOR_CONST dvar_matrix_position& pos);
-dvector restore_dvar_vector_der_nozero(BOR_CONST dvar_vector_position& tmp);
+dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position& pos);
+dvector restore_dvar_vector_der_nozero(const dvar_vector_position& tmp);
 d3_array_position restore_d3_array_position(void);
 d3_array restore_d3_array_value(const d3_array_position&);
-void nograd_assign_row(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii);
-void nograd_assign_column(_CONST dvar_matrix& m,_CONST dvector& v,BOR_CONST int& ii);
+void nograd_assign_row(const dvar_matrix& m, const dvector& v, const int& ii);
+void nograd_assign_column(const dvar_matrix& m, const dvector& v, const int& ii);
 
 long int reset_gs_stack(void);
 void reset_gs_stack(long int);
 
-dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z);
-dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
-  prevariable& ln_unsigned_det,BOR_CONST prevariable& sign);
+dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z);
+dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
+  prevariable& ln_unsigned_det, const prevariable& sign);
 
-//dvar_vector solve(_CONST dvar_matrix& aa,_CONST dvar_vector& z,
- // prevariable& ln_unsigned_det,BOR_CONST prevariable& sign);
+//dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
+ // prevariable& ln_unsigned_det, const prevariable& sign);
 
-dvector csolve(_CONST dmatrix& aa,_CONST dvector& z);
-dvector solve(_CONST dmatrix& aa,_CONST dvector& z);
-dvector solve(_CONST dmatrix& aa,_CONST dvector& z,
+dvector csolve(const dmatrix& aa, const dvector& z);
+dvector solve(const dmatrix& aa, const dvector& z);
+dvector solve(const dmatrix& aa, const dvector& z,
   const double& ln_unsigned_det,double& sign);
 
-dmatrix choleski_decomp(_CONST dmatrix& M);
-dmatrix choleski_decomp_error(_CONST dmatrix& M,int& ierror);
-dmatrix choleski_decomp_neghess_error(_CONST dmatrix& M,int& ierror);
+dmatrix choleski_decomp(const dmatrix& M);
+dmatrix choleski_decomp_error(const dmatrix& M, int& ierror);
+dmatrix choleski_decomp_neghess_error(const dmatrix& M, int& ierror);
 dmatrix choleski_decomp_positive(const dmatrix& MM,const int& ierr);
 dmatrix choleski_decomp_positive(const dmatrix& MM,double bound);
-dvar_matrix choleski_decomp(_CONST dvar_matrix& M);
+dvar_matrix choleski_decomp(const dvar_matrix& M);
 
 dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& zz);
 dmatrix expm(const dmatrix & A);
 dvar_matrix expm(const dvar_matrix & A);
 
-dvariable factln(_CONST dvariable& n);
+dvariable factln(const dvariable& n);
 double factln(double n);
-dvar_vector factln(_CONST dvar_vector& n);
-dvector factln(_CONST dvector& n);
+dvar_vector factln(const dvar_vector& n);
+dvector factln(const dvector& n);
 
 dvar_vector posfun(const dvar_vector&x,double eps,const prevariable& pen);
-dvariable posfun(_CONST dvariable&x,const double eps,const prevariable& pen);
-dvariable posfun2(_CONST dvariable&x,const double eps,const prevariable& pen);
-double posfun(_CONST double&x,const double eps,BOR_CONST double& _pen);
-double posfun2(_CONST double&x,const double eps,BOR_CONST double& _pen);
-double dfposfun(_CONST double&x,_CONST double eps);
+dvariable posfun(const dvariable &x, const double eps, const prevariable& pen);
+dvariable posfun2(const dvariable &x, const double eps, const prevariable& pen);
+double posfun(const double &x, const double eps, const double& _pen);
+double posfun2(const double &x, const double eps, const double& _pen);
+double dfposfun(const double &x, const double eps);
 dvariable dfposfun(const prevariable&x,const double eps);
-double dfposfun1(_CONST double&x,_CONST double eps);
-dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvector& k);
-dvariable log_comb(double n,_CONST dvariable& k);
-dvar_vector log_comb(_CONST dvar_vector& n,_CONST dvar_vector& k);
-dvar_vector log_comb(_CONST dvector& n,_CONST dvar_vector& k);
-dvar_vector log_comb(double n,_CONST dvar_vector& k);
-dvar_vector log_comb(_CONST dvariable& n,_CONST dvector& k);
-dvar_vector log_comb(_CONST dvariable& n,_CONST dvar_vector& k);
-dvariable log_comb(_CONST dvariable& n,double k);
-dvariable log_comb(_CONST dvariable& n,_CONST dvariable& k);
-dvector log_comb(_CONST dvector& n,_CONST dvector& k);
-dvector log_comb(double n,_CONST dvector& k);
+double dfposfun1(const double &x, const double eps);
+dvar_vector log_comb(const dvar_vector& n, const dvector& k);
+dvariable log_comb(double n, const dvariable& k);
+dvar_vector log_comb(const dvar_vector& n, const dvar_vector& k);
+dvar_vector log_comb(const dvector& n, const dvar_vector& k);
+dvar_vector log_comb(double n, const dvar_vector& k);
+dvar_vector log_comb(const dvariable& n, const dvector& k);
+dvar_vector log_comb(const dvariable& n, const dvar_vector& k);
+dvariable log_comb(const dvariable& n, double k);
+dvariable log_comb(const dvariable& n, const dvariable& k);
+dvector log_comb(const dvector& n, const dvector& k);
+dvector log_comb(double n, const dvector& k);
 double log_comb(double n,double k);
 dmatrix orthpoly(int n,int deg);
 dmatrix orthpoly(int n,int deg,int skip);
-dvar_vector gammln(_CONST dvar_vector& n);
-dvector gammln(_CONST dvector& n);
+dvar_vector gammln(const dvar_vector& n);
+dvector gammln(const dvector& n);
 
 /**
  * Description not yet available.
@@ -5138,12 +5126,12 @@ public:
   int min;
   int max;
   double_and_int * va;
-  int indexmin() _CONST {return min;}
-  int indexmax() _CONST {return max;}
-  dvar_vector_position(_CONST dvar_vector& v);
-  dvar_vector_position(BOR_CONST dvar_vector_position& dvp);
+  int indexmin() const { return min; }
+  int indexmax() const { return max; }
+  dvar_vector_position(const dvar_vector& v);
+  dvar_vector_position(const dvar_vector_position& dvp);
   dvar_vector_position(void);
-  double& operator () (BOR_CONST int& i);
+  double& operator()(const int& i);
   friend class dvar_matrix_position;
 };
 
@@ -5159,21 +5147,21 @@ public:
   ivector lb;
   ivector ub;
   ptr_vector ptr;
-  dvar_matrix_position(_CONST dvar_matrix&,int);
+  dvar_matrix_position(const dvar_matrix&, int);
   dvar_matrix_position(int min,int max);
-  dvar_matrix_position(BOR_CONST dvar_matrix_position&);
+  dvar_matrix_position(const dvar_matrix_position&);
   dvar_vector_position operator () (int i);
   int& rowmin(void){return row_min;}
   int& rowmax(void){return row_max;}
   ivector& colmin(void){return lb;}
   ivector& colmax(void){return ub;}
-  friend ostream& operator << (BOR_CONST ostream&,BOR_CONST dvar_matrix_position&);
+  friend ostream& operator<<(const ostream&, const dvar_matrix_position&);
   friend class dmatrix_position;
   friend class dmatrix;
 };
 
-dvar_matrix use_shape(_CONST dvar_matrix& m);
-dmatrix use_shape(_CONST dmatrix& m);
+dvar_matrix use_shape(const dvar_matrix& m);
+dmatrix use_shape(const dmatrix& m);
 
 /**
  * Description not yet available.
@@ -5187,9 +5175,9 @@ public:
   ivector lb;
   ivector ub;
   ptr_vector ptr;
-  dmatrix_position(_CONST dmatrix&);
+  dmatrix_position(const dmatrix&);
   dmatrix_position(int min,int max);
-  dmatrix_position(BOR_CONST dmatrix_position&);
+  dmatrix_position(const dmatrix_position&);
   dvector_position operator () (int i);
   friend class dmatrix;
 };
@@ -5205,8 +5193,8 @@ class d3_array_position
 public:
   d3_array_position(int mmin,int mmax);
   
-  int indexmin() _CONST {return min;}
-  int indexmax() _CONST {return max;}
+  int indexmin() const { return min; }
+  int indexmax() const { return max; }
 };
 
 /**
@@ -5219,11 +5207,11 @@ class dvector_position
   int max;
   double * v;
 public:
-  dvector_position(_CONST dvector& v);
-  dvector_position(BOR_CONST dvector_position& dvp);
+  dvector_position(const dvector& v);
+  dvector_position(const dvector_position& dvp);
   dvector_position(void);
-  int indexmin() _CONST {return min;}
-  int indexmax() _CONST {return max;}
+  int indexmin() const { return min; }
+  int indexmax() const { return max; }
   friend class dmatrix_position;
 };
 
@@ -5238,14 +5226,14 @@ class ivector_position
   int * v;
 public:
   ivector_position(void);
-  ivector_position(_CONST ivector& v);
-  ivector_position(BOR_CONST ivector_position& dvp);
-  int indexmin() _CONST {return min;}
-  int indexmax() _CONST {return max;}
+  ivector_position(const ivector& v);
+  ivector_position(const ivector_position& dvp);
+  int indexmin() const { return min; }
+  int indexmax() const { return max; }
 };
 
-ostream& operator << (BOR_CONST ostream& s,BOR_CONST ptr_vector& ptr);
-ostream& operator << (BOR_CONST ostream&,BOR_CONST dvar_matrix_position&);
+ostream& operator<<(const ostream& s, const ptr_vector& ptr);
+ostream& operator<<(const ostream&, const dvar_matrix_position&);
 
 /**
  * Description not yet available.
@@ -5285,8 +5273,8 @@ public:
   void fread(void* s,const size_t num_bytes);
   void fwrite( double);
   void fwrite(const int&);
-  void fread(BOR_CONST int&);
-  void fread(BOR_CONST double&);
+  void fread(const int&);
+  void fread(const double&);
 
   void fwrite(void * ptr);
   void fread(void* &ptr);
@@ -5350,12 +5338,12 @@ int ip;
 int n;
 public:
   fmmq(int nvar);
-  fmmq(int nvar,_CONST lvector& ipar);
-  double minimize(_CONST dvector& x,double (*pf)(_CONST dvar_vector&));
-  double minimize(BOR_CONST independent_variables & x,_CONST dvector& c,
-	double (*pf)(_CONST dvar_vector&,_CONST dvector&) );
-  void fmin(BOR_CONST double& f,BOR_CONST dvector& x,BOR_CONST dvector& g);
-  void va13c (_CONST dvector& x, double f,_CONST dvector& g);
+  fmmq(int nvar, const lvector& ipar);
+  double minimize(const dvector& x, double (*pf)(const dvar_vector&));
+  double minimize(const independent_variables & x, const dvector& c,
+	double (*pf)(const dvar_vector&, const dvector&));
+  void fmin(const double& f, const dvector& x, const dvector& g);
+  void va13c(const dvector& x, double f, const dvector& g);
 };
 
 /**
@@ -5389,10 +5377,10 @@ class cubic_spline_function
   dvector y;  // dep variable values
   dvector y2; // second derivatives
 public:
-  cubic_spline_function(BOR_CONST dvector & _x,BOR_CONST dvector& _y,
+  cubic_spline_function(const dvector &_x, const dvector& _y,
     double yp1=0.0,double ypn=0.0);
   double operator () (double u);
-  dvector operator () (_CONST dvector& u);
+  dvector operator()(const dvector& u);
 };
 
 #ifdef __ZTC__
@@ -5427,9 +5415,9 @@ public:
 */
 
 // this is the speical version with an index for reordering the matrix
-void ludcmp_index(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
+void ludcmp_index(const dmatrix& a, const ivector& indx, const double& d);
 
-void ludcmp(BOR_CONST dmatrix& a,BOR_CONST ivector& indx,BOR_CONST double& d);
+void ludcmp(const dmatrix& a, const ivector& indx, const double& d);
 // this should allways appear at the end of the file
 #if (__BCPLUSPLUS__ >= 2)
 #endif
@@ -5500,25 +5488,26 @@ public:
     d4_array sub(int,int);
   void allocate(int hsl,int hsu,int sl,int sh,int nrl,
     int nrh,int ncl,int nch);
-  void allocate(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-    _CONST imatrix& nrh,int ncl,_CONST imatrix& nch);
-  void allocate(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-    _CONST imatrix& nrh,int ncl,_CONST i3_array& nch);
+  void allocate(int hsl, int hsu, int sl, const ivector& sh, int nrl,
+                const imatrix& nrh, int ncl, const imatrix& nch);
+  void allocate(int hsl, int hsu, int sl, const ivector& sh, int nrl,
+                const imatrix& nrh, int ncl, const i3_array& nch);
   void allocate(int hsl,int hsu,int sl,int sh,int nrl,
-    int nrh,_CONST ivector& ncl,_CONST ivector& nch);
-  void allocate(int hsl,int hsu,int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,_CONST ivector& ncl,_CONST ivector& nch);
-  void allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch);
+                int nrh, const ivector& ncl, const ivector& nch);
+  void allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
+                const ivector& nrh, const ivector& ncl, const ivector& nch);
+  void allocate(int hsl, int hsu, int sl, const ivector& sh,
+                int nrl, const imatrix& nrh, int ncl, int nch);
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST d4_array&);
-  void allocate(_CONST dvar4_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const d4_array&);
+  void allocate(const dvar4_array&);
+  int operator!(void) const { return (shape == NULL); }
   d4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
     ivector ncl,ivector nch);
 
-  d4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-    _CONST imatrix& nrh,int ncl,_CONST i3_array& nch);
+  d4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
+           const imatrix& nrh, int ncl, const i3_array& nch);
 
   d4_array(int hsl,int hsu,const index_type& sl,
     const index_type& sh,const index_type& nrl,const index_type& nrh,
@@ -5537,12 +5526,12 @@ public:
     const index_type& sh);
   void allocate(ad_integer hsl,ad_integer hsu);
 
-  d4_array& operator = (_CONST d4_array&);
+  d4_array& operator=(const d4_array&);
   d4_array(const d4_array& m2);
   d4_array(int,int,int,int,int,int,int,int);
   //d4_array(int,int,int,ivector,int,imatrix,int,int);
-  d4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch);
+  d4_array(int hsl, int hsu, int sl, const ivector& sh,
+           int nrl, const imatrix& nrh, int ncl, int nch);
   d4_array();
   ~d4_array();
    d3_array& elem(int i) { return t[i];}
@@ -5552,10 +5541,10 @@ public:
    {
      return ( ((*this)(i,j,k))(l));
    }
-   _CONST d3_array& elem(int i) _CONST { return t[i];}
-   _CONST dmatrix& elem (int i ,int j) _CONST {return ((*this)(i))(j);}
-   _CONST dvector& elem(int i,int j,int k) _CONST {return (((*this)(i,j))(k));}
-   _CONST double& elem(int i,int j,int k,int l) _CONST 
+   const d3_array& elem(int i) const { return t[i]; }
+   const dmatrix& elem(int i ,int j) const { return ((*this)(i))(j); }
+   const dvector& elem(int i,int j,int k) const { return (((*this)(i,j))(k)); }
+   const double& elem(int i, int j, int k, int l) const
    {
      return ( ((*this)(i,j,k))(l));
    }
@@ -5569,22 +5558,22 @@ public:
       return ( ((*this)(i,j,k))(l));
     }
     #ifdef USE_CONST
-     inline _CONST d3_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST d3_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST dmatrix& operator ( ) (int i ,int j)_CONST {return ((*this)(i))(j);}
-     inline _CONST dvector& operator ( ) (int i,int j,int k)_CONST {return (((*this)(i,j))(k));}
-     inline _CONST double& operator ( ) (int i,int j,int k,int l)_CONST
+     inline const d3_array& operator()(int i) const { return t[i]; }
+     inline const d3_array& operator[](int i) const { return t[i]; }
+     inline const dmatrix& operator()(int i, int j) const { return ((*this)(i))(j); }
+     inline const dvector& operator()(int i, int j, int k) const { return (((*this)(i,j))(k)); }
+     inline const double& operator()(int i, int j, int k, int l) const
      {
        return ( ((*this)(i,j,k))(l));
      }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST d3_array& operator ( ) (int i)_CONST;
-      _CONST d3_array& operator [] (int i)_CONST;
-      _CONST dmatrix& operator ( ) (int i ,int j)_CONST;
-      _CONST dvector& operator ( ) (int i,int j,int k)_CONST;
-      _CONST double& operator ( ) (int i,int j,int k,int l)_CONST;
+      const d3_array& operator()(int i) const;
+      const d3_array& operator[](int i) const;
+      const dmatrix& operator()(int i, int j) const;
+      const dvector& operator()(int i, int j, int k) const;
+      const double& operator()(int i, int j, int k, int l) const;
     #endif
     d3_array& operator ( ) (int);
     d3_array& operator [] (int);
@@ -5617,41 +5606,41 @@ public:
   int rowsize() {return (rowmax()-rowmin()+1);} // returns the number of rows
   int colsize() {return (colmax()-colmin()+1);} // returns the number of columns
  #ifdef USE_CONST
-  int indexmin(void) _CONST { return(shape->hslice_min);}
-  int indexmax(void) _CONST { return(shape->hslice_max);}
-  int hslicemin(void) _CONST { return(shape->hslice_min);}
-  int hslicemax(void) _CONST { return(shape->hslice_max);}
-  int slicemin(void) _CONST { return((*this)(hslicemin()).slicemin());}
-  int slicemax(void) _CONST { return((*this)(hslicemin()).slicemax());}
-  int rowmin(void) _CONST { return((*this)(hslicemin(),slicemin()).rowmin());}
-  int rowmax(void) _CONST { return((*this)(hslicemin(),slicemin()).rowmax());}
-  int colmin(void) _CONST  
+  int indexmin(void) const { return (shape->hslice_min); }
+  int indexmax(void) const { return (shape->hslice_max); }
+  int hslicemin(void) const { return (shape->hslice_min); }
+  int hslicemax(void) const { return (shape->hslice_max); }
+  int slicemin(void) const { return ((*this)(hslicemin()).slicemin()); }
+  int slicemax(void) const { return ((*this)(hslicemin()).slicemax()); }
+  int rowmin(void) const { return ((*this)(hslicemin(),slicemin()).rowmin()); }
+  int rowmax(void) const { return ((*this)(hslicemin(),slicemin()).rowmax()); }
+  int colmin(void) const 
   { 
     return((*this)(hslicemin(),slicemin(),rowmax()).indexmin());
   }
-  int colmax(void) _CONST 
+  int colmax(void) const
   { 
     return((*this)(hslicemin(),slicemin(),rowmax()).indexmax());
   }
 
-  //int hslicemin(void) _CONST { return(shape->hslice_min);}
-  //int hslicemax(void) _CONST { return(shape->hslice_max);}
-  //int slicemin(void) _CONST { return(shape->slice_min);}
-  //int slicemax(void) _CONST { return(shape->slice_max);}
-  //int colmin(void) _CONST { return(shape->col_min);}
-  //int colmax(void) _CONST { return(shape->col_max);}
-  //int rowmin(void) _CONST { return(shape->row_min);}
-  //int rowmax(void) _CONST { return(shape->row_max);}
-  int hslicesize() _CONST {return (hslicemax()-hslicemin()+1);} // returns the number of rows
-  int slicesize() _CONST {return (slicemax()-slicemin()+1);} // returns the number of rows
-  int rowsize() _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
-  int colsize() _CONST {return (colmax()-colmin()+1);} // returns the number of columns
+  //int hslicemin(void) const { return(shape->hslice_min);}
+  //int hslicemax(void) const { return(shape->hslice_max);}
+  //int slicemin(void) const { return(shape->slice_min);}
+  //int slicemax(void) const { return(shape->slice_max);}
+  //int colmin(void) const { return(shape->col_min);}
+  //int colmax(void) const { return(shape->col_max);}
+  //int rowmin(void) const { return(shape->row_min);}
+  //int rowmax(void) const { return(shape->row_max);}
+  int hslicesize() const { return (hslicemax() - hslicemin() + 1); } // returns the number of rows
+  int slicesize() const { return (slicemax() - slicemin() + 1); } // returns the number of rows
+  int rowsize() const { return (rowmax() - rowmin() + 1); } // returns the number of rows
+  int colsize() const { return (colmax() - colmin() + 1); } // returns the number of columns
  #endif
   void initialize(void);
   void operator /= (double d);
 };
-  d4_array operator / (_CONST d4_array& m, double d);
-  d4_array operator / ( double d,_CONST d4_array& m);
+  d4_array operator/(const d4_array& m, double d);
+  d4_array operator/(double d, const d4_array& m);
 #ifndef D4ARR_HPP
 #define D4ARR_HPP
 #endif
@@ -5671,8 +5660,9 @@ public:
   void allocate(int hsl,int hsu,int sl,int sh,int nrl,
     int nrh,int ncl,int nch);
   void allocate(int hsl,int hsu,int sl,int sh,int nrl,
-    int nrh,_CONST ivector& ncl,_CONST ivector& nch);
-  void allocate(int hsl,int hsu,int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,_CONST ivector& ncl,_CONST ivector& nch);
+                int nrh, const ivector& ncl, const ivector& nch);
+  void allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
+                const ivector& nrh, const ivector& ncl, const ivector& nch);
   void allocate(ad_integer,ad_integer,const index_type&,
     const index_type&,const index_type&,
     const index_type&,const index_type&,const index_type&);
@@ -5684,9 +5674,9 @@ public:
 
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST d4_array&);
-  void allocate(_CONST dvar4_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const d4_array&);
+  void allocate(const dvar4_array&);
+  int operator!(void) const { return (shape == NULL); }
   dvar4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
     ivector ncl,ivector nch);
   dvar4_array(const d4_array& m1);
@@ -5696,10 +5686,10 @@ public:
   dvar4_array(ad_integer,ad_integer,const index_type&,const index_type&,const index_type&,
     const index_type&,const index_type&,const index_type&);
 
-  dvar4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch);
-  void allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch);
+  dvar4_array(int hsl, int hsu, int sl, const ivector& sh,
+              int nrl, const imatrix& nrh, int ncl, int nch);
+  void allocate(int hsl, int hsu, int sl, const ivector& sh,
+                int nrl, const imatrix& nrh, int ncl, int nch);
   //dvar4_array(int,int,int,ivector,int,imatrix,int,int);
   dvar4_array();
   ~dvar4_array();
@@ -5711,18 +5701,18 @@ public:
      return ( ((*this)(i,j,k))(l));
    }
    #ifdef USE_CONST
-   _CONST dvar3_array& elem(int i) _CONST { return t[i];}
-   _CONST dvar_matrix& elem (int i ,int j) _CONST {return ((*this)(i))(j);}
-   _CONST dvar_vector& elem(int i,int j,int k) _CONST {return (((*this)(i,j))(k));}
-   _CONST prevariable elem(int i,int j,int k,int l) _CONST 
+   const dvar3_array& elem(int i) const { return t[i]; }
+   const dvar_matrix& elem(int i, int j) const { return ((*this)(i))(j); }
+   const dvar_vector& elem(int i, int j, int k) const { return (((*this)(i,j))(k)); }
+   const prevariable elem(int i, int j, int k, int l) const
    {
      return ( ((*this)(i,j,k))(l));
    }
    #endif //USE_CONST
   
   d4_array vale(d4_array&);
-  dvar4_array& operator = (_CONST d4_array&);
-  dvar4_array& operator = (_CONST dvar4_array&);
+  dvar4_array& operator=(const d4_array&);
+  dvar4_array& operator=(const dvar4_array&);
   #ifdef OPT_LIB
     dvar3_array& operator ( ) (int i) { return t[i];}
     dvar3_array& operator [] (int i) { return t[i];}
@@ -5733,22 +5723,22 @@ public:
       return ( ((*this)(i,j,k))(l));
     }
     #ifdef USE_CONST
-     inline _CONST dvar3_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST dvar3_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST dvar_matrix& operator ( ) (int i ,int j)_CONST {return ((*this)(i))(j);}
-     inline _CONST dvar_vector& operator ( ) (int i,int j,int k)_CONST {return (((*this)(i,j))(k));}
-     inline _CONST prevariable operator ( ) (int i,int j,int k,int l)_CONST
+     inline const dvar3_array& operator()(int i) const { return t[i]; }
+     inline const dvar3_array& operator[](int i) const { return t[i]; }
+     inline const dvar_matrix& operator()(int i, int j) const { return ((*this)(i))(j); }
+     inline const dvar_vector& operator()(int i, int j, int k) const { return (((*this)(i,j))(k)); }
+     inline const prevariable operator()(int i, int j, int k, int l) const
      {
        return ( ((*this)(i,j,k))(l));
      }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST dvar3_array& operator ( ) (int i)_CONST;
-      _CONST dvar3_array& operator [] (int i)_CONST;
-      _CONST dvar_matrix& operator ( ) (int i ,int j)_CONST;
-      _CONST dvar_vector& operator ( ) (int i,int j,int k)_CONST;
-      _CONST prevariable operator ( ) (int i,int j,int k,int l)_CONST;
+      const dvar3_array& operator()(int i) const;
+      const dvar3_array& operator[](int i) const;
+      const dvar_matrix& operator()(int i, int j) const;
+      const dvar_vector& operator()(int i, int j, int k) const;
+      const prevariable operator()(int i, int j, int k, int l) const;
     #endif
     dvar3_array& operator ( ) (int);
     dvar3_array& operator [] (int);
@@ -5789,78 +5779,78 @@ public:
   int colsize() {return (colmax()-colmin()+1);} // returns the number of columns
 
  #ifdef USE_CONST
-  int indexmin(void) _CONST { return(shape->hslice_min);}
-  int indexmax(void) _CONST { return(shape->hslice_max);}
-  int hslicemin(void) _CONST { return(shape->hslice_min);}
-  int hslicemax(void) _CONST { return(shape->hslice_max);}
-  int slicemin(void) _CONST { return((*this)(hslicemin()).slicemin());}
-  int slicemax(void) _CONST { return((*this)(hslicemin()).slicemax());}
-  int rowmin(void) _CONST { return((*this)(hslicemin(),slicemin()).rowmin());}
-  int rowmax(void) _CONST { return((*this)(hslicemin(),slicemin()).rowmax());}
-  int colmin(void) _CONST  
+  int indexmin(void) const { return(shape->hslice_min); }
+  int indexmax(void) const { return(shape->hslice_max); }
+  int hslicemin(void) const { return(shape->hslice_min); }
+  int hslicemax(void) const { return(shape->hslice_max); }
+  int slicemin(void) const { return((*this)(hslicemin()).slicemin()); }
+  int slicemax(void) const { return((*this)(hslicemin()).slicemax()); }
+  int rowmin(void) const { return((*this)(hslicemin(),slicemin()).rowmin()); }
+  int rowmax(void) const { return((*this)(hslicemin(),slicemin()).rowmax()); }
+  int colmin(void) const 
   { 
     return((*this)(hslicemin(),slicemin(),rowmax()).indexmin());
   }
-  int colmax(void) _CONST 
+  int colmax(void) const 
   { 
     return((*this)(hslicemin(),slicemin(),rowmax()).indexmax());
   }
-  //int hslicemin(void) _CONST { return(shape->hslice_min);}
-  //int hslicemax(void) _CONST { return(shape->hslice_max);}
-  //int slicemin(void) _CONST { return(shape->slice_min);}
-  //int slicemax(void) _CONST { return(shape->slice_max);}
-  //int colmin(void) _CONST { return(shape->col_min);}
-  //int colmax(void) _CONST { return(shape->col_max);}
-  //int rowmin(void) _CONST { return(shape->row_min);}
-  //int rowmax(void) _CONST { return(shape->row_max);}
-  int hslicesize() _CONST {return (hslicemax()-hslicemin()+1);} // returns the number of rows
-  int slicesize() _CONST {return (slicemax()-slicemin()+1);} // returns the number of rows
-  int rowsize() _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
-  int colsize() _CONST {return (colmax()-colmin()+1);} // returns the number of columns
+  //int hslicemin(void) const { return(shape->hslice_min); }
+  //int hslicemax(void) const { return(shape->hslice_max); }
+  //int slicemin(void) const { return(shape->slice_min); }
+  //int slicemax(void) const { return(shape->slice_max); }
+  //int colmin(void) const { return(shape->col_min); }
+  //int colmax(void) const { return(shape->col_max); }
+  //int rowmin(void) const { return(shape->row_min); }
+  //int rowmax(void) const { return(shape->row_max); }
+  int hslicesize() const { return (hslicemax() - hslicemin() + 1); } // returns the number of rows
+  int slicesize() const { return (slicemax() - slicemin() + 1); } // returns the number of rows
+  int rowsize() const { return (rowmax() - rowmin() + 1); } // returns the number of rows
+  int colsize() const { return (colmax() - colmin() + 1); } // returns the number of columns
  #endif
   void initialize(void);
-  void operator /=(_CONST prevariable& d);
-  void operator /=(_CONST double& d);
+  void operator/=(const prevariable& d);
+  void operator/=(const double& d);
 };
 
-dvar4_array operator / (_CONST d4_array& m,_CONST prevariable& d);
-dvar4_array operator / (_CONST dvar4_array& m, double d);
-dvar4_array operator / (_CONST dvar4_array& m,_CONST prevariable& d);
+dvar4_array operator/(const d4_array& m, const prevariable& d);
+dvar4_array operator/(const dvar4_array& m, double d);
+dvar4_array operator/(const dvar4_array& m, const prevariable& d);
 
-dvar5_array operator / (_CONST d5_array& m,_CONST prevariable& d);
-dvar5_array operator / (_CONST dvar5_array& m, double d);
-dvar5_array operator / (_CONST dvar5_array& m,_CONST prevariable& d);
+dvar5_array operator/(const d5_array& m, const prevariable& d);
+dvar5_array operator/(const dvar5_array& m, double d);
+dvar5_array operator/(const dvar5_array& m, const prevariable& d);
 
-d4_array log(_CONST d4_array& x);
-dvar4_array log(_CONST dvar4_array& x);
-d4_array mfexp(_CONST d4_array& x);
-dvar4_array mfexp(_CONST dvar4_array& x);
-d4_array exp(_CONST d4_array& x);
-dvar4_array exp(_CONST dvar4_array& x);
-d4_array sqrt(_CONST d4_array& x);
-dvar4_array sqrt(_CONST dvar4_array& x);
+d4_array log(const d4_array& x);
+dvar4_array log(const dvar4_array& x);
+d4_array mfexp(const d4_array& x);
+dvar4_array mfexp(const dvar4_array& x);
+d4_array exp(const d4_array& x);
+dvar4_array exp(const dvar4_array& x);
+d4_array sqrt(const d4_array& x);
+dvar4_array sqrt(const dvar4_array& x);
 
-d5_array log(_CONST d5_array& x);
-dvar5_array log(_CONST dvar5_array& x);
-d5_array mfexp(_CONST d5_array& x);
-dvar5_array mfexp(_CONST dvar5_array& x);
-d5_array exp(_CONST d5_array& x);
-dvar5_array exp(_CONST dvar5_array& x);
-d5_array sqrt(_CONST d5_array& x);
-dvar5_array sqrt(_CONST dvar5_array& x);
+d5_array log(const d5_array& x);
+dvar5_array log(const dvar5_array& x);
+d5_array mfexp(const d5_array& x);
+dvar5_array mfexp(const dvar5_array& x);
+d5_array exp(const d5_array& x);
+dvar5_array exp(const dvar5_array& x);
+d5_array sqrt(const d5_array& x);
+dvar5_array sqrt(const dvar5_array& x);
 
-ostream& operator<<(BOR_CONST ostream& ostr, BOR_CONST d4_array & z);
-ostream& operator<<(BOR_CONST ostream& ostr, BOR_CONST d5_array & z);
-ostream& operator<<(BOR_CONST ostream& ostr, BOR_CONST d6_array & z);
-istream& operator>>(BOR_CONST istream& istr, BOR_CONST d4_array & z);
-istream& operator>>(BOR_CONST istream& istr, BOR_CONST d5_array & z);
-istream& operator>>(BOR_CONST istream& istr, BOR_CONST d6_array & z);
-ostream& operator<<(BOR_CONST ostream& ostr, BOR_CONST dvar4_array & z);
-ostream& operator<<(BOR_CONST ostream& ostr, BOR_CONST dvar5_array & z);
-ostream& operator<<(BOR_CONST ostream& ostr, BOR_CONST dvar6_array & z);
-istream& operator>>(BOR_CONST istream& istr, BOR_CONST dvar4_array & z);
-istream& operator>>(BOR_CONST istream& istr, BOR_CONST dvar5_array & z);
-istream& operator>>(BOR_CONST istream& istr, BOR_CONST dvar6_array & z);
+ostream& operator<<(const ostream& ostr, const d4_array &z);
+ostream& operator<<(const ostream& ostr, const d5_array &z);
+ostream& operator<<(const ostream& ostr, const d6_array &z);
+istream& operator>>(const istream& istr, const d4_array &z);
+istream& operator>>(const istream& istr, const d5_array &z);
+istream& operator>>(const istream& istr, const d6_array &z);
+ostream& operator<<(const ostream& ostr, const dvar4_array &z);
+ostream& operator<<(const ostream& ostr, const dvar5_array &z);
+ostream& operator<<(const ostream& ostr, const dvar6_array &z);
+istream& operator>>(const istream& istr, const dvar4_array &z);
+istream& operator>>(const istream& istr, const dvar5_array &z);
+istream& operator>>(const istream& istr, const dvar6_array &z);
 
 /**
  * Description not yet available.
@@ -5889,13 +5879,13 @@ public:
   ivector iprint1;
 
 public:
-  double minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&));
+  double minimize(const independent_variables & x, double (*pf)(const dvar_vector&));
   fmmt(int _nvar,int _m=7);
 
-  double minimize(BOR_CONST independent_variables & x,BOR_CONST dvector& c,
-        double (*pf)(BOR_CONST dvar_vector&,BOR_CONST dvector&) );
+  double minimize(const independent_variables & x, const dvector& c,
+        double (*pf)(const dvar_vector&, const dvector&));
 
-  void fmin(BOR_CONST double& f, const dvector & x,BOR_CONST dvector& g);
+  void fmin(const double& f, const dvector &x, const dvector& g);
 
   dmatrix& hessian();
 };
@@ -5919,29 +5909,29 @@ public:
   void shallow_copy(const i4_array&);
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST i4_array&);
-  void allocate(_CONST dvar4_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const i4_array&);
+  void allocate(const dvar4_array&);
+  int operator!(void) const { return (shape == NULL); }
   i4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
     ivector ncl,ivector nch);
 
   i4_array(int hsl,int hsu);
   void allocate(int hsl,int hsu);
 
-  i4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-    _CONST imatrix& nrh,int ncl,_CONST i3_array& nch);
+  i4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
+           const imatrix& nrh, int ncl, const i3_array& nch);
 
   i4_array(const ad_integer& hsl,const ad_integer& hsh,
    const index_type& sl,const index_type& sh,
    const index_type& nrl,const index_type& nrh,const index_type& ncl,
    const index_type& nch);
  
-  i4_array& operator = (_CONST i4_array&);
+  i4_array& operator=(const i4_array&);
   i4_array(const i4_array& m2);
   i4_array(int,int,int,int,int,int,int,int);
   //i4_array(int,int,int,ivector,int,imatrix,int,int);
-  i4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch);
+  i4_array(int hsl, int hsu, int sl, const ivector& sh,
+           int nrl, const imatrix& nrh, int ncl, int nch);
   i4_array();
   ~i4_array();
    i3_array& elem(int i) { return t[i];}
@@ -5961,22 +5951,22 @@ public:
       return ( ((*this)(i,j,k))(l));
     }
     #ifdef USE_CONST
-     inline _CONST i3_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST i3_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST imatrix& operator ( ) (int i ,int j)_CONST {return ((*this)(i))(j);}
-     inline _CONST ivector& operator ( ) (int i,int j,int k)_CONST {return (((*this)(i,j))(k));}
-     inline _CONST int& operator ( ) (int i,int j,int k,int l)_CONST
+     inline const i3_array& operator()(int i) const { return t[i]; }
+     inline const i3_array& operator[](int i) const { return t[i]; }
+     inline const imatrix& operator()(int i, int j) const { return ((*this)(i))(j); }
+     inline const ivector& operator()(int i, int j, int k) const { return (((*this)(i,j))(k)); }
+     inline const int& operator()(int i, int j, int k, int l) const
      {
        return ( ((*this)(i,j,k))(l));
      }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST i3_array& operator ( ) (int i)_CONST;
-      _CONST i3_array& operator [] (int i)_CONST;
-      _CONST imatrix& operator ( ) (int i ,int j)_CONST;
-      _CONST ivector& operator ( ) (int i,int j,int k)_CONST;
-      _CONST int& operator ( ) (int i,int j,int k,int l)_CONST;
+      const i3_array& operator()(int i) const;
+      const i3_array& operator[](int i) const;
+      const imatrix& operator()(int i, int j) const;
+      const ivector& operator()(int i, int j, int k) const;
+      const int& operator()(int i, int j, int k, int l) const;
     #endif
     i3_array& operator ( ) (int);
     i3_array& operator [] (int);
@@ -6010,28 +6000,28 @@ public:
   int rowsize() {return (rowmax()-rowmin()+1);} // returns the number of rows
   int colsize() {return (colmax()-colmin()+1);} // returns the number of columns
  #ifdef USE_CONST
-  int hslicemin(void) _CONST { return(shape->indexmin());}
-  int indexmin(void) _CONST { return(shape->indexmin());}
-  int indexmax(void) _CONST { return(shape->indexmax());}
-  int hslicemax(void) _CONST { return(shape->indexmax());}
-  int slicemin(void) _CONST { return((*this)(hslicemin()).slicemin());}
-  int slicemax(void) _CONST { return((*this)(hslicemin()).slicemax());}
-  int rowmin(void) _CONST { return((*this)(hslicemin(),slicemin()).rowmin());}
-  int rowmax(void) _CONST { return((*this)(hslicemin(),slicemin()).rowmax());}
-  int colmin(void) _CONST  
+  int hslicemin(void) const { return(shape->indexmin()); }
+  int indexmin(void) const { return(shape->indexmin()); }
+  int indexmax(void) const { return(shape->indexmax()); }
+  int hslicemax(void) const { return(shape->indexmax()); }
+  int slicemin(void) const { return((*this)(hslicemin()).slicemin());}
+  int slicemax(void) const { return((*this)(hslicemin()).slicemax()); }
+  int rowmin(void) const { return((*this)(hslicemin(),slicemin()).rowmin()); }
+  int rowmax(void) const { return((*this)(hslicemin(),slicemin()).rowmax()); }
+  int colmin(void) const 
   { 
     return((*this)(hslicemin(),slicemin(),rowmax()).indexmin());
   }
-  int colmax(void) _CONST 
+  int colmax(void) const
   { 
     return((*this)(hslicemin(),slicemin(),rowmax()).indexmax());
   }
 
-  int hslicesize() _CONST {return (indexmax()-indexmin()+1);} 
-  int size() _CONST {return (indexmax()-indexmin()+1);} 
-  int slicesize() _CONST {return (slicemax()-slicemin()+1);} // returns the number of rows
-  int rowsize() _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
-  int colsize() _CONST {return (colmax()-colmin()+1);} // returns the number of columns
+  int hslicesize() const { return (indexmax() - indexmin() + 1); } 
+  int size() const { return (indexmax() - indexmin() + 1); }
+  int slicesize() const { return (slicemax() - slicemin() + 1); } // returns the number of rows
+  int rowsize() const { return (rowmax() - rowmin() + 1); } // returns the number of rows
+  int colsize() const { return (colmax() - colmin() + 1); } // returns the number of columns
  #endif
   void initialize(void);
 };
@@ -6065,15 +6055,15 @@ public:
   void shallow_copy(const i5_array&);
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST i5_array&);
-  //void allocate(_CONST dvar4_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const i5_array&);
+  //void allocate(const dvar4_array&);
+  int operator!(void) const { return (shape == NULL); }
   i5_array(int hsl,int hsu);
   i5_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
     ivector ncl,ivector nch);
 
-  i5_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-    _CONST imatrix& nrh,int ncl,_CONST i3_array& nch);
+  i5_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
+           const imatrix& nrh, int ncl, const i3_array& nch);
 
   i5_array(const ad_integer& hsl,const ad_integer& hsh,
    const index_type& sl,const index_type& sh,
@@ -6081,12 +6071,12 @@ public:
    const index_type& ncl,const index_type& nch,
    const index_type& aa,const index_type& bb);
  
-  i5_array& operator = (_CONST i5_array&);
+  i5_array& operator=(const i5_array&);
   i5_array(const i5_array& m2);
   i5_array(int,int,int,int,int,int,int,int);
   //i5_array(int,int,int,ivector,int,imatrix,int,int);
-  i5_array(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch);
+  i5_array(int hsl, int hsu, int sl, const ivector& sh,
+           int nrl, const imatrix& nrh, int ncl, int nch);
   i5_array();
   ~i5_array();
    //i4_array& elem(int i) { return t[i];}
@@ -6111,27 +6101,27 @@ public:
       return ( ((*this)(i,j,k))(l,ll));
     }
     #ifdef USE_CONST
-     inline _CONST i4_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST i4_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST i3_array& operator ( ) (int i ,int j)_CONST {return ((*this)(i))(j);}
-     inline _CONST imatrix& operator ( ) (int i,int j,int k)_CONST {return (((*this)(i,j))(k));}
-     inline _CONST ivector& operator ( ) (int i,int j,int k,int l)_CONST
+     inline const i4_array& operator()(int i) const { return t[i]; }
+     inline const i4_array& operator[](int i) const { return t[i]; }
+     inline const i3_array& operator()(int i ,int j) const { return ((*this)(i))(j); }
+     inline const imatrix& operator()(int i, int j, int k) const { return (((*this)(i,j))(k)); }
+     inline const ivector& operator()(int i, int j, int k, int l) const
      {
        return ( ((*this)(i,j,k))(l));
      }
-     inline _CONST int& operator ( ) (int i,int j,int k,int l,int ll)_CONST
+     inline const int& operator()(int i, int j, int k, int l, int ll) const
      {
        return ( ((*this)(i,j,k))(l,ll));
      }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST i4_array& operator ( ) (int i)_CONST;
-      _CONST i4_array& operator [] (int i)_CONST;
-      _CONST i3_array& operator ( ) (int i ,int j)_CONST;
-      _CONST imatrix& operator ( ) (int i ,int j,int k)_CONST;
-      _CONST ivector& operator ( ) (int i,int j,int k,int l)_CONST;
-      _CONST int& operator ( ) (int i,int j,int k,int l,int ll)_CONST;
+      const i4_array& operator()(int i) const;
+      const i4_array& operator[](int i) const;
+      const i3_array& operator()(int i,int j) const;
+      const imatrix& operator()(int i, int j, int k) const;
+      const ivector& operator()(int i, int j, int k, int l) const;
+      const int& operator()(int i, int j, int k, int l, int ll) const;
     #endif
     i4_array& operator ( ) (int);
     i4_array& operator [] (int);
@@ -6166,37 +6156,37 @@ public:
   int rowsize() {return (rowmax()-rowmin()+1);} // returns the number of rows
   int colsize() {return (colmax()-colmin()+1);} // returns the number of columns
  #ifdef USE_CONST
-  int hslicemin(void) _CONST { return(shape->indexmin());}
-  int indexmin(void) _CONST { return(shape->indexmin());}
-  int indexmax(void) _CONST { return(shape->indexmax());}
-  int hslicemax(void) _CONST { return(shape->indexmax());}
-  int slicemin(void) _CONST { return((*this)(hslicemin()).slicemin());}
-  int slicemax(void) _CONST { return((*this)(hslicemin()).slicemax());}
-  int rowmin(void) _CONST { return((*this)(hslicemin(),slicemin()).rowmin());}
-  int rowmax(void) _CONST { return((*this)(hslicemin(),slicemin()).rowmax());}
-  int colmin(void) _CONST  
+  int hslicemin(void) const { return(shape->indexmin()); }
+  int indexmin(void) const { return(shape->indexmin()); }
+  int indexmax(void) const { return(shape->indexmax()); }
+  int hslicemax(void) const { return(shape->indexmax()); }
+  int slicemin(void) const { return((*this)(hslicemin()).slicemin()); }
+  int slicemax(void) const { return((*this)(hslicemin()).slicemax()); }
+  int rowmin(void) const { return((*this)(hslicemin(),slicemin()).rowmin()); }
+  int rowmax(void) const { return((*this)(hslicemin(),slicemin()).rowmax()); }
+  int colmin(void) const  
   { 
     return((*this)(hslicemin(),slicemin(),rowmax()).indexmin());
   }
-  int colmax(void) _CONST 
+  int colmax(void) const 
   { 
     return((*this)(hslicemin(),slicemin(),rowmax()).indexmax());
   }
 
-  int hslicesize() _CONST {return (indexmax()-indexmin()+1);} 
-  int size() _CONST {return (indexmax()-indexmin()+1);} 
-  int slicesize() _CONST {return (slicemax()-slicemin()+1);} // returns the number of rows
-  int rowsize() _CONST {return (rowmax()-rowmin()+1);} // returns the number of rows
-  int colsize() _CONST {return (colmax()-colmin()+1);} // returns the number of columns
+  int hslicesize() const { return (indexmax() - indexmin() + 1); } 
+  int size() const { return (indexmax() - indexmin() + 1); } 
+  int slicesize() const { return (slicemax() - slicemin() + 1); } // returns the number of rows
+  int rowsize() const { return (rowmax() - rowmin() + 1); } // returns the number of rows
+  int colsize() const { return (colmax()  -colmin() + 1); } // returns the number of columns
  #endif
   void initialize(void);
 };
-ostream& operator<<(BOR_CONST ostream& istr,_CONST i5_array& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST i5_array& z);
+ostream& operator<<(const ostream& istr, const i5_array& z);
+istream& operator>>(const istream& istr, const i5_array& z);
 #endif  //  if defined(MFCL2_CONSTRUCTORS)
 
-ostream& operator<<(BOR_CONST ostream& istr,_CONST i4_array& z);
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST i4_array& z);
+ostream& operator<<(const ostream& istr, const i4_array& z);
+istream& operator>>(const istream& istr, const i4_array& z);
 
 // ***************************************************************
 // ***************************************************************
@@ -6231,11 +6221,11 @@ public:
 
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST d5_array&);
-  //void allocate(_CONST dvar5_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const d5_array&);
+  //void allocate(const dvar5_array&);
+  int operator!(void) const { return (shape == NULL); }
 
-  d5_array& operator = (_CONST d5_array&);
+  d5_array& operator=(const d5_array&);
   d5_array(const d5_array& m2);
   d5_array();
   ~d5_array();
@@ -6251,14 +6241,14 @@ public:
      return ( ((*this)(i))(j,k,l,_m));
    }
 #  ifdef USE_CONST
-   _CONST d4_array& elem(int i) _CONST { return t[i];}
-   _CONST d3_array& elem (int i ,int j) _CONST  {return ((*this)(i))(j);}
-   _CONST dmatrix& elem(int i,int j,int k) _CONST {return (((*this)(i,j))(k));}
-   _CONST dvector& elem(int i,int j,int k,int l) _CONST 
+   const d4_array& elem(int i) const { return t[i]; }
+   const d3_array& elem (int i ,int j) const { return ((*this)(i))(j); }
+   const dmatrix& elem(int i, int j, int k) const { return (((*this)(i,j))(k)); }
+   const dvector& elem(int i, int j, int k, int l) const
    {
      return ( ((*this)(i,j,k))(l));
    }
-   _CONST double& elem(int i,int j,int k,int l,int _m) _CONST 
+   const double& elem(int i, int j, int k, int l, int _m) const
    {
      return ( ((*this)(i))(j,k,l,_m));
    }
@@ -6277,25 +6267,25 @@ public:
       return ( ((*this)(i))(j,k,l,_m));
     }
     #ifdef USE_CONST
-     inline _CONST d4_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST d4_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST d3_array& operator ( ) (int i ,int j)_CONST {
+     inline const d4_array& operator()(int i) const { return t[i]; }
+     inline const d4_array& operator[](int i) const { return t[i]; }
+     inline const d3_array& operator()(int i, int j) const {
        return ((*this)(i))(j); }
-     inline _CONST dmatrix& operator ( ) (int i,int j,int k)_CONST {
+     inline const dmatrix& operator()(int i, int j, int k) const {
        return (((*this)(i))(j,k));}
-     inline _CONST dvector& operator ( ) (int i,int j,int k,int l)_CONST {
+     inline const dvector& operator()(int i, int j, int k, int l) const {
        return ( ((*this)(i))(j,k,l)); }
-     inline _CONST double& operator ( ) (int i,int j,int k,int l,int _m)_CONST {
+     inline const double& operator ( ) (int i,int j,int k,int l,int _m) const {
        return ( ((*this)(i))(j,k,l,_m)); }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST d4_array& operator ( ) (int i)_CONST;
-      _CONST d4_array& operator [] (int i)_CONST;
-      _CONST d3_array& operator ( ) (int i ,int j)_CONST;
-      _CONST dmatrix& operator ( ) (int i,int j,int k)_CONST;
-      _CONST dvector& operator ( ) (int i,int j,int k,int l)_CONST;
-      _CONST double& operator ( ) (int i,int j,int k,int l,int _m)_CONST;
+      const d4_array& operator()(int i) const;
+      const d4_array& operator[](int i) const;
+      const d3_array& operator()(int i, int j) const;
+      const dmatrix& operator()(int i, int j, int k) const;
+      const dvector& operator()(int i, int j, int k, int l) const;
+      const double& operator()(int i, int j, int k, int l, int _m) const;
     #endif
     d4_array& operator ( ) (int);
     d4_array& operator [] (int);
@@ -6317,7 +6307,7 @@ public:
   void operator /= ( double d);
 };
 
-d5_array operator / (_CONST d5_array& m, double d);
+d5_array operator/(const d5_array& m, double d);
 
 /**
  * Description not yet available.
@@ -6350,12 +6340,12 @@ public:
 
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST d5_array&);
-  void allocate(_CONST dvar5_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const d5_array&);
+  void allocate(const dvar5_array&);
+  int operator!(void) const { return (shape == NULL); }
 
-  dvar5_array& operator = (_CONST d5_array&);
-  dvar5_array& operator =  (_CONST dvar5_array& m);
+  dvar5_array& operator=(const d5_array&);
+  dvar5_array& operator=(const dvar5_array& m);
   dvar5_array(const d5_array& m2);
   dvar5_array(const dvar5_array& m2);
   dvar5_array();
@@ -6372,14 +6362,14 @@ public:
      return ( ((*this)(i))(j,k,l,_m));
    }
 #  ifdef USE_CONST
-     _CONST dvar4_array& elem(int i) _CONST { return t[i];}
-     _CONST dvar3_array& elem (int i ,int j) _CONST {return ((*this)(i))(j);}
-     _CONST dvar_matrix& elem(int i,int j,int k) _CONST  {return (((*this)(i,j))(k));}
-     _CONST dvar_vector& elem(int i,int j,int k,int l) _CONST 
+     const dvar4_array& elem(int i) const { return t[i]; }
+     const dvar3_array& elem(int i, int j) const { return ((*this)(i))(j); }
+     const dvar_matrix& elem(int i, int j, int k) const { return (((*this)(i,j))(k)); }
+     const dvar_vector& elem(int i, int j, int k, int l) const
      {
        return ( ((*this)(i,j,k))(l));
      }
-     _CONST prevariable elem(int i,int j,int k,int l,int _m) _CONST 
+     const prevariable elem(int i, int j, int k, int l, int _m) const
      {
        return ( ((*this)(i))(j,k,l,_m));
      }
@@ -6398,25 +6388,25 @@ public:
       return ( ((*this)(i))(j,k,l,_m));
     }
     #ifdef USE_CONST
-     inline _CONST dvar4_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST dvar4_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST dvar3_array& operator ( ) (int i ,int j)_CONST {
+     inline const dvar4_array& operator()(int i) const { return t[i]; }
+     inline const dvar4_array& operator[](int i) const { return t[i]; }
+     inline const dvar3_array& operator()(int i, int j) const {
        return ((*this)(i))(j); }
-     inline _CONST dvar_matrix& operator ( ) (int i,int j,int k)_CONST {
+     inline const dvar_matrix& operator()(int i, int j, int k) const {
        return (((*this)(i))(j,k));}
-     inline _CONST dvar_vector& operator ( ) (int i,int j,int k,int l)_CONST {
+     inline const dvar_vector& operator()(int i, int j, int k, int l) const {
        return ( ((*this)(i))(j,k,l)); }
-     inline _CONST prevariable operator ( ) (int i,int j,int k,int l,int _m)_CONST {
+     inline const prevariable operator()(int i, int j, int k, int l, int _m) const {
        return ( ((*this)(i))(j,k,l,_m)); }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST dvar4_array& operator ( ) (int i)_CONST;
-      _CONST dvar4_array& operator [] (int i)_CONST;
-      _CONST dvar3_array& operator ( ) (int i ,int j)_CONST;
-      _CONST dvar_matrix& operator ( ) (int i,int j,int k)_CONST;
-      _CONST dvar_vector& operator ( ) (int i,int j,int k,int l)_CONST;
-      _CONST prevariable operator ( ) (int i,int j,int k,int l,int _m)_CONST;
+      const dvar4_array& operator()(int i) const;
+      const dvar4_array& operator[](int i) const;
+      const dvar3_array& operator()(int i, int j) const;
+      const dvar_matrix& operator()(int i, int j, int k) const;
+      const dvar_vector& operator()(int i, int j, int k, int l) const;
+      const prevariable operator()(int i, int j, int k, int l, int _m) const;
     #endif
     dvar4_array& operator ( ) (int);
     dvar4_array& operator [] (int);
@@ -6435,13 +6425,13 @@ public:
   int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
-  void operator /=(_CONST prevariable& d);
-  void operator /=(_CONST double& d);
+  void operator/=(const prevariable& d);
+  void operator/=(const double& d);
 };
 
-dvar5_array operator / (_CONST d5_array& m,_CONST prevariable& d);
-dvar5_array operator / (_CONST dvar5_array& m, double d);
-dvar5_array operator / (_CONST dvar5_array& m,_CONST prevariable& d);
+dvar5_array operator/(const d5_array& m, const prevariable& d);
+dvar5_array operator/(const dvar5_array& m, double d);
+dvar5_array operator/(const dvar5_array& m, const prevariable& d);
 
 /**
  * Description not yet available.
@@ -6472,11 +6462,11 @@ public:
 
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST d6_array&);
-  //void allocate(_CONST dvar5_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const d6_array&);
+  //void allocate(const dvar5_array&);
+  int operator!(void) const { return (shape == NULL); }
 
-  d6_array& operator = (_CONST d6_array&);
+  d6_array& operator=(const d6_array&);
   d6_array(const d6_array& m2);
   d6_array();
   ~d6_array();
@@ -6496,18 +6486,18 @@ public:
      return ( ((*this)(i))(j,k,l,_m,_n));
    }
 #  ifdef USE_CONST
-   _CONST d5_array& elem(int i) _CONST { return t[i];}
-   _CONST d4_array& elem (int i ,int j) _CONST {return ((*this)(i))(j);}
-   _CONST d3_array& elem(int i,int j,int k) _CONST {return (((*this)(i,j))(k));}
-   _CONST dmatrix& elem(int i,int j,int k,int l) _CONST 
+   const d5_array& elem(int i) const { return t[i]; }
+   const d4_array& elem (int i ,int j) const { return ((*this)(i))(j); }
+   const d3_array& elem(int i, int j, int k) const { return (((*this)(i,j))(k)); }
+   const dmatrix& elem(int i, int j, int k, int l) const
    {
      return ( ((*this)(i,j,k))(l));
    }
-   _CONST dvector& elem(int i,int j,int k,int l,int _m) _CONST 
+   const dvector& elem(int i, int j, int k, int l, int _m) const
    {
      return ( ((*this)(i))(j,k,l,_m));
    }
-   _CONST double& elem(int i,int j,int k,int l,int _m,int _n) _CONST 
+   const double& elem(int i, int j, int k, int l, int _m, int _n) const
    {
      return ( ((*this)(i))(j,k,l,_m,_n));
    }
@@ -6530,28 +6520,28 @@ public:
       return ( ((*this)(i))(j,k,l,_m,_n));
     }
     #ifdef USE_CONST
-     inline _CONST d5_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST d5_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST d4_array& operator ( ) (int i ,int j)_CONST {
+     inline const d5_array& operator()(int i) const { return t[i]; }
+     inline const d5_array& operator[](int i) const { return t[i]; }
+     inline const d4_array& operator()(int i, int j) const {
        return ((*this)(i))(j); }
-     inline _CONST d3_array& operator ( ) (int i,int j,int k)_CONST {
+     inline const d3_array& operator()(int i, int j, int k) const {
        return (((*this)(i))(j,k));}
-     inline _CONST dmatrix& operator ( ) (int i,int j,int k,int l)_CONST {
+     inline const dmatrix& operator()(int i, int j, int k, int l) const {
        return ( ((*this)(i))(j,k,l)); }
-     inline _CONST dvector& operator ( ) (int i,int j,int k,int l,int _m)_CONST {
+     inline const dvector& operator()(int i, int j, int k, int l, int _m) const {
        return ( ((*this)(i))(j,k,l,_m)); }
-     inline _CONST double& operator ( ) (int i,int j,int k,int l,int _m,int _n)_CONST {
+     inline const double& operator()(int i, int j, int k, int l, int _m, int _n) const {
        return ( ((*this)(i))(j,k,l,_m,_n)); }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST d5_array& operator ( ) (int i)_CONST;
-      _CONST d5_array& operator [] (int i)_CONST;
-      _CONST d4_array& operator ( ) (int i ,int j)_CONST;
-      _CONST d3_array& operator ( ) (int i,int j,int k)_CONST;
-      _CONST dmatrix& operator ( ) (int i,int j,int k,int l)_CONST;
-      _CONST dvector& operator ( ) (int i,int j,int k,int l,int _m)_CONST;
-      _CONST double& operator ( ) (int i,int j,int k,int l,int _m,int _n)_CONST;
+      const d5_array& operator()(int i) const;
+      const d5_array& operator[](int i) const;
+      const d4_array& operator()(int i, int j) const;
+      const d3_array& operator()(int i, int j, int k) const;
+      const dmatrix& operator()(int i, int j, int k, int l) const;
+      const dvector& operator()(int i, int j, int k, int l, int _m) const;
+      const double& operator()(int i, int j, int k, int l, int _m, int _n) const;
     #endif
     d5_array& operator ( ) (int);
     d5_array& operator [] (int);
@@ -6574,7 +6564,7 @@ public:
   void operator /= ( double d);
 };
 
-d6_array operator / (_CONST d6_array& m, double d);
+d6_array operator/(const d6_array& m, double d);
 
 /**
  * Description not yet available.
@@ -6607,12 +6597,12 @@ public:
 
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST d6_array&);
-  void allocate(_CONST dvar6_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const d6_array&);
+  void allocate(const dvar6_array&);
+  int operator!(void) const { return (shape == NULL); }
 
-  dvar6_array& operator = (_CONST d6_array&);
-  dvar6_array& operator =  (_CONST dvar6_array& m);
+  dvar6_array& operator=(const d6_array&);
+  dvar6_array& operator=(const dvar6_array& m);
   dvar6_array(const d6_array& m2);
   dvar6_array(const dvar6_array& m2);
   dvar6_array();
@@ -6633,18 +6623,18 @@ public:
      return ( ((*this)(i))(j,k,l,_m,_n));
    }
 #  ifdef USE_CONST
-     _CONST dvar5_array& elem(int i) _CONST { return t[i];}
-     _CONST dvar4_array& elem (int i ,int j) _CONST {return ((*this)(i))(j);}
-     _CONST dvar3_array& elem(int i,int j,int k) _CONST  {return (((*this)(i,j))(k));}
-     _CONST dvar_matrix& elem(int i,int j,int k,int l) _CONST
+     const dvar5_array& elem(int i) const { return t[i]; }
+     const dvar4_array& elem(int i, int j) const { return ((*this)(i))(j); }
+     const dvar3_array& elem(int i, int j, int k) const { return (((*this)(i,j))(k)); }
+     const dvar_matrix& elem(int i, int j, int k, int l) const
      {
        return ( ((*this)(i,j,k))(l));
      }
-     _CONST dvar_vector& elem(int i,int j,int k,int l,int _m) _CONST
+     const dvar_vector& elem(int i, int j, int k, int l, int _m) const
      {
        return ( ((*this)(i))(j,k,l,_m));
      }
-     _CONST prevariable elem(int i,int j,int k,int l,int _m,int _n) _CONST
+     const prevariable elem(int i, int j, int k, int l, int _m, int _n) const
      {
        return ( ((*this)(i))(j,k,l,_m,_n));
      }
@@ -6667,28 +6657,28 @@ public:
       return ( ((*this)(i))(j,k,l,_m,_n));
     }
     #ifdef USE_CONST
-     inline _CONST dvar5_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST dvar5_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST dvar4_array& operator ( ) (int i ,int j)_CONST {
+     inline const dvar5_array& operator()(int i) const { return t[i];}
+     inline const dvar5_array& operator[](int i) const { return t[i];}
+     inline const dvar4_array& operator()(int i, int j) const {
        return ((*this)(i))(j); }
-     inline _CONST dvar3_array& operator ( ) (int i,int j,int k)_CONST {
+     inline const dvar3_array& operator()(int i, int j, int k) const {
        return (((*this)(i))(j,k));}
-     inline _CONST dvar_matrix& operator ( ) (int i,int j,int k,int l)_CONST {
+     inline const dvar_matrix& operator()(int i, int j, int k, int l) const {
        return ( ((*this)(i))(j,k,l)); }
-     inline _CONST dvar_vector& operator ( ) (int i,int j,int k,int l,int _m)_CONST {
+     inline const dvar_vector& operator()(int i, int j, int k, int l, int _m) const {
        return ( ((*this)(i))(j,k,l,_m)); }
-     inline _CONST prevariable operator ( ) (int i,int j,int k,int l,int _m,int _n)_CONST {
+     inline const prevariable operator()(int i, int j, int k, int l, int _m, int _n) const {
        return ( ((*this)(i))(j,k,l,_m,_n)); }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST dvar5_array& operator ( ) (int i)_CONST;
-      _CONST dvar5_array& operator [] (int i)_CONST;
-      _CONST dvar4_array& operator ( ) (int i ,int j)_CONST;
-      _CONST dvar3_array& operator ( ) (int i,int j,int k)_CONST;
-      _CONST dvar_matrix& operator ( ) (int i,int j,int k,int l)_CONST;
-      _CONST dvar_vector& operator ( ) (int i,int j,int k,int l,int _m)_CONST;
-      _CONST prevariable operator ( ) (int i,int j,int k,int l,int _m,int _n)_CONST;
+      const dvar5_array& operator()(int i) const;
+      const dvar5_array& operator[](int i) const;
+      const dvar4_array& operator()(int i, int j) const;
+      const dvar3_array& operator()(int i, int j, int k) const;
+      const dvar_matrix& operator()(int i, int j, int k, int l) const;
+      const dvar_vector& operator()(int i, int j, int k, int l, int _m) const;
+      const prevariable operator()(int i, int j, int k, int l, int _m, int _n) const;
     #endif
     dvar5_array& operator ( ) (int);
     dvar5_array& operator [] (int);
@@ -6708,13 +6698,13 @@ public:
   int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
-  void operator /=(_CONST prevariable& d);
-  void operator /=(_CONST double& d);
+  void operator/=(const prevariable& d);
+  void operator/=(const double& d);
 };
 
-dvar6_array operator / (_CONST d6_array& m,_CONST prevariable& d);
-dvar6_array operator / (_CONST dvar6_array& m, double d);
-dvar6_array operator / (_CONST dvar6_array& m,_CONST prevariable& d);
+dvar6_array operator/(const d6_array& m, const prevariable& d);
+dvar6_array operator/(const dvar6_array& m, double d);
+dvar6_array operator/(const dvar6_array& m, const prevariable& d);
 
 /**
  * Description not yet available.
@@ -6747,11 +6737,11 @@ public:
 
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST d7_array&);
-  //void allocate(_CONST dvar5_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const d7_array&);
+  //void allocate(const dvar5_array&);
+  int operator!(void) const { return (shape == NULL); }
 
-  d7_array& operator = (_CONST d7_array&);
+  d7_array& operator=(const d7_array&);
   d7_array(d7_array& m2);
   d7_array();
   ~d7_array();
@@ -6775,22 +6765,22 @@ public:
      return ( ((*this)(i))(j,k,l,_m,_n,_p));
    }
 #  ifdef USE_CONST
-   _CONST d6_array& elem(int i) _CONST { return t[i];}
-   _CONST d5_array& elem (int i ,int j) _CONST {return ((*this)(i))(j);}
-   _CONST d4_array& elem(int i,int j,int k) _CONST {return (((*this)(i,j))(k));}
-   _CONST d3_array& elem(int i,int j,int k,int l) _CONST 
+   const d6_array& elem(int i) const { return t[i];}
+   const d5_array& elem(int i, int j) const { return ((*this)(i))(j); }
+   const d4_array& elem(int i, int j, int k) const { return (((*this)(i,j))(k)); }
+   const d3_array& elem(int i, int j, int k, int l) const
    {
      return ( ((*this)(i,j,k))(l));
    }
-   _CONST dmatrix& elem(int i,int j,int k,int l,int _m) _CONST 
+   const dmatrix& elem(int i, int j, int k, int l, int _m) const
    {
      return ( ((*this)(i))(j,k,l,_m));
    }
-   _CONST dvector& elem(int i,int j,int k,int l,int _m,int _n) _CONST 
+   const dvector& elem(int i, int j, int k, int l, int _m, int _n) const
    {
      return ( ((*this)(i))(j,k,l,_m,_n));
    }
-   _CONST double& elem(int i,int j,int k,int l,int _m,int _n,int _p) _CONST 
+   const double& elem(int i, int j, int k, int l, int _m, int _n, int _p) const
    {
      return ( ((*this)(i))(j,k,l,_m,_n,_p));
    }
@@ -6817,31 +6807,31 @@ public:
       return ( ((*this)(i))(j,k,l,_m,_n,_p));
     }
     #ifdef USE_CONST
-     inline _CONST d6_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST d6_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST d5_array& operator ( ) (int i ,int j)_CONST {
+     inline const d6_array& operator()(int i) const { return t[i]; }
+     inline const d6_array& operator[](int i) const { return t[i]; }
+     inline const d5_array& operator()(int i, int j) const {
        return ((*this)(i))(j); }
-     inline _CONST d4_array& operator ( ) (int i,int j,int k)_CONST {
+     inline const d4_array& operator()(int i, int j, int k) const {
        return (((*this)(i))(j,k));}
-     inline _CONST d3_array& operator ( ) (int i,int j,int k,int l)_CONST {
+     inline const d3_array& operator()(int i, int j, int k, int l) const {
        return ( ((*this)(i))(j,k,l)); }
-     inline _CONST dmatrix& operator ( ) (int i,int j,int k,int l,int _m)_CONST {
+     inline const dmatrix& operator()(int i, int j, int k, int l, int _m) const {
        return ( ((*this)(i))(j,k,l,_m)); }
-     inline _CONST dvector& operator ( ) (int i,int j,int k,int l,int _m,int _n)_CONST {
+     inline const dvector& operator()(int i, int j, int k, int l, int _m, int _n) const {
        return ( ((*this)(i))(j,k,l,_m,_n)); }
-     inline _CONST double& operator ( ) (int i,int j,int k,int l,int _m,int _n,int _p)_CONST {
+     inline const double& operator()(int i, int j, int k, int l, int _m, int _n, int _p) const {
        return ( ((*this)(i))(j,k,l,_m,_n,_p)); }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST d6_array& operator ( ) (int i)_CONST;
-      _CONST d6_array& operator [] (int i)_CONST;
-      _CONST d5_array& operator ( ) (int i ,int j)_CONST;
-      _CONST d4_array& operator ( ) (int i,int j,int k)_CONST;
-      _CONST d3_array& operator ( ) (int i,int j,int k,int l)_CONST;
-      _CONST dmatrix& operator ( ) (int i,int j,int k,int l,int _m)_CONST;
-      _CONST dvector& operator ( ) (int i,int j,int k,int l,int _m,int _n)_CONST;
-      _CONST double& operator ( ) (int i,int j,int k,int l,int _m,int _n,int _p)_CONST;
+      const d6_array& operator()(int i) const;
+      const d6_array& operator[](int i) const;
+      const d5_array& operator()(int i, int j) const;
+      const d4_array& operator()(int i, int j, int k) const;
+      const d3_array& operator()(int i, int j, int k, int l) const;
+      const dmatrix& operator()(int i, int j, int k, int l, int _m) const;
+      const dvector& operator()(int i, int j, int k, int l, int _m, int _n) const;
+      const double& operator()(int i, int j, int k, int l, int _m, int _n, int _p) const;
     #endif
     d6_array& operator ( ) (int);
     d6_array& operator [] (int);
@@ -6865,7 +6855,7 @@ public:
   void operator /= ( double d);
 };
 
-d7_array operator / (_CONST d7_array& m, double d);
+d7_array operator/(const d7_array& m, double d);
 
 /**
  * Description not yet available.
@@ -6898,12 +6888,12 @@ public:
 
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST d7_array&);
-  void allocate(_CONST dvar7_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const d7_array&);
+  void allocate(const dvar7_array&);
+  int operator!(void) const { return (shape == NULL); }
 
-  dvar7_array& operator = (_CONST d7_array&);
-  dvar7_array& operator =  (_CONST dvar7_array& m);
+  dvar7_array& operator=(const d7_array&);
+  dvar7_array& operator=(const dvar7_array& m);
   dvar7_array(d7_array& m2);
   dvar7_array(dvar7_array& m2);
   dvar7_array();
@@ -6928,22 +6918,22 @@ public:
      return ( ((*this)(i))(j,k,l,_m,_n,_p));
    }
 #  ifdef USE_CONST
-     _CONST dvar6_array& elem(int i) _CONST { return t[i];}
-     _CONST dvar5_array& elem (int i ,int j) _CONST {return ((*this)(i))(j);}
-     _CONST dvar4_array& elem(int i,int j,int k) _CONST  {return (((*this)(i,j))(k));}
-     _CONST dvar3_array& elem(int i,int j,int k,int l) _CONST
+     const dvar6_array& elem(int i) const { return t[i]; }
+     const dvar5_array& elem(int i, int j) const { return ((*this)(i))(j); }
+     const dvar4_array& elem(int i, int j, int k) const { return (((*this)(i,j))(k)); }
+     const dvar3_array& elem(int i, int j, int k, int l) const
      {
        return ( ((*this)(i,j,k))(l));
      }
-     _CONST dvar_matrix& elem(int i,int j,int k,int l,int _m) _CONST
+     const dvar_matrix& elem(int i, int j, int k, int l, int _m) const
      {
        return ( ((*this)(i))(j,k,l,_m));
      }
-     _CONST dvar_vector& elem(int i,int j,int k,int l,int _m,int _n) _CONST
+     const dvar_vector& elem(int i, int j, int k, int l, int _m, int _n) const
      {
        return ( ((*this)(i))(j,k,l,_m,_n));
      }
-     _CONST prevariable elem(int i,int j,int k,int l,int _m,int _n,int _p) _CONST
+     const prevariable elem(int i, int j, int k, int l, int _m, int _n, int _p) const
      {
        return ( ((*this)(i))(j,k,l,_m,_n,_p));
      }
@@ -6970,31 +6960,31 @@ public:
       return ( ((*this)(i))(j,k,l,_m,_n,_p));
     }
     #ifdef USE_CONST
-     inline _CONST dvar6_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST dvar6_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST dvar5_array& operator ( ) (int i ,int j)_CONST {
+     inline const dvar6_array& operator()(int i) const { return t[i]; }
+     inline const dvar6_array& operator[](int i) const { return t[i]; }
+     inline const dvar5_array& operator()(int i, int j) const {
        return ((*this)(i))(j); }
-     inline _CONST dvar4_array& operator ( ) (int i,int j,int k)_CONST {
+     inline const dvar4_array& operator()(int i, int j, int k) const {
        return (((*this)(i))(j,k));}
-     inline _CONST dvar3_array& operator ( ) (int i,int j,int k,int l)_CONST {
+     inline const dvar3_array& operator()(int i, int j, int k, int l) const {
        return ( ((*this)(i))(j,k,l)); }
-     inline _CONST dvar_matrix& operator ( ) (int i,int j,int k,int l,int _m)_CONST {
+     inline const dvar_matrix& operator()(int i, int j, int k, int l, int _m) const {
        return ( ((*this)(i))(j,k,l,_m)); }
-     inline _CONST dvar_vector& operator ( ) (int i,int j,int k,int l,int _m,int _n)_CONST {
+     inline const dvar_vector& operator()(int i, int j, int k, int l, int _m, int _n) const {
        return ( ((*this)(i))(j,k,l,_m,_n)); }
-     inline _CONST prevariable operator ( ) (int i,int j,int k,int l,int _m,int _n,int _p)_CONST {
+     inline const prevariable operator()(int i, int j, int k, int l, int _m, int _n, int _p) const {
        return ( ((*this)(i))(j,k,l,_m,_n,_p)); }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST dvar6_array& operator ( ) (int i)_CONST;
-      _CONST dvar6_array& operator [] (int i)_CONST;
-      _CONST dvar5_array& operator ( ) (int i ,int j)_CONST;
-      _CONST dvar4_array& operator ( ) (int i,int j,int k)_CONST;
-      _CONST dvar3_array& operator ( ) (int i,int j,int k,int l)_CONST;
-      _CONST dvar_matrix& operator ( ) (int i,int j,int k,int l,int _m)_CONST;
-      _CONST dvar_vector& operator ( ) (int i,int j,int k,int l,int _m,int _n)_CONST;
-      _CONST prevariable operator ( ) (int i,int j,int k,int l,int _m,int _n,int _p)_CONST;
+      const dvar6_array& operator()(int i) const;
+      const dvar6_array& operator[](int i) const;
+      const dvar5_array& operator()(int i, int j) const;
+      const dvar4_array& operator()(int i, int j, int k) const;
+      const dvar3_array& operator()(int i, int j, int k, int l) const;
+      const dvar_matrix& operator()(int i, int j, int k, int l, int _m) const;
+      const dvar_vector& operator()(int i, int j, int k, int l, int _m, int _n) const;
+      const prevariable operator()(int i, int j, int k, int l, int _m, int _n, int _p) const;
     #endif
     dvar6_array& operator ( ) (int);
     dvar6_array& operator [] (int);
@@ -7015,13 +7005,13 @@ public:
   int size(void) const { return (indexmax()-indexmin()+1);}
  #endif
   void initialize(void);
-  void operator /=(_CONST prevariable& d);
-  void operator /=(_CONST double& d);
+  void operator/=(const prevariable& d);
+  void operator/=(const double& d);
 };
 
-dvar7_array operator / (_CONST d7_array& m,_CONST prevariable& d);
-dvar7_array operator / (_CONST dvar7_array& m, double d);
-dvar7_array operator / (_CONST dvar7_array& m,_CONST prevariable& d);
+dvar7_array operator/(const d7_array& m, const prevariable& d);
+dvar7_array operator/(const dvar7_array& m, double d);
+dvar7_array operator/(const dvar7_array& m, const prevariable& d);
 
 
 #endif // #if defined(USE_HIGHER_ARRAYS)
@@ -7040,14 +7030,14 @@ public:
   ivector lb;
   ivector ub;
   ptr_vector ptr;
-  lmatrix_position(BOR_CONST lmatrix&);
+  lmatrix_position(const lmatrix&);
   lmatrix_position(int min,int max);
-  lmatrix_position(BOR_CONST lmatrix_position&);
+  lmatrix_position(const lmatrix_position&);
   lvector_position operator () (int i);
 };
 
 lmatrix_position restore_lmatrix_position(void);
-lmatrix restore_lmatrix_value(BOR_CONST lmatrix_position&);
+lmatrix restore_lmatrix_value(const lmatrix_position&);
 
 /**
  * Description not yet available.
@@ -7058,37 +7048,37 @@ lmatrix restore_lmatrix_value(BOR_CONST lmatrix_position&);
   protected:
     lvector * m;
     mat_shape * shape;
-    friend char* fform(const char*,_CONST dmatrix&);
+    friend char* fform(const char*, const dmatrix&);
 
  public:
 
-    int operator ! (void) _CONST {return (shape == NULL);}
+    int operator!(void) const { return (shape == NULL); }
 
     lmatrix( int ,  int );
               // makes a matrix [0..nr][0..nc]
 
     lmatrix( int,  int,  int,  int );
              // makes a matrix [nrl..nrh][ncl..nch]
-    lmatrix( int,  int,  int,_CONST ivector& );
-    lmatrix( int,  int,_CONST ivector&,_CONST ivector& );
+    lmatrix(int, int, int, const ivector&);
+    lmatrix(int, int, const ivector&, const ivector&);
     lmatrix(const ad_integer& nrl,const ad_integer& nrh,
       const index_type& ncl,const index_type& nch);
 
-    lmatrix& operator = (_CONST lmatrix& t);
-    lmatrix& operator = (_CONST imatrix& t);
-    lmatrix(_CONST lmatrix&);
+    lmatrix& operator=(const lmatrix& t);
+    lmatrix& operator=(const imatrix& t);
+    lmatrix(const lmatrix&);
              // copy initializer
-    lmatrix(BOR_CONST lmatrix_position&);
+    lmatrix(const lmatrix_position&);
     lmatrix(void);
 
    ~lmatrix();
 
     void save_lmatrix_value(void);
     void save_lmatrix_position(void);
-    lmatrix restore_lmatrix_value(BOR_CONST lmatrix_position& mpos);
+    lmatrix restore_lmatrix_value(const lmatrix_position& mpos);
     lmatrix_position restore_lmatrix_position(void);
 
-    void allocate(_CONST lmatrix& dm);
+    void allocate(const lmatrix& dm);
     void allocate(int nrl,int nrh,int ncl,int nch);
     void allocate(int nrl,int nrh,int ncl,const ivector& nch);
     void allocate(int nrl,int nrh,const ivector& ncl,const ivector& nch);
@@ -7108,28 +7098,28 @@ lmatrix restore_lmatrix_value(BOR_CONST lmatrix_position&);
 
 #ifdef USE_CONST
  #ifdef OPT_LIB
-  inline _CONST lvector& operator() (int i) _CONST {return m[i];}
-  inline _CONST AD_LONG_INT& operator() (int i,int j) _CONST 
+  inline const lvector& operator()(int i) const { return m[i]; }
+  inline const AD_LONG_INT& operator()(int i, int j) const
     {return(*((*(m+i)).v+j));}
-  inline _CONST lvector& operator[] (int i) _CONST {return m[i];}
+  inline const lvector& operator[](int i) const { return m[i]; }
  #else
-    _CONST lvector& operator [] (int) _CONST ;
-    _CONST lvector& operator () (int) _CONST ;
-    _CONST AD_LONG_INT& operator () (int,int) _CONST ;
+    const lvector& operator[](int) const;
+    const lvector& operator()(int) const;
+    const AD_LONG_INT& operator()(int, int) const;
 #endif
 #endif
 
-    int colmin(void) _CONST { return(shape->col_min);}
-    int colmax(void) _CONST { return(shape->col_max);}
-    int rowmin(void) _CONST { return(shape->row_min);}
-    int rowmax(void) _CONST { return(shape->row_max);}
-    int rowsize() _CONST {return (shape->nrows);} // returns the number of rows
-    int colsize() _CONST {return (shape->ncols);} // returns the number of columns
+    int colmin(void) const { return (shape->col_min); }
+    int colmax(void) const { return (shape->col_max); }
+    int rowmin(void) const { return (shape->row_min); }
+    int rowmax(void) const { return (shape->row_max); }
+    int rowsize() const { return (shape->nrows); } // returns the number of rows
+    int colsize() const { return (shape->ncols); } // returns the number of columns
 
-    void write_on(BOR_CONST ostream&) _CONST;
-    void write_on(BOR_CONST uostream&) _CONST;
-    void read_from(BOR_CONST istream&);
-    void read_from(BOR_CONST uistream&);
+    void write_on(const ostream&) const;
+    void write_on(const uostream&) const;
+    void read_from(const istream&);
+    void read_from(const uistream&);
     void initialize(void);
     friend class i3_array;
 }; //end of class lmatrix
@@ -7178,16 +7168,16 @@ class data_int;
   public:
     operator int () const { return d;}
     //operator int () { return d;}
-    ad_integer(BOR_CONST int& _d, BOR_CONST adkludge& k) : d(_d) {}
+    ad_integer(const int& _d, const adkludge& k) : d(_d) {}
     ad_integer(int _d) : d(_d) {}
     ad_integer(const index_type& it);
     ad_integer make_ad_integer(int _d) { adkludge adk; return ad_integer(d, adk);}
 #if defined(_MSC_VER)
 //#  if (_MSC_VER  < 1200)
-    ad_integer(_CONST data_int& _d);
+    ad_integer(const data_int& _d);
 //#  endif
 #else
-    ad_integer(_CONST data_int& _d);
+    ad_integer(const data_int& _d);
 #endif
   };
 
@@ -7227,12 +7217,12 @@ class data_int;
     int dimension(void) const { return p->dimension();}
     index_type(int x);
     //index_type(const data_int& x);
-    index_type(BOR_CONST ivector& x);
-    index_type(BOR_CONST imatrix& x);
-    index_type(BOR_CONST i3_array& x);
-    index_type(BOR_CONST i4_array& x);
-    index_type(BOR_CONST pre_index_type& pit);
-    index_type(BOR_CONST index_type& pit);
+    index_type(const ivector& x);
+    index_type(const imatrix& x);
+    index_type(const i3_array& x);
+    index_type(const i4_array& x);
+    index_type(const pre_index_type& pit);
+    index_type(const index_type& pit);
     //index_type (i4_array& x) { p = new i4_index(x);}
     ~index_type ();
     index_type operator [] (int i);
@@ -7276,8 +7266,8 @@ class data_int;
     }
   public:
     virtual int  dimension(void) const { return 1;}
-    //vector_index(BOR_CONST ivector& v) : ivector(v){}
-    vector_index(BOR_CONST ivector& v);
+    //vector_index(const ivector& v) : ivector(v){}
+    vector_index(const ivector& v);
     virtual ~vector_index();
     virtual int indexmin(void){return ivector::indexmin();}
     virtual int indexmax(void){return ivector::indexmax();}
@@ -7298,7 +7288,7 @@ class data_int;
   public:
     virtual int  dimension(void) const { return 2;}
     virtual ~matrix_index();
-    matrix_index(BOR_CONST imatrix& v) : imatrix(v){}
+    matrix_index(const imatrix& v) : imatrix(v){}
     virtual int indexmin(void){return imatrix::rowmin();}
     virtual int indexmax(void){return imatrix::rowmax();}
     friend class index_type;
@@ -7378,17 +7368,17 @@ public:
  void reinitialize(int seed);
 };
 
-double randpoisson(double lambda,BOR_CONST random_number_generator& rng);
+double randpoisson(double lambda, const random_number_generator& rng);
 
 // note that od is the overdispersion od >1
 double randnegbinomial(double mu,double tau,const random_number_generator& rng);
-double randn(BOR_CONST random_number_generator& rng);
-double randu(BOR_CONST random_number_generator& rng);
+double randn(const random_number_generator& rng);
+double randu(const random_number_generator& rng);
 double gasdev(const random_number_generator& _rng);
 double expdev(const random_number_generator& _rng);
 double sgamma(double a,const random_number_generator& _rng);
-banded_symmetric_dmatrix value(_CONST banded_symmetric_dvar_matrix&v);
-banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos);
+banded_symmetric_dmatrix value(const banded_symmetric_dvar_matrix&v);
+banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(const dvar_matrix_position& mpos);
 
 /**
  * Description not yet available.
@@ -7401,11 +7391,11 @@ class banded_symmetric_dmatrix
 public:
   const dmatrix& get_dmatrix(void) const { return d;}
   void initialize(void);
-  int bandwidth(void) _CONST{return bw;}
-  int indexmin(void) _CONST{return d(0).indexmin();}
-  int indexmax(void) _CONST{return d(0).indexmax();}
-  int rowmin(void) _CONST {return d.rowmin();}
-  int rowmax(void) _CONST {return d.rowmax();}
+  int bandwidth(void) const { return bw; }
+  int indexmin(void) const { return d(0).indexmin(); }
+  int indexmax(void) const { return d(0).indexmax(); }
+  int rowmin(void) const { return d.rowmin(); }
+  int rowmax(void) const { return d.rowmax(); }
   
   banded_symmetric_dmatrix(void) : bw(-1), d() {}
   banded_symmetric_dmatrix(const banded_symmetric_dmatrix&,int,int);
@@ -7417,10 +7407,10 @@ public:
   banded_symmetric_dmatrix& operator = (const banded_symmetric_dmatrix&);
   banded_symmetric_dmatrix(int _min,int _max,int _bw);
 
-  banded_symmetric_dmatrix(_CONST dvar_matrix_position& mpos);
-  void save_dmatrix_value(void) _CONST;
-  void save_dmatrix_position(void) _CONST;
-  void save_dmatrix_derivatives(_CONST dvar_matrix_position&)_CONST;
+  banded_symmetric_dmatrix(const dvar_matrix_position& mpos);
+  void save_dmatrix_value(void) const;
+  void save_dmatrix_position(void) const;
+  void save_dmatrix_derivatives(const dvar_matrix_position&) const;
 
 #if defined(OPT_LIB)
   inline double& operator () (register int i, register int j)
@@ -7428,22 +7418,22 @@ public:
   inline dvector operator () (register int i)
 	  { return  (d.m[i]); }
 #  ifdef USE_CONST
-  inline _CONST double& operator () (register int i, register int j) _CONST
+  inline const double& operator()(register int i, register int j) const
 	  { return ( *((d.m[i-j]).v+i )); }
-  inline _CONST dvector operator () (register int i) _CONST
+  inline const dvector operator()(register int i) const
 	  { return  (d.m[i]); }
 #  endif
 #else
   double& operator () (int i,int j);
   dvector operator () (int i);
 #  ifdef USE_CONST
-  _CONST double& operator () (int i,int j) _CONST;
-  _CONST dvector operator () (int i) _CONST;
+  const double& operator()(int i, int j) const;
+  const dvector operator()(int i) const;
 #  endif
 
 #endif
-  friend banded_symmetric_dmatrix value(_CONST banded_symmetric_dvar_matrix&v);
-  friend banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos);
+  friend banded_symmetric_dmatrix value(const banded_symmetric_dvar_matrix &v);
+  friend banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(const dvar_matrix_position& mpos);
   friend double norm2(const banded_symmetric_dmatrix& B);
   friend double sumsq(const banded_symmetric_dmatrix& B);
 };
@@ -7458,16 +7448,16 @@ class banded_symmetric_dvar_matrix
   dvar_matrix d; 
 public:
   void initialize(void);
-  int bandwidth(void) _CONST{return bw;}
-  int indexmin(void) _CONST{return d(0).indexmin();}
-  int indexmax(void) _CONST{return d(0).indexmax();}
-  int rowmin(void) _CONST {return d.rowmin();}
-  int rowmax(void) _CONST {return d.rowmax();}
+  int bandwidth(void) const { return bw; }
+  int indexmin(void) const { return d(0).indexmin(); }
+  int indexmax(void) const { return d(0).indexmax(); }
+  int rowmin(void) const { return d.rowmin(); }
+  int rowmax(void) const { return d.rowmax(); }
   
-  void save_dvar_matrix_value(void) _CONST;
-  void save_dvar_matrix_position(void) _CONST;
+  void save_dvar_matrix_value(void) const;
+  void save_dvar_matrix_position(void) const;
   banded_symmetric_dvar_matrix(int _min,int _max,int _bw);
-  banded_symmetric_dvar_matrix(_CONST banded_symmetric_dvar_matrix&);
+  banded_symmetric_dvar_matrix(const banded_symmetric_dvar_matrix&);
 
 #if defined(OPT_LIB)
   prevariable operator () (int i,int j)
@@ -7478,7 +7468,7 @@ public:
   prevariable operator () (int i,int j);
   dvar_vector operator () (int i);
 #endif
-  friend banded_symmetric_dmatrix value(_CONST banded_symmetric_dvar_matrix&v);
+  friend banded_symmetric_dmatrix value(const banded_symmetric_dvar_matrix&v);
   friend dvariable norm(const banded_symmetric_dvar_matrix& B);
   friend dvariable norm2(const banded_symmetric_dvar_matrix& B);
   friend dvariable sumsq(const banded_symmetric_dvar_matrix& B);
@@ -7495,41 +7485,41 @@ class banded_lower_triangular_dmatrix
 public:
   void initialize(void);
   void shift(int);
-  int bandwidth(void) _CONST{return bw;}
-  int indexmin(void) _CONST{return d(0).indexmin();}
-  int indexmax(void) _CONST{return d(0).indexmax();}
-  int rowmin(void) _CONST {return d.rowmin();}
-  int rowmax(void) _CONST {return d.rowmax();}
+  int bandwidth(void) const { return bw; }
+  int indexmin(void) const { return d(0).indexmin(); }
+  int indexmax(void) const { return d(0).indexmax(); }
+  int rowmin(void) const { return d.rowmin(); }
+  int rowmax(void) const { return d.rowmax(); }
   
-  void save_dmatrix_value(void) _CONST;
-  void save_dmatrix_position(void) _CONST;
+  void save_dmatrix_value(void) const;
+  void save_dmatrix_position(void) const;
  banded_lower_triangular_dmatrix (const dvar_matrix_position& mpos);
  banded_lower_triangular_dmatrix(int _min,int _max,int _bw);
  banded_lower_triangular_dmatrix(const banded_lower_triangular_dmatrix&);
  banded_lower_triangular_dmatrix& operator =(const banded_lower_triangular_dmatrix&);
- void save_dmatrix_derivatives(_CONST dvar_matrix_position&) _CONST;
- friend  banded_lower_triangular_dmatrix restore_banded_lower_triangular_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos);
+ void save_dmatrix_derivatives(const dvar_matrix_position&) const;
+ friend  banded_lower_triangular_dmatrix restore_banded_lower_triangular_dvar_matrix_value(const dvar_matrix_position& mpos);
 #if defined(OPT_LIB)
   inline double& operator () (register int i, register int j)
 	  { return ( *((d.m[i-j]).v+i )); }
   inline dvector operator () (register int i)
 	  { return  (d.m[i]); }
 #  ifdef USE_CONST
-  inline _CONST double& operator () (register int i, register int j) _CONST
+  inline const double& operator()(register int i, register int j) const
 	  { return ( *((d.m[i-j]).v+i )); }
-  inline _CONST dvector operator () (register int i) _CONST
+  inline const dvector operator()(register int i) const
 	  { return  (d.m[i]); }
 #  endif
 #else
   double& operator () (int i,int j);
   dvector operator () (int i);
 #  ifdef USE_CONST
-  _CONST double& operator () (int i,int j) _CONST;
-  _CONST dvector operator () (int i) _CONST;
+  const double& operator()(int i, int j) const;
+  const dvector operator()(int i) const;
 #  endif
 #endif
   friend banded_lower_triangular_dmatrix value
-    (_CONST banded_lower_triangular_dvar_matrix&v);
+    (const banded_lower_triangular_dvar_matrix&v);
 };
 
 /**
@@ -7541,18 +7531,18 @@ class banded_lower_triangular_dvar_matrix
   int bw;
   dvar_matrix d; 
 public:
-  int bandwidth(void) _CONST{return bw;}
-  int indexmin(void) _CONST{return d(0).indexmin();}
-  int indexmax(void) _CONST{return d(0).indexmax();}
-  int rowmin(void) _CONST {return d.rowmin();}
-  int rowmax(void) _CONST {return d.rowmax();}
+  int bandwidth(void) const { return bw; }
+  int indexmin(void) const { return d(0).indexmin(); }
+  int indexmax(void) const { return d(0).indexmax(); }
+  int rowmin(void) const { return d.rowmin(); }
+  int rowmax(void) const { return d.rowmax(); }
   void initialize(void);
-  void save_dvar_matrix_value(void) _CONST;
-  void save_dvar_matrix_position(void) _CONST;
+  void save_dvar_matrix_value(void) const;
+  void save_dvar_matrix_position(void) const;
   
   banded_lower_triangular_dvar_matrix(int _min,int _max,int _bw);
   banded_lower_triangular_dvar_matrix
-    (_CONST banded_lower_triangular_dvar_matrix&);
+    (const banded_lower_triangular_dvar_matrix&);
 
 #if defined(OPT_LIB)
   inline prevariable operator () (register int i, register int j)
@@ -7560,33 +7550,33 @@ public:
   inline dvar_vector operator () (register int i)
 	  { return  (d.m[i]); }
 #  ifdef USE_CONST
-  inline _CONST prevariable operator () (register int i, register int j) _CONST
+  inline const prevariable operator()(register int i, register int j) const
 	  { return ( (d.m[i-j]).va+i ); }
-  inline _CONST dvar_vector operator () (register int i) _CONST
+  inline const dvar_vector operator()(register int i) const
 	  { return  (d.m[i]); }
 # endif
 #else
   prevariable operator () (int i,int j);
   dvar_vector operator () (int i);
 #  ifdef USE_CONST
-  _CONST prevariable operator () (int i,int j) _CONST;
-  _CONST dvar_vector operator () (int i) _CONST;
+  const prevariable operator()(int i, int j) const;
+  const dvar_vector operator()(int i) const;
 # endif
 #endif
   inline double& elem_value (register int i, register int j)
   { return * (double*) ((d.m[i-j]).va+i); }
 #ifdef USE_CONST
-  inline _CONST double& elem_value (register int i, register int j) _CONST
+  inline const double& elem_value(register int i, register int j) const
     { return * (double*) ((d.m[i-j]).va+i); }
 #endif
   friend banded_lower_triangular_dmatrix value
-    (_CONST banded_lower_triangular_dvar_matrix&v);
+    (const banded_lower_triangular_dvar_matrix &v);
 };
 
-ostream& operator << (BOR_CONST ostream& ofs,_CONST banded_symmetric_dmatrix& S);
-ostream& operator << (BOR_CONST ostream& ofs,_CONST banded_symmetric_dvar_matrix& S);
-ostream& operator << (BOR_CONST ostream& ofs,_CONST banded_lower_triangular_dmatrix& S);
-ostream& operator << (BOR_CONST ostream& ofs,_CONST banded_lower_triangular_dvar_matrix& S);
+ostream& operator<<(const ostream& ofs, const banded_symmetric_dmatrix& S);
+ostream& operator<<(const ostream& ofs, const banded_symmetric_dvar_matrix& S);
+ostream& operator<<(const ostream& ofs, const banded_lower_triangular_dmatrix& S);
+ostream& operator<<(const ostream& ofs, const banded_lower_triangular_dvar_matrix& S);
 
 // check to see how this is transposed before using 
 dmatrix solve(const banded_symmetric_dmatrix& m,const dmatrix& M);
@@ -7597,7 +7587,7 @@ banded_lower_triangular_dmatrix choleski_decomp
   (const banded_symmetric_dmatrix& S,const int& ierr);
 
 banded_lower_triangular_dvar_matrix choleski_decomp_positive
-  (_CONST banded_symmetric_dvar_matrix& S,double eps,dvariable& fpen);
+  (const banded_symmetric_dvar_matrix& S, double eps, dvariable& fpen);
 
 dvariable ln_det_choleski(const banded_symmetric_dvar_matrix& S,const int& ierr);
 double ln_det_choleski(const banded_symmetric_dmatrix& S,const int& ierr);
@@ -7607,14 +7597,14 @@ banded_lower_triangular_dvar_matrix choleski_decomp
 
 banded_lower_triangular_dmatrix
   restore_banded_lower_triangular_dvar_matrix_derivatives
-  (BOR_CONST dvar_matrix_position& pos);
+  (const dvar_matrix_position& pos);
 
 banded_lower_triangular_dmatrix
   restore_banded_lower_triangular_dvar_matrix_value
-  (BOR_CONST dvar_matrix_position& pos);
+  (const dvar_matrix_position& pos);
 
 banded_symmetric_dmatrix restore_bounded_symmetric_dvar_matrix_derivatives
-  (BOR_CONST dvar_matrix_position& pos);
+  (const dvar_matrix_position& pos);
 
 unsigned long max(unsigned long u, unsigned long v);
 unsigned long min(unsigned long u, unsigned long v);
@@ -7623,33 +7613,33 @@ double min(CGNU_DOUBLE u, CGNU_DOUBLE v);
 int max(int i,int j,int k);
 int max(int i,int j);
 
-dvar_vector solve(BOR_CONST banded_lower_triangular_dvar_matrix& m,BOR_CONST dvar_vector&v);
+dvar_vector solve(const banded_lower_triangular_dvar_matrix& m, const dvar_vector &v);
   
-void check_choleski_decomp(_CONST banded_symmetric_dvar_matrix& MM,
+void check_choleski_decomp(const banded_symmetric_dvar_matrix& MM,
   int& ierr);
 
 dvector solve(const banded_lower_triangular_dmatrix& m,const dvector&v);
 dvector solve_trans(const banded_lower_triangular_dmatrix& m,const dvector&v);
 int admax(int i,int j);
 
-dmatrix diagonal_matrix(_CONST dvector& v);
-dvar_matrix diagonal_matrix(_CONST dvar_vector& v);
+dmatrix diagonal_matrix(const dvector& v);
+dvar_matrix diagonal_matrix(const dvar_vector& v);
 dvector diagonal(const dmatrix&);
 ivector diagonal(const imatrix&);
 dvar_vector diagonal(const dvar_matrix&);
 
 double gammln(double xx);
-dvariable gammln(_CONST dvariable& xx);
-dvariable gammln(_CONST prevariable& xx);
-ivector histogram(double min,double max,int nbin,_CONST dvector& input);
+dvariable gammln(const dvariable& xx);
+dvariable gammln(const prevariable& xx);
+ivector histogram(double min, double max, int nbin, const dvector& input);
 
-double cumd_cauchy(_CONST double& x);
-double density_cauchy(_CONST double& x);
-double log_density_cauchy(_CONST double& x);
-double inv_cumd_cauchy(_CONST double& x);
-dvariable inv_cumd_cauchy(_CONST prevariable& x);
-dvariable cumd_cauchy(_CONST prevariable& x);
-dvariable kludge_cumd_cauchy(_CONST prevariable& x);
+double cumd_cauchy(const double& x);
+double density_cauchy(const double& x);
+double log_density_cauchy(const double& x);
+double inv_cumd_cauchy(const double& x);
+dvariable inv_cumd_cauchy(const prevariable& x);
+dvariable cumd_cauchy(const prevariable& x);
+dvariable kludge_cumd_cauchy(const prevariable& x);
 
 double log_negbinomial_density(double x,double mu, double tau);
 
@@ -7671,8 +7661,8 @@ class pre_column_print
 {
   dvector * ptr;
 public:
-  pre_column_print(_CONST dvector& v) {ptr=(dvector*)(&v);}
-  friend ostream& operator << (_CONST ostream&,_CONST pre_column_print&);
+  pre_column_print(const dvector& v) { ptr = (dvector*)(&v); }
+  friend ostream& operator<<(const ostream&, const pre_column_print&);
 };
 
 /**
@@ -7683,73 +7673,73 @@ class pre_zero_print
 {
   dvector * ptr;
 public:
-  pre_zero_print(_CONST dvector& v) {ptr=(dvector*)(&v);}
-  friend ostream& operator << (_CONST ostream&,_CONST pre_zero_print&);
+  pre_zero_print(const dvector& v) { ptr = (dvector*)(&v); }
+  friend ostream& operator<<(const ostream&, const pre_zero_print&);
 };
 
-ostream& operator << (_CONST ostream&,_CONST pre_column_print&);
-ostream& operator << (_CONST ostream&,_CONST pre_zero_print&);
+ostream& operator<<(const ostream&, const pre_column_print&);
+ostream& operator<<(const ostream&, const pre_zero_print&);
 
-pre_column_print column_print(_CONST dvector& v);
-pre_zero_print zero_print(_CONST dvector& v);
+pre_column_print column_print(const dvector& v);
+pre_zero_print zero_print(const dvector& v);
 
-dvector VEC(_CONST dmatrix&);
-dmatrix MAT(_CONST dvector&,int i,int j);
+dvector VEC(const dmatrix&);
+dmatrix MAT(const dvector&,int i,int j);
 
-dvar_vector VEC(_CONST dvar_matrix&);
-dvar_matrix MAT(_CONST dvar_vector&,int i,int j);
+dvar_vector VEC(const dvar_matrix&);
+dvar_matrix MAT(const dvar_vector&, int i, int j);
 
-dmatrix operator - (_CONST dmatrix & m);
-dvar_matrix operator - (_CONST dvar_matrix & m);
+dmatrix operator-(const dmatrix &m);
+dvar_matrix operator-(const dvar_matrix &m);
 
-ivector sgn(_CONST dvector&);
-ivector sgn(_CONST dvar_vector&);
+ivector sgn(const dvector&);
+ivector sgn(const dvar_vector&);
 
-int allocated(_CONST ivector& v);
-int allocated(_CONST lvector& v);
-int allocated(_CONST dvector& v);
-int allocated(_CONST dvar_vector& v);
+int allocated(const ivector& v);
+int allocated(const lvector& v);
+int allocated(const dvector& v);
+int allocated(const dvar_vector& v);
 
-int allocated(_CONST imatrix& v);
-int allocated(_CONST dmatrix& v);
-int allocated(_CONST dvar_matrix& v);
+int allocated(const imatrix& v);
+int allocated(const dmatrix& v);
+int allocated(const dvar_matrix& v);
 
-int allocated(_CONST i3_array& v);
-int allocated(_CONST d3_array& v);
-int allocated(_CONST dvar3_array& v);
+int allocated(const i3_array& v);
+int allocated(const d3_array& v);
+int allocated(const dvar3_array& v);
 
-int allocated(_CONST i4_array& v);
-int allocated(_CONST d4_array& v);
-int allocated(_CONST dvar4_array& v);
+int allocated(const i4_array& v);
+int allocated(const d4_array& v);
+int allocated(const dvar4_array& v);
 
-int allocated(_CONST d5_array& v);
-int allocated(_CONST dvar5_array& v);
+int allocated(const d5_array& v);
+int allocated(const dvar5_array& v);
 
-int allocated(_CONST d6_array& v);
-int allocated(_CONST dvar6_array& v);
+int allocated(const d6_array& v);
+int allocated(const dvar6_array& v);
 
-int allocated(_CONST d7_array& v);
-int allocated(_CONST dvar7_array& v);
+int allocated(const d7_array& v);
+int allocated(const dvar7_array& v);
 
-dvar_matrix positive_definite_matrix(_CONST dvar_matrix& MM,double eps,
+dvar_matrix positive_definite_matrix(const dvar_matrix& MM, double eps,
   dvariable& fpen);
 
-dvar_matrix empirical_covariance(_CONST dvar_matrix& v1);
-dvar_matrix empirical_covariance(_CONST dvar_matrix& v1,
-  _CONST imatrix& missflags);
+dvar_matrix empirical_covariance(const dvar_matrix& v1);
+dvar_matrix empirical_covariance(const dvar_matrix& v1,
+                                 const imatrix& missflags);
 
-void gauss_hermite(BOR_CONST dvector& _x,BOR_CONST dvector& _w);
+void gauss_hermite(const dvector& _x, const dvector& _w);
 void normalized_gauss_hermite(const dvector& _x,const dvector& _w);
 void gauss_legendre(double x1, double x2, const dvector& _x, const dvector& _w);
 void gauss_legendre(const dvector& _x, const dvector& _w);
 
 //dvariable beta(const prevariable&,const prevariable&);
 
-//dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b, _CONST dvariable& _x,int maxit=100);
+//dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x, int maxit = 100);
 
-//double betacf(_CONST double& _a,_CONST double& _b,_CONST double& _x,int maxit=100);
+//double betacf(const double& _a, const double& _b, double& _x,int maxit=100);
 
-//dvariable betai(_CONST dvariable a,_CONST dvariable b,_CONST dvariable x, int maxit=100);
+//dvariable betai(const dvariable a, const dvariable b, const dvariable x, int maxit = 100);
 //double betai(const double a,const double b,const double x, int maxit=100);
 
 double betai(double _aa, double _bb, double _xx);
@@ -7795,7 +7785,7 @@ extern "C" void exit_handler(int k);
     double d;
   public:
     operator double () const { return d;}
-    ad_double(BOR_CONST double& _d, BOR_CONST adkludge& k) : d(_d) {}
+    ad_double(const double& _d, const  adkludge& k) : d(_d) {}
     ad_double(double _d) : d(_d) {}
     ad_double(const double_index_type& it);
     ad_double make_ad_double(double _d) {adkludge adk; return ad_double(d,adk);}
@@ -7836,10 +7826,10 @@ extern "C" void exit_handler(int k);
     int isdouble(void) const { return p->isdouble();}
     double_index_type(double x);
     //index_type(const data_int& x);
-    double_index_type(BOR_CONST dvector& x);
-    double_index_type(BOR_CONST dmatrix& x);
-    double_index_type(BOR_CONST d3_array& x);
-    double_index_type(BOR_CONST pre_double_index_type& pit);
+    double_index_type(const dvector& x);
+    double_index_type(const dmatrix& x);
+    double_index_type(const d3_array& x);
+    double_index_type(const pre_double_index_type& pit);
     double_index_type(const double_index_type& pit);
     //index_type (i4_array& x) { p = new i4_index(x);}
     ~double_index_type ();
@@ -7882,8 +7872,8 @@ extern "C" void exit_handler(int k);
       return new double_index(dvector::operator [](i));
     }
   public:
-    //vector_index(BOR_CONST ivector& v) : ivector(v){}
-    dvector_index(BOR_CONST dvector& v);
+    //vector_index(const ivector& v) : ivector(v){}
+    dvector_index(const dvector& v);
     virtual ~dvector_index();
     virtual int indexmin(void){return dvector::indexmin();}
     virtual int indexmax(void){return dvector::indexmax();}
@@ -7903,7 +7893,7 @@ extern "C" void exit_handler(int k);
     //}
   public:
     virtual ~dmatrix_index();
-    dmatrix_index(BOR_CONST dmatrix& v) : dmatrix(v){}
+    dmatrix_index(const dmatrix& v) : dmatrix(v){}
     virtual int indexmin(void){return dmatrix::rowmin();}
     virtual int indexmax(void){return dmatrix::rowmax();}
     friend class double_index_type;
@@ -7926,15 +7916,15 @@ extern "C" void exit_handler(int k);
     friend class index_type;
   };
 
-  dvariable mf_upper_bound(_CONST prevariable& x,double M,prevariable& fpen);
-  double mf_upper_bound(_CONST double& x,double M,prevariable& fpen);
+  dvariable mf_upper_bound(const prevariable& x, double M, prevariable& fpen);
+  double mf_upper_bound(const double& x, double M, prevariable& fpen);
 
-   int operator ==(double v0,_CONST prevariable& v1);
-   int operator <=(double v0,_CONST prevariable& v1);
-   int operator >=(double v0,_CONST prevariable& v1);
-   int operator >(double v0,_CONST prevariable& v1);
-   int operator <(double v0,_CONST prevariable& v1);
-   int operator !=(double v0,_CONST prevariable& v1);
+   int operator==(double v0, const prevariable& v1);
+   int operator<=(double v0, const prevariable& v1);
+   int operator>=(double v0, const prevariable& v1);
+   int operator>(double v0, const prevariable& v1);
+   int operator<(double v0, const prevariable& v1);
+   int operator!=(double v0, const prevariable& v1);
 
   dvariable cumd_bivariate_normal(const prevariable& xu,const prevariable& yu,
     const prevariable& rho,int nbox);
@@ -8060,8 +8050,8 @@ public:
   virtual void get_slave_assignments(void);
   static adpvm_manager * pvm_manager;
   static adstring subdir;
-  static streampos change_datafile_name(_CONST adstring& s,const streampos& off=0);
-  static streampos change_pinfile_name(_CONST adstring& s,const streampos& off=0);
+  static streampos change_datafile_name(const adstring& s, const streampos& off = 0);
+  static streampos change_pinfile_name(const adstring& s, const streampos& off = 0);
   static cifstream * global_datafile;
   static cifstream * global_parfile;
   static ofstream *  global_savefile;
@@ -8079,8 +8069,8 @@ public:
 
 
 int option_match(int argc,char * argv[], const char * string);
-int option_match(int argc,char * argv[], const char * string,BOR_CONST int& nopt);
-int option_match(char * s, const char * string, BOR_CONST int& _nopt);
+int option_match(int argc, char *argv[], const char *string, const int& nopt);
+int option_match(char *s, const char *string, const int& _nopt);
 int option_match(char * s, const char * string);
 int ad_chdir(const char * s);
 void ad_getcd(const adstring& s);
@@ -8199,7 +8189,7 @@ dvariable lower_triangular_ln_det(const dvar_matrix& m);
 dvariable lower_triangular_ln_det(const dvar_matrix& m,int& sgn);
 double bounder(double x,double min,double max, double scale);
 dvariable bounder(const prevariable&  x,double min,double max, double scale);
-dmatrix inv(_CONST dmatrix& m1,const double& _ln_det, const int& _sgn);
+dmatrix inv(const dmatrix& m1, const double& _ln_det, const int& _sgn);
 
 double gamma_deviate(double _x,double _a);
 dvariable gamma_deviate(const prevariable& _x,const prevariable& _a);

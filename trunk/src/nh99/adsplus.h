@@ -85,10 +85,10 @@ class SPnamed_dvar_vector: public named_dvar_vector
 {
 public:
   SPnamed_dvar_vector(void ): named_dvar_vector() {;} 
-  SPnamed_dvar_vector& operator = (_CONST dvar_vector& m);
-  SPnamed_dvar_vector& operator = (_CONST dvector& m);
+  SPnamed_dvar_vector& operator=(const dvar_vector& m);
+  SPnamed_dvar_vector& operator=(const dvector& m);
   SPnamed_dvar_vector& operator = (CGNU_DOUBLE m);
-  SPnamed_dvar_vector& operator = (_CONST prevariable& m);
+  SPnamed_dvar_vector& operator=(const prevariable& m);
   friend class model_parameters;
   //void allocate(int mmin,int mmax,const char * s);
   ~SPnamed_dvar_vector(void ); //{SPsend(*this);}
@@ -102,7 +102,7 @@ class SPnamed_dvector: public named_dvector
 {
 public:
   SPnamed_dvector(void ): named_dvector() {;} 
-  SPnamed_dvector& operator = (_CONST dvector& m);
+  SPnamed_dvector& operator=(const dvector& m);
   SPnamed_dvector& operator = (CGNU_DOUBLE m);
   friend class model_parameters;
   void allocate(int mmin,int mmax,const char * s);
@@ -117,7 +117,7 @@ class SPnamed_dvariable : public named_dvariable
 {
 protected:
   SPnamed_dvariable(void) : named_dvariable(){}
-  SPnamed_dvariable& operator = (_CONST prevariable& m);
+  SPnamed_dvariable& operator=(const prevariable& m);
   SPnamed_dvariable& operator = (CGNU_DOUBLE m);
   ~SPnamed_dvariable(void);
   friend class model_parameters;
@@ -133,8 +133,8 @@ protected:
   SPnamed_dvar_matrix(void) : named_dvar_matrix() {}
 public:
   SPnamed_dvar_matrix& operator = (CGNU_DOUBLE m);
-  SPnamed_dvar_matrix& operator = (_CONST dmatrix& m);
-  SPnamed_dvar_matrix& operator = (_CONST dvar_matrix& m);
+  SPnamed_dvar_matrix& operator=(const dmatrix& m);
+  SPnamed_dvar_matrix& operator=(const dvar_matrix& m);
   friend class model_parameters;
   ~SPnamed_dvar_matrix();
 };
@@ -149,7 +149,7 @@ protected:
   SPnamed_dmatrix(void) : named_dmatrix() {}
 public:
   SPnamed_dmatrix& operator = (CGNU_DOUBLE m);
-  SPnamed_dmatrix& operator = (_CONST dmatrix& m);
+  SPnamed_dmatrix& operator=(const dmatrix& m);
   friend class model_parameters;
   ~SPnamed_dmatrix();
 };
@@ -230,18 +230,18 @@ public:
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
     const char * ="UNNAMED");
 /*
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,int rmax,
+  void allocate(int hsl,int hsu, const ivector& rmin,int rmax,
     int cmin,int cmax,const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,_CONST ivector& rmax,
+  void allocate(int hsl,int hsu,int rmin, const ivector& rmax,
     int cmin,int cmax,const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,_CONST ivector& rmax,
+  void allocate(int hsl,int hsu, const ivector& rmin, const ivector& rmax,
     int cmin,int cmax,const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,int cmax,
+  void allocate(int hsl,int hsu,int rmin,int rmax, const ivector& cmin,int cmax,
     const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,
-    _CONST ivector& cmax,const char * ="UNNAMED");
+  void allocate(int hsl,int hsu,int rmin,int rmax, const ivector& cmin,
+    const ivector& cmax,const char * ="UNNAMED");
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,
-    _CONST ivector& cmax,const char * ="UNNAMED");
+    const ivector& cmax,const char * ="UNNAMED");
 */
 };
 

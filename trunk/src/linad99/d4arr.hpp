@@ -88,30 +88,31 @@ class d4_array
 public:
   void allocate(int hsl,int hsu,int sl,int sh,int nrl,
     int nrh,int ncl,int nch);
-  void allocate(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-    _CONST imatrix& nrh,int ncl,_CONST imatrix& nch);
-  void allocate(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-    _CONST imatrix& nrh,int ncl,_CONST i3_array& nch);
-  void allocate(int hsl,int hsu,int sl,int sh,int nrl,
-    int nrh,_CONST ivector& ncl,_CONST ivector& nch);
-  void allocate(int hsl,int hsu,int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,_CONST ivector& ncl,_CONST ivector& nch);
-  void allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch);
+  void allocate(int hsl, int hsu, int sl, const ivector& sh, int nrl,
+                const imatrix& nrh, int ncl, const imatrix& nch);
+  void allocate(int hsl, int hsu, int sl, const ivector& sh, int nrl,
+                const imatrix& nrh, int ncl, const i3_array& nch);
+  void allocate(int hsl, int hsu, int sl, int sh, int nrl,
+                int nrh, const ivector& ncl, const ivector& nch);
+  void allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
+                const ivector& nrh, const ivector& ncl, const ivector& nch);
+  void allocate(int hsl, int hsu, int sl, const ivector& sh,
+                int nrl, const imatrix& nrh, int ncl, int nch);
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST d4_array&);
-  void allocate(_CONST dvar4_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const d4_array&);
+  void allocate(const dvar4_array&);
+  int operator!(void) const { return (shape == NULL); }
   d4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
     ivector ncl,ivector nch);
-  d4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-    _CONST imatrix& nrh,int ncl,_CONST i3_array& nch);
-  d4_array& operator = (_CONST d4_array&);
+  d4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
+           const imatrix& nrh, int ncl, const i3_array& nch);
+  d4_array& operator=(const d4_array&);
   d4_array(d4_array& m2);
   d4_array(int,int,int,int,int,int,int,int);
   //d4_array(int,int,int,ivector,int,imatrix,int,int);
-  d4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch);
+  d4_array(int hsl, int hsu, int sl, const ivector& sh,
+           int nrl, const imatrix& nrh, int ncl, int nch);
   d4_array();
   ~d4_array();
    d3_array& elem(int i) { return t[i];}
@@ -131,22 +132,22 @@ public:
       return ( ((*this)(i,j,k))(l));
     }
     #ifdef USE_CONST
-     inline _CONST d3_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST d3_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST dmatrix& operator ( ) (int i ,int j)_CONST {return ((*this)(i))(j);}
-     inline _CONST dvector& operator ( ) (int i,int j,int k)_CONST {return (((*this)(i,j))(k));}
-     inline _CONST double& operator ( ) (int i,int j,int k,int l)_CONST
+     inline const d3_array& operator()(int i) const { return t[i]; }
+     inline const d3_array& operator[](int i) const { return t[i]; }
+     inline const dmatrix& operator()(int i, int j) const { return ((*this)(i))(j); }
+     inline const dvector& operator()(int i, int j, int k) const { return (((*this)(i, j))(k)); }
+     inline const double& operator()(int i, int j, int k, int l) const
      {
-       return ( ((*this)(i,j,k))(l));
+       return (((*this)(i, j, k))(l));
      }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST d3_array& operator ( ) (int i)_CONST;
-      _CONST d3_array& operator [] (int i)_CONST;
-      _CONST dmatrix& operator ( ) (int i ,int j)_CONST;
-      _CONST dvector& operator ( ) (int i,int j,int k)_CONST;
-      _CONST double& operator ( ) (int i,int j,int k,int l)_CONST;
+      const d3_array& operator()(int i) const;
+      const d3_array& operator[](int i) const;
+      const dmatrix& operator()(int i, int j) const;
+      const dvector& operator()(int i, int j, int k) const;
+      const double& operator()(int i, int j, int k, int l) const;
     #endif
     d3_array& operator ( ) (int);
     d3_array& operator [] (int);
@@ -169,18 +170,18 @@ public:
   int rowsize() {return (shape->row_max-shape->row_min+1);} // returns the number of rows
   int colsize() {return (shape->col_max-shape->col_min+1);} // returns the number of columns
  #ifdef USE_CONST
-  int hslicemin(void) _CONST { return(shape->hslice_min);}
-  int hslicemax(void) _CONST { return(shape->hslice_max);}
-  int slicemin(void) _CONST { return(shape->slice_min);}
-  int slicemax(void) _CONST { return(shape->slice_max);}
-  int colmin(void) _CONST { return(shape->col_min);}
-  int colmax(void) _CONST { return(shape->col_max);}
-  int rowmin(void) _CONST { return(shape->row_min);}
-  int rowmax(void) _CONST { return(shape->row_max);}
-  int hslicesize() _CONST {return (shape->hslice_max-shape->hslice_min+1);} // returns the number of rows
-  int slicesize() _CONST {return (shape->slice_max-shape->slice_min+1);} // returns the number of rows
-  int rowsize() _CONST {return (shape->row_max-shape->row_min+1);} // returns the number of rows
-  int colsize() _CONST {return (shape->col_max-shape->col_min+1);} // returns the number of columns
+  int hslicemin(void) const { return (shape->hslice_min); }
+  int hslicemax(void) const { return (shape->hslice_max); }
+  int slicemin(void) const { return (shape->slice_min); }
+  int slicemax(void) const { return (shape->slice_max); }
+  int colmin(void) const { return (shape->col_min); }
+  int colmax(void) const { return (shape->col_max); }
+  int rowmin(void) const { return (shape->row_min); }
+  int rowmax(void) const { return (shape->row_max); }
+  int hslicesize() const { return (shape->hslice_max-shape->hslice_min + 1); } // returns the number of rows
+  int slicesize() const { return (shape->slice_max-shape->slice_min + 1); } // returns the number of rows
+  int rowsize() const { return (shape->row_max-shape->row_min + 1); } // returns the number of rows
+  int colsize() const { return (shape->col_max-shape->col_min + 1); } // returns the number of columns
  #endif
   void initialize(void);
 };
@@ -196,23 +197,24 @@ class dvar4_array
 public:
   void allocate(int hsl,int hsu,int sl,int sh,int nrl,
     int nrh,int ncl,int nch);
-  void allocate(int hsl,int hsu,int sl,int sh,int nrl,
-    int nrh,_CONST ivector& ncl,_CONST ivector& nch);
-  void allocate(int hsl,int hsu,int sl,int sh,_CONST ivector& nrl,_CONST ivector& nrh,_CONST ivector& ncl,_CONST ivector& nch);
+  void allocate(int hsl, int hsu, int sl, int sh, int nrl,
+                int nrh, const ivector& ncl, const ivector& nch);
+  void allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
+                const ivector& nrh, const ivector& ncl, const ivector& nch);
   void deallocate(void);
   void allocate(void);
-  void allocate(_CONST d4_array&);
-  void allocate(_CONST dvar4_array&);
-  int operator ! (void) _CONST {return (shape == NULL);}
+  void allocate(const d4_array&);
+  void allocate(const dvar4_array&);
+  int operator!(void) const { return (shape == NULL); }
   dvar4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
     ivector ncl,ivector nch);
   dvar4_array(d4_array& m1);
   dvar4_array(dvar4_array& m2);
   dvar4_array(int,int,int,int,int,int,int,int);
-  dvar4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch);
-  void allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch);
+  dvar4_array(int hsl, int hsu, int sl, const ivector& sh,
+              int nrl, const imatrix& nrh, int ncl, int nch);
+  void allocate(int hsl, int hsu, int sl, const ivector& sh,
+                int nrl, const imatrix& nrh, int ncl, int nch);
   //dvar4_array(int,int,int,ivector,int,imatrix,int,int);
   dvar4_array();
   ~dvar4_array();
@@ -225,8 +227,8 @@ public:
    }
   
   d4_array vale(d4_array&);
-  dvar4_array& operator = (_CONST d4_array&);
-  dvar4_array& operator = (_CONST dvar4_array&);
+  dvar4_array& operator=(const d4_array&);
+  dvar4_array& operator=(const dvar4_array&);
   #ifdef OPT_LIB
     dvar3_array& operator ( ) (int i) { return t[i];}
     dvar3_array& operator [] (int i) { return t[i];}
@@ -237,22 +239,22 @@ public:
       return ( ((*this)(i,j,k))(l));
     }
     #ifdef USE_CONST
-     inline _CONST dvar3_array& operator ( ) (int i)_CONST { return t[i];}
-     inline _CONST dvar3_array& operator [] (int i)_CONST { return t[i];}
-     inline _CONST dvar_matrix& operator ( ) (int i ,int j)_CONST {return ((*this)(i))(j);}
-     inline _CONST dvar_vector& operator ( ) (int i,int j,int k)_CONST {return (((*this)(i,j))(k));}
-     inline _CONST prevariable operator ( ) (int i,int j,int k,int l)_CONST
+     inline const dvar3_array& operator()(int i) const { return t[i]; }
+     inline const dvar3_array& operator[](int i) const { return t[i]; }
+     inline const dvar_matrix& operator()(int i, int j) const { return ((*this)(i))(j); }
+     inline const dvar_vector& operator()(int i, int j, int k) const {return (((*this)(i, j))(k)); }
+     inline const prevariable operator()(int i, int j, int k, int l) const
      {
        return ( ((*this)(i,j,k))(l));
      }
     #endif
   #else
     #ifdef USE_CONST
-      _CONST dvar3_array& operator ( ) (int i)_CONST;
-      _CONST dvar3_array& operator [] (int i)_CONST;
-      _CONST dvar_matrix& operator ( ) (int i ,int j)_CONST;
-      _CONST dvar_vector& operator ( ) (int i,int j,int k)_CONST;
-      _CONST prevariable operator ( ) (int i,int j,int k,int l)_CONST;
+      const dvar3_array& operator()(int i) const;
+      const dvar3_array& operator[](int i) const;
+      const dvar_matrix& operator()(int i, int j) const;
+      const dvar_vector& operator()(int i, int j, int k) const;
+      const prevariable operator()(int i, int j, int k, int l) const;
     #endif
     dvar3_array& operator ( ) (int);
     dvar3_array& operator [] (int);
@@ -275,30 +277,30 @@ public:
   int rowsize() {return (shape->row_max-shape->row_min+1);} // returns the number of rows
   int colsize() {return (shape->col_max-shape->col_min+1);} // returns the number of columns
  #ifdef USE_CONST
-  int hslicemin(void) _CONST { return(shape->hslice_min);}
-  int hslicemax(void) _CONST { return(shape->hslice_max);}
-  int slicemin(void) _CONST { return(shape->slice_min);}
-  int slicemax(void) _CONST { return(shape->slice_max);}
-  int colmin(void) _CONST { return(shape->col_min);}
-  int colmax(void) _CONST { return(shape->col_max);}
-  int rowmin(void) _CONST { return(shape->row_min);}
-  int rowmax(void) _CONST { return(shape->row_max);}
-  int hslicesize() _CONST {return (shape->hslice_max-shape->hslice_min+1);} // returns the number of rows
-  int slicesize() _CONST {return (shape->slice_max-shape->slice_min+1);} // returns the number of rows
-  int rowsize() _CONST {return (shape->row_max-shape->row_min+1);} // returns the number of rows
-  int colsize() _CONST {return (shape->col_max-shape->col_min+1);} // returns the number of columns
+  int hslicemin(void) const { return (shape->hslice_min); }
+  int hslicemax(void) const { return (shape->hslice_max); }
+  int slicemin(void) const { return (shape->slice_min); }
+  int slicemax(void) const { return (shape->slice_max); }
+  int colmin(void) const { return (shape->col_min); }
+  int colmax(void) const { return (shape->col_max); }
+  int rowmin(void) const { return (shape->row_min); }
+  int rowmax(void) const { return (shape->row_max); }
+  int hslicesize() const { return (shape->hslice_max-shape->hslice_min + 1); } // returns the number of rows
+  int slicesize() const { return (shape->slice_max-shape->slice_min + 1); } // returns the number of rows
+  int rowsize() const { return (shape->row_max-shape->row_min + 1); } // returns the number of rows
+  int colsize() const { return (shape->col_max-shape->col_min + 1); } // returns the number of columns
  #endif
   void initialize(void);
 };
 
-d4_array exp(_CONST d4_array& x);
-dvar4_array exp(_CONST dvar4_array& x);
-d4_array sqrt(_CONST d4_array& x);
-dvar4_array sqrt(_CONST dvar4_array& x);
+d4_array exp(const d4_array& x);
+dvar4_array exp(const dvar4_array& x);
+d4_array sqrt(const d4_array& x);
+dvar4_array sqrt(const dvar4_array& x);
 
-ostream& operator<<(BOR_CONST ostream& ostr, d4_array & z);
-istream& operator>>(BOR_CONST istream& istr, d4_array & z);
-ostream& operator<<(BOR_CONST ostream& ostr, dvar4_array & z);
-istream& operator>>(BOR_CONST istream& istr, dvar4_array & z);
+ostream& operator<<(const ostream& ostr, d4_array &z);
+istream& operator>>(const istream& istr, d4_array &z);
+ostream& operator<<(const ostream& ostr, dvar4_array &z);
+istream& operator>>(const istream& istr, dvar4_array &z);
 
 #endif  // #ifndef D4ARR_HPP

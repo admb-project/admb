@@ -67,47 +67,47 @@ public:
 
 };
 
-void SPreceive(BOR_CONST data_number& x,BOR_CONST adstring& name);
+void SPreceive(const data_number& x, const adstring& name);
 
-void SPreceive(BOR_CONST data_number& x);
+void SPreceive(const data_number& x);
 
-void SPreceive(BOR_CONST dvariable& x,BOR_CONST adstring& name);
+void SPreceive(const dvariable& x,const adstring& name);
 
-void SPreceive(BOR_CONST double& x,BOR_CONST adstring& name);
+void SPreceive(const double& x, const adstring& name);
 
-void SPreceive(BOR_CONST named_dvariable& x);
+void SPreceive(const named_dvariable& x);
 
-void SPreceive(BOR_CONST dvector& x,BOR_CONST adstring& name);
+void SPreceive(const dvector& x, const adstring& name);
 
-void SPreceive(BOR_CONST named_dvector& x);
+void SPreceive(const named_dvector& x);
 
-void SPreceive(BOR_CONST named_dvar_matrix& x);
+void SPreceive(const named_dvar_matrix& x);
 
-void SPreceive(BOR_CONST dvar_vector& x,BOR_CONST adstring& name);
+void SPreceive(const dvar_vector& x, const adstring& name);
 
-void SPreceive(BOR_CONST named_dvar_vector& x);
+void SPreceive(const named_dvar_vector& x);
 
-void SPreceive(BOR_CONST named_dmatrix& x);
+void SPreceive(const named_dmatrix& x);
 
-void SPreceive_double(BOR_CONST double& x,BOR_CONST adstring& name);
+void SPreceive_double(const double& x, const adstring& name);
 
-void SPreceive_double(BOR_CONST dmatrix& x,BOR_CONST adstring& name);
+void SPreceive_double(const dmatrix& x, const adstring& name);
 
-void SPsend(BOR_CONST dmatrix& x,BOR_CONST adstring& name);
+void SPsend(const dmatrix& x, const adstring& name);
 
-void SPsend(BOR_CONST double& x,BOR_CONST adstring& name);
+void SPsend(const double& x, const adstring& name);
 
-void SPsend(BOR_CONST dvector& x,BOR_CONST adstring& name);
+void SPsend(const dvector& x, const adstring& name);
 
-void SPsend(BOR_CONST named_dvector& x);
+void SPsend(const named_dvector& x);
 
-void SPsend(BOR_CONST named_dvariable& x);
+void SPsend(const named_dvariable& x);
 
-void SPsend(BOR_CONST named_dvar_vector& x);
+void SPsend(const named_dvar_vector& x);
 
-void SPsend(BOR_CONST named_dvar_matrix& x);
+void SPsend(const named_dvar_matrix& x);
 
-void SPsend(BOR_CONST named_dmatrix& x);
+void SPsend(const named_dmatrix& x);
 
 void SPexecute( LPBYTE  cbuff,HCONV cstatus);
 
@@ -131,24 +131,24 @@ public:
 
 };
 
-HDDEDATA SPreceive(BOR_CONST dvector& x,BOR_CONST adstring& name);
+HDDEDATA SPreceive(const dvector& x, const adstring& name);
 
-HDDEDATA SPreceive(BOR_CONST named_dvector& x);
+HDDEDATA SPreceive(const named_dvector& x);
 
-HDDEDATA SPreceive(BOR_CONST named_dvar_matrix& x);
+HDDEDATA SPreceive(const named_dvar_matrix& x);
 
-HDDEDATA SPreceive(BOR_CONST named_dmatrix& x);
+HDDEDATA SPreceive(const named_dmatrix& x);
 
-HDDEDATA SPreceive_double(BOR_CONST double& x,BOR_CONST adstring& name);
+HDDEDATA SPreceive_double(const double& x, const adstring& name);
 
 
-HDDEDATA SPsend(BOR_CONST dvector& x,BOR_CONST adstring& name);
+HDDEDATA SPsend(const dvector& x, const adstring& name);
 
-HDDEDATA SPsend(BOR_CONST named_dvector& x);
+HDDEDATA SPsend(const named_dvector& x);
 
-HDDEDATA SPsend(BOR_CONST named_dvar_matrix& x);
+HDDEDATA SPsend(const named_dvar_matrix& x);
 
-HDDEDATA SPsend(BOR_CONST named_dmatrix& x);
+HDDEDATA SPsend(const named_dmatrix& x);
 
 HDDEDATA SPexecute( LPBYTE  cbuff,HCONV cstatus);
 

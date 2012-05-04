@@ -880,10 +880,10 @@ df1b2variable operator / (double x,const df1b2variable& y);
 df1b2variable lgamma2(const df1b2variable& _x);  // new log gamma using forward AD
 df1b2variable gammln(const df1b2variable& _xx);
 df1b2vector gammln(const df1b2vector&  _xx);
-df1b2variable log_comb(_CONST df1b2variable& n,double k);
-df1b2variable log_comb(_CONST df1b2variable& n,_CONST df1b2variable& k);
-df1b2variable log_comb(double n,_CONST df1b2variable& k);
-df1b2variable factln(_CONST df1b2variable& n);
+df1b2variable log_comb(const df1b2variable& n, double k);
+df1b2variable log_comb(const df1b2variable& n, const df1b2variable& k);
+df1b2variable log_comb(double n, const df1b2variable& k);
+df1b2variable factln(const df1b2variable& n);
 
 // vector and matrix stuff
 

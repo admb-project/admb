@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array pow(_CONST dvar3_array& m, int e)
+dvar3_array pow(const dvar3_array& m, int e)
    {
      dvar3_array tmp;
      tmp.allocate(m);

@@ -291,6 +291,23 @@ double laplace_approximation_calculator::
   inner_optimization_banded(/*dvector& uhat,*/ dvector& x,
   function_minimizer * pfmin,int& no_converge_flag)
 {
+/*{
+  static int stop_flag;
+  if (stop_flag!=1)
+  {
+#if defined(USE_ADMPI)
+   if (ad_comm::mpi_manager){
+    if(ad_comm::mpi_manager->is_slave())
+    {
+      cout << "PID " << getpid() << endl;
+    }
+   }
+#endif
+    stop_flag=0;
+  }
+  while(stop_flag==0)
+    sleep(5);
+}*/
   int reset_flag=0;
   if (no_converge_flag) 
   {
@@ -302,11 +319,48 @@ double laplace_approximation_calculator::
   {
     if (!ADqd_flag)
     {
-      uhat=get_uhat_quasi_newton(x,pfmin);
+      /*#if defined(USE_ADMPI)
+      if (ad_comm::mpi_manager)
+      {
+        if (ad_comm::mpi_manager->is_master())
+        {
+          uhat=get_uhat_quasi_newton_mpi_master(x,pfmin);
+        }
+        else
+        {
+          get_uhat_quasi_newton_mpi_slave(x,pfmin);
+        }
+      }
+      else
+      {
+      #endif*/
+        uhat=get_uhat_quasi_newton(x,pfmin);
+      /*#if defined(USE_ADMPI)
+      }
+      #endif*/
+
       double maxg=fabs(fmc1.gmax);
       if (maxg>1.0)
       {
-        uhat=get_uhat_quasi_newton(x,pfmin);
+        #if defined(USE_ADMPI)
+        if (ad_comm::mpi_manager)
+        {
+          if (ad_comm::mpi_manager->is_master())
+          {
+            uhat=get_uhat_quasi_newton_mpi_master(x,pfmin);
+          }
+          else
+          {
+            get_uhat_quasi_newton_mpi_slave(x,pfmin);
+          }
+        }
+        else
+        {
+        #endif
+          uhat=get_uhat_quasi_newton(x,pfmin);
+        #if defined(USE_ADMPI)
+        }
+        #endif
       }
     }
     else

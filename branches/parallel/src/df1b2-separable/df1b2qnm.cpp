@@ -29,23 +29,6 @@ void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn);
 void function_minimizer::quasi_newton_block(int nvar,int _crit,
   independent_variables& x,const dvector& _g,const double& _f)
 {
-/*{
-  static int stop_flag;
-  if (stop_flag!=1)
-  {
-#if defined(USE_ADMPI)
-   if (ad_comm::mpi_manager){
-    if(ad_comm::mpi_manager->is_slave())
-    {
-      cout << "PID " << getpid() << endl;
-    }
-   }
-#endif
-    stop_flag=0;
-  }
-  while(stop_flag==0)
-    sleep(5);
-}*/
 #if defined(USE_ADMPI)
     if (ad_comm::mpi_manager)
     {
@@ -224,7 +207,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           vf+=*objective_function_value::pobjfun;
           f=value(vf);
           set_gradient_sync(1);
-          gradcalc(nvar,g); //gradstrc.cpp
+          gradcalc(nvar,g); //sgradclc.cpp
           set_gradient_sync(0);
         }
       }

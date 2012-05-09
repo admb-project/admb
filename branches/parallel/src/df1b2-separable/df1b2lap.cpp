@@ -24,6 +24,9 @@ static int write_sparse_flag=0;
     }
 int noboundepen_flag=1;
 
+void set_gradient_sync(int flag); // defined in df1b2qnm.cpp
+void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn); // defined in df1b2qnm.cpp
+
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
 void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,dmatrix& Hess,
   dvector& grad, df1b2_gradlist * f1b2gradlist,function_minimizer * pfmin);
@@ -82,6 +85,18 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
   fmc1.dfn=1.e-2;
   dvariable pen=0.0;
   //cout << "starting  norm(u) = " << norm(u) << endl;
+
+  int mpi_minimizer_flag=1;
+  #if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_slave())
+    {
+      mpi_minimizer_flag=0;
+    }
+  }
+  #endif
+
   while (fmc1.ireturn>=0)
   {
    /*
@@ -93,7 +108,9 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
     cout << "V norm(u) = " << nu
          << " f = " << f  << endl;
     */
-    fmc1.fmin(f,u,g);
+    if (mpi_minimizer_flag)
+      fmc1.fmin(f,u,g);
+    mpi_set_x_f_ireturn(u,f,fmc1.ireturn);
     //cout << "W norm(u) = " << norm(value(u)) << endl;
     if (fmc1.ireturn>0)
     {
@@ -101,6 +118,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
       pen=initial_params::reset(dvar_vector(u));
       *objective_function_value::pobjfun=0.0;
       pfmin->AD_uf_inner();
+
       if (saddlepointflag)
       {
         *objective_function_value::pobjfun*=-1.0;
@@ -132,7 +150,9 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
         fb=f;
         ub=u;
       }
+      set_gradient_sync(1);
       gradcalc(usize,g);
+      set_gradient_sync(0);
       //cout << " f = " << setprecision(17) << f << " " << norm(g) 
        // << " " << norm(u) << endl;
      
@@ -198,6 +218,268 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
   pfmin->inner_opt_flag=0;
   return u;
 }
+
+#if defined(USE_ADMPI)
+dvector laplace_approximation_calculator::get_uhat_quasi_newton_mpi_master
+  (const dvector& x,function_minimizer * pfmin)
+{
+  //int on,nopt;
+  pfmin->inner_opt_flag=1;
+  double f=0.0;
+  double fb=1.e+100;
+  dvector g(1,usize);
+  dvector ub(1,usize);
+  independent_variables u(1,usize);
+  gradcalc(0,g);
+  fmc1.itn=0;
+  fmc1.ifn=0;
+  fmc1.ireturn=0;
+  initial_params::xinit(u);    // get the initial values into the
+  initial_params::xinit(ubest);    // get the initial values into the
+  fmc1.ialph=0;
+  fmc1.ihang=0;
+  fmc1.ihflag=0;
+  fmc1.use_control_c=0;
+  
+  if (init_switch)
+  {
+    u.initialize();
+  }
+  else
+  {
+    u=ubest;
+  }
+ 
+  fmc1.dfn=1.e-2;
+  dvariable pen=0.0;
+  //cout << "starting  norm(u) = " << norm(u) << endl;
+
+  // garunteed to be the master
+  for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+  {
+    ad_comm::mpi_manager->send_int_to_slave(fmc1.ireturn,i);
+  }
+
+  while (fmc1.ireturn>=0)
+  {
+   /*
+    double nu=norm(value(u));
+    if (nu>400)
+    {
+      cout << "U norm(u) = " << nu  << endl;
+    }
+    cout << "V norm(u) = " << nu
+         << " f = " << f  << endl;
+    */
+    fmc1.fmin(f,u,g);
+    //cout << "W norm(u) = " << norm(value(u)) << endl;
+
+    // garunteed to be the master
+    for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+    {
+      ad_comm::mpi_manager->send_int_to_slave(fmc1.ireturn,i);
+    }
+
+    if (fmc1.ireturn>0)
+    {
+      for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+      {
+        ad_comm::mpi_manager->send_dvector_to_slave(u,i);
+        ad_comm::mpi_manager->send_dvector_to_slave(g,i);
+      }
+      dvariable vf=0.0;
+      pen=initial_params::reset(dvar_vector(u));
+      *objective_function_value::pobjfun=0.0;
+      pfmin->AD_uf_inner();
+
+      if (saddlepointflag)
+      {
+        *objective_function_value::pobjfun*=-1.0;
+      }
+      if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
+      {
+        quadratic_prior::get_M_calculations();
+      }
+      vf+=*objective_function_value::pobjfun;
+     
+     /*  this is now done in the operator = function
+      if (quadratic_prior::get_num_quadratic_prior()>0)
+      {
+        vf+= quadratic_prior::get_quadratic_priors();
+      }
+      */
+      
+
+      objective_function_value::fun_without_pen=value(vf);
+      
+      //cout << " pen = " << pen << endl;
+      if (noboundepen_flag==0)
+      {
+        vf+=pen;
+      }
+      f=value(vf);
+      if (f<fb) 
+      {
+        fb=f;
+        ub=u;
+      }
+      set_gradient_sync(1);
+      gradcalc(usize,g);
+      set_gradient_sync(0);
+      //cout << " f = " << setprecision(17) << f << " " << norm(g) 
+       // << " " << norm(u) << endl;
+     
+    }
+    u=ub;
+  }
+  cout <<  " inner maxg = " <<  fmc1.gmax;
+  if (fabs(fmc1.gmax)>1.e+3)
+    trapper();
+  // garunteed to be the master
+  for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+  {
+    ad_comm::mpi_manager->send_double_to_slave(fmc1.gmax,i);
+  }
+
+  if (fabs(fmc1.gmax)>1.e-4)
+  {
+    fmc1.itn=0;
+    //fmc1.crit=1.e-9;
+    fmc1.ifn=0;
+    fmc1.ireturn=0;
+    fmc1.ihang=0;
+    fmc1.ihflag=0;
+    fmc1.ialph=0;
+    initial_params::xinit(u);    // get the initial values into the
+    //u.initialize();
+
+    // garunteed to be the master
+    for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+    {
+      ad_comm::mpi_manager->send_int_to_slave(fmc1.ireturn,i);
+    }
+
+    while (fmc1.ireturn>=0)
+    {
+      fmc1.fmin(f,u,g);
+      for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+      {
+        ad_comm::mpi_manager->send_int_to_slave(fmc1.ireturn,i);
+      }
+      if (fmc1.ireturn>0)
+      {
+        dvariable vf=0.0;
+        pen=initial_params::reset(dvar_vector(u));
+        *objective_function_value::pobjfun=0.0;
+        pfmin->AD_uf_inner();
+        if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
+        {
+          quadratic_prior::get_M_calculations();
+        }
+        vf+=*objective_function_value::pobjfun;
+        objective_function_value::fun_without_pen=value(vf);
+
+        vf+=pen;
+        f=value(vf);
+        if (f<fb) 
+        {
+          fb=f;
+          ub=u;
+        }
+        set_gradient_sync(1);
+        gradcalc(usize,g);
+        set_gradient_sync(0);
+        //cout << " f = " << setprecision(15) << f << " " << norm(g) << endl;
+      }
+    }
+    u=ub;
+    cout <<  "  Inner second time = " << fmc1.gmax;
+  }
+  cout << "  Inner f = " << fb << endl;
+  fmc1.ireturn=0;
+  fmc1.fbest=fb;
+  gradient_structure::set_NO_DERIVATIVES();
+  *objective_function_value::pobjfun=0.0;
+  pfmin->AD_uf_inner();
+  if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
+  {
+    quadratic_prior::get_M_calculations();
+  }
+  gradient_structure::set_YES_DERIVATIVES();
+  pfmin->inner_opt_flag=0;
+  return u;
+}
+
+void laplace_approximation_calculator::get_uhat_quasi_newton_mpi_slave
+  (const dvector& x,function_minimizer * pfmin)
+{
+  pfmin->inner_opt_flag=1;
+  dvector g(1,usize);
+  gradcalc(0,g);
+  independent_variables u(1,usize);
+  dvariable pen=0.0;
+  int ireturn;
+  double gmax;
+
+  // garunteed to be a slave
+  ad_comm::mpi_manager->get_int_from_master(ireturn);
+
+  while (ireturn>=0)
+  {
+    // garunteed to be a slave
+    ad_comm::mpi_manager->get_int_from_master(ireturn);
+
+    if (ireturn>0)
+    {
+      u = ad_comm::mpi_manager->get_dvector_from_master();
+      g = ad_comm::mpi_manager->get_dvector_from_master();
+      dvariable vf=0.0;
+      pen=initial_params::reset(dvar_vector(u));
+      *objective_function_value::pobjfun=0.0;
+      pfmin->AD_uf_inner();
+
+      set_gradient_sync(1);
+      gradcalc(usize,g);
+      set_gradient_sync(0);
+    }
+  }
+
+  // garunteed to be a slave
+  gmax = ad_comm::mpi_manager->get_double_from_master();
+
+  if (fabs(gmax)>1.e-4)
+  {
+    // garunteed to be a slave
+    ad_comm::mpi_manager->get_int_from_master(ireturn);
+
+    while (ireturn>=0)
+    {
+      // garunteed to be a slave
+      ad_comm::mpi_manager->get_int_from_master(ireturn);
+
+      if (fmc1.ireturn>0)
+      {
+        *objective_function_value::pobjfun=0.0;
+        pfmin->AD_uf_inner();
+
+        set_gradient_sync(1);
+        gradcalc(usize,g);
+        set_gradient_sync(0);
+      }
+    }
+  }
+
+  gradient_structure::set_NO_DERIVATIVES();
+  *objective_function_value::pobjfun=0.0;
+  pfmin->AD_uf_inner();
+  gradient_structure::set_YES_DERIVATIVES();
+  pfmin->inner_opt_flag=0;
+}
+
+#endif
+
+
+
 
 /**
  * Description not yet available.

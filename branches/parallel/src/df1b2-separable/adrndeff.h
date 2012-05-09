@@ -313,6 +313,12 @@ public:
   dvector get_uhat_quasi_newton_block_diagonal(const dvector& x,function_minimizer * pfmin);
   dvector get_uhat_quasi_newton(const dvector& x,function_minimizer * pfmin);
   dvector get_uhat_quasi_newton_qd(const dvector& x,function_minimizer * pfmin);
+#if defined(USE_ADMPI)
+  dvector get_uhat_quasi_newton_mpi_master(const dvector& x,function_minimizer * pfmin);
+  void get_uhat_quasi_newton_mpi_slave(const dvector& x,function_minimizer * pfmin);
+#endif
+
+
   void set_u_dot(int i);
 
   void do_separable_stuff_laplace_approximation_banded_adjoint

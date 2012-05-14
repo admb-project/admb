@@ -137,7 +137,7 @@ If successful, the wizard will have installed admb directory (/usr/local/admb)
 and script (/usr/local/bin/admb).
 
 Windows and GCC
---------------------------------
+---------------
 1. Download the executable installer for Windows GCC from 
    http://admb-project.org/downloads. The GCC compiler is included with 
    this installer.
@@ -255,6 +255,10 @@ Linux/MacOS and GCC
 
    $ make
 
+   Note: To build with debugging symbols, use
+
+   $ make debug
+
 6. [Optional] Test build by running examples
 
    $ make verify
@@ -292,6 +296,10 @@ Linux and Intel Compiler
 4. Build binaries
 
    $ make
+
+   Note: To build with debugging symbols, use
+
+   $ make debug
 
 4. [Optional] Test build by running examples
 

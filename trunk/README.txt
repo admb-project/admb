@@ -40,7 +40,7 @@ Table of Contents
    - Windows and GCC
    - Windows and Microsoft Visual C++ 2010 Express
  * Installation from Source Code
-   - Linux and GCC
+   - Linux/MacOS and GCC
    - Linux and Intel Compiler
    - Linux and Solaris Studio
    - MacOS and Clang
@@ -126,7 +126,6 @@ Note: additional information about running ADMB in linux, especially for
       $ cd examples
       $ make
 
-
 MacOS and XCode
 ---------------
 1. Download admb-'version'.dmg
@@ -163,7 +162,7 @@ Windows and GCC
    ending with the line "Estimating row 2 out of 2 for hessian".
 
 Windows and Microsoft Visual C++ 2010 Express
---------------------------------------------------------------
+---------------------------------------------
 For HTML directions, go to:
 http://admb-project.org/documentation/installation/admb-installation-visual-c
 
@@ -222,8 +221,8 @@ Installation from Source Code
 =============================
 Below are procedures for installing ADMB from source code.
 
-Linux and GCC
--------------
+Linux/MacOS and GCC
+-------------------
 1. Extract source distribution
 
    $ unzip admb-'version'.zip
@@ -241,6 +240,12 @@ Linux and GCC
 4. Configure the build files
 
    $ ./configure
+
+   Note: The default installation folder is /usr/local/admb.
+
+   To install to another folder, use
+
+   $ ./configure --prefix='your-preferred-location'
 
    To check options
 
@@ -273,6 +278,16 @@ Linux and Intel Compiler
 3. Configure the build files for Intel C++ Compiler
 
    $ ./configure CC=icc CXX=icpc
+
+   Note: The default installation folder is /usr/local/admb.
+
+   To install to another folder, use
+
+   $ ./configure --prefix='your-preferred-location'
+
+   To check options
+
+   $ ./configure --help
 
 4. Build binaries
 
@@ -326,6 +341,16 @@ MacOS and Clang
 
    $ ./configure CC=clang CXX=clang++
 
+   Note: The default installation folder is /usr/local/admb.
+
+   To install to another folder, use
+
+   $ ./configure --prefix='your-preferred-location'
+
+   To check options
+
+   $ ./configure --help
+
 4. Build binaries
 
    $ make
@@ -339,10 +364,11 @@ MacOS and Clang
    $ make install
 
 Windows and Microsoft Visual C++ 2010 Express
-----------------
-Steps:
-1. Follow the same directions given above in the 'Installation from Binary
-   Distributions' section to set up the compilers.
+---------------------------------------------
+
+1. Follow the same directions given above in the 
+   'Installation from Binary Distributions' section 
+   to set up the compilers.
 
 2. Extract source distribution.
 

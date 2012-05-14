@@ -207,7 +207,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           vf+=*objective_function_value::pobjfun;
           f=value(vf);
           set_gradient_sync(1);
-          gradcalc(nvar,g); //sgradclc.cpp
+          gradcalc(nvar,g); //sgradclc.cpp !!! come back to see if sync can/should be done outside of gradcalc
           set_gradient_sync(0);
         }
       }

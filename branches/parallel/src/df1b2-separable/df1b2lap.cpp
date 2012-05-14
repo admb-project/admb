@@ -159,7 +159,30 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
     }
     u=ub;
   }
-  cout <<  " inner maxg = " <<  fmc1.gmax;
+#if defined(USE_ADMPI)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_master())
+    {
+      cout <<  " inner maxg = " <<  fmc1.gmax;
+      for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
+      {
+        ad_comm::mpi_manager->send_double_to_slave(fmc1.gmax,i);
+      }
+    }
+    else
+    {
+      fmc1.gmax = ad_comm::mpi_manager->get_double_from_master();
+    }
+  }
+  else 
+  {
+#endif
+    cout <<  " inner maxg = " <<  fmc1.gmax;
+#if defined(USE_ADMPI)
+  }
+#endif
+
   if (fabs(fmc1.gmax)>1.e+3)
     trapper();
 
@@ -176,7 +199,9 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
     //u.initialize();
     while (fmc1.ireturn>=0)
     {
-      fmc1.fmin(f,u,g);
+      if (mpi_minimizer_flag)
+        fmc1.fmin(f,u,g);
+      mpi_set_x_f_ireturn(u,f,fmc1.ireturn);
       if (fmc1.ireturn>0)
       {
         dvariable vf=0.0;
@@ -197,7 +222,9 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
           fb=f;
           ub=u;
         }
+        set_gradient_sync(1);
         gradcalc(usize,g);
+        set_gradient_sync(0);
         //cout << " f = " << setprecision(15) << f << " " << norm(g) << endl;
       }
     }

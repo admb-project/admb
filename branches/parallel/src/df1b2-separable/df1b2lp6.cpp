@@ -291,23 +291,6 @@ double laplace_approximation_calculator::
   inner_optimization_banded(/*dvector& uhat,*/ dvector& x,
   function_minimizer * pfmin,int& no_converge_flag)
 {
-/*{
-  static int stop_flag;
-  if (stop_flag!=1)
-  {
-#if defined(USE_ADMPI)
-   if (ad_comm::mpi_manager){
-    if(ad_comm::mpi_manager->is_slave())
-    {
-      cout << "PID " << getpid() << endl;
-    }
-   }
-#endif
-    stop_flag=0;
-  }
-  while(stop_flag==0)
-    sleep(5);
-}*/
   int reset_flag=0;
   if (no_converge_flag) 
   {
@@ -342,7 +325,7 @@ double laplace_approximation_calculator::
       double maxg=fabs(fmc1.gmax);
       if (maxg>1.0)
       {
-        #if defined(USE_ADMPI)
+        /*#if defined(USE_ADMPI)
         if (ad_comm::mpi_manager)
         {
           if (ad_comm::mpi_manager->is_master())
@@ -356,11 +339,11 @@ double laplace_approximation_calculator::
         }
         else
         {
-        #endif
+        #endif*/
           uhat=get_uhat_quasi_newton(x,pfmin);
-        #if defined(USE_ADMPI)
+        /*#if defined(USE_ADMPI)
         }
-        #endif
+        #endif*/
       }
     }
     else
@@ -409,7 +392,7 @@ dvector laplace_approximation_calculator::banded_calculations
   double f_from_1=0.0;
 
   int no_converge_flag=0;
- 
+
   // this is the main loop to do inner optimization
   do
   {
@@ -434,7 +417,23 @@ dvector laplace_approximation_calculator::banded_calculations
         for (i=1;i<=xsize;i++) { value(y(i))=x(i); }
         for (i=1;i<=usize;i++) { value(y(i+xsize))=uhat(i); }
       }
-          
+/*{
+  static int stop_flag;
+  if (stop_flag!=1)
+  {
+#if defined(USE_ADMPI)
+   if (ad_comm::mpi_manager){
+    if(ad_comm::mpi_manager->is_slave())
+    {
+      cout << "PID " << getpid() << endl;
+    }
+   }
+#endif
+    stop_flag=0;
+  }
+  while(stop_flag==0)
+    sleep(5);
+}*/      
       laplace_approximation_calculator::where_are_we_flag=2; 
       if (admb_ssflag==0)
       {

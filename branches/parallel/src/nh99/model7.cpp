@@ -575,8 +575,8 @@ void ad_separable_manager::init(int lb,int ub)
 
         ivector minsep(1,local_num_slaves);
         ivector maxsep(1,local_num_slaves);
-        minsep(1)=1;
-        maxsep(1)=mpi_partition(1);
+        minsep(1)=min_bound;
+        maxsep(1)=mpi_partition(1)+minsep(1)-1;
         for (int i=2;i<=local_num_slaves;i++)
         {
           minsep(i)=maxsep(i-1)+1;

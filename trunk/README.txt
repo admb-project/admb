@@ -110,21 +110,22 @@ Note: additional information about running ADMB in linux, especially for
 1. Download and extract ADMB Linux binaries from 
    http://admb-project.org/downloads. 
 
-2. Open a bash shell, change to extracted Linux ADMB Home directory, then type
-   the following commands.
+2. Open a command line shell.
 
-      #Change to ADMB folder.
-      $ cd ~/admb
-      # Sets ADMB Home directory.
-      $ export ADMB_HOME=~/admb
-      # Adds ADMB bin to $PATH
-      $ export PATH=$ADMB_HOME/bin:$PATH
+   For Unix bash or ksh shell, type the following commands
+   $ export ADMB_HOME=~/admb
+   $ export PATH=$ADMB_HOME/bin:$PATH
+
+   For Unix zsh, csh or tcsh shell, type the following commands
+   $ setenv ADMB_HOME ~/admb
+   $ set path=($ADMB_HOME/bin $path)
 
 3. Change into ADMB Home directory, then run examples for verification.
-      $ cd $ADMB_HOME
-      $ chmod -R u+w examples
-      $ cd examples
-      $ make
+
+   $ cd $ADMB_HOME
+   $ chmod -R u+w examples
+   $ cd examples
+   $ make
 
 MacOS and XCode
 ---------------

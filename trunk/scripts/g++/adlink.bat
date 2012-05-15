@@ -27,8 +27,8 @@ set model=%~n1
 if %linker%==g++ (set out=-o %model%) else (set def=-def %model%.def^
  --driver-name g++ & set out=--output-lib lib%model%.a -o %model%.dll)
 
-set CMD=%linker% %sym%-static %def%-L"%ADMB_HOME%\lib" %def% %model%.obj %df1b2lib%^
- -ladmod -ladt %adlib% %df1b2lib% -ladmod -ladt %contriblib% %adlib% -L"%ADMB_HOME%\contrib" %contriblib% %out%
+set CMD=%linker% %sym%-static %def%-L"%ADMB_HOME%\lib" -L"%ADMB_HOME%\contrib" %def% %model%.obj %df1b2lib%^
+ -ladmod %contriblib% -ladt %adlib% %df1b2lib% -ladmod -ladt %contriblib% %adlib% %contriblib% %out%
 echo %CMD%
 %CMD%
 

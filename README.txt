@@ -402,10 +402,19 @@ http://www.admb-project.org/.
 Developing AD Model Builder
 ===========================
 If you are interested in contributing to the further development of AD Model
-Builder please contact users@admb-project.org.
+Builder, please email users@admb-project.org.
 
 Version Control
 ---------------
+ADMB uses Subversion for Version Control.  To access the server, a Subversion
+client has to be installed on the local computer.
+
+Link below has list of available clients.
+http://subversion.apache.org/packages.html
+
+Once the client is installed, check link on ow to use subversion. 
+http://svnbook.red-bean.com/en/1.7/svn.tour.cycle.html
+
 ADMB source version control URL is http://www.admb-project.org/svn/trunk/.
 
 To download source files, use the command

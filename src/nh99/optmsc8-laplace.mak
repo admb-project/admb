@@ -28,7 +28,7 @@ $(DISKDIR)\bin\tpl2cpp.exe:
 
 tpl2cpp-winflex.c: tpl2cpp.lex
 	flex -w tpl2cpp.lex
-	sed -f sedflex lex.yy.c > tpl2cpp-winflex.c
+	..\..\utilities\sed -f sedflex lex.yy.c > tpl2cpp-winflex.c
 
 {..\..\..\..\src\nh99}.cpp.obj:
 	$(CC) $(FLAGS) $<

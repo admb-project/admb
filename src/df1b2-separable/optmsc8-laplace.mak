@@ -25,7 +25,7 @@ $(DISKDIR)\lib\$(LIBNAME): $(OBJECTS)
 
 tpl2rem-winflex.c: ..\..\..\..\src\df1b2-separable\tpl2rem.lex
 	flex -w $<
-	sed -f ..\..\..\..\src\df1b2-separable\sedflex lex.yy.c > tpl2rem-winflex.c
+	..\..\utilities\sed -f ..\..\..\..\src\df1b2-separable\sedflex lex.yy.c > tpl2rem-winflex.c
 
 $(DISKDIR)\bin\tpl2rem.exe:
 	cl /nologo /W4 /wd4049 /wd4700 /wd4702 /wd4018 /wd4996 /wd4131 /wd4127 /wd4244 /wd4101 /wd4189 /DWIN32 /Fe$(DISKDIR)\bin\$@ ..\..\..\..\src\df1b2-separable\tpl2rem-winflex.c

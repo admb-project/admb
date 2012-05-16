@@ -1,7 +1,7 @@
-.PHONY: tpl2cpp tpl2rem docs test contrib
+.PHONY: admb tpl2cpp tpl2rem docs test contrib
 
 all: admb contrib
-	@rm -f admb
+	@rm -rf admb
 	@ln -vs build/@target@/ admb
 	@printf "\nADMB build completed in 'build/@target@'.\n"
 	@printf "To install, read README.txt.\n"

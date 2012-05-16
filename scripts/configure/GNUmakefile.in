@@ -37,7 +37,7 @@ verify:
 	DISK=@disk@ ADMB_CXXFLAGS="@cxxflags@" ADMB_LDFLAGS="@cxxflags@" $(MAKE) --directory=src --file=@makefile@ verify
 
 checkstyle:
-	python2 utilities/cpplint.py --filter=-whitespace/braces src/linad99/*.cpp src/linad99/*.hpp src/nh99/*.cpp src/nh99/*.hpp src/tools99/*.cpp src/tools99/*.hpp src/sparse/*.cpp src/sparse/*.hpp
+	-python2 utilities/cpplint.py --filter=-whitespace/braces src/linad99/*.cpp src/linad99/*.hpp src/nh99/*.cpp src/nh99/*.hpp src/tools99/*.cpp src/tools99/*.hpp src/sparse/*.cpp src/sparse/*.hpp
 
 install:
 	install -d -m 755 @prefix@/admb/bin @prefix@/admb/include @prefix@/admb/lib @prefix@/admb/docs @prefix@/admb/examples @prefix@/admb/contrib

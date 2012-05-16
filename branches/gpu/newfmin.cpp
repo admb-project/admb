@@ -612,7 +612,7 @@ void fmm::fmin(BOR_CONST double& _f, const dvector & _x,BOR_CONST dvector& _g)
       ret=pocl->LoadKernelSource("bfg2.cl");
       if (ret)
         cerr << "Error trying to load Kernel source  GPU" << endl;
-      ret=pocl->CreateBuffers(nv);
+      ret=pocl->CreateBuffers(nv,n);
       if (ret)
         cerr << "Error trying to create buffers on GPU" << endl;
       ret=pocl->CreateKernels();

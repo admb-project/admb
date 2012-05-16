@@ -37,6 +37,7 @@ dist:
 	copy ..\LICENSE.txt $(DISK)\dist
 	copy ..\README.txt $(DISK)\dist
 	copy ..\NEWS.txt $(DISK)\dist
+	copy ..\utilities\sed.exe $(DISK)\dist\bin
 	copy ..\scripts\bcc32\adcomp.bat $(DISK)\dist\bin
 	copy ..\scripts\bcc32\adlink.bat $(DISK)\dist\bin
 	copy ..\scripts\bcc32\set-admb-bcc551.bat $(DISK)\dist\bin

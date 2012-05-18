@@ -50,6 +50,8 @@ contrib:
 	rem cd $(DISK)\objects\contrib-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\contrib\Makefile qfclib-saf
 	cd $(DISK)\dist\contrib& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\contrib\Makefile contribo.lib
 	cd $(DISK)\dist\contrib& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\contrib\Makefile contribs.lib
+	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd ..\contrib\ad2csv& $(MAKE) /A"
+	copy ..\contrib\ad2csv\ad2csv.exe $(DISK)\dist\bin
 
 verify:
 	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake all"

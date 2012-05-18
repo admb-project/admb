@@ -1982,7 +1982,9 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& ln_det,
 df1b2vector lower_triangular_solve(const df1b2matrix& m,const df1b2vector& v);
 df1b2vector lower_triangular_solve_trans(const df1b2matrix& m,const df1b2vector& v);
 
-df1b2variable ln_det(df1b2matrix& M);
+//df1b2variable ln_det(df1b2matrix& M); 
+// line above replaced with line below based on issue #37
+df1b2variable ln_det(const df1b2matrix & m1);
 
 df1b2variable ln_det(df1b2matrix& M,int & sgn);
 

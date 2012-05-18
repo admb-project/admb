@@ -6,7 +6,7 @@ else
 CXXFLAGS:=-c $(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I../${DISK}/include
 endif
 
-all: disk ad2csv  statslib ecolib qfclib libcontribo.a libcontribs.a
+all: disk statslib ecolib qfclib libcontribo.a libcontribs.a ad2csv
 
 disk:
 	mkdir -p ${DISK}/contrib
@@ -15,7 +15,7 @@ disk:
 	cp contrib.h ${DISK}/contrib
 
 ad2csv:
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib
+	ADMB_HOME=../${DISK} PATH=../${DISK}/bin:$(PATH) $(MAKE) --directory=$@
 
 statslib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib

@@ -1,4 +1,4 @@
-.PHONY: all statslib ecolib qfclib libcontribo.a libcontribs.a test clean
+.PHONY: all ad2csv statslib ecolib qfclib libcontribo.a libcontribs.a test clean
 
 ifeq ($(CXX),CC)
 CXXFLAGS:=-c $(CXXFLAGS) -DUSE_LAPLACE -I../${DISK}/include -D__SPDLL__ -D__GNUDOS__ -Dlinux -I../${DISK}/include
@@ -6,13 +6,16 @@ else
 CXXFLAGS:=-c $(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I../${DISK}/include
 endif
 
-all: disk statslib ecolib qfclib libcontribo.a libcontribs.a
+all: disk ad2csv  statslib ecolib qfclib libcontribo.a libcontribs.a
 
 disk:
 	mkdir -p ${DISK}/contrib
 	mkdir -p ${LIBPATH}/contrib-olp
 	mkdir -p ${LIBPATH}/contrib-slp
 	cp contrib.h ${DISK}/contrib
+
+ad2csv:
+	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib
 
 statslib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib

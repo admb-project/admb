@@ -45,3 +45,8 @@ void dp(const dmatrix& x)
 {
   cout << x << endl;
 }
+
+void dp(const banded_symmetric_dmatrix& x)
+{
+  cout << x << endl;
+}

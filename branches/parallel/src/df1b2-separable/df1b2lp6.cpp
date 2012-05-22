@@ -14,6 +14,25 @@
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
+
+/*void stop_flag(void)
+{
+  static int stop_flag;
+  if (stop_flag!=1)
+  {
+#if defined(USE_ADMPI)
+   if (ad_comm::mpi_manager){
+    if(ad_comm::mpi_manager->is_slave())
+    {
+      cout << "PID " << getpid() << endl;
+    }
+   }
+#endif
+    stop_flag=0;
+  }
+  while(stop_flag==0)
+    sleep(5);
+}*/
 double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const banded_symmetric_dmatrix& bHess,const dvector& _xadjoint,
   const dvector& _uadjoint,
@@ -51,7 +70,7 @@ void laplace_approximation_calculator::
 {
   //quadratic_prior * tmpptr=quadratic_prior::ptr[0];
   //cout << tmpptr << endl;
-
+    
 
   laplace_approximation_calculator::where_are_we_flag=2; 
   double maxg=fabs(evaluate_function(uhat,pfmin));
@@ -103,7 +122,30 @@ void laplace_approximation_calculator::
     {
       if (use_dd_nr==0)
       {
+        // do this with just the master. Later find out if good way to do it with slaves.
+        #if defined(USE_ADMPI)
+        if (ad_comm::mpi_manager)
+        {
+          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          {
+            for(int i=0;i<(*bHess).bandwidth();i++)
+            {
+              (*bHess)(i)+=ad_comm::mpi_manager->get_dvector_from_slave(si);
+            }
+          }
+        }
+        #endif
         banded_lower_triangular_dmatrix bltd=choleski_decomp(*bHess,ierr);
+        #if defined(USE_ADMPI)
+        if (ad_comm::mpi_manager)
+        {
+          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          {
+            ad_comm::mpi_manager->send_int_to_slave(ierr,si);
+          }
+        }
+        #endif
+
         if (ierr && no_converge_flag ==0)
         {
           no_converge_flag=1;
@@ -135,6 +177,18 @@ void laplace_approximation_calculator::
             ad_exit(1);
 #endif
           }
+
+          //send uhat to slave
+          #if defined(USE_ADMPI)
+          if (ad_comm::mpi_manager)
+          {
+            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+            {
+              ad_comm::mpi_manager->send_dvector_to_slave(uhat,si);
+            }
+          }
+          #endif
+
           maxg=fabs(evaluate_function(uhat,pfmin));
           if (f_from_1< pfmin->lapprox->fmc1.fbest)
           {
@@ -283,6 +337,144 @@ void laplace_approximation_calculator::
   }
 }
 
+void laplace_approximation_calculator::
+  do_newton_raphson_banded_mpi_slave(function_minimizer * pfmin,double f_from_1,
+  int& no_converge_flag)
+{
+  laplace_approximation_calculator::where_are_we_flag=2; 
+  double maxg=fabs(evaluate_function(uhat,pfmin));
+
+
+  laplace_approximation_calculator::where_are_we_flag=0; 
+  dvector uhat_old(1,usize);
+  for(int ii=1;ii<=num_nr_iters;ii++)
+  {  
+    // test newton raphson
+    switch(hesstype)
+    {
+    case 3:
+      bHess->initialize();
+      break;
+    case 4:
+      Hess.initialize();
+      break;
+    default:
+      cerr << "Illegal value for hesstype here" << endl;
+      ad_exit(1);
+    }
+
+
+
+    grad.initialize();
+    sparse_count=0.0;
+
+    step=get_newton_raphson_info_banded(pfmin);
+
+    if (quadratic_prior::get_num_quadratic_prior()>0)
+    {
+      quadratic_prior::get_cHessian_contribution(Hess,xsize);
+      quadratic_prior::get_cgradient_contribution(grad,xsize);
+    }
+
+    int ierr=0;
+    if (hesstype==3)
+    {
+      if (use_dd_nr==0)
+      {
+        // choleski_decomp(*bHess,ierr);
+        #if defined(USE_ADMPI)
+        if (ad_comm::mpi_manager)
+        {
+          for(int i=0;i<(*bHess).bandwidth();i++)
+          {
+            ad_comm::mpi_manager->send_dvector_to_master((*bHess)(i));
+          }
+
+          ad_comm::mpi_manager->get_int_from_master(ierr);
+        }
+        #endif
+   //banded_lower_triangular_dmatrix bltd = banded_lower_triangular_dmatrix(1,5,2);
+        if (ierr && no_converge_flag ==0)
+        {
+          no_converge_flag=1;
+          //break;
+        }
+        if (ierr)
+        {
+          double oldval;
+          evaluate_function(oldval,uhat,pfmin);
+          uhat=banded_calculations_trust_region_approach(uhat,pfmin);
+        }
+        else
+        {
+          if (dd_nr_flag==0)
+          { // master only
+          //  dvector v=solve(bltd,grad);
+          //  step=-solve_trans(bltd,v);
+          //  //uhat_old=uhat;
+          //  uhat+=step;
+          }
+          else
+          {
+#if defined(USE_DD_STUFF)
+            int n=grad.indexmax();
+            maxg=fabs(evaluate_function(uhat,pfmin));
+            uhat=dd_newton_raphson2(grad,*bHess,uhat);
+#else
+            cerr << "high precision Newton Raphson not implemented" << endl;
+            ad_exit(1);
+#endif
+          }
+
+          //get uhat from master
+          #if defined(USE_ADMPI)
+          if (ad_comm::mpi_manager)
+          {
+            uhat = ad_comm::mpi_manager->get_dvector_from_master();
+          }
+          #endif
+
+          maxg=fabs(evaluate_function(uhat,pfmin)); //needed
+          if (f_from_1< pfmin->lapprox->fmc1.fbest)
+          {
+            uhat=banded_calculations_trust_region_approach(uhat,pfmin);
+            maxg=fabs(evaluate_function(uhat,pfmin));
+          }
+        }
+      }
+      else
+      {
+        cout << "error not used" << endl;
+        ad_exit(1);
+      }
+    
+      if (maxg < 1.e-13) 
+      {
+        break;
+      }
+    } 
+    else if (hesstype==4)
+    {
+      cerr << "Slave type 4 not implemented yet" << endl;
+      ad_exit(1);
+    }
+    
+    if (sparse_hessian_flag==0)
+    {
+      for (int i=1;i<=usize;i++)
+      {
+        y(i+xsize)=uhat(i);
+      }
+    }
+    else  
+    {
+      for (int i=1;i<=usize;i++)
+      {
+        value(y(i+xsize))=uhat(i);
+      }
+    }
+  }
+}
 /**
  * Description not yet available.
  * \param
@@ -417,27 +609,29 @@ dvector laplace_approximation_calculator::banded_calculations
         for (i=1;i<=xsize;i++) { value(y(i))=x(i); }
         for (i=1;i<=usize;i++) { value(y(i+xsize))=uhat(i); }
       }
-/*{
-  static int stop_flag;
-  if (stop_flag!=1)
-  {
-#if defined(USE_ADMPI)
-   if (ad_comm::mpi_manager){
-    if(ad_comm::mpi_manager->is_slave())
-    {
-      cout << "PID " << getpid() << endl;
-    }
-   }
-#endif
-    stop_flag=0;
-  }
-  while(stop_flag==0)
-    sleep(5);
-}*/      
+
       laplace_approximation_calculator::where_are_we_flag=2; 
       if (admb_ssflag==0)
       {
-        do_newton_raphson_banded(pfmin,f_from_1,no_converge_flag);
+        #if defined(USE_ADMPI)
+        if (ad_comm::mpi_manager)
+        {
+          if (ad_comm::mpi_manager->is_master())
+          {
+            do_newton_raphson_banded(pfmin,f_from_1,no_converge_flag);
+          }
+          else
+          {
+            do_newton_raphson_banded_mpi_slave(pfmin,f_from_1,no_converge_flag);
+          }
+        }
+        else
+        {
+        #endif
+          do_newton_raphson_banded(pfmin,f_from_1,no_converge_flag);
+        #if defined(USE_ADMPI)
+        }
+        #endif
       }
       else
       {
@@ -498,7 +692,29 @@ dvector laplace_approximation_calculator::banded_calculations
         bHess->initialize();
       else if (hesstype==4)
         Hess.initialize();
-    
+
+      #if defined(USE_ADMPI)
+      if (ad_comm::mpi_manager)
+      {
+        if (ad_comm::mpi_manager->is_master()){
+          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+          {
+            for(int i=0;i<(*bHess).bandwidth();i++)
+            {
+              (*bHess)(i)+=ad_comm::mpi_manager->get_dvector_from_slave(si);
+            }
+          }
+        }
+        else
+        {
+          for(int i=0;i<(*bHess).bandwidth();i++)
+          {
+            ad_comm::mpi_manager->send_dvector_to_master((*bHess)(i));
+          }
+        }
+      }
+      #endif
+
       block_diagonal_flag=2;
       used_flags.initialize();
       funnel_init_var::lapprox=this;
@@ -707,6 +923,29 @@ dvector laplace_approximation_calculator::banded_calculations
   }
   while(1);
 
+  #if defined(USE_ADMPI)  
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->sync_objfun_flag)
+    {
+      if (ad_comm::mpi_manager->is_master())
+      {
+        //get dvectors from slaves and add into xadjoint
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          dvector slave_xadjoint =
+              ad_comm::mpi_manager->get_dvector_from_slave(si);
+          xadjoint+=slave_xadjoint;
+        }
+      }
+      else
+      {
+        //send dvector to master
+        ad_comm::mpi_manager->send_dvector_to_master(xadjoint);
+      }
+    }
+  }
+  #endif
   return xadjoint;
 }
   //int check_pool_flag1=0;
@@ -1100,6 +1339,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
 
    int sgn=0;
    dvariable ld;
+   double f;
   
    int eigswitch=0;
    if (eigswitch)
@@ -1110,17 +1350,46 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
      ofs << setprecision(3) << setw(12) << setscientific() << dmatrix(bHess) << endl << endl;
      ofs << ev << endl << endl << evecs << endl;
    }
-   ld=0.5*ln_det_choleski(vHess,sgn);
-   if (sgn==1)
+//stop_flag();
+   int evaluate_flag=1;
+   #if defined(USE_ADMPI)
+   if (ad_comm::mpi_manager)
    {
-     cout << "Choleski failed" << endl;
-     pmin->lapprox->bHess_pd_flag=1;
+     if (ad_comm::mpi_manager->is_slave())
+     {
+       evaluate_flag=0;
+     }
+   }
+   #endif
+   if (evaluate_flag)
+   {
+     ld=0.5*ln_det_choleski(vHess,sgn); // do with master only for now. see if chol can parallel later.
+
+     if (sgn==1)
+     {
+       cout << "Choleski failed" << endl;
+       pmin->lapprox->bHess_pd_flag=1;
+     }
+
+     vf+=ld;
+     const double ltp=0.5*log(2.0*PI);
+     vf-=us*ltp;
+     f=value(vf);
    }
 
-   vf+=ld;
-   const double ltp=0.5*log(2.0*PI);
-   vf-=us*ltp;
-   double f=value(vf);
+   #if defined(USE_ADMPI)
+   if (ad_comm::mpi_manager)
+   {
+     if (ad_comm::mpi_manager->is_master())
+     {
+       for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+       {
+         ad_comm::mpi_manager->send_double_to_slave(f,si);
+       }
+     }
+   }
+   #endif
+
    dvector g(1,nvar);
    gradcalc(nvar,g);
   

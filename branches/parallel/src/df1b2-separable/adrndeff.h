@@ -361,6 +361,9 @@ public:
   dvector banded_calculations_trust_region_approach(const dvector& _uhat,
     function_minimizer * pmin);
   void do_newton_raphson_banded(function_minimizer * pmin,double,int&);
+#if defined(USE_ADMPI)
+  void do_newton_raphson_banded_mpi_slave(function_minimizer * pmin,double,int&);
+#endif
   double inner_optimization_banded(/*dvector& uhat,*/ dvector& x,
     function_minimizer * pfmin,int& no_converge_flag);
   void set_default_hessian_type(void);

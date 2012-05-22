@@ -9,9 +9,9 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#if defined(USE_ADMPI)
-  #include "admodel.h"
-#endif
+//#if defined(USE_ADMPI)
+//  #include "admodel.h"
+//#endif
 
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -234,86 +234,12 @@ do
    #endif
   }
 
-/*#if defined(USE_ADMPI)
-  if (ad_comm::mpi_manager)
-  {
-    if (ad_comm::mpi_manager->sync_gradient_flag &&
-        function_minimizer::random_effects_flag)
-    {
-      dvector local_g(0,nvar);
-      for (i=0; i < (unsigned int)nvar; i++)
-      {
-        local_g(i)=* gradient_structure::INDVAR_LIST->get_address(i);
-      }
-
-      if (ad_comm::mpi_manager->is_master())
-      {
-        // sync 
-        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-        {
-          local_g+=ad_comm::mpi_manager->get_dvector_from_slave(si);
-        }
-        // send to slaves
-        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-        {
-          ad_comm::mpi_manager->send_dvector_to_slave(local_g,si);
-        }
-      }
-      else
-      {
-        // sync
-        ad_comm::mpi_manager->send_dvector_to_master(local_g);
-        // get from master
-        local_g=ad_comm::mpi_manager->get_dvector_from_master();
-      }
-
-      for (i=0; i < (unsigned int)nvar; i++)
-      {
-        gradient_structure::INDVAR_LIST->put_value(i,local_g(i));
-      }
-    }
-  }
-#endif*/
-
-
   int mindx = g.indexmin();
   for (i=0; i < (unsigned int)nvar; i++)
   {
     g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
   }
-#if defined(USE_ADMPI)
-  if (ad_comm::mpi_manager)
-  {
-    if (ad_comm::mpi_manager->sync_gradient_flag &&
-        function_minimizer::random_effects_flag)
-    {
-      dvector local_g = g;
 
-      if (ad_comm::mpi_manager->is_master())
-      {
-        // sync 
-        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-        {
-          local_g+=ad_comm::mpi_manager->get_dvector_from_slave(si);
-        }
-        // send to slaves
-        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
-        {
-          ad_comm::mpi_manager->send_dvector_to_slave(local_g,si);
-        }
-      }
-      else
-      {
-        // sync
-        ad_comm::mpi_manager->send_dvector_to_master(local_g);
-        // get from master
-        local_g=ad_comm::mpi_manager->get_dvector_from_master();
-      }
-
-      g = local_g;
-    }
-  }
-#endif
   gradient_structure::GRAD_STACK1->ptr = gradient_structure::GRAD_STACK1->ptr_first;
 
   if (gradient_structure::save_var_flag)

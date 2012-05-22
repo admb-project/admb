@@ -19,6 +19,7 @@ using std::istringstream;
 static int no_stuff=0;
 //static void xxxy(void) {}
 
+void grad_sync(const dvector& _g);
 void set_gradient_sync(int flag);
 void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn);
 
@@ -206,9 +207,8 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           }
           vf+=*objective_function_value::pobjfun;
           f=value(vf);
-          set_gradient_sync(1);
-          gradcalc(nvar,g); //sgradclc.cpp !!! come back to see if sync can/should be done outside of gradcalc
-          set_gradient_sync(0);
+          gradcalc(nvar,g);
+          grad_sync(g);
         }
       }
     }
@@ -491,6 +491,43 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
 } // end block for quasi newton minimization
 
 #endif
+
+void grad_sync(const dvector& _g)
+{
+#if defined(USE_ADMPI)
+  dvector & g= (dvector&)_g;
+  if (ad_comm::mpi_manager)
+  {
+    if (function_minimizer::random_effects_flag)
+    {
+      dvector local_g = g;
+
+      if (ad_comm::mpi_manager->is_master())
+      {
+        // sync 
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          local_g+=ad_comm::mpi_manager->get_dvector_from_slave(si);
+        }
+        // send to slaves
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          ad_comm::mpi_manager->send_dvector_to_slave(local_g,si);
+        }
+      }
+      else
+      {
+        // sync
+        ad_comm::mpi_manager->send_dvector_to_master(local_g);
+        // get from master
+        local_g=ad_comm::mpi_manager->get_dvector_from_master();
+      }
+
+      g = local_g;
+    }
+  }
+#endif
+}
 
 void set_gradient_sync(int flag)
 {

@@ -363,6 +363,7 @@ admpi_manager::admpi_manager(int m,int argc,char * argv[])
   do_hess=0;
   sync_objfun_flag=0;
   sync_gradient_flag=0;
+  sync_evaluate_function_flag=0;
   mpi_int = new int[MAX_MPI_OFFSET];
  
   for (int i=0;i<MAX_MPI_OFFSET;i++)

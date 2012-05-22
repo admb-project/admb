@@ -128,7 +128,19 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
         cout << "Newton raphson " << ii << endl;
       }
       uhat+=step;
+      #if defined(USE_ADMPI)
+      if (ad_comm::mpi_manager)
+      {
+        (ad_comm::mpi_manager->sync_evaluate_function_flag)=1;
+      }
+      #endif
       evaluate_function(uhat,pfmin);
+      #if defined(USE_ADMPI)
+      if (ad_comm::mpi_manager)
+      {
+        (ad_comm::mpi_manager->sync_evaluate_function_flag)=1;
+      }
+      #endif
       pmin->inner_opt_flag=0;
     }
   

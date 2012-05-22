@@ -24,7 +24,7 @@ static int write_sparse_flag=0;
     }
 int noboundepen_flag=1;
 
-void set_gradient_sync(int flag); // defined in df1b2qnm.cpp
+void grad_sync(const dvector& _g); // defined in df1b2qnm.cpp
 void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn); // defined in df1b2qnm.cpp
 
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
@@ -150,9 +150,8 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
         fb=f;
         ub=u;
       }
-      set_gradient_sync(1);
       gradcalc(usize,g);
-      set_gradient_sync(0);
+      grad_sync(g);
       //cout << " f = " << setprecision(17) << f << " " << norm(g) 
        // << " " << norm(u) << endl;
      
@@ -222,9 +221,8 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
           fb=f;
           ub=u;
         }
-        set_gradient_sync(1);
         gradcalc(usize,g);
-        set_gradient_sync(0);
+        grad_sync(g);
         //cout << " f = " << setprecision(15) << f << " " << norm(g) << endl;
       }
     }
@@ -350,9 +348,8 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_mpi_master
         fb=f;
         ub=u;
       }
-      set_gradient_sync(1);
       gradcalc(usize,g);
-      set_gradient_sync(0);
+      grad_sync(g);
       //cout << " f = " << setprecision(17) << f << " " << norm(g) 
        // << " " << norm(u) << endl;
      
@@ -413,9 +410,8 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_mpi_master
           fb=f;
           ub=u;
         }
-        set_gradient_sync(1);
         gradcalc(usize,g);
-        set_gradient_sync(0);
+        grad_sync(g);
         //cout << " f = " << setprecision(15) << f << " " << norm(g) << endl;
       }
     }
@@ -465,9 +461,8 @@ void laplace_approximation_calculator::get_uhat_quasi_newton_mpi_slave
       *objective_function_value::pobjfun=0.0;
       pfmin->AD_uf_inner();
 
-      set_gradient_sync(1);
       gradcalc(usize,g);
-      set_gradient_sync(0);
+      grad_sync(g);
     }
   }
 
@@ -489,9 +484,8 @@ void laplace_approximation_calculator::get_uhat_quasi_newton_mpi_slave
         *objective_function_value::pobjfun=0.0;
         pfmin->AD_uf_inner();
 
-        set_gradient_sync(1);
         gradcalc(usize,g);
-        set_gradient_sync(0);
+        grad_sync(g);
       }
     }
   }
@@ -2238,7 +2232,7 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   #if defined(USE_ADMPI)  
   if (ad_comm::mpi_manager)
   {
-    if (ad_comm::mpi_manager->sync_objfun_flag)
+    if (ad_comm::mpi_manager->sync_evaluate_function_flag)
     {
       if (ad_comm::mpi_manager->is_master())
       {
@@ -2249,15 +2243,23 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
               ad_comm::mpi_manager->get_dvector_from_slave(si);
           u+=slave_u;
         }
+        // send to slaves
+        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
+        {
+          ad_comm::mpi_manager->send_dvector_to_slave(u,si);
+        }
       }
       else
       {
         //send dvector to master
         ad_comm::mpi_manager->send_dvector_to_master(u);
+        // get from master
+        u=ad_comm::mpi_manager->get_dvector_from_master();
       }
     }
   }
   #endif
+
   dvariable vf=0.0;
   vf=initial_params::reset(dvar_vector(u));
   //vf=0.0;
@@ -2272,6 +2274,7 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   laplace_approximation_calculator::where_are_we_flag=0; 
   initial_df1b2params::cobjfun=value(vf);
   gradcalc(usize,g);
+  grad_sync(g);
   double maxg=max(fabs(g));
   if (!initial_params::mc_phase)
   {

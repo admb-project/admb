@@ -2829,6 +2829,7 @@ public:
   void set_sync_objfun_flag(int _flag){ sync_objfun_flag = _flag; }
   int sync_gradient_flag;
   int get_num_slaves(void){ return num_slaves;}
+  int sync_evaluate_function_flag;
   int get_num_hess_slaves(void){ return num_hess_slaves;}
   int get_num_separable_slaves(void){ return num_separable_slaves;}
   void set_num_hess_slaves(int _num_hess_slaves){ num_hess_slaves = _num_hess_slaves; }

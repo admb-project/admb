@@ -80,12 +80,12 @@ void function_minimizer::pvm_master_function_evaluation_profile(double& f,
     {
      {
       send_int_to_slaves(5);
-      int nvar=initial_params::nvarcalc(); // get the number of active
-             // parameters
+      // get the number of active parameters
+      int nvar=initial_params::nvarcalc();
       dvector g(1,nvar);
       independent_variables x(1,nvar);
-      initial_params::xinit(x);    // get the initial values into the
-	   // x vector
+      // get the initial values into the x vector
+      initial_params::xinit(x);
       fmm fmc(nvar);
       fmc.maxfn= maxfn;
       fmc.iprint= iprint;
@@ -104,7 +104,7 @@ void function_minimizer::pvm_master_function_evaluation_profile(double& f,
       }
       if (!(!maximum_function_evaluations))
       {
-	int ind=min(maximum_function_evaluations.indexmax(),
+        int ind=min(maximum_function_evaluations.indexmax(),
           initial_params::current_phase);
         fmc.maxfn=int(maximum_function_evaluations(ind));
       }

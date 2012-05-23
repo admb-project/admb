@@ -615,10 +615,10 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         {
           if (!probe_flag)
             bmn1=bounded_multivariate_normal(nvar,symbds(1),symbds(2),
-	      chd,lprob,rng);
+              chd,lprob,rng);
           else
             bmn1=new_probing_bounded_multivariate_normal(
-	      nvar,symbds(1),symbds(2),chd,lprob,pprobe,rng);
+              nvar,symbds(1),symbds(2),chd,lprob,pprobe,rng);
 
           initial_params::add_random_vector(bmn1);
           initial_params::xinit(y);   
@@ -626,10 +626,10 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
           initial_params::set_all_simulation_bounds(symbds);
           if (!probe_flag)
             bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),chd,
-	      lpinv,-1*(chdinv*bmn1),rng);
+              lpinv,-1*(chdinv*bmn1),rng);
           else 
             new_probing_bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),
-	      chd,lpinv,-1*(chdinv*bmn1),pprobe,rng);
+              chd,lpinv,-1*(chdinv*bmn1),pprobe,rng);
 
           send_int_to_slaves(1);
           ll=-pvm_master_get_monte_carlo_value(nvar,y);
@@ -640,13 +640,13 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         else
         {
           dvector bmn1=bounded_multivariate_uniform(nvar,symbds(1),symbds(2),chd,
-						    lprob,rng);
+                                                    lprob,rng);
           initial_params::add_random_vector(bmn1);
           initial_params::xinit(y);   
           // get the simulation bounds for the inverse transition
           initial_params::set_all_simulation_bounds(symbds);
           bounded_multivariate_uniform_mcmc(nvar,symbds(1),symbds(2),chd,
-					    lpinv,-1*(chdinv*bmn1),rng);
+                                            lpinv,-1*(chdinv*bmn1),rng);
           send_int_to_slaves(1);
           ll=-pvm_master_get_monte_carlo_value(nvar,y);
           double ldiff=lprob-lpinv;

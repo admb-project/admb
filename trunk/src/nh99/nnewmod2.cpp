@@ -112,7 +112,7 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
       {
         double tmp=(h(i,j)+h(j,i))/2.;
         h(i,j)=tmp;
-	h(j,i)=tmp;
+        h(j,i)=tmp;
       }
     }
 

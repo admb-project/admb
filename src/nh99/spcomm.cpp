@@ -28,11 +28,11 @@ void open_the_file_when_finished(ifstream*& pifs, const int& waitflag, const int
 
 # if defined(STUPID_DDL_FUNCTIONS)
 HDDEDATA CALLBACK mycallback(       //DdeCallback(
-	 UINT  uType,	// transaction type
-	 UINT  uFmt,	// clipboard data format
+         UINT  uType,   // transaction type
+         UINT  uFmt,    // clipboard data format
 	 HCONV  hconv,	// handle of the conversation
-	 HSZ  hsz1,	// handle of a string
-	 HSZ  hsz2,	// handle of a string
+	 HSZ  hsz1,     // handle of a string
+	 HSZ  hsz2,     // handle of a string
 	 HDDEDATA  hdata,	// handle of a global memory object
 	 DWORD  dwData1,	// transaction-specific data
 	 DWORD  dwData2 	// transaction-specific data

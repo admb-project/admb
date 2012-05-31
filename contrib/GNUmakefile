@@ -15,7 +15,7 @@ disk:
 	cp contrib.h ${DISK}/contrib
 
 ad2csv:
-	ADMB_HOME=../${DISK} PATH=../${DISK}/bin:$(PATH) $(MAKE) --directory=$@
+	ADMB_HOME=../${DISK} PATH="../${DISK}/bin:$(PATH)" $(MAKE) --directory=$@
 
 statslib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=../${LIBPATH}/contrib-olp DISKDIR=../${DISK}/contrib

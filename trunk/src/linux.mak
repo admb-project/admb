@@ -68,6 +68,7 @@ dist:
 	  cp ../scripts/$(CXX)/adcomp.bat ${DISK}/bin
 	  cp ../scripts/$(CXX)/adlink.bat ${DISK}/bin
 	  cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
+	  cp ../utilities/sed.exe ${DISK}/bin
         endif
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re

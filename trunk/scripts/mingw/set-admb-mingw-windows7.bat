@@ -20,7 +20,10 @@ REM
 REM Adds the bin folder to ADMB_HOME to system path.
 REM
 @set PATH=.;%ADMB_HOME%\bin;%GNUWIN32_HOME%\bin;%MINGW_HOME%\bin;%PATH%
+@echo Setting ADMB Home enviroment to "%ADMB_HOME%".
 
-@echo Set ADMB Home directory to %ADMB_HOME%
+@cd "%USERPROFILE%"
 
-@cd "%HOMEDRIVE%%HOMEPATH%"
+@echo.
+@echo For help, type command "admb -help".
+

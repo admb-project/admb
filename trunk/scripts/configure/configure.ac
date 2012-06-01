@@ -92,7 +92,8 @@ then
   MAKEFILE="linux.mak"
 fi
 
-if (test  "${`uname -s`:0:10}" =  "MINGW32_NT")
+UNAME_S=`uname -s`
+if (test  "${UNAME_S:0:10}" =  "MINGW32_NT")
 then
   GCC_VERSION=`gcc -dumpversion`
   ADMB_TARGET="admb-${ADMB_VERSION}-mingw-gcc${GCC_VERSION}-${CXX_32OR64BIT}"

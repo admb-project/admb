@@ -6,7 +6,11 @@ vpath %.obj $(LIBPATH)
 include objects.lst
 
 all: $(OBJECTS)
+ifeq ($(CXX),g++.exe)
+	copy ecolib.h $(DISKDIR)
+else
 	cp ecolib.h $(DISKDIR)
+endif
 
 test:
 	make --directory=test

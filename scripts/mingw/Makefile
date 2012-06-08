@@ -6,7 +6,7 @@ all: check admb admb-re
 
 check:
 	@if "%ADMB_HOME%"=="" echo "Error: ADMB_HOME is not defined" && exit 1 
-	@if not exist %ADMB_HOME2%\admb.bat echo "Error: admb.bat does not exist" && exit 1 
+	@if not exist %ADMB_HOME%\bin\admb.bat echo "Error: admb.bat does not exist" && exit 1 
 
 admb: \
 buscycle\

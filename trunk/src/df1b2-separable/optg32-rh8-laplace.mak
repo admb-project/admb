@@ -21,7 +21,7 @@ disk: $(DISKDIR)/lib/$(LIBNAME) $(DISKDIR)/bin/tpl2rem
 	cp seddf1b* sedf1b2* $(DISKDIR)/bin
 
 $(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
-	ar -rs $@ $(LIBPATH)/*.obj
+	$(AR) -rs $@ $(LIBPATH)/*.obj
 
 $(DISKDIR)/bin/tpl2rem: tpl2rem.c
 	$(CC) $(CFLAGS) -o $@ $<

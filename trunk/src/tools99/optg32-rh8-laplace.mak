@@ -17,7 +17,7 @@ disk: $(DISKDIR)/lib/$(LIBNAME)
 	cp admb_messages.h $(DISKDIR)/include
 
 $(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
-	ar -rs $@ $(LIBPATH)/*.obj
+	$(AR) -rs $@ $(LIBPATH)/*.obj
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/$*.obj

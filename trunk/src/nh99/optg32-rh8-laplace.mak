@@ -24,7 +24,7 @@ disk: $(DISKDIR)/lib/$(LIBNAME)  $(DISKDIR)/bin/tpl2cpp
 	cp s.h $(DISKDIR)/include
 
 $(DISKDIR)/lib/$(LIBNAME): $(OBJECTS)
-	ar -rs $@ $(LIBPATH)/*.obj
+	$(AR) -rs $@ $(LIBPATH)/*.obj
 
 $(DISKDIR)/bin/tpl2cpp: tpl2cpp.c
 ifeq ("$(CC)","cc")

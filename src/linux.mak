@@ -77,6 +77,10 @@ ifeq ($(CXX),clang++)
 	  cp ../scripts/clang++/adcomp ${DISK}/bin
 	  cp ../scripts/clang++/adlink ${DISK}/bin
 endif
+ifeq ($(CXX),icpc)
+	  cp ../scripts/icpc/adcomp ${DISK}/bin
+	  cp ../scripts/icpc/adlink ${DISK}/bin
+endif
 ifeq ($(CXX),g++.exe)
 	  cp ../scripts/admb/admb.bat ${DISK}/bin
 	  cp ../scripts/$(CXX)/adcomp.bat ${DISK}/bin

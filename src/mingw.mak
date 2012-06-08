@@ -24,10 +24,9 @@ dist:
 	md $(LIBPATH)\nh99-olp
 	md $(LIBPATH)\tools99-olp
 	$(MAKE) -C df1b2-separable CC=$(CXX) LIBPATH=..\$(LIBPATH)\df1b2-separable-olp DISKDIR=..\$(DISK) -f mingw-optg32-rh8-laplace.mak disk
-	$(MAKE) -C df1b2-separable CC=$(CXX) LIBPATH=..\$(LIBPATH)\df1b2-separable-olp DISKDIR=..\$(DISK) -f mingw-safg32-rh8-laplace.mak disk
+	$(MAKE) -C df1b2-separable CC=$(CXX) LIBPATH=..\$(LIBPATH)\df1b2-separable-slp DISKDIR=..\$(DISK) -f mingw-safg32-rh8-laplace.mak disk
 	$(MAKE) -C linad99 CC=$(CXX) LIBPATH=..\$(LIBPATH)\linad99-olp DISKDIR=..\$(DISK) -f mingw-optg32-rh8-laplace.mak disk
 	$(MAKE) -C linad99 CC=$(CXX) LIBPATH=..\$(LIBPATH)\linad99-slp DISKDIR=..\$(DISK) PVMOPTION=-Dlinux -f mingw-safg32-rh8-laplace.mak disk
-	$(MAKE) -C nh99 CC=$(CXX) LIBPATH=..\$(LIBPATH)\nh99-olp DISKDIR=..\$(DISK) -f mingw-optg32-rh8-laplace.mak disk
 	$(MAKE) -C nh99 CC=$(CXX) LIBPATH=..\$(LIBPATH)\nh99-olp DISKDIR=..\$(DISK) -f mingw-optg32-rh8-laplace.mak disk
 	$(MAKE) -C tools99 CC=$(CXX) LIBPATH=..\$(LIBPATH)\tools99-olp DISKDIR=..\$(DISK) -f mingw-optg32-rh8-laplace.mak disk
 	copy ..\LICENSE.txt $(DISK)

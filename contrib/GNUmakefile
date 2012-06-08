@@ -55,18 +55,10 @@ qfclib:
 	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" LIBPATH=$(LIBPATH_SAFE) DISKDIR=$(DISKDIR)
 
 libcontribo.a:
-ifeq ($(CXX),g++.exe)
-	ar -rs ${DISK}\contrib\$@ $(LIBPATH_OPT2)\*.obj
-else
-	ar -rs ${DISK}/contrib/$@ $(LIBPATH_OPT2)/*.obj
-endif
+	$(AR) -rs ${DISK}/contrib/$@ $(LIBPATH_OPT2)/*.obj
 
 libcontribs.a:
-ifeq ($(CXX),g++.exe)
-	ar -rs ${DISK}\contrib\$@ $(LIBPATH_SAFE2)\*.obj
-else
-	ar -rs ${DISK}/contrib/$@ $(LIBPATH_SAFE2)/*.obj
-endif
+	$(AR) -rs ${DISK}/contrib/$@ $(LIBPATH_SAFE2)/*.obj
 
 test:
 	CXXFLAGS="" $(MAKE) --directory=ecolib test

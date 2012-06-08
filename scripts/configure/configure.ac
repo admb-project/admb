@@ -101,6 +101,14 @@ then
   INSTALLER_MINGW="scripts/installers/innosetup/mingw.iss"
 fi
 
+if (test  "${UNAME_S:0:9}" =  "CYGWIN_NT")
+then
+  GCC_VERSION=`gcc -dumpversion`
+  ADMB_TARGET="admb-${ADMB_VERSION}-cygwin-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  MAKEFILE="linux.mak"
+  INSTALLER_MINGW="scripts/installers/innosetup/mingw.iss"
+fi
+
 if test  "`uname -s`" =  "SunOS"
 then
   if test "${CXX}" = "CC"

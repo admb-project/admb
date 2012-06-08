@@ -60,16 +60,30 @@ dist:
 	cp -vf ../README.txt ${DISK}
 	cp -vf ../NEWS.txt ${DISK}
 	cp ../scripts/admb/admb ${DISK}/bin
-	cp ../scripts/$(CXX)/adcomp ${DISK}/bin
-	cp ../scripts/$(CXX)/adlink ${DISK}/bin
 	cp -vf ../scripts/g++/Makefile ${DISK}/examples
-        ifeq ($(CXX),g++)
+ifeq ($(CXX),CC)
+	  cp ../scripts/CC/adcomp ${DISK}/bin
+	  cp ../scripts/CC/adlink ${DISK}/bin
+endif
+ifeq ($(CXX),g++)
+	  cp ../scripts/g++/adcomp ${DISK}/bin
+	  cp ../scripts/g++/adlink ${DISK}/bin
+endif
+ifeq ($(CXX),x86_64-w64-mingw32-g++)
+	  cp ../scripts/g++/adcomp-x86_64-w64-mingw32 ${DISK}/bin/adcomp
+	  cp ../scripts/g++/adlink-x86_64-w64-mingw32 ${DISK}/bin/adlink
+endif
+ifeq ($(CXX),clang++)
+	  cp ../scripts/clang++/adcomp ${DISK}/bin
+	  cp ../scripts/clang++/adlink ${DISK}/bin
+endif
+ifeq ($(CXX),g++.exe)
 	  cp ../scripts/admb/admb.bat ${DISK}/bin
 	  cp ../scripts/$(CXX)/adcomp.bat ${DISK}/bin
 	  cp ../scripts/$(CXX)/adlink.bat ${DISK}/bin
 	  cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
 	  cp ../utilities/sed.exe ${DISK}/bin
-        endif
+endif
 	cp -R ../examples/admb ${DISK}/examples/admb
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 

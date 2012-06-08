@@ -7,7 +7,7 @@ all: admb contrib
 	@printf "To install, read README.txt.\n"
 
 admb:
-	CC=@cc@ CFLAGS="@cflags@" CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 $(MAKE) --directory=src --file=@makefile@
+	@arvar@ CC=@cc@ CFLAGS="@cflags@" CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ ADMB_CONFIGURE=1 $(MAKE) --directory=src --file=@makefile@
 	rm -rf `find build/@target@ -type d -name .svn`
 
 tpl2cpp:
@@ -63,7 +63,7 @@ test:
 	export ADMB_HOME=${PWD}/build/@target@; export PATH=${PWD}/build/@target@/bin:$(PATH); CXXFLAGS="@arch_cxxflag@" $(MAKE) --directory=contrib test
 
 contrib:
-	CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib
+	@arvar@ CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib
 
 clean:
 	rm -rvf build/@target@

@@ -46,6 +46,7 @@ Table of Contents
    - MacOS and Clang
    - Windows and GCC
    - Windows and Microsoft Visual C++ 2010 Express
+   - Windows and Cygwin with MinGW-w64
  * Documentation
  * Developing AD Model Builder
    - Version Control
@@ -390,6 +391,46 @@ Windows and Microsoft Visual C++ 2010 Express
 4. Build binaries
 
    > nmake /fvc.mak
+
+Windows and Cygwin with MinGW-w64
+---------------------------------
+1. Open Cygwin Terminal.
+
+2. Change directory to the admb source folder.
+   
+   > cd admb-'version'
+
+   where 'version' is the distribution version.
+
+3. Configure the build files for MinGW-w64
+
+   $ ./configure CC=x86_64-w64-mingw32-gcc.exe CXX=x86_64-w64-mingw32-g++.exe AR=x86_64-w64-mingw32-ar.exe
+
+   Note: The default installation folder is /usr/local/admb.
+
+   To install to another folder, use
+
+   $ ./configure --prefix='your-preferred-location'
+
+   To check options
+
+   $ ./configure --help
+
+4. Build binaries
+
+   > make
+
+4. [Optional] Test build by running examples
+
+   $ make verify
+
+5. Install binaries to default location /usr/local.
+
+   $ make install
+
+   Or, copy the binary distribution
+
+   $ cp -R build/mingw 'prefered-install-location'
 
 Documentation
 =============

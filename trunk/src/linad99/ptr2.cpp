@@ -40,10 +40,12 @@ int aabbbcd(void)
  * Description not yet available.
  * \param
  */
+#if !defined(__MINGW64__)
 long int _farptr_tolong(void * ptr)
 {
   return( (long int) ptr);
 }
+#endif
 
 /**
  * Description not yet available.

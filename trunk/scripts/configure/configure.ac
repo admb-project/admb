@@ -127,6 +127,12 @@ AC_CONFIG_FILES(
   [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/admb/admb-bin ${INSTALLER_PACKAGEMAKER} ${INSTALLER_MINGW} ]
 )
 
+if test "${AR}" = ""
+then
+AC_SUBST(arvar, "")
+else
+AC_SUBST(arvar, AR=${AR})
+fi
 AC_SUBST(revision, ${ADMB_REVISION})
 AC_SUBST(lextargets, ${LEX_TARGETS})
 AC_SUBST(version, ${ADMB_VERSION})

@@ -15,7 +15,7 @@
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
 
-/*void stop_flag(void)
+void stop_flag(void)
 {
   static int stop_flag;
   if (stop_flag!=1)
@@ -32,7 +32,7 @@
   }
   while(stop_flag==0)
     sleep(5);
-}*/
+}
 double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const banded_symmetric_dmatrix& bHess,const dvector& _xadjoint,
   const dvector& _uadjoint,
@@ -693,6 +693,21 @@ dvector laplace_approximation_calculator::banded_calculations
       else if (hesstype==4)
         Hess.initialize();
 
+      block_diagonal_flag=2;
+      used_flags.initialize();
+      funnel_init_var::lapprox=this;
+      sparse_count=0.0;
+    
+      initial_params::straight_through_flag=1;
+
+      if (sparse_triplet2)
+        sparse_triplet2->initialize();
+
+      pfmin->user_function();
+      initial_params::straight_through_flag=0;
+    
+      int ierr=0;
+
       #if defined(USE_ADMPI)
       if (ad_comm::mpi_manager)
       {
@@ -714,22 +729,6 @@ dvector laplace_approximation_calculator::banded_calculations
         }
       }
       #endif
-
-      block_diagonal_flag=2;
-      used_flags.initialize();
-      funnel_init_var::lapprox=this;
-      sparse_count=0.0;
-    
-      initial_params::straight_through_flag=1;
-
-      if (sparse_triplet2)
-        sparse_triplet2->initialize();
-
-      pfmin->user_function();
-      initial_params::straight_through_flag=0;
-    
-      int ierr=0;
-
       laplace_approximation_calculator::where_are_we_flag=3; 
       if (!ierr)
       {
@@ -809,7 +808,7 @@ dvector laplace_approximation_calculator::banded_calculations
       initial_params::straight_through_flag=1;
       block_diagonal_flag=3;
       local_dtemp.initialize();
-    
+//stop_flag();
       // *****  Note for quadratic prior code: I don't think that this 
       // part gets added to the Hessian here.
       sparse_count=0;

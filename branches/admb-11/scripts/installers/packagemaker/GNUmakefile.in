@@ -1,4 +1,4 @@
-DISTRIBUTION_NAME=ADMB
+DISTRIBUTION_NAME=ADMB-11
 
 #TIGER=10.4
 #LEOPARD=10.5
@@ -24,6 +24,6 @@ all:
 	cp -vf scripts/installers/packagemaker/Resources/background.jpg  build/dmg/@target@/Resources/
 	mkdir -p build/dmg/@target@/package
 	cp -vf docs/install/readme-macos.txt  build/dmg/@target@/package
-	$(CC) --verbose --title $(DISTRIBUTION_NAME) --root build/dmg/@target@/installer --id www.admb-project.org --resources build/dmg/@target@/Resources --out build/dmg/@target@/package/@target@.pkg
+	$(CC) --verbose --title "$(DISTRIBUTION_NAME)" --root build/dmg/@target@/installer --id www.admb-project.org --resources build/dmg/@target@/Resources --out build/dmg/@target@/package/@target@.pkg
 	rm -vf build/@target@.dmg
-	hdiutil create build/@target@.dmg -volname "ADMB @version@" -srcfolder build/dmg/@target@/package
+	hdiutil create build/@target@.dmg -volname "$(DISTRIBUTION_NAME)" -srcfolder build/dmg/@target@/package

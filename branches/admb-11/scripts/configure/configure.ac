@@ -1,4 +1,4 @@
-AC_INIT([ADMB], [11], [users@admb-project.org]): ${CXXFLAGS="${CXXFLAGS}"} ${CFLAGS="${CFLAGS}"} 
+AC_INIT([ADMB], [trunk], [users@admb-project.org]): ${CXXFLAGS="${CXXFLAGS}"} ${CFLAGS="${CFLAGS}"} 
 
 # Check for programs used in building ADMB.
 AC_PROG_CC
@@ -20,7 +20,8 @@ fi
 
 ADMB_TARGET=unix
 
-ADMB_VERSION=`cat VERSION`
+#ADMB_VERSION=`cat VERSION`
+ADMB_VERSION=
 
 AC_CHECK_PROG(HAS_SVNVERSION,svnversion,[yes])
 if test "${HAS_SVNVERSION}" = "yes"
@@ -59,9 +60,9 @@ then
   CLANG_VERSION=`clang++ --version | head -n 1 | awk '{print $4}'`
   if test "${CXX}" = "clang++"
   then
-    ADMB_TARGET="admb-${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-clang${CLANG_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET="admb${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-clang${CLANG_VERSION}-${CXX_32OR64BIT}"
   else
-    ADMB_TARGET="admb-${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET="admb${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
   fi
 fi
 
@@ -76,7 +77,7 @@ then
   if test "${CXX}" = "g++"
   then
     GCC_VERSION=`gcc -dumpversion`
-    ADMB_TARGET="admb-${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET="admb${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   fi
   if test "${CXX}" = "icpc"
   then
@@ -87,7 +88,7 @@ then
     CXX_32OR64BIT="64bit"
     fi
     ICC_VERSION=`icc -dumpversion`
-    ADMB_TARGET="admb-${ADMB_VERSION}-linux-icc${ICC_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET="admb${ADMB_VERSION}-linux-icc${ICC_VERSION}-${CXX_32OR64BIT}"
   fi
   MAKEFILE="linux.mak"
 fi
@@ -96,7 +97,7 @@ UNAME_S=`uname -s`
 if (test  "${UNAME_S:0:10}" =  "MINGW32_NT")
 then
   GCC_VERSION=`gcc -dumpversion`
-  ADMB_TARGET="admb-${ADMB_VERSION}-mingw-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  ADMB_TARGET="admb${ADMB_VERSION}-mingw-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
   INSTALLER_MINGW="scripts/installers/innosetup/mingw.iss"
 fi
@@ -113,10 +114,10 @@ if test  "`uname -s`" =  "SunOS"
 then
   if test "${CXX}" = "CC"
   then
-    ADMB_TARGET="admb-${ADMB_VERSION}-opensolaris-sunstudio-${CXX_32OR64BIT}"
+    ADMB_TARGET="admb${ADMB_VERSION}-opensolaris-sunstudio-${CXX_32OR64BIT}"
   else
     GCC_VERSION=`gcc -dumpversion`
-    ADMB_TARGET="admb-${ADMB_VERSION}-opensolaris-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET="admb${ADMB_VERSION}-opensolaris-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   fi
   MAKEFILE="linux.mak"
 fi

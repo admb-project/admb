@@ -1,5 +1,5 @@
 ADMB Project
-Version trunk
+Version ADMB-11
 Release date
 
 Overview

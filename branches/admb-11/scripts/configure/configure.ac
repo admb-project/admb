@@ -1,4 +1,4 @@
-AC_INIT([ADMB], [trunk], [users@admb-project.org]): ${CXXFLAGS="${CXXFLAGS}"} ${CFLAGS="${CFLAGS}"} 
+AC_INIT([ADMB], [11], [users@admb-project.org]): ${CXXFLAGS="${CXXFLAGS}"} ${CFLAGS="${CFLAGS}"} 
 
 # Check for programs used in building ADMB.
 AC_PROG_CC

@@ -1,4 +1,4 @@
-2*
+/*
  * $Id$
  *
  * Author: David Fournier

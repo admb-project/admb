@@ -57,9 +57,9 @@ then
   MACOS_PRODUCT_VERSION=`sw_vers -productVersion`
   MACOS_XCODE_VERSION=`xcodebuild -version | grep Xcode | awk '{print $2}'`
   INSTALLER_PACKAGEMAKER="scripts/installers/packagemaker/GNUmakefile"
-  CLANG_VERSION=`clang++ --version | head -n 1 | awk '{print $4}'`
   if test "${CXX}" = "clang++"
   then
+    CLANG_VERSION=`clang++ --version | head -n 1 | awk '{print $4}'`
     ADMB_TARGET="admb${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-clang${CLANG_VERSION}-${CXX_32OR64BIT}"
   else
     ADMB_TARGET="admb${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"

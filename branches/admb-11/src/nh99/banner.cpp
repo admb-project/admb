@@ -1,5 +1,7 @@
 /*
  * $Id$
+ *
+ * Copyright (c) 2008-2012 ADMB foundation
  */
 
 #include <fvar.hpp>
@@ -117,7 +119,7 @@ void banner(const adstring& program_name)
 #endif
   ss << "\n";
 
-  ss << "Copyright (c) 2008-2011 Regents of the University of California and ADMB Foundation\n";
+  ss << "Copyright (c) 2008-2012 ADMB Foundation and Regents of the University of California\n";
   
   ss << '\0';
 

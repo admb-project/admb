@@ -2,13 +2,13 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  * 
- * License:
- *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  * 
+ * License:
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:

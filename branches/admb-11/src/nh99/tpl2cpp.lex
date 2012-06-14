@@ -6,7 +6,7 @@
    * $Id: tpl2cpp.lex 945 2011-01-12 23:03:57Z johnoel $
    *
    * Author: David Fournier
-   * Copyright (c) 2008-2011 Regents of the University of California
+   * Copyright (c) 2008-2012 Regents of the University of California
    */
 
   #define   MAX_TMP_STRING  501
@@ -97,7 +97,7 @@
   char arglist1[4000];
   char *  arglist_ptr;
   char arglist[4000];
-  char uuu_xxx[80]={"Copyright (c) 2008-2011 Regents of the University of California"};
+  char uuu_xxx[80]={"Copyright (c) 2008-2012 Regents of the University of California"};
   FILE * fdat=NULL;
   FILE * htop=NULL;
   FILE * fall=NULL;

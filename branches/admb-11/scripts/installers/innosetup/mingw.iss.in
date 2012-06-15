@@ -19,6 +19,11 @@ Name: "mingw"; Description: "ADMB-11 (MinGW GCC-@gccversion@)"
 
 [Files]
 Source: "..\..\..\build\@target@\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\scripts\mingw\set-admb-mingw.bat"; DestDir: "{app}\bin"
+Source: "..\..\..\scripts\g++\adcomp.bat"; DestDir: "{app}\bin"
+Source: "..\..\..\scripts\g++\adlink.bat"; DestDir: "{app}\bin"
+Source: "..\..\..\scripts\admb\admb.bat"; DestDir: "{app}\bin"
+Source: "..\..\..\utilities"; DestDir: "{app}\utilities"
 
 [Icons]
 Name: "{group}\ADMB-11 Command Prompt (MinGW GCC-@gccversion@)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingw.bat"""; WorkingDir: "{app}"; Comment: "ADMB-11 Command Prompt (MinGW GCC-@gccversion@)"

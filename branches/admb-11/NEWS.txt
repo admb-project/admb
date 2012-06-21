@@ -1,44 +1,71 @@
 CHANGES IN ADMB VERSION 11.0:
 
-  SIGNIFICANT USER-VISIBLE CHANGES:
+SIGNIFICANT USER-VISIBLE CHANGES:
 
-    * The compilation scripts (adcomp, adlink, admb) compile in
-      "safe" mode by default.
+* The compilation scripts (adcomp, adlink, admb) compile in
+  "safe" mode by default.
 
-    * [anything that works differently from before, given the
-      same input]
+* Outputs "std.dev" instead of "std dev" in output files .std 
+  and .cor.
+  [Magnusson r53,r54]
 
-  NEW FEATURES:
+* Allow q, n and c key presses for Visual C++. 
+  [Ancheta r248]
+      
 
-    * Functions from user-contributed packages can be loaded from
-      directory 'contrib', [maybe indicate how that is done].
+NEW FEATURES:
 
-    * New class 'init_table' to read input data into a matrix.
+* Functions from user-contributed packages can be loaded from
+  directory 'contrib'.
+  [Martel r90]
+  [Brooks r96]
+  [Weihei r103]
+  [Grandin r293]
 
-    * New function sumsq() to calculate sum of squared values,
-      equivalent to norm2().
+* New class 'init_table' to read input data into a matrix.
 
-    * New constant PI for 3.141593... Makes models more portable
-      than using M_PI or other compiler-specific constants.
+* New function sumsq() to calculate sum of squared values,
+  equivalent to norm2().
 
-    * New shell command 'ad2csv' to write binary files to screen
-      or to a file.
+* Added matrix exponential.
+  [Berg r50,r51]
 
-    * [many more]
+* New constant PI for 3.141593... Makes models more portable
+  than using M_PI or other compiler-specific constants. 
+  [Magnusson r46,r47]
 
-  DEPRECATED AND DEFUNCT:
+* New shell command 'ad2csv' to write binary files to screen
+  or to a file.
+  [Magnusson r318]
 
-  INSTALLATION:
+* PRIORS_SECTION 
+  [Weihei r129]
 
-    * [not the whole installation procedure, only how the
-      procedure has changed]
+* Added Factors support.
+  [Nielsen r275, r276]
 
-  BUG FIXES:
+NEW SUPPORTED COMPILERS 
 
-CHANGES IN ADMB VERSION 10.1:
+* Oracle Solaris Studio 12
 
-CHANGES IN ADMB VERSION 10.0:
+* MinGW (64 bit)
 
-CHANGES IN ADMB VERSION 9.1:
+* MacOS XCode 4
 
-etc.
+* Clang++ 3.x
+
+DEPRECATED AND DEFUNCT
+
+* Borland C++ 5 is no longer supported.
+
+BUG FIXES
+
+* Fixed annoying problem with windows line endings in tpl files.
+  [Ancheta r185]
+
+* Fixed Crtl-C to work with Visual C++
+  [Ancheta r244]
+
+* Various bug fixes and improvments contributed by Brooks, Magnusson, 
+  Nielsen, Sibert, Maunder, Weihei, Seiple, Grandin, Berg, Founier,
+  Martell, Skaug, Mildenbergers and Ianelli.

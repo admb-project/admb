@@ -2,7 +2,7 @@
  * $Id$
  *
  * Authors: Anders Nielsen <anders@nielsensweb.org>
- * Copyright (c) 2010-2011 ADMB Foundation
+ * Copyright (c) 2010-2012 ADMB Foundation
  */
 /**
  * \file

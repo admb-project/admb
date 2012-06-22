@@ -2,7 +2,7 @@
  * $Id: df1b2min2.cpp 2011-07-27 add by weihai,created by Dave$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file df1b2min2.cpp

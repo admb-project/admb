@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2011 ADMB Foundation
+ * Copyright (c) 2012 ADMB Foundation
  */
 
 #include <df1b2fun.h>

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Modified by Derek Seiple
- * Copyright (c) 2010-2011 ADMB Foundation
+ * Copyright (c) 2010-2012 ADMB Foundation
  *
  * Adopted from GNU glibc by Mjt.
  * See stdlib/qsort.c in glibc

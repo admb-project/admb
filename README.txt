@@ -1,6 +1,6 @@
 ADMB Project
-Version trunk
-Release date
+Version ADMB-11pre
+Release June 22, 2012
 
 Overview
 ========

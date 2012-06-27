@@ -11,17 +11,15 @@ Prerequisites
 Procedure
 ---------
 1. Open ADMB dmg file. 
-2. In the mounted disk image (ADMB 10.1), double click the 
-   pkg installer and follow the installation instructions.
-3. Once the installation is "Finished", follow the "Quick Start" 
-   procedure below to build and run the simple example.
+2. In the mounted disk image "ADMB-11", copy "ADMB-11 Terminal"
+   to the "Applications" folder.
 
 Quick Start
 ===========
 Describes the procedure for building and running the
 ADMB simple example.
 
-1. Open Terminal located in /Applications/Utilities,
+1. Open "ADMB-11 Terminal" located in /Applications,
    then type admb for Usage options.
 
    $ admb
@@ -35,9 +33,9 @@ ADMB simple example.
      -s     Enforce safe bounds
      model  Filename prefix, e.g. simple
 
-2. Copy simple from examples.
+2. Copy simple example from ADMB_HOME.
 
-   $ cp -R /usr/local/admb/examples/admb/simple .
+   $ cp -R $ADMB_HOME/examples/admb/simple .
 
 3. Must change to the copied simple directory .
 

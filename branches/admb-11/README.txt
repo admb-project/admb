@@ -1,6 +1,6 @@
 ADMB Project
-Version ADMB-11pre
-Release June 22, 2012
+Version ADMB-11
+Release June 30,2012
 
 Overview
 ========

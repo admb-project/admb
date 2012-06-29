@@ -488,5 +488,7 @@ Hans Skaug <Hans.Skaug@mi.uib.no>
 Mark Maunder <mmaunder@iattc.org>
 Anders Nielsen <anders@nielsensweb.org>
 Arni Magnusson <arnima@hafro.is>
+Ian Taylor <ian.taylor@noaa.gov>
+Chris Grandin <Chris.Grandin@dfo-mpo.gc.ca>
 Derek Seiple <dseiple@hawaii.edu>
 Johnoel Ancheta <johnoel@hawaii.edu>

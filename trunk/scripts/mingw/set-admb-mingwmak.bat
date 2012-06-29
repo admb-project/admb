@@ -8,7 +8,7 @@ REM
 REM
 REM Adds the bin folder to ADMB_HOME to system path.
 REM
-@set PATH=.;"%ADMB_HOME%"\bin;%ADMB_HOME%\utilities;%ADMB_HOME%\MinGW-gcc4.6\bin;%PATH%
+@set PATH=.;"%ADMB_HOME%"\bin;"%ADMB_HOME%"\utilities;"%ADMB_HOME%"\MinGW-gcc4.6\bin;%PATH%
 @echo Setting ADMB Home enviroment to "%ADMB_HOME%".
 
 @cd "%USERPROFILE%"

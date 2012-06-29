@@ -19,7 +19,7 @@ REM
 REM
 REM Adds the bin folder to ADMB_HOME to system path.
 REM
-@set PATH=.;%ADMB_HOME%\bin;%ADMB_HOME%\utilities;%MINGW_HOME%\bin;%PATH%
+@set PATH=.;"%ADMB_HOME%"\bin;"%ADMB_HOME%"\utilities;%MINGW_HOME%\bin;%PATH%
 @echo Setting ADMB Home enviroment to "%ADMB_HOME%".
 
 @cd "%USERPROFILE%"

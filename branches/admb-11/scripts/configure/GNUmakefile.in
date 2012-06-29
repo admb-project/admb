@@ -31,7 +31,7 @@ dist:
 	svn export . build/dist/admb@version@
 	rm -rf build/dist/admb@version@/test
 	cp configure build/dist/admb@version@
-	cd build/dist && zip -r admb@version@.zip admb@version@
+	cd build/dist && rm -vf admb@version@.zip && zip -r admb@version@.zip admb@version@
 
 verify:
 	DISK=@disk@ ADMB_CXXFLAGS="@cxxflags@" ADMB_LDFLAGS="@cxxflags@" $(MAKE) --directory=src --file=@makefile@ verify
@@ -53,7 +53,7 @@ install:
 	cp -Rf build/@target@/examples/* @prefix@/admb/examples
 
 zip:
-	cd build && zip -r @target2@.zip @target@
+	cd build && rm -vf @target2@.zip && zip -r @target2@.zip @target@
 
 dmg:
 	@dmgtask@

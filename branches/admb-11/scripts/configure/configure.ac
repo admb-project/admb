@@ -20,8 +20,7 @@ fi
 
 ADMB_TARGET=unix
 
-#ADMB_VERSION=`cat VERSION`
-ADMB_VERSION=
+ADMB_VERSION=-`cat VERSION`
 
 AC_CHECK_PROG(HAS_SVNVERSION,svnversion,[yes])
 if test "${HAS_SVNVERSION}" = "yes"

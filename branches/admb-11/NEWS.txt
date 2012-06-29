@@ -56,7 +56,7 @@ NEW SUPPORTED COMPILERS
 
 DEPRECATED AND DEFUNCT
 
-* Borland C++ 5 is no longer supported.
+* Borland C++ 5.x is no longer supported.
 
 BUG FIXES
 

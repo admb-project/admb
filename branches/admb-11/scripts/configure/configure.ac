@@ -94,6 +94,11 @@ then
     ADMB_TARGET="admb${ADMB_VERSION}-linux-icc${ICC_VERSION}-${CXX_32OR64BIT}"
     ADMB_TARGET2="admb-linux-icc${ICC_VERSION}-${CXX_32OR64BIT}"
   fi
+  if test "${CXX}" = "CC"
+  then
+    ADMB_TARGET="admb${ADMB_VERSION}-linux-sunstudio12-${CXX_32OR64BIT}"
+    ADMB_TARGET2="admb-linux-sunstudio12-${CXX_32OR64BIT}"
+  fi
   MAKEFILE="linux.mak"
 fi
 

@@ -41,4 +41,4 @@ pkg:
 dmg:
 	rm -rvf `find build/dmg/@target@ -type d -name .svn`
 	rm -vf build/@target@.dmg
-	hdiutil create build/@target@.dmg -volname "$(DISTRIBUTION_NAME)" -srcfolder build/dmg/@target@/srcfolder
+	hdiutil create build/@target2@.dmg -volname "$(DISTRIBUTION_NAME)" -srcfolder build/dmg/@target@/srcfolder

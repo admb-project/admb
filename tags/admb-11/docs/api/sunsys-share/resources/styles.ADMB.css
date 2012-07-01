@@ -1,0 +1,149 @@
+/*
+ * $Id: styles.ADMB.css 221 2009-05-15 18:46:41Z jsibert $
+ *
+ * Author: John Sibert
+ * Copyright (c) 2009 ADMB Foundation
+ *
+ *  modified from styles.javadoc.css
+ *
+ *  Sunsys Dox stylesheet, Javadoc-mimic theme.
+ *
+ *  by  Narech Koumar
+ */
+
+
+a:hover
+{
+    color:                  #3366ff;
+}
+
+
+.doxTxt
+{
+}
+.doxTxtBrief
+{
+}
+.doxTxtDetail
+{
+    margin-left:            30;
+}
+.doxTxtTH
+{
+    text-align:             left;
+    background-color:       #f3f3f3;
+}
+.doxTxtTD
+{
+    text-align:             left;
+    background-color:       #fcfcfc;
+}
+
+
+.doxFntTitle
+{
+    font-size:              16pt;
+    color:                  #000000;
+}
+.doxFntNavBar
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              7pt;
+}
+
+
+.doxFntPara
+{
+}
+.doxFntParaSml
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              8pt;
+}
+
+
+.doxFntCode
+{
+    font-family:            monospace;
+    font-size:              10pt;
+}
+.doxFntCodeMed
+{
+    font-family:            monospace;
+    font-size:              9pt;
+}
+.doxFntCodeSml
+{
+    font-family:            monospace;
+    font-size:              8pt;
+}
+
+
+.doxTabRow1
+{
+    background-color:       #ffffff;
+}
+.doxTabRow2
+{
+    background-color:       #cde2a7;
+}
+
+
+.doxTabBrdr1
+{
+}
+.doxTabBrdr2
+{
+    border-collapse:        collapse;
+    border-left-style:      solid;
+    border-left-width:      1px;
+    border-right-style:     solid;
+    border-right-width:     1px;
+    border-top-style:       solid;
+    border-top-width:       1px;
+    border-bottom-style:    solid;
+    border-bottom-width:    1px;
+    border-color:           #999999;
+}
+
+
+.doxTabHdrTxtA
+{
+    font-size:              17pt;
+    font-weight:            bold;
+    color:                  #000000;
+}
+.doxTabHdrTxtB
+{
+    font-size:              12pt;
+    font-weight:            bold;
+    color:                  #000000;
+}
+.doxTabHdrTxtC
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              8pt;
+    font-weight:            bold;
+    color:                  #000000;
+}
+.doxTabHdrTxtCSml
+{
+    font-family:            Verdana, Arial, Helvetica, sans-serif;
+    font-size:              7pt;
+    color:                  #333333;
+}
+.doxTabHdrBgA
+{
+    background-color:       #74ae0b;
+}
+.doxTabHdrBgB
+{
+    background-color:       #eeeeff;
+}
+.doxTabHdrBgC
+{
+    background-color:       #d7d7d7;
+}
+
+
+/* EOF */

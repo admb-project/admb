@@ -22,6 +22,9 @@ dvector pearson_residuals(long m, dvector obs_p, dvector pred_p);
 // Uniform distribution
 dvariable dunif( const dvariable& x, const double min, const double max );
 
+// Student-t Distribution
+dvariable dstudent_t( const dvar_vector& residual, const dvar_vector& df);
+
 // Inverse gamma distribution
 dvariable dinvgamma( const dvariable& x, const double a, const double b );
 

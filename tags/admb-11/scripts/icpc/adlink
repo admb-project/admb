@@ -1,0 +1,60 @@
+#!/bin/bash
+shopt -s expand_aliases
+alias help='echo -e "Usage: adlink [-d] [-g] [-r] [-s] model\n
+Link AD Model Builder object code to executable.\n
+  -d     Create DLL
+  -g     Insert debugging symbols
+  -r     Create ADMB-RE
+  -s     Enforce safe bounds
+  model  Filename prefix, e.g. simple\n"'
+if [[ "$1" == "" ]]; then help; exit; fi
+if [[ "$1" == "-help" ]]; then help; exit; fi
+if [[ "$1" == "--help" ]]; then help; exit; fi
+###########################################################################################################################
+###                                                                                                                       #
+### Script:   adlink [-d] [-g] [-r] [-s] model                                                                            #
+###                                                                                                                       #
+### Purpose:  Link ADMB object code to executable                                                                         #
+###                                                                                                                       #
+### Args:     -d creates DLL                                                                                              #
+###           -g inserts debugging symbols                                                                                #
+###           -r creates ADMB-RE model                                                                                    #
+###           -s creates model that enforces safe array bounds during runtime                                             #
+###           model is the filename with or without extension, e.g. simple or simple.o                                    #
+###                                                                                                                       #
+### Requires: ADMB libraries, g++                                                                                         #
+###                                                                                                                       #
+### Returns:  Creates executable or DLL with same prefix                                                                  #
+###                                                                                                                       #
+### History:  23 May 2009  Arni Magnusson created                                                                         #
+###           23 Oct 2009  Johnoel Ancheta fixed bug where df1b2s library was always linked and never df1b2o              #
+###           27 Nov 2009  Arni Magnusson added support for filename extension, e.g. simple.o                             #
+###            8 Feb 2010  Johnoel Ancheta split the -s combo option into separate -g and -s options                      #
+###           22 Feb 2010  Arni Magnusson merged forked versions                                                          #
+###                                                                                                                       #
+###########################################################################################################################
+
+# Pop args until model=$1
+adlib=-lado
+unset re
+s=-s
+unset shared
+while getopts "dgrs" A; do
+  case $A in
+    d) shared=-shared;;
+    g) unset s;;
+    r) re=true;;
+    s) adlib=-lads;;
+  esac
+done
+shift $[OPTIND-1]
+
+model="${1%.*}"
+
+df1b2lib=-ldf1b2stub
+if [[ -z $shared ]]; then out="-o $model"; else out="-o $model.so"; fi
+if [[ $adlib == "-lado" ]]; then df1b2lib=-ldf1b2o; fi
+if [[ $adlib == "-lads" ]]; then df1b2lib=-ldf1b2s; fi
+
+echo -e "icpc $s $shared -L$ADMB_HOME/lib $model.o $df1b2lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $out\n"
+         icpc $s $shared -L$ADMB_HOME/lib $model.o $df1b2lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $out

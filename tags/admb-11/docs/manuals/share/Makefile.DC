@@ -1,0 +1,42 @@
+#!/bin/bash
+# $Id:   $
+#
+# Author: Dangerous Curve typesetting@dangerouscurve.org
+# Copyright (c) 2010 ADMB Foundation
+#
+# Usage: make filename=<file base name>  (for compiling the manual).
+# Usage: make clean filename=<file base name> (for cleaning up intermediate auxiliary files)
+# Usage: make dtx filename=<file base name> (to compile the DTX and INS files)
+#
+#  E.g., to make the autodif manual, assuming all associated files have 
+#  basename (the part before the extension) "autodif," you would type:
+#
+#    make filename=autodif
+
+
+all:
+	@echo Making $(filename)
+	#pdflatex --interaction batchmode $(filename)
+	pdflatex $(filename)
+	cp $(filename).log $(filename).1.log
+	bibtex $(filename)
+	touch index.ist
+	#echo "preamble \"\\\\\\\\begin{theindex}\\\\n\\\\\\\\thispagestyle{fancy}\\\\n\"" > index.ist
+	makeindex -s index.ist $(filename).idx
+	pdflatex $(filename)
+	pdflatex $(filename)
+	cp $(filename).log $(filename).2.log
+	
+
+dtx:	
+	@echo Making $(filename).dtx
+	pdflatex --interaction batchmode $(filename).dtx
+	makeindex -s gind.ist -o $(filename).ind $(filename).idx
+	pdflatex --interaction batchmode $(filename).ins
+
+
+clean:
+	@echo Removing $(filename)
+	rm  -fv $(filename).pdf $(filename).aux $(filename).bbl  $(filename).blg  $(filename).brf  $(filename).glo  $(filename).idx  $(filename).ilg  $(filename).ind  $(filename).ioa  $(filename).log  $(filename).lot  $(filename).mtc  $(filename).mlf  $(filename).out  $(filename).pdfsync  $(filename).toc  $(filename).dvi  index.ist
+
+ 

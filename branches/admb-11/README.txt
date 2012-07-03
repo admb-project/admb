@@ -132,11 +132,12 @@ MacOS and XCode
 ---------------
 1. Download admb-'version'.dmg
 2. Double click admb-'version'.dmg file
-3. Double click the admb-'version'.pkg
-4. Follow the installation instructions
+3. Copy ADMB-11 app to preferred location
+4. Double click the ADMB-11 to open Terminal
+5. In the Terminal window, change directory to the your tpl folder,
+   then 
 
-If successful, the wizard will have installed admb directory (/usr/local/admb)
-and script (/usr/local/bin/admb).
+   $ admb 'model' 
 
 Windows and GCC
 ---------------

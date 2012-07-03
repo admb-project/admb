@@ -1,0 +1,44 @@
+DISTRIBUTION_NAME=ADMB-11
+
+#TIGER=10.4
+#LEOPARD=10.5
+#SNOW_LEOPARD=10.6
+
+CC=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
+
+all: app dmg
+
+app:
+	rm -rvf build/dmg/@target@
+	mkdir -p build/dmg/@target@/srcfolder
+
+	cp -vf docs/install/readme-macos.txt  build/dmg/@target@/srcfolder
+	cp -Rvf scripts/installers/packagemaker/ADMB-Terminal.app build/dmg/@target@/srcfolder
+	mkdir -p build/dmg/@target@/srcfolder/ADMB-Terminal.app/Contents/admb-11
+	cp -Rvf build/@target@/* build/dmg/@target@/srcfolder/ADMB-Terminal.app/Contents/admb-11
+	mv build/dmg/@target@/srcfolder/ADMB-Terminal.app build/dmg/@target@/srcfolder/$(DISTRIBUTION_NAME)\ Terminal.app
+
+pkg:
+	mkdir -p build/dmg/@target@/Resources
+
+	rm -rvf build/dmg/@target@/installer
+	mkdir -p build/dmg/@target@/installer
+	#mkdir -p build/dmg/@target@/installer/usr/local/bin
+	#mkdir -p build/dmg/@target@/installer/usr/local/admb
+
+	cp -Rvf build/@target@ build/dmg/@target@/installer/$(DISTRIBUTION_NAME)
+	rm -rvf `find build/dmg/@target@/installer -type d -name .svn`
+
+	#cp -vf scripts/admb/admb-bin build/dmg/@target@/installer/usr/local/bin/admb
+
+	cp -vf build/dmg/@target@/installer/$(DISTRIBUTION_NAME)/README.txt build/dmg/@target@/Resources/Welcome.txt
+	cp -vf build/dmg/@target@/installer/$(DISTRIBUTION_NAME)/LICENSE.txt build/dmg/@target@/Resources/License.txt
+	cp -vf scripts/installers/packagemaker/Resources/background.jpg  build/dmg/@target@/Resources/
+	mkdir -p build/dmg/@target@/package
+	cp -vf docs/install/readme-macos.txt  build/dmg/@target@/package
+	$(CC) --verbose --title "$(DISTRIBUTION_NAME)" --root build/dmg/@target@/installer --id www.admb-project.org --resources build/dmg/@target@/Resources --out build/dmg/@target@/package/@target@.pkg
+
+dmg:
+	rm -rvf `find build/dmg/@target@ -type d -name .svn`
+	rm -vf build/@target2@.dmg
+	hdiutil create build/@target2@.dmg -volname "$(DISTRIBUTION_NAME)" -srcfolder build/dmg/@target@/srcfolder

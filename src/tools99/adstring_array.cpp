@@ -1,3 +1,9 @@
+/*
+ * $Id$
+ *
+ * Author: David Fournier
+ * Copyright (c) 2008-2012 ADMB Foundation
+ */
 #include "adstring.hpp"
 
 adstring_array& adstring_array::operator=(const adstring_array& a)

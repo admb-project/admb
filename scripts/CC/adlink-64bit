@@ -52,4 +52,4 @@ if [ -n $re ] ; then
   fi
 fi
 
-CC $1.o -m64 -L$ADMB_HOME/lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $df1b2lib -o $1
+CC $1.o -m64 -L"$ADMB_HOME"/lib -ladmod -ladt $adlib $df1b2lib -ladmod -ladt $adlib $df1b2lib -o $1

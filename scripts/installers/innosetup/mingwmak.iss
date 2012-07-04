@@ -1,11 +1,11 @@
 [Setup]
 PrivilegesRequired=none
-AppName=ADMB
-AppVerName=ADMB
+AppName=ADMB-11
+AppVerName=ADMB-11
 UsePreviousAppDir=no
 UsePreviousGroup=no
-DefaultDirName={pf}\ADMB
-DefaultGroupName=ADMB (MinGW G++)
+DefaultDirName={pf}\ADMB-11
+DefaultGroupName=ADMB-11 (MinGW G++)
 UninstallDisplayIcon={app}\uninstall.exe
 OutputDir=..\..\..\build
 OutputBaseFilename=admb-mingwmak-g++
@@ -15,17 +15,11 @@ LicenseFile=..\..\..\LICENSE.txt
 AlwaysShowComponentsList=no
 
 [Types]
-Name: "mingw"; Description: "ADMB (MinGW G++)"
+Name: "mingw"; Description: "ADMB-11 (MinGW G++)"
 
 [Files]
 Source: "..\..\..\build\mingw\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
-Source: "..\..\..\scripts\mingw\set-admb-mingwmak.bat"; DestDir: "{app}\bin"
-Source: "..\..\..\scripts\g++\adcomp.bat"; DestDir: "{app}\bin"
-Source: "..\..\..\scripts\g++\adlink.bat"; DestDir: "{app}\bin"
-Source: "..\..\..\scripts\admb\admb.bat"; DestDir: "{app}\bin"
-Source: "..\..\..\utilities\*"; DestDir: "{app}\utilities"
-Source: "c:\MinGW-gcc4.6\*"; DestDir: "{app}\MinGW-gcc4.6\"; Flags: recursesubdirs
 
 [Icons]
-Name: "{group}\ADMB Command Prompt (MinGW G++)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingwmak.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW G++)"
-Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB"
+Name: "{group}\ADMB-11 Command Prompt (MinGW G++)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingw.bat"""; WorkingDir: "{app}"; Comment: "ADMB-11 Command Prompt (MinGW G++)"
+Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB-11"

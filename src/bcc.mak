@@ -1,8 +1,8 @@
 DISK=..\build\admb-bcc5.5-32bit
 CXXFLAGS:=$(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION)
 
-OPT_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DADMB_VERSION=trunk -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DOPT_LIB -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
-SAFE_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DADMB_VERSION=trunk -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DSAFE_ALL -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
+OPT_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DADMB_VERSION=11 -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DOPT_LIB -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
+SAFE_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DADMB_VERSION=11 -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DSAFE_ALL -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
 
 all: dist
 
@@ -37,6 +37,7 @@ dist:
 	copy ..\LICENSE.txt $(DISK)\dist
 	copy ..\README.txt $(DISK)\dist
 	copy ..\NEWS.txt $(DISK)\dist
+	copy ..\VERSION $(DISK)\dist
 	copy ..\utilities\sed.exe $(DISK)\dist\bin
 	copy ..\scripts\bcc32\adcomp.bat $(DISK)\dist\bin
 	copy ..\scripts\bcc32\adlink.bat $(DISK)\dist\bin

@@ -19,7 +19,6 @@ eplogis.obj \
 multifan.obj \
 dunif.obj \
 dinvgamma.obj \
-studentT.obj\
 vcubicspline.obj
 
 												

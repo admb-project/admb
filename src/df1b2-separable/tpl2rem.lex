@@ -107,7 +107,7 @@
   char arglist1[4000];
   char *  arglist_ptr;
   char arglist[4000];
-  char uuu_xxx[80]={"Copyright (c) 2008-2011 Regents of the University of California"};
+  char uuu_xxx[80]={"Copyright (c) 2008-2012 Regents of the University of California"};
   FILE * fdat=NULL;
   FILE * fdat1=NULL;
   FILE * htop=NULL;

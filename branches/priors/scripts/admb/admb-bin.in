@@ -1,5 +1,0 @@
-#!/bin/bash
-
-ADMB_HOME=@prefix@/admb PATH=@prefix@/admb/bin:$PATH CXXFLAGS=@arch_cxxflag@ admb $*
-
-exit 0

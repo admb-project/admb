@@ -59,6 +59,7 @@ dist:
 	cp -vf ../LICENSE.txt ${DISK}
 	cp -vf ../README.txt ${DISK}
 	cp -vf ../NEWS.txt ${DISK}
+	cp -vf ../VERSION ${DISK}
 	cp ../scripts/admb/admb ${DISK}/bin
 	cp -vf ../scripts/g++/Makefile ${DISK}/examples
 ifeq ($(CXX),CC)

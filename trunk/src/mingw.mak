@@ -32,6 +32,7 @@ dist:
 	copy ..\LICENSE.txt $(DISK)
 	copy ..\NEWS.txt $(DISK)
 	copy ..\README.txt $(DISK)
+	copy ..\VERSION $(DISK)
 	copy ..\scripts\mingw\Makefile $(DISK)
 	copy ..\scripts\mingw\*.bat $(DISK)\bin
 	copy ..\scripts\admb\*.bat $(DISK)\bin

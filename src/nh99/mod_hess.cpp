@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
@@ -88,7 +88,7 @@ void function_minimizer::hess_routine_noparallel(void)
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".hes";
   uostream ofs((char*)tmpstring);
-    
+
   ofs << nvar;
   {
     {
@@ -138,7 +138,7 @@ void function_minimizer::hess_routine_noparallel(void)
       gradcalc(nvar,g2);
       x(i)=xsave;
       hess1=(g1-g2)/(sdelta1-sdelta2);
- 
+
       sdelta1=x(i)+eps*delta;
       useless(sdelta1);
       sdelta1-=x(i);
@@ -170,7 +170,7 @@ void function_minimizer::hess_routine_noparallel(void)
       double eps2=eps*eps;
       hess2=(g1-g2)/(sdelta1-sdelta2);
       hess=(eps2*hess1-hess2) /(eps2-1.);
-   
+
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
     }
@@ -475,7 +475,7 @@ void function_minimizer::depvars_routine(void)
   dvector ggg(1,1);
   gradcalc(0,ggg);
   gradient_structure::set_YES_DERIVATIVES();
-  initial_params::restore_start_phase(); 
+  initial_params::restore_start_phase();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   int ndvar=stddev_params::num_stddev_calc();
   independent_variables x(1,nvar);
@@ -492,7 +492,7 @@ void function_minimizer::depvars_routine(void)
     lapprox->no_function_component_flag=1;
   }
 #endif
-    
+
   dvariable vf;
   vf=initial_params::reset(dvar_vector(x));
   *objective_function_value::pobjfun=0.0;
@@ -523,7 +523,7 @@ void function_minimizer::depvars_routine(void)
 // symmetrize and invert the hessian
 void function_minimizer::hess_inv(void)
 {
-  initial_params::set_inactive_only_random_effects(); 
+  initial_params::set_inactive_only_random_effects();
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   independent_variables x(1,nvar);
 
@@ -555,7 +555,7 @@ void function_minimizer::hess_inv(void)
   ifs >> sscale;
   if (!ifs)
   {
-    cerr << "Error reading sscale" 
+    cerr << "Error reading sscale"
          << " in routine hess_inv()" << endl;
   }
 
@@ -584,7 +584,7 @@ void function_minimizer::hess_inv(void)
     int zero_switch=0;
     for (int j=1;j<=nvar;j++)
     {
-      if (hess(i,j)!=0.0) 
+      if (hess(i,j)!=0.0)
       {
 	zero_switch=1;
       }
@@ -601,16 +601,19 @@ void function_minimizer::hess_inv(void)
   double llss=ln_det(hess,ssggnn);
   int on1=0;
   useless(llss);
-  { 
+  {
     ofstream ofs3((char*)(ad_comm::adprogram_name + adstring(".eva")));
     {
-      dvector se=sort(eigenvalues(hess));
+      dvector se=eigenvalues(hess);
       ofs3 << setshowpoint() << setw(14) << setprecision(10)
-	 << se << endl;
-      if (se(se.indexmin())<=0.0)
+	 << "unsorted:\t" << se << endl;
+     se=sort(se);
+     ofs3 << setshowpoint() << setw(14) << setprecision(10)
+     << "sorted:\t" << se << endl;
+     if (se(se.indexmin())<=0.0)
       {
 #if defined(USE_LAPLACE)
-        negative_eigenvalue_flag=1;    
+        negative_eigenvalue_flag=1;
 #endif
         cout << "Warning -- Hessian does not appear to be"
          " positive definite" << endl;
@@ -642,9 +645,9 @@ void function_minimizer::hess_inv(void)
             negflags(num_negflags)=i;
           }
         }
-        if ( (on1>-1) && (num_negflags>0))   // we will try to get away from 
+        if ( (on1>-1) && (num_negflags>0))   // we will try to get away from
         {                                     // saddle point
-          negative_eigenvalue_flag=0;    
+          negative_eigenvalue_flag=0;
           spminflag=1;
           if(negdirections)
           {
@@ -656,7 +659,7 @@ void function_minimizer::hess_inv(void)
             (*negdirections)(i)=ev(negflags(i));
           }
         }
-        if (on2>-1)  
+        if (on2>-1)
         {                                     // saddle point
           dmatrix cross(1,ev.indexmax(),1,ev.indexmax());
           for (int i = 1;i <= ev.indexmax(); i++)
@@ -671,7 +674,7 @@ void function_minimizer::hess_inv(void)
         }
       }
     }
-         
+
     if (spminflag==0)
     {
       if (num_negflags==0)

@@ -1630,7 +1630,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   // *********************************************
 
    int sgn=0;
-   dvariable ld;
+   dvariable ld = 0;
    if (ad_comm::no_ln_det_choleski_flag)
    {
      if(laplace_approximation_calculator::saddlepointflag==0)

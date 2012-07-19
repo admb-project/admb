@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <fvar.hpp>
 #include <string.h>
@@ -75,7 +75,7 @@ adstring str(double x, int minwidth, int decplaces)
    return (tmp);
 }
 
-void str(_CONST int a, adstring& s)
+void str(const int a, adstring& s)
 {
  #if !defined(__GNUDOS__) && !defined(linux)
   char  buffer[50];
@@ -86,7 +86,7 @@ void str(_CONST int a, adstring& s)
 #endif
 }
 
-adstring str(_CONST int a)
+adstring str(const int a)
 {
  #if !defined(__GNUDOS__) && !defined(linux)
   char  buffer[50];

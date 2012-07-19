@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -37,7 +37,7 @@ void set_value_inv( CGNU_DOUBLE u,const dvector& _x,const int& _ii, CGNU_DOUBLE 
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST prevariable& u,const dvector& _x,const int& _ii,CGNU_DOUBLE fmin,
+void set_value_inv(const prevariable& u,const dvector& _x,const int& _ii,CGNU_DOUBLE fmin,
   CGNU_DOUBLE fmax)
 {
   dvector& x=(dvector&) _x;
@@ -49,7 +49,7 @@ void set_value_inv(_CONST prevariable& u,const dvector& _x,const int& _ii,CGNU_D
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST dvector& x,const dvector& _v, const int& _ii)
+void set_value_inv(const dvector& x,const dvector& _v, const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -81,7 +81,7 @@ void set_value_inv(const dvector& x,const dvector& _v, const int& _ii,double s)
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST dvector& x,const dvector& _v, const int& _ii,
+void set_value_inv(const dvector& x, const dvector& _v, const int& _ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   int& ii=(int&) _ii;
@@ -98,7 +98,7 @@ void set_value_inv(_CONST dvector& x,const dvector& _v, const int& _ii,
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST dvar_vector& x,const dvector& _v, const int& _ii,
+void set_value_inv(const dvar_vector& x,const dvector& _v, const int& _ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   int& ii=(int&) _ii;
@@ -115,7 +115,7 @@ void set_value_inv(_CONST dvar_vector& x,const dvector& _v, const int& _ii,
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST dmatrix& x,const dvector& v, const int& ii)
+void set_value_inv(const dmatrix& x, const dvector& v, const int& ii)
 {
   int min=x.rowmin();
   int max=x.rowmax();
@@ -133,7 +133,7 @@ void set_value_inv(_CONST dmatrix& x,const dvector& v, const int& ii)
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST dmatrix& x,const dvector& v, const int& ii,
+void set_value_inv(const dmatrix& x,const dvector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   int min=x.rowmin();
@@ -152,7 +152,7 @@ void set_value_inv(_CONST dmatrix& x,const dvector& v, const int& ii,
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST d3_array& x,const dvector& v, const int& ii)
+void set_value_inv(const d3_array& x, const dvector& v, const int& ii)
 {
   int min=x.slicemin();
   int max=x.slicemax();
@@ -170,7 +170,7 @@ void set_value_inv(_CONST d3_array& x,const dvector& v, const int& ii)
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST d3_array& x,const dvector& v, const int& ii,
+void set_value_inv(const d3_array& x,const dvector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   int min=x.slicemin();
@@ -189,7 +189,7 @@ void set_value_inv(_CONST d3_array& x,const dvector& v, const int& ii,
  * Description not yet available.
  * \param
  */
-void set_value_inv_partial(_CONST dvector& x,const dvector& _v, const int& _ii, int n)
+void set_value_inv_partial(const dvector& x, const dvector& _v, const int& _ii, int n)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -198,7 +198,7 @@ void set_value_inv_partial(_CONST dvector& x,const dvector& _v, const int& _ii, 
   #ifdef SAFE_ARRAYS
     if (max >x.indexmax())
     {
-      cerr << "index out of range in set_value_patial(_CONST dvar_vector&, ... "
+      cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
 	   << endl;
     }
   #endif
@@ -212,7 +212,7 @@ void set_value_inv_partial(_CONST dvector& x,const dvector& _v, const int& _ii, 
  * Description not yet available.
  * \param
  */
-void set_value_inv_partial(_CONST dvector& x,const dvector& _v, const int& _ii, int n,
+void set_value_inv_partial(const dvector& x,const dvector& _v, const int& _ii, int n,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   int& ii=(int&) _ii;
@@ -222,7 +222,7 @@ void set_value_inv_partial(_CONST dvector& x,const dvector& _v, const int& _ii, 
   #ifdef SAFE_ARRAYS
     if (max >x.indexmax())
     {
-      cerr << "index out of range in set_value_patial(_CONST dvar_vector&, ... "
+      cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
 	   << endl;
     }
   #endif
@@ -236,7 +236,7 @@ void set_value_inv_partial(_CONST dvector& x,const dvector& _v, const int& _ii, 
  * Description not yet available.
  * \param
  */
-void set_value_inv_partial(_CONST dvar_matrix& x,const dvector& _v, 
+void set_value_inv_partial(const dvar_matrix& x, const dvector& _v, 
   const int& _ii, int n)
 {
   int mmin=x.indexmin();
@@ -251,7 +251,7 @@ void set_value_inv_partial(_CONST dvar_matrix& x,const dvector& _v,
  * Description not yet available.
  * \param
  */
-void set_value_inv_partial(_CONST dvar_vector& x,const dvector& _v, 
+void set_value_inv_partial(const dvar_vector& x, const dvector& _v, 
   const int& _ii, int n)
 {
   int& ii=(int&) _ii;
@@ -261,7 +261,7 @@ void set_value_inv_partial(_CONST dvar_vector& x,const dvector& _v,
   #ifdef SAFE_ARRAYS
     if (max >x.indexmax())
     {
-      cerr << "index out of range in set_value_patial(_CONST dvar_vector&, ... "
+      cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
 	   << endl;
     }
   #endif
@@ -275,7 +275,7 @@ void set_value_inv_partial(_CONST dvar_vector& x,const dvector& _v,
  * Description not yet available.
  * \param
  */
-void set_value_inv_partial(_CONST dvar_vector& x,const dvector& _v, const int& _ii, int n,
+void set_value_inv_partial(const dvar_vector& x, const dvector& _v, const int& _ii, int n,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   int& ii=(int&) _ii;
@@ -285,7 +285,7 @@ void set_value_inv_partial(_CONST dvar_vector& x,const dvector& _v, const int& _
   #ifdef SAFE_ARRAYS
     if (max >x.indexmax())
     {
-      cerr << "index out of range in set_value_patial(_CONST dvar_vector&, ... "
+      cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
 	   << endl;
     }
   #endif
@@ -299,7 +299,7 @@ void set_value_inv_partial(_CONST dvar_vector& x,const dvector& _v, const int& _
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST prevariable& x,const dvector& _v, const int& _ii)
+void set_value_inv(const prevariable& x, const dvector& _v, const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -310,7 +310,7 @@ void set_value_inv(_CONST prevariable& x,const dvector& _v, const int& _ii)
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST dvariable& u,const dvector& _x,const int& _ii,CGNU_DOUBLE fmin,
+void set_value_inv(const dvariable& u, const dvector& _x, const int& _ii, CGNU_DOUBLE fmin,
   CGNU_DOUBLE fmax)
 {
   int& ii=(int&) _ii;
@@ -322,7 +322,7 @@ void set_value_inv(_CONST dvariable& u,const dvector& _x,const int& _ii,CGNU_DOU
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST dvar_vector& x,const dvector& _v,const int& _ii)
+void set_value_inv(const dvar_vector& x, const dvector& _v, const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -397,7 +397,7 @@ void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,double 
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST dvar_matrix& x,const dvector& v, const int& ii)
+void set_value_inv(const dvar_matrix& x, const dvector& v, const int& ii)
 {
   if (!(!(x)))
   {
@@ -434,7 +434,7 @@ void set_value_inv(const dvar_matrix& x,const dvector& v, const int& ii,
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST dvar_matrix& x,const dvector& v, const int& ii,
+void set_value_inv(const dvar_matrix& x, const dvector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   if (allocated(x))
@@ -472,7 +472,7 @@ void set_value_inv(const dvar_matrix& x,const dvector& v, const int& ii,
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST dvar3_array& x,const dvector& v, const int& ii)
+void set_value_inv(const dvar3_array& x, const dvector& v, const int& ii)
 {
   if (!(!(x)))
   {
@@ -490,7 +490,7 @@ void set_value_inv(_CONST dvar3_array& x,const dvector& v, const int& ii)
  * Description not yet available.
  * \param
  */
-void set_value_inv(_CONST dvar3_array& x,const dvector& v, const int& ii,
+void set_value_inv(const dvar3_array& x, const dvector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   if (!(!(x)))

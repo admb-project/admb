@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -57,13 +57,13 @@ void dv_init(void)
  * Description not yet available.
  * \param
  */
-  void dvar_vector::initialize(_CONST dvector& ww)
+void dvar_vector::initialize(const dvector& ww)
   {
     #ifdef SAFE_ARRAYS
       if (indexmin() != ww.indexmin() ||  indexmax() != ww.indexmax())  
       {
         cerr << "Index bounds do not match in "
-              "void dvar_vector::initialize(_CONST dvector& ww)"<<endl;
+              "void dvar_vector::initialize(const dvector& ww)"<<endl;
         ad_exit(1);
       }
     #endif

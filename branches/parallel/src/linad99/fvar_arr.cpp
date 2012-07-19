@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -41,7 +41,7 @@ dvar_vector& dvar_vector::shift(int min)
  * Description not yet available.
  * \param
  */
- dvar_vector::dvar_vector(BOR_CONST independent_variables& t)
+ dvar_vector::dvar_vector(const independent_variables& t)
  {
    int i;
    allocate(t.indexmin(),t.indexmax());
@@ -58,7 +58,7 @@ dvar_vector& dvar_vector::shift(int min)
  * Description not yet available.
  * \param
  */
- dvar_vector::dvar_vector(_CONST dvector& t)
+ dvar_vector::dvar_vector(const dvector& t)
  {
    if (!t)
    {
@@ -145,7 +145,7 @@ dvar_vector& dvar_vector::shift(int min)
  * Description not yet available.
  * \param
  */
-void make_indvar_list(_CONST dvar_vector& t)
+void make_indvar_list(const dvar_vector& t)
 {
   if (!gradient_structure::instances)
   {
@@ -193,7 +193,7 @@ void make_indvar_list(_CONST dvar_vector& t)
  * Description not yet available.
  * \param
  */
-   void  copy_status(BOR_CONST ostream& _s,_CONST dvar_vector& v)
+void copy_status(const ostream& _s, const dvar_vector& v)
    {
      ostream& s= (ostream&) _s;
      s << " copy_flag ";
@@ -214,7 +214,7 @@ void make_indvar_list(_CONST dvar_vector& t)
  * Description not yet available.
  * \param
  */
-   void dvar_vector::allocate(_CONST dvector& v1)
+void dvar_vector::allocate(const dvector& v1)
    {
      allocate(v1.indexmin(),v1.indexmax());
    }
@@ -223,7 +223,7 @@ void make_indvar_list(_CONST dvar_vector& t)
  * Description not yet available.
  * \param
  */
-   void dvar_vector::allocate(_CONST dvar_vector& v1)
+void dvar_vector::allocate(const dvar_vector& v1)
    {
      allocate(v1.indexmin(),v1.indexmax());
    }
@@ -232,7 +232,7 @@ void make_indvar_list(_CONST dvar_vector& t)
  * Description not yet available.
  * \param
  */
-   void dvar_vector::allocatec(_CONST dvar_vector& t)
+void dvar_vector::allocatec(const dvar_vector& t)
    {
      if (!(*this)) 
      {

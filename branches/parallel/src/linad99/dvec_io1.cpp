@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -34,7 +34,7 @@ const int MAX_NUMBER_ROWS = 6550;
 #define HUGE 1.e+100
 #endif
 
- int get_non_blank_line(BOR_CONST ifstream& infile,char * & line,
+int get_non_blank_line(const ifstream& infile, char * & line,
    const unsigned int& line_length);
 
 /**
@@ -110,7 +110,7 @@ const int MAX_NUMBER_ROWS = 6550;
    if (nr == 0)
    {
      cerr << "Error in dvector constructor There doesn't seem to be any data\n"
-      << "in file:  " << filename << " called in dvector::dvector(char * filename,BOR_CONST const& column)\n";
+      << "in file:  " << filename << " called in dvector::dvector(char * filename,const const& column)\n";
       ad_exit(1);
    }
    infile.clear();

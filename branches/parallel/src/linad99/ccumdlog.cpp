@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@ double inv_cumd_norm_inner(double x);
  * Description not yet available.
  * \param
  */
-double cumd_logistic(_CONST double& x)
+double cumd_logistic(const double& x)
 {
   if (x>=0.0)	
   {	  
@@ -33,7 +33,7 @@ double cumd_logistic(_CONST double& x)
  * Description not yet available.
  * \param
  */
-double inv_cumd_logistic(_CONST double& x)
+double inv_cumd_logistic(const double& x)
 {
   return log(x/(1.0-x));
 }

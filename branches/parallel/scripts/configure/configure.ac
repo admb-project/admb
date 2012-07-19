@@ -19,8 +19,10 @@ then
 fi
 
 ADMB_TARGET=unix
+ADMB_TARGET2=unix
 
-ADMB_VERSION=`cat VERSION`
+#ADMB_VERSION=`cat VERSION`
+ADMB_VERSION=
 
 AC_CHECK_PROG(HAS_SVNVERSION,svnversion,[yes])
 if test "${HAS_SVNVERSION}" = "yes"
@@ -64,12 +66,14 @@ then
   MACOS_PRODUCT_VERSION=`sw_vers -productVersion`
   MACOS_XCODE_VERSION=`xcodebuild -version | grep Xcode | awk '{print $2}'`
   INSTALLER_PACKAGEMAKER="scripts/installers/packagemaker/GNUmakefile"
-  CLANG_VERSION=`clang++ --version | head -n 1 | awk '{print $4}'`
   if test "${CXX}" = "clang++"
   then
-    ADMB_TARGET="admb-${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-clang${CLANG_VERSION}-${CXX_32OR64BIT}"
+    CLANG_VERSION=`clang++ --version | head -n 1 | awk '{print $4}'`
+    ADMB_TARGET="admb${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-clang${CLANG_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET2="admb-macos${MACOS_PRODUCT_VERSION}-clang${CLANG_VERSION}-${CXX_32OR64BIT}"
   else
-    ADMB_TARGET="admb-${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET="admb${ADMB_VERSION}-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET2="admb-macos${MACOS_PRODUCT_VERSION}-xcode${MACOS_XCODE_VERSION}-${CXX_32OR64BIT}"
   fi
 fi
 
@@ -85,7 +89,8 @@ then
   if test "${CXX}" = "g++"
   then
     GCC_VERSION=`gcc -dumpversion`
-    ADMB_TARGET="admb-${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET="admb${ADMB_VERSION}-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET2="admb-linux-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
     AS_IF([test "x$enable_mpi" = "xyes"], [
       dnl Do the stuff needed for enabling the feature
       dnl check for open mpi packages openmpi-bin libopenmpi-dev
@@ -111,16 +116,32 @@ then
     CXX_32OR64BIT="64bit"
     fi
     ICC_VERSION=`icc -dumpversion`
-    ADMB_TARGET="admb-${ADMB_VERSION}-linux-icc${ICC_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET="admb${ADMB_VERSION}-linux-icc${ICC_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET2="admb-linux-icc${ICC_VERSION}-${CXX_32OR64BIT}"
   fi
-
+  if test "${CXX}" = "CC"
+  then
+    ADMB_TARGET="admb${ADMB_VERSION}-linux-solarisstudio12-${CXX_32OR64BIT}"
+    ADMB_TARGET2="admb-linux-solarisstudio12-${CXX_32OR64BIT}"
+  fi
   MAKEFILE="linux.mak"
 fi
 
-if (test  "`uname -s`" =  "MINGW32_NT-6.1")  || (test  "`uname -s`" =  "MINGW32_NT-5.2")  
+UNAME_S=`uname -s`
+if (test  "${UNAME_S:0:10}" =  "MINGW32_NT")
 then
   GCC_VERSION=`gcc -dumpversion`
-  ADMB_TARGET="admb-${ADMB_VERSION}-mingw-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  ADMB_TARGET="admb${ADMB_VERSION}-mingw-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  ADMB_TARGET2="admb-mingw-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  MAKEFILE="linux.mak"
+  INSTALLER_MINGW="scripts/installers/innosetup/mingw.iss"
+fi
+
+if (test  "${UNAME_S:0:9}" =  "CYGWIN_NT")
+then
+  GCC_VERSION=`gcc -dumpversion`
+  ADMB_TARGET="admb${ADMB_VERSION}-cygwin-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+  ADMB_TARGET2="admb-cygwin-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   MAKEFILE="linux.mak"
   INSTALLER_MINGW="scripts/installers/innosetup/mingw.iss"
 fi
@@ -129,10 +150,12 @@ if test  "`uname -s`" =  "SunOS"
 then
   if test "${CXX}" = "CC"
   then
-    ADMB_TARGET="admb-${ADMB_VERSION}-opensolaris-sunstudio-${CXX_32OR64BIT}"
+    ADMB_TARGET="admb${ADMB_VERSION}-opensolaris-sunstudio-${CXX_32OR64BIT}"
+    ADMB_TARGET2="admb-opensolaris-sunstudio-${CXX_32OR64BIT}"
   else
     GCC_VERSION=`gcc -dumpversion`
-    ADMB_TARGET="admb-${ADMB_VERSION}-opensolaris-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET="admb${ADMB_VERSION}-opensolaris-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
+    ADMB_TARGET2="admb-opensolaris-gcc${GCC_VERSION}-${CXX_32OR64BIT}"
   fi
   MAKEFILE="linux.mak"
 fi
@@ -143,10 +166,17 @@ AC_CONFIG_FILES(
   [GNUmakefile:scripts/configure/GNUmakefile.in admb_configure.h:scripts/configure/admb_configure.h.in scripts/admb/admb-bin ${INSTALLER_PACKAGEMAKER} ${INSTALLER_MINGW} ]
 )
 
+if test "${AR}" = ""
+then
+AC_SUBST(arvar, "")
+else
+AC_SUBST(arvar, AR=${AR})
+fi
 AC_SUBST(revision, ${ADMB_REVISION})
 AC_SUBST(lextargets, ${LEX_TARGETS})
 AC_SUBST(version, ${ADMB_VERSION})
 AC_SUBST(target, ${ADMB_TARGET})
+AC_SUBST(target2, ${ADMB_TARGET2})
 AC_SUBST(disk, ../build/${ADMB_TARGET})
 AC_SUBST(libpath, ../build/objects/${ADMB_TARGET})
 AC_SUBST(cxxflags, ${CXXFLAGS})

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -880,10 +880,10 @@ df1b2variable operator / (double x,const df1b2variable& y);
 df1b2variable lgamma2(const df1b2variable& _x);  // new log gamma using forward AD
 df1b2variable gammln(const df1b2variable& _xx);
 df1b2vector gammln(const df1b2vector&  _xx);
-df1b2variable log_comb(_CONST df1b2variable& n,double k);
-df1b2variable log_comb(_CONST df1b2variable& n,_CONST df1b2variable& k);
-df1b2variable log_comb(double n,_CONST df1b2variable& k);
-df1b2variable factln(_CONST df1b2variable& n);
+df1b2variable log_comb(const df1b2variable& n, double k);
+df1b2variable log_comb(const df1b2variable& n, const df1b2variable& k);
+df1b2variable log_comb(double n, const df1b2variable& k);
+df1b2variable factln(const df1b2variable& n);
 
 // vector and matrix stuff
 
@@ -1982,7 +1982,9 @@ df1b2vector solve(df1b2matrix& M,df1b2vector& v,const df1b2variable& ln_det,
 df1b2vector lower_triangular_solve(const df1b2matrix& m,const df1b2vector& v);
 df1b2vector lower_triangular_solve_trans(const df1b2matrix& m,const df1b2vector& v);
 
-df1b2variable ln_det(df1b2matrix& M);
+//df1b2variable ln_det(df1b2matrix& M); 
+// line above replaced with line below based on issue #37
+df1b2variable ln_det(const df1b2matrix & m1);
 
 df1b2variable ln_det(df1b2matrix& M,int & sgn);
 

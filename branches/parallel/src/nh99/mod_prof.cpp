@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -57,7 +57,7 @@
     return model_name_tag::label().mychar();
   }
 
-	param_likeprof_number& param_likeprof_number::operator = (_CONST prevariable& v)
+param_likeprof_number& param_likeprof_number::operator=(const prevariable& v)
 	{
 		this->param_stddev_number::operator = (v);
 		return *this;

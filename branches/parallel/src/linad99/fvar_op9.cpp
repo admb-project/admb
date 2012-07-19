@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -32,7 +32,7 @@
  * Description not yet available.
  * \param
  */
-  void prevariable::operator +=(_CONST prevariable& v1)
+void prevariable::operator+=(const prevariable& v1)
   {
     (*v).x+=(*v1.v).x;
     gradient_structure::GRAD_STACK1->set_gradient_stack1

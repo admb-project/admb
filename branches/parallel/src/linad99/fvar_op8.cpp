@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@ Optimized for derivative computations.
 \param m number to be cubed
 \return \f$m^3\f$
 */
-prevariable& cube(_CONST prevariable& v1)
+prevariable& cube(const prevariable& v1)
 {
   double x=value(v1);
   double x2=x*x;
@@ -33,7 +33,7 @@ Optimized for derivative computations.
 \param m number to be cubed
 \return \f$m^4\f$
 */
-prevariable& fourth(_CONST prevariable& v1)
+prevariable& fourth(const prevariable& v1)
 {
   double x=value(v1);
   double x2=x*x;

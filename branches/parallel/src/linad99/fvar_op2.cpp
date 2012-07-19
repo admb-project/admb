@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -38,7 +38,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-prevariable& operator +( CGNU_DOUBLE x,_CONST prevariable& v2)
+prevariable& operator+(CGNU_DOUBLE x, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
 
@@ -51,7 +51,7 @@ prevariable& operator +( CGNU_DOUBLE x,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& operator +(_CONST prevariable& v1, CGNU_DOUBLE x)
+prevariable& operator+(const prevariable& v1, CGNU_DOUBLE x)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
 
@@ -64,7 +64,7 @@ prevariable& operator +(_CONST prevariable& v1, CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-prevariable& operator -(_CONST prevariable& v1,_CONST prevariable& v2)
+prevariable& operator-(const prevariable& v1, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   gradient_structure::RETURN_PTR->v->x=v1.v->x - v2.v->x;
@@ -77,7 +77,7 @@ prevariable& operator -(_CONST prevariable& v1,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& operator -(_CONST prevariable& v1, CGNU_DOUBLE x)
+prevariable& operator-(const prevariable& v1, CGNU_DOUBLE x)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   gradient_structure::RETURN_PTR->v->x=v1.v->x - x;
@@ -90,7 +90,7 @@ prevariable& operator -(_CONST prevariable& v1, CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-prevariable& operator -( CGNU_DOUBLE x,_CONST prevariable& v2)
+prevariable& operator-(CGNU_DOUBLE x, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   gradient_structure::RETURN_PTR->v->x = x - v2.v->x;
@@ -103,7 +103,7 @@ prevariable& operator -( CGNU_DOUBLE x,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& operator -(_CONST prevariable& v1)
+prevariable& operator-(const prevariable& v1)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   gradient_structure::RETURN_PTR->v->x = -(v1.v->x);
@@ -116,7 +116,7 @@ prevariable& operator -(_CONST prevariable& v1)
  * Description not yet available.
  * \param
  */
-prevariable& operator /(_CONST prevariable& v1,_CONST prevariable& v2)
+prevariable& operator/(const prevariable& v1, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   double x,y;
@@ -133,7 +133,7 @@ prevariable& operator /(_CONST prevariable& v1,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& operator /( CGNU_DOUBLE u,_CONST prevariable& v2)
+prevariable& operator/( CGNU_DOUBLE u, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   double x,y;
@@ -154,7 +154,7 @@ prevariable& operator /( CGNU_DOUBLE u,_CONST prevariable& v2)
  * Description not yet available.
  * \param
  */
-prevariable& operator /(_CONST prevariable& v1, CGNU_DOUBLE u)
+prevariable& operator/(const prevariable& v1, CGNU_DOUBLE u)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   double x,y;

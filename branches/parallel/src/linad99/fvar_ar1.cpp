@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include "fvar.hpp"
 
@@ -48,7 +48,7 @@
  * Description not yet available.
  * \param
  */
- dvar_vector::dvar_vector(_CONST dvar_vector& t)
+dvar_vector::dvar_vector(const dvar_vector& t)
  {
    index_min=t.index_min;
    index_max=t.index_max;
@@ -84,7 +84,7 @@
  * Description not yet available.
  * \param
  */
- dvar_vector::dvar_vector(_CONST predvar_vector& pdv)
+dvar_vector::dvar_vector(const predvar_vector& pdv)
  {
  #ifdef SAFE_ALL
    if (pdv.ub<pdv.lb) 
@@ -120,7 +120,7 @@
  }
 
 /*
- dvar_vector::dvar_vector(_CONST dvar_vector& t,int lb,int ub)
+dvar_vector::dvar_vector(const dvar_vector& t, int lb, int ub)
  {
  #ifdef SAFE_ALL
    if (ub<lb) 

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -41,7 +41,7 @@
        (nch.isinteger() && (nrl !=nch.indexmin() || nrh !=nch.indexmax())))
      {
        cerr << "Incompatible array bounds in dvar_matrix(int nrl,int nrh,"
-        "_CONST ivector& ncl,_CONST ivector& nch)" << endl;
+        "const ivector& ncl, const ivector& nch)" << endl;
        ad_exit(1);
      }
      index_min=int(nrl);

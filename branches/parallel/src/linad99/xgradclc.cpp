@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -378,7 +378,7 @@ void funnel_derivatives(void)
  * Description not yet available.
  * \param
  */
-dvariable& funnel_dvariable::operator = (_CONST prevariable& t)
+dvariable& funnel_dvariable::operator=(const prevariable& t)
 {
   dvariable::operator = (t);
   funnel_gradcalc();

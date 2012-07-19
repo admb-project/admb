@@ -37,6 +37,6 @@ $(DISKDIR)\dist\bin\tpl2rem.exe: tpl2rem-winflex.c
 
 flex:
 	flex < tpl2rem.lex
-	sed -f sedflex lex.yy.c > tpl2rem.c
+	..\..\utilities\sed -f sedflex lex.yy.c > tpl2rem.c
 	bcc32 -DWIN32 -Ic:\\Borland\\BCC55\\Include -Lc:\\Borland\\BCC55\\Lib -etpl2rem.exe tpl2rem-winflex.c
 	cp tpl2rem.exe $(DISKDIR)\dist\bin\tpl2rem.exe

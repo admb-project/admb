@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -17,11 +17,11 @@
   \param t2 A vector, \f$v\f$ with valid subscripts in \f$[i_1,i_n]\f$
   \return A vector containing \f$z_i = u_i\times v_i; [i_1,i_n]\f$.
   */
-  dvector elem_prod(_CONST dvector& t1,_CONST dvector& t2)
+dvector elem_prod(const dvector& t1, const dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  
      {
-       cerr << "Index bounds do not match in dvector elem_prod(_CONST dvector&,_CONST dvector&)\n";
+       cerr << "Index bounds do not match in dvector elem_prod(const dvector&, const dvector&)\n";
        ad_exit(1);
      }
      dvector tmp(t1.indexmin(),t1.indexmax());
@@ -48,11 +48,11 @@
   \param t2 A vector, \f$v\f$ with valid subscripts in \f$[i_1,i_n]\f$
   \return A vector containing \f$z_i = u_i\div v_i; [i_1,i_n]\f$.
   */
-  dvector elem_div(_CONST dvector& t1,_CONST dvector& t2)
+dvector elem_div(const dvector& t1, const dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  
      {
-       cerr << "Index bounds do not match in dvector elem_div(_CONST dvector&,_CONST dvector&)\n";
+       cerr << "Index bounds do not match in dvector elem_div(const dvector&, const dvector&)\n";
        ad_exit(1);
      }
      dvector tmp(t1.indexmin(),t1.indexmax());

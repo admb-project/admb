@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -223,15 +223,15 @@ public:
   char* comment() { return comment_line; }
   char* signature();
 
-  cifstream& operator>>(BOR_CONST dvariable& z);
- //  cifstream& operator>>(BOR_CONST prevariable& z);
+  cifstream& operator>>(const dvariable& z);
+ //  cifstream& operator>>(const prevariable& z);
 #if defined(USE_LONG_LONG)
   cifstream& operator >> (long long& i);
 #endif
-  cifstream& operator >> (BOR_CONST long& i);
-  cifstream& operator >> (BOR_CONST int& i);
-  cifstream& operator >> (BOR_CONST double& x);
-  cifstream& operator >> (BOR_CONST float& x);
+  cifstream& operator>>(const long& i);
+  cifstream& operator>>(const int& i);
+  cifstream& operator>>(const double& x);
+  cifstream& operator>>(const float& x);
   cifstream& operator >> (char* x);
   cifstream& operator >> (const char* x);
   cifstream& operator >> (const adstring& x);
@@ -239,30 +239,30 @@ public:
   cifstream& operator >> (const line_adstring& x);
   cifstream& getline(char*, int, char = '\n');
 
-  cifstream& operator>>(BOR_CONST dvar_vector& z);
-  cifstream& operator>>(BOR_CONST dvector& z);
+  cifstream& operator>>(const dvar_vector& z);
+  cifstream& operator>>(const dvector& z);
   //cifstream& operator>>(svector& z);
-  cifstream& operator>>(BOR_CONST lvector& z);
-  cifstream& operator>>(BOR_CONST ivector& z);
+  cifstream& operator>>(const lvector& z);
+  cifstream& operator>>(const ivector& z);
 
   void set_ignore_eof() {ignore_eof = 0;}
   void set_use_eof() {ignore_eof = 1;}
 };
 
-cifstream& operator>>(cifstream& istr,BOR_CONST  prevariable& z);
-cifstream& operator>>(cifstream& istr,BOR_CONST  dvar_matrix& z);
-cifstream& operator>>(cifstream& istr,BOR_CONST  d3_array& z);
-cifstream& operator>>(cifstream& istr,BOR_CONST  d4_array& z);
-cifstream& operator>>(cifstream& istr,BOR_CONST  d5_array& z);
-cifstream& operator>>(cifstream& istr,BOR_CONST  dvar3_array& z);
-cifstream& operator>>(cifstream& istr,BOR_CONST  dvar4_array& z);
-cifstream& operator>>(cifstream& istr,BOR_CONST  dvar5_array& z);
+cifstream& operator>>(cifstream& istr, const prevariable& z);
+cifstream& operator>>(cifstream& istr, const dvar_matrix& z);
+cifstream& operator>>(cifstream& istr, const d3_array& z);
+cifstream& operator>>(cifstream& istr, const d4_array& z);
+cifstream& operator>>(cifstream& istr, const d5_array& z);
+cifstream& operator>>(cifstream& istr, const dvar3_array& z);
+cifstream& operator>>(cifstream& istr, const dvar4_array& z);
+cifstream& operator>>(cifstream& istr, const dvar5_array& z);
 //cifstream& operator>>(cifstream& istr, s3_array& z);
-cifstream& operator>>(cifstream& istr,BOR_CONST  dmatrix& z);
+cifstream& operator>>(cifstream& istr, const dmatrix& z);
 //cifstream& operator>>(cifstream& istr,smatrix& z);
-cifstream& operator>>(cifstream& istr,BOR_CONST  imatrix& z);
-cifstream& operator>>(cifstream& istr,BOR_CONST  i3_array& z);
-cifstream& operator>>(cifstream& istr,BOR_CONST  i4_array& z);
+cifstream& operator>>(cifstream& istr, const imatrix& z);
+cifstream& operator>>(cifstream& istr, const i3_array& z);
+cifstream& operator>>(cifstream& istr, const i4_array& z);
 //cifstream& operator>>(cifstream& istr, lmatrix& z);
 
 #endif //#define CIFSTREM_H

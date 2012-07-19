@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -63,7 +63,7 @@
      return v[i][j];
 #  endif
 #else
-#  if ( defined(linux) && __GNUC__ < 4)
+#  if ( defined(linux) && __GNUC__ < 4 && !defined(__MINGW64__))
      return (prevariable&) (v[i][j]);
 #  else
      return v[i][j];
@@ -135,7 +135,7 @@
      return v[i](j,k);
 #  endif
 #else
-#  if ( defined(linux) && __GNUC__ < 4)
+#  if ( defined(linux) && __GNUC__ < 4 && !defined(__MINGW64__))
      return (prevariable&) v[i](j,k);
 #  else
      return v[i](j,k);
@@ -192,7 +192,7 @@
      return v[i][j];
 #  endif
 #else
-#  if ( defined(linux) && __GNUC__ < 4)
+#  if ( defined(linux) && __GNUC__ < 4 && !defined(__MINGW64__))
      return (prevariable&) (v[i][j]);
 #  else
      return v[i][j];
@@ -264,7 +264,7 @@
      return v[i](j,k);
 #  endif
 #else
-#  if ( defined(linux) && __GNUC__ < 4)
+#  if ( defined(linux) && __GNUC__ < 4 && !defined(__MINGW64__))
      return (prevariable&) v[i](j,k);
 #  else
      return v[i](j,k);

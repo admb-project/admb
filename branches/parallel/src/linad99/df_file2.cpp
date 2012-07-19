@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -80,7 +80,7 @@
  * Description not yet available.
  * \param
  */
-void DF_FILE::fread(BOR_CONST double& _x)
+void DF_FILE::fread(const double& _x)
 {
   double& x = (double&) _x;
   const unsigned num_bytes=sizeof(double);
@@ -104,7 +104,7 @@ void DF_FILE::fread(BOR_CONST double& _x)
  * Description not yet available.
  * \param
  */
-void DF_FILE::fread(BOR_CONST int& _x)
+void DF_FILE::fread(const int& _x)
 {
   int& x = (int&) _x;
   const unsigned num_bytes=sizeof(int);

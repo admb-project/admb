@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -36,7 +36,7 @@
  * Description not yet available.
  * \param
  */
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dmatrix& _z)
+uistream& operator>>(const uistream& istr, const dmatrix& _z)
 {
   ADUNCONST(dmatrix,z)
   z.read_from(istr);
@@ -48,7 +48,7 @@ uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST dmatrix& _z)
  * Description not yet available.
  * \param
  */
-void dmatrix::read_from(BOR_CONST uistream& s)
+void dmatrix::read_from(const uistream& s)
 {
   int n = rowmin() + rowsize() - 1;
 
@@ -67,7 +67,7 @@ void dmatrix::read_from(BOR_CONST uistream& s)
  * Description not yet available.
  * \param
  */
-uostream& operator<<(BOR_CONST uostream& ostr,_CONST dmatrix& z)
+uostream& operator<<(const uostream& ostr, const dmatrix& z)
 {
   z.write_on(ostr);
 
@@ -78,7 +78,7 @@ uostream& operator<<(BOR_CONST uostream& ostr,_CONST dmatrix& z)
  * Description not yet available.
  * \param
  */
-void dmatrix::write_on(BOR_CONST uostream& s) _CONST
+void dmatrix::write_on(const uostream& s) const
 {
   for (int i=rowmin(); i <= rowmax(); i++)
   {

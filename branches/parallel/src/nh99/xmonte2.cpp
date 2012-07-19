@@ -2,17 +2,17 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
-double inv_cumd_norm(_CONST double& x);
-double cumd_norm(_CONST double& x);
+double inv_cumd_norm(const double& x);
+double cumd_norm(const double& x);
 double myran1(long int&);
 //double better_rand(long int&);
 
-void bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& _wght,BOR_CONST dvector& y, const random_number_generator& rng)
+void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& _wght, const dvector& y, const random_number_generator& rng)
 {
   double & wght=(double &) _wght;
   //cout << y << endl;
@@ -76,8 +76,8 @@ void bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST d
 }
 
 
-void probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& _wght,BOR_CONST dvector& y,double pprobe, const random_number_generator& rng)
+void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& _wght, const dvector& y,double pprobe, const random_number_generator& rng)
 {
   double & wght=(double &) _wght;
   //cout << y << endl;
@@ -127,8 +127,8 @@ void probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR
 }
 
 
-void bounded_multivariate_uniform_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& _wght,BOR_CONST dvector& y, const random_number_generator& rng)
+void bounded_multivariate_uniform_mcmc(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& _wght, const dvector& y, const random_number_generator& rng)
 {
   double& wght=(double&) _wght;
   dvector a(1,nvar);

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -34,7 +34,7 @@ void df_ln_det_choleski(void);
  * Description not yet available.
  * \param
  */
-dvariable ln_det_choleski(_CONST dvar_matrix& MM)
+dvariable ln_det_choleski(const dvar_matrix& MM)
 {
   // kludge to deal with constantness
   dmatrix M=value(MM);

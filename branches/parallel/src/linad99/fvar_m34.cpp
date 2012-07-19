@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -16,13 +16,13 @@ void dmcv_prod(void);
  * Description not yet available.
  * \param
  */
- dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvector& x )
+dvar_vector operator*(const dvar_matrix& m, const dvector& x)
  {
    RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
    {
-     cerr << " Incompatible array bounds in dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvar_vector& x)\n";
+     cerr << " Incompatible array bounds in dvar_vector  operator * (const dvar_matrix& m, const dvar_vector& x)\n";
      ad_exit(21);
    }
 
@@ -33,7 +33,7 @@ void dmcv_prod(void);
    for (int i=m.rowmin(); i<=m.rowmax(); i++)
    {
      sum=0.0;
-     _CONST dvar_vector& tt=m.elem(i);
+     const dvar_vector& tt=m.elem(i);
      for (int j=x.indexmin(); j<=x.indexmax(); j++)
      {
        //sum+=m[i][j]*x[j];

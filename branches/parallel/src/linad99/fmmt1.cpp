@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -15,7 +15,7 @@
  * \param
  */
 extern  int ctlc_flag;
-fmmt1::fmmt1(int nvar,_CONST lvector& ipar)
+fmmt1::fmmt1(int nvar, const lvector& ipar)
 : fmm_control(ipar),
   w(1,4*nvar),
   funval(1,10),

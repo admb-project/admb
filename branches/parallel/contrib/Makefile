@@ -23,10 +23,10 @@ qfclib-saf:
 	$(MAKE) CXXFLAGS="$(CXXFLAGS)" DISKDIR=..\..\dist\contrib /f ..\..\..\..\contrib\qfclib\Makefile
 
 contribo.lib:
-  lib /OUT:$@ /NOLOGO /IGNORE:4006 ../../objects/contrib-olp/*.obj
+	lib /OUT:$@ /NOLOGO /IGNORE:4006 ../../objects/contrib-olp/*.obj
 
 contribs.lib:
-  lib /OUT:$@ /NOLOGO /IGNORE:4006 ../../objects/contrib-slp/*.obj
+	lib /OUT:$@ /NOLOGO /IGNORE:4006 ../../objects/contrib-slp/*.obj
 
 test:
 	CXXFLAGS="" $(MAKE) --directory=ecolib test

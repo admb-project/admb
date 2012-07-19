@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright (c) 2009-2011 ADMB foundation
+ * Copyright (c) 2009-2012 ADMB foundation
  */
 /**
  * \file
@@ -21,12 +21,12 @@ void eigens (const dvar_matrix & m, const dvar_matrix & _evecs,
  * \return a variable vector containing the
  *         eigenvalues of \f$m\f$.
  */
-dvar_vector eigenvalues (_CONST dvar_matrix & m)
+dvar_vector eigenvalues(const dvar_matrix &m)
 {
   if (m.rowsize () != m.colsize ())
     {
       cerr <<
-	"error -- non square matrix passed to dvector eigenvalues(_CONST dmatrix& m)\n";
+	"error -- non square matrix passed to dvector eigenvalues(const dmatrix& m)\n";
       ad_exit (1);
     }
 
@@ -48,12 +48,12 @@ dvar_vector eigenvalues (_CONST dvar_matrix & m)
  * \return a variable matrix with the
  *         eigenvectors of \f$m\f$ stored in its columns.
  */
-dvar_matrix eigenvectors (_CONST dvar_matrix & m)
+dvar_matrix eigenvectors(const dvar_matrix &m)
 {
   if (m.rowsize () != m.colsize ())
     {
       cerr <<
-	"error -- non square matrix passed to dmatrix eigenvectors(_CONST dmatrix& m)\n";
+	"error -- non square matrix passed to dmatrix eigenvectors(const dmatrix& m)\n";
       ad_exit (1);
     }
 

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -51,8 +51,8 @@
        cerr << sl << " " << nrh.indexmin() << endl;
        cerr << sh << " " << nrh.indexmax() << endl;
        cerr << "Incompatible array bounds in dvar3_array(int nrl,int nrh,"
-        "_CONST index_type& nrl,_CONST index_type& nrh," 
-        "_CONST index_type& ncl,_CONST index_type& nch)" << endl;
+        "const index_type& nrl,const index_type& nrh," 
+        "const index_type& ncl,const index_type& nch)" << endl;
        ad_exit(1);
      }
   
@@ -98,8 +98,8 @@
        cerr << sh << " " << nrl.indexmax() << endl;
        cerr << sl << " " << nrh.indexmin() << endl;
        cerr << "Incompatible array bounds in dvar3_array(int nrl,int nrh,"
-        "_CONST index_type& nrl,_CONST index_type& nrh," 
-        "_CONST index_type& ncl,_CONST index_type& nch)" << endl;
+        "const index_type& nrl,const index_type& nrh," 
+        "const index_type& ncl,const index_type& nch)" << endl;
        ad_exit(1);
      }
   

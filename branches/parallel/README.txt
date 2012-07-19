@@ -40,12 +40,13 @@ Table of Contents
    - Windows and GCC
    - Windows and Microsoft Visual C++ 2010 Express
  * Installation from Source Code
-   - Linux and GCC
+   - Linux/MacOS and GCC
    - Linux and Intel Compiler
    - Linux and Solaris Studio
    - MacOS and Clang
    - Windows and GCC
    - Windows and Microsoft Visual C++ 2010 Express
+   - Windows and Cygwin with MinGW-w64
  * Documentation
  * Developing AD Model Builder
    - Version Control
@@ -110,35 +111,36 @@ Note: additional information about running ADMB in linux, especially for
 1. Download and extract ADMB Linux binaries from 
    http://admb-project.org/downloads. 
 
-2. Open a bash shell, change to extracted Linux ADMB Home directory, then type
-   the following commands.
+2. Open a command line shell.
 
-      #Change to ADMB folder.
-      $ cd ~/admb
-      # Sets ADMB Home directory.
-      $ export ADMB_HOME=~/admb
-      # Adds ADMB bin to $PATH
-      $ export PATH=$ADMB_HOME/bin:$PATH
+   For Unix bash or ksh shell, type the following commands
+   $ export ADMB_HOME=~/admb
+   $ export PATH=$ADMB_HOME/bin:$PATH
+
+   For Unix zsh, csh or tcsh shell, type the following commands
+   $ setenv ADMB_HOME ~/admb
+   $ set path=($ADMB_HOME/bin $path)
 
 3. Change into ADMB Home directory, then run examples for verification.
-      $ cd $ADMB_HOME
-      $ chmod -R u+w examples
-      $ cd examples
-      $ make
 
+   $ cd $ADMB_HOME
+   $ chmod -R u+w examples
+   $ cd examples
+   $ make
 
 MacOS and XCode
 ---------------
 1. Download admb-'version'.dmg
 2. Double click admb-'version'.dmg file
-3. Double click the admb-'version'.pkg
-4. Follow the installation instructions
+3. Copy ADMB-Terminal app to preferred location
+4. Double click the ADMB-Terminal to open Terminal
+5. In the Terminal window, change directory to the your tpl folder,
+   then 
 
-If successful, the wizard will have installed admb directory (/usr/local/admb)
-and script (/usr/local/bin/admb).
+   $ admb 'model' 
 
 Windows and GCC
---------------------------------
+---------------
 1. Download the executable installer for Windows GCC from 
    http://admb-project.org/downloads. The GCC compiler is included with 
    this installer.
@@ -163,7 +165,7 @@ Windows and GCC
    ending with the line "Estimating row 2 out of 2 for hessian".
 
 Windows and Microsoft Visual C++ 2010 Express
---------------------------------------------------------------
+---------------------------------------------
 For HTML directions, go to:
 http://admb-project.org/documentation/installation/admb-installation-visual-c
 
@@ -222,8 +224,8 @@ Installation from Source Code
 =============================
 Below are procedures for installing ADMB from source code.
 
-Linux and GCC
--------------
+Linux/MacOS and GCC
+-------------------
 1. Extract source distribution
 
    $ unzip admb-'version'.zip
@@ -242,6 +244,12 @@ Linux and GCC
 
    $ ./configure
 
+   Note: The default installation folder is /usr/local/admb.
+
+   To install to another folder, use
+
+   $ ./configure --prefix='your-preferred-location'
+
    To check options
 
    $ ./configure --help
@@ -249,6 +257,10 @@ Linux and GCC
 5. Build binaries
 
    $ make
+
+   Note: To build with debugging symbols, use
+
+   $ make debug
 
 6. [Optional] Test build by running examples
 
@@ -274,9 +286,23 @@ Linux and Intel Compiler
 
    $ ./configure CC=icc CXX=icpc
 
+   Note: The default installation folder is /usr/local/admb.
+
+   To install to another folder, use
+
+   $ ./configure --prefix='your-preferred-location'
+
+   To check options
+
+   $ ./configure --help
+
 4. Build binaries
 
    $ make
+
+   Note: To build with debugging symbols, use
+
+   $ make debug
 
 4. [Optional] Test build by running examples
 
@@ -326,6 +352,16 @@ MacOS and Clang
 
    $ ./configure CC=clang CXX=clang++
 
+   Note: The default installation folder is /usr/local/admb.
+
+   To install to another folder, use
+
+   $ ./configure --prefix='your-preferred-location'
+
+   To check options
+
+   $ ./configure --help
+
 4. Build binaries
 
    $ make
@@ -339,10 +375,11 @@ MacOS and Clang
    $ make install
 
 Windows and Microsoft Visual C++ 2010 Express
-----------------
-Steps:
-1. Follow the same directions given above in the 'Installation from Binary
-   Distributions' section to set up the compilers.
+---------------------------------------------
+
+1. Follow the same directions given above in the 
+   'Installation from Binary Distributions' section 
+   to set up the compilers.
 
 2. Extract source distribution.
 
@@ -356,6 +393,46 @@ Steps:
 
    > nmake /fvc.mak
 
+Windows and Cygwin with MinGW-w64
+---------------------------------
+1. Open Cygwin Terminal.
+
+2. Change directory to the admb source folder.
+   
+   > cd admb-'version'
+
+   where 'version' is the distribution version.
+
+3. Configure the build files for MinGW-w64
+
+   $ ./configure CC=x86_64-w64-mingw32-gcc.exe CXX=x86_64-w64-mingw32-g++.exe AR=x86_64-w64-mingw32-ar.exe
+
+   Note: The default installation folder is /usr/local/admb.
+
+   To install to another folder, use
+
+   $ ./configure --prefix='your-preferred-location'
+
+   To check options
+
+   $ ./configure --help
+
+4. Build binaries
+
+   > make
+
+4. [Optional] Test build by running examples
+
+   $ make verify
+
+5. Install binaries to default location /usr/local.
+
+   $ make install
+
+   Or, copy the binary distribution
+
+   $ cp -R build/mingw 'prefered-install-location'
+
 Documentation
 =============
 User manuals for AD Model Builder, the AUTODIF library and the ADMB-RE nonlinear
@@ -368,10 +445,19 @@ http://www.admb-project.org/.
 Developing AD Model Builder
 ===========================
 If you are interested in contributing to the further development of AD Model
-Builder please contact users@admb-project.org.
+Builder, please email users@admb-project.org.
 
 Version Control
 ---------------
+ADMB uses Subversion for Version Control.  To access the server, a Subversion
+client has to be installed on the local computer.
+
+Link below has list of available clients.
+http://subversion.apache.org/packages.html
+
+Once the client is installed, check link on ow to use subversion. 
+http://svnbook.red-bean.com/en/1.7/svn.tour.cycle.html
+
 ADMB source version control URL is http://www.admb-project.org/svn/trunk/.
 
 To download source files, use the command
@@ -403,5 +489,7 @@ Hans Skaug <Hans.Skaug@mi.uib.no>
 Mark Maunder <mmaunder@iattc.org>
 Anders Nielsen <anders@nielsensweb.org>
 Arni Magnusson <arnima@hafro.is>
+Ian Taylor <ian.taylor@noaa.gov>
+Chris Grandin <Chris.Grandin@dfo-mpo.gc.ca>
 Derek Seiple <dseiple@hawaii.edu>
 Johnoel Ancheta <johnoel@hawaii.edu>

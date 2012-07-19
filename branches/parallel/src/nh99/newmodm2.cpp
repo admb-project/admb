@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 #if defined(USE_LAPLACE)
@@ -11,7 +11,7 @@
 #endif
  
 
-double function_minimizer::projected_hess_determinant(BOR_CONST dvector& g,
+double function_minimizer::projected_hess_determinant(const dvector& g,
   const int underflow_flag)
 {
  int sgn=0;
@@ -172,8 +172,7 @@ double function_minimizer::projected_hess_determinant(BOR_CONST dvector& g,
 }
 
 
-  void function_minimizer::get_particular_grad(int iprof,int nvar,
-    BOR_CONST dvector& fg,BOR_CONST dvector& g)
+void function_minimizer::get_particular_grad(int iprof,int nvar, const dvector& fg, const dvector& g)
   {
     independent_variables x(1,nvar);
     initial_params::xinit(x);    // get the initial values into the
@@ -223,9 +222,9 @@ double function_minimizer::projected_hess_determinant(BOR_CONST dvector& g,
   }
 
  
-   void function_minimizer::prof_minimize(int iprof, double sigma,
-     double new_value, BOR_CONST double& _fprof,const int underflow_flag,
-     double global_min,BOR_CONST double& _penalties,BOR_CONST double& _final_weight)
+void function_minimizer::prof_minimize(int iprof, double sigma,
+  double new_value, const double& _fprof, const int underflow_flag,
+  double global_min, const double& _penalties, const double& _final_weight)
    {
      double& penalties=(double&) _penalties;
      double& fprof=(double&) _fprof;

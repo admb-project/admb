@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -10,29 +10,29 @@
   #include <gccmanip.h>
 #endif
 
-double inv_cumd_norm(_CONST double& x);
-double inv_cumd_cauchy(_CONST double& x);
-double inv_cumd_norms(_CONST double& x);
-double cumd_norm(_CONST double& x);
-double cumd_cauchy(_CONST double& x);
-double density_cauchy(_CONST double& x);
+double inv_cumd_norm(const double& x);
+double inv_cumd_cauchy(const double& x);
+double inv_cumd_norms(const double& x);
+double cumd_norm(const double& x);
+double cumd_cauchy(const double& x);
+double density_cauchy(const double& x);
 double myran1(long int&);
 double better_rand(long int&);
 
-double log_likelihood_mixture(_CONST double& x);
+double log_likelihood_mixture(const double& x);
 
-void multivariate_mixture(BOR_CONST dvector& _mix,int nvar,long int& iseed,
-  BOR_CONST double& _log_density_normal,BOR_CONST double& _log_density_cauchy,
-  BOR_CONST double& _log_density_small_normal,int is);
+void multivariate_mixture(const dvector& _mix,int nvar,long int& iseed,
+  const double& _log_density_normal, const double& _log_density_cauchy,
+  const double& _log_density_small_normal,int is);
 
-dvector bounded_multivariate_cauchy(int nvar,BOR_CONST dvector& a1,
-  dvector& b1,BOR_CONST dmatrix& ch,long int& iseed,BOR_CONST double& lprob,
-  double& log_tprob,BOR_CONST int& outflag);
+dvector bounded_multivariate_cauchy(int nvar, const dvector& a1,
+  dvector& b1, const dmatrix& ch,long int& iseed, const double& lprob,
+  double& log_tprob, const int& outflag);
 
-dvector bounded_robust_multivariate_normal(int nvar,BOR_CONST dvector& a1,
-  dvector& b1,BOR_CONST dmatrix& ch,BOR_CONST dmatrix& ch3,BOR_CONST dmatrix& chinv,BOR_CONST dmatrix& ch3inv,
-  double contaminant,long int& iseed,BOR_CONST double& lprob,BOR_CONST double& lprob3,
-  double& log_tprob,BOR_CONST int& outflag);
+dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
+  dvector& b1, const dmatrix& ch, const dmatrix& ch3, const dmatrix& chinv, const dmatrix& ch3inv,
+  double contaminant,long int& iseed, const double& lprob, const double& lprob3,
+  double& log_tprob, const int& outflag);
 
 void function_minimizer::monte_carlo_routine(void)
 {

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -18,7 +18,7 @@ extern "C" {
 #endif
  int xlbfgs_(integer *n, integer *m, dvar_vector & x, dvariable & f, dvar_vector & g, logical *diagco, dvar_vector & diag, integer *iprint, double*  eps, double*  xtol, dvar_vector & w, integer *iflag, integer* iter);
 #ifdef __cplusplus
-	}
+}
 #endif
 
  void goofr(void){;}
@@ -171,7 +171,7 @@ L20:
       {
         if (!itn)
           fmmdisp(value(x), value(g), nvar, 0,noprintx);
-	else
+        else
           fmmdisp(value(xbest), value(gbest), nvar, 0,noprintx);
       }
     }

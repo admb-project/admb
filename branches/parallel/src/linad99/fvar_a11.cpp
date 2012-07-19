@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@
  * \param A dvar_vector 
  * \returns The maximum of the vector 
  */
-  dvariable max(_CONST dvar_vector& t1)
+dvariable max(const dvar_vector& t1)
   {
      dvariable tmp;
      int mmin=t1.indexmin();
@@ -36,7 +36,7 @@
  * \param A dvar_vector 
  * \returns The minimum of the vector 
  */
-  dvariable min(_CONST dvar_vector& t1)
+dvariable min(const dvar_vector& t1)
   {
      dvariable tmp;
      int mmin=t1.indexmin();

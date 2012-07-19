@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -190,7 +190,7 @@ void dfsdmat::allocate(int _n)
  * Description not yet available.
  * \param
  */
-dfsdmat::dfsdmat(int _n, BOR_CONST gradient_structure& gs)
+dfsdmat::dfsdmat(int _n, const gradient_structure& gs)
 {
   tmp_file=0;
   disk_save_flag=1;
@@ -201,7 +201,7 @@ dfsdmat::dfsdmat(int _n, BOR_CONST gradient_structure& gs)
  * Description not yet available.
  * \param
  */
-void dfsdmat::allocate(int _n, BOR_CONST gradient_structure& gs)
+void dfsdmat::allocate(int _n, const gradient_structure& gs)
 {
   n=_n;
   ptr= (double *) gs.ARRAY_MEMBLOCK_BASE;
@@ -291,7 +291,7 @@ double& dfsdmat::operator () (int i,int j)
  * Description not yet available.
  * \param
  */
-uostream& operator << (BOR_CONST uostream& ofs,BOR_CONST dfsdmat& m)
+uostream& operator<<(const uostream& ofs, const dfsdmat& m)
 {
   double * p=((dfsdmat&)m).getminp();
   int nn=((dfsdmat&)m).size();
@@ -307,7 +307,7 @@ uostream& operator << (BOR_CONST uostream& ofs,BOR_CONST dfsdmat& m)
  * Description not yet available.
  * \param
  */
-uistream& operator >> (BOR_CONST uistream& _ifs,BOR_CONST dfsdmat& _m)
+uistream& operator>>(const uistream& _ifs, const dfsdmat& _m)
 {
   uistream& ifs= (uistream&) _ifs;
   dfsdmat& m=(dfsdmat&) _m;
@@ -348,7 +348,7 @@ void dfsdmat::save()
          << endl;
   }
   /*
-  if (BOR_CONST ptr && !shared_memory) 
+  if (const ptr && !shared_memory) 
   {
     delete [] ptr;
     ptr=NULL;

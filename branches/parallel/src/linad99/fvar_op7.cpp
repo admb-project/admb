@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -23,7 +23,7 @@ double upick(double x)
  * Description not yet available.
  * \param
  */
-dvariable& square(_CONST prevariable& v1)
+dvariable& square(const prevariable& v1)
 {
   double& x=value(v1);
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
@@ -37,7 +37,7 @@ dvariable& square(_CONST prevariable& v1)
  * Description not yet available.
  * \param
  */
-   dvar_matrix square(_CONST dvar_matrix& m)
+dvar_matrix square(const dvar_matrix& m)
    {
      dvar_matrix tmp;
      tmp.allocate(m);

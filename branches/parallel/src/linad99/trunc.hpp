@@ -2,12 +2,12 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
- * 
- * License:
+ * Copyright (c) 2008-2012 Regents of the University of California
  *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "New BSD" license
+ * 
+ * License:
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -78,11 +78,11 @@ public:
 
   void set_defaults();
   fmm_control();
-  fmm_control(BOR_CONST fmm_control& );
+  fmm_control(const fmm_control&);
 #ifdef HOME_VERSION
 #include "insx014.h"
 #endif
-  void writeon(BOR_CONST ostream& s) const;
+  void writeon(const ostream& s) const;
 };
 */
 
@@ -113,13 +113,13 @@ public:
   ivector iprint1;
 
 public:
-  double minimize(BOR_CONST independent_variables & x,double (*pf)(_CONST dvar_vector&));
+  double minimize(const independent_variables &x,double (*pf)(const dvar_vector&));
   fmmt(int _nvar,int _m=7);
 
-  double minimize(BOR_CONST independent_variables & x,BOR_CONST dvector& c,
-        double (*pf)(BOR_CONST dvar_vector&,BOR_CONST dvector&) );
+  double minimize(const independent_variables &x, const dvector& c,
+                  double (*pf)(const dvar_vector&, const dvector&));
 
-  void fmin(BOR_CONST double& f, BOR_CONST independent_variables & x,BOR_CONST dvector& g);
+  void fmin(const double& f, const independent_variables &x, const dvector& g);
 
   dmatrix& hessian();
 };

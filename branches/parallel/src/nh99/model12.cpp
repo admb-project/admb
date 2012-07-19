@@ -2,11 +2,11 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
-  void initial_params::save(BOR_CONST ofstream& _ofs,int prec)
+void initial_params::save(const ofstream& _ofs, int prec)
   {
     ofstream& ofs=(ofstream&) _ofs;
     ofs << setw(prec+6) << setshowpoint();
@@ -16,7 +16,7 @@
     }
   }
 
-  void param_init_number::save_value(BOR_CONST ofstream& _ofs,int prec)
+void param_init_number::save_value(const ofstream& _ofs, int prec)
   {
     ofstream& ofs=(ofstream&) _ofs;
     #ifndef __ZTC__
@@ -26,19 +26,19 @@
     #endif
   }
 
-  void param_init_vector::save_value(BOR_CONST ofstream& _ofs,int prec)
+void param_init_vector::save_value(const ofstream& _ofs, int prec)
   {
     ofstream& ofs=(ofstream&) _ofs;
     ofs << setw(prec+6) << setprecision(prec) << dvar_vector(*this) << endl;
   }
 
-  void param_init_bounded_vector::save_value(BOR_CONST ofstream& _ofs,int prec)
+void param_init_bounded_vector::save_value(const ofstream& _ofs, int prec)
   {
     ofstream& ofs=(ofstream&) _ofs;
     ofs << setw(prec+6) << setprecision(prec) << dvar_vector(*this) << endl;
   }
 
-  void param_init_matrix::save_value(BOR_CONST ofstream& _ofs,int prec)
+void param_init_matrix::save_value(const ofstream& _ofs, int prec)
   {
     ofstream& ofs=(ofstream&) _ofs;
     ofs << setw(prec+6) << setprecision(prec) << dvar_matrix(*this) << endl;

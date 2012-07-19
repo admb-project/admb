@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   dvar7_array operator / (_CONST d7_array& m,_CONST prevariable& d)
+dvar7_array operator/(const d7_array& m, const prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar7_array tmp;
@@ -31,7 +31,7 @@
  * Description not yet available.
  * \param
  */
-   dvar7_array operator / (_CONST dvar7_array& m, CGNU_DOUBLE d)
+dvar7_array operator/(const dvar7_array& m, CGNU_DOUBLE d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar7_array tmp;
@@ -48,7 +48,7 @@
  * Description not yet available.
  * \param
  */
-   dvar7_array operator / (_CONST dvar7_array& m,_CONST prevariable& d)
+dvar7_array operator/(const dvar7_array& m, const prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar7_array tmp;
@@ -65,7 +65,7 @@
  * Description not yet available.
  * \param
  */
-   void dvar7_array::operator /=(_CONST prevariable& d)
+void dvar7_array::operator/=(const prevariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
@@ -79,7 +79,7 @@
  * Description not yet available.
  * \param
  */
-   void dvar7_array::operator /=(_CONST double& d)
+void dvar7_array::operator/=(const double& d)
    {
      RETURN_ARRAYS_INCREMENT();
      for (int i=indexmin();i<=indexmax();i++)
@@ -93,7 +93,7 @@
  * Description not yet available.
  * \param
  */
-dvariable sum(_CONST dvar7_array& m)
+dvariable sum(const dvar7_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;

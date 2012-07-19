@@ -2,12 +2,11 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
-  void param_init_bounded_dev_vector::set_value(
-    const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& _pen)
+void param_init_bounded_dev_vector::set_value(const dvar_vector& x, const int& ii, const dvariable& _pen)
   {
     dvariable& pen= (dvariable&) _pen;
     if (initial_params::mc_phase)

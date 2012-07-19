@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-  dvar_vector operator / (_CONST prevariable& x,_CONST dvar_vector& t1)
+dvar_vector operator/(const prevariable& x, const dvar_vector& t1)
   {
     RETURN_ARRAYS_INCREMENT();
     dvar_vector tmp(t1.indexmin(),t1.indexmax());

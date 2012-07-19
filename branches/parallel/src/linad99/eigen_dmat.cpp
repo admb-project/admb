@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright (c) 2009-2011 ADMB foundation
+ * Copyright (c) 2009-2012 ADMB foundation
  */
 /**
  * \file
@@ -20,12 +20,12 @@ void eigens(const dmatrix & m, const dmatrix & _evecs,
  * \return a variable vector containing the
  *         eigenvalues of \f$m\f$.
  */
-dvector eigenvalues(_CONST dmatrix & m)
+dvector eigenvalues(const dmatrix &m)
 {
    if (m.rowsize() != m.colsize())
    {
       cerr <<
-	 "error -- non square matrix passed to dvector eigenvalues(_CONST dmatrix& m)\n";
+	 "error -- non square matrix passed to dvector eigenvalues(const dmatrix& m)\n";
       ad_exit(1);
    }
 
@@ -47,12 +47,12 @@ dvector eigenvalues(_CONST dmatrix & m)
  * \return a variable matrix with the
  *         eigenvectors of \f$m\f$ stored in its columns.
  */
-dmatrix eigenvectors(_CONST dmatrix & m)
+dmatrix eigenvectors(const dmatrix &m)
 {
    if (m.rowsize() != m.colsize())
    {
       cerr <<
-	 "error -- non square matrix passed to dmatrix eigenvectors(_CONST dmatrix& m)\n";
+	 "error -- non square matrix passed to dmatrix eigenvectors(const dmatrix& m)\n";
       ad_exit(1);
    }
 
@@ -76,12 +76,12 @@ dmatrix eigenvectors(_CONST dmatrix & m)
  *         eigenvectors of \f$m\f$ stored in its columns.
  * On return _diag contains the eigenvalues of \f$m\f$.
  */
-dmatrix eigenvectors(_CONST dmatrix & m, BOR_CONST dvector & _diag)
+dmatrix eigenvectors(const dmatrix &m, const dvector &_diag)
 {
    ADUNCONST(dvector, diag) if (m.rowsize() != m.colsize())
    {
       cerr << "error -- non square matrix passed to dmatrix "
-	 << "eigenvectors(_CONST dmatrix& m, BOR_CONST dvector& _diag)\n";
+	 << "eigenvectors(const dmatrix& m, const dvector& _diag)\n";
       ad_exit(1);
    }
 

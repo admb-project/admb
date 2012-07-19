@@ -2,12 +2,12 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
- * 
- * License:
+ * Copyright (c) 2008-2012 Regents of the University of California
  *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "New BSD" license
+ * 
+ * License:
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -96,36 +96,36 @@ int ip;
 int n;
 public:
   fmmq(int nvar);
-  fmmq(int nvar,_CONST lvector& ipar);
-  double minimize(_CONST dvector& x,double (*pf)(_CONST dvar_vector&));
-  double minimize(BOR_CONST independent_variables & x,_CONST dvector& c,
-        double (*pf)(_CONST dvar_vector&,_CONST dvector&) );
-  void fmin(_CONST double& f,_CONST dvector& x,_CONST dvector& g);
-  void va13c (_CONST dvector& x,_CONST double& f,_CONST dvector& g);
+  fmmq(int nvar, const lvector& ipar);
+  double minimize(const dvector& x,double (*pf)(const dvar_vector&));
+  double minimize(const independent_variables & x, const dvector& c,
+                  double (*pf)(const dvar_vector&, const dvector&));
+  void fmin(const double& f, const dvector& x, const dvector& g);
+  void va13c(const dvector& x, const double& f, const dvector& g);
 };
 */
 
-void fgcomp(_CONST double& f,_CONST dvector& x,_CONST dvector& g);
+void fgcomp(const double& f, const dvector& x, const dvector& g);
 
-void mc11b (_CONST dvector& h, BOR_CONST int& n, BOR_CONST int& k);
-void mc11e (_CONST dvector& h, BOR_CONST int& n,_CONST dvector& d,_CONST dvector& w, BOR_CONST int& nn);
+void mc11b(const dvector& h, const int& n, const int& k);
+void mc11e(const dvector& h, const int& n, const dvector& d, const dvector& w, const int& nn);
 
 // if you pass ir by referenc it stops after the third func eval
 // if you pass ir by value it runs but is wrong
 
-void mc11a(_CONST dvector& h, BOR_CONST int& n,_CONST dvector& xb,_CONST double& sig,_CONST dvector& w,
-           int& ir, BOR_CONST int& mk,_CONST double& eps);
+void mc11a(const dvector& h, const int& n, const dvector& xb, const double& sig, const dvector& w,
+           int& ir, const int& mk, const double& eps);
 
-void mc11adp(_CONST dvector& h, BOR_CONST int& n,_CONST dvector& d,_CONST double&,_CONST dvector& , BOR_CONST int& ir,
-             int& mk,_CONST double&);
+void mc11adp(const dvector& h, const int& n, const dvector& d, const double&, const dvector& , const int& ir,
+             int& mk, const double&);
 
-double fmax(_CONST double& x,_CONST double& y);
-double ffmin(_CONST double& x,_CONST double& y);
-double ffmin(BOR_CONST int& x,BOR_CONST int& y);
+double fmax(const double& x, const double& y);
+double ffmin(const double& x, const double& y);
+double ffmin(const int& x, const int& y);
 double mypow(double x, double p);
 double dafsqrt(double x);
 
-void fmmq_disp(int nfun, int itn, double f, double gmax,_CONST dvector& x,_CONST dvector& g);
+void fmmq_disp(int nfun, int itn, double f, double gmax, const dvector& x, const dvector& g);
 void here(const char* place);
 
 

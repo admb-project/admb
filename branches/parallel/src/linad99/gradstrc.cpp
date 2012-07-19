@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -72,11 +72,7 @@ int gradient_structure::Hybrid_bounded_flag=0;
 DF_FILE * gradient_structure::fp=NULL;
 char gradient_structure::cmpdif_file_name[101];
 //char gradient_structure::var_store_file_name[61];
-#if defined(AD_DEMO)
-int gradient_structure::NUM_RETURN_ARRAYS = 10;
-#else
 int gradient_structure::NUM_RETURN_ARRAYS = 25;
-#endif
 double * gradient_structure::hessian_ptr=NULL;
 int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #if (defined(NO_DERIVS))
@@ -90,13 +86,7 @@ long int gradient_structure::USE_FOR_HESSIAN = 0;
 dvariable** gradient_structure::RETURN_ARRAYS = NULL;
 int gradient_structure::RETURN_ARRAYS_PTR;
 dvariable ** gradient_structure::RETURN_PTR_CONTAINER = NULL;
-
-#if defined(AD_DEMO)
 int gradient_structure::RETURN_ARRAYS_SIZE = 70;
-#else
-int gradient_structure::RETURN_ARRAYS_SIZE = 70;
-#endif
-
 int gradient_structure::instances = 0;
 //int gradient_structure::RETURN_INDEX = 0;
 //dvariable * gradient_structure::FRETURN = NULL;
@@ -127,11 +117,12 @@ grad_stack * gradient_structure::GRAD_STACK1;
 indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
 arr_list * gradient_structure::ARR_LIST1 = NULL;
 arr_list * gradient_structure::ARR_FREE_LIST1 = NULL;
-#if defined(AD_DEMO)
-int gradient_structure::MAX_DLINKS = 900;
-#else
 int gradient_structure::MAX_DLINKS = 5000;
-#endif
+
+// note: ARRAY_MEMBLOCK stuff is set by tpl2cpp for historical reasons
+//       those settings could be moved into this file in the future
+//       - Ian Taylor 5/3/2012
+
 //unsigned long int gradient_structure::ARRAY_MEMBLOCK_BASE = 0L;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASE;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASEA;
@@ -284,11 +275,8 @@ void allocate_dvariable_space(void)
    atexit(cleanup_temporary_files);
    fill_ad_random_part();
    long int size;
-#if !defined(AD_DEMO)
-     size=_size;
-#else
-     size=12000L;
-#endif
+   size=_size;
+
    if (instances++ > 0)
    {
      cerr << "More than one gradient_structure object has been declared.\n"

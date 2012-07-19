@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -38,7 +38,7 @@
  * Description not yet available.
  * \param
  */
-uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST ivector& _z)
+uistream& operator>>(const uistream& _istr, const ivector& _z)
 {
   ivector& z=(ivector& )_z;
   uistream& istr= (uistream&) _istr;
@@ -50,7 +50,7 @@ uistream& operator>>(BOR_CONST uistream& _istr,BOR_CONST ivector& _z)
  * Description not yet available.
  * \param
  */
-void ivector::read_from(BOR_CONST uistream& _s)
+void ivector::read_from(const uistream& _s)
 {
   ADUNCONST(uistream,s);
   int n = indexmax() - indexmin() + 1;
@@ -63,7 +63,7 @@ void ivector::read_from(BOR_CONST uistream& _s)
  * Description not yet available.
  * \param
  */
-uostream& operator<<(BOR_CONST uostream& _ostr,_CONST ivector& z)
+uostream& operator<<(const uostream& _ostr, const ivector& z)
 {
   uostream & ostr = (uostream&) _ostr;
   z.write_on(ostr);
@@ -75,7 +75,7 @@ uostream& operator<<(BOR_CONST uostream& _ostr,_CONST ivector& z)
  * Description not yet available.
  * \param
  */
-void ivector::write_on(BOR_CONST uostream& _s) _CONST
+void ivector::write_on(const uostream& _s) const
 {
   ADUNCONST(uostream,s)
   int n = indexmax() - indexmin() + 1;

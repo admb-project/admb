@@ -2,14 +2,14 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
-//double ndfboundp( double x, double fmin, double fmax,BOR_CONST double& fpen);
+//double ndfboundp(double x, double fmin, double fmax, const double& fpen);
 
 
-  void param_init_number::sd_scale(BOR_CONST dvector& _d,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_number::sd_scale(const dvector& _d, const dvector& x, const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& d=(dvector&) _d;
@@ -19,7 +19,7 @@
   }
 
 
-  void param_init_bounded_number::sd_scale(BOR_CONST dvector& _d,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_bounded_number::sd_scale(const dvector& _d, const dvector& x, const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& d=(dvector&) _d;
@@ -44,7 +44,7 @@
     ii++;
   }
 
-  void param_init_vector::sd_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_vector::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     if (allocated(*this))
     {  
@@ -62,7 +62,7 @@
   }
 
 
-  void param_init_matrix::sd_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_matrix::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     if (allocated(*this))
     {  
@@ -88,7 +88,7 @@
   }
 
 
-  void param_init_bounded_vector::sd_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_bounded_vector::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     if (allocated(*this))
     {  
@@ -120,7 +120,7 @@
   }
 
 
-  void param_init_bounded_matrix::sd_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_bounded_matrix::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     if (allocated(*this))
     {  

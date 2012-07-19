@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 //#include <iomanip.h>
@@ -16,7 +16,7 @@ void set_labels_for_hess(int);
 
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
-void useless(BOR_CONST double& sdelta2);
+void useless(const double& sdelta2);
 // estimate the matrix of second derivatives
 void ad_update_hess_stats_report(int i,int nvar);
 
@@ -56,7 +56,7 @@ void function_minimizer::hess_routine_master()
       hess_calcreport(i,nvar);
 #else
       cout << "Estimating row " << i << " out of " << nvar
-	   << " for hessian" << endl;
+           << " for hessian" << endl;
 #endif
 
       double f=0.0;

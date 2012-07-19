@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -20,7 +20,7 @@
    return y;
  }
 
-  void initial_params::set_all_simulation_bounds(BOR_CONST dmatrix& symbds)
+  void initial_params::set_all_simulation_bounds(const dmatrix& symbds)
   {
     int ii=1;
     for (int i=0;i<num_initial_params;i++)
@@ -31,7 +31,7 @@
     }
   }
 
-  void param_init_number::set_simulation_bounds(BOR_CONST dmatrix& _symbds,BOR_CONST int& _ii)
+  void param_init_number::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
   {
     int& ii=(int&) _ii;
     dmatrix& symbds=(dmatrix&) _symbds;
@@ -40,7 +40,7 @@
     ii++;
   }
 
-  void param_init_bounded_number::set_simulation_bounds(BOR_CONST dmatrix& _symbds,BOR_CONST int& _ii)
+  void param_init_bounded_number::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
   {
     dmatrix& symbds=(dmatrix&) _symbds;
     int& ii=(int&) _ii;
@@ -49,7 +49,7 @@
     ii++;
   }
 
-  void param_init_vector::set_simulation_bounds(BOR_CONST dmatrix& _symbds,BOR_CONST int& _ii)
+  void param_init_vector::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
   {
     dmatrix& symbds=(dmatrix&) _symbds;
     int& ii=(int&) _ii;
@@ -63,7 +63,7 @@
     }
   }
 
-  void param_init_bounded_vector::set_simulation_bounds(BOR_CONST dmatrix& _symbds,BOR_CONST int& _ii)
+  void param_init_bounded_vector::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
   {
     dmatrix& symbds=(dmatrix&) _symbds;
     int& ii=(int&) _ii;
@@ -78,7 +78,7 @@
   }
 
 
-  void param_init_matrix::set_simulation_bounds(BOR_CONST dmatrix& _symbds,BOR_CONST int& _ii)
+  void param_init_matrix::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
   {
     dmatrix& symbds=(dmatrix&) _symbds;
     int& ii=(int&) _ii;
@@ -98,7 +98,7 @@
   }
 
 
-  void param_init_bounded_matrix::set_simulation_bounds(BOR_CONST dmatrix& _symbds,BOR_CONST int& _ii)
+  void param_init_bounded_matrix::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
   {
     dmatrix& symbds=(dmatrix&) _symbds;
     int& ii=(int&) _ii;
@@ -117,15 +117,15 @@
     }
   }
 
-  void param_init_number::add_value(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& _ii,BOR_CONST double& s,
-    BOR_CONST dvector& diag)
+  void param_init_number::add_value(const dvector& y, const dvector& ndev, const int& _ii, const double& s,
+    const dvector& diag)
   {
     int& ii=(int&) _ii;
     (*this)+=diag(ii)*ndev(ii);
     ii++;
   }
 
-double new_value_mc(BOR_CONST double& _jac,double x,double min,double max,double eps,
+double new_value_mc(const double& _jac,double x,double min,double max,double eps,
   double sig)
 {
   double& jac=(double&) _jac;
@@ -186,16 +186,16 @@ double new_value_mc(BOR_CONST double& _jac,double x,double min,double max,double
   return y;
 }
 
-  void param_init_bounded_number::add_value(BOR_CONST dvector& _y,BOR_CONST dvector& ndev,BOR_CONST int& _ii,
-    BOR_CONST double& s,BOR_CONST dvector& diag)
+  void param_init_bounded_number::add_value(const dvector& _y, const dvector& ndev, const int& _ii,
+    const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     *this = new_value_mc(_y(ii),value(*this),minb,maxb,ndev(ii),diag(ii));
     ii++;
   }
 
-  void param_init_vector::add_value(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& _ii,
-    BOR_CONST double& s,BOR_CONST dvector& diag)
+  void param_init_vector::add_value(const dvector& y, const dvector& ndev, const int& _ii,
+    const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     int mmin=indexmin();
@@ -207,8 +207,8 @@ double new_value_mc(BOR_CONST double& _jac,double x,double min,double max,double
     }
   }
 
-  void param_init_bounded_vector::add_value(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& _ii,
-    BOR_CONST double& s,BOR_CONST dvector& diag)
+  void param_init_bounded_vector::add_value(const dvector& y, const dvector& ndev, const int& _ii,
+    const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     int mmin=indexmin();
@@ -223,7 +223,7 @@ double new_value_mc(BOR_CONST double& _jac,double x,double min,double max,double
 
 
 /*
-  void param_init_bounded_vector::add_value(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& ii,BOR_CONST double& s)
+  void param_init_bounded_vector::add_value(const dvector& y, const dvector& ndev, const int& ii, const double& s)
   {
     int mmin=indexmin();
     int mmax=indexmax();
@@ -244,8 +244,8 @@ double new_value_mc(BOR_CONST double& _jac,double x,double min,double max,double
 */
 
 
-  void param_init_matrix::add_value(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& _ii,BOR_CONST double& s,
-    BOR_CONST dvector& diag)
+void param_init_matrix::add_value(const dvector& y, const dvector& ndev, const int& _ii, const double& s,
+  const dvector& diag)
   {
     int& ii=(int&) _ii;
     int rmin=rowmin();
@@ -262,8 +262,8 @@ double new_value_mc(BOR_CONST double& _jac,double x,double min,double max,double
     }
   }
 
-  void param_init_bounded_matrix::add_value(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& _ii,
-    BOR_CONST double& s,BOR_CONST dvector& diag)
+void param_init_bounded_matrix::add_value(const dvector& y, const dvector& ndev, const int& _ii,
+  const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     int rmin=rowmin();
@@ -281,8 +281,8 @@ double new_value_mc(BOR_CONST double& _jac,double x,double min,double max,double
     }
   }
 
-void param_init_d3array::add_value(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& _ii,
-  BOR_CONST double& s,BOR_CONST dvector& diag)
+void param_init_d3array::add_value(const dvector& y, const dvector& ndev, const int& _ii,
+  const double& s, const dvector& diag)
 {
   int& ii=(int&) _ii;
   int smin=indexmin();
@@ -304,7 +304,7 @@ void param_init_d3array::add_value(BOR_CONST dvector& y,BOR_CONST dvector& ndev,
   }
 }
 
-void param_init_d3array::add_value(BOR_CONST dvector& ndev,BOR_CONST int& _ii)
+void param_init_d3array::add_value(const dvector& ndev, const int& _ii)
 {
   int& ii=(int&) _ii;
   int smin=indexmin();
@@ -327,21 +327,21 @@ void param_init_d3array::add_value(BOR_CONST dvector& ndev,BOR_CONST int& _ii)
 }
 
 
-  void param_init_number::get_jacobian(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& _ii)
+  void param_init_number::get_jacobian(const dvector& y, const dvector& ndev, const int& _ii)
   {
     int& ii=(int&) _ii;
     (*this)+=ndev(ii);
     ii++;
   }
 
-  void param_init_bounded_number::get_jacobian(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& _ii)
+  void param_init_bounded_number::get_jacobian(const dvector& y, const dvector& ndev, const int& _ii)
   {
     int& ii=(int&) _ii;
     (*this)+=ndev(ii);
     ii++;
   }
 
-  void param_init_vector::get_jacobian(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& _ii)
+  void param_init_vector::get_jacobian(const dvector& y, const dvector& ndev, const int& _ii)
   {
     int& ii=(int&) _ii;
     int mmin=indexmin();
@@ -353,7 +353,7 @@ void param_init_d3array::add_value(BOR_CONST dvector& ndev,BOR_CONST int& _ii)
     }
   }
 
-  void param_init_matrix::get_jacobian(BOR_CONST dvector& y,BOR_CONST dvector& ndev,BOR_CONST int& _ii)
+  void param_init_matrix::get_jacobian(const dvector& y, const dvector& ndev, const int& _ii)
   {
     int& ii=(int&) _ii;
     int rmin=rowmin();
@@ -370,8 +370,8 @@ void param_init_d3array::add_value(BOR_CONST dvector& ndev,BOR_CONST int& _ii)
     }
   }
 
-  void param_init_bounded_matrix::get_jacobian(BOR_CONST dvector& y,BOR_CONST dvector& ndev,
-    BOR_CONST int& _ii)
+  void param_init_bounded_matrix::get_jacobian(const dvector& y, const dvector& ndev,
+    const int& _ii)
   {
     int& ii=(int&) _ii;
     int rmin=rowmin();
@@ -389,8 +389,8 @@ void param_init_d3array::add_value(BOR_CONST dvector& ndev,BOR_CONST int& _ii)
   }
 
 
-  void param_init_bounded_vector::get_jacobian(BOR_CONST dvector& _y,BOR_CONST dvector& _jac,
-    BOR_CONST int& _ii)
+  void param_init_bounded_vector::get_jacobian(const dvector& _y, const dvector& _jac,
+    const int& _ii)
   {
     dvector& y=(dvector&) _y;
     dvector& jac=(dvector&) _jac;
@@ -409,8 +409,8 @@ void param_init_d3array::add_value(BOR_CONST dvector& ndev,BOR_CONST int& _ii)
     }
   }
 
-void param_init_d3array::set_simulation_bounds(BOR_CONST dmatrix& _symbds,
-  BOR_CONST int& _ii)
+void param_init_d3array::set_simulation_bounds(const dmatrix& _symbds,
+  const int& _ii)
 {
   dmatrix& symbds=(dmatrix&) _symbds;
   int& ii=(int&) _ii;

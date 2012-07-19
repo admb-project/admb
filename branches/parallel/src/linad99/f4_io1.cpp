@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -38,7 +38,7 @@
  * Description not yet available.
  * \param
  */
-uostream& operator<<(BOR_CONST uostream& ostr,BOR_CONST dvar4_array & z)
+uostream& operator<<(const uostream& ostr, const dvar4_array &z)
 {
   for (int i=z.hslicemin();i<=z.hslicemax();i++)
   {
@@ -51,7 +51,7 @@ uostream& operator<<(BOR_CONST uostream& ostr,BOR_CONST dvar4_array & z)
  * Description not yet available.
  * \param
  */
-uistream& operator>>(BOR_CONST uistream& istr,BOR_CONST  dvar4_array & z)
+uistream& operator>>(const uistream& istr,const dvar4_array &z)
 {
   for (int i=z.hslicemin();i<=z.hslicemax();i++)
   {

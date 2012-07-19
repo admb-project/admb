@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -37,7 +37,7 @@ ivector diagonal(const imatrix& m)
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in imatrix  operator * (_CONST imatrix& x,_CONST imatrix& m)\n";
+     cerr << " Incompatible array bounds in imatrix  operator * (const imatrix& x, const imatrix& m)\n";
      ad_exit(21);
    }
    imatrix tmp(m1.rowmin(),m1.rowmax(), m2.colmin(), m2.colmax());

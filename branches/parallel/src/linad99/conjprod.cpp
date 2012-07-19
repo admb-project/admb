@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -108,32 +108,32 @@ extern int ctlc_flag;
 class fmmc;
 
 
-double do_interpolate( BOR_CONST double& fret,BOR_CONST double& left_bracket,
-  double& left_bracket_value, BOR_CONST dvector& left_bracket_gradient,
-  double& right_bracket, BOR_CONST double& right_bracket_value,
-  dvector& right_bracket_gradient, BOR_CONST dvector& theta, BOR_CONST dvector& d, BOR_CONST int& J,
-  long int& ifn, BOR_CONST double& crit1,
-  int& int_flag,BOR_CONST double& rho_1, BOR_CONST double& Psi_2, BOR_CONST dvector& g1);
+double do_interpolate(const double& fret, const double& left_bracket,
+  double& left_bracket_value, const dvector& left_bracket_gradient,
+  double& right_bracket, const double& right_bracket_value,
+  dvector& right_bracket_gradient, const dvector& theta, const dvector& d, const int& J,
+  long int& ifn, const double& crit1,
+  int& int_flag, const double& rho_1, const double& Psi_2, const dvector& g1);
 
-void do_extrapolate( BOR_CONST double& left_bracket, BOR_CONST double& left_bracket_value,
-  dvector& left_bracket_gradient, BOR_CONST double& right_bracket,
-  double& right_bracket_value, BOR_CONST dvector& right_bracket_gradient, BOR_CONST dvector& theta,
-  dvector& d, BOR_CONST int& J, BOR_CONST double& rho_0,long int& ifn,BOR_CONST int& ifnex,
-  int& ext_flag,BOR_CONST double& rho_1, BOR_CONST double& rf, BOR_CONST dvector& g1);
+void do_extrapolate(const double& left_bracket, const double& left_bracket_value,
+  dvector& left_bracket_gradient, const double& right_bracket,
+  double& right_bracket_value, const dvector& right_bracket_gradient, const dvector& theta,
+  dvector& d, const int& J, const double& rho_0, long int& ifn, const int& ifnex,
+  int& ext_flag, const double& rho_1, const double& rf, const dvector& g1);
 
-double mylinmin( BOR_CONST double& fret, BOR_CONST double& Phi_i, BOR_CONST dvector& theta1, BOR_CONST dvector& q_i,
+double mylinmin(const double& fret, const double& Phi_i, const dvector& theta1, const dvector& q_i,
   fmmc& cs);
 
-void  bracket_report( BOR_CONST dvector& theta, BOR_CONST double& left_bracket,
-  double& right_bracket, BOR_CONST dvector& d);
+void bracket_report(const dvector& theta, const double& left_bracket,
+                    double& right_bracket, const dvector& d);
 
-double cubic_interpolation( BOR_CONST double& u, BOR_CONST double& v, BOR_CONST double& a, BOR_CONST double& b,
-  double& ap, BOR_CONST double& bp);
+double cubic_interpolation(const double& u, const double& v, const double& a, const double& b,
+                           double& ap, const double& bp);
 
 
-double Phi( BOR_CONST dvector&);
-double min( BOR_CONST double&, BOR_CONST double&);
-double max( BOR_CONST double&, BOR_CONST double&);
+double Phi(const dvector&);
+double min(const double&, const double&);
+double max(const double&, const double&);
 
 #include <math.h>
 
@@ -145,7 +145,7 @@ double max( BOR_CONST double&, BOR_CONST double&);
  * Description not yet available.
  * \param
  */
-void fmmc::fmin( BOR_CONST double& fret,BOR_CONST dvector& p,BOR_CONST dvector& gg)
+void fmmc::fmin(const double& fret, const dvector& p, const dvector& gg)
 {
   dfn=0.0;;
   maxfn_flag=0;
@@ -496,7 +496,7 @@ label1000:
  * bracket the minimum
  * \param
  */
-double mylinmin( BOR_CONST double& fret, BOR_CONST double& Phi_i, BOR_CONST dvector& theta1, BOR_CONST dvector& q_i,
+double mylinmin(const double& fret, const double& Phi_i, const dvector& theta1, const dvector& q_i,
   fmmc& cs)
 
 {
@@ -629,12 +629,12 @@ label555:
  * Description not yet available.
  * \param
  */
-double do_interpolate( BOR_CONST double& fret, BOR_CONST double& left_bracket,
-  double& left_bracket_value, BOR_CONST dvector& left_bracket_gradient,
-  double& right_bracket, BOR_CONST double& right_bracket_value,
-  dvector& right_bracket_gradient, BOR_CONST dvector& theta, BOR_CONST dvector& d, BOR_CONST int& _J,
-  long int& ifn, BOR_CONST double& crit1,
-  int& int_flag,BOR_CONST double& rho_1, BOR_CONST double& Psi_2, BOR_CONST dvector& g1)
+double do_interpolate(const double& fret, const double& left_bracket,
+  double& left_bracket_value, const dvector& left_bracket_gradient,
+  double& right_bracket, const double& right_bracket_value,
+  dvector& right_bracket_gradient, const dvector& theta, const dvector& d, const int& _J,
+  long int& ifn, const double& crit1,
+  int& int_flag, const double& rho_1, const double& Psi_2, const dvector& g1)
 {
   double rho_min=1.e-10;
   int& J = (int&) _J;
@@ -796,11 +796,11 @@ label200:
  * Description not yet available.
  * \param
  */
-void do_extrapolate( BOR_CONST double& left_bracket, BOR_CONST double& left_bracket_value,
-  dvector& left_bracket_gradient, BOR_CONST double& right_bracket,
-  double& right_bracket_value, BOR_CONST dvector& right_bracket_gradient, BOR_CONST dvector& theta,
-  dvector& d, BOR_CONST int& J, BOR_CONST double& rho_0,long int& ifn,BOR_CONST int& ifnex,
-  int& ext_flag,BOR_CONST double& rho_1, BOR_CONST double& rf, BOR_CONST dvector& g1)
+void do_extrapolate(const double& left_bracket, const double& left_bracket_value,
+  dvector& left_bracket_gradient, const double& right_bracket,
+  double& right_bracket_value, const dvector& right_bracket_gradient, const dvector& theta,
+  dvector& d, const int& J, const double& rho_0, long int& ifn, const int& ifnex,
+  int& ext_flag, const double& rho_1, const double& rf, const dvector& g1)
 {
   if (ext_flag==1) goto label1500;
   J=J/2;
@@ -837,8 +837,8 @@ label2000:
  * Description not yet available.
  * \param
  */
-void  bracket_report( BOR_CONST dvector& theta, BOR_CONST double& left_bracket,
-  double& right_bracket, BOR_CONST dvector& d)
+void bracket_report(const dvector& theta, const double& left_bracket,
+                    double& right_bracket, const dvector& d)
 {
   double f=0;
   double fp1=0;
@@ -860,8 +860,8 @@ void  bracket_report( BOR_CONST dvector& theta, BOR_CONST double& left_bracket,
  * Description not yet available.
  * \param
  */
-double cubic_interpolation( BOR_CONST double& u, BOR_CONST double& v, BOR_CONST double& aa, BOR_CONST double& bb,
-  double& ap, BOR_CONST double& bp)
+double cubic_interpolation(const double& u, const double& v, const double& aa, const double& bb,
+                           double& ap, const double& bp)
 {
   //cout <<"Begin cube\n";
   dmatrix M(1,4,1,4);
@@ -936,7 +936,7 @@ double cubic_interpolation( BOR_CONST double& u, BOR_CONST double& v, BOR_CONST 
  * Description not yet available.
  * \param
  */
-fmmc::fmmc(BOR_CONST int& n)
+fmmc::fmmc(const int& n)
 {
   ctlc_flag = 0;
   maxfn=500;
@@ -1002,7 +1002,7 @@ fmmc::~fmmc(void)
  * Description not yet available.
  * \param
  */
-void derch(BOR_CONST double& f,BOR_CONST dvector& _x,BOR_CONST dvector& _gg,int n,BOR_CONST int & _ireturn)
+void derch(const double& f, const dvector& _x, const dvector& _gg, int n, const int & _ireturn)
 {
   int& ireturn=(int&) _ireturn;
   dvector& x = (dvector&) _x;

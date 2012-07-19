@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -26,14 +26,14 @@
 #include <iostream.h>
 #endif
 void dfcholeski_decomp_positive(void);
-dvar_matrix choleski_decomp_positive(_CONST dvar_matrix& MM,double eps,
+dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
   dvariable& _fpen);
 
 /**
  * Description not yet available.
  * \param
  */
-dvar_matrix positive_definite_matrix(_CONST dvar_matrix& MM,double eps,
+dvar_matrix positive_definite_matrix(const dvar_matrix& MM, double eps,
   dvariable& _fpen)
 {
   dvar_matrix ch_m=choleski_decomp_positive(MM,eps,_fpen);
@@ -44,7 +44,7 @@ dvar_matrix positive_definite_matrix(_CONST dvar_matrix& MM,double eps,
  * Description not yet available.
  * \param
  */
-dvar_matrix choleski_decomp_positive(_CONST dvar_matrix& MM,double eps,
+dvar_matrix choleski_decomp_positive(const dvar_matrix& MM, double eps,
   dvariable& _fpen)
 {
   // kludge to deal with constantness

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: Unknown
- * Copyright (c) 2009-2011 ADMB Foundation
+ * Copyright (c) 2009-2012 ADMB Foundation
  *
  * This file was originally written in FORTRAN II by and unknown author.
  * In the 1980s, it was ported to C and C++ and extensively modified by
@@ -186,7 +186,7 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
  * Description not yet available.
  * \param
  */
-void fmm::fmin(BOR_CONST double& _f, const dvector & _x,BOR_CONST dvector& _g)
+void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
 {
   if (log_values_switch)
   {

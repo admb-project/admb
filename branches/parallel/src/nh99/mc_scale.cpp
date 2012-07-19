@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -18,7 +18,7 @@ double set_value_mc(double z,double min,double max);
  * Description not yet available.
  * \param
  */
-int initial_params::montecarlo_scale(BOR_CONST dvector& d,BOR_CONST dvector& x)
+int initial_params::montecarlo_scale(const dvector& d, const dvector& x)
 {
   int ii=1;
   for (int i=0;i<num_initial_params;i++)
@@ -34,7 +34,7 @@ int initial_params::montecarlo_scale(BOR_CONST dvector& d,BOR_CONST dvector& x)
  * Description not yet available.
  * \param
  */
-void param_init_number::mc_scale(BOR_CONST dvector& _d,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_number::mc_scale(const dvector& _d, const dvector& x, const int& _ii)
 {
   dvector& d=(dvector&) _d;
   int& ii=(int&) _ii;
@@ -46,7 +46,7 @@ void param_init_number::mc_scale(BOR_CONST dvector& _d,BOR_CONST dvector& x,BOR_
  * Description not yet available.
  * \param
  */
-void param_init_bounded_number::mc_scale(BOR_CONST dvector& _d,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_bounded_number::mc_scale(const dvector& _d, const dvector& x, const int& _ii)
 {
   dvector& d=(dvector&) _d;
   int& ii=(int&) _ii;
@@ -93,7 +93,7 @@ double ndfboundp_mc( double x, double fmin, double fmax,const double& fpen)
  * Description not yet available.
  * \param
  */
-void param_init_vector::mc_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_vector::mc_scale(const dvector& _v, const dvector& x, const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -109,7 +109,7 @@ void param_init_vector::mc_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_
  * Description not yet available.
  * \param
  */
-void param_init_matrix::mc_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_matrix::mc_scale(const dvector& _v, const dvector& x, const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -130,7 +130,7 @@ void param_init_matrix::mc_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_
  * Description not yet available.
  * \param
  */
-void param_init_d3array::mc_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_d3array::mc_scale(const dvector& _v, const dvector& x, const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -156,7 +156,7 @@ void param_init_d3array::mc_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR
  * Description not yet available.
  * \param
  */
-void param_init_bounded_vector::mc_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_bounded_vector::mc_scale(const dvector& _v, const dvector& x, const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -178,7 +178,7 @@ void param_init_bounded_vector::mc_scale(BOR_CONST dvector& _v,BOR_CONST dvector
  * Description not yet available.
  * \param
  */
-void param_init_bounded_matrix::mc_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_bounded_matrix::mc_scale(const dvector& _v, const dvector& x, const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;

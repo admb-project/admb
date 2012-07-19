@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -107,7 +107,7 @@
  * Description not yet available.
  * \param
  */
-dvariable sum(_CONST dvar3_array& m)
+dvariable sum(const dvar3_array& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
- imatrix& imatrix::operator= (_CONST imatrix& m1)
+imatrix& imatrix::operator=(const imatrix& m1)
  {
    if (allocated(*this))
    {
@@ -29,7 +29,7 @@
        cerr << colmax() << endl;
        cerr << m1.colmin() << endl;
        cerr << m1.colmax() << endl;
-       cerr << " Incompatible array bounds in imatrix& operator = (_CONST imatrix&)\n";
+       cerr << " Incompatible array bounds in imatrix& operator=(const imatrix&)\n";
        ad_exit(21);
      }
   

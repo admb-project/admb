@@ -42852,32 +42852,29 @@ case YY_STATE_EOF(IN_PVM_SLAVE_SECTION):
     
     
     
+    // **********************************************************************
+    // **********************************************************************
+    // The following settings for ARRAY_MEMBLOCK_SIZE used to be more complex.
+    // for more info, see:
+    // http://lists.admb-project.org/pipermail/developers/2012-April/000607.html
+    // These defaults should probably be moved to gradstrc.cpp along with other
+    // default settings, but I don't have the skills to do that right now.
+    // - Ian Taylor, May 1, 2012
+
     if (makedll)
     {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
-        "  #if defined(__GNUDOS__) || defined(DOS386) || defined(__DPMI32__) "
-        " || \\\n"
-        "     defined(__MSVC32__)\n"
-        "      if (!arrmblsize) arrmblsize=150000;\n"
-        "  #else\n"
-        "      if (!arrmblsize) arrmblsize=25000;\n"
-        "  #endif\n"
+        "    if (!arrmblsize) arrmblsize=15000000;\n"
         "    model_parameters mp(arrmblsize,argc,argv,ad_dll);\n"
         "    mp.iprint=10;\n");
-    }	
+    }
     else
     {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
-        "  #if defined(__GNUDOS__) || defined(DOS386) || defined(__DPMI32__) "
-        " || \\\n"
-        "     defined(__MSVC32__)\n"
-        "      if (!arrmblsize) arrmblsize=150000;\n"
-        "  #else\n"
-        "      if (!arrmblsize) arrmblsize=25000;\n"
-        "  #endif\n"
+        "    if (!arrmblsize) arrmblsize=15000000;\n"
         "    model_parameters mp(arrmblsize,argc,argv);\n"
         "    mp.iprint=10;\n");
-    }	
+    }
     
 
      fprintf(ftopmain,"    mp.preliminary_calculations();\n");

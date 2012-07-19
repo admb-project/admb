@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -32,13 +32,13 @@
   \return A dvariable, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing 
   the value of the dot product of the two arguments.
 */
-  dvariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)
+dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-      "prevariable operator * (_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
+      "prevariable operator * (const dvar_vector& v1, const dvar_vector& v2)" << endl;
     ad_exit(1);
   }
   double tmp=0;
@@ -130,7 +130,7 @@ void X_dv_sum(void);
   \param v1 A dvar_vector, \f$a\f$.
   \return A dvariable, \f$s = \sum a \f$  containing the sum of the vector.
 */
-dvariable sum(_CONST dvar_vector& v1)
+dvariable sum(const dvar_vector& v1)
 {
   if (allocated(v1))
   {
@@ -184,7 +184,7 @@ void X_dv_sum(void)
   \return A dvariable, \f$s = \sum A \f$  containing the sum of the matrix.
 */
 
-dvariable sum(_CONST dvar_matrix& m)
+dvariable sum(const dvar_matrix& m)
 {
   RETURN_ARRAYS_INCREMENT();
   dvariable tmp=0.;

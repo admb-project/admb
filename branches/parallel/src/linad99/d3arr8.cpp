@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST double& d3_array::operator () (int k, int i, int j) _CONST 
+const double& d3_array::operator()(int k, int i, int j) const
     {
       #ifdef SAFE_ARRAYS
         if (k<slicemin())
@@ -37,7 +37,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST dvector& d3_array::operator () (int k, int i) _CONST 
+const dvector& d3_array::operator()(int k, int i) const
     {
       #ifdef SAFE_ARRAYS
         if (k<slicemin())
@@ -58,7 +58,7 @@
  * Description not yet available.
  * \param
  */
- _CONST  dmatrix& d3_array::operator[] (int i) _CONST 
+const dmatrix& d3_array::operator[](int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i<slicemin())
@@ -84,11 +84,11 @@
  * Description not yet available.
  * \param
  */
- d3_array& d3_array::operator= (_CONST d3_array& m1)
+d3_array& d3_array::operator=(const d3_array& m1)
  {
    if (slicemin() != m1.slicemin() || slicemax() != m1.slicemax())
    {
-     cerr << " Incompatible array bounds in d3_array& operator = (_CONST d3_array&)\n";
+     cerr << " Incompatible array bounds in d3_array& operator = (const d3_array&)\n";
      ad_exit(21);
    }
 

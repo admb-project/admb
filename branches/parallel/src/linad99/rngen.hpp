@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  * 
  * License:
  *
@@ -52,5 +52,5 @@
 //  reinitialize(int seed);
 //};
 //
-//double randn(_CONST random_number_gnerator& rng);
+//double randn(const random_number_gnerator& rng);
 

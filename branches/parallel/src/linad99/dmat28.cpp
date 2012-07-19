@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -27,7 +27,7 @@ dvector banded_symmetric_dmatrix::operator () (int i)
  * Description not yet available.
  * \param
  */
-_CONST dvector banded_symmetric_dmatrix::operator () (int i) _CONST
+const dvector banded_symmetric_dmatrix::operator()(int i) const
 {
   return d(i);
 }
@@ -36,7 +36,7 @@ _CONST dvector banded_symmetric_dmatrix::operator () (int i) _CONST
  * Description not yet available.
  * \param
  */
-_CONST double& banded_symmetric_dmatrix::operator () (int i,int j) _CONST
+const double& banded_symmetric_dmatrix::operator()(int i, int j) const
 {
   return d(i-j,i);
 }
@@ -63,7 +63,7 @@ dvector banded_lower_triangular_dmatrix::operator () (int i)
  * Description not yet available.
  * \param
  */
-_CONST dvector banded_lower_triangular_dmatrix::operator () (int i) _CONST
+const dvector banded_lower_triangular_dmatrix::operator()(int i) const
 {
   return d(i);
 }
@@ -81,7 +81,7 @@ double& banded_lower_triangular_dmatrix::operator () (int i,int j)
  * Description not yet available.
  * \param
  */
-_CONST double& banded_lower_triangular_dmatrix::operator () (int i,int j) _CONST
+const double& banded_lower_triangular_dmatrix::operator()(int i, int j) const
 {
   return d(i-j,i);
 }
@@ -145,8 +145,7 @@ void banded_lower_triangular_dmatrix::shift(int j)
  * Description not yet available.
  * \param
  */
-banded_symmetric_dmatrix::banded_symmetric_dmatrix
-  (_CONST dvar_matrix_position& pos)
+banded_symmetric_dmatrix::banded_symmetric_dmatrix(const dvar_matrix_position& pos)
 {
   int nrl=pos.row_min;
   int nrh=pos.row_max;
@@ -162,8 +161,7 @@ banded_symmetric_dmatrix::banded_symmetric_dmatrix
  * Description not yet available.
  * \param
  */
-banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix
-  (_CONST dvar_matrix_position& pos)
+banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix(const dvar_matrix_position& pos)
 {
   int nrl=pos.row_min;
   int nrh=pos.row_max;
@@ -179,7 +177,7 @@ banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix
  * Description not yet available.
  * \param
  */
-dmatrix::dmatrix(_CONST banded_lower_triangular_dmatrix& S)
+dmatrix::dmatrix(const banded_lower_triangular_dmatrix& S)
 {
   int imin=S.indexmin();
   int imax=S.indexmax();
@@ -208,7 +206,7 @@ dmatrix::dmatrix(_CONST banded_lower_triangular_dmatrix& S)
  * Description not yet available.
  * \param
  */
-dmatrix::dmatrix(_CONST banded_symmetric_dmatrix& S)
+dmatrix::dmatrix(const banded_symmetric_dmatrix& S)
 {
   int imin=S.indexmin();
   int imax=S.indexmax();
@@ -255,7 +253,7 @@ banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix
  * Description not yet available.
  * \param
  */
-ostream& operator << (BOR_CONST ostream& _ofs,_CONST banded_lower_triangular_dmatrix& S1)
+ostream& operator<<(const ostream& _ofs, const banded_lower_triangular_dmatrix& S1)
 {
   ostream & ofs = (ostream&) _ofs;
   banded_lower_triangular_dmatrix& S=(banded_lower_triangular_dmatrix&)(S1);

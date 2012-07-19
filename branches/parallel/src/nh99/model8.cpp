@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
   #include <admodel.h>
 
@@ -11,7 +11,7 @@
 
   objective_function_value::objective_function_value() {pobjfun=this;}
   objective_function_value& objective_function_value::operator =
-    (_CONST prevariable& v)
+    (const prevariable& v)
   {
     prevariable::operator = (v);
     return *this;

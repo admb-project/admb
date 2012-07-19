@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright (c) 2009-2011 ADMB Foundation
+ * Copyright (c) 2009-2012 ADMB Foundation
  */
 /**
  * \file
@@ -37,7 +37,7 @@ void int_qsort2(int *arr, int *arr2, unsigned n)
  *
  * \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
  */
-ivector sort(_CONST ivector & v, int NSTACK)
+ivector sort(const ivector &v, int NSTACK)
 {
    int lb=v.indexmin();
    int ub=v.indexmax();
@@ -69,7 +69,7 @@ ivector sort(_CONST ivector & v, int NSTACK)
  *
  * \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
  */
-ivector sort(_CONST ivector & _v, BOR_CONST ivector & _index, int NSTACK)
+ivector sort(const ivector &_v, const ivector &_index, int NSTACK)
 {
    ivector & index = (ivector &) _index;
    ivector & v = (ivector &) _v;
@@ -77,7 +77,7 @@ ivector sort(_CONST ivector & _v, BOR_CONST ivector & _index, int NSTACK)
    if (v.size() != index.size())
    {
       cerr << " Incompatible array sizes in vector v and ivector index\n"
-	 << " in ivector sort(_CONST ivector& v,_CONST ivector& index)\n";
+	 << " in ivector sort(const ivector& v, const ivector& index)\n";
       ad_exit(1);
    }
 

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   d6_array operator / (_CONST d6_array& m, CGNU_DOUBLE d)
+d6_array operator/(const d6_array& m, CGNU_DOUBLE d)
    {
      d6_array tmp;
      tmp.allocate(m);

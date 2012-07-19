@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright (c) 2009-2011 ADMB Foundation
+ * Copyright (c) 2009-2012 ADMB Foundation
  */
 /**
  * \file
@@ -44,7 +44,7 @@ int min(int a, int b)
     \param aa A dmatrix, \f$M\f$, for which the inverse is to be computed.
     \return A dmatrix containing \f$M^{-1}\f$.
 */
-dmatrix inv(_CONST dmatrix & aa)
+dmatrix inv(const dmatrix & aa)
 {
    int n = aa.colsize();
    int lb = aa.colmin();
@@ -198,7 +198,7 @@ dmatrix inv(_CONST dmatrix & aa)
     \param aa dvar_matrix conaining matrix to be inverted,\f$A\f$.
     \return dvar_matrix containing \f$A^{-1}\f$.
 */
-dvar_matrix inv(_CONST dvar_matrix & aa)
+dvar_matrix inv(const dvar_matrix &aa)
 {
    int imax = 0;
    int n = aa.colsize();
@@ -409,7 +409,7 @@ dvar_matrix inv(_CONST dvar_matrix & aa)
    return vc;
 }
 
-/** Adjoint code for dvar_matrix inv(_CONST dvar_matrix& aa).
+/** Adjoint code for dvar_matrix inv(const dvar_matrix& aa).
 */
 void dfinvpret(void)
 {

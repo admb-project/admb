@@ -6,7 +6,7 @@
    * $Id: tpl2cpp.lex 945 2011-01-12 23:03:57Z johnoel $
    *
    * Author: David Fournier
-   * Copyright (c) 2008-2011 Regents of the University of California
+   * Copyright (c) 2008-2012 Regents of the University of California
    */
 
   #define   MAX_TMP_STRING  501
@@ -37,7 +37,7 @@
   char name_string[100];
   char outfile_name[1000];
   char headerfile_name[100];
-  
+
 
   int  num_spargs=0;
   int  pvmslaves_defined=0;
@@ -97,7 +97,7 @@
   char arglist1[4000];
   char *  arglist_ptr;
   char arglist[4000];
-  char uuu_xxx[80]={"Copyright (c) 2008-2011 Regents of the University of California"};
+  char uuu_xxx[80]={"Copyright (c) 2008-2012 Regents of the University of California"};
   FILE * fdat=NULL;
   FILE * htop=NULL;
   FILE * fall=NULL;
@@ -114,16 +114,16 @@
   char * strip_leading_blanks_and_tabs(char * d, char * s);
 
   int count_paren(int num_paren,char * yytext);
-  void add_references_to_user_classes(FILE * fall);  
-  void call_destructors_for_user_classes(FILE * fall); 
+  void add_references_to_user_classes(FILE * fall);
+  void call_destructors_for_user_classes(FILE * fall);
   void marker(void);
   void write_unallocated(const char *);
-  
+
   void add_prior_to_objective(void);
   void add_likelihood_to_objective(void);
   void setup_for_prior_likelihood(void);
-  void trim(char * a); 
-  int prior_check(char * parameter, char * prior);  
+  void trim(char * a);
+  int prior_check(char * parameter, char * prior);
 
   int filename_index;
   int filename_size;
@@ -144,7 +144,7 @@ prior_name [ \t(a-z_A-Z]+(->)?[ \ta-z_A-Z0-9(),.-]*
 prior_def [ \t(a-z_A-Z0-9-]+(->)?[ \ta-z_A-Z0-9),.-]*
 
 %s DEFINE_DATA DEFINE_PARAMETERS DEFINE_PROCS DEFINE_PROCS2 IN_DATA_DEF IN_PARAM_DEF
-%s IN_NUMBER_DEF IN_NUMBER_DEF2 IN_SPNUMBER_DEF IN_VECTOR_DEF IN_VECTOR_VECTOR_DEF 
+%s IN_NUMBER_DEF IN_NUMBER_DEF2 IN_SPNUMBER_DEF IN_VECTOR_DEF IN_VECTOR_VECTOR_DEF
 %s IN_SPVECTOR_DEF IN_TABLE_DEF IN_FACTOR_DEF
 %s IN_MATRIX_DEF IN_SPMATRIX_DEF IN_THREE_ARRAY_DEF IN_SPTHREE_ARRAY_DEF
 %s IN_NAMED_NUMBER_DEF IN_NAMED_VECTOR_DEF IN_NAMED_MATRIX_DEF
@@ -152,13 +152,13 @@ prior_def [ \t(a-z_A-Z0-9-]+(->)?[ \ta-z_A-Z0-9),.-]*
 %s INIT_BOUNDED_NUMBER_DEF INIT_BOUNDED_VECTOR_DEF IN_BOUNDED_MATRIX_DEF
 %s DEFINE_INITIALIZATION DEFINE_PRELIMINARY_CALCS INIT_BOUNDED_MATRIX_DEF
 %s CONTINUE_PROTOTYPE_DEF DEFINE_RUNTIME IN_FOUR_ARRAY_DEF IN_LOCAL_CALCS
-%s IN_GLOBALS_SECTION IN_TOP_SECTION INIT_BOUNDED_THREE_ARRAY_DEF 
-%s DEFINE_BETWEEN_PHASES IN_FIVE_ARRAY_DEF IN_SIX_ARRAY_DEF IN_SEVEN_ARRAY_DEF 
-%s IN_NAMED_FIVE_ARRAY_DEF IN_NAMED_SIX_ARRAY_DEF IN_NAMED_SEVEN_ARRAY_DEF 
+%s IN_GLOBALS_SECTION IN_TOP_SECTION INIT_BOUNDED_THREE_ARRAY_DEF
+%s DEFINE_BETWEEN_PHASES IN_FIVE_ARRAY_DEF IN_SIX_ARRAY_DEF IN_SEVEN_ARRAY_DEF
+%s IN_NAMED_FIVE_ARRAY_DEF IN_NAMED_SIX_ARRAY_DEF IN_NAMED_SEVEN_ARRAY_DEF
 %s IN_SPBOUNDED_NUMBER_DEF INIT_SPBOUNDED_VECTOR_DEF IN_PVM_SLAVE_SECTION
 %s DEFINE_PRIORS DEFINE_LIKELIHOOD DEFINE_PROCEDURE
 
- 
+
 %%
 
 \/\/.*$         /* ignore trailing comments */ ;
@@ -259,7 +259,7 @@ FINAL_SECTION  {
     BEGIN DEFINE_PROCS;
     final_defined=1;
     setup_for_prior_likelihood();
-    
+
     fprintf(fall,"%s","}\n\nvoid model_parameters::final_calcs()"
       "\n{\n");
   }
@@ -296,28 +296,28 @@ RUNTIME_SECTION  {
   }
                 }
 
-<DEFINE_RUNTIME>^" "*convergence_criteria" ".*$ { 
+<DEFINE_RUNTIME>^" "*convergence_criteria" ".*$ {
 
     strip_leading_blanks(tmp_string1,yytext);
     after_part(tmp_string2,tmp_string1,' ');  // get 10  in x  10
     strip_leading_blanks(tmp_string1,tmp_string2);
-    fprintf(fall,"%s","  dvector temp(\"{"); 
-    fprintf(fall,"%s}\");\n", tmp_string1); 
+    fprintf(fall,"%s","  dvector temp(\"{");
+    fprintf(fall,"%s}\");\n", tmp_string1);
     fprintf(fall,"  convergence_criteria.allocate"
-      "(temp.indexmin(),temp.indexmax());\n" ); 
+      "(temp.indexmin(),temp.indexmax());\n" );
     fprintf(fall,"  convergence_criteria=temp;\n");
 
                                   }
 
-<DEFINE_RUNTIME>^" "*maximum_function_evaluations" ".*$ { 
+<DEFINE_RUNTIME>^" "*maximum_function_evaluations" ".*$ {
 
     strip_leading_blanks(tmp_string1,yytext);
     after_part(tmp_string2,tmp_string1,' ');  // get 10  in x  10
     strip_leading_blanks(tmp_string1,tmp_string2);
-    fprintf(fall,"%s","  dvector temp1(\"{"); 
-    fprintf(fall,"%s}\");\n", tmp_string1); 
+    fprintf(fall,"%s","  dvector temp1(\"{");
+    fprintf(fall,"%s}\");\n", tmp_string1);
     fprintf(fall,"  maximum_function_evaluations.allocate"
-      "(temp1.indexmin(),temp1.indexmax());\n" ); 
+      "(temp1.indexmin(),temp1.indexmax());\n" );
     fprintf(fall,"  maximum_function_evaluations=temp1;\n");
 
                                   }
@@ -427,13 +427,13 @@ DATA_SECTION  {
 #   else
       char * FILE_ROOT = strdup(infile_root);
 #  endif
-    //if(!data_defined) 
+    //if(!data_defined)
 	BEGIN DEFINE_DATA;
     data_defined=1;
     in_define_data=1;
     filename_size = strlen(FILE_ROOT);
     filename_index = 0;
-    while (filename_index < filename_size) 
+    while (filename_index < filename_size)
     {
       int c = (int)FILE_ROOT[filename_index];
       if (isalnum(c) == 0)
@@ -449,18 +449,18 @@ DATA_SECTION  {
     strncat(buff,"_\n\n",100);
     fprintf(fdat,"%s",buff);
     if (makedll)
-    { 
+    {
       fprintf(fall,"%s",
         "model_data::model_data(int argc,char * argv[],dll_args& ad_dll) : "
           "ad_comm(argc,argv)\n{\n");
       fprintf(fdat,"%s","class dll_args;\n");
-    }  
-    else  
+    }
+    else
     {
-        
+
       fprintf(fall,"%s","model_data::model_data(int argc,char * argv[]) : "
         "ad_comm(argc,argv)\n{\n");
-    }  
+    }
     fprintf(fdat,"%s","class model_data : public ad_comm{\n");
   }
                 }
@@ -469,7 +469,7 @@ DATA_SECTION  {
     strip_leading_blanks_and_tabs(tmp_string1,yytext);
     strcpy(tmp_string2,tmp_string1+11);
     fprintf(fall,"%s\n",tmp_string2);
-    
+
     }
 
 <DEFINE_DATA>^[ \t]*!!CLASS.*$ {              // start with !!CLASSbbclassname classinstance(xxx)
@@ -479,18 +479,18 @@ DATA_SECTION  {
     strip_leading_blanks(tmp_string1,tmp_string2); // now classname classinstance(xxx)
     initialize(tmp_string);
     before_part(tmp_string,tmp_string1,'('); // now classname classinstance in tmp_string
-    if (!strlen(tmp_string)) 
+    if (!strlen(tmp_string))
     {
       strcpy(tmp_string,tmp_string1);
-    }  
+    }
     //fprintf(fdat,"%s;\n",tmp_string);
     before_partb(tmp_string2,tmp_string,' '); // now classname in tmp_string2
-    
+
     after_partb(tmp_string3,tmp_string,' ');  // now bbclassinstance in tmp_string3
     strip_leading_blanks(tmp_string4,tmp_string3);// now classinstance in tmp_string4
     fprintf(fdat,"  %s * ",tmp_string2);
     fprintf(fdat,"  pad_%s;\n",tmp_string4);
-    
+
     fprintf(fall,"  pad_%s = new ",tmp_string4);
     fprintf(fall,"%s",tmp_string2);
     initialize(tmp_string3);
@@ -498,7 +498,7 @@ DATA_SECTION  {
     if (strlen(tmp_string3))
     {
       fprintf(fall,"(%s",tmp_string3);
-    } 
+    }
     fprintf(fall,";\n");
     strcpy(reference_statements[num_user_classes-1],tmp_string2);
     strcat(reference_statements[num_user_classes-1],"& ");
@@ -507,7 +507,7 @@ DATA_SECTION  {
     strcat(reference_statements[num_user_classes-1],tmp_string4);
     //strcat(reference_statements[num_user_classes-1],";");
     strcpy(class_instances[num_user_classes-1],tmp_string4);
-    
+
   }
 
 <DEFINE_DATA>^[ \t]*@@.*$ {              // start with !!CLASSbbclassname classinstance(xxx)
@@ -517,18 +517,18 @@ DATA_SECTION  {
     strip_leading_blanks(tmp_string1,tmp_string2); // now classname classinstance(xxx)
     initialize(tmp_string);
     before_part(tmp_string,tmp_string1,'('); // now classname classinstance in tmp_string
-    if (!strlen(tmp_string)) 
+    if (!strlen(tmp_string))
     {
       strcpy(tmp_string,tmp_string1);
-    }  
+    }
     //fprintf(fdat,"%s;\n",tmp_string);
     before_partb(tmp_string2,tmp_string,' '); // now classname in tmp_string2
-    
+
     after_partb(tmp_string3,tmp_string,' ');  // now bbclassinstance in tmp_string3
     strip_leading_blanks(tmp_string4,tmp_string3);// now classinstance in tmp_string4
     fprintf(fdat,"  %s ",tmp_string2);
     fprintf(fdat,"  %s;\n",tmp_string4);
-    
+
     fprintf(fall,"  %s * tmp_%s = new ",tmp_string2,tmp_string4);
     fprintf(fall,"%s",tmp_string2);
 
@@ -538,7 +538,7 @@ DATA_SECTION  {
     if (strlen(tmp_string3))
     {
       fprintf(fall,"(%s",tmp_string3);
-    } 
+    }
     fprintf(fall,";\n");
     fprintf(fall,"  memcpy(cbuf,(char*)(&%s),sizeof(%s));\n",
       tmp_string4,tmp_string2);
@@ -549,21 +549,21 @@ DATA_SECTION  {
     fprintf(fall,"  delete tmp_%s;\n",tmp_string4);
     fprintf(fall,"  tmp_%s=NULL;\n",tmp_string4);
 
-    
+
   }
 
 <DEFINE_DATA>^[ \t]*!!.*$ {
     strip_leading_blanks_and_tabs(tmp_string1,yytext);
     strcpy(tmp_string2,tmp_string1+2);
     fprintf(fall,"%s\n",tmp_string2);
-    
+
     }
 
 
 
-<DEFINE_DATA>^[ \t]*LOCAL_CALCULATIONS | 
+<DEFINE_DATA>^[ \t]*LOCAL_CALCULATIONS |
 <DEFINE_DATA>^[ \t]*LOCAL_CALCS |
-<DEFINE_DATA>^[ \t]*LOC_CALCULATIONS | 
+<DEFINE_DATA>^[ \t]*LOC_CALCULATIONS |
 <DEFINE_DATA>^[ \t]*LOC_CALCS  {
 
     BEGIN IN_LOCAL_CALCS;
@@ -605,7 +605,7 @@ DATA_SECTION  {
     BEGIN IN_NUMBER_DEF;
     fprintf(fdat,"%s","  data_int ");
                      }
-		     
+
 <DEFINE_DATA>splus_number |
 <DEFINE_DATA>dll_init_number |
 <DEFINE_DATA>dll_number {
@@ -797,12 +797,12 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  d7_array ");
                      }
 
-<IN_LOCAL_CALCS>^[ \t]END_CALCS | 
+<IN_LOCAL_CALCS>^[ \t]END_CALCS |
 <IN_LOCAL_CALCS>^[ \t]END_CALCULATIONS {
 
     if (in_define_data) BEGIN DEFINE_DATA;
     if (in_define_parameters) BEGIN DEFINE_PARAMETERS;
-      
+
                   }
 
 <IN_LOCAL_CALCS>^[ \t][^ \tE].*$ {
@@ -824,18 +824,18 @@ DATA_SECTION  {
     strip_leading_blanks(tmp_string1,tmp_string2); // now classname classinstance(xxx)
     initialize(tmp_string);
     before_part(tmp_string,tmp_string1,'('); // now classname classinstance in tmp_string
-    if (!strlen(tmp_string)) 
+    if (!strlen(tmp_string))
     {
       strcpy(tmp_string,tmp_string1);
-    }  
+    }
     //fprintf(fdat,"%s;\n",tmp_string);
     before_partb(tmp_string2,tmp_string,' '); // now classname in tmp_string2
-    
+
     after_partb(tmp_string3,tmp_string,' ');  // now bbclassinstance in tmp_string3
     strip_leading_blanks(tmp_string4,tmp_string3);// now classinstance in tmp_string4
     fprintf(fdat,"  %s * ",tmp_string2);
     fprintf(fdat,"  pad_%s;\n",tmp_string4);
-    
+
     fprintf(fall,"  pad_%s = new ",tmp_string4);
     fprintf(fall,"%s",tmp_string2);
     initialize(tmp_string3);
@@ -843,7 +843,7 @@ DATA_SECTION  {
     if (strlen(tmp_string3))
     {
       fprintf(fall,"(%s",tmp_string3);
-    } 
+    }
     fprintf(fall,";\n");
     strcpy(reference_statements[num_user_classes-1],tmp_string2);
     strcat(reference_statements[num_user_classes-1],"& ");
@@ -852,26 +852,26 @@ DATA_SECTION  {
     strcat(reference_statements[num_user_classes-1],tmp_string4);
     //strcat(reference_statements[num_user_classes-1],";");
     strcpy(class_instances[num_user_classes-1],tmp_string4);
-    
+
   }
 
 <DEFINE_PARAMETERS>^[ \t]*!!USER_CODE.*$ {
     strip_leading_blanks_and_tabs(tmp_string1,yytext);
     strcpy(tmp_string2,tmp_string1+11);
     fprintf(fall,"%s\n",tmp_string2);
-    
+
     }
 
 <DEFINE_PARAMETERS>^[ \t]*!!.*$ {
     strip_leading_blanks_and_tabs(tmp_string1,yytext);
     strcpy(tmp_string2,tmp_string1+2);
     fprintf(fall,"%s\n",tmp_string2);
-    
+
     }
 
-<DEFINE_PARAMETERS>^[ \t]*LOCAL_CALCULATIONS | 
+<DEFINE_PARAMETERS>^[ \t]*LOCAL_CALCULATIONS |
 <DEFINE_PARAMETERS>^[ \t]*LOCAL_CALCS |
-<DEFINE_PARAMETERS>^[ \t]*LOC_CALCULATIONS | 
+<DEFINE_PARAMETERS>^[ \t]*LOC_CALCULATIONS |
 <DEFINE_PARAMETERS>^[ \t]*LOC_CALCS  {
 
     BEGIN IN_LOCAL_CALCS;
@@ -890,7 +890,7 @@ DATA_SECTION  {
     if(objective_function_defined++)
     {
       fprintf(stderr,"%s %d %s","Error in line",nline,"\n");
-      fprintf(stderr,"only one instance of objective_function_value" 
+      fprintf(stderr,"only one instance of objective_function_value"
                      " may be declared\n");
       exit(1);
     }
@@ -1365,38 +1365,38 @@ DATA_SECTION  {
     if (spnumber_flag==1)
     {
       strcpy(name_string,"double *");
-    }  
+    }
     else if (spnumber_flag==2)
     {
       strcpy(name_string,"char **");
-    }  
+    }
     else
     {
       strcpy(name_string,"int *");
-    }  
+    }
     spnumber_flag=0;
-    
+
     nchar=sprintf(classlist_ptr,"  %s%s;\n",name_string,yytext);
     classlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(conlist_ptr,",%s(_%s)",yytext,yytext);
     else
       nchar=sprintf(conlist_ptr," %s(_%s)",yytext,yytext);
     conlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist_ptr,",%s_%s",name_string,yytext);
     else
       nchar=sprintf(arglist_ptr,"%s_%s",name_string,yytext);
     arglist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist1_ptr,",_%s",yytext);
     else
       nchar=sprintf(arglist1_ptr,"_%s",yytext);
     arglist1_ptr+=nchar;
-    
+
     fprintf(fdat,"%s",yytext);
     fprintf(fdat,"%s",";\n");
     fprintf(fall,"  %s",yytext);
@@ -1426,39 +1426,39 @@ DATA_SECTION  {
     if (spnumber_flag==1)
     {
       strcpy(name_string,"double *");
-    }  
+    }
     else if (spnumber_flag==2)
     {
       strcpy(name_string,"char **");
-    }  
+    }
     else
     {
       strcpy(name_string,"int *");
-    }  
+    }
     spnumber_flag=0;
-    
+
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)
     nchar=sprintf(classlist_ptr,"  %s%s;\n",name_string,tmp_string);
     classlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(conlist_ptr,",%s(_%s)",tmp_string,tmp_string);
     else
       nchar=sprintf(conlist_ptr," %s(_%s)",tmp_string,tmp_string);
     conlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist_ptr,",%s_%s",name_string,tmp_string);
     else
       nchar=sprintf(arglist_ptr,"%s_%s",name_string,tmp_string);
     arglist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist1_ptr,",_%s",tmp_string);
     else
       nchar=sprintf(arglist1_ptr,"_%s",tmp_string);
     arglist1_ptr+=nchar;
-    
+
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)
     fprintf(fdat,"%s",tmp_string);
     fprintf(fall,"  %s",tmp_string);
@@ -1472,7 +1472,7 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -1492,7 +1492,7 @@ DATA_SECTION  {
 
 
 <IN_NUMBER_DEF>{name} {
-	
+
     fprintf(fdat,"%s",yytext);
     fprintf(fdat,"%s",";\n");
     fprintf(fall,"  %s",yytext);
@@ -1520,7 +1520,7 @@ DATA_SECTION  {
         if(prior_counter<MAX_PRIOR_CHECK) sprintf(prior_checker[prior_counter++],"%s",yytext);
         prior_found=0;
       }
-      
+
       BEGIN DEFINE_PARAMETERS;
     }
                             }
@@ -1592,7 +1592,7 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -1658,51 +1658,51 @@ DATA_SECTION  {
     after_part(tmp_string1,yytext,'(');  // get x in x(1,4)
     before_part(tmp_string2,tmp_string1,')');
     fprintf(fall,"%s,\"%s\")",tmp_string2+1,tmp_string);
-    
+
 
     num_spargs++;
     if (spnumber_flag==1)
     {
       strcpy(name_string,"double *");
-    }  
+    }
     else if (spnumber_flag==2)
     {
       strcpy(name_string,"char **");
-    }  
+    }
     else
     {
       strcpy(name_string,"int *");
-    }  
+    }
     spnumber_flag=0;
-    
+
     nchar=sprintf(classlist_ptr,"  %s%s;\n",name_string,tmp_string);
     classlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(conlist_ptr,",%s(_%s)",tmp_string,tmp_string);
     else
       nchar=sprintf(conlist_ptr," %s(_%s)",tmp_string,tmp_string);
     conlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist_ptr,",%s_%s",name_string,tmp_string);
     else
       nchar=sprintf(arglist_ptr,"%s_%s",name_string,tmp_string);
     arglist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist1_ptr,",_%s",tmp_string);
     else
       nchar=sprintf(arglist1_ptr,"_%s",tmp_string);
     arglist1_ptr+=nchar;
-    
-    
-    
+
+
+
     fprintf(fdat,"%s",";\n");
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -1764,7 +1764,7 @@ DATA_SECTION  {
     fprintf(fall,"  %s.allocate%s,%s_levels);\n",tmp_string,tmp_string2,tmp_string);
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -1780,7 +1780,7 @@ DATA_SECTION  {
       BEGIN DEFINE_PARAMETERS;
     }
                             }
-  
+
 
 <IN_VECTOR_DEF>{name}\({num_exp},{num_exp}\) |
 <IN_VECTOR_DEF>{name}\({num_exp},{name}\) |
@@ -1798,7 +1798,7 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -1837,7 +1837,7 @@ DATA_SECTION  {
     if (needs_initialization)
     {
       /*
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -1876,7 +1876,7 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -1914,56 +1914,56 @@ DATA_SECTION  {
     after_part(tmp_string1,yytext,'(');  // get x in x(1,4)
     before_part(tmp_string2,tmp_string1,')');
     fprintf(fall,"%s,\"%s\")",tmp_string2+1,tmp_string);
-    
-    
+
+
 // ****************************************************************
 
     num_spargs++;
     if (spnumber_flag==1)
     {
       strcpy(name_string,"double *");
-    }  
+    }
     else if (spnumber_flag==2)
     {
       strcpy(name_string,"char **");
-    }  
+    }
     else
     {
       strcpy(name_string,"int *");
-    }  
+    }
     spnumber_flag=0;
-    
+
     nchar=sprintf(classlist_ptr,"  %s%s;\n",name_string,tmp_string);
     classlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(conlist_ptr,",%s(_%s)",tmp_string,tmp_string);
     else
       nchar=sprintf(conlist_ptr," %s(_%s)",tmp_string,tmp_string);
     conlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist_ptr,",%s_%s",name_string,tmp_string);
     else
       nchar=sprintf(arglist_ptr,"%s_%s",name_string,tmp_string);
     arglist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist1_ptr,",_%s",tmp_string);
     else
       nchar=sprintf(arglist1_ptr,"_%s",tmp_string);
     arglist1_ptr+=nchar;
-    
+
 // ****************************************************************
-    
-    
-    
-    
+
+
+
+
     fprintf(fdat,"%s",";\n");
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -1997,56 +1997,56 @@ DATA_SECTION  {
     after_part(tmp_string1,yytext,'(');  // get x in x(1,4)
     before_part(tmp_string2,tmp_string1,')');
     fprintf(fall,"%s,\"%s\")",tmp_string2+1,tmp_string);
-    
-    
+
+
 // ****************************************************************
 
     num_spargs++;
     if (spnumber_flag==1)
     {
       strcpy(name_string,"double *");
-    }  
+    }
     else if (spnumber_flag==2)
     {
       strcpy(name_string,"char **");
-    }  
+    }
     else
     {
       strcpy(name_string,"int *");
-    }  
+    }
     spnumber_flag=0;
-    
+
     nchar=sprintf(classlist_ptr,"  %s%s;\n",name_string,tmp_string);
     classlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(conlist_ptr,",%s(_%s)",tmp_string,tmp_string);
     else
       nchar=sprintf(conlist_ptr," %s(_%s)",tmp_string,tmp_string);
     conlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist_ptr,",%s_%s",name_string,tmp_string);
     else
       nchar=sprintf(arglist_ptr,"%s_%s",name_string,tmp_string);
     arglist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist1_ptr,",_%s",tmp_string);
     else
       nchar=sprintf(arglist1_ptr,"_%s",tmp_string);
     arglist1_ptr+=nchar;
-    
+
 // ****************************************************************
-    
-    
-    
-    
+
+
+
+
     fprintf(fdat,"%s",";\n");
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2183,7 +2183,7 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2224,7 +2224,7 @@ DATA_SECTION  {
     if (needs_initialization)
     {
       /*
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2266,7 +2266,7 @@ DATA_SECTION  {
     {
       /*
       XXXX
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2409,42 +2409,42 @@ DATA_SECTION  {
     if (spnumber_flag==1)
     {
       strcpy(name_string,"double *");
-    }  
+    }
     else if (spnumber_flag==2)
     {
       strcpy(name_string,"char **");
-    }  
+    }
     else
     {
       strcpy(name_string,"int *");
-    }  
+    }
     spnumber_flag=0;
-    
+
     nchar=sprintf(classlist_ptr,"  %s%s;\n",name_string,tmp_string);
     classlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(conlist_ptr,",%s(_%s)",tmp_string,tmp_string);
     else
       nchar=sprintf(conlist_ptr," %s(_%s)",tmp_string,tmp_string);
     conlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist_ptr,",%s_%s",name_string,tmp_string);
     else
       nchar=sprintf(arglist_ptr,"%s_%s",name_string,tmp_string);
     arglist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist1_ptr,",_%s",tmp_string);
     else
       nchar=sprintf(arglist1_ptr,"_%s",tmp_string);
     arglist1_ptr+=nchar;
-    
+
 // ****************************************************************
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2477,7 +2477,7 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2518,7 +2518,7 @@ DATA_SECTION  {
     if (needs_initialization)
     {
       /*
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2559,7 +2559,7 @@ DATA_SECTION  {
     if (needs_initialization)
     {
       /*
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2604,42 +2604,42 @@ DATA_SECTION  {
     if (spnumber_flag==1)
     {
       strcpy(name_string,"double *");
-    }  
+    }
     else if (spnumber_flag==2)
     {
       strcpy(name_string,"char **");
-    }  
+    }
     else
     {
       strcpy(name_string,"int *");
-    }  
+    }
     spnumber_flag=0;
-    
+
     nchar=sprintf(classlist_ptr,"  %s%s;\n",name_string,tmp_string);
     classlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(conlist_ptr,",%s(_%s)",tmp_string,tmp_string);
     else
       nchar=sprintf(conlist_ptr," %s(_%s)",tmp_string,tmp_string);
     conlist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist_ptr,",%s_%s",name_string,tmp_string);
     else
       nchar=sprintf(arglist_ptr,"%s_%s",name_string,tmp_string);
     arglist_ptr+=nchar;
-    
+
     if (num_spargs>1)
       nchar=sprintf(arglist1_ptr,",_%s",tmp_string);
     else
       nchar=sprintf(arglist1_ptr,"_%s",tmp_string);
     arglist1_ptr+=nchar;
-    
+
 // ****************************************************************
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2669,7 +2669,7 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2710,7 +2710,7 @@ DATA_SECTION  {
     if (needs_initialization)
     {
       /*
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2750,7 +2750,7 @@ DATA_SECTION  {
     if (needs_initialization)
     {
       /*
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2789,7 +2789,7 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2827,7 +2827,7 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -2865,7 +2865,7 @@ DATA_SECTION  {
     fprintf(fall,"%s",";\n");
     if (needs_initialization)
     {
-      before_part(tmp_string,yytext,'('); 
+      before_part(tmp_string,yytext,'(');
       fprintf(fall,"  #ifndef NO_AD_INITIALIZE\n");
       fprintf(fall,"    %s",tmp_string);
       fprintf(fall,".initialize();\n");
@@ -3278,139 +3278,139 @@ DATA_SECTION  {
                             }
 
 
-<DEFINE_PRIORS>{prior_name}[ \t]*[~][ \t]*{prior_def} {    //for priors_section 
+<DEFINE_PRIORS>{prior_name}[ \t]*[~][ \t]*{prior_def} {    //for priors_section
     before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
     strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
     before_part(tmp_string2,tmp_string1,'(');   //function name
-    strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.   
-        
+    strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.
+
     trim(tmp_string2); //function name
     //strcpy(tmp_string4,"prior_");
     //strcat(tmp_string4,tmp_string2); //define prior_** in priors.cpp file, should be neg.log.likelihood.form
     trim(tmp_string); trim(tmp_string3);
-    
+
     int i=0; //check if the prior variable from init_ parameter section
     while(prior_check(prior_checker[i],tmp_string)!=0){
-      //printf(" idx %d tot %d, prior %s, parameter %s\n",i,prior_counter, tmp_string,prior_checker[i]);    
+      //printf(" idx %d tot %d, prior %s, parameter %s\n",i,prior_counter, tmp_string,prior_checker[i]);
       if(i == (prior_counter-1)){//still not found for the last one
         printf("Warning: Prior ( %s ) is not defined on a parameter\n",tmp_string);
         break;
       }
       i++;
     }
-    
-    if(prior_function_toggle==0) 
+
+    if(prior_function_toggle==0)
     { //left side of ~ go to first argument in function argu. list
       fprintf(fall,"  tmp__prior=%s(%s,%s ;\n",tmp_string2,tmp_string,tmp_string3);
       fprintf(fall,"  prior_function_value+=tmp__prior;\n ");
-      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__prior"); 
+      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__prior");
     }
     else
     { //left side of ~ go to the last argument in function argu. list
-      before_partb(tmp_string4,tmp_string3,')'); 
+      before_partb(tmp_string4,tmp_string3,')');
       fprintf(fall,"  tmp__prior=%s(%s,%s);\n",tmp_string2,tmp_string4,tmp_string);
       fprintf(fall,"  prior_function_value+=tmp__prior;\n ");
-      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__prior"); 
+      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__prior");
     }
-    
+
                    }
-                   
 
 
-<DEFINE_LIKELIHOOD>{prior_name}[ \t]*[~][ \t]*{prior_def} { //for likelihood_section   
+
+<DEFINE_LIKELIHOOD>{prior_name}[ \t]*[~][ \t]*{prior_def} { //for likelihood_section
     before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
     strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
     before_part(tmp_string2,tmp_string1,'(');   //function name
     strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.
-    
+
     trim(tmp_string2); //function name
     //strcat(like_str,tmp_string2); //define like_** in priors.cpp file, should be neg.log.likelihood.form
     trim(tmp_string); trim(tmp_string3);
-    
+
     int i=0; //check if the likelihood variable from data section
     while(prior_check(likelihood_checker[i],tmp_string)!=0){
-      //printf(" idx %d tot %d, %s, %s\n",i,likelihood_counter, tmp_string,likelihood_checker[i]);    
+      //printf(" idx %d tot %d, %s, %s\n",i,likelihood_counter, tmp_string,likelihood_checker[i]);
       if(i == (likelihood_counter-1)){//still not found for the last one
         printf("Warning: likelihood ( %s ) is not defined on a data_section variable\n",tmp_string);
         break;
       }
       i++;
     }
-    
-    if(prior_function_toggle==0) 
+
+    if(prior_function_toggle==0)
     { //left side of ~ go to first argument in function argu. list
       fprintf(fall,"  tmp__like=%s(%s,%s ;\n",tmp_string2,tmp_string,tmp_string3);
       fprintf(fall,"  likelihood_function_value+=tmp__like;\n ");
-      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__like"); 
+      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__like");
     }
     else
     { //left side of ~ go to the last argument in function argu. list
-      before_partb(tmp_string4,tmp_string3,')'); 
+      before_partb(tmp_string4,tmp_string3,')');
       fprintf(fall,"  tmp__like=%s(%s,%s);\n",tmp_string2,tmp_string4,tmp_string);
       fprintf(fall,"  likelihood_function_value+=tmp__like;\n ");
-      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__like"); 
+      fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=tmp__like");
     }
                    }
 
 
-<DEFINE_PROCEDURE>{prior_name}[ \t]*[~][ \t]*{prior_def} {    //for procedure_section 
+<DEFINE_PROCEDURE>{prior_name}[ \t]*[~][ \t]*{prior_def} {    //for procedure_section
     before_part(tmp_string,yytext,'~');  // get x in x~10, parameter name
     strict_after_part(tmp_string1,yytext,'~');  // get 10  in x~10
     before_part(tmp_string2,tmp_string1,'(');   //function name
-    strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.   
-    
+    strict_after_part(tmp_string3,tmp_string1,'(');  //function input arg.
+
     trim(tmp_string2);  //function name, should be neg.log.likelihood.form
     trim(tmp_string); trim(tmp_string3);
-    if(prior_function_toggle==0) 
+    if(prior_function_toggle==0)
     { //left side of ~ go to first argument in function argu. list
       fprintf(fall,"  %s +=%s(%s,%s",objective_function_name_string,tmp_string2,tmp_string,tmp_string3);
     }
     else
     { //left side of ~ go to the last argument in function argu. list
-      before_partb(tmp_string4,tmp_string3,')'); 
+      before_partb(tmp_string4,tmp_string3,')');
       fprintf(fall,"  %s +=%s(%s,%s)",objective_function_name_string,tmp_string2,tmp_string4,tmp_string);
     }
                    }
-                   
-                   
+
+
 
 
 ; {
   if(priors_defined && (!priors_done)){
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_PRIORS;
   }
   if(likelihood_defined && (!likelihood_done)){
    	if(priors_defined) priors_done=1; //turn off prior
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_LIKELIHOOD;
   }
   /*
   if(procedure_defined && (!procedure_done)){
    	if(priors_defined) priors_done=1;
    	if(likelihood_defined) likelihood_done=1;
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_PROCEDURE;
   }
   */
   //;             /* ignore semi colons */ ;
   }
-  
+
 
 [ \t]+ {
   if(priors_defined && (!priors_done)){
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_PRIORS;
   }
   if(likelihood_defined && (!likelihood_done)){
    	priors_done=1;
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_LIKELIHOOD;
   }
   /*
   if(procedure_defined && (!procedure_done)){
    	priors_done=1;likelihood_done=1;
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_PROCEDURE;
   }
   */
@@ -3418,56 +3418,56 @@ DATA_SECTION  {
   }
 
 
-\n { 
+\n {
   if(priors_defined && (!priors_done)){
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_PRIORS;
   }
   if(likelihood_defined && (!likelihood_done)){
    	priors_done=1;
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_LIKELIHOOD;
   }
   /*
   if(procedure_defined && (!procedure_done)){
    	priors_done=1;likelihood_done=1;
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_PROCEDURE;
   }
   */
-  nline++; 			
+  nline++;
   }
-  
-  
-  
+
+
+
 . {
   if(priors_defined && (!priors_done)){
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_PRIORS;
   }
   else if(likelihood_defined && (!likelihood_done)){
    	priors_done=1;
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_LIKELIHOOD;
   }
   /*
   else if(procedure_defined && (!procedure_done)){
    	priors_done=1;likelihood_done=1;
-   	fprintf(fall,"%s",yytext); 
+   	fprintf(fall,"%s",yytext);
 	BEGIN DEFINE_PROCEDURE;
   }
   */
-  else  
+  else
   {
 	fprintf(stderr,"%s %d %s","Error in line",nline,"while reading\n");
 	fprintf(stderr,"%s\n",yytext);
 	exit(1);
   }
   }
-     
-     
-   
-     
+
+
+
+
 PARAMETER_SECTION {
     if (!data_defined)
     {
@@ -3475,7 +3475,7 @@ PARAMETER_SECTION {
         " PARAMETER SECTION\n");
       exit(1);
     }
-    //if(!params_defined) 
+    //if(!params_defined)
 	BEGIN DEFINE_PARAMETERS;
     in_define_data=0;
     in_define_parameters=1;
@@ -3485,12 +3485,12 @@ PARAMETER_SECTION {
     if (makedll)
       fprintf(fdat,
         "  model_data(int argc,char * argv[],dll_args&);\n  friend class model_parameters;\n");
-    else  
+    else
       fprintf(fdat,"  model_data(int argc,char * argv[]);\n  friend class model_parameters;\n");
     fprintf(fdat,"%s","};\n\nclass model_parameters : "
       "public model_data ,"
       "\n  public function_minimizer\n{\n");
-    
+
     fprintf(fdat,"%s","public:\n");
     fprintf(fdat,"  ~model_parameters();\n");
 //    fprintf(fdat,"%s","  void admaster_slave_variable_interface(void);\n");
@@ -3500,13 +3500,13 @@ PARAMETER_SECTION {
 
     fprintf(fdat,"%s", "  static int mc_phase(void)\n"
       "  {\n    return initial_params::mc_phase;\n  }\n");
-      
+
     fprintf(fdat,"%s", "  static int mceval_phase(void)\n"
       "  {\n    return initial_params::mceval_phase;\n  }\n");
-      
+
     fprintf(fdat,"%s", "  static int sd_phase(void)\n"
       "  {\n    return initial_params::sd_phase;\n  }\n");
- 
+
    fprintf(fdat,"%s", "  static int current_phase(void)\n"
       "  {\n    return initial_params::current_phase;\n  }\n");
     fprintf(fdat,"%s", "  static int last_phase(void)\n"
@@ -3517,14 +3517,14 @@ PARAMETER_SECTION {
     fprintf(fdat,"%s","private:\n");
     fprintf(fdat,"%s", "  ivector integer_control_flags;\n");
     fprintf(fdat,"%s", "  dvector double_control_flags;\n");
-    
+
     if (makedll)
     {
       fprintf(fall,"%s","}\n\nmodel_parameters::model_parameters"
         "(int sz,int argc,char * argv[], dll_args& ad_dll) : "
         "\n model_data(argc,argv,ad_dll) , function_minimizer(sz)\n{\n");
     }
-    else	
+    else
     {
       fprintf(fall,"%s","}\n\nmodel_parameters::model_parameters"
         "(int sz,int argc,char * argv[]) : "
@@ -3535,7 +3535,7 @@ PARAMETER_SECTION {
                   }
 
 PROCEDURE_SECTION {
-    int i; 
+    int i;
     if (!data_defined)
     {
       fprintf(stderr,"Error -- DATA_SECTION must be defined before"
@@ -3554,7 +3554,7 @@ PROCEDURE_SECTION {
       fprintf(stderr,"%s","Error -- PROCEDURE_SECTION must be defined before"
         " LIKELIHOOD_SECTION \n");
 	    exit(1);
-    } 
+    }
     */
     if (!objective_function_defined)
     {
@@ -3563,10 +3563,10 @@ PROCEDURE_SECTION {
         "and assign the approriate value to it in the\nPROCEDURE_SECTION");
       exit(1);
     }
-        
+
     BEGIN DEFINE_PROCS;
     //BEGIN DEFINE_PROCEDURE;
-    
+
     procedure_defined=1;
     in_procedure_def=1;
     in_define_parameters=0;
@@ -3575,15 +3575,15 @@ PROCEDURE_SECTION {
     {
       fprintf(fdat,"public:\n  virtual void userfunction(void);\n"
         "  virtual void report(void);\n" // define this to get a report
-        "  virtual void final_calcs(void);\n" 
+        "  virtual void final_calcs(void);\n"
         "  model_parameters(int sz,int argc, char * argv[],"
         " dll_args& ad_dll);\n");
     }
-    else	
+    else
     {
       fprintf(fdat,"public:\n  virtual void userfunction(void);\n"
         "  virtual void report(void);\n" // define this to get a report
-        "  virtual void final_calcs(void);\n" 
+        "  virtual void final_calcs(void);\n"
         "  model_parameters(int sz,int argc, char * argv[]);\n");
     }
     if(!initialization_defined)
@@ -3600,8 +3600,8 @@ PROCEDURE_SECTION {
     fprintf(fall,"%s","}\n\nvoid model_parameters::userfunction(void)\n{\n");
     fprintf(fall,"  %s%s",objective_function_name_string," =0.0;\n");
 
-    add_references_to_user_classes(fall); 
-   
+    add_references_to_user_classes(fall);
+
                   }
 
 
@@ -3624,8 +3624,8 @@ PRIOR_SECTION {
     fprintf(stderr,"%s","Error -- PRIORS_SECTION must be defined before"
       " LIKELIHOOD_SECTION \n");
 	  exit(1);
-  } 
-  
+  }
+
   if (procedure_defined)
   {
     fprintf(stderr,"Error -- PRIOR_SECTION must be defined before"
@@ -3636,17 +3636,17 @@ PRIOR_SECTION {
   {
     fprintf(stderr,"%s","Error -- only one PRIORS_SECTION allowed\n");
     exit(1);
-  }  
+  }
   else
   {
-    BEGIN DEFINE_PRIORS; 
+    BEGIN DEFINE_PRIORS;
     priors_defined=1;
     fprintf(fall,"%s","}\n\nvoid model_parameters::priorsfunction(void)" "\n{\n");
     fprintf(fall,"%s","  prior_function_value=0.0;\n");
     fprintf(fall,"%s","  dvariable tmp__prior=0.0;\n");
   }
   }
-             
+
 
 
 LIKELIHOODS_SECTION |
@@ -3673,9 +3673,9 @@ LIKELIHOOD_SECTION {
   {
     fprintf(stderr,"%s","Error -- only one LIKELIHOOD_SECTION allowed\n");
     exit(1);
-  }  
+  }
   else
-  {	
+  {
     BEGIN DEFINE_LIKELIHOOD;
     likelihood_defined=1;
     //setup_for_prior_likelihood();
@@ -3685,12 +3685,12 @@ LIKELIHOOD_SECTION {
   }
   }
 
-	  
-	  
+
+
 
 FUNCTION[ ]*{name}[ ]*{name}\( {
     char c;
-    int i = 0; 
+    int i = 0;
     tmp_string5[i] = '\0';
     while ((c = input()) != ')' || i >= MAX_TMP_STRING - 1)
     {
@@ -3711,10 +3711,10 @@ FUNCTION[ ]*{name}[ ]*{name}\( {
     }
 
     after_part(tmp_string1,yytext,' ');  // get function name
-    strip_leading_blanks(tmp_string2,tmp_string1); 
-    before_part(tmp_string3,tmp_string2,' '); 
+    strip_leading_blanks(tmp_string2,tmp_string1);
+    before_part(tmp_string3,tmp_string2,' ');
     after_part(tmp_string4,tmp_string2,' ');  // get function name
-    strip_leading_blanks(tmp_string1,tmp_string4); 
+    strip_leading_blanks(tmp_string1,tmp_string4);
 
     setup_for_prior_likelihood();
 
@@ -3723,12 +3723,12 @@ FUNCTION[ ]*{name}[ ]*{name}\( {
     fprintf(fall,"model_parameters::%s%s\n{\n",tmp_string1,tmp_string5);
 
     fprintf(fdat," %s %s%s;\n",tmp_string3,tmp_string1,tmp_string5);
- 
-    add_references_to_user_classes(fall); 
+
+    add_references_to_user_classes(fall);
 
     in_aux_proc=1;
     BEGIN DEFINE_PROCS;
- 
+
 
 
 
@@ -3750,9 +3750,9 @@ FUNCTION[ ]*{name} {
 
     fprintf(fall,"}\n\nvoid model_parameters::%s(void)\n{\n",tmp_string1);
     fprintf(fdat,"  void %s(void);\n",tmp_string1);
-    
-    add_references_to_user_classes(fall); 
-    
+
+    add_references_to_user_classes(fall);
+
     in_aux_proc=1;
     BEGIN DEFINE_PROCS;
     /*  BEGIN DEFINE_AUX_PROC; */
@@ -3768,14 +3768,14 @@ FUNCTION_DECLARATION[ ]*{name}[ ]*{name}\(.*\) |
     }
 
     after_part(tmp_string1,yytext,' ');  // get function name
-    strip_leading_blanks(tmp_string2,tmp_string1); 
-    before_part(tmp_string3,tmp_string2,' '); 
+    strip_leading_blanks(tmp_string2,tmp_string1);
+    before_part(tmp_string3,tmp_string2,' ');
     after_part(tmp_string4,tmp_string2,' ');  // get function name
-    strip_leading_blanks(tmp_string1,tmp_string4); 
+    strip_leading_blanks(tmp_string1,tmp_string4);
     //fprintf(fall,"}\n\n%s ",tmp_string3);
     //fprintf(fall,"model_parameters::%s\n{\n",tmp_string1);
     fprintf(fdat," %s %s;\n",tmp_string3,tmp_string1);
-    add_references_to_user_classes(fall); 
+    add_references_to_user_classes(fall);
     in_aux_proc=1;
     BEGIN DEFINE_PROCS;
                               }
@@ -3793,9 +3793,9 @@ FUNCTION_DECLARATION[ ]*{name} |
     after_partb(tmp_string1,yytext,' ');  // get function name
     //fprintf(fall,"}\n\nvoid model_parameters::%s(void)\n{\n",tmp_string1);
     fprintf(fdat,"  void %s(void);\n",tmp_string1);
-    
-    add_references_to_user_classes(fall); 
-    
+
+    add_references_to_user_classes(fall);
+
     in_aux_proc=1;
     BEGIN DEFINE_PROCS;
    /*  BEGIN DEFINE_AUX_PROC; */
@@ -3804,11 +3804,11 @@ FUNCTION_DECLARATION[ ]*{name} |
 
 <DEFINE_PROCS>^[ \t].* { fprintf(fall,"%s\n",yytext); }
 
- 
+
 <DEFINE_AUX_PROC>^\ +{name}\ +{name}\(.*$       {
 
    fprintf(fall,"  %s\n",yytext);
-   num_paren=count_paren(num_paren,yytext); 
+   num_paren=count_paren(num_paren,yytext);
    printf("in define_aux_procs num_paren = %d\n",num_paren);
    if (num_paren==0)
    {
@@ -3819,14 +3819,14 @@ FUNCTION_DECLARATION[ ]*{name} |
    {
      fprintf(fhead,"%s\n",yytext);
      BEGIN CONTINUE_PROTOTYPE_DEF;
-   }  
+   }
                               }
 
 
 <CONTINUE_PROTOTYPE_DEF>^\ .*$       {
 
    fprintf(fall,"  %s\n",yytext);
-   num_paren=count_paren(num_paren,yytext); 
+   num_paren=count_paren(num_paren,yytext);
    printf("in continue_prorotoype_def num_paren = %d\n",num_paren);
    if (num_paren==0)
    {
@@ -3836,20 +3836,20 @@ FUNCTION_DECLARATION[ ]*{name} |
    else
    {
      fprintf(fhead,"%s\n",yytext);
-   }  
+   }
                               }
 
 
 GLOBALS_SECTION {
-  
+
     if (globals_section_defined) {
       fprintf(stderr,"Error -- there is more than 1 GLOBALS_SECTION\n");
       exit(1);
     }
     globals_section_defined=1;
-    
+
     setup_for_prior_likelihood();
-    
+
     BEGIN IN_GLOBALS_SECTION;
     /*fglobals=fopen("xxglobal.tmp","w+");*/
     if (fglobals==NULL)
@@ -3859,22 +3859,22 @@ GLOBALS_SECTION {
 
                 }
 
-<IN_GLOBALS_SECTION>^[ \t].*$ { 
+<IN_GLOBALS_SECTION>^[ \t].*$ {
 
         fprintf(fglobals,"%s\n",yytext);
                               }
 
 TOP_OF_MAIN_SECTION {
-  
+
     *arglist_ptr='\0';
     if (top_of_main_defined) {
       fprintf(stderr,"Error -- there is more than 1 TOP_OF_MAIN_SECTION\n");
       exit(1);
     }
     top_of_main_defined=1;
-    
+
     setup_for_prior_likelihood();
-    
+
     BEGIN IN_TOP_SECTION;
     ftopmain=fopen("xxtopm.tmp","w+");
     if (ftopmain==NULL)
@@ -3896,7 +3896,7 @@ TOP_OF_MAIN_SECTION {
         fprintf(ftopmain,"(%s,char ** dll_options);\n\n",arglist);
       else
         fprintf(ftopmain,"(%s,char * dll_options);\n\n",arglist);
-      
+
       fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
       fprintf(ftopmain,"  %s",infile_root);
 
@@ -3904,7 +3904,7 @@ TOP_OF_MAIN_SECTION {
 
       if (bound_flag) fprintf(ftopmain,"    ad_exit=&ad_boundf;\n");
       fprintf(ftopmain,"(%s,dll_options);\n}\n",arglist1);
-    }   
+    }
     if (!splus_debug_flag)
     {
       if (makedll)
@@ -3924,16 +3924,16 @@ TOP_OF_MAIN_SECTION {
           fprintf(ftopmain,"\n__declspec(dllexport) int _export ");
       }
       else
-      {	
+      {
         fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
         fprintf(ftopmain,"    ad_set_new_handler();\n");
         if (bound_flag) fprintf(ftopmain,"  ad_exit=&ad_boundf;\n");
-      }	
-    }	
+      }
+    }
     else
     {
       fprintf(ftopmain,"\nvoid ");
-    }	
+    }
     if (makedll)
     {
       fprintf(ftopmain,"%s",infile_root);
@@ -3944,18 +3944,18 @@ TOP_OF_MAIN_SECTION {
         else
           fprintf(ftopmain,"(%s,char * dll_options)\n{\n",arglist);
       }
-      else  
+      else
       {
         if (!makegaussdll)
           fprintf(ftopmain,"(%schar ** dll_options)\n{\n",arglist);
         else
           fprintf(ftopmain,"(%schar * dll_options)\n{\n",arglist);
       }
-    }	
+    }
 
                 }
 
-<IN_TOP_SECTION>^[ \t].*$ { 
+<IN_TOP_SECTION>^[ \t].*$ {
 
         fprintf(ftopmain,"%s\n",yytext);
 
@@ -4004,7 +4004,7 @@ TOP_OF_MAIN_SECTION {
     fprintf(fall,"}\n");
     fprintf(fall,"\nmodel_parameters::~model_parameters()\n"
       "{");
-    call_destructors_for_user_classes(fall); 
+    call_destructors_for_user_classes(fall);
 
     if (!report_defined)
     {
@@ -4060,37 +4060,37 @@ TOP_OF_MAIN_SECTION {
             fprintf(ftopmain,"(%s,char ** dll_options);\n\n",arglist);
           else
             fprintf(ftopmain,"(%s,char * dll_options);\n\n",arglist);
-        
+
           fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
           fprintf(ftopmain,"    ad_set_new_handler();\n");
           if (bound_flag) fprintf(ftopmain,"  ad_exit=&ad_boundf;\n");
           fprintf(ftopmain,"  %s",infile_root);
           fprintf(ftopmain,"(%s,dll_options);\n}\n",arglist1);
-        }   
+        }
         if (!splus_debug_flag)
         {
           fprintf(ftopmain,"\n#if !defined(__MSVC32__)"
             "\n#  define __declspec(x)"
             "\n#endif\n");
-      
+
           fprintf(ftopmain,"\n#if !defined(__BORLANDC__)"
             "\n#  define _export"
            "\n#else"
            "\n#  define _export __stdcall"
             "\n#endif\n");
-	    
+
           if (!makegaussdll)
             fprintf(ftopmain,"\n__declspec(dllexport) void _export ");
           else
             fprintf(ftopmain,"\n__declspec(dllexport) int _export ");
-        }	
+        }
         else
         {
           if (!makegaussdll)
             fprintf(ftopmain,"\nvoid ");
           else
             fprintf(ftopmain,"\nint ");
-        }	
+        }
         fprintf(ftopmain,"%s",infile_root);
         if (num_spargs)
         {
@@ -4099,7 +4099,7 @@ TOP_OF_MAIN_SECTION {
           else
             fprintf(ftopmain,"(%s,char * dll_options)\n{\n",arglist);
         }
-        else  
+        else
         {
           if (!makegaussdll)
             fprintf(ftopmain,"(%schar ** dll_options)\n{\n",arglist);
@@ -4113,7 +4113,7 @@ TOP_OF_MAIN_SECTION {
         fprintf(ftopmain,"\nint main(int argc,char * argv[])\n{\n");
         fprintf(ftopmain,"    ad_set_new_handler();\n");
         if (bound_flag) fprintf(ftopmain,"  ad_exit=&ad_boundf;\n");
-      }	
+      }
       // **********************************************************************
       // **********************************************************************
 
@@ -4122,7 +4122,7 @@ TOP_OF_MAIN_SECTION {
     {
       fprintf(ftopmain,"  DDEspclient ddesc;\n");
     }
-    
+
     if (makedll)
     {
       if (makegaussdll)
@@ -4131,7 +4131,7 @@ TOP_OF_MAIN_SECTION {
       }
       fprintf(ftopmain,"  int argc=1;\n");
       fprintf(ftopmain,"  try {\n");
-    
+
       if (!makegaussdll)
       {
         fprintf(ftopmain,"    char **argv=parse_dll_options(\"%s\",argc,"
@@ -4145,43 +4145,37 @@ TOP_OF_MAIN_SECTION {
       fprintf(ftopmain,"    do_dll_housekeeping(argc,argv);\n");
       //fprintf(ftopmain,"    strcpy(argv[0],\"%s\");\n",infile_root);
       //fprintf(ftopmain,"    strcat(argv[0],\".exe\");\n");
-    
+
       if (num_spargs)
         fprintf(ftopmain,"    dll_args ad_dll(%s);\n",arglist1);
-      else  
+      else
         fprintf(ftopmain,"    dll_args ad_dll;\n");
-    }	
+    }
     fprintf(ftopmain,"    gradient_structure::set_NO_DERIVATIVES();\n");
     // **********************************************************************
     // **********************************************************************
-    
+    // The following settings for ARRAY_MEMBLOCK_SIZE used to be more complex.
+    // for more info, see:
+    // http://lists.admb-project.org/pipermail/developers/2012-April/000607.html
+    // These defaults should probably be moved to gradstrc.cpp along with other
+    // default settings, but I don't have the skills to do that right now.
+    // - Ian Taylor, May 1, 2012
+
     if (makedll)
     {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
-        "  #if defined(__GNUDOS__) || defined(DOS386) || defined(__DPMI32__) "
-        " || \\\n"
-        "     defined(__MSVC32__)\n"
-        "      if (!arrmblsize) arrmblsize=150000;\n"
-        "  #else\n"
-        "      if (!arrmblsize) arrmblsize=25000;\n"
-        "  #endif\n"
+        "    if (!arrmblsize) arrmblsize=15000000;\n"
         "    model_parameters mp(arrmblsize,argc,argv,ad_dll);\n"
         "    mp.iprint=10;\n");
-    }	
+    }
     else
     {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
-        "  #if defined(__GNUDOS__) || defined(DOS386) || defined(__DPMI32__) "
-        " || \\\n"
-        "     defined(__MSVC32__)\n"
-        "      if (!arrmblsize) arrmblsize=150000;\n"
-        "  #else\n"
-        "      if (!arrmblsize) arrmblsize=25000;\n"
-        "  #endif\n"
+        "    if (!arrmblsize) arrmblsize=15000000;\n"
         "    model_parameters mp(arrmblsize,argc,argv);\n"
         "    mp.iprint=10;\n");
-    }	
-    
+    }
+
 
      fprintf(ftopmain,"    mp.preliminary_calculations();\n");
 
@@ -4194,8 +4188,8 @@ TOP_OF_MAIN_SECTION {
       fprintf(htop,"  extern \"C\"  {\n");
       fprintf(htop,"    void ad_boundf(int i);\n  }\n");
     }
-      
-    
+
+
     if (talk_to_splus)
     {
       fprintf(htop,"#include <adsplus.h>\n\n");
@@ -4207,7 +4201,7 @@ TOP_OF_MAIN_SECTION {
       //fprintf(ftopmain,"    cleanup_argv(argc,&argv);\n");
       fprintf(ftopmain,"    ad_make_code_reentrant();\n");
       fprintf(ftopmain,"  }\n");
-    
+
       fprintf(ftopmain,"  catch (spdll_exception spe){ \n");
       fprintf(ftopmain,"    if (ad_printf && spe.e) (*ad_printf)"
         " (\"abnormal exit from newtest\\n\");\n");
@@ -4222,9 +4216,9 @@ TOP_OF_MAIN_SECTION {
       fprintf(fdat,"\nclass dll_args\n{\npublic:\n%s",classlist);
       if (num_spargs)
         fprintf(fdat,"\n dll_args(%s) : %s{}\n",arglist,conlist);
-      else  
+      else
         fprintf(fdat,"\n dll_args()  {}\n");
-    }  
+    }
     else
     {
       fprintf(ftopmain,"    return 0;\n}\n");
@@ -4237,7 +4231,7 @@ TOP_OF_MAIN_SECTION {
       fprintf(ftopmain,"    /* so we can stop here */\n");
       fprintf(ftopmain,"    exit(i);\n  }\n}\n");
     }
-      
+
     fclose(fhead);
     fclose(htop);
     fclose(fglobals);
@@ -4248,14 +4242,14 @@ TOP_OF_MAIN_SECTION {
     strcpy(outcommand,"copy /b xxglobal.tmp + xxhtop.tmp + header.tmp + xxalloc.tmp"
       " + xxtopm.tmp ");
 #else
-    strcpy(outcommand,"cat xxglobal.tmp xxhtop.tmp header.tmp xxalloc.tmp" 
+    strcpy(outcommand,"cat xxglobal.tmp xxhtop.tmp header.tmp xxalloc.tmp"
       " xxtopm.tmp > ");
 #endif
     // strcpy(outcommand,"copy xxdata.tmp + header.tmp + xxalloc.tmp ");
     strcat(outcommand,outfile_name);
     errcopy=system(outcommand);
-  
-   
+
+
     if (!errcopy)
     {
       unlink("xxdata.tmp");
@@ -4270,7 +4264,7 @@ TOP_OF_MAIN_SECTION {
       fprintf(stderr,"Error trying to create output file %s",
         outfile_name);
     }
-    
+
     exit(0);
 }
 %%
@@ -4288,24 +4282,24 @@ int main(int argc, char * argv[])
   if ( (on=option_match(argc,argv,"-bounds"))>-1)
   {
     bound_flag=1;
-  }  
+  }
   if ( (on=option_match(argc,argv,"-dll"))>-1)
   {
     makedll=1;
-  }  
+  }
   if ( (on=option_match(argc,argv,"-gaussdll"))>-1)
   {
     makedll=1;
     makegaussdll=1;
-  }  
+  }
   if ( (on=option_match(argc,argv,"-debug"))>-1)
   {
     splus_debug_flag=1;
-  }  
+  }
   if ( (on=option_match(argc,argv,"-no_pad"))>-1)
   {
     no_userclass=1;
-  }  
+  }
   if (argc>1)
   {
     strcpy(infile_name,argv[ioff]);
@@ -4324,7 +4318,7 @@ int main(int argc, char * argv[])
       exit(1);
     }
     if (debug_flag) fprintf(stderr,"Opened file %s for input\n");
-    if (makedll) 
+    if (makedll)
     {
       strcpy(tmp_string1,argv[ioff]);
       strcat(tmp_string1,".def");
@@ -4334,7 +4328,7 @@ int main(int argc, char * argv[])
       fprintf(f1,"\t%s\n",argv[ioff]);
       fclose(f1);
       f1=NULL;
-    }  
+    }
   }
   else
   {
@@ -4553,7 +4547,7 @@ char * after_partb(char * d, char * s, char c)
   else
   {
     d[0]='\0';
-  }  
+  }
   return d;
 }
 
@@ -4623,16 +4617,16 @@ int count_paren(int num_paren,char * yytext)
     if (yytext[i]=='(')
     {
       num_paren++;
-    } 
+    }
     if (yytext[i]==')')
     {
       num_paren--;
-    } 
+    }
   }
   return num_paren;
 }
 
-void add_references_to_user_classes(FILE * fall)  
+void add_references_to_user_classes(FILE * fall)
 {
   int i;
   if (!no_userclass)
@@ -4645,7 +4639,7 @@ void add_references_to_user_classes(FILE * fall)
   }
 }
 
-void call_destructors_for_user_classes(FILE * fall)  
+void call_destructors_for_user_classes(FILE * fall)
 {
   int i;
   if (num_user_classes)
@@ -4661,7 +4655,7 @@ void call_destructors_for_user_classes(FILE * fall)
 void initialize(char *s)
 {
   s[0]='\0';
-}  
+}
 
 void marker(void){;}
 
@@ -4687,40 +4681,40 @@ void marker(void){;}
  }
 
 
-  /* add prior to userfunctions from procedure_section, 
+  /* add prior to userfunctions from procedure_section,
   */
   void add_prior_to_objective(void)
-  {  	
+  {
 	  prior_done_once=1;priors_done=1;
 	  procedure_done=1;
 	  fprintf(fdat,"  virtual void priorsfunction(void);\n");  //add to .htp file
 	  //fprintf(fall,"%s","  prior_function_value=0.0;\n");
       fprintf(fall,"%s","  priorsfunction();\n"); //append at the end of procedure section/userfunction()
-      //fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");          
+      //fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=prior_function_value;\n");
   }
 
 
 
-  /* add likelihood function value to userfunctions from procedure_section, 
+  /* add likelihood function value to userfunctions from procedure_section,
   */
   void add_likelihood_to_objective(void)
-  {  	
+  {
 	  likelihood_done_once=1;likelihood_done=1;
 	  procedure_done=1;
 	  fprintf(fdat,"  virtual void likelihoodfunction(void);\n");  //add to .htp file
 	  //fprintf(fall,"%s","  likelihood_function_value=0.0;\n");
       fprintf(fall,"%s","  likelihoodfunction();\n");
-      //fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=likelihood_function_value;\n");          
+      //fprintf(fall,"%s%s%s","  ",objective_function_name_string,"+=likelihood_function_value;\n");
   }
 
 
 
-  /* reset some control variable for prior and likelihood section, this will be repeated on multiple other sections, 
-  * so we organize them as a function 
+  /* reset some control variable for prior and likelihood section, this will be repeated on multiple other sections,
+  * so we organize them as a function
   */
   void setup_for_prior_likelihood(void)
-  {  	
-	if(priors_defined) priors_done=1; 
+  {
+	if(priors_defined) priors_done=1;
 	if(likelihood_defined) likelihood_done=1;
 	if((procedure_defined)&&(!priors_defined)&&(!likelihood_defined)) procedure_done=1;
 	if((procedure_defined)&&(priors_defined)&&(!prior_done_once)) add_prior_to_objective();
@@ -4731,11 +4725,11 @@ void marker(void){;}
 
 
  /* strip off the leading and trailing spaces from an input string, call it by trim(istring),
-    istring still use the same memory address, but the values being changed due to removed spaces, 
+    istring still use the same memory address, but the values being changed due to removed spaces,
     used to compare the function name for prior_section
  */
  void trim(char * a)
- { 
+ {
 	size_t walker = strlen ( a );
     //printf ( "Before: |%s|\n\n", a );
 
@@ -4743,25 +4737,25 @@ void marker(void){;}
     while ( walker > 0 && isspace ( a[walker - 1] ) )
       --walker;
     a[walker] = '\0';
- 
+
     //printf ( "Trailing: |%s|\n\n", a );
 
     /* Trim leading spaces */
     walker = strspn ( a, " \t\n\v" );
     memmove ( a, a + walker, strlen ( a + walker ) + 1 );
  }
- 
- 
- 
+
+
+
  /* check the prior from parameter lists or not, if found it, return 0, ow return 1
-    not care about the position, 
+    not care about the position,
     it looks complicate because the prior has wider pattern than parameter,
-    such as for parameter a, we may get -log(a), or a(i) for its prior, so we need to tell if 
-    this prior come from parameter a, 
+    such as for parameter a, we may get -log(a), or a(i) for its prior, so we need to tell if
+    this prior come from parameter a,
  */
  int prior_check(char * parameter, char * prior)
  {
-   if(strlen(parameter)==strlen(prior)) 
+   if(strlen(parameter)==strlen(prior))
      return strcmp(parameter,prior); //0 is founded
    else if (strlen(parameter)<strlen(prior))
    {
@@ -4773,12 +4767,12 @@ void marker(void){;}
      {
        //printf("%d,%s,%s\n",i,parameter, prior);
        if(prior[i]==parameter[j]) { //found match
-         cnt++; 
-         if(i==0) start_flag=1;         
+         cnt++;
+         if(i==0) start_flag=1;
          if(cnt<strlen(parameter)) j++;
          //printf("* i=%d, cnt=%d, j=%d , flag=%d \n",i,cnt, j,start_flag);
          if(i==(strlen(prior)-1) && cnt==strlen(parameter) && start_flag)//only return for the last found match
-           return 0; //found it            
+           return 0; //found it
        }
        else{ //not match
          if(cnt==strlen(parameter)) {//take care for special character for not matched one
@@ -4786,7 +4780,7 @@ void marker(void){;}
          }
          if(!isalnum(prior[i])) start_flag=1;
          else start_flag=0;
-         cnt=0;j=0; 
+         cnt=0;j=0;
          //printf("** i=%d, cnt=%d, j=%d , flag=%d \n",i,cnt, j,start_flag);
        }
        if(i==(strlen(prior)-1) && cnt<strlen(parameter)) return 1; //until the end still not found

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -23,14 +23,14 @@
  * Description not yet available.
  * \param
  */
- dmatrix& dmatrix::operator= (_CONST dmatrix& m1)
+dmatrix& dmatrix::operator=(const dmatrix& m1)
  {
    if (allocated(*this))
    {
      if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
        colmin() != m1.colmin() || colmax() != m1.colmax() )
      {
-       cerr << " Incompatible array bounds in dmatrix& operator = (_CONST dmatrix&)\n";
+       cerr << " Incompatible array bounds in dmatrix& operator = (const dmatrix&)\n";
        ad_exit(21);
      }
   
@@ -60,11 +60,11 @@
  * Description not yet available.
  * \param
  */
- dmatrix& dmatrix::operator+= (_CONST dmatrix& m1)
+dmatrix& dmatrix::operator+=(const dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
    {
-     cerr << " Incompatible array bounds in dmatrix& operator += (_CONST dmatrix&)\n";
+     cerr << " Incompatible array bounds in dmatrix& operator += (const dmatrix&)\n";
      ad_exit(21);
    }
 
@@ -79,11 +79,11 @@
  * Description not yet available.
  * \param
  */
- dmatrix& dmatrix::operator-= (_CONST dmatrix& m1)
+dmatrix& dmatrix::operator-=(const dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
    {
-     cerr << " Incompatible array bounds in dmatrix& operator -= (_CONST dmatrix&)\n";
+     cerr << " Incompatible array bounds in dmatrix& operator -= (const dmatrix&)\n";
      ad_exit(21);
    }
 

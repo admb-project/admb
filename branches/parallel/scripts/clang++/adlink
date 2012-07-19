@@ -33,8 +33,8 @@ model="${1%.*}"
 
 if [[ -z $shared ]]; then out="-o $model"; else out="-o $model.so"; fi
 
-CMD="clang++ $LDFLAGS $sym $shared -L$ADMB_HOME/lib  $model.o $df1b2lib -ladmod\
- -ladt $adlib $df1b2lib -ladmod -ladt $adlib -L$ADMB_HOME/contrib $contriblib $out "
+CMD="clang++ $LDFLAGS $sym $shared -L\"$ADMB_HOME\"/lib  $model.o $df1b2lib -ladmod\
+ -ladt $adlib $df1b2lib -ladmod -ladt $adlib -L\"$ADMB_HOME\"/contrib $contriblib $out "
 echo $CMD
 eval $CMD
 

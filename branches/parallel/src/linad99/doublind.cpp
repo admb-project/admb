@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -59,18 +59,18 @@
  * Description not yet available.
  * \param
  */
-  double_index_type::double_index_type(BOR_CONST dvector& x)
+double_index_type::double_index_type(const dvector& x)
   {
-    p = new dvector_index((BOR_CONST dvector&)(x));
+    p = new dvector_index((const dvector&)(x));
   }
 
 /**
  * Description not yet available.
  * \param
  */
-  double_index_type::double_index_type(BOR_CONST dmatrix& x)
+  double_index_type::double_index_type(const dmatrix& x)
   {
-    p = new dmatrix_index((BOR_CONST dmatrix&)(x));
+    p = new dmatrix_index((const dmatrix&)(x));
   }
   
 /**
@@ -86,7 +86,7 @@
  * Description not yet available.
  * \param
  */
-  double_index_type::double_index_type(BOR_CONST  d3_array& x)
+  double_index_type::double_index_type(const d3_array& x)
   {
     p = new d3_index((d3_array&)(x));
   }
@@ -95,7 +95,7 @@
  * Description not yet available.
  * \param
  */
-  double_index_type::double_index_type(BOR_CONST pre_double_index_type& pit)
+  double_index_type::double_index_type(const pre_double_index_type& pit)
   { 
     p = (*(*(pit.a)).p)[pit.i];
   // Dave uncommented this august 1998 because program crashed
@@ -181,7 +181,7 @@ double_index_guts::~double_index_guts()
  * Description not yet available.
  * \param
  */
-dvector_index::dvector_index(BOR_CONST dvector& v) : dvector(v)
+dvector_index::dvector_index(const dvector& v) : dvector(v)
 {
   //xxjj();
 }

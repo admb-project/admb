@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
 \file cifstrem.cpp
@@ -221,7 +221,7 @@ cifstream& cifstream::operator >> (adstring& s)
 
 
 // the new version
-cifstream& cifstream::operator >> (const adstring& _s)
+cifstream& cifstream::operator>>(const adstring& _s)
 {
   adstring& s = (adstring&) _s;
   char * t = new char[FILTER_BUF_SIZE];
@@ -232,7 +232,7 @@ cifstream& cifstream::operator >> (const adstring& _s)
 }
 
 
-cifstream& cifstream::operator >> (const line_adstring& s)
+cifstream& cifstream::operator>>(const line_adstring& s)
 {
   get_field((char*)(const char *)(s),1);
   return (*this); 
@@ -245,13 +245,13 @@ cifstream& cifstream::operator >> (char* c)
   return *this;
 }
 
-cifstream& cifstream::operator >> (const char* c)
+cifstream& cifstream::operator>>(const char* c)
 {
   get_field((char*)c);
   return *this;
 }
 
-cifstream& cifstream::operator >> (BOR_CONST long& i)
+cifstream& cifstream::operator>>(const long& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
@@ -310,7 +310,7 @@ void js_strip_leading_zeros(char * s)
   }
 }
 
-cifstream& cifstream::operator >> (BOR_CONST int& i)
+cifstream& cifstream::operator>>(const int& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
@@ -331,7 +331,7 @@ cifstream& cifstream::operator >> (BOR_CONST int& i)
   return *this;
 }
 
-cifstream& cifstream::operator >> (BOR_CONST double& _x)
+cifstream& cifstream::operator>>(const double& _x)
 {
   double& x = (double&)(_x);
   //char * s = new char[FILTER_BUF_SIZE];
@@ -367,7 +367,7 @@ cifstream& cifstream::operator >> (BOR_CONST double& _x)
   return *this;
 }
 
-cifstream& cifstream::operator >> (BOR_CONST float& x)
+cifstream& cifstream::operator>>(const float& x)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);

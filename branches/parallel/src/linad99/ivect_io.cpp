@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -35,7 +35,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& ostr,_CONST ivector& z)
+ostream& operator<<(const ostream& ostr, const ivector& z)
 {
   z.write_on(ostr);
   return (ostream&) ostr;
@@ -45,7 +45,7 @@ ostream& operator<<(BOR_CONST ostream& ostr,_CONST ivector& z)
  * Description not yet available.
  * \param
  */
-void ivector::write_on(BOR_CONST ostream& _s) _CONST
+void ivector::write_on(const ostream& _s) const
 {
   ostream& s = (ostream&) _s;
 #ifdef __USE_IOSTREAM__
@@ -89,7 +89,7 @@ void ivector::write_on(BOR_CONST ostream& _s) _CONST
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& istr,BOR_CONST ivector& _z)
+istream& operator>>(const istream& istr, const ivector& _z)
 {
   ADUNCONST(ivector,z)
   z.read_from(istr);
@@ -101,7 +101,7 @@ istream& operator>>(BOR_CONST istream& istr,BOR_CONST ivector& _z)
  * Description not yet available.
  * \param
  */
-void ivector::read_from(BOR_CONST istream& _s)
+void ivector::read_from(const istream& _s)
 {
   istream& s=(istream&) _s;
   int mmin=indexmin();

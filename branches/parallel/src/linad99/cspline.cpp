@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009-2011 ADMB Foundation
+ * Copyright (c) 2009-2012 ADMB Foundation
  */
 /**
  * \file
@@ -11,20 +11,20 @@
  */
 #include <fvar.hpp>
 
-dvector spline(BOR_CONST dvector &x,BOR_CONST dvector&y,double yp1,double ypn);
-dvector spline_cubic_set(int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
-  double ybcbeg, int ibcend, double ybcend );
-double spline_cubic_val(int n, _CONST dvector& t, double tval,
-  _CONST dvector& y, _CONST dvector& ypp);
+dvector spline(const dvector &x, const dvector&y, double yp1,double ypn);
+dvector spline_cubic_set(int n, const dvector& t, const dvector& y, int ibcbeg,
+                         double ybcbeg, int ibcend, double ybcend );
+double spline_cubic_val(int n, const dvector& t, double tval,
+                        const dvector& y, const dvector& ypp);
 
-double splint(BOR_CONST dvector& xa,BOR_CONST dvector& ya,BOR_CONST dvector& y2a,double x);
+double splint(const dvector& xa, const dvector& ya, const dvector& y2a, double x);
 
 /**
  * Description not yet available.
  * \param
  */
-cubic_spline_function::cubic_spline_function(BOR_CONST dvector & _x,
-  BOR_CONST dvector& _y,double yp1,double ypn) : x(_x) , y(_y)
+cubic_spline_function::cubic_spline_function(const dvector & _x,
+  const dvector& _y, double yp1, double ypn) : x(_x) , y(_y)
 {
   y2.allocate(x);
   y2=spline(x,y,yp1,ypn);
@@ -44,7 +44,7 @@ double cubic_spline_function::operator () (double u)
  * Description not yet available.
  * \param
  */
-dvector cubic_spline_function::operator () (_CONST dvector& u)
+dvector cubic_spline_function::operator()(const dvector& u)
 {
   int mmin=u.indexmin();
   int mmax=u.indexmax();
@@ -67,7 +67,7 @@ dvector cubic_spline_function::operator () (_CONST dvector& u)
  *        end point
  * \return an array containing the second derivatives
 */
-dvector spline(BOR_CONST dvector& _x,BOR_CONST dvector& _y,double yp1,double ypn)
+dvector spline(const dvector& _x, const dvector& _y,double yp1,double ypn)
 {
   int ibcbeg, ibcend;
   double ybcbeg, ybcend;
@@ -109,7 +109,7 @@ dvector spline(BOR_CONST dvector& _x,BOR_CONST dvector& _y,double yp1,double ypn
  * \param x the input coordinate to be used in the interpolation
  * \return a cubic-spline interpolation to \f$f(x)\f$
 */
-double splint(BOR_CONST dvector& _xa,BOR_CONST dvector& _ya,BOR_CONST dvector& _y2a,double x)
+double splint(const dvector& _xa, const dvector& _ya, const dvector& _y2a, double x)
 {
   return spline_cubic_val(_xa.size(), _xa, x, _ya, _y2a);
 }
@@ -126,8 +126,8 @@ double splint(BOR_CONST dvector& _xa,BOR_CONST dvector& _ya,BOR_CONST dvector& _
  * \param ypp the second derivatives of the spline at the knots
  * \return the value of the spline at tval
  */
-double spline_cubic_val(int n, _CONST dvector& t, double tval,
-  _CONST dvector& y, _CONST dvector& ypp)
+double spline_cubic_val(int n, const dvector& t, double tval,
+                        const dvector& y, const dvector& ypp)
 //
 //  Purpose:
 //
@@ -234,7 +234,7 @@ double spline_cubic_val(int n, _CONST dvector& t, double tval,
  * \param _b the right hand side
  * \return the solution of the linear system
  */
-double *d3_np_fs(int n, _CONST dvector& _a, _CONST dvector& _b)
+double *d3_np_fs(int n, const dvector& _a, const dvector& _b)
 //
 //  Purpose:
 //
@@ -348,7 +348,7 @@ double *d3_np_fs(int n, _CONST dvector& _a, _CONST dvector& _b)
  * \param ybcend the values to be used in the boundary conditions
  * \return the second derivatives of the cubic spline
  */
-dvector spline_cubic_set(int n,_CONST dvector& t,_CONST dvector& y, int ibcbeg,
+dvector spline_cubic_set(int n, const dvector& t, const dvector& y, int ibcbeg,
   double ybcbeg, int ibcend, double ybcend )
 //
 //  Purpose:

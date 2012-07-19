@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: Unknown
- * Copyright (c) 2009-2011 ADMB Foundation
+ * Copyright (c) 2009-2012 ADMB Foundation
  *
  * This file was originally written in FORTRAN II by and unknown author.
  * In the 1980s, it was ported to C and C++ and extensively modified by
@@ -67,15 +67,15 @@ extern int ctlc_flag;
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
-  dvector update(int nvar,int iter,int m,BOR_CONST dvector& g,BOR_CONST dmatrix& xalpha,
-    dmatrix& y,BOR_CONST dvector& x,BOR_CONST dvector& xold,BOR_CONST dvector& gold,BOR_CONST dvector& xrho);
+dvector update(int nvar, int iter, int m, const dvector& g, const dmatrix& xalpha,
+  dmatrix& y, const dvector& x, const dvector& xold, const dvector& gold, const dvector& xrho);
 double dafsqrt( double x );
 
 /**
  * Description not yet available.
  * \param
  */
-void fmmt1::fmin(BOR_CONST double& _f, BOR_CONST dvector & _x,BOR_CONST dvector& _g)
+void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
 {
   double& f=(double&) _f;
   independent_variables & x=(independent_variables &) _x;
@@ -569,8 +569,8 @@ label7020:
  * Description not yet available.
  * \param
  */
-  dvector update(int nvar,int iter,int m,BOR_CONST dvector& g,BOR_CONST dmatrix& _s,
-    dmatrix& y,BOR_CONST dvector& x,BOR_CONST dvector& _xold,BOR_CONST dvector& _gold,BOR_CONST dvector& _xrho)
+dvector update(int nvar, int iter, int m, const dvector& g, const dmatrix& _s,
+  dmatrix& y, const dvector& x, const dvector& _xold, const dvector& _gold, const dvector& _xrho)
   {
     dvector& xold= (dvector&) _xold;
     dmatrix& s= (dmatrix&) _s;

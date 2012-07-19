@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -103,7 +103,7 @@
  * Description not yet available.
  * \param
  */
-void fmmdisp(_CONST dvector& x,_CONST dvector& g,
+void fmmdisp(const dvector& x, const dvector& g,
              const int& nvar, int scroll_flag,int noprintx)
 {
   if (!noprintx)
@@ -194,7 +194,7 @@ void fmmdisp(_CONST dvector& x,_CONST dvector& g,
  * Description not yet available.
  * \param
  */
-void fmmdisp(_CONST double * x,_CONST double * g,
+void fmmdisp(const double *x, const double *g,
              const int& nvar, int scroll_flag,int noprintx)
 {
   if (!noprintx)
@@ -282,7 +282,7 @@ void fmmdisp(_CONST double * x,_CONST double * g,
 } 
   
   
-//void fmmdisp(_CONST dvector& x,_CONST dvector& g,
+//void fmmdisp(const dvector& x, const dvector& g,
 //             const int& nvar, int scroll_flag)
 //{
 //  int      headings = 3;     /* number of heading lines */

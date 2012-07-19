@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -202,7 +202,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST dvar3_array& dvar4_array::operator ( ) (int i) _CONST
+const dvar3_array& dvar4_array::operator()(int i) const
     {
       #ifdef SAFE_ARRAYS
 	if (i<hslicemin()||i>hslicemax())
@@ -218,7 +218,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST dvar3_array& dvar4_array::operator [] (int i) _CONST
+const dvar3_array& dvar4_array::operator[](int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
@@ -234,7 +234,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST dvar_matrix& dvar4_array::operator ( ) (int i ,int j) _CONST
+const dvar_matrix& dvar4_array::operator()(int i, int j) const
     {
       #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
@@ -250,7 +250,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST dvar_vector& dvar4_array::operator ( ) (int i,int j,int k) _CONST
+const dvar_vector& dvar4_array::operator()(int i, int j, int k) const
     {
       #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
@@ -266,7 +266,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST prevariable dvar4_array::operator ( ) (int i,int j,int k,int l) _CONST
+const prevariable dvar4_array::operator()(int i, int j, int k, int l) const
     {
       #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
@@ -285,14 +285,14 @@
  * Description not yet available.
  * \param
  */
- dvar4_array& dvar4_array:: operator =  (_CONST d4_array& m)
+dvar4_array& dvar4_array::operator=(const d4_array& m)
  {
    int mmin=hslicemin();
    int mmax=hslicemax();
    if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
    { 
      cerr << "Incompatible bounds in"
-      " dvar4_array& dvar4_array:: operator =  (_CONST dvar4_array& m)"
+      " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
       << endl;
      ad_exit(1);
     }
@@ -307,14 +307,14 @@
  * Description not yet available.
  * \param
  */
- dvar4_array& dvar4_array:: operator =  (_CONST dvar4_array& m)
+ dvar4_array& dvar4_array::operator=(const dvar4_array& m)
  {
    int mmin=hslicemin();
    int mmax=hslicemax();
    if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
    { 
      cerr << "Incompatible bounds in"
-      " dvar4_array& dvar4_array:: operator =  (_CONST dvar4_array& m)"
+      " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
       << endl;
      ad_exit(1);
     }
@@ -353,8 +353,8 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
- void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
-   int nrh,_CONST ivector& ncl,_CONST ivector& nch)
+void dvar4_array::allocate(int hsl, int hsu, int sl, int sh, int nrl,
+  int nrh, const ivector& ncl, const ivector& nch)
  {
    if ( (shape=new four_array_shape(hsl,hsu)) == 0)
    {
@@ -483,8 +483,8 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
- void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,_CONST ivector& nrl,
-   _CONST ivector& nrh,_CONST ivector& ncl,_CONST ivector& nch)
+void dvar4_array::allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
+  const ivector& nrh, const ivector& ncl, const ivector& nch)
  {
    if ( (shape=new four_array_shape(hsl,hsu)) == 0)
    {
@@ -553,8 +553,8 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
- dvar4_array::dvar4_array(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch)
+dvar4_array::dvar4_array(int hsl, int hsu, int sl, const ivector& sh,
+  int nrl, const imatrix& nrh, int ncl, int nch)
  {
    allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
  }
@@ -563,8 +563,8 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
- void dvar4_array::allocate(int hsl,int hsu,int sl,_CONST ivector& sh,
-   int nrl, _CONST imatrix& nrh,int ncl,int nch)
+void dvar4_array::allocate(int hsl, int hsu, int sl, const ivector& sh,
+  int nrl, const imatrix& nrh, int ncl, int nch)
  {
    //int rmin=nrh.rowmin();
    //int cmin=nrh(rmin).indexmin();
@@ -603,7 +603,7 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
- void dvar4_array::allocate(_CONST d4_array& m1)
+ void dvar4_array::allocate(const d4_array& m1)
  {
    if ( (shape=new four_array_shape(m1.hslicemin(),m1.hslicemax()))
        == 0)
@@ -627,7 +627,7 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
- void dvar4_array::allocate(_CONST dvar4_array& m1)
+ void dvar4_array::allocate(const dvar4_array& m1)
  {
    if ( (shape=new four_array_shape(m1.hslicemin(),m1.hslicemax()))
        == 0)
@@ -648,14 +648,14 @@ void dvar4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  }
 
 /*
-  dvar4_array::dvar4_array(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-    _CONST imatrix& nrh,int ncl,int nch)
+dvar4_array::dvar4_array(int hsl,int hsu, int sl, const ivector& sh,int nrl,
+    const imatrix& nrh,int ncl,int nch)
   {
     allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
   }
 
-  void dvar4_array::allocate(int hsl,int hsu, int sl,_CONST ivector& sh,int nrl,
-    _CONST imatrix& nrh,int ncl,int nch)
+  void dvar4_array::allocate(int hsl,int hsu, int sl, const ivector& sh,int nrl,
+    const imatrix& nrh,int ncl,int nch)
   {
    int rmin=nrh.rowmin();
    int cmin=nrh(nrh.rowmin()).indexmin;

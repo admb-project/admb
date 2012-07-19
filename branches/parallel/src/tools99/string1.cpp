@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <fvar.hpp>
 #include <string.h>
@@ -33,7 +33,7 @@ adstring adstring::operator()(int i, int j)
 }
 
 #if defined (USE_CONST)
-adstring adstring::operator()(int i, int j) _CONST
+adstring adstring::operator()(int i, int j) const
 {
   if (i < 1 || i > (int) shape->size())
   {
@@ -56,7 +56,7 @@ adstring adstring::operator()(int i, int j) _CONST
 }
 #endif
  
-adstring & adstring::operator = (_CONST adstring & t)
+adstring& adstring::operator=(const adstring & t)
 {
   if (s != t.s)
   {
@@ -112,7 +112,7 @@ adstring::~adstring()
   }
 };
  
-unsigned char & adstring::operator()(_CONST int i)
+unsigned char & adstring::operator()(const int i)
 {
   if (i < 1 || i > (int) shape->size())
   {
@@ -122,46 +122,46 @@ unsigned char & adstring::operator()(_CONST int i)
 }
  
 #ifdef USE_CONST
-_CONST unsigned char & adstring::operator()(_CONST int i) _CONST
+const unsigned char& adstring::operator()(const int i) const
 {
   if (i < 1 || i > (int) shape->size())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "unsigned char & adstring::operator()(int i) _CONST", 1, shape->size(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "unsigned char & adstring::operator()(int i) const", 1, shape->size(), i);
   }
   return (s[i]);
 }
 
-_CONST unsigned char & adstring::operator[] (_CONST int i) _CONST 
+const unsigned char& adstring::operator[](const int i) const
 {
   if (i < 1 || i > (int) shape->size())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "unsigned char & adstring::operator[](int i) _CONST", 1, shape->size(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "unsigned char & adstring::operator[](int i) const ", 1, shape->size(), i);
   }
   return (s[i]);
 }
 #endif
  
 #ifdef USE_CONST
-int adstring::operator == (_CONST adstring & v) _CONST
+int adstring::operator==(const adstring& v) const
 {
   int tmp = strcmp (* this, v);
   return (tmp == 0);
 }
 #endif
  
-int adstring::operator == (_CONST adstring & v)
+int adstring::operator==(const adstring& v)
 {
   int tmp = strcmp (* this, v);
   return (tmp == 0);
 }
 /*
-int adstring::operator != (_CONST adstring & v)
+int adstring::operator!=(const adstring& v)
 {
   int tmp = strcmp (* this, v);
   return (tmp != 0);
 }
 */
-adstring & adstring::operator += (_CONST adstring & v)
+adstring& adstring::operator+=(const adstring& v)
 {
   int us = size ();
   int vs = v.size ();
@@ -191,7 +191,7 @@ adstring & adstring::operator += (_CONST adstring & v)
 }
  
 
-unsigned char & adstring::operator[] (_CONST int i)
+unsigned char& adstring::operator[](const int i)
 {
   if (i < 1 || i > (int) shape->size())
   {
@@ -203,7 +203,7 @@ unsigned char & adstring::operator[] (_CONST int i)
   return ( ((unsigned char *)s)[i]);
 }
  
-int length(_CONST adstring& t)
+int length(const adstring& t)
 {
   return (int(t.size()));
 }

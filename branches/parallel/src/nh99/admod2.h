@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -71,28 +71,28 @@
 #define MAX_NUM_PAR_FILES 10
 
   double mfexp(CGNU_DOUBLE );
-  dvariable mfexp(_CONST prevariable& v1);
-  dvar_vector mfexp(_CONST dvar_vector& );
-  dvector mfexp(_CONST dvector& );
+  dvariable mfexp(const prevariable& v1);
+  dvar_vector mfexp(const dvar_vector& );
+  dvector mfexp(const dvector& );
 
 
- void set_value_inv(_CONST dvariable& x,BOR_CONST dvector& v, BOR_CONST int& ii);
- void set_value_inv(_CONST dvar_matrix& x,BOR_CONST dvector& v, BOR_CONST int& ii);
- void set_value_inv(_CONST dvar_vector&,BOR_CONST dvector&,BOR_CONST int &ii);
- void set_value_inv(_CONST dvariable& u,BOR_CONST dvector& x,BOR_CONST int& ii,CGNU_DOUBLE fmin,
+ void set_value_inv(const dvariable& x, const dvector& v, const int& ii);
+ void set_value_inv(const dvar_matrix& x, const dvector& v, const int& ii);
+ void set_value_inv(const dvar_vector&, const dvector&, const int &ii);
+ void set_value_inv(const dvariable& u, const dvector& x, const int& ii,CGNU_DOUBLE fmin,
   CGNU_DOUBLE fmax);
- void set_value_inv(_CONST dvar_matrix& u,BOR_CONST dvector& x,BOR_CONST int& ii,
+ void set_value_inv(const  dvar_matrix& u, const dvector& x, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
 
-  void copy_value_to_vector(_CONST prevariable& x,BOR_CONST dvector& v,BOR_CONST int& ii);
-  void copy_value_to_vector(_CONST dvar_vector& x,BOR_CONST dvector& v,BOR_CONST int& ii);
-  void copy_value_to_vector(_CONST dvar_matrix& x,BOR_CONST dvector& v,BOR_CONST int& ii);
-  void copy_value_to_vector(_CONST dvar3_array& x,BOR_CONST dvector& v,BOR_CONST int& ii);
+  void copy_value_to_vector(const prevariable& x,const dvector& v,const int& ii);
+  void copy_value_to_vector(const dvar_vector& x,const dvector& v,const int& ii);
+  void copy_value_to_vector(const dvar_matrix& x,const dvector& v,const int& ii);
+  void copy_value_to_vector(const dvar3_array& x,const dvector& v,const int& ii);
 
-  void restore_value_from_vector(BOR_CONST prevariable& x,_CONST dvector& v,BOR_CONST int& ii);
-  void restore_value_from_vector(BOR_CONST dvar_vector& x,_CONST dvector& v,BOR_CONST int& ii);
-  void restore_value_from_vector(BOR_CONST dvar_matrix& x,_CONST dvector& v,BOR_CONST int& ii);
-  void restore_value_from_vector(dvar3_array& x,_CONST dvector& v,BOR_CONST int& ii);
+  void restore_value_from_vector(const prevariable& x, const dvector& v, const int& ii);
+  void restore_value_from_vector(const dvar_vector& x, const dvector& v, const int& ii);
+  void restore_value_from_vector(const dvar_matrix& x, const dvector& v, const int& ii);
+  void restore_value_from_vector(dvar3_array& x, const dvector& v, const int& ii);
 
 
 class model_data;
@@ -104,7 +104,7 @@ class model_data;
 class label_class
 {
   const char * name;
-  friend ostream& operator << (BOR_CONST ostream& s,BOR_CONST label_class& lc);
+  friend ostream& operator<<(const ostream& s, const label_class& lc);
   friend class model_name_tag;
 public:
   operator const char * () { return name;}
@@ -118,7 +118,7 @@ public:
 class model_name_tag
 {
   const char * name;
-  //friend ostream& operator << (BOR_CONST ostream& os, BOR_CONST model_name_tag& mnt);
+  //friend ostream& operator<<(const ostream& os, const model_name_tag& mnt);
 public: 
   model_name_tag(void){}
   void allocate(const char * s);
@@ -133,10 +133,10 @@ class named_dvar_vector : public dvar_vector, public model_name_tag
 {
 protected:
   named_dvar_vector(void) : dvar_vector(), model_name_tag() {}
-  named_dvar_vector& operator = (_CONST dvar_vector& m);
-  named_dvar_vector& operator = (_CONST dvector& m);
+  named_dvar_vector& operator=(const dvar_vector& m);
+  named_dvar_vector& operator=(const dvector& m);
   named_dvar_vector& operator = (CGNU_DOUBLE m);
-  named_dvar_vector& operator = (_CONST prevariable& m);
+  named_dvar_vector& operator=(const prevariable& m);
   friend class model_parameters;
   void allocate(int mmin,int mmax,const char * s);
 };
@@ -147,11 +147,11 @@ protected:
  */
 class named_dvariable : public dvariable, public model_name_tag
 {
-  //named_dvariable& operator = (_CONST dvariable& m);
+  //named_dvariable& operator=(const dvariable& m);
 protected:
   named_dvariable(void) : dvariable(), model_name_tag() {}
   void allocate(const char * s);
-  named_dvariable& operator = (_CONST prevariable& m);
+  named_dvariable& operator=(const prevariable& m);
   named_dvariable& operator = (CGNU_DOUBLE m);
   friend class model_parameters;
 };
@@ -167,8 +167,8 @@ protected:
   void allocate(int rmin,int rmax,int cmin,int cmax,const char * s);
 public:
   named_dvar_matrix& operator = (CGNU_DOUBLE m);
-  named_dvar_matrix& operator = (_CONST dmatrix& m);
-  named_dvar_matrix& operator = (_CONST dvar_matrix& m);
+  named_dvar_matrix& operator=(const dmatrix& m);
+  named_dvar_matrix& operator=(const dvar_matrix& m);
   friend class model_parameters;
 };
 
@@ -182,20 +182,20 @@ protected:
   named_dvar3_array(void) : dvar3_array(), model_name_tag() {}
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
     const char * s);
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,int rmax,
+  void allocate(int hsl, int hsu, const ivector& rmin, int rmax,
     int cmin,int cmax,const char * s);
-  void allocate(int hsl,int hsu,int rmin,_CONST ivector& rmax,
+  void allocate(int hsl, int hsu, int rmin, const ivector& rmax,
+    int cmin, int cmax, const char * s);
+  void allocate(int hsl, int hsu, const ivector& rmin, const ivector& rmax,
     int cmin,int cmax,const char * s);
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,_CONST ivector& rmax,
-    int cmin,int cmax,const char * s);
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin,
     int cmax,const char * s);
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,
-    _CONST ivector& cmax,const char * s);
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin,
+                const ivector& cmax, const char *s);
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,
-    _CONST ivector& cmax,const char * s);
-  named_dvar3_array& operator = (_CONST dvar3_array& m);
-  named_dvar3_array& operator = (_CONST d3_array& m);
+                const ivector& cmax, const char *s);
+  named_dvar3_array& operator=(const dvar3_array& m);
+  named_dvar3_array& operator=(const d3_array& m);
   friend class model_parameters;
 };
 
@@ -209,8 +209,8 @@ protected:
   named_dvar4_array(void) : dvar4_array(), model_name_tag() {}
   void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,int rmax,
   int cmin,int cmax,const char * s);
-  named_dvar4_array& operator = (_CONST dvar4_array& m);
-  named_dvar4_array& operator = (_CONST d4_array& m);
+  named_dvar4_array& operator=(const dvar4_array& m);
+  named_dvar4_array& operator=(const d4_array& m);
   friend class model_parameters;
 };
 
@@ -223,7 +223,7 @@ class named_dvector : public dvector, public model_name_tag
 protected:
   named_dvector(void) : dvector(), model_name_tag() {}
   void allocate(int mmin,int mmax,const char * s);
-  named_dvector& operator = (_CONST dvector& m);
+  named_dvector& operator=(const dvector& m);
   named_dvector& operator = (CGNU_DOUBLE m);
 };
 
@@ -247,7 +247,7 @@ class named_dmatrix : public dmatrix, public model_name_tag
 protected:
   named_dmatrix(void) : dmatrix(), model_name_tag() {}
   void allocate(int rmin,int rmax,int cmin,int cmax,const char * s);
-  named_dmatrix& operator = (_CONST dmatrix& m);
+  named_dmatrix& operator=(const dmatrix& m);
   named_dmatrix& operator = (CGNU_DOUBLE m);
 };
 
@@ -260,8 +260,8 @@ class named_imatrix : public imatrix, public model_name_tag
 protected:
   named_imatrix(void) : imatrix(), model_name_tag() {}
   void allocate(int rmin,int rmax,int cmin,int cmax,const char * s);
-  named_imatrix& operator = (_CONST imatrix& m);
-  named_imatrix& operator = (_CONST int& m);
+  named_imatrix& operator=(const imatrix& m);
+  named_imatrix& operator=(const int& m);
 };
 
 /**
@@ -274,19 +274,19 @@ protected:
   named_d3_array(void) : d3_array(), model_name_tag() {}
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
     const char * s);
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,int rmax,
+  void allocate(int hsl, int hsu, const ivector& rmin, int rmax,
     int cmin,int cmax,const char * s);
-  void allocate(int hsl,int hsu,int rmin,_CONST ivector& rmax,
+  void allocate(int hsl, int hsu, int rmin, const ivector& rmax,
     int cmin,int cmax,const char * s);
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,_CONST ivector& rmax,
+  void allocate(int hsl, int hsu, const ivector& rmin, const ivector& rmax,
     int cmin,int cmax,const char * s);
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin,
     int cmax, const char * s);
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,
-    _CONST ivector& cmax, const char * s);
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,
-    _CONST ivector& cmax, const char * s);
-  named_d3_array& operator = (_CONST d3_array& m);
+                const ivector& cmax, const char *s);
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin,
+                const ivector& cmax, const char *s);
+  named_d3_array& operator=(const d3_array& m);
 };
 
 /**
@@ -299,7 +299,7 @@ protected:
   named_d4_array(void) : d4_array(), model_name_tag() {}
   void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,
     int rmax,int cmin,int cmax,const char * s);
-  named_d4_array& operator = (_CONST d4_array& m);
+  named_d4_array& operator=(const d4_array& m);
 };
 
 class function_minimizer;
@@ -323,16 +323,16 @@ public:
   static int sd_phase;
   int phase_start;
   int phase_stop;
-  virtual void set_value(const dvar_vector&,BOR_CONST int&,BOR_CONST dvariable& pen)=0;
+  virtual void set_value(const dvar_vector&, const int&, const dvariable& pen) = 0;
   void set_initial_value(double x);
-  virtual void set_value_inv(BOR_CONST dvector&,BOR_CONST int&)=0;
-  virtual void copy_value_to_vector(BOR_CONST dvector&,BOR_CONST int&)=0;
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&)=0;
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii)=0;
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii)=0;
+  virtual void set_value_inv(const dvector&, const int&) = 0;
+  virtual void copy_value_to_vector(const dvector&, const int&) = 0;
+  virtual void restore_value_from_vector(const dvector&, const int&) = 0;
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii) = 0;
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii)=0;
   virtual int size_count(void)=0; // get the number of active parameters
   virtual void save_value(void)=0; // save the objects value in a file
-	virtual void save_value(BOR_CONST ofstream& ofs,int prec)=0;
+  virtual void save_value(const ofstream& ofs, int prec)=0;
 	virtual const char * label()=0;
   void allocate(int _phase_start);
   void set_active_flag(void);
@@ -340,20 +340,20 @@ public:
   friend int active(const initial_params& ip);
 public:
   initial_params(void);
-  static void xinit(BOR_CONST dvector& x); // get the number of active parameters
-  static void copy_all_values(BOR_CONST dvector& x,BOR_CONST int& ii); //save all initial parameter
+  static void xinit(const dvector& x); // get the number of active parameters
+  static void copy_all_values(const dvector& x, const int& ii); //save all initial parameter
                                                    // values in a vector
-  static void restore_all_values(BOR_CONST dvector& x,BOR_CONST int& ii); //get ivalues for all 
+  static void restore_all_values(const dvector& x, const int& ii); //get ivalues for all 
                                     // active parameters from a vector
-  static dvariable reset(BOR_CONST dvar_vector& x); // get the number of active parameters
+  static dvariable reset(const dvar_vector& x); // get the number of active parameters
   static int nvarcalc(void);
   static int num_active_calc(void);
-  static int stddev_scale(BOR_CONST dvector& d,BOR_CONST dvector& x);
+  static int stddev_scale(const dvector& d,const dvector& x);
   static void read(void);
   static void save(void);
-  static void save(BOR_CONST ofstream& ofs,int prec);
-  static void restore(BOR_CONST ifstream& ifs);
-	virtual void restore_value(BOR_CONST ifstream& ifs)=0;
+  static void save(const ofstream& ofs, int prec);
+  static void restore(const ifstream& ifs);
+  virtual void restore_value(const ifstream& ifs) = 0;
 	virtual void add_to_list(void);
   friend class function_minimizer;
 };
@@ -369,17 +369,17 @@ public:
 protected:
   param_init_vector();
 private:
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void set_value_inv(const dvector& x, const int& ii);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
   virtual int size_count(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&){};
+  virtual void sd_scale(const dvector& d, const dvector& x, const int&);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int&){};
   param_init_vector();
   virtual void save_value(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
   void allocate(int imin,int imax,int phasestart=1,const char * s="UNNAMED");
@@ -399,21 +399,21 @@ public:
   double maxb;
   param_init_bounded_vector();
 private:
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){};
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){};
   void allocate(int imin,int imax,double _minb,double _maxb,
     int phasestart=1, const char * name="UNNAMED");
   void allocate(int imin,int imax,double _minb,double _maxb,
     const char * name="UNNAMED");
   friend class model_parameters;
   virtual const char * label(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs,int prec);
+  virtual void restore_value(const ifstream& ifs);
   virtual void save_value(void);
   void report_value(void);
   //virtual void read_value(void);
@@ -425,7 +425,7 @@ private:
  */
 class param_init_bounded_dev_vector: public param_init_bounded_vector
 {
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
 };
 
 /**
@@ -434,20 +434,20 @@ class param_init_bounded_dev_vector: public param_init_bounded_vector
  */
 class param_init_number: public named_dvariable , public initial_params
 {
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   virtual void save_value(void);
   void report_value(void);
   virtual const char * label(void);
   param_init_number& operator = (CGNU_DOUBLE m);
-  param_init_number& operator = (_CONST prevariable& m);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){};
+  param_init_number& operator = (const prevariable& m);
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){};
   //virtual void read_value(void);
 protected:
   void allocate(int phase_start=1,const char *s="UNNAMED");
@@ -466,18 +466,18 @@ class param_init_bounded_number: public param_init_number
   double maxb;
 protected:
   param_init_bounded_number();
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){};
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){};
   virtual const char * label(void);
   void report_value(void);
   void allocate(double _minb,double _maxb,int phase_start=1,
     const char * s="UNNAMED");
   param_init_bounded_number& operator = (CGNU_DOUBLE m);
-  param_init_bounded_number& operator = (_CONST prevariable& m);
+  param_init_bounded_number& operator=(const prevariable& m);
   void allocate(double _minb,double _maxb,const char * s="UNNAMED");
   friend class model_parameters;
   param_init_bounded_number();
@@ -491,19 +491,19 @@ class param_init_matrix: public named_dvar_matrix,public initial_params
 {
 public:
 
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
   virtual void save_value(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
   virtual const char * label(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){};
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){};
 
 public:
 
@@ -524,10 +524,10 @@ class param_init_bounded_matrix: public param_init_matrix
   double maxb;
 public:
 
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){};
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void set_value_inv(const dvector& x, const int& ii);
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){};
 
 public:
 
@@ -577,18 +577,18 @@ class data_3array : public named_d3_array
   data_3array(void) : named_d3_array() {}
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
     const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,int rmax,
+  void allocate(int hsl, int hsu, const ivector& rmin, int rmax,
     int cmin,int cmax,const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,_CONST ivector& rmax,
+  void allocate(int hsl, int hsu, int rmin, const ivector& rmax,
     int cmin,int cmax,const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,_CONST ivector& rmax,
+  void allocate(int hsl, int hsu, const ivector& rmin, const ivector& rmax,
     int cmin,int cmax,const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,int cmax,
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin, int cmax,
     const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,
-    _CONST ivector& cmax,const char * ="UNNAMED");
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin,
+                const ivector& cmax, const char * = "UNNAMED");
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,
-    _CONST ivector& cmax,const char * ="UNNAMED");
+                const ivector& cmax ,const char * = "UNNAMED");
   friend class model_data;
 };
 
@@ -622,7 +622,7 @@ class data_imatrix : public named_imatrix
 class data_vector : public named_dvector
 {
 public:
-  data_vector& operator = (_CONST dvector& m);
+  data_vector& operator=(const dvector& m);
   data_vector& operator = (CGNU_DOUBLE m);
 private:
   data_vector(void) : named_dvector() {}
@@ -705,47 +705,47 @@ public:
 #ifdef CURVE_CORRECT
   void constraint_hess_routine(int ip);
   void get_curvature_correction_factors(int ip,
-    dvector& g,const int underflow_flag,BOR_CONST dvector& eigenvals,
+    dvector& g, const int underflow_flag, const dvector& eigenvals,
     dvector& curvcor);
 #endif
 
   void prof_minimize(int iprof, double sigma,
-    double new_value, BOR_CONST double& fprof,const int underflow_flag,
-    double global_min,BOR_CONST double& penalties,BOR_CONST double& final_weight);
+    double new_value, const double& fprof, const int underflow_flag,
+    double global_min, const double& penalties, const double& final_weight);
 #ifndef CURVE_CORRECT
   void normalize_posterior_distribution(double udet,
-    dvector& siglevel,BOR_CONST ofstream& ofs2,int num_pp,
-    dvector& all_values,BOR_CONST dmatrix& actual_value,double global_min,
-    int offset,BOR_CONST dmatrix& lprof,BOR_CONST dmatrix& ldet,BOR_CONST dmatrix& xdist,
-    dmatrix& penalties,BOR_CONST dmatrix& lg_jacob,BOR_CONST dmatrix& pdet,
+    dvector& siglevel, const ofstream& ofs2,int num_pp,
+    dvector& all_values, const dmatrix& actual_value, double global_min,
+    int offset, const dmatrix& lprof, const dmatrix& ldet, const dmatrix& xdist,
+    dmatrix& penalties, const dmatrix& lg_jacob, const dmatrix& pdet,
     dmatrix& lg_prjacob);
 #else
   void normalize_posterior_distribution(double udet,
-    dvector& siglevel,BOR_CONST ofstream& ofs2,int num_pp,
-    dvector& all_values,BOR_CONST dmatrix& actual_value,double global_min,
-    int offset,BOR_CONST dmatrix& lprof,BOR_CONST dmatrix& ldet,BOR_CONST dmatrix& xdist,
+    dvector& siglevel, const ofstream& ofs2, int num_pp,
+    dvector& all_values, const dmatrix& actual_value, double global_min,
+    int offset, const dmatrix& lprof, const dmatrix& ldet, const dmatrix& xdist,
     d3_array& eigenvals,d3_array& curvcor);
 #endif
-	void get_particular_grad(int iprof,int nvar,BOR_CONST dvector& g);
-double projected_hess_determinant(BOR_CONST dvector& fg,BOR_CONST dvector& g,
-  const int underflow_flag,BOR_CONST dvector& xscale,BOR_CONST double& ln_det_proj_jac)
-  double projected_hess_determinant(BOR_CONST dmatrix& hh,BOR_CONST dvector& g,
+	void get_particular_grad(int iprof,int nvar, const dvector& g);
+double projected_hess_determinant(const dvector& fg, const dvector& g,
+  const int underflow_flag, const dvector& xscale, const double& ln_det_proj_jac)
+  double projected_hess_determinant(const dmatrix& hh, const dvector& g,
     const int underflow_flag);
-  double projected_hess_determinant(BOR_CONST dvector& g,
-    const int underflow_flag,BOR_CONST dvector& xscale, BOR_CONST double& ln_det_proj_jac,
+  double projected_hess_determinant(const dvector& g,
+    const int underflow_flag, const dvector& xscale, const double& ln_det_proj_jac,
     double& ln_det_proj);
 
-  double diag_projected_hess_determinant(BOR_CONST dvector& g,const int underflow_flagi,
+  double diag_projected_hess_determinant(const dvector& g, const int underflow_flagi,
     dmatrix&);
 	double unrestricted_hess_determinant(void);
 
 	static void set_runtime(void);
 };
 
-cifstream& operator >> (BOR_CONST cifstream& s, BOR_CONST param_init_number& x);
-cifstream& operator >> (BOR_CONST cifstream& s, BOR_CONST param_init_vector& v);
-cifstream& operator >> (BOR_CONST cifstream& s, BOR_CONST param_init_matrix& m);
-ostream& operator << (BOR_CONST ostream& s,BOR_CONST label_class& lc);
+cifstream& operator>>(const cifstream& s, const param_init_number& x);
+cifstream& operator>>(const cifstream& s, const param_init_vector& v);
+cifstream& operator>>(const cifstream& s, const param_init_matrix& m);
+ostream& operator<<(const ostream& s, const label_class& lc);
 
 /**
  * Description not yet available.
@@ -763,8 +763,8 @@ public:
   stddev_params(void){}
   virtual int size_count(void)=0; // get the number of active parameters
   virtual void set_dependent_variables(void)=0;
-  virtual void copy_value_to_vector(BOR_CONST dvector&,BOR_CONST int&)=0;
-  static void copy_all_values(BOR_CONST dvector& x,BOR_CONST int& ii); //get the number of active parameters
+  virtual void copy_value_to_vector(const dvector&, const int&) = 0;
+  static void copy_all_values(const dvector& x, const int& ii); //get the number of active parameters
   virtual void add_to_list(void);
   virtual const char * label()=0;
   friend class function_minimizer;
@@ -811,9 +811,9 @@ class param_stddev_vector: public named_dvar_vector , stddev_params
 	void allocate(int imin,int imax,const char * s="UNNAMED");
 	virtual void set_dependent_variables(void);
 	friend class model_parameters;
-	void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  param_stddev_vector& operator = (_CONST dvar_vector& m);
-  param_stddev_vector& operator = (_CONST dvector& m);
+  void copy_value_to_vector(const dvector& x, const int& ii);
+  param_stddev_vector& operator=(const dvar_vector& m);
+  param_stddev_vector& operator=(const dvector& m);
   param_stddev_vector& operator = (CGNU_DOUBLE m);
 };
 
@@ -826,12 +826,12 @@ class param_stddev_number: public named_dvariable , public stddev_params
 	void allocate(const char *s="UNNAMED");
 	virtual int size_count(void); // get the number of active parameters
 	virtual const char * label(void);
-	void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
+  void copy_value_to_vector(const dvector& x, const int& ii);
 protected:
 	param_stddev_number();
 	friend class model_parameters;
 	virtual void set_dependent_variables(void);
-	param_stddev_number& operator = (_CONST prevariable&);
+  param_stddev_number& operator=(const prevariable&);
 	param_stddev_number& operator = (CGNU_DOUBLE);
 };
 
@@ -848,12 +848,12 @@ class param_likeprof_number: public param_stddev_number ,
 	virtual const char * label(void);
 	virtual double& get_sigma(void){return sigma;}
 	virtual double get_value(void){return value(*this);}
-	//void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
+  //void copy_value_to_vector(const dvector& x, const int& ii);
 	virtual dvariable variable(void){ return dvariable(*this);}
 	param_likeprof_number();
 	friend class model_parameters;
 public:
-	param_likeprof_number& operator = (_CONST prevariable&);
+  param_likeprof_number& operator=(const prevariable&);
 	param_likeprof_number& operator = (CGNU_DOUBLE);
 };
 
@@ -871,10 +871,10 @@ class param_stddev_matrix: public named_dvar_matrix , stddev_params
   param_stddev_matrix(void);
   friend class model_parameters;
   virtual void set_dependent_variables(void);
-	void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
+  void copy_value_to_vector(const dvector& x, const int& ii);
   param_stddev_matrix& operator = (CGNU_DOUBLE m);
-  param_stddev_matrix& operator = (_CONST dmatrix& m);
-  param_stddev_matrix& operator = (_CONST dvar_matrix& m);
+  param_stddev_matrix& operator=(const dmatrix& m);
+  param_stddev_matrix& operator=(const dvar_matrix& m);
 };
 
 /**
@@ -906,7 +906,7 @@ public:
   public:
     static objective_function_value * pobjfun;
     objective_function_value();
-    objective_function_value& operator = (_CONST prevariable& v);
+    objective_function_value& operator=(const prevariable& v);
     objective_function_value& operator = (CGNU_DOUBLE v);
   };
 
@@ -918,19 +918,19 @@ class param_init_d3array: public named_dvar3_array,public initial_params
 {
 public:
 
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void set_value(const dvar_vector& x,const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
   virtual void save_value(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
   virtual const char * label(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){};
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){};
 
 public:
 

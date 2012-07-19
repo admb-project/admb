@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -25,7 +25,7 @@
  * Description not yet available.
  * \param
  */
-void banded_symmetric_dvar_matrix::save_dvar_matrix_value(void) _CONST
+void banded_symmetric_dvar_matrix::save_dvar_matrix_value(void) const
 {
   // saves the size, address, and value information for a dvar_matrix
   int min=d.rowmin();
@@ -41,7 +41,7 @@ void banded_symmetric_dvar_matrix::save_dvar_matrix_value(void) _CONST
  * Description not yet available.
  * \param
  */
-void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value(void) _CONST
+void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value(void) const
 {
   // saves the size, address, and value information for a dvar_matrix
   int min=d.rowmin();
@@ -57,7 +57,7 @@ void banded_lower_triangular_dvar_matrix::save_dvar_matrix_value(void) _CONST
  * Description not yet available.
  * \param
  */
-void banded_symmetric_dmatrix::save_dmatrix_value(void) _CONST
+void banded_symmetric_dmatrix::save_dmatrix_value(void) const
 {
   // saves the size, address, and value information for a dvar_matrix
   int min=d.rowmin();
@@ -73,10 +73,10 @@ void banded_symmetric_dmatrix::save_dmatrix_value(void) _CONST
  * Description not yet available.
  * \param
  */
-banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos)
+banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(const dvar_matrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
-  banded_symmetric_dmatrix out((BOR_CONST dvar_matrix_position&)mpos);
+  banded_symmetric_dmatrix out((const dvar_matrix_position&)mpos);
   //int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
@@ -92,10 +92,10 @@ banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(BOR_CONST dv
  * Description not yet available.
  * \param
  */
-banded_lower_triangular_dmatrix restore_banded_lower_triangular_dvar_matrix_value(BOR_CONST dvar_matrix_position& mpos)
+banded_lower_triangular_dmatrix restore_banded_lower_triangular_dvar_matrix_value(const dvar_matrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
-  banded_lower_triangular_dmatrix out((BOR_CONST dvar_matrix_position&)mpos);
+  banded_lower_triangular_dmatrix out((const dvar_matrix_position&)mpos);
   //int ierr;
   int min=out.rowmin();
   int max=out.rowmax();
@@ -111,7 +111,7 @@ banded_lower_triangular_dmatrix restore_banded_lower_triangular_dvar_matrix_valu
  * Description not yet available.
  * \param
  */
-void banded_symmetric_dvar_matrix::save_dvar_matrix_position(void) _CONST
+void banded_symmetric_dvar_matrix::save_dvar_matrix_position(void) const
 {
   // saves the size and address information for a dvar_vector
   dvar_matrix_position tmp((*this).d,1);
@@ -134,7 +134,7 @@ void banded_symmetric_dvar_matrix::save_dvar_matrix_position(void) _CONST
  * Description not yet available.
  * \param
  */
-void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position(void) _CONST
+void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position(void) const
 {
   // saves the size and address information for a dvar_vector
   dvar_matrix_position tmp((*this).d,1);
@@ -157,7 +157,7 @@ void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position(void) _CONST
  * Description not yet available.
  * \param
  */
-void banded_symmetric_dmatrix::save_dmatrix_derivatives(_CONST dvar_matrix_position& pos) _CONST
+void banded_symmetric_dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& pos) const
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
   int min=rowmin();
@@ -165,20 +165,20 @@ void banded_symmetric_dmatrix::save_dmatrix_derivatives(_CONST dvar_matrix_posit
   if (min!=pos.row_min||max!=pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
-     "void dmatrix::save_dmatrix__derivatives(BOR_CONST dvar_matrix_position& pos)" <<
+     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)" <<
      endl;
   }
   for (int i=min;i<=max;i++)
   {
 #if defined(__MSVC32__)
-     _CONST dvector& xx=(*this)(i);
+     const dvector& xx=(*this)(i);
 #else
     const dvector& xx=(*this)(i);
 #endif
     dvector& x=(dvector&) xx;
     dvar_matrix_position& pos1=(dvar_matrix_position&)pos;
 #if defined(__MSVC32__)
-    //((BOR_CONST dvector&)x).save_dvector_derivatives(pos1(i));
+    //((const dvector&)x).save_dvector_derivatives(pos1(i));
     x.save_dvector_derivatives((pos1(i)));
 #else
     x.save_dvector_derivatives(pos1(i));
@@ -190,7 +190,7 @@ void banded_symmetric_dmatrix::save_dmatrix_derivatives(_CONST dvar_matrix_posit
  * Description not yet available.
  * \param
  */
-void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(_CONST dvar_matrix_position& pos) _CONST
+void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& pos) const
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
   int min=rowmin();
@@ -198,7 +198,7 @@ void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(_CONST dvar_matri
   if (min!=pos.row_min||max!=pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
-     "void dmatrix::save_dmatrix__derivatives(BOR_CONST dvar_matrix_position& pos)" <<
+     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)" <<
      endl;
   }
   for (int i=min;i<=max;i++)
@@ -225,7 +225,7 @@ void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(_CONST dvar_matri
  */
 banded_lower_triangular_dmatrix
   restore_banded_lower_triangular_dvar_matrix_derivatives
-  (BOR_CONST dvar_matrix_position& _pos)
+  (const dvar_matrix_position& _pos)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
   banded_lower_triangular_dmatrix tmp(pos);
@@ -241,7 +241,7 @@ banded_lower_triangular_dmatrix
  * \param
  */
 banded_symmetric_dmatrix restore_bounded_symmetric_dvar_matrix_derivatives
-  (BOR_CONST dvar_matrix_position& _pos)
+  (const dvar_matrix_position& _pos)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
   banded_symmetric_dmatrix tmp(pos);

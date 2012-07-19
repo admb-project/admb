@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array elem_prod(_CONST dvar3_array& m1,_CONST d3_array& m2)
+dvar3_array elem_prod(const dvar3_array& m1, const d3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -31,7 +31,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array elem_div(_CONST dvar3_array& m1,_CONST d3_array& m2)
+dvar3_array elem_div(const dvar3_array& m1, const d3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -48,7 +48,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator + (_CONST dvar3_array& m1,_CONST d3_array& m2)
+dvar3_array operator+(const dvar3_array& m1, const d3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -65,7 +65,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator - (_CONST dvar3_array& m1,_CONST d3_array& m2)
+dvar3_array operator-(const dvar3_array& m1, const d3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -82,7 +82,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator + (_CONST dvariable& d,_CONST d3_array& m2)
+dvar3_array operator+(const dvariable& d, const d3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -99,7 +99,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator - (_CONST dvariable& d,_CONST d3_array& m2)
+dvar3_array operator-(const dvariable& d, const d3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -116,7 +116,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator * (_CONST dvariable& d,_CONST d3_array& m2)
+dvar3_array operator*(const dvariable& d, const d3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -133,7 +133,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator * (_CONST dvariable& d,_CONST dvar3_array& m2)
+dvar3_array operator*(const dvariable& d, const dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -150,7 +150,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator * (double d,_CONST dvar3_array& m2)
+dvar3_array operator*(double d, const dvar3_array& m2)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -167,7 +167,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator - (_CONST dvar3_array& m1,_CONST dvariable& d)
+dvar3_array operator-(const dvar3_array& m1, const dvariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -184,7 +184,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator + (_CONST dvar3_array& m1,_CONST dvariable& d)
+dvar3_array operator+(const dvar3_array& m1, const dvariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -201,7 +201,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator + ( double d,_CONST dvar3_array& m1)
+dvar3_array operator+(double d, const dvar3_array& m1)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -218,7 +218,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator * (_CONST dvar3_array& m1,_CONST dvariable& d)
+dvar3_array operator*(const dvar3_array& m1, const dvariable& d)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;
@@ -235,7 +235,7 @@
  * Description not yet available.
  * \param
  */
-   dvar3_array operator + (_CONST dvariable& d1, _CONST dvar3_array& m1)
+dvar3_array operator+(const dvariable& d1, const dvar3_array& m1)
    {
      RETURN_ARRAYS_INCREMENT();
      dvar3_array tmp;

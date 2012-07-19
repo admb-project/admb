@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  ivector sgn(_CONST dvar_vector& v)
+ivector sgn(const dvar_vector& v)
   {
     int mmin=v.indexmin();
     int mmax=v.indexmax();

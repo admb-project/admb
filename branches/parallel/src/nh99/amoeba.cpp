@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009-2011 ADMB foundation
+ * Copyright (c) 2009-2012 ADMB foundation
  */
 /**
  * \file
@@ -41,7 +41,7 @@
 
   \deprecated User should use the neldmead function
 */
-void function_minimizer::adamoeba(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, int ndim,
+void function_minimizer::adamoeba(const dmatrix& _p, const dvector& _y, int ndim,
   double ftol,int nfunk)
 {
   dmatrix& p=(dmatrix&) _p;
@@ -111,7 +111,7 @@ void function_minimizer::adamoeba(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, 
  * Description not yet available.
  * \param
  */
-double function_minimizer::amxxx(BOR_CONST dmatrix& _p, BOR_CONST dvector& _y, BOR_CONST dvector& _psum, int ndim,
+double function_minimizer::amxxx(const dmatrix& _p, const dvector& _y, const dvector& _psum, int ndim,
   int ihi, double fac)
 {
   dmatrix& p=(dmatrix&) _p;

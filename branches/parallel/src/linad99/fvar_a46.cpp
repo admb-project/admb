@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -29,13 +29,13 @@ void dvdv_elem_div(void);
  * Description not yet available.
  * \param
  */
-dvar_vector elem_div(_CONST dvar_vector& v1,_CONST dvar_vector& v2)
+dvar_vector elem_div(const dvar_vector& v1, const dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-      "dvar_vector elem_prod(_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
+      "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)" << endl;
     ad_exit(1);
   }
   dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -104,13 +104,13 @@ void dvcv_elem_div(void);
  * Description not yet available.
  * \param
  */
-dvar_vector elem_div(_CONST dvar_vector& v1,_CONST dvector& v2)
+dvar_vector elem_div(const dvar_vector& v1, const dvector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-      "dvar_vector elem_prod(_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
+      "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)" << endl;
     ad_exit(1);
   }
   dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -170,13 +170,13 @@ void cvdv_elem_div(void);
  * Description not yet available.
  * \param
  */
-dvar_vector elem_div(_CONST dvector& v1,_CONST dvar_vector& v2)
+dvar_vector elem_div(const dvector& v1, const dvar_vector& v2)
 {
   RETURN_ARRAYS_INCREMENT();
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-      "dvar_vector elem_prod(_CONST dvar_vector& v1,_CONST dvar_vector& v2)" << endl;
+      "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)" << endl;
     ad_exit(1);
   }
   dvar_vector tmp(v1.indexmin(),v1.indexmax());

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -88,14 +88,14 @@
  * Description not yet available.
  * \param
  */
- d6_array& d6_array::operator =  (_CONST d6_array& m)
+d6_array& d6_array::operator=(const d6_array& m)
  {
    int mmin=indexmin();
    int mmax=indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
    { 
      cerr << "Incompatible bounds in"
-      " d6_array& d6_array:: operator =  (_CONST d6_array& m)"
+      " d6_array& d6_array:: operator =  (const d6_array& m)"
       << endl;
      ad_exit(1);
     }
@@ -110,7 +110,7 @@
  * Description not yet available.
  * \param
  */
- void d6_array::allocate(_CONST d6_array& m1)
+void d6_array::allocate(const d6_array& m1)
  {
    if ( (shape=new vector_shape(m1.indexmin(),m1.indexmax()))
        == 0)
@@ -244,7 +244,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST d5_array& d6_array::operator ( ) (int i) _CONST 
+const d5_array& d6_array::operator()(int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -261,7 +261,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST d5_array& d6_array::operator [] (int i) _CONST 
+const d5_array& d6_array::operator[](int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -277,7 +277,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST d4_array& d6_array::operator ( ) (int i ,int j) _CONST 
+const d4_array& d6_array::operator()(int i, int j) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -293,7 +293,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST d3_array& d6_array::operator ( ) (int i,int j,int k) _CONST 
+const d3_array& d6_array::operator()(int i, int j, int k) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -309,7 +309,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST dmatrix& d6_array::operator ( ) (int i,int j,int k,int l) _CONST 
+const dmatrix& d6_array::operator()(int i, int j, int k, int l) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -325,7 +325,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST dvector& d6_array::operator ( ) (int i,int j,int k,int l,int m) _CONST 
+const dvector& d6_array::operator()(int i, int j, int k, int l, int m) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -341,7 +341,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST double& d6_array::operator ( ) (int i,int j,int k,int l,int m,int n) _CONST 
+const double& d6_array::operator()(int i, int j, int k, int l, int m, int n) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -441,7 +441,7 @@ void d6_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * Description not yet available.
  * \param
  */
-double sum(_CONST d6_array& m)
+double sum(const d6_array& m)
 {
   double tmp=0.;
   for (int i=m.indexmin();i<=m.indexmax();i++)

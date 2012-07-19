@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -17,13 +17,13 @@ void cmdv_prod(void);
  * Description not yet available.
  * \param
  */
- dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvar_vector& x )
+dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)
  {
    RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
    {
-     cerr << " Incompatible array bounds in dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvar_vector& x)\n";
+     cerr << " Incompatible array bounds in dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)\n";
      ad_exit(21);
    }
 
@@ -100,13 +100,13 @@ void dmdv_prod(void)
  * Description not yet available.
  * \param
  */
-dvar_vector  operator * (_CONST dmatrix& m,_CONST dvar_vector& x )
+dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
  {
    RETURN_ARRAYS_INCREMENT();
 
    if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
    {
-     cerr << " Incompatible array bounds in dvar_vector  operator * (_CONST dvar_matrix& m,_CONST dvar_vector& x)\n";
+     cerr << " Incompatible array bounds in dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)\n";
      ad_exit(21);
    }
 

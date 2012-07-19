@@ -2,11 +2,11 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
-  void param_init_number::curv_scale(BOR_CONST dvector& _d,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_number::curv_scale(const dvector& _d, const dvector& x, const int& _ii)
   {
     dvector& d=(dvector&) _d;
     int& ii=(int&) _ii;
@@ -14,7 +14,7 @@
     ii++;
   }
 
-  void param_init_bounded_number::curv_scale(BOR_CONST dvector& _d,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_bounded_number::curv_scale(const dvector& _d, const dvector& x,const int& _ii)
   {
     dvector& d=(dvector&) _d;
     int& ii=(int&) _ii;
@@ -27,7 +27,7 @@
     ii++;
   }
 
-  void param_init_vector::curv_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+  void param_init_vector::curv_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -39,7 +39,7 @@
     }
   }
 
-  void param_init_matrix::curv_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_matrix::curv_scale(const dvector& _v,const dvector& x,const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -56,7 +56,7 @@
     }
   }
 
-  void param_init_bounded_vector::curv_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_bounded_vector::curv_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -70,7 +70,7 @@
     }
   }
 
-  void param_init_bounded_matrix::curv_scale(BOR_CONST dvector& _v,BOR_CONST dvector& x,BOR_CONST int& _ii)
+void param_init_bounded_matrix::curv_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;

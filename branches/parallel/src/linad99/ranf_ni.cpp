@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -71,7 +71,7 @@ double randn(long int& n);
  * Description not yet available.
  * \param
  */
-  void dmatrix::colfill_randu_ni(BOR_CONST int&j,long int&n)
+void dmatrix::colfill_randu_ni(const int &j,long int &n)
   {
     long int nn;
     nn=n;
@@ -85,7 +85,7 @@ double randn(long int& n);
  * Description not yet available.
  * \param
  */
-  void dmatrix::rowfill_randu_ni(BOR_CONST int& i,long int& n)
+void dmatrix::rowfill_randu_ni(const int& i,long int& n)
   {
     long int nn;
     nn=n;
@@ -172,7 +172,7 @@ double randn(long int& n);
  * Description not yet available.
  * \param
  */
-  void dmatrix::colfill_randn_ni(BOR_CONST int&j,long int&n)
+void dmatrix::colfill_randn_ni(const int &j,long int &n)
   {
     long int nn;
     nn=n;
@@ -186,7 +186,7 @@ double randn(long int& n);
  * Description not yet available.
  * \param
  */
-  void dmatrix::rowfill_randn_ni(BOR_CONST int& i,long int& n)
+void dmatrix::rowfill_randn_ni(const int& i, long int& n)
   {
     long int nn;
     nn=n;

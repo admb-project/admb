@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -30,7 +30,7 @@
   // {
   //   // ***************  begin send block ***********************************
   //   int ptid=pvm_parent();
-  //   adpvm_slave_vinitsend(PvmDataDefault);/* allocate message buffer */	
+  //   adpvm_slave_vinitsend(PvmDataDefault);/* allocate message buffer */
   //   adpvm_pack(f);
   //   adpvm_slave_vsend(ptid);/* send buffer to master */
   //   // ***************  end send block ***********************************
@@ -194,12 +194,12 @@ adpvm_manager::adpvm_manager(int _mode)
     int on1,nopt1;
     if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-exec",nopt1))>-1)
     {
-      if (nopt1 !=1 && nopt1 !=2)	    
+      if (nopt1 !=1 && nopt1 !=2)  
       {
         cerr << "Wrong number of options to -exec -- must be 1"
-          " you have " << nopt1 << endl;		
+          " you have " << nopt1 << endl;
         ad_exit(1);
-      }	
+      }
       slave_names+= ad_comm::argv[on1+1];
       slave_names+= "-exec";
       slave_names+= ad_comm::argv[on1+2];
@@ -295,12 +295,12 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
      strcpy(*slave_argv,"-dbg");
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-slavedir",noptslave))>-1)
   {
-    if (noptslave !=1)	    
+    if (noptslave !=1)
     {
       cerr << "Wrong number of options to -slavedir -- must be 1"
-        " you have " << noptslave << endl;		
+        " you have " << noptslave << endl;
       ad_exit(1);
-    }	
+    }
   }   
   else
   {
@@ -309,12 +309,12 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
   int on1,nopt1;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-mcmc",nopt1))>-1)
   {
-    if (nopt1 !=1)	    
+    if (nopt1 !=1)
     {
       cerr << "Wrong number of options to -mcmc -- must be 1"
-        " you have " << noptslave << endl;		
+        " you have " << noptslave << endl;
       ad_exit(1);
-    }	
+    }
     strcpy((*slave_argv),"-mcmc");
     strcpy((*slave_argv),ad_comm::argv[on1+1]);
   }   
@@ -330,8 +330,8 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
   }   
   int gdbflag=option_match(ad_comm::argc,ad_comm::argv,"-gdb");
 
-  for (i=0; i<nhost; i++)	/* spawn processes on */			
-  {				/* all physical machines */
+  for (i=0; i<nhost; i++)      /* spawn processes on */
+  {                            /* all physical machines */
     for (j=slave_assignments(i+1).indexmin();j<=slave_assignments(i+1).indexmax();
       j++)
     {
@@ -339,7 +339,7 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
       strcpy((*slave_argv),ad_comm::adprogram_name);
       strcpy((*slave_argv),"-slave");
       strcpy((*slave_argv),(char*)(str(slave_assignments(i+1,j))));
-      if (noptslave ==1)	    
+      if (noptslave ==1)
       {
         strcpy((*slave_argv),"-slavedir");
         strcpy((*slave_argv),ad_comm::argv[on+1]);
@@ -378,7 +378,7 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
       (*slave_argv)--;
       (*slave_argv)--;
       (*slave_argv)--;
-      if (noptslave ==1)	    
+      if (noptslave ==1)
       {
         (*slave_argv)--;
         (*slave_argv)--;
@@ -400,8 +400,8 @@ adpvm_manager::~adpvm_manager(void)
 {
   int i;
   // clean up slaves -- this stops all the slave processes
-  for (i=1; i<=nhost; i++)	/* spawn processes on */			
-  {				/* all physical machines */
+  for (i=1; i<=nhost; i++)     /* spawn processes on */
+  {                            /* all physical machines */
     for (int j=slave_assignments(i).indexmin();
              j<=slave_assignments(i).indexmax();j++)
     {
@@ -524,7 +524,7 @@ void send_int_to_master(int i)
 {
   // ***************  begin send block ***********************************
   int ptid=pvm_parent();
-  adpvm_slave_cinitsend(PvmDataDefault);/* allocate message buffer */	
+  adpvm_slave_cinitsend(PvmDataDefault);/* allocate message buffer */
   adpvm_pack(i);
   adpvm_slave_csend(ptid);/* send buffer to master */
   // ***************  end send block ***********************************

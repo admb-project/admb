@@ -7,13 +7,20 @@ ifdef SAFE_OPTION
 SAFE_OPTION=-s
 endif
 
-#PROG=valgrind -v --leak-check=full --show-reachable=no --track-origins=yes
+ifdef PROG_VALGRIND
+PROG=valgrind -v --leak-check=full --show-reachable=no --track-origins=yes
+else
 PROG=time
+endif
 
 
 default: simple
 
+ifdef PROG_VALGRIND
+all: simple caest
+else
 all: admb admb-re
+endif
 
 admb: \
 buscycle\

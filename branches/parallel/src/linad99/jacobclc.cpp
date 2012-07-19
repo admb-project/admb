@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -79,7 +79,7 @@
  * Description not yet available.
  * \param
  */
-void jacobcalc(int nvar,BOR_CONST dmatrix& jac)
+void jacobcalc(int nvar, const dmatrix& jac)
 {
   gradient_structure::jacobcalc(nvar,jac);
 }
@@ -88,7 +88,7 @@ void jacobcalc(int nvar,BOR_CONST dmatrix& jac)
  * Description not yet available.
  * \param
  */
-void gradient_structure::jacobcalc(int nvar,BOR_CONST dmatrix& _jac)
+void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
 {
   ADUNCONST(dmatrix,jac)
 

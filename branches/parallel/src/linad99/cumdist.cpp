@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -10,14 +10,14 @@
  */
 #include <fvar.hpp>
 
-double inv_cumd_norm(_CONST double& x);
-double cumd_norm(_CONST double& x);
+double inv_cumd_norm(const double& x);
+double cumd_norm(const double& x);
 
 /**
  * Description not yet available.
  * \param
  */
-double normal_tail_right(_CONST double& x)
+double normal_tail_right(const double& x)
 {
   const double a3=5;
   const double a4=9;
@@ -75,7 +75,7 @@ double inv_cumd_norm_inner(double x)
  * Description not yet available.
  * \param
  */
-double inv_cumd_norm(_CONST double& x)
+double inv_cumd_norm(const double& x)
 {
   double y=inv_cumd_norm_inner(x);
   y+=2.50662827*exp(.5*y*y)*(x-cumd_norm(y));
@@ -87,7 +87,7 @@ double inv_cumd_norm(_CONST double& x)
 \return Probablity that of an observation will exceed the argument.
 \ingroup PDF
 */
-double cumd_norm(_CONST double& x)
+double cumd_norm(const double& x)
 {
   const double b1=0.319381530;
   const double b2=-0.356563782;

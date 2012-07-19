@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -26,7 +26,7 @@ double dmax(double, double);
  * Description not yet available.
  * \param
  */
-  dvariable dfatan1( dvariable x, double fmin, double fmax,BOR_CONST prevariable&  _fpen)
+dvariable dfatan1(dvariable x, double fmin, double fmax, const prevariable&  _fpen)
 {
   prevariable&  fpen=(prevariable&)  _fpen;
   dvariable t;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -124,15 +124,15 @@ double get_second_derivative(double f,independent_variables& x,
 }
 
 
-  dvector update1(int nvar,int iter,int m,BOR_CONST dvector& g,BOR_CONST dmatrix& xalpha,
-    dmatrix& y,BOR_CONST dvector& x,BOR_CONST dvector& xold,BOR_CONST dvector& gold,BOR_CONST dvector& xrho);
+dvector update1(int nvar, int iter, int m, const dvector& g, const dmatrix& xalpha,
+  dmatrix& y, const dvector& x, const dvector& xold, const dvector& gold, const dvector& xrho);
 double dafsqrt( double x );
 
 /**
  * Description not yet available.
  * \param
  */
-void fmmt1::fmin2(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR_CONST dvector& _g, function_minimizer * pmp)
+void fmmt1::fmin2(const double& _f, const independent_variables &_x, const dvector& _g, function_minimizer *pmp)
 {
   //int itn=0; int bigbreak=0; int smallbreak=0; int midbreak=0;
   int itn=0; int smallbreak=0; int midbreak=0;
@@ -203,8 +203,8 @@ void fmmt1::fmin2(BOR_CONST double& _f, BOR_CONST independent_variables & _x,BOR
  * Description not yet available.
  * \param
  */
-  dvector update1(int nvar,int iter,int m,BOR_CONST dvector& g,BOR_CONST dmatrix& _s,
-    dmatrix& y,BOR_CONST dvector& x,BOR_CONST dvector& _xold,BOR_CONST dvector& _gold,BOR_CONST dvector& _xrho)
+dvector update1(int nvar, int iter, int m, const dvector& g, const dmatrix& _s,
+  dmatrix& y, const dvector& x, const dvector& _xold, const dvector& _gold, const dvector& _xrho)
   {
     dvector& xold= (dvector&) _xold;
     dmatrix& s= (dmatrix&) _s;

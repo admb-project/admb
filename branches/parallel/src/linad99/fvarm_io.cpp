@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -34,7 +34,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dvar_matrix& z)
+ostream& operator<<(const ostream& _ostr, const dvar_matrix& z)
 {
   ostream& ostr= (ostream&) _ostr; 
   z.write_on(ostr);
@@ -46,7 +46,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dvar_matrix& z)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::write_on(BOR_CONST ostream& _s) _CONST
+void dvar_matrix::write_on(const ostream& _s) const
 {
   ostream& s=(ostream&) _s;
 #ifdef __USE_IOSTREAM__
@@ -80,7 +80,7 @@ void dvar_matrix::write_on(BOR_CONST ostream& _s) _CONST
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvar_matrix& _z)
+istream& operator>>(const istream& _istr, const dvar_matrix& _z)
 {
   dvar_matrix& z = (dvar_matrix&)_z;
   istream& istr= (istream&) _istr; 
@@ -93,7 +93,7 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dvar_matrix& _z)
  * Description not yet available.
  * \param
  */
-void dvar_matrix::read_from(BOR_CONST istream& s)
+void dvar_matrix::read_from(const istream& s)
 {
   int n = rowmin() + rowsize() - 1;
 

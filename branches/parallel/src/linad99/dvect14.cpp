@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -51,7 +51,7 @@
  * Description not yet available.
  * \param
  */
-  dvector sfabs(_CONST dvector& t1)
+dvector sfabs(const dvector& t1)
   {
      dvector tmp(t1.indexmin(),t1.indexmax());
 

@@ -2,16 +2,16 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
  
-   void function_minimizer::prof_minimize_re(int iprof, double sigma,
-     double new_value, BOR_CONST double& _fprof,const int underflow_flag,
-     double global_min,BOR_CONST double& _penalties,BOR_CONST double& _final_weight)
+void function_minimizer::prof_minimize_re(int iprof, double sigma,
+  double new_value, const double& _fprof,const int underflow_flag,
+  double global_min, const double& _penalties, const double& _final_weight)
    {
      double& penalties=(double&) _penalties;
      double& fprof=(double&) _fprof;

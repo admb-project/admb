@@ -12,7 +12,7 @@ REM
 REM
 REM Adds the bin folder to BCC_HOME and ADMB_HOME to system path.
 REM
-@set PATH=%BCC55_HOME%\bin;%ADMB_HOME%\bin;%PATH%
+@set PATH=%BCC55_HOME%\bin;"%ADMB_HOME%"\bin;%PATH%
 
 @echo Set Borland Home directory to %BCC55_HOME%
 @echo Set ADMB Home directory to %ADMB_HOME%

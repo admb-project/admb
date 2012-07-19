@@ -20,11 +20,10 @@ $(DISKDIR)\dist\bin\tpl2cpp.exe: tpl2cpp-winflex.c
 
 flex:
 	flex < tpl2cpp.lex
-	sed -f sedflex lex.yy.c > tpl2cpp.c
+	..\..\utilities\sed -f sedflex lex.yy.c > tpl2cpp.c
 	bcc32 -Ic:\\Borland\\BCC55\\Include -Lc:\\Borland\\BCC55\\Lib -etpl2cpp.exe tpl2cpp-winflex.c
 	cp tpl2cpp.exe $(DISKDIR)\dist\bin
 
 disk:
-	copy sed.exe $(DISKDIR)\dist\bin
 	copy admodel.h $(DISKDIR)\dist\include
 	copy param_init_bounded_number_matrix.h $(DISKDIR)\dist\include

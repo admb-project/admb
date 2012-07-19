@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -35,7 +35,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& _ostr,BOR_CONST d4_array & z)
+ostream& operator<<(const ostream& _ostr, const d4_array &z)
 {
   ostream & ostr = (ostream&) _ostr;
   for (int i=z.hslicemin();i<=z.hslicemax();i++)
@@ -49,7 +49,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,BOR_CONST d4_array & z)
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& _istr,BOR_CONST d4_array & z)
+istream& operator>>(const istream& _istr, const d4_array &z)
 {
   uistream & istr = (uistream&) _istr;
   for (int i=z.hslicemin();i<=z.hslicemax();i++)
@@ -63,7 +63,7 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST d4_array & z)
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& _ostr,BOR_CONST d5_array & z)
+ostream& operator<<(const ostream& _ostr, const d5_array &z)
 {
   ostream & ostr = (ostream&) _ostr;
   for (int i=z.indexmin();i<=z.indexmax();i++)
@@ -77,7 +77,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,BOR_CONST d5_array & z)
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& _istr,BOR_CONST d5_array & z)
+istream& operator>>(const istream& _istr, const d5_array &z)
 {
   uistream & istr = (uistream&) _istr;
   for (int i=z.indexmin();i<=z.indexmax();i++)
@@ -91,7 +91,7 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST d5_array & z)
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& _ostr,BOR_CONST d6_array & z)
+ostream& operator<<(const ostream& _ostr, const d6_array &z)
 {
   uostream & ostr = (uostream&) _ostr;
   for (int i=z.indexmin();i<=z.indexmax();i++)
@@ -105,7 +105,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,BOR_CONST d6_array & z)
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& _istr,BOR_CONST d6_array & z)
+istream& operator>>(const istream& _istr, const d6_array &z)
 {
   uistream & istr = (uistream&) _istr;
   for (int i=z.indexmin();i<=z.indexmax();i++)

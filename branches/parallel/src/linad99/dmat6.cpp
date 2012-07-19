@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -15,7 +15,7 @@
  * Description not yet available.
  * \param
  */
-  dvector column(_CONST dmatrix& m,int j)
+dvector column(const dmatrix& m, int j)
   {
     return extract_column(m,j);
   }
@@ -24,7 +24,7 @@
  * Description not yet available.
  * \param
  */
-  dvector row(_CONST dmatrix& m,int j)
+dvector row(const dmatrix& m, int j)
   {
     return extract_row(m,j);
   }
@@ -33,11 +33,11 @@
  * Description not yet available.
  * \param
  */
-  dvector extract_column(_CONST dmatrix& m,int j)
+dvector extract_column(const dmatrix& m, int j)
   {
     if (j < m.colmin() || j > m.colmax())
     {
-      ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix column specified", "dvector extract_column(_CONST dmatrix& m,int j)", m.colmin(), m.colmax(), j);
+      ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix column specified", "dvector extract_column(const dmatrix& m,int j)", m.colmin(), m.colmax(), j);
     }  
     int mmin=m.rowmin();
     int mmax=m.rowmax();
@@ -54,11 +54,11 @@
  * Description not yet available.
  * \param
  */
-  dvector extract_row(_CONST dmatrix& m,int i)
+dvector extract_row(const dmatrix& m, int i)
   {
     if (i < m.rowmin() || i > m.rowmax())
     {
-      ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix row specified", "dvector extract_row(_CONST dmatrix& m,int i)", m.rowmin(), m.rowmax(), i);
+      ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix row specified", "dvector extract_row(const dmatrix& m,int i)", m.rowmin(), m.rowmax(), i);
     }  
     dvector tmp(m.colmin(),m.colmax());
 

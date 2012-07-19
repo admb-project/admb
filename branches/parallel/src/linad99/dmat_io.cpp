@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -34,7 +34,7 @@
  * Description not yet available.
  * \param
  */
-ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dmatrix& z)
+ostream& operator<<(const ostream& _ostr, const dmatrix& z)
 {
   ostream& ostr = (ostream&) _ostr;
   z.write_on(ostr);
@@ -45,7 +45,7 @@ ostream& operator<<(BOR_CONST ostream& _ostr,_CONST dmatrix& z)
  * Description not yet available.
  * \param
  */
-void dmatrix::write_on(BOR_CONST ostream& _s) _CONST 
+void dmatrix::write_on(const ostream& _s) const
 {
  ostream& s=(ostream&) _s;
 #ifdef __USE_IOSTREAM__
@@ -82,7 +82,7 @@ void dmatrix::write_on(BOR_CONST ostream& _s) _CONST
  * Description not yet available.
  * \param
  */
-istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dmatrix& _z)
+istream& operator>>(const istream& _istr, const dmatrix& _z)
 {
   dmatrix& z= (dmatrix&) _z; 
   istream& istr = (istream&) _istr;
@@ -95,7 +95,7 @@ istream& operator>>(BOR_CONST istream& _istr,BOR_CONST dmatrix& _z)
  * Description not yet available.
  * \param
  */
-void dmatrix::read_from(BOR_CONST istream& s)
+void dmatrix::read_from(const istream& s)
 {
   for (int i=rowmin();i <= rowmax();i++)
   {

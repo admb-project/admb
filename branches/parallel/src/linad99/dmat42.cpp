@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2009-2011 ADMB Foundation
+ * Copyright (c) 2009-2012 ADMB Foundation
  */
 /**
  * \file
@@ -15,15 +15,15 @@
 #include <fvar.hpp>
 #define SIGN(a,b) ((b) >= 0.0 ? fabs(a) : -fabs(a))
 
-int svd(int m,int n,int withu,int withv,double eps,double tol,
-        _CONST dmatrix& a,BOR_CONST dvector& _q,
-        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v);
-int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
-        _CONST dmatrix& aa,BOR_CONST dvector& _q,
-        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v);
-int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
-        _CONST dmatrix& aa,BOR_CONST dvector& _q,
-        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v);
+int svd(int m, int n, int withu, int withv, double eps, double tol,
+        const dmatrix& a, const dvector& _q,
+        const dmatrix& _u, const dmatrix& _v);
+int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
+            const dmatrix& aa, const dvector& _q,
+            const dmatrix& _u, const dmatrix& _v);
+int svd_mln(int m, int n, int withu, int withv, double eps, double tol,
+            const dmatrix& aa, const dvector& _q,
+            const dmatrix& _u, const dmatrix& _v);
 
 
 static const int  maxiter = 40;
@@ -117,8 +117,8 @@ sing_val_decomp singval_decomp(const dmatrix &_a)
  *           so that \f$A = U\cdot\mbox{diag(q)}\cdot V^{T} \f$
  */
 int svd(int m,int n,int withu,int withv,double eps,double tol,
-        _CONST dmatrix& aa,BOR_CONST dvector& _q,
-        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v)
+        const dmatrix& aa, const dvector& _q,
+        const dmatrix& _u, const dmatrix& _v)
 {
   ADUNCONST(dmatrix,u)
   ADUNCONST(dmatrix,v)
@@ -168,9 +168,9 @@ int svd(int m,int n,int withu,int withv,double eps,double tol,
  *      to 'C' from the original Algol code in "Handbook for
  *      Automatic Computation, vol. II, Linear Algebra", Springer-Verlag.
  */
-int svd_mln(int m,int n,int withu,int withv,double eps,double tol,
-        _CONST dmatrix& aa,BOR_CONST dvector& _q,
-        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v)
+int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
+            const dmatrix& aa, const dvector& _q,
+            const dmatrix& _u, const dmatrix& _v)
 {
   ADUNCONST(dmatrix,u)
   ADUNCONST(dmatrix,v)
@@ -446,9 +446,9 @@ convergence:
  *      to 'C' from the original Algol code in "Handbook for
  *      Automatic Computation, vol. II, Linear Algebra", Springer-Verlag.
  */
-int svd_nlm(int m,int n,int withu,int withv,double eps,double tol,
-        _CONST dmatrix& aa,BOR_CONST dvector& _q,
-        BOR_CONST dmatrix& _u,BOR_CONST dmatrix& _v)
+int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
+            const dmatrix& aa, const dvector& _q,
+            const dmatrix& _u, const dmatrix& _v)
 {
 
   ADUNCONST(dmatrix,u)

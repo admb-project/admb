@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -63,19 +63,19 @@ class param_init_d3array: public named_dvar3_array,public initial_params
 {
 public:
 
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
   virtual void save_value(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
   virtual const char * label(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){};
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){};
 
 public:
 
@@ -83,17 +83,17 @@ public:
     int phase_start=1,const char * = "UNNAMED");
   void allocate(int smin,int smax,int rmin,int rmax,int cmin,int cmax,
     const char * = "UNNAMED");
-  void allocate(int smin,int smax,_CONST ivector& rmin,_CONST ivector& rmax,
+  void allocate(int smin, int smax, const ivector& rmin, const ivector& rmax,
     int cmin,int cmax,int phase_start=1,const char * = "UNNAMED");
-  void allocate(int smin,int smax,_CONST ivector& rmin,_CONST ivector& rmax,
+  void allocate(int smin, int smax, const ivector& rmin, const ivector& rmax,
     int cmin,int cmax, const char * = "UNNAMED");
-  void allocate(int smin,int smax,_CONST ivector& rmin,int rmax,int cmin,
+  void allocate(int smin, int smax, const ivector& rmin, int rmax, int cmin,
     int cmax,int phase_start=1,const char * = "UNNAMED");
-  void allocate(int smin,int smax,_CONST ivector& rmin,int rmax,int cmin,
+  void allocate(int smin, int smax, const ivector& rmin, int rmax, int cmin,
     int cmax,const char * = "UNNAMED");
-  void allocate(int smin,int smax,int rmin,_CONST ivector& rmax,int cmin,
+  void allocate(int smin, int smax, int rmin, const ivector& rmax, int cmin,
     int cmax,int phase_start=1,const char * = "UNNAMED");
-  void allocate(int smin,int smax,int rmin,_CONST ivector& rmax,int cmin,
+  void allocate(int smin, int smax, int rmin, const ivector& rmax, int cmin,
     int cmax,const char * = "UNNAMED");
   param_init_d3array(void);
 };
@@ -108,10 +108,10 @@ class param_init_bounded_d3array: public param_init_d3array
   double maxb;
 public:
 
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){};
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void set_value_inv(const dvector& x, const int& ii);
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){};
 
 public:
 
@@ -120,20 +120,20 @@ public:
     int phase_start=1,const char * = "UNNAMED");
   void allocate(int smin,int smax,int rmin,int rmax,int cmin,int cmax,
     double _minb,double _maxb,const char * = "UNNAMED");
-  void allocate(int smin,int smax,_CONST ivector& rmin,int rmax,int cmin,int cmax,
+  void allocate(int smin, int smax, const ivector& rmin, int rmax, int cmin, int cmax,
     double _minb,double _maxb,
     int phase_start=1,const char * = "UNNAMED");
-  void allocate(int smin,int smax,_CONST ivector& rmin,int rmax,int cmin,int cmax,
+  void allocate(int smin, int smax, const ivector& rmin,int rmax,int cmin,int cmax,
     double _minb,double _maxb,const char * = "UNNAMED");
-  void allocate(int smin,int smax,_CONST ivector& rmin,_CONST ivector& rmax,int cmin,int cmax,
+  void allocate(int smin, int smax, const ivector& rmin, const ivector& rmax, int cmin, int cmax,
     double _minb,double _maxb,
     int phase_start=1,const char * = "UNNAMED");
-  void allocate(int smin,int smax,_CONST ivector& rmin,_CONST ivector& rmax,int cmin,int cmax,
+  void allocate(int smin, int smax, const ivector& rmin, const ivector& rmax, int cmin, int cmax,
     double _minb,double _maxb,const char * = "UNNAMED");
-  void allocate(int smin,int smax,int rmin,_CONST ivector& rmax,int cmin,int cmax,
+  void allocate(int smin, int smax, int rmin, const ivector& rmax, int cmin, int cmax,
     double _minb,double _maxb,
     int phase_start=1,const char * = "UNNAMED");
-  void allocate(int smin,int smax,int rmin,_CONST ivector& rmax,int cmin,int cmax,
+  void allocate(int smin, int smax, int rmin, const ivector& rmax, int cmin, int cmax,
     double _minb,double _maxb,const char * = "UNNAMED");
 
   param_init_bounded_d3array(void);

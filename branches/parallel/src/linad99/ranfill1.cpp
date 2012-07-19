@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -41,7 +41,7 @@
  * Description not yet available.
  * \param
  */
-  void dvar_matrix::colfill_seqadd(BOR_CONST int& j, CGNU_DOUBLE base, CGNU_DOUBLE offset)
+void dvar_matrix::colfill_seqadd(const int& j, CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
     double temp=0;
     RETURN_ARRAYS_INCREMENT();
@@ -57,7 +57,7 @@
  * Description not yet available.
  * \param
  */
-  void dvar_matrix::rowfill_seqadd(BOR_CONST int& i, CGNU_DOUBLE base, CGNU_DOUBLE offset)
+void dvar_matrix::rowfill_seqadd(const int& i, CGNU_DOUBLE base, CGNU_DOUBLE offset)
   {
     double temp=0;
     RETURN_ARRAYS_INCREMENT();
@@ -73,7 +73,7 @@
  * Description not yet available.
  * \param
  */
-  void dvar_matrix::colfill(int j,_CONST dvar_vector& v)
+void dvar_matrix::colfill(int j, const dvar_vector& v)
   {
     RETURN_ARRAYS_INCREMENT();
     for (int i=rowmin(); i<=rowmax(); i++)
@@ -87,7 +87,7 @@
  * Description not yet available.
  * \param
  */
-  void dvar_matrix::rowfill(int i,_CONST dvar_vector& v)
+void dvar_matrix::rowfill(int i, const dvar_vector& v)
   {
     RETURN_ARRAYS_INCREMENT();
     // for (int j=colmin(); j<=colmax(); j++)

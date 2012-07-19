@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -17,8 +17,7 @@ extern "C" {
 	}
 #endif
 
-void function_minimizer::limited_memory_quasi_newton
-  (BOR_CONST independent_variables& _x,int m)
+void function_minimizer::limited_memory_quasi_newton(const independent_variables& _x, int m)
 {
   independent_variables& x = (independent_variables&) _x;
   if (m<=0)
@@ -204,8 +203,8 @@ L50:
 }
 
 void function_minimizer::limited_memory_quasi_newton
-  (double& f,BOR_CONST independent_variables& _x,int m,int noprintx,
-  int maxfn,double crit)
+  (double& f, const independent_variables& _x, int m, int noprintx,
+  int maxfn, double crit)
 {
   independent_variables& x = (independent_variables&) _x;
   if (m<=0)

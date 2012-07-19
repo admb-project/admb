@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -93,7 +93,7 @@ int xxx_uuu_a(void)
  * Description not yet available.
  * \param
  */
-    _CONST prevariable dvar_vector::operator[] (int i) _CONST
+const prevariable dvar_vector::operator[](int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin())
@@ -116,7 +116,7 @@ int xxx_uuu_a(void)
  * Description not yet available.
  * \param
  */
-    _CONST prevariable dvar_vector::operator() (int i) _CONST
+const prevariable dvar_vector::operator()(int i) const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin())

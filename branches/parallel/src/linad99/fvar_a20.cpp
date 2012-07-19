@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -26,7 +26,7 @@ void dv_assign(void);
  * Description not yet available.
  * \param
  */
- dvar_vector& dvar_vector::operator = (_CONST dvar_vector& t)
+dvar_vector& dvar_vector::operator=(const dvar_vector& t)
  {
    if (!(*this))
    {
@@ -46,7 +46,7 @@ void dv_assign(void);
      if (mmin != t.indexmin() || mmax != t.indexmax())
      {
        cerr << " Incompatible bounds in dvar_vector& dvar_vector::operator ="
-         " (_CONST dvar_vector& t)\n";
+         " (const dvar_vector& t)\n";
        ad_exit(21);
      }
      if (va != t.va)
@@ -87,7 +87,7 @@ void dv_eqprev(void);
  * Description not yet available.
  * \param
  */
- dvar_vector& dvar_vector::operator = (_CONST prevariable& t)
+dvar_vector& dvar_vector::operator=(const prevariable& t)
  {
    int mmin=indexmin();
    int mmax=indexmax();

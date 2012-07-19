@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 
 
@@ -28,7 +28,7 @@
 #endif
 
 double better_rand(long int&);
-void store_mcmc_values(BOR_CONST ofstream& ofs);
+void store_mcmc_values(const ofstream& ofs);
 void set_labels_for_mcmc(void);
 void save_mcmc_for_gui(const dvector& mcmc_values,dmatrix &mdm,int& ids);
 void save_mcmc_for_gui1(const dvector& mcmc_values,
@@ -36,37 +36,37 @@ void save_mcmc_for_gui1(const dvector& mcmc_values,
 
 void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
   int& next_flag);
-void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST dvector& h,
-  dvector& m,BOR_CONST dvector& s,BOR_CONST dvector& parsave,long int iseed, double size_scale);
+void print_hist_data(const dmatrix& hist, const dmatrix& values, const dvector& h,
+  dvector& m, const dvector& s, const dvector& parsave,long int iseed, double size_scale);
 
 
-int minnz(BOR_CONST dvector& x);
-int maxnz(BOR_CONST dvector& xa);
+int minnz(const dvector& x);
+int maxnz(const dvector& xa);
 
-void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& _SS,double s,
+void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s,
   int mcmc2_flag);
 
-int read_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dvector& h,
-  dvector& m,BOR_CONST dvector& s,BOR_CONST dvector& parsave,long int& iseed,BOR_CONST double& size_scale);
+int read_hist_data(const dmatrix& hist, const dvector& h,
+  dvector& m, const dvector& s, const dvector& parsave, long int& iseed, const double& size_scale);
 
-void make_preliminary_hist(BOR_CONST dvector& s,BOR_CONST dvector& m,int nsim,BOR_CONST dmatrix& values,
-  dmatrix& hist,BOR_CONST dvector& h,int slots,double total_spread,int probflag=0);
+void make_preliminary_hist(const dvector& s, const dvector& m,int nsim, const dmatrix& values,
+  dmatrix& hist, const dvector& h,int slots,double total_spread,int probflag=0);
 
-void add_hist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,BOR_CONST dmatrix& hist,
-  dvector& mcmc_values,double llc,BOR_CONST dvector& h,int nslots,
+void add_hist_values(const dvector& s, const dvector& m, const dmatrix& hist,
+  dvector& mcmc_values,double llc, const dvector& h,int nslots,
   double total_spreadd,int probflag=0);
 
-void add_guihist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,
-  BOR_CONST dmatrix& _hist,dvector& mcmcnumber_values,double llc,
-  BOR_CONST dvector& h,int nslots,double total_spread);
+void add_guihist_values(const dvector& s, const dvector& m,
+  const dmatrix& _hist, dvector& mcmcnumber_values, double llc,
+  const dvector& h, int nslots, double total_spread);
 
-void write_empirical_covariance_matrix(int ncor,BOR_CONST dvector& s_mean,BOR_CONST dmatrix& s_covar,
+void write_empirical_covariance_matrix(int ncor, const dvector& s_mean, const dmatrix& s_covar,
   adstring& prog_name);
 
-void read_empirical_covariance_matrix(int nvar,BOR_CONST dmatrix& S,BOR_CONST adstring& prog_name);
+void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
 
 
-void read_hessian_matrix_and_scale(int nvar,BOR_CONST dmatrix& S,BOR_CONST dvector& pen_vector);
+void read_hessian_matrix_and_scale(int nvar, const dmatrix& S, const dvector& pen_vector);
 
 int user_stop(void);
 
@@ -74,15 +74,15 @@ extern int ctlc_flag;
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
 
-dvector new_probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& wght,double pprobe, random_number_generator& rng);
+dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& wght,double pprobe, random_number_generator& rng);
  // const random_number_generator& rng);
 
-void new_probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch, BOR_CONST double& wght,BOR_CONST dvector& _y,double pprobe, random_number_generator& rng);
+void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& wght, const dvector& _y,double pprobe, random_number_generator& rng);
 
-//void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,double d);
-void  newton_raftery_bayes_estimate_new(double cbf,int ic,BOR_CONST dvector& lk,double d);
+//void  newton_raftery_bayes_estimate(double cbf,int ic, const dvector& lk,double d);
+void  newton_raftery_bayes_estimate_new(double cbf,int ic, const dvector& lk,double d);
 
 void ad_update_mcmc_stats_report
   (int feval,int iter,double fval,double gmax);
@@ -703,7 +703,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
               chd,lprob,rng);
           else
             bmn1=new_probing_bounded_multivariate_normal(
-	      nvar,symbds(1),symbds(2),chd,lprob,pprobe,rng);
+              nvar,symbds(1),symbds(2),chd,lprob,pprobe,rng);
 
           initial_params::add_random_vector(bmn1);
           initial_params::xinit(y);   
@@ -711,10 +711,10 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
           initial_params::set_all_simulation_bounds(symbds);
           if (!probe_flag)
             bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),chd,
-	      lpinv,-1*(chdinv*bmn1),rng);
+              lpinv,-1*(chdinv*bmn1),rng);
           else 
             new_probing_bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),
-	      chd,lpinv,-1*(chdinv*bmn1),pprobe,rng);
+              chd,lpinv,-1*(chdinv*bmn1),pprobe,rng);
 
           ll=-get_monte_carlo_value(nvar,y);
 #if defined(USE_LAPLACE)
@@ -730,13 +730,13 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         else
         {
           dvector bmn1=bounded_multivariate_uniform(nvar,symbds(1),symbds(2),chd,
-	    lprob,rng);
+            lprob,rng);
           initial_params::add_random_vector(bmn1);
           initial_params::xinit(y);   
           // get the simulation bounds for the inverse transition
           initial_params::set_all_simulation_bounds(symbds);
           bounded_multivariate_uniform_mcmc(nvar,symbds(1),symbds(2),chd,
-					    lpinv,-1*(chdinv*bmn1),rng);
+                                            lpinv,-1*(chdinv*bmn1),rng);
           ll=-get_monte_carlo_value(nvar,y);
           double ldiff=lprob-lpinv;
           logr= ll - ldiff - llc;         
@@ -882,8 +882,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
 }
 
-void write_empirical_covariance_matrix(int ncor,BOR_CONST dvector& s_mean,
-  BOR_CONST dmatrix& s_covar,adstring& prog_name)
+void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
+  const dmatrix& s_covar,adstring& prog_name)
 {
   uostream ofs((char*)(ad_comm::adprogram_name + adstring(".ecm")));
   dvector tmp=s_mean/ncor;
@@ -918,7 +918,7 @@ void write_empirical_covariance_matrix(int ncor,BOR_CONST dvector& s_mean,
  */
 }
 
-void read_empirical_covariance_matrix(int nvar,BOR_CONST dmatrix& S,BOR_CONST adstring& prog_name)
+void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name)
 {
   adstring infile_name=ad_comm::adprogram_name + adstring(".ecm");
   uistream ifs((char*)(infile_name));
@@ -962,8 +962,8 @@ void read_empirical_covariance_matrix(int nvar,BOR_CONST dmatrix& S,BOR_CONST ad
  */
 }
 
-void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST dvector& h,
-  dvector& m,BOR_CONST dvector& s,BOR_CONST dvector& parsave,long int iseed,double size_scale)
+void print_hist_data(const dmatrix& hist, const dmatrix& values, const dvector& h,
+  dvector& m, const dvector& s, const dvector& parsave, long int iseed, double size_scale)
 {
   ofstream ofs((char*)(ad_comm::adprogram_name + adstring(".hst")));
   int nsdvars=stddev_params::num_stddev_calc();
@@ -1041,8 +1041,8 @@ void print_hist_data(BOR_CONST dmatrix& hist,BOR_CONST dmatrix& values,BOR_CONST
 
 }
 
-int read_hist_data(BOR_CONST dmatrix& _hist,BOR_CONST dvector& h,
-  dvector& m,BOR_CONST dvector& s,BOR_CONST dvector& parsave,long int& iseed,BOR_CONST double& size_scale)
+int read_hist_data(const dmatrix& _hist, const dvector& h,
+  dvector& m, const dvector& s, const dvector& parsave, long int& iseed, const double& size_scale)
 {
   dmatrix& hist= (dmatrix&) _hist;
   cifstream cif((char*)(ad_comm::adprogram_name + adstring(".hst")));
@@ -1092,7 +1092,7 @@ int read_hist_data(BOR_CONST dmatrix& _hist,BOR_CONST dvector& h,
   return flag;
 }
 
-int minnz(BOR_CONST dvector& x)
+int minnz(const dvector& x)
 {
   int mmin=x.indexmin();
   int mmax=x.indexmax();
@@ -1109,7 +1109,7 @@ int minnz(BOR_CONST dvector& x)
   return m;
 }
 
-int maxnz(BOR_CONST dvector& x)
+int maxnz(const dvector& x)
 {
   int mmin=x.indexmin();
   int mmax=x.indexmax();
@@ -1127,8 +1127,8 @@ int maxnz(BOR_CONST dvector& x)
 }
 
 
-void add_hist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,BOR_CONST dmatrix& _hist,
-  dvector& mcmc_values,double llc,BOR_CONST dvector& h,int nslots,
+void add_hist_values(const dvector& s, const dvector& m, const dmatrix& _hist,
+  dvector& mcmc_values, double llc, const dvector& h, int nslots,
   double total_spread,int probflag)
 {
   dmatrix& hist= (dmatrix&) _hist;
@@ -1162,9 +1162,9 @@ void add_hist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,BOR_CONST dmatrix
 }
 
 /*
-void add_guihist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,
-  BOR_CONST dmatrix& _hist,dvector& mcmcnumber_values,double llc,
-  BOR_CONST dvector& h,int nslots,double total_spread)
+void add_guihist_values(const dvector& s, const dvector& m,
+  const dmatrix& _hist,dvector& mcmcnumber_values,double llc,
+  const dvector& h,int nslots,double total_spread)
 {
   dmatrix& hist= (dmatrix&) _hist;
   int nsdvars=stddev_params::num_stddev_number_calc();
@@ -1190,8 +1190,8 @@ void add_guihist_values(BOR_CONST dvector& s,BOR_CONST dvector& m,
 }
 */
 
-void make_preliminary_hist(BOR_CONST dvector& s,BOR_CONST dvector& m,int nsim,BOR_CONST dmatrix& _values,
-  dmatrix& hist,BOR_CONST dvector& _h,int nslots,double total_spread,int probflag)
+void make_preliminary_hist(const dvector& s, const dvector& m,int nsim, const dmatrix& _values,
+  dmatrix& hist, const dvector& _h, int nslots, double total_spread, int probflag)
 {
   ADUNCONST(dmatrix,values)
   dvector& h = (dvector&) _h;
@@ -1268,7 +1268,7 @@ void make_preliminary_hist(BOR_CONST dvector& s,BOR_CONST dvector& m,int nsim,BO
   }
 }
 
-void read_covariance_matrix(BOR_CONST dmatrix& S,int nvar,int& oldHbf,
+void read_covariance_matrix(const dmatrix& S,int nvar,int& oldHbf,
   dvector & sscale)
 {
   adstring tmpstring="admodel.cov";
@@ -1310,7 +1310,7 @@ void read_covariance_matrix(BOR_CONST dmatrix& S,int nvar,int& oldHbf,
     exit(1);
   }
 }  
-void read_hessian_matrix_and_scale(int nvar, BOR_CONST dmatrix& _SS,BOR_CONST dvector& pen_vector)
+void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS, const dvector& pen_vector)
 {
   dmatrix& S= (dmatrix&) _SS;
   adstring tmpstring="admodel.hes";
@@ -1400,7 +1400,7 @@ void read_hessian_matrix_and_scale(int nvar, BOR_CONST dmatrix& _SS,BOR_CONST dv
   S=inv(S);
 }
 
-void read_hessian_matrix_and_scale1(int nvar,BOR_CONST dmatrix& _SS,
+void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS,
   double rbp,int mcmc2_flag)
 {
   dmatrix& S= (dmatrix&) _SS;
@@ -1531,7 +1531,7 @@ int user_stop(void)
 }
 
 /*
-void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,double d)
+void  newton_raftery_bayes_estimate(double cbf, int ic, const dvector& lk, double d)
 {
   double d1=1.0-d;
   double cbold=cbf;
@@ -1559,7 +1559,7 @@ void  newton_raftery_bayes_estimate(double cbf,int ic,BOR_CONST dvector& lk,doub
 }
 */
   
-void  newton_raftery_bayes_estimate_new(double lcbf,int ic,BOR_CONST dvector& lk,double d)
+void  newton_raftery_bayes_estimate_new(double lcbf, int ic, const dvector& lk, double d)
 {
   double d1=1.0-d;
   double lcbold=lcbf;

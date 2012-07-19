@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #if defined(USE_LAPLACE)
 #include <df1b2fun.h>
@@ -18,7 +18,7 @@ void function_minimizer::quasi_newton_block_pvm_master_random_effects
   // *********************************************************
   // block for quasi-newton minimization
   tracing_message(traceflag,"C2");
-	//int itnold=0;
+  //int itnold=0;
   fmm fmc(nvar);
   int on1;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-nox"))>-1)

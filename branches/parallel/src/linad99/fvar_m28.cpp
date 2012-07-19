@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -47,7 +47,7 @@ dvar_matrix& dvar_matrix::operator /= ( CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator /= ( _CONST prevariable& x)
+dvar_matrix& dvar_matrix::operator/=(const  prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
@@ -77,7 +77,7 @@ dvar_matrix& dvar_matrix::operator = ( CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator = (_CONST prevariable& x)
+dvar_matrix& dvar_matrix::operator=(const prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)
@@ -107,7 +107,7 @@ dvar_matrix& dvar_matrix::operator *= ( CGNU_DOUBLE x)
  * Description not yet available.
  * \param
  */
-dvar_matrix& dvar_matrix::operator *= ( _CONST prevariable& x)
+dvar_matrix& dvar_matrix::operator*=(const prevariable& x)
 {
   RETURN_ARRAYS_INCREMENT();
   for (int i=rowmin();i<=rowmax();i++)

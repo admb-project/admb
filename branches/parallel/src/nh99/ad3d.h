@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -52,19 +52,19 @@ class param_init_d3array: public named_dvar3_array,public initial_params
 {
 public:
 
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
   virtual void save_value(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
   virtual const char * label(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){};
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){};
 
 public:
 
@@ -79,7 +79,7 @@ public:
  * Description not yet available.
  * \param
  */
-  void param_init_d3array::copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii)
+  void param_init_d3array::copy_value_to_vector(const dvector& x, const int& ii)
   {
     ::copy_value_to_vector(*this,x,ii);
   }
@@ -88,7 +88,7 @@ public:
  * Description not yet available.
  * \param
  */
-  void param_init_d3array::restore_value_from_vector(BOR_CONST dvector& x,BOR_CONST int& ii)
+  void param_init_d3array::restore_value_from_vector(const dvector& x, const int& ii)
   {
     ::restore_value_from_vector(*this,x,ii);
   }
@@ -97,7 +97,7 @@ public:
  * Description not yet available.
  * \param
  */
-  void param_init_d3array::save_value(BOR_CONST ofstream& ofs,int prec)
+  void param_init_d3array::save_value(const ofstream& ofs,int prec)
   {
     ofs << setw(prec+6) << setprecision(prec) << dvar3_array(*this) << endl;
   }
@@ -135,7 +135,7 @@ public:
  * Description not yet available.
  * \param
  */
-  void param_init_d3array::hess_scale(BOR_CONST dvector& v,BOR_CONST dvector& x,BOR_CONST int& ii)
+  void param_init_d3array::hess_scale(const dvector& v, const dvector& x, const int& ii)
   {
     int smin=slicemin();
     int smax=slicemax();
@@ -159,7 +159,7 @@ public:
  * Description not yet available.
  * \param
  */
-  void param_init_d3array::sd_scale(BOR_CONST dvector& v,BOR_CONST dvector& x,BOR_CONST int& ii)
+  void param_init_d3array::sd_scale(const dvector& v, const dvector& x, const int& ii)
   {
     int smin=slicemin();
     int smax=slicemax();
@@ -183,7 +183,7 @@ public:
  * Description not yet available.
  * \param
  */
-cifstream& operator >> (BOR_CONST cifstream& s, param_init_3darray& m)
+cifstream& operator>>(const cifstream& s, param_init_3darray& m)
 {
   s >> dvar3_array(m);
   return s;
@@ -193,7 +193,7 @@ cifstream& operator >> (BOR_CONST cifstream& s, param_init_3darray& m)
  * Description not yet available.
  * \param
  */
-void param_init_d3array::restore_value(BOR_CONST ifstream& ofs)
+void param_init_d3array::restore_value(const ifstream& ofs)
 {
   ofs  >> dvar3_array(*this);
 }

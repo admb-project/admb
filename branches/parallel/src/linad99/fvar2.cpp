@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -79,7 +79,7 @@ void gradfree(dlink * v)
   }
 }
 
-//  prevariable::prevariable(_CONST prevariable& t)
+//prevariable::prevariable(const prevariable& t)
 //  {
 //     v=t.v;
 //     (*v).nc++;
@@ -90,7 +90,7 @@ void gradfree(dlink * v)
   Allocates memory and assigns value of argument to new object.
   \param t constant prevariable object
  */
-    dvariable::dvariable(_CONST prevariable& t)
+dvariable::dvariable(const prevariable& t)
     {
       v=gradnew();
       //(*v).nc=0;
@@ -104,7 +104,7 @@ void gradfree(dlink * v)
   Allocates memory and assigns value of argument to new object.
   \param t constant devariable object
  */
-    dvariable::dvariable(_CONST dvariable& t)
+dvariable::dvariable(const dvariable& t)
     {
       v=gradnew();
       v->x=t.v->x;
@@ -164,7 +164,7 @@ void gradfree(dlink * v)
    sets value to zero and initializes derivatve information.
    \param t constant int passed by reference.
  */
-  dvariable::dvariable(BOR_CONST int& t)
+dvariable::dvariable(const int& t)
   {
     v=gradnew();
     v->x=t;

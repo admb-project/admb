@@ -6,7 +6,11 @@ vpath %.obj $(LIBPATH)
 include objects.lst
 
 all: $(OBJECTS)
+ifeq ($(CXX),g++.exe)
+	copy qfclib.h $(DISKDIR)
+else
 	cp qfclib.h $(DISKDIR)
+endif
 
 test:
 	make --directory=test

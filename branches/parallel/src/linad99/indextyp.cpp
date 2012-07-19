@@ -2,7 +2,7 @@
  * $Id$
  * 
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -104,18 +104,18 @@
  * Description not yet available.
  * \param
  */
-  index_type::index_type(BOR_CONST ivector& x)
+index_type::index_type(const ivector& x)
   {
-    p = new vector_index((BOR_CONST ivector&)(x));
+    p = new vector_index((const ivector&)(x));
   }
 
 /**
  * Description not yet available.
  * \param
  */
-  index_type::index_type(BOR_CONST imatrix& x)
+index_type::index_type(const imatrix& x)
   {
-    p = new matrix_index((BOR_CONST imatrix&)(x));
+    p = new matrix_index((const imatrix&)(x));
   }
 
 /**
@@ -131,7 +131,7 @@
  * Description not yet available.
  * \param
  */
-  index_type::index_type(BOR_CONST  i3_array& x)
+  index_type::index_type(const i3_array& x)
   {
     p = new i3_index((i3_array&)(x));
   }
@@ -140,7 +140,7 @@
  * Description not yet available.
  * \param
  */
-  index_type::index_type(BOR_CONST  i4_array& x)
+  index_type::index_type(const i4_array& x)
   {
     p = new i4_index((i4_array&)(x));
   }
@@ -149,7 +149,7 @@
  * Description not yet available.
  * \param
  */
-  index_type::index_type(BOR_CONST pre_index_type& pit)
+  index_type::index_type(const pre_index_type& pit)
   { 
     p = (*(*(pit.a)).p)[pit.i];
   // Dave uncommented this august 1998 because program crashed
@@ -248,7 +248,7 @@
      (nch.isinteger() && (nrl !=nch.indexmin() || nrh !=nch.indexmax())))
    {
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,"
-      "_CONST ivector& ncl,_CONST ivector& nch)" << endl;
+      "const ivector& ncl, const ivector& nch)" << endl;
      ad_exit(1);
    }
    index_min=int(nrl);
@@ -328,8 +328,8 @@
      cout << nch.indexmin() << endl;
      cout << nch.indexmax() << endl;
      cerr << "Incompatible array bounds in i3_array(int nrl,int nrh,"
-      "_CONST index_type& nrl,_CONST index_type& nrh," 
-      "_CONST index_type& ncl,_CONST index_type& nch)" << endl;
+      "const index_type& nrl, const index_type& nrh," 
+      "const index_type& ncl, const index_type& nch)" << endl;
      cout << sl << " " << nrl.indexmin() << endl
           << sh << " " << nrl.indexmax() << endl
           << sl << " " << nrh.indexmin() << endl
@@ -363,9 +363,9 @@
  * Description not yet available.
  * \param
  */
- void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
-   _CONST index_type& nrl,_CONST index_type& nrh,_CONST index_type& ncl,
-   _CONST index_type& nch)
+void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
+  const index_type& nrl, const index_type& nrh, const index_type& ncl,
+  const index_type& nch)
  {
   
    if (int(sl)>int(sh))
@@ -378,8 +378,8 @@
        (nrh.isinteger() && (sl !=nrh.indexmin() || sh !=nrh.indexmax())) )
    {
      cerr << "Incompatible array bounds in i3_array(int nrl,int nrh,"
-      "_CONST index_type& nrl,_CONST index_type& nrh," 
-      "_CONST index_type& ncl,_CONST index_type& nch)" << endl;
+      "const index_type& nrl, const index_type& nrh," 
+      "const index_type& ncl, const index_type& nch)" << endl;
      ad_exit(1);
    }
 
@@ -418,7 +418,7 @@
    if ( (ncl.isinteger() && (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())) ||
      (nch.isinteger() && (nrl !=nch.indexmin() || nrh !=nch.indexmax())))
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,_CONST ivector& ncl,_CONST ivector& nch)\n";
+     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
      ad_exit(1);
    }
    int ss=nrh-nrl+1;
@@ -550,7 +550,7 @@ void xxjj(void);
  * Description not yet available.
  * \param
  */
-vector_index::vector_index(BOR_CONST ivector& v) : ivector(v)
+vector_index::vector_index(const ivector& v) : ivector(v)
 {
   //xxjj();
 }

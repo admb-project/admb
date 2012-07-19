@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -80,32 +80,32 @@
 #define SPparam_3array SPnamed_dvar3_array
 #define SPparam_4array SPnamed_dvar4_array
   double mfexp(CGNU_DOUBLE );
-  dvariable mfexp(_CONST prevariable& v1);
-  dvar_vector mfexp(_CONST dvar_vector& );
-  dvector mfexp(_CONST dvector& );
+  dvariable mfexp(const prevariable& v1);
+  dvar_vector mfexp(const dvar_vector& );
+  dvector mfexp(const dvector& );
 
 /*
- void set_value_inv(_CONST dvariable& x,BOR_CONST dvector& v, BOR_CONST int& ii);
- void set_value_inv(_CONST dvar_matrix& x,BOR_CONST dvector& v, BOR_CONST int& ii);
- void set_value_inv(_CONST dvar_vector&,BOR_CONST dvector&,BOR_CONST int &ii);
- void set_value_inv(_CONST dvariable& u,BOR_CONST dvector& x,BOR_CONST int& ii,CGNU_DOUBLE fmin,
+ void set_value_inv(const dvariable& x, const dvector& v, const int& ii);
+ void set_value_inv(const dvar_matrix& x, const dvector& v, const int& ii);
+ void set_value_inv(const dvar_vector&, const dvector&, const int &ii);
+ void set_value_inv(const dvariable& u, const dvector& x, const int& ii,CGNU_DOUBLE fmin,
   CGNU_DOUBLE fmax);
- void set_value_inv(_CONST dvar_matrix& u,BOR_CONST dvector& x,BOR_CONST int& ii,
+ void set_value_inv(const dvar_matrix& u, const dvector& x, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
- void set_value_inv(_CONST dvar3_array& u,BOR_CONST dvector& x,BOR_CONST int& ii,
+ void set_value_inv(const dvar3_array& u, const dvector& x, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
- void set_value_inv(_CONST dvar3_array& u,BOR_CONST dvector& x,BOR_CONST int& ii);
+ void set_value_inv(const dvar3_array& u, const dvector& x, const int& ii);
 */
 
-  void copy_value_to_vector(_CONST prevariable& x,BOR_CONST dvector& v,BOR_CONST int& ii);
-  void copy_value_to_vector(_CONST dvar_vector& x,BOR_CONST dvector& v,BOR_CONST int& ii);
-  void copy_value_to_vector(_CONST dvar_matrix& x,BOR_CONST dvector& v,BOR_CONST int& ii);
-  void copy_value_to_vector(_CONST dvar3_array& x,BOR_CONST dvector& v,BOR_CONST int& ii);
+  void copy_value_to_vector(const prevariable& x, const dvector& v, const int& ii);
+  void copy_value_to_vector(const dvar_vector& x, const dvector& v, const int& ii);
+  void copy_value_to_vector(const dvar_matrix& x, const dvector& v, const int& ii);
+  void copy_value_to_vector(const dvar3_array& x, const dvector& v, const int& ii);
 
-  void restore_value_from_vector(BOR_CONST prevariable& x,_CONST dvector& v,BOR_CONST int& ii);
-  void restore_value_from_vector(BOR_CONST dvar_vector& x,_CONST dvector& v,BOR_CONST int& ii);
-  void restore_value_from_vector(BOR_CONST dvar_matrix& x,_CONST dvector& v,BOR_CONST int& ii);
-  void restore_value_from_vector(dvar3_array& x,_CONST dvector& v,BOR_CONST int& ii);
+  void restore_value_from_vector(const prevariable& x, const dvector& v, const int& ii);
+  void restore_value_from_vector(const dvar_vector& x, const dvector& v, const int& ii);
+  void restore_value_from_vector(const dvar_matrix& x, const dvector& v, const int& ii);
+  void restore_value_from_vector(dvar3_array& x, const dvector& v, const int& ii);
 
 class AD_matherror
 {
@@ -127,7 +127,7 @@ class model_data;
 class label_class
 {
   const char * name;
-  friend ostream& operator << (BOR_CONST ostream& s,BOR_CONST label_class& lc);
+  friend ostream& operator<<(const ostream& s, const label_class& lc);
   friend class model_name_tag;
 public:
   const char * mychar(void) { return name;}
@@ -138,7 +138,7 @@ class model_name_tag
 {
 protected:
   const char * name;
-  //friend ostream& operator << (BOR_CONST ostream& os, BOR_CONST model_name_tag& mnt);
+  //friend ostream& operator<<(const ostream& os, const model_name_tag& mnt);
 public: 
   model_name_tag(void){;}
   void allocate(const char * s);
@@ -149,10 +149,10 @@ class named_dvar_vector : public dvar_vector, public model_name_tag
 {
 protected:
   named_dvar_vector(void) : dvar_vector(), model_name_tag() {;}
-  named_dvar_vector& operator = (_CONST dvar_vector& m);
-  named_dvar_vector& operator = (_CONST dvector& m);
+  named_dvar_vector& operator=(const dvar_vector& m);
+  named_dvar_vector& operator=(const dvector& m);
   named_dvar_vector& operator = (CGNU_DOUBLE m);
-  named_dvar_vector& operator = (_CONST prevariable& m);
+  named_dvar_vector& operator=(const prevariable& m);
   friend class model_parameters;
   void allocate(int mmin,int mmax,const char * s);
 };
@@ -163,20 +163,20 @@ class dll_param_vector : public named_dvar_vector
 public:
   ~dll_param_vector();
   void allocate(double *_pd,int mmin,int mmax,const char * s);
-  dll_param_vector& operator = (_CONST dvar_vector& m);
-  dll_param_vector& operator = (_CONST dvector& m);
+  dll_param_vector& operator=(const dvar_vector& m);
+  dll_param_vector& operator=(const dvector& m);
   dll_param_vector& operator = (CGNU_DOUBLE m);
-  dll_param_vector& operator = (_CONST prevariable& m);
+  dll_param_vector& operator=(const prevariable& m);
 };
 
 
 class named_dvariable : public dvariable, public model_name_tag
 {
-  //named_dvariable& operator = (_CONST dvariable& m);
+  //named_dvariable& operator=(const dvariable& m);
 protected:
   named_dvariable(void) : dvariable(), model_name_tag() {;}
   void allocate(const char * s);
-  named_dvariable& operator = (_CONST prevariable& m);
+  named_dvariable& operator=(const prevariable& m);
   named_dvariable& operator = (CGNU_DOUBLE m);
   friend class model_parameters;
 };
@@ -187,7 +187,7 @@ class dll_param_number : public named_dvariable
 protected:
   //named_dvariable(void) : dvariable(), model_name_tag() {;}
   void allocate(double *_d,const char * s);
-  dll_param_number& operator = (_CONST prevariable& m);
+  dll_param_number& operator=(const prevariable& m);
   dll_param_number& operator = (CGNU_DOUBLE m);
   virtual ~dll_param_number();
   friend class model_parameters;
@@ -202,9 +202,9 @@ protected:
      ,const index_type& ,const char * s);
 public:
   named_dvar_matrix& operator = (CGNU_DOUBLE m);
-  named_dvar_matrix& operator = (_CONST dmatrix& m);
-  named_dvar_matrix& operator = (_CONST dvar_matrix& m);
-  named_dvar_matrix& operator = (_CONST dvariable& m);
+  named_dvar_matrix& operator=(const dmatrix& m);
+  named_dvar_matrix& operator=(const dvar_matrix& m);
+  named_dvar_matrix& operator=(const dvariable& m);
   friend class model_parameters;
 };
 
@@ -216,10 +216,10 @@ public:
   void allocate(double * ,int rmin,int rmax,int cmin,int cmax,const char * s);
   void allocate(double * ,int rmin,int rmax,const index_type&
      ,const index_type& ,const char * s);
-  dll_param_matrix & operator = (_CONST dvariable& m);
+  dll_param_matrix& operator=(const dvariable& m);
   dll_param_matrix & operator = (const double m);
-  dll_param_matrix & operator = (_CONST dmatrix& m);
-  dll_param_matrix & operator = (_CONST dvar_matrix& m);
+  dll_param_matrix& operator=(const dmatrix& m);
+  dll_param_matrix& operator=(const dvar_matrix& m);
   virtual ~dll_param_matrix();
 };
 
@@ -232,20 +232,20 @@ protected:
     const index_type& nch,const char * s="UNNAMED");
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
     const char * s="UNNAMED");
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,int rmax,
+  void allocate(int hsl, int hsu, const ivector& rmin, int rmax,
     int cmin,int cmax,const char * s="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,_CONST ivector& rmax,
+  void allocate(int hsl, int hsu, int rmin, const ivector& rmax,
     int cmin,int cmax,const char * s="UNNAMED");
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,_CONST ivector& rmax,
+  void allocate(int hsl, int hsu, const ivector& rmin, const ivector& rmax,
     int cmin,int cmax,const char * s="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin,
     int cmax,const char * s="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,
-    _CONST ivector& cmax,const char * s="UNNAMED");
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin,
+                const ivector& cmax, const char *s = "UNNAMED");
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,
-    _CONST ivector& cmax,const char * s="UNNAMED");
-  named_dvar3_array& operator = (_CONST dvar3_array& m);
-  named_dvar3_array& operator = (_CONST d3_array& m);
+                const ivector& cmax, const char *s = "UNNAMED");
+  named_dvar3_array& operator=(const dvar3_array& m);
+  named_dvar3_array& operator=(const d3_array& m);
   friend class model_parameters;
 };
 
@@ -258,8 +258,8 @@ protected:
   void allocate(ad_integer,ad_integer,const index_type&,const index_type&,
     const index_type&,const index_type&,const index_type&,const index_type&,
     const char *s);
-  named_dvar4_array& operator = (_CONST dvar4_array& m);
-  named_dvar4_array& operator = (_CONST d4_array& m);
+  named_dvar4_array& operator=(const dvar4_array& m);
+  named_dvar4_array& operator=(const d4_array& m);
   friend class model_parameters;
 };
 
@@ -279,8 +279,8 @@ protected:
     const index_type& ncl,const index_type& nch,
     const char * s);
 
-  named_dvar5_array& operator = (_CONST dvar5_array& m);
-  named_dvar5_array& operator = (_CONST d5_array& m);
+  named_dvar5_array& operator=(const dvar5_array& m);
+  named_dvar5_array& operator=(const d5_array& m);
   friend class model_parameters;
 };
 
@@ -304,8 +304,8 @@ protected:
     const index_type& l5,const index_type& u5,
     const char * s);
 
-  named_dvar6_array& operator = (_CONST dvar6_array& m);
-  named_dvar6_array& operator = (_CONST d6_array& m);
+  named_dvar6_array& operator=(const dvar6_array& m);
+  named_dvar6_array& operator=(const d6_array& m);
   friend class model_parameters;
 };
 
@@ -332,8 +332,8 @@ protected:
     const index_type& l6,const index_type& u6,
     const char * s);
 
-  named_dvar7_array& operator = (_CONST dvar7_array& m);
-  named_dvar7_array& operator = (_CONST d7_array& m);
+  named_dvar7_array& operator=(const dvar7_array& m);
+  named_dvar7_array& operator=(const d7_array& m);
   friend class model_parameters;
 };
 
@@ -343,8 +343,8 @@ class named_dvector : public dvector, public model_name_tag
 protected:
   named_dvector(void) : dvector(), model_name_tag() {;}
   void allocate(int mmin,int mmax,const char * s);
-  void allocate(int mmin,BOR_CONST ivector& mmax,const char * s);
-  named_dvector& operator = (_CONST dvector& m);
+  void allocate(int mmin, const ivector& mmax, const char *s);
+  named_dvector& operator=(const dvector& m);
   named_dvector& operator = (CGNU_DOUBLE m);
 };
 
@@ -364,7 +364,7 @@ protected:
   void allocate(int rmin,int rmax,const ivector& cmin,int cmax,const char * s);
   void allocate(int rmin,int rmax,const ivector& cmin,const ivector& cmax,const char * s);
   void allocate(int rmin,int rmax,int cmin,const ivector& cmax,const char * s);
-  named_dmatrix& operator = (_CONST dmatrix& m);
+  named_dmatrix& operator=(const dmatrix& m);
   named_dmatrix& operator = (CGNU_DOUBLE m);
 };
 
@@ -373,10 +373,10 @@ class named_imatrix : public imatrix, public model_name_tag
 protected:
   named_imatrix(void) : imatrix(), model_name_tag() {;}
   void allocate(int rmin,int rmax,int cmin,int cmax,const char * s);
-  void allocate(int rmin,int rmax,_CONST index_type& cmin,
-    _CONST index_type& cmax, const char * s);
-  named_imatrix& operator = (_CONST imatrix& m);
-  named_imatrix& operator = (_CONST int& m);
+  void allocate(int rmin, int rmax, const index_type& cmin,
+                const index_type& cmax, const char *s);
+  named_imatrix& operator=(const imatrix& m);
+  named_imatrix& operator=(const int& m);
 };
 
 class named_d3_array : public d3_array, public model_name_tag
@@ -385,22 +385,22 @@ protected:
   named_d3_array(void) : d3_array(), model_name_tag() {;}
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
     const char * s);
-  void allocate(int hsl,int hsu,_CONST index_type& rmin,
-    _CONST index_type& rmax,_CONST  index_type& cmin,
-     _CONST index_type& cmax,const char * s);
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,int rmax,
-    int cmin,int cmax,const char * s);
-  void allocate(int hsl,int hsu,int rmin,_CONST ivector& rmax,
-    int cmin,int cmax,const char * s);
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,_CONST ivector& rmax,
-    int cmin,int cmax,const char * s);
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,
-    int cmax, const char * s);
-  void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,
-    _CONST ivector& cmax, const char * s);
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,
-    _CONST ivector& cmax, const char * s);
-  named_d3_array& operator = (_CONST d3_array& m);
+  void allocate(int hsl, int hsu, const index_type& rmin,
+                const index_type& rmax, const index_type& cmin,
+                const index_type& cmax, const char *s);
+  void allocate(int hsl, int hsu, const ivector& rmin, int rmax,
+                int cmin, int cmax, const char *s);
+  void allocate(int hsl, int hsu, int rmin, const ivector& rmax,
+                int cmin, int cmax, const char *s);
+  void allocate(int hsl, int hsu, const ivector& rmin, const ivector& rmax,
+                int cmin, int cmax, const char *s);
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin,
+                int cmax, const char *s);
+  void allocate(int hsl, int hsu, int rmin, int rmax, int cmin,
+                const ivector& cmax, const char *s);
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin,
+                const ivector& cmax, const char *s);
+  named_d3_array& operator=(const d3_array& m);
 };
 
 class named_i3_array : public i3_array, public model_name_tag
@@ -409,10 +409,10 @@ protected:
   named_i3_array(void) : i3_array(), model_name_tag() {;}
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
     const char * s);
-  void allocate(int hsl,int hsu,_CONST index_type& rmin,
-    _CONST index_type& rmax,_CONST  index_type& cmin,
-     _CONST index_type& cmax,const char * s);
-  named_i3_array& operator = (_CONST i3_array& m);
+  void allocate(int hsl, int hsu, const index_type& rmin,
+                const index_type& rmax, const index_type& cmin,
+                const index_type& cmax, const char *s);
+  named_i3_array& operator=(const i3_array& m);
 };
 
 class named_d4_array : public d4_array, public model_name_tag
@@ -424,7 +424,7 @@ protected:
     const char * s);
   void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,
     int rmax,int cmin,int cmax,const char * s);
-  named_d4_array& operator = (_CONST d4_array& m);
+  named_d4_array& operator=(const d4_array& m);
 };
 
 class named_d5_array : public d5_array, public model_name_tag
@@ -438,7 +438,7 @@ protected:
     const index_type& sh,const index_type& nrl,const index_type& nrh,
     const index_type& ncl,const index_type& nch,const char * s);
 
-  named_d5_array& operator = (_CONST d5_array& m);
+  named_d5_array& operator=(const d5_array& m);
 };
 
 class named_d6_array : public d6_array, public model_name_tag
@@ -455,7 +455,7 @@ protected:
     const index_type& nrl,const index_type& nrh,
     const char * s);
 
-  named_d6_array& operator = (_CONST d6_array& m);
+  named_d6_array& operator=(const d6_array& m);
 };
 
 class named_d7_array : public d7_array, public model_name_tag
@@ -474,7 +474,7 @@ protected:
     const index_type& nrl,const index_type& nrh,
     const char * s);
 
-  named_d7_array& operator = (_CONST d7_array& m);
+  named_d7_array& operator=(const d7_array& m);
 };
 
 
@@ -498,31 +498,31 @@ public:
   static int mceval_phase;
   int phase_start;
   int phase_stop;
-  virtual void set_value(const dvar_vector&,BOR_CONST int&,BOR_CONST dvariable& pen)=0;
-  virtual void dev_correction(BOR_CONST dmatrix&,BOR_CONST int&)=0;
+  virtual void set_value(const dvar_vector&, const int&, const dvariable& pen) = 0;
+  virtual void dev_correction(const dmatrix&, const int&) = 0;
   void set_initial_value(double x);
-  static void set_all_simulation_bounds(BOR_CONST dmatrix& symbds);
-  static void set_all_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST dvector&);
-  static void get_jacobian_value(BOR_CONST dvector& y,BOR_CONST dvector& jac);
-  static int correct_for_dev_objects(BOR_CONST dmatrix &H);
-  virtual void set_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST int& ii)=0;
-//  //virtual void set_simulation_bounds(BOR_CONST dmatrix&,BOR_CONST dvector& symbds,BOR_CONST int& ii)=0;
-  virtual void set_value_inv(BOR_CONST dvector&,BOR_CONST int&)=0;
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST int&)=0;
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&,BOR_CONST double&,BOR_CONST dvector&)=0;
-  virtual void get_jacobian(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&)=0;
-  //virtual void check_tightness(BOR_CONST dvector&,BOR_CONST int&)=0;
-  virtual void copy_value_to_vector(BOR_CONST dvector&,BOR_CONST int&)=0;
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&)=0;
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii)=0;
-  virtual void mc_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii)=0;
-  virtual void curv_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii)=0;
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii)=0;
+  static void set_all_simulation_bounds(const dmatrix& symbds);
+  static void set_all_simulation_bounds(const dmatrix& symbds, const dvector&);
+  static void get_jacobian_value(const dvector& y, const dvector& jac);
+  static int correct_for_dev_objects(const dmatrix &H);
+  virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii) = 0;
+  //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds, const int& ii) = 0;
+  virtual void set_value_inv(const dvector&, const int&) = 0;
+  virtual void add_value(const dvector&, const int&) = 0;
+  virtual void add_value(const dvector&, const dvector&, const int&, const double&, const dvector&) = 0;
+  virtual void get_jacobian(const dvector&, const dvector&, const int&) = 0;
+  //virtual void check_tightness(const dvector&, const int&) = 0;
+  virtual void copy_value_to_vector(const dvector&, const int&) = 0;
+  virtual void restore_value_from_vector(const dvector&, const int&) = 0;
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii) = 0;
+  virtual void mc_scale(const dvector& d, const dvector& x, const int& ii) = 0;
+  virtual void curv_scale(const dvector& d, const dvector& x, const int& ii) = 0;
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii) = 0;
   virtual int size_count(void)=0; // get the number of active parameters
   virtual void save_value(void)=0; // save the objects value in a ascii file
   virtual void bsave_value(void)=0; // save the objects value in a binary file
-	virtual void save_value(BOR_CONST ofstream& ofs,int prec)=0;
-//	virtual void bsave_value(BOR_CONST uostream& ofs)=0;
+  virtual void save_value(const ofstream& ofs, int prec) = 0;
+  //virtual void bsave_value(const uostream& ofs) = 0;
 	virtual const char * label()=0;
   void allocate(int _phase_start);
   void set_active_flag(void);
@@ -530,27 +530,27 @@ public:
   friend int active(const initial_params& ip);
   static adstring get_reportfile_name(void);
   initial_params(void);
-  static void xinit(BOR_CONST dvector& x); // get the number of active parameters
-  static void xinit1(BOR_CONST dvector& x,BOR_CONST dvector& g); 
-  static void copy_all_values(BOR_CONST dvector& x,BOR_CONST int& ii); //save all initial parameter
+  static void xinit(const dvector& x); // get the number of active parameters
+  static void xinit1(const dvector& x, const dvector& g); 
+  static void copy_all_values(const dvector& x, const int& ii); //save all initial parameter
                                                    // values in a vector
-  static void restore_all_values(BOR_CONST dvector& x,BOR_CONST int& ii); //get ivalues for all 
+  static void restore_all_values(const dvector& x, const int& ii); //get ivalues for all 
                                     // active parameters from a vector
-  static dvariable reset(BOR_CONST dvar_vector& x); // get the number of active parameters
-  static dvariable reset1(BOR_CONST dvar_vector& x,BOR_CONST dvector& g); 
-  static dvariable reset(BOR_CONST dvar_vector& x,BOR_CONST dvector& pen); // get the number of active parameters
+  static dvariable reset(const dvar_vector& x); // get the number of active parameters
+  static dvariable reset1(const dvar_vector& x, const dvector& g); 
+  static dvariable reset(const dvar_vector& x,const dvector& pen); // get the number of active parameters
   static int nvarcalc(void);
   static int num_active_calc(void);
-  static int stddev_scale(BOR_CONST dvector& d,BOR_CONST dvector& x);
-  static int montecarlo_scale(BOR_CONST dvector& d,BOR_CONST dvector& x);
-  static int stddev_curvscale(BOR_CONST dvector& d,BOR_CONST dvector& x);
+  static int stddev_scale(const dvector& d,const dvector& x);
+  static int montecarlo_scale(const dvector& d,const dvector& x);
+  static int stddev_curvscale(const dvector& d, const dvector& x);
   static void read(void);
   static void save(void);
-  static void save(BOR_CONST ofstream& ofs,int prec);
-  static void restore(BOR_CONST ifstream& ifs);
-  static void add_random_vector(BOR_CONST dvector& x);
-  static void add_random_vector(BOR_CONST dvector& y,BOR_CONST dvector& x,BOR_CONST double& ll,BOR_CONST dvector& diag);
-  virtual void restore_value(BOR_CONST ifstream& ifs)=0;
+  static void save(const ofstream& ofs, int prec);
+  static void restore(const ifstream& ifs);
+  static void add_random_vector(const dvector& x);
+  static void add_random_vector(const dvector& y, const dvector& x, const double& ll, const dvector& diag);
+  virtual void restore_value(const ifstream& ifs) = 0;
   virtual void add_to_list(void);
   friend class function_minimizer;
 };
@@ -558,28 +558,28 @@ public:
 class param_init_vector: public named_dvar_vector , public initial_params
 {
 public:
-  virtual void dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& ii);
+  virtual void dev_correction(const dmatrix& H, const int& ii);
   virtual const char * label(void);
   param_init_vector();
 private:
-  virtual void set_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST int& ii);
-//  virtual void set_simulation_bounds(BOR_CONST dmatrix&,BOR_CONST dvector& symbds,BOR_CONST int& ii);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&,BOR_CONST double&,BOR_CONST dvector&);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void get_jacobian(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
+  virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
+  //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds, const int& ii);
+  virtual void add_value(const dvector&, const dvector&, const int&, const double&, const dvector&);
+  virtual void add_value(const dvector&, const int&);
+  virtual void get_jacobian(const dvector&, const dvector&, const int&);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void set_value_inv(const dvector& x, const int& ii);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
   virtual int size_count(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void mc_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void curv_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&){;};
+  virtual void sd_scale(const dvector& d,const dvector& x,const int&);
+  virtual void mc_scale(const dvector& d,const dvector& x,const int&);
+  virtual void curv_scale(const dvector& d, const dvector& x, const int&);
+  virtual void hess_scale(const dvector& d,const dvector& x,const int&){;};
   virtual void save_value(void);
   virtual void bsave_value(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
   void allocate(int imin,int imax,int phasestart=1,const char * s="UNNAMED");
@@ -617,29 +617,29 @@ protected:
   double maxb;
   param_init_bounded_vector();
 private:
-  virtual void dev_correction(BOR_CONST dmatrix&,BOR_CONST int&);
-  virtual void set_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST int& ii);
-//  virtual void set_simulation_bounds(BOR_CONST dmatrix&,BOR_CONST dvector& symbds,BOR_CONST int& ii);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&,BOR_CONST double&,BOR_CONST dvector&);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void get_jacobian(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void dev_correction(const dmatrix&, const int&);
+  virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
+  //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds, const int& ii);
+  virtual void add_value(const dvector&, const dvector&, const int&, const double&, const dvector&);
+  virtual void add_value(const dvector&, const int&);
+  virtual void get_jacobian(const dvector&, const dvector&, const int&);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x,const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void mc_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void curv_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){;};
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void mc_scale(const dvector& d, const dvector& x, const int&);
+  virtual void curv_scale(const dvector& d, const dvector& x, const int&);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
   void allocate(int imin,int imax,double _minb,double _maxb,
     int phasestart=1, const char * name="UNNAMED");
   void allocate(int imin,int imax,double _minb,double _maxb,
     const char * name="UNNAMED");
   friend class model_parameters;
   virtual const char * label(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   virtual void save_value(void);
   virtual void bsave_value(void);
   void report_value(void);
@@ -664,8 +664,8 @@ public:
 
 class param_init_bounded_dev_vector: public param_init_bounded_vector
 {
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void param_init_bounded_dev_vector::dev_correction(BOR_CONST dmatrix& H,BOR_CONST int& ii);
+  virtual void set_value(const dvar_vector& x,const int& ii, const dvariable& pen);
+  virtual void dev_correction(const dmatrix& H, const int& ii);
 public:
   param_init_bounded_dev_vector& operator = (const dvar_vector& m);
   param_init_bounded_dev_vector& operator = (const dvector& m);
@@ -675,27 +675,27 @@ public:
 
 class param_init_number: public named_dvariable , public initial_params
 {
-  virtual void param_init_number::dev_correction(BOR_CONST dmatrix&,BOR_CONST int&);
-  virtual void set_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST int& ii);
-//  virtual void set_simulation_bounds(BOR_CONST dmatrix&, BOR_CONST dvector& symbds,BOR_CONST int& ii);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&,BOR_CONST double&,BOR_CONST dvector&);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void get_jacobian(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void dev_correction(const dmatrix&, const int&);
+  virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
+  //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds, const int& ii);
+  virtual void add_value(const dvector&, const dvector&, const int&, const double&, const dvector&);
+  virtual void add_value(const dvector&, const int&);
+  virtual void get_jacobian(const dvector&, const dvector&, const int&);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   virtual void save_value(void);
   virtual void bsave_value(void);
   void report_value(void);
   virtual const char * label(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void mc_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void curv_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){;};
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void mc_scale(const dvector& d, const dvector& x, const int&);
+  virtual void curv_scale(const dvector& d, const dvector& x, const int&);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
   //virtual void read_value(void);
 protected:
   void allocate(int phase_start=1,const char *s="UNNAMED");
@@ -703,7 +703,7 @@ protected:
   friend class model_parameters;
   param_init_number();
   param_init_number& operator = (CGNU_DOUBLE m);
-  param_init_number& operator = (_CONST prevariable& m);
+  param_init_number& operator=(const prevariable& m);
 };
 
 class dll_param_init_number: public param_init_number
@@ -714,7 +714,7 @@ public:
   void allocate(double *pd,const char *s="UNNAMED");
   virtual ~dll_param_init_number();
   dll_param_init_number& operator = (CGNU_DOUBLE m);
-  dll_param_init_number& operator = (_CONST prevariable& m);
+  dll_param_init_number& operator=(const prevariable& m);
 };
 
 class param_init_bounded_number: public param_init_number
@@ -728,23 +728,23 @@ protected:
 public:
   param_init_bounded_number();
 private:
-  virtual void set_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST int& ii);
-//  virtual void set_simulation_bounds(BOR_CONST dmatrix&,BOR_CONST dvector& symbds,BOR_CONST int& ii);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&,BOR_CONST double&,BOR_CONST dvector&);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void get_jacobian(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void mc_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void curv_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){;};
+  virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
+  //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds, const int& ii);
+  virtual void add_value(const dvector&, const dvector&, const int&, const double&, const dvector&);
+  virtual void add_value(const dvector&, const int&);
+  virtual void get_jacobian(const dvector&, const dvector&, const int&);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void mc_scale(const dvector& d, const dvector& x, const int&);
+  virtual void curv_scale(const dvector& d, const dvector& x,const int&);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
   virtual const char * label(void);
   void report_value(void);
   param_init_bounded_number& operator = (CGNU_DOUBLE m);
-  param_init_bounded_number& operator = (_CONST prevariable& m);
+  param_init_bounded_number& operator=(const prevariable& m);
   friend class model_parameters;
 };
 
@@ -764,30 +764,30 @@ public:
 
 class param_init_matrix: public named_dvar_matrix,public initial_params
 {
-  virtual void dev_correction(BOR_CONST dmatrix&,BOR_CONST int&);
-  virtual void set_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST int& ii);
-//  virtual void set_simulation_bounds(BOR_CONST dmatrix&,BOR_CONST dvector& symbds,BOR_CONST int& ii);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&,BOR_CONST double&,BOR_CONST dvector&);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void get_jacobian(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&);
+  virtual void dev_correction(const dmatrix&, const int&);
+  virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
+  //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds, const int& ii);
+  virtual void add_value(const dvector&, const dvector&, const int&, const double&, const dvector&);
+  virtual void add_value(const dvector&, const int&);
+  virtual void get_jacobian(const dvector&, const  dvector&, const int&);
 public:
 
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x,const nint& ii);
   virtual int size_count(void);
   virtual void save_value(void);
   virtual void bsave_value(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
   virtual const char * label(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void mc_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void curv_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){;};
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void mc_scale(const dvector& d, const dvector& x, const int&);
+  virtual void curv_scale(const dvector& d, const dvector& x, const int&);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
 
 public:
 
@@ -795,10 +795,10 @@ public:
     int phase_start=1,const char * = "UNNAMED");
   void allocate(int rmin,int rmax,int cmin,int cmax,
     const char * = "UNNAMED");
-  void allocate(const ad_integer& rmin,const ad_integer& rmax,_CONST index_type& cmin,
-    _CONST index_type& cmax, const char * = "UNNAMED");
-  void allocate(const ad_integer& rmin,const ad_integer& rmax,_CONST index_type& cmin,
-    _CONST index_type& cmax, int phase_start=1,const char * = "UNNAMED");
+  void allocate(const ad_integer& rmin, const ad_integer& rmax, const index_type& cmin,
+                const index_type& cmax, const char * = "UNNAMED");
+  void allocate(const ad_integer& rmin, const ad_integer& rmax, const index_type& cmin,
+    const index_type& cmax, int phase_start = 1,const char * = "UNNAMED");
   param_init_matrix(void);
   param_init_matrix& operator = (const dmatrix& m);
   param_init_matrix& operator = (const dvar_matrix& m);
@@ -826,19 +826,19 @@ class param_init_bounded_matrix: public param_init_matrix
 {
   double minb;
   double maxb;
-  virtual void set_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST int& ii);
-//  virtual void set_simulation_bounds(BOR_CONST dmatrix&,BOR_CONST dvector& symbds,BOR_CONST int& ii);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&,BOR_CONST double&,BOR_CONST dvector&);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void get_jacobian(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&);
+  virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
+  //virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds, const int& ii);
+  virtual void add_value(const dvector&, const dvector&, const int&, const double&, const dvector&);
+  virtual void add_value(const dvector&, const int&);
+  virtual void get_jacobian(const dvector&, const dvector&, const int&);
 public:
 
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void mc_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void curv_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){;};
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void set_value_inv(const dvector& x, const int& ii);
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void mc_scale(const dvector& d, const dvector& x, const int&);
+  virtual void curv_scale(const dvector& d, const dvector& x, const int&);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
 
 public:
 
@@ -849,11 +849,11 @@ public:
   void allocate(int rmin,int rmax,int cmin,int cmax,
     double _minb,double _maxb,const char * = "UNNAMED");
 
-  void allocate(const ad_integer& rmin,const ad_integer& rmax,_CONST index_type& cmin,
-    _CONST index_type& cmax,double _minb,double _maxb,
+  void allocate(const ad_integer& rmin, const ad_integer& rmax, const index_type& cmin,
+                const index_type& cmax, double _minb, double _maxb,
     const char * = "UNNAMED");
-  void allocate(const ad_integer& rmin,const ad_integer& rmax,_CONST index_type& cmin,
-    _CONST index_type& cmax, double _minb,double _maxb,
+  void allocate(const ad_integer& rmin, const ad_integer& rmax, const index_type& cmin,
+                const index_type& cmax, double _minb, double _maxb,
     int phase_start=1,const char * = "UNNAMED");
 };
 
@@ -861,7 +861,7 @@ class data_int : public model_name_tag
 {
 protected:
   int val;
-  data_int& operator = (_CONST int);
+  data_int& operator=(const int);
   void allocate(int n,const char * s="UNNAMED");
   void allocate(const char * s="UNNAMED");
   friend class model_data;
@@ -911,16 +911,16 @@ class data_matrix : public named_dmatrix
 {
 public:
   data_matrix(void) : named_dmatrix() {;}
-  data_matrix& operator = (_CONST dmatrix& m);
-  data_matrix& operator = (_CONST double& m);
+  data_matrix& operator=(const dmatrix& m);
+  data_matrix& operator=(const double& m);
 private:
   void allocate(int rmin,int rmax,int cmin,int cmax,
     const char * = "UNNAMED");
-  void allocate(int rmin,int rmax,BOR_CONST ivector& cmin,BOR_CONST ivector& cmax,
+  void allocate(int rmin, int rmax, const ivector& cmin, const ivector& cmax,
     const char * = "UNNAMED");
-  void allocate(int rmin,int rmax,BOR_CONST ivector& cmin,int cmax,
+  void allocate(int rmin, int rmax, const ivector& cmin, int cmax,
     const char * = "UNNAMED");
-  void allocate(int rmin,int rmax,int cmin,BOR_CONST ivector& cmax,
+  void allocate(int rmin, int rmax, int cmin, const ivector& cmax,
     const char * = "UNNAMED");
   friend class model_data;
 };
@@ -932,8 +932,8 @@ public:
   void allocate(double * _d,int rmin,int rmax,int cmin,int cmax,
     const char * _s = "UNNAMED");
   virtual ~dll_data_matrix();
-  dll_data_matrix& operator = (_CONST dmatrix & m);
-  dll_data_matrix& operator = (_CONST double & m);
+  dll_data_matrix& operator=(const dmatrix &m);
+  dll_data_matrix& operator=(const double &m);
 };
 
     
@@ -944,20 +944,20 @@ public:
 private:
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
     const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,int rmax,
-    int cmin,int cmax,const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,_CONST ivector& rmax,
-    int cmin,int cmax,const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,_CONST ivector& rmin,_CONST ivector& rmax,
-    int cmin,int cmax,const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,int cmax,
-    const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,int rmax,_CONST ivector& cmin,
-    _CONST ivector& cmax,const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,
-    _CONST ivector& cmax,const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,_CONST index_type& rmin,_CONST index_type& rmax,_CONST  index_type& cmin,
-      _CONST index_type& cmax,const char * ="UNNAMED");
+  void allocate(int hsl, int hsu, const ivector& rmin, int rmax,
+                int cmin, int cmax, const char * ="UNNAMED");
+  void allocate(int hsl, int hsu, int rmin, const ivector& rmax,
+                int cmin, int cmax, const char * ="UNNAMED");
+  void allocate(int hsl, int hsu, const ivector& rmin, const ivector& rmax,
+                int cmin, int cmax, const char * ="UNNAMED");
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin, int cmax,
+                const char * ="UNNAMED");
+  void allocate(int hsl, int hsu, int rmin, int rmax, const ivector& cmin,
+                const ivector& cmax, const char * ="UNNAMED");
+  void allocate(int hsl, int hsu, int rmin, int rmax, int cmin,
+                const ivector& cmax, const char * ="UNNAMED");
+  void allocate(int hsl, int hsu, index_type& rmin, const index_type& rmax, const index_type& cmin,
+                const index_type& cmax,const char * ="UNNAMED");
   friend class model_data;
 };
 
@@ -967,7 +967,7 @@ class dll_data_3array : public data_3array
 public:
   void allocate(double * _d,int hmin,int hmax,int rmin,int rmax,
     int cmin,int cmax,const char * _s = "UNNAMED");
-  dll_data_3array& operator = (_CONST d3_array &);
+  dll_data_3array& operator=(const d3_array &);
   virtual ~dll_data_3array();
   friend class model_data;
 };
@@ -977,8 +977,8 @@ class data_3iarray : public named_i3_array
   data_3iarray(void) : named_i3_array() {;}
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
     const char * ="UNNAMED");
-  void allocate(int hsl,int hsu,_CONST index_type& rmin,_CONST index_type& rmax,_CONST  index_type& cmin,
-      _CONST index_type& cmax,const char * ="UNNAMED");
+  void allocate(int hsl, int hsu, const index_type& rmin, const index_type& rmax, const index_type& cmin,
+                const index_type& cmax, const char * ="UNNAMED");
   friend class model_data;
 };
 
@@ -990,9 +990,9 @@ class data_5array : public named_d5_array
     int hsl,int hsu,int rmin,int rmax,
     int cmin,int cmax,const char * ="UNNAMED");
   void allocate(ad_integer hhhsl,ad_integer hhhsu,
-    _CONST index_type& hhsl,_CONST index_type& hhsu,
-    _CONST index_type& hsl,_CONST index_type& hsu,_CONST index_type& rmin,_CONST index_type& rmax,
-    _CONST index_type& cmin,_CONST index_type& cmax,const char * ="UNNAMED");
+                const index_type& hhsl, const index_type& hhsu,
+                const index_type& hsl, const index_type& hsu, const index_type& rmin, const index_type& rmax,
+                const index_type& cmin, const index_type& cmax, const char * ="UNNAMED");
   friend class model_data;
 };
 
@@ -1001,8 +1001,8 @@ class data_4array : public named_d4_array
   data_4array(void) : named_d4_array() {;}
   void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,int rmax,
     int cmin,int cmax,const char * ="UNNAMED");
-  void allocate(ad_integer hhsl,ad_integer hhsu,_CONST index_type& hsl,_CONST index_type& hsu,_CONST index_type& rmin,_CONST index_type& rmax,
-    _CONST index_type& cmin,_CONST index_type& cmax,const char * ="UNNAMED");
+  void allocate(ad_integer hhsl, ad_integer hhsu, const index_type& hsl, const index_type& hsu, const index_type& rmin, const index_type& rmax,
+     const index_type& cmin, const index_type& cmax,const char * ="UNNAMED");
   friend class model_data;
 };
 
@@ -1010,7 +1010,7 @@ class data_imatrix : public named_imatrix
 {
   data_imatrix(void) : named_imatrix() {;}
   void allocate(int rmin,int rmax,int cmin,int cmax,const char * ="UNNAMED");
-  void allocate(int rmin,int rmax,_CONST index_type&,_CONST index_type& cmax,
+  void allocate(int rmin, int rmax, const index_type&, const index_type& cmax,
     const char * ="UNNAMED");
   friend class model_data;
 };
@@ -1018,12 +1018,12 @@ class data_imatrix : public named_imatrix
 class data_vector : public named_dvector
 {
 public:
-  data_vector& operator = (_CONST dvector& m);
+  data_vector& operator=(const dvector& m);
   data_vector& operator = (CGNU_DOUBLE m);
   data_vector(void) : named_dvector() {;}
 private:
   void allocate(int imin,int imax,const char * ="UNNAMED");
-  void allocate(int imin,BOR_CONST ivector& imax,const char * ="UNNAMED");
+  void allocate(int imin, const ivector& imax,const char * ="UNNAMED");
   friend class model_data;
 };
 
@@ -1032,7 +1032,7 @@ class dll_data_vector : public data_vector
 public:
   double * pd;
   void allocate(double * pd,int imin,int imax,const char * ="UNNAMED");
-  void allocate(double * pd,int imin,BOR_CONST ivector& imax,const char * ="UNNAMED");
+  void allocate(double *pd,int imin, const ivector& imax, const char * ="UNNAMED");
   virtual ~dll_data_vector();
   dll_data_vector& operator = (const dvector& x);
   dll_data_vector& operator = (const double& x);
@@ -1058,7 +1058,7 @@ public:
   double& value(void) {return val;}
   void initialize(void) {val=0.0;}
   friend class model_data;
-  data_number & operator = (_CONST double& m);
+  data_number & operator=(const double& m);
 };
 
 class dll_data_number : public data_number
@@ -1067,14 +1067,14 @@ public:
   double * pd;
   void allocate(double *_pd,const char * s);
   virtual ~dll_data_number();
-  dll_data_number & operator = (_CONST double& m);
+  dll_data_number & operator=(const double& m);
 };
 
 typedef dvariable (model_parameters::*PMF) (const dvariable&);
 typedef dvariable (model_parameters::*PMFI) (const dvariable&,int n);
 typedef dvariable (model_parameters::*PMFVI) (const dvar_vector&,int n);
 typedef void (model_parameters::*PMFVIV4) (const dvar_vector&,int n,
-  dvariable& f1,BOR_CONST dvariable& f2,BOR_CONST dvariable& f3,BOR_CONST dvariable& f4);
+  dvariable& f1, const dvariable& f2, const dvariable& f3, const dvariable& f4);
 
 class function_minimizer
 {
@@ -1108,7 +1108,7 @@ protected:
   static adstring user_data_file;
   static adstring user_par_file;
 public:
-  void limited_memory_quasi_newton(BOR_CONST independent_variables&,int);
+  void limited_memory_quasi_newton(const independent_variables&,int);
   function_minimizer(long int sz=0L);
   void likeprof_routine(double global_min);
   virtual ~function_minimizer();
@@ -1120,11 +1120,11 @@ public:
   void computations_np(int argc,char * argv[]);
   void computations(void);
   void hess_routine(void);
-  dmatrix dep_hess_routine(BOR_CONST dvariable& dep);
+  dmatrix dep_hess_routine(const dvariable& dep);
   void mcmc_routine(int,int,double,int);
   void mcmc_eval(void);
   //void hess_routine_and_constraint(int);
-  void function_minimizer::hess_routine_and_constraint(int iprof,BOR_CONST dvector& g,
+  void function_minimizer::hess_routine_and_constraint(int iprof,const dvector& g,
     dvector& fg);
   dmatrix diag_hess_routine(void);
   void hess_inv(void);
@@ -1134,104 +1134,104 @@ public:
 #ifdef CURVE_CORRECT
   void constraint_hess_routine(int ip);
   void get_curvature_correction_factors(int ip,
-    dvector& g,const int underflow_flag,BOR_CONST dvector& eigenvals,
+    dvector& g, const int underflow_flag, const dvector& eigenvals,
     dvector& curvcor);
 #endif
-  double projected_jacobian(BOR_CONST dvector& g,BOR_CONST dvector& xscale);
+  double projected_jacobian(const dvector& g, const dvector& xscale);
 
   void prof_minimize(int iprof, double sigma,
-    double new_value, BOR_CONST double& fprof,const int underflow_flag,
-    double global_min,BOR_CONST double& penalties,BOR_CONST double& final_weight);
+    double new_value, const double& fprof, const int underflow_flag,
+    double global_min, const double& penalties, const double& final_weight);
 
   void prof_hess_routine(int ip,double new_value,double final_weight);
 
   void quasi_newton_minimizer1(int nvar,double _crit,
-    double& f, BOR_CONST independent_variables& x,BOR_CONST dvector& g);
+    double& f, const independent_variables& x, const dvector& g);
 
   double hess_determinant(int underflow_flag);
 
 #ifndef CURVE_CORRECT
   void normalize_posterior_distribution(double udet,
-    BOR_CONST dvector& siglevel,BOR_CONST ofstream& ofs2,int num_pp,
-    BOR_CONST dvector& all_values,BOR_CONST dmatrix& actual_value,double global_min,
-    int offset,BOR_CONST dmatrix& lprof,BOR_CONST dmatrix& ldet,BOR_CONST dmatrix& xdist,
-    BOR_CONST dmatrix& penalties);
-  //  dmatrix& penalties,BOR_CONST dmatrix& lg_jacob);
+    dvector& siglevel, const ofstream& ofs2, int num_pp,
+    const dvector& all_values, const dmatrix& actual_value, double global_min,
+    int offset, const dmatrix& lprof, const dmatrix& ldet, const dmatrix& xdist,
+    const dmatrix& penalties);
+  //  dmatrix& penalties, const dmatrix& lg_jacob);
 #else
   void normalize_posterior_distribution(double udet,
-    BOR_CONST dvector& siglevel,BOR_CONST ofstream& ofs2,int num_pp,
-    BOR_CONST dvector& all_values,BOR_CONST dmatrix& actual_value,
+    const dvector& siglevel, const ofstream& ofs2, int num_pp,
+    const dvector& all_values, const dmatrix& actual_value,
     double global_min,
-    int offset,BOR_CONST dmatrix& lprof,BOR_CONST dmatrix& ldet,
-    BOR_CONST dmatrix& xdist,
-    BOR_CONST d3_array& eigenvals,d3_array& curvcor);
+    int offset, const dmatrix& lprof, const dmatrix& ldet,
+    const dmatrix& xdist,
+    const d3_array& eigenvals, d3_array& curvcor);
 #endif
-  void get_particular_grad(int iprof,int nvar,BOR_CONST dvector& fg,BOR_CONST dvector& g);
-  double projected_hess_determinant(BOR_CONST dvector& g,const int underflow_flag,
-    BOR_CONST dvector& xscale,BOR_CONST double& ln_det_proj_jac);
-//  double projected_hess_determinant(BOR_CONST dvector& fg,BOR_CONST dvector& g,
-  //const int underflow_flag,BOR_CONST dvector& xscale,BOR_CONST double& ln_det_proj_jac);
-  double projected_hess_determinant(BOR_CONST dvector& g,const int underflow_flag);
-  double projected_hess_determinant(BOR_CONST dmatrix& hh,BOR_CONST dvector& g,
+  void get_particular_grad(int iprof, int nvar, const dvector& fg, const dvector& g);
+  double projected_hess_determinant(const dvector& g, const int underflow_flag,
+    const dvector& xscale, const double& ln_det_proj_jac);
+/double projected_hess_determinant(const dvector& fg, const dvector& g,
+  //const int underflow_flag, const dvector& xscale, const double& ln_det_proj_jac);
+  double projected_hess_determinant(const dvector& g, const int underflow_flag);
+  double projected_hess_determinant(const dmatrix& hh, const dvector& g,
     const int underflow_flag);
-  //double projected_hess_determinant(BOR_CONST dvector& g,const int underflow_flag,
-    //dvector& xscale, BOR_CONST double& ln_det_proj_jac);
+  //double projected_hess_determinant(const dvector& g,const int underflow_flag,
+    //dvector& xscale, const double& ln_det_proj_jac);
             
-  double projected_hess_determinant(BOR_CONST dvector& fg,BOR_CONST dvector& g,
-    const int underflow_flag,BOR_CONST dvector& curvscale,BOR_CONST dvector& xscale,
-    double& ln_det_proj_jac,BOR_CONST double& tmp,BOR_CONST dmatrix& hesses);
-  double diag_projected_hess_determinant(BOR_CONST dvector& g,const int underflow_flag,
+  double projected_hess_determinant(const dvector& fg, const dvector& g,
+    const int underflow_flag, const dvector& curvscale, const dvector& xscale,
+    double& ln_det_proj_jac, const double& tmp, const dmatrix& hesses);
+  double diag_projected_hess_determinant(const dvector& g, const int underflow_flag,
     dmatrix& dh);
 	double unrestricted_hess_determinant(void);
   void monte_carlo_routine(void);
-  double get_monte_carlo_value(int nvar,BOR_CONST independent_variables& x);
-  double get_monte_carlo_value(int nvar,BOR_CONST dvector& x);
+  double get_monte_carlo_value(int nvar, const independent_variables& x);
+  double get_monte_carlo_value(int nvar, const dvector& x);
   void sob_routine(int nmcmc,double dscale,int restart_flag);
   void sobol_importance_routine(int nmcmc,int iseed0,double dscale,
   int restart_flag);
 
-  void multint4(int n,BOR_CONST dvar_vector& a,BOR_CONST dvar_vector& b,BOR_CONST dvar_vector& h,
-    double al,int m,BOR_CONST dvariable& e,BOR_CONST dvariable& aint1,BOR_CONST dvariable& aint2,
-    dvariable& aint3,BOR_CONST dvariable& aint4,BOR_CONST int& key,PMFVIV4 f);
+  void multint4(int n, const dvar_vector& a, const dvar_vector& b, const dvar_vector& h,
+    double al, int m, const dvariable& e, const dvariable& aint1, const dvariable& aint2,
+    dvariable& aint3, const dvariable& aint4, const int& key, PMFVIV4 f);
 
-  void multint(int n,BOR_CONST dvar_vector& a,BOR_CONST dvar_vector& b,BOR_CONST dvar_vector& h,
-    double al,int m,BOR_CONST dvariable& e,BOR_CONST dvariable& aint,BOR_CONST int& key,PMFVI f);
+  void multint(int n, const dvar_vector& a, const dvar_vector& b, const dvar_vector& h,
+    double al, int m, const dvariable& e, const dvariable& aint, const int& key, PMFVI f);
 
 	static void set_runtime(void);
   dvariable adromb(PMF,double a,double b,int ns=9);
-  dvariable adromb(PMF,BOR_CONST dvariable& a,double b,int ns=9);
-  dvariable adromb(PMF,BOR_CONST dvariable& a,BOR_CONST dvariable& b,int ns=9);
-  dvariable adromb(PMF,double a,BOR_CONST dvariable& b,int ns=9);
+  dvariable adromb(PMF, const dvariable& a, double b,int ns = 9);
+  dvariable adromb(PMF, const dvariable& a, const dvariable& b, int ns = 9);
+  dvariable adromb(PMF, double a, const dvariable& b, int ns = 9);
 
-  dvariable adrombo(PMF,double a,double b,int ns=9);
-  dvariable adrombo(PMF,BOR_CONST dvariable& a,double b,int ns=9);
-  dvariable adrombo(PMF,BOR_CONST dvariable& a,BOR_CONST dvariable& b,int ns=9);
-  dvariable adrombo(PMF,double a,BOR_CONST dvariable& b,int ns=9);
+  dvariable adrombo(PMF, double a, double b, int ns = 9);
+  dvariable adrombo(PMF, const dvariable& a, double b, int ns=9);
+  dvariable adrombo(PMF, const dvariable& a, const dvariable& b, int ns = 9);
+  dvariable adrombo(PMF, double a, const dvariable& b, int ns = 9);
 
   dvariable trapzd(void*,double a,double b,int n);
   dvariable trapzd(PMF,double a,double b,int n);
-  dvariable trapzd(PMF,double a,BOR_CONST dvariable& b,int n);
-  dvariable trapzd(PMF,BOR_CONST dvariable& a,double b,int n);
-  dvariable trapzd(PMF,BOR_CONST dvariable& a,BOR_CONST dvariable& b,int n);
+  dvariable trapzd(PMF, double a, const dvariable& b, int n);
+  dvariable trapzd(PMF, const dvariable& a, double b, int n);
+  dvariable trapzd(PMF, const dvariable& a, const dvariable& b, int n);
 
   dvariable midpnt(PMF,double a,double b,int n);
-  dvariable midpnt(PMF,double a,BOR_CONST dvariable& b,int n);
-  dvariable midpnt(PMF,BOR_CONST dvariable& a,double b,int n);
-  dvariable midpnt(PMF,BOR_CONST dvariable& a,BOR_CONST dvariable& b,int n);
+  dvariable midpnt(PMF, double a, const dvariable& b, int n);
+  dvariable midpnt(PMF, const dvariable& a, double b, int n);
+  dvariable midpnt(PMF, const dvariable& a, const dvariable& b, int n);
 
   virtual void * mycast() { return (void*)this;}
 
-  void adamoeba(BOR_CONST dmatrix& p, BOR_CONST dvector& y, int ndim, double ftol,int maxfn);
-  void set_initial_simplex(BOR_CONST dmatrix& p,BOR_CONST dvector& y,int nvar,BOR_CONST dvector& x,
+  void adamoeba(const dmatrix& p, const dvector& y, int ndim, double ftol, int maxfn);
+  void set_initial_simplex(const dmatrix& p, const dvector& y,int nvar, const dvector& x,
     double delta);
-  double amxxx(BOR_CONST dmatrix& p, BOR_CONST dvector& y, BOR_CONST dvector& psum, int ndim,
+  double amxxx(const dmatrix& p, const dvector& y, const dvector& psum, int ndim,
     int ihi, double fac);
 };
 
-cifstream& operator >> (BOR_CONST cifstream& s, BOR_CONST param_init_number& x);
-cifstream& operator >> (BOR_CONST cifstream& s, BOR_CONST param_init_vector& v);
-cifstream& operator >> (BOR_CONST cifstream& s, BOR_CONST param_init_matrix& m);
-ostream& operator << (BOR_CONST ostream& s,BOR_CONST label_class& lc);
+cifstream& operator>>(const cifstream& s, const param_init_number& x);
+cifstream& operator>>(const cifstream& s, const param_init_vector& v);
+cifstream& operator>>(const cifstream& s, const param_init_matrix& m);
+ostream& operator<<(const ostream& s, const label_class& lc);
 
 class stddev_params
 {
@@ -1245,8 +1245,8 @@ public:
   stddev_params(void){;}
   virtual int size_count(void)=0; // get the number of active parameters
   virtual void set_dependent_variables(void)=0;
-  virtual void copy_value_to_vector(BOR_CONST dvector&,BOR_CONST int&)=0;
-  static void copy_all_values(BOR_CONST dvector& x,BOR_CONST int& ii); //get the number of active parameters
+  virtual void copy_value_to_vector(const dvector&, const int&) = 0;
+  static void copy_all_values(const dvector& x, const int& ii);//get the number of active parameters
   virtual void add_to_list(void);
   virtual const char * label()=0;
   friend class function_minimizer;
@@ -1285,9 +1285,9 @@ class param_stddev_vector: public named_dvar_vector , stddev_params
 	void allocate(int imin,int imax,const char * s="UNNAMED");
 	virtual void set_dependent_variables(void);
 	friend class model_parameters;
-	void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  param_stddev_vector& operator = (_CONST dvar_vector& m);
-  param_stddev_vector& operator = (_CONST dvector& m);
+  void copy_value_to_vector(const dvector& x, const int& ii);
+  param_stddev_vector& operator=(const dvar_vector& m);
+  param_stddev_vector& operator=(const dvector& m);
   param_stddev_vector& operator = (CGNU_DOUBLE m);
 };
 
@@ -1296,12 +1296,12 @@ class param_stddev_number: public named_dvariable , public stddev_params
 	void allocate(const char *s="UNNAMED");
 	virtual int size_count(void); // get the number of active parameters
 	virtual const char * label(void);
-	void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
+  void copy_value_to_vector(const dvector& x, const int& ii);
 protected:
 	param_stddev_number();
 	friend class model_parameters;
 	virtual void set_dependent_variables(void);
-	param_stddev_number& operator = (_CONST prevariable&);
+  param_stddev_number& operator=(const prevariable&);
 	param_stddev_number& operator = (CGNU_DOUBLE);
 };
 
@@ -1314,12 +1314,12 @@ class param_likeprof_number: public param_stddev_number ,
 	virtual const char * label(void);
 	virtual double& get_sigma(void){return sigma;}
 	virtual double get_value(void){return value(*this);}
-	//void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
+  //void copy_value_to_vector(const dvector& x, const int& ii);
 	virtual dvariable variable(void){ return dvariable(*this);}
 	param_likeprof_number();
 	friend class model_parameters;
 public:
-	param_likeprof_number& operator = (_CONST prevariable&);
+  param_likeprof_number& operator=(const prevariable&);
 	param_likeprof_number& operator = (CGNU_DOUBLE);
 };
 
@@ -1333,10 +1333,10 @@ class param_stddev_matrix: public named_dvar_matrix , stddev_params
   param_stddev_matrix(void);
   friend class model_parameters;
   virtual void set_dependent_variables(void);
-	void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
+  void copy_value_to_vector(const dvector& x, const int& ii);
   param_stddev_matrix& operator = (CGNU_DOUBLE m);
-  param_stddev_matrix& operator = (_CONST dmatrix& m);
-  param_stddev_matrix& operator = (_CONST dvar_matrix& m);
+  param_stddev_matrix& operator=(const dmatrix& m);
+  param_stddev_matrix& operator=(const dvar_matrix& m);
 };
 
 class ad_comm
@@ -1347,8 +1347,8 @@ protected:
   void allocate(void);
   ~ad_comm();
 public:
-  static streampos change_datafile_name(_CONST adstring& s,const streampos& off=0);
-  static streampos change_pinfile_name(_CONST adstring& s,const streampos& off=0);
+  static streampos change_datafile_name(const adstring& s, const streampos& off = 0);
+  static streampos change_pinfile_name(const adstring& s, const streampos& off = 0);
   static cifstream * global_datafile;
   static cifstream * global_parfile;
   static ofstream *  global_savefile;
@@ -1372,48 +1372,48 @@ public:
     static objective_function_value * pobjfun;
     static double gmax;
     objective_function_value();
-    objective_function_value& operator = (_CONST prevariable& v);
+    objective_function_value& operator=(const prevariable& v);
     objective_function_value& operator = (CGNU_DOUBLE v);
   };
 
   int withinbound(int lb,int n,int ub);
 
-double cumd_cauchy(_CONST double& x);
-double density_cauchy(_CONST double& x);
-double log_density_cauchy(_CONST double& x);
-double inv_cumd_cauchy(_CONST double& x);
+double cumd_cauchy(const double& x);
+double density_cauchy(const double& x);
+double log_density_cauchy(const double& x);
+double inv_cumd_cauchy(const double& x);
 
-double cumd_mixture(_CONST double& x);
-double inv_cumd_mixture(_CONST double& y);
-double cumd_mixture_02(_CONST double& x);
-double inv_cumd_mixture_02(_CONST double& y);
+double cumd_mixture(const double& x);
+double inv_cumd_mixture(const double& y);
+double cumd_mixture_02(const double& x);
+double inv_cumd_mixture_02(const double& y);
 
 #if defined _ADM_HIGHER_ARRAYS__
 class param_init_matrix: public named_dvar_matrix,public initial_params
 {
-  virtual void set_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST int& ii);
-//  virtual void set_simulation_bounds(BOR_CONST dmatrix&,BOR_CONST dvector& symbds,BOR_CONST int& ii);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&,BOR_CONST double&,BOR_CONST dvector&);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void get_jacobian(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&);
+  virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
+//virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds, const int& ii);
+  virtual void add_value(const dvector&, const dvector&, const int&, const double&, const dvector&);
+  virtual void add_value(const dvector&, const int&);
+  virtual void get_jacobian(const dvector&, const dvector&, const int&);
 public:
 
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
   virtual void save_value(void);
   virtual void bsave_value(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
   virtual const char * label(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void mc_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void curv_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii){;};
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void mc_scale(const dvector& d, const dvector& x, const int&);
+  virtual void curv_scale(const dvector& d, const dvector& x, const int&);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
 
 public:
 
@@ -1433,28 +1433,28 @@ class param_init_d3array: public named_dvar3_array,public initial_params
 {
 public:
 
-  virtual void dev_correction(BOR_CONST dmatrix&,BOR_CONST int&);
-  virtual void curv_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void set_simulation_bounds(BOR_CONST dmatrix& symbds,BOR_CONST int& ii);
-//  virtual void set_simulation_bounds(BOR_CONST dmatrix&,BOR_CONST dvector& symbds,BOR_CONST int& ii);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&,BOR_CONST double&,BOR_CONST dvector&);
-  virtual void add_value(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void get_jacobian(BOR_CONST dvector&,BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value(const dvar_vector& x,BOR_CONST int& ii,BOR_CONST dvariable& pen);
-  virtual void copy_value_to_vector(BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void restore_value_from_vector(BOR_CONST dvector&,BOR_CONST int&);
-  virtual void set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void dev_correction(const dmatrix&, const int&);
+  virtual void curv_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void set_simulation_bounds(const dmatrix& symbds, const int& ii);
+//  virtual void set_simulation_bounds(const dmatrix&, const dvector& symbds, const int& ii);
+  virtual void add_value(const dvector&, const dvector&, const int&, const double&, const dvector&);
+  virtual void add_value(const dvector&, const int&);
+  virtual void get_jacobian(const dvector&, const dvector&, const int&);
+  virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
+  virtual void copy_value_to_vector(const dvector& x, const int& ii);
+  virtual void restore_value_from_vector(const dvector&, const int&);
+  virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
   virtual void save_value(void);
   virtual void bsave_value(void);
-  virtual void save_value(BOR_CONST ofstream& ofs,int prec);
-  virtual void restore_value(BOR_CONST ifstream& ifs);
+  virtual void save_value(const ofstream& ofs, int prec);
+  virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
   virtual const char * label(void);
-  virtual void sd_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
-  virtual void mc_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int&);
-  virtual void hess_scale(BOR_CONST dvector& d,BOR_CONST dvector& x,BOR_CONST int& ii);
+  virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
+  virtual void mc_scale(const dvector& d, const dvector& x, const int&);
+  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii);
 
 public:
 
@@ -1485,8 +1485,8 @@ public:
     int cmin,int cmax,const char * = "UNNAMED");
   virtual ~dll_param_init_d3array();
   dll_param_init_d3array(){d=NULL;}
-  dll_param_init_d3array& operator = (_CONST d3_array&);
-  dll_param_init_d3array& operator = (_CONST dvar3_array&);
+  dll_param_init_d3array& operator=(const d3_array&);
+  dll_param_init_d3array& operator=(const dvar3_array&);
 };
 
 class dll_param_d3array: public named_dvar3_array
@@ -1500,52 +1500,52 @@ public:
     int cmin,int cmax,const char * = "UNNAMED");
   virtual ~dll_param_d3array();
   dll_param_d3array(){d=NULL;}
-  dll_param_d3array& operator = (_CONST d3_array&);
-  dll_param_d3array& operator = (_CONST dvar3_array&);
+  dll_param_d3array& operator=(const d3_array&);
+  dll_param_d3array& operator=(const dvar3_array&);
 };
 
 
-//double set_value_mc(BOR_CONST double& x,CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
+//double set_value_mc(const double& x,CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
 
-void set_value_mc(BOR_CONST dvar_vector& x,_CONST dvar_vector& v, BOR_CONST int& ii, 
+void set_value_mc(const dvar_vector& x, const dvar_vector& v, const int& ii, 
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
 
 double set_value_inv_mc(double v,double fmin,double fmax);
 
-double set_value_inv_mc(_CONST prevariable& v,double fmin,double fmax);
+double set_value_inv_mc(const prevariable& v, double fmin, double fmax);
 
-void set_value_inv_mc(_CONST dvar_vector& x,BOR_CONST dvector& v, BOR_CONST int& ii, 
+void set_value_inv_mc(const dvar_vector& x, const dvector& v, const int& ii, 
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
 
-//double set_value_inv_mc(BOR_CONST dvector&,BOR_CONST dvector& x,int ii,double minb,double maxb);
+//double set_value_inv_mc(const dvector&, const dvector& x, int ii, double minb, double maxb);
 
 double set_value_mc(double z,double min,double max);
-double ndfboundp( double x, double fmin, double fmax,BOR_CONST double& fpen);
-double ndfboundp_mc( double x, double fmin, double fmax,BOR_CONST double& fpen);
+double ndfboundp(double x, double fmin, double fmax, const double& fpen);
+double ndfboundp_mc(double x, double fmin, double fmax, const double& fpen);
 
-void bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& wght,BOR_CONST dvector& y, const random_number_generator& rng);
+void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& wght, const dvector& y, const random_number_generator& rng);
 
-void bounded_multivariate_uniform_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& wght,BOR_CONST dvector& y, const random_number_generator& rng);
+void bounded_multivariate_uniform_mcmc(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& wght, const dvector& y, const random_number_generator& rng);
 
-dvector bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& lprob, const random_number_generator& rng);
+dvector bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& lprob, const random_number_generator& rng);
 
-dvector bounded_multivariate_normal_sobol(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& lprob, const random_number_generator& rng);
+dvector bounded_multivariate_normal_sobol(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& lprob, const random_number_generator& rng);
 
-dvector probing_bounded_multivariate_normal(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& lprob,double pprobe, const random_number_generator& rng);
+dvector probing_bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& lprob,double pprobe, const random_number_generator& rng);
 
-dvector bounded_multivariate_uniform(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& lprob, const random_number_generator& rng);
+dvector bounded_multivariate_uniform(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& lprob, const random_number_generator& rng);
 
-void probing_bounded_multivariate_normal_mcmc(int nvar,BOR_CONST dvector& a1,BOR_CONST dvector& b1,
-  dmatrix& ch,BOR_CONST double& wght,BOR_CONST dvector& v,double pprobe, const random_number_generator& rng);
+void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
+  dmatrix& ch, const double& wght, const dvector& v,double pprobe, const random_number_generator& rng);
 
 int option_match(int argc,char * argv[], char * string);
-int option_match(int argc,char * argv[], char * string,BOR_CONST int& nopt);
+int option_match(int argc, char *argv[], char *string, const int& nopt);
 
 double inv_cumd_exp(double x);
 double cumd_exp(double x);
@@ -1571,7 +1571,7 @@ adstring get_reportfile_name(void);
 
 void ad_make_code_reentrant(void);
 
-char ** parse_sp_options(char * pname,BOR_CONST int& argc, char * sp_options);
+char** parse_sp_options(char *pname, const int& argc, char *sp_options);
 
 void cleanup_argv(int nopt,char *** pa);
 
@@ -1581,7 +1581,7 @@ void do_dll_housekeeping(int argc,char ** argv);
 
 void adwait(double);
 
-int ad_get_commandline_option(const char * option_label,BOR_CONST int & option_value,
+int ad_get_commandline_option(const char * option_label, const int & option_value,
   const char * error_message);
 
 #endif

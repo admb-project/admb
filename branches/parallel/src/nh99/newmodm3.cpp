@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -16,8 +16,8 @@ int xxxmin(int x,int y)
   if (x<y) return x;
   return y;
 }
-  void get_confidence_interval(BOR_CONST dvector& _left_bd,BOR_CONST dvector& _right_bd,
-    dmatrix& ms,BOR_CONST dvector& xs,BOR_CONST dvector& siglevel,BOR_CONST int& level_index,
+void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
+    dmatrix& ms, const dvector& xs, const dvector& siglevel, const int& level_index,
     int index)
   {
     dvector& left_bd=(dvector&) _left_bd;
@@ -121,8 +121,8 @@ int xxxmin(int x,int y)
     while (1);
   }
 
-  void get_onesided_intervals(BOR_CONST dvector& _left_bd,BOR_CONST dvector& _right_bd,
-    dmatrix& ms,BOR_CONST dvector& xs,BOR_CONST dvector& siglevel,BOR_CONST int& level_index,
+void get_onesided_intervals(const dvector& _left_bd, const dvector& _right_bd,
+    dmatrix& ms, const dvector& xs, const dvector& siglevel, const int& level_index,
     int index)
   {
     dvector& left_bd=(dvector&) _left_bd;

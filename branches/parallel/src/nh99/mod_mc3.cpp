@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -12,8 +12,8 @@
 
 double better_rand(long int&);
 
-void initial_params::add_random_vector(BOR_CONST dvector& y,BOR_CONST dvector& x,BOR_CONST double& ll,
-  BOR_CONST dvector& diag)
+void initial_params::add_random_vector(const dvector& y, const dvector& x, const double& ll,
+  const dvector& diag)
 {
   int ii=1;
   for (int i=0;i<num_initial_params;i++)
@@ -24,7 +24,7 @@ void initial_params::add_random_vector(BOR_CONST dvector& y,BOR_CONST dvector& x
     }
   }
 }
-void initial_params::get_jacobian_value(BOR_CONST dvector& y,BOR_CONST dvector& jac)
+void initial_params::get_jacobian_value(const dvector& y, const dvector& jac)
 {
   int ii=1;
   for (int i=0;i<num_initial_params;i++)
@@ -37,9 +37,9 @@ void initial_params::get_jacobian_value(BOR_CONST dvector& y,BOR_CONST dvector& 
 }
 
 
-void multivariate_mixture(BOR_CONST dvector& _mix,int nvar,long int& iseed,
-  BOR_CONST double& _log_density_normal,BOR_CONST double& _log_density_cauchy,
-  BOR_CONST double& _log_density_small_normal,int is)
+void multivariate_mixture(const dvector& _mix, int nvar, long int& iseed,
+  const double& _log_density_normal, const double& _log_density_cauchy,
+  const double& _log_density_small_normal, int is)
 {
   dvector& mix=(dvector&) _mix;
   double& log_density_cauchy=(double&) _log_density_cauchy;
@@ -140,7 +140,7 @@ double set_value_mc(double z,double min,double max)
   return min+(max-min)*y;
 }
 
-void set_value_inv_mc(_CONST dvar_vector& x,BOR_CONST dvector& _v, BOR_CONST int& _ii,
+void set_value_inv_mc(const dvar_vector& x, const dvector& _v, const int& _ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   dvector& v=(dvector&) _v;
@@ -153,7 +153,7 @@ void set_value_inv_mc(_CONST dvar_vector& x,BOR_CONST dvector& _v, BOR_CONST int
   }
 }
 
-void set_value_mc(BOR_CONST dvar_vector& _x,_CONST dvar_vector& v, BOR_CONST int& _ii,
+void set_value_mc(const dvar_vector& _x,const dvar_vector& v, const int& _ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   ADUNCONST(dvar_vector,x)

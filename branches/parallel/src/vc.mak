@@ -29,9 +29,11 @@ admb:
 
 	copy ..\scripts\cl\*.bat $(DISK)\dist\bin
 	copy ..\scripts\admb\admb.bat $(DISK)\dist\bin
+	copy ..\utilities\sed.exe $(DISK)\dist\bin
 	copy ..\LICENSE.txt $(DISK)\dist
 	copy ..\NEWS.txt $(DISK)\dist
 	copy ..\README.txt $(DISK)\dist
+	copy ..\VERSION $(DISK)\dist
 	IF NOT EXIST $(DISK)\dist\examples md $(DISK)\dist\examples
 	xcopy ..\examples $(DISK)\dist\examples /S /Y
 	copy ..\scripts\cl\Makefile $(DISK)\dist\examples
@@ -49,6 +51,8 @@ contrib:
 	rem cd $(DISK)\objects\contrib-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\contrib\Makefile qfclib-saf
 	cd $(DISK)\dist\contrib& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\contrib\Makefile contribo.lib
 	cd $(DISK)\dist\contrib& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\contrib\Makefile contribs.lib
+	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd ..\contrib\ad2csv& $(MAKE) /A"
+	copy ..\contrib\ad2csv\ad2csv.exe $(DISK)\dist\bin
 
 verify:
 	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake all"

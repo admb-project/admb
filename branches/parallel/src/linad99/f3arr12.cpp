@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-    _CONST prevariable dvar3_array::operator () (int k, int i, int j) _CONST 
+const prevariable dvar3_array::operator()(int k, int i, int j) const
     {
       #ifdef SAFE_ARRAYS
         if (k<slicemin())
@@ -45,7 +45,7 @@
  * Description not yet available.
  * \param
  */
-     _CONST dvar_vector& dvar3_array::operator () (int k, int i) _CONST 
+const dvar_vector& dvar3_array::operator()(int k, int i) const
     {
       #ifdef SAFE_ARRAYS
         if (k<slicemin())

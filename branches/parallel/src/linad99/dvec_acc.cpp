@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -67,7 +67,7 @@
  * Description not yet available.
  * \param
  */
- _CONST double& dvector::operator[] (int i) _CONST
+ const double& dvector::operator[](int i) const 
  {
    #ifdef SAFE_ARRAYS
      if (i>indexmax())
@@ -92,7 +92,7 @@
  * Description not yet available.
  * \param
  */
- _CONST double& dvector::operator() (int i) _CONST
+ const double& dvector::operator()(int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i>indexmax())

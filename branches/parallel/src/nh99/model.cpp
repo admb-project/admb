@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -131,7 +131,7 @@ extern int* pointer_to_phase;
                                          // fundamental objects
   }
 
-  int initial_params::correct_for_dev_objects(BOR_CONST dmatrix&H)
+int initial_params::correct_for_dev_objects(const dmatrix& H)
   {
     cout << H << endl << endl;
     int ii=1;
@@ -196,7 +196,7 @@ extern int* pointer_to_phase;
     return ii-1;
   }
 
-  int initial_params::stddev_scale(BOR_CONST dvector& d,BOR_CONST dvector& x)
+int initial_params::stddev_scale(const dvector& d, const dvector& x)
   {
     int ii=1;
     for (int i=0;i<num_initial_params;i++)
@@ -208,7 +208,7 @@ extern int* pointer_to_phase;
     return ii-1;
   }
 
-  int initial_params::stddev_curvscale(BOR_CONST dvector& d,BOR_CONST dvector& x)
+int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
   {
     int ii=1;
     for (int i=0;i<num_initial_params;i++)
@@ -220,7 +220,7 @@ extern int* pointer_to_phase;
     return ii-1;
   }
 
-  void initial_params::xinit(BOR_CONST dvector& x)
+  void initial_params::xinit(const dvector& x)
   {
     int ii=1;
     for (int i=0;i<num_initial_params;i++)
@@ -290,7 +290,7 @@ extern int* pointer_to_phase;
     }
   }
 
-  void initial_params::xinit1(BOR_CONST dvector& _x,BOR_CONST dvector& g)
+void initial_params::xinit1(const dvector& _x, const dvector& g)
   {
     int ii=1;
     dvector& x=(dvector&) _x;
@@ -306,7 +306,7 @@ extern int* pointer_to_phase;
     x=elem_prod(x,g);
   }
 
-  dvariable initial_params::reset(BOR_CONST dvar_vector& x,BOR_CONST dvector& __pen)
+dvariable initial_params::reset(const dvar_vector& x, const dvector& __pen)
   {
     dvector& _pen=(dvector&) __pen;
     int ii=1;
@@ -324,7 +324,7 @@ extern int* pointer_to_phase;
     return pen;
   }
 
-  dvariable initial_params::reset1(BOR_CONST dvar_vector& _x,BOR_CONST dvector& g)
+dvariable initial_params::reset1(const dvar_vector& _x, const dvector& g)
   {
     dvar_vector& x=(dvar_vector&) _x;
     int ii=1;
@@ -339,7 +339,7 @@ extern int* pointer_to_phase;
     return pen;
   }
 
-  dvariable initial_params::reset(BOR_CONST dvar_vector& x)
+dvariable initial_params::reset(const dvar_vector& x)
   {
     int ii=1;
     dvariable pen=0.0;
@@ -363,7 +363,7 @@ extern int* pointer_to_phase;
     return pen;
   }
 
-  dvariable initial_params::reset(BOR_CONST dvector& x)
+dvariable initial_params::reset(const dvector& x)
   {
     int ii=1;
     dvariable pen=0.0;
@@ -445,8 +445,8 @@ extern int* pointer_to_phase;
     return ip.active_flag;
   }
 
-  void param_init_number::set_value(const dvar_vector& x,BOR_CONST int& ii,
-    BOR_CONST dvariable& pen)
+void param_init_number::set_value(const dvar_vector& x, const int& ii,
+   const dvariable& pen)
   {
     if (!scalefactor)
       ::set_value(*this,x,ii);
@@ -454,12 +454,12 @@ extern int* pointer_to_phase;
       ::set_value(*this,x,ii,scalefactor);
   }
 
-  void param_init_number::set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii)
+void param_init_number::set_value_inv(const dvector& x, const int& ii)
   {
     if (!scalefactor)
-      ::set_value_inv(*this,(BOR_CONST dvector&)(x),ii);
+      ::set_value_inv(*this,(const dvector&)(x),ii);
     else
-      ::set_value_inv(*this,(BOR_CONST dvector&)(x),ii,scalefactor);
+      ::set_value_inv(*this,(const dvector&)(x),ii,scalefactor);
   }
 
   param_init_number::param_init_number() : named_dvariable() ,
@@ -519,8 +519,8 @@ extern int* pointer_to_phase;
       }
     }
   }
-  void param_init_bounded_number::set_value(const dvar_vector& x,
-    BOR_CONST int& ii,BOR_CONST dvariable& pen)
+void param_init_bounded_number::set_value(const dvar_vector& x,
+  const int& ii, const dvariable& pen)
   {
     if (!scalefactor)
       ::set_value(*this,x,ii,minb,maxb,pen);
@@ -528,7 +528,7 @@ extern int* pointer_to_phase;
       ::set_value(*this,x,ii,minb,maxb,pen,scalefactor);
   }
 
-  void param_init_bounded_number::set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii)
+void param_init_bounded_number::set_value_inv(const dvector& x, const int& ii)
   {
     if (!scalefactor)
       ::set_value_inv(*this,x,ii,minb,maxb);
@@ -551,7 +551,7 @@ extern int* pointer_to_phase;
     }
   }
 
-  data_number& data_number::operator =(_CONST double& v)
+data_number& data_number::operator=(const double& v)
   {
     val=v;
     return *this;
@@ -651,8 +651,8 @@ extern int* pointer_to_phase;
     *(ad_comm::global_bsavefile) << tmp;
   }
 
-  void param_init_vector::set_value(const dvar_vector& x,
-    BOR_CONST int& ii,BOR_CONST dvariable& pen)
+void param_init_vector::set_value(const dvar_vector& x,
+  const int& ii, const dvariable& pen)
   {
     if (!scalefactor)
       ::set_value(*this,x,ii);
@@ -660,7 +660,7 @@ extern int* pointer_to_phase;
       ::set_value(*this,x,ii,scalefactor);
   }
 
-  void param_init_vector::set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii)
+  void param_init_vector::set_value_inv(const dvector& x, const int& ii)
   {
 #  if defined(USE_SHARE_FLAGS)
     if (share_flags)
@@ -815,8 +815,8 @@ extern int* pointer_to_phase;
     allocate(imin,imax,1,s);
   }
 
-  void param_init_bounded_vector::set_value(const dvar_vector& x,
-    BOR_CONST int& ii,BOR_CONST dvariable& pen)
+void param_init_bounded_vector::set_value(const dvar_vector& x,
+  const int& ii, const dvariable& pen)
   {
     if (!(!(*this)))
     {
@@ -834,7 +834,7 @@ extern int* pointer_to_phase;
     }
   }
 
-  void param_init_bounded_vector::set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii)
+  void param_init_bounded_vector::set_value_inv(const dvector& x, const int& ii)
   {
     if (!(!(*this)))
     {
@@ -936,8 +936,8 @@ extern int* pointer_to_phase;
     }
   }
 
-  void param_init_matrix::set_value(const dvar_vector& x,BOR_CONST int& ii,
-    BOR_CONST dvariable& pen)
+void param_init_matrix::set_value(const dvar_vector& x, const int& ii,
+  const dvariable& pen)
   {
     if (!scalefactor)
       ::set_value(*this,x,ii);
@@ -946,7 +946,7 @@ extern int* pointer_to_phase;
   }
 
 
-  void param_init_matrix::set_value_inv(BOR_CONST dvector& x,BOR_CONST int& ii)
+void param_init_matrix::set_value_inv(const dvector& x, const int& ii)
   {
     if (!scalefactor)
       ::set_value_inv(*this,x,ii);
@@ -993,8 +993,8 @@ extern int* pointer_to_phase;
     }
   }
 
-  void data_matrix::allocate(int rmin,int rmax,BOR_CONST ivector& cmin,BOR_CONST ivector& cmax,
-    const char * s)
+void data_matrix::allocate(int rmin,int rmax, const ivector& cmin, const ivector& cmax,
+  const char * s)
   {
     named_dmatrix::allocate(rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))
@@ -1004,8 +1004,8 @@ extern int* pointer_to_phase;
     }
   }
 
-  void data_matrix::allocate(int rmin,int rmax,int cmin,BOR_CONST ivector& cmax,
-    const char * s)
+void data_matrix::allocate(int rmin,int rmax,int cmin, const ivector& cmax,
+  const char * s)
   {
     named_dmatrix::allocate(rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))
@@ -1015,8 +1015,8 @@ extern int* pointer_to_phase;
     }
   }
 
-  void data_matrix::allocate(int rmin,int rmax,BOR_CONST ivector& cmin,int cmax,
-    const char * s)
+void data_matrix::allocate(int rmin,int rmax, const ivector& cmin,int cmax,
+  const char * s)
   {
     named_dmatrix::allocate(rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))
@@ -1037,9 +1037,9 @@ extern int* pointer_to_phase;
     }
   }
 
-  void data_3array::allocate(int hsl,int hsu,_CONST index_type& rmin,
-    _CONST index_type& rmax,_CONST  index_type& cmin,
-     _CONST index_type& cmax,const char * s)
+void data_3array::allocate(int hsl, int hsu, const index_type& rmin,
+  const index_type& rmax, const index_type& cmin,
+  const index_type& cmax, const char * s)
   {
     named_d3_array::allocate(hsl,hsu,rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))
@@ -1050,8 +1050,8 @@ extern int* pointer_to_phase;
   }
 
       
-  void data_3array::allocate(int hsl,int hsu,_CONST ivector& rmin,
-    int rmax,int cmin,int cmax,const char * s)
+void data_3array::allocate(int hsl, int hsu, const ivector& rmin,
+  int rmax, int cmin, int cmax, const char * s)
   {
     named_d3_array::allocate(hsl,hsu,rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))
@@ -1061,8 +1061,8 @@ extern int* pointer_to_phase;
     }
   }
 
-  void data_3array::allocate(int hsl,int hsu,int rmin,
-    _CONST ivector& rmax,int cmin,int cmax,const char * s)
+ void data_3array::allocate(int hsl, int hsu, int rmin,
+   const ivector& rmax, int cmin, int cmax, const char * s)
   {
     named_d3_array::allocate(hsl,hsu,rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))
@@ -1072,8 +1072,8 @@ extern int* pointer_to_phase;
     }
   }
 
-  void data_3array::allocate(int hsl,int hsu,_CONST ivector& rmin,
-    _CONST ivector& rmax,int cmin,int cmax,const char * s)
+void data_3array::allocate(int hsl,int hsu, const ivector& rmin,
+  const ivector& rmax,int cmin,int cmax,const char * s)
   {
     named_d3_array::allocate(hsl,hsu,rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))
@@ -1083,8 +1083,8 @@ extern int* pointer_to_phase;
     }
   }
 
-  void data_3array::allocate(int hsl,int hsu,int rmin,int rmax,
-    _CONST ivector& cmin,int cmax,const char * s)
+void data_3array::allocate(int hsl, int hsu, int rmin, int rmax,
+  const ivector& cmin, int cmax, const char * s)
   {
     named_d3_array::allocate(hsl,hsu,rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))
@@ -1094,8 +1094,8 @@ extern int* pointer_to_phase;
     }
   }
 
-  void data_3array::allocate(int hsl,int hsu,int rmin,int rmax,
-    int cmin,_CONST ivector& cmax,const char * s)
+void data_3array::allocate(int hsl, int hsu, int rmin, int rmax,
+  int cmin, const ivector& cmax, const char * s)
   {
     named_d3_array::allocate(hsl,hsu,rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))
@@ -1105,8 +1105,8 @@ extern int* pointer_to_phase;
     }
   }
 
-  void data_3array::allocate(int hsl,int hsu,int rmin,int rmax,
-    _CONST ivector& cmin,_CONST ivector& cmax,const char * s)
+ void data_3array::allocate(int hsl,int hsu,int rmin,int rmax,
+   const ivector& cmin, const ivector& cmax,const char * s)
   {
     named_d3_array::allocate(hsl,hsu,rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))
@@ -1127,8 +1127,8 @@ extern int* pointer_to_phase;
     }
   }
 
-  void data_imatrix::allocate(int rmin,int rmax,_CONST index_type& cmin,
-    _CONST index_type& cmax, const char * s)
+void data_imatrix::allocate(int rmin,int rmax, const index_type& cmin,
+  const index_type& cmax, const char * s)
   {
     named_imatrix::allocate(rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))
@@ -1158,8 +1158,8 @@ void named_imatrix::allocate(int rmin,int rmax,int cmin,int cmax,
   model_name_tag::allocate(s);
 }
 
-void named_imatrix::allocate(int rmin,int rmax,_CONST index_type& cmin,
-  _CONST index_type& cmax, const char * s)
+void named_imatrix::allocate(int rmin,int rmax, const index_type& cmin,
+  const index_type& cmax, const char * s)
 {
   imatrix::allocate(rmin,rmax,cmin,cmax);
   model_name_tag::allocate(s);

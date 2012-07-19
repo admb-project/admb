@@ -10,8 +10,10 @@ call "%VS90COMNTOOLS%..\..\VC\vcvarsall.bat" amd64
 REM
 REM Adds the bin folder to ADMB_HOME to system path.
 REM
-@set PATH=%ADMB_HOME%\bin;%PATH%
+@set PATH="%ADMB_HOME%"\bin;"%ADMB_HOME%"\utilities;%PATH%
+@echo Setting ADMB Home enviroment to "%ADMB_HOME%".
 
-@echo Set ADMB Home directory to %ADMB_HOME%
+@cd "%USERPROFILE%"
 
-@cd "%ADMB_HOME%/examples/admb"
+@echo.
+@echo For help, type command "admb".

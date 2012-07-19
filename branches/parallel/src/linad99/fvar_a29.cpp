@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
 //  "template" for precompiled derivative code
  //   change XXX to function name and YYY to derivative function name
 void DF_dvXXX(void);
-dvar_vector XXX(_CONST dvar_vector& v1)
+dvar_vector XXX(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
@@ -61,7 +61,7 @@ void DF_dvsin(void);
  * Description not yet available.
  * \param
  */
-dvar_vector sin(_CONST dvar_vector& v1)
+dvar_vector sin(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
@@ -109,7 +109,7 @@ void DF_dvexp(void);
  * Description not yet available.
  * \param
  */
-dvar_vector exp(_CONST dvar_vector& v1)
+dvar_vector exp(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
@@ -158,7 +158,7 @@ void DF_dvcos(void);
  * Description not yet available.
  * \param
  */
-dvar_vector cos(_CONST dvar_vector& v1)
+dvar_vector cos(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
@@ -206,7 +206,7 @@ void DF_dvlog(void);
  * Description not yet available.
  * \param
  */
-dvar_vector log(_CONST dvar_vector& v1)
+dvar_vector log(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
@@ -264,7 +264,7 @@ void DF_dvtan(void);
  * Description not yet available.
  * \param
  */
-dvar_vector tan(_CONST dvar_vector& v1)
+dvar_vector tan(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
@@ -312,7 +312,7 @@ void DF_dvatan(void);
  * Description not yet available.
  * \param
  */
-dvar_vector atan(_CONST dvar_vector& v1)
+dvar_vector atan(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
@@ -360,7 +360,7 @@ void DF_dvsqrt(void);
  * Description not yet available.
  * \param
  */
-dvar_vector sqrt(_CONST dvar_vector& v1)
+dvar_vector sqrt(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
@@ -383,7 +383,7 @@ dvar_vector sqrt(_CONST dvar_vector& v1)
  * Description not yet available.
  * \param
  */
-dvar_vector sqr(_CONST dvar_vector& v1)
+dvar_vector sqr(const dvar_vector& v1)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
@@ -431,7 +431,7 @@ void DF_dvpow(void);
  * Description not yet available.
  * \param
  */
-dvar_vector pow(_CONST dvar_vector& v1, CGNU_DOUBLE e)
+dvar_vector pow(const dvar_vector& v1, CGNU_DOUBLE e)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
@@ -485,7 +485,7 @@ void DF_dvdvpow(void);
  * Description not yet available.
  * \param
  */
-dvar_vector pow(_CONST dvar_vector& v1,_CONST prevariable& e)
+dvar_vector pow(const dvar_vector& v1, const prevariable& e)
 {
   //dvector cv1=value(v1);
   double ce=value(e);
@@ -543,7 +543,7 @@ void DF_dvcpow(void);
  * Description not yet available.
  * \param
  */
-dvar_vector pow(_CONST dvar_vector& v1,int e)
+dvar_vector pow(const dvar_vector& v1,int e)
 {
   //dvector cv1=value(v1);
   dvar_vector vtmp(v1.indexmin(),v1.indexmax());
@@ -593,7 +593,7 @@ void DF_cdvpow(void);
  * Description not yet available.
  * \param
  */
-dvar_vector pow(_CONST dvector& v1,_CONST prevariable& e)
+dvar_vector pow(const dvector& v1,const prevariable& e)
 {
   //dvector cv1=value(v1);
   double ce=value(e);

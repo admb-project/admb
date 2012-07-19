@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -25,7 +25,7 @@
  * Description not yet available.
  * \param
  */
-void save_double_derivative( CGNU_DOUBLE x, BOR_CONST prevariable_position& _pos)
+void save_double_derivative(CGNU_DOUBLE x, const prevariable_position& _pos)
 {
   prevariable_position& pos= (prevariable_position&) _pos; 
   // adds the derivative value in a double to a prevariables' guts
@@ -47,7 +47,7 @@ prevariable_position restore_prevariable_position(void)
  * Description not yet available.
  * \param
  */
-void prevariable::save_prevariable_position(void) _CONST
+void prevariable::save_prevariable_position(void) const
 {
   double_and_int * tmp=get_v();
   int wsize=sizeof(double_and_int*);
@@ -58,7 +58,7 @@ void prevariable::save_prevariable_position(void) _CONST
  * Description not yet available.
  * \param
  */
-void prevariable::save_prevariable_value(void) _CONST
+void prevariable::save_prevariable_value(void) const 
 {
   //double_and_int * tmp=get_v();
   //const unsigned wsize=sizeof(double_and_int*);
@@ -101,7 +101,7 @@ void save_pointer_value(void *ptr)
  * Description not yet available.
  * \param
  */
-double restore_prevariable_derivative(BOR_CONST prevariable_position& _pos)
+double restore_prevariable_derivative(const prevariable_position& _pos)
 {
   prevariable_position& pos= (prevariable_position&) _pos; 
   double tmpout=pos.xval();

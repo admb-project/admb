@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -23,11 +23,11 @@
 
 
 /*
- dvar_matrix  operator * (_CONST dvar_matrix& m1,_CONST dvar_matrix& m2 )
+ dvar_matrix  operator*(const dvar_matrix& m1, const dvar_matrix& m2 )
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator * (_CONST dmatrix& x,_CONST dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dmatrix  operator * (const dmatrix& x, const dmatrix& m)\n";
      ad_exit(21);
    }
    //dmatrix cm1=value(m1);
@@ -80,11 +80,11 @@
  * Description not yet available.
  * \param
  */
- dvar_matrix  operator * (_CONST dvar_matrix& m1,_CONST dvar_matrix& m2 )
+ dvar_matrix operator*(const dvar_matrix& m1, const dvar_matrix& m2)
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator * (_CONST dmatrix& x,_CONST dmatrix& m)\n";
+     cerr << " Incompatible array bounds in dmatrix operator*(const dmatrix& x, const dmatrix& m)\n";
      ad_exit(21);
    }
    //dmatrix cm1=value(m1);

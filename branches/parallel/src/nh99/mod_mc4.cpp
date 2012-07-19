@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
@@ -12,8 +12,7 @@
 
 double better_rand(long int&);
 
-double function_minimizer::get_monte_carlo_value(int nvar, 
-  BOR_CONST dvector& x)
+double function_minimizer::get_monte_carlo_value(int nvar, const dvector& x)
 {
   //initial_params::xinit(x);   
   double f=0.0;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  dvector extract_diagonal(_CONST dmatrix& m)
+dvector extract_diagonal(const dmatrix& m)
   {
     if ( (m.rowmin()!=m.colmin()) || (m.rowmax()!=m.colmax()))
     {

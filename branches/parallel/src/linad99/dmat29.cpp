@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  dvector VEC(_CONST dmatrix& _m)
+dvector VEC(const dmatrix& _m)
   {
     dmatrix& m= (dmatrix&) _m;
     int i;
@@ -41,7 +41,7 @@
  * Description not yet available.
  * \param
  */
-  dmatrix MAT(_CONST dvector& v, int n,int m)
+dmatrix MAT(const dvector& v, int n, int m)
   {
     dmatrix tmp(1,n,1,m);
     int mmin=v.indexmin();

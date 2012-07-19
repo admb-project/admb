@@ -2,12 +2,12 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <admodel.h>
 
-double function_minimizer::projected_hess_determinant(BOR_CONST dvector& g,
-  const int underflow_flag,BOR_CONST dvector& xscale, BOR_CONST double& _ln_det_proj_jac)
+double function_minimizer::projected_hess_determinant(const dvector& g,
+  const int underflow_flag, const dvector& xscale, const double& _ln_det_proj_jac)
 {
  double& ln_det_proj_jac=(double&) _ln_det_proj_jac;
  int ibreak=-1;
@@ -112,7 +112,7 @@ double function_minimizer::projected_hess_determinant(BOR_CONST dvector& g,
       {
         double tmp=(h(i,j)+h(j,i))/2.;
         h(i,j)=tmp;
-	h(j,i)=tmp;
+        h(j,i)=tmp;
       }
     }
 

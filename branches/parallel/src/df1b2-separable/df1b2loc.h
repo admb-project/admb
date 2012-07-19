@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -66,4 +66,4 @@
   int operator == (const df1b2variable& x,double y);
   
    dvariable posfun(const dvariable&x,const double eps);
-   df1b2variable posfun(_CONST df1b2variable&x,const double eps);
+df1b2variable posfun(const df1b2variable&x, const double eps);

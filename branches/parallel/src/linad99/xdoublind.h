@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2011 Regents of the University of California
+ * Copyright (c) 2008-2012 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -74,7 +74,7 @@
     double d;
   public:
     operator double () const { return d;}
-    ad_double(BOR_CONST double& _d, BOR_CONST adkludge& k) : d(_d) {}
+    ad_double(const double& _d, const adkludge& k) : d(_d) {}
     ad_double(double _d) : d(_d) {}
     ad_double(const double_index_type& it);
     ad_double make_ad_double(double _d) {adkludge adk; return ad_double(d,adk);}
@@ -115,10 +115,10 @@
     int isdouble(void) const { return p->isdouble();}
     double_index_type(double x);
     //index_type(const data_int& x);
-    double_index_type(BOR_CONST dvector& x);
-    double_index_type(BOR_CONST dmatrix& x);
-    double_index_type(BOR_CONST d3_array& x);
-    double_index_type(BOR_CONST pre_double_index_type& pit);
+    double_index_type(const dvector& x);
+    double_index_type(const dmatrix& x);
+    double_index_type(const d3_array& x);
+    double_index_type(const pre_double_index_type& pit);
     double_index_type(const double_index_type& pit);
     //index_type (i4_array& x) { p = new i4_index(x);}
     ~double_index_type ();
@@ -161,8 +161,8 @@
       return new double_index(dvector::operator [](i));
     }
   public:
-    //vector_index(BOR_CONST ivector& v) : ivector(v){}
-    dvector_index(BOR_CONST dvector& v);
+    //vector_index(const ivector& v) : ivector(v){}
+    dvector_index(const dvector& v);
     virtual ~dvector_index();
     virtual int indexmin(void){return dvector::indexmin();}
     virtual int indexmax(void){return dvector::indexmax();}
@@ -182,7 +182,7 @@
     //}
   public:
     virtual ~dmatrix_index();
-    dmatrix_index(BOR_CONST dmatrix& v) : dmatrix(v){}
+    dmatrix_index(const dmatrix& v) : dmatrix(v){}
     virtual int indexmin(void){return dmatrix::rowmin();}
     virtual int indexmax(void){return dmatrix::rowmax();}
     friend class double_index_type;

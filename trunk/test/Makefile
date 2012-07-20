@@ -1,6 +1,7 @@
-.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd atan2 priors beta1 beta2 beta3 adstring_array
+.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd atan2 priors beta1 beta2 beta3 adstring_array df33_tester
 
-all: adstring_array
+#all: adstring_array beta1 beta2 beta3 beta_regression betareg df33_tester
+all: admb_messages df33_tester
 
 adstring_array:
 	OPTIONS=-s $(MAKE) --directory=$@
@@ -21,6 +22,9 @@ admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 init_bounded_number_matrix:
+	OPTIONS=-s $(MAKE) --directory=$@
+
+df33_tester:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 beta_regression:

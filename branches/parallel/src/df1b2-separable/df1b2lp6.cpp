@@ -15,24 +15,6 @@
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
 
-void stop_flag(void)
-{
-  static int stop_flag;
-  if (stop_flag!=1)
-  {
-#if defined(USE_ADMPI)
-   if (ad_comm::mpi_manager){
-    if(ad_comm::mpi_manager->is_slave())
-    {
-      cout << "PID " << getpid() << endl;
-    }
-   }
-#endif
-    stop_flag=0;
-  }
-  while(stop_flag==0)
-    sleep(5);
-}
 double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const banded_symmetric_dmatrix& bHess,const dvector& _xadjoint,
   const dvector& _uadjoint,
@@ -808,7 +790,7 @@ dvector laplace_approximation_calculator::banded_calculations
       initial_params::straight_through_flag=1;
       block_diagonal_flag=3;
       local_dtemp.initialize();
-//stop_flag();
+
       // *****  Note for quadratic prior code: I don't think that this 
       // part gets added to the Hessian here.
       sparse_count=0;
@@ -1349,7 +1331,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
      ofs << setprecision(3) << setw(12) << setscientific() << dmatrix(bHess) << endl << endl;
      ofs << ev << endl << endl << evecs << endl;
    }
-//stop_flag();
+
    int evaluate_flag=1;
    #if defined(USE_ADMPI)
    if (ad_comm::mpi_manager)

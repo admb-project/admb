@@ -1,0 +1,4051 @@
+Index: nh99/mod_hess.cpp
+===================================================================
+--- nh99/mod_hess.cpp	(.../trunk/src)	(revision 550)
++++ nh99/mod_hess.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -69,9 +69,31 @@
+ {
+ 
+   int nvar=initial_params::nvarcalc(); // get the number of active parameters
+-  //if (adjm_ptr) set_labels_for_hess(nvar);
+   independent_variables x(1,nvar);
+   initial_params::xinit(x);        // get the initial values into the x vector
++#if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
++    {
++      if (ad_comm::mpi_manager->is_master())
++      {
++         int set_hess_slaves=ad_comm::mpi_manager->get_num_slaves();
++         ad_comm::mpi_manager->set_num_hess_slaves(set_hess_slaves);
++         // send variable assignement to slaves for hessian calcs
++         ad_comm::mpi_manager->send_slave_hessian_assignments(nvar);
++        for (int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
++        {
++           ad_comm::mpi_manager->send_dvector_to_slave(x,i);
++        }
++        //sleep(2);
++      }
++      else
++      {
++         //get variable assignement for slaves for hessian calcs
++         ad_comm::mpi_manager->get_slave_hessian_assignments();
++         x=ad_comm::mpi_manager->get_dvector_from_master();
++      }
++    }
++#endif
+   double f;
+   double delta=1.e-5;
+   dvector g1(1,nvar);
+@@ -87,6 +109,17 @@
+   adstring tmpstring="admodel.hes";
+   if (ad_comm::wd_flag)
+      tmpstring = ad_comm::adprogram_name + ".hes";
++#if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->is_slave())
++    {
++      tmpstring += "_";
++      tmpstring += str(ad_comm::mpi_manager->get_slave_number());
++    }
++  }
++#endif // #if defined(USE_ADMPI)
++
+   uostream ofs((char*)tmpstring);
+ 
+   ofs << nvar;
+@@ -102,8 +135,24 @@
+     }
+     double sdelta1;
+     double sdelta2;
+-    for (int i=1;i<=nvar;i++)
++    int mmin=1;
++    int mmax=nvar;
++#if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
+     {
++      ivector hess_bounds=ad_comm::mpi_manager->get_hess_bounds();
++      if (hess_bounds(1)>0)
++      {
++        mmin=hess_bounds(1);
++        mmax=hess_bounds(2);
++        ofs << mmin << mmax;
++      }
++    }
++#endif
++
++
++    for (int i=mmin;i<=mmax;i++)
++    {
+ #if defined (__SPDLL__)
+       hess_calcreport(i,nvar);
+ #else
+@@ -177,8 +226,39 @@
+   }
+   ofs << gradient_structure::Hybrid_bounded_flag;
+   dvector tscale(1,nvar);   // need to get scale from somewhere
+-  /*int check=*/initial_params::stddev_scale(tscale,x);
+-  ofs << tscale;
++#if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->is_master())
++    {
++      ofs << gradient_structure::Hybrid_bounded_flag;
++      ofs << tscale;
++      // wait until slaves are finished
++      for (int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
++      {
++        int iconfirm;
++        ad_comm::mpi_manager->get_int_from_slave(iconfirm,i);
++        if (iconfirm != 2000+i)
++        {
++          cerr << "Error in slave " << i << "hessian confirmation" << endl;
++        }
++      }
++    }
++    
++    if (ad_comm::mpi_manager->is_slave())
++    {
++      int slave_number=ad_comm::mpi_manager->get_slave_number();
++      ad_comm::mpi_manager->send_int_to_master(slave_number+2000);
++    }
++  }
++  else
++  {
++#endif // if defined(USE_ADMPI)
++    ofs << gradient_structure::Hybrid_bounded_flag;
++    ofs << tscale;
++#if defined(USE_ADMPI)
++  }
++#endif // if defined(USE_ADMPI)
+ }
+ 
+ void function_minimizer::hess_routine_and_constraint(int iprof, const dvector& g,
+@@ -532,31 +612,74 @@
+   dmatrix hess(1,nvar,1,nvar);
+   uistream ifs("admodel.hes");
+   int file_nvar;
+-  ifs  >> file_nvar;
+-  if (nvar !=file_nvar)
++  int num_hess_slaves=0;
++#if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
+   {
+-    cerr << "Number of active variables in file mod_hess.rpt is wrong"
+-	 << endl;
++#if defined(USE_LAPLACE)
++    if (!lapprox)
++    {
++#endif
++      num_hess_slaves=ad_comm::mpi_manager->get_num_hess_slaves();
++#if defined(USE_LAPLACE)
++    }
++#endif
+   }
++#endif 
+ 
+-  for (int i = 1;i <= nvar; i++)
++  dvector sscale(1,nvar);
++  for (int is=0;is<=num_hess_slaves;is++)
+   {
+-    ifs >> hess(i);
++    adstring filename;
++    if (is==0) 
++    {
++      filename="admodel.hes";
++    }
++    else
++    {
++      filename=adstring("admodel.hes")+ "_" +str(is);
++    }
++    uistream ifs(filename);
+     if (!ifs)
+     {
+-      cerr << "Error reading line " << i  << " of the hessian"
+-	   << " in routine hess_inv()" << endl;
+-      exit(1);
++      cerr << "Error opening file " << filename << endl;
++      ad_exit(1);
+     }
+-  }
+-  int hybflag;
+-  ifs >> hybflag;
+-  dvector sscale(1,nvar);
+-  ifs >> sscale;
+-  if (!ifs)
+-  {
+-    cerr << "Error reading sscale"
++    ifs  >> file_nvar;
++    if (nvar !=file_nvar)
++    {
++      cerr << "Number of active variables in file mod_hess.rpt is wrong"
++  	 << endl;
++    }
++
++    int mmin=1;
++    int mmax=nvar;
++    int i;
++    if (num_hess_slaves>0)
++    {
++      ifs  >> mmin >> mmax;
++    }
++    for (i=mmin;i<=mmax;i++)
++    {
++      ifs >> hess(i);
++      if (!ifs)
++      {
++        cerr << "Error reading line " << i  << " of the hessian"
++  	   << " in routine hess_inv()" << endl;
++        exit(1);
++      }
++    }
++    int hybflag;
++    if (is==0) // just get this stuff from the first file.
++    {
++      ifs >> hybflag;
++      ifs >> sscale;
++    }
++    if (!ifs)
++    {
++      cerr << "Error reading sscale" 
+          << " in routine hess_inv()" << endl;
++    }
+   }
+ 
+   double maxerr=0.0;
+Index: nh99/getbigs.cpp
+===================================================================
+--- nh99/getbigs.cpp	(.../trunk/src)	(revision 550)
++++ nh99/getbigs.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -87,7 +87,7 @@
+       usize=lapprox->usize;
+       // calculate uhat_prime from the block diagnal matrix
+       d3_array & H=*(lapprox->block_diagonal_hessian); 
+-      d3_array & Dux=*(lapprox->block_diagonal_Dux); 
++      d3_array & Dux=*(lapprox->block_diagonal_Dux);
+       int mmin=H.indexmin();
+       int mmax=H.indexmax();
+       for (int i=mmin;i<=mmax;i++)
+@@ -112,8 +112,44 @@
+           }
+         }
+       }
++      #if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        int umin=uhat_prime.indexmin();
++        int umax=uhat_prime.indexmax();
++        if (ad_comm::mpi_manager->is_master())
++        {
++          for (int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++          {
++            for (int i=umin;i<=umax;i++)
++            {
++              uhat_prime(i)+=ad_comm::mpi_manager->get_dvector_from_slave(si);
++            }
++          }
++        }
++        else
++        {
++          for (int i=umin;i<=umax;i++)
++          {
++            ad_comm::mpi_manager->send_dvector_to_master(uhat_prime(i));
++          }
++        }
++      }
++      #endif
+       // rescale uhat_prime to be der wrt x
++      int master_only=1;
++      #if defined(USE_ADMPI)  
++      if (ad_comm::mpi_manager)
+       {
++        if (ad_comm::mpi_manager->is_slave())
++        {
++          master_only=0;
++        }
++      }
++      #endif
++
++      if (master_only)
++      {
+         int rmin=uhat_prime.indexmin();
+         int rmax=uhat_prime.indexmax();
+         int cmin=uhat_prime(rmin).indexmin();
+@@ -142,17 +178,78 @@
+     }
+     else
+     {
++      //send Suu to slaves
++      #if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        int Suumin=Suu.indexmin();
++        int Suumax=Suu.indexmax();
++        if (ad_comm::mpi_manager->is_master())
++        {
++          for (int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++          {
++            for (int i=Suumin;i<=Suumax;i++)
++            {
++              ad_comm::mpi_manager->send_dvector_to_slave(Suu(i),si);
++            }
++          }
++        }
++        else
++        {
++          for (int i=Suumin;i<=Suumax;i++)
++          {
++            Suu(i)=ad_comm::mpi_manager->get_dvector_from_master();
++          }
++        }
++      }
++      #endif
++
+       d3_array & H=*(lapprox->block_diagonal_hessian); 
+       int mmin=H.indexmin();
+       int mmax=H.indexmax();
++      //send mmin mmax
++      #if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        if (ad_comm::mpi_manager->is_slave())
++        {
++          ad_comm::mpi_manager->send_int_to_master(mmin);
++          ad_comm::mpi_manager->send_int_to_master(mmax);
++        }
++      }
++      #endif
++
+       for (int i=mmin;i<=mmax;i++)
+       {
+-        if (allocated(H(i)))
++        int allocate_flag=allocated(H(i));
++        //send allocate_flag
++        #if defined(USE_ADMPI)
++        if (ad_comm::mpi_manager)
+         {
++          if (ad_comm::mpi_manager->is_slave())
++          {
++              ad_comm::mpi_manager->send_int_to_master(allocate_flag);
++          }
++        }
++        #endif
++
++        if (allocate_flag)
++        {
+           dmatrix tmp=inv(H(i));
+           int rmin=H(i).indexmin();
+           int rmax=H(i).indexmax();
+-          
++          //send rmin rmax allocate flag
++          #if defined(USE_ADMPI)
++          if (ad_comm::mpi_manager)
++          {
++            if (ad_comm::mpi_manager->is_slave())
++            {
++              ad_comm::mpi_manager->send_int_to_master(rmin);
++              ad_comm::mpi_manager->send_int_to_master(rmax);
++            }
++          }
++          #endif
++
+           for (int j=rmin;j<=rmax;j++)
+           {
+             for (int k=rmin;k<=rmax;k++)
+@@ -167,42 +264,113 @@
+               {
+                 Suu(j1,k1)+=tmp(j,k);
+               }
++              //send j1,k1,Suu(j1,k1)
++              #if defined(USE_ADMPI)
++              if (ad_comm::mpi_manager)
++              {
++                if (ad_comm::mpi_manager->is_slave())
++                {
++                  ad_comm::mpi_manager->send_int_to_master(j1);
++                  ad_comm::mpi_manager->send_int_to_master(k1);
++                  ad_comm::mpi_manager->send_double_to_master(Suu(j1,k1));
++                }
++              }
++              #endif
+             }
+           }
+         }
+       }
++      // send Suu to master
++
++      #if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        if (ad_comm::mpi_manager->is_master())
++        {
++          for (int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++          {
++            //get mmin mmax
++            int mmmin,mmmax;
++            ad_comm::mpi_manager->get_int_from_slave(mmmin,si);
++            ad_comm::mpi_manager->get_int_from_slave(mmmax,si);
++
++            for (int i=mmmin;i<=mmmax;i++)
++            {
++              //get allocate_flag
++              int allocate_flag;
++              ad_comm::mpi_manager->get_int_from_slave(allocate_flag,si);
++              if (allocate_flag)
++              {
++                //get rmin rmax
++                int rmin,rmax;
++                ad_comm::mpi_manager->get_int_from_slave(rmin,si);
++                ad_comm::mpi_manager->get_int_from_slave(rmax,si);
++          
++                for (int j=rmin;j<=rmax;j++)
++                {
++                  for (int k=rmin;k<=rmax;k++)
++                  {
++                    //get ji k1 Suu(j1,k1)
++                    int j1,k1;
++                    ad_comm::mpi_manager->get_int_from_slave(j1,si);
++                    ad_comm::mpi_manager->get_int_from_slave(k1,si);
++                    Suu(j1,k1)=ad_comm::mpi_manager->get_double_from_slave(si);
++                  }
++                }
++              }
++            }
++
++          } //end for
++        }
++      }
++      #endif
+     }
+     minv.deallocate();
+     BS.initialize();
+     // random effects are never bounded?
+     scale(xsize+1,Bnvar)=1.0;
+ 
+-    int i;
+-
+-    for (i=1;i<=xsize;i++)
++    int master_only=1;
++    #if defined(USE_ADMPI)  
++    if (ad_comm::mpi_manager)
+     {
+-      for (int j=1;j<=xsize;j++)
++      if (ad_comm::mpi_manager->is_slave())
+       {
+-        BS(i,j)=S(i,j);
++        master_only=0;
+       }
+     }
+-   
+-    for (i=xsize+1;i<=Bnvar;i++)
++    #endif
++
++    if (master_only)
+     {
+-      for (int j=1;j<=xsize;j++)
++      int i;
++
++      for (i=1;i<=xsize;i++)
+       {
+-        BS(i,j)=Sux(i-xsize,j);
+-        BS(j,i)=BS(i,j);
++        for (int j=1;j<=xsize;j++)
++        {
++          BS(i,j)=S(i,j);
++        }
+       }
+-    }
++   
++      for (i=xsize+1;i<=Bnvar;i++)
++      {
++        for (int j=1;j<=xsize;j++)
++        {
++          BS(i,j)=Sux(i-xsize,j);
++          BS(j,i)=BS(i,j);
++        }
++      }
+     
+-    for (i=xsize+1;i<=Bnvar;i++)
+-    {
+-      for (int j=xsize+1;j<=Bnvar;j++)
++      for (i=xsize+1;i<=Bnvar;i++)
+       {
+-        BS(i,j)=Suu(i-xsize,j-xsize);
++        for (int j=xsize+1;j<=Bnvar;j++)
++        {
++          BS(i,j)=Suu(i-xsize,j-xsize);
++        }
+       }
+-    }
++
++    } //end master_only
+ #   endif
+ 
+ 
+Index: nh99/mod_sd.cpp
+===================================================================
+--- nh99/mod_sd.cpp	(.../trunk/src)	(revision 550)
++++ nh99/mod_sd.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -36,7 +36,47 @@
+   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
+ }
+  
++void function_minimizer::sd_routine_mpi_slave(void)
++{
++  int nvar,nvar1,ndvar;
++  #if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    ad_comm::mpi_manager->get_int_from_master(nvar);
++    ad_comm::mpi_manager->get_int_from_master(nvar1);
++    ad_comm::mpi_manager->get_int_from_master(ndvar);
++  }
++  #endif
+ 
++  if (nvar==nvar1)
++  {
++    //Do nothing
++  }
++  else
++  {
++#if   defined(USE_LAPLACE)
++
++    #if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
++    {
++      dmatrix S(1,nvar,1,nvar);
++      dmatrix BS(1,nvar1,1,nvar1);
++      BS.initialize();
++
++      for (int i=1; i<=nvar; i++)
++      {
++         S(i)=ad_comm::mpi_manager->get_dvector_from_master();
++      }
++      dvector scale=ad_comm::mpi_manager->get_dvector_from_master();
++    
++      get_bigS(ndvar,nvar1,nvar,S,BS,scale);
++    }
++    #endif
++
++#endif
++  }
++}
++
+ void function_minimizer::sd_routine(void)
+ {
+   int nvar=initial_params::nvarcalc(); // get the number of active parameters
+@@ -92,6 +132,17 @@
+ 
+ 
+   int ndvar=stddev_params::num_stddev_calc();
++  #if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++    {
++      ad_comm::mpi_manager->send_int_to_slave(nvar,si);
++      ad_comm::mpi_manager->send_int_to_slave(nvar1,si);
++      ad_comm::mpi_manager->send_int_to_slave(ndvar,si);
++    }
++  }
++  #endif
+   dvector scale(1,nvar1);   // need to get scale from somewhere
+   dvector v(1,nvar);  // need to read in v from model.rep
+   dmatrix S(1,nvar,1,nvar);
+@@ -205,6 +256,26 @@
+ 
+         dmatrix BS(1,nvar1,1,nvar1);
+         BS.initialize();
++
++
++        #if defined(USE_ADMPI)
++        if (ad_comm::mpi_manager)
++        {
++          //S,scale
++          for (int i=1; i<=nvar; i++)
++          {
++            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++            {
++              ad_comm::mpi_manager->send_dvector_to_slave(S(i),si);
++            }
++          }
++          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++          {
++            ad_comm::mpi_manager->send_dvector_to_slave(scale,si);
++          }
++        }
++        #endif
++
+         get_bigS(ndvar,nvar1,nvar,S,BS,scale);
+         
+         {
+Index: nh99/modspmin.cpp
+===================================================================
+--- nh99/modspmin.cpp	(.../trunk/src)	(revision 550)
++++ nh99/modspmin.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -14,6 +14,7 @@
+ #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
+ #  include <windows.h>
+ #endif
++
+ char banner0[56]={"*****************************************************"};
+ char banner1[56]={"This is the open source version of AD Model Builder"};
+ char banner1a[58]={"You can freely use AD Model Builder"};
+@@ -320,6 +321,16 @@
+   void function_minimizer::computations1(int argc,char * argv[])
+   {
+     tracing_message(traceflag,"B1");
++#if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
++    {
++      if (ad_comm::mpi_manager->is_slave())
++      {
++        if (initial_df1b2params::separable_flag)
++          ad_comm::mpi_manager->set_minimize_flag();
++      }
++    }
++#endif
+ #if defined(__SPDLL__)
+     //if (ad_printf) (*ad_printf)("entered void function_minimizer::computations1\n");
+ #endif
+@@ -431,16 +442,35 @@
+       }
+       */
+ 
++
+       if (option_match(argc,argv,"-noest") == -1)
+       {
+-        if (!function_minimizer::have_constraints)
++      #if defined(USE_ADMPI)
++        if (!ad_comm::mpi_manager)
+         {
+-          minimize();
++      #endif
++          if (!function_minimizer::have_constraints)
++          {
++            minimize();
++          }
++          else
++          {
++            constraints_minimize();
++          }
++      #if defined(USE_ADMPI)
+         }
++        else if (ad_comm::mpi_manager->get_do_minimize())
++        {
++          if (!function_minimizer::have_constraints)
++            minimize();
++          else
++            constraints_minimize();
++        }
+         else
+         {
+-          constraints_minimize();
++          initial_params::current_phase=initial_params::max_number_phases;
+         }
++      #endif
+       }
+       else
+       {
+@@ -515,13 +545,40 @@
+             }
+             else
+             {
+-              depvars_routine();
+-              hess_inv();
+-              if (spminflag==0)
++ #if defined(USE_ADMPI)
++              if (ad_comm::mpi_manager)
+               {
+-                sd_routine();
++                ad_comm::mpi_manager->set_sync_objfun_flag(0);
++                if (ad_comm::mpi_manager->is_master())
++                {
++                  depvars_routine();
++                  hess_inv();
++                  if (spminflag==0)
++                  {
++                    sd_routine();
++                  }
++                }
++                else
++                {
++                  if (spminflag==0)
++                  {
++                    sd_routine_mpi_slave();
++                  }
++                }
+               }
++              else
++              {
++  #endif // if defined(USE_ADMPI)
++                depvars_routine();
++                hess_inv();
++                if (spminflag==0)
++                {
++                  sd_routine();
++                }
++              }
++  #if defined(USE_ADMPI)
+             }
++  #endif
+           }
+           else
+           {
+Index: nh99/model7.cpp
+===================================================================
+--- nh99/model7.cpp	(.../trunk/src)	(revision 550)
++++ nh99/model7.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -20,8 +20,641 @@
+ void vm_initialize(void);
+ int have_jvm=0;
+ 
++ad_separable_manager * separable_manager;
+ 
++#if defined(USE_ADMPI)
++const int admpi_manager::MAX_MPI_OFFSET=1000;
++dvector admpi_manager::get_dvector_from_master(void)
++{
++  MPI_Status status;
++  int mmin,mmax;
++  MPI_Recv(&mmin,1, MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
++  MPI_Recv(&mmax,1, MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
++  dvector tmp(mmin,mmax);
++  int size=mmax-mmin+1;
++  MPI_Recv(&(tmp(mmin)),size, MPI_DOUBLE,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
++  return tmp;
++}
+ 
++dvector admpi_manager::get_dvector_from_slave(int _slave_number)
++{
++  int slave_number=_slave_number-1;
++  MPI_Status status;
++  int mmin,mmax;
++  MPI_Recv(&mmin,1, MPI_INT,slave_number,0,everyone,&status);
++  MPI_Recv(&mmax,1, MPI_INT,slave_number,0,everyone,&status);
++  dvector tmp(mmin,mmax);
++  int size=mmax-mmin+1;
++  MPI_Recv(&(tmp(mmin)),size, MPI_DOUBLE,slave_number,0,everyone,&status);
++  return tmp;
++}
++
++void admpi_manager::send_dvector_to_master(const dvector& v)
++{
++  int mmin=v.indexmin();
++  int mmax=v.indexmax();
++  int size=mmax-mmin+1;
++  mpi_int[mpi_offset]=v.indexmin();
++  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,0,0,parent);
++  increment_mpi_offset();
++  mpi_int[mpi_offset]=v.indexmax();
++  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,0,0,parent);
++  increment_mpi_offset();
++  MPI_Send((void*)&(v[mmin]),size,MPI_DOUBLE,0,0,parent);
++}
++
++double admpi_manager::get_double_from_slave(int _slave_number)
++{
++  double tmp;
++  int slave_number=_slave_number-1;
++  MPI_Status status;
++  MPI_Recv(&tmp,1, MPI_DOUBLE,slave_number,0,everyone,&status);
++  return tmp;
++}
++
++void admpi_manager::send_double_to_master(const double v)
++{
++  MPI_Send((void*)&v,1,MPI_DOUBLE,0,0,parent);
++}
++
++void admpi_manager::send_double_to_slave(const double v,
++  int _slave_number)
++{
++  int slave_number=_slave_number-1;
++  MPI_Send((void*)&v,1,MPI_DOUBLE,slave_number,0,everyone);
++}
++
++double admpi_manager::get_double_from_master(void)
++{
++  MPI_Status status;
++  double tmp;
++  MPI_Recv(&tmp,1,MPI_DOUBLE,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
++  return tmp;
++}
++
++ivector admpi_manager::get_ivector_from_master(void)
++{
++  MPI_Status status;
++  int mmin,mmax;
++  MPI_Recv(&mmin,1, MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
++  MPI_Recv(&mmax,1, MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
++  ivector tmp(mmin,mmax);
++  int size=mmax-mmin+1;
++  MPI_Recv(&(tmp(mmin)),size,MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent,&status);
++  //cout << "SCA" << tmp << endl;
++  return tmp;
++}
++
++void admpi_manager::send_slave_hessian_assignments(int nvar)
++{
++  int m=nvar/(1+num_hess_slaves);
++  int excess=nvar-m*(1+num_hess_slaves);
++  if (allocated(all_hess_bounds)) all_hess_bounds.deallocate();
++  all_hess_bounds.allocate(0,num_hess_slaves,1,2);
++  all_hess_bounds(0,1)=1;
++  all_hess_bounds(0,2)=m;
++  if (allocated(hess_bounds)) hess_bounds.deallocate();
++  hess_bounds.allocate(1,2);
++  hess_bounds=all_hess_bounds(0);
++  for (int i=1;i<=num_hess_slaves;i++)
++  {
++    all_hess_bounds(i,1)=all_hess_bounds(i-1,2)+1;
++    all_hess_bounds(i,2)=all_hess_bounds(i,1)+m-1;
++    if (excess>0) 
++    {
++      all_hess_bounds(i,2)+=1;
++      excess--;
++    }
++    //cout << "In send slave hess ass from master" << endl;
++    //cout << "sending " << hess_bounds << endl;
++    send_ivector_to_slave(all_hess_bounds(i),i);
++    //cout << "sent" << endl;
++  }
++}
++
++void admpi_manager::get_slave_hessian_assignments(void)
++{
++  //cout << "In get slave hess bounds from master" << endl;
++  hess_bounds=get_ivector_from_master();
++  //cout << "got hess_bounds = " << hess_bounds << endl;
++}
++
++void admpi_manager::get_int_from_slave(int &i,int _slave_number)
++{
++  int slave_number=_slave_number-1;
++  MPI_Status status;
++  MPI_Recv(&i,1,MPI_INT,slave_number,0,everyone,&status);
++}
++
++void admpi_manager::get_int_from_master(int &i)
++{
++  MPI_Status status;
++  MPI_Comm parent2; 
++  MPI_Comm_get_parent(&parent2);
++  // note this is a blocking receive
++  //cout << "SBA" << parent << endl;
++  //cout << "parent = " << parent << endl;
++  MPI_Recv(&i,1, MPI_INT,MPI_ANY_SOURCE,MPI_ANY_TAG,parent2,&status);
++  //cout << "SBB" << parent << endl;
++}
++
++int admpi_manager::is_master(void)
++{
++  return (parent==MPI_COMM_NULL);
++}
++
++int admpi_manager::is_slave(void)
++{
++  return (parent!=MPI_COMM_NULL);
++}
++admpi_manager::~admpi_manager()
++{
++  delete [] global_request;
++  global_request=0;
++  delete [] mpi_int;
++  mpi_int=0;
++  MPI_Finalize();
++}
++
++
++ // void admpi_manager::send_dvector_to_slave(const dvector& v,
++ //   int _slave_number)
++ // {
++ //   int slave_number=_slave_number-1;
++ //   MPI_Status myStatus;
++ //   /* make sure that the previous read using this memory area
++ //      has completed 
++ //   */
++ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
++ //                                   /* once */
++ //   {
++ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
++ //   }
++ //   mpi_int[mpi_offset]=v.indexmin();
++ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
++ //     everyone,&(global_request[mpi_offset]));
++ //   increment_mpi_offset();
++ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
++ //                                   /* once */
++ //   {
++ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
++ //   }
++ //   mpi_int[mpi_offset]=v.indexmax();
++ // 
++ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
++ //     everyone,&(global_request[mpi_offset]));
++ //   increment_mpi_offset();
++ //   int mmin=v.indexmin();
++ //   int mmax=v.indexmax();
++ //   int size=mmax-mmin+1;
++ //   MPI_Request request;
++ //   MPI_Isend(&(v[mmin]),size,MPI_DOUBLE,slave_number,0,everyone,&request);
++ // }
++
++void admpi_manager::send_dvector_to_slave(const dvector& v,
++  int _slave_number)
++{
++  int slave_number=_slave_number-1;
++  int mmin=v.indexmin();
++  int mmax=v.indexmax();
++  int size=mmax-mmin+1;
++  mpi_int[mpi_offset]=v.indexmin();
++  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
++  increment_mpi_offset();
++  mpi_int[mpi_offset]=v.indexmax();
++  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
++  increment_mpi_offset();
++  MPI_Send((void*)&(v[mmin]),size,MPI_DOUBLE,slave_number,0,everyone);
++}
++
++void admpi_manager::send_ivector_to_slave(const ivector& v,
++  int _slave_number)
++{
++  int slave_number=_slave_number-1;
++  int mmin=v.indexmin();
++  int mmax=v.indexmax();
++  int size=mmax-mmin+1;
++  mpi_int[mpi_offset]=v.indexmin();
++  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
++  increment_mpi_offset();
++  mpi_int[mpi_offset]=v.indexmax();
++  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
++  increment_mpi_offset();
++  MPI_Send((void*)&(v[mmin]),size,MPI_INT,slave_number,0,everyone);
++}
++
++ // void admpi_manager::send_ivector_to_slave(const ivector& v,int _slave_number)
++ // {
++ //   int slave_number=_slave_number-1;
++ //   MPI_Status myStatus;
++ //   /* make sure that the previous read using this memory area
++ //      has completed 
++ //   */
++ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
++ //                                   /* once */
++ //   {
++ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
++ //   }
++ //   mpi_int[mpi_offset]=v.indexmin();
++ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
++ //     everyone,&(global_request[mpi_offset]));
++ //   increment_mpi_offset();
++ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
++ //                                   /* once */
++ //   {
++ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
++ //   }
++ //   mpi_int[mpi_offset]=v.indexmax();
++ // 
++ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
++ //     everyone,&(global_request[mpi_offset]));
++ //   increment_mpi_offset();
++ //   int mmin=v.indexmin();
++ //   int mmax=v.indexmax();
++ //   int size=mmax-mmin+1;
++ //   MPI_Request request;
++ //   MPI_Isend(&(v[mmin]),size,MPI_INT,slave_number,0,everyone,&request);
++ //   //cout << "MBA" << endl;
++ //   //cout << "MCA" <<  v << endl;
++ //   // wiat remove 1
++ //   //MPI_Wait(&(request), &myStatus);
++ //   //cout << "MBB" << endl;
++ // }
++ // 
++ // void admpi_manager::send_int_to_slave(int i,int _slave_number)
++ // {
++ //   int slave_number=_slave_number-1;
++ //   MPI_Status myStatus;
++ //   MPI_Request request;
++ //   /* make sure that the previous read using this memory area
++ //      has completed 
++ //   */
++ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
++ //                                   /* once */
++ //   {
++ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
++ //   }
++ //   mpi_int[mpi_offset]=i;
++ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,
++ //     everyone,&(global_request[mpi_offset]));
++ //   //sleep(1);
++ //   //MPI_Wait(&(global_request[mpi_offset]), &myStatus);
++ //   increment_mpi_offset();
++ // }
++
++void admpi_manager::send_int_to_slave(int i,int _slave_number)
++{
++  int slave_number=_slave_number-1;
++  mpi_int[mpi_offset]=i;
++  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,slave_number,0,everyone);
++  increment_mpi_offset();
++}
++
++void admpi_manager::increment_mpi_cobjfun(const double& f)
++{
++  mpi_cobjfun+=f;
++}
++
++ // void admpi_manager::send_int_to_master(int i)
++ // {
++ //   MPI_Status myStatus;
++ //   MPI_Request request;
++ //   /* make sure that the previous read using this memory area
++ //      has completed 
++ //   */
++ //   if(global_request[mpi_offset])  /* checks to see if has been used at least */
++ //                                   /* once */
++ //   {
++ //     MPI_Wait(&(global_request[mpi_offset]), &myStatus);
++ //   }
++ //   mpi_int[mpi_offset]=i;
++ //   MPI_Isend(&(mpi_int[mpi_offset]),1,MPI_INT,0,0,
++ //     parent,&(global_request[mpi_offset]));
++ //   //sleep(1);
++ //   // remove 2
++ //   //MPI_Wait(&(global_request[mpi_offset]), &myStatus);
++ //   increment_mpi_offset();
++ // }
++
++void admpi_manager::send_int_to_master(int i)
++{
++  mpi_int[mpi_offset]=i;
++  MPI_Send(&(mpi_int[mpi_offset]),1,MPI_INT,0,0,parent);
++  increment_mpi_offset();
++}
++
++void admpi_manager::increment_mpi_offset(void)
++{
++  mpi_offset++;
++  if (mpi_offset==MAX_MPI_OFFSET)
++  {
++    mpi_offset=0;
++  }
++}
++
++admpi_manager::admpi_manager(int m,int argc,char * argv[])
++{
++  parent=0;
++  global_request = new MPI_Request[MAX_MPI_OFFSET];
++  mpi_offset=0;
++  num_slaves=0;
++  num_hess_slaves=0;
++  do_minimize=0;
++  do_hess=0;
++  sync_objfun_flag=0;
++  sync_gradient_flag=0;
++  sync_evaluate_function_flag=0;
++  mpi_int = new int[MAX_MPI_OFFSET];
++ 
++  for (int i=0;i<MAX_MPI_OFFSET;i++)
++  {
++    global_request[i]=0;
++    //mpi_int[i]=0;
++  }
++ 
++  int rank,world_size, universe_size, *universe_sizep, flag;
++  if (strlen(argv[0])>150)
++  {
++    cerr << "program name too long for mpi manager" << endl;
++    ad_exit(1);
++  }
++  else
++  {
++    strncpy(worker_program,argv[0],151);
++  }
++
++  MPI_Init(&argc, &argv);
++  MPI_Comm_size(MPI_COMM_WORLD, &world_size);
++
++  cout << world_size << endl;
++
++  MPI_Comm_rank(MPI_COMM_WORLD, &rank);
++  cout << "master rank " << rank << endl;
++  MPI_Comm_get_parent(&parent);
++
++  //sleep(1);
++  if (is_master())
++  {
++    cout << "I am the master process" << endl;
++    do_minimize=1;
++    do_hess=1;
++    if (world_size != 1) 
++    {
++      cerr << "Error --can only have one MPI master process" << endl;
++      ad_exit(1);
++    }
++
++    //sleep(1);
++
++    // !!! need to pass this number in MPI options
++    int on=0; int nopt=0;
++    if ( (on=option_match(argc,argv,"-nslaves",nopt))>-1)
++    {
++      if (nopt ==1)	    
++      {	      
++        num_slaves=atoi(argv[on+1]);
++        //num_hess_slaves=num_slaves;
++      }
++      else
++      {
++        cerr << "Wrong number of options to -nslaves -- must be 1"
++          " you have " << nopt << endl;		
++        ad_exit(1);
++      }	
++    }
++    else
++    {
++      num_slaves=1;
++      //num_hess_slaves=1;
++    }
++   
++    if (num_slaves < 1) 
++    {
++      cerr << "Error --no room for slaves" << endl;
++      ad_exit(1);
++    }
++
++    //sleep(1);
++
++    /*
++     * Now spawn the slaves. Note that there is a run-time determination
++     * of what type of slaves to spawn, and presumably this calculation must
++
++     * be done at run time and cannot be calculated before starting
++     * the program. If everything is known when the application is
++     * first started, it is generally better to start them all at once
++     * in a single MPI_COMM_WORLD.
++     */
++  
++     fprintf(stderr, "will spawn %d slaves\n", num_slaves);
++     cout << "there are " << num_hess_slaves << " hess slaves" << endl;
++     int * ia=(int*)malloc(sizeof(int));
++     char **myargvs=0;  // = {"-slave", NULL};
++     myargvs=new char*[argc+3];
++     int ii=0;
++     myargvs[ii]=new char[strlen(argv[0])+1];
++     strcpy(myargvs[ii++],argv[0]);
++     myargvs[ii]=new char[strlen("-slave")+1];
++     strcpy(myargvs[ii++],"-slave");
++     for (int i=1;i<argc;i++)
++     {
++       if (strcmp(argv[i],"-master"))
++       {
++         myargvs[ii]=new char[strlen(argv[i])+1];
++         strcpy(myargvs[ii++],argv[i]);
++       }
++     }
++     myargvs[ii]=0;
++       
++
++     
++     ivector ierr(1,num_slaves);
++     ierr=-5555;
++     MPI_Comm_spawn(worker_program, myargvs, num_slaves,
++            MPI_INFO_NULL, 0, MPI_COMM_SELF, &everyone,
++            &(ierr(1)) );
++     for (int i=1;i<=num_slaves;i++)
++     {
++        if (ierr(i) != MPI_SUCCESS)
++        {
++          cerr << "Error spawning slave process " << i << endl;
++          ad_exit(1);
++        }
++     }
++     cout << "Error codes for spawn  " << ierr << endl;
++            //MPI_ERRCODES_IGNORE);
++     //cout << "enter 2" << endl;
++     //cin >> ia[0];
++     ia[0]=2;
++     // send an int to the slaves so that they will wait
++     // until they get it
++     /*  
++     for (int i=1;i<=num_slaves;i++)
++     {
++       send_int_to_slave(ia[0]+i,i);
++     }
++     */
++     //sleep(1);
++  }
++  if (is_slave())
++  {
++    //cout << "I am a slave process" << endl;
++    slave_number=rank+1;
++    //cout << "slave_number = " << slave_number << endl;
++    if (initial_df1b2params::separable_flag)
++      do_minimize=1;
++    else
++      do_minimize=0;
++    do_hess=1;
++    //int i=-1;
++    //get_int_from_master(i);
++    //cout << "In slave i = " << i << endl;
++    //sleep(2);
++    cout << "I have " << argc << " argurments which are " << endl;
++    for (int i=0;i<argc;i++)
++    {
++      cout << argv[i] << endl;
++    }
++  }
++}
++
++#endif
++
++ad_separable_manager::ad_separable_manager(void)
++{
++  min_bound=0;
++  max_bound=0;
++  min_index=0;
++  max_index=0;
++  initialize_flag=1;
++  model_parameters_flag=0;
++}
++
++void ad_separable_manager::init(int lb,int ub)
++{
++  //if (initialize_flag)
++  if (initialize_flag || lb!=min_bound || ub!=max_bound) // just for now will set up and array of separable bounds managers
++  {
++    initialize_flag=0;
++    min_bound=lb;
++    max_bound=ub;
++#if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
++    {
++      int num_separable_calls = max_bound-min_bound+1;
++      if (num_separable_calls == 1) 
++      {
++        if(ad_comm::mpi_manager->is_master())
++        {
++          min_index = min_bound;
++          max_index = max_bound;
++        }
++        else
++        {
++          min_index = 0;
++          max_index = -1;
++        }
++        return;
++      }
++      if(ad_comm::mpi_manager->is_master())
++      {
++        int local_num_slaves = ad_comm::mpi_manager->get_num_slaves()+1;
++        if (local_num_slaves > num_separable_calls)
++        {
++          cerr << "Number of slaves exceeds the number of separable "
++               << "calls." << endl;
++          cerr << "Number of separable calls=" << num_separable_calls << endl;
++          cerr << "Set -nslaves values to " << num_separable_calls-1
++               << " or smaller." << endl;
++          ad_exit(1);
++        }
++        int nd=num_separable_calls/local_num_slaves;
++        int r= num_separable_calls - nd * local_num_slaves;
++        ivector mpi_partition(1,local_num_slaves);
++        mpi_partition=nd;
++        mpi_partition(1,r)+=1;
++
++        ivector minsep(1,local_num_slaves);
++        ivector maxsep(1,local_num_slaves);
++        minsep(1)=min_bound;
++        maxsep(1)=mpi_partition(1)+minsep(1)-1;
++        for (int i=2;i<=local_num_slaves;i++)
++        {
++          minsep(i)=maxsep(i-1)+1;
++          maxsep(i)=minsep(i)+mpi_partition(i)-1;
++        }
++
++        min_index = minsep(1);
++        max_index = maxsep(1);
++        for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
++        {
++          ad_comm::mpi_manager->send_int_to_slave(minsep(i+1),i);
++          ad_comm::mpi_manager->send_int_to_slave(maxsep(i+1),i);
++        }
++      }
++      else
++      {
++        ad_comm::mpi_manager->get_int_from_master(min_index);
++        ad_comm::mpi_manager->get_int_from_master(max_index);
++      }
++    }
++    else
++    {
++#endif
++      min_index=min_bound;
++      max_index=max_bound;
++#if defined(USE_ADMPI)
++    }
++#endif
++  }
++}
++
++int ad_separable_manager::indexmin(void)
++{
++#if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->sync_objfun_flag)
++    {
++      return min_index;
++    }
++    else
++    {
++      return min_bound;
++    }
++  }
++  else
++  {
++#endif
++    return min_bound;
++#if defined(USE_ADMPI)
++  }
++#endif
++}
++
++int ad_separable_manager::indexmax(void)
++{
++#if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->sync_objfun_flag)
++    {
++      return max_index;
++    }
++    else
++    {
++      return max_bound;
++    }
++  }
++  else
++  {
++#endif
++    return max_bound;
++#if defined(USE_ADMPI)
++  }
++#endif
++}
++
+ void strip_full_path(const adstring& _s)
+ {
+   adstring& s = (adstring&) _s;
+@@ -82,6 +715,14 @@
+   if (option_match(_argc,_argv,"-slave")>-1)  pvm_flag=2;
+   if (option_match(_argc,_argv,"-master")>-1) pvm_flag=1;
+ 
++#if defined(USE_ADMPI)
++  if (pvm_flag)
++    mpi_manager = new admpi_manager(pvm_flag,_argc,_argv);
++  else
++    mpi_manager = NULL;
++#endif
++  separable_manager = new ad_separable_manager();
++
+ #if defined(USE_ADPVM)
+   if (pvm_flag)
+     pvm_manager = new adpvm_manager(pvm_flag);
+@@ -490,6 +1131,18 @@
+ 
+ ad_comm::~ad_comm()
+ {
++#if defined(USE_ADMPI)
++  if (mpi_manager)
++  {
++    delete mpi_manager;
++    mpi_manager=0;
++  }
++#endif
++  if (separable_manager)
++  {
++    delete separable_manager;
++    separable_manager=0;
++  }
+   if (ptm)
+   {
+     delete ptm;
+@@ -517,6 +1170,43 @@
+   }
+ }
+ 
++#if defined(USE_ADMPI)
++void add_slave_suffix(const adstring& _tmpstring)
++{
++  ADUNCONST(adstring,tmpstring)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->is_slave())
++    {
++      tmpstring += "_";
++      tmpstring += str(ad_comm::mpi_manager->get_slave_number());
++       cout << "In slave " << tmpstring << endl;
++    }
++    else
++    {
++      tmpstring += "_master";
++       cout << "In master " << tmpstring << endl;
++    }
++  }
++}
++
++void report_file_opening(const adstring& _tmpstring)
++{
++  ADUNCONST(adstring,tmpstring)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->is_slave())
++    {
++       cout << "In slave opening file " << tmpstring << endl;
++    }
++    else
++    {
++       cout << "In master opening file " << tmpstring << endl;
++    }
++  }
++}
++#endif
++
+ void function_minimizer::pre_userfunction(void)
+ {
+ #if defined(USE_LAPLACE)
+@@ -526,6 +1216,15 @@
+     {
+       //lapprox->num_separable_calls=0;
+       lapprox->separable_calls_counter=0;
++#if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        if (ad_comm::mpi_manager->is_slave())
++        {
++          ad_comm::mpi_manager->reset_mpi_cobjfun();
++        }
++      }
++#endif
+     }
+   }
+ #endif
+@@ -561,4 +1260,35 @@
+     }
+   }
+ #endif
++#if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->sync_objfun_flag &&
++        function_minimizer::random_effects_flag)
++    {
++      double local_pobjfun=value(*objective_function_value::pobjfun);
++      if (ad_comm::mpi_manager->is_master())
++      {
++        // sync objective function
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          local_pobjfun+=ad_comm::mpi_manager->get_double_from_slave(si);
++        }
++        // send to slaves
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          ad_comm::mpi_manager->send_double_to_slave(local_pobjfun,si);
++        }
++      }
++      else
++      {
++        // sync objective function
++        ad_comm::mpi_manager->send_double_to_master(local_pobjfun);
++        // get initial_df1b2params::cobjfun from master
++        local_pobjfun=ad_comm::mpi_manager->get_double_from_master();
++      }
++      value(*objective_function_value::pobjfun)=local_pobjfun;
++    }
++  }
++#endif
+ }
+Index: nh99/admodel.h
+===================================================================
+--- nh99/admodel.h	(.../trunk/src)	(revision 550)
++++ nh99/admodel.h	(.../branches/parallel/src)	(revision 550)
+@@ -1828,6 +1828,7 @@
+   void hess_inv(void);
+   void depvars_routine(void);
+   void sd_routine(void);
++  void sd_routine_mpi_slave(void);
+   int ef_(double * f, double * x);
+   int constrained_minimization2(int _n,int _nh, int _ng,dvector& __x);
+   static int constraint_exit_number;
+@@ -2803,6 +2804,91 @@
+ 
+ dvector read_old_scale(int & old_nvar);
+ 
++#if defined(USE_ADMPI)
++#include "mpi.h"
++class admpi_manager
++{
++  static const int MAX_MPI_OFFSET;
++  MPI_Request * global_request;
++  int * mpi_int;
++  int num_slaves;
++  int num_hess_slaves; //the number of slaves for hessian may
++                    // be different from the number of slaves in future
++  int num_separable_slaves;
++  int slave_number; // not zero offset
++  int mpi_offset;
++  MPI_Comm parent; /* so slave can communicate with master*/
++  MPI_Comm everyone; /* intercommunicator */
++  char worker_program[152];
++  int master_flag;
++  int do_minimize;
++  int do_hess;
++  imatrix all_hess_bounds;
++  ivector hess_bounds;
++  int min_separable_index;
++  int max_separable_index;
++  double mpi_cobjfun;
++public:
++  int sync_objfun_flag;
++  void set_sync_objfun_flag(int _flag){ sync_objfun_flag = _flag; }
++  int sync_gradient_flag;
++  int get_num_slaves(void){ return num_slaves;}
++  int sync_evaluate_function_flag;
++  int get_num_hess_slaves(void){ return num_hess_slaves;}
++  int get_num_separable_slaves(void){ return num_separable_slaves;}
++  void set_num_hess_slaves(int _num_hess_slaves){ num_hess_slaves = _num_hess_slaves; }
++  void set_num_separable_slaves(int _num_separable_slaves){ num_separable_slaves = _num_separable_slaves; }
++  void reset_mpi_cobjfun(void){ mpi_cobjfun=0.0;}
++  void set_minimize_flag(void){ do_minimize=1; }
++  double get_mpi_cobjfun(void){ return mpi_cobjfun;}
++  int get_slave_number(void){ return slave_number;}
++  int get_do_minimize(void){ return do_minimize;}
++  int get_do_hess(void){ return do_hess;}
++  int get_min_separable_index(void){ return min_separable_index;}
++  int get_max_separable_index(void){ return max_separable_index;}
++  admpi_manager(int m,int argc,char * argv[]);
++  ~admpi_manager();
++  int is_master(void);
++  void send_int_to_slave(int i,int slave_number);
++  void send_int_to_master(int i);
++  void increment_mpi_offset(void);
++  int is_slave(void);
++  dvector get_dvector_from_master(void);
++  ivector get_ivector_from_master(void);
++  ivector get_hess_bounds(void){ return hess_bounds;}
++  void send_dvector_to_slave(const dvector& v,int slave_number);
++  void send_ivector_to_slave(const ivector& v,int slave_number);
++  void get_int_from_master(int &i);
++  void get_int_from_slave(int &i,int slave_number);
++  void get_slave_hessian_assignments(void);
++  void send_slave_hessian_assignments(int);
++  dvector get_dvector_from_slave(int slave_number);
++  void send_dvector_to_master(const dvector& v);
++  void set_separable_assignments(const int _num_separable_calls);
++  void increment_mpi_cobjfun(const double& f);
++  double get_double_from_slave(int slave_number);
++  void send_double_to_master(const double v);
++  void send_double_to_slave(const double v,int slave_number);
++  double get_double_from_master(void);
++};
++#endif
++
++
++class ad_separable_manager
++{
++  int min_index; //use with ADMPI
++  int max_index;
++  int min_bound; //use if no MPI or not syncing
++  int max_bound;
++  int initialize_flag;
++public:
++  int model_parameters_flag;
++  int indexmin(void);
++  int indexmax(void);
++  ad_separable_manager(void);
++  void init(int lb,int ub);
++};
++
+ int withinbound(int lb,int n,int ub);
+ 
+ #if defined(__MSVC32__)
+Index: nh99/xmodelm3.cpp
+===================================================================
+--- nh99/xmodelm3.cpp	(.../trunk/src)	(revision 550)
++++ nh99/xmodelm3.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -14,6 +14,7 @@
+ #  include <adrndeff.h>
+ #endif
+ 
++
+   void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,int& next_flag);
+ 
+   void ad_update_function_minimizer_report(int feval,int iter,int phase,double fval,
+@@ -48,6 +49,7 @@
+   int function_minimizer::inner_opt_flag=0;
+ #endif
+ 
++void update_pobjfun(void);
+ 
+   int function_minimizer::bad_step_flag=0;  
+ 
+@@ -502,6 +504,7 @@
+         {
+ #endif  //#if defined(USE_ADPVM)
+           userfunction();
++          update_pobjfun();
+ #if defined(USE_ADPVM)
+         }
+ #endif  //#if defined(USE_ADPVM)
+@@ -516,12 +519,31 @@
+         print_is_diagnostics(lapprox);
+       }
+ #endif
+-      initial_params::save();
+-      report();
+-      // in case the user changes some initial_params in the report section
+-      // call reset again
+-      initial_params::reset(dvar_vector(x));
+-      report_function_minimizer_stats();
++      #if defined(USE_ADMPI)
++        if (ad_comm::mpi_manager)
++        {
++          if (ad_comm::mpi_manager->is_master())
++          {
++            initial_params::save();
++            report();
++            // in case the user changes some initial_params in the report
++            // section call reset again
++            initial_params::reset(dvar_vector(x));
++            report_function_minimizer_stats();
++          }
++        }
++        else
++        {
++      #endif
++          initial_params::save();
++          report();
++          // in case the user changes some initial_params in the report section
++          // call reset again
++          initial_params::reset(dvar_vector(x));
++          report_function_minimizer_stats();
++      #if defined(USE_ADMPI)
++        }
++      #endif
+       if (quit_flag=='Q') break;
+       if (!quit_flag || quit_flag == 'N')
+       {
+@@ -670,7 +692,25 @@
+     }
+     else
+     {   
+-      option_value=atoi(ad_comm::argv[on1+1]);
++      char * tmp=ad_comm::argv[on1+1];
++
++      int n=strlen(tmp);
++      adstring tmp1(n-1);
++      if (tmp[n-1]=='m' || tmp[n-1]=='M')
++      {
++        tmp1=adstring(tmp)(1,n-1);
++        option_value=atoi(tmp1);
++        option_value*=1000000;
++       cout << option_value << endl;
++       ad_exit(1);
++      }
++      else
++      {
++        option_value=atoi(ad_comm::argv[on1+1]);
++      }
++        
++
++
+     }
+   }
+   return on1;
+@@ -895,3 +935,37 @@
+ 
+ #endif // #if defined(USE_LAPLACE)
+ 
++void update_pobjfun(void)
++{
++#if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->sync_objfun_flag &&
++        function_minimizer::random_effects_flag)
++    {
++      double local_pobjfun=value(*objective_function_value::pobjfun);
++      if (ad_comm::mpi_manager->is_master())
++      {
++        // sync objective function
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          local_pobjfun+=ad_comm::mpi_manager->get_double_from_slave(si);
++        }
++        // send to slaves
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          ad_comm::mpi_manager->send_double_to_slave(local_pobjfun,si);
++        }
++      }
++      else
++      {
++        // sync objective function
++        ad_comm::mpi_manager->send_double_to_master(local_pobjfun);
++        // get initial_df1b2params::cobjfun from master
++        local_pobjfun=ad_comm::mpi_manager->get_double_from_master();
++      }
++      value(*objective_function_value::pobjfun)=local_pobjfun;
++    }
++  }
++#endif
++}
+
+Index: linad99/df_file.cpp
+===================================================================
+--- linad99/df_file.cpp	(.../trunk/src)	(revision 550)
++++ linad99/df_file.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -79,6 +79,12 @@
+ #include <stdlib.h>
+ #include <stdio.h>
+ #include <string.h>
++ 
++#if defined(USE_ADMPI)
++  void add_slave_suffix(const adstring& tmp);
++  void report_file_opening(const adstring& tmp);
++#endif
++
+   char lastchar(char *);
+ 
+   void byte_copy(void * dest,void * source, unsigned num_bytes);
+@@ -186,6 +192,23 @@
+     {
+       sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
+     }
++
++    adstring tmpstring=cmpdif_file_name;
++#if defined(USE_ADMPI)
++      add_slave_suffix(tmpstring);
++#endif // #if defined(USE_ADMPI)
++      if (::length(tmpstring)>100)
++      {
++        cerr << "Need to increase length of cmpdif_file_name"
++             << endl;
++        ad_exit(1);
++      }
++
++     strncpy(&cmpdif_file_name[0],tmpstring,101);
++
++
++
++
+ #if defined (__MSVC32__) || defined (__WAT32__)
+     file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
+                      O_BINARY, S_IREAD | S_IWRITE);
+@@ -241,14 +264,14 @@
+       cerr << "Error closing file " << cmpdif_file_name << "\n";
+     }
+ #   if defined ( __SUN__) ||  defined ( __GNU__)
+-      unlink(cmpdif_file_name);
++      //unlink(cmpdif_file_name);
+ #else
+       adstring currentdir;
+       ad_getcd(currentdir);
+       int xxx=remove(cmpdif_file_name);
+       if (xxx) {
+         cerr << "Error trying to delete file " << cmpdif_file_name << endl;
+-        xxx=unlink(cmpdif_file_name);
++        //xxx=unlink(cmpdif_file_name);
+         cout << xxx << endl;
+       }
+ #endif
+Index: linad99/adglobl.cpp
+===================================================================
+--- linad99/adglobl.cpp	(.../trunk/src)	(revision 550)
++++ linad99/adglobl.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -17,6 +17,9 @@
+  adtimer * ad_comm::ptm1=0;
+  int ad_comm::bandwidth=0;
+  adpvm_manager * ad_comm::pvm_manager=NULL;
++#if defined(USE_ADMPI)
++ admpi_manager * ad_comm::mpi_manager=NULL;
++#endif
+ 
+  int ad_comm::time_flag=0;
+  adstring ad_comm::subdir;
+Index: linad99/gradstrc.cpp
+===================================================================
+--- linad99/gradstrc.cpp	(.../trunk/src)	(revision 550)
++++ linad99/gradstrc.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -70,7 +70,7 @@
+ int ctlc_flag = 0;
+ int gradient_structure::Hybrid_bounded_flag=0;
+ DF_FILE * gradient_structure::fp=NULL;
+-char gradient_structure::cmpdif_file_name[61];
++char gradient_structure::cmpdif_file_name[101];
+ //char gradient_structure::var_store_file_name[61];
+ int gradient_structure::NUM_RETURN_ARRAYS = 25;
+ double * gradient_structure::hessian_ptr=NULL;
+@@ -194,7 +194,7 @@
+   #if defined ( __SUN__) ||  defined ( __GNU__)
+    if (gradient_structure::GRAD_STACK1)
+    {
+-     unlink(gradient_structure::GRAD_STACK1->gradfile_name1);
++     //unlink(gradient_structure::GRAD_STACK1->gradfile_name1);
+      unlink(gradient_structure::GRAD_STACK1->gradfile_name2);
+      unlink(gradient_structure::GRAD_STACK1->var_store_file_name);
+      //unlink(gradient_structure::cmpdif_file_name);
+@@ -202,7 +202,7 @@
+   #else
+    if (gradient_structure::GRAD_STACK1)
+    {
+-     remove(gradient_structure::GRAD_STACK1->gradfile_name1);
++     //remove(gradient_structure::GRAD_STACK1->gradfile_name1);
+      remove(gradient_structure::GRAD_STACK1->gradfile_name2);
+      remove(gradient_structure::GRAD_STACK1->var_store_file_name);
+      //cout << remove(gradient_structure::cmpdif_file_name);
+Index: linad99/objects.lst
+===================================================================
+--- linad99/objects.lst	(.../trunk/src)	(revision 550)
++++ linad99/objects.lst	(.../branches/parallel/src)	(revision 550)
+@@ -491,7 +491,8 @@
+ orthpoly.obj \
+ makesub.obj \
+ fvar_a49.obj \
+-adpvm2.obj 
++adpvm2.obj \
++gdbprint.obj
+ OBJ4= \
+ manip.obj \
+ conjprod.obj 
+Index: linad99/gdbprint.cpp
+===================================================================
+--- linad99/gdbprint.cpp	(.../trunk/src)	(revision 0)
++++ linad99/gdbprint.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -0,0 +1,52 @@
++#include <fvar.hpp>
++int just_to_link_gdb1=0;
++
++void dp(const ivector& x)
++{
++  cout << x << endl;
++}
++
++void dp(const dvar_vector& x)
++{
++  cout << x << endl;
++}
++
++void dp(const dvector& x)
++{
++  cout << x << endl;
++}
++
++void dp(int x)
++{
++  cout << x << endl;
++}
++
++void dp(const prevariable& x)
++{
++  cout << x << endl;
++}
++
++void dp(double x)
++{
++  cout << x << endl;
++}
++
++void dp(const imatrix& x)
++{
++  cout << x << endl;
++}
++
++void dp(const dvar_matrix& x)
++{
++  cout << x << endl;
++}
++
++void dp(const dmatrix& x)
++{
++  cout << x << endl;
++}
++
++void dp(const banded_symmetric_dmatrix& x)
++{
++  cout << x << endl;
++}
+Index: linad99/sgradclc.cpp
+===================================================================
+--- linad99/sgradclc.cpp	(.../trunk/src)	(revision 550)
++++ linad99/sgradclc.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -9,6 +9,9 @@
+  * Description not yet available.
+  */
+ #include "fvar.hpp"
++//#if defined(USE_ADMPI)
++//  #include "admodel.h"
++//#endif
+ 
+ #include <sys/stat.h>
+ #include <fcntl.h>
+@@ -199,8 +202,8 @@
+ 		grad_ptr_first)
+     {
+       //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
+-      (*(gradient_structure::GRAD_STACK1->ptr->func))();
+-      icount++;
++      (*(gradient_structure::GRAD_STACK1->ptr->func))(); // sync ptr->ind_addr1?
++      icount++;                                         // maybe below not need
+       if (icount%1000==0)
+       {
+         //cout << "icount = " << icount << endl;
+Index: linad99/gradstak.cpp
+===================================================================
+--- linad99/gradstak.cpp	(.../trunk/src)	(revision 550)
++++ linad99/gradstak.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -91,6 +91,12 @@
+ #include <string.h>
+ #include <time.h>
+ 
++#if defined(USE_ADMPI)
++  void add_slave_suffix(const adstring& tmp);
++  void report_file_opening(const adstring& tmp);
++#endif
++ 
++
+   char lastchar(char *);
+ 
+   char ad_random_part[6]="tmp";
+@@ -192,7 +198,17 @@
+     }
+     else
+     {
+-      sprintf(&gradfile_name1[0],"gradfil1.%s",ad_random_part);
++      adstring tmpstring="gradfil1.tmp";
++#if defined(USE_ADMPI)
++      add_slave_suffix(tmpstring);
++#endif // #if defined(USE_ADMPI)
++      if (::length(tmpstring)>100)
++      {
++        cerr << "Need to increase length of gradfile_name1"
++             << endl;
++        ad_exit(1);
++      }
++      strncpy(&gradfile_name1[0],tmpstring,101);
+     }
+ 
+     path = getenv("ADTMP1"); // NULL if not defined
+@@ -288,11 +304,11 @@
+    }
+ 
+   #if defined ( __SUN__) ||  defined ( __GNU__)
+-   unlink(gradfile_name1);
++   //unlink(gradfile_name1);
+    unlink(gradfile_name2);
+    unlink(var_store_file_name);
+   #else
+-   remove(gradfile_name1);
++   //remove(gradfile_name1);
+    remove(gradfile_name2);
+    remove(var_store_file_name);
+   #endif
+@@ -408,6 +424,7 @@
+      _VARSSAV_PTR=creat(var_store_file_name, O_RDWR);
+ 
+   #elif ( defined ( __SUN__) ||  defined ( __GNU__))
++     //report_file_opening(gradfile_name1);
+ 
+     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
+       O_BINARY , 0777);
+@@ -415,6 +432,7 @@
+       O_CREAT | O_TRUNC | O_BINARY, 0777);
+ 
+   #elif (defined (__GNUDOS__) && !defined(__GNU__))
++     report_file_opening(gradfile_name1);
+     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
+ 		O_BINARY ,   0777);
+     _VARSSAV_PTR=open(var_store_file_name, O_RDWR | 
+Index: linad99/fvar.hpp
+===================================================================
+--- linad99/fvar.hpp	(.../trunk/src)	(revision 550)
++++ linad99/fvar.hpp	(.../branches/parallel/src)	(revision 550)
+@@ -111,6 +111,11 @@
+ */
+ #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
+ 
++#define separable_bounds(var,lb,ub) ad_separable_manager * var = \
++  separable_manager; \
++  var->init(lb,ub);
++#define reset_separable_bounds(var,lb,ub) var->init(lb,ub);
++
+ #define my_off_t long int
+ #ifdef __BORLANDC__
+ #define my_u_off_t unsigned long int
+@@ -1035,7 +1040,7 @@
+  */
+   class gradient_structure
+   {
+-      static char cmpdif_file_name[61];
++      static char cmpdif_file_name[101];
+       static DF_FILE * fp;
+ public:
+       #if defined(NO_DERIVS)
+@@ -1311,10 +1316,10 @@
+       int _GRADFILE_PTR1; // should be int gradfile_handle;
+       int _GRADFILE_PTR2; // should be int gradfile_handle;
+       int _VARSSAV_PTR; // should be int gradfile_handle;
+-      char gradfile_name[61];
+-      char gradfile_name1[61];
+-      char gradfile_name2[61];
+-      char var_store_file_name[61];
++      char gradfile_name[101];
++      char gradfile_name1[101];
++      char gradfile_name2[101];
++      char var_store_file_name[101];
+       void create_gradfile();
+ #ifdef __BORLANDC__
+       long end_pos;
+@@ -1767,6 +1772,10 @@
+         address[i] = iaddress;
+         //  cerr << "In put_address i = " << i << "\n";
+       }
++      void put_value(unsigned int& i, double value)
++      {
++        *address[i] = value;
++      }
+     };
+ 
+     void gradfree(dlink *);
+@@ -5263,7 +5272,7 @@
+ #else
+   unsigned long long  toffset;
+ #endif
+-  char          cmpdif_file_name[81];
++  char          cmpdif_file_name[101];
+   int           file_ptr;
+   DF_FILE(my_u_off_t);
+   ~DF_FILE();
+@@ -8025,12 +8034,16 @@
+ #include <adstring.hpp>
+   adstring get_string_marker(void);
+   class adpvm_manager;
++#if defined(USE_ADMPI)
++  class admpi_manager;
++#endif
+   class adtimer;
+ 
+ /**
+  * Description not yet available.
+  * \param
+  */
++
+ class ad_comm
+ {
+ protected:
+@@ -8049,6 +8062,9 @@
+   static adtimer * ptm1;
+   virtual void get_slave_assignments(void);
+   static adpvm_manager * pvm_manager;
++#if defined(USE_ADMPI)
++  static admpi_manager * mpi_manager;
++#endif
+   static adstring subdir;
+   static streampos change_datafile_name(const adstring& s, const streampos& off = 0);
+   static streampos change_pinfile_name(const adstring& s, const streampos& off = 0);
+@@ -8536,4 +8552,20 @@
+   int norm2(const ivector&);
+   int sumsq(const ivector& v);
+ 
++#if defined(USE_ADMPI)
++  void add_slave_suffix(const adstring& tmp);
++  void report_file_opening(const adstring& tmp);
++#endif
++
++void dp(const ivector& x);
++void dp(const dvar_vector& x);
++void dp(const dvector& x);
++void dp(int x);
++void dp(const prevariable& x);
++void dp(double x);
++void dp(const imatrix& x);
++void dp(const dvar_matrix& x);
++void dp(const dmatrix& x);
++
++
+ #endif //#ifndef FVAR_HPP
+Index: df1b2-separable/f1b2fnl2.cpp
+===================================================================
+--- df1b2-separable/f1b2fnl2.cpp	(.../trunk/src)	(revision 550)
++++ df1b2-separable/f1b2fnl2.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -250,8 +250,9 @@
+       //int i2=list(lrei,2);
+       step(i1-xsize)=local_step(i); 
+     }
+-  } 
+ 
++  } //end if re
++
+   f1b2gradlist->reset();
+   f1b2gradlist->list.initialize();
+   f1b2gradlist->list2.initialize();
+Index: df1b2-separable/df1b2qnm.cpp
+===================================================================
+--- df1b2-separable/df1b2qnm.cpp	(.../trunk/src)	(revision 550)
++++ df1b2-separable/df1b2qnm.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -19,6 +19,10 @@
+ static int no_stuff=0;
+ //static void xxxy(void) {}
+ 
++void grad_sync(const dvector& _g);
++void set_gradient_sync(int flag);
++void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn);
++
+ /**
+  * Description not yet available.
+  * \param
+@@ -26,6 +30,17 @@
+ void function_minimizer::quasi_newton_block(int nvar,int _crit,
+   independent_variables& x,const dvector& _g,const double& _f)
+ {
++#if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
++    {
++      if (random_effects_flag) // if random effects master & slaves make it here. have to sync
++      {
++        //(ad_comm::mpi_manager->sync_objfun_flag)=1;
++        ad_comm::mpi_manager->set_sync_objfun_flag(1);
++      }
++    }
++#endif
++
+   int ifn_trap=0;
+   int itn_trap=0;
+   int on=0;
+@@ -157,6 +172,17 @@
+     }
+   }
+ 
++  int mpi_minimizer_flag=1;
++  #if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->is_slave())
++    {
++      mpi_minimizer_flag=0;
++    }
++  }
++  #endif
++
+   if (!random_effects_flag || !unvar)
+   {
+     dvariable xf=initial_params::reset(dvar_vector(x));
+@@ -166,7 +192,9 @@
+     {
+       while (fmc.ireturn>=0)
+       {
+-        fmc.fmin(f,x,g);
++        if (mpi_minimizer_flag)
++          fmc.fmin(f,x,g);
++        mpi_set_x_f_ireturn(x,f,fmc.ireturn);
+         if (fmc.ireturn>0)
+         {
+           dvariable vf=0.0;
+@@ -180,6 +208,7 @@
+           vf+=*objective_function_value::pobjfun;
+           f=value(vf);
+           gradcalc(nvar,g);
++          grad_sync(g);
+         }
+       }
+     }
+@@ -263,6 +292,7 @@
+       cerr << "Error allocating memory for lapprox" << endl;
+       ad_exit(1);
+     }
++
+     initial_df1b2params::current_phase=initial_params::current_phase;
+     
+     initial_df1b2params::save_varsptr();
+@@ -291,6 +321,36 @@
+           lapprox->check_hessian_type(this);
+         }
+ 
++        int sep_calls = lapprox->num_separable_calls;
++        int master_only_flag=1;
++        if (lapprox->hesstype == 2)
++        {
++          #if defined(USE_ADMPI)
++          if (ad_comm::mpi_manager)
++          {
++            if (ad_comm::mpi_manager->sync_objfun_flag)
++            {
++              if (ad_comm::mpi_manager->is_master())
++              {
++                // get from slaves
++                for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++                {
++                  int tmp;
++                  ad_comm::mpi_manager->get_int_from_slave(tmp,si);
++                  sep_calls+=tmp;
++                }
++              }
++              else
++              {
++                //send to master
++                ad_comm::mpi_manager->send_int_to_master(sep_calls);
++                master_only_flag=0;
++              }
++            }
++          }
++          #endif
++        }
++
+         // Print Hessian type and related info       
+         switch(lapprox->hesstype)
+         {
+@@ -298,8 +358,9 @@
+           cout << "Hessian type 1 " << endl;
+           break;
+         case 2:
+-          cout << "\nBlock diagonal Hessian (Block size =" <<
+-		 (lapprox->usize)/(lapprox->num_separable_calls) << ")\n" << endl;
++          if (master_only_flag)
++            cout << "\nBlock diagonal Hessian (Block size =" <<
++                (lapprox->usize)/(sep_calls) << ")\n" << endl;
+           break;
+         case 3:
+           cout << "\nBanded Hessian (Band width = " << lapprox->bw << ")\n" << endl;
+@@ -332,11 +393,24 @@
+       lapprox->get_hessian_components_banded_lme(this);
+     }
+ 
++    int mpi_minimizer_flag=1;
++    #if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
++    {
++      if (ad_comm::mpi_manager->is_slave())
++      {
++        mpi_minimizer_flag=0;
++      }
++    }
++    #endif
++
+     if (negdirections==0)
+     {
+       while (fmc.ireturn>=0)
+       {
+-        fmc.fmin(f,x,g);
++        if (mpi_minimizer_flag)
++          fmc.fmin(f,x,g);
++        mpi_set_x_f_ireturn(x,f,fmc.ireturn);
+         if (fmc.ireturn>0)
+         {
+           if (ifn_trap)
+@@ -403,6 +477,7 @@
+     delete funnel_init_var::py;
+     funnel_init_var::py=0;
+   }
++
+   gradient_structure::set_NO_DERIVATIVES();
+   ffbest=fmc.fbest;
+   g=fmc.gbest(1,fmc.gbest.indexmax());
+@@ -416,3 +491,80 @@
+ } // end block for quasi newton minimization
+ 
+ #endif
++
++void grad_sync(const dvector& _g)
++{
++#if defined(USE_ADMPI)
++  dvector & g= (dvector&)_g;
++  if (ad_comm::mpi_manager)
++  {
++    if (function_minimizer::random_effects_flag)
++    {
++      dvector local_g = g;
++
++      if (ad_comm::mpi_manager->is_master())
++      {
++        // sync 
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          local_g+=ad_comm::mpi_manager->get_dvector_from_slave(si);
++        }
++        // send to slaves
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          ad_comm::mpi_manager->send_dvector_to_slave(local_g,si);
++        }
++      }
++      else
++      {
++        // sync
++        ad_comm::mpi_manager->send_dvector_to_master(local_g);
++        // get from master
++        local_g=ad_comm::mpi_manager->get_dvector_from_master();
++      }
++
++      g = local_g;
++    }
++  }
++#endif
++}
++
++void set_gradient_sync(int flag)
++{
++#if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
++    {
++      if (ad_comm::mpi_manager->sync_objfun_flag)
++      {
++        (ad_comm::mpi_manager->sync_gradient_flag)=flag;
++      }
++    }
++#endif
++}
++
++void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn)
++{
++#if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
++    {
++      if (ad_comm::mpi_manager->sync_objfun_flag)
++      {
++        if (ad_comm::mpi_manager->is_master())
++        {
++          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++          {
++            ad_comm::mpi_manager->send_dvector_to_slave(x,si);
++            ad_comm::mpi_manager->send_double_to_slave(f,si);
++            ad_comm::mpi_manager->send_int_to_slave(ireturn,si);
++          }
++        }
++        else
++        {
++          x = ad_comm::mpi_manager->get_dvector_from_master();
++          f = ad_comm::mpi_manager->get_double_from_master();
++          ad_comm::mpi_manager->get_int_from_master(ireturn);
++        }
++      }
++    }
++#endif
++}
+Index: df1b2-separable/mod_rhes.cpp
+===================================================================
+--- df1b2-separable/mod_rhes.cpp	(.../trunk/src)	(revision 550)
++++ df1b2-separable/mod_rhes.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -126,11 +126,26 @@
+  */
+ void function_minimizer::hess_routine_noparallel_random_effects(void)
+ {
+-
+   int nvar=initial_params::nvarcalc(); // get the number of active parameters
+   //if (adjm_ptr) set_labels_for_hess(nvar);
+   independent_variables x(1,nvar);
+   initial_params::xinit(x);        // get the initial values into the x vector
++#if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
++    {
++      if (ad_comm::mpi_manager->is_master())
++      {
++        for (int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
++        {
++           ad_comm::mpi_manager->send_dvector_to_slave(x,i);
++        }
++      }
++      else
++      {
++         x=ad_comm::mpi_manager->get_dvector_from_master();
++      }
++    }
++#endif
+   double f;
+   double delta=1.e-4;
+   dvector g1(1,nvar);
+@@ -144,7 +159,6 @@
+   gradient_structure::set_YES_DERIVATIVES();
+   gbest.fill_seqadd(1.e+50,0.);
+ 
+-    
+   dvector ddd(1,nvar);
+   gradcalc(0,ddd);
+   adstring tmpstring;
+@@ -157,20 +171,39 @@
+     }
+     // modify so thaqt we have l_uu and dux for delta method
+     // DF feb 15 05
+-    //if (lapprox->hesstype==2 || lapprox->hesstype==3) 
++    //if (lapprox->hesstype==2 || lapprox->hesstype==3)
++
+     if (lapprox->hesstype==2 ) 
+     {
+       if (lapprox->block_diagonal_hessian)
+       {
++        int evaluate_flag = 1;
++        #if defined(USE_ADMPI)  
++        if (ad_comm::mpi_manager)
++        {
++          if (ad_comm::mpi_manager->is_slave())
++          {
++            evaluate_flag=0;
++          }
++        }
++        #endif
++
+         //if (ad_comm::wd_flag)
+         tmpstring = ad_comm::adprogram_name + ".rhes";
+         ofstream ofs((char*)(tmpstring));
++          if(evaluate_flag)
++          {
+             ofs << "   value      std.dev" << endl;
++          }
+         int mmin=lapprox->block_diagonal_hessian->indexmin();
+         int mmax=lapprox->block_diagonal_hessian->indexmax();
+         int i,j;
+         int ii=1;
++
+         dvector & u= lapprox->uhat;
++        dvector dd(u.indexmin(),u.indexmax());
++        dd.initialize();
++
+         for (i=mmin;i<=mmax;i++)
+         {
+           if (allocated((*(lapprox->block_diagonal_hessian))(i)))
+@@ -182,13 +215,56 @@
+             for (j=jmin;j<=jmax;j++)
+             {
+               //if (ii<=u.indexmax())
++              #if defined(USE_ADMPI)  
++              if (ad_comm::mpi_manager)
+               {
++                dd(ii++)=d(j);
++              }
++              else
++              #endif
++              {
+                 ofs << setprecision(5) << setscientific() 
+                     << setw(14) << u(ii++) << " " << d(j) << endl;;
+               }
+             }
+           }
+         }
++        // send dd,ii, u to master.
++        #if defined(USE_ADMPI)  
++        if (ad_comm::mpi_manager)
++        {
++          if (ad_comm::mpi_manager->is_master())
++          {
++            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++            {
++              int ddmax;
++              ad_comm::mpi_manager->get_int_from_slave(ddmax,si);
++              dvector slave_dd=ad_comm::mpi_manager->
++                  get_dvector_from_slave(si);
++              u+=ad_comm::mpi_manager->get_dvector_from_slave(si);
++
++              for(int ddi=slave_dd.indexmin();ddi<ddmax;ddi++)
++              {
++                dd(ii++)=slave_dd(ddi);
++              }
++            }
++            //ofs
++            for (int j=u.indexmin();j<=u.indexmax();j++)
++            {
++                ofs << setprecision(5) << setscientific() 
++                    << setw(14) << u(j) << " " << dd(j) << endl;;
++            }
++
++          }
++          else
++          {
++            ad_comm::mpi_manager->send_int_to_master(ii);
++            ad_comm::mpi_manager->send_dvector_to_master(dd);
++            ad_comm::mpi_manager->send_dvector_to_master(u);
++          }
++        }
++        #endif
++  
+       }
+       else if (lapprox->bHess)
+       {
+@@ -302,7 +378,18 @@
+       ofs1.close();
+     }
+ 
++    int evaluate_flag = 1;
++    #if defined(USE_ADMPI)  
++    if (ad_comm::mpi_manager)
+     {
++      if (ad_comm::mpi_manager->is_slave())
++      {
++        evaluate_flag=0;
++      }
++    }
++    #endif
++    if(evaluate_flag)
++    {
+       int i,j;
+       tmpstring = ad_comm::adprogram_name + ".luu";
+       uistream uis1((char*)(tmpstring));
+@@ -310,6 +397,7 @@
+       cout << i << " " << j << endl;
+     }
+ 
++
+     int npts=2;
+     int on,nopt;
+     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hpts",nopt))>-1)
+@@ -355,16 +443,45 @@
+     useless(sdelta);
+     sdelta-=1.0;
+ 
+-    
++
+     {
+       //
+-      uostream uos("hessian.bin");
+-      uos << npts;
++      evaluate_flag=1;
++      #if defined(USE_ADMPI)  
++      if (ad_comm::mpi_manager)
++      {
++        if (ad_comm::mpi_manager->is_slave())
++        {
++          evaluate_flag=0;
++        }
++      }
++      #endif
++
++      adstring tmpstring="admodel.bin";
++      #if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        if (ad_comm::mpi_manager->is_slave())
++        {
++          tmpstring += "_";
++          tmpstring += str(ad_comm::mpi_manager->get_slave_number());
++        }
++      }
++      #endif
++      uostream uos(tmpstring);
++      if (evaluate_flag)
++      {
++        uos << npts;
++      }
++
+       for (int i=1;i<=nvar;i++)
+       {
+-        cout << "Estimating row " << i << " out of " << nvar
+-  	   << " for hessian" << endl;
+-  
++        if (evaluate_flag)
++        {
++            cout << "Estimating row " << i << " out of " << nvar
++  	       << " for hessian" << endl;
++        }
++
+         for (int j=-npts;j<=npts;j++)
+         {
+           if (j !=0)
+@@ -374,24 +491,33 @@
+             x(i)=xsave+j*sdelta;
+             g1=(*lapprox)(x,f,this);
+             x(i)=xsave;
+-            uos << i << j << sdelta << g1;
++            if (evaluate_flag)
++            {
++              uos << i << j << sdelta << g1;
++            }
+           }
+           else
+           {
+-            uos << i << j << sdelta << g0;
++            if (evaluate_flag)
++            {
++              uos << i << j << sdelta << g0;
++            }
+           }
+         }
+       }
+     }
+     // check for accuracy
++    if (evaluate_flag)
+     {
+       double sd;
+-      uistream uis("hessian.bin");
++      adstring tmpstring="admodel.bin";
++      uistream uis(tmpstring);
+       uis >> npts;
+       dvector v=get_solution_vector(npts);
+       v.shift(-npts);
+       dmatrix tmp(-npts,npts,1,nvar);
+       dmatrix hess(1,nvar,1,nvar);
++
+       ivector iind(-npts,npts);
+       ivector jind(-npts,npts);
+       int i;
+Index: df1b2-separable/df1b2lp9.cpp
+===================================================================
+--- df1b2-separable/df1b2lp9.cpp	(.../trunk/src)	(revision 550)
++++ df1b2-separable/df1b2lp9.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -155,6 +155,37 @@
+           }
+         }
+       }
++      #if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        if (ad_comm::mpi_manager->sync_objfun_flag)
++        {
++          if (ad_comm::mpi_manager->is_master())
++          {
++            ivector slave_converged(0,ad_comm::mpi_manager->get_num_slaves());
++            slave_converged(0)=converged;
++            // get converge from slaves
++            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++            {
++              ad_comm::mpi_manager->get_int_from_slave(slave_converged(si),si);
++            }
++            converged=min(slave_converged);
++            // send new converged to salves
++            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++            {
++              ad_comm::mpi_manager->send_int_to_slave(converged,si);
++            }
++          }
++          else
++          {
++            // send converged to master
++            ad_comm::mpi_manager->send_int_to_master(converged);
++            // set new converged
++            ad_comm::mpi_manager->get_int_from_master(converged);
++          }
++        }
++      }
++      #endif
+       initrun_flag=0;
+       for (int i2=1;i2<=num_separable_calls;i2++)
+       {
+@@ -172,7 +203,7 @@
+         *objective_function_value::pobjfun=0.0;
+   
+         //num_separable_calls=0;
+-  
++
+         pmin->inner_opt_flag=1;
+         pfmin->AD_uf_inner();
+         pmin->inner_opt_flag=0;
+@@ -250,11 +281,52 @@
+       }
+       u=ub;
+     }
+-    double tmax=max(gmax); 
++    double tmax=max(gmax);
++#if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->sync_objfun_flag)
++    {
++      if (ad_comm::mpi_manager->is_master())
++      {
++        dvector slave_max(0,ad_comm::mpi_manager->get_num_slaves());
++        slave_max(0)=tmax;
++        // get tmax from slaves
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          slave_max(si)=ad_comm::mpi_manager->get_double_from_slave(si);
++        }
++        tmax=max(slave_max);
++        // send new tmax to salves
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          ad_comm::mpi_manager->send_double_to_slave(tmax,si);
++        }
++        cout <<  " inner maxg = " << tmax << endl; 
++      }
++      else
++      {
++        // send tmax to master
++        ad_comm::mpi_manager->send_double_to_master(tmax);
++        // set new tmax
++        tmax = ad_comm::mpi_manager->get_double_from_master();
++      }
++    }
++    else
++    {
++      cout <<  " inner maxg = " << tmax << endl; 
++    }
++  }
++  else
++  {
++#endif
+     cout <<  " inner maxg = " << tmax << endl; 
+-  
++#if defined(USE_ADMPI)
++  }
++#endif
+     if (tmax< 1.e-4) break;
+   }
++
+   fmc1.ireturn=0;
+   fmc1.fbest=fb;
+   gradient_structure::set_NO_DERIVATIVES();
+
+Index: df1b2-separable/f1b2fnl3.cpp
+===================================================================
+--- df1b2-separable/f1b2fnl3.cpp	(.../trunk/src)	(revision 550)
++++ df1b2-separable/f1b2fnl3.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -108,7 +108,7 @@
+   do_separable_stuff_laplace_approximation_block_diagonal(df1b2variable& ff)
+ {
+   set_dependent_variable(ff);
+-  df1b2_gradlist::set_no_derivatives();
++  df1b2_gradlist::set_no_derivatives();    
+   df1b2variable::passnumber=1;
+   df1b2_gradcalc1();
+    
+@@ -130,7 +130,7 @@
+       lfe_index(++xs)=i;
+     }
+   }
+-  
++
+   dvector local_xadjoint(1,xs);
+   for (j=1;j<=xs;j++)
+   {
+@@ -169,16 +169,22 @@
+         local_Dux(i,j)=locy(i2).u_bar[j2-1];
+       }
+     }
+-  
+-  
+     //if (initial_df1b2params::separable_calculation_type==3)
+     {
+-  
++
+     //int nvar=us*us;
+     double f;
+     dmatrix Hessadjoint=get_gradient_for_hessian_calcs(local_Hess,f);
+     initial_df1b2params::cobjfun+=f;
+-  
++#if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
++    {
++      if (ad_comm::mpi_manager->is_slave())
++      {
++        ad_comm::mpi_manager->increment_mpi_cobjfun(f);
++      }
++    }
++#endif
+     for (i=1;i<=us;i++)
+     {
+       for (j=1;j<=us;j++)
+@@ -188,10 +194,10 @@
+         locy(i2).get_u_bar_tilde()[j2-1]=Hessadjoint(i,j);
+       }
+     }
+-    
++
+      df1b2variable::passnumber=2;
+      df1b2_gradcalc1();
+-  
++   
+      df1b2variable::passnumber=3;
+      df1b2_gradcalc1();
+       dvector xtmp(1,xs);
+@@ -214,6 +220,8 @@
+         local_xadjoint -= local_uadjoint*inv(local_Hess)*local_Dux;
+     }
+   }
++        // assign separable calls to master and slaves
++ 
+   for (i=1;i<=xs;i++)
+   {
+     int ii=lfe_index(i);
+Index: df1b2-separable/f1b2locl.cpp
+===================================================================
+--- df1b2-separable/f1b2locl.cpp	(.../trunk/src)	(revision 550)
++++ df1b2-separable/f1b2locl.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -176,8 +176,12 @@
+     adpool * tmppool=df1b2variable::pool;
+     if (!localf1b2gradlist)
+     {
++    adstring localf1b2gradlist_name = "lf1b2list1";
++#if defined(USE_ADMPI)
++    add_slave_suffix(localf1b2gradlist_name);
++#endif // #if defined(USE_ADMPI)
+       localf1b2gradlist = new df1b2_gradlist(400000U,20000U,800000U,40000U,
+-        200000U,10000U,adstring("lf1b2list1"));
++        200000U,10000U,localf1b2gradlist_name);
+       if (!localf1b2gradlist)
+       {
+         cerr << "Error allocating memory for local df1b2gradlist" << endl;
+Index: df1b2-separable/adrndeff.h
+===================================================================
+--- df1b2-separable/adrndeff.h	(.../trunk/src)	(revision 550)
++++ df1b2-separable/adrndeff.h	(.../branches/parallel/src)	(revision 550)
+@@ -313,6 +313,12 @@
+   dvector get_uhat_quasi_newton_block_diagonal(const dvector& x,function_minimizer * pfmin);
+   dvector get_uhat_quasi_newton(const dvector& x,function_minimizer * pfmin);
+   dvector get_uhat_quasi_newton_qd(const dvector& x,function_minimizer * pfmin);
++#if defined(USE_ADMPI)
++  dvector get_uhat_quasi_newton_mpi_master(const dvector& x,function_minimizer * pfmin);
++  void get_uhat_quasi_newton_mpi_slave(const dvector& x,function_minimizer * pfmin);
++#endif
++
++
+   void set_u_dot(int i);
+ 
+   void do_separable_stuff_laplace_approximation_banded_adjoint
+@@ -355,6 +361,7 @@
+   dvector banded_calculations_trust_region_approach(const dvector& _uhat,
+     function_minimizer * pmin);
+   void do_newton_raphson_banded(function_minimizer * pmin,double,int&);
++  void do_newton_raphson_banded_mpi_slave(function_minimizer * pmin,double,int&);
+   double inner_optimization_banded(/*dvector& uhat,*/ dvector& x,
+     function_minimizer * pfmin,int& no_converge_flag);
+   void set_default_hessian_type(void);
+Index: df1b2-separable/df1b2lap.cpp
+===================================================================
+--- df1b2-separable/df1b2lap.cpp	(.../trunk/src)	(revision 550)
++++ df1b2-separable/df1b2lap.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -24,6 +24,9 @@
+     }
+ int noboundepen_flag=1;
+ 
++void grad_sync(const dvector& _g); // defined in df1b2qnm.cpp
++void mpi_set_x_f_ireturn(independent_variables& x, double& f, int& ireturn); // defined in df1b2qnm.cpp
++
+ double evaluate_function(const dvector& x,function_minimizer * pfmin);
+ void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,dmatrix& Hess,
+   dvector& grad, df1b2_gradlist * f1b2gradlist,function_minimizer * pfmin);
+@@ -82,6 +85,18 @@
+   fmc1.dfn=1.e-2;
+   dvariable pen=0.0;
+   //cout << "starting  norm(u) = " << norm(u) << endl;
++
++  int mpi_minimizer_flag=1;
++  #if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->is_slave())
++    {
++      mpi_minimizer_flag=0;
++    }
++  }
++  #endif
++
+   while (fmc1.ireturn>=0)
+   {
+    /*
+@@ -93,14 +108,215 @@
+     cout << "V norm(u) = " << nu
+          << " f = " << f  << endl;
+     */
++    if (mpi_minimizer_flag)
++      fmc1.fmin(f,u,g);
++    mpi_set_x_f_ireturn(u,f,fmc1.ireturn);
++    //cout << "W norm(u) = " << norm(value(u)) << endl;
++    if (fmc1.ireturn>0)
++    {
++      dvariable vf=0.0;
++      pen=initial_params::reset(dvar_vector(u));
++      *objective_function_value::pobjfun=0.0;
++      pfmin->AD_uf_inner();
++
++      if (saddlepointflag)
++      {
++        *objective_function_value::pobjfun*=-1.0;
++      }
++      if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
++      {
++        quadratic_prior::get_M_calculations();
++      }
++      vf+=*objective_function_value::pobjfun;
++     
++     /*  this is now done in the operator = function
++      if (quadratic_prior::get_num_quadratic_prior()>0)
++      {
++        vf+= quadratic_prior::get_quadratic_priors();
++      }
++      */
++      
++
++      objective_function_value::fun_without_pen=value(vf);
++      
++      //cout << " pen = " << pen << endl;
++      if (noboundepen_flag==0)
++      {
++        vf+=pen;
++      }
++      f=value(vf);
++      if (f<fb) 
++      {
++        fb=f;
++        ub=u;
++      }
++      gradcalc(usize,g);
++      grad_sync(g);
++      //cout << " f = " << setprecision(17) << f << " " << norm(g) 
++       // << " " << norm(u) << endl;
++     
++    }
++    u=ub;
++  }
++#if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->is_master())
++    {
++      cout <<  " inner maxg = " <<  fmc1.gmax;
++      for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
++      {
++        ad_comm::mpi_manager->send_double_to_slave(fmc1.gmax,i);
++      }
++    }
++    else
++    {
++      fmc1.gmax = ad_comm::mpi_manager->get_double_from_master();
++    }
++  }
++  else 
++  {
++#endif
++    cout <<  " inner maxg = " <<  fmc1.gmax;
++#if defined(USE_ADMPI)
++  }
++#endif
++
++  if (fabs(fmc1.gmax)>1.e+3)
++    trapper();
++
++  if (fabs(fmc1.gmax)>1.e-4)
++  {
++    fmc1.itn=0;
++    //fmc1.crit=1.e-9;
++    fmc1.ifn=0;
++    fmc1.ireturn=0;
++    fmc1.ihang=0;
++    fmc1.ihflag=0;
++    fmc1.ialph=0;
++    initial_params::xinit(u);    // get the initial values into the
++    //u.initialize();
++    while (fmc1.ireturn>=0)
++    {
++      if (mpi_minimizer_flag)
++        fmc1.fmin(f,u,g);
++      mpi_set_x_f_ireturn(u,f,fmc1.ireturn);
++      if (fmc1.ireturn>0)
++      {
++        dvariable vf=0.0;
++        pen=initial_params::reset(dvar_vector(u));
++        *objective_function_value::pobjfun=0.0;
++        pfmin->AD_uf_inner();
++        if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
++        {
++          quadratic_prior::get_M_calculations();
++        }
++        vf+=*objective_function_value::pobjfun;
++        objective_function_value::fun_without_pen=value(vf);
++
++        vf+=pen;
++        f=value(vf);
++        if (f<fb) 
++        {
++          fb=f;
++          ub=u;
++        }
++        gradcalc(usize,g);
++        grad_sync(g);
++        //cout << " f = " << setprecision(15) << f << " " << norm(g) << endl;
++      }
++    }
++    u=ub;
++    cout <<  "  Inner second time = " << fmc1.gmax;
++  }
++  cout << "  Inner f = " << fb << endl;
++  fmc1.ireturn=0;
++  fmc1.fbest=fb;
++  gradient_structure::set_NO_DERIVATIVES();
++  *objective_function_value::pobjfun=0.0;
++  pfmin->AD_uf_inner();
++  if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
++  {
++    quadratic_prior::get_M_calculations();
++  }
++  gradient_structure::set_YES_DERIVATIVES();
++  pfmin->inner_opt_flag=0;
++  return u;
++}
++
++#if defined(USE_ADMPI)
++dvector laplace_approximation_calculator::get_uhat_quasi_newton_mpi_master
++  (const dvector& x,function_minimizer * pfmin)
++{
++  //int on,nopt;
++  pfmin->inner_opt_flag=1;
++  double f=0.0;
++  double fb=1.e+100;
++  dvector g(1,usize);
++  dvector ub(1,usize);
++  independent_variables u(1,usize);
++  gradcalc(0,g);
++  fmc1.itn=0;
++  fmc1.ifn=0;
++  fmc1.ireturn=0;
++  initial_params::xinit(u);    // get the initial values into the
++  initial_params::xinit(ubest);    // get the initial values into the
++  fmc1.ialph=0;
++  fmc1.ihang=0;
++  fmc1.ihflag=0;
++  fmc1.use_control_c=0;
++  
++  if (init_switch)
++  {
++    u.initialize();
++  }
++  else
++  {
++    u=ubest;
++  }
++ 
++  fmc1.dfn=1.e-2;
++  dvariable pen=0.0;
++  //cout << "starting  norm(u) = " << norm(u) << endl;
++
++  // garunteed to be the master
++  for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
++  {
++    ad_comm::mpi_manager->send_int_to_slave(fmc1.ireturn,i);
++  }
++
++  while (fmc1.ireturn>=0)
++  {
++   /*
++    double nu=norm(value(u));
++    if (nu>400)
++    {
++      cout << "U norm(u) = " << nu  << endl;
++    }
++    cout << "V norm(u) = " << nu
++         << " f = " << f  << endl;
++    */
+     fmc1.fmin(f,u,g);
+     //cout << "W norm(u) = " << norm(value(u)) << endl;
++
++    // garunteed to be the master
++    for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
++    {
++      ad_comm::mpi_manager->send_int_to_slave(fmc1.ireturn,i);
++    }
++
+     if (fmc1.ireturn>0)
+     {
++      for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
++      {
++        ad_comm::mpi_manager->send_dvector_to_slave(u,i);
++        ad_comm::mpi_manager->send_dvector_to_slave(g,i);
++      }
+       dvariable vf=0.0;
+       pen=initial_params::reset(dvar_vector(u));
+       *objective_function_value::pobjfun=0.0;
+       pfmin->AD_uf_inner();
++
+       if (saddlepointflag)
+       {
+         *objective_function_value::pobjfun*=-1.0;
+@@ -133,6 +349,7 @@
+         ub=u;
+       }
+       gradcalc(usize,g);
++      grad_sync(g);
+       //cout << " f = " << setprecision(17) << f << " " << norm(g) 
+        // << " " << norm(u) << endl;
+      
+@@ -142,6 +359,11 @@
+   cout <<  " inner maxg = " <<  fmc1.gmax;
+   if (fabs(fmc1.gmax)>1.e+3)
+     trapper();
++  // garunteed to be the master
++  for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
++  {
++    ad_comm::mpi_manager->send_double_to_slave(fmc1.gmax,i);
++  }
+ 
+   if (fabs(fmc1.gmax)>1.e-4)
+   {
+@@ -154,9 +376,20 @@
+     fmc1.ialph=0;
+     initial_params::xinit(u);    // get the initial values into the
+     //u.initialize();
++
++    // garunteed to be the master
++    for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
++    {
++      ad_comm::mpi_manager->send_int_to_slave(fmc1.ireturn,i);
++    }
++
+     while (fmc1.ireturn>=0)
+     {
+       fmc1.fmin(f,u,g);
++      for(int i=1;i<=ad_comm::mpi_manager->get_num_slaves();i++)
++      {
++        ad_comm::mpi_manager->send_int_to_slave(fmc1.ireturn,i);
++      }
+       if (fmc1.ireturn>0)
+       {
+         dvariable vf=0.0;
+@@ -178,6 +411,7 @@
+           ub=u;
+         }
+         gradcalc(usize,g);
++        grad_sync(g);
+         //cout << " f = " << setprecision(15) << f << " " << norm(g) << endl;
+       }
+     }
+@@ -199,6 +433,75 @@
+   return u;
+ }
+ 
++void laplace_approximation_calculator::get_uhat_quasi_newton_mpi_slave
++  (const dvector& x,function_minimizer * pfmin)
++{
++  pfmin->inner_opt_flag=1;
++  dvector g(1,usize);
++  gradcalc(0,g);
++  independent_variables u(1,usize);
++  dvariable pen=0.0;
++  int ireturn;
++  double gmax;
++
++  // garunteed to be a slave
++  ad_comm::mpi_manager->get_int_from_master(ireturn);
++
++  while (ireturn>=0)
++  {
++    // garunteed to be a slave
++    ad_comm::mpi_manager->get_int_from_master(ireturn);
++
++    if (ireturn>0)
++    {
++      u = ad_comm::mpi_manager->get_dvector_from_master();
++      g = ad_comm::mpi_manager->get_dvector_from_master();
++      dvariable vf=0.0;
++      pen=initial_params::reset(dvar_vector(u));
++      *objective_function_value::pobjfun=0.0;
++      pfmin->AD_uf_inner();
++
++      gradcalc(usize,g);
++      grad_sync(g);
++    }
++  }
++
++  // garunteed to be a slave
++  gmax = ad_comm::mpi_manager->get_double_from_master();
++
++  if (fabs(gmax)>1.e-4)
++  {
++    // garunteed to be a slave
++    ad_comm::mpi_manager->get_int_from_master(ireturn);
++
++    while (ireturn>=0)
++    {
++      // garunteed to be a slave
++      ad_comm::mpi_manager->get_int_from_master(ireturn);
++
++      if (fmc1.ireturn>0)
++      {
++        *objective_function_value::pobjfun=0.0;
++        pfmin->AD_uf_inner();
++
++        gradcalc(usize,g);
++        grad_sync(g);
++      }
++    }
++  }
++
++  gradient_structure::set_NO_DERIVATIVES();
++  *objective_function_value::pobjfun=0.0;
++  pfmin->AD_uf_inner();
++  gradient_structure::set_YES_DERIVATIVES();
++  pfmin->inner_opt_flag=0;
++}
++
++#endif
++
++
++
++
+ /**
+  * Description not yet available.
+  * \param
+@@ -941,9 +1244,13 @@
+   }
+   
+   step.allocate(1,usize);
++  adstring f1b2gradlist_name = "f1b2list1";
++#if defined(USE_ADMPI)
++  add_slave_suffix(f1b2gradlist_name);
++#endif // #if defined(USE_ADMPI)
+   // !!! nov 12
+   f1b2gradlist = new df1b2_gradlist(4000000U,200000U,8000000U,400000U,
+-    2000000U,100000U,adstring("f1b2list1"));
++    2000000U,100000U,f1b2gradlist_name);
+ 
+   if (hesstype==2)
+   {
+@@ -1630,7 +1937,7 @@
+   // *********************************************
+ 
+    int sgn=0;
+-   dvariable ld = 0;
++   dvariable ld;
+    if (ad_comm::no_ln_det_choleski_flag)
+    {
+      if(laplace_approximation_calculator::saddlepointflag==0)
+@@ -1922,6 +2229,37 @@
+   dvector g(1,usize);
+   independent_variables u(1,usize);
+   u=x;
++  #if defined(USE_ADMPI)  
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->sync_evaluate_function_flag)
++    {
++      if (ad_comm::mpi_manager->is_master())
++      {
++        //get dvectors from slaves and add into xadjoint
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          dvector slave_u =
++              ad_comm::mpi_manager->get_dvector_from_slave(si);
++          u+=slave_u;
++        }
++        // send to slaves
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          ad_comm::mpi_manager->send_dvector_to_slave(u,si);
++        }
++      }
++      else
++      {
++        //send dvector to master
++        ad_comm::mpi_manager->send_dvector_to_master(u);
++        // get from master
++        u=ad_comm::mpi_manager->get_dvector_from_master();
++      }
++    }
++  }
++  #endif
++
+   dvariable vf=0.0;
+   vf=initial_params::reset(dvar_vector(u));
+   //vf=0.0;
+@@ -1936,11 +2274,26 @@
+   laplace_approximation_calculator::where_are_we_flag=0; 
+   initial_df1b2params::cobjfun=value(vf);
+   gradcalc(usize,g);
++  grad_sync(g);
+   double maxg=max(fabs(g));
+   if (!initial_params::mc_phase)
+   {
+-    cout << setprecision(16) << " f = " << vf  
+-         << " max g = " << maxg << endl;
++    int master_only_flag=1;
++    #if defined(USE_ADMPI)
++    if (ad_comm::mpi_manager)
++    {
++      if (ad_comm::mpi_manager->is_slave())
++      {
++        master_only_flag=0;
++      }
++    }
++    #endif
++
++    if (master_only_flag)
++    {
++      cout << setprecision(16) << " f = " << vf  
++           << " max g = " << maxg << endl;
++    }
+   }
+   return maxg;
+ }
+Index: df1b2-separable/sedf1b2a
+===================================================================
+--- df1b2-separable/sedf1b2a	(.../trunk/src)	(revision 550)
++++ df1b2-separable/sedf1b2a	(.../branches/parallel/src)	(revision 550)
+@@ -13,6 +13,7 @@
+ s/dvar3_array/df1b23array/g
+ 
+ 
++
+ /SEPFUN1/{
+   s/df1b2variable/funnel_init_df1b2variable/g
+   s/df1b2vector/funnel_init_df1b2vector/g
+@@ -65,5 +66,3 @@
+   }  \
+ } \
+ 
+-
+-
+Index: df1b2-separable/f1b2loc3.cpp
+===================================================================
+--- df1b2-separable/f1b2loc3.cpp	(.../trunk/src)	(revision 550)
++++ df1b2-separable/f1b2loc3.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -30,8 +30,12 @@
+   adpool * tmppool=df1b2variable::pool;
+   if (!localf1b2gradlist)
+   {
++    adstring localf1b2gradlist_name = "lf1b2list1";
++#if defined(USE_ADMPI)
++    add_slave_suffix(localf1b2gradlist_name);
++#endif // #if defined(USE_ADMPI)
+     localf1b2gradlist = new df1b2_gradlist(400000U,20000U,800000U,40000U,
+-      200000U,10000U,adstring("lf1b2list1"));
++      200000U,10000U,localf1b2gradlist_name);
+     if (!localf1b2gradlist)
+     {
+       cerr << "Error allocating memory for local df1b2gradlist" << endl;
+Index: df1b2-separable/df1b2lp2.cpp
+===================================================================
+--- df1b2-separable/df1b2lp2.cpp	(.../trunk/src)	(revision 550)
++++ df1b2-separable/df1b2lp2.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -33,7 +33,6 @@
+   ADUNCONST(double,f)
+   //int i,j;
+   int i;
+-
+   initial_params::set_inactive_only_random_effects(); 
+   gradient_structure::set_NO_DERIVATIVES();
+   initial_params::reset(x);    // get current x values into the model
+@@ -101,7 +100,18 @@
+     }
+   }
+   //cout << y << endl;
+-        
++
++  int master_only_flag=1;
++  #if defined(USE_ADMPI)
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->is_slave())
++    {
++      master_only_flag=0;
++    }
++  }
++  #endif
++
+   for(int ii=1;ii<=num_nr_iters;ii++)
+   {  
+     {   
+@@ -112,11 +122,25 @@
+       max_separable_g=0.0;
+       pmin->inner_opt_flag=1;
+       step=get_newton_raphson_info_block_diagonal(pfmin);
+-      cout << "max separable g " << max_separable_g << endl; 
+-      cout << "Newton raphson " << ii << endl;
++      if (master_only_flag)
++      {
++        cout << "max separable g " << max_separable_g << endl; 
++        cout << "Newton raphson " << ii << endl;
++      }
+       uhat+=step;
+-    
++      #if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        (ad_comm::mpi_manager->sync_evaluate_function_flag)=1;
++      }
++      #endif
+       evaluate_function(uhat,pfmin);
++      #if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        (ad_comm::mpi_manager->sync_evaluate_function_flag)=1;
++      }
++      #endif
+       pmin->inner_opt_flag=0;
+     }
+   
+@@ -135,8 +159,8 @@
+       }
+     }
+   }
+- 
+-  cout << initial_df1b2params::cobjfun << endl;
++  if (master_only_flag)
++    cout << initial_df1b2params::cobjfun << endl;
+   xadjoint.initialize();
+   uadjoint.initialize();
+   block_diagonal_flag=2;
+@@ -154,7 +178,6 @@
+     //cout << (*pfmin->lapprox->block_diagonal_hessian) << endl;
+     block_diagonal_flag=2;
+     initial_params::straight_through_flag=0;
+- 
+     // do importance sampling and get ders bakc to Hessian adjoint
+     // new stuff for more than one random effect in each separable call
+     //  Apr 17 07
+@@ -181,7 +204,6 @@
+     // derivatives from hessian adjoint back
+     {
+       x_con.initialize();
+-      
+       for (int i=1;i<=num_separable_calls;i++)
+       {
+         ivector& re_list=(*block_diagonal_re_list)(i);
+@@ -191,7 +213,6 @@
+         xxx(re_list,fe_list);
+         int mmax=re_list.indexmax();
+         dvector tmp(1,mmax);
+-        
+         int j;
+         for (j=1;j<=re_list.indexmax();j++)
+         {
+@@ -220,7 +241,6 @@
+     // *******************************************************
+     // *******************************************************
+     // *******************************************************
+-    
+     block_diagonal_flag=3;
+     //pfmin->lapprox->xadjoint.initialize();
+     //pfmin->lapprox->uadjoint.initialize();
+@@ -270,7 +290,6 @@
+       f=calculate_importance_sample_block_diagonal_funnel(x,uhat,Hess,xadjoint,
+         uadjoint,Hessadjoint,pfmin);
+     }
+-
+     int xmax=xadjoint.indexmax();
+     dvector x_con(1,xmax);
+     x_con.initialize();
+@@ -302,7 +321,6 @@
+           {
+             tmp(j)=uadjoint(re_list(j)-xmax);
+           } 
+-  
+           if (allocated(fe_list))
+           {
+             dvector tmp1=solve(H,tmp);
+@@ -328,7 +346,6 @@
+     // *******************************************************
+     // *******************************************************
+     // *******************************************************
+-    
+     block_diagonal_flag=3;
+     //pfmin->lapprox->xadjoint.initialize();
+     //pfmin->lapprox->uadjoint.initialize();
+@@ -377,6 +394,30 @@
+     initial_params::straight_through_flag=0;
+     if (saddlepointflag!=2)
+     {
++      #if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        if (ad_comm::mpi_manager->sync_objfun_flag)
++        {
++          if (ad_comm::mpi_manager->is_master())
++          {
++            // get cobjfun from slaves
++            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++            {
++              double local_cobjfun=ad_comm::mpi_manager->
++                  get_double_from_slave(si);
++              initial_df1b2params::cobjfun+=local_cobjfun;
++            }
++          }
++          else
++          {
++            //send cobjfun to master
++            double local_mpi_cobjfun=ad_comm::mpi_manager->get_mpi_cobjfun();
++            ad_comm::mpi_manager->send_double_to_master(local_mpi_cobjfun);
++          }
++        }
++      }
++      #endif
+       f=initial_df1b2params::cobjfun;
+     }
+     else
+@@ -399,6 +440,29 @@
+   }
+   //cout << initial_df1b2params::cobjfun << endl;
+   //f=initial_df1b2params::cobjfun;
++  #if defined(USE_ADMPI)  
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->sync_objfun_flag)
++    {
++      if (ad_comm::mpi_manager->is_master())
++      {
++        //get dvectors from slaves and add into xadjoint
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          dvector slave_xadjoint =
++              ad_comm::mpi_manager->get_dvector_from_slave(si);
++          xadjoint+=slave_xadjoint;
++        }
++      }
++      else
++      {
++        //send dvector to master
++        ad_comm::mpi_manager->send_dvector_to_master(xadjoint);
++      }
++    }
++  }
++  #endif
+   return xadjoint;
+ }
+ 
+@@ -442,7 +506,7 @@
+     // call function to do block diagonal newton-raphson
+     // the step vector from the newton-raphson is in the vector step
+     df1b2_gradlist::set_yes_derivatives();
+-    
++
+     funnel_init_var::lapprox=this;
+     //cout << funnel_init_var::lapprox << endl;
+     block_diagonal_flag=1;
+@@ -451,6 +515,7 @@
+     funnel_init_var::lapprox=0;
+     block_diagonal_flag=0;
+   }
++
+   return step;
+ }
+ 
+Index: df1b2-separable/df1b2lp6.cpp
+===================================================================
+--- df1b2-separable/df1b2lp6.cpp	(.../trunk/src)	(revision 550)
++++ df1b2-separable/df1b2lp6.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -14,6 +14,25 @@
+ #  include <admodel.h>
+ #  include <df1b2fun.h>
+ #  include <adrndeff.h>
++
++void stop_flag(void)
++{
++  static int stop_flag;
++  if (stop_flag!=1)
++  {
++#if defined(USE_ADMPI)
++   if (ad_comm::mpi_manager){
++    if(ad_comm::mpi_manager->is_slave())
++    {
++      cout << "PID " << getpid() << endl;
++    }
++   }
++#endif
++    stop_flag=0;
++  }
++  while(stop_flag==0)
++    sleep(5);
++}
+ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
+   const banded_symmetric_dmatrix& bHess,const dvector& _xadjoint,
+   const dvector& _uadjoint,
+@@ -51,8 +70,8 @@
+ {
+   //quadratic_prior * tmpptr=quadratic_prior::ptr[0];
+   //cout << tmpptr << endl;
++    
+ 
+-
+   laplace_approximation_calculator::where_are_we_flag=2; 
+   double maxg=fabs(evaluate_function(uhat,pfmin));
+ 
+@@ -103,7 +122,30 @@
+     {
+       if (use_dd_nr==0)
+       {
++        // do this with just the master. Later find out if good way to do it with slaves.
++        #if defined(USE_ADMPI)
++        if (ad_comm::mpi_manager)
++        {
++          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++          {
++            for(int i=0;i<(*bHess).bandwidth();i++)
++            {
++              (*bHess)(i)+=ad_comm::mpi_manager->get_dvector_from_slave(si);
++            }
++          }
++        }
++        #endif
+         banded_lower_triangular_dmatrix bltd=choleski_decomp(*bHess,ierr);
++        #if defined(USE_ADMPI)
++        if (ad_comm::mpi_manager)
++        {
++          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++          {
++            ad_comm::mpi_manager->send_int_to_slave(ierr,si);
++          }
++        }
++        #endif
++
+         if (ierr && no_converge_flag ==0)
+         {
+           no_converge_flag=1;
+@@ -135,6 +177,18 @@
+             ad_exit(1);
+ #endif
+           }
++
++          //send uhat to slave
++          #if defined(USE_ADMPI)
++          if (ad_comm::mpi_manager)
++          {
++            for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++            {
++              ad_comm::mpi_manager->send_dvector_to_slave(uhat,si);
++            }
++          }
++          #endif
++
+           maxg=fabs(evaluate_function(uhat,pfmin));
+           if (f_from_1< pfmin->lapprox->fmc1.fbest)
+           {
+@@ -283,6 +337,144 @@
+   }
+ }
+ 
++void laplace_approximation_calculator::
++  do_newton_raphson_banded_mpi_slave(function_minimizer * pfmin,double f_from_1,
++  int& no_converge_flag)
++{
++  laplace_approximation_calculator::where_are_we_flag=2; 
++  double maxg=fabs(evaluate_function(uhat,pfmin));
++
++
++  laplace_approximation_calculator::where_are_we_flag=0; 
++  dvector uhat_old(1,usize);
++  for(int ii=1;ii<=num_nr_iters;ii++)
++  {  
++    // test newton raphson
++    switch(hesstype)
++    {
++    case 3:
++      bHess->initialize();
++      break;
++    case 4:
++      Hess.initialize();
++      break;
++    default:
++      cerr << "Illegal value for hesstype here" << endl;
++      ad_exit(1);
++    }
++
++
++
++    grad.initialize();
++    sparse_count=0.0;
++
++    step=get_newton_raphson_info_banded(pfmin);
++
++    if (quadratic_prior::get_num_quadratic_prior()>0)
++    {
++      quadratic_prior::get_cHessian_contribution(Hess,xsize);
++      quadratic_prior::get_cgradient_contribution(grad,xsize);
++    }
++
++    int ierr=0;
++    if (hesstype==3)
++    {
++      if (use_dd_nr==0)
++      {
++        // choleski_decomp(*bHess,ierr);
++        #if defined(USE_ADMPI)
++        if (ad_comm::mpi_manager)
++        {
++          for(int i=0;i<(*bHess).bandwidth();i++)
++          {
++            ad_comm::mpi_manager->send_dvector_to_master((*bHess)(i));
++          }
++
++          ad_comm::mpi_manager->get_int_from_master(ierr);
++        }
++        #endif
++   //banded_lower_triangular_dmatrix bltd = banded_lower_triangular_dmatrix(1,5,2);
++        if (ierr && no_converge_flag ==0)
++        {
++          no_converge_flag=1;
++          //break;
++        }
++        if (ierr)
++        {
++          double oldval;
++          evaluate_function(oldval,uhat,pfmin);
++          uhat=banded_calculations_trust_region_approach(uhat,pfmin);
++        }
++        else
++        {
++          if (dd_nr_flag==0)
++          { // master only
++          //  dvector v=solve(bltd,grad);
++          //  step=-solve_trans(bltd,v);
++          //  //uhat_old=uhat;
++          //  uhat+=step;
++          }
++          else
++          {
++#if defined(USE_DD_STUFF)
++            int n=grad.indexmax();
++            maxg=fabs(evaluate_function(uhat,pfmin));
++            uhat=dd_newton_raphson2(grad,*bHess,uhat);
++#else
++            cerr << "high precision Newton Raphson not implemented" << endl;
++            ad_exit(1);
++#endif
++          }
++
++          //get uhat from master
++          #if defined(USE_ADMPI)
++          if (ad_comm::mpi_manager)
++          {
++            uhat = ad_comm::mpi_manager->get_dvector_from_master();
++          }
++          #endif
++
++          maxg=fabs(evaluate_function(uhat,pfmin)); //needed
++          if (f_from_1< pfmin->lapprox->fmc1.fbest)
++          {
++            uhat=banded_calculations_trust_region_approach(uhat,pfmin);
++            maxg=fabs(evaluate_function(uhat,pfmin));
++          }
++        }
++      }
++      else
++      {
++        cout << "error not used" << endl;
++        ad_exit(1);
++      }
++    
++      if (maxg < 1.e-13) 
++      {
++        break;
++      }
++    } 
++    else if (hesstype==4)
++    {
++      cerr << "Slave type 4 not implemented yet" << endl;
++      ad_exit(1);
++    }
++    
++    if (sparse_hessian_flag==0)
++    {
++      for (int i=1;i<=usize;i++)
++      {
++        y(i+xsize)=uhat(i);
++      }
++    }
++    else  
++    {
++      for (int i=1;i<=usize;i++)
++      {
++        value(y(i+xsize))=uhat(i);
++      }
++    }
++  }
++}
+ /**
+  * Description not yet available.
+  * \param
+@@ -302,11 +494,48 @@
+   {
+     if (!ADqd_flag)
+     {
+-      uhat=get_uhat_quasi_newton(x,pfmin);
++      /*#if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        if (ad_comm::mpi_manager->is_master())
++        {
++          uhat=get_uhat_quasi_newton_mpi_master(x,pfmin);
++        }
++        else
++        {
++          get_uhat_quasi_newton_mpi_slave(x,pfmin);
++        }
++      }
++      else
++      {
++      #endif*/
++        uhat=get_uhat_quasi_newton(x,pfmin);
++      /*#if defined(USE_ADMPI)
++      }
++      #endif*/
++
+       double maxg=fabs(fmc1.gmax);
+       if (maxg>1.0)
+       {
+-        uhat=get_uhat_quasi_newton(x,pfmin);
++        /*#if defined(USE_ADMPI)
++        if (ad_comm::mpi_manager)
++        {
++          if (ad_comm::mpi_manager->is_master())
++          {
++            uhat=get_uhat_quasi_newton_mpi_master(x,pfmin);
++          }
++          else
++          {
++            get_uhat_quasi_newton_mpi_slave(x,pfmin);
++          }
++        }
++        else
++        {
++        #endif*/
++          uhat=get_uhat_quasi_newton(x,pfmin);
++        /*#if defined(USE_ADMPI)
++        }
++        #endif*/
+       }
+     }
+     else
+@@ -355,7 +584,7 @@
+   double f_from_1=0.0;
+ 
+   int no_converge_flag=0;
+- 
++
+   // this is the main loop to do inner optimization
+   do
+   {
+@@ -380,11 +609,29 @@
+         for (i=1;i<=xsize;i++) { value(y(i))=x(i); }
+         for (i=1;i<=usize;i++) { value(y(i+xsize))=uhat(i); }
+       }
+-          
++
+       laplace_approximation_calculator::where_are_we_flag=2; 
+       if (admb_ssflag==0)
+       {
+-        do_newton_raphson_banded(pfmin,f_from_1,no_converge_flag);
++        #if defined(USE_ADMPI)
++        if (ad_comm::mpi_manager)
++        {
++          if (ad_comm::mpi_manager->is_master())
++          {
++            do_newton_raphson_banded(pfmin,f_from_1,no_converge_flag);
++          }
++          else
++          {
++            do_newton_raphson_banded_mpi_slave(pfmin,f_from_1,no_converge_flag);
++          }
++        }
++        else
++        {
++        #endif
++          do_newton_raphson_banded(pfmin,f_from_1,no_converge_flag);
++        #if defined(USE_ADMPI)
++        }
++        #endif
+       }
+       else
+       {
+@@ -445,7 +692,7 @@
+         bHess->initialize();
+       else if (hesstype==4)
+         Hess.initialize();
+-    
++
+       block_diagonal_flag=2;
+       used_flags.initialize();
+       funnel_init_var::lapprox=this;
+@@ -461,6 +708,27 @@
+     
+       int ierr=0;
+ 
++      #if defined(USE_ADMPI)
++      if (ad_comm::mpi_manager)
++      {
++        if (ad_comm::mpi_manager->is_master()){
++          for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++          {
++            for(int i=0;i<(*bHess).bandwidth();i++)
++            {
++              (*bHess)(i)+=ad_comm::mpi_manager->get_dvector_from_slave(si);
++            }
++          }
++        }
++        else
++        {
++          for(int i=0;i<(*bHess).bandwidth();i++)
++          {
++            ad_comm::mpi_manager->send_dvector_to_master((*bHess)(i));
++          }
++        }
++      }
++      #endif
+       laplace_approximation_calculator::where_are_we_flag=3; 
+       if (!ierr)
+       {
+@@ -540,7 +808,7 @@
+       initial_params::straight_through_flag=1;
+       block_diagonal_flag=3;
+       local_dtemp.initialize();
+-    
++//stop_flag();
+       // *****  Note for quadratic prior code: I don't think that this 
+       // part gets added to the Hessian here.
+       sparse_count=0;
+@@ -654,6 +922,29 @@
+   }
+   while(1);
+ 
++  #if defined(USE_ADMPI)  
++  if (ad_comm::mpi_manager)
++  {
++    if (ad_comm::mpi_manager->sync_objfun_flag)
++    {
++      if (ad_comm::mpi_manager->is_master())
++      {
++        //get dvectors from slaves and add into xadjoint
++        for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++        {
++          dvector slave_xadjoint =
++              ad_comm::mpi_manager->get_dvector_from_slave(si);
++          xadjoint+=slave_xadjoint;
++        }
++      }
++      else
++      {
++        //send dvector to master
++        ad_comm::mpi_manager->send_dvector_to_master(xadjoint);
++      }
++    }
++  }
++  #endif
+   return xadjoint;
+ }
+   //int check_pool_flag1=0;
+@@ -1047,6 +1338,7 @@
+ 
+    int sgn=0;
+    dvariable ld;
++   double f;
+   
+    int eigswitch=0;
+    if (eigswitch)
+@@ -1057,17 +1349,46 @@
+      ofs << setprecision(3) << setw(12) << setscientific() << dmatrix(bHess) << endl << endl;
+      ofs << ev << endl << endl << evecs << endl;
+    }
+-   ld=0.5*ln_det_choleski(vHess,sgn);
+-   if (sgn==1)
++//stop_flag();
++   int evaluate_flag=1;
++   #if defined(USE_ADMPI)
++   if (ad_comm::mpi_manager)
+    {
+-     cout << "Choleski failed" << endl;
+-     pmin->lapprox->bHess_pd_flag=1;
++     if (ad_comm::mpi_manager->is_slave())
++     {
++       evaluate_flag=0;
++     }
+    }
++   #endif
++   if (evaluate_flag)
++   {
++     ld=0.5*ln_det_choleski(vHess,sgn); // do with master only for now. see if chol can parallel later.
+ 
+-   vf+=ld;
+-   const double ltp=0.5*log(2.0*PI);
+-   vf-=us*ltp;
+-   double f=value(vf);
++     if (sgn==1)
++     {
++       cout << "Choleski failed" << endl;
++       pmin->lapprox->bHess_pd_flag=1;
++     }
++
++     vf+=ld;
++     const double ltp=0.5*log(2.0*PI);
++     vf-=us*ltp;
++     f=value(vf);
++   }
++
++   #if defined(USE_ADMPI)
++   if (ad_comm::mpi_manager)
++   {
++     if (ad_comm::mpi_manager->is_master())
++     {
++       for(int si=1;si<=ad_comm::mpi_manager->get_num_slaves();si++)
++       {
++         ad_comm::mpi_manager->send_double_to_slave(f,si);
++       }
++     }
++   }
++   #endif
++
+    dvector g(1,nvar);
+    gradcalc(nvar,g);
+   
+Index: df1b2-separable/df1b2lp8.cpp
+===================================================================
+--- df1b2-separable/df1b2lp8.cpp	(.../trunk/src)	(revision 550)
++++ df1b2-separable/df1b2lp8.cpp	(.../branches/parallel/src)	(revision 550)
+@@ -376,8 +376,19 @@
+     if (lapprox->hesstype==2) 
+     {
+       lapprox->separable_calls_counter=0;
++#if defined(USE_ADMPI)
++      //lapprox->mpi_separable_calls_counter=0;
++      if (ad_comm::mpi_manager)
++      {
++        if (ad_comm::mpi_manager->is_slave())
++        {
++          ad_comm::mpi_manager->reset_mpi_cobjfun();
++        }
++      }
++#endif
+     }
+   }
++
+   user_function();
+  /* 
+   if (lapprox)
+@@ -825,8 +836,10 @@
+     delete block_diagonal_vch;
+     block_diagonal_vch=0;
+   }
++
+   block_diagonal_vch = new dvar3_array(1,num_separable_calls,
+           1,itmp,1,itmp);
++
+   if (block_diagonal_ch)
+   {
+     delete block_diagonal_ch;
+@@ -834,6 +847,7 @@
+   }
+   block_diagonal_ch = new d3_array(1,num_separable_calls,
+     1,itmp,1,itmp);
++
+   if (block_diagonal_hessian)
+   {
+     delete block_diagonal_hessian;
+Index: df1b2-separable/tpl2rem.lex
+===================================================================
+--- df1b2-separable/tpl2rem.lex	(.../trunk/src)	(revision 550)
++++ df1b2-separable/tpl2rem.lex	(.../branches/parallel/src)	(revision 550)
+@@ -4585,13 +4585,17 @@
+       fprintf(htop,"  extern \"C\"  {\n");
+       fprintf(htop,"    void ad_boundf(int i);\n  }\n");
+     }
+-      
+-    
++          
+     if (talk_to_splus)
+     {
+       fprintf(htop,"#include <adsplus.h>\n\n");
+     }
+ 
++    if (have_separable_function)
++    {
++      fprintf(htop,"extern ad_separable_manager * separable_manager;\n\n");
++    }
++
+     if (makedll)
+     {
+       // make a definition file

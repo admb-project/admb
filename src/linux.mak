@@ -61,6 +61,7 @@ dist:
 	cp -vf ../NEWS.txt ${DISK}
 	cp -vf ../VERSION ${DISK}
 	cp ../scripts/admb/admb ${DISK}/bin
+	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp -vf ../scripts/g++/Makefile ${DISK}/examples
 ifeq ($(CXX),CC)
 	  cp ../scripts/CC/adcomp ${DISK}/bin
@@ -69,6 +70,8 @@ endif
 ifeq ($(CXX),g++)
 	  cp ../scripts/g++/adcomp ${DISK}/bin
 	  cp ../scripts/g++/adlink ${DISK}/bin
+	  cp ../scripts/g++/adcomp.bat ${DISK}/bin
+	  cp ../scripts/g++/adlink.bat ${DISK}/bin
 endif
 ifeq ($(CXX),x86_64-w64-mingw32-g++.exe)
 	  cp ../scripts/g++/adcomp-x86_64-w64-mingw32 ${DISK}/bin/adcomp

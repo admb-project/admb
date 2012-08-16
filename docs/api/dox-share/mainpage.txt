@@ -13,7 +13,7 @@ Modules tab.
 <br>
 Partial documentation of some of the AUTODIF Library and ADMB classes can
 found on the "Classes" tab. No class is 
-fully documented, but class \ref dvector for an example of 
+fully documented, but see class \ref dvector for an example of 
 how it might look.
 <br>
 <br>

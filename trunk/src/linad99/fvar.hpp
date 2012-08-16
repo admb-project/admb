@@ -80,6 +80,9 @@ Macro definitions.
 #   if (_MSC_VER>=1400)
 #      define __MSVC32__ 8
 #   endif
+#   if (__MSVC32__>=7)
+#      define __MSC_NEWER__
+#   endif
 #endif
 
 #if defined(THREAD_EXPERIMENT)
@@ -133,7 +136,7 @@ Macro definitions.
 #      define GCC3
 #   endif
 #endif
-
+/*
 #if (defined(__MSVC32__))
 #   if (__MSVC32__>=7)
 #      define __MSC_NEWER__
@@ -143,7 +146,7 @@ Macro definitions.
 #if defined(__MINGW32__)
 #   include <conio.h>
 #endif
-
+*/
 #if defined(_ADEXEP)
 #   define USE_EXECPTIONS
 #endif
@@ -433,13 +436,13 @@ class independent_variables;
 #      define _FPOS_T_DEFINED
 #   endif
 #endif
-
+/*
 #if defined(__GNUC__)
    extern "C" int getch(void);
 #else
    int getch(void);
 #endif
-
+*/
 #include <math.h>
 
 #if defined(__BORLANDC__)

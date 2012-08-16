@@ -2,15 +2,26 @@
 
 TARGET=beta1
 
-all: clean $(TARGET) run
+all: clean $(TARGET) run test_$(TARGET) run_tests
+
+test_$(TARGET): test_$(TARGET).o
+	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; LDFLAGS=" `gtest-config --ldflags --libs` " adlink -g ${OPTIONS} test_$(TARGET)
+
+test_$(TARGET).o: $(TARGET).cpp $(TARGET).htp
+	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; adcomp -g ${OPTIONS} test_$(TARGET)
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -s $(TARGET)
+	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -s -g $(TARGET)
 
 run:
 	@printf "Started run:\n"
 	./$(TARGET)
 	@printf "Finished run.\n"
+
+run_tests:
+	@printf "Started run tests:\n"
+	./test_$(TARGET)
+	@printf "Finished run tests.\n"
 
 clean:
 	@rm -vf $(TARGET)
@@ -27,4 +38,6 @@ clean:
 	@rm -vf $(TARGET).o
 	@rm -vf $(TARGET).par
 	@rm -vf $(TARGET).std
+	@rm -vf test_$(TARGET).o
+	@rm -vf test_$(TARGET)
 	@rm -vf eigv.rpt

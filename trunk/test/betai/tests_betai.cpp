@@ -10,21 +10,21 @@ extern "C"
 
 class test_admb_messages: public ::testing::Test {};
 
-#define main beta1_main
-#include "beta1.cpp"
+#define main betai_main
+#include "betai.cpp"
 #undef main
 
-TEST(beta1, test2)
+TEST(betai, test2)
 {
   const int argc = 1;
-  const char* argv[] = {"beta1"};
-  beta1_main(argc, argv);
+  const char* argv[] = {"betai"};
+  betai_main(argc, argv);
 }
-TEST(beta1, test3)
+TEST(betai, test3)
 {
   const int argc = 1;
-  const char* argv[] = {"beta1"};
-  beta1_main(argc, argv);
+  const char* argv[] = {"betai"};
+  betai_main(argc, argv);
 }
 int main(int argc, char** argv)
 {

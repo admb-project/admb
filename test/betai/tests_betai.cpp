@@ -8,25 +8,38 @@ extern "C"
   }
 }
 
-class test_admb_messages: public ::testing::Test {};
-
 #define main betai_main
 #include "betai.cpp"
 #undef main
 
-TEST(betai, test2)
+class tests_betai: public ::testing::Test 
+{
+protected:
+  tests_betai() {
+  }
+  virtual ~tests_betai() {
+  }
+  virtual void SetUp() {
+  }
+  virtual void TearDown() {
+  }
+};
+
+TEST(tests_betai, a)
 {
   const int argc = 1;
   const char* argv[] = {"betai"};
   betai_main(argc, argv);
 }
-TEST(betai, test3)
+
+TEST(tests_betai, b)
 {
   const int argc = 1;
   const char* argv[] = {"betai"};
   betai_main(argc, argv);
 }
 int main(int argc, char** argv)
+
 {
   ::testing::InitGoogleTest(&argc, argv);
   ad_exit=&test_ad_exit;

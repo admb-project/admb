@@ -5,56 +5,49 @@ if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
 REM #######################################################################################################################
 REM                                                                                                                       #
-REM Script:   adcomp [-d] [-g] [-r] [-s] model                                                                            #
+REM Script:   adcomp [-d] [-r] [-s] model                                                                                 #
 REM                                                                                                                       #
-REM Purpose:  Compile ADMB C++ to object code, using the Borland 5.5.1 compiler                                           #
+REM Purpose:  Compile ADMB C++ to object code, using the MinGW GCC 3.4.5 compiler                                         #
 REM                                                                                                                       #
 REM Args:     -d creates object file for DLL                                                                              #
-REM           -g inserts debugging symbols                                                                                #
 REM           -r creates object file for ADMB-RE                                                                          #
-REM           -s creates object file that enforces safe array bounds during runtime                                       #
-REM           model is the filename with or without extension, e.g. simple or simple.cpp                                  #
+REM           -s creates object file with safe bounds and debugging symbols                                               #
+REM           model is the filename prefix, e.g. simple                                                                   #
 REM                                                                                                                       #
-REM Requires: ADMB header files, bcc32                                                                                    #
+REM Requires: ADMB header files, g++                                                                                      #
 REM                                                                                                                       #
 REM Returns:  Creates object file with same prefix                                                                        #
 REM                                                                                                                       #
 REM History:  24 May 2009  Arni Magnusson created                                                                         #
-REM            6 Nov 2009  Johnoel Ancheta removed -Vd flag                                                               #
-REM           27 Nov 2009  Arni Magnusson added support for filename extension, e.g. simple.cpp                           #
-REM           22 Feb 2010  Arni Magnusson merged forked versions and synchronized -g -s options with GCC scripts          #
 REM                                                                                                                       #
 REM #######################################################################################################################
 
 rem Pop args until model=%1
+set g=
 set dll=
-set opt=;OPT_LIB
-set v=
+set opt=-DOPT_LIB 
 :STARTLOOP
 if [%2]==[] goto ENDLOOP
-if %1==-d set dll=;__SPDLL& shift
-if %1==-g set v=-v& shift
+if %1==-d set dll=-DBUILDING_DLL& shift
 if %1==-r shift
-if %1==-s set opt=& shift
+if %1==-s set g=-g& set opt=-DSAFE_ALL& shift
 goto STARTLOOP
 :ENDLOOP
 
-set model=%~n1
-
 @echo on
-bcc32 -c -O2 %v% -DDOS386;USE_LAPLACE%opt%%dll% -I. -I%BCC55_HOME%\include -I"%ADMB_HOME%"\include -I"%ADMB_HOME%"\contrib %model%.cpp
+bcc32 -c /EHsc -DUSE_LAPLACE -DWIN32 %opt% /Ox -D__MSVC32__=8 -I. -I"%ADMB_HOME%"\include -I"%ADMB_HOME%"\contrib %1.cpp
 @echo off
+
 goto EOF
 
 :HELP
-echo Usage: adcomp [-d] [-g] [-r] [-s] model
+echo Usage: adcomp [-d] [-r] [-s] model
 echo.
-echo Compile AD Model Builder C++ to object code, using the Borland 5.5.1 compiler.
+echo Compile AD Model Builder C++ to object code.
 echo.
-echo   -d     Create DLL
-echo   -g     Insert debugging symbols
-echo   -r     Create ADMB-RE
-echo   -s     Enforce safe bounds
+echo   -d     Create object file for DLL
+echo   -r     Create object file for ADMB-RE
+echo   -s     Create object file with safe bounds and debugging symbols
 echo   model  Filename prefix, e.g. simple
 echo.
 

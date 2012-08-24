@@ -25,10 +25,13 @@ while getopts "dgrs" A; do
 done
 shift $((OPTIND-1))
 
-model="${1%.*}"
+file="${1%.*}"
+if [ "`basename $file`" == "$file" ]; then
+  file=$file.cpp
+fi
 
 CMD="clang++ -c $CXXFLAGS $sym -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt\
- -DUSE_LAPLACE -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib $model.cpp"
+ -DUSE_LAPLACE -fpermissive -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib $file"
 echo $CMD
 eval $CMD
 

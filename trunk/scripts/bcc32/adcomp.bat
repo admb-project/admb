@@ -25,12 +25,12 @@ REM ############################################################################
 rem Pop args until model=%1
 set g=
 set dll=
-set opt=-DOPT_LIB 
+set opt=;OPT_LIB 
 :STARTLOOP
 if [%2]==[] goto ENDLOOP
-if %1==-d set dll=-DBUILDING_DLL& shift
+if %1==-d set dll=;BUILDING_DLL& shift
 if %1==-r shift
-if %1==-s set g=-g& set opt=-DSAFE_ALL& shift
+if %1==-s set g=-g& set opt=;SAFE_ALL& shift
 goto STARTLOOP
 :ENDLOOP
 

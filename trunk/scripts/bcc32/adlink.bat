@@ -1,64 +1,40 @@
 @echo off
-setlocal
+
+REM History:  24 May 2009  Arni Magnusson created
+
+setlocal EnableExtensions EnableDelayedExpansion
 if [%1]==[] goto HELP
 if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
-REM #######################################################################################################################
-REM                                                                                                                       #
-REM Script:   adlink [-d] [-g] [-r] [-s] model                                                                            #
-REM                                                                                                                       #
-REM Purpose:  Link ADMB object code to executable, using the Borland 5.5.1 compiler                                       #
-REM                                                                                                                       #
-REM Args:     -d creates DLL                                                                                              #
-REM           -g inserts debugging symbols                                                                                #
-REM           -r creates ADMB-RE model                                                                                    #
-REM           -s creates model that enforces safe array bounds during runtime                                             #
-REM           model is the filename with or without extension, e.g. simple or simple.o                                    #
-REM                                                                                                                       #
-REM Requires: ADMB libraries, bcc32                                                                                       #
-REM                                                                                                                       #
-REM Returns:  Creates executable or DLL with same prefix                                                                  #
-REM                                                                                                                       #
-REM History:  24 May 2009  Arni Magnusson created                                                                         #
-REM           27 Nov 2009  Arni Magnusson added support for filename extension, e.g. simple.o                             #
-REM           22 Feb 2010  Arni Magnusson merged forked versions and synchronized -g -s options with GCC scripts          #
-REM                                                                                                                       #
-REM #######################################################################################################################
+set objs=
+for %%a in (%*) do (
+  set arg=%%a
+  if "!arg:~0,1!"=="-" (
+    if "!arg!"=="-s" (
+      set libs="df1b2s.lib admod32s.lib ads32.lib adt32s.lib contribs.lib"
+    )
+  ) else (
+    set objs=!objs! !arg!
+  )
+)
 
-rem Pop args until model=%1
-set adlib=ado32.lib
-set re=0
-set v=
-set wd=
-:STARTLOOP
-if [%2]==[] goto ENDLOOP
-if %1==-d set wd=-WD& shift
-if %1==-g set v=-v& shift
-if %1==-r set re=1& shift
-if %1==-s set adlib=ads32.lib& shift
-goto STARTLOOP
-:ENDLOOP
-
-set model=%~n1
-
-set df1b2lib=df1b2stub.lib
-if %adlib%==ado32.lib set df1b2lib=df1b2o.lib
-if %adlib%==ads32.lib set df1b2lib=df1b2s.lib
+if not defined libs set libs="df1b2o.lib admod32.lib ado32.lib adt32.lib contribo.lib"
+set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
-bcc32 %v% %wd% -L%BCC55_HOME%\lib -L"%ADMB_HOME%"\lib %model%.obj admod32.lib adt32.lib %adlib% %df1b2lib%
+bcc32 !objs! !libs! /link /libpath:"%ADMB_HOME%"\lib /libpath:"%ADMB_HOME%"\contrib
 @echo off
+
 goto EOF
 
 :HELP
-echo Usage: adlink [-d] [-g] [-r] [-s] model
+echo Usage: adlink [-d] [-r] [-s] model
 echo.
-echo Link AD Model Builder object code to executable, using the Borland 5.5.1 compiler.
+echo Link AD Model Builder object code to executable.
 echo.
 echo   -d     Create DLL
-echo   -g     Insert debugging symbols
 echo   -r     Create ADMB-RE
-echo   -s     Enforce safe bounds
+echo   -s     Use safe bounds and debugging symbols
 echo   model  Filename prefix, e.g. simple
 echo.
 

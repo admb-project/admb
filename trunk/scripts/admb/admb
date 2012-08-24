@@ -21,55 +21,106 @@ unset s
 tpl2cpp=tpl2cpp
 while getopts "dgrs" A; do
   case $A in
-    d) d=-d; dll=-dll;;
-    g) g=-g;;
-    r) r=-r; tpl2cpp=tpl2rem;;
-    s) s=-s; bounds=-bounds;;
+    d) d=-d; dll=-dll
+       ;;
+    g) g=-g
+       ;;
+    r) r=-r; tpl2cpp=tpl2rem
+       ;;
+    s) s=-s; bounds=-bounds
+       ;;
+    *)
+       help
+       exit 1
+       ;;
   esac
 done
 shift $((OPTIND-1))
 
-ERROR1 ()
-{
-  echo -e \\nError: $model.tpl not found\\n
-  exit 1
-}
-ERROR2 ()
-{
-  echo -e \\nError: could not create $model$1\\n
-  exit 1
-}
+tpls=
+srcs=
+objs=
 
-model="${1%.*}"
-if [[ ! -f $model.tpl ]]; then ERROR1; fi
-rm -f $model.cpp $model.htp $model.o $model
+for file in $*
+do
+  extension="${file#*.}"
+  if [ "$extension" = "$file" ]; then
+    tpls="$tpls $file"
+  elif [ "$extension" = "tpl" ]; then
+    tpls="$tpls ${file%.*}"
+  elif [ "$extension" = "cpp" -o "$extension" = "c" ]; then
+    srcs="$srcs $file"
+  elif [ "$extension" = "o" -o "$extension" = "obj" ]; then
+    objs="$objs $file"
+  fi
+done
 
-CMD="$tpl2cpp $bounds $dll $model"
-echo -e \\n\*\*\* $CMD
-eval $CMD
-if [[ ! -f $model.cpp ]]; then ERROR2 .cpp; fi
-if [[ ! -f $model.htp ]]; then ERROR2 .htp; fi
+tplsrcs=
+for model in $tpls
+do
+  if [ ! -f $model.tpl ]; then
+    echo -e "\\nError: $model.tpl not found\\n"
+    exit 1
+  fi
+  rm -f $model.cpp $model.htp $model.o $model
 
-if [[ -z "$CXXFLAGS" ]]; then
-  CMD="adcomp $d $g $r $s $model"
-else
-  CMD="CXXFLAGS=\"$CXXFLAGS\" adcomp $d $g $r $s $model"
-fi
-echo -e \\n\*\*\* $CMD
-eval $CMD
-if [[ ! -f $model.o ]]; then ERROR2 .o; fi
+  CMD="$tpl2cpp $bounds $dll $model"
+  echo -e \\n\*\*\* $CMD
+  eval $CMD
+  if [ ! -f $model.cpp -o ! -f $model.htp ]; then
+    echo -e "\\nError: could not parse $model.tpl\\n"
+    exit 1
+  fi
+  tplsrcs="$tplsrcs ${model%.*}.cpp"
+done
 
-if [[ -z "$LDFLAGS" ]]; then
-  CMD="adlink $d $g $r $s $model"
-else
-  CMD="LDFLAGS=\"$LDFLAGS\" adlink $d $g $r $s $model"
-fi
-echo -e \\n\*\*\* $CMD
-eval $CMD
-if [[ -z $dll && ! -f $model ]]; then ERROR2; fi
-if [[ -n $dll && ! -f $model.so ]]; then ERROR2 .so; fi
+for file in $tplsrcs $srcs
+do
+  if [ ! -f $file ]; then
+    echo -e "\\nError: $file not found\\n"
+    exit 1
+  fi
+  if [[ -z "$CXXFLAGS" ]]; then
+    CMD="adcomp $d $g $r $s $file"
+  else
+    CMD="CXXFLAGS=\"$CXXFLAGS\" adcomp $d $g $r $s $file"
+  fi
+  echo -e \\n\*\*\* $CMD
+  eval $CMD
+  if [[ ! -f ${file%.*}.o ]]; then
+    echo -e "\\nError: Could not compile $file\\n"
+    exit 1
+  fi
+done
 
-echo -e \\nDone\\n
+for file in $srcs
+do
+  f=${file%.*}
+  objs="$f.o $objs"
+done
+
+for file in $tpls
+do
+  model=${file%.*}
+  if [[ -z "$LDFLAGS" ]]; then
+    CMD="adlink $d $g $r $s $model $objs"
+  else
+    CMD="LDFLAGS=\"$LDFLAGS\" adlink $d $g $r $s $model $objs"
+  fi
+  echo -e \\n\*\*\* $CMD
+  eval $CMD
+  if [[ -z $dll ]]; then 
+    if [[ ! -f $model ]]; then 
+        echo -e "\\nError: Could not build $model\\n"
+    fi
+  else
+    if [[ ! -f $model.so ]]; then
+        echo -e "\\nError: Could not build $model.so\\n"
+    fi
+  fi
+done
+
+echo -e "\\nSuccessfully built executable.\\n"
 exit 0
 
 ### r259 [2012-02-29] arnima  improved handling of CXXFLAGS and LDFLAGS

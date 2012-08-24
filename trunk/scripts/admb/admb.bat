@@ -1,51 +1,98 @@
 @echo off
-setlocal
+
+setlocal EnableExtensions EnableDelayedExpansion
+
 if [%1]==[] goto HELP
 if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
 
-rem Pop args until model=%1
-set bounds=
-set d=
-set dll=
-set g=
-set r=
-set s=
-set tpl2cpp=tpl2cpp
-set i=0
-:STARTLOOP
-if [%2]==[] goto ENDLOOP
-if %1==-d set d=-d & set dll=-dll & shift
-if %1==-g set g=-g & shift
-if %1==-r set r=-r & set tpl2cpp=tpl2rem& shift
-if %1==-s set s=-s & set bounds=-bounds & shift
-set /a i=%i%+1
-if %i%==100 shift & set i=0 & echo.&echo Warning: illegal option %1 (discarded)
-goto STARTLOOP
-:ENDLOOP
+set srcs=
+set tpls=
+set objs=
 
-set model=%~n1
-if not exist %model%.tpl goto ERROR1
-del %model%.cpp %model%.htp %model%.obj %model%.exe 2> NUL
+for %%a in (%*) do (
+  set arg=%%a
+  if "!arg:~0,1!"=="-" (
+    if %%a==-d (
+      set d=-d 
+      set dll=-dll
+    )
+    if %%a==-g (
+      set g=-g
+    )
+    if %%a==-r (
+      set r=-r 
+      set parser=tpl2rem
+    )
+    if %%a==-s (
+      set s=-s 
+      set bounds=-bounds
+    )
+  ) else (
+    if "%%~xa"=="" (
+      set tpls=!tpls! %%a
+    ) else (
+      if "%%~xa"==".c" (
+        set srcs=!srcs! %%a
+      )
+      if "%%~xa"==".cpp" (
+        set srcs=!srcs! %%a
+      )
+      if "%%~xa"==".o" (
+        set objs=!objs! %%a
+      )
+      if "%%~xa"==".obj" (
+        set objs=!objs! %%a
+      )
+      if "%%~xa"==".tpl" (
+        set tpls=!tpls! %%a
+      )
+    )
+  )
+)
+if not defined parser set parser=tpl2cpp
 
-set CMD=%tpl2cpp% %bounds%%dll%%model%
-echo.&echo *** %CMD%
-%CMD%
-if not exist %model%.cpp set ext=cpp& goto ERROR2
-if not exist %model%.htp set ext=htp& goto ERROR2
+for %%a in (!tpls!) do (
+  if not exist %%~na.tpl goto ERROR1
+  set model=%%~na
+  del !model!.cpp !model!.htp !model!.obj !model!.exe 2> NUL
+  set CMD=!parser! !bounds! !dll! !model!
+  echo.&echo *** !CMD!
+  call !CMD!
+  if not exist !model!.cpp goto ERROR2
+  if not exist !model!.htp goto ERROR2
+)
 
-set CMD=adcomp %d%%g%%r%%s%%model%
-echo.&echo *** %CMD%
-call %CMD%
-if not exist %model%.obj set ext=obj& goto ERROR2
+for %%b in (!tpls!) do (
+  set model=%%~nb
+  for %%a in (!model! !srcs!) do (
+    set src=%%~na
+    set CMD=adcomp !d! !g! !r! !s! !src!
+    echo.&echo *** !CMD!
+    call !CMD!
+    if not exist !src!.obj (
+      echo.&echo Error: Unable to build %%a
+      goto EOF
+    )
+  )
+)
+for %%a in (!srcs!) do (
+  set src=%%~na
+  set objs=!objs! !src!.obj
+)
+for %%a in (!tpls!) do (
+  set model=%%~na
+  set CMD=adlink !d! !g! !r! !s! !model!.obj !objs!
+  echo.&echo *** !CMD!
+  call !CMD!
+  if defined dll (
+    if not exist %%~na.dll goto ERROR2
+  ) else (
+    if not exist %%~na.exe goto ERROR2
+  )
+)
 
-set CMD=adlink %d%%g%%r%%s%%model%
-echo.&echo *** %CMD%
-call %CMD%
-if defined dll (if not exist %model%.dll set ext=dll& goto ERROR2)
-if not defined dll (if not exist %model%.exe set ext=exe& goto ERROR2)
-
-echo.&echo Done
+echo.&echo Successfully built executable.
 goto EOF
 
 :HELP
@@ -62,11 +109,11 @@ echo.
 goto EOF
 
 :ERROR1
-echo.&echo Error: %model%.tpl not found
+echo.&echo Error: !model!.tpl not found
 goto EOF
 
 :ERROR2
-echo.&echo Error: could not create %model%.%ext%
+echo.&echo Error: Could not parse !model!.tpl
 goto EOF
 
 :EOF

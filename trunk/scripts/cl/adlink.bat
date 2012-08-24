@@ -22,7 +22,7 @@ if not defined libs set libs="df1b2o.lib admod32.lib ado32.lib adt32.lib contrib
 set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
-cl !objs! !libs! /link /libpath:"%ADMB_HOME%"\lib /libpath:"%ADMB_HOME%"\contrib
+cl %objs% %libs% /link /libpath:"%ADMB_HOME%"\lib /libpath:"%ADMB_HOME%"\contrib
 @echo off
 
 goto EOF

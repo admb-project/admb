@@ -30,7 +30,7 @@ if [ "`basename $file`" == "$file" ]; then
   file=$file.cpp
 fi
 
-CMD="CC -m64 -c $CXXFLAGS $sym -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt\
+CMD="CC -m64 -c $CXXFLAGS $sym -D__GNUDOS__ $dll -Dlinux $opt\
  -DUSE_LAPLACE -fpermissive -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib $file"
 echo $CMD
 eval $CMD

@@ -34,8 +34,14 @@ if %1==-s set g=-g& set opt=-DSAFE_ALL& shift
 goto STARTLOOP
 :ENDLOOP
 
+if "%%~x1"=="" (
+  set file=%1.cpp
+) else (
+  set file=%1
+)
+
 @echo on
-cl -c /EHsc -DUSE_LAPLACE -DWIN32 %opt% /Ox -D__MSVC32__=8 -I. -I"%ADMB_HOME%"\include -I"%ADMB_HOME%"\contrib %1.cpp
+cl -c /EHsc -DUSE_LAPLACE -DWIN32 %opt% /Ox -D__MSVC32__=8 -I. -I"%ADMB_HOME%"\include -I"%ADMB_HOME%"\contrib %file%
 @echo off
 
 goto EOF

@@ -11,14 +11,14 @@ for %%a in (%*) do (
   set arg=%%a
   if "!arg:~0,1!"=="-" (
     if "!arg!"=="-s" (
-      set libs=df1b2s.lib admod32s.lib ads32.lib adt32s.lib contribs.lib
+      set libs=df1b2s.lib admod32s.lib ads32.lib adt32s.lib
     )
   ) else (
     set objs=!objs! !arg!
   )
 )
 
-if not defined libs set libs=df1b2o.lib admod32.lib ado32.lib adt32.lib contribo.lib
+if not defined libs set libs=df1b2o.lib admod32.lib ado32.lib adt32.lib
 set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on

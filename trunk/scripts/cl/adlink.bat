@@ -14,7 +14,11 @@ for %%a in (%*) do (
       set libs=df1b2s.lib admod32s.lib ads32.lib adt32s.lib contribs.lib
     )
   ) else (
-    set objs=!objs! !arg!
+    if "%%~xa"=="" (
+      set objs=!objs! !arg!.obj
+    ) else (
+      set objs=!objs! !arg!
+    )
   )
 )
 
@@ -22,7 +26,7 @@ if not defined libs set libs=df1b2o.lib admod32.lib ado32.lib adt32.lib contribo
 set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
-cl %objs%.obj %libs% /link /libpath:"%ADMB_HOME%"\lib /libpath:"%ADMB_HOME%"\contrib
+cl %objs% %libs% /link /libpath:"%ADMB_HOME%"\lib /libpath:"%ADMB_HOME%"\contrib
 @echo off
 
 goto EOF

@@ -18,11 +18,11 @@ for %%a in (%*) do (
   )
 )
 
-if not defined libs set libs="f1b2o.lib admod32.lib ado32.lib adt32.lib contribo.lib
+if not defined libs set libs=df1b2o.lib admod32.lib ado32.lib adt32.lib contribo.lib
 set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
-cl %objs% %libs% /link /libpath:"%ADMB_HOME%"\lib /libpath:"%ADMB_HOME%"\contrib
+cl %objs%.obj %libs% /link /libpath:"%ADMB_HOME%"\lib /libpath:"%ADMB_HOME%"\contrib
 @echo off
 
 goto EOF

@@ -53,6 +53,7 @@
   
   initial_params::~initial_params()
   {
+    num_initial_params--;
 #  if defined(USE_SHARE_FLAGS)
     if (share_flags)
     {

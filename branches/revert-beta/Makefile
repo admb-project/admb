@@ -35,11 +35,14 @@ icc:
 icc-verify:
 	$(MAKE) --directory=src --file=linux.mak CC=icc CXX=icpc verify
 
-linux:
+linux: linux-contrib
 	$(MAKE) --directory=src --file=linux.mak
 
-linux-64bit:
+linux-64bit: linux-contrib
 	CXXFLAGS=-m64 $(MAKE) --directory=src --file=linux.mak dist-64bit
+
+linux-contrib:
+	LIBPATH=../build/admb_gcc411_fedora8 DISK=../build/dists/admb_gcc411_fedora8 $(MAKE) --directory=contrib
 
 linux-verify:
 	$(MAKE) --directory=src --file=linux.mak verify
@@ -50,5 +53,11 @@ it:
 it2:
 	$(MAKE) MACOSX_DEPLOYMENT_TARGET=10.5 CFLAGS=-m32 CXXFLAGS="-m32 -mmacosx-version-min=10.5" LDFLAGS="-m32 -Wl,-macosx_version_min,10.5" verify
 
+
+tests:
+	ADMB_HOME=$(PWD)/build/dists/admb_gcc411_fedora8 PATH=$(PWD)/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=test betai
+
 clean:
 	rm -rvf build
+	$(MAKE) --directory=test clean
+	

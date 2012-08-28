@@ -1,26 +1,18 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
- */
-/**
- * \file
- * Description not yet available.
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include "fvar.hpp"
 
-
-/** Log negative bionomial density; variable objects. 
- A local parameter r is used to make it robust.
- \f$ r=\frac{\mu}{10.0^{-120}+\tau-1.0} \f$
- \ingroup PDF
- \param x
- \param mu
- \param tau
- \return Log of NegativeBinomial density. \f$ log(\Gamma(x+r))-log(\Gamma(r))-log(x!)+rlog(r)+xlog(\mu)-(r+x)log(r+\mu) \f$
- */
-
+  /** Log negative bionomial density; variable objects.
+  \ingroup PDF
+  \param x
+  \param mu
+  \param tau
+  \return 
+  */
   dvariable log_negbinomial_density(double x,const prevariable& mu, 
     const prevariable& tau)
   {
@@ -38,15 +30,13 @@
     return tmp;
   }
 
-	/** Negative bionomial density; variable objects.
-	A local parameter r is used to make it robust.
-	\f$ r=\frac{\mu}{10.0^{-120}+\tau-1.0} \f$
-	\ingroup PDF
-	\param x
-	\param mu
-	\param tau
-	\return Log of NegativeBinomial density. \f$ \frac{\Gamma(x+r)}{\Gamma(r)x!}(\frac{r}{r+\mu})^r(\frac{\mu}{r+\mu})^x \f$
-	*/ 
+  /** Negative bionomial density; variable objects.
+  \ingroup PDF
+  \param x
+  \param mu
+  \param tau
+  \return 
+  */ 
   dvariable negbinomial_density(double x,const prevariable& mu, 
     const prevariable& tau)
   {
@@ -77,7 +67,7 @@
   \ingroup PDF
   \param x Number of observed occurences, \f$k\f$.
   \param mu Mean or expected value, \f$\mu\f$.
-  \return Log of Poisson density. \f$-\mu+k \log(\mu)-\log(k!)\f$.
+  \return Log of Poisson density. \f$-\mu+k*\log(\mu)-k!\f$.
   */
   dvariable log_density_poisson(double x,const prevariable& mu)
   {

@@ -35,7 +35,9 @@ icc:
 icc-verify:
 	$(MAKE) --directory=src --file=linux.mak CC=icc CXX=icpc verify
 
-linux: linux-contrib
+linux: linux-admb linux-contrib
+
+linux-admb:
 	$(MAKE) --directory=src --file=linux.mak
 
 linux-64bit: linux-contrib
@@ -59,5 +61,5 @@ tests:
 
 clean:
 	rm -rvf build
+	$(MAKE) --directory=contrib clean
 	$(MAKE) --directory=test clean
-	

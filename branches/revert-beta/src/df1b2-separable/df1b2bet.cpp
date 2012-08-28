@@ -25,8 +25,6 @@ df1b2variable betacf(const df1b2variable& a,const df1b2variable& b,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
 */
 df1b2variable betai(const df1b2variable & a,const df1b2variable & b,double x,
   int maxit)
@@ -54,8 +52,6 @@ df1b2variable betai(const df1b2variable & a,const df1b2variable & b,double x,
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
 */
 df1b2variable betacf(const df1b2variable& a,const df1b2variable& b,
   double x, int MAXIT)

@@ -17,13 +17,9 @@
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
 */
 double betai(const double a,const double b,const double x,int maxit)
 {
-//cout << __FILE__ << ':' << __LINE__ << endl;
-//exit(1);
   double bt;
 
   if (x < 0.0 || x > 1.0) cerr << "Bad x in routine betai" << endl;

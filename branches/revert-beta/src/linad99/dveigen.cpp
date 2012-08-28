@@ -46,8 +46,6 @@ dvar_vector eigenvalues(_CONST dvar_matrix& m)
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
-
-  \deprecated Scheduled for replacement by 2010.
 */
 void tri_dag(BOR_CONST dvar_matrix& _m,BOR_CONST dvar_vector& _d, BOR_CONST dvar_vector& _e)
 {
@@ -179,8 +177,6 @@ void tri_dag(BOR_CONST dvar_matrix& _m,BOR_CONST dvar_vector& _d, BOR_CONST dvar
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
-
-  \deprecated Scheduled for replacement by 2010.
 */
 void get_eigen(BOR_CONST dvar_vector& _d,BOR_CONST dvar_vector& _e,_CONST dvar_matrix& z)
 {
@@ -258,8 +254,6 @@ void get_eigen(BOR_CONST dvar_vector& _d,BOR_CONST dvar_vector& _e,_CONST dvar_m
  \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
-
-    \deprecated Scheduled for replacement by 2010.
 */
 dvar_vector get_eigen_values(const dvar_vector& _ddd,const dvar_vector& _eee)
 {

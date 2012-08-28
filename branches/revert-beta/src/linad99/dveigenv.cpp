@@ -68,8 +68,6 @@ dvar_matrix eigenvectors(_CONST dvar_matrix& m)
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
-
-    \deprecated Scheduled for replacement by 2010.
 */
 
 #ifdef EIGEN_VECTORS
@@ -201,8 +199,6 @@ dvar_matrix eigenvectors(_CONST dvar_matrix& m)
   \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
-
-  \deprecated Scheduled for replacement by 2010.
 */
 #ifdef EIGEN_VECTORS
   void get_eigenv(_CONST dvar_vector& _d,_CONST dvar_vector& _e,BOR_CONST dvar_matrix& _z)

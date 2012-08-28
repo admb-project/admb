@@ -6,10 +6,11 @@
 /*---------------------------------------------2nd variable is a scalar*/
 /**  generalized Ricker function, first parameerization; scalar
 \param x independent variable; data scalar
-\param x0 ; differentiable scalar
+\param x0 \f$x_0\f$; differentiable scalar. 
 \param A ; differentiable scalar
 \param alpha ; differentiable scalar
-\return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\return  \f$ A(\frac{x}{x_0}e^{(1.0-\frac{x}{x_0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 dvariable generalized_Ricker1(const double& x,  const prevariable& x0,  const prevariable& A,  const prevariable& alpha)
 {

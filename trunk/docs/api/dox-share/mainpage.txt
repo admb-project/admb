@@ -118,7 +118,8 @@ invoke custom adjoint code.
     \details Contributed by Mollie Brooks.
 */
 
-/** \defgroup QFC
+/** \defgroup QFC Functions created at the Quantitative Fisheries Center(QFC), Michigan State University.
+ 
     \ingroup CONTRIB
     \details Contributed by Weihai Liu
 */

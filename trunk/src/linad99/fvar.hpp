@@ -47,7 +47,7 @@ Function prototypes for math functions.
 Macro definitions.
 */
 
-
+#include <math.h>
 // Borrow definition of M_PI from GCC
 #ifndef M_PI
 #   define M_PI 3.14159265358979323846
@@ -136,17 +136,7 @@ Macro definitions.
 #      define GCC3
 #   endif
 #endif
-/*
-#if (defined(__MSVC32__))
-#   if (__MSVC32__>=7)
-#      define __MSC_NEWER__
-#   endif
-#endif
 
-#if defined(__MINGW32__)
-#   include <conio.h>
-#endif
-*/
 #if defined(_ADEXEP)
 #   define USE_EXECPTIONS
 #endif
@@ -243,10 +233,6 @@ Macro definitions.
 #   define DSAFE_ALLOCATE
 #   define SAFE_ARRAYS
 #endif
-
-//#ifdef USE_ASSEMBLER
-//#include "adass.h"
-//#endif
 
 // C language function prototypes
 extern "C"
@@ -359,24 +345,6 @@ class independent_variables;
 #endif
 
 #include <stdio.h>
-//# if defined (__WAT32__)
-//#  if defined (max)
-//#    undef max
-//#  endif
-//#  if defined (min)
-//#    undef min
-//#  endif
-//#endif
-
-//#if defined (__TURBOC__) || defined (__WAT32__)
-//#include <mem.h>		// to get memcpy and NULL
-//#include <fstream.h>		// to get fstreambase
-//#include <iostream.h>
-//#include <dos.h>
-//#undef __ZTC__
-//#define __USE_IOSTREAM__
-//#undef __SUN__
-//#endif
 
 #if ( defined(__GNUC__) && __GNUC__<3) || defined(__SUNPRO_CC)
 #   if defined(linux) || defined(__CYGWIN__) || defined(__SUNPRO_CC)
@@ -436,14 +404,8 @@ class independent_variables;
 #      define _FPOS_T_DEFINED
 #   endif
 #endif
-/*
-#if defined(__GNUC__)
-   extern "C" int getch(void);
-#else
-   int getch(void);
-#endif
-*/
-#include <math.h>
+
+//#include <math.h>
 
 #if defined(__BORLANDC__)
 #   if (__BORLANDC__  > 0x0520)
@@ -2413,7 +2375,14 @@ class predvar_vector
    friend class dvar_vector;
 };
 
-class dvector			/// Vector of double precision numbers
+
+/** Vector of double precision numbers.
+A basic container class for a one dimensional array of double precision
+floating point numbers. 
+Fundamental building block for higher dimensional arrays.
+All ADMB vector classes have similar functionality.
+*/
+class dvector
 {
  protected:
    double *v;			///< pointer to the data
@@ -2428,14 +2397,17 @@ class dvector			/// Vector of double precision numbers
 
  public:
    dvector operator -();
+   /// Returns 1 (TRUE) if memory is NOT allocated
    int operator!(void) const
    {
       return (shape == NULL);
    }
+   /// Returns 1 (TRUE) if memory is allocated.
    int allocated(void) const
    {
       return (shape != NULL);
    }
+   /// Decrement vector indices array pointer.
    dvector & operator --(void)
    {
       index_min--;
@@ -2443,6 +2415,7 @@ class dvector			/// Vector of double precision numbers
       v++;
       return *this;
    }
+   /// Increment vector indices array pointer.
    dvector & operator ++(void)
    {
       index_min++;
@@ -2451,16 +2424,28 @@ class dvector			/// Vector of double precision numbers
       return *this;
    }
    void reallocate(double size);
+   /** Get subvector.
+   \param lb starting index of subvector
+   \param ub ending index of subvector
+   \return dvector contining a shallow copy of calling instance of dvector
+    with valid subscripts from lb to ub.
+   */
    dvector sub(int lb, int ub)
    {
       return predvector(this, lb, ub);
    }
+   /** Get subvector.
+   \param lb starting index of subvector
+   \param ub ending index of subvector
+   \return dvector contining a shallow copy of calling instance of dvector
+    with valid subscripts from lb to ub.
+   */
    dvector operator () (int lb, int ub)
    {
       return predvector(this, lb, ub);
    }
+
    dvector(const predvector & pd);
-   //virtual void write_message(void) { cout << " This is a dvector" << endl; }
 
    void fill_randpoisson(double lambda,
 			 const random_number_generator & rng);
@@ -2545,19 +2530,24 @@ class dvector			/// Vector of double precision numbers
       return shape->index_max;
    }				// returns the minimum allowable index
 
+   /// Get minimum valid index.
    int indexmin() const
    {
       return index_min;
-   }				// returns the minimum allowable index
+   }
 
+   /// Get maximum valid index.
    int indexmax() const
    {
       return index_max;
-   }				// returns the maximum allowable index
+   }
+
+   /// Get number of elements in array.
    int size() const
    {
       return (index_max - index_min + 1);
-   }				// returns the number of elements
+   }
+
    dvector & shift(int min);
 
    dvector(const dvar_vector_position & dvp, const kkludge_object &);

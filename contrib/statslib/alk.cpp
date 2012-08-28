@@ -15,7 +15,6 @@
 *  
 * 
 * @author Steven Martell
-* \ingroup STATLIB
 * @date 2/27/2011
 * 
 * The function is implemented as
@@ -37,6 +36,7 @@
 	\param x is the vector of break points for the length bins
 	\return dvar_matrix containing the probability of length(x) for a given age(a)
 	\sa
+        \ingroup STATLIB
 **/
 dvar_matrix ageLengthKey(const dvar_vector& mu, const dvar_vector& sig, const dvector& x)
 {

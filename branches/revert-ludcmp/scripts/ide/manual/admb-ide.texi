@@ -1,0 +1,833 @@
+\input texinfo
+@setfilename admb-mode.info
+@afourpaper
+@kbdinputstyle code
+@set VERSION 10.1
+@set IDEFILE   admb-ide-101-win64
+@set ADMBDIR admb101-gcc452-win64
+@set GCCDIR          gcc452-win64
+@set MODE 6.8
+@set DATE (2012-03-01)
+@set REVISED Revised manual (2012-03-21)
+@set YEARS 2009, 2010, 2011, 2012
+@macro screen{filename}
+@sp
+@center @image{\filename\,13.5cm}
+@sp
+@end macro
+@macro subsec{label}
+@sp 0.5
+@noindent @b{\label\}
+@end macro
+@macro clickthis{clicks}
+@t{@i{@clicksequence{\clicks\}}}
+@end macro
+@macro icon{filename}
+@image{\filename\,9.5pt}
+@end macro
+@macro bigicon{filename}
+@image{\filename\,12pt}
+@end macro
+
+@copying
+This is the manual for AD Model Builder IDE (ADMB-IDE) version
+@value{VERSION}.@*
+The latest edition of the manual is available at:@*
+@uref{http://admb-project.org/community/editing-tools/admb-ide}
+@sp
+Copyright @copyright{} @value{YEARS} Arni Magnusson
+@sp
+To cite ADMB-IDE, use the newsletter article (see @ref{References}) as a fixed
+reference.
+@sp
+AD Model Builder IDE is an aggregate of six components:
+@itemize
+@item AD Model Builder 10.1 is released under the BSD License.@*
+Source code: @uref{http://code.google.com/p/admb-project/downloads/list}
+@item GCC 4.5.2 is released under the GPL.@*
+Source code: @uref{ftp://ftp.gnu.org/gnu/gcc/}
+@item GDB 7.4 is released under the GPL.@*
+Source code: @uref{ftp://ftp.gnu.org/gnu/gdb/}
+@item GNU Emacs 23.4.1 is released under the GPL.@*
+Source code: @uref{ftp://ftp.gnu.org/gnu/emacs/}
+@item ADMB Mode @value{MODE} for Emacs is released under the Simplified BSD License.@*
+Source code: @uref{http://admb-project.org/community/editing-tools/emacs/admb.el}
+@item ADMB-IDE @code{.emacs} @value{VERSION} is released under the Simplified BSD License.@*
+Source code: @uref{http://admb-project.org/community/editing-tools/admb-ide/core}
+@end itemize
+@end copying
+
+@titlepage
+@title AD Model Builder IDE
+@subtitle Emacs @command{admb-mode} without the Emacs
+@subtitle Version @value{VERSION} @value{DATE}
+@subtitle @value{REVISED}
+@author Arni Magnusson
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@contents @cindex
+
+@chapter Preamble
+
+The purpose of ADMB-IDE is to make the convenient features of Emacs
+@command{admb-mode} available to non-Emacs users. In other words, to disable the
+standard Emacs behavior.
+
+@cartouche
+@noindent
+Experienced Emacs users may prefer to ignore the ADMB-IDE @file{.emacs} file,
+and simply install and load @file{admb.el} like other Emacs packages. It is a
+standard ``major mode'' that follows all Emacs mode conventions.
+@end cartouche
+
+@chapter Introduction
+
+@section Emacs @command{admb-mode}
+
+The process of creating statistical models with AD Model Builder (ADMB) involves
+writing, compiling, and testing. An integrated development environment (IDE)
+allows the user to perform these tasks more efficiently than with a basic editor
+and a shell.
+
+GNU Emacs is a complex and powerful editor that comes with particularly good
+support for R, @LaTeX, backup/revision control, and other useful tools for
+statistical computing. Its @command{admb-mode} provides syntax highlighting,
+compilation, file manipulation, outline code navigation, templates, and smaller
+tools for creating ADMB models. Emacs users can fetch @command{admb-mode} from
+@uref{http://admb-project.org/community/editing-tools/emacs/admb.el/view} and
+start using it right away, after reading the commentary at the top of the file.
+
+The problem with Emacs is that it requires considerable time to learn and
+configure, although for heavy-duty statistical computing this can be a rewarding
+investment. As the programmer Larry Wall once said: ``If ease of use was the
+highest goal, we'd all be driving golf carts.'' The
+@uref{http://admb-project.org/community/editing-tools/emacs} page contains some
+pointers for setting up and learning Emacs. There are, however, good reasons why
+many users may not feel like adopting Emacs as their main editor, but would
+still appreciate a simple IDE for ADMB.
+
+The rest of this tutorial demonstrates how Emacs with @command{admb-mode} can be
+configured as a user-friendly ADMB-IDE, without learning the details of Emacs.
+This is achieved with an unusual @file{.emacs} configuration file that emulates
+common keybindings of basic editors, while disabling some of the most used Emacs
+keybindings. This @file{.emacs} file is therefore not intended for experienced
+Emacs users, although they may find it an interesting read.
+
+@section ADMB-IDE for Windows
+
+@display
+@emph{Somebody set up us the bomb.}
+@end display
+
+@noindent
+There are two ways to install ADMB-IDE for Windows: use an installer or set up
+the individual components by hand.
+@sp -0.5
+
+@subsec Installer
+
+@noindent
+The @file{@value{IDEFILE}.exe} installer sets up the five main components (ADMB,
+GCC, GDB, Emacs, @command{admb-mode}) with a customized Emacs user interface,
+file associations, and environment variables to glue everything together. The
+only catch is that the user must accept the default directory structure, and the
+full installation option is strongly recommended:
+
+@sp
+@center @image{intro-install,9cm}
+
+@noindent
+The directory structure is designed to accommodate coexisting versions of ADMB
+and GCC:
+
+@multitable @columnfractions .40 .20 .15
+@item Directory                      @tab Component           @tab Overwrite
+@item @code{c:/admb/@value{ADMBDIR}} @tab ADMB                @tab Yes
+@item @code{c:/gnu/emacs}            @tab Emacs               @tab Yes
+@item @code{c:/gnu/@value{GCCDIR}}   @tab GCC                 @tab Yes
+@item @code{c:/gnu/gdb}              @tab GDB                 @tab Yes
+@item @code{c:/~/emacs/lisp/admb}    @tab @command{admb-mode} @tab Yes
+@item @code{c:/~}                    @tab @code{.emacs}       @tab No
+@end multitable
+
+@noindent
+It is perfectly safe to install ADMB-IDE on top of existing ADMB installations,
+which could reside in subdirectories of @code{c:/admb} or anywhere else.
+Compilers may also coexist, in subdirectories of @code{c:/gnu} or anywhere else.
+Short and shallow paths without spaces are helpful when configuring and writing
+customized scripts.
+
+This is a practical setup for other free software as well. Take for example the
+R statistical software. By separating the main program (@code{c:/gnu/r}) from
+the user settings (@code{c:/~/.Rprofile, c:/~/Rconsole}) and user libraries
+(@code{c:/~/r/library}), the main program can be removed and upgraded without
+affecting the user setup.
+
+As indicated in the table above, the installer will not overwrite an existing
+@code{c:/~/.emacs} file. This is because a personal @file{.emacs} configuration
+file is the only component that is irreplaceable; all other components are
+available and free on the internet.
+
+One thing to keep in mind is that the installer modifies the user @env{PATH} and
+file associations. In rare cases, users may need to reconfigure these according
+to taste and needs after installing ADMB-IDE. Advanced users may choose to
+deselect these options during the installation for this reason.
+
+@subsec Manual setup
+
+@noindent
+Users can also set up and configure the individual components by hand, starting
+from the @file{@value{IDEFILE}.zip} kit. The following guidelines may be useful
+for that:
+
+@uref{http://admb-project.org/documentation}
+
+@uref{http://admb-project.org/community/editing-tools/emacs/install}
+
+@uref{http://admb-project.org/community/editing-tools/emacs/config}
+
+@uref{http://mingw.org/wiki/HOWTO_Install_the_MinGW_GCC_Compiler_Suite}
+
+@noindent
+See also the chapters on @ref{ADMB-IDE for Linux/Mac OS} and
+@ref{Troubleshooting} in this manual.
+
+@page
+
+@section ADMB-IDE for Linux/Mac OS
+@anchor{ADMB-IDE for Linux/Mac OS}
+
+@display
+@emph{Behold, the blueprints of a golf cart.}
+@end display
+
+@noindent
+Setting up ADMB-IDE for Linux or Mac OS is equivalent to the ``manual setup''
+described above, so the same guidelines apply. The key steps are:
+
+@enumerate
+@item Install ADMB, GNU Emacs, GCC (including the C++ component), and GDB.
+
+@item Download the ADMB-IDE
+@uref{http://admb-project.org/community/editing-tools/admb-ide/core,@code{.emacs}}
+configuration file and place it in @code{~/.emacs} to apply the customized Emacs
+user interface.
+
+@item Download
+@uref{http://admb-project.org/community/editing-tools/emacs/admb.el/view,@command{admb-mode}},
+and place it in @code{~/emacs/lisp/admb/admb.el} to provide ADMB syntax
+highlighting and IDE features.
+@end enumerate
+
+@noindent
+The tutorial in the next chapter uses Windows, but ADMB-IDE is very similar in
+Linux:
+
+@screen{intro-linux}
+
+@chapter Tutorial
+
+@section Create a working copy of @command{simple}
+
+First open Windows Explorer and create a folder called @code{c:/simple}. Then
+navigate to @code{c:/admb/@value{ADMBDIR}/examples/admb/simple} and copy the
+model and data files, creating:
+
+@example
+c:/simple/simple.dat
+c:/simple/simple.tpl
+@end example
+
+Now double-click @file{simple.tpl} in the @code{c:/simple} folder. The file
+should open in Emacs in @command{admb-mode} (see red circle) and the code should
+be in color:
+
+@screen{tutor-open-circle}
+
+@page
+
+@section Build, run, and view the results
+
+Build the model by clicking the @icon{icon-connect} icon, or press @kbd{f8}:
+
+@screen{tutor-build-circle}
+
+@noindent
+Run the model by clicking the @icon{icon-jump-to} icon, or press @kbd{f9}:
+
+@screen{tutor-run-circle}
+
+Many ADMB models output their results to a @file{.rep} report file, and ADMB-IDE
+provides the @icon{icon-describe} icon and @kbd{f10} key to open the report
+file. The @command{simple} model outputs no report file, but the parameter
+estimates, standard errors, and correlations are found in the @file{.cor} file.
+
+This is an opportunity to introduce basic buffer and window management. In
+Emacs, a buffer is like a page, often representing a file, but sometimes other
+things, like the compilation and command output buffers in the previous two
+screenshots. The Emacs screen is divided into one or more windows, where each
+window shows one buffer, while other buffers reside in the background. Explore
+the @clickthis{Buffers} menu, as well as @ref{Shortcut keys}.
+
+Try out different ways to open the @file{.cor} file:
+
+@enumerate
+@item Press @kbd{escape} to maximize the active window. Then click the
+@icon{icon-open} icon or press @kbd{C-o} (@key{Ctrl} and @key{o}) and select
+@code{c:/simple/simple.cor}.
+@item Press @kbd{escape} to maximize the active window, @kbd{C-x 3} to split
+into two windows, and select the window on the right with a mouse click or
+@kbd{f6}. Click the @icon{icon-open} icon or press @kbd{C-o} and select
+@code{c:/simple/simple.cor}.
+@item Click the @clickthis{ADMB @click{} View Estimates} menu entry or press
+@kbd{S-f10}.
+@item Click the @clickthis{ADMB @click{} View Any} menu entry or press
+@kbd{C-p}, then type @samp{cor} and @kbd{return}.
+@end enumerate
+
+@screen{tutor-cor}
+
+After viewing, maximize a window by pressing @kbd{escape}, or close a window by
+clicking the @icon{icon-close} icon or pressing @kbd{C-w} or @kbd{C-f4}.
+
+@cartouche
+@noindent
+Note how the ADMB menu and toolbar icons are only available when the active
+window is in @command{admb-mode}. Press @kbd{f2} at any point to switch a window
+to @command{admb-mode}.
+@end cartouche
+
+@page
+
+@section Debug
+
+@b{Types of bugs}
+@anchor{Types of bugs}
+
+@noindent
+Bugs in ADMB models can be categorized by the point of discovery:
+
+@enumerate
+@item @command{tpl2cpp} reports a bug (cannot translate)
+@item @command{g++} reports a bug (cannot compile or link)
+@item The model builds fine, but crashes or writes no output when run (no
+results)
+@item The model runs fine, but not like it is supposed to (strange results)
+@end enumerate
+
+@subsec{Locating bugs}
+
+@itemize
+@item Warnings or error messages indicate line number, or function/variable name
+@item Insert lines of code that print informative messages during runtime
+@item Comment out parts of the code
+@item Use a debugger
+@end itemize
+
+@subsec{Example 1: @command{tpl2cpp} reports a bug}
+
+@noindent
+Create a bug by inserting an extra space inside a vector declaration:
+@code{init_vector Y(1,nobs)} @arrow{} @code{init_vector Y(1, nobs)}. Then click
+the @icon{icon-disconnect} icon or press @kbd{f7} to translate TPL to C++:
+
+@screen{bug-tpl}
+
+The @command{tpl2cpp} translator reports an error in line 36 of
+@file{simple.tpl}. Click @clickthis{Edit @click{} Go To @click{} Goto Line} or
+press @kbd{C-g} to move the cursor to that line, and then remove the unwanted
+space.
+
+@page
+
+@subsec{Example 2: @command{g++} reports a bug}
+
+@noindent
+Create a bug by referring to a nonexistent variable: @code{init_vector
+Y(1,nobs)} @arrow{} @code{init_vector Y(1,n)}. Then click the
+@icon{icon-connect} icon or press @kbd{f8} to build the model:
+
+@screen{bug-gcc}
+
+The @command{g++} compiler reports an error in line 11 of @file{simple.cpp}.
+Click the highlighted filename to open the C++ source file with the cursor in
+that line. After realizing what the problem is (with the help of the error
+message @t{@i{`n' was not declared in this scope}}), go back to the ADMB code in
+@file{simple.tpl} and change the @samp{n} to @samp{nobs}.
+
+@page
+
+@subsec{Example 3: No results}
+
+@noindent
+Create a bug by dividing by zero at the top of the @code{DATA_SECTION}: @code{!!
+cout << 1/0 << endl;}. Then click the @icon{icon-connect} icon or press @kbd{f8}
+to build the model. Ignoring the warning, click @icon{icon-jump-to} or press
+@kbd{f9} to run the model:
+
+@screen{bug-nothing}
+
+@sp 0.5
+
+The shell command @command{simple} exits abnormally with code 1, a generic code
+for failure. The easiest way to search for this bug is to insert informative
+messages in the code, like
+
+@example
+DATA_SECTION
+cout << "DATA_SECTION begins" << endl;
+...
+cout << "DATA_SECTION ends" << endl;
+@end example
+
+@noindent
+and/or simplify the model, possibly by commenting out parts of the code. After
+narrowing the search step by step, the problematic line(s) can be changed or
+removed. To comment or uncomment large parts of code, use the @kbd{M-;}
+keystroke (@pxref{Shortcut keys}).
+
+@page
+
+@subsec{Example 4: Strange results}
+
+@noindent
+Create a bug by dividing by zero in a @code{PROCEDURE_SECTION} assignment:
+@code{pred_Y=a*x+b;} @arrow{} @code{pred_Y=a*x+b/0;}. Then click the
+@icon{icon-connect} icon or press @kbd{f8} to build the model (this time there
+is no compiler warning). Click @icon{icon-jump-to} or press @kbd{f9} to run the
+model:
+
+@screen{bug-strange}
+
+The ADMB on-screen report indicates successful convergence (exit code 0) with an
+objective function value of @samp{-1.#INDe+000}, while Emacs reports failure
+(exit code 1). The easiest way to search for this bug is to insert informative
+messages in the code, like
+
+@example
+PROCEDURE_SECTION
+  cout << "The value of a   is: " << a   << endl;
+  cout << "The value of a*x is: " << a*x << endl;
+  cout << "The value of b   is: " << b   << endl;
+  cout << "The value of b/0 is: " << b/0 << endl;
+  cout << "The value of f   is: " << f   << endl;
+@end example
+
+@noindent
+and/or simplify the model, possibly by commenting out parts of the code. A more
+advanced option is to use a debugger.
+
+@page
+
+@subsec{GDB: When the going gets tough}
+@anchor{GDB}
+
+@noindent
+GNU Emacs and GCC can interact closely with the GDB debugger---these programs
+were all created by the same programmer Richard Stallman. A program must fulfill
+two conditions before debugging:
+
+@itemize
+@item The model executable (e.g.@: @file{simple.exe}) must build successfully,
+so a debugger is only helpful for bugs of type 3 and 4 (@pxref{Types of bugs}).
+@item The model executable must include debugging symbols. To embed debugging
+symbols with ADMB-IDE, either select ``Debug'' compilation from the
+@clickthis{ADMB @click{} Target} menu, or press @kbd{C-- d} (@key{Ctrl} and
+@key{-}, then @key{d}), followed by @kbd{return}.
+@end itemize
+
+Using GDB to debug an ADMB model is beyond the scope of this tutorial, but when
+simpler debugging methods fail, it is time to click @clickthis{Tools @click{}
+Debugger (GDB)}:
+
+@screen{bug-gdb}
+
+@chapter Interface
+
+@section Menu
+
+@multitable @columnfractions .25 .34 .27
+@item@hrule@tab@hrule@tab@hrule
+@headitem Menu label       @tab Purpose                     @tab Emacs command
+@item@hrule@tab@hrule@tab@hrule
+@item Translate            @tab Translate TPL to C++        @tab @command{admb-tpl2cpp}
+@item Compile              @tab Compile C++ to object code  @tab @command{admb-compile}
+@item Link                 @tab Link object code to exe     @tab @command{admb-link}
+@item Build                @tab Build executable from TPL   @tab @command{admb-make}
+@item@hrule@tab@hrule@tab@hrule
+@item Run                  @tab Run executable              @tab @command{admb-run}
+@item Run with Args        @tab Run executable with args    @tab @command{admb-run-args}
+@item Run Makefile         @tab Run Makefile in current dir @tab @command{admb-run-makefile}
+@item@hrule@tab@hrule@tab@hrule
+@item View Report          @tab Open .rep file              @tab @command{admb-rep}
+@item View Estimates       @tab Open .cor file              @tab @command{admb-cor}
+@item View Point Estimates @tab Open .par file              @tab @command{admb-par}
+@item View Initial Values  @tab Open .pin file              @tab @command{admb-pin}
+@item View C++             @tab Open C++ file               @tab @command{admb-cpp}
+@item View Any             @tab Open model file             @tab @command{admb-open}
+@item Clean Directory      @tab Remove temporary files      @tab @command{admb-clean}
+@item@hrule@tab@hrule@tab@hrule
+@item Outline              @tab Navigate with outline       @tab @command{admb-outline}
+@item Imenu                @tab Navigate with imenu         @tab @command{imenu}
+@item Template             @tab Insert template             @tab @command{admb-template}
+@item Mini Template        @tab Insert minimal template     @tab @command{admb-template-mini}
+@item Toggle Section       @tab Toggle section indicator    @tab @command{admb-toggle-section}
+@item Toggle Window        @tab Toggle secondary window     @tab @command{admb-toggle-window}
+@item@hrule@tab@hrule@tab@hrule
+@item Target               @tab Choose what to build        @tab @command{admb-set-flags}
+@item@hrule@tab@hrule@tab@hrule
+@item Help                 @tab Show help page              @tab @command{admb-help}
+@item ADMB Mode Version    @tab Show ADMB Mode version      @tab @command{admb-mode-version}
+@item@hrule@tab@hrule@tab@hrule
+@end multitable
+
+@page
+
+@section Toolbar
+
+@multitable @columnfractions .05 .34 .27
+@item@hrule@tab@hrule@tab@hrule
+@headitem Icon                  @tab Purpose                   @tab Emacs command
+@item@hrule@tab@hrule@tab@hrule
+@item @bigicon{icon-new}        @tab New buffer                @tab @command{new-buffer}
+@item @bigicon{icon-open}       @tab Open file                 @tab @command{find-file}
+@item @bigicon{icon-save}       @tab Save file                 @tab @command{save-buffer}
+@item @bigicon{icon-cut}        @tab Cut                       @tab @command{kill-region}
+@item @bigicon{icon-copy}       @tab Copy                      @tab @command{copy-region-as-kill}
+@item @bigicon{icon-paste}      @tab Paste                     @tab @command{cua-paste}
+@item @bigicon{icon-undo}       @tab Undo                      @tab @command{undo}
+@item @bigicon{icon-close}      @tab Close                     @tab @command{kill-this-buffer}
+@item@hrule@tab@hrule@tab@hrule
+@item @bigicon{icon-disconnect} @tab Translate TPL to C++      @tab @command{admb-tpl2cpp}
+@item @bigicon{icon-connect}    @tab Build executable from TPL @tab @command{admb-make}
+@item @bigicon{icon-jump-to}    @tab Run executable            @tab @command{admb-run}
+@item @bigicon{icon-describe}   @tab Open .rep file            @tab @command{admb-rep}
+@item@hrule@tab@hrule@tab@hrule
+@end multitable
+
+@page
+
+@section Shortcut keys
+@anchor{Shortcut keys}
+
+In combinations, @samp{S-} means @key{Shift}, @samp{C-} means @key{Ctrl}, and
+@samp{M-} means the @key{Alt} key.
+
+@multitable @columnfractions .15 .39 .39
+@item@hrule@tab@hrule@tab@hrule
+@headitem Keystroke           @tab Purpose                        @tab Emacs command
+@item@hrule@tab@hrule@tab@hrule
+@item @kbd{f1}                @tab Help                           @tab @command{admb-help}
+@item @kbd{S-f1}              @tab Show ADMB-IDE version          @tab @command{admb-ide-version}
+@item @kbd{f2}                @tab ADMB mode                      @tab @command{admb-mode}
+@item @kbd{f3}                @tab Data mode                      @tab @command{conf-unix-mode}
+@item @kbd{f4}                @tab Toggle secondary window        @tab @command{admb-toggle-window}
+@item @kbd{C-f4}              @tab Close                          @tab @command{kill-buffer-maybe-window}
+@item @kbd{M-f4}              @tab Quit                           @tab @command{save-buffers-kill-emacs}
+@item @kbd{f5}                @tab Reload                         @tab @command{revert-buffer}
+@item @kbd{f6}                @tab Other window                   @tab @command{other-window}
+@item @kbd{C-f6} / @kbd{M-f6} @tab Next buffer                    @tab @command{next-buffer}
+@item @kbd{f7}                @tab Translate TPL to C++           @tab @command{admb-tpl2cpp}
+@item @kbd{f8}                @tab Build executable from TPL      @tab @command{admb-make}
+@item @kbd{f9}                @tab Run executable                 @tab @command{admb-run}
+@item @kbd{f10}               @tab Open .rep file                 @tab @command{admb-rep}
+@item @kbd{S-f10}             @tab Open .cor file                 @tab @command{admb-cor}
+@item @kbd{f11}               @tab Navigate with outline          @tab @command{admb-outline}
+@item @kbd{f12}               @tab Insert template                @tab @command{admb-template}
+@item @kbd{S-f12}             @tab Insert minimal template        @tab @command{admb-template-mini}
+@item@hrule@tab@hrule@tab@hrule
+@item @kbd{C--}               @tab Toggle compilation flags       @tab @command{admb-toggle-flag}
+@item @kbd{C-,}               @tab Toggle trailing whitespace     @tab @command{toggle-trailing-whitespace}
+@item @kbd{C-.}               @tab Toggle section indicator       @tab @command{admb-toggle-section}
+@item @kbd{C-a}               @tab Select all                     @tab @command{mark-whole-buffer}
+@item @kbd{C-b}               @tab Next buffer                    @tab @command{next-buffer}
+@item @kbd{C-c}               @tab Copy                           @tab @command{cua--prefix-override-handler}
+@item @kbd{C-f}               @tab Find, find next                @tab @command{isearch-forward}
+@item @kbd{C-g}               @tab Goto line                      @tab @command{goto-line}
+@item @kbd{C-l}               @tab Recenter                       @tab @command{recenter}
+@item @kbd{C-n}               @tab New                            @tab @command{new-buffer}
+@item @kbd{C-o}               @tab Open                           @tab @command{find-file}
+@item @kbd{C-p}               @tab Open in other window           @tab @command{admb-open}
+@item @kbd{C-q}               @tab Quit                           @tab @command{save-buffers-kill-emacs}
+@item @kbd{C-r}               @tab Replace                        @tab @command{query-replace}
+@item @kbd{C-s}               @tab Save                           @tab @command{save-buffer}
+@item @kbd{C-S}               @tab Save as                        @tab @command{write-file}
+@item @kbd{C-v}               @tab Paste                          @tab @command{cua-paste}
+@item @kbd{C-w}               @tab Close                          @tab @command{kill-buffer-maybe-window}
+@item @kbd{C-x}               @tab Cut                            @tab @command{cua--prefix-override-handler}
+@item @kbd{C-x 2}             @tab Split window above/below       @tab @command{split-window-vertically}
+@item @kbd{C-x 3}             @tab Split window left/right        @tab @command{split-window-horizontally}
+@item @kbd{C-z}               @tab Undo                           @tab @command{undo}
+@item @kbd{C-return}          @tab Rectangle functions            @tab @command{cua-set-rectangle-mark}
+@item @kbd{C-space}           @tab Expand recognized words        @tab @command{dabbrev-expand}
+@item @kbd{C-M-space}         @tab Open recent files              @tab @command{recentf-open-files}
+@item @kbd{M-,}               @tab Delete trailing whitespace     @tab @command{delete-trailing-spc-tab-m}
+@item @kbd{M-;}               @tab Comment/uncomment region       @tab @command{comment-dwim}
+@item @kbd{escape}            @tab Cancel dialog, maximize window @tab @command{keyboard-escape-quit}
+@item@hrule@tab@hrule@tab@hrule
+@end multitable
+
+@multitable @columnfractions .15 .39 .39
+@item@hrule@tab@hrule@tab@hrule
+@headitem Mouse button @tab Purpose             @tab Emacs command
+@item@hrule@tab@hrule@tab@hrule
+@item @kbd{C-left}     @tab Switch buffers      @tab @command{mouse-buffer-menu}
+@item @kbd{right}      @tab Navigate with imenu @tab @command{imenu}
+@item@hrule@tab@hrule@tab@hrule
+@end multitable
+
+@noindent
+ADMB-IDE does not emulate perfectly the way many editors open menus with the
+@key{Alt} key. To open the @clickthis{Edit} menu, for example, it is not enough
+to press @key{Alt} and @kbd{e} simultaneously. ADMB-IDE provides four ways to
+open the @clickthis{Edit} menu:
+
+@enumerate
+@item Mouse click on the menu bar
+@item Tap @key{Alt} first and then @kbd{e} (Windows)
+@item Hold @key{Alt} and tap @kbd{e} twice (Windows)
+@item Hold @key{Alt} and tap @kbd{f}, then release @key{Alt} and tap @key{Right}
+arrow (Linux)
+@end enumerate
+
+The idea behind ADMB-IDE, however, is that users can memorize intuitive
+keystrokes to undo, cut, copy, paste, find, replace, and goto line, without
+opening the @clickthis{Edit} menu. Also don't forget that ADMB-IDE is open
+source, so users are free to modify any part of the program, including the
+keybindings defined in the @file{.emacs} file.
+
+Longtime users of the Vi editor can turn on Emacs @command{evil-mode} or
+@command{viper-mode}, which are full-featured Vi emulators for Emacs.
+
+@chapter Configuration
+
+@subsec{Personal @code{.emacs} file}
+
+@noindent
+ADMB-IDE is intended for people who don't know Emacs, are not interested in
+learning it, and will only use it to work with ADMB. The design goal is that
+ADMB-IDE should work out of the box and get the job done with minimum fuss.
+
+It is, however, in the nature of modellers to experiment and improve. Users who
+modify the original @file{.emacs} file are no longer using ADMB-IDE, but Emacs
+with @code{admb-mode} and a personal @file{.emacs} file. One reason to modify
+the @file{.emacs} file or write a new one from scratch is to install additional
+packages like @code{ESS} (Emacs Speaks Statistics). Another reason is to
+redefine the keybindings, possibly closer to the Emacs defaults, e.g.@: to
+enable the @kbd{C-h} help system and to keep the fingers on the home row. Other
+reasons include setting fonts and colors, setting user variables, or defining
+new user functions. Users with a personal @file{.emacs} file can update ADMB,
+Emacs, GCC, GDB, and @code{admb-mode} independently, or salvage pieces from a
+recent ADMB-IDE zip bundle.
+
+Note that it is not advisable to configure Emacs by clicking @clickthis{Options
+@click{} Save Options} or @clickthis{Options @click{} Customize Emacs}. Editing
+the @file{.emacs} file directly is a more reliable and transparent approach. See
+@uref{http://admb-project.org/community/editing-tools/emacs} for guidelines.
+
+@subsec{Example}
+
+@noindent
+The @key{f10} key in ADMB-IDE runs @command{admb-rep} to a open a report file:
+
+@smallexample
+(local-set-key [f10]   'admb-rep            ) ; menu-bar-open
+@end smallexample
+
+@noindent
+The semicolon starts a comment, reminding that the default behavior of Emacs is
+to run @command{menu-bar-open} when @key{f10} is pressed. In ADMB-IDE, it is
+easy to activate the menu bar with the mouse or the @key{Alt} key, so @key{f10}
+can be used for something else. The liberal spacing is to align surrounding
+lines of code, but neither the comment nor multiple spaces are necessary.
+
+Some users may find it practical to open the report file in an external browser,
+rather than inside ADMB-IDE. The report file is often best viewed in a large
+window, and the ADMB-IDE windows are somewhat busy showing other things. It is
+easy to rebind the @key{f10} key,
+
+@smallexample
+(local-set-key [f10]   'admb-rep-browser    ) ; menu-bar-open
+@end smallexample
+
+@noindent
+but as mentioned in the documentation of @command{admb-rep-browser}, the
+@file{.rep} file ending in Windows may need to be associated with the desired
+browser program, Firefox or the like.
+
+@subsec{Providing ADMB-IDE while retaining a personal @code{.emacs} file}
+
+@noindent
+It can be practical to make a canned version of ADMB-IDE available, while using
+a different @file{.emacs} file for most Emacs sessions. For example, an
+experienced Emacs user may want to test how ADMB-IDE works, or demonstrate it to
+colleagues, without constantly shuffling @file{.emacs} files. In Windows, one
+can place the ADMB-IDE @file{.emacs} file in @code{c:/admb/ide} and then start
+ADMB-IDE with the shell command:
+
+@smallexample
+c:/gnu/emacs/bin/runemacs.exe -Q -l c:/admb/ide/.emacs -f admb-mode
+@end smallexample
+
+The @option{-Q} option tells Emacs to ignore the default startup file(s), the
+@option{-l} tells it to load a Lisp file, and the @option{-f} tells it to call a
+function. This command can be used in a start menu or desktop shortcut, with the
+@code{c:/~/icons/admb64.ico} decorative icon, and similar tricks can be used in
+Linux and Mac OS.
+
+@chapter Troubleshooting
+@anchor{Troubleshooting}
+
+@section{General usage}
+
+@subsec{The ADMB menu and toolbar icons disappear}
+
+@noindent
+These only appear when the current buffer is in @command{admb-mode}. Either
+switch to a @file{.tpl} buffer that is already in @command{admb-mode}, or press
+@kbd{f2} to switch to @command{admb-mode} in the current buffer. Other modes may
+have special menus and toolbar icons that are useful for that mode, see for
+example the @ref{GDB,,GDB screenshot}.
+
+@subsec{Undo is confusing and redo is missing}
+
+@noindent
+The undo feature in ADMB-IDE does both undo and redo. When undo is performed
+repeatedly, it goes further back in the undo history. Any command other than
+undo will interrupt this sequence, and from that point the previous undo
+commands become ordinary changes that can be undone, equivalent to redo. Try,
+for example, copying some text and then paste it three times. Now undo three
+times, interrupt with a harmless key like the @kbd{Up} arrow, and then undo
+again to redo. To undo all changes since last save, it's easiest to reload using
+the @kbd{f5} key.
+
+@subsec{The @key{Tab} key does not indent code properly}
+
+@noindent
+ADMB-IDE does not know the appropriate indentation of every line, so generally
+users indent their code manually using @key{Space} and @key{Backspace}. The
+@key{Tab} key is programmed to insert a number of spaces, as suggested by the
+previous line, which is sometimes useful.
+
+@subsec{Lines end with strange @code{^M} characters}
+
+@noindent
+This is how Emacs shows Dos line endings, although in most cases Dos line
+endings are handled more gracefully. It could be that the file contains mixed
+line endings (both Dos and Unix), and the simplest solution is to delete all
+@code{^M} characters. It could also be that the Emacs variable
+@code{file-name-buffer-file-type-alist} matches the @file{.tpl} file ending, and
+the simplest solution is to set that variable to @code{nil}.
+
+@subsec{Clicking @clickthis{ADMB @click{} Run Makefile} returns an error}
+
+@noindent
+Makefiles are a sophisticated build automation tool, not required for general
+ADMB usage. This command invokes the @command{make} program that looks for a
+file called @file{Makefile}. If the @command{make} program or the makefile is
+not found, an error is returned. This feature is provided for advanced users who
+have prepared a makefile in the working directory.
+
+@section{Configuration}
+
+@subsec{Double-clicking a @file{.tpl} file in Windows Explorer does not open it
+in Emacs}
+
+@noindent
+The @file{.tpl} file ending needs to be associated with Emacs. This can be done
+with registry entries or in Windows Explorer folder options.
+
+@subsec{Emacs cannot load @command{admb-mode}}
+
+@noindent
+The directory containing the @file{admb.el} file needs to be in the Emacs
+variable @code{load-path}, and the @command{admb-mode} command needs to be
+autoloaded in the @file{.emacs} configuration file.
+
+@page
+
+@subsec{Compilation commands are not recognized}
+
+@noindent
+The @env{PATH} environment variable needs to point to the directories containing
+the compilation programs (@command{tpl2cpp.exe}, @command{tpl2rem.exe}), scripts
+(@command{admb.bat}, @command{adcomp.bat}, @command{adlink.bat}), and the
+@command{g++.exe} program. Likewise, the @env{ADMB_HOME} environment variable
+needs to point to the main ADMB directory. Windows environment variables can be
+set using Dos scripts like @code{c:/autoexec.bat} and
+@code{c:/~/bat/admb-set.bat}, or by right-clicking the My Computer icon, then
+@clickthis{Properties @click{} Advanced @click{} Environment Variables @click{}
+User variables @click{} New}.
+
+Limited user (i.e.@ non-administrator) accounts in Windows can also prevent the
+ADMB-IDE installer from setting the environment variables @env{ADMB_HOME} and @env{PATH}.
+In those cases, the right-click-properties method described above can be used to
+set the variables after the installation. Many Linux distributions include only
+the C component of GCC, so users need to install the optional C++ component
+before using ADMB.
+
+@chapter References
+@anchor{References}
+
+@subsec{ADMB}
+
+@noindent
+Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, M.N. Maunder,
+A. Nielsen, and J. Sibert. 2012. @cite{AD Model Builder: Using automatic
+differentiation for statistical inference of highly parameterized complex
+nonlinear models.} Optimization Methods and Software 27:233--249.
+@sp 0.5
+@noindent
+Fournier, D. 2011. @cite{An introduction to AD Model Builder for use in
+nonlinear modeling and statistics.} Version 10.0.@*
+@uref{http://admb-project.org/documentation/manuals/admb-user-manuals}
+@sp 0.5
+@noindent
+Skaug, H. and D. Fournier. 2011. @cite{Random effects in AD Model Builder:
+ADMB-RE user guide.} Version 10.0.@*
+@uref{http://admb-project.org/documentation/manuals/admb-user-manuals}
+@sp 0.5
+@noindent
+Fournier, D. 2011. @cite{AUTODIF: A C++ array language extension with automatic
+differentiation for use in nonlinear modeling and statistics.} Version 10.0.@*
+@uref{http://admb-project.org/documentation/manuals/admb-user-manuals}
+@sp 0.5
+@noindent
+Magnusson, A. 2009. @cite{ADMB-IDE: Easy and efficient user interface.} ADMB
+Foundation Newsletter 1(3):1--2.@*
+@w{@uref{http://admb-foundation.org/wp-content/uploads/Newsletter/ADMBNewsletterJuly2009.pdf}}
+
+@sp 1
+@subsec{Emacs}
+
+@noindent
+Stallman, R. 2011. @cite{GNU Emacs manual.} 16th ed. Updated for Emacs version
+23.3.@* @uref{http://www.gnu.org/software/emacs/manual/emacs.html}
+@sp 0.5
+@noindent
+Lewis, B., D. LaLiberte, R. Stallman, and the GNU Manual Group. 2011. @cite{GNU
+Emacs Lisp reference manual for Emacs version 23.3.} Rev. 3.0.@*
+@uref{http://www.gnu.org/software/emacs/manual/elisp.html}
+@sp 0.5
+@noindent
+Chassell, R. 2009. @cite{An introduction to programming in Emacs Lisp.} Rev.
+3.10.@* @uref{http://www.gnu.org/software/emacs/emacs-lisp-intro/}
+
+@sp 1
+@subsec{GCC}
+
+@noindent
+Stallman, R.M. and GCC Developer Community. 2010. @cite{Using the GNU Compiler
+Collection.} Version 4.5.2.@* @uref{http://gcc.gnu.org/onlinedocs/}
+
+@sp 1
+@subsec{GDB}
+
+@noindent
+Stallman, R., R. Pesch, S. Shebs, et al. 2012. @cite{Debugging with GDB: The GNU
+source-level debugger.} 10th ed. for GDB version 7.4.@*
+@uref{http://sourceware.org/gdb/download/onlinedocs/}
+@bye

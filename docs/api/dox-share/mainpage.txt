@@ -77,7 +77,7 @@ invoke custom adjoint code.
  */
 
 /**
-  \defgroup RA Cautions for functions that return variable objects.
+  \defgroup RA RETURN_ARRAY_INCREMENT and RETURN_ARRAY_DECREMENT 
    \details
   These functions must be called in any function that returns
   a "variable" object, ie dvariable, dvar_vector, ... Failure to do so

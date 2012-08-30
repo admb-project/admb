@@ -1,8 +1,8 @@
 /**
- * $Id$
+ * $Id: dmat34.cpp 789 2010-10-05 01:01:09Z johnoel $
  *
  * Author: David Fournier
- * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
+ * Copyright (c) 2009, 2010 ADMB Foundation
  */
 #include <fvar.hpp>
 
@@ -21,21 +21,50 @@
 #endif
 
 #define TINY 1.0e-20;
+void dmdv_solve(void);
 
-dmatrix solve(const dmatrix& aa,const dmatrix& tz,
-  double ln_unsigned_det,double& sign);
 
-dmatrix solve(const dmatrix& aa,const dmatrix& tz)
+/** Solve a linear system using LU decomposition. */
+dvector csolve(const dmatrix& aa,const dvector& z)
 {
-  double ln;
-  double sgn;
-  return solve(aa,tz,ln,sgn);
+  double ln_unsigned_det;
+  double sign;
+  dvector sol=solve(aa,z,ln_unsigned_det,sign);
+  return sol;
 }
 
-
-dmatrix solve(const dmatrix& aa,const dmatrix& tz,
-  double ln_unsigned_det,double& sign)
+/** Solve a linear system using LU decomposition.
+    \param aa A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param z A dvector containing the RHS, \f$b\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \return A dvector containing solution vector \f$X\f$.
+*/
+dvector solve(const dmatrix& aa,const dvector& z)
 {
+  double ln_unsigned_det;
+  double sign;
+  dvector sol=solve(aa,z,ln_unsigned_det,sign);
+  return sol;
+}
+
+/** Solve a linear system using LU decomposition.
+    \param aa A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param z A dvector containing the RHS, \f$b\f$ of the linear equation
+    \f$A\cdot X = B\f$, to be solved.
+    \param _ln_unsigned_deg
+    \param sign
+    \return A dvector containing solution vector \f$X\f$.
+
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    \deprecated Scheduled for replacement by 2010.
+*/
+dvector solve(const dmatrix& aa,const dvector& z,
+  const double& _ln_unsigned_det,double& sign)
+{
+  double& ln_unsigned_det=(double&) (_ln_unsigned_det);
   int i,imax,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
@@ -149,12 +178,7 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   }
   ln_unsigned_det=part_prod(ub);
 
-  dmatrix z=trans(tz);
-  int mmin=z.indexmin();
-  int mmax=z.indexmax();
-  dmatrix x(mmin,mmax,lb,ub);
-  //dvector x(lb,ub);
-
+  dvector x(lb,ub);
   dvector y(lb,ub);
   //int lb=rowmin;
   //int ub=rowmax;
@@ -164,66 +188,32 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   {
     indxinv(indx(i))=i;
   }
-  for (int kk=mmin;kk<=mmax;kk++)
-  { 
-    for (i=lb;i<=ub;i++)
-    {
-      y(indxinv(i))=z(kk)(i);
-    }
-  
-    for (i=lb;i<=ub;i++)
-    {
-      sum=y(i);
-      for (int j=lb;j<=i-1;j++)
-      {
-        sum-=b(i,j)*y(j);
-      }
-      y(i)=sum;
-    }
-    for (i=ub;i>=lb;i--)
-    {
-      sum=y(i);
-      for (int j=i+1;j<=ub;j++)
-      {
-        sum-=b(i,j)*x(kk)(j);
-      }
-      x(kk)(i)=sum/b(i,i);
-    }
-  
-  }
-  return trans(x);
-}
 
-double ln_det_choleski(
-  const banded_symmetric_dmatrix& MM, const int& _ierr)
-{
-  banded_lower_triangular_dmatrix tmp=choleski_decomp(MM,_ierr);
-  
-  int mmin=tmp.indexmin();
-  int mmax=tmp.indexmax();
-  double ld=0.0;
-  for (int i=mmin;i<=mmax;i++)
+  for (i=lb;i<=ub;i++)
   {
-    ld+=log(tmp(i,i));
+    y(indxinv(i))=z(i);
   }
-  return 2.0*ld;
-}
 
-double norm(const banded_symmetric_dmatrix& B)
-{
-  return sqrt(norm2(B));
-}
-
-double norm2(const banded_symmetric_dmatrix& B)
-{
-  double nm=0.0;
-  for (int i=1;i<=B.bw-1;i++)
+  for (i=lb;i<=ub;i++)
   {
-    nm+=norm2(B.d(i));
+    sum=y(i);
+    for (int j=lb;j<=i-1;j++)
+    {
+      sum-=b(i,j)*y(j);
+    }
+    y(i)=sum;
   }
-  nm*=2;
-  nm+=norm2(B.d(0));
-  return nm;
+  for (i=ub;i>=lb;i--)
+  {
+    sum=y(i);
+    for (int j=i+1;j<=ub;j++)
+    {
+      sum-=b(i,j)*x(j);
+    }
+    x(i)=sum/b(i,i);
+  }
+
+  return x;
 }
 
 #undef TINY

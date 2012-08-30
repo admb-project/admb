@@ -79,8 +79,6 @@ dmatrix inv(const dmatrix& m1)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
 */
 dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
 {

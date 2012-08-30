@@ -120,8 +120,6 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
 */
 void lubksb(dvar_matrix a, const ivector& indx,dvar_vector b)
 {

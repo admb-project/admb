@@ -14,6 +14,7 @@
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
 \return negative log likelihood
+\ingroup STATLIB
 **/
 
 df1b2variable dzinbinom(const double& x, const df1b2variable& mu, const df1b2variable& k, const df1b2variable& p)
@@ -50,6 +51,7 @@ df1b2variable dzinbinom(const double& x, const df1b2variable& mu, const df1b2var
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
 \return negative log likelihood
+\ingroup STATLIB
 **/
 
 dvariable dzinbinom(const double& x, const prevariable& mu, const prevariable& k, const prevariable& p)
@@ -84,6 +86,7 @@ dvariable dzinbinom(const double& x, const prevariable& mu, const prevariable& k
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
 \return negative log likelihood
+\ingroup STATLIB
 **/
 
 df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2variable& k, const df1b2variable& p)
@@ -125,6 +128,7 @@ df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vari
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
 \return negative log likelihood
+\ingroup STATLIB
 **/
 df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vector& k, const df1b2variable& p)
 {
@@ -166,6 +170,7 @@ df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vect
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
 \return negative log likelihood
+\ingroup STATLIB
 **/
 dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const prevariable& k, const prevariable& p)
 {
@@ -206,6 +211,7 @@ dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const prevariable& 
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
 \return negative log likelihood
+\ingroup STATLIB
 **/
 dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const dvar_vector& k, const prevariable& p)
 {
@@ -250,6 +256,7 @@ dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const dvar_vector& 
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
 \return negative log likelihood
+\ingroup STATLIB
 **/
 df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2variable& k, const df1b2vector& p)
 {
@@ -290,6 +297,7 @@ df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vari
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
 \return negative log likelihood
+\ingroup STATLIB
 **/
 df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vector& k, const df1b2vector& p)
 {
@@ -331,6 +339,7 @@ df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vect
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
 \return negative log likelihood
+\ingroup STATLIB
 **/
 dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const prevariable& k, const dvar_vector& p)
 {
@@ -371,6 +380,7 @@ dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const prevariable& 
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
 \return negative log likelihood
+\ingroup STATLIB
 **/
 dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const dvar_vector& k, const dvar_vector& p)
 {

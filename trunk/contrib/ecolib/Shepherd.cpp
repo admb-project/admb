@@ -1,7 +1,6 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h> 
-#include "ecolib.h"
 
 /*---------------------------------------------------------3rd variable is a scalar*/
 /*---------------------------------------------2nd variable is a scalar*/
@@ -11,6 +10,7 @@
 \param b ; differentiable scalar
 \param c ; differentiable scalar
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 dvariable Shepherd(const double& x,  const prevariable& a,  const prevariable& b,  const prevariable& c)
 {
@@ -27,6 +27,7 @@ dvariable Shepherd(const double& x,  const prevariable& a,  const prevariable& b
 \param b ; differentiable scalar
 \param c ; differentiable scalar
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 dvar_vector Shepherd(const dvector& x,  const prevariable& a,  const prevariable& b,  const prevariable& c)
 {
@@ -43,6 +44,7 @@ dvar_vector Shepherd(const dvector& x,  const prevariable& a,  const prevariable
 \param b ; differentiable scalar
 \param c ; differentiable scalar
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 dvar_vector Shepherd(const dvector& x,  const dvar_vector& a,  const prevariable& b,  const prevariable& c)
 {
@@ -60,6 +62,7 @@ dvar_vector Shepherd(const dvector& x,  const dvar_vector& a,  const prevariable
 \param b ; differentiable vector
 \param c ; differentiable scalar
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 dvar_vector Shepherd(const dvector& x,  const prevariable& a,  const dvar_vector& b,  const prevariable& c)
 {
@@ -76,6 +79,7 @@ dvar_vector Shepherd(const dvector& x,  const prevariable& a,  const dvar_vector
 \param b ; differentiable vector
 \param c ; differentiable scalar
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 dvar_vector Shepherd(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,  const prevariable& c)
 {
@@ -94,6 +98,7 @@ dvar_vector Shepherd(const dvector& x,  const dvar_vector& a,  const dvar_vector
 \param b ; differentiable scalar
 \param c ; differentiable vector
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 dvar_vector Shepherd(const dvector& x,  const prevariable& a,  const prevariable& b,  const dvar_vector& c)
 {
@@ -110,6 +115,7 @@ dvar_vector Shepherd(const dvector& x,  const prevariable& a,  const prevariable
 \param b ; differentiable scalar
 \param c ; differentiable vector
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 dvar_vector Shepherd(const dvector& x,  const dvar_vector& a,  const prevariable& b,  const dvar_vector& c)
 {
@@ -127,6 +133,7 @@ dvar_vector Shepherd(const dvector& x,  const dvar_vector& a,  const prevariable
 \param b ; differentiable vector
 \param c ; differentiable vector
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 dvar_vector Shepherd(const dvector& x,  const prevariable& a,  const dvar_vector& b,  const dvar_vector& c)
 {
@@ -143,6 +150,7 @@ dvar_vector Shepherd(const dvector& x,  const prevariable& a,  const dvar_vector
 \param b ; differentiable vector
 \param c ; differentiable vector
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 dvar_vector Shepherd(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,  const dvar_vector& c)
 {
@@ -162,6 +170,7 @@ dvar_vector Shepherd(const dvector& x,  const dvar_vector& a,  const dvar_vector
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 df1b2variable Shepherd(const double& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -176,6 +185,7 @@ df1b2variable Shepherd(const double& x,  const df1b2variable& a,  const df1b2var
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 df1b2vector Shepherd(const dvector& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -190,6 +200,7 @@ df1b2vector Shepherd(const dvector& x,  const df1b2variable& a,  const df1b2vari
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 df1b2vector Shepherd(const dvector& x,  const df1b2vector& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -207,6 +218,7 @@ df1b2vector Shepherd(const dvector& x,  const df1b2vector& a,  const df1b2variab
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable scalar in a random effects model
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 df1b2vector Shepherd(const dvector& x,  const df1b2variable& a,  const df1b2vector& b,  const df1b2variable& c)
 {
@@ -221,6 +233,7 @@ df1b2vector Shepherd(const dvector& x,  const df1b2variable& a,  const df1b2vect
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable scalar in a random effects model
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 df1b2vector Shepherd(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,  const df1b2variable& c)
 {
@@ -240,6 +253,7 @@ df1b2vector Shepherd(const dvector& x,  const df1b2vector& a,  const df1b2vector
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable vector in a random effects model
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 df1b2vector Shepherd(const dvector& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2vector& c)
 {
@@ -254,6 +268,7 @@ df1b2vector Shepherd(const dvector& x,  const df1b2variable& a,  const df1b2vari
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable vector in a random effects model
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 df1b2vector Shepherd(const dvector& x,  const df1b2vector& a,  const df1b2variable& b,  const df1b2vector& c)
 {
@@ -271,6 +286,7 @@ df1b2vector Shepherd(const dvector& x,  const df1b2vector& a,  const df1b2variab
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable vector in a random effects model
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 df1b2vector Shepherd(const dvector& x,  const df1b2variable& a,  const df1b2vector& b,  const df1b2vector& c)
 {
@@ -285,6 +301,7 @@ df1b2vector Shepherd(const dvector& x,  const df1b2variable& a,  const df1b2vect
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable vector in a random effects model
 \return  \f$ \frac{ax}{b+x^c} \f$
+\ingroup ECOL
 **/
 df1b2vector Shepherd(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,  const df1b2vector& c)
 {

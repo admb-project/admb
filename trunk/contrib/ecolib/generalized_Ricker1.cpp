@@ -6,10 +6,10 @@
 /*---------------------------------------------2nd variable is a scalar*/
 /**  generalized Ricker function, first parameerization; scalar
 \param x independent variable; data scalar
-\param x0 \f$x_0\f$; differentiable scalar. 
+\param x0 ; differentiable scalar
 \param A ; differentiable scalar
 \param alpha ; differentiable scalar
-\return  \f$ A(\frac{x}{x_0}e^{(1.0-\frac{x}{x_0})})^{\alpha} \f$
+\return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
 \ingroup ECOL
 **/
 dvariable generalized_Ricker1(const double& x,  const prevariable& x0,  const prevariable& A,  const prevariable& alpha)
@@ -27,6 +27,7 @@ dvariable generalized_Ricker1(const double& x,  const prevariable& x0,  const pr
 \param A ; differentiable scalar
 \param alpha ; differentiable scalar
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 dvar_vector generalized_Ricker1(const dvector& x,  const prevariable& x0,  const prevariable& A,  const prevariable& alpha)
 {
@@ -43,6 +44,7 @@ dvar_vector generalized_Ricker1(const dvector& x,  const prevariable& x0,  const
 \param A ; differentiable scalar
 \param alpha ; differentiable scalar
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 dvar_vector generalized_Ricker1(const dvector& x,  const dvar_vector& x0,  const prevariable& A,  const prevariable& alpha)
 {
@@ -60,6 +62,7 @@ dvar_vector generalized_Ricker1(const dvector& x,  const dvar_vector& x0,  const
 \param A ; differentiable vector
 \param alpha ; differentiable scalar
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 dvar_vector generalized_Ricker1(const dvector& x,  const prevariable& x0,  const dvar_vector& A,  const prevariable& alpha)
 {
@@ -76,6 +79,7 @@ dvar_vector generalized_Ricker1(const dvector& x,  const prevariable& x0,  const
 \param A ; differentiable vector
 \param alpha ; differentiable scalar
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 dvar_vector generalized_Ricker1(const dvector& x,  const dvar_vector& x0,  const dvar_vector& A,  const prevariable& alpha)
 {
@@ -94,6 +98,7 @@ dvar_vector generalized_Ricker1(const dvector& x,  const dvar_vector& x0,  const
 \param A ; differentiable scalar
 \param alpha ; differentiable vector
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 dvar_vector generalized_Ricker1(const dvector& x,  const prevariable& x0,  const prevariable& A,  const dvar_vector& alpha)
 {
@@ -110,6 +115,7 @@ dvar_vector generalized_Ricker1(const dvector& x,  const prevariable& x0,  const
 \param A ; differentiable scalar
 \param alpha ; differentiable vector
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 dvar_vector generalized_Ricker1(const dvector& x,  const dvar_vector& x0,  const prevariable& A,  const dvar_vector& alpha)
 {
@@ -127,6 +133,7 @@ dvar_vector generalized_Ricker1(const dvector& x,  const dvar_vector& x0,  const
 \param A ; differentiable vector
 \param alpha ; differentiable vector
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 dvar_vector generalized_Ricker1(const dvector& x,  const prevariable& x0,  const dvar_vector& A,  const dvar_vector& alpha)
 {
@@ -143,6 +150,7 @@ dvar_vector generalized_Ricker1(const dvector& x,  const prevariable& x0,  const
 \param A ; differentiable vector
 \param alpha ; differentiable vector
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 dvar_vector generalized_Ricker1(const dvector& x,  const dvar_vector& x0,  const dvar_vector& A,  const dvar_vector& alpha)
 {
@@ -162,6 +170,7 @@ dvar_vector generalized_Ricker1(const dvector& x,  const dvar_vector& x0,  const
 \param A ; differentiable scalar in a random effects model
 \param alpha ; differentiable scalar in a random effects model
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 df1b2variable generalized_Ricker1(const double& x,  const df1b2variable& x0,  const df1b2variable& A,  const df1b2variable& alpha)
 {
@@ -176,6 +185,7 @@ df1b2variable generalized_Ricker1(const double& x,  const df1b2variable& x0,  co
 \param A ; differentiable scalar in a random effects model
 \param alpha ; differentiable scalar in a random effects model
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 df1b2vector generalized_Ricker1(const dvector& x,  const df1b2variable& x0,  const df1b2variable& A,  const df1b2variable& alpha)
 {
@@ -190,6 +200,7 @@ df1b2vector generalized_Ricker1(const dvector& x,  const df1b2variable& x0,  con
 \param A ; differentiable scalar in a random effects model
 \param alpha ; differentiable scalar in a random effects model
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 df1b2vector generalized_Ricker1(const dvector& x,  const df1b2vector& x0,  const df1b2variable& A,  const df1b2variable& alpha)
 {
@@ -207,6 +218,7 @@ df1b2vector generalized_Ricker1(const dvector& x,  const df1b2vector& x0,  const
 \param A ; differentiable vector in a random effects model
 \param alpha ; differentiable scalar in a random effects model
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 df1b2vector generalized_Ricker1(const dvector& x,  const df1b2variable& x0,  const df1b2vector& A,  const df1b2variable& alpha)
 {
@@ -221,6 +233,7 @@ df1b2vector generalized_Ricker1(const dvector& x,  const df1b2variable& x0,  con
 \param A ; differentiable vector in a random effects model
 \param alpha ; differentiable scalar in a random effects model
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 df1b2vector generalized_Ricker1(const dvector& x,  const df1b2vector& x0,  const df1b2vector& A,  const df1b2variable& alpha)
 {
@@ -240,6 +253,7 @@ df1b2vector generalized_Ricker1(const dvector& x,  const df1b2vector& x0,  const
 \param A ; differentiable scalar in a random effects model
 \param alpha ; differentiable vector in a random effects model
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 df1b2vector generalized_Ricker1(const dvector& x,  const df1b2variable& x0,  const df1b2variable& A,  const df1b2vector& alpha)
 {
@@ -254,6 +268,7 @@ df1b2vector generalized_Ricker1(const dvector& x,  const df1b2variable& x0,  con
 \param A ; differentiable scalar in a random effects model
 \param alpha ; differentiable vector in a random effects model
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 df1b2vector generalized_Ricker1(const dvector& x,  const df1b2vector& x0,  const df1b2variable& A,  const df1b2vector& alpha)
 {
@@ -271,6 +286,7 @@ df1b2vector generalized_Ricker1(const dvector& x,  const df1b2vector& x0,  const
 \param A ; differentiable vector in a random effects model
 \param alpha ; differentiable vector in a random effects model
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 df1b2vector generalized_Ricker1(const dvector& x,  const df1b2variable& x0,  const df1b2vector& A,  const df1b2vector& alpha)
 {
@@ -285,6 +301,7 @@ df1b2vector generalized_Ricker1(const dvector& x,  const df1b2variable& x0,  con
 \param A ; differentiable vector in a random effects model
 \param alpha ; differentiable vector in a random effects model
 \return  \f$ A(\frac{x}{x0}e^{(1.0-\frac{x}{x0})})^{\alpha} \f$
+\ingroup ECOL
 **/
 df1b2vector generalized_Ricker1(const dvector& x,  const df1b2vector& x0,  const df1b2vector& A,  const df1b2vector& alpha)
 {

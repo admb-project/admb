@@ -10,7 +10,7 @@
 #//calculate y(v,s,v)	y=a*elem_div(x, b+x);
 #//calculate y(v,v,v)	y=elem_prod(a, elem_div(x, b+x));
 sed -e 's:function;:Michaelis Menten function, 1st parametarization;:g'\
-	-e 's:\f$  \f$:\f$ \frac{ax}{b+x} \f$:g'\
+	-e 's:\\f\$  \\f\$:\\f$ \\frac{ax}{b+x} \\f$ :g'\
 	-e 's:func(:Michaelis_Menten1(:g'\
 	-e 's://calculate y(s,s,s):y=a*x/(b+x);:g'\
 	-e 's://calculate y(v,s,s):y=a*elem_div(x, b+x);:g'\
@@ -31,7 +31,7 @@ sed -e 's:function;:Michaelis Menten function, 1st parametarization;:g'\
 #//calculate y(v,s,v)	y=a*elem_div(x, a/b+x);
 #//calculate y(v,v,v)	y=elem_prod(a, elem_div(x, elem_div(a,b)+x));
 sed -e 's:function;:Michaelis Menten function, 2nd parameterization;:g'\
-	-e 's:\f$  \f$:\f$ \frac{ax}{a/b+x} \f$:g'\
+	-e 's:\\f\$  \\f\$:\\f$ \\frac{ax}{a/b+x} \\f$ :g'\
 	-e 's:func(:Michaelis_Menten2(:g'\
 	-e 's://calculate y(s,s,s):y=a*x/(a/b+x);:g'\
 	-e 's://calculate y(v,s,s):y=a*elem_div(x, a/b+x);:g'\
@@ -55,7 +55,7 @@ sed -e 's:function;:Michaelis Menten function, 2nd parameterization;:g'\
 #//calculate y(v,s,v,v)     y=a*elem_div(pow(x,c), 1+elem_prod(b, pow(x,c)));
 #//calculate y(v,v,v,v)     y=elem_prod(a, elem_div(pow(x,c), 1+elem_prod(b, pow(x,c))));
 sed -e 's:function;:Hill function;:g'\
-	-e 's:\f$  \f$:\f$ \frac{ax^c}{1+bx^c} \f$:g'\
+	-e 's:\\f\$  \\f\$:\\f\$ \\frac{ax^c}{1+bx^c} \\f$ :g'\
 	-e 's:func(:Hill(:g'\
 	-e 's://calculate y(s,s,s,s):y=a*pow(x,c)/(1+b*pow(x,c));:g'\
 	-e 's://calculate y(v,s,s,s):y=a*elem_div(pow(x,c), 1+b*pow(x,c));:g'\
@@ -88,7 +88,7 @@ sed -e 's:function;:HollingII:g'\
 	-e 's:a,:alpha,:g'\
 	-e 's:b ;:h ;:g'\
 	-e 's:b):h):g'\
-	-e 's:\f$  \f$:\f$ \frac{\alpha x}{1+ \alpha hx} \f$:g'\
+	-e 's:\\f\$  \\f\$:\\f\$ \\frac{\alpha x}{1+ \alpha hx} \\f$: g'\
 	-e 's:func(:HollingII(:g'\
 	-e 's://calculate y(s,s,s):y=alpha*x/(1.0+alpha*(h*x));:g'\
 	-e 's://calculate y(v,s,s):y=elem_div(alpha*x, 1.0+alpha*(h*x));:g'\
@@ -109,7 +109,7 @@ sed -e 's:function;:HollingII:g'\
 #//calculate y(v,s,v)	y=a*elem_div(pow(x,2), pow(b,2)+pow(x,2));
 #//calculate y(v,v,v)	y=elem_prod(a, elem_div(pow(x,2), pow(b,2)+pow(x,2)));
 sed -e 's:function;:Holling Type III function;:g'\
-	-e 's:\f$  \f$:\f$ \frac{ax^2}{b^2 + x^2} \f$:g'\
+	-e 's:\\f\$  \\f\$:\\f\$ \\frac{ax^2}{b^2 + x^2} \\f$:g'\
 	-e 's:func(:HollingIII(:g'\
 	-e 's://calculate y(s,s,s):y=a*pow(x,2)/(pow(b,2)+pow(x,2));:g'\
 	-e 's://calculate y(v,s,s):y=a*elem_div(pow(x,2), pow(b,2)+pow(x,2));:g'\
@@ -133,7 +133,9 @@ sed -e 's:function;:Holling Type III function;:g'\
 #//calculate y(v,v,s,v)		y=elem_prod(a, elem_div(pow(x,2), b+elem_prod(c,x)+pow(x,2)));
 #//calculate y(v,s,v,v)		y= a* elem_div(pow(x,2), b+elem_prod(c,x)+pow(x,2));
 #//calculate y(v,v,v,v)		y=elem_prod(a, elem_div(pow(x,2), b+elem_prod(c,x)+pow(x,2)));
-sed -e 's:func(:HollingIV(: g' \
+sed -e 's:function;:Holling Type IV function;: g' \
+	-e 's:\\f\$  \\f\$:\\f\$ \\frac{ax^2}{b + cx + x^2} \\f$: g' \
+	-e 's:func(:HollingIV(: g' \
 	-e 's://calculate y(s,s,s,s):y=a*pow(x,2)/(b+c*x+pow(x,2));: g' \
 	-e 's://calculate y(v,s,s,s):y=a*elem_div(pow(x,2), b+c*x+pow(x,2));: g' \
 	-e 's://calculate y(v,v,s,s):y=elem_prod(a, elem_div(pow(x,2), b+c*x+pow(x,2)));: g' \

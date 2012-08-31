@@ -9,6 +9,7 @@
 \param alpha ; differentiable scalar
 \param h ; differentiable scalar
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvariable HollingII(const double& x,  const prevariable& alpha,  const prevariable& h)
 {
@@ -24,6 +25,7 @@ dvariable HollingII(const double& x,  const prevariable& alpha,  const prevariab
 \param alpha ; differentiable scalar
 \param h ; differentiable scalar
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector HollingII(const dvector& x,  const prevariable& alpha,  const prevariable& h)
 {
@@ -39,6 +41,7 @@ dvar_vector HollingII(const dvector& x,  const prevariable& alpha,  const prevar
 \param alpha ; differentiable vector
 \param h ; differentiable scalar
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector HollingII(const dvector& x,  const dvar_vector& alpha,  const prevariable& h)
 {
@@ -55,6 +58,7 @@ dvar_vector HollingII(const dvector& x,  const dvar_vector& alpha,  const prevar
 \param alpha ; differentiable scalar
 \param h ; differentiable vector
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector HollingII(const dvector& x,  const prevariable& alpha,  const dvar_vector& h)
 {
@@ -70,6 +74,7 @@ dvar_vector HollingII(const dvector& x,  const prevariable& alpha,  const dvar_v
 \param alpha ; differentiable vector
 \param h ; differentiable vector
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector HollingII(const dvector& x,  const dvar_vector& alpha,  const dvar_vector& h)
 {
@@ -87,6 +92,7 @@ dvar_vector HollingII(const dvector& x,  const dvar_vector& alpha,  const dvar_v
 \param alpha ; differentiable scalar in a random effects model
 \param h ; differentiable scalar in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2variable HollingII(const double& x,  const df1b2variable& alpha,  const df1b2variable& h)
 {
@@ -100,6 +106,7 @@ df1b2variable HollingII(const double& x,  const df1b2variable& alpha,  const df1
 \param alpha ; differentiable scalar in a random effects model
 \param h ; differentiable scalar in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector HollingII(const dvector& x,  const df1b2variable& alpha,  const df1b2variable& h)
 {
@@ -113,6 +120,7 @@ df1b2vector HollingII(const dvector& x,  const df1b2variable& alpha,  const df1b
 \param alpha ; differentiable vector in a random effects model
 \param h ; differentiable scalar in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector HollingII(const dvector& x,  const df1b2vector& alpha,  const df1b2variable& h)
 {
@@ -129,6 +137,7 @@ df1b2vector HollingII(const dvector& x,  const df1b2vector& alpha,  const df1b2v
 \param alpha ; differentiable scalar in a random effects model
 \param h ; differentiable vector in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector HollingII(const dvector& x,  const df1b2variable& alpha,  const df1b2vector& h)
 {
@@ -142,6 +151,7 @@ df1b2vector HollingII(const dvector& x,  const df1b2variable& alpha,  const df1b
 \param alpha ; differentiable vector in a random effects model
 \param h ; differentiable vector in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector HollingII(const dvector& x,  const df1b2vector& alpha,  const df1b2vector& h)
 {

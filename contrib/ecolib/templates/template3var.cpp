@@ -10,6 +10,7 @@
 \param b ; differentiable scalar
 \param c ; differentiable scalar
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvariable func(const double& x,  const prevariable& a,  const prevariable& b,  const prevariable& c)
 {
@@ -26,6 +27,7 @@ dvariable func(const double& x,  const prevariable& a,  const prevariable& b,  c
 \param b ; differentiable scalar
 \param c ; differentiable scalar
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector func(const dvector& x,  const prevariable& a,  const prevariable& b,  const prevariable& c)
 {
@@ -42,6 +44,7 @@ dvar_vector func(const dvector& x,  const prevariable& a,  const prevariable& b,
 \param b ; differentiable scalar
 \param c ; differentiable scalar
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector func(const dvector& x,  const dvar_vector& a,  const prevariable& b,  const prevariable& c)
 {
@@ -59,6 +62,7 @@ dvar_vector func(const dvector& x,  const dvar_vector& a,  const prevariable& b,
 \param b ; differentiable vector
 \param c ; differentiable scalar
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector func(const dvector& x,  const prevariable& a,  const dvar_vector& b,  const prevariable& c)
 {
@@ -75,6 +79,7 @@ dvar_vector func(const dvector& x,  const prevariable& a,  const dvar_vector& b,
 \param b ; differentiable vector
 \param c ; differentiable scalar
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector func(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,  const prevariable& c)
 {
@@ -93,6 +98,7 @@ dvar_vector func(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,
 \param b ; differentiable scalar
 \param c ; differentiable vector
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector func(const dvector& x,  const prevariable& a,  const prevariable& b,  const dvar_vector& c)
 {
@@ -109,6 +115,7 @@ dvar_vector func(const dvector& x,  const prevariable& a,  const prevariable& b,
 \param b ; differentiable scalar
 \param c ; differentiable vector
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector func(const dvector& x,  const dvar_vector& a,  const prevariable& b,  const dvar_vector& c)
 {
@@ -126,6 +133,7 @@ dvar_vector func(const dvector& x,  const dvar_vector& a,  const prevariable& b,
 \param b ; differentiable vector
 \param c ; differentiable vector
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector func(const dvector& x,  const prevariable& a,  const dvar_vector& b,  const dvar_vector& c)
 {
@@ -142,6 +150,7 @@ dvar_vector func(const dvector& x,  const prevariable& a,  const dvar_vector& b,
 \param b ; differentiable vector
 \param c ; differentiable vector
 \return  \f$  \f$
+\ingroup ECOL
 **/
 dvar_vector func(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,  const dvar_vector& c)
 {
@@ -161,6 +170,7 @@ dvar_vector func(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2variable func(const double& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -175,6 +185,7 @@ df1b2variable func(const double& x,  const df1b2variable& a,  const df1b2variabl
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector func(const dvector& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -189,6 +200,7 @@ df1b2vector func(const dvector& x,  const df1b2variable& a,  const df1b2variable
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector func(const dvector& x,  const df1b2vector& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -206,6 +218,7 @@ df1b2vector func(const dvector& x,  const df1b2vector& a,  const df1b2variable& 
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable scalar in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector func(const dvector& x,  const df1b2variable& a,  const df1b2vector& b,  const df1b2variable& c)
 {
@@ -220,6 +233,7 @@ df1b2vector func(const dvector& x,  const df1b2variable& a,  const df1b2vector& 
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable scalar in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector func(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,  const df1b2variable& c)
 {
@@ -239,6 +253,7 @@ df1b2vector func(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable vector in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector func(const dvector& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2vector& c)
 {
@@ -253,6 +268,7 @@ df1b2vector func(const dvector& x,  const df1b2variable& a,  const df1b2variable
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable vector in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector func(const dvector& x,  const df1b2vector& a,  const df1b2variable& b,  const df1b2vector& c)
 {
@@ -270,6 +286,7 @@ df1b2vector func(const dvector& x,  const df1b2vector& a,  const df1b2variable& 
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable vector in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector func(const dvector& x,  const df1b2variable& a,  const df1b2vector& b,  const df1b2vector& c)
 {
@@ -284,6 +301,7 @@ df1b2vector func(const dvector& x,  const df1b2variable& a,  const df1b2vector& 
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable vector in a random effects model
 \return  \f$  \f$
+\ingroup ECOL
 **/
 df1b2vector func(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,  const df1b2vector& c)
 {

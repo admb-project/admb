@@ -87,14 +87,6 @@ df1b2variable dnbinom(const double& x, const df1b2variable& mu, const df1b2varia
 	RETURN_ARRAYS_DECREMENT();
 	return(-loglike);
 }
-///** negative log likelihood of negative binomial with mean and size 
-//\brief Negative binomial with size and mean
-//\author Mollie Brooks
-//\param x observed count
-//\param mu is the predicted mean
-//\param k is the overdispersion parameter, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
-//\return negative log likelihood \f$ -( \ln(\Gamma(x+k))-\ln(\Gamma(k))-\ln(x!)+k\ln(k)+x\ln(\mu)-(k+x)\ln(k+\mu) )\f$
-//**/
 //dvariable dnbinom(const double& x, const prevariable& mu, const prevariable& k)
 //{
 //	//x is the observed count

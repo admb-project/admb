@@ -40,6 +40,7 @@
 	\param mu is the expected mean number of successful trials.
 	\return the negative log likelihood for the negative binomial distribution.
 	\sa
+    \ingroup STATLIB
 **/
 
 dvariable dnbinom(const double& x,const prevariable& mu, const prevariable& size)
@@ -66,6 +67,7 @@ dvariable dnbinom(const double& x,const prevariable& mu, const prevariable& size
 \param mu is the predicted mean
 \param k is the overdispersion parameter, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \return negative log likelihood \f$ -( \ln(\Gamma(x+k))-\ln(\Gamma(k))-\ln(x!)+k\ln(k)+x\ln(\mu)-(k+x)\ln(k+\mu) )\f$
+\ingroup STATLIB
 **/
 df1b2variable dnbinom(const double& x, const df1b2variable& mu, const df1b2variable& k)
 {
@@ -119,6 +121,7 @@ df1b2variable dnbinom(const double& x, const df1b2variable& mu, const df1b2varia
 \param mu is the predicted mean
 \param k is the overdispersion parameter, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \return negative log likelihood \f$ -( \ln(\Gamma(x+k))-\ln(\Gamma(k))-\ln(x!)+k\ln(k)+x\ln(\mu)-(k+x)\ln(k+\mu) )\f$
+\ingroup STATLIB
 **/
 df1b2variable dnbinom(const dvector& x, const df1b2vector& mu, const df1b2variable& k)
 {
@@ -150,6 +153,7 @@ df1b2variable dnbinom(const dvector& x, const df1b2vector& mu, const df1b2variab
 \param mu is the predicted mean
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \return negative log likelihood \f$ -( \ln(\Gamma(x+k))-\ln(\Gamma(k))-\ln(x!)+k\ln(k)+x\ln(\mu)-(k+x)\ln(k+\mu) )\f$
+\ingroup STATLIB
 **/
 df1b2variable dnbinom(const dvector& x, const df1b2vector& mu, const df1b2vector& k)
 {
@@ -183,6 +187,7 @@ df1b2variable dnbinom(const dvector& x, const df1b2vector& mu, const df1b2vector
 \param mu is the predicted mean
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \return negative log likelihood \f$ -( \ln(\Gamma(x+k))-\ln(\Gamma(k))-\ln(x!)+k\ln(k)+x\ln(\mu)-(k+x)\ln(k+\mu) )\f$
+\ingroup STATLIB
 **/
 
 dvariable dnbinom(const dvector& x, const dvar_vector& mu, const prevariable& k)
@@ -215,6 +220,7 @@ dvariable dnbinom(const dvector& x, const dvar_vector& mu, const prevariable& k)
 \param mu is the predicted mean
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \return negative log likelihood \f$ -( \ln(\Gamma(x+k))-\ln(\Gamma(k))-\ln(x!)+k\ln(k)+x\ln(\mu)-(k+x)\ln(k+\mu) )\f$
+\ingroup STATLIB
 **/
 dvariable dnbinom(const dvector& x, const dvar_vector& mu, const dvar_vector& k)
 {

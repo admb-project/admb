@@ -4,12 +4,12 @@
 
 /*---------------------------------------------------------3rd variable is a scalar*/
 /*---------------------------------------------2nd variable is a scalar*/
-/**  function; scalar
+/**  Holling Type IV function; scalar
 \param x independent variable; data scalar
 \param a ; differentiable scalar
 \param b ; differentiable scalar
 \param c ; differentiable scalar
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 dvariable HollingIV(const double& x,  const prevariable& a,  const prevariable& b,  const prevariable& c)
@@ -21,12 +21,12 @@ dvariable HollingIV(const double& x,  const prevariable& a,  const prevariable& 
 	RETURN_ARRAYS_DECREMENT();
 	return (y);
 }
-/**  function; vectorized
+/**  Holling Type IV function; vectorized
 \param x independent variable; data vector
 \param a ; differentiable scalar
 \param b ; differentiable scalar
 \param c ; differentiable scalar
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 dvar_vector HollingIV(const dvector& x,  const prevariable& a,  const prevariable& b,  const prevariable& c)
@@ -38,12 +38,12 @@ dvar_vector HollingIV(const dvector& x,  const prevariable& a,  const prevariabl
 	RETURN_ARRAYS_DECREMENT();	
     return (y);
 }
-/**  function; vectorized
+/**  Holling Type IV function; vectorized
 \param x independent variable; data vector
 \param a ; differentiable vector
 \param b ; differentiable scalar
 \param c ; differentiable scalar
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 dvar_vector HollingIV(const dvector& x,  const dvar_vector& a,  const prevariable& b,  const prevariable& c)
@@ -56,12 +56,12 @@ dvar_vector HollingIV(const dvector& x,  const dvar_vector& a,  const prevariabl
     return (y);
 }
 /*---------------------------------------------2nd variable is a vector*/
-/**  function; vectorized
+/**  Holling Type IV function; vectorized
 \param x independent variable; data vector
 \param a ; differentiable scalar
 \param b ; differentiable vector
 \param c ; differentiable scalar
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 dvar_vector HollingIV(const dvector& x,  const prevariable& a,  const dvar_vector& b,  const prevariable& c)
@@ -73,12 +73,12 @@ dvar_vector HollingIV(const dvector& x,  const prevariable& a,  const dvar_vecto
 	RETURN_ARRAYS_DECREMENT();	
     return (y);
 }
-/**  function; vectorized
+/**  Holling Type IV function; vectorized
 \param x independent variable; data vector
 \param a ; differentiable vector
 \param b ; differentiable vector
 \param c ; differentiable scalar
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 dvar_vector HollingIV(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,  const prevariable& c)
@@ -92,12 +92,12 @@ dvar_vector HollingIV(const dvector& x,  const dvar_vector& a,  const dvar_vecto
 }
 /*---------------------------------------------------------3rd variable is a vector*/
 /*---------------------------------------------2nd variable is a scalar*/
-/**  function; vectorized
+/**  Holling Type IV function; vectorized
 \param x independent variable; data vector
 \param a ; differentiable scalar
 \param b ; differentiable scalar
 \param c ; differentiable vector
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 dvar_vector HollingIV(const dvector& x,  const prevariable& a,  const prevariable& b,  const dvar_vector& c)
@@ -109,12 +109,12 @@ dvar_vector HollingIV(const dvector& x,  const prevariable& a,  const prevariabl
 	RETURN_ARRAYS_DECREMENT();	
     return (y);
 }
-/**  function; vectorized
+/**  Holling Type IV function; vectorized
 \param x independent variable; data vector
 \param a ; differentiable vector
 \param b ; differentiable scalar
 \param c ; differentiable vector
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 dvar_vector HollingIV(const dvector& x,  const dvar_vector& a,  const prevariable& b,  const dvar_vector& c)
@@ -127,12 +127,12 @@ dvar_vector HollingIV(const dvector& x,  const dvar_vector& a,  const prevariabl
     return (y);
 }
 /*---------------------------------------------2nd variable is a vector*/
-/**  function; vectorized
+/**  Holling Type IV function; vectorized
 \param x independent variable; data vector
 \param a ; differentiable scalar
 \param b ; differentiable vector
 \param c ; differentiable vector
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 dvar_vector HollingIV(const dvector& x,  const prevariable& a,  const dvar_vector& b,  const dvar_vector& c)
@@ -144,12 +144,12 @@ dvar_vector HollingIV(const dvector& x,  const prevariable& a,  const dvar_vecto
 	RETURN_ARRAYS_DECREMENT();	
     return (y);
 }
-/**  function; vectorized
+/**  Holling Type IV function; vectorized
 \param x independent variable; data vector
 \param a ; differentiable vector
 \param b ; differentiable vector
 \param c ; differentiable vector
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 dvar_vector HollingIV(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,  const dvar_vector& c)
@@ -164,12 +164,12 @@ dvar_vector HollingIV(const dvector& x,  const dvar_vector& a,  const dvar_vecto
 /*---------------------------------------------------------3rd variable is a scalar in a random effects model*/
 /*---------------------------------------------2nd variable is a scalar in a random effects model*/
 /*----------------------1st varible contains random effects*/
-/** function; random effects scalar
+/** Holling Type IV function; random effects scalar
 \param x independent variable; data scalar
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 df1b2variable HollingIV(const double& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2variable& c)
@@ -179,12 +179,12 @@ df1b2variable HollingIV(const double& x,  const df1b2variable& a,  const df1b2va
 
     return (y);
 }
-/** function; random effects vectorized
+/** Holling Type IV function; random effects vectorized
 \param x independent variable; data vector
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 df1b2vector HollingIV(const dvector& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2variable& c)
@@ -194,12 +194,12 @@ df1b2vector HollingIV(const dvector& x,  const df1b2variable& a,  const df1b2var
 
     return(y);
 }
-/** function; random effects vectorized
+/** Holling Type IV function; random effects vectorized
 \param x independent variable; data vector
 \param a ; differentiable vector in a random effects model
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 df1b2vector HollingIV(const dvector& x,  const df1b2vector& a,  const df1b2variable& b,  const df1b2variable& c)
@@ -212,12 +212,12 @@ df1b2vector HollingIV(const dvector& x,  const df1b2vector& a,  const df1b2varia
 
 /*---------------------------------------------2nd variable is a vector in a random effects model*/
 /*----------------------1st varible contains random effects*/
-/** function; random effects vectorized
+/** Holling Type IV function; random effects vectorized
 \param x independent variable; data vector
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable scalar in a random effects model
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 df1b2vector HollingIV(const dvector& x,  const df1b2variable& a,  const df1b2vector& b,  const df1b2variable& c)
@@ -227,12 +227,12 @@ df1b2vector HollingIV(const dvector& x,  const df1b2variable& a,  const df1b2vec
 
     return(y);
 }
-/** function; random effects vectorized
+/** Holling Type IV function; random effects vectorized
 \param x independent variable; data vector
 \param a ; differentiable vector in a random effects model
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable scalar in a random effects model
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 df1b2vector HollingIV(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,  const df1b2variable& c)
@@ -247,12 +247,12 @@ df1b2vector HollingIV(const dvector& x,  const df1b2vector& a,  const df1b2vecto
 /*---------------------------------------------------------3rd variable is a vector in a random effects model*/
 /*---------------------------------------------2nd variable is a scalar in a random effects model*/
 /*----------------------1st varible contains random effects*/
-/** function; random effects vectorized
+/** Holling Type IV function; random effects vectorized
 \param x independent variable; data vector
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable vector in a random effects model
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 df1b2vector HollingIV(const dvector& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2vector& c)
@@ -262,12 +262,12 @@ df1b2vector HollingIV(const dvector& x,  const df1b2variable& a,  const df1b2var
 
     return(y);
 }
-/** function; random effects vectorized
+/** Holling Type IV function; random effects vectorized
 \param x independent variable; data vector
 \param a ; differentiable vector in a random effects model
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable vector in a random effects model
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 df1b2vector HollingIV(const dvector& x,  const df1b2vector& a,  const df1b2variable& b,  const df1b2vector& c)
@@ -280,12 +280,12 @@ df1b2vector HollingIV(const dvector& x,  const df1b2vector& a,  const df1b2varia
 
 /*---------------------------------------------2nd variable is a vector in a random effects model*/
 /*----------------------1st varible contains random effects*/
-/** function; random effects vectorized
+/** Holling Type IV function; random effects vectorized
 \param x independent variable; data vector
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable vector in a random effects model
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 df1b2vector HollingIV(const dvector& x,  const df1b2variable& a,  const df1b2vector& b,  const df1b2vector& c)
@@ -295,12 +295,12 @@ df1b2vector HollingIV(const dvector& x,  const df1b2variable& a,  const df1b2vec
 
     return(y);
 }
-/** function; random effects vectorized
+/** Holling Type IV function; random effects vectorized
 \param x independent variable; data vector
 \param a ; differentiable vector in a random effects model
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable vector in a random effects model
-\return  \f$  \f$
+\return  \f$ \frac{ax^2}{b + cx + x^2} \f$
 \ingroup ECOL
 **/
 df1b2vector HollingIV(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,  const df1b2vector& c)

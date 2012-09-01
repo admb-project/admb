@@ -3,6 +3,7 @@
 
 #include <fvar.hpp>
 #include <admodel.h>
+#include <df1b2fun.h>
 
 dvar_matrix ageLengthKey( const dvar_vector& mu, const dvar_vector& sig, const dvector& x );
 dmatrix ageLengthKey( const dvector& mu, const dvector& sig, const dvector& x );

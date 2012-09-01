@@ -41,6 +41,9 @@ linux:
 linux-64bit:
 	CXXFLAGS=-m64 $(MAKE) --directory=src --file=linux.mak dist-64bit
 
+linux-contrib:
+	CC=gcc CXX=g++ CXXFLAGS="" LIBPATH=../build/gcc411-fedora8 DISK=../build/dists/admb_gcc411_fedora8 $(MAKE) --directory=contrib
+
 linux-verify:
 	$(MAKE) --directory=src --file=linux.mak verify
 

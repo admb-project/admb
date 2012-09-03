@@ -1,3 +1,4 @@
+# $Id$
 # Doxyfile 1.8.0
 
 # This file describes the settings to be used by the documentation system
@@ -580,7 +581,7 @@ SHOW_NAMESPACES        = YES
 # provided by doxygen. Whatever the program writes to standard output
 # is used as the file version. See the manual for examples.
 
-FILE_VERSION_FILTER    = ./getID.sh
+FILE_VERSION_FILTER    =
 
 # The LAYOUT_FILE tag can be used to specify a layout file which will be parsed
 # by doxygen. The layout file controls the global structure of the generated

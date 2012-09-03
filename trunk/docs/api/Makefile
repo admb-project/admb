@@ -11,9 +11,9 @@ VER=`cat ../../VERSION`
 
 default: Doxyfile ./dox-share/mainpage.txt 
 	mkdir -vp dox/html
+#	Insert some linux-specific deltails into configuration file
 #	See Doxygen FAQ "Can I configure doxygen from the command line?"
-	(cat Doxyfile ; echo -n "PROJECT_NUMBER = "$(VER)"."$(REV); ) | doxygen -
-#(cat Doxyfile ; echo "OUTPUT_DIRECTORY = dox"; echo -n "PROJECT_NUMBER = "$(VER).$(REV); ) | doxygen -
+	(cat Doxyfile ; echo "PROJECT_NUMBER = "$(VER)"."$(REV); echo "FILE_VERSION_FILTER  = ./getID.sh"; ) | doxygen -
 
 clean:
 	rm -rf dox

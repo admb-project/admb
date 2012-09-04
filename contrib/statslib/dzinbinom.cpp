@@ -10,10 +10,10 @@
 \brief Zero Inflated Negative binomial with size and mean
 \author Mollie Brooks
 \param x observed count. should be greater than or equal to 0.
-\param mu is the predicted mean
+\param mu is the mean of the negative binomial part
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
-\return negative log likelihood
+\return negative log-likelihood
 \ingroup STATLIB
 **/
 
@@ -47,10 +47,10 @@ df1b2variable dzinbinom(const double& x, const df1b2variable& mu, const df1b2var
 \brief Zero Inflated Negative binomial with size and mean
 \author Mollie Brooks
 \param x observed count. should be greater than or equal to 0.
-\param mu is the predicted mean
+\param mu is the mean of the negative binomial part
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
-\return negative log likelihood
+\return negative log-likelihood
 \ingroup STATLIB
 **/
 
@@ -82,10 +82,10 @@ dvariable dzinbinom(const double& x, const prevariable& mu, const prevariable& k
 \brief Zero Inflated Negative binomial with size and mean
 \author Mollie Brooks
 \param x observed counts. should be greater than or equal to 0.
-\param mu is the predicted mean
+\param mu is the mean of the negative binomial part
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
-\return negative log likelihood
+\return negative log-likelihood
 \ingroup STATLIB
 **/
 
@@ -124,10 +124,10 @@ df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vari
 \brief Zero Inflated Negative binomial with size and mean
 \author Mollie Brooks
 \param x observed counts
-\param mu is the predicted mean
+\param mu is the mean of the negative binomial part
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
-\return negative log likelihood
+\return negative log-likelihood
 \ingroup STATLIB
 **/
 df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vector& k, const df1b2variable& p)
@@ -166,10 +166,10 @@ df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vect
 \brief Zero Inflated Negative binomial with size and mean
 \author Mollie Brooks
 \param x observed counts
-\param mu is the predicted mean
+\param mu is the mean of the negative binomial part
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
-\return negative log likelihood
+\return negative log-likelihood
 \ingroup STATLIB
 **/
 dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const prevariable& k, const prevariable& p)
@@ -207,10 +207,10 @@ dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const prevariable& 
 \brief Zero Inflated Negative binomial with size and mean
 \author Mollie Brooks
 \param x observed counts
-\param mu is the predicted mean
+\param mu is the mean of the negative binomial part
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
-\return negative log likelihood
+\return negative log-likelihood
 \ingroup STATLIB
 **/
 dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const dvar_vector& k, const prevariable& p)
@@ -252,10 +252,10 @@ dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const dvar_vector& 
 \brief Zero Inflated Negative binomial with size and mean
 \author Mollie Brooks
 \param x observed counts
-\param mu is the predicted mean
+\param mu is the mean of the negative binomial part
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
-\return negative log likelihood
+\return negative log-likelihood
 \ingroup STATLIB
 **/
 df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2variable& k, const df1b2vector& p)
@@ -293,10 +293,10 @@ df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vari
 \brief Zero Inflated Negative binomial with size and mean
 \author Mollie Brooks
 \param x observed counts
-\param mu is the predicted mean
+\param mu is the mean of the negative binomial part
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
-\return negative log likelihood
+\return negative log-likelihood
 \ingroup STATLIB
 **/
 df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vector& k, const df1b2vector& p)
@@ -335,10 +335,10 @@ df1b2variable dzinbinom(const dvector& x, const df1b2vector& mu, const df1b2vect
 \brief Zero Inflated Negative binomial with size and mean
 \author Mollie Brooks
 \param x observed counts
-\param mu is the predicted mean
+\param mu is the mean of the negative binomial part
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
-\return negative log likelihood
+\return negative log-likelihood
 \ingroup STATLIB
 **/
 dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const prevariable& k, const dvar_vector& p)
@@ -376,10 +376,10 @@ dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const prevariable& 
 \brief Zero Inflated Negative binomial with size and mean
 \author Mollie Brooks
 \param x observed counts
-\param mu is the predicted mean
+\param mu is the mean of the negative binomial part
 \param k is the overdispersion parameter, i.e. size, i.e. shape parameter of underlying heterogeneity (different from tau). should be >0
 \param p is the zero inflation paramerer, i.e. extra chance of observing zeros. 0<p<1.  
-\return negative log likelihood
+\return negative log-likelihood
 \ingroup STATLIB
 **/
 dvariable dzinbinom(const dvector& x, const dvar_vector& mu, const dvar_vector& k, const dvar_vector& p)

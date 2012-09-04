@@ -1,11 +1,14 @@
 OBJSPARSE = \
 ../sparse/hs_sparse.obj 
 OBJ0 = \
+cbetacf.obj \
+vbetacf.obj \
+vbetai.obj \
+cbetai.obj \
 cgamdev.obj \
 fmmtr1.obj \
 tsdfpool.obj \
 df13fun.obj \
-df13incbet.obj \
 multiindex.obj \
 indextyp.obj \
 logit.obj \
@@ -18,8 +21,8 @@ cbetdev.obj \
 vbetdev.obj \
 df11fun.obj \
 df12fun.obj \
-ccumdbetainv_incbet.obj \
-vcumdbetainv_incbet.obj \
+vcumdbetainv.obj \
+ccumdbetainv.obj \
 vgamdev.obj \
 normmix2.obj \
 normmix.obj \
@@ -449,8 +452,6 @@ derch.obj \
 dvsort.obj \
 ivsort.obj \
 \
-eigen_dmat.obj \
-eigen_dvar.obj \
 ivect_io.obj \
 \
 fmm_cont.obj \
@@ -483,6 +484,10 @@ f4arr2.obj \
 cbivnorm.obj \
 vbivnorm.obj \
 f4arr3.obj \
+eigen.obj \
+eigenv.obj \
+dveigen.obj \
+dveigenv.obj \
 f4arr.obj 
 OBJ3= \
 mfexp.obj \
@@ -497,19 +502,10 @@ manip.obj \
 conjprod.obj 
 #fmmqmin.obj   
 UNUSED= \
-cbetacf.obj \
-vbetacf.obj \
-vbetai.obj \
-cbetai.obj \
 fvar_m42.obj \
 fvar_m20.obj \
 fvar_m15.obj \
 dmat3.obj \
 fvar_ma4.obj \
 dmat34.obj \
-fvar_m24.obj \
-\
-eigen.obj \
-eigenv.obj \
-dveigen.obj \
-dveigenv.obj \
+fvar_m24.obj

@@ -65,6 +65,7 @@ test:
 	CXXFLAGS="" $(MAKE) --directory=qfclib test
 
 clean:
+	@rm -rvf build
 	$(MAKE) --directory=ecolib clean
 	$(MAKE) --directory=qfclib clean
 	$(MAKE) --directory=statslib clean

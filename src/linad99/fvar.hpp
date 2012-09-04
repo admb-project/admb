@@ -9475,9 +9475,9 @@ ivector diagonal(const imatrix &);
 dvar_vector diagonal(const dvar_matrix &);
 
 double gammln(double xx);
-dvariable gammln(const dvariable & xx);
-dvariable gammln(const prevariable & xx);
-ivector histogram(double min, double max, int nbin, const dvector & input);
+//dvariable gammln(const dvariable& xx);
+dvariable gammln(const prevariable& xx);
+ivector histogram(double min, double max, int nbin, const dvector& input);
 
 double cumd_cauchy(const double &x);
 double density_cauchy(const double &x);
@@ -9588,13 +9588,14 @@ void gauss_legendre(const dvector & _x, const dvector & _w);
 
 //dvariable beta(const prevariable&,const prevariable&);
 
-//dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x, int maxit = 100);
+double betacf(const double _a, const double _b, double _x, int maxit = 100);
 
-//double betacf(const double& _a, const double& _b, double& _x,int maxit=100);
+dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x, int maxit = 100);
 
-//dvariable betai(const dvariable a, const dvariable b, const dvariable x, int maxit = 100);
-//double betai(const double a,const double b,const double x, int maxit=100);
+dvariable betai(const dvariable a, const dvariable b, const dvariable x, int maxit = 100);
+double betai(const double a,const double b,const double x, int maxit=100);
 
+/*
 double betai(double _aa, double _bb, double _xx);
 dvariable betai(const dvariable & _a, const dvariable & _b,
 		const dvariable & _x);
@@ -9605,6 +9606,7 @@ dvariable incbet(const dvariable & _a, const dvariable & _b,
 df1_three_variable incbet(const df1_three_variable & _aa,
 			  const df1_three_variable & _bb,
 			  const df1_three_variable & _xx);
+*/
 
 dvar_matrix tensor_prod(const dvar_matrix & a, const dvar_matrix & b);
 

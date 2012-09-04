@@ -35,10 +35,12 @@ icc:
 icc-verify:
 	$(MAKE) --directory=src --file=linux.mak CC=icc CXX=icpc verify
 
-linux:
+linux: linux-admb linux-contrib
+
+linux-admb:
 	$(MAKE) --directory=src --file=linux.mak
 
-linux-64bit:
+linux-64bit: linux-contrib
 	CXXFLAGS=-m64 $(MAKE) --directory=src --file=linux.mak dist-64bit
 
 linux-contrib:
@@ -53,5 +55,17 @@ it:
 it2:
 	$(MAKE) MACOSX_DEPLOYMENT_TARGET=10.5 CFLAGS=-m32 CXXFLAGS="-m32 -mmacosx-version-min=10.5" LDFLAGS="-m32 -Wl,-macosx_version_min,10.5" verify
 
+
+tests:
+	ADMB_HOME=$(PWD)/build/dists/admb_gcc411_fedora8 PATH=$(PWD)/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=test
+
+admb-trunk-readonly:
+	ADMB_HOME=../../../$@/build/dists/admb_gcc411_fedora8 PATH=../../../$@/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=test
+
+admb-ar794:
+	ADMB_HOME=../../../$@/build/dists/admb_gcc411_fedora8 PATH=../../../$@/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=test
+
 clean:
 	rm -rvf build
+	$(MAKE) --directory=contrib clean
+	$(MAKE) --directory=test clean

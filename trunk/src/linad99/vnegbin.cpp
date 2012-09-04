@@ -1,4 +1,4 @@
-/*
+/**
  * $Id$
  *
  * Author: David Fournier
@@ -77,7 +77,7 @@
   \ingroup PDF
   \param x Number of observed occurences, \f$k\f$.
   \param mu Mean or expected value, \f$\mu\f$.
-  \return Log of Poisson density. \f$-\mu+k \log(\mu)-\log(k!)\f$.
+  \return Log of Poisson density. \f$-\mu+k*\log(\mu)-k!\f$.
   */
   dvariable log_density_poisson(double x,const prevariable& mu)
   {

@@ -29,8 +29,6 @@ df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz)
  \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter xx
-
-    \deprecated Scheduled for replacement by 2012.
  */
 df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
   df1b2variable ln_unsigned_det,df1b2variable& sign)

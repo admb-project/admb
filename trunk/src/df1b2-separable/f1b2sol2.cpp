@@ -1,10 +1,11 @@
 /**
- * $Id$
+ * $Id: f1b2sol2.cpp 789 2010-10-05 01:01:09Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
-#include <fvar.hpp>
+#define HOME_VERSION
+#include <df1b2fun.h>
 
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -21,21 +22,36 @@
 #endif
 
 #define TINY 1.0e-20;
+df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z,
+  const df1b2variable & ln_unsigned_det,double& sign);
 
-dmatrix solve(const dmatrix& aa,const dmatrix& tz,
-  double ln_unsigned_det,double& sign);
 
-dmatrix solve(const dmatrix& aa, const dmatrix& tz)
+df1b2vector csolve(const df1b2matrix& aa,const df1b2vector& z)
 {
-  double ln;
-  double sgn;
-  return solve(aa,tz,ln,sgn);
+  double ln_unsigned_det;
+  double sign;
+  df1b2vector sol=solve(aa,z,ln_unsigned_det,sign);
+  return sol;
 }
 
-
-dmatrix solve(const dmatrix& aa,const dmatrix& tz,
-  double ln_unsigned_det,double& sign)
+df1b2vector solve(const df1b2matrix& aa,const df1b2vector& z)
 {
+  df1b2variable ln_unsigned_det;
+  double sign;
+  df1b2vector sol=solve(aa,z,ln_unsigned_det,sign);
+  return sol;
+}
+
+/** LU Decomposition solver.
+    \n\n The implementation of this algorithm was inspired by
+    "Numerical Recipes in C", 2nd edition,
+    Press, Teukolsky, Vetterling, Flannery, chapter 2
+*/
+df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
+  const df1b2variable & _ln_unsigned_det,double& sign)
+{
+  ADUNCONST(df1b2variable,ln_unsigned_det)
+  ADUNCONST(df1b2vector,z)
   int i,imax,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();
@@ -45,15 +61,15 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
     cerr << "Error matrix not square in solve()"<<endl;
     ad_exit(1);
   }
-  dmatrix bb(lb,ub,lb,ub);
+  df1b2matrix bb(lb,ub,lb,ub);
   bb=aa;
   ivector indx(lb,ub);
   int One=1;
   indx.fill_seqadd(lb,One);
-  double d;
-  double big,dum,sum,temp;
+  double  d;
+  df1b2variable big,dum,sum,temp;
   kkludge_object kkk;
-  dvector vv(lb,ub);
+  df1b2vector vv(lb,ub);
 
   d=1.0;
   for (i=lb;i<=ub;i++)
@@ -62,14 +78,14 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
     for (j=lb;j<=ub;j++)
     {
       temp=fabs(bb(i,j));
-      if (temp > big)
+      if (value(temp) > value(big))
       {
         big=temp;
       }
     }
-    if (big == 0.0)
+    if (value(big) == 0.0)
     {
-      cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
+      cerr << "Error in matrix inverse -- matrix singular in inv(df1b2matrix)\n";
     }
     vv[i]=1.0/big;
   }
@@ -96,7 +112,7 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
       }
       bb(i,j)=sum;
       dum=vv[i]*fabs(sum);
-      if ( dum >= big)
+      if ( value(dum) >= value(big))
       {
         big=dum;
         imax=i;
@@ -122,7 +138,7 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
       //cout << "indx= " <<indx<<endl;
     }
 
-    if (bb(j,j) == 0.0)
+    if (value(bb(j,j)) == 0.0)
     {
       bb(j,j)=TINY;
     }
@@ -139,92 +155,54 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
 
   // get the determinant
   sign=d;
-  dvector part_prod(lb,ub);
+  df1b2vector part_prod(lb,ub);
   part_prod(lb)=log(fabs(bb(lb,lb)));
-  if (bb(lb,lb)<0) sign=-sign;
+  if (value(bb(lb,lb))<0) sign=-sign;
   for (j=lb+1;j<=ub;j++)
   {
-    if (bb(j,j)<0) sign=-sign;
+    if (value(bb(j,j))<0) sign=-sign;
     part_prod(j)=part_prod(j-1)+log(fabs(bb(j,j)));
   }
   ln_unsigned_det=part_prod(ub);
 
-  dmatrix z=trans(tz);
-  int mmin=z.indexmin();
-  int mmax=z.indexmax();
-  dmatrix x(mmin,mmax,lb,ub);
-  //dvector x(lb,ub);
-
-  dvector y(lb,ub);
+  df1b2vector x(lb,ub);
+  df1b2vector y(lb,ub);
   //int lb=rowmin;
   //int ub=rowmax;
-  dmatrix& b=bb;
+  df1b2matrix& b=bb;
   ivector indxinv(lb,ub);
   for (i=lb;i<=ub;i++)
   {
     indxinv(indx(i))=i;
   }
-  for (int kk=mmin;kk<=mmax;kk++)
-  { 
-    for (i=lb;i<=ub;i++)
-    {
-      y(indxinv(i))=z(kk)(i);
-    }
-  
-    for (i=lb;i<=ub;i++)
-    {
-      sum=y(i);
-      for (int j=lb;j<=i-1;j++)
-      {
-        sum-=b(i,j)*y(j);
-      }
-      y(i)=sum;
-    }
-    for (i=ub;i>=lb;i--)
-    {
-      sum=y(i);
-      for (int j=i+1;j<=ub;j++)
-      {
-        sum-=b(i,j)*x(kk)(j);
-      }
-      x(kk)(i)=sum/b(i,i);
-    }
-  
-  }
-  return trans(x);
-}
 
-double ln_det_choleski(
-  const banded_symmetric_dmatrix& MM, const int& _ierr)
-{
-  banded_lower_triangular_dmatrix tmp=choleski_decomp(MM,_ierr);
-  
-  int mmin=tmp.indexmin();
-  int mmax=tmp.indexmax();
-  double ld=0.0;
-  for (int i=mmin;i<=mmax;i++)
+  for (i=lb;i<=ub;i++)
   {
-    ld+=log(tmp(i,i));
+    y(indxinv(i))=z(i);
   }
-  return 2.0*ld;
-}
 
-double norm(const banded_symmetric_dmatrix& B)
-{
-  return sqrt(norm2(B));
-}
-
-double norm2(const banded_symmetric_dmatrix& B)
-{
-  double nm=0.0;
-  for (int i=1;i<=B.bw-1;i++)
+  for (i=lb;i<=ub;i++)
   {
-    nm+=norm2(B.d(i));
+    sum=y(i);
+    for (int j=lb;j<=i-1;j++)
+    {
+      sum-=b(i,j)*y(j);
+    }
+    y(i)=sum;
   }
-  nm*=2;
-  nm+=norm2(B.d(0));
-  return nm;
+  for (i=ub;i>=lb;i--)
+  {
+    sum=y(i);
+    for (int j=i+1;j<=ub;j++)
+    {
+      sum-=b(i,j)*x(j);
+    }
+    x(i)=sum/b(i,i);
+  }
+
+  return x;
 }
 
 #undef TINY
+#undef HOME_VERSION
 

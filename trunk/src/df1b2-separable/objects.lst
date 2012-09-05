@@ -25,7 +25,6 @@ df32fun1.obj \
 bounder.obj \
 df1b2h.obj \
 \
-df1b2ludcmp.obj \
 df1b2lme.obj \
 quadpri.obj \
 fquadpri.obj \
@@ -132,9 +131,9 @@ f1b23d1.obj \
 df1b2negb.obj \
 expm.obj \
 smartbuf.obj  \
-mod_rhes.obj  
-UNUSED =\
 f1b2sol2.obj \
 f1b2solv.obj \
+mod_rhes.obj  
+UNUSED =\
 f1b2lndt.obj \
 df1b2min3.obj \

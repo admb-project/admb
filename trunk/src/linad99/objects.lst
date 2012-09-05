@@ -1,6 +1,13 @@
 OBJSPARSE = \
 ../sparse/hs_sparse.obj 
 OBJ0 = \
+dmat3.obj \
+dmat34.obj \
+fvar_ma4.obj \
+fvar_m15.obj \
+fvar_m20.obj \
+fvar_m24.obj \
+fvar_m42.obj \
 cbetacf.obj \
 vbetacf.obj \
 vbetai.obj \
@@ -115,14 +122,6 @@ f5arr3.obj \
 admanip.obj \
 fvar_m38.obj \
 fvar_m41.obj \
-\
-ludcmp.obj \
-ludcmp_det.obj \
-ludcmp_inv.obj \
-ludcmp_ln_det.obj \
-ludcmp_operators.obj \
-ludcmp_solve.obj \
-\
 fvar_m43.obj \
 fvar_m44.obj \
 fvar_m45.obj \
@@ -500,12 +499,3 @@ adpvm2.obj
 OBJ4= \
 manip.obj \
 conjprod.obj 
-#fmmqmin.obj   
-UNUSED= \
-fvar_m42.obj \
-fvar_m20.obj \
-fvar_m15.obj \
-dmat3.obj \
-fvar_ma4.obj \
-dmat34.obj \
-fvar_m24.obj

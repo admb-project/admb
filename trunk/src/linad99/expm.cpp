@@ -9,15 +9,7 @@
  * Matrix exponential function for dvar_matrix. 
  */
 #include <fvar.hpp>
-  #include "ludcmp.hpp"
-  dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& zz);
-  dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z);
-  dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltudecomp & _clu1);
-  cltudecomp xludecomp_pivot_for_expm_solve(const dvar_matrix& M, const ivector& _index2);
-  // static void df_mm_solve(void);
-  static void df_solve(void);
-
-//#define TINY 1.0e-20;
+#define TINY 1.0e-20;
 
 /**
  * Description not yet available.
@@ -35,6 +27,15 @@ dmatrix fabs(const dmatrix & X){
     }
   }
   return ret;
+}
+
+dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_unsigned_det, dvariable& sign);
+
+dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz)
+{
+  dvariable ln;
+  dvariable sgn;
+  return solve(aa,tz,ln,sgn);
 }
 
   /**
@@ -56,7 +57,7 @@ The main use of the matrix exponential is to solve linear ordinary differential 
   \param A square dmatrix
   \returns The matrix exponential of A
   */
-dmatrix expm(const dmatrix & A)
+dmatrix expm(const dmatrix& A)
 {
   int rmin = A.rowmin();
   int rmax = A.rowmax();
@@ -118,7 +119,7 @@ The main use of the matrix exponential is to solve linear ordinary differential 
   \param A square dvar_matrix
   \returns The matrix exponential of A
   */
-dvar_matrix expm(const dvar_matrix & A)
+dvar_matrix expm(const dvar_matrix& A)
 {
   RETURN_ARRAYS_INCREMENT();    
   int rmin = A.rowmin();
@@ -168,269 +169,165 @@ dvar_matrix expm(const dvar_matrix & A)
   return E;
 }
 
-//#undef TINY
-
-
-void savetostack(const dvar_matrix& M, const ivector& index2)
+dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_unsigned_det, dvariable& sign)
 {
-     save_identifier_string("OZ1");
-     M.save_dvar_matrix_value();
-     M.save_dvar_matrix_position();
-     save_identifier_string("OZ2");
-     index2.save_ivector_value();
-     index2.save_ivector_position();
-     save_identifier_string("OZ");
+  RETURN_ARRAYS_INCREMENT();    
+  int i,imax,j,k,n;
+  n=aa.colsize();
+  int lb=aa.colmin();
+  int ub=aa.colmax();
+  if (lb!=aa.rowmin()||ub!=aa.colmax())
+  {
+    cerr << "Error matrix not square in solve()"<<endl;
+    ad_exit(1);
+  }
+  dvar_matrix bb(lb,ub,lb,ub);
+  bb=aa;
+  ivector indx(lb,ub);
+  int One=1;
+  indx.fill_seqadd(lb,One);
+  dvariable d;
+  dvariable big,dum,sum,temp;
+  kkludge_object kkk;
+  dvar_vector vv(lb,ub);
+
+  d=1.0;
+  for (i=lb;i<=ub;i++)
+  {
+    big=0.0;
+    for (j=lb;j<=ub;j++)
+    {
+      temp=fabs(bb(i,j));
+      if (temp > big)
+      {
+        big=temp;
+      }
+    }
+    if (big == 0.0)
+    {
+      cerr << "Error in matrix inverse -- matrix singular in inv(dvar_matrix)\n";
+    }
+    vv[i]=1.0/big;
+  }
+
+  for (j=lb;j<=ub;j++)
+  {
+    for (i=lb;i<j;i++)
+    {
+      sum=bb(i,j);
+      for (k=lb;k<i;k++)
+      {
+	sum -= bb(i,k)*bb(k,j);
+      }
+      //a[i][j]=sum;
+      bb(i,j)=sum;
+    }
+    big=0.0;
+    for (i=j;i<=ub;i++)
+    {
+      sum=bb(i,j);
+      for (k=lb;k<j;k++)
+      {
+	sum -= bb(i,k)*bb(k,j);
+      }
+      bb(i,j)=sum;
+      dum=vv[i]*fabs(sum);
+      if ( dum >= big)
+      {
+        big=dum;
+        imax=i;
+      }
+    }
+    if (j != imax)
+    {
+      for (k=lb;k<=ub;k++)
+      {
+        dum=bb(imax,k);
+        bb(imax,k)=bb(j,k);
+        bb(j,k)=dum;
+      }
+      d = -1.*d;
+      vv[imax]=vv[j];
+
+      //if (j<ub)
+      {
+        int itemp=indx(imax);
+        indx(imax)=indx(j);
+        indx(j)=itemp;
+      }
+      //cout << "indx= " <<indx<<endl;
+    }
+
+    if (bb(j,j) == 0.0)
+    {
+      bb(j,j)=TINY;
+    }
+
+    if (j != n)
+    {
+      dum=1.0/bb(j,j);
+      for (i=j+1;i<=ub;i++)
+      {
+	bb(i,j) = bb(i,j) * dum;
+      }
+    }
+  }
+
+  // get the determinant
+  sign=d;
+  dvar_vector part_prod(lb,ub);
+  part_prod(lb)=log(fabs(bb(lb,lb)));
+  if (bb(lb,lb)<0) sign=-sign;
+  for (j=lb+1;j<=ub;j++)
+  {
+    if (bb(j,j)<0) sign=-sign;
+    part_prod(j)=part_prod(j-1)+log(fabs(bb(j,j)));
+  }
+  ln_unsigned_det=part_prod(ub);
+
+  dvar_matrix z=trans(tz);
+  int mmin=z.indexmin();
+  int mmax=z.indexmax();
+  dvar_matrix x(mmin,mmax,lb,ub);
+  //dvar_vector x(lb,ub);
+
+  dvar_vector y(lb,ub);
+  //int lb=rowmin;
+  //int ub=rowmax;
+  dvar_matrix& b=bb;
+  ivector indxinv(lb,ub);
+  for (i=lb;i<=ub;i++)
+  {
+    indxinv(indx(i))=i;
+  }
+  for (int kk=mmin;kk<=mmax;kk++)
+  {
+    for (i=lb;i<=ub;i++)
+    {
+      y(indxinv(i))=z(kk)(i);
+    }
+
+    for (i=lb;i<=ub;i++)
+    {
+      sum=y(i);
+      for (int j=lb;j<=i-1;j++)
+      {
+        sum-=b(i,j)*y(j);
+      }
+      y(i)=sum;
+    }
+    for (i=ub;i>=lb;i--)
+    {
+      sum=y(i);
+      for (int j=i+1;j<=ub;j++)
+      {
+        sum-=b(i,j)*x(kk)(j);
+      }
+      x(kk)(i)=sum/b(i,i);
+    }
+
+  }
+  RETURN_ARRAYS_DECREMENT();
+  return trans(x);
 }
-
-/** Solve a linear system using LU decomposition.
- *  \param aa A variable matrix. \f$A\f$. 
- *  \param z A matrix containing the RHS, \f$B\f$ of the linear equation
- *  \f$A\cdot X = B\f$, to be solved.
- *  \return A matrix containing solution \f$X\f$.
- */
-dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& zz)
-{
-  // int n = aa.colsize();
-   int lb = aa.colmin();
-   int ub = aa.colmax();
-   if (lb!=aa.rowmin()||ub!=aa.colmax())
-   {
-     cerr << "Error matrix not square in "
-          << "solve(const dvar_matrix& aa, const dvar_matrix& zz)"<<endl;
-     ad_exit(1);
-   }
-   if (zz.rowmin()!=aa.rowmin()||zz.colmax()!=aa.colmax())
-   {
-     cerr << "Error matrices not compatible in "
-          << "solve(const dvar_matrix& aa, const dvar_matrix& zz)"<<endl;
-     ad_exit(1);
-   }
-
-   dvar_matrix xx(lb,ub,lb,ub);
-
-   if(ub==lb)
-   {
-     xx = zz*inv(aa);
-     return(xx);
-   }
-    
-   ivector index2(lb,ub);
-   cltudecomp clu = xludecomp_pivot_for_expm_solve(aa,index2);
-
-   // check if invertable
-	double ln_det = 0.0;
-
-   for (int i = lb; i <= ub; i++)
-   {
-	ln_det += log(clu(i, i));
-   }
-	if(exp(ln_det)==0.0)
-   {
-      cerr <<
-	 "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";
-      ad_exit(1);
-   }
-
-   for(int k = lb;k<=ub;k++)
-   {
-      savetostack(aa,index2);
-      dvar_vector z = column(zz,k);
-      dvar_vector x = solve_work(aa,z,clu);
-      xx.colfill(k,x);
-   }
-
-   return xx;
-}
-
-/** Solve a linear system using LU decomposition. To be used for multiple calls for solve.
- *  \param aa A variable matrix. \f$A\f$. 
- *  \param z A matrix containing the RHS, \f$B\f$ of the linear equation
- *  \param clu1 The LU Decomposition of A
- *  \f$A\cdot X = B\f$, to be solved.
- *  \return A matrix containing solution \f$X\f$.
- */
-dvar_vector solve_work(const dvar_matrix & aa, const dvar_vector & z, const cltudecomp & _clu1)
-{
-   int lb = aa.colmin();
-   int ub = aa.colmax();
-   if (lb != aa.rowmin() || ub != aa.colmax())
-   {
-      cerr << "Error matrix not square in solve(dvar_matrix)" << endl;
-      ad_exit(1);
-   }
-   if ( lb != z.indexmin() || ub != z.indexmax() )
-   {
-      cerr << "Error matrix and vector not of same size in solve(dvar_matrix)" << endl;
-      ad_exit(1);
-   }
-
-   dvar_vector x(lb, ub);
-
-   if (ub == lb)
-   {
-      if( aa(lb,lb) == 0.0 )
-      {
-        cerr << "Error division by zero in solve(dvar_matrix)" << endl;
-        ad_exit(1);
-      }
-      x(lb) = z(lb) / aa(lb, lb);
-      return (x);
-   }
-
-   cltudecomp & clu1 = (cltudecomp &) _clu1;
-   ivector index2 = clu1.get_index2();
-   dmatrix & gamma = clu1.get_U();
-   dmatrix & alpha = clu1.get_L();
-
-   // check if invertable --- may be able to get rid of this check
-	double ln_det = 0.0;
-   for (int i = lb; i <= ub; i++)
-   {
-		ln_det += log(clu1(i, i));
-   }
-	if(exp(ln_det)==0.0)
-   {
-      cerr <<
-	 "Error in matrix inverse -- matrix singular in solve(dvar_matrix)\n";
-      ad_exit(1);
-   }
-
-   // Solve L*y = b with forward-substitution (before solving Ux = y)
-   dvector y(lb, ub);
-   dvector tmp1(lb, ub);
-   y.initialize();
-   tmp1.initialize();
-
-   for (int i = lb; i <= ub; i++)
-   {
-      for (int j = lb; j < i; j++)
-      {
-	 tmp1(i) += alpha(i, j) * y(j);
-      }
-      y(i) = value(z(index2(i))) - tmp1(i);
-   }
-
-   // Now solve U*x = y with back substitution
-   dvector tmp2(lb, ub);
-   tmp2.initialize();
-   for (int i = ub; i >= lb; i--)
-   {
-      for (int j = ub; j > i; j--)
-      {
-	 tmp2(i) += gamma(j, i) * value(x(j));
-      }
-      value(x(i)) = (y(i) - tmp2(i)) / gamma(i, i);
-   }
-
-   dvector x_val(lb, ub);
-   x_val.initialize();
-   x_val = value(x);
-
-   save_identifier_string("FIRST");
-   z.save_dvar_vector_position();
-   save_identifier_string("PLACE2");
-   y.save_dvector_value();
-   y.save_dvector_position();
-   save_identifier_string("PLACE3");
-   index2.save_ivector_value();
-   index2.save_ivector_position();
-   save_identifier_string("PLACE4");
-   x_val.save_dvector_value();
-   x_val.save_dvector_position();
-   save_identifier_string("PLACE5");
-   tmp1.save_dvector_value();
-   tmp1.save_dvector_position();
-   tmp2.save_dvector_value();
-   tmp2.save_dvector_position();
-   save_identifier_string("PLACE6");
-   x.save_dvar_vector_position();
-   save_identifier_string("LAST");
-
-   gradient_structure::GRAD_STACK1->set_gradient_stack(df_solve);
-
-   return (x);
-}
-
-/**
- * Adjoint code for the dvar_vector solve function
- */
-static void df_solve(void)
-{
-   verify_identifier_string("LAST");
-   dvar_vector_position x_pos = restore_dvar_vector_position();
-   verify_identifier_string("PLACE6");
-   dvector_position tmp2_pos = restore_dvector_position();
-   dvector tmp2 = restore_dvector_value(tmp2_pos);
-   dvector_position tmp1_pos = restore_dvector_position();
-   dvector tmp1 = restore_dvector_value(tmp1_pos);
-   verify_identifier_string("PLACE5");
-   dvector_position x_val_pos = restore_dvector_position();
-   dvector x = restore_dvector_value(x_val_pos);
-   verify_identifier_string("PLACE4");
-   ivector_position index2_pos = restore_ivector_position();
-   ivector index2 = restore_ivector_value(index2_pos);
-   verify_identifier_string("PLACE3");
-   dvector_position y_pos = restore_dvector_position();
-   dvector y = restore_dvector_value(y_pos);
-   verify_identifier_string("PLACE2");
-   dvar_vector_position z_pos = restore_dvar_vector_position();
-   verify_identifier_string("FIRST");
-
-   dvector dfx = restore_dvar_vector_derivatives(x_pos);
-
-   dvector dfz(z_pos.indexmin(), z_pos.indexmax());
-   dvector dfy(y_pos.indexmin(), y_pos.indexmax());
-   dvector dftmp1(tmp1_pos.indexmin(), tmp1_pos.indexmax());
-   dvector dftmp2(tmp2_pos.indexmin(), tmp2_pos.indexmax());
-   dfz.initialize();
-   dfy.initialize();
-   dftmp1.initialize();
-   dftmp2.initialize();
-
-   // adjoint code for solve calc
-   cltudecomp_for_adjoint clu1;
-   clu1.ludecomp_pivot_for_adjoint_1();
-   cltudecomp dfclu1 = clu1.get_dfclu();
-   dmatrix_for_adjoint gamma = clu1.get_U();
-   dmatrix_for_adjoint alpha = clu1.get_L();
-   dmatrix dfgamma = dfclu1.get_U();
-   dmatrix dfalpha = dfclu1.get_L();
-   dfalpha.initialize();
-   dfgamma.initialize();
-   int lb = clu1.indexmin();
-   int ub = clu1.indexmax();
-   for (int i = lb; i <= ub; i++)
-   {
-      // value(x(i)) = (y(i)-tmp2(i))/gamma(i,i);
-      dfgamma(i, i) =
-	 ((tmp2(i) - y(i)) * dfx(i)) / (gamma(i, i) * gamma(i, i));
-      dftmp2(i) = -dfx(i) / gamma(i, i);
-      dfy(i) = dfx(i) / gamma(i, i);
-      for (int j = i + 1; j <= ub; j++)
-      {
-	 // tmp2(i)+=gamma(j,i)*value(x(j));
-	 dfgamma(j, i) = dfgamma(j, i) + dftmp2(i) * x(j);
-	 dfx(j) += dftmp2(i) * gamma(j, i);
-      }
-   }
-   // tmp2.initialize();
-   dftmp2.initialize();
-
-   for (int i = ub; i >= lb; i--)
-   {
-      // y(i) = value(z(index2(i)))-tmp1(i);
-      dftmp1(i) = -dfy(i);
-      dfz(index2(i)) = dfy(i);
-      for (int j = i - 1; j >= lb; j--)
-      {
-	 // tmp1(i)+=alpha(i,j)*y(j);
-	 dfalpha(i, j) += dftmp1(i) * y(j);
-	 dfy(j) += dftmp1(i) * alpha(i, j);
-      }
-   }
-   // tmp1.initialize();
-   dftmp1.initialize();
-
-   clu1.ludecomp_pivot_for_adjoint_2();
-   dfz.save_dvector_derivatives(z_pos);
-}
+#undef TINY

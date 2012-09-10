@@ -66,7 +66,7 @@ invoke custom adjoint code.
 */
 
 /**
- * \defgroup gammafunc Gamma and related functions.
+ * \defgroup gammafunc Factorial, gamma and related functions.
  */
 
 /**

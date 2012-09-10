@@ -5,8 +5,8 @@
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
- * \file
- * Description not yet available.
+  \file
+  Functions for gamma probability density; differentiable (variable) objects.
  */
 #include <fvar.hpp>
 
@@ -45,10 +45,11 @@
   /**
   \ingroup PDF
   Gamma probability density function; variable objects.
-  \param _x double argument
-  \param r double argument
-  \param mu dvariable argument
-  \returns Davariable containing \f$\exp\big(r\log{\mu} + (r-1)*\log{x}-\mu*x-\log{\Gamma(r)}\big)\f$
+  Mean \f$ = \frac{r}{\mu} \f$.
+  \param _x Differentiable argument, \f$ x \ge 0 \f$.
+  \param r Constant shape parameter, \f$ r > 0 \f$.
+  \param mu Constang slope parameter, \f$ \mu > 0 \f$.
+  \returns Dvariable containing  \f$\frac{\mu^r}{\Gamma(r)}x^{r-1}e^{-\mu x}\f$
   */
   dvariable gamma_density(const prevariable& _x,double r, double mu)
   {
@@ -59,10 +60,10 @@
   /**
   \ingroup PDF
   Gamma probability density function; variable objects.
-  \param _x dvariable argument
-  \param _r dvariable argument
-  \param _mu dvariable argument
-  \returns Davariable containing \f$\exp\big(r\log{\mu} + (r-1)*\log{x}-\mu*x-\log{\Gamma(r)}\big)\f$
+  \param _x Differentiable argument, \f$ x \ge 0 \f$.
+  \param _r Differentiable, \f$ r > 0 \f$.
+  \param _mu Differentiable, \f$ \mu > 0 \f$.
+  \returns Dvariable containing  \f$\frac{\mu^r}{\Gamma(r)}x^{r-1}e^{-\mu x}\f$
   */  
   dvariable gamma_density(const dvariable& _x,const dvariable& _r,
     const  dvariable& _mu)

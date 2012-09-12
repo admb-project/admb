@@ -1,8 +1,8 @@
-/**
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
+/*
+  $Id$
+ 
+  Author: David Fournier
+  Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <fvar.hpp>
 #define ITMAX 100
@@ -11,6 +11,10 @@
 #define FPMIN 1.0e-30
 static void gcf(double& gammcf,double a,double x,double &gln);
 static void gser(double& gamser,double a,double x,double& gln);
+
+/**
+  \file gamma functions for differentiable objects.
+*/
 
   dvariable gamma_deviate(const prevariable& _x,const prevariable& _a)
   {
@@ -172,7 +176,7 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
   return vz;
 }
 
-#endif
+#endif //#if defined(USE_LAPLACE)
 
 #undef ITMAX
 #undef EPS

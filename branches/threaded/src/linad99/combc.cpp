@@ -1,13 +1,14 @@
-/**
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
+/*
+  $Id$
+ 
+  Author: David Fournier
+  Copyright (c) 2009-2012 ADMB Foundation
  */
 /**
- * \file
- * This file has routines for the constant type
- * log-factorial, log-binomial, and log-gamma functions
+  \file
+  This file has routines for the constant type
+  log-factorial, log-binomial, and log-gamma functions
+  for scalar and vector arguments.
  */
 
 #include <fvar.hpp>
@@ -16,11 +17,12 @@ double factln(double n);
 double gammln(double xx);
 
 /**
- * Log of the binomial coefficent
- * i.e log of 'n choose k'
- * \param n a number
- * \param k a number
- * \return log of the binomial coefficent
+  Log of the binomial coefficent;
+  i.e log of 'n choose k'
+  \ingroup gammafunc
+  \param n a number
+  \param k a number
+  \return \f$ \ln {n \choose k} \f$
  */
 double log_comb(double n, double k)
 {
@@ -28,16 +30,18 @@ double log_comb(double n, double k)
 }
 
 /**
- * Log-factorial \f$\ln(n!)\f$
- * \param n a number
- * \return log of the factorial
- */
+  Log-factorial \f$\ln(n!)\f$
+  \ingroup gammafunc
+  \param n a number
+  \return log of the factorial
+*/
 double factln(double n)
 {
   return gammln(n+1.0);
 }
 
 /** Log gamma function.
+    \ingroup gammafunc
     \param xx \f$x\f$
     \return \f$\ln\bigr(\Gamma(x)\bigl)\f$
 
@@ -64,10 +68,11 @@ double gammln(double xx)
 }
 
 /**
- * Log-binomial of two arrays
- * \param n an array
- * \param r an array
- * \return log of the binomial coefficent
+  Log-binomial of two arrays
+  \ingroup gammafunc
+  \param n an array
+  \param r an array
+  \return log of the binomial coefficent
  */
 dvector log_comb(const dvector& n, const dvector& r)
 {
@@ -107,6 +112,7 @@ dvector log_comb(double n, const dvector& r)
 
 /**
  * Log-Gamma of an array
+    \ingroup gammafunc
  * \param v an array
  * \return log of the factorial
  */
@@ -124,6 +130,7 @@ dvector gammln(const dvector& v)
 
 /**
  * Log-factorial of an array
+  \ingroup gammafunc
  * \param r an array
  * \return log of the factorial
  */

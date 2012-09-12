@@ -52,9 +52,7 @@
   #endif
 #endif
 */
-#ifndef BOR_CONST
-#   define BOR_CONST const
-#endif
+#define BOR_CONST const
 
 #include "clist.h"
 #include <string.h>

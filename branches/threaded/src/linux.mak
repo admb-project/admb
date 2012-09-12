@@ -37,9 +37,9 @@ CXXFLAGS:=-Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 endif
 
 ifdef DEBUG
-CXXFLAGS:=-c -g $(CXXFLAGS)
+CXXFLAGS:=-c -g $(CXXFLAGS) -fpermissive
 else
-CXXFLAGS:=-c -O3 $(CXXFLAGS)
+CXXFLAGS:=-c -O3 $(CXXFLAGS) -fpermissive
 endif
 
 dist:

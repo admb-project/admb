@@ -126,7 +126,7 @@ void read_tilde_values_2(void)
   int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list; 
 
-  int total_bytes=sizeof(df1b2_header);
+  size_t total_bytes=sizeof(df1b2_header);
 #if defined(SAFE_ALL)
   char ids[]="YS";
   int slen=strlen(ids);

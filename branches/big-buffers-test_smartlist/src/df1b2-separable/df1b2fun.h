@@ -515,7 +515,7 @@ void print_derivatives(df1b2_header * px,const char * s,
     char * buffend;
     char * bptr;
     char * sbptr;
-    unsigned int bufsize;
+    size_t bufsize;
     adstring filename;
     int fp;
     void saveposition(void){sbptr=bptr;}
@@ -528,8 +528,8 @@ void print_derivatives(df1b2_header * px,const char * s,
     void set_noreadflag(int n){ noreadflag=n; }
     void restoreposition(void){bptr=sbptr;}
     void restoreposition(int offset){bptr=sbptr+offset;}
-    test_smartlist(unsigned int bufsize,const adstring& filename);
-    void allocate(unsigned int bufsize,const adstring& filename);
+    test_smartlist(const size_t bufsize,const adstring& filename);
+    void allocate(const size_t bufsize,const adstring& filename);
     test_smartlist(void);
     ~test_smartlist();
     void read_buffer(void);
@@ -538,17 +538,17 @@ void print_derivatives(df1b2_header * px,const char * s,
     void set_reverse(void){direction=-1;}
     void rewind(void);
     void initialize(void);
-    void operator -= (int);
-    void operator += (int);
+    void operator-=(const size_t);
+    void operator+=(const size_t);
     double report_usage(void) 
     { 
       return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
-    void write(void * p,int n);
-    void write(int n);
+    void write(void* p, const size_t n);
+    void write(const size_t n);
     void write_buffer(void);
-    void check_buffer_size(int);
-    void add_buffer_fringe(int n){buffend-=n;}
+    void check_buffer_size(const size_t nsize);
+    void add_buffer_fringe(const size_t n){buffend-=n;}
     int written(void){return written_flag;}
   };
 
@@ -697,10 +697,10 @@ void print_derivatives(df1b2_header * px,const char * s,
   };
 
 
-  void write(const test_smartlist &,void *,int nsize);
-  void read(const test_smartlist &,void *,int nsize);
-  void memcpy(const test_smartlist &,void *,int nsize);
-  void memcpy(void *,const test_smartlist &,int nsize);
+  void write(const test_smartlist &,void*, const size_t nsize);
+  void read(const test_smartlist &,void*, const size_t nsize);
+  void memcpy(const test_smartlist&, void*, const size_t nsize);
+  void memcpy(void*, const test_smartlist&, const size_t nsize);
 
   class df1b2function2c;
 
@@ -725,9 +725,9 @@ void print_derivatives(df1b2_header * px,const char * s,
     static int no_derivatives;
     static void set_no_derivatives(void) {no_derivatives=1;}
     static void set_yes_derivatives(void) {no_derivatives=0;}
-    df1b2_gradlist(unsigned int bufsize,unsigned int nbufsize,
-     unsigned int bufsize1, unsigned int nbufsize1,
-     unsigned int bufsize2, unsigned int nbufsize2,const adstring& filename);
+    df1b2_gradlist(const size_t bufsize, const size_t nbufsize,
+     const size_t bufsize1, const size_t nbufsize1,
+     const size_t bufsize2, const size_t nbufsize2, const adstring& filename);
     int mywrite_pass1(const df1b2variable * px, const df1b2variable * py,
       df1b2variable * pz, mydf1b2function2 * pf);
     int write_pass1_sum(double x, const df1b2variable * py,

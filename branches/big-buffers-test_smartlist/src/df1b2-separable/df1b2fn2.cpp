@@ -28,7 +28,7 @@ int max_num_init_df1b2variable=500;
   
 char AD_allocation_error_message[]="Error tryng to allocate memory for ";
 
-int get_f1b2buffer_size(const char * s);
+size_t get_f1b2buffer_size(const char * s);
 
 #if defined(CHECK_COUNT)
   int df1b2_gradlist::ncount_check=-1;
@@ -613,32 +613,32 @@ void df1b2_gradlist::reset(void)
  * Description not yet available.
  * \param
  */
-df1b2_gradlist::df1b2_gradlist(unsigned int _bs,unsigned int _nbs,
-  unsigned int _bs2,unsigned int _nbs2,
-  unsigned int _bs3,unsigned int _nbs3,
+df1b2_gradlist::df1b2_gradlist(const size_t _bs, const size_t _nbs,
+  const size_t _bs2, const size_t _nbs2,
+  const size_t _bs3, const size_t _nbs3,
   const adstring& _filename)  
 {
-  int bs=get_f1b2buffer_size("-l1");
+  size_t bs = get_f1b2buffer_size("-l1");
   if (!bs) bs=_bs;
   list.allocate(bs,_filename);
 
-  int nbs=get_f1b2buffer_size("-nl1");
+  size_t nbs=get_f1b2buffer_size("-nl1");
   if (!nbs) nbs=_nbs;
   nlist.allocate(nbs,"n"+_filename);
 
-  int bs2=get_f1b2buffer_size("-l2");
+  size_t bs2=get_f1b2buffer_size("-l2");
   if (!bs2) bs2=_bs2;
   list2.allocate(bs2,_filename+"2");
 
-  int nbs2=get_f1b2buffer_size("-nl2");
+  size_t nbs2=get_f1b2buffer_size("-nl2");
   if (!nbs2) nbs2=_nbs2;
   nlist2.allocate(nbs2,"n"+_filename+"2");
 
-  int bs3=get_f1b2buffer_size("-l3");
+  size_t bs3=get_f1b2buffer_size("-l3");
   if (!bs3) bs3=_bs3;
   list3.allocate(bs3,_filename+"3");
 
-  int nbs3=get_f1b2buffer_size("-nl3");
+  size_t nbs3=get_f1b2buffer_size("-nl3");
   if (!nbs3) nbs3=_nbs3;
   nlist3.allocate(nbs3,"n"+_filename+"3");
 
@@ -974,9 +974,9 @@ init_df1b2variable& init_df1b2vector::operator [] (int i)
  * Description not yet available.
  * \param
  */
-int get_f1b2buffer_size(const char * s)
+size_t get_f1b2buffer_size(const char * s)
 {
-  int n=0;
+  size_t n = 0;
   int on1=-1;
   int nopt=0;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,s,nopt))>-1)
@@ -987,7 +987,7 @@ int get_f1b2buffer_size(const char * s)
     }
     else
     {   
-      n=atoi(ad_comm::argv[on1+1]);
+      n=atoll(ad_comm::argv[on1+1]);
     }
   }
   return n;

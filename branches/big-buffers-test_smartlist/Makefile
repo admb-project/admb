@@ -1,3 +1,5 @@
+default: linux
+	
 mingw:
 	$(MAKE) --directory=src --file=mingw.mak
 
@@ -35,7 +37,7 @@ icc:
 icc-verify:
 	$(MAKE) --directory=src --file=linux.mak CC=icc CXX=icpc verify
 
-linux: linux-admb linux-contrib
+linux: linux-admb linux-contrib tests
 
 linux-admb:
 	$(MAKE) --directory=src --file=linux.mak

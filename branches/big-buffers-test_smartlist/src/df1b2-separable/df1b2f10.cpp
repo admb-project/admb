@@ -43,7 +43,7 @@ test_smartlist::test_smartlist(void)
  * Description not yet available.
  * \param
  */
-test_smartlist::test_smartlist(unsigned int _bufsize,const adstring& _filename) 
+test_smartlist::test_smartlist(const size_t _bufsize, const adstring& _filename) 
 {
   allocate(_bufsize,_filename);
 }
@@ -52,7 +52,7 @@ test_smartlist::test_smartlist(unsigned int _bufsize,const adstring& _filename)
  * Description not yet available.
  * \param
  */
-void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename) 
+void test_smartlist::allocate(const size_t _bufsize, const adstring& _filename) 
 {
   if (sizeof(char)>1)
   {
@@ -67,18 +67,17 @@ void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
   bufsize=_bufsize;
   filename=_filename;
   //AD_ALLOCATE(true_buffer,char,bufsize+2*sizeof(double),df1b2_gradlist) 
-  if ((true_buffer=new char[(bufsize+2)*sizeof(double) ])==0)
+  if ((true_buffer=new char[bufsize + sizeof(double) * 2])==0)
   {
     cerr << "Allocation error in df1b2_gradlist" << endl;
     ad_exit(1);
   }
   doubleptr=(double*)true_buffer;
-  true_buffend=true_buffer+bufsize+2*sizeof(double)-1;
+  true_buffend = true_buffer + bufsize + sizeof(double) * 2 - 1;
   buffer=true_buffer+sizeof(double);
   *(double*)(true_buffer)=5678.9;
-  *(double*)(true_buffer+bufsize+sizeof(double))=9876.5;
-  //buffend=true_buffer+bufsize-1+sizeof(double);
-  buffend=true_buffer+bufsize-1;
+  buffend = true_buffer + sizeof(double) + bufsize;
+  *(double*)(buffend)=9876.5;
   bptr=buffer;
   fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
                    O_BINARY, S_IREAD | S_IWRITE);
@@ -96,9 +95,9 @@ void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
  * Description not yet available.
  * \param
  */
-void test_smartlist::write(int n)
+void test_smartlist::write(const size_t n)
 {
-  int nw=::write(fp,buffer,n);
+  size_t nw = ::write(fp,buffer,n);
   if (nw<n)
   {
     cerr << "Error writing to file " << filename << endl;
@@ -113,13 +112,13 @@ void test_smartlist::write(int n)
 void test_smartlist::rewind(void)
 {
   bptr=buffer;
-  unsigned int nbytes=0;
   if (written_flag)
   {
     lseek(fp,0L,SEEK_SET);
+    size_t nbytes;
     // get the record size
-    ::read(fp,&nbytes,sizeof(int));
-    if (nbytes>bufsize)
+    ::read(fp, &nbytes, sizeof(size_t));
+    if (nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
        " the buffer it was created from " << endl 
@@ -131,7 +130,7 @@ void test_smartlist::rewind(void)
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record
-    lseek(fp,long(sizeof(off_t)),SEEK_CUR);
+    lseek(fp, sizeof(off_t),SEEK_CUR);
   }
 }
 
@@ -153,20 +152,21 @@ void test_smartlist::initialize(void)
  * Description not yet available.
  * \param
  */
-void test_smartlist::check_buffer_size(int nsize)
+void test_smartlist::check_buffer_size(const size_t nsize)
 {
-  if ( bptr+nsize-1 > buffend)
+  ptrdiff_t ptrdiff = buffend - bptr;
+  if (nsize > ptrdiff)
   {
-    if (df1b2variable::get_passnumber()==2 && !noreadflag )
+    if (df1b2variable::get_passnumber() == 2 && !noreadflag )
     {
       read_buffer();
     }
     else
     {
-      if ((unsigned int)nsize>bufsize)
+      if (nsize > bufsize)
       {
          cout << "Need to increase buffsize in list" << endl;
-         exit(1);
+         ad_exit(1);
       }
       write_buffer();
     }
@@ -211,7 +211,7 @@ void test_smartlist::save_end(void)
  */
 void test_smartlist::write_buffer(void)
 {
-  int nbytes=adptr_diff(bptr,buffer);
+  size_t nbytes=adptr_diff(bptr,buffer);
   if (nbytes)
   {
     written_flag=1;
@@ -219,10 +219,10 @@ void test_smartlist::write_buffer(void)
     off_t pos=lseek(fp,0L,SEEK_CUR);
   
     // write the size of the next record into the file
-    ::write(fp,&nbytes,sizeof(int));
+    ::write(fp,&nbytes,sizeof(size_t));
   
     // write the record into the file
-    int nw=::write(fp,buffer,nbytes);
+    size_t nw = ::write(fp, buffer, nbytes);
     //cout << "Number of bytes written " << nw << endl;
     //cout << "buffer value = "; 
     //for (int ii=0;ii<=25;ii++)
@@ -250,30 +250,26 @@ void test_smartlist::write_buffer(void)
  */
 void test_smartlist::read_buffer(void)
 {
-  off_t pos;
-  unsigned int nbytes;
   if (!written_flag)
   {
-    if (direction ==-1) 
-      eof_flag=-1;
-    else
-      eof_flag=1;
+    eof_flag = direction == -1 ? -1 : 1; 
   }
   else
   {
+    off_t pos;
     if (direction ==-1) // we are going backwards
     {
-      // offset of the begining of the record is at the end
-      // of the record
-      lseek(fp,long(-sizeof(off_t)),SEEK_CUR);
+      // offset of the begining of the record is at the end of the record
+      lseek(fp, -sizeof(off_t),SEEK_CUR);
       read(fp,&pos,sizeof(off_t));
       // back up to the beginning of the record (plus record size) 
       lseek(fp,pos,SEEK_SET);
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
+    size_t nbytes;
     // get the record size
-    ::read(fp,&nbytes,sizeof(int));
-    if (nbytes>bufsize)
+    ::read(fp,&nbytes,sizeof(size_t));
+    if (nbytes > bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
        " the buffer it was created from " << endl 
@@ -281,7 +277,7 @@ void test_smartlist::read_buffer(void)
         << nbytes << endl;
     }
     // now read the record into the buffer
-    unsigned int nr=::read(fp,buffer,nbytes);
+    size_t nr=::read(fp,buffer,nbytes);
     if (nr != nbytes)
     {
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
@@ -306,7 +302,7 @@ void test_smartlist::read_buffer(void)
     else  // we are going forward  
     {
       // skip over file postion entry in file
-      lseek(fp,long(sizeof(off_t)),SEEK_CUR);
+      lseek(fp, sizeof(off_t),SEEK_CUR);
     }
   }
 }
@@ -315,10 +311,11 @@ void test_smartlist::read_buffer(void)
  * Description not yet available.
  * \param
  */
-void memcpy(const test_smartlist & _list,void * p,int nsize)
+void memcpy(const test_smartlist& _list, void* p, const size_t nsize)
 {
   ADUNCONST(test_smartlist,list)
-  if ( list.bptr+nsize-1 > list.buffend)
+  ptrdiff_t ptrdiff = list.buffend - list.bptr;
+  if (nsize - 1 > ptrdiff)
   {
     cerr << " Trying to write outside list buffer" << endl;
     exit(1);
@@ -331,25 +328,19 @@ void memcpy(const test_smartlist & _list,void * p,int nsize)
  * Description not yet available.
  * \param
  */
-void memcpy(void * p,const test_smartlist & _list,int nsize)
+void memcpy(void* p, const test_smartlist& _list, const size_t nsize)
 {
-  ADUNCONST(test_smartlist,list)
-  if ( list.bptr+nsize-1 > list.buffend)
-  {
-    cerr << " Trying to write outside list buffer" << endl;
-    exit(1);
-  }
-  memcpy(p,list.bptr,nsize);
-  list.bptr+=nsize;
+  memcpy(_list, p, nsize);
 }
 
 /**
  * Description not yet available.
  * \param
  */
-void test_smartlist::operator -= (int n) 
+void test_smartlist::operator-=(const size_t n) 
 {
-  if (bptr-n<buffer)
+  ptrdiff_t ptrdiff = bptr - buffer;
+  if (ptrdiff < n)
   {
     if (bptr != buffer)
     {
@@ -358,9 +349,9 @@ void test_smartlist::operator -= (int n)
     }
     else
     {
-      // get previous record from the file
-      read_buffer();
-      bptr=recend-n+1;
+       // get previous record from the file
+       read_buffer();
+       bptr=recend-n+1;
     }
   }
   else
@@ -373,9 +364,11 @@ void test_smartlist::operator -= (int n)
  * Description not yet available.
  * \param
  */
-void test_smartlist::operator += (int nsize) 
+void test_smartlist::operator+=(const size_t nsize) 
 {
-  if ( bptr+nsize-1 > buffend)
+  //ASSUME: buffend >= bptr
+  ptrdiff_t ptrdiff = buffend - bptr;
+  if (nsize > ptrdiff)
   {
     if (df1b2variable::get_passnumber()==2 && !noreadflag )
     {
@@ -383,7 +376,7 @@ void test_smartlist::operator += (int nsize)
     }
     else
     {
-      if ((unsigned int)nsize>bufsize)
+      if (nsize > bufsize)
       {
          cout << "Need to increase buffsize in list" << endl;
          exit(1);

@@ -10,7 +10,7 @@ NOW=$(shell date)
 
 ifndef LIBPATH
 CCVERSION=gcc411
-OSVERSION=fedorar8
+OSVERSION=fedora8
 LIBPATH=../build/${CCVERSION}-${OSVERSION}
 endif
 

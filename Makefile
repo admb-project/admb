@@ -1,3 +1,5 @@
+.PHONY: tests
+
 mingw:
 	$(MAKE) --directory=src --file=mingw.mak
 
@@ -57,7 +59,7 @@ it2:
 
 
 tests:
-	ADMB_HOME=$(PWD)/build/dists/admb_gcc411_fedora8 PATH=$(PWD)/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=tests
+	ADMB_HOME=$(PWD)/build/dists/admb_gcc411_fedora8 PATH=$(PWD)/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=tests main
 
 clean:
 	rm -rvf build

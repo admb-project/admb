@@ -57,15 +57,9 @@ it2:
 
 
 tests:
-	ADMB_HOME=$(PWD)/build/dists/admb_gcc411_fedora8 PATH=$(PWD)/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=test
-
-admb-trunk-readonly:
-	ADMB_HOME=../../../$@/build/dists/admb_gcc411_fedora8 PATH=../../../$@/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=test
-
-admb-ar794:
-	ADMB_HOME=../../../$@/build/dists/admb_gcc411_fedora8 PATH=../../../$@/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=test
+	ADMB_HOME=$(PWD)/build/dists/admb_gcc411_fedora8 PATH=$(PWD)/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=tests
 
 clean:
 	rm -rvf build
 	$(MAKE) --directory=contrib clean
-	$(MAKE) --directory=test clean
+	$(MAKE) --directory=tests clean

@@ -2,6 +2,8 @@
 
 all: geolocation
 
+main: SS3 geolocation
+
 geolocation:
 	OPTIONS=-s $(MAKE) --directory=$@
 
@@ -96,6 +98,7 @@ beta3:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 clean:
+	$(MAKE) --directory=geolocation clean
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=adstring_array clean
 	$(MAKE) --directory=priors clean
@@ -123,3 +126,4 @@ clean:
 	$(MAKE) --directory=beta2 clean
 	$(MAKE) --directory=beta3 clean
 	$(MAKE) --directory=beta_deviate clean
+	$(MAKE) --directory=SS3 clean

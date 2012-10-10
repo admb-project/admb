@@ -13,6 +13,15 @@ run:
 	@printf "Finished run.\n"
 
 clean:
+	@rm -vf ss3.b01
+	@rm -vf ss3.bar
+	@rm -vf ss3.cor
+	@rm -vf ss3.eva
+	@rm -vf ss3.log
+	@rm -vf ss3.p01
+	@rm -vf ss3.r01
+	@rm -vf ss3.rep
+	@rm -vf ss3.std
 	@rm -vf ss3.par
 	@rm -vf wtatage.ss_new
 	@rm -vf ParmTrace.SSO

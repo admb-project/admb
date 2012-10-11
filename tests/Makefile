@@ -14,7 +14,7 @@ adstring_array:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 priors:
-	CXXFLAGS=${CXXFLAGS} OPTIONS=-s $(MAKE) --directory=$@
+	CXXFLAGS=$(CXXFLAGS) OPTIONS=-s $(MAKE) --directory=$@
 
 atan2:
 	OPTIONS=-s $(MAKE) --directory=$@

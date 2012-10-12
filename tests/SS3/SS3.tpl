@@ -1408,7 +1408,11 @@ DATA_SECTION
     mkt_ms(f,nyr_ms(f))=sizeagedata(i,5);
     ageerr_type_ms(f,nyr_ms(f))=sizeagedata(i,6);
     use_ms(f,nyr_ms(f))=sizeagedata(i,7);
-    if(y>retro_yr) use_ms(f,nyr_ms(f)) = -fabs(use_ms(f,nyr_ms(f)));
+    if(y>retro_yr) 
+    {
+      const double value = use_ms(f,nyr_ms(f));
+      use_ms(f,nyr_ms(f)) = -fabs(value);
+    }
     for(b=1;b<=n_abins2;b++)
      {obs_ms(f,nyr_ms(f),b)=sizeagedata(i,7+b);}
     for(b=1;b<=n_abins2;b++)

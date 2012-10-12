@@ -23,7 +23,7 @@ testminmax:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 SS3:
-	OPTIONS=-s $(MAKE) --directory=$@
+	$(MAKE) --directory=$@
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@

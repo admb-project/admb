@@ -13,6 +13,16 @@ run:
 	@printf "Finished run.\n"
 
 clean:
+ifndef WINDIR
+	@rm -vf ss3.b01
+	@rm -vf ss3.bar
+	@rm -vf ss3.cor
+	@rm -vf ss3.eva
+	@rm -vf ss3.log
+	@rm -vf ss3.p01
+	@rm -vf ss3.r01
+	@rm -vf ss3.rep
+	@rm -vf ss3.std
 	@rm -vf ss3.par
 	@rm -vf wtatage.ss_new
 	@rm -vf ParmTrace.SSO
@@ -72,12 +82,4 @@ clean:
 	@rm -vf f1b2list1 gradfil1.tmp nf1b2list12
 	@rm -vf f1b2list12 gradfil2.tmp nf1b2list13
 	@rm -vf cmpdiff.tmp f1b2list1 nf1b2list1 varssave.tmp
-	@rm -vf ss3.log
-	@rm -vf ss3.b01
-	@rm -vf ss3.cor
-	@rm -vf ss3.rep
-	@rm -vf ss3.std
-	@rm -vf ss3.p01
-	@rm -vf ss3.r01
-	@rm -vf ss3.bar
-	@rm -vf ss3.eva
+endif

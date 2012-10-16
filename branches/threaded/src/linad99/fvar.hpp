@@ -113,6 +113,7 @@ Macro definitions.
 */
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
+#import <pthread.h>
 #define __ADMBTHREAD__ __thread
 
 #define my_off_t long int

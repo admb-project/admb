@@ -1408,7 +1408,11 @@ DATA_SECTION
     mkt_ms(f,nyr_ms(f))=sizeagedata(i,5);
     ageerr_type_ms(f,nyr_ms(f))=sizeagedata(i,6);
     use_ms(f,nyr_ms(f))=sizeagedata(i,7);
-    if(y>retro_yr) use_ms(f,nyr_ms(f)) = -fabs(use_ms(f,nyr_ms(f)));
+    if(y>retro_yr) 
+    {
+      const double value = use_ms(f,nyr_ms(f));
+      use_ms(f,nyr_ms(f)) = -fabs(value);
+    }
     for(b=1;b<=n_abins2;b++)
      {obs_ms(f,nyr_ms(f),b)=sizeagedata(i,7+b);}
     for(b=1;b<=n_abins2;b++)
@@ -5822,8 +5826,8 @@ RUNTIME_SECTION
 //  ProgLabel_5100_#  TOP_OF_MAIN_SECTION
 TOP_OF_MAIN_SECTION
   arrmblsize = 1000000;
-  gradient_structure::set_GRADSTACK_BUFFER_SIZE(1000);
-  gradient_structure::set_CMPDIF_BUFFER_SIZE(1000);
+  gradient_structure::set_GRADSTACK_BUFFER_SIZE(10000);
+  gradient_structure::set_CMPDIF_BUFFER_SIZE(10000);
   gradient_structure::set_MAX_NVAR_OFFSET(5000);
   gradient_structure::set_NUM_DEPENDENT_VARIABLES(10000);
 //  arrmblsize = 50000000;

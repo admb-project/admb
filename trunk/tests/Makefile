@@ -2,7 +2,7 @@
 
 all: geolocation
 
-main: SS3 geolocation
+main: geolocation
 
 geolocation:
 	OPTIONS=-s $(MAKE) --directory=$@

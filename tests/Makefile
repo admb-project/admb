@@ -5,7 +5,7 @@ all: geolocation
 main: geolocation
 
 geolocation:
-	OPTIONS=-s $(MAKE) --directory=$@
+	$(MAKE) --directory=$@
 
 expm:
 	OPTIONS=-s $(MAKE) --directory=$@

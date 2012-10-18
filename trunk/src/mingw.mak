@@ -62,3 +62,4 @@ clean:
 	if exist nh99\lex.yy.c del nh99\lex.yy.c
 	if exist nh99\tpl2cpp.c del nh99\tpl2cpp.c
 	if exist nh99\tpl2cpp.exe del nh99\tpl2cpp.exe
+	if exist tests\geolocation\geolocation-read-only rd /S /Q tests\geolocation\geolocation-read-only

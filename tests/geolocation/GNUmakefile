@@ -3,7 +3,7 @@
 all: geolocation-read-only
 	make --always-make --directory=geolocation-read-only
 
-geolocation-read-only: clean
+geolocation-read-only:
 	svn export http://geolocation.googlecode.com/svn/trunk/ $@
 
 clean:

@@ -7,4 +7,4 @@ geolocation-read-only: clean
 	svn export http://geolocation.googlecode.com/svn/trunk/ $@
 
 clean:
-	@rm -rvf geolocation-read-only
+	IF EXIST geolocation-read-only rd /S /Q geolocation-read-only 

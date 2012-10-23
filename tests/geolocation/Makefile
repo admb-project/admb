@@ -1,6 +1,8 @@
 .PHONY: clean geolocation-read-only
 
 all: geolocation-read-only
+
+all2:
 	make --always-make --directory=geolocation-read-only
 
 geolocation-read-only: clean

@@ -284,7 +284,6 @@ void test_smartlist::read_buffer(void)
     unsigned int nr=::read(fp,buffer,nbytes);
     if (nr != nbytes)
     {
-		cerr << " df1b2f10 " << ':' << 287<< endl;
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
       exit(1);
     }

@@ -320,7 +320,6 @@ void fixed_smartlist2::read_buffer(void)
     unsigned int nr=::read(fp,buffer,nbytes);
     if (nr != nbytes)
     {
-		cerr << "df1b2f14 " << ':' << 323 << endl;
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
       exit(1);
     }

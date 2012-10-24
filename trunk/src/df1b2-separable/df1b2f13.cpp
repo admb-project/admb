@@ -71,6 +71,7 @@ void fixed_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
                    O_BINARY, S_IREAD | S_IWRITE);
   if (fp == -1)
   {
+	cerr << "df1b2f14.cpp " << ':' << 74<< endl;
     cerr << "Error trying to open file " << filename 
          << " in class fixed_smartlist " << endl;
     ad_exit(1);

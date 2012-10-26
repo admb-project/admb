@@ -5,7 +5,7 @@ all: geolocation
 main: geolocation
 
 geolocation:
-	$(MAKE) --directory=$@ --file=Makefile
+	ADMB_HOME=$(ADMB_HOME) PATH="/c/MinGW/bin:/c/MinGW/msys/1.0/bin:$(PATH)" $(MAKE) --directory=$@ --file=Makefile
 
 expm:
 	OPTIONS=-s $(MAKE) --directory=$@

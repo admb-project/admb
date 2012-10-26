@@ -59,7 +59,7 @@ dmg:
 	@dmgtask@
 
 tests:
-	export ADMB_HOME="${PWD}/build/@target@"; export PATH="${PWD}/build/@target@/bin":"$(PATH)"; CXXFLAGS="@cxxflags@" LDFLAGS="@cxxflags@" $(MAKE) --directory=tests main
+	export ADMB_HOME="${PWD}/build/@target@"; export PATH="${PWD}/build/@target@/bin:${PATH}"; CXXFLAGS="@cxxflags@" LDFLAGS="@cxxflags@" $(MAKE) --directory=tests main
 
 contrib:
 	@arvar@ CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib

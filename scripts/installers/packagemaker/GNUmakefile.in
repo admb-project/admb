@@ -12,7 +12,7 @@ app:
 	rm -rvf build/dmg/@target@
 	mkdir -p build/dmg/@target@/srcfolder
 
-	cp -vf docs/install/readme-macos.txt  build/dmg/@target@/srcfolder
+	cp -vf docs/install/readme-macos.txt  build/dmg/@target@/srcfolder/readme.txt
 	cp -Rvf scripts/installers/packagemaker/ADMB-Terminal.app build/dmg/@target@/srcfolder
 	mkdir -p build/dmg/@target@/srcfolder/ADMB-Terminal.app/Contents/admb
 	cp -Rvf build/@target@/* build/dmg/@target@/srcfolder/ADMB-Terminal.app/Contents/admb
@@ -35,7 +35,7 @@ pkg:
 	cp -vf build/dmg/@target@/installer/$(DISTRIBUTION_NAME)/LICENSE.txt build/dmg/@target@/Resources/License.txt
 	cp -vf scripts/installers/packagemaker/Resources/background.jpg  build/dmg/@target@/Resources/
 	mkdir -p build/dmg/@target@/package
-	cp -vf docs/install/readme-macos.txt  build/dmg/@target@/package
+	cp -vf docs/install/readme-macos.txt  build/dmg/@target@/package/readme.txt
 	$(CC) --verbose --title "$(DISTRIBUTION_NAME)" --root build/dmg/@target@/installer --id www.admb-project.org --resources build/dmg/@target@/Resources --out build/dmg/@target@/package/@target@.pkg
 
 dmg:

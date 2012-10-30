@@ -4,7 +4,7 @@ all: geolocation-read-only
 	ADMB_HOME=$(ADMB_HOME) PATH=$(ADMB_HOME)/bin:$(PATH) make --always-make --directory=geolocation-read-only
 
 geolocation-read-only:
-	[ ! -d $@ ] && svn export http://geolocation.googlecode.com/svn/trunk/ $@
+	test  -d "$@" || svn export http://geolocation.googlecode.com/svn/trunk/ $@
 
 clean:
 	rm -rvf geolocation-read-only

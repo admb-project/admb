@@ -1,7 +1,7 @@
 .PHONY: clean geolocation-read-only
 
 all: geolocation-read-only
-	ADMB_HOME=$(ADMB_HOME) PATH=$(ADMB_HOME)/bin:$(PATH) make --always-make --directory=geolocation-read-only
+	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" make --always-make --directory=geolocation-read-only
 
 geolocation-read-only:
 	test  -d "$@" || svn export http://geolocation.googlecode.com/svn/trunk/ $@

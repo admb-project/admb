@@ -55,7 +55,7 @@ contrib:
 	copy ..\contrib\ad2csv\ad2csv.exe $(DISK)\dist\bin
 
 tests:
-	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd ..\tests& nmake main"
+	pushd ..\tests & $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DISK)\dist" & popd
 
 verify:
 	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake all"

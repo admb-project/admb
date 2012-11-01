@@ -3,4 +3,4 @@ all:
 	pushd geolocation & $(MAKE) & popd
 
 clean:
-	if exist geolocation-read-only rd /S /Q geolocation-read-only
+	if exist geolocation rd /S /Q geolocation

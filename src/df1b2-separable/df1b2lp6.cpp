@@ -30,6 +30,7 @@ int use_dd_nr=0;
 int admb_ssflag=0;
 dvector solve(const dmatrix & st,const dmatrix & Hess,
   const dvector& grad);
+dvector return_choleski_decomp_solve(dcompressed_triplet & st,dvector& eps);
 
 #if defined(USE_DD_STUFF)
 #  if defined(__MSVC32__)
@@ -94,8 +95,19 @@ void laplace_approximation_calculator::
       cout << "Newton raphson " << ii << "  ";
     if (quadratic_prior::get_num_quadratic_prior()>0)
     {
-      quadratic_prior::get_cHessian_contribution(Hess,xsize);
-      quadratic_prior::get_cgradient_contribution(grad,xsize);
+      if (sparse_hessian_flag==0)
+      {
+        quadratic_prior::get_cHessian_contribution(Hess,xsize);
+        quadratic_prior::get_cgradient_contribution(grad,xsize);
+      }
+      else
+      {
+        quadratic_prior::get_cHessian_contribution(sparse_triplet2,xsize,
+          *sparse_iterator,sparse_count);
+
+        quadratic_prior::get_cgradient_contribution(grad,xsize);
+
+      }
     }
 
     int ierr=0;
@@ -135,11 +147,12 @@ void laplace_approximation_calculator::
             ad_exit(1);
 #endif
           }
+
           maxg=fabs(evaluate_function(uhat,pfmin));
-          if (f_from_1< pfmin->lapprox->fmc1.fbest)
+          if (f_from_1< fmc1.fbest)
           {
-            uhat=banded_calculations_trust_region_approach(uhat,pfmin);
-            maxg=fabs(evaluate_function(uhat,pfmin));
+            //uhat=banded_calculations_trust_region_approach(uhat,pfmin);
+            //maxg=fabs(evaluate_function(uhat,pfmin));
           }
         }
       }
@@ -207,7 +220,13 @@ void laplace_approximation_calculator::
         if (sparse_hessian_flag)
         {
           //step=-solve(*sparse_triplet,Hess,grad,*sparse_symbolic);
+          //dmatrix S=make_sdmatrix(*sparse_triplet2);
+          int ierrx=22;
+          //dvector temp1= choleski_solve_error(S,grad,ierrx);
+          //dvector temp2=return_choleski_decomp_solve(*sparse_triplet2,grad);
           dvector temp=solve(*sparse_triplet2,grad,*sparse_symbolic2,ierr);
+          //cout << norm2(temp2-temp) << endl;
+          //cout << norm2(temp-temp1) << endl;
           if (ierr)
           {
             step=-temp;
@@ -313,14 +332,13 @@ double laplace_approximation_calculator::
     {
       uhat=get_uhat_quasi_newton_qd(x,pfmin);
     }
+    return fmc1.fbest;
   }
   else
   {
-    uhat=get_uhat_lm_newton(x,pfmin);
-    //uhat=get_uhat_lm_newton2(x,pfmin);
-    //maxg=objective_function_value::gmax;
+    uhat=get_uhat_lm_newton2(x,pfmin);
+    return fmc2.fbest;
   }
-  return fmc1.fbest;
 }
 
 /**
@@ -513,7 +531,7 @@ dvector laplace_approximation_calculator::banded_calculations
         f=1.e+30;
       }
 
-      // set flag for thrid erivatvies and call function again because
+      // set flag for third derivatives and call function again because
       // stack is wiped out
       
     
@@ -548,27 +566,30 @@ dvector laplace_approximation_calculator::banded_calculations
       pfmin->user_function();
     
       // *** Hessian calculated just above did not have quadratic prior
-      // in it so can save this part for quadratci prioer adjoint calculations
+      // in it so can save this part for quadratic prior adjoint calculations
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {
-        if (pHess_non_quadprior_part)
+        if (sparse_hessian_flag==0)
         {
-          if (pHess_non_quadprior_part->indexmax() != Hess.indexmax())
+          if (pHess_non_quadprior_part)
           {
-            delete pHess_non_quadprior_part;
-            pHess_non_quadprior_part=0;
+            if (pHess_non_quadprior_part->indexmax() != Hess.indexmax())
+            {
+              delete pHess_non_quadprior_part;
+              pHess_non_quadprior_part=0;
+            }
           }
-        }
-        if (!pHess_non_quadprior_part)
-        {
-          pHess_non_quadprior_part=new dmatrix(1,usize,1,usize);
           if (!pHess_non_quadprior_part)
           {
-            cerr << "Error allocating memory for Hesssian part" << endl;
-            ad_exit(1);
+            pHess_non_quadprior_part=new dmatrix(1,usize,1,usize);
+            if (!pHess_non_quadprior_part)
+            {
+              cerr << "Error allocating memory for Hesssian part" << endl;
+              ad_exit(1);
+            }
           }
+          (*pHess_non_quadprior_part)=Hess;
         }
-        (*pHess_non_quadprior_part)=Hess;
       } 
            
       block_diagonal_flag=0;
@@ -585,8 +606,9 @@ dvector laplace_approximation_calculator::banded_calculations
       /*int check=*/initial_params::stddev_scale(scale1,x);
       //for (i=1;i<=xadjoint.indexmax();i++)
       //  xadjoint(i)*=scale1(i);
-      laplace_approximation_calculator::where_are_we_flag=0; 
   
+      laplace_approximation_calculator::where_are_we_flag=0; 
+
       if (df1b2quadratic_prior::get_num_quadratic_prior()>0)
       {  
        // !!!! need to fix this!!!!!!!!!!!!!!!!!!!!!!!
@@ -594,11 +616,27 @@ dvector laplace_approximation_calculator::banded_calculations
         quadratic_prior::in_qp_calculations=1;
         funnel_init_var::lapprox=this;
         df1b2_gradlist::set_no_derivatives(); 
+        //pfmin->inner_opt_flag=1;
+        quadratic_prior::calc_matrix_flag=1;
+        quadratic_prior::matrix_mult_flag=1;
         df1b2quadratic_prior::get_Lxu_contribution(Dux);
+        //pfmin->inner_opt_flag=0;
+        quadratic_prior::matrix_mult_flag=0;
+        quadratic_prior::calc_matrix_flag=0;
         quadratic_prior::in_qp_calculations=0;
         funnel_init_var::lapprox=0;
         laplace_approximation_calculator::where_are_we_flag=0; 
       }   
+     /*
+      // we don;t seem to need this ?????
+      if (quadratic_prior::get_num_quadratic_prior()>0)
+      {
+        quadratic_prior::matrix_mult_flag=1;
+        dvector tmp=evaluate_quadprior(x,usize,pfmin);
+        quadratic_prior::matrix_mult_flag=0;
+        local_dtemp+=tmp;
+      }
+      */
       if (initial_df1b2params::separable_flag)
       {
         dvector scale(1,nvar);   // need to get scale from somewhere
@@ -612,11 +650,6 @@ dvector laplace_approximation_calculator::banded_calculations
       }
       //cout << trans(Dux)(1) << endl;
       //cout << trans(Dux)(3) << endl;  
-      if (quadratic_prior::get_num_quadratic_prior()>0)
-      {
-        dvector tmp=evaluate_function_with_quadprior(x,usize,pfmin);
-        local_dtemp+=tmp;
-      }
           
       for (i=1;i<=xsize;i++)
       {
@@ -625,7 +658,14 @@ dvector laplace_approximation_calculator::banded_calculations
       if (df1b2quadratic_prior::get_num_quadratic_prior()>0)
       {
        // !!!! need to fix this!!!!!!!!!!!!!!!!!!!!!!!
-        quadratic_prior::get_cHessian_contribution_from_vHessian(Hess,xsize);
+        if (sparse_hessian_flag==0)
+          quadratic_prior::get_cHessian_contribution_from_vHessian(Hess,xsize);
+        else
+        {
+          int sc=pfmin->lapprox->sparse_cutoff;
+          quadratic_prior::get_cHessian_contribution_from_vHessian
+            (sparse_triplet2,xsize,*sparse_iterator,sc);
+        }
       }
    
       if (hesstype==3)
@@ -1103,7 +1143,7 @@ dvector laplace_approximation_calculator::
   //do
   dvector values(1,300);
   double oldfbest=pmin->lapprox->fmc1.fbest; 
-  double newfbest;
+  double newfbest=1.e+150;
   int have_value=0;
   //for (int jj=1;jj<=300;jj++)
   int jj=1;

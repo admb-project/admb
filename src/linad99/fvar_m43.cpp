@@ -11,8 +11,8 @@
 #include "fvar.hpp"
 
 /**
-  The VEC operator concatenates the columns of matrix M into a column vector.
-  \param matrix M
+ * Description not yet available.
+ * \param
  */
 dvar_vector VEC(const dvar_matrix& _m)
   {
@@ -38,11 +38,8 @@ dvar_vector VEC(const dvar_matrix& _m)
   }
 
 /**
-  The MAT operator is the inverse of the VEC operator. 
-It takes the elements of vector v and sequentially fills in the columns of an n by m matrix.
-  \param vector v
-  \param integer n, the number of rows in the resulting matrix
-  \param integer m, the umber of columns in the resulting matrix
+ * Description not yet available.
+ * \param
  */
 dvar_matrix MAT(const dvar_vector& v, int n, int m)
   {

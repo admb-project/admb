@@ -22,7 +22,10 @@ $(DISKDIR)/lib/$(LIBNAME): $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3) $(LIBPATH)/hs_sparse.
 	$(AR) -rs $@ $(LIBPATH)/hs_sparse.obj
 
 $(LIBPATH)/hs_sparse.obj: ../sparse/hs_sparse.cpp
-	$(CXX) $(CXXFLAGS) -o $@ $<
+	$(CXX) $(CXXFLAGS) -o $@ $^
+
+$(LIBPATH)/cmpdif8.obj: cmpdif8.cpp
+	$(CXX) -fpermissive $(CXXFLAGS) -o $@ $^
 
 %.obj: %.cpp
 	$(CXX) $(CXXFLAGS) -o $(LIBPATH)/$(@F) $<

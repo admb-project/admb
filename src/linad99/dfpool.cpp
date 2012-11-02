@@ -21,14 +21,19 @@
 
   void my_do_nothing(void * t){}
 //ofstream xofs("allocation");
-vector_shape_pool * vector_shape::xpool = 
+__ADMBTHREAD__  vector_shape_pool * vector_shape::xpool = 0;
+__ADMBTHREAD__  vector_shape_pool * vector_shapex::xpool =0; 
+__ADMBTHREAD__  vector_shape_pool  * arr_link::xpool = 0;
+/*
+__ADMBTHREAD__  vector_shape_pool * vector_shape::xpool = 
     new vector_shape_pool(sizeof(vector_shape));
 
-vector_shape_pool * vector_shapex::xpool = 
+__ADMBTHREAD__  vector_shape_pool * vector_shapex::xpool = 
     new vector_shape_pool(sizeof(vector_shapex));
 
-vector_shape_pool  * arr_link::xpool = 
+__ADMBTHREAD__  vector_shape_pool  * arr_link::xpool = 
     new vector_shape_pool (sizeof(arr_link));
+*/
 
 vector_shape_pool::vector_shape_pool(void) : dfpool(sizeof(vector_shape))
 { ;}
@@ -69,7 +74,8 @@ void * arr_link::operator new(size_t n)
 {  
   if (xpool==0) 
   {
-    xpool=new vector_shape_pool(sizeof(vector_shape));
+    xpool=new vector_shape_pool(sizeof(arr_link));
+    //xpool=new vector_shape_pool(sizeof(vector_shape));
   }
 # if defined(SAFE_ALL)
   if (n != xpool->size)

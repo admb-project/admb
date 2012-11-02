@@ -1696,6 +1696,8 @@ typedef void (model_parameters::*PMFVIV4) (const dvar_vector&,int n,
  * Description not yet available.
  * \param
  */
+ class sparse_qp_info;
+
 class function_minimizer
 {
 public:
@@ -1709,12 +1711,14 @@ public:
 #if defined(USE_LAPLACE)
   static int inner_opt_flag;
   static int inner_opt(void);
+  sparse_qp_info * spqp;
   laplace_approximation_calculator * lapprox;
   dvector * multinomial_weights;
   void set_multinomial_weights(dvector&d);
   //init_df1b2vector* py;
   virtual void AD_uf_inner(void);
   virtual void AD_uf_outer(void);
+  virtual void get_sparse_stuff(void * triplet_information,int jobno){;}
   virtual void user_function(void);
   void pre_user_function(void);
   //void df1b2_pre_user_function(void);
@@ -2817,4 +2821,12 @@ int withinbound(int lb,int n,int ub);
 #include "param_init_bounded_number_matrix.h"
 
 extern int to_make_sure_admodel_cpp_gets_linked;
+class sparse_qp_info
+{
+public:
+  int n;
+  imatrix compm;
+  sparse_qp_info(void) {n=10;}
+  void make_compressed_triplet_info(imatrix & im);
+};
 #endif

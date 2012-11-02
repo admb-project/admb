@@ -1,3 +1,4 @@
+
 /*
  * $Id$
  *
@@ -15,8 +16,12 @@ using std::istringstream;
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
+#include <fvar.hpp>
+
+#define PI 3.14159265358979323846
+
         int fcount =0;
-static int no_stuff=0;
+ int no_stuff=0;
 static int write_sparse_flag=0;
     static void trapper(void)
     {
@@ -81,47 +86,37 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
  
   fmc1.dfn=1.e-2;
   dvariable pen=0.0;
-  //cout << "starting  norm(u) = " << norm(u) << endl;
+  if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
+  {
+    quadratic_prior::calc_matrix_flag=1;
+    quadratic_prior::matrix_mult_flag=0;
+    quadratic_prior::get_M_calculations();
+  }
   while (fmc1.ireturn>=0)
   {
-   /*
-    double nu=norm(value(u));
-    if (nu>400)
-    {
-      cout << "U norm(u) = " << nu  << endl;
-    }
-    cout << "V norm(u) = " << nu
-         << " f = " << f  << endl;
-    */
     fmc1.fmin(f,u,g);
-    //cout << "W norm(u) = " << norm(value(u)) << endl;
+    
     if (fmc1.ireturn>0)
     {
       dvariable vf=0.0;
       pen=initial_params::reset(dvar_vector(u));
       *objective_function_value::pobjfun=0.0;
       pfmin->AD_uf_inner();
+      if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
+      {
+        quadratic_prior::calc_matrix_flag=0;
+	quadratic_prior::matrix_mult_flag=1;
+        quadratic_prior::get_M_calculations();
+	quadratic_prior::matrix_mult_flag=0;
+      }
       if (saddlepointflag)
       {
         *objective_function_value::pobjfun*=-1.0;
       }
-      if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
-      {
-        quadratic_prior::get_M_calculations();
-      }
       vf+=*objective_function_value::pobjfun;
      
-     /*  this is now done in the operator = function
-      if (quadratic_prior::get_num_quadratic_prior()>0)
-      {
-        vf+= quadratic_prior::get_quadratic_priors();
-      }
-      */
-      
-
       objective_function_value::fun_without_pen=value(vf);
       
-      //cout << " pen = " << pen << endl;
       if (noboundepen_flag==0)
       {
         vf+=pen;
@@ -133,9 +128,6 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
         ub=u;
       }
       gradcalc(usize,g);
-      //cout << " f = " << setprecision(17) << f << " " << norm(g) 
-       // << " " << norm(u) << endl;
-     
     }
     u=ub;
   }
@@ -165,7 +157,14 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
         pfmin->AD_uf_inner();
         if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
         {
+	  quadratic_prior::calc_matrix_flag=0;
+	  quadratic_prior::matrix_mult_flag=1;
           quadratic_prior::get_M_calculations();
+	  quadratic_prior::matrix_mult_flag=0;
+        }
+        if (saddlepointflag)
+        {
+          *objective_function_value::pobjfun*=-1.0;
         }
         vf+=*objective_function_value::pobjfun;
         objective_function_value::fun_without_pen=value(vf);
@@ -187,14 +186,17 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
   cout << "  Inner f = " << fb << endl;
   fmc1.ireturn=0;
   fmc1.fbest=fb;
-  gradient_structure::set_NO_DERIVATIVES();
+  //gradient_structure::set_NO_DERIVATIVES();
   *objective_function_value::pobjfun=0.0;
   pfmin->AD_uf_inner();
   if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
   {
+    quadratic_prior::calc_matrix_flag=0;
+    quadratic_prior::matrix_mult_flag=1;
     quadratic_prior::get_M_calculations();
+    quadratic_prior::matrix_mult_flag=0;
   }
-  gradient_structure::set_YES_DERIVATIVES();
+  //gradient_structure::set_YES_DERIVATIVES();
   pfmin->inner_opt_flag=0;
   return u;
 }
@@ -337,7 +339,6 @@ laplace_approximation_calculator::laplace_approximation_calculator
   vsparse_triplet_adjoint(0),
   sparse_symbolic(0),
   sparse_symbolic2(0),
-  fmc1(usize,1),
   fmc(_xsize),
   xadjoint(1,_xsize),
   check_local_uadjoint(1,_usize),
@@ -346,8 +347,10 @@ laplace_approximation_calculator::laplace_approximation_calculator
   check_local_xadjoint2(1,_xsize),
   uadjoint(1,_usize),
   uhat(1,_usize),
-  ubest(1,_usize)
+  ubest(1,_usize),
+  no_re_ders_flag(0)
 {
+  cout << &uadjoint << endl;
   ubest.initialize();
   nested_shape.allocate(100,100,10);
   nested_shape.initialize();
@@ -392,6 +395,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
   bw=0;
   bHess=0;
   grad_x_u=0;
+  sparse_cutoff=0;
   grad_x=0;
   int ndi=20000;
   int nopt=0;
@@ -428,11 +432,18 @@ laplace_approximation_calculator::laplace_approximation_calculator
   }
   inner_lmnflag=0;
   inner_lmnsteps=10;
+
+  if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-noreders",nopt))>-1)
+  {
+    no_re_ders_flag=1;
+  }
+
+
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-noinit",nopt))>-1)
   {
     init_switch=0;
   }
-  if ( (inner_lmnflag=option_match(ad_comm::argc,ad_comm::argv,"-ilmn",nopt))
+  if ( (inner_lmnflag=option_match(ad_comm::argc,ad_comm::argv,"-ilmn2",nopt))
     >-1)
   {
     if (!nopt)
@@ -451,6 +462,29 @@ laplace_approximation_calculator::laplace_approximation_calculator
         inner_lmnsteps=jj;
       }
     }
+    inner_lmnflag=2;
+  }
+  else if 
+   ( (inner_lmnflag=option_match(ad_comm::argc,ad_comm::argv,"-ilmn",nopt))
+    >-1)
+  {
+    if (!nopt)
+    {
+      cerr << "Usage -ilmn option needs integer  -- set to default 10" << endl;
+    }
+    else
+    {   
+      int jj=atoi(ad_comm::argv[inner_lmnflag+1]);
+      if (jj<=0)
+      {
+        cerr << "Usage -ilmn option needs positive integer  -- set to defalt 10" << endl;
+      }
+      else
+      {
+        inner_lmnsteps=jj;
+      }
+    }
+    inner_lmnflag=1;
   }
   else
   {
@@ -514,6 +548,15 @@ laplace_approximation_calculator::laplace_approximation_calculator
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ddnr",nopt))>-1)
   {
     dd_nr_flag=1;
+  }
+
+  if (inner_lmnflag==0)
+  {
+    fmc1.allocate(usize,1);
+  }
+  else
+  {
+    fmc2.allocate(usize,inner_lmnsteps);
   }
 
   nvariables=xsize+usize;
@@ -1030,6 +1073,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
   uadjoint(1,_usize),
   uhat(1,_usize)
 {
+  cout << &uadjoint << endl;
   nested_tree_position.initialize();
   nested_separable_calls_counter.initialize();
   //hesstype=1;
@@ -1055,6 +1099,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
   bw=0;
   bHess=0;
   grad_x_u=0;
+  sparse_cutoff=0;
   grad_x=0;
   have_users_hesstype=0;
   int mmin=_minder.indexmin();
@@ -1431,7 +1476,9 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   //dcompressed_triplet & lst2 = *(pmin->lapprox->sparse_triplet);
   //hs_symbolic & ssymb=*(pmin->lapprox->sparse_symbolic);
   //dcompressed_triplet & xxxt = *(pmin->lapprox->sparse_triplet);
-  dcompressed_triplet & lst = *(pmin->lapprox->sparse_triplet2);
+  
+  dcompressed_triplet*  plst = pmin->lapprox->sparse_triplet2;
+
   hs_symbolic & ssymb=*(pmin->lapprox->sparse_symbolic2);
   {
   /*
@@ -1451,7 +1498,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   }
   else
   {
-    int sz= lst.indexmax()-lst.indexmin()+1;
+    int sz= plst->indexmax()-plst->indexmin()+1;
     nvar=x.size()+u0.size()+sz;
   }
   independent_variables y(1,nvar);
@@ -1467,18 +1514,33 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   int i,j;
   dvar_vector d(1,xs+us);
 
+ /*
   dmatrix Hess_save;
+  dcompressed_triplet  S_Hess_save;
   // contribution for quadratic prior
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
-    if (allocated(Hess_save)) Hess_save.deallocate();
-    int mmin=Hess.indexmin();
-    int mmax=Hess.indexmax();
-    Hess_save.allocate(mmin,mmax,mmin,mmax);
-    Hess_save=Hess;
     int & vxs = (int&)(xs);
-    quadratic_prior::get_cHessian_contribution(Hess,vxs);
+    if (pmin->lapprox->sparse_hessian_flag==0)
+    {
+      if (allocated(Hess_save)) Hess_save.deallocate();
+      int mmin=Hess.indexmin();
+      int mmax=Hess.indexmax();
+      Hess_save.allocate(mmin,mmax,mmin,mmax);
+      Hess_save=Hess;
+      quadratic_prior::get_cHessian_contribution(Hess,vxs);
+    }
+    else
+    {
+      S_Hess_save.allocate(plst->indexmin(),plst->indexmax(),plst->get_n(),
+        plst->get_n());
+      S_Hess_save=*plst;
+
+      quadratic_prior::get_cHessian_contribution(pmin->lapprox->sparse_triplet2,
+          vxs, *pmin->lapprox->sparse_iterator,pmin->lapprox->sparse_count);
+    }
   }
+ */
  // Here need hooks for sparse matrix structures
   int ii=xs+us+1;
   if (pmin->lapprox->sparse_hessian_flag==0)
@@ -1489,18 +1551,25 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   }
   else
   {
-    int smin=lst.indexmin();
-    int smax=lst.indexmax();
+    int smin=plst->indexmin();
+    int smax=plst->indexmax();
     for (i=smin;i<=smax;i++)
-      y(ii++)=lst(i);
+      y(ii++)=(*plst)(i);
   }
 
-//#if !defined(__MSVC32__)
+ /*
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
-    Hess=Hess_save;
+    if (pmin->lapprox->sparse_hessian_flag==0)
+      Hess=Hess_save;
+    else
+      (*plst)=S_Hess_save;
   }
-//#endif
+  */
+  {
+    dvector tmp(1,1);
+    gradcalc(0,tmp);
+  }
 
   dvar_vector vy=dvar_vector(y); 
   initial_params::stddev_vscale(d,vy);
@@ -1551,8 +1620,8 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
     }
     else
     {
-      int mmin=lst.indexmin();
-      int mmax=lst.indexmax();
+      int mmin=plst->indexmin();
+      int mmax=plst->indexmax();
       dvar_compressed_triplet * vsparse_triplet = 
         pmin->lapprox->vsparse_triplet;
    
@@ -1563,8 +1632,8 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
         vsparse_triplet = pmin->lapprox->vsparse_triplet;
         for (i=mmin;i<=mmax;i++)
         {
-          (*vsparse_triplet)(1,i)=lst(1,i);
-          (*vsparse_triplet)(2,i)=lst(2,i);
+          (*vsparse_triplet)(1,i)=(*plst)(1,i);
+          (*vsparse_triplet)(2,i)=(*plst)(2,i);
         }
       }
       else
@@ -1574,13 +1643,14 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
           (*vsparse_triplet).allocate(mmin,mmax,us,us);
           for (i=mmin;i<=mmax;i++)
           {
-            (*vsparse_triplet)(1,i)=lst(1,i);
-            (*vsparse_triplet)(2,i)=lst(2,i);
+            (*vsparse_triplet)(1,i)=(*plst)(1,i);
+            (*vsparse_triplet)(2,i)=(*plst)(2,i);
           }
         } 
       }
       dcompressed_triplet * vsparse_triplet_adjoint = 
         pmin->lapprox->vsparse_triplet_adjoint;
+      int shit=1;
    
       if (vsparse_triplet_adjoint==0)
       {
@@ -1589,8 +1659,8 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
         vsparse_triplet_adjoint = pmin->lapprox->vsparse_triplet_adjoint;
         for (i=mmin;i<=mmax;i++)
         {
-          (*vsparse_triplet_adjoint)(1,i)=lst(1,i);
-          (*vsparse_triplet_adjoint)(2,i)=lst(2,i);
+          (*vsparse_triplet_adjoint)(1,i)=(*plst)(1,i);
+          (*vsparse_triplet_adjoint)(2,i)=(*plst)(2,i);
         }
       }
       else
@@ -1600,37 +1670,111 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
           (*vsparse_triplet_adjoint).allocate(mmin,mmax,us,us);
           for (i=mmin;i<=mmax;i++)
           {
-            (*vsparse_triplet_adjoint)(1,i)=lst(1,i);
-            (*vsparse_triplet_adjoint)(2,i)=lst(2,i);
+            (*vsparse_triplet_adjoint)(1,i)=(*plst)(1,i);
+            (*vsparse_triplet_adjoint)(2,i)=(*plst)(2,i);
           }
         } 
       }
       vsparse_triplet->get_x()=vy(ii,ii+mmax-mmin).shift(1);
+      shit=0;
+      if (quadratic_prior::get_num_quadratic_prior()>0)
+      {
+        if (pmin->lapprox->sparse_hessian_flag) 
+        {
+          quadratic_prior::get_cHessian_contribution(
+            pmin->lapprox->sparse_triplet2,xs,
+            *pmin->lapprox->sparse_iterator,pmin->lapprox->sparse_count);
+          pmin->lapprox->sparse_count=pmin->lapprox->sparse_cutoff;
+        }
+      }
     }
   }
+  int exvar=0;
+  if (exvar)
+  {
+    pmin->lapprox->vsparse_triplet->get_x()+=1.0;
+    dvariable ld=0.5*ln_det(*(pmin->lapprox->vsparse_triplet));
+      
+    dvector g(1,nvar);
+    gradcalc(nvar,g);
+    cout << ld << endl;
+    cout << g << endl;
+    exvar=0;
+  }
    dvariable vf=0.0;
-
    
    *objective_function_value::pobjfun=0.0;
-   pmin->AD_uf_outer();
-   if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
+
+   int cx=1;
+   if (cx)
    {
-     quadratic_prior::get_M_calculations();
+     pmin->AD_uf_outer();
+     cx=1;
    }
-   vf+=*objective_function_value::pobjfun;
+
+   int fx=0;
+   if (fx)
+   {
+     dvector tmpg(1,nvar);
+     tmpg.initialize();
+     gradcalc(nvar,tmpg);
+     fx=0;
+   }
+
+   pmin->inner_opt_flag=0;
+   int rx=1;
+   if (rx)
+   {
+     if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
+     {
+       quadratic_prior::calc_matrix_flag=1;
+       quadratic_prior::matrix_mult_flag=1;
+       quadratic_prior::get_M_calculations();
+       quadratic_prior::matrix_mult_flag=0;
+       quadratic_prior::calc_matrix_flag=0;
+     }
+     rx=1;
+   }
+       
+   int gx=0;
+   if (gx)
+   {
+     dvector tmpg(1,nvar);
+     tmpg.initialize();
+     gradcalc(nvar,tmpg);
+     gx=0;
+   }
+
+   if (pmin->lapprox->sparse_hessian_flag && 
+     quadratic_prior::get_num_quadratic_prior()>0)
+   {
+     for (int i=0;i<quadratic_prior::get_num_quadratic_prior()>0;i++)
+     {
+       quadratic_prior::ptr[i]->get_vHessian(*pmin->lapprox->vsparse_triplet,
+         xs,*pmin->lapprox->sparse_iterator,
+         pmin->lapprox->sparse_count);
+     }
+   }
+
+   pmin->inner_opt_flag=0;
    //cout << setprecision(15) << vf << endl;
   // *********************************************
   // *********************************************
   // *********************************************
-  // dvector tmpg(1,nvar);
-  // tmpg.initialize();
-  // gradcalc(nvar,tmpg);
+   dvector tmpg(1,nvar);
+   tmpg.initialize();
+   int bx=0;
+   if (bx)
+   {
+     gradcalc(nvar,tmpg);
+     bx=0;
+   }
   // *********************************************
   // *********************************************
   // *********************************************
 
    int sgn=0;
-   dvariable ld = 0;
+   dvariable ld=0.0;
    if (ad_comm::no_ln_det_choleski_flag)
    {
      if(laplace_approximation_calculator::saddlepointflag==0)
@@ -1649,7 +1793,8 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
        int ierr=0;
        if (pmin->lapprox->sparse_hessian_flag==0)
        {
-         ld=0.5*ln_det_choleski_error(vHess,ierr);
+         dvariable ld2=0.5*ln_det_choleski_error(vHess,ierr);
+         *objective_function_value::pobjfun+=ld2;
          if (ierr==1)
          {
            ofstream ofs("hessian.diag");
@@ -1671,10 +1816,11 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
            //ofstream ofs("sparse");
            //ofs << *(pmin->lapprox->vsparse_triplet) << endl;
          }
-         ld=0.5*ln_det(*(pmin->lapprox->vsparse_triplet),
+         // !!! need to fix this
+         //dvariable ld=0.5*ln_det(*(pmin->lapprox->vsparse_triplet));
+         dvariable ld2=0.5*ln_det(*(pmin->lapprox->vsparse_triplet),
            ssymb,*(pmin->lapprox->sparse_triplet2));
-           //*(pmin->lapprox->sparse_symbolic2),pmin->lapprox);
-         //cout << ld-ld1 << endl;
+         *objective_function_value::pobjfun+=ld2;
        }
      }
      else 
@@ -1721,11 +1867,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
    }
 
    int nx=0;
-   if (nx==0)
-   {
-     vf+=ld;
-   }
-   double f=value(vf);
+   double f=value(*objective_function_value::pobjfun);
    f-=us*0.5*log(2.0*PI);
    dvector g(1,nvar);
    gradcalc(nvar,g);
@@ -1749,8 +1891,8 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
     dcompressed_triplet * vsparse_triplet_adjoint = 
       pmin->lapprox->vsparse_triplet_adjoint;
 
-    int smin=lst.indexmin();
-    int smax=lst.indexmax();
+    int smin=plst->indexmin();
+    int smax=plst->indexmax();
     for (i=smin;i<=smax;i++)
     {
       (*vsparse_triplet_adjoint)(i)=g(ii);
@@ -1927,11 +2069,15 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   //vf=0.0;
   *objective_function_value::pobjfun=0.0;
   laplace_approximation_calculator::where_are_we_flag=2; 
+  pfmin->inner_opt_flag=1;
   pfmin->AD_uf_inner();
   if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
   {
+    quadratic_prior::matrix_mult_flag=1;
     quadratic_prior::get_M_calculations();
+    quadratic_prior::matrix_mult_flag=0;
   }
+  pfmin->inner_opt_flag=0;
   vf+=*objective_function_value::pobjfun;
   laplace_approximation_calculator::where_are_we_flag=0; 
   initial_df1b2params::cobjfun=value(vf);
@@ -2698,114 +2844,52 @@ void nested_calls_indices::allocate(const nested_calls_shape& _nsc)
  * Description not yet available.
  * \param
  */
-dvector laplace_approximation_calculator::get_uhat_lm_newton2
-  (const dvector& x,function_minimizer * pfmin)
-{
-  //int on,nopt;
-  pfmin->inner_opt_flag=1;
-  double f=0.0;
-  double fb=1.e+100;
-  dvector g(1,usize);
-  dvector ub(1,usize);
-  independent_variables u(1,usize);
-  gradcalc(0,g);
-  fmc1.itn=0;
-  fmc1.ifn=0;
-  fmc1.ireturn=0;
-  initial_params::xinit(u);    // get the initial values into the
-  initial_params::xinit(ubest);    // get the initial values into the
-  fmc1.ialph=0;
-  fmc1.ihang=0;
-  fmc1.ihflag=0;
-  
-  if (init_switch)
-  {
-    u.initialize();
-  }
-  else
-  {
-    u=ubest;
-  }
- 
-  fmc1.dfn=1.e-2;
-  dvariable pen=0.0;
-  //cout << "starting  norm(u) = " << norm(u) << endl;
-  while (fmc1.ireturn>=0)
-  {
-   /*
-    double nu=norm(value(u));
-    if (nu>400)
-    {
-      cout << "U norm(u) = " << nu  << endl;
-    }
-    cout << "V norm(u) = " << nu
-         << " f = " << f  << endl;
-    */
-    fmc1.fmin(f,u,g);
-    //cout << "W norm(u) = " << norm(value(u)) << endl;
-    if (fmc1.ireturn>0)
-    {
-      dvariable vf=0.0;
-      pen=initial_params::reset(dvar_vector(u));
-      *objective_function_value::pobjfun=0.0;
-      pfmin->AD_uf_inner();
-      if (saddlepointflag)
-      {
-        *objective_function_value::pobjfun*=-1.0;
-      }
-      if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
-      {
-        quadratic_prior::get_M_calculations();
-      }
-      vf+=*objective_function_value::pobjfun;
-     
-     /*  this is now done in the operator = function
-      if (quadratic_prior::get_num_quadratic_prior()>0)
-      {
-        vf+= quadratic_prior::get_quadratic_priors();
-      }
-      */
-      
 
-      objective_function_value::fun_without_pen=value(vf);
-      
-      //cout << " pen = " << pen << endl;
-      if (noboundepen_flag==0)
-      {
-        vf+=pen;
-      }
-      f=value(vf);
-      if (f<fb) 
-      {
-        fb=f;
-        ub=u;
-      }
-      gradcalc(usize,g);
-      //cout << " f = " << setprecision(17) << f << " " << norm(g) 
-       // << " " << norm(u) << endl;
-     
-    }
-    u=ub;
-  }
-  cout <<  " inner maxg = " <<  fmc1.gmax;
-  if (fabs(fmc1.gmax)>1.e+3)
-    trapper();
-
-  if (fabs(fmc1.gmax)>1.e-4)
+  dvector laplace_approximation_calculator::get_uhat_lm_newton2
+    (const dvector& x,function_minimizer * pfmin)
   {
-    fmc1.itn=0;
-    //fmc1.crit=1.e-9;
-    fmc1.ifn=0;
-    fmc1.ireturn=0;
-    fmc1.ihang=0;
-    fmc1.ihflag=0;
-    fmc1.ialph=0;
+    fmc2.iprint=0;
+    fmc2.noprintx=1;
+    int on,nopt;
+    pfmin->inner_opt_flag=1;
+    double f=0.0;
+    double fb=1.e+100;
+    dvector g(1,usize);
+    dvector ub(1,usize);
+    independent_variables u(1,usize);
+    gradcalc(0,g);
+    fmc2.itn=0;
+    fmc2.ifn=0;
+    fmc2.ireturn=0;
     initial_params::xinit(u);    // get the initial values into the
-    //u.initialize();
-    while (fmc1.ireturn>=0)
+    initial_params::xinit(ubest);    // get the initial values into the
+    fmc2.ialph=0;
+    fmc2.ihang=0;
+    fmc2.ihflag=0;
+    fmc1.use_control_c=0;
+    
+    if (init_switch)
     {
-      fmc1.fmin(f,u,g);
-      if (fmc1.ireturn>0)
+      u.initialize();
+    }
+    else
+    {
+      u=ubest;
+    }
+   
+    fmc2.dfn=1.e-2;
+    dvariable pen=0.0;
+    if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
+    {
+      quadratic_prior::calc_matrix_flag=1;
+      quadratic_prior::matrix_mult_flag=0;
+      quadratic_prior::get_M_calculations();
+    }
+
+    while (fmc2.ireturn>=0)
+    {
+      fmc2.fmin(f,u,g);
+      if (fmc2.ireturn>0)
       {
         dvariable vf=0.0;
         pen=initial_params::reset(dvar_vector(u));
@@ -2813,12 +2897,24 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
         pfmin->AD_uf_inner();
         if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
         {
+          quadratic_prior::calc_matrix_flag=0;
+          quadratic_prior::matrix_mult_flag=1;
           quadratic_prior::get_M_calculations();
+          quadratic_prior::matrix_mult_flag=0;
+        }
+
+        if (saddlepointflag)
+        {
+          *objective_function_value::pobjfun*=-1.0;
         }
         vf+=*objective_function_value::pobjfun;
+
         objective_function_value::fun_without_pen=value(vf);
 
-        vf+=pen;
+        if (noboundepen_flag==0)
+        {
+          vf+=pen;
+        }
         f=value(vf);
         if (f<fb) 
         {
@@ -2826,27 +2922,79 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
           ub=u;
         }
         gradcalc(usize,g);
-        //cout << " f = " << setprecision(15) << f << " " << norm(g) << endl;
       }
+      u=ub;
     }
-    u=ub;
-    cout <<  "  Inner second time = " << fmc1.gmax;
-  }
-  cout << "  Inner f = " << fb << endl;
-  fmc1.ireturn=0;
-  fmc1.fbest=fb;
-  gradient_structure::set_NO_DERIVATIVES();
-  *objective_function_value::pobjfun=0.0;
-  pfmin->AD_uf_inner();
-  if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
-  {
-    quadratic_prior::get_M_calculations();
-  }
-  gradient_structure::set_YES_DERIVATIVES();
-  pfmin->inner_opt_flag=0;
-  return u;
-}
+    cout <<  " inner maxg = " <<  fmc2.gmax;
+    if (fabs(fmc2.gmax)>1.e+3)
+      trapper();
+  
+    if (fabs(fmc2.gmax)>1.e-4)
+    {
+      fmc2.itn=0;
+      //fmc2.crit=1.e-9;
+      fmc2.ifn=0;
+      fmc2.ireturn=0;
+      fmc2.ihang=0;
+      fmc2.ihflag=0;
+      fmc2.ialph=0;
+      initial_params::xinit(u);    // get the initial values into the
+      //u.initialize();
+      while (fmc2.ireturn>=0)
+      {
+        fmc2.fmin(f,u,g);
+        if (fmc2.ireturn>0)
+        {
+          dvariable vf=0.0;
+          pen=initial_params::reset(dvar_vector(u));
+          *objective_function_value::pobjfun=0.0;
+          pfmin->AD_uf_inner();
+          if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
+          {
+            quadratic_prior::calc_matrix_flag=0;
+            quadratic_prior::matrix_mult_flag=1;
+            quadratic_prior::get_M_calculations();
+            quadratic_prior::matrix_mult_flag=0;
+          }
+          if (saddlepointflag)
+          {
+            *objective_function_value::pobjfun*=-1.0;
+          }
 
+          vf+=*objective_function_value::pobjfun;
+          objective_function_value::fun_without_pen=value(vf);
+
+          vf+=pen;
+          f=value(vf);
+
+          if (f<fb) 
+          {
+            fb=f;
+            ub=u;
+          }
+          gradcalc(usize,g);
+        }
+      }
+      u=ub;
+      cout <<  "  Inner second time = " << fmc2.gmax;
+    }
+    cout << "  Inner f = " << fb << endl;
+    fmc2.ireturn=0;
+    fmc2.fbest=fb;
+ //   gradient_structure::set_NO_DERIVATIVES();
+    *objective_function_value::pobjfun=0.0;
+    pfmin->AD_uf_inner();
+    if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
+    {
+      quadratic_prior::calc_matrix_flag=0;
+      quadratic_prior::matrix_mult_flag=1;
+      quadratic_prior::get_M_calculations();
+      quadratic_prior::matrix_mult_flag=0;
+    }
+ //   gradient_structure::set_YES_DERIVATIVES();
+    pfmin->inner_opt_flag=0;
+    return u;
+  }
 #  endif
   
 #endif

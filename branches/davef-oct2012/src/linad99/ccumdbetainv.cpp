@@ -1,8 +1,3 @@
-/**
- * $Id: ccumdbetainv.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
- * Author: Unknown
- */
 #include <admodel.h>
 
 static double lnbeta(double a,double b)

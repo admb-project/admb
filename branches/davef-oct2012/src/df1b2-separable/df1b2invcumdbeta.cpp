@@ -1,8 +1,3 @@
-/**
- * $Id: df1b2invcumdbeta.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
- * Author: Unknown
- */
 #include <df1b2fun.h>
 #include <admodel.h>
 #include <df3fun.h>
@@ -189,18 +184,7 @@
   
     return tmp;
   }
-
- /** Incomplete beta function for df3_three_variable objects.
-    \param a \f$a\f$
-    \param b \f$b\f$
-    \param x \f$x\f$
-    \param maxit Maximum number of iterations for the continued fraction approximation in betacf.
-    \return Incomplete beta function \f$I_x(a,b)\f$
-`
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 2
-*/
+  
   df3_three_variable betai(const df3_three_variable& a,
     const df3_three_variable& b,const  df3_three_variable& x,int maxit)
   {
@@ -276,18 +260,6 @@
     return h;
   }
 
-/** Incomplete beta function for df3_three_variable objects.
-    \param a \f$a\f$
-    \param b \f$b\f$
-    \param x \f$x\f$
-    Evaluates the continued fraction approximation for imcomplete beta function.
-
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
-*/
   df3_three_variable betacf(const df3_three_variable& a,
     const df3_three_variable& b, const df3_three_variable& x)
   {

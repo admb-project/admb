@@ -1,15 +1,8 @@
-/**
- * $Id: dveigenv.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
- * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB foundation
- */
-/** \def EIGEN_VECTORS
-   Causes Eigenvectors to be computed
-*/
+#define HOME_VERSION
 #define EIGEN_VECTORS
 
 #include <fvar.hpp>
+
 #ifdef EIGEN_VECTORS
   void tri_dagv(BOR_CONST dvar_matrix& ,BOR_CONST dvar_vector& , BOR_CONST dvar_vector& );
 #else
@@ -21,12 +14,6 @@
   void get_eigen(_CONST dvar_vector& d,_CONST dvar_vector& e,BOR_CONST dvar_matrix& z);
 #endif
 
-/** Eigenvectors.
-    Computes eigenvectors of a real square matrix. Input matrix is symmetrized.
-    \param m Real square matrix.
-    \param _diag
-    \return Matrix of eigenvectors.
-*/
 dvar_matrix eigenvectors(_CONST dvar_matrix& m)
 {
   if (m.rowsize()!=m.colsize())
@@ -59,16 +46,7 @@ dvar_matrix eigenvectors(_CONST dvar_matrix& m)
 
 }
 
-/** Householder transformation for eivenvector computation.
-  \param _m Real, symmetric matrix; on return contains the orthogonal
-   transformed matrix.
-  \param _d On return contains the diagonal elements of the tri-diagonal matrix.
-  \param _e On teturn contains the off-diagonal elements.
 
-  \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 11
-*/
 
 #ifdef EIGEN_VECTORS
   void tri_dagv(BOR_CONST dvar_matrix& _m,BOR_CONST dvar_vector& _d, BOR_CONST dvar_vector& _e)
@@ -174,11 +152,6 @@ dvar_matrix eigenvectors(_CONST dvar_matrix& m)
   #endif
 }
 
-/** Change sign.
-  \param x Argument to change.
-  \param y Argument to test.
-  \return The value of x with the sign of y.
-*/
   dvariable SIGNV(_CONST prevariable& x,_CONST prevariable& y)
 {
   if (y<0.)
@@ -191,15 +164,6 @@ dvar_matrix eigenvectors(_CONST dvar_matrix& m)
   }
 }
 
-/** Eigenvalues and eigenvectors.
-  \param _d Diagonal elements of the matrix computed by Householder transformation.
-  \param _e Off-diagonal elements.
-  \param _z On output contains eigenvectors of _d.
-
-  \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 11
-*/
 #ifdef EIGEN_VECTORS
   void get_eigenv(_CONST dvar_vector& _d,_CONST dvar_vector& _e,BOR_CONST dvar_matrix& _z)
 #else
@@ -273,6 +237,7 @@ dvar_matrix eigenvectors(_CONST dvar_matrix& m)
 }
 
 #undef EIGEN_VECTORS
+#undef HOME_VERSION
 
 
 

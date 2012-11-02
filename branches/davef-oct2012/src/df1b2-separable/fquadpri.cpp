@@ -11,6 +11,9 @@ static char nullptrerror[] = " Trying to access null pointer"
 static char unallocatederror[] = " Trying to access unallocated"
  " matrix in df1b2quadratic_prior";
 
+int quadratic_prior::sparse_flag=0;
+int quadratic_prior::calc_matrix_flag=0;
+int quadratic_prior::matrix_mult_flag=0;
  df1b2quadratic_prior * df1b2quadratic_prior::ptr[100]; // this should be a resizeable array
  int df1b2quadratic_prior::num_quadratic_prior=0;
  const int df1b2quadratic_prior::max_num_quadratic_prior=100;
@@ -87,17 +90,41 @@ static char unallocatederror[] = " Trying to access unallocated"
     pu=0; 
     index=0;
     Lxu=0;
+    SCM=0;
+    DFSCM=0;
+    S_dfpMinv=0;
+    dfpMinv=0;
+    CM=0;
   } 
+
   df1b2quadratic_prior::~df1b2quadratic_prior(void)
+  {
+    deallocate();
+    if (pu) delete pu;
+    pu=0; 
+  }
+  void df1b2quadratic_prior::deallocate(void)
   {
     if (index) delete index; 
     index=0;
+    if (DFSCM) delete DFSCM;
+    DFSCM=0;
+    if (CM) delete SCM;
+    CM=0;
+    if (SCM) delete SCM;
+    SCM=0;
     if (Lxu) delete Lxu;
     Lxu=0;
     if (M) delete M;
     M=0; 
-    if (pu) delete pu;
-    pu=0; 
+    //if (pu) delete pu;
+    //pu=0; 
+    if (S_dfpMinv)
+      delete S_dfpMinv;
+    S_dfpMinv=0;
+    if (dfpMinv)
+      delete dfpMinv;
+    dfpMinv=0;
   } 
 
 
@@ -123,7 +150,7 @@ static char unallocatederror[] = " Trying to access unallocated"
   void df1b2quadratic_prior::operator = (const df1b2matrix & M)
   { 
     quadratic_prior::in_qp_calculations=0; 
-    num_active_parameters=funnel_init_var::num_vars;
+    num_active_parameters=funnel_init_var::num_active_parameters;
     df1b2_gradlist::no_derivatives=1;
     dvector cu=value(*pu);
 
@@ -215,6 +242,110 @@ static char unallocatederror[] = " Trying to access unallocated"
     df1b2_gradlist::no_derivatives=0;
   }
 
+  void df1b2quadratic_prior::operator = (const df1b2_compressed_triplet & _M)
+  { 
+    ADUNCONST(df1b2_compressed_triplet,M)
+    quadratic_prior::in_qp_calculations=0; 
+    num_active_parameters=funnel_init_var::num_active_parameters;
+    df1b2_gradlist::no_derivatives=1;
+    dvector cu=value(*pu);
+
+    if (laplace_approximation_calculator::where_are_we_flag==3) 
+    {
+      df1b2variable::noallocate=1;
+      df1b2vector v(1,M.get_n());
+      df1b2variable::noallocate=0;
+      switch (old_style_flag)
+      {
+      case 0:
+      case 1:
+        cerr << "Error -- no solve defined yet" << endl;
+        ad_exit(1);
+        //v = solve(M,cu);
+        break;
+      case 2:
+        v = M*cu;
+        break;
+      default:
+        cerr << "Illegal value for quadratic_prior::old_style_flag"
+             << endl;
+        ad_exit(1);
+      }
+      int mmin=v.indexmin();
+      int mmax=v.indexmax();
+
+      if (index)
+      {
+        if (index->indexmax() != num_active_parameters)
+        delete index;
+        index=0;
+      }
+  
+      if (num_active_parameters>0)
+      {
+        if (!index)
+        {
+          index=new ivector(column(*funnel_init_var::plist,1));
+        }
+      
+        if (Lxu)
+        {
+          int tmin = Lxu->indexmin();
+          if ( (Lxu->indexmin() != mmin)    ||
+               (Lxu->indexmax() != mmax) ||
+               ((*Lxu)(tmin).indexmin() != 1) ||
+               ((*Lxu)(tmin).indexmax() != num_active_parameters)) 
+          delete Lxu;
+          Lxu=0;
+        }
+        if (!Lxu)
+        {
+          Lxu=new dmatrix(1,num_active_parameters,mmin-1,mmax);
+        }
+    
+        for (int i=1;i<=num_active_parameters;i++)
+        {
+          (*Lxu)(i,mmin-1)=(*funnel_init_var::plist)(i,1);
+        }
+        for (int j=mmin;j<=mmax;j++)
+        {
+          for (int i=1;i<=num_active_parameters;i++)
+          {
+            switch (old_style_flag)
+            {
+              cerr << "Illegal value for quadratic_prior::old_style_flag"
+                   << endl;
+              ad_exit(1);
+            case 0:
+              (*Lxu)(i,j)=v(j).get_u_dot()[i-1];
+              break;
+            case 1:
+              cerr << "Illegal value for quadratic_prior::old_style_flag"
+                   << endl;
+              ad_exit(1);
+            case 2:
+              (*Lxu)(i,j)=v(j).get_u_dot()[i-1];
+              break;
+            default:
+              cerr << "Illegal value for quadratic_prior::old_style_flag"
+                   << endl;
+              ad_exit(1);
+            }
+          }
+        } 
+      }
+      else
+      {
+        if (Lxu)
+        {
+          delete Lxu;
+          Lxu=0;
+        }
+      }
+    }
+    df1b2_gradlist::no_derivatives=0;
+  }
+
  void df1b2quadratic_prior::get_Lxu_contribution(dmatrix& M)
  {
    for (int i=0;i<num_quadratic_prior;i++)
@@ -223,6 +354,17 @@ static char unallocatederror[] = " Trying to access unallocated"
      //if (ptr[i]->get_num_active_parameters()>0)
      {
        ptr[i]->get_Lxu(M);
+     }
+   }
+ }
+
+ void df1b2quadratic_prior::cleanup(void)
+ {
+   for (int i=0;i<num_quadratic_prior;i++)
+   {
+     if (ptr[i])
+     {
+       ptr[i]->deallocate();
      }
    }
  }
@@ -244,6 +386,10 @@ void normal_df1b2quadratic_prior::operator = (const df1b2matrix & M)
 void df1b2quadratic_re_penalty::set_old_style_flag(void)
 {
   old_style_flag=2;
+}
+void df1b2quadratic_re_penalty::operator = (const df1b2_compressed_triplet & M) 
+{ 
+  df1b2quadratic_prior::operator = (M);
 }
 void df1b2quadratic_re_penalty::operator = (const df1b2matrix & M) 
 { 

@@ -1734,15 +1734,10 @@ int allocated(const df1b2vector&);
 int allocated(const df1b2_init_matrix&);
 #include <df3fun.h>
 
-/*
 df1b2variable betai(const df1b2variable & _a, const df1b2variable & _b,
-		     const df1b2variable & _x);
+		     const df1b2variable & _x,int MAXIT=100);
 df1b2variable betai(const df1b2variable & _a, const df1b2variable & _b,
-		     double _x);
-*/
-
-df1b2variable betai(const df1b2variable& a, const df1b2variable& b,
-  double x, int maxit=100);
+		     double _x,int MAXIT=100);
 
 double do_gauss_hermite_block_diagonal(const dvector& x,
   const dvector& u0,const dmatrix& Hess,const dvector& _xadjoint,
@@ -1807,41 +1802,58 @@ public:
  */
 class quadratic_prior : public style_flag_class
 {
+public:
+  dcompressed_triplet * SCM;
+  dmatrix * CM;
+  dmatrix * pM;
   dmatrix * pMinv;
+  dcompressed_triplet * SCMinv;
   dvar_matrix * dfpMinv;
+  dvar_compressed_triplet * S_dfpMinv;
+  dvar_compressed_triplet * DFSCM;
   dvar_vector * pu;
   int xmyindex;
-public:
   static int qflag; 
   static quadratic_prior * ptr[]; // this should be a resizeable array
   static void get_M_calculations(void);
   static void cleanup_pMinv();
   static void cleanup_dfpMinv();
   static int num_quadratic_prior;
+  static int calc_matrix_flag;
+  static int matrix_mult_flag;
+  static int sparse_flag;
   static const int max_num_quadratic_prior;
   void add_to_list(void);
 public:
   static int in_qp_calculations; 
+  static void cleanup(void);
   int get_offset(int xs);
   int get_myindex(void) { return xmyindex;}
   static quadratic_prior * get_ptr(int i){ return ptr[i];} 
   void operator = (const dvar_matrix &);
+  void operator = (const dcompressed_triplet &);
+  void operator = (const dvar_compressed_triplet &);
   void operator = (const dmatrix &);
   static int get_in_qp_calculations() { return in_qp_calculations; }
   static int get_num_quadratic_prior(void) { return num_quadratic_prior;}
   static dvariable get_quadratic_priors(void);
   dvariable get_function(void);
   quadratic_prior(void); 
-  ~quadratic_prior(void);
+  void deallocate(void);
+  virtual ~quadratic_prior(void);
   void allocate(const dvar_vector & _u,const char * s);
   void allocate(const dvar_vector & _u);
   void allocate(const dvar_matrix & _M, const dvar_vector & _u,const char * s);
   void allocate(const dvar_matrix & _M, const dvar_vector & _u);
   //dmatrix get_cHessian(void);
   void get_cHessian(dmatrix,int);
+  void get_cHessian(dcompressed_triplet *,int,ivector& sparse_iterator,int & sparse_count);
   void get_cHessian(dvar_matrix,int);
   void get_cHessian_from_vHessian(dmatrix ,int);
   void get_vHessian(dvar_matrix ,int);
+  //void get_vHessian(const dvar_compressed_triplet&  ,int );
+  void get_vHessian(const dvar_compressed_triplet& _H,
+    int xsize,ivector& sparse_iterator,int& sparse_count);
   void get_cgradient(dvector,int); 
   dvar_matrix get_Hessian(void);
   dvar_vector get_gradient(void); 
@@ -1849,22 +1861,35 @@ public:
   static dvar_matrix get_Hessian_contribution(void);
   static void get_cgradient_contribution(dvector,int);
   static void get_cHessian_contribution(dmatrix,int);
+  static void get_cHessian_contribution(dcompressed_triplet *,int,ivector&,
+    int& );
   static void get_vHessian_contribution(dvar_matrix  ,int );
+  static void get_vHessian_contribution(const dvar_compressed_triplet&  ,int );
   static void get_cHessian_contribution_from_vHessian(dmatrix,int);
   friend class df1b2quadratic_prior;
   virtual void get_cM(void)=0;
+  static void get_cHessian_contribution_from_vHessian(dcompressed_triplet * dct,
+    int xsize,ivector& sparse_iterator,int & sparse_count);
+  void get_cHessian_from_vHessian(dcompressed_triplet*, int, ivector&, int&);
+
 };
 
 /**
  * Description not yet available.
  * \param
  */
+class df1b2_compressed_triplet;
+
 class df1b2quadratic_prior : public style_flag_class
 {
+public:
   ivector * index;
   df1b2matrix * M;
+  df1b2matrix * dfpMinv;
   dmatrix * CM;
-public:
+  df1b2_compressed_triplet * DFSCM;
+  df1b2_compressed_triplet * S_dfpMinv;
+  dcompressed_triplet * SCM;
   dmatrix * Lxu;
   df1b2_init_vector * pu;
   int xmyindex;
@@ -1874,16 +1899,20 @@ public:
   void add_to_list(void);
 public:
   static df1b2quadratic_prior * get_ptr(int i){ return ptr[i];} 
+  static void cleanup(void);
   int num_active_parameters;
   int get_num_active_parameters(void) { return num_active_parameters; } 
   int get_myindex(void) { return xmyindex;}
   void operator = (const df1b2matrix &);
   void operator = (const dmatrix &);
+  void operator = (const dcompressed_triplet &);
+  void operator = (const df1b2_compressed_triplet &);
   static int get_num_quadratic_prior(void) { return num_quadratic_prior;}
   static dvariable get_quadratic_priors(void);
   df1b2variable get_function(void);
   df1b2quadratic_prior(void); 
-  ~df1b2quadratic_prior(void);
+  virtual void deallocate(void);
+  virtual ~df1b2quadratic_prior(void);
   void allocate(const df1b2_init_vector & _u,const char * s);
   void allocate(const df1b2_init_vector & _u);
   void allocate(const df1b2matrix & _M, const df1b2_init_vector & _u,const char * s);
@@ -1902,7 +1931,9 @@ public:
   virtual void get_Lxu(dmatrix&)=0;
   friend class quadratic_prior;
   friend class df1b2_parameters;
+  virtual void get_cM(void)=0;
 };
+
 
 /**
  * Description not yet available.
@@ -1950,6 +1981,7 @@ class df1b2quadratic_re_penalty : public df1b2quadratic_prior
   virtual void set_old_style_flag(void);
 public:
   void operator = (const df1b2matrix & M);
+  void operator = (const df1b2_compressed_triplet & M);
   void operator = (const dmatrix & M);
   df1b2quadratic_re_penalty(void);
 };
@@ -2065,5 +2097,102 @@ void print_is_diagnostics(laplace_approximation_calculator *lapprox);
   void ADMB_getcallindex(const df1b2variable& x);
   void ADMB_getcallindex(const df1b2vector& x);
   void ADMB_getcallindex(const df1b2matrix& x);
+
+class sparse_quadratic_prior : public style_flag_class
+{
+public:
+  dcompressed_triplet * SCM;
+  dmatrix * CM;
+  dmatrix * pM;
+  dmatrix * pMinv;
+  dvar_matrix * dfpMinv;
+  dvar_compressed_triplet * SdfpMinv;
+  dvar_vector * pu;
+  int xmyindex;
+  static int qflag; 
+  static sparse_quadratic_prior * ptr[]; // this should be a resizeable array
+  static void get_M_calculations(void);
+  static void cleanup_pMinv();
+  static void cleanup_dfpMinv();
+  static int num_sparse_quadratic_prior;
+  static int calc_matrix_flag;
+  static int matrix_mult_flag;
+  static const int max_num_sparse_quadratic_prior;
+  void add_to_list(void);
+public:
+  static int in_qp_calculations; 
+  int get_offset(int xs);
+  int get_myindex(void) { return xmyindex;}
+  static sparse_quadratic_prior * get_ptr(int i){ return ptr[i];} 
+  void operator = (const dvar_matrix &);
+  void operator = (const dmatrix &);
+  static int get_in_qp_calculations() { return in_qp_calculations; }
+  static int get_num_quadratic_prior(void) { return num_sparse_quadratic_prior;}
+  static dvariable get_quadratic_priors(void);
+  dvariable get_function(void);
+  sparse_quadratic_prior(void); 
+  ~sparse_quadratic_prior(void);
+  void allocate(const dvar_vector & _u,const char * s);
+  void allocate(const dvar_vector & _u);
+  void allocate(const dvar_matrix & _M, const dvar_vector & _u,const char * s);
+  void allocate(const dvar_matrix & _M, const dvar_vector & _u);
+  //dmatrix get_cHessian(void);
+  void get_cHessian(dmatrix,int);
+  void get_cHessian(dvar_matrix,int);
+  void get_cHessian_from_vHessian(dmatrix ,int);
+  void get_vHessian(dvar_matrix ,int);
+  void get_cgradient(dvector,int); 
+  dvar_matrix get_Hessian(void);
+  dvar_vector get_gradient(void); 
+  static dvar_vector get_gradient_contribution(void);
+  static dvar_matrix get_Hessian_contribution(void);
+  static void get_cgradient_contribution(dvector,int);
+  void get_cHessian_contribution(dmatrix,int);
+  static void get_cHessian_contribution(dcompressed_triplet * dct,int);
+  void get_cHessian(dcompressed_triplet * dct,int xsize); 
+  static void get_vHessian_contribution(dvar_matrix  ,int );
+  static void get_cHessian_contribution_from_vHessian(dmatrix,int);
+  friend class df1b2quadratic_prior;
+  virtual void get_cM(void)=0;
+};
+
+  class sparse_quadratic_re_penalty : public quadratic_prior
+  {
+    virtual void set_old_style_flag(void);
+  public:
+    sparse_quadratic_re_penalty(void);
+    void operator = (const dvar_matrix & M);
+    void operator = (const dmatrix & M);
+    void operator = (const dcompressed_triplet & M);
+    void operator = (const dvar_compressed_triplet & M);
+  };
+
+ class df1b2_compressed_triplet
+  {
+    int n;  // number of rows
+    int m;  // number of columns
+    imatrix coords;
+    df1b2vector x;
+  public:
+    int indexmin(void) { return x.indexmin();}
+    int indexmax(void) { return x.indexmax();}
+    df1b2variable& operator [] (int i) { return x[i];}
+    df1b2variable& operator () (int i) { return x(i);}
+    int& operator () (int i,int j) { return coords(i,j);}
+    df1b2_compressed_triplet(int mmin,int mmax,int n,int m);
+    explicit df1b2_compressed_triplet(const df1b2matrix&);
+    df1b2_compressed_triplet(void);
+    //dcompressed_triplet make_dcompressed_triplet(const dmatrix & );
+    void allocate(int mmin,int mmax,int n,int m);
+    void deallocate(void);
+    imatrix& get_coords(void)  { return coords; }
+    df1b2vector& get_x(void)  { return x; }
+    int get_n(){return n;}
+    int get_m(){return m;}
+    void initialize(void);
+    void operator = (const df1b2_compressed_triplet & M);
+  };
+
+  df1b2vector operator * (const df1b2_compressed_triplet& M,const dvector & v);
 #endif //!defined(__DF1B2FUN__)
 

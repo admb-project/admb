@@ -1,13 +1,12 @@
 /*
-  $Id$
- 
-  Author: David Fournier
-  Copyright (c) 2008-2012 Regents of the University of California 
+ * $Id$
+ *
+ * Author: David Fournier
+ * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
-  \file
-  Poisson and negative binomial probability density functions for 
-  differentiable objects.
+ * \file
+ * Description not yet available.
  */
 #include "fvar.hpp"
 
@@ -78,7 +77,7 @@
   \ingroup PDF
   \param x Number of observed occurences, \f$k\f$.
   \param mu Mean or expected value, \f$\mu\f$.
-  \return Log of Poisson density. \f$-\mu+k*\log(\mu)-k!\f$.
+  \return Log of Poisson density. \f$-\mu+k \log(\mu)-\log(k!)\f$.
   */
   dvariable log_density_poisson(double x,const prevariable& mu)
   {

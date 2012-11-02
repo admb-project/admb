@@ -516,6 +516,8 @@ void tracing_message(int traceflag,const char *s);
         print_is_diagnostics(lapprox);
       }
 #endif
+      quadratic_prior::cleanup(); 
+      df1b2quadratic_prior::cleanup(); 
       initial_params::save();
       report();
       // in case the user changes some initial_params in the report section

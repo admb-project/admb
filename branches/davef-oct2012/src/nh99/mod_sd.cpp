@@ -44,6 +44,12 @@ void function_minimizer::sd_routine(void)
   initial_params::xinit(x); // get the number of active parameters
 
   initial_params::restore_start_phase();
+#if defined(USE_LAPLACE)
+  if (lapprox  && lapprox->no_re_ders_flag)
+  {
+    initial_params::set_inactive_only_random_effects();
+  }
+#endif
   int nvar1=initial_params::nvarcalc(); // get the number of active parameters
   int num_sdrep_types=stddev_params::num_stddev_params +
     initial_params::num_active_calc();
@@ -116,6 +122,12 @@ void function_minimizer::sd_routine(void)
   int check=initial_params::stddev_scale(scale,x);
   double lndet=-ln_det(S,sgn)-2.0*sum(log(scale));
   initial_params::set_active_random_effects(); 
+#if defined(USE_LAPLACE)
+  if (lapprox  && lapprox->no_re_ders_flag)
+  {
+    initial_params::set_inactive_only_random_effects();
+  }
+#endif
   //int nvar1=initial_params::nvarcalc(); 
   dvector diag(1,nvar1+ndvar);
   dvector tmp(1,nvar1+ndvar);

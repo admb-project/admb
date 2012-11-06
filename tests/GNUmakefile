@@ -5,11 +5,7 @@ all: geolocation
 main: geolocation
 
 geolocation:
-ifdef COMSPEC
-	$(MAKE) --file=Makefile --directory=$@
-else
 	$(MAKE) --directory=$@
-endif
 
 expm:
 	OPTIONS=-s $(MAKE) --directory=$@

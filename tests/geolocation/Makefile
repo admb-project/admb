@@ -1,3 +1,5 @@
+SHELL=$(COMSPEC)
+
 all: 
 	if not exist geolocation svn export http://geolocation.googlecode.com/svn/trunk/ geolocation
 	pushd geolocation & $(MAKE) & popd

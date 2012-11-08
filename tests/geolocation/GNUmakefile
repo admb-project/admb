@@ -1,5 +1,5 @@
 all:
-ifeq (sh.exe,$(SHELL))
+ifeq ($(SHELL),sh.exe)
 	if not exist geolocation svn export http://geolocation.googlecode.com/svn/trunk/ geolocation
 	pushd geolocation & $(MAKE) ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" & popd
 else
@@ -8,7 +8,7 @@ else
 endif
 
 clean:
-ifeq (sh.exe,$(SHELL))
+ifeq ($(SHELL),sh.exe)
 	if exist geolocation rd /S /Q geolocation
 else
 	rm -rvf geolocation

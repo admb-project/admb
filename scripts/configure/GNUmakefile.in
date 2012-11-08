@@ -59,7 +59,7 @@ dmg:
 	@dmgtask@
 
 tests:
-	ADMB_HOME="$(CURDIR)/build/@target@" ADMB_CXXFLAGS="@cxxflags@" ADMB_LDFLAGS="@cxxflags@" $(MAKE) --directory=src --file=@makefile@ tests
+	$(MAKE) ADMB_HOME="$(CURDIR)/build/@target@" ADMB_CXXFLAGS="@cxxflags@" ADMB_LDFLAGS="@cxxflags@" --directory=src --file=@makefile@ tests
 
 contrib:
 	@arvar@ CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib

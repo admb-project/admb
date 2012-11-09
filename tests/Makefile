@@ -1,6 +1,6 @@
-tests: tests-geolocation
+tests: test-geolocation
 
-tests-geolocation:
+test-geolocation:
 	pushd geolocation & $(MAKE) & popd
 
 clean:

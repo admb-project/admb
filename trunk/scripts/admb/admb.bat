@@ -55,6 +55,9 @@ if not defined parser set parser=tpl2cpp
 for %%a in (!tpls!) do (
   if not exist %%~na.tpl goto ERROR1
   set model=%%~na
+  del classdef.tmp xxdata.tmp xxhtop.tmp xxhtopm.tmp xxglobal.tmp xxtopm.tmp 2> NUL
+  del xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp 2> NUL
+  del tfile1 tfile2 tfile3 tfile4 tfile5 2> NUL
   del !model!.cpp !model!.htp !model!.obj !model!.exe 2> NUL
   set CMD=!parser! !bounds! !dll! !model!
   echo.&echo *** !CMD!

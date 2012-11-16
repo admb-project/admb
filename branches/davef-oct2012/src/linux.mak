@@ -37,9 +37,9 @@ CXXFLAGS:=-Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 endif
 
 ifdef DEBUG
-CXXFLAGS:=-c -g $(CXXFLAGS)
+CXXFLAGS:=-c -g $(CXXFLAGS) -ggdb -pthread -DUSE_PTHREADS
 else
-CXXFLAGS:=-c -O3 $(CXXFLAGS)
+CXXFLAGS:=-c -O3 $(CXXFLAGS) -pthread  -DUSE_PTHREADS
 endif
 
 dist:

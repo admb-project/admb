@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -187,7 +187,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
           quadratic_prior::get_M_calculations();
         }
        	quadratic_prior::matrix_mult_flag=0;
-        no_function_component_flag=1;
+        no_function_component_flag=0;
         pmin->inner_opt_flag=0;
 
         vf+=*objective_function_value::pobjfun;
@@ -203,10 +203,6 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
           {
             gg(i,j)=g((*derindex)(i)(j));
           }
-        }
-        {
-          ofstream ofs("l:/temp1.dat");
-          ofs << g.indexmax() << " " << setprecision(15) << g << endl;
         }
         if (saddlepointflag==2)
         {

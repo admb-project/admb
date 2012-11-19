@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -25,6 +25,8 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
 double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
+dvector evaluate_quadprior(const dvector& x,int usize,
+  function_minimizer * pfmin);
 
 int use_dd_nr=0;
 int admb_ssflag=0;
@@ -426,7 +428,7 @@ dvector laplace_approximation_calculator::banded_calculations
     }
     while(no_converge_flag);
 
-    /* If we are in mcmc phase we just need to calcualte the
+    /* If we are in mcmc phase we just need to calculate the
        ln_det(Hess) and return
     */
     hs_symbolic & ssymb=*(pmin->lapprox->sparse_symbolic2);
@@ -627,9 +629,12 @@ dvector laplace_approximation_calculator::banded_calculations
         funnel_init_var::lapprox=0;
         laplace_approximation_calculator::where_are_we_flag=0; 
       }   
+     
+      // we don;t seem to need this in the sparse case ?????
+     
      /*
-      // we don;t seem to need this ?????
-      if (quadratic_prior::get_num_quadratic_prior()>0)
+      if (sparse_hessian_flag==0 && 
+        quadratic_prior::get_num_quadratic_prior()>0)
       {
         quadratic_prior::matrix_mult_flag=1;
         dvector tmp=evaluate_quadprior(x,usize,pfmin);
@@ -637,6 +642,8 @@ dvector laplace_approximation_calculator::banded_calculations
         local_dtemp+=tmp;
       }
       */
+     
+      
       if (initial_df1b2params::separable_flag)
       {
         dvector scale(1,nvar);   // need to get scale from somewhere

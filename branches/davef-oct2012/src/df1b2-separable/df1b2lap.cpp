@@ -3,7 +3,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -84,14 +84,16 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
     u=ubest;
   }
  
-  fmc1.dfn=1.e-2;
   dvariable pen=0.0;
+  fmc1.dfn=1.e-2;
+  gradient_structure::no_derivatives=1;
   if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
   {
     quadratic_prior::calc_matrix_flag=1;
     quadratic_prior::matrix_mult_flag=0;
     quadratic_prior::get_M_calculations();
   }
+  gradient_structure::no_derivatives=0;
   while (fmc1.ireturn>=0)
   {
     fmc1.fmin(f,u,g);
@@ -1514,7 +1516,6 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   int i,j;
   dvar_vector d(1,xs+us);
 
- /*
   dmatrix Hess_save;
   dcompressed_triplet  S_Hess_save;
   // contribution for quadratic prior
@@ -1530,24 +1531,14 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
       Hess_save=Hess;
       quadratic_prior::get_cHessian_contribution(Hess,vxs);
     }
-    else
-    {
-      S_Hess_save.allocate(plst->indexmin(),plst->indexmax(),plst->get_n(),
-        plst->get_n());
-      S_Hess_save=*plst;
-
-      quadratic_prior::get_cHessian_contribution(pmin->lapprox->sparse_triplet2,
-          vxs, *pmin->lapprox->sparse_iterator,pmin->lapprox->sparse_count);
-    }
   }
- */
  // Here need hooks for sparse matrix structures
   int ii=xs+us+1;
   if (pmin->lapprox->sparse_hessian_flag==0)
   {
     for (i=1;i<=us;i++)
       for (j=1;j<=us;j++)
-      y(ii++)=Hess(i,j);
+      y(ii++)=Hess_save(i,j);
   }
   else
   {
@@ -1557,15 +1548,12 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
       y(ii++)=(*plst)(i);
   }
 
- /*
+ 
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
     if (pmin->lapprox->sparse_hessian_flag==0)
       Hess=Hess_save;
-    else
-      (*plst)=S_Hess_save;
   }
-  */
   {
     dvector tmp(1,1);
     gradcalc(0,tmp);
@@ -1745,14 +1733,23 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
      gx=0;
    }
 
-   if (pmin->lapprox->sparse_hessian_flag && 
-     quadratic_prior::get_num_quadratic_prior()>0)
+   if (quadratic_prior::get_num_quadratic_prior()>0)
    {
-     for (int i=0;i<quadratic_prior::get_num_quadratic_prior()>0;i++)
+     if (pmin->lapprox->sparse_hessian_flag)  
      {
-       quadratic_prior::ptr[i]->get_vHessian(*pmin->lapprox->vsparse_triplet,
-         xs,*pmin->lapprox->sparse_iterator,
-         pmin->lapprox->sparse_count);
+       for (int i=0;i<quadratic_prior::get_num_quadratic_prior()>0;i++)
+       {
+         quadratic_prior::ptr[i]->get_vHessian(*pmin->lapprox->vsparse_triplet,
+           xs,*pmin->lapprox->sparse_iterator,
+           pmin->lapprox->sparse_count);
+       }
+     }
+     else
+     {
+       for (int i=0;i<quadratic_prior::get_num_quadratic_prior()>0;i++)
+       {
+         quadratic_prior::ptr[i]->get_vHessian(vHess,xs);
+       }
      }
    }
 
@@ -2062,6 +2059,7 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   int usize=initial_params::nvarcalc(); 
   //double f=0.0;
   dvector g(1,usize);
+  gradcalc(0,g);
   independent_variables u(1,usize);
   u=x;
   dvariable vf=0.0;

@@ -52,6 +52,7 @@
   int no_userclass=0;
   int bound_flag=0;
   int in_normal_prior_flag=0;
+  int normal_prior_flag2=0;
   int num_user_classes=0;
   int have_separable_function=0;
   int final_defined=0;
@@ -92,7 +93,7 @@
   char arglist1[4000];
   char *  arglist_ptr;
   char arglist[4000];
-  char uuu_xxx[80]={"Copyright (c) 2008-2012 Regents of the University of California"};
+  char uuu_xxx[80]={"Copyright (c) 2008-2011 Regents of the University of California"};
   FILE * fdat=NULL;
   FILE * fdat1=NULL;
   FILE * htop=NULL;
@@ -3403,7 +3404,6 @@ NESTED_FUNCTION[ ]*{name}[ ]*{name}\(.*\) {
                               }
 
 
-NORMAL_PRIOR_FUNCTION[ ]*{name}[ ]*{name}\(.*\) |
 QUADRATIC_PENALTY_FUNCTION[ ]*{name}[ ]*{name}\(.*\) {
     if (!in_procedure_def)
     {
@@ -3458,6 +3458,64 @@ QUADRATIC_PENALTY_FUNCTION[ ]*{name}[ ]*{name}\(.*\) {
     in_funnel_proc=1;
     //have_separable_function=1;
     in_normal_prior_flag=1;
+    in_normal_prior=1;
+    BEGIN DEFINE_PROCS_NP;
+                              }
+NORMAL_PRIOR_FUNCTION[ ]*{name}[ ]*{name}\(.*\) {
+    if (!in_procedure_def)
+    {
+      fprintf(stderr,"Error -- FUNCTION must be used within the"
+        " PROCEDURE SECTION\n");
+      exit(1);
+    }
+    //---  parsing the function header to get parameter names 
+    strict_after_part(tmp_string1,yytext,'(');  
+    before_part(tmp_string2,tmp_string1,')'); 
+      
+    char * pch;
+    pch = strtok (tmp_string2,",");
+    FILE * tempf_sed;
+    tempf_sed=fopen("_tempfnpsed","w+");
+    while (pch != NULL)
+    {
+      after_partb(tmp_string3,pch,' ');  
+      fprintf(tempf_sed,
+        "s/\\([^a-zA-Z0-9]\\)%s\\([^a-zA-Z0-9]\\)/\\1value(%s)\\2/g\n",
+        tmp_string3,tmp_string3);
+      fprintf(tempf_sed,"s/^%s\\([^a-zA-Z0-9]\\)/value(%s)\\1/g\n",
+        tmp_string3,tmp_string3);
+      fprintf(tempf_sed,"s/\\([^a-zA-Z0-9]\\)%s$/\\1value(%s)/g\n",
+        tmp_string3,tmp_string3);
+      pch = strtok (NULL, ",");
+    }
+    fclose(tempf_sed);
+    //--
+    tempf_NP=fopen("tempfnp","w+");
+    if (tempf_NP==NULL)
+    {
+      fprintf(stderr,"%s","Error trying to open file tempfnp\n");
+    }
+    after_part(tmp_string1,yytext,' ');  // get function name
+    strip_leading_blanks(tmp_string2,tmp_string1); 
+    before_part(tmp_string3,tmp_string2,' '); 
+    after_part(tmp_string4,tmp_string2,' ');  // get function name
+    strip_leading_blanks(tmp_string1,tmp_string4);     
+    write_end_normal_prior();
+    write_funnel_end();  
+    fprintf(fall,"}\n\n%s SEPFUN1  ",tmp_string3);
+    fprintf(fall,"model_parameters::%s\n{\n  "
+      "begin_df1b2_funnel();\n" ,tmp_string1);
+    fprintf(fall,"  if (inner_opt_flag==0)\n  {\n");
+    
+    fprintf(fdat,"SEPFUN3 %s %s;\n",tmp_string3,tmp_string1);
+
+
+    add_references_to_user_classes(fall); 
+    in_aux_proc=1;
+    in_funnel_proc=1;
+    //have_separable_function=1;
+    in_normal_prior_flag=1;
+    normal_prior_flag2=1;
     in_normal_prior=1;
     BEGIN DEFINE_PROCS_NP;
                               }
@@ -4993,7 +5051,10 @@ void write_end_normal_prior(void){
       fprintf(fall,"        delete M.dfpMinv;\n");
       fprintf(fall,"        M.dfpMinv=0;\n");
       fprintf(fall,"      }\n");
-      fprintf(fall,"      M.dfpMinv=new dvar_matrix(tmpM);\n");
+      if (normal_prior_flag2==0)
+        fprintf(fall,"      M.dfpMinv=new dvar_matrix(tmpM);\n");
+      else
+        fprintf(fall,"      M.dfpMinv=new dvar_matrix(inv(tmpM)); /* df1b2 Deletion Tag */\n");
     }
     else
     {
@@ -5074,6 +5135,7 @@ void write_end_normal_prior(void){
       fprintf(fall,"  } \n") ;
     }
     in_normal_prior=0;
+    normal_prior_flag2=0;
   }
 }
 

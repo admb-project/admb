@@ -4,6 +4,7 @@
 class df1b2_parameters : public df1b2_pre_parameters \
 { \
 public: \
+  virtual void * mycast(void) {return (void*)this;} \
   static df1b2_parameters * df1b2_parameters_ptr;\
   static df1b2_parameters * get_df1b2_parameters_ptr(void) \
   { \

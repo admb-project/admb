@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -173,7 +173,8 @@ dvector evaluate_quadprior(const dvector& x,int usize,
   dvariable vf=0.0;
   initial_params::reset(dvar_vector(u));
 
-  if (pfmin->lapprox->sparse_triplet2==0)
+  if (pfmin->lapprox->sparse_hessian_flag &&
+    pfmin->lapprox->sparse_triplet2==0)
   {
     cerr << "need to deal with 0 ptr here" << endl;
     ad_exit(1);
@@ -183,9 +184,14 @@ dvector evaluate_quadprior(const dvector& x,int usize,
   laplace_approximation_calculator::where_are_we_flag=3; 
   if ( quadratic_prior::get_num_quadratic_prior()>0)
   {
+    quadratic_prior::calc_matrix_flag=1;
+    quadratic_prior::matrix_mult_flag=1;
     quadratic_prior::get_M_calculations();
+    quadratic_prior::matrix_mult_flag=0;
+    quadratic_prior::calc_matrix_flag=0;
   }
   laplace_approximation_calculator::where_are_we_flag=0; 
+  vf=*objective_function_value::pobjfun;
   gradcalc(xsize,g);
   return g;
 }
@@ -1299,8 +1305,8 @@ dvector evaluate_quadprior(const dvector& x,int usize,
    switch (quadratic_prior::old_style_flag)
    {
    case 0:
-     cerr << " can't get here " << endl;
-     ad_exit(1);
+     *objective_function_value::pobjfun+=0.5*(*pu)*solve(_M,*pu,lndet,sgn);
+     *objective_function_value::pobjfun+=0.5*lndet;
      break;
    case 1:
      cerr << " can't get here " << endl;
@@ -1328,8 +1334,17 @@ dvector evaluate_quadprior(const dvector& x,int usize,
    {
    case 0:
    case 1:
-     cerr << " can't get here " << endl;
-     ad_exit(1);
+     if (laplace_approximation_calculator::where_are_we_flag==2 ||
+       laplace_approximation_calculator::where_are_we_flag==3) 
+     {
+       pMinv = new dmatrix(inv(_M));
+       if (pMinv==0)
+       {
+         cerr << "Error allocating dmatrix" << endl;
+         ad_exit(1);
+       }
+     }
+
      break;
    case 2:
      if (laplace_approximation_calculator::where_are_we_flag==2 ||

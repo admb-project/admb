@@ -1536,9 +1536,14 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   int ii=xs+us+1;
   if (pmin->lapprox->sparse_hessian_flag==0)
   {
-    for (i=1;i<=us;i++)
-      for (j=1;j<=us;j++)
-      y(ii++)=Hess_save(i,j);
+    if (quadratic_prior::get_num_quadratic_prior()>0)
+      for (i=1;i<=us;i++)
+        for (j=1;j<=us;j++)
+          y(ii++)=Hess_save(i,j);
+    else
+      for (i=1;i<=us;i++)
+        for (j=1;j<=us;j++)
+          y(ii++)=Hess(i,j);
   }
   else
   {

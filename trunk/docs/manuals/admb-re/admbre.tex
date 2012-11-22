@@ -49,7 +49,7 @@ A comment about notation:
 
 Important points are emphasized with a star
 \begin{itemize}
-\item[$\bigstar$] like this.
+  \item[$\bigstar$] like this.
 \end{itemize}
 
 Please submit all comments and complaints by email to
@@ -119,16 +119,15 @@ With \scAB, you can formulate and fit a large class of nonlinear statistical
 models. With \scAR, you can include random effects in your model. Examples of
 such models include:
 \begin{itemize}
-\item Generalized linear mixed models (logistic and Poisson regression).
-\item Nonlinear mixed models (growth curve models, pharmacokinetics).
-\item State space models (nonlinear Kalman filters).
-\item Frailty models in survival analysis.
-\item Nonparametric smoothing.
-\item Semiparametric modelling.
-\item Frailty models in survival analysis.
-\item Bayesian hierarchical models.
-\item General nonlinear random-effects models (fisheries catch-at-age
-models).
+  \item Generalized linear mixed models (logistic and Poisson regression).
+  \item Nonlinear mixed models (growth curve models, pharmacokinetics).
+  \item State space models (nonlinear Kalman filters).
+  \item Frailty models in survival analysis.
+  \item Nonparametric smoothing.
+  \item Semiparametric modelling.
+  \item Frailty models in survival analysis.
+  \item Bayesian hierarchical models.
+  \item General nonlinear random-effects models (fisheries catch-at-age models).
 \end{itemize}
 You formulate the likelihood function in a template file, using a language that
 resembles \cplus. The file is compiled into an executable program (on Linux or
@@ -159,28 +158,28 @@ flexibility with respect to model formulation.
 \subsection{The strengths of \scAR}
 
 \begin{itemize}
-\item \textit{Flexibility:} You can fit a large variety of models within a
-single framework.
-\item \textit{Convenience:} Computational details are transparent. Your only
-responsibility is to formulate the log-likelihood.
-\item \textit{Computational efficiency:} \scAR\ is up to 50 times faster
-than is \scWinBUGS.
-\item \textit{Robustness:} With exact derivatives, you can fit highly nonlinear
-models.
-\item \textit{Convergence diagnostic:} The gradient of the likelihood
-function provides a clear convergence diagnostic.
+  \item \textit{Flexibility:} You can fit a large variety of models within a
+  single framework.
+  \item \textit{Convenience:} Computational details are transparent. Your only
+  responsibility is to formulate the log-likelihood.
+  \item \textit{Computational efficiency:} \scAR\ is up to 50 times faster than
+  \scWinBUGS.
+  \item \textit{Robustness:} With exact derivatives, you can fit highly
+  nonlinear models.
+  \item \textit{Convergence diagnostic:} The gradient of the likelihood function
+  provides a clear convergence diagnostic.
 \end{itemize}
 
 \subsection{Program interface}
 
 \begin{itemize}
-\item\textit{Model formulation}: You fill in a \cplus-based template using your
-favorite text editor.
+  \item\textit{Model formulation}: You fill in a \cplus-based template using
+  your favorite text editor.
 
-\item \textit{Compilation}: You turn your model into an executable program using
-a  \cplus\ compiler (which you need to install separately).
+  \item \textit{Compilation}: You turn your model into an executable program
+  using a \cplus\ compiler (which you need to install separately).
 
-\item\textit{Platforms}: Windows and Linux
+  \item\textit{Platforms}: Windows and Linux.
 \end{itemize}
 
 \subsection{How to obtain \scAR}
@@ -199,14 +198,14 @@ features of \scAB\ make it very useful for building and fitting nonlinear models
 to data:
 
 \begin{itemize}
-\item Vector-matrix arithmetic and vectorized operations for common mathematical
-functions.
-\item Reading and writing vector and matrix objects to a file.
-\item Fitting the model is a stepwise manner (with ``phases''), where more and
-more parameters become active in the minimization.
-\item Calculating standard deviations of arbitrary functions of the model
-parameters by the ``delta method.''
-\item \scMCMC\ sampling around the posterior mode.
+  \item Vector-matrix arithmetic and vectorized operations for common
+  mathematical functions.
+  \item Reading and writing vector and matrix objects to a file.
+  \item Fitting the model is a stepwise manner (with ``phases''), where more and
+  more parameters become active in the minimization.
+  \item Calculating standard deviations of arbitrary functions of the model
+  parameters by the ``delta method.''
+  \item \scMCMC\ sampling around the posterior mode.
 \end{itemize}
 To use random effects in \scAB, it is recommended that you have some experience
 in writing ordinary \scAB\ programs. In this section, we review, for the benefit
@@ -368,9 +367,9 @@ relax---random effects come to rescue! \index{random effects}
 
 The classical motivation of random effects is:
 \begin{itemize}
-\item To create parsimonious and interpretable correlation structures.
+  \item To create parsimonious and interpretable correlation structures.
 
-\item To account for additional variation or overdispersion.
+  \item To account for additional variation or overdispersion.
 \end{itemize}
 We shall see, however, that random effects are useful in a much wider context,
 for instance, in non-parametric smoothing. % (\ref{}).
@@ -446,7 +445,7 @@ effects.) \index{random effects!random effects matrix}
   coefficient. In a more general context. ``latent random variable'' is probably
   a better term.
 
-  \item The unknown parameters in our model are: $a$, $b$, $\mu $, $\sigma $,
+  \item The unknown parameters in our model are: $a$, $b$, $\mu$, $\sigma$,
   $\sigma_{x}$, and $x_{1},\ldots ,x_{n}$. We have agreed to call
   $x_{1},\ldots,x_{n}$ ``random effects.'' The rest of the parameters are called
   ``hyper-parameters.'' Note that we place no prior distribution on the
@@ -459,7 +458,7 @@ effects.) \index{random effects!random effects matrix}
   from making it ``more Bayesian'' by putting priors (penalties) on the
   hyper-parameters.
 
-  \item A statistician will say, ''This model is nothing but a bivariate
+  \item A statistician will say, ``This model is nothing but a bivariate
   Gaussian distribution for $(X,Y)$, and we don't need any random effects in
   this situation.'' This is formally true, because we could work out the
   covariance matrix of $(X,Y)$ by hand and fit the model using ordinary \scAB.
@@ -624,9 +623,9 @@ probabilities are multiplied to yield the joint distribution of data and random
 effects, the objective function becomes a sum of (negative) log-likelihood
 contributions, and the following rule applies:
 \begin{itemize}
-\item[$\bigstar$]
-The order in which the different log-likelihood contributions are added to the
-objective function does not matter.
+  \item[$\bigstar$]
+  The order in which the different log-likelihood contributions are added to the
+  objective function does not matter.
 \end{itemize}
 An addition to this rule is that all programming variables have their values
 assigned before they enter in a prior or a likelihood expression. \scWinBUGS\
@@ -791,7 +790,7 @@ for you in \scAR, and all you have to do is:
 \begin{enumerate}
   \item Define a random effect $u$ with a $N(0,1)$ distribution.
   \item Transform $u$ into a new random effect $x$ using one of
-        \texttt{something\_deviate} functions described below.
+  \texttt{something\_deviate} functions described below.
 \end{enumerate}
 where \texttt{something} is the name of the distribution.
 
@@ -859,10 +858,10 @@ PROCEDURE_SECTION
 
 As indicated by the data types used above,
 \begin{itemize}
-\item[$\bigstar$]
-    $a$ and $b$ are among the parameters that are being estimated.
-\item[$\bigstar$]
-    $c$ cannot be estimated.
+  \item[$\bigstar$]
+  $a$ and $b$ are among the parameters that are being estimated.
+  \item[$\bigstar$]
+  $c$ cannot be estimated.
 \end{itemize}
 It would, however, be possible to write a version of
 \texttt{robust\_normal\_mixture\_deviate} where also $c$ and the mixing
@@ -2151,12 +2150,12 @@ $j=0,1,2$, as opposed to $j = 1,\dots n$, as above. For large~$n$, this can give
 large savings.
 
 To implement the log-likelihood (\ref{l_w}) in \scAR, you must organize your
-code into a \texttt{SEPARABLE\_FUNCTION} (see the section ''Nested models'' in
+code into a \texttt{SEPARABLE\_FUNCTION} (see the section ``Nested models'' in
 the \scAR\ manual). Then you should do the following:
 \begin{itemize}
-\item Formulate the objective function in the weighted form (\ref{l_w}).
+  \item Formulate the objective function in the weighted form (\ref{l_w}).
 
-\item Include the statement
+  \item Include the statement
   \begin{lstlisting}
   !! set_multinomial_weights(w);
   \end{lstlisting}
@@ -2314,29 +2313,29 @@ item-response-theory-irt-and-the-multilevel-rasch-model-1}{here}.
 \chapter{Differences between \scAB\ and \scAR?}
 
 \begin{itemize}
-\item Profile likelihoods are now implemented also in random effects models, but with
-     the limitation that the \texttt{likeprof\_number} can only depend on parameters,
-     not random effects. 
-\item Certain functions, especially for matrix operations, have not been
-implemented.
-\item The assignment operator for \texttt{dvariable} behaves differently. The
-code
+  \item Profile likelihoods are now implemented also in random effects models,
+  but with the limitation that the \texttt{likeprof\_number} can only depend on
+  parameters, not random effects.
+  \item Certain functions, especially for matrix operations, have not been
+  implemented.
+  \item The assignment operator for \texttt{dvariable} behaves differently. The
+  code
 \begin{lstlisting}
      dvariable y = 1;
      dvariable x = y;
 \end{lstlisting}
-will make \texttt{x} and \texttt{y} point to the same memory location (shallow
-copy) in \scAR. Hence, changing the value of \texttt{x} automatically changes
-\texttt{y}. Under \scAB, on the other hand, \texttt{x} and \texttt{y} will refer
-to different memory locations (deep copy). If you want to perform a deep copy
-in \scAR\ you should write:
+  will make \texttt{x} and \texttt{y} point to the same memory location (shallow
+  copy) in \scAR. Hence, changing the value of \texttt{x} automatically changes
+  \texttt{y}. Under \scAB, on the other hand, \texttt{x} and \texttt{y} will
+  refer to different memory locations (deep copy). If you want to perform a deep
+  copy in \scAR\ you should write:
 \begin{lstlisting}
      dvariable y = 1;
      dvariable x;
      x = y;
 \end{lstlisting}
-For vector and matrix objects \scAB\ and \scAR\ behave identically in that
-a shallow copy is used.
+  For vector and matrix objects \scAB\ and \scAR\ behave identically in that
+  a shallow copy is used.
 \end{itemize}
 
 \chapter{Command Line options}

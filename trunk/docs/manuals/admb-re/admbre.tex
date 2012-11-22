@@ -885,7 +885,7 @@ instance, if you have observations $x_i$ that are Poisson distributed with
 expectation $\mu_i$, you would write
 \begin{lstlisting}
 for (i=1;i<=n;i++)
-  f -= og\_density\_poisson(x(i),mu(i));
+  f -= log_density_poisson(x(i),mu(i));
 \end{lstlisting}
 Note that functions do not accept vector arguments.
 \begin{table}[h]

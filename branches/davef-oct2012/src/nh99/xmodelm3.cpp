@@ -516,8 +516,9 @@ void tracing_message(int traceflag,const char *s);
         print_is_diagnostics(lapprox);
       }
 #endif
-      quadratic_prior::cleanup(); 
-      df1b2quadratic_prior::cleanup(); 
+      // move this outside of phase loop?
+      //quadratic_prior::cleanup(); 
+      //df1b2quadratic_prior::cleanup(); 
       initial_params::save();
       report();
       // in case the user changes some initial_params in the report section
@@ -530,6 +531,8 @@ void tracing_message(int traceflag,const char *s);
         initial_params::current_phase++;
       }
     }
+    //quadratic_prior::cleanup(); 
+    //df1b2quadratic_prior::cleanup(); 
     if (initial_params::current_phase >
       initial_params::max_number_phases)
     {

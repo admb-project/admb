@@ -5092,8 +5092,8 @@ dvar_vector solve(const dvar_matrix& aa,const dvar_vector& z,
 dvar_vector old_solve(const dvar_matrix& aa,const dvar_vector& z,
   prevariable& ln_unsigned_det,const prevariable& sign);
 
-//dvar_vector solve(const dvar_matrix& aa,const dvar_vector& z,
- // prevariable& ln_unsigned_det,const prevariable& sign);
+dvar_vector solve(const dvar_matrix& aa,const dvar_vector& z,
+  prevariable& ln_unsigned_det,const prevariable& sign);
 
 dvector csolve(const dmatrix& aa,const dvector& z);
 dvector solve(const dmatrix& aa,const dvector& z);
@@ -5440,6 +5440,11 @@ public:
   #endif
 #endif
 */
+
+dvector Lubksb(const dmatrix& a,const ivector&  indx,const dvector&  b);
+
+dmatrix ludcmp(const dmatrix& _a,const ivector& _indx,
+  const double& _det,const double& sgn, const double& _d);
 
 // this is the speical version with an index for reordering the matrix
 void ludcmp_index(const dmatrix& a,const ivector& indx,const double& d);
@@ -8244,6 +8249,7 @@ dvariable lower_triangular_ln_det(const dvar_matrix& m,int& sgn);
 double bounder(double x,double min,double max, double scale);
 dvariable bounder(const prevariable&  x,double min,double max, double scale);
 dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn);
+dmatrix inv_with_lu(const dmatrix& a,const ivector & indx,double d);
 
 double gamma_deviate(double _x,double _a);
 dvariable gamma_deviate(const prevariable& _x,const prevariable& _a);

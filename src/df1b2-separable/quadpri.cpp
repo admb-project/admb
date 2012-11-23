@@ -655,14 +655,18 @@ dvector evaluate_quadprior(const dvector& x,int usize,
  */
   quadratic_prior::quadratic_prior(void)
   {
+    LU=0;
     CM=0;
     SCM=0;
     DFSCM=0;
     SCMinv=0;
     pMinv=0; 
     dfpMinv=0; 
+    indx=0;
+    sgn=0;
     S_dfpMinv=0; 
     pu=0; 
+    pM=0; 
     add_to_list();
   } 
 
@@ -679,12 +683,26 @@ dvector evaluate_quadprior(const dvector& x,int usize,
 
   void quadratic_prior::deallocate(void)
   {
+    if (SCMinv) delete SCMinv;
+    SCMinv=0; 
+    if (DFSCM) delete DFSCM;
+    DFSCM=0; 
+    if (LU) delete LU;
+    LU=0; 
+    if (SCM) delete SCM;
+    SCM=0; 
+    if (pM) delete pM;
+    pM=0; 
     if (pMinv) delete pMinv;
     pMinv=0; 
-    //if (pu) delete pu;
-    //pu=0; 
-    if (dfpMinv) delete pMinv;
+    if (pu) delete pu;
+    pu=0; 
+    if (S_dfpMinv) delete S_dfpMinv;
+    S_dfpMinv=0; 
+    if (dfpMinv) delete dfpMinv;
     dfpMinv=0; 
+    if (indx) delete indx;
+    indx=0;
     if (CM) delete CM;
     CM=0;
   } 
@@ -711,6 +729,9 @@ dvector evaluate_quadprior(const dvector& x,int usize,
       ad_exit(1);
     }
     pu = new dvar_vector((dvar_vector&)(_u));
+    if (indx)
+     delete indx;
+    indx=new ivector(_u.indexmin(),_u.indexmax());
   }
 
 /**
@@ -933,17 +954,21 @@ dvector evaluate_quadprior(const dvector& x,int usize,
  */
  void quadratic_prior::operator = (const dvar_matrix & _M)
  { 
-   dvariable lndet;
-   dvariable sgn;
+   dvariable vlndet;
+   dvariable vsgn;
    
    switch (quadratic_prior::old_style_flag)
    {
    case 0:
-     *objective_function_value::pobjfun+=0.5*(*pu)*(solve(_M,*pu,lndet,sgn));
-     *objective_function_value::pobjfun+=0.5*lndet;
-     //*objective_function_value::pobjfun+=0.5*(*pu)*(solve(_M,*pu));
-     //*objective_function_value::pobjfun+=0.5*ln_det(_M);
-     break;
+     {
+       /* XXXXXXXXXXXXXXXXXXXXX */
+       *objective_function_value::pobjfun
+         +=0.5*(*pu)*(solve(_M,*pu,vlndet,vsgn));
+       *objective_function_value::pobjfun+=0.5*vlndet;
+       //*objective_function_value::pobjfun+=0.5*(*pu)*(solve(_M,*pu));
+       //*objective_function_value::pobjfun+=0.5*ln_det(_M);
+       break;
+     }
    case 1:
      *objective_function_value::pobjfun+=(*pu)*(solve(_M,*pu));
      break;
@@ -1298,15 +1323,29 @@ dvector evaluate_quadprior(const dvector& x,int usize,
  */
  void quadratic_prior::operator = (const dmatrix & _M)
  { 
-   dvariable lndet;
-   dvariable sgn;
-
-   
    switch (quadratic_prior::old_style_flag)
    {
    case 0:
-     *objective_function_value::pobjfun+=0.5*(*pu)*solve(_M,*pu,lndet,sgn);
-     *objective_function_value::pobjfun+=0.5*lndet;
+     {
+       /* XXXXXXXXXXXXXXXXXXXXX */
+       if (indx==0)
+         indx=new ivector(pu->indexmin(),pu->indexmax());
+
+       dvector ccu=value(*pu);
+       dvector v=Lubksb(_M,*indx,ccu);
+       double vv=0.5*ccu * v;
+       *objective_function_value::pobjfun+=vv;
+       save_identifier_string("P4");
+       v.save_dvector_value();
+       v.save_dvector_position();
+       save_identifier_string("P3");
+       pu->save_dvar_vector_position();
+       save_identifier_string("P2");
+       gradient_structure::GRAD_STACK1->set_gradient_stack(quad_prod);
+       //*objective_function_value::pobjfun+=0.5*(*pu)*solve(_M,*pu,lndet,sgn);
+       //*objective_function_value::pobjfun+=0.5*lndet;
+       break;
+     }
      break;
    case 1:
      cerr << " can't get here " << endl;
@@ -1337,7 +1376,7 @@ dvector evaluate_quadprior(const dvector& x,int usize,
      if (laplace_approximation_calculator::where_are_we_flag==2 ||
        laplace_approximation_calculator::where_are_we_flag==3) 
      {
-       pMinv = new dmatrix(inv(_M));
+       pMinv = new dmatrix(inv_with_lu(_M,*indx,d));
        if (pMinv==0)
        {
          cerr << "Error allocating dmatrix" << endl;
@@ -2505,3 +2544,140 @@ void sparse_quadratic_re_penalty::operator =
  // { 
  //   sparse_quadratic_prior::operator = (M);
  // }
+
+/*
+dmatrix ludcmp(const dmatrix& _a,const ivector& _indx,
+  const double& _det,const double& sgn, const double& _d)
+{
+  const double TINY=1.e-60;
+  int i=0;
+  int imax=0;
+  int j=0;
+  int k=0;
+  int n=0;
+  double& d=(double&)_d;
+  double& det=(double&)_det;
+  double& sgn=(double&)_sgn;
+  dmatrix& a=(dmatrix&)_a;
+  ivector& indx=(ivector&)_indx;
+
+  n=a.colsize();
+  int lb=a.colmin();
+  int ub=a.colmax();
+
+  double big,dum,sum,temp;
+
+  dvector vv(lb,ub);
+
+
+  d=1.0;
+
+  for (i=lb;i<=ub;i++)
+  {
+    big=0.0;
+    for (j=lb;j<=ub;j++)
+    {
+      temp=fabs(a[i][j]);
+      if (temp > big)
+      {
+        big=temp;
+      }
+    }
+    if (big == 0.0) 
+    {
+      cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
+    }
+    vv[i]=1.0/big;
+  }
+
+
+
+  for (j=lb;j<=ub;j++)
+  {
+    for (i=lb;i<j;i++) 
+    {
+      sum=a[i][j];
+      for (k=lb;k<i;k++)
+      {
+        sum -= a[i][k]*a[k][j];
+      }
+      a[i][j]=sum;
+    }
+    big=0.0;
+    for (i=j;i<=ub;i++) 
+    {
+      sum=a[i][j];
+      for (k=lb;k<j;k++)
+      {
+        sum -= a[i][k]*a[k][j];
+      }
+      a[i][j]=sum;
+      dum=vv[i]*fabs(sum);
+      if ( dum >= big)
+      {
+        big=dum;
+        imax=i;
+      }
+    }
+    if (j != imax)
+    {
+      for (k=lb;k<=ub;k++)
+      {
+        dum=a[imax][k];
+        a[imax][k]=a[j][k];
+        a[j][k]=dum;
+      }
+      d = -d;
+      vv[imax]=vv[j];
+    }
+    indx[j]=imax;
+
+    if (a[j][j] == 0.0)
+    {
+      a[j][j]=TINY;
+    }
+
+    if (j != n)
+    {
+      dum=1.0/(a[j][j]);
+      for (i=j+1;i<=ub;i++)
+      {
+        a[i][j] *= dum;
+      }
+    }
+  }
+
+  double ln_det=0.0;
+   
+  if (d>.1) 
+  {
+    sgn=1;
+  }
+  else if (d<-0.1)
+  {
+    sgn=-1;
+  }
+  else
+  {
+    sgn=0;
+  }
+  for (int j=m1.rowmin();j<=m1.rowmax();j++)
+  {
+    if (a(j,j)>0)
+    {
+      ln_det+=log(a[j][j]);
+    }
+    else if (a(j,j)<0)
+    {
+      sgn=-sgn;
+      ln_det+=log(-a[j][j]);
+    }
+    else
+    {
+      sgn=0;
+    }
+  }
+
+  return a;
+}
+*/

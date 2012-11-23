@@ -641,6 +641,10 @@ int * kill_address;
       }
     }
     while(spminflag || repeatminflag);
+
+    // moved quadratic prior cleanupo to here ?
+    quadratic_prior::cleanup(); 
+    df1b2quadratic_prior::cleanup(); 
   }
 
 

@@ -1137,6 +1137,7 @@ df1b2vector log(const df1b2vector& x);
 df1b2matrix mfexp(const df1b2matrix& M);
 df1b2matrix log(const df1b2matrix& M);
 df1b2matrix trans(const df1b2matrix& M);
+df1b2matrix inv(const df1b2matrix& M);
 df1b2matrix choleski_decomp(const df1b2matrix& M);
 df1b2matrix choleski_decomp_extra(const df1b2matrix& M);
 df1b2matrix exp(const df1b2matrix& M);
@@ -1804,7 +1805,12 @@ class quadratic_prior : public style_flag_class
 {
 public:
   dcompressed_triplet * SCM;
+  double d;
+  ivector * indx;
+  double sgn;
+  double lndet;
   dmatrix * CM;
+  dmatrix * LU;
   dmatrix * pM;
   dmatrix * pMinv;
   dcompressed_triplet * SCMinv;

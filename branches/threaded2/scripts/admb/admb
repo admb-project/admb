@@ -1,0 +1,139 @@
+#!/bin/bash
+shopt -s expand_aliases
+alias help='echo -e "Usage: admb [-d] [-g] [-r] [-s] model\n
+Build AD Model Builder executable from TPL.\n
+  -d     Create DLL
+  -g     Insert debugging symbols
+  -r     Create ADMB-RE
+  -s     Enforce safe bounds
+  model  Filename prefix, e.g. simple\n"'
+if [[ "$1" == "" ]]; then help; exit; fi
+if [[ "$1" == "-help" ]]; then help; exit; fi
+if [[ "$1" == "--help" ]]; then help; exit; fi
+
+# Pop args until model=$1
+unset bounds
+unset d
+unset dll
+unset g
+unset r
+unset s
+tpl2cpp=tpl2cpp
+while getopts "dgrs" A; do
+  case $A in
+    d) d=-d; dll=-dll
+       ;;
+    g) g=-g
+       ;;
+    r) r=-r; tpl2cpp=tpl2rem
+       ;;
+    s) s=-s; bounds=-bounds
+       ;;
+    *)
+       help
+       exit 1
+       ;;
+  esac
+done
+shift $((OPTIND-1))
+
+tpls=
+srcs=
+objs=
+
+for file in $*
+do
+  extension="${file#*.}"
+  if [ "$extension" = "$file" ]; then
+    tpls="$tpls $file"
+  elif [ "$extension" = "tpl" ]; then
+    tpls="$tpls ${file%.*}"
+  elif [ "$extension" = "cpp" -o "$extension" = "c" ]; then
+    srcs="$srcs $file"
+  elif [ "$extension" = "o" -o "$extension" = "obj" ]; then
+    objs="$objs $file"
+  fi
+done
+
+tplsrcs=
+for model in $tpls
+do
+  if [ ! -f $model.tpl ]; then
+    echo -e "\\nError: $model.tpl not found\\n"
+    exit 1
+  fi
+  rm -f $model.cpp $model.htp $model.o $model
+
+  CMD="$tpl2cpp $bounds $dll $model"
+  echo -e \\n\*\*\* $CMD
+  eval $CMD
+  if [ ! -f $model.cpp -o ! -f $model.htp ]; then
+    echo -e "\\nError: could not parse $model.tpl\\n"
+    exit 1
+  fi
+  tplsrcs="$tplsrcs ${model%.*}.cpp"
+done
+
+for file in $tplsrcs $srcs
+do
+  if [ ! -f $file ]; then
+    echo -e "\\nError: $file not found\\n"
+    exit 1
+  fi
+  if [[ -z "$CXXFLAGS" ]]; then
+    CMD="adcomp $d $g $r $s $file"
+  else
+    CMD="CXXFLAGS=\"$CXXFLAGS\" adcomp $d $g $r $s $file"
+  fi
+  echo -e \\n\*\*\* $CMD
+  eval $CMD
+  if [[ ! -f ${file%.*}.o ]]; then
+    echo -e "\\nError: Could not compile $file\\n"
+    exit 1
+  fi
+done
+
+for file in $srcs
+do
+  f=${file%.*}
+  objs="$f.o $objs"
+done
+
+for file in $tpls
+do
+  model=${file%.*}
+  if [[ -z "$LDFLAGS" ]]; then
+    CMD="adlink $d $g $r $s $model $objs"
+  else
+    CMD="LDFLAGS=\"$LDFLAGS\" adlink $d $g $r $s $model $objs"
+  fi
+  echo -e \\n\*\*\* $CMD
+  eval $CMD
+  if [[ -z $dll ]]; then 
+    if [[ ! -f $model ]]; then 
+        echo -e "\\nError: Could not build $model\\n"
+    fi
+  else
+    if [[ ! -f $model.so ]]; then
+        echo -e "\\nError: Could not build $model.so\\n"
+    fi
+  fi
+done
+
+echo -e "\\nSuccessfully built executable.\\n"
+exit 0
+
+### r259 [2012-02-29] arnima  improved handling of CXXFLAGS and LDFLAGS
+### r237 [2012-01-25] johnoel improved handling of CXXFLAGS and LDFLAGS
+### r 42 [2011-06-22] arnima  improved handling of CXXFLAGS and LDFLAGS
+### r 39 [2011-06-22] johnoel improved handling of CXXFLAGS and LDFLAGS
+### r982 [2011-02-16] arnima  rewrite, improved messages
+### r927 [2010-12-24] johnoel moved to 'admb' dir
+### r901 [2010-12-22] johnoel moved to 'g++' dir
+### r662 [2010-06-17] johnoel changed script so it deletes cpp/htp/obj/exe and
+###                           reports error or success, added exit status,
+###                           passed CXXFLAGS and LDFLAGS to adcomp and adlink
+### r524 [2010-03-17] arnima  added support for filename extension like
+###                           simple.tpl
+### r503 [2009-02-08] johnoel split -s option into separate -g and -s options
+### r243 [2009-05-27] arnima  created

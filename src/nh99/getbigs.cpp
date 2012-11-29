@@ -94,7 +94,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
       {
         if (allocated(H(i)))
         {
-          dmatrix tmp=inv(H(i))*Dux(i);
+          dmatrix tmp=-inv(H(i))*Dux(i);
           int rmin=H(i).indexmin();
           int rmax=H(i).indexmax();
           int tmpmin=Dux(i).indexmin();

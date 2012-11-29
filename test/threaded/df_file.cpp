@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: df_file.cpp 494 2012-06-13 20:41:16Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -186,7 +186,9 @@
     {
       sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
     }
-    adstring tmpstring=cmpdif_file_name;
+   
+    adstring tmpstring;
+    tmpstring=cmpdif_file_name;
 #if ( defined(USE_ADMPI) || defined(USE_PTHREADS))
       add_slave_suffix(tmpstring);
 #endif // #if defined(USE_ADMPI)
@@ -198,7 +200,10 @@
         ad_exit(1);
       }
 
-     strncpy(&cmpdif_file_name[0],tmpstring,101);
+     strncpy(&cmpdif_file_name[0],tmpstring,100);
+
+
+
 
 #if defined (__MSVC32__) || defined (__WAT32__)
     file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |

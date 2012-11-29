@@ -33,6 +33,7 @@ test:
 	CXXFLAGS="" $(MAKE) --directory=qfclib test
 
 clean:
+	$(MAKE) --directory=ad2csv clean
 	$(MAKE) --directory=ecolib clean
 	$(MAKE) --directory=qfclib clean
 	$(MAKE) --directory=statslib clean

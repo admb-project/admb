@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: model7.cpp 437 2012-04-26 23:43:13Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
@@ -584,6 +584,8 @@ void add_slave_suffix(const adstring& _tmpstring)
 
 #else if defined(USE_PTHREADS)
 
+
+/*
 void add_slave_suffix(const adstring& _tmpstring)
 {
   ADUNCONST(adstring,tmpstring)
@@ -602,4 +604,6 @@ void add_slave_suffix(const adstring& _tmpstring)
     }
   }
 }
+*/
+
 #endif

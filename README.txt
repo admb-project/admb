@@ -70,7 +70,7 @@ Changes
 
 Thanks to the following people for providing fixes and suggestions.
  * Dave Fournier
- * Jan Jaap Poos
+ * Jan Jaap
  * Gareth Williams
  * Weihai Liu
  * Barak A. Pearlmutter

@@ -1,20 +1,18 @@
-.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd atan2 priors betai beta2 beta3 adstring_array df33_tester beta_deviate
+.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd atan2 priors betai beta2 beta3 adstring_array df33_tester beta_deviate expm threaded
 
-all: test-geolocation
+all: threaded
 
-main: test-geolocation
+threaded:
+	OPTIONS=-s $(MAKE) --directory=$@
 
-test-geolocation:
-	$(MAKE) --directory=geolocation
-
-test-expm:
-	$(MAKE) --directory=expm
+expm:
+	OPTIONS=-s $(MAKE) --directory=$@
 
 adstring_array:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 priors:
-	CXXFLAGS=$(CXXFLAGS) OPTIONS=-s $(MAKE) --directory=$@
+	CXXFLAGS=${CXXFLAGS} OPTIONS=-s $(MAKE) --directory=$@
 
 atan2:
 	OPTIONS=-s $(MAKE) --directory=$@
@@ -23,7 +21,7 @@ testminmax:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 SS3:
-	$(MAKE) --directory=$@
+	OPTIONS=-s $(MAKE) --directory=$@
 
 admb_messages:
 	OPTIONS=-s $(MAKE) --directory=$@
@@ -98,7 +96,7 @@ beta3:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 clean:
-	$(MAKE) --directory=geolocation clean
+	$(MAKE) --directory=threaded clean
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=adstring_array clean
 	$(MAKE) --directory=priors clean

@@ -1,7 +1,5 @@
 @echo off
-
-setlocal EnableExtensions EnableDelayedExpansion
-
+setlocal
 if [%1]==[] goto HELP
 if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
@@ -13,29 +11,24 @@ set contriblib=-lcontribo
 set linker=g++
 set sym=-s & rem space
 set i=0
-set objects=
-
-for %%a in (%*) do (
-if %%~xa==.obj (
-set objects=!objects! %%a
-if not defined model set model=%%~na
-)
-if %%a==-d set linker=dllwrap
-if %%a==-g set sym=
-if %%a==-r set r=
-if %%a==-s (
-  set adlib=-lads
-  set df1b2lib=-ldf1b2s
-  set contriblib=-lcontribs
-)
-)
+:STARTLOOP
+if [%2]==[] goto ENDLOOP
+if %1==-d set linker=dllwrap& shift
+if %1==-g set sym=& shift
+if %1==-r shift
+if %1==-s set adlib=-lads& set df1b2lib=-ldf1b2s& set contriblib=-lcontribs& shift
+set /a i=%i%+1
+if %i%==100 shift & set i=0 & echo.&echo Warning: illegal option %1 (discarded)
+goto STARTLOOP
+:ENDLOOP
 
 set def=
+set model=%~n1
 if %linker%==g++ (set out=-o %model%) else (set def=-def %model%.def^
  --driver-name g++ & set out=--output-lib lib%model%.a -o %model%.dll)
 
-set CMD=%linker% %sym%-static %def% -L"%ADMB_HOME%\lib" -L"%ADMB_HOME%\contrib" %def% %objects% %df1b2lib% ^
--ladmod %contriblib% -ladt %adlib% %df1b2lib% -ladmod -ladt %contriblib% %adlib% %contriblib% %out%
+set CMD=%linker% %sym%-static %def%-L"%ADMB_HOME%\lib" -L"%ADMB_HOME%\contrib" %def% %model%.obj %df1b2lib%^
+ -ladmod %contriblib% -ladt %adlib% %df1b2lib% -ladmod -ladt %contriblib% %adlib% %contriblib% %out%
 echo %CMD%
 %CMD%
 

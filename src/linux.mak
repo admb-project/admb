@@ -10,7 +10,7 @@ NOW=$(shell date)
 
 ifndef LIBPATH
 CCVERSION=gcc411
-OSVERSION=fedora8
+OSVERSION=fedorar8
 LIBPATH=../build/${CCVERSION}-${OSVERSION}
 endif
 
@@ -37,9 +37,9 @@ CXXFLAGS:=-Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 endif
 
 ifdef DEBUG
-CXXFLAGS:=-c -g $(CXXFLAGS)
+CXXFLAGS:=-c -g $(CXXFLAGS) -fpermissive
 else
-CXXFLAGS:=-c -O3 $(CXXFLAGS)
+CXXFLAGS:=-c -O3 $(CXXFLAGS) -fpermissive
 endif
 
 dist:
@@ -100,9 +100,6 @@ verify:
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-saf.txt"
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" $(MAKE) -C ${DISK}/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-opt.txt"
-
-tests:
-	$(MAKE) ADMB_HOME="${ADMB_HOME}" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" --directory=../tests
 
 check-admb2r:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); $(MAKE) -C ../test/admb2r gcc

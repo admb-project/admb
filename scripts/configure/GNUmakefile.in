@@ -1,4 +1,4 @@
-.PHONY: admb tpl2cpp tpl2rem docs tests contrib
+.PHONY: admb tpl2cpp tpl2rem docs test contrib
 
 all: admb contrib
 	@rm -rf admb
@@ -29,7 +29,7 @@ dist:
 	mkdir -p build/dist
 	rm -rf build/dist/admb@version@
 	svn export . build/dist/admb@version@
-	rm -rf build/dist/admb@version@/tests
+	rm -rf build/dist/admb@version@/test
 	cp configure build/dist/admb@version@
 	cd build/dist && rm -vf admb@version@.zip && zip -r admb@version@.zip admb@version@
 
@@ -58,8 +58,9 @@ zip:
 dmg:
 	@dmgtask@
 
-tests:
-	$(MAKE) ADMB_HOME="$(CURDIR)/build/@target@" ADMB_CXXFLAGS="@cxxflags@" ADMB_LDFLAGS="@cxxflags@" --directory=src --file=@makefile@ tests
+test:
+	export ADMB_HOME=${PWD}/build/@target@; export PATH=${PWD}/build/@target@/bin:$(PATH); CXXFLAGS="@cxxflags@" $(MAKE) --directory=test
+	@#export ADMB_HOME=${PWD}/build/@target@; export PATH=${PWD}/build/@target@/bin:$(PATH); CXXFLAGS="@cxxflags@" $(MAKE) --directory=contrib test
 
 contrib:
 	@arvar@ CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib
@@ -68,6 +69,6 @@ clean:
 	rm -rvf build/@target@
 	rm -rvf build/objects/@target@
 	$(MAKE) --directory=src --file=@makefile@ clean
-	$(MAKE) --directory=tests clean
+	$(MAKE) --directory=test clean
 	$(MAKE) --directory=scripts/configure clean
 	LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib clean

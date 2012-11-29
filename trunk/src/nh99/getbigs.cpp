@@ -69,7 +69,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
         cerr << "Error reading from file " << tmpstring << endl;
         ad_exit(1);
       }
-      uhat_prime=minv*Dux;
+      uhat_prime=-minv*Dux;
     }
     else
     {

@@ -1,0 +1,24 @@
+all: run-new_sim_thread3 run-new_sim_thread4
+
+run-new_sim_thread3:
+	./mygcco2 new_sim_thread3
+	@echo "=== Run new_sim_thread3"
+	time ./new_sim_thread3
+
+run-new_sim_thread4:
+	./mygcco2 new_sim_thread4
+	@echo "=== Run new_sim_thread4"
+	time ./new_sim_thread4
+
+verify:
+	diff yyy zzz
+
+example: thread-ex.c
+	g++ -pthread -fpermissive -othread-ex thread-ex.c
+	./thread-ex
+
+clean:
+	@rm -vf new_sim_thread3 new_sim_thread4
+	@rm -vf yyy zzz
+	@rm -vf variance eigv.rpt fmin.log
+	@rm -vf thread-ex

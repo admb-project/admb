@@ -28,7 +28,7 @@ AC_CHECK_PROG(HAS_SVNVERSION,svnversion,[yes])
 if test "${HAS_SVNVERSION}" = "yes"
 then
   SVNVERSION=`svnversion .`
-  if test "${SVNVERSION}" != "exported"
+  if test "${SVNVERSION}" != "exported" && test "${SVNVERSION}" != "Unversioned directory"
   then
     ADMB_REVISION=".${SVNVERSION}"
     printf "creating REVISION...\n"

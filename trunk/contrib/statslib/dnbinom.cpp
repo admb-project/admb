@@ -52,10 +52,13 @@ dvariable dnbinom(const double& x,const prevariable& mu, const prevariable& size
 		return(0);
 	}
 	RETURN_ARRAYS_INCREMENT();
-	dvariable p=size/(size+mu);
+	//dvariable p=size/(size+mu);
 	dvariable tmp;
-	tmp = gammln(x+size) - gammln(size) - factln(x)
-		+size*log(p)+x*log(1.-p);
+	//tmp = gammln(x+size) - gammln(size) - factln(x)
+	//	+size*log(p)+x*log(1.-p);
+	dvariable tau = (1.0 + size*mu);
+	tmp = log_negbinomial_density(x,mu,tau);
+		
 	RETURN_ARRAYS_DECREMENT();
 	return(-tmp);
 }
@@ -80,9 +83,11 @@ df1b2variable dnbinom(const double& x, const df1b2variable& mu, const df1b2varia
 		return(0.0);
 	}
 	RETURN_ARRAYS_INCREMENT();
+	df1b2variable tau;
 	df1b2variable loglike;
-
-	loglike = gammln(k+x)-gammln(k)-gammln(x+1)+k*log(k)-k*log(mu+k)+x*log(mu)-x*log(mu+k);
+	tau = (1.0 + mu*k);
+	//loglike = gammln(k+x)-gammln(k)-gammln(x+1)+k*log(k)-k*log(mu+k)+x*log(mu)-x*log(mu+k);
+	loglike = log_negbinomial_density(x,mu,tau);
 
 	RETURN_ARRAYS_DECREMENT();
 	return(-loglike);
@@ -129,11 +134,13 @@ df1b2variable dnbinom(const dvector& x, const df1b2vector& mu, const df1b2variab
 	int i,imin,imax;
 	imin=x.indexmin();
 	imax=x.indexmax();
+	df1b2variable tau;
 	df1b2variable loglike;
 	loglike=0.;
 	for(i = imin; i<=imax; i++)
-	{
-		loglike += gammln(k+x(i))-gammln(k)-gammln(x(i)+1)+k*log(k)-k*log(mu(i)+k)+x(i)*log(mu(i))-x(i)*log(mu(i)+k);
+	{	tau      = (1.0+mu(i)*k);
+		loglike += log_negbinomial_density(x(i),mu(i),tau);
+		//loglike += gammln(k+x(i))-gammln(k)-gammln(x(i)+1)+k*log(k)-k*log(mu(i)+k)+x(i)*log(mu(i))-x(i)*log(mu(i)+k);
 	}
 	RETURN_ARRAYS_DECREMENT();
 	return(-loglike);
@@ -157,6 +164,7 @@ df1b2variable dnbinom(const dvector& x, const df1b2vector& mu, const df1b2vector
 	int i,imin,imax;
 	imin=x.indexmin();
 	imax=x.indexmax();
+	df1b2variable tau;
 	df1b2variable loglike;
 	loglike=0.;
  
@@ -167,7 +175,9 @@ df1b2variable dnbinom(const dvector& x, const df1b2vector& mu, const df1b2vector
 			cerr<<"k("<<i<<") is <=0.0 in dnbinom()";
 			return(0.0);
 		}
-		loglike += gammln(k(i)+x(i))-gammln(k(i))-gammln(x(i)+1)+k(i)*log(k(i))-k(i)*log(mu(i)+k(i))+x(i)*log(mu(i))-x(i)*log(mu(i)+k(i));
+		tau      = (1.0+mu(i)*k(i));
+		loglike += log_negbinomial_density(x(i),mu(i),tau);
+		//loglike += gammln(k(i)+x(i))-gammln(k(i))-gammln(x(i)+1)+k(i)*log(k(i))-k(i)*log(mu(i)+k(i))+x(i)*log(mu(i))-x(i)*log(mu(i)+k(i));
 	}
 	RETURN_ARRAYS_DECREMENT();
 	return(-loglike);
@@ -196,11 +206,14 @@ dvariable dnbinom(const dvector& x, const dvar_vector& mu, const prevariable& k)
 	int i,imin,imax;
 	imin=x.indexmin();
 	imax=x.indexmax();
+	dvariable tau;
 	dvariable loglike = 0.;
 
 	for(i = imin; i<=imax; i++)
 	{
-		loglike += gammln(k+x(i))-gammln(k)-gammln(x(i)+1)+k*log(k)-k*log(mu(i)+k)+x(i)*log(mu(i))-x(i)*log(mu(i)+k);
+		tau      =(1.0+mu(i)*k);
+		loglike +=log_negbinomial_density(x(i),mu(i),tau);
+		//loglike += gammln(k+x(i))-gammln(k)-gammln(x(i)+1)+k*log(k)-k*log(mu(i)+k)+x(i)*log(mu(i))-x(i)*log(mu(i)+k);
 	}
 	RETURN_ARRAYS_DECREMENT();
 	return(-loglike);
@@ -223,6 +236,7 @@ dvariable dnbinom(const dvector& x, const dvar_vector& mu, const dvar_vector& k)
 	int i,imin,imax;
 	imin=x.indexmin();
 	imax=x.indexmax();
+	dvariable tau;
 	dvariable loglike;
 	loglike=0.;
 
@@ -233,8 +247,10 @@ dvariable dnbinom(const dvector& x, const dvar_vector& mu, const dvar_vector& k)
 			cerr<<"k("<<i<<") is <=0.0 in dnbinom()";
 			return(0.0);
 		}
+		tau      =(1.0+mu(i)*k(i));
+		loglike +=log_negbinomial_density(x(i),mu(i),tau);
 		
-		loglike += gammln(k(i)+x(i))-gammln(k(i))-gammln(x(i)+1)+k(i)*log(k(i))-k(i)*log(mu(i)+k(i))+x(i)*log(mu(i))-x(i)*log(mu(i)+k(i));
+		//loglike += gammln(k(i)+x(i))-gammln(k(i))-gammln(x(i)+1)+k(i)*log(k(i))-k(i)*log(mu(i)+k(i))+x(i)*log(mu(i))-x(i)*log(mu(i)+k(i));
 	}
 	RETURN_ARRAYS_DECREMENT();
 	return(-loglike);

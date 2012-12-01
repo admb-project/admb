@@ -7,6 +7,9 @@
 #include <fvar.hpp>
 #include <math.h>
 
+dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
+  int MAXIT);
+
 /** Incomplete beta function for variable objects.
     \param a \f$a\f$
     \param b \f$b\f$
@@ -18,7 +21,7 @@
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 */
-dvariable betai(_CONST dvariable a,_CONST dvariable b,_CONST dvariable x,
+dvariable betai(const dvariable a, const dvariable b, const dvariable x,
   int maxit)
 {
   dvariable bt;

@@ -37,9 +37,9 @@ CXXFLAGS:=-Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 endif
 
 ifdef DEBUG
-CXXFLAGS:=-c -g $(CXXFLAGS)
+CXXFLAGS:=-c -g -fpermissive $(CXXFLAGS)
 else
-CXXFLAGS:=-c -O3 $(CXXFLAGS)
+CXXFLAGS:=-c -O3 -fpermissive $(CXXFLAGS)
 endif
 
 dist:
@@ -117,4 +117,7 @@ clean:
 	@rm -f nh99/lex.yy.c
 	@rm -f df1b2-separable/lex.yy.c
 	@rm -f nh99/tpl2cpp
+	@rm -f nh99/tpl2cpp.c
 	@rm -f df1b2-separable/tpl2rem
+	@rm -f df1b2-separable/tpl2rem.c
+

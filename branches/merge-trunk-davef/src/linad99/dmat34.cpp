@@ -25,7 +25,7 @@ void dmdv_solve(void);
 
 
 /** Solve a linear system using LU decomposition. */
-dvector csolve(const dmatrix& aa,const dvector& z)
+dvector old_csolve(const dmatrix& aa,const dvector& z)
 {
   double ln_unsigned_det;
   double sign;

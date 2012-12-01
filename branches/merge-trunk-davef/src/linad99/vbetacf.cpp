@@ -21,7 +21,7 @@
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 */
-dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,_CONST dvariable& _x,
+dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
   int MAXIT)
 {
   int m,m2;

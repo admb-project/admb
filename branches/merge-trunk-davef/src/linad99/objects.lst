@@ -495,7 +495,12 @@ factors.obj \
 orthpoly.obj \
 makesub.obj \
 fvar_a49.obj \
-adpvm2.obj 
+adpvm2.obj \
+dcompressed.obj \
+fvarcompressed.obj \
+eigen_dmat.obj \
+eigen_dvar.obj \
+fvar_m38.obj
 OBJ4= \
 manip.obj \
 conjprod.obj 

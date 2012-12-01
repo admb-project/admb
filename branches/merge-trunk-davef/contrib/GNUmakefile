@@ -20,7 +20,7 @@ LIBPATH_OPT2=${LIBPATH}/contrib-olp
 DISKDIR=../${DISK}/contrib
 endif
 
-all: disk statslib ecolib qfclib libcontribo.a libcontribs.a ad2csv
+all: disk statslib ecolib qfclib libcontribo.a libcontribs.a
 
 disk:
 ifeq ($(CXX),g++.exe)

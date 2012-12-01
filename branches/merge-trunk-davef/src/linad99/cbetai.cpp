@@ -7,6 +7,8 @@
 #include <fvar.hpp>
 #include <math.h>
 
+double betacf(const double a, const double b, const double x, int MAXIT);
+
 /** Incomplete beta function for constant objects.
     \param a \f$a\f$
     \param b \f$b\f$

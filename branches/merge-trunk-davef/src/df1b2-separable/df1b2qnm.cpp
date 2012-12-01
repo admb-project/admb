@@ -8,15 +8,12 @@
  * \file
  * Description not yet available.
  */
-#include <sstream>
-using std::istringstream;
-
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
 //#include <vmon.h>
-static int no_stuff=0;
+extern int no_stuff;
 //static void xxxy(void) {}
 
 /**
@@ -175,7 +172,10 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           pre_userfunction();
           if ( no_stuff ==0 && quadratic_prior::get_num_quadratic_prior()>0)
           {
+            quadratic_prior::calc_matrix_flag=0;
+            quadratic_prior::matrix_mult_flag=1;
             quadratic_prior::get_M_calculations();
+            quadratic_prior::matrix_mult_flag=0;
           }
           vf+=*objective_function_value::pobjfun;
           f=value(vf);

@@ -1,0 +1,10 @@
+/^# line/d
+/char \*malloc();/d
+/#line.*stdin.*$/d
+/#line.*lexyy.*$/d
+/#line.*lex.yy.*$/d
+/int free();/d
+/int read();/d
+s=//.*$==
+s/fopen$//
+s/extern int yywrap YY_PROTO(( void ));/int yywrap YY_PROTO(( void )){return 1;}/

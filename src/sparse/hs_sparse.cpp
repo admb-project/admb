@@ -245,6 +245,20 @@ dvar_matrix make_dvar_matrix(dvar_compressed_triplet& M,int n,int m)
   return tmp;
 }
 
+dvar_matrix make_sdvar_matrix(dvar_compressed_triplet& M,int n,int m)
+{
+  dvar_matrix tmp(1,n,1,m);
+  int nz = M.indexmax()- M.indexmin() + 1;
+  for (int i=1;i<=nz;i++)
+  {
+    tmp(M(1,i),M(2,i))=M(i);
+    if (M(1,i) != M(2,i))
+    {
+      tmp(M(2,i),M(1,i))=M(i);
+    }
+  }
+  return tmp;
+}
 
 hs_smatrix::hs_smatrix(int _n, XCONST dcompressed_triplet &_M)         
 {
@@ -281,7 +295,10 @@ hs_smatrix::hs_smatrix(int _n, XCONST dcompressed_triplet &_M)
     for (k = 0 ; k < nz ; k++)
       lower_tri += Ti[k]>Tj[k];
     if(lower_tri) 
+    {
       cout << "hs_smatrix::hs_smatrix: M must be upper triangular" << endl;
+      ad_exit(1);
+    }
 
     // Matrix in compressed format 
     p.allocate(0,n);
@@ -2565,7 +2582,11 @@ dcompressed_triplet::dcompressed_triplet(int mmin,int mmax,int _n,int _m)
 {
   allocate(mmin,mmax,_n,_m);
 }
-
+dcompressed_triplet::dcompressed_triplet(void)
+{
+  n=0;
+  m=-1;
+}
 
 void dvar_compressed_triplet::allocate(int mmin,int mmax,int _n,int _m)
 {
@@ -2809,6 +2830,33 @@ dvector solve(dcompressed_triplet & st,dmatrix & Hess,
     return x;
   }
   
+  dvector solve(const dcompressed_triplet & _st,const dvector& _grad)
+  {
+    ADUNCONST(dcompressed_triplet,st)
+    ADUNCONST(dvector,grad)
+    int n=st.get_n();
+    //int n=Hess.indexmax();
+    // fill up compressed triplet with nonzero entries of the Hessian
+    hs_symbolic S(st,1);         // Fill reducing row-col permutation                 
+  
+    hs_smatrix HS(n,st);  // Convert triplet to working format
+  
+    hs_smatrix L(S);              // Allocates cholesky factor
+  
+    ivector nxcount;
+    chol(HS,S,L);                  // Does numeric factorization
+  
+    dvector x(0,n-1);
+    grad.shift(0);
+    x = cs_ipvec(S.pinv, grad);
+    grad.shift(1);
+    x = cs_lsolve(L,x);
+    x = cs_ltsolve(L,x);
+    x = cs_pvec(S.pinv,x);
+    x.shift(1);
+    return x;
+  }
+  
   dvector solve(const dcompressed_triplet & _st,const dvector& _grad,const hs_symbolic& S,int& ierr)
   {
     ADUNCONST(dcompressed_triplet,st)
@@ -2857,7 +2905,11 @@ dvariable ln_det(dvar_compressed_triplet& VM)
 {
   int n=VM.get_n();
   dvar_hs_smatrix H(n,VM);  
-  hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
+  cout << "Needs fixing ??? " << endl;
+  //sleep(1);
+  // what is difference between 0 and 1
+  hs_symbolic S(VM,0);         // Fill reducing row-col permutation  
+  //hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
   dvar_hs_smatrix L(S);              // Allocates cholesky factor
   int ierr=chol(H,S,L);                  // Does numeric factorization
   if (ierr==0)
@@ -3048,17 +3100,16 @@ int cholnew(XCONST hs_smatrix &AA, XCONST hs_symbolic &T, hs_smatrix &LL)
 
 static void dfcholeski_sparse(void);
 
-int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,dvar_hs_smatrix &LL,
- dcompressed_triplet & sparse_triplet2)
- //laplace_approximation_calculator * lapprox)
+int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
+ dvar_hs_smatrix &LL,dcompressed_triplet & sparse_triplet2)
 {
   RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
-  //ADUNCONST(hs_symbolic,S)
-  //ADUNCONST(dvar_hs_smatrix,L)
-  //ADUNCONST(dvar_hs_smatrix,A)
-    hs_symbolic& S = (hs_symbolic&)T;
-    dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
-    dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
+
+  dvar_vector tmp1=AA.x;
+  dvector tmp2=sparse_triplet2.get_x();
+  hs_symbolic& S = (hs_symbolic&)T;
+  dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
+  dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
   int icount=0;
   double lki;
   double d;
@@ -3675,6 +3726,43 @@ dcompressed_triplet make_dcompressed_triplet(const dmatrix & M)
     }
   }
   return dct;
+} 
+dcompressed_triplet::dcompressed_triplet (const dmatrix & M)
+{
+  int mmin=M.indexmin();
+  int mmax=M.indexmax();
+  int n=mmax-mmin+1;
+  int jmin=M(mmin).indexmin();
+  int jmax=M(mmax).indexmax();
+  int m=jmax-jmin+1;
+  int ii=0;
+  int i,j;
+  for (i=mmin;i<=mmax;i++)
+  {
+    int jmin=M(i).indexmin();
+    int jmax=M(i).indexmax();
+    for (j=jmin;j<=jmax;j++)
+    {
+      if (M(i,j) !=0) ii++;
+    }
+  }
+  allocate(1,ii,n,m);
+  ii=0;
+  for (i=mmin;i<=mmax;i++)
+  {
+    int jmin=M(i).indexmin();
+    int jmax=M(i).indexmax();
+    for (j=jmin;j<=jmax;j++)
+    {
+      if (M(i,j) !=0) 
+      {
+        ii++;
+        x(ii)=M(i,j);
+        coords(1,ii)=i;
+        coords(2,ii)=j;
+      }
+    }
+  }
 } 
 /*
 extern "C"  {

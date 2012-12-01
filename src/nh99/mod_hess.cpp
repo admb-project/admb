@@ -476,6 +476,12 @@ void function_minimizer::depvars_routine(void)
   gradcalc(0,ggg);
   gradient_structure::set_YES_DERIVATIVES();
   initial_params::restore_start_phase();
+#if defined(USE_LAPLACE)
+  if (lapprox  && lapprox->no_re_ders_flag)
+  {
+    initial_params::set_inactive_only_random_effects();
+  }
+#endif
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   int ndvar=stddev_params::num_stddev_calc();
   independent_variables x(1,nvar);
@@ -604,13 +610,10 @@ void function_minimizer::hess_inv(void)
   {
     ofstream ofs3((char*)(ad_comm::adprogram_name + adstring(".eva")));
     {
-      dvector se=eigenvalues(hess);
+      dvector se=sort(eigenvalues(hess));
       ofs3 << setshowpoint() << setw(14) << setprecision(10)
-	 << "unsorted:\t" << se << endl;
-     se=sort(se);
-     ofs3 << setshowpoint() << setw(14) << setprecision(10)
-     << "sorted:\t" << se << endl;
-     if (se(se.indexmin())<=0.0)
+	 << se << endl;
+      if (se(se.indexmin())<=0.0)
       {
 #if defined(USE_LAPLACE)
         negative_eigenvalue_flag=1;

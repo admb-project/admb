@@ -1,8 +1,8 @@
-/*
-  $Id$
- 
-  Author: David Fournier
-  Copyright (c) 2008, 2009, 2010 Regents of the University of California 
+/**
+ * $Id$
+ *
+ * Author: David Fournier
+ * Copyright (c) 2008, 2009, 2010 Regents of the University of California 
  */
 #include <fvar.hpp>
 #define ITMAX 100
@@ -11,10 +11,6 @@
 #define FPMIN 1.0e-30
 static void gcf(double& gammcf,double a,double x,double &gln);
 static void gser(double& gamser,double a,double x,double& gln);
-
-/**
-  \file gamma functions for differentiable objects.
-*/
 
   dvariable gamma_deviate(const prevariable& _x,const prevariable& _a)
   {
@@ -51,6 +47,8 @@ static double gammp(double a,double x)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 static void gcf(double& gammcf,double a,double x,double &gln)
 {
@@ -84,6 +82,8 @@ static void gcf(double& gammcf,double a,double x,double &gln)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 6
+
+    \deprecated Scheduled for replacement by 2010.
 */
 static void gser(double& gamser,double a,double x,double& gln)
 {
@@ -176,7 +176,7 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
   return vz;
 }
 
-#endif //#if defined(USE_LAPLACE)
+#endif
 
 #undef ITMAX
 #undef EPS

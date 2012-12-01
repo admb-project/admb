@@ -1,0 +1,7 @@
+s/_CONST/const/g
+s/prevariable&/double/g
+s/prevariable &/double/g
+s/const double/double/g
+s/df1_two_variable/double/g
+s/double &/double/g
+s/double&/double/g

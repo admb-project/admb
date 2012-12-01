@@ -229,6 +229,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -hbf            set the hybrid bounded flag for bounded parameters\n");
       (*ad_printf)( " -hyeps          mean step size for hybrid Monte Carlo\n");
       (*ad_printf)( " -hynstep        number of steps for hybrid Monte Carlo\n");
+      (*ad_printf)( " -noreders       turn off re's for derivative calcs for std devs\n");
       (*ad_printf)( " -noinit         do not initialize RE before inner optimization\n");
       (*ad_printf)( " -ndi N          set maximum number of separable calls\n");
       (*ad_printf)( " -ndb N          set number of blocks for RE derivatives (reduce temp file size)\n");
@@ -562,3 +563,44 @@ void function_minimizer::pre_userfunction(void)
   }
 #endif
 }
+#if defined(USE_ADMPI)
+void add_slave_suffix(const adstring& _tmpstring)
+{
+  ADUNCONST(adstring,tmpstring)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_slave())
+    {
+      tmpstring += "_";
+      tmpstring += str(ad_comm::mpi_manager->get_slave_number());
+       cout << "In slave " << tmpstring << endl;
+    }
+    else
+    {
+      tmpstring += "_master";
+       cout << "In master " << tmpstring << endl;
+    }
+  }
+}
+
+#else if defined(USE_PTHREADS)
+
+void add_slave_suffix(const adstring& _tmpstring)
+{
+  ADUNCONST(adstring,tmpstring)
+  if (ad_comm::pthreads_manager)
+  {
+    if (ad_comm::pthreads_manager->is_slave())
+    {
+      tmpstring += "_";
+      tmpstring += str(ad_comm::pthreads_manager->get_slave_number());
+       cout << "In slave " << tmpstring << endl;
+    }
+    else
+    {
+      tmpstring += "_master";
+       cout << "In master " << tmpstring << endl;
+    }
+  }
+}
+#endif

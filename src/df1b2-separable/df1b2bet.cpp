@@ -9,11 +9,13 @@
 #define EPS double(1.0e-9)
 #define FPMIN double(1.0e-30)
 df1b2variable betacf(const df1b2variable& a,const df1b2variable& b,
-  double x, int MAXIT);
+  double x, int MAXIT=100);
 
 
 //df1b2variable betai(const df1b2variable& a,const df1b2variable& b,
  // double x, int maxit=100);
+df3_two_variable betacf(df3_two_variable& a, df3_two_variable& b, 
+  double x,int MAXIT=100);
 
 /** Incomplete beta function for df1b2variable objects.
     \param a \f$a\f$
@@ -41,6 +43,52 @@ df1b2variable betai(const df1b2variable & a,const df1b2variable & b,double x,
     return 1.0-bt*betacf(b,a,1.0-x,maxit)/b;
 }
 
+
+  df3_two_variable betacf(df3_two_variable& a, df3_two_variable& b, 
+    double x,int MAXIT)
+  {
+    int m,m2;
+    df3_two_variable aa,c,d,del,h,qab,qam,qap;
+     
+    qab=a+b;
+    qap=a+1.0;
+    qam=a-1.0;
+    c=1.0;
+    d=1.0-qab*x/qap;
+    if (fabs(value(d)) < FPMIN) d=FPMIN;
+    d=1.0/d;
+    h=d;
+    for (m=1;m<=MAXIT;m++) 
+    {
+      m2=2*m;
+      aa=m*(b-m)*x/((qam+m2)*(a+m2));
+      d=1.0+aa*d;
+      if (fabs(value(d)) < FPMIN) d=FPMIN;
+      c=1.0+aa/c;
+      if (fabs(value(c)) < FPMIN) c=FPMIN;
+      d=1.0/d;
+      h *= d*c;
+      aa = -(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
+      d=1.0+aa*d;
+      if (fabs(value(d)) < FPMIN) d=FPMIN;
+      c=1.0+aa/c;
+      if (fabs(value(c)) < FPMIN) c=FPMIN;
+      d=1.0/d;
+  
+      del=d*c;
+      h *= del;
+      if (fabs(value(del)-1.0) < EPS) break;
+    }
+    if (m > MAXIT) 
+    {
+      cerr << "a or b too big, or MAXIT too small in betacf"
+         << endl;
+      ad_exit(1);
+    }
+    return h;
+  }
+  
+
 /** Incomplete beta function for df1b2variable objects.
     Evaluates the continued fraction for imcomplete beta function.
     \param _a \f$a\f$
@@ -53,43 +101,19 @@ df1b2variable betai(const df1b2variable & a,const df1b2variable & b,double x,
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 */
-df1b2variable betacf(const df1b2variable& a,const df1b2variable& b,
-  double x, int MAXIT)
+df1b2variable betacf(const df1b2variable& _xa,const df1b2variable& _xb, 
+    double x,int MAXIT)
 {
-  int m,m2;
-  df1b2variable aa,c,d,del,h,qab,qam,qap;
-
-  qab=a+b;
-  qap=a+double(1.0);
-  qam=a-double(1.0);
-  c=double(1.0);
-  d=double(1.0)-qab*x/qap;
-  if (fabs(value(d)) < FPMIN) d=FPMIN;
-  d=double(1.0)/d;
-  h=d;
-  for (m=1;m<=MAXIT;m++) {
-    m2=2*m;
-    aa=double(m)*(b-double(m))*x/((qam+double(m2))*(a+double(m2)));
-    d=double(1.0)+aa*d;
-    if (fabs(value(d)) < FPMIN) d=FPMIN;
-    c=double(1.0)+aa/c;
-    if (fabs(value(c)) < FPMIN) c=FPMIN;
-    d=double(1.0)/d;
-    h *= d*c;
-    aa = -(a+double(m))*(qab+double(m))*x/((a+double(m2))*(qap+double(m2)));
-    d=double(1.0)+aa*d;
-    if (fabs(value(d)) < FPMIN) d=FPMIN;
-    c=double(1.0)+aa/c;
-    if (fabs(value(c)) < FPMIN) c=FPMIN;
-    d=double(1.0)/d;
-    del=d*c;
-    h *= del;
-    if (fabs(value(del)-double(1.0)) < EPS) break;
-  }
-  if (m > MAXIT) cerr << "a or b too big, or MAXIT too small in betacf"
-         << endl;
-  return h;
+  ADUNCONST(df1b2variable,xa)
+  ADUNCONST(df1b2variable,xb) 
+  init_df3_two_variable a(xa);
+  init_df3_two_variable b(xb);
+  df3_two_variable z=betacf(a,b,x,MAXIT);
+  df1b2variable tmp;
+  tmp=z;
+  return tmp;
 }
+
 #undef MAXIT
 #undef EPS
 #undef FPMIN

@@ -73,3 +73,8 @@ clean:
 	rm -rvf build
 	$(MAKE) --directory=contrib clean
 	$(MAKE) --directory=tests clean
+	rm -vf src/df1b2-separable/lex.yy.c
+	rm -vf src/df1b2-separable/tpl2rem.c
+	rm -vf src/nh99/lex.yy.c
+	rm -vf src/nh99/tpl2cpp.c
+

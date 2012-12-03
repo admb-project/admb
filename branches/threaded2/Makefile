@@ -70,11 +70,10 @@ admb-ar794:
 	ADMB_HOME=../../../$@/build/dists/admb_gcc411_fedora8 PATH=../../../$@/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=test
 
 clean:
-	rm -rvf build
+	@rm -rvf build
 	$(MAKE) --directory=contrib clean
 	$(MAKE) --directory=tests clean
-	rm -vf src/df1b2-separable/lex.yy.c
-	rm -vf src/df1b2-separable/tpl2rem.c
-	rm -vf src/nh99/lex.yy.c
-	rm -vf src/nh99/tpl2cpp.c
-
+	@rm -vf src/df1b2-separable/lex.yy.c
+	@rm -vf src/df1b2-separable/tpl2rem.c
+	@rm -vf src/nh99/lex.yy.c
+	@rm -vf src/nh99/tpl2cpp.c

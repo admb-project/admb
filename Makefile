@@ -72,4 +72,4 @@ admb-ar794:
 clean:
 	rm -rvf build
 	$(MAKE) --directory=contrib clean
-	$(MAKE) --directory=test clean
+	$(MAKE) --directory=tests clean

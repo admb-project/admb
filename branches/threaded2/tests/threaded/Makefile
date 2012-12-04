@@ -1,12 +1,12 @@
 all: run-new_sim_thread3 run-new_sim_thread4
 
 run-new_sim_thread3:
-	./mygcco2 new_sim_thread3
+	admb new_sim_thread3.cpp df_file.cpp model7.cpp 
 	@echo "=== Run new_sim_thread3"
 	time ./new_sim_thread3
 
 run-new_sim_thread4:
-	./mygcco2 new_sim_thread4
+	admb new_sim_thread4.cpp df_file.cpp model7.cpp 
 	@echo "=== Run new_sim_thread4"
 	time ./new_sim_thread4
 

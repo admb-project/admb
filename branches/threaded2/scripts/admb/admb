@@ -96,29 +96,39 @@ done
 for file in $srcs
 do
   f=${file%.*}
-  objs="$f.o $objs"
+  objs="$objs $f.o"
 done
 
-for file in $tpls
-do
-  model=${file%.*}
+if [[ -z "$tpls" ]]; then
   if [[ -z "$LDFLAGS" ]]; then
-    CMD="adlink $d $g $r $s $model $objs"
+    CMD="adlink $d $g $r $s $objs"
   else
-    CMD="LDFLAGS=\"$LDFLAGS\" adlink $d $g $r $s $model $objs"
+    CMD="LDFLAGS=\"$LDFLAGS\" adlink $d $g $r $s $objs"
   fi
   echo -e \\n\*\*\* $CMD
   eval $CMD
-  if [[ -z $dll ]]; then 
-    if [[ ! -f $model ]]; then 
-        echo -e "\\nError: Could not build $model\\n"
+else
+  for file in $tpls
+  do
+    model=${file%.*}
+    if [[ -z "$LDFLAGS" ]]; then
+      CMD="adlink $d $g $r $s $model $objs"
+    else
+      CMD="LDFLAGS=\"$LDFLAGS\" adlink $d $g $r $s $model $objs"
     fi
-  else
-    if [[ ! -f $model.so ]]; then
-        echo -e "\\nError: Could not build $model.so\\n"
+    echo -e \\n\*\*\* $CMD
+    eval $CMD
+    if [[ -z $dll ]]; then 
+      if [[ ! -f $model ]]; then 
+          echo -e "\\nError: Could not build $model\\n"
+      fi
+    else
+      if [[ ! -f $model.so ]]; then
+          echo -e "\\nError: Could not build $model.so\\n"
+      fi
     fi
-  fi
-done
+  done
+fi
 
 echo -e "\\nSuccessfully built executable.\\n"
 exit 0

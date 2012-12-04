@@ -22,3 +22,4 @@ clean:
 	@rm -vf yyy zzz
 	@rm -vf variance eigv.rpt fmin.log
 	@rm -vf thread-ex
+	@rm -vf df_file.o model7.o new_sim_thread3.o new_sim_thread4.o

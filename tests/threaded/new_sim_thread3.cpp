@@ -13,16 +13,6 @@
 
 /* prototype for thread routine */
 void admb_thread(void * ptr);
-pthread_mutex_t mutex_print;
-double get_double_from_master(void * transfer_buffer, int sno);
-double get_double_from_slave(void * transfer_buffer, int sno);
-void send_double_to_master(double &x,void * transfer_buffer,int sno);
-void pthread_master_unpack_vector_derivatives(void);
-dvector get_dvector_from_slave(void * transfer_buffer, int sno);
-dvector get_dvector_from_master(void * transfer_buffer, int sno);
-void pthread_slave_unpack_vector_derivatives(void);
-void adpthreads_slave_pack_number_derivative(void);
-double get_double_from_slave(void * transfer_buffer, int sno);
 adpthread_manager * test_thread_manager=0;
 
 void add_slave_suffix(const adstring& _tmpstring)
@@ -44,9 +34,7 @@ void add_slave_suffix(const adstring& _tmpstring)
   }
 }
 
-
 int __thread thread_data::id=-1;
-char ** buffer=0;
 
 extern "C"  {
   void ad_boundf(int i)
@@ -110,8 +98,8 @@ int main2()
   
   }
   test_thread_manager->pthread_join_all();
-  exit(0);
-} /* main() */
+  return 0;
+}
 
 void admb_thread(void * ptr)
 {
@@ -150,4 +138,3 @@ void admb_thread(void * ptr)
     slave_gradcalc();
   }
 }
-

@@ -583,8 +583,6 @@ void add_slave_suffix(const adstring& _tmpstring)
 }
 
 #else if defined(USE_PTHREADS)
-
-
 /*
 void add_slave_suffix(const adstring& _tmpstring)
 {
@@ -605,5 +603,4 @@ void add_slave_suffix(const adstring& _tmpstring)
   }
 }
 */
-
 #endif

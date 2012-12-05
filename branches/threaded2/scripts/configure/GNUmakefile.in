@@ -1,4 +1,4 @@
-.PHONY: admb tpl2cpp tpl2rem docs test contrib
+.PHONY: admb tpl2cpp tpl2rem docs tests contrib
 
 all: admb contrib
 	@rm -rf admb
@@ -58,17 +58,17 @@ zip:
 dmg:
 	@dmgtask@
 
-test:
-	export ADMB_HOME=${PWD}/build/@target@; export PATH=${PWD}/build/@target@/bin:$(PATH); CXXFLAGS="@cxxflags@" $(MAKE) --directory=test
-	@#export ADMB_HOME=${PWD}/build/@target@; export PATH=${PWD}/build/@target@/bin:$(PATH); CXXFLAGS="@cxxflags@" $(MAKE) --directory=contrib test
+tests:
+	export ADMB_HOME=${PWD}/build/@target@; export PATH=${PWD}/build/@target@/bin:$(PATH); CXXFLAGS="@cxxflags@" $(MAKE) --directory=tests
 
 contrib:
 	@arvar@ CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib
+	@#export ADMB_HOME=${PWD}/build/@target@; export PATH=${PWD}/build/@target@/bin:$(PATH); CXXFLAGS="@cxxflags@" $(MAKE) --directory=contrib test
 
 clean:
 	rm -rvf build/@target@
 	rm -rvf build/objects/@target@
 	$(MAKE) --directory=src --file=@makefile@ clean
-	$(MAKE) --directory=test clean
+	$(MAKE) --directory=tests clean
 	$(MAKE) --directory=scripts/configure clean
 	LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib clean

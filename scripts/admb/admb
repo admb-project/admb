@@ -111,12 +111,12 @@ if [[ -z "$tpls" ]]; then
   model="${objs%%.*}"
   if [[ -z $dll ]]; then 
     if [[ ! -f $model ]]; then 
-        echo -e "\\nError: Could not build $model\\n"
+        echo -e "\\nError: Could not build \"${model/ /}\"\\n"
         exit 1
     fi
   else
     if [[ ! -f $model.so ]]; then
-        echo -e "\\nError: Could not build $model.so\\n"
+        echo -e "\\nError: Could not build \"${model/ /}.so\"\\n"
         exit 1
     fi
   fi
@@ -134,12 +134,12 @@ else
     eval $CMD
     if [[ -z $dll ]]; then 
       if [[ ! -f $model ]]; then 
-          echo -e "\\nError: Could not build $model\\n"
+          echo -e "\\nError: Could not build \"${model/ /}\"\\n"
           exit 1
       fi
     else
       if [[ ! -f $model.so ]]; then
-          echo -e "\\nError: Could not build $model.so\\n"
+          echo -e "\\nError: Could not build \"${model/ /}.so\"\\n"
           exit 1
       fi
     fi

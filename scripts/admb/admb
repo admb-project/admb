@@ -80,6 +80,7 @@ do
     echo -e "\\nError: $file not found\\n"
     exit 1
   fi
+  rm -f ${file%.*}.o
   if [[ -z "$CXXFLAGS" ]]; then
     CMD="adcomp $d $g $r $s $file"
   else
@@ -107,10 +108,23 @@ if [[ -z "$tpls" ]]; then
   fi
   echo -e \\n\*\*\* $CMD
   eval $CMD
+  model="${objs%%.*}"
+  if [[ -z $dll ]]; then 
+    if [[ ! -f $model ]]; then 
+        echo -e "\\nError: Could not build $model\\n"
+        exit 1
+    fi
+  else
+    if [[ ! -f $model.so ]]; then
+        echo -e "\\nError: Could not build $model.so\\n"
+        exit 1
+    fi
+  fi
 else
   for file in $tpls
   do
     model=${file%.*}
+    rm -f ${file%.*}
     if [[ -z "$LDFLAGS" ]]; then
       CMD="adlink $d $g $r $s $model $objs"
     else
@@ -121,10 +135,12 @@ else
     if [[ -z $dll ]]; then 
       if [[ ! -f $model ]]; then 
           echo -e "\\nError: Could not build $model\\n"
+          exit 1
       fi
     else
       if [[ ! -f $model.so ]]; then
           echo -e "\\nError: Could not build $model.so\\n"
+          exit 1
       fi
     fi
   done

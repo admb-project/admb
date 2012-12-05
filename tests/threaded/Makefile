@@ -1,7 +1,7 @@
 all: run-new_sim_thread3 run-new_sim_thread4
 
 run-new_sim_thread3:
-	admb new_sim_thread3.cpp df_file.cpp model7.cpp 
+	admb new_sim_thread3.cpp main.cpp adpthread_manager.cpp df_file.cpp model7.cpp 
 	@echo "=== Run new_sim_thread3"
 	time ./new_sim_thread3
 
@@ -22,4 +22,4 @@ clean:
 	@rm -vf yyy zzz
 	@rm -vf variance eigv.rpt fmin.log
 	@rm -vf thread-ex
-	@rm -vf df_file.o model7.o new_sim_thread3.o new_sim_thread4.o
+	@rm -vf adpthread_manager.o main.o df_file.o model7.o new_sim_thread3.o new_sim_thread4.o

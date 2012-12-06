@@ -1,19 +1,19 @@
-all: tests run-new_sim_thread4 run-new_sim_thread3
+all: run-new_sim_thread4 run-new_sim_thread3 tests
 
 gtest-all.o:
 	g++ -c -I../googletest-read-only -I../googletest-read-only/include  ../googletest-read-only/src/gtest-all.cc
 
 tests: gtest-all.o
-	CXXFLAGS=-I../googletest-read-only/include admb tests_threaded.cpp gtest-all.o
+	CXXFLAGS=-I../googletest-read-only/include admb tests_threaded.cpp gtest-all.o new_sim_thread3.o adpthread_manager.o df_file.o model7.o
 	./tests_threaded
 
 run-new_sim_thread3:
-	admb new_sim_thread3.cpp main.cpp adpthread_manager.cpp df_file.cpp model7.cpp 
+	admb new_sim_thread3.cpp main3.cpp adpthread_manager.cpp df_file.cpp model7.cpp 
 	@echo "=== Run new_sim_thread3"
 	time ./new_sim_thread3
 
 run-new_sim_thread4:
-	admb new_sim_thread4.cpp df_file.cpp model7.cpp 
+	admb new_sim_thread4.cpp main4.cpp df_file.cpp model7.cpp 
 	@echo "=== Run new_sim_thread4"
 	time ./new_sim_thread4
 
@@ -29,5 +29,5 @@ clean:
 	@rm -vf yyy zzz
 	@rm -vf variance eigv.rpt fmin.log
 	@rm -vf thread-ex
-	@rm -vf adpthread_manager.o main.o df_file.o model7.o new_sim_thread3.o new_sim_thread4.o
+	@rm -vf adpthread_manager.o main3.o main4.o  df_file.o model7.o new_sim_thread3.o new_sim_thread4.o
 	@rm -vf tests_threaded gtest-all.o  tests_threaded.o

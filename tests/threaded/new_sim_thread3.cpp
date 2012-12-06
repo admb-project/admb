@@ -47,7 +47,7 @@ extern "C"  {
 const int m=150;
 const int m2=m*m;
 
-int main2()
+int main3()
 {
   ad_exit=&ad_boundf;
   test_thread_manager=new adpthread_manager(NSLAVES,200000);

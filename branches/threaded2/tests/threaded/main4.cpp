@@ -1,6 +1,6 @@
-int main2();
+int main4();
 
 int main(int argc, char** argv)
 {
-  return main2();
+  return main4();
 }

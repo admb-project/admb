@@ -94,10 +94,15 @@ do
   fi
 done
 
-for file in $srcs
+objs=
+for file in $*
 do
-  f=${file%.*}
-  objs="$f.o $objs"
+  extension="${file##*.}"
+  if [ "$extension" = "cpp" -o "$extension" = "c"  -o "$extension" = "cc" ]; then
+    objs="$objs ${file%%.*}.o"
+  elif [ "$extension" = "o" -o "$extension" = "obj" ]; then
+    objs="$objs $file"
+  fi
 done
 
 if [[ -z "$tpls" ]]; then

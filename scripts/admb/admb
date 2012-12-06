@@ -43,12 +43,12 @@ objs=
 
 for file in $*
 do
-  extension="${file#*.}"
+  extension="${file##*.}"
   if [ "$extension" = "$file" ]; then
     tpls="$tpls $file"
   elif [ "$extension" = "tpl" ]; then
     tpls="$tpls ${file%.*}"
-  elif [ "$extension" = "cpp" -o "$extension" = "c" ]; then
+  elif [ "$extension" = "cpp" -o "$extension" = "c"  -o "$extension" = "cc" ]; then
     srcs="$srcs $file"
   elif [ "$extension" = "o" -o "$extension" = "obj" ]; then
     objs="$objs $file"

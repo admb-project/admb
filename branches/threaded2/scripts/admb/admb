@@ -97,7 +97,7 @@ done
 for file in $srcs
 do
   f=${file%.*}
-  objs="$objs $f.o"
+  objs="$f.o $objs"
 done
 
 if [[ -z "$tpls" ]]; then

@@ -1761,7 +1761,9 @@ class prevariable_position;
 
 /**
   Base class for dvariable.
-  Basis for reverse mode automatic differentiation.
+  Principle role is to avoid calling a descructor when a pevariable or dvariable
+  object is passed on the stack.
+  (There is no destructor, ~prevariable().)
   \ingroup BAD
  */
 class prevariable

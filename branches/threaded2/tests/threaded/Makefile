@@ -1,4 +1,4 @@
-all: tests
+all: tests run-new_sim_thread4 run-new_sim_thread3
 
 gtest-all.o:
 	g++ -c -I../googletest-read-only -I../googletest-read-only/include  ../googletest-read-only/src/gtest-all.cc

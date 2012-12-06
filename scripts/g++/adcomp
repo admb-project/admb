@@ -28,6 +28,8 @@ shift $((OPTIND-1))
 file="${1%.*}"
 if [ "`basename $file`" == "$file" ]; then
   file=$file.cpp
+else
+  file="$1"
 fi
 
 CMD="g++ -c $CXXFLAGS $sym -pthread -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt\

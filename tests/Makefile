@@ -1,9 +1,12 @@
-.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd atan2 priors betai beta2 beta3 adstring_array df33_tester beta_deviate expm threaded
+.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd atan2 priors betai beta2 beta3 adstring_array df33_tester beta_deviate expm
 
-all: threaded
+all: tests-threaded
 
-threaded:
-	OPTIONS=-s $(MAKE) --directory=$@
+googletest-read-only:
+	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
+
+tests-threaded: googletest-read-only
+	OPTIONS=-s $(MAKE) --directory=threaded
 
 expm:
 	OPTIONS=-s $(MAKE) --directory=$@

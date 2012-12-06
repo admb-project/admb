@@ -1,4 +1,11 @@
-all: run-new_sim_thread3 run-new_sim_thread4
+all: tests
+
+gtest-all.o:
+	g++ -c -I../googletest-read-only -I../googletest-read-only/include  ../googletest-read-only/src/gtest-all.cc
+
+tests: gtest-all.o
+	CXXFLAGS=-I../googletest-read-only/include admb tests_threaded.cpp gtest-all.o
+	./tests_threaded
 
 run-new_sim_thread3:
 	admb new_sim_thread3.cpp main.cpp adpthread_manager.cpp df_file.cpp model7.cpp 
@@ -23,3 +30,4 @@ clean:
 	@rm -vf variance eigv.rpt fmin.log
 	@rm -vf thread-ex
 	@rm -vf adpthread_manager.o main.o df_file.o model7.o new_sim_thread3.o new_sim_thread4.o
+	@rm -vf tests_threaded gtest-all.o  tests_threaded.o

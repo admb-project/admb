@@ -1347,18 +1347,20 @@ class dlist
 class indvar_offset_list;
 
 /**
- * Description not yet available.
- * \param
+  Holds derivative information for arithmetic operators and math library 
+  functions. 
+  Used to record gradient information on the gradient stack for processing 
+  by gradcalc().
  */
 class grad_stack_entry
 {
  public:
-   void (*func) (void);
-   double *dep_addr;
-   double *ind_addr1;
-   double mult1;
-   double *ind_addr2;
-   double mult2;
+   void (*func) (void); ///< Pointer to function (if any) to be used for derivative calculation
+   double *dep_addr;    ///< Pointer to dependent variable
+   double *ind_addr1;   ///< Pointer to first independent variable
+   double mult1;        ///< First mutiplicand in chain rule multipication
+   double *ind_addr2;   ///< Pointer to second independent variable
+   double mult2;        ///< Second mutiplicand in chain rule multipication
  public:
    friend void gradcalc(int nvar, const dvector & g);
    friend void slave_gradcalc(void);

@@ -5,11 +5,9 @@
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
- * \file
- * Description not yet available.
+ \file
+  More overloads of math library functions for variable arguments.
  */
-// file fvar_fn.cpp
-// math.h functions involving prevariables
 #include "fvar.hpp"
 
 #include <stdio.h>

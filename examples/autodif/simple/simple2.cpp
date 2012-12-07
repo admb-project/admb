@@ -36,34 +36,42 @@
  * 
  */
 
-/** \file simple.cpp
-   simple example from the AUTODIF manual using macros 
-   Example from the AUTODIF manual,  pp 1-7 - 1-8
+/**
+  \file simple2.cpp
+   simple example without macros from the AUTODIF manual.
+   Does not use the BEGIN_MINIMIZIATION and 
+   END_MINIMIZATION macros.
+   Example from the AUTODIF manual,  p 1-8
    Updated to get rid of some warnings.
 */
 
-//file: simple.cpp
+//file: simple2.cpp
+
+#include <math.h>
 #include <fvar.hpp>
 
 double fcomp(int, dvar_vector); // Function prototype declaration
 
-#ifdef __BCPLUSPLUS__
-  extern unsigned _stklen = 20000;
-#endif
-#ifdef __ZTC__
-  long _stack = 20000;
-#endif
 int main()
 {
-  int nvar=20; // This is the number of independent variables
-  independent_variables x(1,nvar); // these are the independent variables
-  double f;  // This is the dependent variable
-  dvector g(1,nvar);  // Holds the vector of partial derivatives (the gradient)
-  fmm fmc(nvar);      // Create structure to manage minimization
-  BEGIN_MINIMIZATION(nvar,f,x,g,fmc) // Macro to set up beginning of
-                                     // minimization loop
-  f=fcomp(nvar,x);
-  END_MINIMIZATION(nvar,g)    // Macro to set up end of minimization loop
-  cout << " The minimizing values are\n" << x << "\n"; //Print out the answer
-  return 0;
+   const int nvar=20; // This is the number of independent variables
+   independent_variables x(1,nvar); // these are the independent variables
+   double f; // This is the dependent variable
+   dvector g(1,nvar); // Holds the vector of partial derivatives (gradient)
+   fmm fmc(nvar); // Create structure to manage minimization
+   //--- Expansion of BEGIN_MINIMIZATION(nvar,x,f,g,fmc) macro
+   gradient_structure gs;
+   while (fmc.ireturn >= 0) // Begin loop for minimization
+   {
+      fmc.fmin(f,x,g);      // Calls the minimization routine
+      if (fmc.ireturn > 0)  // Loop for evaluating the function and
+      {                    // derivatives
+   //--- End of the Expansion of BEGIN_MINIMIZATION macro
+         f=fcomp(nvar,x);
+   //--- Expansion of END_MINIMIZATION(nvar,g) macro
+         gradcalc(nvar,g);
+      }
+   }
+   //--- End of the Expansion of END_MINIMIZATION macro
+   cout << " The minimizing values are\n" << x << "\n"; // Print out answer
 }

@@ -1,19 +1,19 @@
 all: run-new_sim_thread4 run-new_sim_thread3 tests
 
 gtest-all.o:
-	g++ -c -I../googletest-read-only -I../googletest-read-only/include  ../googletest-read-only/src/gtest-all.cc
+	g++ -c -std=c++11 -pthread -I../googletest-read-only -I../googletest-read-only/include  ../googletest-read-only/src/gtest-all.cc
 
 tests: gtest-all.o
-	CXXFLAGS=-I../googletest-read-only/include admb tests_threaded.cpp gtest-all.o new_sim_thread3.o adpthread_manager.o df_file.o model7.o
+	CXXFLAGS="-std=c++11 -I../googletest-read-only/include" admb tests_threaded.cpp gtest-all.o new_sim_thread3.o adpthread_manager.o df_file.o model7.o
 	./tests_threaded
 
 run-new_sim_thread3:
-	admb new_sim_thread3.cpp main3.cpp adpthread_manager.cpp df_file.cpp model7.cpp 
+	CXXFLAGS="-std=c++11" admb new_sim_thread3.cpp main3.cpp adpthread_manager.cpp df_file.cpp model7.cpp 
 	@echo "=== Run new_sim_thread3"
 	time ./new_sim_thread3
 
 run-new_sim_thread4:
-	admb new_sim_thread4.cpp main4.cpp df_file.cpp model7.cpp 
+	CXXFLAGS="-std=c++11" admb new_sim_thread4.cpp main4.cpp df_file.cpp model7.cpp 
 	@echo "=== Run new_sim_thread4"
 	time ./new_sim_thread4
 

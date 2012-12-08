@@ -3,10 +3,10 @@
 all: clean cov_re cov_re_sep run
 
 cov_re: cov_re.tpl
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -r -s $@
+	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:"${PATH}"; admb -r -s $@
 
 cov_re_sep: cov_re_sep.tpl
-	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; admb -r -s $@
+	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:"${PATH}"; admb -r -s $@
 
 run:
 	@printf "Started run:\n"

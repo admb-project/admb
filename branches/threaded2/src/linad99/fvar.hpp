@@ -113,7 +113,11 @@ Macro definitions.
 */
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
-#define __ADMBTHREAD__ __thread
+#if (__cplusplus > 199711L)
+  #define __ADMBTHREAD__ __thread
+#else
+  #define __ADMBTHREAD__
+#endif
 
 #define my_off_t long int
 #ifdef __BORLANDC__

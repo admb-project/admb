@@ -124,3 +124,38 @@ invoke custom adjoint code.
     \ingroup CONTRIB
     \details Contributed by Weihai Liu
 */
+
+// generate dox for directories
+/** \dir src
+Main AUTODIF and ADMB source code directories.
+*/
+/** \dir linad99
+Home of \ref fvar.hpp and the source files for most of th AUTODIF library.
+*/
+/** \dir nh99
+Source files for ADMB
+*/
+/** \dir df1b2-separable
+Source files for random effects models.
+*/
+/** \dir tools99
+Source files for "tools" such as the \ref cifstream and \ref adstring classes.
+*/
+/** \dir sparse
+Not sure what lives here.
+*/
+/** \dir contrib
+Houses the contributed libraries
+*/
+/** \dir ecolib
+Source code for ECOL Functions Useful in Ecology;
+contributed by Mollie Brooks.
+*/
+/** \dir qfclib
+QFC Functions created at the Quantitative Fisheries Center(QFC), 
+Michigan State University; Contributed by Weihai Liu.
+*/ 
+/** \dir statslib
+STATLIB Statistical Fuctions; contributed by Steven Martell.
+*/
+

@@ -419,11 +419,13 @@ void allocate_dvariable_space(void)
   
    //cout << (void*) ARRAY_MEMBLOCK_BASE.ptr  << "   ";
    //cout << (int) ARRAY_MEMBLOCK_BASE.ptr  << endl;
+/*
 #if defined(__x86_64)
    //intptr_t adjustment=(8-((intptr_t)ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
 #else
    int adjustment=(8-((int) ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
 #endif
+*/
    //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
    //ARRAY_MEMBLOCK_BASE.adjust(adjustment);
    //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;

@@ -67,6 +67,10 @@ ifeq ($(CXX),CC)
 	  cp ../scripts/CC/adcomp ${DISK}/bin
 	  cp ../scripts/CC/adlink ${DISK}/bin
 endif
+ifeq ($(CXX),c++)
+	  cp ../scripts/g++/adcomp ${DISK}/bin
+	  cp ../scripts/g++/adlink ${DISK}/bin
+endif
 ifeq ($(CXX),g++)
 	  cp ../scripts/g++/adcomp ${DISK}/bin
 	  cp ../scripts/g++/adlink ${DISK}/bin

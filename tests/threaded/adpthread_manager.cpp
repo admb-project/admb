@@ -283,6 +283,7 @@ void send_dvar_vector_to_slave(const dvar_vector &x,void * transfer_buffer,int s
   memcpy(b,&mmax,sizeof(int));
   b+=sizeof(int);
   memcpy(b,&(value(x(mmin))),sz*sizeof(double));
+
   save_identifier_string("T");
   x.save_dvar_vector_position();
   save_identifier_string("G");
@@ -291,6 +292,7 @@ void send_dvar_vector_to_slave(const dvar_vector &x,void * transfer_buffer,int s
   save_identifier_string("HH");
   gradient_structure::GRAD_STACK1->
     set_gradient_stack(pthread_master_unpack_vector_derivatives);
+
   mflag[sno] = 1;
   pthread_mutex_unlock(smutex+sno);
   pthread_cond_signal(scondition+sno);
@@ -311,6 +313,7 @@ void send_dvector_to_slave(const dvector &x,void * transfer_buffer,int sno)
   memcpy(b,&mmax,sizeof(int));
   b+=sizeof(int);
   memcpy(b,&(x(mmin)),sz*sizeof(double));
+
   mflag[sno] = 1;
   pthread_mutex_unlock(smutex+sno);
   pthread_cond_signal(scondition+sno);

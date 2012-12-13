@@ -16,7 +16,8 @@ run-new_sim_thread3:
 	time ./new_sim_thread3
 
 run-new_sim_thread4:
-	CXXFLAGS="-std=c++11" admb new_sim_thread4.cpp main4.cpp df_file.cpp model7.cpp 
+	#CXXFLAGS="-std=c++11" admb new_sim_thread4.cpp main4.cpp df_file.cpp model7.cpp 
+	admb new_sim_thread4.cpp main4.cpp df_file.cpp model7.cpp 
 	@echo "=== Run new_sim_thread4"
 	time ./new_sim_thread4
 

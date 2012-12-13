@@ -415,7 +415,7 @@ void allocate_dvariable_space(void)
    }
  */
 
-   ARRAY_MEMBLOCK_BASE = temp_ptr;
+   ARRAY_MEMBLOCK_BASE = (char*)temp_ptr;
   
    //cout << (void*) ARRAY_MEMBLOCK_BASE.ptr  << "   ";
    //cout << (int) ARRAY_MEMBLOCK_BASE.ptr  << endl;

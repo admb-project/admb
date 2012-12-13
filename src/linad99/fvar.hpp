@@ -1881,7 +1881,7 @@ private:
    inline double * xadr() { return( &(v->x) ); }
    inline double& xval() { return( (v->x) ); }
 
-   inline double_and_int * & get_v()
+   inline double_and_int* get_v() const
    {
      return v;
    }

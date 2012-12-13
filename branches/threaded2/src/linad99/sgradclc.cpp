@@ -252,7 +252,7 @@ do
  */
 void gradient_structure::save_arrays()
 {
-  void * temp_ptr;
+  void* temp_ptr = 0;
   long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
     ARRAY_MEMBLOCK_SIZE);
   gradient_structure::save_var_file_flag=0;
@@ -274,7 +274,7 @@ void gradient_structure::save_arrays()
    }
    if (gradient_structure::save_var_file_flag==0)
    {
-     ARRAY_MEMBLOCK_SAVE = temp_ptr;
+     ARRAY_MEMBLOCK_SAVE = (char*)temp_ptr;
      #if defined(DOS386)
      //#if DOS386==1
        #ifndef USE_ASSEMBLER

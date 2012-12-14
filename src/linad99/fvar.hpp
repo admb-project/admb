@@ -205,7 +205,7 @@ Macro definitions.
 #if !defined(linux) 
 #  include <dos.h>
 #  if !defined(__MSVC32__) && !defined(__BORLANDC__) && !defined (__GNUDOS__)
-#    include <pc.h>
+//#    include <pc.h>
 #  endif
 #endif
 #define AD_VERSION 7

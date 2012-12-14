@@ -61,6 +61,10 @@ typically optimized for automatic differentiation and automatically
 invoke custom adjoint code.
 */
 
+/**  \defgroup prepros Preprosessor (tpl2cpp & tpl2rem)
+\details Document "tpl2cpp" and "tpl2rem" as well as their output files (.cpp and .htp)
+*/
+
 /** \defgroup DEVEL Development Utilities
 \details ADMB functions of use to developers of ADMB code.
 */
@@ -142,7 +146,7 @@ Source files for random effects models.
 Source files for "tools" such as the \ref cifstream and \ref adstring classes.
 */
 /** \dir sparse
-Not sure what lives here.
+Sparse matrix routines used for some special random effects models.
 */
 /** \dir contrib
 Houses the contributed libraries

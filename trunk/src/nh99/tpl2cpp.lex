@@ -4181,7 +4181,8 @@ TOP_OF_MAIN_SECTION {
 
      fprintf(ftopmain,"    mp.computations(argc,argv);\n");
 
-    fprintf(htop,"#include <admodel.h>\n\n");
+    fprintf(htop,"#include <admodel.h>\n");
+    fprintf(htop,"#include <contrib.h>\n\n");
 
     if (bound_flag)
     {

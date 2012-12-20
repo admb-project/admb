@@ -6,6 +6,9 @@
  */
 #include <fvar.hpp>
 #include "cifstrem.h"
+/** \file ad_cif.cpp
+Overloaded cifstream operators for autodif classes.
+*/
 
 //VECTOR_OPERATOR_DEFINE(dvector)
 //VECTOR_OPERATOR_DEFINE(ivector)

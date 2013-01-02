@@ -321,7 +321,7 @@ dvector& dvector::operator=(const dvector& t)
 
    if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
    {
-     cerr << "Index bounds do not match in dvector& operator = (const dvector&)\n";
+     cerr << "Index bounds do not match in independent_variables& independent_variables::operator=(const dvector& t)\n";
      ad_exit(1);
    }
      //double tmp;

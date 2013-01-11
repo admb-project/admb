@@ -1791,6 +1791,7 @@ public:
   void computations(void);
   void hess_routine(void);
   void hess_routine_noparallel(void);
+  void hess_routine_threaded(void);
   void hess_routine_master(void);
   void hess_routine_slave(void);
   void constraint_report(void);

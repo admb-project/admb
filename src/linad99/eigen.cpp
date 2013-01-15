@@ -10,18 +10,18 @@
 #include <fvar.hpp>
 
 
-void tri_dag(BOR_CONST dmatrix& m,BOR_CONST dvector& d,BOR_CONST dvector& e);
-void get_eigen(BOR_CONST dvector& d,BOR_CONST dvector& e,_CONST dmatrix& z);
+void tri_dag(const dmatrix& m, const dvector& d,const dvector& e);
+void get_eigen(const dvector& d, const dvector& e, const dmatrix& z);
 
 /** Eigenvalues.
   \param m Input matrix (unchanged on return).
   \return Vector of eigenvalues.
 */
-dvector eigenvalues(_CONST dmatrix& m)
+dvector eigenvalues(const dmatrix& m)
 {
   if (m.rowsize()!=m.colsize())
   {
-    cerr << "error -- non square matrix passed to dvector eigen(_CONST dmatrix& m)\n";
+    cerr << "error -- non square matrix passed to dvector eigen(const dmatrix& m)\n";
     ad_exit(1);
   }
   dmatrix m1=symmetrize(m);
@@ -51,20 +51,20 @@ dvector eigenvalues(_CONST dmatrix& m)
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
 */
-void tri_dag(BOR_CONST dmatrix& _m,BOR_CONST dvector& _d,BOR_CONST dvector& _e)
+void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
 {
   dvector& d = (dvector&) _d;
   dvector& e = (dvector&) _e;
   dmatrix& m = (dmatrix&) _m;
   if (m.rowsize() != m.colsize())
   {
-    cerr << "Error -- non square matrix passed to void tridag(_CONST dmatrix& m)\n";
+    cerr << "Error -- non square matrix passed to void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
   if (m.rowsize() != d.size() || m.rowsize() != e.size()
     || d.indexmin() != 1 || e.indexmin() !=1 )
   {
-    cerr <<"Error -- incorrect vector size passed to void tridag(_CONST dmatrix& m)\n";
+    cerr <<"Error -- incorrect vector size passed to void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
   int n=m.rowsize();
@@ -178,7 +178,7 @@ double SIGN( CGNU_DOUBLE x, double y)
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
 */
-void get_eigen(BOR_CONST dvector& _d,BOR_CONST dvector& _e,_CONST dmatrix& _z)
+void get_eigen(const dvector& _d, const dvector& _e, const dmatrix& _z)
 {
   dvector& d = (dvector&) _d;
   dvector& e = (dvector&) _e;
@@ -203,7 +203,7 @@ void get_eigen(BOR_CONST dvector& _d,BOR_CONST dvector& _e,_CONST dmatrix& _z)
         if (iter++ == max_iterations)
         {
           cerr << "Maximum number of iterations exceeded in"
-          " dvector eigen(_CONST dmatrix& m)\n";
+          " dvector eigen(const dmatrix& m)\n";
           ad_exit(1);
         }
         g=(d[l+1]-d[l])/(2.0*e[l]);
@@ -283,7 +283,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e)
         if (iter++ == max_iterations)
         {
           cerr << "Maximum number of iterations exceeded in"
-          " dvector eigen(_CONST dmatrix& m)\n";
+          " dvector eigen(const dmatrix& m)\n";
           ad_exit(1);
         }
         g=(d[l+1]-d[l])/(2.0*e[l]);
@@ -364,7 +364,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e,
         if (iter++ == max_iterations)
         {
           cerr << "Maximum number of iterations exceeded in"
-          " dvector eigen(_CONST dmatrix& m)\n";
+          " dvector eigen(const dmatrix& m)\n";
           ad_exit(1);
         }
         g=(d[l+1]-d[l])/(2.0*e[l]);

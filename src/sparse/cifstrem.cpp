@@ -237,7 +237,7 @@ cifstream& cifstream::operator >> (const char* c)
   return *this;
 }
 
-cifstream& cifstream::operator >> (BOR_CONST long& i)
+cifstream& cifstream::operator >> (const long& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
@@ -296,7 +296,7 @@ void js_strip_leading_zeros(char * s)
   }
 }
 
-cifstream& cifstream::operator >> (BOR_CONST int& i)
+cifstream& cifstream::operator >> (const int& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
@@ -317,7 +317,7 @@ cifstream& cifstream::operator >> (BOR_CONST int& i)
   return *this;
 }
 
-cifstream& cifstream::operator >> (BOR_CONST double& _x)
+cifstream& cifstream::operator >> (const double& _x)
 {
   double& x = (double&)(_x);
   //char * s = new char[FILTER_BUF_SIZE];
@@ -353,7 +353,7 @@ cifstream& cifstream::operator >> (BOR_CONST double& _x)
   return *this;
 }
 
-cifstream& cifstream::operator >> (BOR_CONST float& x)
+cifstream& cifstream::operator >> (const float& x)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);

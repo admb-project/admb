@@ -21,7 +21,7 @@
    return ifs;
  }
  
- ostream& operator << (BOR_CONST ostream& _ofs,_CONST adstring_array& sa)
+ ostream& operator << (const ostream& _ofs, const adstring_array& sa)
  {
    ostream& ofs = (ostream&) _ofs;
    if (sa.ptr)

@@ -8,15 +8,15 @@
 #include <fvar.hpp>
 
 
-void tri_dag(BOR_CONST dvar_matrix& ,BOR_CONST dvar_vector& ,BOR_CONST dvar_vector& );
-void get_eigen(BOR_CONST dvar_vector& d,BOR_CONST dvar_vector& e,_CONST dvar_matrix& z);
+void tri_dag(const dvar_matrix& ,const dvar_vector& ,const dvar_vector& );
+void get_eigen(const dvar_vector& d,const dvar_vector& e, const dvar_matrix& z);
 
 
-dvar_vector eigenvalues(_CONST dvar_matrix& m)
+dvar_vector eigenvalues(const dvar_matrix& m)
 {
   if (m.rowsize()!=m.colsize())
   {
-    cerr << "Error -- non square matrix passed to dvector eigen(_CONST dvar_matrix& m)\n";
+    cerr << "Error -- non square matrix passed to dvector eigen(const dvar_matrix& m)\n";
     ad_exit(1);
   }
   dvar_matrix m1=symmetrize(m);
@@ -47,20 +47,20 @@ dvar_vector eigenvalues(_CONST dvar_matrix& m)
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
 */
-void tri_dag(BOR_CONST dvar_matrix& _m,BOR_CONST dvar_vector& _d, BOR_CONST dvar_vector& _e)
+void tri_dag(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
 {
   ADUNCONST(dvar_vector,d)
   ADUNCONST(dvar_vector,e)
   dvar_matrix& m=(dvar_matrix&) _m;
   if (m.rowsize() != m.colsize())
   {
-    cerr << "Error -- non square matrix passed to void tridag(_CONST dmatrix& m)\n";
+    cerr << "Error -- non square matrix passed to void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
   if (m.rowsize() != d.size() || m.rowsize() != e.size()
     || d.indexmin() != 1 || e.indexmin() !=1 )
   {
-    cerr <<"Error -- incorrect vector size passed to void tridag(_CONST dmatrix& m)\n";
+    cerr <<"Error -- incorrect vector size passed to void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
   int n=m.rowsize();
@@ -152,7 +152,7 @@ void tri_dag(BOR_CONST dvar_matrix& _m,BOR_CONST dvar_vector& _d, BOR_CONST dvar
   #endif
 }
 
-  dvariable SIGN(_CONST prevariable& x,_CONST prevariable& y)
+  dvariable SIGN(const prevariable& x, const prevariable& y)
 {
 #if defined __SUN__ || defined(__GNU__) 
   if(value(y) < 0)
@@ -178,7 +178,7 @@ void tri_dag(BOR_CONST dvar_matrix& _m,BOR_CONST dvar_vector& _d, BOR_CONST dvar
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
 */
-void get_eigen(BOR_CONST dvar_vector& _d,BOR_CONST dvar_vector& _e,_CONST dvar_matrix& z)
+void get_eigen(const dvar_vector& _d,const dvar_vector& _e, const dvar_matrix& z)
 {
   ADUNCONST(dvar_vector,d)
   ADUNCONST(dvar_vector,e)
@@ -200,7 +200,7 @@ void get_eigen(BOR_CONST dvar_vector& _d,BOR_CONST dvar_vector& _e,_CONST dvar_m
         if (iter++ == 30)
         {
           cerr << "Maximum number of iterations exceeded in"
-          " dvector eigen(_CONST dmatrix& m)\n";
+          " dvector eigen(const dmatrix& m)\n";
           ad_exit(1);
         }
         g=(d[l+1]-d[l])/(2.0*e[l]);
@@ -287,7 +287,7 @@ dvar_vector get_eigen_values(const dvar_vector& _ddd,const dvar_vector& _eee)
         if (iter++ == 30)
         {
           cerr << "Maximum number of iterations exceeded in"
-          " dvector eigen(_CONST dmatrix& m)\n";
+          " dvector eigen(const dmatrix& m)\n";
           ad_exit(1);
         }
         g=(d[l+1]-d[l])/(2.0*e[l]);

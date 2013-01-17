@@ -84,7 +84,7 @@ computer.
 Several compilers are supported, including
  * GCC 3.4 or newer
  * Microsoft Visual C++ 2003 or newer
- * MacOS XCode 3.2 and 4.x
+ * MacOS XCode(with the Command Line Tools) 3.2 and 4.x
  * Clang 3.0
  * Intel C++ Compiler 11
  * Solaris Studio 12

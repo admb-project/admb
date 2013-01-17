@@ -11,9 +11,13 @@
 #include <admodel.h>
 
 /**
- * Description not yet available.
- * \param
+  Checks if the program has been invoked with a particular command line argument ("string"). 
+  \param argc Number of command line arguments (as in all C programs)
+  \param argv Array  (of length argc) of command line arguments (as in all C programs)
+  \param string Should be one of the possible command line arguments to an ADMB program.  
+  \return An index into "argv" where the match with "string" is obtained. In case of no match, the value "-1" is returned.
  */
+
  int option_match(int argc,char * argv[],const char * string)
  {
    int rval=-1;
@@ -89,8 +93,12 @@ int option_match(char *_s, const char *string, const int& _nopt)
  }
 
 /**
- * Description not yet available.
- * \param
+  Checks if the program has been invoked with a particular command line argument ("string"). If so, counts the number of arguments ("nopt") to this command line option. For example if the program has been invoked with the command line option "-ind FILE", then nopt=1.
+  \param argc Number of command line arguments (as in all C programs)
+  \param argv Array  (of length argc) of command line arguments (as in all C programs)
+  \param string Should be one of the possible command line arguments to an ADMB program.  
+  \param nopt On return holds the number arguments/options associated with "string".
+  \return An index into "argv" where the match with "string" is obtained. In case of no match, the value "-1" is returned.
  */
 int option_match(int argc, char *argv[],const char *string, const int& _nopt)
  {

@@ -19,6 +19,7 @@ void ad_update_hess_stats_report(int i,int nvar);
 
 void function_minimizer::hess_routine_threaded(void)
 {
+
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
@@ -35,15 +36,20 @@ void function_minimizer::hess_routine_threaded(void)
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
 
+/*
   adstring tmpstring="admodel.hes-threaded";
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".hes-threaded";
   uostream ofs((char*)tmpstring);
 
   ofs << nvar;
+*/
+      dvariable vf;
+if (true) return;
   {
     {
       dvariable vf=0.0;
+if (true) return;
       vf=initial_params::reset(dvar_vector(x));
       *objective_function_value::pobjfun=0.0;
       pre_userfunction();
@@ -118,12 +124,16 @@ void function_minimizer::hess_routine_threaded(void)
       hess2=(g1-g2)/(sdelta1-sdelta2);
       hess=(eps2*hess1-hess2) /(eps2-1.);
 
+/*
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
+*/
     }
   }
+/*
   ofs << gradient_structure::Hybrid_bounded_flag;
   dvector tscale(1,nvar);   // need to get scale from somewhere
-  /*int check=*/initial_params::stddev_scale(tscale,x);
+  initial_params::stddev_scale(tscale,x);
   ofs << tscale;
+*/
 }

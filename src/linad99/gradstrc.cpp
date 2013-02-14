@@ -8,6 +8,8 @@
  * \file
  * Description not yet available.
  */
+#include <sstream>
+#include <thread>
 #include "fvar.hpp"
 
 //#define THREAD_SAFE
@@ -67,73 +69,93 @@ extern "C"{
 //char * MY_BUF=NULL;
 // *************************************************************
 // *************************************************************
-int ctlc_flag = 0;
-__ADMBTHREAD__ int gradient_structure::Hybrid_bounded_flag=0;
-__ADMBTHREAD__ DF_FILE * gradient_structure::fp=NULL;
-__ADMBTHREAD__ char gradient_structure::cmpdif_file_name[101];
-//char gradient_structure::var_store_file_name[101];
-int gradient_structure::NUM_RETURN_ARRAYS = 25;
-__ADMBTHREAD__ double * gradient_structure::hessian_ptr=NULL;
-int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
-#if (defined(NO_DERIVS))
-  int gradient_structure::no_derivatives = 0;
-#endif
-__ADMBTHREAD__ long int gradient_structure::max_last_offset = 0;
-__ADMBTHREAD__ long int gradient_structure::NVAR = 0;
-__ADMBTHREAD__ long int gradient_structure::TOTAL_BYTES = 0;
-__ADMBTHREAD__ long int gradient_structure::PREVIOUS_TOTAL_BYTES = 0;
-long int gradient_structure::USE_FOR_HESSIAN = 0;
-__ADMBTHREAD__ dvariable** gradient_structure::RETURN_ARRAYS = NULL;
-__ADMBTHREAD__ int gradient_structure::RETURN_ARRAYS_PTR;
-__ADMBTHREAD__ dvariable ** gradient_structure::RETURN_PTR_CONTAINER = NULL;
-__ADMBTHREAD__ int gradient_structure::RETURN_ARRAYS_SIZE = 70;
-__ADMBTHREAD__ int gradient_structure::instances = 0;
-//int gradient_structure::RETURN_INDEX = 0;
-//dvariable * gradient_structure::FRETURN = NULL;
-__ADMBTHREAD__ dvariable * gradient_structure::MAX_RETURN = NULL;
-__ADMBTHREAD__ dvariable * gradient_structure::MIN_RETURN = NULL;
-__ADMBTHREAD__ dvariable * gradient_structure::RETURN_PTR = NULL;
 #ifdef __BORLANDC__
 long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
 long int gradient_structure::CMPDIF_BUFFER_SIZE=140000000L;
 #else
-long long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
-long long int gradient_structure::CMPDIF_BUFFER_SIZE=140000000L;
+__thread long long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
+__thread long long int gradient_structure::CMPDIF_BUFFER_SIZE = 140000000L;
 #endif
+__thread DF_FILE* gradient_structure::fp = nullptr;
+__thread int gradient_structure::instances = 0;
+__thread dlist* gradient_structure::GRAD_LIST = nullptr;
+__thread int gradient_structure::save_var_flag = 0;
+__thread int gradient_structure::save_var_file_flag = 0;
+__thread int gradient_structure::MAX_DLINKS = 5000;
+__thread int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
+__thread long int gradient_structure::NVAR = 0;
+__thread long int gradient_structure::TOTAL_BYTES = 0;
+__thread long int gradient_structure::PREVIOUS_TOTAL_BYTES = 0;
+__thread long int gradient_structure::USE_FOR_HESSIAN = 0;
+__thread int gradient_structure::NUM_RETURN_ARRAYS = 25;
+__thread unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L;
+__thread unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 
-__ADMBTHREAD__ dependent_variables_information * gradient_structure::DEPVARS_INFO=NULL;
+__thread int gradient_structure::RETURN_ARRAYS_SIZE = 70;
+__thread long int gradient_structure::max_last_offset = 0;
+__thread int gradient_structure::Hybrid_bounded_flag = 0;
 
-int gradient_structure::save_var_flag=0;
-int gradient_structure::save_var_file_flag=0;
-//int gradient_structure::_GRADFILE_PTR = NULL; // should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR1 = NULL; // should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR2 = NULL; // should be int gradfile_handle;
-//int gradient_structure::_VARSSAV_PTR = 0; // should be int gradfile_handle;
+__thread dvariable** gradient_structure::RETURN_ARRAYS = nullptr;
+__thread dvariable** gradient_structure::RETURN_PTR_CONTAINER = nullptr;
+__thread char* gradient_structure::ARRAY_MEMBLOCK_BASE = nullptr;
+__thread char* gradient_structure::ARRAY_MEMBLOCK_BASEA = nullptr;
+__thread char* gradient_structure::ARRAY_MEMBLOCK_SAVE = nullptr;
+__thread double* gradient_structure::variables_save = nullptr;
+__thread indvar_offset_list* gradient_structure::INDVAR_LIST = nullptr;
+__thread dependent_variables_information* gradient_structure::DEPVARS_INFO = nullptr; 
+__thread double* gradient_structure::hessian_ptr = nullptr;
+__thread grad_stack* gradient_structure::GRAD_STACK1 = nullptr;
+__thread dvariable* gradient_structure::RETURN_PTR = nullptr;
+__thread dvariable* gradient_structure::MIN_RETURN = nullptr;
+__thread dvariable* gradient_structure::MAX_RETURN = nullptr;
+__thread arr_list* gradient_structure::ARR_LIST1 = nullptr;
+__thread arr_list* gradient_structure::ARR_FREE_LIST1 = nullptr;
+#if (defined(NO_DERIVS))
+__thread int gradient_structure::no_derivatives = 0;
+#endif
+//Is this storing a pointer to int? bad...
+__thread int gradient_structure::RETURN_ARRAYS_PTR = 0;
+__thread char gradient_structure::cmpdif_file_name[101];
 
-__ADMBTHREAD__ unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
-__ADMBTHREAD__ unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
-__ADMBTHREAD__ dlist * gradient_structure::GRAD_LIST;
-__ADMBTHREAD__ grad_stack * gradient_structure::GRAD_STACK1;
-__ADMBTHREAD__ indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
-__ADMBTHREAD__ arr_list * gradient_structure::ARR_LIST1 = NULL;
-__ADMBTHREAD__ arr_list * gradient_structure::ARR_FREE_LIST1 = NULL;
-int gradient_structure::MAX_DLINKS = 5000;
+int ctlc_flag = 0;
 
-// note: ARRAY_MEMBLOCK stuff is set by tpl2cpp for historical reasons
-//       those settings could be moved into this file in the future
-//       - Ian Taylor 5/3/2012
-
-//unsigned long int gradient_structure::ARRAY_MEMBLOCK_BASE = 0L;
-//humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASE;
-//humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASEA;
-//humungous_pointer gradient_structure::ARRAY_MEMBLOCK_SAVE;
-__ADMBTHREAD__ char * gradient_structure::ARRAY_MEMBLOCK_BASE;
-__ADMBTHREAD__ char * gradient_structure::ARRAY_MEMBLOCK_BASEA;
-__ADMBTHREAD__ char * gradient_structure::ARRAY_MEMBLOCK_SAVE;
-__ADMBTHREAD__ double * gradient_structure::variables_save=NULL;
 void * farptr_norm(void *);
 long int farptr_tolong(void *) ;
 void memory_allocate_error(const char * s, void * ptr);
+
+char lastchar(char * s);
+
+gradient_structure::gradient_structure(const gradient_structure& gs): gradient_structure()
+{
+/*
+  std::thread::id this_thread_id = std::this_thread::get_id();
+
+  std::ostringstream oss;
+  oss << this_thread_id;
+
+  //path is NULL if not defined
+  char* path = getenv("ADTMP1"); 
+  if (path != NULL)
+  {
+#ifdef __SUN__
+    sprintf(&cmpdif_file_name[0],"%s/cmpdiff-%s.tmp", path, oss.str().c_str());
+#else
+    if (lastchar(path)!='\\')
+    {        
+      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff-%s.tmp", path, oss.str().c_str());
+    }
+    else
+    {        
+      sprintf(&cmpdif_file_name[0],"%scmpdiff-%s.tmp", path, oss.str().c_str());
+    }
+#endif
+  }
+  else
+  {
+    sprintf(&cmpdif_file_name[0],"cmpdiff-%s.tmp", oss.str().c_str());
+  }
+*/
+}
 
 /**
  * Description not yet available.
@@ -145,6 +167,7 @@ long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
   PREVIOUS_TOTAL_BYTES = TOTAL_BYTES;
   return tmp;
 }
+
 
 /**
  * Description not yet available.
@@ -166,7 +189,7 @@ long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
  }
 
  void fill_ad_random_part(void);
- extern char ad_random_part[6];
+ //extern char ad_random_part[6];
 
 /**
  * Description not yet available.
@@ -174,24 +197,26 @@ long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
  */
 void cleanup_temporary_files()
 {
-   if (gradient_structure::fp)
+//JCA if (true) return;
+
+   if (gradient_structure::fp != nullptr)
    {
      delete gradient_structure::fp;
-     gradient_structure::fp=NULL;
+     gradient_structure::fp = nullptr;
    }
    if (gradient_structure::GRAD_STACK1)
    {
      if (close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR1))
      {
-       cerr << "Error closing file " << gradient_structure::GRAD_STACK1->gradfile_name1 << "\n";
+       cerr << "2Error closing file " << gradient_structure::GRAD_STACK1->gradfile_name1 << "\n";
      }
      if (close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR2))
      {
-       cerr << "Error closing file " << gradient_structure::GRAD_STACK1->gradfile_name2 << "\n";
+       cerr << "2Error closing file " << gradient_structure::GRAD_STACK1->gradfile_name2 << "\n";
      }
      if (close( gradient_structure::GRAD_STACK1->_VARSSAV_PTR))
      {
-       cerr << "Error closing file " << gradient_structure::GRAD_STACK1->var_store_file_name << "\n";
+       cerr << "2Error closing file " << gradient_structure::GRAD_STACK1->var_store_file_name << "\n";
      }
    }
   #if defined ( __SUN__) ||  defined ( __GNU__)
@@ -219,6 +244,9 @@ void cleanup_temporary_files()
  */
 void allocate_dvariable_space(void)
 {
+cout << __FILE__ << ':' << __LINE__ << endl;
+exit(1);
+
   int on,nopt;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
   {
@@ -268,58 +296,58 @@ void allocate_dvariable_space(void)
   gradient_structure::GRAD_LIST->last=dl;  
 }
 
+#include <sstream>
+#include <thread>
+
 /**
  * Description not yet available.
  * \param
  */
- gradient_structure::gradient_structure(long int _size)
- {
-   gradient_structure::NVAR=0;
-   atexit(cleanup_temporary_files);
-   fill_ad_random_part();
-   long int size;
-   size=_size;
+gradient_structure::gradient_structure(long int _size)
+{
+  gradient_structure::NVAR = 0;
+  atexit(cleanup_temporary_files);
+  fill_ad_random_part();
+  if (instances++ > 0)
+  {
+    cerr << "More than one gradient_structure object has been declared.\n"
+         << "  Only one gradient_structure object can exist. Check the scope\n"
+         << "  of the objects declared.\n";
+    ad_exit(1);
+  }
+  gradient_structure::ARRAY_MEMBLOCK_SIZE = _size;
 
-   if (instances++ > 0)
-   {
-     cerr << "More than one gradient_structure object has been declared.\n"
-          << "  Only one gradient_structure object can exist. Check the scope\n"
-          << "  of the objects declared.\n";
-     ad_exit(1);
-   }
-   gradient_structure::ARRAY_MEMBLOCK_SIZE=size; //js
-
-   char * path = getenv("ADTMP1"); // NULL if not defined
-   if (path != NULL)
-   {
+  std::thread::id this_thread_id = std::this_thread::get_id();
+  std::ostringstream oss;
+  oss << this_thread_id;
+  char* ad_random_part = oss.str().c_str();
+  char* path = getenv("ADTMP1"); // NULL if not defined
+  if (path != NULL)
+  {
      #ifdef __SUN__
-	sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
-          ad_random_part);
+	sprintf(&cmpdif_file_name[0],"%s/cmpdiff%s.tmp", path, ad_random_part);
      #else
         if (lastchar(path)!='\\')
         {        
-	  sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
-            ad_random_part);
+	  sprintf(&cmpdif_file_name[0],"%s\\cmpdiff%s.tmp", path, ad_random_part);
         }
         else
         {        
-	  sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
-            ad_random_part);
+	  sprintf(&cmpdif_file_name[0],"%scmpdiff%s.tmp", path, ad_random_part);
         }
      #endif
-   }
-   else
-   {
-      sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
-   }
+  }
+  else
+  {
+    sprintf(&cmpdif_file_name[0],"cmpdiff%s.tmp",ad_random_part);
+  }
 
-   if (DEPVARS_INFO!= NULL)
-   {
-      cerr << "  0 Trying to allocate to a non NULL pointer in gradient"
-              "_structure" << endl;
-   }
-   else
-   {
+  if (DEPVARS_INFO!= NULL)
+  {
+    cerr << "  0 Trying to allocate to a non NULL pointer in gradient_structure" << endl;
+  }
+  else
+  {
      int on,nopt;
      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
      {
@@ -341,62 +369,45 @@ void allocate_dvariable_space(void)
          }
        }
      }
-     DEPVARS_INFO=new dependent_variables_information(NUM_DEPENDENT_VARIABLES);
-     memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
-   }
+    DEPVARS_INFO=new dependent_variables_information(NUM_DEPENDENT_VARIABLES);
+    memory_allocate_error("DEPVARS_INFO", (void *) DEPVARS_INFO);
+  }
+  if (fp != nullptr)
+  {
+    cerr << "  0 Trying to allocate to a non NULL pointer in gradient_structure" << endl;
+  }
+  else
+  {
+    fp = new DF_FILE(CMPDIF_BUFFER_SIZE);
+    memory_allocate_error("fp", (void*)fp);
+  }
 
-   if (fp!= NULL)
-   {
-      cerr << "  0 Trying to allocate to a non NULL pointer in gradient"
-              "_structure" << endl;
-   }
-   else
-   {
-     fp=new DF_FILE(CMPDIF_BUFFER_SIZE);
-     memory_allocate_error("fp", (void *) fp);
-   }
-
-   void * temp_ptr;
-  // double_and_int * tmp;
    int i;
    #ifdef DIAG
      cerr <<" In gradient_structure::gradient_structure()\n";
      cerr <<"  ARRAY_MEMBLOCK_SIZE = " << ARRAY_MEMBLOCK_SIZE << "\n";
    #endif
 
-   if ( GRAD_LIST!= NULL)
-   {
-      cerr << "  1 Trying to allocate to a non NULL pointer in gradient structure \n";
-   }
-   else
-   {
-      GRAD_LIST = new dlist;
-      memory_allocate_error("GRAD_LIST", (void *) GRAD_LIST);
-   }
+  if (GRAD_LIST != nullptr)
+  {
+    cerr << "  1 Trying to allocate to a non NULL pointer in gradient structure \n";
+  }
+  else
+  {
+    GRAD_LIST = new dlist();
+    memory_allocate_error("GRAD_LIST", (void*)GRAD_LIST);
+  }
+  if (ARR_LIST1 != nullptr)
+  {
+    cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
+  }
+  else
+  {
+    ARR_LIST1 = new arr_list();
+    memory_allocate_error("ARR_LIST1", (void*)ARR_LIST1);
+  }
 
-   if ( ARR_LIST1!= NULL)
-   {
-      cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
-   }
-   else
-   {
-      ARR_LIST1 = new arr_list;
-      memory_allocate_error("ARR_LIST1", (void *) ARR_LIST1);
-   }
-
- /*
-   if ( ARR_FREE_LIST1!= NULL)
-   {
-      cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
-   }
-   else
-   {
-      ARR_FREE_LIST1 = new arr_list;
-      memory_allocate_error("ARR_FREE_LIST1", (void *) ARR_FREE_LIST1);
-   }
- */
-
-//#if DOS386==1
+   void* temp_ptr = nullptr;
 #if defined(DOS386) || defined (__MSVC32__) || defined (__WAT32__)
    if ( (temp_ptr = (void *) malloc(ARRAY_MEMBLOCK_SIZE )) == 0)
 #else
@@ -408,27 +419,7 @@ void allocate_dvariable_space(void)
 
    }
 
-  /*
-   if (ARRAY_MEMBLOCK_BASE != NULL)
-   {
-      cerr << "  3b Trying to allocate to a non NULL pointer in gradient structure \n";
-   }
- */
-
    ARRAY_MEMBLOCK_BASE = (char*)temp_ptr;
-  
-   //cout << (void*) ARRAY_MEMBLOCK_BASE.ptr  << "   ";
-   //cout << (int) ARRAY_MEMBLOCK_BASE.ptr  << endl;
-/*
-#if defined(__x86_64)
-   //intptr_t adjustment=(8-((intptr_t)ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
-#else
-   int adjustment=(8-((int) ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
-#endif
-*/
-   //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
-   //ARRAY_MEMBLOCK_BASE.adjust(adjustment);
-   //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
   
    if (GRAD_STACK1 != NULL)
    {
@@ -580,25 +571,24 @@ void RETURN_ARRAYS_DECREMENT(void)
  */
 gradient_structure::~gradient_structure()
 {
-   gradient_structure::NVAR=0;
-   if (RETURN_ARRAYS == NULL)
-   {
-     null_ptr_err_message();
-     ad_exit(1);
-   }
-   else
-   {
-     for (int i=0; i< NUM_RETURN_ARRAYS; i++)
-     {
-	delete [] RETURN_ARRAYS[i];
-	RETURN_ARRAYS[i]=NULL;
-     }
-     delete [] RETURN_ARRAYS;
-     RETURN_ARRAYS = NULL;
-     delete [] RETURN_PTR_CONTAINER;
-     RETURN_PTR_CONTAINER = NULL;
-   }
-
+  gradient_structure::NVAR = 0;
+  if (RETURN_ARRAYS == nullptr)
+  {
+    null_ptr_err_message();
+    ad_exit(1);
+  }
+  else
+  {
+    for (int i = 0; i < NUM_RETURN_ARRAYS; i++)
+    {
+      delete [] RETURN_ARRAYS[i];
+      RETURN_ARRAYS[i]=NULL;
+    }
+    delete [] RETURN_ARRAYS;
+    RETURN_ARRAYS = NULL;
+    delete [] RETURN_PTR_CONTAINER;
+    RETURN_PTR_CONTAINER = NULL;
+  }
    if (INDVAR_LIST == NULL)
    {
      null_ptr_err_message();
@@ -610,7 +600,6 @@ gradient_structure::~gradient_structure()
      delete INDVAR_LIST;
      INDVAR_LIST = NULL;
    }
-
    if (GRAD_STACK1 == NULL)
    {
      null_ptr_err_message();
@@ -621,7 +610,6 @@ gradient_structure::~gradient_structure()
      delete GRAD_STACK1;
      GRAD_STACK1 = NULL;
    }
-
    if (ARRAY_MEMBLOCK_BASE == NULL)
    {
      cerr << "Trying to farfree a NULL pointer in ~gradient_structure\n";
@@ -629,12 +617,9 @@ gradient_structure::~gradient_structure()
    }
    else
    {
-     //ARRAY_MEMBLOCK_BASE.free();
      free(ARRAY_MEMBLOCK_BASE);
      ARRAY_MEMBLOCK_BASE=0;
    }
-
-
    if (ARR_LIST1 == NULL)
    {
      null_ptr_err_message();
@@ -645,20 +630,6 @@ gradient_structure::~gradient_structure()
       delete ARR_LIST1;
       ARR_LIST1 = NULL;
    }
-
-  /*
-   if (ARR_FREE_LIST1 == NULL)
-   {
-     null_ptr_err_message();
-     ad_exit(1);
-   }
-   else
-   {
-      delete ARR_FREE_LIST1;
-      ARR_FREE_LIST1 = NULL;
-   }
-   */
-
    if (GRAD_LIST == NULL)
    {
      null_ptr_err_message();
@@ -669,9 +640,7 @@ gradient_structure::~gradient_structure()
       delete GRAD_LIST;
       GRAD_LIST = NULL;
    }
-
    instances --;
-
    if (DEPVARS_INFO==NULL)
    {
      null_ptr_err_message();
@@ -679,14 +648,12 @@ gradient_structure::~gradient_structure()
    }
    delete DEPVARS_INFO;
    DEPVARS_INFO=NULL;
-
    if (fp == NULL)
    {
      cerr << "Trying to close stream referenced by a NULL pointer\n"
        " in ~gradient_structure\n";
      ad_exit(1);
    }
-
    delete fp;
    fp = NULL;
 }

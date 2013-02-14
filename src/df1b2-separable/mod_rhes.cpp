@@ -87,9 +87,6 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
 
   return L;
 }
-
-void useless(const double& sdelta2);
-
 /**
  * Description not yet available.
  * \param
@@ -163,7 +160,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       if (lapprox->block_diagonal_hessian)
       {
         //if (ad_comm::wd_flag)
-        tmpstring = ad_comm::adprogram_name + ".rhes";
+        tmpstring = *ad_comm::adprogram_name + ".rhes";
         ofstream ofs((char*)(tmpstring));
             ofs << "   value      std.dev" << endl;
         int mmin=lapprox->block_diagonal_hessian->indexmin();
@@ -193,7 +190,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       else if (lapprox->bHess)
       {
         //if (ad_comm::wd_flag)
-        tmpstring = ad_comm::adprogram_name + ".rhes";
+        tmpstring = *ad_comm::adprogram_name + ".rhes";
         ofstream ofs((char*)(tmpstring));
             ofs << "   value      std.dev" << endl;
         int mmin=lapprox->bHess->indexmin();
@@ -226,11 +223,11 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       int i;
       //if (ad_comm::wd_flag)
       dmatrix m;
-      tmpstring = ad_comm::adprogram_name + ".rhes";
+      tmpstring = *ad_comm::adprogram_name + ".rhes";
       ofstream ofs((char*)(tmpstring));
           ofs << "   value      std.dev" << endl;
       //int ii=1;
-      tmpstring = ad_comm::adprogram_name + ".luu";
+      tmpstring = *ad_comm::adprogram_name + ".luu";
       uostream ofs1((char*)(tmpstring));
       dvector & u= lapprox->uhat;
       if (lapprox->hesstype !=3)
@@ -304,7 +301,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 
     {
       int i,j;
-      tmpstring = ad_comm::adprogram_name + ".luu";
+      tmpstring = *ad_comm::adprogram_name + ".luu";
       uistream uis1((char*)(tmpstring));
       uis1 >> i >> j;
       cout << i << " " << j << endl;
@@ -352,7 +349,6 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 
     // get a number which is exactly representable
     double sdelta=1.0+delta;
-    useless(sdelta);
     sdelta-=1.0;
 
     
@@ -408,7 +404,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
         adstring tmpstring="admodel.hes";
         if (ad_comm::wd_flag)
         {
-          tmpstring = ad_comm::adprogram_name + ".hes";
+          tmpstring = *ad_comm::adprogram_name + ".hes";
         }
         uostream ofs((char*)tmpstring);
         ofs << nvar;
@@ -452,13 +448,11 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       double f=0.0;
       double xsave=x(i);
       sdelta1=x(i)+delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       g1=(*lapprox)(x,f,this);
 
       sdelta2=x(i)-delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       g2=(*lapprox)(x,f,this);
@@ -466,14 +460,12 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       hess1=(g1-g2)/(sdelta1-sdelta2);
  
       sdelta1=x(i)+eps*delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       g1=(*lapprox)(x,f,this);
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       g2=(*lapprox)(x,f,this);
@@ -524,27 +516,23 @@ void function_minimizer::hess_routine_slave_random_effects(void)
       double f=0.0;
       double xsave=x(i);
       sdelta1=x(i)+delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       (*lapprox)(x,f,this);
 
       sdelta2=x(i)-delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       (*lapprox)(x,f,this);
       x(i)=xsave;
  
       sdelta1=x(i)+eps*delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       (*lapprox)(x,f,this);
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       (*lapprox)(x,f,this);

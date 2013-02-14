@@ -9,24 +9,24 @@
  * Description not yet available.
  */
 #include <admodel.h>
+#include <cassert>
 
 /**
  * Description not yet available.
  * \param
  */
- int option_match(int argc,char * argv[],const char * string)
- {
-   int rval=-1;
-   for (int i=0;i<argc;i++)
-   {
-     if (!strcmp(argv[i],string))
-     {
-       rval=i;
-       break;
-     }
-   }
-   return rval;
- }
+int option_match(int argc, char* argv[], const char* string)
+{
+  assert(argv != nullptr);
+  for (int i = 0; i < argc; i++)
+  {
+    if (!strcmp(argv[i], string))
+    {
+      return i;
+    }
+  }
+  return -1;
+}
 
 /**
  * Description not yet available.

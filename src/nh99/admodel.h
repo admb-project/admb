@@ -689,7 +689,7 @@ class function_minimizer;
  */
 class pvm_params
 {
-  static pvm_params * varsptr[]; // this should be a resizeable array
+  static pvm_params* varsptr[]; // this should be a resizeable array
   static int num_pvm_params;
   static const int maxnum_pvm_params;
   void add_to_list(void);
@@ -748,15 +748,21 @@ typedef void * ptovoid;
  */
 class adlist_ptr
 {
-  ptovoid * ptr;
+  ptovoid* ptr;
   int current_size;
   int current;
   void resize(void);
-  void add_to_list(void * p);
+  void add_to_list(void* p);
 public:
-  ~adlist_ptr();
-  pinitial_params  & operator [] (int i);
-  adlist_ptr(int init_size);
+  adlist_ptr(const int init_size);
+  virtual ~adlist_ptr();
+
+  int get_current_size() const { return current_size; }
+  int get_current() const { return current; }
+  ptovoid* get_ptr() const { return ptr; }
+
+  pinitial_params& operator[](const int i);
+
   friend class initial_params;
 };
 
@@ -768,25 +774,28 @@ public:
  */
   class shareinfo
   {
-    index_type * sflags;
-    index_type * original_sflags;
-    index_type * aflags;
-    index_type * invflags;
-    i3_array * bmap;
+    index_type* sflags;
+    index_type* original_sflags;
+    index_type* aflags;
+    index_type* invflags;
+    i3_array* bmap;
     int dimension;
     int maxshare;
     int current_phase;
   public:
-    void get_inv_matrix_shared( int _cf);
-    void get_inv_vector_shared( int _cf);
-    int & get_maxshare(void) { return maxshare; }
-    i3_array & get_bmap(void);
+    shareinfo(const index_type& sf,const index_type& af);
+    virtual ~shareinfo();
+
+    void get_inv_matrix_shared(int _cf);
+    void get_inv_vector_shared(int _cf);
+    int& get_maxshare(void) { return maxshare; }
+    i3_array& get_bmap(void);
     int & get_dimension(void){ return dimension;}
-    index_type * get_original_shareflags(void);
-    index_type * get_shareflags(void);
+    index_type* get_original_shareflags(void);
+    index_type* get_shareflags(void);
     int& get_current_phase(void);
-    index_type * get_activeflags(void);
-    index_type * get_invflags(void);
+    index_type* get_activeflags(void);
+    index_type* get_invflags(void);
     void set_shareflags(const index_type& sf);
     void set_original_shareflags(const index_type& sf);
     void reset_shareflags(const index_type& sf);
@@ -794,8 +803,6 @@ public:
     void set_bmap(const i3_array& af);
     void reset_bmap(const i3_array& af);
     void set_invflags(const index_type& af);
-    shareinfo(const index_type& sf,const index_type& af);
-    ~shareinfo();
   };
 #endif
  
@@ -807,7 +814,7 @@ class initial_params
 {
 protected:
 #if defined(USE_SHARE_FLAGS)
-  shareinfo * share_flags;
+  shareinfo* share_flags;
 #endif
   virtual ~initial_params();
   int active_flag;
@@ -823,21 +830,24 @@ public:
 #endif
   double get_scalefactor();
   void set_scalefactor(const double);
+
+  //varsptr below should be a resizeable array
 #if !defined(BIG_INIT_PARAMS)
-  static initial_params  varsptr[]; // this should be a resizeable array
+  //static initial_params* varsptr;
 #else
-  static adlist_ptr varsptr; // this should be a resizeable array
+  static __thread adlist_ptr* varsptr;
 #endif
-  static int num_initial_params;
-  static const int max_num_initial_params;
-  static int straight_through_flag;
-  static int num_active_initial_params;
-  static int max_number_phases;
-  static int current_phase;
-  static int restart_phase;
-  static int sd_phase;
-  static int mc_phase;
-  static int mceval_phase;
+  static __thread int num_initial_params;
+  static __thread const int max_num_initial_params;
+  static __thread int straight_through_flag;
+  static __thread int num_active_initial_params;
+  static __thread int max_number_phases;
+  static __thread int current_phase;
+  static __thread int restart_phase;
+  static __thread int sd_phase;
+  static __thread int mc_phase;
+  static __thread int mceval_phase;
+
   int phase_start;
   int phase_save;
   int phase_stop;
@@ -1135,13 +1145,14 @@ class param_init_number: public named_dvariable , public initial_params
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,const int& ii);
   //virtual void read_value(void);
 protected:
-  void allocate(int phase_start=1,const char *s="UNNAMED");
-  void allocate(const char *s="UNNAMED");
   friend class model_parameters;
   friend class param_init_number_vector; 
-  param_init_number();
   param_init_number& operator = (CGNU_DOUBLE m);
   param_init_number& operator=(const prevariable& m);
+public:
+  param_init_number();
+  void allocate(int phase_start=1,const char *s="UNNAMED");
+  void allocate(const char *s="UNNAMED");
 };
 
 /**
@@ -1699,15 +1710,16 @@ typedef void (model_parameters::*PMFVIV4) (const dvar_vector&,int n,
 class function_minimizer
 {
 public:
-  static int bad_step_flag;
-  static int likeprof_flag;
-  static int first_hessian_flag;
-  static int test_trust_flag;
-  static int random_effects_flag;
-  dmatrix * negdirections;
-  static int negative_eigenvalue_flag;
+  dmatrix* negdirections;
+
+  static __thread int bad_step_flag;
+  static __thread int likeprof_flag;
+  static __thread int first_hessian_flag;
+  static __thread int test_trust_flag;
+  static __thread int random_effects_flag;
+  static __thread int negative_eigenvalue_flag;
 #if defined(USE_LAPLACE)
-  static int inner_opt_flag;
+  static __thread int inner_opt_flag;
   static int inner_opt(void);
   laplace_approximation_calculator * lapprox;
   dvector * multinomial_weights;
@@ -1749,25 +1761,26 @@ public:
   int quit_flag;
   double min_improve;
   void pre_userfunction(void);
-  virtual void userfunction(void)=0;
+  virtual void userfunction(void) {;}
   virtual void allocate(void){;}
-  static named_dvar_vector * ph;
-  static named_dvar_vector * pg;
+  static __thread named_dvar_vector* ph;
+  static __thread named_dvar_vector* pg;
 protected:
   double ffbest;
 private:
-  gradient_structure * pgs;
+  gradient_structure* pgs;
   adstring_array param_labels;
   ivector param_size;
 protected:
   void report_function_minimizer_stats(void){;}
   virtual void report(void){;};
-  static dvector convergence_criteria;
-  static dvector maximum_function_evaluations;
-  static int sd_flag;
-  static adstring user_data_file;
-  static adstring user_par_file;
-  static int have_constraints;
+public:
+  static __thread dvector* convergence_criteria;
+  static __thread dvector* maximum_function_evaluations;
+  static __thread int sd_flag;
+  static __thread adstring* user_data_file;
+  static __thread adstring* user_par_file;
+  static __thread int have_constraints;
 public:
   virtual dvariable user_randeff(const dvar_vector& x);
   virtual dvar_vector user_dfrandeff(const dvar_vector& x);
@@ -1831,7 +1844,7 @@ public:
   void sd_routine(void);
   int ef_(double * f, double * x);
   int constrained_minimization2(int _n,int _nh, int _ng,dvector& __x);
-  static int constraint_exit_number;
+  static __thread int constraint_exit_number;
   void get_bigS(int ndvar,int nvar1,int nvar,
     dmatrix& S,dmatrix& BS,dvector& scale);
 
@@ -1992,28 +2005,28 @@ ostream& operator<<(const ostream& s, const label_class& lc);
  */
 class stddev_params
 {
-protected:
 public:
-  static stddev_params * stddevptr[150]; // this should be a resizeable array
-  static stddev_params * stddev_number_ptr[150]; // this should be a resizeable array
-  static void get_all_sd_values(const dvector& x, const int& ii);
+  static stddev_params* stddevptr[150]; // this should be a resizeable array
+  static stddev_params* stddev_number_ptr[150]; // this should be a resizeable array
   static int num_stddev_params;
   static int num_stddev_number_params;
+
   static ivector copy_all_number_offsets(void);
-  void allocate(void){;};
   static int num_stddev_calc(void);
   static int num_stddev_number_calc(void);
   static void get_stddev_number_offset(void);
+  static void copy_all_values(const dvector& x, const int& ii); //get the number of active parameters
+  static void copy_all_number_values(const dvector& x, const int& ii); //get the number of active parameters
+  static void get_all_sd_values(const dvector& x, const int& ii);
 public:
   stddev_params(void){;}
+  void allocate(void){;};
   virtual void setindex(int);
   virtual int getindex(void);
   virtual int size_count(void)=0; // get the number of active parameters
   virtual void set_dependent_variables(void)=0;
   virtual void copy_value_to_vector(const dvector&,const int&) = 0;
   virtual void get_sd_values(const dvector& x, const int& ii) = 0;
-  static void copy_all_values(const dvector& x, const int& ii); //get the number of active parameters
-  static void copy_all_number_values(const dvector& x, const int& ii); //get the number of active parameters
   virtual void add_to_list(void);
   virtual void add_to_gui_list(void);
   virtual const char * label()=0;
@@ -2029,9 +2042,9 @@ class likeprof_params
   double stepsize;
   int    stepnumber;
 protected:
-public:
-  static likeprof_params * likeprofptr[500]; // this should be a 
-                                               // resizeable array
+public: 
+  //this should be a resizeable array
+  static likeprof_params* likeprofptr[500];
   static int num_likeprof_params;
   void allocate(void){;};
   static int num_stddev_calc(void);
@@ -2163,16 +2176,16 @@ class adpvm_manager;
  * Description not yet available.
  * \param
  */
-  class objective_function_value : public named_dvariable
-  {
-  public:
-    static objective_function_value * pobjfun;
-    static double fun_without_pen;
-    static double gmax;
-    objective_function_value();
-    objective_function_value& operator=(const prevariable& v);
-    objective_function_value& operator = (CGNU_DOUBLE v);
-  };
+class objective_function_value : public named_dvariable
+{
+public:
+  static __thread objective_function_value* pobjfun;
+  static __thread double fun_without_pen;
+  static __thread double gmax;
+  objective_function_value();
+  objective_function_value& operator=(const prevariable& v);
+  objective_function_value& operator=(CGNU_DOUBLE v);
+};
 
   int withinbound(int lb,int n,int ub);
 

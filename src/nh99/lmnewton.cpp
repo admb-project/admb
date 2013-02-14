@@ -64,9 +64,9 @@ void function_minimizer::limited_memory_quasi_newton(const independent_variables
   // set convergence criterion for this phase
   if (!(!convergence_criteria))
   {
-    int ind=min(convergence_criteria.indexmax(),
+    int ind=min(convergence_criteria->indexmax(),
     initial_params::current_phase);
-    crit=convergence_criteria(ind);
+    crit = (*convergence_criteria)(ind);
   }
   if (_crit)
   {
@@ -74,9 +74,9 @@ void function_minimizer::limited_memory_quasi_newton(const independent_variables
   } 
   if (!(!maximum_function_evaluations) && !maxfn_option)
   {
-    int ind=min(maximum_function_evaluations.indexmax(),
+    int ind=min(maximum_function_evaluations->indexmax(),
       initial_params::current_phase);
-    maxfn= (int) maximum_function_evaluations(ind);
+    maxfn = (int)(*maximum_function_evaluations)(ind);
   }
   dvariable vf=0.0;
 

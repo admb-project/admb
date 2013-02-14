@@ -4,6 +4,9 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
+#include <sstream>
+#include <thread>
+#include <cassert>
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #endif
@@ -58,13 +61,13 @@ void function_minimizer::sd_routine(void)
   {
     //if ((initial_params::varsptr[i])->phase_start
      // <= initial_params::current_phase)
-    if (withinbound(0,(initial_params::varsptr[i])->phase_start,
+    if (withinbound(0,(initial_params::varsptr->operator[](i))->phase_start,
       initial_params::current_phase))
     {
       param_labels[ii]=
-       (initial_params::varsptr[i])->label();
+       (initial_params::varsptr->operator[](i))->label();
       param_size[ii]=
-       (initial_params::varsptr[i])->size_count();
+       (initial_params::varsptr->operator[](i))->size_count();
       if (max_name_length<param_labels[ii].size())
       {
         max_name_length=param_labels[ii].size();
@@ -96,20 +99,23 @@ void function_minimizer::sd_routine(void)
   dvector v(1,nvar);  // need to read in v from model.rep
   dmatrix S(1,nvar,1,nvar);
   {
-    uistream cif("admodel.cov");
-    int tmp_nvar;
-    cif >> tmp_nvar;
-    if (nvar !=tmp_nvar)
+    std::thread::id this_thread_id = std::this_thread::get_id();
+    std::ostringstream oss;
+    oss << *ad_comm::adprogram_name << this_thread_id << ".cov";
+    uistream cif(oss.str().c_str());
+    if (cif.is_open())
     {
-      cerr << "Incorrect number of independent variables in file"
-        " model.cov" << endl;
-      exit(1);
+      int tmp_nvar;
+      cif >> tmp_nvar;
+      assert(nvar == tmp_nvar);
+
+      cif >> S;
+      cif.close();
     }
-    cif >> S;
-    if (!cif)
+    else
     {
-      cerr << "error reading covariance matrix from model.cov" << endl;
-      exit(1);
+      cerr << "Error: Unable to open " << oss.str() << " for covariance matrix.\n";
+      //JCA exit(1);
     }
   }
   int sgn;
@@ -121,9 +127,10 @@ void function_minimizer::sd_routine(void)
   dvector tmp(1,nvar1+ndvar);
 
   {
-    ofstream ofs("admodel.tmp");
-
-
+    std::thread::id this_thread_id = std::this_thread::get_id();
+    std::ostringstream oss;
+    oss << "admodel" << this_thread_id << ".tmp";
+    ofstream ofs(oss.str().c_str());
     #if defined(__GNU__) || defined(DOS386)  || defined(__GNUDOS__)
     // *******************************************************
     // *******************************************************
@@ -142,19 +149,13 @@ void function_minimizer::sd_routine(void)
           diag(i)=tmp(i);
         }
         dmatrix tv(1,ndvar,1,nvar1);
-        adstring tmpstring="admodel.dep";
-        if (ad_comm::wd_flag)
-           tmpstring = ad_comm::adprogram_name + ".dep";
-        cifstream cif((char*)tmpstring);
+        std::ostringstream oss2;
+        oss2 << *ad_comm::adprogram_name << this_thread_id << ".dep";
+        cifstream cif(oss2.str().c_str());
       
         int tmp_nvar,tmp_ndvar;
         cif >> tmp_nvar >> tmp_ndvar;
-        if (tmp_nvar!=nvar1)
-        {
-          cerr << " tmp_nvar != nvar1 in file " << tmpstring
-                 << endl;
-          ad_exit(1);
-        }
+        assert(tmp_nvar == nvar1);
         if (ndvar>0)
         {
           cif >> tv;
@@ -189,26 +190,20 @@ void function_minimizer::sd_routine(void)
       { 
 #if   defined(USE_LAPLACE)
         dmatrix tv(1,ndvar,1,nvar1);
-        adstring tmpstring="admodel.dep";
-        if (ad_comm::wd_flag)
-           tmpstring = ad_comm::adprogram_name + ".dep";
-        cifstream cif((char*)tmpstring);
+        std::ostringstream oss2;
+        oss2 << *ad_comm::adprogram_name << this_thread_id << ".dep";
+        cifstream cif(oss2.str().c_str());
       
         int tmp_nvar,tmp_ndvar;
         cif >> tmp_nvar >> tmp_ndvar;
-        if (tmp_nvar!=nvar1)
-        {
-          cerr << " tmp_nvar != nvar1 in file " << tmpstring
-                 << endl;
-          ad_exit(1);
-        }
+        assert(tmp_nvar == nvar1);
 
         dmatrix BS(1,nvar1,1,nvar1);
         BS.initialize();
         get_bigS(ndvar,nvar1,nvar,S,BS,scale);
         
         {
-          tmpstring = ad_comm::adprogram_name + ".bgs";
+          adstring tmpstring = *ad_comm::adprogram_name + ".bgs";
           uostream uos((char*)(tmpstring));
           if (!uos)
           {
@@ -285,10 +280,9 @@ void function_minimizer::sd_routine(void)
         diag(i)=tmp(i);
       }
       dvector tv(1,nvar);
-      adstring tmpstring="admodel.dep";
-      if (ad_comm::wd_flag)
-         tmpstring = ad_comm::adprogram_name + ".dep";
-      cifstream cif((char*)tmpstring);
+      std::ostringstream oss2;
+      oss2 << *ad_comm::adprogram_name << this_thread_id << ".dep";
+      cifstream cif(oss2.str().c_str());
       int tmp_nvar,tmp_ndvar;
       cif >> tmp_nvar >> tmp_ndvar;
       dvector tmpsub(1,nvar);
@@ -326,10 +320,17 @@ void function_minimizer::sd_routine(void)
 
 
   {
-    cifstream cif("admodel.tmp");
+    std::thread::id this_thread_id = std::this_thread::get_id();
+    std::ostringstream oss;
+    oss << "admodel" << this_thread_id << ".tmp";
+    cifstream cif(oss.str().c_str());
     //ofstream ofs("admodel.cor");
-    ofstream ofs((char*)(ad_comm::adprogram_name + adstring(".cor")));
-    ofstream ofsd((char*)(ad_comm::adprogram_name + adstring(".std")));
+    std::ostringstream oss2;
+    oss2 << *ad_comm::adprogram_name << this_thread_id << ".cor";
+    ofstream ofs(oss2.str());
+    std::ostringstream oss3;
+    oss3 << *ad_comm::adprogram_name << this_thread_id << ".std";
+    ofstream ofsd(oss3.str());
 
     int offset=1;
     dvector param_values(1,nvar1+ndvar);
@@ -484,16 +485,19 @@ void function_minimizer::sd_routine(void)
   //cout << *GAUSS_varcovariance_matrix << endl;
 
   char msg[40]={"Error trying to delete temporary file "};
+  std::thread::id this_thread_id = std::this_thread::get_id();
+  std::ostringstream oss;
   #if !defined(__GNUDOS__) && !defined(__GNU__)
-    if (system("del admodel.tmp")==-1)
-    {
-      cerr << msg << "admodel.tmp" << endl;
-    }
+  oss << "del admodel" << this_thread_id << ".tmp";
+  if (system(oss.str().c_str()) == -1)
+  {
+    cerr << msg << "admodel.tmp" << endl;
+  }
   #else
-    if (unlink("admodel.tmp")==-1)
-    {
-      cerr << msg << "admodel.tmp" << endl;
-    }
-
+  oss << "admodel" << this_thread_id << ".tmp";
+  if (unlink(oss.str().c_str()) == -1)
+  {
+    cerr << msg << "admodel.tmp" << endl;
+  }
   #endif
 }

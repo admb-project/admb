@@ -16,18 +16,25 @@
 
   int param_init_d3array::shared_size_count(void)
   {
+cerr << __FILE__ << ':' << __LINE__ << endl;
     if (share_flags->get_current_phase() != current_phase)
     {
+cerr << __FILE__ << ':' << __LINE__ << endl;
       share_flags->get_inv_matrix_shared(current_phase);
+cerr  << __FILE__ << ':' << __LINE__ << endl;
     }
+cerr << __FILE__ << ':' << __LINE__ << endl;
     i3_array & bmap = share_flags->get_bmap();
     int  mmin=bmap.indexmin();
     int  mmax=bmap.indexmax();
     int nv=0;
     for (int i=mmin;i<=mmax;i++)
     {
+cerr  << __FILE__ << ':' << __LINE__ << endl;
       nv+=::size_count((*this)(bmap(i,1,1),bmap(i,1,2)));
+cerr  << __FILE__ << ':' << __LINE__ << endl;
     }
+cerr  << __FILE__ << ':' << __LINE__ << endl;
     return nv;
   }
 

@@ -34,6 +34,7 @@ void call_from_thread(int tid)
   std::cout << __FILE__ << ':' << __LINE__ << ' ' << tid << std::endl;
 }
 
+/*
 TEST(tests_threaded, example)
 {
   static const int num_threads = 10;
@@ -47,6 +48,7 @@ TEST(tests_threaded, example)
     t[i].join();
   }
 }
+*/
 
 int main(int argc, char** argv)
 {

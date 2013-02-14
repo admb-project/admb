@@ -6,6 +6,9 @@
  */
 
 
+#include <thread>
+#include <sstream>
+#include <cassert>
 #include <admodel.h>
 
 
@@ -254,7 +257,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
       if (use_empirical_flag)
       { 
-        read_empirical_covariance_matrix(nvar,S,ad_comm::adprogram_name);
+        read_empirical_covariance_matrix(nvar, S, *ad_comm::adprogram_name);
       }
       else if (!rescale_bounded_flag)
       {
@@ -266,7 +269,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
         else
         {
           int tmp_nvar;
-          adstring tmpstring = ad_comm::adprogram_name + ".bgs";
+          adstring tmpstring = *ad_comm::adprogram_name + ".bgs";
           uistream uis((char*)(tmpstring));
           if (!uis)
           {
@@ -328,7 +331,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
   
     dmatrix symbds(1,2,1,nvar);
     initial_params::set_all_simulation_bounds(symbds);
-    ofstream ofs_sd1((char*)(ad_comm::adprogram_name + adstring(".mc2")));
+    ofstream ofs_sd1((char*)(*ad_comm::adprogram_name + adstring(".mc2")));
   
     {
       long int iseed=0;
@@ -506,7 +509,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
        if (!restart_flag)
        {
          pofs_sd = 
-           new uostream((char*)(ad_comm::adprogram_name + adstring(".mcm")));
+           new uostream((char*)(*ad_comm::adprogram_name + adstring(".mcm")));
        }
 
       int mcsave_flag=0;
@@ -527,11 +530,11 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
           {
             // check that nvar is correct
             {
-              uistream uis((char*)(ad_comm::adprogram_name + adstring(".psv")));
+              uistream uis((char*)(*ad_comm::adprogram_name + adstring(".psv")));
               if (!uis)
               {
                 cerr << "Error trying to open file" << 
-                  ad_comm::adprogram_name + adstring(".psv") <<
+                  *ad_comm::adprogram_name + adstring(".psv") <<
                   " for mcrestart" <<   endl;
                 cerr << " I am starting a new file " << endl;
                 psvflag=1;
@@ -543,7 +546,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
                 if (nv1 !=nvar)
                 {
                   cerr << "wrong number of independent variables in" <<
-                    ad_comm::adprogram_name + adstring(".psv") <<
+                    *ad_comm::adprogram_name + adstring(".psv") <<
                   cerr << " I am starting a new file " << endl;
                   psvflag=1;
                 }
@@ -553,20 +556,20 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
             if (!psvflag) {
               pofs_psave=
                 new uostream(
-                  (char*)(ad_comm::adprogram_name + adstring(".psv")),ios::app);
+                  (char*)(*ad_comm::adprogram_name + adstring(".psv")),ios::app);
             } else {
               pofs_psave=
-                new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
+                new uostream((char*)(*ad_comm::adprogram_name + adstring(".psv")));
             }
                          
           } else {
             pofs_psave=
-              new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
+              new uostream((char*)(*ad_comm::adprogram_name + adstring(".psv")));
           }
           if (!pofs_psave|| !(*pofs_psave))
           {
             cerr << "Error trying to open file" << 
-              ad_comm::adprogram_name + adstring(".psv") << endl;
+              *ad_comm::adprogram_name + adstring(".psv") << endl;
             mcsave_flag=0;
             if (pofs_psave)
             {
@@ -868,7 +871,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
     }
              
     write_empirical_covariance_matrix(ncor,s_mean,s_covar,
-      ad_comm::adprogram_name);
+      *ad_comm::adprogram_name);
     //newton_raftery_bayes_estimate(current_bf,ibfcount,exp(lkvector),.01);
 #if defined(USE_BAYES_FACTORS)
     cout << "log current bayes factor " << lcurrent_bf << endl;
@@ -885,7 +888,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
 void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
   const dmatrix& s_covar,adstring& prog_name)
 {
-  uostream ofs((char*)(ad_comm::adprogram_name + adstring(".ecm")));
+  uostream ofs((char*)(*ad_comm::adprogram_name + adstring(".ecm")));
   dvector tmp=s_mean/ncor;
   int nvar=s_mean.indexmax();
   //ofs << ncor << " " << nvar << endl;
@@ -920,7 +923,7 @@ void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
 
 void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name)
 {
-  adstring infile_name=ad_comm::adprogram_name + adstring(".ecm");
+  adstring infile_name = *ad_comm::adprogram_name + adstring(".ecm");
   uistream ifs((char*)(infile_name));
   if (!ifs)
   {
@@ -965,7 +968,7 @@ void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring
 void print_hist_data(const dmatrix& hist, const dmatrix& values, const dvector& h,
   dvector& m, const dvector& s, const dvector& parsave, long int iseed, double size_scale)
 {
-  ofstream ofs((char*)(ad_comm::adprogram_name + adstring(".hst")));
+  ofstream ofs((char*)(*ad_comm::adprogram_name + adstring(".hst")));
   int nsdvars=stddev_params::num_stddev_calc();
   adstring_array param_labels(1,nsdvars);
   ivector param_size(1,nsdvars);
@@ -1045,7 +1048,7 @@ int read_hist_data(const dmatrix& _hist, const dvector& h,
   dvector& m, const dvector& s, const dvector& parsave, long int& iseed, const double& size_scale)
 {
   dmatrix& hist= (dmatrix&) _hist;
-  cifstream cif((char*)(ad_comm::adprogram_name + adstring(".hst")));
+  cifstream cif((char*)(*ad_comm::adprogram_name + adstring(".hst")));
   int nsdvars=stddev_params::num_stddev_calc();
   int nsim=0;
   int ii=1;
@@ -1262,50 +1265,45 @@ void make_preliminary_hist(const dvector& s, const dvector& m,int nsim, const dm
     if (!ifs)
     {
       cerr << "Error trying to read data from file " 
-         << ad_comm::adprogram_name + adstring(".mcm");
+         << *ad_comm::adprogram_name + adstring(".mcm");
       return;
     }
   }
 }
 
-void read_covariance_matrix(const dmatrix& S,int nvar,int& oldHbf,
-  dvector & sscale)
+void read_covariance_matrix(const dmatrix& S, int nvar, int& oldHbf, dvector& sscale)
 {
-  adstring tmpstring="admodel.cov";
-  if (ad_comm::wd_flag)
-    tmpstring = ad_comm::adprogram_name + ".cov";
-  uistream cif((char*)tmpstring);
-  if (!cif)
-  {
-    cerr << "Error trying to open file " << tmpstring
-         << "  for reading" << endl;
-  }
+  std::thread::id this_thread_id = std::this_thread::get_id();
+  std::ostringstream oss;
+  oss << *ad_comm::adprogram_name << this_thread_id << ".cov";
+  uistream cif(oss.str().c_str());
+  assert(cif.is_open());
+
   int tmp_nvar;
   cif >> tmp_nvar;
   if (nvar !=tmp_nvar)
   {
-    cerr << "Incorrect number of independent variables in file"
-      " model.cov" << endl;
+    cerr << "Incorrect number of independent variables in file model.cov" << endl;
     exit(1);
   }
   cif >> S;
   if (!cif)
   {
-    cerr << "error reading covariance matrix from " << tmpstring
+    cerr << "error reading covariance matrix from " << oss.str()
          << endl;
     exit(1);
   }
   cif >> oldHbf;
   if (!cif)
   {
-    cerr << "error reading old_hybrid_bounded_flag from " << tmpstring
+    cerr << "error reading old_hybrid_bounded_flag from " << oss.str()
          << endl;
     exit(1);
   }
   cif >> sscale;
   if (!cif)
   {
-    cerr << "error reading sscale from " << tmpstring
+    cerr << "error reading sscale from " << oss.str()
          << endl;
     exit(1);
   }
@@ -1313,11 +1311,11 @@ void read_covariance_matrix(const dmatrix& S,int nvar,int& oldHbf,
 void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS, const dvector& pen_vector)
 {
   dmatrix& S= (dmatrix&) _SS;
-  adstring tmpstring="admodel.hes";
-  if (ad_comm::wd_flag)
-     tmpstring = ad_comm::adprogram_name + ".hes";
+  std::thread::id this_thread_id = std::this_thread::get_id();
+  std::ostringstream oss;
+  oss << *ad_comm::adprogram_name << this_thread_id << ".hes";
+  adstring tmpstring = oss.str().c_str();
   uistream cif((char*)tmpstring);
-    
   if (!cif)
   {
     cerr << "Error trying to open file " << tmpstring
@@ -1337,7 +1335,7 @@ void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS, const dvector& 
     cerr << "error reading covariance matrix from model.cov" << endl;
     exit(1);
   }
-  cifstream cifs((char*)(ad_comm::adprogram_name + adstring(".bvs")));
+  cifstream cifs((char*)(*ad_comm::adprogram_name + adstring(".bvs")));
   dvector tmp(1,nvar);
   cifs >> tmp;
   dvector wts=pen_vector/.16;
@@ -1404,15 +1402,13 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS,
   double rbp,int mcmc2_flag)
 {
   dmatrix& S= (dmatrix&) _SS;
-  adstring tmpstring="admodel.hes";
+  std::thread::id this_thread_id = std::this_thread::get_id();
+  std::ostringstream oss;
+  oss << *ad_comm::adprogram_name << this_thread_id << ".hes";
+  adstring tmpstring = oss.str().c_str();
   if (mcmc2_flag)
   {
-    tmpstring = ad_comm::adprogram_name + ".bgs";
-  }
-  else
-  {
-    if (ad_comm::wd_flag)
-       tmpstring = ad_comm::adprogram_name + ".hes";
+    tmpstring = *ad_comm::adprogram_name + ".bgs";
   }
   uistream cif((char*)tmpstring);
     
@@ -1616,21 +1612,18 @@ void save_mcmc_for_gui1(const dvector& mcmc_values,
 
 dvector read_old_scale(int & old_nvar)
 {
-  adstring tmpstring="admodel.cov";
-  if (ad_comm::wd_flag)
-    tmpstring = ad_comm::adprogram_name + ".cov";
-  uistream cif((char*)tmpstring);
-  if (!cif)
-  {
-    cerr << "Error trying to open file " << tmpstring
-         << "  for reading" << endl;
-  }
+  std::thread::id this_thread_id = std::this_thread::get_id();
+  std::ostringstream oss;
+  oss << *ad_comm::adprogram_name << this_thread_id << ".cov";
+  uistream cif(oss.str().c_str());
+  assert(cif.is_open());
+
   cif >> old_nvar;
   dmatrix S(1,old_nvar,1,old_nvar);
   cif >> S;
   if (!cif)
   {
-    cerr << "error reading covariance matrix from " << tmpstring
+    cerr << "error reading covariance matrix from " << oss.str()
          << endl;
     exit(1);
   }
@@ -1638,7 +1631,7 @@ dvector read_old_scale(int & old_nvar)
   cif >> oldHbf;
   if (!cif)
   {
-    cerr << "error reading old_hybrid_bounded_flag from " << tmpstring
+    cerr << "error reading old_hybrid_bounded_flag from " << oss.str()
          << endl;
     exit(1);
   }
@@ -1646,7 +1639,7 @@ dvector read_old_scale(int & old_nvar)
   cif >> sscale;
   if (!cif)
   {
-    cerr << "error reading sscale from " << tmpstring
+    cerr << "error reading sscale from " << oss.str()
          << endl;
     exit(1);
   }

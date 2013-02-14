@@ -21,9 +21,9 @@
 
   void my_do_nothing(void * t){}
 //ofstream xofs("allocation");
-__ADMBTHREAD__  vector_shape_pool * vector_shape::xpool = 0;
-__ADMBTHREAD__  vector_shape_pool * vector_shapex::xpool =0; 
-__ADMBTHREAD__  vector_shape_pool  * arr_link::xpool = 0;
+__thread vector_shape_pool* vector_shape::xpool = nullptr;
+__thread vector_shape_pool* vector_shapex::xpool = nullptr; 
+__thread vector_shape_pool* arr_link::xpool = nullptr;
 /*
 __ADMBTHREAD__  vector_shape_pool * vector_shape::xpool = 
     new vector_shape_pool(sizeof(vector_shape));

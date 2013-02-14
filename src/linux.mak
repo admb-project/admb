@@ -18,7 +18,7 @@ ifndef ADMB_HOME
 ADMB_HOME=${PWD}/${DISK}
 endif
 
-CXXFLAGS:= -pthread -DUSE_PTHREADS -DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS)
+CXXFLAGS:=-std=c++11 -pthread -DUSE_PTHREADS -DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS)
 
 ifndef ADMB_REVISION
 ADMB_REVISION=$(shell test -e ../REVISION && cat ../REVISION)
@@ -100,9 +100,9 @@ endif
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 
 verify:
-	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C ${DISK}/examples all
+	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" DEBUG=1 SAFE_OPTION=1 $(MAKE) -C ${DISK}/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-saf.txt"
-	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" $(MAKE) -C ${DISK}/examples all
+	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" DEBUG=1 $(MAKE) -C ${DISK}/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-opt.txt"
 
 check-admb2r:

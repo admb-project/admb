@@ -709,7 +709,7 @@ ostream& operator<<(const ostream& istr,const i3_array& z);
   {
   public:
 #if defined(USE_VECTOR_SHAPE_POOL)
-    static __ADMBTHREAD__ vector_shape_pool * xpool;
+    static __thread vector_shape_pool* xpool;
     void * operator new(size_t);
     void operator delete(void * ptr,size_t n)
     {  xpool->free(ptr); }
@@ -1044,149 +1044,134 @@ public:
  * class for things related to the gradient structures, including dimension of 
  * arrays, size of buffers, etc.
  */
-  class gradient_structure
-  {
-      static __ADMBTHREAD__ char cmpdif_file_name[101];
-      static __ADMBTHREAD__ DF_FILE * fp;
+class gradient_structure
+{
 public:
-      #if defined(NO_DERIVS)
-        static int no_derivatives;
-      #endif
-private:
-      static long int USE_FOR_HESSIAN;
-      static __ADMBTHREAD__ long int NVAR;
-      static int NUM_RETURN_ARRAYS;
-      static __ADMBTHREAD__ dvariable** RETURN_ARRAYS;
-      static __ADMBTHREAD__ int RETURN_ARRAYS_PTR;
-      static __ADMBTHREAD__ dvariable ** RETURN_PTR_CONTAINER;
-      static __ADMBTHREAD__ long int TOTAL_BYTES;
-      static __ADMBTHREAD__ long int PREVIOUS_TOTAL_BYTES;
-      static __ADMBTHREAD__ unsigned long ARRAY_MEMBLOCK_SIZE; //js
-      //static humungous_pointer ARRAY_MEMBLOCK_BASE;
-      //static humungous_pointer ARRAY_MEMBLOCK_BASEA;
-      //static humungous_pointer ARRAY_MEMBLOCK_SAVE;
-      static __ADMBTHREAD__ char * ARRAY_MEMBLOCK_BASE;
-      static __ADMBTHREAD__ char * ARRAY_MEMBLOCK_BASEA;
-      static __ADMBTHREAD__ char * ARRAY_MEMBLOCK_SAVE;
-public:    
-      static double * get_ARRAY_MEMBLOCK_BASE() 
-      { 
-        return (double*) ARRAY_MEMBLOCK_BASE;
-      }
-private:
-      static __ADMBTHREAD__ double * variables_save;
 #ifdef __BORLANDC__
-      static long int CMPDIF_BUFFER_SIZE;
-      static long int GRADSTACK_BUFFER_SIZE;
+  static long int CMPDIF_BUFFER_SIZE;
+  static long int GRADSTACK_BUFFER_SIZE;
 #else
-      static long long int CMPDIF_BUFFER_SIZE;
-      static long long int GRADSTACK_BUFFER_SIZE;
+  static __thread long long int CMPDIF_BUFFER_SIZE;
+  static __thread long long int GRADSTACK_BUFFER_SIZE;
 #endif
-      static __ADMBTHREAD__ unsigned int MAX_NVAR_OFFSET;
-      static int save_var_file_flag;
-      static int save_var_flag;
-
-      static int MAX_DLINKS;
-      static __ADMBTHREAD__ indvar_offset_list * INDVAR_LIST;
-      static int NUM_DEPENDENT_VARIABLES;
-      static __ADMBTHREAD__ dependent_variables_information * DEPVARS_INFO;
+  static __thread DF_FILE* fp;
+  static __thread int instances;
+  static __thread dlist* GRAD_LIST;
+  static __thread int save_var_file_flag;
+  static __thread int save_var_flag;
+  static __thread int MAX_DLINKS;
+  static __thread int NUM_DEPENDENT_VARIABLES;
+  static __thread long int NVAR;
+  static __thread long int TOTAL_BYTES;
+  static __thread long int PREVIOUS_TOTAL_BYTES;
+  static __thread long int USE_FOR_HESSIAN;
+  static __thread int NUM_RETURN_ARRAYS;
+  static __thread unsigned long ARRAY_MEMBLOCK_SIZE;
+  static __thread unsigned int MAX_NVAR_OFFSET;
+  static __thread int RETURN_ARRAYS_SIZE;
+  static __thread long int max_last_offset;
+  static __thread int Hybrid_bounded_flag;
+  static __thread dvariable** RETURN_ARRAYS;
+  static __thread dvariable** RETURN_PTR_CONTAINER;
+  static __thread char* ARRAY_MEMBLOCK_BASE;
+  static __thread char* ARRAY_MEMBLOCK_BASEA;
+  static __thread char* ARRAY_MEMBLOCK_SAVE;
+  static __thread double* variables_save;
+  static __thread indvar_offset_list* INDVAR_LIST;
+  static __thread dependent_variables_information* DEPVARS_INFO;
+  static __thread double* hessian_ptr;
+  static __thread grad_stack* GRAD_STACK1;
+  static __thread dvariable* RETURN_PTR;
+  static __thread dvariable* MIN_RETURN;
+  static __thread dvariable* MAX_RETURN;
+  static __thread arr_list* ARR_LIST1;
+  static __thread arr_list* ARR_FREE_LIST1;
+#if defined(NO_DERIVS)
+  static __thread int no_derivatives;
+#endif
+  static __thread int RETURN_ARRAYS_PTR;
+  static __thread char cmpdif_file_name[101];
 
       // this needs to be a static member function so other static
       // member functions can call it
       static void check_set_error(const char* variable_name);
-
-      static __ADMBTHREAD__ int instances;
       int   x;
 
-    public:
-      class arrmemblerr{}; // exception class
-   
-      static __ADMBTHREAD__ int Hybrid_bounded_flag;
-      static __ADMBTHREAD__ double * hessian_ptr;
-      static int get_USE_FOR_HESSIAN(void) {return USE_FOR_HESSIAN;}
-      static void set_USE_FOR_HESSIAN(int i) {USE_FOR_HESSIAN=i;}
-      friend class dfsdmat;
-      gradient_structure(long int size=100000L);  // constructor
-      ~gradient_structure(void); // destructor
-      static void save_variables(void);
-      static void restore_variables(void);
-      static void save_arrays(void);
-      static void restore_arrays(void);
-      static long int totalbytes(void);
-      friend dvector restore_dvar_vector_value(const dvar_vector_position& tmp);
-      friend void cleanup_temporary_files();
-      //friend dvector restore_dvar_vector_value(const dvar_vector_position&);
-      friend dvector restore_dvar_vector_derivatives(void);
-      friend dmatrix restore_dvar_matrix_derivatives(void);
-      friend dmatrix restore_dvar_matrix_value(void);
-      //friend dmatrix restore_derivatives(void);
-      friend void gradfree(dlink * v);
-      friend double_and_int * arr_new(unsigned int sz); //js
-      friend void arr_free(double_and_int *);
-      friend void RETURN_ARRAYS_DECREMENT(void);
-      friend void RETURN_ARRAYS_INCREMENT(void);
-      friend void make_indvar_list(const dvar_vector& t);
-      //friend void gradcalc( int , double *);
-      friend void gradcalc(int nvar,const dvector& g);
-      friend void slave_gradcalc(void);
-      friend void funnel_gradcalc(void);
-      friend void allocate_dvariable_space(void);
-      friend void wide_funnel_gradcalc(void);
-      friend dvar_vector_position restore_dvar_vector_position(void);
-      static __ADMBTHREAD__ grad_stack  * GRAD_STACK1;
-      friend double_and_int * gradnew();
-      static __ADMBTHREAD__ dlist * GRAD_LIST;
-      static __ADMBTHREAD__ int RETURN_ARRAYS_SIZE;
-      //static int RETURN_INDEX;
-      static __ADMBTHREAD__ dvariable * RETURN_PTR;
-      static __ADMBTHREAD__ dvariable * MIN_RETURN;
-      static __ADMBTHREAD__ dvariable * MAX_RETURN;
-      static __ADMBTHREAD__ arr_list * ARR_LIST1;
-      static __ADMBTHREAD__ arr_list * ARR_FREE_LIST1;
-      //static void funnel_jacobcalc(void);
-      static void jacobcalc(int nvar,const dmatrix& jac);
-      static void jacobcalc(int nvar,const ofstream& jac);
-      static void jacobcalc(int nvar,const uostream& jac);
+public:
+  gradient_structure(const long int size = 100000L);
+  gradient_structure(const gradient_structure& gs);
+  virtual ~gradient_structure(void);
 
-      friend void default_evaluation(void);
-      //access functions
+  class arrmemblerr{}; // exception class
 
-      friend class DF_FILE;
-      static DF_FILE * get_fp(void){return fp;}
-      static void set_NUM_RETURN_ARRAYS(int i);
-     #if defined(NO_DERIVS)
-      static void set_NO_DERIVATIVES(void);
-      static void set_YES_DERIVATIVES(void);
-     #endif
-      static void set_YES_SAVE_VARIABLES_VALUES();
-      static void set_NO_SAVE_VARIABLES_VALUES();
-      //static int _GRADFILE_PTR; // should be int gradfile_handle;
-      //static int _GRADFILE_PTR1; // should be int gradfile_handle;
-      //static int _GRADFILE_PTR2; // should be int gradfile_handle;
-      //static int _VARSSAV_PTR; // should be int gradfile_handle;
-      static void set_NUM_DEPENDENT_VARIABLES(int i);
-      static void set_RETURN_ARRAYS_SIZE(int i);
-      static void set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
-#ifdef __BORLANDC__
-      static void set_CMPDIF_BUFFER_SIZE(long int i);
-      static void set_GRADSTACK_BUFFER_SIZE(long int i);
-      static void set_GRADSTACK_BUFFER_BYTES(long int i);
-#else
-      static void set_CMPDIF_BUFFER_SIZE(long long int i);
-      static void set_GRADSTACK_BUFFER_SIZE(long long int i);
-      static void set_GRADSTACK_BUFFER_BYTES(long long int i);
+  static double* get_ARRAY_MEMBLOCK_BASE() { return (double*)ARRAY_MEMBLOCK_BASE; }
+  static DF_FILE* get_fp(void) { return fp; }
+  static int get_USE_FOR_HESSIAN(void) { return USE_FOR_HESSIAN; }
+  static void set_USE_FOR_HESSIAN(int i) { USE_FOR_HESSIAN = i; }
+  static void save_variables(void);
+  static void restore_variables(void);
+  static void save_arrays(void);
+  static void restore_arrays(void);
+  static long int totalbytes(void);
+
+  //static void funnel_jacobcalc(void);
+  static void jacobcalc(int nvar,const dmatrix& jac);
+  static void jacobcalc(int nvar,const ofstream& jac);
+  static void jacobcalc(int nvar,const uostream& jac);
+
+  static void set_NUM_RETURN_ARRAYS(int i);
+#if defined(NO_DERIVS)
+  static void set_NO_DERIVATIVES(void);
+  static void set_YES_DERIVATIVES(void);
 #endif
-      static void set_MAX_NVAR_OFFSET(unsigned int i);
-      static void set_MAX_DLINKS(int i);
-      static long int NUM_GRADSTACK_BYTES_WRITTEN(void);
-      friend class dlist;
-      friend class grad_stack;
-      static void save_dependent_variable_position
-        (const prevariable& v1);
-      static __ADMBTHREAD__ long int max_last_offset;
-      friend class function_minimizer;
-      friend void funnel_derivatives(void);
-  };
+  static void set_YES_SAVE_VARIABLES_VALUES();
+  static void set_NO_SAVE_VARIABLES_VALUES();
+  static void set_NUM_DEPENDENT_VARIABLES(int i);
+  static void set_RETURN_ARRAYS_SIZE(int i);
+  static void set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
+#ifdef __BORLANDC__
+  static void set_CMPDIF_BUFFER_SIZE(long int i);
+  static void set_GRADSTACK_BUFFER_SIZE(long int i);
+  static void set_GRADSTACK_BUFFER_BYTES(long int i);
+#else
+  static void set_CMPDIF_BUFFER_SIZE(long long int i);
+  static void set_GRADSTACK_BUFFER_SIZE(long long int i);
+  static void set_GRADSTACK_BUFFER_BYTES(long long int i);
+#endif
+  static void set_MAX_NVAR_OFFSET(unsigned int i);
+  static void set_MAX_DLINKS(int i);
+  static long int NUM_GRADSTACK_BYTES_WRITTEN(void);
+  static void save_dependent_variable_position(const prevariable& v1);
+
+  friend class dfsdmat;
+  friend dvector restore_dvar_vector_value(const dvar_vector_position& tmp);
+  friend void cleanup_temporary_files();
+  //friend dvector restore_dvar_vector_value(const dvar_vector_position&);
+  friend dvector restore_dvar_vector_derivatives(void);
+  friend dmatrix restore_dvar_matrix_derivatives(void);
+  friend dmatrix restore_dvar_matrix_value(void);
+  //friend dmatrix restore_derivatives(void);
+  friend void gradfree(dlink * v);
+  friend double_and_int * arr_new(unsigned int sz); //js
+  friend void arr_free(double_and_int *);
+  friend void RETURN_ARRAYS_DECREMENT(void);
+  friend void RETURN_ARRAYS_INCREMENT(void);
+  friend void make_indvar_list(const dvar_vector& t);
+  //friend void gradcalc( int , double *);
+  friend void gradcalc(int nvar,const dvector& g);
+  friend void slave_gradcalc(void);
+  friend void funnel_gradcalc(void);
+  friend void allocate_dvariable_space(void);
+  friend void wide_funnel_gradcalc(void);
+  friend dvar_vector_position restore_dvar_vector_position(void);
+  friend double_and_int* gradnew();
+  friend void default_evaluation(void);
+  friend class DF_FILE;
+  friend class dlist;
+  friend class grad_stack;
+  friend class function_minimizer;
+  friend void funnel_derivatives(void);
+};
 
   void jacobcalc(int nvar,const dmatrix& g);
   void jacobcalc(int nvar,const ofstream& ofs);
@@ -1208,7 +1193,7 @@ private:
  */
     class dvect_ptr_ptr
     {
-      dvector ** m;
+      dvector** m;
     };
 
 /**
@@ -1217,23 +1202,23 @@ private:
  */
     class dlink
     {
-       double_and_int  di;
-       dlink *       prev;
+       double_and_int di;
+       dlink* prev;
     public:  // comments
-      dlink * previous();
-      inline double_and_int * get_address()
+      dlink();
+      dlink(const dlink&) = delete;
+      virtual ~dlink();
+
+      dlink* previous();
+      inline double_and_int* get_address()
       {
         return &di;
-      } //access function
-
-      //friend tempvar();
-      //friend class prevariable;
-      //friend class tempvar;
+      }
       friend class dlist;
       friend void gradcalc(int nvar,const dvector& g);
       friend void slave_gradcalc(void);
       friend void gradloop();
-      friend double_and_int * gradnew();
+      friend double_and_int* gradnew();
       friend void allocate_dvariable_space(void);
     };
 
@@ -1243,23 +1228,25 @@ private:
  */
     class dlist
     {
-      dlink * last;
+      dlink* last;
       unsigned int last_offset;
-      unsigned int nlinks;
-      dlink ** dlink_addresses;
-      friend double_and_int * gradnew();
+      int nlinks;
+      dlink** dlink_addresses;
+      friend double_and_int* gradnew();
       friend void df_check_derivative_values(void);
       friend void df_check_derivative_values_indexed(void);
       friend void df_check_derivative_values_indexed_break(void);
 
     public:
       dlist();  // constructor
-      void check_list(void);  // check list integrity
+      unsigned int check_list();  // check list integrity
      ~dlist();  // destructor
       dlink * create();     //create a new link 
-      void free_remove(dlink * rem);
-      dlink * append(dlink *);  // add a link
+      void free_remove(dlink* rem);
+      dlink* append(dlink*);  // add a link
       dlink* last_remove();
+      dlink* get_last() const { return last; }
+      int get_nlinks() const { return nlinks; }
       friend void funnel_gradcalc(void);
       friend void slave_gradcalc(void);
       friend void gradcalc(int nvar,const dvector& g);
@@ -1306,9 +1293,9 @@ private:
  */
     class grad_stack
     {
-      grad_stack_entry * true_ptr_first;
-      grad_stack_entry * ptr_first;
-      grad_stack_entry * ptr_last;
+      grad_stack_entry* true_ptr_first;
+      grad_stack_entry* ptr_first;
+      grad_stack_entry* ptr_last;
 #ifdef __BORLANDC__
       long int length;
       long int true_length;
@@ -1317,7 +1304,7 @@ private:
       long long int true_length;
 #endif
     public:
-      grad_stack_entry * ptr;
+      grad_stack_entry* ptr;
     private:
       //lvector * table;
       // js
@@ -1339,7 +1326,7 @@ private:
       long long end_pos1;
       long long end_pos2;
 #endif
-      dmatrix * table;
+      dmatrix* table;
     public:
       friend void gradcalc(int nvar,const dvector& g);
       friend void slave_gradcalc(void);
@@ -2282,7 +2269,7 @@ private:
     //friend class tdvector;
     friend class dvar_vector;
 #if defined(USE_VECTOR_SHAPE_POOL)
-    static __ADMBTHREAD__ vector_shape_pool * xpool;
+    static __thread vector_shape_pool* xpool;
     void * operator new(size_t);
     void operator delete(void * ptr,size_t n)
     {  xpool->free(ptr); }
@@ -2712,7 +2699,7 @@ double dmax(double i, double j);
     {
 #if defined(USE_VECTOR_SHAPE_POOL)
      public:
-    static __ADMBTHREAD__ vector_shape_pool * xpool;
+    static __thread vector_shape_pool* xpool;
     void * operator new(size_t);
     void operator delete(void * ptr,size_t n) 
     {  xpool->free(ptr); }
@@ -8103,39 +8090,43 @@ class function_minimizer_exception
  */
 class ad_comm
 {
-protected:
-  ad_comm(int argc,char * argv[]);
-  ad_comm(void);
-  void allocate(void);
-  virtual ~ad_comm();
 public:
-  static int time_flag;
-  static int bandwidth;
-  static int print_hess_and_exit_flag;
-  static int no_pvm_flag;
-  static int no_atlas_flag;
-  static int no_ln_det_choleski_flag;
-  static adtimer * ptm;
-  static adtimer * ptm1;
+  ad_comm(void);
+  ad_comm(const ad_comm& copy);
+  ad_comm(int argc, char* argv[]);
+  virtual ~ad_comm();
+
+  void allocate(void);
+
   virtual void get_slave_assignments(void);
-  static adpvm_manager * pvm_manager;
-  static __ADMBTHREAD__ adpthreads_manager * pthreads_manager;
-  static adstring subdir;
-  static streampos change_datafile_name(const adstring& s,const streampos& off=0);
-  static streampos change_pinfile_name(const adstring& s,const streampos& off=0);
-  static cifstream * global_datafile;
-  static cifstream * global_parfile;
-  static ofstream *  global_savefile;
-  static ofstream *  global_logfile;
-  static uostream *  global_bsavefile;
-  static uistream * global_bparfile;
-  static adstring adprogram_name;
-  static adstring working_directory_path;
-  static char option_flags[];
-  static int argc;
-  static unsigned int wd_flag;
-  static unsigned char directory_prefix;
-  static char ** argv;
+public:
+  static __thread int time_flag;
+  static __thread int bandwidth;
+  static __thread int print_hess_and_exit_flag;
+  static __thread int no_pvm_flag;
+  static __thread int no_atlas_flag;
+  static __thread int no_ln_det_choleski_flag;
+  static __thread adtimer* ptm;
+  static __thread adtimer* ptm1;
+  static __thread adpvm_manager* pvm_manager;
+  static __thread adpthreads_manager* pthreads_manager;
+  static __thread adstring* subdir;
+  static __thread cifstream* global_datafile;
+  static __thread cifstream* global_parfile;
+  static __thread ofstream* global_savefile;
+  static __thread ofstream* global_logfile;
+  static __thread uostream* global_bsavefile;
+  static __thread uistream* global_bparfile;
+  static __thread adstring* adprogram_name;
+  static __thread adstring* working_directory_path;
+  static __thread char option_flags[];
+  static __thread unsigned int wd_flag;
+  static __thread unsigned char directory_prefix;
+  static __thread int argc;
+  static __thread char** argv;
+
+  static __thread streampos change_datafile_name(const adstring& s, const streampos& off=0);
+  static __thread streampos change_pinfile_name(const adstring& s, const streampos& off=0);
 };
 
 

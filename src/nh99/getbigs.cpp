@@ -8,6 +8,9 @@
  * \file
  * Description not yet available.
  */
+#include <thread>
+#include <sstream>
+#include <cassert>
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #endif
@@ -21,20 +24,15 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
   dmatrix& S,dmatrix& BS,dvector& scale)
 { 
   dmatrix tv(1,ndvar,1,nvar1);
-  adstring tmpstring="admodel.dep";
-  if (ad_comm::wd_flag)
-     tmpstring = ad_comm::adprogram_name + ".dep";
-  cifstream cif((char*)tmpstring);
+
+  std::thread::id this_thread_id = std::this_thread::get_id();
+  std::ostringstream oss2;
+  oss2 << *ad_comm::adprogram_name << this_thread_id << ".dep";
+  cifstream cif(oss2.str().c_str());
 
   int tmp_nvar,tmp_ndvar;
   cif >> tmp_nvar >> tmp_ndvar;
-  if (tmp_nvar!=nvar1)
-  {
-    cerr << " tmp_nvar != nvar1 in file " << tmpstring
-           << endl;
-    ad_exit(1);
-  }
-
+  assert(tmp_nvar == nvar1);
 
 #if defined(USE_LAPLACE)
 
@@ -48,7 +46,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
     // get l_uu and l_xu for covariance calculations
     if (lapprox->hesstype !=2)
     {
-      tmpstring = ad_comm::adprogram_name + ".luu";
+      adstring tmpstring = *ad_comm::adprogram_name + ".luu";
       uistream ifs1((char*)(tmpstring));
       ifs1 >> usize >> xsize;
       if (!ifs1)

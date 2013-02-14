@@ -13,7 +13,9 @@
  * \file
  * Description not yet available.
  */
-
+#include <thread>
+#include <sstream>
+#include <cassert>
 #include <fvar.hpp>
 #if defined(__SPDLL__)
 #  if !defined(linux)
@@ -153,7 +155,7 @@ double dafsqrt( double x );
     }
   }
 int log_values_switch=0;
-ofstream logstream("fmin.log");
+ofstream logstream;
 
 /**
  * Description not yet available.
@@ -161,6 +163,13 @@ ofstream logstream("fmin.log");
  */
 void print_values(const double& f, const dvector & x,const dvector& g)
 {
+  if (!logstream.is_open())
+  {
+    std::thread::id this_thread_id = std::this_thread::get_id();
+    std::ostringstream oss;
+    oss << *ad_comm::adprogram_name << this_thread_id << "-fmin.log";
+    logstream.open(oss.str().c_str());
+  }
   logstream << setprecision(13) << f << endl;
   logstream << setprecision(13) << x << endl;
   logstream << setprecision(13) << g << endl;

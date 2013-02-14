@@ -18,9 +18,9 @@ void initial_params::add_random_vector(const dvector& y, const dvector& x, const
   int ii=1;
   for (int i=0;i<num_initial_params;i++)
   {
-    if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+    if (withinbound(0,((*varsptr)[i])->phase_start,current_phase))
     {
-      (varsptr[i])->add_value(y,x,ii,ll,diag);
+      ((*varsptr)[i])->add_value(y,x,ii,ll,diag);
     }
   }
 }
@@ -29,9 +29,9 @@ void initial_params::get_jacobian_value(const dvector& y, const dvector& jac)
   int ii=1;
   for (int i=0;i<num_initial_params;i++)
   {
-    if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+    if (withinbound(0,((*varsptr)[i])->phase_start,current_phase))
     {
-      (varsptr[i])->get_jacobian(y,jac,ii);
+      ((*varsptr)[i])->get_jacobian(y,jac,ii);
     }
   }
 }

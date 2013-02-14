@@ -5,9 +5,10 @@
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #  include <admodel.h>
-int function_minimizer::random_effects_flag=0;
-int function_minimizer::test_trust_flag=0;
-int function_minimizer::negative_eigenvalue_flag=0;
+__thread int function_minimizer::likeprof_flag = 0;
+__thread int function_minimizer::test_trust_flag = 0;
+__thread int function_minimizer::random_effects_flag = 0;
+__thread int function_minimizer::negative_eigenvalue_flag = 0;
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #include <adrndeff.h>

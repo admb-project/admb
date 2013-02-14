@@ -11,9 +11,9 @@ void initial_params::copy_all_values(const dvector& x, const int& ii)
     for (int i=0;i<num_initial_params;i++)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
-      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+      if (withinbound(0,((*varsptr)[i])->phase_start,current_phase))
       {
-        (varsptr[i])->copy_value_to_vector(x,ii);
+        ((*varsptr)[i])->copy_value_to_vector(x,ii);
       }
     }
   }
@@ -93,9 +93,9 @@ void initial_params::restore_all_values(const dvector& x, const int& ii)
     for (int i=0;i<num_initial_params;i++)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
-      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+      if (withinbound(0,((*varsptr)[i])->phase_start,current_phase))
       {
-        (varsptr[i])->restore_value_from_vector(x,ii);
+        ((*varsptr)[i])->restore_value_from_vector(x,ii);
       }
     }
   }

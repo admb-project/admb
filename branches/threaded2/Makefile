@@ -42,7 +42,7 @@ icc-verify:
 linux: linux-admb linux-contrib
 
 linux-admb:
-	$(MAKE) --directory=src --file=linux.mak
+	$(MAKE) DEBUG=1 --directory=src --file=linux.mak
 
 linux-64bit: linux-contrib
 	CXXFLAGS=-m64 $(MAKE) --directory=src --file=linux.mak dist-64bit
@@ -51,7 +51,7 @@ linux-contrib:
 	CC=gcc CXX=g++ CXXFLAGS="" LIBPATH=../build/gcc411-fedora8 DISK=../build/dists/admb_gcc411_fedora8 $(MAKE) --directory=contrib
 
 linux-verify:
-	$(MAKE) --directory=src --file=linux.mak verify
+	$(MAKE) DEBUG=1 --directory=src --file=linux.mak verify
 
 it:
 	./configure CFLAGS=-m32 CXXFLAGS="-m32 -mmacosx-version-min=10.5" LDFLAGS="-m32"

@@ -307,7 +307,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       }
       if (use_empirical_flag)
       { 
-        read_empirical_covariance_matrix(nvar,S,ad_comm::adprogram_name);
+        read_empirical_covariance_matrix(nvar, S, *ad_comm::adprogram_name);
       }
       else if (!rescale_bounded_flag)
       {
@@ -318,7 +318,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
         else
         {
           int tmp_nvar;
-          adstring tmpstring = ad_comm::adprogram_name + ".bgs";
+          adstring tmpstring = *ad_comm::adprogram_name + ".bgs";
           uistream uis((char*)(tmpstring));
           if (!uis)
           {
@@ -385,19 +385,17 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     if ( mcrestart_flag>-1)
     {
       // check that nvar is correct
-      uistream uis((char*)(ad_comm::adprogram_name + adstring(".psv")));
+      uistream uis((char*)(*ad_comm::adprogram_name + adstring(".psv")));
       if (!uis)
       {
-        cerr << "Error trying to open file" << 
-          ad_comm::adprogram_name + adstring(".psv") <<
+        cerr << "Error trying to open file" << *ad_comm::adprogram_name + adstring(".psv") <<
           " for mcrestart" <<   endl;
         ad_exit(1);
       } else {
         int nv1;
         uis >> nv1;
         if (nv1 !=nvar) {
-          cerr << "wrong number of independent variables in" <<
-            ad_comm::adprogram_name + adstring(".psv") << endl
+          cerr << "wrong number of independent variables in" << *ad_comm::adprogram_name + adstring(".psv") << endl
            << " I found " << nv1 << " instead of " << nvar  << endl;
           ad_exit(1);
         }
@@ -411,7 +409,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
         if (!uis)
         {
           cerr << "error resotring last mcmc poistion from file "
-            << ad_comm::adprogram_name + adstring(".psv") << endl;
+            << *ad_comm::adprogram_name + adstring(".psv") << endl;
           ad_exit(1);
         }
         int ii=1;
@@ -428,7 +426,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     if ( mcrestart_flag>-1)
     {
-      pofs_psave= new uostream( (char*)(ad_comm::adprogram_name 
+      pofs_psave= new uostream( (char*)(*ad_comm::adprogram_name 
           + adstring(".psv")),ios::app);
      /*
       pofs_psave->seekp(0,std::ios::end);
@@ -456,13 +454,12 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     else
     {
       pofs_psave=
-        new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
+        new uostream((char*)(*ad_comm::adprogram_name + adstring(".psv")));
     }
 
     if (!pofs_psave|| !(*pofs_psave))
     {
-      cerr << "Error trying to open file" << 
-        ad_comm::adprogram_name + adstring(".psv") << endl;
+      cerr << "Error trying to open file" << *ad_comm::adprogram_name + adstring(".psv") << endl;
       ad_exit(1);
     }
     if (mcrestart_flag == -1 )

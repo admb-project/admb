@@ -4,6 +4,8 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
+#include <sstream>
+#include <thread>
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #else
@@ -41,10 +43,15 @@ void set_signal_handlers(void)
   signal(SIGILL,exit_handler);
   signal(SIGINT,exit_handler);
 }
+ad_comm::ad_comm(void)
+{
+  allocate();
+}
+ad_comm::ad_comm(const ad_comm& copy): ad_comm(copy.argc, copy.argv) 
+{
 
-
-
-ad_comm::ad_comm(int _argc,char * _argv[])
+}
+ad_comm::ad_comm(int _argc, char* _argv[])
 {
   if (option_match(_argc,_argv,"-version") > -1
    || option_match(_argc,_argv,"--version") > -1)
@@ -56,7 +63,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   }
 
   ad_comm::argc=_argc;
-  ad_comm::argv=_argv;
+  ad_comm::argv =_argv;
   int pvm_flag=0;
   if (option_match(_argc,_argv,"-time")>-1)
   {
@@ -82,12 +89,11 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   if (option_match(_argc,_argv,"-slave")>-1)  pvm_flag=2;
   if (option_match(_argc,_argv,"-master")>-1) pvm_flag=1;
 
+  pvm_manager = nullptr;
 #if defined(USE_ADPVM)
   if (pvm_flag)
     pvm_manager = new adpvm_manager(pvm_flag);
-  else
 #endif
-    pvm_manager = NULL;
 
 
 #if defined(USE_ADPVM)
@@ -124,20 +130,15 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     }
   }
 #endif
-
-
-  /*
-    if (option_match(_argc,_argv,"-gui")>-1)
-    {
-      vm_initialize();
-    }
-  */
   set_signal_handlers();
-  adprogram_name=_argv[0];
+  adprogram_name = new adstring(_argv[0]);
   int len=strlen(_argv[0]);
-  for (int i=1;i<=len;i++) adprogram_name[i]=tolower(adprogram_name[i]);
+  for (int i = 1; i <= len; i++) 
+  {
+    (*adprogram_name)[i] = tolower((*adprogram_name)[i]);
+  }
 #if !defined(__SPDLL__)
-  strip_full_path(adprogram_name);
+  strip_full_path(*adprogram_name);
 #endif
   adstring workdir;
   ad_getcd(workdir);
@@ -151,15 +152,15 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     {
       // remove path (if user runs -help)
       unsigned int i;
-      for (i=adprogram_name.size();i>=1;i--)
+      for (i = (*adprogram_name).size(); i >= 1; i--)
       {
 #ifdef _WIN32
-        if (adprogram_name(i) == '\\')
+        if ((*adprogram_name)(i) == '\\')
 #else
-        if (adprogram_name(i) == '/')
+        if ((*adprogram_name)(i) == '/')
 #endif
         {
-          adprogram_name=adprogram_name(i+1,adprogram_name.size());
+          *adprogram_name = (*adprogram_name)(i + 1, (*adprogram_name).size());
           break;
         }
       }
@@ -312,11 +313,6 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   allocate();
 }
 
-ad_comm::ad_comm(void)
-{
-  allocate();
-}
-
 void ad_comm::allocate(void)
 {
 #if defined (_WIN32)
@@ -324,7 +320,6 @@ void ad_comm::allocate(void)
 #else
   directory_prefix='/';
 #endif
-  adstring tmpstring;
   // remove path (if __SPDLL__ is not defined)
 #if !defined(__SPDLL__)
   for (int i = adprogram_name.size(); i >= 1; i--)
@@ -338,20 +333,21 @@ void ad_comm::allocate(void)
 
 #endif
   // strip off the .exe if it is there
-  int n=adprogram_name.size();
+  int n = (*adprogram_name).size();
   if(n>4)
   {
-    if (adprogram_name(n - 3) == '.'
-        && adprogram_name(n - 2) == 'e'
-        && adprogram_name(n - 1) == 'x'
-        && adprogram_name(n) == 'e')
+    if ((*adprogram_name)(n - 3) == '.'
+        && (*adprogram_name)(n - 2) == 'e'
+        && (*adprogram_name)(n - 1) == 'x'
+        && (*adprogram_name)(n) == 'e')
     {
       n -= 4;
     }
   }
-  adprogram_name=adprogram_name(1,n);
+  *adprogram_name = (*adprogram_name)(1, n);
 
   // change the working directory name
+  adstring tmpstring;
   if (argc > 1)
   {
     int on=0;
@@ -373,17 +369,17 @@ void ad_comm::allocate(void)
   {
     if (tmpstring(length(tmpstring)) == directory_prefix)
     {
-      adprogram_name=tmpstring + adprogram_name;
-      working_directory_path = tmpstring;
+      *adprogram_name = tmpstring + *adprogram_name;
+      *working_directory_path = tmpstring;
     }
     else
     {
-      adprogram_name=tmpstring + directory_prefix + adprogram_name;
-      working_directory_path = tmpstring + directory_prefix;
+      *adprogram_name = tmpstring + directory_prefix + *adprogram_name;
+      *working_directory_path = tmpstring + directory_prefix;
     }
   }
 
-  tmpstring=adprogram_name + adstring(".dat");
+  tmpstring = *adprogram_name + adstring(".dat");
   if (argc > 1)
   {
     int on=0;
@@ -391,8 +387,7 @@ void ad_comm::allocate(void)
     {
       if (on>argc-2 || argv[on+1][0] == '-')
       {
-        cerr << "Invalid input data command line option"
-                " -- ignored" << endl;
+        cerr << "Invalid input data command line option -- ignored" << endl;
       }
       else
       {
@@ -403,28 +398,29 @@ void ad_comm::allocate(void)
   global_datafile= new cifstream(tmpstring);
   if (!global_datafile)
   {
-    cerr << "Error trying to open data input file "
-         << tmpstring << endl;
+    cerr << "1Error trying to open data input file " << tmpstring << endl;
   }
   else
   {
     if (!(*global_datafile))
     {
-      cerr << "Error trying to open data input file "
-           << tmpstring << endl;
+      cerr << "2Error trying to open data input file " << tmpstring << endl;
       delete global_datafile;
-      global_datafile=NULL;
+      global_datafile = nullptr;
     }
   }
-  adstring ts=adprogram_name + adstring(".log");
-  global_logfile= new ofstream( (char*)ts);
+  //JCA: should have program name correct laters
+  std::thread::id this_thread_id = std::this_thread::get_id();
+  std::ostringstream oss;
+  oss << *adprogram_name << this_thread_id << ".log";
+  global_logfile = new ofstream(oss.str());
 
   int biopt=-1;
   int aiopt=-1;
   biopt=option_match(argc,argv,"-binp");
   aiopt=option_match(argc,argv,"-ainp");
 
-  tmpstring=adprogram_name + adstring(".bin");
+  tmpstring = *adprogram_name + adstring(".bin");
   if (!global_bparfile && aiopt == -1)
   {
     if (biopt>-1)
@@ -451,11 +447,11 @@ void ad_comm::allocate(void)
 	  exit(1);
 	}
         delete global_bparfile;
-        global_bparfile=NULL;
+        global_bparfile = nullptr;
       }
     }
   }
-  tmpstring=adprogram_name + adstring(".pin");
+  tmpstring = *adprogram_name + adstring(".pin");
   if (!global_parfile)
   {
     if (aiopt>-1)
@@ -482,7 +478,7 @@ void ad_comm::allocate(void)
 	  exit(1);
 	}
         delete global_parfile;
-        global_parfile=NULL;
+        global_parfile = nullptr;
       }
     }
   }
@@ -493,28 +489,45 @@ ad_comm::~ad_comm()
   if (ptm)
   {
     delete ptm;
-    ptm=0;
+    ptm = nullptr;
   }
   if (ptm1)
   {
     delete ptm1;
-    ptm1=0;
+    ptm1 = nullptr;
   }
   if (global_datafile)
   {
     delete global_datafile;
-    global_datafile=NULL;
+    global_datafile = nullptr;
   }
   if (global_parfile)
   {
     delete global_parfile;
-    global_parfile=NULL;
+    global_parfile = nullptr;
   }
   if (global_logfile)
   {
     delete global_logfile;
-    global_logfile=NULL;
+    global_logfile = nullptr;
   }
+  if (subdir)
+  {
+    delete subdir;
+    subdir = nullptr;
+  }
+  if (adprogram_name)
+  {
+    delete adprogram_name;
+    adprogram_name = nullptr;
+  }
+  if (working_directory_path)
+  {
+    delete working_directory_path;
+    working_directory_path = nullptr;
+  }
+  argc = 0;
+  argv = nullptr;
 }
 
 void function_minimizer::pre_userfunction(void)

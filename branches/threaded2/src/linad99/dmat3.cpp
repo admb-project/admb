@@ -4,8 +4,9 @@
  * Author: David Fournier
  * Copyright (c) 2009-2012 ADMB Foundation
  */
-#include "fvar.hpp"
 #include <math.h>
+#include <cassert>
+#include "fvar.hpp"
 #ifndef __ZTC__
 //#include <iomanip.h>
 #endif
@@ -19,35 +20,35 @@ undefined, redefined and undefined in this file.
 void lubksb(dmatrix a, const ivector&  indx,dvector b);
 void ludcmp(const dmatrix& a, const ivector& indx, const double& d);
 
-/** Inverse of a constant matrix by LU decomposition.
-    \ingroup matop
-    \param m1 A dmatrix, \f$M\f$, for which the inverse is to be computed.
-    \return A dmatrix containing \f$M^{-1}\f$.
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 2
+/** 
+Inverse of a constant matrix by LU decomposition.
+\ingroup matop
+\param m1 A dmatrix, \f$M\f$, for which the inverse is to be computed.
+\return A dmatrix containing \f$M^{-1}\f$.
+\n\n The implementation of this algorithm was inspired by
+"Numerical Recipes in C", 2nd edition,
+Press, Teukolsky, Vetterling, Flannery, chapter 2
 */
 dmatrix inv(const dmatrix& m1)
 {
-  double d;
+
   if (m1.rowmin()!=m1.colmin() || m1.rowmax() != m1.colmax())
   {
     cerr << " Error in dmatrix inv(const dmatrix&) -- matrix not square \n";
   }
+  if (true) return m1;
  
   dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
-
-  int i;
-  for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+  for (int i = m1.rowmin(); i <= m1.rowmax(); i++)
   {
-    for (int j=m1.rowmin(); j<=m1.rowmax(); j++)
+    for (int j = m1.rowmin(); j <= m1.rowmax(); j++)
     {
       a[i][j]=m1[i][j];
     }
   }
   ivector indx(m1.rowmin(),m1.rowmax());
-  //int indx[30];
-
+  
+  double d = 0;
   ludcmp(a,indx,d);
 
   dmatrix y(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
@@ -55,20 +56,20 @@ dmatrix inv(const dmatrix& m1)
 
   for (int j=m1.rowmin(); j<=m1.rowmax(); j++)
   {
-    for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+    for (int i = m1.rowmin(); i <= m1.rowmax(); i++)
     {
-      col[i]=0;
+      col[i] = 0;
     }
-    col[j]=1;
+    col[j] = 1;
 
     lubksb(a,indx,col);
   
-    for (i=m1.rowmin(); i<=m1.rowmax(); i++)
+    for (int i = m1.rowmin(); i <= m1.rowmax(); i++)
     {
-      y[i][j]=col[i];
+      y[i][j] = col[i];
     }
   }
-  return(y);
+  return y;
 }
 
 /** Inverse of a constant matrix by LU decomposition.
@@ -183,10 +184,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
   double big,dum,sum,temp;
 
   dvector vv(lb,ub);
-
-
   d=1.0;
-
   for (i=lb;i<=ub;i++)
   {
     big=0.0;
@@ -204,9 +202,6 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
     }
     vv[i]=1.0/big;
   }
-
-
-
   for (j=lb;j<=ub;j++)
   {
     for (i=lb;i<j;i++) 
@@ -224,16 +219,17 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
       sum=a[i][j];
       for (k=lb;k<j;k++)
       {
-        sum = sum - a[i][k]*a[k][j];
+        //sum = sum - a[i][k]*a[k][j];
       }
       a[i][j]=sum;
       dum=vv[i]*fabs(sum);
-      if ( dum >= big)
+      if (dum >= big)
       {
-        big=dum;
-        imax=i;
+        big = dum;
+        imax = i;
       }
     }
+/*
     if (j != imax)
     {
       for (k=lb;k<=ub;k++)
@@ -245,13 +241,13 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
       d = -d;
       vv[imax]=vv[j];
     }
+*/
+/*
     indx[j]=imax;
-
     if (a[j][j] == 0.0)
     {
       a[j][j]=TINY;
     }
-
     if (j != n)
     {
       dum=1.0/(a[j][j]);
@@ -260,6 +256,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
         a[i][j] = a[i][j] * dum;
       }
     }
+*/
   }
 }
 #undef TINY 
@@ -276,28 +273,21 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
 */
 void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
 {
-  int i,imax,j,k,n;
-  double& d=(double&)_d;
   dmatrix& a=(dmatrix&)_a;
   ivector& indx=(ivector&)_indx;
-
-  n=a.colsize();
   int lb=a.colmin();
   int ub=a.colmax();
 
-  double big,dum,sum,temp;
-
-  dvector vv(lb,ub);
-
-
+  double& d=(double&)_d;
   d=1.0;
 
-  for (i=lb;i<=ub;i++)
+  dvector vv(lb,ub);
+  for (int i = lb; i <= ub; i++)
   {
-    big=0.0;
-    for (j=lb;j<=ub;j++)
+    double big = 0.0;
+    for (int j = lb; j <= ub; j++)
     {
-      temp=fabs(a[i][j]);
+      double temp = fabs(a[i][j]);
       if (temp > big)
       {
         big=temp;
@@ -310,30 +300,30 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
     vv[i]=1.0/big;
   }
 
-
-
-  for (j=lb;j<=ub;j++)
+  int n=a.colsize();
+  for (int j = lb; j <= ub; j++)
   {
-    for (i=lb;i<j;i++) 
+    for (int i = lb; i < j; i++) 
     {
-      sum=a[i][j];
-      for (k=lb;k<i;k++)
+      double sum = a[i][j];
+      for (int k = lb; k < i; k++)
       {
         sum = sum - a[i][k]*a[k][j];
       }
       a[i][j]=sum;
     }
-    big=0.0;
-    for (i=j;i<=ub;i++) 
+    int imax = lb;
+    double big = 0.0;
+    for (int i = j; i <= ub; i++) 
     {
-      sum=a[i][j];
-      for (k=lb;k<j;k++)
+      double sum = a[i][j];
+      for (int k = lb; k < j; k++)
       {
         sum = sum - a[i][k]*a[k][j];
       }
       a[i][j]=sum;
-      dum=vv[i]*fabs(sum);
-      if ( dum >= big)
+      double dum=vv[i]*fabs(sum);
+      if (dum >= big)
       {
         big=dum;
         imax=i;
@@ -341,9 +331,9 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
     }
     if (j != imax)
     {
-      for (k=lb;k<=ub;k++)
+      for (int k = lb; k <= ub; k++)
       {
-        dum=a[imax][k];
+        double dum=a[imax][k];
         a[imax][k]=a[j][k];
         a[j][k]=dum;
       }
@@ -351,16 +341,14 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
       vv[imax]=vv[j];
     }
     indx[j]=imax;
-
     if (a[j][j] == 0.0)
     {
       a[j][j]=TINY;
     }
-
     if (j != n)
     {
-      dum=1.0/(a[j][j]);
-      for (i=j+1;i<=ub;i++)
+      double dum=1.0/(a[j][j]);
+      for (int i = j + 1; i <= ub; i++)
       {
         a[i][j] = a[i][j] * dum;
       }
@@ -378,39 +366,45 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
-
-    \deprecated Scheduled for replacement by 2010.
 */
 void lubksb(dmatrix a, const ivector& indx, dvector b)
 {
-  int i,ii=0,ip,j,iiflag=0;
-  double sum;
-  int lb=a.colmin();
-  int ub=a.colmax();
-  for (i=lb;i<=ub;i++)
+  int ii = 0, iiflag = 0;
+  int lb = a.colmin();
+  int ub = a.colmax();
+cerr << "===" << endl;
+cerr << "a: " << a << endl;
+cerr << "===" << endl;
+cerr << "indx: " << indx << endl;
+cerr << "===" << endl;
+cerr << "b: " << b << endl;
+cerr << "===" << endl;
+  for (int i = lb; i <= ub; i++)
   {
-    ip=indx[i];
-    sum=b[ip];
-    b[ip]=b[i];
+    int ip = indx[i];
+    assert(b.indexmin() <= ip && ip <= b.indexmax());
+    double sum = b[ip];
+continue;
+    b[ip] = b[i];
     if (iiflag)
     {
-      for (j=ii;j<=i-1;j++)
+      for (int j = ii; j <= i - 1; j++)
       {
-        sum -= a[i][j]*b[j];
+        sum -= a[i][j] * b[j];
       }
     }
-    else if ( sum )
+    else if (sum)
     {
       ii=i;
       iiflag=1;
     }
-    b[i]=sum;
+    b[i] = sum;
   }
- 
-  for (i=ub;i>=lb;i--) 
+if (true) return;
+  for (int i = ub; i >= lb; i--) 
   {
-    sum=b[i];
-    for (j=i+1;j<=ub;j++) 
+    double sum = b[i];
+    for (int j = i + 1; j <= ub; j++) 
     {                        // !!! remove to show bug
       sum -= a[i][j]*b[j];
     }                        // !!! remove to show bug
@@ -456,7 +450,7 @@ double det(const dmatrix& m1)
 
   return(d);
 }
-
+#include <cassert>
 /** Compute log determinant of a constant matrix.
     \param m1 A dmatrix, \f$M\f$, for which the determinant is computed.
     \param _sgn
@@ -469,57 +463,55 @@ double det(const dmatrix& m1)
 */
 double ln_det(const dmatrix& m1, const int& _sgn)
 {
-  double d;
-  int& sgn=(int&)_sgn;
-  dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
-
-  if (m1.rowmin()!=m1.colmin()||m1.rowmax()!=m1.colmax())
+  if (m1.rowmin() != m1.colmin() || m1.rowmax() != m1.colmax())
   {
     cerr << "Matrix not square in routine det()" << endl;
     ad_exit(1);
   }
-
-  for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
+  dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
+  for (int i = m1.rowmin(); i <= m1.rowmax(); i++)
   {
-    for (int j=m1.rowmin(); j<=m1.rowmax(); j++)
+    for (int j = m1.rowmin(); j <= m1.rowmax(); j++)
     {
-      a[i][j]=m1[i][j];
+      a[i][j] = m1[i][j];
     }
   }
+  ivector indx(m1.rowmin(), m1.rowmax());
 
-  ivector indx(m1.rowmin(),m1.rowmax());
+  double d = 0;
   ludcmp_det(a,indx,d);
-  double ln_det=0.0;
-   
-  if (d>.1) 
+
+  double ln_det = 0.0;
+  int& sgn = (int&)_sgn;
+  if (d > .1) 
   {
-    sgn=1;
+    sgn = 1;
   }
-  else if (d<-0.1)
+  else if (d < -0.1)
   {
-    sgn=-1;
+    sgn = -1;
   }
   else
   {
-    sgn=0;
+    sgn = 0;
   }
-  for (int j=m1.rowmin();j<=m1.rowmax();j++)
+  for (int j=m1.rowmin(); j <= m1.rowmax(); j++)
   {
-    if (a(j,j)>0)
+    if (a(j,j) > 0)
     {
-      ln_det+=log(a[j][j]);
+      ln_det += log(a[j][j]);
     }
-    else if (a(j,j)<0)
+    else if (a(j,j) < 0)
     {
-      sgn=-sgn;
-      ln_det+=log(-a[j][j]);
+      sgn =- sgn;
+      ln_det += log(-a[j][j]);
     }
     else
     {
-      sgn=0;
+      sgn = 0;
     }
   }
-  return(ln_det);
+  return ln_det;
 }
 
 /** LU decomposition. 

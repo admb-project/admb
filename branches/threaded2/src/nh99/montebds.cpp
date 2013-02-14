@@ -7,7 +7,7 @@
 #include <admodel.h>
 
  const double simbdsmax=1.e+90;
- ofstream ofss("variance");
+ //ofstream ofss("variance");
 
  double ssmin(double x,double y)
  {
@@ -26,8 +26,8 @@
     for (int i=0;i<num_initial_params;i++)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
-      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
-	(varsptr[i])->set_simulation_bounds(symbds,ii);
+      if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
+	(varsptr->operator[](i))->set_simulation_bounds(symbds,ii);
     }
   }
 

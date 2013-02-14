@@ -4,18 +4,19 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
+#include <thread>
+#include <sstream>
 #include <admodel.h>
 
 double function_minimizer::unrestricted_hess_determinant(void)
 {
-  adstring tmpstring="admodel.hes";
-  if (ad_comm::wd_flag)
-     tmpstring = ad_comm::adprogram_name + ".hes";
-  uistream ifs((char*)tmpstring);
-    
+  std::thread::id this_thread_id = std::this_thread::get_id();
+  std::ostringstream oss;
+  oss << *ad_comm::adprogram_name << this_thread_id << ".hes";
+  uistream ifs(oss.str().c_str());
   if (!ifs)
   {
-    cerr << "Error opening file " << (char*) tmpstring
+    cerr << "Error opening file " << oss.str()
       << " in unrestricted_hess_determinant" << endl;
   }
   int nvar;

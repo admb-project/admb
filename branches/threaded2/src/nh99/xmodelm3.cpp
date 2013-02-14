@@ -44,12 +44,12 @@ void tracing_message(int traceflag,const char *s);
   {
     return inner_opt_flag;
   }
-
-  int function_minimizer::inner_opt_flag=0;
+__thread int function_minimizer::inner_opt_flag = 0;
 #endif
 
-
-  int function_minimizer::bad_step_flag=0;  
+__thread int function_minimizer::bad_step_flag = 0;  
+__thread named_dvar_vector* function_minimizer::ph = nullptr;
+__thread named_dvar_vector* function_minimizer::pg = nullptr;
 
   void function_minimizer::minimize(void)
   {
@@ -543,89 +543,87 @@ void tracing_message(int traceflag,const char *s);
   }
 #endif
 
-  function_minimizer::function_minimizer(long int sz)
-  {
-#  if defined(USE_LAPLACE)
-    lapprox=0;
-    multinomial_weights=0;
-    //cout << lapprox << endl;
-#  endif
-    maxfn  = 1000;
-    iprint = 1;
-    crit   = 0.0001;
-    imax   = 30;
-    dfn    = 0.01;
-    iexit  = 0;
-    ihflag = 0;
-    ihang  = 0;
-    scroll_flag = 1;
-    maxfn_flag=0;
-    quit_flag=0;
-    min_improve=.0;
-    negdirections=0;
-    spminflag=0;
-    repeatminflag=0;
+function_minimizer::function_minimizer(long int sz)
+{
+#if defined(USE_LAPLACE)
+  lapprox=0;
+  multinomial_weights=0;
+#endif
+  maxfn  = 1000;
+  iprint = 1;
+  crit   = 0.0001;
+  imax   = 30;
+  dfn    = 0.01;
+  iexit  = 0;
+  ihflag = 0;
+  ihang  = 0;
+  scroll_flag = 1;
+  maxfn_flag=0;
+  quit_flag=0;
+  min_improve=.0;
+  negdirections = nullptr;
+  spminflag=0;
+  repeatminflag=0;
 
-    int ssz;
-
-    int nopt=get_option_number("-ams",
+  int ssz;
+  int nopt=get_option_number("-ams",
       "-ams option needs positive integer -- ignored",ssz);
-    if (nopt>-1 && ssz>0) {
+  if (nopt > -1 && ssz > 0) 
+  {
       sz=ssz;
-    }
+  }
     
 #ifdef __BORLANDC__
-    long int lssz;
+  long int lssz;
 #else
-    long long int lssz;
+  long long int lssz;
 #endif
-    nopt=get_option_number("-cbs",
+  nopt=get_option_number("-cbs",
       "-cbs option needs positive integer -- ignored",lssz);
-    if (nopt>-1 && lssz>0) {
-      gradient_structure::set_CMPDIF_BUFFER_SIZE(lssz);
-    }
-
-    
-    nopt=get_option_number("-gbs",
-      "-gbs option needs positive integer -- ignored",lssz);
-    if (nopt>-1 && lssz>0) {
-      gradient_structure::set_GRADSTACK_BUFFER_SIZE
-        (lssz/sizeof(grad_stack_entry));
-    }
-
-    if (!sz)
-    {
-      pgs = new gradient_structure;
-    }
-    else
-    {
-      pgs = new gradient_structure(sz);
-    }
-  }
-
-  function_minimizer::~function_minimizer()
+  if (nopt > -1 && lssz > 0)
   {
-#  if defined(USE_LAPLACE)
-    if(multinomial_weights)
-    {
-      delete multinomial_weights;
-      multinomial_weights=0;
-    }
-
-    if (lapprox)
-    {
-      delete lapprox;
-      lapprox=0;
-    }
-#  endif
-    delete pgs;
-    pgs=NULL;
-    if (negdirections)
-    {
-      delete negdirections;
-      negdirections=0;
-    }
+    gradient_structure::set_CMPDIF_BUFFER_SIZE(lssz);
   }
+  nopt=get_option_number("-gbs",
+      "-gbs option needs positive integer -- ignored",lssz);
+  if (nopt > -1 && lssz > 0) 
+  {
+    gradient_structure::set_GRADSTACK_BUFFER_SIZE(lssz/sizeof(grad_stack_entry));
+  }
+  if (!sz)
+  {
+    pgs = new gradient_structure();
+  }
+  else
+  {
+    pgs = new gradient_structure(sz);
+  }
+}
+function_minimizer::~function_minimizer()
+{
+#if defined(USE_LAPLACE)
+  if(multinomial_weights)
+  {
+    delete multinomial_weights;
+    multinomial_weights = nullptr;
+  }
+  if (lapprox)
+  {
+    delete lapprox;
+    lapprox = nullptr;
+  }
+#endif
+  if (pgs)
+  {
+    delete pgs;
+    pgs = nullptr;
+  }
+  if (negdirections)
+  {
+    delete negdirections;
+    negdirections = nullptr;
+  }
+}
 
   void function_minimizer::set_initial_simplex(const dmatrix& _p, const dvector& _y, int nvar, const dvector& x,
     double delta)

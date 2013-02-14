@@ -43,7 +43,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
   {
     for (int i=0;i<initial_params::num_initial_params;i++)
     {
-       (initial_params::varsptr[i])->save_value();
+       (initial_params::varsptr->operator[](i))->save_value();
     }
     delete ad_comm::global_savefile;
     ad_comm::global_savefile=tmpfile;

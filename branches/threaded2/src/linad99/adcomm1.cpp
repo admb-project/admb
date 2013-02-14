@@ -85,7 +85,7 @@ void adpvm_slave_args::operator -- (void)
     if (argv[counter])
     {
       delete [] argv[counter];
-      argv[counter]=NULL;
+      argv[counter] = nullptr;
     }
     counter--;
     strcpy(argv[0],(char*)str(counter));
@@ -250,9 +250,9 @@ adpvm_slave_args::adpvm_slave_args(int _num_args,int _length_args)
   argv[0] = new char[20];
   for (int i = 1; i < num_args; i++)
   {
-    argv[i] = NULL;
+    argv[i] = nullptr;
   }
-  argv[num_args]=NULL;
+  argv[num_args] = nullptr;
 }
 
 /**
@@ -268,11 +268,11 @@ adpvm_slave_args::~adpvm_slave_args()
       if (argv[i])
       {
         delete [] argv[i];
-        argv[i]=NULL;
+        argv[i] = nullptr;
       }
     }
     delete [] argv;
-    argv = NULL;
+    argv = nullptr;
     num_args=0;
   }
 }

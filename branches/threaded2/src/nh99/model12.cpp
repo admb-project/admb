@@ -12,7 +12,7 @@ void initial_params::save(const ofstream& _ofs, int prec)
     ofs << setw(prec+6) << setshowpoint();
     for (int i=0;i<num_initial_params;i++)
     {
-      (varsptr[i])->save_value(ofs,prec);
+      (varsptr->operator[](i))->save_value(ofs,prec);
     }
   }
 

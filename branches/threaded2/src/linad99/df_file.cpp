@@ -79,10 +79,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <sstream>
+#include <thread>
+
   char lastchar(char *);
 
   void byte_copy(void * dest,void * source, unsigned num_bytes);
-  extern char ad_random_part[6];
 
 /**
  * Description not yet available.
@@ -163,28 +165,28 @@
       }   
     }
 #endif
-
+    std::thread::id this_thread_id = std::this_thread::get_id();
+    std::ostringstream oss;
+    oss << this_thread_id;
+    char* ad_random_part = oss.str().c_str();
     if (path != NULL)
 #if defined (__SUN__) ||defined (__GNU__)
     {
-      sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
-        ad_random_part);
+      sprintf(&cmpdif_file_name[0],"%s/cmpdiff%s.tmp", path, ad_random_part);
     }
 #else
     if (lastchar(path) != '\\')
     {
-      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
-        ad_random_part);
+      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff%s.tmp", path, ad_random_part);
     }
     else
     {
-      sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
-        ad_random_part);
+      sprintf(&cmpdif_file_name[0],"%scmpdiff%s.tmp", path, ad_random_part);
     }
 #endif
     else
     {
-      sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
+      sprintf(&cmpdif_file_name[0],"cmpdiff%s.tmp", ad_random_part);
     }
     adstring tmpstring=cmpdif_file_name;
 #if ( defined(USE_ADMPI) || defined(USE_PTHREADS))

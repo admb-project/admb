@@ -69,26 +69,25 @@ void function_minimizer::hess_routine(void)
 
 void function_minimizer::hess_routine_noparallel(void)
 {
-  int nvar=initial_params::nvarcalc(); // get the number of active parameters
-  //if (adjm_ptr) set_labels_for_hess(nvar);
+  int nvar=initial_params::nvarcalc();
   independent_variables x(1,nvar);
-  initial_params::xinit(x);        // get the initial values into the x vector
+  initial_params::xinit(x);
   double delta=1.e-5;
   dvector g1(1,nvar);
   dvector g2(1,nvar);
-  dvector gbest(1,nvar);
   dvector hess(1,nvar);
   dvector hess1(1,nvar);
   dvector hess2(1,nvar);
   double eps=.1;
   gradient_structure::set_YES_DERIVATIVES();
+
+  dvector gbest(1,nvar);
   gbest.fill_seqadd(1.e+50,0.);
  
   std::ostringstream oss;
   std::thread::id this_thread_id = std::this_thread::get_id();
   oss << *ad_comm::adprogram_name << this_thread_id << ".hes";
   uostream ofs((char*)oss.str().c_str());
-
   ofs << nvar;
   {
     {
@@ -98,7 +97,6 @@ void function_minimizer::hess_routine_noparallel(void)
       vf+=*objective_function_value::pobjfun;
       double f = value(vf);
       gradcalc(nvar,g1);
-//cerr << this_thread_id << " f: " << f << " g1: " << g1 << endl;
     }
     for (int i=1;i<=nvar;i++)
     {
@@ -119,7 +117,6 @@ void function_minimizer::hess_routine_noparallel(void)
       vf+=*objective_function_value::pobjfun;
       f=value(vf);
       gradcalc(nvar,g1);
-//cerr << this_thread_id << " f: " << f << " g1: " << g1 << endl;
 
       double sdelta2=x(i)-delta;
       sdelta2-=x(i);
@@ -132,7 +129,6 @@ void function_minimizer::hess_routine_noparallel(void)
       gradcalc(nvar,g2);
       x(i)=xsave;
       hess1=(g1-g2)/(sdelta1-sdelta2);
-//cerr << this_thread_id << " f: " << f << " g2: " << g2 << endl;
 
       sdelta1=x(i)+eps*delta;
       sdelta1-=x(i);
@@ -162,17 +158,14 @@ void function_minimizer::hess_routine_noparallel(void)
       hess = (eps2 * hess1 - hess2) / (eps2 - 1.0);
 
       ofs << hess;
-
-//cerr << "g1b: " << g1 << endl;
-//cerr << "g2b: " << g2 << endl;
-
-//cerr << hess << endl;
     }
   }
   ofs << gradient_structure::Hybrid_bounded_flag;
   dvector tscale(1,nvar);   // need to get scale from somewhere
   initial_params::stddev_scale(tscale,x);
   ofs << tscale;
+
+  ofs.close();
 }
 
 void function_minimizer::hess_routine_and_constraint(int iprof, const dvector& g, dvector& fg)

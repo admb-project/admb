@@ -1227,6 +1227,7 @@ df1b2vector pow(const df1b2vector& x,double y);
 df1b2vector pow(const df1b2vector& v,const df1b2variable & x);
 df1b2vector pow(const df1b2vector& v,const df1b2vector & x);
 df1b2vector pow(const df1b2variable& v,const df1b2vector & x);
+df1b2vector pow(df1b2vector const& _x,dvector const& v);
 df1b2vector pow(double v,const df1b2vector & x);
 df1b2vector pow(const dvector& x,  const df1b2vector& a);
 df1b2vector pow(const dvector& x,  const df1b2variable& a);

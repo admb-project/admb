@@ -1238,6 +1238,17 @@ TEST(tests_threaded, threaded_simple_nohess)
   }
   ASSERT_EQ(nullptr, initial_params::varsptr);
 }
+TEST(tests_threaded, simple_do_10_in_sequence)
+{
+  char* argv[] = { "simple/simple" };
+  for (int i = 0; i < 10; i++)
+  {
+    initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
+    simple(1, argv);
+    delete initial_params::varsptr;
+    initial_params::varsptr = nullptr;
+  }
+}
 TEST(tests_threaded, threaded_simple)
 {
   ad_set_new_handler();
@@ -1266,15 +1277,54 @@ TEST(tests_threaded, threaded_simple)
   }
   ASSERT_EQ(nullptr, initial_params::varsptr);
 }
-TEST(tests_threaded, simple5)
+TEST(tests_threaded, hess_routine_noparallel)
 {
+  int argc = 1;
   char* argv[] = { "simple/simple" };
-  for (int i = 0; i < 5; i++)
-  {
+  ad_set_new_handler();
+  ad_exit=&ad_boundf;
+  gradient_structure::set_NO_DERIVATIVES();
+  gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
+
+  initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
+
+  if (!arrmblsize) arrmblsize=15000000;
+  model_parameters mp(arrmblsize,argc,argv);
+  mp.iprint=10;
+  mp.preliminary_calculations();
+  mp.minimize();
+  mp.hess_routine_noparallel();
+
+  delete initial_params::varsptr;
+  initial_params::varsptr = nullptr;
+}
+TEST(tests_threaded, threaded_hess_routine_noparallel)
+{
+  int argc = 1;
+  char* argv[] = { "simple/simple" };
+  ad_set_new_handler();
+  ad_exit=&ad_boundf;
+
+  vector<thread> threads;
+  threads.push_back(thread([&argc, &argv](){
+    ASSERT_EQ(nullptr, initial_params::varsptr);
+    gradient_structure::set_NO_DERIVATIVES();
+    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
     initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
-    simple(1, argv);
+
+    if (!arrmblsize) arrmblsize=15000000;
+    model_parameters mp(arrmblsize,argc,argv);
+    mp.iprint=10;
+    mp.preliminary_calculations();
+    mp.minimize();
+    mp.hess_routine_noparallel();
+
     delete initial_params::varsptr;
     initial_params::varsptr = nullptr;
+  }));
+  for (auto& thread: threads)
+  {
+    thread.join();
   }
 }
 int main(int argc, char** argv)

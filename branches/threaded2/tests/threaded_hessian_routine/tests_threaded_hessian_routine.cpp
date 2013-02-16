@@ -1,8 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <functional>
 using std::vector;
 using std::thread;
+using std::function;
 
 #include <gtest/gtest.h>
 
@@ -29,6 +31,7 @@ __thread int tests_threaded::line = -1;
 __thread dvariable* tests_threaded::variable = nullptr;
 
 int simple(int argc, char* argv[]);
+/*
 void hello_world()
 {
 }
@@ -600,7 +603,7 @@ TEST(tests_threaded, threaded_model_parameters_computations_nohess)
   ad_exit=&ad_boundf;
 
   int argc = 2;
-  char* argv[] = { (char*)"simple/simple", "-nohess" };
+  char* argv[] = { (char*)"simple/simple", (char*)"-nohess" };
   if (!arrmblsize) arrmblsize=15000000;
 
   const int n = 10;
@@ -748,7 +751,7 @@ TEST(tests_threaded, threaded_model_parameters_computations1)
 TEST(tests_threaded, simple_hess_routine_noparallel)
 {
   int argc = 1;
-  char* argv[] = { "simple/simple" };
+  char* argv[] = { (char*)"simple/simple" };
   ad_set_new_handler();
   ad_exit=&ad_boundf;
   gradient_structure::set_NO_DERIVATIVES();
@@ -768,7 +771,7 @@ TEST(tests_threaded, simple_hess_routine_noparallel)
 TEST(tests_threaded, simple_hess_routine)
 {
   int argc = 1;
-  char* argv[] = { "simple/simple" };
+  char* argv[] = { (char*)"simple/simple" };
   ad_set_new_handler();
   ad_exit=&ad_boundf;
   gradient_structure::set_NO_DERIVATIVES();
@@ -856,7 +859,7 @@ TEST(tests_threaded, threaded_model_parameters_hess_routine)
 TEST(tests_threaded, simple)
 {
   initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
-  char* argv[] = { "simple/simple" };
+  char* argv[] = { (char*)"simple/simple" };
   simple(1, argv);
   delete initial_params::varsptr;
   initial_params::varsptr = nullptr;
@@ -864,7 +867,7 @@ TEST(tests_threaded, simple)
 TEST(tests_threaded, simple_computations)
 {
   int argc = 1;
-  char* argv[] = { "simple/simple" };
+  char* argv[] = { (char*)"simple/simple" };
   ad_set_new_handler();
   ad_exit=&ad_boundf;
   gradient_structure::set_NO_DERIVATIVES();
@@ -884,7 +887,7 @@ TEST(tests_threaded, simple_computations)
 TEST(tests_threaded, simple_computations1)
 {
   int argc = 1;
-  char* argv[] = { "simple/simple" };
+  char* argv[] = { (char*)"simple/simple" };
   ad_set_new_handler();
   ad_exit=&ad_boundf;
   gradient_structure::set_NO_DERIVATIVES();
@@ -904,7 +907,7 @@ TEST(tests_threaded, simple_computations1)
 TEST(tests_threaded, simple_hess_inv)
 {
   int argc = 1;
-  char* argv[] = { "simple/simple" };
+  char* argv[] = { (char*)"simple/simple" };
   ad_set_new_handler();
   ad_exit=&ad_boundf;
   gradient_structure::set_NO_DERIVATIVES();
@@ -1175,7 +1178,7 @@ TEST(tests_threaded, threaded_static_xpool)
   //int argc = 1;
   //char* argv[] = { (char*)"simple/simple" };
   int argc = 2;
-  char* argv[] = { (char*)"simple/simple", "-nohess" };
+  char* argv[] = { (char*)"simple/simple", (char*)"-nohess" };
   if (!arrmblsize) arrmblsize=15000000;
 
   const int n = 10;
@@ -1216,7 +1219,7 @@ TEST(tests_threaded, threaded_simple_nohess)
   ad_exit=&ad_boundf;
 
   int argc = 2;
-  char* argv[] = { (char*)"simple/simple", "-nohess" };
+  char* argv[] = { (char*)"simple/simple", (char*)"-nohess" };
 
   const int n = 10;
   vector<thread> threads;
@@ -1240,7 +1243,7 @@ TEST(tests_threaded, threaded_simple_nohess)
 }
 TEST(tests_threaded, simple_do_10_in_sequence)
 {
-  char* argv[] = { "simple/simple" };
+  char* argv[] = { (char*)"simple/simple" };
   for (int i = 0; i < 10; i++)
   {
     initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
@@ -1280,7 +1283,7 @@ TEST(tests_threaded, threaded_simple)
 TEST(tests_threaded, hess_routine_noparallel)
 {
   int argc = 1;
-  char* argv[] = { "simple/simple" };
+  char* argv[] = { (char*)"simple/simple" };
   ad_set_new_handler();
   ad_exit=&ad_boundf;
   gradient_structure::set_NO_DERIVATIVES();
@@ -1298,34 +1301,65 @@ TEST(tests_threaded, hess_routine_noparallel)
   delete initial_params::varsptr;
   initial_params::varsptr = nullptr;
 }
+*/
 TEST(tests_threaded, threaded_hess_routine_noparallel)
 {
   int argc = 1;
-  char* argv[] = { "simple/simple" };
+  char* argv[] = { (char*)"simple/simple" };
   ad_set_new_handler();
   ad_exit=&ad_boundf;
 
-  vector<thread> threads;
-  threads.push_back(thread([&argc, &argv](){
-    ASSERT_EQ(nullptr, initial_params::varsptr);
-    gradient_structure::set_NO_DERIVATIVES();
-    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
-    initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
+  ASSERT_EQ(nullptr, initial_params::varsptr);
+  gradient_structure::set_NO_DERIVATIVES();
+  gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
+  initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
 
-    if (!arrmblsize) arrmblsize=15000000;
-    model_parameters mp(arrmblsize,argc,argv);
-    mp.iprint=10;
+  if (!arrmblsize) arrmblsize=15000000;
+  model_parameters mp(arrmblsize,argc,argv);
+  mp.iprint=10;
+  mp.preliminary_calculations();
+  mp.minimize();
+  mp.hess_routine_noparallel();
+
+  function<void(void)> f = [&argc, &argv](){
+    gradient_structure::set_YES_DERIVATIVES();
+    //gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
+    initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
+    const long int arrmblsize = 15000000;
+    model_parameters mp(arrmblsize, argc, argv);
+
+    const int nvar=initial_params::nvarcalc();
+    independent_variables x(1,nvar);
+    initial_params::xinit(x);
+
     mp.preliminary_calculations();
-    mp.minimize();
-    mp.hess_routine_noparallel();
+    dvariable vf = initial_params::reset(dvar_vector(x));
+    *objective_function_value::pobjfun=0.0;
+    mp.userfunction();
+    vf+=*objective_function_value::pobjfun;
+    double f = value(vf);
+
+    dvector g1(1, nvar);
+    gradcalc(nvar,g1);
+    cout << __FILE__ << ' ' << __LINE__ << ' ' << g1 << endl;
 
     delete initial_params::varsptr;
     initial_params::varsptr = nullptr;
-  }));
+  };
+
+  const int nvar = initial_params::nvarcalc();
+  vector<thread> threads;
+  for (int i = 1; i <= 1; i++)
+  {
+    threads.push_back(thread(f));
+  }
   for (auto& thread: threads)
   {
     thread.join();
   }
+
+  delete initial_params::varsptr;
+  initial_params::varsptr = nullptr;
 }
 int main(int argc, char** argv)
 {

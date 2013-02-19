@@ -35,7 +35,7 @@ public:
 };
 pthread_mutex_t mutex_print;
 
-const int NSLAVES=16;
+const int NSLAVES=24;
 
 int mflag[NSLAVES+1];
 int sflag[NSLAVES+1];
@@ -626,7 +626,7 @@ extern "C"  {
   }
 }
 
-const int m=75;
+const int m=150;
 const int m2=m*m;
 
 int main()
@@ -645,13 +645,14 @@ int main()
   test_thread_manager->create_all(&admb_thread,data1);
   const int n=NSLAVES;
   {
-    gradient_structure::set_MAX_NVAR_OFFSET(10000);
+    gradient_structure::set_MAX_NVAR_OFFSET(30000);
     //gradient_structure::set_ARRAY_MEMBLOCK_SIZE(20000);
     //gradient_structure::set_GRADSTACK_BUFFER_SIZE(200);
-    gradient_structure gs(1000000);
+    gradient_structure gs(2000000);
     independent_variables x(1,m2);
     random_number_generator rng(101);
     x.fill_randn(rng);
+    adtimer adt;
     dvar_vector vx=dvar_vector(x);
     //int offset=0;
     for (int kk=1;kk<=n;kk++)
@@ -675,6 +676,7 @@ int main()
     gradcalc(m2,g);
   
     ofs1<<g<<endl;
+    cout << adt.get_elapsed_time_and_reset()<<endl; 
   
   }
   test_thread_manager->pthread_join_all();
@@ -709,7 +711,7 @@ void admb_thread(void * ptr)
     u.fill_seqadd(sno,1.0/sno);
     
     dvariable z=0.0;
-    for (int i=1;i<=20;i++)
+    for (int i=1;i<=50;i++)
     {
       z+=norm2(solve(M,u+double(i)));
     }

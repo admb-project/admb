@@ -1,0 +1,13 @@
+CXX=g++
+#ADMB_HOME=~/admodel
+ADMB_HOME=/home/jsibert/admb-threaded2/build/dists/admb_gcc411_fedora8
+
+echo "!!! Note using the version found in directory "
+echo ${ADMB_HOME} 
+${CXX}  -pthread -ggdb -Wall -fpermissive -DUSE_PTHREADS -DUSE_LAPLACE -Dlinux \
+  -D__GNUDOS__ -o$1 $1.cpp  \
+   -I${ADMB_HOME}/include -I. -I/usr/include \
+  -L${ADMB_HOME}/lib -L/usr/lib \
+  -ladt -lads -ladmod -ldf1b2s -ladt -lads -ladmod -ldf1b2s \
+  -ladt -lads -ladmod -ldf1b2s -ladt -lads -ladmod -ldf1b2s
+echo ${ADMB_HOME}/include 

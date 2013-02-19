@@ -47,9 +47,7 @@ void adpthread_manager::pt_result(const char *string, const char* file,
     {
       transfer_buffer[i]=new char[bs];
       tb_save[i] = transfer_buffer[i];
-      TTTRACE(i,(void*)transfer_buffer[i],(void*)tb_save[i])
       buffend[i]=transfer_buffer[i]+bs-1;
-      TTTRACE(i,(void*)transfer_buffer[i],(void*)buffend[i])
     }
     //tb_lock=new pthread_rwlock_t[ns+1];
     //tb_lock--;
@@ -101,14 +99,10 @@ void adpthread_manager::pt_result(const char *string, const char* file,
     for (int i=1;i<=nslaves;i++)
     {
       pthread_mutex_lock(smutex+i);
-      TTTRACE(i,(void*)tb_save[i],(void*)transfer_buffer[i]);
       transfer_buffer[i]=tb_save[i];
-      TTTRACE(i,(void*)tb_save[i],(void*)transfer_buffer[i]);
       pthread_mutex_init(smutex+i,NULL);
-      TTTRACE(i,mflag[i],sflag[i])
       mflag[i] = 0;
       sflag[i] = 0;
-      TTTRACE(i,mflag[i],sflag[i])
       //smutex[i] = PTHREAD_MUTEX_INITIALIZER;
       scondition[i] = PTHREAD_COND_INITIALIZER;
       mcondition[i] = PTHREAD_COND_INITIALIZER;
@@ -125,6 +119,50 @@ union a_union {
     double d;
 };
 //a_union au;
+
+void send_dvector_to_slave(const dvector &x,void * transfer_buffer,int sno)
+{
+  char * b = (char*)(transfer_buffer);
+  int mmin=x.indexmin();
+  int mmax=x.indexmax();
+  int sz=mmax-mmin+1;
+  pthread_mutex_lock(smutex+sno);
+  // only write if buffer empty
+  while (mflag[sno] == 1 || sflag[sno] ==1 ) 
+    pthread_cond_wait(mcondition+sno,smutex+sno);
+  memcpy(b,&mmin,sizeof(int));
+  b+=sizeof(int);
+  memcpy(b,&mmax,sizeof(int));
+  b+=sizeof(int);
+  memcpy(b,&(x(mmin)),sz*sizeof(double));
+
+  mflag[sno] = 1;
+  pthread_mutex_unlock(smutex+sno);
+  pthread_cond_signal(scondition+sno);
+}
+
+dvariable get_dvariable_from_slave(void * transfer_buffer, int sno)
+{
+  dvariable x;
+
+  value(x)=get_double_from_slave(transfer_buffer,sno);
+  TTRACE(sno,x)
+
+  save_identifier_string("C");
+  x.save_prevariable_position();
+  save_identifier_string("D");
+  save_pointer_value(transfer_buffer);
+  save_int_value(sno);
+  save_identifier_string("G2");
+  gradient_structure::GRAD_STACK1->
+            set_gradient_stack(adpthreads_master_pack_number_derivative);
+  return x;
+}
+
+double adpthread_manager::get_double_from_slave(int sno)
+{
+  return ::get_double_from_slave(transfer_buffer[sno],sno);
+}
 
 double get_double_from_slave(void * transfer_buffer, int sno)
 {
@@ -144,6 +182,21 @@ double get_double_from_slave(void * transfer_buffer, int sno)
   return x;
 }
 
+void adpthreads_master_pack_number_derivative(void)
+{
+  verify_identifier_string("G2");
+  int sno=restore_int_value();
+  void * ptr=restore_pointer_value();
+  verify_identifier_string("D");
+  prevariable_position dvpos=restore_prevariable_position();
+  double dv=restore_prevariable_derivative(dvpos);
+  cout << "sending " << dv << " to master " << endl;
+  send_double_to_slave(dv,ptr,sno);
+  //pvm_pack(dv);
+  verify_identifier_string("C");
+}
+
+/*
 double get_double_from_master(void * transfer_buffer, int sno)
 {
   pthread_mutex_lock(smutex+sno);
@@ -217,12 +270,8 @@ void send_double_to_master(const double x,void * transfer_buffer,int sno)
   pthread_mutex_lock(smutex+sno);
   // only write if buffer empty
   while (mflag[sno] == 1 || sflag[sno] ==1 ) 
-  {
     pthread_cond_wait(scondition+sno,smutex+sno);
-  }
-
   memcpy(transfer_buffer,&x,sizeof(double));
-
   sflag[sno] = 1;
   pthread_mutex_unlock(smutex+sno);
   pthread_cond_signal(mcondition+sno);
@@ -310,38 +359,6 @@ void send_dvariable_to_slave(const prevariable  &_x,void * transfer_buffer, int 
             set_gradient_stack(adpthread_master_unpack_number_derivative);
 }
 
-void adpthreads_master_pack_number_derivative(void)
-{
-  verify_identifier_string("G2");
-  int sno=restore_int_value();
-  void * ptr=restore_pointer_value();
-  verify_identifier_string("D");
-  prevariable_position dvpos=restore_prevariable_position();
-  double dv=restore_prevariable_derivative(dvpos);
-  //cout << "sending " << dv << " to master " << endl;
-  TRACE(dv)
-  send_double_to_slave(dv,ptr,sno);
-  //pvm_pack(dv);
-  verify_identifier_string("C");
-}
-
-dvariable get_dvariable_from_slave(void * transfer_buffer, int sno)
-{
-  dvariable x;
-
-  value(x)=get_double_from_slave(transfer_buffer,sno);
-  TTRACE(sno,x)
-
-  save_identifier_string("C");
-  x.save_prevariable_position();
-  save_identifier_string("D");
-  save_pointer_value(transfer_buffer);
-  save_int_value(sno);
-  save_identifier_string("G2");
-  gradient_structure::GRAD_STACK1->
-            set_gradient_stack(adpthreads_master_pack_number_derivative);
-  return x;
-}
 
 void send_dvariable_to_master(const prevariable  &_x,
   void * transfer_buffer,int sno)
@@ -774,28 +791,6 @@ void send_ivector_to_slave(const ivector &x,void * transfer_buffer,int sno)
   pthread_mutex_unlock(smutex+sno);
   pthread_cond_signal(scondition+sno);
 }
-
-void send_dvector_to_slave(const dvector &x,void * transfer_buffer,int sno)
-{
-  char * b = (char*)(transfer_buffer);
-  int mmin=x.indexmin();
-  int mmax=x.indexmax();
-  int sz=mmax-mmin+1;
-  pthread_mutex_lock(smutex+sno);
-  // only write if buffer empty
-  while (mflag[sno] == 1 || sflag[sno] ==1 ) 
-    pthread_cond_wait(mcondition+sno,smutex+sno);
-  memcpy(b,&mmin,sizeof(int));
-  b+=sizeof(int);
-  memcpy(b,&mmax,sizeof(int));
-  b+=sizeof(int);
-  memcpy(b,&(x(mmin)),sz*sizeof(double));
-
-  mflag[sno] = 1;
-  pthread_mutex_unlock(smutex+sno);
-  pthread_cond_signal(scondition+sno);
-}
-
 void send_dvector_to_master(const dvector &x,void * transfer_buffer,int sno)
 {
   char * b = (char*)(transfer_buffer);
@@ -871,7 +866,7 @@ void pthread_slave_unpack_vector_derivatives(void)
   v=get_dvector_from_master(ptr,sno);
   v.save_dvector_derivatives(dvpos);
 }
-/*
+
 void send_dvar_vector_to_master(const dvar_vector &x,void * transfer_buffer,int sno)
 {
   char * b = (char*)(transfer_buffer);
@@ -901,7 +896,6 @@ void send_dvar_vector_to_master(const dvar_vector &x,void * transfer_buffer,int 
   pthread_cond_signal(mcondition+sno);
 
 }
-*/
 
 void adpthread_manager::send_dvar_matrix_to_slave(const dvar_matrix &x,int sno)
 {
@@ -984,12 +978,32 @@ void adpthread_manager::pthread_join_all(void)
 {
   for (int i=1;i<=nslaves;i++)
   {
-    TTTRACE(i,sflag[i],mflag[i])
     pthread_cond_signal(scondition+i);
     pthread_cond_signal(mcondition+i);
     pthread_join(thread1[i], NULL);
   }
 }
+
+void add_slave_suffix(const adstring& _tmpstring)
+{
+  ADUNCONST(adstring,tmpstring)
+  //if (test_thread_manager)
+  {
+    if (thread_data::id>0)
+    {
+      tmpstring += "_";
+      tmpstring += str(thread_data::id);
+       cout << "In slave " << tmpstring << endl;
+    }
+    else
+    {
+      tmpstring += "_master";
+       cout << "In master " << tmpstring << endl;
+    }
+  }
+}
+
+
 void adpthread_manager::send_double_to_slave(const double x,int sno)
 {
   ::send_double_to_slave(x,transfer_buffer[sno],sno);
@@ -1082,10 +1096,6 @@ void adpthread_manager::send_int_to_slave(const int x,int sno)
   ::send_int_to_slave(x,transfer_buffer[sno],sno);
 }
 
-double adpthread_manager::get_double_from_slave(int sno)
-{
-  return ::get_double_from_slave(transfer_buffer[sno],sno);
-}
 
 double adpthread_manager::get_double_from_master(int sno)
 {
@@ -1106,3 +1116,4 @@ dvector adpthread_manager::get_dvector_from_master(int sno)
 {
   return ::get_dvector_from_master(transfer_buffer[sno],sno);
 }
+*/

@@ -10,19 +10,24 @@
 .PHONY: all rules
 
 ifeq ($(HOSTNAME),katsuo)
-  export ADMB_HOME=/home/jsibert/admb-threaded2/build/dists/admb_gcc411_fedora8
+  #export ADMB_HOME=/home/jsibert/admb-threaded2/build/dists/admb_gcc411_fedora8
+  export ADMB_HOME=/home/davef/admb-threaded/build/admb-linux-gcc4.8.0-64bit
+
 else
   export ADMB_HOME=/home/jsibert/admb/admb-threaded2/build/dists/admb_gcc411_fedora8
 endif
 CC = g++
 LL = g++
+#${CXX}  -pthread -ggdb -Wall -fpermissive -DUSE_PTHREADS -DUSE_LAPLACE -Dlinux 
+CFLAGS = -pthread -ggdb -Wall -fpermissive -DUSE_PTHREADS -DUSE_LAPLACE -Dlinux -c -I. -I$(ADMB_HOME)/include -I$(ADMB_HOME)/contrib
+#CFLAGS = -c -pthread -fpermissive -m64 -Wall -Wno-deprecated -ggdb -I. -I$(ADMB_HOME)/include -I$(ADMB_HOME)/contrib -D__GNUDOS__ -Dlinux -DUSE_PTHREADS -DUSE_LAPLACE -DSAFE_ARRAYS
 
-CFLAGS = -c -pthread -fpermissive -m64 -Wall -Wno-deprecated -ggdb -I. -I$(ADMB_HOME)/include -I$(ADMB_HOME)/contrib -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -DSAFE_ARRAYS
+#LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -lpthread
+LFLAGS = -L${ADMB_HOME}/lib -L/usr/lib -ladt -lads -ladmod -ldf1b2s -ladt -lads -ladmod -ldf1b2s -ladt -lads -ladmod -ldf1b2s -ladt -lads -ladmod -ldf1b2s -lpthread
 
-
-LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -lpthread
-
-OBJECTS=adpthread_manager.o admb_thread.o nst.o
+# generates multiple definition linker errors
+#OBJECTS=adpthread_manager.o admb_thread.o nst.o
+OBJECTS=thread_stuff.o admb_thread.o nst.o
 
 # link the object file into the executable 
 nst: $(OBJECTS) 
@@ -97,5 +102,5 @@ clean:
 	rm -fv variance
 	rm -fv eigv.rpt
 	rm -fv make.out
-	rm -fv zzz*
+	rm -fv zzz-nst
 	rm -fv new_sim_thread3

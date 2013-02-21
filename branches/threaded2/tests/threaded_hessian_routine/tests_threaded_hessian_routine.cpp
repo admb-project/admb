@@ -31,7 +31,6 @@ __thread int tests_threaded::line = -1;
 __thread dvariable* tests_threaded::variable = nullptr;
 
 int simple(int argc, char* argv[]);
-/*
 void hello_world()
 {
 }
@@ -856,7 +855,7 @@ TEST(tests_threaded, threaded_model_parameters_hess_routine)
   }
   ASSERT_EQ(nullptr, initial_params::varsptr);
 }
-TEST(tests_threaded, simple)
+TEST(tests_threaded, simple2)
 {
   initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
   char* argv[] = { (char*)"simple/simple" };
@@ -1280,6 +1279,14 @@ TEST(tests_threaded, threaded_simple)
   }
   ASSERT_EQ(nullptr, initial_params::varsptr);
 }
+TEST(tests_threaded, simple)
+{
+  initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
+  char* argv[] = { (char*)"simple/simple" };
+  simple(1, argv);
+  delete initial_params::varsptr;
+  initial_params::varsptr = nullptr;
+}
 TEST(tests_threaded, hess_routine_noparallel)
 {
   int argc = 1;
@@ -1301,65 +1308,110 @@ TEST(tests_threaded, hess_routine_noparallel)
   delete initial_params::varsptr;
   initial_params::varsptr = nullptr;
 }
-*/
-TEST(tests_threaded, threaded_hess_routine_noparallel)
+TEST(tests_threaded, threaded_hess_routine_threaded)
 {
   int argc = 1;
   char* argv[] = { (char*)"simple/simple" };
   ad_set_new_handler();
   ad_exit=&ad_boundf;
 
-  ASSERT_EQ(nullptr, initial_params::varsptr);
-  gradient_structure::set_NO_DERIVATIVES();
-  gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
-  initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
-
-  if (!arrmblsize) arrmblsize=15000000;
-  model_parameters mp(arrmblsize,argc,argv);
-  mp.iprint=10;
-  mp.preliminary_calculations();
-  mp.minimize();
-  mp.hess_routine_noparallel();
-
-  function<void(void)> f = [&argc, &argv](){
+  function<void(const dvector&, const dvector&)> f = [&argc, &argv](const dvector& dv, const dvector& g){
+    ASSERT_EQ(nullptr, gradient_structure::GRAD_STACK1);
     gradient_structure::set_YES_DERIVATIVES();
-    //gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
     initial_params::varsptr = new adlist_ptr(initial_params::max_num_initial_params);
     const long int arrmblsize = 15000000;
     model_parameters mp(arrmblsize, argc, argv);
+    mp.iprint = 10;
+    mp.preliminary_calculations();
 
     const int nvar=initial_params::nvarcalc();
     independent_variables x(1,nvar);
     initial_params::xinit(x);
+    x = dv;
 
-    mp.preliminary_calculations();
     dvariable vf = initial_params::reset(dvar_vector(x));
-    *objective_function_value::pobjfun=0.0;
-    mp.userfunction();
+    *objective_function_value::pobjfun = 0.0;
+    mp.pre_userfunction();
     vf+=*objective_function_value::pobjfun;
     double f = value(vf);
 
-    dvector g1(1, nvar);
-    gradcalc(nvar,g1);
-    cout << __FILE__ << ' ' << __LINE__ << ' ' << g1 << endl;
+    g.initialize();
+    gradcalc(nvar,g);
 
     delete initial_params::varsptr;
     initial_params::varsptr = nullptr;
   };
 
-  const int nvar = initial_params::nvarcalc();
-  vector<thread> threads;
-  for (int i = 1; i <= 1; i++)
+  const double delta = 1.e-5;
+  const double eps = 0.1;
+  const double eps2 = eps * eps;
+  const int nvar = 2;//initial_params::nvarcalc();
+  dvector dv(1, nvar);
+  dv.initialize();
+  dv(1) = 1.90909098475;
+  dv(2) = 4.07817738582;
+
+  d3_array d3g(1, nvar, 1, 4, 1, nvar);
+  d3g.initialize();
+  d3_array d3x(1, nvar, 1, 4, 1, nvar);
+  d3x.initialize();
+  for (int i = 1; i <= nvar; i++)
   {
-    threads.push_back(thread(f));
+    for (int j = 1; j <= 4; j++)
+    {
+      d3x(i, j) = dv;
+    }    
+    double sdelta1 = d3x(i, 1, i) + delta;
+    sdelta1 -= d3x(i, 1, i);
+    d3x(i, 1, i) = dv(i) + sdelta1;
+
+    double sdelta2 = d3x(i, 2, i) - delta;
+    sdelta2 -= d3x(i, 2, i);
+    d3x(i, 2, i) = dv(i) + sdelta2;
+
+    double sdelta3 = d3x(i, 3, i) + eps * delta;
+    sdelta3 -= d3x(i, 3, i);
+    d3x(i, 3, i) = dv(i) + sdelta3;
+
+    double sdelta4 = d3x(i, 4, i) - eps * delta;
+    sdelta4 -= d3x(i, 4, i);
+    d3x(i, 4, i) = dv(i) + sdelta4;
+  }
+  vector<thread> threads;
+  for (int i = 1; i <= nvar; i++)
+  {
+    for (int j = 1; j <= 4; j++)
+    {
+      threads.push_back(thread(f, d3x(i, j), d3g(i, j)));
+    }    
   }
   for (auto& thread: threads)
   {
     thread.join();
   }
+  ASSERT_EQ(nullptr, initial_params::varsptr);
+  dvector hess(1, nvar);
+  hess.initialize();
+  dvector hess1(1, nvar);
+  hess1.initialize();
+  dvector hess2(1, nvar);
+  hess2.initialize();
+  for (int i = 1; i <= nvar; i++)
+  {
+    double sdelta1 = d3x(i, 1, i) + delta;
+    sdelta1 -= d3x(i, 1, i);
+    double sdelta2 = d3x(i, 2, i) - delta;
+    sdelta2 -= d3x(i, 2, i);
+    hess1 = (d3g(i, 1) - d3g(i, 2)) / (sdelta1 - sdelta2); 
 
-  delete initial_params::varsptr;
-  initial_params::varsptr = nullptr;
+    double sdelta3 = d3x(i, 3, i) + eps * delta;
+    sdelta3 -= d3x(i, 3, i);
+    double sdelta4 = d3x(i, 4, i) - eps * delta;
+    sdelta4 -= d3x(i, 4, i);
+    hess2 = (d3g(i, 3) - d3g(i, 4)) / (sdelta3 - sdelta4);
+
+    hess = (eps2 * hess1 - hess2) / (eps2 - 1.);
+  }
 }
 int main(int argc, char** argv)
 {

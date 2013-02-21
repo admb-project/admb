@@ -1293,6 +1293,7 @@ public:
  */
     class grad_stack
     {
+    public:
       grad_stack_entry* true_ptr_first;
       grad_stack_entry* ptr_first;
       grad_stack_entry* ptr_last;

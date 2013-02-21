@@ -516,8 +516,6 @@ int * kill_address;
             if ( (on=option_match(argc,argv,"-sob",nopt))>-1)
             {
               int nsob=0;
-              //int iseed0=0;
-              //double dscale=1.0;
               if (nopt)
               {
                 nsob=atoi(argv[on+1]);
@@ -526,29 +524,6 @@ int * kill_address;
                   cerr << " Invalid option following command line option -sob -- "
                     << endl << " ignored" << endl;
                 }
-              }
-              if ( (on=option_match(argc,argv,"-mcr",nopt))>-1)
-              {
-    #if defined(NO_MCMC)
-                cerr << "mcmc and sob option not supported you must purchase"
-                        " this as an add on" << endl;
-                exit(1);
-    #else
-                //sob_routine(nsob,dscale,1);
-                //sobol_importance_routine(nsob,iseed0,dscale,1);
-    #endif
-          
-              }
-              else
-              {
-    #if defined(NO_MCMC)
-                cerr << "mcmc and sob option not supported you must purchase"
-                        " this as an add on" << endl;
-                exit(1);
-    #else
-                //sobol_importance_routine(nsob,iseed0,dscale,0);
-    #endif
-         
               }
             }
             initial_params::sd_phase=0;

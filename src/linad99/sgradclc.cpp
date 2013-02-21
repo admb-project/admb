@@ -94,39 +94,31 @@ void gradcalc(int nvar, const dvector& _g)
       ad_exit(1);
     }
   }
-  dvector& g= (dvector&) _g;
+  dvector& g = (dvector&)_g;
   gradient_structure::TOTAL_BYTES = 0;
-  gradient_structure::PREVIOUS_TOTAL_BYTES=0;
+  gradient_structure::PREVIOUS_TOTAL_BYTES = 0;
   unsigned int i;
   long int lpos;
-  if(!gradient_structure::instances)
+  if (!gradient_structure::instances)
   {
     g.initialize();
     return;
   }
-  
   if (g.size() < nvar)
   {
     cerr  << "gradient vector size is less than the number of variables" << endl;
     ad_exit(1);
   }
 
-   gradient_structure::GRAD_STACK1->_GRADFILE_PTR =
-              gradient_structure::GRAD_STACK1->gradfile_handle();
+  gradient_structure::GRAD_STACK1->_GRADFILE_PTR = gradient_structure::GRAD_STACK1->gradfile_handle();
 
   int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
   lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
 
-  if(gradient_structure::GRAD_STACK1->ptr
-       <= gradient_structure::GRAD_STACK1->ptr_first)
+  if (gradient_structure::GRAD_STACK1->ptr <= gradient_structure::GRAD_STACK1->ptr_first)
   {
-   /*
-    #ifdef SAFE_ARRAYS
-      cerr << "warning -- calling gradcalc when no calculations generating"
-	 << endl << "derivative information have occurred" << endl;
-    #endif
-   */
+    cerr << "warning -- calling gradcalc when no calculations generating\nderivative information have occurred\n";
     g.initialize();
     return;
   }    // current is one past the end so -- it

@@ -66,24 +66,20 @@ void function_minimizer::hess_routine(void)
   }
 #endif
 }
-
 void function_minimizer::hess_routine_noparallel(void)
 {
-  int nvar=initial_params::nvarcalc();
-  independent_variables x(1,nvar);
+  int nvar = initial_params::nvarcalc();
+  independent_variables x(1, nvar);
   initial_params::xinit(x);
   double delta=1.e-5;
-  dvector g1(1,nvar);
-  dvector g2(1,nvar);
-  dvector hess(1,nvar);
-  dvector hess1(1,nvar);
-  dvector hess2(1,nvar);
-  double eps=.1;
+  dvector g1(1, nvar);
+  dvector g2(1, nvar);
+  dvector hess(1, nvar);
+  dvector hess1(1, nvar);
+  dvector hess2(1, nvar);
+  double eps = 0.1;
   gradient_structure::set_YES_DERIVATIVES();
 
-  dvector gbest(1,nvar);
-  gbest.fill_seqadd(1.e+50,0.);
- 
   std::ostringstream oss;
   std::thread::id this_thread_id = std::this_thread::get_id();
   oss << *ad_comm::adprogram_name << this_thread_id << ".hes";
@@ -161,7 +157,7 @@ void function_minimizer::hess_routine_noparallel(void)
     }
   }
   ofs << gradient_structure::Hybrid_bounded_flag;
-  dvector tscale(1,nvar);   // need to get scale from somewhere
+  dvector tscale(1,nvar);
   initial_params::stddev_scale(tscale,x);
   ofs << tscale;
 

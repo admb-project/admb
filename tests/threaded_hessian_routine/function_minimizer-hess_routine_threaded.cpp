@@ -19,23 +19,11 @@ void ad_update_hess_stats_report(int i,int nvar);
 
 void function_minimizer::hess_routine_threaded(void)
 {
+  const double delta = 1.e-5;
+  const double eps = 0.1;
 
-  int nvar=initial_params::nvarcalc(); // get the number of active parameters
-  //if (adjm_ptr) set_labels_for_hess(nvar);
-  independent_variables x(1,nvar);
-  initial_params::xinit(x);        // get the initial values into the x vector
-  double f;
-  double delta=1.e-5;
-  dvector g1(1,nvar);
-  dvector g2(1,nvar);
-  dvector gbest(1,nvar);
-  dvector hess(1,nvar);
-  dvector hess1(1,nvar);
-  dvector hess2(1,nvar);
-  double eps=.1;
   gradient_structure::set_YES_DERIVATIVES();
-  gbest.fill_seqadd(1.e+50,0.);
-
+  const int nvar = initial_params::nvarcalc();
 /*
   adstring tmpstring="admodel.hes-threaded";
   if (ad_comm::wd_flag)
@@ -44,19 +32,23 @@ void function_minimizer::hess_routine_threaded(void)
 
   ofs << nvar;
 */
-      dvariable vf;
+  independent_variables x(1,nvar);
+  initial_params::xinit(x);
+
+  dvariable vf = initial_params::reset(dvar_vector(x));
+  *objective_function_value::pobjfun = 0.0;
+  pre_userfunction();
+  vf += *objective_function_value::pobjfun;
+  double f = value(vf);
+  dvector g1(1,nvar);
+  gradcalc(nvar, g1);
+cout << "kdjfkdj" << g1 << endl;
 if (true) return;
-  {
-    {
-      dvariable vf=0.0;
-if (true) return;
-      vf=initial_params::reset(dvar_vector(x));
-      *objective_function_value::pobjfun=0.0;
-      pre_userfunction();
-      vf+=*objective_function_value::pobjfun;
-      f=value(vf);
-      gradcalc(nvar,g1);
-    }
+/*
+  dvector g2(1,nvar);
+  dvector hess(1,nvar);
+  dvector hess1(1,nvar);
+  dvector hess2(1,nvar);
     double sdelta1;
     double sdelta2;
     for (int i=1;i<=nvar;i++)
@@ -124,13 +116,9 @@ if (true) return;
       hess2=(g1-g2)/(sdelta1-sdelta2);
       hess=(eps2*hess1-hess2) /(eps2-1.);
 
-/*
-      ofs << hess;
-      //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
-*/
+      //ofs << hess;
     }
   }
-/*
   ofs << gradient_structure::Hybrid_bounded_flag;
   dvector tscale(1,nvar);   // need to get scale from somewhere
   initial_params::stddev_scale(tscale,x);

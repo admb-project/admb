@@ -2,6 +2,8 @@
 #include <vector>
 #include <thread>
 #include <functional>
+#include <chrono>
+#include <ctime>
 using std::vector;
 using std::thread;
 using std::function;
@@ -1303,7 +1305,13 @@ TEST(tests_threaded, hess_routine_noparallel)
   mp.iprint=10;
   mp.preliminary_calculations();
   mp.minimize();
+
+  std::chrono::time_point<std::chrono::system_clock> start, end;
+  start = std::chrono::system_clock::now();
   mp.hess_routine_noparallel();
+  end = std::chrono::system_clock::now();
+  int elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end-start).count();
+  cout << elapsed << endl;
 
   delete initial_params::varsptr;
   initial_params::varsptr = nullptr;
@@ -1377,6 +1385,8 @@ TEST(tests_threaded, hess_routine_threaded)
     sdelta4 -= d3x(i, 4, i);
     d3x(i, 4, i) = dv(i) + sdelta4;
   }
+  std::chrono::time_point<std::chrono::system_clock> start, end;
+  start = std::chrono::system_clock::now();
   vector<thread> threads;
   for (int i = 1; i <= nvar; i++)
   {
@@ -1389,6 +1399,10 @@ TEST(tests_threaded, hess_routine_threaded)
   {
     thread.join();
   }
+  end = std::chrono::system_clock::now();
+  int elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end-start).count();
+  cout << elapsed << endl;
+
   ASSERT_EQ(nullptr, initial_params::varsptr);
   dvector hess(1, nvar);
   hess.initialize();

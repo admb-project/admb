@@ -1,5 +1,7 @@
 .PHONY: tests
 
+default: linux
+
 mingw:
 	$(MAKE) --directory=src --file=mingw.mak
 

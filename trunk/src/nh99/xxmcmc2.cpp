@@ -522,7 +522,12 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
       double pprobe=0.05;
       int probe_flag=0;
       int nopt=0;
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcgrope",nopt))>-1)
+      on = option_match(ad_comm::argc, ad_comm::argv, "-mcprobe", nopt);
+      if (on == -1)
+      {
+        on = option_match(ad_comm::argc,ad_comm::argv,"-mcgrope",nopt);
+      }
+      if (on > -1)
       {
         probe_flag=1;
         if (nopt)

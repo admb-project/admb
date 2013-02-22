@@ -1308,7 +1308,7 @@ TEST(tests_threaded, hess_routine_noparallel)
   delete initial_params::varsptr;
   initial_params::varsptr = nullptr;
 }
-TEST(tests_threaded, threaded_hess_routine_threaded)
+TEST(tests_threaded, hess_routine_threaded)
 {
   int argc = 1;
   char* argv[] = { (char*)"simple/simple" };
@@ -1398,6 +1398,8 @@ TEST(tests_threaded, threaded_hess_routine_threaded)
   hess2.initialize();
   for (int i = 1; i <= nvar; i++)
   {
+    cout << "Estimating row " << i << " out of " << nvar << " for hessian" << endl;
+
     double sdelta1 = d3x(i, 1, i) + delta;
     sdelta1 -= d3x(i, 1, i);
     double sdelta2 = d3x(i, 2, i) - delta;

@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: df1b2fun.h 601 2012-09-04 22:36:11Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
@@ -1227,7 +1227,6 @@ df1b2vector pow(const df1b2vector& x,double y);
 df1b2vector pow(const df1b2vector& v,const df1b2variable & x);
 df1b2vector pow(const df1b2vector& v,const df1b2vector & x);
 df1b2vector pow(const df1b2variable& v,const df1b2vector & x);
-df1b2vector pow(df1b2vector const& _x,dvector const& v);
 df1b2vector pow(double v,const df1b2vector & x);
 df1b2vector pow(const dvector& x,  const df1b2vector& a);
 df1b2vector pow(const dvector& x,  const df1b2variable& a);
@@ -1314,8 +1313,6 @@ public:
   initial_df1b2params(void);
   void set_phase_start(int n){phase_start=n; phase_save=n;}
   virtual void sd_scale(const dvector& d,const dvector& x,const int& ii)=0;
-  double get_scalefactor();
-  void set_scalefactor(const double);
 };
 
 typedef initial_df1b2params * P_INITIAL_DF1B2PARAMS;
@@ -1603,14 +1600,9 @@ public:
 void set_value(const df1b2variable& u,const init_df1b2vector& x,const int& _ii,
   double fmin,double fmax,const df1b2variable& fpen);
 
-void set_value(const df1b2variable& u,const init_df1b2vector& x,const int& _ii,
-  double fmin,double fmax,const df1b2variable& fpen,double s);
-
 df1b2variable boundp(const df1b2variable& x, double fmin, double fmax);
 df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
   const df1b2variable& _fpen);
-df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
-  const df1b2variable& _fpen,double s);
 
   ostream& operator << (const ostream& _os, const df1b2variable& _x);
   ostream& operator << (const ostream& _os, const df1b2vector& _x);

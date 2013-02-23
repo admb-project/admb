@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: model7.cpp 608M 2013-02-20 18:06:53Z (local) $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
@@ -187,8 +187,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -mcrb  N        reduce amount of correlation in the covariance matrix 1<=N<=9\n");
       (*ad_printf)( " -mcnoscale      don't rescale step size for mcmc depending on acceptance rate\n");
       (*ad_printf)( " -nosdmcmc       turn off mcmc histogram calcs to make mcsave run faster\n");
-      (*ad_printf)( " -mcgrope N      same as -mcprobe\n");
-      (*ad_printf)( " -mcprobe N      use probing strategy for mcmc with factor N\n");
+      (*ad_printf)( " -mcgrope N      use probing strategy for mcmc with factor N\n");
       (*ad_printf)( " -mcseed N       seed for random number generator for markov chain monte carlo\n");
       (*ad_printf)( " -mcscale N      rescale step size for first N evaluations\n");
       (*ad_printf)( " -mcsave N       save the parameters for every Nth simulation\n");
@@ -563,3 +562,46 @@ void function_minimizer::pre_userfunction(void)
   }
 #endif
 }
+#if defined(USE_ADMPI)
+void add_slave_suffix(const adstring& _tmpstring)
+{
+  ADUNCONST(adstring,tmpstring)
+  if (ad_comm::mpi_manager)
+  {
+    if (ad_comm::mpi_manager->is_slave())
+    {
+      tmpstring += "_";
+      tmpstring += str(ad_comm::mpi_manager->get_slave_number());
+       cout << "In slave " << tmpstring << endl;
+    }
+    else
+    {
+      tmpstring += "_master";
+       cout << "In master " << tmpstring << endl;
+    }
+  }
+}
+
+/*
+#else if defined(USE_PTHREADS)
+
+void add_slave_suffix(const adstring& _tmpstring)
+{
+  ADUNCONST(adstring,tmpstring)
+  if (ad_comm::pthreads_manager)
+  {
+    if (ad_comm::pthreads_manager->is_slave())
+    {
+      tmpstring += "_";
+      tmpstring += str(ad_comm::pthreads_manager->get_slave_number());
+       cout << "In slave " << tmpstring << endl;
+    }
+    else
+    {
+      tmpstring += "_master";
+       cout << "In master " << tmpstring << endl;
+    }
+  }
+}
+*/
+#endif

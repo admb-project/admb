@@ -1,14 +1,11 @@
 /*
- * $Id$
+ * $Id: ad_cif.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
 #include <fvar.hpp>
 #include "cifstrem.h"
-/** \file ad_cif.cpp
-Overloaded cifstream operators for autodif classes.
-*/
 
 //VECTOR_OPERATOR_DEFINE(dvector)
 //VECTOR_OPERATOR_DEFINE(ivector)

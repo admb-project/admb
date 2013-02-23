@@ -28,10 +28,12 @@ shift $((OPTIND-1))
 file="${1%.*}"
 if [ "`basename $file`" == "$file" ]; then
   file=$file.cpp
+else
+  file="$1"
 fi
 
-CMD="g++ -c $CXXFLAGS $sym -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt\
- -DUSE_LAPLACE -fpermissive -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib $file"
+CMD="g++ -c $CXXFLAGS $sym -pthread -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt\
+ -DUSE_LAPLACE -DUSE_PTHREADS -fpermissive -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib $file"
 echo $CMD
 eval $CMD
 

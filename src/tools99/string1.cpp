@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: string1.cpp 608 2012-09-12 01:42:45Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -7,7 +7,7 @@
 #include <fvar.hpp>
 #include <string.h>
 #include <stdlib.h>
-#include <safe_mem.h>
+//#include <safe_mem.h>
 #include "admb_messages.h"
 
 adstring adstring::operator()(int i, int j)
@@ -62,11 +62,11 @@ adstring& adstring::operator=(const adstring & t)
   {
     int sz = t.size ();
     shape->size() = t.size();
-    mem_free(++s);
+    free(++s);
   #if (defined __ZTC__) || (defined __NDPX__)
-    s =  (char*)mem_malloc(sz+1);
+    s =  (char*)malloc(sz+1);
   #else
-    s =  (unsigned char*)mem_malloc(sz+1);
+    s =  (unsigned char*)malloc(sz+1);
   #endif
     s--;
     int size = t.size();
@@ -90,8 +90,8 @@ void adstring::realloc(const char * t)
 {
   int sz = strlen(t);
   shape->size() = strlen(t);
-  mem_free(++s);
-  s =  (unsigned char*)mem_malloc(sz+1);
+  free(++s);
+  s =  (unsigned char*)malloc(sz+1);
   strcpy((char*)(s),t);
   s--;
   adstring * tmp = (adstring *) this->next;
@@ -107,8 +107,8 @@ adstring::~adstring()
 {
   if (next==this)
   {
-    mem_free(shape);
-    mem_free(++s);
+    free(shape);
+    shape=0;
   }
 };
  

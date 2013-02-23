@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: str_aio.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -21,7 +21,7 @@
    return ifs;
  }
  
- ostream& operator << (const ostream& _ofs, const adstring_array& sa)
+ ostream& operator << (BOR_CONST ostream& _ofs,_CONST adstring_array& sa)
  {
    ostream& ofs = (ostream&) _ofs;
    if (sa.ptr)

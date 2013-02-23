@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: dfadcif.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -10,14 +10,14 @@
 
 
 
-cifstream& cifstream::operator>>(const dvariable& z)
+cifstream& cifstream::operator>>(BOR_CONST dvariable& z)
 {
   *this >> value(z);
   return *this;
 }
 
 /*
-cifstream& cifstream::operator>>(const prevariable& z)
+cifstream& cifstream::operator>>(BOR_CONST prevariable& z)
 {
   *this >> value(z);
   return *this;
@@ -25,7 +25,7 @@ cifstream& cifstream::operator>>(const prevariable& z)
 */
 
 
-cifstream& cifstream::operator>>(const dvar_vector& z)
+cifstream& cifstream::operator>>(BOR_CONST dvar_vector& z)
 {
   for (int i= z.indexmin(); i <= z.indexmax(); i++)
   {
@@ -34,7 +34,7 @@ cifstream& cifstream::operator>>(const dvar_vector& z)
   return *this;
 }
 
-cifstream& operator>>(cifstream& istr,const dvar_matrix& z)
+cifstream& operator>>(cifstream& istr,BOR_CONST dvar_matrix& z)
 { 
   for (int i= z.rowmin(); i <= z.rowmax(); i++)
   { 
@@ -46,7 +46,7 @@ cifstream& operator>>(cifstream& istr,const dvar_matrix& z)
   return istr;
 }
 
-cifstream& operator>>(cifstream& istr,const dvar3_array& z)
+cifstream& operator>>(cifstream& istr,BOR_CONST dvar3_array& z)
 { 
   for (int i= z.slicemin(); i <= z.slicemax(); i++)
   { 
@@ -55,7 +55,7 @@ cifstream& operator>>(cifstream& istr,const dvar3_array& z)
   return istr;
 }
 
-cifstream& operator>>(cifstream& istr,const dvar4_array& z)
+cifstream& operator>>(cifstream& istr,BOR_CONST dvar4_array& z)
 { 
   for (int i= z.hslicemin(); i <= z.hslicemax(); i++)
   { 
@@ -64,7 +64,7 @@ cifstream& operator>>(cifstream& istr,const dvar4_array& z)
   return istr;
 }
 
-cifstream& operator>>(cifstream& istr,const dvar5_array& z)
+cifstream& operator>>(cifstream& istr,BOR_CONST dvar5_array& z)
 { 
   for (int i= z.indexmin(); i <= z.indexmax(); i++)
   { 

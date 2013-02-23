@@ -29,7 +29,7 @@ dist:
 	mkdir -p build/dist
 	rm -rf build/dist/admb@version@
 	svn export . build/dist/admb@version@
-	rm -rf build/dist/admb@version@/tests
+	rm -rf build/dist/admb@version@/test
 	cp configure build/dist/admb@version@
 	cd build/dist && rm -vf admb@version@.zip && zip -r admb@version@.zip admb@version@
 
@@ -59,10 +59,11 @@ dmg:
 	@dmgtask@
 
 tests:
-	$(MAKE) ADMB_HOME="$(CURDIR)/build/@target@" ADMB_CXXFLAGS="@cxxflags@" ADMB_LDFLAGS="@cxxflags@" --directory=src --file=@makefile@ tests
+	export ADMB_HOME=${PWD}/build/@target@; export PATH=${PWD}/build/@target@/bin:$(PATH); CXXFLAGS="@cxxflags@" $(MAKE) --directory=tests
 
 contrib:
 	@arvar@ CC=@cc@ CXX=@cxx@ CXXFLAGS="@cxxflags@" LIBPATH=@libpath@ DISK=@disk@ $(MAKE) --directory=contrib
+	@#export ADMB_HOME=${PWD}/build/@target@; export PATH=${PWD}/build/@target@/bin:$(PATH); CXXFLAGS="@cxxflags@" $(MAKE) --directory=contrib test
 
 clean:
 	rm -rvf build/@target@

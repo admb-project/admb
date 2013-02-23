@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: safe_mem.h 418 2012-04-10 23:36:33Z arnima $
  *
  * Author: Walter Bright
  *

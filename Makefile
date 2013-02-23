@@ -54,16 +54,26 @@ linux-verify:
 	$(MAKE) --directory=src --file=linux.mak verify
 
 it:
-	./configure CFLAGS=-m32 CXXFLAGS="-m32 -mmacosx-version-min=10.5"
+	./configure CFLAGS=-m32 CXXFLAGS="-m32 -mmacosx-version-min=10.5" LDFLAGS="-m32"
 
 it2:
 	$(MAKE) MACOSX_DEPLOYMENT_TARGET=10.5 CFLAGS=-m32 CXXFLAGS="-m32 -mmacosx-version-min=10.5" LDFLAGS="-m32 -Wl,-macosx_version_min,10.5" verify
 
 
 tests:
-	ADMB_HOME="$(CURDIR)/build/dists/admb_gcc411_fedora8" $(MAKE) --directory=tests
+	ADMB_HOME=$(PWD)/build/dists/admb_gcc411_fedora8 PATH=$(PWD)/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=tests
+
+admb-trunk-readonly:
+	ADMB_HOME=../../../$@/build/dists/admb_gcc411_fedora8 PATH=../../../$@/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=test
+
+admb-ar794:
+	ADMB_HOME=../../../$@/build/dists/admb_gcc411_fedora8 PATH=../../../$@/build/dists/admb_gcc411_fedora8/bin:$(PATH) $(MAKE) --directory=test
 
 clean:
-	rm -rvf build
+	@rm -rvf build
 	$(MAKE) --directory=contrib clean
 	$(MAKE) --directory=tests clean
+	@rm -vf src/df1b2-separable/lex.yy.c
+	@rm -vf src/df1b2-separable/tpl2rem.c
+	@rm -vf src/nh99/lex.yy.c
+	@rm -vf src/nh99/tpl2cpp.c

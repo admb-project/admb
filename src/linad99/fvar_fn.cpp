@@ -1,13 +1,15 @@
 /*
- * $Id$
+ * $Id: fvar_fn.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
- \file
- Overloads of math library functions for variable arguments.
+ * \file
+ * Description not yet available.
  */
+// file fvar_fn.cpp
+// math.h functions involving prevariables
 #include "fvar.hpp"
 
 #ifdef __TURBOC__

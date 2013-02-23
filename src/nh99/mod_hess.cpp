@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: mod_hess.cpp 545 2012-07-16 23:22:25Z tamar $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California

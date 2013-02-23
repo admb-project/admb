@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: gradstak.cpp 608 2012-09-12 01:42:45Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -90,6 +90,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+
+#if defined(USE_ADMPI)
+  void add_slave_suffix(const adstring& tmp);
+  void report_file_opening(const adstring& tmp);
+#endif
 
   char lastchar(char *);
 
@@ -194,6 +199,9 @@
     {
       sprintf(&gradfile_name1[0],"gradfil1.%s",ad_random_part);
     }
+    adstring tmps=gradfile_name1;
+    add_slave_suffix(tmps);
+    strncpy(gradfile_name1,tmps,100);
 
     path = getenv("ADTMP1"); // NULL if not defined
 #if defined(USE_ADPVM)
@@ -241,6 +249,14 @@
       sprintf(&var_store_file_name[0],"varssave.%s",
         ad_random_part);
     }
+    adstring tmps2=gradfile_name2;
+    add_slave_suffix(tmps2);
+    strncpy(gradfile_name2,tmps2,100);
+
+    adstring tmps3=var_store_file_name;
+    add_slave_suffix(tmps3);
+    strncpy(var_store_file_name,tmps3,100);
+
     create_gradfile();
 
     strcpy(gradfile_name, gradfile_name1);

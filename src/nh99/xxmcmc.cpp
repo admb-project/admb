@@ -1,5 +1,5 @@
 /**
- * $Id$
+ * $Id: xxmcmc.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -591,17 +591,12 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0,double dscale,
       double pprobe=0.05;
       int probe_flag=0;
       int nopt=0;
-      on = option_match(ad_comm::argc, ad_comm::argv, "-mcprobe", nopt);
-      if (on == -1)
-      {
-        on = option_match(ad_comm::argc,ad_comm::argv,"-mcgrope",nopt);
-      }
-      if (on > -1)
+      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcgrope",nopt))>-1)
       {
         probe_flag=1;
         if (nopt)
         {
-          char* end = 0;
+          char * end;
           pprobe=strtod(ad_comm::argv[on+1],&end);
           if (pprobe<=0.00001 || pprobe > .499) 
           {

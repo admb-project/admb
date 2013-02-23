@@ -10,7 +10,7 @@ NOW=$(shell date)
 
 ifndef LIBPATH
 CCVERSION=gcc411
-OSVERSION=fedora8
+OSVERSION=fedorar8
 LIBPATH=../build/${CCVERSION}-${OSVERSION}
 endif
 
@@ -18,7 +18,7 @@ ifndef ADMB_HOME
 ADMB_HOME=${PWD}/${DISK}
 endif
 
-CXXFLAGS:=-DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS)
+CXXFLAGS:= -pthread -DUSE_PTHREADS -DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS)
 
 ifndef ADMB_REVISION
 ADMB_REVISION=$(shell test -e ../REVISION && cat ../REVISION)
@@ -37,9 +37,9 @@ CXXFLAGS:=-Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 endif
 
 ifdef DEBUG
-CXXFLAGS:=-c -g $(CXXFLAGS)
+CXXFLAGS:=-c -g $(CXXFLAGS) -fpermissive
 else
-CXXFLAGS:=-c -O3 $(CXXFLAGS)
+CXXFLAGS:=-c -O3 $(CXXFLAGS) -fpermissive
 endif
 
 dist:
@@ -51,7 +51,7 @@ dist:
 	mkdir -p ${LIBPATH}/nh99-olp
 	mkdir -p ${LIBPATH}/tools99-olp
 	$(MAKE) --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
+	$(MAKE) --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -ggdb -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
 	$(MAKE) --directory=df1b2-separable AR=$(AR) CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	$(MAKE) --directory=df1b2-separable AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
 	$(MAKE) --directory=nh99 CC=$(CC) AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/nh99-olp ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
@@ -104,9 +104,6 @@ verify:
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-saf.txt"
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" $(MAKE) -C ${DISK}/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-opt.txt"
-
-tests:
-	$(MAKE) ADMB_HOME="${ADMB_HOME}" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" --directory=../tests
 
 check-admb2r:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); $(MAKE) -C ../test/admb2r gcc

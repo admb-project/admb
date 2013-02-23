@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: cs.h 417 2012-04-10 23:27:01Z arnima $
  *
  * Author: Timothy A. Davis
  * Copyright (c) Timothy A. Davis, 2006-2007

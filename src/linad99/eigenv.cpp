@@ -17,14 +17,14 @@
 #endif
 
 #ifdef EIGEN_VECTORS
-  void tri_dagv(const dmatrix& m,const dvector& d,const dvector& e);
+  void tri_dagv(BOR_CONST dmatrix& m,BOR_CONST dvector& d,BOR_CONST dvector& e);
 #else
-  void tri_dag(const dmatrix& m,const dvector& d,const dvector& e);
+  void tri_dag(BOR_CONST dmatrix& m,BOR_CONST dvector& d,BOR_CONST dvector& e);
 #endif
 #ifdef EIGEN_VECTORS
   void get_eigenv(const dvector& d,const dvector& e,const dmatrix& z);
 #else
-  void get_eigen(const dvector& d,const dvector& e,const dmatrix& z);
+  void get_eigen(BOR_CONST dvector& d,BOR_CONST dvector& e,BOR_CONST dmatrix& z);
 #endif
 
 /** Eigenvectors.
@@ -32,12 +32,12 @@
     \param m Real square matrix.
     \return Matrix of eigenvectors.
 */
-dmatrix eigenvectors(const dmatrix& m)  //,_CONST dvector& diag)
+dmatrix eigenvectors(_CONST dmatrix& m)  //,_CONST dvector& diag)
 {
   if (m.rowsize()!=m.colsize())
   {
     cerr << "Error -- non square matrix passed to dvector"
-           " eigen(const dmatrix& m)" << endl;
+           " eigen(_CONST dmatrix& m)" << endl;
     ad_exit(1);
   }
 
@@ -69,7 +69,7 @@ dmatrix eigenvectors(const dmatrix& m)  //,_CONST dvector& diag)
     \param _diag
     \return Matrix of eigenvectors.
 */
-dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)  //,_CONST dvector& diag)
+dmatrix eigenvectors(_CONST dmatrix& m,BOR_CONST dvector& _diag)  //,_CONST dvector& diag)
 {
   ADUNCONST(dvector,diag)
   if (m.rowsize()!=m.colsize())
@@ -118,9 +118,9 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)  //,_CONST dvector& 
     Press, Teukolsky, Vetterling, Flannery, chapter 11
 */
 #ifdef EIGEN_VECTORS
-  void tri_dagv(const dmatrix& _m,const dvector& _d,const dvector& _e)
+  void tri_dagv(BOR_CONST dmatrix& _m,BOR_CONST dvector& _d,BOR_CONST dvector& _e)
 #else
-  void tri_dagv(const dmatrix& _m,const dvector& _d,const dvector& _e)
+  void tri_dagv(BOR_CONST dmatrix& _m,BOR_CONST dvector& _d,BOR_CONST dvector& _e)
 #endif
 {
   dvector& d = (dvector&) _d;
@@ -128,13 +128,13 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)  //,_CONST dvector& 
   dmatrix& m = (dmatrix&) _m;
   if (m.rowsize() != m.colsize())
   {
-    cerr << "Error -- non square matrix passed to void tridag(const dmatrix& m)\n";
+    cerr << "Error -- non square matrix passed to void tridag(_CONST dmatrix& m)\n";
     ad_exit(1);
   }
   if (m.rowsize() != d.size() || m.rowsize() != e.size()
     || d.indexmin() != 1 || e.indexmin() !=1 )
   {
-    cerr <<"Error -- incorrect vector size passed to void tridag(const dmatrix& m)\n";
+    cerr <<"Error -- incorrect vector size passed to void tridag(_CONST dmatrix& m)\n";
     ad_exit(1);
   }
   int n=m.rowsize();
@@ -250,7 +250,7 @@ double SIGNV( CGNU_DOUBLE x, double y)
 #ifdef EIGEN_VECTORS
   void get_eigenv(const dvector& _d,const dvector& _e,const dmatrix& _z)
 #else
-  void get_eigen(const dvector& _d,const dvector& _e,const dmatrix& _z)
+  void get_eigen(BOR_CONST dvector& _d,BOR_CONST dvector& _e,BOR_CONST dmatrix& _z)
 #endif
 {
   dvector& d = (dvector&) _d;
@@ -274,7 +274,7 @@ double SIGNV( CGNU_DOUBLE x, double y)
         if (iter++ == 30)
         {
           cerr << "Maximum number of iterations exceeded in"
-          " dvector eigen(const dmatrix& m)\n";
+          " dvector eigen(_CONST dmatrix& m)\n";
           ad_exit(1);
         }
         g=(d[l+1]-d[l])/(2.0*e[l]);

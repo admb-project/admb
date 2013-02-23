@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: expm.cpp 602 2012-09-05 22:09:11Z johnoel $
  *
  * Authors: Anders Nielsen <anders@nielsensweb.org> and Casper Berg <cbe@aqua.dtu.dk> 
  * Copyright (c) 2008-2012 Regents of the University of California 

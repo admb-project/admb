@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: df1b2f15.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -70,24 +70,6 @@ void initial_df1b2params::reset(const init_df1b2vector& x,
  * Description not yet available.
  * \param
  */
- double initial_df1b2params::get_scalefactor(void)
- {
-   return scalefactor;
- }
-
-/**
- * Set scale factor for parameter in RE model.
- * \param sf Scale factor 
- * The function minimizer will work internally with x*df, where x is the parameter in the model.
- */
- void initial_df1b2params::set_scalefactor(const double sf)
- {
-   scalefactor=sf;
- }
-
-
-
-
 int initial_df1b2params::set_index(void)
 {
   int ii=1;
@@ -240,10 +222,7 @@ void df1b2_init_number::set_value(const init_df1b2vector& _x,const int& _ii,
 {
   ADUNCONST(init_df1b2vector,x)
   ADUNCONST(int,ii)
-  if (scalefactor==0.0)
-    operator = (x(ii++));
-  else
-    operator = (x(ii++)/scalefactor);
+  operator = (x(ii++));
 }
 
 /**
@@ -332,10 +311,7 @@ void df1b2_init_bounded_number::set_value(const init_df1b2vector& _x,
 {
   ADUNCONST(init_df1b2vector,x)
   ADUNCONST(int,ii)
-  if (scalefactor==0.0)
-    ::set_value(*this,x,ii,minb,maxb,pen);
-  else
-    ::set_value(*this,x,ii,minb,maxb,pen,scalefactor);
+  ::set_value(*this,x,ii,minb,maxb,pen);
 }
 
 /**
@@ -370,41 +346,9 @@ void set_value(const df1b2variable& _u,const init_df1b2vector& _x,
   }
 }
 
-void set_value(const df1b2variable& _u,const init_df1b2vector& _x,
-  const int& _ii,double fmin,double fmax,const df1b2variable& _fpen,
-  double s)
-{
-  ADUNCONST(init_df1b2vector,x)
-  ADUNCONST(int,ii)
-  ADUNCONST(df1b2variable,u)
-  ADUNCONST(df1b2variable,fpen)
-  if (!initial_params::straight_through_flag)
-  {
-    u=boundp(x(ii++),fmin,fmax,fpen,s);
-  }
-  else
-  {
-    u=x(ii);
-    value(u)=boundp(value(x(ii++)),fmin,fmax,s);
-    double diff=fmax-fmin;
-    //t=fmin + diff*ss;
-    df1b2variable ss=(u-fmin)/diff;
-#   ifdef USE_BARD_PEN
-      const double l4=log(4.0);
-      double pen=.000001/diff;
-      fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-#   else 
-          XXXX
-#   endif
-  }
-}
-
 /**
- * Bound model parameter
- * \param x Variable to bound
- * \param fmin  Lower value
- * \param fmax  Upper value
- * \param _fpen Penalty to apply    
+ * Description not yet available.
+ * \param
  */
 df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
   const df1b2variable& _fpen)
@@ -418,61 +362,6 @@ df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
   df1b2variable ss=0.49999999999999999*sin(x*1.57079632679489661)+0.50;
   t=fmin + diff*ss;
 
-#ifdef USE_BARD_PEN
-  double pen=.000001/diff;
-  fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-#else 
-  if (x < -.9999)
-  {
-    fpen+=cube(-0.9999-x);
-    if (x < -1.)
-    {
-      fpen+=1.e+6*cube(-1.0-x);
-      if (x < -1.02)
-      {
-        fpen+=1.e+10*cube(-1.02-x);
-      }
-    }
-  }
-  if (x > 0.9999)
-  {
-    fpen+=cube(x-0.9999);
-    if (x > 1.)
-    {
-      fpen+=1.e+6*cube(x-1.);
-      if (x > 1.02)
-      {
-        fpen+=1.e+10*cube(x-1.02);
-      }
-    }
-  }
-#endif
-  return(t);
-}
-
-/**
- * Bound and scale model parameter
- * \param x 	Variable to bound
- * \param fmin  Lower value
- * \param fmax  Upper value
- * \param _fpen Penalty to apply    
- */
-df1b2variable boundp(const df1b2variable& _x, double fmin, double fmax,
-  const df1b2variable& _fpen,double s)
-{
-  ADUNCONST(df1b2variable,fpen)
-  df1b2variable t;
-  df1b2variable x=_x/s;
-  //df1b2variable y;
-  //y=x;
-  double diff=fmax-fmin;
-  const double l4=log(4.0);
-
-  // ss is underlying varialbe on [0,1] and t lives in [fmin,fmax]
-  df1b2variable ss=0.49999999999999999*sin(x*1.57079632679489661)+0.50;
-  t=fmin + diff*ss;
-
-  // Add penalty
 #ifdef USE_BARD_PEN
   double pen=.000001/diff;
   fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);

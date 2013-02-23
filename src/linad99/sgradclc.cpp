@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: sgradclc.cpp 721 2012-12-13 01:14:33Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -252,7 +252,7 @@ do
  */
 void gradient_structure::save_arrays()
 {
-  void * temp_ptr;
+  void* temp_ptr = 0;
   long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
     ARRAY_MEMBLOCK_SIZE);
   gradient_structure::save_var_file_flag=0;
@@ -274,7 +274,7 @@ void gradient_structure::save_arrays()
    }
    if (gradient_structure::save_var_file_flag==0)
    {
-     ARRAY_MEMBLOCK_SAVE = temp_ptr;
+     ARRAY_MEMBLOCK_SAVE = (char*)temp_ptr;
      #if defined(DOS386)
      //#if DOS386==1
        #ifndef USE_ASSEMBLER
@@ -301,7 +301,8 @@ void gradient_structure::save_arrays()
   }
   else
   {
-     humungous_pointer src = ARRAY_MEMBLOCK_BASE;
+     char * src = ARRAY_MEMBLOCK_BASE;
+     //humungous_pointer src = ARRAY_MEMBLOCK_BASE;
      lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
      #if defined(DOS386)
      //#if DOS386==1
@@ -345,8 +346,10 @@ void gradient_structure::restore_arrays()
      unsigned long max_move=50000;
 
      long int left_to_move=bytes_needed;
-     humungous_pointer src = ARRAY_MEMBLOCK_SAVE;
-     humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
+     //humungous_pointer src = ARRAY_MEMBLOCK_SAVE;
+     //humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
+     char *  src = ARRAY_MEMBLOCK_SAVE;
+     char * dest = ARRAY_MEMBLOCK_BASE;
      while(left_to_move > max_move)
      {
        memcpy((char*)dest,(char*)src,max_move);
@@ -356,11 +359,13 @@ void gradient_structure::restore_arrays()
      }
      memcpy((char*)dest,(char*)src,left_to_move);
     #endif
-    ARRAY_MEMBLOCK_SAVE.free();
+    free(ARRAY_MEMBLOCK_SAVE);
+    ARRAY_MEMBLOCK_SAVE=0;
   }
   else
   {
-    humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
+    //humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
+    char * dest = ARRAY_MEMBLOCK_BASE;
     lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
     #if defined(DOS386)
     // #if DOS386==1

@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: dvector.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -321,7 +321,7 @@ dvector& dvector::operator=(const dvector& t)
 
    if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
    {
-     cerr << "Index bounds do not match in independent_variables& independent_variables::operator=(const dvector& t)\n";
+     cerr << "Index bounds do not match in dvector& operator = (const dvector&)\n";
      ad_exit(1);
    }
      //double tmp;

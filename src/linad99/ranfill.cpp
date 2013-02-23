@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: ranfill.cpp 601 2012-09-04 22:36:11Z johnoel $
  * 
  * Author: David Fournier
  * Copyright (c) 2009-2012 ADMB Foundation

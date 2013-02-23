@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: ludcmp_operators.cpp 586 2012-08-30 01:24:41Z johnoel $
  *
  * Copyright (c) 2009-2012 ADMB Foundation
  */

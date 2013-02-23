@@ -1,5 +1,5 @@
 /**
- * $Id$
+ * $Id: dmat38.cpp 602 2012-09-05 22:09:11Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 

@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: f1b2v10.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier and Mollie Brooks
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -135,38 +135,6 @@ df1b2vector pow(const dvector& x,  const df1b2vector& a)
 	RETURN_ARRAYS_DECREMENT();	
     return(y);
 }
-/**
- \brief raise v1 to the power v2.
- \param v1 vector of bases
- \param v2 vector of exponents	
- */
-  dvar_vector pow(const dvar_vector& v1, const dvector& v2)
-  {
-    RETURN_ARRAYS_INCREMENT();
-    dvar_vector tmp(v1.indexmin(),v1.indexmax());
-    for (int i=v1.indexmin();i<=v1.indexmax();i++)
-    {
-      tmp.elem(i)=pow(v1.elem(i),v2.elem(i));             
-    }
-    RETURN_ARRAYS_DECREMENT();
-    return(tmp);
-  }        
-/**
- \brief raise x to the power v.
- \param x vector of bases
- \param v vector of exponents	
- */  
-  df1b2vector pow(df1b2vector const& _x,dvector const& v)
-  {
-   ADUNCONST(df1b2vector,x);
-   int mmin=v.indexmin();
-   int mmax=v.indexmax();
-   df1b2vector tmp;
-   tmp.noallocate(mmin,mmax);
-   for (int i=mmin;i<=mmax;i++) tmp(i)=pow(x(i),v(i));
-   return tmp;
-  }
-  
 /**
  * Description not yet available.
  * \param

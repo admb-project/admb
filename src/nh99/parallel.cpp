@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: parallel.cpp 544 2012-07-14 00:07:58Z tamar $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California

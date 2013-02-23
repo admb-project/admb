@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: modspmin.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -363,7 +363,6 @@ int * kill_address;
       gradient_structure::Hybrid_bounded_flag=1;
     }
 
-    // Sets the maximum number of function evaluation as determined from the command line
     if ( (on=option_match(argc,argv,"-maxfn",nopt))>-1)
     {
       if (nopt ==1)            

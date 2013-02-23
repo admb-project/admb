@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: adstring.hpp 608 2012-09-12 01:42:45Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -52,9 +52,7 @@
   #endif
 #endif
 */
-#ifndef BOR_CONST
-#   define BOR_CONST const
-#endif
+#define BOR_CONST const
 
 #include "clist.h"
 #include <string.h>

@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: cifstrem.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -237,7 +237,7 @@ cifstream& cifstream::operator >> (const char* c)
   return *this;
 }
 
-cifstream& cifstream::operator >> (const long& i)
+cifstream& cifstream::operator >> (BOR_CONST long& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
@@ -296,7 +296,7 @@ void js_strip_leading_zeros(char * s)
   }
 }
 
-cifstream& cifstream::operator >> (const int& i)
+cifstream& cifstream::operator >> (BOR_CONST int& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
@@ -317,7 +317,7 @@ cifstream& cifstream::operator >> (const int& i)
   return *this;
 }
 
-cifstream& cifstream::operator >> (const double& _x)
+cifstream& cifstream::operator >> (BOR_CONST double& _x)
 {
   double& x = (double&)(_x);
   //char * s = new char[FILTER_BUF_SIZE];
@@ -353,7 +353,7 @@ cifstream& cifstream::operator >> (const double& _x)
   return *this;
 }
 
-cifstream& cifstream::operator >> (const float& x)
+cifstream& cifstream::operator >> (BOR_CONST float& x)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);

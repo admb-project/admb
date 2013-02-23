@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: factors.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Authors: Anders Nielsen <anders@nielsensweb.org>
  * Copyright (c) 2010-2012 ADMB Foundation

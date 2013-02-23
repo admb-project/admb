@@ -1,4 +1,4 @@
-.PHONY: dist verify tests
+.PHONY: dist verify
 
 SHELL:=$(COMSPEC)
 DISK=..\build\mingw
@@ -47,7 +47,7 @@ verify:
 	cmd /C "set ADMB_HOME=%CD%\$(DISK)& set PATH=%CD%\$(DISK)\bin;$(PATH)& $(MAKE) -C ${DISK} all"
 
 tests:
-	pushd ..\tests & $(MAKE) ADMB_HOME="%CD%\$(DISK)" & popd
+	cmd /C "set ADMB_HOME=%CD%\$(DISK)& set PATH=%CD%\$(DISK)\bin;$(PATH)& $(MAKE) -C ..\tests"
 
 clean:
 	if exist df1b2-separable\${CCVERSION}-${OSVERSION}olp rd /S /Q df1b2-separable\${CCVERSION}-${OSVERSION}olp
@@ -62,4 +62,3 @@ clean:
 	if exist nh99\lex.yy.c del nh99\lex.yy.c
 	if exist nh99\tpl2cpp.c del nh99\tpl2cpp.c
 	if exist nh99\tpl2cpp.exe del nh99\tpl2cpp.exe
-	if exist tests\geolocation\geolocation-read-only rd /S /Q tests\geolocation\geolocation-read-only

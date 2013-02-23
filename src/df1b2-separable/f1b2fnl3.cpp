@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: f1b2fnl3.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -101,31 +101,27 @@ void laplace_approximation_calculator::
 }
 
 /**
- * Calculates the Laplace approximation for a single separable function
- * in the "block diagonal", i.e. each u(i) occurs only in a single separable function
- * \param ff value of separable function (???)
- * This function will be called multiple times (once for each separable function).
- * Notation: x = fixed effects (parameters) and u = random effects.
+ * Description not yet available.
+ * \param
  */
 void laplace_approximation_calculator::
   do_separable_stuff_laplace_approximation_block_diagonal(df1b2variable& ff)
 {
-  set_dependent_variable(ff);			// Initializs "dot_bar" for reverse mode AD			
+  set_dependent_variable(ff);
   df1b2_gradlist::set_no_derivatives();
   df1b2variable::passnumber=1;
-  df1b2_gradcalc1();				// Forward mode AD follow by a series of reverse sweeps
+  df1b2_gradcalc1();
    
-  init_df1b2vector & locy= *funnel_init_var::py; // Independent variables for separable function
-  imatrix& list=*funnel_init_var::plist;	 // Index into "locy"
+  init_df1b2vector & locy= *funnel_init_var::py;
+  imatrix& list=*funnel_init_var::plist;
 
-  int i; int j; int us=0; int xs=0;		 // us = #u's and xs = #x's 
+  int i; int j; int us=0; int xs=0;
   ivector lre_index(1,funnel_init_var::num_active_parameters);
   ivector lfe_index(1,funnel_init_var::num_active_parameters);
 
-  // count to find us and xs, and find indexes of fixed and random effects
   for (i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
-    if (list(i,1)>xsize) 	// x's are stored first in the joint vector
+    if (list(i,1)>xsize) 
     {
       lre_index(++us)=i;
     }
@@ -135,16 +131,15 @@ void laplace_approximation_calculator::
     }
   }
   
-  dvector local_xadjoint(1,xs);  // First order derivative of ff wrt x
+  dvector local_xadjoint(1,xs);
   for (j=1;j<=xs;j++)
   {
     int j2=list(lfe_index(j),2);
-    local_xadjoint(j)=ff.u_dot[j2-1];  // u_dot is the result of forward AD
+    local_xadjoint(j)=ff.u_dot[j2-1];
   }
   
   if (us>0)
   {
-    // Find Hessian matrix needed for Laplace approximation	  
     dmatrix local_Hess(1,us,1,us); 
     dvector local_grad(1,us); 
     dmatrix local_Dux(1,us,1,xs); 
@@ -159,15 +154,12 @@ void laplace_approximation_calculator::
         local_Hess(i,j)+=locy(i2).u_bar[j2-1];
       }
     }
-    
-    // First order derivative of separable function wrt u  
     for (i=1;i<=us;i++)
     {
       int i2=list(lre_index(i),2);
       local_uadjoint(i)= ff.u_dot[i2-1];
     }
   
-    // Mixed derivatives wrt x and u needed in the sensitivity of u_hat wrt x
     for (i=1;i<=us;i++)
     {
       for (j=1;j<=xs;j++)
@@ -178,15 +170,14 @@ void laplace_approximation_calculator::
       }
     }
   
-    // Enter calculations for the derivative of log(det(Hessian))
   
     //if (initial_df1b2params::separable_calculation_type==3)
     {
   
     //int nvar=us*us;
-    double f;				// 0.5*log(det(local_Hess))
-    dmatrix Hessadjoint=get_gradient_for_hessian_calcs(local_Hess,f);   
-    initial_df1b2params::cobjfun+=f;  	// Adds 0.5*log(det(local_Hess))
+    double f;
+    dmatrix Hessadjoint=get_gradient_for_hessian_calcs(local_Hess,f);
+    initial_df1b2params::cobjfun+=f;
   
     for (i=1;i<=us;i++)
     {
@@ -220,13 +211,13 @@ void laplace_approximation_calculator::
         local_uadjoint(i)+=locy[i2].u_tilde[0];
       }
       if (xs>0)
-        local_xadjoint -= local_uadjoint*inv(local_Hess)*local_Dux;  
+        local_xadjoint -= local_uadjoint*inv(local_Hess)*local_Dux;
     }
   }
   for (i=1;i<=xs;i++)
   {
     int ii=lfe_index(i);
-    xadjoint(list(ii,1))+=local_xadjoint(i);  // Ads contribution to "global" gradient vector
+    xadjoint(list(ii,1))+=local_xadjoint(i);
   }
   f1b2gradlist->reset();
   f1b2gradlist->list.initialize();

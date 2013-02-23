@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: cifstrem.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -385,13 +385,6 @@ cifstream& cifstream::operator>>(const float& x)
   return *this;
 }
 
-/** Reads a line from a cifstream character by character.
-\deprecated This function may never be used?
-\param s Character string containing the line
-\papam k Integer containing the maximum number of characters per line to read.
-\param d End of line charactter; defaluts to '\\n'.
-\return Pointer to current state of input stream.
-*/
 cifstream& cifstream::getline(char* s, int k, char d)
 {
   filter();

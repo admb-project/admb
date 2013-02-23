@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: getbigs.cpp 542 2012-07-10 21:04:06Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
@@ -69,7 +69,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
         cerr << "Error reading from file " << tmpstring << endl;
         ad_exit(1);
       }
-      uhat_prime=-minv*Dux;
+      uhat_prime=minv*Dux;
     }
     else
     {
@@ -94,7 +94,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
       {
         if (allocated(H(i)))
         {
-          dmatrix tmp=-inv(H(i))*Dux(i);
+          dmatrix tmp=inv(H(i))*Dux(i);
           int rmin=H(i).indexmin();
           int rmax=H(i).indexmax();
           int tmpmin=Dux(i).indexmin();

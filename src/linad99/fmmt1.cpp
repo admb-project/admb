@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: fmmt1.cpp 608 2012-09-12 01:42:45Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -32,6 +32,18 @@ fmmt1::fmmt1(int nvar, const lvector& ipar)
  * Description not yet available.
  * \param
  */
+void fmmt1::allocate(int nvar,int _xm)
+{
+  w.allocate(1,4*nvar); funval.allocate(1,10);
+  xx.allocate(0,nvar); gbest.allocate(0,nvar); xsave.allocate(0,nvar);
+  gsave.allocate(0,nvar);xstep.allocate(0,_xm+1,1,nvar);
+  xy.allocate(0,_xm+1,1,nvar); xrho.allocate(0,_xm+1); 
+  xold.allocate(1,nvar); gold.allocate(1,nvar); rrr.allocate(1,nvar);
+  ctlc_flag = 0;
+  n = nvar;
+  xm=_xm;
+  xrho.initialize();
+}
 fmmt1::fmmt1(int nvar,int _xm)
 : w(1,4*nvar),
   funval(1,10),
@@ -52,4 +64,10 @@ fmmt1::fmmt1(int nvar,int _xm)
   xrho.initialize();
 //  cout << " In fmm::fmm(int nvar) nvar = " << nvar 
 //       << " and n = " << n << "\n";
+}
+fmmt1::fmmt1(void)
+{
+  ctlc_flag = 0;
+  n = 0;
+  xm=0;
 }

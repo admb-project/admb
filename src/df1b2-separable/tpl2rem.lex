@@ -4573,8 +4573,7 @@ TOP_OF_MAIN_SECTION {
      fprintf(ftopmain,"    mp.computations(argc,argv);\n");
 #endif
 
-    fprintf(htop,"#include <admodel.h>\n");
-    fprintf(htop,"#include <contrib.h>\n\n");
+    fprintf(htop,"#include <admodel.h>\n\n");
     if (random_effects_flag)
     {
       fprintf(htop,"#include <df1b2fun.h>\n\n");

@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: gaussher.cpp 542 2012-07-10 21:04:06Z johnoel $
  * 
  * Author: David Fournier
  * Copyright (c) 2009-2012 ADMB Foundation

@@ -43,12 +43,12 @@ objs=
 
 for file in $*
 do
-  extension="${file#*.}"
+  extension="${file##*.}"
   if [ "$extension" = "$file" ]; then
     tpls="$tpls $file"
   elif [ "$extension" = "tpl" ]; then
     tpls="$tpls ${file%.*}"
-  elif [ "$extension" = "cpp" -o "$extension" = "c" ]; then
+  elif [ "$extension" = "cpp" -o "$extension" = "c"  -o "$extension" = "cc" ]; then
     srcs="$srcs $file"
   elif [ "$extension" = "o" -o "$extension" = "obj" ]; then
     objs="$objs $file"
@@ -62,11 +62,7 @@ do
     echo -e "\\nError: $model.tpl not found\\n"
     exit 1
   fi
-
-  rm -vf classdef.tmp xxdata.tmp xxhtop.tmp xxhtopm.tmp xxglobal.tmp xxtopm.tmp 
-  rm -vf xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp 
-  rm -vf tfile1 tfile2 tfile3 tfile4 tfile5
-  rm -vf $model.cpp $model.htp $model.o $model
+  rm -f $model.cpp $model.htp $model.o $model
 
   CMD="$tpl2cpp $bounds $dll $model"
   echo -e \\n\*\*\* $CMD
@@ -84,6 +80,7 @@ do
     echo -e "\\nError: $file not found\\n"
     exit 1
   fi
+  rm -f ${file%.*}.o
   if [[ -z "$CXXFLAGS" ]]; then
     CMD="adcomp $d $g $r $s $file"
   else
@@ -97,32 +94,62 @@ do
   fi
 done
 
-for file in $srcs
+objs=
+for file in $*
 do
-  f=${file%.*}
-  objs="$f.o $objs"
+  extension="${file##*.}"
+  if [ "$extension" = "cpp" -o "$extension" = "c"  -o "$extension" = "cc" ]; then
+    objs="$objs ${file%%.*}.o"
+  elif [ "$extension" = "o" -o "$extension" = "obj" ]; then
+    objs="$objs $file"
+  fi
 done
 
-for file in $tpls
-do
-  model=${file%.*}
+if [[ -z "$tpls" ]]; then
   if [[ -z "$LDFLAGS" ]]; then
-    CMD="adlink $d $g $r $s $model $objs"
+    CMD="adlink $d $g $r $s $objs"
   else
-    CMD="LDFLAGS=\"$LDFLAGS\" adlink $d $g $r $s $model $objs"
+    CMD="LDFLAGS=\"$LDFLAGS\" adlink $d $g $r $s $objs"
   fi
   echo -e \\n\*\*\* $CMD
   eval $CMD
+  model="${objs%%.*}"
   if [[ -z $dll ]]; then 
-    if [[ ! -f $model ]]; then 
-        echo -e "\\nError: Could not build $model\\n"
+    if [[ ! -f ${model/ /} ]]; then 
+        echo -e "\\nError: Could not build \"${model/ /}\"\\n"
+        exit 1
     fi
   else
-    if [[ ! -f $model.so ]]; then
-        echo -e "\\nError: Could not build $model.so\\n"
+    if [[ ! -f ${model/ /}.so ]]; then
+        echo -e "\\nError: Could not build \"${model/ /}.so\"\\n"
+        exit 1
     fi
   fi
-done
+else
+  for file in $tpls
+  do
+    model=${file%.*}
+    rm -f ${file%.*}
+    if [[ -z "$LDFLAGS" ]]; then
+      CMD="adlink $d $g $r $s $model $objs"
+    else
+      CMD="LDFLAGS=\"$LDFLAGS\" adlink $d $g $r $s $model $objs"
+    fi
+    echo -e \\n\*\*\* $CMD
+    eval $CMD
+    if [[ -z $dll ]]; then 
+      if [[ ! -f ${model/ /} ]]; then 
+          echo -e "\\nError: Could not build \"${model/ /}\"\\n"
+          exit 1
+      fi
+    else
+      if [[ ! -f ${model/ /}.so ]]; then
+          echo -e "\\nError: Could not build \"${model/ /}.so\"\\n"
+          exit 1
+      fi
+    fi
+  done
+fi
 
 echo -e "\\nSuccessfully built executable.\\n"
 exit 0

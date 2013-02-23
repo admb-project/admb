@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: df12fun.cpp 608 2012-09-12 01:42:45Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -761,6 +761,21 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
   {
     num_ind_var=0;
   }
+
+dvariable& dvariable::operator = (const df1_two_variable& v)
+{
+  const prevariable * px=df1_two_variable::ind_var[0];
+  const prevariable * py=df1_two_variable::ind_var[1];
+  const prevariable * pz=df1_two_variable::ind_var[2];
+  double  dfx= *v.get_u_x();
+  double  dfy= *v.get_u_y();
+  value(*this)=*v.get_u();
+
+  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation3,
+    &(value(*this)),&(value(*px)),dfx,&(value(*py)),dfy);
+
+  return *this;
+}
 
 /**
  * Description not yet available.

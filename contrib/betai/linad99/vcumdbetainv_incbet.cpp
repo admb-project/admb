@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: vcumdbetainv_incbet.cpp 578 2012-08-28 00:07:44Z johnoel $
  * Author: Unknown
  */
 /**

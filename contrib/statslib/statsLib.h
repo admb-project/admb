@@ -33,10 +33,6 @@ dvariable dinvgamma( const dvariable& x, const double a, const double b );
 dvariable dbinom( const prevariable& x,const double& n,const double& p );
 dvariable dbinom( const prevariable& x,const prevariable& n,const double& p );
 dvariable dbinom( const prevariable& x,const prevariable& n,const prevariable& p );
-dvariable dbinom(const dvar_vector& x,const dvar_vector& n,const dvar_vector& p);
-dvariable dbinom(const prevariable& x,const dvar_vector& n,const dvar_vector& p);
-dvariable dbinom(const dvar_vector& x,const prevariable& n,const dvar_vector& p);
-dvariable dbinom(const dvar_vector& x,const dvar_vector& n,const prevariable& p);
 
 // Negative binomial distribution
 dvariable dnbinom(const double& x,const prevariable& mu, const prevariable& size);

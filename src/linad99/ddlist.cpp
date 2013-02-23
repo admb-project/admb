@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: ddlist.cpp 608 2012-09-12 01:42:45Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
@@ -39,8 +39,8 @@ extern char otter_address4[];
 extern char otter_address5[];
 
 
-char* ddlist_space;
-char* ddlist_spacea;
+__ADMBTHREAD__ char* ddlist_space;
+__ADMBTHREAD__ char* ddlist_spacea;
 
 /**
  * Description not yet available.

@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: adglobl.cpp 608 2012-09-12 01:42:45Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
@@ -17,6 +17,8 @@
  adtimer * ad_comm::ptm1=0;
  int ad_comm::bandwidth=0;
  adpvm_manager * ad_comm::pvm_manager=NULL;
+ __ADMBTHREAD__ adpthreads_manager * ad_comm::pthreads_manager=0;
+ __ADMBTHREAD__ int  adpthreads_manager::slave_number=0;
 
  int ad_comm::time_flag=0;
  adstring ad_comm::subdir;

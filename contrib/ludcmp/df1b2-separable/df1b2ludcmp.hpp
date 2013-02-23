@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * $Id: df1b2ludcmp.hpp 586 2012-08-30 01:24:41Z johnoel $
  *
  * Copyright (c) 2010-2012 ADMB Foundation
  */

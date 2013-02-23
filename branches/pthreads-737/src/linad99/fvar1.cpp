@@ -1,0 +1,19 @@
+/*
+ * $Id: fvar1.cpp 542 2012-07-10 21:04:06Z johnoel $
+ *
+ * Author: David Fournier
+ * Copyright (c) 2008-2012 Regents of the University of California 
+ */
+/**
+ * \file
+ * Description not yet available.
+ */
+#if defined(__GNUDOS__)
+#  pragma implementation "fvar.hpp"
+#endif
+// file fvar.cpp
+// constructors, destructors and misc functions involving class prevariable 
+
+#include "fvar.hpp"
+int traceflag=0;
+int just_to_link_fvar1=0;

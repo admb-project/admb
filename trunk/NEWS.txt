@@ -2,9 +2,6 @@ CHANGES IN ADMB VERSION 11.0:
 
   SIGNIFICANT USER-VISIBLE CHANGES:
 
-    * The compilation scripts (adcomp, adlink, admb) compile in
-      "safe" mode by default.
-
     * [anything that works differently from before, given the
       same input]
 
@@ -42,3 +39,10 @@ CHANGES IN ADMB VERSION 10.0:
 CHANGES IN ADMB VERSION 9.1:
 
 etc.
+
+
+
+UPCOMING CHANGES:
+
+    * The compilation scripts (adcomp, adlink, admb) compile in
+      "safe" mode by default.

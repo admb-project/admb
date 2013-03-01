@@ -2,6 +2,8 @@
 
 default: linux
 
+verify: linux-verify
+
 mingw:
 	$(MAKE) --directory=src --file=mingw.mak
 

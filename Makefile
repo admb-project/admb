@@ -26,20 +26,22 @@ vc:
 vc-verify:
 	cd src& nmake /f vc.mak verify
 
-solarisstudio:
+solarisstudio: solarisstudio-dist solarisstudio-contrib
+
+solarisstudio-dist:
 	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=CC
 
-solarisstudio-verify:
+solarisstudio-contrib:
+	$(MAKE) --directory=contrib CC=cc CXX=CC
+
+solarisstudio-verify: solarisstudio
 	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=CC verify
 
-sunstudio:
-	ARCH_CXXFLAGS=-m32 $(MAKE) --directory=src --file=linux.mak CC=cc CXX=CC
+sunstudio: solarisstudio
+sunstudio-verify: solarisstudio-verify
 
 sunstudio-64bit:
 	ARCH_CXXFLAGS=-m64 $(MAKE) --directory=src --file=linux.mak CC=cc CXX=CC dist-64bit
-
-sunstudio-verify:
-	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=CC verify
 
 icc:
 	$(MAKE) --directory=src --file=linux.mak CC=icc CXX=icpc

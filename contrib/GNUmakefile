@@ -1,5 +1,13 @@
 .PHONY: all ad2csv statslib ecolib qfclib libcontribo.a libcontribs.a test clean
 
+ifndef DISK
+DISK=../build/dists/admb_gcc411_fedora8
+endif
+
+ifndef LIBPATH
+LIBPATH=../build/gcc411-fedora8
+endif
+
 ifeq ($(CXX),CC)
 CXXFLAGS:=-c $(CXXFLAGS) -DUSE_LAPLACE -I../${DISK}/include -D__SPDLL__ -D__GNUDOS__ -Dlinux -I../${DISK}/include
 else

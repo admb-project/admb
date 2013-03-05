@@ -1,10 +1,11 @@
 # make some special targets
 .PHONY: all rules
 
-export ADMB_HOME=/home/jsibert/admb/pthreads-737/build/admb-linux-gcc4.7.2-64bit
 ifeq ($(HOSTNAME),katsuo)
-  #export ADMB_HOME=/home/jsibert/admb-threaded2/build/dists/admb_gcc411_fedora8
   export ADMB_HOME=/home/davef/admb-threaded/build/admb-linux-gcc4.8.0-64bit
+endif
+ifeq ($(HOSTNAME),kihikihi)
+  export ADMB_HOME=/home/jsibert/admb/pthreads-737/build/admb-linux-gcc4.7.2-64bit
 endif
 CC = g++
 LL = g++

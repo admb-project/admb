@@ -2,7 +2,7 @@
 
 ADMB_HOME=$(CURDIR)/../build/dist
 
-all: test-cov_re
+all: test-geolocation test-cov_re
 
 main: test-geolocation test-cov_re
 

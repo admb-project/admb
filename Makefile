@@ -49,16 +49,16 @@ icc:
 icc-verify:
 	$(MAKE) --directory=src --file=linux.mak CC=icc CXX=icpc verify
 
-linux: linux-admb linux-contrib
+linux: linux-dist linux-contrib
 
-linux-admb:
+linux-dist:
 	$(MAKE) --directory=src --file=linux.mak
 
 linux-64bit: linux-contrib
 	CXXFLAGS=-m64 $(MAKE) --directory=src --file=linux.mak dist-64bit
 
 linux-contrib:
-	CC=gcc CXX=g++ CXXFLAGS="" LIBPATH=../build/gcc411-fedora8 DISK=../build/dists/admb_gcc411_fedora8 $(MAKE) --directory=contrib
+	$(MAKE) --directory=contrib CC=gcc CXX=g++
 
 linux-verify:
 	$(MAKE) --directory=src --file=linux.mak verify
@@ -72,6 +72,11 @@ it2:
 
 tests:
 	ADMB_HOME="$(CURDIR)/build/dists/admb_gcc411_fedora8" $(MAKE) --directory=tests
+
+dist:
+	rm -f admb.zip admb
+	ln -sf build/dist/ admb
+	zip -r admb admb/*
 
 clean:
 	rm -rvf build

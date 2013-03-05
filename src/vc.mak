@@ -1,4 +1,4 @@
-DISK=..\build\admb-vc10
+DISK=..\build
 
 all: admb contrib
 
@@ -40,9 +40,9 @@ admb:
 	cd $(DISK)\dist& cscript ..\..\..\scripts\create-admb-shortcut.vbs
 
 contrib:
-  IF NOT EXIST $(DISK)\dist\contrib md $(DISK)\dist\contrib
-  IF NOT EXIST $(DISK)\objects\contrib-olp md $(DISK)\objects\contrib-olp
-  IF NOT EXIST $(DISK)\objects\contrib-slp md $(DISK)\objects\contrib-slp
+	IF NOT EXIST $(DISK)\dist\contrib md $(DISK)\dist\contrib
+	IF NOT EXIST $(DISK)\objects\contrib-olp md $(DISK)\objects\contrib-olp
+	IF NOT EXIST $(DISK)\objects\contrib-slp md $(DISK)\objects\contrib-slp
 	cd $(DISK)\objects\contrib-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\contrib\Makefile statslib-opt
 	cd $(DISK)\objects\contrib-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\contrib\Makefile statslib-saf
 	cd $(DISK)\objects\contrib-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\..\contrib\Makefile ecolib-opt

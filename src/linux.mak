@@ -2,16 +2,14 @@
 SHELL = /bin/bash
 
 ifndef DISK
-DISK=../build/dists/admb_gcc411_fedora8
+DISK=../build/dist
 endif
 
 PWD=$(shell pwd)
 NOW=$(shell date)
 
 ifndef LIBPATH
-CCVERSION=gcc411
-OSVERSION=fedora8
-LIBPATH=../build/${CCVERSION}-${OSVERSION}
+LIBPATH=../build/objects/dist
 endif
 
 ifndef ADMB_HOME
@@ -96,7 +94,9 @@ ifeq ($(CXX),g++.exe)
 	  cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
 	  cp ../utilities/sed.exe ${DISK}/bin
 endif
+	rm -rf ${DISK}/examples/admb
 	cp -R ../examples/admb ${DISK}/examples/admb
+	rm -rf ${DISK}/examples/admb-re
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 
 verify:

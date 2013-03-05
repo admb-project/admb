@@ -101,5 +101,7 @@ c++-contrib:
 	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=c++ contrib
 c++-verify:
 	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=c++ verify
+c++-tests:
+	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=c++ tests
 c++-clean:
 	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=c++ clean

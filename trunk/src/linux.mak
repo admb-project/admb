@@ -105,6 +105,9 @@ verify:
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" $(MAKE) -C ${DISK}/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-opt.txt"
 
+contrib:
+	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../contrib
+
 tests:
 	$(MAKE) ADMB_HOME="${ADMB_HOME}" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" --directory=../tests
 

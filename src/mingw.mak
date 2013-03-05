@@ -50,6 +50,7 @@ tests:
 	pushd ..\tests & $(MAKE) ADMB_HOME="%CD%\$(DISK)" & popd
 
 clean:
+	if exist build rd /Q /S build
 	if exist df1b2-separable\${CCVERSION}-${OSVERSION}olp rd /S /Q df1b2-separable\${CCVERSION}-${OSVERSION}olp
 	if exist df1b2-separable\${CCVERSION}-${OSVERSION}slp rd /S /Q df1b2-separable\${CCVERSION}-${OSVERSION}slp
 	if exist linad99\\${CCVERSION}-${OSVERSION}olp rd /S /Q linad99\\${CCVERSION}-${OSVERSION}olp

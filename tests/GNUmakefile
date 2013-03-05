@@ -1,17 +1,19 @@
 .PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd atan2 priors betai beta2 beta3 adstring_array df33_tester beta_deviate
 
-all: test-geolocation
+ADMB_HOME=$(CURDIR)/../build/dist
+
+all: test-cov_re
 
 main: test-geolocation test-cov_re
 
 test-geolocation:
-	$(MAKE) --directory=geolocation
+	-$(MAKE) --directory=geolocation
 
 test-expm:
 	$(MAKE) --directory=expm
 
 test-cov_re:
-	$(MAKE) --directory=cov_re
+	ADMB_HOME=$(ADMB_HOME) $(MAKE) --directory=cov_re
 
 adstring_array:
 	OPTIONS=-s $(MAKE) --directory=$@

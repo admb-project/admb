@@ -1,11 +1,11 @@
 .PHONY: all ad2csv statslib ecolib qfclib libcontribo.a libcontribs.a test clean
 
 ifndef DISK
-DISK=../build/dists/admb_gcc411_fedora8
+DISK=../build/dist
 endif
 
 ifndef LIBPATH
-LIBPATH=../build/gcc411-fedora8
+LIBPATH=../build/objects/dist
 endif
 
 ifeq ($(CXX),CC)

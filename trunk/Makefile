@@ -70,15 +70,15 @@ CC-clean:
 #Intel
 icpc: icpc-dist icpc-contrib
 icpc-dist:
-	source /opt/intel/bin/compilervars.sh intel64& $(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc dist
+	$(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc dist
 icpc-contrib:
-	source /opt/intel/bin/compilervars.sh intel64& $(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc contrib
+	$(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc contrib
 icpc-verify:
-	source /opt/intel/bin/compilervars.sh intel64& $(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc verify
+	$(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc verify
 icpc-tests:
-	source /opt/intel/bin/compilervars.sh intel64& $(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc tests
+	$(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc tests
 icpc-clean:
-	source /opt/intel/bin/compilervars.sh intel64& $(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc clean
+	$(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc clean
 
 #GNU
 g++: g++-dist g++-contrib

@@ -63,6 +63,17 @@ linux-contrib:
 linux-verify:
 	$(MAKE) --directory=src --file=linux.mak verify
 
+intel: intel64-dist intel64-contrib
+
+intel64-dist:
+	source /opt/intel/bin/compilervars.sh intel64& $(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc
+
+intel64-contrib:
+	source /opt/intel/bin/compilervars.sh intel64& $(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc contrib
+
+intel64-verify: intel
+	source /opt/intel/bin/compilervars.sh intel64& $(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc verify
+
 it:
 	./configure CFLAGS=-m32 CXXFLAGS="-m32 -mmacosx-version-min=10.5"
 

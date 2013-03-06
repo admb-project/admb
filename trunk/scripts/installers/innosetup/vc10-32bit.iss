@@ -17,7 +17,7 @@ LicenseFile=..\..\..\LICENSE.txt
 Name: "vc10"; Description: "ADMB (Microsoft Visual C++ 2010 32Bit)"
 
 [Files]
-Source: "..\..\..\build\admb-vc10\dist\*"; DestDir: "{app}"; Flags: recursesubdirs
+Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Flags: recursesubdirs
 
 [Icons]
 Name: "{group}\ADMB Command Prompt (Microsoft Visual C++ 2010)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-vc10.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (Microsoft Visual C++ 2010 32Bit)"

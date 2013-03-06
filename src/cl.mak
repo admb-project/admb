@@ -59,9 +59,9 @@ tests:
 
 verify:
 	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake all"
-	-cd $(MAKEDIR)\$(DISK)\dist& ..\..\..\scripts\get-outputs.bat > "..\..\..\benchmarks-opt.txt"
+	-cd $(MAKEDIR)\$(DISK)\dist& ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt"
 	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake OPTION=-s all"
-	-cd $(MAKEDIR)\$(DISK)\dist& ..\..\..\scripts\get-outputs.bat > "..\..\..\benchmarks-saf.txt"
+	-cd $(MAKEDIR)\$(DISK)\dist& ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt"
 
 clean:
 	IF EXIST $(DISK) rd /S /Q $(DISK)

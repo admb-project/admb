@@ -1,10 +1,9 @@
-.PHONY: tests
-
+#default targets depending on compiler
 all: $(CXX)
 dist: $(CXX)-dist
 contrib: $(CXX)-contrib
 verify: $(CXX)-verify
-tests: $(CXX)-tests
+test: $(CXX)-tests
 clean: $(CXX)-clean
 
 installer:

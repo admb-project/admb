@@ -37,7 +37,7 @@ admb:
 	IF NOT EXIST $(DISK)\dist\examples md $(DISK)\dist\examples
 	xcopy ..\examples $(DISK)\dist\examples /S /Y
 	copy ..\scripts\cl\Makefile $(DISK)\dist\examples
-	cd $(DISK)\dist& cscript ..\..\..\scripts\create-admb-shortcut.vbs
+	cd $(DISK)\dist& cscript ..\..\scripts\create-admb-shortcut.vbs
 
 contrib:
 	IF NOT EXIST $(DISK)\dist\contrib md $(DISK)\dist\contrib

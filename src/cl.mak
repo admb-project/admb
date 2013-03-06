@@ -1,8 +1,8 @@
 DISK=..\build
 
-all: admb contrib
+all: dist contrib
 
-admb:
+dist:
 	IF NOT EXIST $(DISK) md $(DISK)
 	IF NOT EXIST $(DISK)\dist md $(DISK)\dist
 	IF NOT EXIST $(DISK)\dist\bin md $(DISK)\dist\bin

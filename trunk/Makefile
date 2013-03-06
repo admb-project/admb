@@ -5,15 +5,12 @@ dist: $(CXX)-dist
 contrib: $(CXX)-contrib
 verify: $(CXX)-verify
 tests: $(CXX)-tests
+clean: $(CXX)-clean
 
 installer:
 	rm -f admb.zip admb
 	ln -sf build/dist/ admb
 	zip -r admb admb/*
-
-clean: $(CXX)-clean
-	$(MAKE) --directory=contrib clean
-	$(MAKE) --directory=tests clean
 
 #MinGW
 mingw: mingw-dist mingw-contrib
@@ -31,15 +28,15 @@ mingw-clean:
 #Borland 5.5
 bcc: bcc-dist bcc-contrib
 bcc-dist:
-	$(MAKE) --directory=src --file=bcc.mak dist
+	cd src& $(MAKE) -fbcc.mak dist
 bcc-contrib:
-	$(MAKE) --directory=src --file=bcc.mak contrib
+	cd src& $(MAKE) -fbcc.mak contrib
 bcc-verify:
-	$(MAKE) --directory=src --file=bcc.mak verify
+	cd src& $(MAKE) -fbcc.mak verify
 bcc-tests:
-	$(MAKE) --directory=src --file=bcc.mak tests
+	cd src& $(MAKE) -fbcc.mak tests
 bcc-clean:
-	$(MAKE) --directory=src --file=bcc.mak clean
+	cd src& $(MAKE) -fbcc.mak clean
 
 #Microsoft Visual C++
 cl: cl-dist cl-contrib

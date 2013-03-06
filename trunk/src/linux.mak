@@ -125,3 +125,5 @@ clean:
 	@rm -f df1b2-separable/lex.yy.c
 	@rm -f nh99/tpl2cpp
 	@rm -f df1b2-separable/tpl2rem
+	@make --directory=../contrib clean
+	@make --directory=../tests clean

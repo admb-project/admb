@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><title>R: Extract Random Effects</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="../../R.css">
+</head><body>
+
+<table width="100%" summary="page for ranef.glmm.admb {glmmADMB}"><tr><td>ranef.glmm.admb {glmmADMB}</td><td align="right">R Documentation</td></tr></table>
+<h2>Extract Random Effects</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Extract random effects from objects fitted with the function 'glmm.admb' 
+and (optionally) their standard deviations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+ranef.glmm.admb(object, sd = FALSE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+An object (a fit) returned from <code>glmm.admb</code></td></tr>
+<tr valign="top"><td><code>sd</code></td>
+<td>
+logical.  If 'TRUE', the standard deviations of the random effects are
+returned, rather than point estimates.</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+Further arguments passed on</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+The point estimates of the random effects are 'empirical Bayes' estimates in
+the sense that the hyperparameters (fixed effects, variance components etc) are fixed
+at their MLE's when the joint likelihood is maximized with respect to the random effects.
+However, uncertainty about the hyperparameters is taken into account when the 
+standard deviations of the random effects are calculated.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+A matrix of estimated random effects (or standard deviations).</p>
+
+<h3>Author(s)</h3>
+
+<p>
+H. Skaug skaug@mi.uib.no, David Fournier otter@otter-rsch.com and
+Anders Nielsen andersn@hawaii.edu
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code><a href="glmm.admb.html">glmm.admb</a></code>
+</p>
+
+
+
+<hr><div align="center">[Package <em>glmmADMB</em> version 0.3 <a href="00Index.html">Index]</a></div>
+
+</body></html>

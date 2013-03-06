@@ -1,0 +1,47 @@
+CHANGES IN ADMB VERSION 11.0:
+
+  SIGNIFICANT USER-VISIBLE CHANGES:
+
+    * [anything that works differently from before, given the
+      same input]
+
+NEW FEATURES:
+* Functions from user-contributed packages can be loaded from
+  directory 'contrib', [maybe indicate how that is done].
+
+* New class 'init_table' to read input data into a matrix.
+
+* New function sumsq() to calculate sum of squared values,
+  equivalent to norm2().
+
+* New constant PI for 3.141593... Makes models more portable
+  than using M_PI or other compiler-specific constants.
+
+* New shell command 'ad2csv' to write binary files to screen 
+  or to a file.
+
+* [many more]
+
+  DEPRECATED AND DEFUNCT:
+
+  INSTALLATION:
+
+    * [not the whole installation procedure, only how the
+      procedure has changed]
+
+  BUG FIXES:
+
+CHANGES IN ADMB VERSION 10.1:
+
+CHANGES IN ADMB VERSION 10.0:
+
+CHANGES IN ADMB VERSION 9.1:
+
+etc.
+
+
+
+UPCOMING CHANGES:
+
+    * The compilation scripts (adcomp, adlink, admb) compile in
+      "safe" mode by default.

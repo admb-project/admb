@@ -1,0 +1,175 @@
+<br>
+<table align="center" cellspacing="2" cellpadding="2" border="0">
+<tr>
+    <td colspan="2" align="center">
+	<h1>Crossed random effects - Beyond NLME; <br>
+	The orange data revisited</h1>
+		<br><br>
+	</td>
+</tr>
+
+<tr>
+    <td width="30%">
+	<table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#359163">
+         <tr>
+           <td align="center">
+             <font face="Arial, Helvetica" color="White"><b>ADMB Files</b></font>
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <table cellspacing=0 cellpadding=3 width="100%" border=0 bgcolor="#ffffff">
+               <tr>
+			     <td>
+                     Code: <a href="orange2.tpl">orange2.tpl</a><br>
+                     Data: 		<a href="orange2.dat">orange2.dat</a><br>
+                     Initial values: <a href="orange2.pin">orange2.pin</a><br>
+                     All required files (DOS): <a href="orange2.zip">orange2.zip</a><br>
+					 All required files (linux): <a href="orange2.tar.gz">orange2.tar.gz</a><br>					 
+                     Results: <a href="orange2.par">orange2.par</a><br>
+				   </font>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </table>
+<br>
+
+	<table width="90%" border="0" cellspacing="0" cellpadding="2" bgcolor="#359163">
+         <tr>
+           <td align="center">
+             <font face="Arial, Helvetica" color="White"><b>Running ADMB-executables</b></font>
+           </td>
+         </tr>
+         <tr>
+           <td>
+             <table cellspacing=0 cellpadding=3 width="100%" border=0 bgcolor="#ffffff">
+               <tr>
+			     <td>
+                     In a <a href="../admb_tutorial.html">DOS</a> window<br> 
+					 Under <a href="../admb_tutorial.html">linux</a><br>
+				   </font>
+                 </td>
+               </tr>
+             </table>
+           </td>
+         </tr>
+       </table>
+<br>
+
+
+	      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0>
+        <TR>
+          <TD align=middle><FONT face="Arial, Helvetica" 
+            color=white><B>Navigation</B></FONT> </TD></TR>
+        <TR>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=3 width="100%" bgColor=#ffffff 
+            border=0>
+              <TBODY>
+              <TR>
+                <TD>			  
+				<A href="http://otter-rsch.com/admbre/admbre.html">ADMB-RE home</A> <br>
+                <A href="http://otter-rsch.com/">Otter Research</A> 
+        </FONT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE><BR>
+      <TABLE cellSpacing=0 cellPadding=2 width="90%" bgColor=#359163 border=0></TABLE>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+	   
+	</td>
+
+	
+ <td width="75%">
+<h3><strong>Model description</strong></h3>
+
+The <A HREF="../orange/orange.html">orange data</A> were considered by 
+Millar (2004, Aust NZ J. Stat, 46, p. 543-554).
+A "day effect" (<em>v</em>) was added to the original model formulation, yielding
+<br>
+<div align="center"><em>y<sub>ij</sub></em> = <FONT FACE="Symbol">f</FONT><sub>1,<em>ij</em></sub>
+/(1 + exp[-(<em>t</em>-<FONT FACE="Symbol">f</FONT><sub>2</sub>)/<FONT FACE="Symbol">f</FONT><sub>3</sub>])
+] + <FONT FACE="Symbol">e</FONT><sub><em>ij</em></sub>,
+</div>
+<div align="center">
+	<FONT FACE="Symbol">f</FONT><sub>1,<em>ij</em></sub> 
+	= <FONT FACE="Symbol">f</FONT><sub>1</sub> +  <em>u<sub>i</sub></em> + <em>v<sub>j</sub></em>
+</div>
+where <em>u</em> is a tree-effect and <em>v</em> is a day-effect. This is an example of a model where
+the random effects <em>u</em> and <em>v</em> are crossed. Such models cannot easily be fit in <TT>nlme</TT> 
+(<A HREF="../citations.html#pinh:bate:2000">Pinheiro &amp; Bates, 2000</A>), while the inclusion
+of the random effect <em>v</em> requires only 2-3 lines of extra code in the ADMB-RE program.
+<br>
+
+<h3><strong>Comparison with Millar (2004)</strong></h3>
+Millar (2004) used simulated likelihood to evaluate the marginal likelihood. 
+The following table shows a comparison of point estimates and standard deviations (SD):
+
+<div align="center"><table cellspacing="2" cellpadding="3" border="1">
+<tr>
+<td></td>
+<td> Millar</td>
+<td> SD</td>
+<td> ADMB-RE</td>
+<td> SD</td>
+</tr>
+<tr>
+<td><FONT FACE="Symbol">f</FONT><sub>1</sub></td>
+<td> 195.9</td>
+<td> 14.5</td>
+<td> 196.2</td>
+<td> 19.4</td>
+</tr>
+<tr>
+<td><FONT FACE="Symbol">f</FONT><sub>2</sub></td>
+<td> 747.6</td>
+<td> 59.1</td>
+<td> 748.4</td>
+<td> 62.3</td>
+</tr>
+<tr>
+<td><FONT FACE="Symbol">f</FONT><sub>3</sub></td>
+<td> 352.7</td>
+<td> 32.0</td>
+<td> 352.9</td>
+<td> 33.3</td>
+</tr>
+<tr>
+<td>Var(<FONT FACE="Symbol">e</FONT></td>
+<td>  28.1</td>
+<td>  8.2</td>
+<td>  28.1</td>
+<td>  8.2</td>
+</tr>
+<tr>
+<td>Var(<em>u</em>)</td>
+<td>1059.8</td>
+<td>684.5</td>
+<td>1061.0</td>
+<td>687.6</td>
+</tr>
+<tr>
+<td>Var(<em>v</em>)</td>
+<td> 109.1</td>
+<td> 88.8</td>
+<td> 109.9</td>
+<td> 90.7</td>
+</tr>
+</table>
+</div>
+<br>
+
+The differences between the two approaches are minor.
+<P>
+
+
+</table>
+

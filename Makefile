@@ -53,51 +53,51 @@ cl-clean:
 #Oracle Solaris Studio
 CC: CC-dist CC-contrib
 CC-dist:
-	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=CC dist
+	$(MAKE) --directory=src CC=cc CXX=CC dist
 CC-contrib:
-	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=CC contrib 
+	$(MAKE) --directory=src CC=cc CXX=CC contrib 
 CC-verify:
-	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=CC verify
+	$(MAKE) --directory=src CC=cc CXX=CC verify
 CC-tests:
-	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=CC tests
+	$(MAKE) --directory=src CC=cc CXX=CC tests
 CC-clean:
-	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=CC clean
+	$(MAKE) --directory=src CC=cc CXX=CC clean
 
 #Intel
 icpc: icpc-dist icpc-contrib
 icpc-dist:
-	$(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc dist
+	$(MAKE) --directory=src CXX=icpc CC=icc dist
 icpc-contrib:
-	$(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc contrib
+	$(MAKE) --directory=src CXX=icpc CC=icc contrib
 icpc-verify:
-	$(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc verify
+	$(MAKE) --directory=src CXX=icpc CC=icc verify
 icpc-tests:
-	$(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc tests
+	$(MAKE) --directory=src CXX=icpc CC=icc tests
 icpc-clean:
-	$(MAKE) --directory=src --file=linux.mak CXX=icpc CC=icc clean
+	$(MAKE) --directory=src CXX=icpc CC=icc clean
 
 #GNU
 g++: g++-dist g++-contrib
 g++-dist:
-	$(MAKE) --directory=src --file=linux.mak CC=gcc CXX=g++ dist
+	$(MAKE) --directory=src CC=gcc CXX=g++ dist
 g++-contrib:
-	$(MAKE) --directory=src --file=linux.mak CC=gcc CXX=g++ contrib
+	$(MAKE) --directory=src CC=gcc CXX=g++ contrib
 g++-verify:
-	$(MAKE) --directory=src --file=linux.mak CC=gcc CXX=g++ verify
+	$(MAKE) --directory=src CC=gcc CXX=g++ verify
 g++-tests:
-	$(MAKE) --directory=src --file=linux.mak CC=gcc CXX=g++ tests
+	$(MAKE) --directory=src CC=gcc CXX=g++ tests
 g++-clean:
-	$(MAKE) --directory=src --file=linux.mak CC=gcc CXX=g++ clean
+	$(MAKE) --directory=src CC=gcc CXX=g++ clean
 
 #MacOS clang
 c++: c++-dist c++-contrib
 c++-dist:
-	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=c++ dist
+	$(MAKE) --directory=src CC=cc CXX=c++ dist
 c++-contrib:
-	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=c++ contrib
+	$(MAKE) --directory=src CC=cc CXX=c++ contrib
 c++-verify:
-	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=c++ verify
+	$(MAKE) --directory=src CC=cc CXX=c++ verify
 c++-tests:
-	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=c++ tests
+	$(MAKE) --directory=src CC=cc CXX=c++ tests
 c++-clean:
-	$(MAKE) --directory=src --file=linux.mak CC=cc CXX=c++ clean
+	$(MAKE) --directory=src CC=cc CXX=c++ clean

@@ -98,6 +98,7 @@ endif
 	cp -R ../examples/admb ${DISK}/examples/admb
 	rm -rf ${DISK}/examples/admb-re
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
+	rm -rf `find ${DISK} -type d -name .svn`
 
 verify:
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C ${DISK}/examples all

@@ -18,7 +18,7 @@ AlwaysShowComponentsList=no
 Name: "mingw"; Description: "ADMB (MinGW G++)"
 
 [Files]
-Source: "..\..\..\build\mingw\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
+Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "..\..\..\scripts\mingw\set-admb-mingwmak.bat"; DestDir: "{app}\bin"
 Source: "..\..\..\scripts\g++\adcomp.bat"; DestDir: "{app}\bin"
 Source: "..\..\..\scripts\g++\adlink.bat"; DestDir: "{app}\bin"

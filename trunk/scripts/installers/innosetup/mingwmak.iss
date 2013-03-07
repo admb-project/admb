@@ -24,7 +24,7 @@ Source: "..\..\..\scripts\g++\adcomp.bat"; DestDir: "{app}\bin"
 Source: "..\..\..\scripts\g++\adlink.bat"; DestDir: "{app}\bin"
 Source: "..\..\..\scripts\admb\admb.bat"; DestDir: "{app}\bin"
 Source: "..\..\..\utilities\*"; DestDir: "{app}\utilities"
-Source: "c:\MinGW-gcc4.6\*"; DestDir: "{app}\MinGW-gcc4.6\"; Flags: recursesubdirs
+Source: "c:\MinGW\*"; DestDir: "{app}\MinGW\"; Flags: recursesubdirs
 
 [Icons]
 Name: "{group}\ADMB Command Prompt (MinGW G++)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingwmak.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW G++)"

@@ -15,7 +15,7 @@ LicenseFile=..\..\..\LICENSE.txt
 AlwaysShowComponentsList=no
 
 [Types]
-Name: "mingw"; Description: "ADMB (MinGW G++)"
+Name: "mingw"; Description: "ADMB (MinGW g++)"
 
 [Files]
 Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
@@ -26,5 +26,5 @@ Source: "..\..\..\scripts\admb\admb.bat"; DestDir: "{app}\bin"
 Source: "..\..\..\utilities\*"; DestDir: "{app}\utilities"
 
 [Icons]
-Name: "{group}\ADMB Command Prompt (MinGW G++)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingw.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW g++)"
+Name: "{group}\ADMB Command Prompt (MinGW g++)"; Filename: "{cmd}"; Parameters: "/K ""{app}\bin\set-admb-mingw.bat"""; WorkingDir: "{app}"; Comment: "ADMB Command Prompt (MinGW g++)"
 Name: "{group}\Uninstall"; Filename: "{uninstallexe}"; Comment: "Uninstall ADMB (Mingw g++)"

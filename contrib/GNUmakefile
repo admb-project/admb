@@ -74,6 +74,8 @@ test:
 
 clean:
 	@rm -rvf build
+	@rm -vf ad2csv/ad2csv
+	@rm -vf ad2csv/ad2csv.o
 	$(MAKE) --directory=ecolib clean
 	$(MAKE) --directory=qfclib clean
 	$(MAKE) --directory=statslib clean

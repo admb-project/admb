@@ -98,7 +98,7 @@ void gradcalc(int nvar, const dvector& _g)
   gradient_structure::TOTAL_BYTES = 0;
   gradient_structure::PREVIOUS_TOTAL_BYTES=0;
   unsigned int i;
-  long int lpos;
+  my_off_t lpos;
   if(!gradient_structure::instances)
   {
     g.initialize();
@@ -252,7 +252,7 @@ do
  */
 void gradient_structure::save_arrays()
 {
-  void* temp_ptr = 0;
+  void * temp_ptr;
   long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
     ARRAY_MEMBLOCK_SIZE);
   gradient_structure::save_var_file_flag=0;
@@ -274,7 +274,7 @@ void gradient_structure::save_arrays()
    }
    if (gradient_structure::save_var_file_flag==0)
    {
-     ARRAY_MEMBLOCK_SAVE = (char*)temp_ptr;
+     ARRAY_MEMBLOCK_SAVE = temp_ptr;
      #if defined(DOS386)
      //#if DOS386==1
        #ifndef USE_ASSEMBLER

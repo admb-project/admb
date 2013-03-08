@@ -119,7 +119,7 @@ Macro definitions.
   #define __ADMBTHREAD__
 #endif
 
-#define my_off_t long int
+#define my_off_t long long int
 #ifdef __BORLANDC__
 #define my_u_off_t unsigned long int
 #else
@@ -8078,25 +8078,24 @@ class function_minimizer_exception
   adstring get_string_marker(void);
   class adpvm_manager;
   class adtimer;
-  /*
-  class adpthreads_manager
-  {
-    static __ADMBTHREAD__ int slave_number;
-  public:
-    static int is_slave(void) { if (slave_number)
-                                  return 1;
-                                else
-                                  return 0; }
-    static int is_master(void) { if (slave_number) 
-                                  return 0;
-                                else
-                                  return 1; }
-    int get_slave_number(void) { return slave_number; }
-    void set_slave_number(int n) { slave_number=n; }
-    adpthreads_manager(int n) { slave_number=n;}
-    adpthreads_manager(void) { slave_number=0;}
-  };
-  */
+
+//class adpthreads_manager
+//{
+//  static __ADMBTHREAD__ int slave_number;
+//public:
+//  static int is_slave(void) { if (slave_number)
+//                                return 1;
+//                              else
+//                                return 0; }
+//  static int is_master(void) { if (slave_number) 
+//                                return 0;
+//                              else
+//                                return 1; }
+//  int get_slave_number(void) { return slave_number; }
+//  void set_slave_number(int n) { slave_number=n; }
+//  adpthreads_manager(int n) { slave_number=n;}
+//  adpthreads_manager(void) { slave_number=0;}
+//};
 
   // ******************************************************
   // ******************************************************
@@ -8185,7 +8184,10 @@ class function_minimizer_exception
     void adjoint_read_unlock_buffer_master(void);
     void adjoint_write_lock_buffer_slave(void);
     void adjoint_write_lock_buffer_master(void);
+    void send_dvar_matrix_to_slave(const dvar_matrix &x,int sno);
+    void adjoint_send_dvar_matrix_to_slave(void);
   };
+
 
 /**
  * Description not yet available.
@@ -8209,7 +8211,8 @@ public:
   static adtimer * ptm1;
   virtual void get_slave_assignments(void);
   static adpvm_manager * pvm_manager;
-  static __ADMBTHREAD__ adpthread_manager * pthread_manager;
+  //static __ADMBTHREAD__ adpthreads_manager * pthreads_manager;
+  static adpthread_manager * pthread_manager;
   static adstring subdir;
   static streampos change_datafile_name(const adstring& s,const streampos& off=0);
   static streampos change_pinfile_name(const adstring& s,const streampos& off=0);

@@ -40,15 +40,15 @@ bcc-clean:
 #Microsoft Visual C++
 cl: cl-dist cl-contrib
 cl-dist:
-	cd src& nmake /f cl.mak dist
+	cd src& nmake dist
 cl-contrib:
-	cd src& nmake /f cl.mak contrib
+	cd src& nmake contrib
 cl-verify:
-	cd src& nmake /f cl.mak verify
+	cd src& nmake verify
 cl-tests:
-	cd src& nmake /f cl.mak tests
+	cd src& nmake tests
 cl-clean:
-	cd src& nmake /f cl.mak clean
+	cd src& nmake clean
 
 #Oracle Solaris Studio
 CC: CC-dist CC-contrib

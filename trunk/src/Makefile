@@ -66,3 +66,5 @@ verify:
 clean:
 	IF EXIST $(DISK) rd /S /Q $(DISK)
 	IF EXIST $(DISK) rd /S /Q $(DISK)\objects
+	pushd ..\contrib& $(MAKE) clean& popd
+	pushd ..\tests& $(MAKE) clean& popd

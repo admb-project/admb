@@ -1,9 +1,12 @@
 # make some special targets
 .PHONY: all rules
+.PRECIOUS: %.cpp %.htp
 
 ifeq ($(HOSTNAME),katsuo)
-  export ADMB_HOME=/home/davef/admb-threaded/build/admb-linux-gcc4.8.0-64bit
+  #export ADMB_HOME=/home/jsibert/admb-threaded2/build/dists/admb_gcc411_fedora8
+ #export ADMB_HOME=/home/davef/admb-threaded/build/admb-linux-gcc4.8.0-64bit
 endif
+
 ifeq ($(HOSTNAME),kihikihi)
   export ADMB_HOME=/home/jsibert/admb/pthreads-737/build/admb-linux-gcc4.7.2-64bit
 endif
@@ -17,8 +20,8 @@ CFLAGS = -pthread -ggdb -Wall -fpermissive -DUSE_PTHREADS -DUSE_LAPLACE -Dlinux 
 LFLAGS = -L${ADMB_HOME}/lib -L/usr/lib -ladt -lads -ladmod -ldf1b2s -ladt -lads -ladmod -ldf1b2s -ladt -lads -ladmod -ldf1b2s -ladt -lads -ladmod -ldf1b2s -lpthread
 
 # generates multiple definition linker errors
-#OBJECTS=adpthread_manager.o admb_thread.o nst.o
-OBJECTS=thread_stuff.o admb_thread.o nst.o
+#OBJECTS=adpthread_manager.o admb_thread.o nst.o 
+OBJECTS=thread_stuff.o admb_thread.o nst.o 
 
 # link the object file into the executable 
 nst: $(OBJECTS) 
@@ -27,7 +30,7 @@ nst: $(OBJECTS)
 	$(LL) -o $@ $^ $(LFLAGS)
 	@echo ------- Done
 
-admb_thread.o: admb_thread.cpp nst.tpl nst.htp
+admb_thread.o: admb_thread.cpp nst.tpl nst.htp 
 	@echo
 	@echo ------- Compile $<
 	sed -i '/class model_data : public ad_comm{/a\
@@ -48,14 +51,14 @@ admb_thread.o: admb_thread.cpp nst.tpl nst.htp
 	@echo
 	@echo ------- Making $@
 	@echo ------- Translate $<
-	$(ADMB_HOME)/bin/tpl2cpp $*
+	tpl2cpp $*
 	@echo ------- Done
 
 %.htp:%.tpl;
 	@echo
 	@echo ------- Making $@
 	@echo ------- Translate $<
-	$(ADMB_HOME)/bin/tpl2cpp $*
+	tpl2cpp $*
 
 # make Dave's new_sim_thread3
 new_sim_thread3:

@@ -3,6 +3,7 @@
 #include "pt_trace.h"
 
 #include <admodel.h>
+//#include "adpthread_manager.h"
 #include "adthread.h"
 #include "nst.htp"
 
@@ -11,7 +12,6 @@ extern void * mp_ptr;
 extern pthread_mutex_t mp_ptr_mutex;
 extern pthread_cond_t mp_ptr_cond;
   
-//__ADMBTHREAD__ int  adpthread_manager::slave_number=0;
 
 
 void admb_thread(void * ptr)

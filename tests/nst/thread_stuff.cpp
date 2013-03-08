@@ -1059,6 +1059,69 @@ void add_slave_suffix(const adstring& _tmpstring)
     }
   }
 }
+void adpthread_manager::send_dvar_matrix_to_slave(const dvar_matrix &x,int sno)
+void adpthread_manager::adjoint_send_dvar_matrix_to_slave(void)
 */
 
+
+
+void adjoint_send_dvar_matrix_to_slave(void)
+{
+  verify_identifier_string("UN");
+  adpthread_manager * ptr=(adpthread_manager*)(restore_pointer_value());
+  ptr->adjoint_send_dvar_matrix_to_slave();
+}
+
+void adpthread_manager::adjoint_send_dvar_matrix_to_slave(void)
+{
+  verify_identifier_string("HH");
+  int sno=restore_int_value();
+  verify_identifier_string("OP");
+  verify_id_string_from_slave_nl("SVX",sno);
+  int rmin;
+  int rmax;
+  readbuffer(&rmin,sizeof(int),sno);
+  readbuffer(&rmax,sizeof(int),sno);
+  dmatrix M(rmin,rmax);
+  for (int i=rmin;i<=rmax;i++)
+  {
+    int mmin,mmax;
+    readbuffer(&mmin,sizeof(int),sno);
+    readbuffer(&mmax,sizeof(int),sno);
+    M(i).allocate(mmin,mmax);
+    int sz=mmax-mmin+1;
+    readbuffer(&(M(i)(mmin)),sz*sizeof(double),sno);
+  }
+  dvar_matrix_position dmpos=restore_dvar_matrix_position();
+  verify_identifier_string("Y");
+  M.save_dmatrix_derivatives(dmpos);
+}
+
+void adpthread_manager::send_dvar_matrix_to_slave(const dvar_matrix &x,int sno)
+{
+  int rmin=x.indexmin();
+  int rmax=x.indexmax();
+  send_id_string_to_slave_nl("WUZ",sno);
+  writebuffer(&rmin,sizeof(int),sno);
+  writebuffer(&rmax,sizeof(int),sno);
+  for (int i=rmin;i<=rmax;i++)
+  {
+    int mmin=x(i).indexmin();
+    int mmax=x(i).indexmax();
+    int sz=mmax-mmin+1;
+    writebuffer(&mmin,sizeof(int),sno);
+    writebuffer(&mmax,sizeof(int),sno);
+    writebuffer(&(value(x(i)(mmin))),sz*sizeof(double),sno);
+  }
+  save_identifier_string("Y");
+  // !!! should we optimize this ?
+  x.save_dvar_matrix_position();
+  save_identifier_string("OP");
+  save_int_value(sno);
+  save_identifier_string("HH");
+  save_pointer_value(this);
+  save_identifier_string("UN");
+  gradient_structure::GRAD_STACK1->
+    set_gradient_stack(::adjoint_send_dvar_matrix_to_slave);
+}
 

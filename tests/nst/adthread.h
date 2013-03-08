@@ -115,6 +115,8 @@
     void adjoint_read_unlock_buffer_master(void);
     void adjoint_write_lock_buffer_slave(void);
     void adjoint_write_lock_buffer_master(void);
+    void send_dvar_matrix_to_slave(const dvar_matrix &x,int sno);
+    void adjoint_send_dvar_matrix_to_slave(void);
   };
  */
   extern adpthread_manager * test_thread_manager;

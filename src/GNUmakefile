@@ -1,12 +1,8 @@
-.PHONY: dist verify
-SHELL = /bin/bash
-
 ifndef DISK
 DISK=../build/dist
 endif
 
 PWD=$(shell pwd)
-NOW=$(shell date)
 
 ifndef LIBPATH
 LIBPATH=../build/objects/dist

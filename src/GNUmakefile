@@ -37,7 +37,11 @@ CXXFLAGS:=-c -O3 $(CXXFLAGS)
 endif
 
 dist:
-	mkdir -p ${DISK}/{bin,docs/manuals,examples,include,lib}
+	mkdir -p ${DISK}/bin
+	mkdir -p ${DISK}/docs/manuals
+	mkdir -p ${DISK}/examples
+	mkdir -p ${DISK}/include
+	mkdir -p ${DISK}/lib
 	mkdir -p ${LIBPATH}/linad99-olp
 	mkdir -p ${LIBPATH}/linad99-slp
 	mkdir -p ${LIBPATH}/df1b2-separable-olp

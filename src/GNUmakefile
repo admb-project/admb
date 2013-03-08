@@ -130,5 +130,7 @@ clean:
 	@rm -f df1b2-separable/tpl2rem
 	@rm -rvf $(DISK)
 	@rm -rvf $(LIBPATH)
+	@rm -vf nh99/tpl2cpp.c
+	@rm -vf df1b2-separable/tpl2rem.c
 	@make --directory=../contrib clean
 	@make --directory=../tests clean

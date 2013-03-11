@@ -2,12 +2,16 @@
 
 ADMB_HOME=$(CURDIR)/../build/dist
 
-all: test-geolocation test-cov_re
+all: test-geolocation
+svn: svn-geolocation
 
 main: test-geolocation test-cov_re
 
 test-geolocation:
-	-$(MAKE) --directory=geolocation
+	$(MAKE) --directory=geolocation
+
+svn-geolocation:
+	$(MAKE) --directory=geolocation svn
 
 test-expm:
 	$(MAKE) --directory=expm

@@ -1,8 +1,4 @@
-.PHONY: clean testminmax SS3 admb_messages init_bounded_number_matrix beta_regression hysimple simple_mcmc betareg gmrf RC04_solve RC04_det RC04_inv RC10_spline1 RC10_spline2 RC13_dsort RC15_eigen RC26_dflndet RC27_dfsolve1 RC27_dfsolve2 RC05_quad RC01_svd atan2 priors betai beta2 beta3 adstring_array df33_tester beta_deviate
-
-ADMB_HOME=$(CURDIR)/../build/dist
-
-all: test-geolocation
+all: test-geolocation test-expm test-cov_re
 svn: svn-geolocation
 
 main: test-geolocation test-cov_re

@@ -12,17 +12,17 @@ if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 
 # Pop args until model=$1
-adlib=-lado
-df1b2lib=-ldf1b2o
-contriblib=-lcontribo
+libadmb=-ladmb
+libcontrib=-lcontrib
 unset shared
 sym=-s
-while getopts "dgrs" A; do
+while getopts "dgrso" A; do
   case $A in
     d) shared=-shared;;
     g) unset sym;;
     r) ;;
-    s) contriblib=-lcontribs; df1b2lib=-ldf1b2s; adlib=-lads;;
+    s) libcontriblib=-lcontrib;libadmb=-ladmb;;
+    o) libcontriblib=-lcontribo;libadmb=-ladmbo;;
   esac
 done
 shift $((OPTIND-1))
@@ -44,8 +44,7 @@ done
 
 if [[ -z $shared ]]; then out="-o $model"; else out="-o $model.so"; fi
 
-CMD="icpc $LDFLAGS $sym $shared -L\"$ADMB_HOME\"/lib -L\"$ADMB_HOME\"/contrib $objects $df1b2lib -ladmod $contriblib\
- -ladt $adlib $df1b2lib -ladmod -ladt $adlib $contriblib $out "
+CMD="icpc $LDFLAGS $sym $shared -L\"$ADMB_HOME\"/lib -L\"$ADMB_HOME\"/contrib $objects $libadmb $libcontrib $out "
 
 echo $CMD
 eval $CMD

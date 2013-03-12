@@ -13,14 +13,15 @@ if [[ "$1" == "--help" ]]; then help; exit; fi
 
 # Pop args until model=$1
 unset dll
-opt=-DOPT_LIB
+opt=-DSAFE_ALL
 sym=-O3
-while getopts "dgrs" A; do
+while getopts "dgrso" A; do
   case $A in
     d) dll=-DBUILDING_DLL;;
     g) sym=-g;;
     r) ;;
     s) opt=-DSAFE_ALL;;
+    o) opt=-DOPT_ALL;;
   esac
 done
 shift $((OPTIND-1))

@@ -6,7 +6,7 @@
 #include <df1b2fun.h>
 #include <admodel.h>
 #include <df3fun.h>
-#include <df33fun.h>
+#include "df33fun.h"
 #define MAXIT 100
 #define EPS 1.0e-9
 //#define EPS 3.0e-7

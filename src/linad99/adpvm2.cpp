@@ -18,7 +18,7 @@
 #if defined(__BORLANDC__)
 #define WIN32
 #endif
-#include <adpvm2.h>
+#include "adpvm2.h"
 //#if defined(__BORLANDC__)
 #define AD_USE_DYNAMIC_LOAD
 //#endif

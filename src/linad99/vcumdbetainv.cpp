@@ -9,7 +9,7 @@
 #endif
 
 #include <admodel.h>
-#include <df12fun.h>
+#include "df12fun.h"
 
 //#define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 

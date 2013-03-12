@@ -1,76 +1,50 @@
-.PHONY: all ad2csv statslib ecolib qfclib libcontribo.a libcontribs.a test clean
-
 ifndef DISK
-DISK=../build/dist
+DISK=../../build/dist
 endif
 
 ifndef LIBPATH
-LIBPATH=../build/objects/dist
+LIBPATH=../../build/objects/dist
 endif
 
 ifeq ($(CXX),CC)
-CXXFLAGS:=-c $(CXXFLAGS) -DUSE_LAPLACE -I../${DISK}/include -D__SPDLL__ -D__GNUDOS__ -Dlinux -I../${DISK}/include
+CXXFLAGS:=$(CXXFLAGS) -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I${DISK}/include
 else
-CXXFLAGS:=-c $(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I../${DISK}/include
+CXXFLAGS:=$(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I${DISK}/include
 endif
 
+all: build-statslib build-ecolib build-qfclib build-ad2csv
+ifeq ($(SHELL),sh.exe)
+	copy contrib.h ..\build\dist\contrib
+else
+	$(AR) -rs ../build/dist/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
+	$(AR) -rs ../build/dist/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
+	cp contrib.h ../build/dist/contrib
+endif
+
+build-statslib:
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-statslib-
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-statslib-
+
+build-ecolib:
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-ecolib-
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-ecolib-
+
+build-qfclib:
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-qfclib-
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-qfclib-
+
+build-ad2csv:
 ifeq ($(CXX),g++.exe)
-LIBPATH_SAFE=..\${LIBPATH}\contrib-slp
-LIBPATH_OPT=..\${LIBPATH}\contrib-olp
-LIBPATH_SAFE2=${LIBPATH}\contrib-slp
-LIBPATH_OPT2=${LIBPATH}\contrib-olp
-DISKDIR=..\${DISK}\contrib
+	$(MAKE) --directory=ad2csv ADMB_HOME=${DISK} PATH="${DISK}\bin;$(PATH)"
+	copy ad2csv\ad2csv.exe ..\build\dist\bin
 else
-LIBPATH_SAFE=../${LIBPATH}/contrib-slp
-LIBPATH_OPT=../${LIBPATH}/contrib-olp
-LIBPATH_SAFE2=${LIBPATH}/contrib-slp
-LIBPATH_OPT2=${LIBPATH}/contrib-olp
-DISKDIR=../${DISK}/contrib
+	ADMB_HOME="${DISK}/dist" PATH="${DISK}/bin:$(PATH)" $(MAKE) --directory=ad2csv
+	cp -v ad2csv/ad2csv ../build/dist/bin
 endif
-
-all: disk statslib ecolib qfclib libcontribo.a libcontribs.a ad2csv
-
-disk:
-ifeq ($(CXX),g++.exe)
-	if not exist ${DISK}\contrib md ${DISK}\contrib
-	if not exist ${LIBPATH}\contrib-olp md ${LIBPATH}\contrib-olp
-	if not exist ${LIBPATH}\contrib-slp md ${LIBPATH}\contrib-slp
-	copy contrib.h ${DISK}\contrib
-else
-	mkdir -p ${DISK}/contrib
-	mkdir -p ${LIBPATH}/contrib-olp
-	mkdir -p ${LIBPATH}/contrib-slp
-	cp contrib.h ${DISK}/contrib
-endif
-
-ad2csv:
-ifeq ($(CXX),g++.exe)
-	$(MAKE) --directory=$@ ADMB_HOME=..\${DISK} PATH="..\${DISK}\bin;$(PATH)"
-else
-	ADMB_HOME=../${DISK} PATH="../${DISK}/bin:$(PATH)" $(MAKE) --directory=$@
-endif
-
-statslib:
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=$(LIBPATH_OPT) DISKDIR=$(DISKDIR)
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" LIBPATH=$(LIBPATH_SAFE) DISKDIR=$(DISKDIR)
-
-ecolib:
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=$(LIBPATH_OPT) DISKDIR=$(DISKDIR)
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" LIBPATH=$(LIBPATH_SAFE) DISKDIR=$(DISKDIR)
-
-qfclib:
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" LIBPATH=$(LIBPATH_OPT) DISKDIR=$(DISKDIR)
-	$(MAKE) --directory=$@ CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" LIBPATH=$(LIBPATH_SAFE) DISKDIR=$(DISKDIR)
-
-libcontribo.a:
-	$(AR) -rs ${DISK}/contrib/$@ $(LIBPATH_OPT2)/*.obj
-
-libcontribs.a:
-	$(AR) -rs ${DISK}/contrib/$@ $(LIBPATH_SAFE2)/*.obj
 
 test:
-	CXXFLAGS="" $(MAKE) --directory=ecolib test
-	CXXFLAGS="" $(MAKE) --directory=qfclib test
+	$(MAKE) --directory=ecolib test
+	$(MAKE) --directory=qfclib test
 
 clean:
 	@rm -rvf build
@@ -79,8 +53,3 @@ clean:
 	$(MAKE) --directory=ecolib clean
 	$(MAKE) --directory=qfclib clean
 	$(MAKE) --directory=statslib clean
-ifeq ($(CXX),g++.exe)
-	rm -rf $(DISKDIR)
-	rm -rf $(LIBPATH_OPT)
-	rm -rf $(LIBPATH_SAFE)
-endif

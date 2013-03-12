@@ -7,7 +7,7 @@
 #include <fvar.hpp>
 #include <string.h>
 #include <stdlib.h>
-#include <safe_mem.h>
+#include "safe_mem.h"
 
 line_adstring& line_adstring::operator=(const adstring& s)
   {

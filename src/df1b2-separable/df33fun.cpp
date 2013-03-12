@@ -9,7 +9,7 @@
  * Description not yet available.
  */
 #include <df1b2fun.h>
-#include <df33fun.h>
+#include "df33fun.h"
   df1b2variable * df3_three_variable::ind_var[3];
   int df3_three_variable::num_ind_var=0;
   int df3_three_variable::num_local_ind_var=0;

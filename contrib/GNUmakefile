@@ -12,7 +12,9 @@ else
 CXXFLAGS:=$(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I${DISK}/include
 endif
 
-all: build-statslib build-ecolib build-qfclib build-ad2csv
+all: contribs build-ad2csv 
+
+contribs: build-statslib build-ecolib build-qfclib
 ifeq ($(SHELL),sh.exe)
 	copy contrib.h ..\build\dist\contrib
 else

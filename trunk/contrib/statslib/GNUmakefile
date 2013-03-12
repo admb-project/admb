@@ -1,18 +1,13 @@
-.PHONY: all
-.SUFFIXES: .obj .cpp
-
-vpath %.obj $(LIBPATH)
-
 include objects.lst
 
-all: $(OBJECTS)
-ifeq ($(CXX),g++.exe)
-	copy statsLib.h $(DISKDIR)
+all: $(addprefix $(PREFIX_OBJ), $(OBJECTS))
+ifeq ($(SHELL),sh.exe)
+	copy statsLib.h $(DISK)\contrib
 else
-	cp statsLib.h $(DISKDIR)
+	cp statsLib.h $(DISK)/contrib
 endif
 
 clean:
 
-%.obj: %.cpp
-	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/$*.obj
+$(PREFIX_OBJ)%.obj: %.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<

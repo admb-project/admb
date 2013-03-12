@@ -10,7 +10,7 @@
  */
 #include <admodel.h>
 #include <df1b2fun.h>
-#include <f1b2locl.h>
+#include "f1b2locl.h"
 #include <adrndeff.h>
 
 static void xxx(double*,double*){;}

@@ -1,9 +1,19 @@
 CHANGES IN ADMB VERSION 11.0:
 
-  SIGNIFICANT USER-VISIBLE CHANGES:
+SIGNIFICANT USER-VISIBLE CHANGES:
 
-    * [anything that works differently from before, given the
-      same input]
+* [anything that works differently from before, given the
+   same input]
+
+* Improved build files.  Build will not rebuild an already built
+  object file.
+  
+  Note: Building from source will create distribution folder in
+        build/dist instead of build/os-comiler-arch.
+
+* Use a single library libadmb.a instead of separate libraries. 
+
+* Reverted some algorithms to previous code from version 9.
 
 NEW FEATURES:
 * Functions from user-contributed packages can be loaded from

@@ -12,7 +12,7 @@ ifndef ADMB_HOME
 ADMB_HOME=${PWD}/${DISK}
 endif
 
-CXXFLAGS:=-DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS)
+CXXFLAGS:=-Wno-unused-private-field -DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS)
 
 ifndef ADMB_REVISION
 ADMB_REVISION=$(shell test -e ../REVISION && cat ../REVISION)
@@ -23,7 +23,8 @@ CXXFLAGS:=-DADMB_REVISION=$(ADMB_REVISION) $(CXXFLAGS)
 ADMB_REVISION:=-r$(ADMB_REVISION)
 endif
 
-CXXFLAGS_INCLUDES:=-I../df1b2-separable -I../nh99 -I../linad99 -I../tools99
+#CXXFLAGS_INCLUDES:=-I../df1b2-separable -I../nh99 -I../linad99 -I../tools99
+CXXFLAGS_INCLUDES:=-I../${DISK}/include
 ifeq ($(CXX),CC)
 CXXFLAGS:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 else
@@ -36,28 +37,61 @@ else
 CXXFLAGS:=-c -O3 $(CXXFLAGS)
 endif
 
-dist:
-	mkdir -p ${DISK}/bin
-	mkdir -p ${DISK}/docs/manuals
-	mkdir -p ${DISK}/examples
-	mkdir -p ${DISK}/include
+all: dist contrib
+	@printf "\nADMB build completed.\n"
+	@printf "For installation, check README.txt.\n"
+
+dist: includes examples bins
+	mkdir -p ${LIBPATH}
+	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-linad99- DISKDIR=../${DISK}
+	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-linad99- DISKDIR=../${DISK}
+	$(MAKE) --directory=df1b2-separable CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-df1b2-separable- DISKDIR=../${DISK}
+	$(MAKE) --directory=df1b2-separable CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-df1b2-separable- DISKDIR=../${DISK}
+	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK}
+	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-tools99- DISKDIR=../${DISK}
+
 	mkdir -p ${DISK}/lib
-	mkdir -p ${LIBPATH}/linad99-olp
-	mkdir -p ${LIBPATH}/linad99-slp
-	mkdir -p ${LIBPATH}/df1b2-separable-olp
-	mkdir -p ${LIBPATH}/df1b2-separable-slp
-	mkdir -p ${LIBPATH}/nh99-olp
-	mkdir -p ${LIBPATH}/tools99-olp
-	$(MAKE) --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
-	$(MAKE) --directory=df1b2-separable AR=$(AR) CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=df1b2-separable AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
-	$(MAKE) --directory=nh99 CC=$(CC) AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/nh99-olp ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=tools99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-linad99-*.obj ../build/objects/dist/saflp-df1b2-separable-*.obj ../build/objects/dist/optlp-nh99-*.obj ../build/objects/dist/optlp-tools99-*.obj
+	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-linad99-*.obj ../build/objects/dist/optlp-df1b2-separable-*.obj ../build/objects/dist/optlp-nh99-*.obj ../build/objects/dist/optlp-tools99-*.obj
+
+	mkdir -p ${DISK}/docs/manuals
 	cp -vf ../LICENSE.txt ${DISK}
 	cp -vf ../README.txt ${DISK}
 	cp -vf ../NEWS.txt ${DISK}
 	cp -vf ../VERSION ${DISK}
+	rm -rf `find ${DISK} -type d -name .svn`
+	mkdir -p ${DISK}/contrib
+
+includes:
+	mkdir -p ${DISK}/include
+	cp linad99/fvar.hpp ${DISK}/include
+	cp linad99/dfpool.h ${DISK}/include
+	cp linad99/trunc.hpp ${DISK}/include
+	cp linad99/factors.h ${DISK}/include
+	cp tools99/adoption.hpp ${DISK}/include
+	cp tools99/adstring.hpp ${DISK}/include
+	cp tools99/cifstrem.h ${DISK}/include
+	cp tools99/clist.h ${DISK}/include
+	cp tools99/admb_messages.h ${DISK}/include
+	cp df1b2-separable/adpool.h ${DISK}/include
+	cp df1b2-separable/adrndeff.h ${DISK}/include
+	cp df1b2-separable/df1b2fun.h ${DISK}/include
+	cp df1b2-separable/df32fun.h ${DISK}/include
+	cp df1b2-separable/df3fun.h ${DISK}/include
+	cp df1b2-separable/df1b2fnl.h ${DISK}/include
+	cp df1b2-separable/df1b2loc.h ${DISK}/include
+	cp df1b2-separable/smartbuf.h ${DISK}/include
+	cp nh99/admodel.h ${DISK}/include
+	cp nh99/adsplus.h ${DISK}/include
+	cp nh99/spcomm.h ${DISK}/include
+	cp nh99/s.h ${DISK}/include
+	cp nh99/newredef.h ${DISK}/include
+	cp nh99/param_init_bounded_number_matrix.h ${DISK}/include
+	cp nh99/gccmanip.h ${DISK}/include
+
+bins:
+	mkdir -p ${DISK}/bin
+	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DISK}/bin
 	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp -vf ../scripts/g++/Makefile ${DISK}/examples
@@ -94,13 +128,13 @@ ifeq ($(CXX),g++.exe)
 	  cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
 	  cp ../utilities/sed.exe ${DISK}/bin
 endif
+
+examples:
+	mkdir -p ${DISK}/examples
 	rm -rf ${DISK}/examples/admb
 	cp -R ../examples/admb ${DISK}/examples/admb
 	rm -rf ${DISK}/examples/admb-re
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
-	rm -rf `find ${DISK} -type d -name .svn`
-	@printf "\nADMB build completed.\n"
-	@printf "For installation, check README.txt.\n"
 
 verify:
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C ${DISK}/examples all
@@ -112,18 +146,13 @@ contrib:
 	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../contrib
 
 tests:
+	$(MAKE) ADMB_HOME="${ADMB_HOME}" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" --directory=../contrib test
 	$(MAKE) ADMB_HOME="${ADMB_HOME}" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" --directory=../tests
 
 check-admb2r:
 	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); $(MAKE) -C ../test/admb2r gcc
 
 clean:
-	@rm -rvf linad99/${LIBPATH}-olp
-	@rm -rvf linad99/${LIBPATH}-slp
-	@rm -rvf nh99/${LIBPATH}-olp
-	@rm -rvf tools99/${LIBPATH}olp
-	@rm -rvf df1b2-separable/${LIBPATH}-olp
-	@rm -rvf df1b2-separable/${LIBPATH}-slp
 	@rm -f nh99/lex.yy.c
 	@rm -f df1b2-separable/lex.yy.c
 	@rm -f nh99/tpl2cpp

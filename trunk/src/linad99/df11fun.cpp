@@ -7,7 +7,7 @@
 
 char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
 
-#include <df11fun.h>
+#include "df11fun.h"
 
   prevariable * df1_one_variable::ind_var[1];
 

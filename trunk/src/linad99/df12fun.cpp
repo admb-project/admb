@@ -10,8 +10,7 @@
  */
 //class df1b2matrix;
 
-//#include <df1b2fun.h>
-#include <df12fun.h>
+#include "df12fun.h"
 
   prevariable * df1_two_variable::ind_var[2];
 

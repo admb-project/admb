@@ -9,7 +9,7 @@
  * Description not yet available.
  */
 #include <df1b2fun.h>
-#include <f1b2locl.h>
+#include "f1b2locl.h"
 class newadkludge;
 extern newadkludge * newadkl;
 

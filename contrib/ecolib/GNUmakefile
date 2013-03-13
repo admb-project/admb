@@ -8,7 +8,9 @@ else
 endif
 
 test:
-	make --directory=tests
+ifneq ($(SHELL),sh.exe)
+	ADMB_HOME="../$(ADMB_HOME)" PATH="../$(ADMB_HOME)/bin:$(PATH)" make --directory=tests
+endif
 
 clean:
 ifneq ($(SHELL),sh.exe)

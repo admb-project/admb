@@ -45,8 +45,10 @@ else
 endif
 
 test:
+ifneq ($(CXX),g++.exe)
 	@#$(MAKE) --directory=ecolib test
-	$(MAKE) --directory=qfclib test
+	ADMB_HOME="${DISK}/dist" PATH="${DISK}/bin:$(PATH)" $(MAKE) --directory=qfclib test
+endif
 
 clean:
 	@rm -rvf build

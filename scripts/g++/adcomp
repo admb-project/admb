@@ -32,7 +32,7 @@ if [ "`basename $file`" == "$file" ]; then
 fi
 
 CMD="g++ -c $CXXFLAGS $sym -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt\
- -DUSE_LAPLACE -fpermissive -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib $file"
+ -DUSE_LAPLACE -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib $file"
 echo $CMD
 eval $CMD
 

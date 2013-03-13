@@ -78,7 +78,8 @@ do
   tplsrcs="$tplsrcs ${model%.*}.cpp"
 done
 
-for file in $tplsrcs $srcs
+tplobjs=
+for file in $tplsrcs
 do
   if [ ! -f $file ]; then
     echo -e "\\nError: $file not found\\n"
@@ -95,15 +96,30 @@ do
     echo -e "\\nError: Could not compile $file\\n"
     exit 1
   fi
+  tplobjs="$tplobjs ${file%.*}.o"
 done
 
 for file in $srcs
 do
-  f=${file%.*}
-  objs="$f.o $objs"
+  if [ ! -f $file ]; then
+    echo -e "\\nError: $file not found\\n"
+    exit 1
+  fi
+  if [[ -z "$CXXFLAGS" ]]; then
+    CMD="adcomp $d $g $r $s $file"
+  else
+    CMD="CXXFLAGS=\"$CXXFLAGS\" adcomp $d $g $r $s $file"
+  fi
+  echo -e \\n\*\*\* $CMD
+  eval $CMD
+  if [[ ! -f ${file%.*}.o ]]; then
+    echo -e "\\nError: Could not compile $file\\n"
+    exit 1
+  fi
+  objs="$objs ${file%.*}.o"
 done
 
-for file in $tpls
+for file in $tplobjs
 do
   model=${file%.*}
   if [[ -z "$LDFLAGS" ]]; then
@@ -123,6 +139,12 @@ do
     fi
   fi
 done
+
+if [[ "$tplobjs" == "" ]]; then
+  CMD="adlink $d $g $r $s $objs"
+  echo -e \\n\*\*\* $CMD
+  eval $CMD
+fi
 
 echo -e "\\nSuccessfully built executable.\\n"
 exit 0

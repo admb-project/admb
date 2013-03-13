@@ -42,7 +42,7 @@ done
 
 if [[ -z $shared ]]; then out="-o $model"; else out="-o $model.so"; fi
 
-CMD="g++ $LDFLAGS $sym $shared \"$ADMB_HOME\"/lib/libadmb$opt.a \"$ADMB_HOME\"/contrib/libcontrib$opt.a $out $objects"
+CMD="g++ $LDFLAGS $sym $shared $out $objects \"$ADMB_HOME\"/lib/libadmb$opt.a \"$ADMB_HOME\"/contrib/libcontrib$opt.a"
 
 echo $CMD
 eval $CMD

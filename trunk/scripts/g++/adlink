@@ -11,17 +11,16 @@ if [[ "$1" == "" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 
-libadmb=-ladmb
-libcontrib=-lcontrib
 unset shared
 sym=-s
+opt=
 while getopts "dgrso" A; do
   case $A in
     d) shared=-shared;;
     g) unset sym;;
     r) ;;
-    s) libcontrib=-lcontrib; libadmb=-ladmb;;
-    o) libcontrib=-lcontribo; libadmb=-ladmbo;;
+    s) ;;
+    o) opt=o;;
   esac
 done
 shift $((OPTIND-1))
@@ -37,13 +36,13 @@ do
   if [ "$extension" = "$file" ]; then
     objects="${file%.*}.o $objects"
   elif [ "$extension" = "obj" -o "$extension" = "o" ]; then
-    objects="$file $objects"
+    objects="$objects $file"
   fi 
 done
 
 if [[ -z $shared ]]; then out="-o $model"; else out="-o $model.so"; fi
 
-CMD="g++ $LDFLAGS $sym $shared -L\"$ADMB_HOME\"/lib -L\"$ADMB_HOME\"/contrib $objects $libadmb $contriblib $out "
+CMD="g++ $LDFLAGS $sym $shared \"$ADMB_HOME\"/lib/libadmb$opt.a \"$ADMB_HOME\"/contrib/libcontrib$opt.a $out $objects"
 
 echo $CMD
 eval $CMD

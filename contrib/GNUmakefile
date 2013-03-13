@@ -18,8 +18,8 @@ contribs: build-statslib build-ecolib build-qfclib
 ifeq ($(SHELL),sh.exe)
 	copy contrib.h ..\build\dist\contrib
 else
-	$(AR) -rs ../build/dist/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
-	$(AR) -rs ../build/dist/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
+	$(AR) -rs ../build/dist/contrib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
+	$(AR) -rs ../build/dist/contrib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
 	cp contrib.h ../build/dist/contrib
 endif
 

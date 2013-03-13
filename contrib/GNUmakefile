@@ -45,7 +45,7 @@ else
 endif
 
 test:
-	-$(MAKE) --directory=ecolib test
+	@#$(MAKE) --directory=ecolib test
 	$(MAKE) --directory=qfclib test
 
 clean:

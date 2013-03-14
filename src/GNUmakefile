@@ -115,14 +115,6 @@ ifeq ($(CXX),x86_64-w64-mingw32-g++.exe)
 	  cp ../scripts/g++/adcomp-x86_64-w64-mingw32 ${DISK}/bin/adcomp
 	  cp ../scripts/g++/adlink-x86_64-w64-mingw32 ${DISK}/bin/adlink
 endif
-ifeq ($(CXX),clang++)
-	  cp ../scripts/clang++/adcomp ${DISK}/bin
-	  cp ../scripts/clang++/adlink ${DISK}/bin
-endif
-ifeq ($(CXX),icpc)
-	  cp ../scripts/icpc/adcomp ${DISK}/bin
-	  cp ../scripts/icpc/adlink ${DISK}/bin
-endif
 ifeq ($(CXX),g++.exe)
 	  cp ../scripts/admb/admb.bat ${DISK}/bin
 	  cp ../scripts/$(CXX)/adcomp.bat ${DISK}/bin

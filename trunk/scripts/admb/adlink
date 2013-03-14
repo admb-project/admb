@@ -40,8 +40,14 @@ do
   fi 
 done
 
+if [ -z $CXX ]; then
+  if [ -f $ADMB_HOME/bin/admb-cfg.sh ]; then
+    source $ADMB_HOME/bin/admb-cfg.sh
+  else
+    CXX=c++
+  fi
+fi
 
-declare -r CXX=g++
 LDFLAGS="$LDFLAGS"
 if [ ! -z "$sym" ]; then
   LDFLAGS="$LDFLAGS $sym"

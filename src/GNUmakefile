@@ -103,7 +103,6 @@ bins:
 	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DISK}/bin
 	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/admb/admb.bat ${DISK}/bin
-	cp -vf ../scripts/g++/Makefile ${DISK}/examples
 ifeq ($(CXX),CC)
 	  cp ../scripts/CC/adcomp ${DISK}/bin
 	  cp ../scripts/CC/adlink ${DISK}/bin
@@ -139,11 +138,8 @@ ifeq ($(CXX),g++.exe)
 endif
 
 examples:
-	mkdir -p ${DISK}/examples
-	rm -rf ${DISK}/examples/admb
-	cp -R ../examples/admb ${DISK}/examples/admb
-	rm -rf ${DISK}/examples/admb-re
-	cp -R ../examples/admb-re ${DISK}/examples/admb-re
+	rm -rf ${DISK}/examples
+	cp -R ../examples ${DISK}
 
 verify:
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C ${DISK}/examples all

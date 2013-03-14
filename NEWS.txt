@@ -3,9 +3,9 @@ CHANGES IN ADMB VERSION 11.0:
 TODO:
 [ ] add contrib procedure
 [ ] fix when no flex problem
-[ ] fix geolocation test
-[ ] catch exit errors for adlink and adcomp
-[ ] simplify admb scripts
+[*] fix geolocation test
+[*] catch exit errors for adlink and adcomp
+[*] simplify admb scripts
 [ ] VC++ build files
 
 SIGNIFICANT USER-VISIBLE CHANGES:

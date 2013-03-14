@@ -31,8 +31,14 @@ if [ "`basename $file`" == "$file" ]; then
   file=$file.cpp
 fi
 
-CMD="g++ -c $CXXFLAGS $sym -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt\
- -DUSE_LAPLACE -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib $file"
+declare -r CXX=g++
+CXXFLAGS="-c $CXXFLAGS $sym"
+if [ ! -z "$dll" ]; then
+  CXXFLAGS="$CXXFLAGS $dll"
+fi
+CXXFLAGS="$CXXFLAGS -Wno-deprecated -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib"
+
+CMD="$CXX $CXXFLAGS $file"
 echo $CMD
 eval $CMD
 

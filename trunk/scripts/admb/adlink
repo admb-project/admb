@@ -40,10 +40,19 @@ do
   fi 
 done
 
-if [[ -z $shared ]]; then out="-o $model"; else out="-o $model.so"; fi
 
-CMD="g++ $LDFLAGS $sym $shared $out $objects \"$ADMB_HOME\"/lib/libadmb$opt.a \"$ADMB_HOME\"/contrib/libcontrib$opt.a"
+declare -r CXX=g++
+LDFLAGS="$LDFLAGS"
+if [ ! -z "$sym" ]; then
+  LDFLAGS="$LDFLAGS $sym"
+fi
+if [ ! -z "$shared" ]; then
+  LDFLAGS="$LDFLAGS $shared -o $model.so"
+else
+  LDFLAGS="$LDFLAGS -o $model"
+fi
 
+CMD="$CXX $LDFLAGS $objects \"$ADMB_HOME\"/lib/libadmb$opt.a \"$ADMB_HOME\"/contrib/libcontrib$opt.a"
 echo $CMD
 eval $CMD
 

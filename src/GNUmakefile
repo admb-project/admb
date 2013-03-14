@@ -103,17 +103,11 @@ bins:
 	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DISK}/bin
 	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/admb/admb.bat ${DISK}/bin
-ifeq ($(CXX),CC)
-	  cp ../scripts/CC/adcomp ${DISK}/bin
-	  cp ../scripts/CC/adlink ${DISK}/bin
-endif
-ifeq ($(CXX),c++)
-	  cp ../scripts/admb/adcomp ${DISK}/bin
-	  cp ../scripts/admb/adlink ${DISK}/bin
-endif
+	cp ../scripts/admb/adcomp ${DISK}/bin
+	cp ../scripts/admb/adlink ${DISK}/bin
+	rm -f ${DISK}/bin/admb-cfg.sh
+	echo "CXX=$(CXX)" > ${DISK}/bin/admb-cfg.sh
 ifeq ($(CXX),g++)
-	  cp ../scripts/admb/adcomp ${DISK}/bin
-	  cp ../scripts/admb/adlink ${DISK}/bin
 	  cp ../scripts/admb/adcomp.bat ${DISK}/bin
 	  cp ../scripts/admb/adlink.bat ${DISK}/bin
 endif

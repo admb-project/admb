@@ -31,7 +31,14 @@ if [ "`basename $file`" == "$file" ]; then
   file=$file.cpp
 fi
 
-declare -r CXX=g++
+if [ -z $CXX ]; then
+  if [ -f $ADMB_HOME/bin/admb-cfg.sh ]; then
+    source $ADMB_HOME/bin/admb-cfg.sh
+  else
+    CXX=c++
+  fi
+fi
+
 CXXFLAGS="-c $CXXFLAGS $sym"
 if [ ! -z "$dll" ]; then
   CXXFLAGS="$CXXFLAGS $dll"

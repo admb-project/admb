@@ -83,6 +83,8 @@ int ad2csv(int argc, char** argv)
     mystream >> line;
     i++;
   }
+
+  return 0;
 }
 
 void writeLine(dvector& line, adstring sep)

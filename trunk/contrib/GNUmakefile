@@ -12,7 +12,7 @@ else
 CXXFLAGS:=$(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I${DISK}/include
 endif
 
-all: contribs build-ad2csv 
+all: contribs build-ad2csv build-sample
 
 contribs: build-statslib build-ecolib build-qfclib
 ifeq ($(SHELL),sh.exe)
@@ -44,7 +44,13 @@ else
 	cp -v ad2csv/ad2csv ../build/dist/bin
 endif
 
+build-sample:
+	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-c $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-sample-
+
 test:
+	ADMB_HOME="${DISK}" $(MAKE) --directory=sample test
+
+test-notworking:
 ifneq ($(CXX),g++.exe)
 	ADMB_HOME="${DISK}" $(MAKE) --directory=ecolib test
 	ADMB_HOME="${DISK}" $(MAKE) --directory=qfclib test

@@ -4,28 +4,28 @@ kfsst:
 ifeq ($(SHELL),sh.exe)
 	$(MAKE) --file=Makefile kfsst
 else
-	-test -d svn-kfsst && ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-kfsst
+	test ! -d svn-kfsst || ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-kfsst
 endif
 
 kftrack:
 ifeq ($(SHELL),sh.exe)
 	$(MAKE) --file=Makefile kftrack
 else
-	-test -d svn-kftrack && ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-kftrack
+	test ! -d svn-kftrack || ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-kftrack
 endif
 
 trackit:
 ifeq ($(SHELL),sh.exe)
 	$(MAKE) --file=Makefile trackit
 else
-	-test -d svn-trackit && ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-trackit
+	test ! -d svn-trackit || ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-trackit
 endif
 
 ukfsst:
 ifeq ($(SHELL),sh.exe)
 	$(MAKE) --file=Makefile ukfsst
 else
-	-test -d svn-ukfsst && ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-ukfsst
+	test ! -d svn-ukfsst || ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" $(MAKE) --directory=svn-ukfsst
 endif
 
 svn:

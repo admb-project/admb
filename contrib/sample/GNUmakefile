@@ -1,4 +1,4 @@
-all: $(addprefix $(PREFIX_OBJ), sample.obj) test
+all: $(addprefix $(PREFIX_OBJ), sample.obj)
 	cp sample.h $(DISK)/contrib
 
 test:

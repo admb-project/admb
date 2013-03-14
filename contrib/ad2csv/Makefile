@@ -1,3 +1,2 @@
 all:
-	adcomp ad2csv
-	adlink ad2csv
+	admb ad2csv.cpp main.cpp

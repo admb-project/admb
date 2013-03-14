@@ -16,7 +16,7 @@
 
 void writeLine(dvector& line, adstring sep);
 
-int main(int argc, char** argv)
+int ad2csv(int argc, char** argv)
 {
   int i = 0;  // line in binary file
   int p = 0;  // number of parameters in binary file
@@ -88,10 +88,9 @@ int main(int argc, char** argv)
 void writeLine(dvector& line, adstring sep)
 // Write comma-separated values to stdout
 {
-  int j;  // item in line
   int first = line.indexmin();
   int last  = line.indexmax();
-  for(j=first; j<=last-1; j++)
+  for(int j=first; j<=last-1; j++)
     cout << line(j) << sep;
   cout << line(last) << endl;  // no separator after last value
 }

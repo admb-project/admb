@@ -108,8 +108,8 @@ ifeq ($(CXX),CC)
 	  cp ../scripts/CC/adlink ${DISK}/bin
 endif
 ifeq ($(CXX),c++)
-	  cp ../scripts/g++/adcomp ${DISK}/bin
-	  cp ../scripts/g++/adlink ${DISK}/bin
+	  cp ../scripts/admb/adcomp ${DISK}/bin
+	  cp ../scripts/admb/adlink ${DISK}/bin
 endif
 ifeq ($(CXX),g++)
 	  cp ../scripts/g++/adcomp ${DISK}/bin

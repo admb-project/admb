@@ -6,7 +6,23 @@ test:
 	./simple
 
 clean:
-	@rm -vf sample.obj
+	@rm -f sample.obj
+	@rm -f simple.std
+	@rm -f simple.htp
+	@rm -f admodel.hes
+	@rm -f variance
+	@rm -f simple
+	@rm -f admodel.cov
+	@rm -f simple.bar
+	@rm -f eigv.rpt
+	@rm -f simple.eva
+	@rm -f fmin.log
+	@rm -f simple.log
+	@rm -f simple.cpp
+	@rm -f simple.par
+	@rm -f simple.cor
+	@rm -f admodel.dep
+
 
 $(PREFIX_OBJ)%.obj: %.cpp
 	@#adcomp CXXFLAGS="-o $@" $<

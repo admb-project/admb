@@ -1,5 +1,13 @@
 CHANGES IN ADMB VERSION 11.0:
 
+TODO:
+[ ] add contrib procedure
+[ ] fix when no flex problem
+[ ] fix geolocation test
+[ ] catch exit errors for adlink and adcomp
+[ ] simplify admb scripts
+[ ] VC++ build files
+
 SIGNIFICANT USER-VISIBLE CHANGES:
 
 * [anything that works differently from before, given the
@@ -11,13 +19,25 @@ SIGNIFICANT USER-VISIBLE CHANGES:
   Note: Building from source will create distribution folder in
         build/dist instead of build/os-comiler-arch.
 
-* Use a single library libadmb.a instead of separate libraries. 
+* Combined libraries to a single library libadmb.a. 
 
 * Reverted some algorithms to previous code from version 9.
+
+* Safe library is now the default build option.  To build with
+  Optimized libraries use option 
+
+  $ admb --use-optimized model.tpl
+
+* s option with the control^c was added???
+
+* contributed libraries are built with the main libraries.
 
 NEW FEATURES:
 * Functions from user-contributed packages can be loaded from
   directory 'contrib', [maybe indicate how that is done].
+
+  GLOBAL_SECTION
+    using admb::contrib;
 
 * New class 'init_table' to read input data into a matrix.
 
@@ -29,6 +49,15 @@ NEW FEATURES:
 
 * New shell command 'ad2csv' to write binary files to screen 
   or to a file.
+
+* admb is now able to handle .obj, .cpp and .tpl files on
+  the commandline.
+
+  Example
+
+  admb model.tpl supportcode.cpp anotherfile.cpp
+
+  Output is executable model
 
 * [many more]
 

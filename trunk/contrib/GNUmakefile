@@ -64,3 +64,4 @@ clean:
 	$(MAKE) --directory=ecolib clean
 	$(MAKE) --directory=qfclib clean
 	$(MAKE) --directory=statslib clean
+	$(MAKE) --directory=sample clean

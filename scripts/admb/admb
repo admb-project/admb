@@ -132,10 +132,12 @@ do
   if [[ -z $dll ]]; then 
     if [[ ! -f $model ]]; then 
         echo -e "\\nError: Could not build $model\\n"
+        exit 1
     fi
   else
     if [[ ! -f $model.so ]]; then
         echo -e "\\nError: Could not build $model.so\\n"
+        exit 1
     fi
   fi
 done
@@ -144,6 +146,20 @@ if [[ "$tplobjs" == "" ]]; then
   CMD="adlink $d $g $r $s $objs"
   echo -e \\n\*\*\* $CMD
   eval $CMD
+  declare -a amodel=( $objs )
+  m=${amodel[0]}
+  m2=${m%.*}
+  if [[ -z $dll ]]; then 
+    if [[ ! -f $m2 ]]; then 
+        echo -e "\\nError: Could not build $m2\\n"
+        exit 1
+    fi
+  else
+    if [[ ! -f $m2.so ]]; then
+        echo -e "\\nError: Could not build $m2.so\\n"
+        exit 1
+    fi
+  fi
 fi
 
 echo -e "\\nSuccessfully built executable.\\n"

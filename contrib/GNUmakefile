@@ -45,7 +45,8 @@ else
 endif
 
 build-sample:
-	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-c $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-sample-
+	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-sample-
+	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-sample-
 
 test:
 	ADMB_HOME="${DISK}" $(MAKE) --directory=sample test

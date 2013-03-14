@@ -58,6 +58,10 @@ else
   LDFLAGS="$LDFLAGS -o $model"
 fi
 
+if [ "$CXX" == "adcomp-x86_64-w64-mingw32" ]; then
+  LDFLAGS="--static $LDFLAGS"
+fi
+
 CMD="$CXX $LDFLAGS $objects \"$ADMB_HOME\"/lib/libadmb$opt.a \"$ADMB_HOME\"/contrib/libcontrib$opt.a"
 echo $CMD
 eval $CMD

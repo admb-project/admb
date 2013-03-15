@@ -38,8 +38,9 @@ unset dll
 unset g
 unset r
 unset s
+unset c
 tpl2cpp=tpl2cpp
-while getopts "dgrs" A; do
+while getopts "dgrsc" A; do
   case $A in
     d) d=-d; dll=-dll
        ;;
@@ -48,6 +49,8 @@ while getopts "dgrs" A; do
     r) r=-r; tpl2cpp=tpl2rem
        ;;
     s) s=-s; bounds=-bounds
+       ;;
+    c) c=1
        ;;
     *)
        help
@@ -138,6 +141,11 @@ do
   fi
   objs="$objs ${file%.*}.o"
 done
+
+if [ ! -z "$c" ]; then
+  echo -e "\\nSuccessfully compiled \"$tplobjs $objs\".\\n"
+  exit 0
+fi 
 
 for file in $tplobjs
 do

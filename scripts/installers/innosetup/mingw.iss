@@ -20,8 +20,8 @@ Name: "mingw"; Description: "ADMB (MinGW g++)"
 [Files]
 Source: "..\..\..\build\dist\*"; DestDir: "{app}"; Excludes: ".svn,*\.svn"; Flags: recursesubdirs
 Source: "..\..\..\scripts\mingw\set-admb-mingw.bat"; DestDir: "{app}\bin"
-Source: "..\..\..\scripts\g++\adcomp.bat"; DestDir: "{app}\bin"
-Source: "..\..\..\scripts\g++\adlink.bat"; DestDir: "{app}\bin"
+Source: "..\..\..\scripts\admb\adcomp.bat"; DestDir: "{app}\bin"
+Source: "..\..\..\scripts\admb\adlink.bat"; DestDir: "{app}\bin"
 Source: "..\..\..\scripts\admb\admb.bat"; DestDir: "{app}\bin"
 Source: "..\..\..\utilities\*"; DestDir: "{app}\utilities"
 

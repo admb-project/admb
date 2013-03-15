@@ -12,15 +12,8 @@ ifndef ADMB_HOME
 ADMB_HOME=${PWD}/${DISK}
 endif
 
-CXXFLAGS:=-DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS)
-
 ifndef ADMB_REVISION
-ADMB_REVISION=$(shell test -e ../REVISION && cat ../REVISION)
-endif
-
-ifneq ($(ADMB_REVISION),)
-CXXFLAGS:=-DADMB_REVISION=$(ADMB_REVISION) $(CXXFLAGS)
-ADMB_REVISION:=-r$(ADMB_REVISION)
+ADMB_REVISION=-r$(shell test -e ../REVISION && cat ../REVISION)
 endif
 
 #CXXFLAGS_INCLUDES:=-I../df1b2-separable -I../nh99 -I../linad99 -I../tools99
@@ -63,13 +56,31 @@ dist: includes examples bins
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-nh99-*.obj
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-tools99-*.obj
 
-	mkdir -p ${DISK}/docs/manuals
+	rm -rf ${DISK}/src
+	cp -R ../src ${DISK}
+
+	rm -rf ${DISK}/docs
+	cp -R ../docs ${DISK} 
+
+	rm -rf ${DISK}/tests
+	cp -R ../tests ${DISK}
+
+	rm -rf ${DISK}/utilities
+	cp -R ../utilities ${DISK}
+
 	cp -vf ../LICENSE.txt ${DISK}
 	cp -vf ../README.txt ${DISK}
 	cp -vf ../NEWS.txt ${DISK}
 	cp -vf ../VERSION ${DISK}
+	cp -vf ../Makefile ${DISK}
+
 	rm -rf `find ${DISK} -type d -name .svn`
-	mkdir -p ${DISK}/contrib
+
+	rm -rf ${DISK}/contrib
+	cp -R ../contrib ${DISK}
+	mkdir -p ${DISK}/contrib/include
+	mkdir -p ${DISK}/contrib/lib
+	mkdir -p ${DISK}/contrib/bin
 
 includes:
 	mkdir -p ${DISK}/include

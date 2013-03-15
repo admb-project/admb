@@ -12,13 +12,6 @@ ifndef ADMB_HOME
 ADMB_HOME=${PWD}/${DISK}
 endif
 
-ifndef ADMB_REVISION
-REVISION=$(shell test -e ../REVISION && cat ../REVISION)
-  ifdef REVISION
-  ADMB_REVISION=-r$(REVISION)
-  endif
-endif
-
 #CXXFLAGS_INCLUDES:=-I../df1b2-separable -I../nh99 -I../linad99 -I../tools99
 CXXFLAGS_INCLUDES:=-I../${DISK}/include
 ifeq ($(CXX),CC)
@@ -139,9 +132,9 @@ examples:
 
 verify:
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C ${DISK}/examples all
-	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-saf.txt"
+	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-saf.txt"
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" $(MAKE) -C ${DISK}/examples all
-	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-opt.txt"
+	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-opt.txt"
 
 contrib:
 	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../contrib
@@ -149,9 +142,6 @@ contrib:
 tests:
 	$(MAKE) ADMB_HOME="${ADMB_HOME}" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" --directory=../contrib test
 	$(MAKE) ADMB_HOME="${ADMB_HOME}" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" --directory=../tests
-
-check-admb2r:
-	export ADMB_HOME=${PWD}/${DISK}; export PATH=${PWD}/${DISK}/bin:$(PATH); $(MAKE) -C ../test/admb2r gcc
 
 clean:
 	@rm -f nh99/lex.yy.c

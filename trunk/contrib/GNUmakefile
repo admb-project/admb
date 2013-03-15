@@ -23,6 +23,9 @@ else
 	cp contrib.h ../build/dist/contrib
 endif
 
+build-admb2r:
+	$(MAKE) --directory=admb2r ADMB_HOME="${DISK}" PATH="${DISK}/bin:$(PATH)" gcc
+
 build-statslib:
 	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-statslib-
 	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-statslib-
@@ -37,7 +40,7 @@ build-qfclib:
 
 build-ad2csv:
 ifeq ($(CXX),g++.exe)
-	$(MAKE) --directory=ad2csv ADMB_HOME=${DISK} PATH="${DISK}\bin;$(PATH)"
+	$(MAKE) --directory=ad2csv ADMB_HOME="${DISK}" PATH="${DISK}\bin;$(PATH)"
 	copy ad2csv\ad2csv.exe ..\build\dist\bin
 else
 	ADMB_HOME="${DISK}/dist" PATH="${DISK}/bin:$(PATH)" $(MAKE) --directory=ad2csv

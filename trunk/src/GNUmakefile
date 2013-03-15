@@ -13,7 +13,10 @@ ADMB_HOME=${PWD}/${DISK}
 endif
 
 ifndef ADMB_REVISION
-ADMB_REVISION=-r$(shell test -e ../REVISION && cat ../REVISION)
+REVISION=$(shell test -e ../REVISION && cat ../REVISION)
+  ifdef REVISION
+  ADMB_REVISION=-r$(REVISION)
+  endif
 endif
 
 #CXXFLAGS_INCLUDES:=-I../df1b2-separable -I../nh99 -I../linad99 -I../tools99

@@ -1,4 +1,4 @@
-all: test-geolocation test-expm test-cov_re
+all: test-expm test-cov_re
 svn: svn-geolocation
 
 main: test-geolocation test-cov_re

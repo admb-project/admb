@@ -66,6 +66,10 @@ CMD="$CXX $LDFLAGS $objects \"$ADMB_HOME\"/lib/libadmb$opt.a \"$ADMB_HOME\"/cont
 echo $CMD
 eval $CMD
 
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
 exit 0
 
 ### r259 [2012-02-29] arnima  logged revision history

@@ -44,14 +44,19 @@ if [ ! -z "$dll" ]; then
   CXXFLAGS="$CXXFLAGS $dll"
 fi
 
-if [ "$CXX" != "CC" ]; then
-  CXXFLAGS="$CXXFLAGS -Wno-deprecated"
-fi
+#if [ "$CXX" != "CC" ]; then
+#  CXXFLAGS="$CXXFLAGS -Wno-deprecated"
+#fi
+
 CXXFLAGS="$CXXFLAGS -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib"
 
 CMD="$CXX $CXXFLAGS $file"
 echo $CMD
 eval $CMD
+
+if [ $? -ne 0 ]; then
+  exit 1
+fi
 
 exit 0
 

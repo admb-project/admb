@@ -45,7 +45,6 @@ dist:
 	copy ..\scripts\admb\admb.bat $(DISK)\dist\bin
 	IF NOT EXIST $(DISK)\dist\examples md $(DISK)\dist\examples
 	xcopy ..\examples $(DISK)\dist\examples /S /Y
-	copy ..\scripts\cl\Makefile $(DISK)\dist\examples
 
 verify:
 	cd $(DISK)\dist

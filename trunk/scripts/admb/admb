@@ -11,6 +11,26 @@ if [[ "$1" == "" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 
+if [ -z $ADMB_HOME ]; then
+  FILE=$0
+  while [ -h ${FILE} ]; do 
+    BASENAME=$(basename $FILE)
+    DIRNAME=$(dirname $FILE)
+    pushd $DIRNAME &> /dev/null
+    FILE="$PWD/$BASENAME"
+    FILE=$(readlink $FILE)
+    if [ ! "$FILE" == "/*" -a ! "$FILE" == "~/*" ]; then
+      FILE="$PWD/$FILE"
+    fi
+    popd &> /dev/null
+  done
+
+  pushd "$(dirname $FILE)/../" &> /dev/null
+  declare -rx ADMB_HOME="$PWD"
+  popd &> /dev/null
+  PATH=$ADMB_HOME/bin:$PATH
+fi
+
 # Pop args until model=$1
 unset bounds
 unset d

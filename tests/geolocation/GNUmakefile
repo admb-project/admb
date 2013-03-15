@@ -1,5 +1,5 @@
 ifndef ADMB_HOME
-ADMB_HOME=../../build/dist
+ADMB_HOME=../../../build/dist
 endif
 
 all: kfsst kftrack trackit ukfsst

@@ -1,12 +1,17 @@
+11234567892123456789312345678941234567895123456789612345678971234567898123456789
 CHANGES IN ADMB VERSION 11.0:
 
 TODO:
 [ ] add contrib procedure
-[ ] fix when no flex problem
+[ ] add contrib/lib and contrib/bin
+[*] fix when no flex problem
 [*] fix geolocation test
 [*] catch exit errors for adlink and adcomp
 [*] simplify admb scripts
 [ ] VC++ build files
+[*] Do gelocation test last in buildbot
+    ADMB_HOME=dkjfdk PATH=kdjfkdj make --directory=tests/geolocation clean svn all
+[ ] Add -o option to rename the output file with path.
 
 SIGNIFICANT USER-VISIBLE CHANGES:
 
@@ -31,8 +36,25 @@ SIGNIFICANT USER-VISIBLE CHANGES:
 * s option with the control^c was added???
 
 * contributed libraries are built with the main libraries.
+ 
+* flex is not needed to build ADMB, but it is needed to develop the tpl2cpp.lex 
+  and tpl2rem.lex files.
+
+* The compilation scripts (adcomp, adlink, admb) compile in "safe" mode by 
+  default.
 
 NEW FEATURES:
+* bash admb script can now set ADMB_HOME and PATH.  So, the command below
+  will work even though ADMB_HOME is not defined or added to PATH.
+
+  ~/admb/examples/admb/simple$ ~/admb/build/dist/bin/admb simple
+
+* Added "-c" option to admb script to only compile object files
+
+  ~/admb/examples/admb/simple$ ~/admb/build/dist/bin/admb -c simple
+
+  Outputs simple.o
+
 * Functions from user-contributed packages can be loaded from
   directory 'contrib', [maybe indicate how that is done].
 
@@ -82,5 +104,3 @@ etc.
 
 UPCOMING CHANGES:
 
-    * The compilation scripts (adcomp, adlink, admb) compile in
-      "safe" mode by default.

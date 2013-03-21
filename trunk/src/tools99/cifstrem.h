@@ -132,8 +132,7 @@ Definition of the cifstream class.
 #define FILTER_BUF_SIZE 8000
 #define SIGNATURE_LENGTH  80
 
-/** Class to read input data file with comments; 
-a "self-documenting" ASCII file. */
+//#define HERE cout << "reached line " << __LINE__ << " in " << __FILE__ << endl;
 class cifstream : public ifstream
 {
 #if defined(__ZTC__) || defined(__GNUDOS__) || defined (__WAT32__)
@@ -148,13 +147,13 @@ class cifstream : public ifstream
 #if ( defined(__MSVC32__) && __MSVC32__ >=7 )
   streambuf* bp;
 #endif
-  char COMMENT_CHAR;    ///<  Comment character; set to "#" by default in the constructor.
-  char comment_line[SIGNATURE_LENGTH+1];  ///< buffer to hold a comment
-  char signature_line[SIGNATURE_LENGTH+1];///< Usually the first comment line in the file.
-  adstring file_name; ///< Name of the file.
-  int  line; ///< line counter.
-  int  field; ///< field counter.
-  int  ignore_eof; ///< allows reaching end of file without an error to enable checkint for end of file
+  char COMMENT_CHAR;
+  char comment_line[SIGNATURE_LENGTH+1];
+  char signature_line[SIGNATURE_LENGTH+1];
+  adstring file_name;
+  int  line;
+  int  field;
+  int  ignore_eof;
 
   void filter(void);
   void get_field(char * s,int space_flag=0);
@@ -215,102 +214,55 @@ public:
 
 
 #include <stdio.h>
-  /** Get most recently read comment line.
-   \return last read comment line.
-  */
+
+
+
+
+
+
   char* comment() { return comment_line; }
-  /** Get file "signature", usually the first comment line in the file.
-  \return The fi;e signature.
-   */
   char* signature();
 
-  /** Read \ref dvariable from stream.
-  \param z dvariable into which to read a number. 
-   Overloaded for many variable types.
-   The const keyword, when present, is "cast" away.
-  \return New state of the cifstream. 
-   Necessary to string together many input operators in a single statement.
-  */ 
   cifstream& operator>>(const dvariable& z);
  //  cifstream& operator>>(const prevariable& z);
 #if defined(USE_LONG_LONG)
   cifstream& operator >> (long long& i);
 #endif
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator>>(const long& i);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator>>(const int& i);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator>>(const double& x);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator>>(const float& x);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator >> (char* x);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator >> (const char* x);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator >> (const adstring& x);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator >> (adstring& x);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator >> (const line_adstring& x);
-  
-  cifstream& getline(char* s, int k, char d = '\n');
+  cifstream& getline(char*, int, char = '\n');
 
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator>>(const dvar_vector& z);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator>>(const dvector& z);
-  // \overload [cifstream& operator>>(const dvariable& z)]
   //cifstream& operator>>(svector& z);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator>>(const lvector& z);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
   cifstream& operator>>(const ivector& z);
-  /// \overload [cifstream& operator>>(const dvariable& z)]
 
-  /// Avoids an end of file error.
   void set_ignore_eof() {ignore_eof = 0;}
-  /// Allows an end of file error.
   void set_use_eof() {ignore_eof = 1;}
 };
 
-  /** Reads a \ref prevariable from an input stream.
-  \param istr Reference to an open cifstream.
-  \param z dvariable into which to read a number. 
-   Overloaded for many variable types.
-   The const keyword, when present, is "cast" away.
-  \return New state of the cifstream. 
-   Necessary to string together many input operators in a single statement.
-  */ 
 cifstream& operator>>(cifstream& istr, const prevariable& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 cifstream& operator>>(cifstream& istr, const dvar_matrix& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 cifstream& operator>>(cifstream& istr, const d3_array& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 cifstream& operator>>(cifstream& istr, const d4_array& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 cifstream& operator>>(cifstream& istr, const d5_array& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 cifstream& operator>>(cifstream& istr, const dvar3_array& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 cifstream& operator>>(cifstream& istr, const dvar4_array& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 cifstream& operator>>(cifstream& istr, const dvar5_array& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 //cifstream& operator>>(cifstream& istr, s3_array& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 cifstream& operator>>(cifstream& istr, const dmatrix& z);
-// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 //cifstream& operator>>(cifstream& istr,smatrix& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 cifstream& operator>>(cifstream& istr, const imatrix& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 cifstream& operator>>(cifstream& istr, const i3_array& z);
-/// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 cifstream& operator>>(cifstream& istr, const i4_array& z);
-// \overload [cifstream& operator>>(cifstream& istr, const prevariable& z)]
 //cifstream& operator>>(cifstream& istr, lmatrix& z);
 
 #endif //#define CIFSTREM_H

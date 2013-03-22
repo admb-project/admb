@@ -739,7 +739,7 @@ PARAMETER_SECTION
 
 PROCEDURE_SECTION
 
-  int k=0;
+  int k=1;
   L(1,1) = 1.0;
   for(i=2;i<=4;i++)
   {
@@ -872,7 +872,7 @@ used is likely to be expanded in the future.
 \section{Built-in data likelihoods}
 
 In the simple \texttt{simple.tpl}, the mathematical expressions for all
-log-likehood contributions where written out in full detail. You may have hoped
+log-likelihood contributions where written out in full detail. You may have hoped
 that for the most common probability distributions, there were functions written
 so that you would not have to remember or look up their log-likelihood
 expressions. If your density is among those given in
@@ -1502,56 +1502,56 @@ command line option, as described~later.
 \index{Gauss-Hermite quadrature}
 
 In the situation where the model is separable of type ``Block diagonal
-Hessian,'' with only a single random effect in each block (see
-Section~\ref{separability}), Gauss-Hermite quadrature is available as an option
+Hessian,'' (see Section~\ref{separability}), 
+Gauss-Hermite quadrature is available as an option
 to the Laplace approximation and to the \texttt{-is} (importance sampling)
 option. It is invoked with command line option \texttt{-gh N}, where \texttt{N}
 is the number of quadrature points.
 
-\subsection{Frequency weighting for multinomial likelihoods}
-
-In situations where the response variable only can take on a finite number of
-different values, it is possibly to reduce the computational burden enormously.
-As an example, consider a situation where observation $y_{i}$ is binomially
-distributed with parameters $N=2$ and $p_{i}$. Assume that
-\begin{equation*}
-  p_{i}=\frac{\exp (\mu +u_{i})}{1+\exp (\mu +u_{i})},
-\end{equation*}
-where $\mu$ is a parameter and $u_{i}\sim N(0,\sigma ^{2})$ is a random effect.
-For independent observations $y_1,\ldots,y_n$, the log-likelihood function for
-the parameter $\theta =(\mu ,\sigma )$ can be written as
-\begin{equation}
-  l(\theta )=\sum_{i=1}^{n}\log \bigl[\, p(x_{i};\theta )\bigr] .
-\end{equation}
-In \scAR, $p(x_{i};\theta)$ is approximated using the Laplace approximation.
-However, since $y_i$ only can take the values~$0$, $1$, and~$2$, we can rewrite
-the log-likelihood~as
-$$
-l(\theta )=\sum_{j=0}^{2}n_{j}\log \left[ p(j;\theta )\right],
-$$
-where $n_j$ is the number $y_i$s being equal to $j$. Still, the Laplace
-approximation must be used to approximate $p(j;\theta )$, but now only for
-$j=0,1,2$, as opposed to $n$~times above. For large~$n$, this can give large a
-large reduction in computing time.
-
-To implement the weighted log-likelihood~(\ref{l_w}), we define a weight vector
-$(w_1,w_2,w_3)=(n_{0},n_{1},n_{2})$. To read the weights from file, and to tell
-\scAR\ that~\texttt{w} is a weights vector, the following code is used:
-\begin{lstlisting}
-DATA_SECTION
- init_vector w(1,3)
-
-PARAMETER_SECTION
- !! set_multinomial_weights(w);
-\end{lstlisting}
-In addition, it is necessary to explicitly multiply the likelihood contributions
-in~(\ref{l_w}) by~$w$. The program must be written with
-\texttt{SEPARABLE\_FUNCTION}, as explained in Section~\ref{sec:nested}. For the
-likelihood~(\ref{l_w}), the \texttt{SEPARABLE\_FUNCTION} will be invoked three
-times.
-
-See a full example
-\href{http://www.otter-rsch.com/admbre/examples/weights/weights.html}{here}.
+%\subsection{Frequency weighting for multinomial likelihoods}
+%
+%In situations where the response variable only can take on a finite number of
+%different values, it is possibly to reduce the computational burden enormously.
+%As an example, consider a situation where observation $y_{i}$ is binomially
+%distributed with parameters $N=2$ and $p_{i}$. Assume that
+%\begin{equation*}
+%  p_{i}=\frac{\exp (\mu +u_{i})}{1+\exp (\mu +u_{i})},
+%\end{equation*}
+%where $\mu$ is a parameter and $u_{i}\sim N(0,\sigma ^{2})$ is a random effect.
+%For independent observations $y_1,\ldots,y_n$, the log-likelihood function for
+%the parameter $\theta =(\mu ,\sigma )$ can be written as
+%\begin{equation}
+%  l(\theta )=\sum_{i=1}^{n}\log \bigl[\, p(x_{i};\theta )\bigr] .
+%\end{equation}
+%In \scAR, $p(x_{i};\theta)$ is approximated using the Laplace approximation.
+%However, since $y_i$ only can take the values~$0$, $1$, and~$2$, we can rewrite
+%the log-likelihood~as
+%$$
+%l(\theta )=\sum_{j=0}^{2}n_{j}\log \left[ p(j;\theta )\right],
+%$$
+%where $n_j$ is the number $y_i$s being equal to $j$. Still, the Laplace
+%approximation must be used to approximate $p(j;\theta )$, but now only for
+%$j=0,1,2$, as opposed to $n$~times above. For large~$n$, this can give large a
+%large reduction in computing time.
+%
+%To implement the weighted log-likelihood~(\ref{l_w}), we define a weight vector
+%$(w_1,w_2,w_3)=(n_{0},n_{1},n_{2})$. To read the weights from file, and to tell
+%\scAR\ that~\texttt{w} is a weights vector, the following code is used:
+%\begin{lstlisting}
+%DATA_SECTION
+% init_vector w(1,3)
+%
+%PARAMETER_SECTION
+% !! set_multinomial_weights(w);
+%\end{lstlisting}
+%In addition, it is necessary to explicitly multiply the likelihood contributions
+%in~(\ref{l_w}) by~$w$. The program must be written with
+%\texttt{SEPARABLE\_FUNCTION}, as explained in Section~\ref{sec:nested}. For the
+%likelihood~(\ref{l_w}), the \texttt{SEPARABLE\_FUNCTION} will be invoked three
+%times.
+%
+%See a full example
+%\href{http://www.otter-rsch.com/admbre/examples/weights/weights.html}{here}.
 
 \section{State-space models: banded $H$}
 \label{sec:state-space}\index{state-space models}
@@ -1819,7 +1819,7 @@ becomes clear that GAM's are naturally handled in \scAR.
   \item Since equation~(\ref{eqn:first_order}) does not penalize the mean
   of~$\mathbf{u}$, we impose the restriction that $\sum_{k=1}u_{k}=0$ (see
   \texttt{union.tpl} for details). Without this restriction, the model would be
-  over-parameterized, since we allready have an overall mean~$\mu $ in
+  over-parameterized, since we already have an overall mean~$\mu $ in
   equation~(\ref{eqn:gam}).
 
   \item To speed up computations, the parameter $\mu $ (and other regression
@@ -1830,7 +1830,7 @@ becomes clear that GAM's are naturally handled in \scAR.
 \begin{figure}[h]
 \centering\hskip1pt
 \includegraphics[width=6in]{union_fig.pdf}
-\caption{Probablity of membership as a function of covariates. In each plot,
+\caption{Probability of membership as a function of covariates. In each plot,
 the remaining covariates are fixed at their sample means. The effective
 degrees of freedom (df) are also given \protect\cite{hast:tibs:1990}.}
 \label{fig:union}
@@ -2127,7 +2127,7 @@ See the files
 
 \subsubsection{Model description}
 
-Let $X_{i}$ be binomially distributed with paramters $N=2$ and $p_{i}$, and
+Let $X_{i}$ be binomially distributed with parameters $N=2$ and $p_{i}$, and
 further assume that
 \begin{equation}
 p_{i}=\frac{\exp (\mu +u_{i})}{1+\exp (\mu +u_{i})},
@@ -2299,7 +2299,7 @@ See the files
 
 \subsection{Multilevel Rasch model}
 
-The multilevel Rasch model can be implented using random effects in \scAB. As an
+The multilevel Rasch model can be implemented using random effects in \scAB. As an
 example, we use data on the responses of 2042~soldiers to a total of 19~items
 (questions), taken from~\cite{doran2007estimating} %Doran et al.\ (2007).
 This illustrates the use of crossed random effects in \scAB. Furthermore, it is

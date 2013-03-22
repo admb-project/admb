@@ -2,9 +2,9 @@ include objects.lst
 
 all: $(addprefix $(PREFIX_OBJ), $(OBJECTS))
 ifeq ($(SHELL),sh.exe)
-	copy qfclib.h $(DISK)\contrib
+	copy qfclib.h $(ADMB_HOME)\contrib\include
 else
-	cp qfclib.h $(DISK)/contrib
+	cp qfclib.h $(ADMB_HOME)/contrib/include
 endif
 
 test:
@@ -32,4 +32,8 @@ ifneq ($(SHELL),sh.exe)
 endif
 
 $(PREFIX_OBJ)%.obj: %.cpp
-	$(CXX) $(CXXFLAGS) -o $@ $<
+ifeq ($(CXX),cl)
+	$(CXX) /c $(CXXFLAGS) /Fo$@ $<
+else
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
+endif

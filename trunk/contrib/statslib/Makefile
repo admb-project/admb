@@ -1,6 +1,3 @@
-.PHONY: all
-.SUFFIXES: .obj .cpp
-
 include objects.lst
 
 all: $(OBJECTS)

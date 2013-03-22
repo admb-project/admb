@@ -1,6 +1,6 @@
 all: contribs
 
-contribs: build-statslib build-ecolib build-qfclib
+contribs: build-statslib build-ecolib
 
 build-statslib:
 	pushd statslib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)statslib-

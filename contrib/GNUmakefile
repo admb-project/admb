@@ -14,7 +14,7 @@ endif
 
 all: contribs build-ad2csv
 
-contribs: build-statslib build-ecolib build-qfclib build-sample
+contribs: build-statslib build-ecolib build-sample
 ifeq ($(SHELL),sh.exe)
 	copy contrib.h ..\build\dist\contrib
 else

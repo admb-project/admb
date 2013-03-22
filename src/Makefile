@@ -1,69 +1,90 @@
-DISK=..\build
+DESTDIR=..\build\dist
+OBJDESTDIR=..\build\objects\dist
 
-all: dist contrib
+CXXFLAGS_SAF=/nologo /Ox /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
+CXXFLAGS_OPT=/nologo /Ox /W4 /GF /EHsc /DOPT_LIB /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
 
-dist:
-	IF NOT EXIST $(DISK) md $(DISK)
-	IF NOT EXIST $(DISK)\dist md $(DISK)\dist
-	IF NOT EXIST $(DISK)\dist\bin md $(DISK)\dist\bin
-	IF NOT EXIST $(DISK)\dist\lib md $(DISK)\dist\lib
-	IF NOT EXIST $(DISK)\dist\include md $(DISK)\dist\include
-	IF NOT EXIST $(DISK)\objects md $(DISK)\objects
+all: dist libs
+	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
 
-	IF NOT EXIST $(DISK)\objects\df1b2-separable-slp md $(DISK)\objects\df1b2-separable-slp
-	IF NOT EXIST $(DISK)\objects\df1b2-separable-olp md $(DISK)\objects\df1b2-separable-olp
-	cd $(DISK)\objects\df1b2-separable-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\src\df1b2-separable\safmsc8-laplace.mak all
-	cd $(DISK)\objects\df1b2-separable-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\src\df1b2-separable\optmsc8-laplace.mak all
-	IF NOT EXIST $(DISK)\objects\linad99-olp md $(DISK)\objects\linad99-olp
-	IF NOT EXIST $(DISK)\objects\linad99-slp md $(DISK)\objects\linad99-slp
-	cd $(DISK)\objects\linad99-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\src\linad99\optmsc8-laplace.mak all
-	cd $(DISK)\objects\linad99-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\src\linad99\safmsc8-laplace.mak all
-	IF NOT EXIST $(DISK)\objects\nh99-olp md $(DISK)\objects\nh99-olp
-	IF NOT EXIST $(DISK)\objects\nh99-slp md $(DISK)\objects\nh99-slp
-	cd $(DISK)\objects\nh99-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\src\nh99\optmsc8-laplace.mak all
-	cd $(DISK)\objects\nh99-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\src\nh99\safmsc8-laplace.mak all
-	IF NOT EXIST $(DISK)\objects\tools99-olp md $(DISK)\objects\tools99-olp
-	IF NOT EXIST $(DISK)\objects\tools99-slp md $(DISK)\objects\tools99-slp
-	cd $(DISK)\objects\tools99-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\src\tools99\optmsc8-laplace.mak all
-	cd $(DISK)\objects\tools99-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\src\tools99\safmsc8-laplace.mak all
+dist: srcs bins
 
-	copy ..\scripts\cl\*.bat $(DISK)\dist\bin
-	copy ..\scripts\admb\admb.bat $(DISK)\dist\bin
-	copy ..\utilities\sed.exe $(DISK)\dist\bin
-	copy ..\LICENSE.txt $(DISK)\dist
-	copy ..\NEWS.txt $(DISK)\dist
-	copy ..\README.txt $(DISK)\dist
-	copy ..\VERSION $(DISK)\dist
-	IF NOT EXIST $(DISK)\dist\examples md $(DISK)\dist\examples
-	xcopy ..\examples $(DISK)\dist\examples /S /Y
-	cd $(DISK)\dist& cscript ..\..\scripts\create-admb-shortcut.vbs
+srcs:
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)
+	copy ..\LICENSE.txt $(DESTDIR)
+	copy ..\NEWS.txt $(DESTDIR)
+	copy ..\README.txt $(DESTDIR)
+	copy ..\VERSION $(DESTDIR)
+	IF NOT EXIST $(DESTDIR)\examples xcopy /I /E /Y ..\examples $(DESTDIR)\examples
+	IF NOT EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\constrib
+
+bins: libs
+	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin
+	copy df1b2-separable\sed* $(DESTDIR)\bin
+	copy ..\scripts\cl\*.bat $(DESTDIR)\bin
+	copy ..\scripts\admb\admb.bat $(DESTDIR)\bin
+	copy ..\utilities\sed.exe $(DESTDIR)\bin
+	copy ..\utilities\*.dll $(DESTDIR)\bin
+	pushd df1b2-separable& ..\..\utilities\make CC=$(CC) DESTDIR="..\$(DESTDIR)" --file=Makefile tpl2rem & popd
+	pushd nh99& ..\..\utilities\make CC=$(CC) DESTDIR="..\$(DESTDIR)" --file=Makefile tpl2cpp& popd
+
+libs: includes
+	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib
+	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
+	pushd df1b2-separable & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-df1b2-separable-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
+	pushd df1b2-separable & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-df1b2-separable-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
+	pushd linad99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-linad99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
+	pushd linad99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-linad99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
+	pushd nh99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-nh99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
+	pushd nh99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-nh99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
+	pushd tools99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-tools99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
+	pushd tools99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-tools99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
+	lib /OUT:$(DESTDIR)\lib\admb.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\saflp-df1b2-separable*.obj $(OBJDESTDIR)\saflp-linad99*.obj $(OBJDESTDIR)\saflp-nh99*.obj $(OBJDESTDIR)\saflp-tools99*.obj
+	lib /OUT:$(DESTDIR)\lib\admbo.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\optlp-df1b2-separable*.obj $(OBJDESTDIR)\optlp-linad99*.obj $(OBJDESTDIR)\optlp-nh99*.obj $(OBJDESTDIR)\optlp-tools99*.obj
+
+
+includes:
+	IF NOT EXIST $(DESTDIR)\include md $(DESTDIR)\include
+	copy df1b2-separable\df1b2fun.h $(DESTDIR)\include
+	copy df1b2-separable\adpool.h $(DESTDIR)\include
+	copy df1b2-separable\adrndeff.h $(DESTDIR)\include
+	copy df1b2-separable\df1b2fnl.h $(DESTDIR)\include
+	copy df1b2-separable\df3fun.h $(DESTDIR)\include
+	copy df1b2-separable\df32fun.h $(DESTDIR)\include
+	copy df1b2-separable\df1b2loc.h $(DESTDIR)\include
+	copy linad99\fvar.hpp $(DESTDIR)\include
+	copy linad99\d4arr.hpp $(DESTDIR)\include
+	copy linad99\dfpool.h $(DESTDIR)\include
+	copy linad99\factors.h $(DESTDIR)\include
+	copy nh99\admodel.h $(DESTDIR)\include
+	copy nh99\adsplus.h $(DESTDIR)\include
+	copy nh99\spcomm.h $(DESTDIR)\include
+	copy nh99\s.h $(DESTDIR)\include
+	copy nh99\newredef.h $(DESTDIR)\include
+	copy nh99\param_init_bounded_number_matrix.h $(DESTDIR)\include
+	copy tools99\clist.h $(DESTDIR)\include
+	copy tools99\cifstrem.h $(DESTDIR)\include
+	copy tools99\adstring.hpp $(DESTDIR)\include
+	copy tools99\admb_messages.h $(DESTDIR)\include
 
 contrib:
-	IF NOT EXIST $(DISK)\dist\contrib md $(DISK)\dist\contrib
-	IF NOT EXIST $(DISK)\objects\contrib-olp md $(DISK)\objects\contrib-olp
-	IF NOT EXIST $(DISK)\objects\contrib-slp md $(DISK)\objects\contrib-slp
-	cd $(DISK)\objects\contrib-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\contrib\Makefile statslib-opt
-	cd $(DISK)\objects\contrib-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\contrib\Makefile statslib-saf
-	cd $(DISK)\objects\contrib-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\contrib\Makefile ecolib-opt
-	cd $(DISK)\objects\contrib-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\contrib\Makefile ecolib-saf
-	rem cd $(DISK)\objects\contrib-olp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\contrib\Makefile qfclib-opt
-	rem cd $(DISK)\objects\contrib-slp& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\contrib\Makefile qfclib-saf
-	cd $(DISK)\dist\contrib& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\contrib\Makefile contribo.lib
-	cd $(DISK)\dist\contrib& $(MAKE) DISKDIR=..\..\dist /f ..\..\..\contrib\Makefile contribs.lib
-	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd ..\contrib\ad2csv& $(MAKE) /A"
-	copy ..\contrib\ad2csv\ad2csv.exe $(DISK)\dist\bin
+	IF NOT EXIST $(DESTDIR)\contrib\include md $(DESTDIR)\contrib\include
+	IF NOT EXIST $(DESTDIR)\contrib\lib md $(DESTDIR)\contrib\lib
+	IF NOT EXIST $(DESTDIR)\contrib\bin md $(DESTDIR)\contrib\bin
+	pushd ..\contrib& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-contrib-"& popd
+	pushd ..\contrib& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-contrib-"& popd
+	lib /OUT:$(DESTDIR)\contrib\lib\contrib.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\saflp-contrib*.obj
+	lib /OUT:$(DESTDIR)\contrib\lib\contribo.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\optlp-contrib*.obj
 
 tests:
-	pushd ..\tests & $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DISK)\dist" & popd
+	pushd ..\tests& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)"& popd
 
 verify:
-	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake all"
-	-cd $(MAKEDIR)\$(DISK)\dist& ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt"
-	cmd /C "set ADMB_HOME=$(MAKEDIR)\$(DISK)\dist& set PATH=$(MAKEDIR)\$(DISK)\dist\bin;$(PATH)& cd $(MAKEDIR)\$(DISK)\dist\examples& nmake OPTION=-s all"
-	-cd $(MAKEDIR)\$(DISK)\dist& ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt"
+	pushd $(DESTDIR)\examples& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" PATH="$(MAKEDIR)\$(DESTDIR)\bin;$(PATH)" all& popd
+	pushd $(DESTDIR) & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
 
 clean:
-	IF EXIST $(DISK) rd /S /Q $(DISK)
-	IF EXIST $(DISK) rd /S /Q $(DISK)\objects
+	IF EXIST $(DESTDIR) rd /S /Q $(DESTDIR)
+	IF EXIST $(OBJDESTDIR) rd /S /Q $(OBJDESTDIR)
 	pushd ..\contrib& $(MAKE) clean& popd
 	pushd ..\tests& $(MAKE) clean& popd

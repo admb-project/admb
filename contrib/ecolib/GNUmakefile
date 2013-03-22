@@ -2,9 +2,9 @@ include objects.lst
 
 all: $(addprefix $(PREFIX_OBJ), $(OBJECTS))
 ifeq ($(SHELL),sh.exe)
-	copy ecolib.h $(DISK)\contrib
+	copy ecolib.h $(ADMB_HOME)\contrib\include
 else
-	cp ecolib.h $(DISK)/contrib
+	cp ecolib.h $(ADMB_HOME)/contrib/include
 endif
 
 test:
@@ -34,4 +34,8 @@ ifneq ($(SHELL),sh.exe)
 endif
 
 $(PREFIX_OBJ)%.obj: %.cpp
-	$(CXX) $(CXXFLAGS) -o $@ $<
+ifeq ($(CXX),cl)
+	$(CXX) /c $(CXXFLAGS) /Fo$@ $<
+else
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
+endif

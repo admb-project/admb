@@ -1,25 +1,15 @@
-all: disk
+all: contribs
 
-disk:
-	rem cp contrib.h $(DISK)/contrib
+contribs: build-statslib build-ecolib build-qfclib
 
-statslib-opt:
-	$(MAKE) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" DISKDIR=..\..\dist\contrib /f ..\..\..\contrib\statslib\Makefile
+build-statslib:
+	pushd statslib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)statslib-
 
-statslib-saf:
-	$(MAKE) CXXFLAGS="$(CXXFLAGS)" DISKDIR=..\..\dist\contrib /f ..\..\..\contrib\statslib\Makefile
+build-ecolib:
+	pushd ecolib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)ecolib-
 
-ecolib-opt:
-	$(MAKE) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" DISKDIR=..\..\dist\contrib /f ..\..\..\contrib\ecolib\Makefile
-
-ecolib-saf:
-	$(MAKE) CXXFLAGS="$(CXXFLAGS)" DISKDIR=..\..\dist\contrib /f ..\..\..\contrib\ecolib\Makefile
-
-qfclib-opt:
-	$(MAKE) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" DISKDIR=..\..\dist\contrib /f ..\..\..\contrib\qfclib\Makefile
-
-qfclib-saf:
-	$(MAKE) CXXFLAGS="$(CXXFLAGS)" DISKDIR=..\..\dist\contrib /f ..\..\..\contrib\qfclib\Makefile
+build-qfclib:
+	pushd qfclib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)qfclib-
 
 contribo.lib:
 	lib /OUT:$@ /NOLOGO /IGNORE:4006 ..\..\objects\contrib-olp\*.obj

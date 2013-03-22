@@ -463,7 +463,7 @@
     }
 
     fract = alpha - int(alpha) + EPS;  //fractional part of alpha
-    v0 = M_E / (M_E + fract);
+    v0 = QFC_M_E / (QFC_M_E + fract);
 
     //calculate the fractional gamma(fract,1)
     while(1){

@@ -1,5 +1,5 @@
 all: $(addprefix $(PREFIX_OBJ), sample.obj)
-	cp sample.h $(DISK)/contrib
+	cp sample.h $(ADMB_HOME)/contrib/include
 
 test:
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" admb simple.tpl
@@ -23,7 +23,5 @@ clean:
 	@rm -f simple.cor
 	@rm -f admodel.dep
 
-
 $(PREFIX_OBJ)%.obj: %.cpp
-	@#adcomp CXXFLAGS="-o $@" $<
 	$(CXX) $(CXXFLAGS) -o $@ $<

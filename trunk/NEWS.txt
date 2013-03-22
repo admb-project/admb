@@ -10,7 +10,7 @@ TODO:
 [*] simplify admb scripts
 [ ] VC++ build files
 [*] Do gelocation test last in buildbot
-    ADMB_HOME=dkjfdk PATH=kdjfkdj make --directory=tests/geolocation clean svn all
+    ADMB_HOME=dfdk PATH=kfkdj make --directory=tests/geolocation clean svn all
 [ ] Add -o option to rename the output file with path.
 
 SIGNIFICANT USER-VISIBLE CHANGES:

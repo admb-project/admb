@@ -38,6 +38,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "statsLib.h"
-#include "ecolib.h"
-#include "qfclib.h"
+#include <statsLib.h>
+#include <ecolib.h>
+#include <qfclib.h>

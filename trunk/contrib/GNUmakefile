@@ -1,69 +1,55 @@
-ifndef DISK
-DISK=../../build/dist
-endif
-
 ifndef LIBPATH
 LIBPATH=../../build/objects/dist
 endif
 
 ifeq ($(CXX),CC)
-CXXFLAGS:=$(CXXFLAGS) -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I${DISK}/include
+CXXFLAGS:=$(CXXFLAGS) -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I$(ADMB_HOME)/include
 else
-CXXFLAGS:=$(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I${DISK}/include
+CXXFLAGS:=$(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I$(ADMB_HOME)/include
 endif
 
 all: contribs build-ad2csv
 
-contribs: build-statslib build-ecolib build-sample
+contribs: build-statslib build-ecolib build-qfclib build-sample
 ifeq ($(SHELL),sh.exe)
-	copy contrib.h ..\build\dist\contrib
+	copy contrib.h $(ADMB_HOME)\contrib\include
 else
-	$(AR) -rs ../build/dist/contrib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
-	$(AR) -rs ../build/dist/contrib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
-	cp contrib.h ../build/dist/contrib
+	$(AR) -rs $(ADMB_HOME)/contrib/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
+	$(AR) -rs $(ADMB_HOME)/contrib/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
+	cp contrib.h $(ADMB_HOME)/contrib/include
 endif
 
-build-admb2r:
-	$(MAKE) --directory=admb2r ADMB_HOME="${DISK}" PATH="${DISK}/bin:$(PATH)" gcc
 
 build-statslib:
-	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-statslib-
-	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-statslib-
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-statslib-
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-statslib-
 
 build-ecolib:
-	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-ecolib-
-	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-ecolib-
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-ecolib-
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-ecolib-
 
 build-qfclib:
-	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-qfclib-
-	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-qfclib-
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-qfclib-
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-qfclib-
 
 build-ad2csv:
-ifeq ($(CXX),g++.exe)
-	$(MAKE) --directory=ad2csv ADMB_HOME="${DISK}" PATH="${DISK}\bin;$(PATH)"
-	copy ad2csv\ad2csv.exe ..\build\dist\bin
-else
-	ADMB_HOME="${DISK}/dist" PATH="${DISK}/bin:$(PATH)" $(MAKE) --directory=ad2csv
-	cp -v ad2csv/ad2csv ../build/dist/bin
-endif
+	$(MAKE) --directory=ad2csv ADMB_HOME="$(ADMB_HOME)"
+
+build-admb2r:
+	$(MAKE) --directory=admb2r ADMB_HOME="$(ADMB_HOME)" gcc
 
 build-sample:
-	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-sample-
-	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" DISK="$(DISK)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-sample-
+	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-sample-
+	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-sample-
 
 test:
-	ADMB_HOME="${DISK}" $(MAKE) --directory=sample test
+	$(MAKE) --directory=sample ADMB_HOME="$(ADMB_HOME)" test 
 
 test-notworking:
-ifneq ($(CXX),g++.exe)
-	ADMB_HOME="${DISK}" $(MAKE) --directory=ecolib test
-	ADMB_HOME="${DISK}" $(MAKE) --directory=qfclib test
-endif
+	$(MAKE) --directory=ecolib ADMB_HOME="$(ADMB_HOME)" test
+	$(MAKE) --directory=qfclib ADMB_HOME="$(ADMB_HOME)" test
 
 clean:
-	@rm -rvf build
-	@rm -vf ad2csv/ad2csv
-	@rm -vf ad2csv/ad2csv.o
 	$(MAKE) --directory=ecolib clean
 	$(MAKE) --directory=qfclib clean
 	$(MAKE) --directory=statslib clean

@@ -13,7 +13,7 @@ test-expm:
 	$(MAKE) --directory=expm
 
 test-cov_re:
-	ADMB_HOME=$(ADMB_HOME) $(MAKE) --directory=cov_re
+	$(MAKE) --directory=cov_re
 
 adstring_array:
 	OPTIONS=-s $(MAKE) --directory=$@

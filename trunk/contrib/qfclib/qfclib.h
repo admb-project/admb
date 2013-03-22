@@ -34,7 +34,7 @@
 #include <adrndeff.h>
 // define constant variable
 const double EPS = 1.e-20;   
-const double M_E= 1.e-20;   
+const double QFC_M_E= 1.e-20;   
 
 //function defined for simulation model
 int 		numRows4VarFromFile (adstring filename, adstring varName);

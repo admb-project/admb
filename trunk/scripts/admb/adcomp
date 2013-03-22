@@ -48,7 +48,7 @@ fi
 #  CXXFLAGS="$CXXFLAGS -Wno-deprecated"
 #fi
 
-CXXFLAGS="$CXXFLAGS -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib"
+CXXFLAGS="$CXXFLAGS -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib/include"
 
 CMD="$CXX $CXXFLAGS $file"
 echo $CMD

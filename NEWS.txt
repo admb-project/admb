@@ -3,15 +3,16 @@ CHANGES IN ADMB VERSION 11.0:
 
 TODO:
 [ ] add contrib procedure
-[ ] add contrib/lib and contrib/bin
+[*] add contrib/lib and contrib/bin
 [*] fix when no flex problem
 [*] fix geolocation test
 [*] catch exit errors for adlink and adcomp
 [*] simplify admb scripts
-[ ] VC++ build files
+[*] VC++ build files
 [*] Do gelocation test last in buildbot
     ADMB_HOME=dfdk PATH=kfkdj make --directory=tests/geolocation clean svn all
 [ ] Add -o option to rename the output file with path.
+[ ] Need to fix flex builds for tpl2cpp and tpl2rem under windows
 
 SIGNIFICANT USER-VISIBLE CHANGES:
 

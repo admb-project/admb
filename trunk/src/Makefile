@@ -16,7 +16,7 @@ srcs:
 	copy ..\README.txt $(DESTDIR)
 	copy ..\VERSION $(DESTDIR)
 	IF NOT EXIST $(DESTDIR)\examples xcopy /I /E /Y ..\examples $(DESTDIR)\examples
-	IF NOT EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\constrib
+	IF NOT EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\contrib
 
 bins: libs
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin
@@ -25,22 +25,28 @@ bins: libs
 	copy ..\scripts\admb\admb.bat $(DESTDIR)\bin
 	copy ..\utilities\sed.exe $(DESTDIR)\bin
 	copy ..\utilities\*.dll $(DESTDIR)\bin
-	pushd df1b2-separable& ..\..\utilities\make CC=$(CC) DESTDIR="..\$(DESTDIR)" --file=Makefile tpl2rem & popd
-	pushd nh99& ..\..\utilities\make CC=$(CC) DESTDIR="..\$(DESTDIR)" --file=Makefile tpl2cpp& popd
+	pushd nh99& $(MAKE) DESTDIR="..\$(DESTDIR)" bins& popd
+	pushd df1b2-separable& $(MAKE) DESTDIR="..\$(DESTDIR)" bins& popd
 
-libs: includes
-	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib
+libs: includes admbsaf admbopt
+
+admbsaf:
 	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
 	pushd df1b2-separable & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-df1b2-separable-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	pushd df1b2-separable & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-df1b2-separable-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
 	pushd linad99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-linad99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	pushd linad99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-linad99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
 	pushd nh99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-nh99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	pushd nh99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-nh99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
 	pushd tools99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-tools99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
+	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib
+	pushd $(OBJDESTDIR) & lib /OUT:..\..\dist\lib\admb.lib /NOLOGO /IGNORE:4006 saflp-df1b2-separable*.obj saflp-linad99*.obj saflp-nh99*.obj saflp-tools99*.obj
+
+admbopt:
+	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
+	pushd df1b2-separable & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-df1b2-separable-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
+	pushd linad99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-linad99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
+	pushd nh99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-nh99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
 	pushd tools99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-tools99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	lib /OUT:$(DESTDIR)\lib\admb.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\saflp-df1b2-separable*.obj $(OBJDESTDIR)\saflp-linad99*.obj $(OBJDESTDIR)\saflp-nh99*.obj $(OBJDESTDIR)\saflp-tools99*.obj
-	lib /OUT:$(DESTDIR)\lib\admbo.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\optlp-df1b2-separable*.obj $(OBJDESTDIR)\optlp-linad99*.obj $(OBJDESTDIR)\optlp-nh99*.obj $(OBJDESTDIR)\optlp-tools99*.obj
+	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib
+	pushd $(OBJDESTDIR) & lib /OUT:..\..\dist\lib\admbo.lib /NOLOGO /IGNORE:4006 optlp-df1b2-separable*.obj optlp-linad99*.obj optlp-nh99*.obj optlp-tools99*.obj
 
 
 includes:
@@ -67,13 +73,19 @@ includes:
 	copy tools99\adstring.hpp $(DESTDIR)\include
 	copy tools99\admb_messages.h $(DESTDIR)\include
 
-contrib:
+contrib: contribdirs libcontribsaf libcontribopt
+
+contribdirs:
 	IF NOT EXIST $(DESTDIR)\contrib\include md $(DESTDIR)\contrib\include
 	IF NOT EXIST $(DESTDIR)\contrib\lib md $(DESTDIR)\contrib\lib
 	IF NOT EXIST $(DESTDIR)\contrib\bin md $(DESTDIR)\contrib\bin
+
+libcontribsaf:
 	pushd ..\contrib& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-contrib-"& popd
-	pushd ..\contrib& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-contrib-"& popd
 	lib /OUT:$(DESTDIR)\contrib\lib\contrib.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\saflp-contrib*.obj
+
+libcontribopt:
+	pushd ..\contrib& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-contrib-"& popd
 	lib /OUT:$(DESTDIR)\contrib\lib\contribo.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\optlp-contrib*.obj
 
 tests:
@@ -88,5 +100,11 @@ verify:
 clean:
 	IF EXIST $(DESTDIR) rd /S /Q $(DESTDIR)
 	IF EXIST $(OBJDESTDIR) rd /S /Q $(OBJDESTDIR)
+	pushd df1b2-separable& $(MAKE) clean& popd
+	pushd nh99& $(MAKE) clean& popd
 	pushd ..\contrib& $(MAKE) clean& popd
 	pushd ..\tests& $(MAKE) clean& popd
+	del df1b2-separable\lex.yy.c
+	del df1b2-separable\tpl2rem-winflex.obj
+	del nh99\lex.yy.c
+	del nh99\tpl2cpp-winflex.obj

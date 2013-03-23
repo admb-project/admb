@@ -11,7 +11,7 @@ for %%a in (%*) do (
   set arg=%%a
   if "!arg:~0,1!"=="-" (
     if "!arg!"=="-s" (
-      set libs=admb.lib contrib.lib
+      set libs="%ADMB_HOME%"\lib\admb.lib "%ADMB_HOME%"\contrib\lib\contrib.lib
     )
   ) else (
     if "%%~xa"=="" (
@@ -22,11 +22,11 @@ for %%a in (%*) do (
   )
 )
 
-if not defined libs set libs=admbo.lib contribo.lib
+if not defined libs set libs="%ADMB_HOME%"\lib\admbo.lib "%ADMB_HOME%"\contrib\lib\contribo.lib
 set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
-cl %objs% %libs% /link /libpath:"%ADMB_HOME%"\lib /libpath:"%ADMB_HOME%"\contrib\lib
+cl %objs% %libs% /link
 @echo off
 
 goto EOF

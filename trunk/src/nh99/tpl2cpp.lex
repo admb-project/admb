@@ -3288,15 +3288,16 @@ DATA_SECTION  {
     //strcpy(tmp_string4,"prior_");
     //strcat(tmp_string4,tmp_string2); //define prior_** in priors.cpp file, should be neg.log.likelihood.form
     trim(tmp_string); trim(tmp_string3);
-
-    int i=0; //check if the prior variable from init_ parameter section
-    while(prior_check(prior_checker[i],tmp_string)!=0){
-      //printf(" idx %d tot %d, prior %s, parameter %s\n",i,prior_counter, tmp_string,prior_checker[i]);
-      if(i == (prior_counter-1)){//still not found for the last one
-        printf("Warning: Prior ( %s ) is not defined on a parameter\n",tmp_string);
-        break;
+    {
+      int i=0; //check if the prior variable from init_ parameter section
+      while(prior_check(prior_checker[i],tmp_string)!=0){
+        //printf(" idx %d tot %d, prior %s, parameter %s\n",i,prior_counter, tmp_string,prior_checker[i]);
+        if(i == (prior_counter-1)){//still not found for the last one
+          printf("Warning: Prior ( %s ) is not defined on a parameter\n",tmp_string);
+          break;
+        }
+        i++;
       }
-      i++;
     }
 
     if(prior_function_toggle==0)
@@ -3327,14 +3328,16 @@ DATA_SECTION  {
     //strcat(like_str,tmp_string2); //define like_** in priors.cpp file, should be neg.log.likelihood.form
     trim(tmp_string); trim(tmp_string3);
 
-    int i=0; //check if the likelihood variable from data section
-    while(prior_check(likelihood_checker[i],tmp_string)!=0){
-      //printf(" idx %d tot %d, %s, %s\n",i,likelihood_counter, tmp_string,likelihood_checker[i]);
-      if(i == (likelihood_counter-1)){//still not found for the last one
-        printf("Warning: likelihood ( %s ) is not defined on a data_section variable\n",tmp_string);
-        break;
+    {
+      int i=0; //check if the likelihood variable from data section
+      while(prior_check(likelihood_checker[i],tmp_string)!=0){
+        //printf(" idx %d tot %d, %s, %s\n",i,likelihood_counter, tmp_string,likelihood_checker[i]);
+        if(i == (likelihood_counter-1)){//still not found for the last one
+          printf("Warning: likelihood ( %s ) is not defined on a data_section variable\n",tmp_string);
+          break;
+        }
+        i++;
       }
-      i++;
     }
 
     if(prior_function_toggle==0)
@@ -4787,5 +4790,5 @@ void marker(void){;}
        if(i==(strlen(prior)-1) && cnt<strlen(parameter)) return 1; //until the end still not found
      } //end for loop
    }
-   else return 1; //not found
+   return 1; //not found
  }

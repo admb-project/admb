@@ -12,7 +12,7 @@ TODO:
 [*] Do gelocation test last in buildbot
     ADMB_HOME=dfdk PATH=kfkdj make --directory=tests/geolocation clean svn all
 [ ] Add -o option to rename the output file with path.
-[ ] Need to fix flex builds for tpl2cpp and tpl2rem under windows
+[*] Need to fix flex builds for tpl2cpp and tpl2rem under windows
 
 SIGNIFICANT USER-VISIBLE CHANGES:
 

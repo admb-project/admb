@@ -25,8 +25,8 @@ bins: libs
 	copy ..\scripts\admb\admb.bat $(DESTDIR)\bin
 	copy ..\utilities\sed.exe $(DESTDIR)\bin
 	copy ..\utilities\*.dll $(DESTDIR)\bin
-	pushd nh99& $(MAKE) DESTDIR="..\$(DESTDIR)" bins& popd
-	pushd df1b2-separable& $(MAKE) DESTDIR="..\$(DESTDIR)" bins& popd
+	pushd nh99& ..\..\utilities\make  --file=Makefile CC="$(CC) /TC " DESTDIR="..\$(DESTDIR)" bins& popd
+	pushd df1b2-separable& ..\..\utilities\make --file=Makefile CC="$(CC) /TC " DESTDIR="..\$(DESTDIR)" bins& popd
 
 libs: includes admbsaf admbopt
 

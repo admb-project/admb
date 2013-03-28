@@ -24,14 +24,14 @@ lex.yy.c: tpl2cpp.lex
 	if [ ! -f $@ ]; then touch $@; fi
 
 $(PREFIX_OBJ)banner.obj: banner.cpp
-	$(CXX) $(CXXFLAGS) -DADMB_VERSION=$(shell cat ../../VERSION) -DADMB_REVISION=$(shell test -e ../../REVISION && cat ../../REVISION) -o $@ $^
+	$(CXX) -c $(CXXFLAGS) -DADMB_VERSION=$(shell cat ../../VERSION) -DADMB_REVISION=$(shell test -e ../../REVISION && cat ../../REVISION) -o $@ $^
 
 $(PREFIX_OBJ)model7.obj: model7.cpp
 ifdef ADMB_CONFIGURE
-	$(CXX) -DADMB_CONFIGURE="${ADMB_CONFIGURE}" $(CXXFLAGS) -o $@ $^
+	$(CXX) -c -DADMB_CONFIGURE="${ADMB_CONFIGURE}" $(CXXFLAGS) -o $@ $^
 else
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) -c $(CXXFLAGS) -o $@ $^
 endif
 
 $(PREFIX_OBJ)%.obj: %.cpp
-	$(CXX) $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<

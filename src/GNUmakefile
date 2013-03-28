@@ -21,59 +21,69 @@ CXXFLAGS:=-Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 endif
 
 ifdef DEBUG
-CXXFLAGS:=-c -g $(CXXFLAGS)
+CXXFLAGS:=-g $(CXXFLAGS)
 else
-CXXFLAGS:=-c -O3 $(CXXFLAGS)
+CXXFLAGS:=-O3 $(CXXFLAGS)
 endif
 
 all: dist contrib
 	@printf "\nADMB build completed.\n"
 	@printf "For installation, check README.txt.\n"
 
-dist: includes examples bins
+dist:
+	rm -rf ${DISK}/contrib
+	rm -rf ${DISK}/docs
+	rm -rf ${DISK}/examples
+	rm -rf ${DISK}/src
+	rm -rf ${DISK}/tests
+	rm -rf ${DISK}/utilities
+	mkdir -p ${DISK}
+	cp -R ../contrib ${DISK}
+	cp -R ../docs ${DISK} 
+	cp -R ../examples ${DISK}
+	cp -R ../src ${DISK}
+	cp -R ../tests ${DISK}
+	cp -R ../utilities ${DISK}
+	cp -f ../LICENSE.txt ${DISK}
+	cp -f ../README.txt ${DISK}
+	cp -f ../NEWS.txt ${DISK}
+	cp -f ../VERSION ${DISK}
+	cp -f ../Makefile ${DISK}
+	rm -rf `find ${DISK} -type d -name .svn`
+
+contrib: includes bins libs
+	mkdir -p ${DISK}/contrib/include
+	mkdir -p ${DISK}/contrib/lib
+	mkdir -p ${DISK}/contrib/bin
+	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../contrib
+
+libs: admbsaf admbopt
+
+admbsaf:
+	mkdir -p ${DISK}/lib
 	mkdir -p ${LIBPATH}
 	$(MAKE) --directory=df1b2-separable CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-df1b2-separable- DISKDIR=../${DISK}
-	$(MAKE) --directory=df1b2-separable CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-df1b2-separable- DISKDIR=../${DISK}
 	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-linad99- DISKDIR=../${DISK}
-	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-linad99- DISKDIR=../${DISK}
 	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK}
 	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-tools99- DISKDIR=../${DISK}
-
-	mkdir -p ${DISK}/lib
 	rm -vf ${DISK}/lib/libadmb.a
 	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-linad99-*.obj
 	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-df1b2-separable-*.obj
 	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/optlp-nh99-*.obj
 	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/optlp-tools99-*.obj
 
+admbopt:
+	mkdir -p ${DISK}/lib
+	mkdir -p ${LIBPATH}
+	$(MAKE) --directory=df1b2-separable CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-df1b2-separable- DISKDIR=../${DISK}
+	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-linad99- DISKDIR=../${DISK}
+	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK}
+	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-tools99- DISKDIR=../${DISK}
 	rm -vf ${DISK}/lib/libadmbo.a
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-linad99-*.obj
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-df1b2-separable-*.obj
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-nh99-*.obj
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-tools99-*.obj
-
-	rm -rf ${DISK}/src
-	cp -R ../src ${DISK}
-
-	rm -rf ${DISK}/docs
-	cp -R ../docs ${DISK} 
-
-	rm -rf ${DISK}/tests
-	cp -R ../tests ${DISK}
-
-	rm -rf ${DISK}/utilities
-	cp -R ../utilities ${DISK}
-
-	cp -vf ../LICENSE.txt ${DISK}
-	cp -vf ../README.txt ${DISK}
-	cp -vf ../NEWS.txt ${DISK}
-	cp -vf ../VERSION ${DISK}
-	cp -vf ../Makefile ${DISK}
-
-	rm -rf `find ${DISK} -type d -name .svn`
-
-	rm -rf ${DISK}/contrib
-	cp -R ../contrib ${DISK}
 
 includes:
 	mkdir -p ${DISK}/include
@@ -81,6 +91,7 @@ includes:
 	cp linad99/dfpool.h ${DISK}/include
 	cp linad99/trunc.hpp ${DISK}/include
 	cp linad99/factors.h ${DISK}/include
+	cp linad99/vector_shape.h ${DISK}/include
 	cp tools99/adoption.hpp ${DISK}/include
 	cp tools99/adstring.hpp ${DISK}/include
 	cp tools99/cifstrem.h ${DISK}/include
@@ -123,21 +134,12 @@ ifeq ($(CXX),g++.exe)
 	  cp ../utilities/sed.exe ${DISK}/bin
 endif
 
-examples:
-	rm -rf ${DISK}/examples
-	cp -R ../examples ${DISK}
 
 verify:
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C $(DISK)/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-saf.txt"
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" $(MAKE) -C $(DISK)/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-opt.txt"
-
-contrib:
-	mkdir -p ${DISK}/contrib/include
-	mkdir -p ${DISK}/contrib/lib
-	mkdir -p ${DISK}/contrib/bin
-	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../contrib
 
 tests:
 	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../contrib test

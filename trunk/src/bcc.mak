@@ -1,8 +1,8 @@
 DISK=..\build\admb-bcc5.5-32bit
 CXXFLAGS:=$(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION)
 
-OPT_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DADMB_VERSION=11 -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DOPT_LIB -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
-SAFE_CXXFLAGS ="-q -I${BCC55_HOME}\Include -DADMB_VERSION=11 -DUSE_LAPLACE -WC -O2 -5 -DDOS386 -DSAFE_ALL -I..\linad99 -c -f -I..\sparse -I..\nh99 -I..\df1b2-separable -I..\tools99"
+OPT_CXXFLAGS ="-c -q -f -WC -O2 -5 -I${BCC55_HOME}\Include -DADMB_VERSION=11 -DUSE_LAPLACE -DDOS386 -DOPT_LIB -I..\linad99 -I..\nh99 -I..\df1b2-separable -I..\tools99"
+SAFE_CXXFLAGS ="-c -q -f -WC -O2 -5 -I${BCC55_HOME}\Include -DADMB_VERSION=11 -DUSE_LAPLACE -DDOS386 -DSAFE_ALL -I..\linad99 -I..\nh99 -I..\df1b2-separable -I..\tools99"
 
 all: dist
 

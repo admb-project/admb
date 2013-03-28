@@ -14,4 +14,4 @@ lex.yy.c: tpl2rem.lex
 	if [ ! -f $@ ]; then touch $@; fi
 
 $(PREFIX_OBJ)%.obj:%.cpp
-	$(CXX) $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<

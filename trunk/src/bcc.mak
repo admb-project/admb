@@ -54,4 +54,4 @@ verify:
 	-..\..\..\scripts\get-outputs.bat > ..\..\..\benchmarks-saf.txt
 
 clean:
-	IF EXIST $(DISK) rd /S /Q $(DISK)
+	IF EXIST $(DISK) rd /S /Q ..\build

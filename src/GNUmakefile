@@ -91,7 +91,7 @@ includes:
 	cp linad99/dfpool.h ${DISK}/include
 	cp linad99/trunc.hpp ${DISK}/include
 	cp linad99/factors.h ${DISK}/include
-	cp linad99/vector_shape.h ${DISK}/include
+	#cp linad99/vector_shape.h ${DISK}/include
 	cp tools99/adoption.hpp ${DISK}/include
 	cp tools99/adstring.hpp ${DISK}/include
 	cp tools99/cifstrem.h ${DISK}/include

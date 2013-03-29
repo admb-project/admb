@@ -1,4 +1,4 @@
-MAKEFLAG_J=-j
+MAKEFLAG_J=-j 1
 ifndef DISK
 DISK=../build/dist
 endif

@@ -44,6 +44,10 @@ adstring_array::adstring_array(const adstring_array& sa):clist(sa)
     ptr=NULL;
   }
 
+int adstring_array::size() const { return shape->indexmax()-shape->indexmin() + 1; }
+int adstring_array::indexmin(void) const { return shape->indexmin();}
+int adstring_array::indexmax(void) const { return shape->indexmax();}
+
   adstring_array::adstring_array(int min,int max) 
   {
     allocate(min,max); 

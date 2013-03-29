@@ -55,7 +55,7 @@ contrib: includes bins libs
 	mkdir -p ${DISK}/contrib/include
 	mkdir -p ${DISK}/contrib/lib
 	mkdir -p ${DISK}/contrib/bin
-	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../contrib
+	$(MAKE) ADMB_HOME="${PWD}/${DISK}" --directory=../contrib
 
 libs: admbsaf admbopt
 

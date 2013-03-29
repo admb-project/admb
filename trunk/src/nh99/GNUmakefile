@@ -18,7 +18,7 @@ endif
 
 tpl2cpp.c: lex.yy.c
 	if [ "`cat $^ | wc -l`" -ne 0 ]; then sed -f sedflex $^ > $@; else rm -vf $@; fi
-	if [ ! -f $@ ]; then cp -vf tpl2rem-unixflex.c $@; fi
+	if [ ! -f $@ ]; then cp -vf tpl2cpp-unixflex.c $@; fi
 lex.yy.c: tpl2cpp.lex
 	if [ `command -v flex` ]; then flex -v -w $^; else rm -vf $@; fi
 	if [ ! -f $@ ]; then touch $@; fi

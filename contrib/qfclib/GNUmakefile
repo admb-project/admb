@@ -1,14 +1,9 @@
 include objects.lst
 
 all: $(addprefix $(PREFIX_OBJ), $(OBJECTS))
-ifeq ($(SHELL),sh.exe)
-	copy qfclib.h $(ADMB_HOME)\contrib\include
-else
-	cp qfclib.h $(ADMB_HOME)/contrib/include
-endif
 
 test:
-	ADMB_HOME="../$(ADMB_HOME)" PATH="../$(ADMB_HOME)/bin:$(PATH)" make --directory=tests
+	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" make --directory=tests
 
 clean:
 ifneq ($(SHELL),sh.exe)

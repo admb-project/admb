@@ -1,6 +1,8 @@
 include objects.lst
 
-all: $(addprefix $(PREFIX_OBJ), $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)) $(DISKDIR)/bin/tpl2rem
+all: $(sort $(addprefix $(PREFIX_OBJ), $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)))
+
+bins: $(DISKDIR)/bin/tpl2rem
 
 $(DISKDIR)/bin/tpl2rem: tpl2rem.c
 	$(CC) $(CFLAGS) -o $@ $<

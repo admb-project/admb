@@ -6,8 +6,9 @@ else
 OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
 endif
 
+all: $(sort $(addprefix $(PREFIX_OBJ), $(OBJECTS)))
 
-all: $(addprefix $(PREFIX_OBJ), $(OBJECTS)) $(DISKDIR)/bin/tpl2cpp
+bins: $(DISKDIR)/bin/tpl2cpp
 
 $(DISKDIR)/bin/tpl2cpp: tpl2cpp.c
 ifeq ("$(CC)","cc")

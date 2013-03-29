@@ -9,7 +9,7 @@ all: $(LIBNAME)
 
 $(LIBNAME): $(OBJ0)
 	cd $(LIBPATH)
-	tlib ..\..\dist\lib\$(LIBNAME) /a $(OBJ0)
+	tlib /P128 ..\..\dist\lib\$(LIBNAME) /a $(OBJ0)
 	cd ..\..\..\..\src\nh99
 
 .cpp.obj:

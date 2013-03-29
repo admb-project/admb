@@ -691,11 +691,11 @@ class vector_shape
       index_max = lu;
       ncopies = 0;
    }
-   int indexmin()
+   int indexmin() const
    {
       return index_min;
    }
-   int indexmax()
+   int indexmax() const
    {
       return index_max;
    }

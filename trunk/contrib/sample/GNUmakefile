@@ -24,4 +24,4 @@ clean:
 	@rm -f admodel.dep
 
 $(PREFIX_OBJ)%.obj: %.cpp
-	$(CXX) $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<

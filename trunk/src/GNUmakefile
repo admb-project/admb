@@ -12,7 +12,6 @@ ifndef ADMB_HOME
 ADMB_HOME=${PWD}/${DISK}
 endif
 
-#CXXFLAGS_INCLUDES:=-I../df1b2-separable -I../nh99 -I../linad99 -I../tools99
 CXXFLAGS_INCLUDES:=-I../${DISK}/include
 ifeq ($(CXX),CC)
 CXXFLAGS:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
@@ -117,23 +116,19 @@ bins:
 	mkdir -p ${DISK}/bin
 	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DISK}/bin
 	cp ../scripts/admb/admb ${DISK}/bin
-	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp ../scripts/admb/adcomp ${DISK}/bin
 	cp ../scripts/admb/adlink ${DISK}/bin
 	rm -f ${DISK}/bin/admb-cfg.sh
 	echo "CXX=$(CXX)" > ${DISK}/bin/admb-cfg.sh
-ifeq ($(CXX),g++)
-	  cp ../scripts/admb/adcomp.bat ${DISK}/bin
-	  cp ../scripts/admb/adlink.bat ${DISK}/bin
-endif
-ifeq ($(CXX),g++.exe)
-	  cp ../scripts/admb/admb.bat ${DISK}/bin
-	  cp ../scripts/$(CXX)/adcomp.bat ${DISK}/bin
-	  cp ../scripts/$(CXX)/adlink.bat ${DISK}/bin
-	  cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
-	  cp ../utilities/sed.exe ${DISK}/bin
-endif
 
+bins2:
+ifeq ($(SHELL),sh.exe)
+	copy ../scripts/admb/admb.bat ${DISK}/bin
+	copy ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
+	copy ../utilities/sed.exe ${DISK}/bin
+	copy ../scripts/admb/adcomp.bat ${DISK}/bin
+	copy ../scripts/admb/adlink.bat ${DISK}/bin
+endif
 
 verify:
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C $(DISK)/examples all

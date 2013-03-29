@@ -1,11 +1,6 @@
 include objects.lst
 
 all: $(addprefix $(PREFIX_OBJ), $(OBJECTS))
-ifeq ($(SHELL),sh.exe)
-	copy ecolib.h $(ADMB_HOME)\contrib\include
-else
-	cp ecolib.h $(ADMB_HOME)/contrib/include
-endif
 
 test:
 ifneq ($(SHELL),sh.exe)

@@ -10,7 +10,7 @@ endif
 
 all: contribs build-ad2csv
 
-contribs: build-statslib build-ecolib build-qfclib build-sample
+contribs: build-statslib build-ecolib build-qfclib
 ifeq ($(SHELL),sh.exe)
 	copy contrib.h $(ADMB_HOME)\contrib\include
 else
@@ -21,16 +21,16 @@ endif
 
 
 build-statslib:
-	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-statslib-
-	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-statslib-
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-statslib-
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-statslib-
 
 build-ecolib:
-	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-ecolib-
-	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-ecolib-
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-ecolib-
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-ecolib-
 
 build-qfclib:
-	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-qfclib-
-	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-qfclib-
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-qfclib-
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-qfclib-
 
 build-ad2csv:
 	$(MAKE) --directory=ad2csv ADMB_HOME="$(ADMB_HOME)"
@@ -39,8 +39,8 @@ build-admb2r:
 	$(MAKE) --directory=admb2r ADMB_HOME="$(ADMB_HOME)" gcc
 
 build-sample:
-	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-c -DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-sample-
-	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-c -DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-sample-
+	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-sample-
+	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-sample-
 
 test:
 	$(MAKE) --directory=sample ADMB_HOME="$(ADMB_HOME)" test 

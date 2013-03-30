@@ -145,9 +145,13 @@ L20:
     if (iprint>0)
     {
       if (!itn)
+      {
         if (ad_printf) (*ad_printf)("\nInitial statistics: ");
+      }
       else
+      {
         if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
+      }
 
       if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);

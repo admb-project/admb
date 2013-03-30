@@ -66,7 +66,7 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
    dvar_vector sample_value(1,nsamp);
    sample_value.initialize();
    
-   int ierr;
+   int ierr = 0;
    banded_lower_triangular_dvar_matrix ch=choleski_decomp(vHess,ierr);
    if (ierr)
    {

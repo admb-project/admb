@@ -256,12 +256,12 @@
  * Description not yet available.
  * \param
  */
-  int sub_unallocated(const ivector& m)
-  {
-    int iflag;
-    if (!allocated(m)) iflag=1;
-    return iflag;
-  }
+int sub_unallocated(const ivector& m)
+{
+  int iflag = 0;
+  if (!allocated(m)) iflag=1;
+  return iflag;
+}
 
 /**
  * Description not yet available.

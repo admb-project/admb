@@ -529,46 +529,22 @@ ostream & setscientific(const ostream & s);
 
 //ostream& setshowpoint(const ostream& s);
 
-/**
- * Description not yet available.
- * \param
- */
-class preshowpoint
-{
-   int x;
-};
+class preshowpoint {};
 preshowpoint setshowpoint(void);
 ostream & operator <<(const ostream &, preshowpoint);
-
 #if (__MSVC32__>=7 || __BORLANDC__  >= 0x0560)
-#   define setfixed() std::fixed
+  #define setfixed() std::fixed
 #else
 ostream & setfixed(const ostream & s);
-
-/**
- * Description not yet available.
- * \param
- */
-class prefixed
-{
-   int x;
-};
+class prefixed {};
 prefixed setfixed(void);
 ostream & operator<<(const ostream &, prefixed);
 #endif
 
 #if (__MSVC32__>=7 || __BORLANDC__  >= 0x0560)
-#   define setscientific() std::scientific
+  #define setscientific() std::scientific
 #else
-
-/**
- * Description not yet available.
- * \param
- */
-class prescientific
-{
-   int x;
-};
+class prescientific {};
 prescientific setscientific(void);
 ostream & operator<<(const ostream &, prescientific);
 #endif
@@ -583,10 +559,7 @@ class grad_stack;
  * Description not yet available.
  * \param
  */
-class kkludge_object
-{
-   char u;
-};
+class kkludge_object{};
 
 /**
  * Description not yet available.
@@ -1269,14 +1242,7 @@ void jacobcalc(int nvar, const uostream & ofs);
 #endif
 #endif
 
-/**
- * Description not yet available.
- * \param
- */
-class dvect_ptr_ptr
-{
-   dvector **m;
-};
+//class dvect_ptr_ptr { dvector **m; };
 
 /**
  * Description not yet available.
@@ -3226,14 +3192,7 @@ class dvar_vector
     };
   */
 
-/**
- * Description not yet available.
- * \param
- */
-class fvar_ptr
-{
-   dvar_vector *p;
-};
+//class fvar_ptr { dvar_vector *p; };
 
 /**
  * Description not yet available.
@@ -4676,24 +4635,8 @@ class three_array_shape
 
 };				// End of class three_array_shape
 
-/**
- * Description not yet available.
- * \param
- */
-class dmatrix_ptr
-{
-   dmatrix *p;
-};
-
-/**
- * Description not yet available.
- * \param
- */
-class dvar_matrix_ptr
-{
-   dvar_matrix *p;
-};
-
+//class dmatrix_ptr { dmatrix *p; };
+//class dvar_matrix_ptr { dvar_matrix *p; };
 
 /**
  * Description not yet available.
@@ -8766,10 +8709,7 @@ class i3_index;
  * Description not yet available.
  * \param
  */
-class adkludge
-{
-   char x;
-};
+class adkludge{};
 
 /**
  * Description not yet available.

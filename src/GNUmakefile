@@ -3,6 +3,10 @@ ifndef DISK
 DISK=../build/dist
 endif
 
+ifndef INSTALL_DIR
+INSTALL_DIR=/usr/local/admb
+endif
+
 PWD=$(shell pwd)
 
 ifndef LIBPATH
@@ -137,6 +141,11 @@ verify:
 tests:
 	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../contrib test
 	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../tests
+
+install:
+ifneq ($(SHELL),sh.exe)
+	cp -Rvf $(DISK) $(INSTALL_DIR)
+endif
 
 clean:
 	@rm -f nh99/lex.yy.c

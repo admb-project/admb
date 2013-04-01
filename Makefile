@@ -4,6 +4,7 @@ dist: $(CXX)-dist
 contrib: $(CXX)-contrib
 verify: $(CXX)-verify
 test: $(CXX)-tests
+install: $(CXX)-install
 clean: $(CXX)-clean
 
 installer:
@@ -60,6 +61,8 @@ CC-verify:
 	$(MAKE) --directory=src CC=cc CXX=CC verify
 CC-tests:
 	$(MAKE) --directory=src CC=cc CXX=CC tests
+CC-install:
+	$(MAKE) --directory=src CC=cc CXX=CC install
 CC-clean:
 	$(MAKE) --directory=src CC=cc CXX=CC clean
 
@@ -73,6 +76,8 @@ icpc-verify:
 	$(MAKE) --directory=src CXX=icpc CC=icc verify
 icpc-tests:
 	$(MAKE) --directory=src CXX=icpc CC=icc tests
+icpc-install:
+	$(MAKE) --directory=src CXX=icpc CC=icc install
 icpc-clean:
 	$(MAKE) --directory=src CXX=icpc CC=icc clean
 
@@ -86,6 +91,8 @@ g++-verify:
 	$(MAKE) --directory=src CC=gcc CXX=g++ verify
 g++-tests:
 	$(MAKE) --directory=src CC=gcc CXX=g++ tests
+g++-install:
+	$(MAKE) --directory=src CC=gcc CXX=g++ install
 g++-clean:
 	$(MAKE) --directory=src CC=gcc CXX=g++ clean
 
@@ -99,5 +106,7 @@ c++-verify:
 	$(MAKE) --directory=src CC=cc CXX=c++ verify
 c++-tests:
 	$(MAKE) --directory=src CC=cc CXX=c++ tests
+c++-install:
+	$(MAKE) --directory=src CC=cc CXX=c++ install
 c++-clean:
 	$(MAKE) --directory=src CC=cc CXX=c++ clean

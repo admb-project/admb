@@ -7,10 +7,10 @@ $(PREFIX_OBJ)%.obj:%.cpp
 
 bins: $(DESTDIR)\bin\tpl2rem.exe
 
-$(DESTDIR)\bin\tpl2rem.exe: tpl2rem-winflex.c
-	$(CC) /nologo /TC /Fe$@ tpl2rem-winflex.c
+$(DESTDIR)\bin\tpl2rem.exe: tpl2rem.c
+	$(CC) /nologo /TC /Fe$@ tpl2rem.c
 
-tpl2rem-winflex.c: tpl2rem.lex
+tpl2rem.c: tpl2rem.lex
 	..\..\utilities\flex -w tpl2rem.lex 
 	..\..\utilities\sed -f sedflex lex.yy.c > $@
 

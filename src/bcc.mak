@@ -39,6 +39,7 @@ dist:
 	copy ..\NEWS.txt $(DISK)\dist
 	copy ..\VERSION $(DISK)\dist
 	copy ..\utilities\sed.exe $(DISK)\dist\bin
+	copy ..\scripts\bcc32\contrib.h $(DISK)\dist\include
 	copy ..\scripts\bcc32\adcomp.bat $(DISK)\dist\bin
 	copy ..\scripts\bcc32\adlink.bat $(DISK)\dist\bin
 	copy ..\scripts\bcc32\set-admb-bcc551.bat $(DISK)\dist\bin

@@ -20,7 +20,7 @@ istream & operator >> (istream & c, adstring & t)
     exit(1);
   }
   t=tmp;
-  delete tmp;
+  delete [] tmp;
   return (c);
 }
 
@@ -32,7 +32,6 @@ istream & operator >> (istream & c, line_adstring & t)
   ch=c.get();
   // throw away the newline at the end of the last line if necessary
   if (ch == '\n') ch=c.get();
-  char xx=ch;
   unsigned int ii=0;
   while (ch != '\n' && ch != EOF)
   {
@@ -44,7 +43,6 @@ istream & operator >> (istream & c, line_adstring & t)
     }
     tmp[ii++]=ch;
     ch=c.get();
-    xx=ch;
   }
   tmp[ii]='\0';
   t=tmp;

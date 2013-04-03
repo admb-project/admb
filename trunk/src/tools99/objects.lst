@@ -13,7 +13,6 @@ clist.obj  \
 string3.obj \
 string4.obj \
 string5.obj \
-mem.obj  \
 string5a.obj \
 str.obj \
 val.obj  \

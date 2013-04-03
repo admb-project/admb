@@ -1,7 +1,6 @@
 all: contribs
 
 contribs: build-statslib build-qfclib build-ecolib
-	copy contrib.h $(ADMB_HOME)\contrib\include
 
 build-statslib:
 	pushd statslib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)statslib-
@@ -14,6 +13,9 @@ build-ecolib:
 build-qfclib:
 	pushd qfclib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)qfclib-
 	copy qfclib\qfclib.h $(ADMB_HOME)\contrib\include
+
+build-contributions:
+	pushd contributions& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)contributions-
 
 test:
 	cd ecolib& $(MAKE) test

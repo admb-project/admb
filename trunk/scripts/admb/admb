@@ -63,6 +63,7 @@ shift $((OPTIND-1))
 tpls=
 srcs=
 objs=
+nontpls=
 
 for file in $*
 do
@@ -73,8 +74,10 @@ do
     tpls="$tpls ${file%.*}"
   elif [ "$extension" = "cpp" -o "$extension" = "c" ]; then
     srcs="$srcs $file"
+    nontpls="$nontpls $file"
   elif [ "$extension" = "o" -o "$extension" = "obj" ]; then
     objs="$objs $file"
+    nontpls="$nontpls $file"
   fi
 done
 
@@ -174,7 +177,7 @@ if [[ "$tplobjs" == "" ]]; then
   CMD="adlink $d $g $r $s $objs"
   echo -e \\n\*\*\* $CMD
   eval $CMD
-  declare -a amodel=( $objs )
+  declare -a amodel=( $nontpls )
   m=${amodel[0]}
   m2=${m%.*}
   if [[ -z $dll ]]; then 

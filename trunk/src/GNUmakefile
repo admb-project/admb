@@ -13,10 +13,6 @@ ifndef LIBPATH
 LIBPATH=../build/objects/dist
 endif
 
-ifndef ADMB_HOME
-ADMB_HOME=${PWD}/${DISK}
-endif
-
 CXXFLAGS_INCLUDES:=-I../${DISK}/include
 ifeq ($(CXX),CC)
 CXXFLAGS:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
@@ -113,13 +109,6 @@ includes:
 	cp nh99/gccmanip.h ${DISK}/include
 
 bins:
-ifeq ($(SHELL),sh.exe)
-	copy ../scripts/admb/admb.bat ${DISK}/bin
-	copy ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
-	copy ../utilities/sed.exe ${DISK}/bin
-	copy ../scripts/admb/adcomp.bat ${DISK}/bin
-	copy ../scripts/admb/adlink.bat ${DISK}/bin
-else
 	mkdir -p ${DISK}/bin
 	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DISK}/bin
 	cp ../scripts/admb/admb ${DISK}/bin
@@ -131,17 +120,37 @@ else
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DISK} bins
 	ln -sf bin/admb ${DISK}
 	ln -sf build/dist/bin/admb ..
+ifdef COMSPEC
+	cp ../scripts/admb/admb.bat ${DISK}/bin
+	cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
+	cp ../utilities/sed.exe ${DISK}/bin
+	cp ../scripts/admb/adcomp.bat ${DISK}/bin
+	cp ../scripts/admb/adlink.bat ${DISK}/bin
 endif
 
 verify:
+	ADMB_HOME="${PWD}/${DISK}" PATH="${PWD}/${DISK}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C $(DISK)/examples all
+	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-saf.txt"
+	ADMB_HOME="${PWD}/${DISK}" PATH="${PWD}/${DISK}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" $(MAKE) -C $(DISK)/examples all
+	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-opt.txt"
+
+verify_admb_home:
+ifdef ADMB_HOME
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C $(DISK)/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-saf.txt"
 	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" $(MAKE) -C $(DISK)/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-opt.txt"
+endif
 
 tests:
+	$(MAKE) ADMB_HOME="${PWD}/${DISK}" --directory=../contrib test
+	$(MAKE) ADMB_HOME="${PWD}/${DISK}" --directory=../tests
+
+tests_admb_home:
+ifdef ADMB_HOME
 	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../contrib test
 	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../tests
+endif
 
 install:
 ifneq ($(SHELL),sh.exe)

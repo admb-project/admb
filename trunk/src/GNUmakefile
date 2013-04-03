@@ -113,6 +113,13 @@ includes:
 	cp nh99/gccmanip.h ${DISK}/include
 
 bins:
+ifeq ($(SHELL),sh.exe)
+	copy ../scripts/admb/admb.bat ${DISK}/bin
+	copy ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
+	copy ../utilities/sed.exe ${DISK}/bin
+	copy ../scripts/admb/adcomp.bat ${DISK}/bin
+	copy ../scripts/admb/adlink.bat ${DISK}/bin
+else
 	mkdir -p ${DISK}/bin
 	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DISK}/bin
 	cp ../scripts/admb/admb ${DISK}/bin
@@ -122,14 +129,8 @@ bins:
 	echo "CXX=$(CXX)" > ${DISK}/bin/admb-cfg.sh
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DISK} bins
-
-bins2:
-ifeq ($(SHELL),sh.exe)
-	copy ../scripts/admb/admb.bat ${DISK}/bin
-	copy ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
-	copy ../utilities/sed.exe ${DISK}/bin
-	copy ../scripts/admb/adcomp.bat ${DISK}/bin
-	copy ../scripts/admb/adlink.bat ${DISK}/bin
+	ln -sf bin/admb ${DISK}
+	ln -sf build/dist/bin/admb ..
 endif
 
 verify:

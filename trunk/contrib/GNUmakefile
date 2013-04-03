@@ -11,12 +11,9 @@ endif
 all: contribs build-ad2csv
 
 contribs: build-statslib build-ecolib build-qfclib build-sample
-ifeq ($(SHELL),sh.exe)
-	copy contrib.h $(ADMB_HOME)\contrib\include
-else
+ifneq ($(SHELL),sh.exe)
 	$(AR) -rs $(ADMB_HOME)/contrib/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
 	$(AR) -rs $(ADMB_HOME)/contrib/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
-	cp contrib.h $(ADMB_HOME)/contrib/include
 endif
 
 

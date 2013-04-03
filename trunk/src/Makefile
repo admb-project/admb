@@ -76,7 +76,6 @@ includes:
 contrib: contribdirs libcontribsaf libcontribopt
 
 contribdirs:
-	IF NOT EXIST $(DESTDIR)\contrib\include md $(DESTDIR)\contrib\include
 	IF NOT EXIST $(DESTDIR)\contrib\lib md $(DESTDIR)\contrib\lib
 	IF NOT EXIST $(DESTDIR)\contrib\bin md $(DESTDIR)\contrib\bin
 

@@ -47,7 +47,6 @@ dist:
 	rm -rf `find ${DISK} -type d -name .svn`
 
 contrib: includes bins libs
-	mkdir -p ${DISK}/contrib/include
 	mkdir -p ${DISK}/contrib/lib
 	mkdir -p ${DISK}/contrib/bin
 	$(MAKE) ADMB_HOME="${PWD}/${DISK}" --directory=../contrib

@@ -7,7 +7,6 @@
 #include <fvar.hpp>
 #include <string.h>
 #include <stdlib.h>
-#include "safe_mem.h"
 
 adstring::adstring(int lb, int ub) : clist()
 {

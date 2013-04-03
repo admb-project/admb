@@ -6,7 +6,6 @@
  */
 #include <fvar.hpp>
 #include <stdlib.h>
-#include "safe_mem.h"
 
 istream & operator >> (istream & c, adstring & t)
 {

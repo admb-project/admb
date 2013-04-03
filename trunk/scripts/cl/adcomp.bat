@@ -10,7 +10,8 @@ for %%a in (%*) do (
   if "!arg:~0,1!"=="-" (
     if "%%a"=="-d" set dll=/DBUILDING_DLL
     @REM if "%%a"=="-r" shift
-    if "%%a"=="-s" set g=/Z7 & set opt=/DSAFE_ALL
+    if "%%a"=="-s" set opt=/DSAFE_ALL
+    if "%%a"=="-g" set DEBUG=/Z7
   ) else (
     if "%%~xa"=="" (
       set file=%%a.cpp
@@ -23,7 +24,7 @@ if not defined file goto HELP
 if not defined opt set opt=/DOPT_LIB 
 
 @echo on
-cl -c /EHsc /Ox /DUSE_LAPLACE /DWIN32 %opt% %dll% /D__MSVC32__=8 /I. /I"%ADMB_HOME%"\include /I"%ADMB_HOME%"\contrib\include %file%
+cl /c /EHsc /Ox %DEBUG% /DUSE_LAPLACE /DWIN32 %opt% %dll% /D__MSVC32__=8 /I. /I"%ADMB_HOME%"\include /I"%ADMB_HOME%"\contrib\include %file%
 @echo off
 
 goto EOF

@@ -6,27 +6,30 @@ setlocal EnableExtensions EnableDelayedExpansion
 if [%1]==[] goto HELP
 if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
-set objs=
+set OBJS=
 for %%a in (%*) do (
   set arg=%%a
   if "!arg:~0,1!"=="-" (
     if "!arg!"=="-s" (
-      set libs="%ADMB_HOME%"\lib\admb.lib "%ADMB_HOME%"\contrib\lib\contrib.lib
+      set LIBS="%ADMB_HOME%"\lib\admb.lib "%ADMB_HOME%"\contrib\lib\contrib.lib
+    )
+    if "!arg!"=="-g" (
+      set DEBUG="/DEBUG"
     )
   ) else (
     if "%%~xa"=="" (
-      set objs=!objs! !arg!.obj
+      set OBJS=!OBJS! !arg!.obj
     ) else (
-      set objs=!objs! !arg!
+      set OBJS=!OBJS! !arg!
     )
   )
 )
 
-if not defined libs set libs="%ADMB_HOME%"\lib\admbo.lib "%ADMB_HOME%"\contrib\lib\contribo.lib
+if not defined LIBS set LIBS="%ADMB_HOME%"\lib\admbo.lib "%ADMB_HOME%"\contrib\lib\contribo.lib
 set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
-cl %objs% %libs% /link
+cl %OBJS% %LIBS% /link %DEBUG%
 @echo off
 
 goto EOF

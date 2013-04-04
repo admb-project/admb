@@ -123,6 +123,9 @@ ifdef COMSPEC
 	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
 	cp ../utilities/sed.exe ${DISK}/bin
+	cp ../utilities/libiconv2.dll ${DISK}/bin
+	cp ../utilities/libintl3.dll ${DISK}/bin
+	cp ../utilities/regex2.dll ${DISK}/bin
 	cp ../scripts/admb/adcomp.bat ${DISK}/bin
 	cp ../scripts/admb/adlink.bat ${DISK}/bin
 endif

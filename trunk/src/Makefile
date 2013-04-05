@@ -1,13 +1,13 @@
 DESTDIR=..\build\dist
 OBJDESTDIR=..\build\objects\dist
 
-CXXFLAGS_SAF=/nologo /Ox /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
-CXXFLAGS_OPT=/nologo /Ox /W4 /GF /EHsc /DOPT_LIB  /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
+CXXFLAGS_SAF=/nologo /O2 /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
+CXXFLAGS_OPT=/nologo /O2 /W4 /GF /EHsc /DOPT_LIB  /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
 
-all: dist libs
+all: dist contrib
 	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
 
-dist: srcs bins
+dist: srcs
 
 srcs:
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)
@@ -15,7 +15,9 @@ srcs:
 	copy ..\NEWS.txt $(DESTDIR)
 	copy ..\README.txt $(DESTDIR)
 	copy ..\VERSION $(DESTDIR)
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\examples
 	IF NOT EXIST $(DESTDIR)\examples xcopy /I /E /Y ..\examples $(DESTDIR)\examples
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\contrib
 	IF NOT EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\contrib
 
 bins: libs

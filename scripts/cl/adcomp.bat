@@ -24,7 +24,7 @@ if not defined file goto HELP
 if not defined opt set opt=/DOPT_LIB 
 
 @echo on
-cl /c /EHsc /Ox %DEBUG% /DUSE_LAPLACE /DWIN32 %opt% %dll% /D__MSVC32__=8 /I. /I"%ADMB_HOME%"\include /I"%ADMB_HOME%"\contrib\include %file%
+cl /c /EHsc /O2 %DEBUG% /DUSE_LAPLACE /DWIN32 %opt% %dll% /D__MSVC32__=8 /I. /I"%ADMB_HOME%"\include /I"%ADMB_HOME%"\contrib\include %file%
 @echo off
 
 goto EOF

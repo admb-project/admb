@@ -1,112 +1,79 @@
 #default targets depending on compiler
-all: $(CXX)
-dist: $(CXX)-dist
-contrib: $(CXX)-contrib
+all: $(CXX)-all
 verify: $(CXX)-verify
-test: $(CXX)-tests
 install: $(CXX)-install
 clean: $(CXX)-clean
 
-installer:
-	rm -f admb.zip admb
-	ln -sf build/dist/ admb
-	zip -r admb admb/*
-
-#MinGW
-mingw: mingw-dist mingw-contrib
-mingw-dist:
-	$(MAKE) --directory=src --file=mingw.mak dist
-mingw-contrib:
-	$(MAKE) --directory=src --file=mingw.mak contrib
-mingw-verify:
-	$(MAKE) --directory=src --file=mingw.mak verify
-mingw-tests:
-	$(MAKE) --directory=src --file=mingw.mak tests
-mingw-clean:
-	$(MAKE) --directory=src --file=mingw.mak clean
-
-#Borland 5.5
-bcc: bcc-dist bcc-contrib
-bcc-dist:
-	cd src& $(MAKE) -fbcc.mak dist
-bcc-contrib:
-	cd src& $(MAKE) -fbcc.mak contrib
-bcc-verify:
-	cd src& $(MAKE) -fbcc.mak verify
-bcc-tests:
-	cd src& $(MAKE) -fbcc.mak tests
-bcc-clean:
-	cd src& $(MAKE) -fbcc.mak clean
-
 #Microsoft Visual C++
-cl: cl-dist cl-contrib
-cl-dist:
-	cd src& nmake dist
-cl-contrib:
-	cd src& nmake contrib
+cl: cl-all
+cl-all:
+	cd src& nmake all
 cl-verify:
 	cd src& nmake verify
-cl-tests:
-	cd src& nmake tests
+cl-install:
+	cd src& nmake install
 cl-clean:
 	cd src& nmake clean
 
-#Oracle Solaris Studio
-CC: CC-dist CC-contrib
-CC-dist:
-	$(MAKE) --directory=src CC=cc CXX=CC dist
-CC-contrib:
-	$(MAKE) --directory=src CC=cc CXX=CC contrib 
-CC-verify:
-	$(MAKE) --directory=src CC=cc CXX=CC verify
-CC-tests:
-	$(MAKE) --directory=src CC=cc CXX=CC tests
-CC-install:
-	$(MAKE) --directory=src CC=cc CXX=CC install
-CC-clean:
-	$(MAKE) --directory=src CC=cc CXX=CC clean
-
-#Intel
-icpc: icpc-dist icpc-contrib
-icpc-dist:
-	$(MAKE) --directory=src CXX=icpc CC=icc dist
-icpc-contrib:
-	$(MAKE) --directory=src CXX=icpc CC=icc contrib
-icpc-verify:
-	$(MAKE) --directory=src CXX=icpc CC=icc verify
-icpc-tests:
-	$(MAKE) --directory=src CXX=icpc CC=icc tests
-icpc-install:
-	$(MAKE) --directory=src CXX=icpc CC=icc install
-icpc-clean:
-	$(MAKE) --directory=src CXX=icpc CC=icc clean
-
 #GNU
-g++: g++-dist g++-contrib
-g++-dist:
-	$(MAKE) --directory=src CC=gcc CXX=g++ dist
-g++-contrib:
-	$(MAKE) --directory=src CC=gcc CXX=g++ contrib
+g++: g++-all
+g++-all:
+	$(MAKE) --directory=src CC=gcc CXX=g++ all
 g++-verify:
 	$(MAKE) --directory=src CC=gcc CXX=g++ verify
-g++-tests:
-	$(MAKE) --directory=src CC=gcc CXX=g++ tests
 g++-install:
 	$(MAKE) --directory=src CC=gcc CXX=g++ install
 g++-clean:
 	$(MAKE) --directory=src CC=gcc CXX=g++ clean
 
 #MacOS clang
-c++: c++-dist c++-contrib
-c++-dist:
-	$(MAKE) --directory=src CC=cc CXX=c++ dist
-c++-contrib:
-	$(MAKE) --directory=src CC=cc CXX=c++ contrib
+clang++: c++-all
+clang++-all: c++-all
+clang++-verify: c++-verify
+clang++-install: c++-install
+clang++-clean: c++-clean
+
+#default c++
+c++: c++-all
+c++-all:
+	$(MAKE) --directory=src CC=cc CXX=c++ all
 c++-verify:
 	$(MAKE) --directory=src CC=cc CXX=c++ verify
-c++-tests:
-	$(MAKE) --directory=src CC=cc CXX=c++ tests
 c++-install:
 	$(MAKE) --directory=src CC=cc CXX=c++ install
 c++-clean:
 	$(MAKE) --directory=src CC=cc CXX=c++ clean
+
+#Oracle Solaris Studio
+CC: CC-all
+CC-all:
+	$(MAKE) --directory=src CC=cc CXX=CC all
+CC-verify:
+	$(MAKE) --directory=src CC=cc CXX=CC verify
+CC-install:
+	$(MAKE) --directory=src CC=cc CXX=CC install
+CC-clean:
+	$(MAKE) --directory=src CC=cc CXX=CC clean
+
+#Intel
+icpc: icpc-all
+icpc-all:
+	$(MAKE) --directory=src CC=icc CXX=icpc all
+icpc-verify:
+	$(MAKE) --directory=src CC=icc CXX=icpc verify
+icpc-install:
+	$(MAKE) --directory=src CC=icc CXX=icpc install
+icpc-clean:
+	$(MAKE) --directory=src CC=icc CXX=icpc clean
+
+
+#Unsupported Borland 5.5
+bcc: bcc-all
+bcc-all:
+	cd src& $(MAKE) -fbcc.mak all
+bcc-verify:
+	cd src& $(MAKE) -fbcc.mak verify
+bcc-install:
+	cd src& $(MAKE) -fbcc.mak install
+bcc-clean:
+	cd src& $(MAKE) -fbcc.mak clean

@@ -25,7 +25,7 @@ g++-all:
 g++-verify:
 	$(MAKE) --directory=src CC=gcc CXX=g++ verify
 g++-test:
-	$(MAKE) --directory=src CC=gcc CXX=g++ test
+	$(MAKE) --directory=src CC=gcc CXX=g++ tests
 g++-install:
 	$(MAKE) --directory=src CC=gcc CXX=g++ install
 g++-clean:
@@ -46,7 +46,7 @@ c++-all:
 c++-verify:
 	$(MAKE) --directory=src CC=cc CXX=c++ verify
 c++-test:
-	$(MAKE) --directory=src CC=cc CXX=c++ test
+	$(MAKE) --directory=src CC=cc CXX=c++ tests
 c++-install:
 	$(MAKE) --directory=src CC=cc CXX=c++ install
 c++-clean:
@@ -59,7 +59,7 @@ CC-all:
 CC-verify:
 	$(MAKE) --directory=src CC=cc CXX=CC verify
 CC-test:
-	$(MAKE) --directory=src CC=cc CXX=CC test
+	$(MAKE) --directory=src CC=cc CXX=CC tests
 CC-install:
 	$(MAKE) --directory=src CC=cc CXX=CC install
 CC-clean:
@@ -72,7 +72,7 @@ icpc-all:
 icpc-verify:
 	$(MAKE) --directory=src CC=icc CXX=icpc verify
 icpc-test:
-	$(MAKE) --directory=src CC=icc CXX=icpc test
+	$(MAKE) --directory=src CC=icc CXX=icpc tests
 icpc-install:
 	$(MAKE) --directory=src CC=icc CXX=icpc install
 icpc-clean:
@@ -85,7 +85,7 @@ bcc-all:
 bcc-verify:
 	cd src& $(MAKE) -fbcc.mak verify
 bcc-test:
-	cd src& $(MAKE) -fbcc.mak test
+	cd src& $(MAKE) -fbcc.mak tests
 bcc-install:
 	cd src& $(MAKE) -fbcc.mak install
 bcc-clean:

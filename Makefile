@@ -17,7 +17,7 @@ cl-all:
 cl-verify:
 	cd src& nmake verify
 cl-test:
-	cd src& nmake test
+	cd src& nmake tests
 cl-install:
 	cd src& nmake install
 cl-clean:

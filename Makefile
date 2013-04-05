@@ -5,6 +5,11 @@ test: $(CXX)-test
 install: $(CXX)-install
 clean: $(CXX)-clean
 
+installer:
+	rm -f admb.zip admb
+	ln -sf build/dist/ admb
+	zip -r admb admb/*
+
 #Microsoft Visual C++
 cl: cl-all
 cl-all:

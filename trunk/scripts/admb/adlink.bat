@@ -7,14 +7,9 @@ if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
 
 rem Pop args until model=%1
-set adlib=-lado
-set df1b2lib=-ldf1b2o
-set contriblib=-lcontribo
-set linker=g++
-set sym=-s & rem space
-set i=0
 set objects=
-
+set sym=-s & rem space
+set linker=g++
 for %%a in (%*) do (
 if %%~xa==.obj (
 set objects=!objects! %%a
@@ -24,18 +19,15 @@ if %%a==-d set linker=dllwrap
 if %%a==-g set sym=
 if %%a==-r set r=
 if %%a==-s (
-  set adlib=-lads
-  set df1b2lib=-ldf1b2s
-  set contriblib=-lcontribs
+  set libs="%ADMB_HOME%\lib\libadmb.a" "%ADMB_HOME%\contrib\lib\libcontrib.a"
 )
 )
+if not defined libs set libs="%ADMB_HOME%\lib\libadmbo.a" "%ADMB_HOME%\contrib\lib\libcontribo.a"
 
-set def=
 if %linker%==g++ (set out=-o %model%) else (set def=-def %model%.def^
  --driver-name g++ & set out=--output-lib lib%model%.a -o %model%.dll)
 
-set CMD=%linker% %sym%-static %def% -L"%ADMB_HOME%\lib" -L"%ADMB_HOME%\contrib" %def% %objects% %df1b2lib% ^
--ladmod %contriblib% -ladt %adlib% %df1b2lib% -ladmod -ladt %contriblib% %adlib% %contriblib% %out%
+set CMD=%linker% %sym% -static %def% %out% %objects% %libs%
 echo %CMD%
 %CMD%
 

@@ -1,3 +1,9 @@
+ifneq ($(SHELL),sh.exe)
+DISK=../build/dist
+else
+DISK=..\build\dist
+endif
+
 ifndef LIBPATH
 LIBPATH=../../build/objects/dist
 endif
@@ -12,8 +18,8 @@ all: contribs build-ad2csv
 
 contribs: build-statslib build-ecolib build-qfclib build-sample
 ifneq ($(SHELL),sh.exe)
-	$(AR) -rs $(ADMB_HOME)/contrib/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
-	$(AR) -rs $(ADMB_HOME)/contrib/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
+	$(AR) -rs $(DISK)/contrib/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
+	$(AR) -rs $(DISK)/contrib/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
 endif
 
 
@@ -21,38 +27,44 @@ build-statslib:
 	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-statslib-
 	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-statslib-
 ifeq ($(SHELL),sh.exe)
-	copy statslib\statsLib.h $(ADMB_HOME)\contrib\include
+	copy statslib\statsLib.h $(DISK)\contrib\include
 else
-	cp statslib/statsLib.h $(ADMB_HOME)/contrib/include
+	cp statslib/statsLib.h $(DISK)/contrib/include
 endif
 
 build-ecolib:
 	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-ecolib-
 	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-ecolib-
 ifeq ($(SHELL),sh.exe)
-	copy ecolib\ecolib.h $(ADMB_HOME)\contrib\include
+	copy ecolib\ecolib.h $(DISK)\contrib\include
 else
-	cp ecolib/ecolib.h $(ADMB_HOME)/contrib/include
+	cp ecolib/ecolib.h $(DISK)/contrib/include
 endif
 
 build-qfclib:
 	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-qfclib-
 	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-qfclib-
 ifeq ($(SHELL),sh.exe)
-	copy qfclib\qfclib.h $(ADMB_HOME)\contrib\include
+	copy qfclib\qfclib.h $(DISK)\contrib\include
 else
-	cp qfclib/qfclib.h $(ADMB_HOME)/contrib/include
+	cp qfclib/qfclib.h $(DISK)/contrib/include
 endif
 
 build-ad2csv:
+ifneq ($(SHELL),sh.exe)
 	$(MAKE) --directory=ad2csv ADMB_HOME="$(ADMB_HOME)"
+endif
 
 build-admb2r:
+ifneq ($(SHELL),sh.exe)
 	$(MAKE) --directory=admb2r ADMB_HOME="$(ADMB_HOME)" gcc
+endif
 
 build-sample:
+ifneq ($(SHELL),sh.exe)
 	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-sample-
 	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-sample-
+endif
 
 test:
 	$(MAKE) --directory=sample ADMB_HOME="$(ADMB_HOME)" test 

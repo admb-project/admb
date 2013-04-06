@@ -14,7 +14,7 @@ ifndef INSTALL_DIR
 INSTALL_DIR=/usr/local/admb
 endif
 
-ifeq ($(SHELL),sh.exe)
+ifneq ($(SHELL),sh.exe)
 PWD=$(shell pwd)
 else
 PWD=$(shell cd)

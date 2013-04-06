@@ -8,6 +8,7 @@ endif
 
 all: $(sort $(addprefix $(PREFIX_OBJ), $(OBJECTS)))
 
+ifneq ($(SHELL),sh.exe)
 bins: $(DISKDIR)/bin/tpl2cpp
 
 $(DISKDIR)/bin/tpl2cpp: tpl2cpp.c
@@ -23,6 +24,12 @@ tpl2cpp.c: lex.yy.c
 lex.yy.c: tpl2cpp.lex
 	if [ `command -v flex` ]; then flex -v -w $^; else rm -vf $@; fi
 	if [ ! -f $@ ]; then touch $@; fi
+else
+bins: $(DISKDIR)\bin\tpl2cpp.exe
+
+$(DISKDIR)\bin\tpl2cpp.exe: tpl2cpp-winflex.c
+	$(CC) $(CFLAGS) -Wno-format -o $@ $<
+endif
 
 $(PREFIX_OBJ)banner.obj: banner.cpp
 	$(CXX) -c $(CXXFLAGS) -DADMB_VERSION=$(shell cat ../../VERSION) -DADMB_REVISION=$(shell test -e ../../REVISION && cat ../../REVISION) -o $@ $^

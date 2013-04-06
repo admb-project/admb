@@ -20,6 +20,9 @@ contribs: build-statslib build-ecolib build-qfclib build-sample
 ifneq ($(SHELL),sh.exe)
 	$(AR) -rs $(DISK)/contrib/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
 	$(AR) -rs $(DISK)/contrib/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
+else
+	$(AR) -rs $(DISK)\contrib\lib\libcontrib.a ..\build\objects\dist\saflp-contrib-*.obj
+	$(AR) -rs $(DISK)\contrib\lib\libcontribo.a ..\build\objects\dist\optlp-contrib-*.obj
 endif
 
 

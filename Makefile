@@ -36,13 +36,18 @@ g++-install:
 g++-clean:
 	$(MAKE) --directory=src CC=gcc CXX=g++ clean
 
-#MacOS clang
+#clang
 clang++: c++-all
-clang++-all: c++-all
-clang++-verify: c++-verify
-clang++-test: c++-test
-clang++-install: c++-install
-clang++-clean: c++-clean
+clang++-all:
+	$(MAKE) --directory=src CC=clang CXX=clang++ all
+clang++-verify:
+	$(MAKE) --directory=src CC=clang CXX=clang++ verify
+clang++-test:
+	$(MAKE) --directory=src CC=clang CXX=clang++ test
+clang++-install:
+	$(MAKE) --directory=src CC=clang CXX=clang++ install
+clang++-clean:
+	$(MAKE) --directory=src CC=clang CXX=clang++ clean
 
 #default c++
 c++: c++-all

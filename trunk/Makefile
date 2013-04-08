@@ -37,7 +37,7 @@ g++-clean:
 	$(MAKE) --directory=src CC=gcc CXX=g++ clean
 
 #clang
-clang++: c++-all
+clang++: clang++-all
 clang++-all:
 	$(MAKE) --directory=src CC=clang CXX=clang++ all
 clang++-verify:

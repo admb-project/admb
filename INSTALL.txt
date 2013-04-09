@@ -17,10 +17,15 @@ Windows
 
    C:\> cd admb-trunk
 
-4. Install MinGW GCC compiler (32 Bit).
+4. Install MinGW C++ compiler (32 Bit).
 
-   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin
-   C:\admb-trunk\> mingw-get install gcc g++
+   C:\admb-trunk\> utilities\make --directory=utilities\mingw
+
+   Note: This will download approximately ~177M from 'sourceforge.net'.
+
+   Add MinGW to PATH.
+
+   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin;%PATH%
 
 5. Build libraries
 
@@ -68,3 +73,6 @@ Windows and Visual C++
    C:\admb-trunk\> cd examples\admb\simple
    C:\admb-trunk\examples\admb\simple\> admb simple
    C:\admb-trunk\examples\admb\simple\> simple
+
+Unix
+----

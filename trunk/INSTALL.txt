@@ -1,3 +1,5 @@
+Describes the procedures to install ADMB from source for Windows and
+Unix operating systems.
 
 Quick Start
 ===========
@@ -76,3 +78,37 @@ Windows and Visual C++
 
 Unix
 ----
+
+1. Download ADMB source distribution.
+
+   http://admb-project.org/buildbot/snapshots/admb-r939.zip
+
+   Right click the downloaded file and extract to C:\admb-trunk\.
+
+2. Open Terminal windows.
+
+3. Extract files.
+
+   [~]$ unzip admb-r939.zip
+
+3. Change to admb directory.
+
+   [~]$ cd admb-trunk
+
+4. Build libraries 
+
+   [~/admb-trunk/]$ make
+
+   Note: Build times vary from machine to machine, but it usually
+         takes approximately 15-25 minutes.
+
+   If you are using NOT using the default C++ compiler, specify on
+   the command line.  For example,
+
+   [~/admb-trunk/]$ make CXX=icpc
+
+5. Build and run the simple example.
+
+   [~/admb-trunk/]$ cd examples/admb/simple
+   [~/admb-trunk/examples/admb/simple/]$ ../../../admb simple
+   [~/admb-trunk/examples/admb/simple/]$ ./simple

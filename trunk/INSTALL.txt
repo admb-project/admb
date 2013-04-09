@@ -1,3 +1,4 @@
+0123456789012345678901234567890123456789012345678901234567890123456789
 Describes the procedures to install ADMB from source for Windows and
 Unix operating systems.
 
@@ -9,7 +10,7 @@ Windows
 
 1. Download ADMB source distribution.
 
-   http://admb-project.org/buildbot/snapshots/admb-r939.zip
+   http://admb-project.org/buildbot/snapshots/admb-latest-src.zip
 
    Right click the downloaded file and extract to C:\admb-trunk\.
 
@@ -50,7 +51,7 @@ Windows and Visual C++
 
 1. Download ADMB source distribution.
 
-   http://admb-project.org/buildbot/snapshots/admb-r939.zip
+   http://admb-project.org/buildbot/snapshots/admb-latest-src.zip
 
 2. Open Visual Studio Comand Prompt window.
 
@@ -79,13 +80,13 @@ Unix
 
 1. Download ADMB source distribution.
 
-   http://admb-project.org/buildbot/snapshots/admb-r939.zip
+   http://admb-project.org/buildbot/snapshots/admb-latest-src.zip
 
 2. Open Terminal windows.
 
 3. Extract files.
 
-   [~]$ unzip admb-r939.zip
+   [~]$ unzip admb-latest-src.zip
 
 3. Change to admb directory.
 

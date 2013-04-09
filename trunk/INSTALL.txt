@@ -1,0 +1,47 @@
+0123456789012345678901234567890123456789012345678901234567890123456789
+
+Quick Start
+===========
+
+Windows
+-------
+
+1. Download ADMB source distribution.
+
+   http://www.admb-project.org/buildbot/snapshots/admb-r939.zip
+
+   Right click the downloaded file and extract to C:\admb-trunk\.
+
+2. Open Comand Prompt window.
+
+2. Change to admb directory.
+
+   C:\> cd admb-trunk
+
+3. Download MinGW C++ compiler (32 Bit).
+
+   C:\admb-trunk\> cd utilities\mingw
+   C:\admb-trunk\utilities\mingw\> ..\make
+   C:\admb-trunk\utilities\mingw\> cd ..\..
+
+   Note: This will download approximately ~177M from 'sourceforge.net'.
+
+   Add MinGW to PATH. 
+
+   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin;%PATH%
+
+4. Build libraries
+
+   C:\admb-trunk\> utilities\make
+
+   Note: Build times vary from machine to machine, but it usually 
+         takes approximately 15-25 minutes.
+
+5. Build and run the simple example.
+
+   C:\admb-trunk\> set ADMB_HOME=%CD%\build\dist
+   C:\admb-trunk\> set PATH=%CD%\build\dist\bin;%PATH%
+
+   C:\admb-trunk\> cd examples\admb\simple
+   C:\admb-trunk\examples\admb\simple\> ..\..\..\admb.bat simple
+   C:\admb-trunk\examples\admb\simple\> simple

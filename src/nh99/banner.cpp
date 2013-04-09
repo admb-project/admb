@@ -38,7 +38,7 @@ void banner(const adstring& program_name)
   ss << "ADMB";
 
 #if defined(ADMB_VERSION)
-  ss << "-" << STR2(ADMB_VERSION);
+  ss << " -" << STR2(ADMB_VERSION);
 #endif
 
   if (which_library() == 'o')
@@ -49,23 +49,23 @@ void banner(const adstring& program_name)
   ss << " compiled with ";
 
 #if defined(__GNUC__)
-  ss <<  "Gnu C++ " << __GNUC__ << '.' << __GNUC_MINOR__ << '.' << __GNUC_PATCHLEVEL__;
+  ss <<  "GNU C++ " << __GNUC__ << '.' << __GNUC_MINOR__ << '.' << __GNUC_PATCHLEVEL__;
   #if defined(__x86_64)
-  ss <<  "(64bit)";
+  ss <<  " (64bit)";
   #else
-  ss <<  "(32bit)";
+  ss <<  " (32bit)";
   #endif
 #elif defined(_MSC_VER)
   ss << "Microsoft Visual C++ ";
-  #if (_MSC_VER==1300) 
+  #if (_MSC_VER==1300)
   ss << "7.0";
-  #elif (_MSC_VER==1310) 
+  #elif (_MSC_VER==1310)
   ss << "2003 7.1";
-  #elif (_MSC_VER==1400) 
+  #elif (_MSC_VER==1400)
   ss << "2005 8.0";
-  #elif (_MSC_VER==1500) 
+  #elif (_MSC_VER==1500)
   ss << "2008 9.0";
-  #elif (_MSC_VER==1600) 
+  #elif (_MSC_VER==1600)
   ss << "2010 10.0";
   #endif
   #if defined(_M_X64)
@@ -120,7 +120,7 @@ void banner(const adstring& program_name)
   ss << "\n";
 
   ss << "Copyright (c) 2008-2012 ADMB Foundation and Regents of the University of California\n";
-  
+
   ss << '\0';
 
   cout << ss.str() << endl;

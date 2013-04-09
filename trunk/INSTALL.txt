@@ -14,11 +14,11 @@ Windows
 
 2. Open Comand Prompt window.
 
-2. Change to admb directory.
+3. Change to admb directory.
 
    C:\> cd admb-trunk
 
-3. Download MinGW C++ compiler (32 Bit).
+4. Download MinGW C++ compiler (32 Bit).
 
    C:\admb-trunk\> cd utilities\mingw
    C:\admb-trunk\utilities\mingw\> ..\make
@@ -30,9 +30,40 @@ Windows
 
    C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin;%PATH%
 
-4. Build libraries
+5. Build libraries
 
    C:\admb-trunk\> utilities\make
+
+   Note: Build times vary from machine to machine, but it usually 
+         takes approximately 15-25 minutes.
+
+6. Build and run the simple example.
+
+   C:\admb-trunk\> set ADMB_HOME=%CD%\build\dist
+   C:\admb-trunk\> set PATH=%CD%\build\dist\bin;%PATH%
+
+   C:\admb-trunk\> cd examples\admb\simple
+   C:\admb-trunk\examples\admb\simple\> admb simple
+   C:\admb-trunk\examples\admb\simple\> simple
+
+Windows and Visual C++
+----------------------
+
+1. Download ADMB source distribution.
+
+   http://www.admb-project.org/buildbot/snapshots/admb-r939.zip
+
+   Right click the downloaded file and extract to C:\admb-trunk\.
+
+2. Open Visual Studio Comand Prompt window.
+
+3. Change to admb directory.
+
+   C:\> cd admb-trunk
+
+4. Build libraries
+
+   C:\admb-trunk\> nmake
 
    Note: Build times vary from machine to machine, but it usually 
          takes approximately 15-25 minutes.
@@ -43,5 +74,5 @@ Windows
    C:\admb-trunk\> set PATH=%CD%\build\dist\bin;%PATH%
 
    C:\admb-trunk\> cd examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> ..\..\..\admb.bat simple
+   C:\admb-trunk\examples\admb\simple\> admb simple
    C:\admb-trunk\examples\admb\simple\> simple

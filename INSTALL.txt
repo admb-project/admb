@@ -1,4 +1,3 @@
-0123456789012345678901234567890123456789012345678901234567890123456789
 
 Quick Start
 ===========
@@ -8,7 +7,7 @@ Windows
 
 1. Download ADMB source distribution.
 
-   http://www.admb-project.org/buildbot/snapshots/admb-r939.zip
+   http://admb-project.org/buildbot/snapshots/admb-r939.zip
 
    Right click the downloaded file and extract to C:\admb-trunk\.
 
@@ -18,23 +17,16 @@ Windows
 
    C:\> cd admb-trunk
 
-4. Download MinGW C++ compiler (32 Bit).
+4. Install MinGW GCC compiler (32 Bit).
 
-   C:\admb-trunk\> cd utilities\mingw
-   C:\admb-trunk\utilities\mingw\> ..\make
-   C:\admb-trunk\utilities\mingw\> cd ..\..
-
-   Note: This will download approximately ~177M from 'sourceforge.net'.
-
-   Add MinGW to PATH. 
-
-   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin;%PATH%
+   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin
+   C:\admb-trunk\> mingw-get install gcc g++
 
 5. Build libraries
 
    C:\admb-trunk\> utilities\make
 
-   Note: Build times vary from machine to machine, but it usually 
+   Note: Build times vary from machine to machine, but it usually
          takes approximately 15-25 minutes.
 
 6. Build and run the simple example.
@@ -51,7 +43,7 @@ Windows and Visual C++
 
 1. Download ADMB source distribution.
 
-   http://www.admb-project.org/buildbot/snapshots/admb-r939.zip
+   http://admb-project.org/buildbot/snapshots/admb-r939.zip
 
    Right click the downloaded file and extract to C:\admb-trunk\.
 
@@ -65,7 +57,7 @@ Windows and Visual C++
 
    C:\admb-trunk\> nmake
 
-   Note: Build times vary from machine to machine, but it usually 
+   Note: Build times vary from machine to machine, but it usually
          takes approximately 15-25 minutes.
 
 5. Build and run the simple example.

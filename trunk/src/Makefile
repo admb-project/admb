@@ -12,7 +12,7 @@ dist: srcs
 srcs:
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)
 	copy ..\LICENSE.txt $(DESTDIR)
-	copy ..\NEWS.txt $(DESTDIR)
+	copy ..\CHANGES.txt $(DESTDIR)
 	copy ..\README.txt $(DESTDIR)
 	copy ..\VERSION $(DESTDIR)
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\examples

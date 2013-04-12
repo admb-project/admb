@@ -36,7 +36,7 @@ dist:
 	cd ..
 	copy ..\LICENSE.txt $(DISK)\dist
 	copy ..\README.txt $(DISK)\dist
-	copy ..\NEWS.txt $(DISK)\dist
+	copy ..\CHANGES.txt $(DISK)\dist
 	copy ..\VERSION $(DISK)\dist
 	copy ..\utilities\sed.exe $(DISK)\dist\bin
 	copy ..\scripts\bcc32\contrib.h $(DISK)\dist\include

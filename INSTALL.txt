@@ -28,7 +28,7 @@ Windows
 
    Add MinGW to PATH.
 
-   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin;%PATH%
+   C:\admb-trunk\> set PATH=C:\admb-trunk\utilities\mingw\bin;%PATH%
 
 5. Build libraries
 
@@ -39,11 +39,8 @@ Windows
 
 6. Build and run the simple example.
 
-   C:\admb-trunk\> set ADMB_HOME=%CD%\build\dist
-   C:\admb-trunk\> set PATH=%CD%\build\dist\bin;%PATH%
-
    C:\admb-trunk\> cd examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> admb simple
+   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\build\dist\bin\admb simple
    C:\admb-trunk\examples\admb\simple\> simple
 
 Windows and Visual C++
@@ -52,6 +49,8 @@ Windows and Visual C++
 1. Download ADMB source distribution.
 
    http://admb-project.org/buildbot/snapshots/admb-latest-src.zip
+
+   Right click the downloaded file and extract to C:\admb-trunk\.
 
 2. Open Visual Studio Comand Prompt window.
 
@@ -68,11 +67,8 @@ Windows and Visual C++
 
 5. Build and run the simple example.
 
-   C:\admb-trunk\> set ADMB_HOME=%CD%\build\dist
-   C:\admb-trunk\> set PATH=%CD%\build\dist\bin;%PATH%
-
    C:\admb-trunk\> cd examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> admb simple
+   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\build\dist\bin\admb simple
    C:\admb-trunk\examples\admb\simple\> simple
 
 Unix
@@ -107,5 +103,16 @@ Unix
 5. Build and run the simple example.
 
    [~/admb-trunk/]$ cd examples/admb/simple
-   [~/admb-trunk/examples/admb/simple/]$ ../../../admb simple
+   [~/admb-trunk/examples/admb/simple/]$ ~/admb-trunk/admb simple
    [~/admb-trunk/examples/admb/simple/]$ ./simple
+
+   Note: To avoid using admb folder location ~/admb-trunk, add ~/admb-trunk
+   to PATH in .bashrc
+   
+   For example,
+
+   PATH=~/admb-trunk:$PATH
+
+   Then
+
+   [~/admb-trunk/examples/admb/simple/]$ admb simple

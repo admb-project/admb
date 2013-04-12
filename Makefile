@@ -5,6 +5,17 @@ test: $(CXX)-test
 install: $(CXX)-install
 clean: $(CXX)-clean
 
+help:
+	@echo "Help"
+	@echo "\tFor Clang C++ compiler,"
+	@echo "\tmake clang++\n"
+	@echo "\tFor GNU C++ compiler,"
+	@echo "\tmake g++\n"
+	@echo "\tFor Solaris Studio C++ compiler,"
+	@echo "\tmake icpc\n"
+	@echo "\tFor Intel C++ compiler,"
+	@echo "\tmake CC\n"
+
 installer:
 	rm -f admb.zip admb
 	ln -sf build/dist/ admb

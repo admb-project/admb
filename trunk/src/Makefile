@@ -98,6 +98,9 @@ verify:
 	pushd $(DESTDIR)\examples& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" PATH="$(MAKEDIR)\$(DESTDIR)\bin;$(PATH)" all& popd
 	pushd $(DESTDIR) & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
 
+install:
+	@echo "Read INSTALL.txt for installation instructions."
+
 clean:
 	IF EXIST $(DESTDIR) rd /S /Q $(DESTDIR)
 	IF EXIST $(OBJDESTDIR) rd /S /Q $(OBJDESTDIR)

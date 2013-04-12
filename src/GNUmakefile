@@ -268,9 +268,7 @@ else
 endif
 
 install:
-ifneq ($(SHELL),sh.exe)
-	cp -Rvf $(DISK) $(INSTALL_DIR)
-endif
+	@echo "Read INSTALL.txt for installation instructions."
 
 clean:
 	@rm -f nh99/lex.yy.c

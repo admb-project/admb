@@ -1,5 +1,5 @@
-all:
+install:
 	bin\mingw-get install mingw32-gcc-g++
 
-all2:
+update:
 	bin\mingw-get upgrade mingw32-gcc-g++

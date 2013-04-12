@@ -19,7 +19,7 @@ users@admb-project.org for help.
 Download
 ========
 Source and precompiled binary distributions can be downloaded from
-http://www.admb-project.org/downloads/
+'http://www.admb-project.org/downloads/'.
 
 Quick Start
 ===========
@@ -42,15 +42,14 @@ Windows
 4. Install MinGW C++ compiler (32 Bit).
 
    C:\admb-trunk\> utilities\get-mingw.bat
-   If mingw is already installed, then just update it.
+
+   If mingw is already installed, then it will just update it.
 
    Note: This will download approximately ~177M from 'sourceforge.net'.
 
    Add MinGW to PATH.
 
-   C:\admb-trunk\> set PATH=C:\admb-trunk\utilities\mingw\bin;%PATH%
-
-   To avoid this just check if admb-cfg.txt has mingw path in the admb script.
+   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin;%PATH%
 
 5. Build libraries
 

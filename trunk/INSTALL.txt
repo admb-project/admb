@@ -41,8 +41,7 @@ Windows
 
 4. Install MinGW C++ compiler (32 Bit).
 
-   C:\admb-trunk\> utilities\make --directory=utilities\mingw
-   C:\admb-trunk\> utilities\mingw-install.bat
+   C:\admb-trunk\> utilities\get-mingw.bat
    If mingw is already installed, then just update it.
 
    Note: This will download approximately ~177M from 'sourceforge.net'.

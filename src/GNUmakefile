@@ -51,7 +51,7 @@ ifneq ($(SHELL),sh.exe)
 	cp -R ../utilities ${DISK}
 	cp -f ../LICENSE.txt ${DISK}
 	cp -f ../README.txt ${DISK}
-	cp -f ../NEWS.txt ${DISK}
+	cp -f ../CHANGES.txt ${DISK}
 	cp -f ../VERSION ${DISK}
 	cp -f ../Makefile ${DISK}
 	rm -rf `find ${DISK} -type d -name .svn`

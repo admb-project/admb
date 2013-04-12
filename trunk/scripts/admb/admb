@@ -16,19 +16,14 @@ unset ADMB_HOME
 fi
 
 FILE=$0
+DIRECTORY=$(cd `dirname $FILE` && pwd)
 while [ -h ${FILE} ]; do 
-  BASENAME=$(basename $FILE)
-  DIRNAME=$(dirname $FILE)
-  pushd $DIRNAME &> /dev/null
-  FILE="$PWD/$BASENAME"
-  FILE=$(readlink $FILE)
-  if [ ! "$FILE" == "/*" -a ! "$FILE" == "~/*" ]; then
-    FILE="$PWD/$FILE"
-  fi
+  pushd $DIRECTORY &> /dev/null
+  FILE=$(readlink $DIRECTORY/admb)
+  DIRECTORY=$(cd `dirname $FILE` && pwd)
   popd &> /dev/null
 done
-
-pushd "$(dirname $FILE)/../" &> /dev/null
+pushd $DIRECTORY/.. &> /dev/null
 declare -rx ADMB_HOME="$PWD"
 popd &> /dev/null
 PATH=$ADMB_HOME/bin:$PATH

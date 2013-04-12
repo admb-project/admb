@@ -1,4 +1,5 @@
 0123456789012345678901234567890123456789012345678901234567890123456789
+
 Describes the procedures to install ADMB from source for Windows and
 Unix operating systems.
 
@@ -80,9 +81,11 @@ Unix
 
 2. Open Terminal windows.
 
-3. Extract files.
+3. Extract files in HOME directory.
 
    [~]$ unzip admb-latest-src.zip
+
+   Note: This will extract admb-trunk folder to HOME.
 
 3. Change to admb directory.
 

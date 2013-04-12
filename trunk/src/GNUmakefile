@@ -71,7 +71,7 @@ else
 	md ${DISK}\utilities
 	copy /Y ..\LICENSE.txt ${DISK}
 	copy /Y ..\README.txt ${DISK}
-	copy /Y ..\NEWS.txt ${DISK}
+	copy /Y ..\CHANGES.txt ${DISK}
 	copy /Y ..\VERSION ${DISK}
 	copy /Y ..\Makefile ${DISK}
 endif

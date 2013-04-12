@@ -89,7 +89,7 @@ do
   rm -vf classdef.tmp xxdata.tmp xxhtop.tmp xxhtopm.tmp xxglobal.tmp xxtopm.tmp 
   rm -vf xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp 
   rm -vf tfile1 tfile2 tfile3 tfile4 tfile5
-  rm -vf $model.cpp $model.htp $model.o $model
+  rm -f $model.cpp $model.htp $model.o $model
 
   CMD="$tpl2cpp $bounds $dll $model"
   echo -e \\n\*\*\* $CMD

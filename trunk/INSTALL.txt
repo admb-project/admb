@@ -1,7 +1,25 @@
-0123456789012345678901234567890123456789012345678901234567890123456789
+Describe ADMB installation from source and binary distributions.
 
-Describes the procedures to install ADMB from source for Windows and
-Unix operating systems.
+Requirements
+============
+ADMB has been tested and used on Windows and Linux operating systems in both 32
+and 64 bit versions. A C/C++ compiler must be be installed on the local computer.
+
+Below is a list of supported compilers:
+ * GNU gcc version 4.7
+ * Microsoft Visual C++ 2010 and 2012
+ * MacOS XCode(with the Command Line Tools) version 4.6
+ * Clang version 3.0
+ * Intel C++ Compiler 11
+ * Solaris Studio 12
+
+If the compiler is not listed, try building from the source distribution. Email
+users@admb-project.org for help.
+
+Download
+========
+Source and precompiled binary distributions can be downloaded from
+http://www.admb-project.org/downloads/
 
 Quick Start
 ===========
@@ -24,12 +42,16 @@ Windows
 4. Install MinGW C++ compiler (32 Bit).
 
    C:\admb-trunk\> utilities\make --directory=utilities\mingw
+   C:\admb-trunk\> utilities\mingw-install.bat
+   If mingw is already installed, then just update it.
 
    Note: This will download approximately ~177M from 'sourceforge.net'.
 
    Add MinGW to PATH.
 
    C:\admb-trunk\> set PATH=C:\admb-trunk\utilities\mingw\bin;%PATH%
+
+   To avoid this just check if admb-cfg.txt has mingw path in the admb script.
 
 5. Build libraries
 
@@ -38,11 +60,14 @@ Windows
    Note: Build times vary from machine to machine, but it usually
          takes approximately 15-25 minutes.
 
-6. Build and run the simple example.
+   After building libraries, build and run the simple example.
 
    C:\admb-trunk\> cd examples\admb\simple
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\build\dist\bin\admb simple
    C:\admb-trunk\examples\admb\simple\> simple
+
+   Note: Should be below
+   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
 
 Windows and Visual C++
 ----------------------
@@ -66,11 +91,14 @@ Windows and Visual C++
    Note: Build times vary from machine to machine, but it usually
          takes approximately 15-25 minutes.
 
-5. Build and run the simple example.
+   After building libraries, build and run the simple example.
 
    C:\admb-trunk\> cd examples\admb\simple
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\build\dist\bin\admb simple
    C:\admb-trunk\examples\admb\simple\> simple
+
+   Note: Should be below
+   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
 
 Unix
 ----
@@ -101,21 +129,74 @@ Unix
    If you are NOT using the default C++ compiler, specify compiler on
    the command line.  For example,
 
-   [~/admb-trunk/]$ make CXX=icpc
+   [~/admb-trunk/]$ make icpc
 
-5. Build and run the simple example.
+   Use help to show available compiler targets.
+
+   [~/admb-trunk/]$ make help
+
+   After the building the libraries, build run the simple example.
 
    [~/admb-trunk/]$ cd examples/admb/simple
    [~/admb-trunk/examples/admb/simple/]$ ~/admb-trunk/admb simple
    [~/admb-trunk/examples/admb/simple/]$ ./simple
 
-   Note: To avoid using admb folder location ~/admb-trunk, add ~/admb-trunk
-   to PATH in .bashrc
-   
-   For example,
+5. [Optional] Installation
 
-   PATH=~/admb-trunk:$PATH
+   Copy entire distribution.
+   [~/admb-trunk/]$ sudo cp -Rvf ../admb-trunk /usr/local/admb 
 
-   Then
+   Create symlink to main admb script.
+   [~/admb-trunk/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin
 
+   Note: make install is no longer supported.
+
+   After the copying the libraries, build run the simple example.
+
+   [~/admb-trunk/]$ cd examples/admb/simple
    [~/admb-trunk/examples/admb/simple/]$ admb simple
+   [~/admb-trunk/examples/admb/simple/]$ ./simple
+
+Configure Microsoft Visual C++ 2010 Express
+-------------------------------------------
+1. Download and install the following software, install them in their default
+   locations:
+   A. Microsoft .NET 4
+   B. Microsoft Windows SDK 7.1
+   C. Microsoft Visual Studio 2010 Express
+
+2. Download the executable installer for Windows MSVC from 
+   http://admb-project.org/downloads and run it.  Make sure to choose the
+   install location as the default C:\ADMB or another location without spaces in
+   the name.
+
+3. Add the following to the PATH in the order given. If you are using a 32-bit
+   machine, enter only the first, third, fourth, and fifth path listed in that
+   order.  If you are using a 64-bit machine, enter all five paths in the order
+   listed.  If you are compiling for a 64-bit machine, the second path listed
+   here must reflect which architecture you want to compile for, this example
+   is for Intel 64-bit processors - for most people this should not be changed.
+   Also, if you are on a 32-bit machine, remove the ' (x86)' from these paths.
+
+   C:\Program Files\Microsoft SDKs\Windows\v7.1
+   C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64
+   C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin
+   C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE
+
+4. Add the following environment variables:
+   INCLUDE   = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include;
+               C:\Program Files\Microsoft SDKs\Windows\v7.1\Include
+
+   For the LIB variable, choose either 32-bit or 64-bit.
+   32-bit LIB:
+   LIB       = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib;
+               C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib 
+
+   64-bit LIB:
+   LIB       = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\amd64;
+               C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64 
+
+5. Logout and login again to make the environment variable changes take effect.
+
+--------------------------------------------------------------------------------
+$ID$

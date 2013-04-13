@@ -58,14 +58,11 @@ Windows
    Note: Build times vary from machine to machine, but it usually
          takes approximately 15-25 minutes.
 
-   After building libraries, build and run the simple example.
+6. Build and run the simple example.
 
    C:\admb-trunk\> cd examples\admb\simple
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\build\dist\bin\admb simple
    C:\admb-trunk\examples\admb\simple\> simple
-
-   Note: Should be below
-   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
 
 Windows and Visual C++
 ----------------------
@@ -89,14 +86,11 @@ Windows and Visual C++
    Note: Build times vary from machine to machine, but it usually
          takes approximately 15-25 minutes.
 
-   After building libraries, build and run the simple example.
+5. Build and run the simple example.
 
    C:\admb-trunk\> cd examples\admb\simple
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\build\dist\bin\admb simple
    C:\admb-trunk\examples\admb\simple\> simple
-
-   Note: Should be below
-   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
 
 Unix
 ----
@@ -133,13 +127,13 @@ Unix
 
    [~/admb-trunk/]$ make help
 
-   After the building the libraries, build run the simple example.
+6. Build run the simple example.
 
    [~/admb-trunk/]$ cd examples/admb/simple
    [~/admb-trunk/examples/admb/simple/]$ ~/admb-trunk/admb simple
    [~/admb-trunk/examples/admb/simple/]$ ./simple
 
-5. [Optional] Installation
+7. [Optional] Installation
 
    Copy entire distribution.
    [~/admb-trunk/]$ sudo cp -Rvf ../admb-trunk /usr/local/admb 

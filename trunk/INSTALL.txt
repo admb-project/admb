@@ -144,8 +144,8 @@ Unix
    Copy entire distribution.
    [~/admb-trunk/]$ sudo cp -Rvf ../admb-trunk /usr/local/admb 
 
-   Create symlink to main admb script.
-   [~/admb-trunk/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin
+   Create symlink to main admb script.  Check to that '/usr/local/bin/' exists.
+   [~/admb-trunk/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
    Note: make install is no longer supported.
 

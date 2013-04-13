@@ -29,7 +29,7 @@ Windows
 
 1. Download ADMB source distribution.
 
-   http://admb-project.org/buildbot/snapshots/admb-latest-src.zip
+   http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip
 
    Right click the downloaded file and extract to C:\admb-trunk\.
 
@@ -72,7 +72,7 @@ Windows and Visual C++
 
 1. Download ADMB source distribution.
 
-   http://admb-project.org/buildbot/snapshots/admb-latest-src.zip
+   http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip
 
    Right click the downloaded file and extract to C:\admb-trunk\.
 
@@ -103,7 +103,7 @@ Unix
 
 1. Download ADMB source distribution.
 
-   http://admb-project.org/buildbot/snapshots/admb-latest-src.zip
+   http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip
 
 2. Open Terminal windows.
 
@@ -164,7 +164,7 @@ Configure Microsoft Visual C++ 2010 Express
    C. Microsoft Visual Studio 2010 Express
 
 2. Download the executable installer for Windows MSVC from 
-   http://admb-project.org/downloads and run it.  Make sure to choose the
+   http://www.admb-project.org/downloads and run it.  Make sure to choose the
    install location as the default C:\ADMB or another location without spaces in
    the name.
 

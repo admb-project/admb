@@ -271,6 +271,7 @@ install:
 	@echo "Read INSTALL.txt for installation instructions."
 
 clean:
+ifneq ($(SHELL),sh.exe)
 	@rm -f nh99/lex.yy.c
 	@rm -f df1b2-separable/lex.yy.c
 	@rm -f nh99/tpl2cpp
@@ -279,5 +280,8 @@ clean:
 	@rm -rvf $(LIBPATH)
 	@rm -vf nh99/tpl2cpp.c
 	@rm -vf df1b2-separable/tpl2rem.c
-	@make --directory=../contrib clean
-	@make --directory=../tests clean
+	@$(MAKE) --directory=../contrib clean
+	@$(MAKE) --directory=../tests clean
+else
+	if exist build rd /S /Q ..\build
+endif

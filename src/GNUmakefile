@@ -35,7 +35,7 @@ endif
 
 all: dist contrib
 ifeq ($(SHELL),sh.exe)
-	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
+	pushd $(DISK) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
 endif
 	@echo ADMB build completed.
 	@echo For installation, check README.txt.
@@ -81,11 +81,13 @@ contrib: includes bins libs
 ifneq ($(SHELL),sh.exe)
 	mkdir -p ${DISK}/contrib/lib
 	mkdir -p ${DISK}/contrib/bin
+	mkdir -p ${DISK}/contrib/include
 	$(MAKE) ADMB_HOME="${PWD}/${DISK}" --directory=../contrib
 else
 	if not exist ${DISK}\contrib md ${DISK}\contrib
 	if not exist ${DISK}\contrib\lib md ${DISK}\contrib\lib
 	if not exist ${DISK}\contrib\bin md ${DISK}\contrib\bin
+	if not exist ${DISK}\contrib\include md ${DISK}\contrib\include
 	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" --directory=..\contrib
 endif
 
@@ -279,12 +281,12 @@ ifneq ($(SHELL),sh.exe)
 	@rm -f df1b2-separable/lex.yy.c
 	@rm -f nh99/tpl2cpp
 	@rm -f df1b2-separable/tpl2rem
-	@rm -rvf $(DISK)
-	@rm -rvf $(LIBPATH)
 	@rm -vf nh99/tpl2cpp.c
 	@rm -vf df1b2-separable/tpl2rem.c
+	@rm -rvf ../build
 	@$(MAKE) --directory=../contrib clean
 	@$(MAKE) --directory=../tests clean
+	@rm -f ../admb
 else
 	if exist build rd /S /Q ..\build
 endif

@@ -1,5 +1,9 @@
-all: $(addprefix $(PREFIX_OBJ), sample.obj)
-	cp sample.h $(ADMB_HOME)/contrib/include
+ifndef ADMB_HOME
+ADMB_HOME=../../build/dist
+endif
+
+all: $(addprefix $(PREFIX_OBJ), contrib.obj)
+	cp contrib.h $(ADMB_HOME)/contrib/include
 
 test:
 	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" admb simple.tpl

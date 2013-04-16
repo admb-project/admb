@@ -5,7 +5,7 @@ setlocal EnableExtensions EnableDelayedExpansion
 for %%a in (%0.bat) do (
   set HAS_PATH=%%~$PATH:a
   if not "!HAS_PATH!"=="" (
-    set ADMB_PATH="%%~dp$PATH:a"
+    set ADMB_PATH=%%~dp$PATH:a
   ) else (
     set ADMB_PATH=%%~dpa
   )
@@ -15,6 +15,10 @@ for %%a in (%0.bat) do (
     pushd !ADMB_PATH!\..
     set ADMB_HOME=!CD!
     popd
+  )
+  if exist !ADMB_PATH!utilities\mingw\bin\g++.exe (
+    PATH=%PATH%;!ADMB_PATH!utilities\mingw\bin
+    path
   )
   call !ADMB_HOME!\bin\admb.bat %*
 )

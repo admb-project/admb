@@ -61,7 +61,7 @@ Windows
 6. Build and run the simple example.
 
    C:\admb-trunk\> cd examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\build\dist\bin\admb simple
+   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
    C:\admb-trunk\examples\admb\simple\> simple
 
 Windows and Visual C++
@@ -89,7 +89,7 @@ Windows and Visual C++
 5. Build and run the simple example.
 
    C:\admb-trunk\> cd examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\build\dist\bin\admb simple
+   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
    C:\admb-trunk\examples\admb\simple\> simple
 
 Unix

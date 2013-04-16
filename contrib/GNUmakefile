@@ -16,7 +16,7 @@ endif
 
 all: contribs build-ad2csv
 
-contribs: build-statslib build-ecolib build-qfclib build-contrib
+contribs: build-statslib build-ecolib build-qfclib build-src
 ifneq ($(SHELL),sh.exe)
 	$(AR) -rs $(DISK)/contrib/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
 	$(AR) -rs $(DISK)/contrib/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
@@ -63,10 +63,13 @@ ifneq ($(SHELL),sh.exe)
 	$(MAKE) --directory=admb2r ADMB_HOME="$(ADMB_HOME)" gcc
 endif
 
-build-contrib:
-ifneq ($(SHELL),sh.exe)
+build-src:
 	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-
 	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-
+ifeq ($(SHELL),sh.exe)
+	copy src\contrib.h $(DISK)\contrib\include
+else
+	cp src/contrib.h $(DISK)/contrib/include
 endif
 
 test:

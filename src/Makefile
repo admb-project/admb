@@ -25,6 +25,7 @@ bins: libs
 	copy df1b2-separable\sed* $(DESTDIR)\bin
 	copy ..\scripts\cl\*.bat $(DESTDIR)\bin
 	copy ..\scripts\admb\admb.bat $(DESTDIR)\bin
+	copy ..\scripts\admb\root-admb.bat ..\admb.bat
 	copy ..\utilities\sed.exe $(DESTDIR)\bin
 	copy ..\utilities\*.dll $(DESTDIR)\bin
 	pushd nh99& ..\..\utilities\make  --file=Makefile CC="$(CC) /TC " DESTDIR="..\$(DESTDIR)" bins& popd
@@ -80,6 +81,7 @@ contrib: contribdirs libcontribsaf libcontribopt
 contribdirs:
 	IF NOT EXIST $(DESTDIR)\contrib\lib md $(DESTDIR)\contrib\lib
 	IF NOT EXIST $(DESTDIR)\contrib\bin md $(DESTDIR)\contrib\bin
+	IF NOT EXIST $(DESTDIR)\contrib\include md $(DESTDIR)\contrib\include
 
 libcontribsaf:
 	pushd ..\contrib& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-contrib-"& popd

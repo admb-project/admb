@@ -16,7 +16,7 @@ endif
 
 all: contribs build-ad2csv
 
-contribs: build-statslib build-ecolib build-qfclib build-sample
+contribs: build-statslib build-ecolib build-qfclib build-contrib
 ifneq ($(SHELL),sh.exe)
 	$(AR) -rs $(DISK)/contrib/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
 	$(AR) -rs $(DISK)/contrib/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
@@ -63,14 +63,14 @@ ifneq ($(SHELL),sh.exe)
 	$(MAKE) --directory=admb2r ADMB_HOME="$(ADMB_HOME)" gcc
 endif
 
-build-sample:
+build-contrib:
 ifneq ($(SHELL),sh.exe)
-	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-sample-
-	$(MAKE) --directory=sample CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-sample-
+	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-
+	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-
 endif
 
 test:
-	$(MAKE) --directory=sample ADMB_HOME="$(ADMB_HOME)" test 
+	$(MAKE) --directory=src ADMB_HOME="$(ADMB_HOME)" test 
 
 test-needR:
 	$(MAKE) --directory=ecolib ADMB_HOME="$(ADMB_HOME)" test
@@ -80,4 +80,4 @@ clean:
 	@$(MAKE) --directory=ecolib clean
 	@$(MAKE) --directory=qfclib clean
 	@$(MAKE) --directory=statslib clean
-	@$(MAKE) --directory=sample clean
+	@$(MAKE) --directory=src clean

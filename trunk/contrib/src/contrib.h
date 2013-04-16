@@ -41,3 +41,8 @@
 #include <statsLib.h>
 #include <ecolib.h>
 #include <qfclib.h>
+
+/**
+ * Description: Outputs "Hello World" to screen.
+ */
+void sample_hello_world();

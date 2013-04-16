@@ -10,18 +10,15 @@ if defined ADMB_HOME (
   set "ADMB_HOME="
 )
 for %%a in (%0.bat) do (
-  set IS_ON_PATH=%%~$PATH:a
-  if not "!IS_ON_PATH!"=="" (
+  set HAS_PATH=%%~$PATH:a
+  if not "!HAS_PATH!"=="" (
     set ADMB_PATH="%%~dp$PATH:a"
-    pushd !ADMB_PATH!\..
-    set ADMB_HOME=!CD!
-    popd
   ) else (
     set ADMB_PATH="%%~dpa"
-    pushd !ADMB_PATH!\..
-    set ADMB_HOME=!CD!
-    popd
   )
+  pushd !ADMB_PATH!\..
+  set ADMB_HOME=!CD!
+  popd
 )
 set PATH=!ADMB_HOME!\bin;%PATH%
 

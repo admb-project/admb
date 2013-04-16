@@ -34,7 +34,7 @@ CXXFLAGS:=-O3 $(CXXFLAGS)
 endif
 
 all: dist contrib
-ifneq ($(SHELL),sh.exe)
+ifeq ($(SHELL),sh.exe)
 	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
 endif
 	@echo ADMB build completed.

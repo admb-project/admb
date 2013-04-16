@@ -226,7 +226,7 @@ ifneq ($(SHELL),sh.exe)
 	cp ../scripts/admb/adcomp.bat ${DISK}/bin
 	cp ../scripts/admb/adlink.bat ${DISK}/bin
 	cp ../scripts/admb/admb.bat ${DISK}/bin
-	cp ../scripts/admb/root-admb.bat ..
+	cp ../scripts/admb/root-admb.bat ../admb.bat
   endif
 else
 	md ${DISK}\bin
@@ -244,7 +244,7 @@ else
 	copy ..\scripts\admb\adcomp.bat ${DISK}\bin
 	copy ..\scripts\admb\adlink.bat ${DISK}\bin
 	copy ..\scripts\admb\admb.bat ${DISK}\bin
-	copy ..\scripts\admb\root-admb.bat ..
+	copy ..\scripts\admb\root-admb.bat ..\admb.bat
 endif
 
 

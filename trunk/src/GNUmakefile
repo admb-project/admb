@@ -35,9 +35,10 @@ endif
 
 all: dist contrib
 ifneq ($(SHELL),sh.exe)
-	@printf "\nADMB build completed.\n"
-	@printf "For installation, check README.txt.\n"
+	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
 endif
+	@echo ADMB build completed.
+	@echo For installation, check README.txt.
 
 dist:
 ifneq ($(SHELL),sh.exe)
@@ -223,6 +224,7 @@ ifneq ($(SHELL),sh.exe)
 	cp ../scripts/admb/adcomp.bat ${DISK}/bin
 	cp ../scripts/admb/adlink.bat ${DISK}/bin
 	cp ../scripts/admb/admb.bat ${DISK}/bin
+	cp ../scripts/admb/root-admb.bat ..
   endif
 else
 	md ${DISK}\bin
@@ -240,6 +242,7 @@ else
 	copy ..\scripts\admb\adcomp.bat ${DISK}\bin
 	copy ..\scripts\admb\adlink.bat ${DISK}\bin
 	copy ..\scripts\admb\admb.bat ${DISK}\bin
+	copy ..\scripts\admb\root-admb.bat ..
 endif
 
 

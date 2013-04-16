@@ -41,9 +41,13 @@ http://www.admb-project.org/
 
 Help and Support
 ================
-For help and support, email users@admb-project.org.
+For help and support, email 'users@admb-project.org'.
 
-List archives can be read at
+User list archives are available from
+'http://lists.admb-project.org/pipermail/users/'.
+
+Developers list archives are available from
+'http://lists.admb-project.org/pipermail/developers/'.
 
 Contributors
 ============

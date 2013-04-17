@@ -207,15 +207,10 @@ Unix
 
    Create symlink to main admb script.  Directory '/usr/local/bin/' should exist.
 
-   [~/admb-trunk/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
-
-3. Create shortcut softlink.
-
-   [/usr/local/]$ sudo ln -sf admb/admb bin/admb
+   [/usr/local/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
 4. Build and run simple example.
 
-   [~]$ cd
    [~]$ cp -R /usr/local/admb/example/admb/simple .
    [~/simple/]$ admb simple
    [~/simple/]$ ./simple

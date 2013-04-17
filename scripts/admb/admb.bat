@@ -20,7 +20,7 @@ for %%a in (%0.bat) do (
   set ADMB_HOME=!CD!
   popd
 )
-set PATH=!ADMB_HOME!\bin;%PATH%
+set PATH=!ADMB_HOME!\bin;"%PATH%"
 
 set srcs=
 set tpls=

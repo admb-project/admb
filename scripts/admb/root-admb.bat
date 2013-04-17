@@ -17,8 +17,7 @@ for %%a in (%0.bat) do (
     popd
   )
   if exist !ADMB_PATH!utilities\mingw\bin\g++.exe (
-    PATH=%PATH%;!ADMB_PATH!utilities\mingw\bin
-    path
+    PATH=!ADMB_PATH!utilities\mingw\bin;%PATH%
   )
   call !ADMB_HOME!\bin\admb.bat %*
 )

@@ -1,5 +1,8 @@
 Describe ADMB installation from source and binary distributions.
 
+It is recommended to build ADMB from source to best match compiler and operating
+system.
+
 Requirements
 ============
 ADMB has been tested and used on Windows and Linux operating systems in both 32
@@ -18,7 +21,7 @@ users@admb-project.org for help.
 
 Download
 ========
-Source and precompiled binary distributions can be downloaded from
+Source and pre-built binary distributions can be downloaded from
 'http://www.admb-project.org/downloads/'.
 
 Quick Start
@@ -31,34 +34,30 @@ Windows
 
    http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip
 
-   Right click the downloaded file and extract to C:\admb-trunk\.
+   Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
-2. Open Comand Prompt window.
-
-3. Change to admb directory.
+2. Open Comand Prompt window and change to admb directory.
 
    C:\> cd admb-trunk
 
-4. Install MinGW C++ compiler (32 Bit).
+3. Install MinGW C++ compiler (32 Bit).
 
    C:\admb-trunk\> utilities\get-mingw.bat
 
-   If mingw is already installed, then it will just update it.
-
-   Note: This will download approximately ~177M from 'sourceforge.net'.
+   Download is approximately ~177M from 'sourceforge.net'.  This will also 
+   update existing MinGW installation.
 
    Add MinGW to PATH.
 
    C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin;%PATH%
 
-5. Build libraries
+4. Build libraries
 
    C:\admb-trunk\> utilities\make
 
-   Note: Build times vary from machine to machine, but it usually
-         takes approximately 15-25 minutes.
+   Takes approximately 15-25 minutes to complete.
 
-6. Build and run the simple example.
+5. Build and run the simple example.
 
    C:\admb-trunk\> cd examples\admb\simple
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
@@ -71,22 +70,19 @@ Windows and Visual C++
 
    http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip
 
-   Right click the downloaded file and extract to C:\admb-trunk\.
+   Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
-2. Open Visual Studio Comand Prompt window.
-
-3. Change to admb directory.
+2. Open Visual Studio Comand Prompt window and change to admb directory.
 
    C:\> cd admb-trunk
 
-4. Build libraries
+3. Build libraries
 
    C:\admb-trunk\> nmake
 
-   Note: Build times vary from machine to machine, but it usually
-         takes approximately 15-25 minutes.
+   Takes approximately 15-25 minutes to complete.
 
-5. Build and run the simple example.
+4. Build and run the simple example.
 
    C:\admb-trunk\> cd examples\admb\simple
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
@@ -101,11 +97,9 @@ Unix
 
 2. Open Terminal windows.
 
-3. Extract files in HOME directory.
+3. Extract downloaded file in HOME directory.
 
    [~]$ unzip admb-latest-src.zip
-
-   Note: This will extract admb-trunk folder to HOME.
 
 3. Change to admb directory.
 
@@ -115,13 +109,7 @@ Unix
 
    [~/admb-trunk/]$ make
 
-   Note: Build times vary from machine to machine, but it usually
-         takes approximately 15-25 minutes.
-
-   If you are NOT using the default C++ compiler, specify compiler on
-   the command line.  For example,
-
-   [~/admb-trunk/]$ make icpc
+   Takes approximately 15-25 minutes to complete.
 
    Use help to show available compiler targets.
 
@@ -135,60 +123,102 @@ Unix
 
 7. [Optional] Installation
 
+   'make install' is no longer supported.  Users should manually copy distribution
+   to the preferred folder.
+
    Copy entire distribution.
+
    [~/admb-trunk/]$ sudo cp -Rvf ../admb-trunk /usr/local/admb 
 
-   Create symlink to main admb script.  Check to that '/usr/local/bin/' exists.
+   Create symlink to main admb script.  Directory '/usr/local/bin/' should exist.
+
    [~/admb-trunk/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
-   Note: make install is no longer supported.
-
-   After the copying the libraries, build run the simple example.
+   After copying, build and run the simple example.
 
    [~/admb-trunk/]$ cd examples/admb/simple
    [~/admb-trunk/examples/admb/simple/]$ admb simple
    [~/admb-trunk/examples/admb/simple/]$ ./simple
 
-Configure Microsoft Visual C++ 2010 Express
--------------------------------------------
-1. Download and install the following software, install them in their default
-   locations:
-   A. Microsoft .NET 4
-   B. Microsoft Windows SDK 7.1
-   C. Microsoft Visual Studio 2010 Express
+Quick Start (Binary Distribution)
+=================================
 
-2. Download the executable installer for Windows MSVC from 
-   http://www.admb-project.org/downloads and run it.  Make sure to choose the
-   install location as the default C:\ADMB or another location without spaces in
-   the name.
+Windows
+-------
 
-3. Add the following to the PATH in the order given. If you are using a 32-bit
-   machine, enter only the first, third, fourth, and fifth path listed in that
-   order.  If you are using a 64-bit machine, enter all five paths in the order
-   listed.  If you are compiling for a 64-bit machine, the second path listed
-   here must reflect which architecture you want to compile for, this example
-   is for Intel 64-bit processors - for most people this should not be changed.
-   Also, if you are on a 32-bit machine, remove the ' (x86)' from these paths.
+1. Download ADMB source distribution.
 
-   C:\Program Files\Microsoft SDKs\Windows\v7.1
-   C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\amd64
-   C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin
-   C:\Program Files (x86)\Microsoft Visual Studio 10.0\Common7\IDE
+   NOT YET AVAILABLE. 
 
-4. Add the following environment variables:
-   INCLUDE   = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include;
-               C:\Program Files\Microsoft SDKs\Windows\v7.1\Include
+   Double click the downloaded file and follow instructions.  Install
+   will be to 'C:\admb-trunk\'.
 
-   For the LIB variable, choose either 32-bit or 64-bit.
-   32-bit LIB:
-   LIB       = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib;
-               C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib 
+2. Open Comand Prompt window and change to admb directory.
 
-   64-bit LIB:
-   LIB       = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\lib\amd64;
-               C:\Program Files\Microsoft SDKs\Windows\v7.1\Lib\x64 
+   C:\> cd admb-trunk
 
-5. Logout and login again to make the environment variable changes take effect.
+3. Install MinGW C++ compiler (32 Bit).
+
+   C:\admb-trunk\> utilities\get-mingw.bat
+
+   Download is approximately ~177M from 'sourceforge.net'.  This will also 
+   update existing MinGW installation.
+
+5. Build and run the simple example.
+
+   C:\admb-trunk\> cd examples\admb\simple
+   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
+   C:\admb-trunk\examples\admb\simple\> simple
+
+Windows and Visual C++
+----------------------
+
+1. Download ADMB Windows installer.
+
+   NOT YET AVAILABLE. 
+
+   Double click the downloaded file and follow instructions.  Install
+   will be to 'C:\admb-trunk\'.
+
+2. Open Visual Studio Comand Prompt window.
+
+3. Build and run the simple example.
+
+   C:\admb-trunk\> cd examples\admb\simple
+   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
+   C:\admb-trunk\examples\admb\simple\> simple
+
+Unix
+----
+
+1. Download ADMB binary distribution.
+
+   NOT YET AVAILABLE. 
+
+2. Open Terminal windows and change prefered installation directory.
+  
+   [~]$ cd /usr/local
+
+3. Extract downloaded file.
+
+   [/usr/local/]$ sudo unzip admb-latest.zip
+
+   This will create admb directory '/usr/local/admb/'.
+
+   Create symlink to main admb script.  Directory '/usr/local/bin/' should exist.
+
+   [~/admb-trunk/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
+
+3. Create shortcut softlink.
+
+   [/usr/local/]$ sudo ln -sf admb/admb bin/admb
+
+4. Build and run simple example.
+
+   [~]$ cd
+   [~]$ cp -R /usr/local/admb/example/admb/simple .
+   [~/simple/]$ admb simple
+   [~/simple/]$ ./simple
 
 --------------------------------------------------------------------------------
 $ID$

@@ -1,7 +1,4 @@
-Describe ADMB installation from source and binary distributions.
-
-It is recommended to build ADMB from source to best match compiler and operating
-system.
+ADMB installation procedures for source and binary distributions.
 
 Requirements
 ============
@@ -16,11 +13,11 @@ Below is a list of supported compilers:
  * Intel C++ Compiler 11
  * Solaris Studio 12
 
-If the compiler is not listed, try building from the source distribution. Email
-users@admb-project.org for help.
+If the compiler is not listed, try building from the source distribution. For help,
+email 'users@admb-project.org'.
 
-Download
-========
+Downloads
+=========
 Source and pre-built binary distributions can be downloaded from
 'http://www.admb-project.org/downloads/'.
 
@@ -101,11 +98,11 @@ Unix
 
    [~]$ unzip admb-latest-src.zip
 
-3. Change to admb directory.
+4. Change to admb directory.
 
    [~]$ cd admb-trunk
 
-4. Build libraries 
+5. Build libraries 
 
    [~/admb-trunk/]$ make
 
@@ -142,16 +139,16 @@ Unix
 
 Quick Start (Binary Distribution)
 =================================
+It is recommended to build ADMB from source to best match compiler and operating system.
 
 Windows
 -------
 
-1. Download ADMB source distribution.
+1. Download ADMB distribution.
 
-   NOT YET AVAILABLE. 
+   NOT YET AVAILABLE.
 
-   Double click the downloaded file and follow instructions.  Install
-   will be to 'C:\admb-trunk\'.
+   Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
 2. Open Comand Prompt window and change to admb directory.
 
@@ -164,7 +161,7 @@ Windows
    Download is approximately ~177M from 'sourceforge.net'.  This will also 
    update existing MinGW installation.
 
-5. Build and run the simple example.
+4. Build and run the simple example.
 
    C:\admb-trunk\> cd examples\admb\simple
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
@@ -173,14 +170,15 @@ Windows
 Windows and Visual C++
 ----------------------
 
-1. Download ADMB Windows installer.
+1. Download ADMB distribution.
 
-   NOT YET AVAILABLE. 
+   NOT YET AVAILABLE.
 
-   Double click the downloaded file and follow instructions.  Install
-   will be to 'C:\admb-trunk\'.
+   Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
-2. Open Visual Studio Comand Prompt window.
+2. Open Visual Studio Comand Prompt window and change to admb directory.
+
+   C:\> cd admb-trunk
 
 3. Build and run the simple example.
 
@@ -191,29 +189,44 @@ Windows and Visual C++
 Unix
 ----
 
-1. Download ADMB binary distribution.
+1. Download ADMB distribution.
 
-   NOT YET AVAILABLE. 
+   NOT YET AVAILABLE.
 
-2. Open Terminal windows and change prefered installation directory.
-  
-   [~]$ cd /usr/local
+2. Open Terminal windows.
 
-3. Extract downloaded file.
+3. Extract downloaded file in HOME directory.
 
-   [/usr/local/]$ sudo unzip admb-latest.zip
+   [~]$ unzip admb-latest.zip
 
-   This will create admb directory '/usr/local/admb/'.
+4. Change to admb directory.
+
+   [~]$ cd admb-trunk
+
+5. Build run the simple example.
+
+   [~/admb-trunk/]$ cd examples/admb/simple
+   [~/admb-trunk/examples/admb/simple/]$ ~/admb-trunk/admb simple
+   [~/admb-trunk/examples/admb/simple/]$ ./simple
+
+6. [Optional] Installation
+
+   'make install' is no longer supported.  Users should manually copy distribution
+   to the preferred folder.
+
+   Copy entire distribution.
+
+   [~/admb-trunk/]$ sudo cp -Rvf ../admb-trunk /usr/local/admb 
 
    Create symlink to main admb script.  Directory '/usr/local/bin/' should exist.
 
-   [/usr/local/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
+   [~/admb-trunk/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
-4. Build and run simple example.
+   After copying, build and run the simple example.
 
-   [~]$ cp -R /usr/local/admb/example/admb/simple .
-   [~/simple/]$ admb simple
-   [~/simple/]$ ./simple
+   [~/admb-trunk/]$ cd examples/admb/simple
+   [~/admb-trunk/examples/admb/simple/]$ admb simple
+   [~/admb-trunk/examples/admb/simple/]$ ./simple
 
 --------------------------------------------------------------------------------
 $ID$

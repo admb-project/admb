@@ -44,13 +44,13 @@ Windows
    Download is approximately 177 MB from 'sourceforge.net'.  This will also 
    update existing MinGW installation.
 
-   Add MinGW and utitilities to PATH.
+   Set minimal PATH to MinGW and utilities.
 
    C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin;%CD%\utilities
 
 4. Build libraries
 
-   C:\admb-trunk\> utilities\make
+   C:\admb-trunk\> make
 
    Takes approximately 15-25 minutes to complete.
 

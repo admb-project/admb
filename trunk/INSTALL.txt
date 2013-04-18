@@ -46,7 +46,7 @@ Windows
 
    Add MinGW to PATH.
 
-   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin;%PATH%
+   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin
 
 4. Build libraries
 

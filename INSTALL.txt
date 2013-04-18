@@ -41,12 +41,12 @@ Windows
 
    C:\admb-trunk\> utilities\get-mingw.bat
 
-   Download is approximately ~177M from 'sourceforge.net'.  This will also 
+   Download is approximately 177 MB from 'sourceforge.net'.  This will also 
    update existing MinGW installation.
 
-   Add MinGW to PATH.
+   Add MinGW and utitilities to PATH.
 
-   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin
+   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin;%CD%\utilities
 
 4. Build libraries
 

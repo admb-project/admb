@@ -20,7 +20,11 @@ for %%a in (%0.bat) do (
   set ADMB_HOME=!CD!
   popd
 )
-set PATH=!ADMB_HOME!\bin;"%PATH%"
+if not "!MINGW_HOME!"=="" (
+  set PATH=!ADMB_HOME!\bin;!MINGW_HOME!\bin;!PATH!
+) else (
+  set PATH=!ADMB_HOME!\bin;!PATH!
+)
 
 set srcs=
 set tpls=

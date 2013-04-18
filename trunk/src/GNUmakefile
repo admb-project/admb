@@ -20,7 +20,6 @@ else
 PWD=$(shell cd)
 endif
 
-
 ifeq ($(CXX),CC)
 CXXFLAGS:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 else
@@ -88,7 +87,7 @@ else
 	if not exist ${DISK}\contrib\lib md ${DISK}\contrib\lib
 	if not exist ${DISK}\contrib\bin md ${DISK}\contrib\bin
 	if not exist ${DISK}\contrib\include md ${DISK}\contrib\include
-	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" --directory=..\contrib
+	$(MAKE) ADMB_HOME="$(PWD)\${DISK}" --directory=..\contrib
 endif
 
 libs: admbsaf admbopt
@@ -232,7 +231,7 @@ else
 	md ${DISK}\bin
 	copy df1b2-separable\seddf1b* ${DISK}\bin
 	copy df1b2-separable\sedf1b2* ${DISK}\bin
-	del ${DISK}\bin\admb-cfg.sh
+	if exist ${DISK}\bin\admb-cfg.sh del ${DISK}\bin\admb-cfg.sh
 	echo "CXX=$(CXX)" > ${DISK}\bin\admb-cfg.sh
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=..\${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=..\${DISK} bins
@@ -246,7 +245,6 @@ else
 	copy ..\scripts\admb\admb.bat ${DISK}\bin
 	copy ..\scripts\admb\root-admb.bat ..\admb.bat
 endif
-
 
 verify:
 ifndef USE_ADMB_HOME

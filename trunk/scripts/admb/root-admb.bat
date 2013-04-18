@@ -19,5 +19,5 @@ for %%a in (%0.bat) do (
   if exist !ADMB_PATH!utilities\mingw\bin\g++.exe (
     set MINGW_HOME=!ADMB_PATH!utilities\mingw
   )
-  call !ADMB_HOME!\bin\admb.bat %*
+  call "!ADMB_HOME!\bin\admb.bat" %*
 )

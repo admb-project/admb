@@ -4,6 +4,11 @@ ifeq ($(SHELL),sh.exe)
   DISK=..\build\dist
   LIBPATH=..\build\objects\dist
   CXXFLAGS_INCLUDES:=-I..\${DISK}\include
+  ifndef MINGW_HOME
+    PATH:=..\..\utilities\mingw\bin:$(PATH)
+    AR=..\utilities\mingw\bin\ar
+    MAKE=..\utilities\make
+  endif
 else
   DISK=../build/dist
   LIBPATH=../build/objects/dist

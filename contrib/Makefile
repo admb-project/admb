@@ -26,3 +26,4 @@ clean:
 	cd ecolib& $(MAKE) clean
 	cd qfclib& $(MAKE) clean
 	cd statslib& $(MAKE) clean
+	cd ad2csv& $(MAKE) clean

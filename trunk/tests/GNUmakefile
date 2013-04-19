@@ -1,7 +1,11 @@
-all: test-expm test-cov_re
+all: test-adstring
+#all: test-expm test-cov_re
 svn: svn-geolocation
 
 main: test-geolocation test-cov_re
+
+test-adstring:
+	$(MAKE) --directory=adstring
 
 test-geolocation:
 	$(MAKE) --directory=geolocation
@@ -14,6 +18,7 @@ test-expm:
 
 test-cov_re:
 	$(MAKE) --directory=cov_re
+
 
 adstring_array:
 	OPTIONS=-s $(MAKE) --directory=$@

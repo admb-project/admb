@@ -46,7 +46,7 @@ Windows
 
 4. Build libraries
 
-   C:\admb-trunk\> make
+   C:\admb-trunk\> utilities\make
 
    Takes approximately 15-25 minutes to complete.
 

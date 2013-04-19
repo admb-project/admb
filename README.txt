@@ -24,7 +24,7 @@ differentiation for statistical inference of highly parameterized complex
 nonlinear models. Optim. Methods Softw. 27:233-249.
 
 It can be downloaded for free from the publisher:
-http://tandfonline.com/doi/abs/10.1080/10556788.2011.597854
+'http://tandfonline.com/doi/abs/10.1080/10556788.2011.597854'.
 
 Documentation
 =============
@@ -34,10 +34,10 @@ Installation procedures are in INSTALL.txt.
 
 User manuals for AD Model Builder, the AUTODIF library and the ADMB-RE nonlinear
 random effects module can be downloaded from
-http://www.admb-project.org/downloads/
+'http://www.admb-project.org/downloads/'.
 
 Additional documentation is also available on the ADMB website
-http://www.admb-project.org/
+'http://www.admb-project.org/'.
 
 Help and Support
 ================

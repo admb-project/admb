@@ -33,7 +33,7 @@ Windows
 
    Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
-2. Open Comand Prompt window and change to admb directory.
+2. Open 'Comand Prompt' window and change to admb directory.
 
    C:\> cd admb-trunk
 
@@ -43,10 +43,6 @@ Windows
 
    Download is approximately 177 MB from 'sourceforge.net'.  This will also 
    update existing MinGW installation.
-
-   Set minimal PATH to MinGW and utilities.
-
-   C:\admb-trunk\> set PATH=%CD%\utilities\mingw\bin;%CD%\utilities
 
 4. Build libraries
 
@@ -69,7 +65,7 @@ Windows and Visual C++
 
    Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
-2. Open Visual Studio Comand Prompt window and change to admb directory.
+2. Open 'Visual Studio Comand Prompt' window and change to admb directory.
 
    C:\> cd admb-trunk
 
@@ -92,7 +88,7 @@ Unix
 
    http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip
 
-2. Open Terminal windows.
+2. Open 'Terminal' windows.
 
 3. Extract downloaded file in HOME directory.
 
@@ -127,7 +123,8 @@ Unix
 
    [~/admb-trunk/]$ sudo cp -Rvf ../admb-trunk /usr/local/admb 
 
-   Create symlink to main admb script.  Directory '/usr/local/bin/' should exist.
+   Create symlink to main admb script.  Directory '/usr/local/bin/' should 
+   already exist.
 
    [~/admb-trunk/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
@@ -139,7 +136,9 @@ Unix
 
 Quick Start (Binary Distribution)
 =================================
-It is recommended to build ADMB from source to best match compiler and operating system.
+
+It is recommended to build ADMB from source to best match compiler 
+and operating system.
 
 Windows
 -------
@@ -150,7 +149,7 @@ Windows
 
    Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
-2. Open Comand Prompt window and change to admb directory.
+2. Open 'Comand Prompt' window and change to admb directory.
 
    C:\> cd admb-trunk
 
@@ -176,7 +175,7 @@ Windows and Visual C++
 
    Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
-2. Open Visual Studio Comand Prompt window and change to admb directory.
+2. Open 'Visual Studio Comand Prompt' window and change to admb directory.
 
    C:\> cd admb-trunk
 
@@ -193,7 +192,7 @@ Unix
 
    NOT YET AVAILABLE.
 
-2. Open Terminal windows.
+2. Open 'Terminal' windows.
 
 3. Extract downloaded file in HOME directory.
 
@@ -218,7 +217,8 @@ Unix
 
    [~/admb-trunk/]$ sudo cp -Rvf ../admb-trunk /usr/local/admb 
 
-   Create symlink to main admb script.  Directory '/usr/local/bin/' should exist.
+   Create symlink to main admb script.  Directory '/usr/local/bin/' should 
+   already exist.
 
    [~/admb-trunk/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 

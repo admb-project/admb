@@ -2,6 +2,11 @@ ifneq ($(SHELL),sh.exe)
 DISK=../build/dist
 else
 DISK=..\build\dist
+  ifndef MINGW_HOME
+    PATH:=..\..\utilities\mingw\bin:$(PATH)
+    AR=..\utilities\mingw\bin\ar
+    MAKE=..\utilities\make
+  endif
 endif
 
 ifndef LIBPATH
@@ -11,7 +16,11 @@ endif
 ifeq ($(CXX),CC)
 CXXFLAGS:=$(CXXFLAGS) -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I$(ADMB_HOME)/include
 else
-CXXFLAGS:=$(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I$(ADMB_HOME)/include
+  ifneq ($(SHELL),sh.exe)
+    CXXFLAGS:=$(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I\"$(ADMB_HOME)/include\"
+  else
+    CXXFLAGS:=$(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I\"$(ADMB_HOME)\include\"
+  endif
 endif
 
 all: contribs build-ad2csv

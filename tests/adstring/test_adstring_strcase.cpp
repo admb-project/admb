@@ -1,7 +1,7 @@
 /**
  * Tests for errors in "void adstring::to_lower(void)"
  */
-TEST_F(test_adstring, tools99_strcase_01)
+TEST_F(test_adstring, strcase_01)
 {
   adstring a = "abc-123";
   a.to_upper();
@@ -16,7 +16,7 @@ TEST_F(test_adstring, tools99_strcase_01)
 /**
  * Tests for errors in "adstring to_upper(adstring& s)"
  */
-TEST_F(test_adstring, tools99_strcase_02)
+TEST_F(test_adstring, strcase_02)
 {
   adstring a = "abc-123";
   adstring b = to_upper(a);
@@ -31,7 +31,7 @@ TEST_F(test_adstring, tools99_strcase_02)
 /**
  * Tests for errors in "void adstring::to_upper(void)"
  */
-TEST_F(test_adstring, tools99_strcase_03)
+TEST_F(test_adstring, strcase_03)
 {
   adstring a = "ABC-123";
   a.to_lower();
@@ -46,7 +46,7 @@ TEST_F(test_adstring, tools99_strcase_03)
 /**
  * Tests for errors in "adstring to_lower(adstring& s)"
  */
-TEST_F(test_adstring, tools99_strcase_04)
+TEST_F(test_adstring, strcase_04)
 {
   adstring a = "ABC-123";
   adstring b = to_lower(a);
@@ -61,7 +61,7 @@ TEST_F(test_adstring, tools99_strcase_04)
 /**
  * Tests for errors in "adstring_array to_lower(adstring_array& s)"
  */
-TEST_F(test_adstring, tools99_strcase2_05)
+TEST_F(test_adstring, strcase2_05)
 {
   adstring_array a(1, 3);
   a(1) = "ABC-123";
@@ -81,7 +81,7 @@ TEST_F(test_adstring, tools99_strcase2_05)
 /**
  * Tests for errors in "adstring_array to_upper(adstring_array& s)"
  */
-TEST_F(test_adstring, tools99_strcase2_06)
+TEST_F(test_adstring, strcase2_06)
 {
   adstring_array a(1, 3);
   a(1) = "abc-123";

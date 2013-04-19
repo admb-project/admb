@@ -4,6 +4,7 @@ ifeq ($(SHELL),sh.exe)
   DISK=..\build\dist
   LIBPATH=..\build\objects\dist
   CXXFLAGS_INCLUDES:=-I..\${DISK}\include
+  PWD=$(shell cd)
   ifndef MINGW_HOME
     PATH:=..\..\utilities\mingw\bin:$(PATH)
     AR=..\utilities\mingw\bin\ar
@@ -13,16 +14,7 @@ else
   DISK=../build/dist
   LIBPATH=../build/objects/dist
   CXXFLAGS_INCLUDES:=-I../${DISK}/include
-endif
-
-ifndef INSTALL_DIR
-INSTALL_DIR=/usr/local/admb
-endif
-
-ifneq ($(SHELL),sh.exe)
-PWD=$(shell pwd)
-else
-PWD=$(shell cd)
+  PWD=$(shell pwd)
 endif
 
 ifeq ($(CXX),CC)
@@ -52,6 +44,7 @@ ifneq ($(SHELL),sh.exe)
 	cp -R ../docs ${DISK} 
 	cp -R ../examples ${DISK}
 	cp -R ../src ${DISK}
+	cp -R ../scripts ${DISK}
 	cp -R ../tests ${DISK}
 	cp -R ../utilities ${DISK}
 	cp -f ../LICENSE.txt ${DISK}
@@ -71,6 +64,8 @@ else
 	xcopy ..\examples $(DISK)\examples /S
 	md ${DISK}\src
 	xcopy ..\src $(DISK)\src /S
+	md ${DISK}\scripts
+	xcopy ..\scripts $(DISK)\scripts /S
 	md ${DISK}\tests
 	xcopy ..\tests $(DISK)\tests /S
 	md ${DISK}\utilities
@@ -284,12 +279,13 @@ ifneq ($(SHELL),sh.exe)
 	@rm -f df1b2-separable/lex.yy.c
 	@rm -f nh99/tpl2cpp
 	@rm -f df1b2-separable/tpl2rem
-	@rm -vf nh99/tpl2cpp.c
-	@rm -vf df1b2-separable/tpl2rem.c
-	@rm -rvf ../build
+	@rm -f nh99/tpl2cpp.c
+	@rm -f df1b2-separable/tpl2rem.c
+	@rm -rf ../build
 	@$(MAKE) --directory=../contrib clean
 	@$(MAKE) --directory=../tests clean
 	@rm -f ../admb
 else
 	if exist build rd /S /Q ..\build
+	if exist ..\admb.bat del ..\admb.bat
 endif

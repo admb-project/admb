@@ -33,7 +33,7 @@ Windows
 
    Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
-2. Open 'Comand Prompt' window and change to admb directory.
+2. Open 'Command Prompt' window and change to admb directory.
 
    C:\> cd admb-trunk
 
@@ -41,7 +41,7 @@ Windows
 
    C:\admb-trunk\> utilities\get-mingw.bat
 
-   Download is approximately 177 MB from 'sourceforge.net'.  This will also 
+   Downloads approximately 177 MB from 'sourceforge.net'.  This will also 
    update existing MinGW installation.
 
 4. Build libraries
@@ -65,7 +65,7 @@ Windows and Visual C++
 
    Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
-2. Open 'Visual Studio Comand Prompt' window and change to admb directory.
+2. Open 'Visual Studio Command Prompt' window and change to admb directory.
 
    C:\> cd admb-trunk
 
@@ -149,7 +149,7 @@ Windows
 
    Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
-2. Open 'Comand Prompt' window and change to admb directory.
+2. Open 'Command Prompt' window and change to admb directory.
 
    C:\> cd admb-trunk
 
@@ -175,13 +175,11 @@ Windows and Visual C++
 
    Right click the downloaded file and extract to 'C:\admb-trunk\'.
 
-2. Open 'Visual Studio Comand Prompt' window and change to admb directory.
-
-   C:\> cd admb-trunk
+2. Open 'Visual Studio Command Prompt' window.
 
 3. Build and run the simple example.
 
-   C:\admb-trunk\> cd examples\admb\simple
+   C:\> cd admb-trunk\examples\admb\simple
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
    C:\admb-trunk\examples\admb\simple\> simple
 
@@ -198,17 +196,13 @@ Unix
 
    [~]$ unzip admb-latest.zip
 
-4. Change to admb directory.
+4. Build run the simple example.
 
-   [~]$ cd admb-trunk
-
-5. Build run the simple example.
-
-   [~/admb-trunk/]$ cd examples/admb/simple
+   [~]$ cd admb-trunk/examples/admb/simple
    [~/admb-trunk/examples/admb/simple/]$ ~/admb-trunk/admb simple
    [~/admb-trunk/examples/admb/simple/]$ ./simple
 
-6. [Optional] Installation
+5. [Optional] Installation
 
    'make install' is no longer supported.  Users should manually copy distribution
    to the preferred folder.

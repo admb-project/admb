@@ -7,7 +7,9 @@ and 64 bit versions. A C/C++ compiler must be be installed on the local computer
 
 Below is a list of supported compilers:
  * GNU gcc version 4.7
- * Microsoft Visual C++ 2010 and 2012
+ * Microsoft Visual C++ 2012
+ * Microsoft Visual C++ 2010
+   - Read installation help 'http://www.admb-project.org/documentation/installation/admb-installation-visual-c'.
  * MacOS XCode(with the Command Line Tools) version 4.6
  * Clang version 3.0
  * Intel C++ Compiler 11

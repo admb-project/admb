@@ -140,8 +140,8 @@ flexibility with respect to model formulation.
   \item Hyper-parameters (variance components, etc.) estimated by maximum
   likelihood.
 
-  \item Marginal likelihood evaluated by the Laplace approximation or importance
-  sampling.
+  \item Marginal likelihood evaluated by the Laplace approximation, (adaptive) importance
+	sampling or Gauss-Hermite integration.
 
   \item Exact derivatives calculated using Automatic Differentiation.
 
@@ -179,7 +179,7 @@ flexibility with respect to model formulation.
   \item \textit{Compilation}: You turn your model into an executable program
   using a \cplus\ compiler (which you need to install separately).
 
-  \item\textit{Platforms}: Windows and Linux.
+  \item\textit{Platforms}: Windows, Linux and Mac.
 \end{itemize}
 
 \subsection{How to obtain \scAR}
@@ -1250,6 +1250,17 @@ meaningful error message. You should monitor the memory use of your application
 (using ``Task Manager'' under Windows, and the command \texttt{top} under Linux)
 to ensure that you do not exceed the available memory on your computer.
 
+\subsection{Exploiting special model structure}
+If your model has special structure, such as
+grouped or nested random effects, state-space structure,
+crossed random effects or a general Markov strucure
+you will benefit greatly from using the techniques 
+described in Section~\ref{separability} below.
+In this case the memory options in Table~\ref{tab:temporary-files}
+are less relevant (although sometimes useful), and instead the
+memory use can be controlled with the classical \ADM~command line options 
+\texttt{-cbs}, \texttt{-gbs} etc. 
+
 \subsection{Limited memory Newton optimization}
 \index{limited memory quasi-Newton}
 
@@ -1261,30 +1272,34 @@ efficient to use a ``limited memory quasi-Newton'' optimization algorithm. This
 is done using the command line argument \texttt{-ilmn N}, where \texttt{N} is
 the number of steps to keep. Typically, $\texttt{N} = 5$ is a good choice.
 
-\chapter{Exploiting Separability}
+\chapter{Exploiting special structure (Separability)}
 \label{separability}
-
-The following model classes:
+A model is said to be ``separable'' if the likelihood can be written
+as a product of terms, each involving only a small number of random effects.
+Not all models are separable, and for small toy examples (less than 50~random
+effects, say), we do not need to care about separability. You 
+need to care about separability both to reduce memory requirements and 
+computation time. Examples of separable models are 
 \begin{itemize}
   \item Grouped or nested random effects
   \item State-space models
   \item Crossed random effects
   \item Latent Markov random fields
 \end{itemize}
-share an important property: their ``Hessian'' is a sparse matrix. This enables
-\scAR\ to do the calculations very efficiently. The Hessian~$H$ is defined as
+The presence of separability allows \scAB\ to calculate the ``Hessian''  matrix
+very efficiently.The Hessian~$H$ is defined as
 the (negative) Fisher information matrix (inverse covariance matrix) of the
-posterior distribution of the random~effects:
-\begin{equation}
-  p(u \mid y) \propto p(y \mid u)\, p(u),
-  \label{p(u|y)}
-\end{equation}
-where $u$ are the random effects and~$y$ are the data. This definition is only
-exact if both~$u$ and~$y$ are Gaussian. More generally, $H$~is the Hessian
-matrix of the function~$\log\left[p(\cdot \mid y)\right]$.
+posterior distribution of the random~effects , and is a key component of the Laplace
+approximation. 
 
-That $H$ is sparse means that it contains mostly zeros. The actual sparsity
-pattern depends on the model type:
+How do we inform \scAR\ that the model is separable? We define \texttt{SEPARABLE\_FUNCTION}s
+in the \texttt{PROCEDURE\_SECTION} to specify the individual terms in the
+product that defines the likelihood function. Typically, a \texttt{SEPARABLE\_FUNCTION}
+is invoked many times, with a small subset of the random effects each time.
+
+For separable models the Hessian is a sparse matrix which means that it contains mostly zeros. 
+Sparsity can be exploited by \scAB\ when manipulating the matrix $H$,
+such as calculating its determinant. The actual sparsity pattern depends on the model type:
 \begin{itemize}
   \item \textit{Grouped or nested random effects:} $H$ is block diagonal.
    \item \textit{State-space models:} $H$ is a banded matrix with a narrow band.
@@ -1292,24 +1307,14 @@ pattern depends on the model type:
    \item \textit{Latent Markov random fields:} often banded, but with a wide
    band.
 \end{itemize}
-\scAR\ should print out a message such as:
+For block diagonal and banded $H$, \scAR\ automatically will detect the structure from
+the \texttt{SEPARABLE\_FUNCTION} specification, and will print out a  message such as:
 \begin{lstlisting}
   Block diagonal Hessian (Block size = 3)
 \end{lstlisting}
 at the beginning of the phase when the random effects are becoming active
-parameters.
-
-Not all models are separable, and for small toy examples (less than 50~random
-effects, say), we do not need to care about separability. However, chances are
-high that you need to become familiar with the concept. How do we inform \scAR\
-that the model is separable? We use \texttt{SEPARABLE\_FUNCTION}s, which are
-invoked many times, with a small number of the random effects as arguments each
-time. Do you think that \scAR\ should be able to detect the separable structure
-on its own? Well, maybe so, but after you have worked with a few separable
-models, you will find that having to call the \texttt{SEPARABLE\_FUNCTION}s
-actually structures your own way of thinking about the model. This is especially
-so for state-space models. A good reference (although a bit advanced) on
-conditional probabilities is~\citeasnoun{rue2005gaussian}.
+parameters. For general sparsity pattern the command line option \texttt{-shess}
+can be used to invoke the sparse matrix libraries for manipulation of the matrix $H$.
 
 \section{The first example}
 
@@ -1319,7 +1324,7 @@ A simple example is the one-way variance component model
   \qquad i=1,\ldots ,q,\quad j=1,\ldots ,n_{i}
 \]
 where $u_{i}\sim N(0,1)$ is a random effect and $\varepsilon_{ij}\sim
-N(0,\sigma^2)$ is an error term. The straightforward implementation of this
+N(0,\sigma^2)$ is an error term. The straightforward (non-separable) implementation of this
 model (shown only in part)~is
 \begin{lstlisting}
 PARAMETER_SECTION
@@ -1333,7 +1338,7 @@ PROCEDURE_SECTION
       g -= -log(sigma) - 0.5*square((y(i,j)-mu-sigma_u*u(i))/sigma);
   }
 \end{lstlisting}
-The efficient implementation of this model is
+The efficient (separable) implementation of this model is
 \begin{lstlisting}
 PROCEDURE_SECTION
   for(i=1;i<=q;i++)
@@ -1397,10 +1402,13 @@ changed by the function. You may also come across the type \texttt{const
 
 There are other rules that have to be obeyed:
 \begin{itemize}
-  \item[$\bigstar$] No calculations involving variables defined in the
-  \texttt{PARAMETER\_SECTION} are allowed in the \texttt{PROCEDURE\_SECTION}.
-  The only allowed use of such variables there is you can pass them as arguments
-  to \texttt{SEPARABLE\_FUNCTION}s.
+\item[$\bigstar$]
+	No calculations of the log-likelihood, except calling \texttt{SEPARABLE\_FUNCTION},
+	are allowed in \texttt{PROCEDURE\_SECTION}. Hence, the only allowed
+	use of parameters defined in \texttt{PARAMETER\_SECTION} is to pass them
+	as arguments to \texttt{SEPARABLE\_FUNCTION}s. However,
+	evaluation of \texttt{sdreport} numbers during the \texttt{sd\_phase},
+	as well as MCMC calculations, are allowed.
 \end{itemize}
 This rule implies that all the action has to take place inside the
 \texttt{SEPARABLE\_FUNCTION}s. To minimize the number of parameters that have be
@@ -1453,9 +1461,11 @@ PROCEDURE_SECTION
   for(i=1;i<=q;i++)
     g_cluster(v(i),u(i),sigma,sigma_u,sigma_v,i);
 \end{lstlisting}
-Note that \texttt{u(i)} is the $i^{\textrm{th}}$ row of the matrix \texttt{u}
-(this is standard \scAB\ stuff), and it should be passed as a vector to the
-\texttt{SEPARABLE\_FUNCTION}, which we would implement as follows:
+Each element of \texttt{v} and each row (\texttt{u(i)}) of the matrix \texttt{u} 
+are passed only once to the separable function  \texttt{g\_cluster}.
+This is the criterion \scAB\ uses to detect the block diagonal Hessian structure.
+Note that \texttt{v(i)} is passed as a single value while \texttt{u(i)}
+is passed as a vector to the \texttt{SEPARABLE\_FUNCTION} as follows:
 \begin{lstlisting}
 SEPARABLE_FUNCTION void g_cluster(const dvariable& v,const dvar_vector& u,...)
   g -= -0.5*square(v);
@@ -1476,11 +1486,14 @@ like this at run~time:
 \begin{lstlisting}
   Block diagonal Hessian (Block size = 3)
 \end{lstlisting}
+The ``block size'' is the number of random effects in each call
+to the \texttt{SEPARABLE\_FUNCTION}, which in this case is
+one \texttt{v(i)} and a vector \texttt{u(i)} of length two.
 It is possible that the groups or clusters (as indexed by~$i$, in this case) are
 of different size. Then, the ``Block diagonal Hessian'' that is printed is an
 average.
 
-Alternatively, we could have structured the program as follows:
+The program could have improperly been structured as follows:
 \begin{lstlisting}
 PARAMETER_SECTION
   random_effects_vector v(1,q)
@@ -1493,20 +1506,28 @@ PROCEDURE_SECTION
 \end{lstlisting}
 but this would not be detected by \scAR\ as a clustered model (because
 \texttt{v(i)} is passed multiple times), and hence \scAR\ will not be able to
-take advantage of the likelihood factors. However, the use of the
-\texttt{SEPARABLE\_FUNCTION} makes it possible for \scAR\ to perform efficient
-calculations when invoked with the \texttt{-shess} \index{sparse matrix methods}
-command line option, as described~later.
+take advantage of block diagonal Hessiand, as indicated by
+the absence of runtime message
+\begin{lstlisting}
+  Block diagonal Hessian (Block size = 3).
+\end{lstlisting}
 
 \subsection{Gauss-Hermite quadrature}
 \index{Gauss-Hermite quadrature}
 
 In the situation where the model is separable of type ``Block diagonal
 Hessian,'' (see Section~\ref{separability}), 
-Gauss-Hermite quadrature is available as an option
-to the Laplace approximation and to the \texttt{-is} (importance sampling)
-option. It is invoked with command line option \texttt{-gh N}, where \texttt{N}
-is the number of quadrature points.
+Gauss-Hermite quadrature is available as an option to improve upon the Laplace 
+approximation. It is invoked with the command line option \texttt{-gh N}, where \texttt{N}
+is the number of quadrature points determining the accuracy of the integral approximation.
+For a block size of~1, the default choice should be $N=10$ or greater, but for larger
+block sizes the computational and memory requirements very quickly limits the range
+of $N$. If $N$ is chosen too large \scAR\ will crash witout giving a meaningful
+error message. To avoid \scAR\ creating large temporary files the command 
+line options \texttt{-cbs} and \texttt{-gbs} can be used.
+
+The \texttt{-gh N} option should be preferred over importance sampling (\texttt{-is}).
+
 
 %\subsection{Frequency weighting for multinomial likelihoods}
 %

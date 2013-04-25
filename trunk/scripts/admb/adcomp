@@ -31,9 +31,9 @@ if [ "`basename $file`" == "$file" ]; then
   file=$file.cpp
 fi
 
-if [ -z $CXX ]; then
-  if [ -f $ADMB_HOME/bin/admb-cfg.sh ]; then
-    source $ADMB_HOME/bin/admb-cfg.sh
+if [ -z "$CXX" ]; then
+  if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
+    source "$ADMB_HOME/bin/admb-cfg.sh"
   else
     CXX=c++
   fi

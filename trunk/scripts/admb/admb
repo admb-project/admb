@@ -11,19 +11,19 @@ if [[ "$1" == "" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 
-if [ ! -z $ADMB_HOME ]; then
+if [ ! -z "$ADMB_HOME" ]; then
 unset ADMB_HOME
 fi
 
 FILE=$0
 DIRECTORY=$(cd `dirname $FILE` && pwd)
-while [ -h ${FILE} ]; do 
+while [ -h "${FILE}" ]; do 
   pushd $DIRECTORY &> /dev/null
   FILE=$(readlink $DIRECTORY/admb)
   DIRECTORY=$(cd `dirname $FILE` && pwd)
   popd &> /dev/null
 done
-pushd $DIRECTORY/.. &> /dev/null
+pushd "$DIRECTORY/.." &> /dev/null
 declare -rx ADMB_HOME="$PWD"
 popd &> /dev/null
 PATH=$ADMB_HOME/bin:$PATH

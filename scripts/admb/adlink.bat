@@ -19,10 +19,10 @@ if %%a==-d set linker=dllwrap
 if %%a==-g set sym=
 if %%a==-r set r=
 if %%a==-s (
-  set libs="%ADMB_HOME%\lib\libadmb.a" "%ADMB_HOME%\contrib\lib\libcontrib.a"
+  set libs="%ADMB_HOME%\contrib\lib\libcontrib.a" "%ADMB_HOME%\lib\libadmb.a" 
 )
 )
-if not defined libs set libs="%ADMB_HOME%\lib\libadmbo.a" "%ADMB_HOME%\contrib\lib\libcontribo.a"
+if not defined libs set libs="%ADMB_HOME%\contrib\lib\libcontribo.a" "%ADMB_HOME%\lib\libadmbo.a" 
 
 if %linker%==g++ (set out=-o %model%) else (set def=-def %model%.def^
  --driver-name g++ & set out=--output-lib lib%model%.a -o %model%.dll)

@@ -12,7 +12,7 @@ if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 
 unset shared
-sym=-s
+sym=
 opt=
 while getopts "dgrso" A; do
   case $A in
@@ -40,9 +40,9 @@ do
   fi 
 done
 
-if [ -z $CXX ]; then
-  if [ -f $ADMB_HOME/bin/admb-cfg.sh ]; then
-    source $ADMB_HOME/bin/admb-cfg.sh
+if [ -z "$CXX" ]; then
+  if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
+    source "$ADMB_HOME/bin/admb-cfg.sh"
   else
     CXX=c++
   fi
@@ -62,7 +62,7 @@ if [ "$CXX" == "adcomp-x86_64-w64-mingw32" ]; then
   LDFLAGS="--static $LDFLAGS"
 fi
 
-CMD="$CXX $LDFLAGS $objects \"$ADMB_HOME\"/lib/libadmb$opt.a \"$ADMB_HOME\"/contrib/lib/libcontrib$opt.a"
+CMD="$CXX $LDFLAGS $objects \"$ADMB_HOME\"/contrib/lib/libcontrib$opt.a \"$ADMB_HOME\"/lib/libadmb$opt.a"
 echo $CMD
 eval $CMD
 

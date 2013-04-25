@@ -25,6 +25,7 @@ Source and pre-built binary distributions can be downloaded from
 
 Quick Start
 ===========
+MinGW and Cygwin shells should use Unix installation procedure.
 
 Windows
 -------
@@ -58,6 +59,27 @@ Windows
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
    C:\admb-trunk\examples\admb\simple\> simple
 
+6. [Optional] Include admb in system 'PATH'.
+   Avoids the need the to add the prefix path to the admb script. 
+
+   A. In the 'System Properties' window, click on the 'Enviroment Variables' button.
+
+   B. In the 'Enviroment Variables' windows, click on the 'New...' button, 
+   in the 'Variable name:' type 
+
+   PATH
+
+   and in the 'Variable value:' type 
+
+   C:\admb-trunk\;%PATH% 
+
+   C. Click the 'OK' button when done and open a new command prompt.
+
+   C:\> cd \admb-trunk\examples\admb\simple
+   C:\admb-trunk\examples\admb\simple\> admb simple
+   C:\admb-trunk\examples\admb\simple\> simple
+
+
 Windows and Visual C++
 ----------------------
 
@@ -81,6 +103,26 @@ Windows and Visual C++
 
    C:\admb-trunk\> cd examples\admb\simple
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
+   C:\admb-trunk\examples\admb\simple\> simple
+
+5. [Optional] Include admb in system 'PATH'.
+   Avoids the need the to add the prefix path to the admb script. 
+
+   A. In the 'System Properties' window, click on the 'Enviroment Variables' button.
+
+   B. In the 'Enviroment Variables' windows, click on the 'New...' button, 
+   in the 'Variable name:' type 
+
+   PATH
+
+   and in the 'Variable value:' type 
+
+   C:\admb-trunk\;%PATH% 
+
+   C. Click the 'OK' button when done and open a new command prompt.
+
+   C:\> cd \admb-trunk\examples\admb\simple
+   C:\admb-trunk\examples\admb\simple\> admb simple
    C:\admb-trunk\examples\admb\simple\> simple
 
 Unix
@@ -168,6 +210,26 @@ Windows
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
    C:\admb-trunk\examples\admb\simple\> simple
 
+5. [Optional] Include admb in system 'PATH'.
+   Avoids the need the to add the prefix path to the admb script. 
+
+   A. In the 'System Properties' window, click on the 'Enviroment Variables' button.
+
+   B. In the 'Enviroment Variables' windows, click on the 'New...' button, 
+   in the 'Variable name:' type 
+
+   PATH
+
+   and in the 'Variable value:' type 
+
+   C:\admb-trunk\;%PATH% 
+
+   C. Click the 'OK' button when done and open a new command prompt.
+
+   C:\> cd \admb-trunk\examples\admb\simple
+   C:\admb-trunk\examples\admb\simple\> admb simple
+   C:\admb-trunk\examples\admb\simple\> simple
+
 Windows and Visual C++
 ----------------------
 
@@ -183,6 +245,26 @@ Windows and Visual C++
 
    C:\> cd admb-trunk\examples\admb\simple
    C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
+   C:\admb-trunk\examples\admb\simple\> simple
+
+4. [Optional] Include admb in system 'PATH'.
+   Avoids the need the to add the prefix path to the admb script. 
+
+   A. In the 'System Properties' window, click on the 'Enviroment Variables' button.
+
+   B. In the 'Enviroment Variables' windows, click on the 'New...' button, 
+   in the 'Variable name:' type 
+
+   PATH
+
+   and in the 'Variable value:' type 
+
+   C:\admb-trunk\;%PATH% 
+
+   C. Click the 'OK' button when done and open a new command prompt.
+
+   C:\> cd \admb-trunk\examples\admb\simple
+   C:\admb-trunk\examples\admb\simple\> admb simple
    C:\admb-trunk\examples\admb\simple\> simple
 
 Unix

@@ -16,12 +16,14 @@ Changes
   Note: Building from source will create distribution folder in
         build/dist instead of build/os-comiler-arch.
 
-* Combined libraries to a single library libadmb.a. 
+* Combined mulitple libraries to a single library libadmb.a. 
 
 * Reverted some algorithms to previous version 9 code.
 
-* Safe library is now the default build option.  To build with
-  Optimized libraries use option 
+* The compilation scripts (adcomp, adlink, admb) compile in "safe" mode by 
+  default.
+
+  To build with optimized libraries use option 
 
   $ admb --use-optimized model.tpl
 
@@ -31,9 +33,6 @@ Changes
  
 * flex is not needed to build ADMB, but it is needed to develop the tpl2cpp.lex 
   and tpl2rem.lex files.
-
-* The compilation scripts (adcomp, adlink, admb) compile in "safe" mode by 
-  default.
 
 New Features
 ------------
@@ -68,16 +67,11 @@ New Features
 Bug Fixes
 ----------
 
-* Able to build ADMB without flex.
-
-* Fix geolocation test.
-
 * Catch exit errors for adlink and adcomp.
 
 * Watch out for spaces in admb scripts
 
 * Fix memory leaks.
-
 
 Changes 9.2 to 11.0
 -------------------

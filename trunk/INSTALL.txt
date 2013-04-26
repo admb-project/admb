@@ -25,7 +25,8 @@ Source and pre-built binary distributions can be downloaded from
 
 Quick Start
 ===========
-MinGW and Cygwin shells should use Unix installation procedure.
+* MinGW and Cygwin shells should use Unix installation procedure.
+* Visual C++ users should use 'Windows and Visual C++' procedure.
 
 Windows
 -------
@@ -40,7 +41,15 @@ Windows
 
    C:\> cd admb-trunk
 
-3. Install MinGW C++ compiler (32 Bit).
+3. Install MinGW C++ compiler.
+
+   If MinGW has been already installed, use the command below to add MinGW 
+   programs to the system PATH.
+
+   C:\> set PATH=C:\MinGW\bin;%PATH%
+
+   If MinGW has not been installed, use the command below to download and 
+   install 32-bit C++ compiler.
 
    C:\admb-trunk\> utilities\get-mingw.bat
 

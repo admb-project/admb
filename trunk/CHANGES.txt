@@ -1,4 +1,4 @@
-Describe the changes, new features and deprecated.
+Describe changes and new features in this release.
 
 Release Notes
 =============
@@ -8,23 +8,7 @@ correct defects (bugs), and streamline installation and build process.
 Changes
 -------
 
-TODO:
-[ ] add contrib procedure
-[*] add contrib/lib and contrib/bin
-[*] fix when no flex problem
-[*] fix geolocation test
-[*] catch exit errors for adlink and adcomp
-[*] simplify admb scripts
-[*] VC++ build files
-[*] Do gelocation test last in buildbot
-    ADMB_HOME=dfdk PATH=kfkdj make --directory=tests/geolocation clean svn all
-[ ] Add -o option to rename the output file with path.
-[*] Need to fix flex builds for tpl2cpp and tpl2rem under windows
-
-SIGNIFICANT USER-VISIBLE CHANGES:
-
-* [anything that works differently from before, given the
-   same input]
+* Updated Visual Studio nmake build files.
 
 * Improved build files.  Build will not rebuild an already built
   object file.
@@ -34,7 +18,7 @@ SIGNIFICANT USER-VISIBLE CHANGES:
 
 * Combined libraries to a single library libadmb.a. 
 
-* Reverted some algorithms to previous code from version 9.
+* Reverted some algorithms to previous version 9 code.
 
 * Safe library is now the default build option.  To build with
   Optimized libraries use option 
@@ -53,22 +37,13 @@ SIGNIFICANT USER-VISIBLE CHANGES:
 
 New Features
 ------------
-* bash admb script can now set ADMB_HOME and PATH.  So, the command below
-  will work even though ADMB_HOME is not defined or added to PATH.
+* admb script can now build tpl models without the need to set ADMB_HOME
+  or PATH. For example, 
 
-  ~/admb/examples/admb/simple$ ~/admb/build/dist/bin/admb simple
-
-* Added "-c" option to admb script to only compile object files
-
-  ~/admb/examples/admb/simple$ ~/admb/build/dist/bin/admb -c simple
-
-  Outputs simple.o
+  [~/admb-11.1/examples/admb/simple/]$ ~/admb-11.1/admb simple
 
 * Functions from user-contributed packages can be loaded from
-  directory 'contrib', [maybe indicate how that is done].
-
-  GLOBAL_SECTION
-    using admb::contrib;
+  directory 'contrib'. Read 'contrib/README.txt'.
 
 * New class 'init_table' to read input data into a matrix.
 
@@ -84,14 +59,25 @@ New Features
 * admb is now able to handle .obj, .cpp and .tpl files on
   the commandline.
 
-  Example
+  For example,
 
-  admb model.tpl supportcode.cpp anotherfile.cpp
+  $ admb model.tpl supportcode.cpp anotherfile.cpp
 
-  Output is executable model
+  Output is executable 'model'.
 
-Deprecated
+Bug Fixes
 ----------
+
+* Able to build ADMB without flex.
+
+* Fix geolocation test.
+
+* Catch exit errors for adlink and adcomp.
+
+* Watch out for spaces in admb scripts
+
+* Fix memory leaks.
+
 
 Changes 9.2 to 11.0
 -------------------

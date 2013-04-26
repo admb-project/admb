@@ -48,7 +48,7 @@ istream& operator>>(const istream& _istr, const prevariable& _f)
 {
   prevariable& f = (prevariable&)_f;
   istream& istr=(istream&) _istr;
-  double tmp;
+  double tmp = 0;
   istr >> tmp;
   f=tmp;
   return istr;
@@ -75,7 +75,7 @@ uistream& operator>>(const uistream& _istr, const prevariable& _f)
 {
   prevariable& f = (prevariable&)_f;
   uistream& istr=(uistream&) _istr;
-  double tmp;
+  double tmp = 0;
   istr >> tmp;
   f=tmp;
   return istr;

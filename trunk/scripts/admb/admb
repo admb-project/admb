@@ -5,7 +5,8 @@ Build AD Model Builder executable from TPL.\n
   -d     Create DLL
   -g     Insert debugging symbols
   -r     Create ADMB-RE
-  -s     Enforce safe bounds
+  -s     Enforce safe bounds (default)
+  -O     Use optimized mode
   model  Filename prefix, e.g. simple\n"'
 if [[ "$1" == "" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
@@ -37,7 +38,9 @@ unset r
 unset s
 unset c
 tpl2cpp=tpl2cpp
-while getopts "dgrsc" A; do
+s=-s
+bounds=-bounds
+while getopts "dgrscO" A; do
   case $A in
     d) d=-d; dll=-dll
        ;;
@@ -46,6 +49,8 @@ while getopts "dgrsc" A; do
     r) r=-r; tpl2cpp=tpl2rem
        ;;
     s) s=-s; bounds=-bounds
+       ;;
+    O) s=; bounds=
        ;;
     c) c=1
        ;;

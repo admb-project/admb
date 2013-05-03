@@ -29,6 +29,8 @@ if not "!MINGW_HOME!"=="" (
 set srcs=
 set tpls=
 set objs=
+set s=-s 
+set bounds=-bounds
 
 for %%a in (%*) do (
   set arg=%%a
@@ -47,6 +49,10 @@ for %%a in (%*) do (
     if %%a==-s (
       set s=-s 
       set bounds=-bounds
+    )
+    if %%a==-O (
+      set s=
+      set bounds=
     )
   ) else (
     if "%%~xa"=="" (
@@ -126,7 +132,8 @@ echo.
 echo   -d     Create DLL
 echo   -g     Insert debugging symbols
 echo   -r     Create ADMB-RE
-echo   -s     Enforce safe bounds
+echo   -s     Enforce safe bounds (default)
+echo   -O     Use optimized mode
 echo   model  Filename prefix, e.g. simple
 echo.
 goto EOF

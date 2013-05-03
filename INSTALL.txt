@@ -31,15 +31,15 @@ Quick Start
 Windows
 -------
 
-1. Download ADMB source distribution.
+1. Download ADMB source distribution from
 
-   http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip
+   'http://www.admb-project.org/downloads/'.
 
-   Right click the downloaded file and extract to 'C:\admb-trunk\'.
+   Right click the downloaded file and extract to 'C:\admb\'.
 
 2. Open 'Command Prompt' window and change to admb directory.
 
-   C:\> cd admb-trunk
+   C:\> cd admb
 
 3. Install MinGW C++ compiler.
 
@@ -51,22 +51,22 @@ Windows
    If MinGW has not been installed, use the command below to download and 
    install 32-bit C++ compiler.
 
-   C:\admb-trunk\> utilities\get-mingw.bat
+   C:\admb\> utilities\get-mingw.bat
 
    Downloads approximately 177 MB from 'sourceforge.net'.  This will also 
    update existing MinGW installation.
 
 4. Build libraries
 
-   C:\admb-trunk\> utilities\make
+   C:\admb\> utilities\make
 
    Takes approximately 15-25 minutes to complete.
 
 5. Build and run the simple example.
 
-   C:\admb-trunk\> cd examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
-   C:\admb-trunk\examples\admb\simple\> simple
+   C:\admb\> cd examples\admb\simple
+   C:\admb\examples\admb\simple\> C:\admb\admb simple
+   C:\admb\examples\admb\simple\> simple
 
 6. [Optional] Include admb in system 'PATH'.
    Avoids the need the to add the prefix path to the admb script. 
@@ -80,39 +80,39 @@ Windows
 
    and in the 'Variable value:' type 
 
-   C:\admb-trunk\;%PATH% 
+   C:\admb\;%PATH% 
 
    C. Click the 'OK' button when done and open a new command prompt.
 
-   C:\> cd \admb-trunk\examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> admb simple
-   C:\admb-trunk\examples\admb\simple\> simple
+   C:\> cd \admb\examples\admb\simple
+   C:\admb\examples\admb\simple\> admb simple
+   C:\admb\examples\admb\simple\> simple
 
 
 Windows and Visual C++
 ----------------------
 
-1. Download ADMB source distribution.
+1. Download ADMB source distribution from
 
-   http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip
+   'http://www.admb-project.org/downloads/'.
 
-   Right click the downloaded file and extract to 'C:\admb-trunk\'.
+   Right click the downloaded file and extract to 'C:\admb\'.
 
 2. Open 'Visual Studio Command Prompt' window and change to admb directory.
 
-   C:\> cd admb-trunk
+   C:\> cd admb
 
 3. Build libraries
 
-   C:\admb-trunk\> nmake
+   C:\admb\> nmake
 
    Takes approximately 15-25 minutes to complete.
 
 4. Build and run the simple example.
 
-   C:\admb-trunk\> cd examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
-   C:\admb-trunk\examples\admb\simple\> simple
+   C:\admb\> cd examples\admb\simple
+   C:\admb\examples\admb\simple\> C:\admb\admb simple
+   C:\admb\examples\admb\simple\> simple
 
 5. [Optional] Include admb in system 'PATH'.
    Avoids the need the to add the prefix path to the admb script. 
@@ -126,20 +126,20 @@ Windows and Visual C++
 
    and in the 'Variable value:' type 
 
-   C:\admb-trunk\;%PATH% 
+   C:\admb\;%PATH% 
 
    C. Click the 'OK' button when done and open a new command prompt.
 
-   C:\> cd \admb-trunk\examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> admb simple
-   C:\admb-trunk\examples\admb\simple\> simple
+   C:\> cd \admb\examples\admb\simple
+   C:\admb\examples\admb\simple\> admb simple
+   C:\admb\examples\admb\simple\> simple
 
 Unix
 ----
 
-1. Download ADMB source distribution.
+1. Download ADMB source distribution from
 
-   http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip
+   'http://www.admb-project.org/downloads/'.
 
 2. Open 'Terminal' windows.
 
@@ -149,23 +149,23 @@ Unix
 
 4. Change to admb directory.
 
-   [~]$ cd admb-trunk
+   [~]$ cd admb
 
 5. Build libraries 
 
-   [~/admb-trunk/]$ make
+   [~/admb/]$ make
 
    Takes approximately 15-25 minutes to complete.
 
    Use help to show available compiler targets.
 
-   [~/admb-trunk/]$ make help
+   [~/admb/]$ make help
 
 6. Build run the simple example.
 
-   [~/admb-trunk/]$ cd examples/admb/simple
-   [~/admb-trunk/examples/admb/simple/]$ ~/admb-trunk/admb simple
-   [~/admb-trunk/examples/admb/simple/]$ ./simple
+   [~/admb/]$ cd examples/admb/simple
+   [~/admb/examples/admb/simple/]$ ~/admb/admb simple
+   [~/admb/examples/admb/simple/]$ ./simple
 
 7. [Optional] Installation
 
@@ -174,18 +174,18 @@ Unix
 
    Copy entire distribution.
 
-   [~/admb-trunk/]$ sudo cp -Rvf ../admb-trunk /usr/local/admb 
+   [~/admb/]$ sudo cp -Rvf ../admb /usr/local/admb 
 
    Create symlink to main admb script.  Directory '/usr/local/bin/' should 
    already exist.
 
-   [~/admb-trunk/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
+   [~/admb/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
    After copying, build and run the simple example.
 
-   [~/admb-trunk/]$ cd examples/admb/simple
-   [~/admb-trunk/examples/admb/simple/]$ admb simple
-   [~/admb-trunk/examples/admb/simple/]$ ./simple
+   [~/admb/]$ cd examples/admb/simple
+   [~/admb/examples/admb/simple/]$ admb simple
+   [~/admb/examples/admb/simple/]$ ./simple
 
 Quick Start (Binary Distribution)
 =================================
@@ -196,28 +196,28 @@ and operating system.
 Windows
 -------
 
-1. Download ADMB distribution.
+1. Download ADMB distribution from
 
-   NOT YET AVAILABLE.
+   'http://www.admb-project.org/downloads/'.
 
-   Right click the downloaded file and extract to 'C:\admb-trunk\'.
+   Right click the downloaded file and extract to 'C:\admb\'.
 
 2. Open 'Command Prompt' window and change to admb directory.
 
-   C:\> cd admb-trunk
+   C:\> cd admb
 
 3. Install MinGW C++ compiler (32 Bit).
 
-   C:\admb-trunk\> utilities\get-mingw.bat
+   C:\admb\> utilities\get-mingw.bat
 
    Download is approximately ~177M from 'sourceforge.net'.  This will also 
    update existing MinGW installation.
 
 4. Build and run the simple example.
 
-   C:\admb-trunk\> cd examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
-   C:\admb-trunk\examples\admb\simple\> simple
+   C:\admb\> cd examples\admb\simple
+   C:\admb\examples\admb\simple\> C:\admb\admb simple
+   C:\admb\examples\admb\simple\> simple
 
 5. [Optional] Include admb in system 'PATH'.
    Avoids the need the to add the prefix path to the admb script. 
@@ -231,30 +231,30 @@ Windows
 
    and in the 'Variable value:' type 
 
-   C:\admb-trunk\;%PATH% 
+   C:\admb\;%PATH% 
 
    C. Click the 'OK' button when done and open a new command prompt.
 
-   C:\> cd \admb-trunk\examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> admb simple
-   C:\admb-trunk\examples\admb\simple\> simple
+   C:\> cd \admb\examples\admb\simple
+   C:\admb\examples\admb\simple\> admb simple
+   C:\admb\examples\admb\simple\> simple
 
 Windows and Visual C++
 ----------------------
 
-1. Download ADMB distribution.
+1. Download ADMB distribution from
 
-   NOT YET AVAILABLE.
+   'http://www.admb-project.org/downloads/'.
 
-   Right click the downloaded file and extract to 'C:\admb-trunk\'.
+   Right click the downloaded file and extract to 'C:\admb\'.
 
 2. Open 'Visual Studio Command Prompt' window.
 
 3. Build and run the simple example.
 
-   C:\> cd admb-trunk\examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> C:\admb-trunk\admb simple
-   C:\admb-trunk\examples\admb\simple\> simple
+   C:\> cd admb\examples\admb\simple
+   C:\admb\examples\admb\simple\> C:\admb\admb simple
+   C:\admb\examples\admb\simple\> simple
 
 4. [Optional] Include admb in system 'PATH'.
    Avoids the need the to add the prefix path to the admb script. 
@@ -268,32 +268,32 @@ Windows and Visual C++
 
    and in the 'Variable value:' type 
 
-   C:\admb-trunk\;%PATH% 
+   C:\admb\;%PATH% 
 
    C. Click the 'OK' button when done and open a new command prompt.
 
-   C:\> cd \admb-trunk\examples\admb\simple
-   C:\admb-trunk\examples\admb\simple\> admb simple
-   C:\admb-trunk\examples\admb\simple\> simple
+   C:\> cd \admb\examples\admb\simple
+   C:\admb\examples\admb\simple\> admb simple
+   C:\admb\examples\admb\simple\> simple
 
 Unix
 ----
 
-1. Download ADMB distribution.
+1. Download ADMB distribution from
 
-   NOT YET AVAILABLE.
+   'http://www.admb-project.org/downloads/'.
 
 2. Open 'Terminal' windows.
 
 3. Extract downloaded file in HOME directory.
 
-   [~]$ unzip admb-latest.zip
+   [~]$ unzip admb.zip
 
 4. Build run the simple example.
 
-   [~]$ cd admb-trunk/examples/admb/simple
-   [~/admb-trunk/examples/admb/simple/]$ ~/admb-trunk/admb simple
-   [~/admb-trunk/examples/admb/simple/]$ ./simple
+   [~]$ cd admb/examples/admb/simple
+   [~/admb/examples/admb/simple/]$ ~/admb/admb simple
+   [~/admb/examples/admb/simple/]$ ./simple
 
 5. [Optional] Installation
 
@@ -302,18 +302,18 @@ Unix
 
    Copy entire distribution.
 
-   [~/admb-trunk/]$ sudo cp -Rvf ../admb-trunk /usr/local/admb 
+   [~/admb/]$ sudo cp -Rvf ../admb /usr/local/admb 
 
    Create symlink to main admb script.  Directory '/usr/local/bin/' should 
    already exist.
 
-   [~/admb-trunk/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
+   [~/admb/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
    After copying, build and run the simple example.
 
-   [~/admb-trunk/]$ cd examples/admb/simple
-   [~/admb-trunk/examples/admb/simple/]$ admb simple
-   [~/admb-trunk/examples/admb/simple/]$ ./simple
+   [~/admb/]$ cd examples/admb/simple
+   [~/admb/examples/admb/simple/]$ admb simple
+   [~/admb/examples/admb/simple/]$ ./simple
 
 --------------------------------------------------------------------------------
 $ID$

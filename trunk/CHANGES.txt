@@ -10,24 +10,23 @@ Changes
 
 * Updated Visual Studio nmake build files.
 
-* Improved build files.  Build will not rebuild an already built
-  object file.
+* Improved Unix build files. Only outdated files are rebuilt.
   
   Note: Building from source will create distribution folder in
         build/dist instead of build/os-comiler-arch.
 
-* Combined mulitple libraries to a single library libadmb.a. 
+* Combined mulitple libraries to a single library 'libadmb.a'. 
 
-* Reverted some algorithms to previous version 9 code.
+* Reverted some algorithms to previous version-9 code.
 
 * The compilation scripts (adcomp, adlink, admb) compile in "safe" mode by 
   default.
 
   To build with optimized libraries use option 
 
-  $ admb --use-optimized model.tpl
+  $ admb -O model.tpl
 
-* s option with the control^c was added???
+* added 's' option with the Ctrl^C
 
 * contributed libraries are built with the main libraries.
  

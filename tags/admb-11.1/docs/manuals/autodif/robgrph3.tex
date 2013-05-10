@@ -1,0 +1,22 @@
+% $Id$
+%
+% Author: David Fournier
+% Copyright (c) 2008 Regents of the University of California
+%
+\beginpicture
+  \setcoordinatesystem units <1in,1in>
+  \setplotarea x from -2 to 2, y from 0 to 2
+ %\plotheading{\lines {Figure \number\mychapno.1\ Plot of the smoothed absolute\cr 
+%        value function {\tt y=1000*sfabs(x/1000)} and\cr the normal
+%        absolute value function {\tt y=fabs(x)}\cr}}
+  \axis left  
+    ticks numbered from  0 to 2 by .5 /
+  \axis bottom  
+    ticks numbered from -2 to 2 by .5 /
+ \setquadratic
+ \plot "smoothdt.tex" 
+ \setlinear
+ \plot 0 0  2 2 /
+ \plot 0 0 -2 2 /
+ \setplotsymbol({\rm .})
+\endpicture

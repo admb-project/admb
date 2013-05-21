@@ -27,6 +27,7 @@ DATA_SECTION
   // init_matrix G(1,n,1,ncolG)                    // Design matrix for zero-inflation (fixed effects)
   // TESTING: remove eventually?
   init_int zi_kluge				// apply zi=0.001?
+  init_int poisshack                            // add e3 to poiss prob?
   init_int nbinom1_flag				// 1=NBinom1, 0=NBinom2
   init_int intermediate_maxfn			// Not used
   init_int has_offset				// Offset in linear predictor: 0=no offset, 1=with offset
@@ -36,9 +37,11 @@ DATA_SECTION
   // Makes design matrix X orthogonal to improve numeric stability
   matrix rr(1,n,1,6)
   matrix phi(1,p,1,p)
+  number ymax           // maximum y for bounding mean in nb and pois
  LOC_CALCS
   int i,j;
   phi.initialize();
+  ymax=log(15.0*max(y)+1);
   for (i=1;i<=p;i++)
   {
     phi(i,i)=1.0;
@@ -108,7 +111,7 @@ PARAMETER_SECTION
   double log_alpha_lowerbound = nbinom1_flag==1 ? 0.001 : -5.0 ;
   ncolS = m;                       	// Uncorrelated random effects
   for (int i=1;i<=M;i++)                // Modifies the correlated ones
-    if(cor_flag(i))
+    if(cor_flag(i)>0)
       ncolS(i) = m(i)*(m(i)+1)/2;
   int nS = sum(ncolS);             	//  Total number
  END_CALCS
@@ -170,31 +173,31 @@ PROCEDURE_SECTION
       dvar_matrix tmpS(1,m(i_m),1,m(i_m));
       tmpS.initialize();
 
-      if(cor_flag(i_m))
+      if(cor_flag(i_m)>0) // full cor structure
       {
         int ii=1;
         L(1,1)=1;
         for (i=1;i<=m(i_m);i++)
         {
-          L(i,i)=1;
+          L(i,i)=1; // set diagonal
           for (int j=1;j<i;j++)
-            L(i,j)=tmpL1(i2++);
-          L(i)(1,i)/=norm(L(i)(1,i));
+            L(i,j)=tmpL1(i2++); // fill in off-diag
+          L(i)(1,i)/=norm(L(i)(1,i)); // ???
         }
         for (i=1;i<=m(i_m);i++)
-          L(i)*=exp(tmpL(i1++));
+          L(i)*=exp(tmpL(i1++)); //scale row
       }
-      else
+      else  /// diagonal cor structure
       {
         for (i=1;i<=m(i_m);i++)
           L(i,i)=exp(tmpL(i1++));
       }
 
-      tmpS=L*trans(L);
+      tmpS=L*trans(L);  // square
 
-      for (i=1;i<=m(i_m);i++)
+      for (i=1;i<=m(i_m);i++) // fill in var-cov vector
       {
-          if(cor_flag(i_m))
+          if(cor_flag(i_m)>0)
             for(j=1;j<i;j++)
               S(ii++) = tmpS(i,j);
           S(ii++) = tmpS(i,i);
@@ -218,6 +221,7 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
   int i,j, i_m, Ni;
   double e1=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
   double e2=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
+  double e3=1e-6; // Poisson prob=0 hack
 
   dvariable alpha = e2+exp(log_alpha);
 
@@ -230,7 +234,7 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
     dvar_matrix L(1,m(i_m),1,m(i_m));
     L.initialize();
 
-    if(cor_flag(i_m))
+    if(cor_flag(i_m)>0)
     {
       L(1,1)=1;
       for (i=1;i<=m(i_m);i++)
@@ -398,7 +402,11 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
   switch(like_type_flag)
   {
     case 0:   // Poisson
-      tmpl = log_density_poisson(y(_i,1),lambda);
+	if (poisshack==0) { 
+	    tmpl =  log_density_poisson(y(_i,1),lambda);
+	} else {
+	    tmpl = log(e3+exp(log_density_poisson(y(_i,1),lambda)));  // DF hack May 2013
+	}
       break;
     case 1:   // Binomial: y(_i,1)=#successes, y(_i,2)=#failures, 
       if (p_y==1) {

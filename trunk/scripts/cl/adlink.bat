@@ -1,7 +1,7 @@
 @echo off
 
 REM History:  24 May 2009  Arni Magnusson created
-REM           23 May 2013  Chris Grandin fix DLL creation
+REM           23 May 2013  Chris Grandin fix DLL creation, got rid of deprecated MSSDK
 
 setlocal EnableExtensions EnableDelayedExpansion
 if [%1]==[] goto HELP
@@ -31,7 +31,6 @@ for %%a in (%*) do (
 )
 
 if not defined LIBS set LIBS="%ADMB_HOME%"\lib\admbo.lib "%ADMB_HOME%"\contrib\lib\contribo.lib
-set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
 cl %OBJS% %LIBS% /link %DEBUG% %DLL% %FN%

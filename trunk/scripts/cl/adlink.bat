@@ -1,6 +1,7 @@
 @echo off
 
 REM History:  24 May 2009  Arni Magnusson created
+REM           23 May 2013  Chris Grandin fix DLL creation
 
 setlocal EnableExtensions EnableDelayedExpansion
 if [%1]==[] goto HELP
@@ -16,6 +17,10 @@ for %%a in (%*) do (
     if "!arg!"=="-g" (
       set DEBUG="/DEBUG"
     )
+    if "!arg!"=="-d" (
+      set DLL="/DLL"
+      set FN="/OUT:%~n3.dll"
+    )
   ) else (
     if "%%~xa"=="" (
       set OBJS=!OBJS! !arg!.obj
@@ -29,7 +34,7 @@ if not defined LIBS set LIBS="%ADMB_HOME%"\lib\admbo.lib "%ADMB_HOME%"\contrib\l
 set LIBPATH_MSSDK=/libpath:"%MSSDK%"\lib
 
 @echo on
-cl %OBJS% %LIBS% /link %DEBUG%
+cl %OBJS% %LIBS% /link %DEBUG% %DLL% %FN%
 @echo off
 
 goto EOF

@@ -106,11 +106,13 @@ install:
 clean:
 	IF EXIST $(DESTDIR) rd /S /Q $(DESTDIR)
 	IF EXIST $(OBJDESTDIR) rd /S /Q $(OBJDESTDIR)
-	pushd df1b2-separable& $(MAKE) clean& popd
-	pushd nh99& $(MAKE) clean& popd
 	pushd ..\contrib& $(MAKE) clean& popd
 	pushd ..\tests& $(MAKE) clean& popd
 	del df1b2-separable\lex.yy.c
 	del df1b2-separable\tpl2rem-winflex.obj
+	del df1b2-separable\tpl2rem.c
+	del df1b2-separable\tpl2rem.obj
 	del nh99\lex.yy.c
 	del nh99\tpl2cpp-winflex.obj
+	del nh99\tpl2cpp.c
+	del nh99\tpl2cpp.obj

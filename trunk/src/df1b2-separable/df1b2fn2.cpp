@@ -8,6 +8,7 @@
  * \file
  * Description not yet available.
  */
+#include <cstring>
 #if !defined(__BORLANDC__) && !defined(_MSC_VER)
 #include <inttypes.h>
 #endif
@@ -120,33 +121,29 @@ ptrdiff_t adptr_diff(void* x, void* y)
  * Description not yet available.
  * \param
  */
-  void df1b2variable::initialize(void)
-  {
-    //double * tmp=ptr+1;
+void df1b2variable::initialize(void)
+{
 #if defined(__CHECK_MEMORY__)
-    if (sanity_flag)
-      df1b2variable::pool->sanity_check();
-#endif
-    int nvar=((twointsandptr*)ptr)->ptr->nvar;
-    int blocksize=get_blocksize(nvar);
-    for (double * tmp=ptr+2;tmp<ptr+blocksize-1;*tmp++=0);
-   /*
-    for (int i=1;i<blocksize;i++)
-    {
-      *tmp++=0.0;
-    }
-   */
+  if (sanity_flag)
+  {
+    df1b2variable::pool->sanity_check();
   }
+#endif
+  int nvar=((twointsandptr*)ptr)->ptr->nvar;
+  initialize(nvar);
+}
         
 /**
  * Description not yet available.
  * \param
  */
-  void df1b2variable::initialize(int n)
-  {
-    int bs=get_blocksize(n);
-    for (double * tmp=ptr+2;tmp<ptr+bs-1;*tmp++=0);
-  }
+void df1b2variable::initialize(int n)
+{
+  //int bs=get_blocksize(n);
+  //for (double * tmp=ptr+2;tmp<ptr+bs-1;*tmp++=0);
+  int nbytes = (get_blocksize(n) - 2) * sizeof(double);
+  memset(ptr + 2, 0, nbytes);
+}
         
 /**
  * Description not yet available.

@@ -5,9 +5,10 @@ all: $(addprefix $(PREFIX_OBJ), $(OBJ0) $(OBJSPLUS))
 $(PREFIX_OBJ)%.obj:%.cpp
 	$(CXX) /c $(CXXFLAGS) /Fo$@ $<
 
-bins: $(DESTDIR)\bin\tpl2cpp.exe
+bins: 
+	move tpl2cpp.exe $(DESTDIR)\bin\tpl2cpp.exe
 
-$(DESTDIR)\bin\tpl2cpp.exe: tpl2cpp.c
+tpl2cpp.exe: tpl2cpp.c
 	$(CC) /nologo /TC /Fe$@ tpl2cpp.c
 
 tpl2cpp.c: tpl2cpp.lex

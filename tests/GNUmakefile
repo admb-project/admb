@@ -107,6 +107,14 @@ beta2:
 beta3:
 	OPTIONS=-s $(MAKE) --directory=$@
 
+gtest: gtest-colfill
+
+gtest-colfill: googletest-read-only
+	$(MAKE) --directory=colfill
+
+googletest-read-only:
+	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
+
 clean:
 	$(MAKE) --directory=geolocation clean
 	$(MAKE) --directory=expm clean

@@ -576,6 +576,30 @@ df1b2vector::df1b2vector(int lb,int ub)
 }
 
 /**
+ * Construct df1b2vector from dvector v.
+ */
+df1b2vector::df1b2vector(const dvector& v)
+{
+  if (!v)
+  {
+    allocate();
+  }
+  else
+  {
+    const int lb = v.indexmin();
+    const int ub = v.indexmax();
+    if (lb<=ub)
+    {
+      allocate(lb,ub);
+      for (int i = lb; i <= ub; i++)
+      {
+        (*this)[i] = v[i];
+      }
+    }
+  }
+}
+
+/**
  * Description not yet available.
  * \param
  */

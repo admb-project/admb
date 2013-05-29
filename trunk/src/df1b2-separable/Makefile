@@ -5,7 +5,7 @@ all: $(addprefix $(PREFIX_OBJ), $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3))
 $(PREFIX_OBJ)%.obj:%.cpp
 	$(CXX) /c $(CXXFLAGS) /Fo$@ $<
 
-bins: 
+bins: tpl2rem.exe
 	move tpl2rem.exe $(DESTDIR)\bin\tpl2rem.exe
 
 tpl2rem.exe: tpl2rem.c

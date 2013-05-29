@@ -936,6 +936,7 @@ public:
   int indexmax(void)const {return index_max;}
   int size(){return index_max-index_min+1;}
   df1b2vector(int lb,int ub);
+  df1b2vector(const dvector& v);
   ~df1b2vector();
   df1b2vector(const df1b2vector&);
   void copy(const df1b2vector&);
@@ -1014,6 +1015,7 @@ public:
   int allocated(void){return v!=0;}
   void initialize(void);
   ~df1b2matrix();
+  void colfill(const int j, const df1b2vector& v);
   int rowmin(void) const {return index_min;}
   int indexmin(void) const {return index_min;}
   int indexmax(void) const {return index_max;}

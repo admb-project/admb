@@ -1,4 +1,4 @@
-all: test-geolocation test-cov_re test-expm
+all: test-geolocation test-cov_re test-expm test-colfill
 
 test-geolocation:
 	pushd geolocation & $(MAKE) & popd

@@ -776,6 +776,19 @@ void df1b2matrix::allocate(void)
 }
 
 /**
+ * Copy values of vector v into column j.
+ */
+void df1b2matrix::colfill(const int j, const df1b2vector& v)
+{
+  //RETURN_ARRAYS_INCREMENT();   makes no sense for df1b2 stuff
+  for (int i=rowmin(); i<=rowmax(); i++)
+  {
+    (*this)[i][j]=v[i];
+  }
+  //RETURN_ARRAYS_DECREMENT();
+}
+
+/**
  * Description not yet available.
  * \param
  */

@@ -176,12 +176,25 @@ do
 done
 
 if [[ "$tplobjs" == "" ]]; then
-  CMD="adlink $d $g $r $s $objs"
+  listobjs=
+  for file in $nontpls
+  do
+    extension="${file#*.}"
+    if [ "$extension" = "o" -o "$extension" = "obj" ]; then
+      listobjs="$listobjs $file"
+    else
+      listobjs="$listobjs ${file%.*}.o"
+    fi
+  done
+
+  CMD="adlink $d $g $r $s $listobjs"
   echo -e \\n\*\*\* $CMD
   eval $CMD
-  declare -a amodel=( $nontpls )
+
+  declare -a amodel=( $listobjs )
   m=${amodel[0]}
   m2=${m%.*}
+
   if [[ -z $dll ]]; then 
     if [[ ! -f $m2 ]]; then 
         echo -e "\\nError: Could not build $m2\\n"

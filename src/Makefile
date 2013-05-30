@@ -1,5 +1,6 @@
 DESTDIR=..\build\dist
 OBJDESTDIR=..\build\objects\dist
+LEXDESTDIR=..\build\lex
 
 CXXFLAGS_SAF=/nologo /O2 /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
 CXXFLAGS_OPT=/nologo /O2 /W4 /GF /EHsc /DOPT_LIB  /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
@@ -20,7 +21,7 @@ srcs:
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\contrib
 	IF NOT EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\contrib
 
-bins: libs
+bins: lexfiles libs
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin
 	copy df1b2-separable\sed* $(DESTDIR)\bin
 	copy ..\scripts\cl\*.bat $(DESTDIR)\bin
@@ -28,6 +29,28 @@ bins: libs
 	copy ..\scripts\admb\root-admb.bat ..\admb.bat
 	copy ..\utilities\sed.exe $(DESTDIR)\bin
 	copy ..\utilities\*.dll $(DESTDIR)\bin
+
+lexfiles: lexdestdir $(DESTDIR)\bin\tpl2cpp.exe $(DESTDIR)\bin\tpl2rem.exe
+
+lexdestdir:
+	IF NOT EXIST $(LEXDESTDIR) md $(LEXDESTDIR)
+	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin
+
+$(DESTDIR)\bin\tpl2cpp.exe: $(LEXDESTDIR)\tpl2cpp.c
+	$(CC) /nologo /TC /Fo$(LEXDESTDIR)\ /Fe$@ $(LEXDESTDIR)\tpl2cpp.c
+
+$(LEXDESTDIR)\tpl2cpp.c: nh99\tpl2cpp.lex
+	..\utilities\flex -o$(LEXDESTDIR)\lex.yy.c nh99\tpl2cpp.lex
+	..\utilities\sed -f nh99\sedflex $(LEXDESTDIR)\lex.yy.c > $@
+
+$(DESTDIR)\bin\tpl2rem.exe: $(LEXDESTDIR)\tpl2rem.c
+	$(CC) /nologo /TC /Fo$(LEXDESTDIR)\ /Fe$@ $(LEXDESTDIR)\tpl2rem.c
+
+$(LEXDESTDIR)\tpl2rem.c: df1b2-separable\tpl2rem.lex
+	..\utilities\flex -w -o$(LEXDESTDIR)\lex.yy.c df1b2-separable\tpl2rem.lex 
+	..\utilities\sed -f df1b2-separable\sedflex $(LEXDESTDIR)\lex.yy.c > $@
+
+lexfiles2:
 	pushd nh99& ..\..\utilities\make  --file=Makefile CC="$(CC)" DESTDIR="..\$(DESTDIR)" bins& popd
 	pushd df1b2-separable& ..\..\utilities\make --file=Makefile CC="$(CC)" DESTDIR="..\$(DESTDIR)" bins& popd
 
@@ -108,11 +131,3 @@ clean:
 	IF EXIST $(OBJDESTDIR) rd /S /Q $(OBJDESTDIR)
 	pushd ..\contrib& $(MAKE) clean& popd
 	pushd ..\tests& $(MAKE) clean& popd
-	del df1b2-separable\lex.yy.c
-	del df1b2-separable\tpl2rem-winflex.obj
-	del df1b2-separable\tpl2rem.c
-	del df1b2-separable\tpl2rem.obj
-	del nh99\lex.yy.c
-	del nh99\tpl2cpp-winflex.obj
-	del nh99\tpl2cpp.c
-	del nh99\tpl2cpp.obj

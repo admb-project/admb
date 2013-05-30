@@ -27,7 +27,7 @@ DATA_SECTION
   // init_matrix G(1,n,1,ncolG)                    // Design matrix for zero-inflation (fixed effects)
   // TESTING: remove eventually?
   init_int zi_kluge				// apply zi=0.001?
-  init_int poisshack                            // add e3 to poiss prob?
+  init_int poiss_prob_bound                     // bound poiss prob away from zero?
   init_int nbinom1_flag				// 1=NBinom1, 0=NBinom2
   init_int intermediate_maxfn			// Not used
   init_int has_offset				// Offset in linear predictor: 0=no offset, 1=with offset
@@ -222,6 +222,7 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
   double e1=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
   double e2=1e-8; // formerly 1.e-20; current agrees with nbmm.tpl
   double e3=1e-6; // Poisson prob=0 hack
+  double e4=1e-10; // Poisson prob=0 hack for last phase
 
   dvariable alpha = e2+exp(log_alpha);
 
@@ -402,10 +403,13 @@ SEPARABLE_FUNCTION void log_lik(int _i,const dvar_vector& tmpL,const dvar_vector
   switch(like_type_flag)
   {
     case 0:   // Poisson
-	if (poisshack==0) { 
+	if (poiss_prob_bound==0) { 
 	    tmpl =  log_density_poisson(y(_i,1),lambda);
 	} else {
+          if (cph<5)  
 	    tmpl = log(e3+exp(log_density_poisson(y(_i,1),lambda)));  // DF hack May 2013
+          else
+	    tmpl = log(e4+exp(log_density_poisson(y(_i,1),lambda)));  // DF hack May 2013
 	}
       break;
     case 1:   // Binomial: y(_i,1)=#successes, y(_i,2)=#failures, 
@@ -499,6 +503,8 @@ GLOBALS_SECTION
   ofstream ofs12("b2");
   ofstream ofs13("s1");
   ofstream ofs14("s2");
+
+  //void add_slave_suffix(const adstring & s){}
 
   dvariable betaln(const prevariable& a,const prevariable& b )
   {

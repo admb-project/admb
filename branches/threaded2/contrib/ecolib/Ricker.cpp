@@ -9,7 +9,6 @@
 \param a ; differentiable scalar
 \param b ; differentiable scalar
 \return  \f$ axe^{-bx} \f$
-\ingroup ECOL
 **/
 dvariable Ricker(const double& x,  const prevariable& a,  const prevariable& b)
 {
@@ -25,7 +24,6 @@ dvariable Ricker(const double& x,  const prevariable& a,  const prevariable& b)
 \param a ; differentiable scalar
 \param b ; differentiable scalar
 \return  \f$ axe^{-bx} \f$
-\ingroup ECOL
 **/
 dvar_vector Ricker(const dvector& x,  const prevariable& a,  const prevariable& b)
 {
@@ -41,7 +39,6 @@ dvar_vector Ricker(const dvector& x,  const prevariable& a,  const prevariable& 
 \param a ; differentiable vector
 \param b ; differentiable scalar
 \return  \f$ axe^{-bx} \f$
-\ingroup ECOL
 **/
 dvar_vector Ricker(const dvector& x,  const dvar_vector& a,  const prevariable& b)
 {
@@ -58,7 +55,6 @@ dvar_vector Ricker(const dvector& x,  const dvar_vector& a,  const prevariable& 
 \param a ; differentiable scalar
 \param b ; differentiable vector
 \return  \f$ axe^{-bx} \f$
-\ingroup ECOL
 **/
 dvar_vector Ricker(const dvector& x,  const prevariable& a,  const dvar_vector& b)
 {
@@ -74,7 +70,6 @@ dvar_vector Ricker(const dvector& x,  const prevariable& a,  const dvar_vector& 
 \param a ; differentiable vector
 \param b ; differentiable vector
 \return  \f$ axe^{-bx} \f$
-\ingroup ECOL
 **/
 dvar_vector Ricker(const dvector& x,  const dvar_vector& a,  const dvar_vector& b)
 {
@@ -92,7 +87,6 @@ dvar_vector Ricker(const dvector& x,  const dvar_vector& a,  const dvar_vector& 
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable scalar in a random effects model
 \return  \f$ axe^{-bx} \f$
-\ingroup ECOL
 **/
 df1b2variable Ricker(const double& x,  const df1b2variable& a,  const df1b2variable& b)
 {
@@ -106,7 +100,6 @@ df1b2variable Ricker(const double& x,  const df1b2variable& a,  const df1b2varia
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable scalar in a random effects model
 \return  \f$ axe^{-bx} \f$
-\ingroup ECOL
 **/
 df1b2vector Ricker(const dvector& x,  const df1b2variable& a,  const df1b2variable& b)
 {
@@ -120,7 +113,6 @@ df1b2vector Ricker(const dvector& x,  const df1b2variable& a,  const df1b2variab
 \param a ; differentiable vector in a random effects model
 \param b ; differentiable scalar in a random effects model
 \return  \f$ axe^{-bx} \f$
-\ingroup ECOL
 **/
 df1b2vector Ricker(const dvector& x,  const df1b2vector& a,  const df1b2variable& b)
 {
@@ -137,7 +129,6 @@ df1b2vector Ricker(const dvector& x,  const df1b2vector& a,  const df1b2variable
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable vector in a random effects model
 \return  \f$ axe^{-bx} \f$
-\ingroup ECOL
 **/
 df1b2vector Ricker(const dvector& x,  const df1b2variable& a,  const df1b2vector& b)
 {
@@ -151,7 +142,6 @@ df1b2vector Ricker(const dvector& x,  const df1b2variable& a,  const df1b2vector
 \param a ; differentiable vector in a random effects model
 \param b ; differentiable vector in a random effects model
 \return  \f$ axe^{-bx} \f$
-\ingroup ECOL
 **/
 df1b2vector Ricker(const dvector& x,  const df1b2vector& a,  const df1b2vector& b)
 {

@@ -119,20 +119,29 @@
  * Description not yet available.
  * \param
  */
- dvar5_array& dvar5_array::operator=(const dvar5_array& m)
+ dvar5_array& dvar5_array::operator = ( const dvar5_array& m)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   { 
-     cerr << "Incompatible bounds in"
-      " dvar4_array& dvar4_array:: operator=(const dvar4_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
+   if (!allocated(*this))
    {
-     (*this)(i)=m(i);
+     shape=m.shape;
+     (shape->ncopies)++;
+     t = m.t;
+   }
+   else
+   {
+     int mmin=indexmin();
+     int mmax=indexmax();
+     if (mmin!=m.indexmin() || mmax!=m.indexmax())
+     { 
+       cerr << "Incompatible bounds in"
+        " dvar5_array& dvar5_array:: operator=(const dvar5_array& m)"
+        << endl;
+       ad_exit(1);
+      }
+     for (int i=mmin; i<=mmax; i++)
+     {
+       (*this)(i)=m(i);
+     }
    }
    return *this;
  }
@@ -143,19 +152,19 @@
  */
 dvar5_array& dvar5_array::operator=(const d5_array& m)
  {
-   int mmin=indexmin();
-   int mmax=indexmax();
-   if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   { 
-     cerr << "Incompatible bounds in"
-      " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i)=m(i);
-   }
+     int mmin=indexmin();
+     int mmax=indexmax();
+     if (mmin!=m.indexmin() || mmax!=m.indexmax())
+     { 
+       cerr << "Incompatible bounds in"
+        " dvar5_array& dvar5_array:: operator =  (const dvar5_array& m)"
+        << endl;
+       ad_exit(1);
+      }
+     for (int i=mmin; i<=mmax; i++)
+     {
+       (*this)(i)=m(i);
+     }
    return *this;
  }
 

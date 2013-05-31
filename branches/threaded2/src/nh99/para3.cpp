@@ -40,10 +40,10 @@ void function_minimizer::hess_routine_master()
   gradient_structure::set_YES_DERIVATIVES();
   gbest.fill_seqadd(1.e+50,0.);
 
-  std::thread::id this_thread_id = std::this_thread::get_id();
-  std::ostringstream oss;
-  oss << *ad_comm::adprogram_name << this_thread_id << ".hes";
-  uostream ofs(oss.str().c_str());
+  adstring tmpstring="admodel.hes";
+  if (ad_comm::wd_flag)
+     tmpstring = ad_comm::adprogram_name + ".hes";
+  uostream ofs((char*)tmpstring);
     
   ofs << nvar;
   {

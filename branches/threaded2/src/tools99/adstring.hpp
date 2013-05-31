@@ -99,6 +99,7 @@ class adstring : public clist
   unsigned char * s;
 #endif
   void allocate(int sz);
+  void deallocate(void);
   friend class adstring_array;
 public :
   friend std::ostream & operator<<(std::ostream & c, const adstring & t);

@@ -32,6 +32,62 @@
  * Description not yet available.
  * \param
  */
+ void dmatrix::allocate(int nrl,int nrh,int ncl,int nch,const dvector& x,
+   int & off1)
+ {
+   if (nrh<nrl)
+   {
+     allocate();
+     return;
+   }
+   index_min=nrl;
+   index_max=nrh;
+   if ( (m = new dvector [rowsize()]) == 0)
+   {
+     cerr << " Error allocating memory in dmatrix contructor\n";
+     ad_exit(21);
+   }
+   if ( (shape = new mat_shapex(m))== 0)
+   {
+     cerr << " Error allocating memory in dmatrix contructor\n";
+     ad_exit(21);
+   }
+   m -= rowmin();
+   for (int i=rowmin(); i<=rowmax(); i++)
+   {
+     m[i]=x(ncl+off1,nch+off1).shift(ncl);
+     off1+=(nch-ncl+1);
+     //m[i].allocate(ncl,nch);
+   }
+ }
+ void dmatrix::allocate(int nrl,int nrh,int ncl,const ivector& ind1,const dvector& x,
+   int & off1)
+ {
+   if (nrh<nrl)
+   {
+     allocate();
+     return;
+   }
+   index_min=nrl;
+   index_max=nrh;
+   if ( (m = new dvector [rowsize()]) == 0)
+   {
+     cerr << " Error allocating memory in dmatrix contructor\n";
+     ad_exit(21);
+   }
+   if ( (shape = new mat_shapex(m))== 0)
+   {
+     cerr << " Error allocating memory in dmatrix contructor\n";
+     ad_exit(21);
+   }
+   m -= rowmin();
+   for (int i=rowmin(); i<=rowmax(); i++)
+   {
+     m[i]=x(ncl+off1,ind1(i)+off1).shift(ncl);
+     off1+=(ind1(i)-ncl+1);
+     //m[i].allocate(ncl,nch);
+   }
+ }
  void dmatrix::allocate(int nrl,int nrh,int ncl,int nch)
  {
    if (nrh<nrl)

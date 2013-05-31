@@ -10,7 +10,6 @@
 \param b ; differentiable scalar
 \param c carrying capacity; differentiable scalar
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 dvariable logistic3(const double& x,  const prevariable& a,  const prevariable& b,  const prevariable& c)
 {
@@ -27,7 +26,6 @@ dvariable logistic3(const double& x,  const prevariable& a,  const prevariable& 
 \param b ; differentiable scalar
 \param c carrying capacity; differentiable scalar
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 dvar_vector logistic3(const dvector& x,  const prevariable& a,  const prevariable& b,  const prevariable& c)
 {
@@ -44,7 +42,6 @@ dvar_vector logistic3(const dvector& x,  const prevariable& a,  const prevariabl
 \param b ; differentiable scalar
 \param c carrying capacity; differentiable scalar
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 dvar_vector logistic3(const dvector& x,  const dvar_vector& a,  const prevariable& b,  const prevariable& c)
 {
@@ -62,7 +59,6 @@ dvar_vector logistic3(const dvector& x,  const dvar_vector& a,  const prevariabl
 \param b ; differentiable vector
 \param c carrying capacity; differentiable scalar
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 dvar_vector logistic3(const dvector& x,  const prevariable& a,  const dvar_vector& b,  const prevariable& c)
 {
@@ -79,7 +75,6 @@ dvar_vector logistic3(const dvector& x,  const prevariable& a,  const dvar_vecto
 \param b ; differentiable vector
 \param c carrying capacity; differentiable scalar
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 dvar_vector logistic3(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,  const prevariable& c)
 {
@@ -98,7 +93,6 @@ dvar_vector logistic3(const dvector& x,  const dvar_vector& a,  const dvar_vecto
 \param b ; differentiable scalar
 \param c carrying capacity; differentiable vector
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 dvar_vector logistic3(const dvector& x,  const prevariable& a,  const prevariable& b,  const dvar_vector& c)
 {
@@ -115,7 +109,6 @@ dvar_vector logistic3(const dvector& x,  const prevariable& a,  const prevariabl
 \param b ; differentiable scalar
 \param c carrying capacity; differentiable vector
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 dvar_vector logistic3(const dvector& x,  const dvar_vector& a,  const prevariable& b,  const dvar_vector& c)
 {
@@ -133,7 +126,6 @@ dvar_vector logistic3(const dvector& x,  const dvar_vector& a,  const prevariabl
 \param b ; differentiable vector
 \param c carrying capacity; differentiable vector
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 dvar_vector logistic3(const dvector& x,  const prevariable& a,  const dvar_vector& b,  const dvar_vector& c)
 {
@@ -150,7 +142,6 @@ dvar_vector logistic3(const dvector& x,  const prevariable& a,  const dvar_vecto
 \param b ; differentiable vector
 \param c carrying capacity; differentiable vector
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 dvar_vector logistic3(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,  const dvar_vector& c)
 {
@@ -170,7 +161,6 @@ dvar_vector logistic3(const dvector& x,  const dvar_vector& a,  const dvar_vecto
 \param b ; differentiable scalar in a random effects model
 \param c carrying capacity; differentiable scalar in a random effects model
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 df1b2variable logistic3(const double& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -185,7 +175,6 @@ df1b2variable logistic3(const double& x,  const df1b2variable& a,  const df1b2va
 \param b ; differentiable scalar in a random effects model
 \param c carrying capacity; differentiable scalar in a random effects model
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 df1b2vector logistic3(const dvector& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -200,7 +189,6 @@ df1b2vector logistic3(const dvector& x,  const df1b2variable& a,  const df1b2var
 \param b ; differentiable scalar in a random effects model
 \param c carrying capacity; differentiable scalar in a random effects model
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 df1b2vector logistic3(const dvector& x,  const df1b2vector& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -218,7 +206,6 @@ df1b2vector logistic3(const dvector& x,  const df1b2vector& a,  const df1b2varia
 \param b ; differentiable vector in a random effects model
 \param c carrying capacity; differentiable scalar in a random effects model
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 df1b2vector logistic3(const dvector& x,  const df1b2variable& a,  const df1b2vector& b,  const df1b2variable& c)
 {
@@ -233,7 +220,6 @@ df1b2vector logistic3(const dvector& x,  const df1b2variable& a,  const df1b2vec
 \param b ; differentiable vector in a random effects model
 \param c carrying capacity; differentiable scalar in a random effects model
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 df1b2vector logistic3(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,  const df1b2variable& c)
 {
@@ -253,7 +239,6 @@ df1b2vector logistic3(const dvector& x,  const df1b2vector& a,  const df1b2vecto
 \param b ; differentiable scalar in a random effects model
 \param c carrying capacity; differentiable vector in a random effects model
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 df1b2vector logistic3(const dvector& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2vector& c)
 {
@@ -268,7 +253,6 @@ df1b2vector logistic3(const dvector& x,  const df1b2variable& a,  const df1b2var
 \param b ; differentiable scalar in a random effects model
 \param c carrying capacity; differentiable vector in a random effects model
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 df1b2vector logistic3(const dvector& x,  const df1b2vector& a,  const df1b2variable& b,  const df1b2vector& c)
 {
@@ -286,7 +270,6 @@ df1b2vector logistic3(const dvector& x,  const df1b2vector& a,  const df1b2varia
 \param b ; differentiable vector in a random effects model
 \param c carrying capacity; differentiable vector in a random effects model
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 df1b2vector logistic3(const dvector& x,  const df1b2variable& a,  const df1b2vector& b,  const df1b2vector& c)
 {
@@ -301,7 +284,6 @@ df1b2vector logistic3(const dvector& x,  const df1b2variable& a,  const df1b2vec
 \param b ; differentiable vector in a random effects model
 \param c carrying capacity; differentiable vector in a random effects model
 \return  \f$ \frac{c}{1+e^{-(a+bx)}} \f$
-\ingroup ECOL
 **/
 df1b2vector logistic3(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,  const df1b2vector& c)
 {

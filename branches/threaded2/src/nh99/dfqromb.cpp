@@ -54,6 +54,52 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   return s[1];
 }
 
+void function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,double b,const prevariable& _v,int ns)
+{
+  ADUNCONST(prevariable,v)
+  const double base = 4; 
+  int MAXN = min(JMAX, ns);
+  dvar_vector s(1,MAXN+1);
+
+  for(int j=1; j<=MAXN+1; j++)
+  {
+    s[j] = trapzd(func,a,b,j);
+  }
+
+  for(int iter=1; iter<=MAXN+1; iter++)
+  {
+    for(int j=1; j<=MAXN+1-iter; j++)
+    {
+      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
+    }
+  }
+  v=s[1];
+}
+
+void function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&,void *),double a,double b,const prevariable& _v,void * ptr,int ns)
+{
+  //ADUNCONST(prevariable,v)
+  prevariable& v= (prevariable&)(_v);
+  const double base = 4; 
+  int MAXN = min(JMAX, ns);
+  dvar_vector s(1,MAXN+1);
+  dvariable ss;
+
+  for(int j=1; j<=MAXN+1; j++)
+  {
+    s[j] = trapzd(func,a,b,ptr,ss,j);
+  }
+
+  for(int iter=1; iter<=MAXN+1; iter++)
+  {
+    for(int j=1; j<=MAXN+1-iter; j++)
+    {
+      s[j] = (pow(base,iter)*s[j+1]-s[j])/(pow(base,iter)-1);
+    }
+  }
+  v=s[1];
+}
+
 /** Romberg integration.
   \param func Pointer to a member function of class model_parameters.
   \param a Lower limit of integration.
@@ -167,6 +213,49 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
     hn=(b-a)/num_interval;
     x=a+0.5*hn;
     for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x);
+    interval *= 2;
+    s=0.5*(s+(b-a)*sum/num_interval);
+    return s;
+  }
+}
+
+dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&,void *),double a,double b,void * ptr1,int n)
+{
+  double x,num_interval,hn;
+  dvariable sum;
+  static dvariable s;
+  static int interval;
+  int j;
+  model_parameters * ptr= (model_parameters *) mycast();
+  if (n == 1) {
+    interval=1;
+    return (s=0.5*(b-a)*((ptr->*func)(a,ptr1)+(ptr->*func)(b,ptr1)));
+  } else {
+    num_interval=interval;
+    hn=(b-a)/num_interval;
+    x=a+0.5*hn;
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x,ptr1);
+    interval *= 2;
+    s=0.5*(s+(b-a)*sum/num_interval);
+    return s;
+  }
+}
+dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&,void *),double a,double b,void * ptr1,const prevariable& _s,int n)
+{
+  ADUNCONST(prevariable,s)
+  double x,num_interval,hn;
+  dvariable sum;
+  static int interval;
+  int j;
+  model_parameters * ptr= (model_parameters *) mycast();
+  if (n == 1) {
+    interval=1;
+    return (s=0.5*(b-a)*((ptr->*func)(a,ptr1)+(ptr->*func)(b,ptr1)));
+  } else {
+    num_interval=interval;
+    hn=(b-a)/num_interval;
+    x=a+0.5*hn;
+    for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += (ptr->*func)(x,ptr1);
     interval *= 2;
     s=0.5*(s+(b-a)*sum/num_interval);
     return s;

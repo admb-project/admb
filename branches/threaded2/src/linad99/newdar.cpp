@@ -16,7 +16,7 @@
 #endif
 #include <stdlib.h>
 
-int num_free_obj=0;
+__ADMBTHREAD__ int num_free_obj=0;
 extern char demo_capacity[];
 extern char please_buy[];
 extern char otter_address1[];
@@ -94,19 +94,28 @@ double_and_int * arr_new(unsigned int sz)
     ad_exit(1);
   }
 
-  char* temp_ptr = nullptr;
-
-  unsigned int bytes_needed= sizeof(double_and_int) * sz;
+  char * temp_ptr;
 
   // this routine allocated a block of memory of sizeof(double)*sz bytes
   // for the gradients of an array or matrix of prevariables 
+
   arr_link * tmp = gradient_structure::ARR_LIST1->free_last;
+
+  unsigned int bytes_needed=sizeof(double_and_int)*sz;
+  int ss=0;
+  if (ss)
+  {
+    double_and_int * tt=0;
+    return tt;
+  }
+
   while (tmp)
   {
     if (tmp->size >= bytes_needed)
     {
       // if the free block within 20 bytes of the size you want
       // simply mark it occupied and return it
+
       if (tmp->size <= bytes_needed + 50)
       {
         tmp->status = 1;
@@ -115,27 +124,33 @@ double_and_int * arr_new(unsigned int sz)
         
 	temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp->offset;
 
-	//put the address tmp into the location pointed to by temp_ptr
-	(* (arr_link **) (temp_ptr)) = tmp;
-
-	return (double_and_int*)temp_ptr;
+	(* (arr_link **) (temp_ptr)) = tmp; //put the address
+					  //tmp into the location pointed to
+					  //by temp_ptr
+	return  (double_and_int *) (temp_ptr);
       }
       else
       {
-	// otherwise split up this memory block and return the part you need
-	arr_link* tmp1 = new arr_link();
-        gradient_structure::ARR_LIST1->number_arr_links++;
+	// otherwise split up this memory block and return
+	// the part you need
+
+	arr_link * tmp1 = new arr_link;
+        gradient_structure::ARR_LIST1->number_arr_links += 1;
 
         // put the new link tmp1-> into the list BEFORE tmp->
+
         tmp1->prev=tmp->prev;
-        if (tmp1->prev)
+
+        if(tmp1->prev)
         {
           tmp1->prev->next=tmp1;
         }
+
         tmp1->next=tmp;
         tmp->prev=tmp1;
 
         // get the size of the new link and mark it free
+
         tmp1->size=bytes_needed;
 	tmp1->status=1;
         tmp1->offset=tmp->offset;
@@ -145,33 +160,36 @@ double_and_int * arr_new(unsigned int sz)
 
 	temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp1->offset;
 
-	//put the address pointed to by  tmp1 into the location pointed to by temp_ptr
-	(* (arr_link **) (temp_ptr )) = tmp1;
-
-	return (double_and_int*)temp_ptr;
+	(* (arr_link **) (temp_ptr )) = tmp1; //put the address
+					 //pointed to by
+					 // tmp1 into the location pointed to
+					 //by temp_ptr
+	return  (double_and_int *) (temp_ptr);
       }
     }
     tmp=tmp->free_prev;
   }
-  //couldn't find a free block large enough.  make a new block
-  tmp = new arr_link();
-  if (tmp == 0)
+  // couldn't find a free block large enough
+  // make a new block
+
+  tmp = new arr_link;
+  if (tmp==0)
   {
     cerr << "Error allocating new arr_link" << endl;
     ad_exit(1);
   }
-  gradient_structure::ARR_LIST1->number_arr_links++;
 
-  // the new block point back at the previous last block
-  tmp->prev = gradient_structure::ARR_LIST1->last; 
+  gradient_structure::ARR_LIST1->number_arr_links  += 1;
+
+  tmp->prev = gradient_structure::ARR_LIST1->last; // the new block point back 
+                                                 // at the previous last block
 
   if (gradient_structure::ARR_LIST1->last)
   {
-    // the previous last block point forward to tmp
-    gradient_structure::ARR_LIST1->last->next = tmp; 
-  }
-  // tmp is the new last block
-  gradient_structure::ARR_LIST1->last = tmp;
+    gradient_structure::ARR_LIST1->last->next = tmp; // the previous last 
+                                                  // block point forward to tmp
+  }                             
+  gradient_structure::ARR_LIST1->last = tmp;         // tmp is the new last block
 
   tmp->next = 0;
 
@@ -181,9 +199,11 @@ double_and_int * arr_new(unsigned int sz)
 
   gradient_structure::ARR_LIST1->last_offset += bytes_needed;
 
-  if (gradient_structure::ARR_LIST1->last_offset > (unsigned int)gradient_structure::max_last_offset)
+  if (gradient_structure::ARR_LIST1->last_offset>
+    (unsigned int)gradient_structure::max_last_offset )
   {
-    gradient_structure::max_last_offset= gradient_structure::ARR_LIST1->last_offset;
+    gradient_structure::max_last_offset=
+      gradient_structure::ARR_LIST1->last_offset;
   }
 
   if (gradient_structure::ARR_LIST1->last_offset > gradient_structure::ARR_LIST1->max_last_offset)
@@ -193,8 +213,25 @@ double_and_int * arr_new(unsigned int sz)
 
   if( gradient_structure::ARR_LIST1->last_offset >=gradient_structure::ARRAY_MEMBLOCK_SIZE)
   {
-    cout << gradient_structure::ARR_LIST1->last_offset << ">=" << gradient_structure::ARRAY_MEMBLOCK_SIZE <<"\n";
-    cout << " No memory for dvar_vectors\nNeed to increase ARRAY_MEMBLOCK_SIZE parameter\nIn gradient_structure declaration\n";
+#if defined(AD_DEMO)
+    cout << "demo capacity exceeded" << endl;
+#endif
+    cout << gradient_structure::ARR_LIST1->last_offset <<">="
+	     <<  gradient_structure::ARRAY_MEMBLOCK_SIZE <<"\n";
+#if !defined(AD_DEMO)
+    cout << " No memory for dvar_vectors\n"
+	 << " Need to increase ARRAY_MEMBLOCK_SIZE parameter\n"
+      "In gradient_structure declaration\n";
+#else
+    cout << demo_capacity << endl;
+    cout << please_buy << endl;
+    cout << otter_address1 << endl;
+    cout << otter_address2 << endl;
+    cout << otter_address3 << endl;
+    cout << otter_address4 << endl;
+    cout << otter_address5 << endl;
+#endif
+    //throw gradient_structure::arrmemblerr();
     ad_exit(1);
   }
 
@@ -202,11 +239,13 @@ double_and_int * arr_new(unsigned int sz)
 
   temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp->offset;
 
-  //put the address tmp into the location pointed to by temp_ptr
-  (*(arr_link **) (temp_ptr )) = tmp;
+  (*(arr_link **) (temp_ptr )) = tmp; //put the address 
+                                   // tmp into the location pointed to
+                                   //by temp_ptr
          
-  //return  (double_and_int *) (temp_ptr+sizeof(double_and_int));
-  return (double_and_int*)temp_ptr;
+//  return  (double_and_int *) (temp_ptr+sizeof(double_and_int));
+  return  (double_and_int *) (temp_ptr);
+
 }
 
 /**

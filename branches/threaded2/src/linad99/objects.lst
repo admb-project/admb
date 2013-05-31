@@ -1,17 +1,6 @@
 OBJSPARSE = \
 ../sparse/hs_sparse.obj 
 OBJ0 = \
-dmat3.obj \
-dmat34.obj \
-fvar_ma4.obj \
-fvar_m15.obj \
-fvar_m20.obj \
-fvar_m24.obj \
-fvar_m42.obj \
-cbetacf.obj \
-vbetacf.obj \
-vbetai.obj \
-cbetai.obj \
 cgamdev.obj \
 fmmtr1.obj \
 tsdfpool.obj \
@@ -28,8 +17,8 @@ cbetdev.obj \
 vbetdev.obj \
 df11fun.obj \
 df12fun.obj \
-vcumdbetainv.obj \
 ccumdbetainv.obj \
+vcumdbetainv.obj \
 vgamdev.obj \
 normmix2.obj \
 normmix.obj \
@@ -59,12 +48,12 @@ fvar_m52.obj \
 fvar_m53.obj \
 fvar_m57.obj \
 ad_atlas.obj \
+dmat38.obj \
 timer.obj \
 \
 dmat35.obj \
 dmat36.obj \
 dmat37.obj \
-dmat38.obj \
 vgamdens.obj \
 cgamdens.obj \
 dmat33.obj \
@@ -483,10 +472,6 @@ f4arr2.obj \
 cbivnorm.obj \
 vbivnorm.obj \
 f4arr3.obj \
-eigen.obj \
-eigenv.obj \
-dveigen.obj \
-dveigenv.obj \
 f4arr.obj 
 OBJ3= \
 mfexp.obj \
@@ -496,9 +481,44 @@ orthpoly.obj \
 makesub.obj \
 fvar_a49.obj \
 dfbetai.obj \
+betai.obj \
+adpvm2.obj \
+eigen.obj \
+eigenv.obj \
+dveigen.obj \
+dmat3.obj \
+fvar_m42.obj \
+fvar_m24.obj \
+dmat34.obj \
+fvar_m15.obj \
 dcompressed.obj \
 fvarcompressed.obj \
-adpvm2.obj 
+dveigenv.obj \
+thread_stuff.obj \
+thread_stuff2.obj \
+thread_stuff3.obj \
+thread_stuff4.obj \
+thread_stuff5.obj \
+thread_stuff6.obj \
+thread_stuff7.obj \
+thread_stuff8.obj \
+xthread_stuff.obj \
+ythread_stuff.obj
+
 OBJ4= \
 manip.obj \
 conjprod.obj 
+UNUSED= \
+eigen_dmat.obj \
+eigen_dvar.obj \
+cbetacf.obj \
+vbetacf.obj \
+cbetai.obj \
+fvar_m38.obj \
+fvar_m20.obj \
+fvar_ma4.obj \
+df13incbet.obj \
+eigen.obj \
+eigenv.obj \
+dveigen.obj \
+dveigenv.obj

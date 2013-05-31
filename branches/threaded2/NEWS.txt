@@ -1,30 +1,88 @@
+11234567892123456789312345678941234567895123456789612345678971234567898123456789
 CHANGES IN ADMB VERSION 11.0:
 
-  SIGNIFICANT USER-VISIBLE CHANGES:
+TODO:
+[ ] add contrib procedure
+[*] add contrib/lib and contrib/bin
+[*] fix when no flex problem
+[*] fix geolocation test
+[*] catch exit errors for adlink and adcomp
+[*] simplify admb scripts
+[*] VC++ build files
+[*] Do gelocation test last in buildbot
+    ADMB_HOME=dfdk PATH=kfkdj make --directory=tests/geolocation clean svn all
+[ ] Add -o option to rename the output file with path.
+[*] Need to fix flex builds for tpl2cpp and tpl2rem under windows
 
-    * The compilation scripts (adcomp, adlink, admb) compile in
-      "safe" mode by default.
+SIGNIFICANT USER-VISIBLE CHANGES:
 
-    * [anything that works differently from before, given the
-      same input]
+* [anything that works differently from before, given the
+   same input]
 
-  NEW FEATURES:
+* Improved build files.  Build will not rebuild an already built
+  object file.
+  
+  Note: Building from source will create distribution folder in
+        build/dist instead of build/os-comiler-arch.
 
-    * Functions from user-contributed packages can be loaded from
-      directory 'contrib', [maybe indicate how that is done].
+* Combined libraries to a single library libadmb.a. 
 
-    * New class 'init_table' to read input data into a matrix.
+* Reverted some algorithms to previous code from version 9.
 
-    * New function sumsq() to calculate sum of squared values,
-      equivalent to norm2().
+* Safe library is now the default build option.  To build with
+  Optimized libraries use option 
 
-    * New constant PI for 3.141593... Makes models more portable
-      than using M_PI or other compiler-specific constants.
+  $ admb --use-optimized model.tpl
 
-    * New shell command 'ad2csv' to write binary files to screen
-      or to a file.
+* s option with the control^c was added???
 
-    * [many more]
+* contributed libraries are built with the main libraries.
+ 
+* flex is not needed to build ADMB, but it is needed to develop the tpl2cpp.lex 
+  and tpl2rem.lex files.
+
+* The compilation scripts (adcomp, adlink, admb) compile in "safe" mode by 
+  default.
+
+NEW FEATURES:
+* bash admb script can now set ADMB_HOME and PATH.  So, the command below
+  will work even though ADMB_HOME is not defined or added to PATH.
+
+  ~/admb/examples/admb/simple$ ~/admb/build/dist/bin/admb simple
+
+* Added "-c" option to admb script to only compile object files
+
+  ~/admb/examples/admb/simple$ ~/admb/build/dist/bin/admb -c simple
+
+  Outputs simple.o
+
+* Functions from user-contributed packages can be loaded from
+  directory 'contrib', [maybe indicate how that is done].
+
+  GLOBAL_SECTION
+    using admb::contrib;
+
+* New class 'init_table' to read input data into a matrix.
+
+* New function sumsq() to calculate sum of squared values,
+  equivalent to norm2().
+
+* New constant PI for 3.141593... Makes models more portable
+  than using M_PI or other compiler-specific constants.
+
+* New shell command 'ad2csv' to write binary files to screen 
+  or to a file.
+
+* admb is now able to handle .obj, .cpp and .tpl files on
+  the commandline.
+
+  Example
+
+  admb model.tpl supportcode.cpp anotherfile.cpp
+
+  Output is executable model
+
+* [many more]
 
   DEPRECATED AND DEFUNCT:
 
@@ -42,3 +100,8 @@ CHANGES IN ADMB VERSION 10.0:
 CHANGES IN ADMB VERSION 9.1:
 
 etc.
+
+
+
+UPCOMING CHANGES:
+

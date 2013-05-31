@@ -117,7 +117,7 @@ void initial_df1b2params::restore_varsptr(void)
       varsptr[i+num_initial_df1b2params]=varsptr_sav[i];
     }
     num_initial_df1b2params+=num_initial_df1b2params_sav; 
-    delete varsptr_sav;
+    delete [] varsptr_sav;
     varsptr_sav=0;
     num_initial_df1b2params_sav=0; 
   }

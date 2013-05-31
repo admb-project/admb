@@ -66,17 +66,17 @@ void function_minimizer::quasi_newton_block_pvm_master(int nvar,int _crit,
   {
     fmc.crit = _crit;
   }
-  if (!convergence_criteria)
+  if (!(!convergence_criteria))
   {
-    int ind=min(convergence_criteria->indexmax(),
+    int ind=min(convergence_criteria.indexmax(),
       initial_params::current_phase);
-    fmc.crit = (*convergence_criteria)(ind);
+    fmc.crit=convergence_criteria(ind);
   }
-  if (!maximum_function_evaluations)
+  if (!(!maximum_function_evaluations))
   {
-    int ind=min(maximum_function_evaluations->indexmax(),
+    int ind=min(maximum_function_evaluations.indexmax(),
       initial_params::current_phase);
-    fmc.maxfn = (int)(*maximum_function_evaluations)(ind);
+    fmc.maxfn= (int) maximum_function_evaluations(ind);
   }
   tracing_message(traceflag,"E2");
   dvariable xf=initial_params::reset(dvar_vector(x));

@@ -2,21 +2,18 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
  * Description not yet available.
  */
-#include <sstream>
-using std::istringstream;
-
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
 //#include <vmon.h>
-static int no_stuff=0;
+extern int no_stuff;
 //static void xxxy(void) {}
 
 /**
@@ -130,15 +127,15 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   }
   if (!(!convergence_criteria))
   {
-    int ind=min(convergence_criteria->indexmax(),
+    int ind=min(convergence_criteria.indexmax(),
       initial_params::current_phase);
-    fmc.crit = (*convergence_criteria)(ind);
+    fmc.crit=convergence_criteria(ind);
   }
   if (!(!maximum_function_evaluations))
   {
-    int ind=min(maximum_function_evaluations->indexmax(),
+    int ind=min(maximum_function_evaluations.indexmax(),
       initial_params::current_phase);
-    fmc.maxfn= (int)(*maximum_function_evaluations)(ind);
+    fmc.maxfn= (int) maximum_function_evaluations(ind);
   }
   int unvar=1;
   if (random_effects_flag)
@@ -173,10 +170,15 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           vf=initial_params::reset(dvar_vector(x));
           *objective_function_value::pobjfun=0.0;
           pre_userfunction();
+         /*
           if ( no_stuff ==0 && quadratic_prior::get_num_quadratic_prior()>0)
           {
+            quadratic_prior::calc_matrix_flag=0;
+            quadratic_prior::matrix_mult_flag=1;
             quadratic_prior::get_M_calculations();
+            quadratic_prior::matrix_mult_flag=0;
           }
+         */
           vf+=*objective_function_value::pobjfun;
           f=value(vf);
           gradcalc(nvar,g);

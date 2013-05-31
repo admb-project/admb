@@ -8,27 +8,39 @@
  * \file
  * Description not yet available.
  */
-
-#include <stdlib.h>
+/// file ddlist.cpp
 #include "fvar.hpp"
 
+#ifdef __ZTC__
+   #include <iostream.hpp>
+#endif
+
+#ifdef __TURBOC__
+   #pragma hdrstop
+   #include <iostream.h>
+#endif
+
+#include <stdlib.h>
 //#define MAX_DLINKS 1000
+dlink * dlink::previous(){return prev;}
 
-dlink::dlink()
-{
-  di.x = 0;
-  prev = nullptr;
-}
-dlink::~dlink()
-{
-}
-dlink* dlink::previous()
-{
-  return prev;
-}
+//////////////////////////////
+// global list names
 
-__thread char* ddlist_space;
-__thread char* ddlist_spacea;
+//dlist * GRAD_LIST;
+//extern dlist * GRAD_LIST; //js
+/////////////////////////////
+extern char demo_capacity[];
+extern char please_buy[];
+extern char otter_address1[];
+extern char otter_address2[];
+extern char otter_address3[];
+extern char otter_address4[];
+extern char otter_address5[];
+
+
+__ADMBTHREAD__ char* ddlist_space;
+__ADMBTHREAD__ char* ddlist_spacea;
 
 /**
  * Description not yet available.
@@ -36,59 +48,81 @@ __thread char* ddlist_spacea;
  */
 dlist::dlist(void)
 {
-  int on, nopt;
+  int on,nopt;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
   {
-    if (nopt == 1)	    
+    if (nopt ==1)	    
     {	      
       gradient_structure::MAX_DLINKS=atoi(ad_comm::argv[on+1]);
     }
     else
     {
-      cerr << "Wrong number of options to -mdl -- must be 1 you have " << nopt << endl;		
+      cerr << "Wrong number of options to -mdl -- must be 1"
+        " you have " << nopt << endl;		
       ad_exit(1);
     }	
   }   
-
-  last = nullptr;
+  // cout << sizeof(double_and_int) << endl;
+  // cerr << "dlist::dlist(void)\n";
+  last = 0;
   last_offset = 0;
   nlinks = 0;
-
   dlink_addresses = new dlink*[gradient_structure::MAX_DLINKS];
-  for (int i = 0; i < gradient_structure::MAX_DLINKS; ++i)
-  {
-    dlink_addresses[i] = nullptr;
-  }
-
   ddlist_space = (char*)malloc(2 * sizeof(double) * (gradient_structure::MAX_DLINKS + 1));
+  //cout << (int) (ddlist_space) << endl;
+  //cout << ((int) (ddlist_space))%8 << endl;
 #if defined(__x86_64)
   intptr_t adjust=(8 - ((intptr_t)(ddlist_space))%8)%8;
 #else
   int adjust=(8- ((int) (ddlist_space))%8)%8;
 #endif
+  
   ddlist_spacea=ddlist_space+adjust;
+
+  for (int i = 0; i < gradient_structure::MAX_DLINKS; ++i)
+  {
+    dlink_addresses[i] = 0;
+  }
 }
 
 /**
  * Description not yet available.
  * \param
  */
-dlink* dlist::create()
+dlink * dlist::create()
 {
-  dlink* tmp = (dlink*)(ddlist_spacea + 2 * sizeof(double) * nlinks);
-  tmp->prev = nullptr;
 
-  // keep track of the links so you can zero them out
-  dlink_addresses[nlinks] = tmp;
+  dlink * tmp= (dlink*)(ddlist_spacea+2*sizeof(double)*nlinks);
+  /*
+  if ( (tmp = new dlink) ==0)
+  {
+    cerr << "Error allocating dlink in dlist::create()\n";
+    ad_exit(21);
+  }
+ */
 
-  nlinks++;
+  dlink_addresses[nlinks]=tmp;   // keep track of the links so you can 
+                                 // zero them out
+  nlinks+=1;
+
   if (nlinks > (unsigned int)gradient_structure::MAX_DLINKS)
   {
     cerr << "Need to increase the maximum number of dlinks" << endl;
+#if defined(AD_DEMO)
+    cout << demo_capacity << endl;
+    cout << please_buy << endl;
+    cout << otter_address1 << endl;
+    cout << otter_address2 << endl;
+    cout << otter_address3 << endl;
+    cout << otter_address4 << endl;
+    cout << otter_address5 << endl;
+#endif
     ad_exit(1);
   }
 
-  return tmp;
+  tmp->prev=0;
+  // cout << "Made a dlink with address " << _farptr_tolong(tmp) <<"\n";
+  return(tmp);
 }
  
 /**
@@ -97,13 +131,17 @@ dlink* dlist::create()
  */
 dlink* dlist::last_remove()
 {
-  dlink* tmp = nullptr;
-  if (last != nullptr)
+  dlink * tmp;
+  if (last)
   {
-    tmp = last;
-    last = last->prev;
+    tmp=last;
+    last=last->prev;
+    return(tmp);
   }
-  return tmp;
+  else
+  {
+    return 0;
+  }
 }
 
 /**
@@ -112,54 +150,89 @@ dlink* dlist::last_remove()
  */
 dlist::~dlist()
 {
-  ::free(ddlist_space);
-  ddlist_space = nullptr;
+/*
+  dlink * tmp;
+//   cout << "used the dlist destructor\n";
+//   cout << "entered ~dlist   last =" << _farptr_tolong(last) << "\n";
 
+  unsigned int count=0;
+  
+  while(last)
+  {
+    count+=1;
+    tmp=last->prev;
+
+//  cout << "last =" << _farptr_tolong(last) << "\n";
+//  cout << "last->prev =" << _farptr_tolong(last->prev) << "\n";
+//  cout << "deleted dlink with address" << _farptr_tolong(last) << "\n";
+
+    //delete last;
+    last=tmp;
+  }
+  if (count != nlinks)
+  {
+    cerr << "In ~dlist() number of links destroyed not equal to number created\n";
+    cerr << " The number created was "<< nlinks << " The number destroyed was "
+	 << count << "\n";
+    ad_exit(1);
+  }
+*/
+  ::free(ddlist_space);
+  ddlist_space=NULL;
   delete [] dlink_addresses;
-  dlink_addresses = nullptr;
 }
 
 /**
  * Description not yet available.
  * \param
  */
-unsigned int dlist::check_list()
+void dlist::check_list(void)
 {
-  unsigned int count = 0;
+  dlink * tmp;
+  dlink * tmp_last=last;
 
-  dlink* tmp_last = last;
-  while (tmp_last != nullptr)
+  unsigned int count=0;
+  while(tmp_last && count <=nlinks)
   {
     count+=1;
     if (count > nlinks)
     {
       cerr << "In check_list() number of links > number created\n";
       cerr << " The number created was "<< nlinks << endl;
-      break;
     }
 
-    tmp_last = tmp_last->prev;
+    tmp=tmp_last->prev;
+
+//  cout << "last =" << _farptr_tolong(last) << "\n";
+//  cout << "last->prev =" << _farptr_tolong(last->prev) << "\n";
+//  cout << "deleted dlink with address" << _farptr_tolong(last) << "\n";
+
+    tmp_last=tmp;
   }
   cerr << "In check_list() number of free links is " << count << endl;
-
-  return count;
 }
 
 /**
  * Description not yet available.
  * \param
  */
-dlink* dlist::append(dlink* app)
+dlink * dlist::append(dlink * app)
 {
-  if (app == 0)
+  // cout << " In dlist::append\n";
+  if (app ==0)
   {
     cerr << "NULL pointer passed to  dlist::append()\n";
     ad_exit(1);
   }
 
-  dlink* tmp = last;
-  last = app;
-  last->prev = tmp;
+  dlink * tmp;
 
-  return last;
+  tmp = last;
+
+  last = app;
+
+  last->prev = tmp;
+  // cout << " In dlist::append  last = " << _farptr_tolong(last) <<"\n";
+
+  return(last);
 }    

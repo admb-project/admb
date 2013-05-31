@@ -2,12 +2,12 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
- * 
- * ADModelbuilder and associated libraries and documentations are
- * provided under the general terms of the "New BSD" license
+ * Copyright (c) 2008-2011 Regents of the University of California
  * 
  * License:
+ *
+ * ADModelbuilder and associated libraries and documentations are
+ * provided under the general terms of the "New BSD" license
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -38,31 +38,31 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef FVAR_HPP
-#define FVAR_HPP
 /** \file fvar.hpp
 AUTODIF classes.
-Class definitions for reverse mode automatic differentiation.
-Function prototypes for math functions.
-Macro definitions.
+A more detailed description might someday be written.
 */
 
 // Borrow definition of M_PI from GCC
 #ifndef M_PI
-#   define M_PI 3.14159265358979323846
+  #define M_PI 3.14159265358979323846
 #endif
 #ifndef PI
-#   define PI 3.14159265358979323846
+  #define PI 3.14159265358979323846
+#endif
+
+#if defined(__MSVC32__) || defined(__MINGW32__) || defined(__MINGW64__)
+#  define sleep(n) Sleep(1000 * n)
 #endif
 
 #if defined(__GNUDOS__)
-#   if defined(__GNUC__)
-#      if (__GNUC__ < 3)
-#         pragma interface
-#      endif
-#   else
-#      pragma interface
-#   endif
+  #if defined(__GNUC__)
+    #if (__GNUC__ < 3)
+      #pragma interface
+    #endif
+  #else
+    #pragma interface
+  #endif
 #endif
 
 
@@ -92,6 +92,8 @@ Macro definitions.
 #  include <pthread.h>
 #endif
 
+#ifndef FVAR_HPP
+#define FVAR_HPP
 #define USE_VECTOR_SHAPE_POOL
 //#define MYDEBUG
 #if defined(USE_DDOUBLE)
@@ -113,13 +115,9 @@ Macro definitions.
 */
 #define ADUNCONST(type,obj) type & obj = (type&) _##obj;
 
-#if (__cplusplus >= 199711L)
-  #define __ADMBTHREAD__ __thread
-#else
-  #define __ADMBTHREAD__
-#endif
+#define __ADMBTHREAD__ __thread
 
-#define my_off_t long int
+#define my_off_t long long int
 #ifdef __BORLANDC__
 #define my_u_off_t unsigned long int
 #else
@@ -205,7 +203,7 @@ Macro definitions.
 #if !defined(linux) 
 #  include <dos.h>
 #  if !defined(__MSVC32__) && !defined(__BORLANDC__) && !defined (__GNUDOS__)
-//#    include <pc.h>
+#    include <pc.h>
 #  endif
 #endif
 #define AD_VERSION 7
@@ -709,7 +707,7 @@ ostream& operator<<(const ostream& istr,const i3_array& z);
   {
   public:
 #if defined(USE_VECTOR_SHAPE_POOL)
-    static __thread vector_shape_pool* xpool;
+    static __ADMBTHREAD__ vector_shape_pool * xpool;
     void * operator new(size_t);
     void operator delete(void * ptr,size_t n)
     {  xpool->free(ptr); }
@@ -1044,134 +1042,149 @@ public:
  * class for things related to the gradient structures, including dimension of 
  * arrays, size of buffers, etc.
  */
-class gradient_structure
-{
+  class gradient_structure
+  {
+      static __ADMBTHREAD__ char cmpdif_file_name[101];
+      static __ADMBTHREAD__ DF_FILE * fp;
 public:
+      #if defined(NO_DERIVS)
+        static int no_derivatives;
+      #endif
+private:
+      static long int USE_FOR_HESSIAN;
+      static __ADMBTHREAD__ long int NVAR;
+      static int NUM_RETURN_ARRAYS;
+      static __ADMBTHREAD__ dvariable** RETURN_ARRAYS;
+      static __ADMBTHREAD__ int RETURN_ARRAYS_PTR;
+      static __ADMBTHREAD__ dvariable ** RETURN_PTR_CONTAINER;
+      static __ADMBTHREAD__ long int TOTAL_BYTES;
+      static __ADMBTHREAD__ long int PREVIOUS_TOTAL_BYTES;
+      static __ADMBTHREAD__ unsigned long ARRAY_MEMBLOCK_SIZE; //js
+      //static humungous_pointer ARRAY_MEMBLOCK_BASE;
+      //static humungous_pointer ARRAY_MEMBLOCK_BASEA;
+      //static humungous_pointer ARRAY_MEMBLOCK_SAVE;
+      static __ADMBTHREAD__ char * ARRAY_MEMBLOCK_BASE;
+      static __ADMBTHREAD__ char * ARRAY_MEMBLOCK_BASEA;
+      static __ADMBTHREAD__ char * ARRAY_MEMBLOCK_SAVE;
+public:    
+      static double * get_ARRAY_MEMBLOCK_BASE() 
+      { 
+        return (double*) ARRAY_MEMBLOCK_BASE;
+      }
+private:
+      static __ADMBTHREAD__ double * variables_save;
 #ifdef __BORLANDC__
-  static long int CMPDIF_BUFFER_SIZE;
-  static long int GRADSTACK_BUFFER_SIZE;
+      static __ADMBTHREAD__ long int CMPDIF_BUFFER_SIZE;
+      static __ADMBTHREAD__ long int GRADSTACK_BUFFER_SIZE;
 #else
-  static __thread long long int CMPDIF_BUFFER_SIZE;
-  static __thread long long int GRADSTACK_BUFFER_SIZE;
+      static __ADMBTHREAD__ long long int CMPDIF_BUFFER_SIZE;
+      static __ADMBTHREAD__ long long int GRADSTACK_BUFFER_SIZE;
 #endif
-  static __thread DF_FILE* fp;
-  static __thread int instances;
-  static __thread dlist* GRAD_LIST;
-  static __thread int save_var_file_flag;
-  static __thread int save_var_flag;
-  static __thread int MAX_DLINKS;
-  static __thread int NUM_DEPENDENT_VARIABLES;
-  static __thread long int NVAR;
-  static __thread long int TOTAL_BYTES;
-  static __thread long int PREVIOUS_TOTAL_BYTES;
-  static __thread long int USE_FOR_HESSIAN;
-  static __thread int NUM_RETURN_ARRAYS;
-  static __thread unsigned long ARRAY_MEMBLOCK_SIZE;
-  static __thread unsigned int MAX_NVAR_OFFSET;
-  static __thread int RETURN_ARRAYS_SIZE;
-  static __thread long int max_last_offset;
-  static __thread int Hybrid_bounded_flag;
-  static __thread dvariable** RETURN_ARRAYS;
-  static __thread dvariable** RETURN_PTR_CONTAINER;
-  static __thread char* ARRAY_MEMBLOCK_BASE;
-  static __thread char* ARRAY_MEMBLOCK_BASEA;
-  static __thread char* ARRAY_MEMBLOCK_SAVE;
-  static __thread double* variables_save;
-  static __thread indvar_offset_list* INDVAR_LIST;
-  static __thread dependent_variables_information* DEPVARS_INFO;
-  static __thread double* hessian_ptr;
-  static __thread grad_stack* GRAD_STACK1;
-  static __thread dvariable* RETURN_PTR;
-  static __thread dvariable* MIN_RETURN;
-  static __thread dvariable* MAX_RETURN;
-  static __thread arr_list* ARR_LIST1;
-  static __thread arr_list* ARR_FREE_LIST1;
-#if defined(NO_DERIVS)
-  static __thread int no_derivatives;
-#endif
-  static __thread int RETURN_ARRAYS_PTR;
-  static __thread char cmpdif_file_name[101];
+      static __ADMBTHREAD__ unsigned int MAX_NVAR_OFFSET;
+      static __ADMBTHREAD__ int save_var_file_flag;
+      static int save_var_flag;
+
+      static int MAX_DLINKS;
+      static __ADMBTHREAD__ indvar_offset_list * INDVAR_LIST;
+      static int NUM_DEPENDENT_VARIABLES;
+      static __ADMBTHREAD__ dependent_variables_information * DEPVARS_INFO;
 
       // this needs to be a static member function so other static
       // member functions can call it
       static void check_set_error(const char* variable_name);
+
+      static __ADMBTHREAD__ int instances;
       int   x;
 
-public:
-  gradient_structure(const long int size = 100000L);
-  gradient_structure(const gradient_structure& gs);
-  virtual ~gradient_structure(void);
+    public:
+      class arrmemblerr{}; // exception class
+   
+      static __ADMBTHREAD__ int Hybrid_bounded_flag;
+      static __ADMBTHREAD__ double * hessian_ptr;
+      static int get_USE_FOR_HESSIAN(void) {return USE_FOR_HESSIAN;}
+      static void set_USE_FOR_HESSIAN(int i) {USE_FOR_HESSIAN=i;}
+      friend class dfsdmat;
+      gradient_structure(long int size=100000L);  // constructor
+      ~gradient_structure(void); // destructor
+      static void save_variables(void);
+      static void restore_variables(void);
+      static void save_arrays(void);
+      static void restore_arrays(void);
+      static long int totalbytes(void);
+      friend dvector restore_dvar_vector_value(const dvar_vector_position& tmp);
+      friend void cleanup_temporary_files();
+      //friend dvector restore_dvar_vector_value(const dvar_vector_position&);
+      friend dvector restore_dvar_vector_derivatives(void);
+      friend dmatrix restore_dvar_matrix_derivatives(void);
+      friend dmatrix restore_dvar_matrix_value(void);
+      //friend dmatrix restore_derivatives(void);
+      friend void gradfree(dlink * v);
+      friend double_and_int * arr_new(unsigned int sz); //js
+      friend void arr_free(double_and_int *);
+      friend void RETURN_ARRAYS_DECREMENT(void);
+      friend void RETURN_ARRAYS_INCREMENT(void);
+      friend void make_indvar_list(const dvar_vector& t);
+      //friend void gradcalc( int , double *);
+      friend void gradcalc(int nvar,const dvector& g);
+      friend void slave_gradcalc(void);
+      friend void funnel_gradcalc(void);
+      friend void allocate_dvariable_space(void);
+      friend void wide_funnel_gradcalc(void);
+      friend dvar_vector_position restore_dvar_vector_position(void);
+      static __ADMBTHREAD__ grad_stack  * GRAD_STACK1;
+      friend double_and_int * gradnew();
+      static __ADMBTHREAD__ dlist * GRAD_LIST;
+      static __ADMBTHREAD__ int RETURN_ARRAYS_SIZE;
+      //static int RETURN_INDEX;
+      static __ADMBTHREAD__ dvariable * RETURN_PTR;
+      static __ADMBTHREAD__ dvariable * MIN_RETURN;
+      static __ADMBTHREAD__ dvariable * MAX_RETURN;
+      static __ADMBTHREAD__ arr_list * ARR_LIST1;
+      static __ADMBTHREAD__ arr_list * ARR_FREE_LIST1;
+      //static void funnel_jacobcalc(void);
+      static void jacobcalc(int nvar,const dmatrix& jac);
+      static void jacobcalc(int nvar,const ofstream& jac);
+      static void jacobcalc(int nvar,const uostream& jac);
 
-  class arrmemblerr{}; // exception class
+      friend void default_evaluation(void);
+      //access functions
 
-  static double* get_ARRAY_MEMBLOCK_BASE() { return (double*)ARRAY_MEMBLOCK_BASE; }
-  static DF_FILE* get_fp(void) { return fp; }
-  static int get_USE_FOR_HESSIAN(void) { return USE_FOR_HESSIAN; }
-  static void set_USE_FOR_HESSIAN(int i) { USE_FOR_HESSIAN = i; }
-  static void save_variables(void);
-  static void restore_variables(void);
-  static void save_arrays(void);
-  static void restore_arrays(void);
-  static long int totalbytes(void);
-
-  //static void funnel_jacobcalc(void);
-  static void jacobcalc(int nvar,const dmatrix& jac);
-  static void jacobcalc(int nvar,const ofstream& jac);
-  static void jacobcalc(int nvar,const uostream& jac);
-
-  static void set_NUM_RETURN_ARRAYS(int i);
-#if defined(NO_DERIVS)
-  static void set_NO_DERIVATIVES(void);
-  static void set_YES_DERIVATIVES(void);
-#endif
-  static void set_YES_SAVE_VARIABLES_VALUES();
-  static void set_NO_SAVE_VARIABLES_VALUES();
-  static void set_NUM_DEPENDENT_VARIABLES(int i);
-  static void set_RETURN_ARRAYS_SIZE(int i);
-  static void set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
+      friend class DF_FILE;
+      static DF_FILE * get_fp(void){return fp;}
+      static void set_NUM_RETURN_ARRAYS(int i);
+     #if defined(NO_DERIVS)
+      static void set_NO_DERIVATIVES(void);
+      static void set_YES_DERIVATIVES(void);
+     #endif
+      static void set_YES_SAVE_VARIABLES_VALUES();
+      static void set_NO_SAVE_VARIABLES_VALUES();
+      //static int _GRADFILE_PTR; // should be int gradfile_handle;
+      //static int _GRADFILE_PTR1; // should be int gradfile_handle;
+      //static int _GRADFILE_PTR2; // should be int gradfile_handle;
+      //static int _VARSSAV_PTR; // should be int gradfile_handle;
+      static void set_NUM_DEPENDENT_VARIABLES(int i);
+      static void set_RETURN_ARRAYS_SIZE(int i);
+      static void set_ARRAY_MEMBLOCK_SIZE(unsigned long i);
 #ifdef __BORLANDC__
-  static void set_CMPDIF_BUFFER_SIZE(long int i);
-  static void set_GRADSTACK_BUFFER_SIZE(long int i);
-  static void set_GRADSTACK_BUFFER_BYTES(long int i);
+      static void set_CMPDIF_BUFFER_SIZE(long int i);
+      static void set_GRADSTACK_BUFFER_SIZE(long int i);
+      static void set_GRADSTACK_BUFFER_BYTES(long int i);
 #else
-  static void set_CMPDIF_BUFFER_SIZE(long long int i);
-  static void set_GRADSTACK_BUFFER_SIZE(long long int i);
-  static void set_GRADSTACK_BUFFER_BYTES(long long int i);
+      static void set_CMPDIF_BUFFER_SIZE(long long int i);
+      static void set_GRADSTACK_BUFFER_SIZE(long long int i);
+      static void set_GRADSTACK_BUFFER_BYTES(long long int i);
 #endif
-  static void set_MAX_NVAR_OFFSET(unsigned int i);
-  static void set_MAX_DLINKS(int i);
-  static long int NUM_GRADSTACK_BYTES_WRITTEN(void);
-  static void save_dependent_variable_position(const prevariable& v1);
-
-  friend class dfsdmat;
-  friend dvector restore_dvar_vector_value(const dvar_vector_position& tmp);
-  friend void cleanup_temporary_files();
-  //friend dvector restore_dvar_vector_value(const dvar_vector_position&);
-  friend dvector restore_dvar_vector_derivatives(void);
-  friend dmatrix restore_dvar_matrix_derivatives(void);
-  friend dmatrix restore_dvar_matrix_value(void);
-  //friend dmatrix restore_derivatives(void);
-  friend void gradfree(dlink * v);
-  friend double_and_int * arr_new(unsigned int sz); //js
-  friend void arr_free(double_and_int *);
-  friend void RETURN_ARRAYS_DECREMENT(void);
-  friend void RETURN_ARRAYS_INCREMENT(void);
-  friend void make_indvar_list(const dvar_vector& t);
-  //friend void gradcalc( int , double *);
-  friend void gradcalc(int nvar,const dvector& g);
-  friend void slave_gradcalc(void);
-  friend void funnel_gradcalc(void);
-  friend void allocate_dvariable_space(void);
-  friend void wide_funnel_gradcalc(void);
-  friend dvar_vector_position restore_dvar_vector_position(void);
-  friend double_and_int* gradnew();
-  friend void default_evaluation(void);
-  friend class DF_FILE;
-  friend class dlist;
-  friend class grad_stack;
-  friend class function_minimizer;
-  friend void funnel_derivatives(void);
-};
+      static void set_MAX_NVAR_OFFSET(unsigned int i);
+      static void set_MAX_DLINKS(int i);
+      static long int NUM_GRADSTACK_BYTES_WRITTEN(void);
+      friend class dlist;
+      friend class grad_stack;
+      static void save_dependent_variable_position
+        (const prevariable& v1);
+      static __ADMBTHREAD__ long int max_last_offset;
+      friend class function_minimizer;
+      friend void funnel_derivatives(void);
+  };
 
   void jacobcalc(int nvar,const dmatrix& g);
   void jacobcalc(int nvar,const ofstream& ofs);
@@ -1193,7 +1206,7 @@ public:
  */
     class dvect_ptr_ptr
     {
-      dvector** m;
+      dvector ** m;
     };
 
 /**
@@ -1202,23 +1215,23 @@ public:
  */
     class dlink
     {
-       double_and_int di;
-       dlink* prev;
+       double_and_int  di;
+       dlink *       prev;
     public:  // comments
-      dlink();
-      dlink(const dlink&) = delete;
-      virtual ~dlink();
-
-      dlink* previous();
-      inline double_and_int* get_address()
+      dlink * previous();
+      inline double_and_int * get_address()
       {
         return &di;
-      }
+      } //access function
+
+      //friend tempvar();
+      //friend class prevariable;
+      //friend class tempvar;
       friend class dlist;
       friend void gradcalc(int nvar,const dvector& g);
       friend void slave_gradcalc(void);
       friend void gradloop();
-      friend double_and_int* gradnew();
+      friend double_and_int * gradnew();
       friend void allocate_dvariable_space(void);
     };
 
@@ -1228,25 +1241,23 @@ public:
  */
     class dlist
     {
-      dlink* last;
+      dlink * last;
       unsigned int last_offset;
-      int nlinks;
-      dlink** dlink_addresses;
-      friend double_and_int* gradnew();
+      unsigned int nlinks;
+      dlink ** dlink_addresses;
+      friend double_and_int * gradnew();
       friend void df_check_derivative_values(void);
       friend void df_check_derivative_values_indexed(void);
       friend void df_check_derivative_values_indexed_break(void);
 
     public:
       dlist();  // constructor
-      unsigned int check_list();  // check list integrity
+      void check_list(void);  // check list integrity
      ~dlist();  // destructor
       dlink * create();     //create a new link 
-      void free_remove(dlink* rem);
-      dlink* append(dlink*);  // add a link
+      void free_remove(dlink * rem);
+      dlink * append(dlink *);  // add a link
       dlink* last_remove();
-      dlink* get_last() const { return last; }
-      int get_nlinks() const { return nlinks; }
       friend void funnel_gradcalc(void);
       friend void slave_gradcalc(void);
       friend void gradcalc(int nvar,const dvector& g);
@@ -1293,10 +1304,9 @@ public:
  */
     class grad_stack
     {
-    public:
-      grad_stack_entry* true_ptr_first;
-      grad_stack_entry* ptr_first;
-      grad_stack_entry* ptr_last;
+      grad_stack_entry * true_ptr_first;
+      grad_stack_entry * ptr_first;
+      grad_stack_entry * ptr_last;
 #ifdef __BORLANDC__
       long int length;
       long int true_length;
@@ -1305,7 +1315,7 @@ public:
       long long int true_length;
 #endif
     public:
-      grad_stack_entry* ptr;
+      grad_stack_entry * ptr;
     private:
       //lvector * table;
       // js
@@ -1327,7 +1337,7 @@ public:
       long long end_pos1;
       long long end_pos2;
 #endif
-      dmatrix* table;
+      dmatrix * table;
     public:
       friend void gradcalc(int nvar,const dvector& g);
       friend void slave_gradcalc(void);
@@ -1869,7 +1879,7 @@ public:
    inline double * xadr() { return( &(v->x) ); }
    inline double& xval() { return( (v->x) ); }
 
-   inline double_and_int* get_v() const
+   inline double_and_int * & get_v()
    {
      return v;
    }
@@ -2270,7 +2280,7 @@ public:
     //friend class tdvector;
     friend class dvar_vector;
 #if defined(USE_VECTOR_SHAPE_POOL)
-    static __thread vector_shape_pool* xpool;
+    static __ADMBTHREAD__ vector_shape_pool * xpool;
     void * operator new(size_t);
     void operator delete(void * ptr,size_t n)
     {  xpool->free(ptr); }
@@ -2700,7 +2710,7 @@ double dmax(double i, double j);
     {
 #if defined(USE_VECTOR_SHAPE_POOL)
      public:
-    static __thread vector_shape_pool* xpool;
+    static __ADMBTHREAD__ vector_shape_pool * xpool;
     void * operator new(size_t);
     void operator delete(void * ptr,size_t n) 
     {  xpool->free(ptr); }
@@ -3286,6 +3296,8 @@ int count_factor(const ivector& v);
     void allocate(const dmatrix& dm);
     void allocate(const dvar_matrix&);
     void allocate(int nrl,int nrh,int ncl,int nch);
+    void allocate(int nrl,int nrh,int ncl,int nch,const dvector&,int &);
+    void allocate(int nrl,int nrh,int ncl,const ivector & ,const dvector&,int &);
     void allocate(int nrl,int nrh);
     void allocate(ad_integer nrl,ad_integer nrh);
     void allocate(int nrl,int nrh,int ncl,const ivector& nch);
@@ -5082,8 +5094,8 @@ dvar_vector solve(const dvar_matrix& aa,const dvar_vector& z,
 dvar_vector old_solve(const dvar_matrix& aa,const dvar_vector& z,
   prevariable& ln_unsigned_det,const prevariable& sign);
 
-//dvar_vector solve(const dvar_matrix& aa,const dvar_vector& z,
- // prevariable& ln_unsigned_det,const prevariable& sign);
+dvar_vector solve(const dvar_matrix& aa,const dvar_vector& z,
+  prevariable& ln_unsigned_det,const prevariable& sign);
 
 dvector csolve(const dmatrix& aa,const dvector& z);
 dvector solve(const dmatrix& aa,const dvector& z);
@@ -5431,6 +5443,11 @@ public:
 #endif
 */
 
+dvector Lubksb(const dmatrix& a,const ivector&  indx,const dvector&  b);
+
+dmatrix ludcmp(const dmatrix& _a,const ivector& _indx,
+  const double& _det,const double& sgn, const double& _d);
+
 // this is the speical version with an index for reordering the matrix
 void ludcmp_index(const dmatrix& a,const ivector& indx,const double& d);
 
@@ -5526,11 +5543,15 @@ public:
   d4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
            const imatrix& nrh, int ncl, const i3_array& nch);
 
+  d4_array(int hsl,int hsu,const index_type& sl,const index_type& sh);
+
   d4_array(int hsl,int hsu,const index_type& sl,
     const index_type& sh,const index_type& nrl,const index_type& nrh,
     const index_type& ncl,const index_type& nch);
 
-  void allocate(int hsl,int hsu, const index_type& sl,
+ void allocate(int hsl,int hsu, const index_type& sl,const index_type& sh);
+
+ void allocate(int hsl,int hsu, const index_type& sl,
     const index_type& sh,const index_type& nrl,const index_type& nrh,
     const index_type& ncl,const index_type& nch);
   void allocate(ad_integer hsl,ad_integer hsu, const index_type& sl,
@@ -7654,7 +7675,7 @@ ivector diagonal(const imatrix&);
 dvar_vector diagonal(const dvar_matrix&);
 
 double gammln(double xx);
-//dvariable gammln(const dvariable& xx);
+dvariable gammln(const dvariable& xx);
 dvariable gammln(const prevariable& xx);
 ivector histogram(double min,double max,int nbin,const dvector& input);
 
@@ -7667,6 +7688,9 @@ dvariable cumd_cauchy(const prevariable& x);
 dvariable kludge_cumd_cauchy(const prevariable& x);
 
 double log_negbinomial_density(double x,double mu, double tau);
+double log_negbinomial_density(const dvector & x,const dvector  mu, double tau);
+dvariable log_negbinomial_density(const dvar_vector & x,const dvar_vector  mu,
+ const prevariable & tau);
 
 dvariable log_negbinomial_density(double x,const prevariable& mu,
   const prevariable&  tau);
@@ -7758,7 +7782,6 @@ void normalized_gauss_hermite(const dvector& _x,const dvector& _w);
 void gauss_legendre(double x1, double x2, const dvector& _x, const dvector& _w);
 void gauss_legendre(const dvector& _x, const dvector& _w);
 
-/*
 //dvariable beta(const prevariable&,const prevariable&);
 
 //dvariable betacf(const dvariable& _a,const dvariable& _b, const dvariable& _x,int maxit=100);
@@ -7768,7 +7791,7 @@ void gauss_legendre(const dvector& _x, const dvector& _w);
 //dvariable betai(const dvariable a,const dvariable b,const dvariable x, int maxit=100);
 //double betai(const double a,const double b,const double x, int maxit=100);
 
-double betai(double _aa, double _bb, double _xx);
+double betai(double _aa, double _bb, double _xx,int MAXIT=100);
 dvariable betai(const dvariable& _a,const dvariable& _b,const dvariable& _x);
 double incbet(const double a,const double b,const double x);
 dvariable incbet(const dvariable& _a,const dvariable& _b,const dvariable & _x);
@@ -7776,20 +7799,6 @@ dvariable incbet(const dvariable& _a,const dvariable& _b,const dvariable & _x);
 df1_three_variable incbet(const df1_three_variable & _aa,
 				 const df1_three_variable & _bb,
 				 const df1_three_variable & _xx);
-*/
-dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x, int maxit = 100);
-double betacf(const double& _a,const double& _b,const double& _x,int maxit=100);
-dvariable betai(const dvariable a,const dvariable b,const dvariable x, int maxit=100);
-double betai(const double a,const double b,const double x, int maxit=100);
-/*
-double betacf(const double _a, const double _b, double _x, int maxit = 100);
-dvariable betacf(const dvariable& _a,const dvariable& _b, const dvariable& _x,int maxit=100);
- 
- 
-dvariable betai(const dvariable a, const dvariable b, const dvariable x, int maxit = 100);
-double betai(const double a,const double b,const double x, int maxit=100);
-*/
-
 
 dvar_matrix tensor_prod(const dvar_matrix& a,const dvar_matrix & b);
 
@@ -8066,7 +8075,9 @@ class function_minimizer_exception
   adstring get_string_marker(void);
   class adpvm_manager;
   class adtimer;
+  class adpthread_manager;
 
+ /*
   class adpthreads_manager
   {
     static __ADMBTHREAD__ int slave_number;
@@ -8084,6 +8095,137 @@ class function_minimizer_exception
     adpthreads_manager(int n) { slave_number=n;}
     adpthreads_manager(void) { slave_number=0;}
   };
+  */
+
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
+  // ******************************************************
+  class thread_data;
+
+ /*
+  class adpthread_manager
+  {
+    static __ADMBTHREAD__ int slave_number;
+  public:
+    static int is_slave(void) { if (slave_number)
+                                  return 1;
+                                else
+                                  return 0; }
+    static int is_master(void) { if (slave_number)
+                                  return 0;
+                                else
+                                  return 1; }
+    static int get_slave_number(void) { return slave_number; }
+    static void set_slave_number(int n) { slave_number=n; }
+
+    char ** transfer_buffer;
+    char ** current_bptr;
+    char ** buffend;
+    int nslaves;
+    int bs;
+    ivector mflag;
+    ivector sflag;
+    ivector buffer_size;
+    pthread_mutex_t * smutex;
+    pthread_cond_t * scondition;
+    pthread_cond_t *mcondition;
+    pthread_t * thread1;  
+    adpthread_manager(int ns,int bs);
+    void send_dvector_to_slave(const dvector &x,int sno);
+    void send_dvector_to_master(const dvector &x,int sno);
+    dvector get_dvector_from_slave(int sno);
+    dvector get_dvector_from_master(int sno);
+    dvar_vector get_dvar_vector_from_slave(int sno);
+    dvar_vector get_dvar_vector_from_master(int sno);
+    void send_dvar_vector_to_slave(const dvar_vector &x,int sno);
+    void send_dvar_vector_to_master(const dvar_vector &x,int sno);
+    double get_double_from_master_nl(int sno);
+    //void send_dvar_vector_to_slave(const dvar_vector &x,int sno);
+    void writebuffer(const void *x,int nbytes,int sno);
+    void readbuffer(const void *x,int nbytes,int sno);
+    void pthread_join_all(void);
+    void create_all(void*f,thread_data * ptr);
+    void check_buffer_size(int, int);
+    void check_buffer_size_read(int, int);
+    void memcpy(const double &x,int sno);
+    void read_lock_buffer_slave(int sno);
+    void write_lock_buffer_slave(int sno);
+    void read_lock_buffer_master(int sno);
+    void write_lock_buffer_master(int sno);
+    void read_unlock_buffer_slave(int sno);
+    void write_unlock_buffer_slave(int sno);
+    void read_unlock_buffer_master(int sno);
+    void write_unlock_buffer_master(int sno);
+    void adjoint_slave_write_unlock(int sno);
+    void adjoint_slave_write_lock(int sno);
+    void adjoint_master_write_lock(int sno);
+    void verify_id_string_from_master(const char * s,int sno);
+    void send_id_string_to_slave(const char * s,int sno);
+    void verify_id_string_from_slave(const char * s,int sno);
+    void send_id_string_to_master(const char * s,int sno);
+    void adjoint_send_dvariable_to_master(void);
+    void adjoint_get_dvariable_from_slave(void);
+    void adjoint_get_dvar_vector_from_master(void);
+    void adjoint_send_dvar_vector_to_slave(void);
+    void adjoint_write_unlock_buffer_master(void);
+    void adjoint_read_lock_buffer_master(void);
+    void adjoint_read_lock_buffer_slave(void);
+    void adjoint_write_unlock_buffer_slave(void);
+    void adjoint_read_unlock_buffer_slave(void);
+    void adjoint_read_unlock_buffer_master(void);
+    void adjoint_write_lock_buffer_slave(void);
+    void adjoint_write_lock_buffer_master(void);
+    void send_dvar_matrix_to_slave(const dvar_matrix &x,int sno);
+    void adjoint_send_dvar_matrix_to_slave(void);
+    void adjoint_get_dvar_matrix_from_master(void);
+    dvar_matrix get_dvar_matrix_from_master(int sno);
+    dvar_matrix get_dvar_matrix_from_slave(int sno);
+    void adjoint_get_dvar_matrix_from_slave(void);
+    void send_dvar_matrix_to_master(const dvar_matrix &x,int sno);
+    void adjoint_send_dvar_matrix_to_master(void);
+    void send_int_to_slave(int, int);
+    void send_int_to_master(int, int);
+    int get_int_from_master(int);
+    int get_int_from_slave(int);
+    void send_dvariable_to_slave(const prevariable &x,int sno);
+    void send_dvariable_to_master(const prevariable &x,int sno);
+    dvariable get_dvariable_from_slave(int sno);
+    dvariable get_dvariable_from_master(int sno);
+    void adjoint_send_dvariable_to_slave(void);
+    void send_double_to_master(const double&, int);
+    void send_double_to_slave(const double &x,int sno);
+    double get_double_from_slave(int sno);
+    double get_double_from_master(int sno);
+
+    void adjoint_send_dvar3_array_to_slave(void);
+    void send_dvar3_array_to_slave(const dvar3_array &x,int sno);
+    void adjoint_get_dvar3_array_from_master(void);
+    dvar3_array get_dvar3_array_from_master(int sno);
+    dvar3_array get_dvar3_array_from_slave(int sno);
+    void adjoint_get_dvar3_array_from_slave(void);
+    void send_dvar3_array_to_master(const dvar3_array &x,int sno);
+    void adjoint_send_dvar3_array_to_master(void);
+
+    void adjoint_send_dvar4_array_to_slave(void);
+    void send_dvar4_array_to_slave(const dvar4_array &x,int sno);
+    void adjoint_get_dvar4_array_from_master(void);
+    dvar4_array get_dvar4_array_from_master(int sno);
+    dvar4_array get_dvar4_array_from_slave(int sno);
+    void adjoint_get_dvar4_array_from_slave(void);
+    void send_dvar4_array_to_master(const dvar4_array &x,int sno);
+    void adjoint_send_dvar4_array_to_master(void);
+
+    void adjoint_send_dvar5_array_to_slave(void);
+    void send_dvar5_array_to_slave(const dvar5_array &x,int sno);
+    void adjoint_get_dvar5_array_from_master(void);
+    dvar5_array get_dvar5_array_from_master(int sno);
+    dvar5_array get_dvar5_array_from_slave(int sno);
+    void adjoint_get_dvar5_array_from_slave(void);
+    void send_dvar5_array_to_master(const dvar5_array &x,int sno);
+    void adjoint_send_dvar5_array_to_master(void);
+  };
+ */
 
 /**
  * Description not yet available.
@@ -8091,43 +8233,40 @@ class function_minimizer_exception
  */
 class ad_comm
 {
-public:
+protected:
+  ad_comm(int argc,char * argv[]);
   ad_comm(void);
-  ad_comm(const ad_comm& copy);
-  ad_comm(int argc, char* argv[]);
-  virtual ~ad_comm();
-
   void allocate(void);
-
-  virtual void get_slave_assignments(void);
+  virtual ~ad_comm();
 public:
-  static __thread int time_flag;
-  static __thread int bandwidth;
-  static __thread int print_hess_and_exit_flag;
-  static __thread int no_pvm_flag;
-  static __thread int no_atlas_flag;
-  static __thread int no_ln_det_choleski_flag;
-  static __thread adtimer* ptm;
-  static __thread adtimer* ptm1;
-  static __thread adpvm_manager* pvm_manager;
-  static __thread adpthreads_manager* pthreads_manager;
-  static __thread adstring* subdir;
-  static __thread cifstream* global_datafile;
-  static __thread cifstream* global_parfile;
-  static __thread ofstream* global_savefile;
-  static __thread ofstream* global_logfile;
-  static __thread uostream* global_bsavefile;
-  static __thread uistream* global_bparfile;
-  static __thread adstring* adprogram_name;
-  static __thread adstring* working_directory_path;
-  static __thread char option_flags[];
-  static __thread unsigned int wd_flag;
-  static __thread unsigned char directory_prefix;
-  static __thread int argc;
-  static __thread char** argv;
-
-  static __thread streampos change_datafile_name(const adstring& s, const streampos& off=0);
-  static __thread streampos change_pinfile_name(const adstring& s, const streampos& off=0);
+  static int time_flag;
+  static int bandwidth;
+  static int print_hess_and_exit_flag;
+  static int no_pvm_flag;
+  static int no_atlas_flag;
+  static int no_ln_det_choleski_flag;
+  static adtimer * ptm;
+  static adtimer * ptm1;
+  virtual void get_slave_assignments(void);
+  static adpvm_manager * pvm_manager;
+  //static __ADMBTHREAD__ adpthreads_manager * pthreads_manager;
+  static adpthread_manager * pthread_manager;
+  static adstring subdir;
+  static streampos change_datafile_name(const adstring& s,const streampos& off=0);
+  static streampos change_pinfile_name(const adstring& s,const streampos& off=0);
+  static cifstream * global_datafile;
+  static cifstream * global_parfile;
+  static ofstream *  global_savefile;
+  static ofstream *  global_logfile;
+  static uostream *  global_bsavefile;
+  static uistream * global_bparfile;
+  static adstring adprogram_name;
+  static adstring working_directory_path;
+  static char option_flags[];
+  static int argc;
+  static unsigned int wd_flag;
+  static unsigned char directory_prefix;
+  static char ** argv;
 };
 
 
@@ -8253,6 +8392,7 @@ dvariable lower_triangular_ln_det(const dvar_matrix& m,int& sgn);
 double bounder(double x,double min,double max, double scale);
 dvariable bounder(const prevariable&  x,double min,double max, double scale);
 dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn);
+dmatrix inv_with_lu(const dmatrix& a,const ivector & indx,double d);
 
 double gamma_deviate(double _x,double _a);
 dvariable gamma_deviate(const prevariable& _x,const prevariable& _a);

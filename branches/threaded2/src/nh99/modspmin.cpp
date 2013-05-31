@@ -49,25 +49,27 @@ void ADSleep(int x);
 //#if defined (AD_DEMO)
   void adwait(double sec);
 //#endif
-__thread int function_minimizer::have_constraints = 0;
-__thread int function_minimizer::first_hessian_flag = 0;
+  int function_minimizer::have_constraints=0;
+  int function_minimizer::first_hessian_flag=0;
   //int function_minimizer::in_likeprof_flag=0;
 
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
 
+//  static int try_it_again(int stupid_flag);
+
 #if defined(ADMB_REDEMO)
   static int q830=830;
-  int** pflag1;
-  int** pflag2;
-  int** pflag3;
-  int** pflag4;
-  int** pflag5;
-  int* qflag1;
-  int* qflag2;
-  int* qflag3;
-  int* qflag4;
-  int* qflag5;
+  int ** pflag1;
+  int ** pflag2;
+  int ** pflag3;
+  int ** pflag4;
+  int ** pflag5;
+  int * qflag1;
+  int * qflag2;
+  int * qflag3;
+  int * qflag4;
+  int * qflag5;
   int flag1=10;
   int flag2=11;
   int flag3=12;
@@ -81,23 +83,48 @@ extern admb_javapointers * adjm_ptr;
   void extra_random_effects_generator2(void);
   void extra_random_effects_generator3(void);
 
-void function_minimizer::computations(int argc,char * argv[])
-{
-  tracing_message(traceflag,"A1");
-  if (option_match(argc,argv,"-mceval") == -1)
+  void function_minimizer::computations(int argc,char * argv[])
   {
-    computations1(argc,argv);
-  }
-  else
-  {
-    initial_params::mceval_phase=1;
-    mcmc_eval();
-    initial_params::mceval_phase=0;
-  }
-  other_calculations();
+    //traceflag=1;
+    tracing_message(traceflag,"A1");
+    //if (option_match(argc,argv,"-gui")>-1)
+    //{
+    //  vm_initialize();
+    //  cout << " called vm_initialize() " << endl;
+    //}
+#if defined(__SPDLL__)
+    //if (ad_printf) (*ad_printf)("entered void function_minimizer::computations\n");
+#endif
+#if defined (AD_DEMO)
+     write_banner_stuff();
+#endif
+    if (option_match(argc,argv,"-mceval") == -1)
+    {
+      //negative_eigenvalue_flag=0;
+      //do
+      {
+#if defined(ADMB_REDEMO)
+  exit(1);
+#else
+        computations1(argc,argv);
+#endif
+      }
+      //while(negative_eigenvalue_flag);
+    }
+    else
+    {
+      initial_params::mceval_phase=1;
+      mcmc_eval();
+      initial_params::mceval_phase=0;
+    }
+    other_calculations();
     
-  final_calcs();
-}
+    final_calcs();
+    // clean up if have random effects
+#   if defined(USE_LAPLACE)
+     // cleanup_laplace_stuff(lapprox);
+#   endif
+  }
 int something_105=0;
 //static int something_106=0;
 
@@ -293,8 +320,23 @@ int * kill_address;
   void function_minimizer::computations1(int argc,char * argv[])
   {
     tracing_message(traceflag,"B1");
+#if defined(__SPDLL__)
+    //if (ad_printf) (*ad_printf)("entered void function_minimizer::computations1\n");
+#endif
+
+#if defined (AD_DEMO)
+     if (gradient_structure::ARRAY_MEMBLOCK_SIZE != 12000)
+     {
+#if defined(__SPDLL__)
+       //if (ad_printf) (*ad_printf)("setting ad_chea_flag\n");
+#endif
+       ad_cheat_flag=1;
+     }
+#endif
+    //char ch;
     int on=-1;
     int nopt=-1;
+    //dvector xxxx("{1.1,2.1,3.1}");
 #if defined(USE_ADPVM)
     if (ad_comm::pvm_manager)
     {
@@ -314,7 +356,7 @@ int * kill_address;
     }
 #endif  // #if defined(USE_ADPVM)
       
-    set_runtime();
+    //set_runtime();
 
     if ( (on=option_match(argc,argv,"-hbf",nopt))>-1)
     {
@@ -333,7 +375,7 @@ int * kill_address;
           " you have " << nopt << endl;                
       }        
     }   
-
+    
     if ( (on=option_match(argc,argv,"-ttr",nopt))>-1)
     {
       test_trust_flag=1;
@@ -354,11 +396,41 @@ int * kill_address;
 
     stddev_params::get_stddev_number_offset();
 
+#if defined (AD_DEMO)
+    if (ad_cheat_flag==1)
+    {
+      exit(0);
+    }
+#endif
+
     tracing_message(traceflag,"C1");
+
+#if defined(ADMB_REDEMO)
+  if (return_int(*pflag5) != 1912)
+  {
+    for (int i=0;i<initial_params::num_initial_params;i++)
+    {
+      initial_params::varsptr[i]=0;
+    }
+  }
+
+#endif // #if defined(ADMB_REDEMO)
 
     repeatminflag=0;
     do 
     {
+     /*
+      if (spminflag)
+      {
+        repeatminflag=1;
+        spminflag=0;
+      }
+      else
+      {
+        repeatminflag=0;
+      }
+      */
+
       if (option_match(argc,argv,"-noest") == -1)
       {
         if (!function_minimizer::have_constraints)
@@ -376,6 +448,18 @@ int * kill_address;
         initial_params::current_phase=initial_params::max_number_phases;
       }
       tracing_message(traceflag,"D1");
+  
+      //double ratio=100.*gradient_structure::max_last_offset/12000.0;
+  #if defined (AD_DEMO)
+      cout << endl << endl;
+      if (ad_printf)
+      {
+        (*ad_printf) (" Your model used %lf  percent of demonstration version"
+           " capacity \n",ratio);
+      }
+      write_banner_stuff();
+  
+  #endif
       tracing_message(traceflag,"E1");
       if (option_match(argc,argv,"-est") == -1)
       {
@@ -389,7 +473,7 @@ int * kill_address;
             if (lapprox->sparse_triplet2)
             {
               dcompressed_triplet& dct=*(lapprox->sparse_triplet2);
-              adstring tmpstring = *ad_comm::adprogram_name + ".shess";
+              adstring tmpstring = ad_comm::adprogram_name + ".shess";
               uostream uos((char*)(tmpstring));
               uos << dct.get_n()  << dct.indexmin() << dct.indexmax()
                   << dct.get_coords() << dct.get_x();
@@ -516,6 +600,8 @@ int * kill_address;
             if ( (on=option_match(argc,argv,"-sob",nopt))>-1)
             {
               int nsob=0;
+              //int iseed0=0;
+              //double dscale=1.0;
               if (nopt)
               {
                 nsob=atoi(argv[on+1]);
@@ -525,6 +611,29 @@ int * kill_address;
                     << endl << " ignored" << endl;
                 }
               }
+              if ( (on=option_match(argc,argv,"-mcr",nopt))>-1)
+              {
+    #if defined(NO_MCMC)
+                cerr << "mcmc and sob option not supported you must purchase"
+                        " this as an add on" << endl;
+                exit(1);
+    #else
+                //sob_routine(nsob,dscale,1);
+                //sobol_importance_routine(nsob,iseed0,dscale,1);
+    #endif
+          
+              }
+              else
+              {
+    #if defined(NO_MCMC)
+                cerr << "mcmc and sob option not supported you must purchase"
+                        " this as an add on" << endl;
+                exit(1);
+    #else
+                //sobol_importance_routine(nsob,iseed0,dscale,0);
+    #endif
+         
+              }
             }
             initial_params::sd_phase=0;
           }
@@ -532,12 +641,19 @@ int * kill_address;
       }
     }
     while(spminflag || repeatminflag);
+
+    // moved quadratic prior cleanupo to here ?
+    quadratic_prior::cleanup(); 
+    df1b2quadratic_prior::cleanup(); 
   }
 
 
   void function_minimizer::computations(void)
   {
+    // for now just do parameter estimates
+    //function_minimizer::minimize();
     minimize();
+    //
   }
 
 
@@ -606,20 +722,19 @@ void adwait(double sec){;}
   {
     adstring opt="{" + adstring(s) + "}";          
     dvector temp1((char*)(opt));
-    if (maximum_function_evaluations && allocated(*maximum_function_evaluations))
-      maximum_function_evaluations->deallocate();
-    maximum_function_evaluations->allocate(temp1.indexmin(),temp1.indexmax());
-    *maximum_function_evaluations = temp1;
+    if (allocated(maximum_function_evaluations))
+      maximum_function_evaluations.deallocate();
+    maximum_function_evaluations.allocate(temp1.indexmin(),temp1.indexmax());
+    maximum_function_evaluations=temp1;
   }  
 
   void function_minimizer::set_runtime_crit(const char * s)
   {
     adstring opt="{" + adstring(s) + "}";          
     dvector temp1((char*)(opt));
-    if (convergence_criteria && allocated(*convergence_criteria)) 
-      convergence_criteria->deallocate();
-    convergence_criteria->allocate(temp1.indexmin(),temp1.indexmax());
-    *convergence_criteria = temp1;
+    if (allocated(convergence_criteria)) convergence_criteria.deallocate();
+    convergence_criteria.allocate(temp1.indexmin(),temp1.indexmax());
+    convergence_criteria=temp1;
   }  
 
 

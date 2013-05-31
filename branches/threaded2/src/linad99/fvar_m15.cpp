@@ -1,14 +1,9 @@
-/**
- * $Id: fvar_m15.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
- * Author: David Fournier
- * Copyright (c) 2009-2012 ADMB Foundation
- */
+#define HOME_VERSION
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
   #pragma hdrstop
-  #include <iostream.h>
+  
 #endif
 
 #ifdef __ZTC__
@@ -18,25 +13,15 @@
 #define TINY 1.0e-20;
 void dfinvpret(void);
 
-/** Smallest of two integers
-\param a An integer
-\param b An integer
-\return A integer \f$ z = \min(a,b)\f$
-*/
 int min(int a,int b)
 {
   if (a>b) return b;
   return a;
 }
 
-/** Inverse of a varaiable matrix.    
-    \param aa dvar_matrix conaining matrix to be inverted,\f$A\f$.
-    \return dvar_matrix containing \f$A^{-1}\f$.
-    \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 2
-*/
-dvar_matrix inv(const dvar_matrix& aa)
+
+
+dvar_matrix inv(_CONST dvar_matrix& aa)
 {
   int i,imax,j,k,n;
   n=aa.colsize();
@@ -208,8 +193,6 @@ dvar_matrix inv(const dvar_matrix& aa)
   return vc;
 }
 
-/** Adjoint code for dvar_matrix inv(const dvar_matrix& aa).
-*/
 void dfinvpret(void)
 {
   verify_identifier_string("P1");
@@ -317,3 +300,4 @@ void dfinvpret(void)
 }
 
 #undef TINY
+#undef HOME_VERSION

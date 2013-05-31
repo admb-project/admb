@@ -96,9 +96,11 @@
   void report_file_opening(const adstring& tmp);
 #endif
 
+
+
   char lastchar(char *);
 
-  //char ad_random_part[50];
+  char ad_random_part[6]="tmp";
 
 /**
  * Description not yet available.
@@ -120,16 +122,12 @@
    */
   }
 
-#include <sstream>
-#include <thread>
-
 /**
  * Description not yet available.
  * \param
  */
   grad_stack::grad_stack()
   {
-    
     gradient_structure::TOTAL_BYTES = 0;
     gradient_structure::PREVIOUS_TOTAL_BYTES=0;
     true_length = gradient_structure::GRADSTACK_BUFFER_SIZE;
@@ -170,9 +168,9 @@
         {	      
           {
             int ierr=make_sub_directory(ad_comm::argv[on+1]);
-            ad_comm::subdir = new adstring(ad_comm::argv[on+1]);
-            string_path += ad_comm::subdir;
-            path = (char*)string_path;
+            ad_comm::subdir=ad_comm::argv[on+1];
+            string_path+=ad_comm::subdir;
+            path=(char*) string_path;
           }
         }
         else
@@ -184,27 +182,24 @@
       }   
     }
 #endif
-    std::thread::id this_thread_id = std::this_thread::get_id();
-    std::ostringstream oss;
-    oss << this_thread_id;
     if (path != NULL)
     {
     #  if defined ( __SUN__) ||  defined ( __GNU__)
-      sprintf(&gradfile_name1[0],"%s/gradfil1%s.tmp", path, oss.str().c_str());
+      sprintf(&gradfile_name1[0],"%s/gradfil1.%s", path,ad_random_part);
     #  else
       if (lastchar(path)!='\\')
       {
-        sprintf(&gradfile_name1[0],"%s\\gradfil1%s.tmp", path, oss.str().c_str());
+        sprintf(&gradfile_name1[0],"%s\\gradfil1.%s", path,ad_random_part);
       }
       else
       {
-        sprintf(&gradfile_name1[0],"%sgradfil1%s.tmp", path, oss.str().c_str());
+        sprintf(&gradfile_name1[0],"%sgradfil1.%s", path,ad_random_part);
       }
     #  endif
     }
     else
     {
-      sprintf(&gradfile_name1[0],"gradfil1%s.tmp", oss.str().c_str());
+      sprintf(&gradfile_name1[0],"gradfil1.%s",ad_random_part);
     }
     adstring tmps=gradfile_name1;
     add_slave_suffix(tmps);
@@ -222,8 +217,10 @@
       #if defined ( __SUN__) ||  defined ( __GNU__)  || defined(linux)
 	if (strlen(path)>0)
 	{    	
-	  sprintf(&var_store_file_name[0],"%s/varssave%s.tmp", path, oss.str().c_str());
-	  sprintf(&gradfile_name2[0],"%s/gradfil2%s.tmp", path, oss.str().c_str());
+	  sprintf(&var_store_file_name[0],"%s/varssave.%s",path,
+            ad_random_part);
+	  sprintf(&gradfile_name2[0],"%s/gradfil2.%s", path,
+            ad_random_part);
 	}
 	else
 	{    	
@@ -233,22 +230,27 @@
       #else
         if (lastchar(path)!='\\')
         {
-	  sprintf(&gradfile_name2[0],"%s\\gradfil2%s.tmp", path, oss.str().c_str());
-	  sprintf(&var_store_file_name[0],"%s\\varssave%s.tmp", path, oss.str().c_str());
+	  sprintf(&gradfile_name2[0],"%s\\gradfil2.%s", path,
+            ad_random_part);
+	  sprintf(&var_store_file_name[0],"%s\\varssave.%s",path,
+            ad_random_part);
         }
         else
         {
-	  sprintf(&gradfile_name2[0],"%sgradfil2%s.tmp", path, oss.str().c_str());
-	  sprintf(&var_store_file_name[0],"%svarssave%s.tmp",path, oss.str().c_str());
+	  sprintf(&gradfile_name2[0],"%sgradfil2.%s", path,
+            ad_random_part);
+	  sprintf(&var_store_file_name[0],"%svarssave.%s",path,
+            ad_random_part);
         }
       #endif
     }
     else
     {
-      sprintf(&gradfile_name2[0],"gradfil2%s.tmp", oss.str().c_str());
-      sprintf(&var_store_file_name[0],"varssave%s.tmp", oss.str().c_str());
+      sprintf(&gradfile_name2[0],"gradfil2.%s",
+        ad_random_part);
+      sprintf(&var_store_file_name[0],"varssave.%s",
+        ad_random_part);
     }
-
     adstring tmps2=gradfile_name2;
     add_slave_suffix(tmps2);
     strncpy(gradfile_name2,tmps2,100);
@@ -261,6 +263,7 @@
 
     strcpy(gradfile_name, gradfile_name1);
     _GRADFILE_PTR = _GRADFILE_PTR1;
+
 }
 
 /**
@@ -404,58 +407,95 @@ grad_stack::~grad_stack()
  */
 void grad_stack::create_gradfile()
 {
+
   #if defined (__TURBOC__)
-   _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
-   _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+   _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
+       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+
+   _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT |
+       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+
   #elif defined (__ZTC__)
-    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC , S_IREAD | S_IWRITE);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT | O_TRUNC,  S_IREAD | S_IWRITE);
+    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
+	O_TRUNC , S_IREAD | S_IWRITE);
+    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT
+	| O_TRUNC,  S_IREAD | S_IWRITE);
+
   #elif defined (__NDPX__)
     _GRADFILE_PTR1=creat(gradfile_name1, O_RDWR);
      _VARSSAV_PTR=creat(var_store_file_name, O_RDWR);
+
   #elif ( defined ( __SUN__) ||  defined ( __GNU__))
-    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC | O_BINARY , 0777);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0777);
+
+    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
+      O_BINARY , 0777);
+    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | 
+      O_CREAT | O_TRUNC | O_BINARY, 0777);
+
   #elif (defined (__GNUDOS__) && !defined(__GNU__))
-    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC | O_BINARY ,   0777);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0777);
+    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
+		O_BINARY ,   0777);
+    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | 
+      O_CREAT | O_TRUNC | O_BINARY, 0777);
+
   #elif defined (__MSVC32__)
-    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC | O_BINARY ,   0777);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, 0777);
+    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
+		O_BINARY ,   0777);
+    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | 
+      O_CREAT | O_TRUNC | O_BINARY, 0777);
+
   #elif defined (__WAT32__)
-   _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
-   _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+   _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
+       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+
+   _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT |
+       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
   #else
     xxxxx   // need to define this for thei compiler!
   #endif
+
   if (_GRADFILE_PTR1 == -1)
   {
-    if (ad_printf) (*ad_printf)("Error opening temporary gradient file" " %s\n",gradfile_name1);
+    if (ad_printf) (*ad_printf)("Error opening temporary gradient file"
+     " %s\n",gradfile_name1);
     ad_exit(1);
   }
+
   if (_VARSSAV_PTR == -1)
   {
     perror("Error opening temporary gradient file");
     cerr <<"  Attempting to open " << var_store_file_name <<"\n";
     ad_exit(1);
   }
+
   #if defined (__TURBOC__)
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
+		     O_BINARY, S_IREAD | S_IWRITE);
   #elif defined (__ZTC__)
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC , S_IREAD | S_IWRITE);
+    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC ,
+		     S_IREAD | S_IWRITE);
   #elif defined (__NDPX__)
     _GRADFILE_PTR2=creat(gradfile_name2, O_RDWR);
+
   #elif ( defined (__SUN__) ||  defined (__GNU__) ) 
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC | O_BINARY , 0777);
+    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
+		O_BINARY , 0777);
+
   #elif (defined (__GNUDOS__) && !defined (__GNU__))
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC | O_BINARY , 0777);
+    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
+		O_BINARY , 0777);
+
   #elif defined (__MSVC32__)
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
+		     O_BINARY, S_IREAD | S_IWRITE);
+
   #elif defined (__WAT32__)
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
+		     O_BINARY, S_IREAD | S_IWRITE);
   #else
     xxxx  // need to define this for this compiler
   #endif
+
   if (_GRADFILE_PTR2 == -1)
   {
     perror("Error opening temporary gradient file");
@@ -515,7 +555,7 @@ int grad_stack::decrement_current_gradfile_ptr()
  */
 char* grad_stack::get_gradfile_name()
 {
-  return gradfile_name;
+  return(gradfile_name);
 }
 
 /**

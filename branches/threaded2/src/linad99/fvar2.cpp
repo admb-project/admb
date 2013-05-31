@@ -33,7 +33,7 @@ void gradfree(dlink *);
  * Description not yet available.
  * \param
  */
-double_and_int* gradnew()
+double_and_int * gradnew()
 {
   #if defined (SAFE_ARRAYS)
     if (!gradient_structure::instances)
@@ -44,19 +44,26 @@ double_and_int* gradnew()
       ad_exit(1);
     }
   #endif
-  dlink* tmp = gradient_structure::GRAD_LIST->last_remove();
-  if (tmp == nullptr)
   {
-    tmp = gradient_structure::GRAD_LIST->create();
+    dlink * tmp;
+    tmp = gradient_structure::GRAD_LIST->last_remove();
+    if (!tmp)
+    {
+      tmp=gradient_structure::GRAD_LIST->create();
+    }
+
+    //  cout << "In gradnew the address of the double * ptr is "
+    //       << _farptr_tolong(tmp) << "\n"; 
+
+    return (double_and_int *) tmp;
   }
-  return (double_and_int*)tmp;
 }
 
 /**
  * Description not yet available.
  * \param
  */
-void gradfree(dlink* v)
+void gradfree(dlink * v)
 {
   if (gradient_structure::GRAD_LIST)
   {
@@ -64,10 +71,10 @@ void gradfree(dlink* v)
     { 
       gradient_structure::GRAD_LIST->append(v);
     }
-    else if (v != nullptr)
+    else
     {
-      delete (double_and_int*)v;
-      v = nullptr;
+      delete (double_and_int *) v;
+      v=NULL;
     }
   }
 }
@@ -112,15 +119,12 @@ dvariable::dvariable(const dvariable& t)
  */
     dvariable::dvariable()
     {
-//cout << __FILE__ << ':' << __LINE__ << endl;
       v=gradnew();
-      //v=nullptr;
       //(*v).nc=0;
       #ifdef SAFE_INITIALIZE
 	(*v).x=0;
 	gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0,&((*v).x));
       #endif
-//cout << __FILE__ << ':' << __LINE__ << endl;
     }
 
 /**
@@ -137,7 +141,7 @@ dvariable::dvariable(const dvariable& t)
  */
    dvariable::~dvariable()
    {
-     gradfree((dlink*)v);
+     gradfree( (dlink *) v );
    }
 
 /**

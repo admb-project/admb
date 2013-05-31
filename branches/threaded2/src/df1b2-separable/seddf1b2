@@ -4,6 +4,7 @@
 class df1b2_parameters : public df1b2_pre_parameters \
 { \
 public: \
+  virtual void * mycast(void) {return (void*)this;} \
   static df1b2_parameters * df1b2_parameters_ptr;\
   static df1b2_parameters * get_df1b2_parameters_ptr(void) \
   { \
@@ -38,6 +39,9 @@ $a\
  // void end_df1b2_funnel(void);
 # virtual void user_function(const init_df1b2vector& x,df1b2variable& f); \
 /df_normal_prior_/d
+/df_quadratic_prior_/d
+/df_sparse_normal_prior_/d
+/df_sparse_quadratic_prior_/d
 #s/df_normal_prior_/df1b2_normal_prior_/g
 s/param_init_bounded_dev_vector/df1b2_init_bounded_dev_vector/
 s/param_init_bounded_vector/df1b2_init_bounded_vector/

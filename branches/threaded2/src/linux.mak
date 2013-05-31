@@ -18,7 +18,8 @@ ifndef ADMB_HOME
 ADMB_HOME=${PWD}/${DISK}
 endif
 
-CXXFLAGS:=-std=c++11 -pthread -DUSE_PTHREADS -DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS)
+
+CXXFLAGS:=-DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS)
 
 ifndef ADMB_REVISION
 ADMB_REVISION=$(shell test -e ../REVISION && cat ../REVISION)
@@ -31,15 +32,15 @@ endif
 
 CXXFLAGS_INCLUDES:=-I../df1b2-separable -I../nh99 -I../linad99 -I../tools99
 ifeq ($(CXX),CC)
-CXXFLAGS:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
+CXXFLAGS:=-D__MINGW__ D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 else
-CXXFLAGS:=-Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
+CXXFLAGS:=-D__MINGW__ -Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 endif
 
 ifdef DEBUG
-CXXFLAGS:=-c -g $(CXXFLAGS) -fpermissive
+CXXFLAGS:=-D__MINGW__ -c -g $(CXXFLAGS) -w -fpermissive -pthread -DUSE_PTHREADS
 else
-CXXFLAGS:=-c -O3 $(CXXFLAGS) -fpermissive
+CXXFLAGS:=-D__MINGW__ -c $(CXXFLAGS) -ggdb -w -fpermissive -pthread  -DUSE_PTHREADS
 endif
 
 dist:
@@ -50,32 +51,25 @@ dist:
 	mkdir -p ${LIBPATH}/df1b2-separable-slp
 	mkdir -p ${LIBPATH}/nh99-olp
 	mkdir -p ${LIBPATH}/tools99-olp
-	$(MAKE) --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -ggdb -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
-	$(MAKE) --directory=df1b2-separable AR=$(AR) CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=df1b2-separable AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
-	$(MAKE) --directory=nh99 CC=$(CC) AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/nh99-olp ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) --directory=tools99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) -j  --directory=nh99 CC=$(CC) AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/nh99-olp ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) -j  --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) -j  --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -ggdb -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
+	$(MAKE) -j  --directory=df1b2-separable AR=$(AR) CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) -j  --directory=df1b2-separable AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -ggdb -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
+	$(MAKE) -j  --directory=tools99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE.txt ${DISK}
 	cp -vf ../README.txt ${DISK}
 	cp -vf ../NEWS.txt ${DISK}
 	cp -vf ../VERSION ${DISK}
 	cp ../scripts/admb/admb ${DISK}/bin
-	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp -vf ../scripts/g++/Makefile ${DISK}/examples
 ifeq ($(CXX),CC)
 	  cp ../scripts/CC/adcomp ${DISK}/bin
 	  cp ../scripts/CC/adlink ${DISK}/bin
 endif
-ifeq ($(CXX),c++)
-	  cp ../scripts/g++/adcomp ${DISK}/bin
-	  cp ../scripts/g++/adlink ${DISK}/bin
-endif
 ifeq ($(CXX),g++)
 	  cp ../scripts/g++/adcomp ${DISK}/bin
 	  cp ../scripts/g++/adlink ${DISK}/bin
-	  cp ../scripts/g++/adcomp.bat ${DISK}/bin
-	  cp ../scripts/g++/adlink.bat ${DISK}/bin
 endif
 ifeq ($(CXX),x86_64-w64-mingw32-g++.exe)
 	  cp ../scripts/g++/adcomp-x86_64-w64-mingw32 ${DISK}/bin/adcomp
@@ -100,9 +94,9 @@ endif
 	cp -R ../examples/admb-re ${DISK}/examples/admb-re
 
 verify:
-	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" DEBUG=1 SAFE_OPTION=1 $(MAKE) -C ${DISK}/examples all
+	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C ${DISK}/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-saf.txt"
-	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" DEBUG=1 $(MAKE) -C ${DISK}/examples all
+	ADMB_HOME="${ADMB_HOME}" PATH="${ADMB_HOME}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" $(MAKE) -C ${DISK}/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks$(ADMB_REVISION)-opt.txt"
 
 check-admb2r:

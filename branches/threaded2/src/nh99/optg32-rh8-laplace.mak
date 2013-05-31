@@ -1,5 +1,6 @@
 .PHONY: disk
 .SUFFIXES: .obj .cpp
+.SUFFIXES: .h.gch .h
 
 LIBPATH =gcc32-rh8olp
 LIBNAME = libadmod.a
@@ -15,7 +16,7 @@ endif
 
 all: disk
 
-disk: $(DISKDIR)/lib/$(LIBNAME)  $(DISKDIR)/bin/tpl2cpp
+disk: $(DISKDIR)/lib/$(LIBNAME)  
 	cp admodel.h $(DISKDIR)/include
 	cp spcomm.h $(DISKDIR)/include
 	cp adsplus.h $(DISKDIR)/include
@@ -45,4 +46,6 @@ else
 endif
 
 %.obj: %.cpp
-	$(CXX) $(CXXFLAGS) $< -o $(LIBPATH)/$*.obj
+	$(CXX) $(CXXFLAGS)  $< -o $(LIBPATH)/$*.obj
+%.h.gch: %.h
+	$(CXX) $(CXXFLAGS) -x c++-header   $< 

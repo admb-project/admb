@@ -16,5 +16,6 @@ logistic3.obj \
 logisticK.obj \
 monomolecular.obj \
 nonrectangular_hyperbola.obj \
+pow_vectorized_RE.obj \
 theta_logistic.obj
 

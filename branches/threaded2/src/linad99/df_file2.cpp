@@ -86,7 +86,7 @@ void DF_FILE::fread(const double& _x)
   const unsigned num_bytes=sizeof(double);
   if (toffset < num_bytes)
   {
-    my_off_t lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
+    my_off_t lpos = lseek(file_ptr,-((long long int) buff_size),SEEK_CUR);
     //cout << "In fread filepos = " << lpos << endl;
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;
@@ -110,7 +110,7 @@ void DF_FILE::fread(const int& _x)
   const unsigned num_bytes=sizeof(int);
   if (toffset < num_bytes)
   {
-     my_off_t lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
+     my_off_t lpos = lseek(file_ptr,-((long long int) buff_size),SEEK_CUR);
     //cout << "In fread filepos = " << lpos << endl;
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;
@@ -133,7 +133,7 @@ void DF_FILE::fread(void* &x)
   const unsigned num_bytes=sizeof(void*);
   if (toffset < num_bytes)
   {
-     my_off_t lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
+     my_off_t lpos = lseek(file_ptr,-((long long int) buff_size),SEEK_CUR);
     //cout << "In fread filepos = " << lpos << endl;
     read_cmpdif_stack_buffer(lpos);
     offset -= num_bytes;

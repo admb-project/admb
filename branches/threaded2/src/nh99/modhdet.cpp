@@ -4,8 +4,6 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
-#include <thread>
-#include <sstream>
 #include <admodel.h>
 
 double function_minimizer::hess_determinant(int underflow_flag)
@@ -14,10 +12,7 @@ double function_minimizer::hess_determinant(int underflow_flag)
  double lndet=0.0;
  if (!underflow_flag)
  {
-  std::thread::id this_thread_id = std::this_thread::get_id();
-  std::ostringstream oss;
-  oss << *ad_comm::adprogram_name << this_thread_id << ".hes";
-  uistream ifs(oss.str().c_str());
+  uistream ifs("admodel.hes");
   if (!ifs)
   {
     cerr << "Error opening file admodel.hes" << endl;

@@ -4,34 +4,29 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
-#include <sstream>
-#include <thread>
-#include <cassert>
 #include <admodel.h>
 
-__thread int initial_params::num_initial_params = 0;
+ int initial_params::num_initial_params=0;
 
 #if !defined(BIG_INIT_PARAMS)
-__thread const int initial_params::max_num_initial_params=4000;
-  #if (__BORLANDC__  >= 0x0550) 
-  initial_params* initial_params::varsptr[4001]; // this should be a resizeable array
-  #else
-  initial_params* initial_params::varsptr[initial_params::max_num_initial_params+1]; // this should be a resizeable array
-  #endif
+  const int initial_params::max_num_initial_params=4000;
+#  if (__BORLANDC__  >= 0x0550) 
+ initial_params * initial_params::varsptr[4001]; // this should be a resizeable array
+#  else
+ initial_params * initial_params::varsptr[initial_params::max_num_initial_params+1]; // this should be a resizeable array
+#  endif
 #else
-__thread const int initial_params::max_num_initial_params=250;
-__thread adlist_ptr* initial_params::varsptr = nullptr;
+  const int initial_params::max_num_initial_params=250;
+  adlist_ptr initial_params::varsptr(initial_params::max_num_initial_params);
 #endif
-__thread int initial_params::max_number_phases = 1;
-__thread int initial_params::current_phase = 1;
-__thread int initial_params::restart_phase = 0;
-__thread int initial_params::sd_phase = 0;
-__thread int initial_params::mc_phase = 0;
-__thread int initial_params::mceval_phase = 0;
+ int initial_params::max_number_phases=1;
+ int initial_params::current_phase=1;
+ int initial_params::restart_phase=0;
+ int initial_params::sd_phase=0;
+ int initial_params::mc_phase=0;
+ int initial_params::mceval_phase=0;
  int AD_gaussflag=0;
  int ADqd_flag=0;
-
-__thread int initial_params::num_active_initial_params = 0;
 
  double initial_params::get_scalefactor(void)
  { 
@@ -42,12 +37,11 @@ __thread int initial_params::num_active_initial_params = 0;
    scalefactor=sf;
  }
 
-__thread dvector* function_minimizer::convergence_criteria = nullptr;
-__thread dvector* function_minimizer::maximum_function_evaluations = nullptr;
-__thread int function_minimizer::sd_flag = 0;
-__thread int function_minimizer::constraint_exit_number = 0;
-__thread adstring* function_minimizer::user_data_file = nullptr;
-__thread adstring* function_minimizer::user_par_file = nullptr;
+ dvector function_minimizer::convergence_criteria;
+ dvector function_minimizer::maximum_function_evaluations;
+ int function_minimizer::sd_flag;
+ adstring function_minimizer::user_data_file;
+ adstring function_minimizer::user_par_file;
 
   int withinbound(int lb,int n,int ub)
   {
@@ -57,28 +51,22 @@ __thread adstring* function_minimizer::user_par_file = nullptr;
      return 0;
   }
   
-initial_params::~initial_params()
-{
-  num_initial_params--;
-#if defined(USE_SHARE_FLAGS)
-  if (share_flags != nullptr)
+  initial_params::~initial_params()
   {
-    delete share_flags;
-    share_flags = nullptr;
+#  if defined(USE_SHARE_FLAGS)
+    if (share_flags)
+    {
+      delete share_flags;
+      share_flags=0;
+    }
+#  endif
   }
-#endif:
-  if (varsptr)
-  {
-    delete varsptr;
-    varsptr = nullptr;
-  }
-}
   
 extern int* pointer_to_phase;
   initial_params::initial_params(void)
   {
 #  if defined(USE_SHARE_FLAGS)
-     share_flags=  nullptr;
+     share_flags=0;
 #  endif
     phase_start=0;
     phase_save=-9999;
@@ -117,35 +105,31 @@ extern int* pointer_to_phase;
     name=s;
   }
 
-void initial_params::allocate(int _phase_start)
-{
+  void initial_params::allocate(int _phase_start)
+  {
 #if !defined(BIG_INIT_PARAMS)
     add_to_list();
 #else
-    assert(varsptr != nullptr);
-    //varsptr = new adlist_ptr(initial_params::max_num_initial_params);
-    varsptr->add_to_list(this);
+    varsptr.add_to_list(this);
     num_initial_params++;
 #endif
-  phase_start = _phase_start;
-  phase_save = phase_start;
-  if (max_number_phases < _phase_start) 
-  {
-    max_number_phases = _phase_start;
+    phase_start=_phase_start;
+    phase_save=phase_start;
+    if (max_number_phases<_phase_start) max_number_phases=_phase_start;
   }
-}
-void initial_params::add_to_list(void)
-{
-  if (num_initial_params>=initial_params::max_num_initial_params)
+
+  void initial_params::add_to_list(void)
   {
-    cerr << " This version of ADMB only supports "
-         << initial_params::max_num_initial_params << " initial parameter"
-         << " objects" << endl;
-    ad_exit(1);
+    if (num_initial_params>=initial_params::max_num_initial_params)
+    {
+      cerr << " This version of ADMB only supports "
+          << initial_params::max_num_initial_params << " initial parameter"
+        " objects" << endl;
+      ad_exit(1);
+    }
+    varsptr[num_initial_params++]= this; // this is the list of 
+                                         // fundamental objects
   }
-  //list of fundamental objects
-  (*varsptr)[num_initial_params++] = this;
-}
 
 int initial_params::correct_for_dev_objects(const dmatrix& H)
   {
@@ -153,41 +137,39 @@ int initial_params::correct_for_dev_objects(const dmatrix& H)
     int ii=1;
     for (int i=0;i<num_initial_params;i++)
     {
-      if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
       {
-	(varsptr->operator[](i))->dev_correction(H,ii);
+	(varsptr[i])->dev_correction(H,ii);
       }
     }
     cout << H << endl << endl;
     return ii-1;
   }
 
-int initial_params::nvarcalc()
-{
-  int nvar = 0;
-  for (int i = 0; i < num_initial_params; i++)
+  int initial_params::nvarcalc()
   {
-    initial_params* p = (*varsptr)[i];
-    if (p == nullptr) continue;
-    //assert(p != nullptr);
-#if defined(USE_SHARE_FLAGS)
-    if (p->share_flags != nullptr)  
+    int nvar=0;
+    for (int i=0;i<num_initial_params;i++)
     {
-      nvar += p->shared_size_count();
+      //if ((varsptr[i])->phase_start <= current_phase)
+#  if defined(USE_SHARE_FLAGS)
+       if (varsptr[i]->share_flags !=0)  
+       {
+          nvar+=(varsptr[i])->shared_size_count();
+       }
+       else
+       {
+#  endif
+          if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+          {
+    	    nvar+= (varsptr[i])->size_count();
+          }
+#  if defined(USE_SHARE_FLAGS)
+        }
+#  endif
     }
-    else
-    {
-#endif
-      if (withinbound(0, p->phase_start, current_phase))
-      {
-        nvar+= p->size_count();
-      }
-#if defined(USE_SHARE_FLAGS)
-    }
-#endif
+    return nvar;
   }
-  return nvar;
-}
 
   int initial_params::num_active_calc()
   {
@@ -195,7 +177,7 @@ int initial_params::nvarcalc()
     for (int i=0;i<num_initial_params;i++)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
-      if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
       {
 	ntypes++;
       }
@@ -208,8 +190,8 @@ int initial_params::nvarcalc()
     int ii=1;
     for (int i=0;i<num_initial_params;i++)
     {
-      if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
-	(varsptr->operator[](i))->sd_vscale(d,x,ii);
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+	(varsptr[i])->sd_vscale(d,x,ii);
     }
     return ii-1;
   }
@@ -220,8 +202,8 @@ int initial_params::stddev_scale(const dvector& d, const dvector& x)
     for (int i=0;i<num_initial_params;i++)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
-      if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
-	(varsptr->operator[](i))->sd_scale(d,x,ii);
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+	(varsptr[i])->sd_scale(d,x,ii);
     }
     return ii-1;
   }
@@ -232,8 +214,8 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
     for (int i=0;i<num_initial_params;i++)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
-      if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
-	(varsptr->operator[](i))->curv_scale(d,x,ii);
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+	(varsptr[i])->curv_scale(d,x,ii);
     }
     return ii-1;
   }
@@ -245,17 +227,17 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
 #  if defined(USE_SHARE_FLAGS)
-       if (varsptr->operator[](i)->share_flags != nullptr)  
+       if (varsptr[i]->share_flags !=0)  
        {
-          (varsptr->operator[](i))->shared_set_value_inv(x,ii);
+          (varsptr[i])->shared_set_value_inv(x,ii);
        }
        else
        {
 #  endif 
-         if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
+         if (withinbound(0,(varsptr[i])->phase_start,current_phase))
          {
-           (varsptr->operator[](i))->set_value_inv(x,ii);
-           (varsptr->operator[](i))->set_active_flag();
+           (varsptr[i])->set_value_inv(x,ii);
+           (varsptr[i])->set_active_flag();
          }
 #  if defined(USE_SHARE_FLAGS)
         }
@@ -267,7 +249,7 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
   {
     for (int i=0;i<num_initial_params;i++)
     {
-      (varsptr->operator[](i))->set_only_random_effects_active();
+      (varsptr[i])->set_only_random_effects_active();
     }
   }
 
@@ -275,7 +257,7 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
   {
     for (int i=0;i<num_initial_params;i++)
     {
-      (varsptr->operator[](i))->set_only_random_effects_inactive();
+      (varsptr[i])->set_only_random_effects_inactive();
     }
   }
 
@@ -283,7 +265,7 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
   {
     for (int i=0;i<num_initial_params;i++)
     {
-      (varsptr->operator[](i))->set_random_effects_active();
+      (varsptr[i])->set_random_effects_active();
     }
   }
 
@@ -291,7 +273,7 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
   {
     for (int i=0;i<num_initial_params;i++)
     {
-      (varsptr->operator[](i))->restore_phase_start();
+      (varsptr[i])->restore_phase_start();
     }
   }
 
@@ -304,7 +286,7 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
   {
     for (int i=0;i<num_initial_params;i++)
     {
-      (varsptr->operator[](i))->set_random_effects_inactive();
+      (varsptr[i])->set_random_effects_inactive();
     }
   }
 
@@ -315,10 +297,10 @@ void initial_params::xinit1(const dvector& _x, const dvector& g)
     for (int i=0;i<num_initial_params;i++)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
-      if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
       {
-        (varsptr->operator[](i))->set_value_inv(x,ii);
-        (varsptr->operator[](i))->set_active_flag();
+        (varsptr[i])->set_value_inv(x,ii);
+        (varsptr[i])->set_active_flag();
       }
     }
     x=elem_prod(x,g);
@@ -332,9 +314,9 @@ dvariable initial_params::reset(const dvar_vector& x, const dvector& __pen)
     dvariable pen1;
     for (int i=0;i<num_initial_params;i++)
     {
-      if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
       {
-        (varsptr->operator[](i))->set_value(x,ii,pen1);
+        (varsptr[i])->set_value(x,ii,pen1);
         _pen(ii-1)=value(pen1);
         pen+=pen1; 
       }
@@ -351,8 +333,8 @@ dvariable initial_params::reset1(const dvar_vector& _x, const dvector& g)
     for (int i=0;i<num_initial_params;i++)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
-      if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
-        (varsptr->operator[](i))->set_value(x,ii,pen);
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+        (varsptr[i])->set_value(x,ii,pen);
     }
     return pen;
   }
@@ -364,16 +346,16 @@ dvariable initial_params::reset(const dvar_vector& x)
     for (int i=0;i<num_initial_params;i++)
     {
 #  if defined(USE_SHARE_FLAGS)
-      if (varsptr->operator[](i)->share_flags != nullptr)  
+      if (varsptr[i]->share_flags !=0)  
       {
-         (varsptr->operator[](i))->shared_set_value(x,ii,pen);
+         (varsptr[i])->shared_set_value(x,ii,pen);
       }
       else
       {
 #  endif 
         //if ((varsptr[i])->phase_start <= current_phase)
-        if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
-        (varsptr->operator[](i))->set_value(x,ii,pen);
+        if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+        (varsptr[i])->set_value(x,ii,pen);
 #  if defined(USE_SHARE_FLAGS)
       }
 #  endif 
@@ -388,8 +370,8 @@ dvariable initial_params::reset(const dvector& x)
     for (int i=0;i<num_initial_params;i++)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
-      if (withinbound(0,(varsptr->operator[](i))->phase_start,current_phase))
-        (varsptr->operator[](i))->set_value(x,ii,pen);
+      if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+        (varsptr[i])->set_value(x,ii,pen);
     }
     return pen;
   }
@@ -410,11 +392,8 @@ dvariable initial_params::reset(const dvector& x)
       tmp="0" + str(current_phase);
     }
     {
-      std::thread::id this_thread_id = std::this_thread::get_id();
-      std::ostringstream oss;
-      //adstring tadstring=ad_comm::adprogram_name + adstring(".p") + tmp;
-      oss << *ad_comm::adprogram_name << this_thread_id << ".p" << tmp;
-      ad_comm::global_savefile = new ofstream(oss.str().c_str());
+      adstring tadstring=ad_comm::adprogram_name + adstring(".p") + tmp;
+      ad_comm::global_savefile = new ofstream((char*)tadstring);
       if (ad_comm::global_savefile)
       {
         *(ad_comm::global_savefile) << setshowpoint();
@@ -428,26 +407,24 @@ dvariable initial_params::reset(const dvector& x)
         
         for (int i=0;i<num_initial_params;i++)
         {
-           (varsptr->operator[](i))->save_value();
+           (varsptr[i])->save_value();
         }
         delete ad_comm::global_savefile;
-        ad_comm::global_savefile=nullptr;
+        ad_comm::global_savefile=NULL;
       }
     }
     {
-      std::thread::id this_thread_id = std::this_thread::get_id();
-      std::ostringstream oss;
-      //adstring tadstring=ad_comm::adprogram_name + adstring(".b") + tmp;
-      oss << *ad_comm::adprogram_name << this_thread_id << ".b" << tmp;
-      ad_comm::global_bsavefile = new uostream(oss.str().c_str());
+      adstring tadstring=ad_comm::adprogram_name + adstring(".b") + tmp;
+      ad_comm::global_bsavefile = new uostream((char*)tadstring);
+      
       if (ad_comm::global_bsavefile)
       {
         for (int i=0;i<num_initial_params;i++)
         {
-           (varsptr->operator[](i))->bsave_value();
+           (varsptr[i])->bsave_value();
         }
         delete ad_comm::global_bsavefile;
-        ad_comm::global_bsavefile=nullptr;
+        ad_comm::global_bsavefile=NULL;
       }
     }
 
@@ -621,38 +598,41 @@ data_number& data_number::operator=(const double& v)
     dvar_vector::allocate();
     model_name_tag::allocate(s);
   }
-void param_init_number::allocate(int phasestart, const char* s)
-{
-  named_dvariable::allocate(s);
-  initial_params::allocate(phasestart);
-  if (ad_comm::global_bparfile)
+
+  void param_init_number::allocate( int phasestart,const char * s)
   {
-    *(ad_comm::global_bparfile) >> value(*this);
-    if (!(*(ad_comm::global_bparfile)))
+    named_dvariable::allocate(s);
+    initial_params::allocate(phasestart);
+    if (ad_comm::global_bparfile)
     {
-      cerr << "error reading parameters from binary file " << endl;
-      ad_exit(1);
+      *(ad_comm::global_bparfile) >> value(*this);
+        if (!(*(ad_comm::global_bparfile)))
+        {
+          cerr << "error reading parameters from binary file "
+               << endl;
+          ad_exit(1);
+        }
+    }
+    else if (ad_comm::global_parfile)
+    {
+      *(ad_comm::global_parfile) >> value(*this);
+        if (!(*(ad_comm::global_parfile)))
+        {
+          cerr << "error reading parameters from file "
+               << ad_comm::global_parfile->get_file_name() << endl;
+          ad_exit(1);
+        }
+    }
+    else
+    {
+      prevariable::operator=(initial_value);
     }
   }
-  else if (ad_comm::global_parfile)
+
+  void param_init_number::allocate(const char * _s)
   {
-    *(ad_comm::global_parfile) >> value(*this);
-    if (!(*(ad_comm::global_parfile)))
-    {
-      cerr << "error reading parameters from file "
-           << ad_comm::global_parfile->get_file_name() << endl;
-      ad_exit(1);
-    }
+    allocate(1,_s);
   }
-  else
-  {
-    prevariable::operator=(initial_value);
-  }
-}
-void param_init_number::allocate(const char* _s)
-{
-  allocate(1, _s);
-}
 
   void param_init_number::save_value(void)
   {
@@ -683,7 +663,7 @@ void param_init_vector::set_value(const dvar_vector& x,
   void param_init_vector::set_value_inv(const dvector& x, const int& ii)
   {
 #  if defined(USE_SHARE_FLAGS)
-    if (share_flags != nullptr)
+    if (share_flags)
     {
       int ndim=share_flags->get_shareflags()->dimension();
       if (ndim!=1)
@@ -1242,65 +1222,67 @@ void initial_params::set_random_effects_inactive(void) {;}
 void get_sp_printf(void)
 {
 #if !defined(linux)
-  ad_printf=nullptr;
+  ad_printf=NULL;
   HINSTANCE h=LoadLibrary("sqpe.dll");
   if(h)
     ad_printf= (fptr) GetProcAddress(h,"S_newio_printf");
 #endif
 }
 #endif
-pinitial_params& adlist_ptr::operator[](const int i)
-{
-  assert(ptr != nullptr);
-  return (pinitial_params&)ptr[i];
-}
-adlist_ptr::adlist_ptr(const int init_size)
-{
-  current = 0;
-  current_size = init_size;
-  ptr = new ptovoid[current_size];
-  assert(ptr != nullptr);
-  for (int i = 0; i < current_size; i++)
-  {
-    ptr[i] = nullptr;
-  }
-} 
-void adlist_ptr::resize(void)
-{
-  current_size *= 2;
-  ptovoid* tmp = ptr;
 
-  ptr = new ptovoid[current_size];
-  assert(ptr == nullptr);
+  pinitial_params & adlist_ptr::operator [] (int i)
+  {
+    return (pinitial_params &) ptr[i];
+  }
 
-  for (int i = 0; i < current; i++)
+  adlist_ptr::adlist_ptr(int init_size)
   {
-    ptr[i] = tmp[i];
-  }
-  for (int i = current; i < current_size; i++)
+    current=0;
+    ptr = new ptovoid[init_size];
+    if (ptr==0)
+    {
+      cerr << "Errorl allocating memory in adlist_ptr" << endl;
+    }
+    current_size=init_size;
+  } 
+  void adlist_ptr::resize(void)
   {
-    ptr[i] = nullptr;
-  }
-  delete [] tmp;
-  tmp = nullptr;
-}
-void adlist_ptr::add_to_list(void* p)
-{
-  if (current == current_size)
-  {
-    resize();
-  }
-  assert(current < current_size);
-  ptr[current] = p;
-  current++;
-}
-adlist_ptr::~adlist_ptr()
-{
-  current = 0;
-  current_size = -1;
-  if (ptr != nullptr)
-  {
+    current_size*=2;
+    ptovoid * tmp = new ptovoid[current_size];
+    if (tmp==0)
+    {
+      cerr << "Errorl allocating memory in adlist_ptr" << endl;
+    }
+    for (int i=0;i<current;i++)
+    {
+      tmp[i]=ptr[i];
+    }
     delete [] ptr;
-    ptr = nullptr;
+    ptr = tmp;
   }
-} 
+  void adlist_ptr::add_to_list(void * p)
+  {
+    if (current>current_size)
+    {
+      cerr << "This can't happen in adlist_ptr" << endl;
+      exit(1);
+    }
+    if (current==current_size)
+    {
+      resize();
+    }
+    ptr[current++]=p;
+  }
+
+  adlist_ptr::~adlist_ptr()
+  {
+    current=0;
+    current_size=-1;
+    if (ptr)
+    {
+      delete [] ptr;
+      ptr=0;
+    }
+  } 
+
+

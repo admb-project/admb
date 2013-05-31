@@ -673,6 +673,7 @@ smartlist::smartlist(unsigned int _bufsize,const adstring& _filename)
   bufsize=_bufsize;
   filename=_filename;
   AD_ALLOCATE(buffer,char,bufsize,df1b2_gradlist) 
+  memset(buffer,0,sizeof(char)*bufsize);
   buffend=buffer+bufsize-1;
   bptr=buffer;
   if ( (fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |

@@ -1,8 +1,3 @@
-/**
- * $Id: dveigen.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
- * Author: Unknown
- */
 //#define EIGEN_VECTORS
 
 #include <fvar.hpp>
@@ -37,16 +32,8 @@ dvar_vector eigenvalues(_CONST dvar_matrix& m)
 
 }
 
-/** Householder transformation for eigenvalue computation.
-  \param _m Real, symmetric matrix; on return contains the orthogonal
-   transformed matrix.
-  \param _d On return contains the diagonal elements of the tri-diagonal matrix.
-  \param _e On return contains the off-diagonal elements.
 
-  \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 11
-*/
+
 void tri_dag(BOR_CONST dvar_matrix& _m,BOR_CONST dvar_vector& _d, BOR_CONST dvar_vector& _e)
 {
   ADUNCONST(dvar_vector,d)
@@ -169,15 +156,6 @@ void tri_dag(BOR_CONST dvar_matrix& _m,BOR_CONST dvar_vector& _d, BOR_CONST dvar
 }
 //#define SIGN(a,b) ((b)<0 ? -fabs(a) : fabs(a))
 
-/** Eigenvalues.
-  \param _d Diagonal elements of the matrix computed by Householder transformation.
-  \param _e Off-diagonal elements.
-  \param _z On output contains nothing useful.
-
-  \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 11
-*/
 void get_eigen(BOR_CONST dvar_vector& _d,BOR_CONST dvar_vector& _e,_CONST dvar_matrix& z)
 {
   ADUNCONST(dvar_vector,d)
@@ -245,16 +223,7 @@ void get_eigen(BOR_CONST dvar_vector& _d,BOR_CONST dvar_vector& _e,_CONST dvar_m
   }
 }
 
-/** Eigenvalues and eigenvectors.
-  \param _d Diagonal elements of the matrix computed by Householder transformation.
-  \param _e Off-diagonal elements.
-  \param _z On return containses eigenvectors.
-  \return Vector of eigenvalues.
 
- \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 11
-*/
 dvar_vector get_eigen_values(const dvar_vector& _ddd,const dvar_vector& _eee)
 {
   ADUNCONST(dvar_vector,ddd)
@@ -326,4 +295,5 @@ dvar_vector get_eigen_values(const dvar_vector& _ddd,const dvar_vector& _eee)
 }
 
 #undef EIGEN_VECTORS
+#undef HOME_VERSION
 

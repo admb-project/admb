@@ -55,6 +55,7 @@ void fixed_smartlist2::allocate(unsigned int _bufsize,
   bufsize=_bufsize;
   filename=_filename;
   AD_ALLOCATE(true_buffer,int,nentries+2,df1b2_gradlist) 
+  memset(true_buffer,0,sizeof(int)*(nentries+2));
   doubleptr=(double*)true_buffer;
   true_buffend=true_buffer+nentries+1;
   buffer=true_buffer+1;

@@ -79,12 +79,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <sstream>
-#include <thread>
-
   char lastchar(char *);
 
   void byte_copy(void * dest,void * source, unsigned num_bytes);
+  extern char ad_random_part[6];
 
 /**
  * Description not yet available.
@@ -165,34 +163,36 @@
       }   
     }
 #endif
-    std::thread::id this_thread_id = std::this_thread::get_id();
-    std::ostringstream oss;
-    oss << this_thread_id;
-    char* ad_random_part = oss.str().c_str();
+
     if (path != NULL)
 #if defined (__SUN__) ||defined (__GNU__)
     {
-      sprintf(&cmpdif_file_name[0],"%s/cmpdiff%s.tmp", path, ad_random_part);
+      sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
+        ad_random_part);
     }
 #else
     if (lastchar(path) != '\\')
     {
-      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff%s.tmp", path, ad_random_part);
+      sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
+        ad_random_part);
     }
     else
     {
-      sprintf(&cmpdif_file_name[0],"%scmpdiff%s.tmp", path, ad_random_part);
+      sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
+        ad_random_part);
     }
 #endif
     else
     {
-      sprintf(&cmpdif_file_name[0],"cmpdiff%s.tmp", ad_random_part);
+      sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
     }
-    adstring tmpstring=cmpdif_file_name;
+   
+    adstring tmpstring;
+    tmpstring=cmpdif_file_name;
 #if ( defined(USE_ADMPI) || defined(USE_PTHREADS))
       add_slave_suffix(tmpstring);
 #endif // #if defined(USE_ADMPI)
-      cout << tmpstring << endl;
+      //cout << tmpstring << endl;
       if (::length(tmpstring)>100)
       {
         cerr << "Need to increase length of cmpdif_file_name"
@@ -200,7 +200,10 @@
         ad_exit(1);
       }
 
-     strncpy(&cmpdif_file_name[0],tmpstring,101);
+     strncpy(&cmpdif_file_name[0],tmpstring,100);
+
+
+
 
 #if defined (__MSVC32__) || defined (__WAT32__)
     file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
@@ -279,15 +282,9 @@ void DF_FILE::fread(void* s,const size_t num_bytes)
 {
   if (toffset < num_bytes)
   {
-    my_off_t lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
+    my_off_t lpos = lseek(file_ptr,-((long long int) buff_size),SEEK_CUR);
     //cout << "In fread filepos = " << lpos << endl;
     read_cmpdif_stack_buffer(lpos);
-/*
-    for(int i=0;i<sizeof(unsigned int);i++)
-    {
-       fourb[i] = *(buff+buff_end+1+i);
-    }
-*/
    // cout << "roffset: " << offset << endl;
     offset -= num_bytes;
     toffset = offset;
@@ -347,7 +344,7 @@ void DF_FILE::read_cmpdif_stack_buffer(my_off_t & lpos)
     cerr << "End of file trying to read "<< cmpdif_file_name << endl;
     ad_exit(1);
   }
-  lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
+  lpos = lseek(file_ptr,-((long long int) buff_size),SEEK_CUR);
   //cout << "offset after read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
   for(unsigned int i=0;i<sizeof(unsigned int);i++)
   {

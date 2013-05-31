@@ -43,8 +43,6 @@ static void xxxv(ivector& x)
     }
   }
 }
-//int varchol(XCONST dvar_hs_smatrix &A, XCONST hs_symbolic &S,dvar_hs_smatrix &L,
- //laplace_approximation_calculator * );
 int varchol(XCONST dvar_hs_smatrix &A, XCONST hs_symbolic &S,dvar_hs_smatrix &L,
  dcompressed_triplet & sparse_triplet2);
 
@@ -3102,20 +3100,16 @@ int cholnew(XCONST hs_smatrix &AA, XCONST hs_symbolic &T, hs_smatrix &LL)
 
 static void dfcholeski_sparse(void);
 
-int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,dvar_hs_smatrix &LL,
- dcompressed_triplet & sparse_triplet2)
- //laplace_approximation_calculator * lapprox)
+int varchol(XCONST dvar_hs_smatrix &AA, XCONST hs_symbolic &T,
+ dvar_hs_smatrix &LL,dcompressed_triplet & sparse_triplet2)
 {
   RETURN_ARRAYS_INCREMENT(); //Need this statement because the function
 
   dvar_vector tmp1=AA.x;
   dvector tmp2=sparse_triplet2.get_x();
-  //ADUNCONST(hs_symbolic,S)
-  //ADUNCONST(dvar_hs_smatrix,L)
-  //ADUNCONST(dvar_hs_smatrix,A)
-    hs_symbolic& S = (hs_symbolic&)T;
-    dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
-    dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
+  hs_symbolic& S = (hs_symbolic&)T;
+  dvar_hs_smatrix& A = (dvar_hs_smatrix&)AA;
+  dvar_hs_smatrix& L = (dvar_hs_smatrix&)LL;
   int icount=0;
   double lki;
   double d;

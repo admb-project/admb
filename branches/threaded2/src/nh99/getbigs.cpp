@@ -8,9 +8,6 @@
  * \file
  * Description not yet available.
  */
-#include <thread>
-#include <sstream>
-#include <cassert>
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #endif
@@ -24,15 +21,20 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
   dmatrix& S,dmatrix& BS,dvector& scale)
 { 
   dmatrix tv(1,ndvar,1,nvar1);
-
-  std::thread::id this_thread_id = std::this_thread::get_id();
-  std::ostringstream oss2;
-  oss2 << *ad_comm::adprogram_name << this_thread_id << ".dep";
-  cifstream cif(oss2.str().c_str());
+  adstring tmpstring="admodel.dep";
+  if (ad_comm::wd_flag)
+     tmpstring = ad_comm::adprogram_name + ".dep";
+  cifstream cif((char*)tmpstring);
 
   int tmp_nvar,tmp_ndvar;
   cif >> tmp_nvar >> tmp_ndvar;
-  assert(tmp_nvar == nvar1);
+  if (tmp_nvar!=nvar1)
+  {
+    cerr << " tmp_nvar != nvar1 in file " << tmpstring
+           << endl;
+    ad_exit(1);
+  }
+
 
 #if defined(USE_LAPLACE)
 
@@ -46,7 +48,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
     // get l_uu and l_xu for covariance calculations
     if (lapprox->hesstype !=2)
     {
-      adstring tmpstring = *ad_comm::adprogram_name + ".luu";
+      tmpstring = ad_comm::adprogram_name + ".luu";
       uistream ifs1((char*)(tmpstring));
       ifs1 >> usize >> xsize;
       if (!ifs1)
@@ -67,7 +69,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
         cerr << "Error reading from file " << tmpstring << endl;
         ad_exit(1);
       }
-      uhat_prime=minv*Dux;
+      uhat_prime=-minv*Dux;
     }
     else
     {
@@ -92,7 +94,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
       {
         if (allocated(H(i)))
         {
-          dmatrix tmp=inv(H(i))*Dux(i);
+          dmatrix tmp=-inv(H(i))*Dux(i);
           int rmin=H(i).indexmin();
           int rmax=H(i).indexmax();
           int tmpmin=Dux(i).indexmin();
@@ -204,69 +206,4 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
 #   endif
 
 
- // 
- //   int us=nvar1-nvar;
- //   int xsize,usize;
- //   // get l_uu and l_xu for covariance calculations
- //   tmpstring = ad_comm::adprogram_name + ".luu";
- //   uistream ifs1((char*)(tmpstring));
- //   ifs1 >> usize >> xsize;
- //   if (!ifs1)
- //   {
- //     cerr << "Error reading from file " << tmpstring << endl;
- //     ad_exit(1);
- //   }
- //   // check xsize and usize
- //   if (xsize !=nvar ||usize !=us)
- //   {
- //     cerr << "size error in file " << tmpstring << endl;
- //     ad_exit(1);
- //   }
- //   dmatrix minv(1,usize,1,usize);
- //   dmatrix Dux(1,usize,1,xsize);
- //   int Bnvar=xsize+usize;
- //   ifs1 >> minv;
- //   ifs1 >> Dux;
- //   if (!ifs1)
- //   {
- //     cerr << "Error reading from file " << tmpstring << endl;
- //     ad_exit(1);
- //   }
- //   dmatrix S(1,nvar,1,nvar);
- //   read_covariance_matrix(S,nvar);
- //   dmatrix uhat_prime=minv*Dux;
- //   dmatrix Sux=uhat_prime*S;
- //   dmatrix Suu=Sux*trans(uhat_prime);
- //   Suu+=minv;
- //   //Suu=minv;
- //   minv.deallocate();
- //   BS.initialize();
- //   // random effects are never bounded?
- // 
- //   int i;
- // 
- //   for (i=1;i<=xsize;i++)
- //   {
- //     for (int j=1;j<=xsize;j++)
- //     {
- //       BS(i,j)=S(i,j);
- //     }
- //   }
- //  
- //   for (i=xsize+1;i<=Bnvar;i++)
- //   {
- //     for (int j=1;j<=xsize;j++)
- //     {
- //       BS(i,j)=Sux(i-xsize,j);
- //       BS(j,i)=BS(i,j);
- //     }
- //   }
- //   
- //   for (i=xsize+1;i<=Bnvar;i++)
- //   {
- //     for (int j=xsize+1;j<=Bnvar;j++)
- //     {
- //       BS(i,j)=Suu(i-xsize,j-xsize);
- //     }
- //   }
 }

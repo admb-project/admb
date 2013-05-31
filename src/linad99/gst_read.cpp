@@ -75,7 +75,7 @@
 #     if defined(__GNU__)
   int  grad_stack::read_grad_stack_buffer(my_off_t& lpos)
 #     else
-  int  grad_stack::read_grad_stack_buffer(long int& lpos)
+  int  grad_stack::read_grad_stack_buffer(my_off_t& lpos)
 #     endif
   {
     // check to see if we are past the beginning of this file

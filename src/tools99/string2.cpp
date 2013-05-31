@@ -18,10 +18,7 @@ adstring::adstring(int lb, int ub) : clist()
     exit(1);
   }
   unsigned int sz = ub;
-//  shape = new adstring_shape(sz);
-//  s = new char[size_t(sz + 1)];
   allocate(sz);
-  s--;
   for (unsigned int i = 1; i <= sz; i++)
   {
     s[i] = '\0'; //' ';
@@ -29,26 +26,10 @@ adstring::adstring(int lb, int ub) : clist()
   s[sz + 1] = '\0';
 }
 
-/*
-adstring::adstring(const unsigned char ub) : clist()
-{
-  unsigned int sz = 1;
-//  shape = new adstring_shape(sz);
-//  s = new char[size_t(sz + 1)];
-  allocate(sz);
-  s--;
-  s[1] = ub;
-  s[2] = '\0';
-}
-*/
-
 adstring::adstring(const char ub) : clist()
 {
   unsigned int sz = 1;
-//  shape = new adstring_shape(sz);
-//  s = new char[size_t(sz + 1)];
   allocate(sz);
-  s--;
   s[1] = ub;
   s[2] = '\0';
 }

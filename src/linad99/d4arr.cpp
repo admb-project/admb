@@ -554,6 +554,12 @@ d4_array::d4_array(int hsl,int hsu,const index_type& sl,
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
 }
 
+d4_array::d4_array(int hsl,int hsu,const index_type& sl,
+    const index_type& sh)
+{
+  allocate(hsl,hsu,sl,sh);
+}
+
 /**
  * Description not yet available.
  * \param
@@ -637,6 +643,39 @@ void d4_array::allocate(int hsl,int hsu,const index_type& sl,
     (*this)(i).allocate(aa,bb,rnrl,rnrh,rncl,rnch);
 
     //(*this)(i).allocate(sl[i],sh[i],nrl[i],nrh[i],ncl[i],nch[i]);
+  }
+}
+
+void d4_array::allocate(int hsl,int hsu,const index_type& sl,
+    const index_type& sh)
+{
+   if (hsl>hsu)
+   {
+     allocate();
+     return;
+   }
+  int ss=hsu-hsl+1;
+  if ( (t = new d3_array[ss]) == 0)
+  {
+    cerr << " Error allocating memory in d3_array contructor\n";
+    ad_exit(21);
+  }
+  if ( (shape=new four_array_shape(hsl,hsu)) == 0)
+  {
+    cerr << " Error allocating memory in d3_array contructor\n";
+    ad_exit(21);
+  }
+  t -= int(hsl);
+  for (int i=hsl; i<=hsu; i++)
+  {
+    const index_type& rsl=sl[i];
+    const index_type& rsh=sh[i];
+
+    const ad_integer& aa=ad_integer(rsl);
+    const ad_integer& bb=ad_integer(rsh);
+
+    (*this)(i).allocate(aa,bb);
+
   }
 }
 

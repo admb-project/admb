@@ -36,7 +36,6 @@
   }
   int param_init_matrix::shared_size_count(void)
   {
-cerr << __FILE__ << ':' << __LINE__ << endl;
     if (share_flags->get_current_phase() != current_phase)
     {
       share_flags->get_inv_matrix_shared(current_phase);
@@ -46,7 +45,6 @@ cerr << __FILE__ << ':' << __LINE__ << endl;
 
   int param_init_vector::shared_size_count(void)
   {
-cerr << __FILE__ << ':' << __LINE__ << endl;
     if (share_flags->get_current_phase() != current_phase)
     {
       share_flags->get_inv_vector_shared(current_phase);

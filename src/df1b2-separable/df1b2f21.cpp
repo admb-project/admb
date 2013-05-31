@@ -36,8 +36,8 @@ int df1b2_gradlist::write_pass1(const df1b2variable * _px,
   int nvar=df1b2variable::nvar;
 
   int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)
-   // +sizeof(char*)
     +4*sizeof(double)+nvar*sizeof(double);
+   // +sizeof(char*)
 // string identifier debug stuff
 #if defined(SAFE_ALL)
   char ids[]="HU";
@@ -232,6 +232,9 @@ void read_pass1_2_dv(void)
   int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list; 
 
+  // unchange df 21 feb 2013
+  //int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)
+   // +4*sizeof(double)+nvar*sizeof(double);
   int total_bytes=sizeof(df1b2_header)+sizeof(df1b2_header)+sizeof(char*)
     +sizeof(double)+nvar*sizeof(double);
 // string identifier debug stuff

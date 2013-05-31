@@ -9,5 +9,6 @@ s/ model_parameters::/ df1b2_parameters::/
 s/dvariable/df1b2variable/g
 s/prevariable/df1b2variable/g
 s/dvar_vector/df1b2vector/g
+s/dvar_compressed_triplet/df1b2_compressed_triplet/g
 s/dvar_matrix/df1b2matrix/g
 s/dvar3_array/df1b23array/g

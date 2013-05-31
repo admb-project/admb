@@ -6,9 +6,9 @@
  */
 #include <admodel.h>
 
-int likeprof_params::num_likeprof_params = 0;
-// this should be a resizeable array
-likeprof_params* likeprof_params::likeprofptr[500]; 
+ int likeprof_params::num_likeprof_params=0;
+ likeprof_params * likeprof_params::likeprofptr[500]; // this should be 
+                                                 // a resizeable array
 
   likeprof_params::likeprof_params(void)
   { 

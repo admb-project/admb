@@ -24,8 +24,8 @@ int initial_params::montecarlo_scale(const dvector& d, const dvector& x)
   for (int i=0;i<num_initial_params;i++)
   {
     //if ((varsptr[i])->phase_start <= current_phase)
-    if (withinbound(0,((*varsptr)[i])->phase_start,current_phase))
-	((*varsptr)[i])->mc_scale(d,x,ii);
+    if (withinbound(0,(varsptr[i])->phase_start,current_phase))
+	(varsptr[i])->mc_scale(d,x,ii);
     }
     return ii-1;
   }

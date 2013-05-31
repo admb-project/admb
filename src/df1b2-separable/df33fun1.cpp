@@ -446,6 +446,9 @@ void read_pass2_2_dvdvdv(void)
   int nvar=df1b2variable::nvar;
   test_smartlist & list=f1b2gradlist->list; 
 
+  // unchange df feb 21 2013
+   //int total_bytes=4*sizeof(df1b2_header)+sizeof(char*)
+   //  +(3*nvar+22)*sizeof(double);
   int total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
     +2*(nvar+1)*sizeof(double);
 // string identifier debug stuff

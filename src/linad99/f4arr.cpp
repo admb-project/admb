@@ -287,19 +287,19 @@ const prevariable dvar4_array::operator()(int i, int j, int k, int l) const
  */
 dvar4_array& dvar4_array::operator=(const d4_array& m)
  {
-   int mmin=hslicemin();
-   int mmax=hslicemax();
-   if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
-   { 
-     cerr << "Incompatible bounds in"
-      " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
-   {
-     (*this)(i)=m(i);
-   }
+     int mmin=hslicemin();
+     int mmax=hslicemax();
+     if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
+     { 
+       cerr << "Incompatible bounds in"
+        " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
+        << endl;
+       ad_exit(1);
+      }
+     for (int i=mmin; i<=mmax; i++)
+     {
+       (*this)(i)=m(i);
+     }
    return *this;
  }
 
@@ -309,18 +309,27 @@ dvar4_array& dvar4_array::operator=(const d4_array& m)
  */
  dvar4_array& dvar4_array::operator=(const dvar4_array& m)
  {
-   int mmin=hslicemin();
-   int mmax=hslicemax();
-   if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
-   { 
-     cerr << "Incompatible bounds in"
-      " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
-      << endl;
-     ad_exit(1);
-    }
-   for (int i=mmin; i<=mmax; i++)
+   if (!allocated(*this))
    {
-     (*this)(i)=m(i);
+     shape=m.shape;
+     (shape->ncopies)++;
+     t = m.t;
+   }
+   else
+   {
+     int mmin=hslicemin();
+     int mmax=hslicemax();
+     if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
+     { 
+       cerr << "Incompatible bounds in"
+        " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
+        << endl;
+       ad_exit(1);
+      }
+     for (int i=mmin; i<=mmax; i++)
+     {
+       (*this)(i)=m(i);
+     }
    }
    return *this;
  }

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -403,7 +403,8 @@ void laplace_approximation_calculator::
 {
   //int i,j,ip; 
   int i,ip; 
-  if (quadratic_prior::get_num_quadratic_prior()>0)
+  if (quadratic_prior::get_num_quadratic_prior()>0 && 
+     quadratic_prior::sparse_flag==0)
   {
     hesstype=4;
     if (allocated(Hess))
@@ -470,22 +471,28 @@ void laplace_approximation_calculator::
   
       quadratic_prior::in_qp_calculations=1; 
 
+      int nsc=0;
       if (sparse_hessian_flag)
       {
         // just to get the number of separable calls
         separable_calls_counter=0;
         pfmin->AD_uf_inner();
         // allocate space for uncompressed sparse hessian information
+        nsc=separable_calls_counter;
 
-        //num_separable_calls=separable_calls_counter;
+        if (quadratic_prior::get_num_quadratic_prior()>0 && 
+          quadratic_prior::sparse_flag==1)
+        {
+          nsc+=1;
+        }
         if (triplet_information==0) 
         {
-          triplet_information =new i3_array(1,separable_calls_counter);
+          triplet_information =new i3_array(1,nsc);
         }
-        else if ( triplet_information->indexmax() != separable_calls_counter) 
+        else if ( triplet_information->indexmax() != nsc) 
         {
           delete triplet_information;
-          triplet_information =new i3_array(1,separable_calls_counter);
+          triplet_information =new i3_array(1,nsc);
         }
         triplet_information->initialize();
         separable_calls_counter=0;
@@ -493,10 +500,33 @@ void laplace_approximation_calculator::
 
       pfmin->pre_user_function();
 
+      if (quadratic_prior::get_num_quadratic_prior()>0 && 
+          quadratic_prior::sparse_flag==1)
+      {
+        pfmin->inner_opt_flag=1;
+        quadratic_prior::calc_matrix_flag=1;
+        quadratic_prior::matrix_mult_flag=0;
+        df1b2quadratic_prior::ptr[0]->get_cM();
+        quadratic_prior::ptr[0]->get_cM();
+        pfmin->inner_opt_flag=0;
+        quadratic_prior::calc_matrix_flag=0;
+
+        (*triplet_information)(nsc)=quadratic_prior::ptr[0]->SCM->get_coords();
+        //imatrix * tmp=new imatrix(quadratic_prior::ptr[0]->SCM->get_coords());
+      }
+      int non_block_diagonal=0;
 
       if (sparse_hessian_flag)
       {
-        // turn triplet_informaiton into  compressed_triplet_information 
+        // if we have a sparse_quadratic_prior object
+        // get extra stuff for sparseness
+        non_block_diagonal=1;
+        // turn triplet_information into  compressed_triplet_information 
+        if (pfmin->spqp)
+        {
+          imatrix tmp;
+          pfmin->get_sparse_stuff(&tmp,1);
+        }
         int mmin= triplet_information->indexmin();
         int mmax= triplet_information->indexmax();
         int i;
@@ -505,6 +535,11 @@ void laplace_approximation_calculator::
         {
           if (allocated((*triplet_information)(i)))
           {
+            if (i==mmax)
+            {
+              sparse_cutoff=ndim;
+              //cout << "HERE" << endl;
+            }
             ndim+=(*triplet_information)(i,1).indexmax();
           }
         }
@@ -514,8 +549,10 @@ void laplace_approximation_calculator::
           compressed_triplet_information=0;
         }
         compressed_triplet_information=new imatrix(1,ndim,1,3);
-        (*compressed_triplet_information)(3).fill_seqadd(1,1);
+        //(*compressed_triplet_information)(3).fill_seqadd(1,1);
         int ii=0;
+
+
         for (i=mmin;i<=mmax;i++)
         {
           if (allocated((*triplet_information)(i)))
@@ -556,7 +593,6 @@ void laplace_approximation_calculator::
 
       quadratic_prior::in_qp_calculations=0; 
   
-      int non_block_diagonal=0;
       for (i=xsize+1;i<=xsize+usize;i++)
       {
         if (used_flags(i)>1)
@@ -565,6 +601,7 @@ void laplace_approximation_calculator::
           break;
         } 
       }
+
       if (non_block_diagonal)
       {
         if (bw< usize/2 && sparse_hessian_flag==0)
@@ -1212,5 +1249,63 @@ imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
 }      
       
 
+/*
+imatrix  get_compressed_triplet_for_sparse_qp()
+{
+  int mmin= lapprox->triplet_information->indexmin();
+  int mmax= lapprox->triplet_information->indexmax();
+  int i;
+  int ndim=0;
+  for (i=mmin;i<=mmax;i++)
+  {
+    if (allocated((*triplet_information)(i)))
+    {
+      ndim+=(*triplet_information)(i,1).indexmax();
+    }
+  }
+  if (compressed_triplet_information)
+  {
+    delete compressed_triplet_information;
+    compressed_triplet_information=0;
+  }
+  compressed_triplet_information=new imatrix(1,ndim,1,3);
+  (*compressed_triplet_information)(3).fill_seqadd(1,1);
+  int ii=0;
+  for (i=mmin;i<=mmax;i++)
+  {
+    if (allocated((*triplet_information)(i)))
+    {
+      int jmin=(*triplet_information)(i,1).indexmin();
+      int jmax=(*triplet_information)(i,1).indexmax();
+      int j;
+      for (j=jmin;j<=jmax;j++)
+      {
+        ii++;
+        (*compressed_triplet_information)(ii,1)=
+          (*triplet_information)(i,1,j);
+        (*compressed_triplet_information)(ii,2)=
+          (*triplet_information)(i,2,j);
+        (*compressed_triplet_information)(ii,3)=ii;
+      }
+    }
+  }
+  imatrix & cti= *compressed_triplet_information;
+  cti=sort(cti,1);
+  int lmin=1;
+  int lmax=0;
+  for (i=2;i<=ndim;i++)
+  {
+    if (cti(i,1)>cti(i-1,1))
+    {
+      lmax=i-1;
+      cti.sub(lmin,lmax)=sort(cti.sub(lmin,lmax),2);
+      lmin=i;
+    }
+  } 
+  cti.sub(lmin,ndim)=sort(cti.sub(lmin,ndim),2);
+  imatrix tmp=trans(cti);
+  delete compressed_triplet_information;
+  compressed_triplet_information=new imatrix(tmp);
+  */  
 
 #endif // if defined(USE_LAPLACE)

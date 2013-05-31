@@ -10,7 +10,6 @@
 \param r growth rate; differentiable scalar
 \param n0 initial population size at t=0; differentiable scalar
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 dvariable logisticK( const double& t,  const prevariable& K,  const prevariable& r,  const prevariable& n0)
 {
@@ -27,7 +26,6 @@ dvariable logisticK( const double& t,  const prevariable& K,  const prevariable&
 \param r growth rate; differentiable scalar
 \param n0 initial population size at t=0; differentiable scalar
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 dvar_vector logisticK( const dvector& t,  const prevariable& K,  const prevariable& r,  const prevariable& n0)
 {
@@ -44,7 +42,6 @@ dvar_vector logisticK( const dvector& t,  const prevariable& K,  const prevariab
 \param r growth rate; differentiable scalar
 \param n0 initial population size at t=0; differentiable scalar
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 dvar_vector logisticK( const dvector& t,  const dvar_vector& K,  const prevariable& r,  const prevariable& n0)
 {
@@ -62,7 +59,6 @@ dvar_vector logisticK( const dvector& t,  const dvar_vector& K,  const prevariab
 \param r growth rate; differentiable vector
 \param n0 initial population size at t=0; differentiable scalar
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 dvar_vector logisticK( const dvector& t,  const prevariable& K,  const dvar_vector& r,  const prevariable& n0)
 {
@@ -79,7 +75,6 @@ dvar_vector logisticK( const dvector& t,  const prevariable& K,  const dvar_vect
 \param r growth rate; differentiable vector
 \param n0 initial population size at t=0; differentiable scalar
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 dvar_vector logisticK( const dvector& t,  const dvar_vector& K,  const dvar_vector& r,  const prevariable& n0)
 {
@@ -98,7 +93,6 @@ dvar_vector logisticK( const dvector& t,  const dvar_vector& K,  const dvar_vect
 \param r growth rate; differentiable scalar
 \param n0 initial population size at t=0; differentiable vector
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 dvar_vector logisticK( const dvector& t,  const prevariable& K,  const prevariable& r,  const dvar_vector& n0)
 {
@@ -115,7 +109,6 @@ dvar_vector logisticK( const dvector& t,  const prevariable& K,  const prevariab
 \param r growth rate; differentiable scalar
 \param n0 initial population size at t=0; differentiable vector
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 dvar_vector logisticK( const dvector& t,  const dvar_vector& K,  const prevariable& r,  const dvar_vector& n0)
 {
@@ -133,7 +126,6 @@ dvar_vector logisticK( const dvector& t,  const dvar_vector& K,  const prevariab
 \param r growth rate; differentiable vector
 \param n0 initial population size at t=0; differentiable vector
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 dvar_vector logisticK( const dvector& t,  const prevariable& K,  const dvar_vector& r,  const dvar_vector& n0)
 {
@@ -150,7 +142,6 @@ dvar_vector logisticK( const dvector& t,  const prevariable& K,  const dvar_vect
 \param r growth rate; differentiable vector
 \param n0 initial population size at t=0; differentiable vector
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 dvar_vector logisticK( const dvector& t,  const dvar_vector& K,  const dvar_vector& r,  const dvar_vector& n0)
 {
@@ -170,7 +161,6 @@ dvar_vector logisticK( const dvector& t,  const dvar_vector& K,  const dvar_vect
 \param r growth rate; differentiable scalar in a random effects model
 \param n0 initial population size at t=0; differentiable scalar in a random effects model
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 df1b2variable logisticK( const double& t,  const df1b2variable& K,  const df1b2variable& r,  const df1b2variable& n0)
 {
@@ -185,7 +175,6 @@ df1b2variable logisticK( const double& t,  const df1b2variable& K,  const df1b2v
 \param r growth rate; differentiable scalar in a random effects model
 \param n0 initial population size at t=0; differentiable scalar in a random effects model
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 df1b2vector logisticK( const dvector& t,  const df1b2variable& K,  const df1b2variable& r,  const df1b2variable& n0)
 {
@@ -200,7 +189,6 @@ df1b2vector logisticK( const dvector& t,  const df1b2variable& K,  const df1b2va
 \param r growth rate; differentiable scalar in a random effects model
 \param n0 initial population size at t=0; differentiable scalar in a random effects model
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 df1b2vector logisticK( const dvector& t,  const df1b2vector& K,  const df1b2variable& r,  const df1b2variable& n0)
 {
@@ -218,7 +206,6 @@ df1b2vector logisticK( const dvector& t,  const df1b2vector& K,  const df1b2vari
 \param r growth rate; differentiable vector in a random effects model
 \param n0 initial population size at t=0; differentiable scalar in a random effects model
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 df1b2vector logisticK( const dvector& t,  const df1b2variable& K,  const df1b2vector& r,  const df1b2variable& n0)
 {
@@ -233,7 +220,6 @@ df1b2vector logisticK( const dvector& t,  const df1b2variable& K,  const df1b2ve
 \param r growth rate; differentiable vector in a random effects model
 \param n0 initial population size at t=0; differentiable scalar in a random effects model
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 df1b2vector logisticK( const dvector& t,  const df1b2vector& K,  const df1b2vector& r,  const df1b2variable& n0)
 {
@@ -253,7 +239,6 @@ df1b2vector logisticK( const dvector& t,  const df1b2vector& K,  const df1b2vect
 \param r growth rate; differentiable scalar in a random effects model
 \param n0 initial population size at t=0; differentiable vector in a random effects model
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 df1b2vector logisticK( const dvector& t,  const df1b2variable& K,  const df1b2variable& r,  const df1b2vector& n0)
 {
@@ -268,7 +253,6 @@ df1b2vector logisticK( const dvector& t,  const df1b2variable& K,  const df1b2va
 \param r growth rate; differentiable scalar in a random effects model
 \param n0 initial population size at t=0; differentiable vector in a random effects model
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 df1b2vector logisticK( const dvector& t,  const df1b2vector& K,  const df1b2variable& r,  const df1b2vector& n0)
 {
@@ -286,7 +270,6 @@ df1b2vector logisticK( const dvector& t,  const df1b2vector& K,  const df1b2vari
 \param r growth rate; differentiable vector in a random effects model
 \param n0 initial population size at t=0; differentiable vector in a random effects model
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 df1b2vector logisticK( const dvector& t,  const df1b2variable& K,  const df1b2vector& r,  const df1b2vector& n0)
 {
@@ -301,7 +284,6 @@ df1b2vector logisticK( const dvector& t,  const df1b2variable& K,  const df1b2ve
 \param r growth rate; differentiable vector in a random effects model
 \param n0 initial population size at t=0; differentiable vector in a random effects model
 \return  \f$ \frac{K}{1+(\frac{K}{n0}-1)e^{-rt}} \f$ 
-\ingroup ECOL
 **/
 df1b2vector logisticK( const dvector& t,  const df1b2vector& K,  const df1b2vector& r,  const df1b2vector& n0)
 {

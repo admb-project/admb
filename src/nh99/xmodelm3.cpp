@@ -44,12 +44,12 @@ void tracing_message(int traceflag,const char *s);
   {
     return inner_opt_flag;
   }
-__thread int function_minimizer::inner_opt_flag = 0;
+
+  int function_minimizer::inner_opt_flag=0;
 #endif
 
-__thread int function_minimizer::bad_step_flag = 0;  
-__thread named_dvar_vector* function_minimizer::ph = nullptr;
-__thread named_dvar_vector* function_minimizer::pg = nullptr;
+
+  int function_minimizer::bad_step_flag=0;  
 
   void function_minimizer::minimize(void)
   {
@@ -516,6 +516,9 @@ __thread named_dvar_vector* function_minimizer::pg = nullptr;
         print_is_diagnostics(lapprox);
       }
 #endif
+      // move this outside of phase loop?
+      //quadratic_prior::cleanup(); 
+      //df1b2quadratic_prior::cleanup(); 
       initial_params::save();
       report();
       // in case the user changes some initial_params in the report section
@@ -528,6 +531,8 @@ __thread named_dvar_vector* function_minimizer::pg = nullptr;
         initial_params::current_phase++;
       }
     }
+    //quadratic_prior::cleanup(); 
+    //df1b2quadratic_prior::cleanup(); 
     if (initial_params::current_phase >
       initial_params::max_number_phases)
     {
@@ -543,87 +548,89 @@ __thread named_dvar_vector* function_minimizer::pg = nullptr;
   }
 #endif
 
-function_minimizer::function_minimizer(long int sz)
-{
-#if defined(USE_LAPLACE)
-  lapprox=0;
-  multinomial_weights=0;
-#endif
-  maxfn  = 1000;
-  iprint = 1;
-  crit   = 0.0001;
-  imax   = 30;
-  dfn    = 0.01;
-  iexit  = 0;
-  ihflag = 0;
-  ihang  = 0;
-  scroll_flag = 1;
-  maxfn_flag=0;
-  quit_flag=0;
-  min_improve=.0;
-  negdirections = nullptr;
-  spminflag=0;
-  repeatminflag=0;
-
-  int ssz;
-  int nopt=get_option_number("-ams",
-      "-ams option needs positive integer -- ignored",ssz);
-  if (nopt > -1 && ssz > 0) 
+  function_minimizer::function_minimizer(long int sz)
   {
+#  if defined(USE_LAPLACE)
+    lapprox=0;
+    multinomial_weights=0;
+    //cout << lapprox << endl;
+#  endif
+    maxfn  = 1000;
+    iprint = 1;
+    crit   = 0.0001;
+    imax   = 30;
+    dfn    = 0.01;
+    iexit  = 0;
+    ihflag = 0;
+    ihang  = 0;
+    scroll_flag = 1;
+    maxfn_flag=0;
+    quit_flag=0;
+    min_improve=.0;
+    negdirections=0;
+    spminflag=0;
+    repeatminflag=0;
+
+    int ssz;
+
+    int nopt=get_option_number("-ams",
+      "-ams option needs positive integer -- ignored",ssz);
+    if (nopt>-1 && ssz>0) {
       sz=ssz;
-  }
+    }
     
 #ifdef __BORLANDC__
-  long int lssz;
+    long int lssz;
 #else
-  long long int lssz;
+    long long int lssz;
 #endif
-  nopt=get_option_number("-cbs",
+    nopt=get_option_number("-cbs",
       "-cbs option needs positive integer -- ignored",lssz);
-  if (nopt > -1 && lssz > 0)
-  {
-    gradient_structure::set_CMPDIF_BUFFER_SIZE(lssz);
-  }
-  nopt=get_option_number("-gbs",
+    if (nopt>-1 && lssz>0) {
+      gradient_structure::set_CMPDIF_BUFFER_SIZE(lssz);
+    }
+
+    
+    nopt=get_option_number("-gbs",
       "-gbs option needs positive integer -- ignored",lssz);
-  if (nopt > -1 && lssz > 0) 
-  {
-    gradient_structure::set_GRADSTACK_BUFFER_SIZE(lssz/sizeof(grad_stack_entry));
+    if (nopt>-1 && lssz>0) {
+      gradient_structure::set_GRADSTACK_BUFFER_SIZE
+        (lssz/sizeof(grad_stack_entry));
+    }
+
+    if (!sz)
+    {
+      pgs = new gradient_structure;
+    }
+    else
+    {
+      pgs = new gradient_structure(sz);
+    }
   }
-  if (!sz)
+
+  function_minimizer::~function_minimizer()
   {
-    pgs = new gradient_structure();
-  }
-  else
-  {
-    pgs = new gradient_structure(sz);
-  }
-}
-function_minimizer::~function_minimizer()
-{
-#if defined(USE_LAPLACE)
-  if(multinomial_weights)
-  {
-    delete multinomial_weights;
-    multinomial_weights = nullptr;
-  }
-  if (lapprox)
-  {
-    delete lapprox;
-    lapprox = nullptr;
-  }
-#endif
-  if (pgs)
-  {
+#  if defined(USE_LAPLACE)
+    if(multinomial_weights)
+    {
+      delete multinomial_weights;
+      multinomial_weights=0;
+    }
+
+    if (lapprox)
+    {
+      delete lapprox;
+      lapprox=0;
+    }
+#  endif
     delete pgs;
-    pgs = nullptr;
+    pgs=NULL;
+    if (negdirections)
+    {
+      delete negdirections;
+      negdirections=0;
+    }
   }
-  if (negdirections)
-  {
-    delete negdirections;
-    negdirections = nullptr;
-  }
-}
 
   void function_minimizer::set_initial_simplex(const dmatrix& _p, const dvector& _y, int nvar, const dvector& x,
     double delta)

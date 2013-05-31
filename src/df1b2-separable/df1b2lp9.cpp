@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2011 Regents of the University of California 
  */
 /**
  * \file
@@ -135,11 +135,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
           if (!icon(i))
           {
             independent_variables& uuu=*(independent_variables*)(&(uu(i)));
-            if (i==19)
-              crap(ff[i],uuu,gg[i]);
             (pfmc1[i])->fmin(ff[i],uuu,gg(i));
-            if (i==19)
-              crap();
             gmax(i)=fabs(pfmc1[i]->gmax);
             if (!initrun_flag)
             {
@@ -175,16 +171,21 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
   
         pmin->inner_opt_flag=1;
         pfmin->AD_uf_inner();
-        pmin->inner_opt_flag=0;
 
         if (saddlepointflag)
         {
           *objective_function_value::pobjfun*=-1.0;
         }
+        no_function_component_flag=1;
+       	quadratic_prior::matrix_mult_flag=1;
         if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
         {
           quadratic_prior::get_M_calculations();
         }
+       	quadratic_prior::matrix_mult_flag=0;
+        no_function_component_flag=0;
+        pmin->inner_opt_flag=0;
+
         vf+=*objective_function_value::pobjfun;
        
         objective_function_value::fun_without_pen=value(vf);
@@ -198,10 +199,6 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_block_diagonal
           {
             gg(i,j)=g((*derindex)(i)(j));
           }
-        }
-        {
-          ofstream ofs("l:/temp1.dat");
-          ofs << g.indexmax() << " " << setprecision(15) << g << endl;
         }
         if (saddlepointflag==2)
         {

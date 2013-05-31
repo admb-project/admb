@@ -1,13 +1,4 @@
-/**
- * $Id: eigenv.cpp 789 2010-10-05 01:01:09Z johnoel $
- *
- * Author: David Fournier
- * Copyright (c) 2009, 2010 ADMB foundation
- */
-
-/** \def EIGEN_VECTORS
-   Causes Eigenvectors to be computed
-*/
+#define HOME_VERSION
 #define EIGEN_VECTORS
 
 #include <fvar.hpp>
@@ -27,11 +18,6 @@
   void get_eigen(BOR_CONST dvector& d,BOR_CONST dvector& e,BOR_CONST dmatrix& z);
 #endif
 
-/** Eigenvectors.
-    Computes eigenvectors of a real square matrix. Input matrix is symmetrized.
-    \param m Real square matrix.
-    \return Matrix of eigenvectors.
-*/
 dmatrix eigenvectors(_CONST dmatrix& m)  //,_CONST dvector& diag)
 {
   if (m.rowsize()!=m.colsize())
@@ -63,12 +49,6 @@ dmatrix eigenvectors(_CONST dmatrix& m)  //,_CONST dvector& diag)
   return m1;
 }
 
-/** Eigenvectors.
-    Computes eigenvectors of a real square matrix. Input matrix is symmetrized.
-    \param m Real square matrix.
-    \param _diag
-    \return Matrix of eigenvectors.
-*/
 dmatrix eigenvectors(_CONST dmatrix& m,BOR_CONST dvector& _diag)  //,_CONST dvector& diag)
 {
   ADUNCONST(dvector,diag)
@@ -107,16 +87,7 @@ dmatrix eigenvectors(_CONST dmatrix& m,BOR_CONST dvector& _diag)  //,_CONST dvec
 }
 
 
-/** Householder transformation for eivenvector computation.
-  \param _m Real, symmetric matrix; on return contains the orthogonal
-   transformed matrix.
-  \param _d On return contains the diagonal elements of the tri-diagonal matrix.
-  \param _e On teturn contains the off-diagonal elements.
 
-  \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 11
-*/
 #ifdef EIGEN_VECTORS
   void tri_dagv(BOR_CONST dmatrix& _m,BOR_CONST dvector& _d,BOR_CONST dvector& _e)
 #else
@@ -221,11 +192,6 @@ dmatrix eigenvectors(_CONST dmatrix& m,BOR_CONST dvector& _diag)  //,_CONST dvec
   #endif
 }
 
-/** Change sign.
-  \param x Argument to change.
-  \param y Argument to test.
-  \return The value of x with the sign of y.
-*/
 double SIGNV( CGNU_DOUBLE x, double y)
 {
   if (y<0)
@@ -238,15 +204,6 @@ double SIGNV( CGNU_DOUBLE x, double y)
   }
 }
 
-/** Eigenvalues and eigenvectors.
-  \param _d Diagonal elements of the matrix computed by Householder transformation.
-  \param _e Off-diagonal elements.
-  \param _z On output contains eigenvectors of _d.
-
-  \n\n The implementation of this algorithm was inspired by
-    "Numerical Recipes in C", 2nd edition,
-    Press, Teukolsky, Vetterling, Flannery, chapter 11
-*/
 #ifdef EIGEN_VECTORS
   void get_eigenv(const dvector& _d,const dvector& _e,const dmatrix& _z)
 #else
@@ -320,6 +277,7 @@ double SIGNV( CGNU_DOUBLE x, double y)
 }
 
 #undef EIGEN_VECTORS
+#undef HOME_VERSION
 
 
 

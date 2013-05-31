@@ -13,9 +13,7 @@
  * \file
  * Description not yet available.
  */
-#include <thread>
-#include <sstream>
-#include <cassert>
+
 #include <fvar.hpp>
 #if defined(__SPDLL__)
 #  if !defined(linux)
@@ -155,7 +153,7 @@ double dafsqrt( double x );
     }
   }
 int log_values_switch=0;
-ofstream logstream;
+ofstream logstream("fmin.log");
 
 /**
  * Description not yet available.
@@ -163,13 +161,6 @@ ofstream logstream;
  */
 void print_values(const double& f, const dvector & x,const dvector& g)
 {
-  if (!logstream.is_open())
-  {
-    std::thread::id this_thread_id = std::this_thread::get_id();
-    std::ostringstream oss;
-    oss << *ad_comm::adprogram_name << this_thread_id << "-fmin.log";
-    logstream.open(oss.str().c_str());
-  }
   logstream << setprecision(13) << f << endl;
   logstream << setprecision(13) << x << endl;
   logstream << setprecision(13) << g << endl;
@@ -365,6 +356,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
         cout << "finished hessian restore" << endl;
       }
   tracing_message(traceflag,"A18");
+      fbest=f;
       for (i=1; i<=n; i++)
       {
         x.elem(i)=xsave.elem(i);
@@ -487,6 +479,10 @@ label21 :
       if(gs >= 0.0)
          goto label92;
       gso=gs;
+      if (isnan(gs) || isnan(gso))
+      {
+        cerr << "fmin produced NAN"<<endl;
+      }
       alpha=-2.0*df/gs;
       if(alpha > 1.0)
         alpha=1.0;

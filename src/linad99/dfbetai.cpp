@@ -1,8 +1,8 @@
 #include <df1b2fun.h>
 #include <df12fun.h>
 //#define EPS double(3.0e-7)
-#define EPS double(1.0e-9)
-#define FPMIN double(1.0e-30)
+#define EPS double(1.0e-10)
+#define FPMIN double(1.0e-60)
 prevariable betacf(_CONST prevariable& a,_CONST prevariable& b,
   double x, int MAXIT=100);
 

@@ -4,8 +4,6 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
-#include <thread>
-#include <sstream>
 #include <admodel.h>
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
@@ -23,10 +21,10 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
  //char ch;
  if (!underflow_flag)
  {
-    std::thread::id this_thread_id = std::this_thread::get_id();
-    std::ostringstream oss;
-    oss << *ad_comm::adprogram_name << this_thread_id << ".hes";
-    uistream ifs(oss.str().c_str());
+    adstring tmpstring="admodel.hes";
+    if (ad_comm::wd_flag)
+       tmpstring = ad_comm::adprogram_name + ".hes";
+    uistream ifs((char*)tmpstring);
     
   if (!ifs)
   {
@@ -258,15 +256,15 @@ void function_minimizer::prof_minimize(int iprof, double sigma,
        // set convergence criterion for this phase
        if (!(!convergence_criteria))
        {
-         int ind=min(convergence_criteria->indexmax(),
+         int ind=min(convergence_criteria.indexmax(),
            initial_params::current_phase);
-         fmc.crit = (*convergence_criteria)(ind);
+         fmc.crit=convergence_criteria(ind);
        }
        if (!(!maximum_function_evaluations))
        {
- 	int ind=min(maximum_function_evaluations->indexmax(),
+ 	int ind=min(maximum_function_evaluations.indexmax(),
            initial_params::current_phase);
-         fmc.maxfn=int((*maximum_function_evaluations)(ind));
+         fmc.maxfn=int(maximum_function_evaluations(ind));
        }
        int itnsave=0;
        //double weight=pow(50.0,profile_phase)/(sigma*sigma);

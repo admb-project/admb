@@ -62,12 +62,8 @@ adstring& adstring::operator=(const adstring & t)
   {
     int sz = t.size ();
     shape->size() = t.size();
-    free(++s);
-  #if (defined __ZTC__) || (defined __NDPX__)
-    s =  (char*)malloc(sz+1);
-  #else
-    s =  (unsigned char*)malloc(sz+1);
-  #endif
+    delete [] ++s;
+    s=new char[sz+1];
     s--;
     int size = t.size();
     for (int i = 1; i <= size; i++)
@@ -90,8 +86,8 @@ void adstring::realloc(const char * t)
 {
   int sz = strlen(t);
   shape->size() = strlen(t);
-  free(++s);
-  s =  (unsigned char*)malloc(sz+1);
+  delete [] ++s;
+  s=new char[sz+1];
   strcpy((char*)(s),t);
   s--;
   adstring * tmp = (adstring *) this->next;
@@ -107,8 +103,7 @@ adstring::~adstring()
 {
   if (next==this)
   {
-    free(shape);
-    shape=0;
+    deallocate();
   }
 };
  

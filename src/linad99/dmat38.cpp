@@ -1,9 +1,7 @@
-/**
- * $Id$
- *
- * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
- */
+
+
+
+#define HOME_VERSION
 #include <fvar.hpp>
 
 #ifdef __TURBOC__
@@ -25,7 +23,7 @@
 dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   double ln_unsigned_det,double& sign);
 
-dmatrix solve(const dmatrix& aa, const dmatrix& tz)
+dmatrix solve(const dmatrix& aa,const dmatrix& tz)
 {
   double ln;
   double sgn;
@@ -227,4 +225,5 @@ double norm2(const banded_symmetric_dmatrix& B)
 }
 
 #undef TINY
+#undef HOME_VERSION
 

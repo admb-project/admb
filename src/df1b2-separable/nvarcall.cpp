@@ -19,7 +19,7 @@
     int nvar=0;
     for (int i=0;i<num_initial_params;i++)
     {
-      nvar+= (varsptr->operator[](i))->size_count();
+      nvar+= (varsptr[i])->size_count();
     }
     return nvar;
   }
@@ -34,7 +34,7 @@
     int ii=1;
     for (int i=0;i<num_initial_params;i++)
     {
-      (varsptr->operator[](i))->set_value_inv(x,ii);
+      (varsptr[i])->set_value_inv(x,ii);
     }
   }
 
@@ -50,7 +50,7 @@
     dvariable pen1;
     for (int i=0;i<num_initial_params;i++)
     {
-      (varsptr->operator[](i))->set_value(x,ii,pen1);
+      (varsptr[i])->set_value(x,ii,pen1);
       _pen(ii-1)=value(pen1);
       pen+=pen1; 
     }

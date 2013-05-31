@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California
+ * Copyright (c) 2008-2011 Regents of the University of California
  * 
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
@@ -187,9 +187,11 @@ public:
   nested_calls_shape nested_shape;
   int separable_call_level;
   int dd_nr_flag;
+  int no_re_ders_flag;
   dmatrix * antiepsilon;
   i3_array * triplet_information;
   imatrix * compressed_triplet_information;
+  imatrix * compressed_triplet_information_for_sparse_qp;
   imatrix * calling_set;
   dvector *  importance_sampling_values; 
   dvector *  importance_sampling_weights; 
@@ -287,7 +289,7 @@ public:
   dmatrix get_gradient_for_hessian_calcs(const dmatrix& local_Hess,
     double & f);
   fmm fmc1;
-  //fmmt1 fmc1;
+  fmmt1 fmc2;
   fmm fmc;
   dvector scale;
   dvector curv;
@@ -391,6 +393,7 @@ public:
   void begin_separable_call_stuff(void);
   void end_separable_call_stuff(void);
   void build_up_nested_shape(void);
+  int sparse_cutoff;
 };
 
 /**

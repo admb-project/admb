@@ -225,6 +225,8 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     //pfmin->lapprox->xadjoint.initialize();
     //pfmin->lapprox->uadjoint.initialize();
     pfmin->lapprox->num_separable_calls=0;
+    // DF !!!! march 22 13
+    pfmin->lapprox->separable_calls_counter=0;
     pfmin->lapprox->check_local_xadjoint.initialize();
     pfmin->lapprox->check_local_xadjoint2.initialize();
     pfmin->lapprox->check_local_uadjoint.initialize();

@@ -10,7 +10,8 @@ include objects.lst
 
 all: disk
 
-disk: $(DISKDIR)/lib/$(LIBNAME) $(DISKDIR)/bin/tpl2rem
+#disk: $(DISKDIR)/lib/$(LIBNAME) $(DISKDIR)/bin/tpl2rem
+disk: $(DISKDIR)/lib/$(LIBNAME) 
 	cp adpool.h $(DISKDIR)/include
 	cp adrndeff.h $(DISKDIR)/include
 	cp df1b2fun.h $(DISKDIR)/include

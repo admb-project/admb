@@ -15,9 +15,9 @@ void initial_params::add_random_vector(const dvector& x)
   int ii=1;
   for (int i=0;i<num_initial_params;i++)
   {
-    if (withinbound(0,((*varsptr)[i])->phase_start,current_phase))
+    if (withinbound(0,(varsptr[i])->phase_start,current_phase))
     {
-      ((*varsptr)[i])->add_value((const dvector&)(x),ii);
+      (varsptr[i])->add_value((const dvector&)(x),ii);
     }
   }
 }

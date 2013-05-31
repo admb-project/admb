@@ -4,22 +4,21 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
-#include <admodel.h>
+  #include <admodel.h>
 
-__thread objective_function_value* objective_function_value::pobjfun = nullptr;
-__thread double objective_function_value::gmax = 0;
-__thread double objective_function_value::fun_without_pen = 0;
-objective_function_value::objective_function_value() 
-{ 
-  pobjfun = this; 
-}
-objective_function_value& objective_function_value::operator=(const prevariable& v)
-{
-  prevariable::operator=(v);
-  return *this;
-}
-objective_function_value& objective_function_value::operator=(CGNU_DOUBLE v)
-{
-  prevariable::operator=(v);
-  return *this;
-}
+  objective_function_value * objective_function_value::pobjfun=NULL;
+  double objective_function_value::gmax=0;
+
+  objective_function_value::objective_function_value() {pobjfun=this;}
+  objective_function_value& objective_function_value::operator =
+    (const prevariable& v)
+  {
+    prevariable::operator = (v);
+    return *this;
+  }
+  objective_function_value& objective_function_value::operator =
+    (CGNU_DOUBLE v)
+  {
+    prevariable::operator = (v);
+    return *this;
+  }

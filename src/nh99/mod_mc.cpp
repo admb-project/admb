@@ -4,9 +4,6 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
-#include <thread>
-#include <sstream>
-#include <cassert>
 #include <admodel.h>
 
 #ifdef __GNUDOS__
@@ -55,18 +52,30 @@ void function_minimizer::monte_carlo_routine(void)
     dvector v(1,nvar);  // need to read in v from model.rep
     dmatrix S(1,nvar,1,nvar);
     {
-      std::thread::id this_thread_id = std::this_thread::get_id();
-      std::ostringstream oss2;
-      oss2 << *ad_comm::adprogram_name << this_thread_id << ".cov";
-      uistream  cif(oss2.str().c_str());
-      assert(cif.is_open());
-
+      adstring tmpstring="admodel.cov";
+      if (ad_comm::wd_flag)
+        tmpstring = ad_comm::adprogram_name + ".cov";
+      uistream cif((char*)tmpstring);
+      if (!cif)
+      {
+        cerr << "Error trying to open file " << tmpstring
+	    << " for reading" << endl;
+      }
       int tmp_nvar;
       cif >> tmp_nvar;
-      assert(nvar == tmp_nvar);
-
+      if (nvar !=tmp_nvar)
+      {
+        cerr << "Incorrect number of independent variables in file"
+            << tmpstring  << endl;
+        exit(1);
+      }
       cif >> S;
-      assert(cif);
+      if (!cif)
+      {
+        cerr << "error reading covariance matrix from "
+	     <<   tmpstring << endl;
+        exit(1);
+      }
 
       initial_params::mc_phase=0;
       /*int check=*/initial_params::stddev_scale(scale,x);

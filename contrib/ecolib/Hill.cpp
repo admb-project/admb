@@ -1,6 +1,7 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 #include <adrndeff.h> 
+#include "ecolib.h"
 
 /*---------------------------------------------------------3rd variable is a scalar*/
 /*---------------------------------------------2nd variable is a scalar*/
@@ -9,8 +10,7 @@
 \param a ; differentiable scalar
 \param b ; differentiable scalar
 \param c ; differentiable scalar
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 dvariable Hill(const double& x,  const prevariable& a,  const prevariable& b,  const prevariable& c)
 {
@@ -26,8 +26,7 @@ dvariable Hill(const double& x,  const prevariable& a,  const prevariable& b,  c
 \param a ; differentiable scalar
 \param b ; differentiable scalar
 \param c ; differentiable scalar
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 dvar_vector Hill(const dvector& x,  const prevariable& a,  const prevariable& b,  const prevariable& c)
 {
@@ -43,8 +42,7 @@ dvar_vector Hill(const dvector& x,  const prevariable& a,  const prevariable& b,
 \param a ; differentiable vector
 \param b ; differentiable scalar
 \param c ; differentiable scalar
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 dvar_vector Hill(const dvector& x,  const dvar_vector& a,  const prevariable& b,  const prevariable& c)
 {
@@ -61,8 +59,7 @@ dvar_vector Hill(const dvector& x,  const dvar_vector& a,  const prevariable& b,
 \param a ; differentiable scalar
 \param b ; differentiable vector
 \param c ; differentiable scalar
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 dvar_vector Hill(const dvector& x,  const prevariable& a,  const dvar_vector& b,  const prevariable& c)
 {
@@ -78,8 +75,7 @@ dvar_vector Hill(const dvector& x,  const prevariable& a,  const dvar_vector& b,
 \param a ; differentiable vector
 \param b ; differentiable vector
 \param c ; differentiable scalar
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 dvar_vector Hill(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,  const prevariable& c)
 {
@@ -97,8 +93,7 @@ dvar_vector Hill(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,
 \param a ; differentiable scalar
 \param b ; differentiable scalar
 \param c ; differentiable vector
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 dvar_vector Hill(const dvector& x,  const prevariable& a,  const prevariable& b,  const dvar_vector& c)
 {
@@ -114,8 +109,7 @@ dvar_vector Hill(const dvector& x,  const prevariable& a,  const prevariable& b,
 \param a ; differentiable vector
 \param b ; differentiable scalar
 \param c ; differentiable vector
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 dvar_vector Hill(const dvector& x,  const dvar_vector& a,  const prevariable& b,  const dvar_vector& c)
 {
@@ -132,8 +126,7 @@ dvar_vector Hill(const dvector& x,  const dvar_vector& a,  const prevariable& b,
 \param a ; differentiable scalar
 \param b ; differentiable vector
 \param c ; differentiable vector
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 dvar_vector Hill(const dvector& x,  const prevariable& a,  const dvar_vector& b,  const dvar_vector& c)
 {
@@ -149,8 +142,7 @@ dvar_vector Hill(const dvector& x,  const prevariable& a,  const dvar_vector& b,
 \param a ; differentiable vector
 \param b ; differentiable vector
 \param c ; differentiable vector
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 dvar_vector Hill(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,  const dvar_vector& c)
 {
@@ -169,8 +161,7 @@ dvar_vector Hill(const dvector& x,  const dvar_vector& a,  const dvar_vector& b,
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 df1b2variable Hill(const double& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -184,8 +175,7 @@ df1b2variable Hill(const double& x,  const df1b2variable& a,  const df1b2variabl
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 df1b2vector Hill(const dvector& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -199,8 +189,7 @@ df1b2vector Hill(const dvector& x,  const df1b2variable& a,  const df1b2variable
 \param a ; differentiable vector in a random effects model
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable scalar in a random effects model
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 df1b2vector Hill(const dvector& x,  const df1b2vector& a,  const df1b2variable& b,  const df1b2variable& c)
 {
@@ -217,8 +206,7 @@ df1b2vector Hill(const dvector& x,  const df1b2vector& a,  const df1b2variable& 
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable scalar in a random effects model
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 df1b2vector Hill(const dvector& x,  const df1b2variable& a,  const df1b2vector& b,  const df1b2variable& c)
 {
@@ -232,8 +220,7 @@ df1b2vector Hill(const dvector& x,  const df1b2variable& a,  const df1b2vector& 
 \param a ; differentiable vector in a random effects model
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable scalar in a random effects model
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 df1b2vector Hill(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,  const df1b2variable& c)
 {
@@ -252,8 +239,7 @@ df1b2vector Hill(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable vector in a random effects model
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 df1b2vector Hill(const dvector& x,  const df1b2variable& a,  const df1b2variable& b,  const df1b2vector& c)
 {
@@ -267,8 +253,7 @@ df1b2vector Hill(const dvector& x,  const df1b2variable& a,  const df1b2variable
 \param a ; differentiable vector in a random effects model
 \param b ; differentiable scalar in a random effects model
 \param c ; differentiable vector in a random effects model
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 df1b2vector Hill(const dvector& x,  const df1b2vector& a,  const df1b2variable& b,  const df1b2vector& c)
 {
@@ -285,8 +270,7 @@ df1b2vector Hill(const dvector& x,  const df1b2vector& a,  const df1b2variable& 
 \param a ; differentiable scalar in a random effects model
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable vector in a random effects model
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 df1b2vector Hill(const dvector& x,  const df1b2variable& a,  const df1b2vector& b,  const df1b2vector& c)
 {
@@ -300,8 +284,7 @@ df1b2vector Hill(const dvector& x,  const df1b2variable& a,  const df1b2vector& 
 \param a ; differentiable vector in a random effects model
 \param b ; differentiable vector in a random effects model
 \param c ; differentiable vector in a random effects model
-\return  \f$ \frac{ax^c}{1+bx^c} \f$ 
-\ingroup ECOL
+\return  \f$  \f$
 **/
 df1b2vector Hill(const dvector& x,  const df1b2vector& a,  const df1b2vector& b,  const df1b2vector& c)
 {

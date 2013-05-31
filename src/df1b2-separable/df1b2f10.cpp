@@ -18,7 +18,7 @@ void test_smartlist::reset(void)
 {
   bptr=buffer; 
   eof_flag=0;
-  /*off_t pos=*/lseek(fp,0L,SEEK_CUR);
+  /*off_t pos=*/lseek(fp,0L,SEEK_SET);
   written_flag=0;
   end_saved=0;
 }
@@ -72,6 +72,7 @@ void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
     cerr << "Allocation error in df1b2_gradlist" << endl;
     ad_exit(1);
   }
+  memset(true_buffer,0,(bufsize+2)*sizeof(double));
   doubleptr=(double*)true_buffer;
   true_buffend=true_buffer+bufsize+2*sizeof(double)-1;
   buffer=true_buffer+sizeof(double);
@@ -127,7 +128,11 @@ void test_smartlist::rewind(void)
         << nbytes << endl;
     }
     // now read the record into the buffer
-    /*int nr=*/::read(fp,buffer,nbytes);
+    int nr=::read(fp,buffer,nbytes);
+    if (nr<nbytes)
+    {
+      cerr << "Error reading file list1" << endl;
+    }
     //cout << "Number of bytes read " << nr << endl;
     // skip over file postion entry in file
     // so we are ready to read second record

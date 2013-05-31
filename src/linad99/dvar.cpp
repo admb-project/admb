@@ -12,7 +12,6 @@
 // math.h functions involving prevariables
 #include "fvar.hpp"
 
-
 #ifdef __TURBOC__
   #pragma hdrstop
   #include <iostream.h>

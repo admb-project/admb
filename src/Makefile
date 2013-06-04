@@ -16,10 +16,18 @@ srcs:
 	copy ..\CHANGES.txt $(DESTDIR)
 	copy ..\README.txt $(DESTDIR)
 	copy ..\VERSION $(DESTDIR)
-	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\examples
-	IF NOT EXIST $(DESTDIR)\examples xcopy /I /E /Y ..\examples $(DESTDIR)\examples
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\contrib
 	IF NOT EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\contrib
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\docs
+	IF NOT EXIST $(DESTDIR)\docs xcopy /I /E /Y ..\docs $(DESTDIR)\docs
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\examples
+	IF NOT EXIST $(DESTDIR)\examples xcopy /I /E /Y ..\examples $(DESTDIR)\examples
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\scripts
+	IF NOT EXIST $(DESTDIR)\scripts xcopy /I /E /Y ..\scripts $(DESTDIR)\scripts
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\tests
+	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\utilities
+	IF NOT EXIST $(DESTDIR)\utilities xcopy /I /E /Y ..\utilities $(DESTDIR)\utilities
 
 bins: lexfiles libs
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin

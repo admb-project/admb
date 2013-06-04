@@ -28,6 +28,8 @@ srcs:
 	IF NOT EXIST $(DESTDIR)\tests xcopy /I /E /Y ..\tests $(DESTDIR)\tests
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\utilities
 	IF NOT EXIST $(DESTDIR)\utilities xcopy /I /E /Y ..\utilities $(DESTDIR)\utilities
+	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\src
+	IF NOT EXIST $(DESTDIR)\src xcopy /I /E /Y ..\examples $(DESTDIR)\src
 
 bins: lexfiles libs
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin

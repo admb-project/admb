@@ -1,5 +1,6 @@
 #default targets depending on compiler
 all: $(CXX)-all
+debug: $(CXX)-debug
 verify: $(CXX)-verify
 test: $(CXX)-test
 install: $(CXX)-install
@@ -25,6 +26,8 @@ installer:
 cl: cl-all
 cl-all:
 	cd src& nmake all
+cl-debug:
+	cd src& nmake DEBUG=1 all
 cl-verify:
 	cd src& nmake verify
 cl-test:
@@ -38,6 +41,8 @@ cl-clean:
 g++: g++-all
 g++-all:
 	$(MAKE) --directory=src CC=gcc CXX=g++ all
+g++-debug:
+	$(MAKE) --directory=src CC=gcc CXX=g++ DEBUG=1 all
 g++-verify:
 	$(MAKE) --directory=src CC=gcc CXX=g++ verify
 g++-test:
@@ -51,6 +56,8 @@ g++-clean:
 clang++: clang++-all
 clang++-all:
 	$(MAKE) --directory=src CC=clang CXX=clang++ all
+clang++-debug:
+	$(MAKE) --directory=src CC=clang CXX=clang++ DEBUG=1 all
 clang++-verify:
 	$(MAKE) --directory=src CC=clang CXX=clang++ verify
 clang++-test:
@@ -64,6 +71,8 @@ clang++-clean:
 c++: c++-all
 c++-all:
 	$(MAKE) --directory=src CC=cc CXX=c++ all
+c++-debug:
+	$(MAKE) --directory=src CC=cc CXX=c++ DEBUG=1 all
 c++-verify:
 	$(MAKE) --directory=src CC=cc CXX=c++ verify
 c++-test:
@@ -77,6 +86,8 @@ c++-clean:
 CC: CC-all
 CC-all:
 	$(MAKE) --directory=src CC=cc CXX=CC all
+CC-debug:
+	$(MAKE) --directory=src CC=cc CXX=CC DEBUG=1 all
 CC-verify:
 	$(MAKE) --directory=src CC=cc CXX=CC verify
 CC-test:
@@ -90,6 +101,8 @@ CC-clean:
 icpc: icpc-all
 icpc-all:
 	$(MAKE) --directory=src CC=icc CXX=icpc all
+icpc-debug:
+	$(MAKE) --directory=src CC=icc CXX=icpc DEBUG=1 all
 icpc-verify:
 	$(MAKE) --directory=src CC=icc CXX=icpc verify
 icpc-test:
@@ -103,6 +116,7 @@ icpc-clean:
 bcc: bcc-all
 bcc-all:
 	cd src& $(MAKE) -fbcc.mak all
+bcc-debug:
 bcc-verify:
 	cd src& $(MAKE) -fbcc.mak verify
 bcc-test:

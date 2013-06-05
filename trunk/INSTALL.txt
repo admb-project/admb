@@ -60,6 +60,10 @@ Windows
 
    C:\admb\> utilities\make
 
+   To build with debug symbols,
+
+   C:\admb\> utilities\make debug
+
    Takes approximately 15-25 minutes to complete.
 
 5. Build and run the simple example.
@@ -105,6 +109,10 @@ Windows and Visual C++
 3. Build libraries
 
    C:\admb\> nmake
+
+   To build with debug symbols,
+
+   C:\admb\> nmake debug
 
    Takes approximately 15-25 minutes to complete.
 
@@ -154,6 +162,10 @@ Unix
 5. Build libraries 
 
    [~/admb/]$ make
+
+   To build with debug symbols,
+
+   [~/admb/]$ make debug
 
    Takes approximately 15-25 minutes to complete.
 

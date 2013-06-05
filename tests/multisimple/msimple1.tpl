@@ -1,10 +1,12 @@
-//$Id$
+//$Id: msimple1.tpl 742 2013-01-12 17:26:20Z jsibert $
+GLOBALS_SECTION
+  int NSLAVES = 8;
 
 DATA_SECTION
   !! ad_comm::change_datafile_name("msimple.dat");
   init_int nobs
-  init_int nslaves
-
+  int nslaves
+  !! nslaves = NSLAVES;
   matrix Y(1,nslaves,1,nobs)
   matrix x(1,nslaves,1,nobs)
 

@@ -1,0 +1,1962 @@
+==7142== Memcheck, a memory error detector
+==7142== Copyright (C) 2002-2011, and GNU GPL'd, by Julian Seward et al.
+==7142== Using Valgrind-3.7.0 and LibVEX; rerun with -h for copyright info
+==7142== Command: ./newertpl -maxfn 1
+==7142== Parent PID: 7141
+==7142== 
+==7142== Warning: set address range perms: large range [0x395a5040, 0x7292c040) (undefined)
+==7142== Warning: set address range perms: large range [0x7292d040, 0xabcb4040) (undefined)
+==7142== Invalid write of size 4
+==7142==    at 0x58AF59A: __printf_fp (printf_fp.c:220)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef4 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58AF5B1: __printf_fp (printf_fp.c:281)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffded0 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58AF5C0: __printf_fp (printf_fp.c:281)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdec0 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58AF5CA: __printf_fp (printf_fp.c:282)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef0 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58AF8F0: __printf_fp (printf_fp.c:313)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdee8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58AF8FB: __printf_fp (printf_fp.c:178)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdebc is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58AF905: __printf_fp (printf_fp.c:177)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdea8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58AF674: __printf_fp (printf_fp.c:402)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58AF67C: __printf_fp (printf_fp.c:406)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde38 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58967A3: isnan (s_isnan.c:34)
+==7142==    by 0x58AF680: __printf_fp (printf_fp.c:406)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==  Address 0x7feffde38 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58AF9F8: __printf_fp (printf_fp.c:421)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58AFF3F: __printf_fp (printf_fp.c:437)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58AFF52: __printf_fp (printf_fp.c:437)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffded8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58AFB18: __printf_fp (printf_fp.c:483)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdf00 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58AFC26: __printf_fp (printf_fp.c:160)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58AFC62: __printf_fp (printf_fp.c:549)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde60 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58AFC6E: __printf_fp (printf_fp.c:549)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde60 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B00B1: __printf_fp (printf_fp.c:564)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde60 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B00BF: __printf_fp (printf_fp.c:564)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde60 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B00D7: __printf_fp (printf_fp.c:567)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdf00 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B00F9: __printf_fp (printf_fp.c:568)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdf00 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0120: __printf_fp (printf_fp.c:570)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0130: __printf_fp (printf_fp.c:576)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B0148: __printf_fp (printf_fp.c:586)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdf00 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B1058: __printf_fp (printf_fp.c:637)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B1076: __printf_fp (printf_fp.c:640)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B109D: __printf_fp (printf_fp.c:642)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B0248: __printf_fp (printf_fp.c:834)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdeb8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 1
+==7142==    at 0x58B0256: __printf_fp (printf_fp.c:844)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde87 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 1
+==7142==    at 0x58B0262: __printf_fp (printf_fp.c:856)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde87 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B0284: __printf_fp (printf_fp.c:876)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde88 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0E0E: __printf_fp (printf_fp.c:877)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde88 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B0E23: __printf_fp (printf_fp.c:891)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdea0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B02B6: __printf_fp (printf_fp.c:898)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde88 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B02BD: __printf_fp (printf_fp.c:892)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde88 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B02C3: __printf_fp (printf_fp.c:892)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdea0 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B02CD: __printf_fp (printf_fp.c:892)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B02D3: __printf_fp (printf_fp.c:898)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde90 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B02DA: __printf_fp (printf_fp.c:901)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdee0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B02EF: __printf_fp (printf_fp.c:901)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B02F6: __printf_fp (printf_fp.c:901)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdeb0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B02FC: __printf_fp (printf_fp.c:904)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdee8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B0304: __printf_fp (printf_fp.c:843)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde8c is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B033E: __printf_fp (printf_fp.c:918)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde90 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B034B: __printf_fp (printf_fp.c:918)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B0352: __printf_fp (printf_fp.c:918)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde90 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B035F: __printf_fp (printf_fp.c:925)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde90 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B037F: __printf_fp (printf_fp.c:926)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde7c is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B0399: __printf_fp (printf_fp.c:935)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde98 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B03BB: __printf_fp (printf_fp.c:942)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdea0 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B03CC: __printf_fp (printf_fp.c:942)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdee0 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B03D3: __printf_fp (printf_fp.c:942)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdec8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B03DA: __printf_fp (printf_fp.c:942)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde98 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B03E1: __printf_fp (printf_fp.c:942)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdea0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B03E7: __printf_fp (printf_fp.c:942)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffded8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58AF3FD: hack_digit.14957 (printf_fp.c:252)
+==7142==    by 0x58B03F7: __printf_fp (printf_fp.c:945)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==  Address 0x7feffdf00 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0406: __printf_fp (printf_fp.c:160)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdea0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B040C: __printf_fp (printf_fp.c:160)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdea0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B0413: __printf_fp (printf_fp.c:160)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdee0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B041A: __printf_fp (printf_fp.c:160)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdec8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B0424: __printf_fp (printf_fp.c:160)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde80 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0430: __printf_fp (printf_fp.c:948)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdeb0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0442: __printf_fp (printf_fp.c:950)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0460: __printf_fp (printf_fp.c:951)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef0 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B0466: __printf_fp (printf_fp.c:947)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdee0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0478: __printf_fp (printf_fp.c:959)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdeb0 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B0482: __printf_fp (printf_fp.c:972)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdec8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0D92: __printf_fp (printf_fp.c:966)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B0DA5: __printf_fp (printf_fp.c:969)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffded8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58AF3FD: hack_digit.14957 (printf_fp.c:252)
+==7142==    by 0x58B0DB4: __printf_fp (printf_fp.c:969)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==  Address 0x7feffdf00 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B0D88: __printf_fp (printf_fp.c:972)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdee0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0DC2: __printf_fp (printf_fp.c:972)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdee0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0DF0: __printf_fp (printf_fp.c:966)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdeb0 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B0DF6: __printf_fp (printf_fp.c:966)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdec8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B0520: __printf_fp (printf_fp.c:981)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffded8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B0527: __printf_fp (printf_fp.c:981)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde70 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58AF3FD: hack_digit.14957 (printf_fp.c:252)
+==7142==    by 0x58B0531: __printf_fp (printf_fp.c:981)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==  Address 0x7feffdf00 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0535: __printf_fp (printf_fp.c:982)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde70 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B0634: __printf_fp (printf_fp.c:1114)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdee8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B073A: __printf_fp (printf_fp.c:1175)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdeb8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B074A: __printf_fp (printf_fp.c:1175)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdee8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B075B: __printf_fp (printf_fp.c:1175)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdeb8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0813: __printf_fp (printf_fp.c:1187)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdeb8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0870: __printf_fp (printf_fp.c:1196)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef4 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B087E: __printf_fp (printf_fp.c:1202)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B08AC: __printf_fp (printf_fp.c:1206)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdec0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B08BA: __printf_fp (printf_fp.c:1208)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdea8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B08C2: __printf_fp (printf_fp.c:1206)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffded0 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B08C9: __printf_fp (printf_fp.c:1209)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffded8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B08FB: __printf_fp (printf_fp.c:1213)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B0902: __printf_fp (printf_fp.c:1214)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffded0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B0909: __printf_fp (printf_fp.c:1213)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde90 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0919: __printf_fp (printf_fp.c:1215)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde7c is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B093B: __printf_fp (printf_fp.c:1226)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B0942: __printf_fp (printf_fp.c:1227)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B094C: __printf_fp (printf_fp.c:1233)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B0953: __printf_fp (printf_fp.c:1227)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdee0 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 4
+==7142==    at 0x58B0960: __printf_fp (printf_fp.c:1233)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdec8 is on thread 1's stack
+==7142== 
+==7142== Invalid write of size 8
+==7142==    at 0x58B0967: __printf_fp (printf_fp.c:1233)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdea0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0971: __printf_fp (printf_fp.c:1233)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef0 is on thread 1's stack
+==7142== 
+==7142== 
+==7142== More than 100 errors detected.  Subsequent errors
+==7142== will still be recorded, but in less detail than before.
+==7142== Invalid write of size 8
+==7142==    at 0x58B0978: __printf_fp (printf_fp.c:1233)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdeb0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B097F: __printf_fp (printf_fp.c:1233)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdebc is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B09B3: __printf_fp (printf_fp.c:1235)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffded0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B09BA: __printf_fp (printf_fp.c:1235)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdec0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B10C7: __printf_fp (printf_fp.c:656)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdec8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B10CE: __printf_fp (printf_fp.c:656)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdeb0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B10D5: __printf_fp (printf_fp.c:656)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdea0 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 8
+==7142==    at 0x58B0A94: __printf_fp (printf_fp.c:1242)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef8 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0A9B: __printf_fp (printf_fp.c:1260)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef4 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0F70: __printf_fp (printf_fp.c:1260)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdef4 is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0AFD: __printf_fp (printf_fp.c:1263)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffde7c is on thread 1's stack
+==7142== 
+==7142== Invalid read of size 4
+==7142==    at 0x58B0B0B: __printf_fp (printf_fp.c:1270)
+==7142==    by 0x58AC5B7: vfprintf (vfprintf.c:1629)
+==7142==    by 0x58D4441: vsnprintf (vsnprintf.c:120)
+==7142==    by 0x4EB529D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA399: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EBA7D8: std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::do_put(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x4EC704D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.16)
+==7142==    by 0x41BF73: adpthread_manager::read_unlock_buffer(int) (ythread_stuff.cpp:227)
+==7142==    by 0x4050C9: model_parameters::userfunction() (newertpl.cpp:149)
+==7142==    by 0x46640C: function_minimizer::pre_userfunction() (model7.cpp:533)
+==7142==    by 0x4D28CB: function_minimizer::quasi_newton_block(int, int, independent_variables&, dvector const&, double const&) (df1b2qnm.cpp:172)
+==7142==    by 0x470006: function_minimizer::minimize() (xmodelm3.cpp:404)
+==7142==  Address 0x7feffdeb8 is on thread 1's stack
+==7142== 
+==7142== 
+==7142== HEAP SUMMARY:
+==7142==     in use at exit: 1,963,365,260 bytes in 186 blocks
+==7142==   total heap usage: 2,011,889 allocs, 2,011,703 frees, 2,567,123,461 bytes allocated
+==7142== 
+==7142== 16 bytes in 1 blocks are definitely lost in loss record 23 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x406DE2: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:175)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 16 bytes in 1 blocks are definitely lost in loss record 24 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x406E30: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:177)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 16 bytes in 1 blocks are definitely lost in loss record 25 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x407340: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:217)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 16 bytes in 1 blocks are definitely lost in loss record 26 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x40739E: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:219)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 24 bytes in 2 blocks are definitely lost in loss record 30 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x4077F4: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:259)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 24 bytes in 2 blocks are definitely lost in loss record 31 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x4078ED: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:266)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 48 bytes in 1 blocks are possibly lost in loss record 47 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x4054C6: main (newertpl.cpp:198)
+==7142== 
+==7142== 48 bytes in 1 blocks are definitely lost in loss record 48 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x407B2E: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:289)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 56 bytes in 1 blocks are possibly lost in loss record 49 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x43DC8E: imatrix::allocate(int, int) (imat.cpp:366)
+==7142==    by 0x40742B: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:226)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 56 bytes in 1 blocks are possibly lost in loss record 50 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x43DC8E: imatrix::allocate(int, int) (imat.cpp:366)
+==7142==    by 0x40744B: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:227)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 56 bytes in 1 blocks are possibly lost in loss record 51 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x43DC8E: imatrix::allocate(int, int) (imat.cpp:366)
+==7142==    by 0x407614: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:242)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 80 bytes in 1 blocks are possibly lost in loss record 52 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x407580: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:239)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 80 bytes in 1 blocks are definitely lost in loss record 53 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x407135: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:200)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 96 bytes in 1 blocks are possibly lost in loss record 56 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x407B2E: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:289)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 96 bytes in 1 blocks are possibly lost in loss record 57 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x407CA7: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:304)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 96 bytes in 1 blocks are definitely lost in loss record 58 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x407211: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:208)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 96 bytes in 1 blocks are definitely lost in loss record 59 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x407272: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:210)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 328 bytes in 1 blocks are possibly lost in loss record 68 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x43A299: dvar_matrix::allocate(int, int, int, int) (fvar_mat.cpp:131)
+==7142==    by 0x439E47: dvar_matrix::dvar_matrix(int, int, int, int) (fvar_mat.cpp:20)
+==7142==    by 0x404673: admb_thread_1(void*) (newertpl.cpp:30)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 328 bytes in 1 blocks are possibly lost in loss record 69 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x43A0F2: dvar_matrix::allocate(int, int) (fvar_mat.cpp:105)
+==7142==    by 0x439EB3: dvar_matrix::dvar_matrix(int, int) (fvar_mat.cpp:44)
+==7142==    by 0x40CC33: adpthread_manager::get_dvar_matrix(int) (thread_stuff.cpp:1641)
+==7142==    by 0x404B11: admb_thread_2(void*) (newertpl.cpp:86)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 608 bytes in 2 blocks are possibly lost in loss record 76 of 127
+==7142==    at 0x4C29DB4: calloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x4012074: _dl_allocate_tls (dl-tls.c:297)
+==7142==    by 0x564CABC: pthread_create@@GLIBC_2.2.5 (allocatestack.c:571)
+==7142==    by 0x40A470: adpthread_manager::create_all(void*) (thread_stuff.cpp:864)
+==7142==    by 0x405595: main (newertpl.cpp:211)
+==7142== 
+==7142== 1,016 (16 direct, 1,000 indirect) bytes in 1 blocks are definitely lost in loss record 81 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x406DAE: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:174)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 2,524 (24 direct, 2,500 indirect) bytes in 2 blocks are definitely lost in loss record 85 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x4076FB: adpthread_manager::adpthread_manager(int, ivector&, int) (thread_stuff.cpp:253)
+==7142==    by 0x405480: main (newertpl.cpp:196)
+==7142== 
+==7142== 14,200 bytes in 25 blocks are possibly lost in loss record 88 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x421FB1: gradient_structure::gradient_structure(long) (gradstrc.cpp:499)
+==7142==    by 0x404A52: admb_thread_2(void*) (newertpl.cpp:75)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 14,200 bytes in 25 blocks are possibly lost in loss record 89 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x421FB1: gradient_structure::gradient_structure(long) (gradstrc.cpp:499)
+==7142==    by 0x404596: admb_thread_1(void*) (newertpl.cpp:18)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 92 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x43EFE7: ptr_vector::allocate(int, int) (ptr_vec.cpp:138)
+==7142==    by 0x43EF4D: ptr_vector::ptr_vector(int, int) (ptr_vec.cpp:115)
+==7142==    by 0x445BFF: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404A52: admb_thread_2(void*) (newertpl.cpp:75)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 93 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x428E1F: lvector::allocate(int, int) (lvector.cpp:170)
+==7142==    by 0x428F0D: lvector::lvector(int, int) (lvector.cpp:202)
+==7142==    by 0x445C19: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404A52: admb_thread_2(void*) (newertpl.cpp:75)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 94 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x428E1F: lvector::allocate(int, int) (lvector.cpp:170)
+==7142==    by 0x428F0D: lvector::lvector(int, int) (lvector.cpp:202)
+==7142==    by 0x445C33: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404A52: admb_thread_2(void*) (newertpl.cpp:75)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 95 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x428E1F: lvector::allocate(int, int) (lvector.cpp:170)
+==7142==    by 0x428F0D: lvector::lvector(int, int) (lvector.cpp:202)
+==7142==    by 0x445C4D: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404A52: admb_thread_2(void*) (newertpl.cpp:75)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 96 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x428E1F: lvector::allocate(int, int) (lvector.cpp:170)
+==7142==    by 0x428F0D: lvector::lvector(int, int) (lvector.cpp:202)
+==7142==    by 0x445C67: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404A52: admb_thread_2(void*) (newertpl.cpp:75)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 97 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x428E1F: lvector::allocate(int, int) (lvector.cpp:170)
+==7142==    by 0x428F0D: lvector::lvector(int, int) (lvector.cpp:202)
+==7142==    by 0x445C81: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404A52: admb_thread_2(void*) (newertpl.cpp:75)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 98 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x43EFE7: ptr_vector::allocate(int, int) (ptr_vec.cpp:138)
+==7142==    by 0x43EF4D: ptr_vector::ptr_vector(int, int) (ptr_vec.cpp:115)
+==7142==    by 0x445BFF: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404596: admb_thread_1(void*) (newertpl.cpp:18)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 99 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x428E1F: lvector::allocate(int, int) (lvector.cpp:170)
+==7142==    by 0x428F0D: lvector::lvector(int, int) (lvector.cpp:202)
+==7142==    by 0x445C19: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404596: admb_thread_1(void*) (newertpl.cpp:18)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 100 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x428E1F: lvector::allocate(int, int) (lvector.cpp:170)
+==7142==    by 0x428F0D: lvector::lvector(int, int) (lvector.cpp:202)
+==7142==    by 0x445C33: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404596: admb_thread_1(void*) (newertpl.cpp:18)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 101 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x428E1F: lvector::allocate(int, int) (lvector.cpp:170)
+==7142==    by 0x428F0D: lvector::lvector(int, int) (lvector.cpp:202)
+==7142==    by 0x445C4D: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404596: admb_thread_1(void*) (newertpl.cpp:18)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 102 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x428E1F: lvector::allocate(int, int) (lvector.cpp:170)
+==7142==    by 0x428F0D: lvector::lvector(int, int) (lvector.cpp:202)
+==7142==    by 0x445C67: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404596: admb_thread_1(void*) (newertpl.cpp:18)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== 16,000 bytes in 1 blocks are definitely lost in loss record 103 of 127
+==7142==    at 0x4C2AC27: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7142==    by 0x428E1F: lvector::allocate(int, int) (lvector.cpp:170)
+==7142==    by 0x428F0D: lvector::lvector(int, int) (lvector.cpp:202)
+==7142==    by 0x445C81: dependent_variables_information::dependent_variables_information(int) (depvars.cpp:98)
+==7142==    by 0x421C03: gradient_structure::gradient_structure(long) (gradstrc.cpp:344)
+==7142==    by 0x404596: admb_thread_1(void*) (newertpl.cpp:18)
+==7142==    by 0x564BE99: start_thread (pthread_create.c:308)
+==7142==    by 0x5954CCC: clone (clone.S:112)
+==7142== 
+==7142== LEAK SUMMARY:
+==7142==    definitely lost: 192,472 bytes in 27 blocks
+==7142==    indirectly lost: 3,500 bytes in 5 blocks
+==7142==      possibly lost: 30,152 bytes in 61 blocks
+==7142==    still reachable: 1,963,139,136 bytes in 93 blocks
+==7142==         suppressed: 0 bytes in 0 blocks
+==7142== Reachable blocks (those to which a pointer was found) are not shown.
+==7142== To see them, rerun with: --leak-check=full --show-reachable=yes
+==7142== 
+==7142== For counts of detected and suppressed errors, rerun with: -v
+==7142== ERROR SUMMARY: 164 errors from 148 contexts (suppressed: 2 from 2)

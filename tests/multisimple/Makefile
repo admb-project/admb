@@ -9,20 +9,19 @@
 # make some special targets
 .PHONY: all rules
 
-ifeq ($(HOSTNAME),katsuo)
-  export ADMB_HOME=/home/jsibert/admb-threaded2/build/dists/admb_gcc411_fedora8
-else
-  export ADMB_HOME=/home/jsibert/admb/admb-threaded2/build/dists/admb_gcc411_fedora8
-endif
-CC = g++
-LL = g++
+export ADMB_HOME=/home/jsibert/admb/threaded2/build/dists/admb_gcc411_fedora8
+CC=/usr/local/gcc-4.8.0/bin/g++
+LL = $(CC)
 
-CFLAGS = -c -pthread -fpermissive -m64 -Wall -Wno-deprecated -ggdb -I. -I$(ADMB_HOME)/include -I$(ADMB_HOME)/contrib -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -DSAFE_ARRAYS
+#CFLAGS = -c -pthread -fpermissive -m64 -Wall -Wno-deprecated -ggdb -I. -I$(ADMB_HOME)/include -I$(ADMB_HOME)/contrib -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -DSAFE_ARRAYS
+CFLAGS = -c -pthread -fpermissive -m64 -Wall -Wno-deprecated -ggdb -I. -I$(ADMB_HOME)/include -I$(ADMB_HOME)/contrib -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -DOPT_LIB
 
 
-LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -lpthread
+#LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -lpthread
+LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado -lpthread
 
-OBJECTS=adpthread_manager.o msimple.o simple_thread.o
+#OBJECTS=adpthread_manager.o msimple.o simple_thread.o
+OBJECTS=msimple.o simple_thread.o
 
 # link the object file into the executable 
 msimple: $(OBJECTS) 

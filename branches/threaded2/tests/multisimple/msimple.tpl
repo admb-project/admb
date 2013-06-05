@@ -2,33 +2,31 @@
 
 GLOBALS_SECTION
   #include <pthread.h>
-  #include "adpthread_manager.h"
-  #include "pt_trace.h"
+  #include <fvar.hpp>
+  #include <adthread.h>
+  //#include "pt_trace.h"
   pthread_mutex_t trace_mutex= PTHREAD_MUTEX_INITIALIZER;
   ofstream clogf;
-  int NSLAVES=0;
 
 
   void * mp_ptr = NULL;
-  adpthread_manager * thread_manager= NULL;
   void* simple_thread(void * ptr);
-  int __thread thread_data::id=-1;
-
-
 
 DATA_SECTION
   init_int nobs
-  init_int nslaves
-
-  matrix Y(1,nslaves,1,nobs)
-  matrix x(1,nslaves,1,nobs)
+  init_int nrow
+  matrix Y(1,nrow,1,nobs)
+  matrix x(1,nrow,1,nobs)
+  number A
+  number B
 
  LOCAL_CALCS
-    double A = 2.0;
-    double B = 4.0;
+    //TTRACE(nobs,nrow)
+    A = 2.0;
+    B = 4.0;
     random_number_generator rng(101);
     dvector err(1,nobs);
-    for (int i = 1; i <= nslaves; i++)
+    for (int i = 1; i <= nrow; i++)
     {
        x(i).fill_randu(rng);
        x(i) *= 100.0;
@@ -36,11 +34,11 @@ DATA_SECTION
        err.fill_randn(rng);
        Y(i) += 5.0*err;
     }
-    NSLAVES = nslaves;
+
     /*
     if (1)
     {
-       TTRACE(nobs,NSLAVES)
+       TTRACE(nobs,nrow)
        TTRACE(A,B)
        TRACE(x)
        TRACE(Y)
@@ -51,54 +49,65 @@ DATA_SECTION
 PARAMETER_SECTION
   init_number a   
   init_number b   
-  //matrix pred_Y(1,nslaves, 1,nobs)
-  vector ff(1,nslaves)
+  //matrix pred_Y(1,nrow, 1,nobs)
+  vector ff(1,nrow)
   objective_function_value f
 
 PRELIMINARY_CALCS_SECTION
-  TRACE(x)
-  TRACE(Y)
+  //TRACE(x)
+  //TRACE(Y)
   a = 1.0;
   b = 2.0;
   mp_ptr = (void*)this;
-  TTRACE(mp_ptr,((void*)this));
-  TRACE(NSLAVES)
+  //TTRACE(mp_ptr,((void*)this));
 
-  thread_manager = new adpthread_manager(NSLAVES,50000);
-  thread_data* data1 = new thread_data[NSLAVES+1];
-  data1 --;
+  int ngroups=1;
+  ivector ng(1,ngroups);
+  ng(1)=nrow;
+
+  ad_comm::pthread_manager = new adpthread_manager(ngroups,ng,500);
+  new_thread_data* data1 = new new_thread_data[nrow+1];
   // initialize data to pass to thread 1
-  for (int i=1;i<=NSLAVES;i++)
+  for (int i=1;i<=nrow;i++)
   {
     data1[i].thread_no = i;
-    TTRACE(i,data1[i].thread_no)
+    data1[i].m=0;
   }
-  thread_manager->create_all(&simple_thread,data1);
+
+  ad_comm::pthread_manager->attach_code(&simple_thread);
+
+  pthread_mutex_lock(&ad_comm::pthread_manager->start_mutex);
+  ad_comm::pthread_manager->create_all(data1);
+  ad_comm::pthread_manager->set_old_buffer_flag(0);
+  
+  pthread_mutex_unlock(&ad_comm::pthread_manager->start_mutex);
+
 
 
 PROCEDURE_SECTION
-  //thread_manager->initialize();
-  thread_manager->reset();
-  /*
-  for (int i=1;i<=NSLAVES;i++)
+  for (int kk=1;kk<=nrow;kk++)
   {
-      pthread_mutex_ulock(smutex+i);
-      TTTRACE(i,mflag[i],sflag[i])
-      mflag[i] = 0;
-      sflag[i] = 0;
-      TTTRACE(i,mflag[i],sflag[i])
-      pthread_cond_broadcast(scondition[i])
-      pthread_cond_broadcast(mcondition[i])
-      pthread_mutex_unlock(smutex+i);
+     ad_comm::pthread_manager->cwrite_lock_buffer(kk);
+     ad_comm::pthread_manager->send_int(1,kk); 
+     ad_comm::pthread_manager->cwrite_unlock_buffer(kk);
+     ad_comm::pthread_manager->write_lock_buffer(kk);
+     ad_comm::pthread_manager->send_dvariable(a,kk); 
+     ad_comm::pthread_manager->send_dvariable(b,kk); 
+     ad_comm::pthread_manager->write_unlock_buffer(kk);
+     //TTRACE(kk,sum(x(kk)))
+  
   }
-  */
-  for (int i=1;i<=NSLAVES;i++)
+
+  for (int kk=1;kk<=nrow;kk++)
   {
-      ff(i) = thread_manager->get_dvariable_from_slave(i);
-      TTRACE(i,ff(i))
+      //TRACE(kk)
+      ad_comm::pthread_manager->read_lock_buffer(kk);
+      ff(kk) = ad_comm::pthread_manager->get_dvariable(kk);
+      ad_comm::pthread_manager->read_unlock_buffer(kk);
+      //TTRACE(kk,ff(kk))
   }
   f = sum(ff);
-  TRACE(f)
+  //TRACE(f)
 
 TOP_OF_MAIN_SECTION
   adstring logname("mymsimple.log");
@@ -109,10 +118,23 @@ TOP_OF_MAIN_SECTION
     ad_exit(1);
   }
   cout << "Opened " << logname << endl;
-  
+
+REPORT_SECTION
+  //TTRACE(a,b)
+  report << "A = " << A << "; B = " << B <<endl;
+  report << "a = " << a << "; b = " << b <<endl;
 
 FINAL_SECTION
+  //TTRACE(a,b)
+  for (int k = 1; k <= nrow;k++)
+  {
+    ad_comm::pthread_manager->write_lock_buffer(k);
+    ad_comm::pthread_manager->send_int(0,k);
+    ad_comm::pthread_manager->write_unlock_buffer(k);
+  }
+  sleep(1);
+  delete ad_comm::pthread_manager;
+  ad_comm::pthread_manager=0;
   HERE
-  thread_manager -> pthread_join_all();
 
   clogf.close(); 

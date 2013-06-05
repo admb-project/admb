@@ -49,12 +49,12 @@ void fmm_control::set_defaults()
 }
 
 /**
- * Description not yet available.
- * \param
+ * fmm_control Function minimizer copy constructor
+ * \param t object
  */
 fmm_control::fmm_control(const fmm_control & t)
 {
-  fringe = fringe;
+  fringe = t.fringe;
   maxfn  = t.maxfn;
   iprint = t.iprint;
   crit   = t.crit;
@@ -73,7 +73,7 @@ fmm_control::fmm_control(const fmm_control & t)
 }
 
 /**
- * Description not yet available.
+ * fmm_control Function minimizer null constructor
  * \param
  */
 fmm_control::fmm_control()
@@ -82,8 +82,8 @@ fmm_control::fmm_control()
 }
 
 /**
- * Description not yet available.
- * \param
+ * fmm_control Function minimizer constructor sets extended defaults
+ * \param ipar vector of settings
  */
 fmm_control::fmm_control(const lvector& ipar)
 {
@@ -100,8 +100,10 @@ fmm_control::fmm_control(const lvector& ipar)
 }
 
 /**
- * Description not yet available.
- * \param
+ * << operator to write function minimizer details
+ * \param s string of details
+ * \param fmc function minimizer control object
+ * \return output stream of details.
  */
 ostream& operator<<(const ostream& s, const fmm_control& fmc)
 {
@@ -110,8 +112,8 @@ ostream& operator<<(const ostream& s, const fmm_control& fmc)
 }
 
 /**
- * Description not yet available.
- * \param
+ * writeon Writes function minimizing status
+ * \param s string that contains results
  */
 void fmm_control::writeon(const ostream& _s) const
 {

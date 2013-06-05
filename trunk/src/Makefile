@@ -2,8 +2,13 @@ DESTDIR=..\build\dist
 OBJDESTDIR=..\build\objects\dist
 LEXDESTDIR=..\build\lex
 
+!IF DEFINED(DEBUG)
+CXXFLAGS_SAF=/nologo /G7 /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
+CXXFLAGS_OPT=/nologo /G7 /W4 /GF /EHsc /DOPT_LIB  /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
+!ELSE
 CXXFLAGS_SAF=/nologo /O2 /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
 CXXFLAGS_OPT=/nologo /O2 /W4 /GF /EHsc /DOPT_LIB  /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
+!ENDIF
 
 all: dist bins contrib
 	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
@@ -29,7 +34,7 @@ srcs:
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\utilities
 	IF NOT EXIST $(DESTDIR)\utilities xcopy /I /E /Y ..\utilities $(DESTDIR)\utilities
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)\src
-	IF NOT EXIST $(DESTDIR)\src xcopy /I /E /Y ..\examples $(DESTDIR)\src
+	IF NOT EXIST $(DESTDIR)\src xcopy /I /E /Y ..\src $(DESTDIR)\src
 
 bins: lexfiles libs
 	IF NOT EXIST $(DESTDIR)\bin md $(DESTDIR)\bin

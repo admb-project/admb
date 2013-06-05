@@ -29,13 +29,15 @@ else
 CXXFLAGS:=-O3 $(CXXFLAGS)
 endif
 
-all: dist contrib
+all: revision dist contrib
 ifeq ($(SHELL),sh.exe)
 	pushd $(DISK) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
 endif
 	@echo ADMB build completed.
 	@echo For installation, check README.txt.
 
+revision:
+	-svnversion .. > ../REVISION
 dist:
 ifneq ($(SHELL),sh.exe)
 	rm -rf ${DISK}
@@ -249,9 +251,9 @@ endif
 verify:
 ifndef USE_ADMB_HOME
   ifneq ($(SHELL),sh.exe)
-	ADMB_HOME="${PWD}/${DISK}" PATH="${PWD}/${DISK}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C $(DISK)/examples all
+	PATH="${PWD}/${DISK}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C $(DISK)/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-saf.txt"
-	ADMB_HOME="${PWD}/${DISK}" PATH="${PWD}/${DISK}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" $(MAKE) -C $(DISK)/examples all
+	PATH="${PWD}/${DISK}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" $(MAKE) -C $(DISK)/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-opt.txt"
   else
 	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 -C $(DISK)\examples --file=Makefile all

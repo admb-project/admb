@@ -444,15 +444,15 @@ label21 :
       pfmintime->get_elapsed_time_and_reset();
       for (i=2; i<=n; i++)
       {
-	 i1=i-1;
-         z=-g.elem(i);
-         double * pd=&(h.elem(i,1));
-         double * pw=&(w.elem(1));
-         for (j=1; j<=i1; j++)
-         {
-            z-=*pd++ * *pw++;
-         }
-         w.elem(i)=z;
+	      i1=i-1;
+        z=-g.elem(i);
+        double * pd=&(h.elem(i,1));
+        double * pw=&(w.elem(1));
+        for (j=1; j<=i1; j++)
+        {
+          z-=*pd++ * *pw++;
+        }
+        w.elem(i)=z;
       }
       w.elem(is+n)=w.elem(n)/h.elem(n,n);
       {
@@ -488,20 +488,20 @@ label30:
       if (ialph) { goto label92; }
       if( ifn >= maxfn)
       {
-         maxfn_flag=1;
-         goto label92;
+        maxfn_flag=1;
+        goto label92;
       }
       else
       {
-         maxfn_flag=0;
-         iexit=1;
+        maxfn_flag=0;
+        iexit=1;
       }
       if(quit_flag) goto label92;
       for (i=1; i<=n; i++)
-         {
-         z=alpha*w.elem(is+i);
-         xx.elem(i)+=z;
-         }
+      {
+        z=alpha*w.elem(is+i);
+        xx.elem(i)+=z;
+      }
       for (i=1; i<=n; i++)
       {
         xsave.elem(i)=x.elem(i);
@@ -871,8 +871,9 @@ label7020:
    }
 
 /**
- * Description not yet available.
- * \param
+ * dafsqrt robust square root (returns zero of argument is negative)
+ * \param x double
+ * \return square root of x (for x>0)
  */
    double dafsqrt( double x )
    {

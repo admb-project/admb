@@ -8,7 +8,7 @@ GLOBALS_SECTION
   pthread_mutex_t trace_mutex= PTHREAD_MUTEX_INITIALIZER;
   ofstream clogf;
 
-  int NSLAVES = 8;
+  int NSLAVES = 7;
 
   void * mp_ptr = NULL;
   //adpthread_manager * ad_comm::pthread_manager= NULL;

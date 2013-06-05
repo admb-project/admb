@@ -1,6 +1,6 @@
 //$Id: msimple1.tpl 742M 2013-06-02 00:06:06Z (local) $
 GLOBALS_SECTION
-  int NSLAVES = 8;
+  int NSLAVES = 7;
 
 DATA_SECTION
   !! ad_comm::change_datafile_name("msimple.dat");

@@ -1,4 +1,4 @@
-/*
+//*
  * $Id$
  *
  * Author: David Fournier
@@ -291,6 +291,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 
       (*ad_printf)("  Anders Nielsen (Denmark)\n");
       (*ad_printf)("  Arni Magnusson (Iceland)\n");
+      (*ad_printf)("  Athol Whitten (Australia)\n");
       (*ad_printf)("  Ben Bolker (Canada)\n");
       (*ad_printf)("  Casper Berg (Denmark)\n");
       (*ad_printf)("  Chris Grandin (Canada)\n");
@@ -301,12 +302,12 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)("  Jim Ianelli (USA)\n");
       (*ad_printf)("  John Sibert (USA)\n");
       (*ad_printf)("  Johnoel Ancheta (USA)\n");
+      (*ad_printf)("  Juan Valero (Argentina)\n");
       (*ad_printf)("  Mark Maunder (USA)\n");
       (*ad_printf)("  Matthew Supernaw (USA)\n");
       (*ad_printf)("  Mollie Brooks (USA)\n");
       (*ad_printf)("  Steve Martell (Canada)\n");
       (*ad_printf)("  Teresa A'mar (USA)\n");
-      (*ad_printf)("  Weihai Liu (USA)\n");
       ad_exit(0);
     }
   }
@@ -366,7 +367,7 @@ void ad_comm::allocate(void)
       else
       {
         tmpstring = adstring(argv[on+1]);
-	wd_flag=1;
+	      wd_flag=1;
       }
     }
   }

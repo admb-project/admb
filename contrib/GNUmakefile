@@ -1,3 +1,5 @@
+.NOPARALLEL: all
+
 ifneq ($(SHELL),sh.exe)
 DISK=../build/dist
 else
@@ -23,9 +25,9 @@ else
   endif
 endif
 
-all: contribs build-ad2csv
+ad2csv: build-ad2csv
 
-contribs: build-statslib build-ecolib build-qfclib build-src
+all: build-statslib build-ecolib build-qfclib build-src
 ifneq ($(SHELL),sh.exe)
 	$(AR) -rs $(DISK)/contrib/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
 	$(AR) -rs $(DISK)/contrib/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
@@ -33,7 +35,6 @@ else
 	$(AR) -rs $(DISK)\contrib\lib\libcontrib.a ..\build\objects\dist\saflp-contrib-*.obj
 	$(AR) -rs $(DISK)\contrib\lib\libcontribo.a ..\build\objects\dist\optlp-contrib-*.obj
 endif
-
 
 build-statslib:
 	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-statslib-
@@ -62,7 +63,7 @@ else
 	cp qfclib/qfclib.h $(DISK)/contrib/include
 endif
 
-build-ad2csv:
+build-ad2csv: all
 ifneq ($(SHELL),sh.exe)
 	$(MAKE) --directory=ad2csv ADMB_HOME="$(ADMB_HOME)"
 endif

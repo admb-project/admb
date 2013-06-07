@@ -1,7 +1,5 @@
 .NOTPARALLEL: all libs contrib
 
-MAKEFLAGS_J=-j
-
 ifeq ($(SHELL),sh.exe)
   DISK=..\build\dist
   LIBPATH=..\build\objects\dist
@@ -85,13 +83,13 @@ ifneq ($(SHELL),sh.exe)
 	mkdir -p ${DISK}/contrib/lib
 	mkdir -p ${DISK}/contrib/bin
 	mkdir -p ${DISK}/contrib/include
-	$(MAKE) ADMB_HOME="${PWD}/${DISK}" --directory=../contrib
+	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="${PWD}/${DISK}" --directory=../contrib
 else
 	if not exist ${DISK}\contrib md ${DISK}\contrib
 	if not exist ${DISK}\contrib\lib md ${DISK}\contrib\lib
 	if not exist ${DISK}\contrib\bin md ${DISK}\contrib\bin
 	if not exist ${DISK}\contrib\include md ${DISK}\contrib\include
-	$(MAKE) ADMB_HOME="$(PWD)\${DISK}" --directory=..\contrib
+	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(PWD)\${DISK}" --directory=..\contrib
 endif
 
 libs: admbsaf

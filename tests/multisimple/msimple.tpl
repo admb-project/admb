@@ -4,13 +4,47 @@ GLOBALS_SECTION
   #include <pthread.h>
   #include <fvar.hpp>
   #include <adthread.h>
-  //#include "pt_trace.h"
-  pthread_mutex_t trace_mutex= PTHREAD_MUTEX_INITIALIZER;
-  ofstream clogf;
+ 
+  void simple_thread(void * ptr)
+  {
+      new_thread_data * tptr = (new_thread_data *) ptr;
 
+      gradient_structure::set_MAX_NVAR_OFFSET(10000);
+      gradient_structure::set_GRADSTACK_BUFFER_SIZE(20000000);
+      gradient_structure::set_CMPDIF_BUFFER_SIZE   (20000000);
+      gradient_structure gs(10000000);
+   
+      ad_comm::pthread_manager->set_slave_number(tptr->thread_no);
 
-  void * mp_ptr = NULL;
-  void* simple_thread(void * ptr);
+      ad_comm::pthread_manager->cread_lock_buffer(0);
+      dvector x = ad_comm::pthread_manager->get_dvector(0);
+      dvector Y = ad_comm::pthread_manager->get_dvector(0);
+      ad_comm::pthread_manager->cread_unlock_buffer(0);
+
+      do
+      {
+         ad_comm::pthread_manager->read_lock_buffer(0);
+         int lflag=ad_comm::pthread_manager->get_int(0);
+         if (lflag == 0) break;
+         dvariable a =ad_comm::pthread_manager->get_dvariable(0);
+         dvariable b =ad_comm::pthread_manager->get_dvariable(0);
+         ad_comm::pthread_manager->read_unlock_buffer(0);
+
+         dvar_vector pred_Y(x.indexmin(),x.indexmax());
+
+         pred_Y = a * x +  b;
+         dvariable f=norm2(pred_Y-Y); 
+   
+         ad_comm::pthread_manager->write_lock_buffer(0);
+         ad_comm::pthread_manager->send_dvariable_to_master(f, 0);
+         ad_comm::pthread_manager->write_unlock_buffer(0);
+   
+         slave_gradcalc();
+      }
+      while (1);
+      pthread_exit(ptr);
+   }
+
 
 DATA_SECTION
   init_int nobs
@@ -21,7 +55,7 @@ DATA_SECTION
   number B
 
  LOCAL_CALCS
-    //TTRACE(nobs,nrow)
+    cout << nobs << "  " << nrow << endl;
     A = 2.0;
     B = 4.0;
     random_number_generator rng(101);
@@ -35,17 +69,6 @@ DATA_SECTION
        Y(i) += 5.0*err;
     }
 
-    /*
-    if (1)
-    {
-       TTRACE(nobs,nrow)
-       TTRACE(A,B)
-       TRACE(x)
-       TRACE(Y)
-       ad_exit(1);
-    }
-    */
-
 PARAMETER_SECTION
   init_number a   
   init_number b   
@@ -54,12 +77,11 @@ PARAMETER_SECTION
   objective_function_value f
 
 PRELIMINARY_CALCS_SECTION
+    cout << nobs << "  " << nrow << endl;
   //TRACE(x)
   //TRACE(Y)
   a = 1.0;
   b = 2.0;
-  mp_ptr = (void*)this;
-  //TTRACE(mp_ptr,((void*)this));
 
   int ngroups=1;
   ivector ng(1,ngroups);
@@ -75,22 +97,23 @@ PRELIMINARY_CALCS_SECTION
   }
 
   ad_comm::pthread_manager->attach_code(&simple_thread);
-
-  pthread_mutex_lock(&ad_comm::pthread_manager->start_mutex);
   ad_comm::pthread_manager->create_all(data1);
-  ad_comm::pthread_manager->set_old_buffer_flag(0);
-  
-  pthread_mutex_unlock(&ad_comm::pthread_manager->start_mutex);
 
+  
+  for (int kk=1;kk<=nrow;kk++)
+  {
+     ad_comm::pthread_manager->cwrite_lock_buffer(kk);
+     ad_comm::pthread_manager->send_dvector(Y(kk),kk);
+     ad_comm::pthread_manager->send_dvector(x(kk),kk);
+     ad_comm::pthread_manager->cwrite_unlock_buffer(kk);
+  }
 
 
 PROCEDURE_SECTION
   for (int kk=1;kk<=nrow;kk++)
   {
-     ad_comm::pthread_manager->cwrite_lock_buffer(kk);
-     ad_comm::pthread_manager->send_int(1,kk); 
-     ad_comm::pthread_manager->cwrite_unlock_buffer(kk);
      ad_comm::pthread_manager->write_lock_buffer(kk);
+     ad_comm::pthread_manager->send_int(1,kk); 
      ad_comm::pthread_manager->send_dvariable(a,kk); 
      ad_comm::pthread_manager->send_dvariable(b,kk); 
      ad_comm::pthread_manager->write_unlock_buffer(kk);
@@ -107,25 +130,15 @@ PROCEDURE_SECTION
       //TTRACE(kk,ff(kk))
   }
   f = sum(ff);
-  //TRACE(f)
+  f=(nrow*nobs)/2.*log(f);    // make it a likelihood function so that
+                                  // covariance matrix is correct
 
-TOP_OF_MAIN_SECTION
-  adstring logname("mymsimple.log");
-  clogf.open(logname);
-  if ( !clogf ) 
-  {
-    cerr << "Cannot open file " << logname << endl;
-    ad_exit(1);
-  }
-  cout << "Opened " << logname << endl;
 
 REPORT_SECTION
-  //TTRACE(a,b)
   report << "A = " << A << "; B = " << B <<endl;
   report << "a = " << a << "; b = " << b <<endl;
 
 FINAL_SECTION
-  //TTRACE(a,b)
   for (int k = 1; k <= nrow;k++)
   {
     ad_comm::pthread_manager->write_lock_buffer(k);
@@ -135,6 +148,3 @@ FINAL_SECTION
   sleep(1);
   delete ad_comm::pthread_manager;
   ad_comm::pthread_manager=0;
-  HERE
-
-  clogf.close(); 

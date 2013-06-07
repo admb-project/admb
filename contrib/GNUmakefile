@@ -15,16 +15,6 @@ ifndef LIBPATH
 LIBPATH=../../build/objects/dist
 endif
 
-ifeq ($(CXX),CC)
-CXXFLAGS:=$(CXXFLAGS) -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I$(ADMB_HOME)/include
-else
-  ifneq ($(SHELL),sh.exe)
-    CXXFLAGS:=$(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I\"$(ADMB_HOME)/include\"
-  else
-    CXXFLAGS:=$(CXXFLAGS) -Wall -DUSE_LAPLACE -D__SPDLL__ -D__GNUDOS__ -Dlinux -I\"$(ADMB_HOME)\include\"
-  endif
-endif
-
 ad2csv: build-ad2csv
 
 all: build-statslib build-ecolib build-qfclib build-src
@@ -37,8 +27,8 @@ else
 endif
 
 build-statslib:
-	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-statslib-
-	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-statslib-
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-statslib-
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-statslib-
 ifeq ($(SHELL),sh.exe)
 	copy statslib\statsLib.h $(DISK)\contrib\include
 else
@@ -46,8 +36,8 @@ else
 endif
 
 build-ecolib:
-	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-ecolib-
-	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-ecolib-
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-ecolib-
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-ecolib-
 ifeq ($(SHELL),sh.exe)
 	copy ecolib\ecolib.h $(DISK)\contrib\include
 else
@@ -55,8 +45,8 @@ else
 endif
 
 build-qfclib:
-	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-qfclib-
-	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-qfclib-
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-qfclib-
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-qfclib-
 ifeq ($(SHELL),sh.exe)
 	copy qfclib\qfclib.h $(DISK)\contrib\include
 else
@@ -74,8 +64,8 @@ ifneq ($(SHELL),sh.exe)
 endif
 
 build-src:
-	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-
-	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS)" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-
+	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-
+	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-
 ifeq ($(SHELL),sh.exe)
 	copy src\contrib.h $(DISK)\contrib\include
 else

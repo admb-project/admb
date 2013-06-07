@@ -21,51 +21,6 @@ __ADMBTHREAD__ int adpthread_manager::slave_number;
 
 int adpthread_manager::old_buffer_flag=0;
 
-adpthread_manager::~adpthread_manager()
-{
-  //cerr << "called adpthread_manager::~adpthread_manager(); nslaves = "
-  //     << nslaves << endl;
-  int i;
-  for (i=0;i<nslaves;i++)
-  {
-    ssmutex[i]+=i+1;
-    delete [] ssmutex[i];
-    ssmutex[i]=0;
-  }
-  delete [] ssmutex;
-  ssmutex=0;
-  ppf++;
-  delete [] ppf;
-  ppf=0;
-  thread1++;
-  delete [] thread1;
-  thread1=0;
-  buffend++;
-  delete [] buffend;
-  buffend=0;
-  current_bptr++;
-  delete [] current_bptr;
-  current_bptr=0;
-  for (i=0;i<nslaves;i++)
-  {
-    for (int j=i+1;j<=nslaves;j++)
-    {
-      if (stransfer_buffer[i][j])
-      {
-        delete [] stransfer_buffer[i][j];
-        stransfer_buffer[i][j]=0;
-      }
-    }
-  }
-  for (i=0;i<nslaves;i++)
-  {
-    stransfer_buffer[i]+=i+1;
-    delete [] stransfer_buffer[i];
-    stransfer_buffer[i]=0;
-  }
-  delete [] stransfer_buffer;
-  stransfer_buffer=0;
-}
 
 adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
   mflag(1,ns), sflag(1,ns), num_in_group(1,1),ngroups(1),
@@ -111,37 +66,13 @@ adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
   smflag.initialize();
   ssflag.initialize();
   
-  for (i=1;i<=ns;i++)
-  {
-    transfer_buffer[i]=new char[bs];
-    current_bptr[i]=transfer_buffer[i];
-    buffend[i]=transfer_buffer[i]+bs-1;
-  }
-  smutex=new pthread_mutex_t[ns];
-  smutex--;
-  for (i=1;i<=ns;i++)
-  {
-    pthread_mutex_init(smutex+i,NULL);
-  }
-  scondition=new pthread_cond_t[ns];
-  scondition--;
-  mcondition=new pthread_cond_t[ns];
-  mcondition--;
-  for (i=1;i<=ns;i++)
-  {
-    pthread_cond_init(scondition+i,0);
-    pthread_cond_init(mcondition+i,0);
-  }
-  thread1=new pthread_t[ns];
-  thread1--;
-  pthread_mutex_init(&copy_mutex,NULL);
-  pthread_mutex_init(&start_mutex,NULL);
   ssmutex=new ppthread_mutex_t[ns];
   for (i=0;i<ns;i++)
   {
     ssmutex[i]=new pthread_mutex_t[ns-i];
     ssmutex[i]-=i+1;
   }
+
   sbuffer_size.allocate(0,ns-1);
   for (i=0;i<ns;i++)
   {
@@ -149,7 +80,7 @@ adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
   }
   sbuffer_size.initialize();
 
-  stransfer_buffer=new ppchar[ns];
+ stransfer_buffer=new ppchar[ns];
 
   for (i=0;i<ns;i++)
   {
@@ -163,7 +94,7 @@ adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
     scurrent_bptr[i]-=i+1;
   }
 
-  sbuffend=new ppchar[ns];
+ sbuffend=new ppchar[ns];
   for (i=0;i<ns;i++)
   {
     sbuffend[i]=new pchar[ns-i];
@@ -179,6 +110,7 @@ adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
       sbuffend[i][j]=0;
     }
   }
+
   for (i=0;i<ns;i++)
   {
     for (int j=i+1;j<=ns;j++)
@@ -432,8 +364,11 @@ void adpthread_manager::check_buffer_size(int nbytes,int s1,int s2)
 {
   // if the buffer is too small make it bigger and copy old
   // buffer contents
-  if (scurrent_bptr[s1][s2]+nbytes>sbuffend[s1][s2])
+  do
   {
+    //if (scurrent_bptr[s1][s2]+nbytes>sbuffend[s1][s2])
+    if (scurrent_bptr[s1][s2]+nbytes<=sbuffend[s1][s2]) break;
+  
     std::ptrdiff_t pd=scurrent_bptr[s1][s2]-stransfer_buffer[s1][s2];
     std::ptrdiff_t pd1=sbuffend[s1][s2]-stransfer_buffer[s1][s2];
     cout << "scurrent offset is " << pd << " bytes " << endl;
@@ -461,6 +396,7 @@ void adpthread_manager::check_buffer_size(int nbytes,int s1,int s2)
     std::ptrdiff_t pd2=sbuffend[s1][s2]-stransfer_buffer[s1][s2];
     cout << " new sbuffend is at " << pd2 << " bytes " << endl;
   }
+  while(1);
 }
 
 
@@ -977,6 +913,29 @@ void adpthread_manager::writebuffer(const void *x,int nbytes,int sno)
   }
 }
 
+long int adpthread_manager::get_offset(int sno)
+{
+  int s1,s2;
+  int tn2=ad_comm::pthread_manager->get_slave_number();
+  if (tn2==sno)
+  {
+    cerr << "This can't happen" << endl;
+    ad_exit(1);
+  }
+  if (tn2<sno)
+  {
+    s1=tn2;
+    s2=sno;
+  }
+  else
+  {
+    s1=sno;
+    s2=tn2;
+  }
+  std::ptrdiff_t pd=scurrent_bptr[s1][s2]-stransfer_buffer[s1][s2];
+  return pd;
+}
+
 void adpthread_manager::readbuffer(const void *_x,int nbytes,int sno)
 {
   void * x= (void *)(_x); 
@@ -1023,8 +982,7 @@ void adpthread_manager::verify_id_string_from_master(const char * s,int sno)
   readbuffer(s1,sz,sno);
   if (strcmp(s,s1))
   {
-    cerr << "Error verifying master string " << s << " got " 
-         << s1[0] << s1[1] << s1[2] << " instead" << endl;
+    cerr << "Error verifying master string " << s << endl;
     ad_exit(1);
   }
 #endif
@@ -1059,20 +1017,14 @@ void adpthread_manager::send_double_to_slave(const double &x,int sno)
 }
 void adpthread_manager::send_int_to_slave(int x,int sno)
 {
-  send_id_string_to_slave("XT",sno);
+  send_id_string_to_slave("RY",sno);
   writebuffer(&x,sizeof(int),sno);
 }
 
 void adpthread_manager::send_int(int x,int sno)
 {
-  send_id_string_to_slave("RY",sno);
+  send_id_string_to_slave("ES",sno);
   writebuffer(&x,sizeof(int),sno);
-}
-
-void adpthread_manager::send_pointer(void * x,int sno)
-{
-  send_id_string_to_slave("WQ",sno);
-  writebuffer(&x,sizeof(void *),sno);
 }
 
 void adpthread_manager::send_int_to_master(int x,int sno)
@@ -1083,7 +1035,7 @@ void adpthread_manager::send_int_to_master(int x,int sno)
 
 int adpthread_manager::get_int_from_master(int sno)
 {
-  verify_id_string_from_master("XT",sno);
+  verify_id_string_from_master("RY",sno);
   int x;
   readbuffer(&x,sizeof(int),sno);
   return x;
@@ -1091,17 +1043,9 @@ int adpthread_manager::get_int_from_master(int sno)
 
 int adpthread_manager::get_int(int sno)
 {
-  verify_id_string_from_master("RY",sno);
+  verify_id_string_from_master("ES",sno);
   int x;
   readbuffer(&x,sizeof(int),sno);
-  return x;
-}
-
-void *  adpthread_manager::get_pointer(int sno)
-{
-  verify_id_string_from_master("WQ",sno);
-  void * x;
-  readbuffer(&x,sizeof(void *),sno);
   return x;
 }
 
@@ -1762,6 +1706,7 @@ void add_slave_suffix(const adstring& _tmpstring)
     pthread_mutex_unlock(&ad_comm::pthread_manager->copy_mutex);
   }
 }
+
 new_thread_data::new_thread_data(void)
 {
  // id=0;

@@ -1,5 +1,7 @@
 .NOTPARALLEL: all libs contrib
 
+INSTALL_DIR=/usr/local/
+
 ifeq ($(SHELL),sh.exe)
   DISK=..\build\dist
   LIBPATH=..\build\objects\dist
@@ -279,6 +281,10 @@ else
 endif
 
 install:
+	cp -Rf ../build/dist $(INSTALL_DIR)admb
+	ln -sf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
+
+install2:
 	@echo "Read INSTALL.txt for installation instructions."
 
 clean:

@@ -13,18 +13,24 @@ export ADMB_HOME=/home/jsibert/admb/threaded2/build/dists/admb_gcc411_fedora8
 CC=/usr/local/gcc-4.8.0/bin/g++
 LL = $(CC)
 
-#CFLAGS = -c -pthread -fpermissive -m64 -Wall -Wno-deprecated -ggdb -I. -I$(ADMB_HOME)/include -I$(ADMB_HOME)/contrib -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -DSAFE_ARRAYS
-CFLAGS = -c -pthread -fpermissive -m64 -Wall -Wno-deprecated -ggdb -I. -I$(ADMB_HOME)/include -I$(ADMB_HOME)/contrib -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -DOPT_LIB
+CFLAGS = -c -pthread -fpermissive -m64 -Wall -Wno-deprecated -ggdb -I. -I$(ADMB_HOME)/include -I$(ADMB_HOME)/contrib -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -DSAFE_ARRAYS
+#CFLAGS = -c -pthread -fpermissive -m64 -Wall -Wno-deprecated -ggdb -I. -I$(ADMB_HOME)/include -I$(ADMB_HOME)/contrib -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -DOPT_LIB
 
 
-#LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -lpthread
-LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado -lpthread
+LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -lpthread
+#LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado -lpthread
 
 #OBJECTS=adpthread_manager.o msimple.o simple_thread.o
-OBJECTS=msimple.o simple_thread.o
+OBJECTS=msimple.o
 
 # link the object file into the executable 
 msimple: $(OBJECTS) 
+	@echo
+	@echo ------- Link $@
+	$(LL) -o $@ $^ $(LFLAGS)
+	@echo ------- Done
+
+msimple1: msimple1.o
 	@echo
 	@echo ------- Link $@
 	$(LL) -o $@ $^ $(LFLAGS)
@@ -77,10 +83,17 @@ rules:
 
 clean:
 	rm -fv msimple.cpp
+	rm -fv msimple1.cpp
 	rm -fv msimple
+	rm -fv msimple1
 	rm -fv *.o
 	rm -fv *.htp
 	rm -fv *.log
+	rm -fv *.std
+	rm -fv *.cov
+	rm -fv *.hes
+	rm -fv *.eva
+	rm -fv *.bar
 	rm -fv derivatives
 	rm -fv variance
 	rm -fv eigv.rpt

@@ -352,7 +352,9 @@ PRELIMINARY_CALCS_SECTION  {
 
     fprintf(fall,"%s","}\n\nvoid model_parameters::preliminary_calculations(void)"
       "\n{\n");
+    fprintf(fall,"%s","\n#if defined(USE_ADPVM)\n");
     fprintf(fall,"%s","\n  admaster_slave_variable_interface(*this);\n");
+    fprintf(fall,"%s","\n#endif\n");
   }
                 }
 
@@ -392,7 +394,7 @@ BETWEEN_PHASES_SECTION {
                             }
 
 SLAVE_SECTION  {
-
+  #if defined(USE_ADPVM)
   if (pvmslaves_defined)
   {
     fprintf(stderr,"%s","Error -- only one pvm slave section allowed\n");
@@ -407,7 +409,7 @@ SLAVE_SECTION  {
     fprintf(fall,"%s","}\n\nimatrix model_parameters::"
       "get_slave_assignments(void)\n{\n");
   }
-
+  #endif
          }
 
 <IN_PVM_SLAVE_SECTION>^[ \t].*$ { fprintf(fall,"%s\n",yytext); }
@@ -3998,7 +4000,9 @@ TOP_OF_MAIN_SECTION {
       fprintf(fall,"}\n");
       fprintf(fall,"\nvoid model_parameters::preliminary_calculations(void)"
         "{");
+      fprintf(fall,"%s","\n#if defined(USE_ADPVM)\n");
       fprintf(fall,"%s","\n  admaster_slave_variable_interface(*this);\n");
+      fprintf(fall,"%s","\n#endif\n");
     }
 
     fprintf(fall,"}\n");

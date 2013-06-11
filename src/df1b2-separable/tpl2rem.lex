@@ -409,7 +409,9 @@ PRELIMINARY_CALCS_SECTION  {
       }
     }
     fprintf(fall,"%s","\nvoid model_parameters::preliminary_calculations(void) \n{\n");
+    fprintf(fall,"%s","\n  #if defined(USE_ADPVM)\n");
     fprintf(fall,"%s","\n  admaster_slave_variable_interface(*this);\n");
+    fprintf(fall,"%s","\n  #endif\n");
   }
                 }
 
@@ -4352,7 +4354,10 @@ TOP_OF_MAIN_SECTION {
     {
       fprintf(fall,"\nvoid model_parameters::preliminary_calculations(void)"
         "{");
-      fprintf(fall,"%s","\n  admaster_slave_variable_interface(*this);\n  }\n");
+      fprintf(fall,"%s","\n  #if defined(USE_ADPVM)\n");
+      fprintf(fall,"%s","\n  admaster_slave_variable_interface(*this);\n");
+      fprintf(fall,"%s","\n  #endif\n");
+      fprintf(fall,"%s","\n}\n");
     }
 
     fprintf(fall,"\nmodel_data::~model_data()\n"

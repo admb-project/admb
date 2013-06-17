@@ -17,13 +17,21 @@ endif
 
 ad2csv: build-ad2csv
 
-all: build-statslib build-ecolib build-qfclib build-src
+all: build-gdbprintlib build-statslib build-ecolib build-qfclib build-src
 ifneq ($(SHELL),sh.exe)
 	$(AR) -rs $(DISK)/contrib/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
 	$(AR) -rs $(DISK)/contrib/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
 else
 	$(AR) -rs $(DISK)\contrib\lib\libcontrib.a ..\build\objects\dist\saflp-contrib-*.obj
 	$(AR) -rs $(DISK)\contrib\lib\libcontribo.a ..\build\objects\dist\optlp-contrib-*.obj
+endif
+
+build-gdbprintlib:
+	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-gdbprintlib-
+ifeq ($(SHELL),sh.exe)
+	copy gdbprintlib\gdbprintlib.h $(DISK)\contrib\include
+else
+	cp gdbprintlib/gdbprintlib.h $(DISK)/contrib/include
 endif
 
 build-statslib:
@@ -80,6 +88,7 @@ test-needR:
 	$(MAKE) --directory=qfclib ADMB_HOME="$(ADMB_HOME)" test
 
 clean:
+	@$(MAKE) --directory=gdbprintlib clean
 	@$(MAKE) --directory=ecolib clean
 	@$(MAKE) --directory=qfclib clean
 	@$(MAKE) --directory=statslib clean

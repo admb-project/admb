@@ -187,13 +187,13 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -mcrb  N        reduce amount of correlation in the covariance matrix 1<=N<=9\n");
       (*ad_printf)( " -mcnoscale      don't rescale step size for mcmc depending on acceptance rate\n");
       (*ad_printf)( " -nosdmcmc       turn off mcmc histogram calcs to make mcsave run faster\n");
-      (*ad_printf)( " -mcgrope N      same as -mcprobe\n");
       (*ad_printf)( " -mcprobe N      use probing strategy for mcmc with factor N\n");
+      (*ad_printf)( " -mcgrope N      Deprecated, same as -mcprobe\n");
       (*ad_printf)( " -mcseed N       seed for random number generator for markov chain monte carlo\n");
       (*ad_printf)( " -mcscale N      rescale step size for first N evaluations\n");
       (*ad_printf)( " -mcsave N       save the parameters for every Nth simulation\n");
       (*ad_printf)( " -mceval         go through the saved mcmc values from a previous mcsave\n");
-    //(*ad_printf)( " -mcu            use uniformaly distributed steps for mcmc\n");
+      (*ad_printf)( " -mcu            use uniformaly distributed steps for mcmc instead of random normal\n");
       (*ad_printf)( " -crit N1,N2,... set gradient magnitude convergence criterion to N\n");
       (*ad_printf)( " -iprint N       print out function minimizer report every N iterations\n");
       (*ad_printf)( " -maxfn N1,N2,.. set maximum number opf function eval's to N\n");

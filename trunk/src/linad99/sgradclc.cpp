@@ -5,8 +5,8 @@
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
- * \file
- * Description not yet available.
+  \file sgradclc.cpp
+  Functions to compute gradient from the global \ref gradient_structure.
  */
 #include "fvar.hpp"
 
@@ -77,8 +77,9 @@
 //void KLUDGEX(void * p);
 
 /**
- * Description not yet available.
- * \param
+  Compute the gradient from the data stored in the global \ref gradient_structure.
+  \param nvar Number of variables in the gradient.
+  \param _g Vector from 1 to nvar. On return contains the gradient.
  */
 void gradcalc(int nvar, const dvector& _g)
 {
@@ -247,8 +248,6 @@ do
 }
 
 /**
- * Description not yet available.
- * \param
  */
 void gradient_structure::save_arrays()
 {
@@ -323,8 +322,6 @@ void gradient_structure::save_arrays()
 }
 
 /**
- * Description not yet available.
- * \param
  */
 void gradient_structure::restore_arrays()
 {
@@ -384,8 +381,6 @@ void gradient_structure::restore_arrays()
 }
 
 /**
- * Description not yet available.
- * \param
  */
 void gradient_structure::save_variables()
 {
@@ -407,8 +402,6 @@ void gradient_structure::save_variables()
 }
 
 /**
- * Description not yet available.
- * \param
  */
 void gradient_structure::restore_variables()
 {
@@ -425,8 +418,6 @@ void gradient_structure::restore_variables()
 void KLUDGEX(void * p){;}
 
 /**
- * Description not yet available.
- * \param
  */
 void reset_gradient_stack(void)
 {
@@ -442,8 +433,13 @@ static int inner_count=0;
 //static grad_stack_entry * pgse = (grad_stack_entry*) (0x1498fffc);
 
 /**
- * Description not yet available.
- * \param
+  Sets the gradient stack entry for a function or operator with a single
+  independent variable.
+  \param func Pointer to function to compute the derivative of the dependent 
+   variable with respect to the independent variable. 
+   Function prototype: void func(void);
+  \param dep_addr Address of dependent variable; pointer to double.
+  \param ind_addr1 Address of independent variable; pointer to double
  */
 void grad_stack::set_gradient_stack1(void (* func)(void),
   double * dep_addr,double * ind_addr1)
@@ -481,8 +477,6 @@ void grad_stack::set_gradient_stack1(void (* func)(void),
 }
 
 /**
- * Description not yet available.
- * \param
  */
 void test_the_pointer(void)
 {

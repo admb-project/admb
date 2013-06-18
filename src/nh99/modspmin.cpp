@@ -885,7 +885,9 @@ void adwait(double sec){;}
         exit(1);
 #else
         //mcmc_routine(nmcmc,iseed0,dscale,1);
+        #if defined(USE_ADPVM)
         pvm_master_mcmc_routine(nmcmc,iseed0,dscale,1);
+        #endif
 #endif
       }
       else
@@ -896,7 +898,9 @@ void adwait(double sec){;}
         exit(1);
 #else
         //mcmc_routine(nmcmc,iseed0,dscale,0);
+        #if defined(USE_ADPVM)
         pvm_master_mcmc_routine(nmcmc,iseed0,dscale,0);
+        #endif
 #endif
       }
     }

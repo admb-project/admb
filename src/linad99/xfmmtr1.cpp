@@ -5,8 +5,9 @@
  * Copyright (c) 2008-2012 Regents of the University of California 
  */
 /**
- * \file
- * Description not yet available.
+  \file xfnntr1.cpp
+  Minimize artibrary user-supplied function.
+  
  */
 // this is to get UNIX systems to use getchar
 // #define UNIXKLUDGE

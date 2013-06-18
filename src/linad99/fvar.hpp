@@ -556,8 +556,9 @@ ostream & operator<<(const ostream & istr, const i3_array & z);
 class grad_stack;
 
 /**
- * Description not yet available.
- * \param
+ Null class to allow specialized function overloads. 
+ Has no members; does nothing. 
+ Exists purely to coerce the compiler to generate a specific function call.
  */
 class kkludge_object{};
 
@@ -4053,8 +4054,7 @@ istream & operator>>(const istream & s, const ptr_vector & v);
 ostream & operator<<(const ostream & s, const ptr_vector & v);
 
 /**
- * Description not yet available.
- * \param
+  Function minimizer control.
  */
 class fmm_control
 {
@@ -4166,8 +4166,7 @@ class dfsdmat
 };
 
 /**
- * Description not yet available.
- * \param
+ Functions and variables for function minimizer.
  */
 class fmm:public fmm_control
 {
@@ -4182,7 +4181,7 @@ class fmm:public fmm_control
    double z, zz, gys, gs, sig, gso, alpha, tot, fy, dgs;
    long int itn, icc, np, nn, is, iu, iv, ib;
    int i, j;
-   double gmax;
+   double gmax; ///< maximum gradient
    double fsave;
    dvector xx;
    dvector gbest;
@@ -4198,13 +4197,14 @@ class fmm:public fmm_control
    double minimize(const independent_variables & x,
 		   double (*pf) (const dvar_vector &));
 
+   /// Undefined
    double minimize(const independent_variables & x, const dvector & c,
 		   double (*pf) (const dvar_vector &, const dvector &));
 
    //void fmin(const double& f, const independent_variables &x, const dvector& g);
    void fmin(const double &f, const dvector & x, const dvector & g);
 
-   dmatrix & hessian();
+   dmatrix & hessian(); ///< Undefined
 };
 
 class function_minimizer;

@@ -10,8 +10,8 @@
  *
  */
 /**
- * \file
- * Description not yet available.
+  \file newfmin.cpp
+  Souce code for quasi-Newton function minimizer.
  */
 
 #include <fvar.hpp>
@@ -183,8 +183,11 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
 #endif
 
 /**
- * Description not yet available.
- * \param
+ Quasi-Newton function minimizer.
+  \param _f Value of function to be minimized.
+  \param _x Vector of independent variables.
+  \param _g Vector containing the partial derivatives of _f with respect to 
+   each independent variable. The gradient vector returned by \ref gradcalc.
  */
 void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
 {
@@ -871,9 +874,9 @@ label7020:
    }
 
 /**
- * dafsqrt robust square root (returns zero of argument is negative)
- * \param x double
- * \return square root of x (for x>0)
+  Robust square root.
+  \param x Double precision argunent \f$x; x \ge 0\f$.
+  \return \f$\sqrt{x}\f$ for \f$x>0\f$, 0 otherwise.
  */
    double dafsqrt( double x )
    {

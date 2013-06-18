@@ -129,7 +129,7 @@ dvariable::dvariable(const dvariable& t)
 
 /**
    Specialized constructor that does not create unnecessary entries 
-   in the gradient structure; see function nograd_assign(...).
+   in the gradient structure; see function \ref nograd_assign.
  */
     dvariable::dvariable(kkludge_object)
     {

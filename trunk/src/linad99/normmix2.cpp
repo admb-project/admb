@@ -110,23 +110,6 @@ double  nr_generic(double y,double a,pinit_f p_get_initial_x,
   return x;
 }
 
-/**
- * Description not yet available.
- * \param
- */
-dvariable inv_cumd_normal_logistic_mixture(const prevariable& _yy,double a)
-{
-  ADUNCONST(dvariable,yy)
-  double  x=nr_generic(value(yy),a,cumd_normal_logistic_mixture_initx,
-    cumd_normal_logistic_mixture,df_cumd_normal_logistic_mixture);
-  dvariable z;
-  value(z)=x;
-  double dfx=1.0/df_cumd_normal_logistic_mixture(x,a);
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-     &(value(z)), &(value(yy)),dfx);
-  return z;
-}
-
 /*
 main()
 {

@@ -366,20 +366,3 @@ void DF_FILE::read_cmpdif_stack_buffer(my_off_t & lpos)
     //cout << "offset after write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
     //clogf << "offset after write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
   }
-
-/**
- * Description not yet available.
- * \param
- */
-void byte_copy(void * dest,void * source, unsigned num_bytes)
-{
-#if !defined (__SUN__) && !defined (__WAT32__) && !defined(__ADSGI__) && !defined (__MSVC32__) && !defined(linux)
-  int ii=0;
-  while (ii++<num_bytes)
-  {
-   *((char *)dest)++ = *((char *)source)++;
-  }
-#else
-  memcpy((char*)dest, (char*)source, num_bytes);
-#endif
- }

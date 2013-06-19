@@ -40,7 +40,6 @@ OBJ0=\
  lbfgs.obj\
  lmnewton.obj\
  xxmcmc.obj\
- xxmcmc2.obj\
  xxmcmc3.obj\
  mceval.obj\
  prmonte.obj\
@@ -97,19 +96,22 @@ OBJ0=\
  mod_mc4.obj\
  mc_scale.obj\
  adsleep.obj\
- parallel.obj\
  dfqromb.obj\
- paral3re.obj\
- paral5re.obj\
- paralle2.obj\
  profmin.obj\
  para3.obj
 OBJSPLUS=\
  spcomm.obj
- #adsplus.obj\
- #usereval.obj\
- #dfqromo.obj\
- #admbgui.obj\
- #confmin.obj\
- #model_mi.obj\
- #evalxtrn.obj\
+PVM=\
+ parallel.obj\
+ paralle2.obj\
+ paral3re.obj\
+ paral5re.obj\
+ xxmcmc2.obj
+UNUSED=\
+ adsplus.obj\
+ usereval.obj\
+ dfqromo.obj\
+ admbgui.obj\
+ confmin.obj\
+ model_mi.obj\
+ evalxtrn.obj

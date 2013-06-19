@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-   void d4_array::operator /= (CGNU_DOUBLE d)
+   void d4_array::operator /= (double d)
    {
      for (int i=indexmin();i<=indexmax();i++)
      {
@@ -26,7 +26,7 @@
  * Description not yet available.
  * \param
  */
-d4_array operator/(const d4_array& m, CGNU_DOUBLE d)
+d4_array operator/(const d4_array& m, double d)
    {
      d4_array tmp;
      tmp.allocate(m);
@@ -41,13 +41,16 @@ d4_array operator/(const d4_array& m, CGNU_DOUBLE d)
  * Description not yet available.
  * \param
  */
-d4_array operator/(CGNU_DOUBLE d, const d4_array& m)
-   {
-     d4_array tmp;
-     tmp.allocate(m);
-     for (int i=tmp.indexmin();i<=tmp.indexmax();i++)
-     {
-       tmp(i)=d/m(i);
-     }
-     return tmp;
-   }  
+d4_array operator/(double d, const d4_array& m)
+{
+  d4_array tmp;
+  tmp.allocate(m);
+  for (int i = tmp.indexmin(); i <= tmp.indexmax(); i++)
+  {
+    for (int j=tmp(i).indexmin(); j <= tmp(i).indexmax(); j++)
+    {
+      tmp(i, j) = d / m(i, j);
+    }
+  }
+  return tmp;
+}  

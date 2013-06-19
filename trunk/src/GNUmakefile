@@ -25,6 +25,10 @@ else
 CXXFLAGS:=-Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 endif
 
+ifdef BUILD_SHARED_LIBRARY
+CXXFLAGS:=-fPIC $(CXXFLAGS)
+endif
+
 ifdef DEBUG
 CXXFLAGS:=-g $(CXXFLAGS)
 else
@@ -35,7 +39,17 @@ all: revision dist contrib
 ifeq ($(SHELL),sh.exe)
 	pushd $(DISK) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
 endif
+ifndef BUILD_SHARED_LIBRARY
+	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(PWD)/${DISK}" --directory=../contrib build-ad2csv
+endif
 	@echo ADMB build completed.
+	@echo For installation, check README.txt.
+
+shared: libobjects
+	g++ -shared -o${DISK}/lib/libadmb.so ../build/objects/dist/saflp-linad99-*.obj ../build/objects/dist/saflp-df1b2-separable-*.obj ../build/objects/dist/optlp-nh99-*.obj ../build/objects/dist/optlp-tools99-*.obj ../build/objects/dist/saflp-contrib-*.obj
+	g++ -shared -o${DISK}/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
+	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(PWD)/${DISK}" --directory=../contrib build-ad2csv
+	@echo ADMB shared build completed.
 	@echo For installation, check README.txt.
 
 revision:
@@ -219,7 +233,11 @@ ifneq ($(SHELL),sh.exe)
 	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DISK}/bin
 	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/admb/adcomp ${DISK}/bin
+ifdef BUILD_SHARED_LIBRARY
+	cp ../scripts/admb/adlink-shared ${DISK}/bin/adlink
+else
 	cp ../scripts/admb/adlink ${DISK}/bin
+endif
 	rm -f ${DISK}/bin/admb-cfg.sh
 	echo "CXX=$(CXX)" > ${DISK}/bin/admb-cfg.sh
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DISK} bins

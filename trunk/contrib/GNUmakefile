@@ -15,8 +15,6 @@ ifndef LIBPATH
 LIBPATH=../../build/objects/dist
 endif
 
-ad2csv: build-ad2csv
-
 all: build-gdbprintlib build-statslib build-ecolib build-qfclib build-src
 ifneq ($(SHELL),sh.exe)
 	$(AR) -rs $(DISK)/contrib/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
@@ -25,6 +23,8 @@ else
 	$(AR) -rs $(DISK)\contrib\lib\libcontrib.a ..\build\objects\dist\saflp-contrib-*.obj
 	$(AR) -rs $(DISK)\contrib\lib\libcontribo.a ..\build\objects\dist\optlp-contrib-*.obj
 endif
+
+ad2csv: build-ad2csv
 
 build-gdbprintlib:
 	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-gdbprintlib-

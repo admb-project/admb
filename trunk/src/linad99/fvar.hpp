@@ -9924,7 +9924,9 @@ class ad_comm
    static int no_ln_det_choleski_flag;
    static adtimer *ptm;
    static adtimer *ptm1;
+#if defined(USE_ADPVM)
    virtual void get_slave_assignments(void);
+#endif
    static adpvm_manager *pvm_manager;
    static adstring subdir;
    static streampos change_datafile_name(const adstring & s,

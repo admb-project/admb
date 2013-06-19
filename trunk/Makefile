@@ -3,6 +3,7 @@ all: $(CXX)-all
 debug: $(CXX)-debug
 verify: $(CXX)-verify
 test: $(CXX)-test
+shared: g++-shared
 install: $(CXX)-install
 clean: $(CXX)-clean
 
@@ -47,6 +48,8 @@ g++-verify:
 	$(MAKE) --directory=src CC=gcc CXX=g++ verify
 g++-test:
 	$(MAKE) --directory=src CC=gcc CXX=g++ tests
+g++-shared:
+	$(MAKE) --directory=src CC=gcc CXX=g++ BUILD_SHARED_LIBRARY=1 all shared
 g++-install:
 	$(MAKE) --directory=src CC=gcc CXX=g++ install
 g++-clean:

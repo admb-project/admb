@@ -400,6 +400,8 @@ double ln_normal_tail_right(const double& x)
   return tmp;
 }
 
+/*
+Same as linad99/cumdist.cpp -> double inv_cumd_norm_inner(const double& x)
 double inv_cumd_norm(const double& x)
 {
   const double c0=2.515517;
@@ -432,6 +434,7 @@ double inv_cumd_norm(const double& x)
     return p;
   } 
 }
+*/
 
 double inv_cumd_norm_ln(const double& x)
 {
@@ -470,6 +473,8 @@ double inv_cumd_norm_ln(const double& x)
   } 
 }
 
+/*
+Same as in linad99/cumdist.cpp
 double cumd_norm(const double& x)
 {
   const double b1=0.319381530;
@@ -502,6 +507,7 @@ double cumd_norm(const double& x)
     return z;
   }
 }
+*/
 
 double cumd_mixture_02(const double& x)
 {

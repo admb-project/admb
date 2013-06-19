@@ -167,6 +167,10 @@ Unix
 
    [~/admb/]$ make debug
 
+   To build shared library,
+
+   [~/admb/]$ make shared
+
    Takes approximately 15-25 minutes to complete.
 
    Use help to show available compiler targets.

@@ -5,6 +5,29 @@ Release Notes
 The goal for all releases was to improve algorithms, add new requested features,
 correct defects (bugs), and streamline installation and build process.
 
+ADMB
+===
+
+Changes
+-------
+
+New Features
+------------
+
+* Add debug target to build files.
+
+  $ make shared
+
+* Add shared target to build files (Unix only).
+
+  $ make shared
+
+To Do
+-----
+
+ADMB-11.1
+=========
+
 Changes
 -------
 

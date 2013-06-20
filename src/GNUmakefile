@@ -108,64 +108,55 @@ else
 	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(PWD)\${DISK}" --directory=..\contrib
 endif
 
-libs: admbsaf
-
-admbsaf: admbopt
-ifneq ($(SHELL),sh.exe)
-	mkdir -p ${DISK}/lib
-	@#mkdir -p ${LIBPATH}
-	@#$(MAKE) $(MAKEFLAGS_J) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK}
-	@#$(MAKE) $(MAKEFLAGS_J) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-tools99- DISKDIR=../${DISK}
-	rm -vf ${DISK}/lib/libadmb.a
-	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-linad99-*.obj
-	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-df1b2-separable-*.obj
-	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/optlp-nh99-*.obj
-	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/optlp-tools99-*.obj
-else
+libs: objects
+ifeq ($(SHELL),sh.exe)
 	if not exist ${DISK}\lib md ${DISK}\lib
-	if not exist ..\build\objects md ..\build\objects
-	if not exist ..\build\objects\dist md ..\build\objects\dist
-	$(MAKE) $(MAKEFLAG_J) --directory=df1b2-separable CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\saflp-df1b2-separable- DISKDIR=../${DISK}
-	$(MAKE) $(MAKEFLAG_J) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\saflp-linad99- DISKDIR=../${DISK}
-	@#$(MAKE) $(MAKEFLAG_J) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK}
-	@#$(MAKE) $(MAKEFLAG_J) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-tools99- DISKDIR=../${DISK}
 	if exist ${DISK}\lib\libadmb.a del ${DISK}\lib\libadmb.a
 	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\saflp-linad99-*.obj
 	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\saflp-df1b2-separable-*.obj
 	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\optlp-nh99-*.obj
 	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\optlp-tools99-*.obj
-endif
-
-admbopt: libobjects
-ifneq ($(SHELL),sh.exe)
-	mkdir -p ${DISK}/lib
-	rm -vf ${DISK}/lib/libadmbo.a
-	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-linad99-*.obj
-	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-df1b2-separable-*.obj
-	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-nh99-*.obj
-	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-tools99-*.obj
-else
-	if not exist ${DISK}\lib md ${DISK}\lib
-	if not exist ..\build\objects md ..\build\objects
-	if not exist ..\build\objects\dist md ..\build\objects\dist
-	$(MAKE) $(MAKEFLAG_J) --directory=df1b2-separable CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-df1b2-separable- DISKDIR=..\${DISK}
-	$(MAKE) $(MAKEFLAG_J) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-linad99- DISKDIR=..\${DISK}
-	$(MAKE) $(MAKEFLAG_J) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=..\${DISK}
-	$(MAKE) $(MAKEFLAG_J) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-tools99- DISKDIR=..\${DISK}
 	if exist ${DISK}\lib\libadmbo.a del ${DISK}\lib\libadmbo.a
 	$(AR) -rs ${DISK}\lib\libadmbo.a ..\build\objects\dist\optlp-linad99-*.obj
 	$(AR) -rs ${DISK}\lib\libadmbo.a ..\build\objects\dist\optlp-df1b2-separable-*.obj
 	$(AR) -rs ${DISK}\lib\libadmbo.a ..\build\objects\dist\optlp-nh99-*.obj
 	$(AR) -rs ${DISK}\lib\libadmbo.a ..\build\objects\dist\optlp-tools99-*.obj
+else
+	mkdir -p ${DISK}/lib
+	rm -vf ${DISK}/lib/libadmb.a
+	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-linad99-*.obj
+	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-df1b2-separable-*.obj
+	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-nh99-*.obj
+	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-tools99-*.obj
+	rm -vf ${DISK}/lib/libadmbo.a
+	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-linad99-*.obj
+	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-df1b2-separable-*.obj
+	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-nh99-*.obj
+	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-tools99-*.obj
 endif
 
-libobjects:
-ifneq ($(SHELL),sh.exe)
+objects:
+ifeq ($(SHELL),sh.exe)
+	if not exist ..\build\objects md ..\build\objects
+	if not exist ..\build\objects\dist md ..\build\objects\dist
+	$(MAKE) --directory=df1b2-separable CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-df1b2-separable- DISKDIR=..\${DISK}
+	$(MAKE) --directory=df1b2-separable CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\saflp-df1b2-separable- DISKDIR=..\${DISK}
+	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-tools99- DISKDIR=..\${DISK}
+	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-tools99- DISKDIR=..\${DISK}
+	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=..\${DISK}
+	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=..\${DISK}
+	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-linad99- DISKDIR=..\${DISK} all1
+	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-linad99- DISKDIR=..\${DISK} all2
+	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\saflp-linad99- DISKDIR=..\${DISK} all1
+	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\saflp-linad99- DISKDIR=..\${DISK} all2
+else
 	mkdir -p ${LIBPATH}
 	$(MAKE) --directory=df1b2-separable CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-df1b2-separable- DISKDIR=../${DISK}
 	$(MAKE) --directory=df1b2-separable CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-df1b2-separable- DISKDIR=../${DISK}
 	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-tools99- DISKDIR=../${DISK}
+	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-tools99- DISKDIR=../${DISK}
 	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK}
+	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK}
 	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-linad99- DISKDIR=../${DISK} all1
 	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-linad99- DISKDIR=../${DISK} all2
 	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-linad99- DISKDIR=../${DISK} all1

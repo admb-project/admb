@@ -3,15 +3,37 @@ OBJDESTDIR=..\build\objects\dist
 LEXDESTDIR=..\build\lex
 
 !IF DEFINED(DEBUG)
-CXXFLAGS_SAF=/nologo /G7 /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
-CXXFLAGS_OPT=/nologo /G7 /W4 /GF /EHsc /DOPT_LIB  /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
+CXXFLAGS_SAF=/nologo /G7 /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I$(DESTDIR)\include
+CXXFLAGS_OPT=/nologo /G7 /W4 /GF /EHsc /DOPT_LIB  /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I$(DESTDIR)\include
+CXXFLAGS_SAF2=/nologo /G7 /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
+CXXFLAGS_OPT2=/nologo /G7 /W4 /GF /EHsc /DOPT_LIB  /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
 !ELSE
-CXXFLAGS_SAF=/nologo /O2 /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
-CXXFLAGS_OPT=/nologo /O2 /W4 /GF /EHsc /DOPT_LIB  /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
+CXXFLAGS_SAF=/nologo /O2 /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I$(DESTDIR)\include
+CXXFLAGS_OPT=/nologo /O2 /W4 /GF /EHsc /DOPT_LIB  /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I$(DESTDIR)\include
+CXXFLAGS_SAF2=/nologo /O2 /W4 /GF /EHsc /DSAFE_ALL /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
+CXXFLAGS_OPT2=/nologo /O2 /W4 /GF /EHsc /DOPT_LIB  /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I..\$(DESTDIR)\include
 !ENDIF
+
+!INCLUDE df1b2-separable\objects.lst
+OPTLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\dist\optlp-df1b2-separable-)
+SAFLP_DF1B2_SEPARABLE_OBJS=$(OBJ0: = ..\build\objects\dist\saflp-df1b2-separable-)
+
+!INCLUDE linad99\objects.lst
+OPTLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\dist\optlp-linad99-) $(OBJ2: = ..\build\objects\dist\optlp-linad99-) $(OBJ3: = ..\build\objects\dist\optlp-linad99-) $(OBJ4: = ..\build\objects\dist\optlp-linad99-)
+SAFLP_LINAD99_OBJS=$(OBJ1: = ..\build\objects\dist\saflp-linad99-) $(OBJ2: = ..\build\objects\dist\saflp-linad99-) $(OBJ3: = ..\build\objects\dist\saflp-linad99-) $(OBJ4: = ..\build\objects\dist\saflp-linad99-)
+
+!INCLUDE nh99\objects.lst
+OPTLP_NH99_OBJS=$(OBJ6: = ..\build\objects\dist\optlp-nh99-)
+SAFLP_NH99_OBJS=$(OBJ6: = ..\build\objects\dist\saflp-nh99-)
+
+!INCLUDE tools99\objects.lst
+OPTLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\dist\optlp-tools99-)
+SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\dist\saflp-tools99-)
 
 all: dist bins contrib
 	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
+	@echo ADMB build completed.
+	@echo For installation, check README.txt.
 
 dist: srcs
 
@@ -65,31 +87,6 @@ $(LEXDESTDIR)\tpl2rem.c: df1b2-separable\tpl2rem.lex
 	..\utilities\flex -w -o$(LEXDESTDIR)\lex.yy.c df1b2-separable\tpl2rem.lex 
 	..\utilities\sed -f df1b2-separable\sedflex $(LEXDESTDIR)\lex.yy.c > $@
 
-lexfiles2:
-	pushd nh99& ..\..\utilities\make  --file=Makefile CC="$(CC)" DESTDIR="..\$(DESTDIR)" bins& popd
-	pushd df1b2-separable& ..\..\utilities\make --file=Makefile CC="$(CC)" DESTDIR="..\$(DESTDIR)" bins& popd
-
-libs: includes admbsaf admbopt
-
-admbsaf:
-	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
-	pushd df1b2-separable & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-df1b2-separable-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	pushd linad99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-linad99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	pushd nh99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-nh99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	pushd tools99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-tools99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib
-	pushd $(OBJDESTDIR) & lib /OUT:..\..\dist\lib\admb.lib /NOLOGO /IGNORE:4006 saflp-df1b2-separable*.obj saflp-linad99*.obj saflp-nh99*.obj saflp-tools99*.obj
-
-admbopt:
-	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
-	pushd df1b2-separable & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-df1b2-separable-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	pushd linad99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-linad99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	pushd nh99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-nh99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	pushd tools99 & ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-tools99-" DESTDIR="..\$(DESTDIR)" --file=Makefile & popd
-	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib
-	pushd $(OBJDESTDIR) & lib /OUT:..\..\dist\lib\admbo.lib /NOLOGO /IGNORE:4006 optlp-df1b2-separable*.obj optlp-linad99*.obj optlp-nh99*.obj optlp-tools99*.obj
-
-
 includes:
 	IF NOT EXIST $(DESTDIR)\include md $(DESTDIR)\include
 	copy df1b2-separable\df1b2fun.h $(DESTDIR)\include
@@ -114,6 +111,48 @@ includes:
 	copy tools99\adstring.hpp $(DESTDIR)\include
 	copy tools99\admb_messages.h $(DESTDIR)\include
 
+libs: includes objects
+	IF NOT EXIST $(DESTDIR)\lib md $(DESTDIR)\lib
+	IF EXIST $(DESTDIR)\lib\admb.lib del $(DESTDIR)\lib\admb.lib
+	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admb.lib /NOLOGO /IGNORE:4006 saflp-df1b2-separable*.obj saflp-linad99*.obj saflp-nh99*.obj saflp-tools99*.obj saflp-sparse*.obj
+	IF EXIST $(DESTDIR)\lib\admbo.lib del $(DESTDIR)\lib\admbo.lib
+	pushd $(OBJDESTDIR) & lib /OUT:..\..\$(DESTDIR)\lib\admbo.lib /NOLOGO /IGNORE:4006 optlp-df1b2-separable*.obj optlp-linad99*.obj optlp-nh99*.obj optlp-tools99*.obj optlp-sparse*.obj
+
+objects: objdestdir $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LINAD99_OBJS) $(SAFLP_LINAD99_OBJS) $(OPTLP_NH99_OBJS) $(SAFLP_NH99_OBJS) $(OPTLP_TOOLS99_OBJS) $(SAFLP_TOOLS99_OBJS) $(OBJDESTDIR)\optlp-sparse-hs_sparse.obj $(OBJDESTDIR)\saflp-sparse-hs_sparse.obj
+
+$(SAFLP_DF1B2_SEPARABLE_OBJS):: $(@B:saflp-df1b2-separable-=df1b2-separable\).cpp
+	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
+
+$(OPTLP_DF1B2_SEPARABLE_OBJS):: $(@B:optlp-df1b2-separable-=df1b2-separable\).cpp
+	$(CXX) /c $(CXXFLAGS_OPT) /Fo$@ $?
+
+$(SAFLP_LINAD99_OBJS):: $(@B:saflp-linad99-=linad99\).cpp
+	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
+
+$(OPTLP_LINAD99_OBJS):: $(@B:optlp-linad99-=linad99\).cpp
+	$(CXX) /c $(CXXFLAGS_OPT) /Fo$@ $?
+
+$(SAFLP_NH99_OBJS):: $(@B:saflp-nh99-=nh99\).cpp
+	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
+
+$(OPTLP_NH99_OBJS):: $(@B:optlp-nh99-=nh99\).cpp
+	$(CXX) /c $(CXXFLAGS_OPT) /Fo$@ $?
+
+$(SAFLP_TOOLS99_OBJS):: $(@B:saflp-tools99-=tools99\).cpp
+	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
+
+$(OPTLP_TOOLS99_OBJS):: $(@B:optlp-tools99-=tools99\).cpp
+	$(CXX) /c $(CXXFLAGS_OPT) /Fo$@ $?
+
+$(OBJDESTDIR)\optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
+	$(CXX) /c $(CXXFLAGS_OPT) /Fo$@ $?
+
+$(OBJDESTDIR)\saflp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
+	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
+
+objdestdir:
+	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
+
 contrib: contribdirs libcontribsaf libcontribopt
 
 contribdirs:
@@ -122,11 +161,11 @@ contribdirs:
 	IF NOT EXIST $(DESTDIR)\contrib\include md $(DESTDIR)\contrib\include
 
 libcontribsaf:
-	pushd ..\contrib& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" CXXFLAGS="$(CXXFLAGS_SAF)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-contrib-"& popd
+	pushd ..\contrib& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" CXX="$(CXX)" CXXFLAGS="$(CXXFLAGS_SAF2)" PREFIX_OBJ="..\$(OBJDESTDIR)\saflp-contrib-"& popd
 	lib /OUT:$(DESTDIR)\contrib\lib\contrib.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\saflp-contrib*.obj
 
 libcontribopt:
-	pushd ..\contrib& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" CXXFLAGS="$(CXXFLAGS_OPT)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-contrib-"& popd
+	pushd ..\contrib& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" CXX="$(CXX)" CXXFLAGS="$(CXXFLAGS_OPT2)" PREFIX_OBJ="..\$(OBJDESTDIR)\optlp-contrib-"& popd
 	lib /OUT:$(DESTDIR)\contrib\lib\contribo.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\optlp-contrib*.obj
 
 tests:

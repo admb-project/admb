@@ -28,6 +28,7 @@ ad2csv: build-ad2csv
 
 build-gdbprintlib:
 	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/saflp-contrib-gdbprintlib-
+	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I\"$(ADMB_HOME)/include\"" PREFIX_OBJ=$(LIBPATH)/optlp-contrib-gdbprintlib-
 ifeq ($(SHELL),sh.exe)
 	copy gdbprintlib\gdbprintlib.h $(DISK)\contrib\include
 else

@@ -1,9 +1,9 @@
 include objects.lst
 
 ifeq ("$(CXX)","CC")
-OBJECTS = $(filter-out dfqromb.obj, $(OBJ0)) $(OBJ1) $(OBJ2) $(OBJ3)
+OBJECTS = $(filter-out dfqromb.obj, $(OBJ6)) $(OBJSPLUS)
 else
-OBJECTS = $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)
+OBJECTS = $(OBJ6) $(OBJSPLUS)
 endif
 
 all: $(sort $(addprefix $(PREFIX_OBJ), $(OBJECTS)))

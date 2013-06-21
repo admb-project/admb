@@ -1,6 +1,6 @@
 OBJSPARSE=\
  ../sparse/hs_sparse.obj
-OBJ0=\
+OBJ1=\
  dmat3.obj\
  dmat34.obj\
  fvar_ma4.obj\
@@ -208,7 +208,7 @@ OBJ0=\
  dmat6.obj\
  dmat7.obj\
  dmat8.obj
-OBJ1=\
+OBJ2=\
  dmat9.obj\
  dmat10.obj\
  dmat12.obj\
@@ -288,7 +288,7 @@ OBJ1=\
  fvar_a11.obj\
  fvar_a13.obj\
  fvar_a14.obj
-OBJ2=\
+OBJ3=\
  fvar_a18.obj\
  fvar_a19.obj\
  fvar_a20.obj\
@@ -478,7 +478,7 @@ OBJ2=\
  dveigen.obj\
  dveigenv.obj\
  f4arr.obj
-OBJ3=\
+OBJ4=\
  mfexp.obj\
  expm.obj\
  factors.obj\
@@ -486,7 +486,7 @@ OBJ3=\
  makesub.obj\
  fvar_a49.obj\
  adpvm2.obj
-OBJ4=\
+OBJ5=\
  manip.obj\
  conjprod.obj
 PVM=\

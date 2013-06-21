@@ -1,7 +1,7 @@
 include objects.lst
 
 ifeq ("$(CXX)","CC")
-OBJECTS = $(filter-out dfqromb.obj, $(OBJ6)) $(OBJSPLUS)
+OBJECTS = $(filter-out dfqromb.obj, $(OBJ6))
 else
 OBJECTS = $(OBJ6)
 endif

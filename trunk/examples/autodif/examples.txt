@@ -45,7 +45,7 @@
       io_examp.exe,   mixture.exe,  normsim.exe,  neur1.exe,  winit.exe,
       nplot2.exe, robust.exe robsim.exe
 
-      examples.doc - this file.
+      examples.txt - this file.
 
       hemholtz.cpp - Hemholtz energy example from Chapter 1.
       hemholtz.prj - Project file for Hemholtz energy example.

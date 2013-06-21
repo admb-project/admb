@@ -1,6 +1,10 @@
 all: contribs
 
-contribs: build-src build-statslib build-qfclib build-ecolib
+contribs: build-src build-gdbprintlib build-statslib build-qfclib build-ecolib
+
+build-gdbprintlib:
+	pushd gdbprintlib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)gdbprint-
+	copy gdbprintlib\gdbprintlib.h $(ADMB_HOME)\contrib\include
 
 build-statslib:
 	pushd statslib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)statslib-

@@ -27,4 +27,8 @@ clean:
 	@rm -f admodel.dep
 
 $(PREFIX_OBJ)%.obj: %.cpp
+ifeq ($(CXX),cl)
+	$(CXX) /c $(CXXFLAGS) /Fo$@ $<
+else
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
+endif

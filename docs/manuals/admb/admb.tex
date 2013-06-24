@@ -583,7 +583,7 @@ using \ADM's robust regression routine over standard nonlinear least square
 regression procedures. Further discussion about the underlying theory can be
 found in the \scAD\ user's manual, but it is not necessary to understand the
 theory to make use of the procedure.
-\begin{figure}[h]
+\begin{figure}[htbp]
   \centering\hskip1pt\beginpicture
   \setcoordinatesystem units <.18in,.04in>
   \setplotarea x from 0 to 16.5, y from 0 to 50
@@ -675,7 +675,7 @@ close to ``cooking'' the data in order to obtain the desired result from the
 analysis. An alternative approach, which avoids these difficulties, is to employ
 \ADM's robust regression procedure, which removes the undue influence of
 outlying points without the need to expressly remove them from the data.
-\begin{figure}[h]
+\begin{figure}[htbp]
   \centering\hskip1pt\beginpicture
     \setcoordinatesystem units <.18in,.04in>
     \setplotarea x from 0 to 16.5, y from 0 to 50
@@ -783,7 +783,7 @@ That's all there is to it! These three changes will convert any AD Model builder
 template from a nonlinear regression model to a robust nonlinear regression
 model.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering\hskip1pt\beginpicture
   \setcoordinatesystem units <.18in,.04in>
   \setplotarea x from 0 to 16.5, y from 0 to 50
@@ -826,7 +826,7 @@ distributed errors in the statistical model is satisfied exactly. They do much
 better than least-square estimates in the presence of moderate or large
 outliers. You can lose only a little and you stand to gain a lot by using these
 estimators.
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering\hskip1pt\beginpicture
   \setcoordinatesystem units <.18in,.04in>
   \setplotarea x from 0 to 16.5, y from 0 to 50
@@ -889,7 +889,7 @@ the third run initially consisted of only the second reactant. The initial
 concentrations of the reactants are known only approximately.
 See~Table~\ref{tab:runs} for what they are.
 %xx \htmlbegintex
-\begin{table}[h]
+\begin{table}[htbp]
 \begin{center}
 \begin{tabular}{@{\extracolsep{1em}} l c  l}
  \bf Run 1&$s_1(0)=\theta_5=1\pm0.05$&$s_2(0)=\theta_6=1\pm0.05$\\
@@ -2135,7 +2135,7 @@ The reports of the one and two-sided confidence limits for the parameter were
 produced this way. Also, a plot of $y_i$ versus $x_i$ gives the user an
 indication of what the probability distribution of the parameter looks like.
 (See Figure~\ref{fig:05}.)
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering\hskip1pt\beginpicture
     \setplotsymbol ({\eightrm .})
   %\setcoordinatesystem units <.7in,5in> Have to adjust so labels don't overlap.
@@ -2578,7 +2578,7 @@ Figure~\ref{fig:06} compares the profile likelihood for the projected biomass to
 the estimates produced by the \textsc{mcmc} method, for different sample sizes
 (25,000 and 2,500,000 samples) for the \texttt{catage} example.
 %xx \htmlbeginignore
-\begin{figure}[h]
+\begin{figure}[htbp]
 %xx \htmlendignore
 \centering\hskip1pt\beginpicture
   \setplotsymbol ({\eightrm .})
@@ -2911,7 +2911,7 @@ This option reduces the amount of correlation in the Hessian, while leaving the
 standard deviations fixed. The number \texttt{N} should be between~1 and~9. The
 smaller the number, the more the correlation is reduced. For this example (see
 Figure~\ref{fig:07}), a value of~3 seemed to perform well.
-\begin{figure}[h]
+\begin{figure}[htbp]
 \includegraphics[height=3.5in, width=\textwidth]{mcrb3-50K.png}
 \emptycaption
 \label{fig:07}
@@ -3787,7 +3787,7 @@ significant.
 The plot of \texttt{qa} and \texttt{qb} demonstrates the extra information about
 the probability distribution of the current state contained in in the current
 value of~\texttt{y(t)}. (See Figure~\ref{fig:08}.)
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering\hskip1pt\beginpicture
   \setplotsymbol ({\eightrm .})
   \setcoordinatesystem units <3.2in,2.5in>

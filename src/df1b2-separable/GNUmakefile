@@ -1,7 +1,3 @@
-include objects.lst
-
-all: $(sort $(addprefix $(PREFIX_OBJ), $(OBJ0) $(OBJ1) $(OBJ2) $(OBJ3)))
-
 ifneq ($(SHELL),sh.exe)
 bins: $(DISKDIR)/bin/tpl2rem
 
@@ -20,8 +16,4 @@ bins: $(DISKDIR)\bin\tpl2rem.exe
 
 $(DISKDIR)\bin\tpl2rem.exe: tpl2rem-winflex.c
 	$(CC) $(CFLAGS) -o $@ $<
-
 endif
-
-$(PREFIX_OBJ)%.obj:%.cpp
-	$(CXX) -c $(CXXFLAGS) -o $@ $<

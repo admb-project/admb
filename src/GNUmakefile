@@ -22,7 +22,7 @@ endif
 ifeq ($(CXX),CC)
 CXXFLAGS:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
 else
-CXXFLAGS:=-Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
+CXXFLAGS:=-Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE -I../build/dist/include $(CXXFLAGS)
 endif
 
 ifdef BUILD_SHARED_LIBRARY
@@ -35,6 +35,22 @@ else
 CXXFLAGS:=-O3 $(CXXFLAGS)
 endif
 
+include df1b2-separable/objects.lst
+OPTLP_DF1B2_SEPARABLE_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-df1b2-separable-,$(OBJ0)))
+SAFLP_DF1B2_SEPARABLE_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-df1b2-separable-,$(OBJ0)))
+
+include linad99/objects.lst
+OPTLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)))
+SAFLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)))
+
+include nh99/objects.lst
+OPTLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-nh99-,$(OBJ6)))
+SAFLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-nh99-,$(OBJ6)))
+
+include tools99/objects.lst
+OPTLP_TOOLS99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-tools99-,$(OBJ7)))
+SAFLP_TOOLS99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-tools99-,$(OBJ7)))
+
 all: revision dist contrib
 ifeq ($(SHELL),sh.exe)
 	pushd $(DISK) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
@@ -45,7 +61,7 @@ endif
 	@echo ADMB build completed.
 	@echo For installation, check README.txt.
 
-shared: libobjects
+shared: objects
 	g++ -shared -o${DISK}/lib/libadmb.so ../build/objects/dist/saflp-linad99-*.obj ../build/objects/dist/saflp-df1b2-separable-*.obj ../build/objects/dist/optlp-nh99-*.obj ../build/objects/dist/optlp-tools99-*.obj ../build/objects/dist/saflp-contrib-*.obj
 	g++ -shared -o${DISK}/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
 	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(PWD)/${DISK}" --directory=../contrib build-ad2csv
@@ -71,6 +87,7 @@ ifneq ($(SHELL),sh.exe)
 	cp -f ../VERSION ${DISK}
 	cp -f ../Makefile ${DISK}
 	rm -rf `find ${DISK} -type d -name .svn`
+	mkdir -p ../build/objects/dist/
 else
 	if exist ${DISK} rd /S /Q ${DISK}
 	md ${DISK}
@@ -108,7 +125,7 @@ else
 	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(PWD)\${DISK}" --directory=..\contrib
 endif
 
-libs: objects
+libs: $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LINAD99_OBJS) $(SAFLP_LINAD99_OBJS) $(OPTLP_NH99_OBJS) $(SAFLP_NH99_OBJS) $(OPTLP_TOOLS99_OBJS) $(SAFLP_TOOLS99_OBJS) ../build/objects/dist/saflp-sparse-hs_sparse.obj ../build/objects/dist/optlp-sparse-hs_sparse.obj
 ifeq ($(SHELL),sh.exe)
 	if not exist ${DISK}\lib md ${DISK}\lib
 	if exist ${DISK}\lib\libadmb.a del ${DISK}\lib\libadmb.a
@@ -116,11 +133,13 @@ ifeq ($(SHELL),sh.exe)
 	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\saflp-df1b2-separable-*.obj
 	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\optlp-nh99-*.obj
 	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\optlp-tools99-*.obj
+	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\optlp-sparse-*.obj
 	if exist ${DISK}\lib\libadmbo.a del ${DISK}\lib\libadmbo.a
 	$(AR) -rs ${DISK}\lib\libadmbo.a ..\build\objects\dist\optlp-linad99-*.obj
 	$(AR) -rs ${DISK}\lib\libadmbo.a ..\build\objects\dist\optlp-df1b2-separable-*.obj
 	$(AR) -rs ${DISK}\lib\libadmbo.a ..\build\objects\dist\optlp-nh99-*.obj
 	$(AR) -rs ${DISK}\lib\libadmbo.a ..\build\objects\dist\optlp-tools99-*.obj
+	$(AR) -rs ${DISK}\lib\libadmbo.a ..\build\objects\dist\optlp-sparse-*.obj
 else
 	mkdir -p ${DISK}/lib
 	rm -vf ${DISK}/lib/libadmb.a
@@ -128,40 +147,50 @@ else
 	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-df1b2-separable-*.obj
 	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-nh99-*.obj
 	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-tools99-*.obj
+	$(AR) -rs ${DISK}/lib/libadmb.a ../build/objects/dist/saflp-sparse-*.obj
 	rm -vf ${DISK}/lib/libadmbo.a
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-linad99-*.obj
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-df1b2-separable-*.obj
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-nh99-*.obj
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-tools99-*.obj
+	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-sparse-*.obj
 endif
 
-objects:
-ifeq ($(SHELL),sh.exe)
-	if not exist ..\build\objects md ..\build\objects
-	if not exist ..\build\objects\dist md ..\build\objects\dist
-	$(MAKE) --directory=df1b2-separable CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-df1b2-separable- DISKDIR=..\${DISK}
-	$(MAKE) --directory=df1b2-separable CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\saflp-df1b2-separable- DISKDIR=..\${DISK}
-	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-tools99- DISKDIR=..\${DISK}
-	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-tools99- DISKDIR=..\${DISK}
-	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=..\${DISK}
-	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=..\${DISK}
-	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-linad99- DISKDIR=..\${DISK} all1
-	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\optlp-linad99- DISKDIR=..\${DISK} all2
-	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\saflp-linad99- DISKDIR=..\${DISK} all1
-	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=..\${LIBPATH}\saflp-linad99- DISKDIR=..\${DISK} all2
-else
-	mkdir -p ${LIBPATH}
-	$(MAKE) --directory=df1b2-separable CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-df1b2-separable- DISKDIR=../${DISK}
-	$(MAKE) --directory=df1b2-separable CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-df1b2-separable- DISKDIR=../${DISK}
-	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-tools99- DISKDIR=../${DISK}
-	$(MAKE) --directory=tools99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-tools99- DISKDIR=../${DISK}
-	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK}
-	$(MAKE) --directory=nh99 CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-nh99- ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK}
-	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-linad99- DISKDIR=../${DISK} all1
-	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/optlp-linad99- DISKDIR=../${DISK} all2
-	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-linad99- DISKDIR=../${DISK} all1
-	$(MAKE) --directory=linad99 CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_INCLUDES)" PREFIX_OBJ=../${LIBPATH}/saflp-linad99- DISKDIR=../${DISK} all2
-endif
+../build/objects/dist/optlp-nh99-banner.obj: nh99/banner.cpp
+	$(CXX) -c -DOPT_LIB $(CXXFLAGS) -DADMB_VERSION=$(shell cat ../../VERSION) -DADMB_REVISION=$(shell test -e ../../REVISION && cat ../../REVISION) -o$@ $<
+
+../build/objects/dist/saflp-nh99-banner.obj: nh99/banner.cpp
+	$(CXX) -c -DSAFE_ALL $(CXXFLAGS) -DADMB_VERSION=$(shell cat ../../VERSION) -DADMB_REVISION=$(shell test -e ../../REVISION && cat ../../REVISION) -o$@ $<
+
+../build/objects/dist/optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
+	$(CXX) -c -DOPT_LIB $(CXXFLAGS) -o$@ $<
+
+../build/objects/dist/saflp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
+	$(CXX) -c -DSAFE_ALL $(CXXFLAGS) -o$@ $<
+
+../build/objects/dist/optlp-df1b2-separable-%.obj:df1b2-separable/%.cpp
+	$(CXX) -c -DOPT_LIB $(CXXFLAGS) -o$@ $<
+
+../build/objects/dist/saflp-df1b2-separable-%.obj:df1b2-separable/%.cpp
+	$(CXX) -c -DSAFE_ALL $(CXXFLAGS) -o$@ $<
+
+../build/objects/dist/optlp-linad99-%.obj:linad99/%.cpp
+	$(CXX) -c -DOPT_LIB $(CXXFLAGS) -o$@ $<
+
+../build/objects/dist/saflp-linad99-%.obj:linad99/%.cpp
+	$(CXX) -c -DSAFE_ALL $(CXXFLAGS) -o$@ $<
+
+../build/objects/dist/saflp-nh99-%.obj:nh99/%.cpp
+	$(CXX) -c -DSAFE_ALL $(CXXFLAGS) -o$@ $<
+
+../build/objects/dist/optlp-nh99-%.obj:nh99/%.cpp
+	$(CXX) -c -DOPT_LIB $(CXXFLAGS) -o$@ $<
+
+../build/objects/dist/saflp-tools99-%.obj:tools99/%.cpp
+	$(CXX) -c -DSAFE_ALL $(CXXFLAGS) -o$@ $<
+
+../build/objects/dist/optlp-tools99-%.obj:tools99/%.cpp
+	$(CXX) -c -DOPT_LIB $(CXXFLAGS) -o$@ $<
 
 includes:
 ifneq ($(SHELL),sh.exe)

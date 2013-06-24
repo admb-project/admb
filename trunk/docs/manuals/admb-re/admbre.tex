@@ -16,6 +16,7 @@
 \newcommand{\scGLM}{\textsc{glm}}
 \newcommand{\scGLMM}{\textsc{glmm}}
 \newcommand{\scLIDAR}{\textsc{lidar}}
+\newcommand\admbversion{11.1}
 
 \makeindex
 
@@ -24,7 +25,8 @@
 \title{%
     \largetitlepart{Random Effects in\\ \ADM}
     \smalltitlepart{ADMB-RE User Guide}
-    \vspace{4.5ex}\textsf{\textit{Version 11.1~~(2013-05-01)}}\vspace{3ex}
+    \vspace{4.5ex}\textsf{\textit{Version \admbversion~~(2013-05-01)\\[3pt]
+      Revised manual~~(2013-06-24)}}\vspace{3ex}
 }
 % Author definition.
 \author{\textsf{\textit{Hans Skaug \& David Fournier}}}
@@ -35,11 +37,11 @@
 ~\vfill
 \noindent ADMB Foundation, Honolulu.\\\\
 \noindent This is the manual for AD Model Builder with Random Effects (ADMB-RE)
-version 11.1.\\\\
-\noindent Copyright \copyright\ 2004, 2006, 2008, 2009, 2011 Hans Skaug \& David
+version \admbversion.\\\\
+\noindent Copyright \copyright\ 2004, 2006, 2008, 2009, 2011, 2013 Hans Skaug \& David
 Fournier\\\\
 \noindent The latest edition of the manual is available at:\\
-\url{http://admb-project.org/documentation/manuals/admb-user-manuals}
+\url{http://admb-project.org/documentation/manuals}
 
 \tableofcontents
 
@@ -140,8 +142,8 @@ flexibility with respect to model formulation.
   \item Hyper-parameters (variance components, etc.) estimated by maximum
   likelihood.
 
-  \item Marginal likelihood evaluated by the Laplace approximation, (adaptive) importance
-	sampling or Gauss-Hermite integration.
+  \item Marginal likelihood evaluated by the Laplace approximation, (adaptive)
+  importance sampling or Gauss-Hermite integration.
 
   \item Exact derivatives calculated using Automatic Differentiation.
 
@@ -385,8 +387,8 @@ distribution placed on the random effects is called the ``prior,'' which is a
 term borrowed from Bayesian statistics.
 
 A central concept that originates from generalized linear models is that of a
-``linear predictor.'' Let $x_{1},\ldots ,x_{p}$ denote observed covariates
-(explanatory variables), and let $\beta _{1},\ldots ,\beta _{p}$ be the
+``linear predictor.'' Let $x_{1},\ldots,x_{p}$ denote observed covariates
+(explanatory variables), and let $\beta _{1},\ldots,\beta _{p}$ be the
 corresponding regression parameters to be estimated. Many of the examples in
 this manual involve a linear predictor $\eta_{i}=\beta_{1}x_{1,i}+\cdots
 +\beta_{p}x_{p,i}$, which we also will write in vector form as
@@ -414,7 +416,7 @@ We use the \texttt{simple.tpl} example from the ordinary \scAB\ manual to
 exemplify the use of random effects. The statistical model underlying this
 example is the simple linear regression
 \[
-Y_i=ax_i+b+\varepsilon_i,\qquad i=1,\ldots ,n,
+Y_i=ax_i+b+\varepsilon_i,\qquad i=1,\ldots,n,
 \]
 where $Y_i$ and $x_i$ are the data, $a$ and $b$ are the unknown parameters to be
 estimated, and $\varepsilon_i\sim N(0,\sigma ^{2})$ is an error term.
@@ -431,7 +433,7 @@ measurement error variance. For reasons discussed below, we shall assume that we
 know the value of $\sigma_e$, so we shall pretend that~$\sigma_e=0.5$.
 
 Because $x_i$ is not observed, we model it as a random effect with $x_i\sim
-N(\mu ,\sigma_{x}^{2})$. In \scAR, you are allowed to make such definitions
+N(\mu,\sigma_{x}^{2})$. In \scAR, you are allowed to make such definitions
 through the new parameter type called \texttt{random\_effects\_vector}.
 \index{random effects!random effects vector} (There is also a
 \texttt{random\_effects\_matrix}, which allows you to define a matrix of random
@@ -446,7 +448,7 @@ effects.) \index{random effects!random effects matrix}
   a better term.
 
   \item The unknown parameters in our model are: $a$, $b$, $\mu$, $\sigma$,
-  $\sigma_{x}$, and $x_{1},\ldots ,x_{n}$. We have agreed to call
+  $\sigma_{x}$, and $x_{1},\ldots,x_{n}$. We have agreed to call
   $x_{1},\ldots,x_{n}$ ``random effects.'' The rest of the parameters are called
   ``hyper-parameters.'' Note that we place no prior distribution on the
   hyper-parameters.
@@ -573,7 +575,7 @@ hyper-parameters and random effects are written to \texttt{simple.par}.
 
 \section{The flexibility of \scAR\label{lognormal}}
 
-Say that you doubt the distributional assumption $x_i\sim N(\mu ,\sigma
+Say that you doubt the distributional assumption $x_i\sim N(\mu,\sigma
 _{x}^{2})$ made in \texttt{simple.tpl}, and that you want to check if a skewed
 distribution gives a better fit. You could, for instance,~take
 \[
@@ -658,11 +660,11 @@ files (not even the gradient value).
 
 \section{The random effects distribution (prior)}
 
-In \texttt{simple.tpl}, we declared $x_{1},\ldots ,x_{n}$ to be of type
+In \texttt{simple.tpl}, we declared $x_{1},\ldots,x_{n}$ to be of type
 \texttt{random\_effects\_vector}. This statement tells \scAB\ that $x_{1},\ldots
 ,x_{n}$ should be treated as random effects (i.e., be the targets for the
 Laplace approximation), but it does not say anything about what distribution the
-random effects should have. We assumed that $x_i\sim N(\mu ,\sigma_{x}^{2})$,
+random effects should have. We assumed that $x_i\sim N(\mu,\sigma_{x}^{2})$,
 and (without saying it explicitly) that the $x_i$s were statistically
 independent. We know that the corresponding prior contribution to the
 log-likelihood is
@@ -683,7 +685,7 @@ A frequent source of error when writing \scAR\ programs is that priors get
 wrongly specified. The following trick can make the code easier to read, and has
 the additional advantage of being numerically stable for small values of
 $\sigma_{x}$. From basic probability theory, we know that if $u\sim N(0,1)$,
-then $x=\sigma_{x}u+\mu$ will have a $N(\mu ,\sigma_{x}^{2})$ distribution. The
+then $x=\sigma_{x}u+\mu$ will have a $N(\mu,\sigma_{x}^{2})$ distribution. The
 corresponding \scAB\ code would be
 \begin{lstlisting}
   f += - 0.5*norm2(u);
@@ -872,9 +874,9 @@ used is likely to be expanded in the future.
 \section{Built-in data likelihoods}
 
 In the simple \texttt{simple.tpl}, the mathematical expressions for all
-log-likelihood contributions where written out in full detail. You may have hoped
-that for the most common probability distributions, there were functions written
-so that you would not have to remember or look up their log-likelihood
+log-likelihood contributions where written out in full detail. You may have
+hoped that for the most common probability distributions, there were functions
+written so that you would not have to remember or look up their log-likelihood
 expressions. If your density is among those given in
 Table~\ref{tab:distributions}, you are lucky. More functions are likely to be
 implemented over time, and user contributions are welcomed!
@@ -1042,7 +1044,7 @@ very easy to switch from a random-effects version of the program to a
 penalized-likelihood version. In \texttt{simple.tpl}, we would simply redefine
 the random effects vector \texttt{x} to be of type \texttt{init\_vector}. The
 parameters would then be $a$, $b$, $\mu $, $\sigma $, $\sigma_{x}$, and
-$x_{1}$,\ldots , $x_{n}$. It is not recommended, or even possible, to estimate
+$x_{1}$,\ldots, $x_{n}$. It is not recommended, or even possible, to estimate
 all of these simultaneously, so you should fix~$\sigma_{x}$ (by giving it a
 phase~$-\kern-.1em1$) at some reasonable value. The actual value at which you
 fix~$\sigma_{x}$ is not critically important, and you could even try a range of
@@ -1074,7 +1076,7 @@ variance component is zero ($\sigma_{x}=0$). Parameters bouncing against the
 boundaries usually makes one feel uncomfortable, but with random effects, the
 interpretation of $\sigma_{x}=0$ is clear and unproblematic. All it really means
 is that data do not support a random effect, and the natural consequence is to
-remove (or inactivate) $x_{1},\ldots ,x_{n}$, together with the corresponding
+remove (or inactivate) $x_{1},\ldots,x_{n}$, together with the corresponding
 prior (and hence $\sigma_{x}$), from the model.
 
 \section{\scMCMC}
@@ -1254,12 +1256,12 @@ to ensure that you do not exceed the available memory on your computer.
 If your model has special structure, such as
 grouped or nested random effects, state-space structure,
 crossed random effects or a general Markov strucure
-you will benefit greatly from using the techniques 
+you will benefit greatly from using the techniques
 described in Section~\ref{separability} below.
 In this case the memory options in Table~\ref{tab:temporary-files}
 are less relevant (although sometimes useful), and instead the
-memory use can be controlled with the classical \ADM~command line options 
-\texttt{-cbs}, \texttt{-gbs} etc. 
+memory use can be controlled with the classical \ADM~command line options
+\texttt{-cbs}, \texttt{-gbs} etc.
 
 \subsection{Limited memory Newton optimization}
 \index{limited memory quasi-Newton}
@@ -1277,29 +1279,30 @@ the number of steps to keep. Typically, $\texttt{N} = 5$ is a good choice.
 A model is said to be ``separable'' if the likelihood can be written
 as a product of terms, each involving only a small number of random effects.
 Not all models are separable, and for small toy examples (less than 50~random
-effects, say), we do not need to care about separability. You 
-need to care about separability both to reduce memory requirements and 
-computation time. Examples of separable models are 
+effects, say), we do not need to care about separability. You
+need to care about separability both to reduce memory requirements and
+computation time. Examples of separable models are
 \begin{itemize}
   \item Grouped or nested random effects
   \item State-space models
   \item Crossed random effects
   \item Latent Markov random fields
 \end{itemize}
-The presence of separability allows \scAB\ to calculate the ``Hessian''  matrix
-very efficiently.The Hessian~$H$ is defined as
-the (negative) Fisher information matrix (inverse covariance matrix) of the
-posterior distribution of the random~effects , and is a key component of the Laplace
-approximation. 
+The presence of separability allows \scAB\ to calculate the ``Hessian'' matrix
+very efficiently.The Hessian~$H$ is defined as the (negative) Fisher information
+matrix (inverse covariance matrix) of the posterior distribution of the
+random~effects, and is a key component of the Laplace approximation.
 
-How do we inform \scAR\ that the model is separable? We define \texttt{SEPARABLE\_FUNCTION}s
-in the \texttt{PROCEDURE\_SECTION} to specify the individual terms in the
-product that defines the likelihood function. Typically, a \texttt{SEPARABLE\_FUNCTION}
-is invoked many times, with a small subset of the random effects each time.
+How do we inform \scAR\ that the model is separable? We define
+\texttt{SEPARABLE\_FUNCTION}s in the \texttt{PROCEDURE\_SECTION} to specify the
+individual terms in the product that defines the likelihood function. Typically,
+a \texttt{SEPARABLE\_FUNCTION} is invoked many times, with a small subset of the
+random effects each time.
 
-For separable models the Hessian is a sparse matrix which means that it contains mostly zeros. 
-Sparsity can be exploited by \scAB\ when manipulating the matrix $H$,
-such as calculating its determinant. The actual sparsity pattern depends on the model type:
+For separable models the Hessian is a sparse matrix which means that it contains
+mostly zeros. Sparsity can be exploited by \scAB\ when manipulating the matrix
+$H$, such as calculating its determinant. The actual sparsity pattern depends on
+the model type:
 \begin{itemize}
   \item \textit{Grouped or nested random effects:} $H$ is block diagonal.
    \item \textit{State-space models:} $H$ is a banded matrix with a narrow band.
@@ -1307,25 +1310,27 @@ such as calculating its determinant. The actual sparsity pattern depends on the 
    \item \textit{Latent Markov random fields:} often banded, but with a wide
    band.
 \end{itemize}
-For block diagonal and banded $H$, \scAR\ automatically will detect the structure from
-the \texttt{SEPARABLE\_FUNCTION} specification, and will print out a  message such as:
+For block diagonal and banded $H$, \scAR\ automatically will detect the
+structure from the \texttt{SEPARABLE\_FUNCTION} specification, and will print
+out a message such as:
 \begin{lstlisting}
   Block diagonal Hessian (Block size = 3)
 \end{lstlisting}
 at the beginning of the phase when the random effects are becoming active
 parameters. For general sparsity pattern the command line option \texttt{-shess}
-can be used to invoke the sparse matrix libraries for manipulation of the matrix $H$.
+can be used to invoke the sparse matrix libraries for manipulation of the matrix
+$H$.
 
 \section{The first example}
 
 A simple example is the one-way variance component model
 \[
   y_{ij}=\mu +\sigma_u u_{i}+\varepsilon_{ij},
-  \qquad i=1,\ldots ,q,\quad j=1,\ldots ,n_{i}
+  \qquad i=1,\ldots,q,\quad j=1,\ldots,n_{i}
 \]
 where $u_{i}\sim N(0,1)$ is a random effect and $\varepsilon_{ij}\sim
-N(0,\sigma^2)$ is an error term. The straightforward (non-separable) implementation of this
-model (shown only in part)~is
+N(0,\sigma^2)$ is an error term. The straightforward (non-separable)
+implementation of this model (shown only in part)~is
 \begin{lstlisting}
 PARAMETER_SECTION
   random_effects_vector u(1,q)
@@ -1402,13 +1407,13 @@ changed by the function. You may also come across the type \texttt{const
 
 There are other rules that have to be obeyed:
 \begin{itemize}
-\item[$\bigstar$]
-	No calculations of the log-likelihood, except calling \texttt{SEPARABLE\_FUNCTION},
-	are allowed in \texttt{PROCEDURE\_SECTION}. Hence, the only allowed
-	use of parameters defined in \texttt{PARAMETER\_SECTION} is to pass them
-	as arguments to \texttt{SEPARABLE\_FUNCTION}s. However,
-	evaluation of \texttt{sdreport} numbers during the \texttt{sd\_phase},
-	as well as MCMC calculations, are allowed.
+  \item[$\bigstar$] No calculations of the log-likelihood, except calling
+  \texttt{SEPARABLE\_FUNCTION}, are allowed in \texttt{PROCEDURE\_SECTION}.
+  Hence, the only allowed use of parameters defined in
+  \texttt{PARAMETER\_SECTION} is to pass them as arguments to
+  \texttt{SEPARABLE\_FUNCTION}s. However, evaluation of \texttt{sdreport}
+  numbers during the \texttt{sd\_phase}, as well as MCMC calculations, are
+  allowed.
 \end{itemize}
 This rule implies that all the action has to take place inside the
 \texttt{SEPARABLE\_FUNCTION}s. To minimize the number of parameters that have be
@@ -1440,7 +1445,7 @@ variables (the \texttt{u}s). A more complicated example is provided by the
 following model:
 \[
   y_{ijk}= \sigma_v v_{i} + \sigma_u u_{ij}+\varepsilon_{ijk},
-            \qquad i=1,\ldots ,q,\quad j=1,\ldots ,m,\quad k=1,\ldots ,n_{ij},
+            \qquad i=1,\ldots,q,\quad j=1,\ldots,m,\quad k=1,\ldots,n_{ij},
 \]
 where the random effects $v_{i}$ and $u_{ij}$ are independent
 $N(0,1)$~distributed, and $\varepsilon_{ijk}\sim N(0,\sigma^2)$ is still the
@@ -1461,11 +1466,11 @@ PROCEDURE_SECTION
   for(i=1;i<=q;i++)
     g_cluster(v(i),u(i),sigma,sigma_u,sigma_v,i);
 \end{lstlisting}
-Each element of \texttt{v} and each row (\texttt{u(i)}) of the matrix \texttt{u} 
-are passed only once to the separable function  \texttt{g\_cluster}.
-This is the criterion \scAB\ uses to detect the block diagonal Hessian structure.
-Note that \texttt{v(i)} is passed as a single value while \texttt{u(i)}
-is passed as a vector to the \texttt{SEPARABLE\_FUNCTION} as follows:
+Each element of \texttt{v} and each row (\texttt{u(i)}) of the matrix \texttt{u}
+are passed only once to the separable function \texttt{g\_cluster}. This is the
+criterion \scAB\ uses to detect the block diagonal Hessian structure. Note that
+\texttt{v(i)} is passed as a single value while \texttt{u(i)} is passed as a
+vector to the \texttt{SEPARABLE\_FUNCTION} as follows:
 \begin{lstlisting}
 SEPARABLE_FUNCTION void g_cluster(const dvariable& v,const dvar_vector& u,...)
   g -= -0.5*square(v);
@@ -1516,17 +1521,18 @@ the absence of runtime message
 \index{Gauss-Hermite quadrature}
 
 In the situation where the model is separable of type ``Block diagonal
-Hessian,'' (see Section~\ref{separability}), 
-Gauss-Hermite quadrature is available as an option to improve upon the Laplace 
-approximation. It is invoked with the command line option \texttt{-gh N}, where \texttt{N}
-is the number of quadrature points determining the accuracy of the integral approximation.
-For a block size of~1, the default choice should be $N=10$ or greater, but for larger
-block sizes the computational and memory requirements very quickly limits the range
-of $N$. If $N$ is chosen too large \scAR\ will crash witout giving a meaningful
-error message. To avoid \scAR\ creating large temporary files the command 
-line options \texttt{-cbs} and \texttt{-gbs} can be used.
+Hessian,'' (see Section~\ref{separability}), Gauss-Hermite quadrature is
+available as an option to improve upon the Laplace approximation. It is invoked
+with the command line option \texttt{-gh N}, where \texttt{N} is the number of
+quadrature points determining the accuracy of the integral approximation. For a
+block size of~1, the default choice should be $N=10$ or greater, but for larger
+block sizes the computational and memory requirements very quickly limits the
+range of $N$. If $N$ is chosen too large \scAR\ will crash witout giving a
+meaningful error message. To avoid \scAR\ creating large temporary files the
+command line options \texttt{-cbs} and \texttt{-gbs} can be used.
 
-The \texttt{-gh N} option should be preferred over importance sampling (\texttt{-is}).
+The \texttt{-gh N} option should be preferred over importance sampling
+(\texttt{-is}).
 
 
 %\subsection{Frequency weighting for multinomial likelihoods}
@@ -1540,7 +1546,7 @@ The \texttt{-gh N} option should be preferred over importance sampling (\texttt{
 %\end{equation*}
 %where $\mu$ is a parameter and $u_{i}\sim N(0,\sigma ^{2})$ is a random effect.
 %For independent observations $y_1,\ldots,y_n$, the log-likelihood function for
-%the parameter $\theta =(\mu ,\sigma )$ can be written as
+%the parameter $\theta =(\mu,\sigma )$ can be written as
 %\begin{equation}
 %  l(\theta )=\sum_{i=1}^{n}\log \bigl[\, p(x_{i};\theta )\bigr] .
 %\end{equation}
@@ -1565,8 +1571,8 @@ The \texttt{-gh N} option should be preferred over importance sampling (\texttt{
 %PARAMETER_SECTION
 % !! set_multinomial_weights(w);
 %\end{lstlisting}
-%In addition, it is necessary to explicitly multiply the likelihood contributions
-%in~(\ref{l_w}) by~$w$. The program must be written with
+%In addition, it is necessary to explicitly multiply the likelihood
+%contributions in~(\ref{l_w}) by~$w$. The program must be written with
 %\texttt{SEPARABLE\_FUNCTION}, as explained in Section~\ref{sec:nested}. For the
 %likelihood~(\ref{l_w}), the \texttt{SEPARABLE\_FUNCTION} will be invoked three
 %times.
@@ -2155,7 +2161,7 @@ p_{i}=\frac{\exp (\mu +u_{i})}{1+\exp (\mu +u_{i})},
 \end{equation}%
 where $\mu $ is a parameter and $u_{i}\sim N(0,\sigma ^{2})$ is a random effect.
 Assuming independence, the log-likelihood function for the parameter $\theta
-=(\mu ,\sigma )$ can be written as
+=(\mu,\sigma )$ can be written as
 \begin{equation}
 l(\theta )=\sum_{i=1}^{n}\log \bigl[\, p(x_{i};\theta )\bigr] .
 \end{equation}%
@@ -2163,7 +2169,7 @@ In \scAR, $p(x_{i};\theta )$ is approximated using the Laplace approximation.
 However, since $x_{i}$ only can take the values~$0$, $1$, and~$2$, we can
 rewrite the log-likelihood as
 \begin{equation}
-l(\theta )=\sum_{j=0}^{2}n_{j}\log \bigl[\, p(j;\theta )\bigr] ,  \label{l_w}
+l(\theta )=\sum_{j=0}^{2}n_{j}\log \bigl[\, p(j;\theta )\bigr],  \label{l_w}
 \end{equation}%
 where $n_{j}$ is the number $x_{i}$ being equal to~$j$. Still, the Laplace
 approximation must be used to approximate $p(j;\theta )$, but now only for
@@ -2320,8 +2326,8 @@ See the files
 
 \subsection{Multilevel Rasch model}
 
-The multilevel Rasch model can be implemented using random effects in \scAB. As an
-example, we use data on the responses of 2042~soldiers to a total of 19~items
+The multilevel Rasch model can be implemented using random effects in \scAB. As
+an example, we use data on the responses of 2042~soldiers to a total of 19~items
 (questions), taken from~\cite{doran2007estimating} %Doran et al.\ (2007).
 This illustrates the use of crossed random effects in \scAB. Furthermore, it is
 shown how the model easily can be generalized in \scAB. These more general

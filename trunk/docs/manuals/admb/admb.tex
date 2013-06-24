@@ -26,6 +26,7 @@
 \newcommand\Pone{P_{t|t-1}}
 \newcommand\diag{\textrm{diag}}
 \newcommand\ep{\textrm{elem\_prod}}
+\newcommand\admbversion{11.1}
 
 \makeindex
 
@@ -35,7 +36,8 @@
   \smalltitlepart{An Introduction to}
   \largetitlepart{AD MODEL BUILDER}
   \smalltitlepart{for Use in Nonlinear Modeling and Statistics}
-  \vspace{3ex}\textsf{\textit{Version 11.1~~(2013-05-01)}}\vspace{3ex}
+  \vspace{3ex}\textsf{\textit{Version \admbversion~~(2013-05-01)\\[3pt]
+      Revised manual~~(2013-06-24)}}\vspace{3ex}
 }
 \author{\textsf{\textit{David Fournier}}}
 \manualname{AD Model Builder}
@@ -44,11 +46,12 @@
 
 ~\vfill
 \noindent ADMB Foundation, Honolulu.\\\\
-\noindent This is the manual for AD Model Builder (ADMB) version 10.0.\\\\
+\noindent This is the manual for AD Model Builder (ADMB) version
+\admbversion.\\\\
 \noindent Copyright \copyright\ 1993, 1994, 1996, 2000, 2001, 2004, 2007, 2008,
-2011 David Fournier\\\\
+2011, 2013 David Fournier\\\\
 \noindent The latest edition of the manual is available at:\\
-\url{http://admb-project.org/documentation/manuals/admb-user-manuals}
+\url{http://admb-project.org/documentation/manuals}
 
 \tableofcontents
 
@@ -163,8 +166,9 @@ arising in least-squares problems. There are, however, various techniques that
 render the estimation of parameters in such nonlinear models more tractable. The
 \ADMS package is intended to organize these techniques in such a way that they
 are easy to employ (where possible, employing them in a way that the user does
-not need to be aware of them), so that investigating nonlinear statistical models
-becomes---so far as possible---as simple as for linear statistical models.
+not need to be aware of them), so that investigating nonlinear statistical
+models becomes---so far as possible---as simple as for linear statistical
+models.
 
 \section{Installing the software}
 
@@ -3052,8 +3056,8 @@ values $-3.0$ and $3.0$ are the limits of integration (effectively $-\infty$,
 $\infty$ for this example). The integer argument \texttt{nsteps} determines how
 accurate the integration will be. Higher values of \texttt{nsteps} will be more
 accurate, but greatly increase the amount of time necessary to fit the model.
-The basic strategy is to use a moderate value for \texttt{nsteps}, such as~6, and
-then to increase this value to see if the parameter estimates change much.
+The basic strategy is to use a moderate value for \texttt{nsteps}, such as~6,
+and then to increase this value to see if the parameter estimates change much.
 \begin{lstlisting}
   FUNCTION dvariable h(const dvariable& z)
 \end{lstlisting}
@@ -3423,9 +3427,9 @@ dependent variables that must be calculated from the independent variables. The
 default behavior of \ADM\ is to read in initial parameter values for the
 parameters from a \texttt{PAR} file, if it finds one. Otherwise, they are given
 default values consistent with their type. The quantity~\texttt{f} is a vector
-of four coefficients for the autoregressive process. \texttt{Pcoff} is a $2\times
-2$ matrix used to parameterize the transition matrix \texttt{P} for the Markov
-process. Its values are restricted to lie between~$0.01$ and~$0.99$.
+of four coefficients for the autoregressive process. \texttt{Pcoff} is a
+$2\times 2$ matrix used to parameterize the transition matrix \texttt{P} for the
+Markov process. Its values are restricted to lie between~$0.01$ and~$0.99$.
 \texttt{smult} is a number used to parameterize \texttt{sigma} and \texttt{var}
 (which is the variance) as a multiple of the mean-squared residuals. This
 reparameterization undimensionalizes the calculation and is a good technique to
@@ -3616,9 +3620,9 @@ This does not affect the ``statistical'' properties of the parameters of
 interest. The matrix~\texttt{z} is calculated using a transformed matrix,
 because \ADM\ deals with vector rows better than columns. The probability
 distribution for the states in period~1, \texttt{qb1}, is set equal to the
-unconditional distribution for a Markov process in terms of its transition matrix
-\texttt{P}, as discussed in~\cite{hamilton1994}. The transition matrix is used
-to compute the probability distribution of the states in periods $(2,1)$,
+unconditional distribution for a Markov process in terms of its transition
+matrix \texttt{P}, as discussed in~\cite{hamilton1994}. The transition matrix is
+used to compute the probability distribution of the states in periods $(2,1)$,
 $(3,2,1)$, $(4,3,2,1)$, and finally, $(5,4,3,2,1)$. For the last quintuplet,
 this is the probability distribution before observing~\texttt{y(5)}. The
 quantities \texttt{eps} in the code correspond to the possible realized values

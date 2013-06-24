@@ -19,10 +19,14 @@ else
   PWD=$(shell pwd)
 endif
 
-ifeq ($(CXX),CC)
-CXXFLAGS:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
+ifeq ($(SHELL),sh.exe)
+CXXFLAGS:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE -I..\build\dist\include $(CXXFLAGS)
 else
-CXXFLAGS:=-Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE -I../build/dist/include $(CXXFLAGS)
+CXXFLAGS:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE -I../build/dist/include $(CXXFLAGS)
+endif
+
+ifneq ($(CXX),CC)
+CXXFLAGS:=-Wall $(CXXFLAGS)
 endif
 
 ifdef BUILD_SHARED_LIBRARY

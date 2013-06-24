@@ -160,6 +160,16 @@ else
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-sparse-*.obj
 endif
 
+../build/objects/dist/saflp-nh99-dfqromb.obj: nh99/dfqromb.cpp
+ifneq ($(CXX),CC)
+	$(CXX) -c -DSAFE_ALL $(CXXFLAGS) -o$@ $<
+endif
+
+../build/objects/dist/optlp-nh99-dfqromb.obj: nh99/dfqromb.cpp
+ifneq ($(CXX),CC)
+	$(CXX) -c -DOPT_LIB $(CXXFLAGS) -o$@ $<
+endif
+
 ../build/objects/dist/optlp-nh99-banner.obj: nh99/banner.cpp
 	$(CXX) -c -DOPT_LIB $(CXXFLAGS) -DADMB_VERSION=$(shell cat ../../VERSION) -DADMB_REVISION=$(shell test -e ../../REVISION && cat ../../REVISION) -o$@ $<
 

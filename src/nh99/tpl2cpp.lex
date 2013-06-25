@@ -3604,6 +3604,7 @@ PROCEDURE_SECTION {
    /* fprintf(fdat,"%s","};\n");*/
     fprintf(fall,"%s","}\n\nvoid model_parameters::userfunction(void)\n{\n");
     fprintf(fall,"  %s%s",objective_function_name_string," =0.0;\n");
+    fprintf(fall,"  pad();\n");
 
     add_references_to_user_classes(fall);
 

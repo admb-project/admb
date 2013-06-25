@@ -48,8 +48,8 @@ OPTLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-linad99-,$(OBJ
 SAFLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)))
 
 include nh99/objects.lst
-OPTLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-nh99-,$(OBJ6)))
-SAFLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-nh99-,$(OBJ6)))
+OPTLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-nh99-,$(filter-out dfqromb.obj,$(OBJ6))))
+SAFLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-nh99-,$(filter-out dfqromb.obj,$(OBJ6))))
 
 include tools99/objects.lst
 OPTLP_TOOLS99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-tools99-,$(OBJ7)))
@@ -158,16 +158,6 @@ else
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-nh99-*.obj
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-tools99-*.obj
 	$(AR) -rs ${DISK}/lib/libadmbo.a ../build/objects/dist/optlp-sparse-*.obj
-endif
-
-../build/objects/dist/saflp-nh99-dfqromb.obj: nh99/dfqromb.cpp
-ifneq ($(CXX),CC)
-	$(CXX) -c -DSAFE_ALL $(CXXFLAGS) -o$@ $<
-endif
-
-../build/objects/dist/optlp-nh99-dfqromb.obj: nh99/dfqromb.cpp
-ifneq ($(CXX),CC)
-	$(CXX) -c -DOPT_LIB $(CXXFLAGS) -o$@ $<
 endif
 
 ../build/objects/dist/optlp-nh99-banner.obj: nh99/banner.cpp

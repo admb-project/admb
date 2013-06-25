@@ -1,6 +1,15 @@
 #include "gdbprintlib.h"
 
 /**
+* Do nothing, this will be included by ADMB lexical analyzer
+* so that the library is usable from within GDB
+* @return Nothing
+**/
+void pad()
+{
+}
+
+/**
 * Print a double precision number to the screen
 * @param v The double to print
 * @return Nothing

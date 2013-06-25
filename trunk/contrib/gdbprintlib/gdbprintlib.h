@@ -22,6 +22,8 @@
 #include <admodel.h>
 #include <df1b2fun.h>
 
+void pad();
+
 void pad(double v);
 
 void pad(const adstring & v);

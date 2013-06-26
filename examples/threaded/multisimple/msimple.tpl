@@ -70,31 +70,31 @@ GLOBALS_SECTION
 
 DATA_SECTION
   init_int nobs
-  init_int nrow
-  matrix Y(1,nrow,1,nobs)
-  matrix x(1,nrow,1,nobs)
+  init_int nthread
+  vector Y(1,nobs)
+  vector x(1,nobs)
   number A
   number B
 
+  int chunk_size
+
  LOCAL_CALCS
+    chunk_size = nobs/nthread  + 1;
     A = 2.0;
     B = 4.0;
     random_number_generator rng(101);
     dvector err(1,nobs);
-    for (int i = 1; i <= nrow; i++)
-    {
-       x(i).fill_randu(rng);
-       x(i) *= 100.0;
-       Y(i) = A*x(i) + B;
-       err.fill_randn(rng);
-       Y(i) += 5.0*err;
-    }
+    x.fill_randu(rng);
+    x *= 100.0;
+    Y = A*x + B;
+    err.fill_randn(rng);
+    Y += 5.0*err;
+    chunk_size = nobs/nthread;
 
 PARAMETER_SECTION
   init_number a   
   init_number b   
-  vector ff(1,nrow)
-  //matrix pred_Y(1,nrow, 1,nobs)
+  vector ff(1,nthread)
   objective_function_value f
 
 PRELIMINARY_CALCS_SECTION
@@ -105,15 +105,15 @@ PRELIMINARY_CALCS_SECTION
   int ngroups=1;
   ivector ng(1,ngroups);
   // number of threads in group 1
-  ng(1)=nrow;
+  ng(1)=nthread;
 
   // create instance of pthread_manager class
   // third argument is number of bytes in the transfer buffer
   ad_comm::pthread_manager = new adpthread_manager(ngroups,ng,500);
 
   // create data vecor for argument to thread function
-  new_thread_data* data1 = new new_thread_data[nrow+1];
-  for (int i=1;i<=nrow;i++)
+  new_thread_data* data1 = new new_thread_data[nthread+1];
+  for (int i=1;i<=nthread;i++)
   {
     data1[i].thread_no = i; // only the thread number is imortant
     data1[i].m=0;           // not used
@@ -127,21 +127,27 @@ PRELIMINARY_CALCS_SECTION
   
   // send constant data to the threads;
   // in this case rows of the independent variables
-  for (int kk=1;kk<=nrow;kk++)
+  int end_pos = 0;
+  for (int kk=1;kk<=nthread;kk++)
   {
+     int start_pos = end_pos + 1;
+     end_pos = start_pos+chunk_size-1;
+     if (end_pos > nobs)
+         end_pos = nobs;
+     cerr << " * * * chunk " << kk << " from " << start_pos << " to " << end_pos << endl;
+
      // take control of the constant buffer for sending
      ad_comm::pthread_manager->cwrite_lock_buffer(kk);
      // send x and Y
-     ad_comm::pthread_manager->send_dvector(x(kk),kk);
-     ad_comm::pthread_manager->send_dvector(Y(kk),kk);
+     ad_comm::pthread_manager->send_dvector(x(start_pos,end_pos),kk);
+     ad_comm::pthread_manager->send_dvector(Y(start_pos,end_pos),kk);
      // release the constant buffer
      ad_comm::pthread_manager->cwrite_unlock_buffer(kk);
   }
 
-
 PROCEDURE_SECTION
   // send variable data to threads
-  for (int kk=1;kk<=nrow;kk++)
+  for (int kk=1;kk<=nthread;kk++)
   {
      // take control of the variable buffer for sending
      ad_comm::pthread_manager->write_lock_buffer(kk);
@@ -156,7 +162,7 @@ PROCEDURE_SECTION
   }
 
   // get results of thread computations
-  for (int kk=1;kk<=nrow;kk++)
+  for (int kk=1;kk<=nthread;kk++)
   {
       // take control of the variable buffer for reading
       ad_comm::pthread_manager->read_lock_buffer(kk);
@@ -166,7 +172,7 @@ PROCEDURE_SECTION
   }
   // sum the results to compute the objective function
   f = sum(ff);
-  f=(nrow*nobs)/2.*log(f);    // make it a likelihood function so that
+  f = nobs/2.*log(f);    // make it a likelihood function so that
                               // covariance matrix is correct
 
 
@@ -177,7 +183,7 @@ REPORT_SECTION
   /*
   removed until pthread_manger destructor finalized
   FINAL_SECTION
-    for (int k = 1; k <= nrow;k++)
+    for (int k = 1; k <= nthread;k++)
     {
       ad_comm::pthread_manager->write_lock_buffer(k);
       ad_comm::pthread_manager->send_int(0,k);

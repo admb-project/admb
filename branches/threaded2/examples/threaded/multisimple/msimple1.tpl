@@ -42,7 +42,7 @@ PROCEDURE_SECTION
   }
   f = sum(ff);
   f = (nrow*nobs)/2.*log(f);    // make it a likelihood function so that
-                                    // covariance matrix is correct
+                                // covariance matrix is correct
 REPORT_SECTION
   report << "A = " << A << "; B = " << B <<endl;
   report << "a = " << a << "; b = " << b <<endl;

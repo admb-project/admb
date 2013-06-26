@@ -20,30 +20,15 @@ CFLAGS = -c -pthread -fpermissive -m64 -Wall -Wno-deprecated -ggdb -I. -I$(ADMB_
 LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -lpthread
 #LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado -lpthread
 
-#OBJECTS=adpthread_manager.o msimple.o simple_thread.o
-OBJECTS=msimple.o
 
-# link the object file into the executable 
-msimple: $(OBJECTS) 
+all: msimple
+
+%:%.o
 	@echo
 	@echo ------- Link $@
 	$(LL) -o $@ $^ $(LFLAGS)
 	@echo ------- Done
 
-msimple1: msimple1.o
-	@echo
-	@echo ------- Link $@
-	$(LL) -o $@ $^ $(LFLAGS)
-	@echo ------- Done
-
-simple_thread.o: simple_thread.cpp msimple.tpl msimple.htp
-	@echo
-	@echo ------- Compile $<
-	sed -i '/class model_data : public ad_comm{/a\
-          public:' msimple.htp
-	sed -i '{s/^private/public/}' msimple.htp
-	$(CC) $(CFLAGS)  -o $@ $<
-	@echo ------- Done
 
 # compile the C++ into an object file
 %.o:%.cpp;
@@ -58,7 +43,6 @@ simple_thread.o: simple_thread.cpp msimple.tpl msimple.htp
 	@echo ------- Making $@
 	@echo ------- Translate $<
 	$(ADMB_HOME)/bin/tpl2cpp $*
-#cp -v $@ $(OBJ_DIR)
 	@echo ------- Done
 
 %.htp:%.tpl;
@@ -83,9 +67,7 @@ rules:
 
 clean:
 	rm -fv msimple.cpp
-	rm -fv msimple1.cpp
 	rm -fv msimple
-	rm -fv msimple1
 	rm -fv *.o
 	rm -fv *.htp
 	rm -fv *.log

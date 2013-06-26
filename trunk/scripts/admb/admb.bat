@@ -80,7 +80,10 @@ if not defined parser set parser=tpl2cpp
 
 for %%a in (!tpls!) do (
   set model=%%~na
-  if not exist %%~na.tpl goto ERROR1
+  if not exist %%~na.tpl (
+    echo.&echo Error: !model!.tpl not found
+    goto EOF
+  )
   del classdef.tmp xxdata.tmp xxhtop.tmp xxhtopm.tmp xxglobal.tmp xxtopm.tmp 2> NUL
   del xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp 2> NUL
   del tfile1 tfile2 tfile3 tfile4 tfile5 2> NUL
@@ -88,8 +91,8 @@ for %%a in (!tpls!) do (
   set CMD=!parser! !bounds! !dll! !model!
   echo.&echo *** !CMD!
   call !CMD!
-  if not exist !model!.cpp goto ERROR2
-  if not exist !model!.htp goto ERROR2
+  if not exist !model!.cpp goto ERROR
+  if not exist !model!.htp goto ERROR
 )
 
 for %%b in (!tpls!) do (
@@ -107,21 +110,52 @@ for %%b in (!tpls!) do (
 )
 for %%a in (!srcs!) do (
   set src=%%~na
-  set objs=!objs! !src!.obj
-)
-for %%a in (!tpls!) do (
-  set model=%%~na
-  set CMD=adlink !d! !g! !r! !s! !model!.obj !objs!
+  set CMD=adcomp !d! !g! !r! !s! !src!
   echo.&echo *** !CMD!
   call !CMD!
-  if defined dll (
-    if not exist %%~na.dll goto ERROR2
-  ) else (
-    if not exist %%~na.exe goto ERROR2
+  if exist !src!.obj (
+    set objs=!objs! !src!.obj
+  )
+  if not exist !src!.obj (
+    echo.&echo Error: Unable to build !src!.obj
+    goto ERROR
+  )
+)
+if not defined tpls (
+  for %%a in (!objs!) do (
+    set model=%%~na
+    set CMD=adlink !d! !g! !r! !s! !objs!
+    echo.&echo *** !CMD!
+    call !CMD!
+    if not exist !model!.exe (
+      goto ERROR
+    )
+    goto SUCCESS
+  )
+) else (
+  for %%a in (!tpls!) do (
+    set model=%%~na
+    set CMD=adlink !d! !g! !r! !s! !model!.obj !objs!
+    echo.&echo *** !CMD!
+    call !CMD!
+    if defined dll (
+      if not exist !model!.dll (
+        goto ERROR
+      )
+    ) else (
+      if not exist !model!.exe (
+        goto ERROR
+      )
+    )
   )
 )
 
+:SUCCESS
 echo.&echo Successfully built executable.
+goto EOF
+
+:ERROR
+echo.&echo Error: Unable to build executable.
 goto EOF
 
 :HELP
@@ -136,15 +170,6 @@ echo   -s     Enforce safe bounds (default)
 echo   -O     Use optimized mode
 echo   model  Filename prefix, e.g. simple
 echo.
-goto EOF
-
-:ERROR1
-echo.&echo Error: !model!.tpl not found
-goto EOF
-
-:ERROR2
-echo.&echo Error: Could not parse !model!.tpl
-pwd
 goto EOF
 
 :EOF

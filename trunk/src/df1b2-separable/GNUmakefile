@@ -1,8 +1,24 @@
+ifeq ($(OS),Windows_NT)
+  ifeq ($(TERM),cygwin)
+    TERMINAL=cygwin
+  else
+    TERMINAL=dos
+    PATH:=$(PATH);..\..\utilities;..\..\utilities\mingw\bin
+  endif
+endif
+
 ifeq ($(TERMINAL),dos)
 bins: $(DISKDIR)\bin\tpl2rem.exe
 
-$(DISKDIR)\bin\tpl2rem.exe: tpl2rem-winflex.c
+$(DISKDIR)\bin\tpl2rem.exe: tpl2rem.c
 	$(CC) $(CFLAGS) -o $@ $<
+
+tpl2rem.c: lex.yy.c
+	sed -f sedflex lex.yy.c > $@
+
+lex.yy.c: tpl2rem.lex
+	flex -w tpl2rem.lex 
+
 else
 bins: $(DISKDIR)/bin/tpl2rem
 

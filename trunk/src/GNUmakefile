@@ -15,11 +15,7 @@ ifeq ($(TERMINAL),dos)
   LIBPATH=..\build\objects\dist
   CXXFLAGS_INCLUDES:=-I..\${DISK}\include
   PWD=$(shell cd)
-  ifndef MINGW_HOME
-    PATH:=..\..\utilities\mingw\bin:$(PATH)
-    AR=..\utilities\mingw\bin\ar
-    MAKE=..\utilities\make
-  endif
+  PATH:=$(PATH);..\utilities\mingw\bin;..\utilities
 else
   DISK=../build/dist
   LIBPATH=../build/objects/dist
@@ -371,9 +367,9 @@ endif
 verify:
 ifndef USE_ADMB_HOME
 ifeq ($(TERMINAL),dos)
-	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 -C $(DISK)\examples --file=Makefile all
+	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH):$(CURDIR)\..\utilities:$(CURDIR)\..\utilities\mingw\bin" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 -C $(DISK)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
-	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" -C $(DISK)\examples --file=Makefile all
+	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH):$(CURDIR)\..\utilities:$(CURDIR)\..\utilities\mingw\bin" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" -C $(DISK)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
 else
 	PATH="${PWD}/${DISK}/bin:$(PATH)" CXXFLAGS="${ADMB_CXXFLAGS}" LDFLAGS="${ADMB_LDFLAGS}" SAFE_OPTION=1 $(MAKE) -C $(DISK)/examples all

@@ -264,7 +264,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)("License\n");
       (*ad_printf)("-------\n\n");
 
-      (*ad_printf)("Copyright (c) 2008-2012\n");
+      (*ad_printf)("Copyright (c) 2008-2013\n");
       (*ad_printf)("Regents of the University of California and ADMB Foundation\n\n");
 
       (*ad_printf)("ADMB is free software and comes with ABSOLUTELY NO WARRANTY.\n");
@@ -286,28 +286,11 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)("the source code was released in December 2009. More information about the ADMB\n");
       (*ad_printf)("Project can be found at admb-project.org.\n\n");
 
-      (*ad_printf)("ADMB was originally developed by David Fournier of Otter Research Ltd.\n");
-      (*ad_printf)("It is now maintained by the ADMB Core Team, currently consisting of\n\n");
+      (*ad_printf)("ADMB was originally developed by David Fournier of Otter Research Ltd.\n\n");
 
-      (*ad_printf)("  Anders Nielsen (Denmark)\n");
-      (*ad_printf)("  Arni Magnusson (Iceland)\n");
-      (*ad_printf)("  Athol Whitten (Australia)\n");
-      (*ad_printf)("  Ben Bolker (Canada)\n");
-      (*ad_printf)("  Casper Berg (Denmark)\n");
-      (*ad_printf)("  Chris Grandin (Canada)\n");
-      (*ad_printf)("  David Fournier (Canada)\n");
-      (*ad_printf)("  Derek Seiple (USA)\n");
-      (*ad_printf)("  Hans Skaug (Norway)\n");
-      (*ad_printf)("  Ian Taylor (USA)\n");
-      (*ad_printf)("  Jim Ianelli (USA)\n");
-      (*ad_printf)("  John Sibert (USA)\n");
-      (*ad_printf)("  Johnoel Ancheta (USA)\n");
-      (*ad_printf)("  Juan Valero (Argentina)\n");
-      (*ad_printf)("  Mark Maunder (USA)\n");
-      (*ad_printf)("  Matthew Supernaw (USA)\n");
-      (*ad_printf)("  Mollie Brooks (USA)\n");
-      (*ad_printf)("  Steve Martell (Canada)\n");
-      (*ad_printf)("  Teresa A'mar (USA)\n");
+      (*ad_printf)("It is now maintained by the ADMB Core Team, whose members are listen on\n");
+      (*ad_printf)("http://admb-project.org/developers/core-team.\n");
+
       ad_exit(0);
     }
   }

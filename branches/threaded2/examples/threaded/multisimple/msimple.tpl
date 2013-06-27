@@ -16,7 +16,7 @@ GLOBALS_SECTION
       gradient_structure::set_MAX_NVAR_OFFSET(10000);
       gradient_structure::set_GRADSTACK_BUFFER_SIZE(20000000);
       gradient_structure::set_CMPDIF_BUFFER_SIZE   (20000000);
-      gradient_structure gs(20000000);
+      gradient_structure gs(30000000);
    
       // get the thread number
       ad_comm::pthread_manager->set_slave_number(tptr->thread_no);
@@ -91,6 +91,23 @@ DATA_SECTION
     Y += 5.0*err;
     chunk_size = nobs/nthread;
 
+    /*
+    cout << "chunk_size = " << chunk_size << endl;
+    int end_pos = 0;
+    for (int kk=1;kk<=nthread;kk++)
+    {
+       int start_pos = end_pos + 1;
+       end_pos = start_pos+chunk_size-1;
+       if (kk == nthread)
+           end_pos = nobs;
+        cout << " * * * chunk " << kk << " from " << start_pos << " to " << end_pos << endl;
+       dvector t = x(start_pos,end_pos);
+       cout << "       t runs from " << t.indexmin() << " to " << t.indexmax() << endl;
+    } 
+    if (1) exit(1);
+    */
+
+
 PARAMETER_SECTION
   init_number a   
   init_number b   
@@ -132,7 +149,7 @@ PRELIMINARY_CALCS_SECTION
   {
      int start_pos = end_pos + 1;
      end_pos = start_pos+chunk_size-1;
-     if (end_pos > nobs)
+     if (kk == nthread)
          end_pos = nobs;
      cerr << " * * * chunk " << kk << " from " << start_pos << " to " << end_pos << endl;
 
@@ -179,6 +196,11 @@ PROCEDURE_SECTION
 REPORT_SECTION
   report << "A = " << A << "; B = " << B <<endl;
   report << "a = " << a << "; b = " << b <<endl;
+  report << "f = " << f <<endl;
+  report << "nobs = " << nobs << endl;
+  report << "number of threads = " << nthread << endl;
+  report << "chunk size = " << chunk_size << " elements" << endl;
+  report << "           = " << chunk_size*sizeof(double) << " bytes" << endl;
 
   /*
   removed until pthread_manger destructor finalized

@@ -4,7 +4,7 @@ PATH=$(ADMB_HOME)\bin;$(PATH)
 all: colfill
 
 colfill: colfill.tpl
-	admb -r colfill.tpl
+	admb colfill.tpl
 	colfill -nohess
 
 clean:

@@ -12,7 +12,7 @@ gtest-all.o: $(GTEST_DIR)/src/gtest-all.cc
 
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-	../../admb -r -s $(TARGET)
+	../../admb $(TARGET)
 
 run:
 	@printf "Started run:\n"

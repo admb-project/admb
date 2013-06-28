@@ -12,15 +12,8 @@
 //#include <parallel.h>
 #include <signal.h>
 
-#undef ADMB_CONFIGURE
-#ifdef ADMB_CONFIGURE
-  //#include "../../admb_configure.h"
-#endif
-
 void vm_initialize(void);
 int have_jvm=0;
-
-
 
 void strip_full_path(const adstring& _s)
 {
@@ -164,9 +157,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
         }
       }
 
-#ifdef ADMB_CONFIGURE
-    //(*ad_printf)(" %s", (char*)admb_banner);
-#endif
+      //(*ad_printf)(" %s", (char*)admb_banner);
       (*ad_printf)( "Usage: %s [options]\n\n",(char*)(adprogram_name));
 
       (*ad_printf)( "Options:\n");
@@ -258,9 +249,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)("differentiation for statistical inference of highly parameterized complex\n");
       (*ad_printf)("nonlinear models. Optim. Methods Softw. 27:233-249.\n\n");
 
-#ifdef ADMB_CONFIGURE
       //(*ad_printf)(" %s", (char*)admb_banner);
-#endif
       (*ad_printf)("License\n");
       (*ad_printf)("-------\n\n");
 

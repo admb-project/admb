@@ -277,7 +277,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 
       (*ad_printf)("ADMB was originally developed by David Fournier of Otter Research Ltd.\n\n");
 
-      (*ad_printf)("It is now maintained by the ADMB Core Team, whose members are listen on\n");
+      (*ad_printf)("It is now maintained by the ADMB Core Team, whose members are listed on\n");
       (*ad_printf)("http://admb-project.org/developers/core-team.\n");
 
       ad_exit(0);

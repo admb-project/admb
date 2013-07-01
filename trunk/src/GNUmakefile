@@ -7,6 +7,7 @@ ifeq ($(OS),Windows_NT)
     TERMINAL=cygwin
   else
     TERMINAL=dos
+    SHELL=cmd
   endif
 endif
 
@@ -23,26 +24,28 @@ else
   PWD=$(shell pwd)
 endif
 
-ifeq ($(TERMINAL),dos)
-CXXFLAGS:=-I..\build\dist\include $(CXXFLAGS)
-else
-CXXFLAGS:=-I../build/dist/include $(CXXFLAGS)
-endif
-
-CXXFLAGS:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXXFLAGS)
-
-ifneq ($(CXX),CC)
-CXXFLAGS:=-Wall $(CXXFLAGS)
-endif
+CXXFLAGS:=$(CXXFLAGS) -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE
 
 ifdef BUILD_SHARED_LIBRARY
 CXXFLAGS:=-fPIC $(CXXFLAGS)
+endif
+
+ifneq ($(CXX),CC)
+CXXFLAGS:=-Wall $(CXXFLAGS)
 endif
 
 ifdef DEBUG
 CXXFLAGS:=-g $(CXXFLAGS)
 else
 CXXFLAGS:=-O3 $(CXXFLAGS)
+endif
+
+CXXFLAGS_CONTRIB:=$(CXXFLAGS)
+
+ifeq ($(TERMINAL),dos)
+CXXFLAGS:=$(CXXFLAGS) -I..\build\dist\include
+else
+CXXFLAGS:=$(CXXFLAGS) -I../build/dist/include
 endif
 
 include df1b2-separable/objects.lst
@@ -146,12 +149,12 @@ ifeq ($(TERMINAL),dos)
 	if not exist ${DISK}\contrib\lib md ${DISK}\contrib\lib
 	if not exist ${DISK}\contrib\bin md ${DISK}\contrib\bin
 	if not exist ${DISK}\contrib\include md ${DISK}\contrib\include
-	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(PWD)\${DISK}" --directory=..\contrib
+	$(MAKE) CXXFLAGS="$(CXXFLAGS_CONTRIB)" ADMB_HOME="$(PWD)\${DISK}" --directory=..\contrib
 else
 	mkdir -p ${DISK}/contrib/lib
 	mkdir -p ${DISK}/contrib/bin
 	mkdir -p ${DISK}/contrib/include
-	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="${PWD}/${DISK}" --directory=../contrib
+	$(MAKE) CXXFLAGS="$(CXXFLAGS_CONTRIB)" ADMB_HOME="${PWD}/${DISK}" --directory=../contrib
 endif
 
 libs: $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LINAD99_OBJS) $(SAFLP_LINAD99_OBJS) $(OPTLP_NH99_OBJS) $(SAFLP_NH99_OBJS) $(OPTLP_TOOLS99_OBJS) $(SAFLP_TOOLS99_OBJS)

@@ -19,7 +19,7 @@ build-qfclib:
 	copy qfclib\qfclib.h $(ADMB_HOME)\contrib\include
 
 build-src:
-	pushd src& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)contributions-
+	pushd src& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)src-
 	copy src\contrib.h $(ADMB_HOME)\contrib\include
 
 test:

@@ -18,7 +18,7 @@ double function_minimizer::unrestricted_hess_determinant(void)
     cerr << "Error opening file " << (char*) tmpstring
       << " in unrestricted_hess_determinant" << endl;
   }
-  int nvar;
+  int nvar = 0;
 
   ifs >> nvar;
   cout << "nvar =" << nvar << endl;

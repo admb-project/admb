@@ -26,7 +26,9 @@ GLOBALS_SECTION
       ad_comm::pthread_manager->cread_lock_buffer(0);
       // read the independent variables IN THE SAME ORDER AS THEY ARE SENT
       dvector x = ad_comm::pthread_manager->get_dvector(0);
+      cerr << " * * *  got x chunk " << tptr->thread_no << " from " << x.indexmin() << " to " << x.indexmax() << endl;
       dvector Y = ad_comm::pthread_manager->get_dvector(0);
+      cerr << " * * *  got Y chunk " << tptr->thread_no << " from " << Y.indexmin() << " to " << Y.indexmax() << endl;
      // release the constant buffer
       ad_comm::pthread_manager->cread_unlock_buffer(0);
 
@@ -75,6 +77,7 @@ DATA_SECTION
   vector x(1,nobs)
   number A
   number B
+  number S
 
   int chunk_size
 
@@ -82,14 +85,19 @@ DATA_SECTION
     chunk_size = nobs/nthread  + 1;
     A = 2.0;
     B = 4.0;
+    S = 7.0;
     random_number_generator rng(101);
     dvector err(1,nobs);
     x.fill_randu(rng);
     x *= 100.0;
     Y = A*x + B;
+
+
     err.fill_randn(rng);
-    Y += 5.0*err;
+    Y += S*err;
     chunk_size = nobs/nthread;
+    // for log-normal error
+    //Y = elem_prod(Y,exp(S*err));
 
     /*
     cout << "chunk_size = " << chunk_size << endl;
@@ -111,12 +119,14 @@ DATA_SECTION
 PARAMETER_SECTION
   init_number a   
   init_number b   
+  number s;
   vector ff(1,nthread)
   objective_function_value f
 
 PRELIMINARY_CALCS_SECTION
   a = 1.0;
   b = 2.0;
+  crit = 1e-3;
 
   // number of thread groups
   int ngroups=1;
@@ -126,7 +136,8 @@ PRELIMINARY_CALCS_SECTION
 
   // create instance of pthread_manager class
   // third argument is number of bytes in the transfer buffer
-  ad_comm::pthread_manager = new adpthread_manager(ngroups,ng,500);
+  //ad_comm::pthread_manager = new adpthread_manager(ngroups,ng,500);
+  ad_comm::pthread_manager = new adpthread_manager(ngroups,ng,32005);
 
   // create data vecor for argument to thread function
   new_thread_data* data1 = new new_thread_data[nthread+1];
@@ -151,12 +162,13 @@ PRELIMINARY_CALCS_SECTION
      end_pos = start_pos+chunk_size-1;
      if (kk == nthread)
          end_pos = nobs;
-     cerr << " * * * chunk " << kk << " from " << start_pos << " to " << end_pos << endl;
 
      // take control of the constant buffer for sending
      ad_comm::pthread_manager->cwrite_lock_buffer(kk);
      // send x and Y
+     cerr << " * * * send x chunk " << kk << " from " << start_pos << " to " << end_pos << endl;
      ad_comm::pthread_manager->send_dvector(x(start_pos,end_pos),kk);
+     cerr << " * * * send Y chunk " << kk << " from " << start_pos << " to " << end_pos << endl;
      ad_comm::pthread_manager->send_dvector(Y(start_pos,end_pos),kk);
      // release the constant buffer
      ad_comm::pthread_manager->cwrite_unlock_buffer(kk);
@@ -188,22 +200,32 @@ PROCEDURE_SECTION
       ad_comm::pthread_manager->read_unlock_buffer(kk);
   }
   // sum the results to compute the objective function
-  f = sum(ff);
-  f = nobs/2.*log(f);    // make it a likelihood function so that
-                              // covariance matrix is correct
+  s = sum(ff);
+  f = nobs/2.*log(s);    // make it a likelihood function so that
+                         // covariance matrix is correct
 
 
 REPORT_SECTION
-  report << "A = " << A << "; B = " << B <<endl;
-  report << "a = " << a << "; b = " << b <<endl;
+  s = sqrt(s/nobs);
+  report << "A = " << A << "; B = " << B << "; S = " << S <<endl;
+  report << "a = " << a << "; b = " << b << "; s = " << s << endl;
   report << "f = " << f <<endl;
   report << "nobs = " << nobs << endl;
   report << "number of threads = " << nthread << endl;
   report << "chunk size = " << chunk_size << " elements" << endl;
   report << "           = " << chunk_size*sizeof(double) << " bytes" << endl;
+  if (nobs <= 100)
+  {
+     report << endl;
+     report << "i,x,Y" << endl;
+     for (int i = 1; i <= nobs; i++)
+     {
+        report << i << "  " << setprecision(15) << x(i) << "," << Y(i) << endl;
+      }
+  }
 
   /*
-  removed until pthread_manger destructor finalized
+  removed until pthread_manager destructor finalized
   FINAL_SECTION
     for (int k = 1; k <= nthread;k++)
     {

@@ -21,7 +21,7 @@ LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt 
 #LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado -ldf1b2o -ladmod -ladt -lado -lpthread
 
 
-all: msimple
+all: msimple msimple-nothreads
 
 %:%.o
 	@echo
@@ -68,15 +68,22 @@ rules:
 clean:
 	rm -fv msimple.cpp
 	rm -fv msimple
+	rm -fv msimple-nothreads.cpp
+	rm -fv msimple-nothreads
 	rm -fv *.o
 	rm -fv *.htp
 	rm -fv *.log
 	rm -fv *.std
 	rm -fv *.cov
+	rm -fv *.cor
+	rm -fv *.par
 	rm -fv *.hes
 	rm -fv *.eva
 	rm -fv *.bar
+	rm -fv *.rep
 	rm -fv derivatives
 	rm -fv variance
 	rm -fv eigv.rpt
 	rm -fv make.out
+	rm -fv *master
+	rm -fv log*

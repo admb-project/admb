@@ -3,8 +3,17 @@ GLOBALS_SECTION
   #include <admodel.h>
   #include <adthread.h>
 
-  #include "trace.h"
 
+  /**
+  Specialized class to encapsulate variables needed to run the model.
+  In the original forest.tpl example, the functions 
+     dvariable trapzd(double a,double b,int n);
+     dvariable adromb(double a, double b, int ns);
+  are included in the function_minimzer class so that they would be inherited
+  by the model_data class. It is probably a bad idea to use such shared objects
+  in threads. Moving them to this thread_funnel class eliminates the possiblity
+  of false sharing and the static variables in trapzd.
+  */
   class thread_funnel
   {
    public:
@@ -14,9 +23,7 @@ GLOBALS_SECTION
 
      // constant model objects
      int nsteps;
-     //int k;
      dvector a;
-     //dvector freq;
      int a_index;
   
      // variable objects
@@ -27,8 +34,6 @@ GLOBALS_SECTION
      dvariable tau;
      dvariable nu;
      dvariable sigma;
-     //dvar_vector S;
-     //dvariable f;
   
      int get_constant_objects();
      int get_variable_objects();
@@ -38,15 +43,13 @@ GLOBALS_SECTION
      dvariable trapzd(double a,double b,int n);
      dvariable adromb(double a, double b, int ns);
   };
-  /*
-  dvariable tfh(thread_funnel* p, const dvariable& z)
-  {
-      return p->h(z);
 
-  }
+  /**
+  Formerly FUNCTION dvariable h(const dvariable& z) in the
+  original example. Since it is now a class member, there it is unnecessary to
+  pass a pointer to the function. Passing a pointer to a member function also
+  also violates C++ rules make making it necessary to do a lot of obscure casts.
   */
-
-  //FUNCTION dvariable h(const dvariable& z)
   dvariable thread_funnel::h(const dvariable& z)
   {
      dvariable tmp;
@@ -74,7 +77,6 @@ GLOBALS_SECTION
       for (sum=0.0,j=1;j<=interval;j++,x+=hn) sum += h(x);
       interval *= 2;
       s=0.5*(s+(b-a)*sum/num_interval);
-      //TTRACE(x,s);
       return s;
     }
 
@@ -112,11 +114,8 @@ GLOBALS_SECTION
 
       // read the independent variables IN THE SAME ORDER AS THEY ARE SENT
       nsteps = ad_comm::pthread_manager->get_int(0);
-      //TRACE(nsteps)
       a = ad_comm::pthread_manager->get_dvector(0);
-      //TRACE(a)
       a_index = ad_comm::pthread_manager->get_int(0);
-      TRACE(a_index)
       
       // release the constant buffer
       ad_comm::pthread_manager->cread_unlock_buffer(0);
@@ -156,26 +155,25 @@ GLOBALS_SECTION
       // get the thread number
       ad_comm::pthread_manager->set_slave_number(tptr->thread_no);
 
+      // create instance of thread_funnel for this thread
       thread_funnel tf;
-      //TTRACE(tptr->thread_no,tf.a_index)
       tf.get_constant_objects();
-      //TTRACE(tptr->thread_no,tf.a_index)
       if (tptr->thread_no != tf.a_index)
           cerr << "error getting a_index" << endl;
       do
       {
          int lflag = tf.get_variable_objects();
-         //TRACE(lflag)
          if (lflag == 1) break;
     
          dvariable Integral=tf.adromb(-3.0,3.0,tf.nsteps);
-         //TRACE(Integral)
 
          // send results to master
          // take control of the variable buffer for sending
          ad_comm::pthread_manager->write_lock_buffer(0);
-         // send Integral
+
+         // send Integral to the main thread
          ad_comm::pthread_manager->send_dvariable(Integral, 0);
+
          // release the variable buffer
          ad_comm::pthread_manager->write_unlock_buffer(0);
    
@@ -236,6 +234,7 @@ PRELIMINARY_CALCS_SECTION
 
   // specifiy function to run on the threads by passing apointer to the function
   ad_comm::pthread_manager->attach_code(&funnel_loop);
+
   // create the threads
   ad_comm::pthread_manager->create_all(data1);
 
@@ -244,26 +243,17 @@ PRELIMINARY_CALCS_SECTION
      a_index = i;
      // take control of the constant buffer for sending
      ad_comm::pthread_manager->cwrite_lock_buffer(i);
-    
+
+     // send constant objects to each thread (could be encapsulated)
      ad_comm::pthread_manager->send_int(nsteps, i);
-     //TTRACE(i,nsteps)
      ad_comm::pthread_manager->send_dvector(a, i);
-     //TTRACE(i,a)
      ad_comm::pthread_manager->send_int(a_index, i);
-     //TTRACE(i,a_index)
 
      // release the constant buffer
      ad_comm::pthread_manager->cwrite_unlock_buffer(i); 
   }
-  //TRACE(sleep(1))
 
 PROCEDURE_SECTION
-  //cout << endl;
-  //cout << "ifn = " << ifn << endl;
-  //cout << "quit_flag = " << quit_flag << endl;
-  //cout << "ihflag = " << ihflag << endl;
-  //cout << "last_phase() " << last_phase() << endl; 
-  //cout << "iexit = " << iexit << endl;
   tau=exp(log_tau);
   nu=exp(log_nu);
   sigma=exp(log_sigma);
@@ -287,27 +277,20 @@ PROCEDURE_SECTION
 
      // release the variable bufffer
      ad_comm::pthread_manager->write_unlock_buffer(i);
-     /*
-     if (i == 5)
-     {  
-        TRACE(sleep(1))
-        exit(1);
-     }
-     */
   }
-  //TRACE(sleep(1))
   f=0.0;
   for (int i=1;i<=k+1;i++)
   {
      // take control of the variable buffer for reading
      ad_comm::pthread_manager->read_lock_buffer(i);
+
+     // fetch the integral from the thread
      dvariable Integral = ad_comm::pthread_manager->get_dvariable(i);
-     //TRACE(Integral)
+
      // release the variable buffer
      ad_comm::pthread_manager->read_unlock_buffer(i);
      S(i) = Integral;
   }
-  //TRACE(S)
   for (int i=1;i<=k;i++)
   {
      dvariable ff=0.0;
@@ -316,7 +299,6 @@ PROCEDURE_SECTION
      f+=ff;
   }
   f+=sum_freq*log(1.e-50+S(1));
-  //TRACE(f)
 
 REPORT_SECTION
   report << "report:" << endl;

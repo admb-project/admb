@@ -29,7 +29,7 @@ mforest: mforest.o
 	$(LL) -o $@ $^ $(LFLAGS)
 	@echo ------- Done
 
-mforest-nothreads: mforest-nothreads.o dfqromb.o
+mforest-nothreads: mforest-nothreads.o 
 	@echo
 	@echo ------- Link $@
 	$(LL) $^ $(LFLAGS) -o $@ 
@@ -81,11 +81,11 @@ clean:
 	rm -fv *.std
 	rm -fv *.cov
 	rm -fv *.cor
-	rm -fv *.par
+	rm -fv *.p??
 	rm -fv *.hes
 	rm -fv *.eva
-	rm -fv *.bar
-	rm -fv *.rep
+	rm -fv *.b??
+	rm -fv *.r??
 	rm -fv derivatives
 	rm -fv variance
 	rm -fv eigv.rpt

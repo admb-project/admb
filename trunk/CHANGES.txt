@@ -6,10 +6,15 @@ The goal for all releases was to improve algorithms, add new requested features,
 correct defects (bugs), and streamline installation and build process.
 
 ADMB
-===
+====
 
 Changes
 -------
+
+New Supported Compilers
+-----------------------
+* AMD C++ compiler - still porting...
+* GNU C++ 4.8 compiler
 
 New Features
 ------------

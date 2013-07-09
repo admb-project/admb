@@ -17,6 +17,8 @@ help:
 	@echo "\tmake icpc\n"
 	@echo "\tFor Intel C++ compiler,"
 	@echo "\tmake CC\n"
+	@echo "\tFor ADMB C++ compiler,"
+	@echo "\tmake openCC\n"
 
 installer:
 	rm -f admb.zip admb
@@ -114,6 +116,21 @@ icpc-install:
 	$(MAKE) --directory=src CC=icc CXX=icpc install
 icpc-clean:
 	$(MAKE) --directory=src CC=icc CXX=icpc clean
+
+#AMD
+openCC: openCC-all
+openCC-all:
+	$(MAKE) --directory=src CC=opencc CXX=openCC all
+openCC-debug:
+	$(MAKE) --directory=src CC=opencc CXX=openCC DEBUG=1 all
+openCC-verify:
+	$(MAKE) --directory=src CC=opencc CXX=openCC verify
+openCC-test:
+	$(MAKE) --directory=src CC=opencc CXX=openCC tests
+openCC-install:
+	$(MAKE) --directory=src CC=opencc CXX=openCC install
+openCC-clean:
+	$(MAKE) --directory=src CC=opencc CXX=openCC clean
 
 #Unsupported Borland 5.5
 bcc: bcc-all

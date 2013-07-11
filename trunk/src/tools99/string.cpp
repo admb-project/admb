@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <fvar.hpp>
 #include <string.h>
@@ -80,6 +80,6 @@ ostream& operator<<(ostream& c, const adstring& t)
 }
 
 adstring& adstring::operator=(const char t)
-{ 
-  return (*this = adstring(t)); 
+{
+  return (*this = adstring(t));
 }

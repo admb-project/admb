@@ -2,29 +2,29 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "New BSD" license
- * 
+ *
  * License:
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -64,13 +64,13 @@
   #undef HERE
 #endif
 //#define HERE cout << "reached line " << __LINE__ << " in " << __FILE__ << endl;
-#define HERE 
+#define HERE
 
 #define USE_CONST
 #ifdef USE_CONST
   #define _CONST const
 #else
-  #define _CONST 
+  #define _CONST
 #endif
 class adstring_shape
 {
@@ -130,7 +130,7 @@ public :
   }
 #endif
 
-  friend adstring operator+(const adstring &u, const adstring &v); 
+  friend adstring operator+(const adstring &u, const adstring &v);
 
   friend adstring operator+(const adstring &u, const unsigned char v);
 
@@ -164,7 +164,7 @@ public :
 
   int operator==(const adstring &u) const;
   adstring operator()(int i, int j) const;
-  #endif 
+  #endif
 
   adstring& operator=(const adstring &t);
   adstring& operator=(const char t);
@@ -200,7 +200,7 @@ void val(const adstring& s, int& v, int& code);
 int val(const adstring& s);
 
 class cifstream;
- 
+
 class line_adstring : public adstring
 {
 public:
@@ -221,7 +221,7 @@ int pos(const adstring& substr, const adstring& s);
 //adstring operator+(const char u, const char v)
 //  { return (adstring(u) + adstring(v) ); }
 #if defined(__BORLANDC__)
-#  if (__BORLANDC__  <= 0x0520) 
+#  if (__BORLANDC__  <= 0x0520)
      class ifstream;
      class ofstream;
      class cifstream;
@@ -242,7 +242,7 @@ public:
   ~adstring_array();
   adstring_array(int min,int max);
   void allocate(int min,int max);
-  adstring_array(void); 
+  adstring_array(void);
   #ifdef USE_CONST
   const adstring& operator[](int i) const;
   const adstring& operator()(int i) const;
@@ -258,7 +258,7 @@ public:
   void to_upper(void);
   void to_lower(void);
   adstring_array to_upper(adstring_array& s);
-  adstring_array to_lower(adstring_array& s); 
+  adstring_array to_lower(adstring_array& s);
   adstring_array& operator=(const adstring_array&);
 };   // end class adstring_array
 adstring_array to_lower(adstring_array& s);

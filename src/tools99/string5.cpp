@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <fvar.hpp>
 #include <stdlib.h>
@@ -48,12 +48,12 @@ int adstring_array::size() const { return shape->indexmax()-shape->indexmin() + 
 int adstring_array::indexmin(void) const { return shape->indexmin();}
 int adstring_array::indexmax(void) const { return shape->indexmax();}
 
-  adstring_array::adstring_array(int min,int max) 
+  adstring_array::adstring_array(int min,int max)
   {
-    allocate(min,max); 
+    allocate(min,max);
   }
 
-  void adstring_array::allocate(int min,int max) 
+  void adstring_array::allocate(int min,int max)
   {
     if (min > max)
     {

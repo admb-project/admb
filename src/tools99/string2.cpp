@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <fvar.hpp>
 #include <string.h>
@@ -38,9 +38,8 @@ adstring::adstring(const adstring & v) : clist(v)
   shape = v.shape;
   s = v.s;
 }
- 
- 
-adstring operator+(const adstring& u, const adstring& v) 
+
+adstring operator+(const adstring& u, const adstring& v)
 {
   int us = u.size ();
   int vs = v.size ();

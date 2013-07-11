@@ -2,29 +2,29 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
- * 
+ * Copyright (c) 2008-2012 Regents of the University of California
+ *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  *
  * License:
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -89,7 +89,7 @@ Definition of the cifstream class.
 #if !defined(linux) && !defined(__CYGWIN32__) && !defined(__MINGW32__)
   #include <strstrea.h>
 #else
-#  if (__GNUC__  >= 3) 
+#  if (__GNUC__  >= 3)
 #    include <sstream>
 #  else
 #    include <strstream.h>
@@ -139,7 +139,7 @@ class cifstream : public ifstream
   streambuf* bp;
 #endif
 #if defined(__BORLANDC__)
-#  if (__BORLANDC__  >= 0x0520) 
+#  if (__BORLANDC__  >= 0x0520)
   streambuf* bp;
 #  endif
 #endif
@@ -164,21 +164,21 @@ public:
   adstring get_file_name(void);
   ~cifstream(){/*cout << "In cifstream destructor" << endl;*/}
 #if defined(__BORLANDC__)
-#  if (__BORLANDC__  > 0x0520) 
+#  if (__BORLANDC__  > 0x0520)
       cifstream(const char*, int=0 , char cc = '#');
 #  else
       cifstream(const char*, int = ios::nocreate, char cc = '#');
 #  endif
 #else
-#  if defined(__GNUC__) 
-#    if (__GNUC__  >= 3) 
+#  if defined(__GNUC__)
+#    if (__GNUC__  >= 3)
        cifstream(const char*, int = std::ios_base::in , char cc = '#');
 #    else
        cifstream(const char*, int = ios::nocreate, char cc = '#');
 #    endif
 #  elif ( defined(__MSVC32__) && __MSVC32__ >=7)
        cifstream(const char*, int = std::ios_base::in , char cc = '#');
-#  else  
+#  else
      cifstream(const char*, int = ios::nocreate, char cc = '#');
 #  endif
 #endif
@@ -193,21 +193,21 @@ public:
   #endif
 
 #if defined(__BORLANDC__)
-#  if (__BORLANDC__  > 0x0520) 
+#  if (__BORLANDC__  > 0x0520)
   void open(const char*, int );
 #  else
     void open(const char*, int = ios::nocreate);
 #  endif
 #else // not BORLAND
-#  if defined(__GNUC__) 
-#    if (__GNUC__  >= 3) 
+#  if defined(__GNUC__)
+#    if (__GNUC__  >= 3)
        void open(const char*, int);
 #    else
        void open(const char*, int = ios::nocreate);
 #    endif
 #  elif ( defined(__MSVC32__) && __MSVC32__ >=7)
        void open(const char*, int);
-#  else  
+#  else
      void open(const char*, int = ios::nocreate);
 #  endif
 #endif

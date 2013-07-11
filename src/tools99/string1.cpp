@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <fvar.hpp>
 #include <string.h>
@@ -54,7 +54,7 @@ adstring adstring::operator()(int i, int j) const
   return (tmp);
 }
 #endif
- 
+
 adstring& adstring::operator=(const adstring & t)
 {
   if (s != t.s)
@@ -105,7 +105,7 @@ adstring::~adstring()
     deallocate();
   }
 };
- 
+
 unsigned char & adstring::operator()(const int i)
 {
   if (i < 1 || i > (int) shape->size())
@@ -114,7 +114,7 @@ unsigned char & adstring::operator()(const int i)
   }
   return ( ((unsigned char *)s)[i]);
 }
- 
+
 #ifdef USE_CONST
 const unsigned char& adstring::operator()(const int i) const
 {
@@ -134,7 +134,7 @@ const unsigned char& adstring::operator[](const int i) const
   return (s[i]);
 }
 #endif
- 
+
 #ifdef USE_CONST
 int adstring::operator==(const adstring& v) const
 {
@@ -142,7 +142,7 @@ int adstring::operator==(const adstring& v) const
   return (tmp == 0);
 }
 #endif
- 
+
 int adstring::operator==(const adstring& v)
 {
   int tmp = strcmp (* this, v);
@@ -183,7 +183,6 @@ adstring& adstring::operator+=(const adstring& v)
   }
   return (* this);
 }
- 
 
 unsigned char& adstring::operator[](const int i)
 {
@@ -196,7 +195,7 @@ unsigned char& adstring::operator[](const int i)
  // return (s[i]);
   return ( ((unsigned char *)s)[i]);
 }
- 
+
 int length(const adstring& t)
 {
   return (int(t.size()));

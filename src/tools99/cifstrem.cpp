@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
 \file cifstrem.cpp
@@ -45,7 +45,7 @@ char* cifstream::signature()
     {
       signature_line[n++] = c;
       c = bp->snextc();
-     // cout << "in sig testc= " << c << endl; 
+     // cout << "in sig testc= " << c << endl;
     }
     signature_line[n++] = '\0';
     strcpy(comment_line, signature_line);
@@ -54,7 +54,7 @@ char* cifstream::signature()
     while (c != '\n')
     {
       c = bp->snextc();
-      //cout << "in sig testc= " << c << endl; 
+      //cout << "in sig testc= " << c << endl;
     }
 
     // position buffer to first character of next  line
@@ -65,11 +65,11 @@ char* cifstream::signature()
 }
 
 adstring cifstream::get_file_name(void)
-{ 
+{
   return file_name;
 }
 
-cifstream::cifstream(const char* fn, int open_m, char cc) 
+cifstream::cifstream(const char* fn, int open_m, char cc)
 #if defined (__MSVC32__) || defined (__WAT32__)
  : ifstream(fn, ios::in | open_m) , file_name(fn)
 #elif defined(__BCPLUSPLUS__)
@@ -94,12 +94,12 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
     bp = rdbuf();
   #endif
 #if defined(__MSVC32__)
-#  if (__MSVC32__  >= 7) 
+#  if (__MSVC32__  >= 7)
     bp = rdbuf();
 #  endif
 #endif
 #if defined(__BORLANDC__)
-#  if (__BORLANDC__  >= 0x0520) 
+#  if (__BORLANDC__  >= 0x0520)
     bp = rdbuf();
 #  endif
 #endif
@@ -120,11 +120,11 @@ void cifstream::filter(void)
   //HERE
   //char testc = bp->NEXTCHAR();
   char testc = bp->sgetc();
- // cout << "in filter testc= " << testc << endl; 
+ // cout << "in filter testc= " << testc << endl;
   while (isspace(testc))
   {
     testc = bp->snextc();
- //   cout << "in filter testc= " << testc << endl; 
+ //   cout << "in filter testc= " << testc << endl;
   }
 
   while ( (good()) && (testc == COMMENT_CHAR) && (testc != EOF))
@@ -137,7 +137,7 @@ void cifstream::filter(void)
 	comment_line[n++] = testc;
 
       testc = bp->snextc();
-      //cout << "in filter testc= " << testc << endl; 
+      //cout << "in filter testc= " << testc << endl;
       if (testc == '\n')
       {
 	comment_line[n++] = '\0';
@@ -198,7 +198,6 @@ void cifstream::get_field(char * s,int space_flag)
     report_error("function: void cifstream::prefilter();"
         " Buffer size exceeded?");
   }
-    
 
   if ( (!good()) || (testc == EOF))
   {
@@ -216,7 +215,7 @@ cifstream& cifstream::operator >> (adstring& s)
   (*this) >> t;
   s.realloc(t);
   delete [] t;
-  return (*this); 
+  return (*this);
 }
 
 
@@ -228,14 +227,14 @@ cifstream& cifstream::operator>>(const adstring& _s)
   (*this) >> t;
   s.realloc(t);
   delete [] t;
-  return (*this); 
+  return (*this);
 }
 
 
 cifstream& cifstream::operator>>(const line_adstring& s)
 {
   get_field((char*)(const char *)(s),1);
-  return (*this); 
+  return (*this);
 }
 
 
@@ -314,7 +313,7 @@ cifstream& cifstream::operator>>(const int& i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
-  //cout << "cifstream& cifstream::operator >> (int& i) s = '" << s 
+  //cout << "cifstream& cifstream::operator >> (int& i) s = '" << s
   //     << "'" << endl;
   js_strip_leading_zeros(s);
   istringstream is(s);
@@ -348,7 +347,7 @@ cifstream& cifstream::operator>>(const double& _x)
     report_error("double extraction operator");
   }
   is >> x;
-  
+
 #  ifdef __NDPX__
   if (is.eof()) is.clear();
 #  endif
@@ -434,7 +433,7 @@ void cifstream::report_error(const char * msg)
 void cifstream::report_error(const char * msg) {;}
 
 /*
-#if defined(__GNUDOS__) 
+#if defined(__GNUDOS__)
 #  if !defined(__ADSGI__)
   void strnset(char * comment_line, char x, size_t len)
 #  else

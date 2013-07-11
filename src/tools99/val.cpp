@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <fvar.hpp>
 #include <stdio.h>
@@ -35,5 +35,5 @@ int val(const adstring& s)
     code = 1;
   else
     code = 0;
-  return v;  
+  return v;
 }

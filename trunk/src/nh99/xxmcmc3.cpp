@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -16,7 +16,7 @@ void function_minimizer::pvm_slave_mcmc_routine(void)
   {
     int iflag=get_int_from_master();
     if (!iflag) break;
-    pvm_slave_get_monte_carlo_value(nvar); 
+    pvm_slave_get_monte_carlo_value(nvar);
   }
   while(1);
 }

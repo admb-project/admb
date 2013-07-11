@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -24,20 +24,20 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector
   a=a1;
   b=b1;
   wght=0;
-  double ah; 
-  double bl; 
+  double ah;
+  double bl;
   double upper;
-  double lower; 
+  double lower;
   double diff;
   int expflag;
   int in=0;
   int ie=0;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i); 
-    bl=b(i)/ch(i,i); 
+    ah=a(i)/ch(i,i);
+    bl=b(i)/ch(i,i);
     upper=cumd_norm(bl);
-    lower=cumd_norm(ah); 
+    lower=cumd_norm(ah);
     diff=upper-lower;
     if (diff>1.e-5)
     {
@@ -89,20 +89,20 @@ void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const
   a=a1;
   b=b1;
   wght=0;
-  double ah; 
-  double bl; 
+  double ah;
+  double bl;
   double upper;
-  double lower; 
+  double lower;
   double diff;
   double diff1;
   //int in=0;
   //int ie=0;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i); 
-    bl=b(i)/ch(i,i); 
+    ah=a(i)/ch(i,i);
+    bl=b(i)/ch(i,i);
     upper=cumd_norm(bl);
-    lower=cumd_norm(ah); 
+    lower=cumd_norm(ah);
     diff=upper-lower;
     upper=cumd_cauchy(bl);
     lower=cumd_cauchy(ah);
@@ -136,15 +136,15 @@ void bounded_multivariate_uniform_mcmc(int nvar, const dvector& a1, const dvecto
   a=a1;
   b=b1;
   wght=0;
-  double ah; 
-  double bl; 
+  double ah;
+  double bl;
   double upper;
-  double lower; 
+  double lower;
   double diff;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i); 
-    bl=b(i)/ch(i,i); 
+    ah=a(i)/ch(i,i);
+    bl=b(i)/ch(i,i);
     lower=ffmax(-1.0,ah);
     upper=ffmin(1.0,bl);
     diff=upper-lower;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -98,16 +98,16 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
 {
   uostream * pofs_psave=NULL;
   dmatrix mcmc_display_matrix;
-  int mcmc_save_index=1; 
+  int mcmc_save_index=1;
   int mcmc_wrap_flag=0;
   int mcmc_gui_length=10000;
   int no_sd_mcmc=0;
-  
+
   int on2=-1;
   if ( (on2=option_match(ad_comm::argc,ad_comm::argv,"-nosdmcmc"))>-1)
     no_sd_mcmc=1;
-    
-  if (stddev_params::num_stddev_params==0) 
+
+  if (stddev_params::num_stddev_params==0)
   {
     cerr << " You must declare at least one object of type sdreport "
          << endl << " to do the mcmc calculations" << endl;
@@ -115,9 +115,9 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
   }
   {
     //ofstream of_bf("testbf");
-    
+
     //if (adjm_ptr) set_labels_for_mcmc();
-    
+
     ivector number_offsets;
     dvector lkvector;
     //double current_bf=0;
@@ -141,7 +141,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
     int ibfcount=0;
     double llbest;
     double lbmax;
-  
+
     //if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcscov",ntmp))>-1)
     //{
     scov_option=1;
@@ -153,7 +153,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
     int ndvar=stddev_params::num_stddev_calc();
     int numdvar=stddev_params::num_stddev_number_calc();
     /*
-    if (adjm_ptr) 
+    if (adjm_ptr)
     {
       mcmc_display_matrix.allocate(1,numdvar,1,mcmc_gui_length);
       number_offsets.allocate(1,numdvar);
@@ -164,13 +164,13 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
     dvector scale(1,nvar);
     dmatrix values;
     int have_hist_flag=0;
-    initial_params::xinit(x); 
+    initial_params::xinit(x);
     dvector pen_vector(1,nvar);
     {
-      initial_params::reset(dvar_vector(x),pen_vector); 
+      initial_params::reset(dvar_vector(x),pen_vector);
       cout << pen_vector << endl << endl;
     }
-      
+
     initial_params::mc_phase=0;
     initial_params::stddev_scale(scale,x);
     initial_params::mc_phase=1;
@@ -190,7 +190,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
     {
       diag_option=1;
       cout << " Setting covariance matrix to diagonal with entries " << dscale
-           << endl;  
+           << endl;
     }
     dmatrix S(1,nvar,1,nvar);
     dvector sscale(1,nvar);
@@ -224,7 +224,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         use_empirical_flag=1;
       }
       if (use_empirical_flag)
-      { 
+      {
         read_empirical_covariance_matrix(nvar,S,ad_comm::adprogram_name);
       }
       else if (!rescale_bounded_flag)
@@ -261,16 +261,16 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         S(i,i)=dscale;
       }
     }
-    
+
     cout << sort(eigenvalues(S)) << endl;
     dmatrix chd = choleski_decomp( (dscale*2.4/sqrt(double(nvar))) * S);
     dmatrix chdinv=inv(chd);
     int sgn;
-  
+
     dmatrix symbds(1,2,1,nvar);
     initial_params::set_all_simulation_bounds(symbds);
     ofstream ofs_sd1((char*)(ad_comm::adprogram_name + adstring(".mc2")));
-  
+
     {
       long int iseed=0;
       int number_sims;
@@ -297,16 +297,16 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
       }
       cout << "Initial seed value " << iseed << endl;
       random_number_generator rng(iseed);
-      rng.better_rand();   
-      //better_rand(iseed);   
+      rng.better_rand();
+      //better_rand(iseed);
       double lprob=0.0;
       double lpinv=0.0;
       double lprob3=0.0;
       // get lower and upper bounds
-  
+
       independent_variables y(1,nvar);
       independent_variables parsave(1,nvar);
-  
+
       // read in the mcmc values to date
       int ii=1;
       dmatrix hist;
@@ -366,7 +366,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
           ii=1;
           initial_params::copy_all_values(parsave,ii);
         }
-      }    
+      }
 
       ii=1;
       initial_params::restore_all_values(parsave,ii);
@@ -374,7 +374,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
       gradient_structure::set_NO_DERIVATIVES();
       ofstream ogs("sims");
       ogs << nvar << " " << number_sims << endl;
-      initial_params::xinit(y);   
+      initial_params::xinit(y);
 
       send_int_to_slaves(1);
       double llc=-pvm_master_get_monte_carlo_value(nvar,y);
@@ -396,7 +396,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
       stddev_params::copy_all_values(mcmc_values,offs);
 
       /*
-      if (adjm_ptr) 
+      if (adjm_ptr)
       {
         offs=1;
         stddev_params::copy_all_number_values(mcmc_number_values,offs);
@@ -438,11 +438,11 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
       //cout << llc << " " << llc << endl;
       int iac_old=0;
       int i_old=0;
-      
+
       {
        if (!restart_flag)
        {
-         pofs_sd = 
+         pofs_sd =
            new uostream((char*)(ad_comm::adprogram_name + adstring(".mcm")));
        }
 
@@ -454,7 +454,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         int jj=(int)atof(ad_comm::argv[on+1]);
         if (jj <=0)
         {
-          cerr << " Invalid option following command line option -mcsave -- " 
+          cerr << " Invalid option following command line option -mcsave -- "
             << endl;
         }
         else
@@ -467,7 +467,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
               uistream uis((char*)(ad_comm::adprogram_name + adstring(".psv")));
               if (!uis)
               {
-                cerr << "Error trying to open file" << 
+                cerr << "Error trying to open file" <<
                   ad_comm::adprogram_name + adstring(".psv") <<
                   " for mcrestart" <<   endl;
                 cerr << " I am starting a new file " << endl;
@@ -495,14 +495,14 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
               pofs_psave=
                 new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
             }
-                         
+
           } else {
             pofs_psave=
               new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
           }
           if (!pofs_psave|| !(*pofs_psave))
           {
-            cerr << "Error trying to open file" << 
+            cerr << "Error trying to open file" <<
               ad_comm::adprogram_name + adstring(".psv") << endl;
             mcsave_flag=0;
             if (pofs_psave)
@@ -534,14 +534,14 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         {
           char * end;
           pprobe=strtod(ad_comm::argv[on+1],&end);
-          if (pprobe<=0.00001 || pprobe > .499) 
+          if (pprobe<=0.00001 || pprobe > .499)
           {
             cerr << "Invalid argument to option -mcgrope" << endl;
             pprobe=-1.0;
             probe_flag=0;
           }
         }
-      }    
+      }
 
        int start_flag;
        int java_quit_flag=0;
@@ -559,7 +559,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
           cout << llc << " " << llc << endl;
           double tratio=double(liac)/200;
           liac=0;
-          cout << " mcmc sim " << i <<  "  acceptance rate "  
+          cout << " mcmc sim " << i <<  "  acceptance rate "
                << ratio << " " << tratio << endl;
 
          /*
@@ -577,31 +577,31 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
             ADSleep(50);
           }
           */
-             
+
           if (i>50 && s_option && i<change_ball && !restart_flag)
           {
-            if (tratio < .15)  
+            if (tratio < .15)
             {
               chd=.2*chd;
               size_scale*=0.2;
               chdinv=chdinv/0.2;
               cout << "decreasing step size " << ln_det(chd,itmp) << endl;
             }
-            if (tratio > .6)  
+            if (tratio > .6)
             {
               chd=2.*chd;
               size_scale*=2.0;
               chdinv=chdinv/2.;
               cout << "increasing step size " << ln_det(chd,itmp) << endl;
             }
-            else if (tratio > .5)  
+            else if (tratio > .5)
             {
               chd=1.5*chd;
               size_scale*=1.5;
               chdinv=chdinv/1.5;
               cout << "increasing step size " << ln_det(chd,itmp) << endl;
             }
-            else if (tratio > .4)  
+            else if (tratio > .4)
             {
               chd=1.2*chd;
               size_scale*=1.2;
@@ -626,13 +626,13 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
               nvar,symbds(1),symbds(2),chd,lprob,pprobe,rng);
 
           initial_params::add_random_vector(bmn1);
-          initial_params::xinit(y);   
+          initial_params::xinit(y);
           // get the simulation bounds for the inverse transition
           initial_params::set_all_simulation_bounds(symbds);
           if (!probe_flag)
             bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),chd,
               lpinv,-1*(chdinv*bmn1),rng);
-          else 
+          else
             new_probing_bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),
               chd,lpinv,-1*(chdinv*bmn1),pprobe,rng);
 
@@ -640,14 +640,14 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
           ll=-pvm_master_get_monte_carlo_value(nvar,y);
           //cout << ll << " " << llc << endl;
           double ldiff=lprob-lpinv;
-          logr= ll - ldiff - llc;         
+          logr= ll - ldiff - llc;
         }
         else
         {
           dvector bmn1=bounded_multivariate_uniform(nvar,symbds(1),symbds(2),chd,
                                                     lprob,rng);
           initial_params::add_random_vector(bmn1);
-          initial_params::xinit(y);   
+          initial_params::xinit(y);
           // get the simulation bounds for the inverse transition
           initial_params::set_all_simulation_bounds(symbds);
           bounded_multivariate_uniform_mcmc(nvar,symbds(1),symbds(2),chd,
@@ -655,7 +655,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
           send_int_to_slaves(1);
           ll=-pvm_master_get_monte_carlo_value(nvar,y);
           double ldiff=lprob-lpinv;
-          logr= ll - ldiff - llc;         
+          logr= ll - ldiff - llc;
         }
         //cout << logr << endl;
         // decide whether to accept the new point
@@ -670,7 +670,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
           // save current mcmc values
           stddev_params::copy_all_values(mcmc_values,ii);
           /*
-          if (adjm_ptr) 
+          if (adjm_ptr)
           {
             ii=1;
             stddev_params::copy_all_number_values(mcmc_number_values,ii);
@@ -700,7 +700,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
           (*pofs_psave) << parsave;
         }
        /*
-        if (adjm_ptr) 
+        if (adjm_ptr)
         {
           save_mcmc_for_gui1(mcmc_values,mcmc_display_matrix,
             mcmc_save_index,mcmc_wrap_flag,number_offsets);
@@ -709,7 +709,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
         if (!no_sd_mcmc)
         {
           if (!have_hist_flag)
-          { 
+          {
             for (ii=mmin;ii<=mmax;ii++)
             {
               (*pofs_sd) << float(mcmc_values(ii));
@@ -730,7 +730,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
           s_mean+=parsave;
           s_covar+=outer_prod(parsave,parsave);
         }
-        if (!no_sd_mcmc && iac>5 && isim>initial_nsim) 
+        if (!no_sd_mcmc && iac>5 && isim>initial_nsim)
         {
           if (!have_hist_flag)
           {
@@ -758,7 +758,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
           total_spread);
       }
       if (!no_sd_mcmc)
-        if (iac>5) 
+        if (iac>5)
           print_hist_data(hist,values,h,mean_mcmc_values,s,parsave,iseed,
             size_scale);
       cout << iac/double(isim) << endl;
@@ -774,7 +774,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,double dsc
       }
       */
     }
-             
+
     write_empirical_covariance_matrix(ncor,s_mean,s_covar,
       ad_comm::adprogram_name);
     //newton_raftery_bayes_estimate(current_bf,ibfcount,exp(lkvector),.01);

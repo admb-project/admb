@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <sstream>
 using std::istringstream;
@@ -49,7 +49,7 @@ void tracing_message(int traceflag,const char *s);
 #endif
 
 
-  int function_minimizer::bad_step_flag=0;  
+  int function_minimizer::bad_step_flag=0;
 
   void function_minimizer::minimize(void)
   {
@@ -80,7 +80,7 @@ void tracing_message(int traceflag,const char *s);
            ad_exit(1);
         }
 #    endif
-     
+
 #   endif
     //initial_params::read(); // read in the values for the initial parameters
     if (initial_params::restart_phase)
@@ -96,12 +96,12 @@ void tracing_message(int traceflag,const char *s);
         cerr << "Usage -maxph option needs integer  -- ignored" << endl;
       }
       else
-      {   
+      {
         int jj=atoi(ad_comm::argv[on+1]);
         if (jj<=0)
         {
           cerr << "Usage -maxph option needs positive integer  -- ignored" << endl;
-        } 
+        }
         else
         {
           if (jj>allphases)
@@ -122,12 +122,12 @@ void tracing_message(int traceflag,const char *s);
         cerr << "Usage -ndv option needs integer  -- ignored" << endl;
       }
       else
-      {   
+      {
         int jj=atoi(ad_comm::argv[on+1]);
         if (jj<=0)
         {
           cerr << "Usage -ndv option needs positive integer  -- ignored" << endl;
-        } 
+        }
         else
         {
           gradient_structure::NUM_DEPENDENT_VARIABLES=jj;
@@ -143,12 +143,12 @@ void tracing_message(int traceflag,const char *s);
         cerr << "Usage -maxph option needs integer  -- ignored" << endl;
       }
       else
-      {   
+      {
         int _maxfn=atoi(ad_comm::argv[on+1]);
         if (_maxfn<0)
         {
           cerr << "Usage -maxfn option needs positive integer  -- ignored" << endl;
-        } 
+        }
         else
         {
           maxfn=_maxfn;
@@ -164,16 +164,16 @@ void tracing_message(int traceflag,const char *s);
         cerr << "Usage -crit option needs number  -- ignored" << endl;
       }
       else
-      {   
-    
+      {
+
         istringstream ist(ad_comm::argv[on+1]);
         ist >> _crit;
-    
+
         if (_crit<=0)
         {
           cerr << "Usage -crit option needs positive number  -- ignored" << endl;
           _crit=0.0;
-        } 
+        }
       }
     }
     int bandwidth=0;
@@ -184,16 +184,16 @@ void tracing_message(int traceflag,const char *s);
         cerr << "Usage -bw option needs number  -- ignored" << endl;
       }
       else
-      {   
-    
+      {
+
         istringstream ist(ad_comm::argv[on+1]);
         ist >> bandwidth;
-    
+
         if (bandwidth<=0)
         {
           cerr << "Usage -bw option needs positive number  -- ignored" << endl;
           bandwidth=0.0;
-        } 
+        }
         else
         {
           ad_comm::bandwidth=bandwidth;
@@ -205,7 +205,7 @@ void tracing_message(int traceflag,const char *s);
       int jj=atoi(ad_comm::argv[on+1]);
       if (jj <=0)
       {
-        cerr << " Invalid option following command line option -phase -- " 
+        cerr << " Invalid option following command line option -phase -- "
           << endl << " phase set equal to 1" << endl;
       }
       if (jj>allphases)
@@ -223,7 +223,7 @@ void tracing_message(int traceflag,const char *s);
     {
       ADqd_flag=1;
     }
-    
+
     tracing_message(traceflag,"A2");
     while (initial_params::current_phase <= allphases)
     {
@@ -231,14 +231,14 @@ void tracing_message(int traceflag,const char *s);
 
 #if defined(USE_LAPLACE)
       if (random_effects_flag)
-        initial_params::set_inactive_random_effects(); 
+        initial_params::set_inactive_random_effects();
 #endif
 
       int nvar=initial_params::nvarcalc(); // get the number of active
              // parameters
       if (!nvar)
       {
-        cerr << "Error -- no active parameters. There must be at least 1" 
+        cerr << "Error -- no active parameters. There must be at least 1"
              << endl;
         exit(1);
       }
@@ -252,28 +252,28 @@ void tracing_message(int traceflag,const char *s);
       {
         int ierr=0;
         ifstream ifs("vector");
-        if (!ifs) 
+        if (!ifs)
         {
           cerr << "couldn't open file vector" << endl;
           ierr=1;
         }
         if(ierr==0)
-        { 
+        {
           ifs >> zz;
-          if (!ifs) 
+          if (!ifs)
           {
             cerr << "couldn't read vector" << endl;
             ierr=1;
           }
-        }   
+        }
         if (ierr==0)
         {
-          do 
+          do
           {
             double delta=0;
             cout << "enter delta" << endl;
             cin >> delta;
-            xsave=x;   
+            xsave=x;
             x+=delta*zz;
             initial_params::reset(x);    // get the initial values into the
             userfunction();
@@ -281,9 +281,8 @@ void tracing_message(int traceflag,const char *s);
           }
           while(1);
         }
-      } 
+      }
 
-   
       double f=0.0;
 
       int lmnflag = -1;
@@ -338,7 +337,7 @@ void tracing_message(int traceflag,const char *s);
           cerr << "Usage -lmn option needs integer  -- set to default 10" << endl;
         }
         else
-        {   
+        {
           int jj=atoi(ad_comm::argv[lmnflag+1]);
           if (jj<=0)
           {
@@ -386,7 +385,7 @@ void tracing_message(int traceflag,const char *s);
                      "  -- set to default 5" << endl;
                 }
                 else
-                {   
+                {
                   int jj=atoi(ad_comm::argv[lmnflag+1]);
                   if (jj<=0)
                   {
@@ -452,7 +451,7 @@ void tracing_message(int traceflag,const char *s);
             cerr << "error illega value for pvm_manager->mode" << endl;
             exit(1);
           }
-        } 
+        }
       }
 #else
           {
@@ -512,7 +511,7 @@ void tracing_message(int traceflag,const char *s);
       {
         (*lapprox)(x,f,this);
         *objective_function_value::pobjfun=f;
-        initial_params::set_inactive_only_random_effects(); 
+        initial_params::set_inactive_only_random_effects();
         print_is_diagnostics(lapprox);
       }
 #endif
@@ -573,7 +572,7 @@ void tracing_message(int traceflag,const char *s);
     if (nopt>-1 && ssz>0) {
       sz=ssz;
     }
-    
+
 #ifdef __BORLANDC__
     long int lssz;
 #else
@@ -585,7 +584,6 @@ void tracing_message(int traceflag,const char *s);
       gradient_structure::set_CMPDIF_BUFFER_SIZE(lssz);
     }
 
-    
     nopt=get_option_number("-gbs",
       "-gbs option needs positive integer -- ignored",lssz);
     if (nopt>-1 && lssz>0) {
@@ -650,8 +648,7 @@ void tracing_message(int traceflag,const char *s);
       vf+=value(*objective_function_value::pobjfun);
       y(i)=vf;
     }
-  }    
-
+  }
 
 int get_option_number(const char * option_name,const char * error_message,
   int& option_value)
@@ -669,7 +666,7 @@ int get_option_number(const char * option_name,const char * error_message,
       on1=-1;
     }
     else
-    {   
+    {
       option_value=atoi(ad_comm::argv[on1+1]);
     }
   }
@@ -696,7 +693,7 @@ int get_option_number(const char * option_name,const char * error_message,
       on1=-1;
     }
     else
-    {   
+    {
 #if defined(__BORLANDC__) || defined(_MSC_VER)
       option_value=atol(ad_comm::argv[on1+1]);
 #else
@@ -709,14 +706,14 @@ int get_option_number(const char * option_name,const char * error_message,
 
 #if defined(USE_LAPLACE)
 
-void function_minimizer::other_separable_stuff_begin(void) 
-{ 
+void function_minimizer::other_separable_stuff_begin(void)
+{
   if (lapprox)
   {
     lapprox->separable_calls_counter++;
     /*
     lapprox->separable_call_level++;
-    //lapprox->build_up_nested_shape(); 
+    //lapprox->build_up_nested_shape();
     lapprox->nested_separable_calls_counter
       (lapprox->separable_call_level)++;
     //clean(lapprox->nested_tree_position,lapprox->separable_call_level);
@@ -725,12 +722,12 @@ void function_minimizer::other_separable_stuff_begin(void)
   }
 }
 
-void function_minimizer::other_separable_stuff_end(void) 
-{ 
+void function_minimizer::other_separable_stuff_end(void)
+{
   /*
   if (lapprox)
   {
-    lapprox->build_up_nested_shape(); 
+    lapprox->build_up_nested_shape();
     clean(lapprox->nested_tree_position,lapprox->separable_call_level);
     lapprox->separable_call_level--;
   }
@@ -785,7 +782,7 @@ void function_minimizer::begin_funnel_stuff(void)
   lapprox->separable_calls_counter++;
   if (lapprox->hesstype==2)
   {
-    if (lapprox->in_gauss_hermite_phase) 
+    if (lapprox->in_gauss_hermite_phase)
     {
        begin_gauss_hermite_stuff();
     }
@@ -808,12 +805,12 @@ void function_minimizer::get_function_difference(void)
     value(*objective_function_value::pobjfun)=0.0;
 
 }
-void function_minimizer::end_df1b2_funnel_stuff(void) 
-{  
-  if (lapprox->in_gauss_hermite_phase) 
-  { 
-    end_gauss_hermite_stuff();  
-  }  
+void function_minimizer::end_df1b2_funnel_stuff(void)
+{
+  if (lapprox->in_gauss_hermite_phase)
+  {
+    end_gauss_hermite_stuff();
+  }
   else
   {
     if (lapprox->hesstype==2)
@@ -839,7 +836,7 @@ void function_minimizer::end_df1b2_funnel_stuff(void)
       }
     }
   }
-} 
+}
 
 
 void function_minimizer::end_gauss_hermite_stuff(void)
@@ -873,7 +870,7 @@ void print_is_diagnostics(laplace_approximation_calculator *lapprox)
       tmp(1).fill_seqadd(1,1);
       tmp=trans(sort(trans(tmp),2));
       ofstream ofs("is_diagnostics");
-      ofs << "number of importance samples " 
+      ofs << "number of importance samples "
           << lapprox->num_importance_samples << endl;
       ofs << "importance_sampling_values" << endl;
       ofs << *lapprox->importance_sampling_values << endl<< endl;;
@@ -881,7 +878,7 @@ void print_is_diagnostics(laplace_approximation_calculator *lapprox)
       ofs << *lapprox->importance_sampling_values-mn << endl<< endl;;
       ofs << "sorted normalized importance_sampling_values" << endl;
       ofs << setw(9) << tmp << endl<< endl;;
-      ofs << "epsilon(1).indexmax()  "  
+      ofs << "epsilon(1).indexmax()  "
           << lapprox->epsilon(1).indexmax() << endl;
       ofs << lapprox->epsilon << endl;
       dmatrix plotstuff(1,2,mmin,mmax);

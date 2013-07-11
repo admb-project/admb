@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -32,7 +32,7 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   int maxiter=50;
   int iprint=-10;
 
-  dvar_vector& x = (dvar_vector&)(_x); 
+  dvar_vector& x = (dvar_vector&)(_x);
 
   integer nvar=x.indexmax()-x.indexmin()+1; // get the number of active
   if (m<=0)
@@ -63,14 +63,14 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
       cerr << "Usage -crit option needs number  -- ignored" << endl;
     }
     else
-    {   
+    {
       char * end;
       _crit=strtod(ad_comm::argv[on+1],&end);
       if (_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
         _crit=0.0;
-      } 
+      }
     }
   }
   gradient_structure::set_YES_DERIVATIVES();
@@ -85,7 +85,7 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   if (_crit)
   {
     crit = _crit;
-  } 
+  }
   dvector maximum_function_evaluations;
   if (!(!maximum_function_evaluations) && !maxfn_option)
   {
@@ -130,7 +130,7 @@ L20:
     xbest=x;
     gbest=g;
   }
-  
+
   //gradcalc(nvar,g);
   g=user_dfrandeff(x);
 

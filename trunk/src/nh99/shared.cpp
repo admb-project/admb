@@ -2,10 +2,10 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
- 
+
 #  if defined(USE_SHARE_FLAGS)
   static int integer(const index_type& it)
   {
@@ -179,63 +179,63 @@
   }
 
   void initial_params::setshare(const index_type& sf,
-    const index_type& af) 
-  { 
+    const index_type& af)
+  {
     cerr << " setshare not yet defined for this class " << endl;
     ad_exit(1);
   }
 
   shareinfo::~shareinfo(void)
-  { 
-    delete sflags; 
-    delete original_sflags; 
-    delete aflags; 
-    delete invflags; 
-    delete bmap; 
-    sflags=0; 
-    aflags=0; 
-    original_sflags=0; 
-    invflags=0; 
+  {
+    delete sflags;
+    delete original_sflags;
+    delete aflags;
+    delete invflags;
+    delete bmap;
+    sflags=0;
+    aflags=0;
+    original_sflags=0;
+    invflags=0;
     current_phase=-1;
     maxshare=0;
     bmap=0;
   }
 
   int &  shareinfo::get_current_phase(void)
-  { 
-    return current_phase; 
+  {
+    return current_phase;
   }
   index_type * shareinfo::get_original_shareflags(void)
-  { 
-    return original_sflags; 
+  {
+    return original_sflags;
   }
   index_type * shareinfo::get_shareflags(void)
-  { 
-    return sflags; 
+  {
+    return sflags;
   }
   i3_array & shareinfo::get_bmap(void)
-  { 
+  {
     return *bmap;
   }
   index_type * shareinfo::get_invflags(void)
-  { 
+  {
     return invflags;
   }
   index_type * shareinfo::get_activeflags(void)
-  { 
+  {
     return aflags;
   }
   void shareinfo::set_invflags(const index_type& sf)
-  { 
+  {
     invflags=new index_type(sf);
   }
   void shareinfo::set_bmap(const i3_array & _bmap)
-  { 
+  {
     bmap=new i3_array(_bmap);
   }
   void shareinfo::reset_bmap(const i3_array & _bmap)
-  { 
-    if (bmap) 
+  {
+    if (bmap)
     {
       delete bmap;
       bmap=0;
@@ -243,7 +243,7 @@
     bmap=new i3_array(_bmap);
   }
   void shareinfo::reset_shareflags(const index_type& sf)
-  { 
+  {
     if (sflags)
     {
       delete sflags;
@@ -252,22 +252,22 @@
     sflags=new index_type(sf);
   }
   void shareinfo::set_original_shareflags(const index_type& sf)
-  { 
+  {
     original_sflags=new index_type(sf);
   }
   void shareinfo::set_shareflags(const index_type& sf)
-  { 
+  {
     sflags=new index_type(sf);
   }
   void shareinfo::set_activeflags(const index_type& af)
-  { 
+  {
     aflags=new index_type(af);
   }
-  shareinfo::shareinfo(const index_type& sf,const index_type& af) 
+  shareinfo::shareinfo(const index_type& sf,const index_type& af)
   {
-    set_shareflags(sf); 
-    set_original_shareflags(sf); 
-    set_activeflags(af); 
+    set_shareflags(sf);
+    set_original_shareflags(sf);
+    set_activeflags(af);
     invflags=0;
     current_phase=-1;
   }
@@ -359,7 +359,7 @@
       {
         int lmin=bmap2(k).indexmin();
         int lmax=bmap2(k).indexmax();
-        
+
         if (lmax>0)
         {
           int i1=bmap2(k,lmin,1);
@@ -381,9 +381,8 @@
           }
         }
       }
-        
-  
-      // indirect will cotain pointers for the number 
+
+      // indirect will cotain pointers for the number
       // of active parameters it starts out with the
       // number of shared flags and removes the inactive ones
       ivector indirect(fmin1,fmax1);
@@ -514,7 +513,7 @@
         fmax1=max(fmax1,integer(sf(i)));
         fmin1=min(fmin1,integer(sf(i)));
       }
-  
+
       ivector indirect(fmin1,fmax1);
       ivector processed_flag(fmin1,fmax1);
       processed_flag.initialize();
@@ -638,5 +637,3 @@
     }
   }
 #  endif
- 
-

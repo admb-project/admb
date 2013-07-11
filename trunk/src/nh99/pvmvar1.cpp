@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -11,7 +11,7 @@
  int pvm_params::num_pvm_params=0;
  const int pvm_params::maxnum_pvm_params=50;
  pvm_params * pvm_params::varsptr[pvm_params::maxnum_pvm_params+1];
-    
+
   void pvm_int::assign(const ivector& u)
   {
     if(ad_comm::pvm_manager)
@@ -30,8 +30,8 @@
       d=u(0);
     }
   }
-  pvm_int::operator int() 
-  { 
+  pvm_int::operator int()
+  {
     return d;
   }
   pvm_number::operator double() { return d;}
@@ -58,15 +58,15 @@
   void pvm_params::send_all_to_slaves(void)
   {
     for (int i=0;i<num_pvm_params;i++)
-    { 
+    {
       varsptr[i]->send_to_slaves();
     }
-  } 
+  }
 
   void pvm_params::get_all_from_master(void)
   {
     for (int i=0;i<num_pvm_params;i++)
-    { 
+    {
       varsptr[i]->get_from_master();
     }
   }
@@ -90,7 +90,7 @@
         " objects" << endl;
       ad_exit(1);
     }
-    varsptr[num_pvm_params++]= this; // this is the list of 
+    varsptr[num_pvm_params++]= this; // this is the list of
                                          // fundamental objects
   }
 
@@ -140,23 +140,21 @@ void pvm_int::get_from_master(void)
   int ptid=pvm_parent();
   // ***************  begin constant receive block *********************
   adpvm_slave_crecv(ptid);
-  adpvm_unpack(x);  
+  adpvm_unpack(x);
   adpvm_slave_end_creceive();
   // ***************  end receive block ***********************************
   d=x;
 }
-  
+
 void pvm_number::get_from_master(void)
 {
   double x;
   int ptid=pvm_parent();
   // ***************  begin constant receive block *********************
   adpvm_slave_crecv(ptid);
-  adpvm_unpack(x);  
+  adpvm_unpack(x);
   adpvm_slave_end_creceive();
   // ***************  end receive block ***********************************
   d=x;
 }
-  
 #endif //  #if defined(USE_ADPVM)
-

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -28,12 +28,12 @@ dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, con
   double rwght=0;
   double nwght=0;
   w.initialize();
-  double ah; 
-  double bl; 
+  double ah;
+  double bl;
   double upper;
-  double lower; 
+  double lower;
   double upper1;
-  double lower1; 
+  double lower1;
   double diff;
   double diff1;
   int expflag;
@@ -54,11 +54,11 @@ dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, con
   {
     for (int i=1;i<=nvar;i++)
     {
-      ah=a(i)/ch(i,i); 
-      bl=b(i)/ch(i,i); 
+      ah=a(i)/ch(i,i);
+      bl=b(i)/ch(i,i);
       double u = rng.better_rand();
       upper=cumd_norm(bl);
-      lower=cumd_norm(ah); 
+      lower=cumd_norm(ah);
       diff=upper-lower;
       if (diff>1.e-5)
       {
@@ -71,7 +71,7 @@ dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, con
       upper1=cumd_cauchy(bl);
       lower1=cumd_cauchy(ah);
       diff1=upper1-lower1;
-  
+
       u=u*.9998+.0001;
       if (!expflag)
       {
@@ -105,12 +105,12 @@ dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, con
     b=b1;
     for (int i=1;i<=nvar;i++)
     {
-      ah=a(i)/ch(i,i); 
-      bl=b(i)/ch(i,i); 
+      ah=a(i)/ch(i,i);
+      bl=b(i)/ch(i,i);
       double u = rng.better_rand();
       double pp = rng.better_rand();
       upper=cumd_norm(bl);
-      lower=cumd_norm(ah); 
+      lower=cumd_norm(ah);
       diff=upper-lower;
       if (diff>1.e-5)
       {
@@ -123,7 +123,7 @@ dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, con
       upper1=cumd_cauchy(bl);
       lower1=cumd_cauchy(ah);
       diff1=upper1-lower1;
-  
+
       u=u*.9998+.0001;
       if (!expflag)
       {
@@ -160,9 +160,8 @@ dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, con
     }
     wght = log(dd)+rwght;
   }
-  return w; 
+  return w;
 }
-
 
 void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
   dmatrix& ch, const double& _wght, const dvector& _y,double pprobe, random_number_generator& rng)
@@ -179,12 +178,12 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, c
   double rwght=0;
   double nwght=0;
   w.initialize();
-  double ah; 
-  double bl; 
+  double ah;
+  double bl;
   double upper;
-  double lower; 
+  double lower;
   double upper1;
-  double lower1; 
+  double lower1;
   double diff;
   double diff1;
   int expflag;
@@ -198,11 +197,11 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, c
   for (i=1;i<=nvar;i++)
   {
     y=_y(i);
-    ah=a(i)/ch(i,i); 
-    bl=b(i)/ch(i,i); 
+    ah=a(i)/ch(i,i);
+    bl=b(i)/ch(i,i);
     /*double u = */rng.better_rand();
     upper=cumd_norm(bl);
-    lower=cumd_norm(ah); 
+    lower=cumd_norm(ah);
     diff=upper-lower;
     if (diff>1.e-5)
     {
@@ -215,7 +214,7 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, c
     upper1=cumd_cauchy(bl);
     lower1=cumd_cauchy(ah);
     diff1=upper1-lower1;
-  
+
     if (diff>1.e-5)
     {
       nwght+=-.5*y*y -log(sqrt_tpi*diff);
@@ -238,12 +237,12 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, c
   for (i=1;i<=nvar;i++)
   {
     y=_y(i);
-    ah=a(i)/ch(i,i); 
-    bl=b(i)/ch(i,i); 
+    ah=a(i)/ch(i,i);
+    bl=b(i)/ch(i,i);
     double u = rng.better_rand();
     double pp = rng.better_rand();
     upper=cumd_norm(bl);
-    lower=cumd_norm(ah); 
+    lower=cumd_norm(ah);
     diff=upper-lower;
     if (diff>1.e-5)
     {

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -14,7 +14,7 @@
 #ifdef __MSVC32__
   #define lseek _lseek
   #define  read _read
-  #define write _write 
+  #define write _write
   #include <sys\stat.h>
 #endif
 
@@ -27,7 +27,7 @@
   #if (__GNUC__ >3)
      #include <iostream>
      using namespace std;
-  #else   
+  #else
     #include <iostream.h>
   #endif
 #include <fcntl.h>
@@ -70,7 +70,7 @@
   #if (__GNUC__ >3)
      #include <iostream>
      using namespace std;
-  #else   
+  #else
     #include <iostream.h>
   #endif
 #include <fcntl.h>
@@ -137,8 +137,8 @@
     {
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-slave",nopt))>-1)
       {
-        if (nopt ==1)	    
-        {	      
+        if (nopt ==1)
+        {
           {
             int ierr=make_sub_directory(ad_comm::argv[on+1]);
             ad_comm::subdir=ad_comm::argv[on+1];
@@ -152,7 +152,7 @@
             " you have " << nopt << endl;		
           ad_exit(1);
         }	
-      }   
+      }
     }
 #endif
 
@@ -265,7 +265,7 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
   { cerr << "Error rewinding file in ad_sbuffer:fread"<<endl;
     ad_exit(1);
   }
-    //cout << " trying to read buff_size = " << buff_size 
+    //cout << " trying to read buff_size = " << buff_size
       //   << " from cmpdif file" << endl;
   //cout << "offset before read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
   if (read(file_ptr,buff,buff_size)<buff_size)
@@ -287,9 +287,9 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
  */
   void ad_sbuffer::write_cmpdif_stack_buffer(void)
   {
-    //cout << " trying to write buff_size = " << buff_size 
+    //cout << " trying to write buff_size = " << buff_size
       //   << " into cmpdif file" << endl;
-    //clogf << " trying to write buff_size = " << buff_size 
+    //clogf << " trying to write buff_size = " << buff_size
          //<< " into cmpdif file" << endl;
     //cout << "offset before write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
     //if (write(file_ptr,buff,buff_size)<buff_size)

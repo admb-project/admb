@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier and Mollie Brooks
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -146,16 +146,16 @@ df1b2vector pow(const dvector& x,  const df1b2vector& a)
     dvar_vector tmp(v1.indexmin(),v1.indexmax());
     for (int i=v1.indexmin();i<=v1.indexmax();i++)
     {
-      tmp.elem(i)=pow(v1.elem(i),v2.elem(i));             
+      tmp.elem(i)=pow(v1.elem(i),v2.elem(i));
     }
     RETURN_ARRAYS_DECREMENT();
     return(tmp);
-  }        
+  }
 /**
  \brief raise x to the power v.
  \param x vector of bases
  \param v vector of exponents	
- */  
+ */
   df1b2vector pow(df1b2vector const& _x,dvector const& v)
   {
    ADUNCONST(df1b2vector,x);
@@ -166,7 +166,7 @@ df1b2vector pow(const dvector& x,  const df1b2vector& a)
    for (int i=mmin;i<=mmax;i++) tmp(i)=pow(x(i),v(i));
    return tmp;
   }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -195,7 +195,7 @@ df1b2variable operator * (const df1b2vector& _x,const df1b2vector& _y)
     double * yd=y(i).get_u_dot();
     double xu= *x(i).get_u();
     double yu= *y(i).get_u();
-  
+
     for (int j=0;j<df1b2variable::nvar;j++)
     {
       *zd++ += yu * *xd++ + xu * *yd++;
@@ -204,7 +204,6 @@ df1b2variable operator * (const df1b2vector& _x,const df1b2vector& _y)
   // WRITE WHATEVER ON TAPE
   if (!df1b2_gradlist::no_derivatives)
     f1b2gradlist->write_pass1_prod(&x,&y,&tmp);
-    
 
   return tmp;
 }
@@ -215,7 +214,7 @@ df1b2variable operator * (const df1b2vector& _x,const df1b2vector& _y)
  */
 void ad_read_pass2_prod_vector(void);
 
- int df1b2_gradlist::write_pass1_prod(const df1b2vector * _px, 
+ int df1b2_gradlist::write_pass1_prod(const df1b2vector * _px,
    const df1b2vector * _py,df1b2variable * pz)
  {
    ADUNCONST(df1b2vector*,px)
@@ -301,7 +300,7 @@ void ad_read_pass2_prod_vector(void)
     read_pass2_3_prod_vector();
     break;
   default:
-    cerr << "illegal value for df1b2variable::pass = " 
+    cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
     exit(1);
   }
@@ -314,7 +313,7 @@ void ad_read_pass2_prod_vector(void)
 void read_pass2_1_prod_vector(void)
 {
   int nvar=df1b2variable::nvar;
-  test_smartlist& list=f1b2gradlist->list; 
+  test_smartlist& list=f1b2gradlist->list;
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
@@ -339,7 +338,7 @@ void read_pass2_1_prod_vector(void)
     // df1b2_header *
     px(i)=(df1b2_header *) bptr;
     bptr+=sizeof(df1b2_header);
-    // df1b2_header * 
+    // df1b2_header *
     py(i)=(df1b2_header *) bptr;
     bptr+=sizeof(df1b2_header);
   }
@@ -354,16 +353,16 @@ void read_pass2_1_prod_vector(void)
   }
   for (i=mmin;i<=mmax;i++)
   {
-    // double * 
+    // double *
     xdot(i)=(double*)bptr;
     bptr+=nvar*sizeof(double);
-    // double * 
+    // double *
     ydot(i)=(double*)bptr;
     bptr+=nvar*sizeof(double);
   }
 
   list.restoreposition(); // save pointer to beginning of record;
- 
+
   // ****************************************************************
   // turn this off if no third derivatives are calculated
   // if (!no_third_derivatives)
@@ -405,14 +404,14 @@ void read_pass2_1_prod_vector(void)
       py(i)->u_bar[j]+=xu(i)*pz->u_bar[j];
     }
   }
-  
+
   for (i=mmin;i<=mmax;i++)
   {
     for (j=0;j<nvar;j++)
     {
       px(i)->u_bar[j]+=ydot(i)[j]*pz->u_dot_bar[j];
     }
-    
+
     for (j=0;j<nvar;j++)
     {
       py(i)->u_bar[j]+=xdot(i)[j]*pz->u_dot_bar[j];
@@ -450,7 +449,7 @@ void read_pass2_2_prod_vector(void)
   // list 1
   //
   int nvar=df1b2variable::nvar;
-  test_smartlist & list=f1b2gradlist->list; 
+  test_smartlist & list=f1b2gradlist->list;
 
   //int total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
   //  +2*(nvar+1)*sizeof(double);
@@ -464,7 +463,7 @@ void read_pass2_2_prod_vector(void)
 #endif
 // end of string identifier debug stuff
 
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
   int total_bytes=nlist.bptr->numbytes;
   list.check_buffer_size(total_bytes);
   list.saveposition(); // save pointer to beginning of record;
@@ -472,8 +471,8 @@ void read_pass2_2_prod_vector(void)
   //
   // list 2
   //
-  test_smartlist & list2=f1b2gradlist->list2; 
-  fixed_smartlist2 & nlist2=f1b2gradlist->nlist2; 
+  test_smartlist & list2=f1b2gradlist->list2;
+  fixed_smartlist2 & nlist2=f1b2gradlist->nlist2;
   // get record size
   int num_bytes2=*nlist2.bptr;
   --nlist2;
@@ -511,7 +510,7 @@ void read_pass2_2_prod_vector(void)
     // df1b2_header * //
     px(i)=(df1b2_header *) list.bptr;
     list.bptr+=sizeof(df1b2_header);
-    // df1b2_header * 
+    // df1b2_header *
     py(i)=(df1b2_header *) list.bptr;
     list.bptr+=sizeof(df1b2_header);
   }
@@ -534,7 +533,7 @@ void read_pass2_2_prod_vector(void)
     list.bptr+=nvar*sizeof(double);
   }
   list.restoreposition(total_bytes); // save pointer to beginning of record;
-  
+
   double * zbar;
   double * zdotbar;
 
@@ -551,7 +550,7 @@ void read_pass2_2_prod_vector(void)
     z_bar_tilde[j]=0;
     z_dot_bar_tilde[j]=0;
   }
-  
+
   for (i=mmin;i<=mmax;i++)
   {
     double * x_tilde=px(i)->get_u_tilde();
@@ -564,33 +563,33 @@ void read_pass2_2_prod_vector(void)
     double * y_dot_bar_tilde=py(i)->get_u_dot_bar_tilde();
 
     int j;
-    
+
     // start wjth x and add y
     for (j=0;j<nvar;j++)
     {
       z_bar_tilde[j]+=yu(i)*x_bar_tilde[j];
       *y_tilde+=zbar[j]*x_bar_tilde[j];
     }
-  
+
     for (j=0;j<nvar;j++)
     {
       *y_tilde+=zdotbar[j]*x_dot_bar_tilde[j];
       z_dot_bar_tilde[j]+=yu(i)*x_dot_bar_tilde[j];
     }
-  
+
     // start wjth y and add x
     for (j=0;j<nvar;j++)
     {
       *x_tilde+=zbar[j]*y_bar_tilde[j];
       z_bar_tilde[j]+=xu(i)*y_bar_tilde[j];
     }
-  
+
     for (j=0;j<nvar;j++)
     {
       *x_tilde+=zdotbar[j]*y_dot_bar_tilde[j];
       z_dot_bar_tilde[j]+=xu(i)*y_dot_bar_tilde[j];
     }
-  
+
     for (j=0;j<nvar;j++)
     {
       y_dot_tilde[j]+=zdotbar[j]*x_bar_tilde[j];
@@ -614,8 +613,8 @@ void read_pass2_3_prod_vector(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
-  test_smartlist& list=f1b2gradlist->list; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
+  test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
@@ -649,7 +648,7 @@ void read_pass2_3_prod_vector(void)
     // df1b2_header *
     px(i)=(df1b2_header *) list.bptr;
     list.bptr+=sizeof(df1b2_header);
-    // df1b2_header * 
+    // df1b2_header *
     py(i)=(df1b2_header *) list.bptr;
     list.bptr+=sizeof(df1b2_header);
   }
@@ -664,16 +663,16 @@ void read_pass2_3_prod_vector(void)
   }
   for (i=mmin;i<=mmax;i++)
   {
-    // double * 
+    // double *
     xdot(i)=(double*)list.bptr;
     list.bptr+=nvar*sizeof(double);
-    // double * 
+    // double *
     ydot(i)=(double*)list.bptr;
     list.bptr+=nvar*sizeof(double);
   }
 
   list.restoreposition(); // save pointer to beginning of record;
-  
+
   for (i=mmin;i<=mmax;i++)
   {
     *(px(i)->u_tilde)+=yu(i) * *(pz->u_tilde);

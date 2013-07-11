@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -20,15 +20,15 @@ static void xxx(double*,double*){;}
  * Description not yet available.
  * \param
  */
-static void begin_local_calculations(int& nap) 
-{ 
-  df1b2_gradlist::set_no_derivatives();  
-  local_init_var::allocate_all();  
-  local_dep_var::allocate_all();  
+static void begin_local_calculations(int& nap)
+{
+  df1b2_gradlist::set_no_derivatives();
+  local_init_var::allocate_all();
+  local_dep_var::allocate_all();
   nap=local_init_var::num_active_parameters;
-}  
+}
 
-int write_pass1(const df1b2variable * _px, 
+int write_pass1(const df1b2variable * _px,
   const df1b2variable * _py,
   const df1b2variable * _pz,int nap);
 
@@ -72,7 +72,7 @@ df1b2variable   local_tester(int i,local_init_df1b2variable x ,
  * Description not yet available.
  * \param
  */
-int write_pass1(const df1b2variable * px, 
+int write_pass1(const df1b2variable * px,
   const df1b2variable * py,
   const df1b2variable * pz,int nap)
  {
@@ -144,8 +144,8 @@ void read_xxx_1(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   //int nvar=df1b2variable::nvar;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
-  test_smartlist& list=f1b2gradlist->list; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
+  test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
@@ -195,7 +195,7 @@ void read_xxx_1(void)
   list.restoreposition(); // save pointer to beginning of record;
 
   f1b2gradlist=localf1b2gradlist;
-  df1b2variable::save_adpool_pointer(); 
+  df1b2variable::save_adpool_pointer();
 
 
   adpool * tmppool=df1b2variable::pool;
@@ -229,14 +229,14 @@ void read_xxx_1(void)
       }
       if (!found_pool_flag)
       {
-        cerr << "coudn't find right sized pool -- this can't happen" 
+        cerr << "coudn't find right sized pool -- this can't happen"
              << endl;
         ad_exit(1);
-      }    
+      }
     }
   }
 
-  df1b2_gradlist::set_yes_derivatives();  
+  df1b2_gradlist::set_yes_derivatives();
   //local_init_df1b2variable x(xu,xpudot), y(yu,ypudot);
 
   local_init_pass1_df1b2variable x(xu,xudot);
@@ -251,12 +251,12 @@ void read_xxx_1(void)
 
   z=square(x+2.0*y+2.5);
 
-  df1b2_gradlist::set_no_derivatives();  
+  df1b2_gradlist::set_no_derivatives();
 
   set_dependent_variable(z);
   df1b2variable::passnumber=1;
   df1b2_gradcalc1();
-  df1b2variable::restore_adpool_pointer(); 
+  df1b2variable::restore_adpool_pointer();
   f1b2gradlist=globalf1b2gradlist;
 
   double * zprime=z.get_u_dot();   // size nvp
@@ -276,7 +276,7 @@ void read_xxx_1(void)
      // pzubar[1]+=xudot[i]*pzudotbar[i];
       xudotbar[i]+=zprime[0]*pzudotbar[i];
       yudotbar[i]+=zprime[1]*pzudotbar[i];
-    
+
       pxubar[i]+=(x.u_bar[0]*xudot[i]+x.u_bar[1]*yudot[i])*pzudotbar[i];
       pyubar[i]+=(y.u_bar[0]*xudot[i]+y.u_bar[1]*yudot[i])*pzudotbar[i];
 
@@ -308,7 +308,7 @@ void ad_read_xxx(void)
     read_xxx_3();
     break;
   default:
-    cerr << "illegal value for df1b2variable::pass = " 
+    cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
     exit(1);
   }
@@ -324,8 +324,8 @@ void read_xxx_2(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  //fixed_smartlist & nlist=f1b2gradlist->nlist; 
-  test_smartlist& list=f1b2gradlist->list; 
+  //fixed_smartlist & nlist=f1b2gradlist->nlist;
+  test_smartlist& list=f1b2gradlist->list;
   int total_bytes=3*sizeof(df1b2_header)
     +2*(nvar+1)*sizeof(double);
   //int num_bytes=nlist.bptr->numbytes;
@@ -375,7 +375,7 @@ void read_xxx_2(void)
 
   f1b2gradlist=localf1b2gradlist;
   f1b2gradlist->reset();
-  df1b2variable::save_adpool_pointer(); 
+  df1b2variable::save_adpool_pointer();
 
 
   adpool * tmppool=df1b2variable::pool;
@@ -409,14 +409,14 @@ void read_xxx_2(void)
       }
       if (!found_pool_flag)
       {
-        cerr << "coudn't find right sized pool -- this can't happen" 
+        cerr << "coudn't find right sized pool -- this can't happen"
              << endl;
         ad_exit(1);
-      }    
+      }
     }
   }
 
-  df1b2_gradlist::set_yes_derivatives();  
+  df1b2_gradlist::set_yes_derivatives();
   //local_init_df1b2variable x(xu,xpudot), y(yu,ypudot);
 
   local_init_pass1_df1b2variable x(xu,xudot);
@@ -431,7 +431,7 @@ void read_xxx_2(void)
 
   z=square(x+2.0*y+2.5);
 
-  df1b2_gradlist::set_no_derivatives();  
+  df1b2_gradlist::set_no_derivatives();
 
   set_dependent_variable(z);
   df1b2variable::passnumber=1;
@@ -441,7 +441,7 @@ void read_xxx_2(void)
   x.get_u_bar_tilde()[1]=0;
   y.get_u_bar_tilde()[0]=0;
   y.get_u_bar_tilde()[1]=0;
-  
+
   df1b2variable::passnumber=2;
   df1b2_gradcalc1();
 
@@ -452,7 +452,7 @@ void read_xxx_2(void)
   x.get_u_bar_tilde()[1]=1;
   y.get_u_bar_tilde()[0]=0;
   y.get_u_bar_tilde()[1]=0;
-  
+
   df1b2variable::passnumber=2;
   df1b2_gradcalc1();
 

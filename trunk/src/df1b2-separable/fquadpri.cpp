@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <df1b2fun.h>
 
@@ -22,7 +22,7 @@ static char unallocatederror[] = " Trying to access unallocated"
     xmyindex=num_quadratic_prior;
     ptr[num_quadratic_prior++]=this;
   }
-  void df1b2quadratic_prior::get_Lxu(dmatrix& M) 
+  void df1b2quadratic_prior::get_Lxu(dmatrix& M)
   {
     if (!Lxu || !index)
     {
@@ -83,51 +83,50 @@ static char unallocatederror[] = " Trying to access unallocated"
   {
     add_to_list();
     num_active_parameters=0;
-    M=0; 
-    pu=0; 
+    M=0;
+    pu=0;
     index=0;
     Lxu=0;
-  } 
+  }
   df1b2quadratic_prior::~df1b2quadratic_prior(void)
   {
-    if (index) delete index; 
+    if (index) delete index;
     index=0;
     if (Lxu) delete Lxu;
     Lxu=0;
     if (M) delete M;
-    M=0; 
+    M=0;
     if (pu) delete pu;
-    pu=0; 
-  } 
+    pu=0;
+  }
 
-
-  void df1b2quadratic_prior::allocate(const df1b2_init_vector & _u, const char * s) 
+  void df1b2quadratic_prior::allocate(const df1b2_init_vector & _u, const char * s)
   {
     allocate(_u);
   }
-  void df1b2quadratic_prior::allocate(const df1b2matrix & _M, 
-    const df1b2_init_vector & _u, const char * s) 
+  void df1b2quadratic_prior::allocate(const df1b2matrix & _M,
+    const df1b2_init_vector & _u, const char * s)
   {
     allocate(_M,_u);
   }
-  void df1b2quadratic_prior::allocate(const df1b2_init_vector & _u) 
+  void df1b2quadratic_prior::allocate(const df1b2_init_vector & _u)
   {
     pu = new df1b2_init_vector(_u);
   }
-  void df1b2quadratic_prior::allocate(const df1b2matrix & _M, 
-    const df1b2_init_vector & _u) 
+  void df1b2quadratic_prior::allocate(const df1b2matrix & _M,
+    const df1b2_init_vector & _u)
   {
     M =new df1b2matrix(_M);
     pu = new df1b2_init_vector(_u);
   }
   void df1b2quadratic_prior::operator = (const df1b2matrix & M)
-  { 
-    quadratic_prior::in_qp_calculations=0; 
+  {
+    quadratic_prior::in_qp_calculations=0;
     num_active_parameters=funnel_init_var::num_vars;
     df1b2_gradlist::no_derivatives=1;
     dvector cu=value(*pu);
 
-    if (laplace_approximation_calculator::where_are_we_flag==3) 
+    if (laplace_approximation_calculator::where_are_we_flag==3)
     {
       df1b2variable::noallocate=1;
       df1b2vector v(M.indexmin(),M.indexmax());
@@ -155,21 +154,21 @@ static char unallocatederror[] = " Trying to access unallocated"
         delete index;
         index=0;
       }
-  
+
       if (num_active_parameters>0)
       {
         if (!index)
         {
           index=new ivector(column(*funnel_init_var::plist,1));
         }
-      
+
         if (Lxu)
         {
           int tmin = Lxu->indexmin();
           if ( (Lxu->indexmin() != mmin)    ||
                (Lxu->indexmax() != mmax) ||
                ((*Lxu)(tmin).indexmin() != 1) ||
-               ((*Lxu)(tmin).indexmax() != num_active_parameters)) 
+               ((*Lxu)(tmin).indexmax() != num_active_parameters))
           delete Lxu;
           Lxu=0;
         }
@@ -177,7 +176,7 @@ static char unallocatederror[] = " Trying to access unallocated"
         {
           Lxu=new dmatrix(1,num_active_parameters,mmin-1,mmax);
         }
-    
+
         for (int i=1;i<=num_active_parameters;i++)
         {
           (*Lxu)(i,mmin-1)=(*funnel_init_var::plist)(i,1);
@@ -201,7 +200,7 @@ static char unallocatederror[] = " Trying to access unallocated"
               ad_exit(1);
             }
           }
-        } 
+        }
       }
       else
       {
@@ -227,8 +226,8 @@ static char unallocatederror[] = " Trying to access unallocated"
    }
  }
 
-normal_df1b2quadratic_prior::normal_df1b2quadratic_prior(void) 
-{ 
+normal_df1b2quadratic_prior::normal_df1b2quadratic_prior(void)
+{
   set_old_style_flag();
 }
 
@@ -236,8 +235,8 @@ void normal_df1b2quadratic_prior::set_old_style_flag(void)
 {
   old_style_flag=0;
 }
-void normal_df1b2quadratic_prior::operator = (const df1b2matrix & M) 
-{ 
+void normal_df1b2quadratic_prior::operator = (const df1b2matrix & M)
+{
   df1b2quadratic_prior::operator = (M);
 }
 
@@ -245,26 +244,26 @@ void df1b2quadratic_re_penalty::set_old_style_flag(void)
 {
   old_style_flag=2;
 }
-void df1b2quadratic_re_penalty::operator = (const df1b2matrix & M) 
-{ 
+void df1b2quadratic_re_penalty::operator = (const df1b2matrix & M)
+{
   df1b2quadratic_prior::operator = (M);
 }
-void df1b2quadratic_re_penalty::operator = (const dmatrix & M) 
-{ 
+void df1b2quadratic_re_penalty::operator = (const dmatrix & M)
+{
   df1b2quadratic_prior::operator = (M);
 }
 
 
-df1b2quadratic_re_penalty::df1b2quadratic_re_penalty(void) 
-{ 
+df1b2quadratic_re_penalty::df1b2quadratic_re_penalty(void)
+{
   set_old_style_flag();
 }
 // *******************************************************
 // *******************************************************
 // *******************************************************
 // *******************************************************
-constant_df1b2quadratic_re_penalty::constant_df1b2quadratic_re_penalty(void) 
-{ 
+constant_df1b2quadratic_re_penalty::constant_df1b2quadratic_re_penalty(void)
+{
   set_old_style_flag();
 }
 
@@ -272,18 +271,18 @@ void constant_df1b2quadratic_re_penalty::set_old_style_flag(void)
 {
   old_style_flag=2;
 }
-void constant_df1b2quadratic_re_penalty::operator = (const dmatrix & M) 
-{ 
+void constant_df1b2quadratic_re_penalty::operator = (const dmatrix & M)
+{
   //df1b2quadratic_prior::operator = (M);
 }
 void df1b2quadratic_prior::operator = (const dmatrix & M)
-{ 
-  quadratic_prior::in_qp_calculations=0; 
+{
+  quadratic_prior::in_qp_calculations=0;
   num_active_parameters=funnel_init_var::num_vars;
   df1b2_gradlist::no_derivatives=1;
   dvector cu=value(*pu);
 
-  if (laplace_approximation_calculator::where_are_we_flag==3) 
+  if (laplace_approximation_calculator::where_are_we_flag==3)
   {
     df1b2variable::noallocate=1;
     //df1b2vector v(M.indexmin(),M.indexmax());
@@ -314,7 +313,7 @@ void df1b2quadratic_prior::operator = (const dmatrix & M)
       delete index;
       index=0;
     }
-    
+
     if (Lxu)
     {
       cout << "this can't happen" << endl;

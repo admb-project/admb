@@ -17,8 +17,8 @@ df1b2vector df1b2vector::operator() (const ivector & iv)
 
   for (int i=lb;i<=ub;i++)
   {
-    tmp(i)=(*this)(iv(i));    
-    tmp(i).get_ind_index()=(*this)(iv(i)).get_ind_index();    
+    tmp(i)=(*this)(iv(i));
+    tmp(i).get_ind_index()=(*this)(iv(i)).get_ind_index();
   }
   return tmp;
 }

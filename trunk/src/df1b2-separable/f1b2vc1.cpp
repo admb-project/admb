@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -20,7 +20,7 @@ df1b2vector operator + (const df1b2vector& _x,const df1b2vector& _y)
   ADUNCONST(df1b2vector,x)
   ADUNCONST(df1b2vector,y)
   check_shape(x,y,"operator +");
-  
+
   int mmin=x.indexmin();
   int mmax=x.indexmax();
   df1b2vector tmp;
@@ -42,7 +42,7 @@ df1b2vector operator + (const df1b2vector& _x,const dvector& _y)
   ADUNCONST(df1b2vector,x)
   ADUNCONST(dvector,y)
   check_shape(x,y,"operator +");
-  
+
   int mmin=x.indexmin();
   int mmax=x.indexmax();
   df1b2vector tmp;
@@ -64,7 +64,7 @@ df1b2vector operator + (const dvector& _x,const df1b2vector& _y)
   ADUNCONST(dvector,x)
   ADUNCONST(df1b2vector,y)
   check_shape(x,y,"operator +");
-  
+
   int mmin=x.indexmin();
   int mmax=x.indexmax();
   df1b2vector tmp;
@@ -137,7 +137,7 @@ df1b2vector sin(const df1b2vector& _x)
 /**
  * Description not yet available.
  * \param
- */ 
+ */
 df1b2vector tan(const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
@@ -190,7 +190,7 @@ df1b2vector cos(const df1b2vector& _x)
   }
   return tmp;
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -200,7 +200,7 @@ df1b2vector operator - (const df1b2vector& _x,const df1b2vector& _y)
   ADUNCONST(df1b2vector,x)
   ADUNCONST(df1b2vector,y)
   check_shape(x,y,"operator -");
-  
+
   int mmin=x.indexmin();
   int mmax=x.indexmax();
   df1b2vector tmp;
@@ -212,7 +212,7 @@ df1b2vector operator - (const df1b2vector& _x,const df1b2vector& _y)
   }
   return tmp;
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -222,7 +222,7 @@ df1b2vector operator - (const df1b2vector& _x,const dvector& _y)
   ADUNCONST(df1b2vector,x)
   ADUNCONST(dvector,y)
   check_shape(x,y,"operator -");
-  
+
   int mmin=x.indexmin();
   int mmax=x.indexmax();
   df1b2vector tmp;
@@ -234,7 +234,7 @@ df1b2vector operator - (const df1b2vector& _x,const dvector& _y)
   }
   return tmp;
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -244,7 +244,7 @@ df1b2vector operator - (const dvector& _x,const df1b2vector& _y)
   ADUNCONST(dvector,x)
   ADUNCONST(df1b2vector,y)
   check_shape(x,y,"operator -");
-  
+
   int mmin=x.indexmin();
   int mmax=x.indexmax();
   df1b2vector tmp;
@@ -256,7 +256,7 @@ df1b2vector operator - (const dvector& _x,const df1b2vector& _y)
   }
   return tmp;
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -265,7 +265,7 @@ df1b2vector& df1b2vector::operator += (const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
   check_shape(*this,x,"operator +=");
-  
+
   int mmin=x.indexmin();
   int mmax=x.indexmax();
 
@@ -284,7 +284,7 @@ df1b2vector& df1b2vector::operator += (const dvector& _x)
 {
   ADUNCONST(dvector,x)
   check_shape(*this,x,"operator +=");
- 
+
   int mmin=x.indexmin();
   int mmax=x.indexmax();
 
@@ -303,7 +303,7 @@ df1b2vector& df1b2vector::operator -= (const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
   check_shape(*this,x,"operator -");
-  
+
   int mmin=x.indexmin();
   int mmax=x.indexmax();
 
@@ -408,7 +408,7 @@ df1b2vector& df1b2vector::operator *= (const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
   check_shape(*this,x,"operator *");
-  
+
   int mmin=x.indexmin();
   int mmax=x.indexmax();
 
@@ -427,7 +427,7 @@ df1b2vector& df1b2vector::operator /= (const df1b2vector& _x)
 {
   ADUNCONST(df1b2vector,x)
   check_shape(*this,x,"operator /");
-  
+
   int mmin=x.indexmin();
   int mmax=x.indexmax();
 
@@ -437,7 +437,7 @@ df1b2vector& df1b2vector::operator /= (const df1b2vector& _x)
   }
   return *this;
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -454,13 +454,13 @@ df1b2vector& df1b2vector::operator /= (const df1b2variable& _x)
   }
   return *this;
 }
-    
+
 #if defined(SAFE_ARRAYS)
 /**
  * Description not yet available.
  * \param
  */
-df1b2variable& df1b2matrix::operator () (int i,int j) const 
+df1b2variable& df1b2matrix::operator () (int i,int j) const
 {
   if (i < indexmin())
   {
@@ -494,7 +494,7 @@ df1b2vector& df1b2matrix::operator [] (int i) const
  * Description not yet available.
  * \param
  */
-df1b2vector& df1b2matrix::operator () (int i) const 
+df1b2vector& df1b2matrix::operator () (int i) const
 {
   if (i < indexmin())
   {
@@ -512,7 +512,7 @@ df1b2vector& df1b2matrix::operator () (int i) const
  * \param
  */
 df1b2variable& df1b2vector::operator () (int i) const
-{ 
+{
   if (i < indexmin())
   {
     ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2variable& df1b2vector::operator () (int i) const", indexmin(), indexmax(), i);
@@ -526,17 +526,17 @@ df1b2variable& df1b2vector::operator () (int i) const
 }
 /*
 const df1b2variable& df1b2vector::operator () (int i) const
-{ 
+{
   if (i<indexmin())
   {
     cerr << "Index too low in df1b2variable& operator () (int i)"
-      " value = " << i << endl;  
+      " value = " << i << endl;
     ad_exit(1);
   }
   if (i>indexmax())
   {
     cerr << "Index too high in df1b2variable& operator () (int i)"
-      " value = " << i << endl;  
+      " value = " << i << endl;
     ad_exit(1);
   }
   //return *(v+i);
@@ -549,7 +549,7 @@ const df1b2variable& df1b2vector::operator () (int i) const
  * \param
  */
 df1b2variable& df1b2vector::operator [] (int i) const
-{ 
+{
   if (i < indexmin())
   {
     ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2variable& df1b2vector::operator [] (int i) const", indexmin(), indexmax(), i);
@@ -795,7 +795,7 @@ void df1b2vector::copy(const df1b2vector& _x)
     v=0;
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param

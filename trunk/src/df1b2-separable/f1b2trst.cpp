@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -27,11 +27,11 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
   fmm fmc(nvar);
   if (random_effects_flag)
   {
-    initial_params::set_active_only_random_effects(); 
+    initial_params::set_active_only_random_effects();
     //cout << nvar << endl;
     unvar=initial_params::nvarcalc(); // get the number of active
-    initial_params::restore_start_phase(); 
-    initial_params::set_inactive_random_effects(); 
+    initial_params::restore_start_phase();
+    initial_params::set_inactive_random_effects();
     int nvar1=initial_params::nvarcalc(); // get the number of active
     if (nvar1 != nvar)
     {
@@ -70,13 +70,13 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
     tester(i,i)+=lambda;
   }
   dvector step =  x-solve(tester,g);
-  
+
   {
     // calculate the number of random effects unvar
     // this turns on random effects variables and turns off
     // everything else
     //cout << nvar << endl;
-    initial_params::set_active_only_random_effects(); 
+    initial_params::set_active_only_random_effects();
     //cout << nvar << endl;
     int unvar=initial_params::nvarcalc(); // get the number of active
     //df1b2_gradlist::set_no_derivatives();
@@ -96,21 +96,21 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
       }
     }
     lapprox=new laplace_approximation_calculator(nvar,unvar,1,nvar+unvar,
-      this); 
+      this);
     initial_df1b2params::current_phase=initial_params::current_phase;
-    
+
     initial_df1b2params::save_varsptr();
     allocate();
     initial_df1b2params::restore_varsptr();
 
     df1b2_gradlist::set_no_derivatives();
-    int nvar=initial_params::nvarcalc_all(); 
+    int nvar=initial_params::nvarcalc_all();
     dvector y(1,nvar);
-    initial_params::xinit_all(y); 
+    initial_params::xinit_all(y);
     initial_df1b2params::reset_all(y);
 
     g=(*lapprox)(step,f,this);
-    
+
   }
 
 } // end block for quasi newton minimization

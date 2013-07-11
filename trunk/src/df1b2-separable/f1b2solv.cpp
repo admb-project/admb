@@ -2,7 +2,7 @@
  * $Id: f1b2solv.cpp 789 2010-10-05 01:01:09Z johnoel $
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #define HOME_VERSION
 #include <df1b2fun.h>

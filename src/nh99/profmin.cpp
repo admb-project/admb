@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -47,7 +47,7 @@ void function_minimizer::pvm_master_function_evaluation_profile(double& f,
     cout << "Error in im" << endl;
     ad_exit(1);
   }
- 
+
   dvar_matrix fslave=get_f_from_slaves();
   vf+=sum(fslave);
   f=value(vf);
@@ -142,10 +142,9 @@ void function_minimizer::pvm_master_function_evaluation_profile(double& f,
           check_pvm_message(1,1);
         }
       }
-     
+
       gradient_structure::set_NO_DERIVATIVES();
       check_pvm_message(1,1);
- 
 
       int break_flag=38;
       send_int_to_slaves(break_flag);
@@ -166,7 +165,7 @@ void function_minimizer::pvm_master_function_evaluation_profile(double& f,
         cout << "Error in im" << endl;
         ad_exit(1);
       }
- 
+
       dvar_matrix fslave=get_f_from_slaves();
       double tv=value(likeprof_params::likeprofptr[iprof]->variable());
       fprof+=value(*objective_function_value::pobjfun);
@@ -198,7 +197,7 @@ void function_minimizer::pvm_master_function_evaluation_profile(double& f,
     int max_profile_phases=3;
     int profile_phase=1;
     initial_params::current_phase = initial_params::max_number_phases;
-    do 
+    do
     {
       int prof_flag=get_int_from_master();
       if (prof_flag && prof_flag !=5)
@@ -224,16 +223,16 @@ void function_minimizer::pvm_master_function_evaluation_profile(double& f,
           grad_chk();
         }
         while(1);
-  
+
         int break_flag=get_int_from_master();
         if (break_flag)
         {
           cout << break_flag << endl;
         }
         gradient_structure::set_NO_DERIVATIVES();
-  
+
         pvm_slave_function_evaluation_noder();
- 
+
       }
     }
     while(1);

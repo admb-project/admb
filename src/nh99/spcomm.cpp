@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <windows.h>
 #include <windows.h>
@@ -18,7 +18,7 @@
 
 
 DWORD DDEspclient::idInst=0;
-DWORD DDEspclient::sleeptime=0; 
+DWORD DDEspclient::sleeptime=0;
 HCONV DDEspclient::cstatus=NULL;
 UINT  DDEspclient::status=0;
 
@@ -41,7 +41,7 @@ HDDEDATA CALLBACK mycallback(       //DdeCallback(
 
 DDEspclient::DDEspclient(DWORD _sleeptime)
 {
-  status=DdeInitialize(&idInst, mycallback,CBF_FAIL_EXECUTES | 
+  status=DdeInitialize(&idInst, mycallback,CBF_FAIL_EXECUTES |
     CBF_SKIP_ALLNOTIFICATIONS,0);
   HSZ  hszService=DdeCreateStringHandle(idInst,"SPLUS", CP_WINANSI);
   HSZ  hszTopic=DdeCreateStringHandle(idInst,"SCommand", CP_WINANSI);
@@ -71,7 +71,7 @@ void SPsend(const double& x, const adstring& name)
   check_when_finished();
 }
 
-void SPsend(const dvector& x, const adstring& name) 
+void SPsend(const dvector& x, const adstring& name)
 {
   ofstream ofs("c:\\tmp.spl");
 
@@ -87,24 +87,24 @@ void SPsend(const dvector& x, const adstring& name)
 void SPsend(const named_dmatrix& _x)
 {
   ADUNCONST(named_dmatrix,x)
-  SPsend(x,adstring(x.label().mychar())); 
+  SPsend(x,adstring(x.label().mychar()));
 }
 
 
-void SPsend(const named_dvar_matrix& _x) 
+void SPsend(const named_dvar_matrix& _x)
 {
-  ADUNCONST(named_dvar_matrix,x) 
-  SPsend(value(x),adstring(x.label().mychar())); 
+  ADUNCONST(named_dvar_matrix,x)
+  SPsend(value(x),adstring(x.label().mychar()));
 }
 
 void SPsend(const named_dvariable& _x)
 {
   ADUNCONST(named_dvariable,x)
-  SPsend(value(x),adstring(x.label().mychar())); 
+  SPsend(value(x),adstring(x.label().mychar()));
 }
 
 
-void SPsend(const dmatrix& x, const adstring& name) 
+void SPsend(const dmatrix& x, const adstring& name)
 {
   int i1=x.rowmin();
   int ncol=x(i1).indexmax()-x(i1).indexmin()+1;
@@ -120,9 +120,9 @@ void SPsend(const dmatrix& x, const adstring& name)
   check_when_finished();
 }
 
-void SPreceive(const dvector& _x, const adstring& name) 
+void SPreceive(const dvector& _x, const adstring& name)
 {
-  ADUNCONST(dvector,x) 
+  ADUNCONST(dvector,x)
 
   //adstring command = name + adstring(" <- scan(\"c:\\\\tmp.spl\")");
   // tell splus to send the size of the vector
@@ -145,13 +145,12 @@ void SPreceive(const dvector& _x, const adstring& name)
     open_the_file_when_finished(pifs,waitflag,numwaits);
   }
   while (waitflag && numwaits<5);
-  
+
   if (pifs && !(!(*pifs)) )
   {
     int n;
     (*pifs) >> n;
-     
-    
+
     // check to see if this object is allocated;
     if (!x)
     {
@@ -182,24 +181,23 @@ void SPreceive(const dvector& _x, const adstring& name)
     pifs=NULL;
   }
   //DeleteFile("c:\\tmp.spl");
-  
 }
 
-void SPreceive(const named_dvector& _x) 
+void SPreceive(const named_dvector& _x)
 {
-  ADUNCONST(named_dvector,x) 
+  ADUNCONST(named_dvector,x)
   SPreceive(x,adstring(x.label().mychar()));
 }
 
-void SPreceive(const named_dvar_vector& _x) 
+void SPreceive(const named_dvar_vector& _x)
 {
-  ADUNCONST(named_dvar_vector,x) 
+  ADUNCONST(named_dvar_vector,x)
   SPreceive(x,adstring(x.label().mychar()));
 }
 
-void SPreceive(const dvar_vector& _x,const adstring& name) 
+void SPreceive(const dvar_vector& _x,const adstring& name)
 {
-  ADUNCONST(dvar_vector,x) 
+  ADUNCONST(dvar_vector,x)
 
   //adstring command = name + adstring(" <- scan(\"c:\\\\tmp.spl\")");
   // tell splus to send the size of the vector
@@ -222,13 +220,12 @@ void SPreceive(const dvar_vector& _x,const adstring& name)
     open_the_file_when_finished(pifs,waitflag,numwaits);
   }
   while (waitflag && numwaits<5);
-  
+
   if (pifs && !(!(*pifs)) )
   {
     int n;
     (*pifs) >> n;
-     
-    
+
     // check to see if this object is allocated;
     if (!x)
     {
@@ -259,17 +256,16 @@ void SPreceive(const dvar_vector& _x,const adstring& name)
     pifs=NULL;
   }
   //DeleteFile("c:\\tmp.spl");
-  
 }
 
 void SPreceive(const dmatrix& _x, const adstring& name);
-void SPreceive(const named_dmatrix& _x) 
+void SPreceive(const named_dmatrix& _x)
 {
-  ADUNCONST(named_dmatrix,x) 
+  ADUNCONST(named_dmatrix,x)
   SPreceive(x,adstring(x.label().mychar()));
 }
 
-void SPreceive(const dmatrix& _x, const adstring& name) 
+void SPreceive(const dmatrix& _x, const adstring& name)
 {
   ADUNCONST(dmatrix,x)
 
@@ -292,7 +288,7 @@ void SPreceive(const dmatrix& _x, const adstring& name)
     + adstring("),\"c:\\\\tmp.spl\", append=T)");
 
   //command = adstring(" write(t(") + name
-  //  + adstring("),\"c:\\\\tmp.spl\",ncol=ncol(") + name 
+  //  + adstring("),\"c:\\\\tmp.spl\",ncol=ncol(") + name
   //  + adstring("),append=T)");
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
   Sleep(200);
@@ -305,22 +301,21 @@ void SPreceive(const dmatrix& _x, const adstring& name)
     open_the_file_when_finished(pifs,waitflag,numwaits);
   }
   while (waitflag && numwaits<5);
-  
+
   if (pifs && !(!(*pifs)) )
   {
     int nrows;
     int ncols;
     (*pifs) >> nrows;
     (*pifs) >> ncols;
-     
-    
+
     // check to see if this object is allocated;
     if (!x)
     {
       x.allocate(1,nrows,1,ncols);
       if (!(*pifs))
       {
-        cerr << "Error state before reading dmatrix from temporary file" 
+        cerr << "Error state before reading dmatrix from temporary file"
              << endl;
       }
       (*pifs) >> x;
@@ -351,18 +346,17 @@ void SPreceive(const dmatrix& _x, const adstring& name)
     pifs=NULL;
   }
   DeleteFile("c:\\tmp.spl");
-  
 }
 
 void SPreceive(const dvar_matrix& x, const adstring& name);
 
-void SPreceive(const named_dvar_matrix& _x) 
+void SPreceive(const named_dvar_matrix& _x)
 {
-  ADUNCONST(named_dvar_matrix,x) 
-  SPreceive(x,adstring(x.label().mychar())); 
+  ADUNCONST(named_dvar_matrix,x)
+  SPreceive(x,adstring(x.label().mychar()));
 }
 
-void SPreceive(const dvar_matrix& _x, const adstring& name) 
+void SPreceive(const dvar_matrix& _x, const adstring& name)
 {
   ADUNCONST(dvar_matrix,x)
 
@@ -385,7 +379,7 @@ void SPreceive(const dvar_matrix& _x, const adstring& name)
     + adstring("),\"c:\\\\tmp.spl\", append=T)");
 
   //command = adstring(" write(t(") + name
-  //  + adstring("),\"c:\\\\tmp.spl\",ncol=ncol(") + name 
+  //  + adstring("),\"c:\\\\tmp.spl\",ncol=ncol(") + name
   //  + adstring("),append=T)");
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
   Sleep(200);
@@ -398,22 +392,21 @@ void SPreceive(const dvar_matrix& _x, const adstring& name)
     open_the_file_when_finished(pifs,waitflag,numwaits);
   }
   while (waitflag && numwaits<5);
-  
+
   if (pifs && !(!(*pifs)) )
   {
     int nrows;
     int ncols;
     (*pifs) >> nrows;
     (*pifs) >> ncols;
-     
-    
+
     // check to see if this object is allocated;
     if (!x)
     {
       x.allocate(1,nrows,1,ncols);
       if (!(*pifs))
       {
-        cerr << "Error state before reading dmatrix from temporary file" 
+        cerr << "Error state before reading dmatrix from temporary file"
              << endl;
       }
       (*pifs) >> x;
@@ -444,32 +437,31 @@ void SPreceive(const dvar_matrix& _x, const adstring& name)
     pifs=NULL;
   }
   DeleteFile("c:\\tmp.spl");
-  
 }
 
 void SPreceive(const named_dvariable& _x)
 {
   ADUNCONST(named_dvariable,x)
-  SPreceive(value(x),adstring(x.label().mychar())); 
+  SPreceive(value(x),adstring(x.label().mychar()));
 }
 
 void SPreceive(const data_number& _x)
 {
   ADUNCONST(data_number,x)
-  SPreceive(x.value(),adstring(x.label().mychar())); 
+  SPreceive(x.value(),adstring(x.label().mychar()));
 }
 
-void SPreceive(const dvariable& x, const adstring& name) 
+void SPreceive(const dvariable& x, const adstring& name)
 {
-  SPreceive(value(x),name); 
+  SPreceive(value(x),name);
 }
 
-void SPreceive(const double& x, const adstring& name) 
+void SPreceive(const double& x, const adstring& name)
 {
 
   //adstring command = name + adstring(" <- scan(\"c:\\\\tmp.spl\")");
   // tell splus to send the size of the vector
-  adstring command = adstring(" write(") + name 
+  adstring command = adstring(" write(") + name
     + adstring(",\"c:\\\\tmp.spl\")");
 
   SPexecute((unsigned char*)command,DDEspclient::get_cstatus());
@@ -486,11 +478,10 @@ void SPreceive(const double& x, const adstring& name)
     open_the_file_when_finished(pifs,waitflag,numwaits);
   }
   while (waitflag && numwaits<5);
-  
+
   if (pifs && !(!(*pifs)) )
   {
     (*pifs) >> (double&)x;
-     
   }
   else
   {
@@ -505,19 +496,17 @@ void SPreceive(const double& x, const adstring& name)
   DeleteFile("c:\\tmp.spl");
 }
 
-
-
-void SPsend(const named_dvector& _x) 
+void SPsend(const named_dvector& _x)
 {
-  ADUNCONST(named_dvector,x) 
+  ADUNCONST(named_dvector,x)
   SPsend(x,adstring(x.label().mychar()));
-} 
+}
 
-void SPsend(const named_dvar_vector& _x) 
+void SPsend(const named_dvar_vector& _x)
 {
-  ADUNCONST(named_dvar_vector,x) 
+  ADUNCONST(named_dvar_vector,x)
    SPsend(value(x),adstring(x.label().mychar()));
-} 
+}
 
 void SPplot(const dvector& x, const adstring& name)
 {
@@ -539,10 +528,10 @@ void SPplot(const dvector& x, const adstring& name)
   Sleep(500);
 }
 
-void SPplot(const named_dvector& _x) 
+void SPplot(const named_dvector& _x)
 {
-  ADUNCONST(named_dvector,x) 
-  SPplot(x,adstring(x.label().mychar())); 
+  ADUNCONST(named_dvector,x)
+  SPplot(x,adstring(x.label().mychar()));
 }
 
 void printInitializestatus(int status)
@@ -599,14 +588,13 @@ HDDEDATA CALLBACK mycallback(       //DdeCallback(
 	)
 
 {
-  
   return (HDDEDATA) NULL;
 }
 
 #endif // # if defined(STUPID_DDL_FUNCTIONS)
 
 void check_when_finished(void)
-{ 
+{
   // tell us when splus is finished writing the matrix
   DeleteFile("c:\\tmp1.spl");
 
@@ -646,9 +634,8 @@ void check_when_finished(void)
   DeleteFile("c:\\tmp1.spl");
 }
 
-
 void open_the_file_when_finished(ifstream*& pifs, const int& _waitflag, const int& _numwaits)
-{ 
+{
   int& waitflag=(int&) _waitflag;
   int& numwaits=(int&) _numwaits;
   // tell us when splus is finished writing the matrix
@@ -704,7 +691,7 @@ void open_the_file_when_finished(ifstream*& pifs, const int& _waitflag, const in
 }
 
 void open_the_file(ifstream*& pifs, const int& _waitflag, const int& _numwaits)
-{ 
+{
   int& waitflag=(int&) _waitflag;
   int& numwaits=(int&) _numwaits;
   int nn=0;

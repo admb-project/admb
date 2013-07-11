@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #  include <admodel.h>
 int function_minimizer::random_effects_flag=0;
@@ -25,7 +25,7 @@ int function_minimizer::set_hessian_type(int n)
 {
   if (n<0 || n>4)
   {
-    cerr << "Illegal value of " << n 
+    cerr << "Illegal value of " << n
       << " in function_minimizer::set_hessian_type(int) " << endl;
     ad_exit(1);
   }
@@ -69,7 +69,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       fmc.iprint=iprint;
     }
     else
-    {   
+    {
       int jj=atoi(ad_comm::argv[on1+1]);
       fmc.dcheck_flag=jj;
     }
@@ -83,7 +83,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       fmc.iprint=iprint;
     }
     else
-    {   
+    {
       int jj=atoi(ad_comm::argv[on1+1]);
       fmc.iprint=jj;
     }
@@ -115,7 +115,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
       initial_params::current_phase);
     fmc.maxfn= (int) maximum_function_evaluations(ind);
   }
-  
+
   //if (!random_effects_flag)
   {
     dvariable xf=initial_params::reset(dvar_vector(x));

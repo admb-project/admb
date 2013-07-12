@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -25,7 +25,7 @@ void laplace_approximation_calculator::
   df1b2_gradlist::set_no_derivatives();
   df1b2variable::passnumber=1;
   df1b2_gradcalc1();
-   
+
   init_df1b2vector & locy= *funnel_init_var::py;
   imatrix& list=*funnel_init_var::plist;
   int num_local_re=0;
@@ -37,17 +37,16 @@ void laplace_approximation_calculator::
 
   for (i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
-    if (list(i,1)>xsize) 
+    if (list(i,1)>xsize)
     {
       lre_index(++num_local_re)=i;
     }
-    else if (list(i,1)>0) 
+    else if (list(i,1)>0)
     {
       lfe_index(++num_local_fe)=i;
     }
   }
- 
-  
+
   if (num_local_re > 0)
   {
     int j;
@@ -97,7 +96,7 @@ void laplace_approximation_calculator::
             int i2=list(lrei,2);
             int j1=list(lrej,1)-xsize;
             int j2=list(lrej,2);
-            
+
             if (i1<=j1)
             {
               sparse_count++;
@@ -109,7 +108,7 @@ void laplace_approximation_calculator::
       }
     }
   }
-  
+
   // Now the adjoint code
 
   if (num_local_re > 0)
@@ -127,7 +126,7 @@ void laplace_approximation_calculator::
           int i2=list(lrei,2);
           int j1=list(lrej,1)-xsize;
           int j2=list(lrej,2);
-          if (i1>=j1) 
+          if (i1>=j1)
           {
             //(*bHess)(i1,j1)+=locy(i2).u_bar[j2-1];
             locy(i2).get_u_bar_tilde()[j2-1]=(*bHessadjoint)(i1,j1);
@@ -158,7 +157,7 @@ void laplace_approximation_calculator::
       }
       else
       {
-        dcompressed_triplet * vsparse_triplet_adjoint = 
+        dcompressed_triplet * vsparse_triplet_adjoint =
           pmin->lapprox->vsparse_triplet_adjoint;
         for (i=1;i<=num_local_re;i++)
         {
@@ -188,13 +187,13 @@ void laplace_approximation_calculator::
       }
     }
   }
-  
+
   df1b2variable::passnumber=2;
   df1b2_gradcalc1();
-  
+
   df1b2variable::passnumber=3;
   df1b2_gradcalc1();
-  
+
   f1b2gradlist->reset();
   f1b2gradlist->list.initialize();
   f1b2gradlist->list2.initialize();

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -83,7 +83,7 @@ void adpool::sanity_check(void * ptr)
     depth++;
     if (p == ptr)
     {
-      cerr << "both allocated and unallocated memory at entry " 
+      cerr << "both allocated and unallocated memory at entry "
            << depth << endl;
       break;
     }
@@ -116,7 +116,7 @@ void adpool::write_pointers(int mmin,int mmax)
  */
 void * adpool::alloc(void)
 {
-  if (!head) 
+  if (!head)
   {
     grow();
     //cout << "depth = " << depth_check() << endl;
@@ -240,7 +240,7 @@ void adpool::free(void * b)
      {
        cout << "trying to deallocate allocated object " << endl;
      }
-   }  
+   }
 #endif
   //cout << "freeing " << b << endl;
   link * p = (link*) b;
@@ -283,12 +283,12 @@ adpool::adpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
  * Description not yet available.
  * \param
  */
-adpool::adpool(void) 
+adpool::adpool(void)
 {
   num_adpools++;
   int i1=sizeof(twointsandptr);
   int i2=2*sizeof(double);
-  if (i1>i2) 
+  if (i1>i2)
   {
     cout << "Error because sizeof(twointsandptr)>2*sizeof(double)" << endl;
     ad_exit(1);
@@ -403,7 +403,7 @@ void adpool::grow(void)
     maxaddress[num_chunks]=(real_start+chunk_size-1);
   }
 #endif
-  if (last_chunk == 0 ) 
+  if (last_chunk == 0 )
   {
     last_chunk=real_start;
     *(char**) real_start=0;
@@ -413,7 +413,7 @@ void adpool::grow(void)
     *(char**) real_start=last_chunk;
     last_chunk=real_start;
   }
-  
+
 #if defined(__CHECK_MEMORY__)
   if (nalloc>pvalues_size-1)
   {
@@ -447,7 +447,7 @@ void adpool::clean(void)
          << " you must set the unit size " << endl;
   }
   //const int overhead = 12;
-  
+
   double *ptr=first;
   for (int i=1;i<=nelem;i++)
   {

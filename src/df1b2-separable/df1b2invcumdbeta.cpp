@@ -327,7 +327,7 @@
     }
     return h;
   }
-  
+
 static df3_three_variable gammlnguts(const df3_three_variable& _z)
 {
   df3_three_variable x;

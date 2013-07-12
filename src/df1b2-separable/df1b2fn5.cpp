@@ -24,7 +24,7 @@ void ad_read_pass1_initialize(void);
  * Description not yet available.
  * \param
  */
-void df1b2variable::operator = (double d) 
+void df1b2variable::operator = (double d)
 {
   initialize();
   //ptr[blocksize-1]=8219.4;
@@ -42,22 +42,22 @@ void df1b2variable::operator = (double d)
  * Description not yet available.
  * \param
  */
-df1b2variable::df1b2variable(double d) 
+df1b2variable::df1b2variable(double d)
 {
   // vectors are all 1,...,nvar
   ptr = (double*) pool->alloc();
-  //AD_ALLOCATE(ptr,double,blocksize,df1b2variable) 
+  //AD_ALLOCATE(ptr,double,blocksize,df1b2variable)
   initialize();
   double * block=ptr;
   //block[blocksize-1]=8219.4;
   get_ind_index()=-1;
   ncopies=&(((twointsandptr*)block)->ncopies);
   *ncopies=0;
-  u=block+=2;   
+  u=block+=2;
   u_dot=block+=1;  // u has size 1
-  u_bar=block+=nvar;  // u_dot has size  nvar        
-  u_dot_bar=block+=nvar;  // u_bar has size  nvar                     
-  u_tilde=block+=nvar; // u_dot_bar has size  nvar  
+  u_bar=block+=nvar;  // u_dot has size  nvar
+  u_dot_bar=block+=nvar;  // u_bar has size  nvar
+  u_tilde=block+=nvar; // u_dot_bar has size  nvar
   u_dot_tilde=block+=1;  // u_tilde has size 1
   u_bar_tilde=block+=nvar; // u_dot_tilde has size nvar
   u_dot_bar_tilde=block+=nvar;  // u_bar_tilde has size nvar
@@ -70,7 +70,7 @@ df1b2variable::df1b2variable(double d)
  * Description not yet available.
  * \param
  */
-df1b2variable::df1b2variable(void) 
+df1b2variable::df1b2variable(void)
 {
   if (!df1b2variable::noallocate)
   {
@@ -81,11 +81,11 @@ df1b2variable::df1b2variable(void)
     ptr=0;
 #if defined(SAFE_ALL)
   ncopies=0;
-  u=0;  
-  u_dot=0;  
-  u_bar=0;  
-  u_dot_bar=0; 
-  u_tilde=0; 
+  u=0;
+  u_dot=0;
+  u_bar=0;
+  u_dot_bar=0;
+  u_tilde=0;
   u_dot_tilde=0;
   u_bar_tilde=0;
   u_dot_bar_tilde=0;
@@ -97,16 +97,16 @@ df1b2variable::df1b2variable(void)
  * Description not yet available.
  * \param
  */
-df1b2variable::df1b2variable(const newadkludge* z) 
+df1b2variable::df1b2variable(const newadkludge* z)
 {
   ptr=0;
 #if defined(SAFE_ALL)
   ncopies=0;
-  u=0;  
-  u_dot=0;  
-  u_bar=0;  
-  u_dot_bar=0; 
-  u_tilde=0; 
+  u=0;
+  u_dot=0;
+  u_bar=0;
+  u_dot_bar=0;
+  u_tilde=0;
   u_dot_tilde=0;
   u_bar_tilde=0;
   u_dot_bar_tilde=0;
@@ -117,23 +117,23 @@ df1b2variable::df1b2variable(const newadkludge* z)
  * Description not yet available.
  * \param
  */
-void df1b2variable::allocate(void) 
+void df1b2variable::allocate(void)
 {
   // vectors are all 1,...,nvar
   ptr = (double*) pool->alloc();
   //cout << *(int*)ptr << endl;
-  //AD_ALLOCATE(ptr,double,blocksize,df1b2variable) 
+  //AD_ALLOCATE(ptr,double,blocksize,df1b2variable)
   initialize();
   double * block=ptr;
   //block[blocksize-1]=8219.4;
   get_ind_index()=-1;
   ncopies=&(((twointsandptr*)block)->ncopies);
   *ncopies=0;
-  u=block+=2;   
+  u=block+=2;
   u_dot=block+=1;  // u has size 1
-  u_bar=block+=nvar;  // u_dot has size  nvar        
-  u_dot_bar=block+=nvar;  // u_bar has size  nvar                     
-  u_tilde=block+=nvar; // u_dot_bar has size  nvar  
+  u_bar=block+=nvar;  // u_dot has size  nvar
+  u_dot_bar=block+=nvar;  // u_bar has size  nvar
+  u_tilde=block+=nvar; // u_dot_bar has size  nvar
   u_dot_tilde=block+=1;  // u_tilde has size 1
   u_bar_tilde=block+=nvar; // u_dot_tilde has size nvar
   u_dot_bar_tilde=block+=nvar;  // u_bar_tilde has size nvar
@@ -149,18 +149,18 @@ df1b2variable::df1b2variable(adkludge1 * adkludgexxx)
 {
   // vectors are all 1,...,nvar
   ptr = (double*) pool->alloc();
-  //AD_ALLOCATE(ptr,double,blocksize,df1b2variable) 
+  //AD_ALLOCATE(ptr,double,blocksize,df1b2variable)
   initialize();
   double * block=ptr;
   block[blocksize-1]=8219.4;
   get_ind_index()=-1;
   ncopies=&(((twointsandptr*)block)->ncopies);
   *ncopies=0;
-  u=block+=2;   
+  u=block+=2;
   u_dot=block+=1;  // u has size 1
-  u_bar=block+=nvar;  // u_dot has size  nvar        
-  u_dot_bar=block+=nvar;  // u_bar has size  nvar                     
-  u_tilde=block+=nvar; // u_dot_bar has size  nvar  
+  u_bar=block+=nvar;  // u_dot has size  nvar
+  u_dot_bar=block+=nvar;  // u_bar has size  nvar
+  u_tilde=block+=nvar; // u_dot_bar has size  nvar
   u_dot_tilde=block+=1;  // u_tilde has size 1
   u_bar_tilde=block+=nvar; // u_dot_tilde has size nvar
   u_dot_bar_tilde=block+=nvar;  // u_bar_tilde has size nvar
@@ -168,7 +168,7 @@ df1b2variable::df1b2variable(adkludge1 * adkludgexxx)
    // f1b2gradlist->write_pass1_initialize(this);
 }
 
-//int df1b2_gradlist::write_pass1_initialize(const df1b2variable * px, 
+//int df1b2_gradlist::write_pass1_initialize(const df1b2variable * px,
 //  df1b2variable * pz)
 
 /**
@@ -179,7 +179,7 @@ int df1b2_gradlist::write_pass1_initialize(df1b2variable * pz)
 {
   char * pg=0;
   ncount++;
- 
+
 #if defined(CHECK_COUNT)
   if (ncount >= ncount_check)
     ncount_checker(ncount,ncount_check);
@@ -195,7 +195,7 @@ int df1b2_gradlist::write_pass1_initialize(df1b2variable * pz)
 #endif
   list.check_buffer_size(total_bytes);
   void * tmpptr=list.bptr;
-  
+
 #if defined(SAFE_ALL)
   memcpy(list,ids,slen);
 #endif
@@ -232,7 +232,7 @@ void ad_read_pass1_initialize(void)
     read_pass1_init_3();
     break;
   default:
-    cerr << "illegal value for df1b2variable::pass = " 
+    cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
     exit(1);
   }
@@ -250,7 +250,7 @@ void checkidentiferstring(const char * ids,test_smartlist& list)
   if (ss)
   {
     cerr << "Error in string identifer in list value should be " << ids
-     << endl << " it appears to be " << s[0] << s[1] << s[2] << s[3] 
+     << endl << " it appears to be " << s[0] << s[1] << s[2] << s[3]
      << " ... " << endl;
     ad_exit(1);
   }
@@ -267,8 +267,8 @@ void read_pass1_init_1(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
-  test_smartlist& list=f1b2gradlist->list; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
+  test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
@@ -289,7 +289,7 @@ void read_pass1_init_1(void)
   list.bptr+=sizeof(char*);
   list.restoreposition(); // save pointer to beginning of record;
   //int i;
-  
+
   // Do first reverse paSS calculations
   // ****************************************************************
   // turn this off if no third derivatives are calculated
@@ -297,8 +297,8 @@ void read_pass1_init_1(void)
   // {
   // save for second reverse pass
   // save identifier 1
-     fixed_smartlist2& nlist2=f1b2gradlist->nlist2; 
-     test_smartlist& list2=f1b2gradlist->list2; 
+     fixed_smartlist2& nlist2=f1b2gradlist->nlist2;
+     test_smartlist& list2=f1b2gradlist->list2;
 
      int total_bytes=2*nvar*sizeof(double);
 
@@ -323,8 +323,8 @@ void read_pass1_init_1(void)
   // }
   //
   // ****************************************************************
- 
-  // This should *NEVER* be used (I think) 
+
+  // This should *NEVER* be used (I think)
  /*
   for (i=0;i<nvar;i++)
   {
@@ -335,7 +335,7 @@ void read_pass1_init_1(void)
     pz->u_dot_bar[i]=0;
   }
   */
- 
+
 }
 
 /**
@@ -350,7 +350,7 @@ void read_pass1_init_2(void)
   // list 1
   //
   int nvar=df1b2variable::nvar;
-  test_smartlist & list=f1b2gradlist->list; 
+  test_smartlist & list=f1b2gradlist->list;
 
   int total_bytes=sizeof(df1b2_header)+sizeof(char *);
 // string identifier debug stuff
@@ -363,7 +363,7 @@ void read_pass1_init_2(void)
   list.check_buffer_size(total_bytes);
 
   list.saveposition(); // save pointer to beginning of record;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
@@ -371,8 +371,8 @@ void read_pass1_init_2(void)
   //
   // list 2
   //
-  test_smartlist & list2=f1b2gradlist->list2; 
-  fixed_smartlist2 & nlist2=f1b2gradlist->nlist2; 
+  test_smartlist & list2=f1b2gradlist->list2;
+  fixed_smartlist2 & nlist2=f1b2gradlist->nlist2;
   // get record size
   int num_bytes2=*nlist2.bptr;
   --nlist2;
@@ -396,10 +396,8 @@ void read_pass1_init_2(void)
   list.bptr+=sizeof(char*);
   list.restoreposition(num_bytes); // save pointer to beginning of record;
 
-  
   double * zbar;
   double * zdotbar;
-
 
   zbar=(double*)list2.bptr;
   zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
@@ -410,16 +408,16 @@ void read_pass1_init_2(void)
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
   int i;
- 
+
   // !!!! oct31 02
-  
+
   *pz->get_u_tilde()=0.0;
   for (i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
   }
-  
+
 }
 
 /**
@@ -432,8 +430,8 @@ void read_pass1_init_3(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
-  test_smartlist& list=f1b2gradlist->list; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
+  test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;

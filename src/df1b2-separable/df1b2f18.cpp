@@ -50,8 +50,8 @@ void df1b2_init_matrix::set_value(const dvector& x,const int& _ii)
   int rmax=indexmax();
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=(*this)(i).indexmin(); 
-    int cmax=(*this)(i).indexmax(); 
+    int cmin=(*this)(i).indexmin();
+    int cmax=(*this)(i).indexmax();
     for (int j=cmin;j<=cmax;j++)
     {
       (*this)(i,j) = (x(ii++));

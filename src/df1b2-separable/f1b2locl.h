@@ -3,28 +3,28 @@
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- * 
+ *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  *
  * License:
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -88,7 +88,7 @@ public:
   virtual int nvar_calc(void)=0;
 
   static void reset(init_df1b2vector& x);
-    
+
   static void allocate_all(void);
   static int nvarcalc_all(void);
 };
@@ -97,7 +97,7 @@ public:
  * Description not yet available.
  * \param
  */
-class local_init_df1b2variable : public local_init_var, public df1b2variable 
+class local_init_df1b2variable : public local_init_var, public df1b2variable
 {
 public:
   const df1b2variable * p;
@@ -108,11 +108,11 @@ public:
   int ind_index;
   int nvar_calc(void){return 1;}
   virtual void set_dot(int ii){*(get_u_dot()+ii)=1;ii++;}
-  local_init_df1b2variable(const df1b2_init_number & x); 
-  local_init_df1b2variable(const df1b2variable & x); 
-  local_init_df1b2variable(double xu,double * xdot); 
-  local_init_df1b2variable(void); 
-  local_init_df1b2variable(const random_effects_bounded_vector_info&); 
+  local_init_df1b2variable(const df1b2_init_number & x);
+  local_init_df1b2variable(const df1b2variable & x);
+  local_init_df1b2variable(double xu,double * xdot);
+  local_init_df1b2variable(void);
+  local_init_df1b2variable(const random_effects_bounded_vector_info&);
   virtual void allocate(void);
   virtual void allocate(const df1b2variable&);
   virtual void preallocate(const df1b2variable&);
@@ -129,8 +129,8 @@ public:
  * Description not yet available.
  * \param
  */
-class local_init_bounded_df1b2vector : public local_init_var, 
-  public df1b2vector 
+class local_init_bounded_df1b2vector : public local_init_var,
+  public df1b2vector
 {
   const df1b2vector * p;
 public:
@@ -149,7 +149,7 @@ public:
  * Description not yet available.
  * \param
  */
-class local_init_df1b2vector : public local_init_var, public df1b2vector 
+class local_init_df1b2vector : public local_init_var, public df1b2vector
 {
   const df1b2vector * p;
 public:
@@ -202,7 +202,7 @@ public:
   virtual int nvar_calc(void)=0;
 
   //static void reset(dep_df1b2vector& x);
-    
+
   static void deallocate_all(void);
   static void allocate_all(void);
   static int nvarcalc_all(void);
@@ -212,7 +212,7 @@ public:
  * Description not yet available.
  * \param
  */
-class local_dep_df1b2variable : public local_dep_var, public df1b2variable 
+class local_dep_df1b2variable : public local_dep_var, public df1b2variable
 {
 public:
   const df1b2variable * p;
@@ -224,12 +224,12 @@ public:
   double xu;
   int ind_index;
   int nvar_calc(void){return 1;}
-  //local_dep_df1b2variable(const df1b2_dep_number & x); 
-  local_dep_df1b2variable(const df1b2variable & x); 
+  //local_dep_df1b2variable(const df1b2_dep_number & x);
+  local_dep_df1b2variable(const df1b2variable & x);
   local_dep_df1b2variable(void);
   local_dep_df1b2variable(double * xdot,double * pxdot);
-  //local_dep_df1b2variable(const random_effects_bounded_vector_info&); 
-  local_dep_df1b2variable&  operator = (const df1b2variable&);  
+  //local_dep_df1b2variable(const random_effects_bounded_vector_info&);
+  local_dep_df1b2variable&  operator = (const df1b2variable&);
   virtual void allocate(void);
   virtual void deallocate(void);
   //virtual void allocate(const df1b2variable&);
@@ -246,7 +246,7 @@ public:
  * Description not yet available.
  * \param
  */
-class local_dep_df1b2vector : public local_dep_var, public df1b2vector 
+class local_dep_df1b2vector : public local_dep_var, public df1b2vector
 {
   const df1b2vector * p;
 public:
@@ -294,8 +294,8 @@ public:
  * Description not yet available.
  * \param
  */
-class local_init_pass1_df1b2variable : public local_init_pass1_var, 
-  public df1b2variable 
+class local_init_pass1_df1b2variable : public local_init_pass1_var,
+  public df1b2variable
 {
   double xu;
   double * xudot;
@@ -305,7 +305,5 @@ public:
   void allocate(void);
   int nvar_calc(void){return 1;}
   local_init_pass1_df1b2variable(double _xu,double* _xudot);
- 
 };
-
 #endif  //  #if !defined(__DF1B2FNL__)

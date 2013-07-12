@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -11,7 +11,7 @@
 #define HOME_VERSION
 #include "df1b2fun.h"
 
-/*/** Log negative bionomial density; random effects objects. 
+/*/** Log negative bionomial density; random effects objects.
  A local parameter r is used to make it robust.
  \f$ r=\frac{\mu}{\tau-1.0} \f$
  \ingroup PDF
@@ -21,7 +21,7 @@
  \return Log of NegativeBinomial density. \f$ log(\Gamma(x+r))-log(\Gamma(r))-log(x!)+rlog(r)+xlog(\mu)-(r+x)log(r+\mu) \f$
  */
 /*
-  df1b2variable log_negbinomial_density(double x,const df1b2variable& mu, 
+  df1b2variable log_negbinomial_density(double x,const df1b2variable& mu,
     const df1b2variable& tau)
   {
     if (value(tau)<=1.0)
@@ -46,8 +46,8 @@
  \param mu
  \param tau
  \return NegativeBinomial density. \f$ \frac{\Gamma(x+r)}{\Gamma(r)x!}(\frac{r}{r+\mu})^r(\frac{\mu}{r+\mu})^x \f$
- */ 
-df1b2variable negbinomial_density(double x,const df1b2variable& mu, 
+ */
+df1b2variable negbinomial_density(double x,const df1b2variable& mu,
     const df1b2variable& tau)
   {
     if (value(tau)-1<0.0)

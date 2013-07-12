@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -25,8 +25,8 @@
  * Description not yet available.
  * \param
  */
- df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator [] (int i) 
- { 
+ df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator [] (int i)
+ {
    if (i < indexmin() || i > indexmax())
    {
      ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator [] (int i)", indexmin(), indexmax(), i);
@@ -38,8 +38,8 @@
  * Description not yet available.
  * \param
  */
- df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator () (int i) 
- { 
+ df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator () (int i)
+ {
    if (i < indexmin() || i > indexmax())
    {
      ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator () (int i)", indexmin(), indexmax(), i);
@@ -136,7 +136,7 @@ void df1b2_init_number_vector::set_scalefactor(const dvector& s)
   int mmax=indexmax();
   if (s.indexmin()!=mmin || s.indexmax() != mmax)
   {
-    cerr << "non matching vector bounds in" 
+    cerr << "non matching vector bounds in"
      " init_number_vector::set_scalefactor" << endl;
     ad_exit(1);
   }
@@ -174,7 +174,7 @@ void df1b2_init_bounded_number_vector::set_scalefactor(const dvector& s)
   int mmax=indexmax();
   if (s.indexmin()!=mmin || s.indexmax() != mmax)
   {
-    cerr << "non matching vector bounds in" 
+    cerr << "non matching vector bounds in"
      " init_bounded_number_vector::set_scalefactor" << endl;
     ad_exit(1);
   }
@@ -205,8 +205,8 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
  * Description not yet available.
  * \param
  */
- df1b2_init_number& df1b2_init_number_vector::operator [] (int i) 
- { 
+ df1b2_init_number& df1b2_init_number_vector::operator [] (int i)
+ {
    if (i < indexmin() || i > indexmax())
    {
      ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_number& df1b2_init_number_vector::operator [] (int i)", indexmin(), indexmax(), i);
@@ -218,8 +218,8 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
  * Description not yet available.
  * \param
  */
- df1b2_init_number& df1b2_init_number_vector::operator () (int i) 
- { 
+ df1b2_init_number& df1b2_init_number_vector::operator () (int i)
+ {
    if (i < indexmin() || i > indexmax())
    {
      ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_number& df1b2_init_number_vector::operator () (int i)", indexmin(), indexmax(), i);

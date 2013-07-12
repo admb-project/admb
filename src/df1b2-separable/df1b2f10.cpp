@@ -16,7 +16,7 @@
  */
 void test_smartlist::reset(void)
 {
-  bptr=buffer; 
+  bptr=buffer;
   eof_flag=0;
   lseek(fp, 0L, SEEK_SET);
   written_flag=0;
@@ -29,12 +29,12 @@ void xxx_yyy(df1b2variable * tmp){;}
  * Description not yet available.
  * \param
  */
-test_smartlist::test_smartlist(void) 
+test_smartlist::test_smartlist(void)
 {
   bufsize=0;
   buffer=0;
   true_buffer=0;
-  buffend=0; 
+  buffend=0;
   bptr=0;
   fp=-1;
 }
@@ -43,7 +43,7 @@ test_smartlist::test_smartlist(void)
  * Description not yet available.
  * \param
  */
-test_smartlist::test_smartlist(unsigned int _bufsize,const adstring& _filename) 
+test_smartlist::test_smartlist(unsigned int _bufsize,const adstring& _filename)
 {
   allocate(_bufsize,_filename);
 }
@@ -52,7 +52,7 @@ test_smartlist::test_smartlist(unsigned int _bufsize,const adstring& _filename)
  * Description not yet available.
  * \param
  */
-void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename) 
+void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
 {
   if (sizeof(char)>1)
   {
@@ -66,7 +66,7 @@ void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
   direction=0;
   bufsize=_bufsize;
   filename=_filename;
-  //AD_ALLOCATE(true_buffer,char,bufsize+2*sizeof(double),df1b2_gradlist) 
+  //AD_ALLOCATE(true_buffer,char,bufsize+2*sizeof(double),df1b2_gradlist)
   if ((true_buffer=new char[(bufsize+2)*sizeof(double) ])==0)
   {
     cerr << "Allocation error in df1b2_gradlist" << endl;
@@ -84,7 +84,7 @@ void test_smartlist::allocate(unsigned int _bufsize,const adstring& _filename)
                    O_BINARY, S_IREAD | S_IWRITE);
   if (fp == -1)
   {
-    cerr << "Error trying to open file " << filename 
+    cerr << "Error trying to open file " << filename
          << " in class test_smartlist " << endl;
     exit(1);
   }
@@ -122,7 +122,7 @@ void test_smartlist::rewind(void)
     if (nbytes>bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
-       " the buffer it was created from " << endl 
+       " the buffer it was created from " << endl
         << " buffer size is " << bufsize << " record size is supposedly "
         << nbytes << endl;
     }
@@ -217,14 +217,14 @@ void test_smartlist::write_buffer(void)
     written_flag=1;
     // get the current file position
     off_t pos=lseek(fp,0L,SEEK_CUR);
-  
+
     // write the size of the next record into the file
     ::write(fp,&nbytes,sizeof(int));
-  
+
     // write the record into the file
     int nw=::write(fp,buffer,nbytes);
     //cout << "Number of bytes written " << nw << endl;
-    //cout << "buffer value = "; 
+    //cout << "buffer value = ";
     //for (int ii=0;ii<=25;ii++)
     //  cout << int (*(buffer+ii)) << " ";
     //cout << endl;
@@ -235,11 +235,11 @@ void test_smartlist::write_buffer(void)
     }
     // reset the pointer to the beginning of the buffer
     bptr=buffer;
-  
+
     // now write the previous file position into the file so we can back up
     // when we want to.
     ::write(fp,&pos,sizeof(off_t));
-  
+
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
   }
 }
@@ -254,7 +254,7 @@ void test_smartlist::read_buffer(void)
   unsigned int nbytes;
   if (!written_flag)
   {
-    if (direction ==-1) 
+    if (direction ==-1)
       eof_flag=-1;
     else
       eof_flag=1;
@@ -267,7 +267,7 @@ void test_smartlist::read_buffer(void)
       // of the record
       lseek(fp,long(-sizeof(off_t)),SEEK_CUR);
       read(fp,&pos,sizeof(off_t));
-      // back up to the beginning of the record (plus record size) 
+      // back up to the beginning of the record (plus record size)
       lseek(fp,pos,SEEK_SET);
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
@@ -276,7 +276,7 @@ void test_smartlist::read_buffer(void)
     if (nbytes>bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
-       " the buffer it was created from " << endl 
+       " the buffer it was created from " << endl
         << " buffer size is " << bufsize << " record size is supposedly "
         << nbytes << endl;
     }
@@ -303,7 +303,7 @@ void test_smartlist::read_buffer(void)
       lseek(fp,pos,SEEK_SET);
       // *(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
-    else  // we are going forward  
+    else  // we are going forward
     {
       // skip over file postion entry in file
       lseek(fp,long(sizeof(off_t)),SEEK_CUR);
@@ -347,7 +347,7 @@ void memcpy(void * p,const test_smartlist & _list,int nsize)
  * Description not yet available.
  * \param
  */
-void test_smartlist::operator -= (int n) 
+void test_smartlist::operator -= (int n)
 {
   if (bptr-n<buffer)
   {
@@ -373,7 +373,7 @@ void test_smartlist::operator -= (int n)
  * Description not yet available.
  * \param
  */
-void test_smartlist::operator += (int nsize) 
+void test_smartlist::operator += (int nsize)
 {
   if ( bptr+nsize-1 > buffend)
   {
@@ -401,7 +401,7 @@ void test_smartlist::operator += (int nsize)
  * Description not yet available.
  * \param
  */
-test_smartlist::~test_smartlist() 
+test_smartlist::~test_smartlist()
 {
   end_saved=0;
   eof_flag=0;
@@ -423,7 +423,7 @@ test_smartlist::~test_smartlist()
   {
     if (ad_comm::global_logfile)
     {
-      *ad_comm::global_logfile << "size of file " << filename 
+      *ad_comm::global_logfile << "size of file " << filename
         << " = " << pos << endl;
     }
   }

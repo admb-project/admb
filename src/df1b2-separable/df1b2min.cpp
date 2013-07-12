@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -27,7 +27,7 @@
     {
       *zd++ = *xd++ - *yd++;
     }
-    
+
     // WRITE WHATEVER ON TAPE
     if (!df1b2_gradlist::no_derivatives)
       f1b2gradlist->write_pass1_minus(&x,&y,&z);
@@ -40,7 +40,7 @@ void ad_read_pass2_minus(void);
  * Description not yet available.
  * \param
  */
- int df1b2_gradlist::write_pass1_minus(const df1b2variable * _px, 
+ int df1b2_gradlist::write_pass1_minus(const df1b2variable * _px,
    const df1b2variable * _py,df1b2variable * pz)
  {
    ADUNCONST(df1b2variable*,px)
@@ -80,7 +80,7 @@ void ad_read_pass2_minus(void);
 void read_pass2_1_minus(void);
 void read_pass2_2_minus(void);
 void read_pass2_3_minus(void);
-  
+
 /**
  * Description not yet available.
  * \param
@@ -99,7 +99,7 @@ void ad_read_pass2_minus(void)
     read_pass2_3_minus();
     break;
   default:
-    cerr << "illegal value for df1b2variable::pass = " 
+    cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
     exit(1);
   }
@@ -116,7 +116,7 @@ void read_pass2_1_minus(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  test_smartlist& list=f1b2gradlist->list; 
+  test_smartlist& list=f1b2gradlist->list;
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
@@ -133,7 +133,7 @@ void read_pass2_1_minus(void)
   df1b2_header * pz=(df1b2_header *) bptr;
 
   list.restoreposition(); // save pointer to beginning of record;
- 
+
   // ****************************************************************
   // turn this off if no third derivatives are calculated
   // if (!no_third_derivatives)
@@ -158,7 +158,7 @@ void read_pass2_1_minus(void)
   {
     py->u_dot_bar[i]-=pz->u_dot_bar[i];
   }
-  
+
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   for (i=0;i<nvar;i++)
   {
@@ -182,7 +182,7 @@ void read_pass2_2_minus(void)
   // list 1
   //
   int nvar=df1b2variable::nvar;
-  test_smartlist & list=f1b2gradlist->list; 
+  test_smartlist & list=f1b2gradlist->list;
 
   int total_bytes=3*sizeof(df1b2_header);
 // string identifier debug stuff
@@ -195,7 +195,7 @@ void read_pass2_2_minus(void)
 // end of string identifier debug stuff
 
   list.saveposition(); // save pointer to beginning of record;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
   // get record size
   int num_bytes=nlist.bptr->numbytes;
   // get info from tape1
@@ -208,7 +208,7 @@ void read_pass2_2_minus(void)
   list.bptr+=sizeof(df1b2_header);
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
-  
+
   double * x_bar_tilde=px->get_u_bar_tilde();
   double * x_dot_bar_tilde=px->get_u_dot_bar_tilde();
   double * y_bar_tilde=py->get_u_bar_tilde();
@@ -217,13 +217,13 @@ void read_pass2_2_minus(void)
   double * z_dot_bar_tilde=pz->get_u_dot_bar_tilde();
   // Do second "reverse-reverse" pass calculations
   int i;
-  
+
   for (i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
   }
-  
+
   // start with x and add y
   for (i=0;i<nvar;i++)
   {
@@ -257,8 +257,8 @@ void read_pass2_3_minus(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
-  test_smartlist& list=f1b2gradlist->list; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
+  test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
@@ -282,7 +282,7 @@ void read_pass2_3_minus(void)
 
   list.restoreposition(); // save pointer to beginning of record;
   int i;
-  
+
   *(px->u_tilde)+=*(pz->u_tilde);
   *(py->u_tilde)-=*(pz->u_tilde);
   for (i=0;i<nvar;i++)

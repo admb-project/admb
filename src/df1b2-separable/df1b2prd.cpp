@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  df1b2variable operator * (const df1b2variable& _x,const df1b2variable& _y) 
+  df1b2variable operator * (const df1b2variable& _x,const df1b2variable& _y)
   {
     ADUNCONST(df1b2variable,x)
     ADUNCONST(df1b2variable,y)
@@ -31,13 +31,12 @@
     {
       *zd++ = yu * *xd++ + xu * *yd++;
     }
-    
+
     // WRITE WHATEVER ON TAPE
     if (!df1b2_gradlist::no_derivatives)
       f1b2gradlist->write_pass1_prod(&x,&y,&z);
     return z;
   }
-
 
 void ad_read_pass2_prod(void);
 
@@ -45,7 +44,7 @@ void ad_read_pass2_prod(void);
  * Description not yet available.
  * \param
  */
- int df1b2_gradlist::write_pass1_prod(const df1b2variable * _px, 
+ int df1b2_gradlist::write_pass1_prod(const df1b2variable * _px,
    const df1b2variable * _py,df1b2variable * pz)
  {
    ADUNCONST(df1b2variable*,px)
@@ -113,7 +112,7 @@ void ad_read_pass2_prod(void)
     read_pass2_3_prod();
     break;
   default:
-    cerr << "illegal value for df1b2variable::pass = " 
+    cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
     exit(1);
   }
@@ -129,10 +128,10 @@ void read_pass2_1_prod(void)
   // and  forward for bptr2 and nbptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  //char * bptr=f1b2gradlist->bptr; 
-  //char * bptr2=f1b2gradlist2->bptr; 
+  //char * bptr=f1b2gradlist->bptr;
+  //char * bptr2=f1b2gradlist2->bptr;
   int nvar=df1b2variable::nvar;
-  test_smartlist& list=f1b2gradlist->list; 
+  test_smartlist& list=f1b2gradlist->list;
   //f1b2gradlist->nlist-=sizeof(int);
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
   list-=num_bytes;
@@ -163,7 +162,7 @@ void read_pass2_1_prod(void)
   double * ydot=(double*)bptr;
 
   list.restoreposition(); // save pointer to beginning of record;
- 
+
   // ****************************************************************
   // turn this off if no third derivatives are calculated
   // if (!no_third_derivatives)
@@ -204,14 +203,14 @@ void read_pass2_1_prod(void)
     //py->u_bar[i]+=(pf->df2)(xu,yu)*pz->u_bar[i];
     py->u_bar[i]+=xu*pz->u_bar[i];
   }
-  
+
   for (i=0;i<nvar;i++)
   {
     //px->u_bar[i]+=(pf->d2f11)(xu,yu)*xdot[i]*pz->u_dot_bar[i];
     //px->u_bar[i]+=(pf->d2f12)(xu,yu)*ydot[i]*pz->u_dot_bar[i];
     px->u_bar[i]+=ydot[i]*pz->u_dot_bar[i];
   }
-  
+
   for (i=0;i<nvar;i++)
   {
     //py->u_bar[i]+=(pf->d2f22)(xu,yu)*ydot[i]*pz->u_dot_bar[i];
@@ -252,7 +251,7 @@ void read_pass2_2_prod(void)
   // list 1
   //
   int nvar=df1b2variable::nvar;
-  test_smartlist & list=f1b2gradlist->list; 
+  test_smartlist & list=f1b2gradlist->list;
 
   //int total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
   //  +2*(nvar+1)*sizeof(double);
@@ -268,15 +267,15 @@ void read_pass2_2_prod(void)
 // end of string identifier debug stuff
 
   list.saveposition(); // save pointer to beginning of record;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
   //
   // list 2
   //
-  test_smartlist & list2=f1b2gradlist->list2; 
-  fixed_smartlist2 & nlist2=f1b2gradlist->nlist2; 
+  test_smartlist & list2=f1b2gradlist->list2;
+  fixed_smartlist2 & nlist2=f1b2gradlist->nlist2;
   // get record size
   int num_bytes2=*nlist2.bptr;
   --nlist2;
@@ -314,10 +313,9 @@ void read_pass2_2_prod(void)
   list.bptr+=nvar*sizeof(double);
   ydot=(double*)list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
-  
+
   double * zbar;
   double * zdotbar;
-
 
   zbar=(double*)list2.bptr;
   zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
@@ -336,13 +334,13 @@ void read_pass2_2_prod(void)
   // Do second "reverse-reverse" pass calculations
 
   int i;
-  
+
   for (i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
   }
-  
+
   // start with x and add y
   for (i=0;i<nvar;i++)
   {
@@ -429,8 +427,8 @@ void read_pass2_3_prod(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
-  test_smartlist& list=f1b2gradlist->list; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
+  test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
@@ -467,7 +465,7 @@ void read_pass2_3_prod(void)
   ydot=(double*)list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
   int i;
-  
+
   //*(px->u_tilde)+=(pf->df1)(xu,yu)* *(pz->u_tilde);
   //*(py->u_tilde)+=(pf->df2)(xu,yu)* *(pz->u_tilde);
   *(px->u_tilde)+=yu* *(pz->u_tilde);

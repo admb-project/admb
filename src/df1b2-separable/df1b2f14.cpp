@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-fixed_smartlist2::fixed_smartlist2(void) 
+fixed_smartlist2::fixed_smartlist2(void)
 {
   nentries=0;
   end_saved=0;
@@ -34,7 +34,7 @@ fixed_smartlist2::fixed_smartlist2(void)
  * Description not yet available.
  * \param
  */
-fixed_smartlist2::fixed_smartlist2(unsigned int _bufsize,const adstring& _filename) 
+fixed_smartlist2::fixed_smartlist2(unsigned int _bufsize,const adstring& _filename)
 {
   allocate(_bufsize,_filename);
 }
@@ -44,7 +44,7 @@ fixed_smartlist2::fixed_smartlist2(unsigned int _bufsize,const adstring& _filena
  * \param
  */
 void fixed_smartlist2::allocate(unsigned int _bufsize,
-  const adstring& _filename) 
+  const adstring& _filename)
 {
   nentries=_bufsize/sizeof(int);
   end_saved=0;
@@ -54,7 +54,7 @@ void fixed_smartlist2::allocate(unsigned int _bufsize,
   direction=0;
   bufsize=_bufsize;
   filename=_filename;
-  AD_ALLOCATE(true_buffer,int,nentries+2,df1b2_gradlist) 
+  AD_ALLOCATE(true_buffer,int,nentries+2,df1b2_gradlist)
   doubleptr=(double*)true_buffer;
   true_buffend=true_buffer+nentries+1;
   buffer=true_buffer+1;
@@ -66,7 +66,7 @@ void fixed_smartlist2::allocate(unsigned int _bufsize,
                    O_BINARY, S_IREAD | S_IWRITE);
   if (fp == -1)
   {
-    cerr << "Error trying to open file " << filename 
+    cerr << "Error trying to open file " << filename
          << " in class fixed_smartlist2 " << endl;
     ad_exit(1);
   }
@@ -105,7 +105,7 @@ void fixed_smartlist2::rewind(void)
     if (nbytes>bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
-       " the buffer it was created from " << endl 
+       " the buffer it was created from " << endl
         << " buffer size is " << bufsize << " record size is supposedly "
         << nbytes << endl;
       ad_exit(1);
@@ -122,7 +122,7 @@ void fixed_smartlist2::rewind(void)
 /**
  * Description not yet available.
  * \param
- */   
+ */
 void fixed_smartlist2::initialize(void)
 {
   end_saved=0;
@@ -161,7 +161,7 @@ void fixed_smartlist2::check_buffer_size(int nsize)
 /**
  * Description not yet available.
  * \param
- */   
+ */
 void fixed_smartlist2::restore_end(void)
 {
   if (written_flag)
@@ -203,14 +203,14 @@ void fixed_smartlist2::write_buffer_one_less(void)
     written_flag=1;
     // get the current file position
     off_t pos=lseek(fp,0L,SEEK_CUR);
-  
+
     // write the size of the next record into the file
     ::write(fp,&nbytes,sizeof(int));
-  
+
     // write the record into the file
     int nw=::write(fp,buffer,nbytes);
-    //cout << "Number of bytes written " << nw 
-     //    << " bptr value =  " << bptr << endl; 
+    //cout << "Number of bytes written " << nw
+     //    << " bptr value =  " << bptr << endl;
     //for (int ii=0;ii<=25;ii++)
     //  cout << int (*(buffer+ii)) << " ";
     //cout << endl;
@@ -221,13 +221,13 @@ void fixed_smartlist2::write_buffer_one_less(void)
     }
     // reset the pointer to the beginning of the buffer
     bptr=buffer;
-  
+
     // now write the previous file position into the file so we can back up
     // when we want to.
     ::write(fp,&pos,sizeof(off_t));
 
     endof_file_ptr=lseek(fp,0L,SEEK_CUR);
-  
+
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
   }
 }
@@ -244,14 +244,14 @@ void fixed_smartlist2::write_buffer(void)
     written_flag=1;
     // get the current file position
     off_t pos=lseek(fp,0L,SEEK_CUR);
-  
+
     // write the size of the next record into the file
     ::write(fp,&nbytes,sizeof(int));
-  
+
     // write the record into the file
     int nw=::write(fp,buffer,nbytes);
-    //cout << "Number of bytes written " << nw 
-     //    << " bptr value =  " << bptr << endl; 
+    //cout << "Number of bytes written " << nw
+     //    << " bptr value =  " << bptr << endl;
     //for (int ii=0;ii<=25;ii++)
     //  cout << int (*(buffer+ii)) << " ";
     //cout << endl;
@@ -262,11 +262,11 @@ void fixed_smartlist2::write_buffer(void)
     }
     // reset the pointer to the beginning of the buffer
     bptr=buffer;
-  
+
     // now write the previous file position into the file so we can back up
     // when we want to.
     ::write(fp,&pos,sizeof(off_t));
-  
+
     endof_file_ptr=lseek(fp,0L,SEEK_CUR);
 
     //cout << lseek(fp,0L,SEEK_CUR) << endl;
@@ -283,7 +283,7 @@ void fixed_smartlist2::read_buffer(void)
   unsigned int nbytes;
   if (!written_flag)
   {
-    if (direction ==-1) 
+    if (direction ==-1)
       eof_flag=-1;
     else
       eof_flag=1;
@@ -302,7 +302,7 @@ void fixed_smartlist2::read_buffer(void)
       // of the record
       lseek(fp,long(-sizeof(off_t)),SEEK_CUR);
       read(fp,&pos,sizeof(off_t));
-      // back up to the beginning of the record (plus record size) 
+      // back up to the beginning of the record (plus record size)
       lseek(fp,pos,SEEK_SET);
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
@@ -311,7 +311,7 @@ void fixed_smartlist2::read_buffer(void)
     if (nbytes>bufsize)
     {
       cerr << "Error -- record size in file seems to be larger than"
-       " the buffer it was created from " << endl 
+       " the buffer it was created from " << endl
         << " buffer size is " << bufsize << " record size is supposedly "
         << nbytes << endl;
       ad_exit(1);
@@ -323,7 +323,7 @@ void fixed_smartlist2::read_buffer(void)
       cerr << "Error reading -- should be " << nbytes << " got " << nr << endl;
       exit(1);
     }
-   
+
    /*
     cout << "Number of bytes read " << nr << endl;
     cout << "buffer value = ";
@@ -335,7 +335,7 @@ void fixed_smartlist2::read_buffer(void)
     bptr=buffer;
     int ns=nbytes/sizeof(int);
     recend=bptr+ns-1;
-    //cout << "Number of bytes read " << nr 
+    //cout << "Number of bytes read " << nr
      //    << "  recend value = " << recend << endl;
     if (direction ==-1) // we are going backwards
     {
@@ -343,7 +343,7 @@ void fixed_smartlist2::read_buffer(void)
       lseek(fp,pos,SEEK_SET);
       // *(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
-    else  // we are going forward  
+    else  // we are going forward
     {
       // skip over file postion entry in file
       lseek(fp,long(sizeof(off_t)),SEEK_CUR);
@@ -354,7 +354,7 @@ void fixed_smartlist2::read_buffer(void)
 /**
  * Description not yet available.
  * \param
- */   
+ */
 void memcpy(const fixed_smartlist2 & _list,void * p,int nsize)
 {
   ADUNCONST(fixed_smartlist2,list)
@@ -387,7 +387,7 @@ void memcpy(void * p,const fixed_smartlist2 & _list,int nsize)
  * Description not yet available.
  * \param
  */
-void fixed_smartlist2::operator -= (int n) 
+void fixed_smartlist2::operator -= (int n)
 {
   if (bptr-n<buffer)
   {
@@ -413,7 +413,7 @@ void fixed_smartlist2::operator -= (int n)
  * Description not yet available.
  * \param
  */
-void fixed_smartlist2::operator -- (void) 
+void fixed_smartlist2::operator -- (void)
 {
   if (bptr-1<buffer)
   {
@@ -440,7 +440,7 @@ void fixed_smartlist2::operator -- (void)
  * Description not yet available.
  * \param
  */
-void fixed_smartlist2::operator += (int nsize) 
+void fixed_smartlist2::operator += (int nsize)
 {
   if ( bptr+nsize-1 > buffend)
   {
@@ -467,8 +467,8 @@ void fixed_smartlist2::operator += (int nsize)
 /**
  * Description not yet available.
  * \param
- */   
-void fixed_smartlist2::operator ++ (void) 
+ */
+void fixed_smartlist2::operator ++ (void)
 {
   if ( bptr==buffend)
   {
@@ -490,7 +490,7 @@ void fixed_smartlist2::operator ++ (void)
 /**
  * Description not yet available.
  * \param
- */   
+ */
 void fixed_smartlist2::read_file(void)
 {
   //rewind the file

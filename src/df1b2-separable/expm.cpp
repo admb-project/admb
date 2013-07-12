@@ -1,12 +1,12 @@
 /*
  * $Id$
  *
- * Authors: Anders Nielsen <anders@nielsensweb.org> and Casper W. Berg <cbe@aqua.dtu.dk> 
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Authors: Anders Nielsen <anders@nielsensweb.org> and Casper W. Berg <cbe@aqua.dtu.dk>
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
- * Matrix exponential function for df1b2_matrix. 
+ * Matrix exponential function for df1b2_matrix.
  */
 
 #include <df1b2fun.h>
@@ -195,15 +195,14 @@ df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
 
 /**
   \ingroup matop
-   Matrix exponential. 
-   
+   Matrix exponential.
+
    The matrix exponential is calculated using the Pade approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
 
-   
-The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems: 
+The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems:
 \f[
 \frac{d}{dt}y(t) = Ay(t)\ , \ \mbox{with } y(0) = y_0
-\f] 
+\f]
    \item then the solution becomes
 \f[
    y(t) = e^{At}y_0

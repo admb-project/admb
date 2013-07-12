@@ -77,7 +77,7 @@ void initial_df1b2params::reset(const init_df1b2vector& x,
 
 /**
  * Set scale factor for parameter in RE model.
- * \param sf Scale factor 
+ * \param sf Scale factor
  * The function minimizer will work internally with x*df, where x is the parameter in the model.
  */
  void initial_df1b2params::set_scalefactor(const double sf)
@@ -180,8 +180,8 @@ void df1b2_init_matrix::set_index(int aflag,const int& _ii)
   {
     for (int i=rmin;i<=rmax;i++)
     {
-      int cmin=(*this)(i).indexmin(); 
-      int cmax=(*this)(i).indexmax(); 
+      int cmin=(*this)(i).indexmin();
+      int cmax=(*this)(i).indexmax();
       {
         for (int j=cmin;j<=cmax;j++)
         {
@@ -194,8 +194,8 @@ void df1b2_init_matrix::set_index(int aflag,const int& _ii)
   {
     for (int i=rmin;i<=rmax;i++)
     {
-      int cmin=(*this)(i).indexmin(); 
-      int cmax=(*this)(i).indexmax(); 
+      int cmin=(*this)(i).indexmin();
+      int cmax=(*this)(i).indexmax();
       {
         for (int j=cmin;j<=cmax;j++)
         {
@@ -209,7 +209,7 @@ void df1b2_init_matrix::set_index(int aflag,const int& _ii)
 /**
  * Description not yet available.
  * \param
- */  
+ */
 void df1b2_init_matrix::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& pen)
 {
@@ -220,8 +220,8 @@ void df1b2_init_matrix::set_value(const init_df1b2vector& _x,
   int rmax=indexmax();
   for (int i=rmin;i<=rmax;i++)
   {
-    int cmin=(*this)(i).indexmin(); 
-    int cmax=(*this)(i).indexmax(); 
+    int cmin=(*this)(i).indexmin();
+    int cmax=(*this)(i).indexmax();
     {
       for (int j=cmin;j<=cmax;j++)
       {
@@ -234,7 +234,7 @@ void df1b2_init_matrix::set_value(const init_df1b2vector& _x,
 /**
  * Description not yet available.
  * \param
- */  
+ */
 void df1b2_init_number::set_value(const init_df1b2vector& _x,const int& _ii,
     const df1b2variable& pen)
 {
@@ -283,7 +283,7 @@ void df1b2variable::allocate(const char *s)
  * \param
  */
 df1b2_init_number::df1b2_init_number() :  df1b2variable(do_naught_kludge_a)
-{ 
+{
   //cout << "Here" << endl;
 }
 
@@ -291,7 +291,7 @@ df1b2_init_number::df1b2_init_number() :  df1b2variable(do_naught_kludge_a)
  * Description not yet available.
  * \param
  */
-void df1b2_init_number::operator = (const df1b2variable& _x) 
+void df1b2_init_number::operator = (const df1b2variable& _x)
 {
   df1b2variable::operator = (_x);
 }
@@ -301,7 +301,7 @@ void df1b2_init_number::operator = (const df1b2variable& _x)
  * \param
  */
 void df1b2_init_bounded_number::allocate(double _minb,double _maxb,
- int _n,const char * s) 
+ int _n,const char * s)
 {
   minb=_minb;
   maxb=_maxb;
@@ -313,9 +313,9 @@ void df1b2_init_bounded_number::allocate(double _minb,double _maxb,
 /**
  * Description not yet available.
  * \param
- */  
+ */
 void df1b2_init_bounded_number::allocate(double _minb,
-  double _maxb,const char * s) 
+  double _maxb,const char * s)
 {
   minb=_minb;
   maxb=_maxb;
@@ -326,7 +326,7 @@ void df1b2_init_bounded_number::allocate(double _minb,
 /**
  * Description not yet available.
  * \param
- */  
+ */
 void df1b2_init_bounded_number::set_value(const init_df1b2vector& _x,
   const int& _ii,const df1b2variable& pen)
 {
@@ -364,7 +364,7 @@ void set_value(const df1b2variable& _u,const init_df1b2vector& _x,
       const double l4=log(4.0);
       double pen=.000001/diff;
       fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-#   else 
+#   else
           XXXX
 #   endif
   }
@@ -393,7 +393,7 @@ void set_value(const df1b2variable& _u,const init_df1b2vector& _x,
       const double l4=log(4.0);
       double pen=.000001/diff;
       fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-#   else 
+#   else
           XXXX
 #   endif
   }
@@ -404,7 +404,7 @@ void set_value(const df1b2variable& _u,const init_df1b2vector& _x,
  * \param x Variable to bound
  * \param fmin  Lower value
  * \param fmax  Upper value
- * \param _fpen Penalty to apply    
+ * \param _fpen Penalty to apply
  */
 df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
   const df1b2variable& _fpen)
@@ -421,7 +421,7 @@ df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
 #ifdef USE_BARD_PEN
   double pen=.000001/diff;
   fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-#else 
+#else
   if (x < -.9999)
   {
     fpen+=cube(-0.9999-x);
@@ -455,7 +455,7 @@ df1b2variable boundp(const df1b2variable& x, double fmin, double fmax,
  * \param x 	Variable to bound
  * \param fmin  Lower value
  * \param fmax  Upper value
- * \param _fpen Penalty to apply    
+ * \param _fpen Penalty to apply
  */
 df1b2variable boundp(const df1b2variable& _x, double fmin, double fmax,
   const df1b2variable& _fpen,double s)
@@ -476,7 +476,7 @@ df1b2variable boundp(const df1b2variable& _x, double fmin, double fmax,
 #ifdef USE_BARD_PEN
   double pen=.000001/diff;
   fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-#else 
+#else
   if (x < -.9999)
   {
     fpen+=cube(-0.9999-x);
@@ -558,7 +558,7 @@ void set_value(const df1b2vector& _x,const init_df1b2vector& _v, const int& _ii,
   {
     x(i)=boundp(v(ii++),fmin,fmax,fpen);
     //cout << setprecision(15) << fpen << " " << fmin << " " << fmax
-     //  << " " << v(ii-1) << " " << x(i) << endl; 
+     //  << " " << v(ii-1) << " " << x(i) << endl;
   }
 }
 
@@ -629,7 +629,7 @@ void re_df1b2_init_bounded_vector::set_value(const init_df1b2vector& _x,
         const double l4=log(4.0);
         double wght=.000001/diff;
         pen-=wght*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-#     else 
+#     else
        XXXX
 #     endif
     }
@@ -733,7 +733,7 @@ void random_effects_bounded_vector_info::set_value
   {
     // df1b2variable& tmp = boundp(x(ii++),b.getminb(),b.getmaxb(),pen);
     // df1b2variable::operator = (tmp);
-    //df1b2variable::operator = 
+    //df1b2variable::operator =
     y = (boundp(x(ii++),pv->getminb(),pv->getmaxb(),pen));
   }
   else
@@ -746,7 +746,7 @@ void random_effects_bounded_vector_info::set_value
       const double l4=log(4.0);
       double wght=.000001/diff;
       pen-=wght*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-#   else 
+#   else
      XXXX
 #   endif
   }

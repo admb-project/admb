@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -23,7 +23,7 @@ void laplace_approximation_calculator::
   df1b2_gradlist::set_no_derivatives();
   df1b2variable::passnumber=1;
   df1b2_gradcalc1();
-   
+
   init_df1b2vector & locy= *funnel_init_var::py;
   imatrix& list=*funnel_init_var::plist;
 
@@ -33,16 +33,16 @@ void laplace_approximation_calculator::
 
   for (i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
-    if (list(i,1)>xsize) 
+    if (list(i,1)>xsize)
     {
       lre_index(++us)=i;
     }
-    else if (list(i,1)>0) 
+    else if (list(i,1)>0)
     {
       lfe_index(++xs)=i;
     }
   }
-  
+
   dvector local_xadjoint(1,xs);
   dvector local_uadjoint(1,us);
   for (i=1;i<=xs;i++)
@@ -58,9 +58,9 @@ void laplace_approximation_calculator::
   dvector tmp;
   if (us>0)
   {
-    dmatrix local_Hess(1,us,1,us); 
-    dvector local_grad(1,us); 
-    dmatrix local_Dux(1,us,1,xs); 
+    dmatrix local_Hess(1,us,1,us);
+    dvector local_grad(1,us);
+    dmatrix local_Dux(1,us,1,xs);
     local_Hess.initialize();
     for (i=1;i<=us;i++)
     {
@@ -114,11 +114,11 @@ void laplace_approximation_calculator::
   df1b2_gradlist::set_no_derivatives();
   df1b2variable::passnumber=1;
   df1b2_gradcalc1();				// Forward mode AD follow by a series of reverse sweeps
-   
+
   init_df1b2vector & locy= *funnel_init_var::py; // Independent variables for separable function
   imatrix& list=*funnel_init_var::plist;	 // Index into "locy"
 
-  int i; int j; int us=0; int xs=0;		 // us = #u's and xs = #x's 
+  int i; int j; int us=0; int xs=0;		 // us = #u's and xs = #x's
   ivector lre_index(1,funnel_init_var::num_active_parameters);
   ivector lfe_index(1,funnel_init_var::num_active_parameters);
 
@@ -129,25 +129,25 @@ void laplace_approximation_calculator::
     {
       lre_index(++us)=i;
     }
-    else if (list(i,1)>0) 
+    else if (list(i,1)>0)
     {
       lfe_index(++xs)=i;
     }
   }
-  
+
   dvector local_xadjoint(1,xs);  // First order derivative of ff wrt x
   for (j=1;j<=xs;j++)
   {
     int j2=list(lfe_index(j),2);
     local_xadjoint(j)=ff.u_dot[j2-1];  // u_dot is the result of forward AD
   }
-  
+
   if (us>0)
   {
-    // Find Hessian matrix needed for Laplace approximation	  
-    dmatrix local_Hess(1,us,1,us); 
-    dvector local_grad(1,us); 
-    dmatrix local_Dux(1,us,1,xs); 
+    // Find Hessian matrix needed for Laplace approximation
+    dmatrix local_Hess(1,us,1,us);
+    dvector local_grad(1,us);
+    dmatrix local_Dux(1,us,1,xs);
     local_Hess.initialize();
     dvector local_uadjoint(1,us);
     for (i=1;i<=us;i++)
@@ -159,14 +159,14 @@ void laplace_approximation_calculator::
         local_Hess(i,j)+=locy(i2).u_bar[j2-1];
       }
     }
-    
-    // First order derivative of separable function wrt u  
+
+    // First order derivative of separable function wrt u
     for (i=1;i<=us;i++)
     {
       int i2=list(lre_index(i),2);
       local_uadjoint(i)= ff.u_dot[i2-1];
     }
-  
+
     // Mixed derivatives wrt x and u needed in the sensitivity of u_hat wrt x
     for (i=1;i<=us;i++)
     {
@@ -177,17 +177,16 @@ void laplace_approximation_calculator::
         local_Dux(i,j)=locy(i2).u_bar[j2-1];
       }
     }
-  
+
     // Enter calculations for the derivative of log(det(Hessian))
-  
+
     //if (initial_df1b2params::separable_calculation_type==3)
     {
-  
     //int nvar=us*us;
     double f;				// 0.5*log(det(local_Hess))
-    dmatrix Hessadjoint=get_gradient_for_hessian_calcs(local_Hess,f);   
+    dmatrix Hessadjoint=get_gradient_for_hessian_calcs(local_Hess,f);
     initial_df1b2params::cobjfun+=f;  	// Adds 0.5*log(det(local_Hess))
-  
+
     for (i=1;i<=us;i++)
     {
       for (j=1;j<=us;j++)
@@ -197,10 +196,10 @@ void laplace_approximation_calculator::
         locy(i2).get_u_bar_tilde()[j2-1]=Hessadjoint(i,j);
       }
     }
-    
+
      df1b2variable::passnumber=2;
      df1b2_gradcalc1();
-  
+
      df1b2variable::passnumber=3;
      df1b2_gradcalc1();
       dvector xtmp(1,xs);
@@ -220,7 +219,7 @@ void laplace_approximation_calculator::
         local_uadjoint(i)+=locy[i2].u_tilde[0];
       }
       if (xs>0)
-        local_xadjoint -= local_uadjoint*inv(local_Hess)*local_Dux;  
+        local_xadjoint -= local_uadjoint*inv(local_Hess)*local_Dux;
     }
   }
   for (i=1;i<=xs;i++)
@@ -256,9 +255,9 @@ dmatrix laplace_approximation_calculator::get_gradient_for_hessian_calcs
     for (j=1;j<=us;j++)
       cy(ii++)=local_Hess(i,j);
 
-  dvar_vector vy=dvar_vector(cy); 
+  dvar_vector vy=dvar_vector(cy);
   dvar_matrix vHess(1,us,1,us);
-  
+
   ii=1;
   for (i=1;i<=us;i++)
     for (j=1;j<=us;j++)
@@ -272,11 +271,11 @@ dmatrix laplace_approximation_calculator::get_gradient_for_hessian_calcs
   }
   else
   {
-    dvector & w= *(pmin->multinomial_weights); 
+    dvector & w= *(pmin->multinomial_weights);
     double w_i=w[separable_calls_counter];
     double d=vHess.indexmax()-vHess.indexmin()+1;
     vf+=w_i*(0.5*ln_det(vHess,sgn)-0.5*d*log(w_i));
-    vf-=w_i*d*.91893853320467241; 
+    vf-=w_i*d*.91893853320467241;
   }
   f=value(vf);
   dvector g(1,nvar);

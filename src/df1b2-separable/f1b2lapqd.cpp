@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -65,7 +65,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
  * \param
  */
 dvector laplace_approximation_calculator::get_uhat_quasi_newton_qd
-  (const dvector& x,function_minimizer * pfmin) 
+  (const dvector& x,function_minimizer * pfmin)
 {
   dvector u(1,1)
   return u;

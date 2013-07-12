@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -25,7 +25,7 @@ void laplace_approximation_calculator::
   df1b2_gradlist::set_no_derivatives();
   df1b2variable::passnumber=1;
   df1b2_gradcalc1();
-   
+
   init_df1b2vector & locy= *funnel_init_var::py;
   imatrix& list=*funnel_init_var::plist;
   int num_local_re=0;
@@ -38,22 +38,22 @@ void laplace_approximation_calculator::
 
   for (i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
-    if (list(i,1)>xsize) 
+    if (list(i,1)>xsize)
     {
       lre_index(++num_local_re)=i;
     }
-    else if (list(i,1)>0) 
+    else if (list(i,1)>0)
     {
       lfe_index(++num_fixed_effects)=i;
     }
   }
-  
+
   if (num_local_re > 0)
   {
-    dmatrix& local_Hess=(*block_diagonal_hessian)(num_separable_calls); 
-    dmatrix& local_Dux=(*block_diagonal_Dux)(num_separable_calls); 
-    ivector& local_re_list=(*block_diagonal_re_list)(num_separable_calls); 
-    ivector& local_fe_list=(*block_diagonal_fe_list)(num_separable_calls); 
+    dmatrix& local_Hess=(*block_diagonal_hessian)(num_separable_calls);
+    dmatrix& local_Dux=(*block_diagonal_Dux)(num_separable_calls);
+    ivector& local_re_list=(*block_diagonal_re_list)(num_separable_calls);
+    ivector& local_fe_list=(*block_diagonal_fe_list)(num_separable_calls);
     local_re_list.initialize();
     local_fe_list.initialize();
     local_Hess.initialize();
@@ -62,12 +62,12 @@ void laplace_approximation_calculator::
     {
       local_re_list(i)=list(lre_index(i),1);
     }
-      
+
     for (i=1;i<=num_fixed_effects;i++)
     {
       local_fe_list(i)=list(lfe_index(i),1);
     }
-      
+
     for (i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
@@ -89,12 +89,10 @@ void laplace_approximation_calculator::
         local_Dux(i,j)=locy(i2).u_bar[j2-1];
       }
     }
-  
-    
+
     have_bounded_random_effects=0;
     if (have_bounded_random_effects)
     {
-  
       for (i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
@@ -107,7 +105,7 @@ void laplace_approximation_calculator::
         }
       }
     }
-  } 
+  }
 
   f1b2gradlist->reset();
   f1b2gradlist->list.initialize();
@@ -116,9 +114,9 @@ void laplace_approximation_calculator::
   f1b2gradlist->nlist.initialize();
   f1b2gradlist->nlist2.initialize();
   f1b2gradlist->nlist3.initialize();
-  funnel_init_var::num_vars=0; 
-  funnel_init_var::num_active_parameters=0; 
-  funnel_init_var::num_inactive_vars=0; 
+  funnel_init_var::num_vars=0;
+  funnel_init_var::num_active_parameters=0;
+  funnel_init_var::num_inactive_vars=0;
 }
 
 /**
@@ -134,7 +132,7 @@ void laplace_approximation_calculator::
   //df1b2_gradlist::set_no_derivatives();
   df1b2variable::passnumber=1;
   df1b2_gradcalc1();
-   
+
   init_df1b2vector & locy= *funnel_init_var::py;
   imatrix& list=*funnel_init_var::plist;
 
@@ -144,23 +142,23 @@ void laplace_approximation_calculator::
 
   for (i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
-    if (list(i,1)>xsize) 
+    if (list(i,1)>xsize)
     {
       lre_index(++us)=i;
     }
-    else if (list(i,1)>0) 
+    else if (list(i,1)>0)
     {
       lfe_index(++xs)=i;
     }
   }
-  
+
   dvector local_xadjoint(1,xs);
-  
+
   if (us>0)
   {
-    dmatrix local_Hess(1,us,1,us); 
-    dvector local_grad(1,us); 
-    dmatrix local_Dux(1,us,1,xs); 
+    dmatrix local_Hess(1,us,1,us);
+    dvector local_grad(1,us);
+    dmatrix local_Dux(1,us,1,xs);
     local_Hess.initialize();
     dvector local_uadjoint(1,us);
     for (i=1;i<=us;i++)
@@ -172,7 +170,7 @@ void laplace_approximation_calculator::
         local_Hess(i,j)+=locy(i2).u_bar[j2-1];
       }
     }
-  
+
     for (i=1;i<=us;i++)
     {
       for (j=1;j<=xs;j++)
@@ -182,11 +180,10 @@ void laplace_approximation_calculator::
         local_Dux(i,j)=locy(i2).u_bar[j2-1];
       }
     }
-  
-  
+
     double f=0.0;
     initial_df1b2params::cobjfun+=f;
-  
+
     for (i=1;i<=us;i++)
     {
       for (j=1;j<=us;j++)
@@ -197,10 +194,10 @@ void laplace_approximation_calculator::
           (*block_diagonal_vhessianadjoint)(num_separable_calls)(i,j);
       }
     }
-    
+
     df1b2variable::passnumber=2;
     df1b2_gradcalc1();
-  
+
     df1b2variable::passnumber=3;
     df1b2_gradcalc1();
     dvector xtmp(1,xs);

@@ -23,7 +23,7 @@ fixed_smartlist::~fixed_smartlist()
   {
     if (ad_comm::global_logfile)
     {
-      *ad_comm::global_logfile << "size of file " << filename 
+      *ad_comm::global_logfile << "size of file " << filename
         << " = " << pos << endl;
     }
   }
@@ -49,7 +49,7 @@ fixed_smartlist2::~fixed_smartlist2()
   {
     if (ad_comm::global_logfile)
     {
-      *ad_comm::global_logfile << "size of file " << filename 
+      *ad_comm::global_logfile << "size of file " << filename
         << " = " << pos << endl;
     }
   }

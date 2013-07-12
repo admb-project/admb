@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -26,7 +26,7 @@ void local_init_pass1_var::allocate_all(void)
 {
   num_active_parameters=local_init_pass1_var::nvarcalc_all();
 
-  df1b2variable::save_adpool_pointer(); 
+  df1b2variable::save_adpool_pointer();
   adpool * tmppool=df1b2variable::pool;
   if (!localf1b2gradlist)
   {
@@ -40,7 +40,7 @@ void local_init_pass1_var::allocate_all(void)
   }
   globalf1b2gradlist=f1b2gradlist;
   f1b2gradlist=localf1b2gradlist;
- 
+
   if (tmppool)
   {
     //cout << tmppool << endl;
@@ -90,7 +90,7 @@ void local_init_pass1_var::allocate_all(void)
         {
           cerr << "Memory allocation error" << endl;
           ad_exit(1);
-        } 
+        }
 
         df1b2variable::nvar=num_active_parameters;
         df1b2variable::set_blocksize();
@@ -106,7 +106,7 @@ void local_init_pass1_var::allocate_all(void)
           df1b2variable::pool->on_adpool_vector()=1;
         }
 
-      }    
+      }
     }
   }
   else
@@ -116,7 +116,7 @@ void local_init_pass1_var::allocate_all(void)
     {
       cerr << "Memory allocation error" << endl;
       ad_exit(1);
-    } 
+    }
     df1b2variable::nvar=num_active_parameters;
     df1b2variable::set_blocksize();
     df1b2variable::adpool_vector[df1b2variable::adpool_counter]=
@@ -162,7 +162,7 @@ void local_init_pass1_var::set_dot_all(void)
  * \param
  */
 void local_init_pass1_df1b2variable::dot_calcs(local_dep_df1b2variable& v,int j)
-{ 
+{
   if (adpool_stack_pointer<1)
   {
     cerr << "this can't happen" << endl;
@@ -208,9 +208,9 @@ int local_init_pass1_var::nvarcalc_all(void)
  * Description not yet available.
  * \param
  */
-local_init_pass1_df1b2variable::local_init_pass1_df1b2variable(double _xu,double* _xudot) 
+local_init_pass1_df1b2variable::local_init_pass1_df1b2variable(double _xu,double* _xudot)
 {
-  xu=_xu; 
-  *get_u()=_xu; 
+  xu=_xu;
+  *get_u()=_xu;
   xudot=_xudot;
 }

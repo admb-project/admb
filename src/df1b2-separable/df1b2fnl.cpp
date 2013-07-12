@@ -88,7 +88,7 @@ void check_pool_depths(void)
   for (int i=0;i<df1b2variable::adpool_counter;i++)
   {
     cout << " Pool depth " << i << "  "
-         << df1b2variable::adpool_vector[i]->depth_check() 
+         << df1b2variable::adpool_vector[i]->depth_check()
          << "  " << df1b2variable::adpool_vector[i]  << endl;
   }
 }
@@ -99,7 +99,7 @@ void check_pool_depths(void)
  */
 void funnel_init_var::allocate_all(void)
 {
-  re_objective_function_value::pobjfun->deallocate(); 
+  re_objective_function_value::pobjfun->deallocate();
   if (lapprox)
   {
     if (lapprox->calling_set)
@@ -108,7 +108,7 @@ void funnel_init_var::allocate_all(void)
     }
   }
   num_active_parameters=funnel_init_var::nvarcalc_all();
-  if (py) 
+  if (py)
   {
     if (py->indexmax() != num_active_parameters)
     {
@@ -143,7 +143,7 @@ void funnel_init_var::allocate_all(void)
         {
           cerr << "Memory allocation error" << endl;
           ad_exit(1);
-        } 
+        }
         if (df1b2variable::adpool_counter>df1b2variable::adpool_vectorsize)
         {
           //cerr << "Need to increase adpool_vectorsize" << endl;
@@ -166,7 +166,7 @@ void funnel_init_var::allocate_all(void)
           //df1b2variable::adpool_counter++;
           df1b2variable::increment_adpool_counter();
         }
-      }    
+      }
     }
   }
   else
@@ -176,7 +176,7 @@ void funnel_init_var::allocate_all(void)
     {
       cerr << "Memory allocation error" << endl;
       ad_exit(1);
-    } 
+    }
     if (df1b2variable::adpool_counter>df1b2variable::adpool_vectorsize)
     {
       int offset=1;
@@ -203,7 +203,7 @@ void funnel_init_var::allocate_all(void)
   df1b2variable::nvar=num_active_parameters;
   df1b2variable::set_blocksize();
 
-  re_objective_function_value::pobjfun->allocate(); 
+  re_objective_function_value::pobjfun->allocate();
   //if (funnel_check_flag)
    // check_pool_depths();
   df1b2variable::minder=1;
@@ -221,9 +221,9 @@ void funnel_init_var::allocate_all(void)
     ad_exit(1);
   }
   //init_df1b2vector& tmp = *py;
-  
 
-  if (plist) 
+
+  if (plist)
   {
     if (plist->indexmax() != num_active_parameters)
     {
@@ -231,7 +231,7 @@ void funnel_init_var::allocate_all(void)
       plist=0;
     }
   }
-  if (!plist) 
+  if (!plist)
   {
     plist = new imatrix(1,num_active_parameters,1,2);
   }
@@ -259,7 +259,6 @@ void funnel_init_var::allocate_all(void)
     inactive_list[i]->allocate();
   }
 
- 
   funnel_init_var::reset(*py);
   //if (funnel_check_flag)
   //  check_pool_depths();
@@ -278,7 +277,7 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
   type=0;
   pointer=0;
   ind_index=x.get_ind_index();
-  if (ind_index<0) 
+  if (ind_index<0)
   {
     add_to_inactive_list();
   }
@@ -293,7 +292,7 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
     lapprox->used_flags(ind_index)+=1;
   }
   //cout << "ind_index = " << ind_index << endl;
-  xu=*(x.get_u()); 
+  xu=*(x.get_u());
 }
 
 /**
@@ -310,7 +309,7 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
   type=1;
   pointer=u.pv;
   ind_index = x.get_ind_index();
-  if (ind_index<0) 
+  if (ind_index<0)
   {
     add_to_inactive_list();
   }
@@ -319,7 +318,7 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
     add_to_list();
     lapprox->used_flags(ind_index)+=1;
   }
-  xu=*(x.get_u()); 
+  xu=*(x.get_u());
 
 }
 
@@ -343,7 +342,7 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
   type=0;
   pointer=0;
   ind_index = -1;
-  if (ind_index<0) 
+  if (ind_index<0)
   {
     add_to_inactive_list();
   }
@@ -358,13 +357,13 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
  * \param
  */
 void funnel_init_df1b2variable::
-  preallocate(const df1b2variable & _x) 
+  preallocate(const df1b2variable & _x)
 {
   ADUNCONST(df1b2variable,x)
   type=0;
   pointer=0;
   ind_index = x.get_ind_index();
-  if (ind_index<0) 
+  if (ind_index<0)
   {
     add_to_inactive_list();
   }
@@ -373,7 +372,7 @@ void funnel_init_df1b2variable::
     add_to_list();
     lapprox->used_flags(ind_index)+=1;
   }
-  xu=*(x.get_u()); 
+  xu=*(x.get_u());
 }
 
 /**
@@ -396,7 +395,7 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
   pointer=0;
   ind_index = x.get_ind_index();
   get_ind_index() = x.get_ind_index();
-  if (ind_index<0) 
+  if (ind_index<0)
   {
     add_to_inactive_list();
   }
@@ -416,7 +415,7 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
       (*lapprox->calling_set)(ind_index,j)=(*lapprox->calling_set)(0,0);
     }
   }
-  xu=*(x.get_u()); 
+  xu=*(x.get_u());
 }
 
 /**
@@ -428,7 +427,7 @@ void funnel_init_df1b2variable::allocate(void)
   df1b2variable::allocate();
   *(get_u())=xu;
   if (index>=0)
-    get_u_dot()[index]=1.0; 
+    get_u_dot()[index]=1.0;
 }
 
 /**
@@ -467,12 +466,12 @@ void funnel_init_df1b2variable::set_value(const init_df1b2vector& _x,
     {
       case 1:   // vector
       {
-        df1b2_init_bounded_vector & b = *(df1b2_init_bounded_vector*)pointer; 
+        df1b2_init_bounded_vector & b = *(df1b2_init_bounded_vector*)pointer;
         if (!initial_params::straight_through_flag)
         {
           // df1b2variable& tmp = boundp(x(ii++),b.getminb(),b.getmaxb(),pen);
           // df1b2variable::operator = (tmp);
-          df1b2variable::operator = 
+          df1b2variable::operator =
             (boundp(x(ii++),b.getminb(),b.getmaxb()));
         }
         else
@@ -485,12 +484,12 @@ void funnel_init_df1b2variable::set_value(const init_df1b2vector& _x,
       case 2:  // matrix
       default:
       {
-        cerr << "the bounded matrix case in " 
+        cerr << "the bounded matrix case in "
           " void funnel_init_df1b2variable::xinit  has not bee implemented"
           << endl;
           ad_exit(1);
       }
-    }  
+    }
   }
 }
 
@@ -514,7 +513,7 @@ void funnel_init_df1b2variable::set_value(const init_df1b2vector& _x,
     {
       case 1:   // vector
       {
-        df1b2_init_bounded_vector & b = *(df1b2_init_bounded_vector*)pointer; 
+        df1b2_init_bounded_vector & b = *(df1b2_init_bounded_vector*)pointer;
         laplace_approximation_calculator * l =lapprox;
         int uf=-1;
         if (ind_index>0)
@@ -554,7 +553,7 @@ void funnel_init_df1b2variable::set_value(const init_df1b2vector& _x,
               double wght=.000001/diff;
               pen-=wght*(log(ss+double(1.e-40))+log((double(1.0)-ss)
                 +double(1.e-40))+l4);
-#           else 
+#           else
              XXXX
 #           endif
           }
@@ -564,12 +563,12 @@ void funnel_init_df1b2variable::set_value(const init_df1b2vector& _x,
       case 2:  // matrix
       default:
       {
-        cerr << "the bounded matrix case in " 
+        cerr << "the bounded matrix case in "
           " void funnel_init_df1b2variable::xinit  has not bee implemented"
           << endl;
           ad_exit(1);
       }
-    }  
+    }
   }
 }
 
@@ -603,21 +602,21 @@ void funnel_init_df1b2variable::xinit(init_df1b2vector& y,int& ii)
     {
       case 1:   // vector
       {
-        df1b2_init_bounded_vector & b = *(df1b2_init_bounded_vector*)pointer; 
+        df1b2_init_bounded_vector & b = *(df1b2_init_bounded_vector*)pointer;
         y(ii)=boundpin(xu,b.getminb(),b.getmaxb());
-        //cout << setprecision(15) <<  << b.getminb() << " " 
-         // << b.getmaxb() << " " << y(ii) << " " << xu << endl; 
+        //cout << setprecision(15) <<  << b.getminb() << " "
+         // << b.getmaxb() << " " << y(ii) << " " << xu << endl;
         break;
       }
       case 2:  // matrix
       default:
       {
-        cerr << "the bounded matrix case in " 
+        cerr << "the bounded matrix case in "
           " void funnel_init_df1b2variable::xinit  has not bee implemented"
           << endl;
           ad_exit(1);
       }
-    }  
+    }
   }
   ii++;
 }
@@ -638,23 +637,23 @@ void funnel_init_df1b2variable::xinit(dvector& y,int& ii)
     {
       case 1:   // vector
       {
-        df1b2_init_bounded_vector & b = *(df1b2_init_bounded_vector*)pointer; 
+        df1b2_init_bounded_vector & b = *(df1b2_init_bounded_vector*)pointer;
         y(ii)=boundpin(xu,b.getminb(),b.getmaxb());
         break;
       }
       case 2:  // matrix
       default:
       {
-        cerr << "the bounded matrix case in " 
+        cerr << "the bounded matrix case in "
           " void funnel_init_df1b2variable::xinit  has not bee implemented"
           << endl;
           ad_exit(1);
       }
-    }  
+    }
   }
   ii++;
 }
-  
+
 /*
 void funnel_init_df1b2variable::xinit(dvector& y,int& ii)
 {
@@ -674,7 +673,7 @@ void funnel_init_df1b2variable::set_index(imatrix& y,int& ii)
   y(ii,2)= ii;
   ii++;
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -706,7 +705,7 @@ funnel_init_df1b2vector::funnel_init_df1b2vector(const df1b2_init_vector & _x)
   int mmin=p->indexmin();
   int mmax=p->indexmax();
   int ind_index = (*p)(mmin).get_ind_index();
-  if (ind_index<0) 
+  if (ind_index<0)
   {
     add_to_inactive_list();
   }
@@ -733,7 +732,7 @@ funnel_init_df1b2vector::funnel_init_df1b2vector(const df1b2vector & _x)
   int mmin=p->indexmin();
   int mmax=p->indexmax();
   int ind_index = x(mmin).get_ind_index();
-  if (ind_index<0) 
+  if (ind_index<0)
   {
     add_to_inactive_list();
   }
@@ -765,7 +764,7 @@ int funnel_init_df1b2vector::nvar_calc(void)
  * \param
  */
 void funnel_init_df1b2vector::xinit(init_df1b2vector& y,int& ii)
-{ 
+{
   //df1b2_init_vector * vp = (df1b2_init_vector *) p;
   //int mmin=vp->indexmin();
   //int mmax=vp->indexmax();
@@ -786,7 +785,6 @@ void funnel_init_df1b2vector::xinit(init_df1b2vector& y,int& ii)
  */
 void funnel_init_df1b2vector::set_index(imatrix& y,int& ii)
 {
-  
   df1b2_init_vector * vp = (df1b2_init_vector *) p;
   int mmin=vp->indexmin();
   int mmax=vp->indexmax();
@@ -833,7 +831,7 @@ funnel_init_bounded_df1b2vector::funnel_init_bounded_df1b2vector(const df1b2_ini
   int mmin=x.indexmin();
   int mmax=x.indexmax();
   int ind_index = x(mmin).get_ind_index();
-  if (ind_index<0) 
+  if (ind_index<0)
   {
     add_to_inactive_list();
   }
@@ -860,7 +858,7 @@ int funnel_init_bounded_df1b2vector::nvar_calc(void)
  * \param
  */
 void funnel_init_bounded_df1b2vector::xinit(init_df1b2vector& y,int& ii)
-{ 
+{
   df1b2_init_bounded_vector * vp = (df1b2_init_bounded_vector *) p;
   int mmin=p->indexmin();
   int mmax=p->indexmax();
@@ -878,7 +876,6 @@ void funnel_init_bounded_df1b2vector::xinit(init_df1b2vector& y,int& ii)
  */
 void funnel_init_bounded_df1b2vector::set_index(imatrix& y,int& ii)
 {
-  
   int mmin=p->indexmin();
   int mmax=p->indexmax();
   int i;
@@ -915,7 +912,7 @@ void funnel_init_bounded_df1b2vector::set_value(const init_df1b2vector& _x,
     else
     {
       (*this)(i) = (x(ii));
-      *((*this)(i).get_u()) = 
+      *((*this)(i).get_u()) =
         boundp(*(x(ii++).get_u()),vp->getminb(),vp->getmaxb());
     }
   }

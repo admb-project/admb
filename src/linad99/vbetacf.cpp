@@ -45,7 +45,7 @@ dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,_CONST dvariable& _x,
   c1(0)=1.0;
   d1(0)=1.0/(1.0-qab*x/qap);
   h1(0)=d1(0);
-  for (m=1;m<=MAXIT;m++) 
+  for (m=1;m<=MAXIT;m++)
   {
     int i=m;
     m2=2*m;
@@ -60,7 +60,7 @@ dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,_CONST dvariable& _x,
     h1(i) = h(i)*del(i);
     if (fabs(del(i)-1.0) < EPS) break;
   }
-  if (m > MAXIT) 
+  if (m > MAXIT)
   {
     cerr << "a or b too big, or MAXIT too small in cumulative beta function"
       " routine" << endl;
@@ -80,7 +80,7 @@ dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,_CONST dvariable& _x,
   dvector dfaa(1,MAXIT);
   dvector dfaa1(1,MAXIT);
   dvector dfdel(1,MAXIT);
-  
+
   dfc1.initialize();
   dfc.initialize();
   dfaa1.initialize();
@@ -98,7 +98,7 @@ dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,_CONST dvariable& _x,
   double dfb=0.0;
   double dfx=0.0;
 
-  for (m=mmax;m>=1;m--) 
+  for (m=mmax;m>=1;m--)
   {
    /*
     int i=m;
@@ -116,13 +116,13 @@ dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,_CONST dvariable& _x,
 
     int i=m;
     int m2=2*m;
-  
+
     //h1(i) = h(i)*del(i);
 
     dfh(i)+=dfh1(i)*del(i);
     dfdel(i)+=dfh1(i)*h(i);
     dfh1(i)=0.0;
-   
+
     //del(i)=d1(i)*c1(i);
 
     dfd1(i)+=dfdel(i)*c1(i);
@@ -140,9 +140,9 @@ dvariable betacf(_CONST dvariable& _a,_CONST dvariable& _b,_CONST dvariable& _x,
     dfaa1(i)-=dfd1(i)*sq*d(i);
     dfd(i)-=dfd1(i)*sq*aa1(i);
     dfd1(i)=0.0;
-    
+
     //aa1(i) = -(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
-    dfx -= dfaa1(i) * 
+    dfx -= dfaa1(i) *
      (a+m)*(qab+m)/((a+m2)*(qap+m2));
 
     dfa += dfaa1(i) * aa1(i)* (1.0/(a+m) - 1.0/(a+m2));

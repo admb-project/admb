@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -18,7 +18,7 @@ int size_count(const dvar_vector& x)
 {
   if (!(x))
     return 0;
-  else  
+  else
     return x.size();
 }
 
@@ -30,7 +30,7 @@ int size_count_partial(const dvar_vector& x,int n)
 {
   if (!(x))
     return 0;
-  else  
+  else
     return max(0, n);
 }
 
@@ -43,7 +43,7 @@ int size_count(const dvar_matrix& x)
   if (!(x))
     return 0;
   else
-  {  
+  {
     int tmp=0;
     int min=x.rowmin();
     int max=x.rowmax();

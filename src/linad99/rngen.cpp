@@ -1,16 +1,16 @@
 /*
    $Id$
-  
+
    ADMB adaptations Copyright (c) 2009-2012 ADMB Foundation
 
    A C-program for MT19937, with initialization improved 2002/1/26.
    Coded by Takuji Nishimura and Makoto Matsumoto.
 
-   Before using, initialize the state by using init_genrand(seed)  
+   Before using, initialize the state by using init_genrand(seed)
    or init_by_array(init_key, key_length).
 
    Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura,
-   All rights reserved.                          
+   All rights reserved.
 
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
@@ -23,8 +23,8 @@
         notice, this list of conditions and the following disclaimer in the
         documentation and/or other materials provided with the distribution.
 
-     3. The names of its contributors may not be used to endorse or promote 
-        products derived from this software without specific prior written 
+     3. The names of its contributors may not be used to endorse or promote
+        products derived from this software without specific prior written
         permission.
 
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -44,8 +44,8 @@
    http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
    email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
 
-   Modified for AD Model Builder by Kasper Kristensen <kkr@aqua.dtu.dk> and 
-   Anders Nielsen <an@aqua.dtu.dk> 2009     
+   Modified for AD Model Builder by Kasper Kristensen <kkr@aqua.dtu.dk> and
+   Anders Nielsen <an@aqua.dtu.dk> 2009
 */
 /**
  * \file
@@ -67,7 +67,7 @@
   \param seed Integer used to initialize the random number generator.
   Using different values of seed will generat different series of random numbers.
 */
-random_number_generator::random_number_generator(int seed) 
+random_number_generator::random_number_generator(int seed)
 {
   unsigned long s=seed;
   mt=new unsigned long [N]; /* the array for the state vector  */
@@ -75,7 +75,7 @@ random_number_generator::random_number_generator(int seed)
 
   mt[0]= s & 0xffffffffUL;
   for (mti=1; mti<N; mti++) {
-    mt[mti] = (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti); 
+    mt[mti] = (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti);
     /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
     /* In the previous versions, MSBs of the seed affect   */
     /* only MSBs of the array mt[].                        */
@@ -109,8 +109,8 @@ void random_number_generator::reinitialize(int seed)
   unsigned long s=seed;
   mt[0]= s & 0xffffffffUL;
   for (mti=1; mti<N; mti++) {
-      mt[mti] = 
-  	    (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti); 
+      mt[mti] =
+  	    (1812433253UL * (mt[mti-1] ^ (mt[mti-1] >> 30)) + mti);
       /* See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier. */
       /* In the previous versions, MSBs of the seed affect   */
       /* only MSBs of the array mt[].                        */
@@ -130,10 +130,10 @@ void random_number_generator::reinitialize(int seed)
   a 623-dimensionally equidistributed uniform pseudo-random number generator.
   ACM Transactions on Modeling and Computer Simulation (TOMACS) 8(1):3-30.
 
-  \returns double containing uniformly distributed pseudorandom number 
+  \returns double containing uniformly distributed pseudorandom number
    between zero and one.
 */
-double random_number_generator::better_rand() 
+double random_number_generator::better_rand()
 {
   unsigned long y;
   static unsigned long mag01[2]={0x0UL, MATRIX_A};
@@ -158,7 +158,7 @@ double random_number_generator::better_rand()
 
       mti = 0;
   }
- 
+
   y = mt[mti++];
 
   /* Tempering */
@@ -167,19 +167,19 @@ double random_number_generator::better_rand()
   y ^= (y << 15) & 0xefc60000UL;
   y ^= (y >> 18);
 
-  return (((double)y) + 0.5)*(1.0/4294967296.0); 
+  return (((double)y) + 0.5)*(1.0/4294967296.0);
 }
 
-#undef N 
-#undef M 
-#undef MATRIX_A 
-#undef UPPER_MASK 
-#undef LOWER_MASK 
-          
+#undef N
+#undef M
+#undef MATRIX_A
+#undef UPPER_MASK
+#undef LOWER_MASK
+
 /**
   \ingroup RNG
   Normal number generator.
-  \returns N(0,1) double containing Normally distributed pseudorandom number 
+  \returns N(0,1) double containing Normally distributed pseudorandom number
    with mean zero and standard deviation one.
 */
 double randn(const random_number_generator& rng)
@@ -190,12 +190,12 @@ double randn(const random_number_generator& rng)
   double u=sqrt(-2*log(x))*cos(2*PI*y);
   return(u);
 }
-  
+
 /**
   \ingroup RNG
   Uniform random number generator.
 
-  \returns double containing uniformly distributed pseudorandom number 
+  \returns double containing uniformly distributed pseudorandom number
    between zero and one.
 */
 double randu(const random_number_generator& rng)
@@ -204,7 +204,7 @@ double randu(const random_number_generator& rng)
   x=((random_number_generator&) rng).better_rand();
   return(x);
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -226,7 +226,7 @@ void dvector::fill_randbi(double p, const random_number_generator& rng)
     else
     {
       elem(i)=0;
-    } 
+    }
   }
 }
 

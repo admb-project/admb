@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -29,7 +29,7 @@ double cumd_cauchy(const double& x)
 double density_cauchy(const double& x)
 {
   const double r2=PI*sqrt(2.0);
-  return 1./(r2*(1+0.5*x*x)); 
+  return 1./(r2*(1+0.5*x*x));
 }
 
 /**
@@ -39,7 +39,7 @@ double density_cauchy(const double& x)
 double log_density_cauchy(const double& x)
 {
   const double r2=PI*sqrt(2.0);
-  return -log(r2*(1+0.5*x*x)); 
+  return -log(r2*(1+0.5*x*x));
 }
 
 /**

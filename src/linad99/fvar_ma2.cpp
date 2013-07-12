@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -33,7 +33,7 @@ dvar_matrix operator+(const dvar_matrix& m1, const dmatrix& m2)
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.
@@ -76,7 +76,7 @@ dvar_matrix operator+(const dmatrix& m1, const dvar_matrix& m2)
    }
    kkludge_object kk;
    dvar_matrix tmp(m1.rowmin(),m1.rowmax(),kk);
-   
+
    for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
    {
      tmp(i)=m1(i)+m2(i);

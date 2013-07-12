@@ -34,7 +34,7 @@ void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
 */
 dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int ns)
 {
-  const double base = 4; 
+  const double base = 4;
   int MAXN = min(JMAX, ns);
   dvar_vector s(1,MAXN+1);
 
@@ -214,7 +214,7 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
   double num_interval;
   dvariable sum,hn,x;
   static dvariable s;
-  
+
   static int interval;
   int j;
 
@@ -293,7 +293,7 @@ void polint(const dvector& xa, const dvar_vector& ya,int n,double x, const dvari
       ho=xa[i]-x;
       hp=xa[i+m]-x;
       w=c[i+1]-d[i];
-      if ( (den=ho-hp) == 0.0) 
+      if ( (den=ho-hp) == 0.0)
       {
         cerr << "Error in routine POLINT" << endl;
         exit(1);
@@ -305,5 +305,3 @@ void polint(const dvector& xa, const dvar_vector& ya,int n,double x, const dvari
     y += (dy=(2*ns < (n-m) ? c[ns+1] : d[ns--]));
   }
 }
-
-

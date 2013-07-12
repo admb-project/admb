@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -289,7 +289,6 @@ void dfcholeski_decomp(void)
  //*******************************************************************8
  //*******************************************************************8
  //*******************************************************************8
-  
   dfM.rowshift(rowsave);
   dfM.colshift(colsave);
 

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -14,9 +14,9 @@
   #ifdef __MSC__
     #define lseek _lseek
     #define  read _read
-    #define write _write 
+    #define write _write
     #define open _open
-    #define close _close 
+    #define close _close
   #endif
 #if !defined(linux)
 #endif
@@ -44,7 +44,7 @@ prevariable& operator<<(const prevariable& _v1, const prevariable& v2)
 dvar_vector& operator<<(const dvar_vector& v1, const dvar_vector& v2)
   {
     RETURN_ARRAYS_INCREMENT();
-    
+
     int mmin=v1.indexmin();
     int mmax=v1.indexmax();
     if (mmin != v2.indexmin() || mmax != v2.indexmax())

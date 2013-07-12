@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -82,7 +82,7 @@ dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
   //tprob=(1.-contaminant)*exp(tmpa)+contaminant*exp(tmpb);
   if (tmpa>tmpb)
   {
-    //tprob=exp(tmpa)* 
+    //tprob=exp(tmpa)*
       //( (1.-contaminant)+contaminant*exp(tmpb-tmpa) );
     log_tprob=tmpa+log((1.-contaminant)+contaminant*exp(tmpb-tmpa));
   }
@@ -90,7 +90,7 @@ dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
   {
     log_tprob=tmpb+log((1.-contaminant)*exp(tmpa-tmpb)+contaminant);
   }
-  return w; 
+  return w;
 }
 
 dvector bounded_multivariate_cauchy(int nvar, const dvector& a1,
@@ -111,7 +111,7 @@ dvector bounded_multivariate_cauchy(int nvar, const dvector& a1,
   }
   double tmpa=(lprob+.5*nvar);
   log_tprob=tmpa;
-  return w; 
+  return w;
 }
 
 void generate_actual_multivariate_cauchy(int nvar, const dvector& _a, const dvector& _b,
@@ -121,15 +121,15 @@ void generate_actual_multivariate_cauchy(int nvar, const dvector& _a, const dvec
   dvector& a=(dvector&) _a;
   dvector& b=(dvector&) _b;
   dvector& w=(dvector&) _w;
-  double ah; 
-  double bl; 
+  double ah;
+  double bl;
   dvector y(1,nvar);
   lprob=0;
   double log_density=0.0;;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i); 
-    bl=b(i)/ch(i,i); 
+    ah=a(i)/ch(i,i);
+    bl=b(i)/ch(i,i);
 
     get_bounded_cauchy(ah,bl,y(i),log_density,iseed);
     lprob += log_density;
@@ -141,7 +141,7 @@ void generate_actual_multivariate_cauchy(int nvar, const dvector& _a, const dvec
       b(j)-=tmp;
     }
   }
-}  
+}
 
 dvector bounded_multivariate_mixture(int nvar, const dvector& a1,
   dvector& b1, const dmatrix& _ch,long int& iseed, const double& lprob, const int& _outflag)
@@ -158,7 +158,7 @@ dvector bounded_multivariate_mixture(int nvar, const dvector& a1,
     b=b1;
     generate_actual_multivariate_mixture(nvar,a,b,ch,iseed,lprob,w);
   }
-  return w; 
+  return w;
 }
 
 void generate_actual_multivariate_mixture(int nvar, const dvector& _a, const dvector& _b,
@@ -168,15 +168,15 @@ void generate_actual_multivariate_mixture(int nvar, const dvector& _a, const dve
   dvector& a=(dvector&) _a;
   dvector& b=(dvector&) _b;
   dvector& w=(dvector&) _w;
-  double ah; 
-  double bl; 
+  double ah;
+  double bl;
   dvector y(1,nvar);
   lprob=0;
   double log_density=0.0;;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i); 
-    bl=b(i)/ch(i,i); 
+    ah=a(i)/ch(i,i);
+    bl=b(i)/ch(i,i);
 
     get_bounded_mixture(ah,bl,y(i),log_density,iseed);
     lprob += log_density;
@@ -188,8 +188,7 @@ void generate_actual_multivariate_mixture(int nvar, const dvector& _a, const dve
       b(j)-=tmp;
     }
   }
-}  
-
+}
 
 void generate_actual_multivariate(int nvar, const dvector& _a, const dvector& _b, const dmatrix& ch,
   long int& iseed, const double& _lprob, const dvector& _w)
@@ -198,15 +197,15 @@ void generate_actual_multivariate(int nvar, const dvector& _a, const dvector& _b
   dvector& a=(dvector&) _a;
   dvector& b=(dvector&) _b;
   dvector& w=(dvector&) _w;
-  double ah; 
-  double bl; 
+  double ah;
+  double bl;
   dvector y(1,nvar);
   lprob=0;
   double log_density=0.0;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i); 
-    bl=b(i)/ch(i,i); 
+    ah=a(i)/ch(i,i);
+    bl=b(i)/ch(i,i);
 
     get_bounded_normal(ah,bl,y(i),log_density,iseed);
     lprob += log_density;
@@ -218,7 +217,7 @@ void generate_actual_multivariate(int nvar, const dvector& _a, const dvector& _b
       b(j)-=tmp;
     }
   }
-}  
+}
 
 void generate_virtual_multivariate(int nvar, const dvector& _a, const dvector& _b, const dmatrix& ch,
   const double& _lprob, const dvector& eps)
@@ -226,15 +225,15 @@ void generate_virtual_multivariate(int nvar, const dvector& _a, const dvector& _
   double& lprob=(double&) _lprob;
   dvector& a=(dvector&) _a;
   dvector& b=(dvector&) _b;
-  double ah; 
-  double bl; 
+  double ah;
+  double bl;
   dvector& y=(dvector&)(eps);
   lprob=0;
   double log_density;
   for (int i=1;i<=nvar;i++)
   {
-    ah=a(i)/ch(i,i); 
-    bl=b(i)/ch(i,i); 
+    ah=a(i)/ch(i,i);
+    bl=b(i)/ch(i,i);
     get_bounded_normal_virtual(ah,bl,y(i),log_density);
     lprob -= log_density;
     for (int j=i;j<=nvar;j++)
@@ -244,7 +243,7 @@ void generate_virtual_multivariate(int nvar, const dvector& _a, const dvector& _
       b(j)-=tmp;
     }
   }
-}  
+}
 
 void get_bounded_cauchy(double x1,double x2, const double& _y, const double& _log_density,
   long int& iseed)
@@ -257,11 +256,11 @@ void get_bounded_cauchy(double x1,double x2, const double& _y, const double& _lo
   double w;
   double u = better_rand(iseed);
   {
-    double lower=cumd_cauchy(x1); 
+    double lower=cumd_cauchy(x1);
     double upper=cumd_cauchy(x2);
     w=-log(upper-lower);
     u=u*.9998+.0001;
-    y = inv_cumd_cauchy(u*(upper-lower)+lower); 
+    y = inv_cumd_cauchy(u*(upper-lower)+lower);
   }
   log_density=w-log(1+0.5*y*y);
 }
@@ -277,14 +276,14 @@ void get_bounded_mixture(double x1,double x2, const double& _y, const double& _l
   double w;
   double u = better_rand(iseed);
   {
-    //double lower=cumd_mixture_02(x1); 
+    //double lower=cumd_mixture_02(x1);
     //double upper=cumd_mixture_02(x2);
-    double lower=cumd_mixture(x1); 
+    double lower=cumd_mixture(x1);
     double upper=cumd_mixture(x2);
     w=-log(upper-lower);
     u=u*.9998+.0001;
-    //y = inv_cumd_mixture_02(u*(upper-lower)+lower); 
-    y = inv_cumd_mixture(u*(upper-lower)+lower); 
+    //y = inv_cumd_mixture_02(u*(upper-lower)+lower);
+    y = inv_cumd_mixture(u*(upper-lower)+lower);
   }
   //log_density=w+log_likelihood_mixture_02(y);
   log_density=w+log_likelihood_mixture(y);
@@ -319,11 +318,11 @@ void get_bounded_normal(double x1,double x2, const double& _y, const double& _lo
   }
   else
   {
-    double lower=cumd_norm(x1); 
+    double lower=cumd_norm(x1);
     double upper=cumd_norm(x2);
     w=-log(upper-lower);
     u=u*.9998+.0001;
-    y = inv_cumd_norm(u*(upper-lower)+lower); 
+    y = inv_cumd_norm(u*(upper-lower)+lower);
   }
   log_density=w-0.5*y*y;
 }
@@ -353,7 +352,7 @@ void get_bounded_normal_virtual(double x1,double x2, const double& _y,
   }
   else
   {
-    double lower=cumd_norm(x1); 
+    double lower=cumd_norm(x1);
     double upper=cumd_norm(x2);
     w=-log(upper-lower);
   }
@@ -395,7 +394,7 @@ double ln_normal_tail_right(const double& x)
   double b3=b2*(x2+6);
   double b4=b3*(x2+8);
   double b5=b4*(x2+10);
-  double tmp=lz-log(x) + 
+  double tmp=lz-log(x) +
     log(1.0 -1.0/b1 +1.0/b2 - a3/b3 +a4/b4 -a5/b5);
   return tmp;
 }
@@ -410,12 +409,12 @@ double inv_cumd_norm(const double& x)
   const double d1=1.432788;
   const double d2=0.189269;
   const double d3=0.001308;
-  if (x<=0 || x>=1.0) 
+  if (x<=0 || x>=1.0)
   {
     cerr << "Illegal argument to inv_cumd_norm = " << x << endl;
     return 0;
   }
-   
+
   if (x<0.5)
   {
     double t = sqrt(-2.*log(x));
@@ -432,7 +431,7 @@ double inv_cumd_norm(const double& x)
     double t = sqrt(-2.*log(y));
     double p=t-((c2*t+c1)*t+c0)/((((d3*t+d2)*t+d1)*t)+1);
     return p;
-  } 
+  }
 }
 */
 
@@ -444,12 +443,12 @@ double inv_cumd_norm_ln(const double& x)
   const double d1=1.432788;
   const double d2=0.189269;
   const double d3=0.001308;
-  if (x>=0) 
+  if (x>=0)
   {
     cerr << "Illegal argument to inv_cumd_norm = " << x << endl;
     return 0;
   }
-   
+
   if (x<log(0.5))
   {
     double t = sqrt(-2.*x);
@@ -470,7 +469,7 @@ double inv_cumd_norm_ln(const double& x)
     double t = sqrt(-2.*y);
     double p=t-((c2*t+c1)*t+c0)/((((d3*t+d2)*t+d1)*t)+1);
     return p;
-  } 
+  }
 }
 
 /*
@@ -548,7 +547,7 @@ double log_likelihood_mixture_02(const double& x)
 }
 
 
-double inv_cumd_mixture(const double& zz) 
+double inv_cumd_mixture(const double& zz)
 {
   if (zz<=0.5)
   {
@@ -556,11 +555,11 @@ double inv_cumd_mixture(const double& zz)
     {
       const double beta=0.2000006361;
       const double a1= -1.20100758;
-      const double a2=  0.705759703; 
+      const double a2=  0.705759703;
       const double a3= -0.3969207118;
       const double a4=  0.1013877547;
-      const double b1=  0.4064582431; 
-      const double b2= -1.313226944; 
+      const double b1=  0.4064582431;
+      const double b2= -1.313226944;
       const double b3= -0.4745760236;
       const double b4=  0.8704844718;
       double t=2*zz;
@@ -599,9 +598,9 @@ double inv_cumd_mixture(const double& zz)
   {
     return -inv_cumd_mixture(1-zz);
   }
-}  
- 
-double inv_cumd_mixture_02(const double& zz) 
+}
+
+double inv_cumd_mixture_02(const double& zz)
 {
   if (zz<=0.5)
   {
@@ -652,7 +651,7 @@ double inv_cumd_mixture_02(const double& zz)
   {
     return -inv_cumd_mixture_02(1-zz);
   }
-}  
+}
 
 /*
 dvariable inv_cumd_norm(const prevariable& x)
@@ -663,12 +662,12 @@ dvariable inv_cumd_norm(const prevariable& x)
   const double d1=1.432788;
   const double d2=0.189269;
   const double d3=0.001308;
-  if (x<=0 || x>=1.0) 
+  if (x<=0 || x>=1.0)
   {
     cerr << "Illegal argument to inv_cumd_norm = " << x << endl;
     return 0;
   }
-   
+
   if (x<0.5)
   {
     dvariable t = sqrt(-2.*log(x));
@@ -685,6 +684,6 @@ dvariable inv_cumd_norm(const prevariable& x)
     dvariable t = sqrt(-2.*log(y));
     dvariable p=t-((c2*t+c1)*t+c0)/((((d3*t+d2)*t+d1)*t)+1);
     return p;
-  } 
+  }
 }
 */

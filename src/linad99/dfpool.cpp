@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -21,13 +21,13 @@
 
   void my_do_nothing(void * t){}
 //ofstream xofs("allocation");
-vector_shape_pool * vector_shape::xpool = 
+vector_shape_pool * vector_shape::xpool =
     new vector_shape_pool(sizeof(vector_shape));
 
-vector_shape_pool * vector_shapex::xpool = 
+vector_shape_pool * vector_shapex::xpool =
     new vector_shape_pool(sizeof(vector_shapex));
 
-vector_shape_pool  * arr_link::xpool = 
+vector_shape_pool  * arr_link::xpool =
     new vector_shape_pool (sizeof(arr_link));
 
 vector_shape_pool::vector_shape_pool(void) : dfpool(sizeof(vector_shape))
@@ -46,8 +46,8 @@ vector_shape_pool::vector_shape_pool(int n) : dfpool(n)
  * \param
  */
 void * vector_shape::operator new(size_t n)
-{  
-  if (xpool==0) 
+{
+  if (xpool==0)
   {
     xpool=new vector_shape_pool(sizeof(vector_shape));
   }
@@ -58,7 +58,7 @@ void * vector_shape::operator new(size_t n)
     ad_exit(1);
   }
 # endif
-  return xpool->alloc(); 
+  return xpool->alloc();
 }
 
 /**
@@ -66,8 +66,8 @@ void * vector_shape::operator new(size_t n)
  * \param
  */
 void * arr_link::operator new(size_t n)
-{  
-  if (xpool==0) 
+{
+  if (xpool==0)
   {
     xpool=new vector_shape_pool(sizeof(vector_shape));
   }
@@ -78,7 +78,7 @@ void * arr_link::operator new(size_t n)
     ad_exit(1);
   }
 # endif
-  return xpool->alloc(); 
+  return xpool->alloc();
 }
 
 /**
@@ -86,8 +86,8 @@ void * arr_link::operator new(size_t n)
  * \param
  */
 void * vector_shapex::operator new(size_t n)
-{  
-  if (xpool==0) 
+{
+  if (xpool==0)
   {
     xpool=new vector_shape_pool(sizeof(vector_shapex));
   }
@@ -98,7 +98,7 @@ void * vector_shapex::operator new(size_t n)
     ad_exit(1);
   }
 # endif
-  return xpool->alloc(); 
+  return xpool->alloc();
 }
 
 #if defined(__CHECK_MEMORY__)
@@ -151,7 +151,7 @@ void dfpool::sanity_check(void * ptr)
     depth++;
     if (p == ptr)
     {
-      cerr << "both allocated and unallocated memory at entry " 
+      cerr << "both allocated and unallocated memory at entry "
            << depth << endl;
       break;
     }
@@ -336,7 +336,7 @@ void dfpool::free(void * b)
      {
        cout << "trying to deallocate allocated object " << endl;
      }
-   }  
+   }
 #endif
   //cout << "freeing " << b << endl;
   link * p = (link*) b;
@@ -368,7 +368,7 @@ void tsdfpool::free(void * b)
      {
        cout << "trying to deallocate allocated object " << endl;
      }
-   }  
+   }
 #endif
   //cout << "freeing " << b << endl;
   link * p = (link*) b;
@@ -413,7 +413,7 @@ dfpool::dfpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
  * Description not yet available.
  * \param
  */
-dfpool::dfpool(void) 
+dfpool::dfpool(void)
 {
   dfpool_vector_flag=0;
   size=0;
@@ -515,7 +515,7 @@ void dfpool::grow(void)
     maxaddress[num_chunks]=real_start+chunk_size-1;
   }
 #endif
-  if (last_chunk == 0 ) 
+  if (last_chunk == 0 )
   {
     last_chunk=real_start;
     *(char**) real_start=0;
@@ -525,7 +525,7 @@ void dfpool::grow(void)
     *(char**) real_start=last_chunk;
     last_chunk=real_start;
   }
-  
+
 #if defined(__CHECK_MEMORY__)
   if (nalloc>pvalues_size-1)
   {
@@ -559,7 +559,7 @@ void dfpool::clean(void)
          << " you must set the unit size " << endl;
   }
   //const int overhead = 12;
-  
+
   double *ptr=first;
   for (int i=1;i<=nelem;i++)
   {

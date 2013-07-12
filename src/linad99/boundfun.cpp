@@ -91,11 +91,11 @@ dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariabl
     const double l4=log(4.0);
     dvariable ss=0.4999999999999999*sin(x*1.57079632679489661)+0.50;
     t=fmin + diff*ss;
-  
+
   #ifdef USE_BARD_PEN
     double pen=.000001/diff;
     fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
-  #else 
+  #else
     if (x < -.9999)
     {
       fpen+=cube(-0.9999-x);
@@ -175,7 +175,7 @@ dvariable dfboundp(const prevariable& x, double fmin,double fmax)
     }
     return diff*dfy;
   }
-} 
+}
 
 /**
  * Description not yet available.
@@ -206,7 +206,7 @@ double ndfboundp( double x, double fmin, double fmax,const double& fpen)
     }
     return diff*dfy;
   }
-} 
+}
 
 /**
  * Description not yet available.
@@ -261,7 +261,7 @@ double nd2fboundp( double x, double fmin, double fmax,const double& fpen)
     return (boundp(x+1.e-6,fmin,fmax,fpen)-2.*boundp(x,fmin,fmax,fpen)
       +boundp(x-1.e-6,fmin,fmax,fpen))/1.e-12;
   }
-} 
+}
 
 /**
  * Description not yet available.
@@ -279,8 +279,8 @@ double boundp( double x, double fmin, double fmax,const double& _fpen)
     t=fmin + diff*ss;
   #ifdef USE_BARD_PEN
     double pen=.001/diff;
-    fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4); 
-  #else 
+    fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
+  #else
     if (x < -.9999)
     {
       fpen+=(x+0.9999)*(x+0.9999);
@@ -332,7 +332,7 @@ double boundp( double x, double fmin, double fmax,const double& _fpen)
  */
 double boundpin(double x, double fmin, double fmax,double s)
 {
-  return s*boundpin(x,fmin,fmax); 
+  return s*boundpin(x,fmin,fmax);
 }
 
 /**
@@ -381,7 +381,7 @@ double boundpin(double x, double fmin, double fmax)
  */
 double boundpin(const prevariable& x, double fmin, double fmax,double s)
 {
-  return s*boundpin(x,fmin,fmax); 
+  return s*boundpin(x,fmin,fmax);
 }
 
 /**

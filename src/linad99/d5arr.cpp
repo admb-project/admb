@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -25,7 +25,7 @@ double sum(const d5_array& m)
   }
   return tmp;
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -68,7 +68,7 @@ double sum(const d5_array& m)
      }
    }
    else
-   { 
+   {
 #    if defined(SAFE_ALL)
     // cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
 #    endif
@@ -79,7 +79,7 @@ double sum(const d5_array& m)
  * Description not yet available.
  * \param
  */
- d5_array::~d5_array() 
+ d5_array::~d5_array()
  {
    deallocate();
  }
@@ -93,7 +93,7 @@ d5_array& d5_array::operator=(const d5_array& m)
    int mmin=indexmin();
    int mmax=indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   { 
+   {
      cerr << "Incompatible bounds in"
       " d4_array& d4_array:: operator =  (const d4_array& m)"
       << endl;
@@ -154,7 +154,7 @@ void d5_array::allocate(const d5_array& m1)
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "d4_array& d5_array::operator()(int i)", indexmin(), indexmax(), i);
       }
       #endif

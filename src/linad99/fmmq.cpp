@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -16,7 +16,7 @@
  * Description not yet available.
  * \param
  */
-fmmq::fmmq(int nv) : 
+fmmq::fmmq(int nv):
   h(1,(nv*(nv+1))/2),
   w(1,4*nv),
   funval(1,10),
@@ -25,9 +25,9 @@ fmmq::fmmq(int nv) :
   xsave(1,nv),
   gsave(1,nv),
   scale(1,nv),
-  xa(1,nv), 
+  xa(1,nv),
   xb(1,nv),
-  d(1,nv), 
+  d(1,nv),
   ga(1,nv),
   gb(1,nv)
 {

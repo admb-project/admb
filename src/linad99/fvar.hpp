@@ -6,25 +6,25 @@
  *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "New BSD" license
- * 
+ *
  * License:
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -556,8 +556,8 @@ ostream & operator<<(const ostream & istr, const i3_array & z);
 class grad_stack;
 
 /**
- Null class to allow specialized function overloads. 
- Has no members; does nothing. 
+ Null class to allow specialized function overloads.
+ Has no members; does nothing.
  Exists purely to coerce the compiler to generate a specific function call.
  */
 class kkludge_object{};
@@ -1074,7 +1074,7 @@ void arr_free(double_and_int *);
 double_and_int *arr_new(unsigned int sz);
 
 /**
- * class for things related to the gradient structures, including dimension of 
+ * class for things related to the gradient structures, including dimension of
  * arrays, size of buffers, etc.
  */
 class gradient_structure
@@ -1290,7 +1290,7 @@ class dlist
    dlist();			// constructor
    void check_list(void);	// check list integrity
    ~dlist();			// destructor
-   dlink *create();		//create a new link 
+   dlink *create();		//create a new link
    void free_remove(dlink * rem);
    dlink *append(dlink *);	// add a link
    dlink *last_remove();
@@ -1314,9 +1314,9 @@ class dlist
 class indvar_offset_list;
 
 /**
-  Holds derivative information for arithmetic operators and math library 
-  functions. 
-  Used to record gradient information on the gradient stack for processing 
+  Holds derivative information for arithmetic operators and math library
+  functions.
+  Used to record gradient information on the gradient stack for processing
   by gradcalc().
  */
 class grad_stack_entry
@@ -1973,7 +1973,7 @@ class dvariable:public prevariable
 #  define double dd_real
 #endif
    dvariable(const dvariable &);
-//#  if (__BORLANDC__  > 0x0520) 
+//#  if (__BORLANDC__  > 0x0520)
 //     dvariable& operator+=(const prevariable&);
 //#  endif
 
@@ -2254,8 +2254,8 @@ class vector_shapex
       index_max(ub), ncopies(0), trueptr(p)
    {
    }
-   /// Returns address of first element in the vector. 
-   void *get_truepointer(void) 
+   /// Returns address of first element in the vector.
+   void *get_truepointer(void)
    {
       return trueptr;
    }
@@ -2281,10 +2281,10 @@ class vector_shapex
    in the destructor.
    */
    unsigned int ncopies;
-   /** Address of first element in the vector. 
+   /** Address of first element in the vector.
    Value set in allocate(...) function. */
    void *trueptr;
-   
+
  private:
    friend class subdvector;
    friend class lvector;
@@ -2349,7 +2349,7 @@ class predvar_vector
 
 /** Vector of double precision numbers.
 A basic container class for a one dimensional array of double precision
-floating point numbers. 
+floating point numbers.
 Fundamental building block for higher dimensional arrays.
 All ADMB vector classes have similar functionality.
 */
@@ -2357,7 +2357,7 @@ class dvector
 {
  protected:
    double *v;			///< pointer to the data
-   int index_min;		///< minimum valid subscript 
+   int index_min;		///< minimum valid subscript
    int index_max;		///< maximum valid subscript
    /// pointer to vector "shape"
 #if defined(THREAD_SAFE)
@@ -4374,23 +4374,23 @@ class uostream:public ofstream
 
  // inline void uostream::open(const char* name, int m, int prot)
  // {
- // #if defined (__TURBOC__) &&   (__BORLANDC__  <= 0x0520) 
+ // #if defined (__TURBOC__) &&   (__BORLANDC__  <= 0x0520)
  //   fstreambase::open(name, m, prot);
  // #endif
- // #if (__BORLANDC__  >= 0x0540 && __BORLANDC__  <= 0x0550) 
+ // #if (__BORLANDC__  >= 0x0540 && __BORLANDC__  <= 0x0550)
  //   ofstream::open(name, m, prot);
  // #else
  // #  if defined(linux)
- // #    if (__GNUC__  >= 3) 
+ // #    if (__GNUC__  >= 3)
  //        ofstream::open(name, std::_Ios_Openmode(m));
  // #    else
  //        ofstream::open(name, m);
- // #    endif     
+ // #    endif
  // #  else
  //      ofstream::open(name, m);
  // #  endif
  // #endif
- // 
+ //
  // #ifdef __MSVC32__
  // #  if (__MSVC32__>=8)
  //   ofstream::open(name, m);
@@ -4517,7 +4517,7 @@ class uistream:public ifstream
 
   // inline void   uistream::open(const char* name, int m, int prot)
   // {
-  // #if defined(__TURBOC__) && (__BORLANDC__  <= 0x0520) 
+  // #if defined(__TURBOC__) && (__BORLANDC__  <= 0x0520)
   //   fstreambase::open(name, m, prot);
   // #endif
   // #ifdef __ZTC__
@@ -8870,7 +8870,7 @@ class number_index:public ad_integer, public index_guts
  number_index(int i):ad_integer(i)
    {
    }
-   // only overload this for number_index ... will fail for other classes 
+   // only overload this for number_index ... will fail for other classes
    virtual operator  int ()
    {
       return d;
@@ -9363,7 +9363,7 @@ ostream & operator<<(const ostream & ofs,
 ostream & operator<<(const ostream & ofs,
 		     const banded_lower_triangular_dvar_matrix & S);
 
-// check to see how this is transposed before using 
+// check to see how this is transposed before using
 dmatrix solve(const banded_symmetric_dmatrix & m, const dmatrix & M);
 dmatrix solve(const dmatrix & m, const dmatrix & M);
 dvector solve(const banded_symmetric_dmatrix & m, const dvector & v);
@@ -9700,7 +9700,7 @@ class double_index:public ad_double, public double_index_guts
  double_index(double i):ad_double(i)
    {
    }
-   // only overload this for number_index ... will fail for other classes 
+   // only overload this for number_index ... will fail for other classes
    virtual operator  double ()
    {
       return d;
@@ -10250,8 +10250,8 @@ extern "C"
 	       ivector & rchlnk, ivector & mrglnk, ivector & marker,
 	       int *flag__);
 
-//  int smbfct_(int *neqns, int *xadj, int *adjncy, 
-//      int *perm, int *invp, int *xlnz, int *maxlnz, int 
+//  int smbfct_(int *neqns, int *xadj, int *adjncy,
+//      int *perm, int *invp, int *xlnz, int *maxlnz, int
 //      *xnzsub, int *nzsub, int *maxsub, int *rchlnk, int *
 //      mrglnk, int *marker, int *flag__);
 #ifdef __cplusplus
@@ -10514,10 +10514,10 @@ class hs_symbolic		// Info for symbolic cholesky
  public:
    int n;			// Dimension of underlying pos. def. matrix
    int m;			// Dimension of underlying pos. def. matrix
-   ivector pinv;		// inverse row perm. for QR, fill red. perm for Chol 
-   ivector parent;		// elimination tree for Cholesky and QR 
-   ivector cp;			// column pointers for Cholesky, row counts for QR 
-   double lnz;			// # entries in L for LU or Cholesky; in V for QR 
+   ivector pinv;		// inverse row perm. for QR, fill red. perm for Chol
+   ivector parent;		// elimination tree for Cholesky and QR
+   ivector cp;			// column pointers for Cholesky, row counts for QR
+   double lnz;			// # entries in L for LU or Cholesky; in V for QR
    hs_symbolic(int, css *);
    hs_symbolic(int n, dmatrix & T, int order);
    hs_symbolic(const dcompressed_triplet & T, int order);

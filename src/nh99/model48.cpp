@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -14,7 +14,7 @@
  param_init_bounded_number_vector::param_init_bounded_number_vector(): v(NULL), it(NULL)
  {
  }
-     
+
  param_init_bounded_number_vector::~param_init_bounded_number_vector()
  {
    deallocate();
@@ -86,7 +86,7 @@ void param_init_number_vector::set_scalefactor(const dvector& s)
   int mmax=indexmax();
   if (s.indexmin()!=mmin || s.indexmax() != mmax)
   {
-    cerr << "non matching vector bounds in" 
+    cerr << "non matching vector bounds in"
      " init_number_vector::set_scalefactor" << endl;
     ad_exit(1);
   }
@@ -126,7 +126,7 @@ void param_init_vector_vector::set_scalefactor(const dvector& s)
   int mmax=indexmax();
   if (s.indexmin()!=mmin || s.indexmax() != mmax)
   {
-    cerr << "non matching vector bounds in" 
+    cerr << "non matching vector bounds in"
      " init_vector_vector::set_scalefactor" << endl;
     ad_exit(1);
   }
@@ -167,7 +167,7 @@ void param_init_matrix_vector::set_scalefactor(const dvector& s)
   int mmax=indexmax();
   if (s.indexmin()!=mmin || s.indexmax() != mmax)
   {
-    cerr << "non matching vector bounds in" 
+    cerr << "non matching vector bounds in"
      " init_matrix_vector::set_scalefactor" << endl;
     ad_exit(1);
   }
@@ -207,7 +207,7 @@ void param_init_bounded_number_vector::set_scalefactor(const dvector& s)
   int mmax=indexmax();
   if (s.indexmin()!=mmin || s.indexmax() != mmax)
   {
-    cerr << "non matching vector bounds in" 
+    cerr << "non matching vector bounds in"
      " init_bounded_number_vector::set_scalefactor" << endl;
     ad_exit(1);
   }
@@ -247,7 +247,7 @@ void param_init_bounded_vector_vector::set_scalefactor(const dvector& s)
   int mmax=indexmax();
   if (s.indexmin()!=mmin || s.indexmax() != mmax)
   {
-    cerr << "non matching vector bounds in" 
+    cerr << "non matching vector bounds in"
      " init_bounded_vector_vector::set_scalefactor" << endl;
     ad_exit(1);
   }
@@ -288,7 +288,7 @@ void param_init_bounded_matrix_vector::set_scalefactor(const dvector& s)
   int mmax=indexmax();
   if (s.indexmin()!=mmin || s.indexmax() != mmax)
   {
-    cerr << "non matching vector bounds in" 
+    cerr << "non matching vector bounds in"
      " init_bounded_matrix_vector::set_scalefactor" << endl;
     ad_exit(1);
   }

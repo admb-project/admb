@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -164,7 +164,7 @@ ivector& ivector::operator=(const ivector& t)
                  " =(const ivector&)" << endl;
          ad_exit(1);
        }
-  
+
        for ( int i=indexmin(); i<=indexmax(); i++)
        {
          elem(i) = t.elem(i);

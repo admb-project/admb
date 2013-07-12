@@ -154,7 +154,7 @@ double spline_cubic_val(int n, const dvector& t, double tval,
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -261,7 +261,7 @@ double *d3_np_fs(int n, const dvector& _a, const dvector& _b)
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -418,12 +418,12 @@ dvector spline_cubic_set(int n, const dvector& t, const dvector& y, int ibcbeg,
 //      6 * ( Y(IVAL+1) - Y(IVAL) ) / H(IVAL)
 //      - 6 * ( Y(IVAL) - Y(IVAL-1) ) / H(IVAL-1)
 //
-//    Boundary conditions must be applied at the first and last knots.  
+//    Boundary conditions must be applied at the first and last knots.
 //    The resulting tridiagonal system can be solved for the YPP values.
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //

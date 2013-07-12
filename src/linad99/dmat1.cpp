@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -53,7 +53,7 @@ dvector operator*(const dvector& x, const dmatrix& m)
      }
 #endif
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.
@@ -98,7 +98,7 @@ dvector operator*(const dmatrix& m, const dvector& x)
      }
 #endif
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.
@@ -125,7 +125,7 @@ dvector operator*(const dmatrix& m, const dvector& x)
      }
    }
    return(tmp);
- }      
+ }
 
 /*
 
@@ -168,6 +168,6 @@ dmatrix operator*(const dmatrix& m1, const dmatrix& m2 )
    temp_col+=m2.rowmin();
    free ((char*)temp_col);
    return(tmp);
- }      
+ }
 */
 

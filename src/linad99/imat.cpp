@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -93,23 +93,23 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
      allocate();
    }
    else
-   { 
+   {
      index_min=nrl;
      index_max=nrh;
-     
+
      int rs=rowsize();
      if ( (m = new ivector [rs]) == 0)
      {
        cerr << " Error allocating memory in imatrix contructor\n";
        ad_exit(21);
      }
-  
+
      if ( (shape = new mat_shapex(m))== 0)
      {
        cerr << " Error allocating memory in imatrix contructor\n";
        ad_exit(21);
      }
-  
+
      m -= rowmin();
      for (int i=rowmin(); i<=rowmax(); i++)
      {
@@ -136,7 +136,7 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
      allocate();
    }
    else
-   { 
+   {
      index_min=nrl;
      index_max=nrh;
      int rs=rowsize();
@@ -145,13 +145,13 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
        cerr << " Error allocating memory in imatrix contructor\n";
        ad_exit(21);
      }
-  
+
      if ( (shape = new mat_shapex(m))== 0)
      {
        cerr << " Error allocating memory in imatrix contructor\n";
        ad_exit(21);
      }
-  
+
      m -= rowmin();
      for (int i=rowmin(); i<=rowmax(); i++)
      {
@@ -183,7 +183,7 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
      allocate();
    }
    else
-   { 
+   {
      index_min=nrl;
      index_max=nrh;
      int rs=rowsize();
@@ -222,7 +222,7 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
      allocate();
    }
    else
-   { 
+   {
      index_min=nrl;
      index_max=nrh;
      int rs=rowsize();

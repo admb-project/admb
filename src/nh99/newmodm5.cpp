@@ -2,13 +2,13 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #if defined(USE_LAPLACE)
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
- 
+
 void function_minimizer::prof_minimize_re(int iprof, double sigma,
   double new_value, const double& _fprof,const int underflow_flag,
   double global_min, const double& _penalties, const double& _final_weight)
@@ -29,11 +29,11 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
 // ****************************************************************
 // ****************************************************************
        int unvar=1;
-       initial_params::set_active_only_random_effects(); 
+       initial_params::set_active_only_random_effects();
        //cout << nvar << endl;
        unvar=initial_params::nvarcalc(); // get the number of active
-       initial_params::restore_start_phase(); 
-       initial_params::set_inactive_random_effects(); 
+       initial_params::restore_start_phase();
+       initial_params::set_inactive_random_effects();
        int nvar=initial_params::nvarcalc(); // get the number of active
 
 // ****************************************************************
@@ -91,7 +91,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
     // this turns on random effects variables and turns off
     // everything else
     //cout << nvar << endl;
-    initial_params::set_active_only_random_effects(); 
+    initial_params::set_active_only_random_effects();
     //cout << nvar << endl;
     int unvar=initial_params::nvarcalc(); // get the number of active
     //df1b2_gradlist::set_no_derivatives();
@@ -116,22 +116,22 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
       df1b2variable::adpool_counter=0;
     }
     lapprox=new laplace_approximation_calculator(nvar,unvar,1,nvar+unvar,
-      this); 
+      this);
     if (lapprox==0)
     {
       cerr << "Error allocating memory for lapprox" << endl;
       ad_exit(1);
     }
     initial_df1b2params::current_phase=initial_params::current_phase;
-    
+
     initial_df1b2params::save_varsptr();
     allocate();
     initial_df1b2params::restore_varsptr();
 
     df1b2_gradlist::set_no_derivatives();
-    int nvar=initial_params::nvarcalc_all(); 
+    int nvar=initial_params::nvarcalc_all();
     dvector y(1,nvar);
-    initial_params::xinit_all(y); 
+    initial_params::xinit_all(y);
     initial_df1b2params::reset_all(y);
 
     gradient_structure::set_NO_DERIVATIVES();
@@ -140,7 +140,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
     int on=0;
     int nopt=0;
     //  DF Nov 27 11
-    initial_params::set_inactive_only_random_effects(); 
+    initial_params::set_inactive_only_random_effects();
     nvar=initial_params::nvarcalc(); // get the number of active
 
     if (lapprox->have_users_hesstype==0)
@@ -152,7 +152,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
           lapprox->check_hessian_type2(this);
         }
         else
-        { 
+        {
           lapprox->check_hessian_type(this);
         }
       }
@@ -166,7 +166,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
    */
 
     // linear mixed effects optimization
-    if (laplace_approximation_calculator::variance_components_vector) 
+    if (laplace_approximation_calculator::variance_components_vector)
     {
       if (!lapprox)
       {
@@ -201,7 +201,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
       #if defined(USE_LAPLACE)
         if (lapprox)
         {
-          if (lapprox->hesstype==2) 
+          if (lapprox->hesstype==2)
           {
             //lapprox->num_separable_calls=0;
             lapprox->separable_calls_counter=0;
@@ -220,7 +220,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
         g+=g1;
       }
     }
-    initial_params::set_inactive_only_random_effects(); 
+    initial_params::set_inactive_only_random_effects();
   }
 
 
@@ -247,7 +247,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
       #if defined(USE_LAPLACE)
         if (lapprox)
         {
-          if (lapprox->hesstype==2) 
+          if (lapprox->hesstype==2)
           {
             //lapprox->num_separable_calls=0;
             lapprox->separable_calls_counter=0;

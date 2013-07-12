@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -15,7 +15,7 @@
  * \param
  */
 double colsum(const dmatrix& m, int col)
-{ 
+{
   if (col<m.rowmin() || col>m.rowmax())
   {
     cerr << "Row out of bounds in function"

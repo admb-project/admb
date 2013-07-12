@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -16,7 +16,7 @@
  */
 double dfposfun(const double &x, const double eps)
 {
-  if (x>=eps) 
+  if (x>=eps)
   {
     return 1;
   }
@@ -36,7 +36,7 @@ double dfposfun(const double &x, const double eps)
  */
 double dfposfun1(const double &x, const double eps)
 {
-  if (x>=eps) 
+  if (x>=eps)
   {
     return 0;
   }
@@ -54,7 +54,7 @@ double dfposfun1(const double &x, const double eps)
 double posfun(const double &x, const double eps, const double& _pen)
 {
   double& pen=(double&)_pen;
-  if (x>=eps) 
+  if (x>=eps)
   {
     return x;
   }
@@ -73,7 +73,7 @@ double posfun(const double &x, const double eps, const double& _pen)
 double posfun2(const double &x, const double eps, const double& _pen)
 {
   double& pen=(double&)_pen;
-  if (x>=eps) 
+  if (x>=eps)
   {
     return x;
   }

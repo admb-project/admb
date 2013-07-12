@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -55,7 +55,7 @@ void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
 
     for (i=mmin+1;i<=mmax;i++)
     {
-      integral+=fval(i)*(xs(i)-xs(i-1)); 
+      integral+=fval(i)*(xs(i)-xs(i-1));
     }
     cout << integral << endl;
     do
@@ -82,12 +82,12 @@ void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
         }
         double incr=fval(lb)*xdiff/integral;
         //double incr=fval(lb);
-        if ( incr >= (siglevel(level_index)-isum)) 
+        if ( incr >= (siglevel(level_index)-isum))
         {
           double diff = siglevel(level_index) - isum;
           double delta=diff/incr;
           if (lb>fval.indexmin())
-          { 
+          {
             left_bd(level_index)=xs(lb)-delta*(xdiff);
           }
           else

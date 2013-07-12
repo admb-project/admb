@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -26,8 +26,8 @@ dvar_matrix operator*(const prevariable& x, const dmatrix& m)
   int i;
   for (i=rmin;i<=rmax;i++)
   {
-    cmin(i)=(m(i)).indexmin();  
-    cmax(i)=(m(i)).indexmax();  
+    cmin(i)=(m(i)).indexmin();
+    cmax(i)=(m(i)).indexmax();
   }
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
@@ -55,8 +55,8 @@ dvar_matrix operator*(const dvar_matrix& m,CGNU_DOUBLE x)
   int i;
   for (i=rmin;i<=rmax;i++)
   {
-    cmin(i)=(m(i)).indexmin();  
-    cmax(i)=(m(i)).indexmax();  
+    cmin(i)=(m(i)).indexmin();
+    cmax(i)=(m(i)).indexmax();
   }
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 
@@ -84,8 +84,8 @@ dvar_matrix operator*(CGNU_DOUBLE x, const dvar_matrix& m)
   int i;
   for (i=rmin;i<=rmax;i++)
   {
-    cmin(i)=(m(i)).indexmin();  
-    cmax(i)=(m(i)).indexmax();  
+    cmin(i)=(m(i)).indexmin();
+    cmax(i)=(m(i)).indexmax();
   }
   dvar_matrix tmp(rmin,rmax,cmin,cmax);
 

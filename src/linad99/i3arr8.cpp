@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -12,7 +12,7 @@
 //#include "i3_array.h"
 
 #ifdef USE_CONST
-  #ifndef OPT_LIB 
+  #ifndef OPT_LIB
 
 /**
  * Description not yet available.

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -23,7 +23,7 @@ d7_array operator/(const d7_array& m, CGNU_DOUBLE d)
        tmp(i)=m(i)/d;
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -35,7 +35,7 @@ d7_array operator/(const d7_array& m, CGNU_DOUBLE d)
      {
        (*this)(i)/=d;
      }
-   }  
+   }
 
 /**
  * Description not yet available.

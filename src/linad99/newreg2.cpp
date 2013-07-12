@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -47,7 +47,7 @@ dvariable robust_regression(const dvector& obs, const dvar_vector& pred, const d
  * Description not yet available.
  * \param
  */
-dvariable robust_regression(const dvector& obs, const dvar_vector& pred, 
+dvariable robust_regression(const dvector& obs, const dvar_vector& pred,
   CGNU_DOUBLE a)
 {
   if (obs.indexmin() != pred.indexmin() || obs.indexmax() != pred.indexmax() )

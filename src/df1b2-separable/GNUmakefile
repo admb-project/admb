@@ -17,7 +17,7 @@ tpl2rem.c: lex.yy.c
 	sed -f sedflex lex.yy.c > $@
 
 lex.yy.c: tpl2rem.lex
-	flex -w tpl2rem.lex 
+	flex -w tpl2rem.lex
 
 else
 bins: $(DISKDIR)/bin/tpl2rem

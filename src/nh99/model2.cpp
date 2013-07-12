@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -14,24 +14,24 @@
 
   void stddev_params::add_to_list(void)
   {
-    if (num_stddev_params>=150) 
+    if (num_stddev_params>=150)
     {
       cerr << "This version of ADMB only supports " << num_stddev_params
            << " stddev_params." << endl;
       exit(1);
-    } 
-    stddevptr[num_stddev_params++]= this; // this is the list of 
+    }
+    stddevptr[num_stddev_params++]= this; // this is the list of
   }
 
   void stddev_params::add_to_gui_list(void)
   {
-    if (num_stddev_number_params>=150) 
+    if (num_stddev_number_params>=150)
     {
       cerr << "This version of ADMB only supports " << num_stddev_params
            << " stddev_params." << endl;
       exit(1);
-    } 
-    stddev_number_ptr[num_stddev_number_params++]= this; // this is the list of 
+    }
+    stddev_number_ptr[num_stddev_number_params++]= this; // this is the list of
   }
 
   ivector stddev_params::copy_all_number_offsets(void)

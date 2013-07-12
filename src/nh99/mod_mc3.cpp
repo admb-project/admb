@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -51,8 +51,7 @@ void multivariate_mixture(const dvector& _mix, int nvar, long int& iseed,
   const double pr2=log(PI*r2);
   log_density_normal=0.0;
   log_density_cauchy=0.0;
-  
- 
+
   if (is==0)
   {
     for (int i=1;i<=nvar;i++)
@@ -63,10 +62,10 @@ void multivariate_mixture(const dvector& _mix, int nvar, long int& iseed,
         u = better_rand(iseed);
       }
       while (u<.0001 || u>.9999);
-      mix(i) = inv_cumd_norm(u); 
+      mix(i) = inv_cumd_norm(u);
       log_density_normal-= l2p +.5*mix(i)*mix(i);
       log_density_small_normal-= l3p +4.5*mix(i)*mix(i);
-      log_density_cauchy+= -pr2 + 1./(1.+mix(i)*mix(i)); 
+      log_density_cauchy+= -pr2 + 1./(1.+mix(i)*mix(i));
     }
   }
   else if (is==2)
@@ -79,10 +78,10 @@ void multivariate_mixture(const dvector& _mix, int nvar, long int& iseed,
         u = better_rand(iseed);
       }
       while (u<.0001 || u>.9999);
-      mix(i) = inv_cumd_norm(u); 
+      mix(i) = inv_cumd_norm(u);
       mix(i)/=3;
       log_density_normal-= l2p +.5*mix(i)*mix(i);
-      log_density_cauchy+= -pr2 + 1./(1.+mix(i)*mix(i)); 
+      log_density_cauchy+= -pr2 + 1./(1.+mix(i)*mix(i));
       log_density_small_normal-= l3p +4.5*mix(i)*mix(i);
     }
   }
@@ -96,10 +95,10 @@ void multivariate_mixture(const dvector& _mix, int nvar, long int& iseed,
         u = better_rand(iseed);
       }
       while (u<.0001 || u>.9999);
-      mix(i) = inv_cumd_cauchy(u); 
+      mix(i) = inv_cumd_cauchy(u);
       log_density_normal-= l2p +.5*mix(i)*mix(i);
       log_density_small_normal-= l3p +4.5*mix(i)*mix(i);
-      log_density_cauchy+= -pr2 + 1./(1.+mix(i)*mix(i)); 
+      log_density_cauchy+= -pr2 + 1./(1.+mix(i)*mix(i));
     }
   }
   else
@@ -108,12 +107,12 @@ void multivariate_mixture(const dvector& _mix, int nvar, long int& iseed,
     {
       double u=0.5;
       while (u<.0001 || u>.9999);
-      mix(i) = inv_cumd_cauchy(u); 
+      mix(i) = inv_cumd_cauchy(u);
       log_density_normal-= l2p +.5*mix(i)*mix(i);
       log_density_small_normal-= l3p +4.5*mix(i)*mix(i);
-      log_density_cauchy+= -pr2 + 1./(1.+mix(i)*mix(i)); 
+      log_density_cauchy+= -pr2 + 1./(1.+mix(i)*mix(i));
     }
-  }  
+  }
 }
 
 double set_value_inv_mc(const prevariable& z,double min, double max)

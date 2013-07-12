@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -76,7 +76,7 @@
 
 #endif
 
-#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__)  
+#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__)
   void gotoxy(int x, int y) { ; }
 
 /**
@@ -110,16 +110,15 @@ void fmmdisp(const dvector& x, const dvector& g,
   {
     int      headings = 3;     /* number of heading lines */
     int      cols = 3;     /* number of columns to display  */
-  
+
     int      rownum;       /* row number to print */
     //static int colnum[3] = {1, 28, 55}; /* position in line for each column */
     int      i, j, ij;
     int      imax;         /* number of lines to display */
     int      wmax;         /* number of lines in current window */
-  
-  
+
     char     colhead[30];
-  
+
     char format[20];
     char format1[20];
     char format2[20];
@@ -144,7 +143,7 @@ void fmmdisp(const dvector& x, const dvector& g,
       strcpy(format3,"%3d%9.2lf %12.5le");
               /*  12345678901234567 */
     #endif
-  
+
     wmax = 22;
     strcpy(colhead,"Var   Value    Gradient   ");
     if (ad_printf) (*ad_printf)("%26s|%26s|%26s\n",colhead,colhead,colhead);
@@ -153,8 +152,7 @@ void fmmdisp(const dvector& x, const dvector& g,
     if ( (scroll_flag == 0) && (imax > wmax-headings) )
       imax = wmax - headings - 1;
     rownum = headings;
-  
-    
+
     for (i=1; i<=imax; i++)
     {
       for (j=0; j<cols; j++)
@@ -163,19 +161,19 @@ void fmmdisp(const dvector& x, const dvector& g,
         if (ij <= nvar)
         {
 	  if (fabs(x[ij])<100)
-	  {  
+	  {
             if (ad_printf) (*ad_printf)(format, ij, x[ij], g[ij]);
 	  }
 	  else if (fabs(x[ij])<1000)
-	  {  
+	  {
             if (ad_printf) (*ad_printf)(format1, ij, x[ij], g[ij]);
 	  }
 	  else if (fabs(x[ij])<10000)
-	  {  
+	  {
             if (ad_printf) (*ad_printf)(format2, ij, x[ij], g[ij]);
 	  }
 	  else
-	  {  
+	  {
             if (ad_printf) (*ad_printf)(format3, ij, x[ij], g[ij]);
 	  }
           if (j<cols-1)
@@ -188,8 +186,8 @@ void fmmdisp(const dvector& x, const dvector& g,
     }  // i loop
     if (ad_printf) fflush(stdout);
   }
-} 
-  
+}
+
 /**
  * Description not yet available.
  * \param
@@ -201,16 +199,15 @@ void fmmdisp(const double *x, const double *g,
   {
     int      headings = 3;     /* number of heading lines */
     int      cols = 3;     /* number of columns to display  */
-  
+
     int      rownum;       /* row number to print */
     //static int colnum[3] = {1, 28, 55}; /* position in line for each column */
     int      i, j, ij;
     int      imax;         /* number of lines to display */
     int      wmax;         /* number of lines in current window */
-  
-  
+
     char     colhead[30];
-  
+
     char format[30];
     char format1[30];
     char format2[30];
@@ -235,7 +232,7 @@ void fmmdisp(const double *x, const double *g,
       strcpy(format3,"%3d%9.2lf            ");
               /*  12345678901234567 */
     #endif
-  
+
     wmax = 22;
     strcpy(colhead,"Var   Value               ");
     if (ad_printf) (*ad_printf)("%26s|%26s|%26s\n",colhead,colhead,colhead);
@@ -244,8 +241,7 @@ void fmmdisp(const double *x, const double *g,
     if ( (scroll_flag == 0) && (imax > wmax-headings) )
       imax = wmax - headings - 1;
     rownum = headings;
-  
-    
+
     for (i=1; i<=imax; i++)
     {
       for (j=0; j<cols; j++)
@@ -254,19 +250,19 @@ void fmmdisp(const double *x, const double *g,
         if (ij <= nvar)
         {
 	  if (fabs(x[ij])<100)
-	  {  
+	  {
             if (ad_printf) (*ad_printf)(format, ij, x[ij]);
 	  }
 	  else if (fabs(x[ij])<1000)
-	  {  
+	  {
             if (ad_printf) (*ad_printf)(format1, ij, x[ij]);
 	  }
 	  else if (fabs(x[ij])<10000)
-	  {  
+	  {
             if (ad_printf) (*ad_printf)(format2, ij, x[ij]);
 	  }
 	  else
-	  {  
+	  {
             if (ad_printf) (*ad_printf)(format3, ij, x[ij]);
 	  }
           if (j<cols-1)
@@ -279,9 +275,8 @@ void fmmdisp(const double *x, const double *g,
     }  // i loop
     if (ad_printf) fflush(stdout);
   }
-} 
-  
-  
+}
+
 //void fmmdisp(const dvector& x, const dvector& g,
 //             const int& nvar, int scroll_flag)
 //{
@@ -358,7 +353,7 @@ void fmmdisp(const double *x, const double *g,
 //      ij = cols*(i-1)+(j+1);
 //      if (ij <= nvar)
 //      {
-//#if !defined(__NDPX__) && !defined(__SUN__)  && !defined(__SUN__) 
+//#if !defined(__NDPX__) && !defined(__SUN__)  && !defined(__SUN__)
 //        gotoxy(colnum[j], rownum);
 //#endif
 //        if (ad_printf) (*ad_printf)(format, ij, x[ij], g[ij]);
@@ -368,7 +363,7 @@ void fmmdisp(const double *x, const double *g,
 //        }
 //      }
 //    } // j loop
-//#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__) 
+//#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__)
 //    if (ad_printf) (*ad_printf)("\n");
 //#endif
 //  }  // i loop

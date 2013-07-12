@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -367,7 +367,7 @@ dmatrix::dmatrix(const dmatrix& m2)
    {
      cerr << "Making a copy of an unallocated dmatrix"<<endl;
    }
-#endif 
+#endif
    m = m2.m;
  }
 
@@ -389,7 +389,7 @@ void dmatrix::shallow_copy(const dmatrix& m2)
    {
      cerr << "Making a copy of an unallocated dmatrix"<<endl;
    }
-#endif 
+#endif
    m = m2.m;
  }
 
@@ -417,7 +417,7 @@ dvector cube(const dvector& m)
        tmp(i)=cube(m(i));
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -432,7 +432,7 @@ dmatrix cube(const dmatrix& m)
        tmp(i)=cube(m(i));
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -460,18 +460,18 @@ dmatrix cube(const dmatrix& m)
        delete shape;
        shape=NULL;
      }
-  
+
    }
    if (testflag)
    {
      cout << " B " << ycounter << endl;
      test_the_pointer();
    }
-     
+
 #ifdef  SAFE_ARRAYS
    else
    {
      //cerr << "Warning -- trying to deallocate an unallocated dmatrix"<<endl;
    }
-#endif 
+#endif
  }

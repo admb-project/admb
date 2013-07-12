@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -236,14 +236,14 @@ void set_value_inv_partial(const dvector& x,const dvector& _v, const int& _ii, i
  * Description not yet available.
  * \param
  */
-void set_value_inv_partial(const dvar_matrix& x, const dvector& _v, 
+void set_value_inv_partial(const dvar_matrix& x, const dvector& _v,
   const int& _ii, int n)
 {
   int mmin=x.indexmin();
   int mmax=x.indexmax();
   for (int i=mmin;i<=mmax;i++)
   {
-    set_value_inv_partial(x(i),_v,_ii,n); 
+    set_value_inv_partial(x(i),_v,_ii,n);
   }
 }
 
@@ -251,7 +251,7 @@ void set_value_inv_partial(const dvar_matrix& x, const dvector& _v,
  * Description not yet available.
  * \param
  */
-void set_value_inv_partial(const dvar_vector& x, const dvector& _v, 
+void set_value_inv_partial(const dvar_vector& x, const dvector& _v,
   const int& _ii, int n)
 {
   int& ii=(int&) _ii;

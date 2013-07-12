@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -208,7 +208,7 @@ void dfcholeski_decomp_positive(void)
     dftmp(i)=dfptmp(i)*dfposfun(tmp(i),eps);
     dftmp(i)+=dfpen*dfposfun1(tmp(i),eps);
     dfptmp(i)=0.0;
-    
+
     for (k=i-1;k>=1;k--)
     {
       //tmp(i)-=L(i,k)*L(i,k);
@@ -255,7 +255,6 @@ void dfcholeski_decomp_positive(void)
  //*******************************************************************8
  //*******************************************************************8
  //*******************************************************************8
-  
   dfM.rowshift(rowsave);
   dfM.colshift(colsave);
 

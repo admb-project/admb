@@ -32,7 +32,7 @@ dvariable ln_det(const dvar_matrix& a)
   int sgn;
   return ln_det(a,sgn);
 }
-/** 
+/**
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2

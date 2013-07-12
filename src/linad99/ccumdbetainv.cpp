@@ -30,7 +30,7 @@ double inv_cumd_beta_stable(double a,double b,double y,double eps)
     cerr << "Illegal value in inv_cumd_beta" << endl;
     ad_exit(1);
   }
- 
+
   double mu=a/(a+b);
   double x=mu;
   if (x<=eps)
@@ -98,7 +98,7 @@ double inv_cumd_beta_stable(double a,double b,double y,double eps)
       else
         s=stry;
     }
-    else 
+    else
     if (h>0.0)
     {
       if (stry>upper)
@@ -113,9 +113,8 @@ double inv_cumd_beta_stable(double a,double b,double y,double eps)
 
   return x;
 }
-  
+
 /*
-  
 main()
 {
   double eps=0.000001;

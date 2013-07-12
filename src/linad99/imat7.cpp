@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -32,7 +32,7 @@ int sum(const imatrix& m)
  * \param
  */
 int colsum(const imatrix& m, int col)
-{ 
+{
   if (col < m.colmin() || col > m.colmax())
   {
     //JCA: Should be Column out of bounds
@@ -53,7 +53,7 @@ int colsum(const imatrix& m, int col)
  * \param
  */
 ivector column(const imatrix& m, int col)
-{ 
+{
   if (col < m.colmin() || col > m.colmax())
   {
     //JCA: Should be Column out of bounds

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -23,9 +23,9 @@
 
     #define lseek _lseek
     #define  read _read
-    #define write _write 
+    #define write _write
     #define open _open
-    #define close _close 
+    #define close _close
 
   #endif
 
@@ -66,9 +66,9 @@
   #ifdef __MSC__
     #define lseek _lseek
     #define  read _read
-    #define write _write 
+    #define write _write
     #define open _open
-    #define close _close 
+    #define close _close
   #endif
   #ifndef __MSVC32__
     #include <unistd.h>
@@ -97,7 +97,7 @@
   int n;
 public:
   double * getminp(void){ return minp;}
-  int size(void) {return n;} 
+  int size(void) {return n;}
   dfsdmat(int n);
   dfsdmat();
   allocate(n);
@@ -171,9 +171,9 @@ void dfsdmat::allocate(int _n)
     m[i]=tmp-1;
     tmp+=i;
   }
-  tmp_file=NULL; 
+  tmp_file=NULL;
   /*
-  if (!tmp_file) 
+  if (!tmp_file)
   {
     tmp_file=open("fmm_tmp.tmp", O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);
@@ -184,7 +184,7 @@ void dfsdmat::allocate(int _n)
     }
   }
    */
-}  
+}
 
 /**
  * Description not yet available.
@@ -233,7 +233,7 @@ dfsdmat::~dfsdmat()
  */
 void dfsdmat::deallocate()
 {
-  if (ptr && !shared_memory) 
+  if (ptr && !shared_memory)
   {
     delete [] ptr;
     ptr=NULL;
@@ -250,7 +250,7 @@ void dfsdmat::deallocate()
     close(tmp_file);
     tmp_file=0;
   }
-}  
+}
 
 #if !defined(OPT_LIB) || defined(__INTEL_COMPILER)
 
@@ -301,7 +301,7 @@ uostream& operator<<(const uostream& ofs, const dfsdmat& m)
     (uostream&)ofs << *p++;
   }
   return (uostream&)ofs;
-} 
+}
 
 /**
  * Description not yet available.
@@ -319,7 +319,7 @@ uistream& operator>>(const uistream& _ifs, const dfsdmat& _m)
     ifs >> *p++;
   }
   return ifs;
-} 
+}
 
 /**
  * Description not yet available.
@@ -327,7 +327,7 @@ uistream& operator>>(const uistream& _ifs, const dfsdmat& _m)
  */
 void dfsdmat::save()
 {
-  if (!tmp_file) 
+  if (!tmp_file)
   {
     tmp_file=open("fmm_tmp.tmp", O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);
@@ -342,13 +342,13 @@ void dfsdmat::save()
   lseek(tmp_file,0L,SEEK_SET);
   write(tmp_file,&_n,sizeof(int));
   int num_bytes=write(tmp_file,ptr,nn*sizeof(double));
-  if (num_bytes < nn) 
+  if (num_bytes < nn)
   {
     cerr << "Error writing to temporary hess file in dfsdmat::save()"
          << endl;
   }
   /*
-  if (const ptr && !shared_memory) 
+  if (const ptr && !shared_memory)
   {
     delete [] ptr;
     ptr=NULL;
@@ -375,7 +375,7 @@ void dfsdmat::restore()
   int nn=(_n*(_n+1))/2;
   //if (!shared_memory) allocate(_n);
   int num_bytes=read(tmp_file,ptr,nn*sizeof(double));
-  if (num_bytes < nn) 
+  if (num_bytes < nn)
   {
     cerr << "Error reading from temporary hess file in dfsdmat::save()"
          << endl;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -10,7 +10,7 @@
 
 #if !defined(BIG_INIT_PARAMS)
   const int initial_params::max_num_initial_params=4000;
-#  if (__BORLANDC__  >= 0x0550) 
+#  if (__BORLANDC__  >= 0x0550)
  initial_params * initial_params::varsptr[4001]; // this should be a resizeable array
 #  else
  initial_params * initial_params::varsptr[initial_params::max_num_initial_params+1]; // this should be a resizeable array
@@ -29,10 +29,10 @@
  int ADqd_flag=0;
 
  double initial_params::get_scalefactor(void)
- { 
+ {
    return scalefactor;
  }
- void initial_params::set_scalefactor(const double sf) 
+ void initial_params::set_scalefactor(const double sf)
  {
    scalefactor=sf;
  }
@@ -45,12 +45,12 @@
 
   int withinbound(int lb,int n,int ub)
   {
-    if (lb<=n && n<=ub) 
+    if (lb<=n && n<=ub)
       return 1;
-    else 
+    else
      return 0;
   }
-  
+
   initial_params::~initial_params()
   {
     num_initial_params--;
@@ -62,7 +62,7 @@
     }
 #  endif
   }
-  
+
 extern int* pointer_to_phase;
   initial_params::initial_params(void)
   {
@@ -128,7 +128,7 @@ extern int* pointer_to_phase;
         " objects" << endl;
       ad_exit(1);
     }
-    varsptr[num_initial_params++]= this; // this is the list of 
+    varsptr[num_initial_params++]= this; // this is the list of
                                          // fundamental objects
   }
 
@@ -154,7 +154,7 @@ int initial_params::correct_for_dev_objects(const dmatrix& H)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
 #  if defined(USE_SHARE_FLAGS)
-       if (varsptr[i]->share_flags !=0)  
+       if (varsptr[i]->share_flags !=0)
        {
           nvar+=(varsptr[i])->shared_size_count();
        }
@@ -228,13 +228,13 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
 #  if defined(USE_SHARE_FLAGS)
-       if (varsptr[i]->share_flags !=0)  
+       if (varsptr[i]->share_flags !=0)
        {
           (varsptr[i])->shared_set_value_inv(x,ii);
        }
        else
        {
-#  endif 
+#  endif
          if (withinbound(0,(varsptr[i])->phase_start,current_phase))
          {
            (varsptr[i])->set_value_inv(x,ii);
@@ -242,7 +242,7 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
          }
 #  if defined(USE_SHARE_FLAGS)
         }
-#  endif 
+#  endif
     }
   }
 
@@ -319,7 +319,7 @@ dvariable initial_params::reset(const dvar_vector& x, const dvector& __pen)
       {
         (varsptr[i])->set_value(x,ii,pen1);
         _pen(ii-1)=value(pen1);
-        pen+=pen1; 
+        pen+=pen1;
       }
     }
     return pen;
@@ -347,19 +347,19 @@ dvariable initial_params::reset(const dvar_vector& x)
     for (int i=0;i<num_initial_params;i++)
     {
 #  if defined(USE_SHARE_FLAGS)
-      if (varsptr[i]->share_flags !=0)  
+      if (varsptr[i]->share_flags !=0)
       {
          (varsptr[i])->shared_set_value(x,ii,pen);
       }
       else
       {
-#  endif 
+#  endif
         //if ((varsptr[i])->phase_start <= current_phase)
         if (withinbound(0,(varsptr[i])->phase_start,current_phase))
         (varsptr[i])->set_value(x,ii,pen);
 #  if defined(USE_SHARE_FLAGS)
       }
-#  endif 
+#  endif
     }
     return pen;
   }
@@ -405,7 +405,7 @@ dvariable initial_params::reset(const dvector& x)
         *(ad_comm::global_savefile) <<  "  Maximum gradient component = "
            << objective_function_value::gmax << endl;
         *(ad_comm::global_savefile) << setshowpoint();
-        
+
         for (int i=0;i<num_initial_params;i++)
         {
            (varsptr[i])->save_value();
@@ -417,7 +417,7 @@ dvariable initial_params::reset(const dvector& x)
     {
       adstring tadstring=ad_comm::adprogram_name + adstring(".b") + tmp;
       ad_comm::global_bsavefile = new uostream((char*)tadstring);
-      
+
       if (ad_comm::global_bsavefile)
       {
         for (int i=0;i<num_initial_params;i++)
@@ -509,7 +509,7 @@ void param_init_number::set_value_inv(const dvector& x, const int& ii)
     }
     else
     {
-      if ((!initial_value_flag) || initial_value <=minb 
+      if ((!initial_value_flag) || initial_value <=minb
            || initial_value >= maxb)
       {
         prevariable::operator=((minb+maxb)/2.);
@@ -843,11 +843,11 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
       {
         set_value_inv_mc(*this,x,ii,minb,maxb);
       }
-      else 
+      else
       {
         if (!scalefactor)
           ::set_value_inv(*this,x,ii,minb,maxb);
-        else 
+        else
           ::set_value_inv(*this,x,ii,minb,maxb,scalefactor);
       }
     }
@@ -901,11 +901,11 @@ void param_init_bounded_vector::set_value(const dvar_vector& x,
       }
       else
       {
-        if ((!initial_value_flag) || initial_value <=minb 
+        if ((!initial_value_flag) || initial_value <=minb
              || initial_value >= maxb)
         {
-          initial_value=(minb+maxb)/2.; 
-        } 
+          initial_value=(minb+maxb)/2.;
+        }
         dvar_vector::operator=(initial_value);
       }
     }
@@ -955,7 +955,7 @@ void param_init_matrix::set_value_inv(const dvector& x, const int& ii)
       ::set_value_inv(*this,x,ii,scalefactor);
   }
 
-  param_init_matrix::param_init_matrix() : named_dvar_matrix() , 
+  param_init_matrix::param_init_matrix() : named_dvar_matrix() ,
     initial_params()
   {
     //add_to_list();
@@ -969,7 +969,7 @@ void param_init_matrix::set_value_inv(const dvector& x, const int& ii)
   void param_init_matrix::save_value(void)
   {
     if (!(!(*this)))
-      *(ad_comm::global_savefile) << label_class(this->label()) 
+      *(ad_comm::global_savefile) << label_class(this->label())
         << dvar_matrix(*this) << endl;
   }
 
@@ -1050,7 +1050,6 @@ void data_3array::allocate(int hsl, int hsu, const index_type& rmin,
     }
   }
 
-      
 void data_3array::allocate(int hsl, int hsu, const ivector& rmin,
   int rmax, int cmin, int cmax, const char * s)
   {
@@ -1245,7 +1244,7 @@ void get_sp_printf(void)
       cerr << "Errorl allocating memory in adlist_ptr" << endl;
     }
     current_size=init_size;
-  } 
+  }
   void adlist_ptr::resize(void)
   {
     current_size*=2;
@@ -1284,6 +1283,6 @@ void get_sp_printf(void)
       delete [] ptr;
       ptr=0;
     }
-  } 
+  }
 
 

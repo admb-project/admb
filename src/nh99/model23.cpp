@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -71,7 +71,7 @@ void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H, const int&
 	}
       }
       Htmp(i,j)=tmp;
-    }	    
+    }
   }
   for (i=lmin;i<=lmax;i++)
   {
@@ -81,5 +81,5 @@ void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H, const int&
     }
   }
   ii+=n;
-}    
+}
 

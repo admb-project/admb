@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -78,7 +78,7 @@
      }
    }
    else
-   { 
+   {
 #    if defined(SAFE_ALL)
     // cerr << "Warning -- trying to deallocate an unallocated dvar4_array"<<endl;
 #    endif
@@ -89,7 +89,7 @@
  * Description not yet available.
  * \param
  */
- dvar6_array::~dvar6_array() 
+ dvar6_array::~dvar6_array()
  {
    deallocate();
  }
@@ -103,7 +103,7 @@
    int mmin=indexmin();
    int mmax=indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   { 
+   {
      cerr << "Incompatible bounds in"
       " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
       << endl;
@@ -125,7 +125,7 @@
    int mmin=indexmin();
    int mmax=indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   { 
+   {
      cerr << "Incompatible bounds in"
       " dvar6_array& dvar6_array:: operator=(const d6_array& m)"
       << endl;
@@ -196,7 +196,7 @@
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "dvar5_array& dvar6_array::operator()(int i)", indexmin(), indexmax(), i);
       }
       #endif
@@ -211,7 +211,7 @@
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "dvar5_array& dvar6_array::operator[](int i)", indexmin(), indexmax(), i);
       }
       #endif
@@ -226,7 +226,7 @@
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar5_array& dvar6_array::operator()(int i, int j)", indexmin(), indexmax(), i);
       }
       #endif
@@ -241,7 +241,7 @@
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar5_array& dvar6_array::operator()(int i, int j, int k)", indexmin(), indexmax(), i);
       }
       #endif
@@ -256,7 +256,7 @@
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar_matrix& dvar6_array::operator()(int i, int j, int k, int l)", indexmin(), indexmax(), i);
       }
       #endif
@@ -271,7 +271,7 @@
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar_vector& dvar6_array::operator()(int i, int j, int k, int l, int m)", indexmin(), indexmax(), i);
       }
       #endif
@@ -287,7 +287,7 @@
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "prevariable dvar6_array::operator()(int i, int j, int k, int l, int m, int n)", indexmin(), indexmax(), i);
       }
       #endif

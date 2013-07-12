@@ -1,6 +1,6 @@
 /*
   $Id$
- 
+
   Author: David Fournier
   Copyright (c) 2009-2012 ADMB Foundation
  */
@@ -59,7 +59,7 @@ double gammln(double xx)
   tmp=x+5.5;
   tmp -= (x+0.5)*log(tmp);
   ser=1.0;
-  for (j=0;j<=5;j++) 
+  for (j=0;j<=5;j++)
   {
     x += 1.0;
     ser += cof[j]/x;
@@ -78,19 +78,19 @@ dvector log_comb(const dvector& n, const dvector& r)
 {
   int mmin=n.indexmin();
   int mmax=n.indexmax();
-  if (mmin != r.indexmin() || mmax != r.indexmax()) 
+  if (mmin != r.indexmin() || mmax != r.indexmax())
   {
     cerr << "Incompatible array bounds in function "
       "dvector log_comb(const dvector& n, const dvector& r)" << endl;
     ad_exit(1);
-  } 
+  }
   dvector tmp(mmin,mmax);
   for (int i=mmin;i<=mmax;i++)
   {
     tmp(i)=log_comb(n(i),r(i));
   }
   return tmp;
-} 
+}
 
 /**
  * Log-binomial of a number with an arrays
@@ -108,7 +108,7 @@ dvector log_comb(double n, const dvector& r)
     tmp(i)=log_comb(n,r(i));
   }
   return tmp;
-} 
+}
 
 /**
  * Log-Gamma of an array

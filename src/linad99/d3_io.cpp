@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -45,7 +45,7 @@ ostream& operator<<(const ostream& _s, const d3_array& z)
 #else
   long new_form = s.flags();
 #endif
-  
+
   char new_fill = s.fill();
 #endif
 

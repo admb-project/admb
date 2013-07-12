@@ -134,17 +134,17 @@ void cifstream::filter(void)
     do
     {
       if (n < SIGNATURE_LENGTH)
-	comment_line[n++] = testc;
+        comment_line[n++] = testc;
 
       testc = bp->snextc();
       //cout << "in filter testc= " << testc << endl;
       if (testc == '\n')
       {
-	comment_line[n++] = '\0';
-	if (line == 1)
-	  strcpy(signature_line, comment_line);
-	line ++;
-	field = 0;
+        comment_line[n++] = '\0';
+        if (line == 1)
+          strcpy(signature_line, comment_line);
+        line ++;
+        field = 0;
       }
     } while (testc != '\n');
 
@@ -418,7 +418,7 @@ void cifstream::report_error(const char * msg)
   if (!end || (end && ignore_eof))
   {
     cerr << "\n** error reading file '" << file_name
-	 << "' at line " << line
+         << "' at line " << line
          << ", field " << field
          << endl;
     if (msg)

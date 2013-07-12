@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -51,13 +51,13 @@ uistream& operator>>(const uistream& istr, const dvar_matrix& _z)
 void dvar_matrix::read_from(const uistream& s)
 {
   if (allocated(*this))
-  {  
+  {
     int n = rowmin() + rowsize() - 1;
 
     for (int i=rowmin(); i <= n; i++)
     {
       s >> (*this)[i];
-      if (!s.good()) 
+      if (!s.good())
       {
         cerr << " Error in dvar_matrix read\n";
         ad_exit(1);
@@ -85,12 +85,12 @@ uostream& operator<<(const uostream& ostr, const dvar_matrix& z)
 void dvar_matrix::write_on(const uostream& s) const
 {
   if (allocated(*this))
-  {  
+  {
     int n = rowmin() + rowsize() - 1;
     for (int i=rowmin(); i <= n; i++)
     {
       s << (*this)[i];
-      if (!s.good()) 
+      if (!s.good())
       {
         cerr << " Error in dvar_matrix write\n";
         ad_exit(1);

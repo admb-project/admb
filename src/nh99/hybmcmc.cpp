@@ -108,18 +108,16 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
   robust_hybrid_flag=0;
   uostream * pofs_psave=NULL;
   dmatrix mcmc_display_matrix;
-  //int mcmc_save_index=1; 
+  //int mcmc_save_index=1;
   //int mcmc_wrap_flag=0;
   //int mcmc_gui_length=10000;
   int no_sd_mcmc=0;
 
-  
   int on2=-1;
   int nvar1=0;
   if ( (on2=option_match(ad_comm::argc,ad_comm::argv,"-nosdmcmc"))>-1)
   {
     no_sd_mcmc=1;
-    
   }
   if (mcmc2_flag==1)
   {
@@ -127,7 +125,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     nvar1=initial_params::nvarcalc(); // get the number of active parameters
   }
 
-  if (stddev_params::num_stddev_params==0) 
+  if (stddev_params::num_stddev_params==0)
   {
     cerr << " You must declare at least one object of type sdreport "
          << endl << " to do the mcmc calculations" << endl;
@@ -135,9 +133,9 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
   }
   {
     //ofstream of_bf("testbf");
-    
+
     //if (adjm_ptr) set_labels_for_mcmc();
-    
+
     ivector number_offsets;
     dvector lkvector;
     //double current_bf=0;
@@ -151,9 +149,9 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     int nvar_x=0;
 #if defined(USE_LAPLACE)
     initial_params::set_inactive_random_effects();
-    nvar_x=initial_params::nvarcalc(); 
+    nvar_x=initial_params::nvarcalc();
     initial_params::set_active_random_effects();
-    int nvar_re=initial_params::nvarcalc(); 
+    int nvar_re=initial_params::nvarcalc();
 #endif
 
 
@@ -171,7 +169,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     //int ibfcount=0;
     double llbest;
     double lbmax;
-  
+
     scov_option=1;
     s_covar.allocate(1,nvar,1,nvar);
     s_mean.allocate(1,nvar);
@@ -191,7 +189,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
 #if defined(USE_LAPLACE)
       independent_variables parsave(1,nvar_re);
-      initial_params::restore_start_phase(); 
+      initial_params::restore_start_phase();
 #else
       independent_variables parsave(1,nvar);
 #endif
@@ -199,13 +197,13 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     //dvector scale(1,nvar);
     dmatrix values;
     //int have_hist_flag=0;
-    initial_params::xinit(x); 
+    initial_params::xinit(x);
     dvector pen_vector(1,nvar);
     {
-      initial_params::reset(dvar_vector(x),pen_vector); 
+      initial_params::reset(dvar_vector(x),pen_vector);
       //cout << pen_vector << endl << endl;
     }
-      
+
     initial_params::mc_phase=0;
     //initial_params::stddev_scale(scale,x);
     initial_params::mc_phase=1;
@@ -234,16 +232,15 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
         cerr << "Usage -hyeps option needs number  -- ignored" << endl;
       }
       else
-      {   
-    
+      {
         istringstream ist(ad_comm::argv[on+1]);
         ist >> _hybeps;
-    
+
         if (_hybeps<=0)
         {
           cerr << "Usage -hyeps option needs positive number  -- ignored" << endl;
           _hybeps=-1.0;
-        } 
+        }
       }
     }
     if (_hybeps>0.0)
@@ -270,7 +267,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
     {
       diag_option=1;
       cout << " Setting covariance matrix to diagonal with entries " << dscale
-           << endl;  
+           << endl;
     }
     int mcrestart_flag=option_match(ad_comm::argc,ad_comm::argv,"-mcr");
     dmatrix S(1,nvar,1,nvar);
@@ -306,7 +303,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
         use_empirical_flag=1;
       }
       if (use_empirical_flag)
-      { 
+      {
         read_empirical_covariance_matrix(nvar,S,ad_comm::adprogram_name);
       }
       else if (!rescale_bounded_flag)
@@ -379,7 +376,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
         S(i,i)=dscale;
       }
     }
-    
+
     // for hybrid mcmc option always save output
     //if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcsave"))>-1)
     if ( mcrestart_flag>-1)
@@ -388,7 +385,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       uistream uis((char*)(ad_comm::adprogram_name + adstring(".psv")));
       if (!uis)
       {
-        cerr << "Error trying to open file" << 
+        cerr << "Error trying to open file" <<
           ad_comm::adprogram_name + adstring(".psv") <<
           " for mcrestart" <<   endl;
         ad_exit(1);
@@ -419,16 +416,16 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
         initial_params::restore_all_values(parsave,ii);
         //x0.initialize();
         //dvector pen_vector(1,nvar);
-        //initial_params::reset(dvar_vector(parsave),pen_vector); 
-        //initial_params::xinit(x0);   
+        //initial_params::reset(dvar_vector(parsave),pen_vector);
+        //initial_params::xinit(x0);
         //cout << " x0 " << x0(x0.indexmin()) << endl;
       }
-    } 
+    }
 
 
     if ( mcrestart_flag>-1)
     {
-      pofs_psave= new uostream( (char*)(ad_comm::adprogram_name 
+      pofs_psave= new uostream( (char*)(ad_comm::adprogram_name
           + adstring(".psv")),ios::app);
      /*
       pofs_psave->seekp(0,std::ios::end);
@@ -437,7 +434,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       uistream uis((char*)(ad_comm::adprogram_name + adstring(".psv")));
       if (!uis)
       {
-        cerr << "Error trying to open file" << 
+        cerr << "Error trying to open file" <<
           ad_comm::adprogram_name + adstring(".psv") <<
           " for mcrestart" <<   endl;
         ad_exit(1);
@@ -461,7 +458,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
     if (!pofs_psave|| !(*pofs_psave))
     {
-      cerr << "Error trying to open file" << 
+      cerr << "Error trying to open file" <<
         ad_comm::adprogram_name + adstring(".psv") << endl;
       ad_exit(1);
     }
@@ -474,7 +471,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       // get the current scale
       dvector x0(1,nvar);
       dvector current_scale(1,nvar);
-      initial_params::xinit(x0);   
+      initial_params::xinit(x0);
       // cout << "starting with " << x0(x0.indexmin()) << " "
         //    << x0(x0.indexmax()) << endl;
       int mctmp=initial_params::mc_phase;
@@ -538,8 +535,8 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
       random_number_generator rng(iseed);
       gradient_structure::set_YES_DERIVATIVES();
       ofstream ogs("sims");
-      initial_params::xinit(x0);   
-      
+      initial_params::xinit(x0);
+
       z=x0+chd*y;
       /*double llc=*/get_hybrid_monte_carlo_value(nvar,z,g);
       llbest=get_hybrid_monte_carlo_value(nvar,z,g);
@@ -566,7 +563,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
        if (robust_hybrid_flag)
        {
          double choice=randu(rng);
-         if (choice<0.05) 
+         if (choice<0.05)
          {
            p*=3.0;
          }
@@ -589,7 +586,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
        int ii=1;
        initial_params::copy_all_values(parsave,ii);
        // detmine whether to go forward or backward
-       
+
        double iaccept=0.0;
        for (int is=1;is<=number_sims;is++)
        {
@@ -605,7 +602,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
          // randomize the number of steps
          double rnd2=randn(rng);
          int hnsteps=hybnstep*exp(.2*rnd2);
-         
+
          for (int i=1;i<=hnsteps;i++)
          {
            if (forflag==1)
@@ -663,12 +660,12 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
          double Ham=tmpprior+pprob;
          double rr=randu(rng);
          double pp=exp(Hbegin-Ham);
-         p.fill_randn(rng); 
+         p.fill_randn(rng);
          //p*=1.2;
          if (robust_hybrid_flag)
          {
            double choice=randu(rng);
-           if (choice<0.05) 
+           if (choice<0.05)
            {
              p*=3.0;
            }
@@ -684,7 +681,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
          }
          if ((is%50)==1)
            //  cout << iaccept/is << " " << Hbegin-Ham << " " << Ham << endl;
-           cout << " hybrid sim " << is <<  "  accept rate " << iaccept/is 
+           cout << " hybrid sim " << is <<  "  accept rate " << iaccept/is
                 << "  Hbegin-Ham " << Hbegin-Ham << "  Ham " << Ham << endl;
          if (rr<pp)
          {
@@ -727,10 +724,10 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
  * Description not yet available.
  * \param
  */
-double function_minimizer::get_hybrid_monte_carlo_value(int nvar, 
+double function_minimizer::get_hybrid_monte_carlo_value(int nvar,
   const independent_variables& x,dvector& g)
 {
-  //initial_params::xinit(x);   
+  //initial_params::xinit(x);
   double f=0.0;
 #if defined(USE_LAPLACE)
   if (mcmc2_flag==0 && lapprox)

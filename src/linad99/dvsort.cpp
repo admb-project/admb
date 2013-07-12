@@ -63,7 +63,7 @@ dvector sort(const dvector & v, int NSTACK)
    return arr;
 }
 
-/** 
+/**
  * Quicksort.
  * \param _v A dvector to be sorted.
  * \param _index ivector on return containing the input order of the original vector.
@@ -71,7 +71,7 @@ dvector sort(const dvector & v, int NSTACK)
  * \return ivector object containing the input vector sorted in ascending order.
  *
  * \n\n Adopted from the GNU C Library. http://www.corpit.ru/mjt/qsort.html
- */   
+ */
 dvector sort(const dvector &_v, const ivector &_index, int NSTACK)
 {
    ivector & index = (ivector &) _index;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -21,6 +21,6 @@ void param_init_bounded_dev_vector::set_value(const dvar_vector& x, const int& i
     pen+=10000.0*s*s;
     if (!initial_params::mc_phase)
     {
-      (*this)-=s; 
+      (*this)-=s;
     }
   }

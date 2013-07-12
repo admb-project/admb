@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -36,7 +36,7 @@ const AD_LONG_INT& lvector::operator[](int i) const
        cerr << "array bound exceeded -- index too high in lvector::operator[]";
        ad_exit(1);
      }
-     
+
      if (i<indexmin())
      {
        cerr << "array bound exceeded -- index too low in lvector::operator[]";
@@ -58,7 +58,7 @@ const AD_LONG_INT& lvector::operator()(int i) const
        cerr << "array bound exceeded -- index too high in lvector::operator[]";
        ad_exit(1);
      }
-     
+
      if (i<indexmin())
      {
        cerr << "array bound exceeded -- index too low in lvector::operator[]";

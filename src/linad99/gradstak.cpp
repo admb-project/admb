@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -19,9 +19,9 @@
   #ifdef __MSVC32__
     #define lseek _lseek
     #define  read _read
-    #define write _write 
+    #define write _write
     #define open _open
-    #define close _close 
+    #define close _close
     #include <sys\stat.h>
     #include <fcntl.h>
   #endif
@@ -64,9 +64,9 @@
   #ifdef __MSC__
     #define lseek _lseek
     #define  read _read
-    #define write _write 
+    #define write _write
     #define open _open
-    #define close _close 
+    #define close _close
   #endif
   #ifndef __MSVC32__
     #include <unistd.h>
@@ -77,7 +77,7 @@
   #if (__GNUC__ >3)
      #include <iostream>
      using namespace std;
-  #else   
+  #else
     #include <iostream.h>
   #endif
   #include <fcntl.h>
@@ -108,7 +108,6 @@
     int div=1;
     for (int i=0;i<6;i++)
     {
-      
       ad_random_part[i]=(tt/div)%10+48;
       div*=10;
     }
@@ -157,8 +156,8 @@
     {
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-slave",nopt))>-1)
       {
-        if (nopt ==1)	    
-        {	      
+        if (nopt ==1)
+        {
           {
             int ierr=make_sub_directory(ad_comm::argv[on+1]);
             ad_comm::subdir=ad_comm::argv[on+1];
@@ -172,7 +171,7 @@
             " you have " << nopt << endl;		
           ad_exit(1);
         }	
-      }   
+      }
     }
 #endif
     if (path != NULL)
@@ -257,7 +256,7 @@ grad_stack::~grad_stack()
    // this->print();
 
    int repfs=option_match(ad_comm::argc,ad_comm::argv,"-fsize");
-    
+
    if (ad_comm::global_logfile && repfs)
    {
      int pos;
@@ -411,19 +410,19 @@ void grad_stack::create_gradfile()
 
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | 
+    _VARSSAV_PTR=open(var_store_file_name, O_RDWR |
       O_CREAT | O_TRUNC | O_BINARY, 0777);
 
   #elif (defined (__GNUDOS__) && !defined(__GNU__))
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
 		O_BINARY ,   0777);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | 
+    _VARSSAV_PTR=open(var_store_file_name, O_RDWR |
       O_CREAT | O_TRUNC | O_BINARY, 0777);
 
   #elif defined (__MSVC32__)
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
 		O_BINARY ,   0777);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | 
+    _VARSSAV_PTR=open(var_store_file_name, O_RDWR |
       O_CREAT | O_TRUNC | O_BINARY, 0777);
 
   #elif defined (__WAT32__)
@@ -459,7 +458,7 @@ void grad_stack::create_gradfile()
   #elif defined (__NDPX__)
     _GRADFILE_PTR2=creat(gradfile_name2, O_RDWR);
 
-  #elif ( defined (__SUN__) ||  defined (__GNU__) ) 
+  #elif ( defined (__SUN__) ||  defined (__GNU__) )
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
 		O_BINARY , 0777);
 

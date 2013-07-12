@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -48,7 +48,7 @@ dvector& dvector::shift(int min)
   return *this;
 }
 
- /** 
+ /**
  Default destructor. Invoked by the compiler. Only frees allocated memory
  if all shallow copies in scope have been removed.
  */
@@ -62,11 +62,10 @@ dvector& dvector::shift(int min)
      }
      else
      {
-  
        #ifdef DIAG
          myheapcheck(" Entering ~dvector");
        #endif
-  
+
        if ( v == NULL)
        {
          cerr << " Trying to delete NULL pointer in ~dvector\n";
@@ -152,15 +151,15 @@ static int ycounter=0;
   }
 
   /**
-    Copy constructor. This constructor make a "shallow" copy. 
+    Copy constructor. This constructor make a "shallow" copy.
     Values of existing pointers are copied, and no memory is allocated.
-    Invoked by the compiler in some circumstances such as function 
-    call containing an argument of class %dvector passed by value. 
+    Invoked by the compiler in some circumstances such as function
+    call containing an argument of class %dvector passed by value.
 
     The following code segments creates the \c dvector object \c x and fills it with
-    uniform random numbers (using the constant 79 as seed; \ref fill_randu). The new \c dvector 
+    uniform random numbers (using the constant 79 as seed; \ref fill_randu). The new \c dvector
     object \c y will reference the same memory locations as \c x, and any changes in \c y
-    will also appear in \c x. The new \c dvector object \c z does not refer to 
+    will also appear in \c x. The new \c dvector object \c z does not refer to
     the same memory locations as \c x, and any changes in \c z will be unique to \c z.
 
     \code
@@ -388,7 +387,7 @@ dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
  }
 
  /**
- Construct a %dvector without allocating memory. 
+ Construct a %dvector without allocating memory.
  Useful in creating classes containing dvectors.
  */
  dvector::dvector(void)
@@ -448,13 +447,13 @@ dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
        cerr << "Error trying to allocate memory for dvector\n";
        ad_exit(1);
      }
-  
+
      //int align= ((int) v)%8 ;
      //if (align)
      //{
      //  int diff=(8-align)%8;
      //  v=(double*)( ((char*)v)+diff);
-     //}     
+     //}
 
      index_min=ncl;
      index_max=nch;
@@ -493,7 +492,7 @@ Copies the shape of its argument.
 */
 void dvector::allocatec(const dvector& t)
 {
-  if (!(*this)) 
+  if (!(*this))
   {
     if (t.shape)
     {
@@ -528,7 +527,7 @@ void dvector::allocatec(const dvector& t)
   \ingroup matop
   \param t1 A %dvector, \f$a\f$.
   \param t2 A %dvector, \f$b\f$.
-  \return A double, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing 
+  \return A double, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing
   the value of the dot product of the two arguments.
   */
 double operator*(const dvector& t1, const dvector& t2)
@@ -564,7 +563,7 @@ double operator*(const dvector& t1, const dvector& t2)
        dp_dotproduct(&tmp,&(t1(min)),&(t2(min)),n);
      #endif
    #endif
-     
+
      return(tmp);
   }
 
@@ -574,12 +573,12 @@ double operator*(const dvector& t1, const dvector& t2)
   Exits with error if bounds of the two arguments differ.
   \param t1 %dvector reference, \f$a\f$.
   \param t2 %dvector reference, \f$b\f$.
-  \return A %dvector, \f$z_i = a_i + b_i\f$  containing 
+  \return A %dvector, \f$z_i = a_i + b_i\f$  containing
   the value of the sum of the two arguments.
   */
 dvector operator+(const dvector& t1, const dvector& t2)
   {
-     if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  
+     if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
      {
        cerr << "Index bounds do not match in dvector operator+(const dvector&, const dvector&)\n";
        ad_exit(1);
@@ -612,12 +611,12 @@ dvector operator+(const dvector& t1, const dvector& t2)
   Exits with error if bounds of the two arguments differ.
   \param t1 %dvector reference, \f$a\f$.
   \param t2 %dvector reference, \f$b\f$.
-  \return A %dvector, \f$z_i = a_i - b_i\f$  containing 
+  \return A %dvector, \f$z_i = a_i - b_i\f$  containing
   the value of the difference of the two arguments.
   */
 dvector operator-(const dvector& t1, const dvector& t2)
   {
-     if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())  
+     if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
      {
        cerr << "Index bounds do not match in dvector operator - (const dvector&, const dvector&)\n";
        ad_exit(1);
@@ -686,7 +685,7 @@ dvector operator*(CGNU_DOUBLE x, const dvector& t1)
        cerr << msg << "Heap is OK.\n";
      }
    }
-#else 
+#else
 */
    /** Does nothing. This function is only defined for older Borland compilers.
    The user could provide an implementation that might be useful in certain circumstances.

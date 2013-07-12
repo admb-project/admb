@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -31,10 +31,10 @@
  * \param
  */
 void shape_check(const dvector& v1, const dvector& v2, const char *function_name)
- {
-   if (v1.indexmin() != v2.indexmin() || v1.indexmax() != v2.indexmax())
-   {
-     cerr << " Vector sizes do no match in" << function_name << "\n";
-     ad_exit(1);
-   }
- }
+{
+  if (v1.indexmin() != v2.indexmin() || v1.indexmax() != v2.indexmax())
+  {
+    cerr << " Vector sizes do no match in" << function_name << "\n";
+    ad_exit(1);
+  }
+}

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -49,7 +49,7 @@ double randn(long int& n);
       else
       {
         elem(i)=0;
-      } 
+      }
     }
   }
 
@@ -134,7 +134,7 @@ void dmatrix::rowfill_randu_ni(const int& i,long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randn_ni(nn);
-      nn+=2;  
+      nn+=2;
     }
   }
 
@@ -149,7 +149,7 @@ void dmatrix::rowfill_randu_ni(const int& i,long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randu_ni(nn);
-      nn+=2;  
+      nn+=2;
     }
   }
 
@@ -164,7 +164,7 @@ void dmatrix::rowfill_randu_ni(const int& i,long int& n)
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i).fill_randu_ni(nn);
-      nn+=2;  
+      nn+=2;
     }
   }
 

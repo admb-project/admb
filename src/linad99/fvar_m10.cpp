@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -136,7 +136,7 @@ void dvar_matrix::fill( const char * s)
       }
     }
   }
-    
+
   k = 0;
   for (i=rowmin(); i<=rowmax(); i++)
   {

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -19,4 +19,4 @@ double mean(const d3_array& m)
      double tmp;
      tmp=sum(m)/size_count(m);
      return tmp;
-   }  
+   }

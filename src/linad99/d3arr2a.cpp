@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -23,7 +23,7 @@ d3_array log(const d3_array& m)
        tmp(i)=log(m(i));
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -38,7 +38,7 @@ d3_array exp(const d3_array& m)
        tmp(i)=exp(m(i));
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -53,7 +53,7 @@ d3_array sin(const d3_array& m)
        tmp(i)=sin(m(i));
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -68,7 +68,7 @@ d3_array cos(const d3_array& m)
        tmp(i)=cos(m(i));
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -83,8 +83,8 @@ d3_array tan(const d3_array& m)
        tmp(i)=tan(m(i));
      }
      return tmp;
-   } 
- 
+   }
+
 /**
  * Description not yet available.
  * \param
@@ -128,7 +128,7 @@ d3_array operator+(const d3_array& m1, const d3_array& m2)
        tmp(i)=m1(i)+m2(i);
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -143,7 +143,7 @@ d3_array operator-(const d3_array& m1, const d3_array& m2)
        tmp(i)=m1(i)-m2(i);
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -188,7 +188,7 @@ d3_array operator+(double d, const d3_array& m2)
        tmp(i)=d+m2(i);
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -203,7 +203,7 @@ d3_array operator-( double d,const d3_array& m2)
        tmp(i)=d-m2(i);
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -218,7 +218,7 @@ d3_array operator+(const d3_array& m1, double d)
        tmp(i)=m1(i)+d;
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -233,7 +233,7 @@ d3_array operator-(const d3_array& m1, double d)
        tmp(i)=m1(i)-d;
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -248,7 +248,7 @@ d3_array operator*(const d3_array& m1, double d)
        tmp(i)=m1(i)*d;
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.

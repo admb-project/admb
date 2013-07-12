@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -71,7 +71,7 @@ void lvector::write_on(const ostream& _s) const
      s.fill(new_fill);
      s << (*this)[i];
      /*
-     if (!s.good()) 
+     if (!s.good())
      {
        cerr << " Error in lvector write\n";
        ad_exit(1);
@@ -80,7 +80,7 @@ void lvector::write_on(const ostream& _s) const
   #else
      s << " " << (*this)[i];
      /*
-     if (!s.good()) 
+     if (!s.good())
      {
        cerr << " Error in lvector write\n";
        ad_exit(1);

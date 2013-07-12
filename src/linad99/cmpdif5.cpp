@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -29,7 +29,7 @@
  * Description not yet available.
  * \param
  */
-void dmatrix::save_dmatrix_value(void) const 
+void dmatrix::save_dmatrix_value(void) const
 {
   // saves the size, address, and value information for a dvar_matrix
   //int ierr;
@@ -140,11 +140,11 @@ dvector restore_dvar_vector_derivatives(const dvar_vector_position& tmp)
 //  _dp_vector_add
 //  _dp_vector_elem_div
 //  _dp_dotproduct
-//  _dp_vector_elem_prod 
+//  _dp_vector_elem_prod
 //  _dp_scalar_product
-//  _dp_vector_sub 
+//  _dp_vector_sub
 //  _dw_block_move
-     
+
   return tempvec;
 }
 
@@ -235,7 +235,7 @@ void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
 void save_dmatrix_derivatives(const dvar_matrix_position& _pos, CGNU_DOUBLE x, const int& i,
   int& j)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   if ( i<pos.rowmin()||i>pos.rowmax() ||
      j<(pos.colmin())(i) || j>(pos.colmax())(i) )
   {

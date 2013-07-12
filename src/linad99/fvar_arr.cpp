@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -28,7 +28,7 @@ long int farptr_tolong(void *) ;
  * Description not yet available.
  * \param
  */
-dvar_vector& dvar_vector::shift(int min) 
+dvar_vector& dvar_vector::shift(int min)
 {
   va += indexmin()-min;
   index_max=index_max-index_min+min;
@@ -187,7 +187,7 @@ void make_indvar_list(const dvar_vector& t)
     gradient_structure::INDVAR_LIST->put_address(tmp,&(t.va[i].x));
   }
   gradient_structure::NVAR=t.indexmax()-t.indexmin()+1;
-} 
+}
 
 /**
  * Description not yet available.
@@ -209,7 +209,7 @@ void copy_status(const ostream& _s, const dvar_vector& v)
      shape=NULL;
      va=NULL;
    }
- 
+
 /**
  * Description not yet available.
  * \param
@@ -234,7 +234,7 @@ void dvar_vector::allocate(const dvar_vector& v1)
  */
 void dvar_vector::allocatec(const dvar_vector& t)
    {
-     if (!(*this)) 
+     if (!(*this))
      {
        if (t.shape)
        {
@@ -265,7 +265,7 @@ void dvar_vector::allocatec(const dvar_vector& t)
      if (ncl>nch)
        allocate();
      else
-     {  
+     {
        index_min=ncl;
        index_max=nch;
        int itemp=nch-ncl+1;
@@ -281,17 +281,17 @@ void dvar_vector::allocatec(const dvar_vector& t)
          cerr << " Error trying to allocate memory for dvar_vector\n";
          ad_exit(1);
        }
-  
+
        if ( (shape=new vector_shapex(ncl,nch,va)) == NULL)
        {
          cerr << "Error trying to allocate memory for dvar_vector\n";
          ad_exit(1);
        }
-  
+
        link_ptr=* (arr_link **) va;
        va -= indexmin();
        // if ( ((int)va) %8) cerr << "Array is not QWORD alligned" << endl;
-       
+
        #ifdef DIAG
          myheapcheck("Leaving dvar_vector::allocate(ncl,nch)");
        #endif

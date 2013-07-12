@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #if defined(USE_LAPLACE)
 #include <admodel.h>
@@ -13,7 +13,6 @@
     //phase_start=1;
     phase_start=phase_save;
   }
-
 
   void random_effects_vector::set_only_random_effects_active(void)
   {

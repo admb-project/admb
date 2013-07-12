@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -33,7 +33,7 @@ dvar_vector operator*(const dvar_vector& x, const dmatrix& m)
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
- }      
+ }
 
 dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
  {
@@ -57,7 +57,7 @@ dvar_vector operator*(const dmatrix& m, const dvar_vector& x)
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
- }      
+ }
 */
 
 /**

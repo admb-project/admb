@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -277,7 +277,7 @@ void df_ln_det_choleski(void)
  //*******************************************************************8
  //*******************************************************************8
  //*******************************************************************8
-  
+
   dfM.rowshift(rowsave);
   dfM.colshift(colsave);
 
@@ -294,7 +294,7 @@ static dvariable error_condition(int &onerror)
   dvariable v=0.0;
   return v;
 }
-  
+
 /**
  * Description not yet available.
  * \param

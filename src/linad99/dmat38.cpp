@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <fvar.hpp>
 
@@ -165,12 +165,12 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
     indxinv(indx(i))=i;
   }
   for (int kk=mmin;kk<=mmax;kk++)
-  { 
+  {
     for (i=lb;i<=ub;i++)
     {
       y(indxinv(i))=z(kk)(i);
     }
-  
+
     for (i=lb;i<=ub;i++)
     {
       sum=y(i);
@@ -189,7 +189,7 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
       }
       x(kk)(i)=sum/b(i,i);
     }
-  
+
   }
   return trans(x);
 }
@@ -198,7 +198,7 @@ double ln_det_choleski(
   const banded_symmetric_dmatrix& MM, const int& _ierr)
 {
   banded_lower_triangular_dmatrix tmp=choleski_decomp(MM,_ierr);
-  
+
   int mmin=tmp.indexmin();
   int mmax=tmp.indexmax();
   double ld=0.0;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -51,7 +51,7 @@ uistream& operator>>(const uistream& istr, const dvar_vector& _z)
 void dvar_vector::read_from(const uistream& _s)
 {
   if (allocated(*this))
-  {  
+  {
     uistream& s = (uistream&) _s;
     int n = indexmax() - indexmin() + 1;
     double_and_int * p = va + indexmin();
@@ -81,7 +81,7 @@ uostream& operator<<(const uostream& ostr, const dvar_vector& z)
 void dvar_vector::write_on(const uostream& _s) const
 {
   if (allocated(*this))
-  {  
+  {
     uostream& s = (uostream&) _s;
     int n = indexmax() - indexmin() + 1;
     double_and_int * p = va + indexmin();

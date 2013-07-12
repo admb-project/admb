@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -36,7 +36,7 @@
  */
 ostream& operator<<(const ostream& _ostr, const dvar_matrix& z)
 {
-  ostream& ostr= (ostream&) _ostr; 
+  ostream& ostr= (ostream&) _ostr;
   z.write_on(ostr);
 
   return ostr;
@@ -83,7 +83,7 @@ void dvar_matrix::write_on(const ostream& _s) const
 istream& operator>>(const istream& _istr, const dvar_matrix& _z)
 {
   dvar_matrix& z = (dvar_matrix&)_z;
-  istream& istr= (istream&) _istr; 
+  istream& istr= (istream&) _istr;
   z.read_from(istr);
 
   return istr;
@@ -101,7 +101,7 @@ void dvar_matrix::read_from(const istream& s)
   {
     s >> (*this)[i];
     /*
-    if (!s.good()) 
+    if (!s.good())
     {
       cerr << " Error in dvar_matrix read\n";
       ad_exit(1);

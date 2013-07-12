@@ -1,6 +1,6 @@
 /*
  * $Id$
- * 
+ *
  * Author: David Fournier
  * Copyright (c) 2009-2012 ADMB Foundation
  */
@@ -29,7 +29,7 @@ double sign ( double x )
   if ( x < 0.0 )
   {
     value = -1.0;
-  } 
+  }
   else
   {
     value = 1.0;
@@ -61,7 +61,7 @@ void gauss_hermite (const dvector& _t,const dvector& _wts)
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -75,7 +75,7 @@ void gauss_hermite (const dvector& _t,const dvector& _wts)
 //  Reference:
 //
 //    Sylvan Elhay, Jaroslav Kautsky,
-//    Algorithm 655: IQPACK, FORTRAN Subroutines for the Weights of 
+//    Algorithm 655: IQPACK, FORTRAN Subroutines for the Weights of
 //    Interpolatory Quadrature,
 //    ACM Transactions on Mathematical Software,
 //    Volume 13, Number 4, December 1987, pages 399-415.
@@ -171,7 +171,7 @@ void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts 
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -185,7 +185,7 @@ void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts 
 //  Reference:
 //
 //    Sylvan Elhay, Jaroslav Kautsky,
-//    Algorithm 655: IQPACK, FORTRAN Subroutines for the Weights of 
+//    Algorithm 655: IQPACK, FORTRAN Subroutines for the Weights of
 //    Interpolatory Quadrature,
 //    ACM Transactions on Mathematical Software,
 //    Volume 13, Number 4, December 1987, pages 399-415.
@@ -247,7 +247,7 @@ void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts 
     bj[i-1] = sqrt ( abi * abi / ( abj * abj - 1.0 ) );
   }
 
-  //  Compute the knots and weights. 
+  //  Compute the knots and weights.
   if ( zemu <= 0.0 )  //  Exit if the zero-th moment is not positive.
   {
     cout << "\n";
@@ -275,7 +275,7 @@ void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts 
     wts[i] = wts[i] * wts[i];
   }
 
-  //  Prepare to scale the quadrature formula to other weight function with 
+  //  Prepare to scale the quadrature formula to other weight function with
   //  valid A and B.
   ivector mlt(0,ub);
   for ( i = 0; i < nt; i++ )
@@ -372,20 +372,20 @@ void imtqlx( const dvector& _d, const dvector& _e, const dvector& _z )
 //
 //  Discussion:
 //
-//    This routine is a slightly modified version of the EISPACK routine to 
-//    perform the implicit QL algorithm on a symmetric tridiagonal matrix. 
+//    This routine is a slightly modified version of the EISPACK routine to
+//    perform the implicit QL algorithm on a symmetric tridiagonal matrix.
 //
 //    The authors thank the authors of EISPACK for permission to use this
-//    routine. 
+//    routine.
 //
-//    It has been modified to produce the product Q' * Z, where Z is an input 
-//    vector and Q is the orthogonal matrix diagonalizing the input matrix.  
+//    It has been modified to produce the product Q' * Z, where Z is an input
+//    vector and Q is the orthogonal matrix diagonalizing the input matrix.
 //    The changes consist (essentialy) of applying the orthogonal transformations
 //    directly to Z as they are generated.
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -399,7 +399,7 @@ void imtqlx( const dvector& _d, const dvector& _e, const dvector& _z )
 //  Reference:
 //
 //    Sylvan Elhay, Jaroslav Kautsky,
-//    Algorithm 655: IQPACK, FORTRAN Subroutines for the Weights of 
+//    Algorithm 655: IQPACK, FORTRAN Subroutines for the Weights of
 //    Interpolatory Quadrature,
 //    ACM Transactions on Mathematical Software,
 //    Volume 13, Number 4, December 1987, pages 399-415.
@@ -414,7 +414,7 @@ void imtqlx( const dvector& _d, const dvector& _e, const dvector& _z )
 //    Input/output, double D(N), the diagonal entries of the matrix.
 //    On output, the information in D has been overwritten.
 //
-//    Input/output, double E(N), the subdiagonal entries of the 
+//    Input/output, double E(N), the subdiagonal entries of the
 //    matrix, in entries E(1) through E(N-1).  On output, the information in
 //    E has been overwritten.
 //

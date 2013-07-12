@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -10,7 +10,7 @@
  */
 #include "fvar.hpp"
 
-  /** Log negative bionomial density; constant objects. 
+  /** Log negative bionomial density; constant objects.
    A local parameter r is used to make it robust.
    \f$ r=\frac{\mu}{10.0^{-120}+\tau-1.0} \f$
   \ingroup PDF
@@ -39,7 +39,7 @@
   \param mu
   \param tau
   \return NegativeBinomial density. \f$ \frac{\Gamma(x+r)}{\Gamma(r)x!}(\frac{r}{r+\mu})^r(\frac{\mu}{r+\mu})^x \f$
-  */ 
+  */
   double density_negbinomial(double x,double mu,double tau)
   {
     if (tau-1.0<0.0)

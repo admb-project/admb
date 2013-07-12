@@ -2,14 +2,14 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
  * Description not yet available.
  */
 // file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable 
+// constructors, destructors and misc functions involving class prevariable
 #include "fvar.hpp"
 
 #ifdef __TURBOC__
@@ -30,7 +30,7 @@
 void gradfree(dlink *);
 
 /**
-  Creates an entry in the gradient structure linked list. 
+  Creates an entry in the gradient structure linked list.
   \return Pointer instance of class double_and_int
  */
 double_and_int * gradnew()
@@ -53,7 +53,7 @@ double_and_int * gradnew()
     }
 
     //  cout << "In gradnew the address of the double * ptr is "
-    //       << _farptr_tolong(tmp) << "\n"; 
+    //       << _farptr_tolong(tmp) << "\n";
 
     return (double_and_int *) tmp;
   }
@@ -68,7 +68,7 @@ void gradfree(dlink * v)
   if (gradient_structure::GRAD_LIST)
   {
     if (gradient_structure::instances)
-    { 
+    {
       gradient_structure::GRAD_LIST->append(v);
     }
     else
@@ -113,7 +113,7 @@ dvariable::dvariable(const dvariable& t)
     }
 
 /**
-   Null constructor. 
+   Null constructor.
    Creates new dvariable object,
    sets value to zero and initializes derivatve information.
  */
@@ -128,7 +128,7 @@ dvariable::dvariable(const dvariable& t)
     }
 
 /**
-   Specialized constructor that does not create unnecessary entries 
+   Specialized constructor that does not create unnecessary entries
    in the gradient structure; see function \ref nograd_assign.
  */
     dvariable::dvariable(kkludge_object)

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -32,7 +32,7 @@ ostream& operator<<(const ostream& _ofs, const pre_column_print& p)
  */
 pre_column_print column_print(const dvector& v)
 {
-  return pre_column_print(v); 
+  return pre_column_print(v);
 }
 
 /**
@@ -61,5 +61,5 @@ ostream& operator << (const ostream& _ofs, const pre_zero_print& p)
  */
 pre_zero_print zero_print(const dvector& v)
 {
-  return pre_zero_print(v); 
+  return pre_zero_print(v);
 }

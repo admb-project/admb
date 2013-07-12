@@ -261,7 +261,7 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
   return ret;
 }
 
-/** 
+/**
  * \ingroup cub_spline
  *  Evaluates a piecewise cubic spline at a point.
  * \param n the number of knots
@@ -301,7 +301,7 @@ dvariable spline_cubic_val(int n,  const dvector& _t, double tval,
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -385,7 +385,7 @@ dvariable spline_cubic_val(int n,  const dvector& _t, double tval,
   return yval;
 }
 
-/** 
+/**
  * \ingroup cub_spline
  *  Evaluates a piecewise cubic spline at a point.
  * \param n the number of knots
@@ -425,7 +425,7 @@ dvariable spline_cubic_val2(int n, const dvector& _t, const prevariable tval,
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -544,7 +544,7 @@ dvar_vector d3_np_fs ( int n, const dvar_vector& _a, const dvar_vector& _b)
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //
@@ -700,12 +700,12 @@ dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
 //      6 * ( Y(IVAL+1) - Y(IVAL) ) / H(IVAL)
 //      - 6 * ( Y(IVAL) - Y(IVAL-1) ) / H(IVAL-1)
 //
-//    Boundary conditions must be applied at the first and last knots.  
+//    Boundary conditions must be applied at the first and last knots.
 //    The resulting tridiagonal system can be solved for the YPP values.
 //
 //  Licensing:
 //
-//    This code is distributed under the GNU LGPL license. 
+//    This code is distributed under the GNU LGPL license.
 //
 //  Modified:
 //

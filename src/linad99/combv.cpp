@@ -72,12 +72,12 @@ dvar_vector log_comb(const dvar_vector& n, const dvar_vector& r)
     RETURN_ARRAYS_INCREMENT();
     int mmin=n.indexmin();
     int mmax=n.indexmax();
-    if (mmin != r.indexmin() || mmax != r.indexmax()) 
+    if (mmin != r.indexmin() || mmax != r.indexmax())
     {
       cerr << "Incompatible array bounds in function "
         "dvar_vector log_comb(const dvar_vector& n, const dvector& r)" << endl;
       ad_exit(1);
-    } 
+    }
     dvar_vector tmp(mmin,mmax);
     for (int i=mmin;i<=mmax;i++)
     {
@@ -85,7 +85,7 @@ dvar_vector log_comb(const dvar_vector& n, const dvar_vector& r)
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
-} 
+}
 
 /**
  * Log-binomial of a number with an arrays
@@ -98,12 +98,12 @@ dvar_vector log_comb(const dvector& n, const dvar_vector& r)
     RETURN_ARRAYS_INCREMENT();
     int mmin=n.indexmin();
     int mmax=n.indexmax();
-    if (mmin != r.indexmin() || mmax != r.indexmax()) 
+    if (mmin != r.indexmin() || mmax != r.indexmax())
     {
       cerr << "Incompatible array bounds in function "
         "dvar_vector log_comb(const dvar_vector& n, const dvector& r)" << endl;
       ad_exit(1);
-    } 
+    }
     dvar_vector tmp(mmin,mmax);
     for (int i=mmin;i<=mmax;i++)
     {
@@ -111,7 +111,7 @@ dvar_vector log_comb(const dvector& n, const dvar_vector& r)
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
-} 
+}
 
 /**
  * Log-binomial of two arrays
@@ -124,12 +124,12 @@ dvar_vector log_comb(const dvar_vector& n, const dvector& r)
     RETURN_ARRAYS_INCREMENT();
     int mmin=n.indexmin();
     int mmax=n.indexmax();
-    if (mmin != r.indexmin() || mmax != r.indexmax()) 
+    if (mmin != r.indexmin() || mmax != r.indexmax())
     {
       cerr << "Incompatible array bounds in function "
         "dvar_vector log_comb(const dvar_vector& n, const dvector& r)" << endl;
       ad_exit(1);
-    } 
+    }
     dvar_vector tmp(mmin,mmax);
     for (int i=mmin;i<=mmax;i++)
     {
@@ -137,7 +137,7 @@ dvar_vector log_comb(const dvar_vector& n, const dvector& r)
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
-} 
+}
 
 /**
  * Log-binomial of a number with an arrays
@@ -157,7 +157,7 @@ dvar_vector log_comb(const dvariable& n, const dvector& r)
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
-} 
+}
 
 /**
  * Log-binomial of a number with an arrays
@@ -177,7 +177,7 @@ dvar_vector log_comb(const dvariable& n, const dvar_vector& r)
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
-} 
+}
 
 /**
  * Log-factorial of an array
@@ -216,7 +216,7 @@ dvar_vector log_comb(double n, const dvar_vector& r)
     }
     RETURN_ARRAYS_DECREMENT();
     return tmp;
-} 
+}
 
 /**
  * Log-Gamma of an array
@@ -245,14 +245,14 @@ static dvariable gammlnguts(const prevariable _z)
   const double pi =3.1415926535897932384626432;
   const double lpp =0.9189385332046727417803297;
   int n=7;
-  const double c[9]={0.99999999999980993, 
-    676.5203681218851, 
+  const double c[9]={0.99999999999980993,
+    676.5203681218851,
     -1259.1392167224028,
-     771.32342877765313, 
-    -176.61502916214059, 
+     771.32342877765313,
+    -176.61502916214059,
     12.507343278686905,
-     -0.13857109526572012, 
-    9.9843695780195716e-6, 
+     -0.13857109526572012,
+    9.9843695780195716e-6,
     1.5056327351493116e-7};
   z-=1.0;
   double x=c[0];
@@ -263,7 +263,7 @@ static dvariable gammlnguts(const prevariable _z)
     x+=c[i]*zinv;
     //xdot-=c[i]/square(z+i)*zdot;  since zdot=1.0
     xdot-=c[i]*square(zinv);
-  }    
+  }
   double t=z+n+0.5;
   double tdot=zdot;
   //return lpp + (z+0.5)*log(t) -t + log(x);

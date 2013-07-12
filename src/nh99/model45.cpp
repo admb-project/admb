@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -15,7 +15,7 @@
  {
    it=NULL;
  }
-     
+
  void param_init_bounded_vector_vector::allocate(int min1,int max1,
    const index_type& min,const index_type& max,const double_index_type& dmin,
    const double_index_type& dmax,
@@ -32,7 +32,7 @@
    index_min=min1;
    index_max=max1;
    int size=indexmax()-indexmin()+1;
-    
+
    if (size>0)
    {
      if (!(v=new param_init_bounded_vector[size]))
@@ -44,7 +44,6 @@
      v-=indexmin();
      for (int i=indexmin();i<=indexmax();i++)
      {
-      
        if (it) v[i].set_initial_value(ad_double((*it)[i]));
        adstring ss=s + adstring("[") + str(i) + adstring("]");
        v[i].allocate(ad_integer(min[i]),ad_integer(max[i]),
@@ -56,13 +55,11 @@
      v=NULL;
  }
 
-
    param_init_bounded_vector_vector::~param_init_bounded_vector_vector()
    {
      deallocate();
    }
-  
-  
+
    void param_init_bounded_vector_vector::deallocate(void)
    {
      if(it)

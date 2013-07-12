@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -15,8 +15,8 @@
  * \param
  */
 void dvar_vector::fill_multinomial(const int& seed,const dvector& p)
-  {
-    dvector tmp(indexmin(),indexmax());
-    tmp.fill_multinomial(seed,p);
-    *(this)=tmp;
-  }
+{
+  dvector tmp(indexmin(),indexmax());
+  tmp.fill_multinomial(seed,p);
+  *(this)=tmp;
+}

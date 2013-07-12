@@ -3,28 +3,28 @@
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- * 
+ *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  *
  * License:
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -49,7 +49,7 @@
  extern int inumber1;
  extern int number3;
  extern int number31;
-// 
+//
 //const int nx=10;
 //const int number3=31;
 //const int number31=number3+1;
@@ -94,8 +94,8 @@ struct gggg24 {
 struct gggg25 {
   doublereal *x, *x0, *x1, *xmin, *resmin, *d, *d0,
 	     *dd, *difx, xnorm, x0norm, dnorm, d0norm, sig, sig0,
-	     sigmin, dscal, upsi, upsi0, upsi1, upsist, upsim, psi, psi0, 
-	    psi1, psist, psimin, phi, phi0, phi1, phimin, fx, fx0, fx1, fxst, 
+	     sigmin, dscal, upsi, upsi0, upsi1, upsist, upsim, psi, psi0,
+	    psi1, psist, psimin, phi, phi0, phi1, phimin, fx, fx0, fx1, fxst,
 	    fmin, b2n, b2n0, dirder, cosphi;
   gggg25();
   ~gggg25();
@@ -152,7 +152,7 @@ struct gggg00 {
  * \param
  */
 struct gggg01 {
-    logical intakt, inx, std, te0, te1, te2, te3, sinumbervul, ident, eqres, 
+    logical intakt, inx, std, te0, te1, te2, te3, sinumbervul, ident, eqres,
 	    silent, wwuq3, cold;
   gggg01(logical _wwuq3, logical _te0, logical _te1,
     logical _te2, logical _te3, logical _cold);
@@ -165,7 +165,7 @@ struct gggg01 {
  * \param
  */
 struct gggg02 {
-  doublereal *a	/* was ** */, *diag0, scalm, scalm2, 
+  doublereal *a	/* was ** */, *diag0, scalm, scalm2,
 	    matsc;
   gggg02();
   ~gggg02();
@@ -191,7 +191,7 @@ struct gggg03 {
  */
 struct gggg04 {
   doublereal *res, *res0, *res1, *resst, *u, *u0,
-	     *w, *w1, *work, *yu, *slack, scf, 
+	     *w, *w1, *work, *yu, *slack, scf,
 	    scf0, infeas;
   gggg04();
   ~gggg04();
@@ -238,7 +238,7 @@ struct gggg07 {
  * \param
  */
 struct gggg08 {
-    doublereal alpha, beta, theta, wdg8, sigla, delta, stptrm, delta1, 
+    doublereal alpha, beta, theta, wdg8, sigla, delta, stptrm, delta1,
 	    stmaxl;
 };
 

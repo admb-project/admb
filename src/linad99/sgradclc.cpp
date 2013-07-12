@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
   \file sgradclc.cpp
@@ -33,7 +33,7 @@
 #ifdef __MSVC32__
   #define lseek _lseek
   #define  read _read
-  #define write _write 
+  #define write _write
 #endif
 
 #ifdef __SUN__
@@ -50,7 +50,7 @@
   #if (__GNUC__ >3)
      #include <iostream>
      using namespace std;
-  #else   
+  #else
     #include <iostream.h>
   #endif
   #include <fcntl.h>
@@ -89,7 +89,7 @@ void gradcalc(int nvar, const dvector& _g)
     {
       cerr << "nvar != gradient_structure::NVAR in gradcalc" << endl;
       cerr << "  nvar = " << nvar << endl;
-      cerr << "  gradient_structure::NVAR = " << gradient_structure::NVAR 
+      cerr << "  gradient_structure::NVAR = " << gradient_structure::NVAR
            << endl;
       cerr << "  in " __FILE__ << endl;
       ad_exit(1);
@@ -105,7 +105,7 @@ void gradcalc(int nvar, const dvector& _g)
     g.initialize();
     return;
   }
-  
+
   if (g.size() < nvar)
   {
     cerr  << "gradient vector size is less than the number of variables" << endl;
@@ -223,7 +223,7 @@ do
 
  {
    #ifdef GRAD_DIAG
-  long int ttmp = 
+  long int ttmp =
    #endif
     lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
    #ifdef GRAD_DIAG
@@ -421,7 +421,7 @@ void KLUDGEX(void * p){;}
  */
 void reset_gradient_stack(void)
 {
-  gradient_structure::GRAD_STACK1->ptr = 
+  gradient_structure::GRAD_STACK1->ptr =
     gradient_structure::GRAD_STACK1->ptr_first;
 
   int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
@@ -435,8 +435,8 @@ static int inner_count=0;
 /**
   Sets the gradient stack entry for a function or operator with a single
   independent variable.
-  \param func Pointer to function to compute the derivative of the dependent 
-   variable with respect to the independent variable. 
+  \param func Pointer to function to compute the derivative of the dependent
+   variable with respect to the independent variable.
    Function prototype: void func(void);
   \param dep_addr Address of dependent variable; pointer to double.
   \param ind_addr1 Address of independent variable; pointer to double

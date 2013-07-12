@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -136,7 +136,7 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
       hess(j,i)=tmp;
     }
     hess(i,i)-=depg(i)*curv(i)/(scale(i)*scale(i)*scale(i));
-  }  
+  }
  */
   return hess;
 }

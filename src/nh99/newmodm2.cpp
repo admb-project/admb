@@ -2,14 +2,13 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
 #endif
- 
 
 double function_minimizer::projected_hess_determinant(const dvector& g,
   const int underflow_flag)
@@ -25,7 +24,7 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
     if (ad_comm::wd_flag)
        tmpstring = ad_comm::adprogram_name + ".hes";
     uistream ifs((char*)tmpstring);
-    
+
   if (!ifs)
   {
     cerr << "Error opening file admodel.hes" << endl;
@@ -73,7 +72,7 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
     for (i=1;i<=nvar;i++)
     {
       if (ss(i)==minsize) break;
-      p1(i)=p(i); 
+      p1(i)=p(i);
     }
 
     for (int ii=i+1;ii<=nvar;ii++)
@@ -81,7 +80,7 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
       p1(ii-1)=p(ii);
     }
    */
-    
+
     for (i=1;i<=nvar;i++)
     {
       for (int j=1;j<i;j++)
@@ -156,9 +155,9 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
     cerr << "Error restricted Hessian is not positive definite" << endl;
   }
   {
-  //  cout << "doing S eigenvalues" << endl;   
+  //  cout << "doing S eigenvalues" << endl;
   //  dvector eig=eigenvalues(S);
-  //  cout << "finished S eigenvalues" << endl;   
+  //  cout << "finished S eigenvalues" << endl;
     //lndet2=sum(log(eig));
   //  cout << sort(eig) << endl << endl;
 
@@ -184,7 +183,7 @@ void function_minimizer::get_particular_grad(int iprof,int nvar, const dvector& 
     #if defined(USE_LAPLACE)
       if (lapprox)
       {
-        if (lapprox->hesstype==2) 
+        if (lapprox->hesstype==2)
         {
           lapprox->separable_calls_counter=0;
         }
@@ -201,7 +200,7 @@ void function_minimizer::get_particular_grad(int iprof,int nvar, const dvector& 
     #if defined(USE_LAPLACE)
       if (lapprox)
       {
-        if (lapprox->hesstype==2) 
+        if (lapprox->hesstype==2)
         {
           lapprox->separable_calls_counter=0;
         }
@@ -214,14 +213,13 @@ void function_minimizer::get_particular_grad(int iprof,int nvar, const dvector& 
 
     gradient_structure::set_NO_DERIVATIVES();
     double div=norm(g)*norm(fg);
-    
+
     if (div==0.0)
       cout << "0" << endl;
     else
       cout << g*fg/(norm(g)*norm(fg)) << endl;
   }
 
- 
 void function_minimizer::prof_minimize(int iprof, double sigma,
   double new_value, const double& _fprof, const int underflow_flag,
   double global_min, const double& _penalties, const double& _final_weight)

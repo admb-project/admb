@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -68,7 +68,7 @@
      }
    }
    else
-   { 
+   {
 #    if defined(SAFE_ALL)
   //   cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
 #    endif
@@ -79,7 +79,7 @@
  * Description not yet available.
  * \param
  */
- d6_array::~d6_array() 
+ d6_array::~d6_array()
  {
    deallocate();
  }
@@ -93,7 +93,7 @@ d6_array& d6_array::operator=(const d6_array& m)
    int mmin=indexmin();
    int mmax=indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   { 
+   {
      cerr << "Incompatible bounds in"
       " d6_array& d6_array:: operator =  (const d6_array& m)"
       << endl;
@@ -140,7 +140,7 @@ void d6_array::allocate(const d6_array& m1)
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "d5_array& d6_array::operator()(int i)", indexmin(), indexmax(), i);
       }
       #endif
@@ -156,7 +156,7 @@ void d6_array::allocate(const d6_array& m1)
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "d5_array& d6_array::operator[](int i)", indexmin(), indexmax(), i);
       }
       #endif
@@ -171,7 +171,7 @@ void d6_array::allocate(const d6_array& m1)
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "d4_array& d6_array::operator()(int i, int j)", indexmin(), indexmax(), i);
       }
       #endif
@@ -186,7 +186,7 @@ void d6_array::allocate(const d6_array& m1)
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "d3_array& d6_array::operator()(int i, int j, int k)", indexmin(), indexmax(), i);
       }
       #endif
@@ -201,7 +201,7 @@ void d6_array::allocate(const d6_array& m1)
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dmatrix& d6_array::operator()(int i, int j, int k, int l)", indexmin(), indexmax(), i);
       }
       #endif
@@ -216,7 +216,7 @@ void d6_array::allocate(const d6_array& m1)
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvector& d6_array::operator()(int i, int j, int k, int l, int m)", indexmin(), indexmax(), i);
       }
       #endif
@@ -231,7 +231,7 @@ void d6_array::allocate(const d6_array& m1)
     {
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
-      { 
+      {
         ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "double& d6_array::operator()(int i, int j, int k, int l, int m, int n)", indexmin(), indexmax(), i);
       }
       #endif

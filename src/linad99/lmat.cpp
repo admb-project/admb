@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -178,7 +178,7 @@ lmatrix::lmatrix(int nrl, int nrh, int ncl, const ivector& nch)
      }
      else
      {
-       //int offset = rowmin();   
+       //int offset = rowmin();
        m += rowmin();
        delete [] m;
        m=NULL;

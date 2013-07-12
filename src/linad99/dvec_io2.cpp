@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -74,9 +74,9 @@ void dvector::write_on(const uostream& _s) const
  * Description not yet available.
  * \param
  */
-void dvector::read_from(const uistream& _s) 
+void dvector::read_from(const uistream& _s)
 {
-  ADUNCONST(uistream,s) 
+  ADUNCONST(uistream,s)
   int mmin = indexmin();
   int mmax = indexmax();
   for (int i=mmin;i<=mmax;i++)

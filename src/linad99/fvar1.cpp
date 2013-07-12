@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -12,7 +12,7 @@
 #  pragma implementation "fvar.hpp"
 #endif
 // file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable 
+// constructors, destructors and misc functions involving class prevariable
 
 #include "fvar.hpp"
 int traceflag=0;

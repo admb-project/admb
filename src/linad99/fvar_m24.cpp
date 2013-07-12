@@ -24,7 +24,7 @@ void dmdv_solve(void);
 
 dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z, prevariable& ln_unsigned_det, const prevariable& sign);
 /** Solve a linear system using LU decomposition.
-    \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$.
     \param z A dvar_vector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved.
     \return A dvar_vector containing solution vector \f$X\f$.
@@ -38,7 +38,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z)
 }
 
 /** Solve a linear sysgem using LU decomposition.
-    \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$.
     \param z A dvar_vector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved.
     \param _ln_unsigned_deg
@@ -51,7 +51,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z)
 dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z, prevariable& ln_unsigned_det, const prevariable& _sign)
 {
   prevariable& sign=(prevariable&) _sign;
-  
+
   RETURN_ARRAYS_INCREMENT();
   int i,imax,j,k,n;
   n=aa.colsize();

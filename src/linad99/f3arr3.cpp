@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -15,7 +15,7 @@
  * \param
  */
 d3_array value(const dvar3_array& ar)
- { 
+ {
    d3_array tmp;
    tmp.allocate(ar);
    for (int i=tmp.slicemin(); i<=tmp.slicemax(); i++)

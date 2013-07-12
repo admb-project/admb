@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -93,7 +93,7 @@ dvar3_array sin(const dvar3_array& m)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -110,7 +110,7 @@ dvar3_array cos(const dvar3_array& m)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -127,7 +127,7 @@ dvar3_array sqrt(const dvar3_array& m)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -144,7 +144,7 @@ dvar3_array sqr(const dvar3_array& m)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -161,8 +161,8 @@ dvar3_array tan(const dvar3_array& m)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   } 
- 
+   }
+
 /**
  * Description not yet available.
  * \param
@@ -178,7 +178,7 @@ dvar3_array elem_prod(const dvar3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -195,7 +195,7 @@ dvar3_array elem_div(const dvar3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -212,7 +212,7 @@ dvar3_array operator+(const dvar3_array& m1,const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -229,7 +229,7 @@ dvar3_array operator-(const dvar3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -246,7 +246,7 @@ dvar3_array elem_prod(const d3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -263,7 +263,7 @@ dvar3_array elem_div(const d3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -280,7 +280,7 @@ dvar3_array operator+(const d3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -297,4 +297,4 @@ dvar3_array operator-(const d3_array& m1, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -94,7 +94,7 @@ prevariable& operator-(CGNU_DOUBLE x, const prevariable& v2)
 {
   if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN) gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
   gradient_structure::RETURN_PTR->v->x = x - v2.v->x;
-  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation1m,&(gradient_structure::RETURN_PTR->v->x), 
+  gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation1m,&(gradient_structure::RETURN_PTR->v->x),
                                            &(v2.v->x));
   return(*gradient_structure::RETURN_PTR);
 }

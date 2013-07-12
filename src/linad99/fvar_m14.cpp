@@ -2,13 +2,13 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
  * Description not yet available.
  */
-// constructors, destructors and misc functions involving class prevariable 
+// constructors, destructors and misc functions involving class prevariable
 
 #include "fvar.hpp"
 
@@ -95,9 +95,8 @@
 
    for (int j=m2.colmin(); j<=m2.colmax(); j++)
    {
-
      dvector m2col=column_value(m2,j);
-     
+
      for (int i=m1.rowmin(); i<=m1.rowmax(); i++)
      {
        sum=value(m1(i))*m2col;

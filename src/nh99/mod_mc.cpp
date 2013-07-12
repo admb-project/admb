@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -42,7 +42,7 @@ void function_minimizer::monte_carlo_routine(void)
     int nvar=initial_params::nvarcalc(); // get the number of active parameters
     dvector x(1,nvar);
     dvector jac(1,nvar);
-    initial_params::xinit(x); 
+    initial_params::xinit(x);
     initial_params::stddev_scale(jac,x);
     dvector bmn(1,nvar);
     bmn.initialize();
@@ -82,7 +82,7 @@ void function_minimizer::monte_carlo_routine(void)
       initial_params::mc_phase=1;
       {
         dmatrix tmp(1,nvar,1,nvar);
-  
+
         int i;
         for (i=1;i<=nvar;i++)
         {
@@ -114,7 +114,7 @@ void function_minimizer::monte_carlo_routine(void)
     /*double lnd=*/ln_det(S,sgn);
     //cout << endl << S << endl << endl;
     //cout << endl << CHD << endl << endl;
-  
+
     dmatrix chdec(1,nvar,1,nvar);
     chdec=choleski_decomp(S);
     {
@@ -138,12 +138,12 @@ void function_minimizer::monte_carlo_routine(void)
     double ljac0=sum(log(jac+1.e-50));
 #endif
 */
-  
+
     dmatrix ch3=3.*chdec;
     dmatrix chinv=inv(chdec);
     dmatrix ch3inv=inv(ch3);
     //double xxin;
-  
+
     {
       long int iseed=0;
       int number_sims=  500;
@@ -157,14 +157,14 @@ void function_minimizer::monte_carlo_routine(void)
       {
         iseed=-iseed;
       }
-      better_rand(iseed);   
+      better_rand(iseed);
       //double lprob=0.0;
       //double lprob3=0.0;
       // get lower and upper bounds
-  
+
       //independent_variables x(1,nvar);
       independent_variables parsave(1,nvar);
-  
+
       int ii=1;
       initial_params::copy_all_values(parsave,ii);
       gradient_structure::set_NO_DERIVATIVES();
@@ -178,7 +178,7 @@ void function_minimizer::monte_carlo_routine(void)
       int ndvar=stddev_params::num_stddev_calc();
       dvector param_values(1,ndvar);
       //int outflag;
-      //ooff1 << "Number of simulations = " << number_sims << endl; 
+      //ooff1 << "Number of simulations = " << number_sims << endl;
       ii=1;
       initial_params::restore_all_values(parsave,ii);
 
@@ -193,10 +193,10 @@ void function_minimizer::monte_carlo_routine(void)
         switch (ad_comm::pvm_manager->mode)
         {
         case 1: // master
-          fbest=pvm_master_get_monte_carlo_value(nvar,x); 
+          fbest=pvm_master_get_monte_carlo_value(nvar,x);
           break;
         case 2: // slave
-          pvm_slave_get_monte_carlo_value(nvar); 
+          pvm_slave_get_monte_carlo_value(nvar);
           break;
         default:
           cerr << "error illegal value for pvm_manager->mode" << endl;
@@ -212,7 +212,7 @@ void function_minimizer::monte_carlo_routine(void)
         log_tprob=log_tprob_normal
           +log(0.95+0.05*exp(log_tprob_cauchy-log_tprob_normal));
       }
-      else 
+      else
       {
         log_tprob=log_tprob_cauchy
           +log(0.95*exp(log_tprob_normal-log_tprob_cauchy)+.05);
@@ -222,9 +222,9 @@ void function_minimizer::monte_carlo_routine(void)
       //double clt=log_tprob;
       //ooff1 << " *  weight    likelihood   simprob  ln det "
        //"  ljac0   ljac     parameter value " << endl;
-      //ooff1 << setw(10) << exp(-fbest-log_tprob) << " "  
-        //<< setw(10) << exp(-fbest) << " "  
-      //  << setw(10) << exp(log_tprob) << " "  
+      //ooff1 << setw(10) << exp(-fbest-log_tprob) << " "
+        //<< setw(10) << exp(-fbest) << " "
+      //  << setw(10) << exp(log_tprob) << " "
        //    << setw(10) << lnd << " "
        //    << setw(10) << param_values << endl;
 
@@ -252,19 +252,19 @@ void function_minimizer::monte_carlo_routine(void)
         initial_params::restore_all_values(parsave,ii);
 
         double mixprob=better_rand(iseed);
-        int mixswitch; 
+        int mixswitch;
         //if (mixprob<.0)
         if (mixprob<.05)
         {
-          mixswitch=1; 
+          mixswitch=1;
         }
         else if (mixprob<.50)
         {
-          mixswitch=2; 
+          mixswitch=2;
         }
         else
         {
-          mixswitch=0; 
+          mixswitch=0;
         }
         multivariate_mixture(bmn,nvar,iseed,log_tprob_normal,
           log_tprob_cauchy,log_tprob_small_normal,mixswitch);
@@ -276,7 +276,7 @@ void function_minimizer::monte_carlo_routine(void)
             +log( 0.50+.45*exp(log_tprob_small_normal-log_tprob_normal)
             +      .05*exp(log_tprob_cauchy-log_tprob_normal));
         }
-        else 
+        else
         {
           log_tprob=log_tprob_cauchy
             +log( 0.50*exp(log_tprob_normal-log_tprob_cauchy)
@@ -287,7 +287,7 @@ void function_minimizer::monte_carlo_routine(void)
 
         ll=0.0;
         initial_params::add_random_vector(jac,bmn1,ll,diag);
-        initial_params::xinit(y);   
+        initial_params::xinit(y);
 
         //initial_params::stddev_scale(jac,y);
 /*
@@ -310,28 +310,27 @@ void function_minimizer::monte_carlo_routine(void)
           switch (ad_comm::pvm_manager->mode)
           {
           case 1: // master
-            f=pvm_master_get_monte_carlo_value(nvar,x); 
+            f=pvm_master_get_monte_carlo_value(nvar,x);
             break;
           case 2: // slave
-            pvm_master_get_monte_carlo_value(nvar,x); 
+            pvm_master_get_monte_carlo_value(nvar,x);
             break;
           default:
             cerr << "error illega value for pvm_manager->mode" << endl;
             exit(1);
           }
         }
-  
-        //ooff << setw(12) << -f-log_tprob << "  " 
-        //     << setw(12) << -f-log_tprob-ll << "  " 
-        //     << setw(12) << fbest-f << "  " 
-        //     << setw(12) << log_tprob << " " 
+
+        //ooff << setw(12) << -f-log_tprob << "  "
+        //     << setw(12) << -f-log_tprob-ll << "  "
+        //     << setw(12) << fbest-f << "  "
+        //     << setw(12) << log_tprob << " "
         //     << setw(5) << outflag << " " << setw(12) << -f;
         //ooff << endl;
-       
-        
+
         ii=1;
         stddev_params::copy_all_values(param_values,ii);
-        //ooff << " " << setw(6) << "  " << param_values << endl; 
+        //ooff << " " << setw(6) << "  " << param_values << endl;
         /*
         if (mixswitch==1)
         {
@@ -348,9 +347,9 @@ void function_minimizer::monte_carlo_routine(void)
           ooff1 << " +  weight    likelihood   simprob  ln det "
              "  ljac0   ljac     parameter value " << endl;
         }
-        ooff1 << setw(10) << exp(-f-log_tprob-cdiff+(ljac0-ljac) ) << " "  
-          << setw(10) << -f << " "  
-          << setw(10) << log_tprob << " "  
+        ooff1 << setw(10) << exp(-f-log_tprob-cdiff+(ljac0-ljac) ) << " "
+          << setw(10) << -f << " "
+          << setw(10) << log_tprob << " "
           << setw(10) << lnd << " "
           << setw(10) << ljac0 << " "
           << setw(10) << ljac << " "

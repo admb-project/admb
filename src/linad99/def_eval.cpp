@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -41,7 +41,7 @@
  #if (__GNUC__ >3)
    #include <iostream>
    using namespace std;
-  #else   
+  #else
     #include <iostream.h>
   #endif
   #include <fcntl.h>
@@ -53,7 +53,7 @@
 #ifdef __MSVC32__
   #define lseek _lseek
   #define  read _read
-  #define write _write 
+  #define write _write
 #endif
 
 #if defined (__WAT32__)
@@ -189,11 +189,11 @@
 
     double mult3=grad_ptr->mult1 ;
     double * ind_addr3=grad_ptr->ind_addr1;
-    if (gradient_structure::GRAD_STACK1->ptr-- == 
+    if (gradient_structure::GRAD_STACK1->ptr-- ==
       gradient_structure::GRAD_STACK1->ptr_first)
     {
       // back up the file one buffer size and read forward
-     
+
       my_off_t lpos=lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
         -((long int)(sizeof(grad_stack_entry)*gradient_structure::
         GRAD_STACK1->length)),SEEK_CUR);
@@ -223,7 +223,7 @@
     double mult3=grad_ptr->mult1 ;
     double * ind_addr4=grad_ptr->ind_addr2;
     double mult4=grad_ptr->mult2 ;
-    if (gradient_structure::GRAD_STACK1->ptr-- == 
+    if (gradient_structure::GRAD_STACK1->ptr-- ==
       gradient_structure::GRAD_STACK1->ptr_first)
     {
       // back up the file one buffer size and read forward

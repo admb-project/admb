@@ -6,7 +6,7 @@
  *
  * This file was originally written in FORTRAN II by and unknown author.
  * In the 1980s, it was ported to C and C++ and extensively modified by
- * David Fournier. 
+ * David Fournier.
  *
  */
 /**
@@ -42,7 +42,7 @@ extern int ctlc_flag;
   #include <iostream.h>
   #include <conio.h>
 #endif
-#if defined (__WAT32__) || defined (__MSVC32__) 
+#if defined (__WAT32__) || defined (__MSVC32__)
   #include <conio.h>
 #endif
 #if defined(__CYGWIN__)
@@ -59,7 +59,7 @@ extern int ctlc_flag;
 #endif
 #ifdef __SUN__
   #define getch getchar
-  void clrscr(void); 
+  void clrscr(void);
 #endif
 #if defined(__GNU__) || defined(UNIXKLUDGE)
   #define getch getchar
@@ -170,7 +170,7 @@ extern int traceflag;
 //#pragma warn -sig
 
 #ifdef _MSC_VER
-BOOL CtrlHandler( DWORD fdwCtrlType ) 
+BOOL CtrlHandler( DWORD fdwCtrlType )
 {
   if (fdwCtrlType == CTRL_C_EVENT)
   {
@@ -186,7 +186,7 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
  Quasi-Newton function minimizer.
   \param _f Value of function to be minimized.
   \param _x Vector of independent variables.
-  \param _g Vector containing the partial derivatives of _f with respect to 
+  \param _g Vector containing the partial derivatives of _f with respect to
    each independent variable. The gradient vector returned by \ref gradcalc.
  */
 void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
@@ -225,13 +225,13 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
     #endif
  #endif
     #if defined( __GNU__) || defined (__BORLANDC__)
-      if (ireturn <= 0 ) 
+      if (ireturn <= 0 )
       {
 	 signal(SIGINT, &onintr);
       }
     #endif
     #ifdef __ZTC__
-      if (ireturn <= 0 ) 
+      if (ireturn <= 0 )
       {
         if (disp_inited == 0)
         {
@@ -241,7 +241,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
       }
     #endif
   tracing_message(traceflag,"A5");
-      if (ireturn ==1 && dcheck_flag ==0) 
+      if (ireturn ==1 && dcheck_flag ==0)
       {
         ireturn = 3;
       }
@@ -258,45 +258,45 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
       w.initialize();
       alpha=1.0;
       ihflag=0;
-     if (n==0) 
-     { 
+     if (n==0)
+     {
        cerr << "Error -- the number of active parameters"
          " fmin must be > 0\n";
        ad_exit(1);
-     } 
+     }
   tracing_message(traceflag,"A7");
-     if (x.indexmin() !=1) 
-     { 
+     if (x.indexmin() !=1)
+     {
        cerr << "Error -- minimum valid index"
          " for independent_variables in fmin must be 1\n"
         << " it is " << x.indexmin() << "\n";
         ad_exit(1);
-     } 
-     if (x.size() <n) 
-     { 
+     }
+     if (x.size() <n)
+     {
        cerr << "Error -- the size of the independent_variables"
         " which is " << x.size() << " must be >= " << n << "\n"
         << " the number of independent variables in fmin\n";
         ad_exit(1);
-     } 
+     }
   tracing_message(traceflag,"A8");
-     if (g.indexmin() !=1) 
-     { 
+     if (g.indexmin() !=1)
+     {
        cerr << "Error -- minimum valid index"
          " for the gradient vector in fmin must be 1\n"
         << " it is " << g.indexmin() << "\n";
         ad_exit(1);
-     } 
-     if (g.size() <n) 
-     { 
+     }
+     if (g.size() <n)
+     {
        cerr << "Error -- the size of the gradient vector"
         " which is " << g.size() << " must be >=\n"
         << " the number of independent variables in fmin\n";
         ad_exit(1);
-     } 
+     }
   tracing_message(traceflag,"A9");
      for (i=1; i<=n; i++)
-           xx.elem(i)=x.elem(i); 
+           xx.elem(i)=x.elem(i);
   tracing_message(traceflag,"A10");
       itn=0;
       icc=0;
@@ -333,7 +333,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
       if (dmin <= 0.)
          goto label7020;
       if(dfn == 0.)
-         z = 0.0; 
+         z = 0.0;
   tracing_message(traceflag,"A14");
       for (i=1; i<=n; i++)
       {
@@ -417,7 +417,7 @@ label20:
 label7003:
       if (iprint>0)
       {
-	if (ad_printf) 
+	if (ad_printf)
         {
           (*ad_printf)("%d variables; iteration %ld; function evaluation %ld", n, itn, ifn);
           if (pointer_to_phase)
@@ -435,7 +435,7 @@ label7003:
         }
       }
 label7002:
-      if(iprint>0) 
+      if(iprint>0)
       {
         fmmdisp(x, g, n, this->scroll_flag,noprintx);
       }
@@ -546,7 +546,7 @@ label30:
           gbest.elem(i)=w.elem(i);
         }
       }
-      if (use_control_c==1)         
+      if (use_control_c==1)
       {
 #if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) || defined(linux)
          if(ctlc_flag || ifn == dcheck_flag )
@@ -572,7 +572,6 @@ label30:
               c='C';
             if ( c == 'C')
             {
-	      
               for (i=1; i<=n; i++)
               {
                 x.elem(i)=xx.elem(i);
@@ -580,16 +579,16 @@ label30:
               ireturn = 3;
               derch(f, x , w, n, ireturn);
               return;
-            } 
+            }
             else if(c=='S')
             {
 	      //set convergence criteria to something high to stop now
 	      crit=100000.0;
 	      return;
 	    }
-            else 
+            else
             {
-              if ( c == 'Q'|| c == 'N') 
+              if ( c == 'Q'|| c == 'N')
               {
                 quit_flag=c;
                 goto label92;
@@ -674,7 +673,7 @@ label40:
       }
       else
       {
-        if (z>10.0) 
+        if (z>10.0)
         {
           cout << "large z" << z << endl;
           z=10.0;
@@ -863,7 +862,7 @@ label7020:
    if (iprint>0)
    {
      if (ad_printf) (*ad_printf)("*** hessian not positive definite\n");
-   } 
+   }
          #ifdef __ZTC__
          if (ireturn <= 0)
          {

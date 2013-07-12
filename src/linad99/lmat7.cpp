@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -30,7 +30,7 @@ AD_LONG_INT sum(const lmatrix& m)
  * \param
  */
 AD_LONG_INT colsum(const lmatrix& m,int col)
-{ 
+{
   if (col < m.colmin() || col > m.colmax())
   {
     ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "AD_LONG_INT colsum(const lmatrix& m,int col)", m.colmin(), m.colmax(), col);
@@ -50,7 +50,7 @@ AD_LONG_INT colsum(const lmatrix& m,int col)
  * \param
  */
 lvector column(const lmatrix& m,int col)
-{ 
+{
   if (col < m.colmin() || col > m.colmax())
   {
     ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "lvector column(const lmatrix& m,int col)", m.colmin(), m.colmax(), col);

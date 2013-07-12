@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -70,8 +70,8 @@ void dmatrix::write_on(const ostream& _s) const
      s << (*this)[i];
      if (i<rowmax())
      {
-//#  if ( defined(__BORLANDC__) &&  __BORLANDC__  > 0x0520) 
-      
+//#  if ( defined(__BORLANDC__) &&  __BORLANDC__  > 0x0520)
+
 //#  endif
        s << endl;
      }
@@ -84,7 +84,7 @@ void dmatrix::write_on(const ostream& _s) const
  */
 istream& operator>>(const istream& _istr, const dmatrix& _z)
 {
-  dmatrix& z= (dmatrix&) _z; 
+  dmatrix& z= (dmatrix&) _z;
   istream& istr = (istream&) _istr;
   z.read_from(istr);
 

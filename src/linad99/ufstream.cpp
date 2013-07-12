@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -29,7 +29,7 @@ uistream& uistream::operator>> (const TYPE& x) \
 
 #if defined(__GNUDOS__) || defined(__MSVC32__) || defined (__WAT32__)
 #  define __BINFILE__ ios::binary
-#elif defined(__TURBOC__) 
+#elif defined(__TURBOC__)
 #  define __BINFILE__ ios::binary
 #else
 #  define __BINFILE__ 0
@@ -38,11 +38,11 @@ uistream& uistream::operator>> (const TYPE& x) \
 #if defined(__TURBOC__) || defined(__GNUDOS__) || defined(__MSVC32__) || defined (__WAT32__)
 uostream::uostream(const char* name, int  m, int prot)
 #  if defined(__GNU_NEWER__)
-    :ofstream(name, std::ios::binary | std::_Ios_Openmode(m)) 
-#  elif defined(__MSC_NEWER__) || (__BORLANDC__  > 0x0550) 
-    :ofstream(name, std::ios::binary | m) 
+    :ofstream(name, std::ios::binary | std::_Ios_Openmode(m))
+#  elif defined(__MSC_NEWER__) || (__BORLANDC__  > 0x0550)
+    :ofstream(name, std::ios::binary | m)
 #  else
-    :ofstream(name, m | __BINFILE__, prot) 
+    :ofstream(name, m | __BINFILE__, prot)
 #  endif
 { }
 
@@ -52,7 +52,7 @@ uostream::uostream(const char* name, int  m, int prot)
  */
 void uistream::open(const char* name, int m, int prot)
 {
-#if defined(__TURBOC__) && (__BORLANDC__  <= 0x0520) 
+#if defined(__TURBOC__) && (__BORLANDC__  <= 0x0520)
   fstreambase::open(name, m, prot);
 #endif
 #ifdef __ZTC__
@@ -72,18 +72,18 @@ void uistream::open(const char* name, int m, int prot)
  */
 void uostream::open(const char* name, int m, int prot)
 {
-#if defined (__TURBOC__) &&   (__BORLANDC__  <= 0x0520) 
+#if defined (__TURBOC__) &&   (__BORLANDC__  <= 0x0520)
   fstreambase::open(name, m, prot);
 #endif
-#if (__BORLANDC__  >= 0x0540 && __BORLANDC__  <= 0x0550) 
+#if (__BORLANDC__  >= 0x0540 && __BORLANDC__  <= 0x0550)
   ofstream::open(name, m, prot);
 #else
 #  if defined(linux)
-#    if (__GNUC__  >= 3) 
+#    if (__GNUC__  >= 3)
        ofstream::open(name, std::_Ios_Openmode(m));
 #    else
        ofstream::open(name, m);
-#    endif     
+#    endif
 #  else
      ofstream::open(name, m);
 #  endif
@@ -113,10 +113,10 @@ void uostream::open(const char* name, int m, int prot)
  * \param
  */
 uistream::uistream(const char* name, int m, int prot)
-#  if (__BORLANDC__  > 0x0520  && __BORLANDC__  < 0x0560) 
+#  if (__BORLANDC__  > 0x0520  && __BORLANDC__  < 0x0560)
   :ifstream(name, m | __BINFILE__ , prot) { }
 #  else
-#  if ( defined(__GNU_NEWER__) || defined(__MSC_NEWER__)  || __BORLANDC__  > 0x0550) 
+#  if ( defined(__GNU_NEWER__) || defined(__MSC_NEWER__)  || __BORLANDC__  > 0x0550)
        :ifstream(name, std::ios::binary ) { }
 #    else
        :ifstream(name, m | ios::nocreate | __BINFILE__ , prot) { }
@@ -151,7 +151,7 @@ INSERT_IMPLEMENT(long double)
 
 // implement extraction operators for various types in class uistream
 #ifndef __SUN__
-//#  if (__BORLANDC__  > 0x0520 || defined(linux)) 
+//#  if (__BORLANDC__  > 0x0520 || defined(linux))
 EXTRACT_IMPLEMENT(signed char)
 EXTRACT_IMPLEMENT(unsigned char)
 EXTRACT_IMPLEMENT(char)
@@ -177,7 +177,7 @@ EXTRACT_IMPLEMENT(double)
 #endif
 
 #ifdef __TURBOC__
-#  if (__BORLANDC__  > 0x0520) 
+#  if (__BORLANDC__  > 0x0520)
 EXTRACT_IMPLEMENT(long double)
 #  else
 EXTRACT_IMPLEMENT(const long double)

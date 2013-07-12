@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -11,11 +11,11 @@
 #ifdef __ZTC__
   #include <conio.h>
 #endif
- 
+
 #include "fvar.hpp"
 
 #if !defined(__SUN__) && !defined(__GNU__) && !defined(__linux__)
-	#if !defined(__NDPX__) 
+	#if !defined(__NDPX__)
 	  #include <conio.h>
 	#else
 	  extern "C" {
@@ -73,7 +73,7 @@ void derch(const double& _f, const independent_variables & _x, const dvector& _g
       {
         maxg=fabs(g(i));
         maxind=i;
-      }  
+      }
     }
     cout << "maxind = " << maxind << " maxg = " << maxg << endl;
     index=ivector(column(dtmp,1));
@@ -91,7 +91,7 @@ void derch(const double& _f, const independent_variables & _x, const dvector& _g
       ireturn = -1;
       return;
     }
-    if (j == 0) 
+    if (j == 0)
     {
       cout << "\n   Checking all derivatives. Press X to terminate checking.\n";
       flush(cout);
@@ -117,12 +117,12 @@ void derch(const double& _f, const independent_variables & _x, const dvector& _g
 #   else
       cin >> s;
 #   endif
-  
+
     if (s < 0) ad_exit(0);
     if (j==0)
     {
       cout << endl << "   If you want the derivatives approximated in order"
-        << endl << "   of decreasing magnitude enter 1" 
+        << endl << "   of decreasing magnitude enter 1"
         << endl << "   Else enter 0" << endl;
       int tmpint=0;
       cin >> tmpint;
@@ -155,13 +155,13 @@ void derch(const double& _f, const independent_variables & _x, const dvector& _g
     label4:
       derch_stepsize=s;
       derchflag=-1;
-      f1 = f; 
+      f1 = f;
       x(i)=xsave-s;
       ireturn= 5; //fgcomp(&f2,x,g1,n, params, vars);
       return;
-  
+
     label5:
-      f2 = f; 
+      f2 = f;
       f = fsave;
       x(i)=xsave;
       if (s==0.0)
@@ -170,7 +170,7 @@ void derch(const double& _f, const independent_variables & _x, const dvector& _g
         {
           cout << "There appear to be uninitialized variables in "
                << "the objective function "  << endl
-               << "    f1 = " << setprecision(15) << f1 
+               << "    f1 = " << setprecision(15) << f1
                << " f2 = " << setprecision(15) << f2 << endl;
         }
         else
@@ -184,20 +184,20 @@ void derch(const double& _f, const independent_variables & _x, const dvector& _g
         g2=(f1-f2)/(2.*s);
         derchflag=0;
         double perr= fabs(g2-g(i))/(fabs(g(i))+1.e-6);
-  
+
         if (pofs)
         {
           if (perr > 1.e-3)
             (*pofs) << " ** ";
           else
             (*pofs) << "    ";
-          (*pofs) << "  " << setw(4) << i 
+          (*pofs) << "  " << setw(4) << i
                   << "  " <<  setw(12) << g(i)
                   << "  " <<  setw(12) << g2
                   << "  " <<  setw(12) <<  perr
                   << endl;
         }
-        if (ad_printf) 
+        if (ad_printf)
         {
           (*ad_printf)("  %12.5e  %12.5e  %12.5e  %12.5e ; %5d \n",
                 x(i), f, g(i), g2, i);
@@ -214,8 +214,8 @@ void derch(const double& _f, const independent_variables & _x, const dvector& _g
           ad_exit(0);
         }
       }
-#endif  
-      
+#endif
+
     } // for loop
   } // while (j > 0)
 //  ireturn = 2;

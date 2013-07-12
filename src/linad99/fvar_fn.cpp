@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  \file
@@ -95,9 +95,9 @@ prevariable& sigmoid(const prevariable& v1)
 
 
     /** \ingroup misc
-    Absolute value. Simple overload of standard C library function. 
+    Absolute value. Simple overload of standard C library function.
     Not differentiable and should not be used in cases where an
-    independent variable is expected to change sign. 
+    independent variable is expected to change sign.
     Use \ref sfabs in such cases.
     \param v1 Indpendent variable \f$x\f$
     \return \f$|x|\f$
@@ -124,7 +124,7 @@ prevariable& fabs(const prevariable& v1)
     }
 
     /** \ingroup misc
-    Smooth absolute value. 
+    Smooth absolute value.
     Uses thrid order polynomial to interpolate between += 0.001.
     Derivatives correct for all values of indpendent variable != 0.
     \param v1 Indpendent variable \f$x\f$

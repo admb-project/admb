@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -33,7 +33,7 @@ dmatrix& dmatrix::operator=(const dmatrix& m1)
        cerr << " Incompatible array bounds in dmatrix& operator = (const dmatrix&)\n";
        ad_exit(21);
      }
-  
+
      if (m != m1.m)            // check for condition that both matrices
      {                         // point to the same object
        for (int i=rowmin();i<=rowmax();i++)

@@ -1,8 +1,8 @@
 /*
   $Id$
- 
+
   Author: David Fournier
-  Copyright (c) 2008, 2009, 2010 Regents of the University of California 
+  Copyright (c) 2008, 2009, 2010 Regents of the University of California
  */
 #include <fvar.hpp>
 #define ITMAX 100
@@ -35,7 +35,7 @@ static double gammp(double a,double x)
 {
   double gamser,gammcf,gln;
 
-  if (x < 0.0 || a <= 0.0) 
+  if (x < 0.0 || a <= 0.0)
     cerr << "Invalid arguments in routine gammp" << endl;
   if (x < (a+1.0)) {
     gser(gamser,a,x,gln);
@@ -74,7 +74,7 @@ static void gcf(double& gammcf,double a,double x,double &gln)
     h *= del;
     if (fabs(del-1.0) < EPS) break;
   }
-  if (i > ITMAX) 
+  if (i > ITMAX)
     cerr << "a too large, ITMAX too small in gcf" << endl;
   gammcf=exp(-x+a*log(x)-(gln))*h;
 }
@@ -92,7 +92,7 @@ static void gser(double& gamser,double a,double x,double& gln)
 
   gln=gammln(a);
   if (x <= 0.0) {
-    if (x < 0.0) 
+    if (x < 0.0)
       cerr << "x less than 0 in routine gser" << endl;
     gamser=0.0;
     return;
@@ -153,7 +153,7 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
     }
   }
   while(fabs(h)>1.e-12);
-  
+
   double x=a*exp(u);
 
   init_df3_two_variable xx(x);
@@ -165,7 +165,7 @@ dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
   df3_two_variable z=cumd_gamma(xx,aa);
   double F_x=1.0/(*z.get_u_x());
   double F_y=-F_x*(*z.get_u_y());
-  
+
   dvariable vz=0.0;
   value(vz)=x;
 
@@ -200,12 +200,10 @@ static double Sn(double x,double a)
       cerr << "convergence error" << endl;
       ad_exit(1);
     }
-  } 
+  }
   while(1);
   return summ;
 }
-    
-    
 
 static double get_initial_u(double a,double y)
 {
@@ -249,7 +247,7 @@ static double get_initial_u(double a,double y)
     {
       double y=-logB;
       double v=y-(1-a)*log(y);
-      x0=y-(1-a)*log(v)-log(1+(1.0-a)/(1.0+v));  
+      x0=y-(1-a)*log(v)-log(1+(1.0-a)/(1.0+v));
       log_x0=log(x0);
     }
     else if (log(.01)<logB && logB < log(.15))
@@ -272,7 +270,7 @@ static double get_initial_u(double a,double y)
       ad_exit(1);
     }
   }
-  else  if (a>=1.0) 
+  else  if (a>=1.0)
   {
     const double a0 = 3.31125922108741;
     const double b1 = 6.61053765625462;
@@ -282,7 +280,7 @@ static double get_initial_u(double a,double y)
     const double b3 = 1.27364489782223;
     const double a3 = .213623493715853;
     const double b4 = .03611708101884203;
-  
+
     int sgn=1;
     double logtau;
     if (logP< log(0.5))
@@ -295,10 +293,9 @@ static double get_initial_u(double a,double y)
       logtau=logQ;
       sgn=1;
     }
-  
+
     double t=sqrt(-2.0*logtau);
-  
-  
+
     double num = (((a3*t+a2)*t+a1)*t)+a0;
     double den = ((((b4*t+b3)*t+b2)*t)+b1)*t+1;
     double s=sgn*(t-num/den);
@@ -337,7 +334,6 @@ static double get_initial_u(double a,double y)
           double zbar=exp((v+z-log(sn))/a);
           x0=zbar*(1.0-(a*log(zbar)-zbar-v+log(sn))/(a-zbar));
         }
-       
       }
       log_x0=log(x0);
     }
@@ -355,4 +351,3 @@ static double get_initial_u(double a,double y)
   }
   return log_x0-log(a);
 }
-

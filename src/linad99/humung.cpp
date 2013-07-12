@@ -2,14 +2,14 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
  * Description not yet available.
  */
 // file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable 
+// constructors, destructors and misc functions involving class prevariable
 #define DOS386
 
 #include "fvar.hpp"
@@ -73,8 +73,8 @@ humungous_pointer::humungous_pointer()
  * Description not yet available.
  * \param
  */
-int humungous_pointer::operator == (void * p) 
-{ 
+int humungous_pointer::operator == (void * p)
+{
   return (ptr==p);
 }
 
@@ -82,7 +82,7 @@ int humungous_pointer::operator == (void * p)
  * Description not yet available.
  * \param
  */
-int humungous_pointer::operator != (void * p) 
+int humungous_pointer::operator != (void * p)
 {
   return (ptr!=p);
 }
@@ -91,7 +91,7 @@ int humungous_pointer::operator != (void * p)
  * Description not yet available.
  * \param
  */
-humungous_pointer::operator char* () 
+humungous_pointer::operator char* ()
 {
   return ptr;
 }
@@ -100,7 +100,7 @@ humungous_pointer::operator char* ()
  * Description not yet available.
  * \param
  */
-humungous_pointer::operator void* () 
+humungous_pointer::operator void* ()
 {
   return (void *) ptr;
 }
@@ -168,5 +168,5 @@ humungous_pointer& humungous_pointer::operator = (void * p)
   #else
     ptr = (char *) p;
   #endif
-  return *this; 
+  return *this;
 }

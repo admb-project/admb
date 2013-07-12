@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -10,7 +10,7 @@
     const dvar_vector& x,const int& _ii)
   {
     if (allocated(*this))
-    {  
+    {
       int& ii=(int&) _ii;
       dvar_vector& d=(dvar_vector&) _d;
       int mmin=indexmin();
@@ -34,7 +34,7 @@
               }
             }
           }
-	}  
+	}
       }
     }
   }

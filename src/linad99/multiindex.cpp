@@ -1,14 +1,14 @@
 /*
  * $Id$
- * 
+ *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
  * Description not yet available.
  */
-#include <fvar.hpp> 
+#include <fvar.hpp>
  //   class multi_index
  //   {
  //     int mind;
@@ -21,7 +21,7 @@
  //     void operator ++ (void);
  //     int get_depth(void) { return depth;}
  //   };
- // 
+ //
 
 /**
  * Description not yet available.
@@ -53,12 +53,12 @@
       {
         break;
       }
-    } 
-    if (tmpdepth>depth) 
+    }
+    if (tmpdepth>depth)
       depth =tmpdepth;
-      
-  }    
-  int multi_index::get_offset(void) 
+
+  }
+  int multi_index::get_offset(void)
   {
     int imin=index.indexmin();
     int imax=index.indexmax();
@@ -85,13 +85,12 @@
     index=mind;
     depth=mind;
   }
-    
- 
- // 
+
+ //
  //   void main()
  //   {
  //     multi_index mi(1,3,4);
- // 
+ //
  //     mi()=3;
  //     do
  //     {
@@ -100,4 +99,4 @@
  //     }
  //     while(mi.get_depth()<5);
  //   }
- //     
+ //

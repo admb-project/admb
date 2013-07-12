@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -10,12 +10,12 @@
  {
     it=new double_index_type(_it);
  }
-     
+
  param_init_vector_vector::param_init_vector_vector()
  {
    it=NULL;
  }
-   
+
  void param_init_vector_vector::allocate(int min1,int max1,
    const index_type& min,
    const index_type& max,
@@ -84,8 +84,7 @@
    {
      deallocate();
    }
-  
-  
+
    void param_init_vector_vector::deallocate(void)
    {
      if(it)

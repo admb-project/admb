@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -16,7 +16,7 @@
  */
 banded_lower_triangular_dmatrix::
   banded_lower_triangular_dmatrix(const banded_lower_triangular_dmatrix& mm) :
-  bw(mm.bw), d(mm.d) 
+  bw(mm.bw), d(mm.d)
 {}
 
 /**
@@ -40,7 +40,7 @@ banded_lower_triangular_dmatrix & banded_lower_triangular_dmatrix::operator =
   }
   return *this;
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -53,7 +53,7 @@ banded_lower_triangular_dmatrix choleski_decomp_trust_bound(
   int minsave=M.indexmin();
   M.shift(1);
   int n=M.indexmax();
-  
+
   double delta=0.0;
   int bw=M.bandwidth();
   banded_lower_triangular_dmatrix L(1,n,bw);
@@ -156,4 +156,4 @@ banded_lower_triangular_dmatrix choleski_decomp_trust_bound(
 //***********************************************************
 //***********************************************************
 //***********************************************************
- 
+

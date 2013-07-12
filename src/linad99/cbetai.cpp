@@ -31,4 +31,3 @@ double betai(const double a,const double b,const double x,int maxit)
   else
     return 1.0-bt*betacf(b,a,1.0-x,maxit)/b;
 }
-

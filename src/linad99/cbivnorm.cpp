@@ -148,8 +148,8 @@ typedef struct
 } inlist;
 
 #define VOID void
- // 
- // 
+ //
+ //
  // union Multitype {	/* for multiple entry points */
  // 	integer1 g;
  // 	shortint h;
@@ -160,9 +160,9 @@ typedef struct
  // 	complex c;
  // 	doublecomplex z;
  // 	};
- // 
+ //
  // typedef union Multitype Multitype;
- // 
+ //
 
 /*typedef long int Long;*/	/* No longer used; formerly in Namelist */
 
@@ -260,7 +260,7 @@ double cmvbvu_(const double *sh,const  double *sk,
   \param x Upper limit of inetegration on X.
   \param y Upper limit of inetegration on Y
   \param rho correlation coefficient.
-  \return Probability that X is larger than x; and Y is larger than y 
+  \return Probability that X is larger than x; and Y is larger than y
 */
 double cumbvn(const double& x,const double& y,const double& rho)
 {
@@ -311,12 +311,12 @@ double cmvbvu_(const double *sh,const double *sk,const double *r__)
 	doublereal e_3[6];
 	doublereal fill_4[4];
 	doublereal e_5[10];
-	} equiv_21 = { {.1713244923791705, .3607615730481384, 
+	} equiv_21 = { {.1713244923791705, .3607615730481384,
 		.4679139345726904}, {0, 0, 0, 0, 0, 0, 0}, {.04717533638651177, .1069393259953183,
-		 .1600783285433464, .2031674267230659, .2334925365383547, 
-		.2491470458134029}, {0, 0, 0, 0}, {.01761400713915212, 
-		.04060142980038694, .06267204833410906, .08327674157670475, 
-		.1019301198172404, .1181945319615184, .1316886384491766, 
+		 .1600783285433464, .2031674267230659, .2334925365383547,
+		.2491470458134029}, {0, 0, 0, 0}, {.01761400713915212,
+		.04060142980038694, .06267204833410906, .08327674157670475,
+		.1019301198172404, .1181945319615184, .1316886384491766,
 		.1420961093183821, .1491729864726037, .1527533871307259}};
 
 #define w ((doublereal *)&equiv_21)
@@ -327,12 +327,12 @@ double cmvbvu_(const double *sh,const double *sk,const double *r__)
 	doublereal e_3[6];
 	doublereal fill_4[4];
 	doublereal e_5[10];
-	} equiv_22 = { {-.9324695142031522, -.6612093864662647, 
+	} equiv_22 = { {-.9324695142031522, -.6612093864662647,
 		-.238619186083197}, {0, 0, 0, 0, 0, 0, 0}, {-.9815606342467191, -.904117256370475,
-		 -.769902674194305, -.5873179542866171, -.3678314989981802, 
-		-.1252334085114692}, {0, 0, 0, 0}, {-.9931285991850949, 
-		-.9639719272779138, -.9122344282513259, -.8391169718222188, 
-		-.7463319064601508, -.636053680726515, -.5108670019508271, 
+		 -.769902674194305, -.5873179542866171, -.3678314989981802,
+		-.1252334085114692}, {0, 0, 0, 0}, {-.9931285991850949,
+		-.9639719272779138, -.9122344282513259, -.8391169718222188,
+		-.7463319064601508, -.636053680726515, -.5108670019508271,
 		-.3737060887154196, -.2277858511416451, -.07652652113349733}};
 
 #define x ((doublereal *)&equiv_22)
@@ -427,12 +427,12 @@ double cmvbvu_(const double *sh,const double *sk,const double *r__)
 	    bs = d__1 * d__1;
 	    c__ = (4 - hk) / 8;
 	    d__ = (12 - hk) / 16;
-	    bvn = a * exp(-(bs / as + hk) / 2) * (1 - c__ * (bs - as) * (1 - 
+	    bvn = a * exp(-(bs / as + hk) / 2) * (1 - c__ * (bs - as) * (1 -
 		    d__ * bs / 5) / 3 + c__ * d__ * as * as / 5);
 	    if (hk > -160.) {
 		b = sqrt(bs);
 		d__1 = -b / a;
-		bvn -= exp(-hk / 2) * sqrt(6.283185307179586) * cmvphi_(&d__1) 
+		bvn -= exp(-hk / 2) * sqrt(6.283185307179586) * cmvphi_(&d__1)
 			* b * (1 - c__ * bs * (1 - d__ * bs / 5) / 3);
 	    }
 	    a /= 2;
@@ -442,15 +442,15 @@ double cmvbvu_(const double *sh,const double *sk,const double *r__)
 		d__1 = a * (x[i__ + ng * 10 - 11] + 1);
 		xs = d__1 * d__1;
 		rs = sqrt(1 - xs);
-		bvn += a * w[i__ + ng * 10 - 11] * (exp(-bs / (xs * 2) - hk / 
-			(rs + 1)) / rs - exp(-(bs / xs + hk) / 2) * (c__ * xs 
+		bvn += a * w[i__ + ng * 10 - 11] * (exp(-bs / (xs * 2) - hk /
+			(rs + 1)) / rs - exp(-(bs / xs + hk) / 2) * (c__ * xs
 			* (d__ * xs + 1) + 1));
 /* Computing 2nd power */
 		d__1 = -x[i__ + ng * 10 - 11] + 1;
 		xs = as * (d__1 * d__1) / 4;
 		rs = sqrt(1 - xs);
-		bvn += a * w[i__ + ng * 10 - 11] * exp(-(bs / xs + hk) / 2) * 
-			(exp(-hk * (1 - rs) / ((rs + 1) * 2)) / rs - (c__ * 
+		bvn += a * w[i__ + ng * 10 - 11] * exp(-(bs / xs + hk) / 2) *
+			(exp(-hk * (1 - rs) / ((rs + 1) * 2)) / rs - (c__ *
 			xs * (d__ * xs + 1) + 1));
 	    }
 	    bvn = -bvn / 6.283185307179586;
@@ -518,13 +518,13 @@ double cmvphi_(double *z__)
 /*     |Z| < CUTOFF = 10/SQRT(2) */
 
 	if (zabs < 7.071067811865475) {
-	    p = expntl * ((((((zabs * .03526249659989109 + .7003830644436881) 
-		    * zabs + 6.37396220353165) * zabs + 33.912866078383) * 
-		    zabs + 112.0792914978709) * zabs + 221.2135961699311) * 
-		    zabs + 220.2068679123761) / (((((((zabs * 
-		    .08838834764831844 + 1.755667163182642) * zabs + 
-		    16.06417757920695) * zabs + 86.78073220294608) * zabs + 
-		    296.5642487796737) * zabs + 637.3336333788311) * zabs + 
+	    p = expntl * ((((((zabs * .03526249659989109 + .7003830644436881)
+		    * zabs + 6.37396220353165) * zabs + 33.912866078383) *
+		    zabs + 112.0792914978709) * zabs + 221.2135961699311) *
+		    zabs + 220.2068679123761) / (((((((zabs *
+		    .08838834764831844 + 1.755667163182642) * zabs +
+		    16.06417757920695) * zabs + 86.78073220294608) * zabs +
+		    296.5642487796737) * zabs + 637.3336333788311) * zabs +
 		    793.8265125199484) * zabs + 440.4137358247522);
 
 /*     |Z| >= CUTOFF. */

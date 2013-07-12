@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -67,7 +67,7 @@
  * Description not yet available.
  * \param
  */
- const double& dvector::operator[](int i) const 
+ const double& dvector::operator[](int i) const
  {
    #ifdef SAFE_ARRAYS
      if (i>indexmax())
@@ -77,7 +77,7 @@
        cerr << " index value is " << i << " indexmax() is "<< indexmax() <<"\n";
        ad_exit(1);
      }
-     
+
      if (i<indexmin())
      {
        cerr << "array bound exceeded -- index too low in dvector::operator[]";
@@ -102,7 +102,7 @@
        cerr << " index value is " << i << " indexmax() is "<< indexmax() <<"\n";
        ad_exit(1);
      }
-     
+
      if (i<indexmin())
      {
        cerr << "array bound exceeded -- index too low in dvector::operator[]";

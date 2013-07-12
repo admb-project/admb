@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -52,7 +52,7 @@ double sum(const d4_array& m)
   }
   return tmp;
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -132,10 +132,10 @@ double sum(const d4_array& m)
      }
    }
    else
-   { 
+   {
 #    if defined(SAFE_ALL)
    //  cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
-#    endif 
+#    endif
    }
  }
 
@@ -143,7 +143,7 @@ double sum(const d4_array& m)
  * Description not yet available.
  * \param
  */
- d4_array::~d4_array() 
+ d4_array::~d4_array()
  {
    deallocate();
  }
@@ -157,7 +157,7 @@ d4_array& d4_array::operator=(const d4_array& m)
    int mmin=hslicemin();
    int mmax=hslicemax();
    if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
-   { 
+   {
      cerr << "Incompatible bounds in"
       " d4_array& d4_array:: operator =  (const d4_array& m)"
       << endl;

@@ -2,12 +2,11 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
 //double ndfboundp(double x, double fmin, double fmax, const double& fpen);
-
 
 void param_init_number::sd_scale(const dvector& _d, const dvector& x, const int& _ii)
   {
@@ -18,7 +17,6 @@ void param_init_number::sd_scale(const dvector& _d, const dvector& x, const int&
     ii++;
   }
 
-
 void param_init_bounded_number::sd_scale(const dvector& _d, const dvector& x, const int& _ii)
   {
     int& ii=(int&) _ii;
@@ -26,14 +24,14 @@ void param_init_bounded_number::sd_scale(const dvector& _d, const dvector& x, co
     double pen=0;
     if(!initial_params::mc_phase)
     {
-      if (!scalefactor) 
+      if (!scalefactor)
         d(ii)=ndfboundp(x(ii),minb,maxb,pen);
       else
         d(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/scalefactor;
     }
     else
     {
-      if (!scalefactor) 
+      if (!scalefactor)
         d(ii)=ndfboundp_mc(x(ii),minb,maxb,pen);
       else
         d(ii)=ndfboundp_mc(x(ii)/scalefactor,minb,maxb,pen)/scalefactor;
@@ -47,7 +45,7 @@ void param_init_bounded_number::sd_scale(const dvector& _d, const dvector& x, co
 void param_init_vector::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     if (allocated(*this))
-    {  
+    {
       int& ii=(int&) _ii;
       dvector& v=(dvector&) _v;
       int mmin=indexmin();
@@ -65,7 +63,7 @@ void param_init_vector::sd_scale(const dvector& _v, const dvector& x, const int&
 void param_init_matrix::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     if (allocated(*this))
-    {  
+    {
       int& ii=(int&) _ii;
       dvector& v=(dvector&) _v;
       int mmin=rowmin();
@@ -82,7 +80,7 @@ void param_init_matrix::sd_scale(const dvector& _v, const dvector& x, const int&
             if (scalefactor) v(ii)/=scalefactor;
             ii++;
           }
-	}  
+	}
       }
     }
   }
@@ -91,7 +89,7 @@ void param_init_matrix::sd_scale(const dvector& _v, const dvector& x, const int&
 void param_init_bounded_vector::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     if (allocated(*this))
-    {  
+    {
       int& ii=(int&) _ii;
       dvector& v=(dvector&) _v;
       int mmin=indexmin();
@@ -101,7 +99,7 @@ void param_init_bounded_vector::sd_scale(const dvector& _v, const dvector& x, co
       {
         for (int i=mmin;i<=mmax;i++)
         {
-          if (!scalefactor) 
+          if (!scalefactor)
             v(ii)=ndfboundp(x(ii),minb,maxb,pen);
           else
             v(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/scalefactor;
@@ -123,7 +121,7 @@ void param_init_bounded_vector::sd_scale(const dvector& _v, const dvector& x, co
 void param_init_bounded_matrix::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     if (allocated(*this))
-    {  
+    {
       int& ii=(int&) _ii;
       dvector& v=(dvector&) _v;
       int rmin=rowmin();
@@ -132,12 +130,12 @@ void param_init_bounded_matrix::sd_scale(const dvector& _v, const dvector& x, co
       for (int i=rmin;i<=rmax;i++)
       {
         if (allocated((*this)(i)))
-        {  
+        {
           int cmin=(*this)(i).indexmin();
           int cmax=(*this)(i).indexmax();
           for (int j=cmin;j<=cmax;j++)
           {
-            if (!scalefactor) 
+            if (!scalefactor)
               v(ii)=ndfboundp(x(ii),minb,maxb,pen);
             else
               v(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/

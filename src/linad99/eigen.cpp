@@ -32,7 +32,7 @@ dvector eigenvalues(const dmatrix& m)
   m1.rowshift(1);
   dvector diag(1,n);
   dvector off_diag(1,n);
-  
+
   tri_dag(m1,diag,off_diag);
 
   get_eigen(diag,off_diag,m1); // eigenvalues are returned in diag
@@ -81,7 +81,7 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
         scale += fabs(m[i][k]);
       if (scale == 0.0)
         e[i]=m[i][l];
-      else 
+      else
       {
         for (k=1;k<=l;k++)
         {
@@ -94,7 +94,7 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
         h -= f*g;
         m[i][l]=f-g;
         f=0.0;
-        for (j=1;j<=l;j++) 
+        for (j=1;j<=l;j++)
         {
         #ifdef EIGEN_VECTORS
         /* Next statement can be omitted if eigenvectors not wanted */
@@ -109,7 +109,7 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
           f += e[j]*m[i][j];
         }
         hh=f/(h+h);
-        for (j=1;j<=l;j++) 
+        for (j=1;j<=l;j++)
         {
           f=m[i][j];
           e[j]=g=e[j]-hh*f;
@@ -130,10 +130,10 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
   /* Contents of this loop can be omitted if eigenvectors not
       wanted except for statement d[i]=a[i][i]; */
   #ifdef EIGEN_VECTORS
-  for (i=1;i<=n;i++) 
+  for (i=1;i<=n;i++)
   {
     l=i-1;
-    if (d[i]) 
+    if (d[i])
     {
       for (j=1;j<=l;j++)
       {
@@ -149,7 +149,7 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
     for (j=1;j<=l;j++) m[j][i]=m[i][j]=0.0;
   }
   #else
-  for (i=1;i<=n;i++) 
+  for (i=1;i<=n;i++)
   {
     d[i]=m[i][i];
   }
@@ -232,7 +232,7 @@ void get_eigen(const dvector& _d, const dvector& _e, const dmatrix& _z)
           g=c*r-b;
           /* Next loop can be omitted if eigenvectors not wanted */
           #ifdef EIGEN_VECTORS
-            for (k=1;k<=n;k++) 
+            for (k=1;k<=n;k++)
             {
               f=z[k][i+1];
               z[k][i+1]=s*z[k][i]+c*f;
@@ -392,7 +392,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e,
           d[i+1]=g+p;
           g=c*r-b;
           /* Next loop can be omitted if eigenvectors not wanted */
-          for (k=1;k<=n;k++) 
+          for (k=1;k<=n;k++)
           {
             f=z[k][i+1];
             z[k][i+1]=s*z[k][i]+c*f;

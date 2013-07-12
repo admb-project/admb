@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 #if defined(USE_LAPLACE)
@@ -75,10 +75,8 @@ extern admb_javapointers * adjm_ptr;
   int flag3=12;
   int flag4=13;
   int flag5=14;
-  
 #endif
 
-  
   void extra_random_effects_generator1(void);
   void extra_random_effects_generator2(void);
   void extra_random_effects_generator3(void);
@@ -118,7 +116,7 @@ extern admb_javapointers * adjm_ptr;
       initial_params::mceval_phase=0;
     }
     other_calculations();
-    
+
     final_calcs();
     // clean up if have random effects
 #   if defined(USE_LAPLACE)
@@ -355,7 +353,7 @@ int * kill_address;
       }
     }
 #endif  // #if defined(USE_ADPVM)
-      
+
     set_runtime();
 
     if ( (on=option_match(argc,argv,"-hbf",nopt))>-1)
@@ -366,17 +364,17 @@ int * kill_address;
     // Sets the maximum number of function evaluation as determined from the command line
     if ( (on=option_match(argc,argv,"-maxfn",nopt))>-1)
     {
-      if (nopt ==1)            
-      {              
+      if (nopt ==1)
+      {
         set_runtime_maxfn(argv[on+1]);
       }
       else
       {
         cerr << "Wrong number of options to -mafxn -- must be 1"
-          " you have " << nopt << endl;                
-      }        
-    }   
-    
+          " you have " << nopt << endl;
+      }
+    }
+
     if ( (on=option_match(argc,argv,"-ttr",nopt))>-1)
     {
       test_trust_flag=1;
@@ -384,16 +382,16 @@ int * kill_address;
 
     if ( (on=option_match(argc,argv,"-crit",nopt))>-1)
     {
-      if (nopt ==1)            
-      {              
+      if (nopt ==1)
+      {
         set_runtime_crit(argv[on+1]);
       }
       else
       {
         cerr << "Wrong number of options to -crit -- must be 1"
-          " you have " << nopt << endl;                
-      }        
-    }   
+          " you have " << nopt << endl;
+      }
+    }
 
     stddev_params::get_stddev_number_offset();
 
@@ -418,7 +416,7 @@ int * kill_address;
 #endif // #if defined(ADMB_REDEMO)
 
     repeatminflag=0;
-    do 
+    do
     {
      /*
       if (spminflag)
@@ -449,7 +447,7 @@ int * kill_address;
         initial_params::current_phase=initial_params::max_number_phases;
       }
       tracing_message(traceflag,"D1");
-  
+
       //double ratio=100.*gradient_structure::max_last_offset/12000.0;
   #if defined (AD_DEMO)
       cout << endl << endl;
@@ -459,7 +457,7 @@ int * kill_address;
            " capacity \n",ratio);
       }
       write_banner_stuff();
-  
+
   #endif
       tracing_message(traceflag,"E1");
       if (option_match(argc,argv,"-est") == -1)
@@ -552,7 +550,6 @@ int * kill_address;
                   cerr << "error illega value for pvm_manager->mode" << endl;
                   exit(1);
                 }
-    
     #else
                 cerr << "PVM not included with this distribution" << endl;
                 ad_exit(1);
@@ -572,7 +569,7 @@ int * kill_address;
                 mcmc2_flag=1;
               else
                 mcmc2_flag=0;
-    
+
               if (!ad_comm::pvm_manager)
               {
                 mcmc_computations();
@@ -622,7 +619,6 @@ int * kill_address;
                 //sob_routine(nsob,dscale,1);
                 //sobol_importance_routine(nsob,iseed0,dscale,1);
     #endif
-          
               }
               else
               {
@@ -633,7 +629,6 @@ int * kill_address;
     #else
                 //sobol_importance_routine(nsob,iseed0,dscale,0);
     #endif
-         
               }
             }
             initial_params::sd_phase=0;
@@ -657,7 +652,7 @@ int * kill_address;
 void write_banner_stuff(void)
 {
   if (ad_printf)
-  {  
+  {
     (*ad_printf)("\n%s\n", banner0);
     (*ad_printf)("%s\n", banner1);
     (*ad_printf)("%s\n", banner1a);
@@ -717,23 +712,22 @@ void adwait(double sec){;}
 
   void function_minimizer::set_runtime_maxfn(const char * s)
   {
-    adstring opt="{" + adstring(s) + "}";          
+    adstring opt="{" + adstring(s) + "}";
     dvector temp1((char*)(opt));
     if (allocated(maximum_function_evaluations))
       maximum_function_evaluations.deallocate();
     maximum_function_evaluations.allocate(temp1.indexmin(),temp1.indexmax());
     maximum_function_evaluations=temp1;
-  }  
+  }
 
   void function_minimizer::set_runtime_crit(const char * s)
   {
-    adstring opt="{" + adstring(s) + "}";          
+    adstring opt="{" + adstring(s) + "}";
     dvector temp1((char*)(opt));
     if (allocated(convergence_criteria)) convergence_criteria.deallocate();
     convergence_criteria.allocate(temp1.indexmin(),temp1.indexmax());
     convergence_criteria=temp1;
-  }  
-
+  }
 
   void function_minimizer::mcmc_computations(void)
   {
@@ -746,7 +740,7 @@ void adwait(double sec){;}
     }
     on=ton;
     nopt=tnopt;
-     
+
     if (on>-1)
     {
       /*
@@ -775,13 +769,13 @@ void adwait(double sec){;}
         {
           char * end;
           dscale=strtod(ad_comm::argv[on+1],&end);
-          if (!dscale) 
+          if (!dscale)
           {
             cerr << "Invalid argument to option -mcmult" << endl;
             dscale=1.0;
           }
         }
-      }    
+      }
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcseed",nopt))>-1)
       {
         if (nopt)
@@ -794,7 +788,7 @@ void adwait(double sec){;}
             iseed0=0;
           }
         }
-      }    
+      }
       int hybrid_flag=0;
       if (option_match(ad_comm::argc,ad_comm::argv,"-hybrid") > -1)
       {
@@ -857,13 +851,13 @@ void adwait(double sec){;}
         {
           char * end;
           dscale=strtod(ad_comm::argv[on+1],&end);
-          if (!dscale) 
+          if (!dscale)
           {
             cerr << "Invalid argument to option -mcmult" << endl;
             dscale=1.0;
           }
         }
-      }    
+      }
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcseed",nopt))>-1)
       {
         if (nopt)
@@ -876,7 +870,7 @@ void adwait(double sec){;}
             iseed0=0;
           }
         }
-      }    
+      }
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcr",nopt))>-1)
       {
 #if defined(NO_MCMC)
@@ -912,7 +906,7 @@ void adwait(double sec){;}
 #if defined(ADMB_REDEMO)
 
   int rn3;
-  
+
   extern "C" {
   int verifier1(int **pflag1,int ** p2,int ** p3,int ** p4,int ** p5);
   int verifier2(int **pflag1,int ** p2,int ** p3,int ** p4,int ** p5);
@@ -935,8 +929,7 @@ void adwait(double sec){;}
   int verifier19(int **pflag1,int ** p2,int ** p3,int ** p4,int ** p5);
   int verifier20(int **pflag1,int ** p2,int ** p3,int ** p4,int ** p5);
   }
-  
-  
+
   void extra_random_effects_generator2(void)
   {
     int i=1;
@@ -952,7 +945,7 @@ void adwait(double sec){;}
     qflag5=&flag5;
     qflag5=&flag5;
     int ret=verifier1(pflag1,pflag2,pflag3,pflag4,pflag5);
-    
+
     for (i=1;i<20;i++)
       ret=verifier2(pflag1,pflag2,pflag3,pflag4,pflag5);
     for (i=1;i<20;i++)
@@ -985,9 +978,9 @@ void adwait(double sec){;}
       ret=verifier15(pflag1,pflag2,pflag3,pflag4,pflag5);
     for (i=1;i<20;i++)
       ret=verifier16(pflag1,pflag2,pflag3,pflag4,pflag5);
-    
+
       ret=verifier17(pflag1,pflag2,pflag3,pflag4,pflag5);
-  
+
     for (i=1;i<20;i++)
       ret=verifier18(pflag1,pflag2,pflag3,pflag4,pflag5);
     for (i=1;i<20;i++)
@@ -1002,7 +995,7 @@ void adwait(double sec){;}
     cout << " *qflag5 = " << *qflag5 << endl;
  */
   }
-  
+
   void extra_random_effects_generator1(void)
   {
     int i=1;
@@ -1018,7 +1011,7 @@ void adwait(double sec){;}
     qflag5=&flag5;
     qflag5=&flag5;
     int ret=verifier1(pflag1,pflag2,pflag3,pflag4,pflag5);
-    
+
     for (i=1;i<20;i++)
       ret=verifier2(pflag1,pflag2,pflag3,pflag4,pflag5);
     for (i=1;i<20;i++)
@@ -1051,9 +1044,9 @@ void adwait(double sec){;}
       ret=verifier15(pflag1,pflag2,pflag3,pflag4,pflag5);
     for (i=1;i<20;i++)
       ret=verifier16(pflag1,pflag2,pflag3,pflag4,pflag5);
-    
+
       //ret=verifier17(pflag1,pflag2,pflag3,pflag4,pflag5);
-  
+
     for (i=1;i<20;i++)
       ret=verifier18(pflag1,pflag2,pflag3,pflag4,pflag5);
     for (i=1;i<20;i++)
@@ -1061,7 +1054,7 @@ void adwait(double sec){;}
     for (i=1;i<20;i++)
       ret=verifier20(pflag1,pflag2,pflag3,pflag4,pflag5);
   }
-  
+
   void extra_random_effects_generator3(void)
   {
     int i=1;
@@ -1077,7 +1070,7 @@ void adwait(double sec){;}
     qflag5=&flag5;
     qflag5=&flag5;
     int ret=verifier1(pflag1,pflag2,pflag3,pflag4,pflag5);
-    
+
     for (i=1;i<20;i++)
       ret=verifier2(pflag1,pflag2,pflag3,pflag4,pflag5);
     for (i=1;i<20;i++)
@@ -1110,9 +1103,9 @@ void adwait(double sec){;}
       ret=verifier15(pflag1,pflag2,pflag3,pflag4,pflag5);
     for (i=1;i<20;i++)
       ret=verifier16(pflag1,pflag2,pflag3,pflag4,pflag5);
-    
+
       //ret=verifier17(pflag1,pflag2,pflag3,pflag4,pflag5);
-  
+
     for (i=1;i<20;i++)
       ret=verifier18(pflag1,pflag2,pflag3,pflag4,pflag5);
     for (i=1;i<20;i++)
@@ -1120,7 +1113,7 @@ void adwait(double sec){;}
     for (i=1;i<20;i++)
       ret=verifier20(pflag1,pflag2,pflag3,pflag4,pflag5);
   }
-  
+
   int try_it_again(int stupid_flag)
   {
     if (stupid_flag)
@@ -1128,27 +1121,27 @@ void adwait(double sec){;}
     switch (stupid_flag)
     {
     case 1:
-      exit(1); 
+      exit(1);
     case 2:
-      exit(1); 
+      exit(1);
     case 3:
-      exit(1); 
+      exit(1);
     case 4:
-      exit(1); 
+      exit(1);
     case 5:
-      exit(1); 
+      exit(1);
     case 6:
-      exit(1); 
+      exit(1);
     case 7:
-      exit(1); 
+      exit(1);
     case 8:
-      exit(1); 
+      exit(1);
     case 9:
-      exit(1); 
+      exit(1);
     }
     return 6945;
-  }   
+  }
 #else
   void extra_random_effects_generator2(void) {;}
-  
+
 #endif  //#if defined(ADMB_REDEMO)

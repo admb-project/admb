@@ -43,7 +43,7 @@ static double pythag(double a, double b)
 }
 
 /*
-class sing_val_decomp 
+class sing_val_decomp
 {
   dmatrix a;
   dvector w;
@@ -85,7 +85,7 @@ sing_val_decomp singval_decomp(const dmatrix &_a)
   dmatrix v(1,n,1,n);
 
   double eps = 1.e-12;
-  double tol = eps; 
+  double tol = eps;
   int k = svd(m,n,1,1,eps,tol,a,w,u,v);
   if(k!=0)
   {
@@ -186,7 +186,7 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
   u=aa;
 
 /* Householder's reduction to bidiagonal form. */
-  g = x = 0.0;    
+  g = x = 0.0;
   for (i=0;i<n;i++)
   {
     e[i] = g;
@@ -299,7 +299,6 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
       g = e[i];
       l = i;
     } /* end i */
- 
   } /* end withv, parens added for clarity */
 
 /* accumulation of left-hand transformations */
@@ -316,10 +315,10 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
           for (k=l;k<m;k++)
             s += (u[k][i] * u[k][j]);
           f = s / h;
-          for (k=i;k<m;k++) 
+          for (k=i;k<m;k++)
             u[k][j] += (f * u[k][i]);
         } /* end j */
-        for (j=i;j<m;j++) 
+        for (j=i;j<m;j++)
           u[j][i] /= g;
       } /* end g */
       else {
@@ -429,7 +428,7 @@ convergence:
       } /* end withv, parens added for clarity */
     } /* end z */
   } /* end k */
-  
+
   free(e);
 
   return retval;
@@ -464,7 +463,7 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
 
   u=aa;
 /* Householder's reduction to bidiagonal form. */
-  g = x = 0.0;    
+  g = x = 0.0;
   for (i=0;i<n;i++)
   {
     e[i] = g;
@@ -568,7 +567,6 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
       g = e[i];
       l = i;
     } /* end i */
- 
   } /* end withv, parens added for clarity */
 
 /* accumulation of left-hand transformations */
@@ -585,10 +583,10 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
           for (k=l;k<m;k++)
             s += (u[k][i] * u[k][j]);
           f = s / h;
-          for (k=i;k<m;k++) 
+          for (k=i;k<m;k++)
             u[k][j] += (f * u[k][i]);
         } /* end j */
-        for (j=i;j<m;j++) 
+        for (j=i;j<m;j++)
           u[j][i] /= g;
       } /* end g */
       else {
@@ -698,7 +696,7 @@ convergence:
       } /* end withv, parens added for clarity */
     } /* end z */
   } /* end k */
-  
+
   free(e);
 
   return retval;

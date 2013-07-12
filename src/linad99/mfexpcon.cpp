@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -21,7 +21,7 @@
   double mfexp(double x)
   {
     double b=60;
-    if (x<=b && x>=-b) 
+    if (x<=b && x>=-b)
     {
       return exp(x);
     }
@@ -45,7 +45,7 @@
   */
   double mfexp(double x,double b)
   {
-    if (x<=b && x>=-b) 
+    if (x<=b && x>=-b)
     {
       return exp(x);
     }

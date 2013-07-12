@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -29,12 +29,12 @@ void function_minimizer::mcmc_eval(void)
 
 #if defined(USE_LAPLACE)
     initial_params::set_active_random_effects();
-    int nvar1=initial_params::nvarcalc(); 
+    int nvar1=initial_params::nvarcalc();
 #else
   int nvar1=initial_params::nvarcalc(); // get the number of active parameters
 #endif
   int nvar;
-  
+
   pifs_psave= new
     uistream((char*)(ad_comm::adprogram_name + adstring(".psv")));
   if (!pifs_psave || !(*pifs_psave))
@@ -50,7 +50,7 @@ void function_minimizer::mcmc_eval(void)
     }
   }
   else
-  {     
+  {
     (*pifs_psave) >> nvar;
     if (nvar!=nvar1)
     {
@@ -64,7 +64,7 @@ void function_minimizer::mcmc_eval(void)
       return;
     }
   }
-   
+
   independent_variables y(1,nvar);
 
   do
@@ -83,7 +83,7 @@ void function_minimizer::mcmc_eval(void)
       }
       int ii=1;
       initial_params::restore_all_values(y,ii);
-      initial_params::xinit(y);   
+      initial_params::xinit(y);
       /*double ll=-*/get_monte_carlo_value(nvar,y);
     }
   }

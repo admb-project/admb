@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -87,7 +87,7 @@ double ndfboundp_mc( double x, double fmin, double fmax,const double& fpen)
     return (set_value_mc(x+1.e-6,fmin,fmax)-
       set_value_mc(x-1.e-6,fmin,fmax))/2.e-6;
   }
-} 
+}
 
 /**
  * Description not yet available.

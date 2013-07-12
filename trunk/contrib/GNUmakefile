@@ -29,45 +29,45 @@ ad2csv: build-ad2csv
 
 build-gdbprintlib:
 ifeq ($(TERMINAL),dos)
-	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I..\..\build\dist\include" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-gdbprintlib-
-	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I..\..\build\dist\include" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-gdbprintlib-
+	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-gdbprintlib-
+	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-gdbprintlib-
 	copy gdbprintlib\gdbprintlib.h $(DISK)\contrib\include
 else
-	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I../../build/dist/include" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-gdbprintlib-
-	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I../../build/dist/include" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-gdbprintlib-
+	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-gdbprintlib-
+	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-gdbprintlib-
 	cp gdbprintlib/gdbprintlib.h $(DISK)/contrib/include
 endif
 
 build-statslib:
 ifeq ($(TERMINAL),dos)
-	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I..\..\build\dist\include" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-statslib-
-	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I..\..\build\dist\include" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-statslib-
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-statslib-
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-statslib-
 	copy statslib\statsLib.h $(DISK)\contrib\include
 else
-	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I../../build/dist/include" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-statslib-
-	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I../../build/dist/include" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-statslib-
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-statslib-
+	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-statslib-
 	cp statslib/statsLib.h $(DISK)/contrib/include
 endif
 
 build-ecolib:
 ifeq ($(TERMINAL),dos)
-	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I..\..\build\dist\include" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-ecolib-
-	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I..\..\build\dist\include" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-ecolib-
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-ecolib-
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-ecolib-
 	copy ecolib\ecolib.h $(DISK)\contrib\include
 else
-	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I../../build/dist/include" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-ecolib-
-	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I../../build/dist/include" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-ecolib-
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-ecolib-
+	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-ecolib-
 	cp ecolib/ecolib.h $(DISK)/contrib/include
 endif
 
 build-qfclib:
 ifeq ($(TERMINAL),dos)
-	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I..\..\build\dist\include" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-qfclib-
-	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I..\..\build\dist\include" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-qfclib-
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-qfclib-
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-qfclib-
 	copy qfclib\qfclib.h $(DISK)\contrib\include
 else
-	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I../../build/dist/include" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-qfclib-
-	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I../../build/dist/include" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-qfclib-
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-qfclib-
+	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-qfclib-
 	cp qfclib/qfclib.h $(DISK)/contrib/include
 endif
 

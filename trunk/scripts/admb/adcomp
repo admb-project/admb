@@ -31,12 +31,10 @@ if [ "`basename $file`" == "$file" ]; then
   file=$file.cpp
 fi
 
-if [ -z "$CXX" ]; then
-  if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
-    source "$ADMB_HOME/bin/admb-cfg.sh"
-  else
-    CXX=c++
-  fi
+if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
+  source "$ADMB_HOME/bin/admb-cfg.sh"
+else
+  CXX=c++
 fi
 
 CXXFLAGS="-c $CXXFLAGS $sym"

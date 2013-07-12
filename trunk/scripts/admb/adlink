@@ -40,12 +40,10 @@ do
   fi 
 done
 
-if [ -z "$CXX" ]; then
-  if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
-    source "$ADMB_HOME/bin/admb-cfg.sh"
-  else
-    CXX=c++
-  fi
+if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
+  source "$ADMB_HOME/bin/admb-cfg.sh"
+else
+  CXX=c++
 fi
 
 LDFLAGS="$LDFLAGS"

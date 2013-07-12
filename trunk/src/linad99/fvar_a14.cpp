@@ -2,14 +2,14 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
  * Dot-product fpor dvar_vector and sum for dvar_vector and dvar_matrix.
  */
 // file fvar.cpp
-// constructors, destructors and misc functions involving class prevariable 
+// constructors, destructors and misc functions involving class prevariable
 
 #include "fvar.hpp"
 
@@ -29,7 +29,7 @@
   \ingroup matop
   \param v1 A dvar_vector, \f$a\f$.
   \param v2 A dvar_vector, \f$b\f$.
-  \return A dvariable, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing 
+  \return A dvariable, \f$z = a\cdot b = \sum_i a_i\cdot b_i\f$  containing
   the value of the dot product of the two arguments.
 */
 dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
@@ -42,7 +42,7 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
     ad_exit(1);
   }
   double tmp=0;
- 
+
   #ifndef USE_ASSEMBLER
     int mmin=v1.indexmin();
     int mmax=v1.indexmax();
@@ -66,7 +66,7 @@ dvariable operator*(const dvar_vector& v1, const dvar_vector& v2)
     int n=v1.indexmax()-mmin+1;
     dp_dotproduct(&tmp,&(v1.elem_value(mmin)),&(v2.elem_value(mmin)),n);
   #endif
-  
+
   dvariable vtmp=nograd_assign(tmp);
 
   // The derivative list considerations
@@ -140,9 +140,9 @@ dvariable sum(const dvar_vector& v1)
     {
       tmp+=cv1.elem(i);
     }
-  
+
     dvariable vtmp=nograd_assign(tmp);
-  
+
     // The derivative list considerations
     save_identifier_string("bbbb");
     v1.save_dvar_vector_position();
@@ -161,7 +161,7 @@ dvariable sum(const dvar_vector& v1)
 
 /*
  * Description not yet available.
- * 
+ *
  */
 void X_dv_sum(void)
 {

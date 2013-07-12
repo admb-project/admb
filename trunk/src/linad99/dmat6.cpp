@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -38,7 +38,7 @@ dvector extract_column(const dmatrix& m, int j)
     if (j < m.colmin() || j > m.colmax())
     {
       ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix column specified", "dvector extract_column(const dmatrix& m,int j)", m.colmin(), m.colmax(), j);
-    }  
+    }
     int mmin=m.rowmin();
     int mmax=m.rowmax();
     dvector tmp(mmin,mmax);
@@ -59,7 +59,7 @@ dvector extract_row(const dmatrix& m, int i)
     if (i < m.rowmin() || i > m.rowmax())
     {
       ADMB_ARRAY_BOUNDS_ERROR("Invalid matrix row specified", "dvector extract_row(const dmatrix& m,int i)", m.rowmin(), m.rowmax(), i);
-    }  
+    }
     dvector tmp(m.colmin(),m.colmax());
 
     for (int j=m.colmin(); j<=m.colmax(); j++)

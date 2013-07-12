@@ -64,20 +64,20 @@ CTIONS*/
 /* **** USER_EVAL MUST SET VALID=TRUE, IF FUNCTIONVALUES ARE VALID FOR THE
  */
 /* **** CURRENT XTR */
-/* **** CORR IS SET TO TRUE BY DONLP2, IF THE INITIAL X DOES NOT SATISFY 
+/* **** CORR IS SET TO TRUE BY DONLP2, IF THE INITIAL X DOES NOT SATISFY
 */
 /* **** THE BOUND CONSTRAINTS. X IS MODIFIED IN THIS CASE */
-/* **** DIFFTYPE=1,2,3 NUMERICAL DIFFERENTIATION BY THE ORDINARY FORWARD 
+/* **** DIFFTYPE=1,2,3 NUMERICAL DIFFERENTIATION BY THE ORDINARY FORWARD
 */
 /* **** DIFFERENCES, BY CENTRAL DIFFERENCES OR BY RICHARDSON-EXTRAPOLATION
  */
-/* **** OF ORDER 6, REQUIRING N, 2N , 6N ADDITIONAL FUNCTION EVALUATIONS 
+/* **** OF ORDER 6, REQUIRING N, 2N , 6N ADDITIONAL FUNCTION EVALUATIONS
 */
 /* **** RESPECTIVELY */
-/* **** EPSFCN IS THE ASSUMED PRECISION OF THE FUNCTION EVALUATION, TO BE 
+/* **** EPSFCN IS THE ASSUMED PRECISION OF THE FUNCTION EVALUATION, TO BE
 */
 /* **** SET BY THE USER */
-/* **** TAUBND: AMOUNT BY WHICH BOUND CONSTRAINTS MAY BE VIOLATED DURING 
+/* **** TAUBND: AMOUNT BY WHICH BOUND CONSTRAINTS MAY BE VIOLATED DURING
 */
 /* **** FINITE DIFFERENCING, SET BY THE USER */
 /* ***** THIS IS A MODEL OF EVAL_EXTERN, SIMPLY CALLING THE */
@@ -97,7 +97,7 @@ CTIONS*/
 	}
 	return 0;
     }
-    if ( !(gunit_ref(1, 0) != 1 && *mode == 2)) 
+    if ( !(gunit_ref(1, 0) != 1 && *mode == 2))
     {
       ef_(gggg18_1->xtr, gggg18_1->fu);
     }
@@ -121,13 +121,13 @@ CTIONS*/
 	}
     }
     */
-  
+
     if (*mode == 2) {
       dvector h(1,gggg05_1->numberw);
       dvector g(1,gggg05_1->numberv);
       dmatrix jacob_hg(1,gggg05_1->numberw+gggg05_1->numberv,1,gggg05_1->n);
       ehg_and_jacobian_hg(gggg18_1->xtr,h,g,jacob_hg);
-  
+
       i__1 = gggg05_1->numberw;
       for (j = 1; j <= i__1; ++j) {
   	gggg18_1->fu[j]=h(j);
@@ -148,19 +148,19 @@ CTIONS*/
   	    if (gggg01_1->wwuq3) {
   		i__2 = gggg05_1->n;
   		for (i = 1; i <= i__2; ++i) {
-  		    fugrad_ref(i, j + gggg05_1->numberw) 
+  		    fugrad_ref(i, j + gggg05_1->numberw)
                         = jacob_hg(j+ gggg05_1->numberw,i);
   		}
   	    }
   	}
       }
-    } 
+    }
     else
     {
       dvector h(1,gggg05_1->numberw);
       dvector g(1,gggg05_1->numberv);
       ehg(gggg18_1->xtr,h,g);
-  
+
       i__1 = gggg05_1->numberw;
       for (j = 1; j <= i__1; ++j) {
   	gggg18_1->fu[j]=h(j);
@@ -169,7 +169,7 @@ CTIONS*/
       for (j = 1; j <= i__1; ++j) {
   	gggg18_1->fu[gggg05_1->numberw + j]=g(j);
       }
-    } 
+    }
 
    /*
     i__1 = gggg05_1->numberw;

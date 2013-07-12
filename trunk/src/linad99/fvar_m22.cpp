@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -72,12 +72,12 @@ void dmdv_prod(void)
   dvector x=restore_dvar_vector_value(x_pos);
   verify_identifier_string("PLACE4");
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  
+
   dmatrix dfm(m_pos);
   dvector dfx(x_pos.indexmin(),x_pos.indexmax());
   dfm.initialize();
   dfx.initialize();
-  
+
    double dfsum;
    for (int i=m.rowmax(); i>=m.rowmin(); i--)
    {
@@ -153,10 +153,10 @@ void cmdv_prod(void)
   dvector x=restore_dvar_vector_value(x_pos);
   verify_identifier_string("PLACE4");
   dvector dftmp=restore_dvar_vector_derivatives(tmp_pos);
-  
+
   dvector dfx(x_pos.indexmin(),x_pos.indexmax());
   dfx.initialize();
-  
+
    double dfsum;
    for (int i=m.rowmax(); i>=m.rowmin(); i--)
    {

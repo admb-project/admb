@@ -6,7 +6,7 @@
  *
  * This file was originally written in FORTRAN II by and unknown author.
  * In the 1980s, it was ported to C and C++ and extensively modified by
- * David Fournier. 
+ * David Fournier.
  *
  */
 /**
@@ -39,7 +39,7 @@ extern int ctlc_flag;
   #include <iostream.h>
   #include <signal.h>
   #define getch getchar
-  void clrscr(void); 
+  void clrscr(void);
   #ifdef __HP__
   extern "C" void onintr(int k);
   #endif
@@ -103,15 +103,15 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
   }
   if (use_control_c)
   {
-    #if defined( __GNU__) 
-      if (ireturn <= 0 ) 
+    #if defined( __GNU__)
+      if (ireturn <= 0 )
       {
 	 signal(SIGINT, &onintr);
       }
     #endif
   }
     #ifdef __ZTC__
-      if (ireturn <= 0 ) 
+      if (ireturn <= 0 )
       {
         if (disp_inited == 0)
         {
@@ -128,42 +128,42 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
       if (ireturn == 1) goto call1;
       if (ireturn == 2) goto call2;
       ihflag=0;
-     if (n==0) 
-     { 
+     if (n==0)
+     {
        cerr << "Error -- the number of active parameters"
          " fmin must be > 0\n";
        ad_exit(1);
-     } 
-     if (x.indexmin() !=1) 
-     { 
+     }
+     if (x.indexmin() !=1)
+     {
        cerr << "Error -- minimum valid index"
          " for independent_variables in fmin must be 1\n"
         << " it is " << x.indexmin() << "\n";
         ad_exit(1);
-     } 
-     if (x.size() <n) 
-     { 
+     }
+     if (x.size() <n)
+     {
        cerr << "Error -- the size of the independent_variables"
         " which is " << x.size() << " must be >= " << n << "\n"
         << " the number of independent variables in fmin\n";
         ad_exit(1);
-     } 
-     if (g.indexmin() !=1) 
-     { 
+     }
+     if (g.indexmin() !=1)
+     {
        cerr << "Error -- minimum valid index"
          " for the gradient vector in fmin must be 1\n"
         << " it is " << g.indexmin() << "\n";
         ad_exit(1);
-     } 
-     if (g.size() <n) 
-     { 
+     }
+     if (g.size() <n)
+     {
        cerr << "Error -- the size of the gradient vector"
         " which is " << g.size() << " must be >=\n"
         << " the number of independent variables in fmin\n";
         ad_exit(1);
-     } 
+     }
      for (i=1; i<=n; i++)
-           xx.elem(i)=x.elem(i); 
+           xx.elem(i)=x.elem(i);
       itn=0;
       icc=0;
        for (i=1; i< 11; i++)
@@ -182,7 +182,7 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
       if (dmin <= 0.)
          goto label7020;
       if(dfn == 0.)
-         z = 0.0; 
+         z = 0.0;
       for (i=1; i<=n; i++)
       {
         xsave.elem(i)=x.elem(i);
@@ -233,7 +233,7 @@ label20:
       if( (itn%iprint) != 0)
          goto label21;
       if (llog) goto label7010;
-#     if   !defined (__MSVC32__)  && !defined (__WAT32__) && !defined(__GNUDOS__)  
+#     if   !defined (__MSVC32__)  && !defined (__WAT32__) && !defined(__GNUDOS__)
         if (!scroll_flag) clrscr();
 #     endif
 label7003:
@@ -245,7 +245,7 @@ label7003:
             f, gmax);
       }
 label7002:
-      if(iprint>0) 
+      if(iprint>0)
       {
         fmmdisp(x, g, n, this->scroll_flag,noprintx);
       }
@@ -355,9 +355,9 @@ label30:
             derch(f, x , w, n, ireturn);
             return;
           }
-          else 
+          else
           {
-            if ( c == 'Q'|| c == 'N') 
+            if ( c == 'Q'|| c == 'N')
             {
               quit_flag=c;
               goto label92;
@@ -555,7 +555,7 @@ label7020:
    if (iprint>0)
    {
      if (ad_printf) (*ad_printf)("*** hessian not positive definite\n");
-   } 
+   }
          #ifdef __ZTC__
          if (ireturn <= 0)
          {

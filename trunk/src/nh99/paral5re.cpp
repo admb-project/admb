@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #if defined(USE_LAPLACE)
 #include <df1b2fun.h>
@@ -35,7 +35,7 @@ void function_minimizer::function_evaluation_block_pvm_slave_random_effects
       fmc.iprint=iprint;
     }
     else
-    {   
+    {
       int jj=atoi(ad_comm::argv[on1+1]);
       fmc.dcheck_flag=jj;
     }
@@ -49,7 +49,7 @@ void function_minimizer::function_evaluation_block_pvm_slave_random_effects
       fmc.iprint=iprint;
     }
     else
-    {   
+    {
       int jj=atoi(ad_comm::argv[on1+1]);
       fmc.iprint=jj;
     }
@@ -88,11 +88,11 @@ void function_minimizer::function_evaluation_block_pvm_slave_random_effects
   int unvar=1;
   if (random_effects_flag)
   {
-    initial_params::set_active_only_random_effects(); 
+    initial_params::set_active_only_random_effects();
     //cout << nvar << endl;
     unvar=initial_params::nvarcalc(); // get the number of active
-    initial_params::restore_start_phase(); 
-    initial_params::set_inactive_random_effects(); 
+    initial_params::restore_start_phase();
+    initial_params::set_inactive_random_effects();
     int nvar1=initial_params::nvarcalc(); // get the number of active
     if (nvar1 != nvar)
     {
@@ -132,7 +132,7 @@ void function_minimizer::function_evaluation_block_pvm_slave_random_effects
     // this turns on random effects variables and turns off
     // everything else
     //cout << nvar << endl;
-    initial_params::set_active_only_random_effects(); 
+    initial_params::set_active_only_random_effects();
     //cout << nvar << endl;
     int unvar=initial_params::nvarcalc(); // get the number of active
     //df1b2_gradlist::set_no_derivatives();
@@ -152,17 +152,17 @@ void function_minimizer::function_evaluation_block_pvm_slave_random_effects
       }
     }
     lapprox=new laplace_approximation_calculator(nvar,unvar,1,nvar+unvar,
-      this); 
+      this);
     initial_df1b2params::current_phase=initial_params::current_phase;
-    
+
     initial_df1b2params::save_varsptr();
     allocate();
     initial_df1b2params::restore_varsptr();
 
     df1b2_gradlist::set_no_derivatives();
-    int nvar=initial_params::nvarcalc_all(); 
+    int nvar=initial_params::nvarcalc_all();
     dvector y(1,nvar);
-    initial_params::xinit_all(y); 
+    initial_params::xinit_all(y);
     initial_df1b2params::reset_all(y);
 
     //vmon_begin();
@@ -179,9 +179,9 @@ void function_minimizer::function_evaluation_block_pvm_slave_random_effects
     }
     //vmon_done();
     // turn off the random effects
-    initial_params::set_inactive_only_random_effects(); 
+    initial_params::set_inactive_only_random_effects();
     //df1b2variable::pool.deallocate();
-    
+
   }
 
 
@@ -203,7 +203,7 @@ void function_minimizer::pvm_master_function_evaluation_random_effects
   (double& f,independent_variables& x,const dvector & _g,int nvar)
 {
   dvector& g=(dvector&) _g;
-  g=lapprox->function_default_calculations_parallel(x,f,this); 
+  g=lapprox->function_default_calculations_parallel(x,f,this);
 }
 */
   // void function_minimizer::function_evaluation_block_pvm_slave(void)
@@ -220,7 +220,7 @@ void function_minimizer::pvm_master_function_evaluation_random_effects
   //   while(1);
   //   gradient_structure::set_NO_DERIVATIVES();
   // }
-  // 
+  //
   // void function_minimizer::pvm_slave_function_evaluation(void)
   // {
   //   dvariable vf=0.0;
@@ -233,7 +233,7 @@ void function_minimizer::pvm_master_function_evaluation_random_effects
   //   send_f_to_master(vf);
   //   slave_gradcalc();
   // }
-  // 
+  //
   // void function_minimizer::pvm_slave_function_evaluation_noder(void)
   // {
   //   dvariable vf=0.0;
@@ -245,5 +245,5 @@ void function_minimizer::pvm_master_function_evaluation_random_effects
   //   send_int_to_master(67);
   //   send_f_to_master(vf);
   // }
-  // 
+  //
 #endif //#if defined(USE_LAPLACE)

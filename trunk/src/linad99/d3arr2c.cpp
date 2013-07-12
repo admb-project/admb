@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -23,7 +23,7 @@ d3_array sqrt(const d3_array& m)
        tmp(i)=sqrt(m(i));
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.

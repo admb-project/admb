@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -30,7 +30,7 @@ double dmax(double, double);
     const double& s)
 {
   prevariable& fpen=(prevariable&) _fpen;
-  
+
   dvariable t,y,x;
   x=xx/s;
   const double l4=log(4.0);
@@ -40,8 +40,8 @@ double dmax(double, double);
 #ifdef USE_BARD_PEN
   //cout << "xxxxx" << endl;
   double pen=.00001/diff;
-  fpen=fpen-pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4); 
-#else 
+  fpen=fpen-pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
+#else
 
   if (x < -.9999)
   {
@@ -83,8 +83,8 @@ double boundp( double xx, double fmin, double fmax, const double& _fpen,
 #ifdef USE_BARD_PEN
   //cout << "xxxxx" << endl;
   double pen=.00001/diff;
-  fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4); 
-#else 
+  fpen-=pen*(log(ss+1.e-40)+log((1.0-ss)+1.e-40)+l4);
+#else
   if (x < -.9999)
   {
     fpen+=(x+0.9999)*(x+0.9999);

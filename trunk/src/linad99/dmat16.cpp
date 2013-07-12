@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -30,7 +30,7 @@ dmatrix  operator-(const dmatrix& m1, const dmatrix& m2)
      tmp.elem(i)=m1.elem(i)-m2.elem(i);
    }
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.
@@ -52,7 +52,7 @@ dmatrix operator+(const dmatrix& m1, const dmatrix& m2)
      tmp.elem(i)=m1.elem(i)+m2.elem(i);
    }
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.
@@ -67,7 +67,7 @@ dmatrix operator+(CGNU_DOUBLE d, const dmatrix& m2)
      tmp.elem(i)=d+m2.elem(i);
    }
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.
@@ -82,7 +82,7 @@ dmatrix operator-(CGNU_DOUBLE d, const dmatrix& m2)
      tmp.elem(i)=d-m2.elem(i);
    }
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.
@@ -97,7 +97,7 @@ dmatrix operator*(CGNU_DOUBLE d, const dmatrix& m2)
      tmp.elem(i)=d*m2.elem(i);
    }
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.
@@ -112,7 +112,7 @@ dmatrix operator+(const dmatrix& m1, CGNU_DOUBLE d)
      tmp.elem(i)=m1.elem(i)+d;
    }
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.
@@ -127,7 +127,7 @@ dmatrix operator-(const dmatrix& m1, CGNU_DOUBLE d)
      tmp.elem(i)=m1.elem(i)-d;
    }
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.

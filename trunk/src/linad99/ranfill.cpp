@@ -1,6 +1,6 @@
 /*
  * $Id$
- * 
+ *
  * Author: David Fournier
  * Copyright (c) 2009-2012 ADMB Foundation
  */
@@ -23,8 +23,8 @@
 #include <math.h>
 
 #define M1 714025
-#define IA1 1366 
-#define IC1 150889 
+#define IA1 1366
+#define IC1 150889
 #define RM1 (1.0/M1)
 #define M3 134456
 #define IA3 8121
@@ -62,7 +62,7 @@ double auto_rand(long int& idum, int reset)
   static int iff=0;
   int j;
 
-  if (reset < 0) 
+  if (reset < 0)
   {
     iff =0;
     return .5;
@@ -82,12 +82,12 @@ double auto_rand(long int& idum, int reset)
     ix1=(IA1*ix1+IC1);
     ix1=ix1 % M1;
     ix3=ix1 % M3;
-    for (j=1;j<=107;j++) 
+    for (j=1;j<=107;j++)
     {
       ix2=(IA2*ix2+IC2) % M2;
       ix1=(IA1*ix1+IC1);
               ix1=ix1 % M1;
-          
+
       long int iu = (long int)(ix2 * RM2);
       r[j]=(ix1+iu)*RM1;
     }
@@ -101,7 +101,7 @@ double auto_rand(long int& idum, int reset)
   ix2=(IA2*ix2+IC2) % M2;
   ix2=ix2 % M2;
   j=1 + ((107*ix3)/M3);
-  if (j > 107 || j < 1) cerr << " Error in random number generator\n"; 
+  if (j > 107 || j < 1) cerr << " Error in random number generator\n";
   temp=r[j];
   r[j]=ix2*RM2;
   r[j]=(ix1+r[j]);
@@ -135,7 +135,7 @@ double randn(long int& n)
   double u=sqrt(-2*log(x))*cos(2*PI*y);
   return(u);
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -159,7 +159,7 @@ double randn(long int& n)
       else
       {
         elem(i)=0;
-      } 
+      }
     }
     reinitialize_auto_rand();
   }
@@ -250,7 +250,7 @@ void dmatrix::rowfill_randu(const int& i, long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randn_ni(nn);
-      nn+=2;  
+      nn+=2;
     }
     reinitialize_auto_rand();
   }
@@ -266,7 +266,7 @@ void dmatrix::rowfill_randu(const int& i, long int& n)
     for (int i=slicemin(); i<=slicemax(); i++)
     {
       elem(i).fill_randu_ni(nn);
-      nn+=2;  
+      nn+=2;
     }
     reinitialize_auto_rand();
   }
@@ -282,7 +282,7 @@ void dmatrix::rowfill_randu(const int& i, long int& n)
     for (int i=rowmin(); i<=rowmax(); i++)
     {
       elem(i).fill_randu_ni(nn);
-      nn+=2;  
+      nn+=2;
     }
     reinitialize_auto_rand();
   }

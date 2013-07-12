@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -16,7 +16,7 @@
  * \param
  */
 dvariable colsum(const dvar_matrix& m, int col)
-{ 
+{
   if (col < m.rowmin() || col > m.rowmax())
   {
     ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "dvariable colsum(const dvar_matrix& m, int col)", m.rowmin(), m.rowmax(), col);

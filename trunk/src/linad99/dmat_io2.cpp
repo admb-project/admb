@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -77,7 +77,7 @@ int get_non_blank_line(const ifstream& infile,char * & line,
    void ** m;
  };
 
-#if !defined(HUGE) 
+#if !defined(HUGE)
 #define HUGE 1.e+100
 #endif
 
@@ -249,7 +249,7 @@ dmatrix::dmatrix(char * s)
       << "in file " << filename << " caled in dmatrix::dmatrix(char * filename)\n";
       ad_exit(1);
    }
-   
+
    infile.clear();
    infile.seekg(0,ios::beg);
 
@@ -323,7 +323,7 @@ dmatrix::dmatrix(char * s)
          << err_ptr[3] << "\n";
          ad_exit(1);
        }
-       
+
        #ifdef __GNU__
           if (elem(i,j)== HUGE ||elem(i,j)== -HUGE)
        #else
@@ -364,7 +364,7 @@ int get_non_blank_line(const ifstream& _infile,char * & line,
      {
        //cout << line << endl;
        infile >> ch; // get rid of the terminating character
-       if (ch != '\0') infile.putback(ch); // If character is not null 
+       if (ch != '\0') infile.putback(ch); // If character is not null
                                            // put if back
        int length=mystrlen(line);
        if (length == -1)

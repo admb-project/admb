@@ -19,7 +19,7 @@
  */
 void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
   dmatrix& S,dmatrix& BS,dvector& scale)
-{ 
+{
   dmatrix tv(1,ndvar,1,nvar1);
   adstring tmpstring="admodel.dep";
   if (ad_comm::wd_flag)
@@ -86,8 +86,8 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
       xsize=lapprox->xsize;
       usize=lapprox->usize;
       // calculate uhat_prime from the block diagnal matrix
-      d3_array & H=*(lapprox->block_diagonal_hessian); 
-      d3_array & Dux=*(lapprox->block_diagonal_Dux); 
+      d3_array & H=*(lapprox->block_diagonal_hessian);
+      d3_array & Dux=*(lapprox->block_diagonal_Dux);
       int mmin=H.indexmin();
       int mmax=H.indexmax();
       for (int i=mmin;i<=mmax;i++)
@@ -100,7 +100,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
           int tmpmin=Dux(i).indexmin();
           int cmin=Dux(i,tmpmin).indexmin();
           int cmax=Dux(i,tmpmin).indexmax();
-          
+
           for (int j=rmin;j<=rmax;j++)
           {
             for (int k=cmin;k<=cmax;k++)
@@ -142,7 +142,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
     }
     else
     {
-      d3_array & H=*(lapprox->block_diagonal_hessian); 
+      d3_array & H=*(lapprox->block_diagonal_hessian);
       int mmin=H.indexmin();
       int mmax=H.indexmax();
       for (int i=mmin;i<=mmax;i++)
@@ -152,7 +152,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
           dmatrix tmp=inv(H(i));
           int rmin=H(i).indexmin();
           int rmax=H(i).indexmax();
-          
+
           for (int j=rmin;j<=rmax;j++)
           {
             for (int k=rmin;k<=rmax;k++)
@@ -186,7 +186,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
         BS(i,j)=S(i,j);
       }
     }
-   
+
     for (i=xsize+1;i<=Bnvar;i++)
     {
       for (int j=1;j<=xsize;j++)
@@ -195,7 +195,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
         BS(j,i)=BS(i,j);
       }
     }
-    
+
     for (i=xsize+1;i<=Bnvar;i++)
     {
       for (int j=xsize+1;j<=Bnvar;j++)
@@ -206,7 +206,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
 #   endif
 
 
- // 
+ //
  //   int us=nvar1-nvar;
  //   int xsize,usize;
  //   // get l_uu and l_xu for covariance calculations
@@ -244,9 +244,9 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
  //   minv.deallocate();
  //   BS.initialize();
  //   // random effects are never bounded?
- // 
+ //
  //   int i;
- // 
+ //
  //   for (i=1;i<=xsize;i++)
  //   {
  //     for (int j=1;j<=xsize;j++)
@@ -254,7 +254,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
  //       BS(i,j)=S(i,j);
  //     }
  //   }
- //  
+ //
  //   for (i=xsize+1;i<=Bnvar;i++)
  //   {
  //     for (int j=1;j<=xsize;j++)
@@ -263,7 +263,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
  //       BS(j,i)=BS(i,j);
  //     }
  //   }
- //   
+ //
  //   for (i=xsize+1;i<=Bnvar;i++)
  //   {
  //     for (int j=xsize+1;j<=Bnvar;j++)

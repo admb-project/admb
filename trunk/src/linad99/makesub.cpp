@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -15,7 +15,7 @@
 #if (defined(__GNUDOS__) || defined(unix) || defined(__BORLANDC__))
 #  include <dirent.h>
 #endif
-#if defined(__BORLANDC__) 
+#if defined(__BORLANDC__)
 #  include <dir.h>
 #endif
 #if (defined(__GNUDOS__) || defined(unix))
@@ -31,7 +31,7 @@
   #if (__GNUC__ >3)
      #include <iostream>
      using namespace std;
-  #else   
+  #else
     #include <iostream.h>
   #endif
 #include <memory.h>
@@ -47,7 +47,7 @@
  */
 int ad_chdir(const char * s)
 {
-#if defined(_WIN32) 
+#if defined(_WIN32)
   return SetCurrentDirectory(s);
 #elif (defined(__GNUDOS__) || defined(unix) || defined(__linux__) )
     return chdir(s);
@@ -64,7 +64,7 @@ int ad_chdir(const char * s)
 void ad_getcd(const adstring& _s)
 {
   adstring& s=(adstring&) (_s);
-#if defined(_WIN32) 
+#if defined(_WIN32)
   char tmp[101];
   tmp[0]='\0';
   GetCurrentDirectory(100,tmp);
@@ -86,7 +86,7 @@ void ad_getcd(const adstring& _s)
  */
 int ad_mkdir(const char * s)
 {
-#if defined(_WIN32) 
+#if defined(_WIN32)
   return CreateDirectory(s,NULL);
 #elif (defined(__GNUDOS__) || defined(unix) || defined(__linux__) )
     return mkdir(s,S_IREAD | S_IWRITE);

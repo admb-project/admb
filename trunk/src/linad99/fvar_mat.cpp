@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -20,7 +20,7 @@
    allocate(nrl,nrh,ncl,nch);
    #ifdef SAFE_ARRAYS
      initialize();
-   #endif 
+   #endif
  }
 
 /**
@@ -32,7 +32,7 @@
    allocate(nrl,nrh);
    #ifdef SAFE_ARRAYS
      initialize();
-   #endif 
+   #endif
  }
 
 /**
@@ -44,7 +44,7 @@
    allocate(nrl,nrh);
    #ifdef SAFE_ARRAYS
      initialize();
-   #endif 
+   #endif
  }
 
 /**
@@ -205,7 +205,7 @@
      allocate();
    }
  }
- 
+
 /**
  * Description not yet available.
  * \param
@@ -252,7 +252,7 @@ dvar_matrix::dvar_matrix(int nrl, int nrh, const ivector& ncl, const ivector& nc
    allocate(nrl,nrh,ncl,nch);
    #ifdef SAFE_ARRAYS
      initialize();
-   #endif 
+   #endif
  }
 
 /**
@@ -274,7 +274,7 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, const ivector& 
      }
      index_min=nrl;
      index_max=nrh;
-  
+
      int rs=rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
@@ -285,9 +285,9 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, const ivector& 
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
      }
-  
+
      m -= rowmin();
-  
+
      for (int i=nrl; i<=nrh; i++)
      {
        m[i].allocate(ncl[i],nch[i]);
@@ -304,7 +304,7 @@ dvar_matrix::dvar_matrix(int nrl, int nrh, int ncl, const ivector& nch)
    allocate(nrl,nrh,ncl,nch);
    #ifdef SAFE_ARRAYS
      initialize();
-   #endif 
+   #endif
  }
 
 /**
@@ -312,7 +312,7 @@ dvar_matrix::dvar_matrix(int nrl, int nrh, int ncl, const ivector& nch)
  * \param
  */
 void dvar_matrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
- {  
+ {
    if (nrl>nrh)
      allocate();
    else
@@ -325,20 +325,20 @@ void dvar_matrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
      }
      index_min=nrl;
      index_max=nrh;
-  
+
      int rs=rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
        ad_exit(21);
      }
-  
+
      if ( (shape=new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
      }
      m -= rowmin();
-  
+
      for (int i=nrl; i<=nrh; i++)
      {
        m[i].allocate(ncl,nch[i]);
@@ -364,20 +364,20 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, int nch)
      }
      index_min=nrl;
      index_max=nrh;
-  
+
      int rs=rowsize();
      if ( (m = new dvar_vector [rs]) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
        ad_exit(21);
      }
-  
+
      if ( (shape=new mat_shapex(m)) == 0)
      {
        cerr << " Error allocating memory in dvar_matrix contructor"<<endl;
      }
      m -= rowmin();
-  
+
      for (int i=nrl; i<=nrh; i++)
      {
        m[i].allocate(ncl[i],nch);
@@ -538,7 +538,7 @@ dvar_matrix& dvar_matrix::operator=(const dvar_matrix& m1)
          "(const dvar_matrix&)\n";
        ad_exit(21);
      }
-  
+
      if (m != m1.m)            // check for condition that both matrices
      {                         // don't point to the same object
        for (int i=rowmin(); i<=rowmax(); i++)

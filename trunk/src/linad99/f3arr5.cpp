@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -25,7 +25,7 @@ dvar3_array operator/(const d3_array& m, const prevariable& d)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -42,7 +42,7 @@ dvar3_array operator/(const dvar3_array& m, CGNU_DOUBLE d)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -59,7 +59,7 @@ dvar3_array operator/(const dvar3_array& m, const prevariable& d)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -73,7 +73,7 @@ void dvar3_array::operator/=(const prevariable& d)
        (*this)(i)/=d;
      }
      RETURN_ARRAYS_DECREMENT();
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -87,4 +87,4 @@ void dvar3_array::operator/=(const prevariable& d)
        (*this)(i)/=d;
      }
      RETURN_ARRAYS_DECREMENT();
-   }  
+   }

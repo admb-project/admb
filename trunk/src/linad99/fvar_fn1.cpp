@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  \file
@@ -69,7 +69,7 @@ prevariable& ldexp(const prevariable& v1, const int& exponent)
 prevariable& sqrt(const prevariable& v1)
     {
       double tmp=v1.v->x;
-      if (tmp==0.0) 
+      if (tmp==0.0)
       {
         cerr << "Attempting to take the derivative of sqrt(prevariable x)"
          " at x=0\n";
@@ -90,7 +90,7 @@ prevariable& sqrt(const prevariable& v1)
 prevariable& sqr(const prevariable& v1)
     {
       double tmp=v1.v->x;
-      if (tmp==0.0) 
+      if (tmp==0.0)
       {
         cerr << "Attempting to take the derivative of sqrt(prevariable x)"
          " at x=0\n";
@@ -170,7 +170,7 @@ prevariable& pow(const prevariable& v1, const prevariable& v2)
       y=x* v1.v->x;
       gradient_structure::RETURN_PTR->v->x=y;
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
-                            &(v1.v->x), v2.v->x * x  ,&(v2.v->x), 
+                            &(v1.v->x), v2.v->x * x  ,&(v2.v->x),
                                      y * ::log(v1.v->x) );
       return(*gradient_structure::RETURN_PTR);
     }
@@ -188,7 +188,7 @@ prevariable& pow( CGNU_DOUBLE u, const prevariable& v1)
       gradient_structure::RETURN_PTR->v->x=y;
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x),
                        &(v1.v->x), y * ::log(u) );
- 
+
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -226,7 +226,7 @@ prevariable& atan2(const prevariable& v1, const prevariable& v2)
 {
   if (value(v1) == 0 && value(v2) == 0)
   {
-    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n"; 
+    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n";
     ad_exit(1);
   }
   if (value(v1) == 0 && value(v2) > 0)
@@ -245,7 +245,7 @@ prevariable& atan2(const prevariable& v1, CGNU_DOUBLE v2)
 {
   if (value(v1) == 0 && v2 == 0)
   {
-    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n"; 
+    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n";
     ad_exit(1);
   }
   if (value(v1) == 0 && v2 > 0)
@@ -264,7 +264,7 @@ prevariable& atan2( CGNU_DOUBLE v1, const prevariable& v2)
 {
   if (v1 == 0 && value(v2) == 0)
   {
-    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n"; 
+    cerr << "Error: The ADMB function \"atan2(y, x)\" is undefined for y and x equal zero.\n";
     ad_exit(1);
   }
   if (v1 == 0 && value(v2) > 0)

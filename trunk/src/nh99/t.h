@@ -3,28 +3,28 @@
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- * 
+ *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
- * 
+ *
  * License:
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -51,9 +51,9 @@
 #ifndef _ADMODEL_H_
   #define  _ADMODEL_H_
 #ifdef __GNUDOS__
-  #define CGNU_DOUBLE double 
+  #define CGNU_DOUBLE double
 #else
-  #define CGNU_DOUBLE const double& 
+  #define CGNU_DOUBLE const double&
 #endif
 #include <fvar.hpp>
 //#include <d4arr.hpp>
@@ -118,9 +118,7 @@ public:
   _exception * err;
   AD_matherror(_exception * _err) : err(_err) {;}
 #endif
-  
 };
-
 
 class model_data;
 
@@ -139,7 +137,7 @@ class model_name_tag
 protected:
   const char * name;
   //friend ostream& operator<<(const ostream& os, const model_name_tag& mnt);
-public: 
+public:
   model_name_tag(void){;}
   void allocate(const char * s);
   label_class label(void){return name;}
@@ -531,13 +529,13 @@ public:
   static adstring get_reportfile_name(void);
   initial_params(void);
   static void xinit(const dvector& x); // get the number of active parameters
-  static void xinit1(const dvector& x, const dvector& g); 
+  static void xinit1(const dvector& x, const dvector& g);
   static void copy_all_values(const dvector& x, const int& ii); //save all initial parameter
                                                    // values in a vector
-  static void restore_all_values(const dvector& x, const int& ii); //get ivalues for all 
+  static void restore_all_values(const dvector& x, const int& ii); //get ivalues for all
                                     // active parameters from a vector
   static dvariable reset(const dvar_vector& x); // get the number of active parameters
-  static dvariable reset1(const dvar_vector& x, const dvector& g); 
+  static dvariable reset1(const dvar_vector& x, const dvector& g);
   static dvariable reset(const dvar_vector& x,const dvector& pen); // get the number of active parameters
   static int nvarcalc(void);
   static int num_active_calc(void);
@@ -651,7 +649,7 @@ public:
   param_init_bounded_vector& operator = (const double&);
 };
 
-class dll_param_init_bounded_vector: public param_init_bounded_vector 
+class dll_param_init_bounded_vector: public param_init_bounded_vector
 {
   double * pd;
 public:
@@ -936,7 +934,6 @@ public:
   dll_data_matrix& operator=(const double &m);
 };
 
-    
 class data_3array : public named_d3_array
 {
 public:
@@ -1176,7 +1173,7 @@ public:
     const int underflow_flag);
   //double projected_hess_determinant(const dvector& g,const int underflow_flag,
     //dvector& xscale, const double& ln_det_proj_jac);
-            
+
   double projected_hess_determinant(const dvector& fg, const dvector& g,
     const int underflow_flag, const dvector& curvscale, const dvector& xscale,
     double& ln_det_proj_jac, const double& tmp, const dmatrix& hesses);
@@ -1252,13 +1249,13 @@ public:
   friend class function_minimizer;
 };
 
-class likeprof_params 
+class likeprof_params
 {
   double stepsize;
   int    stepnumber;
 protected:
 public:
-  static likeprof_params * likeprofptr[50]; // this should be a 
+  static likeprof_params * likeprofptr[50]; // this should be a
                                                // resizeable array
   static int num_likeprof_params;
   void allocate(void){;};
@@ -1507,14 +1504,14 @@ public:
 
 //double set_value_mc(const double& x,CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
 
-void set_value_mc(const dvar_vector& x, const dvar_vector& v, const int& ii, 
+void set_value_mc(const dvar_vector& x, const dvar_vector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
 
 double set_value_inv_mc(double v,double fmin,double fmax);
 
 double set_value_inv_mc(const prevariable& v, double fmin, double fmax);
 
-void set_value_inv_mc(const dvar_vector& x, const dvector& v, const int& ii, 
+void set_value_inv_mc(const dvar_vector& x, const dvector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
 
 //double set_value_inv_mc(const dvector&, const dvector& x, int ii, double minb, double maxb);

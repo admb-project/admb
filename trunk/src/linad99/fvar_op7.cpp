@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -18,7 +18,7 @@ double upick(double x)
 {
   return x*x;
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -46,4 +46,4 @@ dvar_matrix square(const dvar_matrix& m)
        tmp(i)=square(m(i));
      }
      return tmp;
-   }  
+   }

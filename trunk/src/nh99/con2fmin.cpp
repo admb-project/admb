@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -41,7 +41,7 @@ void function_minimizer::constraints_minimize(void)
   int numberv=function_minimizer::pg->indexmax()
     -function_minimizer::pg->indexmin()+1;
   dvector x(1,nvar);
-  initial_params::xinit(x); 
+  initial_params::xinit(x);
   make_all_classes(nvar,numberw,numberv);
   constrained_minimization2(nvar,numberw,numberv,x);
   gradient_structure::set_NO_DERIVATIVES();
@@ -85,7 +85,7 @@ void function_minimizer::constraints_minimize(void)
   int nopt=0;
   int on=0;
   int allphases=initial_params::max_number_phases;
-    
+
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-maxph",nopt))>-1)
   {
     if (!nopt)
@@ -93,12 +93,12 @@ void function_minimizer::constraints_minimize(void)
       cerr << "Usage -maxph uerton needs integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       int jj=atoi(ad_comm::argv[on+1]);
       if (jj<=0)
       {
         cerr << "Usage -maxph uerton needs positive integer  -- ignored" << endl;
-      } 
+      }
       else
       {
         if (jj>allphases)
@@ -108,7 +108,7 @@ void function_minimizer::constraints_minimize(void)
       }
     }
   }
-      
+
   // set the maximum number of function evaluations by command line
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-maxfn",nopt))>-1)
   {
@@ -117,19 +117,19 @@ void function_minimizer::constraints_minimize(void)
       cerr << "Usage -maxph uerton needs integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       int _maxfn=atoi(ad_comm::argv[on+1]);
       if (_maxfn<=0)
       {
         cerr << "Usage -maxfn uerton needs positive integer  -- ignored" << endl;
-      } 
+      }
       else
       {
         maxfn=_maxfn;
       }
     }
   }
-      
+
   double _crit=0;
   // set the maximum number of function evaluations by command line
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
@@ -139,25 +139,25 @@ void function_minimizer::constraints_minimize(void)
       cerr << "Usage -crit uerton needs number  -- ignored" << endl;
     }
     else
-    {   
-  
+    {
+
       istrstream ist(ad_comm::argv[on+1]);
       ist >> _crit;
-  
+
       if (_crit<=0)
       {
         cerr << "Usage -crit uerton needs positive number  -- ignored" << endl;
         _crit=0.0;
-      } 
+      }
     }
   }
-    
+
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-phase"))>-1)
   {
     int jj=atoi(ad_comm::argv[on+1]);
     if (jj <=0)
     {
-      cerr << " Inwwuq4 uerton followinumberv command line uerton -phase -- " 
+      cerr << " Inwwuq4 uerton followinumberv command line uerton -phase -- "
         << endl << " phase set equal to 1" << endl;
     }
     if (jj>allphases)
@@ -171,7 +171,7 @@ void function_minimizer::constraints_minimize(void)
     initial_params::current_phase = jj;
     cout << "Set current phase to " << jj << endl;
   }
-  
+
   while (initial_params::current_phase <= allphases)
   {
     between_phases_calculations();
@@ -180,7 +180,7 @@ void function_minimizer::constraints_minimize(void)
              // parameters
     if (!nvar)
     {
-      cerr << "Error -- no active parameters. There must be at least 1" 
+      cerr << "Error -- no active parameters. There must be at least 1"
            << endl;
       exit(1);
     }
@@ -196,7 +196,7 @@ void function_minimizer::constraints_minimize(void)
       numberv=function_minimizer::pg->indexmax()
         -function_minimizer::pg->indexmin()+1;
     dvector x(1,nvar);
-    initial_params::xinit(x); 
+    initial_params::xinit(x);
     make_all_classes(nvar,numberw,numberv);
 
     constrained_minimization2(nvar,numberw,numberv,x);
@@ -265,7 +265,7 @@ void function_minimizer::constraint_report()
           + str(i) + ")  ";
         if (i<10)
           ofs << "    ";
-        else if (i<100) 
+        else if (i<100)
           ofs << "   ";
         else
           ofs << "  ";
@@ -280,7 +280,7 @@ void function_minimizer::constraint_report()
       {
         if (i<10)
           ofs << "    ";
-        else if (i<100) 
+        else if (i<100)
           ofs << "   ";
         else
           ofs << "  ";

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -294,7 +294,7 @@ dmatrix_position::dmatrix_position(const dmatrix_position& p)
 \ingroup DEVEL
 Writes a gradient stack verification string.
 Writes a character string to the adjoint code variable stack.
-Only available in the "safe" library. 
+Only available in the "safe" library.
 Used primarily for debugging adjoint coide.
 \param str Character sting to saved on the stack.
 */

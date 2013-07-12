@@ -19,13 +19,13 @@
   //   int ptid=pvm_parent();
   //   // ***************  begin variable receive block *********************
   //   adpvm_slave_vrecv(ptid);
-  //   adpvm_unpack(x);  
+  //   adpvm_unpack(x);
   //   adpvm_slave_end_vreceive();
   //   // ***************  end receive block ***********************************
   //   return x;
   // }
-  //   
-  // 
+  //
+  //
   // void send_f_to_master(const dvariable& f)
   // {
   //   // ***************  begin send block ***********************************
@@ -35,7 +35,7 @@
   //   adpvm_slave_vsend(ptid);/* send buffer to master */
   //   // ***************  end send block ***********************************
   // }
-  // 
+  //
 int adpvm_slave_args::get_num_args(void){return num_args;}
 
 /**
@@ -70,7 +70,7 @@ void ad_comm::get_slave_assignments(void)
     slave_assignments.deallocate();
   }
   slave_assignments.allocate(1,nhost,1,num_per_host);
-    
+
   slave_assignments.fill_seqadd(1,1);
 }
 
@@ -80,7 +80,7 @@ void ad_comm::get_slave_assignments(void)
  */
 void adpvm_slave_args::operator -- (void)
 {
-  if (counter>0) 
+  if (counter>0)
   {
     if (argv[counter])
     {
@@ -182,7 +182,7 @@ adpvm_manager::adpvm_manager(int _mode)
   printf("I found the following hosts in your virtual machine\n");
   int i;
   for (i = 0; i < nhost; i++)
-  { 
+  {
     printf("    %s\n", hostp[i].hi_name);
   }
   //id.allocate(0,nhost);
@@ -194,7 +194,7 @@ adpvm_manager::adpvm_manager(int _mode)
     int on1,nopt1;
     if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-exec",nopt1))>-1)
     {
-      if (nopt1 !=1 && nopt1 !=2)  
+      if (nopt1 !=1 && nopt1 !=2)
       {
         cerr << "Wrong number of options to -exec -- must be 1"
           " you have " << nopt1 << endl;
@@ -203,13 +203,13 @@ adpvm_manager::adpvm_manager(int _mode)
       slave_names+= ad_comm::argv[on1+1];
       slave_names+= "-exec";
       slave_names+= ad_comm::argv[on1+2];
-    }   
+    }
     else
     {
-      slave_names+="test"; 
+      slave_names+="test";
     }
   }
-  if (!ptm) 
+  if (!ptm)
   {
     ptm = new adtimer;
   }
@@ -223,9 +223,9 @@ char * adpvm_slave_args::operator () (int i)
 {
   if (i>=num_args || i<0)
   {
-    cerr << "index value of " << i 
+    cerr << "index value of " << i
          << "is out of bounds in adpvm_slave_args"
-         << " maximum value is " << num_args-1 
+         << " maximum value is " << num_args-1
          << " minimum value is 0 " << endl;
     ad_exit(1);
   }
@@ -242,7 +242,7 @@ adpvm_slave_args::adpvm_slave_args(int _num_args,int _length_args)
   //char ** argv;
   counter=1;
   num_args=_num_args;
-  if (allocated(length_args)) 
+  if (allocated(length_args))
     length_args.deallocate();
   length_args.allocate(0,num_args-1);
   length_args=_length_args;
@@ -301,7 +301,7 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
         " you have " << noptslave << endl;
       ad_exit(1);
     }
-  }   
+  }
   else
   {
     noptslave=0;
@@ -317,17 +317,17 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
     }
     strcpy((*slave_argv),"-mcmc");
     strcpy((*slave_argv),ad_comm::argv[on1+1]);
-  }   
+  }
 
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-nohess"))>-1)
   {
     strcpy((*slave_argv),"-nohess");
-  }   
+  }
 
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,"-lprof"))>-1)
   {
     strcpy((*slave_argv),"-lprof");
-  }   
+  }
   int gdbflag=option_match(ad_comm::argc,ad_comm::argv,"-gdb");
 
   for (i=0; i<nhost; i++)      /* spawn processes on */
@@ -352,7 +352,7 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
         {
           strcpy(*slave_argv,ad_comm::argv[i]);
         }
-      }   
+      }
       if (gdbflag<0)
       {
         check=pvm_spawn(slave_names[1],*slave_argv ,
@@ -383,10 +383,10 @@ int adpvm_manager::start_slave_processes(const ad_comm& _mp)
         (*slave_argv)--;
         (*slave_argv)--;
       }
-      if (!check) 
-        printf("Couldn't start process on %s\n",hostp[i].hi_name); 
+      if (!check)
+        printf("Couldn't start process on %s\n",hostp[i].hi_name);
       else
-        printf("Started process on %s\n",hostp[i].hi_name); 
+        printf("Started process on %s\n",hostp[i].hi_name);
     }
   }
   return check;
@@ -510,12 +510,12 @@ int get_int_from_master(void)
   int ptid=pvm_parent();
   // ***************  begin constant receive block *********************
   adpvm_slave_crecv(ptid);
-  adpvm_unpack(x);  
+  adpvm_unpack(x);
   adpvm_slave_end_creceive();
   // ***************  end receive block ***********************************
   return x;
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -537,7 +537,7 @@ void send_int_to_master(int i)
 void adpvm_manager::send_variable_values_to_slaves(void)
 {
   int i,j;
-  //for (i=ad_comm::pvm_manager->nhost;i>=1;i--) 
+  //for (i=ad_comm::pvm_manager->nhost;i>=1;i--)
   //{
   for (i=1; i<=ad_comm::pvm_manager-> nhost; i++)
   {
@@ -549,7 +549,7 @@ void adpvm_manager::send_variable_values_to_slaves(void)
       // pack all the variables
       for (int jj=1;jj<=initial_params::num_initial_params;jj++)
       {
-        initial_params::varsptr[jj-1]->pvm_pack(); 
+        initial_params::varsptr[jj-1]->pvm_pack();
       }
       adpvm_master_csend(id(i,j));
       // *********  end constant send block  *************
@@ -570,7 +570,7 @@ void adpvm_manager::get_variable_values_from_master(void)
   // unpack all the variables
   for (j=1;j<=initial_params::num_initial_params;j++)
   {
-    initial_params::varsptr[j-1]->pvm_unpack(); 
+    initial_params::varsptr[j-1]->pvm_unpack();
   }
   adpvm_slave_end_creceive();
   // ***************  end receive block ***********************************

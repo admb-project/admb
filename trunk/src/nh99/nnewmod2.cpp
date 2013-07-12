@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -56,15 +56,14 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
     }
     minsize=min(ss);
 
-  
     for (i=1;i<=nvar;i++)
     {
-      if (ss(i)==minsize) 
+      if (ss(i)==minsize)
       {
         ibreak = i;
         break;
       }
-      p1(i)=p(i); 
+      p1(i)=p(i);
     }
 
     int ii;
@@ -72,9 +71,9 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
     {
       p1(ii-1)=p(ii);
     }
-    
+
     dmatrix tmpS(1,nvar-1,1,nvar-1);
-    
+
     //for (ii=1;ii<=nvar-1;ii++)
     //{
       //for (i=1;i<=nvar;i++)
@@ -82,7 +81,7 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
         //p1(ii,i)*=xscale(i);
       //}
     //}
-   
+
     for (i=1;i<=nvar-1;i++)
     {
       tmpS(i,i)=p1(i)*p1(i);
@@ -93,19 +92,19 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
       }
     }
     ln_det_proj_jac=ln_det(tmpS,sgn);
- 
+
     // reset the p1 basis
     for (i=1;i<=nvar;i++)
     {
       if (i==ibreak) break;
-      p1(i)=p(i); 
+      p1(i)=p(i);
     }
 
     for (ii=i+1;ii<=nvar;ii++)
     {
       p1(ii-1)=p(ii);
     }
-    
+
     for (i=1;i<=nvar;i++)
     {
       for (int j=1;j<i;j++)

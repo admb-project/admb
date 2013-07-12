@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -227,7 +227,7 @@ banded_lower_triangular_dmatrix
   restore_banded_lower_triangular_dvar_matrix_derivatives
   (const dvar_matrix_position& _pos)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   banded_lower_triangular_dmatrix tmp(pos);
   for (int i=pos.row_max;i>=pos.row_min;i--)
   {
@@ -243,7 +243,7 @@ banded_lower_triangular_dmatrix
 banded_symmetric_dmatrix restore_bounded_symmetric_dvar_matrix_derivatives
   (const dvar_matrix_position& _pos)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   banded_symmetric_dmatrix tmp(pos);
   for (int i=pos.row_max;i>=pos.row_min;i--)
   {

@@ -151,7 +151,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)  //,_CONST dvector& 
         scale += fabs(m[i][k]);
       if (scale == 0.0)
         e[i]=m[i][l];
-      else 
+      else
       {
         for (k=1;k<=l;k++)
         {
@@ -164,7 +164,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)  //,_CONST dvector& 
         h -= f*g;
         m[i][l]=f-g;
         f=0.0;
-        for (j=1;j<=l;j++) 
+        for (j=1;j<=l;j++)
         {
         #ifdef EIGEN_VECTORS
         /* Next statement can be omitted if eigenvectors not wanted */
@@ -179,7 +179,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)  //,_CONST dvector& 
           f += e[j]*m[i][j];
         }
         hh=f/(h+h);
-        for (j=1;j<=l;j++) 
+        for (j=1;j<=l;j++)
         {
           f=m[i][j];
           e[j]=g=e[j]-hh*f;
@@ -200,7 +200,7 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)  //,_CONST dvector& 
   /* Contents of this loop can be omitted if eigenvectors not
       wanted except for statement d[i]=a[i][i]; */
   #ifdef EIGEN_VECTORS
-  for (i=1;i<=n;i++) 
+  for (i=1;i<=n;i++)
   {
     l=i-1;
     if (d[i])
@@ -303,7 +303,7 @@ double SIGNV( CGNU_DOUBLE x, double y)
           g=c*r-b;
           /* Next loop can be omitted if eigenvectors not wanted */
           #ifdef EIGEN_VECTORS
-            for (k=1;k<=n;k++) 
+            for (k=1;k<=n;k++)
             {
               f=z[k][i+1];
               z[k][i+1]=s*z[k][i]+c*f;
@@ -318,9 +318,4 @@ double SIGNV( CGNU_DOUBLE x, double y)
     } while (m != l);
   }
 }
-
 #undef EIGEN_VECTORS
-
-
-
-

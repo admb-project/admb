@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -34,7 +34,7 @@ dvector square(const dvector& m)
        tmp(i)=square(m(i));
      }
      return tmp;
-   }  
+   }
 
 /** Square of a number; constant matrix object.
 \ingroup misc
@@ -50,7 +50,7 @@ dmatrix square(const dmatrix& m)
        tmp(i)=square(m(i));
      }
      return tmp;
-   }  
+   }
 
 /** Square of a number; constant 3 dimensionsal array.
 \ingroup misc

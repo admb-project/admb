@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -250,7 +250,6 @@ void DF_dvlog(void)
       {
         cerr << "Possible overflow in DF_dvlog" << endl;
       }
-      
 #    endif
     dfv1(i)=dfvtmp(i)/(v1.elem(i));
   }

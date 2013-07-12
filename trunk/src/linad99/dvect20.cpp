@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -14,24 +14,24 @@
  * Description not yet available.
  * \param
  */
-  dvector& dvector::operator /= ( CGNU_DOUBLE x)
+dvector& dvector::operator /= ( CGNU_DOUBLE x)
+{
+  for (int i=indexmin(); i<=indexmax(); i++)
   {
-    for (int i=indexmin(); i<=indexmax(); i++)
-    {
-      elem(i)/=x;
-    }
-    return(*this);
+    elem(i)/=x;
   }
+  return(*this);
+}
 
 /**
  * Description not yet available.
  * \param
  */
-  dvector& dvector::operator *= ( CGNU_DOUBLE x)
+dvector& dvector::operator *= ( CGNU_DOUBLE x)
+{
+  for (int i=indexmin(); i<=indexmax(); i++)
   {
-    for (int i=indexmin(); i<=indexmax(); i++)
-    {
-      elem(i)*=x;
-    }
-    return(*this);
+    elem(i)*=x;
   }
+  return(*this);
+}

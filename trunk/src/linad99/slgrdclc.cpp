@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -33,7 +33,7 @@
 #ifdef __MSVC32__
   #define lseek _lseek
   #define  read _read
-  #define write _write 
+  #define write _write
 #endif
 
 #ifdef __SUN__
@@ -87,14 +87,14 @@ void slave_gradcalc(void)
     gradient_structure::PREVIOUS_TOTAL_BYTES=0;
     unsigned int i;
     my_off_t lpos;
-  
+
      gradient_structure::GRAD_STACK1->_GRADFILE_PTR =
                 gradient_structure::GRAD_STACK1->gradfile_handle();
-  
+
     int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
-  
+
     lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
-  
+
     if(gradient_structure::GRAD_STACK1->ptr
          <= gradient_structure::GRAD_STACK1->ptr_first)
     {
@@ -106,38 +106,38 @@ void slave_gradcalc(void)
      */
       return;
     }    // current is one past the end so -- it
-  
+
     if (gradient_structure::save_var_flag)
     {
       gradient_structure::save_arrays();
       gradient_structure::save_variables();
     }
-  
+
     gradient_structure::GRAD_STACK1->ptr--;
-  
+
     for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
     {
       * (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i]) = 0;
     }
-  
+
     #if defined (__BORLANDC__) && !defined(DOS386)
       double_and_int huge * tmp;
     #else
       double_and_int * tmp;
     #endif
-  
+
     #if defined (__BORLANDC__) && !defined(DOS386)
        tmp = (double_and_int huge *) gradient_structure::ARRAY_MEMBLOCK_BASE;
     #else
        tmp = (double_and_int *) gradient_structure::ARRAY_MEMBLOCK_BASE;
     #endif
-  
+
     unsigned long int max_last_offset = gradient_structure::ARR_LIST1->get_max_last_offset();
-  
+
     unsigned int size = sizeof(double_and_int );
-  
+
     double * zptr;
-  
+
     for (i=0 ; i< (max_last_offset/size) ; i++ )
     {
       tmp->x = 0;
@@ -155,13 +155,13 @@ void slave_gradcalc(void)
          tmp++;
        #endif
     }
-  
+
     //* gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
-  
+
     //double z;
     int break_flag=1;
-    
+
     do
     {
       gradient_structure::GRAD_STACK1->ptr++;
@@ -176,23 +176,23 @@ void slave_gradcalc(void)
           //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
           (*(gradient_structure::GRAD_STACK1->ptr->func))();
         }
-    
+
       #endif
-    
+
       // back up the file one buffer size and read forward
       //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
       lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
           -((long int)(sizeof(grad_stack_entry)*gradient_structure::
             GRAD_STACK1->length)),SEEK_CUR);
       //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
-    
+
       break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
-    
+
     }  while (break_flag); // do
-  
+
     {
      #ifdef GRAD_DIAG
-      my_off_t ttmp = 
+      my_off_t ttmp =
      #endif
         lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
      #ifdef GRAD_DIAG
@@ -200,10 +200,10 @@ void slave_gradcalc(void)
   				      << " bytes from the beginning\n";
      #endif
     }
-  
-  
+
+
     gradient_structure::GRAD_STACK1->ptr = gradient_structure::GRAD_STACK1->ptr_first;
-  
+
     if (gradient_structure::save_var_flag)
     {
       gradient_structure::restore_arrays();

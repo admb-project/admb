@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
   \file
@@ -41,7 +41,7 @@
     prevariable& mu= (prevariable&)(_mu);
     return r*log(mu) + (r-1)*log(x)-mu*x-gammln(r);
   }
-    
+
   /**
   \ingroup PDF
   Gamma probability density function; variable objects.
@@ -64,7 +64,7 @@
   \param _r Differentiable, \f$ r > 0 \f$.
   \param _mu Differentiable, \f$ \mu > 0 \f$.
   \returns Dvariable containing  \f$\frac{\mu^r}{\Gamma(r)}x^{r-1}e^{-\mu x}\f$
-  */  
+  */
   dvariable gamma_density(const dvariable& _x,const dvariable& _r,
     const  dvariable& _mu)
   {

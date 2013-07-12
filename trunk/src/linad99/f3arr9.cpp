@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -25,7 +25,7 @@ dvar3_array elem_prod(const dvar3_array& m1, const d3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -42,7 +42,7 @@ dvar3_array elem_div(const dvar3_array& m1, const d3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -59,7 +59,7 @@ dvar3_array operator+(const dvar3_array& m1, const d3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -76,7 +76,7 @@ dvar3_array operator-(const dvar3_array& m1, const d3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -93,7 +93,7 @@ dvar3_array operator+(const dvariable& d, const d3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -110,7 +110,7 @@ dvar3_array operator-(const dvariable& d, const d3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -127,7 +127,7 @@ dvar3_array operator*(const dvariable& d, const d3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -144,7 +144,7 @@ dvar3_array operator*(const dvariable& d, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -161,7 +161,7 @@ dvar3_array operator*(double d, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -178,7 +178,7 @@ dvar3_array operator-(const dvar3_array& m1, const dvariable& d)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -195,7 +195,7 @@ dvar3_array operator+(const dvar3_array& m1, const dvariable& d)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -212,7 +212,7 @@ dvar3_array operator+(double d, const dvar3_array& m1)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -229,7 +229,7 @@ dvar3_array operator*(const dvar3_array& m1, const dvariable& d)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.

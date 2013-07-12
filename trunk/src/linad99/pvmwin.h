@@ -8,23 +8,23 @@
  * provided under the general terms of the "BSD" license.
  *
  * License:
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -47,7 +47,7 @@
  *               University of Tennessee, Knoxville TN.
  *           Oak Ridge National Laboratory, Oak Ridge TN.
  *                   Emory University, Atlanta GA.
- *      Authors:  J. J. Dongarra, G. E. Fagg, M. Fischer, 
+ *      Authors:  J. J. Dongarra, G. E. Fagg, M. Fischer,
  *          G. A. Geist, J. A. Kohl, R. J. Manchek, P. Mucci,
  *         P. M. Papadopoulos, S. L. Scott, and V. S. Sunderam
  *                   (C) 1997 All Rights Reserved
@@ -70,8 +70,8 @@
  * the National Science Foundation and the State of Tennessee.
  */
 
-/* cruft file for different compiler specifications 
-*  like Watcom, Visual, Borland ... 
+/* cruft file for different compiler specifications
+*  like Watcom, Visual, Borland ...
 *
 *  added __fortran stub    06/21/1997 	Fischer
 */
@@ -132,7 +132,7 @@
 #define NOGETDTBLSIZ
 #endif
 
-#ifndef ARCHCLASS 
+#ifndef ARCHCLASS
 #define ARCHCLASS "WIN32"
 #endif
 
@@ -150,7 +150,7 @@
 /* sys/param.h doesn't exist: */
 #define MAXHOSTNAMELEN 64
 #define MAXPATHLEN 64
-	   
+
 #ifndef TIME
 #define TIME
 struct timezone {
@@ -164,7 +164,7 @@ struct timezone {
 extern int gettimeofday(struct timeval *, struct timezone *);
 extern char *MyGetUserName();
 extern int kill(int,int, int);
- 
+
 extern HANDLE win32_open_file( char *);
 extern HANDLE win32_create_file(char *s, int );
 extern int win32_close_file(HANDLE);

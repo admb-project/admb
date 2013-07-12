@@ -29,7 +29,7 @@ dvector atlas_solve_spd(const dmatrix & M, const dvector & x)
          << endl;
     ad_exit(1);
   }
-  if (mmin != x.indexmin() || mmax != x.indexmax()) 
+  if (mmin != x.indexmin() || mmax != x.indexmax())
   {
     cerr << "Incompatible matrix and vector sizes in dvector atlas_solve_spd"
          << endl;
@@ -48,14 +48,14 @@ dvector atlas_solve_spd(const dmatrix & M, const dvector & x)
     }
   }
   v=x;
-  double *Ap= &(M1(1)); 
+  double *Ap= &(M1(1));
   double *X = &(v(mmin)); const int incX=1;
-   
+
   const enum CBLAS_ORDER Order=CblasRowMajor;
   const enum CBLAS_UPLO Uplo=CblasLower;
-  const enum CBLAS_TRANSPOSE TransA=CblasNoTrans; 
+  const enum CBLAS_TRANSPOSE TransA=CblasNoTrans;
   const enum CBLAS_DIAG Diag=CblasNonUnit;
-      
+
   int retr=clapack_dposv(Order, Uplo, sz,1, Ap, sz, X, sz);
   return v;
 }
@@ -75,7 +75,7 @@ dvector atlas_solve_spd(const dmatrix & M, const dvector & x, int& ierr)
          << endl;
     ad_exit(1);
   }
-  if (mmin != x.indexmin() || mmax != x.indexmax()) 
+  if (mmin != x.indexmin() || mmax != x.indexmax())
   {
     cerr << "Incompatible matrix and vector sizes in dvector atlas_solve_spd"
          << endl;
@@ -94,14 +94,14 @@ dvector atlas_solve_spd(const dmatrix & M, const dvector & x, int& ierr)
     }
   }
   v=x;
-  double *Ap= &(M1(1)); 
+  double *Ap= &(M1(1));
   double *X = &(v(mmin)); const int incX=1;
-   
+
   const enum CBLAS_ORDER Order=CblasRowMajor;
   const enum CBLAS_UPLO Uplo=CblasLower;
-  const enum CBLAS_TRANSPOSE TransA=CblasNoTrans; 
+  const enum CBLAS_TRANSPOSE TransA=CblasNoTrans;
   const enum CBLAS_DIAG Diag=CblasNonUnit;
-      
+
   int retr=clapack_dposv(Order, Uplo, sz,1, Ap, sz, X, sz);
   ierr=retr;
   return v;
@@ -124,7 +124,7 @@ dmatrix atlas_solve_spd(const dmatrix & M, const dmatrix & N)
          << endl;
     ad_exit(1);
   }
-  if (mmin != N(nmin).indexmin() || mmax != N(nmin).indexmax() ) 
+  if (mmin != N(nmin).indexmin() || mmax != N(nmin).indexmax() )
   {
     cerr << "Incompatible matrix and vector sizes in dmatrix atlas_solve_spd"
          << endl;
@@ -151,14 +151,14 @@ dmatrix atlas_solve_spd(const dmatrix & M, const dmatrix & N)
       N1(ii++)=N(i,j);
     }
   }
-  double *Ap= &(M1(1)); 
+  double *Ap= &(M1(1));
   double *X = &(N1(1)); const int incX=1;
-   
+
   const enum CBLAS_ORDER Order=CblasRowMajor;
   const enum CBLAS_UPLO Uplo=CblasLower;
-  const enum CBLAS_TRANSPOSE TransA=CblasNoTrans; 
+  const enum CBLAS_TRANSPOSE TransA=CblasNoTrans;
   const enum CBLAS_DIAG Diag=CblasNonUnit;
-      
+
   //int retr=clapack_dposv(Order, Uplo, sz,1  , Ap, sz, X, sz);
   int retr=clapack_dposv(Order, Uplo, sz,szn, Ap, sz, X, sz);
   dmatrix tmp(nmin,nmax,mmin,mmax);
@@ -189,7 +189,7 @@ dmatrix atlas_solve_spd_trans(const dmatrix & M, const dmatrix & N)
          << endl;
     ad_exit(1);
   }
-  if (mmin != N.indexmin() || mmax != N.indexmax() ) 
+  if (mmin != N.indexmin() || mmax != N.indexmax() )
   {
     cerr << "Incompatible matrix and vector sizes in dmatrix atlas_solve_spd"
          << endl;
@@ -218,14 +218,14 @@ dmatrix atlas_solve_spd_trans(const dmatrix & M, const dmatrix & N)
       N1(ii++)=N(i,j);
     }
   }
-  double *Ap= &(M1(1)); 
+  double *Ap= &(M1(1));
   double *X = &(N1(1)); const int incX=1;
-   
+
   const enum CBLAS_ORDER Order=CblasRowMajor;
   const enum CBLAS_UPLO Uplo=CblasLower;
-  const enum CBLAS_TRANSPOSE TransA=CblasNoTrans; 
+  const enum CBLAS_TRANSPOSE TransA=CblasNoTrans;
   const enum CBLAS_DIAG Diag=CblasNonUnit;
-      
+
   //int retr=clapack_dposv(Order, Uplo, sz,1  , Ap, sz, X, sz);
   int retr=clapack_dposv(Order, Uplo, sz,szn, Ap, sz, X, sz);
   dmatrix tmp(mmin,mmax,nmin,nmax);

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -10,7 +10,7 @@
  {
     it=new double_index_type(_it);
  }
-     
+
  param_init_bounded_matrix_vector::param_init_bounded_matrix_vector()
  {
    it=NULL;
@@ -64,7 +64,7 @@
 
  void param_init_bounded_matrix::allocate(const ad_integer& imin,
    const ad_integer& imax, const ad_integer& imin2,
-   const ad_integer& imax2, const ad_double& _bmin, 
+   const ad_integer& imax2, const ad_double& _bmin,
    const ad_double& _bmax, const ad_integer& phase_start,
    const char * s)
  {
@@ -84,12 +84,12 @@
      }
      else
      {
-       if ((!initial_value_flag) || initial_value <=minb 
+       if ((!initial_value_flag) || initial_value <=minb
             || initial_value >= maxb)
        {
          //cerr << "Initial value out of bounds -- using halfway value" << endl;
-         initial_value=(minb+maxb)/2.; 
-       } 
+         initial_value=(minb+maxb)/2.;
+       }
        dvar_matrix::operator=(initial_value);
      }
    }
@@ -99,13 +99,11 @@
    }
  }
 
-
    param_init_bounded_matrix_vector::~param_init_bounded_matrix_vector()
    {
      deallocate();
    }
-  
-  
+
    void param_init_bounded_matrix_vector::deallocate(void)
    {
      if(it)

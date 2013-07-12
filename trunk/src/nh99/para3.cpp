@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 //#include <iomanip.h>
@@ -44,7 +44,7 @@ void function_minimizer::hess_routine_master()
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".hes";
   uostream ofs((char*)tmpstring);
-    
+
   ofs << nvar;
   {
     pvm_master_function_evaluation(f,x,g1,nvar);
@@ -77,7 +77,7 @@ void function_minimizer::hess_routine_master()
 
       x(i)=xsave;
       hess1=(g1-g2)/(sdelta1-sdelta2);
- 
+
       sdelta1=x(i)+eps*delta;
       useless(sdelta1);
       sdelta1-=x(i);
@@ -99,7 +99,7 @@ void function_minimizer::hess_routine_master()
       double eps2=eps*eps;
       hess2=(g1-g2)/(sdelta1-sdelta2);
       hess=(eps2*hess1-hess2) /(eps2-1.);
-   
+
       ofs << hess;
       //if (adjm_ptr) ad_update_hess_stats_report(nvar,i);
     }

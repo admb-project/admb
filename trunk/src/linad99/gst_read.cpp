@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -40,9 +40,9 @@
   #ifdef __MSVC32__
     #define lseek _lseek
     #define  read _read
-    #define write _write 
+    #define write _write
     #define open _open
-    #define close _close 
+    #define close _close
   #endif
 #endif
 
@@ -50,7 +50,7 @@
   #if (__GNUC__ >3)
      #include <iostream>
      using namespace std;
-  #else   
+  #else
     #include <iostream.h>
   #endif
   #include <fcntl.h>

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
@@ -18,7 +18,7 @@ double better_rand(long int&);
 
 double function_minimizer::get_monte_carlo_value(int nvar, const independent_variables& x)
 {
-  //initial_params::xinit(x);   
+  //initial_params::xinit(x);
   double f=0.0;
 #if defined(USE_LAPLACE)
   if (mcmc2_flag==0 && lapprox)
@@ -41,10 +41,10 @@ double function_minimizer::get_monte_carlo_value(int nvar, const independent_var
 }
 
 #if !defined(USE_ADPVM)
-double function_minimizer::pvm_master_get_monte_carlo_value(int nvar, 
+double function_minimizer::pvm_master_get_monte_carlo_value(int nvar,
   const dvector& x){return 0.0;}
 #else
-double function_minimizer::pvm_master_get_monte_carlo_value(int nvar, 
+double function_minimizer::pvm_master_get_monte_carlo_value(int nvar,
   const dvector& x)
 {
   double f=0.0;
@@ -66,8 +66,8 @@ double function_minimizer::pvm_master_get_monte_carlo_value(int nvar,
 
 #if !defined(USE_ADPVM)
 void function_minimizer::pvm_slave_get_monte_carlo_value(int nvar){}
-#else 
-void function_minimizer::pvm_slave_get_monte_carlo_value(int nvar) 
+#else
+void function_minimizer::pvm_slave_get_monte_carlo_value(int nvar)
 {
   double f=0.0;
   {
@@ -85,7 +85,7 @@ void function_minimizer::pvm_slave_get_monte_carlo_value(int nvar)
 
 double function_minimizer::get_monte_carlo_value(int nvar, const independent_variables& x,dvector& g)
 {
-  //initial_params::xinit(x);   
+  //initial_params::xinit(x);
   double f=0.0;
 #if defined(USE_LAPLACE)
   if (mcmc2_flag==0 && lapprox)

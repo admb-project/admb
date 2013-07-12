@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -23,7 +23,7 @@ void report_confidence_limits(const ofstream& _ofs3,int numsig_levels,
   const dvector& siglevel, const dvector& left_bd, const dvector& right_bd)
 {
   ofstream& ofs3=(ofstream&) _ofs3;
-  ofs3 << "Minimum width confidence limits:" << endl 
+  ofs3 << "Minimum width confidence limits:" << endl
        <<                    " significance level  lower bound"
        << "  upper bound" << endl;
   for (int i=1;i<=numsig_levels;i++)
@@ -42,14 +42,14 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
   for (i=1;i<=numsig_levels;i++)
   {
     ofs3 << "The probability is " << setw(7) << siglevel(i) << " that "
-         << likeprof_params::likeprofptr[ip]->label() 
+         << likeprof_params::likeprofptr[ip]->label()
          << " is greater than " << left_bd(i) << endl;
   }
   ofs3 << endl;
   for (i=1;i<=numsig_levels;i++)
   {
     ofs3 << "The probability is " << setw(7) << siglevel(i) << " that "
-         << likeprof_params::likeprofptr[ip]->label() 
+         << likeprof_params::likeprofptr[ip]->label()
          << " is less than " << right_bd(i) << endl;
   }
   ofs3 << endl;
@@ -166,12 +166,12 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
       m(3)=tempint2; //+ 1.e-4*max(tempint2);
 
      /*
-      savef << "penalties" << endl << setw(9) << setprecision(4) 
+      savef << "penalties" << endl << setw(9) << setprecision(4)
             << penalties(ip) << endl;
-      savef << "normalized exp(lg_jacob)" << endl << setw(9) << setprecision(4) 
+      savef << "normalized exp(lg_jacob)" << endl << setw(9) << setprecision(4)
             << exp(2.*(lg_jacob(ip)-lg_jacob(ip,0))) << endl;
      */
-      savef << "tempint1 " << endl << setw(9) << setprecision(3) 
+      savef << "tempint1 " << endl << setw(9) << setprecision(3)
             << tempint1 << endl;
      #if defined(DO_PROFILE)
       savef << "m(1) " << endl << setw(9) << setprecision(3) << m(1) << endl;
@@ -205,15 +205,15 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         int mmin=m.rowmin();
         int mmax=m.rowmax();
         for (int i=mmin;i<=mmax;i++)
-        { 
+        {
           int cmin=m(i).indexmin();
           int cmax=m(i).indexmax();
           for (int j=cmin;j<=cmax;j++)
-          { 
+          {
             if (m(i,j)<=0.0) m(i,j)=1.e-50;
           }
         }
-      }     
+      }
       //dmatrix lm=log(m);
       dmatrix lm=m;
       int lowlimit=2;
@@ -286,7 +286,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
       for (j=lowlimit;j<=3;j++)
       {
         if (ssum(j) !=0)
-        { 
+        {
         /*
           cout << ms(j) << endl << ssum(j) << endl << endl;
           char ch;
@@ -326,7 +326,6 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
 
       output(1)=xs(new_min_ind,new_max_ind);
 
-     
     #if defined(DO_PROFILE)
       output(2)=ms(1)(new_min_ind,new_max_ind);
       {
@@ -339,7 +338,7 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         report_onesided_confidence_limits(ofs3,numsig_levels,siglevel,
           lower_bd(1),upper_bd(1),ip);
       }
-     #endif 
+     #endif
 
       output(2)=ms(2)(new_min_ind,new_max_ind);
       {
@@ -394,8 +393,6 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
     tmp(mmax-1)=.2*v(mmax)+.6*v(mmax-1)+.2*v(mmax-2);
     return tmp;
   }
-     
-
 
 double polint(double * xa,double * ya,double x)
 {

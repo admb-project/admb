@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -17,7 +17,7 @@
 dvariable posfun(const dvariable &x, const double eps, const prevariable& _pen)
 {
   dvariable& pen= (dvariable&) _pen;
-  if (x>=eps) 
+  if (x>=eps)
   {
     return x;
   }
@@ -36,7 +36,7 @@ dvariable posfun(const dvariable &x, const double eps, const prevariable& _pen)
 dvariable posfun(const dvariable &x, const double eps, const dvariable& _pen)
 {
   dvariable& pen= (dvariable&) _pen;
-  if (x>=eps) 
+  if (x>=eps)
   {
     return x;
   }
@@ -55,7 +55,7 @@ dvariable posfun(const dvariable &x, const double eps, const dvariable& _pen)
 dvariable posfun2(const dvariable &x, const double eps, const prevariable& _pen)
 {
   dvariable& pen= (dvariable&) _pen;
-  if (x>=eps) 
+  if (x>=eps)
   {
     return x;
   }
@@ -76,7 +76,7 @@ dvariable posfun2(const dvariable &x, const double eps, const prevariable& _pen)
  */
 dvariable dfposfun(const prevariable&x,const double eps)
 {
-  if (x>=eps) 
+  if (x>=eps)
   {
     return 1;
   }

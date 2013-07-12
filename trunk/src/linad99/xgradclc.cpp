@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -33,7 +33,7 @@
 #ifdef __MSVC32__
   #define lseek _lseek
   #define  read _read
-  #define write _write 
+  #define write _write
 #endif
 
 #ifdef __SUN__
@@ -50,7 +50,7 @@
   #if (__GNUC__ >3)
      #include <iostream>
      using namespace std;
-  #else   
+  #else
     #include <iostream.h>
   #endif
   #include <fcntl.h>
@@ -96,7 +96,7 @@ void funnel_gradcalc(void)
   {
     return;
   }
-  
+
    gradient_structure::GRAD_STACK1->_GRADFILE_PTR =
               gradient_structure::GRAD_STACK1->gradfile_handle();
 
@@ -203,10 +203,10 @@ do
 }  while (break_flag); // do
 
  {
-   if (lpos<0) 
-   {  
+   if (lpos<0)
+   {
      #ifdef GRAD_DIAG
-      long int ttmp = 
+      long int ttmp =
      #endif
       lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
 
@@ -236,7 +236,7 @@ do
     ivector offset(0,dsize-1);
     save_identifier_string("ue");
     if (*(++dptr))
-    { 
+    {
       save_double_value(*dptr);
       dcount++;
       zero_flag=0;
@@ -248,7 +248,7 @@ do
       zero_flag=1;
       nzero++;
     }
-    
+
     for (unsigned int i1=1;i1<dsize;i1++)
     {
       if (*(++dptr))
@@ -300,7 +300,6 @@ do
     gradient_structure::get_fp()->fwrite(&zptr,size_t(wsize));
     save_identifier_string("ae");
 
-    
     gradient_structure::GRAD_STACK1->set_gradient_stack(funnel_derivatives);
     gradient_structure::restore_arrays();
     gradient_structure::restore_variables();
@@ -360,7 +359,7 @@ void funnel_derivatives(void)
       dptr+=offset(ii+1);
       ii+=2;
       ic=0;
-    }  
+    }
   }
 
   int smax=stmp.indexmax();

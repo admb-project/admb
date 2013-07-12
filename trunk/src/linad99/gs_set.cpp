@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -39,7 +39,7 @@ void gradient_structure::set_RETURN_ARRAYS_SIZE(int i)
 }
 
 /**
- * Set the maximum allowable depth of nesting of functions that return autodif 
+ * Set the maximum allowable depth of nesting of functions that return autodif
  * variable types
  * \param i number of return arrays
  */
@@ -110,9 +110,9 @@ void gradient_structure::set_CMPDIF_BUFFER_SIZE(long long int i)
  * the actual amount of memory (in bytes) reserved for the buffer is equal to
  * the value of GRADSTACK_BUFFER_SIZE multiplied by the size (in bytes) of an
  * autodif structure, grad_stack_entry.
- * See also set_GRADSTACK_BUFFER_BYTES which performs the same function 
+ * See also set_GRADSTACK_BUFFER_BYTES which performs the same function
  * but with input in units of bytes
- * \param i memory allocation in units of "gs_size" (which is about 36 bytes)    
+ * \param i memory allocation in units of "gs_size" (which is about 36 bytes)
  */
 #ifdef __BORLANDC__
 void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long int i)
@@ -135,10 +135,10 @@ void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i)
       "should probably be  " << max_size << endl;
     cerr << "Note: the Borland compiler limit is a long integer\n"
       "      other compilers allow long long integers" << endl;
-    cerr << "LONG_MAX = " << (unsigned long int) (LONG_MAX) << endl; 
-    cerr << " i = " << i << endl; 
-    cerr << " gs_size = " << gs_size << endl; 
-    cerr << " i*gs_size = " << i*gs_size << endl; 
+    cerr << "LONG_MAX = " << (unsigned long int) (LONG_MAX) << endl;
+    cerr << " i = " << i << endl;
+    cerr << " gs_size = " << gs_size << endl;
+    cerr << " i*gs_size = " << i*gs_size << endl;
 
   }
 #else
@@ -154,11 +154,11 @@ void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i)
     cerr << "for the function\n"
       "--- gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i) ---\n"
       "should probably be  " << max_size << endl;
-    cerr << "LLONG_MAX = " << (unsigned long int) (LLONG_MAX) << endl; 
-    cerr << " i = " << i << endl; 
-    cerr << " gs_size = " << gs_size << endl; 
-    cerr << " i*gs_size = " << i*gs_size << endl; 
-  
+    cerr << "LLONG_MAX = " << (unsigned long int) (LLONG_MAX) << endl;
+    cerr << " i = " << i << endl;
+    cerr << " gs_size = " << gs_size << endl;
+    cerr << " i*gs_size = " << i*gs_size << endl;
+
   }
 #endif
   check_set_error("GRADSTACK_BUFFER_SIZE");
@@ -166,11 +166,11 @@ void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i)
 }
 
 /**
- * Set (in bytes) the number of entries contained in the buffer used for 
- * calculating derivatives. This is an alternative to 
+ * Set (in bytes) the number of entries contained in the buffer used for
+ * calculating derivatives. This is an alternative to
  * set_GRADSTACK_BUFFER_SIZE which is in units of "gs_size" rather than bytes.
  * \author Ian Taylor
- * \param i memory allocation in bytes    
+ * \param i memory allocation in bytes
  */
 #ifdef __BORLANDC__
 void gradient_structure::set_GRADSTACK_BUFFER_BYTES(long int i)
@@ -191,8 +191,8 @@ void gradient_structure::set_GRADSTACK_BUFFER_BYTES(long long int i)
     cerr << "for the function\n"
       "--- gradient_structure::set_GRADSTACK_BUFFER_BYTES(long int i) ---\n"
       "should probably be  " << max_size << endl;
-    cerr << "LONG_MAX = " << (unsigned long int) (LONG_MAX) << endl; 
-    cerr << " i = " << i << endl; 
+    cerr << "LONG_MAX = " << (unsigned long int) (LONG_MAX) << endl;
+    cerr << " i = " << i << endl;
     cerr << "Note: the Borland compiler limit is a long integer\n"
       "      other compilers allow long long integers" << endl;
   }
@@ -209,8 +209,8 @@ void gradient_structure::set_GRADSTACK_BUFFER_BYTES(long long int i)
     cerr << "for the function\n"
       "--- gradient_structure::set_GRADSTACK_BUFFER_BYTES(long long int i) ---\n"
       "should probably be  " << max_size << endl;
-    cerr << "LLONG_MAX = " << (unsigned long int) (LLONG_MAX) << endl; 
-    cerr << " i = " << i << endl; 
+    cerr << "LLONG_MAX = " << (unsigned long int) (LLONG_MAX) << endl;
+    cerr << " i = " << i << endl;
   }
 #endif
   check_set_error("GRADSTACK_BUFFER_SIZE");

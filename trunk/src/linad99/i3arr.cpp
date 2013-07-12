@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -209,8 +209,8 @@ void i3_array::allocate(int sl, int sh, int nrl, const ivector& nrh,
    t -= slicemin();
    for (int i=sl; i<=sh; i++)
    {
-     t[i].allocate(nrl,nrh(i),ncl,nch(i));  
-   } 
+     t[i].allocate(nrl,nrh(i),ncl,nch(i));
+   }
  }
 
 /**

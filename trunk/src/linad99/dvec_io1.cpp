@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -30,7 +30,7 @@ const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
 const int MAX_NUMBER_ROWS = 6550;
 
-#if !defined(HUGE) 
+#if !defined(HUGE)
 #define HUGE 1.e+100
 #endif
 
@@ -99,7 +99,7 @@ int get_non_blank_line(const ifstream& infile, char * & line,
      // Need to check error status f
      if (j < column)
      {
-       cerr << "Error -- not enough columns in line " << i  
+       cerr << "Error -- not enough columns in line " << i
         << "\n in dvector::dvector(char * filename, const int& column) "
            " in file:  "
         << filename << "\n";
@@ -149,7 +149,7 @@ int get_non_blank_line(const ifstream& infile, char * & line,
                          //" indexmin() = "<<indexmin()<<"\n";
         denormalize_ptr(&v, indexmin() * sizeof(double));
      }
-   }  
+   }
 
    v -= indexmin();
 

@@ -49,7 +49,7 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
         big=temp;
       }
     }
-    if (big == 0.0) 
+    if (big == 0.0)
     {
       cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
     }
@@ -58,7 +58,7 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
 
   for (j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++) 
+    for (i=lb;i<j;i++)
     {
       sum=a(i,j);
       for (k=lb;k<i;k++)
@@ -68,7 +68,7 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
       a(i,j)=sum;
     }
     big=0.0;
-    for (i=j;i<=ub;i++) 
+    for (i=j;i<=ub;i++)
     {
       sum=a(i,j);
       for (k=lb;k<j;k++)
@@ -113,7 +113,7 @@ void ludcmp(const dvar_matrix& _a, const ivector& _indx, const prevariable& _d)
 }
 
 /** LU decomposition back susbstitution alogrithm for variable object.
-    \param a A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param a A dmatrix containing LU decomposition of input matrix. \f$a\f$.
     \param indx Permutation vector from ludcmp.
     \param b A dvector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved, and containing on return the solution vector \f$X\f$.
@@ -128,7 +128,7 @@ void lubksb(dvar_matrix a, const ivector& indx,dvar_vector b)
   int n=a.colsize();
   int lb=a.colmin();
   int ub=a.colmax();
-  for (i=lb;i<=ub;i++) 
+  for (i=lb;i<=ub;i++)
   {
     ip=indx(i);
     sum=b(ip);
@@ -147,11 +147,11 @@ void lubksb(dvar_matrix a, const ivector& indx,dvar_vector b)
     }
     b(i)=sum;
   }
- 
-  for (i=ub;i>=lb;i--) 
+
+  for (i=ub;i>=lb;i--)
   {
     sum=b(i);
-    for (j=i+1;j<=ub;j++) 
+    for (j=i+1;j<=ub;j++)
     {                        // !!! remove to show bug
       sum -= a.elem(i,j)*b.elem(j);
     }                        // !!! remove to show bug

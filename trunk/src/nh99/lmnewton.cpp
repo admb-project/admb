@@ -9,8 +9,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-  int lbfgs_(long int *, long int *, double *, 
-	    double *, double *, long int *, double *, long int *, 
+  int lbfgs_(long int *, long int *, double *,
+	    double *, double *, long int *, double *, long int *,
 	    double *, double *, double *, long int *,long int *,
             long int *);
 #ifdef __cplusplus
@@ -49,14 +49,14 @@ void function_minimizer::limited_memory_quasi_newton(const independent_variables
       cerr << "Usage -crit option needs number  -- ignored" << endl;
     }
     else
-    {   
+    {
       char * end;
       _crit=strtod(ad_comm::argv[on+1],&end);
       if (_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
         _crit=0.0;
-      } 
+      }
     }
   }
 
@@ -71,7 +71,7 @@ void function_minimizer::limited_memory_quasi_newton(const independent_variables
   if (_crit)
   {
     crit = _crit;
-  } 
+  }
   if (!(!maximum_function_evaluations) && !maxfn_option)
   {
     int ind=min(maximum_function_evaluations.indexmax(),
@@ -104,7 +104,7 @@ void function_minimizer::limited_memory_quasi_newton(const independent_variables
       cerr << "Usage -iprint option needs integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       int jj=atoi(ad_comm::argv[on1+1]);
       iprint=jj;
     }
@@ -131,7 +131,7 @@ L20:
     xbest=x;
     gbest=g;
   }
-  
+
   gradcalc(nvar,g);
   if(fmod(double(itn),double(iprint)) == 0)
   {
@@ -169,7 +169,7 @@ L20:
       }
     }
   }
-  
+
   long int lnvar=nvar;
   long int litn=itn;
   long int liprintx= *iprintx;
@@ -231,14 +231,14 @@ void function_minimizer::limited_memory_quasi_newton
       cerr << "Usage -crit option needs number  -- ignored" << endl;
     }
     else
-    {   
+    {
       char * end;
       _crit=strtod(ad_comm::argv[on+1],&end);
       if (_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
         _crit=0.0;
-      } 
+      }
     }
   }
   gradient_structure::set_YES_DERIVATIVES();
@@ -281,7 +281,7 @@ L20:
     xbest=x;
     gbest=g;
   }
-  
+
   gradcalc(nvar,g);
   if(fmod(double(itn),double(iprint)) == 0)
   {

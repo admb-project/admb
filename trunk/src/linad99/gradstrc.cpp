@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -219,8 +219,8 @@ void allocate_dvariable_space(void)
   int on,nopt;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
   {
-    if (nopt ==1)	    
-    {	      
+    if (nopt ==1)
+    {
       gradient_structure::MAX_DLINKS=atoi(ad_comm::argv[on+1]);
     }
     else
@@ -229,7 +229,7 @@ void allocate_dvariable_space(void)
         " you have " << nopt << endl;		
       ad_exit(1);
     }	
-  }   
+  }
   int numlinks=gradient_structure::MAX_DLINKS;
   cout << sizeof(dlink) << endl;
 
@@ -250,8 +250,8 @@ void allocate_dvariable_space(void)
   tmp1+=2*sizeof(double);
   dl->prev=NULL;
   dlink * prev=dl;
-  int& nlinks=(int&)gradient_structure::GRAD_LIST->nlinks;  
-  gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl; 
+  int& nlinks=(int&)gradient_structure::GRAD_LIST->nlinks;
+  gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl;
   for (int i=1;i<=numlinks;i++)
   {
     dl=(dlink*)tmp1;
@@ -259,10 +259,10 @@ void allocate_dvariable_space(void)
     prev=dl;
     tmp1+=2*sizeof(double);
 
-    gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl; 
-      // keep track of the links so you can 
+    gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl;
+      // keep track of the links so you can
   }                               // zero them out
-  gradient_structure::GRAD_LIST->last=dl;  
+  gradient_structure::GRAD_LIST->last=dl;
 }
 
 /**
@@ -294,12 +294,12 @@ void allocate_dvariable_space(void)
           ad_random_part);
      #else
         if (lastchar(path)!='\\')
-        {        
+        {
 	  sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
             ad_random_part);
         }
         else
-        {        
+        {
 	  sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
             ad_random_part);
         }
@@ -325,13 +325,13 @@ void allocate_dvariable_space(void)
          cerr << "Usage -ndv option needs integer  -- ignored" << endl;
        }
        else
-       {   
+       {
          int jj=atoi(ad_comm::argv[on+1]);
          if (jj<=0)
          {
            cerr << "Usage -ndv option needs positive integer"
               "  -- ignored" << endl;
-         } 
+         }
          else
          {
            NUM_DEPENDENT_VARIABLES=jj;
@@ -413,7 +413,7 @@ void allocate_dvariable_space(void)
  */
 
    ARRAY_MEMBLOCK_BASE = temp_ptr;
-  
+
    //cout << (void*) ARRAY_MEMBLOCK_BASE.ptr  << "   ";
    //cout << (int) ARRAY_MEMBLOCK_BASE.ptr  << endl;
 #if defined(__x86_64)
@@ -424,7 +424,7 @@ void allocate_dvariable_space(void)
    //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
    ARRAY_MEMBLOCK_BASE.adjust(adjustment);
    //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
-  
+
    if (GRAD_STACK1 != NULL)
    {
       cerr << " 3 Trying to allocate to a non NULL pointer\n";
@@ -459,8 +459,8 @@ void allocate_dvariable_space(void)
 
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mno",nopt))>-1)
       {
-        if (nopt ==1)	    
-        {	      
+        if (nopt ==1)
+        {
           MAX_NVAR_OFFSET=atoi(ad_comm::argv[on+1]);
         }
         else
@@ -469,7 +469,7 @@ void allocate_dvariable_space(void)
             " you have " << nopt << endl;		
           ad_exit(1);
         }	
-      }   
+      }
 
  // ****************************************************************
  // ****************************************************************
@@ -513,8 +513,8 @@ void allocate_dvariable_space(void)
  }
 
 /**
-  Increments gradient_structure::RETURN_ARRAYS_PTR. 
-  Must be called on entry to any functiton that returns a 
+  Increments gradient_structure::RETURN_ARRAYS_PTR.
+  Must be called on entry to any functiton that returns a
   variable object.
   Calls must balance calls to void RETURN_ARRAYS_DECREMENT(void).
   \ingroup RA
@@ -542,8 +542,8 @@ void RETURN_ARRAYS_INCREMENT(void)
 }
 
 /**
-  Decrements gradient_structure::RETURN_ARRAYS_PTR. 
-  Must be called prior to exit from any functiton that returns a 
+  Decrements gradient_structure::RETURN_ARRAYS_PTR.
+  Must be called prior to exit from any functiton that returns a
   variable object.
   Calls must balance calls to void RETURN_ARRAYS_INCREMENT(void).
   \ingroup RA
@@ -744,7 +744,7 @@ void memory_allocate_error(const char * s, void * ptr)
     {
       save_var_flag=0;
     }
-      
+
 /**
  * Description not yet available.
  * \param
@@ -755,7 +755,7 @@ void memory_allocate_error(const char * s, void * ptr)
       {
         cerr << " Error in "
                 "gradient_structure::set_NUM_DEPENDENT_VARIABLES(int i)"
-             << endl << " value of i must be >= 1" << endl; 
+             << endl << " value of i must be >= 1" << endl;
         i=1;
       }
       NUM_DEPENDENT_VARIABLES=i;

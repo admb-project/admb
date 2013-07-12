@@ -2,12 +2,11 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
   \file xfnntr1.cpp
   Minimize artibrary user-supplied function.
-  
  */
 // this is to get UNIX systems to use getchar
 // #define UNIXKLUDGE
@@ -56,7 +55,7 @@ extern int ctlc_flag;
   #if (__GNUC__ >3)
      #include <iostream>
      using namespace std;
-  #else   
+  #else
     #include <iostream.h>
   #endif
   #include <signal.h>
@@ -113,10 +112,10 @@ double get_second_derivative(double f,independent_variables& x,
   const double stepsize=1.e-5;
   dvector g1(1,nvar);
   dvector g2(1,nvar);
-  x+=stepsize*r; 
-  do_evaluation(f,x,g1,nvar,pmp); 
-  x-=2.*stepsize*r; 
-  do_evaluation(f,x,g2,nvar,pmp); 
+  x+=stepsize*r;
+  do_evaluation(f,x,g1,nvar,pmp);
+  x-=2.*stepsize*r;
+  do_evaluation(f,x,g2,nvar,pmp);
   double scder=r*(g1-g2)/(2.0*stepsize);
   cout << " f = " << f << endl;
   cout << "  second derivative =  " ;
@@ -149,30 +148,30 @@ void fmmt1::fmin2(const double& _f, const independent_variables &_x, const dvect
   do_evaluation(f,x,g,nvar,pmp); // get initial vales for f and g
   curf=f; curx=x;
   cout << " f = " << f << endl;
-  
 
-  do 
+
+  do
   {
-    r=update1(n,itn,xm,g,xstep,xy,x,xold,gold,xrho); // get search 
+    r=update1(n,itn,xm,g,xstep,xy,x,xold,gold,xrho); // get search
 
     cout << "  norm(g) =  " << norm(g) ;
     cout << "  r*g/norm(g) =  " << r*g/norm(g) << endl;
     do
     {
       x=curx;
-        
+
       a=get_second_derivative(f,x,g,r,nvar,pmp);
       b=r*g;
-  
+
       stepsize=-b/a;
       do
       {
         xtry=curx+stepsize*r; x=xtry;
-        
+
         do_evaluation(f,x,g,nvar,pmp);
         cout << " f = " << f << endl;
         cout << "  r*g/norm(g) =  " << r*g/norm(g) << endl;
-        
+
         if (f<curf+1.e-10)
         {
           curx=x; curf=f;
@@ -185,7 +184,7 @@ void fmmt1::fmin2(const double& _f, const independent_variables &_x, const dvect
         else
         {
           cout << setprecision(10) << f-curf << endl;
-          stepsize=0.001*stepsize; xtry=curx+stepsize*r; 
+          stepsize=0.001*stepsize; xtry=curx+stepsize*r;
         }
       }
       while(!smallbreak);
@@ -231,7 +230,7 @@ dvector update1(int nvar, int iter, int m, const dvector& g, const dmatrix& _s,
       xrho(k1)=1./(y(k1)*s(k1));
       xold=x;
       gold=g;
-    
+
       int i;
       int lb=k-m+1;
       if (lb <0) lb=0;

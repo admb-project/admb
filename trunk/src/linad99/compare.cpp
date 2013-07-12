@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -15,25 +15,25 @@
  * \param
  */
 int operator==(double v0, const prevariable& v1)
-   { 
-     return (v0==value(v1));
-   }
+{
+  return (v0==value(v1));
+}
 
 /**
  * Description not yet available.
  * \param
  */
 int operator<=(double v0, const prevariable& v1)
-   { 
-     return (v0<=value(v1));
-   }
+{
+  return (v0<=value(v1));
+}
 
 /**
  * Description not yet available.
  * \param
  */
 int operator>=(double v0, const prevariable& v1)
-   { 
+   {
      return (v0>=value(v1));
    }
 
@@ -42,7 +42,7 @@ int operator>=(double v0, const prevariable& v1)
  * \param
  */
 int operator>(double v0, const prevariable& v1)
-   { 
+   {
      return (v0>value(v1));
    }
 
@@ -51,7 +51,7 @@ int operator>(double v0, const prevariable& v1)
  * \param
  */
 int operator<(double v0, const prevariable& v1)
-   { 
+   {
      return (v0<value(v1));
    }
 
@@ -60,6 +60,6 @@ int operator<(double v0, const prevariable& v1)
  * \param
  */
 int operator!=(double v0, const prevariable& v1)
-   { 
+   {
      return (v0!=value(v1));
    }

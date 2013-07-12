@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -219,13 +219,13 @@ dmatrix trans(const dvector& x)
             if (random_effects_flag==0)
             {
 	      prof_minimize(ip,sigma,new_value,fprof,underflow_flag,
-	        global_min,penalties(ip,j*sign),final_weight); // get the 
+	        global_min,penalties(ip,j*sign),final_weight); // get the
                                                         // conditional max
             }
             else
             {
 	      prof_minimize_re(ip,sigma,new_value,fprof,underflow_flag,
-	        global_min,penalties(ip,j*sign),final_weight); // get the 
+	        global_min,penalties(ip,j*sign),final_weight); // get the
                                                         // conditional max
             }
           }
@@ -236,7 +236,7 @@ dmatrix trans(const dvector& x)
             {
               send_int_to_slaves(3);
 	      pvm_master_prof_minimize(ip,sigma,new_value,fprof,underflow_flag,
-	        global_min,penalties(ip,j*sign),final_weight); // get the 
+	        global_min,penalties(ip,j*sign),final_weight); // get the
             }
 #else
             {
@@ -324,12 +324,12 @@ dmatrix trans(const dvector& x)
 	    gprof(sign*j)=gprof(sign*(j-1));
             xdist(ip,sign*j)=xdist(ip,sign*(j-1));
 	  }
-         
+
         //#if defined(DO_PROFILE)
 	/*
 	  if (!underflow_flag)
 	  {
-            hess_routine_and_constraint(ip,g,fg);  // calculate the hessian 
+            hess_routine_and_constraint(ip,g,fg);  // calculate the hessian
                                             // at the conditional max
           }
 
@@ -370,7 +370,6 @@ dmatrix trans(const dvector& x)
       ldet(ip)=ldet(ip)-ln_det_proj_jac(ip);
     }
     {
-    
       ofstream ofs("det.tmp");
       for (ip=0;ip<likeprof_params::num_likeprof_params;ip++)
       {
@@ -380,7 +379,7 @@ dmatrix trans(const dvector& x)
         ofs << "lndet_proj_jac" << endl;
         ofs << ln_det_proj_jac(ip) << endl << endl;
         ofs << "ldet-lndet_proj_jac" << endl;
-        ofs << ldet(ip)-ln_det_proj_jac(ip) +ln_det_proj_jac(ip,0) 
+        ofs << ldet(ip)-ln_det_proj_jac(ip) +ln_det_proj_jac(ip,0)
             << endl << endl;
       }
     }
@@ -404,9 +403,9 @@ dmatrix trans(const dvector& x)
   }
 
 /*
-void get_ee(const dmatrix& hh, const ofstream& _of5) 
+void get_ee(const dmatrix& hh, const ofstream& _of5)
 {
-  ofstream& of5= (ofstream&) _of5; 
+  ofstream& of5= (ofstream&) _of5;
   int mmin=hh.rowmin();
   int mmax=hh.rowmax();
   dvector l(mmin,mmax);
@@ -415,7 +414,7 @@ void get_ee(const dmatrix& hh, const ofstream& _of5)
   dmatrix e=eigenvectors(hh,l);
   for (int i=mmin;i<=mmax;i++)
   {
-    ll(i)=e(i)*(hh*e(i)); 
+    ll(i)=e(i)*(hh*e(i));
     of5 << l(i) << "  " << ll(i) << endl;
   }
 }

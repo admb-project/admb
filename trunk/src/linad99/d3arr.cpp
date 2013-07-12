@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -23,7 +23,7 @@ double sum(const d3_array& m)
   }
   return tmp;
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -349,7 +349,7 @@ void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh, 
  */
 void d3_array::allocate(int sl, int sh, const ivector& nrl, int nrh, int ncl, int nch)
  {
-   if (sl !=nrl.indexmin() || sh !=nrl.indexmax()) 
+   if (sl !=nrl.indexmin() || sh !=nrl.indexmax())
    {
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)" << endl;
      ad_exit(1);

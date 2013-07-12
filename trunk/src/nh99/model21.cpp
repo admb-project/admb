@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 /*
@@ -105,11 +105,11 @@ void param_init_d3array::save_value(const ofstream& _ofs,int prec)
       for (int i=indexmin();i<=indexmax();i++)
       {
 	if (allocated((*this)(i)))
-	{  
+	{
           for (int j=(*this)(i).indexmin();j<=(*this)(i).indexmax();j++)
           {
             if (allocated((*this)(i,j)))
-	    {  
+	    {
               if (ad_comm::global_bparfile)
               {
                 *(ad_comm::global_bparfile) >> (*this)(i,j);
@@ -123,7 +123,7 @@ void param_init_d3array::save_value(const ofstream& _ofs,int prec)
                 (*this)(i,j)=(initial_value);
 	      }
 	    }
-	  }  
+	  }
 	}
       }
     }

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -157,7 +157,7 @@ double new_value_mc(const double& _jac,double x,double min,double max,double eps
     }
     y+=x;
     y1+=x;
-  } 
+  }
   else
   {
     double d=x-min;
@@ -181,7 +181,7 @@ double new_value_mc(const double& _jac,double x,double min,double max,double eps
     }
     y=x-y;
     y1=x-y1;
-  } 
+  }
   jac=(y1-y)*1.e+6;
   return y;
 }
@@ -234,7 +234,7 @@ double new_value_mc(const double& _jac,double x,double min,double max,double eps
     for (int i=mmin;i<=mmax;i++)
     {
       tmp(i)=atan(y(ii)+ndev(ii))/hpi;
-      s-= log(1./(hpi*(1.0+square(y(ii)+ndev(ii))))); 
+      s-= log(1./(hpi*(1.0+square(y(ii)+ndev(ii)))));
       ii++;
     }
     jj=1;
@@ -256,7 +256,7 @@ void param_init_matrix::add_value(const dvector& y, const dvector& ndev, const i
       int cmax=(*this)(i).indexmax();
       for (int j=cmin;j<=cmax;j++)
       {
-        (*this)(i,j)+=diag(ii)*ndev(ii); 
+        (*this)(i,j)+=diag(ii)*ndev(ii);
         ii++;
       }
     }
@@ -364,7 +364,7 @@ void param_init_d3array::add_value(const dvector& ndev, const int& _ii)
       int cmax=(*this)(i).indexmax();
       for (int j=cmin;j<=cmax;j++)
       {
-        (*this)(i,j)+=ndev(ii); 
+        (*this)(i,j)+=ndev(ii);
         ii++;
       }
     }
@@ -388,7 +388,6 @@ void param_init_d3array::add_value(const dvector& ndev, const int& _ii)
     }
   }
 
-
   void param_init_bounded_vector::get_jacobian(const dvector& _y, const dvector& _jac,
     const int& _ii)
   {
@@ -404,7 +403,7 @@ void param_init_d3array::add_value(const dvector& ndev, const int& _ii)
     for (int i=mmin;i<=mmax;i++)
     {
       y(ii)=tan(hpi*tmp(i));
-      jac(ii) = 1./(hpi*(1.0+square(y(ii)))); 
+      jac(ii) = 1./(hpi*(1.0+square(y(ii))));
       ii++;
     }
   }

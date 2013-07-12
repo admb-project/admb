@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -29,7 +29,7 @@ double normal_tail_right(const double& x)
   return tmp;
 }
 */
-  
+
 /**
  * Description not yet available.
  * \param
@@ -45,13 +45,13 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
   const double d1=1.432788;
   const double d2=0.189269;
   const double d3=0.001308;
-  if (x<=0 || x>=1.0) 
+  if (x<=0 || x>=1.0)
   {
     //cerr << "Illegal argument to inv_cumd_norm = " << x << endl;
     RETURN_ARRAYS_DECREMENT();
     return 0.0;
   }
-   
+
   if (x<=0.5)
   {
     //dvariable t = sqrt(-2.*log(x));
@@ -87,7 +87,7 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
   else if (x==0.5)
   {
     cout << "can't happen" << endl;
-    exit(1);    
+    exit(1);
     return 0.0;
   }
   else
@@ -105,7 +105,7 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
     double v=((d3*tt+d2)*tt+d1)*tt+1;
     double vinv=1/v;
     double pp=tt-u*vinv;
-    
+
     //double pp=tt-u*vinv;
     double dfu=-vinv;
     double dfvinv=-u;
@@ -126,7 +126,7 @@ dvariable inv_cumd_norm_inner(const prevariable& x)
     gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
        &(gradient_structure::RETURN_PTR->v->x), &(x.v->x),dfx);
     return(*gradient_structure::RETURN_PTR);
-  } 
+  }
 }
 
 /**
@@ -212,7 +212,7 @@ prevariable& cumd_norm(const prevariable& _x)
 
     //double y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     double dfu=  ((((b55*u+b44)*u+b33)*u+b22)*u+b1)*dfy;
-    
+
     //double u=1./(1+p*x);
     dfx-=u*u*p*dfu;
 
@@ -307,7 +307,7 @@ prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
 
     //double y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     double dfu=  ((((b55*u+b44)*u+b33)*u+b22)*u+b1)*dfy;
-    
+
     //double u=1./(1+p*x);
     dfx-=u*u*p*dfu;
 
@@ -358,13 +358,13 @@ dvariable inv_cumd_norm_logistic(const prevariable& x,double p)
 #if defined(SAFE_ALL)
   if (0.0<p || 1.0>p)
   {
-    cerr << "Error in dvariable inv_cumd_norm_logistic -- illegal p value = " 
+    cerr << "Error in dvariable inv_cumd_norm_logistic -- illegal p value = "
          << p << endl;
     exit(1);
-  }    
-#endif   
+  }
+#endif
   dvariable y=inv_cumd_norm_inner(x);
-  y+=( (1.0-p)*2.50662827*exp(.5*y*y) + 
+  y+=( (1.0-p)*2.50662827*exp(.5*y*y) +
     p*exp(-x)/square(1.0+exp(-x)) ) * (x-cumd_norm_logistic (y,p));
   return y;
 }
@@ -376,4 +376,4 @@ dvariable inv_cumd_norm_logistic(const prevariable& x,double p)
 prevariable& cumd_norm_logistic(const prevariable& _x,double p)
 {
   return (1.0-p)*cumd_norm(_x)+p*cumd_logistic(_x);
-}  
+}

@@ -3,28 +3,28 @@
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- * 
+ *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
- * 
+ *
  * License:
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -43,7 +43,7 @@
  * Description not yet available.
  */
 #if !defined(_DOUBLE_IND_)
-#define _DOUBLE_IND_ 
+#define _DOUBLE_IND_
   class double_index_guts;
   class double_index_type;
   class double_number_index;
@@ -97,7 +97,7 @@
      " -- object not dereferenced enough" << endl; exit(1); return 1;}
     virtual int indexmin(void)=0;
     virtual int indexmax(void)=0;
-    double_index_guts(); 
+    double_index_guts();
     double_index_guts(const double_index_guts& ig);
     virtual ~double_index_guts();
     friend class double_index_type;
@@ -124,8 +124,8 @@
     ~double_index_type ();
     double_index_type operator [] (int i);
     double_index_type operator () (int i);
-    double_index_type operator [] (int i) const; 
-    double_index_type operator () (int i) const; 
+    double_index_type operator [] (int i) const;
+    double_index_type operator () (int i) const;
     int indexmin(void) const { return p->indexmin();}
     int indexmax(void) const { return p->indexmax();}
     friend class ad_integer;
@@ -145,8 +145,8 @@
   public:
     virtual ~double_index() {}
     double_index(double i) : ad_double(i) {}
-    // only overload this for number_index ... will fail for other classes 
-    virtual operator double () { return d;} 
+    // only overload this for number_index ... will fail for other classes
+    virtual operator double () { return d;}
     friend class double_index_type;
   };
 

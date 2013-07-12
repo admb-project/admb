@@ -29,7 +29,7 @@ int min(int a,int b)
   return a;
 }
 
-/** Inverse of a varaiable matrix.    
+/** Inverse of a varaiable matrix.
     \param aa dvar_matrix conaining matrix to be inverted,\f$A\f$.
     \return dvar_matrix containing \f$A^{-1}\f$.
     \n\n The implementation of this algorithm was inspired by

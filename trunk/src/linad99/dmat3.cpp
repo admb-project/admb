@@ -34,7 +34,7 @@ dmatrix inv(const dmatrix& m1)
   {
     cerr << " Error in dmatrix inv(const dmatrix&) -- matrix not square \n";
   }
- 
+
   dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
 
   int i;
@@ -62,7 +62,7 @@ dmatrix inv(const dmatrix& m1)
     col[j]=1;
 
     lubksb(a,indx,col);
-  
+
     for (i=m1.rowmin(); i<=m1.rowmax(); i++)
     {
       y[i][j]=col[i];
@@ -86,12 +86,12 @@ dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
   double& ln_det=(double&)(_ln_det);
   ln_det=0.0;
   int& sgn=(int&)(_sgn);
-  
+
   if (m1.rowmin()!=m1.colmin() || m1.rowmax() != m1.colmax())
   {
     cerr << " Error in dmatrix inv(const dmatrix&) -- matrix not square \n";
   }
- 
+
   dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
 
   int i;
@@ -106,7 +106,7 @@ dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
   //int indx[30];
 
   ludcmp(a,indx,d);
-  if (d>.1) 
+  if (d>.1)
   {
     sgn=1;
   }
@@ -148,7 +148,7 @@ dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
     col[j]=1;
 
     lubksb(a,indx,col);
-  
+
     for (i=m1.rowmin(); i<=m1.rowmax(); i++)
     {
       y[i][j]=col[i];
@@ -198,7 +198,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
         big=temp;
       }
     }
-    if (big == 0.0) 
+    if (big == 0.0)
     {
       cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
     }
@@ -209,7 +209,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
 
   for (j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++) 
+    for (i=lb;i<j;i++)
     {
       sum=a[i][j];
       for (k=lb;k<i;k++)
@@ -219,7 +219,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
       a[i][j]=sum;
     }
     big=0.0;
-    for (i=j;i<=ub;i++) 
+    for (i=j;i<=ub;i++)
     {
       sum=a[i][j];
       for (k=lb;k<j;k++)
@@ -262,7 +262,7 @@ void ludcmp(const dmatrix& _a, const ivector& _indx, const double& _d)
     }
   }
 }
-#undef TINY 
+#undef TINY
 
 #define TINY 1.0e-50;
 
@@ -303,7 +303,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
         big=temp;
       }
     }
-    if (big == 0.0) 
+    if (big == 0.0)
     {
       d=0.;
     }
@@ -314,7 +314,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
 
   for (j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++) 
+    for (i=lb;i<j;i++)
     {
       sum=a[i][j];
       for (k=lb;k<i;k++)
@@ -324,7 +324,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
       a[i][j]=sum;
     }
     big=0.0;
-    for (i=j;i<=ub;i++) 
+    for (i=j;i<=ub;i++)
     {
       sum=a[i][j];
       for (k=lb;k<j;k++)
@@ -370,7 +370,7 @@ void ludcmp_det(const dmatrix& _a, const ivector& _indx, const double& _d)
 
 
 /** LU decomposition back susbstitution alogrithm for constant object.
-    \param a A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param a A dmatrix containing LU decomposition of input matrix. \f$a\f$.
     \param indx Permutation vector from ludcmp.
     \param b A dvector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved, and containing on return the solution vector \f$X\f$.
@@ -406,11 +406,11 @@ void lubksb(dmatrix a, const ivector& indx, dvector b)
     }
     b[i]=sum;
   }
- 
-  for (i=ub;i>=lb;i--) 
+
+  for (i=ub;i>=lb;i--)
   {
     sum=b[i];
-    for (j=i+1;j<=ub;j++) 
+    for (j=i+1;j<=ub;j++)
     {                        // !!! remove to show bug
       sum -= a[i][j]*b[j];
     }                        // !!! remove to show bug
@@ -490,8 +490,8 @@ double ln_det(const dmatrix& m1, const int& _sgn)
   ivector indx(m1.rowmin(),m1.rowmax());
   ludcmp_det(a,indx,d);
   double ln_det=0.0;
-   
-  if (d>.1) 
+
+  if (d>.1)
   {
     sgn=1;
   }
@@ -522,7 +522,7 @@ double ln_det(const dmatrix& m1, const int& _sgn)
   return(ln_det);
 }
 
-/** LU decomposition. 
+/** LU decomposition.
     \deprecated This function may be completely unused?
 
     \n\n The implementation of this algorithm was inspired by
@@ -563,7 +563,7 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
         big=temp;
       }
     }
-    if (big == 0.0) 
+    if (big == 0.0)
     {
       cerr << "Error in matrix inverse -- matrix singular in inv(dmatrix)\n";
     }
@@ -574,7 +574,7 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
 
   for (j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++) 
+    for (i=lb;i<j;i++)
     {
       sum=a[i][j];
       for (k=lb;k<i;k++)
@@ -585,7 +585,7 @@ void ludcmp_index(const dmatrix& _a, const ivector& _indx, const double& _d)
     }
     big=0.0;
 
-    for (i=j;i<=ub;i++) 
+    for (i=j;i<=ub;i++)
     {
       sum=a[i][j];
       for (k=lb;k<j;k++)

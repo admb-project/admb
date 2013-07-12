@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -137,7 +137,7 @@ dmatrix_position restore_dmatrix_position(void)
  */
 dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position& _pos)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   dmatrix tmp(pos);
   for (int i=pos.row_max;i>=pos.row_min;i--)
   {
@@ -152,7 +152,7 @@ dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position& _pos)
  */
 dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position& _pos)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   dmatrix tmp(pos);
   for (int i=pos.row_max;i>=pos.row_min;i--)
   {
@@ -167,7 +167,7 @@ dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position& _pos)
  */
 dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& _pos, const int& ii)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   dvector tmp=restore_dvar_vector_derivatives(pos(ii));
   return tmp;
 }
@@ -178,7 +178,7 @@ dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& _pos, con
  */
 dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& _pos, const int& ii)
 {
-  dvar_matrix_position& pos= (dvar_matrix_position&) _pos; 
+  dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   dvector tmpvec(pos.rowmin(),pos.rowmax());
   int min=tmpvec.indexmin();
   int max=tmpvec.indexmax();

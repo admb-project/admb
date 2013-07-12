@@ -3,28 +3,28 @@
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- * 
+ *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  *
  * License:
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -42,7 +42,7 @@
  * \file
  * Description not yet available.
  */
-#define USE_SHARE_FLAGS 
+#define USE_SHARE_FLAGS
 //#define DO_PROFILE
 #define __MINI_MAX__
 #if !defined(__MSVC32__)
@@ -57,12 +57,12 @@
 #ifndef _ADMODEL_H_
   #define  _ADMODEL_H_
 
-#define BIG_INIT_PARAMS 
+#define BIG_INIT_PARAMS
 
 #if !defined(linux)
 #  define BORCAST (prevariable&)
 #else
-#  define BORCAST 
+#  define BORCAST
 #endif
 #if defined(USE_LAPLACE)
   class laplace_approximation_calculator;
@@ -103,7 +103,7 @@
   dvar_vector mfexp(const dvar_vector&);
   dvector mfexp(const dvector&);
 
-  class param_init_bounded_number_vector; 
+  class param_init_bounded_number_vector;
   class model_parameters;
   extern int AD_gaussflag;
 
@@ -148,7 +148,7 @@ public:
   _exception * err;
   AD_matherror(_exception * _err) : err(_err) {;}
 #endif
-  
+
 };
 
 class model_data;
@@ -176,7 +176,7 @@ class model_name_tag
 protected:
   adstring name;
   //friend ostream& operator<<(const ostream& os, const model_name_tag& mnt);
-public: 
+public:
   model_name_tag(void){;}
   void allocate(const char * s);
   label_class label(void){return (char*)(name);}
@@ -700,7 +700,6 @@ public:
   static void pvm_params::get_all_from_master(void);
   void allocate(const char *);
   void allocate(void);
-  
 };
 
 /**
@@ -718,7 +717,7 @@ public:
   void assign(const dvector&);
   void assign(double);
 };
-  
+
 /**
  * Description not yet available.
  * \param
@@ -798,7 +797,7 @@ public:
     ~shareinfo();
   };
 #endif
- 
+
 /**
  * Description not yet available.
  * \param
@@ -889,14 +888,14 @@ public:
   static void set_inactive_only_random_effects(void); // get the number of active parameters
   static void set_inactive_random_effects(void); // get the number of active parameters
   static void restore_start_phase(void); // get the number of active parameters
-  static void xinit1(const dvector& x, const dvector& g); 
+  static void xinit1(const dvector& x, const dvector& g);
   static void copy_all_values(const dvector& x, const int& ii); //save all initial parameter
                                                    // values in a vector
-  static void restore_all_values(const dvector& x, const int& ii); //get ivalues for all 
+  static void restore_all_values(const dvector& x, const int& ii); //get ivalues for all
                                     // active parameters from a vector
   static dvariable reset(const dvar_vector& x); // get the number of active parameters
   static dvariable reset(const dvector& x); // get the number of active parameters
-  static dvariable reset1(const dvar_vector& x, const dvector& g); 
+  static dvariable reset1(const dvar_vector& x, const dvector& g);
   static dvariable reset(const dvar_vector& x, const dvector& pen); // get the number of active parameters
   static dvariable reset_all(const dvar_vector& x,const dvector& pen); // get the number of active parameters
   static int nvarcalc(void);
@@ -956,7 +955,7 @@ private:
   virtual void add_value(const dvector&, const int&);
   virtual void get_jacobian(const dvector&, const dvector&, const int&);
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,const int& ii);
- 
+
   virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
   virtual void set_value_inv(const dvector& x, const int& ii);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
@@ -1073,7 +1072,7 @@ public:
  * Description not yet available.
  * \param
  */
-class dll_param_init_bounded_vector: public param_init_bounded_vector 
+class dll_param_init_bounded_vector: public param_init_bounded_vector
 {
   double * pd;
 public:
@@ -1138,7 +1137,7 @@ protected:
   void allocate(int phase_start=1,const char *s="UNNAMED");
   void allocate(const char *s="UNNAMED");
   friend class model_parameters;
-  friend class param_init_number_vector; 
+  friend class param_init_number_vector;
   param_init_number();
   param_init_number& operator = (CGNU_DOUBLE m);
   param_init_number& operator=(const prevariable& m);
@@ -1276,10 +1275,10 @@ public:
  void allocate(const ad_integer& imin,const ad_integer&imax,
    const index_type& imin2,const index_type& imax2,
    const ad_integer& phase_start, const char * s);
-  void allocate(const ad_integer& rmin, const ad_integer& rmax, 
+  void allocate(const ad_integer& rmin, const ad_integer& rmax,
                 const index_type& cmin, const index_type& cmax,
                 const char * = "UNNAMED");
-  void allocate(const ad_integer& rmin, const ad_integer& rmax, 
+  void allocate(const ad_integer& rmin, const ad_integer& rmax,
                 const index_type& cmin, const index_type& cmax,
                 int phase_start = 1, const char * = "UNNAMED");
   param_init_matrix(void);
@@ -1350,7 +1349,7 @@ public:
 
  void allocate(const ad_integer& imin,
    const ad_integer& imax, const ad_integer& imin2,
-   const ad_integer& imax2, const ad_double& _bmin, 
+   const ad_integer& imax2, const ad_double& _bmin,
    const ad_double& _bmax, const ad_integer& phase_start,
    const char * s);
 
@@ -1817,9 +1816,9 @@ public:
   void mcmc_routine(int,int,double,int);
   void sgibbs_mcmc_routine(int,int,double,int);
   void hybrid_mcmc_routine(int,int,double,int);
-  double pvm_master_get_monte_carlo_value(int nvar, 
+  double pvm_master_get_monte_carlo_value(int nvar,
     const dvector& x);
-  void pvm_slave_get_monte_carlo_value(int nvar); 
+  void pvm_slave_get_monte_carlo_value(int nvar);
   void mcmc_eval(void);
   //void hess_routine_and_constraint(int);
   void hess_routine_and_constraint(int iprof, const dvector& g,
@@ -1886,7 +1885,7 @@ public:
     const int underflow_flag);
   //double projected_hess_determinant(const dvector& g, const int underflow_flag,
     //dvector& xscale, const double& ln_det_proj_jac);
-            
+
   double projected_hess_determinant(const dvector& fg, const dvector& g,
     const int underflow_flag, const dvector& curvscale, const dvector& xscale,
     double& ln_det_proj_jac, const double& tmp, const dmatrix& hesses);
@@ -2023,13 +2022,13 @@ public:
  * Description not yet available.
  * \param
  */
-class likeprof_params 
+class likeprof_params
 {
   double stepsize;
   int    stepnumber;
 protected:
 public:
-  static likeprof_params * likeprofptr[500]; // this should be a 
+  static likeprof_params * likeprofptr[500]; // this should be a
                                                // resizeable array
   static int num_likeprof_params;
   void allocate(void){;};
@@ -2332,14 +2331,14 @@ public:
 
 //double set_value_mc(const double& x, CGNU_DOUBLE fmin, CGNU_DOUBLE fmax);
 
-void set_value_mc(const dvar_vector& x, const dvar_vector& v, const int& ii, 
+void set_value_mc(const dvar_vector& x, const dvar_vector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
 
 double set_value_inv_mc(double v,double fmin,double fmax);
 
 double set_value_inv_mc(const prevariable& v, double fmin, double fmax);
 
-void set_value_inv_mc(const dvar_vector& x, const dvector& v, const int& ii, 
+void set_value_inv_mc(const dvar_vector& x, const dvector& v, const int& ii,
   CGNU_DOUBLE fmin,CGNU_DOUBLE fmax);
 
 //double set_value_inv_mc(const dvector&, const dvector& x, int ii, double minb, double maxb);
@@ -2351,7 +2350,7 @@ double ndfboundp_mc( double x, double fmin, double fmax,const double& fpen);
 void copy_value_from_vector(const double& _sd,const dvector& x,const int & _ii);
 void copy_value_from_vector(const dvector& _sd,const dvector& x,const int & _ii);
 void copy_value_from_vector(const dmatrix& _sd,const dvector& x,const int & _ii);
-  
+
 dvector bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1, dmatrix& ch, const double& _wght,const random_number_generator & rng);
 
 void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
@@ -2373,7 +2372,7 @@ dvector bounded_multivariate_uniform(int nvar, const dvector& a1, const dvector&
   dmatrix& ch, const double& lprob, random_number_generator &rng);
 
 dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const dmatrix& ch3, double contaminant, const double& _wght, 
+  dmatrix& ch, const dmatrix& ch3, double contaminant, const double& _wght,
   random_number_generator &rng);
 
 void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
@@ -2410,7 +2409,7 @@ adstring get_reportfile_name(void);
 
 void ad_make_code_reentrant(void);
 
-char** parse_dll_options(char *pname, const int& argc, 
+char** parse_dll_options(char *pname, const int& argc,
   char * dll_options);
 
 void parse_dll_options(char *pname, const int& argc, char *dll_options,
@@ -2433,13 +2432,13 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
  * Description not yet available.
  * \param
  */
- class param_init_vector_vector 
+ class param_init_vector_vector
  {
    param_init_vector * v;
    int index_min;
    int index_max;
    double_index_type * it;
- 
+
  public:
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
@@ -2455,7 +2454,6 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
    prevariable operator () (int i,int j);
 #endif
 
-     
    void allocate(int min1,int max1,const index_type& min,
      const index_type& max,const index_type& phase_start,
      const char * s);
@@ -2465,30 +2463,28 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
 
    param_init_vector_vector();
    int allocated(void) { return (v!=NULL); }
-   int indexmin(void) {return (index_min);} 
-   int indexmax(void) {return (index_max);} 
+   int indexmin(void) {return (index_min);}
+   int indexmax(void) {return (index_max);}
    ~param_init_vector_vector();
    void set_initial_value(const double_index_type& it);
    void deallocate(void);
- };   
+ };
 
 /**
  * Description not yet available.
  * \param
  */
- class param_init_bounded_vector_vector 
+ class param_init_bounded_vector_vector
  {
    param_init_bounded_vector * v;
    int index_min;
    int index_max;
    double_index_type * it;
- 
  public:
-
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
   dvector get_scalefactor(void);
-  param_init_bounded_vector_vector(); 
+  param_init_bounded_vector_vector();
 #if defined(OPT_LIB)
    param_init_bounded_vector& operator [] (int i) { return v[i];}
    param_init_bounded_vector& operator () (int i) { return v[i];}
@@ -2498,7 +2494,7 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
    param_init_bounded_vector& operator () (int i);
    prevariable operator () (int i,int j);
 #endif
-     
+
    void allocate(int min1,int max1,
      const index_type& min,
      const index_type& max,
@@ -2515,26 +2511,25 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
      const char * s);
 
    int allocated(void) { return (v!=NULL); }
-   int indexmin(void) {return (index_min);} 
-   int indexmax(void) {return (index_max);} 
+   int indexmin(void) {return (index_min);}
+   int indexmax(void) {return (index_max);}
    ~param_init_bounded_vector_vector();
    void deallocate(void);
    void set_initial_value(const double_index_type& it);
- };   
+ };
 
 /**
  * Description not yet available.
  * \param
  */
- class param_init_matrix_vector 
+ class param_init_matrix_vector
  {
    param_init_matrix * v;
    int index_min;
    int index_max;
    double_index_type * it;
- 
  public:
-  param_init_matrix_vector(); 
+  param_init_matrix_vector();
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
   dvector get_scalefactor(void);
@@ -2550,7 +2545,6 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
    dvar_vector& operator () (int i,int j);
    prevariable operator () (int i,int j,int k);
 #endif
-     
    void allocate(int min0,int max0,const index_type& min,
      const index_type& max,const index_type& min1,
      const index_type& max1,const index_type& phase_start,
@@ -2561,31 +2555,30 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
      const index_type& max1,const char * s);
 
    int allocated(void) { return (v!=NULL); }
-   int indexmin(void) {return (index_min);} 
-   int indexmax(void) {return (index_max);} 
+   int indexmin(void) {return (index_min);}
+   int indexmax(void) {return (index_max);}
    ~param_init_matrix_vector();
    void set_initial_value(const double_index_type& it);
    void deallocate(void);
- };   
+ };
 
 /**
  * Description not yet available.
  * \param
  */
- class param_init_bounded_matrix_vector 
+ class param_init_bounded_matrix_vector
  {
    param_init_bounded_matrix * v;
    int index_min;
    int index_max;
    double_index_type * it;
- 
  public:
 
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
   dvector get_scalefactor(void);
   param_init_bounded_matrix_vector();
- 
+
    void allocate(int min1,int max1,
      const index_type& min, const index_type& max, const index_type& min2,
      const index_type& max2, const double_index_type& dmin2,
@@ -2608,33 +2601,31 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
    dvar_vector& operator () (int i,int j);
    prevariable operator () (int i,int j,int k);
 #endif
-     
+
    int allocated(void) { return (v!=NULL); }
-   int indexmin(void) {return (index_min);} 
-   int indexmax(void) {return (index_max);} 
+   int indexmin(void) {return (index_min);}
+   int indexmax(void) {return (index_max);}
    ~param_init_bounded_matrix_vector();
    void set_initial_value(const double_index_type& it);
    void deallocate(void);
- };   
+ };
 
 /**
  * Description not yet available.
  * \param
  */
- class param_init_number_vector 
+ class param_init_number_vector
  {
    param_init_number * v;
    int index_min;
    int index_max;
    double_index_type * it;
- 
  public:
-
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
   dvector get_scalefactor(void);
   param_init_number_vector();
- 
+
 #if defined(OPT_LIB)
    param_init_number& operator [] (int i) { return v[i];}
    param_init_number& operator () (int i) { return v[i];}
@@ -2643,38 +2634,36 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
    param_init_number& operator () (int i);
 #endif
 
-     
    void allocate(int min1,int max1,const index_type& phase_start,
      const char * s);
 
    void allocate(int min1,int max1,const char * s);
 
    int allocated(void) { return (v!=NULL); }
-   int indexmin(void) {return (index_min);} 
-   int indexmax(void) {return (index_max);} 
+   int indexmin(void) {return (index_min);}
+   int indexmax(void) {return (index_max);}
    ~param_init_number_vector();
    void set_initial_value(const double_index_type& it);
    void deallocate(void);
- };   
+ };
 
 /**
  * Description not yet available.
  * \param
  */
- class param_init_bounded_number_vector 
+ class param_init_bounded_number_vector
  {
    param_init_bounded_number * v;
    int index_min;
    int index_max;
    double_index_type * it;
- 
  public:
 
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
   dvector get_scalefactor(void);
   param_init_bounded_number_vector();
- 
+
 #if defined(OPT_LIB)
    param_init_bounded_number& operator [] (int i) { return v[i];}
    param_init_bounded_number& operator () (int i) { return v[i];}
@@ -2683,7 +2672,6 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
    param_init_bounded_number& operator () (int i);
 #endif
 
-     
    void allocate(int min1,int max1,const double_index_type & bmin,
      const double_index_type & bmax,const index_type& phase_start,
      const char * s);
@@ -2692,12 +2680,12 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
      const double_index_type & bmax,const char * s);
 
    int allocated(void) { return (v!=NULL); }
-   int indexmin(void) {return (index_min);} 
-   int indexmax(void) {return (index_max);} 
+   int indexmin(void) {return (index_min);}
+   int indexmax(void) {return (index_max);}
    ~param_init_bounded_number_vector();
    void set_initial_value(const double_index_type& it);
    void deallocate(void);
- };   
+ };
   extern int traceflag;
   void tracing_message(int traceflag,const char *s,int *pn);
   void tracing_message(int traceflag,const char *s,double *pn);
@@ -2706,12 +2694,12 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
   void set_covariance_matrix(const dll_data_matrix& m);
   void set_covariance_matrix(const dmatrix& m);
 
-  //ostream& operator <<  (const ostream&, const param_init_number_vector); 
-  //ostream& operator <<  (const ostream&, const param_init_bounded_number_vector); 
-  //ostream& operator <<  (const ostream&, const param_init_vector_vector); 
-  //ostream& operator <<  (const ostream&, const param_init_bounded_vector_vector); 
-  //ostream& operator <<  (const ostream&, const param_init_matrix_vector); 
-  //ostream& operator <<  (const ostream&, const param_init_bounded_matrix_vector); 
+  //ostream& operator <<  (const ostream&, const param_init_number_vector);
+  //ostream& operator <<  (const ostream&, const param_init_bounded_number_vector);
+  //ostream& operator <<  (const ostream&, const param_init_vector_vector);
+  //ostream& operator <<  (const ostream&, const param_init_bounded_vector_vector);
+  //ostream& operator <<  (const ostream&, const param_init_matrix_vector);
+  //ostream& operator <<  (const ostream&, const param_init_bounded_matrix_vector);
 
 /**
  * Description not yet available.
@@ -2723,7 +2711,6 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
      vector_kludge(const param_init_number_vector &);
      vector_kludge(const param_init_bounded_number_vector &);
   };
-    
 /**
  * Description not yet available.
  * \param
@@ -2734,9 +2721,9 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
      matrix_kludge(const param_init_vector_vector &);
      matrix_kludge(const param_init_bounded_vector_vector &);
   };
-    
+
 class ad_comm;
-      
+
 /**
  * Description not yet available.
  * \param
@@ -2806,10 +2793,10 @@ dvector read_old_scale(int & old_nvar);
 int withinbound(int lb,int n,int ub);
 
 #if defined(__MSVC32__)
-#  if defined(min) 
+#  if defined(min)
 #    undef min
 #  endif
-#  if defined(max) 
+#  if defined(max)
 #    undef max
 #  endif
 #endif

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -38,7 +38,7 @@ dvector VEC(const dmatrix& _m)
   }
 
 /**
-  The MAT operator is the inverse of the VEC operator. 
+  The MAT operator is the inverse of the VEC operator.
 It takes the elements of vector v and sequentially fills in the columns of an n by m matrix.
   \param vector v
   \param integer n, the number of rows in the resulting matrix
@@ -54,7 +54,7 @@ dmatrix MAT(const dvector& v, int n, int m)
       cerr << " Vector and Matrix sizes don't match in function MAT" << endl;
       tmp.initialize();
       return tmp;
-    }  	  
+    }
     for (int i=1;i<=n;i++)
     {
       for (int j=1;j<=m;j++)

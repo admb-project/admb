@@ -263,7 +263,7 @@ static integer c__1 = 1;
 /*     LBFGS SUBROUTINE */
 /*     **************** */
 
-/* Subroutine */ int lbfgs_(integer *n, integer *m, doublereal *x, doublereal 
+/* Subroutine */ int lbfgs_(integer *n, integer *m, doublereal *x, doublereal
         *f, doublereal *g, logical *diagco, doublereal *diag, integer *iprint,
          doublereal *eps, doublereal *xtol, doublereal *w, integer *iflag,
 	 integer* iter, integer * info)
@@ -298,26 +298,26 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
     /* Local variables */
     static doublereal beta;
     static integer inmc;
-    extern doublereal ddot_(integer *, doublereal *, integer *, doublereal *, 
+    extern doublereal ddot_(integer *, doublereal *, integer *, doublereal *,
             integer *);
     static integer iscn, nfev, iycn;
     static doublereal ftol;
     static integer nfun, ispt, iypt, i, bound;
     static doublereal gnorm;
-    extern /* Subroutine */ int daxpy_(integer *, doublereal *, doublereal *, 
+    extern /* Subroutine */ int daxpy_(integer *, doublereal *, doublereal *,
             integer *, doublereal *, integer *);
     static integer point;
     static doublereal xnorm;
     static integer cp;
     static doublereal sq, yr, ys;
     extern /* Subroutine */ int mcsrch_(integer *, doublereal *, doublereal *,
-             doublereal *, doublereal *, doublereal *, doublereal *, 
+             doublereal *, doublereal *, doublereal *, doublereal *,
             doublereal *, integer *, integer *, integer *, doublereal *);
     static logical finish;
     static doublereal yy;
     static integer maxfev;
-    extern /* Subroutine */ int lb1_(integer *, integer *, integer *, 
-            doublereal *, integer *, integer *, doublereal *, doublereal *, 
+    extern /* Subroutine */ int lb1_(integer *, integer *, integer *,
+            doublereal *, integer *, integer *, doublereal *, doublereal *,
             doublereal *, doublereal *, logical *);
     static integer npt;
     static doublereal stp, stp1;
@@ -343,14 +343,14 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
 /*      using the limited memory BFGS method. The routine is especially */
 /*      effective on problems involving a large number of variables. In */
 /*      a typical iteration of this method an approximation Hk to the */
-/*      inverse of the Hessian is obtained by applying M BFGS updates to 
+/*      inverse of the Hessian is obtained by applying M BFGS updates to
 */
 /*     a diagonal matrix Hk0, using information from the previous M steps.
 */
 /*      The user specifies the number M, which determines the amount of */
 /*      storage required by the routine. The user may also provide the */
 /*      diagonal matrices Hk0 if not satisfied with the default choice. */
-/*      The algorithm is described in "On the limited memory BFGS method 
+/*      The algorithm is described in "On the limited memory BFGS method
 */
 /*      for large scale optimization", by D. Liu and J. Nocedal, */
 /*      Mathematical Programming B 45 (1989) 503-528. */
@@ -371,24 +371,24 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
 
 /*      where */
 
-/*     N       is an INTEGER variable that must be set by the user to the 
+/*     N       is an INTEGER variable that must be set by the user to the
 */
 /*             number of variables. It is not altered by the routine. */
 /*             Restriction: N>0. */
 
 /*     M       is an INTEGER variable that must be set by the user to */
 /*             the number of corrections used in the BFGS update. It */
-/*             is not altered by the routine. Values of M less than 3 are 
+/*             is not altered by the routine. Values of M less than 3 are
 */
 /*             not recommended; large values of M will result in excessive
  */
 /*             computing time. 3<= M <=7 is recommended. Restriction: M>0.
  */
 
-/*     X       is a DOUBLE PRECISION array of length N. On initial entry 
+/*     X       is a DOUBLE PRECISION array of length N. On initial entry
 */
 /*             it must be set by the user to the values of the initial */
-/*             estimate of the solution vector. On exit with IFLAG=0, it 
+/*             estimate of the solution vector. On exit with IFLAG=0, it
 */
 /*             contains the values of the variables at the best point */
 /*             found (usually a solution). */
@@ -405,23 +405,23 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
 
 /*     DIAGCO  is a LOGICAL variable that must be set to .TRUE. if the */
 /*             user  wishes to provide the diagonal matrix Hk0 at each */
-/*             iteration. Otherwise it should be set to .FALSE., in which 
+/*             iteration. Otherwise it should be set to .FALSE., in which
 */
 /*             case  LBFGS will use a default value described below. If */
 /*             DIAGCO is set to .TRUE. the routine will return at each */
-/*             iteration of the algorithm with IFLAG=2, and the diagonal 
+/*             iteration of the algorithm with IFLAG=2, and the diagonal
 */
 /*              matrix Hk0  must be provided in the array DIAG. */
 
 
-/*     DIAG    is a DOUBLE PRECISION array of length N. If DIAGCO=.TRUE., 
+/*     DIAG    is a DOUBLE PRECISION array of length N. If DIAGCO=.TRUE.,
 */
 /*             then on initial entry or on re-entry with IFLAG=2, DIAG */
 /*             it must be set by the user to contain the values of the */
 /*             diagonal matrix Hk0.  Restriction: all elements of DIAG */
 /*             must be positive. */
 
-/*     IPRINT  is an INTEGER array of length two which must be set by the 
+/*     IPRINT  is an INTEGER array of length two which must be set by the
 */
 /*             user. */
 
@@ -465,7 +465,7 @@ ty*/
 /*             is less than XTOL. */
 
 /*     W       is a DOUBLE PRECISION array of length N(2M+1)+2M used as */
-/*             workspace for LBFGS. This array must not be altered by the 
+/*             workspace for LBFGS. This array must not be altered by the
 */
 /*             user. */
 
@@ -475,7 +475,7 @@ y*/
 */
 /*            and IFLAG=0 indicates that the routine has terminated withou
 t*/
-/*             detecting errors. On a return with IFLAG=1, the user must 
+/*             detecting errors. On a return with IFLAG=1, the user must
 */
 /*             evaluate the function F and gradient G. On a return with */
 /*             IFLAG=2, the user must provide the diagonal matrix Hk0. */
@@ -494,7 +494,7 @@ t*/
 /*                       INFO = 2  RELATIVE WIDTH OF THE INTERVAL OF */
 /*                                 UNCERTAINTY IS AT MOST XTOL. */
 
-/*                       INFO = 3  MORE THAN 20 FUNCTION EVALUATIONS WERE 
+/*                       INFO = 3  MORE THAN 20 FUNCTION EVALUATIONS WERE
 */
 /*                                 REQUIRED AT THE PRESENT ITERATION. */
 
@@ -506,7 +506,7 @@ t*/
 .*/
 /*                                 THERE MAY NOT BE A STEP WHICH SATISFIES
  */
-/*                                 THE SUFFICIENT DECREASE AND CURVATURE 
+/*                                 THE SUFFICIENT DECREASE AND CURVATURE
 */
 /*                                CONDITIONS. TOLERANCES MAY BE TOO SMALL.
 */
@@ -517,7 +517,7 @@ t*/
 /*                        Hessian approximation, given in DIAG, is not */
 /*                        positive. */
 
-/*              IFLAG=-3  Improper input parameters for LBFGS (N or M are 
+/*              IFLAG=-3  Improper input parameters for LBFGS (N or M are
 */
 /*                        not positive). */
 
@@ -541,39 +541,39 @@ t*/
 /*    reference: */
 
 
-/*    MP  is an INTEGER variable with default value 6. It is used as the 
+/*    MP  is an INTEGER variable with default value 6. It is used as the
 */
 /*        unit number for the printing of the monitoring information */
 /*        controlled by IPRINT. */
 
-/*    LP  is an INTEGER variable with default value 6. It is used as the 
+/*    LP  is an INTEGER variable with default value 6. It is used as the
 */
 /*        unit number for the printing of error messages. This printing */
 /*        may be suppressed by setting LP to a non-positive value. */
 
 /*    GTOL is a DOUBLE PRECISION variable with default value 0.9, which */
-/*        controls the accuracy of the line search routine MCSRCH. If the 
+/*        controls the accuracy of the line search routine MCSRCH. If the
 */
-/*        function and gradient evaluations are inexpensive with respect 
+/*        function and gradient evaluations are inexpensive with respect
 */
-/*        to the cost of the iteration (which is sometimes the case when 
+/*        to the cost of the iteration (which is sometimes the case when
 */
-/*        solving very large problems) it may be advantageous to set GTOL 
+/*        solving very large problems) it may be advantageous to set GTOL
 */
 /*        to a small value. A typical small value is 0.1.  Restriction: */
 /*        GTOL should be greater than 1.D-04. */
 
-/*    STPMIN and STPMAX are non-negative DOUBLE PRECISION variables which 
+/*    STPMIN and STPMAX are non-negative DOUBLE PRECISION variables which
 */
-/*        specify lower and uper bounds for the step in the line search. 
+/*        specify lower and uper bounds for the step in the line search.
 */
-/*        Their default values are 1.D-20 and 1.D+20, respectively. These 
+/*        Their default values are 1.D-20 and 1.D+20, respectively. These
 */
-/*        values need not be modified unless the exponents are too large 
+/*        values need not be modified unless the exponents are too large
 */
-/*        for the machine being used, or unless the problem is extremely 
+/*        for the machine being used, or unless the problem is extremely
 */
-/*        badly scaled (in which case the exponents should be increased). 
+/*        badly scaled (in which case the exponents should be increased).
 */
 
 
@@ -591,7 +591,7 @@ t*/
 /*                     error messages on unit LP. */
 
 
-/*    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+/*    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 -*/
 
 
@@ -799,7 +799,7 @@ L165:
         w[i] = g[i];
     }
 L172:
-    mcsrch_(n, &x[1], f, &g[1], &w[ispt + point * *n + 1], &stp, &ftol, xtol, 
+    mcsrch_(n, &x[1], f, &g[1], &w[ispt + point * *n + 1], &stp, &ftol, xtol,
             &maxfev, info, &nfev, &diag[1]);
     if (*info == -1) {
         *iflag = 1;
@@ -887,7 +887,7 @@ L196:
 /*     LAST LINE OF SUBROUTINE LBFGS */
 
 
-/* Subroutine */ int lb1_(integer *iprint, integer *iter, integer *nfun, 
+/* Subroutine */ int lb1_(integer *iprint, integer *iter, integer *nfun,
         doublereal *gnorm, integer *n, integer *m, doublereal *x, doublereal *
         f, doublereal *g, doublereal *stp, logical *finish)
 {
@@ -1084,7 +1084,7 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
 
 /*   ---------------------------------------------------------- */
 
-/* Subroutine */ int daxpy_(integer *n, doublereal *da, doublereal *dx, 
+/* Subroutine */ int daxpy_(integer *n, doublereal *da, doublereal *dx,
         integer *incx, doublereal *dy, integer *incy)
 {
     /* System generated locals */
@@ -1169,7 +1169,7 @@ L40:
 
 /*   ---------------------------------------------------------- */
 
-doublereal ddot_(integer *n, doublereal *dx, integer *incx, doublereal *dy, 
+doublereal ddot_(integer *n, doublereal *dx, integer *incx, doublereal *dy,
         integer *incy)
 {
     /* System generated locals */
@@ -1244,7 +1244,7 @@ L40:
     mp1 = m + 1;
     i__1 = *n;
     for (i = mp1; i <= i__1; i += 5) {
-        dtemp = dtemp + dx[i] * dy[i] + dx[i + 1] * dy[i + 1] + dx[i + 2] * 
+        dtemp = dtemp + dx[i] * dy[i] + dx[i + 1] * dy[i + 1] + dx[i + 2] *
                 dy[i + 2] + dx[i + 3] * dy[i + 3] + dx[i + 4] * dy[i + 4];
 /* L50: */
     }
@@ -1259,9 +1259,9 @@ L60:
 /*     LINE SEARCH ROUTINE MCSRCH */
 /*     ************************** */
 
-/* Subroutine */ int mcsrch_(integer *n, doublereal *x, doublereal *f, 
-        doublereal *g, doublereal *s, doublereal *stp, doublereal *ftol, 
-        doublereal *xtol, integer *maxfev, integer *info, integer *nfev, 
+/* Subroutine */ int mcsrch_(integer *n, doublereal *x, doublereal *f,
+        doublereal *g, doublereal *s, doublereal *stp, doublereal *ftol,
+        doublereal *xtol, integer *maxfev, integer *info, integer *nfev,
         doublereal *wa)
 {
     /* Initialized data */
@@ -1290,8 +1290,8 @@ RECTION\002)";
     static doublereal width1, ftest1, dg, fm, fx, fy;
     static logical brackt;
     static doublereal dginit, dgtest;
-    extern /* Subroutine */ int mcstep_(doublereal *, doublereal *, 
-            doublereal *, doublereal *, doublereal *, doublereal *, 
+    extern /* Subroutine */ int mcstep_(doublereal *, doublereal *,
+            doublereal *, doublereal *, doublereal *, doublereal *,
             doublereal *, doublereal *, doublereal *, logical *, doublereal *,
              doublereal *, integer *);
     static doublereal dgm, dgx, dgy, fxm, fym, stx, sty;
@@ -1305,7 +1305,7 @@ RECTION\002)";
 
 /*     A slight modification of the subroutine CSRCH of More' and Thuente.
  */
-/*     The changes are to allow reverse communication, and do not affect 
+/*     The changes are to allow reverse communication, and do not affect
 */
 /*       NFEV IS AN INTEGER OUTPUT VARIABLE SET TO THE NUMBER OF */
 /*         CALLS TO FCN. */
@@ -1336,7 +1336,7 @@ RECTION\002)";
 
 /*     CHECK THE INPUT PARAMETERS FOR ERRORS. */
 
-    if (*n <= 0 || *stp <= zero || *ftol < zero || lb3_1.gtol < zero || *xtol 
+    if (*n <= 0 || *stp <= zero || *ftol < zero || lb3_1.gtol < zero || *xtol
             < zero || lb3_1.stpmin < zero || lb3_1.stpmax < lb3_1.stpmin || *
             maxfev <= 0) {
         return 0;
@@ -1411,7 +1411,7 @@ L30:
 /*        IF AN UNUSUAL TERMINATION IS TO OCCUR THEN LET */
 /*        STP BE THE LOWEST POINT OBTAINED SO FAR. */
 
-    if (brackt && (*stp <= stmin || *stp >= stmax) || *nfev >= *maxfev - 1 || 
+    if (brackt && (*stp <= stmin || *stp >= stmax) || *nfev >= *maxfev - 1 ||
             infoc == 0 || brackt && stmax - stmin <= *xtol * stmax) {
         *stp = stx;
     }
@@ -1530,9 +1530,9 @@ L45:
 
 } /* mcsrch_ */
 
-/* Subroutine */ int mcstep_(doublereal *stx, doublereal *fx, doublereal *dx, 
-        doublereal *sty, doublereal *fy, doublereal *dy, doublereal *stp, 
-        doublereal *fp, doublereal *dp, logical *brackt, doublereal *stpmin, 
+/* Subroutine */ int mcstep_(doublereal *stx, doublereal *fx, doublereal *dx,
+        doublereal *sty, doublereal *fy, doublereal *dy, doublereal *stp,
+        doublereal *fp, doublereal *dp, logical *brackt, doublereal *stpmin,
         doublereal *stpmax, integer *info)
 {
     /* System generated locals */
@@ -1638,7 +1638,7 @@ L45:
         q = gamma - *dx + gamma + *dp;
         r = p / q;
         stpc = *stx + r * (*stp - *stx);
-        stpq = *stx + *dx / ((*fx - *fp) / (*stp - *stx) + *dx) / 2 * (*stp - 
+        stpq = *stx + *dx / ((*fx - *fp) / (*stp - *stx) + *dx) / 2 * (*stp -
                 *stx);
         if ((d__1 = stpc - *stx, abs(d__1)) < (d__2 = stpq - *stx, abs(d__2)))
                  {
@@ -1687,7 +1687,7 @@ L45:
 /*     IS BEYOND STP. OTHERWISE THE CUBIC STEP IS DEFINED TO BE */
 /*     EITHER STPMIN OR STPMAX. THE QUADRATIC (SECANT) STEP IS ALSO */
 /*     COMPUTED AND IF THE MINIMUM IS BRACKETED THEN THE THE STEP */
-/*     CLOSEST TO STX IS TAKEN, ELSE THE STEP FARTHEST AWAY IS TAKEN. 
+/*     CLOSEST TO STX IS TAKEN, ELSE THE STEP FARTHEST AWAY IS TAKEN.
 */
 
     } else if (abs(*dp) < abs(*dx)) {
@@ -1748,7 +1748,7 @@ L45:
         if (*brackt) {
             theta = (*fp - *fy) * 3 / (*sty - *stp) + *dy + *dp;
 /* Computing MAX */
-            d__1 = abs(theta), d__2 = abs(*dy), d__1 = max(d__1,d__2), d__2 = 
+            d__1 = abs(theta), d__2 = abs(*dy), d__1 = max(d__1,d__2), d__2 =
                     abs(*dp);
             s = max(d__1,d__2);
 /* Computing 2nd power */

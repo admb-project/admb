@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -55,7 +55,7 @@ void dmatrix::read_from(const uistream& s)
   for (int i=rowmin(); i <= n; i++)
   {
      s >> (*this)[i];
-     if (!s.good()) 
+     if (!s.good())
      {
        cerr << " Error in dmatrix read\n";
        ad_exit(1);
@@ -83,7 +83,7 @@ void dmatrix::write_on(const uostream& s) const
   for (int i=rowmin(); i <= rowmax(); i++)
   {
      s << (*this)[i];
-     if (!s.good()) 
+     if (!s.good())
      {
        cerr << " Error in dmatrix write\n";
        ad_exit(1);

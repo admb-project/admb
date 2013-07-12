@@ -145,7 +145,7 @@ void tri_dag(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
       for (j=1;j<=l;j++) m[j][i]=m[i][j]=0.0;
     }
   #else
-    for (i=1;i<=n;i++) 
+    for (i=1;i<=n;i++)
     {
       d[i]=m[i][i];
     }
@@ -154,7 +154,7 @@ void tri_dag(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
 
   dvariable SIGN(const prevariable& x, const prevariable& y)
 {
-#if defined __SUN__ || defined(__GNU__) 
+#if defined __SUN__ || defined(__GNU__)
   if(value(y) < 0)
 #else
   if (y<0)
@@ -229,7 +229,7 @@ void get_eigen(const dvar_vector& _d,const dvar_vector& _e, const dvar_matrix& z
           g=c*r-b;
           /* Next loop can be omitted if eigenvectors not wanted */
           #ifdef EIGEN_VECTORS
-            for (k=1;k<=n;k++) 
+            for (k=1;k<=n;k++)
             {
               f=z[k][i+1];
               z[k][i+1]=s*z[k][i]+c*f;

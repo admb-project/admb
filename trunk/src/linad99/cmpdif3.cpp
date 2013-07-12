@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -74,7 +74,7 @@ void set_gradstack_flag(char* str)
   int length=strlen(str);
   gradient_structure::get_fp()->fwrite(str,length);
   gradient_structure::get_fp()->fwrite(&length,sizeof(int));
-  gradient_structure::GRAD_STACK1-> 
+  gradient_structure::GRAD_STACK1->
     set_gradient_stack(report_gradstack_flag);
   save_identifier_string("stack");
 #endif
@@ -99,7 +99,7 @@ void set_gradstack_flag(char* _str,int i,int j)
   gradient_structure::get_fp()->fwrite(&j,sizeof(int));
   gradient_structure::get_fp()->fwrite(str,length);
   gradient_structure::get_fp()->fwrite(&length,sizeof(int));
-  gradient_structure::GRAD_STACK1-> 
+  gradient_structure::GRAD_STACK1->
     set_gradient_stack(report_gradstack_flag2);
   save_identifier_string("stack");
 #endif
@@ -180,7 +180,7 @@ void dvar_vector::save_dvar_vector_position(void) const
  * Description not yet available.
  * \param
  */
-void save_ad_pointer(void * p) 
+void save_ad_pointer(void * p)
 {
   // saves the size and address information for a dvar_vector
   unsigned wsize=sizeof(void *);

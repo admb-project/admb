@@ -34,7 +34,7 @@ dvector csolve(const dmatrix& aa,const dvector& z)
 }
 
 /** Solve a linear system using LU decomposition.
-    \param aa A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param aa A dmatrix containing LU decomposition of input matrix. \f$a\f$.
     \param z A dvector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved.
     \return A dvector containing solution vector \f$X\f$.
@@ -48,7 +48,7 @@ dvector solve(const dmatrix& aa,const dvector& z)
 }
 
 /** Solve a linear system using LU decomposition.
-    \param aa A dmatrix containing LU decomposition of input matrix. \f$a\f$. 
+    \param aa A dmatrix containing LU decomposition of input matrix. \f$a\f$.
     \param z A dvector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved.
     \param _ln_unsigned_deg

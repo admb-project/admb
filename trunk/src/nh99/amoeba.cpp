@@ -155,7 +155,7 @@ double function_minimizer::amxxx(const dmatrix& _p, const dvector& _y, const dve
   \param numres Integer pointer
   \param ifault Integer pointer
 */
-void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin, 
+void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
   double *ynewlo, double reqmin, double delta,int *icount, int *numres, int *ifault)
 //
 //  Purpose:
@@ -211,13 +211,13 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
 //    Input, double REQMIN, the terminating limit for the variance
 //    of function values.
 //
-//    Input, int KONVGE, the convergence check is carried out 
+//    Input, int KONVGE, the convergence check is carried out
 //    every KONVGE iterations.
 //
-//    Input, int KCOUNT, the maximum number of function 
+//    Input, int KCOUNT, the maximum number of function
 //    evaluations.
 //
-//    Output, int *ICOUNT, the number of function evaluations 
+//    Output, int *ICOUNT, the number of function evaluations
 //    used.
 //
 //    Output, int *NUMRES, the number of restarts.
@@ -293,7 +293,7 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
   *icount = 0;
   *numres = 0;
 
-  jcount = konvge; 
+  jcount = konvge;
   dn = ( double ) ( n );
   nn = n + 1;
   dnn = ( double ) ( nn );
@@ -306,7 +306,7 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
   for ( ; ; )
   {
     for ( i = 0; i < n; i++ )
-    { 
+    {
       p[i+n*n] = start[i];
     }
     start.shift(1);
@@ -339,11 +339,11 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
 
       *icount = *icount + 1;
       start[j] = x;
-    }                   
+    }
     // The simplex construction is complete.
-                   
+
     // Find highest and lowest Y values.  YNEWLO = Y(IHI) indicates
-    // the vertex of the simplex to be replaced.             
+    // the vertex of the simplex to be replaced.
     ylo = y[0];
     ilo = 0;
 
@@ -381,10 +381,10 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
       {
         z = 0.0;
         for ( j = 0; j < nn; j++ )
-        { 
+        {
           z = z + p[i+j*n];
         }
-        z = z - p[i+ihi*n];  
+        z = z - p[i+ihi*n];
         pbar[i] = z / dn;
       }
 

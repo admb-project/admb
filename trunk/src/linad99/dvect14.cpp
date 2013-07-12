@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -22,7 +22,7 @@
    #define cutoff 0.001
    #define cutoff2 0.000001
    double a = 2./cutoff;
-   double b = 1./cutoff2;     
+   double b = 1./cutoff2;
 
    double return_value;
    double tmp1 = v1;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -28,14 +28,14 @@
   int sub_unallocated(const dvar_matrix& m)
   {
     int iflag=0;
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
     }
     int mmin=m.indexmin();
     int mmax=m.indexmax();
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
@@ -60,12 +60,12 @@
     int iflag=0;
     int mmin=m.indexmin();
     int mmax=m.indexmax();
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
     }
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
@@ -90,12 +90,12 @@
     int iflag=0;
     int mmin=m.indexmin();
     int mmax=m.indexmax();
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
     }
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
@@ -120,12 +120,12 @@
     int iflag=0;
     int mmin=m.indexmin();
     int mmax=m.indexmax();
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
     }
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
@@ -161,7 +161,7 @@
     int iflag=0;
     int mmin=m.indexmin();
     int mmax=m.indexmax();
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
@@ -186,7 +186,7 @@
     int iflag=0;
     int mmin=m.indexmin();
     int mmax=m.indexmax();
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
@@ -211,7 +211,7 @@
     int iflag=0;
     int mmin=m.indexmin();
     int mmax=m.indexmax();
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
@@ -236,7 +236,7 @@
     int iflag=0;
     int mmin=m.indexmin();
     int mmax=m.indexmax();
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
@@ -272,7 +272,7 @@ int sub_unallocated(const ivector& m)
     int iflag=0;
     int mmin=m.indexmin();
     int mmax=m.indexmax();
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
@@ -297,7 +297,7 @@ int sub_unallocated(const ivector& m)
     int iflag=0;
     int mmin=m.indexmin();
     int mmax=m.indexmax();
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;
@@ -322,7 +322,7 @@ int sub_unallocated(const ivector& m)
     int iflag=0;
     int mmin=m.indexmin();
     int mmax=m.indexmax();
-    if (!allocated(m)) 
+    if (!allocated(m))
     {
       iflag=1;
       return iflag;

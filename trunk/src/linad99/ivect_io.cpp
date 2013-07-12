@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -73,7 +73,7 @@ void ivector::write_on(const ostream& _s) const
      s.flags(new_form);
      s.fill(new_fill);
      /*
-     if (!s.good()) 
+     if (!s.good())
      {
        cerr << " Error in ivector write\n";
        ad_exit(1);

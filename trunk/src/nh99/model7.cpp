@@ -35,8 +35,6 @@ void set_signal_handlers(void)
   signal(SIGINT,exit_handler);
 }
 
-
-
 ad_comm::ad_comm(int _argc,char * _argv[])
 {
   if (option_match(_argc,_argv,"-version") > -1

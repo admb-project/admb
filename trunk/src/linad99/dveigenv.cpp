@@ -76,7 +76,7 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
   void tri_dagv(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
 #endif
 {
-  ADUNCONST(dvar_vector,d) 
+  ADUNCONST(dvar_vector,d)
   ADUNCONST(dvar_vector,e)
   dvar_matrix& m=(dvar_matrix&) _m;
   if (m.rowsize() != m.colsize())
@@ -104,7 +104,7 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
         scale += fabs(m[i][k]);
       if (scale == 0.0)
         e[i]=m[i][l];
-      else 
+      else
       {
         for (k=1;k<=l;k++)
         {
@@ -117,7 +117,7 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
         h -= f*g;
         m[i][l]=f-g;
         f=0.0;
-        for (j=1;j<=l;j++) 
+        for (j=1;j<=l;j++)
         {
         #ifdef EIGEN_VECTORS
         /* Next statement can be omitted if eigenvectors not wanted */
@@ -132,7 +132,7 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
           f += e[j]*m[i][j];
         }
         hh=f/(h+h);
-        for (j=1;j<=l;j++) 
+        for (j=1;j<=l;j++)
         {
           f=m[i][j];
           e[j]=g=e[j]-hh*f;

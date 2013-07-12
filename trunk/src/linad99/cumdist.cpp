@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -32,7 +32,7 @@ double normal_tail_right(const double& x)
   double tmp=z/x*(1.0 -1.0/b1 +1.0/b2 - a3/b3 +a4/b4 -a5/b5);
   return tmp;
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -45,12 +45,12 @@ double inv_cumd_norm_inner(double x)
   const double d1=1.432788;
   const double d2=0.189269;
   const double d3=0.001308;
-  if (x<=0 || x>=1.0) 
+  if (x<=0 || x>=1.0)
   {
     cerr << "Illegal argument to inv_cumd_norm = " << x << endl;
     return 0;
   }
-   
+
   if (x<0.5)
   {
     double t = sqrt(-2.*log(x));
@@ -68,7 +68,7 @@ double inv_cumd_norm_inner(double x)
     double t = sqrt(-2.*log(y));
     double p=t-((c2*t+c1)*t+c0)/((((d3*t+d2)*t+d1)*t)+1);
     return p;
-  } 
+  }
 }
 
 /**

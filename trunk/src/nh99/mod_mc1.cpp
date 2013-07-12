@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -74,7 +74,7 @@ void param_init_matrix::add_value(const dvector& ndev, const int& _ii)
     int cmax=(*this)(i).indexmax();
     for (int j=cmin;j<=cmax;j++)
     {
-      (*this)(i,j)+=ndev(ii); 
+      (*this)(i,j)+=ndev(ii);
       ii++;
     }
   }
@@ -91,7 +91,7 @@ void param_init_bounded_matrix::add_value(const dvector& ndev, const int& _ii)
     int cmax=(*this)(i).indexmax();
     for (int j=cmin;j<=cmax;j++)
     {
-      (*this)(i,j)+=ndev(ii); 
+      (*this)(i,j)+=ndev(ii);
       ii++;
     }
   }

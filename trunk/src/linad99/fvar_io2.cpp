@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -51,7 +51,7 @@ const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
 const int MAX_NUMBER_ROWS = 6550;
-#if !defined(HUGE) 
+#if !defined(HUGE)
 #define HUGE 1.e+100
 #endif
 
@@ -194,7 +194,7 @@ dvar_vector::dvar_vector(const char * s)
      }
      #if defined(__SUN__) || defined (__GNUDOS__)
      double cmp = value(elem(i));
-     if (cmp == HUGE || cmp == -HUGE) 
+     if (cmp == HUGE || cmp == -HUGE)
      #else
      if (value(elem(i))== HUGE_VAL ||value(elem(i))== -HUGE_VAL)
      #endif

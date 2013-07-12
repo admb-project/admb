@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -99,7 +99,7 @@
      }
    }
    else
-   { 
+   {
 #    if defined(SAFE_ALL)
    //  cerr << "Warning -- trying to deallocate an unallocated dvar4_array"<<endl;
 #    endif
@@ -110,7 +110,7 @@
  * Description not yet available.
  * \param
  */
- dvar5_array::~dvar5_array() 
+ dvar5_array::~dvar5_array()
  {
    deallocate();
  }
@@ -124,7 +124,7 @@
    int mmin=indexmin();
    int mmax=indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   { 
+   {
      cerr << "Incompatible bounds in"
       " dvar4_array& dvar4_array:: operator=(const dvar4_array& m)"
       << endl;
@@ -146,7 +146,7 @@ dvar5_array& dvar5_array::operator=(const d5_array& m)
    int mmin=indexmin();
    int mmax=indexmax();
    if (mmin!=m.indexmin() || mmax!=m.indexmax())
-   { 
+   {
      cerr << "Incompatible bounds in"
       " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
       << endl;

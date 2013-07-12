@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -48,7 +48,7 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
       for (int i=indexmin();i<=indexmax();i++)
       {
 	if (allocated((*this)(i)))
-	{  
+	{
           if (ad_comm::global_bparfile)
           {
             *(ad_comm::global_bparfile) >> (*this)(i);
@@ -59,15 +59,15 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
           }
           else
           {
-            if ((!initial_value_flag) || initial_value <=minb 
+            if ((!initial_value_flag) || initial_value <=minb
                  || initial_value >= maxb)
             {
               //cerr << "Initial value out of bounds -- using halfway value" << endl;
-              initial_value=(minb+maxb)/2.; 
-            } 
+              initial_value=(minb+maxb)/2.;
+            }
             (*this)(i)=(initial_value);
 	  }
-	}  
+	}
       }
     }
     else
@@ -89,7 +89,7 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
       for (int i=indexmin();i<=indexmax();i++)
       {
 	if (allocated((*this)(i)))
-	{  
+	{
           if (ad_comm::global_bparfile)
           {
             *(ad_comm::global_bparfile) >> (*this)(i);
@@ -100,15 +100,15 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
           }
           else
           {
-            if ((!initial_value_flag) || initial_value <=minb 
+            if ((!initial_value_flag) || initial_value <=minb
                  || initial_value >= maxb)
             {
               //cerr << "Initial value out of bounds -- using halfway value" << endl;
-              initial_value=(minb+maxb)/2.; 
-            } 
+              initial_value=(minb+maxb)/2.;
+            }
             (*this)(i)=(initial_value);
 	  }
-	}  
+	}
       }
     }
     else
@@ -132,7 +132,7 @@ void param_init_bounded_matrix::allocate(const ad_integer& rmin,
       for (int i=indexmin();i<=indexmax();i++)
       {
 	if (allocated((*this)(i)))
-	{  
+	{
           if (ad_comm::global_bparfile)
           {
             *(ad_comm::global_bparfile) >> (*this)(i);
@@ -143,15 +143,15 @@ void param_init_bounded_matrix::allocate(const ad_integer& rmin,
           }
           else
           {
-            if ((!initial_value_flag) || initial_value <=minb 
+            if ((!initial_value_flag) || initial_value <=minb
                  || initial_value >= maxb)
             {
               //cerr << "Initial value out of bounds -- using halfway value" << endl;
-              initial_value=(minb+maxb)/2.; 
-            } 
+              initial_value=(minb+maxb)/2.;
+            }
             (*this)(i)=(initial_value);
 	  }
-	}  
+	}
       }
     }
     else
@@ -176,7 +176,7 @@ void param_init_bounded_matrix::allocate(const ad_integer& rmin,
       for (int i=indexmin();i<=indexmax();i++)
       {
 	if (allocated((*this)(i)))
-	{  
+	{
           if (ad_comm::global_bparfile)
           {
             *(ad_comm::global_bparfile) >> (*this)(i);
@@ -187,15 +187,15 @@ void param_init_bounded_matrix::allocate(const ad_integer& rmin,
           }
           else
           {
-            if ((!initial_value_flag) || initial_value <=minb 
+            if ((!initial_value_flag) || initial_value <=minb
                  || initial_value >= maxb)
             {
               //cerr << "Initial value out of bounds -- using halfway value" << endl;
-              initial_value=(minb+maxb)/2.; 
-            } 
+              initial_value=(minb+maxb)/2.;
+            }
             (*this)(i)=(initial_value);
 	  }
-	}  
+	}
       }
     }
     else

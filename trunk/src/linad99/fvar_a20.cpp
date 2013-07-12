@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -56,7 +56,7 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
        int mmax=indexmax();
        memcpy(&elem_value(mmin),&t.elem_value(mmin),
          (mmax-mmin+1)*sizeof(double));
-     #else 
+     #else
        #ifndef USE_ASSEMBLER
          for (int i=mmin; i<=mmax; i++)
          {
@@ -68,7 +68,7 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
          dw_block_move(&(this->elem_value(min)),&(t.elem_value(min)),n);
        #endif
       #endif
-  
+
        // The derivative list considerations
        save_identifier_string("bbbb");
        t.save_dvar_vector_position();
@@ -79,7 +79,7 @@ dvar_vector& dvar_vector::operator=(const dvar_vector& t)
      }
    }
    return (*this);
- } 
+ }
 
 void dv_eqprev(void);
 
@@ -196,6 +196,6 @@ void dv_assign(void)
      dw_block_move(&(dft.elem(mmin)),&(dftmp.elem(mmin)),n);
 #endif
 #endif
-     
+
   dft.save_dvector_derivatives(t_pos);
 }

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -558,7 +558,7 @@ void dvar3_array::shallow_copy(const dvar3_array& m2)
  * Description not yet available.
  * \param
  */
- dvar3_array::~dvar3_array() 
+ dvar3_array::~dvar3_array()
  {
    if (shape)
    {
@@ -644,7 +644,7 @@ void dvar3_array::allocate(int sl, int sh, const ivector& nrl, int nrh,
      allocate();
      return;
    }
-   if (sl !=nrl.indexmin() || sh !=nrl.indexmax()) 
+   if (sl !=nrl.indexmin() || sh !=nrl.indexmax())
    {
      cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)" << endl;
      ad_exit(1);

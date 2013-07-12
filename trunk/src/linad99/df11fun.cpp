@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 
 char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
@@ -57,7 +57,6 @@ char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
 
  dvector value(const df1_one_vector& v)
  {
-   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -67,7 +66,6 @@ char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
    }
    return cv;
  }
-   
 
   void df1_one_vector::initialize(void)
   {
@@ -101,13 +99,13 @@ char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
     }
     if ( (shape=new vector_shapex(min,max,v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df1_one_vector" 
+      cerr << "Error trying to allocate memory for df1_one_vector"
            << endl;;
       ad_exit(1);
     }
     v-=min;
   }
-  
+
   void df1_one_vector::allocate(void)
   {
     index_min=0;
@@ -115,11 +113,9 @@ char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
     v=0;
     shape=0;
   }
-    
 
  dmatrix value(const df1_one_matrix& v)
  {
-   
    int rmin=v.indexmin();
    int rmax=v.indexmax();
    dmatrix cm(rmin,rmax);
@@ -127,7 +123,7 @@ char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax); 
+     cm(i).allocate(cmin,cmax);
      for (int j=cmin;j<=cmax;j++)
      {
        cm(i,j)=value(v(i,j));
@@ -135,7 +131,6 @@ char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
    }
    return cm;
  }
-   
 
  df1_one_matrix::df1_one_matrix(const df1_one_matrix& m2)
  {
@@ -197,17 +192,16 @@ char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
     }
     if ( (shape=new mat_shapex(v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df1_one_vector" 
+      cerr << "Error trying to allocate memory for df1_one_vector"
            << endl;;
     }
     v-=rmin;
-    
+
     for (int i=rmin;i<=rmax;i++)
     {
       v[i].allocate(cmin,cmax);
     }
   }
-    
 
   df1_one_variable& df1_one_variable::operator -= (const df1_one_variable& v)
   {
@@ -378,7 +372,6 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
  */
  dvector first_derivatives(const df1_one_vector& v)
  {
-   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -388,7 +381,6 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
    }
    return cv;
  }
-   
 
 /**
  * Description not yet available.
@@ -396,7 +388,6 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
  */
  dmatrix first_derivatives(const df1_one_matrix& v)
  {
-   
    int rmin=v.indexmin();
    int rmax=v.indexmax();
    dmatrix cm(rmin,rmax);
@@ -404,19 +395,11 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax); 
+     cm(i).allocate(cmin,cmax);
      cm(i)=first_derivatives(v(i));
    }
    return cm;
  }
-   
-    
-
-
-
-
-
-
 
   df1_one_variable& df1_one_variable::operator = (const df1_one_variable& x)
   {
@@ -571,13 +554,13 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
     }
     ind_var[num_ind_var++]=&v;
     *get_u() =  value(v);
-    switch(num_ind_var) 
+    switch(num_ind_var)
     {
     case 1:
       *get_u_x() = 1.0;
       break;
     default:
-      cerr << "illegal num_ind_var value of " << num_ind_var 
+      cerr << "illegal num_ind_var value of " << num_ind_var
            << " in  df1_one_variable function" << endl;
       ad_exit(1);
     }
@@ -591,10 +574,7 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
 
   df1_one_variable::df1_one_variable(void)
   {
-     
-
   }
-
 
 df1_one_matrix choleski_decomp(const df1_one_matrix& MM)
 {
@@ -626,14 +606,14 @@ df1_one_matrix choleski_decomp(const df1_one_matrix& MM)
 
   int i,j,k;
   df1_one_variable tmp;
-   
+
     if (value(M(1,1))<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-   
+
   L(1,1)=sqrt(M(1,1));
   for (i=2;i<=n;i++)
   {
@@ -656,14 +636,14 @@ df1_one_matrix choleski_decomp(const df1_one_matrix& MM)
     {
       tmp-=L(i,k)*L(i,k);
     }
-   
+
     if (value(tmp)<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-   
+
     L(i,i)=sqrt(tmp);
   }
 

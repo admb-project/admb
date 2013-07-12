@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -102,7 +102,7 @@
      }
    }
    else
-   { 
+   {
 #    if defined(SAKE_ARRAYS)
        //cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
 #    endif
@@ -113,7 +113,7 @@
  * Description not yet available.
  * \param
  */
- dvar4_array::~dvar4_array() 
+ dvar4_array::~dvar4_array()
  {
    deallocate();
  }
@@ -290,7 +290,7 @@ dvar4_array& dvar4_array::operator=(const d4_array& m)
    int mmin=hslicemin();
    int mmax=hslicemax();
    if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
-   { 
+   {
      cerr << "Incompatible bounds in"
       " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
       << endl;
@@ -312,7 +312,7 @@ dvar4_array& dvar4_array::operator=(const d4_array& m)
    int mmin=hslicemin();
    int mmax=hslicemax();
    if (mmin!=m.hslicemin() || mmax!=m.hslicemax())
-   { 
+   {
      cerr << "Incompatible bounds in"
       " dvar4_array& dvar4_array:: operator =  (const dvar4_array& m)"
       << endl;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
@@ -19,23 +19,21 @@ void  set_gauss_covariance_matrix(const dll_data_matrix& m)
 {
   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
 }
- 
+
 void  set_gauss_covariance_matrix(const dmatrix& m)
 {
   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
 }
- 
 
 void  set_covariance_matrix(const dll_data_matrix& m)
 {
   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
 }
- 
+
 void  set_covariance_matrix(const dmatrix& m)
 {
   GAUSS_varcovariance_matrix = &((dmatrix&)(m) );
 }
- 
 
 void function_minimizer::sd_routine(void)
 {
@@ -115,8 +113,8 @@ void function_minimizer::sd_routine(void)
   int sgn;
   int check=initial_params::stddev_scale(scale,x);
   double lndet=-ln_det(S,sgn)-2.0*sum(log(scale));
-  initial_params::set_active_random_effects(); 
-  //int nvar1=initial_params::nvarcalc(); 
+  initial_params::set_active_random_effects();
+  //int nvar1=initial_params::nvarcalc();
   dvector diag(1,nvar1+ndvar);
   dvector tmp(1,nvar1+ndvar);
 
@@ -128,9 +126,8 @@ void function_minimizer::sd_routine(void)
     // *******************************************************
     // *******************************************************
     {
-      
       if (nvar==nvar1)  // no random effects
-      { 
+      {
         for (i=1;i<=nvar;i++)
         {
           for (int j=1;j<=i;j++)
@@ -146,7 +143,7 @@ void function_minimizer::sd_routine(void)
         if (ad_comm::wd_flag)
            tmpstring = ad_comm::adprogram_name + ".dep";
         cifstream cif((char*)tmpstring);
-      
+
         int tmp_nvar,tmp_ndvar;
         cif >> tmp_nvar >> tmp_ndvar;
         if (tmp_nvar!=nvar1)
@@ -174,7 +171,7 @@ void function_minimizer::sd_routine(void)
               ofs << tmp(nvar+j) << " ";
             }
             diag(i+nvar)=tmp(i+nvar);
-  
+
             if (diag(i+nvar)<=0.0)
             {
               cerr << "Estimated covariance matrix may not"
@@ -186,14 +183,14 @@ void function_minimizer::sd_routine(void)
         }
       }
       else  // have random effects
-      { 
+      {
 #if   defined(USE_LAPLACE)
         dmatrix tv(1,ndvar,1,nvar1);
         adstring tmpstring="admodel.dep";
         if (ad_comm::wd_flag)
            tmpstring = ad_comm::adprogram_name + ".dep";
         cifstream cif((char*)tmpstring);
-      
+
         int tmp_nvar,tmp_ndvar;
         cif >> tmp_nvar >> tmp_ndvar;
         if (tmp_nvar!=nvar1)
@@ -206,7 +203,7 @@ void function_minimizer::sd_routine(void)
         dmatrix BS(1,nvar1,1,nvar1);
         BS.initialize();
         get_bigS(ndvar,nvar1,nvar,S,BS,scale);
-        
+
         {
           tmpstring = ad_comm::adprogram_name + ".bgs";
           uostream uos((char*)(tmpstring));
@@ -254,7 +251,7 @@ void function_minimizer::sd_routine(void)
               ofs << tmp(nvar1+j) << " ";
             }
             diag(i+nvar1)=tmp(i+nvar1);
-  
+
             if (diag(i+nvar1)<=0.0)
             {
               if (norm(tv(i))>1.e-100)
@@ -465,7 +462,7 @@ void function_minimizer::sd_routine(void)
       ofsd << setscientific() << setw(10) << setprecision(4) << diag(i);
       for (j=1;j<=i;j++)
       {
-        ofs << " " << setfixed() << setprecision(4) << setw(7) 
+        ofs << " " << setfixed() << setprecision(4) << setw(7)
             << tmp(j);
         if (GAUSS_varcovariance_matrix)
         {

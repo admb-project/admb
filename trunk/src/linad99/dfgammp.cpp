@@ -56,7 +56,7 @@ void gcf(const dvariable& _gammcf,const dvariable& a,
     h *= del;
     if (fabs(value(del)-1.0) < EPS) break;
   }
-  if (i > ITMAX) 
+  if (i > ITMAX)
     cerr << "a too large, ITMAX too small in gcf" << endl;
   gammcf=exp(-x+a*log(x)-(gln))*h;
 }
@@ -78,12 +78,12 @@ void gser(const dvariable& _gamser,const dvariable& a,
   gln=gammln(a);
 
   if (value(x) <= 0.0) {
-    if (value(x) < 0.0) 
+    if (value(x) < 0.0)
       cerr << "x less than 0 in routine gser" << endl;
     gamser=0.0;
     return;
-  } 
-  else 
+  }
+  else
   {
     ap=a;
     del=sum=1.0/a;
@@ -101,12 +101,11 @@ void gser(const dvariable& _gamser,const dvariable& a,
   }
 }
 
-
 dvariable cumd_gamma(const dvariable& x, const dvariable& a)
 {
   dvariable gamser,gammcf,gln;
 
-  if (value(x) < 0.0 || value(a) <= 0.0) 
+  if (value(x) < 0.0 || value(a) <= 0.0)
     cerr << "Invalid arguments in routine gammp" << endl;
   if (value(x) < (value(a)+1.0)) {
     gser(gamser,a,x,gln);

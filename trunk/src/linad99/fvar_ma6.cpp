@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -27,7 +27,6 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1, const imatrix& _missfla
    int rmax=v1.indexmax();
    int nobs=rmax-rmin+1;
 
-   
    tmp.initialize();
    for (int ii=rmin; ii<=rmax; ii++)
    {
@@ -63,12 +62,12 @@ dvar_matrix empirical_covariance(const dvar_matrix& _v1, const imatrix& _missfla
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(dfempirical_covarv_partial);
    return(tmp);
- }   
+ }
 
 /**
  * Description not yet available.
  * \param
- */   
+ */
 void dfempirical_covarv_partial(void)
 {
   verify_identifier_string("rv");
@@ -130,7 +129,6 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
    int rmin=v1.indexmin();
    int rmax=v1.indexmax();
 
-   
    tmp.initialize();
    int nobs=rmax-rmin+1;
    for (int ii=rmin; ii<=rmax; ii++)
@@ -158,7 +156,7 @@ dvar_matrix empirical_covariance(const dvar_matrix& v1)
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(dfempirical_covarv);
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.
@@ -230,7 +228,7 @@ dvar_matrix outer_prod(const dvar_vector& v1, const dvar_vector& v2)
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(dfouter_prodvv);
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.
@@ -282,7 +280,7 @@ dvar_matrix outer_prod(const dvector& v1, const dvar_vector& v2)
    }
    RETURN_ARRAYS_DECREMENT();
    return(tmp);
- }      
+ }
 
 /**
  * Description not yet available.

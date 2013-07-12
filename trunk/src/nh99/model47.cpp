@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -14,7 +14,7 @@
  {
    it=NULL;
  }
-     
+
  param_init_number_vector::~param_init_number_vector()
  {
    deallocate();
@@ -34,7 +34,6 @@
      v=NULL;
    }
  }
-
 
  void param_init_number_vector::allocate(int min1,int max1,
    const char * s)

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -27,7 +27,7 @@ ivector diagonal(const imatrix& m)
   for (int i=mmin;i<=mmax;i++)
     tmp(i)=m(i,i);
   return tmp;
-} 
+}
 
 /**
  * Description not yet available.
@@ -51,4 +51,4 @@ ivector diagonal(const imatrix& m)
      }
    }
    return(tmp);
- }      
+ }

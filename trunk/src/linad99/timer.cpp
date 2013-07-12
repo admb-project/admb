@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -20,9 +20,9 @@
   adtimer::adtimer (void)
   {
     gettimeofday(&tv,0);
-    
-    tvold.tv_sec=tv.tv_sec;	       
-    tvold.tv_usec=tv.tv_usec;	       
+
+    tvold.tv_sec=tv.tv_sec;
+    tvold.tv_usec=tv.tv_usec;
 
   }
 
@@ -34,20 +34,20 @@
   {
     gettimeofday(&tv,0);
     //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
-    int nsec=0; 
-    int nusec=0; 
+    int nsec=0;
+    int nusec=0;
     if ( tv.tv_usec< tvold.tv_usec)
     {
-      nsec=tv.tv_sec-tvold.tv_sec-1;	       
-      nusec=tv.tv_usec-tvold.tv_usec+1000000;	       
+      nsec=tv.tv_sec-tvold.tv_sec-1;
+      nusec=tv.tv_usec-tvold.tv_usec+1000000;
     }
     else
     {
-      nsec=tv.tv_sec-tvold.tv_sec;	       
-      nusec=tv.tv_usec-tvold.tv_usec;	       
+      nsec=tv.tv_sec-tvold.tv_sec;
+      nusec=tv.tv_usec-tvold.tv_usec;
     }
-    tvold.tv_sec=tv.tv_sec;	       
-    tvold.tv_usec=tv.tv_usec;	       
+    tvold.tv_sec=tv.tv_sec;
+    tvold.tv_usec=tv.tv_usec;
     return 1000.*nsec+nusec/1000.;
   }
 
@@ -57,19 +57,19 @@
  */
   double adtimer::get_elapsed_time(void)
   {
-    int nsec=0; 
-    int nusec=0; 
+    int nsec=0;
+    int nusec=0;
     gettimeofday(&tv,0);
     //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
     if ( tv.tv_usec< tvold.tv_usec)
     {
-      nsec=tv.tv_sec-tvold.tv_sec-1;	       
-      nusec=tv.tv_usec-tvold.tv_usec+1000000;	       
+      nsec=tv.tv_sec-tvold.tv_sec-1;
+      nusec=tv.tv_usec-tvold.tv_usec+1000000;
     }
     else
     {
-      nsec=tv.tv_sec-tvold.tv_sec;	       
-      nusec=tv.tv_usec-tvold.tv_usec;	       
+      nsec=tv.tv_sec-tvold.tv_sec;
+      nusec=tv.tv_usec-tvold.tv_usec;
     }
     return 1000.*nsec+nusec/1000.;
   }
@@ -83,7 +83,7 @@
  */
   adtimer::adtimer (void)
   {
-    t=GetCurrentTime(); 
+    t=GetCurrentTime();
     told=t;
   }
 
@@ -93,7 +93,7 @@
  */
   double adtimer::get_elapsed_time_and_reset(void)
   {
-    t=GetCurrentTime(); 
+    t=GetCurrentTime();
     //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
     double diff=t-told;
     told=t;
@@ -106,7 +106,7 @@
  */
   double adtimer::get_elapsed_time(void)
   {
-    t=GetCurrentTime(); 
+    t=GetCurrentTime();
     //std::cout << tv.tv_sec << " " << tv.tv_usec << std::endl;
     double diff=t-told;
     return diff;

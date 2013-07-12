@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -81,7 +81,6 @@
  */
  dvector value(const df1_two_vector& v)
  {
-   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -91,7 +90,7 @@
    }
    return cv;
  }
-   
+
 /**
  * Description not yet available.
  * \param
@@ -140,13 +139,13 @@
     }
     if ( (shape=new vector_shapex(min,max,v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df1_two_vector" 
+      cerr << "Error trying to allocate memory for df1_two_vector"
            << endl;;
       ad_exit(1);
     }
     v-=min;
   }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -158,14 +157,13 @@
     v=0;
     shape=0;
   }
-    
+
 /**
  * Description not yet available.
  * \param
  */
  dmatrix value(const df1_two_matrix& v)
  {
-   
    int rmin=v.indexmin();
    int rmax=v.indexmax();
    dmatrix cm(rmin,rmax);
@@ -173,7 +171,7 @@
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax); 
+     cm(i).allocate(cmin,cmax);
      for (int j=cmin;j<=cmax;j++)
      {
        cm(i,j)=value(v(i,j));
@@ -181,7 +179,7 @@
    }
    return cm;
  }
-   
+
 /**
  * Description not yet available.
  * \param
@@ -260,17 +258,17 @@
     }
     if ( (shape=new mat_shapex(v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df1_two_vector" 
+      cerr << "Error trying to allocate memory for df1_two_vector"
            << endl;;
     }
     v-=rmin;
-    
+
     for (int i=rmin;i<=rmax;i++)
     {
       v[i].allocate(cmin,cmax);
     }
   }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -776,7 +774,7 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
     }
     ind_var[num_ind_var++]=&v;
     *get_u() =  value(v);
-    switch(num_ind_var) 
+    switch(num_ind_var)
     {
     case 1:
       *get_u_x() = 1.0;
@@ -787,7 +785,7 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
       *get_u_y() = 1.0;
       break;
     default:
-      cerr << "illegal num_ind_var value of " << num_ind_var 
+      cerr << "illegal num_ind_var value of " << num_ind_var
            << " in  df1_two_variable function" << endl;
       ad_exit(1);
     }
@@ -810,8 +808,6 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
  */
   df1_two_variable::df1_two_variable(void)
   {
-     
-
   }
 
 /**
@@ -848,14 +844,14 @@ df1_two_matrix choleski_decomp(const df1_two_matrix& MM)
 
   int i,j,k;
   df1_two_variable tmp;
-   
+
     if (value(M(1,1))<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-   
+
   L(1,1)=sqrt(M(1,1));
   for (i=2;i<=n;i++)
   {
@@ -878,14 +874,14 @@ df1_two_matrix choleski_decomp(const df1_two_matrix& MM)
     {
       tmp-=L(i,k)*L(i,k);
     }
-   
+
     if (value(tmp)<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-   
+
     L(i,i)=sqrt(tmp);
   }
 
@@ -896,7 +892,7 @@ df1_two_matrix choleski_decomp(const df1_two_matrix& MM)
   {
     df1_two_variable z;
     if (value(x)>=0.0)
-      z=x; 
+      z=x;
     else
       z=-x;
     return z;

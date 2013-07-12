@@ -1,12 +1,12 @@
 /*
  * $Id$
  *
- * Authors: Anders Nielsen <anders@nielsensweb.org> and Casper Berg <cbe@aqua.dtu.dk> 
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Authors: Anders Nielsen <anders@nielsensweb.org> and Casper Berg <cbe@aqua.dtu.dk>
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
- * Matrix exponential function for dvar_matrix. 
+ * Matrix exponential function for dvar_matrix.
  */
 #include <fvar.hpp>
 #define TINY 1.0e-20;
@@ -19,7 +19,7 @@ dmatrix fabs(const dmatrix & X){
   int rmin = X.rowmin();
   int rmax = X.rowmax();
   int cmin = X.colmin();
-  int cmax = X.colmax(); 
+  int cmax = X.colmax();
   dmatrix ret(rmin,rmax,cmin,cmax);
   for(int i = rmin; i<=rmax; ++i){
     for(int j = cmin; j<=cmax; ++j){
@@ -40,15 +40,15 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz)
 
   /**
   \ingroup matop
-   Matrix exponential. 
-   
+   Matrix exponential.
+
    The matrix exponential is calculated using the Pade approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
 
-   
-The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems: 
+
+The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems:
 \f[
 \frac{d}{dt}y(t) = Ay(t)\ , \ \mbox{with } y(0) = y_0
-\f] 
+\f]
    \item then the solution becomes
 \f[
    y(t) = e^{At}y_0
@@ -102,15 +102,15 @@ dmatrix expm(const dmatrix& A)
 
   /**
   \ingroup matop
-   Matrix exponential. 
-   
+   Matrix exponential.
+
    The matrix exponential is calculated using the Pade approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
 
-   
-The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems: 
+
+The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems:
 \f[
 \frac{d}{dt}y(t) = Ay(t)\ , \ \mbox{with } y(0) = y_0
-\f] 
+\f]
    \item then the solution becomes
 \f[
    y(t) = e^{At}y_0
@@ -121,7 +121,7 @@ The main use of the matrix exponential is to solve linear ordinary differential 
   */
 dvar_matrix expm(const dvar_matrix& A)
 {
-  RETURN_ARRAYS_INCREMENT();    
+  RETURN_ARRAYS_INCREMENT();
   int rmin = A.rowmin();
   int rmax = A.rowmax();
 
@@ -171,7 +171,7 @@ dvar_matrix expm(const dvar_matrix& A)
 
 dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_unsigned_det, dvariable& sign)
 {
-  RETURN_ARRAYS_INCREMENT();    
+  RETURN_ARRAYS_INCREMENT();
   int i,imax,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();

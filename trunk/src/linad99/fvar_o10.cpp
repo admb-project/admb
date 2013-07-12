@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -30,7 +30,7 @@
   void df_eq_pvpv(void);
 
 #if defined(__BORLANDC__)
-#  if (__BORLANDC__  >= 0x0540) 
+#  if (__BORLANDC__  >= 0x0540)
 /**
  * Description not yet available.
  * \param

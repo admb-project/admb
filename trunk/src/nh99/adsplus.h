@@ -3,28 +3,28 @@
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- * 
+ *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
- * 
+ *
  * License:
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -54,10 +54,10 @@
  * Description not yet available.
  * \param
  */
-class SPparam_init_number: public param_init_number 
+class SPparam_init_number: public param_init_number
 {
 public:
-  SPparam_init_number(void ): param_init_number() {;} 
+  SPparam_init_number(void ): param_init_number() {;}
 protected:
   void allocate(int phase_start=1,const char *s="UNNAMED");
   void allocate(const char *s="UNNAMED");
@@ -71,7 +71,7 @@ protected:
 class SPparam_init_vector: public param_init_vector
 {
 public:
-  SPparam_init_vector(void ): param_init_vector() {;} 
+  SPparam_init_vector(void ): param_init_vector() {;}
   void allocate(int phasestart=1,const char * s="UNNAMED");
   void allocate(const char * s="UNNAMED");
   friend class model_parameters;
@@ -84,7 +84,7 @@ public:
 class SPnamed_dvar_vector: public named_dvar_vector
 {
 public:
-  SPnamed_dvar_vector(void ): named_dvar_vector() {;} 
+  SPnamed_dvar_vector(void ): named_dvar_vector() {;}
   SPnamed_dvar_vector& operator=(const dvar_vector& m);
   SPnamed_dvar_vector& operator=(const dvector& m);
   SPnamed_dvar_vector& operator = (CGNU_DOUBLE m);
@@ -101,7 +101,7 @@ public:
 class SPnamed_dvector: public named_dvector
 {
 public:
-  SPnamed_dvector(void ): named_dvector() {;} 
+  SPnamed_dvector(void ): named_dvector() {;}
   SPnamed_dvector& operator=(const dvector& m);
   SPnamed_dvector& operator = (CGNU_DOUBLE m);
   friend class model_parameters;
@@ -161,7 +161,7 @@ public:
 class SPparam_init_bounded_number: public param_init_bounded_number
 {
 public:
-  SPparam_init_bounded_number(void ): param_init_bounded_number() {;} 
+  SPparam_init_bounded_number(void ): param_init_bounded_number() {;}
 protected:
   void allocate(double _minb,double _maxb,int phase_start=1,
     const char * s="UNNAMED");
@@ -172,10 +172,10 @@ protected:
  * Description not yet available.
  * \param
  */
-class SPparam_init_matrix: public param_init_matrix 
+class SPparam_init_matrix: public param_init_matrix
 {
 public:
-  SPparam_init_matrix(void ): param_init_matrix() {;} 
+  SPparam_init_matrix(void ): param_init_matrix() {;}
 protected:
   void allocate(int phase_start=1,const char * = "UNNAMED");
   void allocate(const char * = "UNNAMED");
@@ -185,10 +185,10 @@ protected:
  * Description not yet available.
  * \param
  */
-class SPparam_init_bounded_matrix: public param_init_bounded_matrix 
+class SPparam_init_bounded_matrix: public param_init_bounded_matrix
 {
 public:
-  SPparam_init_bounded_matrix(void ): param_init_bounded_matrix() {;} 
+  SPparam_init_bounded_matrix(void ): param_init_bounded_matrix() {;}
 
 public:
 
@@ -201,10 +201,10 @@ public:
  * Description not yet available.
  * \param
  */
-class SPdata_int : public data_int  
+class SPdata_int : public data_int
 {
 public:
-  SPdata_int(void) : data_int() {;}  
+  SPdata_int(void) : data_int() {;}
   void allocate(int n,const char * s="UNNAMED");
   void allocate(const char * s="UNNAMED");
 };
@@ -213,10 +213,10 @@ public:
  * Description not yet available.
  * \param
  */
-class SPdata_matrix : public data_matrix  
+class SPdata_matrix : public data_matrix
 {
 public:
-  SPdata_matrix(void) : data_matrix() {;}  
+  SPdata_matrix(void) : data_matrix() {;}
   void allocate(const char * = "UNNAMED");
 };
 
@@ -224,7 +224,7 @@ public:
  * Description not yet available.
  * \param
  */
-class SPdata_3array : public data_3array 
+class SPdata_3array : public data_3array
 {
 public:
   void allocate(int hsl,int hsu,int rmin,int rmax,int cmin,int cmax,
@@ -249,7 +249,7 @@ public:
  * Description not yet available.
  * \param
  */
-class SPdata_4array : public data_4array 
+class SPdata_4array : public data_4array
 {
 public:
   void allocate(int hhsl,int hhsu,int hsl,int hsu,int rmin,int rmax,
@@ -260,7 +260,7 @@ public:
  * Description not yet available.
  * \param
  */
-class SPdata_imatrix : public data_imatrix 
+class SPdata_imatrix : public data_imatrix
 {
 public:
   //void allocate(int rmin,int rmax,int cmin,int cmax,const char * ="UNNAMED");
@@ -293,7 +293,7 @@ public:
  * Description not yet available.
  * \param
  */
-class SPdata_number : public data_number 
+class SPdata_number : public data_number
 {
 public:
   SPdata_number(void) : data_number() {;}

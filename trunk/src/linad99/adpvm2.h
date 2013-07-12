@@ -6,25 +6,25 @@
  *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
- * 
+ *
  * License:
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -49,10 +49,10 @@
 
 #include <admodel.h>
 
-#if defined(__cplusplus)  
+#if defined(__cplusplus)
 //  extern "C" {
 #  endif
-#if defined(__BORLANDC__) 
+#if defined(__BORLANDC__)
 #  if !defined(__linux__)
 #   include <pvm3bor.h>
 #   include <pvm3.h>
@@ -60,7 +60,7 @@
 #else
 #  include <pvm3.h>
 #endif
-#if defined(__cplusplus)  
+#if defined(__cplusplus)
 //}
 #endif
 
@@ -110,7 +110,7 @@ void pvm_unpack(const dmatrix & _m);
 void pvm_unpack(const d3_array & _m);
 void pvm_unpack(const d4_array & _m);
 void pvm_unpack(const d5_array & _m);
-    
+
 void pvm_pack(int v);
 void pvm_pack(const ivector& _v);
 void pvm_pack(const imatrix & _m);
@@ -124,7 +124,7 @@ void pvm_unpack(const imatrix & _m);
 void pvm_unpack(const i3_array & _m);
 //void pvm_unpack(const i4_array & _m);
 //void pvm_unpack(const i5_array & _m);
-    
+
 void adpvm_pack(const prevariable& _v);
 void adpvm_pack(const dvar_vector& _v);
 void adpvm_pack(const dvar_matrix & _m);
@@ -153,7 +153,7 @@ void adpvm_unpack(const dmatrix & _m);
 void adpvm_unpack(const d3_array & _m);
 void adpvm_unpack(const d4_array & _m);
 void adpvm_unpack(const d5_array & _m);
-    
+
 void adpvm_pack(int v);
 void adpvm_pack(const ivector& _v);
 void adpvm_pack(const imatrix & _m);
@@ -166,16 +166,15 @@ void adpvm_unpack(const ivector& _v);
 void adpvm_unpack(const imatrix & _m);
 void adpvm_unpack(const i3_array & _m);
 #if defined(linux)
-#  define __declspec(dllexport) 
+#  define __declspec(dllexport)
 #endif
 
 int load_adpvm_library(void);
 
-
 int adpvm_slave_vinitsend(int mode);
-  
+
 int adpvm_slave_cinitsend(int mode);
-  
+
 void adpvm_slave_vsend(int ptid);
 
 void adpvm_slave_csend(int ptid);

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -10,7 +10,7 @@
  */
 
 // file fvar.cpp
-// constructors, destructors and misc functions involving class dvariable 
+// constructors, destructors and misc functions involving class dvariable
 
 #include "fvar.hpp"
 

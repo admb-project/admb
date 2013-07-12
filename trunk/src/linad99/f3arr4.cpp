@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -25,7 +25,7 @@ dvar3_array operator-(CGNU_DOUBLE d, const dvar3_array& m2)
      }
      RETURN_ARRAYS_DECREMENT();
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.

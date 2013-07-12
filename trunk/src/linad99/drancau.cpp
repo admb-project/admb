@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -19,7 +19,7 @@ double randcau(const random_number_generator& rng)
   double u=inv_cumd_cauchy(((random_number_generator&) rng).better_rand());
   return(u);
 }
-  
+
 /**
  * Description not yet available.
  * \param

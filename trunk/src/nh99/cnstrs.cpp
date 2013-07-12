@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -63,9 +63,9 @@ gggg01::gggg01(logical _wwuq3, logical _te0, logical _te1,
   te0(_te0),
   te1(_te1),
   te2(_te2),
-  te3(_te3), 
-  wwuq3(_wwuq3), 
-  cold(_cold) 
+  te3(_te3),
+  wwuq3(_wwuq3),
+  cold(_cold)
 {
 }
 
@@ -436,7 +436,7 @@ gggg04::~gggg04()
  */
 gggg05::gggg05(int _n,int _numberw,int _numberv) :
  n(_n), numberw(_numberw), numberv(_numberv) {}
- 
+
 /**
  * Description not yet available.
  * \param
@@ -556,7 +556,7 @@ gggg18::~gggg18()
   if (fugrad != 0)
   {
     delete[] fugrad;
-    fugrad = 0; 
+    fugrad = 0;
   }
   if (fud != 0)
   {
@@ -836,7 +836,7 @@ doublestar::~doublestar()
 {
 #if defined(SAFE_ALL)
   d+=index_min-1;
-  if ( fabs(d[0]-123456789.12) >1.e-10 
+  if ( fabs(d[0]-123456789.12) >1.e-10
     || fabs(d[index_max-index_min+1]-123456789.12) > 1.e-10 )
   {
     cerr << "Memory error in doublestar" << endl;
@@ -850,7 +850,7 @@ doublestar::~doublestar()
 
 /*
 doublereal& doublestar::operator[] (int i)
-{ 
+{
   if (i<index_min | i>=index_max)
   {
     cout << "Index too high in doublestar access = " << i << endl;
@@ -859,7 +859,7 @@ doublereal& doublestar::operator[] (int i)
   return *(d+i);
 }
 integer& intstar::operator[] (int i)
-{ 
+{
   if (i<0 | i>=index_max)
   {
     cout << "Index too high in intstar access = " << i << endl;

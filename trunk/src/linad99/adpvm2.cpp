@@ -29,7 +29,7 @@
 
 int ad_constant_flag=0;
 
-//#define  __declspec(dllexport) 
+//#define  __declspec(dllexport)
 
 #define AD__PRELOAD
 
@@ -38,7 +38,7 @@ int ad_constant_flag=0;
  * \param
  */
 int load_adpvm_library(void)
-{ 
+{
   int ierr=0;
   return ierr;
 }
@@ -230,7 +230,7 @@ void adpvm_pack(const dvar_vector& _v)
   pvm_pkint(&imin,1,1);
   pvm_pkint(&imax,1,1);
   pvm_pkdouble(&(value(v(imin))),imax-imin+1,1);
-  
+
   save_identifier_string("X");
   v.save_dvar_vector_position();
   save_identifier_string("Y");
@@ -261,7 +261,7 @@ void adpvm_pack(const dvar_matrix & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -309,7 +309,7 @@ void adpvm_pack(const dvar4_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -333,7 +333,7 @@ void adpvm_pack(const dvar5_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -421,15 +421,15 @@ void adpvm_unpack(const dvar_vector& _v)
   pvm_upkint(&imax,1,1);
   if (allocated(v))
   {
-    if (v.indexmin()!=imin) 
+    if (v.indexmin()!=imin)
     {
       cerr << "Error in min index in "
           "void adpvm_unpack(const dvar_vector& v)" << endl;
       ad_exit(1);
     }
-    if (v.indexmax()!=imax) 
+    if (v.indexmax()!=imax)
     {
-      cerr << "Error in max index in" 
+      cerr << "Error in max index in"
           " void adpvm_unpack(const dvar_vector& v)" << endl;
       ad_exit(1);
     }
@@ -464,7 +464,7 @@ void adpvm_unpack(const dvar_matrix & _m)
       ad_exit(1);
     }
     if (m.indexmax()!=imax) {
-      cerr << "Error in max index in" 
+      cerr << "Error in max index in"
           " void adpvm_unpack(const dvar_matrix& v)" << endl;
       ad_exit(1);
     }
@@ -479,7 +479,7 @@ void adpvm_unpack(const dvar_matrix & _m)
   gradient_structure::GRAD_STACK1->
             set_gradient_stack(adpvm_pack_index_bounds);
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -498,7 +498,7 @@ void adpvm_unpack(const dvar3_array & _m)
       ad_exit(1);
     }
     if (m.indexmax()!=imax) {
-      cerr << "Error in max index in" 
+      cerr << "Error in max index in"
           " void adpvm_unpack(const dvar3_array& v)" << endl;
       ad_exit(1);
     }
@@ -507,7 +507,7 @@ void adpvm_unpack(const dvar3_array & _m)
   }
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -535,7 +535,7 @@ void adpvm_unpack(const dvar4_array & _m)
   }
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -549,7 +549,7 @@ void adpvm_unpack(const dvar5_array & _m)
   pvm_upkint(&imax,1,1);
   if (allocated(m)) {
     if (m.indexmin()!=imin) {
-      cerr << "Error in min index in" 
+      cerr << "Error in min index in"
           " void adpvm_unpack(const dvector& v)" << endl;
       ad_exit(1);
     }
@@ -638,7 +638,7 @@ void adpvm_pack(const dmatrix & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -662,7 +662,7 @@ void adpvm_pack(const d3_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -686,7 +686,7 @@ void adpvm_pack(const d4_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -710,7 +710,7 @@ void adpvm_pack(const d5_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -766,7 +766,7 @@ void adpvm_unpack(const dmatrix & _m)
   }
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -794,7 +794,7 @@ void adpvm_unpack(const d3_array & _m)
   }
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -822,7 +822,7 @@ void adpvm_unpack(const d4_array & _m)
   }
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -850,7 +850,7 @@ void adpvm_unpack(const d5_array & _m)
   }
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -873,7 +873,7 @@ void adpvm_pack(const ivector& _v)
   pvm_pkint(&imax,1,1);
   pvm_pkint(&(v(imin)),imax-imin+1,1);
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -921,7 +921,7 @@ void adpvm_pack(const i3_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-/*   
+/*
 void adpvm_pack(const i4_array & _m)
 {
   i4_array& m = (i4_array &) _m;
@@ -931,7 +931,7 @@ void adpvm_pack(const i4_array & _m)
   pvm_pkint(&imax,1,1);
   for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
 }
-    
+
 void adpvm_pack(const i5_array & _m)
 {
   i5_array& m = (i5_array &) _m;
@@ -942,7 +942,7 @@ void adpvm_pack(const i5_array & _m)
   for (int i=imin;i<=imax;i++) adpvm_pack(m(i));
 }
 */
-    
+
 /**
  * Description not yet available.
  * \param
@@ -996,7 +996,7 @@ void adpvm_unpack(const imatrix & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i=imin;i<=imax;i++) 
+  for (int i=imin;i<=imax;i++)
   {
     pvm_unpack(m(i));
   }
@@ -1029,7 +1029,7 @@ void adpvm_unpack(const i3_array & _m)
   }
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
-/*    
+/*
 void adpvm_unpack(const i4_array & _m)
 {
   i4_array& m = (i4_array &) _m;
@@ -1039,12 +1039,12 @@ void adpvm_unpack(const i4_array & _m)
   pvm_upkint(&imax,1,1);
   if (allocated(m)) {
     if (m.indexmin()!=imin) {
-      cerr << "Error in min index in 
+      cerr << "Error in min index in
           void adpvm_unpack(const dvector& v)" << endl;
       ad_exit(1);
     }
     if (m.indexmax()!=imax) {
-      cerr << "Error in max index in 
+      cerr << "Error in max index in
           void adpvm_unpack(const dvector& v)" << endl;
       ad_exit(1);
     }
@@ -1053,7 +1053,7 @@ void adpvm_unpack(const i4_array & _m)
   }
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
-    
+
 void adpvm_unpack(const i5_array & _m)
 {
   i5_array& m = (i5_array &) _m;
@@ -1063,12 +1063,12 @@ void adpvm_unpack(const i5_array & _m)
   pvm_upkint(&imax,1,1);
   if (allocated(m)) {
     if (m.indexmin()!=imin) {
-      cerr << "Error in min index in 
+      cerr << "Error in min index in
           void adpvm_unpack(const dvector& v)" << endl;
       ad_exit(1);
     }
     if (m.indexmax()!=imax) {
-      cerr << "Error in max index in 
+      cerr << "Error in max index in
           void adpvm_unpack(const dvector& v)" << endl;
       ad_exit(1);
     }
@@ -1077,7 +1077,7 @@ void adpvm_unpack(const i5_array & _m)
   }
   for (int i=imin;i<=imax;i++) adpvm_unpack(m(i));
 }
-*/  
+*/
 // ************************************************************
 // ************************************************************
 
@@ -1148,7 +1148,7 @@ void pvm_pack(const dvar_matrix & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1172,7 +1172,7 @@ void pvm_pack(const dvar3_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1196,7 +1196,7 @@ void pvm_pack(const dvar4_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1220,7 +1220,7 @@ void pvm_pack(const dvar5_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 
 
 void  pvm_end_receive(void) {; }
@@ -1248,15 +1248,15 @@ void pvm_unpack(const dvar_vector& _v)
   pvm_upkint(&imax,1,1);
   if (allocated(v))
   {
-    if (v.indexmin()!=imin) 
+    if (v.indexmin()!=imin)
     {
       cerr << "Error in min index in "
           "void pvm_unpack(const dvar_vector& v)" << endl;
       ad_exit(1);
     }
-    if (v.indexmax()!=imax) 
+    if (v.indexmax()!=imax)
     {
-      cerr << "Error in max index in" 
+      cerr << "Error in max index in"
           " void pvm_unpack(const dvar_vector& v)" << endl;
       ad_exit(1);
     }
@@ -1286,7 +1286,7 @@ void pvm_unpack(const dvar_matrix & _m)
       ad_exit(1);
     }
     if (m.indexmax()!=imax) {
-      cerr << "Error in max index in" 
+      cerr << "Error in max index in"
           " void pvm_unpack(const dvar_matrix& v)" << endl;
       ad_exit(1);
     }
@@ -1295,7 +1295,7 @@ void pvm_unpack(const dvar_matrix & _m)
   }
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1314,7 +1314,7 @@ void pvm_unpack(const dvar3_array & _m)
       ad_exit(1);
     }
     if (m.indexmax()!=imax) {
-      cerr << "Error in max index in" 
+      cerr << "Error in max index in"
           " void pvm_unpack(const dvar3_array& v)" << endl;
       ad_exit(1);
     }
@@ -1323,7 +1323,7 @@ void pvm_unpack(const dvar3_array & _m)
   }
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1351,7 +1351,7 @@ void pvm_unpack(const dvar4_array & _m)
   }
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1365,7 +1365,7 @@ void pvm_unpack(const dvar5_array & _m)
   pvm_upkint(&imax,1,1);
   if (allocated(m)) {
     if (m.indexmin()!=imin) {
-      cerr << "Error in min index in" 
+      cerr << "Error in min index in"
           " void pvm_unpack(const dvector& v)" << endl;
       ad_exit(1);
     }
@@ -1436,7 +1436,7 @@ void pvm_pack(const dmatrix & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1460,7 +1460,7 @@ void pvm_pack(const d3_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1484,7 +1484,7 @@ void pvm_pack(const d4_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1508,7 +1508,7 @@ void pvm_pack(const d5_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1564,7 +1564,7 @@ void pvm_unpack(const dmatrix & _m)
   }
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1592,7 +1592,7 @@ void pvm_unpack(const d3_array & _m)
   }
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1620,7 +1620,7 @@ void pvm_unpack(const d4_array & _m)
   }
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1648,7 +1648,7 @@ void pvm_unpack(const d5_array & _m)
   }
   for (int i=imin;i<=imax;i++) pvm_unpack(m(i));
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1671,7 +1671,7 @@ void pvm_pack(const ivector& _v)
   pvm_pkint(&imax,1,1);
   pvm_pkint(&(v(imin)),imax-imin+1,1);
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1719,7 +1719,7 @@ void pvm_pack(const i3_array & _m)
     pvm_pkint(&imax,1,1);
   }
 }
-/*   
+/*
 void pvm_pack(const i4_array & _m)
 {
   i4_array& m = (i4_array &) _m;
@@ -1729,7 +1729,7 @@ void pvm_pack(const i4_array & _m)
   pvm_pkint(&imax,1,1);
   for (int i=imin;i<=imax;i++) pvm_pack(m(i));
 }
-    
+
 void pvm_pack(const i5_array & _m)
 {
   i5_array& m = (i5_array &) _m;
@@ -1740,7 +1740,7 @@ void pvm_pack(const i5_array & _m)
   for (int i=imin;i<=imax;i++) pvm_pack(m(i));
 }
 */
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1794,7 +1794,7 @@ void pvm_unpack(const imatrix & _m)
   } else {
     m.allocate(imin,imax);
   }
-  for (int i=imin;i<=imax;i++) 
+  for (int i=imin;i<=imax;i++)
   {
     pvm_unpack(m(i));
   }
@@ -1836,7 +1836,7 @@ int adpvm_slave_vinitsend(int mode)
 {
   return adpvm_initsend(mode);
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -1845,7 +1845,7 @@ int adpvm_slave_cinitsend(int mode)
 {
   return adpvm_initsend(mode);
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -1873,9 +1873,9 @@ void adpvm_slave_csend(int ptid)
 int adpvm_slave_vrecv(int ptid)
 {
   int ierr=pvm_recv(ptid,-1);
-  adpvm_unpack(gradient_structure::no_derivatives); 
-  
-  if (!gradient_structure::no_derivatives) 
+  adpvm_unpack(gradient_structure::no_derivatives);
+
+  if (!gradient_structure::no_derivatives)
   {
     save_identifier_string("E");
     save_int_value(ptid);
@@ -1884,7 +1884,7 @@ int adpvm_slave_vrecv(int ptid)
     gradient_structure::GRAD_STACK1->
             set_gradient_stack(adpvm_send_derivatives);
   }
-  
+
   return ierr;
 }
 
@@ -1907,7 +1907,7 @@ int adpvm_slave_crecv(int ptid)
 int adpvm_master_vinitsend(int mode)
 {
   int bufid = adpvm_initsend(mode);
-  adpvm_pack(gradient_structure::no_derivatives); 
+  adpvm_pack(gradient_structure::no_derivatives);
   return bufid;
 }
 
@@ -1947,12 +1947,12 @@ void adpvm_master_vsend(int id)
  */
 int adpvm_master_vrecv(int id)
 {
-  return adpvm_recv(id,2); 
+  return adpvm_recv(id,2);
 }
-int adpvm_master_crecv(int id) 
+int adpvm_master_crecv(int id)
 {
   ad_constant_flag=1;
-  int status=adpvm_recv(id,2); 
+  int status=adpvm_recv(id,2);
   ad_constant_flag=0;
   return status;
 }
@@ -1989,12 +1989,12 @@ dvar_vector get_x_from_master(void)
   int ptid=pvm_parent();
   // ***************  begin variable receive block *********************
   adpvm_slave_vrecv(ptid);
-  adpvm_unpack(x);  
+  adpvm_unpack(x);
   adpvm_slave_end_vreceive();
   // ***************  end receive block ***********************************
   return x;
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -2005,12 +2005,12 @@ dvector get_dvector_from_master(void)
   int ptid=pvm_parent();
   // ***************  begin variable receive block *********************
   adpvm_slave_crecv(ptid);
-  adpvm_unpack(x);  
+  adpvm_unpack(x);
   adpvm_slave_end_creceive();
   // ***************  end receive block ***********************************
   return x;
 }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -2021,12 +2021,12 @@ dmatrix get_dmatrix_from_master(void)
   int ptid=pvm_parent();
   // ***************  begin variable receive block *********************
   adpvm_slave_crecv(ptid);
-  adpvm_unpack(x);  
+  adpvm_unpack(x);
   adpvm_slave_end_creceive();
   // ***************  end receive block ***********************************
   return x;
 }
-  
+
 /**
  * Description not yet available.
  * \param

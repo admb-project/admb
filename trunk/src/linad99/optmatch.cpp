@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -11,10 +11,10 @@
 #include <admodel.h>
 
 /**
-  Checks if the program has been invoked with a particular command line argument ("string"). 
+  Checks if the program has been invoked with a particular command line argument ("string").
   \param argc Number of command line arguments (as in all C programs)
   \param argv Array  (of length argc) of command line arguments (as in all C programs)
-  \param string Should be one of the possible command line arguments to an ADMB program.  
+  \param string Should be one of the possible command line arguments to an ADMB program.
   \return An index into "argv" where the match with "string" is obtained. In case of no match, the value "-1" is returned.
  */
 
@@ -81,7 +81,7 @@ int option_match(char *_s, const char *string, const int& _nopt)
      i++;
    }
    while (p);
-   do 
+   do
    {
      p=strtok('\0'," ");
      if (!p) break;
@@ -96,7 +96,7 @@ int option_match(char *_s, const char *string, const int& _nopt)
   Checks if the program has been invoked with a particular command line argument ("string"). If so, counts the number of arguments ("nopt") to this command line option. For example if the program has been invoked with the command line option "-ind FILE", then nopt=1.
   \param argc Number of command line arguments (as in all C programs)
   \param argv Array  (of length argc) of command line arguments (as in all C programs)
-  \param string Should be one of the possible command line arguments to an ADMB program.  
+  \param string Should be one of the possible command line arguments to an ADMB program.
   \param nopt On return holds the number arguments/options associated with "string".
   \return An index into "argv" where the match with "string" is obtained. In case of no match, the value "-1" is returned.
  */

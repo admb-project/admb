@@ -3,28 +3,28 @@
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- * 
+ *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
- * 
+ *
  * License:
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -53,9 +53,9 @@
 #ifndef _ADMODEL_H_
   #define  _ADMODEL_H_
 #ifdef __GNUDOS__
-  #define CGNU_DOUBLE double 
+  #define CGNU_DOUBLE double
 #else
-  #define CGNU_DOUBLE const double& 
+  #define CGNU_DOUBLE const double&
 #endif
 #include <fvar.hpp>
 #include <d4arr.hpp>
@@ -119,7 +119,7 @@ class model_name_tag
 {
   const char * name;
   //friend ostream& operator<<(const ostream& os, const model_name_tag& mnt);
-public: 
+public:
   model_name_tag(void){}
   void allocate(const char * s);
   label_class label(void){return name;}
@@ -343,7 +343,7 @@ public:
   static void xinit(const dvector& x); // get the number of active parameters
   static void copy_all_values(const dvector& x, const int& ii); //save all initial parameter
                                                    // values in a vector
-  static void restore_all_values(const dvector& x, const int& ii); //get ivalues for all 
+  static void restore_all_values(const dvector& x, const int& ii); //get ivalues for all
                                     // active parameters from a vector
   static dvariable reset(const dvar_vector& x); // get the number of active parameters
   static int nvarcalc(void);
@@ -774,13 +774,13 @@ public:
  * Description not yet available.
  * \param
  */
-class likeprof_params 
+class likeprof_params
 {
   double stepsize;
   int    stepnumber;
 protected:
 public:
-  static likeprof_params * likeprofptr[50]; // this should be a 
+  static likeprof_params * likeprofptr[50]; // this should be a
                                                // resizeable array
   static num_likeprof_params;
   void allocate(void){};

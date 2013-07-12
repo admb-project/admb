@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -45,8 +45,9 @@ void ad_make_code_reentrant(void)
   }
 }
 
+//REMOVE
 void ssbul_l(char * ptmp){;}
-    
+
 void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
   char *** pargv)
 {
@@ -128,7 +129,7 @@ void cleanup_argv(int nopt,char *** pa)
     {
       for (int i=0;i<=nopt;i++)
       {
-        if (a[i]) 
+        if (a[i])
         {
           free(a[i]);
         }
@@ -138,7 +139,6 @@ void cleanup_argv(int nopt,char *** pa)
     }
   }
 }
-
 
 void do_dll_housekeeping(int argc,char ** argv)
 {
@@ -161,7 +161,7 @@ void do_dll_housekeeping(int argc,char ** argv)
   }
 #else
   ad_exit=exit;
-  
+
   if (!ad_printf) ad_printf=printf;
 #endif
 }
@@ -242,12 +242,10 @@ class string_parser
   char * str;
   char * nt;
   char * ct;
-  string_parser(char * s,int n); 
-
-
+  string_parser(char * s,int n);
 };
 
-string_parser::string_parser(char * s,int n) 
+string_parser::string_parser(char * s,int n)
 {
   if (strlen(s)>n)
   {
@@ -286,7 +284,7 @@ char * string_parser::get_next_option(int & n)
   n=nlen;
   char * rs=ct;
 
-  if (nlen!=0) 
+  if (nlen!=0)
   {
     ct=nt;
     int ii=0;
@@ -296,7 +294,7 @@ char * string_parser::get_next_option(int & n)
       ii++;
     }
     nlen=ii;
-  
+
     while (nt==' ')
     {
       nt++;
@@ -340,7 +338,7 @@ class string_parser
   char * ct;
   int nlen;
 public:
-  string_parser(char * s,int n); 
+  string_parser(char * s,int n);
   char * get_next_option(int & n);
 };
 
@@ -348,7 +346,7 @@ void davesnobullshitstrncpy(char * a,const char * b, int n);
 char ** parse_dll_options(char * s,int& argc);
 
 
-string_parser::string_parser(char * s,int n) 
+string_parser::string_parser(char * s,int n)
 {
   if (strlen(s) > (unsigned int)n)
   {
@@ -387,7 +385,7 @@ char * string_parser::get_next_option(int & n)
   n=nlen;
 
   char * rt=ct;
-  if (nlen!=0) 
+  if (nlen!=0)
   {
     ct=nt;
     int ii=0;
@@ -397,7 +395,7 @@ char * string_parser::get_next_option(int & n)
       ii++;
     }
     nlen=ii;
-  
+
     while (*nt==' ')
     {
       nt++;
@@ -429,7 +427,7 @@ char** parse_dll_options(char *pname, const int& _argc, char *s)
 
   int n=0;
   int ii=1;
-  do 
+  do
   {
      char * ss=sp.get_next_option(n);
      if (n>0)

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -23,7 +23,7 @@ dvar3_array operator/(const prevariable& d, const dvar3_array& m)
        tmp(i)=d/m(i);
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.
@@ -38,7 +38,7 @@ dvar3_array operator/(const prevariable& d, const d3_array& m)
        tmp(i)=d/m(i);
      }
      return tmp;
-   }  
+   }
 
 /**
  * Description not yet available.

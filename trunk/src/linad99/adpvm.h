@@ -3,28 +3,28 @@
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- * 
+ *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
- * 
+ *
  * License:
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -83,7 +83,7 @@ void pvm_unpack(const dmatrix & _m);
 void pvm_unpack(const d3_array & _m);
 void pvm_unpack(const d4_array & _m);
 void pvm_unpack(const d5_array & _m);
-    
+
 void pvm_pack(int v);
 void pvm_pack(const ivector& _v);
 void pvm_pack(const imatrix & _m);
@@ -97,62 +97,62 @@ void pvm_unpack(const imatrix & _m);
 void pvm_unpack(const i3_array & _m);
 //void pvm_unpack(const i4_array & _m);
 //void pvm_unpack(const i5_array & _m);
-    
+
 extern "C" {
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_SETOPT )(int,int);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_RECV)(int,int);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_CATCHOUT)(FILE*);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_SEND)(int,int);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_CONFIG )(int*,int*,struct pvmhostinfo **);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_SPAWN )(char *,char **,int,char *,int,int *);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_PARENT) (void);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_INITSEND) (int);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_UPKDOUBLE) (double*,int,int);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_PKINT) (int*,int,int);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_PKSTR) (char*);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_UPKSTR) (char*);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_PKDOUBLE) (double*,int,int);
 
-typedef 
-  __declspec(dllexport) 
+typedef
+  __declspec(dllexport)
   int (*ADPVM_UPKINT) (int*,int,int);
 
 

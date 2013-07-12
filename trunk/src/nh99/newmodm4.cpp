@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -12,7 +12,6 @@ double function_minimizer::unrestricted_hess_determinant(void)
   if (ad_comm::wd_flag)
      tmpstring = ad_comm::adprogram_name + ".hes";
   uistream ifs((char*)tmpstring);
-    
   if (!ifs)
   {
     cerr << "Error opening file " << (char*) tmpstring

@@ -336,6 +336,8 @@ ifeq ($(TERMINAL),dos)
 	copy df1b2-separable\sedf1b2* ${DISK}\bin
 	if exist ${DISK}\bin\admb-cfg.sh del ${DISK}\bin\admb-cfg.sh
 	echo "CXX=$(CXX)" > ${DISK}\bin\admb-cfg.sh
+	echo "CXXFLAGS=$(CXXFLAGS)" >> ${DISK}\bin\admb-cfg.sh
+	echo "LDFLAGS=$(LDFLAGS)" >> ${DISK}\bin\admb-cfg.sh
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=..\${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=..\${DISK} bins
 	copy ..\scripts\mingw\set-admb-mingw.bat ${DISK}\bin

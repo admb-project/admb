@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -26,7 +26,6 @@ data_int& data_int::operator=(const int xx)
   val=xx;
   return *this;
 }
- 
 
 ad_integer::ad_integer(const data_int& _d) : d(int(*(data_int*)(&_d))) {}
 

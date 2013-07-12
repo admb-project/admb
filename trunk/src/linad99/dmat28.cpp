@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -304,7 +304,7 @@ banded_lower_triangular_dmatrix choleski_decomp(
   int minsave=M.indexmin();
   M.shift(1);
   int n=M.indexmax();
-  
+
   int bw=M.bandwidth();
   banded_lower_triangular_dmatrix L(1,n,bw);
 #ifndef SAFE_INITIALIZE
@@ -368,7 +368,7 @@ banded_lower_triangular_dmatrix choleski_decomp(
  * Description not yet available.
  * \param
  */
-banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator = 
+banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
   (const banded_symmetric_dmatrix& M)
 {
   int _bw=M.bandwidth();
@@ -402,12 +402,12 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
   }
   return *this;
 }
-    
+
 /**
  * Description not yet available.
  * \param
  */
-  banded_symmetric_dmatrix banded_symmetric_dmatrix::sub(int l,int u)   
+  banded_symmetric_dmatrix banded_symmetric_dmatrix::sub(int l,int u)
   {
     return banded_symmetric_dmatrix(*this,l,u);
   }
@@ -495,7 +495,6 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
     return get_eigen_values(diag.shift(1),offdiag.shift(1));
   }
 
-    
   dmatrix eigenvectors(const banded_symmetric_dmatrix& _SS,const dvector& _e)
   {
     banded_symmetric_dmatrix& S = (banded_symmetric_dmatrix&) _SS;

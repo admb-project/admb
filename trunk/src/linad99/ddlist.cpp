@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -51,8 +51,8 @@ dlist::dlist(void)
   int on,nopt;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
   {
-    if (nopt ==1)	    
-    {	      
+    if (nopt ==1)
+    {
       gradient_structure::MAX_DLINKS=atoi(ad_comm::argv[on+1]);
     }
     else
@@ -61,7 +61,7 @@ dlist::dlist(void)
         " you have " << nopt << endl;		
       ad_exit(1);
     }	
-  }   
+  }
   // cout << sizeof(double_and_int) << endl;
   // cerr << "dlist::dlist(void)\n";
   last = 0;
@@ -76,7 +76,7 @@ dlist::dlist(void)
 #else
   int adjust=(8- ((int) (ddlist_space))%8)%8;
 #endif
-  
+
   ddlist_spacea=ddlist_space+adjust;
 
   for (int i = 0; i < gradient_structure::MAX_DLINKS; ++i)
@@ -101,7 +101,7 @@ dlink * dlist::create()
   }
  */
 
-  dlink_addresses[nlinks]=tmp;   // keep track of the links so you can 
+  dlink_addresses[nlinks]=tmp;   // keep track of the links so you can
                                  // zero them out
   nlinks+=1;
 
@@ -124,7 +124,7 @@ dlink * dlist::create()
   // cout << "Made a dlink with address " << _farptr_tolong(tmp) <<"\n";
   return(tmp);
 }
- 
+
 /**
  * Description not yet available.
  * \param
@@ -156,7 +156,7 @@ dlist::~dlist()
 //   cout << "entered ~dlist   last =" << _farptr_tolong(last) << "\n";
 
   unsigned int count=0;
-  
+
   while(last)
   {
     count+=1;
@@ -235,4 +235,4 @@ dlink * dlist::append(dlink * app)
   // cout << " In dlist::append  last = " << _farptr_tolong(last) <<"\n";
 
   return(last);
-}    
+}

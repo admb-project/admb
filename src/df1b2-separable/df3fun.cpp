@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 
 #include <df1b2fun.h>
@@ -55,7 +55,6 @@
 
  dvector value(const df3_one_vector& v)
  {
-   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -65,10 +64,9 @@
    }
    return cv;
  }
-   
+
  dvector first_derivatives(const df3_one_vector& v)
  {
-   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -78,11 +76,9 @@
    }
    return cv;
  }
-   
 
  dvector second_derivatives(const df3_one_vector& v)
  {
-   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -92,10 +88,9 @@
    }
    return cv;
  }
-   
+
  dvector third_derivatives(const df3_one_vector& v)
  {
-   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -105,7 +100,6 @@
    }
    return cv;
  }
-   
 
   void df3_one_vector::initialize(void)
   {
@@ -139,13 +133,13 @@
     }
     if ( (shape=new vector_shapex(min,max,v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df3_one_vector" 
+      cerr << "Error trying to allocate memory for df3_one_vector"
            << endl;;
       ad_exit(1);
     }
     v-=min;
   }
-  
+
   void df3_one_vector::allocate(void)
   {
     index_min=0;
@@ -153,11 +147,9 @@
     v=0;
     shape=0;
   }
-    
 
  dmatrix value(const df3_one_matrix& v)
  {
-   
    int rmin=v.indexmin();
    int rmax=v.indexmax();
    dmatrix cm(rmin,rmax);
@@ -165,7 +157,7 @@
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax); 
+     cm(i).allocate(cmin,cmax);
      for (int j=cmin;j<=cmax;j++)
      {
        cm(i,j)=value(v(i,j));
@@ -173,10 +165,9 @@
    }
    return cm;
  }
-   
+
  dmatrix first_derivatives(const df3_one_matrix& v)
  {
-   
    int rmin=v.indexmin();
    int rmax=v.indexmax();
    dmatrix cm(rmin,rmax);
@@ -184,12 +175,11 @@
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax); 
+     cm(i).allocate(cmin,cmax);
      cm(i)=first_derivatives(v(i));
    }
    return cm;
  }
-   
 
  dmatrix second_derivatives(const df3_one_matrix& v)
  {
@@ -200,12 +190,12 @@
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax); 
+     cm(i).allocate(cmin,cmax);
      cm(i)=second_derivatives(v(i));
    }
    return cm;
  }
-   
+
  dmatrix third_derivatives(const df3_one_matrix& v)
  {
    int rmin=v.indexmin();
@@ -215,12 +205,12 @@
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax); 
+     cm(i).allocate(cmin,cmax);
      cm(i)=third_derivatives(v(i));
    }
    return cm;
  }
-   
+
 
  df3_one_matrix::df3_one_matrix(const df3_one_matrix& m2)
  {
@@ -282,17 +272,17 @@
     }
     if ( (shape=new mat_shapex(v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df3_one_vector" 
+      cerr << "Error trying to allocate memory for df3_one_vector"
            << endl;;
     }
     v-=rmin;
-    
+
     for (int i=rmin;i<=rmax;i++)
     {
       v[i].allocate(cmin,cmax);
     }
   }
-    
+
 /*
   df3_one_variable operator F(const df3_one_variable& x)
   {
@@ -465,7 +455,7 @@
     *z.get_udot2() = *x.get_udot2() * *y.get_u()
                    + 2.0 * *x.get_udot() * *y.get_udot()
                    +  *x.get_u() * *y.get_udot2();
-    
+
     *z.get_udot3() = *x.get_udot3() * *y.get_u()
                    + 3.0 * *x.get_udot2() * *y.get_udot()
                    + 3.0 * *x.get_udot() * *y.get_udot2()
@@ -481,7 +471,7 @@
     *z.get_udot() = x * *y.get_udot();
 
     *z.get_udot2() = x * *y.get_udot2();
-    
+
     *z.get_udot3() = x * *y.get_udot3();
     return z;
   }
@@ -494,7 +484,7 @@
     *z.get_udot() =  *x.get_udot() * y;
 
     *z.get_udot2() = *x.get_udot2() * y;
-    
+
     *z.get_udot3() = *x.get_udot3() * y;
     return z;
   }
@@ -524,33 +514,33 @@
     return z;
   }
 
- //  
+ //
  //   df3_one_variable operator / (const df3_one_variable& x,
  //     const df3_one_variable& y)
  //   {
  //     df3_one_variable z;
  //     double yinv =  1.0 / (*y.get_u());
- //     double yinv2 = yinv * yinv; 
- //     double yinv3 = yinv * yinv2; 
+ //     double yinv2 = yinv * yinv;
+ //     double yinv3 = yinv * yinv2;
  //     doubl yd = *y.get_udot();
- // 
+ //
  //     //*z.get_u() = *x.get_u() /  *y.get_u();
  //     *z.get_u() = *x.get_u() * yinv;
- // 
+ //
  //     *z.get_udot() =  - (*x.get_u()) * yinv2 * yd
  //                   + *x.get_udot() * yinv;
- // 
+ //
  //     *z.get_udot2() = *x.get_udot2() * yinv
  //                    - 2.0 * *x.get_udot() * yd * yinv2
  //                    + 2.0 * *x.get_u() * yinv3  * yd *yd
  //                    -  *x.get_u() * yinv2 * y.get_udot2();
- //     
+ //
  //     *z.get_udot3() = *x.get_udot3() * yinv
  //                    + 3.0 * *x.get_udot2() * *y.get_udot()
  //                    + 3.0 * *x.get_udot() * *y.get_udot2()
  //                    +  *x.get_u() * *y.get_udot3();
  //   }
- //  
+ //
 
 
   df3_one_variable operator + (const df3_one_variable& y,
@@ -633,10 +623,7 @@
 
   df3_one_variable::df3_one_variable(void)
   {
-     
-
   }
-
 
 df3_one_matrix choleski_decomp(const df3_one_matrix& MM)
 {
@@ -668,14 +655,14 @@ df3_one_matrix choleski_decomp(const df3_one_matrix& MM)
 
   int i,j,k;
   df3_one_variable tmp;
-   
+
     if (value(M(1,1))<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-   
+
   L(1,1)=sqrt(M(1,1));
   for (i=2;i<=n;i++)
   {
@@ -698,14 +685,14 @@ df3_one_matrix choleski_decomp(const df3_one_matrix& MM)
     {
       tmp-=L(i,k)*L(i,k);
     }
-   
+
     if (value(tmp)<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-   
+
     L(i,i)=sqrt(tmp);
   }
 
@@ -730,7 +717,6 @@ df1b2matrix& df1b2matrix::operator = (const df3_one_matrix& M)
   }
   return *this;
 }
-    
 
 df1b2vector& df1b2vector::operator = (const df3_one_vector& M)
 {
@@ -750,7 +736,6 @@ df1b2vector& df1b2vector::operator = (const df3_one_vector& M)
   }
   return *this;
 }
-    
 
 df1b2variable& df1b2variable::operator = (const df3_one_variable& v)
 {
@@ -765,7 +750,7 @@ df1b2variable& df1b2variable::operator = (const df3_one_variable& v)
   {
     *zd++ = df * *xd++;
   }
-      
+
  /*
   cout << *v.get_u()  << " ";
   cout << *v.get_udot()  << " ";
@@ -774,7 +759,7 @@ df1b2variable& df1b2variable::operator = (const df3_one_variable& v)
   */
   f1b2gradlist->write_pass1(px,this,*v.get_udot(),*v.get_udot2(),
 
-    *v.get_udot3()); 
+    *v.get_udot3());
   return *this;
 }
 
@@ -790,7 +775,7 @@ df1b2variable cumd_norm(const df1b2variable& _x)
   const double b4=-1.821255978;
   const double b5=1.330274429;
   const double p=.2316419;
-  
+
   if (value(x)>=0)
   {
     df3_one_variable u1=p*x;
@@ -822,7 +807,7 @@ df1b2variable bounded_cumd_norm(const df1b2variable& _x, double beta)
   const double b4=-1.821255978;
   const double b5=1.330274429;
   const double p=.2316419;
-  
+
   if (value(x)>=0)
   {
     df3_one_variable u1=p*x;

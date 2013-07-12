@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -44,12 +44,11 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
   nvar=x.size()+u0.size()+sz;
   independent_variables y(1,nvar);
 
-  
   // need to set random effects active together with whatever
   // init parameters should be active in this phase
-  initial_params::set_inactive_only_random_effects(); 
-  initial_params::set_active_random_effects(); 
-  int onvar=initial_params::nvarcalc(); 
+  initial_params::set_inactive_only_random_effects();
+  initial_params::set_active_random_effects();
+  int onvar=initial_params::nvarcalc();
   initial_params::xinit(y);    // get the initial values into the
   // do we need this next line?
   y(1,xs)=x;
@@ -70,7 +69,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
   for (i=smin;i<=smax;i++)
     y(ii++)=lst(i);
 
-  dvar_vector vy=dvar_vector(y); 
+  dvar_vector vy=dvar_vector(y);
   initial_params::stddev_vscale(d,vy);
 
 
@@ -87,9 +86,9 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
     dcompressed_triplet & lst = *(pmin->lapprox->sparse_triplet2);
     int mmin=lst.indexmin();
     int mmax=lst.indexmax();
-    dvar_compressed_triplet * vsparse_triplet = 
+    dvar_compressed_triplet * vsparse_triplet =
       pmin->lapprox->vsparse_triplet;
- 
+
     if (vsparse_triplet==0)
     {
       pmin->lapprox->vsparse_triplet=
@@ -111,11 +110,11 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
           (*vsparse_triplet)(1,i)=lst(1,i);
           (*vsparse_triplet)(2,i)=lst(2,i);
         }
-      } 
+      }
     }
-    dcompressed_triplet * vsparse_triplet_adjoint = 
+    dcompressed_triplet * vsparse_triplet_adjoint =
       pmin->lapprox->vsparse_triplet_adjoint;
- 
+
     if (vsparse_triplet_adjoint==0)
     {
       pmin->lapprox->vsparse_triplet_adjoint=
@@ -137,7 +136,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
           (*vsparse_triplet_adjoint)(1,i)=lst(1,i);
           (*vsparse_triplet_adjoint)(2,i)=lst(2,i);
         }
-      } 
+      }
     }
     vsparse_triplet->get_x()=vy(ii,ii+mmax-mmin).shift(1);
 
@@ -148,7 +147,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
    sample_value.initialize();
    //dvar_matrix ch=choleski_decomp(inv(vHess));
 
-   dvar_compressed_triplet * vsparse_triplet  
+   dvar_compressed_triplet * vsparse_triplet
      = pmin->lapprox->vsparse_triplet;
 
    dvar_hs_smatrix * dhs= return_choleski_decomp(*vsparse_triplet);
@@ -168,14 +167,14 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
        //dvar_vector tau=ch*pmin->lapprox->epsilon(is);
        dvar_vector tau=return_choleski_factor_solve(dhs,
          pmin->lapprox->epsilon(is));
-      
+
        vy(xs+1,xs+us).shift(1)+=tau;
        initial_params::reset(vy);    // get the values into the model
        vy(xs+1,xs+us).shift(1)-=tau;
-  
+
        *objective_function_value::pobjfun=0.0;
        pmin->AD_uf_outer();
-  
+
       /*
        if (pmin->lapprox->istudent_flag==0)
       */
@@ -196,8 +195,8 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
           =value(sample_value(is))-fhat;
      }
      dvariable min_vf=min(sample_value);
-     vf=min_vf-log(mean(exp(min_vf-sample_value))); 
-   
+     vf=min_vf-log(mean(exp(min_vf-sample_value)));
+
    }
    else
    {
@@ -271,13 +270,13 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
    if (pmin->lapprox->istudent_flag==0)
   */
    {
-     vf-=us*0.91893853320467241; 
+     vf-=us*0.91893853320467241;
    }
   /*
    else
    {
      (*(pmin->lapprox->importance_sampling_values))
-        +=us*0.91893853320467241; 
+        +=us*0.91893853320467241;
    }
   */
 
@@ -296,14 +295,14 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
    vy(xs+1,xs+us).shift(1)=u0;
    initial_params::reset(vy);    // get the values into the model
    gradient_structure::set_YES_DERIVATIVES();
-  
+
   ii=1;
   for (i=1;i<=xs;i++)
     xadjoint(i)=g(ii++);
   for (i=1;i<=us;i++)
     uadjoint(i)=g(ii++);
-   
-  dcompressed_triplet * vsparse_triplet_adjoint = 
+ 
+  dcompressed_triplet * vsparse_triplet_adjoint =
     pmin->lapprox->vsparse_triplet_adjoint;
   int mmin=vsparse_triplet_adjoint->indexmin();
   int mmax=vsparse_triplet_adjoint->indexmax();

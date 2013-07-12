@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -19,10 +19,10 @@ void ad_read_pass2_dvdvdv(void);
  * Description not yet available.
  * \param
  */
- int df1b2_gradlist::write_pass1(const df1b2variable * _px, 
+ int df1b2_gradlist::write_pass1(const df1b2variable * _px,
    const df1b2variable * _py,const df1b2variable * pw,
    const df1b2variable * pz,
-   double df_x, double df_y, double df_z, 
+   double df_x, double df_y, double df_z,
    double df_xx, double df_xy,double df_xz,double df_yy,
    double df_yz,double df_zz,
    double df_xxx,
@@ -116,7 +116,7 @@ void ad_read_pass2_dvdvdv(void);
 void read_pass2_1_dvdvdv(void);
 void read_pass2_2_dvdvdv(void);
 void read_pass2_3_dvdvdv(void);
-  
+
 /**
  * Description not yet available.
  * \param
@@ -135,7 +135,7 @@ void ad_read_pass2_dvdvdv(void)
     read_pass2_3_dvdvdv();
     break;
   default:
-    cerr << "illegal value for df1b2variable::pass = " 
+    cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
     exit(1);
   }
@@ -151,10 +151,10 @@ void read_pass2_1_dvdvdv(void)
   // and  forward for bptr2 and nbptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  //char * bptr=f1b2gradlist->bptr; 
-  //char * bptr2=f1b2gradlist2->bptr; 
+  //char * bptr=f1b2gradlist->bptr;
+  //char * bptr2=f1b2gradlist2->bptr;
   int nvar=df1b2variable::nvar;
-  test_smartlist& list=f1b2gradlist->list; 
+  test_smartlist& list=f1b2gradlist->list;
   //f1b2gradlist->nlist-=sizeof(int);
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
   list-=num_bytes;
@@ -269,7 +269,7 @@ void read_pass2_1_dvdvdv(void)
   double * wdot=(double*)bptr;
 
   list.restoreposition(); // save pointer to beginning of record;
- 
+
   // ****************************************************************
   // turn this off if no third derivatives are calculated
   // if (!no_third_derivatives)
@@ -305,9 +305,9 @@ void read_pass2_1_dvdvdv(void)
   (df2),(d2f11),(d2f12),(d2f22),
   (d3f111),(d3f112),(d3f122),
   (d3f222),1);
- print_derivatives(pz,"z"); 
- print_derivatives(px,"x"); 
- print_derivatives(py,"y"); 
+ print_derivatives(pz,"z");
+ print_derivatives(px,"x");
+ print_derivatives(py,"y");
 #endif
 #if defined(__DERCHECK__)
   if (derchecker)
@@ -324,7 +324,7 @@ void read_pass2_1_dvdvdv(void)
         case 1:
           if (!derchecker->dotflag)
             px->u_bar[derchecker->index-1]+=derchecker->delta;
-          else 
+          else
             px->u_dot_bar[derchecker->index-1]+=derchecker->delta;
           break;
         case 2:
@@ -340,7 +340,7 @@ void read_pass2_1_dvdvdv(void)
             pz->u_dot_bar[derchecker->index-1]+=derchecker->delta;
           break;
         default:
-          cerr << "Invalid index value for dercheck_index was " 
+          cerr << "Invalid index value for dercheck_index was "
                << derchecker->index << endl;
           break;
         }
@@ -351,7 +351,7 @@ void read_pass2_1_dvdvdv(void)
         case 1:
           if (!derchecker->dotflag)
             px->u_bar[derchecker->index-1]-=derchecker->delta;
-          else 
+          else
             px->u_dot_bar[derchecker->index-1]-=derchecker->delta;
           break;
         case 2:
@@ -367,13 +367,13 @@ void read_pass2_1_dvdvdv(void)
             pz->u_dot_bar[derchecker->index-1]-=derchecker->delta;
           break;
         default:
-          cerr << "Invalid index value for dercheck_index was " 
+          cerr << "Invalid index value for dercheck_index was "
                << derchecker->index << endl;
           break;
         }
         break;
       }
-    }  
+    }
   }
 #endif
 
@@ -444,7 +444,7 @@ void read_pass2_2_dvdvdv(void)
   // list 1
   //
   int nvar=df1b2variable::nvar;
-  test_smartlist & list=f1b2gradlist->list; 
+  test_smartlist & list=f1b2gradlist->list;
 
   int total_bytes=3*sizeof(df1b2_header)+sizeof(char*)
     +2*(nvar+1)*sizeof(double);
@@ -458,7 +458,7 @@ void read_pass2_2_dvdvdv(void)
 // end of string identifier debug stuff
 
   list.saveposition(); // save pointer to beginning of record;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
@@ -466,8 +466,8 @@ void read_pass2_2_dvdvdv(void)
   //
   // list 2
   //
-  test_smartlist & list2=f1b2gradlist->list2; 
-  fixed_smartlist2 & nlist2=f1b2gradlist->nlist2; 
+  test_smartlist & list2=f1b2gradlist->list2;
+  fixed_smartlist2 & nlist2=f1b2gradlist->nlist2;
   // get record size
   int num_bytes2=*nlist2.bptr;
   --nlist2;
@@ -584,7 +584,7 @@ void read_pass2_2_dvdvdv(void)
   double * wdot=(double*)list.bptr;
 
   list.restoreposition(num_bytes); // save pointer to beginning of record;
-  
+
   double * zbar;
   double * zdotbar;
 
@@ -613,20 +613,20 @@ void read_pass2_2_dvdvdv(void)
   (df2),(d2f11),(d2f12),(d2f22),
   (d3f111),(d3f112),(d3f122),
   (d3f222),1);
- print_derivatives(pz,"z"); 
- print_derivatives(px,"x"); 
- print_derivatives(pw,"x"); 
- print_derivatives(py,"y"); 
+ print_derivatives(pz,"z");
+ print_derivatives(px,"x");
+ print_derivatives(pw,"x");
+ print_derivatives(py,"y");
 #endif
 
   int i;
-  
+
   for (i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
   }
-  
+
   for (i=0;i<nvar;i++)
   {
     *x_tilde+=(d2f11)*zbar[i]*x_bar_tilde[i];
@@ -776,17 +776,17 @@ void read_pass2_2_dvdvdv(void)
               pz->u_dot_bar_tilde[derchecker->index-1];
           break;
         default:
-          cerr << "Invalid index value for dercheck_index was " 
+          cerr << "Invalid index value for dercheck_index was "
                << derchecker->index << endl;
         }
       }
-    }  
+    }
   }
 #endif
 #if defined(PRINT_DERS)
- print_derivatives(pz,"z"); 
- print_derivatives(px,"x"); 
- print_derivatives(py,"y"); 
+ print_derivatives(pz,"z");
+ print_derivatives(px,"x");
+ print_derivatives(py,"y");
 #endif
 }
 
@@ -800,8 +800,8 @@ void read_pass2_3_dvdvdv(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
-  test_smartlist& list=f1b2gradlist->list; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
+  test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
@@ -926,12 +926,12 @@ void read_pass2_3_dvdvdv(void)
   (df2),(d2f11),(d2f12),(d2f22),
   (d3f111),(d3f112),(d3f122),
   (d3f222),1);
- print_derivatives(pz,"z"); 
- print_derivatives(px,"x"); 
- print_derivatives(py,"y"); 
- print_derivatives(pw,"y"); 
+ print_derivatives(pz,"z");
+ print_derivatives(px,"x");
+ print_derivatives(py,"y");
+ print_derivatives(pw,"y");
 #endif
-  
+
   *(px->u_tilde)+=(df1)* *(pz->u_tilde);
   *(py->u_tilde)+=(df2)* *(pz->u_tilde);
   *(pw->u_tilde)+=(df3)* *(pz->u_tilde);
@@ -964,9 +964,9 @@ void read_pass2_3_dvdvdv(void)
 
 
 #if defined(PRINT_DERS)
- print_derivatives(pz,"z"); 
- print_derivatives(px,"x"); 
- print_derivatives(py,"y"); 
- print_derivatives(pw,"y"); 
+ print_derivatives(pz,"z");
+ print_derivatives(px,"x");
+ print_derivatives(py,"y");
+ print_derivatives(pw,"y");
 #endif
 }

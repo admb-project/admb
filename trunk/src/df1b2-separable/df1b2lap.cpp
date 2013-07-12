@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -35,14 +35,13 @@ void get_second_ders(int xs,int us,const init_df1b2vector y,dmatrix& Hess,
 
   double re_objective_function_value::fun_without_pen=0;
 
-      
-int laplace_approximation_calculator::antiflag=0; 
-int laplace_approximation_calculator::saddlepointflag=0; 
+int laplace_approximation_calculator::antiflag=0;
+int laplace_approximation_calculator::saddlepointflag=0;
 int laplace_approximation_calculator::print_importance_sampling_weights_flag=0;
 int laplace_approximation_calculator::sparse_hessian_flag=0;
 
-int laplace_approximation_calculator::where_are_we_flag=0; 
-dvar_vector * 
+int laplace_approximation_calculator::where_are_we_flag=0;
+dvar_vector *
   laplace_approximation_calculator::variance_components_vector=0;
 
 /**
@@ -69,7 +68,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
   fmc1.ihang=0;
   fmc1.ihflag=0;
   fmc1.use_control_c=0;
-  
+
   if (init_switch)
   {
     u.initialize();
@@ -78,7 +77,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
   {
     u=ubest;
   }
- 
+
   fmc1.dfn=1.e-2;
   dvariable pen=0.0;
   //cout << "starting  norm(u) = " << norm(u) << endl;
@@ -110,32 +109,30 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
         quadratic_prior::get_M_calculations();
       }
       vf+=*objective_function_value::pobjfun;
-     
+
      /*  this is now done in the operator = function
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {
         vf+= quadratic_prior::get_quadratic_priors();
       }
       */
-      
 
       objective_function_value::fun_without_pen=value(vf);
-      
+
       //cout << " pen = " << pen << endl;
       if (noboundepen_flag==0)
       {
         vf+=pen;
       }
       f=value(vf);
-      if (f<fb) 
+      if (f<fb)
       {
         fb=f;
         ub=u;
       }
       gradcalc(usize,g);
-      //cout << " f = " << setprecision(17) << f << " " << norm(g) 
+      //cout << " f = " << setprecision(17) << f << " " << norm(g)
        // << " " << norm(u) << endl;
-     
     }
     u=ub;
   }
@@ -172,7 +169,7 @@ dvector laplace_approximation_calculator::get_uhat_quasi_newton
 
         vf+=pen;
         f=value(vf);
-        if (f<fb) 
+        if (f<fb)
         {
           fb=f;
           ub=u;
@@ -228,7 +225,7 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton
     cout << "  Inner f = " << f << endl;
   }
   //gradient_structure::set_NO_DERIVATIVES();
-  //initial_params::set_inactive_only_random_effects(); 
+  //initial_params::set_inactive_only_random_effects();
   //initial_params::reset(dvar_vector(x));
   return u;
 }
@@ -253,10 +250,10 @@ void set_partition_sizes(int & num_der_blocks,ivector& minder,
       {
         int i;
         int ndb=ad_comm::pvm_manager->num_slave_processes+1;
-    
+
         minder.allocate(1,ndb);
         maxder.allocate(1,ndb);
-    
+
         int nd=nvariables/ndb;
         int r= nvariables - nd * ndb;
         ivector partition(1,ndb);
@@ -264,7 +261,7 @@ void set_partition_sizes(int & num_der_blocks,ivector& minder,
         partition(1,r)+=1;
         minder(1)=1;
         maxder(1)=partition(1);
-     
+
         for (i=2;i<=ndb;i++)
         {
           minder(i)=maxder(i-1)+1;
@@ -274,8 +271,7 @@ void set_partition_sizes(int & num_der_blocks,ivector& minder,
         send_int_to_slaves(maxder(2,ndb));
         break;
       }
-      
-      
+
     case 2: //slave
       minder.allocate(1,1);
       maxder.allocate(1,1);
@@ -283,20 +279,19 @@ void set_partition_sizes(int & num_der_blocks,ivector& minder,
       maxder(1)=get_int_from_master();
       break;
     }
-    
   }
   else
 #endif // #USE_ADPVM
   {
     minder.allocate(1,num_der_blocks);
     maxder.allocate(1,num_der_blocks);
-  
+
     int nd=nvariables/num_der_blocks;
     int r= nvariables - nd * num_der_blocks;
     ivector partition(1,num_der_blocks);
     partition=nd;
     partition(1,r)+=1;
-  
+
     minder(1)=1;
     maxder(1)=partition(1);
     int i;
@@ -314,10 +309,10 @@ void set_partition_sizes(int & num_der_blocks,ivector& minder,
  */
 laplace_approximation_calculator::laplace_approximation_calculator
   (int _xsize,int _usize,int _minder,int _maxder,
-  function_minimizer * _pmin) : 
+  function_minimizer * _pmin):
   init_switch(1),
   separable_call_level(0),
-  triplet_information(0), 
+  triplet_information(0),
   compressed_triplet_information(0),
   nested_separable_calls_counter(1,10),
   nested_tree_position(1,5),
@@ -333,7 +328,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
   sparse_count(0),
   sparse_count_adjoint(0),
   sparse_triplet2(0),
-  vsparse_triplet(0), 
+  vsparse_triplet(0),
   vsparse_triplet_adjoint(0),
   sparse_symbolic(0),
   sparse_symbolic2(0),
@@ -357,7 +352,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
   antiepsilon=0;
   dd_nr_flag=0;
   importance_sampling_components=0;
-  is_diagnostics_flag=0; 
+  is_diagnostics_flag=0;
   importance_sampling_values = 0;
   importance_sampling_weights = 0;
   no_function_component_flag=0;
@@ -404,7 +399,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -ndi option needs integer  -- set to default 20000" << endl;
     }
     else
-    {   
+    {
       int jj=atoi(ad_comm::argv[inner_lmnflag+1]);
       if (jj<=0)
       {
@@ -440,7 +435,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -ilmn option needs integer  -- set to default 10" << endl;
     }
     else
-    {   
+    {
       int jj=atoi(ad_comm::argv[inner_lmnflag+1]);
       if (jj<=0)
       {
@@ -466,12 +461,12 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -ndb option needs non-negative integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       int _num_der_blocks=atoi(ad_comm::argv[on+1]);
       if (_num_der_blocks<=0)
       {
         cerr << "Usage -ndb option needs positive integer  -- ignored" << endl;
-      } 
+      }
       else
       {
         num_der_blocks=_num_der_blocks;
@@ -486,12 +481,12 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -isf option needs non-negative integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       int _nfunnelblocks=atoi(ad_comm::argv[on+1]);
       if (_nfunnelblocks<=0)
       {
         cerr << "Usage -isf option needs positive integer  -- ignored" << endl;
-      } 
+      }
       else
       {
         nfunnelblocks=_nfunnelblocks;
@@ -557,12 +552,12 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -nr option needs non-negative integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       int _num_nr_iters=atoi(ad_comm::argv[on+1]);
       if (_num_nr_iters<0)
       {
         cerr << "Usage -nr option needs non-negative integer  -- ignored" << endl;
-      } 
+      }
       else
       {
         num_nr_iters=_num_nr_iters;
@@ -590,18 +585,17 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -nrcrit option needs number  -- ignored" << endl;
     }
     else
-    {   
-  
+    {
       istringstream ist(ad_comm::argv[on+1]);
       ist >> _nr_crit;
-  
+
       if (_nr_crit<=0)
       {
         cerr << "Usage -nrcrit option needs positive number  -- ignored" << endl;
         _nr_crit=0.0;
-      } 
+      }
     }
-    if (_nr_crit>0) 
+    if (_nr_crit>0)
     {
       nr_crit=_nr_crit;
     }
@@ -613,19 +607,18 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -gh option needs positive integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       int _inner_gh=atoi(ad_comm::argv[on+1]);
       if (_inner_gh<=0)
       {
         cerr << "Usage -gh option needs positive integer  -- ignored" << endl;
-      } 
+      }
       else
       {
         use_gauss_hermite=_inner_gh;
       }
     }
   }
-      
 
   inner_crit=1.e-3;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-icrit",nopt))>-1)
@@ -636,27 +629,25 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -icrit option needs number  -- ignored" << endl;
     }
     else
-    {   
-  
+    {
       istringstream ist(ad_comm::argv[on+1]);
       ist >> _inner_crit;
-  
+
       if (_inner_crit<=0)
       {
         cerr << "Usage -icrit option needs positive number  -- ignored" << endl;
         _inner_crit=0.0;
-      } 
+      }
     }
-    if (_inner_crit>0) 
+    if (_inner_crit>0)
     {
       inner_crit=_inner_crit;
     }
   }
   fmc1.crit=inner_crit;
-      
+
   fmc.dfn=.01;
-      
-  
+
   inner_iprint=0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-iiprint",nopt))>-1)
   {
@@ -665,12 +656,12 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -iprint option needs non-negative integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       int _inner_iprint=atoi(ad_comm::argv[on+1]);
       if (_inner_iprint<=0)
       {
         cerr << "Usage -iip option needs non-negative integer  -- ignored" << endl;
-      } 
+      }
       else
       {
         inner_iprint=_inner_iprint;
@@ -687,12 +678,12 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -maxfn option needs non-negative integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       int _inner_maxfn=atoi(ad_comm::argv[on+1]);
       if (_inner_maxfn<0)
       {
         cerr << "Usage -iip option needs non-negative integer  -- ignored" << endl;
-      } 
+      }
       else
       {
         inner_maxfn=_inner_maxfn;
@@ -713,12 +704,12 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -is option needs positive integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       int tht=atoi(ad_comm::argv[on+1]);
       if (tht<=0)
       {
         cerr << "Usage -is option needs non-negative integer  -- ignored" << endl;
-      } 
+      }
       else
       {
         num_importance_samples=tht;
@@ -729,7 +720,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
         if (rseed1<=0)
         {
           cerr << "Usage -is option needs non-negative integer  -- ignored" << endl;
-        } 
+        }
         else
         {
           rseed=rseed1;
@@ -746,12 +737,12 @@ laplace_approximation_calculator::laplace_approximation_calculator
       cerr << "Usage -isb option needs positive integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       int tht=atoi(ad_comm::argv[on+1]);
       if (tht<=0)
       {
         cerr << "Usage -isb option needs non-negative integer  -- ignored" << endl;
-      } 
+      }
       else
       {
         num_importance_samples=2*tht;
@@ -762,7 +753,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
         if (rseed1<=0)
         {
           cerr << "Usage -isb option needs non-negative integer  -- ignored" << endl;
-        } 
+        }
         else
         {
           rseed=rseed1;
@@ -779,14 +770,14 @@ laplace_approximation_calculator::laplace_approximation_calculator
   {
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-isdiag",nopt))>-1)
     {
-      is_diagnostics_flag=1; 
+      is_diagnostics_flag=1;
     }
     if (importance_sampling_values)
     {
       delete importance_sampling_values;
       importance_sampling_values=0;
     }
-    importance_sampling_values = 
+    importance_sampling_values =
       new dvector(1,num_importance_samples);
 
     if (importance_sampling_weights)
@@ -794,7 +785,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
       delete importance_sampling_weights;
       importance_sampling_weights=0;
     }
-    importance_sampling_weights = 
+    importance_sampling_weights =
       new dvector(1,num_importance_samples);
 
     random_number_generator rng(rseed);
@@ -852,17 +843,16 @@ laplace_approximation_calculator::laplace_approximation_calculator
         cerr << "Usage -epsmult option needs number  -- ignored" << endl;
       }
       else
-      {   
-    
+      {
         istringstream ist(ad_comm::argv[on+1]);
         ist >> eps_mult;
-    
+
         if (eps_mult<=0.0 || eps_mult>1.0)
         {
           cerr << "Usage -epsmult option needs positive number between 0 and 1 "
               "-- ignored" << endl;
           eps_mult=1.0;
-        } 
+        }
       }
       for (i=1;i<=num_importance_samples;i++)
       {
@@ -881,13 +871,13 @@ laplace_approximation_calculator::laplace_approximation_calculator
       set_default_hessian_type();
     }
     else
-    {   
+    {
       int tht=atoi(ad_comm::argv[on+1]);
       if (tht<=0)
       {
         cerr << "Usage -ht option needs non-negative integer  -- ignored" << endl;
         set_default_hessian_type();
-      } 
+      }
       else
       {
         have_users_hesstype=1;
@@ -939,7 +929,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
   default:
     break;
   }
-  
+
   step.allocate(1,usize);
   // !!! nov 12
   f1b2gradlist = new df1b2_gradlist(4000000U,200000U,8000000U,400000U,
@@ -1000,14 +990,14 @@ laplace_approximation_calculator::laplace_approximation_calculator
  */
 laplace_approximation_calculator::laplace_approximation_calculator
   (int _xsize,int _usize,ivector _minder,ivector _maxder,
-  function_minimizer * _pmin ) : 
+  function_minimizer * _pmin ):
   separable_call_level(1),
   triplet_information(0),
   compressed_triplet_information(0),
   nested_separable_calls_counter(1,10),
   nested_tree_position(1,5),
   nr_debug(0),
-  pmin(_pmin), 
+  pmin(_pmin),
   xsize(_xsize),
   usize(_usize),
   bHess_pd_flag(0),
@@ -1155,7 +1145,6 @@ laplace_approximation_calculator::~laplace_approximation_calculator()
     delete block_diagonal_vhessianadjoint;
     block_diagonal_vhessianadjoint =0;
   }
-  
   if (separable_function_difference)
   {
     delete separable_function_difference;
@@ -1185,7 +1174,6 @@ laplace_approximation_calculator::~laplace_approximation_calculator()
     delete bHessadjoint;
     bHessadjoint=0;
   }
-  
   if (grad_x)
   {
     delete grad_x;
@@ -1350,7 +1338,7 @@ void get_second_ders(int xs,int us,const init_df1b2vector _y,dmatrix& Hess,
   int num_der_blocks=lpc->num_der_blocks;
   int xsize=lpc->xsize;
   int usize=lpc->usize;
-  
+
   for (int ip=1;ip<=num_der_blocks;ip++)
   {
     df1b2variable::minder=lpc->minder(ip);
@@ -1370,28 +1358,28 @@ void get_second_ders(int xs,int us,const init_df1b2vector _y,dmatrix& Hess,
       Hess.initialize();
       Dux.initialize();
     }
-    
+
     //cout << "2D" << endl;
     pfmin->user_function();
-    
+
     //pfmin->user_function(y,zz);
     (*re_objective_function_value::pobjfun)+=pen;
     (*re_objective_function_value::pobjfun)+=zz;
-  
+
     if (!initial_df1b2params::separable_flag)
     {
       set_dependent_variable(*re_objective_function_value::pobjfun);
       df1b2_gradlist::set_no_derivatives();
       df1b2variable::passnumber=1;
       df1b2_gradcalc1();
-    
+
       int mind=y(1).minder;
       int jmin=max(mind,xsize+1);
       int jmax=min(y(1).maxder,xsize+usize);
       for (i=1;i<=usize;i++)
         for (j=jmin;j<=jmax;j++)
           Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
-  
+
       jmin=max(mind,1);
       jmax=min(y(1).maxder,xsize);
       for (i=1;i<=usize;i++)
@@ -1437,14 +1425,14 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   /*
     cout << norm2(make_dmatrix(lst)-make_dmatrix(xxxt)) << endl;
     ofstream ofs1("m1");
-    ofs1 << setfixed() << setprecision(3) << setw(10) 
+    ofs1 << setfixed() << setprecision(3) << setw(10)
          << make_dmatrix(lst) << endl;
     ofstream ofs2("m2");
-    ofs2 << setfixed() << setprecision(3) << setw(10) 
+    ofs2 << setfixed() << setprecision(3) << setw(10)
          << make_dmatrix(xxxt) << endl;
-   */ 
+   */
   }
-    
+
   if (pmin->lapprox->sparse_hessian_flag==0)
   {
     nvar=x.size()+u0.size()+u0.size()*u0.size();
@@ -1455,12 +1443,12 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
     nvar=x.size()+u0.size()+sz;
   }
   independent_variables y(1,nvar);
-  
+
   // need to set random effects active together with whatever
   // init parameters should be active in this phase
-  initial_params::set_inactive_only_random_effects(); 
-  initial_params::set_active_random_effects(); 
-  /*int onvar=*/initial_params::nvarcalc(); 
+  initial_params::set_inactive_only_random_effects();
+  initial_params::set_active_random_effects();
+  /*int onvar=*/initial_params::nvarcalc();
   initial_params::xinit(y);    // get the initial values into the
   y(1,xs)=x;
 
@@ -1502,7 +1490,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   }
 //#endif
 
-  dvar_vector vy=dvar_vector(y); 
+  dvar_vector vy=dvar_vector(y);
   initial_params::stddev_vscale(d,vy);
   dvar_matrix vHess;
   if (pmin->lapprox->sparse_hessian_flag==0)
@@ -1553,9 +1541,9 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
     {
       int mmin=lst.indexmin();
       int mmax=lst.indexmax();
-      dvar_compressed_triplet * vsparse_triplet = 
+      dvar_compressed_triplet * vsparse_triplet =
         pmin->lapprox->vsparse_triplet;
-   
+
       if (vsparse_triplet==0)
       {
         pmin->lapprox->vsparse_triplet=
@@ -1577,11 +1565,11 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
             (*vsparse_triplet)(1,i)=lst(1,i);
             (*vsparse_triplet)(2,i)=lst(2,i);
           }
-        } 
+        }
       }
-      dcompressed_triplet * vsparse_triplet_adjoint = 
+      dcompressed_triplet * vsparse_triplet_adjoint =
         pmin->lapprox->vsparse_triplet_adjoint;
-   
+
       if (vsparse_triplet_adjoint==0)
       {
         pmin->lapprox->vsparse_triplet_adjoint=
@@ -1603,14 +1591,13 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
             (*vsparse_triplet_adjoint)(1,i)=lst(1,i);
             (*vsparse_triplet_adjoint)(2,i)=lst(2,i);
           }
-        } 
+        }
       }
       vsparse_triplet->get_x()=vy(ii,ii+mmax-mmin).shift(1);
     }
   }
    dvariable vf=0.0;
 
-   
    *objective_function_value::pobjfun=0.0;
    pmin->AD_uf_outer();
    if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
@@ -1637,7 +1624,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
      {
        ld=0.5*ln_det(vHess,sgn);
      }
-     else 
+     else
      {
        ld=0.5*ln_det(-vHess,sgn);
      }
@@ -1677,7 +1664,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
          //cout << ld-ld1 << endl;
        }
      }
-     else 
+     else
      {
        if (pmin->lapprox->sparse_hessian_flag==0)
        {
@@ -1714,7 +1701,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
      r(2)=num;
      dmatrix tt2=trans(r);
      dmatrix ss2=trans(sort(tt2,1));
-     
+
      cout << " t " << setprecision(3) << ss2(1)(1,5) << " --- " << t(nnn)*cHess*t(nnn) << endl;
      cout << "   " << setprecision(3) << ss2(2)(1,5) << endl;
      //cout << " t " << t(1) << " " << t(1)*cHess*t(2) << endl;
@@ -1729,7 +1716,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
    f-=us*0.5*log(2.0*PI);
    dvector g(1,nvar);
    gradcalc(nvar,g);
-  
+
   ii=1;
   for (i=1;i<=xs;i++)
     xadjoint(i)=g(ii++);
@@ -1746,7 +1733,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   }
   else
   {
-    dcompressed_triplet * vsparse_triplet_adjoint = 
+    dcompressed_triplet * vsparse_triplet_adjoint =
       pmin->lapprox->vsparse_triplet_adjoint;
 
     int smin=lst.indexmin();
@@ -1769,13 +1756,13 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
      independent_variables y(1,nvar);
      initial_params::xinit(y);    // get the initial values into the
      y(1,xs)=x;
-     dvar_vector vy=dvar_vector(y); 
+     dvar_vector vy=dvar_vector(y);
      initial_params::reset(vy);    // get the initial values into the
-  
+
      pmin->AD_uf_outer();
-     
+
      dvar_matrix tmpH=quadratic_prior::get_vHessian_contribution();
- 
+
      tmpH+=Hess;
      dvariable ld;
      ld=0.5*ln_det(tmpH,sgn);
@@ -1819,7 +1806,6 @@ void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
   int j;
   int i;
   ADUNCONST(init_df1b2vector,y)
-  
   {
     df1b2_gradlist::set_yes_derivatives();
     //cout << re_objective_function_value::pobjfun << endl;
@@ -1857,14 +1843,12 @@ void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
  */
 void laplace_approximation_calculator::check_for_need_to_reallocate(int ip)
 {
-  
 }
-
   //void laplace_approximation_calculator::get_newton_raphson_info
   //  (function_minimizer * pfmin)
   //{
-  //  int i,j,ip; 
-  //  
+  //  int i,j,ip;
+  //
   //  for (ip=1;ip<=num_der_blocks;ip++)
   //  {
   //    // do we need to reallocate memory for df1b2variables?
@@ -1885,7 +1869,7 @@ void laplace_approximation_calculator::check_for_need_to_reallocate(int ip)
   //    //pfmin->user_function(y,zz);
   //    (*re_objective_function_value::pobjfun)+=pen;
   //    (*re_objective_function_value::pobjfun)+=zz;
-  //  
+  //
   //    if (!initial_df1b2params::separable_flag)
   //    {
   //      set_dependent_variable(*re_objective_function_value::pobjfun);
@@ -1898,7 +1882,7 @@ void laplace_approximation_calculator::check_for_need_to_reallocate(int ip)
   //      for (i=1;i<=usize;i++)
   //        for (j=jmin;j<=jmax;j++)
   //          Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
-  //  
+  //
   //      for (j=jmin;j<=jmax;j++)
   //        grad(j-xsize)= re_objective_function_value::pobjfun->u_dot[j-mind];
   //    }
@@ -1917,7 +1901,7 @@ void laplace_approximation_calculator::check_for_need_to_reallocate(int ip)
  */
 double evaluate_function(const dvector& x,function_minimizer * pfmin)
 {
-  int usize=initial_params::nvarcalc(); 
+  int usize=initial_params::nvarcalc();
   //double f=0.0;
   dvector g(1,usize);
   independent_variables u(1,usize);
@@ -1926,20 +1910,20 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
   vf=initial_params::reset(dvar_vector(u));
   //vf=0.0;
   *objective_function_value::pobjfun=0.0;
-  laplace_approximation_calculator::where_are_we_flag=2; 
+  laplace_approximation_calculator::where_are_we_flag=2;
   pfmin->AD_uf_inner();
   if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
   {
     quadratic_prior::get_M_calculations();
   }
   vf+=*objective_function_value::pobjfun;
-  laplace_approximation_calculator::where_are_we_flag=0; 
+  laplace_approximation_calculator::where_are_we_flag=0;
   initial_df1b2params::cobjfun=value(vf);
   gradcalc(usize,g);
   double maxg=max(fabs(g));
   if (!initial_params::mc_phase)
   {
-    cout << setprecision(16) << " f = " << vf  
+    cout << setprecision(16) << " f = " << vf
          << " max g = " << maxg << endl;
   }
   return maxg;
@@ -1951,7 +1935,7 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
  */
 double evaluate_function(double& fval,const dvector& x,function_minimizer * pfmin)
 {
-  int usize=initial_params::nvarcalc(); 
+  int usize=initial_params::nvarcalc();
   //double f=0.0;
   dvector g(1,usize);
   independent_variables u(1,usize);
@@ -1960,21 +1944,21 @@ double evaluate_function(double& fval,const dvector& x,function_minimizer * pfmi
   vf=initial_params::reset(dvar_vector(u));
   //vf=0.0;
   *objective_function_value::pobjfun=0.0;
-  laplace_approximation_calculator::where_are_we_flag=2; 
+  laplace_approximation_calculator::where_are_we_flag=2;
   pfmin->AD_uf_inner();
   if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
   {
     quadratic_prior::get_M_calculations();
   }
   vf+=*objective_function_value::pobjfun;
-  laplace_approximation_calculator::where_are_we_flag=0; 
+  laplace_approximation_calculator::where_are_we_flag=0;
   initial_df1b2params::cobjfun=value(vf);
   gradcalc(usize,g);
   double maxg=max(fabs(g));
   fval=value(vf);
   if (!initial_params::mc_phase)
   {
-    cout << setprecision(10) << " f = " << vf  
+    cout << setprecision(10) << " f = " << vf
          << " max g = " << maxg << endl;
   }
   return maxg;
@@ -1987,7 +1971,7 @@ double evaluate_function(double& fval,const dvector& x,function_minimizer * pfmi
 double evaluate_function(double& fval,const dvector& x,const dvector& g,
   function_minimizer * pfmin)
 {
-  int usize=initial_params::nvarcalc(); 
+  int usize=initial_params::nvarcalc();
   //double f=0.0;
   //dvector g(1,usize);
   independent_variables u(1,usize);
@@ -1996,21 +1980,21 @@ double evaluate_function(double& fval,const dvector& x,const dvector& g,
   vf=initial_params::reset(dvar_vector(u));
   //vf=0.0;
   *objective_function_value::pobjfun=0.0;
-  laplace_approximation_calculator::where_are_we_flag=2; 
+  laplace_approximation_calculator::where_are_we_flag=2;
   pfmin->AD_uf_inner();
   if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
   {
     quadratic_prior::get_M_calculations();
   }
   vf+=*objective_function_value::pobjfun;
-  laplace_approximation_calculator::where_are_we_flag=0; 
+  laplace_approximation_calculator::where_are_we_flag=0;
   initial_df1b2params::cobjfun=value(vf);
   gradcalc(usize,g);
   double maxg=max(fabs(g));
   fval=value(vf);
   if (!initial_params::mc_phase)
   {
-    cout << setprecision(15) << " f = " << vf  
+    cout << setprecision(15) << " f = " << vf
          << " max g = " << maxg << endl;
   }
   return maxg;
@@ -2022,7 +2006,7 @@ double evaluate_function(double& fval,const dvector& x,const dvector& g,
  */
 double evaluate_function_quiet(const dvector& x,function_minimizer * pfmin)
 {
-  int usize=initial_params::nvarcalc(); 
+  int usize=initial_params::nvarcalc();
   //double f=0.0;
   dvector g(1,usize);
   independent_variables u(1,usize);
@@ -2031,14 +2015,14 @@ double evaluate_function_quiet(const dvector& x,function_minimizer * pfmin)
   vf=initial_params::reset(dvar_vector(u));
   //vf=0.0;
   *objective_function_value::pobjfun=0.0;
-  laplace_approximation_calculator::where_are_we_flag=2; 
+  laplace_approximation_calculator::where_are_we_flag=2;
   pfmin->AD_uf_inner();
   if ( no_stuff==0 && quadratic_prior::get_num_quadratic_prior()>0)
   {
     quadratic_prior::get_M_calculations();
   }
   vf+=*objective_function_value::pobjfun;
-  laplace_approximation_calculator::where_are_we_flag=0; 
+  laplace_approximation_calculator::where_are_we_flag=0;
   initial_df1b2params::cobjfun=value(vf);
   gradcalc(usize,g);
   double maxg=max(fabs(g));
@@ -2052,7 +2036,7 @@ double evaluate_function_quiet(const dvector& x,function_minimizer * pfmin)
 void evaluate_function_gradient(double& f,const dvector& x,
   function_minimizer * pfmin,dvector& xadjoint,dvector& uadjoint)
 {
-  int usize=initial_params::nvarcalc(); 
+  int usize=initial_params::nvarcalc();
   dvector g(1,usize);
   independent_variables u(1,usize);
   u=x;
@@ -2083,7 +2067,7 @@ double evaluate_function_no_derivatives(const dvector& x,function_minimizer * pf
 {
   double fval;
   gradient_structure::set_NO_DERIVATIVES();
-  int usize=initial_params::nvarcalc(); 
+  int usize=initial_params::nvarcalc();
   //double f=0.0;
   dvector g(1,usize);
   independent_variables u(1,usize);
@@ -2143,7 +2127,7 @@ gauss_hermite_stuff::gauss_hermite_stuff
     if (itmp(i)!=itmp(i-1))
     {
       cerr << " At present for the adaptive gauss_hermite must have the same"
-           << endl 
+           << endl
            << " number of random effects in each separable function call"
            << endl;
       ad_exit(1);
@@ -2158,21 +2142,21 @@ gauss_hermite_stuff::gauss_hermite_stuff
      /*
       cerr << "At present gauss-hermite is only implemented for"
         " one random effect per separable function call "
-       << endl; 
+       << endl;
       ad_exit(1);
      */
     }
   }
-  if (allocated(gauss_hermite_values)) 
-    gauss_hermite_values.deallocate(); 
+  if (allocated(gauss_hermite_values))
+    gauss_hermite_values.deallocate();
   if (lapprox->multi_random_effects==0)
   {
-    gauss_hermite_values.allocate(1,num_separable_calls,1,use_gauss_hermite); 
+    gauss_hermite_values.allocate(1,num_separable_calls,1,use_gauss_hermite);
   }
   else
   {
    ivector indx=pow(use_gauss_hermite,itmp);
-    gauss_hermite_values.allocate(1,num_separable_calls,1,indx); 
+    gauss_hermite_values.allocate(1,num_separable_calls,1,indx);
   }
 
   normalized_gauss_hermite(x,w);
@@ -2217,8 +2201,8 @@ void laplace_approximation_calculator::set_default_hessian_type(void )
  */
 double laplace_approximation_calculator::get_fx_fu(function_minimizer * pfmin)
 {
-  initial_params::set_inactive_only_random_effects(); 
-  initial_params::set_active_random_effects(); 
+  initial_params::set_inactive_only_random_effects();
+  initial_params::set_active_random_effects();
 
   if (grad_x==0)
   {
@@ -2234,7 +2218,7 @@ double laplace_approximation_calculator::get_fx_fu(function_minimizer * pfmin)
   independent_variables u(1,xsize+usize);
   //gradcalc(0,*grad_x_u);
   initial_params::xinit(u);    // get the initial values into the
-  
+
   dvariable pen=0.0;
   dvariable vf=0.0;
   pen=initial_params::reset(dvar_vector(u));
@@ -2255,7 +2239,7 @@ double laplace_approximation_calculator::get_fx_fu(function_minimizer * pfmin)
   void laplace_approximation_calculator::begin_separable_call_stuff(void)
   {
     separable_call_level++;
-    //build_up_nested_shape(); 
+    //build_up_nested_shape();
     //clean(nested_tree_position,separable_call_level);
     //nested_separable_calls_counter(separable_call_level)++;
     //nested_tree_position(separable_call_level)++;
@@ -2267,7 +2251,7 @@ double laplace_approximation_calculator::get_fx_fu(function_minimizer * pfmin)
  */
   void laplace_approximation_calculator::end_separable_call_stuff(void)
   {
-    //build_up_nested_shape(); 
+    //build_up_nested_shape();
     //clean(nested_tree_position,separable_call_level);
     separable_call_level--;
   }
@@ -2276,8 +2260,8 @@ double laplace_approximation_calculator::get_fx_fu(function_minimizer * pfmin)
  * Description not yet available.
  * \param
  */
-void laplace_approximation_calculator::build_up_nested_shape(void) 
-{ 
+void laplace_approximation_calculator::build_up_nested_shape(void)
+{
   int ll;
   ivector& a =nested_separable_calls_counter;
   int clean_level=0;
@@ -2357,7 +2341,7 @@ void laplace_approximation_calculator::build_up_nested_shape(void)
     }
    default:
      cerr << "illegal value in " <<
-       "laplace_approximation_calculator::build_up_nested_shape" 
+       "laplace_approximation_calculator::build_up_nested_shape"
        << endl;
   }
   if (clean_level>0)
@@ -2416,18 +2400,18 @@ ostream &  operator << (const ostream& _s,const nested_calls_shape& _m)
   ADUNCONST(ofstream,s)
   if (m.get_ptr1())
     s<< *(m.get_ptr1()) << endl << endl;
-  
+
   if (m.get_ptr2())
     s<< *(m.get_ptr2()) << endl << endl;
-  
+
   if (m.get_ptr3())
     s<< *(m.get_ptr3()) << endl << endl;
-    
+
   if (m.get_ptr4())
     s<< *(m.get_ptr4()) << endl << endl;
 
   return s;
-}    
+}
 
 /**
  * Description not yet available.
@@ -2480,7 +2464,7 @@ void nested_calls_shape::trim(void)
           if ((*ptr2)(i,j)==0) break;
           mmax2++;
         }
-        if (mmax2>0) 
+        if (mmax2>0)
         {
           (*tmp)(i).allocate(1,mmax2);
           (*tmp)(i)=(*ptr2)(i)(1,mmax2);
@@ -2717,7 +2701,7 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
   fmc1.ialph=0;
   fmc1.ihang=0;
   fmc1.ihflag=0;
-  
+
   if (init_switch)
   {
     u.initialize();
@@ -2726,7 +2710,7 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
   {
     u=ubest;
   }
- 
+
   fmc1.dfn=1.e-2;
   dvariable pen=0.0;
   //cout << "starting  norm(u) = " << norm(u) << endl;
@@ -2758,32 +2742,31 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
         quadratic_prior::get_M_calculations();
       }
       vf+=*objective_function_value::pobjfun;
-     
+
      /*  this is now done in the operator = function
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {
         vf+= quadratic_prior::get_quadratic_priors();
       }
       */
-      
 
       objective_function_value::fun_without_pen=value(vf);
-      
+
       //cout << " pen = " << pen << endl;
       if (noboundepen_flag==0)
       {
         vf+=pen;
       }
       f=value(vf);
-      if (f<fb) 
+      if (f<fb)
       {
         fb=f;
         ub=u;
       }
       gradcalc(usize,g);
-      //cout << " f = " << setprecision(17) << f << " " << norm(g) 
+      //cout << " f = " << setprecision(17) << f << " " << norm(g)
        // << " " << norm(u) << endl;
-     
+
     }
     u=ub;
   }
@@ -2820,7 +2803,7 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
 
         vf+=pen;
         f=value(vf);
-        if (f<fb) 
+        if (f<fb)
         {
           fb=f;
           ub=u;
@@ -2846,7 +2829,5 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
   pfmin->inner_opt_flag=0;
   return u;
 }
-
 #  endif
-  
 #endif

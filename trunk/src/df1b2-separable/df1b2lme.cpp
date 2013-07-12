@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -42,9 +42,9 @@ void laplace_approximation_calculator::get_hessian_components_banded_lme
         ad_exit(1);
       }
       df1b2_gradlist::set_no_derivatives();
-      int nvar=initial_params::nvarcalc_all(); 
+      int nvar=initial_params::nvarcalc_all();
       dvector x(1,nvar);
-      initial_params::xinit_all(x); 
+      initial_params::xinit_all(x);
       initial_df1b2params::reset_all(x);
       for (int i=1;i<=nvar;i++) y(i)=x(i);
       step=get_newton_raphson_info_banded(pfmin);
@@ -56,15 +56,14 @@ void laplace_approximation_calculator::get_hessian_components_banded_lme
     ad_exit(1);
   }
 
-  
   dvector df0=exp(-2.0*value(*variance_components_vector));
-    
+
   dvector vsave(mmin,mmax);
   vsave=value(*variance_components_vector);
   for(int ic=mmin;ic<=mmax;ic++)
-  {  
+  {
     (*variance_components_vector)(ic)+=0.2;
-  
+
     // test newton raphson
     switch(hesstype)
     {
@@ -80,9 +79,9 @@ void laplace_approximation_calculator::get_hessian_components_banded_lme
     }
 
     df1b2_gradlist::set_no_derivatives();
-    int nvar=initial_params::nvarcalc_all(); 
+    int nvar=initial_params::nvarcalc_all();
     dvector x(1,nvar);
-    initial_params::xinit_all(x); 
+    initial_params::xinit_all(x);
     initial_df1b2params::reset_all(x);
     for (int i=1;i<=nvar;i++) y(i)=x(i);
     step=get_newton_raphson_info_banded(pfmin);
@@ -124,8 +123,8 @@ dvar_matrix laplace_approximation_calculator::get_hessian_from_components_lme
 {
   int mmin=variance_components_vector->indexmin();
   int mmax=variance_components_vector->indexmax();
-    
-  initial_params::set_inactive_only_random_effects(); 
+
+  initial_params::set_inactive_only_random_effects();
   independent_variables xx(1,mmax-mmin+1);
   initial_params::xinit(xx);    // get the initial values into the
   dvar_vector vxx=dvar_vector(xx);
@@ -143,10 +142,10 @@ dvar_matrix laplace_approximation_calculator::get_hessian_from_components_lme
   case 4:
     {
       for(int ic=mmin;ic<=mmax;ic++)
-      {  
+      {
         if (var_flag==1)
         {
-          vHess+= 
+          vHess+=
             (*variance_components_vector)(ic)*((*Hess_components)(ic));
         }
         else
@@ -177,19 +176,19 @@ dvector laplace_approximation_calculator::banded_calculations_lme
   ADUNCONST(double,f)
   //int i,j;
 
-  initial_params::set_inactive_only_random_effects(); 
+  initial_params::set_inactive_only_random_effects();
   gradient_structure::set_NO_DERIVATIVES();
   initial_params::reset(x);    // get current x values into the model
   gradient_structure::set_YES_DERIVATIVES();
 
-  initial_params::set_active_only_random_effects(); 
+  initial_params::set_active_only_random_effects();
   dvector g=get_gradient_lme(pfmin);
 
   reset_gradient_stack();
   // this is the main loop to do inner optimization
   //for (i=1;i<=xsize;i++) { y(i)=x(i); }
   //for (i=1;i<=usize;i++) { y(i+xsize)=uhat(i); }
-        
+
   dvar_matrix vHess=get_hessian_from_components_lme(pfmin);
   //cout << setprecision(12) << "norm(vHess) = " << norm(value(vHess)) << endl;
 
@@ -197,8 +196,8 @@ dvector laplace_approximation_calculator::banded_calculations_lme
   dvariable tmp=0.0;
   dvariable sgn;
 
-  dvector step=value(solve(vHess,g,tmp,sgn)); 
-  if (value(sgn)<=0) 
+  dvector step=value(solve(vHess,g,tmp,sgn));
+  if (value(sgn)<=0)
   {
     cerr << "sgn sucks" << endl;
   }
@@ -209,19 +208,18 @@ dvector laplace_approximation_calculator::banded_calculations_lme
   ld=0.5*tmp;
   gradcalc(nv,g1);
   uhat-=step;
- 
-  initial_params::set_active_only_random_effects(); 
+
+  initial_params::set_active_only_random_effects();
   double maxg=max(fabs(get_gradient_lme(uhat,pfmin)));
   if (maxg > 1.e-12)
   {
     cout << "max g = " << maxg << endl;
   }
-  
+
   double f2=0.0;
   dvector g2=get_gradient_lme_hp(f2,pfmin);
   f=f2+value(ld);
   return g1+g2;
-    
 }
 
 /**
@@ -239,7 +237,7 @@ dvector laplace_approximation_calculator::get_gradient_lme
   gradcalc(0,g);
   initial_params::xinit(u);    // get the initial values into the
   uhat=u;
-  
+
   dvariable pen=0.0;
   dvariable vf=0.0;
   pen=initial_params::reset(dvar_vector(u));
@@ -268,7 +266,7 @@ dvector laplace_approximation_calculator::get_gradient_lme
   independent_variables u(1,usize);
   u=x;
   gradcalc(0,g);
-  
+
   dvariable pen=0.0;
   dvariable vf=0.0;
   pen=initial_params::reset(dvar_vector(u));
@@ -296,10 +294,10 @@ dvector laplace_approximation_calculator::get_gradient_lme_hp
   dvector ub(1,xsize);
   independent_variables u(1,xsize);
   //gradcalc(xsize,g);
-  initial_params::restore_start_phase(); 
-  initial_params::set_inactive_random_effects(); 
+  initial_params::restore_start_phase();
+  initial_params::set_inactive_random_effects();
   initial_params::xinit(u);    // get the initial values into the
-  
+
   dvariable pen=0.0;
   dvariable vf=0.0;
   pen=initial_params::reset(dvar_vector(u));

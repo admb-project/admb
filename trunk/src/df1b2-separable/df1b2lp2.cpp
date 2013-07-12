@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -34,12 +34,12 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
   //int i,j;
   int i;
 
-  initial_params::set_inactive_only_random_effects(); 
+  initial_params::set_inactive_only_random_effects();
   gradient_structure::set_NO_DERIVATIVES();
   initial_params::reset(x);    // get current x values into the model
   gradient_structure::set_YES_DERIVATIVES();
 
-  initial_params::set_active_only_random_effects(); 
+  initial_params::set_active_only_random_effects();
   //int lmn_flag=0;
   if (!inner_lmnflag)
   {
@@ -81,7 +81,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
   if (sparse_hessian_flag==0)
   {
     for (i=1;i<=xsize;i++)
-    {  
+    {
       y(i)=x(i);
     }
     for (int i=1;i<=usize;i++)
@@ -89,10 +89,10 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       y(i+xsize)=uhat(i);
     }
   }
-  else  
+  else
   {
     for (i=1;i<=xsize;i++)
-    {  
+    {
       value(y(i))=x(i);
     }
     for (int i=1;i<=usize;i++)
@@ -100,11 +100,10 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       value(y(i+xsize))=uhat(i);
     }
   }
-  //cout << y << endl;
-        
+
   for(int ii=1;ii<=num_nr_iters;ii++)
-  {  
-    {   
+  {
+    {
       // test newton raphson
       //Hess.initialize();
       int check=initial_params::stddev_scale(scale,uhat);
@@ -112,14 +111,14 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       max_separable_g=0.0;
       pmin->inner_opt_flag=1;
       step=get_newton_raphson_info_block_diagonal(pfmin);
-      cout << "max separable g " << max_separable_g << endl; 
+      cout << "max separable g " << max_separable_g << endl;
       cout << "Newton raphson " << ii << endl;
       uhat+=step;
-    
+
       evaluate_function(uhat,pfmin);
       pmin->inner_opt_flag=0;
     }
-  
+
     if (sparse_hessian_flag==0)
     {
       for (int i=1;i<=usize;i++)
@@ -127,7 +126,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
         y(i+xsize)=uhat(i);
       }
     }
-    else  
+    else
     {
       for (int i=1;i<=usize;i++)
       {
@@ -135,7 +134,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
       }
     }
   }
- 
+
   cout << initial_df1b2params::cobjfun << endl;
   xadjoint.initialize();
   uadjoint.initialize();
@@ -154,7 +153,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     //cout << (*pfmin->lapprox->block_diagonal_hessian) << endl;
     block_diagonal_flag=2;
     initial_params::straight_through_flag=0;
- 
+
     // do importance sampling and get ders bakc to Hessian adjoint
     // new stuff for more than one random effect in each separable call
     //  Apr 17 07
@@ -181,7 +180,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     // derivatives from hessian adjoint back
     {
       x_con.initialize();
-      
+
       for (int i=1;i<=num_separable_calls;i++)
       {
         ivector& re_list=(*block_diagonal_re_list)(i);
@@ -191,12 +190,12 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
         xxx(re_list,fe_list);
         int mmax=re_list.indexmax();
         dvector tmp(1,mmax);
-        
+
         int j;
         for (j=1;j<=re_list.indexmax();j++)
         {
           tmp(j)=uadjoint(re_list(j)-xmax);
-        } 
+        }
 
         if (allocated(fe_list))
         {
@@ -220,7 +219,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     // *******************************************************
     // *******************************************************
     // *******************************************************
-    
+
     block_diagonal_flag=3;
     //pfmin->lapprox->xadjoint.initialize();
     //pfmin->lapprox->uadjoint.initialize();
@@ -237,7 +236,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     //df1b2_gradlist::set_no_derivatives();
     funnel_init_var::lapprox=0;
     block_diagonal_flag=0;
-    initial_params::set_inactive_only_random_effects(); 
+    initial_params::set_inactive_only_random_effects();
   }
   else if (num_importance_samples>0)
   {
@@ -284,7 +283,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     // derivatives from hessian adjoint back
     {
       x_con.initialize();
-      
+
       for (int i=1;i<=num_separable_calls;i++)
       {
         dmatrix& H=(*block_diagonal_hessian)(i);
@@ -296,13 +295,13 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
           xxx(re_list,fe_list);
           int mmax=re_list.indexmax();
           dvector tmp(1,mmax);
-          
+
           int j;
           for (j=1;j<=re_list.indexmax();j++)
           {
             tmp(j)=uadjoint(re_list(j)-xmax);
-          } 
-  
+          }
+
           if (allocated(fe_list))
           {
             dvector tmp1=solve(H,tmp);
@@ -328,7 +327,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     // *******************************************************
     // *******************************************************
     // *******************************************************
-    
+
     block_diagonal_flag=3;
     //pfmin->lapprox->xadjoint.initialize();
     //pfmin->lapprox->uadjoint.initialize();
@@ -345,7 +344,7 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     //df1b2_gradlist::set_no_derivatives();
     funnel_init_var::lapprox=0;
     block_diagonal_flag=0;
-    initial_params::set_inactive_only_random_effects(); 
+    initial_params::set_inactive_only_random_effects();
   }
   else
   {
@@ -386,13 +385,13 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
 
     if (saddlepointflag!=2 && pmin->multinomial_weights==0)
     {
-      f-=usize*.91893853320467241; 
+      f-=usize*.91893853320467241;
     }
 
     funnel_init_var::lapprox=0;
     block_diagonal_flag=0;
     dvector scale1(1,xsize);   // need to get scale from somewhere
-    initial_params::set_inactive_only_random_effects(); 
+    initial_params::set_inactive_only_random_effects();
     /*int check=*/initial_params::stddev_scale(scale1,x);
     for (i=1;i<=xadjoint.indexmax();i++)
       xadjoint(i)*=scale1(i);
@@ -409,9 +408,9 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
 dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
   (function_minimizer * pfmin)
 {
-  //int i,j,ip; 
-  int ip; 
-  
+  //int i,j,ip;
+  int ip;
+
   int nv=initial_df1b2params::set_index();
   if (allocated(used_flags))
   {
@@ -424,7 +423,7 @@ dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
   {
     used_flags.safe_allocate(1,nv);
   }
-  
+
   //for (ip=1;ip<=num_der_blocks;ip++)
   {
     used_flags.initialize();
@@ -442,7 +441,7 @@ dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
     // call function to do block diagonal newton-raphson
     // the step vector from the newton-raphson is in the vector step
     df1b2_gradlist::set_yes_derivatives();
-    
+
     funnel_init_var::lapprox=this;
     //cout << funnel_init_var::lapprox << endl;
     block_diagonal_flag=1;

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -84,7 +84,6 @@
  */
  dvector value(const df3_two_vector& v)
  {
-   
    int mmin=v.indexmin();
    int mmax=v.indexmax();
    dvector cv(mmin,mmax);
@@ -94,7 +93,7 @@
    }
    return cv;
  }
-   
+
 /**
  * Description not yet available.
  * \param
@@ -143,13 +142,13 @@
     }
     if ( (shape=new vector_shapex(min,max,v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df3_two_vector" 
+      cerr << "Error trying to allocate memory for df3_two_vector"
            << endl;;
       ad_exit(1);
     }
     v-=min;
   }
-  
+
 /**
  * Description not yet available.
  * \param
@@ -161,14 +160,13 @@
     v=0;
     shape=0;
   }
-    
+
 /**
  * Description not yet available.
  * \param
  */
  dmatrix value(const df3_two_matrix& v)
  {
-   
    int rmin=v.indexmin();
    int rmax=v.indexmax();
    dmatrix cm(rmin,rmax);
@@ -176,7 +174,7 @@
    {
      int cmin=v(i).indexmin();
      int cmax=v(i).indexmax();
-     cm(i).allocate(cmin,cmax); 
+     cm(i).allocate(cmin,cmax);
      for (int j=cmin;j<=cmax;j++)
      {
        cm(i,j)=value(v(i,j));
@@ -184,7 +182,7 @@
    }
    return cm;
  }
-   
+
 /**
  * Description not yet available.
  * \param
@@ -263,17 +261,17 @@
     }
     if ( (shape=new mat_shapex(v)) == NULL)
     {
-      cerr << "Error trying to allocate memory for df3_two_vector" 
+      cerr << "Error trying to allocate memory for df3_two_vector"
            << endl;;
     }
     v-=rmin;
-    
+
     for (int i=rmin;i<=rmax;i++)
     {
       v[i].allocate(cmin,cmax);
     }
   }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -556,7 +554,7 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
                    + 3.0 * f_vv * *y.get_u_x() * *y.get_u_xx()
                    + f_v * *y.get_u_xxx()
                    + 3.0 * f_uuv * square(*x.get_u_x()) * *y.get_u_x()
-                   + 3.0 * f_uvv * *x.get_u_x()* square(*y.get_u_x()) 
+                   + 3.0 * f_uvv * *x.get_u_x()* square(*y.get_u_x())
                    + 3.0* f_uv * *x.get_u_xx() * *y.get_u_x()
                    + 3.0* f_uv * *x.get_u_x() * *y.get_u_xx();
 
@@ -570,8 +568,8 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
                    + f_v * *y.get_u_xxy()
                    + f_uuv * square(*x.get_u_x()) * *y.get_u_y()
                    + 2.0* f_uuv * *x.get_u_x() * *x.get_u_y() * *y.get_u_x()
-                   + f_uvv * *x.get_u_y()* square(*y.get_u_x()) 
-                   + 2.0 * f_uvv * *x.get_u_x()* *y.get_u_x() * *y.get_u_y() 
+                   + f_uvv * *x.get_u_y()* square(*y.get_u_x())
+                   + 2.0 * f_uvv * *x.get_u_x()* *y.get_u_x() * *y.get_u_y()
                    + f_uv * *x.get_u_xx() * *y.get_u_y()
                    + f_uv * *x.get_u_y() * *y.get_u_xx()
                    + 2.0* f_uv * *x.get_u_xy() * *y.get_u_x()
@@ -587,8 +585,8 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
                    + f_v * *y.get_u_xyy()
                    + f_uuv * square(*x.get_u_y()) * *y.get_u_x()
                    + 2.0* f_uuv * *x.get_u_y() * *x.get_u_x() * *y.get_u_y()
-                   + f_uvv * *x.get_u_x()* square(*y.get_u_y()) 
-                   + 2.0 * f_uvv * *x.get_u_y()* *y.get_u_y() * *y.get_u_x() 
+                   + f_uvv * *x.get_u_x()* square(*y.get_u_y())
+                   + 2.0 * f_uvv * *x.get_u_y()* *y.get_u_y() * *y.get_u_x()
                    + f_uv * *x.get_u_yy() * *y.get_u_x()
                    + f_uv * *x.get_u_x() * *y.get_u_yy()
                    + 2.0* f_uv * *x.get_u_xy() * *y.get_u_y()
@@ -602,7 +600,7 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
                    + 3.0 * f_vv * *y.get_u_y() * *y.get_u_yy()
                    + f_v * *y.get_u_yyy()
                    + 3.0 * f_uuv * square(*x.get_u_y()) * *y.get_u_y()
-                   + 3.0 * f_uvv * *x.get_u_y()* square(*y.get_u_y()) 
+                   + 3.0 * f_uvv * *x.get_u_y()* square(*y.get_u_y())
                    + 3.0 * f_uv * *x.get_u_yy() * *y.get_u_y()
                    + 3.0 * f_uv * *x.get_u_y() * *y.get_u_yy();
 }
@@ -1097,7 +1095,7 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
     }
     ind_var[num_ind_var++]=&v;
     *get_u() =  *v.get_u();
-    switch(num_ind_var) 
+    switch(num_ind_var)
     {
     case 1:
       *get_u_x() = 1.0;
@@ -1108,7 +1106,7 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
       *get_u_y() = 1.0;
       break;
     default:
-      cerr << "illegal num_ind_var value of " << num_ind_var 
+      cerr << "illegal num_ind_var value of " << num_ind_var
            << " in  df3_two_variable function" << endl;
       ad_exit(1);
     }
@@ -1141,8 +1139,6 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
 
   df3_two_variable::df3_two_variable(void)
   {
-     
-
   }
 
 /**
@@ -1179,14 +1175,14 @@ df3_two_matrix choleski_decomp(const df3_two_matrix& MM)
 
   int i,j,k;
   df3_two_variable tmp;
-   
+
     if (value(M(1,1))<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-   
+
   L(1,1)=sqrt(M(1,1));
   for (i=2;i<=n;i++)
   {
@@ -1209,14 +1205,14 @@ df3_two_matrix choleski_decomp(const df3_two_matrix& MM)
     {
       tmp-=L(i,k)*L(i,k);
     }
-   
+
     if (value(tmp)<=0)
     {
       cerr << "Error matrix not positive definite in choleski_decomp"
         <<endl;
       ad_exit(1);
     }
-   
+
     L(i,i)=sqrt(tmp);
   }
 
@@ -1245,7 +1241,7 @@ df1b2matrix& df1b2matrix::operator = (const df3_two_matrix& M)
   }
   return *this;
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1268,7 +1264,7 @@ df1b2vector& df1b2vector::operator = (const df3_two_vector& M)
   }
   return *this;
 }
-    
+
 /**
  * Description not yet available.
  * \param
@@ -1291,7 +1287,7 @@ df1b2variable& df1b2variable::operator = (const df3_two_variable& v)
   {
     *zd++ = dfx * *xd++ + dfy * *yd++;
   }
-      
+
  /*
   cout << *v.get_u()  << " ";
   cout << *v.get_udot()  << " ";
@@ -1341,12 +1337,12 @@ df1b2variable div(const df1b2variable& x,const df1b2variable& y)
   {
     *zd++ = dfx * *xd++ + dfy * *yd++;
   }
-      
+
   f1b2gradlist->write_pass1(&x,&y,&z,
     dfx,
     dfy,
     dfxx,dfxy,dfyy,
-    dfxxx,dfxxy,dfxyy,dfyyy); 
+    dfxxx,dfxxy,dfxyy,dfyyy);
   return z;
 }
 
@@ -1370,7 +1366,7 @@ df1b2variable mypow(const df1b2variable& x,double y)
   {
     *zd++ = dfx * *xd++ ;
   }
-      
+
   f1b2gradlist->write_pass1(&x,&z,
     dfx,
     dfxx,

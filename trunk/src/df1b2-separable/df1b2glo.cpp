@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -10,7 +10,7 @@
  */
 #include <df1b2fun.h>
 #define _FIVE_ 50  // must defien the macro SIX to be one greater than FIVE
-#define _SIX_ 51 
+#define _SIX_ 51
 int df1b2variable::allocation_counter=0;
 int df1b2variable::current_allocation_index=0;
 const int df1b2variable::adpool_vectorsize=_FIVE_;
@@ -49,12 +49,12 @@ df1b2_gradlist * globalf1b2gradlist = 0;
 
 int df1b2variable::noallocate=0;
 
-initial_df1b2params ** initial_df1b2params::varsptr 
+initial_df1b2params ** initial_df1b2params::varsptr
   =new P_INITIAL_DF1B2PARAMS[1000];
 int initial_df1b2params::num_initial_df1b2params=0;         // array
 
 int initial_df1b2params::num_initial_df1b2params_sav=0;         // array
-initial_df1b2params ** initial_df1b2params::varsptr_sav=0; 
+initial_df1b2params ** initial_df1b2params::varsptr_sav=0;
 
 int initial_df1b2params::current_phase=0;
 

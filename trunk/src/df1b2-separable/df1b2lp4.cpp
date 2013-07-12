@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -18,7 +18,6 @@ void get_second_ders(int xs,int us,const init_df1b2vector y,dmatrix& Hess,
 double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const dmatrix& Hess,const dvector& _xadjoint,const dvector& _uadjoint,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
-      
 
 /**
  * Description not yet available.
@@ -38,7 +37,7 @@ void get_second_ders_master(int xs,int us,const init_df1b2vector _y,
   int num_der_blocks=lpc->num_der_blocks;
   int xsize=lpc->xsize;
   int usize=lpc->usize;
-  
+
   for (int ip=1;ip<=num_der_blocks;ip++)
   {
     df1b2variable::minder=lpc->minder(ip);
@@ -55,28 +54,28 @@ void get_second_ders_master(int xs,int us,const init_df1b2vector _y,
       Hess.initialize();
       Dux.initialize();
     }
-    
+
     //cout << "2D" << endl;
     pfmin->user_function();
-    
+
     //pfmin->user_function(y,zz);
     (*re_objective_function_value::pobjfun)+=pen;
     (*re_objective_function_value::pobjfun)+=zz;
-  
+
     if (!initial_df1b2params::separable_flag)
     {
       set_dependent_variable(*re_objective_function_value::pobjfun);
       df1b2_gradlist::set_no_derivatives();
       df1b2variable::passnumber=1;
       df1b2_gradcalc1();
-    
+
       int mind=y(1).minder;
       int jmin=max(mind,xsize+1);
       int jmax=min(y(1).maxder,xsize+usize);
       for (i=1;i<=usize;i++)
         for (j=jmin;j<=jmax;j++)
           Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
-  
+
       jmin=max(mind,1);
       jmax=min(y(1).maxder,xsize);
       for (i=1;i<=usize;i++)
@@ -91,7 +90,7 @@ void get_second_ders_master(int xs,int us,const init_df1b2vector _y,
     if (ad_comm::pvm_manager->timing_flag)
       ad_comm::pvm_manager->tm.get_elapsed_time_and_reset();
   }
-  
+
   d3_array M1=get_dmatrix_from_slaves();
 
   if (ad_comm::pvm_manager)
@@ -129,7 +128,7 @@ void get_second_ders_master(int xs,int us,const init_df1b2vector _y,
     if (ad_comm::pvm_manager->timing_flag)
       ad_comm::pvm_manager->tm.get_elapsed_time_and_reset();
   }
-  
+
   imatrix flags=get_int_from_slaves();
   d3_array Dux1=get_dmatrix_from_slaves(flags);
   if (ad_comm::pvm_manager)
@@ -144,7 +143,7 @@ void get_second_ders_master(int xs,int us,const init_df1b2vector _y,
       }
     }
   }
-  
+
   mmin=Dux1.indexmin();
   mmax=Dux1.indexmax();
   for (k=mmin;k<=mmax;k++)
@@ -184,12 +183,12 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
   int i,j;
 
   send_dvector_to_slaves(x);
-  initial_params::set_inactive_only_random_effects(); 
+  initial_params::set_inactive_only_random_effects();
   gradient_structure::set_NO_DERIVATIVES();
   initial_params::reset(x);    // get current x values into the model
   gradient_structure::set_YES_DERIVATIVES();
 
-  initial_params::set_active_only_random_effects(); 
+  initial_params::set_active_only_random_effects();
   //int lmn_flag=0;
   if (ad_comm::time_flag)
   {
@@ -201,7 +200,7 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
     {
       ad_comm::ptm->get_elapsed_time_and_reset();
     }
-  }  
+  }
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -248,17 +247,15 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
   {
     y(i+xsize)=uhat(i);
   }
-  //cout << y << endl;
-        
+
   for(int ii=1;ii<=num_nr_iters;ii++)
-  {  
-    {   
+  {
+    {
       // test newton raphson
       Hess.initialize();
      cout << "Newton raphson " << ii << endl;
       get_newton_raphson_info_master(pfmin);
-  
-   
+
       if (ad_comm::time_flag)
       {
         if (ad_comm::ptm)
@@ -272,8 +269,8 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
         }
       }
         dvector step;
-#if defined(USE_ATLAS)   
-      if (!ad_comm::no_atlas_flag) 
+#if defined(USE_ATLAS)
+      if (!ad_comm::no_atlas_flag)
         step=-atlas_solve_spd(Hess,grad);
       else
         step=-solve(Hess,grad);
@@ -294,7 +291,7 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
       }
       send_dvector_to_slaves(step);
       //cout << norm(step1-step) << endl;
-  
+
       if (ad_comm::time_flag)
       {
         if (ad_comm::ptm)
@@ -307,7 +304,7 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
           }
         }
       }
-     
+
       f1b2gradlist->reset();
       f1b2gradlist->list.initialize();
       f1b2gradlist->list2.initialize();
@@ -315,19 +312,18 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
       f1b2gradlist->nlist.initialize();
       f1b2gradlist->nlist2.initialize();
       f1b2gradlist->nlist3.initialize();
-    
-    
+
       uhat+=step;
-    
+
       evaluate_function(uhat,pfmin);
     }
-  
+
     for (i=1;i<=usize;i++)
     {
       y(i+xsize)=uhat(i);
     }
   }
- 
+
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -342,7 +338,7 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
   }
   get_second_ders_master(xsize,usize,y,Hess,Dux,f1b2gradlist,pfmin,this);
   //int sgn=0;
-  
+
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -358,7 +354,7 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
 
   f=calculate_laplace_approximation(x,uhat,Hess,xadjoint,uadjoint,
     Hessadjoint,pfmin);
- 
+
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -389,8 +385,8 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
       }
     }
 
-    int mmin=minder.indexmin();  
-    int mmax=minder.indexmax();  
+    int mmin=minder.indexmin();
+    int mmax=minder.indexmax();
     ivector jjmin(mmin,mmax-1);
     ivector jjmax(mmin,mmax-1);
     for (i=mmin+1;i<=mmax;i++)
@@ -420,7 +416,7 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
 
     if (initial_df1b2params::separable_flag)
     {
-      for (j=1;j<=xsize+usize;j++) 
+      for (j=1;j<=xsize+usize;j++)
       {
         *y(j).get_u_tilde()=0;
       }
@@ -438,12 +434,12 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
         (*re_objective_function_value::pobjfun)=0;
         df1b2variable pen=0.0;
         df1b2variable zz=0.0;
-   
+
         initial_df1b2params::reset(y,pen);
         pfmin->user_function();
         (*re_objective_function_value::pobjfun)+=pen;
         (*re_objective_function_value::pobjfun)+=zz;
-  
+
         set_dependent_variable(*re_objective_function_value::pobjfun);
         df1b2_gradlist::set_no_derivatives();
         df1b2variable::passnumber=1;
@@ -458,14 +454,14 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
           y(i+xsize).get_u_bar_tilde()[j-mind]=Hessadjoint(i,j-xsize);
         }
       }
-    
+
       //int mind=y(1).minder;
       df1b2variable::passnumber=2;
       df1b2_gradcalc1();
-    
+
       df1b2variable::passnumber=3;
       df1b2_gradcalc1();
-    
+
       f1b2gradlist->reset();
       f1b2gradlist->list.initialize();
       f1b2gradlist->list2.initialize();
@@ -473,8 +469,8 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
       f1b2gradlist->nlist.initialize();
       f1b2gradlist->nlist2.initialize();
       f1b2gradlist->nlist3.initialize();
-    } 
-   
+    }
+
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
@@ -510,7 +506,7 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
         ad_comm::ptm->get_elapsed_time_and_reset();
       }
     }
-  
+
     dmatrix slave_dtmps=get_dvector_from_slaves();
     if (ad_comm::time_flag)
     {
@@ -526,7 +522,7 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
     }
     mmin=slave_dtmps.indexmin();
     mmax=slave_dtmps.indexmax();
-    
+
     for (j=mmin;j<=mmax;j++)
     {
       dvector& s_j=slave_dtmps(j);
@@ -536,7 +532,7 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
         dtmp(i)+=s_j(i);
       }
     }
-  
+
     for (i=1;i<=xsize;i++)
     {
       xadjoint(i)+=dtmp(i);
@@ -551,10 +547,10 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
           << time << endl;
       }
     }
-      
+
     mmin=slave_utmps.indexmin();
     mmax=slave_utmps.indexmax();
-    
+
     for (j=mmin;j<=mmax;j++)
     {
       dvector& s_j=slave_utmps(j);
@@ -564,12 +560,12 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
         uadjoint(i)+=s_j(i);
       }
     }
-  
+
     for (i=1;i<=usize;i++)
       uadjoint(i)+=*y(xsize+i).get_u_tilde();
   }
-#if defined(USE_ATLAS)   
-  if (!ad_comm::no_atlas_flag) 
+#if defined(USE_ATLAS)
+  if (!ad_comm::no_atlas_flag)
   {
     //xadjoint -= uadjoint*atlas_solve_spd_trans(Hess,Dux);
     xadjoint -= atlas_solve_spd_trans(Hess,uadjoint)*Dux;
@@ -613,13 +609,13 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
 void laplace_approximation_calculator::get_newton_raphson_info_master
   (function_minimizer * pfmin)
 {
-  int i,j,ip; 
-  
+  int i,j,ip;
+
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
     {
-        (*ad_comm::global_logfile) << " Starting Newton-Raphson " 
+        (*ad_comm::global_logfile) << " Starting Newton-Raphson "
           <<  endl;
     }
   }
@@ -672,7 +668,7 @@ void laplace_approximation_calculator::get_newton_raphson_info_master
 
     (*re_objective_function_value::pobjfun)+=pen;
     (*re_objective_function_value::pobjfun)+=zz;
-  
+
     if (!initial_df1b2params::separable_flag)
     {
       set_dependent_variable(*re_objective_function_value::pobjfun);
@@ -685,7 +681,7 @@ void laplace_approximation_calculator::get_newton_raphson_info_master
       for (i=1;i<=usize;i++)
         for (j=jmin;j<=jmax;j++)
           Hess(i,j-xsize)=y(i+xsize).u_bar[j-mind];
-  
+
       for (j=jmin;j<=jmax;j++)
         grad(j-xsize)= re_objective_function_value::pobjfun->u_dot[j-mind];
     }
@@ -733,7 +729,7 @@ void laplace_approximation_calculator::get_newton_raphson_info_master
       }
     }
   }
-  
+
   if (ad_comm::time_flag)
   {
     if (ad_comm::ptm)
@@ -765,10 +761,10 @@ void laplace_approximation_calculator::get_newton_raphson_info_master
     dvector & g1_k=g1(k);
     for (int j=jmin;j<=jmax;j++)
     {
-      grad(j-xsize)=g1_k(j); 
+      grad(j-xsize)=g1_k(j);
     }
   }
-  
+
 }
 
 

@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -103,8 +103,8 @@ int common(ivector& v,ivector& w)
 void laplace_approximation_calculator::
   check_hessian_type2(function_minimizer * pfmin)
 {
-  //int i,j,ip; 
-  int i,ip; 
+  //int i,j,ip;
+  int i,ip;
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
     hesstype=4;
@@ -136,7 +136,6 @@ void laplace_approximation_calculator::
   }
   else
   {
-    
     int nv=initial_df1b2params::set_index();
     if (allocated(used_flags))
     {
@@ -149,7 +148,7 @@ void laplace_approximation_calculator::
     {
       used_flags.safe_allocate(1,nv);
     }
-    
+
     //for (ip=1;ip<=num_der_blocks;ip++)
     {
       used_flags.initialize();
@@ -161,19 +160,19 @@ void laplace_approximation_calculator::
       (*re_objective_function_value::pobjfun)=0;
       df1b2variable pen=0.0;
       df1b2variable zz=0.0;
-  
+
       initial_df1b2params::reset(y,pen);
       // call function to do block diagonal newton-raphson
       // the step vector from the newton-raphson is in the vector step
       df1b2_gradlist::set_no_derivatives();
-      
+
       funnel_init_var::lapprox=this;
       block_diagonal_flag=5;
-  
-      quadratic_prior::in_qp_calculations=1; 
+
+      quadratic_prior::in_qp_calculations=1;
       pfmin->pre_user_function();
-      quadratic_prior::in_qp_calculations=0; 
-  
+      quadratic_prior::in_qp_calculations=0;
+
       int non_block_diagonal=0;
       for (i=xsize+1;i<=xsize+usize;i++)
       {
@@ -181,7 +180,7 @@ void laplace_approximation_calculator::
         {
           non_block_diagonal=1;
           break;
-        } 
+        }
       }
       if (non_block_diagonal)
       {
@@ -260,7 +259,7 @@ void laplace_approximation_calculator::
           else
           {
             Hess.allocate(1,usize,1,usize);
-          } 
+          }
           if (allocated(Hessadjoint))
           {
             if (Hessadjoint.indexmax() != usize)
@@ -272,7 +271,7 @@ void laplace_approximation_calculator::
           else
           {
             Hessadjoint.allocate(1,usize,1,usize);
-          } 
+          }
         }
       }
       else
@@ -307,9 +306,9 @@ void laplace_approximation_calculator::
         (*calling_set)(0,0)=1;
       }
       used_flags.initialize();
-      quadratic_prior::in_qp_calculations=1; 
+      quadratic_prior::in_qp_calculations=1;
       pfmin->pre_user_function();
-      quadratic_prior::in_qp_calculations=0; 
+      quadratic_prior::in_qp_calculations=0;
       report_calling_set(this);
 
       if (hesstype==2 && (num_importance_samples>0 || use_gauss_hermite>0))
@@ -335,7 +334,7 @@ void laplace_approximation_calculator::
           delete block_diagonal_vch;
           block_diagonal_vch=0;
         }
-        
+
         block_diagonal_vch = new dvar3_array(1,num_separable_calls,
           1,itmp,1,itmp);
         if (block_diagonal_ch)
@@ -412,14 +411,11 @@ void laplace_approximation_calculator::
           cerr << "error_allocating d3_array" << endl;
           ad_exit(1);
         }
-
-
-      } 
+      }
       funnel_init_var::lapprox=0;
       block_diagonal_flag=0;
       pen.deallocate();
     }
   }
 }
-
 #endif // if defined(USE_LAPLACE)

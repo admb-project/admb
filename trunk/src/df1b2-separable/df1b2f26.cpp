@@ -22,7 +22,7 @@ df1b2variable asin(const df1b2variable& _xx)
 
   double x=value(xx);
 
-  double f=asin(x); 
+  double f=asin(x);
 
   double t1=1.0/(1-x*x);
   double dfx = sqrt(t1);

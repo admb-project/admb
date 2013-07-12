@@ -19,14 +19,14 @@ void myderkludge(void);
 
 do_naught_kludge df1b2_init_number::do_naught_kludge_a;
 
-//#define  ADDEBUG_PRINT 
+//#define  ADDEBUG_PRINT
 #if defined(ADDEBUG_PRINT)
     int addebug_count=0;
 #endif
 
 //df1b2_gradlist * f1b2gradlist = NULL;
 int max_num_init_df1b2variable=500;
-  
+
 char AD_allocation_error_message[]="Error tryng to allocate memory for ";
 
 int get_f1b2buffer_size(const char * s);
@@ -76,8 +76,8 @@ int df1b2variable::get_blocksize(void)
  */
 int df1b2variable::get_blocksize(int n)
 {
-  return 6*n+5; 
-  //return 6*n+4; 
+  return 6*n+5;
+  //return 6*n+4;
 }
 
 /**
@@ -93,10 +93,10 @@ void df1b2variable::set_blocksize(void)
 
 //init_df1b2variable * init_df1b2variable::list[max_num_init_df1b2variable];
 init_df1b2variable ** init_df1b2variable::list=0;
-int df1b2variable::nvar=0; 
-int df1b2variable::minder=0; 
-int df1b2variable::maxder=0; 
-int df1b2variable::blocksize=0; 
+int df1b2variable::nvar=0;
+int df1b2variable::minder=0;
+int df1b2variable::maxder=0;
+int df1b2variable::blocksize=0;
 int init_df1b2variable::num_variables=0;
 int df1b2_gradlist::no_derivatives=0;
 int df1b2variable::passnumber=0;
@@ -105,11 +105,11 @@ int ad_dstar::n=0;
 void ad_read_pass2(void);
 // should inline this
 #if !defined(__BORLANDC__)
-ptrdiff_t adptr_diff(void* x, void* y) 
-{ 
+ptrdiff_t adptr_diff(void* x, void* y)
+{
   uintptr_t uintptrx = (uintptr_t)x;
   uintptr_t uintptry = (uintptr_t)y;
-  return uintptrx - uintptry; 
+  return uintptrx - uintptry;
 }
 #endif
 
@@ -132,7 +132,7 @@ void df1b2variable::initialize(void)
   int nvar=((twointsandptr*)ptr)->ptr->nvar;
   initialize(nvar);
 }
-        
+
 /**
  * Description not yet available.
  * \param
@@ -144,12 +144,12 @@ void df1b2variable::initialize(int n)
   int nbytes = (get_blocksize(n) - 2) * sizeof(double);
   memset(ptr + 2, 0, nbytes);
 }
-        
+
 /**
  * Description not yet available.
  * \param
  */
-  void init_df1b2variable::set_u_dot(void) 
+  void init_df1b2variable::set_u_dot(void)
   {
     //int j;
     double uvalue=*get_u();
@@ -171,7 +171,7 @@ void df1b2variable::initialize(int n)
  * Description not yet available.
  * \param
  */
-  void init_df1b2variable::operator = (double d) 
+  void init_df1b2variable::operator = (double d)
   {
     //int nc=*ncopies;
     initialize();
@@ -189,7 +189,7 @@ void df1b2variable::initialize(int n)
  * Description not yet available.
  * \param
  */
-  df1b2variable::df1b2variable(const df1b2variable& v) 
+  df1b2variable::df1b2variable(const df1b2variable& v)
   {
 #if defined(__CHECK_MEMORY__)
     if (pchecker)
@@ -207,7 +207,7 @@ void df1b2variable::initialize(int n)
       (*ncopies)++;
       u=v.u;
       u_dot=v.u_dot;
-      u_bar=v.u_bar;         
+      u_bar=v.u_bar;
       u_dot_bar=v.u_dot_bar;
       u_tilde=v.u_tilde;
       u_dot_tilde=v.u_dot_tilde;
@@ -230,7 +230,7 @@ void df1b2variable::initialize(int n)
   }
 
   adkludge1 * adkludgexxx;
-    
+
 typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
 
 /**
@@ -241,7 +241,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
   {
     ++num_variables;
    /*
-    if (list==0)  
+    if (list==0)
     {
       list =new PINIT_DF1B2VARIABLE[max_num_init_df1b2variable];
     }
@@ -249,15 +249,15 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     {
       cerr << "Need to increase the maximum number of init_df1b2variables"
        << endl << "Use command line option -mni N" << endl;
-    }  
-      
+    }
+
     if (num_variables>=df1b2variable::nvar)
     {
       cerr << "Maximum number of independent variables exceeded"
            << endl;
       cerr << "current max is " << df1b2variable::nvar << endl;
     }
-    list[num_variables]=this;  
+    list[num_variables]=this;
     */
     ind_index=num_variables;
     *get_u()=v;
@@ -274,7 +274,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
  * Description not yet available.
  * \param
  */
-  df1b2variable::~df1b2variable() 
+  df1b2variable::~df1b2variable()
   {
     deallocate();
   }
@@ -283,7 +283,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
  * Description not yet available.
  * \param
  */
-  void df1b2variable::deallocate(void) 
+  void df1b2variable::deallocate(void)
   {
     if (ptr)
     {
@@ -302,11 +302,10 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
       }
       else
       {
-        
         if (!df1b2_gradlist::no_derivatives)
           f1b2gradlist->write_save_pass2_tilde_values(this);
         ((twointsandptr*)ptr)->ptr->free(ptr);
-        
+
         ptr=0;
       }
     }
@@ -315,7 +314,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
 /**
  * Description not yet available.
  * \param
- */  
+ */
   void init_df1b2vector::set_value(const dvector& v)
   {
     int mmin=indexmin();
@@ -325,7 +324,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
       cerr << "incompatible shape in "
         "init_df1b2vector::set_value(const dvector& v)" << endl;
     }
-    
+
     for (int i=mmin;i<=mmax;i++)
     {
       (*this)(i)=v(i);
@@ -344,25 +343,25 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
 /**
  * Description not yet available.
  * \param
- */    
+ */
   init_df1b2vector::init_df1b2vector(int lb,int ub)
   {
     allocate(lb,ub);
   }
-    
+
 /**
  * Description not yet available.
  * \param
  */
   void init_df1b2vector::allocate(int lb,int ub)
   {
-    init_df1b2variable::num_variables= 0; 
+    init_df1b2variable::num_variables= 0;
     index_min=lb;
     index_max=ub;
     ncopies=new int;
     *ncopies=0;
     int size=indexmax()-indexmin()+1;
-    if (init_df1b2variable::list==0)  
+    if (init_df1b2variable::list==0)
     {
       max_num_init_df1b2variable
         =max(size,max_num_init_df1b2variable);
@@ -385,7 +384,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
            << endl;
       ad_exit(1);
     }
-    //AD_ALLOCATE(trueptr,init_df1b2variable,size,df1b2_gradlist) 
+    //AD_ALLOCATE(trueptr,init_df1b2variable,size,df1b2_gradlist)
   // ****************************************
 
     ptr=trueptr;
@@ -469,7 +468,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
   init_df1b2vector::init_df1b2vector(const init_df1b2vector & v)
   {
     ncopies=v.ncopies;
-    if (v.ncopies) 
+    if (v.ncopies)
     {
       (*ncopies)++;
       trueptr=v.trueptr;
@@ -490,7 +489,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
  * Description not yet available.
  * \param
  */
-  double& value(const df1b2variable& _x) 
+  double& value(const df1b2variable& _x)
   {
     ADUNCONST(df1b2variable,x)
     return *x.u;
@@ -547,7 +546,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     {
       *zd++ =dfx * *xd++;
     }
-    
+
     // WRITE WHATEVER ON TAPE
     //df1b2tape->set_tapeinfo_header(&x,&z,this,xd);
     // save stuff for first reverse pass
@@ -584,7 +583,7 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
     {
       *zd++ =dfx * *xd++ + dfy * *yd++;
     }
-    
+
     // WRITE WHATEVER ON TAPE
     if (!df1b2_gradlist::no_derivatives)
       f1b2gradlist->write_pass1(&x,&y,&z,this);
@@ -613,7 +612,7 @@ void df1b2_gradlist::reset(void)
 df1b2_gradlist::df1b2_gradlist(unsigned int _bs,unsigned int _nbs,
   unsigned int _bs2,unsigned int _nbs2,
   unsigned int _bs3,unsigned int _nbs3,
-  const adstring& _filename)  
+  const adstring& _filename)
 {
   int bs=get_f1b2buffer_size("-l1");
   if (!bs) bs=_bs;
@@ -645,11 +644,11 @@ df1b2_gradlist::df1b2_gradlist(unsigned int _bs,unsigned int _nbs,
   ncount=0;
 }
 /*
-smartlist::smartlist(void) 
+smartlist::smartlist(void)
 {
   bufsize=0;
   filename=0;
-  buffer=0; 
+  buffer=0;
   buffend=0;
   bptr=buffer;
   fp=-1;
@@ -660,7 +659,7 @@ smartlist::smartlist(void)
  * Description not yet available.
  * \param
  */
-smartlist::smartlist(unsigned int _bufsize,const adstring& _filename) 
+smartlist::smartlist(unsigned int _bufsize,const adstring& _filename)
 {
   if (sizeof(char)>1)
   {
@@ -669,13 +668,13 @@ smartlist::smartlist(unsigned int _bufsize,const adstring& _filename)
   }
   bufsize=_bufsize;
   filename=_filename;
-  AD_ALLOCATE(buffer,char,bufsize,df1b2_gradlist) 
+  AD_ALLOCATE(buffer,char,bufsize,df1b2_gradlist)
   buffend=buffer+bufsize-1;
   bptr=buffer;
   if ( (fp=open((char*)(filename), O_RDWR | O_CREAT | O_TRUNC |
                    O_BINARY, S_IREAD | S_IWRITE) == -1) )
   {
-    cerr << "Error trying to open file " << filename 
+    cerr << "Error trying to open file " << filename
          << " in class smartlist " << endl;
     exit(1);
   }
@@ -703,7 +702,7 @@ void junk(void* a ,void* b,void* c,void* d,void * e){;}
  * Description not yet available.
  * \param
  */
-void set_dependent_variable(const df1b2variable& _x) 
+void set_dependent_variable(const df1b2variable& _x)
 {
   df1b2variable& x=(df1b2variable&) (_x);
   //cout << "dep " << int(x.u) << endl;
@@ -716,7 +715,7 @@ void set_dependent_variable(const df1b2variable& _x)
 /**
  * Description not yet available.
  * \param
- */  
+ */
 dmatrix get_hessian(const init_df1b2vector& _x)
 {
   ADUNCONST(init_df1b2vector,x)
@@ -845,7 +844,7 @@ d3_array check_third_derivatives(const init_df1b2vector& x)
   }
   return h;
 }
- 
+
 #if defined(__DERCHECK__)
 
 /**
@@ -890,7 +889,7 @@ re_objective_function_value::~re_objective_function_value()
  * Description not yet available.
  * \param
  */
-re_objective_function_value& re_objective_function_value::operator = 
+re_objective_function_value& re_objective_function_value::operator =
   (const df1b2variable& v)
 {
   df1b2variable::operator = (v);
@@ -901,7 +900,7 @@ re_objective_function_value& re_objective_function_value::operator =
  * Description not yet available.
  * \param
  */
-re_objective_function_value& re_objective_function_value::operator = 
+re_objective_function_value& re_objective_function_value::operator =
   (double v)
 {
   df1b2variable::operator = (v);
@@ -932,8 +931,8 @@ void re_objective_function_value::allocate(const char * s)
  * Description not yet available.
  * \param
  */
-init_df1b2variable& init_df1b2vector::operator () (int i) 
-{ 
+init_df1b2variable& init_df1b2vector::operator () (int i)
+{
   if (i < indexmin())
   {
     ADMB_ARRAY_BOUNDS_ERROR("Index too low", "init_df1b2variable& init_df1b2vector::operator () (int i)", indexmin(), indexmax(), i);
@@ -942,15 +941,15 @@ init_df1b2variable& init_df1b2vector::operator () (int i)
   {
     ADMB_ARRAY_BOUNDS_ERROR("Index too high", "init_df1b2variable& init_df1b2vector::operator () (int i)", indexmin(), indexmax(), i);
   }
-  return ptr[i]; 
+  return ptr[i];
 }
 
 /**
  * Description not yet available.
  * \param
  */
-init_df1b2variable& init_df1b2vector::operator [] (int i) 
-{ 
+init_df1b2variable& init_df1b2vector::operator [] (int i)
+{
   if (i < indexmin())
   {
     ADMB_ARRAY_BOUNDS_ERROR("Index too low", "init_df1b2variable& init_df1b2vector::operator [] (int i)", indexmin(), indexmax(), i);
@@ -959,7 +958,7 @@ init_df1b2variable& init_df1b2vector::operator [] (int i)
   {
     ADMB_ARRAY_BOUNDS_ERROR("Index too high", "init_df1b2variable& init_df1b2vector::operator [] (int i)", indexmin(), indexmax(), i);
   }
-  return ptr[i]; 
+  return ptr[i];
 }
 #endif
 //int active (const df1b2_init_vector &){return 1;}
@@ -983,7 +982,7 @@ int get_f1b2buffer_size(const char * s)
       cerr << "Usage " << s << " option needs integer  -- ignored" << endl;
     }
     else
-    {   
+    {
       n=atoi(ad_comm::argv[on1+1]);
     }
   }
@@ -1004,7 +1003,7 @@ df1b2variable::df1b2variable(const random_effects_bounded_vector_info& rebv)
     (*ncopies)++;
     u=v.u;
     u_dot=v.u_dot;
-    u_bar=v.u_bar;         
+    u_bar=v.u_bar;
     u_dot_bar=v.u_dot_bar;
     u_tilde=v.u_tilde;
     u_dot_tilde=v.u_dot_tilde;
@@ -1024,5 +1023,5 @@ df1b2variable::df1b2variable(const random_effects_bounded_vector_info& rebv)
     u_bar_tilde=NULL;
     u_dot_bar_tilde=NULL;
   }
-}   
+}
 

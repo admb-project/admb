@@ -3,28 +3,28 @@
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
- * 
+ *
  * ADModelbuilder and associated libraries and documentations are
  * provided under the general terms of the "BSD" license.
  *
  * License:
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
- * 
+ *
  * 2.  Redistributions in binary form must reproduce the above copyright
  * notice, this list of conditions and the following disclaimer in the
  * documentation and/or other materials provided with the distribution.
- * 
+ *
  * 3.  Neither the name of the  University of California, Otter Research,
  * nor the ADMB Foundation nor the names of its contributors may be used
  * to endorse or promote products derived from this software without
  * specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -124,7 +124,7 @@ class random_effects_bounded_matrix : public param_init_bounded_matrix
 class gauss_hermite_stuff;
 
 class nested_calls_shape;
-//class sparse_symbolic; 
+//class sparse_symbolic;
 
 /**
  * Description not yet available.
@@ -191,9 +191,9 @@ public:
   i3_array * triplet_information;
   imatrix * compressed_triplet_information;
   imatrix * calling_set;
-  dvector *  importance_sampling_values; 
-  dvector *  importance_sampling_weights; 
-  int is_diagnostics_flag; 
+  dvector *  importance_sampling_values;
+  dvector *  importance_sampling_weights;
+  int is_diagnostics_flag;
   static int saddlepointflag;
   static int sparse_hessian_flag;
   static int antiflag;
@@ -240,7 +240,7 @@ public:
   function_minimizer * pmin;
   int block_diagonal_flag;
   int bw;
-  int xsize;   
+  int xsize;
   int usize;
   int nvariables;
   int nvar;
@@ -265,8 +265,8 @@ public:
   dcompressed_triplet * sparse_triplet2;
   dvar_compressed_triplet * vsparse_triplet;
   dcompressed_triplet * vsparse_triplet_adjoint;
-  hs_symbolic * sparse_symbolic; 
-  hs_symbolic * sparse_symbolic2; 
+  hs_symbolic * sparse_symbolic;
+  hs_symbolic * sparse_symbolic2;
 
   void make_sparse_triplet(void);
   void check_for_need_to_reallocate(int ip);
@@ -399,7 +399,7 @@ public:
 class gauss_hermite_stuff
 {
 public:
-  dvar_matrix gauss_hermite_values; 
+  dvar_matrix gauss_hermite_values;
   dvector x;
   dvector w;
   int is;
@@ -407,7 +407,7 @@ public:
 
   gauss_hermite_stuff(laplace_approximation_calculator * lapprox,
     int use_gauss_hermite,int num_separable_calls ,const ivector& itmp);
-  
+
   friend class laplace_approximation_calculator;
 };
 

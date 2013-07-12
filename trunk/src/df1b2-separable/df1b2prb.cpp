@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -14,7 +14,7 @@
  * Description not yet available.
  * \param
  */
-  df1b2variable operator * (const df1b2variable& _x, double y) 
+  df1b2variable operator * (const df1b2variable& _x, double y)
   {
     ADUNCONST(df1b2variable,x)
     df1b2variable z;
@@ -28,13 +28,12 @@
     {
       *zd++ = y * *xd++;
     }
-    
+
     // WRITE WHATEVER ON TAPE
     if (!df1b2_gradlist::no_derivatives)
       f1b2gradlist->write_pass1_prod(&x,y,&z);
     return z;
   }
-
 
 void ad_read_pass2_prodc2(void);
 
@@ -111,7 +110,7 @@ void ad_read_pass2_prodc2(void)
     read_pass2_3_prodc2();
     break;
   default:
-    cerr << "illegal value for df1b2variable::pass = " 
+    cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
     exit(1);
   }
@@ -127,10 +126,10 @@ void read_pass2_1_prodc2(void)
   // and  forward for bptr2 and nbptr2
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
-  //char * bptr=f1b2gradlist->bptr; 
-  //char * bptr2=f1b2gradlist2->bptr; 
+  //char * bptr=f1b2gradlist->bptr;
+  //char * bptr2=f1b2gradlist2->bptr;
   int nvar=df1b2variable::nvar;
-  test_smartlist& list=f1b2gradlist->list; 
+  test_smartlist& list=f1b2gradlist->list;
   //f1b2gradlist->nlist-=sizeof(int);
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
   list-=num_bytes;
@@ -153,7 +152,7 @@ void read_pass2_1_prodc2(void)
   //double * xdot=(double*)bptr;
 
   list.restoreposition(); // save pointer to beginning of record;
- 
+
   // ****************************************************************
   // turn this off if no third derivatives are calculated
   // if (!no_third_derivatives)
@@ -188,7 +187,7 @@ void read_pass2_1_prodc2(void)
   {
     px->u_bar[i]+=yu*pz->u_bar[i];
   }
-  
+
   for (i=0;i<nvar;i++)
   {
     px->u_dot_bar[i]+=yu*pz->u_dot_bar[i];
@@ -217,7 +216,7 @@ void read_pass2_2_prodc2(void)
   // list 1
   //
   int nvar=df1b2variable::nvar;
-  test_smartlist & list=f1b2gradlist->list; 
+  test_smartlist & list=f1b2gradlist->list;
 
    int total_bytes=2*sizeof(df1b2_header)
      +(nvar+2)*sizeof(double);
@@ -231,15 +230,15 @@ void read_pass2_2_prodc2(void)
 // end of string identifier debug stuff
 
   list.saveposition(); // save pointer to beginning of record;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
   //
   // list 2
   //
-  test_smartlist & list2=f1b2gradlist->list2; 
-  fixed_smartlist2 & nlist2=f1b2gradlist->nlist2; 
+  test_smartlist & list2=f1b2gradlist->list2;
+  fixed_smartlist2 & nlist2=f1b2gradlist->nlist2;
   // get record size
   int num_bytes2=*nlist2.bptr;
   --nlist2;
@@ -270,10 +269,9 @@ void read_pass2_2_prodc2(void)
   list.bptr+=sizeof(double);
   xdot=(double*)list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
-  
+
   double * zbar;
   double * zdotbar;
-
 
   zbar=(double*)list2.bptr;
   zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
@@ -288,7 +286,7 @@ void read_pass2_2_prodc2(void)
   // Do second "reverse-reverse" pass calculations
 
   int i;
-  
+
   for (i=0;i<nvar;i++)
   {
     z_bar_tilde[i]=0;
@@ -317,8 +315,8 @@ void read_pass2_3_prodc2(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
-  test_smartlist& list=f1b2gradlist->list; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
+  test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
@@ -347,7 +345,7 @@ void read_pass2_3_prodc2(void)
   xdot=(double*)list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
   int i;
-  
+
   *(px->u_tilde)+=yu* *(pz->u_tilde);
   for (i=0;i<nvar;i++)
   {

@@ -10,7 +10,7 @@
  */
 #include <df1b2fun.h>
 
-//#define  ADDEBUG_PRINT 
+//#define  ADDEBUG_PRINT
 #if defined(ADDEBUG_PRINT)
     int addebug_count=0;
 #endif
@@ -25,9 +25,9 @@ void zero_it(double * p,int n);
  * Description not yet available.
  * \param
  */
-int df1b2_gradlist::write_save_pass2_tilde_values(const df1b2variable * _px) 
+int df1b2_gradlist::write_save_pass2_tilde_values(const df1b2variable * _px)
 {
-  ADUNCONST(df1b2variable*, px) 
+  ADUNCONST(df1b2variable*, px)
   ncount++;
 #if defined(CHECK_COUNT)
   if (ncount >= ncount_check)
@@ -73,7 +73,7 @@ void ad_read_write_tilde_values(void)
     read_tilde_values_3();
     break;
   default:
-    cerr << "illegal value for df1b2variable::pass = " 
+    cerr << "illegal value for df1b2variable::pass = "
          << df1b2variable::passnumber << endl;
     exit(1);
   }
@@ -90,8 +90,8 @@ void read_tilde_values_1(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
-  test_smartlist& list=f1b2gradlist->list; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
+  test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
@@ -124,7 +124,7 @@ void read_tilde_values_2(void)
   // list 1
   //
   int nvar=df1b2variable::nvar;
-  test_smartlist & list=f1b2gradlist->list; 
+  test_smartlist & list=f1b2gradlist->list;
 
   int total_bytes=sizeof(df1b2_header);
 #if defined(SAFE_ALL)
@@ -138,17 +138,17 @@ void read_tilde_values_2(void)
   checkidentiferstring("YS",list);
 #endif
 
-  //fixed_smartlist & nlist=f1b2gradlist->nlist; 
+  //fixed_smartlist & nlist=f1b2gradlist->nlist;
    // nlist-=sizeof(int);
   // get record size
   //int num_bytes=nlist.bptr->numbytes;
     // nlist+=nlist_record_size;
-  df1b2_header * px=(df1b2_header *) list.bptr; 
+  df1b2_header * px=(df1b2_header *) list.bptr;
   //
   // list 3
   //
-  fixed_smartlist2& nlist3=f1b2gradlist->nlist3; 
-  test_smartlist& list3=f1b2gradlist->list3; 
+  fixed_smartlist2& nlist3=f1b2gradlist->nlist3;
+  test_smartlist& list3=f1b2gradlist->list3;
 
   int total_bytes2=(nvar+1)*sizeof(double);
 #if defined(SAFE_ALL)
@@ -185,8 +185,8 @@ void read_tilde_values_3(void)
   // the current entry+2 in bptr is the size of the record i.e
   // points to the next record
   int nvar=df1b2variable::nvar;
-  fixed_smartlist & nlist=f1b2gradlist->nlist; 
-  test_smartlist& list=f1b2gradlist->list; 
+  fixed_smartlist & nlist=f1b2gradlist->nlist;
+  test_smartlist& list=f1b2gradlist->list;
    // nlist-=sizeof(int);
   // get record size
   int num_bytes=nlist.bptr->numbytes;
@@ -196,11 +196,11 @@ void read_tilde_values_3(void)
 #if defined(SAFE_ARRAYS)
   checkidentiferstring("YS",list);
 #endif
-  df1b2_header * px=(df1b2_header *) list.bptr; 
+  df1b2_header * px=(df1b2_header *) list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
-  fixed_smartlist2& nlist3=f1b2gradlist->nlist3; 
-  test_smartlist& list3=f1b2gradlist->list3; 
+  fixed_smartlist2& nlist3=f1b2gradlist->nlist3;
+  test_smartlist& list3=f1b2gradlist->list3;
   --nlist3;
   // get record size
   int num_bytes3=*nlist3.bptr;

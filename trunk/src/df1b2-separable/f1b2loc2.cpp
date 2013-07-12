@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
  * \file
@@ -22,9 +22,9 @@ local_dep_df1b2variable::local_dep_df1b2variable(void) :
 {
   //adpool * tmppool=df1b2variable::pool;
   //int tmpnvar=df1b2variable::nvar;
-  //df1b2variable::restore_adpool_pointer(); 
+  //df1b2variable::restore_adpool_pointer();
   p=new df1b2variable();
-  //df1b2variable::save_adpool_pointer(); 
+  //df1b2variable::save_adpool_pointer();
   //df1b2variable::pool=tmppool;
   //df1b2variable::nvar=tmpnvar;
 }
@@ -42,8 +42,8 @@ local_dep_df1b2variable::~local_dep_df1b2variable()
  * Description not yet available.
  * \param
  */
-local_dep_df1b2variable&  local_dep_df1b2variable::operator = 
-  (const df1b2variable& x)  
+local_dep_df1b2variable&  local_dep_df1b2variable::operator =
+  (const df1b2variable& x)
 {
   df1b2variable::operator = (x);
   *(p->get_u()) = *get_u();
@@ -80,7 +80,7 @@ local_dep_df1b2variable::local_dep_df1b2variable
 {
   ADUNCONST(df1b2variable,x)
   p=&_x;
-  xu=*(x.get_u()); 
+  xu=*(x.get_u());
 }
 
 /**
@@ -99,14 +99,13 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
   df1b2variable::noallocate=0;
 }
 
- 
  // #define USE_BARD_PEN
  // class newadkludge;
  // extern newadkludge * newadkl=0;
- // 
- // 
+ //
+ //
   typedef local_dep_var  * PLOCAL_INIT_VAR;
- // 
+ //
  // class laplace_approximation_calculator;
  // laplace_approximation_calculator * funnel_dep_var::lapprox=0;
  // df1b2variable * funnel_dep_var::funnel_constraints_penalty=0;
@@ -119,9 +118,9 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
   local_dep_var ** local_dep_var::inactive_list=new PLOCAL_INIT_VAR[200];
   //dep_df1b2vector * local_dep_var::py=0;
   imatrix * local_dep_var::plist=0;
- // 
+ //
  // void  xxx(dep_df1b2vector & tmp,int x){;}
- // 
+ //
 /**
  * Description not yet available.
  * \param
@@ -132,7 +131,7 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
     list[num_vars++]=this;
     //all_list[num_all_vars++]=this;
   }
- // 
+ //
  // void funnel_dep_var::delete_from_list(void)
  // {
  //   if (index!=num_vars-1)
@@ -143,7 +142,7 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
  //   num_vars--;
  //   index=-1;
  // }
- // 
+ //
 
 /**
  * Description not yet available.
@@ -164,7 +163,7 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
     local_dep_var::deallocate_all();
     reset_counters();
     f1b2gradlist=globalf1b2gradlist;
-    df1b2_gradlist::set_yes_derivatives();  
+    df1b2_gradlist::set_yes_derivatives();
     df1b2variable::restore_adpool_pointer();
   }
 
@@ -250,7 +249,6 @@ local_dep_df1b2vector::local_dep_df1b2vector(const df1b2vector & _x)
  */
   void local_dep_df1b2vector::set_index(imatrix& y,int& ii)
   {
-    
     int mmin=p->indexmin();
     int mmax=p->indexmax();
     int i;

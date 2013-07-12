@@ -16,7 +16,6 @@
  */
   ostream& operator << (const ostream& _os, const df1b2variable& _x)
   {
-      
     ADUNCONST(df1b2variable,x)
     ADUNCONST(ostream,os)
     os << *x.u;
@@ -41,7 +40,7 @@
     for (int i=mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
-    }  
+    }
     return os;
   }
 
@@ -59,7 +58,7 @@
     {
       os << x(i) << " ";
       if (i<mmax) os << endl;
-    }  
+    }
     return os;
   }
 
@@ -76,7 +75,7 @@
     for (int i=mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
-    }  
+    }
     return os;
   }
 
@@ -84,7 +83,7 @@
  * Description not yet available.
  * \param
  */
-  ostream& operator << (const ostream& _os, 
+  ostream& operator << (const ostream& _os,
     const df1b2_init_bounded_number_vector& _x)
   {
     ADUNCONST(ostream,os)
@@ -94,7 +93,7 @@
     for (int i=mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
-    }  
+    }
     return os;
   }
 
@@ -102,7 +101,7 @@
  * Description not yet available.
  * \param
  */
-  ostream& operator << (const ostream& _os, 
+  ostream& operator << (const ostream& _os,
     const init_df1b2vector& _x)
   {
     ADUNCONST(ostream,os)
@@ -112,6 +111,6 @@
     for (int i=mmin;i<=mmax;i++)
     {
       os << x(i) << " ";
-    }  
+    }
     return os;
   }

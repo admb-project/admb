@@ -26,14 +26,14 @@ df1b2variable gammlnguts(const df1b2variable _zz)
   const double pi =3.1415926535897932384626432;
   const double lpp =0.9189385332046727417803297;
   int n=7;
-  const double c[9]={0.99999999999980993, 
-    676.5203681218851, 
+  const double c[9]={0.99999999999980993,
+    676.5203681218851,
     -1259.1392167224028,
-     771.32342877765313, 
-    -176.61502916214059, 
+     771.32342877765313,
+    -176.61502916214059,
     12.507343278686905,
-     -0.13857109526572012, 
-    9.9843695780195716e-6, 
+     -0.13857109526572012,
+    9.9843695780195716e-6,
     1.5056327351493116e-7};
   z-=1.0;
   double x=c[0];
@@ -49,7 +49,7 @@ df1b2variable gammlnguts(const df1b2variable _zz)
     xdot-=c[i]*square(zinv);
     x2dot+=2.0*c[i]*cube(zinv);
     x3dot-=6.0*c[i]*fourth(zinv);
-  }    
+  }
   double t=z+n+0.5;
   double tdot=zdot;
   //return lpp + (z+0.5)*log(t) -t + log(x);

@@ -301,7 +301,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
     xadjoint(i)=g(ii++);
   for (i=1;i<=us;i++)
     uadjoint(i)=g(ii++);
- 
+
   dcompressed_triplet * vsparse_triplet_adjoint =
     pmin->lapprox->vsparse_triplet_adjoint;
   int mmin=vsparse_triplet_adjoint->indexmin();

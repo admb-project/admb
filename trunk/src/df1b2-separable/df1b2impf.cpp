@@ -105,7 +105,7 @@ double calculate_importance_sample_funnel(const dvector& x,const dvector& u0,
        if (is>nsamp) break;
        icount++;
        dvar_vector tau=ch*pmin->lapprox->epsilon(is);
- 
+
        vy(xs+1,xs+us).shift(1)+=tau;
        initial_params::reset(vy);    // get the values into the model
        vy(xs+1,xs+us).shift(1)-=tau;
@@ -140,14 +140,13 @@ double calculate_importance_sample_funnel(const dvector& x,const dvector& u0,
      }
      lbound+=samplesize;
      ubound+=samplesize;
-   } 
-  
+   }
+
    double fm=mean(value(fvalues(1,mean_count)));
    dvar_vector nfval=exp(fvalues(1,mean_count)-fm);
    vf=-fm-log(nfval*blocksizes(1,mean_count)/sum(blocksizes(1,mean_count)));
-   //vf-=us*.91893853320467241; 
+   //vf-=us*.91893853320467241;
 
-   
    int sgn=0;
    dvariable ld;
    if (ad_comm::no_ln_det_choleski_flag)
@@ -165,7 +164,7 @@ double calculate_importance_sample_funnel(const dvector& x,const dvector& u0,
    vy(xs+1,xs+us).shift(1)=u0;
    initial_params::reset(vy);    // get the values into the model
    gradient_structure::set_YES_DERIVATIVES();
-  
+
   ii=1;
   for (i=1;i<=xs;i++)
     xadjoint(i)=g(ii++);

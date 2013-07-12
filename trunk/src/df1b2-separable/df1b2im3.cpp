@@ -273,7 +273,7 @@ double calculate_importance_sample_block_diagonal(const dvector& x,
    vy(xs+1,xs+us).shift(1)=u0;
    initial_params::reset(vy);    // get the values into the model
    gradient_structure::set_YES_DERIVATIVES();
-  
+
   ii=1;
   for (i=1;i<=xs;i++)
     xadjoint(i)=g(ii++);

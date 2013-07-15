@@ -11,10 +11,21 @@ if [[ "$1" == "" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 
+if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
+  source "$ADMB_HOME/bin/admb-cfg.sh"
+else
+  CXX=c++
+fi
+
+if [ "$CXX" == "openCC" ]; then
+  sym=-O2
+else
+  sym=-O3
+fi
+
 # Pop args until model=$1
 unset dll
 opt=-DSAFE_ALL
-sym=-O3
 while getopts "dgrs" A; do
   case $A in
     d) dll=-DBUILDING_DLL;;
@@ -31,11 +42,6 @@ if [ "`basename $file`" == "$file" ]; then
   file=$file.cpp
 fi
 
-if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
-  source "$ADMB_HOME/bin/admb-cfg.sh"
-else
-  CXX=c++
-fi
 
 CXXFLAGS="-c $CXXFLAGS $sym"
 if [ ! -z "$dll" ]; then

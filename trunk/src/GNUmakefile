@@ -25,7 +25,11 @@ endif
 ifdef DEBUG
 CXXFLAGS_PRE:=-g
 else
-CXXFLAGS_PRE:=-O3
+  ifeq ($(CXX),openCC)
+    CXXFLAGS_PRE:=-O2
+  else
+    CXXFLAGS_PRE:=-O3
+  endif
 endif
 
 ifdef BUILD_SHARED_LIBRARY

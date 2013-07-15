@@ -52,7 +52,6 @@ dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   indx.fill_seqadd(lb,One);
   double d;
   double big,dum,sum,temp;
-  kkludge_object kkk;
   dvector vv(lb,ub);
 
   d=1.0;

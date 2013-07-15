@@ -50,7 +50,6 @@ df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
   indx.fill_seqadd(lb,One);
   df1b2variable d;
   df1b2variable big,dum,sum,temp;
-  kkludge_object kkk;
   df1b2vector vv(lb,ub);
 
   d = 1.0;

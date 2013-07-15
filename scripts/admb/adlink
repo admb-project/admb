@@ -11,13 +11,24 @@ if [[ "$1" == "" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 
+if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
+  source "$ADMB_HOME/bin/admb-cfg.sh"
+else
+  CXX=c++
+fi
+
+if [ "$CXX" == "openCC" ]; then
+  sym=-O2
+else
+  sym=-O3
+fi
+
 unset shared
-sym=
 opt=
 while getopts "dgrso" A; do
   case $A in
     d) shared=-shared;;
-    g) unset sym;;
+    g) sym=-g;;
     r) ;;
     s) ;;
     o) opt=o;;
@@ -25,7 +36,7 @@ while getopts "dgrso" A; do
 done
 shift $((OPTIND-1))
 
-if [[ "`uname -s`" == "Darwin" ]]; then unset sym; fi
+#if [[ "`uname -s`" == "Darwin" ]]; then unset sym; fi
 
 model="${1%.*}"
 
@@ -39,12 +50,6 @@ do
     objects="$objects $file"
   fi 
 done
-
-if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
-  source "$ADMB_HOME/bin/admb-cfg.sh"
-else
-  CXX=c++
-fi
 
 LDFLAGS="$LDFLAGS"
 if [ ! -z "$sym" ]; then

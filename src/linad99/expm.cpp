@@ -188,7 +188,6 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_uns
   indx.fill_seqadd(lb,One);
   dvariable d;
   dvariable big,dum,sum,temp;
-  kkludge_object kkk;
   dvar_vector vv(lb,ub);
 
   d=1.0;

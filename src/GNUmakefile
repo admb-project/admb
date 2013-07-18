@@ -81,13 +81,24 @@ SAFLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-linad99-,$(OBJ
 endif
 
 include nh99/objects.lst
-ifeq ($(TERMINAL),dos)
-OPTLP_NH99_OBJS=$(sort $(addprefix ..\build\objects\dist\optlp-nh99-,$(OBJ6))) ..\build\objects\dist\optlp-sparse-hs_sparse.obj
-SAFLP_NH99_OBJS=$(sort $(addprefix ..\build\objects\dist\saflp-nh99-,$(OBJ6))) ..\build\objects\dist\saflp-sparse-hs_sparse.obj
+ifneq ($(CXX),CC)
+ ifeq ($(TERMINAL),dos)
+ OPTLP_NH99_OBJS=$(sort $(addprefix ..\build\objects\dist\optlp-nh99-,$(filter-out dfqromb.obj,$(OBJ6)))) ..\build\objects\dist\optlp-sparse-hs_sparse.obj
+ SAFLP_NH99_OBJS=$(sort $(addprefix ..\build\objects\dist\saflp-nh99-,$(filter-out dfqromb.obj,$(OBJ6)))) ..\build\objects\dist\saflp-sparse-hs_sparse.obj
+ else
+ OPTLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-nh99-,$(filter-out dfqromb.obj,$(OBJ6)))) ../build/objects/dist/optlp-sparse-hs_sparse.obj
+ SAFLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-nh99-,$(filter-out dfqromb.obj,$(OBJ6)))) ../build/objects/dist/saflp-sparse-hs_sparse.obj
+ endif
 else
-OPTLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-nh99-,$(OBJ6))) ../build/objects/dist/optlp-sparse-hs_sparse.obj
-SAFLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-nh99-,$(OBJ6))) ../build/objects/dist/saflp-sparse-hs_sparse.obj
+ ifeq ($(TERMINAL),dos)
+ OPTLP_NH99_OBJS=$(sort $(addprefix ..\build\objects\dist\optlp-nh99-,$(OBJ6))) ..\build\objects\dist\optlp-sparse-hs_sparse.obj
+ SAFLP_NH99_OBJS=$(sort $(addprefix ..\build\objects\dist\saflp-nh99-,$(OBJ6))) ..\build\objects\dist\saflp-sparse-hs_sparse.obj
+ else
+ OPTLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-nh99-,$(OBJ6))) ../build/objects/dist/optlp-sparse-hs_sparse.obj
+ SAFLP_NH99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-nh99-,$(OBJ6))) ../build/objects/dist/saflp-sparse-hs_sparse.obj
+ endif
 endif
+
 include tools99/objects.lst
 ifeq ($(TERMINAL),dos)
 OPTLP_TOOLS99_OBJS=$(sort $(addprefix ..\build\objects\dist\optlp-tools99-,$(OBJ7)))

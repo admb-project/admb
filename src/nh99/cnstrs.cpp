@@ -538,7 +538,7 @@ gggg18::gggg18(int _nx, doublereal _wwuq5, doublereal _wdg5bnd) :
   //xtr = new doublereal[nx];
   xsc = new doublereal[_nx];
   fu = new doublereal[number3+1];
-  fugrad = new doublereal[_nx*(number3+1)];	
+  fugrad = new doublereal[_nx*(number3+1)];
   fud = new doublereal[(number3+1)*6];
 }
 gggg18::~gggg18()
@@ -631,7 +631,7 @@ gggg23::~gggg23()
 }
 
 #ifdef __cplusplus
-	}
+}
 #endif
 
 /*
@@ -787,7 +787,7 @@ void make_all_classes(int _n,int _numberw,int _numberv)
 }
 
 #ifdef __cplusplus
-	}
+}
 #endif
 
 /**

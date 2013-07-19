@@ -10,7 +10,7 @@
  */
 /* donlp2.f -- translated by f2c (version 19950110).
    You must link the resultinumberv object file with the libraries:
-	-lf2c -lm   (in that order)
+     -lf2c -lm   (in that order)
 */
 //#include <fstream.h>
 #include <admodel.h>
@@ -26,10 +26,6 @@ extern "C" {
 #ifdef __cplusplus
   }
 #endif
-
-
-
-
 
 /*
 void function_minimizer::constraints_minimize(void)

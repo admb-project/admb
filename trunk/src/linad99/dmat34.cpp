@@ -67,7 +67,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
   n=aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
-  if (lb!=aa.rowmin()||ub!=aa.colmax())
+  if (lb!=aa.rowmin()||ub!=aa.rowmax())
   {
     cerr << "Error matrix not square in solve()"<<endl;
     ad_exit(1);
@@ -212,6 +212,4 @@ dvector solve(const dmatrix& aa,const dvector& z,
 
   return x;
 }
-
 #undef TINY
-

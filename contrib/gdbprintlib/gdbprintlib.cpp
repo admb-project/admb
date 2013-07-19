@@ -19,7 +19,7 @@ void pad(double v)
   cout << v << endl;
 }
 
- /**
+/**
 * Print an adstring to the screen
 * @param v The adstring to print
 * @return Nothing
@@ -29,7 +29,7 @@ void pad(const adstring & v)
   cout << v << endl;
 }
 
- /**
+/**
 * Print a dvar3_array to the screen
 * @param v The dvar3_array to print
 * @return Nothing
@@ -39,7 +39,7 @@ void pad(const dvar3_array & v)
   cout << v << endl;
 }
 
- /**
+/**
 * Print a matrix slice of a dvar3_array to the screen
 * @param v The dvar3_array to print
 * @param i 1-based index of the matrix to print
@@ -50,7 +50,7 @@ void pad(const dvar3_array & v,int i)
   cout << v(i) << endl;
 }
 
- /**
+/**
 * Print a vector slice of a dvar3_array to the screen
 * @param v The dvar3_array to print
 * @param i 1-based index of the matrix to slice from
@@ -62,7 +62,7 @@ void pad(const dvar3_array & v,int i,int j)
   cout << v(i,j) << endl;
 }
 
- /**
+/**
 * Print a scalar of a dvar3_array to the screen
 * @param v The dvar3_array to print
 * @param i 1-based index of the matrix to slice from
@@ -75,7 +75,7 @@ void pad(const dvar3_array & v,int i,int j,int k)
   cout << v(i,j,k) << endl;
 }
 
- /**
+/**
 * Print a dvar4_array to the screen
 * @param v The dvar4_array to print
 * @return Nothing
@@ -85,7 +85,7 @@ void pad(const dvar4_array & v)
   cout << v << endl;
 }
 
- /**
+/**
 * Print a 3D slice of a dvar4_array to the screen
 * @param v The dvar4_array to print
 * @param i 1-based index of the 3D object to print
@@ -96,7 +96,7 @@ void pad(const dvar4_array & v,int i)
   cout << v(i) << endl;
 }
 
- /**
+/**
 * Print a matrix slice of a dvar4_array to the screen
 * @param v The dvar4_array to print
 * @param i 1-based index of the 3D object to print
@@ -108,7 +108,7 @@ void pad(const dvar4_array & v,int i,int j)
   cout << v(i,j) << endl;
 }
 
- /**
+/**
 * Print a vector slice of a dvar4_array to the screen
 * @param v The dvar4_array to print
 * @param i 1-based index of the 3D object to print
@@ -121,7 +121,7 @@ void pad(const dvar4_array & v,int i,int j,int k)
   cout << v(i,j,k) << endl;
 }
 
- /**
+/**
 * Print a d4_array to the screen
 * @param v The d4_array to print
 * @return Nothing
@@ -131,7 +131,7 @@ void pad(const d4_array & v)
   cout << v << endl;
 }
 
- /**
+/**
 * Print a 3D slice of a d4_array to the screen
 * @param v The d4_array to print
 * @param i 1-based index of the 3D object to print
@@ -141,7 +141,7 @@ void pad(const d4_array & v)
   cout << v(i) << endl;
 }
 
- /**
+/**
 * Print a matrix slice of a d4_array to the screen
 * @param v The d4_array to print
 * @param i 1-based index of the 3D object to print
@@ -153,7 +153,7 @@ void pad(const d4_array & v,int i,int j)
   cout << v(i,j) << endl;
 }
 
- /**
+/**
 * Print a vector slice of a d4_array to the screen
 * @param v The d4_array to print
 * @param i 1-based index of the 3D object to print
@@ -166,7 +166,7 @@ void pad(const d4_array & v,int i,int j,int k)
   cout << v(i,j,k) << endl;
 }
 
- /**
+/**
 * Print a d3_array to the screen
 * @param v The d3_array to print
 * @return Nothing
@@ -176,7 +176,7 @@ void pad(const d3_array & v)
   cout << v << endl;
 }
 
- /**
+/**
 * Print a matrix slice of a d3_array to the screen
 * @param v The d3_array to print
 * @param i 1-based index of the matrix to print
@@ -187,7 +187,7 @@ void pad(const d3_array & v,int i)
   cout << v(i) << endl;
 }
 
- /**
+/**
 * Print a vector slice of a d3_array to the screen
 * @param v The d3_array to print
 * @param i 1-based index of the matrix to print
@@ -211,7 +211,7 @@ void pad(const d3_array & v,int i,int j,int k)
 {
   cout << v(i,j,k) << endl;
 }
- /**
+/**
 * Print a i3_array to the screen
 * @param v The i3_array to print
 * @return Nothing
@@ -221,7 +221,7 @@ void pad(const i3_array & v)
   cout << v << endl;
 }
 
- /**
+/**
 * Print a matrix slice of a i3_array to the screen
 * @param v The i3_array to print
 * @param i 1-based index of the matrix to print
@@ -232,7 +232,7 @@ void pad(const i3_array & v,int i)
   cout << v(i) << endl;
 }
 
- /**
+/**
 * Print a vector slice of a i3_array to the screen
 * @param v The i3_array to print
 * @param i 1-based index of the matrix to print
@@ -257,7 +257,7 @@ void pad(const i3_array & v,int i,int j,int k)
   cout << v(i,j,k) << endl;
 }
 
- /**
+/**
 * Print a i4_array to the screen
 * @param v The i4_array to print
 * @return Nothing
@@ -267,7 +267,7 @@ void pad(const i4_array & v)
   cout << v << endl;
 }
 
- /**
+/**
 * Print a 3D slice of a i4_array to the screen
 * @param v The i4_array to print
 * @param i 1-based index of the 3D object to print
@@ -278,7 +278,7 @@ void pad(const i4_array & v,int i)
   cout << v(i) << endl;
 }
 
- /**
+/**
 * Print a matrix slice of a i4_array to the screen
 * @param v The i4_array to print
 * @param i 1-based index of the 3D object to print
@@ -290,7 +290,7 @@ void pad(const i4_array & v,int i,int j)
   cout << v(i,j) << endl;
 }
 
- /**
+/**
 * Print a matrix slice of a i4_array to the screen
 * @param v The i4_array to print
 * @param i 1-based index of the 3D object to print
@@ -302,7 +302,7 @@ void pad(const i4_array & v,int i,int j,int k)
   cout << v(i,j,k) << endl;
 }
 
- /**
+/**
 * Print a scalar of a i4_array to the screen
 * @param v The i4_array to print
 * @param i 1-based index of the 3D object to print
@@ -485,7 +485,7 @@ void padp(const dvar_matrix & v,int i)
   cout << setprecision(12) << v(i) << endl;
 }
 
- /**
+/**
 * Print the sum of a dvar_vector to the screen
 * @param v The dvar_vector
 * @return Nothing
@@ -495,7 +495,7 @@ void padsum(const dvar_vector & v)
   cout << sum(v) << endl;
 }
 
- /**
+/**
 * Print the sum of a dvector to the screen
 * @param v The dvector
 * @return Nothing
@@ -505,7 +505,7 @@ void padsum(const dvector & v)
   cout << sum(v) << endl;
 }
 
- /**
+/**
 * Print the sum of an ivector to the screen
 * @param v The ivector
 * @return Nothing
@@ -515,7 +515,7 @@ void padsum(const ivector & v)
   cout << sum(v) << endl;
 }
 
- /**
+/**
 * Print the sum of a dvar_matrix to the screen
 * @param v The dvar_matrix
 * @return Nothing
@@ -525,7 +525,7 @@ void padsum(const dvar_matrix & v)
   cout << sum(v) << endl;
 }
 
- /**
+/**
 * Print the sum of a dmatrix to the screen
 * @param v The dmatrix
 * @return Nothing
@@ -535,7 +535,7 @@ void padsum(const dmatrix & v)
   cout << sum(v) << endl;
 }
 
- /**
+/**
 * Print the sum of an imatrix to the screen
 * @param v The imatrix
 * @return Nothing

@@ -140,7 +140,7 @@ int initial_params::correct_for_dev_objects(const dmatrix& H)
     {
       if (withinbound(0,(varsptr[i])->phase_start,current_phase))
       {
-	(varsptr[i])->dev_correction(H,ii);
+        (varsptr[i])->dev_correction(H,ii);
       }
     }
     cout << H << endl << endl;
@@ -163,7 +163,7 @@ int initial_params::correct_for_dev_objects(const dmatrix& H)
 #  endif
           if (withinbound(0,(varsptr[i])->phase_start,current_phase))
           {
-    	    nvar+= (varsptr[i])->size_count();
+            nvar+= (varsptr[i])->size_count();
           }
 #  if defined(USE_SHARE_FLAGS)
         }
@@ -180,7 +180,7 @@ int initial_params::correct_for_dev_objects(const dmatrix& H)
       //if ((varsptr[i])->phase_start <= current_phase)
       if (withinbound(0,(varsptr[i])->phase_start,current_phase))
       {
-	ntypes++;
+        ntypes++;
       }
     }
     return ntypes;
@@ -192,7 +192,7 @@ int initial_params::correct_for_dev_objects(const dmatrix& H)
     for (int i=0;i<num_initial_params;i++)
     {
       if (withinbound(0,(varsptr[i])->phase_start,current_phase))
-	(varsptr[i])->sd_vscale(d,x,ii);
+        (varsptr[i])->sd_vscale(d,x,ii);
     }
     return ii-1;
   }
@@ -204,7 +204,7 @@ int initial_params::stddev_scale(const dvector& d, const dvector& x)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
       if (withinbound(0,(varsptr[i])->phase_start,current_phase))
-	(varsptr[i])->sd_scale(d,x,ii);
+        (varsptr[i])->sd_scale(d,x,ii);
     }
     return ii-1;
   }
@@ -216,7 +216,7 @@ int initial_params::stddev_curvscale(const dvector& d, const dvector& x)
     {
       //if ((varsptr[i])->phase_start <= current_phase)
       if (withinbound(0,(varsptr[i])->phase_start,current_phase))
-	(varsptr[i])->curv_scale(d,x,ii);
+        (varsptr[i])->curv_scale(d,x,ii);
     }
     return ii-1;
   }

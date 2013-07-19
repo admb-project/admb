@@ -70,7 +70,7 @@ void function_minimizer::adamoeba(const dmatrix& _p, const dvector& _y, int ndim
     }
     if (nfunk >= NMAX)
     {
-	cerr << "NMAX exceeded" << endl;
+      cerr << "NMAX exceeded" << endl;
     }
     nfunk += 2;
     ytry=amxxx(p,y,psum,ndim,ihi,-1.0);
@@ -117,30 +117,29 @@ double function_minimizer::amxxx(const dmatrix& _p, const dvector& _y, const dve
   dmatrix& p=(dmatrix&) _p;
   dvector& y=(dvector&) _y;
   dvector& psum=(dvector&) _psum;
-	int j;
-	double fac1,fac2,ytry;
+  int j;
+  double fac1,fac2,ytry;
 
-	dvector ptry(1,ndim);
-	fac1=(1.0-fac)/ndim;
-	fac2=fac1-fac;
-	for (j=1;j<=ndim;j++) ptry[j]=psum[j]*fac1-p[ihi][j]*fac2;
+  dvector ptry(1,ndim);
+  fac1=(1.0-fac)/ndim;
+  fac2=fac1-fac;
+  for (j=1;j<=ndim;j++) ptry[j]=psum[j]*fac1-p[ihi][j]*fac2;
 
+  dvariable vf=0.0;
+  vf=initial_params::reset(dvar_vector(ptry));
+  *objective_function_value::pobjfun=0.0;
+  userfunction();
+  vf+=*objective_function_value::pobjfun;
+  ytry=value(vf);
 
-        dvariable vf=0.0;
-        vf=initial_params::reset(dvar_vector(ptry));
-        *objective_function_value::pobjfun=0.0;
-        userfunction();
-        vf+=*objective_function_value::pobjfun;
-	ytry=value(vf);
-
-	if (ytry < y[ihi]) {
-		y[ihi]=ytry;
-		for (j=1;j<=ndim;j++) {
-			psum[j] += ptry[j]-p[ihi][j];
-			p[ihi][j]=ptry[j];
-		}
-	}
-	return ytry;
+  if (ytry < y[ihi]) {
+    y[ihi]=ytry;
+    for (j=1;j<=ndim;j++) {
+      psum[j] += ptry[j]-p[ihi][j];
+      p[ihi][j]=ptry[j];
+      }
+  }
+  return ytry;
 }
 #undef NRANSI
 

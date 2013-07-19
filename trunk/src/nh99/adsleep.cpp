@@ -24,7 +24,7 @@
  */
 void ADSleep(int t)
 {
-#if !defined(linux) && !defined(__CYGWIN__) && !defined(__linux__)	
+#if !defined(linux) && !defined(__CYGWIN__) && !defined(__linux__)
   Sleep(t);
 #else
 #  if defined(__MINGW32__)

@@ -1,16 +1,7 @@
-/**
-* @file gdbprint.h
-* @brief Contains function prototypes for printing ADMB objects during GDB sessions
-* \ingroup GDBPRINTLIB
-* This file contains function prototypes for printing out the various ADMB
-* variable types to the screen. This functioniality was added to allow easy
-* viewing of ADMB variables of all types during a GDB debugging session, but
-* the functions can be used in code.
-* To use the functions in a GDB session, ADMB must have been built from source
-* in debug mode, typically using the command 'make debug'. Also, the model
-* TPL must have been compiled using the debug flag, typically using the command
-* 'admb -g '.
-*
+// $Id$
+/** \file gdbprintlib.h
+  Function prototypes for printing ADMB objects during GDB sessions.
+
 * @author Chris Grandin, Dave Fournier
 * @date 6/18/2013
 **/

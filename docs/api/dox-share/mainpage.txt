@@ -129,6 +129,21 @@ invoke custom adjoint code.
     \details Contributed by Weihai Liu
 */
 
+/** \defgroup  GDBPRINTLIB Dubugging aids.
+    \ingroup CONTRIB
+    \details Functions for printing ADMB objects during GDB sessions.
+  This functioniality was added to allow easy
+  viewing of ADMB variables of all types during a GDB debugging session, but
+  the functions can be used in code.
+  To use the functions in a GDB session, ADMB must have been built from source
+  in debug mode, typically using the command 'make debug'. Also, the model
+  TPL must have been compiled using the debug flag, typically using the command
+  'admb -g '.
+ 
+  Contributed by Chris Grandin and Dave Fournier
+*/
+
+
 // generate dox for directories
 /** \dir src
 Main AUTODIF and ADMB source code directories.

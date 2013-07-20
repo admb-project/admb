@@ -1,9 +1,28 @@
+// $Id$
+
+/**  \file gdbprintlib.cpp
+  Source code for functions for printing ADMB objects during GDB sessions.
+
+  This functioniality was added to allow easy
+  viewing of ADMB variables of all types during a GDB debugging session, but
+  the functions can be used in code.
+  To use the functions in a GDB session, ADMB must have been built from source
+  in debug mode, typically using the command 'make debug'. Also, the model
+  TPL must have been compiled using the debug flag, typically using the command
+  'admb -g '.
+ 
+  @author Chris Grandin, Dave Fournier
+  @date 6/18/2013
+  \ingroup GDBPRINTLIB
+*/
+
 #include "gdbprintlib.h"
 
 /**
 * Do nothing, this will be included by ADMB lexical analyzer
 * so that the library is usable from within GDB
 * @return Nothing
+  \ingroup GDBPRINTLIB
 **/
 void pad()
 {
@@ -13,6 +32,7 @@ void pad()
 * Print a double precision number to the screen
 * @param v The double to print
 * @return Nothing
+  \ingroup GDBPRINTLIB
 **/
 void pad(double v)
 {
@@ -23,6 +43,7 @@ void pad(double v)
 * Print an adstring to the screen
 * @param v The adstring to print
 * @return Nothing
+  \ingroup GDBPRINTLIB
 **/
 void pad(const adstring & v)
 {

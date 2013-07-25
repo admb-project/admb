@@ -44,7 +44,6 @@ cifstream& cifstream::operator>>(const lvector& z)
   return *this;
 }
 
-
 cifstream& operator>>(cifstream& istr, const imatrix& z)
 {
   if (allocated(z))
@@ -124,6 +123,3 @@ cifstream& operator>>(cifstream& istr, const d4_array& z)
   }
   return istr;
 }
-
-
-

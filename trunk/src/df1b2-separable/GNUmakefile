@@ -1,6 +1,11 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ("$(TERM)","xterm")
-    TERMINAL=cygwin
+  ifdef TERM
+    ifeq ("$(TERM)","xterm")
+      TERMINAL=cygwin
+    endif
+    ifeq ("$(TERM)","cygwin")
+      TERMINAL=cygwin
+    endif
   else
     TERMINAL=dos
     PATH:=$(PATH);..\..\utilities;..\..\utilities\mingw\bin

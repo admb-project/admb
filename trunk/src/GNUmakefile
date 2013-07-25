@@ -3,7 +3,7 @@
 INSTALL_DIR=/usr/local/
 
 ifeq ($(OS),Windows_NT)
-  ifeq ($(TERM),cygwin)
+  ifeq ("$(TERM)","xterm")
     TERMINAL=cygwin
   else
     TERMINAL=dos
@@ -383,6 +383,7 @@ else
 	ln -sf bin/admb ${DISK}
 	ln -sf build/dist/bin/admb ..
   ifeq ($(OS),Windows_NT)
+    ifneq ("$(TERM)","xterm")
 	cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
 	cp ../utilities/sed.exe ${DISK}/bin
 	cp ../utilities/libiconv2.dll ${DISK}/bin
@@ -392,6 +393,7 @@ else
 	cp ../scripts/admb/adlink.bat ${DISK}/bin
 	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp ../scripts/admb/root-admb.bat ../admb.bat
+    endif
   endif
 endif
 

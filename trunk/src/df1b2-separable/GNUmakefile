@@ -1,5 +1,5 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(TERM),cygwin)
+  ifeq ("$(TERM)","xterm")
     TERMINAL=cygwin
   else
     TERMINAL=dos

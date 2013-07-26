@@ -357,7 +357,11 @@ ifeq ($(TERMINAL),dos)
 	if exist ${DISK}\bin\admb-cfg.sh del ${DISK}\bin\admb-cfg.sh
 	echo "CXX=$(CXX)" > ${DISK}\bin\admb-cfg.sh
 	echo "CXXFLAGS=$(CXXFLAGS)" >> ${DISK}\bin\admb-cfg.sh
+  ifeq ($(OS),Windows_NT)
+	echo "LDFLAGS=-static $(LDFLAGS)" >> ${DISK}\bin\admb-cfg.sh
+  else
 	echo "LDFLAGS=$(LDFLAGS)" >> ${DISK}\bin\admb-cfg.sh
+  endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=..\${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=..\${DISK} bins
 	copy ..\scripts\mingw\set-admb-mingw.bat ${DISK}\bin
@@ -382,7 +386,11 @@ else
 	rm -f ${DISK}/bin/admb-cfg.sh
 	echo "CXX=$(CXX)" > ${DISK}/bin/admb-cfg.sh
 	echo "CXXFLAGS=$(CXXFLAGS)" >> ${DISK}/bin/admb-cfg.sh
+  ifeq ($(OS),Windows_NT)
+	echo "LDFLAGS=-static $(LDFLAGS)" >> ${DISK}/bin/admb-cfg.sh
+  else
 	echo "LDFLAGS=$(LDFLAGS)" >> ${DISK}/bin/admb-cfg.sh
+  endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DISK} bins
 	ln -sf bin/admb ${DISK}

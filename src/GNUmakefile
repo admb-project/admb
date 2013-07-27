@@ -354,13 +354,13 @@ ifeq ($(TERMINAL),dos)
 	if not exist ${DISK}\bin md ${DISK}\bin
 	copy df1b2-separable\seddf1b* ${DISK}\bin
 	copy df1b2-separable\sedf1b2* ${DISK}\bin
-	if exist ${DISK}\bin\admb-cfg.sh del ${DISK}\bin\admb-cfg.sh
-	echo "CXX=$(CXX)" > ${DISK}\bin\admb-cfg.sh
-	echo "CXXFLAGS=$(CXXFLAGS)" >> ${DISK}\bin\admb-cfg.sh
+	if exist ${DISK}\bin\admb-cfg.bat del ${DISK}\bin\admb-cfg.bat
+	echo set ADMB_CFG_CXX=$(CXX) > ${DISK}\bin\admb-cfg.bat
+	echo set ADMB_CFG_CXXFLAGS=$(CXXFLAGS) >> ${DISK}\bin\admb-cfg.bat
   ifeq ($(OS),Windows_NT)
-	echo "LDFLAGS=-static $(LDFLAGS)" >> ${DISK}\bin\admb-cfg.sh
+	echo set ADMB_CFG_LDFLAGS=-static $(LDFLAGS) >> ${DISK}\bin\admb-cfg.bat
   else
-	echo "LDFLAGS=$(LDFLAGS)" >> ${DISK}\bin\admb-cfg.sh
+	echo set ADMB_CFG_LDFLAGS=$(LDFLAGS) >> ${DISK}\bin\admb-cfg.bat
   endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=..\${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=..\${DISK} bins

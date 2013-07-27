@@ -32,7 +32,14 @@ if not defined libs set libs="%ADMB_HOME%\contrib\lib\libcontribo.a" "%ADMB_HOME
 if %linker%==g++ (set out=-o %model%) else (set def=-def %model%.def^
  --driver-name g++ & set out=--output-lib lib%model%.a -o %model%.dll)
 
-set CMD=%linker% %sym% -static %def% -o %model%.exe %objects% %libs%
+call "%ADMB_HOME%"\bin\admb-cfg.bat
+if defined LDFLAGS (
+  set LDFLAGS=%LDFLAGS% %ADMB_CFG_LDFLAGS%
+) else (
+  set LDFLAGS=%ADMB_CFG_LDFLAGS%
+)
+
+set CMD=%linker% %LDFLAGS% %sym% -static %def% -o %model%.exe %objects% %libs%
 echo %CMD%
 %CMD%
 

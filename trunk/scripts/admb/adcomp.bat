@@ -21,7 +21,13 @@ goto STARTLOOP
 :ENDLOOP
 
 set model=%~n1
-if defined CXXFLAGS (set CXXFLAGS=%CXXFLAGS% )
+
+call "%ADMB_HOME%"\bin\admb-cfg.bat
+if defined CXXFLAGS (
+  set CXXFLAGS=%CXXFLAGS% %ADMB_CFG_CXXFLAGS%
+) else (
+  set CXXFLAGS=%ADMB_CFG_CXXFLAGS%
+)
 
 set CMD=g++ -c %CXXFLAGS% %sym% -D__GNUDOS__ %dll% -Dlinux %opt% -DUSE_LAPLACE -fpermissive -I. -I"%ADMB_HOME%\include" -I"%ADMB_HOME%\contrib\include" -o %model%.obj %model%.cpp
 echo %CMD%

@@ -1,5 +1,13 @@
 all: test-expm test-cov_re
 
+gtest: gtest-colfill
+
+gtest-colfill: googletest-read-only
+	$(MAKE) --directory=colfill
+
+googletest-read-only:
+	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
+
 svn: svn-geolocation
 
 main: test-geolocation test-cov_re
@@ -106,14 +114,6 @@ beta2:
 
 beta3:
 	OPTIONS=-s $(MAKE) --directory=$@
-
-gtest: gtest-colfill
-
-gtest-colfill: googletest-read-only
-	$(MAKE) --directory=colfill
-
-googletest-read-only:
-	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
 
 clean:
 	$(MAKE) --directory=geolocation clean

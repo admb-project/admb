@@ -13,6 +13,8 @@ if [[ "$1" == "--help" ]]; then help; exit; fi
 
 if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
   source "$ADMB_HOME/bin/admb-cfg.sh"
+  CXX=$ADMB_CFG_CXX
+  LDFLAGS=$LDFLAGS $ADMB_CFG_LDFLAGS
 else
   CXX=c++
 fi

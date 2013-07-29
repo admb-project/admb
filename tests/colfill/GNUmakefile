@@ -4,7 +4,7 @@ GTEST_DIR=../googletest-read-only
 all: clean $(TARGET) run gtest
 
 gtest: gtest-all.o gtest.cpp
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb gtest.cpp gtest-all.o
+	CXXFLAGS=-I$(GTEST_DIR)/include LDFLAGS=-pthread ../../admb gtest.cpp gtest-all.o
 	./gtest
 
 gtest-all.o: $(GTEST_DIR)/src/gtest-all.cc

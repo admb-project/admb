@@ -14,7 +14,7 @@ if [[ "$1" == "--help" ]]; then help; exit; fi
 if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
   source "$ADMB_HOME/bin/admb-cfg.sh"
   CXX=$ADMB_CFG_CXX
-  CXXFLAGS=$CXXFLAGS $ADMB_CFG_CXXFLAGS
+  CXXFLAGS="$CXXFLAGS $ADMB_CFG_CXXFLAGS"
 else
   CXX=c++
 fi

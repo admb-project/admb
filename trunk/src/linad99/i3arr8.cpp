@@ -11,8 +11,7 @@
 #include "fvar.hpp"
 //#include "i3_array.h"
 
-#ifdef USE_CONST
-  #ifndef OPT_LIB
+#ifndef OPT_LIB
 
 /**
  * Description not yet available.
@@ -101,7 +100,6 @@ const imatrix& i3_array::operator()(int i) const
    #endif
    return(t[i]);
  }
-  #endif
 #endif
 
 /**

@@ -9,8 +9,7 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#ifdef USE_CONST
-  #ifndef OPT_LIB
+#ifndef OPT_LIB
 
 /**
  * Description not yet available.
@@ -76,8 +75,6 @@ const dmatrix& d3_array::operator[](int i) const
    #endif
    return(t[i]);
  }
-
-  #endif
 #endif
 
 /**

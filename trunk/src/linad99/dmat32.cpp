@@ -10,8 +10,6 @@
  */
 #include "fvar.hpp"
 #if !defined(OPT_LIB)
-
-#  ifdef USE_CONST
 /**
  * Description not yet available.
  * \param
@@ -34,6 +32,4 @@ const dvector& dmatrix::operator()(int i) const
 #    endif
    return *(m+i);
  }
-
-#  endif
 #endif

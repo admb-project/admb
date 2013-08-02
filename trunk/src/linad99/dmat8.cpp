@@ -73,8 +73,6 @@
    return( *((m[i]).v+j) );
  }
 
-#  ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -113,5 +111,4 @@ const double& dmatrix::operator()(int i, int j) const
 #    endif
    return( *((m[i]).v+j) );
  }
-#  endif
 #endif

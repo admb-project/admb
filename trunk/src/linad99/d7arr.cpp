@@ -252,8 +252,6 @@ void d7_array::allocate(const d7_array& m1)
       return elem(i)(j,k,l,m,n,_p);
     }
 
-   #ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -382,11 +380,7 @@ const double& d7_array::operator()(int i, int j, int k, int l, int m, int n, int
       #endif
       return elem(i)(j,k,l,m,n,_p);
     }
-
-
-   #endif
-  #endif
-
+#endif
 
 /**
  * Description not yet available.

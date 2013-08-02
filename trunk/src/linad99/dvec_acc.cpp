@@ -60,9 +60,6 @@
    return(*(v+i));
  }
 
-
-#ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -112,6 +109,4 @@
    #endif
    return(*(v+i));
  }
-
- #endif
 #endif

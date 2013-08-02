@@ -115,8 +115,6 @@ int adstring_array::indexmax(void) const { return shape->indexmax();}
     return *(ptr[i]);
   }
 
-#ifdef USE_CONST
-
 const adstring& adstring_array::operator[](int i) const
   {
     if (!shape)
@@ -155,4 +153,3 @@ const adstring& adstring_array::operator()(int i) const
     }
     return *(ptr[i]);
   }
-#endif

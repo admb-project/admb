@@ -32,7 +32,6 @@
    #endif
    return m[i];
  }
- #ifdef USE_CONST
 
 /**
  * Description not yet available.
@@ -56,5 +55,4 @@ const lvector& lmatrix::operator()(int i) const
    #endif
    return m[i];
  }
- #endif
 #endif

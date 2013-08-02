@@ -260,8 +260,6 @@ i5_array::i5_array(const i5_array& m2)
       return ( ((*this)(i,j,k))(l,ll));
     }
 
-#if defined(USE_CONST)
-
 /**
  * Description not yet available.
  * \param
@@ -332,5 +330,3 @@ const int& i5_array::operator()(int i, int j, int k, int l, int ll) const
       return ( ((*this)(i,j,k))(l,ll));
     }
 #endif
-#endif
-

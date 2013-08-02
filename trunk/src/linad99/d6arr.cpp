@@ -238,8 +238,6 @@ void d6_array::allocate(const d6_array& m1)
       return elem(i)(j,k,l,m,n);
     }
 
-   #ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -352,11 +350,7 @@ const double& d6_array::operator()(int i, int j, int k, int l, int m, int n) con
       #endif
       return elem(i)(j,k,l,m,n);
     }
-
-
-   #endif
-  #endif
-
+#endif
 
 /**
  * Description not yet available.

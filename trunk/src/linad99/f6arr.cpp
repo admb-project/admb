@@ -294,8 +294,6 @@
       return elem(i)(j,k,l,m,n);
     }
 
-   #ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -407,10 +405,7 @@ const prevariable dvar6_array::operator()(int i, int j, int k, int l, int m, int
       #endif
       return elem(i)(j,k,l,m,n);
     }
-
-
-   #endif
-  #endif
+#endif
 
 /**
  * Description not yet available.

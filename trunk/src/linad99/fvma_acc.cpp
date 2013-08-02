@@ -59,8 +59,6 @@
    return (m[i]);
  }
 
-#ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -118,8 +116,4 @@ const dvar_vector& dvar_matrix::operator[](int i) const
    #endif
    return (m[i]);
  }
-
 #endif
-
-#endif
-

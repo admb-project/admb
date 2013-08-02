@@ -35,9 +35,6 @@
    return m[i];
  }
 
-
-#ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -60,5 +57,4 @@ const ivector& imatrix::operator()(int i) const
    #endif
    return m[i];
  }
-#endif
 #endif

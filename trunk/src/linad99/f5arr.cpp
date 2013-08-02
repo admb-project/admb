@@ -299,8 +299,6 @@ void dvar5_array::allocate(const d5_array& m1)
       return elem(i)(j,k,l,m);
     }
 
-   #ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -396,10 +394,7 @@ const prevariable dvar5_array::operator()(int i, int j, int k, int l, int m) con
       #endif
       return elem(i)(j,k,l,m);
     }
-
-   #endif
-  #endif
-
+#endif
 
 /**
  * Description not yet available.

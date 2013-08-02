@@ -43,14 +43,7 @@
  * Description not yet available.
  */
 #ifndef D4ARR_HPP
-  #define D4ARR_HPP
-#ifndef USE_CONST
-  #ifdef _CONST
-    #undef _CONST
-  #endif
-  #define USE_CONST
-  #define _CONST const
-#endif
+#define D4ARR_HPP
 
 /**
  * Description not yet available.
@@ -131,7 +124,6 @@ public:
     {
       return ( ((*this)(i,j,k))(l));
     }
-    #ifdef USE_CONST
      inline const d3_array& operator()(int i) const { return t[i]; }
      inline const d3_array& operator[](int i) const { return t[i]; }
      inline const dmatrix& operator()(int i, int j) const { return ((*this)(i))(j); }
@@ -140,15 +132,12 @@ public:
      {
        return (((*this)(i, j, k))(l));
      }
-    #endif
   #else
-    #ifdef USE_CONST
       const d3_array& operator()(int i) const;
       const d3_array& operator[](int i) const;
       const dmatrix& operator()(int i, int j) const;
       const dvector& operator()(int i, int j, int k) const;
       const double& operator()(int i, int j, int k, int l) const;
-    #endif
     d3_array& operator ( ) (int);
     d3_array& operator [] (int);
     dmatrix& operator ( ) (int,int);
@@ -169,7 +158,6 @@ public:
   int slicesize() {return (shape->slice_max-shape->slice_min+1);} // returns the number of rows
   int rowsize() {return (shape->row_max-shape->row_min+1);} // returns the number of rows
   int colsize() {return (shape->col_max-shape->col_min+1);} // returns the number of columns
- #ifdef USE_CONST
   int hslicemin(void) const { return (shape->hslice_min); }
   int hslicemax(void) const { return (shape->hslice_max); }
   int slicemin(void) const { return (shape->slice_min); }
@@ -182,7 +170,6 @@ public:
   int slicesize() const { return (shape->slice_max-shape->slice_min + 1); } // returns the number of rows
   int rowsize() const { return (shape->row_max-shape->row_min + 1); } // returns the number of rows
   int colsize() const { return (shape->col_max-shape->col_min + 1); } // returns the number of columns
- #endif
   void initialize(void);
 };
 
@@ -238,7 +225,6 @@ public:
     {
       return ( ((*this)(i,j,k))(l));
     }
-    #ifdef USE_CONST
      inline const dvar3_array& operator()(int i) const { return t[i]; }
      inline const dvar3_array& operator[](int i) const { return t[i]; }
      inline const dvar_matrix& operator()(int i, int j) const { return ((*this)(i))(j); }
@@ -247,15 +233,12 @@ public:
      {
        return ( ((*this)(i,j,k))(l));
      }
-    #endif
   #else
-    #ifdef USE_CONST
       const dvar3_array& operator()(int i) const;
       const dvar3_array& operator[](int i) const;
       const dvar_matrix& operator()(int i, int j) const;
       const dvar_vector& operator()(int i, int j, int k) const;
       const prevariable operator()(int i, int j, int k, int l) const;
-    #endif
     dvar3_array& operator ( ) (int);
     dvar3_array& operator [] (int);
     dvar_matrix& operator ( ) (int,int);
@@ -276,7 +259,6 @@ public:
   int slicesize() {return (shape->slice_max-shape->slice_min+1);} // returns the number of rows
   int rowsize() {return (shape->row_max-shape->row_min+1);} // returns the number of rows
   int colsize() {return (shape->col_max-shape->col_min+1);} // returns the number of columns
- #ifdef USE_CONST
   int hslicemin(void) const { return (shape->hslice_min); }
   int hslicemax(void) const { return (shape->hslice_max); }
   int slicemin(void) const { return (shape->slice_min); }
@@ -289,7 +271,6 @@ public:
   int slicesize() const { return (shape->slice_max-shape->slice_min + 1); } // returns the number of rows
   int rowsize() const { return (shape->row_max-shape->row_min + 1); } // returns the number of rows
   int colsize() const { return (shape->col_max-shape->col_min + 1); } // returns the number of columns
- #endif
   void initialize(void);
 };
 

@@ -216,7 +216,7 @@ Macro definitions.
 #   endif
 #endif
 
-#define USE_CONST
+//#define USE_CONST
 
 #define _CONST const
 
@@ -789,12 +789,10 @@ class ivector
    {
       return (v[i]);
    }
-#ifdef USE_CONST
    const int &elem(int i) const
    {
       return v[i];
    }
-#endif
    int indexmin() const
    {
       return index_min;
@@ -870,7 +868,6 @@ class ivector
    int &operator() (int i);
 #endif
 
-#ifdef USE_CONST
 #ifdef OPT_LIB
    inline const int &operator[] (int i) const
    {
@@ -883,7 +880,6 @@ class ivector
 #else
    const int &operator[] (int i) const;
    const int &operator() (int i) const;
-#endif
 #endif
 
    ivector sub(int lb, int ub)
@@ -955,12 +951,10 @@ class lvector
    {
       return (v[i]);
    }
-#ifdef USE_CONST
    inline const AD_LONG_INT & elem(int i) const
    {
       return v[i];
    }
-#endif
    int indexmin() const
    {
       return shape->index_min;
@@ -1025,7 +1019,6 @@ class lvector
    AD_LONG_INT & operator()(int i);
 #endif
 
-#ifdef USE_CONST
 #ifdef OPT_LIB
    inline const AD_LONG_INT & operator[] (int i) const
    {
@@ -1038,7 +1031,6 @@ class lvector
 #else
    const AD_LONG_INT & operator[] (int i) const;
    const AD_LONG_INT & operator() (int i) const;
-#endif
 #endif
 
    lvector operator() (const lvector & u);
@@ -1840,12 +1832,10 @@ class prevariable
    {
       return v;
    }
-#ifdef USE_CONST
    inline double_and_int *get_v() const
    {
       return v;
    }
-#endif
 
    prevariable & operator=(const prevariable &);
    prevariable & operator=(double);
@@ -2455,7 +2445,6 @@ class dvector
    {
       return (v + indexmin());
    }
-#ifdef USE_CONST
    const double *initpointer(void) const
    {
       return (v + indexmin());
@@ -2468,7 +2457,6 @@ class dvector
    {
       return v[i];
    }
-#endif
 
    void fill(const char *s);
    void fill_randu_ni(long int &n);
@@ -2638,7 +2626,6 @@ class dvector
    double &operator() (int i);
 #endif
 
-#ifdef USE_CONST
 #ifdef OPT_LIB
    inline const double &operator[] (register int i) const
    {
@@ -2652,8 +2639,6 @@ class dvector
    const double &operator[] (int i) const;
    const double &operator() (int i) const;
 #endif
-#endif
-
 
    dvector & operator=(const dvector & t);
 
@@ -2668,8 +2653,7 @@ class dvector
    friend double max(const dvector &);
 
    friend double min(const dvector &);
-
-};				// end of class dvector
+};
 
 /**
  * Description not yet available.
@@ -2949,7 +2933,6 @@ class dvar_vector
       return va;
    }
 
-#ifdef USE_CONST
    prevariable elem(int i) const
    {
       return (va + i);
@@ -2964,8 +2947,6 @@ class dvar_vector
    {
       return va;
    }
-#endif
-
 
    friend dvar_matrix operator*(const dvar_matrix & m1,
 				const dmatrix & m2);
@@ -3027,7 +3008,6 @@ class dvar_vector
    {
       return (va + i);
    }
-#ifdef USE_CONST
    inline const prevariable operator() (int i) const
    {
       return (va + i);
@@ -3036,7 +3016,6 @@ class dvar_vector
    {
       return (va + i);
    }
-#endif
 #else
    inline prevariable operator() (int i)
    {
@@ -3046,7 +3025,6 @@ class dvar_vector
    {
       return (va + i);
    }
-#ifdef USE_CONST
    inline const prevariable operator() (int i) const
    {
       return (va + i);
@@ -3056,26 +3034,21 @@ class dvar_vector
       return (va + i);
    }
 #endif
-#endif
 #else
    prevariable operator[] (int i);
    prevariable operator() (int i);
-#ifdef USE_CONST
    const prevariable operator[] (int i) const;
    const prevariable operator() (int i) const;
-#endif
 #endif
 
    double *initpointer(void)
    {
       return ((double *) (va + indexmin()));
    }
-#ifdef USE_CONST
    const double *initpointer(void) const
    {
       return ((double *) (va + indexmin()));
    }
-#endif
    dvar_vector operator() (const lvector &);
    //dvar_vector operator()(int,int);
    dvar_vector operator () (const ivector & u);
@@ -3234,7 +3207,6 @@ class dvar_matrix
    {
       return (elem(i).elem(j));
    }
-#ifdef USE_CONST
    inline dvar_vector & elem(int i) const
    {
       return (m[i]);
@@ -3243,7 +3215,6 @@ class dvar_matrix
    {
       return (elem(i).elem(j));
    }
-#endif
 
    friend class banded_symmetric_dvar_matrix;
    friend class banded_lower_triangular_dvar_matrix;
@@ -3386,7 +3357,6 @@ class dvar_matrix
    dvar_vector & operator[](int);
 #endif
 
-#ifdef USE_CONST
 #ifdef OPT_LIB
    inline const dvar_vector & operator[] (register int i) const
    {
@@ -3399,7 +3369,6 @@ class dvar_matrix
 #else
    const dvar_vector & operator() (int i) const;
    const dvar_vector & operator[] (int) const;
-#endif
 #endif
 
 #ifdef OPT_LIB
@@ -3423,7 +3392,6 @@ class dvar_matrix
       return *(double *) ((m[i]).va + j);
    }
 
-#ifdef USE_CONST
    inline const double &elem_value(register int i, register int j) const
    {
       return *(double *) ((m[i]).va + j);
@@ -3442,7 +3410,6 @@ class dvar_matrix
 #endif
 #else
    const prevariable operator() (int i, int j) const;
-#endif
 #endif
 
    dvar_matrix & operator+=(const dvar_matrix & x);
@@ -3711,7 +3678,6 @@ class dmatrix
    dvector & operator[](int);
 #endif
 
-#ifdef USE_CONST
 #if defined(OPT_LIB)
    inline const dvector & operator() (register int i) const
    {
@@ -3724,7 +3690,6 @@ class dmatrix
 #else
    const dvector & operator() (int i) const;
    const dvector & operator[] (int) const;
-#endif
 #endif
 
 #if defined(OPT_LIB) && !defined(__INTEL_COMPILER)
@@ -3749,7 +3714,6 @@ class dmatrix
    {
       return (*((*(m + i)).v + j));
    }
-#ifdef USE_CONST
    inline const dvector & elem(int i) const
    {
       return (*(m + i));
@@ -3758,7 +3722,6 @@ class dmatrix
    {
       return (*((*(m + i)).v + j));
    }
-#endif
    friend class d3_array;
    friend dvector operator*(const dvector &, const dmatrix &);
 
@@ -3967,7 +3930,6 @@ class imatrix
    int &operator () (int, int);
 #endif
 
-#ifdef USE_CONST
 #ifdef OPT_LIB
    inline const ivector & operator() (int i) const
    {
@@ -3985,7 +3947,6 @@ class imatrix
    const ivector & operator[] (int) const;
    const ivector & operator() (int) const;
    const int &operator() (int, int) const;
-#endif
 #endif
    int indexmin(void) const
    {
@@ -4781,14 +4742,11 @@ class d3_array
    {
       return (t[k]);
    }
-#ifdef USE_CONST
    const dmatrix & elem(int k) const
    {
       return t[k];
    }
-#endif
 #ifdef OPT_LIB
-#ifdef USE_CONST
    inline const double &operator() (int k, int i, int j) const
    {
       return (((t[k].m[i]).v)[j]);
@@ -4808,7 +4766,6 @@ class d3_array
    {
       return (t[i]);
    }
-#endif
 
    inline double &operator () (int k, int i, int j)
    {
@@ -4834,12 +4791,10 @@ class d3_array
    dvector & operator ()(int k, int i);
    dmatrix & operator[](int i);
    dmatrix & operator()(int i);
-#ifdef USE_CONST
    const double &operator() (int k, int i, int j) const;
    const dvector & operator() (int k, int i) const;
    const dmatrix & operator[] (int i) const;
    const dmatrix & operator() (int i) const;
-#endif
 #endif
 
    d3_array & operator=(const d3_array & m1);
@@ -4998,14 +4953,11 @@ class i3_array
    {
       return (t[k]);
    }
-#ifdef USE_CONST
    const imatrix & elem(int k) const
    {
       return t[k];
    }
-#endif
 #ifdef OPT_LIB
-#ifdef USE_CONST
    inline const int &operator() (int k, int i, int j) const
    {
       return (((t[k].m[i]).v)[j]);
@@ -5025,7 +4977,6 @@ class i3_array
    {
       return (t[i]);
    }
-#endif
 
    inline int &operator() (int k, int i, int j)
    {
@@ -5051,12 +5002,10 @@ class i3_array
    ivector & operator ()(int k, int i);
    imatrix & operator[](int i);
    imatrix & operator()(int i);
-#ifdef USE_CONST
    const int &operator() (int k, int i, int j) const;
    const ivector & operator() (int k, int i) const;
    const imatrix & operator[] (int i) const;
    const imatrix & operator() (int i) const;
-#endif
 #endif
 
    i3_array & operator=(const i3_array & m1);
@@ -5217,7 +5166,6 @@ class dvar3_array
    {
       return (t[k].elem(i, j));
    }
-#ifdef USE_CONST
    const dvar_matrix & elem(int k) const
    {
       return t[k];
@@ -5226,10 +5174,8 @@ class dvar3_array
    {
       return t[k].elem(i, j);
    }
-#endif
 
 #ifdef OPT_LIB
-#ifdef USE_CONST
    inline const prevariable operator() (int k, int i, int j) const
    {
       return (((t[k].m[i]).va) + j);
@@ -5249,7 +5195,6 @@ class dvar3_array
    {
       return (t[i]);
    }
-#endif
 
    inline prevariable operator () (int k, int i, int j)
    {
@@ -5275,12 +5220,10 @@ class dvar3_array
    dvar_vector & operator ()(int k, int i);
    dvar_matrix & operator[](int i);
    dvar_matrix & operator()(int i);
-#ifdef USE_CONST
    const prevariable operator() (int k, int i, int j) const;
    const dvar_vector & operator() (int k, int i) const;
    const dvar_matrix & operator[] (int i) const;
    const dvar_matrix & operator() (int i) const;
-#endif
 #endif
 
    dvar3_array & operator=(const d3_array & m1);
@@ -6227,7 +6170,6 @@ class d4_array
    {
       return (((*this) (i, j, k)) (l));
    }
-#ifdef USE_CONST
    inline const d3_array & operator() (int i) const
    {
       return t[i];
@@ -6248,15 +6190,12 @@ class d4_array
    {
       return (((*this) (i, j, k)) (l));
    }
-#endif
 #else
-#ifdef USE_CONST
    const d3_array & operator() (int i) const;
    const d3_array & operator[] (int i) const;
    const dmatrix & operator() (int i, int j) const;
    const dvector & operator() (int i, int j, int k) const;
    const double &operator() (int i, int j, int k, int l) const;
-#endif
    d3_array & operator ()(int);
    d3_array & operator [](int);
    dmatrix & operator ()(int, int);
@@ -6323,7 +6262,6 @@ class d4_array
    {
       return (colmax() - colmin() + 1);
    }				// returns the number of columns
-#ifdef USE_CONST
    int indexmin(void) const
    {
       return (shape->hslice_min);
@@ -6389,7 +6327,6 @@ class d4_array
    {
       return (colmax() - colmin() + 1);
    }				// returns the number of columns
-#endif
    void initialize(void);
    void operator /=(double d);
 };
@@ -6471,7 +6408,6 @@ class dvar4_array
    {
       return (((*this) (i, j, k)) (l));
    }
-#ifdef USE_CONST
    const dvar3_array & elem(int i) const
    {
       return t[i];
@@ -6488,7 +6424,6 @@ class dvar4_array
    {
       return (((*this) (i, j, k)) (l));
    }
-#endif				//USE_CONST
 
    d4_array vale(d4_array &);
    dvar4_array & operator=(const d4_array &);
@@ -6514,7 +6449,6 @@ class dvar4_array
    {
       return (((*this) (i, j, k)) (l));
    }
-#ifdef USE_CONST
    inline const dvar3_array & operator() (int i) const
    {
       return t[i];
@@ -6535,15 +6469,12 @@ class dvar4_array
    {
       return (((*this) (i, j, k)) (l));
    }
-#endif
 #else
-#ifdef USE_CONST
    const dvar3_array & operator() (int i) const;
    const dvar3_array & operator[] (int i) const;
    const dvar_matrix & operator() (int i, int j) const;
    const dvar_vector & operator() (int i, int j, int k) const;
    const prevariable operator() (int i, int j, int k, int l) const;
-#endif
    dvar3_array & operator ()(int);
    dvar3_array & operator [](int);
    dvar_matrix & operator ()(int, int);
@@ -6618,7 +6549,6 @@ class dvar4_array
       return (colmax() - colmin() + 1);
    }				// returns the number of columns
 
-#ifdef USE_CONST
    int indexmin(void) const
    {
       return (shape->hslice_min);
@@ -6683,7 +6613,6 @@ class dvar4_array
    {
       return (colmax() - colmin() + 1);
    }				// returns the number of columns
-#endif
    void initialize(void);
    void operator/=(const prevariable & d);
    void operator/=(const double &d);
@@ -6852,7 +6781,6 @@ class i4_array
    {
       return (((*this) (i, j, k)) (l));
    }
-#ifdef USE_CONST
    inline const i3_array & operator() (int i) const
    {
       return t[i];
@@ -6873,15 +6801,12 @@ class i4_array
    {
       return (((*this) (i, j, k)) (l));
    }
-#endif
 #else
-#ifdef USE_CONST
    const i3_array & operator() (int i) const;
    const i3_array & operator[] (int i) const;
    const imatrix & operator() (int i, int j) const;
    const ivector & operator() (int i, int j, int k) const;
    const int &operator() (int i, int j, int k, int l) const;
-#endif
    i3_array & operator ()(int);
    i3_array & operator [](int);
    imatrix & operator ()(int, int);
@@ -6952,7 +6877,6 @@ class i4_array
    {
       return (colmax() - colmin() + 1);
    }				// returns the number of columns
-#ifdef USE_CONST
    int hslicemin(void) const
    {
       return (shape->indexmin());
@@ -7014,7 +6938,6 @@ class i4_array
    {
       return (colmax() - colmin() + 1);
    }				// returns the number of columns
-#endif
    void initialize(void);
 };
 
@@ -7107,7 +7030,6 @@ class i5_array
    {
       return (((*this) (i, j, k)) (l, ll));
    }
-#ifdef USE_CONST
    inline const i4_array & operator() (int i) const
    {
       return t[i];
@@ -7132,16 +7054,13 @@ class i5_array
    {
       return (((*this) (i, j, k)) (l, ll));
    }
-#endif
 #else
-#ifdef USE_CONST
    const i4_array & operator() (int i) const;
    const i4_array & operator[] (int i) const;
    const i3_array & operator() (int i, int j) const;
    const imatrix & operator() (int i, int j, int k) const;
    const ivector & operator() (int i, int j, int k, int l) const;
    const int &operator() (int i, int j, int k, int l, int ll) const;
-#endif
    i4_array & operator () (int);
    i4_array & operator [] (int);
    i3_array & operator () (int, int);
@@ -7213,7 +7132,6 @@ class i5_array
    {
       return (colmax() - colmin() + 1);
    }				// returns the number of columns
-#ifdef USE_CONST
    int hslicemin(void) const
    {
       return (shape->indexmin());
@@ -7275,7 +7193,6 @@ class i5_array
    {
       return (colmax() - colmin() + 1);
    }				// returns the number of columns
-#endif
    void initialize(void);
 };
 
@@ -7352,7 +7269,6 @@ class d5_array
    {
       return (((*this) (i)) (j, k, l, _m));
    }
-#  ifdef USE_CONST
    const d4_array & elem(int i) const
    {
       return t[i];
@@ -7373,7 +7289,6 @@ class d5_array
    {
       return (((*this) (i)) (j, k, l, _m));
    }
-#  endif
 #ifdef OPT_LIB
    d4_array & operator () (int i)
    {
@@ -7399,7 +7314,6 @@ class d5_array
    {
       return (((*this) (i)) (j, k, l, _m));
    }
-#ifdef USE_CONST
    inline const d4_array & operator() (int i) const
    {
       return t[i];
@@ -7424,16 +7338,13 @@ class d5_array
    {
       return (((*this) (i)) (j, k, l, _m));
    }
-#endif
 #else
-#ifdef USE_CONST
    const d4_array & operator() (int i) const;
    const d4_array & operator[] (int i) const;
    const d3_array & operator() (int i, int j) const;
    const dmatrix & operator() (int i, int j, int k) const;
    const dvector & operator() (int i, int j, int k, int l) const;
    const double &operator() (int i, int j, int k, int l, int _m) const;
-#endif
    d4_array & operator ()(int);
    d4_array & operator [](int);
    d3_array & operator ()(int, int);
@@ -7454,7 +7365,6 @@ class d5_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#ifdef USE_CONST
    int indexmin(void) const
    {
       return (shape->indexmin());
@@ -7467,7 +7377,6 @@ class d5_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#endif
    void initialize(void);
    void operator /=(double d);
 };
@@ -7540,7 +7449,6 @@ class dvar5_array
    {
       return (((*this) (i)) (j, k, l, _m));
    }
-#  ifdef USE_CONST
    const dvar4_array & elem(int i) const
    {
       return t[i];
@@ -7561,7 +7469,6 @@ class dvar5_array
    {
       return (((*this) (i)) (j, k, l, _m));
    }
-#  endif
 #ifdef OPT_LIB
    dvar4_array & operator () (int i)
    {
@@ -7587,7 +7494,6 @@ class dvar5_array
    {
       return (((*this) (i)) (j, k, l, _m));
    }
-#ifdef USE_CONST
    inline const dvar4_array & operator() (int i) const
    {
       return t[i];
@@ -7612,16 +7518,13 @@ class dvar5_array
    {
       return (((*this) (i)) (j, k, l, _m));
    }
-#endif
 #else
-#ifdef USE_CONST
    const dvar4_array & operator() (int i) const;
    const dvar4_array & operator[] (int i) const;
    const dvar3_array & operator() (int i, int j) const;
    const dvar_matrix & operator() (int i, int j, int k) const;
    const dvar_vector & operator() (int i, int j, int k, int l) const;
    const prevariable operator() (int i, int j, int k, int l, int _m) const;
-#endif
    dvar4_array & operator ()(int);
    dvar4_array & operator [](int);
    dvar3_array & operator ()(int, int);
@@ -7642,7 +7545,6 @@ class dvar5_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#ifdef USE_CONST
    int indexmin(void) const
    {
       return (shape->indexmin());
@@ -7655,7 +7557,6 @@ class dvar5_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#endif
    void initialize(void);
    void operator/=(const prevariable & d);
    void operator/=(const double &d);
@@ -7731,7 +7632,6 @@ class d6_array
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-#  ifdef USE_CONST
    const d5_array & elem(int i) const
    {
       return t[i];
@@ -7756,7 +7656,6 @@ class d6_array
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-#  endif
 #ifdef OPT_LIB
    d5_array & operator () (int i)
    {
@@ -7786,7 +7685,6 @@ class d6_array
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-#ifdef USE_CONST
    inline const d5_array & operator() (int i) const
    {
       return t[i];
@@ -7816,18 +7714,14 @@ class d6_array
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-#endif
 #else
-#ifdef USE_CONST
    const d5_array & operator() (int i) const;
    const d5_array & operator[] (int i) const;
    const d4_array & operator() (int i, int j) const;
    const d3_array & operator() (int i, int j, int k) const;
    const dmatrix & operator() (int i, int j, int k, int l) const;
    const dvector & operator() (int i, int j, int k, int l, int _m) const;
-   const double &operator() (int i, int j, int k, int l, int _m,
-			     int _n) const;
-#endif
+   const double &operator() (int i, int j, int k, int l, int _m, int _n) const;
    d5_array & operator ()(int);
    d5_array & operator [](int);
    d4_array & operator ()(int, int);
@@ -7849,7 +7743,6 @@ class d6_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#ifdef USE_CONST
    int indexmin(void) const
    {
       return (shape->indexmin());
@@ -7862,7 +7755,6 @@ class d6_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#endif
    void initialize(void);
    void operator /=(double d);
 };
@@ -7939,7 +7831,6 @@ class dvar6_array
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-#  ifdef USE_CONST
    const dvar5_array & elem(int i) const
    {
       return t[i];
@@ -7964,7 +7855,6 @@ class dvar6_array
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-#  endif
 #ifdef OPT_LIB
    dvar5_array & operator () (int i)
    {
@@ -7994,7 +7884,6 @@ class dvar6_array
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-#ifdef USE_CONST
    inline const dvar5_array & operator() (int i) const
    {
       return t[i];
@@ -8025,19 +7914,14 @@ class dvar6_array
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-#endif
 #else
-#ifdef USE_CONST
    const dvar5_array & operator() (int i) const;
    const dvar5_array & operator[] (int i) const;
    const dvar4_array & operator() (int i, int j) const;
    const dvar3_array & operator() (int i, int j, int k) const;
    const dvar_matrix & operator() (int i, int j, int k, int l) const;
-   const dvar_vector & operator() (int i, int j, int k, int l,
-				   int _m) const;
-   const prevariable operator() (int i, int j, int k, int l, int _m,
-				 int _n) const;
-#endif
+   const dvar_vector & operator() (int i, int j, int k, int l, int _m) const;
+   const prevariable operator() (int i, int j, int k, int l, int _m, int _n) const;
    dvar5_array & operator ()(int);
    dvar5_array & operator [](int);
    dvar4_array & operator ()(int, int);
@@ -8059,7 +7943,6 @@ class dvar6_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#ifdef USE_CONST
    int indexmin(void) const
    {
       return (shape->indexmin());
@@ -8072,7 +7955,6 @@ class dvar6_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#endif
    void initialize(void);
    void operator/=(const prevariable & d);
    void operator/=(const double &d);
@@ -8155,7 +8037,6 @@ class d7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
-#  ifdef USE_CONST
    const d6_array & elem(int i) const
    {
       return t[i];
@@ -8184,7 +8065,6 @@ class d7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
-#  endif
 #ifdef OPT_LIB
    d6_array & operator () (int i)
    {
@@ -8218,7 +8098,6 @@ class d7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
-#ifdef USE_CONST
    inline const d6_array & operator() (int i) const
    {
       return t[i];
@@ -8253,9 +8132,7 @@ class d7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
-#endif
 #else
-#ifdef USE_CONST
    const d6_array & operator() (int i) const;
    const d6_array & operator[] (int i) const;
    const d5_array & operator() (int i, int j) const;
@@ -8266,7 +8143,6 @@ class d7_array
 			       int _n) const;
    const double &operator() (int i, int j, int k, int l, int _m, int _n,
 			     int _p) const;
-#endif
    d6_array & operator ()(int);
    d6_array & operator [](int);
    d5_array & operator ()(int, int);
@@ -8289,7 +8165,6 @@ class d7_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#ifdef USE_CONST
    int indexmin(void) const
    {
       return (shape->indexmin());
@@ -8302,7 +8177,6 @@ class d7_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#endif
    void initialize(void);
    void operator /=(double d);
 };
@@ -8385,7 +8259,6 @@ class dvar7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
-#  ifdef USE_CONST
    const dvar6_array & elem(int i) const
    {
       return t[i];
@@ -8415,7 +8288,6 @@ class dvar7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
-#  endif
 #ifdef OPT_LIB
    dvar6_array & operator () (int i)
    {
@@ -8450,7 +8322,6 @@ class dvar7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
-#ifdef USE_CONST
    inline const dvar6_array & operator() (int i) const
    {
       return t[i];
@@ -8486,21 +8357,15 @@ class dvar7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
-#endif
 #else
-#ifdef USE_CONST
    const dvar6_array & operator() (int i) const;
    const dvar6_array & operator[] (int i) const;
    const dvar5_array & operator() (int i, int j) const;
    const dvar4_array & operator() (int i, int j, int k) const;
    const dvar3_array & operator() (int i, int j, int k, int l) const;
-   const dvar_matrix & operator() (int i, int j, int k, int l,
-				   int _m) const;
-   const dvar_vector & operator() (int i, int j, int k, int l, int _m,
-				   int _n) const;
-   const prevariable operator() (int i, int j, int k, int l, int _m,
-				 int _n, int _p) const;
-#endif
+   const dvar_matrix & operator() (int i, int j, int k, int l, int _m) const;
+   const dvar_vector & operator() (int i, int j, int k, int l, int _m, int _n) const;
+   const prevariable operator() (int i, int j, int k, int l, int _m, int _n, int _p) const;
    dvar6_array & operator ()(int);
    dvar6_array & operator [](int);
    dvar5_array & operator ()(int, int);
@@ -8523,7 +8388,6 @@ class dvar7_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#ifdef USE_CONST
    int indexmin(void) const
    {
       return (shape->indexmin());
@@ -8536,7 +8400,6 @@ class dvar7_array
    {
       return (indexmax() - indexmin() + 1);
    }
-#endif
    void initialize(void);
    void operator/=(const prevariable & d);
    void operator/=(const double &d);
@@ -8642,7 +8505,6 @@ class lmatrix
    AD_LONG_INT & operator () (int, int);
 #endif
 
-#ifdef USE_CONST
 #ifdef OPT_LIB
    inline const lvector & operator() (int i) const
    {
@@ -8660,7 +8522,6 @@ class lmatrix
    const lvector & operator[] (int) const;
    const lvector & operator() (int) const;
    const AD_LONG_INT & operator() (int, int) const;
-#endif
 #endif
 
    int colmin(void) const
@@ -9115,7 +8976,6 @@ class banded_symmetric_dmatrix
    {
       return (d.m[i]);
    }
-#  ifdef USE_CONST
    inline const double &operator() (register int i, register int j) const
    {
       return (*((d.m[i - j]).v + i));
@@ -9124,15 +8984,11 @@ class banded_symmetric_dmatrix
    {
       return (d.m[i]);
    }
-#  endif
 #else
    double &operator () (int i, int j);
    dvector operator () (int i);
-#  ifdef USE_CONST
    const double &operator() (int i, int j) const;
    const dvector operator() (int i) const;
-#  endif
-
 #endif
    friend banded_symmetric_dmatrix value(const banded_symmetric_dvar_matrix
 					 & v);
@@ -9254,7 +9110,6 @@ class banded_lower_triangular_dmatrix
    {
       return (d.m[i]);
    }
-#  ifdef USE_CONST
    inline const double &operator() (register int i, register int j) const
    {
       return (*((d.m[i - j]).v + i));
@@ -9263,14 +9118,11 @@ class banded_lower_triangular_dmatrix
    {
       return (d.m[i]);
    }
-#  endif
 #else
    double &operator () (int i, int j);
    dvector operator () (int i);
-#  ifdef USE_CONST
    const double &operator() (int i, int j) const;
    const dvector operator() (int i) const;
-#  endif
 #endif
    friend banded_lower_triangular_dmatrix value
       (const banded_lower_triangular_dvar_matrix & v);
@@ -9322,7 +9174,6 @@ class banded_lower_triangular_dvar_matrix
    {
       return (d.m[i]);
    }
-#  ifdef USE_CONST
    inline const prevariable operator() (register int i, register int j) const
    {
       return ((d.m[i - j]).va + i);
@@ -9331,25 +9182,20 @@ class banded_lower_triangular_dvar_matrix
    {
       return (d.m[i]);
    }
-# endif
 #else
    prevariable operator () (int i, int j);
    dvar_vector operator () (int i);
-#  ifdef USE_CONST
    const prevariable operator() (int i, int j) const;
    const dvar_vector operator() (int i) const;
-# endif
 #endif
    inline double &elem_value(register int i, register int j)
    {
       return *(double *) ((d.m[i - j]).va + i);
    }
-#ifdef USE_CONST
    inline const double &elem_value(register int i, register int j) const
    {
       return *(double *) ((d.m[i - j]).va + i);
    }
-#endif
    friend banded_lower_triangular_dmatrix value
       (const banded_lower_triangular_dvar_matrix & v);
 };

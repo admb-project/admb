@@ -144,7 +144,7 @@ void d5_array::allocate(const d5_array& m1)
    }
  }
 
-  #ifndef OPT_LIB
+#ifndef OPT_LIB
 
 /**
  * Description not yet available.
@@ -236,8 +236,6 @@ void d5_array::allocate(const d5_array& m1)
       #endif
       return elem(i)(j,k,l,m);
     }
-
-   #ifdef USE_CONST
 
 /**
  * Description not yet available.
@@ -335,8 +333,7 @@ const double& d5_array::operator()(int i, int j, int k, int l, int m) const
       return elem(i)(j,k,l,m);
     }
 
-   #endif
-  #endif
+#endif
 
 /**
  * Description not yet available.

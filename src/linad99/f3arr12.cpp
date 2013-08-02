@@ -9,8 +9,7 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#ifdef USE_CONST
-  #ifndef OPT_LIB
+#ifndef OPT_LIB
 
 /**
  * Description not yet available.
@@ -67,5 +66,4 @@ const dvar_vector& dvar3_array::operator()(int k, int i) const
       #endif
       return ( t[k].m[i]);
     }
-  #endif
 #endif

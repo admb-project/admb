@@ -66,12 +66,8 @@
 //#define HERE cout << "reached line " << __LINE__ << " in " << __FILE__ << endl;
 #define HERE
 
-#define USE_CONST
-#ifdef USE_CONST
-  #define _CONST const
-#else
-  #define _CONST
-#endif
+#define _CONST const
+
 class adstring_shape
 {
   unsigned int sz;
@@ -117,10 +113,8 @@ public :
   unsigned int buff_size(void);
   unsigned char &operator()(const int i);
   unsigned char &operator[](const int i);
-#ifdef USE_CONST
   const unsigned char& operator()(const int i) const;
   const unsigned char& operator[](const int i) const;
-#endif
 
 #ifdef __INTEL_COMPILER
   friend adstring operator+(const adstring &u, const char* v)
@@ -159,12 +153,10 @@ public :
     { return(!(*this==u)); }
 
   adstring operator()(int i, int j);
-  #if defined(USE_CONST)
   int operator==(const char* u) const;
 
   int operator==(const adstring &u) const;
   adstring operator()(int i, int j) const;
-  #endif
 
   adstring& operator=(const adstring &t);
   adstring& operator=(const char t);
@@ -172,10 +164,8 @@ public :
 
   operator unsigned char * ();
   operator char * ();
-#ifdef USE_CONST
   operator const unsigned char*() const;
   operator const char*() const;
-#endif
 
   // Pascal-like adstring functions
 
@@ -243,10 +233,8 @@ public:
   adstring_array(int min,int max);
   void allocate(int min,int max);
   adstring_array(void);
-  #ifdef USE_CONST
   const adstring& operator[](int i) const;
   const adstring& operator()(int i) const;
-  #endif
   adstring& operator [] (int i);
   adstring& operator () (int i);
   adstring_array& operator += (const adstring& s);

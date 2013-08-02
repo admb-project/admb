@@ -43,8 +43,6 @@
    return(*((*(m+i)).v+j));
  }
 
-#ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -79,5 +77,4 @@ const AD_LONG_INT& lmatrix::operator()(int i, int j) const
    #endif
    return(*((*(m+i)).v+j));
  }
-#endif
 #endif

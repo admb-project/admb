@@ -73,9 +73,6 @@
    return(*(v+i));
  }
 
-
-#ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -138,6 +135,3 @@ const int& ivector::operator()(int i) const
    return(*(v+i));
  }
 #endif
-#endif
-
-void abcde_f(void) { /*int i=1;*/ }

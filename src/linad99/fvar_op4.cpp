@@ -87,8 +87,7 @@ int xxx_uuu_a(void)
     }
 #endif
 
-#ifdef USE_CONST
-  #ifndef OPT_LIB
+#ifndef OPT_LIB
 /**
  * Description not yet available.
  * \param
@@ -134,6 +133,4 @@ const prevariable dvar_vector::operator()(int i) const
       return (va+i);
 
     }
-  #endif
 #endif
-

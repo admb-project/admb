@@ -22,7 +22,6 @@
 #include <stdlib.h>
 
 #ifndef OPT_LIB
-#ifdef USE_CONST
 
 /**
  * Description not yet available.
@@ -68,6 +67,3 @@ const AD_LONG_INT& lvector::operator()(int i) const
    return(*(v+i));
  }
 #endif
-#endif
-
-void f63hhh(void){/*int x=1;*/}

@@ -35,8 +35,6 @@
    return m[i];
  }
 
-#ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -60,5 +58,3 @@ const ivector& imatrix::operator[](int i) const
    return m[i];
  }
 #endif
-#endif
-void AAsvf(void){/*int x=1;*/}

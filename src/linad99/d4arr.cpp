@@ -271,8 +271,6 @@ void d4_array::allocate(const d4_array& m1)
       return ( ((*this)(i,j,k))(l));
     }
 
-   #ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -353,8 +351,7 @@ const double& d4_array::operator()(int i, int j, int k, int l) const
       return ( ((*this)(i,j,k))(l));
     }
 
-   #endif
-  #endif
+#endif
 
 /**
  * Description not yet available.

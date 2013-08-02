@@ -31,7 +31,6 @@ adstring adstring::operator()(int i, int j)
   return (tmp);
 }
 
-#if defined (USE_CONST)
 adstring adstring::operator()(int i, int j) const
 {
   if (i < 1 || i > (int) shape->size())
@@ -53,7 +52,6 @@ adstring adstring::operator()(int i, int j) const
   }
   return (tmp);
 }
-#endif
 
 adstring& adstring::operator=(const adstring & t)
 {
@@ -115,7 +113,6 @@ unsigned char & adstring::operator()(const int i)
   return ( ((unsigned char *)s)[i]);
 }
 
-#ifdef USE_CONST
 const unsigned char& adstring::operator()(const int i) const
 {
   if (i < 1 || i > (int) shape->size())
@@ -133,15 +130,12 @@ const unsigned char& adstring::operator[](const int i) const
   }
   return (s[i]);
 }
-#endif
 
-#ifdef USE_CONST
 int adstring::operator==(const adstring& v) const
 {
   int tmp = strcmp (* this, v);
   return (tmp == 0);
 }
-#endif
 
 int adstring::operator==(const adstring& v)
 {

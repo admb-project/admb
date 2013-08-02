@@ -9,30 +9,27 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#ifdef USE_CONST
-  #ifndef OPT_LIB
-
+#ifndef OPT_LIB
 /**
  * Description not yet available.
  * \param
  */
 const dmatrix& d3_array::operator()(int i) const
- {
-   #ifdef SAFE_ARRAYS
-     if (i<slicemin())
-     {
-       cerr << "matrix bound exceeded -- row index too low in 3d_array::operator[]"
-             << "value was" << i;
-       ad_exit(21);
-     }
-     if (i>slicemax())
-     {
-       cerr << "matrix bound exceeded -- row index too high in 3d_array::operator[]"
-             << "value was" << i;
-       ad_exit(22);
-     }
-   #endif
-   return(t[i]);
- }
-  #endif
+{
+#ifdef SAFE_ARRAYS
+  if (i<slicemin())
+  {
+    cerr << "matrix bound exceeded -- row index too low in 3d_array::operator[]"
+         << "value was" << i;
+    ad_exit(21);
+  }
+  if (i>slicemax())
+  {
+    cerr << "matrix bound exceeded -- row index too high in 3d_array::operator[]"
+         << "value was" << i;
+    ad_exit(22);
+  }
+#endif
+  return t[i];
+}
 #endif

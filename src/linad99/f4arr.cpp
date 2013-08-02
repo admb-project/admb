@@ -196,8 +196,6 @@
       return ( ((*this)(i,j,k))(l));
     }
 
-    #ifdef USE_CONST
-
 /**
  * Description not yet available.
  * \param
@@ -277,9 +275,7 @@ const prevariable dvar4_array::operator()(int i, int j, int k, int l) const
       #endif
       return ( ((*this)(i,j,k))(l));
     }
-
-   #endif
-  #endif
+#endif
 
 /**
  * Description not yet available.

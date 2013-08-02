@@ -276,8 +276,6 @@ i4_array::i4_array(const i4_array& m2)
       return ( ((*this)(i,j,k))(l));
     }
 
-#if defined(USE_CONST)
-
 /**
  * Description not yet available.
  * \param
@@ -339,5 +337,3 @@ const int& i4_array::operator()(int i, int j, int k, int l) const
       return ( ((*this)(i,j,k))(l));
     }
 #endif
-#endif
-

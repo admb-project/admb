@@ -43,7 +43,6 @@ adstring::operator char * ()
   return (char*)(s + 1);
 }
 
-#ifdef USE_CONST
 adstring::operator const unsigned char * () const
 {
   return (const unsigned char*)s + 1;
@@ -53,7 +52,6 @@ adstring::operator const char * () const
 {
   return (const char*)(s + 1);
 }
-#endif
 
   unsigned int adstring::size(void) const
   {

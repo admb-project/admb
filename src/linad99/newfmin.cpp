@@ -20,7 +20,6 @@
 #    include <windows.h>
 #  endif
 #include <admodel.h>
-#include <s.h>
 #include <newredef.h>
 #endif
 #if defined(__BORLANDC__)

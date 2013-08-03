@@ -317,8 +317,6 @@ ifeq ($(TERMINAL),dos)
 	copy nh99\admodel.h ${DISK}\include
 	copy nh99\adsplus.h ${DISK}\include
 	copy nh99\spcomm.h ${DISK}\include
-	copy nh99\s.h ${DISK}\include
-	copy nh99\newredef.h ${DISK}\include
 	copy nh99\param_init_bounded_number_matrix.h ${DISK}\include
 	copy nh99\gccmanip.h ${DISK}\include
 else
@@ -343,8 +341,6 @@ else
 	cp nh99/admodel.h ${DISK}/include
 	cp nh99/adsplus.h ${DISK}/include
 	cp nh99/spcomm.h ${DISK}/include
-	cp nh99/s.h ${DISK}/include
-	cp nh99/newredef.h ${DISK}/include
 	cp nh99/param_init_bounded_number_matrix.h ${DISK}/include
 	cp nh99/gccmanip.h ${DISK}/include
 endif

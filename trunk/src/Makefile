@@ -103,8 +103,6 @@ includes:
 	copy nh99\admodel.h $(DESTDIR)\include
 	copy nh99\adsplus.h $(DESTDIR)\include
 	copy nh99\spcomm.h $(DESTDIR)\include
-	copy nh99\s.h $(DESTDIR)\include
-	copy nh99\newredef.h $(DESTDIR)\include
 	copy nh99\param_init_bounded_number_matrix.h $(DESTDIR)\include
 	copy tools99\clist.h $(DESTDIR)\include
 	copy tools99\cifstrem.h $(DESTDIR)\include

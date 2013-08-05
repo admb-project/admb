@@ -102,7 +102,7 @@ adstring::~adstring()
   {
     deallocate();
   }
-};
+}
 
 unsigned char & adstring::operator()(const int i)
 {

@@ -169,4 +169,3 @@ void get_onesided_intervals(const dvector& _left_bd, const dvector& _right_bd,
       isum+=incr;
     }
   }
-

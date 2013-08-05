@@ -276,5 +276,4 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
       fprof=global_min+20.0;
     }
    }
-
 #endif //#if defined(USE_LAPLACE)

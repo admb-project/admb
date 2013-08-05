@@ -419,4 +419,3 @@ double polint(double * xa,double * ya,double x)
            +(x-xa[1])*(x-xa[2])/prod3*ya[3];
   return y;
 }
-

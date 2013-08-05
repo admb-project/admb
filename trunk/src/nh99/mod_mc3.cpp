@@ -164,6 +164,3 @@ void set_value_mc(const dvar_vector& _x,const dvar_vector& v, const int& _ii,
     x(i)=set_value_mc(v(ii++),fmin,fmax);
   }
 }
-
-
-

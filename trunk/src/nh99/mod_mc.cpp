@@ -360,6 +360,3 @@ void function_minimizer::monte_carlo_routine(void)
     }
   }
 }
-
-
-

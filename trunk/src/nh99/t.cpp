@@ -2021,10 +2021,6 @@ L45:
 /*     LAST LINE OF SUBROUTINE MCSTEP. */
 
 } /* xmcstep_ */
-
-
 #ifdef __cplusplus
 	}
 #endif
-
-

@@ -308,5 +308,3 @@ void param_init_bounded_matrix_vector::set_scalefactor(double s)
     (*this)(i).set_scalefactor(s);
   }
 }
-
-

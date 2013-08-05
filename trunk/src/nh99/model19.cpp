@@ -88,4 +88,3 @@ void param_init_bounded_matrix::curv_scale(const dvector& _v, const dvector& x, 
       }
     }
   }
-

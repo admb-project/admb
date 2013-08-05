@@ -311,5 +311,4 @@ dvector laplace_approximation_calculator::get_gradient_lme_hp
   gradcalc(xsize,g);
   return g;
 }
-
 #endif   //if defined(USE_LAPLACE)

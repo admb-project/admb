@@ -283,5 +283,4 @@ double calculate_importance_sample_block_diagonal_option_antithetical
   }
   return f;
 }
-
 #endif

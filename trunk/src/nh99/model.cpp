@@ -1284,5 +1284,3 @@ void get_sp_printf(void)
       ptr=0;
     }
   }
-
-

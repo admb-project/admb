@@ -250,5 +250,4 @@ void function_minimizer::pvm_master_function_evaluation_random_effects
   //   send_f_to_master(vf);
   // }
   //
-
 #endif // #if defined(USE_LAPLACE)

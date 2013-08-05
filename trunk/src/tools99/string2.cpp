@@ -72,6 +72,3 @@ adstring itoa(int n,int r)
   }
   return s;
 }
-
-
-

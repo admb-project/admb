@@ -435,4 +435,3 @@ test_smartlist::~test_smartlist()
    remove(filename);
   #endif
 }
-

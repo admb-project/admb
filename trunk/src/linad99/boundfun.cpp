@@ -457,4 +457,3 @@ double dmax(double x, double y)
     return(y);
   }
 }
-

@@ -69,4 +69,3 @@ cifstream& operator>>(cifstream& istr, const dvar5_array& z)
   }
   return istr;
 }
-

@@ -173,4 +173,3 @@ void restore_value_from_vector(dvar3_array& x, const dvector& v, const int& ii)
       }
     }
   }
-

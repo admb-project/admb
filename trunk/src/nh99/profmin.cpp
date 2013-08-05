@@ -239,4 +239,3 @@ void function_minimizer::pvm_master_function_evaluation_profile(double& f,
    }
   }
 #endif
-

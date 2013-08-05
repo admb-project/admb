@@ -72,4 +72,3 @@
     dvar_matrix::operator = (m);
     return *this;
   }
-

@@ -967,4 +967,3 @@ df1b2variable operator + (const df1b2variable& x,double y)
   return ADf1b2_sum(x,y);
 }
 */
-

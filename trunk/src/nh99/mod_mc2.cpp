@@ -107,6 +107,3 @@ double function_minimizer::get_monte_carlo_value(int nvar, const independent_var
 #endif
   return f;
 }
-
-
-

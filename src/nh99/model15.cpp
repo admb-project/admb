@@ -153,4 +153,3 @@ named_dvar4_array& named_dvar4_array::operator=(const d4_array& m)
   this->dvar4_array::operator=(m);
   return *this;
 }
-

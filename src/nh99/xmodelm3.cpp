@@ -889,6 +889,4 @@ void print_is_diagnostics(laplace_approximation_calculator *lapprox)
     }
   }
 }
-
 #endif // #if defined(USE_LAPLACE)
-

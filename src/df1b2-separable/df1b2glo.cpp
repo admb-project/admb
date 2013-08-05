@@ -62,5 +62,3 @@ int df1b2variable::adpool_stack_pointer=0;
 const int df1b2variable::adpool_stack_size=50;
 adpool * df1b2variable::adpool_stack[50];
 int df1b2variable::adpool_nvar_stack[50];
-
-

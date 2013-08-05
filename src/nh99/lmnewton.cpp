@@ -354,4 +354,3 @@ L50:
   f=fbest;
   objective_function_value::gmax=fabs(max(gbest));
 }
-

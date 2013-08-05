@@ -159,5 +159,4 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
   }
   return f;
 }
-
 #endif //#if defined(USE_LAPLACE)

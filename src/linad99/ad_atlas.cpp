@@ -240,7 +240,4 @@ dmatrix atlas_solve_spd_trans(const dmatrix & M, const dmatrix & N)
   }
   return tmp;
 }
-
-
-
 #endif //#if defined USE_ATLAS

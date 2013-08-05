@@ -556,4 +556,3 @@ df1b2variable pow(const df1b2variable& x,double y)
   return AD_pow_c2(x,y);
 }
 */
-

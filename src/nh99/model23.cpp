@@ -82,4 +82,3 @@ void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H, const int&
   }
   ii+=n;
 }
-

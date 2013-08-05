@@ -311,5 +311,4 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
 
   return f;
 }
-
 #endif

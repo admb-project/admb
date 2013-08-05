@@ -908,5 +908,4 @@ void laplace_approximation_calculator::check_pool_size(void)
   df1b2variable::nvar=num_active_parameters;
   df1b2variable::set_blocksize();
 }
-
 #endif //#if defined(USE_LAPLACE)

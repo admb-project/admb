@@ -449,4 +449,3 @@ void cifstream::report_error(const char * msg) {;}
   }
 #endif
 */
-

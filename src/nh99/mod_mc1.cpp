@@ -96,6 +96,3 @@ void param_init_bounded_matrix::add_value(const dvector& ndev, const int& _ii)
     }
   }
 }
-
-
-

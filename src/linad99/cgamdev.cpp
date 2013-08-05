@@ -319,4 +319,3 @@ double get_initial_u(double a,double y)
   }
   return log_x0-log(a);
 }
-

@@ -250,5 +250,4 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
   }
   return f;
 }
-
 #endif

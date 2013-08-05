@@ -324,4 +324,3 @@ void function_minimizer::prof_minimize(int iprof, double sigma,
       fprof=global_min+20.0;
     }
    }
-

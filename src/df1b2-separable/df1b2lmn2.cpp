@@ -392,5 +392,4 @@ void function_minimizer::limited_memory_quasi_newton_block(int nvar,int _crit,
   quit_flag=fmc.quit_flag;
   objective_function_value::gmax=fabs(fmc.gmax);
 } // end block for quasi newton minimization
-
 #endif

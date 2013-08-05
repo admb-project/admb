@@ -261,5 +261,4 @@ double calculate_importance_sample_block_diagonal_funnel(const dvector& x,
   }
   return f;
 }
-
 #endif

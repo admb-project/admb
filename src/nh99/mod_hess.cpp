@@ -737,5 +737,3 @@ void useless(const double& sdelta2){/*int i=0;*/}
    if (ad_printf) (*ad_printf)("Hessian does not appear to be positive definite\n");
  }
 #endif
-
-

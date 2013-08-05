@@ -1706,5 +1706,3 @@ dvector read_old_scale(int & old_nvar)
   }
   return sscale;
 }
-
-

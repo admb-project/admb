@@ -497,4 +497,3 @@ data_matrix& data_matrix::operator=(const double& m)
   named_dmatrix::operator = (m);
   return *this;
 }
-

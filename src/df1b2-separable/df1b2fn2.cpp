@@ -1024,4 +1024,3 @@ df1b2variable::df1b2variable(const random_effects_bounded_vector_info& rebv)
     u_dot_bar_tilde=NULL;
   }
 }
-

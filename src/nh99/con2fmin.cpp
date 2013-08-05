@@ -22,7 +22,7 @@ extern "C" {
 #include "f2c.h"
 /* Common Block Declarations */
 
-#include "constructors.h"
+#include "constructor
 #ifdef __cplusplus
   }
 #endif
@@ -310,5 +310,4 @@ void function_minimizer::constraint_report()
     }
   }
 }
-
 #endif

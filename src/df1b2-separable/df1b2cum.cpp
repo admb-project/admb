@@ -33,4 +33,3 @@ df1b2variable cumd_exponential(const df1b2variable& x)
   else
     return 1.0-0.5*exp(-x);
 }
-

@@ -279,5 +279,4 @@ double calculate_importance_sample_block_diagonal_option2(const dvector& x,
   }
   return f;
 }
-
 #endif

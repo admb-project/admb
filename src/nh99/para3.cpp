@@ -120,4 +120,3 @@ void function_minimizer::hess_routine_slave()
   gradient_structure::set_NO_DERIVATIVES();
 }
 #endif // #if defined(USE_ADPVM)
-

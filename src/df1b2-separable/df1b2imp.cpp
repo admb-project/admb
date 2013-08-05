@@ -143,5 +143,4 @@ double calculate_importance_sample(const dvector& x,const dvector& u0,
       Hessadjoint(i,j)=g(ii++);
   return f;
 }
-
 #endif

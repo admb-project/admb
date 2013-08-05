@@ -675,4 +675,3 @@ void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
 
   return;
 }
-

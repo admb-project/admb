@@ -536,6 +536,4 @@ dvector laplace_approximation_calculator::
 
   return xadjoint;
 }
-
-
 #endif //#if defined(USE_LAPLACE)

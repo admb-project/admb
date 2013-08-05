@@ -157,5 +157,3 @@ void bounded_multivariate_uniform_mcmc(int nvar, const dvector& a1, const dvecto
     }
   }
 }
-
-

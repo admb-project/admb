@@ -218,4 +218,3 @@ void function_minimizer::pvm_slave_function_evaluation_noder(void)
   send_f_to_master(vf);
 }
 #endif //defined(USE_ADPVM)
-

@@ -456,5 +456,3 @@ void adpool::clean(void)
     ptr++;
   }
 }
-
-

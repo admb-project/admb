@@ -6,10 +6,6 @@
  */
 #include "clist.h"
 
-#ifdef HERE
-  #undef HERE
-#endif
-#define HERE cout << "reached line " << __LINE__ << " in " << __FILE__ << endl;
 clist * clist::prev(void)
 {
   clist * tmp = this->next;

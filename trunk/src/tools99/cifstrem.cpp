@@ -117,7 +117,6 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
 
 void cifstream::filter(void)
 {
-  //HERE
   //char testc = bp->NEXTCHAR();
   char testc = bp->sgetc();
  // cout << "in filter testc= " << testc << endl;

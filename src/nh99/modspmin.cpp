@@ -98,16 +98,7 @@ extern admb_javapointers * adjm_ptr;
 #endif
     if (option_match(argc,argv,"-mceval") == -1)
     {
-      //negative_eigenvalue_flag=0;
-      //do
-      {
-#if defined(ADMB_REDEMO)
-  exit(1);
-#else
         computations1(argc,argv);
-#endif
-      }
-      //while(negative_eigenvalue_flag);
     }
     else
     {

@@ -309,23 +309,9 @@ int * kill_address;
   void function_minimizer::computations1(int argc,char * argv[])
   {
     tracing_message(traceflag,"B1");
-#if defined(__SPDLL__)
-    //if (ad_printf) (*ad_printf)("entered void function_minimizer::computations1\n");
-#endif
 
-#if defined (AD_DEMO)
-     if (gradient_structure::ARRAY_MEMBLOCK_SIZE != 12000)
-     {
-#if defined(__SPDLL__)
-       //if (ad_printf) (*ad_printf)("setting ad_chea_flag\n");
-#endif
-       ad_cheat_flag=1;
-     }
-#endif
-    //char ch;
     int on=-1;
     int nopt=-1;
-    //dvector xxxx("{1.1,2.1,3.1}");
 #if defined(USE_ADPVM)
     if (ad_comm::pvm_manager)
     {
@@ -386,13 +372,6 @@ int * kill_address;
 
     stddev_params::get_stddev_number_offset();
 
-#if defined (AD_DEMO)
-    if (ad_cheat_flag==1)
-    {
-      exit(0);
-    }
-#endif
-
     tracing_message(traceflag,"C1");
 
 #if defined(ADMB_REDEMO)
@@ -434,22 +413,11 @@ int * kill_address;
       }
       else
       {
-
         initial_params::current_phase=initial_params::max_number_phases;
       }
       tracing_message(traceflag,"D1");
 
       //double ratio=100.*gradient_structure::max_last_offset/12000.0;
-  #if defined (AD_DEMO)
-      cout << endl << endl;
-      if (ad_printf)
-      {
-        (*ad_printf) (" Your model used %lf  percent of demonstration version"
-           " capacity \n",ratio);
-      }
-      write_banner_stuff();
-
-  #endif
       tracing_message(traceflag,"E1");
       if (option_match(argc,argv,"-est") == -1)
       {
@@ -629,16 +597,13 @@ int * kill_address;
     }
     while(spminflag || repeatminflag);
   }
-
-
+  
   void function_minimizer::computations(void)
   {
     // for now just do parameter estimates
     //function_minimizer::minimize();
     minimize();
-    //
   }
-
 
 void write_banner_stuff(void)
 {
@@ -1134,5 +1099,4 @@ void adwait(double sec){;}
   }
 #else
   void extra_random_effects_generator2(void) {;}
-
 #endif  //#if defined(ADMB_REDEMO)

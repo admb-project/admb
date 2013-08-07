@@ -13,7 +13,8 @@
 #include <fvar.hpp>
 
 /**
-  Adjoint code for posfun; possibly not used.
+   Adjoint code for posfun; possibly not used.
+   Retained in source code to support legacy models with user-written adjoint code.
  */
 double dfposfun(const double &x, const double eps)
 {
@@ -32,8 +33,9 @@ double dfposfun(const double &x, const double eps)
 }
 
 /**
-  Adjoint code for posfun; possibly not used.
- */
+   \brief \copybrief dfposfun(const double&, const double)
+   \details \copydetails dfposfun(const double&, const double)
+*/
 double dfposfun1(const double &x, const double eps)
 {
   if (x>=eps)
@@ -48,19 +50,10 @@ double dfposfun1(const double &x, const double eps)
 }
 
 /**
-  Retuns a positive function of the argument \f$x\f$ and sets a penalty for
-  \f$x<0\f$. The penalty should be added to the objective function.
-  \param x Argument, \f$x\f$.
-  \param eps Threshold, \f$\epsilon\f$, 
-   a double constant containing the minimum allowed value of \f$x\f$.
-  \param  _pen The penalty value \b incremented by \f$ 0.01(x-\epsilon)^2 \f$ 
-   if \f$x<\epsilon\f$. 
-  \return \f$\left\{\begin{array} {r@{\quad:\quad}l}
-             x\ge\epsilon & x\\
-               x<\epsilon & \frac{\epsilon}{2-x/\epsilon}
-           \end{array}\right.\f$
-  \ingroup misc
- */
+ \brief \copybrief posfun(const dvariable&, const double, const prevariable&)
+ \details \copydetails posfun(const dvariable&, const double, const prevariable&)
+ \ingroup misc
+*/
 double posfun(const double &x, const double eps, const double& _pen)
 {
   double& pen=(double&)_pen;
@@ -77,20 +70,8 @@ double posfun(const double &x, const double eps, const double& _pen)
 }
 
 /**
-  Retuns a positive function of the argument \f$x\f$ and sets a penalty for
-  \f$x<0\f$. The penalty should be added to the objective function. 
-   A more coersive version.
-  \param x Argument, \f$x\f$.
-  \param eps Threshold, \f$\epsilon\f$, 
-   a double constant containing the minimum allowed value of \f$x\f$.
-  \param  _pen The penalty value \b incremented by \f$ 0.01(x-\epsilon)^3 \f$ 
-   if \f$x<\epsilon\f$. 
-  \return \f$\left\{\begin{array} {r@{\quad:\quad}l}
-             x\ge\epsilon & x\\
-               x<\epsilon & \frac{\epsilon}{1+x/\epsilon
-                                             +(x/\epsilon)^2
-                                             +(x/\epsilon)^3}
-           \end{array}\right.\f$
+ \brief \copybrief posfun2(const dvariable&, const double, const prevariable&)
+ \details \copydetails posfun2(const dvariable&, const double, const prevariable&)
   \ingroup misc
  */
 double posfun2(const double &x, const double eps, const double& _pen)

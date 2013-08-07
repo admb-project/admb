@@ -23,7 +23,7 @@ streampos ad_comm::change_datafile_name(const adstring& s,
   global_datafile= new cifstream(tmpstring);
   if ( (!global_datafile) || !(*global_datafile))
   {
-    //cerr << "Error trying to open data input file " <<  s << endl;
+    cerr << "Error trying to open data input file " <<  s << endl;
     delete global_datafile;
     global_datafile=NULL;
     exit(1);
@@ -47,7 +47,7 @@ streampos ad_comm::change_pinfile_name(const adstring& s,
   global_parfile= new cifstream(s);
   if ( (!global_parfile) || !(*global_parfile))
   {
-    //cerr << "Error trying to open parameter input file " <<  s << endl;
+    cerr << "Error trying to open parameter input file " <<  s << endl;
     delete global_parfile;
     global_parfile=NULL;
     exit(1);

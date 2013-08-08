@@ -148,7 +148,7 @@ dvariable::dvariable(const dvariable& t)
 /**
    Creates dvariable instance from a double constant.
    Creates new dvariable object,
-   Sets Value to the argument and initializes derivatve information.
+   Sets Value to the argument and initializes derivative information.
    \param t constant double passed by value.
  */
   dvariable::dvariable( CGNU_DOUBLE t)

@@ -163,6 +163,7 @@ TEST_F(test_atan2, y_less_than_zero_and_x_equal_zero)
  */
 TEST_F(test_atan2, y_and_x_equal_zero)
 {
+  ad_exit=&test_ad_exit;
   try
   {
     dvariable y = 0.0;
@@ -179,11 +180,4 @@ TEST_F(test_atan2, y_and_x_equal_zero)
     }
   }
   FAIL();
-
-}
-int main(int argc, char** argv)
-{
-  ::testing::InitGoogleTest(&argc, argv);
-  ad_exit=&test_ad_exit;
-  return RUN_ALL_TESTS();
 }

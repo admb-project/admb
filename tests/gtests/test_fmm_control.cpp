@@ -1,3 +1,9 @@
+#include <gtest/gtest.h>
+#include <fvar.hpp>
+#include <adstring.hpp>
+
+class test_fmm_control: public ::testing::Test {};
+
 /**
  * Tests for errors in "void adstring::to_lower(void)"
  */

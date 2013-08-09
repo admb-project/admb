@@ -42,9 +42,6 @@ adstring_array:
 priors:
 	CXXFLAGS=$(CXXFLAGS) OPTIONS=-s $(MAKE) --directory=$@
 
-atan2:
-	OPTIONS=-s $(MAKE) --directory=$@
-
 testminmax:
 	OPTIONS=-s $(MAKE) --directory=$@
 

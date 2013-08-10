@@ -1,0 +1,81 @@
+ADMB Project  
+============
+*ADMB-11.1*  
+*Released May 10, 2013*  
+
+Describes Quick Start installation procedure for Windows.
+
+---
+
+For Windows computers with Visual C++ compiler already installed, read
+the [QuickStart for Visual C++](QuickStartVisualC++.html).
+
+Quick Start Windows
+-------------------
+
+1. Download [ADMB source distribution](download).
+
+   [download]: http://www.admb-project.org/downloads/
+
+   Right click the downloaded file and extract to `C:\admb\`.
+
+2. Open **'Command Prompt'** window and change to admb directory.
+
+   `C:\> cd admb`
+
+3. Install MinGW C++ compiler.
+
+   `C:\admb\> utilities\get-mingw.bat`
+
+   Downloads approximately 177 MB from 'sourceforge.net'.  This will also
+   update existing MinGW installation.
+
+   If MinGW has been already installed, use the command below to add MinGW
+   programs to the system **'PATH'**.
+
+   `C:\admb\> set PATH=C:\MinGW\bin;%PATH%`
+
+4. Build libraries
+
+   `C:\admb\> utilities\make`
+
+   To build with debug symbols,
+
+   `C:\admb\> utilities\make debug`
+
+   Takes approximately 15-25 minutes to complete.
+
+5. Build and run the simple example.
+
+   `C:\admb\> cd examples\admb\simple`
+
+   `C:\admb\examples\admb\simple\> C:\admb\admb simple`
+
+   `C:\admb\examples\admb\simple\> simple`
+
+6. *[Optional]* Include admb in system **PATH**.
+   Avoids the need the to add the prefix path to the admb script.
+
+   A. In the **'System Properties'** window, click on the **'Enviroment Variables'** button.
+
+   B. In the **'Enviroment Variables'** windows, click on the **'New'** button, then
+   in the **'Variable name'** input type
+
+   **PATH**
+
+   and in the **'Variable value'** input type
+
+   `C:\admb\;%PATH%`
+
+   C. Click the **'OK'** button when done and open a new command prompt.
+
+   `C:\> cd \admb\examples\admb\simple`
+
+   `C:\admb\examples\admb\simple\> admb simple`
+
+   `C:\admb\examples\admb\simple\> simple`
+
+---
+For help and support, email <users@admb-project.org>.
+
+$ID$

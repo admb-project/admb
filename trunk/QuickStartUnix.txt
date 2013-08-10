@@ -72,4 +72,4 @@ Quick Start Unix
 --------------------------------------------------------------------------------
 For help and support, email <users@admb-project.org>.
 
-$ID$
+$Id$

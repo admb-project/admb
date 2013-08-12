@@ -35,10 +35,6 @@ test-expm:
 test-cov_re:
 	$(MAKE) --directory=cov_re
 
-
-adstring_array:
-	OPTIONS=-s $(MAKE) --directory=$@
-
 priors:
 	CXXFLAGS=$(CXXFLAGS) OPTIONS=-s $(MAKE) --directory=$@
 

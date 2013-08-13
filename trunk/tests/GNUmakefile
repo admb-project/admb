@@ -119,7 +119,6 @@ beta3:
 clean:
 	$(MAKE) --directory=geolocation clean
 	$(MAKE) --directory=expm clean
-	$(MAKE) --directory=adstring_array clean
 	$(MAKE) --directory=priors clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=hysimple clean

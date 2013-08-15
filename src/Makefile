@@ -83,9 +83,13 @@ $(LEXDESTDIR)\tpl2cpp.c: nh99\tpl2cpp.lex
 $(DESTDIR)\bin\tpl2rem.exe: $(LEXDESTDIR)\tpl2rem.c
 	$(CC) /nologo /TC /Fo$(LEXDESTDIR)\ /Fe$@ $(LEXDESTDIR)\tpl2rem.c
 
-$(LEXDESTDIR)\tpl2rem.c: df1b2-separable\tpl2rem.lex
-	..\utilities\flex -w -o$(LEXDESTDIR)\lex.yy.c df1b2-separable\tpl2rem.lex 
-	..\utilities\sed -f df1b2-separable\sedflex $(LEXDESTDIR)\lex.yy.c > $@
+$(LEXDESTDIR)\tpl2cpp.c: nh99\tpl2cpp.lex
+	!IF DEFINED(DEBUG)
+	  \utilities\flex -o$(LEXDESTDIR)\lex.yy.c nh99\tpl2cpp.lex
+	!ELSE
+	  \utilities\flex -d -o$(LEXDESTDIR)\lex.yy.c nh99\tpl2cpp.lex
+	!ENDIF
+	\utilities\sed -f nh99\sedflex $(LEXDESTDIR)\lex.yy.c > $@
 
 includes:
 	IF NOT EXIST $(DESTDIR)\include md $(DESTDIR)\include

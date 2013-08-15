@@ -1,0 +1,66 @@
+ADMB Project
+============
+*ADMB-11.1*  
+*Released May 10, 2013*  
+
+Describes Quick Start installation procedures for Visual C++ compilers.
+
+---
+**Note**: For Microsoft Visual C++ 2010, Read [installation help][help]. 
+[help]: http://www.admb-project.org/documentation/installation/admb-installation-visual-c
+
+Quick Start Visual C++
+----------------------
+
+1. Download [ADMB source distribution](download).
+
+   [download]: http://www.admb-project.org/downloads/
+
+   Right click the downloaded file and extract to `C:\admb\`.
+
+2. Open **'Visual Studio Command Prompt**' window and change to admb directory.
+
+   `C:\> cd admb`
+
+3. Build libraries
+
+   `C:\admb\> nmake`
+
+   To build with debug symbols,
+
+   `C:\admb\> nmake debug`
+
+   Takes approximately 15-25 minutes to complete.
+
+4. Build and run the simple example.
+
+   `C:\admb\> cd examples\admb\simple`
+
+   `C:\admb\examples\admb\simple\> C:\admb\admb simple`
+
+   `C:\admb\examples\admb\simple\> simple`
+
+5. *[Optional]* Include admb in system **PATH**.
+   Avoids the need the to add the prefix path to the admb script.
+
+   A. In the **'System Properties'** window, click on the **'Enviroment Variables'** button.
+
+   B. In the **'Enviroment Variables'** windows, click on the **'New'** button, then
+   in the **'Variable name'** input type
+
+   **PATH**
+
+   and in the **'Variable value'** input type
+
+   `C:\admb\;%PATH%`
+
+   C. Click the **'OK'** button when done and open a new command prompt.
+
+   `C:\> cd \admb\examples\admb\simple`
+   `C:\admb\examples\admb\simple\> admb simple`
+   `C:\admb\examples\admb\simple\> simple`
+
+---
+For help and support, email <users@admb-project.org>.
+
+$Id$

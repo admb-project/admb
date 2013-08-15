@@ -1,0 +1,75 @@
+ADMB Project  
+============
+*ADMB-11.1*  
+*Released May 10, 2013*  
+
+Describes QuickStart installation procedures for Unix distributions.
+
+---
+
+Quick Start Unix
+----------------
+
+1. Download [ADMB source distribution](download).
+
+   [download]: http://www.admb-project.org/downloads/
+
+2. Open a **'Terminal'** window.
+
+3. Extract downloaded file in **'HOME'** directory.
+
+   `[~]$ unzip admb-latest-src.zip`
+
+4. Change to admb directory.
+
+   `[~]$ cd admb`
+
+5. Build libraries 
+
+   `[~/admb/]$ make`
+
+   To build with debug symbols,
+
+   `[~/admb/]$ make debug`
+
+   To build shared library,
+
+   `[~/admb/]$ make shared`
+
+   Takes approximately 15-25 minutes to complete.
+
+   Use help to show available compiler targets.
+
+   `[~/admb/]$ make help`
+
+6. Build run the simple example.
+
+   `[~/admb/]$ cd examples/admb/simple`
+
+   `[~/admb/examples/admb/simple/]$ ~/admb/admb simple`
+
+   `[~/admb/examples/admb/simple/]$ ./simple`
+
+7. *[Optional]* Installation
+
+   Copy entire distribution.
+
+   `[~/admb/]$ sudo cp -Rvf ../admb /usr/local/admb`
+
+   Create symlink to main admb script.  Directory '/usr/local/bin/' should 
+   already exist.
+
+   `[~/admb/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb`
+
+   After copying, build and run the simple example.
+
+   `[~/admb/]$ cd examples/admb/simple`
+
+   `[~/admb/examples/admb/simple/]$ admb simple`
+
+   `[~/admb/examples/admb/simple/]$ ./simple`
+
+--------------------------------------------------------------------------------
+For help and support, email <users@admb-project.org>.
+
+$Id$

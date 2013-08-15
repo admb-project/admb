@@ -1,0 +1,98 @@
+#!/bin/bash
+shopt -s expand_aliases
+alias help='echo -e "Usage: adlink [-d] [-g] [-r] [-s] model\n
+Link AD Model Builder object code to executable.\n
+  -d     Create DLL
+  -g     Insert debugging symbols
+  -r     Create ADMB-RE
+  -s     Enforce safe bounds
+  model  Filename prefix, e.g. simple\n"'
+if [[ "$1" == "" ]]; then help; exit; fi
+if [[ "$1" == "-help" ]]; then help; exit; fi
+if [[ "$1" == "--help" ]]; then help; exit; fi
+
+if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
+  source "$ADMB_HOME/bin/admb-cfg.sh"
+  CXX=$ADMB_CFG_CXX
+  LDFLAGS="$LDFLAGS $ADMB_CFG_LDFLAGS"
+else
+  CXX=c++
+fi
+
+if [ "$CXX" == "openCC" ]; then
+  sym=-O2
+else
+  sym=-O3
+fi
+
+unset shared
+opt=
+while getopts "dgrso" A; do
+  case $A in
+    d) shared=-shared;;
+    g) sym=-g;;
+    r) ;;
+    s) ;;
+    o) opt=o;;
+  esac
+done
+shift $((OPTIND-1))
+
+#if [[ "`uname -s`" == "Darwin" ]]; then unset sym; fi
+
+model="${1%.*}"
+
+objects=
+for file in $*
+do
+  extension="${file#*.}"
+  if [ "$extension" = "$file" ]; then
+    objects="${file%.*}.o $objects"
+  elif [ "$extension" = "obj" -o "$extension" = "o" ]; then
+    objects="$objects $file"
+  fi 
+done
+
+LDFLAGS="$LDFLAGS"
+if [ ! -z "$sym" ]; then
+  LDFLAGS="$LDFLAGS $sym"
+fi
+if [ ! -z "$shared" ]; then
+  LDFLAGS="$LDFLAGS $shared -o $model.so"
+else
+  LDFLAGS="$LDFLAGS -o $model"
+fi
+
+if [ "$CXX" == "adcomp-x86_64-w64-mingw32" ]; then
+  LDFLAGS="--static $LDFLAGS"
+fi
+
+CMD="$CXX $LDFLAGS $objects \"$ADMB_HOME\"/contrib/lib/libcontrib$opt.a \"$ADMB_HOME\"/lib/libadmb$opt.a"
+echo $CMD
+eval $CMD
+
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
+exit 0
+
+### r259 [2012-02-29] arnima  logged revision history
+### r 42 [2011-06-22] arnima  improved handling of LDFLAGS
+### r 39 [2011-06-22] johnoel improved handling of LDFLAGS
+### r982 [2010-02-16] arnima  rewrite, updated OPTIND structure, removed -O3,
+###                           fixed spaces, simplified echo
+### r938 [2010-12-28] johnoel put LDFLAGS before other options
+### r901 [2010-12-22] johnoel moved to 'g++' dir
+### r860 [2010-11-18] johnoel added -O3
+### r662 [2010-06-17] johnoel added LDFLAGS and exit status, simplified echo
+### r632 [2010-05-21] johnoel diabled strip in Mac OS
+### r551 [2010-03-27] johnoel disabled -ldf1b2stub
+### r524 [2010-03-17] arnima  added support for filename extension like
+###                           simple.o, enabled strip
+###                   johnoel split -s option into separate -g and -s options
+### r511 [2010-02-18] johnoel went back to r446
+### r510 [2010-02-18] johnoel removed duplicate libraries
+### r446 [2009-10-23] johnoel fixed adlib bug
+### r419 [2009-05-29] johnoel disabled strip
+### r243 [2009-05-27] arnima  created

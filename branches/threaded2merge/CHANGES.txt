@@ -1,0 +1,115 @@
+ADMB Project  
+============
+*ADMB-11.1*  
+*Released May 10, 2013*  
+
+Describe release changes and features.
+
+---
+
+Release Notes
+-------------
+The goal for all releases was to improve algorithms, add new requested features,
+correct defects (bugs), and streamline installation and build process.
+
+ADMB-dev
+--------
+
+###Changes
+
+###New Supported Compilers
+* AMD C++ compiler - still porting...
+* GNU C++ 4.8 compiler
+
+###New Features
+
+* Add debug target to build files.
+
+  `$ make debug`
+
+* Add shared target to build files (Unix only).
+
+  `$ make shared`
+
+###To Do
+
+ADMB-11.1
+---------
+
+###Changes
+
+* Updated Visual Studio nmake build files.
+
+* Improved Unix build files. Only outdated files are rebuilt.
+  
+  Note: Building from source will create distribution folder in
+        build/dist instead of build/os-comiler-arch.
+
+* Combined mulitple libraries to a single library 'libadmb.a'. 
+
+* Reverted some algorithms to previous version-9 code.
+
+* The compilation scripts (adcomp, adlink, admb) compile in "safe" mode by 
+  default.
+
+  To build with optimized libraries use option 
+
+  `$ admb -O model.tpl`
+
+* added 's' option with the Ctrl^C
+
+* contributed libraries are built with the main libraries.
+ 
+* flex is not needed to build ADMB, but it is needed to develop the tpl2cpp.lex 
+  and tpl2rem.lex files.
+
+###New Features
+* admb script can now build tpl models without the need to set ADMB_HOME
+  or PATH. For example, 
+
+  `[~/admb-11.1/examples/admb/simple/]$ ~/admb-11.1/admb simple`
+
+* Functions from user-contributed packages can be loaded from
+  directory 'contrib'. Read 'contrib/README.txt'.
+
+* New class 'init_table' to read input data into a matrix.
+
+* New function sumsq() to calculate sum of squared values,
+  equivalent to norm2().
+
+* New constant PI for 3.141593... Makes models more portable
+  than using M_PI or other compiler-specific constants.
+
+* New shell command 'ad2csv' to write binary files to screen 
+  or to a file.
+
+* admb is now able to handle .obj, .cpp and .tpl files on
+  the commandline.
+
+  For example,
+
+  `$ admb model.tpl supportcode.cpp anotherfile.cpp`
+
+  Output is executable 'model'.
+
+###Bug Fixes
+
+* Catch exit errors for adlink and adcomp.
+
+* Watch out for spaces in admb scripts
+
+* Fix memory leaks.
+
+Changes 9.2 to 11.0
+-------------------
+* Fixed gammln functions
+* Fixed configure script
+* Fixed atan2 functions
+* Documentation changes
+* Script changes
+* Various bug fixes
+
+---
+For help and support, email <users@admb-project.org>.
+
+$Id$

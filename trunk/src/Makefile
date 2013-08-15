@@ -84,11 +84,7 @@ $(DESTDIR)\bin\tpl2rem.exe: $(LEXDESTDIR)\tpl2rem.c
 	$(CC) /nologo /TC /Fo$(LEXDESTDIR)\ /Fe$@ $(LEXDESTDIR)\tpl2rem.c
 
 $(LEXDESTDIR)\tpl2cpp.c: nh99\tpl2cpp.lex
-	!IF DEFINED(DEBUG)
-	  \utilities\flex -o$(LEXDESTDIR)\lex.yy.c nh99\tpl2cpp.lex
-	!ELSE
-	  \utilities\flex -d -o$(LEXDESTDIR)\lex.yy.c nh99\tpl2cpp.lex
-	!ENDIF
+	..\utilities\flex -o$(LEXDESTDIR)\lex.yy.c nh99\tpl2cpp.lex
 	\utilities\sed -f nh99\sedflex $(LEXDESTDIR)\lex.yy.c > $@
 
 includes:

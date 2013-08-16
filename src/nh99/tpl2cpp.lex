@@ -3604,7 +3604,7 @@ PROCEDURE_SECTION {
    /* fprintf(fdat,"%s","};\n");*/
     fprintf(fall,"%s","}\n\nvoid model_parameters::userfunction(void)\n{\n");
     fprintf(fall,"  %s%s",objective_function_name_string," =0.0;\n");
-    if(yy_flex_debug){
+    if(splus_debug_flag){
       fprintf(fall,"  pad();\n");
     }
 

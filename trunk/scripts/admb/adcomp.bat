@@ -22,7 +22,7 @@ goto STARTLOOP
 
 set model=%~n1
 
-call "%ADMB_HOME%"\bin\admb-cfg.bat
+if exist "%ADMB_HOME%"\bin\admb-cfg.bat call "%ADMB_HOME%"\bin\admb-cfg.bat
 if defined CXXFLAGS (
   set CXXFLAGS=%CXXFLAGS% %ADMB_CFG_CXXFLAGS%
 ) else (

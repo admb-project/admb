@@ -30,9 +30,9 @@ if %%a==-s (
 if not defined libs set libs="%ADMB_HOME%\contrib\lib\libcontribo.a" "%ADMB_HOME%\lib\libadmbo.a" 
 
 if %linker%==g++ (set out=-o %model%) else (set def=-def %model%.def^
- --driver-name g++ & set out=--output-lib lib%model%.a -o %model%.dll)
+ --driver-name g++ --output-lib %model%.dll & set out=--output-lib lib%model%.a -o %model%.dll)
 
-call "%ADMB_HOME%"\bin\admb-cfg.bat
+if exist "%ADMB_HOME%"\bin\admb-cfg.bat call "%ADMB_HOME%"\bin\admb-cfg.bat
 if defined LDFLAGS (
   set LDFLAGS=%LDFLAGS% %ADMB_CFG_LDFLAGS%
 ) else (

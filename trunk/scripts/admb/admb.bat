@@ -31,6 +31,7 @@ set tpls=
 set objs=
 set s=-s 
 set bounds=-bounds
+set debug=
 
 for %%a in (%*) do (
   set arg=%%a
@@ -41,6 +42,7 @@ for %%a in (%*) do (
     )
     if %%a==-g (
       set g=-g
+      set debug=-debug
     )
     if %%a==-r (
       set r=-r 
@@ -88,7 +90,7 @@ for %%a in (!tpls!) do (
   del xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp 2> NUL
   del tfile1 tfile2 tfile3 tfile4 tfile5 2> NUL
   del !model!.cpp !model!.htp !model!.obj !model!.exe 2> NUL
-  set CMD=!parser! !bounds! !dll! !model!
+  set CMD=!parser! !debug! !bounds! !dll! !model!
   echo.&echo *** !CMD!
   call !CMD!
   if not exist !model!.cpp goto ERROR

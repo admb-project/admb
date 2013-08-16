@@ -3821,6 +3821,10 @@ PROCEDURE_SECTION {
     fprintf(fall,"%s","void model_parameters::userfunction(void)"
       "\n{\n");
     fprintf(fall,"  %s%s",objective_function_name_string," =0.0;\n");
+    if(splus_debug_flag){
+      fprintf(fall,"  pad();\n");
+    }
+
     add_references_to_user_classes(fall);  
                   }
 

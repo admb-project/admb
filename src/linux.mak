@@ -51,12 +51,12 @@ dist:
 	mkdir -p ${LIBPATH}/df1b2-separable-slp
 	mkdir -p ${LIBPATH}/nh99-olp
 	mkdir -p ${LIBPATH}/tools99-olp
-	$(MAKE) -j  --directory=nh99 CC=$(CC) AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/nh99-olp ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) -j  --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) -j  --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -ggdb -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
-	$(MAKE) -j  --directory=df1b2-separable AR=$(AR) CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
-	$(MAKE) -j  --directory=df1b2-separable AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -ggdb -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
-	$(MAKE) -j  --directory=tools99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) --directory=nh99 CC=$(CC) AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/nh99-olp ADMB_CONFIGURE=${ADMB_CONFIGURE} DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) --directory=linad99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -ggdb -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/linad99-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
+	$(MAKE) --directory=df1b2-separable AR=$(AR) CC=$(CC) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
+	$(MAKE) --directory=df1b2-separable AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -ggdb -DSAFE_ALL $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/df1b2-separable-slp DISKDIR=../${DISK} -f safg32-rh8-laplace.mak disk
+	$(MAKE) --directory=tools99 AR=$(AR) CXX=$(CXX) CXXFLAGS="$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_INCLUDES)" LIBPATH=../${LIBPATH}/tools99-olp DISKDIR=../${DISK} -f optg32-rh8-laplace.mak disk
 	cp -vf ../LICENSE.txt ${DISK}
 	cp -vf ../README.txt ${DISK}
 	cp -vf ../NEWS.txt ${DISK}

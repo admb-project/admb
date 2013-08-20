@@ -2,6 +2,8 @@
 
 default: linux
 
+installer:
+
 mingw:
 	$(MAKE) --directory=src --file=mingw.mak
 

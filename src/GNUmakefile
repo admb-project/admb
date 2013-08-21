@@ -448,5 +448,5 @@ else
 	@rm -rf ../build
 	@$(MAKE) --directory=../contrib clean
 	@$(MAKE) --directory=../tests clean
-	@rm -f ../admb
+	@rm -rvf ../admb
 endif

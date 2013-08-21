@@ -2,7 +2,7 @@
 
 GTEST_DIR=googletest-read-only
 
-all: test-expm test-cov_re gtests
+all: test-expm test-cov_re gtests test-threads
 
 gtests: $(GTEST_DIR)/gtest-all.o
 	$(MAKE) --directory=gtests
@@ -15,6 +15,9 @@ $(GTEST_DIR)/gtest-all.o: googletest-read-only
 
 googletest-read-only:
 	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
+
+test-threads:
+	$(MAKE) --directory=threads
 
 svn: svn-geolocation
 
@@ -146,3 +149,5 @@ clean:
 	$(MAKE) --directory=beta_deviate clean
 	$(MAKE) --directory=SS3 clean
 	$(MAKE) --directory=cov_re clean
+	$(MAKE) --directory=threads clean
+	$(MAKE) --directory=gtests clean

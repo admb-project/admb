@@ -9,3 +9,7 @@ gtest-all: main.cpp test_adstring_strcase.cpp test_fmm_control.cpp test_atan2.cp
 
 clean:
 	@rm -vf gtest-all *.o
+	@rm -f variance
+	@rm -f eigv.rpt
+	@rm -f simple.log
+	@rm -f fmin.log

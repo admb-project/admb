@@ -9754,6 +9754,7 @@ class adtimer;
  * Description not yet available.
  * \param
  */
+class adpthread_manager;
 class ad_comm
 {
  protected:
@@ -9774,6 +9775,7 @@ class ad_comm
    virtual void get_slave_assignments(void);
 #endif
    static adpvm_manager *pvm_manager;
+   static adpthread_manager *pthread_manager;
    static adstring subdir;
    static streampos change_datafile_name(const adstring & s,
 					 const streampos & off = 0);

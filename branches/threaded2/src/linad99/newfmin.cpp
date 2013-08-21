@@ -196,6 +196,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
   tracing_message(traceflag,"A3");
   dvector& g=(dvector&) _g;
   double& f=(double&) _f;
+  //cerr << "f = " << setprecision(17) << f << ", g = " << g << endl;
   independent_variables& x= (independent_variables&) _x;
     #ifdef DIAG
       cout << "On entry to fmin: " << *this << endl;

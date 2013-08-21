@@ -1064,6 +1064,7 @@ double adpthread_manager::get_double_from_master(int sno)
   readbuffer(&x,sizeof(double),sno);
   return x;
 }
+
 double adpthread_manager::get_double(int sno)
 {
   verify_id_string_from_master("TY",sno);
@@ -1774,4 +1775,26 @@ void adpthread_manager::send_ivector(const ivector &x,int sno)
   writebuffer(&mmin,sizeof(int),sno);
   writebuffer(&mmax,sizeof(int),sno);
   writebuffer(&(x(mmin)),sz*sizeof(int),sno);
+}
+
+void adpthread_manager::send_adstring(const adstring & _x,int sno)
+{
+  ADUNCONST(adstring,x)
+  const int sz = x.size();
+  send_id_string_to_slave("ST",sno);
+  writebuffer(&sz,sizeof(int),sno);
+  writebuffer((char*)x,sz,sno);
+}
+
+adstring adpthread_manager::get_adstring(int sno)
+{
+  verify_id_string_from_master("ST",sno);
+  int sz;
+  readbuffer(&sz,sizeof(int),sno);
+  char * s = new char(sz); ;
+  readbuffer(s,sz,sno);
+  s[sz] = '\0';
+  adstring x(s);
+  delete [] s;  
+  return adstring(x);
 }

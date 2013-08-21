@@ -194,6 +194,10 @@
     double get_double(int sno);
     double get_double_from_master(int sno);
 
+
+    void send_adstring(const adstring &x,int sno);
+    adstring get_adstring(int sno);
+
     void adjoint_send_dvar3_array_to_slave(void);
     void send_dvar3_array_to_slave(const dvar3_array &x,int sno);
     void send_dvar3_array(const dvar3_array &x,int sno);

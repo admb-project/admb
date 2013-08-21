@@ -5,8 +5,8 @@
  * Copyright (c) 2009-2012 ADMB Foundation
  */
 /**
- * \file
- * Contains routines for numerical integration
+  \file dfqromb.cpp 
+  Contains routines for numerical integration
  */
 
 #include <admodel.h>

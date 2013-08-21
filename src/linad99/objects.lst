@@ -477,6 +477,16 @@ OBJ3=\
  eigenv.obj\
  dveigen.obj\
  dveigenv.obj\
+ thread_stuff.obj\
+ thread_stuff2.obj\
+ thread_stuff3.obj\
+ thread_stuff4.obj\
+ thread_stuff5.obj\
+ thread_stuff6.obj\
+ thread_stuff7.obj\
+ thread_stuff8.obj\
+ xthread_stuff.obj\
+ ythread_stuff.obj\
  f4arr.obj
 OBJ4=\
  mfexp.obj\

@@ -1,11 +1,11 @@
+.PHONY: gtests
+
 GTEST_DIR=googletest-read-only
 
-all: test-expm test-cov_re
+all: test-expm test-cov_re gtests
 
-run-gtests: $(GTEST_DIR)/gtest-all.o
+gtests: $(GTEST_DIR)/gtest-all.o
 	$(MAKE) --directory=gtests
-
-all2: test-expm test-cov_re
 
 gtest-colfill: googletest-read-only
 	$(MAKE) --directory=colfill

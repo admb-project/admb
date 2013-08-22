@@ -39,8 +39,8 @@ extern char otter_address4[];
 extern char otter_address5[];
 
 
-char* ddlist_space;
-char* ddlist_spacea;
+__thread char* ddlist_space;
+__thread char* ddlist_spacea;
 
 /**
  * Description not yet available.

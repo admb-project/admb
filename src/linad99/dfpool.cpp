@@ -21,14 +21,18 @@
 
   void my_do_nothing(void * t){}
 //ofstream xofs("allocation");
+__thread vector_shape_pool* vector_shape::xpool = 0;
+__thread vector_shape_pool* vector_shapex::xpool = 0;
+__thread vector_shape_pool* arr_link::xpool = 0;
+/*
 vector_shape_pool * vector_shape::xpool =
     new vector_shape_pool(sizeof(vector_shape));
 
 vector_shape_pool * vector_shapex::xpool =
     new vector_shape_pool(sizeof(vector_shapex));
 
-vector_shape_pool  * arr_link::xpool =
-    new vector_shape_pool (sizeof(arr_link));
+vector_shape_pool* arr_link::xpool = new vector_shape_pool(sizeof(arr_link));
+*/
 
 vector_shape_pool::vector_shape_pool(void) : dfpool(sizeof(vector_shape))
 { ;}
@@ -177,7 +181,7 @@ void dfpool::write_pointers(int mmin,int mmax)
 }
 #endif
 
-dfpool::link ** global_p=0;
+dfpool::link** global_p = 0;
 
 /**
  * Description not yet available.

@@ -75,7 +75,7 @@ void derch(const double& _f, const independent_variables & _x, const dvector& _g
         maxind=i;
       }  
     }
-    cout << "maxind = " << maxind << " maxg = " << maxg << endl;
+    //cout << "maxind = " << maxind << " maxg = " << maxg << endl;
     index=ivector(column(dtmp,1));
   }
   while (j > 0)

@@ -1791,10 +1791,10 @@ adstring adpthread_manager::get_adstring(int sno)
   verify_id_string_from_master("ST",sno);
   int sz;
   readbuffer(&sz,sizeof(int),sno);
-  char * s = new char(sz); ;
+  char * s = new char(sz+1); ;
   readbuffer(s,sz,sno);
   s[sz] = '\0';
   adstring x(s);
   delete [] s;  
-  return adstring(x);
+  return x;
 }

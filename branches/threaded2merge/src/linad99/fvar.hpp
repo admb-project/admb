@@ -627,7 +627,7 @@ class vector_shape
 {
  public:
 #if defined(USE_VECTOR_SHAPE_POOL)
-   static vector_shape_pool *xpool;
+   static __thread vector_shape_pool *xpool;
    void *operator  new(size_t);
    void operator  delete(void *ptr, size_t n)
    {
@@ -1071,53 +1071,53 @@ double_and_int *arr_new(unsigned int sz);
  */
 class gradient_structure
 {
-   static char cmpdif_file_name[61];
-   static DF_FILE *fp;
+   static __thread char cmpdif_file_name[61];
+   static __thread DF_FILE* fp;
  public:
 #if defined(NO_DERIVS)
    static int no_derivatives;
 #endif
  private:
    static long int USE_FOR_HESSIAN;
-   static long int NVAR;
+   static __thread long int NVAR;
    static int NUM_RETURN_ARRAYS;
-   static dvariable **RETURN_ARRAYS;
-   static int RETURN_ARRAYS_PTR;
-   static dvariable **RETURN_PTR_CONTAINER;
-   static long int TOTAL_BYTES;
-   static long int PREVIOUS_TOTAL_BYTES;
-   static unsigned long ARRAY_MEMBLOCK_SIZE;	//js
-   static humungous_pointer ARRAY_MEMBLOCK_BASE;
-   static humungous_pointer ARRAY_MEMBLOCK_BASEA;
-   static humungous_pointer ARRAY_MEMBLOCK_SAVE;
+   static __thread dvariable** RETURN_ARRAYS;
+   static __thread int RETURN_ARRAYS_PTR;
+   static __thread dvariable** RETURN_PTR_CONTAINER;
+   static __thread long int TOTAL_BYTES;
+   static __thread long int PREVIOUS_TOTAL_BYTES;
+   static __thread unsigned long ARRAY_MEMBLOCK_SIZE;	//js
+   static __thread char* ARRAY_MEMBLOCK_BASE;
+   static __thread char* ARRAY_MEMBLOCK_BASEA;
+   static __thread char* ARRAY_MEMBLOCK_SAVE;
  public:
    static double *get_ARRAY_MEMBLOCK_BASE()
    {
       return (double *) ARRAY_MEMBLOCK_BASE;
    }
  private:
-   static double *variables_save;
+   static __thread double* variables_save;
 #ifdef __BORLANDC__
-   static long int CMPDIF_BUFFER_SIZE;
-   static long int GRADSTACK_BUFFER_SIZE;
+   static __thread long int CMPDIF_BUFFER_SIZE;
+   static __thread long int GRADSTACK_BUFFER_SIZE;
 #else
-   static long long int CMPDIF_BUFFER_SIZE;
-   static long long int GRADSTACK_BUFFER_SIZE;
+   static __thread long long int CMPDIF_BUFFER_SIZE;
+   static __thread long long int GRADSTACK_BUFFER_SIZE;
 #endif
-   static unsigned int MAX_NVAR_OFFSET;
-   static int save_var_file_flag;
+   static __thread unsigned int MAX_NVAR_OFFSET;
+   static __thread int save_var_file_flag;
    static int save_var_flag;
 
    static int MAX_DLINKS;
-   static indvar_offset_list *INDVAR_LIST;
+   static __thread indvar_offset_list* INDVAR_LIST;
    static int NUM_DEPENDENT_VARIABLES;
-   static dependent_variables_information *DEPVARS_INFO;
+   static __thread dependent_variables_information* DEPVARS_INFO;
 
    // this needs to be a static member function so other static
    // member functions can call it
    static void check_set_error(const char *variable_name);
 
-   static int instances;
+   static __thread int instances;
    int x;
 
  public:
@@ -1125,8 +1125,8 @@ class gradient_structure
    {
    };				// exception class
 
-   static int Hybrid_bounded_flag;
-   static double *hessian_ptr;
+   static __thread int Hybrid_bounded_flag;
+   static __thread double* hessian_ptr;
    static int get_USE_FOR_HESSIAN(void)
    {
       return USE_FOR_HESSIAN;
@@ -1164,16 +1164,16 @@ class gradient_structure
    friend void allocate_dvariable_space(void);
    friend void wide_funnel_gradcalc(void);
    friend dvar_vector_position restore_dvar_vector_position(void);
-   static grad_stack *GRAD_STACK1;
+   static __thread grad_stack* GRAD_STACK1;
    friend double_and_int *gradnew();
-   static dlist *GRAD_LIST;
-   static int RETURN_ARRAYS_SIZE;
+   static __thread dlist* GRAD_LIST;
+   static __thread int RETURN_ARRAYS_SIZE;
    //static int RETURN_INDEX;
-   static dvariable *RETURN_PTR;
-   static dvariable *MIN_RETURN;
-   static dvariable *MAX_RETURN;
-   static arr_list *ARR_LIST1;
-   static arr_list *ARR_FREE_LIST1;
+   static __thread dvariable* RETURN_PTR;
+   static __thread dvariable* MIN_RETURN;
+   static __thread dvariable* MAX_RETURN;
+   static __thread arr_list* ARR_LIST1;
+   static __thread arr_list* ARR_FREE_LIST1;
    //static void funnel_jacobcalc(void);
    static void jacobcalc(int nvar, const dmatrix & jac);
    static void jacobcalc(int nvar, const ofstream & jac);
@@ -1216,7 +1216,7 @@ class gradient_structure
    friend class dlist;
    friend class grad_stack;
    static void save_dependent_variable_position(const prevariable & v1);
-   static long int max_last_offset;
+   static __thread long int max_last_offset;
    friend class function_minimizer;
    friend void funnel_derivatives(void);
 };
@@ -2198,8 +2198,8 @@ class ts_vector_shapex
 
 #  if defined(USE_VECTOR_SHAPE_POOL)
    static ts_vector_shape_pool **xpool;
-   void *operator  new(size_t);
-   void operator  delete(void *ptr, size_t n);
+   void *operator new(size_t);
+   void operator delete(void *ptr, size_t n);
 #  endif
 
    unsigned int ncopies;
@@ -2253,7 +2253,7 @@ class vector_shapex
    friend class ivector;
    friend class dvar_vector;
 #if defined(USE_VECTOR_SHAPE_POOL)
-   static vector_shape_pool *xpool;
+   static __thread vector_shape_pool *xpool;
    void *operator  new(size_t);
    void operator  delete(void *ptr, size_t n)
    {
@@ -2832,9 +2832,9 @@ class arr_list
 class arr_link
 {
 #if defined(USE_VECTOR_SHAPE_POOL)
-   static vector_shape_pool *xpool;
-   void *operator  new(size_t);
-   void operator  delete(void *ptr, size_t n)
+   static __thread vector_shape_pool *xpool;
+   void *operator new(size_t);
+   void operator delete(void *ptr, size_t n)
    {
       xpool->free(ptr);
    }

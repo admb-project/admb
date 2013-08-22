@@ -273,7 +273,7 @@ void gradient_structure::save_arrays()
    }
    if (gradient_structure::save_var_file_flag==0)
    {
-     ARRAY_MEMBLOCK_SAVE = temp_ptr;
+     ARRAY_MEMBLOCK_SAVE = (char*)temp_ptr;
      #if defined(DOS386)
      //#if DOS386==1
        #ifndef USE_ASSEMBLER
@@ -300,7 +300,7 @@ void gradient_structure::save_arrays()
   }
   else
   {
-     humungous_pointer src = ARRAY_MEMBLOCK_BASE;
+     char* src = ARRAY_MEMBLOCK_BASE;
      lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
      #if defined(DOS386)
      //#if DOS386==1
@@ -353,11 +353,13 @@ void gradient_structure::restore_arrays()
      }
      memcpy((char*)dest,(char*)src,left_to_move);
     #endif
-    ARRAY_MEMBLOCK_SAVE.free();
+    //ARRAY_MEMBLOCK_SAVE.free();
+    free(ARRAY_MEMBLOCK_SAVE);
+    ARRAY_MEMBLOCK_SAVE = 0;
   }
   else
   {
-    humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
+    char* dest = ARRAY_MEMBLOCK_BASE;
     lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
     #if defined(DOS386)
     // #if DOS386==1
@@ -429,7 +431,7 @@ void reset_gradient_stack(void)
   lseek(_GRADFILE_PTR,0L,SEEK_SET);
 }
 
-static int inner_count=0;
+static __thread int inner_count = 0;
 //static grad_stack_entry * pgse = (grad_stack_entry*) (0x1498fffc);
 
 /**

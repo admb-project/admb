@@ -14,10 +14,10 @@ pthread_mutex_t mutex_print;
 
 //const int NSLAVES=1;
 
-typedef char * pchar;
-typedef pchar *  ppchar;
-typedef ofstream * pofstream;
-__ADMBTHREAD__ int adpthread_manager::slave_number;
+typedef char* pchar;
+typedef pchar*  ppchar;
+typedef ofstream* pofstream;
+__thread int adpthread_manager::slave_number;
 
 int adpthread_manager::old_buffer_flag=0;
 

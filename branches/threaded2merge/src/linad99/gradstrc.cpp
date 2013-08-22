@@ -68,55 +68,54 @@ extern "C"{
 // *************************************************************
 // *************************************************************
 int ctlc_flag = 0;
-int gradient_structure::Hybrid_bounded_flag=0;
-DF_FILE * gradient_structure::fp=NULL;
-char gradient_structure::cmpdif_file_name[61];
+__thread int gradient_structure::Hybrid_bounded_flag = 0;
+__thread DF_FILE* gradient_structure::fp = NULL;
+__thread char gradient_structure::cmpdif_file_name[61];
 //char gradient_structure::var_store_file_name[61];
 int gradient_structure::NUM_RETURN_ARRAYS = 25;
-double * gradient_structure::hessian_ptr=NULL;
+__thread double* gradient_structure::hessian_ptr = NULL;
 int gradient_structure::NUM_DEPENDENT_VARIABLES = 2000;
 #if (defined(NO_DERIVS))
   int gradient_structure::no_derivatives = 0;
 #endif
-long int gradient_structure::max_last_offset = 0;
-long int gradient_structure::NVAR = 0;
-long int gradient_structure::TOTAL_BYTES = 0;
-long int gradient_structure::PREVIOUS_TOTAL_BYTES = 0;
+__thread long int gradient_structure::max_last_offset = 0;
+__thread long int gradient_structure::NVAR = 0;
+__thread long int gradient_structure::TOTAL_BYTES = 0;
+__thread long int gradient_structure::PREVIOUS_TOTAL_BYTES = 0;
 long int gradient_structure::USE_FOR_HESSIAN = 0;
-dvariable** gradient_structure::RETURN_ARRAYS = NULL;
-int gradient_structure::RETURN_ARRAYS_PTR;
-dvariable ** gradient_structure::RETURN_PTR_CONTAINER = NULL;
-int gradient_structure::RETURN_ARRAYS_SIZE = 70;
-int gradient_structure::instances = 0;
+__thread dvariable** gradient_structure::RETURN_ARRAYS = NULL;
+__thread int gradient_structure::RETURN_ARRAYS_PTR = 0;
+__thread dvariable** gradient_structure::RETURN_PTR_CONTAINER = NULL;
+__thread int gradient_structure::RETURN_ARRAYS_SIZE = 70;
+__thread int gradient_structure::instances = 0;
 //int gradient_structure::RETURN_INDEX = 0;
 //dvariable * gradient_structure::FRETURN = NULL;
-dvariable * gradient_structure::MAX_RETURN = NULL;
-dvariable * gradient_structure::MIN_RETURN = NULL;
-dvariable * gradient_structure::RETURN_PTR = NULL;
+__thread dvariable* gradient_structure::MAX_RETURN = NULL;
+__thread dvariable* gradient_structure::MIN_RETURN = NULL;
+__thread dvariable* gradient_structure::RETURN_PTR = NULL;
 #ifdef __BORLANDC__
-long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
-long int gradient_structure::CMPDIF_BUFFER_SIZE=140000000L;
+__thread long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
+__thread long int gradient_structure::CMPDIF_BUFFER_SIZE = 140000000L;
 #else
-long long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
-long long int gradient_structure::CMPDIF_BUFFER_SIZE=140000000L;
+__thread long long int gradient_structure::GRADSTACK_BUFFER_SIZE = 4000000L;
+__thread long long int gradient_structure::CMPDIF_BUFFER_SIZE = 140000000L;
 #endif
+__thread dependent_variables_information * gradient_structure::DEPVARS_INFO = NULL;
 
-dependent_variables_information * gradient_structure::DEPVARS_INFO=NULL;
-
-int gradient_structure::save_var_flag=0;
-int gradient_structure::save_var_file_flag=0;
+int gradient_structure::save_var_flag = 0;
+__thread int gradient_structure::save_var_file_flag = 0;
 //int gradient_structure::_GRADFILE_PTR = NULL; // should be int gradfile_handle;
 //int gradient_structure::_GRADFILE_PTR1 = NULL; // should be int gradfile_handle;
 //int gradient_structure::_GRADFILE_PTR2 = NULL; // should be int gradfile_handle;
 //int gradient_structure::_VARSSAV_PTR = 0; // should be int gradfile_handle;
 
-unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
-unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
-dlist * gradient_structure::GRAD_LIST;
-grad_stack * gradient_structure::GRAD_STACK1;
-indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
-arr_list * gradient_structure::ARR_LIST1 = NULL;
-arr_list * gradient_structure::ARR_FREE_LIST1 = NULL;
+__thread unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
+__thread unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
+__thread dlist* gradient_structure::GRAD_LIST;
+__thread grad_stack* gradient_structure::GRAD_STACK1;
+__thread indvar_offset_list* gradient_structure::INDVAR_LIST = NULL;
+__thread arr_list* gradient_structure::ARR_LIST1 = NULL;
+__thread arr_list* gradient_structure::ARR_FREE_LIST1 = NULL;
 int gradient_structure::MAX_DLINKS = 5000;
 
 // note: ARRAY_MEMBLOCK stuff is set by tpl2cpp for historical reasons
@@ -124,13 +123,18 @@ int gradient_structure::MAX_DLINKS = 5000;
 //       - Ian Taylor 5/3/2012
 
 //unsigned long int gradient_structure::ARRAY_MEMBLOCK_BASE = 0L;
+/*
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASE;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_BASEA;
 humungous_pointer gradient_structure::ARRAY_MEMBLOCK_SAVE;
-double * gradient_structure::variables_save=NULL;
-void * farptr_norm(void *);
-long int farptr_tolong(void *) ;
-void memory_allocate_error(const char * s, void * ptr);
+*/
+__thread char* gradient_structure::ARRAY_MEMBLOCK_BASE;
+__thread char* gradient_structure::ARRAY_MEMBLOCK_BASEA;
+__thread char* gradient_structure::ARRAY_MEMBLOCK_SAVE;
+__thread double* gradient_structure::variables_save = NULL;
+void* farptr_norm(void*);
+long int farptr_tolong(void*) ;
+void memory_allocate_error(const char* s, void* ptr);
 
 /**
  * Description not yet available.
@@ -412,17 +416,19 @@ void allocate_dvariable_space(void)
    }
  */
 
-   ARRAY_MEMBLOCK_BASE = temp_ptr;
+   ARRAY_MEMBLOCK_BASE = (char*)temp_ptr;
 
    //cout << (void*) ARRAY_MEMBLOCK_BASE.ptr  << "   ";
    //cout << (int) ARRAY_MEMBLOCK_BASE.ptr  << endl;
+/*
 #if defined(__x86_64)
    intptr_t adjustment=(8-((intptr_t)ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
 #else
    int adjustment=(8-((int) ARRAY_MEMBLOCK_BASE.ptr)%8)%8;
 #endif
+*/
    //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
-   ARRAY_MEMBLOCK_BASE.adjust(adjustment);
+   //ARRAY_MEMBLOCK_BASE.adjust(adjustment);
    //cout << ((int) ARRAY_MEMBLOCK_BASE.ptr)%8  << endl;
 
    if (GRAD_STACK1 != NULL)
@@ -622,7 +628,9 @@ gradient_structure::~gradient_structure()
    }
    else
    {
-     ARRAY_MEMBLOCK_BASE.free();
+     //ARRAY_MEMBLOCK_BASE.free();
+     free(ARRAY_MEMBLOCK_BASE);
+     ARRAY_MEMBLOCK_BASE = 0;
    }
 
 

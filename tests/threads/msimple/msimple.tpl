@@ -5,7 +5,6 @@ GLOBALS_SECTION
   #include <fvar.hpp>
   #include <adthread.h>
 
- 
   // write the function to run on the threads
   void* simple_thread(void* ptr)
   {
@@ -21,7 +20,6 @@ GLOBALS_SECTION
       // get the thread number
       ad_comm::pthread_manager->set_slave_number(tptr->thread_no);
 
-    
       // take control of the constant buffer for reading
       ad_comm::pthread_manager->cread_lock_buffer(0);
       // read the independent variables IN THE SAME ORDER AS THEY ARE SENT
@@ -29,13 +27,14 @@ GLOBALS_SECTION
       cerr << " * * *  got x chunk " << tptr->thread_no << " from " << x.indexmin() << " to " << x.indexmax() << endl;
       dvector Y = ad_comm::pthread_manager->get_dvector(0);
       cerr << " * * *  got Y chunk " << tptr->thread_no << " from " << Y.indexmin() << " to " << Y.indexmax() << endl;
-     // release the constant buffer
+      // release the constant buffer
       ad_comm::pthread_manager->cread_unlock_buffer(0);
 
       do
       {
          // take control of the variable buffer for reading
          ad_comm::pthread_manager->read_lock_buffer(0);
+
          // read the finished signal
          int lflag=ad_comm::pthread_manager->get_int(0);
          if (lflag == 0) break;
@@ -63,12 +62,11 @@ GLOBALS_SECTION
    
          // compute derivative contribution for this thread 
          slave_gradcalc();
-      }
-      while (1);
+      } while (1);
+
       // close thread
       pthread_exit(ptr);
    }
-
 
 DATA_SECTION
   init_int nobs
@@ -92,7 +90,6 @@ DATA_SECTION
     x *= 100.0;
     Y = A*x + B;
 
-
     err.fill_randn(rng);
     Y += S*err;
     chunk_size = nobs/nthread;
@@ -114,7 +111,6 @@ DATA_SECTION
     } 
     if (1) exit(1);
     */
-
 
 PARAMETER_SECTION
   init_number a   
@@ -152,7 +148,6 @@ PRELIMINARY_CALCS_SECTION
   // create the threads
   ad_comm::pthread_manager->create_all(data1);
 
-  
   // send constant data to the threads;
   // in this case rows of the independent variables
   int end_pos = 0;
@@ -160,8 +155,7 @@ PRELIMINARY_CALCS_SECTION
   {
      int start_pos = end_pos + 1;
      end_pos = start_pos+chunk_size-1;
-     if (kk == nthread)
-         end_pos = nobs;
+     if (kk == nthread) end_pos = nobs;
 
      // take control of the constant buffer for sending
      ad_comm::pthread_manager->cwrite_lock_buffer(kk);
@@ -187,7 +181,6 @@ PROCEDURE_SECTION
      ad_comm::pthread_manager->send_dvariable(b,kk); 
      // release the variable buffer
      ad_comm::pthread_manager->write_unlock_buffer(kk);
-  
   }
 
   // get results of thread computations
@@ -196,14 +189,15 @@ PROCEDURE_SECTION
       // take control of the variable buffer for reading
       ad_comm::pthread_manager->read_lock_buffer(kk);
       ff(kk) = ad_comm::pthread_manager->get_dvariable(kk);
-     // release the variable buffer
+      // release the variable buffer
       ad_comm::pthread_manager->read_unlock_buffer(kk);
   }
+
   // sum the results to compute the objective function
   s = sum(ff);
-  f = nobs/2.*log(s);    // make it a likelihood function so that
-                         // covariance matrix is correct
 
+  // make it a likelihood function so that covariance matrix is correct
+  f = nobs/2.*log(s);
 
 REPORT_SECTION
   s = sqrt(s/nobs);

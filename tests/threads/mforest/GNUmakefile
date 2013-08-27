@@ -1,4 +1,5 @@
 mforest: mforest.tpl
+	ls -al ../../../admb
 	CXXFLAGS=-pthread LDFLAGS=-pthread ../../../admb -g mforest
 	-./mforest
 

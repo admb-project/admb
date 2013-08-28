@@ -16,10 +16,19 @@ clean:
 	@rm -vf msimple.log
 	@rm -vf msimple.cpp
 	@rm -vf variance
-	@rm -vf log_slave_1
+	@rm -vf log_slave_*
 	@rm -vf log_master
 	@rm -vf eigv.rpt
 	@rm -vf msimple.htp
 	@rm -vf msimple
 	@rm -vf fmin.log
 	@rm -vf tests_msimple
+	@rm -vf msimple.eva
+	@rm -vf admodel.hes
+	@rm -vf msimple.par
+	@rm -vf msimple.cor
+	@rm -vf admodel.cov
+	@rm -vf msimple.rep
+	@rm -vf msimple.std
+	@rm -vf msimple.bar
+	@rm -vf *.o

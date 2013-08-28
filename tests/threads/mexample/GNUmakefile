@@ -1,5 +1,7 @@
 mexample: mexample.tpl
-	CXXFLAGS=-pthread LDFLAGS=-pthread ../../../admb -g mexample
+	PATH=../../../build/dist/bin:$PATH CXXFLAGS=-pthread LDFLAGS=-pthread admb -g mexample
+
+run:
 	-./mexample
 
 clean:

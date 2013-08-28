@@ -217,42 +217,44 @@
 
 
 /**
- * Description not yet available.
- * \param
- */
-  DF_FILE::~DF_FILE()
+Destructor
+*/
+DF_FILE::~DF_FILE()
+{
+  if (buff)
   {
     delete [] buff;
-    buff=0;
-    buff_end=0;
-
-    int repfs=option_match(ad_comm::argc,ad_comm::argv,"-fsize");
-
-    if (ad_comm::global_logfile && repfs)
-    {
-      my_off_t pos;
-      pos=lseek(file_ptr,0,SEEK_END);
-      *ad_comm::global_logfile << "size of file " << cmpdif_file_name
-        << " = " << pos << endl;
-    }
-
-    if (close(file_ptr))
-    {
-      cerr << "Error closing file " << cmpdif_file_name << "\n";
-    }
-#   if defined ( __SUN__) ||  defined ( __GNU__)
-      unlink(cmpdif_file_name);
-#else
-      adstring currentdir;
-      ad_getcd(currentdir);
-      int xxx=remove(cmpdif_file_name);
-      if (xxx) {
-        cerr << "Error trying to delete file " << cmpdif_file_name << endl;
-        xxx=unlink(cmpdif_file_name);
-        cout << xxx << endl;
-      }
-#endif
+    buff = 0;
   }
+  buff_end = 0;
+
+  int repfs = option_match(ad_comm::argc, ad_comm::argv, "-fsize");
+  if (ad_comm::global_logfile && repfs)
+  {
+    my_off_t pos;
+    pos=lseek(file_ptr,0,SEEK_END);
+    *ad_comm::global_logfile << "size of file " << cmpdif_file_name
+      << " = " << pos << endl;
+  }
+
+  if (close(file_ptr))
+  {
+    cerr << "Error closing file " << cmpdif_file_name << "\n";
+  }
+#if defined ( __SUN__) ||  defined ( __GNU__)
+  unlink(cmpdif_file_name);
+#else
+  adstring currentdir;
+  ad_getcd(currentdir);
+  int xxx=remove(cmpdif_file_name);
+  if (xxx) 
+  {
+    cerr << "Error trying to delete file " << cmpdif_file_name << endl;
+    xxx=unlink(cmpdif_file_name);
+    cout << xxx << endl;
+  }
+#endif
+}
 
 
 /**

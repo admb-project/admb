@@ -2,7 +2,7 @@
 
 GTEST_DIR=googletest-read-only
 
-all: test-threads
+all: test-threads gtests
 
 gtests: $(GTEST_DIR)/gtest-all.o
 	$(MAKE) --directory=gtests

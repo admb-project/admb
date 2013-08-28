@@ -1,14 +1,15 @@
 GTEST_DIR=../../googletest-read-only
 
-all: clean tests_msimple
+all: tests_msimple
 
-msimple: msimple.tpl
+msimple.cpp: msimple.tpl
 	CXXFLAGS=-pthread LDFLAGS=-pthread ../../../admb -g msimple
-	-./msimple
 
-tests_msimple: msimple tests_msimple.cpp
+tests_msimple: msimple.cpp tests_msimple.cpp
 	cp $(GTEST_DIR)/gtest-all.o .
 	CXXFLAGS="-pthread -I$(GTEST_DIR)/include" LDFLAGS=-pthread ../../../admb -g tests_msimple.cpp main.cpp gtest-all.o
+
+run:
 	-./tests_msimple
 
 clean:

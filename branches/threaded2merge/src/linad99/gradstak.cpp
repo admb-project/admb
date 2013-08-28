@@ -248,56 +248,50 @@
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 grad_stack::~grad_stack()
 {
-   // this->print();
-
-   int repfs=option_match(ad_comm::argc,ad_comm::argv,"-fsize");
-
-   if (ad_comm::global_logfile && repfs)
-   {
-     int pos;
-     pos=lseek(_GRADFILE_PTR1,0,SEEK_END);
-     *ad_comm::global_logfile << "size of file " << gradfile_name1
+  int repfs=option_match(ad_comm::argc, ad_comm::argv, "-fsize");
+  if (ad_comm::global_logfile && repfs)
+  {
+    int pos = lseek(_GRADFILE_PTR1,0,SEEK_END);
+    *ad_comm::global_logfile << "size of file " << gradfile_name1
       << " = " << pos << endl;
 
-     pos=lseek(_GRADFILE_PTR2,0,SEEK_END);
-     *ad_comm::global_logfile << "size of file " << gradfile_name2
+    pos=lseek(_GRADFILE_PTR2,0,SEEK_END);
+    *ad_comm::global_logfile << "size of file " << gradfile_name2
       << " = " << pos << endl;
 
-     pos=lseek(_VARSSAV_PTR,0,SEEK_END);
-     *ad_comm::global_logfile << "size of file " << var_store_file_name
+    pos=lseek(_VARSSAV_PTR,0,SEEK_END);
+    *ad_comm::global_logfile << "size of file " << var_store_file_name
       << " = " << pos << endl;
-   }
+  }
 
-   if (close(_GRADFILE_PTR1))
-   {
-     cerr << "Error closing file " << gradfile_name1 << "\n";
-   }
-   if (close(_GRADFILE_PTR2))
-   {
-     cerr << "Error closing file " << gradfile_name2 << "\n";
-   }
-   if (close(_VARSSAV_PTR))
-   {
-     cerr << "Error closing file " << var_store_file_name << "\n";
-   }
+  if (close(_GRADFILE_PTR1))
+  {
+    cerr << "Error closing file " << gradfile_name1 << "\n";
+  }
+  if (close(_GRADFILE_PTR2))
+  {
+    cerr << "Error closing file " << gradfile_name2 << "\n";
+  }
+  if (close(_VARSSAV_PTR))
+  {
+    cerr << "Error closing file " << var_store_file_name << "\n";
+  }
+#if defined(__SUN__) || defined( __GNU__)
+  unlink(gradfile_name1);
+  unlink(gradfile_name2);
+  unlink(var_store_file_name);
+#else
+  remove(gradfile_name1);
+  remove(gradfile_name2);
+  remove(var_store_file_name);
+#endif
 
-  #if defined ( __SUN__) ||  defined ( __GNU__)
-   unlink(gradfile_name1);
-   unlink(gradfile_name2);
-   unlink(var_store_file_name);
-  #else
-   remove(gradfile_name1);
-   remove(gradfile_name2);
-   remove(var_store_file_name);
-  #endif
-
-   delete[] true_ptr_first;
-   true_ptr_first = 0;
+  delete [] true_ptr_first;
+  true_ptr_first = 0;
 }
 
 /**

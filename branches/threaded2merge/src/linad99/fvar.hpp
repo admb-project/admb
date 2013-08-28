@@ -602,9 +602,9 @@ class humungous_pointer
  */
 class vector_shape_pool:public dfpool
 {
- public:
-   vector_shape_pool(void);
-   vector_shape_pool(int);
+public:
+  vector_shape_pool(void);
+  vector_shape_pool(int);
 };
 
 /**
@@ -625,20 +625,20 @@ class ts_vector_shape_pool:public tsdfpool
  */
 class vector_shape
 {
- public:
+public:
 #if defined(USE_VECTOR_SHAPE_POOL)
-   static __thread vector_shape_pool *xpool;
-   void *operator  new(size_t);
-   void operator  delete(void *ptr, size_t n)
-   {
-      xpool->free(ptr);
-   }
+  static __thread vector_shape_pool *xpool;
+  void* operator new(size_t);
+  void operator delete(void *ptr, size_t n)
+  {
+    xpool->free(ptr);
+  }
 #endif
    unsigned int ncopies;
    void shift(int min);
    int index_min;
    int index_max;
- private:
+private:
    friend class dvector;
    //friend class tdvector;
    friend class subdvector;
@@ -646,33 +646,33 @@ class vector_shape
    friend class ivector;
    friend class lvector;
    friend class ptr_vector;
- public:
-   int decr_ncopies(void)
-   {
-      return --ncopies;
-   }
-   int get_ncopies(void)
-   {
-      return ncopies;
-   }
-   int incr_ncopies(void)
-   {
-      return ++ncopies;
-   }
-   vector_shape(int lb, int lu)
-   {
-      index_min = lb;
-      index_max = lu;
-      ncopies = 0;
-   }
-   int indexmin() const
-   {
-      return index_min;
-   }
-   int indexmax() const
-   {
-      return index_max;
-   }
+public:
+  int decr_ncopies(void)
+  {
+    return --ncopies;
+  }
+  int get_ncopies(void)
+  {
+    return ncopies;
+  }
+  int incr_ncopies(void)
+  {
+    return ++ncopies;
+  }
+  vector_shape(int lb, int lu)
+  {
+    index_min = lb;
+    index_max = lu;
+    ncopies = 0;
+  }
+  int indexmin() const
+  {
+    return index_min;
+  }
+  int indexmax() const
+  {
+    return index_max;
+  }
 };
 
 

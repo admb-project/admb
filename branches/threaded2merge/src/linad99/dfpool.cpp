@@ -19,8 +19,6 @@
   pthread_mutex_t mutex_dfpool = PTHREAD_MUTEX_INITIALIZER;
 #endif
 
-  void my_do_nothing(void * t){}
-//ofstream xofs("allocation");
 __thread vector_shape_pool* vector_shape::xpool = 0;
 __thread vector_shape_pool* vector_shapex::xpool = 0;
 __thread vector_shape_pool* arr_link::xpool = 0;
@@ -49,7 +47,7 @@ vector_shape_pool::vector_shape_pool(int n) : dfpool(n)
  * Description not yet available.
  * \param
  */
-void * vector_shape::operator new(size_t n)
+void* vector_shape::operator new(size_t n)
 {
   if (xpool==0)
   {
@@ -58,6 +56,7 @@ void * vector_shape::operator new(size_t n)
 # if defined(SAFE_ALL)
   if (n != xpool->size)
   {
+    cerr << __FILE__ << ':' << __LINE__ << endl;
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
   }
@@ -69,16 +68,18 @@ void * vector_shape::operator new(size_t n)
  * Description not yet available.
  * \param
  */
-void * arr_link::operator new(size_t n)
+void* arr_link::operator new(size_t n)
 {
-  if (xpool==0)
+  if (xpool == 0)
   {
-    xpool=new vector_shape_pool(sizeof(vector_shape));
+    xpool=new vector_shape_pool(sizeof(arr_link));
   }
 # if defined(SAFE_ALL)
   if (n != xpool->size)
   {
-    cerr << "incorrect size requested in dfpool" << endl;
+    cerr << __FILE__ << ':' << __LINE__ << endl;
+    cerr << xpool->size << endl;
+    cerr << "incorrect size \"" << n << "\" requested in dfpool" << endl;
     ad_exit(1);
   }
 # endif
@@ -89,7 +90,7 @@ void * arr_link::operator new(size_t n)
  * Description not yet available.
  * \param
  */
-void * vector_shapex::operator new(size_t n)
+void* vector_shapex::operator new(size_t n)
 {
   if (xpool==0)
   {
@@ -98,6 +99,7 @@ void * vector_shapex::operator new(size_t n)
 # if defined(SAFE_ALL)
   if (n != xpool->size)
   {
+    cerr << __FILE__ << ':' << __LINE__ << endl;
     cerr << "incorrect size requested in dfpool" << endl;
     ad_exit(1);
   }
@@ -357,7 +359,7 @@ void dfpool::free(void * b)
  * Description not yet available.
  * \param
  */
-void tsdfpool::free(void * b)
+void tsdfpool::free(void* b)
 {
 #if defined(SAFE_ALL)
 #endif
@@ -386,19 +388,18 @@ void tsdfpool::free(void * b)
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 dfpool::~dfpool(void)
 {
   deallocate();
 }
 
 /**
- * Description not yet available.
- * \param
+Constructor
+\param unsigned sz
  */
-dfpool::dfpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
+dfpool::dfpool(unsigned sz): size(sz < sizeof(link*) ? sizeof(link*) : sz)
 {
   dfpool_vector_flag=0;
   if (!sz) size=0;
@@ -414,10 +415,9 @@ dfpool::dfpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
 }
 
 /**
- * Description not yet available.
- * \param
- */
-dfpool::dfpool(void)
+Constructor
+*/
+dfpool::dfpool()
 {
   dfpool_vector_flag=0;
   size=0;
@@ -448,9 +448,8 @@ void dfpool::set_size(unsigned int sz)
 //void xxiieeuu(void * tmp0){;}
 
 /**
- * Description not yet available.
- * \param
- */
+Deallocate memory.
+*/
 void dfpool::deallocate(void)
 {
 #if defined(__CHECK_MEMORY__)
@@ -483,7 +482,7 @@ void dfpool::deallocate(void)
 }
 */
 
- const int pvalues_size=500000;
+const int pvalues_size=500000;
 
 /**
  * Description not yet available.
@@ -572,5 +571,4 @@ void dfpool::clean(void)
     ptr++;
   }
 }
-
 #endif  // #if defined(USE_VECTOR_SHAPE_POOL)

@@ -59,40 +59,41 @@ class dfpool
 public:
   int nvar;
   int& on_dfpool_vector(void) {return dfpool_vector_flag;}
-  char * last_chunk;
+  char* last_chunk;
   struct link { link * next; };
   int num_allocated;
   int num_chunks;
   int nelem;
   unsigned size;
-  link * head;
-  double * first;
+  link* head;
+  double* first;
   dfpool(dfpool&);  // copy protection
-  void operator = (dfpool&); // copy protection
+  void operator=(dfpool&); // copy protection
   void grow(void);
 #if defined(__CHECK_MEMORY__)
   int maxchunks;
-  char * minaddress[100];
-  char * maxaddress[100];
-  int * pvalues;
+  char* minaddress[100];
+  char* maxaddress[100];
+  int* pvalues;
   int nalloc;
 #endif
 public:
+  dfpool();
+  ~dfpool();
+
   void clean(void);
   dfpool(unsigned);
   void set_size(unsigned);
-  dfpool(void);
- ~dfpool();
-  void * alloc(void);
+  void* alloc(void);
   void free(void * b);
   void deallocate(void);
 #if defined(__CHECK_MEMORY__)
-  int bad(link * p);
-  int badaddress(link * p);
+  int bad(link* p);
+  int badaddress(link* p);
   void sanity_check(void);
-  void sanity_check(void *);
+  void sanity_check(void*);
   void sanity_check2(void);
-  void write_pointers(int m,int max);
+  void write_pointers(int m, int max);
 #endif
 };
 

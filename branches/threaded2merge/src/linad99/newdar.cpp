@@ -78,7 +78,7 @@ void arr_free_add(arr_link * tmp)
  * Description not yet available.
  * \param
  */
-double_and_int * arr_new(unsigned int sz)
+double_and_int* arr_new(unsigned int sz)
 {
   if (!gradient_structure::instances)
   {
@@ -88,20 +88,23 @@ double_and_int * arr_new(unsigned int sz)
     ad_exit(1);
   }
 
-  char * temp_ptr;
+  char* temp_ptr = 0;
 
   // this routine allocated a block of memory of sizeof(double)*sz bytes
   // for the gradients of an array or matrix of prevariables
 
-  arr_link * tmp = gradient_structure::ARR_LIST1->free_last;
+  arr_link* tmp = gradient_structure::ARR_LIST1->free_last;
 
   unsigned int bytes_needed=sizeof(double_and_int)*sz;
+
+/*
   int ss=0;
   if (ss)
   {
     double_and_int * tt=0;
     return tt;
   }
+*/
 
   while (tmp)
   {
@@ -109,30 +112,28 @@ double_and_int * arr_new(unsigned int sz)
     {
       // if the free block within 20 bytes of the size you want
       // simply mark it occupied and return it
-
       if (tmp->size <= bytes_needed + 50)
       {
         tmp->status = 1;
+
         // remove tmp from the free list
         arr_free_remove(tmp);
 
 	temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp->offset;
 
-	(* (arr_link **) (temp_ptr)) = tmp; //put the address
-					  //tmp into the location pointed to
-					  //by temp_ptr
-	return  (double_and_int *) (temp_ptr);
+        //put the address tmp into the location pointed to by temp_ptr
+	(*(arr_link**)(temp_ptr)) = tmp;
+
+	return (double_and_int*)temp_ptr;
       }
       else
       {
 	// otherwise split up this memory block and return
 	// the part you need
-
-	arr_link * tmp1 = new arr_link;
+	arr_link* tmp1 = new arr_link();
         gradient_structure::ARR_LIST1->number_arr_links += 1;
 
         // put the new link tmp1-> into the list BEFORE tmp->
-
         tmp1->prev=tmp->prev;
 
         if(tmp1->prev)
@@ -144,7 +145,6 @@ double_and_int * arr_new(unsigned int sz)
         tmp->prev=tmp1;
 
         // get the size of the new link and mark it free
-
         tmp1->size=bytes_needed;
 	tmp1->status=1;
         tmp1->offset=tmp->offset;
@@ -154,20 +154,18 @@ double_and_int * arr_new(unsigned int sz)
 
 	temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp1->offset;
 
-	(* (arr_link **) (temp_ptr )) = tmp1; //put the address
-					 //pointed to by
-					 // tmp1 into the location pointed to
-					 //by temp_ptr
+        //put the address pointed to by tmp1 into the location pointed to by temp_ptr
+	(* (arr_link **) (temp_ptr )) = tmp1;
+
 	return  (double_and_int *) (temp_ptr);
       }
     }
     tmp=tmp->free_prev;
   }
-  // couldn't find a free block large enough
-  // make a new block
 
-  tmp = new arr_link;
-  if (tmp==0)
+  // couldn't find a free block large enough make a new block
+  tmp = new arr_link();
+  if (tmp == 0)
   {
     cerr << "Error allocating new arr_link" << endl;
     ad_exit(1);
@@ -175,8 +173,8 @@ double_and_int * arr_new(unsigned int sz)
 
   gradient_structure::ARR_LIST1->number_arr_links  += 1;
 
-  tmp->prev = gradient_structure::ARR_LIST1->last; // the new block point back
-                                                 // at the previous last block
+  //the new block point back at the previous last block
+  tmp->prev = gradient_structure::ARR_LIST1->last;
 
   if (gradient_structure::ARR_LIST1->last)
   {
@@ -193,11 +191,9 @@ double_and_int * arr_new(unsigned int sz)
 
   gradient_structure::ARR_LIST1->last_offset += bytes_needed;
 
-  if (gradient_structure::ARR_LIST1->last_offset>
-    (unsigned int)gradient_structure::max_last_offset )
+  if (gradient_structure::ARR_LIST1->last_offset > (unsigned int)gradient_structure::max_last_offset)
   {
-    gradient_structure::max_last_offset=
-      gradient_structure::ARR_LIST1->last_offset;
+    gradient_structure::max_last_offset = gradient_structure::ARR_LIST1->last_offset;
   }
 
   if (gradient_structure::ARR_LIST1->last_offset > gradient_structure::ARR_LIST1->max_last_offset)
@@ -220,13 +216,11 @@ double_and_int * arr_new(unsigned int sz)
 
   temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp->offset;
 
-  (*(arr_link **) (temp_ptr )) = tmp; //put the address
-                                   // tmp into the location pointed to
-                                   //by temp_ptr
+  //put the address tmp into the location pointed to by temp_ptr
+  (*(arr_link **)(temp_ptr)) = tmp;
 
-//  return  (double_and_int *) (temp_ptr+sizeof(double_and_int));
+  //return  (double_and_int *) (temp_ptr+sizeof(double_and_int));
   return  (double_and_int *) (temp_ptr);
-
 }
 
 /**

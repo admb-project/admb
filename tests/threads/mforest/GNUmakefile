@@ -1,6 +1,6 @@
 mforest: mforest.tpl
 	ls -al ../../../admb
-	PATH=../../../build/dist/bin:$PATH CXXFLAGS=-pthread LDFLAGS=-pthread admb -g mforest
+	PATH=../../../build/dist/bin:$(PATH) CXXFLAGS=-pthread LDFLAGS=-pthread admb -g mforest
 
 run:
 	-./mforest

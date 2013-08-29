@@ -391,10 +391,8 @@ void ad_comm::allocate(void)
   adstring ts=adprogram_name + adstring(".log");
   global_logfile= new ofstream( (char*)ts);
 
-  int biopt=-1;
-  int aiopt=-1;
-  biopt=option_match(argc,argv,"-binp");
-  aiopt=option_match(argc,argv,"-ainp");
+  const int biopt = option_match(argc, argv, "-binp");
+  const int aiopt = option_match(argc, argv, "-ainp");
 
   tmpstring=adprogram_name + adstring(".bin");
   if (!global_bparfile && aiopt == -1)

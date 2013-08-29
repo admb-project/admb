@@ -747,15 +747,17 @@ typedef void * ptovoid;
  */
 class adlist_ptr
 {
-  ptovoid * ptr;
+  ptovoid* ptr;
   int current_size;
   int current;
   void resize(void);
   void add_to_list(void * p);
 public:
-  ~adlist_ptr();
-  pinitial_params  & operator [] (int i);
   adlist_ptr(int init_size);
+  ~adlist_ptr();
+  pinitial_params& operator[](int i);
+  void reinitialize();
+
   friend class initial_params;
 };
 

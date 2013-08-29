@@ -1230,57 +1230,89 @@ void get_sp_printf(void)
 }
 #endif
 
-  pinitial_params & adlist_ptr::operator [] (int i)
+pinitial_params& adlist_ptr::operator[](int i)
+{
+  return (pinitial_params&)ptr[i];
+}
+/**
+Constructor
+*/
+adlist_ptr::adlist_ptr(int init_size)
+{
+  current = 0;
+  ptr = new ptovoid[init_size];
+  if (ptr == 0)
   {
-    return (pinitial_params &) ptr[i];
+    cerr << "Error: allocating memory in adlist_ptr" << endl;
+    ad_exit(0);
   }
+  current_size = init_size;
+  for (int i = 0; i < current_size; i++)
+  {
+    ptr[i] = 0;
+  }
+}
+/**
+*/
+void adlist_ptr::reinitialize()
+{
+  current = 0;
+  for (int i = 0; i < current_size; i++)
+  {
+    ptr[i] = 0;
+  }
+}
+/**
+Reallocate buffers.
+*/
+void adlist_ptr::resize(void)
+{
+  current_size *= 2;
+  ptovoid* tmp = new ptovoid[current_size];
+  if (tmp == 0)
+  {
+    cerr << "Error: allocating memory in adlist_ptr::resize." << endl;
+  }
+  for (int i = 0; i < current; i++)
+  {
+    tmp[i] = ptr[i];
+  }
+  for (int i = current; i < current_size; i++)
+  {
+    tmp[i] = 0;
+  }
+  delete [] ptr;
+  ptr = tmp;
+  tmp = 0;
+}
+/**
+Add ptr(p) to list.
+*/
+void adlist_ptr::add_to_list(void* p)
+{
+  if (current > current_size)
+  {
+    cerr << "This can't happen in adlist_ptr" << endl;
+    cerr << "Error: adlist_ptr::add_to_list." << endl;
+    exit(1);
+  }
+  if (current == current_size)
+  {
+    resize();
+  }
+  ptr[current++] = p;
+}
 
-  adlist_ptr::adlist_ptr(int init_size)
+/**
+Destructor
+*/
+adlist_ptr::~adlist_ptr()
+{
+  current = 0;
+  current_size = -1;
+  if (ptr)
   {
-    current=0;
-    ptr = new ptovoid[init_size];
-    if (ptr==0)
-    {
-      cerr << "Errorl allocating memory in adlist_ptr" << endl;
-    }
-    current_size=init_size;
-  }
-  void adlist_ptr::resize(void)
-  {
-    current_size*=2;
-    ptovoid * tmp = new ptovoid[current_size];
-    if (tmp==0)
-    {
-      cerr << "Errorl allocating memory in adlist_ptr" << endl;
-    }
-    for (int i=0;i<current;i++)
-    {
-      tmp[i]=ptr[i];
-    }
     delete [] ptr;
-    ptr = tmp;
+    ptr = 0;
   }
-  void adlist_ptr::add_to_list(void * p)
-  {
-    if (current>current_size)
-    {
-      cerr << "This can't happen in adlist_ptr" << endl;
-      exit(1);
-    }
-    if (current==current_size)
-    {
-      resize();
-    }
-    ptr[current++]=p;
-  }
-
-  adlist_ptr::~adlist_ptr()
-  {
-    current=0;
-    current_size=-1;
-    if (ptr)
-    {
-      delete [] ptr;
-      ptr=0;
-    }
-  }
+}

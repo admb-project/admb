@@ -12,18 +12,44 @@ extern "C" {
     throw i;
   }
 }
-
+TEST_F(tests_msimple, msimple_main_cleanups)
+{
+  int argc = 1;
+  char* argv[] = {"msimple"};
+  msimple_main(argc, argv);
+  ad_set_new_handler();
+  ad_exit=&test_ad_boundf;
+  gradient_structure::set_NO_DERIVATIVES();
+  gradient_structure::set_YES_SAVE_VARIABLES_VALUES();
+  if (!arrmblsize) arrmblsize=15000000;
+  try
+  {
+    initial_params::varsptr.reinitialize();
+    model_parameters mp(arrmblsize,argc,argv);
+    //mp.iprint=10;
+    //mp.preliminary_calculations();
+    //mp.computations(argc,argv);
+    initial_params::nvarcalc();
+  } 
+  catch (int i)
+  {
+    FAIL();
+  }
+}
 TEST_F(tests_msimple, msimple_main)
 {
   int argc = 1;
   char* argv[] = {"msimple"};
+  initial_params::varsptr.reinitialize();
   msimple_main(argc, argv);
 }
 TEST_F(tests_msimple, msimple_main_test_for_cleanups_files)
 {
   int argc = 1;
   char* argv[] = {"msimple"};
+  initial_params::varsptr.reinitialize();
   msimple_main(argc, argv);
+  initial_params::varsptr.reinitialize();
   msimple_main(argc, argv);
 }
 TEST_F(tests_msimple, msimple_main_contents)
@@ -38,6 +64,7 @@ TEST_F(tests_msimple, msimple_main_contents)
   if (!arrmblsize) arrmblsize=15000000;
   try
   {
+    initial_params::varsptr.reinitialize();
     model_parameters mp(arrmblsize,argc,argv);
     mp.iprint=10;
     mp.preliminary_calculations();
@@ -59,6 +86,7 @@ TEST_F(tests_msimple, msimple_main_model_parameters)
   if (!arrmblsize) arrmblsize=15000000;
   try
   {
+    initial_params::varsptr.reinitialize();
     model_parameters mp(arrmblsize,argc,argv);
   } 
   catch (int i)

@@ -41,6 +41,9 @@ TEST_F(tests_msimple, msimple_main)
   int argc = 1;
   char* argv[] = {"msimple"};
   initial_params::varsptr.reinitialize();
+  ASSERT_EQ(0, initial_params::varsptr[0]);
+  ASSERT_EQ(0, initial_params::varsptr[1]);
+
   msimple_main(argc, argv);
 }
 TEST_F(tests_msimple, msimple_main_test_for_cleanups_files)

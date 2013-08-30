@@ -37,6 +37,8 @@ else
   endif
 endif
 
+CXXFLAGS_PRE:=$(CXXFLAGS_PRE) -pthread
+
 ifdef BUILD_SHARED_LIBRARY
 CXXFLAGS_PRE:=$(CXXFLAGS_PRE) -fPIC
 endif

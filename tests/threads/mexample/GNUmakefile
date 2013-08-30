@@ -1,7 +1,8 @@
+all: run
 mexample: mexample.tpl
-	PATH=../../../build/dist/bin:$(PATH) CXXFLAGS=-pthread LDFLAGS=-pthread admb -g mexample
+	../../../admb -g mexample
 
-run:
+run: mexample
 	-./mexample
 
 clean:
@@ -18,3 +19,9 @@ clean:
 	@rm -vf mexample
 	@rm -vf fmin.log
 	@rm -vf gradfil1.tmp
+	@rm -vf admodel.dep
+	@rm -vf admodel.hes
+	@rm -vf mexample.bar
+	@rm -vf mexample.eva
+	@rm -vf mexample.par
+	@rm -vf *.o

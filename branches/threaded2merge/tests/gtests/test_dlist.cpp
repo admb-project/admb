@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 
-extern char* ddlist_space;
+extern __thread char* ddlist_space;
 
 class test_dlist: public ::testing::Test {};
 

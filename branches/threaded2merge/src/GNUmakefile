@@ -382,11 +382,11 @@ else
   endif
 	rm -f ${DISK}/bin/admb-cfg.sh
 	echo "ADMB_CFG_CXX=$(CXX)" > ${DISK}/bin/admb-cfg.sh
-	echo "ADMB_CFG_CXXFLAGS=$(CXXFLAGS)" >> ${DISK}/bin/admb-cfg.sh
+	echo "ADMB_CFG_CXXFLAGS=-pthread $(CXXFLAGS)" >> ${DISK}/bin/admb-cfg.sh
   ifeq ($(OS),Windows_NT)
 	echo "ADMB_CFG_LDFLAGS=-static $(LDFLAGS)" >> ${DISK}/bin/admb-cfg.sh
   else
-	echo "ADMB_CFG_LDFLAGS=$(LDFLAGS)" >> ${DISK}/bin/admb-cfg.sh
+	echo "ADMB_CFG_LDFLAGS=-pthread $(LDFLAGS)" >> ${DISK}/bin/admb-cfg.sh
   endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DISK} bins

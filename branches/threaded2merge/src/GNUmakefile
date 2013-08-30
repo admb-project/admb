@@ -451,4 +451,5 @@ else
 	@$(MAKE) --directory=../contrib clean
 	@$(MAKE) --directory=../tests clean
 	@rm -rvf ../admb
+	@rm -vf ../admb.zip
 endif

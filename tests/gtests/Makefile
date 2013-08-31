@@ -4,7 +4,8 @@ all: gtest-all
 	-./gtest-all
 
 gtest-all: main.cpp test_adstring_strcase.cpp test_fmm_control.cpp test_atan2.cpp test_adstring_array.cpp test_dlist.cpp test_ad_comm.cpp test_adthread_manager.cpp
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb $(GTEST_DIR)/gtest-all.o $^
+	cp $(GTEST_DIR)/gtest-all.o .
+	CXXFLAGS="-I$(GTEST_DIR)/include" ../../admb gtest-all.o $^
 
 clean:
 	@rm -vf gtest-all *.o

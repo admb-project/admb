@@ -851,6 +851,23 @@ void adpthread_manager::create_all(pthreadfun pf ,thread_data * ptr)
 
 void adpthread_manager::create_all(void * ptr)
 {
+  pthread_attr_t policy_attr;
+  pthread_attr_init(&policy_attr);
+  #undef USE_FIFO_POLICY
+  #ifdef USE_FIFO_POLICY
+  int old_policy;
+  //int pthread_attr_getschedpolicy(pthread_attr_t *attr, int *policy);
+  pthread_attr_getschedpolicy(&policy_attr, &old_policy);
+  cerr << "In adpthread_manager::create_all, old_policty = " << old_policy << endl;
+
+  // int pthread_attr_setschedpolicy(pthread_attr_t *attr, int policy);
+  pthread_attr_setschedpolicy(&policy_attr, SCHED_FIFO);
+  cerr << "In adpthread_manager::create_all, set policy to = " << SCHED_FIFO << endl;
+  #endif //USE_FIFO_POLICY
+  
+  //int pthread_attr_setinheritsched(pthread_attr_t *attr, int inheritsched);
+  pthread_attr_setinheritsched(&policy_attr, PTHREAD_EXPLICIT_SCHED);
+
   new_thread_data * dptr = (new_thread_data *)ptr; 
   int ii=0;
   for (int i=1;i<=ngroups;i++)
@@ -865,7 +882,8 @@ void adpthread_manager::create_all(void * ptr)
     {
       cout << ppf[i] << endl;
       ++ii;
-      pthread_create(thread1+ii,NULL,ppf[i],dptr+ii);
+      //pthread_create(thread1+ii,NULL,ppf[i],dptr+ii);
+      pthread_create(thread1+ii,&policy_attr,ppf[i],dptr+ii);
     }
   }
 }

@@ -37,7 +37,11 @@ else
   endif
 endif
 
+ifeq ($(CXX),CC)
+CXXFLAGS_PRE:=$(CXXFLAGS_PRE) -mt
+else
 CXXFLAGS_PRE:=$(CXXFLAGS_PRE) -pthread
+endif
 
 ifdef BUILD_SHARED_LIBRARY
 CXXFLAGS_PRE:=$(CXXFLAGS_PRE) -fPIC
@@ -384,11 +388,19 @@ else
   endif
 	rm -f ${DISK}/bin/admb-cfg.sh
 	echo "ADMB_CFG_CXX=$(CXX)" > ${DISK}/bin/admb-cfg.sh
+  ifeq ($(CXX),CC)
+	echo "ADMB_CFG_CXXFLAGS=\"-mt $(CXXFLAGS)\"" >> ${DISK}/bin/admb-cfg.sh
+  else
 	echo "ADMB_CFG_CXXFLAGS=\"-pthread $(CXXFLAGS)\"" >> ${DISK}/bin/admb-cfg.sh
+  endif
   ifeq ($(OS),Windows_NT)
 	echo "ADMB_CFG_LDFLAGS=\"-static $(LDFLAGS)\"" >> ${DISK}/bin/admb-cfg.sh
   else
+    ifeq ($(CXX),CC)
+	echo "ADMB_CFG_LDFLAGS=\"-mt $(LDFLAGS)\"" >> ${DISK}/bin/admb-cfg.sh
+    else
 	echo "ADMB_CFG_LDFLAGS=\"-pthread $(LDFLAGS)\"" >> ${DISK}/bin/admb-cfg.sh
+    endif
   endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DISK} bins

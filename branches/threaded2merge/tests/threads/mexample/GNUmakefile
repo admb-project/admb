@@ -3,7 +3,7 @@ mexample: mexample.tpl
 	../../../admb -g mexample
 
 run: mexample
-	-./mexample
+	-./mexample -nohess
 
 clean:
 	@rm -vf variance

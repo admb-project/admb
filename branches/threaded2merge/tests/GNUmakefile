@@ -11,7 +11,11 @@ gtest-colfill: googletest-read-only
 	$(MAKE) --directory=colfill
 
 $(GTEST_DIR)/gtest-all.o: googletest-read-only
+ifeq ($(CXX),CC)
+	$(CXX) -c -library=stlport4 -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
+else
 	$(CXX) -c -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
+endif
 
 googletest-read-only:
 	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only

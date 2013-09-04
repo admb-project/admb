@@ -4,7 +4,7 @@ mforest: mforest.tpl
 	../../../admb -g mforest
 
 run: mforest
-	-./mforest
+	-./mforest -nohess
 
 clean:
 	@rm -vf mforest

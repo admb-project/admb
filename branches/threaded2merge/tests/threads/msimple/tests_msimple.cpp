@@ -26,7 +26,7 @@ TEST_F(tests_msimple, msimple_main_cleanups)
   {
     initial_params::varsptr.reinitialize();
     model_parameters mp(arrmblsize,argc,argv);
-    //mp.iprint=10;
+    mp.iprint=10;
     //mp.preliminary_calculations();
     //mp.computations(argc,argv);
     initial_params::nvarcalc();

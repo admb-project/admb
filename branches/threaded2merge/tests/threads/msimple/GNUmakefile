@@ -33,3 +33,6 @@ clean:
 	@rm -vf msimple.std
 	@rm -vf msimple.bar
 	@rm -vf *.o
+	@rm -vf gradfil1.tmp
+	@rm -vf gradfil2.tmp
+	@rm -vf varssave.tmp

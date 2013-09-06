@@ -14,7 +14,11 @@ $(GTEST_DIR)/gtest-all.o: googletest-read-only
 ifeq ($(CXX),CC)
 	$(CXX) -c -library=stlport4 -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
 else
+  ifeq (m32,$(findstring m32,$(CXXFLAGS)))
+	$(CXX) -c -m32 -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
+  else
 	$(CXX) -c -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
+  endif
 endif
 
 googletest-read-only:
@@ -156,3 +160,4 @@ clean:
 	$(MAKE) --directory=cov_re clean
 	$(MAKE) --directory=threads clean
 	$(MAKE) --directory=gtests clean
+	@rm -vf googletest-read-only/gtest-all.o

@@ -437,10 +437,10 @@ endif
 tests:
 ifndef USE_ADMB_HOME
 	@#$(MAKE) ADMB_HOME="${PWD}/${DISK}" --directory=../contrib test
-	$(MAKE) ADMB_HOME="${PWD}/${DISK}" --directory=../tests
+	$(MAKE) CXXFLAGS="${CXXFLAGS}" ADMB_HOME="${PWD}/${DISK}" --directory=../tests
 else
 	@#$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../contrib test
-	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../tests
+	$(MAKE) CXXFLAGS="${CXXFLAGS}" ADMB_HOME="${ADMB_HOME}" --directory=../tests
 endif
 
 install:

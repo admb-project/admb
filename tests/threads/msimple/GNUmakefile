@@ -1,6 +1,6 @@
 GTEST_DIR=../../googletest-read-only
 
-all: run
+all: clean run
 
 msimple.cpp: msimple.tpl
 	../../../admb -g msimple

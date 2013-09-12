@@ -14,8 +14,8 @@ extern "C" {
 }
 TEST_F(tests_msimple, msimple_main_cleanups)
 {
-  int argc = 1;
-  char* argv[] = {"msimple"};
+  int argc = 2;
+  char* argv[] = {"msimple", "-nohess"};
   msimple_main(argc, argv);
   ad_set_new_handler();
   ad_exit=&test_ad_boundf;
@@ -38,8 +38,8 @@ TEST_F(tests_msimple, msimple_main_cleanups)
 }
 TEST_F(tests_msimple, msimple_main)
 {
-  int argc = 1;
-  char* argv[] = {"msimple"};
+  int argc = 2;
+  char* argv[] = {"msimple", "-nohess"};
   initial_params::varsptr.reinitialize();
   ASSERT_EQ(0, initial_params::varsptr[0]);
   ASSERT_EQ(0, initial_params::varsptr[1]);
@@ -48,8 +48,8 @@ TEST_F(tests_msimple, msimple_main)
 }
 TEST_F(tests_msimple, msimple_main_test_for_cleanups_files)
 {
-  int argc = 1;
-  char* argv[] = {"msimple"};
+  int argc = 2;
+  char* argv[] = {"msimple", "-nohess"};
   initial_params::varsptr.reinitialize();
   msimple_main(argc, argv);
   initial_params::varsptr.reinitialize();
@@ -57,8 +57,8 @@ TEST_F(tests_msimple, msimple_main_test_for_cleanups_files)
 }
 TEST_F(tests_msimple, msimple_main_contents)
 {
-  int argc = 1;
-  char* argv[] = {"msimple"};
+  int argc = 2;
+  char* argv[] = {"msimple", "-nohess"};
   //msimple_main(argc, argv);
   ad_set_new_handler();
   ad_exit=&test_ad_boundf;
@@ -80,8 +80,8 @@ TEST_F(tests_msimple, msimple_main_contents)
 }
 TEST_F(tests_msimple, msimple_main_model_parameters)
 {
-  int argc = 1;
-  char* argv[] = {"msimple"};
+  int argc = 2;
+  char* argv[] = {"msimple", "-nohess"};
   ad_set_new_handler();
   ad_exit=&test_ad_boundf;
   gradient_structure::set_NO_DERIVATIVES();
@@ -130,8 +130,8 @@ public:
 TEST_F(tests_msimple, msimple_param_vector)
 {
   gradient_structure gs(150000L);
-  int argc = 1;
-  char* argv[] = {"msimple"};
+  int argc = 2;
+  char* argv[] = {"msimple", "-nohess"};
   test_ad_comm ad(argc, argv);
   test_named_dvar_vector ff;
 }
@@ -142,8 +142,8 @@ TEST_F(tests_msimple, msimple_new_arr_link)
 TEST_F(tests_msimple, msimple_param_vector_allocate)
 {
   gradient_structure gs(150000L);
-  int argc = 1;
-  char* argv[] = {"msimple"};
+  int argc = 2;
+  char* argv[] = {"msimple", "-nohess"};
   test_ad_comm ad(argc, argv);
   test_named_dvar_vector ff;
   try

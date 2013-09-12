@@ -2,7 +2,11 @@
 
 GTEST_DIR=googletest-read-only
 
+ifneq ($(CXX),CC)
 all: $(GTEST_DIR)/gtest-all.o test-threads gtests
+else
+all:
+endif
 
 gtests: $(GTEST_DIR)/gtest-all.o
 	$(MAKE) --directory=gtests

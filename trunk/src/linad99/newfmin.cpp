@@ -4,14 +4,14 @@
  * Author: Unknown
  * Copyright (c) 2009-2012 ADMB Foundation
  *
- * This file was originally written in FORTRAN II by and unknown author.
+ * This file was originally written in FORTRAN II by an unknown author.
  * In the 1980s, it was ported to C and C++ and extensively modified by
  * David Fournier.
  *
  */
 /**
   \file newfmin.cpp
-  Souce code for quasi-Newton function minimizer.
+  Source code for quasi-Newton function minimizer.
  */
 
 #include <fvar.hpp>
@@ -872,7 +872,7 @@ label7020:
 
 /**
   Robust square root.
-  \param x Double precision argunent \f$x; x \ge 0\f$.
+  \param x Double precision argument \f$x; x \ge 0\f$.
   \return \f$\sqrt{x}\f$ for \f$x>0\f$, 0 otherwise.
  */
    double dafsqrt( double x )

@@ -184,7 +184,7 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
  Quasi-Newton function minimizer.
   \param _f Value of function to be minimized.
   \param _x Vector of independent variables.
-  \param _g Vector containing the partial derivatives of _f with respect to
+  \param _g Vector containin the partial derivatives of _f with respect to
    each independent variable. The gradient vector returned by \ref gradcalc.
  */
 void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
@@ -312,6 +312,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
       ib=iv+n;
       iexit=0;
   tracing_message(traceflag,"A12");
+  // Initialize hessian to diagonal=1 and the rest=0
       h.elem(1,1) = 1;
       for (i=2; i<=n; i++)
       {
@@ -437,7 +438,7 @@ label7002:
       {
         fmmdisp(x, g, n, this->scroll_flag,noprintx);
       }
-label21 :
+label21 :  // Compute 
       itn=itn+1;
       for (i=1; i<=n; i++)
          x.elem(i)=xx.elem(i);
@@ -632,7 +633,7 @@ label30:
       if(fabs(gys/gso)<=.95 && ic > 4)
          goto label50;
       if(gys>0.0)
-         goto  label40;
+         goto label40;
       tot+=alpha;
       z=10.0;
       if(gs<gys)
@@ -723,7 +724,7 @@ label65:
       for (i=1;i<=n;i++)
          g.elem(i)=w.elem(i);
       goto  label20;
-label70:
+label70:  // Hessian update
       w.elem(iv+1)=w.elem(iu+1);
       pfmintime->get_elapsed_time_and_reset();
       for (i=2;i<=n;i++)

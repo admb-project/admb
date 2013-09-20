@@ -166,6 +166,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -ind FILE       change default input data filename to FILE\n");
       (*ad_printf)( " -lmn N          use limited memory quasi newton -- keep N steps\n");
       (*ad_printf)( " -lmn2 N         use other limited memory quasi newton -- keep N steps\n");
+      (*ad_printf)( " -ilmn N         use other limited memory quasi newton for random effects models - keep N steps\n");
       (*ad_printf)( " -dd N           check derivatives after N function evaluations\n");
       (*ad_printf)( " -lprof          perform profile likelihood calculations\n");
       (*ad_printf)( " -maxph N        increase the maximum phase number to N\n");

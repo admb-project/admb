@@ -184,7 +184,7 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
  Quasi-Newton function minimizer.
   \param _f Value of function to be minimized.
   \param _x Vector of independent variables.
-  \param _g Vector containin the partial derivatives of _f with respect to
+  \param _g Vector containing the partial derivatives of _f with respect to
    each independent variable. The gradient vector returned by \ref gradcalc.
  */
 void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)

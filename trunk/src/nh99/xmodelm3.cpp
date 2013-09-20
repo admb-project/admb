@@ -368,7 +368,7 @@ void tracing_message(int traceflag,const char *s);
               repeatminflag=1;
               spminflag=0;
             }
-c            else
+            else
             {
               repeatminflag=0;
             }

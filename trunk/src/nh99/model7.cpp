@@ -126,7 +126,7 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   set_signal_handlers();
   adprogram_name=_argv[0];
   int len=strlen(_argv[0]);
-  for (int i=1;i<=len;i++) adprogram_name[i]=tolower(adprogram_name[i]);
+  //for (int i=1;i<=len;i++) adprogram_name[i]=tolower(adprogram_name[i]);
 #if !defined(__SPDLL__)
   strip_full_path(adprogram_name);
 #endif

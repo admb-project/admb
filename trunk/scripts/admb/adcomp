@@ -27,10 +27,11 @@ fi
 
 # Pop args until model=$1
 unset dll
+unset fpic
 opt=-DSAFE_ALL
 while getopts "dgrs" A; do
   case $A in
-    d) dll=-DBUILDING_DLL;;
+    d) dll=-DBUILDING_DLL; fpic=-fPIC;;
     g) sym=-g;;
     r) ;;
     s) opt=-DSAFE_ALL;;
@@ -54,7 +55,7 @@ fi
 #  CXXFLAGS="$CXXFLAGS -Wno-deprecated"
 #fi
 
-CXXFLAGS="$CXXFLAGS -D__GNUDOS__ $dll -Dlinux $opt -DUSE_LAPLACE -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib/include"
+CXXFLAGS="$CXXFLAGS -D__GNUDOS__ $dll $fpic -Dlinux $opt -DUSE_LAPLACE -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib/include"
 
 CMD="$CXX $CXXFLAGS $file"
 echo $CMD

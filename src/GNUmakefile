@@ -45,7 +45,7 @@ ifneq ($(CXX),CC)
 CXXFLAGS_PRE:=$(CXXFLAGS_PRE) -Wall
 endif
 
-CXXFLAGS_DEFINES:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE
+CXXFLAGS_DEFINES:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE -fPIC
 
 ifeq ($(TERMINAL),dos)
 CXXFLAGS_INCLUDES:=-I..\build\dist\include

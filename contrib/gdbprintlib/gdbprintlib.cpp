@@ -431,6 +431,17 @@ void pad(const dmatrix & v)
 }
 
 /**
+* Print a dfsdmat (a matrix) to the screen
+* @param v The dfsdmat to print
+* @return Nothing
+**/
+void pad(const dfsdmat & v)
+{
+  // Problem here with cout! 
+  //cout << v << endl;
+}
+
+/**
 * Print a imatrix to the screen
 * @param v The imatrix to print
 * @return Nothing

@@ -63,6 +63,8 @@ void pad(const dvar_matrix & v,int i,int j);
 
 void pad(const dmatrix & v);
 
+void pad(const dfsdmat & v);
+
 void pad(const imatrix & v);
 void pad(const imatrix & v,int i);
 void pad(const imatrix & v,int i,int j);

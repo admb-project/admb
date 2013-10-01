@@ -14,10 +14,10 @@ pthread_mutex_t mutex_print;
 
 //const int NSLAVES=1;
 
-typedef char* pchar;
-typedef pchar*  ppchar;
-typedef ofstream* pofstream;
-__thread int adpthread_manager::slave_number;
+typedef char * pchar;
+typedef pchar *  ppchar;
+typedef ofstream * pofstream;
+__ADMBTHREAD__ int adpthread_manager::slave_number;
 
 int adpthread_manager::old_buffer_flag=0;
 
@@ -340,8 +340,8 @@ void adpthread_manager::check_buffer_size_read(int nbytes,int s1,int s2)
 {
   if (stransfer_buffer[s1][s2]== 0)
   {
-    //transfer_buffer[s1][s2]=new char[bs];
-    //scurrent_bptr[s1][s2]=transfer_buffer[s1][s2];
+    transfer_buffer[s1][s2]=new char[bs];
+    scurrent_bptr[s1][s2]=transfer_buffer[s1][s2];
     sbuffend[s1][s2]=stransfer_buffer[s1][s2]+bs-1;
     cout << "Initialized transfer buffer for pair " 
          << s1 << "  " << s2 << endl;
@@ -832,8 +832,8 @@ void adpthread_manager::read_unlock_buffer_slave(int sno)
   }
 }
 
-//void adpthread_manager::create_all(void* (*f)(void*),new_thread_data * ptr)
-void adpthread_manager::create_all(pthreadfun pf,new_thread_data * ptr)
+
+void adpthread_manager::create_all(pthreadfun pf ,new_thread_data * ptr)
 {
   for (int i=1;i<=nslaves;i++)
   {
@@ -841,8 +841,7 @@ void adpthread_manager::create_all(pthreadfun pf,new_thread_data * ptr)
   }
 }
 
-//void adpthread_manager::create_all(void* (*f)(void*),thread_data* ptr)
-void adpthread_manager::create_all(pthreadfun pf,thread_data* ptr)
+void adpthread_manager::create_all(pthreadfun pf ,thread_data * ptr)
 {
   for (int i=1;i<=nslaves;i++)
   {
@@ -850,8 +849,25 @@ void adpthread_manager::create_all(pthreadfun pf,thread_data* ptr)
   }
 }
 
-void adpthread_manager::create_all(void* ptr)
+void adpthread_manager::create_all(void * ptr)
 {
+  pthread_attr_t policy_attr;
+  pthread_attr_init(&policy_attr);
+  #undef USE_FIFO_POLICY
+  #ifdef USE_FIFO_POLICY
+  int old_policy;
+  //int pthread_attr_getschedpolicy(pthread_attr_t *attr, int *policy);
+  pthread_attr_getschedpolicy(&policy_attr, &old_policy);
+  cerr << "In adpthread_manager::create_all, old_policty = " << old_policy << endl;
+
+  // int pthread_attr_setschedpolicy(pthread_attr_t *attr, int policy);
+  pthread_attr_setschedpolicy(&policy_attr, SCHED_FIFO);
+  cerr << "In adpthread_manager::create_all, set policy to = " << SCHED_FIFO << endl;
+  #endif //USE_FIFO_POLICY
+  
+  //int pthread_attr_setinheritsched(pthread_attr_t *attr, int inheritsched);
+  pthread_attr_setinheritsched(&policy_attr, PTHREAD_EXPLICIT_SCHED);
+
   new_thread_data * dptr = (new_thread_data *)ptr; 
   int ii=0;
   for (int i=1;i<=ngroups;i++)
@@ -866,7 +882,8 @@ void adpthread_manager::create_all(void* ptr)
     {
       cout << ppf[i] << endl;
       ++ii;
-      pthread_create(thread1+ii,NULL,ppf[i],dptr+ii);
+      //pthread_create(thread1+ii,NULL,ppf[i],dptr+ii);
+      pthread_create(thread1+ii,&policy_attr,ppf[i],dptr+ii);
     }
   }
 }
@@ -1065,6 +1082,7 @@ double adpthread_manager::get_double_from_master(int sno)
   readbuffer(&x,sizeof(double),sno);
   return x;
 }
+
 double adpthread_manager::get_double(int sno)
 {
   verify_id_string_from_master("TY",sno);
@@ -1775,4 +1793,26 @@ void adpthread_manager::send_ivector(const ivector &x,int sno)
   writebuffer(&mmin,sizeof(int),sno);
   writebuffer(&mmax,sizeof(int),sno);
   writebuffer(&(x(mmin)),sz*sizeof(int),sno);
+}
+
+void adpthread_manager::send_adstring(const adstring & _x,int sno)
+{
+  ADUNCONST(adstring,x)
+  const int sz = x.size();
+  send_id_string_to_slave("ST",sno);
+  writebuffer(&sz,sizeof(int),sno);
+  writebuffer((char*)x,sz,sno);
+}
+
+adstring adpthread_manager::get_adstring(int sno)
+{
+  verify_id_string_from_master("ST",sno);
+  int sz;
+  readbuffer(&sz,sizeof(int),sno);
+  char * s = new char(sz+1); ;
+  readbuffer(s,sz,sno);
+  s[sz] = '\0';
+  adstring x(s);
+  delete [] s;  
+  return x;
 }

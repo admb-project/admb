@@ -98,9 +98,11 @@
     pthread_cond_t ** sscondition;
     pthread_cond_t ** smcondition;
     pthread_t * thread1;  /* thread variables */
+
     adpthread_manager(int ns,int bs);
-   ~adpthread_manager();
     adpthread_manager(int ngroups,ivector& group_num,int bs);
+    virtual ~adpthread_manager() {}
+
     void send_dvector_to_slave(const dvector &x,int sno);
     void send_dvector(const dvector &x,int sno);
     void send_dvector_to_master(const dvector &x,int sno);

@@ -21,7 +21,7 @@
  // 
  typedef char * pchar;
  typedef ofstream * pofstream;
- typedef void (*pthreadfun)(void*);
+ typedef void* (*pthreadfun)(void*);
  typedef pthreadfun * ppthreadfun;
  typedef pthread_mutex_t * ppthread_mutex_t;  
  typedef pthread_cond_t * ppthread_cond_t;
@@ -52,7 +52,7 @@
     int num_code;
     static int old_buffer_flag;
     int logflag;
-    static __ADMBTHREAD__ int slave_number;
+    static __thread int slave_number;
     adtimer * adt;
     pofstream * logfiles;
     ppthreadfun ppf;

@@ -340,8 +340,8 @@ void adpthread_manager::check_buffer_size_read(int nbytes,int s1,int s2)
 {
   if (stransfer_buffer[s1][s2]== 0)
   {
-    stransfer_buffer[s1][s2]=new char[bs];
-    scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
+    transfer_buffer[s1][s2]=new char[bs];
+    scurrent_bptr[s1][s2]=transfer_buffer[s1][s2];
     sbuffend[s1][s2]=stransfer_buffer[s1][s2]+bs-1;
     cout << "Initialized transfer buffer for pair " 
          << s1 << "  " << s2 << endl;

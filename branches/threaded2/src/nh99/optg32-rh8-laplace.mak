@@ -16,7 +16,7 @@ endif
 
 all: disk
 
-disk: $(DISKDIR)/lib/$(LIBNAME)  
+disk: $(DISKDIR)/lib/$(LIBNAME)  $(DISKDIR)/bin/tpl2cpp
 	cp admodel.h $(DISKDIR)/include
 	cp spcomm.h $(DISKDIR)/include
 	cp adsplus.h $(DISKDIR)/include

@@ -21,7 +21,7 @@
  // 
  typedef char * pchar;
  typedef ofstream * pofstream;
- typedef void (*pthreadfun)(void*);
+ typedef void* (*pthreadfun)(void*);
  typedef pthreadfun * ppthreadfun;
  typedef pthread_mutex_t * ppthread_mutex_t;  
  typedef pthread_cond_t * ppthread_cond_t;

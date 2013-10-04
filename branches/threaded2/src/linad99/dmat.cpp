@@ -31,7 +31,7 @@
 /**
  * Description not yet available.
  * \param
- */
+
  void dmatrix::allocate(int nrl,int nrh,int ncl,int nch,const dvector& x,
    int & off1)
  {
@@ -60,6 +60,8 @@
      //m[i].allocate(ncl,nch);
    }
  }
+ */
+/*
  void dmatrix::allocate(int nrl,int nrh,int ncl,const ivector& ind1,const dvector& x,
    int & off1)
  {
@@ -88,6 +90,7 @@
      //m[i].allocate(ncl,nch);
    }
  }
+  */
  void dmatrix::allocate(int nrl,int nrh,int ncl,int nch)
  {
    if (nrh<nrl)

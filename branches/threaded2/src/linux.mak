@@ -38,9 +38,11 @@ CXXFLAGS:=-D__MINGW__ -Wall -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE $(CXX
 endif
 
 ifdef DEBUG
-CXXFLAGS:=-D__MINGW__ -c -g $(CXXFLAGS) -w -fpermissive -pthread -DUSE_PTHREADS
+#CXXFLAGS:=-D__MINGW__ -c -g $(CXXFLAGS) -w -fpermissive -pthread -DUSE_PTHREADS
+CXXFLAGS:=-D__MINGW__ -c -g $(CXXFLAGS) -w -pthread -DUSE_PTHREADS
 else
-CXXFLAGS:=-D__MINGW__ -c $(CXXFLAGS) -ggdb -w -fpermissive -pthread  -DUSE_PTHREADS
+#CXXFLAGS:=-D__MINGW__ -c $(CXXFLAGS) -ggdb -w -fpermissive -pthread  -DUSE_PTHREADS
+CXXFLAGS:=-D__MINGW__ -c $(CXXFLAGS) -ggdb -w -pthread  -DUSE_PTHREADS
 endif
 
 dist:

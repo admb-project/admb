@@ -49,7 +49,10 @@ prevariable_position restore_prevariable_position(void)
  */
 void prevariable::save_prevariable_position(void) const
 {
-  double_and_int * tmp=get_v();
+  //double_and_int * tmp=get_v();
+  prevariable t = *this;
+  double_and_int * tmp=t.get_v();
+  
   int wsize=sizeof(double_and_int*);
   gradient_structure::get_fp()->fwrite(&tmp,size_t(wsize));
 }

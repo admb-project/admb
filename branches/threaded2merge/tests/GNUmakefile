@@ -5,9 +5,9 @@ GTEST_DIR=googletest-read-only
 all: $(GTEST_DIR)/gtest-all.o msimple
 
 ifneq ($(CXX),CC)
-all: $(GTEST_DIR)/gtest-all.o test-threads gtests
+all2: $(GTEST_DIR)/gtest-all.o test-threads gtests
 else
-all:
+all2:
 endif
 
 gtests: $(GTEST_DIR)/gtest-all.o

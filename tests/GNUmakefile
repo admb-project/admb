@@ -2,6 +2,8 @@
 
 GTEST_DIR=googletest-read-only
 
+all: $(GTEST_DIR)/gtest-all.o msimple
+
 ifneq ($(CXX),CC)
 all: $(GTEST_DIR)/gtest-all.o test-threads gtests
 else
@@ -28,9 +30,12 @@ endif
 googletest-read-only:
 	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
 
+msimple:
+	$(MAKE) --directory=threads/msimple
+
 test-threads:
 	$(MAKE) --directory=threads clean
-	$(MAKE) --directory=threads
+	$(MAKE) --directory=threads/msimple
 
 svn: svn-geolocation
 

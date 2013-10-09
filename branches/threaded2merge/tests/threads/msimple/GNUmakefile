@@ -5,9 +5,9 @@ all: clean run
 msimple.cpp: msimple.tpl
 	../../../admb -g msimple
 
-tests_msimple: msimple.cpp tests_msimple.cpp
+tests_msimple: msimple.cpp tests_msimple.cpp tests_adthread_manager.cpp
 	cp $(GTEST_DIR)/gtest-all.o .
-	CXXFLAGS="-I$(GTEST_DIR)/include" ../../../admb -g tests_msimple.cpp main.cpp gtest-all.o
+	CXXFLAGS="-I$(GTEST_DIR)/include" ../../../admb -g tests_msimple.cpp tests_adthread_manager.cpp main.cpp gtest-all.o
 
 run: tests_msimple
 	-./tests_msimple

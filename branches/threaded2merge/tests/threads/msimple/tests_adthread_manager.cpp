@@ -137,3 +137,56 @@ TEST_F(tests_adthread_manager, create_all_5threads)
   delete ad_comm::pthread_manager;
   ad_comm::pthread_manager = 0;
 }
+static int lflag = 0;
+pthread_mutex_t lflag_mutex = PTHREAD_MUTEX_INITIALIZER;
+void* test_read_lock_buffer(void* ptr)
+{
+  //ad_comm::pthread_manager->write_lock_buffer(0);
+  //ad_comm::pthread_manager->write_unlock_buffer(0);
+  pthread_mutex_lock(&lflag_mutex);
+  lflag++;
+  pthread_mutex_unlock(&lflag_mutex);
+  return ptr;
+}
+TEST_F(tests_adthread_manager, read_lock_buffer)
+{
+  const int nthread = 5;
+  const int ngroups = 1;
+  ivector ng(1, ngroups);
+  // number of threads in group 1
+  ng(1)=nthread;
+  // create instance of pthread_manager class 
+  // third argument is number of bytes in the transfer buffer
+  ad_comm::pthread_manager = new adpthread_manager(ngroups, ng, 32005);
+  if (ad_comm::pthread_manager == 0)
+  {
+    FAIL();
+  }
+
+  ad_comm::pthread_manager->attach_code(test_read_lock_buffer);
+
+  new_thread_data data[nthread + 1];
+  for (int i = 0; i <= nthread; i++)
+  {
+    data[i].thread_no = i;
+  }
+
+/*
+  for (int i = 1; i <= nthread; i++)
+  {
+    ad_comm::pthread_manager->write_lock_buffer(i);
+    ad_comm::pthread_manager->send_int(1, i);
+    ad_comm::pthread_manager->write_unlock_buffer(i);
+  }
+*/
+
+  ASSERT_EQ(0, lflag);
+  //This starts thread after a unknown delay
+  ad_comm::pthread_manager->create_all(&data);
+  //Need to join it
+  ad_comm::pthread_manager->pthread_join_all();
+  ASSERT_EQ(5, lflag);
+
+  delete ad_comm::pthread_manager;
+  ad_comm::pthread_manager = 0;
+}

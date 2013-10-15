@@ -141,6 +141,7 @@ static int lflag = 0;
 pthread_mutex_t lflag_mutex = PTHREAD_MUTEX_INITIALIZER;
 void* test_read_lock_buffer(void* ptr)
 {
+  //gradient_structure gs(30000000);
   //ad_comm::pthread_manager->write_lock_buffer(0);
   //ad_comm::pthread_manager->write_unlock_buffer(0);
   pthread_mutex_lock(&lflag_mutex);

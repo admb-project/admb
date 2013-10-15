@@ -7,20 +7,12 @@
 #  endif
 #endif
 
-/* prototype for thread routine */
-void admb_thread(void * ptr);
-
 pthread_mutex_t mutex_print;
-
-//const int NSLAVES=1;
 
 typedef char * pchar;
 typedef pchar *  ppchar;
 typedef ofstream * pofstream;
 __thread int adpthread_manager::slave_number;
-
-int adpthread_manager::old_buffer_flag=0;
-
 
 adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
   mflag(1,ns), sflag(1,ns), num_in_group(1,1),ngroups(1),
@@ -843,15 +835,6 @@ void adpthread_manager::create_all(pthreadfun pf ,new_thread_data * ptr)
     pthread_create(thread1+i,NULL,pf,ptr+i);
   }
 }
-
-void adpthread_manager::create_all(pthreadfun pf ,thread_data * ptr)
-{
-  for (int i=1;i<=nslaves;i++)
-  {
-    pthread_create(thread1+i,NULL,pf,ptr+i);
-  }
-}
-
 void adpthread_manager::create_all(void * ptr)
 {
   pthread_attr_t policy_attr;
@@ -890,7 +873,6 @@ void adpthread_manager::create_all(void * ptr)
     }
   }
 }
-
 void adpthread_manager::pthread_join_all(void)
 {
   for (int i=1;i<=nslaves;i++)
@@ -898,102 +880,65 @@ void adpthread_manager::pthread_join_all(void)
     pthread_join(thread1[i], NULL);
   }
 }
-
 void adpthread_manager::writebuffer(const void *x,int nbytes,int sno)
 {
- /*
-  if (old_buffer_flag==1)
-  {
-    check_buffer_size(nbytes,sno);
-    ::memcpy(current_bptr[sno],x,nbytes);
-    current_bptr[sno]+=nbytes;
-  }
-  else
- */
-  {
-    int s1,s2;
-    int tn2=ad_comm::pthread_manager->get_slave_number();
-    if (tn2==sno)
-    {
-      cerr << "This can't happen" << endl;
-      ad_exit(1);
-    }
-    if (tn2<sno)
-    {
-      s1=tn2;
-      s2=sno;
-    }
-    else
-    {
-      s1=sno;
-      s2=tn2;
-    }
-    check_buffer_size(nbytes,s1,s2);
-    ::memcpy(scurrent_bptr[s1][s2],x,nbytes);
-    scurrent_bptr[s1][s2]+=nbytes;
-  }
-}
-
-long int adpthread_manager::get_offset(int sno)
-{
-  int s1,s2;
   int tn2=ad_comm::pthread_manager->get_slave_number();
   if (tn2==sno)
   {
     cerr << "This can't happen" << endl;
     ad_exit(1);
   }
+  int s1 = sno;
+  int s2 = tn2;
   if (tn2<sno)
   {
     s1=tn2;
     s2=sno;
   }
-  else
+  check_buffer_size(nbytes,s1,s2);
+  ::memcpy(scurrent_bptr[s1][s2],x,nbytes);
+  scurrent_bptr[s1][s2]+=nbytes;
+}
+
+long int adpthread_manager::get_offset(int sno)
+{
+  int tn2=ad_comm::pthread_manager->get_slave_number();
+  if (tn2==sno)
   {
-    s1=sno;
-    s2=tn2;
+    cerr << "This can't happen" << endl;
+    ad_exit(1);
+  }
+  int s1 = sno;
+  int s2 = tn2;
+  if (tn2<sno)
+  {
+    s1=tn2;
+    s2=sno;
   }
   std::ptrdiff_t pd=scurrent_bptr[s1][s2]-stransfer_buffer[s1][s2];
   return pd;
 }
-
 void adpthread_manager::readbuffer(const void *_x,int nbytes,int sno)
 {
+  int tn2=ad_comm::pthread_manager->get_slave_number();
+  if (tn2==sno)
+  {
+    cerr << "This can't happen" << endl;
+    ad_exit(1);
+  }
+  int s1 = sno;
+  int s2 = tn2;
+  if (tn2<sno)
+  {
+    s1=tn2;
+    s2=sno;
+  }
+  check_buffer_size_read(nbytes,s1,s2);
+
   void * x= (void *)(_x); 
- /*
-  if (old_buffer_flag==1)
-  {
-    check_buffer_size_read(nbytes,sno);
-    ::memcpy(x,current_bptr[sno],nbytes);
-    current_bptr[sno]+=nbytes;
-  }
-  else
- */
-  {
-    int s1,s2;
-    int tn2=ad_comm::pthread_manager->get_slave_number();
-    if (tn2==sno)
-    {
-      cerr << "This can't happen" << endl;
-      ad_exit(1);
-    }
-    if (tn2<sno)
-    {
-      s1=tn2;
-      s2=sno;
-    }
-    else
-    {
-      s1=sno;
-      s2=tn2;
-    }
-    check_buffer_size_read(nbytes,s1,s2);
-    ::memcpy(x,scurrent_bptr[s1][s2],nbytes);
-    scurrent_bptr[s1][s2]+=nbytes;
-  }
+  ::memcpy(x,scurrent_bptr[s1][s2],nbytes);
+  scurrent_bptr[s1][s2]+=nbytes;
 }
-
-
 void adpthread_manager::verify_id_string_from_master(const char * s,int sno)
 {
 #if defined(CHK_ID_STRING)
@@ -1008,7 +953,6 @@ void adpthread_manager::verify_id_string_from_master(const char * s,int sno)
   }
 #endif
 }
-
 void adpthread_manager::verify_id_string_from_slave(const char * s,int sno)
 {
 #if defined(CHK_ID_STRING)
@@ -1024,13 +968,11 @@ void adpthread_manager::verify_id_string_from_slave(const char * s,int sno)
   }
 #endif
 }
-
 void adpthread_manager::send_double(const double &x,int sno)
 {
   send_id_string_to_slave("TY",sno);
   writebuffer(&x,sizeof(double),sno);
 }
-
 void adpthread_manager::send_double_to_slave(const double &x,int sno)
 {
   send_id_string_to_slave("TY",sno);
@@ -1047,13 +989,11 @@ void adpthread_manager::send_int(int x,int sno)
   send_id_string_to_slave("ES",sno);
   writebuffer(&x,sizeof(int),sno);
 }
-
 void adpthread_manager::send_int_to_master(int x,int sno)
 {
   send_id_string_to_slave("YY",sno);
   writebuffer(&x,sizeof(int),sno);
 }
-
 int adpthread_manager::get_int_from_master(int sno)
 {
   verify_id_string_from_master("RY",sno);
@@ -1061,7 +1001,6 @@ int adpthread_manager::get_int_from_master(int sno)
   readbuffer(&x,sizeof(int),sno);
   return x;
 }
-
 int adpthread_manager::get_int(int sno)
 {
   verify_id_string_from_master("ES",sno);
@@ -1069,7 +1008,6 @@ int adpthread_manager::get_int(int sno)
   readbuffer(&x,sizeof(int),sno);
   return x;
 }
-
 int adpthread_manager::get_int_from_slave(int sno)
 {
   verify_id_string_from_master("YY",sno);
@@ -1077,7 +1015,6 @@ int adpthread_manager::get_int_from_slave(int sno)
   readbuffer(&x,sizeof(int),sno);
   return x;
 }
-
 double adpthread_manager::get_double_from_master(int sno)
 {
   verify_id_string_from_master("TY",sno);
@@ -1085,7 +1022,6 @@ double adpthread_manager::get_double_from_master(int sno)
   readbuffer(&x,sizeof(double),sno);
   return x;
 }
-
 double adpthread_manager::get_double(int sno)
 {
   verify_id_string_from_master("TY",sno);
@@ -1093,13 +1029,11 @@ double adpthread_manager::get_double(int sno)
   readbuffer(&x,sizeof(double),sno);
   return x;
 }
-
 void adpthread_manager::send_double_to_master(const double &x,int sno)
 {
   send_id_string_to_master("EY",sno);
   writebuffer(&x,sizeof(double),sno);
 }
-
 double adpthread_manager::get_double_from_slave(int sno)
 {
   verify_id_string_from_master("EY",sno);
@@ -1107,7 +1041,6 @@ double adpthread_manager::get_double_from_slave(int sno)
   readbuffer(&x,sizeof(double),sno);
   return x;
 }
-
 void adpthread_manager::send_id_string_to_slave(const char * x,int sno)
 {
 #if defined(CHK_ID_STRING)
@@ -1115,7 +1048,6 @@ void adpthread_manager::send_id_string_to_slave(const char * x,int sno)
   writebuffer(x,sz,sno);
 #endif
 }
-
 void adpthread_manager::send_id_string_to_master(const char * x,int sno)
 {
 #if defined(CHK_ID_STRING)
@@ -1123,15 +1055,12 @@ void adpthread_manager::send_id_string_to_master(const char * x,int sno)
   writebuffer(x,sz,sno);
 #endif
 }
-
-
 void adjoint_get_dvar_vector_from_master(void)
 {
   verify_identifier_string("D4");
   adpthread_manager * ptr=(adpthread_manager*)(restore_pointer_value());
   ptr->adjoint_get_dvar_vector_from_master();
 }
-
 void adpthread_manager::adjoint_get_dvar_vector_from_master(void)
 {
   verify_identifier_string("K6");
@@ -1194,21 +1123,12 @@ dvar_vector adpthread_manager::get_dvar_vector(int sno)
             set_gradient_stack(::adjoint_get_dvar_vector_from_master);
   return x;
 }
-
-/*
-dvariable adpthread_manager::get_dvariable_from_master(int sno)
-{
-  return ::get_dvariable_from_master(current_bptr[sno],sno);
-}
-*/
-
 void adjoint_get_dvariable_from_slave(void)
 {
   verify_identifier_string("G2");
   adpthread_manager * ptr=(adpthread_manager*)(restore_pointer_value());
   ptr->adjoint_get_dvariable_from_slave();
 }
-
 void adpthread_manager::adjoint_get_dvariable_from_slave(void)
 {
   verify_identifier_string("F7");
@@ -1220,7 +1140,6 @@ void adpthread_manager::adjoint_get_dvariable_from_slave(void)
   send_id_string_to_slave("RUX",sno);
   writebuffer(&dv,sizeof(double),sno);
 }
-
 dvariable adpthread_manager::get_dvariable_from_slave(int sno)
 {
   dvariable x;
@@ -1310,9 +1229,6 @@ void adpthread_manager::send_dvariable(const prevariable& _x,int sno)
   gradient_structure::GRAD_STACK1->
             set_gradient_stack(::adjoint_send_dvariable_to_master);
 }
-
-// ***********************************************
-// ***********************************************
 // ***********************************************
 void adjoint_send_dvariable_to_slave(void)
 {
@@ -1320,7 +1236,6 @@ void adjoint_send_dvariable_to_slave(void)
   adpthread_manager * ptr=(adpthread_manager*)(restore_pointer_value());
   ptr->adjoint_send_dvariable_to_slave();
 }
-
 void adpthread_manager::adjoint_send_dvariable_to_slave(void)
 {
   verify_identifier_string("GH");
@@ -1333,7 +1248,6 @@ void adpthread_manager::adjoint_send_dvariable_to_slave(void)
   verify_identifier_string("B");
   save_double_derivative(x,dxpos);
 }
-
 void adpthread_manager::send_dvariable_to_slave(const prevariable &x,int sno)
 {
   writebuffer(&(value(x)),sizeof(double),sno);
@@ -1347,17 +1261,13 @@ void adpthread_manager::send_dvariable_to_slave(const prevariable &x,int sno)
   gradient_structure::GRAD_STACK1->
     set_gradient_stack(::adjoint_send_dvariable_to_slave);
 }
-
 // ***********************************************
-// ***********************************************
-
 void adjoint_send_dvar_vector_to_slave(void)
 {
   verify_identifier_string("UP");
   adpthread_manager * ptr=(adpthread_manager*)(restore_pointer_value());
   ptr->adjoint_send_dvar_vector_to_slave();
 }
-
 void adpthread_manager::adjoint_send_dvar_vector_to_slave(void)
 {
   verify_identifier_string("HH");
@@ -1375,7 +1285,6 @@ void adpthread_manager::adjoint_send_dvar_vector_to_slave(void)
   verify_identifier_string("T");
   x.save_dvector_derivatives(dvpos);
 }
-
 void adpthread_manager::send_dvar_vector_to_slave(const dvar_vector &x,int sno)
 {
   int mmin=x.indexmin();
@@ -1416,7 +1325,6 @@ void adpthread_manager::send_dvar_vector(const dvar_vector &x,int sno)
     set_gradient_stack(::adjoint_send_dvar_vector_to_slave);
     //set_gradient_stack(pthread_master_unpack_vector_derivatives);
 }
-
 void adpthread_manager::send_dvector_to_slave(const dvector &x,int sno)
 {
   int mmin=x.indexmin();
@@ -1428,7 +1336,6 @@ void adpthread_manager::send_dvector_to_slave(const dvector &x,int sno)
   writebuffer(&(x(mmin)),sz*sizeof(double),sno);
   //::send_dvector_to_slave(x,current_bptr[sno],sno);
 }
-
 void adpthread_manager::send_dvector(const dvector &x,int sno)
 {
   int mmin=x.indexmin();
@@ -1440,7 +1347,6 @@ void adpthread_manager::send_dvector(const dvector &x,int sno)
   writebuffer(&(x(mmin)),sz*sizeof(double),sno);
   //::send_dvector_to_slave(x,current_bptr[sno],sno);
 }
-
 void adpthread_manager::send_dvector_to_master(const dvector &x,int sno)
 {
   int mmin=x.indexmin();
@@ -1463,7 +1369,6 @@ dvector adpthread_manager::get_dvector_from_slave(int sno)
   readbuffer(&(x(mmin)),sz*sizeof(double),sno);
   return x;
 }
-
 dvector adpthread_manager::get_dvector_from_master(int sno)
 {
   int mmin;
@@ -1488,15 +1393,12 @@ dvector adpthread_manager::get_dvector(int sno)
   readbuffer(&(x(mmin)),sz*sizeof(double),sno);
   return x;
 }
-adpthread_manager * test_thread_manager=0;
-
 void adjoint_send_dvar_matrix_to_slave(void)
 {
   verify_identifier_string("UN");
   adpthread_manager * ptr=(adpthread_manager*)(restore_pointer_value());
   ptr->adjoint_send_dvar_matrix_to_slave();
 }
-
 void adpthread_manager::adjoint_send_dvar_matrix_to_slave(void)
 {
   verify_identifier_string("HH");
@@ -1521,7 +1423,6 @@ void adpthread_manager::adjoint_send_dvar_matrix_to_slave(void)
   verify_identifier_string("Y");
   M.save_dmatrix_derivatives(dmpos);
 }
-
 void adpthread_manager::send_dvar_matrix_to_slave(const dvar_matrix &x,int sno)
 {
   int rmin=x.indexmin();
@@ -1549,7 +1450,6 @@ void adpthread_manager::send_dvar_matrix_to_slave(const dvar_matrix &x,int sno)
   gradient_structure::GRAD_STACK1->
     set_gradient_stack(::adjoint_send_dvar_matrix_to_slave);
 }
-
 void adpthread_manager::send_dvar_matrix(const dvar_matrix &x,int sno)
 {
   int rmin=x.indexmin();
@@ -1600,7 +1500,6 @@ void adjoint_get_dvar_matrix_from_master(void)
   adpthread_manager * ptr=(adpthread_manager*)(restore_pointer_value());
   ptr->adjoint_get_dvar_matrix_from_master();
 }
-
 void adpthread_manager::adjoint_get_dvar_matrix_from_master(void)
 {
   verify_identifier_string("K6");
@@ -1686,7 +1585,6 @@ dvar_matrix adpthread_manager::get_dvar_matrix(int sno)
             set_gradient_stack(::adjoint_get_dvar_matrix_from_master);
   return x;
 }
-
 dmatrix adpthread_manager::get_dmatrix(int sno)
 {
   verify_id_string_from_master("SAY",sno);
@@ -1707,7 +1605,6 @@ dmatrix adpthread_manager::get_dmatrix(int sno)
   }
   return x;
 }
-
 void add_slave_suffix(const adstring& _tmpstring)
 {
   ADUNCONST(adstring,tmpstring)
@@ -1728,15 +1625,6 @@ void add_slave_suffix(const adstring& _tmpstring)
     pthread_mutex_unlock(&ad_comm::pthread_manager->copy_mutex);
   }
 }
-
-new_thread_data::new_thread_data(void)
-{
- // id=0;
-  thread_no=0;
-  pfsh=0;
-  m=0;
-}
-
 imatrix adpthread_manager::get_imatrix(int sno)
 {
   verify_id_string_from_master("FKY",sno);
@@ -1757,7 +1645,6 @@ imatrix adpthread_manager::get_imatrix(int sno)
   }
   return x;
 }
-
 void adpthread_manager::send_imatrix(const imatrix &x,int sno)
 {
   int rmin=x.indexmin();
@@ -1797,7 +1684,6 @@ void adpthread_manager::send_ivector(const ivector &x,int sno)
   writebuffer(&mmax,sizeof(int),sno);
   writebuffer(&(x(mmin)),sz*sizeof(int),sno);
 }
-
 void adpthread_manager::send_adstring(const adstring & _x,int sno)
 {
   ADUNCONST(adstring,x)
@@ -1806,7 +1692,6 @@ void adpthread_manager::send_adstring(const adstring & _x,int sno)
   writebuffer(&sz,sizeof(int),sno);
   writebuffer((char*)x,sz,sno);
 }
-
 adstring adpthread_manager::get_adstring(int sno)
 {
   verify_id_string_from_master("ST",sno);

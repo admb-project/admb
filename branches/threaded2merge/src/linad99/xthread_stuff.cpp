@@ -1,4 +1,3 @@
-
 #include <admodel.h>
 #include <cstddef>
 #include "adthread.h"
@@ -7,14 +6,6 @@
 #    define CHK_ID_STRING
 #  endif
 #endif
-
-/* prototype for thread routine */
-void admb_thread(void * ptr);
-
-//pthread_mutex_t mutex_print;
-
-typedef char * pchar;
-typedef ofstream * pofstream;
 
 void adjoint_adwrite_lock_buffer_1(void);
 void adjoint_adwrite_lock_buffer_2(void);
@@ -27,7 +18,6 @@ void adpthread_manager::write_lock_buffer(int sno)
     //adt[0].get_elapsed_time_and_reset();
   }
   int tn2=ad_comm::pthread_manager->get_slave_number();
-  int s1,s2;
   if (tn2==sno)
   {
     //cerr << "Error -- process can not write to itself" << endl;
@@ -35,8 +25,8 @@ void adpthread_manager::write_lock_buffer(int sno)
   }
   else if (tn2<sno)  // old master write to slave
   {
-    s1=tn2;
-    s2=sno;
+    int s1 = tn2;
+    int s2 = sno;
     pthread_mutex_lock(ssmutex[s1]+s2);
     // only write if buffer empty
     while (smflag(s1,s2) == 1 || ssflag(s1,s2) ==1 ) 
@@ -52,8 +42,8 @@ void adpthread_manager::write_lock_buffer(int sno)
   }
   else if (sno<tn2)  // old slave write to master
   {
-    s2=tn2;
-    s1=sno;
+    int s2 = tn2;
+    int s1 = sno;
     pthread_mutex_lock(ssmutex[s1]+s2);
     // only write if buffer empty
     while (smflag(s1,s2) == 1 || ssflag(s1,s2) ==1 ) 
@@ -68,7 +58,6 @@ void adpthread_manager::write_lock_buffer(int sno)
         set_gradient_stack(::adjoint_adwrite_lock_buffer_2);
   }
 }   
-
 void adpthread_manager::cwrite_lock_buffer(int sno)
 {
   if (logflag)
@@ -77,7 +66,6 @@ void adpthread_manager::cwrite_lock_buffer(int sno)
     //adt[0].get_elapsed_time_and_reset();
   }
   int tn2=ad_comm::pthread_manager->get_slave_number();
-  int s1,s2;
   if (tn2==sno)
   {
     //cerr << "Error -- process can not write to itself" << endl;
@@ -85,8 +73,8 @@ void adpthread_manager::cwrite_lock_buffer(int sno)
   }
   else if (tn2<sno)  // old master write to slave
   {
-    s1=tn2;
-    s2=sno;
+    int s1 = tn2;
+    int s2 = sno;
     pthread_mutex_lock(ssmutex[s1]+s2);
     // only write if buffer empty
     while (smflag(s1,s2) == 1 || ssflag(s1,s2) ==1 ) 
@@ -94,15 +82,14 @@ void adpthread_manager::cwrite_lock_buffer(int sno)
   }
   else if (sno<tn2)  // old slave write to master
   {
-    s2=tn2;
-    s1=sno;
+    int s2 = tn2;
+    int s1 = sno;
     pthread_mutex_lock(ssmutex[s1]+s2);
     // only write if buffer empty
     while (smflag(s1,s2) == 1 || ssflag(s1,s2) ==1 ) 
       pthread_cond_wait(sscondition[s1]+s2,ssmutex[s1]+s2);
   }
 }   
-
 void adjoint_adwrite_lock_buffer_1(void)
 {
   verify_identifier_string("CT");
@@ -122,9 +109,8 @@ void adpthread_manager::adjoint_adwrite_lock_buffer_1(void)
     cerr << "This can't happen" << endl;
     ad_exit(1);
   }
-  int s1,s2;
-  s1=tn2;
-  s2=sno;
+  int s1 = tn2;
+  int s2 = sno;
   scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
   verify_identifier_string("YX");
   // !!!!!!!!!!!!!!!!!!!!
@@ -157,9 +143,8 @@ void adpthread_manager::adjoint_adwrite_lock_buffer_2(void)
     //cerr << "This can't happen" << endl;
     ad_exit(1);
   }
-  int s1,s2;
-  s1=sno;
-  s2=tn2;
+  int s1 = sno;
+  int s2 = tn2;
   scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
   verify_identifier_string("TYD");
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -179,7 +164,6 @@ void adpthread_manager::write_unlock_buffer(int sno)
   // we should be using the mutexes from the class
   // to get rid of global variables
   int tn2=ad_comm::pthread_manager->get_slave_number();
-  int s1,s2;
   if (tn2==sno)
   {
     //cerr << "Error -- process can not write to itself" << endl;
@@ -187,8 +171,8 @@ void adpthread_manager::write_unlock_buffer(int sno)
   }
   else if (tn2<sno)  // old master write to slave
   {
-    s1=tn2;
-    s2=sno;
+    int s1 = tn2;
+    int s2 = sno;
     scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
     smflag(s1,s2) = 1;
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
@@ -210,8 +194,8 @@ void adpthread_manager::write_unlock_buffer(int sno)
   }
   else if (sno<tn2)  // old slave write to master
   {
-    s2=tn2;
-    s1=sno;
+    int s2 = tn2;
+    int s1 = sno;
     scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
     ssflag(s1,s2) = 1;
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -238,7 +222,6 @@ void adpthread_manager::cwrite_unlock_buffer(int sno)
   // we should be using the mutexes from the class
   // to get rid of global variables
   int tn2=ad_comm::pthread_manager->get_slave_number();
-  int s1,s2;
   if (tn2==sno)
   {
     //cerr << "Error -- process can not write to itself" << endl;
@@ -246,8 +229,8 @@ void adpthread_manager::cwrite_unlock_buffer(int sno)
   }
   else if (tn2<sno)  // old master write to slave
   {
-    s1=tn2;
-    s2=sno;
+    int s1 = tn2;
+    int s2 = sno;
     scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
     smflag(s1,s2) = 1;
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
@@ -261,8 +244,8 @@ void adpthread_manager::cwrite_unlock_buffer(int sno)
   }
   else if (sno<tn2)  // old slave write to master
   {
-    s2=tn2;
-    s1=sno;
+    int s2 = tn2;
+    int s1 = sno;
     scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
     ssflag(s1,s2) = 1;
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -275,14 +258,12 @@ void adpthread_manager::cwrite_unlock_buffer(int sno)
     }
   }
 }   
-
 void adjoint_adwrite_unlock_buffer_1(void)
 {
   verify_identifier_string("ZD");
   adpthread_manager * ptr=(adpthread_manager*)(restore_pointer_value());
   ptr->adjoint_adwrite_unlock_buffer_1();
 }
-
 void adpthread_manager::adjoint_adwrite_unlock_buffer_1(void)
 {
   if (logflag)
@@ -298,9 +279,8 @@ void adpthread_manager::adjoint_adwrite_unlock_buffer_1(void)
     cerr << "This can't happen" << endl;
     ad_exit(1);
   }
-  int s1,s2;
-  s1=tn2;
-  s2=sno;
+  int s1 = tn2;
+  int s2 = sno;
   verify_identifier_string("SH");
   //read_lock_buffer_master(sno);
   pthread_mutex_lock(ssmutex[s1]+s2);
@@ -310,14 +290,12 @@ void adpthread_manager::adjoint_adwrite_unlock_buffer_1(void)
     pthread_cond_wait(smcondition[s1]+s2,ssmutex[s1]+s2);
   ssflag(s1,s2)=0; 
 }
-
 void adjoint_adwrite_unlock_buffer_2(void)
 {
   verify_identifier_string("CZ");
   adpthread_manager * ptr=(adpthread_manager*)(restore_pointer_value());
   ptr->adjoint_adwrite_unlock_buffer_2();
 }
-
 void adpthread_manager::adjoint_adwrite_unlock_buffer_2(void)
 {
   // cout  << "adjoint_write_unlock_buffer_slave(void)" << endl;
@@ -329,9 +307,8 @@ void adpthread_manager::adjoint_adwrite_unlock_buffer_2(void)
     cerr << "This can't happen" << endl;
     ad_exit(1);
   }
-  int s1,s2;
-  s1=sno;
-  s2=tn2;
+  int s1 = sno;
+  int s2 = tn2;
   pthread_mutex_lock(ssmutex[s1]+s2);
   scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
   if (logflag)

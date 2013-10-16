@@ -229,7 +229,6 @@ PRELIMINARY_CALCS_SECTION
   for (int i=1;i<=nthread;i++)
   {
     data1[i].thread_no = i; // only the thread number is imortant
-    data1[i].m=0;           // not used
   }
 
   // specifiy function to run on the threads by passing apointer to the function

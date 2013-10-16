@@ -1048,6 +1048,7 @@ void adpthread_manager::adjoint_get_dvar_matrix_from_master(void)
     writebuffer(&(dv(i)(mmin)),sz*sizeof(double),sno);
   }
 }
+/*
 dvar_matrix adpthread_manager::get_dvar_matrix_from_master(int sno)
 {
   verify_id_string_from_master("WTZ",sno);
@@ -1079,6 +1080,7 @@ dvar_matrix adpthread_manager::get_dvar_matrix_from_master(int sno)
             set_gradient_stack(::adjoint_get_dvar_matrix_from_master);
   return x;
 }
+*/
 dvar_matrix adpthread_manager::get_dvar_matrix(int sno)
 {
   verify_id_string_from_master("RAZ",sno);

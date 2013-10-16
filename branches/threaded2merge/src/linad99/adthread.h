@@ -84,19 +84,11 @@ public:
   pthread_cond_t ** smcondition;
   pthread_t * thread1;  /* thread variables */
 
-  void send_dvector_to_slave(const dvector &x,int sno);
   void send_dvector(const dvector &x,int sno);
-  void send_dvector_to_master(const dvector &x,int sno);
-  dvector get_dvector_from_slave(int sno);
   dvector get_dvector(int sno);
-  dvector get_dvector_from_master(int sno);
-  dvar_vector get_dvar_vector_from_slave(int sno);
   dvar_vector get_dvar_vector(int sno);
-  dvar_vector get_dvar_vector_from_master(int sno);
-  void send_dvar_vector_to_slave(const dvar_vector &x,int sno);
   void send_dvar_vector(const dvar_vector &x,int sno);
   void send_dvar_vector_to_master(const dvar_vector &x,int sno);
-  double get_double_from_master_nl(int sno);
   void writebuffer(const void *x,int nbytes,int sno);
   void readbuffer(const void *x,int nbytes,int sno);
   void pthread_join_all(void);
@@ -117,7 +109,6 @@ public:
   void adjoint_get_dvariable_from_slave(void);
   void adjoint_get_dvar_vector_from_master(void);
   void adjoint_send_dvar_vector_to_slave(void);
-  void send_dvar_matrix_to_slave(const dvar_matrix &x,int sno);
   void adjoint_send_dvar_matrix_to_slave(void);
   void adjoint_get_dvar_matrix_from_master(void);
   dvar_matrix get_dvar_matrix_from_master(int sno);
@@ -134,27 +125,17 @@ public:
   void send_imatrix(const imatrix &x,int sno);
   void send_ivector(const ivector &x,int sno);
   void adjoint_send_dvar_matrix_to_master(void);
-  void send_int_to_slave(int, int);
   void send_int(int, int);
   void send_pointer(void*, int);
-  void send_int_to_master(int, int);
-  int get_int_from_master(int);
   int get_int(int);
   void * get_pointer(int);
-  int get_int_from_slave(int);
   void send_dvariable_to_slave(const prevariable &x,int sno);
   void send_dvariable(const prevariable &x,int sno);
   void send_dvariable_to_master(const prevariable &x,int sno);
-  dvariable get_dvariable_from_slave(int sno);
   dvariable get_dvariable(int sno);
-  dvariable get_dvariable_from_master(int sno);
   void adjoint_send_dvariable_to_slave(void);
-  void send_double_to_master(const double&, int);
   void send_double(const double&, int);
-  void send_double_to_slave(const double &x,int sno);
-  double get_double_from_slave(int sno);
   double get_double(int sno);
-  double get_double_from_master(int sno);
 
   void send_adstring(const adstring &x,int sno);
   adstring get_adstring(int sno);

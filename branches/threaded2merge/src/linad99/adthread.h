@@ -52,9 +52,11 @@ public:
   static void set_slave_number(int n) { slave_number=n; }
   static void set_old_buffer_flag(int n) { old_buffer_flag=n;}
 
+  /*
   char ** transfer_buffer;
   char ** current_bptr;
   char ** buffend;
+  */
   int nslaves;
   int initial_buffer_size;
   int ngroups;
@@ -72,9 +74,9 @@ public:
   pthread_cond_t * scondition;
   pthread_cond_t * mcondition;
   imatrix sbuffer_size;
-  char *** stransfer_buffer;
-  char *** scurrent_bptr;
-  char *** sbuffend;
+  char*** stransfer_buffer;
+  char*** scurrent_bptr;
+  char*** sbuffend;
   imatrix smflag;
   imatrix ssflag;
   pthread_mutex_t ** ssmutex;
@@ -102,22 +104,11 @@ public:
   void create_all(pthreadfun pf,new_thread_data * ptr);
   void attach_code(pthreadfun pf);
   void create_all(void * ptr);
-  void check_buffer_size(int, int);
   void check_buffer_size(int, int,int);
-  void check_buffer_size_read(int, int);
   void check_buffer_size_read(int, int,int);
   void memcpy(const double &x,int sno);
-  void read_lock_buffer_slave(int sno);
-  void write_lock_buffer_slave(int sno);
-  void read_lock_buffer_master(int sno);
-  void write_lock_buffer_master(int sno);
-  void read_unlock_buffer_slave(int sno);
-  void write_unlock_buffer_slave(int sno);
-  void read_unlock_buffer_master(int sno);
-  void write_unlock_buffer_master(int sno);
   void adjoint_slave_write_unlock(int sno);
   void adjoint_slave_write_lock(int sno);
-  void adjoint_master_write_lock(int sno);
   void verify_id_string_from_master(const char * s,int sno);
   void send_id_string_to_slave(const char * s,int sno);
   void verify_id_string_from_slave(const char * s,int sno);
@@ -126,14 +117,6 @@ public:
   void adjoint_get_dvariable_from_slave(void);
   void adjoint_get_dvar_vector_from_master(void);
   void adjoint_send_dvar_vector_to_slave(void);
-  void adjoint_write_unlock_buffer_master(void);
-  void adjoint_read_lock_buffer_master(void);
-  void adjoint_read_lock_buffer_slave(void);
-  void adjoint_write_unlock_buffer_slave(void);
-  void adjoint_read_unlock_buffer_slave(void);
-  void adjoint_read_unlock_buffer_master(void);
-  void adjoint_write_lock_buffer_slave(void);
-  void adjoint_write_lock_buffer_master(void);
   void send_dvar_matrix_to_slave(const dvar_matrix &x,int sno);
   void adjoint_send_dvar_matrix_to_slave(void);
   void adjoint_get_dvar_matrix_from_master(void);

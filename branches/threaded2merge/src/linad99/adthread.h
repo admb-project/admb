@@ -52,11 +52,6 @@ public:
   static void set_slave_number(int n) { slave_number=n; }
   static void set_old_buffer_flag(int n) { old_buffer_flag=n;}
 
-  /*
-  char ** transfer_buffer;
-  char ** current_bptr;
-  char ** buffend;
-  */
   int nslaves;
   int initial_buffer_size;
   int ngroups;
@@ -70,9 +65,9 @@ public:
   ivector buffer_size;
   pthread_mutex_t copy_mutex;
   pthread_mutex_t start_mutex;
-  pthread_mutex_t * smutex;
-  pthread_cond_t * scondition;
-  pthread_cond_t * mcondition;
+  pthread_mutex_t* smutex;
+  pthread_cond_t* scondition;
+  pthread_cond_t* mcondition;
   imatrix sbuffer_size;
   char*** stransfer_buffer;
   char*** scurrent_bptr;
@@ -84,61 +79,73 @@ public:
   pthread_cond_t ** smcondition;
   pthread_t * thread1;  /* thread variables */
 
-  void send_dvector(const dvector &x,int sno);
-  dvector get_dvector(int sno);
-  dvar_vector get_dvar_vector(int sno);
-  void send_dvar_vector(const dvar_vector &x,int sno);
-  void send_dvar_vector_to_master(const dvar_vector &x,int sno);
-  void writebuffer(const void *x,int nbytes,int sno);
-  void readbuffer(const void *x,int nbytes,int sno);
-  void pthread_join_all(void);
-  void create_all(pthreadfun pf,void * ptr);
-  void create_all(pthreadfun pf,new_thread_data * ptr);
   void attach_code(pthreadfun pf);
-  void create_all(void * ptr);
   void check_buffer_size(int, int,int);
   void check_buffer_size_read(int, int,int);
-  void memcpy(const double &x,int sno);
-  void adjoint_slave_write_unlock(int sno);
-  void adjoint_slave_write_lock(int sno);
-  void verify_id_string_from_master(const char * s,int sno);
-  void send_id_string_to_slave(const char * s,int sno);
-  void verify_id_string_from_slave(const char * s,int sno);
-  void send_id_string_to_master(const char * s,int sno);
-  void adjoint_send_dvariable_to_master(void);
-  void adjoint_get_dvariable_from_slave(void);
-  void adjoint_get_dvar_vector_from_master(void);
-  void adjoint_send_dvar_vector_to_slave(void);
-  void adjoint_send_dvar_matrix_to_slave(void);
-  void adjoint_get_dvar_matrix_from_master(void);
-  dvar_matrix get_dvar_matrix_from_master(int sno);
-  dmatrix get_dmatrix_from_master(int sno);
-  dvar_matrix get_dvar_matrix(int sno);
+  void create_all(pthreadfun pf,new_thread_data * ptr);
+  void create_all(void * ptr);
+  void pthread_join_all(void);
+  void writebuffer(const void *x,int nbytes,int sno);
+  void readbuffer(const void *x,int nbytes,int sno);
+  void send_id_string(const char * s,int sno);
+  void verify_id_string(const char * s,int sno);
+  long int get_offset(int sno);
+  double get_double(int sno);
+  int get_int(int);
+  dvector get_dvector(int sno);
   dmatrix get_dmatrix(int sno);
   imatrix get_imatrix(int sno);
+  dvariable get_dvariable(int sno);
   ivector get_ivector(int sno);
+  adstring get_adstring(int sno);
+  dvar_vector get_dvar_vector(int sno);
+  dvar_matrix get_dvar_matrix(int sno);
+  void send_double(const double&, int);
+  void send_int(int, int);
+  void send_dvector(const dvector &x,int sno);
+  void send_dmatrix(const dmatrix &x,int sno);
+  void send_imatrix(const imatrix &x,int sno);
+  void send_dvariable(const prevariable &x,int sno);
+  void send_ivector(const ivector &x,int sno);
+  void send_adstring(const adstring &x,int sno);
+  void send_dvar_vector(const dvar_vector &x,int sno);
+  void send_dvar_matrix(const dvar_matrix &x,int sno);
+  void adjoint_get_dvariable(void);
+  void adjoint_get_dvar_vector(void);
+  void adjoint_get_dvar_matrix(void);
+  void adjoint_send_dvariable(void);
+  void adjoint_send_dvar_vector(void);
+  void adjoint_send_dvar_matrix(void);
+
+  void write_lock_buffer(int sno);
+  void write_unlock_buffer(int sno);
+  void cwrite_lock_buffer(int sno);
+  void cwrite_unlock_buffer(int sno);
+  void adjoint_adwrite_lock_buffer_1(void);
+  void adjoint_adwrite_unlock_buffer_1(void);
+  void adjoint_adwrite_lock_buffer_2(void);
+  void adjoint_adwrite_unlock_buffer_2(void);
+
+  void read_lock_buffer(int sno);
+  void read_unlock_buffer(int sno);
+  void cread_lock_buffer(int sno);
+  void cread_unlock_buffer(int sno);
+  void adjoint_adread_lock_buffer_1(void);
+  void adjoint_adread_unlock_buffer_1(void);
+  void adjoint_adread_lock_buffer_2(void);
+  void adjoint_adread_unlock_buffer_2(void);
+/*
+  void send_dvar_vector_to_master(const dvar_vector &x,int sno);
+  void create_all(pthreadfun pf,void * ptr);
+  void memcpy(const double &x,int sno);
+  dvar_matrix get_dvar_matrix_from_master(int sno);
+  dmatrix get_dmatrix_from_master(int sno);
   dvar_matrix get_dvar_matrix_from_slave(int sno);
   void adjoint_get_dvar_matrix_from_slave(void);
   void send_dvar_matrix_to_master(const dvar_matrix &x,int sno);
-  void send_dvar_matrix(const dvar_matrix &x,int sno);
-  void send_dmatrix(const dmatrix &x,int sno);
-  void send_imatrix(const imatrix &x,int sno);
-  void send_ivector(const ivector &x,int sno);
   void adjoint_send_dvar_matrix_to_master(void);
-  void send_int(int, int);
   void send_pointer(void*, int);
-  int get_int(int);
   void * get_pointer(int);
-  void send_dvariable_to_slave(const prevariable &x,int sno);
-  void send_dvariable(const prevariable &x,int sno);
-  void send_dvariable_to_master(const prevariable &x,int sno);
-  dvariable get_dvariable(int sno);
-  void adjoint_send_dvariable_to_slave(void);
-  void send_double(const double&, int);
-  double get_double(int sno);
-
-  void send_adstring(const adstring &x,int sno);
-  adstring get_adstring(int sno);
 
   void adjoint_send_dvar3_array_to_slave(void);
   void send_dvar3_array_to_slave(const dvar3_array &x,int sno);
@@ -182,24 +189,6 @@ public:
   void adjoint_get_dvar5_array_from_slave(void);
   void send_dvar5_array_to_master(const dvar5_array &x,int sno);
   void adjoint_send_dvar5_array_to_master(void);
-
-  void adjoint_adwrite_lock_buffer_1(void);
-  void adjoint_adwrite_lock_buffer_2(void);
-  void adjoint_adwrite_unlock_buffer_1(void);
-  void adjoint_adwrite_unlock_buffer_2(void);
-  void write_unlock_buffer(int sno);
-  void cwrite_unlock_buffer(int sno);
-  void write_lock_buffer(int sno);
-  void cwrite_lock_buffer(int sno);
-
-  void adjoint_adread_lock_buffer_1(void);
-  void adjoint_adread_lock_buffer_2(void);
-  void adjoint_adread_unlock_buffer_1(void);
-  void adjoint_adread_unlock_buffer_2(void);
-  void read_lock_buffer(int sno);
-  void cread_lock_buffer(int sno);
-  void read_unlock_buffer(int sno);
-  void cread_unlock_buffer(int sno);
-  long int get_offset(int sno);
+*/
 };
 #endif

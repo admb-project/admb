@@ -107,7 +107,6 @@ void adjoint_adread_lock_buffer_1(void)
 }
 void adpthread_manager::adjoint_adread_lock_buffer_1(void)
 {
-  // cout  << "adjoint_read_lock_buffer_master(void)" << endl;
   verify_identifier_string("XE");
   // *************************************************
   // *************************************************
@@ -235,7 +234,6 @@ void adpthread_manager::read_unlock_buffer(int sno)
     }
   }
 }
-
 void adpthread_manager::cread_unlock_buffer(int sno)
 {
   int tn2=ad_comm::pthread_manager->get_slave_number();
@@ -284,7 +282,6 @@ void adjoint_adread_unlock_buffer_1(void)
 }
 void  adpthread_manager::adjoint_adread_unlock_buffer_1(void)
 {
-  // cout  << "adpthread_manager::adjoint_read_unlock_buffer_master(void);" << endl;
   verify_identifier_string("G7");
   int tn2=restore_int_value();
   int sno=restore_int_value();
@@ -315,7 +312,6 @@ void adjoint_adread_unlock_buffer_2(void)
 }
 void  adpthread_manager::adjoint_adread_unlock_buffer_2(void)
 { 
-  // cout  << "adpthread_manager::adjoint_read_unlock_buffer_slave(void)" << endl;
   // write_lock_slave_buffer
   verify_identifier_string("L7");
   int tn2=restore_int_value();

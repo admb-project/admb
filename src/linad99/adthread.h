@@ -27,12 +27,12 @@ public:
 };
 class adpthread_manager
 {
+private:
   int num_code;
-  static int old_buffer_flag;
   int logflag;
   static __thread int slave_number;
-  adtimer * adt;
-  pofstream * logfiles;
+  adtimer* adt;
+  pofstream* logfiles;
   ppthreadfun ppf;
 public:
   adpthread_manager(int ns,int bs);
@@ -40,31 +40,22 @@ public:
   virtual ~adpthread_manager() {}
 
 public:
-  static int is_slave(void) { if (slave_number)
-                                  return 1;
-                                else
-                                  return 0; }
-  static int is_master(void) { if (slave_number)
-                                  return 0;
-                                else
-                                  return 1; }
+  static bool is_slave(void) { return slave_number ? true : false; }
+  static bool is_master(void) { return !is_slave(); }
+  static void set_slave_number(int n) { slave_number = n; }
   static int get_slave_number(void) { return slave_number; }
-  static void set_slave_number(int n) { slave_number=n; }
-  static void set_old_buffer_flag(int n) { old_buffer_flag=n;}
 
   int nslaves;
   int initial_buffer_size;
   int ngroups;
   ivector gmin;
   ivector gmax;
-  int nfun;
   ivector num_in_group;
   int bs;
   ivector mflag;
   ivector sflag;
   ivector buffer_size;
   pthread_mutex_t copy_mutex;
-  pthread_mutex_t start_mutex;
   pthread_mutex_t* smutex;
   pthread_cond_t* scondition;
   pthread_cond_t* mcondition;
@@ -74,10 +65,10 @@ public:
   char*** sbuffend;
   imatrix smflag;
   imatrix ssflag;
-  pthread_mutex_t ** ssmutex;
-  pthread_cond_t ** sscondition;
-  pthread_cond_t ** smcondition;
-  pthread_t * thread1;  /* thread variables */
+  pthread_mutex_t** ssmutex;
+  pthread_cond_t** sscondition;
+  pthread_cond_t** smcondition;
+  pthread_t* thread1;
 
   void attach_code(pthreadfun pf);
   void check_buffer_size(int, int,int);

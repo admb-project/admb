@@ -7,9 +7,9 @@
 #  endif
 #endif
 
-typedef char * pchar;
-typedef pchar *  ppchar;
-typedef ofstream * pofstream;
+typedef char* pchar;
+typedef pchar* ppchar;
+typedef ofstream* pofstream;
 __thread int adpthread_manager::slave_number;
 
 adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
@@ -24,7 +24,6 @@ adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
   logflag=0;
   mflag.initialize();
   sflag.initialize();
-  int i;
   buffer_size=bs;
   nslaves=ns;
   // for timing 0 is for master 1-n for slaves
@@ -34,7 +33,7 @@ adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
     logfiles=new pofstream[ns+1]; 
     adstring fname="log_master";
     logfiles[0]=new ofstream(fname);
-    for (i=1;i<=ns;i++)
+    for (int i=1;i<=ns;i++)
     {
       adstring fname="log_slave_" + str(i);
       logfiles[i]=new ofstream(fname);
@@ -42,50 +41,44 @@ adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
   }
   ssflag.allocate(0,ns-1);
   smflag.allocate(0,ns-1);
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     ssflag(i).allocate(i+1,ns);
     smflag(i).allocate(i+1,ns);
   }
   smflag.initialize();
   ssflag.initialize();
-  
   ssmutex=new ppthread_mutex_t[ns];
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     ssmutex[i]=new pthread_mutex_t[ns-i];
     ssmutex[i]-=i+1;
   }
-
   sbuffer_size.allocate(0,ns-1);
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     sbuffer_size(i).allocate(i+1,ns);
   }
   sbuffer_size.initialize();
-
- stransfer_buffer=new ppchar[ns];
-
-  for (i=0;i<ns;i++)
+  stransfer_buffer=new ppchar[ns];
+  for (int i=0;i<ns;i++)
   {
     stransfer_buffer[i]=new pchar[ns-i];
     stransfer_buffer[i]-=i+1;
   }
   scurrent_bptr=new ppchar[ns];
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     scurrent_bptr[i]=new pchar[ns-i];
     scurrent_bptr[i]-=i+1;
   }
-
- sbuffend=new ppchar[ns];
-  for (i=0;i<ns;i++)
+  sbuffend=new ppchar[ns];
+  for (int i=0;i<ns;i++)
   {
     sbuffend[i]=new pchar[ns-i];
     sbuffend[i]-=i+1;
   }
-
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     for (int j=i+1;j<=ns;j++)
     {
@@ -94,8 +87,7 @@ adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
       sbuffend[i][j]=0;
     }
   }
-
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     for (int j=i+1;j<=ns;j++)
     {
@@ -103,28 +95,25 @@ adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
     }
   }
   sscondition=new ppthread_cond_t[ns];
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     sscondition[i]=new pthread_cond_t[ns-i];
     sscondition[i]-=i+1;
   }
-  
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     for (int j=i+1;j<=ns;j++)
     {
       pthread_cond_init(sscondition[i]+j,NULL);
     }
   }
-
   smcondition=new ppthread_cond_t[ns];
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     smcondition[i]=new pthread_cond_t[ns-i];
     smcondition[i]-=i+1;
   }
-  
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     for (int j=i+1;j<=ns;j++)
     {
@@ -153,7 +142,6 @@ adpthread_manager::adpthread_manager(int _ngroups,ivector& _num_in_group,int bs)
   logflag=1;
   mflag.initialize();
   sflag.initialize();
-  int i;
   buffer_size=bs;
   // for timing 0 is for master 1-n for slaves
   if (logflag)
@@ -162,7 +150,7 @@ adpthread_manager::adpthread_manager(int _ngroups,ivector& _num_in_group,int bs)
     logfiles=new pofstream[ns+1]; 
     adstring fname="log_master";
     logfiles[0]=new ofstream(fname);
-    for (i=1;i<=ns;i++)
+    for (int i=1;i<=ns;i++)
     {
       adstring fname="log_slave_" + str(i);
       logfiles[i]=new ofstream(fname);
@@ -171,8 +159,7 @@ adpthread_manager::adpthread_manager(int _ngroups,ivector& _num_in_group,int bs)
   smutex=new pthread_mutex_t[ns];
   smutex--;
   pthread_mutex_init(&copy_mutex,NULL);
-  pthread_mutex_init(&start_mutex,NULL);
-  for (i=1;i<=ns;i++)
+  for (int i=1;i<=ns;i++)
   {
     pthread_mutex_init(smutex+i,NULL);
   }
@@ -180,7 +167,7 @@ adpthread_manager::adpthread_manager(int _ngroups,ivector& _num_in_group,int bs)
   scondition--;
   mcondition=new pthread_cond_t[ns];
   mcondition--;
-  for (i=1;i<=ns;i++)
+  for (int i=1;i<=ns;i++)
   {
     pthread_cond_init(scondition+i,0);
     pthread_cond_init(mcondition+i,0);
@@ -189,56 +176,51 @@ adpthread_manager::adpthread_manager(int _ngroups,ivector& _num_in_group,int bs)
   thread1--;
   ppf = new pthreadfun[ngroups];
   ppf--;
-  for (i=1;i<=ngroups;i++)
+  for (int i=1;i<=ngroups;i++)
   {
     ppf[i]= (pthreadfun)(0);
   }
   num_code=0;
   ssflag.allocate(0,ns-1);
   smflag.allocate(0,ns-1);
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     ssflag(i).allocate(i+1,ns);
     smflag(i).allocate(i+1,ns);
   }
   smflag.initialize();
   ssflag.initialize();
-
   ssmutex=new ppthread_mutex_t[ns];
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     ssmutex[i]=new pthread_mutex_t[ns-i];
     ssmutex[i]-=i+1;
   }
   sbuffer_size.allocate(0,ns-1);
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     sbuffer_size(i).allocate(i+1,ns);
   }
   sbuffer_size.initialize();
-
   stransfer_buffer=new ppchar[ns];
-
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     stransfer_buffer[i]=new pchar[ns-i];
     stransfer_buffer[i]-=i+1;
   }
   scurrent_bptr=new ppchar[ns];
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     scurrent_bptr[i]=new pchar[ns-i];
     scurrent_bptr[i]-=i+1;
   }
-
   sbuffend=new ppchar[ns];
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     sbuffend[i]=new pchar[ns-i];
     sbuffend[i]-=i+1;
   }
-
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     for (int j=i+1;j<=ns;j++)
     {
@@ -247,7 +229,7 @@ adpthread_manager::adpthread_manager(int _ngroups,ivector& _num_in_group,int bs)
       sbuffend[i][j]=0;
     }
   }
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     for (int j=i+1;j<=ns;j++)
     {
@@ -255,28 +237,25 @@ adpthread_manager::adpthread_manager(int _ngroups,ivector& _num_in_group,int bs)
     }
   }
   sscondition=new ppthread_cond_t[ns];
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     sscondition[i]=new pthread_cond_t[ns-i];
     sscondition[i]-=i+1;
   }
-  
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     for (int j=i+1;j<=ns;j++)
     {
       pthread_cond_init(sscondition[i]+j,NULL);
     }
   }
-
   smcondition=new ppthread_cond_t[ns];
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     smcondition[i]=new pthread_cond_t[ns-i];
     smcondition[i]-=i+1;
   }
-  
-  for (i=0;i<ns;i++)
+  for (int i=0;i<ns;i++)
   {
     for (int j=i+1;j<=ns;j++)
     {
@@ -533,9 +512,9 @@ void adpthread_manager::adjoint_get_dvar_vector(void)
 }
 dvar_vector adpthread_manager::get_dvar_vector(int sno)
 {
+  verify_id_string("DCY",sno);
   int mmin;
   int mmax;
-  verify_id_string("DCY",sno);
   readbuffer(&mmin,sizeof(int),sno);
   readbuffer(&mmax,sizeof(int),sno);
   // cout  << "In dvar_vector get_dvar_vector" << endl;
@@ -550,14 +529,13 @@ dvar_vector adpthread_manager::get_dvar_vector(int sno)
   save_identifier_string("K6");
   save_pointer_value(this);
   save_identifier_string("D4");
-  gradient_structure::GRAD_STACK1->
-            set_gradient_stack(::adjoint_get_dvar_vector);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(::adjoint_get_dvar_vector);
   return x;
 }
 void adjoint_get_dvariable(void)
 {
   verify_identifier_string("G2");
-  adpthread_manager * ptr=(adpthread_manager*)(restore_pointer_value());
+  adpthread_manager* ptr=(adpthread_manager*)(restore_pointer_value());
   ptr->adjoint_get_dvariable();
 }
 void adpthread_manager::adjoint_get_dvariable(void)
@@ -573,9 +551,9 @@ void adpthread_manager::adjoint_get_dvariable(void)
 }
 dvariable adpthread_manager::get_dvariable(int sno)
 {
+  verify_id_string("VP",sno);
   dvariable x;
   double cx;
-  verify_id_string("VP",sno);
   readbuffer(&cx,sizeof(double),sno);
   value(x)=cx;
   save_identifier_string("C");
@@ -662,9 +640,7 @@ void adpthread_manager::send_dvar_vector(const dvar_vector &x,int sno)
   save_identifier_string("HH");
   save_pointer_value(this);
   save_identifier_string("UP");
-  gradient_structure::GRAD_STACK1->
-    set_gradient_stack(::adjoint_send_dvar_vector);
-    //set_gradient_stack(pthread_master_unpack_vector_derivatives);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(::adjoint_send_dvar_vector);
 }
 void adpthread_manager::send_dvector(const dvector &x,int sno)
 {
@@ -675,13 +651,12 @@ void adpthread_manager::send_dvector(const dvector &x,int sno)
   writebuffer(&mmin,sizeof(int),sno);
   writebuffer(&mmax,sizeof(int),sno);
   writebuffer(&(x(mmin)),sz*sizeof(double),sno);
-  //::send_dvector(x,current_bptr[sno],sno);
 }
 dvector adpthread_manager::get_dvector(int sno)
 {
+  verify_id_string("CCX",sno);
   int mmin;
   int mmax;
-  verify_id_string("CCX",sno);
   readbuffer(&mmin,sizeof(int),sno);
   readbuffer(&mmax,sizeof(int),sno);
   dvector x(mmin,mmax);
@@ -798,8 +773,6 @@ dvar_matrix adpthread_manager::get_dvar_matrix(int sno)
   int rmax;
   readbuffer(&rmin,sizeof(int),sno);
   readbuffer(&rmax,sizeof(int),sno);
-  // cout  << "In dvar_vector get_dvar_vector" << endl;
-  // cout  << " mmin = " << mmin   << " mmax = " << mmax  << endl;
   dvar_matrix x(rmin,rmax);
   for (int i=rmin;i<=rmax;i++)
   {
@@ -818,8 +791,7 @@ dvar_matrix adpthread_manager::get_dvar_matrix(int sno)
   save_identifier_string("K6");
   save_pointer_value(this);
   save_identifier_string("T4");
-  gradient_structure::GRAD_STACK1->
-            set_gradient_stack(::adjoint_get_dvar_matrix);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(::adjoint_get_dvar_matrix);
   return x;
 }
 dmatrix adpthread_manager::get_dmatrix(int sno)
@@ -884,9 +856,9 @@ imatrix adpthread_manager::get_imatrix(int sno)
 }
 void adpthread_manager::send_imatrix(const imatrix &x,int sno)
 {
+  send_id_string("FKY",sno);
   int rmin=x.indexmin();
   int rmax=x.indexmax();
-  send_id_string("FKY",sno);
   writebuffer(&rmin,sizeof(int),sno);
   writebuffer(&rmax,sizeof(int),sno);
   for (int i=rmin;i<=rmax;i++)
@@ -901,9 +873,9 @@ void adpthread_manager::send_imatrix(const imatrix &x,int sno)
 }
 ivector adpthread_manager::get_ivector(int sno)
 {
+  verify_id_string("EAC",sno);
   int mmin;
   int mmax;
-  verify_id_string("EAC",sno);
   readbuffer(&mmin,sizeof(int),sno);
   readbuffer(&mmax,sizeof(int),sno);
   ivector x(mmin,mmax);
@@ -934,10 +906,11 @@ adstring adpthread_manager::get_adstring(int sno)
   verify_id_string("ST",sno);
   int sz;
   readbuffer(&sz,sizeof(int),sno);
-  char * s = new char(sz+1); ;
+  char* s = new char(sz+1);
   readbuffer(s,sz,sno);
   s[sz] = '\0';
   adstring x(s);
   delete [] s;  
+  s = 0;
   return x;
 }

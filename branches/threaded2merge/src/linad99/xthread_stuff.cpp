@@ -122,14 +122,12 @@ void adpthread_manager::adjoint_adwrite_lock_buffer_1(void)
     //*(logfiles[0]) << tm << " adjoint_write_lock_buffer_master"   << endl;
   }
 }
-
 void adjoint_adwrite_lock_buffer_2(void)
 {
   verify_identifier_string("CY");
   adpthread_manager * ptr=(adpthread_manager*)(restore_pointer_value());
   ptr->adjoint_adwrite_lock_buffer_2();
 }
-
 void adpthread_manager::adjoint_adwrite_lock_buffer_2(void)
 {
   //unlock read buffer slave
@@ -214,7 +212,6 @@ void adpthread_manager::write_unlock_buffer(int sno)
     }
   }
 }   
-
 void adpthread_manager::cwrite_unlock_buffer(int sno)
 {
   // we should be using the mutexes from the class

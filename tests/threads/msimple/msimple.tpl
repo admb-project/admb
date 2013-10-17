@@ -56,7 +56,7 @@ GLOBALS_SECTION
          // take control of the variable buffer for sending
          ad_comm::pthread_manager->write_lock_buffer(0);
          // send f
-         ad_comm::pthread_manager->send_dvariable_to_master(f, 0);
+         ad_comm::pthread_manager->send_dvariable(f, 0);
          // release the variable buffer
          ad_comm::pthread_manager->write_unlock_buffer(0);
    

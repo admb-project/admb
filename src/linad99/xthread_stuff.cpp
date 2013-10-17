@@ -100,7 +100,6 @@ void adjoint_adwrite_lock_buffer_1(void)
 void adpthread_manager::adjoint_adwrite_lock_buffer_1(void)
 {
   //unlock read buffer slave
-   //cout  << "adjoint_write_lock_buffer_master(void)" << endl;
   verify_identifier_string("OD");
   int tn2=restore_int_value();
   int sno=restore_int_value();
@@ -134,7 +133,6 @@ void adjoint_adwrite_lock_buffer_2(void)
 void adpthread_manager::adjoint_adwrite_lock_buffer_2(void)
 {
   //unlock read buffer slave
-   //cout  << "adjoint_write_lock_buffer_slave(void)" << endl;
   verify_identifier_string("ED");
   int tn2=restore_int_value();
   int sno=restore_int_value();
@@ -270,7 +268,6 @@ void adpthread_manager::adjoint_adwrite_unlock_buffer_1(void)
   {
     adt[0].get_elapsed_time_and_reset();
   }
-  // cout  << "adjoint_write_unlock_buffer_master(void)" << endl;
   verify_identifier_string("KW");
   int tn2=restore_int_value();
   int sno=restore_int_value();
@@ -298,7 +295,6 @@ void adjoint_adwrite_unlock_buffer_2(void)
 }
 void adpthread_manager::adjoint_adwrite_unlock_buffer_2(void)
 {
-  // cout  << "adjoint_write_unlock_buffer_slave(void)" << endl;
   verify_identifier_string("CD");
   int tn2=restore_int_value();
   int sno=restore_int_value();

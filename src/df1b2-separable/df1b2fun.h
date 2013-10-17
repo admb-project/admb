@@ -2072,5 +2072,6 @@ void print_is_diagnostics(laplace_approximation_calculator *lapprox);
   void ADMB_getcallindex(const df1b2variable& x);
   void ADMB_getcallindex(const df1b2vector& x);
   void ADMB_getcallindex(const df1b2matrix& x);
-#endif //!defined(__DF1B2FUN__)
 
+df1b2variable asin(const df1b2variable& xx);
+#endif //!defined(__DF1B2FUN__)

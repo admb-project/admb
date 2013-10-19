@@ -1,8 +1,8 @@
 #if !defined(__ADXTHREAD__)
-#define __ADXTHREAD__ 
+#define __ADXTHREAD__
 
 #include <unistd.h>     /* Symbolic Constants */
-#include <sys/types.h>  /* Primitive System Data Types */ 
+#include <sys/types.h>  /* Primitive System Data Types */
 #include <errno.h>      /* Errors */
 #include <stdio.h>      /* Input/Output */
 #include <stdlib.h>     /* General Utilities */
@@ -11,9 +11,9 @@
 
 typedef ofstream * pofstream;
 typedef void* (*pthreadfun)(void*);
-typedef pthreadfun * ppthreadfun;
-typedef pthread_mutex_t * ppthread_mutex_t;  
-typedef pthread_cond_t * ppthread_cond_t;
+typedef pthreadfun* ppthreadfun;
+typedef pthread_mutex_t* ppthread_mutex_t;
+typedef pthread_cond_t* ppthread_cond_t;
 
 class new_thread_data
 {
@@ -35,8 +35,8 @@ private:
   pofstream* logfiles;
   ppthreadfun ppf;
 public:
-  adpthread_manager(int ns,int bs);
-  adpthread_manager(int ngroups,ivector& group_num,int bs);
+  adpthread_manager(int ns, int bs);
+  adpthread_manager(int ngroups, ivector& group_num, int bs);
   virtual ~adpthread_manager() {}
 
 public:

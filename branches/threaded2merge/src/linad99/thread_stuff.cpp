@@ -30,7 +30,7 @@ adpthread_manager::adpthread_manager(int ns,int bs) : buffer_size(1,ns),
   if (logflag)
   {
     adt=new adtimer[ns+1];
-    logfiles=new pofstream[ns+1]; 
+    logfiles=new pofstream[ns+1];
     adstring fname="log_master";
     logfiles[0]=new ofstream(fname);
     for (int i=1;i<=ns;i++)
@@ -134,11 +134,11 @@ adpthread_manager::adpthread_manager(int _ngroups,ivector& _num_in_group,int bs)
     gmin(i)=gmax(i-1)+1;
     gmax(i)=gmin(i)+num_in_group(i)-1;
   }
-    
+
   nslaves=ns;
   buffer_size.allocate(1,ns),
   mflag.allocate(1,ns);
-  sflag.allocate(1,ns); 
+  sflag.allocate(1,ns);
   logflag=1;
   mflag.initialize();
   sflag.initialize();
@@ -147,7 +147,7 @@ adpthread_manager::adpthread_manager(int _ngroups,ivector& _num_in_group,int bs)
   if (logflag)
   {
     adt=new adtimer[ns+1];
-    logfiles=new pofstream[ns+1]; 
+    logfiles=new pofstream[ns+1];
     adstring fname="log_master";
     logfiles[0]=new ofstream(fname);
     for (int i=1;i<=ns;i++)
@@ -276,11 +276,11 @@ void adpthread_manager::check_buffer_size_read(int nbytes,int s1,int s2)
     stransfer_buffer[s1][s2]=new char[bs];
     scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
     sbuffend[s1][s2]=stransfer_buffer[s1][s2]+bs-1;
-    cout << "Initialized transfer buffer for pair " 
+    cout << "Initialized transfer buffer for pair "
          << s1 << "  " << s2 << endl;
   }
-  
-  // if the buffer is too small on read theree is an error
+
+  // if the buffer is too small on read there is an error
   if (scurrent_bptr[s1][s2]+nbytes>sbuffend[s1][s2])
   {
     std::ptrdiff_t pd=scurrent_bptr[s1][s2]-stransfer_buffer[s1][s2];
@@ -302,7 +302,7 @@ void adpthread_manager::check_buffer_size(int nbytes,int s1,int s2)
   {
     //if (scurrent_bptr[s1][s2]+nbytes>sbuffend[s1][s2])
     if (scurrent_bptr[s1][s2]+nbytes<=sbuffend[s1][s2]) break;
-  
+
     std::ptrdiff_t pd=scurrent_bptr[s1][s2]-stransfer_buffer[s1][s2];
     std::ptrdiff_t pd1=sbuffend[s1][s2]-stransfer_buffer[s1][s2];
     cout << "scurrent offset is " << pd << " bytes " << endl;
@@ -354,11 +354,11 @@ void adpthread_manager::create_all(void * ptr)
   pthread_attr_setschedpolicy(&policy_attr, SCHED_FIFO);
   cerr << "In adpthread_manager::create_all, set policy to = " << SCHED_FIFO << endl;
   #endif //USE_FIFO_POLICY
-  
+
   //int pthread_attr_setinheritsched(pthread_attr_t *attr, int inheritsched);
   pthread_attr_setinheritsched(&policy_attr, PTHREAD_EXPLICIT_SCHED);
 
-  new_thread_data * dptr = (new_thread_data *)ptr; 
+  new_thread_data * dptr = (new_thread_data *)ptr;
   int ii=0;
   for (int i=1;i<=ngroups;i++)
   {
@@ -439,7 +439,7 @@ void adpthread_manager::readbuffer(const void *_x,int nbytes,int sno)
   }
   check_buffer_size_read(nbytes,s1,s2);
 
-  void * x= (void *)(_x); 
+  void * x= (void *)(_x);
   ::memcpy(x,scurrent_bptr[s1][s2],nbytes);
   scurrent_bptr[s1][s2]+=nbytes;
 }
@@ -910,7 +910,7 @@ adstring adpthread_manager::get_adstring(int sno)
   readbuffer(s,sz,sno);
   s[sz] = '\0';
   adstring x(s);
-  delete [] s;  
+  delete [] s;
   s = 0;
   return x;
 }

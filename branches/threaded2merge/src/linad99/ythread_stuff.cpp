@@ -30,10 +30,10 @@ void adpthread_manager::read_lock_buffer(int sno)
     pthread_mutex_lock(ssmutex[s1]+s2);
     scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
     // only read if buffer full and data is for you
-    while (ssflag(s1,s2) == 0) 
+    while (ssflag(s1,s2) == 0)
       pthread_cond_wait(smcondition[s1]+s2,ssmutex[s1]+s2);
     // cout  << "A sflag=0" << endl;
-    ssflag(s1,s2)=0; 
+    ssflag(s1,s2)=0;
     save_identifier_string("WE");
     save_int_value(sno);
     save_int_value(tn2);
@@ -50,9 +50,9 @@ void adpthread_manager::read_lock_buffer(int sno)
     pthread_mutex_lock(ssmutex[s1]+s2);
     scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
     // only write if buffer empty
-    while (smflag(s1,s2) == 0) 
+    while (smflag(s1,s2) == 0)
       pthread_cond_wait(sscondition[s1]+s2,ssmutex[s1]+s2);
-    smflag(s1,s2)=0; 
+    smflag(s1,s2)=0;
     save_identifier_string("H1");
     save_int_value(sno);
     save_int_value(tn2);
@@ -62,7 +62,7 @@ void adpthread_manager::read_lock_buffer(int sno)
     gradient_structure::GRAD_STACK1->
               set_gradient_stack(::adjoint_adread_lock_buffer_2);
   }
-}   
+}
 void adpthread_manager::cread_lock_buffer(int sno)
 {
   if (logflag)
@@ -83,9 +83,9 @@ void adpthread_manager::cread_lock_buffer(int sno)
     pthread_mutex_lock(ssmutex[s1]+s2);
     scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
     // only read if buffer full and data is for you
-    while (ssflag(s1,s2) == 0) 
+    while (ssflag(s1,s2) == 0)
       pthread_cond_wait(smcondition[s1]+s2,ssmutex[s1]+s2);
-    ssflag(s1,s2)=0; 
+    ssflag(s1,s2)=0;
   }
   else
   {
@@ -94,11 +94,11 @@ void adpthread_manager::cread_lock_buffer(int sno)
     pthread_mutex_lock(ssmutex[s1]+s2);
     scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
     // only write if buffer empty
-    while (smflag(s1,s2) == 0) 
+    while (smflag(s1,s2) == 0)
       pthread_cond_wait(sscondition[s1]+s2,ssmutex[s1]+s2);
-    smflag(s1,s2)=0; 
+    smflag(s1,s2)=0;
   }
-}   
+}
 void adjoint_adread_lock_buffer_1(void)
 {
   verify_identifier_string("ZE");
@@ -164,7 +164,7 @@ void adpthread_manager::adjoint_adread_lock_buffer_2(void)
   // to get rid of global variables
   scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
   // cout  << "adpthread_manager::adjoint_read_lock_buffer_slave(void)=1" << endl;
-  ssflag(s1,s2)=1; 
+  ssflag(s1,s2)=1;
   // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
   pthread_cond_signal(smcondition[s1]+s2);
   pthread_mutex_unlock(ssmutex[s1]+s2);
@@ -194,7 +194,7 @@ void adpthread_manager::read_unlock_buffer(int sno)
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     pthread_cond_signal(sscondition[s1]+s2);
     pthread_mutex_unlock(ssmutex[s1]+s2);
-    
+
     save_identifier_string("G9");
     save_int_value(sno);
     save_int_value(tn2);
@@ -250,7 +250,7 @@ void adpthread_manager::cread_unlock_buffer(int sno)
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     pthread_cond_signal(sscondition[s1]+s2);
     pthread_mutex_unlock(ssmutex[s1]+s2);
-    
+
     if (logflag)
     {
       double tm=adt[0].get_elapsed_time_and_reset();
@@ -296,12 +296,12 @@ void  adpthread_manager::adjoint_adread_unlock_buffer_1(void)
   pthread_mutex_lock(ssmutex[s1]+s2);
   if (logflag)
   {
-   // *(logfiles[0]) << "starting adjoint_read_unlock_buffer_master " << sno 
+   // *(logfiles[0]) << "starting adjoint_read_unlock_buffer_master " << sno
      //              << endl;
     adt[0].get_elapsed_time_and_reset();
   }
   // only write if buffer empty
-  while (smflag(s1,s2) == 1 || ssflag(s1,s2) ==1 ) 
+  while (smflag(s1,s2) == 1 || ssflag(s1,s2) == 1)
     pthread_cond_wait(smcondition[s1]+s2,ssmutex[s1]+s2);
 }
 void adjoint_adread_unlock_buffer_2(void)
@@ -311,7 +311,7 @@ void adjoint_adread_unlock_buffer_2(void)
   ptr->adjoint_adread_unlock_buffer_2();
 }
 void  adpthread_manager::adjoint_adread_unlock_buffer_2(void)
-{ 
+{
   // write_lock_slave_buffer
   verify_identifier_string("L7");
   int tn2=restore_int_value();
@@ -326,12 +326,12 @@ void  adpthread_manager::adjoint_adread_unlock_buffer_2(void)
   pthread_mutex_lock(ssmutex[s1]+s2);
   if (logflag)
   {
-    //*(logfiles[sno]) << "starting adjoint_read_unlock_buffer_slave " << sno  
+    //*(logfiles[sno]) << "starting adjoint_read_unlock_buffer_slave " << sno
       //               << endl;
     adt[sno].get_elapsed_time_and_reset();
   }
   // only write if buffer empty
-  while (smflag(s1,s2) == 1 || ssflag(s1,s2) ==1 ) 
+  while (smflag(s1,s2) == 1 || ssflag(s1,s2) == 1)
     pthread_cond_wait(sscondition[s1]+s2,ssmutex[s1]+s2);
   verify_identifier_string("J5");
 }

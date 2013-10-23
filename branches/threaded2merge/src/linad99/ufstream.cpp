@@ -38,7 +38,7 @@ uistream& uistream::operator>> (const TYPE& x) \
 #if defined(__TURBOC__) || defined(__GNUDOS__) || defined(__MSVC32__) || defined (__WAT32__)
 uostream::uostream(const char* name, int  m, int prot)
 #  if defined(__GNU_NEWER__)
-    :ofstream(name, std::ios::binary | std::_Ios_Openmode(m))
+    :ofstream(name, std::ios::binary)
 #  elif defined(__MSC_NEWER__) || (__BORLANDC__  > 0x0550)
     :ofstream(name, std::ios::binary | m)
 #  else
@@ -80,7 +80,7 @@ void uostream::open(const char* name, int m, int prot)
 #else
 #  if defined(linux)
 #    if (__GNUC__  >= 3)
-       ofstream::open(name, std::_Ios_Openmode(m));
+       ofstream::open(name);
 #    else
        ofstream::open(name, m);
 #    endif

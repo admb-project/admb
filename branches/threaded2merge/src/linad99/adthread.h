@@ -25,6 +25,24 @@ public:
 public:
   int thread_no;
 };
+class adthread_buffer
+{
+public:
+  adthread_buffer();
+  adthread_buffer(const adthread_buffer& other);
+  virtual ~adthread_buffer();
+
+public:
+  void lock();
+  void unlock();
+
+  bool islocked() const { return locked; }
+
+private:
+  bool locked;
+  pthread_mutex_t mutex;
+  pthread_cond_t condition;
+};
 class adpthread_manager
 {
 private:

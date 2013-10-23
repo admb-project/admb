@@ -914,3 +914,30 @@ adstring adpthread_manager::get_adstring(int sno)
   s = 0;
   return x;
 }
+
+adthread_buffer::adthread_buffer()
+{
+}
+adthread_buffer::adthread_buffer(const adthread_buffer& other)
+{
+}
+adthread_buffer::~adthread_buffer()
+{
+}
+void adthread_buffer::lock()
+{
+  pthread_mutex_init(&mutex, NULL);
+  pthread_cond_init(&condition, NULL);
+  locked = true;
+  pthread_mutex_lock(&mutex);
+  while (locked)
+  {
+    pthread_cond_wait(&condition, &mutex);
+  }
+}
+void adthread_buffer::unlock()
+{
+  locked = false;
+  pthread_cond_signal(&condition);
+  pthread_mutex_unlock(&mutex);
+}

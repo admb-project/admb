@@ -68,7 +68,11 @@ void adpthread_manager::cwrite_lock_buffer(int sno)
     pthread_mutex_lock(ssmutex[s1]+s2);
     // only write if buffer empty
     while (smflag(s1,s2) == 1 || ssflag(s1,s2) == 1)
+    {
+      cout << __func__ << ';' << __LINE__ << endl;
       pthread_cond_wait(smcondition[s1]+s2,ssmutex[s1]+s2);
+      cout << __func__ << ';' << __LINE__ << endl;
+    }
   }
   else if (sno < tn2)  // old slave write to master
   {
@@ -77,7 +81,11 @@ void adpthread_manager::cwrite_lock_buffer(int sno)
     pthread_mutex_lock(ssmutex[s1]+s2);
     // only write if buffer empty
     while (smflag(s1,s2) == 1 || ssflag(s1,s2) == 1)
+    {
+      cout << __func__ << ':' << __LINE__ << endl;
       pthread_cond_wait(sscondition[s1]+s2,ssmutex[s1]+s2);
+      cout << __func__ << ':' << __LINE__ << endl;
+    }
   }
   else
   {
@@ -95,8 +103,11 @@ void adpthread_manager::cwrite_unlock_buffer(int sno)
     scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
     smflag(s1,s2) = 1;
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-    pthread_cond_signal(sscondition[s1]+s2);
+      cout << __func__ << ';' << __LINE__ << endl;
+    pthread_cond_broadcast(sscondition[s1]+s2);
+      cout << __func__ << ';' << __LINE__ << endl;
     pthread_mutex_unlock(ssmutex[s1]+s2);
+      cout << __func__ << ';' << __LINE__ << endl;
   }
   else if (sno < tn2)  // old slave write to master
   {
@@ -105,8 +116,11 @@ void adpthread_manager::cwrite_unlock_buffer(int sno)
     scurrent_bptr[s1][s2]=stransfer_buffer[s1][s2];
     ssflag(s1,s2) = 1;
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    pthread_cond_signal(smcondition[s1]+s2);
+      cout << __func__ << ':' << __LINE__ << endl;
+    pthread_cond_broadcast(smcondition[s1]+s2);
+      cout << __func__ << ':' << __LINE__ << endl;
     pthread_mutex_unlock(ssmutex[s1]+s2);
+      cout << __func__ << ':' << __LINE__ << endl;
   }
   else
   {

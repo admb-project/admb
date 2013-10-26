@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
 #include <adthread.h>
+#include <string>
 
 class tests_adthread_manager: public ::testing::Test {};
 
@@ -312,4 +313,161 @@ TEST_F(tests_adthread_buffer, read_lock_buffer2)
   a.unlock();
   pthread_join(ptlock, NULL);
   ASSERT_EQ(2, count);
+}
+TEST_F(tests_adthread_buffer, int_binary_to_stdstring)
+{
+  const size_t sizeofint = sizeof(int);
+
+  std::string str;
+  int value = 123789;
+  char* ptr = (char*)&value;
+  str.append(ptr, sizeofint);
+  int expected = 0;
+  char* ptr2 = (char*)&expected;
+  memcpy(ptr2, str.c_str(), sizeofint);
+  ASSERT_EQ(expected, value);
+
+  int value2 = 456321;
+  ptr = (char*)&value2;
+  str.append(ptr, sizeofint);
+  const char* ptr3 = str.c_str();
+  memcpy(ptr2, &ptr3[sizeofint], sizeofint);
+  ASSERT_EQ(expected, value2);
+}
+TEST_F(tests_adthread_buffer, double_binary_to_stdstring)
+{
+  const size_t sizeofdouble = sizeof(double);
+
+  std::string str;
+  double value = 123789.456321;
+  char* ptr = (char*)&value;
+  str.append(ptr, sizeofdouble);
+  double expected = 0;
+  char* ptr2 = (char*)&expected;
+  memcpy(ptr2, str.c_str(), sizeofdouble);
+  ASSERT_EQ(expected, value);
+
+  double value2 = 456321.123789;
+  ptr = (char*)&value2;
+  str.append(ptr, sizeofdouble);
+  const char* ptr3 = str.c_str();
+  memcpy(ptr2, &ptr3[sizeofdouble], sizeofdouble);
+  ASSERT_EQ(expected, value2);
+}
+TEST_F(tests_adthread_buffer, push_pop_int)
+{
+  adthread_buffer a;
+  const int value = 123789;
+  a.push(value);
+  int expected = 0;
+  a.pop(expected);
+  ASSERT_EQ(expected, value);
+}
+TEST_F(tests_adthread_buffer, push_pop_int_3x)
+{
+  adthread_buffer a;
+
+  const int expected1 = 123789;
+  a.push(expected1);
+  const int expected2 = 72891;
+  a.push(expected2);
+  const int expected3 = 789123;
+  a.push(expected3);
+
+  int value3 = 0;
+  a.pop(value3);
+  ASSERT_EQ(expected3, value3);
+
+  int value2 = 0;
+  a.pop(value2);
+  ASSERT_EQ(expected2, value2);
+
+  int value1 = 0;
+  a.pop(value1);
+  ASSERT_EQ(expected1, value1);
+}
+TEST_F(tests_adthread_buffer, push_pop_double)
+{
+  adthread_buffer a;
+  const double expected = 123789.9876;
+  a.push(expected);
+  double value = 0;
+  a.pop(value);
+  ASSERT_EQ(expected, value);
+}
+TEST_F(tests_adthread_buffer, push_pop_double_3x)
+{
+  adthread_buffer a;
+
+  const double expected1 = 123789.45;
+  a.push(expected1);
+  const double expected2 = 72891.221;
+  a.push(expected2);
+  const double expected3 = 789123.101;
+  a.push(expected3);
+
+  double value3 = 0;
+  a.pop(value3);
+  ASSERT_EQ(expected3, value3);
+
+  double value2 = 0;
+  a.pop(value2);
+  ASSERT_EQ(expected2, value2);
+
+  double value1 = 0;
+  a.pop(value1);
+  ASSERT_EQ(expected1, value1);
+}
+TEST_F(tests_adthread_buffer, push_pop_chararray)
+{
+  adthread_buffer a;
+  const char* expected = "123789.9876\0";
+  a.push(expected);
+  char* value = new char[strlen(expected) + 1];
+  a.pop(value);
+  value[strlen(expected)] = '\0';
+  ASSERT_STREQ(expected, value);
+  delete value;
+  value = 0;
+}
+TEST_F(tests_adthread_buffer, push_pop_chararray_3x)
+{
+  adthread_buffer a;
+  const char* expected1 = "123789.9876\0";
+  a.push(expected1);
+  const char* expected2 = "72891.221\0";
+  a.push(expected2);
+  const char* expected3 = "789123.101\0";
+  a.push(expected3);
+
+  char* value3 = new char[strlen(expected3) + 1];
+  a.pop(value3);
+  value3[strlen(expected3)] = '\0';
+  ASSERT_STREQ(expected3, value3);
+  delete value3;
+  value3 = 0;
+
+  char* value2 = new char[strlen(expected2) + 1];
+  a.pop(value2);
+  value2[strlen(expected2)] = '\0';
+  ASSERT_STREQ(expected2, value2);
+  delete value2;
+  value2 = 0;
+
+  char* value1 = new char[strlen(expected1) + 1];
+  a.pop(value1);
+  value1[strlen(expected1)] = '\0';
+  ASSERT_STREQ(expected1, value1);
+  delete value1;
+  value1 = 0;
+}
+class tests_adthread: public ::testing::Test {};
+TEST_F(tests_adthread, constructor)
+{
+  adthread t;
+}
+TEST_F(tests_adthread, create)
+{
+  adthread t;
+  t.create();
 }

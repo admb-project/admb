@@ -8,6 +8,7 @@
 #include <stdlib.h>     /* General Utilities */
 #include <pthread.h>    /* POSIX Threads */
 #include <string.h>     /* String handling */
+#include <string>     /* String handling */
 
 typedef ofstream * pofstream;
 typedef void* (*pthreadfun)(void*);
@@ -25,6 +26,9 @@ public:
 public:
   int thread_no;
 };
+/**
+Make a member of manager class.
+ */
 class adthread_buffer
 {
 public:
@@ -38,10 +42,36 @@ public:
 
   bool islocked() const { return locked; }
 
+  void push(const int value);
+  void pop(int& value);
+  void push(const size_t value);
+  void pop(size_t& value);
+  void push(const double value);
+  void pop(double& value);
+  void push(const char* value);
+  void pop(char* value);
+
 private:
   bool locked;
   pthread_mutex_t mutex;
   pthread_cond_t condition;
+  std::string buffer;
+};
+class adthread
+{
+public:
+  adthread();
+  adthread(const adthread& other);
+  virtual ~adthread();
+
+public:
+  void create();
+
+private:
+  void routine();
+
+private:
+  adthread_buffer buffer;
 };
 class adpthread_manager
 {

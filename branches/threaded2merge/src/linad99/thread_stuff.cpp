@@ -1,5 +1,7 @@
 #include <admodel.h>
 #include <cstddef>
+#include <cstring>
+#include <thread>
 #include "adthread.h"
 #if !defined(OPT_LIB)
 #  if !defined(CHK_ID_STRING)
@@ -940,4 +942,74 @@ void adthread_buffer::unlock()
   locked = false;
   pthread_cond_signal(&condition);
   pthread_mutex_unlock(&mutex);
+}
+void adthread_buffer::push(const int value)
+{
+  const size_t v = value;
+  push(v);
+}
+void adthread_buffer::pop(int& value)
+{
+  size_t v = 0;
+  pop(v);
+  value = v;
+}
+void adthread_buffer::push(const size_t value)
+{
+  const size_t size = sizeof(size_t);
+  const char* v = (const char*)&value;
+  buffer.append(v, size);
+}
+void adthread_buffer::pop(size_t& value)
+{
+  const size_t size = sizeof(size_t);
+  const char* source = buffer.c_str();
+  char* destination = (char*)&value;
+  memcpy(destination, &source[buffer.size() - size], size);
+  buffer.erase(buffer.size() - size, size);
+}
+void adthread_buffer::push(const double value)
+{
+  const size_t size = sizeof(double);
+  const char* v = (const char*)&value;
+  buffer.append(v, size);
+}
+void adthread_buffer::pop(double& value)
+{
+  const size_t size = sizeof(double);
+  const char* source = buffer.c_str();
+  char* destination = (char*)&value;
+  memcpy(destination, &source[buffer.size() - size], size);
+  buffer.erase(buffer.size() - size, size);
+}
+void adthread_buffer::push(const char* value)
+{
+  const size_t size = strlen(value);
+  buffer.append(value, size);
+  push(size);
+}
+void adthread_buffer::pop(char* value)
+{
+  size_t size = 0;
+  pop(size);
+  const char* source = buffer.c_str();
+  memcpy(value, &source[buffer.size() - size], size);
+  buffer.erase(buffer.size() - size, size);
+}
+adthread::adthread()
+{
+}
+adthread::adthread(const adthread& other)
+{
+}
+adthread::~adthread()
+{
+}
+void adthread::create()
+{
+  std::thread t(&routine);
+}
+void adthread::routine()
+{
+  cout << __func__ << ':' << __LINE__ << endl;
 }

@@ -4,6 +4,7 @@
 #include <fvar.hpp>
 #include <admodel.h>
 #include <df1b2fun.h>
+#include <adrndeff.h> 
 
 dvar_matrix ageLengthKey( const dvar_vector& mu, const dvar_vector& sig, const dvector& x );
 dmatrix ageLengthKey( const dvector& mu, const dvector& sig, const dvector& x );
@@ -69,13 +70,20 @@ dvariable dgamma( const dvector &x, const dvar_vector& a, const prevariable& b )
 // Normal distribution
 dvariable dnorm( const prevariable& x, const double& mu, const double& std );
 dvariable dnorm( const dvar_vector& x, const double& mu, const double& std );
+dvariable dnorm( const prevariable& x, const double& mu, const double& std, bool bLog );
 dvariable dnorm( const dvector& x, const prevariable& mu, const prevariable& std );
+dvariable dnorm( const dvector& x, const prevariable& mu, const prevariable& std, bool dLog );
 dvariable dnorm( const dvar_vector& residual, const prevariable& std );
 dvariable dnorm( const dvar_vector& residual, const double& std );
 dvariable dnorm( const dvar_vector& residual, const dvector& std );
 dvariable dnorm( const dvar_vector& residual, const dvar_vector std );
 dvariable dnorm( const dvar_vector& residual );
 dvariable dnorm( const dmatrix& obs, const dvar_matrix& pred );
+df1b2variable dnorm( const df1b2variable& x, const double& mu, const double& std );
+df1b2variable dnorm( const df1b2variable& x, const double& mu, const double& std, bool bLog );
+df1b2variable dnorm( const df1b2variable& x, const df1b2variable& mu, const df1b2variable& std, bool bLog );
+df1b2variable dnorm( const df1b2vector& x, const df1b2variable& mu, const df1b2variable& std, bool dLog );
+
 
 // Plogis distribution
 dvariable plogis( const prevariable& x, const double& location, const double& scale );
@@ -124,6 +132,12 @@ dvariable multifan(const double& s,const dvector obsQ,const dvar_vector& preQ, d
 // Spline class and functions
 typedef vcubic_spline_function * pvcubic_spline_function;
 
+/**
+ * \brief A class for implementin cubic splines
+ * \author Dave Fournier, Jim Ianelli, Steve Martell
+ * \remarks
+ * Uses cubic spline interpolation.
+**/
 class vcubic_spline_function_array
 {
 public:
@@ -161,11 +175,12 @@ dvariable splint(const dvector& _xa,const dvar_vector& _ya, const dvar_vector& _
 * @file statsLib.h
 * @brief Library of statistic functions
 * \ingroup STATLIB
+* \remarks
 * This library contains declaratioins for
 * numerous statistical functions
 * that can be used in ADMB TPL files.
 * 
-* @author Chris Grandin, Steve Martell, Mollie Brooks
+* @author  Steve Martell, Chris Grandin, Mollie Brooks
 * 
 * @date 12/14/2011
 */

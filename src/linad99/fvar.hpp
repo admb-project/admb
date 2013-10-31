@@ -5936,7 +5936,7 @@ class vcubic_spline_function
 			  dvariable yp1, dvariable ypn);
    vcubic_spline_function(const dvector & _x, const dvar_vector & _y,
 			  dvariable yp1);
-   dvariable operator () (double u);
+   dvariable operator   () (double u);
    dvar_vector operator () (const dvector & u);
    dvar_vector operator () (const dvar_vector & u);
 };

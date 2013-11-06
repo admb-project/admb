@@ -43,7 +43,6 @@ dmatrix eigenvectors(const dmatrix& m)  //,_CONST dvector& diag)
 
   dmatrix m1=symmetrize(m);
   int n=m1.rowsize();
-  int imin=m.colmin();
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   dvector diag(1,n);
@@ -81,7 +80,6 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)  //,_CONST dvector& 
 
   dmatrix m1=symmetrize(m);
   int n=m1.rowsize();
-  int imin=m.colmin();
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   diag.shift(1);

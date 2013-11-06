@@ -1838,9 +1838,8 @@ void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Does Nothing.
+*/
 void laplace_approximation_calculator::check_for_need_to_reallocate(int ip)
 {
 }

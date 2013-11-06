@@ -408,9 +408,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
 dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
   (function_minimizer * pfmin)
 {
-  //int i,j,ip;
-  int ip;
-
   int nv=initial_df1b2params::set_index();
   if (allocated(used_flags))
   {
@@ -427,8 +424,11 @@ dvector laplace_approximation_calculator::get_newton_raphson_info_block_diagonal
   //for (ip=1;ip<=num_der_blocks;ip++)
   {
     used_flags.initialize();
+
     // do we need to reallocate memory for df1b2variables?
+    int ip = 0;
     check_for_need_to_reallocate(ip);
+
     df1b2_gradlist::set_no_derivatives();
     //cout << re_objective_function_value::pobjfun << endl;
     //cout << re_objective_function_value::pobjfun->ptr << endl;

@@ -83,7 +83,6 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
  : ifstream(fn, ios::in | open_m) , file_name(fn)
  #else
  : ifstream(fn, ios::in | std::ios::openmode(open_m)) , file_name(fn)
- // : ifstream(fn, ios::in | std::_Ios_Openmode(open_m)) , file_name(fn)
  #endif
 #elif defined (__ZTC__)
  : ios(&buffer), ifstream(fn, ios::in | open_m) , file_name(fn)

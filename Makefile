@@ -21,9 +21,9 @@ help:
 	@echo "\tmake openCC\n"
 
 installer:
-	rm -f admb.zip admb
-	ln -sf build/dist/ admb
-	zip -r admb admb/*
+	rm -vf admb.zip build/admb
+	cd build && ln -sf dist/ admb
+	cd build && zip -r ../admb admb
 
 #Microsoft Visual C++
 cl: cl-all

@@ -308,8 +308,13 @@ void set_partition_sizes(int & num_der_blocks,ivector& minder,
  * \param
  */
 laplace_approximation_calculator::laplace_approximation_calculator
-  (int _xsize,int _usize,int _minder,int _maxder,
-  function_minimizer * _pmin):
+(
+  int _xsize,
+  int _usize,
+  int _minder,
+  int _maxder,
+  function_minimizer* _pmin
+):
   init_switch(1),
   separable_call_level(0),
   triplet_information(0),
@@ -988,9 +993,13 @@ laplace_approximation_calculator::laplace_approximation_calculator
  * Description not yet available.
  * \param
  */
-laplace_approximation_calculator::laplace_approximation_calculator
-  (int _xsize,int _usize,ivector _minder,ivector _maxder,
-  function_minimizer * _pmin ):
+laplace_approximation_calculator::laplace_approximation_calculator(
+  int _xsize,
+  int _usize,
+  ivector _minder,
+  ivector _maxder,
+  function_minimizer* _pmin
+):
   separable_call_level(1),
   triplet_information(0),
   compressed_triplet_information(0),

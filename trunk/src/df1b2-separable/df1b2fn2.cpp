@@ -118,9 +118,8 @@ ptrdiff_t adptr_diff(void* x, void* y)
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
+Initialize
+*/
 void df1b2variable::initialize(void)
 {
 #if defined(__CHECK_MEMORY__)
@@ -134,9 +133,10 @@ void df1b2variable::initialize(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Initialize nvariables
+
+/param n nvariables
+*/
 void df1b2variable::initialize(int n)
 {
   //int bs=get_blocksize(n);
@@ -271,45 +271,43 @@ typedef init_df1b2variable * PINIT_DF1B2VARIABLE;
   int no_destruct=0;
 
 /**
- * Description not yet available.
- * \param
- */
-  df1b2variable::~df1b2variable()
-  {
+Destructor
+*/
+df1b2variable::~df1b2variable()
+{
     deallocate();
-  }
+}
 
 /**
- * Description not yet available.
- * \param
- */
-  void df1b2variable::deallocate(void)
+If no other copies exist, free df1b2variable::ptr.
+*/
+void df1b2variable::deallocate(void)
+{
+  if (ptr)
   {
-    if (ptr)
-    {
 #if defined(__CHECK_MEMORY__)
-      if (pchecker)
+    if (pchecker)
+    {
+      if (ptr == pchecker)
       {
-        if (ptr == pchecker)
-        {
-          cout << "destructor called  " << endl;
-        }
-      }
-#endif
-      if (*ncopies)
-      {
-        (*ncopies)--;
-      }
-      else
-      {
-        if (!df1b2_gradlist::no_derivatives)
-          f1b2gradlist->write_save_pass2_tilde_values(this);
-        ((twointsandptr*)ptr)->ptr->free(ptr);
-
-        ptr=0;
+        cout << "destructor called  " << endl;
       }
     }
+#endif
+    if (ncopies && *ncopies)
+    {
+      (*ncopies)--;
+    }
+    else
+    {
+      if (!df1b2_gradlist::no_derivatives)
+        f1b2gradlist->write_save_pass2_tilde_values(this);
+      ((twointsandptr*)ptr)->ptr->free(ptr);
+
+      ptr = 0;
+    }
   }
+}
 
 /**
  * Description not yet available.
@@ -609,10 +607,13 @@ void df1b2_gradlist::reset(void)
  * Description not yet available.
  * \param
  */
-df1b2_gradlist::df1b2_gradlist(unsigned int _bs,unsigned int _nbs,
-  unsigned int _bs2,unsigned int _nbs2,
-  unsigned int _bs3,unsigned int _nbs3,
-  const adstring& _filename)
+df1b2_gradlist::df1b2_gradlist
+(
+  unsigned int _bs, unsigned int _nbs,
+  unsigned int _bs2, unsigned int _nbs2,
+  unsigned int _bs3, unsigned int _nbs3,
+  const adstring& _filename
+)
 {
   int bs=get_f1b2buffer_size("-l1");
   if (!bs) bs=_bs;
@@ -967,10 +968,9 @@ init_df1b2variable& init_df1b2vector::operator [] (int i)
 //int active(const df1b2matrix& x){return 1;}
 
 /**
- * Description not yet available.
- * \param
- */
-int get_f1b2buffer_size(const char * s)
+Get f1b2buffer size from commandline options.
+*/
+int get_f1b2buffer_size(const char* s)
 {
   int n=0;
   int on1=-1;

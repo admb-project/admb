@@ -144,10 +144,10 @@ inline void increment_pointer(vreference p,int n)
 #include <df32fun.h>
 extern int global_nvar;
 class df1b2_gradlist;
-extern df1b2_gradlist * f1b2gradlist;
-extern df1b2_gradlist * localf1b2gradlist;
-extern df1b2_gradlist * globalf1b2gradlist;
-extern df1b2_gradlist ** f1b2gradlist_stack;
+extern df1b2_gradlist* f1b2gradlist;
+extern df1b2_gradlist* localf1b2gradlist;
+extern df1b2_gradlist* globalf1b2gradlist;
+extern df1b2_gradlist** f1b2gradlist_stack;
 extern int max_num_init_df1b2variable;
 
 void df1b2_gradcalc1(void);
@@ -233,13 +233,12 @@ void read_pass1_2(void);
  */
   class df1b2variable : public df1b2_header
   {
-
   public:
-    double * ptr;
+    double* ptr;
     int get_local_nvar(void) const {return int(((twointsandptr*)ptr)->nvar);}
     int allocated(void){return ptr!=0;}
     int unallocated(void){return ptr==0;}
-    static adpool * pool;
+    static adpool* pool;
     static int current_allocation_index;
     static int adpool_use_index[];
     static int pool_allocation_number[];
@@ -248,8 +247,8 @@ void read_pass1_2(void);
     static int adpool_counter;
     static void increment_adpool_counter(void);
     static const int adpool_stack_size;
-    static adpool * adpool_vector[];
-    static adpool * adpool_stack[];
+    static adpool* adpool_vector[];
+    static adpool* adpool_stack[];
     static int adpool_nvar_stack[];
     static int adpool_stack_pointer;
     static void save_adpool_pointer(void);
@@ -259,7 +258,7 @@ void read_pass1_2(void);
     static int nvar;  // the number of independent variables
     static int minder;  // the number of independent variables
     static int maxder;  // the number of independent variables
-    static int blocksize;//
+    static int blocksize;
     static int noallocate;
 
     static int get_passnumber(void){return passnumber;}
@@ -271,11 +270,9 @@ void read_pass1_2(void);
     static int get_blocksize(void);
     static int get_blocksize(int n);
     int & get_ind_index(void){ return indindex;}
-    const int & get_ind_index(void) const { return indindex;}
-    short int * ncopies;
+    const int& get_ind_index(void) const { return indindex;}
+    short int* ncopies;
     // for fixed size n whole thing is 6n+2
-
-
     void initialize(void);
     void initialize(int n);
 

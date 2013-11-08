@@ -21,10 +21,11 @@ void read_pass1_init_3(void);
 void ad_read_pass1_initialize(void);
 
 /**
- * Description not yet available.
- * \param
- */
-void df1b2variable::operator = (double d)
+Assign with value d.
+
+\param d new value
+*/
+void df1b2variable::operator=(double d)
 {
   initialize();
   //ptr[blocksize-1]=8219.4;
@@ -67,9 +68,8 @@ df1b2variable::df1b2variable(double d)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 df1b2variable::df1b2variable(void)
 {
   if (!df1b2variable::noallocate)
@@ -79,17 +79,15 @@ df1b2variable::df1b2variable(void)
   else
   {
     ptr=0;
-#if defined(SAFE_ALL)
-  ncopies=0;
-  u=0;
-  u_dot=0;
-  u_bar=0;
-  u_dot_bar=0;
-  u_tilde=0;
-  u_dot_tilde=0;
-  u_bar_tilde=0;
-  u_dot_bar_tilde=0;
-#endif
+    ncopies=0;
+    u=0;
+    u_dot=0;
+    u_bar=0;
+    u_dot_bar=0;
+    u_tilde=0;
+    u_dot_tilde=0;
+    u_bar_tilde=0;
+    u_dot_bar_tilde=0;
   }
 }
 

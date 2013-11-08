@@ -25,14 +25,23 @@
 dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   double ln_unsigned_det,double& sign);
 
+/**
+/param aa
+/param tz
+*/
 dmatrix solve(const dmatrix& aa, const dmatrix& tz)
 {
-  double ln;
-  double sgn;
+  double ln = 0;
+  double sgn = 0;
   return solve(aa,tz,ln,sgn);
 }
 
-
+/**
+/param aa
+/param tz
+/param ln_unsigned_det
+/param sign
+*/
 dmatrix solve(const dmatrix& aa,const dmatrix& tz,
   double ln_unsigned_det,double& sign)
 {

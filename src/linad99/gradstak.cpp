@@ -248,9 +248,8 @@
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 grad_stack::~grad_stack()
 {
    // this->print();

@@ -219,9 +219,8 @@ void dfsdmat::allocate(int _n, const gradient_structure& gs)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 dfsdmat::~dfsdmat()
 {
   deallocate();

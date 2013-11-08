@@ -72,9 +72,8 @@ void sdmatrix::allocate(int irh)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 sdmatrix::~sdmatrix()
 {
   #ifdef DIAG

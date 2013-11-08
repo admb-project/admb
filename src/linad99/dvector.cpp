@@ -48,33 +48,32 @@ dvector& dvector::shift(int min)
   return *this;
 }
 
- /**
- Default destructor. Invoked by the compiler. Only frees allocated memory
- if all shallow copies in scope have been removed.
- */
- dvector::~dvector()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       #ifdef DIAG
-         myheapcheck(" Entering ~dvector");
-       #endif
-
-       if ( v == NULL)
-       {
-         cerr << " Trying to delete NULL pointer in ~dvector\n";
-         ad_exit(21);
-       }
-       deallocate();
-     }
-   }
- }
+/**
+Default destructor. Invoked by the compiler. Only frees allocated memory
+if all shallow copies in scope have been removed.
+*/
+dvector::~dvector()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      #ifdef DIAG
+      myheapcheck(" Entering ~dvector");
+      #endif
+      if (v == NULL)
+      {
+        cerr << " Trying to delete NULL pointer in ~dvector\n";
+        ad_exit(21);
+      }
+      deallocate();
+    }
+  }
+}
 
 static int testflag=0;
 static int ycounter=0;

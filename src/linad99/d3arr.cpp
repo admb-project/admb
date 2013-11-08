@@ -662,30 +662,28 @@ static int testflag=0;
  }
 
 /**
- * Description not yet available.
- * \param
- */
- d3_array::~d3_array()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       deallocate();
-     }
-   }
-   else
-   {
+Destructor
+*/
+d3_array::~d3_array()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      deallocate();
+    }
+  }
 #  ifdef SAFE_ARRAYS
-    // cerr << "Warning -- trying to deallocate an unallocated d3_array"<<endl;
+  else
+  {
+    cerr << "Warning -- trying to deallocate an unallocated d3_array"<<endl;
+  }
 #  endif
-   }
- }
-
+}
 /**
  * Description not yet available.
  * \param

@@ -145,9 +145,8 @@ dlink* dlist::last_remove()
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 dlist::~dlist()
 {
 /*
@@ -179,7 +178,9 @@ dlist::~dlist()
 */
   ::free(ddlist_space);
   ddlist_space=NULL;
+
   delete [] dlink_addresses;
+  dlink_addresses = 0;
 }
 
 /**

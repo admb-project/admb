@@ -20,41 +20,36 @@
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  smart_counter::smart_counter(void)
-  {
-    ncopies=new int;
-    *ncopies=0;
-  }
-
+Default constructor
+*/
+smart_counter::smart_counter(void)
+{
+  ncopies = new int;
+  *ncopies = 0;
+}
 /**
- * Description not yet available.
- * \param
- */
-  smart_counter::smart_counter(const smart_counter & sc)
-  {
-    ncopies=sc.ncopies;
+Copy constructor
+*/
+smart_counter::smart_counter(const smart_counter& sc)
+{
+    ncopies = sc.ncopies;
     (*ncopies)++;
-  }
-
+}
 /**
- * Description not yet available.
- * \param
- */
-  smart_counter::~smart_counter(void)
+Destructor
+*/
+smart_counter::~smart_counter(void)
+{
+  if (*ncopies == 0)
   {
-    if (*ncopies==0)
-    {
-      delete ncopies;
-      ncopies=0;
-    }
-    else
-    {
-      (*ncopies)--;
-    }
+    delete ncopies;
+    ncopies = 0;
   }
+  else
+  {
+    (*ncopies)--;
+  }
+}
 
   ad_integer::ad_integer(const index_type& it) : d(it.integer()) {}
 

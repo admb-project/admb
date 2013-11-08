@@ -382,9 +382,8 @@ void tsdfpool::free(void * b)
 #endif
 
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 dfpool::~dfpool(void)
 {
   deallocate();
@@ -410,9 +409,8 @@ dfpool::dfpool(unsigned sz) : size(sz<sizeof(link *)?sizeof(link*):sz)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 dfpool::dfpool(void)
 {
   dfpool_vector_flag=0;

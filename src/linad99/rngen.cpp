@@ -87,13 +87,12 @@ random_number_generator::random_number_generator(int seed)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 random_number_generator::~random_number_generator()
 {
    delete [] mt;
-   mt=0;  // not  necessary but habit.
+   mt = 0;
 }
 
 /**

@@ -76,14 +76,12 @@ double sum(const d5_array& m)
  }
 
 /**
- * Description not yet available.
- * \param
- */
- d5_array::~d5_array()
- {
-   deallocate();
- }
-
+Destructor
+*/
+d5_array::~d5_array()
+{
+  deallocate();
+}
 /**
  * Description not yet available.
  * \param

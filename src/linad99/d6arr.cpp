@@ -76,13 +76,12 @@
  }
 
 /**
- * Description not yet available.
- * \param
- */
- d6_array::~d6_array()
- {
-   deallocate();
- }
+Destructor
+*/
+d6_array::~d6_array()
+{
+  deallocate();
+}
 
 /**
  * Description not yet available.

@@ -73,16 +73,13 @@
 #    endif
    }
  }
-
 /**
- * Description not yet available.
- * \param
- */
- d7_array::~d7_array()
- {
-   deallocate();
- }
-
+Destructor
+*/
+d7_array::~d7_array()
+{
+  deallocate();
+}
 /**
  * Description not yet available.
  * \param

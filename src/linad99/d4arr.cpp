@@ -140,13 +140,12 @@ double sum(const d4_array& m)
  }
 
 /**
- * Description not yet available.
- * \param
- */
- d4_array::~d4_array()
- {
-   deallocate();
- }
+Destructor
+*/
+d4_array::~d4_array()
+{
+  deallocate();
+}
 
 /**
  * Description not yet available.

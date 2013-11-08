@@ -144,26 +144,21 @@ lmatrix::lmatrix(int nrl, int nrh, int ncl, const ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
  }
-
 /**
- * Description not yet available.
- * \param
- */
- lmatrix::lmatrix(void)
- {
+Default constructor
+*/
+lmatrix::lmatrix(void)
+{
    shape = NULL;
    m=NULL;
- }
-
+}
 /**
- * Description not yet available.
- * \param
- */
- lmatrix::~lmatrix()
- {
-   deallocate();
- }
-
+Destructor
+*/
+lmatrix::~lmatrix()
+{
+  deallocate();
+}
 /**
  * Description not yet available.
  * \param

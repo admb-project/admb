@@ -12,45 +12,40 @@
 
 #include "df12fun.h"
 
-  prevariable * df1_two_variable::ind_var[2];
+prevariable* df1_two_variable::ind_var[2];
 
-  int df1_two_variable::num_ind_var=0;
+int df1_two_variable::num_ind_var=0;
 
 /**
- * Description not yet available.
- * \param
- */
-  df1_two_variable::df1_two_variable(const df1_two_variable& x)
+Copy constructor
+*/
+df1_two_variable::df1_two_variable(const df1_two_variable& x)
+{
+  v[0] = x.v[0];
+  v[1] = x.v[1];
+  v[2] = x.v[2];
+}
+/**
+Copy constructor
+*/
+df1_two_vector::df1_two_vector(const df1_two_vector& m2)
+{
+  index_min = m2.index_min;
+  index_max = m2.index_max;
+  shape  =m2.shape;
+  if (shape)
   {
-    v[0]=x.v[0];
-    v[1]=x.v[1];
-    v[2]=x.v[2];
+    (shape->ncopies)++;
   }
-
+  v = m2.v;
+}
 /**
- * Description not yet available.
- * \param
- */
- df1_two_vector::df1_two_vector(const df1_two_vector& m2)
- {
-   index_min=m2.index_min;
-   index_max=m2.index_max;
-   shape=m2.shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-   v = m2.v;
- }
-
-/**
- * Description not yet available.
- * \param
- */
- df1_two_vector::~df1_two_vector()
- {
-   deallocate();
- }
+Destructor
+*/
+df1_two_vector::~df1_two_vector()
+{
+  deallocate();
+}
 
 /**
  * Description not yet available.

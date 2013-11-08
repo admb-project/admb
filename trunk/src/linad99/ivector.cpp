@@ -26,28 +26,27 @@ long int _farptr_tolong(void * px);
 long int farptr_tolong(void *);
 
 /**
- * Description not yet available.
- * \param
- */
- ivector::~ivector()
- {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       if ( v == NULL)
-       {
+Destructor
+*/
+ivector::~ivector()
+{
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      if ( v == NULL)
+      {
          cerr << " Trying to delete NULL pointer in ~ivector\n";
          ad_exit(21);
-       }
-       deallocate();
-     }
-   }
- }
+      }
+      deallocate();
+    }
+  }
+}
 
 /**
  * Description not yet available.

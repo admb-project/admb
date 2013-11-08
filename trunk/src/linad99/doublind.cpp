@@ -74,13 +74,12 @@ double_index_type::double_index_type(const dvector& x)
   }
 
 /**
- * Description not yet available.
- * \param
- */
-  dmatrix_index::~dmatrix_index()
-  {
-    //cout << "in ~matrix_index()" << endl;
-  }
+Destructor
+*/
+dmatrix_index::~dmatrix_index()
+{
+  //DoesNothing
+}
 
 /**
  * Description not yet available.
@@ -138,7 +137,13 @@ double_index_type::double_index_type(const dvector& x)
     return pre_double_index_type(this,i);
   }
 
-  dvector_index::~dvector_index() {}
+/**
+Destructor
+*/
+dvector_index::~dvector_index()
+{
+  //DoesNothing
+}
 
 /**
  * Description not yet available.

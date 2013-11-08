@@ -24,11 +24,10 @@
 void denormalize_ptr(void * ptr, unsigned int byte_offset);
 
 /**
- * Description not yet available.
- * \param
- */
- lvector::~lvector()
- {
+Destructor
+*/
+lvector::~lvector()
+{
    if (shape)
    {
      if (shape->ncopies)
@@ -54,28 +53,23 @@ void denormalize_ptr(void * ptr, unsigned int byte_offset);
    {
      cerr << "Trying to delete an unallocated lvector" << endl;
    }
- }
-
+}
 /**
- * Description not yet available.
- * \param
- */
+Copy constructor
+*/
 lvector::lvector(const lvector& t)
- {
-   shape=t.shape;
-   (shape->ncopies)++;
-   v = t.v;
- }
-
+{
+  shape=t.shape;
+  (shape->ncopies)++;
+  v = t.v;
+}
 /**
- * Description not yet available.
- * \param
- */
- lvector::lvector(void)
- {
-   allocate();
- }
-
+Default constructor
+*/
+lvector::lvector(void)
+{
+  allocate();
+}
 /**
  * Description not yet available.
  * \param

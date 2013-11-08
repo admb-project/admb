@@ -59,13 +59,12 @@
  }
 
 /**
- * Description not yet available.
- * \param
- */
- df1_three_vector::~df1_three_vector()
- {
-   deallocate();
- }
+Destructor
+*/
+df1_three_vector::~df1_three_vector()
+{
+  deallocate();
+}
 
 /**
  * Description not yet available.

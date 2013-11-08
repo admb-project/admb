@@ -31,10 +31,13 @@ char df12fun_notice[50]="copyright (c) 2006 otter research ltd";
    v = m2.v;
  }
 
- df1_one_vector::~df1_one_vector()
- {
-   deallocate();
- }
+/**
+Destructor
+*/
+df1_one_vector::~df1_one_vector()
+{
+  deallocate();
+}
 
  void df1_one_vector::deallocate(void)
  {

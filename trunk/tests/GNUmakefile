@@ -1,11 +1,9 @@
 GTEST_DIR=googletest-read-only
 
-all: run-gtests
+all: test-expm test-cov_re
 
 run-gtests: $(GTEST_DIR)/gtest-all.o
 	$(MAKE) --directory=gtests
-
-all2: test-expm test-cov_re
 
 gtest-colfill: googletest-read-only
 	$(MAKE) --directory=colfill

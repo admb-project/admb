@@ -15,3 +15,7 @@ df1b2atan2.o: df1b2atan2.cpp
 
 clean:
 	@rm -vf gtest-all *.o
+	@rm -vf eigv.rpt
+	@rm -vf fmin.log
+	@rm -vf simple.log
+	@rm -vf variance

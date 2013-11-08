@@ -25,7 +25,7 @@ void zero_it(double * p,int n);
  * Description not yet available.
  * \param
  */
-int df1b2_gradlist::write_save_pass2_tilde_values(const df1b2variable * _px)
+int df1b2_gradlist::write_save_pass2_tilde_values(const df1b2variable* _px)
 {
   ADUNCONST(df1b2variable*, px)
   ncount++;
@@ -41,7 +41,7 @@ int df1b2_gradlist::write_save_pass2_tilde_values(const df1b2variable * _px)
   total_bytes+=slen;
 #endif
   list.check_buffer_size(total_bytes);
-  void * tmpptr=list.bptr;
+  void* tmpptr=list.bptr;
 #if defined(SAFE_ALL)
   memcpy(list,ids,slen);
 #endif
@@ -52,6 +52,7 @@ int df1b2_gradlist::write_save_pass2_tilde_values(const df1b2variable * _px)
   nlist.bptr->numbytes=adptr_diff(list.bptr,tmpptr);
   nlist.bptr->pf=(ADrfptr)(&ad_read_write_tilde_values);
   ++nlist;
+
   return 0;
 }
 

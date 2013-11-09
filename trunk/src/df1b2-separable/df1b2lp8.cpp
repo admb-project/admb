@@ -399,8 +399,7 @@ void function_minimizer::pre_user_function(void)
 void laplace_approximation_calculator::
   check_hessian_type(function_minimizer * pfmin)
 {
-  //int i,j,ip;
-  int i,ip;
+  int ip = 0;
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
     hesstype=4;
@@ -496,9 +495,8 @@ void laplace_approximation_calculator::
         // turn triplet_informaiton into  compressed_triplet_information
         int mmin= triplet_information->indexmin();
         int mmax= triplet_information->indexmax();
-        int i;
         int ndim=0;
-        for (i=mmin;i<=mmax;i++)
+        for (int i=mmin;i<=mmax;i++)
         {
           if (allocated((*triplet_information)(i)))
           {
@@ -513,14 +511,13 @@ void laplace_approximation_calculator::
         compressed_triplet_information=new imatrix(1,ndim,1,3);
         (*compressed_triplet_information)(3).fill_seqadd(1,1);
         int ii=0;
-        for (i=mmin;i<=mmax;i++)
+        for (int i=mmin;i<=mmax;i++)
         {
           if (allocated((*triplet_information)(i)))
           {
             int jmin=(*triplet_information)(i,1).indexmin();
             int jmax=(*triplet_information)(i,1).indexmax();
-            int j;
-            for (j=jmin;j<=jmax;j++)
+            for (int j=jmin;j<=jmax;j++)
             {
               ii++;
               (*compressed_triplet_information)(ii,1)=
@@ -535,7 +532,7 @@ void laplace_approximation_calculator::
         cti=sort(cti,1);
         int lmin=1;
         int lmax=0;
-        for (i=2;i<=ndim;i++)
+        for (int i=2;i<=ndim;i++)
         {
           if (cti(i,1)>cti(i-1,1))
           {
@@ -553,7 +550,7 @@ void laplace_approximation_calculator::
       quadratic_prior::in_qp_calculations=0;
 
       int non_block_diagonal=0;
-      for (i=xsize+1;i<=xsize+usize;i++)
+      for (int i=xsize+1;i<=xsize+usize;i++)
       {
         if (used_flags(i)>1)
         {
@@ -994,11 +991,10 @@ void laplace_approximation_calculator::
   int num_local_re=0;
   int num_fixed_effects=0;
 
-  int i;
   ivector lre_index(1,funnel_init_var::num_active_parameters);
   ivector lfe_index(1,funnel_init_var::num_active_parameters);
 
-  for (i=1;i<=funnel_init_var::num_active_parameters;i++)
+  for (int i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
     if (list(i,1)>xsize)
     {
@@ -1012,7 +1008,6 @@ void laplace_approximation_calculator::
 
   //if (num_local_re > 0)
   {
-    int j;
     switch(hesstype)
     {
     case 3:
@@ -1020,10 +1015,10 @@ void laplace_approximation_calculator::
       save_number_of_local_effects(num_separable_calls,
         &num_local_re_array,&num_local_fixed_array,num_local_re,
         num_fixed_effects); //,lre_index,lfe_index);
-      for (i=1;i<=num_local_re;i++)
+      for (int i=1;i<=num_local_re;i++)
       {
         int lrei=lre_index(i);
-        for (j=1;j<=num_local_re;j++)
+        for (int j=1;j<=num_local_re;j++)
         {
           int lrej=lre_index(j);
           int i1=list(lrei,1)-xsize;
@@ -1062,10 +1057,10 @@ void laplace_approximation_calculator::
         imatrix tmp(1,2,1,dim);
 
         int ii=0;
-        for (i=1;i<=num_local_re;i++)
+        for (int i=1;i<=num_local_re;i++)
         {
           int lrei=lre_index(i);
-          for (j=1;j<=num_local_re;j++)
+          for (int j=1;j<=num_local_re;j++)
           {
             int lrej=lre_index(j);
             int i1=list(lrei,1)-xsize;
@@ -1113,7 +1108,7 @@ void laplace_approximation_calculator::
     if (allocated((*derindex)(num_separable_calls)))
       (*derindex)(num_separable_calls).deallocate();
     (*derindex)(num_separable_calls).allocate(1,num_local_re);
-    for (i=1;i<=num_local_re;i++)
+    for (int i=1;i<=num_local_re;i++)
     {
       int lrei=lre_index(i);
       int i1=list(lrei,1)-xsize;
@@ -1140,13 +1135,12 @@ void laplace_approximation_calculator::
  */
 imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
 {
-  int i,ii;
   ivector rowsize(1,usize);
   rowsize.initialize();
 
   imatrix tmp(1,usize,1,usize);
   tmp.initialize();
-  for (ii=1;ii<=num_separable_calls;ii++)
+  for (int ii=1;ii<=num_separable_calls;ii++)
   {
     if (allocated((*derindex)(ii)))
     {
@@ -1193,7 +1187,7 @@ imatrix laplace_approximation_calculator::check_sparse_matrix_structure(void)
   ofs << "# Number of off diagonal elements in each row" << endl;
   ofs << rowsize << endl;
   ofs << "# The nonempty rows of M" << endl;
-  for (i=1;i<=usize;i++)
+  for (int i=1;i<=usize;i++)
   {
     if (rowsize(i)>0)
     {

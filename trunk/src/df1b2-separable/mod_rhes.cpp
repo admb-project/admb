@@ -302,15 +302,15 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     }
 
     {
-      int i,j;
       tmpstring = ad_comm::adprogram_name + ".luu";
       uistream uis1((char*)(tmpstring));
+      int i = 0, j = 0;
       uis1 >> i >> j;
       cout << i << " " << j << endl;
     }
 
     int npts=2;
-    int on,nopt;
+    int on,nopt = 0;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-hpts",nopt))>-1)
     {
       if (nopt !=1)
@@ -381,7 +381,6 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     }
     // check for accuracy
     {
-      double sd;
       uistream uis("hessian.bin");
       uis >> npts;
       dvector v=get_solution_vector(npts);
@@ -390,6 +389,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       dmatrix hess(1,nvar,1,nvar);
       ivector iind(-npts,npts);
       ivector jind(-npts,npts);
+      double sd = 0;
       int i;
       for (i=1;i<=nvar;i++)
       {

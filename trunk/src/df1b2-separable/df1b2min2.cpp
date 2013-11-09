@@ -213,7 +213,7 @@ void read_pass2_3_minuscv(void)
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
-  df1b2_header x,z;
+  //df1b2_header x,z;
 
   // get info from tape1
   // get info from tape1

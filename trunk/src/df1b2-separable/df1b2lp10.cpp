@@ -25,8 +25,7 @@ void report_calling_set(laplace_approximation_calculator *lapprox)
 
   ofs << "Total num_separable calls " <<  callset(0,0)-1 << endl;
 
-  int i;
-  for (i=1;i<=callset.indexmax();i++)
+  for (int i=1;i<=callset.indexmax();i++)
   {
     ofs << "Variable " << i << " num calls = " << callset(i)(0) << endl;
     ofs << callset(i)(1,callset(i).indexmax())<< endl;
@@ -103,8 +102,7 @@ int common(ivector& v,ivector& w)
 void laplace_approximation_calculator::
   check_hessian_type2(function_minimizer * pfmin)
 {
-  //int i,j,ip;
-  int i,ip;
+  int ip = 0;
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
     hesstype=4;
@@ -174,7 +172,7 @@ void laplace_approximation_calculator::
       quadratic_prior::in_qp_calculations=0;
 
       int non_block_diagonal=0;
-      for (i=xsize+1;i<=xsize+usize;i++)
+      for (int i=xsize+1;i<=xsize+usize;i++)
       {
         if (used_flags(i)>1)
         {

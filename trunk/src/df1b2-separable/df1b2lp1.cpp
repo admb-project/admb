@@ -729,27 +729,23 @@ void laplace_approximation_calculator::get_newton_raphson_info
       grad.initialize();
     }
 
-    double time1;
+    double time1 = 0;
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
       {
-        /*double time1=*/ad_comm::ptm->get_elapsed_time();
+        time1 = ad_comm::ptm->get_elapsed_time();
       }
     }
-
     pfmin->user_function();
-
-
     if (ad_comm::time_flag)
     {
       if (ad_comm::ptm)
       {
-        double time=ad_comm::ptm->get_elapsed_time();
         if (ad_comm::global_logfile)
         {
-          (*ad_comm::global_logfile) << "       Time in user_function() " <<  ip << "  "
-            << time-time1 << endl;
+          double time=ad_comm::ptm->get_elapsed_time();
+          (*ad_comm::global_logfile) << "       Time in user_function() " <<  ip << "  " << time-time1 << endl;
         }
       }
     }

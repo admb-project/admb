@@ -148,7 +148,7 @@ void read_pass2_1c(void)
   int num_bytes=f1b2gradlist->nlist.bptr->numbytes;
   list-=num_bytes;
   list.saveposition(); // save pointer to beginning of record;
-  double xu,yu;
+  double xu, yu = 0;
   //ad_dstar xdot,ydot;
   df1b2function2c * pf;
 

@@ -1244,11 +1244,10 @@ laplace_approximation_calculator::~laplace_approximation_calculator()
  * Description not yet available.
  * \param
  */
-dvector laplace_approximation_calculator::operator () (const dvector& _x,
-  const double& _f, function_minimizer * pfmin)
+dvector laplace_approximation_calculator::operator()
+  (const dvector& _x, const double& _f, function_minimizer * pfmin)
 {
-# if defined(USE_ADPVM)
-
+#if defined(USE_ADPVM)
   if (pfmin->test_trust_flag)
   {
     return test_trust_region_method(_x,_f,pfmin);
@@ -1274,6 +1273,7 @@ dvector laplace_approximation_calculator::operator () (const dvector& _x,
   }
   else
 #endif  //# if defined(USE_ADPVM)
+
   {
     //hesstype=1;
     //cout << hesstype << endl;
@@ -1284,9 +1284,9 @@ dvector laplace_approximation_calculator::operator () (const dvector& _x,
         int check_der_flag=0;
         int on=-1;
         int nopt=0;
-        if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-chkder",nopt))>-1)
+        if ((on=option_match(ad_comm::argc,ad_comm::argv,"-chkder",nopt))>-1)
         {
-           check_der_flag=1;
+          check_der_flag=1;
         }
         if (check_der_flag==1)
         {
@@ -1327,8 +1327,7 @@ dvector laplace_approximation_calculator::operator () (const dvector& _x,
   }
 }
 
-void   random_effects_userfunction(double f,const dvector& x,
-  const dvector& g);
+void random_effects_userfunction(double f,const dvector& x, const dvector& g);
 
 /**
  * Description not yet available.

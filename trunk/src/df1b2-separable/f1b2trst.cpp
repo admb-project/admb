@@ -47,7 +47,7 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
     cerr << "Error trying to open file admodel.hes" << endl;
     ad_exit(1);
   }
-  int hnvar;
+  int hnvar = 0;
   uis >> hnvar;
   dmatrix Hess(1,hnvar,1,hnvar);
   uis >> Hess;

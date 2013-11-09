@@ -8,10 +8,10 @@ gtest-all: main.cpp test_adstring_strcase.cpp test_fmm_control.cpp test_atan2.cp
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb gtest-all.o $^
 
 test_df1b2atan2.o: test_df1b2atan2.cpp
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../build/dist/bin/adcomp -r $^
+	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb -c -r $^
 
 df1b2atan2.o: df1b2atan2.cpp
-	../../build/dist/bin/adcomp -r $^
+	../../admb -c -r $^
 
 clean:
 	@rm -vf gtest-all *.o

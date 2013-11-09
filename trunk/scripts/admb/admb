@@ -1,14 +1,40 @@
 #!/bin/bash
+#
+# Created by: Arni Magnusson [2009-05-27] revision 243
+#
+# Copyright (c) 2008-2013 ADMB Foundation
+#
 shopt -s expand_aliases
-alias help='echo -e "Usage: admb [-d] [-g] [-r] [-s] model\n
-Build AD Model Builder executable from TPL.\n
-  -d     Create DLL
-  -g     Insert debugging symbols
-  -r     Create ADMB-RE
-  -s     Enforce safe bounds (default)
-  -O     Use optimized mode
-  model  Filename prefix, e.g. simple\n"'
+alias help='echo -e "
+Builds AD Model Builder application or library.\n
+Usage: 
+admb [-c] [-d] [-g] [-r] [-f] model [srcs]\n
+Options:
+ -c     Build object file only.
+ -d     Build a shared library.
+ -g     Build with debug symbols.
+ -r     Build Random effects (ADMB-RE).
+ -f     Build with Fast optimized mode (no bounds checking).
+        By default, admb script builds with bounds checking.
+ model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl extension)
+ srcs   One or more C++ source files with functions that are used in the model.\n
+Examples:
+
+Build a random effects model,
+[admb/examples/admb-re/bcb]$ admb -r bcb.tpl
+The program file is bcb.
+
+Build a shared library,
+[admb/examples/admb/simple]$ admb -d simple.tpl
+The program file is simple.
+
+Build with srcs and debug symbols,
+[admb/contrib/ad2csv]$ admb -g ad2csv.cpp main.cpp
+The program file is ad2csv.
+"'
+
 if [[ "$1" == "" ]]; then help; exit; fi
+if [[ "$1" == "-h" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 
@@ -38,20 +64,21 @@ unset g
 unset r
 unset s
 unset c
-tpl2cpp=tpl2cpp
+tpl2lex=tpl2cpp
 s=-s
-bounds=-bounds
+bounds=
+library=safe
 while getopts "dgrscO" A; do
   case $A in
     d) d=-d; dll=-dll
        ;;
     g) g=-g; debug=-debug
        ;;
-    r) r=-r; tpl2cpp=tpl2rem
+    r) r=-r; tpl2lex=tpl2rem
        ;;
-    s) s=-s; bounds=-bounds
+    s) s=-s;
        ;;
-    O) s=; bounds=
+    f) s=; library=opt; bounds=
        ;;
     c) c=1
        ;;
@@ -83,7 +110,41 @@ do
     nontpls="$nontpls $file"
   fi
 done
-
+if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
+  source "$ADMB_HOME/bin/admb-cfg.sh"
+  CXX=$ADMB_CFG_CXX
+  CXXFLAGS="$CXXFLAGS $ADMB_CFG_CXXFLAGS"
+  LDFLAGS="$LDFLAGS $ADMB_CFG_LDFLAGS"
+else
+  CXX=c++
+  CXXFLAGS="$CXXFLAGS"
+  LDFLAGS="$LDFLAGS"
+fi
+if [ ! -z "$dll" ]; then
+  CXXFLAGS="-fPIC -DBUILDING_DLL $CXXFLAGSS"
+  LDFLAGS="-shared $LDFLAGS"
+fi
+if [ ! -z "$debug" ]; then
+  CXXFLAGS="-g $CXXFLAGS"
+  LDFLAGS="-g $LDFLAGS"
+else
+  if [ "$CXX" == "openCC" ]; then
+    CXXFLAGS="-O2 $CXXFLAGS"
+    LDFLAGS="-O2 $LDFLAGS"
+  else
+    CXXFLAGS="-O3 $CXXFLAGS"
+    LDFLAGS="-O3 $LDFLAGS"
+  fi
+fi
+if [ "$library" == "opt" ]; then
+  CXXFLAGS="$CXXFLAGS -DOPT_LIB"
+else
+  CXXFLAGS="$CXXFLAGS -DSAFE_ALL"
+fi
+CXXFLAGS="$CXXFLAGS -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -I. -I\"$ADMB_HOME\"/include -I\"$ADMB_HOME\"/contrib/include"
+if [ "$CXX" == "adcomp-x86_64-w64-mingw32" ]; then
+  LDFLAGS="--static $LDFLAGS"
+fi
 tplsrcs=
 for model in $tpls
 do
@@ -97,9 +158,10 @@ do
   rm -vf tfile1 tfile2 tfile3 tfile4 tfile5
   rm -f $model.cpp $model.htp $model.o $model
 
-  CMD="$tpl2cpp $debug $bounds $dll $model"
-  echo -e \\n\*\*\* $CMD
+  CMD="$tpl2lex $debug $bounds $dll $model"
+  echo -e \\n\*\*\* Parsing tpl file: $model.tpl\\n$CMD
   eval $CMD
+
   if [ ! -f $model.cpp -o ! -f $model.htp ]; then
     echo -e "\\nError: could not parse $model.tpl\\n"
     exit 1
@@ -114,13 +176,11 @@ do
     echo -e "\\nError: $file not found\\n"
     exit 1
   fi
-  if [[ -z "$CXXFLAGS" ]]; then
-    CMD="adcomp $d $g $r $s $file"
-  else
-    CMD="CXXFLAGS=\"$CXXFLAGS\" adcomp $d $g $r $s $file"
-  fi
-  echo -e \\n\*\*\* $CMD
+
+  CMD="$CXX -c $CXXFLAGS $file"
+  echo -e \\n\*\*\* Compiling source file: $file\\n$CMD
   eval $CMD
+
   if [[ ! -f ${file%.*}.o ]]; then
     echo -e "\\nError: Could not compile $file\\n"
     exit 1
@@ -134,12 +194,8 @@ do
     echo -e "\\nError: $file not found\\n"
     exit 1
   fi
-  if [[ -z "$CXXFLAGS" ]]; then
-    CMD="adcomp $d $g $r $s $file"
-  else
-    CMD="CXXFLAGS=\"$CXXFLAGS\" adcomp $d $g $r $s $file"
-  fi
-  echo -e \\n\*\*\* $CMD
+  CMD="$CXX -c $CXXFLAGS $file"
+  echo -e \\n\*\*\* Compiling source file: $file\\n$CMD
   eval $CMD
   if [[ ! -f ${file%.*}.o ]]; then
     echo -e "\\nError: Could not compile $file\\n"
@@ -149,19 +205,29 @@ do
 done
 
 if [ ! -z "$c" ]; then
-  echo -e "\\nSuccessfully compiled \"$tplobjs $objs\".\\n"
+  objects=$tplobjs
+  if [ ! -z "$objs" ]; then
+    objects=$objs
+  fi
+  echo -e "\\nSuccessfully compiled \"$objects\".\\n"
   exit 0
 fi 
 
 for file in $tplobjs
 do
   model=${file%.*}
-  if [[ -z "$LDFLAGS" ]]; then
-    CMD="adlink $d $g $r $s $model $objs"
+  if [ ! -z  "$dll" ]; then
+    CMD="$CXX $LDFLAGS -o $model.so"
   else
-    CMD="LDFLAGS=\"$LDFLAGS\" adlink $d $g $r $s $model $objs"
+    CMD="$CXX $LDFLAGS -o $model"
   fi
-  echo -e \\n\*\*\* $CMD
+  CMD="$CMD $file $objs"
+  if [[ "$library" == "opt" ]]; then
+    CMD="$CMD \"$ADMB_HOME\"/contrib/lib/libcontribo.a \"$ADMB_HOME\"/lib/libadmbo.a"
+  else
+    CMD="$CMD \"$ADMB_HOME\"/contrib/lib/libcontrib.a \"$ADMB_HOME\"/lib/libadmb.a"
+  fi
+  echo -e \\n\*\*\* Linking files: $file $objs\\n$CMD
   eval $CMD
   if [[ -z $dll ]]; then 
     if [[ ! -f $model ]]; then 
@@ -177,6 +243,7 @@ do
 done
 
 if [[ "$tplobjs" == "" ]]; then
+  outputfilebasename=
   listobjs=
   for file in $nontpls
   do
@@ -186,10 +253,23 @@ if [[ "$tplobjs" == "" ]]; then
     else
       listobjs="$listobjs ${file%.*}.o"
     fi
+    if [ -z  "$outputfilebasename" ]; then
+      outputfilebasename="`basename $file`"
+      outputfilebasename=${file%.*}
+    fi
   done
-
-  CMD="adlink $d $g $r $s $listobjs"
-  echo -e \\n\*\*\* $CMD
+  if [ ! -z  "$dll" ]; then
+    CMD="$CXX $LDFLAGS -o $outputfilebasename.so"
+  else
+    CMD="$CXX $LDFLAGS -o $outputfilebasename"
+  fi
+  CMD="$CMD $listobjs"
+  if [[ "$library" == "opt" ]]; then
+    CMD="$CMD \"$ADMB_HOME\"/contrib/lib/libcontribo.a \"$ADMB_HOME\"/lib/libadmbo.a"
+  else
+    CMD="$CMD \"$ADMB_HOME\"/contrib/lib/libcontrib.a \"$ADMB_HOME\"/lib/libadmb.a"
+  fi
+  echo -e \\n\*\*\* Linking files: $listobjs\\n$CMD
   eval $CMD
 
   declare -a amodel=( $listobjs )
@@ -211,18 +291,3 @@ fi
 
 echo -e "\\nSuccessfully built executable.\\n"
 exit 0
-
-### r259 [2012-02-29] arnima  improved handling of CXXFLAGS and LDFLAGS
-### r237 [2012-01-25] johnoel improved handling of CXXFLAGS and LDFLAGS
-### r 42 [2011-06-22] arnima  improved handling of CXXFLAGS and LDFLAGS
-### r 39 [2011-06-22] johnoel improved handling of CXXFLAGS and LDFLAGS
-### r982 [2011-02-16] arnima  rewrite, improved messages
-### r927 [2010-12-24] johnoel moved to 'admb' dir
-### r901 [2010-12-22] johnoel moved to 'g++' dir
-### r662 [2010-06-17] johnoel changed script so it deletes cpp/htp/obj/exe and
-###                           reports error or success, added exit status,
-###                           passed CXXFLAGS and LDFLAGS to adcomp and adlink
-### r524 [2010-03-17] arnima  added support for filename extension like
-###                           simple.tpl
-### r503 [2009-02-08] johnoel split -s option into separate -g and -s options
-### r243 [2009-05-27] arnima  created

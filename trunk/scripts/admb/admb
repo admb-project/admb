@@ -56,31 +56,38 @@ popd &> /dev/null
 PATH=$ADMB_HOME/bin:$PATH
 
 # Pop args until model=$1
-unset debug
-unset bounds
-unset d
 unset dll
-unset g
-unset r
-unset s
-unset c
+unset debug
+unset tpl2lex
+unset library
+unset compileonly
+dll=
+debug=
 tpl2lex=tpl2cpp
-s=-s
-bounds=
 library=safe
-while getopts "dgrscO" A; do
+compileonly=
+output=
+while getopts "dgrsfco:" A; do
   case $A in
-    d) d=-d; dll=-dll
+    d) 
+       dll=-dll
        ;;
-    g) g=-g; debug=-debug
+    g) 
+       debug=-debug
        ;;
-    r) r=-r; tpl2lex=tpl2rem
+    r) 
+       tpl2lex=tpl2rem
        ;;
-    s) s=-s;
+    s)
        ;;
-    f) s=; library=opt; bounds=
+    f) 
+       library=opt
        ;;
-    c) c=1
+    c) 
+       compileonly=yes
+       ;;
+    o) 
+       output="$OPTARG"
        ;;
     *)
        help
@@ -158,7 +165,7 @@ do
   rm -vf tfile1 tfile2 tfile3 tfile4 tfile5
   rm -f $model.cpp $model.htp $model.o $model
 
-  CMD="$tpl2lex $debug $bounds $dll $model"
+  CMD="$tpl2lex $debug $dll $model"
   echo -e \\n\*\*\* Parsing tpl file: $model.tpl\\n$CMD
   eval $CMD
 
@@ -204,7 +211,7 @@ do
   objs="${file%.*}.o $objs"
 done
 
-if [ ! -z "$c" ]; then
+if [ ! -z "$compileonly" ]; then
   objects=$tplobjs
   if [ ! -z "$objs" ]; then
     objects=$objs
@@ -215,7 +222,11 @@ fi
 
 for file in $tplobjs
 do
-  model=${file%.*}
+  if [ ! -z  "$output" ]; then
+    model="$output"
+  else
+    model=${file%.*}
+  fi
   if [ ! -z  "$dll" ]; then
     CMD="$CXX $LDFLAGS -o $model.so"
   else
@@ -244,6 +255,9 @@ done
 
 if [[ "$tplobjs" == "" ]]; then
   outputfilebasename=
+  if [ ! -z  "$output" ]; then
+    outputfilebasename="$output"
+  fi
   listobjs=
   for file in $nontpls
   do
@@ -272,19 +286,32 @@ if [[ "$tplobjs" == "" ]]; then
   echo -e \\n\*\*\* Linking files: $listobjs\\n$CMD
   eval $CMD
 
-  declare -a amodel=( $listobjs )
-  m=${amodel[0]}
-  m2=${m%.*}
-
-  if [[ -z $dll ]]; then 
-    if [[ ! -f $m2 ]]; then 
-        echo -e "\\nError: Could not build $m2\\n"
+  if [ ! -z  "$output" ]; then
+    if [[ -z $dll ]]; then 
+      if [[ ! -f $output ]]; then 
+        echo -e "\\nError: Could not build $output\\n"
         exit 1
+      fi
+    else
+      if [[ ! -f $output.so ]]; then
+        echo -e "\\nError: Could not build $output.so\\n"
+        exit 1
+      fi
     fi
   else
-    if [[ ! -f $m2.so ]]; then
+    declare -a amodel=( $listobjs )
+    m=${amodel[0]}
+    m2=${m%.*}
+    if [[ -z $dll ]]; then 
+      if [[ ! -f $m2 ]]; then 
+        echo -e "\\nError: Could not build $m2\\n"
+        exit 1
+      fi
+    else
+      if [[ ! -f $m2.so ]]; then
         echo -e "\\nError: Could not build $m2.so\\n"
         exit 1
+      fi
     fi
   fi
 fi

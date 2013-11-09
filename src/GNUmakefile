@@ -408,14 +408,14 @@ endif
 
 verify:
 ifeq ($(TERMINAL),dos)
-	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH):$(CURDIR)\..\utilities:$(CURDIR)\..\utilities\mingw\bin" SAFE_OPTION=1 -C $(DISK)\examples --file=Makefile all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
 	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH):$(CURDIR)\..\utilities:$(CURDIR)\..\utilities\mingw\bin" -C $(DISK)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH):$(CURDIR)\..\utilities:$(CURDIR)\..\utilities\mingw\bin" FAST_OPTION=1 -C $(DISK)\examples --file=Makefile all
+	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
 else
-	PATH="${PWD}/${DISK}/bin:$(PATH)" SAFE_OPTION=1 $(MAKE) -C $(DISK)/examples all
-	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-saf.txt"
 	PATH="${PWD}/${DISK}/bin:$(PATH)" $(MAKE) -C $(DISK)/examples all
+	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-saf.txt"
+	PATH="${PWD}/${DISK}/bin:$(PATH)" FAST_OPTION=1 $(MAKE) -C $(DISK)/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-opt.txt"
 endif
 

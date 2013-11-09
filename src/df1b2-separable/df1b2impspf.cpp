@@ -53,7 +53,6 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
   // do we need this next line?
   y(1,xs)=x;
 
-  int i,j;
   dvar_vector d(1,xs+us);
 
   // contribution for quadratic prior
@@ -66,7 +65,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
  // Here need hooks for sparse matrix structures
 
   int ii=xs+us+1;
-  for (i=smin;i<=smax;i++)
+  for (int i=smin;i<=smax;i++)
     y(ii++)=lst(i);
 
   dvar_vector vy=dvar_vector(y);
@@ -94,7 +93,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
       pmin->lapprox->vsparse_triplet=
         new dvar_compressed_triplet(mmin,mmax,us,us);
       vsparse_triplet = pmin->lapprox->vsparse_triplet;
-      for (i=mmin;i<=mmax;i++)
+      for (int i=mmin;i<=mmax;i++)
       {
         (*vsparse_triplet)(1,i)=lst(1,i);
         (*vsparse_triplet)(2,i)=lst(2,i);
@@ -105,7 +104,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
       if (!allocated(*vsparse_triplet))
       {
         (*vsparse_triplet).allocate(mmin,mmax,us,us);
-        for (i=mmin;i<=mmax;i++)
+        for (int i=mmin;i<=mmax;i++)
         {
           (*vsparse_triplet)(1,i)=lst(1,i);
           (*vsparse_triplet)(2,i)=lst(2,i);
@@ -120,7 +119,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
       pmin->lapprox->vsparse_triplet_adjoint=
         new dcompressed_triplet(mmin,mmax,us,us);
       vsparse_triplet_adjoint = pmin->lapprox->vsparse_triplet_adjoint;
-      for (i=mmin;i<=mmax;i++)
+      for (int i=mmin;i<=mmax;i++)
       {
         (*vsparse_triplet_adjoint)(1,i)=lst(1,i);
         (*vsparse_triplet_adjoint)(2,i)=lst(2,i);
@@ -131,7 +130,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
       if (!allocated(*vsparse_triplet_adjoint))
       {
         (*vsparse_triplet_adjoint).allocate(mmin,mmax,us,us);
-        for (i=mmin;i<=mmax;i++)
+        for (int i=mmin;i<=mmax;i++)
         {
           (*vsparse_triplet_adjoint)(1,i)=lst(1,i);
           (*vsparse_triplet_adjoint)(2,i)=lst(2,i);
@@ -297,9 +296,9 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
    gradient_structure::set_YES_DERIVATIVES();
 
   ii=1;
-  for (i=1;i<=xs;i++)
+  for (int i=1;i<=xs;i++)
     xadjoint(i)=g(ii++);
-  for (i=1;i<=us;i++)
+  for (int i=1;i<=us;i++)
     uadjoint(i)=g(ii++);
 
   dcompressed_triplet * vsparse_triplet_adjoint =

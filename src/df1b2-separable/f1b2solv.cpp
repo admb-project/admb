@@ -28,7 +28,7 @@ df1b2vector solve(const df1b2matrix& aa,const dvector& z,
 
 df1b2vector csolve(const df1b2matrix& aa,const dvector& z)
 {
-  double ln_unsigned_det;
+  double ln_unsigned_det = 0;
   double sign;
   df1b2vector sol=solve(aa,z,ln_unsigned_det,sign);
   return sol;

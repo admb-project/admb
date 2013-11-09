@@ -61,7 +61,7 @@ void function_minimizer::monte_carlo_routine(void)
         cerr << "Error trying to open file " << tmpstring
 	    << " for reading" << endl;
       }
-      int tmp_nvar;
+      int tmp_nvar = 0;
       cif >> tmp_nvar;
       if (nvar !=tmp_nvar)
       {

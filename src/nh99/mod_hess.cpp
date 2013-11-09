@@ -531,9 +531,9 @@ void function_minimizer::hess_inv(void)
   //double f;
   dmatrix hess(1,nvar,1,nvar);
   uistream ifs("admodel.hes");
-  int file_nvar;
-  ifs  >> file_nvar;
-  if (nvar !=file_nvar)
+  int file_nvar = 0;
+  ifs >> file_nvar;
+  if (nvar != file_nvar)
   {
     cerr << "Number of active variables in file mod_hess.rpt is wrong"
 	 << endl;

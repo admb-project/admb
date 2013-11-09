@@ -26,7 +26,7 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
      tmpstring = ad_comm::adprogram_name + ".dep";
   cifstream cif((char*)tmpstring);
 
-  int tmp_nvar,tmp_ndvar;
+  int tmp_nvar = 0, tmp_ndvar = 0;
   cif >> tmp_nvar >> tmp_ndvar;
   if (tmp_nvar!=nvar1)
   {
@@ -35,11 +35,9 @@ void function_minimizer::get_bigS(int ndvar,int nvar1,int nvar,
     ad_exit(1);
   }
 
-
 #if defined(USE_LAPLACE)
-
     int us=nvar1-nvar;
-    int xsize,usize;
+    int xsize = 0, usize = 0;
     dmatrix minv(1,us,1,us);
     dmatrix Dux(1,us,1,nvar);
     dmatrix uhat_prime(1,us,1,nvar);

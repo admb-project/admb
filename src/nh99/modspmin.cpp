@@ -14,12 +14,6 @@
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
 #  include <windows.h>
 #endif
-char banner0[56]={"*****************************************************"};
-char banner1[56]={"This is the open source version of AD Model Builder"};
-char banner1a[58]={"You can freely use AD Model Builder"};
-char banner2[30]={"http://www.admb-project.org/"};
-char banner3[55]={"http://www.admb-project.org/"};
-char banner4[60]={"users@admb-project.org   http://www.admb-project.org/"};
 int ad_cheat_flag=0;
 #if defined(linux)
   int Sleep(int);
@@ -115,14 +109,9 @@ extern admb_javapointers * adjm_ptr;
 #   endif
   }
 int something_105=0;
-//static int something_106=0;
 
-#if defined(ADMB_REDEMO)
-static int stupid_flag=17;
-int * kill_address;
-#endif  //#if defined(ADMB_REDEMO)
-          int kill_flag_105=901;
-          int kill_flag_107=901;
+int kill_flag_105=901;
+int kill_flag_107=901;
 
   void function_minimizer::computationsx(int argc,char * argv[])
   {
@@ -149,9 +138,6 @@ int * kill_address;
 #endif
 #if defined (AD_DEMO)
      write_banner_stuff();
-#endif
-#if defined(ADMB_REDEMO)
-    stupid_flag=0;
 #endif
     xflag_105=&something_105;
     if (option_match(argc,argv,"-mceval") == -1)
@@ -609,6 +595,12 @@ void write_banner_stuff(void)
 {
   if (ad_printf)
   {
+    char banner0[56]={"*****************************************************"};
+    char banner1[56]={"This is the open source version of AD Model Builder"};
+    char banner1a[58]={"You can freely use AD Model Builder"};
+    char banner2[30]={"http://www.admb-project.org/"};
+    char banner3[55]={"http://www.admb-project.org/"};
+    char banner4[60]={"users@admb-project.org   http://www.admb-project.org/"};
     (*ad_printf)("\n%s\n", banner0);
     (*ad_printf)("%s\n", banner1);
     (*ad_printf)("%s\n", banner1a);
@@ -687,15 +679,14 @@ void adwait(double sec){;}
 
   void function_minimizer::mcmc_computations(void)
   {
-    int ton,tnopt;
-    int on,nopt;
+    int ton,tnopt = 0;
     ton=option_match(ad_comm::argc,ad_comm::argv,"-mcmc",tnopt);
     if (ton<0)
     {
       ton=option_match(ad_comm::argc,ad_comm::argv,"-mcmc2",tnopt);
     }
-    on=ton;
-    nopt=tnopt;
+    int on=ton;
+    int nopt=tnopt;
 
     if (on>-1)
     {
@@ -778,7 +769,7 @@ void adwait(double sec){;}
 
   void function_minimizer::pvm_master_mcmc_computations(void)
   {
-    int on,nopt;
+    int on,nopt = 0;
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcmc",nopt))>-1)
     {
       /*

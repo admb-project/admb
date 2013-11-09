@@ -110,7 +110,7 @@ char** no_dll_options(char *pname, const int& _nopt)
 {
   int& nopt=(int&) _nopt;
   nopt=1;
-  char ** a;
+  char** a = 0;
   //char * p=NULL;
   //a=(char **)malloc((nopt+1)*sizeof(char *));
   a[nopt]=NULL;

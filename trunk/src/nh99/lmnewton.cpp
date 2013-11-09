@@ -40,7 +40,7 @@ void function_minimizer::limited_memory_quasi_newton(const independent_variables
   double _crit=0;
   int itn=0;
   int ifn=0;
-  int nopt;
+  int nopt = 0;
   // set the convergence criterion by command line
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
   {
@@ -222,7 +222,7 @@ void function_minimizer::limited_memory_quasi_newton
   double _crit=0;
   int itn=0;
   int ifn=0;
-  int nopt;
+  int nopt = 0;
   // set the convergence criterion by command line
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
   {

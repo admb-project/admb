@@ -9,7 +9,6 @@ OBJ6=\
  xmodelm3.obj\
  xmodelm5.obj\
  getbigs.obj\
- admodel.obj\
  vec_io.obj\
  t.obj\
  cnstrs.obj\
@@ -108,6 +107,7 @@ PVM=\
  paral5re.obj\
  xxmcmc2.obj
 UNUSED=\
+ admodel.obj\
  adsplus.obj\
  usereval.obj\
  dfqromo.obj\

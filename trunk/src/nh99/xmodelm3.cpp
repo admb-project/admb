@@ -654,7 +654,7 @@ int get_option_number(const char * option_name,const char * error_message,
   int& option_value)
 {
   int on1;
-  int nopt;
+  int nopt = 0;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,option_name,nopt))>-1)
   {
     if (!nopt)
@@ -681,7 +681,7 @@ int get_option_number(const char * option_name,const char * error_message,
 #endif
 {
   int on1;
-  int nopt;
+  int nopt = 0;
   if ( (on1=option_match(ad_comm::argc,ad_comm::argv,option_name,nopt))>-1)
   {
     if (!nopt)

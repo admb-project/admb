@@ -17,8 +17,7 @@ double function_minimizer::hess_determinant(int underflow_flag)
   {
     cerr << "Error opening file admodel.hes" << endl;
   }
-  int nvar;
-
+  int nvar = 0;
   ifs >> nvar;
   {
     if (nvar != initial_params::nvarcalc())

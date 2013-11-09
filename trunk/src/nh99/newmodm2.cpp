@@ -29,8 +29,7 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
   {
     cerr << "Error opening file admodel.hes" << endl;
   }
-  int nvar;
-
+  int nvar = 0;
   ifs >> nvar;
   dmatrix S(1,nvar,1,nvar);
   {

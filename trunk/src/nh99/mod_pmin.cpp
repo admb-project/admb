@@ -95,7 +95,7 @@ dmatrix trans(const dvector& x)
     initial_params::copy_all_values(xsave,ii);
     double old_value;  // this is where we were
     double new_value;  // this is where we want to go
-    double fprof;//
+    double fprof = 0.0;
     double current_value;
     dmatrix lprof(0,likeprof_params::num_likeprof_params-1,-num_pp,num_pp);
     dmatrix ldet(0,likeprof_params::num_likeprof_params-1,-num_pp,num_pp);

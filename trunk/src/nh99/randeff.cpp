@@ -54,7 +54,7 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   double _crit=0;
   integer itn=0;
   int ifn=0;
-  int nopt;
+  int nopt = 0;
   // set the convergence criterion by command line
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-crit",nopt))>-1)
   {

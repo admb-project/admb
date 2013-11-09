@@ -33,7 +33,7 @@ void function_minimizer::mcmc_eval(void)
 #else
   int nvar1=initial_params::nvarcalc(); // get the number of active parameters
 #endif
-  int nvar;
+  int nvar = 0;
 
   pifs_psave= new
     uistream((char*)(ad_comm::adprogram_name + adstring(".psv")));

@@ -95,7 +95,7 @@ void function_minimizer::sd_routine(void)
   dmatrix S(1,nvar,1,nvar);
   {
     uistream cif("admodel.cov");
-    int tmp_nvar;
+    int tmp_nvar = 0;
     cif >> tmp_nvar;
     if (nvar !=tmp_nvar)
     {
@@ -111,7 +111,7 @@ void function_minimizer::sd_routine(void)
     }
   }
   int sgn;
-  int check=initial_params::stddev_scale(scale,x);
+  initial_params::stddev_scale(scale,x);
   double lndet=-ln_det(S,sgn)-2.0*sum(log(scale));
   initial_params::set_active_random_effects();
   //int nvar1=initial_params::nvarcalc();
@@ -144,7 +144,7 @@ void function_minimizer::sd_routine(void)
            tmpstring = ad_comm::adprogram_name + ".dep";
         cifstream cif((char*)tmpstring);
 
-        int tmp_nvar,tmp_ndvar;
+        int tmp_nvar = 0, tmp_ndvar = 0;
         cif >> tmp_nvar >> tmp_ndvar;
         if (tmp_nvar!=nvar1)
         {
@@ -191,7 +191,7 @@ void function_minimizer::sd_routine(void)
            tmpstring = ad_comm::adprogram_name + ".dep";
         cifstream cif((char*)tmpstring);
 
-        int tmp_nvar,tmp_ndvar;
+        int tmp_nvar = 0, tmp_ndvar = 0;
         cif >> tmp_nvar >> tmp_ndvar;
         if (tmp_nvar!=nvar1)
         {

@@ -259,7 +259,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     dvector sscale(1,nvar);
     if (!diag_option)
     {
-      int on,nopt;
+      int on,nopt = 0;
       int rescale_bounded_flag=0;
       double rescale_bounded_power=0.5;
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcrb",nopt))>-1)
@@ -299,7 +299,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
         }
         else
         {
-          int tmp_nvar;
+          int tmp_nvar = 0;
           adstring tmpstring = ad_comm::adprogram_name + ".bgs";
           uistream uis((char*)(tmpstring));
           if (!uis)
@@ -500,7 +500,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
       }
       */
       int change_ball=2500;
-      int nopt;
+      int nopt = 0;
       if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcscale",nopt))>-1)
       {
         if (nopt)
@@ -572,7 +572,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
               }
               else
               {
-                int nv1;
+                int nv1 = 0;
                 uis >> nv1;
                 if (nv1 !=nvar)
                 {
@@ -1278,7 +1278,7 @@ void make_preliminary_hist(const dvector& s, const dvector& m,int nsim, const dm
   }
   for (i=1;i<=nsim;i++)
   {
-    float ftmp;
+    float ftmp = 0.0;
     int ii;
     int mmin=mcmc_values.indexmin();
     int mmax=mcmc_values.indexmax();
@@ -1335,7 +1335,7 @@ void read_covariance_matrix(const dmatrix& S,int nvar,int& oldHbf,
     cerr << "Error trying to open file " << tmpstring
          << "  for reading" << endl;
   }
-  int tmp_nvar;
+  int tmp_nvar = 0;
   cif >> tmp_nvar;
   if (nvar !=tmp_nvar)
   {
@@ -1378,7 +1378,7 @@ void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS, const dvector& 
     cerr << "Error trying to open file " << tmpstring
          << "  for reading" << endl;
   }
-  int tmp_nvar;
+  int tmp_nvar = 0;
   cif >> tmp_nvar;
   if (nvar !=tmp_nvar)
   {
@@ -1476,7 +1476,7 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS,
     cerr << "Error trying to open file " << tmpstring
          << "  for reading" << endl;
   }
-  int tmp_nvar;
+  int tmp_nvar = 0;
   cif >> tmp_nvar;
   if (nvar !=tmp_nvar)
   {

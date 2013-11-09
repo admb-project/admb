@@ -144,3 +144,4 @@ clean:
 	$(MAKE) --directory=beta_deviate clean
 	$(MAKE) --directory=SS3 clean
 	$(MAKE) --directory=cov_re clean
+	$(MAKE) --directory=gtests clean

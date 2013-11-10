@@ -25,11 +25,9 @@ dvector eigenvalues(const dmatrix& m)
     ad_exit(1);
   }
   dmatrix m1=symmetrize(m);
-  int n=m1.rowsize();
-  int cmin=m1.colmin();
-  int rmin=m1.rowmin();
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
+  int n=m1.rowsize();
   dvector diag(1,n);
   dvector off_diag(1,n);
 
@@ -68,7 +66,7 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
     ad_exit(1);
   }
   int n=m.rowsize();
-  int l,k,j,i;
+  int l,j,i;
   double scale,hh,h,g,f;
 
   for (i=n;i>=2;i--)
@@ -77,13 +75,13 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
     h=scale=0.0;
     if (l > 1)
     {
-      for (k=1;k<=l;k++)
+      for (int k=1;k<=l;k++)
         scale += fabs(m[i][k]);
       if (scale == 0.0)
         e[i]=m[i][l];
       else
       {
-        for (k=1;k<=l;k++)
+        for (int k=1;k<=l;k++)
         {
           m[i][k] /= scale;
           h += m[i][k]*m[i][k];
@@ -101,9 +99,9 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
           m[j][i]=m[i][j]/h;
         #endif
           g=0.0;
-          for (k=1;k<=j;k++)
+          for (int k=1;k<=j;k++)
             g += m[j][k]*m[i][k];
-          for (k=j+1;k<=l;k++)
+          for (int k=j+1;k<=l;k++)
             g += m[k][j]*m[i][k];
           e[j]=g/h;
           f += e[j]*m[i][j];
@@ -113,7 +111,7 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
         {
           f=m[i][j];
           e[j]=g=e[j]-hh*f;
-          for (k=1;k<=j;k++)
+          for (int k=1;k<=j;k++)
             m[j][k] -= (f*e[k]+g*m[i][k]);
         }
       }
@@ -138,9 +136,9 @@ void tri_dag(const dmatrix& _m, const dvector& _d, const dvector& _e)
       for (j=1;j<=l;j++)
       {
         g=0.0;
-        for (k=1;k<=l;k++)
+        for (int k=1;k<=l;k++)
           g += m[i][k]*m[k][j];
-        for (k=1;k<=l;k++)
+        for (int k=1;k<=l;k++)
           m[k][j] -= g*m[k][i];
       }
     }
@@ -182,11 +180,13 @@ void get_eigen(const dvector& _d, const dvector& _e, const dmatrix& _z)
 {
   dvector& d = (dvector&) _d;
   dvector& e = (dvector&) _e;
+#ifdef EIGEN_VECTORS
   dmatrix& z = (dmatrix&) _z;
+#endif
   int max_iterations=30;
   int n=d.size();
   max_iterations+=10*(n/100);
-  int m,l,iter,i,k;
+  int m,l,iter,i;
   double s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];
@@ -232,7 +232,7 @@ void get_eigen(const dvector& _d, const dvector& _e, const dmatrix& _z)
           g=c*r-b;
           /* Next loop can be omitted if eigenvectors not wanted */
           #ifdef EIGEN_VECTORS
-            for (k=1;k<=n;k++)
+            for (int k=1;k<=n;k++)
             {
               f=z[k][i+1];
               z[k][i+1]=s*z[k][i]+c*f;
@@ -266,7 +266,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e)
   int max_iterations=30;
   int n=d.size();
   max_iterations+=10*(n/100);
-  int m,l,iter,i,k;
+  int m,l,iter,i;
   double s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];
@@ -347,7 +347,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e,
   int max_iterations=30;
   int n=d.size();
   max_iterations+=10*(n/100);
-  int m,l,iter,i,k;
+  int m,l,iter,i;
   double s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];
@@ -392,7 +392,7 @@ dvector get_eigen_values(const dvector& _d,const dvector& _e,
           d[i+1]=g+p;
           g=c*r-b;
           /* Next loop can be omitted if eigenvectors not wanted */
-          for (k=1;k<=n;k++)
+          for (int k=1;k<=n;k++)
           {
             f=z[k][i+1];
             z[k][i+1]=s*z[k][i]+c*f;

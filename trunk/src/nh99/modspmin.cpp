@@ -614,28 +614,6 @@ void write_banner_stuff(void)
   adwait(2.5);
 }
 
-/*
-#if defined (AD_DEMO)
-#include <time.h>
-double waste_time();
-
-void adwait(double sec)
-{
-  time_t tt;
-  time_t ttold;
-  time(&ttold);
-  do
-  {
-    time(&tt);
-    if ( (tt-ttold) > sec ) break;
-  }
-  while(1);
-}
-#else
-void adwait(double sec){;}
-#endif
-*/
-
   void test_mcmc_options_window(void)
   {
     dvector v(1,1000);

@@ -58,12 +58,12 @@ PATH=$ADMB_HOME/bin:$PATH
 # Pop args until model=$1
 unset dll
 unset debug
-unset tpl2lex
+unset parser 
 unset library
 unset compileonly
 dll=
 debug=
-tpl2lex=tpl2cpp
+parser=tpl2cpp
 library=safe
 compileonly=
 output=
@@ -76,7 +76,7 @@ while getopts "dgrsfco:" A; do
        debug=-debug
        ;;
     r) 
-       tpl2lex=tpl2rem
+       parser=tpl2rem
        ;;
     s)
        ;;
@@ -165,7 +165,7 @@ do
   rm -vf tfile1 tfile2 tfile3 tfile4 tfile5
   rm -f $model.cpp $model.htp $model.o $model
 
-  CMD="$tpl2lex $debug $dll $model"
+  CMD="$parser $debug $dll $model"
   echo -e \\n\*\*\* Parsing tpl file: $model.tpl\\n$CMD
   eval $CMD
 

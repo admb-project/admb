@@ -16,4 +16,3 @@
 
 #include "fvar.hpp"
 int traceflag=0;
-int just_to_link_fvar1=0;

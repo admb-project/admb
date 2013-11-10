@@ -26,18 +26,9 @@ dlink * dlink::previous(){return prev;}
 
 //////////////////////////////
 // global list names
-
 //dlist * GRAD_LIST;
 //extern dlist * GRAD_LIST; //js
 /////////////////////////////
-extern char demo_capacity[];
-extern char please_buy[];
-extern char otter_address1[];
-extern char otter_address2[];
-extern char otter_address3[];
-extern char otter_address4[];
-extern char otter_address5[];
-
 
 char* ddlist_space;
 char* ddlist_spacea;
@@ -48,7 +39,7 @@ char* ddlist_spacea;
  */
 dlist::dlist(void)
 {
-  int on,nopt;
+  int on,nopt = 0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
   {
     if (nopt ==1)
@@ -108,15 +99,6 @@ dlink * dlist::create()
   if (nlinks > (unsigned int)gradient_structure::MAX_DLINKS)
   {
     cerr << "Need to increase the maximum number of dlinks" << endl;
-#if defined(AD_DEMO)
-    cout << demo_capacity << endl;
-    cout << please_buy << endl;
-    cout << otter_address1 << endl;
-    cout << otter_address2 << endl;
-    cout << otter_address3 << endl;
-    cout << otter_address4 << endl;
-    cout << otter_address5 << endl;
-#endif
     ad_exit(1);
   }
 

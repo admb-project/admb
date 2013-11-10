@@ -20,8 +20,8 @@
 int save_identifier_string(const char*);
 void verify_identifier_string(const char*);
 
-struct dvar_matrix_position;
-struct dvector_position;
+//struct dvar_matrix_position;
+//struct dvector_position;
 long int reset_gs_stack(void);
 void reset_gs_stack(long int);
 

@@ -14,8 +14,8 @@
  * Description not yet available.
  * \param
  */
-dfunction_tweaker::dfunction_tweaker(double _eps,double _mult):
-  mult(mult), eps(_eps), coffs(1, 3)
+dfunction_tweaker::dfunction_tweaker(double _eps, double _mult):
+  mult(_mult), eps(_eps), coffs(1, 3)
 {
   double e=eps;
   double e2=e*e;

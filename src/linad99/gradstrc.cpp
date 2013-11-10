@@ -216,7 +216,7 @@ void cleanup_temporary_files()
  */
 void allocate_dvariable_space(void)
 {
-  int on,nopt;
+  int on,nopt = 0;
   if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mdl",nopt))>-1)
   {
     if (nopt ==1)
@@ -317,7 +317,7 @@ void allocate_dvariable_space(void)
    }
    else
    {
-     int on,nopt;
+     int on,nopt = 0;
      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ndv",nopt))>-1)
      {
        if (!nopt)

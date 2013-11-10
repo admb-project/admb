@@ -82,7 +82,7 @@ dmatrix inv(const dmatrix& m1)
 */
 dmatrix inv(const dmatrix& m1,const double& _ln_det, const int& _sgn)
 {
-  double d;
+  double d = 0.0;
   double& ln_det=(double&)(_ln_det);
   ln_det=0.0;
   int& sgn=(int&)(_sgn);
@@ -430,7 +430,7 @@ void lubksb(dmatrix a, const ivector& indx, dvector b)
 */
 double det(const dmatrix& m1)
 {
-  double d;
+  double d = 0.0;
   dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
 
   if (m1.rowmin()!=m1.colmin()||m1.rowmax()!=m1.colmax())
@@ -469,7 +469,7 @@ double det(const dmatrix& m1)
 */
 double ln_det(const dmatrix& m1, const int& _sgn)
 {
-  double d;
+  double d = 0.0;
   int& sgn=(int&)_sgn;
   dmatrix a(m1.rowmin(),m1.rowmax(),m1.rowmin(),m1.rowmax());
 

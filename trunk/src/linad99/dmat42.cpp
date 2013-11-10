@@ -28,10 +28,7 @@ int svd_mln(int m, int n, int withu, int withv, double eps, double tol,
 
 static const int  maxiter = 40;
 
-/**
- * Description not yet available.
- * \param
- */
+/*
 static double pythag(double a, double b)
 {
   double fa=fabs(a);
@@ -41,6 +38,7 @@ static double pythag(double a, double b)
   else
     return fb*sqrt(1.0+square(fa/fb));
 }
+*/
 
 /*
 class sing_val_decomp

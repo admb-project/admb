@@ -12,7 +12,6 @@ OBJ6=\
  vec_io.obj\
  t.obj\
  cnstrs.obj\
- pvmvar1.obj\
  con2fmin.obj\
  randeff.obj\
  model34.obj\
@@ -95,17 +94,18 @@ OBJ6=\
  mod_mc4.obj\
  mc_scale.obj\
  adsleep.obj\
- dfqromb.obj\
- profmin.obj\
- para3.obj
+ dfqromb.obj
 OBJSPLUS=\
  spcomm.obj
 PVM=\
+ pvmvar1.obj\
  parallel.obj\
  paralle2.obj\
  paral3re.obj\
  paral5re.obj\
- xxmcmc2.obj
+ xxmcmc2.obj\
+ profmin.obj\
+ para3.obj
 UNUSED=\
  admodel.obj\
  adsplus.obj\

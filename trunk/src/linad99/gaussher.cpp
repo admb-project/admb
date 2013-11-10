@@ -12,29 +12,19 @@
  */
 
 #include <fvar.hpp>
-static double eps=3.0e-14;
-static double pim=0.7511255444649427;
-static int maxit=50;
+//static double eps=3.0e-14;
+//static double pim=0.7511255444649427;
+//static int maxit=50;
 
 void imtqlx ( const dvector& _d, const dvector& _e, const dvector& _z );
 
 /**
- * The sign of a number
- * \param x Double
- */
-double sign ( double x )
+The sign of a number
+\param x Double
+*/
+double sign (double x)
 {
-  double value;
-
-  if ( x < 0.0 )
-  {
-    value = -1.0;
-  }
-  else
-  {
-    value = 1.0;
-  }
-  return value;
+  return x < 0.0 ? -1.0 : 0.0;
 }
 
 /**

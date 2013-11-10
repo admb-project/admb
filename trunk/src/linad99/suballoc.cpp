@@ -16,7 +16,7 @@
  */
   int sub_unallocated(const dvar_vector& m)
   {
-    int iflag;
+    int iflag = 0;
     if (!allocated(m)) iflag=1;
     return iflag;
   }
@@ -147,7 +147,7 @@
  */
   int sub_unallocated(const dvector& m)
   {
-    int iflag;
+    int iflag = 0;
     if (!allocated(m)) iflag=1;
     return iflag;
   }

@@ -255,7 +255,7 @@ double SIGNV( CGNU_DOUBLE x, double y)
   dvector& e = (dvector&) _e;
   dmatrix& z = (dmatrix&) _z;
   int n=d.size();
-  int m,l,iter,i,k;
+  int m,l,iter,i;
   double s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];
@@ -301,7 +301,7 @@ double SIGNV( CGNU_DOUBLE x, double y)
           g=c*r-b;
           /* Next loop can be omitted if eigenvectors not wanted */
           #ifdef EIGEN_VECTORS
-            for (k=1;k<=n;k++)
+            for (int k=1;k<=n;k++)
             {
               f=z[k][i+1];
               z[k][i+1]=s*z[k][i]+c*f;

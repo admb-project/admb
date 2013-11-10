@@ -171,7 +171,7 @@ void dfsdmat::allocate(int _n)
     m[i]=tmp-1;
     tmp+=i;
   }
-  tmp_file=NULL;
+  tmp_file = 0;
   /*
   if (!tmp_file)
   {
@@ -382,5 +382,5 @@ void dfsdmat::restore()
          << endl;
   }
   if (tmp_file) close(tmp_file);
-  tmp_file=NULL;
+  tmp_file = 0;
 }

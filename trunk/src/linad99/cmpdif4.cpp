@@ -147,7 +147,7 @@ dvector restore_dvector_value(const dvector_position& tmp)
   dvector temp_vec(tmp.indexmin(),tmp.indexmax());
   for (int i=tmp.indexmax();i>=tmp.indexmin();i--)
   {
-    double ttmp;
+    double ttmp = 0.0;
     gradient_structure::get_fp()->fread(ttmp);
     temp_vec(i)=ttmp;
   }
@@ -166,7 +166,7 @@ ivector restore_ivector_value(const ivector_position& tmp)
   ivector temp_vec(tmp.indexmin(),tmp.indexmax());
   for (int i=tmp.indexmax();i>=tmp.indexmin();i--)
   {
-    int tmp;
+    int tmp = 0;
     gradient_structure::get_fp()->fread(&tmp,sizeof(int));
     temp_vec(i)=tmp;
   }
@@ -187,7 +187,7 @@ dvector restore_dvar_vector_value(const dvar_vector_position& tmp)
   dvector temp_vec(tmp.indexmin(),tmp.indexmax());
   for (int i=tmp.indexmax();i>=tmp.indexmin();i--)
   {
-    double ttmp;
+    double ttmp = 0.0;
     //gradient_structure::get_fp()->fread(&ttmp,sizeof(double));
     gradient_structure::get_fp()->fread(ttmp);
     temp_vec(i)=ttmp;

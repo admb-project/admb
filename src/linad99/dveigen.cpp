@@ -21,8 +21,6 @@ dvar_vector eigenvalues(const dvar_matrix& m)
   }
   dvar_matrix m1=symmetrize(m);
   int n=m1.rowsize();
-  int cmin=m1.colmin();
-  int rmin=m1.rowmin();
   m1.colshift(1);     // set minimum column and row indices to 1
   m1.rowshift(1);
   dvar_vector diag(1,n);
@@ -30,11 +28,11 @@ dvar_vector eigenvalues(const dvar_matrix& m)
 
   tri_dag(m1,diag,off_diag);
 
-  get_eigen(diag,off_diag,m1); // eigenvalues are returned in diag
-           // eigenvalues are returned in columns of z
+  // eigenvalues are returned in diag
+  get_eigen(diag,off_diag,m1);
 
+  // eigenvalues are returned in columns of z
   return diag;
-
 }
 
 /** Householder transformation for eigenvalue computation.
@@ -183,7 +181,7 @@ void get_eigen(const dvar_vector& _d,const dvar_vector& _e, const dvar_matrix& z
   ADUNCONST(dvar_vector,d)
   ADUNCONST(dvar_vector,e)
   int n=d.size();
-  int m,l,iter,i,k;
+  int m,l,iter,i;
   dvariable s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];
@@ -229,7 +227,7 @@ void get_eigen(const dvar_vector& _d,const dvar_vector& _e, const dvar_matrix& z
           g=c*r-b;
           /* Next loop can be omitted if eigenvectors not wanted */
           #ifdef EIGEN_VECTORS
-            for (k=1;k<=n;k++)
+            for (int k=1;k<=n;k++)
             {
               f=z[k][i+1];
               z[k][i+1]=s*z[k][i]+c*f;
@@ -270,7 +268,7 @@ dvar_vector get_eigen_values(const dvar_vector& _ddd,const dvar_vector& _eee)
 
 
   int n=d.size();
-  int m,l,iter,i,k;
+  int m,l,iter,i;
   dvariable s,r,p,g,f,dd,c,b;
 
   for (i=2;i<=n;i++) e[i-1]=e[i];

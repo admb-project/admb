@@ -132,7 +132,7 @@ double restore_prevariable_value(void)
 {
   // Back up the stream and read the number of bytes written in the
   // ``write function'' corresponding to this ``read function''
-  double tmpout;
+  double tmpout = 0;
   gradient_structure::get_fp()->fread(&tmpout,sizeof(double));
   return tmpout;
 }
@@ -143,7 +143,7 @@ double restore_prevariable_value(void)
  */
 double restore_double_value(void)
 {
-  double tmpout;
+  double tmpout = 0;
   gradient_structure::get_fp()->fread(tmpout);
   return tmpout;
 }
@@ -154,7 +154,7 @@ double restore_double_value(void)
  */
 int restore_int_value(void)
 {
-  int tmpout;
+  int tmpout = 0;
   gradient_structure::get_fp()->fread(tmpout);
   return tmpout;
 }

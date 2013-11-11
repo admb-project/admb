@@ -10,7 +10,6 @@
  */
 #include <fvar.hpp>
 
-//#ifdef __GNUDOS__
 /*
 ostream& setfixed(const ostream& _s)
 {

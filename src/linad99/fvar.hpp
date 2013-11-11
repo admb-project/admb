@@ -56,16 +56,9 @@ Macro definitions.
 #   define PI 3.14159265358979323846
 #endif
 
-#if defined(__GNUDOS__)
-#   if defined(__GNUC__)
-#      if (__GNUC__ < 3)
-#         pragma interface
-#      endif
-#   else
-#      pragma interface
-#   endif
+#if defined(__GNUC__) && (__GNUC__ < 3)
+  #pragma interface
 #endif
-
 
 #if defined(_MSC_VER)
 #   if defined(__MSVC32__)

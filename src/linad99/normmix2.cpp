@@ -10,14 +10,10 @@
  */
 #include <fvar.hpp>
 
-static double cc=0.39894228040143267794;
-
 typedef double (*pinit_f)(double y,double a);
 
-/**
- * Description not yet available.
- * \param
- */
+/*
+static double cc=0.39894228040143267794;
 static double cumd_normal_logistic_mixture(double x,double a)
 {
   // "normal" value for a is 3.0
@@ -33,10 +29,6 @@ static double cumd_normal_logistic_mixture(double x,double a)
   return y;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 static double df_cumd_normal_logistic_mixture(double x,double a)
 {
   // "normal" value for a is 3.0
@@ -55,10 +47,6 @@ static double df_cumd_normal_logistic_mixture(double x,double a)
   return dfx;
 }
 
-/**
- * Description not yet available.
- * \param
- */
 static double cumd_normal_logistic_mixture_initx(double y,double a)
 {
   double x;
@@ -76,6 +64,7 @@ static double cumd_normal_logistic_mixture_initx(double y,double a)
   }
   return x;
 }
+*/
 
 /**
  * Description not yet available.

@@ -44,36 +44,27 @@ Definition of the cifstream class.
 */
 
 #ifndef CIFSTREM_H
-  #define CIFSTREM_H
-#  include <fvar.hpp>
+#define CIFSTREM_H
 
-#if defined(__GNUDOS__)
-  #if defined(__GNUC__)
-    #if (__GNUC__ < 3)
-      #pragma interface
-    #endif
-  #else
-    #pragma interface
-  #endif
+#include <fvar.hpp>
+
+#if defined(__GNUC__) && (__GNUC__ < 3)
+  #pragma interface
 #endif
 
 #if defined(linux) || defined(__GNUDOS__)
 #define USE_LONG_LONG
 #endif
 
-
 #include <stdio.h>
 
-
-#if defined (__WAT32__)
+#ifdef __WAT32__
   #include <iostream.h>
   #include <strstrea.h>
 #endif
-
-#if  defined( __BCPLUSPLUS__) && !defined(__linux__)
+#ifdef __BCPLUSPLUS__
   #include <strstrea.h>
 #endif
-
 #ifdef __ZTC__
   #include <iomanip.hpp>
   #include <strstrea.hpp>
@@ -86,15 +77,15 @@ Definition of the cifstream class.
 #endif
 
 #if defined(__GNU__) || defined(__GNUDOS__)
-#if !defined(linux) && !defined(__CYGWIN32__) && !defined(__MINGW32__)
-  #include <strstrea.h>
-#else
-#  if (__GNUC__  >= 3)
-#    include <sstream>
-#  else
-#    include <strstream.h>
-#  endif
-#endif
+  #if !defined(linux) && !defined(__CYGWIN32__) && !defined(__MINGW32__)
+    #include <strstrea.h>
+  #else
+    #if (__GNUC__  >= 3)
+      #include <sstream>
+    #else
+      # include <strstream.h>
+    #endif
+  #endif
 #endif
 
 #include <ctype.h>
@@ -212,16 +203,10 @@ public:
 #  endif
 #endif
 
-
 #include <stdio.h>
 
-
-
-
-
-
-  char* comment() { return comment_line; }
-  char* signature();
+char* comment() { return comment_line; }
+char* signature();
 
   cifstream& operator>>(const dvariable& z);
  //  cifstream& operator>>(const prevariable& z);

@@ -14,7 +14,6 @@ OBJ1=\
  cbetai.obj\
  cgamdev.obj\
  fmmtr1.obj\
- tsdfpool.obj\
  df13fun.obj\
  multiindex.obj\
  indextyp.obj\
@@ -44,7 +43,6 @@ OBJ1=\
  ccumdexp.obj\
  vcumdexp.obj\
  newhand.obj\
- model49.obj\
  bounder.obj\
  rannegbn.obj\
  drannegbin.obj\
@@ -57,7 +55,6 @@ OBJ1=\
  fvar_m52.obj\
  fvar_m53.obj\
  fvar_m57.obj\
- ad_atlas.obj\
  timer.obj\
  dmat35.obj\
  dmat36.obj\
@@ -124,16 +121,12 @@ OBJ1=\
  fvar_m45.obj\
  fvar_m46.obj\
  fvar_m47.obj\
- fvar_m48.obj\
  fvar_m50.obj\
  fvar_m40.obj\
  fvar_m39.obj\
  lvector.obj\
  lmat.obj\
- lmat1.obj\
- lmat2.obj\
  lmat3.obj\
- lmat4.obj\
  lmat5.obj\
  lmat6.obj\
  lmat7.obj\
@@ -165,7 +158,6 @@ OBJ1=\
  ivec3.obj\
  ivec4.obj\
  ivect6.obj\
- ivec7.obj\
  ivec8.obj\
  ivec9.obj\
  ivect10.obj\
@@ -195,7 +187,6 @@ OBJ1=\
  d3arr8.obj\
  d3arr9.obj\
  d3arr10.obj\
- d3arr11.obj\
  d3_io.obj\
  d3_io1.obj\
  d4_io.obj\
@@ -206,14 +197,12 @@ OBJ1=\
  dmat2.obj\
  dmat4.obj\
  dmat6.obj\
- dmat7.obj\
- dmat8.obj
+ dmat7.obj
 OBJ2=\
  dmat9.obj\
  dmat10.obj\
  dmat12.obj\
  dmat14.obj\
- dmat21.obj\
  dmat22.obj\
  dmat23.obj\
  dmat24.obj\
@@ -224,9 +213,7 @@ OBJ2=\
  dmat29.obj\
  dmat30.obj\
  dmat31.obj\
- dmat32.obj\
  dmat_a.obj\
- dmat_acc.obj\
  dmat_io.obj\
  dmat_io2.obj\
  dmsort.obj\
@@ -252,7 +239,6 @@ OBJ2=\
  dvect18.obj\
  dvect19.obj\
  dvect20.obj\
- dvect21.obj\
  dvect22.obj\
  dvect23.obj\
  dvect24.obj\
@@ -272,14 +258,11 @@ OBJ2=\
  f3arr9.obj\
  f3arr10.obj\
  f3arr11.obj\
- f3arr12.obj\
  f3arr13.obj\
  f3arr14.obj\
  f3arr15.obj\
  f3arr16.obj\
  f3arr17.obj\
- f3arr18.obj\
- f3arr19.obj\
  fmm.obj\
  fvar1.obj\
  fvar2.obj\
@@ -321,7 +304,6 @@ OBJ3=\
  fvar_a47.obj\
  fvar_a48.obj\
  fvar_a51.obj\
- fvar_a52.obj\
  fvar_a53.obj\
  fvar_a54.obj\
  fvar_a55.obj\
@@ -368,7 +350,6 @@ OBJ3=\
  fvar_ma3.obj\
  fvar_ma6.obj\
  fvar_ma7.obj\
- fvar_ma8.obj\
  fvar_ma9.obj\
  fvar_mat.obj\
  fvar_op2.obj\
@@ -378,14 +359,10 @@ OBJ3=\
  fvar_op7.obj\
  fvar_op8.obj\
  fvar_opr.obj\
- fvma_acc.obj\
  imat.obj\
- imat1.obj\
- imat2.obj\
  imat_io.obj\
  imat_a.obj\
  imat3.obj\
- imat4.obj\
  imat5.obj\
  imat6.obj\
  imat7.obj\
@@ -395,7 +372,6 @@ OBJ3=\
  ivec_io1.obj\
  libtype.obj\
  lvec1.obj\
- lvec2.obj\
  lvect_io.obj\
  lvec_io1.obj\
  minim.obj\
@@ -419,7 +395,6 @@ OBJ3=\
  fmmq.obj\
  maxmin.obj\
  fvar_arr.obj\
- dvec_acc.obj\
  def_eval.obj\
  fmm_disp.obj\
  xgradclc.obj\
@@ -461,8 +436,6 @@ OBJ3=\
  i3_io.obj\
  i4io.obj\
  i5io.obj\
- i3arr.obj\
- i3arr1.obj\
  cinvcumdt.obj\
  vinvcumdt.obj\
  vnorlogmix.obj\
@@ -489,7 +462,35 @@ OBJ4=\
 OBJ5=\
  manip.obj\
  conjprod.obj
+OBJ16=\
+ dvec_acc.obj\
+ dmat_acc.obj\
+ dmat8.obj\
+ dmat32.obj\
+ f3arr12.obj\
+ f3arr18.obj\
+ f3arr19.obj\
+ fvar_m48.obj\
+ fvar_ma8.obj\
+ fvma_acc.obj\
+ i3arr.obj\
+ imat1.obj\
+ imat2.obj\
+ ivec7.obj\
+ lmat1.obj\
+ lmat2.obj\
+ lmat4.obj\
+ lvec2.obj\
+ imat4.obj\
+ model49.obj\
+ i3arr1.obj\
+ d3arr11.obj
 PVM=\
  adcomm1.obj
 DEPRECATED=\
+ dvect21.obj\
+ tsdfpool.obj\
+ fvar_a52.obj\
+ dmat21.obj\
+ ad_atlas.obj\
  getopt.obj

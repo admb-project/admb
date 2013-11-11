@@ -320,16 +320,16 @@
     return *this;
   }
 
-  df3_one_variable operator - (const df3_one_variable& v)
-  {
-    df3_one_variable z;
-    *z.get_u() =- *v.get_u();
+df3_one_variable operator-(const df3_one_variable& v)
+{
+  df3_one_variable z;
+  *z.get_u() = -(*v.get_u());
 
-    *z.get_udot() =- *v.get_udot();
-    *z.get_udot2() =- *v.get_udot2();
-    *z.get_udot3() =- *v.get_udot3();
-    return z;
-  }
+  *z.get_udot() = -(*v.get_udot());
+  *z.get_udot2() = -(*v.get_udot2());
+  *z.get_udot3() = -(*v.get_udot3());
+  return z;
+}
 
   df3_one_variable& df3_one_variable::operator += (const df3_one_variable& v)
   {

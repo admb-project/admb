@@ -10,7 +10,6 @@ OBJ6=\
  xmodelm5.obj\
  getbigs.obj\
  vec_io.obj\
- t.obj\
  cnstrs.obj\
  con2fmin.obj\
  randeff.obj\
@@ -107,6 +106,7 @@ PVM=\
  profmin.obj\
  para3.obj
 UNUSED=\
+ t.obj\
  admodel.obj\
  adsplus.obj\
  usereval.obj\

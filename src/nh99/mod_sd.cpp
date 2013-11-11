@@ -491,6 +491,5 @@ void function_minimizer::sd_routine(void)
     {
       cerr << msg << "admodel.tmp" << endl;
     }
-
   #endif
 }

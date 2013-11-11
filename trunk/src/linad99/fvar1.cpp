@@ -8,8 +8,8 @@
  * \file
  * Description not yet available.
  */
-#if defined(__GNUDOS__)
-#  pragma implementation "fvar.hpp"
+#if defined(__GNUC__) && (__GNUC__ < 3)
+  #pragma implementation "fvar.hpp"
 #endif
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable

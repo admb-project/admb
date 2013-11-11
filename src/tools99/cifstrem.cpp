@@ -13,7 +13,9 @@ using std::istringstream;
 
 #include <fvar.hpp>
 
-#pragma implementation "cifstrem.h"
+#if defined(__GNUC__) && (__GNUC__ < 3)
+  #pragma implementation "cifstrem.h"
+#endif
 
 #include "cifstrem.h"
 /*

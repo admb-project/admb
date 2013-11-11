@@ -41,18 +41,6 @@
 #ifndef __ADSTRING_HPP__
 #define __ADSTRING_HPP__
 
-/*
-#if defined(__BORLANDC__ )
-  #if defined(__GNUC__)
-    #if (__GNUC__ < 3)
-      #pragma interface
-    #endif
-  #else
-    #pragma interface
-  #endif
-#endif
-*/
-
 #include "clist.h"
 #include <string.h>
 //#include <fvar.hpp>

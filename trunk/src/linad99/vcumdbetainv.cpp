@@ -18,6 +18,7 @@ static double lnbeta(double a,double b)
   return gammln(a)+gammln(b)-gammln(a+b);
 }
 
+/*
 static int sgn(double z)
 {
   if (z>=0)
@@ -25,6 +26,7 @@ static int sgn(double z)
   else
     return -1;
 }
+*/
 
 df1_two_variable betai(const df1_two_variable& a,
   const df1_two_variable& b,double x,int maxit=100);

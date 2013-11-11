@@ -43,10 +43,7 @@
  * Description not yet available.
  */
 #if !defined(__DF1B2TEST__)
-#  define __DF1B2TEST__
-#if defined(__GNUC__)
-//#pragma interface
-#endif
+#define __DF1B2TEST__
 #include <df1b2fun.h>
 #include <admodel.h>
 

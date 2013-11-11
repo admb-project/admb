@@ -42,19 +42,12 @@
  * \file
  * Description not yet available.
  */
-#if defined(__BORLANDC__ )
-  #if defined(__GNUC__)
-    #if (__GNUC__ < 3)
-      #pragma interface
-    #endif
-  #else
-    #pragma interface
-  #endif
-#endif
-
-// file fvar.hpp
 #ifndef FMMT_HPP
 #define FMMT_HPP
+
+#if defined(__GNUC__) && (__GNUC__ < 3)
+  #pragma interface
+#endif
 
 /*
 class fmm_control
@@ -113,8 +106,9 @@ public:
   ivector iprint1;
 
 public:
-  double minimize(const independent_variables &x,double (*pf)(const dvar_vector&));
   fmmt(int _nvar,int _m=7);
+
+  double minimize(const independent_variables &x,double (*pf)(const dvar_vector&));
 
   double minimize(const independent_variables &x, const dvector& c,
                   double (*pf)(const dvar_vector&, const dvector&));
@@ -123,7 +117,4 @@ public:
 
   dmatrix& hessian();
 };
-
-#endif //#ifndef FMMT_HPP
-
-
+#endif

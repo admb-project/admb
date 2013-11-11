@@ -46,10 +46,8 @@
 #if !defined(__DF1B2FUN__)
 #  define __DF1B2FUN__
 
-#if defined(__GNUC__)
-  #if (__GNUC__ < 3)
-    #pragma interface
-  #endif
+#if defined(__GNUC__) && (__GNUC__ < 3)
+  #pragma interface
 #endif
 
 #include <adpool.h>
@@ -1333,6 +1331,8 @@ class do_naught_kludge
 class df1b2_init_vector : public df1b2vector, public initial_df1b2params
 {
 public:
+  virtual ~df1b2_init_vector() {;}
+
   virtual void sd_scale(const dvector& d,const dvector& x,const int& ii);
   void set_phase_start(int n){phase_start=n; phase_save=n;}
   virtual void set_value(const dvector& x,const int& _ii);

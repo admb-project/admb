@@ -299,16 +299,16 @@ df1_two_vector::~df1_two_vector()
  * Description not yet available.
  * \param
  */
-  df1_two_variable operator - (const df1_two_variable& v)
-  {
-    df1_two_variable z;
+df1_two_variable operator-(const df1_two_variable& v)
+{
+  df1_two_variable z;
 
-    *z.get_u() =- *v.get_u();
-    *z.get_u_x() =- *v.get_u_x();
-    *z.get_u_y() =- *v.get_u_y();
+  *z.get_u() = -(*v.get_u());
+  *z.get_u_x() = -(*v.get_u_x());
+  *z.get_u_y() = -(*v.get_u_y());
 
-    return z;
-  }
+  return z;
+}
 
 /**
  * Description not yet available.

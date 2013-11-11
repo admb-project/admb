@@ -377,33 +377,33 @@ void df3_three_variable::initialize(void)
  * Description not yet available.
  * \param
  */
-  df3_three_variable operator - (const df3_three_variable& v)
-  {
-    df3_three_variable z;
+df3_three_variable operator-(const df3_three_variable& v)
+{
+  df3_three_variable z;
 
-    *z.get_u() =- *v.get_u();
-    *z.get_u_x() =- *v.get_u_x();
-    *z.get_u_y() =- *v.get_u_y();
-    *z.get_u_z() =- *v.get_u_z();
-    *z.get_u_xx() =- *v.get_u_xx();
-    *z.get_u_xy() =- *v.get_u_xy();
-    *z.get_u_xz() =- *v.get_u_xz();
-    *z.get_u_yy() =- *v.get_u_yy();
-    *z.get_u_yz() =- *v.get_u_yz();
-    *z.get_u_zz() =- *v.get_u_zz();
-    *z.get_u_xxx() =- *v.get_u_xxx();
-    *z.get_u_xxy() =- *v.get_u_xxy();
-    *z.get_u_xxz() =- *v.get_u_xxz();
-    *z.get_u_xyy() =- *v.get_u_xyy();
-    *z.get_u_xyz() =- *v.get_u_xyz();
-    *z.get_u_xzz() =- *v.get_u_xzz();
-    *z.get_u_yyy() =- *v.get_u_yyy();
-    *z.get_u_yyz() =- *v.get_u_yyz();
-    *z.get_u_yzz() =- *v.get_u_yzz();
-    *z.get_u_zzz() =- *v.get_u_zzz();
+  *z.get_u() = -(*v.get_u());
+  *z.get_u_x() = -(*v.get_u_x());
+  *z.get_u_y() = -(*v.get_u_y());
+  *z.get_u_z() = -(*v.get_u_z());
+  *z.get_u_xx() = -(*v.get_u_xx());
+  *z.get_u_xy() = -(*v.get_u_xy());
+  *z.get_u_xz() = -(*v.get_u_xz());
+  *z.get_u_yy() = -(*v.get_u_yy());
+  *z.get_u_yz() = -(*v.get_u_yz());
+  *z.get_u_zz() = -(*v.get_u_zz());
+  *z.get_u_xxx() = -(*v.get_u_xxx());
+  *z.get_u_xxy() = -(*v.get_u_xxy());
+  *z.get_u_xxz() = -(*v.get_u_xxz());
+  *z.get_u_xyy() = -(*v.get_u_xyy());
+  *z.get_u_xyz() = -(*v.get_u_xyz());
+  *z.get_u_xzz() = -(*v.get_u_xzz());
+  *z.get_u_yyy() = -(*v.get_u_yyy());
+  *z.get_u_yyz() = -(*v.get_u_yyz());
+  *z.get_u_yzz() = -(*v.get_u_yzz());
+  *z.get_u_zzz() = -(*v.get_u_zzz());
 
-    return z;
-  }
+  return z;
+}
 
 /**
  * Description not yet available.

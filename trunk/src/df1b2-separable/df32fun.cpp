@@ -296,24 +296,24 @@
  * Description not yet available.
  * \param
  */
-  df3_two_variable operator - (const df3_two_variable& v)
-  {
-    df3_two_variable z;
+df3_two_variable operator-(const df3_two_variable& v)
+{
+  df3_two_variable z;
 
-    *z.get_u() =- *v.get_u();
+  *z.get_u() = - *v.get_u();
 
-    *z.get_u_x() =- *v.get_u_x();
-    *z.get_u_y() =- *v.get_u_y();
-    *z.get_u_xx() =- *v.get_u_xx();
-    *z.get_u_xy() =- *v.get_u_xy();
-    *z.get_u_yy() =- *v.get_u_yy();
-    *z.get_u_xxx() =- *v.get_u_xxx();
-    *z.get_u_xxy() =- *v.get_u_xxy();
-    *z.get_u_xyy() =- *v.get_u_xyy();
-    *z.get_u_yyy() =- *v.get_u_yyy();
+  *z.get_u_x() = -(*v.get_u_x());
+  *z.get_u_y() = -(*v.get_u_y());
+  *z.get_u_xx() = -(*v.get_u_xx());
+  *z.get_u_xy() = -(*v.get_u_xy());
+  *z.get_u_yy() = -(*v.get_u_yy());
+  *z.get_u_xxx() = -(*v.get_u_xxx());
+  *z.get_u_xxy() = -(*v.get_u_xxy());
+  *z.get_u_xyy() = -(*v.get_u_xyy());
+  *z.get_u_yyy() = -(*v.get_u_yyy());
 
-    return z;
-  }
+  return z;
+}
 
 /**
  * Description not yet available.

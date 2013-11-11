@@ -91,8 +91,7 @@ dvector laplace_approximation_calculator::
     }
   }
 
-  double maxg;
-  //double maxg_save;
+  double maxg = 0;
   dvector uhat_old(1,usize);
   //double f_from_1=0.0;
 

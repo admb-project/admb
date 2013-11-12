@@ -436,8 +436,9 @@ install:
 
 clean:
 ifeq ($(TERMINAL),dos)
-	if exist build rd /S /Q ..\build
+	if exist ..\build rd /S /Q ..\build
 	if exist ..\admb.bat del ..\admb.bat
+	if exist ..\admb.zip del ..\admb.zip
 else
 	@rm -f nh99/lex.yy.c
 	@rm -f df1b2-separable/lex.yy.c

@@ -274,7 +274,7 @@ void read_pass1_2(void);
     void initialize(void);
     void initialize(int n);
 
-    df1b2variable(const do_naught_kludge& a){ptr=0;}
+    df1b2variable(const do_naught_kludge&){ ptr = 0; }
 
 #if defined(USE_DDOUBLE)
 #undef double
@@ -1379,8 +1379,7 @@ public:
   {
     df1b2matrix::allocate(rmin,rmax,cmin,cmax,s);
   }
-  inline void allocate(int rmin,int rmax,int cmin,int cmax,double fmin,double fmax,
-    const char * s)
+  inline void allocate(int rmin, int rmax, int cmin, int cmax, double, double, const char* s)
   {
     df1b2matrix::allocate(rmin,rmax,cmin,cmax,s);
   }

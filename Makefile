@@ -6,8 +6,6 @@ test: $(CXX)-test
 shared: g++-shared
 install: $(CXX)-install
 clean: $(CXX)-clean
-	@rm -vf admb.zip
-	@rm -vf REVISION
 
 help:
 	@echo "Help"

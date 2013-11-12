@@ -163,7 +163,7 @@ void make_indvar_list(const dvar_vector& t)
      (*ad_printf)("  This can be done by putting the line\n"
          "    gradient_structure::set_MAX_NVAR_OFFSET(%d);\n",
         t.indexmax()-t.indexmin()+1);
-     (*printf)("  before the declaration of the gradient_structure object.\n"
+     (*ad_printf)("  before the declaration of the gradient_structure object.\n"
         " or the command line option -mno %d\n",
         t.indexmax()-t.indexmin()+1);
    }

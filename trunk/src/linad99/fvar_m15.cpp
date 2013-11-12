@@ -23,10 +23,9 @@ void dfinvpret(void);
 \param b An integer
 \return A integer \f$ z = \min(a,b)\f$
 */
-int min(int a,int b)
+int min(const int a, const int b)
 {
-  if (a>b) return b;
-  return a;
+  return a <= b ? a : b;
 }
 
 /** Inverse of a varaiable matrix.
@@ -38,8 +37,8 @@ int min(int a,int b)
 */
 dvar_matrix inv(const dvar_matrix& aa)
 {
-  int i,imax,j,k,n;
-  n=aa.colsize();
+  int imax = 0;
+  int n = aa.colsize();
   int lb=aa.colmin();
   int ub=aa.colmax();
   dvar_matrix vc(lb,ub,lb,ub);
@@ -66,10 +65,10 @@ dvar_matrix inv(const dvar_matrix& aa)
   dvector vv(lb,ub);
 
   d=1.0;
-  for (i=lb;i<=ub;i++)
+  for (int i=lb;i<=ub;i++)
   {
     big=0.0;
-    for (j=lb;j<=ub;j++)
+    for (int j=lb;j<=ub;j++)
     {
       temp=fabs(bb.elem(i,j));
       if (temp > big)
@@ -85,12 +84,12 @@ dvar_matrix inv(const dvar_matrix& aa)
     vv[i]=1.0/big;
   }
 
-  for (j=lb;j<=ub;j++)
+  for (int j=lb;j<=ub;j++)
   {
-    for (i=lb;i<j;i++)
+    for (int i=lb;i<j;i++)
     {
       sum=bb.elem(i,j);
-      for (k=lb;k<i;k++)
+      for (int k=lb;k<i;k++)
       {
         sum = sum - bb.elem(i,k)*bb.elem(k,j);
       }
@@ -98,10 +97,10 @@ dvar_matrix inv(const dvar_matrix& aa)
       bb.elem(i,j)=sum;
     }
     big=0.0;
-    for (i=j;i<=ub;i++)
+    for (int i=j;i<=ub;i++)
     {
       sum=bb.elem(i,j);
-      for (k=lb;k<j;k++)
+      for (int k=lb;k<j;k++)
       {
         sum = sum - bb.elem(i,k)*bb.elem(k,j);
       }
@@ -115,7 +114,7 @@ dvar_matrix inv(const dvar_matrix& aa)
     }
     if (j != imax)
     {
-      for (k=lb;k<=ub;k++)
+      for (int k=lb;k<=ub;k++)
       {
         dum=bb.elem(imax,k);
         bb.elem(imax,k)=bb.elem(j,k);
@@ -141,7 +140,7 @@ dvar_matrix inv(const dvar_matrix& aa)
     if (j != n)
     {
       dum=1.0/bb.elem(j,j);
-      for (i=j+1;i<=ub;i++)
+      for (int i=j+1;i<=ub;i++)
       {
         bb.elem(i,j) = bb.elem(i,j) * dum;
       }
@@ -154,7 +153,7 @@ dvar_matrix inv(const dvar_matrix& aa)
   //int ub=rowmax;
   dmatrix& b=bb;
   ivector indxinv(lb,ub);
-  for (i=lb;i<=ub;i++)
+  for (int i=lb;i<=ub;i++)
   {
     indxinv(indx.elem(i))=i;
   }
@@ -179,7 +178,7 @@ dvar_matrix inv(const dvar_matrix& aa)
       }
       y.elem(i)=sum;
     }
-    for (i=ub;i>=lb;i--)
+    for (int i=ub;i>=lb;i--)
     {
       sum=y.elem(i);
       for (int j=i+1;j<=ub;j++)

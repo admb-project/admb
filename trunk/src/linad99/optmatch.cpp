@@ -42,8 +42,7 @@
    char * s=(char*)ss;
    int rval=-1;
    int i=1;
-   char * p;
-   p=strtok(s," ");
+   char* p = strtok(s," ");
    do {
      if (!strcmp(p,string))
      {
@@ -51,7 +50,7 @@
        break;
      }
      i++;
-     p=strtok('\0'," ");
+     p = strtok(NULL, " ");
    }
    while (p);
    return rval;
@@ -64,26 +63,25 @@
 int option_match(char *_s, const char *string, const int& _nopt)
  {
    adstring ss=_s;
-   char * s=(char*)ss;
-   int& nopt = (int&) _nopt;
+   char* s=(char*)ss;
+   int& nopt = (int&)_nopt;
    int rval=-1;
    int i=1;
    nopt=0;
-   char * p;
-   p=strtok(s," ");
+   char* p = strtok(s," ");
    do {
      if (!strcmp(p,string))
      {
        rval=i;
        break;
      }
-     p=strtok('\0'," ");
+     p = strtok(NULL, " ");
      i++;
    }
    while (p);
    do
    {
-     p=strtok('\0'," ");
+     p = strtok(NULL, " ");
      if (!p) break;
      if (p[0] == '-') break;
      nopt++;

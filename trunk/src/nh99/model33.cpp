@@ -67,7 +67,7 @@ void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
     ssbul_l(ptmp);
     do
     {
-      ptmp=strtok('\0'," ");
+      ptmp = strtok(NULL, " ");
       if (ptmp) nopt++;
     }
     while(ptmp);
@@ -84,7 +84,7 @@ void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
     }
     do
     {
-      ptmp=strtok('\0'," ");
+      ptmp = strtok(NULL, " ");
       if (ptmp)
       {
         //a[nopt]=(char *)malloc((strlen(ptmp)+5)*sizeof(char));

@@ -10183,48 +10183,48 @@ class multi_index
    void initialize();
 };
 
-inline void ADMB_getcallindex(int x)
-{;
+inline void ADMB_getcallindex(int)
+{
 }
 
-inline void ADMB_getcallindex(double x)
-{;
+inline void ADMB_getcallindex(double)
+{
 }
 
-inline void ADMB_getcallindex(const dvector & v)
-{;
+inline void ADMB_getcallindex(const dvector&)
+{
 }
 
-inline void ADMB_getcallindex(const dmatrix & v)
-{;
+inline void ADMB_getcallindex(const dmatrix&)
+{
 }
 
-inline void ADMB_getcallindex(const d3_array & v)
-{;
+inline void ADMB_getcallindex(const d3_array&)
+{
 }
 
-inline void ADMB_getcallindex(const d4_array & v)
-{;
+inline void ADMB_getcallindex(const d4_array&)
+{
 }
 
-inline void ADMB_getcallindex(const prevariable &)
-{;
+inline void ADMB_getcallindex(const prevariable&)
+{
 }
 
-inline void ADMB_getcallindex(const dvar_vector & v)
-{;
+inline void ADMB_getcallindex(const dvar_vector&)
+{
 }
 
-inline void ADMB_getcallindex(const dvar_matrix & v)
-{;
+inline void ADMB_getcallindex(const dvar_matrix&)
+{
 }
 
-inline void ADMB_getcallindex(const dvar3_array & v)
-{;
+inline void ADMB_getcallindex(const dvar3_array&)
+{
 }
 
-inline void ADMB_getcallindex(dvar4_array & v)
-{;
+inline void ADMB_getcallindex(dvar4_array&)
+{
 }
 
 void clean(ivector & v, int level);

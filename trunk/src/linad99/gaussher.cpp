@@ -22,9 +22,9 @@ void imtqlx ( const dvector& _d, const dvector& _e, const dvector& _z );
 The sign of a number
 \param x Double
 */
-double sign (double x)
+double sign(const double x)
 {
-  return x < 0.0 ? -1.0 : 0.0;
+  return x < 0.0 ? -1.0 : 1.0;
 }
 
 /**

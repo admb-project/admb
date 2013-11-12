@@ -591,7 +591,6 @@ gradient_structure::~gradient_structure()
      delete [] RETURN_PTR_CONTAINER;
      RETURN_PTR_CONTAINER = NULL;
    }
-
    if (INDVAR_LIST == NULL)
    {
      null_ptr_err_message();
@@ -625,7 +624,6 @@ gradient_structure::~gradient_structure()
      ARRAY_MEMBLOCK_BASE.free();
    }
 
-
    if (ARR_LIST1 == NULL)
    {
      null_ptr_err_message();
@@ -636,19 +634,6 @@ gradient_structure::~gradient_structure()
       delete ARR_LIST1;
       ARR_LIST1 = NULL;
    }
-
-  /*
-   if (ARR_FREE_LIST1 == NULL)
-   {
-     null_ptr_err_message();
-     ad_exit(1);
-   }
-   else
-   {
-      delete ARR_FREE_LIST1;
-      ARR_FREE_LIST1 = NULL;
-   }
-   */
 
    if (GRAD_LIST == NULL)
    {
@@ -661,7 +646,7 @@ gradient_structure::~gradient_structure()
       GRAD_LIST = NULL;
    }
 
-   instances --;
+   instances--;
 
    if (DEPVARS_INFO==NULL)
    {
@@ -677,7 +662,6 @@ gradient_structure::~gradient_structure()
        " in ~gradient_structure\n";
      ad_exit(1);
    }
-
    delete fp;
    fp = NULL;
 }

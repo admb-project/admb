@@ -51,7 +51,7 @@ void nograd_assign_row(const dvar_matrix& m, const dvector& v, const int& ii)
  * Description not yet available.
  * \param
  */
-  dvariable nograd_assign(double tmp)
+dvariable nograd_assign(double tmp)
 {
   kkludge_object kg;
   dvariable tmpout(kg);

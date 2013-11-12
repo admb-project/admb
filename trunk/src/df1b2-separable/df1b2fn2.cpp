@@ -425,7 +425,7 @@ void df1b2variable::deallocate(void)
     if (ncopies)
     {
       if (*ncopies)
-        *(ncopies--);
+        (*ncopies)--;
       else
       {
         if (trueptr)
@@ -448,7 +448,7 @@ void df1b2variable::deallocate(void)
     if (ncopies)
     {
       if (*ncopies)
-        *(ncopies--);
+        (*ncopies)--;
       else
       {
         delete [] trueptr;

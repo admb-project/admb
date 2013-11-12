@@ -959,7 +959,7 @@ private:
   virtual void sd_scale(const dvector& d, const dvector& x, const int&);
   virtual void mc_scale(const dvector& d, const dvector& x, const int&);
   virtual void curv_scale(const dvector& d, const dvector& x,const int&);
-  virtual void hess_scale(const dvector& d, const dvector& x, const int&){;};
+  virtual void hess_scale(const dvector&, const dvector&, const int&){}
   virtual void save_value(void);
   virtual void bsave_value(void);
   virtual void save_value(const ofstream& ofs, int prec);
@@ -1035,7 +1035,7 @@ private:
   virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
   virtual void mc_scale(const dvector& d, const dvector& x, const int&);
   virtual void curv_scale(const dvector& d, const dvector& x, const int&);
-  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
+  virtual void hess_scale(const dvector&, const dvector&, const int&){}
   void allocate(int imin,int imax,double _minb,double _maxb,
     int phasestart=1, const char * name="UNNAMED");
   void allocate(int imin,int imax,double _minb,double _maxb,
@@ -1125,7 +1125,7 @@ class param_init_number: public named_dvariable , public initial_params
   virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
   virtual void mc_scale(const dvector& d, const dvector& x, const int&);
   virtual void curv_scale(const dvector& d, const dvector& x, const int&);
-  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
+  virtual void hess_scale(const dvector&, const dvector&, const int&){}
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,const int& ii);
   //virtual void read_value(void);
 protected:
@@ -1189,7 +1189,7 @@ private:
   virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
   virtual void mc_scale(const dvector& d, const dvector& x, const int&);
   virtual void curv_scale(const dvector& d, const dvector& x, const int&);
-  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
+  virtual void hess_scale(const dvector&, const dvector&, const int&){}
   virtual const char * label(void);
   void report_value(void);
   param_init_bounded_number& operator = (CGNU_DOUBLE m);
@@ -1253,7 +1253,7 @@ public:
   virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
   virtual void mc_scale(const dvector& d, const dvector& x, const int&);
   virtual void curv_scale(const dvector& d, const dvector& x, const int&);
-  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
+  virtual void hess_scale(const dvector&, const dvector&, const int&){}
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,const int& ii);
 
 public:
@@ -1337,7 +1337,7 @@ public:
   virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
   virtual void mc_scale(const dvector& d, const dvector& x, const int&);
   virtual void curv_scale(const dvector& d, const dvector& x, const int&);
-  virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
+  virtual void hess_scale(const dvector&, const dvector&, const int&){}
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,const int& ii);
 
 public:

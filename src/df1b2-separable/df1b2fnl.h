@@ -146,10 +146,10 @@ public:
   int nvar_calc(void);
   funnel_init_bounded_df1b2vector(const df1b2_init_bounded_vector & x);
   virtual void xinit(init_df1b2vector&,int& ii);
-  virtual void xinit(dvector&,int& ii){ cout << "here"<< endl;}
+  virtual void xinit(dvector&, int&){ cout << "here"<< endl;}
   virtual void set_value(const init_df1b2vector&,const int& ii,
     const df1b2variable&);
-  virtual void set_value(const init_df1b2vector&,const int& ii){ cout << "here"<< endl;}
+  virtual void set_value(const init_df1b2vector&, const int&){ cout << "here"<< endl;}
   virtual void set_index(imatrix&,int& ii);
 };
 
@@ -167,10 +167,10 @@ public:
   //funnel_init_df1b2vector(const df1b2_init_vector & x);
   funnel_init_df1b2vector(const df1b2vector & x);
   virtual void xinit(init_df1b2vector&,int& ii);
-  virtual void xinit(dvector&,int& ii){ cout << "here"<< endl;}
+  virtual void xinit(dvector&, int&){ cout << "here"<< endl;}
   virtual void set_value(const init_df1b2vector&,const int& ii,
     const df1b2variable&);
-  virtual void set_value(const init_df1b2vector&,const int& ii){ cout << "here"<< endl;}
+  virtual void set_value(const init_df1b2vector&, const int&){ cout << "here"<< endl;}
   virtual void set_index(imatrix&,int& ii);
   virtual void allocate(void);
 };
@@ -189,10 +189,10 @@ public:
   //funnel_init_df1b2vector(const df1b2_init_vector & x);
   funnel_init_df1b2matrix(const df1b2matrix & x);
   virtual void xinit(init_df1b2vector&,int& ii);
-  virtual void xinit(dvector&,int& ii){ cout << "here"<< endl;}
+  virtual void xinit(dvector&, int&){ cout << "here"<< endl;}
   virtual void set_value(const init_df1b2vector&,const int& ii,
     const df1b2variable&);
-  virtual void set_value(const init_df1b2vector&,const int& ii){ cout << "here"<< endl;}
+  virtual void set_value(const init_df1b2vector&, const int&){ cout << "here"<< endl;}
   virtual void set_index(imatrix&,int& ii);
 };
 

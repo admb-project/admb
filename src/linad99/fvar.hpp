@@ -621,8 +621,8 @@ class vector_shape
  public:
 #if defined(USE_VECTOR_SHAPE_POOL)
    static vector_shape_pool *xpool;
-   void *operator  new(size_t);
-   void operator  delete(void *ptr, size_t n)
+   void *operator new(size_t);
+   void operator delete(void *ptr, size_t)
    {
       xpool->free(ptr);
    }
@@ -2247,8 +2247,8 @@ class vector_shapex
    friend class dvar_vector;
 #if defined(USE_VECTOR_SHAPE_POOL)
    static vector_shape_pool *xpool;
-   void *operator  new(size_t);
-   void operator  delete(void *ptr, size_t n)
+   void *operator new(size_t);
+   void operator delete(void *ptr, size_t)
    {
       xpool->free(ptr);
    }
@@ -2826,8 +2826,8 @@ class arr_link
 {
 #if defined(USE_VECTOR_SHAPE_POOL)
    static vector_shape_pool *xpool;
-   void *operator  new(size_t);
-   void operator  delete(void *ptr, size_t n)
+   void *operator new(size_t);
+   void operator delete(void* ptr, size_t)
    {
       xpool->free(ptr);
    }
@@ -8596,7 +8596,7 @@ class ad_integer
       return d;
    }
    //operator int () { return d;}
-   ad_integer(const int &_d, const adkludge & k):d(_d)
+   ad_integer(const int &_d, const adkludge&): d(_d)
    {
    }
    ad_integer(int _d):d(_d)
@@ -9430,7 +9430,7 @@ class ad_double
    {
       return d;
    }
-   ad_double(const double &_d, const adkludge & k):d(_d)
+   ad_double(const double& _d, const adkludge&):d(_d)
    {
    }
    ad_double(double _d):d(_d)

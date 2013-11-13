@@ -1,6 +1,6 @@
 GTEST_DIR=googletest-read-only
 
-all: test-expm test-cov_re
+all: run-gtests
 
 run-gtests: $(GTEST_DIR)/gtest-all.o
 	$(MAKE) --directory=gtests

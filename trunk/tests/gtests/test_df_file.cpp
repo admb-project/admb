@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 #include <fvar.hpp>
+#include <new>
+//using std::new;
 
 class test_df_file:public ::testing::Test {};
 
@@ -13,43 +15,39 @@ TEST_F(test_df_file, signs)
 
   ASSERT_EQ(-x, z);
 }
-/*
 TEST_F(test_df_file, strtok)
 {
   char args[100];
-  strcpy(args, "afdk dkfjdk dkfjkdj kdsjfk dkjfkj\0");
-  cout << args << endl;
-  char* ca2 = strtok(args, " ");
-  cout << "\"" << ca2 << "\"" << endl;
-  char* ca3 = strtok(NULL, " ");
-  cout << "\"" << ca3 << "\"" << endl;
-  char* ca4 = strtok('\0', " ");
-  cout << "\"" << ca4 << "\"" << endl;
-  //char* ca5 = strtok((char*)"\0", " ");
-  //cout << "\"" << ca5 << "\"" << endl;
+  strcpy(args, "aaaa bbbb cccc dddd eeee ffff gggg\0");
+  ASSERT_STREQ("aaaa", strtok(args, " "));
+  ASSERT_STREQ("bbbb", strtok(NULL, " "));
+  ASSERT_STREQ("cccc", strtok('\0', " "));
+  //Does not work -> strtok((char*)"\0", " ")
 }
-*/
-TEST_F(test_df_file, allocate_UULONG_MAX)
+TEST_F(test_df_file, allocate_INT_MAX)
 {
-  unsigned long long int size = ULLONG_MAX;
-  ASSERT_EQ(ULLONG_MAX, size);
-  char* array = 0;
-  ASSERT_NO_THROW(array = new char[size]);
-  delete [] array;
-  array = 0;
+  int size = INT_MAX;
+  ASSERT_EQ(INT_MAX, size);
+  char* a = 0;
+  ASSERT_NO_THROW(a = new char[size]);
+  delete [] a;
+  a = 0;
 }
-TEST_F(test_df_file, instance_LONG_MAX)
+TEST_F(test_df_file, instance_INT_MAX)
 {
-  DF_FILE dffile;
-  dffile.buff = new char[LONG_MAX];
+  ASSERT_NO_THROW(DF_FILE instance(INT_MAX));
 }
-/*
-TEST_F(test_df_file, instance_LLONG_MAX)
+TEST_F(test_df_file, allocate_INT_MAX_plus_1)
 {
-  ASSERT_NO_THROW(DF_FILE df_file(LLONG_MAX));
+  ASSERT_LT(INT_MAX, LONG_MAX);
+  ASSERT_LT(LONG_MAX, SIZE_MAX);
+  ASSERT_EQ(SIZE_MAX, ULONG_MAX);
+  size_t size = INT_MAX + 1;
+  ASSERT_LT(size, SIZE_MAX);
+  char* a = new char[size];
+  if (a != 0)
+  {
+    delete [] a;
+    a = 0;
+  }
 }
-TEST_F(test_df_file, instance_ULLONG_MAX)
-{
-  ASSERT_NO_THROW(DF_FILE df_file(ULLONG_MAX));
-}
-*/

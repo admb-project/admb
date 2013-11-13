@@ -18,8 +18,6 @@
     #define open _open
     #define close _close
   #endif
-#if !defined(linux)
-#endif
 
 #ifdef __GNU__
   #include <unistd.h>

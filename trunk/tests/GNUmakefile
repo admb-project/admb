@@ -1,6 +1,6 @@
 GTEST_DIR=googletest-read-only
 
-all: run-gtests
+all: test-cov_re test-expm
 
 run-gtests: $(GTEST_DIR)/gtest-all.o
 	$(MAKE) --directory=gtests
@@ -9,7 +9,7 @@ gtest-colfill: googletest-read-only
 	$(MAKE) --directory=colfill
 
 $(GTEST_DIR)/gtest-all.o: googletest-read-only
-	$(CXX) -c -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
+	$(CXX) -c -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
 
 googletest-read-only:
 	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only

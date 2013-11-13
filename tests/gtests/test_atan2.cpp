@@ -12,12 +12,12 @@ extern "C"
 
 class test_atan2: public ::testing::Test {};
 
-gradient_structure gs(1500000L);
 /**
  * Test atan2 for x greater than zero.
  */
 TEST_F(test_atan2, x_greater_than_zero)
 {
+  gradient_structure gs(1500000L);
   dvariable y = 10.0;
   dvariable x = 10.0;
   const double v = value(atan2(y, x));
@@ -37,6 +37,7 @@ TEST_F(test_atan2, x_greater_than_zero)
  */
 TEST_F(test_atan2, y_greater_than_or_equal_zero_x_less_than_zero)
 {
+  gradient_structure gs(1500000L);
   dvariable y = 10.0;
   dvariable x = -10.0;
   //const double pi = std::atan(1.0)*4.0;
@@ -58,6 +59,7 @@ TEST_F(test_atan2, y_greater_than_or_equal_zero_x_less_than_zero)
  */
 TEST_F(test_atan2, y_and_x_less_than_zero)
 {
+  gradient_structure gs(1500000L);
   dvariable y = -10.0;
   dvariable x = -10.0;
   //const double pi = std::atan(1.0)*4.0;
@@ -79,6 +81,7 @@ TEST_F(test_atan2, y_and_x_less_than_zero)
  */
 TEST_F(test_atan2, y_greater_than_zero_and_x_equal_zero)
 {
+  gradient_structure gs(1500000L);
   dvariable y = 10.0;
   dvariable x = 0.0;
   //const double pi_2 = std::atan(1.0)*2.0;
@@ -100,6 +103,7 @@ TEST_F(test_atan2, y_greater_than_zero_and_x_equal_zero)
  */
 TEST_F(test_atan2, y_equal_zero_and_x_less_than_zero)
 {
+  gradient_structure gs(1500000L);
   dvariable y = 0.0;
   dvariable x = -1.0;
   //const double pi_2 = -1.0*std::atan(1.0)*2.0;
@@ -121,6 +125,7 @@ TEST_F(test_atan2, y_equal_zero_and_x_less_than_zero)
  */
 TEST_F(test_atan2, y_equal_zero_and_x_greater_than_zero)
 {
+  gradient_structure gs(1500000L);
   dvariable y = 0.0;
   dvariable x = 1.0;
   //const double pi_2 = -1.0*std::atan(1.0)*2.0;
@@ -142,6 +147,7 @@ TEST_F(test_atan2, y_equal_zero_and_x_greater_than_zero)
  */
 TEST_F(test_atan2, y_less_than_zero_and_x_equal_zero)
 {
+  gradient_structure gs(1500000L);
   dvariable y = -10.0;
   dvariable x = 0.0;
   //const double pi_2 = -1.0*std::atan(1.0)*2.0;
@@ -163,6 +169,7 @@ TEST_F(test_atan2, y_less_than_zero_and_x_equal_zero)
  */
 TEST_F(test_atan2, y_and_x_equal_zero)
 {
+  gradient_structure gs(1500000L);
   ad_exit=&test_ad_exit;
   try
   {

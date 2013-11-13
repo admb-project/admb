@@ -183,3 +183,7 @@ clean:
 	IF EXIST $(OBJDESTDIR) rd /S /Q $(OBJDESTDIR)
 	pushd ..\contrib& $(MAKE) clean& popd
 	pushd ..\tests& $(MAKE) clean& popd
+	if exist ..\build rd /S /Q ..\build
+	if exist ..\admb del ..\admb
+	if exist ..\admb.bat del ..\admb.bat
+	if exist ..\admb.zip del ..\admb.zip

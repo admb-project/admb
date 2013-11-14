@@ -1,7 +1,7 @@
 /*
  * $Id$
  *
- * Copyright (c) 2008-2012 ADMB foundation
+ * Copyright (c) 2008-2013 ADMB Foundation
  */
 
 #include <fvar.hpp>
@@ -38,7 +38,7 @@ void banner(const adstring& program_name)
   ss << "ADMB";
 
 #if defined(ADMB_VERSION)
-  ss << " -" << STR2(ADMB_VERSION);
+  ss << "-" << STR2(ADMB_VERSION);
 #endif
 
   if (which_library() == 'o')
@@ -113,15 +113,11 @@ void banner(const adstring& program_name)
   ss << "unknown compiler";
 #endif
   ss << "\n";
+  ss << "Copyright (c) 2008-2013 ADMB Foundation and Regents of the University of California\n";
   ss << "Build date: " << __DATE__ << "\n";
 #if defined(ADMB_REVISION)
   ss << "Revision: " << STR2(ADMB_REVISION) << "\n";
 #endif
-  ss << "\n";
-
-  ss << "Copyright (c) 2008-2012 ADMB Foundation and Regents of the University of California\n";
-
-  ss << '\0';
 
   cout << ss.str() << endl;
 }

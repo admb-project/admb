@@ -2636,7 +2636,7 @@ hs_smatrix * return_choleski_decomp(dcompressed_triplet & st)
   hs_symbolic S(st,1);         // Fill reducing row-col permutation                 
   hs_smatrix * PL = new hs_smatrix(S);              // Allocates cholesky factor
 
-  int ierr=chol(HS,S,*PL);                  // Does numeric factorization
+  chol(HS,S,*PL);                  // Does numeric factorization
 
   PL->set_symbolic(S);
 
@@ -2653,7 +2653,7 @@ dvar_hs_smatrix * return_choleski_decomp(dvar_compressed_triplet & st)
   hs_symbolic S(st,1);         // Fill reducing row-col permutation                 
   dvar_hs_smatrix * PL = new dvar_hs_smatrix(S);              // Allocates cholesky factor
 
-  int ierr=chol(HS,S,*PL);                  // Does numeric factorization
+  chol(HS,S,*PL);                  // Does numeric factorization
 
   PL->set_symbolic(S);
 
@@ -2670,7 +2670,7 @@ dvector return_choleski_decomp_solve(dcompressed_triplet & st,dvector& eps)
   hs_symbolic S(st,1);         // Fill reducing row-col permutation                 
   hs_smatrix L(S);              // Allocates cholesky factor
 
-  int ierr=chol(HS,S,L);                  // Does numeric factorization
+  chol(HS,S,L);                  // Does numeric factorization
 
   dvector x(0,n-1);
   eps.shift(0);
@@ -2897,7 +2897,7 @@ dvariable ln_det(dvar_compressed_triplet& VM,hs_symbolic& S,
   dvar_hs_smatrix H(n,VM);  
   //hs_symbolic S(VM,1);         // Fill reducing row-col permutation  
   dvar_hs_smatrix L(S);              // Allocates cholesky factor
-  int ierr;
+  int ierr = 0;
   if (check_flag==0)
   {
     ierr=varchol(H,S,L,s);   

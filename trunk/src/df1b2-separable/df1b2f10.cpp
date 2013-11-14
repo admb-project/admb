@@ -23,12 +23,9 @@ void test_smartlist::reset(void)
   end_saved=0;
 }
 
-void xxx_yyy(df1b2variable * tmp){;}
-
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 test_smartlist::test_smartlist(void)
 {
   bufsize=0;
@@ -250,8 +247,6 @@ void test_smartlist::write_buffer(void)
  */
 void test_smartlist::read_buffer(void)
 {
-  off_t pos;
-  unsigned int nbytes;
   if (!written_flag)
   {
     if (direction ==-1)
@@ -261,6 +256,7 @@ void test_smartlist::read_buffer(void)
   }
   else
   {
+    off_t pos;
     if (direction ==-1) // we are going backwards
     {
       // offset of the begining of the record is at the end
@@ -272,6 +268,7 @@ void test_smartlist::read_buffer(void)
       //*(off_t*)(bptr)=lseek(fp,pos,SEEK_SET);
     }
     // get the record size
+    unsigned int nbytes = 0;
     ::read(fp,&nbytes,sizeof(int));
     if (nbytes>bufsize)
     {
@@ -347,7 +344,7 @@ void memcpy(void * p,const test_smartlist & _list,int nsize)
  * Description not yet available.
  * \param
  */
-void test_smartlist::operator -= (int n)
+void test_smartlist::operator-=(int n)
 {
   if (bptr-n<buffer)
   {
@@ -373,7 +370,7 @@ void test_smartlist::operator -= (int n)
  * Description not yet available.
  * \param
  */
-void test_smartlist::operator += (int nsize)
+void test_smartlist::operator+=(int nsize)
 {
   if ( bptr+nsize-1 > buffend)
   {
@@ -396,11 +393,9 @@ void test_smartlist::operator += (int nsize)
     bptr+=nsize;
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Destructor
+*/
 test_smartlist::~test_smartlist()
 {
   end_saved=0;
@@ -410,9 +405,11 @@ test_smartlist::~test_smartlist()
   direction=0;
   bufsize=0;
 
-  //delete true_buffer;
-  delete [] true_buffer;
-  true_buffer=0;
+  if (true_buffer)
+  {
+    delete [] true_buffer;
+    true_buffer=0;
+  }
   true_buffend=0;
   buffer=0;
   buffend=0;
@@ -429,9 +426,9 @@ test_smartlist::~test_smartlist()
   }
   close(fp);
   fp=0;
-  #if defined ( __SUN__) ||  defined ( __GNU__)
-   unlink(filename);
-  #else
-   remove(filename);
-  #endif
+#if defined ( __SUN__) ||  defined ( __GNU__)
+  unlink(filename);
+#else
+  remove(filename);
+#endif
 }

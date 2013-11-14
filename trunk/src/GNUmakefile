@@ -83,7 +83,11 @@ ifeq ($(TERMINAL),dos)
 OPTLP_LINAD99_OBJS=$(sort $(addprefix ..\build\objects\dist\optlp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)))
 SAFLP_LINAD99_OBJS=$(sort $(addprefix ..\build\objects\dist\saflp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ16)))
 else
-OPTLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)))
+  ifeq ($(CXX),icpc)
+    OPTLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ16)))
+  else
+    OPTLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)))
+  endif
 SAFLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ16)))
 endif
 

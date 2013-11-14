@@ -143,17 +143,16 @@ dvector laplace_approximation_calculator::
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {
         laplace_approximation_calculator::where_are_we_flag=2;
-        /*double maxg=*/fabs(evaluate_function_quiet(uhat,pfmin));
+        /*double maxg = */evaluate_function_quiet(uhat,pfmin);
         laplace_approximation_calculator::where_are_we_flag=0;
         quadratic_prior::get_cHessian_contribution(Hess,xsize);
         quadratic_prior::get_cgradient_contribution(grad,xsize);
       }
 
-      if (ii==1)
-      {
-        /*double diff= */fabs(re_objective_function_value::fun_without_pen-
-          objective_function_value::fun_without_pen);
-      }
+      /*
+      if (ii == 1)
+        { double diff = fabs(re_objective_function_value::fun_without_pen - objective_function_value::fun_without_pen); }
+      */
 
       dvector step;
       int print_hess_in_newton_raphson_flag=0;

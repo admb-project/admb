@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Copyright (c) 2013 ADMB Foundation
+#
+shopt -s expand_aliases
+
+SCRIPT_DIR=`dirname $0`
+pushd "$SCRIPT_DIR" &> /dev/null
+declare -rx ADMB_HOME="$PWD/build/dist"
+popd &> /dev/null
+
+PATH="$ADMB_HOME"/bin:$PATH
+
+admb $*
+
+exit 0

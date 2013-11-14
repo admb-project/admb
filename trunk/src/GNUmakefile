@@ -395,8 +395,6 @@ else
   endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DISK} bins
-	ln -sf bin/admb ${DISK}
-	ln -sf build/dist/bin/admb ..
   ifeq ($(OS),Windows_NT)
     ifneq ("$(TERM)","xterm")
 	cp ../scripts/mingw/set-admb-mingw.bat ${DISK}/bin
@@ -408,7 +406,11 @@ else
 	cp ../scripts/admb/adlink.bat ${DISK}/bin
 	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp ../scripts/admb/root-admb.bat ../admb.bat
+	cp ../scripts/admb/root-admb ../admb
     endif
+  else
+	ln -sf bin/admb ${DISK}
+	ln -sf build/dist/bin/admb ..
   endif
 endif
 

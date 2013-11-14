@@ -40,7 +40,7 @@ extern int ctlc_flag;
   #include <iostream.h>
   #include <conio.h>
 #endif
-#if defined (__WAT32__) || defined (__MSVC32__)
+#if defined (__WAT32__) || defined (_MSC_VER)
   #include <conio.h>
 #endif
 #if defined(__CYGWIN__)
@@ -75,7 +75,7 @@ extern int ctlc_flag;
     void clrscr();
   };
 #endif
-#if defined (__MSVC32__)
+#if defined (_MSC_VER)
   void __cdecl clrscr(void);
 #endif
 #include <math.h>
@@ -163,7 +163,7 @@ void print_values(const double& f, const dvector & x,const dvector& g)
   logstream << setprecision(13) << x << endl;
   logstream << setprecision(13) << g << endl;
 }
-extern adtimer * pfmintime=0;
+adtimer* pfmintime = 0;
 extern int traceflag;
 //#pragma warn -sig
 
@@ -248,28 +248,28 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
          2 (call2 - line search and Hessian update)
          >=3 (derivative check)
   */
-#if !defined (__MSVC32__)
-    #if defined( __SUN__) && !(defined __GNU__)
-      #if defined( __HP__)
+#if !defined (_MSC_VER)
+  #if defined( __SUN__) && !(defined __GNU__)
+    #if defined( __HP__)
         if (ireturn <= 0 )
         {
 	   signal(SIGINT, &onintr);
         }
-      #else
+    #else
         if (ireturn <= 0 )
         {
 	   signal(SIGINT, (SIG_PF)&onintr);
         }
-      #endif
     #endif
- #endif
-    #if defined( __GNU__) || defined (__BORLANDC__)
+  #endif
+#endif
+#if defined( __GNU__) || defined (__BORLANDC__)
       if (ireturn <= 0 )
       {
 	 signal(SIGINT, &onintr);
       }
-    #endif
-    #ifdef __ZTC__
+#endif
+#ifdef __ZTC__
       if (ireturn <= 0 )
       {
         if (disp_inited == 0)
@@ -278,7 +278,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
           disp_usebios();
         }
       }
-    #endif
+#endif
   tracing_message(traceflag,"A5");
       if (ireturn ==1 && dcheck_flag ==0)
       {
@@ -492,9 +492,9 @@ label20: /* check for convergence */
          goto label21;
 #endif
       if (llog) goto label7010;
-#     if   !defined (__MSVC32__)  && !defined (__WAT32__) && !defined(linux)
+#if !defined (_MSC_VER) && !defined (__WAT32__) && !defined(__linux__)
         if (!scroll_flag) clrscr();
-#     endif
+#endif
 label7003: /* Printing table header */
       if (iprint>0)
       {
@@ -507,9 +507,9 @@ label7003: /* Printing table header */
           }
 	  (*ad_printf)("\nFunction value %15.7le; maximum gradient component mag %12.4le\n",
 #if defined(USE_DDOUBLE)
-#undef double
+  #undef double
               double(f), double(gmax));
-#define double dd_real
+  #define double dd_real
 #else
               f, gmax);
 #endif
@@ -643,13 +643,13 @@ label30: /* Taking a step, updating x */
       {
 #if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) || defined(linux)
          if(ctlc_flag || ifn == dcheck_flag )
-  #elif defined(__BORLANDC__)
+#elif defined(__BORLANDC__)
          if ( kbhit() || ctlc_flag|| ifn == dcheck_flag )
-  #elif defined(_MSC_VER)
+#elif defined(_MSC_VER)
          if ( _kbhit() || ctlc_flag || ifn == dcheck_flag )
-  #else
+#else
          if ( kbhit() || ifn == dcheck_flag )
-  #endif
+#endif
          {
             int c=0;
             if (ifn != dcheck_flag)
@@ -902,9 +902,9 @@ label92: /* Exit with error */
           ireturn=-1;
         }
       }
-#     if defined (__MSVC32__)  && !defined (__WAT32__)
+#if defined (_MSC_VER)  && !defined (__WAT32__)
         if (scroll_flag == 0) clrscr();
-#     endif
+#endif
       if (maxfn_flag == 1)
       {
         if (iprint>0)
@@ -948,7 +948,7 @@ label777: /* Printing final Hessian approximation */
 label7000:/* Printing Initial statistics */
       if (iprint>0)
       {
-#     if defined (__MSVC32__)  && !defined (__WAT32__)
+#if defined (_MSC_VER)  && !defined (__WAT32__)
         if (!scroll_flag) clrscr();
 #endif
         if (ad_printf) (*ad_printf)("\nInitial statistics: ");
@@ -957,7 +957,7 @@ label7000:/* Printing Initial statistics */
 label7010:/* Printing Intermediate statistics */
    if (iprint>0)
    {
-#     if defined (__MSVC32__)  && !defined (__WAT32__)
+#if defined (_MSC_VER)  && !defined (__WAT32__)
      if (!scroll_flag)  clrscr();
 #endif
      if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
@@ -965,28 +965,23 @@ label7010:/* Printing Intermediate statistics */
    llog=0;
    goto label7003;
 label7020:/* Exis because Hessian is not positive definite */
-   if (iprint>0)
-   {
-     if (ad_printf) (*ad_printf)("*** hessian not positive definite\n");
-   }
-         #ifdef __ZTC__
-         if (ireturn <= 0)
-         {
-           disp_close();
-         }
-         #endif
-         return;
-   }
-
+  if (iprint > 0)
+  {
+    if (ad_printf) (*ad_printf)("*** hessian not positive definite\n");
+  }
+#ifdef __ZTC__
+  if (ireturn <= 0)
+  {
+    disp_close();
+  }
+#endif
+}
 /**
-  Robust square root.
-  \param x Double precision argument \f$x; x \ge 0\f$.
-  \return \f$\sqrt{x}\f$ for \f$x>0\f$, 0 otherwise.
- */
-   double dafsqrt( double x )
-   {
-   if (x>0)
-      return(sqrt(x));
-   else
-      return(0.);
-   }
+Robust square root.
+\param x Double precision argument \f$x; x \ge 0\f$.
+\return \f$\sqrt{x}\f$ for \f$x>0\f$, 0 otherwise.
+*/
+double dafsqrt(double x)
+{
+  return x > 0 ? sqrt(x) : 0.0;
+}

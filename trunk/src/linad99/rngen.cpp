@@ -139,12 +139,12 @@ double random_number_generator::better_rand()
   /* mag01[x] = x * MATRIX_A  for x=0,1 */
 
   if (mti >= N) { /* generate N words at one time */
-      int kk;
+      int kk = 0;
 
       //if (mti == N+1)   /* if init_genrand() has not been called, */
       //    init_genrand(5489UL); /* a default initial seed is used */
 
-      for (kk=0;kk<N-M;kk++) {
+      for (;kk<N-M;kk++) {
           y = (mt[kk]&UPPER_MASK)|(mt[kk+1]&LOWER_MASK);
           mt[kk] = mt[kk+M] ^ (y >> 1) ^ mag01[y & 0x1UL];
       }
@@ -183,11 +183,10 @@ double random_number_generator::better_rand()
 */
 double randn(const random_number_generator& rng)
 {
-  double x,y;
-  x=((random_number_generator&) rng).better_rand();
-  y=((random_number_generator&) rng).better_rand();
+  double x=((random_number_generator&) rng).better_rand();
+  double y=((random_number_generator&) rng).better_rand();
   double u=sqrt(-2*log(x))*cos(2*PI*y);
-  return(u);
+  return u;
 }
 
 /**

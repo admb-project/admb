@@ -517,9 +517,11 @@ laplace_approximation_calculator::laplace_approximation_calculator
   }
 
   nvariables=xsize+usize;
+  /*
   int rem=0;
   if (nvariables%xsize!=0)
     rem=1;
+  */
 
   if (nvariables/num_der_blocks<xsize)
   {

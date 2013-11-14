@@ -109,7 +109,7 @@ do
     tpls="$tpls $file"
   elif [ "$extension" = "tpl" ]; then
     tpls="$tpls ${file%.*}"
-  elif [ "$extension" = "cpp" -o "$extension" = "c" ]; then
+  elif [ "$extension" = "cpp" -o "$extension" = "c" -o "$extension" = "cc" -o "$extension" = "cxx" ]; then
     srcs="$srcs $file"
     nontpls="$nontpls $file"
   elif [ "$extension" = "o" -o "$extension" = "obj" ]; then

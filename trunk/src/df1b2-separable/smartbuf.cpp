@@ -313,7 +313,7 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
  * Description not yet available.
  * \param
  */
-void byte_copy(void * dest,void * source, unsigned num_bytes)
+void byte_copy(void* dest, void* source, unsigned num_bytes)
 {
 #if !defined (__SUN__) && !defined (__WAT32__) && !defined(__ADSGI__) && !defined (__MSVC32__) && !defined(linux)
   char* pdest = (char*)dest;

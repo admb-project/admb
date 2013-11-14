@@ -162,7 +162,7 @@ dvector laplace_approximation_calculator::default_calculations
       if (quadratic_prior::get_num_quadratic_prior()>0)
       {
         laplace_approximation_calculator::where_are_we_flag=2;
-        /*double maxg=*/fabs(evaluate_function_quiet(uhat,pfmin));
+        evaluate_function_quiet(uhat,pfmin);
         laplace_approximation_calculator::where_are_we_flag=0;
         quadratic_prior::get_cHessian_contribution(Hess,xsize);
         quadratic_prior::get_cgradient_contribution(grad,xsize);
@@ -170,9 +170,9 @@ dvector laplace_approximation_calculator::default_calculations
 
       if (ii==1)
       {
-        /*double diff=*/fabs(re_objective_function_value::fun_without_pen-
-          objective_function_value::fun_without_pen);
-       /*
+        /*
+        double diff = fabs(re_objective_function_value::fun_without_pen 
+                      - objective_function_value::fun_without_pen);
         if (diff>1.e-7)
         {
           cout << "there is a difference in the the user_functions "
@@ -294,7 +294,7 @@ dvector laplace_approximation_calculator::default_calculations
           if (quadratic_prior::get_num_quadratic_prior()>0)
           {
             laplace_approximation_calculator::where_are_we_flag=2;
-            /*double maxg=*/fabs(evaluate_function_quiet(uhat,pfmin));
+            evaluate_function_quiet(uhat,pfmin);
             laplace_approximation_calculator::where_are_we_flag=0;
             quadratic_prior::get_cHessian_contribution(Hess,xsize);
             quadratic_prior::get_cgradient_contribution(grad,xsize);

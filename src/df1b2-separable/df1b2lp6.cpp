@@ -1135,7 +1135,7 @@ dvector laplace_approximation_calculator::
       //cout << "norm(uhat_old) = " << norm(uhat_old)
        //    << "   norm(uhat) = " << norm(uhat)  << endl;
 
-      /*double maxg=*/fabs(evaluate_function(newval,uhat,pfmin));
+      /*double maxg=*/evaluate_function(newval,uhat,pfmin);
       if (have_value && newval>newfbest)
       {
         break;

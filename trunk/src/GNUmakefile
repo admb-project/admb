@@ -20,7 +20,9 @@ ifeq ($(TERMINAL),dos)
   DISK=..\build\dist
   LIBPATH=..\build\objects\dist
   PWD=$(shell cd)
-  PATH:=$(PATH);..\utilities\mingw\bin;..\utilities
+  ifndef NO_UTILITIES
+  PATH:=..\utilities\mingw\bin;..\utilities;$(PATH)
+  endif
 else
   DISK=../build/dist
   LIBPATH=../build/objects/dist
@@ -222,10 +224,10 @@ objects: $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LIN
 
 ifeq ($(TERMINAL),dos)
 ..\build\objects\dist\optlp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -DADMB_VERSION=$(shell cat ../../VERSION) -DADMB_REVISION=$(shell test -e ../../REVISION && cat ../../REVISION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell test -f ../REVISION && cat ../REVISION) -o$@ $<
 
 ..\build\objects\dist\saflp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -DADMB_VERSION=$(shell cat ../../VERSION) -DADMB_REVISION=$(shell test -e ../../REVISION && cat ../../REVISION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_SAFE) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell test -f ../REVISION && cat ../REVISION) -o$@ $<
 
 ..\build\objects\dist\optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
@@ -258,10 +260,10 @@ ifeq ($(TERMINAL),dos)
 	$(CXX) -c $(CXXFLAGS_SAFE) -o$@ $<
 else
 ../build/objects/dist/optlp-nh99-banner.obj: nh99/banner.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -DADMB_VERSION=$(shell cat ../../VERSION) -DADMB_REVISION=$(shell test -e ../../REVISION && cat ../../REVISION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell test -f ../REVISION && cat ../REVISION) -o$@ $<
 
 ../build/objects/dist/saflp-nh99-banner.obj: nh99/banner.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -DADMB_VERSION=$(shell cat ../../VERSION) -DADMB_REVISION=$(shell test -e ../../REVISION && cat ../../REVISION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_SAFE) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell test -f ../REVISION && cat ../REVISION) -o$@ $<
 
 ../build/objects/dist/optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
@@ -408,9 +410,17 @@ endif
 
 verify:
 ifeq ($(TERMINAL),dos)
-	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH):$(CURDIR)\..\utilities:$(CURDIR)\..\utilities\mingw\bin" -C $(DISK)\examples --file=Makefile all
+  ifdef NO_UTILITIES
+	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH)" -C $(DISK)\examples --file=Makefile all
+  else
+	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(CURDIR)\..\utilities:$(CURDIR)\..\utilities\mingw\bin:$(PATH)" -C $(DISK)\examples --file=Makefile all
+  endif
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
-	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH):$(CURDIR)\..\utilities:$(CURDIR)\..\utilities\mingw\bin" FAST_OPTION=1 -C $(DISK)\examples --file=Makefile all
+  ifdef NO_UTILITIES
+	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH)" FAST_OPTION=1 -C $(DISK)\examples --file=Makefile all
+  else
+	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(CURDIR)\..\utilities:$(CURDIR)\..\utilities\mingw\bin:$(PATH)" FAST_OPTION=1 -C $(DISK)\examples --file=Makefile all
+  endif
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
 else
 	PATH="${PWD}/${DISK}/bin:$(PATH)" $(MAKE) -C $(DISK)/examples all

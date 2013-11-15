@@ -4,13 +4,14 @@
 #
 shopt -s expand_aliases
 
-if [ -f "$PWD/build/dist/bin/admb" ]; then
-  declare -rx ADMB_HOME="$PWD/build/dist"
-  $(ADMB_HOME)/bin/admb $*
+SCRIPT_DIR=$(cd `dirname $0` && pwd)
+if [ -f "$SCRIPT_DIR/build/dist/bin/admb" ]; then
+  declare -rx ADMB_HOME="$SCRIPT_DIR/build/dist"
+  $ADMB_HOME/bin/admb $*
 else
-  if [ -f "$PWD/bin/admb" ]; then
-    declare -rx ADMB_HOME="$PWD"
-    $(ADMB_HOME)/bin/admb $*
+  if [ -f "$SCRIPT_DIR/bin/admb" ]; then
+    declare -rx ADMB_HOME="$SCRIPT_DIR"
+    $ADMB_HOME/bin/admb $*
   fi
 fi
 

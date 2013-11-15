@@ -23,6 +23,7 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
 {
   double & f= (double&)_f;
   dvector & g= (dvector&)_g;
+  int unvar=1; 
   fmm fmc(nvar);
   if (random_effects_flag)
   {

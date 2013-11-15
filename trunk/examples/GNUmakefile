@@ -1,18 +1,19 @@
-DEBUG_OPTION=
-ifdef DEBUG
-DEBUG_OPTION=-g
-endif
+ADMB_HOME=$(shell cd .. && pwd)/
 
+ifdef OPTIONS
+OPTIONS:= $(OPTIONS)
+endif
+ifdef DEBUG_OPTION
+OPTIONS:= $(OPTIONS) -g
+endif
 ifdef FAST_OPTION
-FAST_OPTION=-f
+OPTIONS:= $(OPTIONS) -f
 endif
-
 ifdef PROG_VALGRIND
 PROG=valgrind -v --leak-check=full --show-reachable=no --track-origins=yes
 else
 PROG=time
 endif
-
 
 default: simple
 
@@ -22,152 +23,152 @@ else
 all: admb admb-re
 endif
 
-admb: \
-buscycle\
-catage \
-chem-eng \
-forest \
-finance \
-pella-t \
-robreg \
-truncreg \
-simple \
-vol
+admb:\
+ buscycle\
+ catage\
+ chem-eng\
+ forest\
+ finance\
+ pella-t\
+ robreg\
+ truncreg\
+ simple\
+ vol
 
 buscycle: ham4 ham5
 ham4:
-	cd admb/buscycle;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@ -version;$(PROG) ./$@
+	pushd admb/buscycle && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@ -version && $(PROG) ./$@
 
 ham5:
-	cd admb/buscycle;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	pushd admb/buscycle && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@
 
 catage:
-	cd admb/$@;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	pushd admb/$@ && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@
 
 chem-eng:
-	cd admb/$@;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	pushd admb/$@ && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@
 
 finance:
-	cd admb/$@;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	pushd admb/$@ && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@
 
 forest:
-	-cd admb/$@;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	-pushd admb/$@ && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@
 
 pella-t:
-	cd admb/$@;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	pushd admb/$@ && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@
 
 robreg: vonb vonbr
 vonb:
-	cd admb/robreg;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	pushd admb/robreg && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@
 
 vonbr:
-	cd admb/robreg;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	pushd admb/robreg && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@
 
 simple:
-	cd admb/$@;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@
+	pushd admb/$@ && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@
 
 truncreg:
-	@cd admb/$@;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@ -ams 2000000;$(PROG) ./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
+	pushd admb/$@ && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@ -ams 2000000 && $(PROG) ./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
 
 vol: n2mvol
 n2mvol:
-	cd admb/vol;rm -f @.par @.std;admb $(FAST_OPTION) $(DEBUG_OPTION) $@;$(PROG) ./$@ -nohess
+	pushd admb/vol && $(ADMB_HOME)admb$(OPTIONS) $@ && $(PROG) ./$@ -nohess
 
 admb-re:\
-bcb \
-biglog \
-bvprobit \
-glmmadmb \
-caest \
-gamma \
-kidney \
-lidar \
-logistic \
-nbmm \
-nested4 \
-orange \
-orange2 \
-orange_cor \
-pheno \
-polio \
-sdv \
-skewed \
-socatt \
-spatial \
-union \
-weights
+ bcb\
+ biglog\
+ bvprobit\
+ glmmadmb\
+ caest\
+ gamma\
+ kidney\
+ lidar\
+ logistic\
+ nbmm\
+ nested4\
+ orange\
+ orange2\
+ orange_cor\
+ pheno\
+ polio\
+ sdv\
+ skewed\
+ socatt\
+ spatial\
+ union\
+ weights
 
 bcb:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 biglog:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 bvprobit:
 	@#Do not catch for admb-9.x
-	-cd admb-re/glmmadmb;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	-pushd admb-re/glmmadmb && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 glmmadmb:
 	@#Do not catch for admb-9.x
-	-cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	-pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 caest:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 gamma:
-	-cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) liver_$@;$(PROG) ./liver_$@
+	-pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) liver_$@ && $(PROG) ./liver_$@
 
 kidney:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 lidar:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 logistic:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 nbmm:
-	-cd admb-re/nbmm;rm -f @.par @.std;admb -r $(FAST_OPTION) $@;$(PROG) ./$@
+	-pushd admb-re/nbmm && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 nested4:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 orange:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 orange2:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 orange_cor:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@ -nohess
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@ -nohess
 
 pheno:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 polio:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 sdv:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 skewed: diet diet_sk
 diet:
-	cd admb-re/skewed;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/skewed && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 diet_sk:
-	cd admb-re/skewed;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/skewed && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 socatt:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 spatial:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 union:
-	cd admb-re/$@;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 
 weights: binomial
 binomial:
-	cd admb-re/weights;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@
+	pushd admb-re/weights && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@
 binomial_w2:
-	cd admb-re/weights;rm -f @.par @.std;admb -r $(DEBUG_OPTION) $(FAST_OPTION) $@;$(PROG) ./$@ -nohess
+	pushd admb-re/weights && $(ADMB_HOME)admb -r$(OPTIONS) $@ && $(PROG) ./$@ -nohess

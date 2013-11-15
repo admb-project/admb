@@ -23,7 +23,7 @@ for %%a in (%0.bat) do (
 if not "!MINGW_HOME!"=="" (
   set PATH=!ADMB_HOME!\bin;!MINGW_HOME!\bin;!PATH!
 ) else (
-  set PATH=!ADMB_HOME!\bin;!PATH!
+  set PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!
 )
 
 set srcs=

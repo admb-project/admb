@@ -20,8 +20,10 @@ ifeq ($(TERMINAL),dos)
   DISK=..\build\dist
   LIBPATH=..\build\objects\dist
   PWD=$(shell cd)
-  ifndef NO_UTILITIES
-  PATH:=..\utilities\mingw\bin;..\utilities;$(PATH)
+  ifdef MINGW_HOME
+    PATH:=$MINGW_HOME\bin;..\utilities;$(PATH)
+  else
+    PATH:=..\utilities\mingw\bin;..\utilities;$(PATH)
   endif
 else
   DISK=../build/dist
@@ -363,6 +365,9 @@ ifeq ($(TERMINAL),dos)
 	echo set ADMB_CFG_LDFLAGS=-static $(LDFLAGS) >> ${DISK}\bin\admb-cfg.bat
   else
 	echo set ADMB_CFG_LDFLAGS=$(LDFLAGS) >> ${DISK}\bin\admb-cfg.bat
+  endif
+  ifdef MINGW_HOME
+	echo set MINGW_HOME=$MINGW_HOME >> ${DISK}\bin\admb-cfg.bat
   endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=..\${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=..\${DISK} bins

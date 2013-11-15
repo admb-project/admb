@@ -13,13 +13,12 @@ for %%a in (%0.bat) do (
     set ADMB_PATH=%%~dpa
   )
 )
-if exist !ADMB_PATH!build\dist\bin\admb.bat (
-  set ADMB_HOME=!ADMB_PATH!build\dist
+if exist !ADMB_PATH!\bin\admb.bat (
+  set ADMB_HOME=!ADMB_PATH!
   call "!ADMB_HOME!\bin\admb.bat" %*
-)
-else (
-  if exist !ADMB_PATH!\bin\admb.bat (
-    set ADMB_HOME=!ADMB_PATH!
+) else (
+  if exist !ADMB_PATH!build\dist\bin\admb.bat (
+    set ADMB_HOME=!ADMB_PATH!build\dist
     call "!ADMB_HOME!\bin\admb.bat" %*
   )
 )

@@ -10,11 +10,13 @@ test:
 
 clean:
 	@rm -f sample.obj
+	@rm -f sample.o
 	@rm -f simple.std
 	@rm -f simple.htp
 	@rm -f admodel.hes
 	@rm -f variance
 	@rm -f simple
+	@rm -f simple.exe
 	@rm -f admodel.cov
 	@rm -f simple.bar
 	@rm -f eigv.rpt

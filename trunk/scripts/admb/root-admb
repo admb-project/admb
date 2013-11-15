@@ -6,12 +6,12 @@ shopt -s expand_aliases
 
 if [ -f "$PWD/build/dist/bin/admb" ]; then
   declare -rx ADMB_HOME="$PWD/build/dist"
+  $(ADMB_HOME)/bin/admb $*
 else
   if [ -f "$PWD/bin/admb" ]; then
     declare -rx ADMB_HOME="$PWD"
+    $(ADMB_HOME)/bin/admb $*
   fi
 fi
-
-$(ADMB_HOME)/admb $*
 
 exit 0

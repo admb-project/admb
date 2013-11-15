@@ -81,8 +81,7 @@ void laplace_approximation_calculator::
     //int check=initial_params::stddev_scale(scale,uhat);
     //check=initial_params::stddev_curvscale(curv,uhat);
     //max_separable_g=0.0;
-    sparse_count=0.0;
-
+    sparse_count = 0;
 
     step=get_newton_raphson_info_banded(pfmin);
     //if (bHess)
@@ -449,7 +448,7 @@ dvector laplace_approximation_calculator::banded_calculations
       block_diagonal_flag=2;
       used_flags.initialize();
       funnel_init_var::lapprox=this;
-      sparse_count=0.0;
+      sparse_count = 0;
 
       initial_params::straight_through_flag=1;
 

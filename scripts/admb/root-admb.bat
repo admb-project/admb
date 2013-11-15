@@ -1,4 +1,7 @@
 @echo off
+@REM 
+@REM  Copyright 2013 (c) ADMB Foundation
+@REM 
 
 setlocal EnableExtensions EnableDelayedExpansion
 
@@ -9,15 +12,14 @@ for %%a in (%0.bat) do (
   ) else (
     set ADMB_PATH=%%~dpa
   )
-  if exist !ADMB_PATH!build\dist\bin\admb.bat (
-    set ADMB_HOME=!ADMB_PATH!build\dist
-  ) else (
-    pushd !ADMB_PATH!\..
-    set ADMB_HOME=!CD!
-    popd
-  )
-  if exist !ADMB_PATH!utilities\mingw\bin\g++.exe (
-    set MINGW_HOME=!ADMB_PATH!utilities\mingw
-  )
-  call "!ADMB_HOME!\bin\admb.bat" %*
 )
+if exist !ADMB_PATH!build\dist\bin\admb.bat (
+  set ADMB_HOME=!ADMB_PATH!build\dist
+)
+else (
+  if exist !ADMB_PATH!\bin\admb.bat (
+    set ADMB_HOME=!ADMB_PATH!
+  )
+)
+call "!ADMB_HOME!\bin\admb.bat" %*
+exit 0

@@ -375,6 +375,7 @@ ifeq ($(TERMINAL),dos)
 	copy ..\scripts\admb\adlink.bat ${DISK}\bin
 	copy ..\scripts\admb\admb.bat ${DISK}\bin
 	copy ..\scripts\admb\root-admb.bat ..\admb.bat
+	copy ..\scripts\admb\root-admb.bat ${DISK}\admb.bat
 else
 	mkdir -p ${DISK}/bin
 	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DISK}/bin
@@ -406,7 +407,9 @@ else
 	cp ../scripts/admb/adlink.bat ${DISK}/bin
 	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp ../scripts/admb/root-admb.bat ../admb.bat
+	cp ../scripts/admb/root-admb.bat ${DISK}/admb.bat
 	cp ../scripts/admb/root-admb ../admb
+	cp ../scripts/admb/root-admb ${DISK}/admb
     endif
   else
 	ln -sf bin/admb ${DISK}
@@ -416,23 +419,15 @@ endif
 
 verify:
 ifeq ($(TERMINAL),dos)
-  ifdef NO_UTILITIES
-	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH)" -C $(DISK)\examples --file=Makefile all
-  else
-	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(CURDIR)\..\utilities:$(CURDIR)\..\utilities\mingw\bin:$(PATH)" -C $(DISK)\examples --file=Makefile all
-  endif
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
-  ifdef NO_UTILITIES
-	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(PATH)" FAST_OPTION=1 -C $(DISK)\examples --file=Makefile all
-  else
-	$(MAKE) ADMB_HOME="$(CURDIR)\${DISK}" PATH="$(CURDIR)\${DISK}\bin:$(CURDIR)\..\utilities:$(CURDIR)\..\utilities\mingw\bin:$(PATH)" FAST_OPTION=1 -C $(DISK)\examples --file=Makefile all
-  endif
+	$(MAKE) FAST_OPTION=-f -C $(DISK)\examples --file=Makefile all
+	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
+	$(MAKE) -C $(DISK)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
 else
-	PATH="${PWD}/${DISK}/bin:$(PATH)" $(MAKE) -C $(DISK)/examples all
-	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-saf.txt"
-	PATH="${PWD}/${DISK}/bin:$(PATH)" FAST_OPTION=1 $(MAKE) -C $(DISK)/examples all
+	$(MAKE) FAST_OPTION=-f -C $(DISK)/examples all
 	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-opt.txt"
+	$(MAKE) -C $(DISK)/examples all
+	-../scripts/get-outputs.sh ${DISK}/examples/ > "../benchmarks-saf.txt"
 endif
 
 tests:

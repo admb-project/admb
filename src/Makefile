@@ -64,6 +64,7 @@ bins: lexfiles libs
 	copy ..\scripts\cl\*.bat $(DESTDIR)\bin
 	copy ..\scripts\admb\admb.bat $(DESTDIR)\bin
 	copy ..\scripts\admb\root-admb.bat ..\admb.bat
+	copy ..\scripts\admb\root-admb.bat $(DESTDIR)\admb.bat
 	copy ..\utilities\sed.exe $(DESTDIR)\bin
 	copy ..\utilities\*.dll $(DESTDIR)\bin
 

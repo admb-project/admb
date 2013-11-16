@@ -157,6 +157,7 @@ ifeq ($(TERMINAL),dos)
 	if not exist ${DISK}\tests md ${DISK}\tests
 	xcopy ..\tests $(DISK)\tests /S /Y /D
 	if not exist ${DISK}\utilities md ${DISK}\utilities
+	xcopy ..\utilities $(DISK)\utilities /S /Y /D
 	copy /Y ..\LICENSE.txt ${DISK}
 	copy /Y ..\README.txt ${DISK}
 	copy /Y ..\CHANGES.txt ${DISK}
@@ -408,11 +409,14 @@ else
 	cp ../utilities/libiconv2.dll ${DISK}/bin
 	cp ../utilities/libintl3.dll ${DISK}/bin
 	cp ../utilities/regex2.dll ${DISK}/bin
+    endif
+    ifneq ("$(TERM)","dos")
 	cp ../scripts/admb/adcomp.bat ${DISK}/bin
 	cp ../scripts/admb/adlink.bat ${DISK}/bin
 	cp ../scripts/admb/admb.bat ${DISK}/bin
 	cp ../scripts/admb/root-admb.bat ../admb.bat
 	cp ../scripts/admb/root-admb.bat ${DISK}/admb.bat
+	cp ../scripts/admb/admb ${DISK}/bin
 	cp ../scripts/admb/root-admb ../admb
 	cp ../scripts/admb/root-admb ${DISK}/admb
     endif

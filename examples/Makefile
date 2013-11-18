@@ -164,8 +164,8 @@ diet:
 	pushd admb-re\\skewed & $@
 
 diet_sk:
-	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\skewed & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\skewed & $@
 
 socatt:
 	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@

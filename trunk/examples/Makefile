@@ -1,4 +1,5 @@
 SHELL=cmd
+ADMB_HOME=..\\..\\..\\
 
 all: admb admb-re
 
@@ -16,42 +17,54 @@ vol
 
 buscycle: ham4 ham5
 ham4:
-	pushd admb\\buscycle & admb $(OPTIONS) $@ & $@ & popd
+	pushd admb\\buscycle & $(ADMB_HOME)admb $(OPTIONS) $@
+	pushd admb\\buscycle & $@
 
 ham5:
-	pushd admb\\buscycle & admb $(OPTIONS) $@ & $@ & popd
+	pushd admb\\buscycle & $(ADMB_HOME)admb $(OPTIONS) $@
+	pushd admb\\buscycle & $@
 
 catage:
-	pushd admb\\$@ & admb $(OPTIONS) $@ & $@ & popd
+	pushd admb\\$@ & $(ADMB_HOME)admb $(OPTIONS) $@
+	pushd admb\\$@ & $@
 
 chem-eng:
-	pushd admb\\$@ & admb $(OPTIONS) $@ & $@ & popd
+	pushd admb\\$@ & $(ADMB_HOME)admb $(OPTIONS) $@
+	pushd admb\\$@ & $@
 
 finance:
-	pushd admb\\$@ & admb $(OPTIONS) $@ & $@ & popd
+	pushd admb\\$@ & $(ADMB_HOME)admb $(OPTIONS) $@
+	pushd admb\\$@ & $@
 
 forest:
-	@REM pushd admb\\$@ & admb $(OPTIONS) $@ & $@ & popd
+	@REM pushd admb\\$@ & $(ADMB_HOME)admb $(OPTIONS) $@
+	@REM pushd admb\\$@ & $@
 
 pella-t:
-	@REM pushd admb\\$@ & admb $(OPTIONS) $@ & $@ & popd
+	@REM pushd admb\\$@ & $(ADMB_HOME)admb $(OPTIONS) $@
+	@REM pushd admb\\$@ & $@
 
 robreg: vonb vonbr
 vonb:
-	pushd admb\\robreg & admb $(OPTIONS) $@ & $@ & popd
+	pushd admb\\robreg & $(ADMB_HOME)admb $(OPTIONS) $@
+	pushd admb\\robreg & $@
 
 vonbr:
-	pushd admb\\robreg & admb $(OPTIONS) $@ & $@ & popd
+	pushd admb\\robreg & $(ADMB_HOME)admb $(OPTIONS) $@
+	pushd admb\\robreg & $@
 
 simple:
-	pushd admb\\$@ & admb $(OPTIONS) $@ & $@ & popd
+	pushd admb\\$@ & $(ADMB_HOME)admb $(OPTIONS) $@
+	pushd admb\\$@ & $@
 
 truncreg:
-	@REM pushd admb\\$@ & admb $(OPTIONS) $@ & $@ & popd
+	@REM pushd admb\\$@ & $(ADMB_HOME)admb $(OPTIONS) $@
+	@REM pushd admb\\$@ & $@
 
 vol: n2mvol
 n2mvol:
-	pushd admb\\vol & admb $(OPTIONS) $@ & $@ -nohess & popd
+	pushd admb\\vol & $(ADMB_HOME)admb $(OPTIONS) $@
+	pushd admb\\vol & $@
 
 admb-re:\
 bcb \
@@ -78,75 +91,99 @@ union \
 weights
 
 bcb:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 biglog:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 bvprobit:
-	pushd admb-re\\glmmadmb & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\glmmadmb & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\glmmadmb $@ & $@
 
 glmmadmb:
-	pushd admb-re\\glmmadmb & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\glmmadmb & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\glmmadmb $@ & $@
 
 caest:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 gamma:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 kidney:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 lidar:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 logistic:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 nbmm:
-	@REM pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	@REM pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	@REM pushd admb-re\\$@ & $@
 
 nested4:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 orange:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 orange2:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 orange_cor:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ -nohess & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 pheno:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 polio:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 sdv:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 skewed: diet diet_sk
 diet:
-	pushd admb-re\\skewed & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\skewed & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\skewed $@ & $@
 
 diet_sk:
-	pushd admb-re\\skewed & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 socatt:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 spatial:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 union:
-	pushd admb-re\\$@ & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\$@ & $@
 
 weights: binomial
 binomial:
-	pushd admb-re\\weights & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\weights & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\weights $@ & $@
 
 binomial_w2:
-	pushd admb-re\\weights & admb -r $(OPTIONS) $@ & $@ & popd
+	pushd admb-re\\weights & $(ADMB_HOME)admb -r $(OPTIONS) $@
+	pushd admb-re\\weights $@ & $@

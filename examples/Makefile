@@ -64,7 +64,7 @@ truncreg:
 vol: n2mvol
 n2mvol:
 	pushd admb\\vol & $(ADMB_HOME)admb $(OPTIONS) $@
-	pushd admb\\vol & $@
+	pushd admb\\vol & $@ -nohess
 
 admb-re:\
 bcb \
@@ -111,8 +111,8 @@ caest:
 	pushd admb-re\\$@ & $@
 
 gamma:
-	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) liver_$@
+	pushd admb-re\\$@ & liver_$@
 
 kidney:
 	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
@@ -144,7 +144,7 @@ orange2:
 
 orange_cor:
 	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
-	pushd admb-re\\$@ & $@
+	pushd admb-re\\$@ & $@ -nohess
 
 pheno:
 	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
@@ -161,7 +161,7 @@ sdv:
 skewed: diet diet_sk
 diet:
 	pushd admb-re\\skewed & $(ADMB_HOME)admb -r $(OPTIONS) $@
-	pushd admb-re\\skewed $@ & $@
+	pushd admb-re\\skewed & $@
 
 diet_sk:
 	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
@@ -186,4 +186,4 @@ binomial:
 
 binomial_w2:
 	pushd admb-re\\weights & $(ADMB_HOME)admb -r $(OPTIONS) $@
-	pushd admb-re\\weights & $@
+	pushd admb-re\\weights & $@ -nohess

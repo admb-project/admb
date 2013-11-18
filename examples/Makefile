@@ -100,11 +100,11 @@ biglog:
 
 bvprobit:
 	pushd admb-re\\glmmadmb & $(ADMB_HOME)admb -r $(OPTIONS) $@
-	pushd admb-re\\glmmadmb $@ & $@
+	pushd admb-re\\glmmadmb & $@
 
 glmmadmb:
 	pushd admb-re\\glmmadmb & $(ADMB_HOME)admb -r $(OPTIONS) $@
-	pushd admb-re\\glmmadmb $@ & $@
+	pushd admb-re\\glmmadmb & $@
 
 caest:
 	pushd admb-re\\$@ & $(ADMB_HOME)admb -r $(OPTIONS) $@
@@ -182,8 +182,8 @@ union:
 weights: binomial
 binomial:
 	pushd admb-re\\weights & $(ADMB_HOME)admb -r $(OPTIONS) $@
-	pushd admb-re\\weights $@ & $@
+	pushd admb-re\\weights & $@
 
 binomial_w2:
 	pushd admb-re\\weights & $(ADMB_HOME)admb -r $(OPTIONS) $@
-	pushd admb-re\\weights $@ & $@
+	pushd admb-re\\weights & $@

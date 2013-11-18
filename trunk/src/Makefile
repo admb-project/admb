@@ -173,9 +173,9 @@ tests:
 	pushd ..\tests& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)"& popd
 
 verify:
-	pushd $(DESTDIR)\examples& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" PATH="$(MAKEDIR)\$(DESTDIR)\bin;$(PATH)" OPTION=-s all& popd
+	pushd $(DESTDIR)\examples& $(MAKE) OPTION=-s all& popd
 	pushd $(DESTDIR) & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
-	pushd $(DESTDIR)\examples& $(MAKE) ADMB_HOME="$(MAKEDIR)\$(DESTDIR)" PATH="$(MAKEDIR)\$(DESTDIR)\bin;$(PATH)" all& popd
+	pushd $(DESTDIR)\examples& $(MAKE) all& popd
 	pushd $(DESTDIR) & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
 
 install:

@@ -91,6 +91,10 @@ invoke custom adjoint code.
  */
 
 /**
+  \defgroup FMM Numerical Function Minimization
+*/
+
+/**
   \defgroup AD Classes for Automatic Differentiation.
    \details
    The algorithms for AD  in ADMB are invoked by declaring variables to be

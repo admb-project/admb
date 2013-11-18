@@ -215,6 +215,7 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
 *    The Hessian matrix (and not its inverse) h
 * Returns (via parameter vector x):
 *    A vector x after a step of linear search in the direction of gradient descent
+\ingroup FMM
 */
 void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
 {

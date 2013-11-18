@@ -1,7 +1,7 @@
 SHELL=cmd
 
 all:
-	..\..\build\dist\bin\admb.bat ad2csv.cpp main.cpp
+	..\..\admb.bat ad2csv.cpp main.cpp
 	copy ad2csv.exe ..\..\build\dist\contrib\bin
 clean:
 	del ad2csv.obj

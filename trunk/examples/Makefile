@@ -1,3 +1,5 @@
+SHELL=cmd
+
 all: admb admb-re
 
 admb:\

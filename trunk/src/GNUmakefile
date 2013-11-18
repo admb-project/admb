@@ -421,9 +421,9 @@ endif
 
 verify:
 ifeq ($(TERMINAL),dos)
-	$(MAKE) SHELL=cmd FAST_OPTION=-f -C $(DISK)\examples --file=Makefile all
+	$(MAKE) FAST_OPTION=-f -C $(DISK)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
-	$(MAKE) SHELL=cmd -C $(DISK)\examples --file=Makefile all
+	$(MAKE) -C $(DISK)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
 else
 	$(MAKE) FAST_OPTION=-f -C $(DISK)/examples all

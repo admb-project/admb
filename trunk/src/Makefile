@@ -1,3 +1,5 @@
+SHELL=cmd
+
 DESTDIR=..\build\dist
 OBJDESTDIR=..\build\objects\dist
 LEXDESTDIR=..\build\lex

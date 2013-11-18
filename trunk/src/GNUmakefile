@@ -3,14 +3,7 @@
 INSTALL_DIR=/usr/local/
 
 ifeq ($(OS),Windows_NT)
-  ifdef TERM
-    ifeq ("$(TERM)","xterm")
-      TERMINAL=cygwin
-    endif
-    ifeq ("$(TERM)","cygwin")
-      TERMINAL=cygwin
-    endif
-  else
+  ifndef TERM
     TERMINAL=dos
     SHELL=cmd
   endif
@@ -231,10 +224,10 @@ objects: $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LIN
 
 ifeq ($(TERMINAL),dos)
 ..\build\objects\dist\optlp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell test -f ../REVISION && cat ../REVISION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -DADMB_REVISION=$(shell if exist ..\REVISION type ..\REVISION) -o$@ $<
 
 ..\build\objects\dist\saflp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell test -f ../REVISION && cat ../REVISION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_SAFE) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -DADMB_REVISION=$(shell if exist ..\REVISION type ..\REVISION) -o$@ $<
 
 ..\build\objects\dist\optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
@@ -428,9 +421,9 @@ endif
 
 verify:
 ifeq ($(TERMINAL),dos)
-	$(MAKE) FAST_OPTION=-f -C $(DISK)\examples --file=Makefile all
+	$(MAKE) SHELL=cmd FAST_OPTION=-f -C $(DISK)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
-	$(MAKE) -C $(DISK)\examples --file=Makefile all
+	$(MAKE) SHELL=cmd -C $(DISK)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
 else
 	$(MAKE) FAST_OPTION=-f -C $(DISK)/examples all

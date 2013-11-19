@@ -111,7 +111,6 @@ void fmmdisp(const dvector& x, const dvector& g,
     int      headings = 3;     /* number of heading lines */
     int      cols = 3;     /* number of columns to display  */
 
-    int      rownum;       /* row number to print */
     //static int colnum[3] = {1, 28, 55}; /* position in line for each column */
     int      i, j, ij;
     int      imax;         /* number of lines to display */
@@ -151,7 +150,8 @@ void fmmdisp(const dvector& x, const dvector& g,
     if (nvar % cols > 0) imax++;
     if ( (scroll_flag == 0) && (imax > wmax-headings) )
       imax = wmax - headings - 1;
-    rownum = headings;
+
+    //int rownum = headings;       /* row number to print */
 
     for (i=1; i<=imax; i++)
     {
@@ -200,7 +200,6 @@ void fmmdisp(const double *x, const double *g,
     int      headings = 3;     /* number of heading lines */
     int      cols = 3;     /* number of columns to display  */
 
-    int      rownum;       /* row number to print */
     //static int colnum[3] = {1, 28, 55}; /* position in line for each column */
     int      i, j, ij;
     int      imax;         /* number of lines to display */
@@ -240,7 +239,8 @@ void fmmdisp(const double *x, const double *g,
     if (nvar % cols > 0) imax++;
     if ( (scroll_flag == 0) && (imax > wmax-headings) )
       imax = wmax - headings - 1;
-    rownum = headings;
+
+    //int rownum = headings;       /* row number to print */
 
     for (i=1; i<=imax; i++)
     {

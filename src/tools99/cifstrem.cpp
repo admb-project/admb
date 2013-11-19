@@ -167,13 +167,11 @@ void cifstream::filter(void)
 void cifstream::get_field(char * s,int space_flag)
 {
   filter();
+
   // remove leading blanks
   char testc = bp->sgetc();
-   // COUT_TRACE(testc)
-  char oldtest = '\0';
   while (isspace(testc))
   {
-    oldtest = testc;
     testc = bp->snextc();
   }
 

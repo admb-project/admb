@@ -197,11 +197,9 @@ void gradient_structure::set_GRADSTACK_BUFFER_BYTES(long long int i)
       "      other compilers allow long long integers" << endl;
   }
 #else
-  long long int gs_size=(long long int) (sizeof(grad_stack_entry));
-
-  if ( (unsigned long int) (LLONG_MAX) < i)
+  if (LLONG_MAX < i)
   {
-    unsigned int max_size=LLONG_MAX;
+    long long int max_size=LLONG_MAX;
 
     cerr << "\n\n It appears that the size you are setting for "
       "the\n GRADSTACK_BUFFER is > " << LLONG_MAX <<
@@ -209,9 +207,10 @@ void gradient_structure::set_GRADSTACK_BUFFER_BYTES(long long int i)
     cerr << "for the function\n"
       "--- gradient_structure::set_GRADSTACK_BUFFER_BYTES(long long int i) ---\n"
       "should probably be  " << max_size << endl;
-    cerr << "LLONG_MAX = " << (unsigned long int) (LLONG_MAX) << endl;
+    cerr << "LLONG_MAX = " << LLONG_MAX << endl;
     cerr << " i = " << i << endl;
   }
+  long long int gs_size=(long long int)sizeof(grad_stack_entry);
 #endif
   check_set_error("GRADSTACK_BUFFER_SIZE");
   GRADSTACK_BUFFER_SIZE = i/gs_size;

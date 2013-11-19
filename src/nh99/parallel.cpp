@@ -6,7 +6,7 @@
  */
 #include <admodel.h>
 
-#if defined(linux) && !defined(__WIN32) && !defined(__MINGW64__) && !defined(__CYGWIN__)
+#if defined(linux) && !defined(_WIN32) && !defined(__MINGW64__) && !defined(__CYGWIN__)
 #include <ctype.h>
     void strlwr(char * s)
     {

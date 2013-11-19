@@ -111,7 +111,6 @@ void function_minimizer::hess_routine_noparallel(void)
 	   << " for hessian" << endl;
 #endif
 
-      double f=0.0;
       double xsave=x(i);
       sdelta1=x(i)+delta;
       useless(sdelta1);
@@ -122,7 +121,7 @@ void function_minimizer::hess_routine_noparallel(void)
       *objective_function_value::pobjfun=0.0;
       pre_userfunction();
       vf+=*objective_function_value::pobjfun;
-      f=value(vf);
+      double f = value(vf);
       gradcalc(nvar,g1);
 
       sdelta2=x(i)-delta;
@@ -156,7 +155,6 @@ void function_minimizer::hess_routine_noparallel(void)
       useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
-      vf=0.0;
       vf=0.0;
       vf=initial_params::reset(dvar_vector(x));
       *objective_function_value::pobjfun=0.0;
@@ -326,9 +324,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       f=value(vf);
       gradcalc(nvar,g1);
     }
-    double sdelta1;
-    double sdelta2;
-
     for (int i=1;i<=nvar;i++)
     {
       cout << "Estimating row " << i << " out of " << nvar
@@ -336,7 +331,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
 
       double f=0.0;
       double xsave=x(i);
-      sdelta1=x(i)+delta;
+      double sdelta1=x(i)+delta;
       useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
@@ -348,7 +343,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       f=value(vf);
       gradcalc(nvar,g1);
 
-      sdelta2=x(i)-delta;
+      double sdelta2=x(i)-delta;
       useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;

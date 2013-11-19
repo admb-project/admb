@@ -453,6 +453,10 @@ ifeq ($(TERMINAL),dos)
 	if exist ..\admb del ..\admb
 	if exist ..\admb.bat del ..\admb.bat
 	if exist ..\admb.zip del ..\admb.zip
+	if exist nh99/lex.yy.c del nh99/lex.yy.c
+	if exist df1b2-separable/lex.yy.c del df1b2-separable/lex.yy.c
+	if exist nh99/tpl2cpp.c del nh99/tpl2cpp.c
+	if exist df1b2-separable/tpl2rem.c del df1b2-separable/tpl2rem.c
 else
 	@rm -f nh99/lex.yy.c
 	@rm -f df1b2-separable/lex.yy.c

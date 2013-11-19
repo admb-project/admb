@@ -78,6 +78,11 @@ for %%a in (%*) do (
     )
   )
 )
+if "!srcs!"=="" && "!tpls!"="" && "!objs!"=="" (
+  echo.&echo Error: Nothing to build
+  echo.
+  goto HELP
+)
 if not defined parser set parser=tpl2cpp
 
 for %%a in (!tpls!) do (

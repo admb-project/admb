@@ -15,10 +15,15 @@ correct defects (bugs), and streamline installation and build process.
 ADMB-dev
 --------
 
-###Changes
+###Changes and Improvements
+* Added description documentation to the programming interface.
+* Improvements to admb scripts (see New Features).
+* Added more unit tests for improved code coverage. 
+* Fixed reported and found bugs.
+* Fixed compilers warnings.
 
 ###New Supported Compilers
-* AMD C++ compiler - still porting...
+
 * GNU C++ 4.8 compiler
 
 ###New Features
@@ -31,7 +36,35 @@ ADMB-dev
 
   `$ make shared`
 
+* admb scripts can be called directly and do not require setting enviromental variables
+  ADMB_HOME and PATH.
+
+  For Unix, 
+  [~/simple/]$ ~/admb/admb simple
+
+  For Windows, 
+  C:\simple\> C:\admb\admb simple
+
+* admb scripts can build C++ source files and link.
+
+  For Unix, 
+  [~/simple/]$ ~/admb/admb simple.tpl mysource.cpp
+
+  For Windows, 
+  C:\simple\> C:\admb\admb simple.tpl mysource.cpp
+
+* admb scripts have a new option -f for optimized library "OPT_LIB".
+
+* admb scripts have a new option -c for only building object files.
+
 ###To Do
+
+The following are planned or requested features for the next release.
+* Migrating ADMB Subversion Version Control to Git
+* Migrating ADMB Redmine Issue Tracking to Git
+* Merge Threading Code to trunk
+* Write Design Documentation
+* Write Developer Documentation
 
 ADMB-11.1
 ---------

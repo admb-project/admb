@@ -9,8 +9,8 @@ test:
 	./simple
 
 clean:
-	@rm -f sample.obj
-	@rm -f sample.o
+	@rm -f simple.obj
+	@rm -f simple.o
 	@rm -f simple.std
 	@rm -f simple.htp
 	@rm -f admodel.hes

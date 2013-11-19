@@ -3,62 +3,73 @@ ADMB Project
 *ADMB-11.1*  
 *Released May 10, 2013*  
 
-Describes Quick Start installation procedures for Visual C++ compilers.
+Describe ADMB build and installation procedures for Windows and Visual C++ compilers.
 
 ---
-**Note**: For Microsoft Visual C++ 2010, Read [installation help][help]. 
+_**Note**: For Microsoft Visual C++ 2010, read [installation][help] documentation._
 [help]: http://www.admb-project.org/documentation/installation/admb-installation-visual-c
+
+Prerequisites
+-------------
+
+The following programs should be installed on the local computer.
+
+* Visual C++ installed and updated
+* Subversion Client SlikSVN 
 
 Quick Start Visual C++
 ----------------------
 
-1. Download [ADMB source distribution](download).
+1. Open **Visual Studio Command Prompt** window
 
-   [download]: http://www.admb-project.org/downloads/
+2. Download ADMB
 
-   Right click the downloaded file and extract to `C:\admb\`.
+   To get the most current code, download from directly from 
+   ADMB version control using the command below.
 
-2. Open **'Visual Studio Command Prompt**' window and change to admb directory.
+       C:\> svn checkout http://www.admb-project.org/svn/trunk admb
 
-   `C:\> cd admb`
+   This will download admb trunk folder to _C:\admb\ _.
 
-3. Build libraries
+   If **unable** to checkout, download [ADMB source distribution](download).
+ 
+   [download]: http://www.admb-project.org/buildbot/snapshots/admb-latest.zip
 
-   `C:\admb\> nmake`
+   Double click downloaded zip file and extract to _C:\admb\ _.
 
-   To build with debug symbols,
+3. Change to admb directory
 
-   `C:\admb\> nmake debug`
+       C:\> cd admb
 
-   Takes approximately 15-25 minutes to complete.
+4. Build ADMB distribution
 
-4. Build and run the simple example.
+       C:\admb\> nmake
 
-   `C:\admb\> cd examples\admb\simple`
+   Build with debug symbols,
 
-   `C:\admb\examples\admb\simple\> C:\admb\admb simple`
+       C:\admb\> nmake debug
 
-   `C:\admb\examples\admb\simple\> simple`
+5. Test ADMB
 
-5. *[Optional]* Include admb in system **PATH**.
+   The following commands build and run the simple example.
+
+       C:\admb\> cd examples\admb\simple
+       C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
+       C:\admb\examples\admb\simple\> simple.exe
+
+6. **[OPTIONAL]** Include ADMB in system **PATH**.
+
    Avoids the need the to add the prefix path to the admb script.
 
-   A. In the **'System Properties'** window, click on the **'Enviroment Variables'** button.
+   1. In the **System Properties** window, click on the **Enviroment Variables** button.
 
-   B. In the **'Enviroment Variables'** windows, click on the **'New'** button, then
-   in the **'Variable name'** input type
+   2. In the **Enviroment Variables** windows, click on the **New** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb\;%PATH%`.
 
-   **PATH**
+   3. Click the **OK** button when done and open a new command prompt.
 
-   and in the **'Variable value'** input type
-
-   `C:\admb\;%PATH%`
-
-   C. Click the **'OK'** button when done and open a new command prompt.
-
-   `C:\> cd \admb\examples\admb\simple`
-   `C:\admb\examples\admb\simple\> admb simple`
-   `C:\admb\examples\admb\simple\> simple`
+            C:\admb\> cd examples\admb\simple
+            C:\admb\examples\admb\simple\> admb simple.tpl
+            C:\admb\examples\admb\simple\> simple.exe
 
 ---
 For help and support, email <users@admb-project.org>.

@@ -1,73 +1,86 @@
-ADMB Project  
-============
+#ADMB Project  
 *ADMB-11.1*  
 *Released May 10, 2013*  
 
-Describes QuickStart installation procedures for Unix distributions.
+Describe ADMB build and installation procedures for Unix distributions.
 
 ---
+
+Prerequisites
+-------------
+
+The following programs should be installed on the local computer.
+
+* GNU sed
+* GNU flex
+* GNU make
+* C++ compiler
+* Subversion Client
 
 Quick Start Unix
 ----------------
 
-1. Download [ADMB source distribution](download).
+1. Open a **Terminal** window
 
-   [download]: http://www.admb-project.org/downloads/
+2. Download ADMB
 
-2. Open a **'Terminal'** window.
+   To get the most current code, download from directly from 
+   ADMB version control using the command below.
 
-3. Extract downloaded file in **'HOME'** directory.
+       [~]$ svn checkout http://www.admb-project.org/svn/trunk admb
 
-   `[~]$ unzip admb-latest-src.zip`
+   This will download admb trunk folder to _~/admb/_.
 
-4. Change to admb directory.
+   If **unable** to checkout, download [ADMB source distribution](download).
+ 
+   [download]: http://www.admb-project.org/buildbot/snapshots/admb-latest.zip
 
-   `[~]$ cd admb`
+   Use the command below to extract to _~/admb/_. 
 
-5. Build libraries 
+       [~]$ unzip admb.zip
 
-   `[~/admb/]$ make`
+3. Change to admb directory.
 
-   To build with debug symbols,
+       [~]$ cd admb
 
-   `[~/admb/]$ make debug`
+4. Build ADMB distribution
 
-   To build shared library,
+       [~/admb/]$ make
 
-   `[~/admb/]$ make shared`
+   Build with debug symbols,
 
-   Takes approximately 15-25 minutes to complete.
+       [~/admb/]$ make debug
 
    Use help to show available compiler targets.
 
-   `[~/admb/]$ make help`
+       [~/admb/]$ make help
 
-6. Build run the simple example.
+5. Test ADMB
 
-   `[~/admb/]$ cd examples/admb/simple`
+   The following commands build and run the simple example.
 
-   `[~/admb/examples/admb/simple/]$ ~/admb/admb simple`
+       [~/admb/]$ cd examples/admb/simple
+       [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
+       [~/admb/examples/admb/simple/]$ ./simple
 
-   `[~/admb/examples/admb/simple/]$ ./simple`
+6. **[OPTIONAL]** Installation
 
-7. *[Optional]* Installation
+   Avoids the need the to include path with the admb script.
 
-   Copy entire distribution.
+   Copy entire distribution folder.
 
-   `[~/admb/]$ sudo cp -Rvf ../admb /usr/local/admb`
+       [~]$ sudo cp -Rvf admb /usr/local/admb
 
-   Create symlink to main admb script.  Directory '/usr/local/bin/' should 
+   Create symlink to main admb script.  Directory _/usr/local/bin/_ should 
    already exist.
 
-   `[~/admb/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb`
+       [~]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
    After copying, build and run the simple example.
 
-   `[~/admb/]$ cd examples/admb/simple`
-
-   `[~/admb/examples/admb/simple/]$ admb simple`
-
-   `[~/admb/examples/admb/simple/]$ ./simple`
+       [~]$ cd admb/examples/admb/simple
+       [~/admb/examples/admb/simple/]$ admb simple.tpl
+       [~/admb/examples/admb/simple/]$ ./simple
 
 --------------------------------------------------------------------------------
 For help and support, email <users@admb-project.org>.

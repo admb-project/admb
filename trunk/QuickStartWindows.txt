@@ -1,79 +1,98 @@
-ADMB Project  
-============
+#ADMB Project 
 *ADMB-11.1*  
 *Released May 10, 2013*  
 
-Describes Quick Start installation procedure for Windows.
+Describe ADMB build and installation procedures for Windows and MinGW.
 
 ---
 
-For Windows computers with Visual C++ compiler already installed, read
-the [QuickStart for Visual C++](QuickStartVisualC++.html).
+_For Windows computers with Visual C++ compiler already installed, read
+the [QuickStart for Visual C++](QuickStartVisualC++.html)._
+
+Prerequisites
+-------------
+  
+The following programs should be installed on the local computer.  
+
+* Subversion Client - SlikSVN 
 
 Quick Start Windows
 -------------------
 
-1. Download [ADMB source distribution](download).
+1. Open **Command Prompt** window
 
-   [download]: http://www.admb-project.org/downloads/
+2. Download ADMB
 
-   Right click the downloaded file and extract to `C:\admb\`.
+   To get the most current code, download from directly from 
+   ADMB version control using the command below.
 
-2. Open **'Command Prompt'** window and change to admb directory.
+       C:\> svn checkout http://www.admb-project.org/svn/trunk admb
 
-   `C:\> cd admb`
+   This will download admb trunk folder to _C:\admb\ _.
 
-3. Install MinGW C++ compiler.
+   If **unable** to checkout code, download the full source distribution.
 
-   `C:\admb\> utilities\get-mingw.bat`
+   [download]: http://www.admb-project.org/buildbot/snapshots/admb-latest.zip
 
-   Downloads approximately 177 MB from 'sourceforge.net'.  This will also
+   Double click downloaded zip file and extract to _C:\admb\ _.
+
+3. Change to admb directory
+
+       C:\> cd admb
+
+4. Install MinGW C++ compiler
+
+   If MinGW C++ compiler has already been installed, skip this step and go to
+   step 5.
+
+   If MinGW C++ compiler has not been installed, use the command below to download
+   and install from the MinGW site to the _C:\admb\utilities\mingw_ folder.
+
+       C:\admb\> utilities\get-mingw.bat
+
+   Downloads approximately 177 MB from MinGW downloads.  This will also
    update existing MinGW installation.
 
-   If MinGW has been already installed, use the command below to add MinGW
-   programs to the system **'PATH'**.
+5. Build ADMB distribution
 
-   `C:\admb\> set PATH=C:\MinGW\bin;%PATH%`
+   If MinGW was installed with _get-mingw.bat_, use the command below.
 
-4. Build libraries
+       C:\admb\> utilities\make
 
-   `C:\admb\> utilities\make`
+   Build with debug symbols,
 
-   To build with debug symbols,
+       C:\admb\> utilities\make debug
 
-   `C:\admb\> utilities\make debug`
+   If MinGW was installed in _C:\MinGW_, set the MINGW_HOME to specify the 
+   location.
 
-   Takes approximately 15-25 minutes to complete.
+       C:\admb\> utilities\make MINGW_HOME=C:\MinGW
 
-5. Build and run the simple example.
+   Build with debug symbols,
 
-   `C:\admb\> cd examples\admb\simple`
+       C:\admb\> utilities\make MINGW_HOME=C:\MinGW debug
 
-   `C:\admb\examples\admb\simple\> C:\admb\admb simple`
+6. Test ADMB
+ 
+   The following commands build and run the simple example.
 
-   `C:\admb\examples\admb\simple\> simple`
+       C:\admb\> cd examples\admb\simple
+       C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
+       C:\admb\examples\admb\simple\> simple.exe
 
-6. *[Optional]* Include admb in system **PATH**.
-   Avoids the need the to add the prefix path to the admb script.
+7. **[OPTIONAL]** Include admb script in system **PATH**
 
-   A. In the **'System Properties'** window, click on the **'Enviroment Variables'** button.
+   Avoids the need the to include path with the admb script.
 
-   B. In the **'Enviroment Variables'** windows, click on the **'New'** button, then
-   in the **'Variable name'** input type
+   1. In the **System Properties** window, click on the **Enviroment Variables** button.
 
-   **PATH**
+   2. In the **Enviroment Variables** window, click on the **New** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb\;%PATH%`.
 
-   and in the **'Variable value'** input type
-
-   `C:\admb\;%PATH%`
-
-   C. Click the **'OK'** button when done and open a new command prompt.
-
-   `C:\> cd \admb\examples\admb\simple`
-
-   `C:\admb\examples\admb\simple\> admb simple`
-
-   `C:\admb\examples\admb\simple\> simple`
+   3. Click the **OK** button when done and open a new command prompt.  
+          
+          C:\admb\> cd examples\admb\simple
+          C:\admb\examples\admb\simple\> admb simple.tpl
+          C:\admb\examples\admb\simple\> simple.exe
 
 ---
 For help and support, email <users@admb-project.org>.

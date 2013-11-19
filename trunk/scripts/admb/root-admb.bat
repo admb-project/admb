@@ -22,4 +22,3 @@ if exist !ADMB_PATH!\bin\admb.bat (
     call "!ADMB_HOME!\bin\admb.bat" %*
   )
 )
-exit 0

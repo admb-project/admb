@@ -29,15 +29,6 @@
 
 void gradfree(dlink *);
 
-/**
- * Description not yet available.
- * \param
- */
-int xxx_uuu_a(void)
-{
-  return 1;
-}
-
 #ifndef OPT_LIB
 
 /**

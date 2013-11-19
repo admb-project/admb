@@ -562,6 +562,7 @@ class kkludge_object{};
 class humungous_pointer
 {
  public:
+//__WIN32__ is a Borland macro
 #if defined(__BORLANDC__ ) && !defined(DOS386) && !defined(__WIN32__)
    char huge *ptr;
 #else
@@ -9815,7 +9816,7 @@ dvariable log_gamma_density(const dvariable & _x, const dvariable & _r,
 
 
 
-#if (defined(linux) || defined(__linux__)) && !defined(__WIN32)
+#if (defined(linux) || defined(__linux__)) && !defined(_WIN32)
 #include <sys/time.h>
 #include <iostream>
 

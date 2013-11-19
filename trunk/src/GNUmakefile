@@ -457,6 +457,7 @@ ifeq ($(TERMINAL),dos)
 	if exist df1b2-separable\lex.yy.c del df1b2-separable\lex.yy.c
 	if exist nh99\tpl2cpp.c del nh99\tpl2cpp.c
 	if exist df1b2-separable\tpl2rem.c del df1b2-separable\tpl2rem.c
+	if exist ..\REVISION del ..\REVISION
 else
 	@rm -f nh99/lex.yy.c
 	@rm -f df1b2-separable/lex.yy.c
@@ -469,4 +470,6 @@ else
 	@$(MAKE) --directory=../tests clean
 	@rm -f ../admb
 	@rm -f ../admb.bat
+	@rm -f ../admb.zip
+	@rm -f ../REVISION
 endif

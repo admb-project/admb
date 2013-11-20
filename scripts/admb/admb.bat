@@ -29,8 +29,9 @@ if not "!MINGW_HOME!"=="" (
 set srcs=
 set tpls=
 set objs=
-set bounds=-bounds
-set debug=
+set tplbounds=-bounds
+set tpldebug=
+set fast=
 
 for %%a in (%*) do (
   set arg=%%a
@@ -41,17 +42,17 @@ for %%a in (%*) do (
     )
     if "%%a"=="-g" (
       set g=-g
-      set debug=-debug
+      set tpldebug=-debug
     )
     if "%%a"=="-r" (
       set r=-r
       set parser=tpl2rem
     )
     if "%%a"=="-s" (
-      set bounds=-bounds
+      set tplbounds=-bounds
     )
     if "%%a"=="-f" (
-      set bounds=
+      set fast=-f
     )
   ) else (
     if "%%~xa"=="" (
@@ -99,7 +100,7 @@ for %%a in (!tpls!) do (
   del xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp 2> NUL
   del tfile1 tfile2 tfile3 tfile4 tfile5 2> NUL
   del !model!.cpp !model!.htp !model!.obj !model!.exe 2> NUL
-  set CMD=!parser! !debug! !bounds! !dll! !model!
+  set CMD=!parser! !tpldebug! !tplbounds! !dll! !model!
   echo.&echo *** !CMD!
   call !CMD!
   if not exist !model!.cpp goto ERROR
@@ -115,7 +116,7 @@ for %%b in (!tpls!) do (
   set model=%%~nb
   for %%a in (!model! !srcs!) do (
     set src=%%~na
-    set CMD=adcomp !d! !g! !r! !s! !src!
+    set CMD=adcomp !d! !g! !r! !fast! !src!
     echo.&echo *** !CMD!
     call !CMD!
     if not exist !src!.obj (
@@ -126,7 +127,7 @@ for %%b in (!tpls!) do (
 )
 for %%a in (!srcs!) do (
   set src=%%~na
-  set CMD=adcomp !d! !g! !r! !s! !src!
+  set CMD=adcomp !d! !g! !r! !fast! !src!
   echo.&echo *** !CMD!
   call !CMD!
   if exist !src!.obj (
@@ -144,7 +145,7 @@ if not defined tpls (
   )
   for %%a in (!objs!) do (
     set model=%%~na
-    set CMD=adlink !d! !g! !r! !s! !objs!
+    set CMD=adlink !d! !g! !r! !fast! !objs!
     echo.&echo *** !CMD!
     call !CMD!
     if not exist !model!.exe (
@@ -155,7 +156,7 @@ if not defined tpls (
 ) else (
   for %%a in (!tpls!) do (
     set model=%%~na
-    set CMD=adlink !d! !g! !r! !s! !model!.obj !objs!
+    set CMD=adlink !d! !g! !r! !fast! !model!.obj !objs!
     echo.&echo *** !CMD!
     call !CMD!
     if defined dll (
@@ -176,16 +177,16 @@ goto EOF
 echo.&echo Error: Unable to build executable.
 goto EOF
 :HELP
-echo Usage: admb [-d] [-g] [-r] [-s] model
+echo Usage: admb [-d] [-g] [-r] [-f] model
 echo.
 echo Build AD Model Builder executable from TPL.
 echo.
-echo   -d     Create DLL
-echo   -g     Insert debugging symbols
-echo   -r     Create ADMB-RE
-echo   -s     Enforce safe bounds (default)
-echo   -O     Use optimized mode
-echo   model  Filename prefix, e.g. simple
+echo   -d     Build a dynamic library (dll).
+echo   -g     Build with debug symbols.
+echo   -r     Build Random effects program (ADMB-RE).
+echo   -f     Build with Fast optimized mode (no bounds checking).
+echo          By default, admb script builds with bounds checking.
+echo   model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl extension)
 echo.
 goto EOF
 REM r982 [2011-02-16] arnima  rewrite, fixed bug when user option is not

@@ -83,7 +83,7 @@ else
   else
     OPTLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/optlp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4)))
   endif
-SAFLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ16)))
+  SAFLP_LINAD99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-linad99-,$(OBJ1) $(OBJ2) $(OBJ3) $(OBJ4) $(OBJ16)))
 endif
 
 include nh99/objects.lst
@@ -200,9 +200,9 @@ ifeq ($(TERMINAL),dos)
 	if exist ${DISK}\lib\libadmb.a del ${DISK}\lib\libadmb.a
 	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\saflp-linad99-*.obj
 	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\saflp-df1b2-separable-*.obj
-	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\optlp-nh99-*.obj
-	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\optlp-tools99-*.obj
-	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\optlp-sparse-*.obj
+	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\saflp-nh99-*.obj
+	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\saflp-tools99-*.obj
+	$(AR) -rs ${DISK}\lib\libadmb.a ..\build\objects\dist\saflp-sparse-*.obj
 	if exist ${DISK}\lib\libadmbo.a del ${DISK}\lib\libadmbo.a
 	$(AR) -rs ${DISK}\lib\libadmbo.a ..\build\objects\dist\optlp-linad99-*.obj
 	$(AR) -rs ${DISK}\lib\libadmbo.a ..\build\objects\dist\optlp-df1b2-separable-*.obj

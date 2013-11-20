@@ -78,9 +78,9 @@ endif
 
 build-ad2csv:
 ifeq ($(TERMINAL),dos)
-	$(MAKE) --directory=ad2csv --file=Makefile ADMB_HOME="$(ADMB_HOME)"
+	$(MAKE) --directory=ad2csv --file=Makefile
 else
-	$(MAKE) --directory=ad2csv ADMB_HOME="$(ADMB_HOME)"
+	$(MAKE) --directory=ad2csv
 endif
 
 build-admb2r:

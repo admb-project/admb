@@ -115,9 +115,6 @@ SAFLP_TOOLS99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-tools99-,$(OBJ
 endif
 
 all: revision dist contrib
-ifeq USE_CSCRIPT
-	pushd $(DISK) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
-endif
 ifndef BUILD_SHARED_LIBRARY
 	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(PWD)/${DISK}" --directory=../contrib build-ad2csv
 endif

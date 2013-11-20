@@ -13,7 +13,7 @@ Options:
  -c     Build object file only.
  -d     Build a shared library.
  -g     Build with debug symbols.
- -r     Build Random effects (ADMB-RE).
+ -r     Build Random effects program (ADMB-RE).
  -f     Build with Fast optimized mode (no bounds checking).
         By default, admb script builds with bounds checking.
  model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl extension)

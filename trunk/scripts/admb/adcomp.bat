@@ -6,7 +6,7 @@ if [%1]==[--help] goto HELP
 
 rem Pop args until model=%1
 set dll=
-set opt=-DOPT_LIB
+set safopt=-DSAFE_ALL
 set sym=-O3
 set i=0
 :STARTLOOP
@@ -14,7 +14,7 @@ if [%2]==[] goto ENDLOOP
 if %1==-d set dll=-DBUILDING_DLL & shift
 if %1==-g set sym=-g& shift
 if %1==-r shift
-if %1==-s set opt=-DSAFE_ALL& shift
+if %1==-f set safopt=-DOPT_LIB& shift
 set /a i=%i%+1
 if %i%==100 shift & set i=0 & echo.&echo Warning: illegal option %1 (discarded)
 goto STARTLOOP
@@ -29,22 +29,23 @@ if defined CXXFLAGS (
   set CXXFLAGS=%ADMB_CFG_CXXFLAGS%
 )
 
-set CMD=g++ -c %CXXFLAGS% %sym% -D__GNUDOS__ %dll% -Dlinux %opt% -DUSE_LAPLACE -fpermissive -I. -I"%ADMB_HOME%\include" -I"%ADMB_HOME%\contrib\include" -o %model%.obj %model%.cpp
+set CMD=g++ -c %CXXFLAGS% %sym% -D__GNUDOS__ %dll% -Dlinux %safopt% -DUSE_LAPLACE -fpermissive -I. -I"%ADMB_HOME%\include" -I"%ADMB_HOME%\contrib\include" -o %model%.obj %model%.cpp
 echo %CMD%
 %CMD%
 
 goto EOF
 
 :HELP
-echo Usage: adcomp [-d] [-g] [-r] [-s] model
+echo Usage: adcomp [-d] [-g] [-r] [-f] model
 echo.
 echo Compile AD Model Builder C++ to object code, using the MinGW GCC compiler.
 echo.
-echo   -d     Create DLL
-echo   -g     Insert debugging symbols
-echo   -r     Create ADMB-RE
-echo   -s     Enforce safe bounds
-echo   model  Filename prefix, e.g. simple
+echo   -d     Build a dynamic library (dll).
+echo   -g     Build with debug symbols.
+echo   -r     Build Random effects program (ADMB-RE).
+echo   -f     Build with Fast optimized mode (no bounds checking).
+echo          By default, admb script builds with bounds checking.
+echo   model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl extension)
 echo.
 
 :EOF

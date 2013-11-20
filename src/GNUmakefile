@@ -115,7 +115,7 @@ SAFLP_TOOLS99_OBJS=$(sort $(addprefix ../build/objects/dist/saflp-tools99-,$(OBJ
 endif
 
 all: revision dist contrib
-ifdef USE_DOS
+ifeq ($(TERMINAL),dos)
 	pushd $(DISK) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
 endif
 ifndef BUILD_SHARED_LIBRARY
@@ -132,7 +132,12 @@ shared: objects
 	@echo For installation, check README.txt.
 
 revision:
+ifeq ($(TERMINAL),dos)
+	-svnversion .. > ..\REVISION
+else
 	-svnversion .. > ../REVISION
+endif
+
 dist:
 ifeq ($(TERMINAL),dos)
 	if not exist ${DISK} md ${DISK}
@@ -224,10 +229,10 @@ objects: $(OPTLP_DF1B2_SEPARABLE_OBJS) $(SAFLP_DF1B2_SEPARABLE_OBJS) $(OPTLP_LIN
 
 ifeq ($(TERMINAL),dos)
 ..\build\objects\dist\optlp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -DADMB_REVISION=$(shell if exist ..\REVISION type ..\REVISION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o$@ $<
 
 ..\build\objects\dist\saflp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -DADMB_REVISION=$(shell if exist ..\REVISION type ..\REVISION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_SAFE) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o$@ $<
 
 ..\build\objects\dist\optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<

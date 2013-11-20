@@ -29,62 +29,66 @@ if not "!MINGW_HOME!"=="" (
 set srcs=
 set tpls=
 set objs=
-set s=-s 
 set bounds=-bounds
 set debug=
 
 for %%a in (%*) do (
   set arg=%%a
   if "!arg:~0,1!"=="-" (
-    if %%a==-d (
-      set d=-d 
+    if "%%a"=="-d" (
+      set d=-d
       set dll=-dll
     )
-    if %%a==-g (
+    if "%%a"=="-g" (
       set g=-g
       set debug=-debug
     )
-    if %%a==-r (
-      set r=-r 
+    if "%%a"=="-r" (
+      set r=-r
       set parser=tpl2rem
     )
-    if %%a==-s (
-      set s=-s 
+    if "%%a"=="-s" (
       set bounds=-bounds
     )
-    if %%a==-O (
-      set s=
+    if "%%a"=="-f" (
       set bounds=
     )
   ) else (
     if "%%~xa"=="" (
       set tpls=!tpls! %%a
-    ) else (
-      if "%%~xa"==".c" (
-        set srcs=!srcs! %%a
-      )
-      if "%%~xa"==".cpp" (
-        set srcs=!srcs! %%a
-      )
-      if "%%~xa"==".o" (
-        set objs=!objs! %%a
-      )
-      if "%%~xa"==".obj" (
-        set objs=!objs! %%a
-      )
-      if "%%~xa"==".tpl" (
-        set tpls=!tpls! %%a
-      )
+    )
+    if "%%~xa"==".c" (
+      set srcs=!srcs! %%a
+    )
+    if "%%~xa"==".cpp" (
+      set srcs=!srcs! %%a
+    )
+    if "%%~xa"==".o" (
+      set objs=!objs! %%a
+    )
+    if "%%~xa"==".obj" (
+      set objs=!objs! %%a
+    )
+    if "%%~xa"==".tpl" (
+      set tpls=!tpls! %%a
     )
   )
 )
-if "!srcs!"=="" && "!tpls!"="" && "!objs!"=="" (
-  echo.&echo Error: Nothing to build
-  echo.
-  goto HELP
+if not defined tpls (
+  if not defined srcs (
+    if not defined objs (
+      echo.&echo Error: Nothing to build
+      echo.
+      goto HELP
+    )
+  )
 )
-if not defined parser set parser=tpl2cpp
-
+if not defined tpls (
+  goto compiler
+)
+if not defined parser (
+  set parser=tpl2cpp
+)
 for %%a in (!tpls!) do (
   set model=%%~na
   if not exist %%~na.tpl (
@@ -101,7 +105,12 @@ for %%a in (!tpls!) do (
   if not exist !model!.cpp goto ERROR
   if not exist !model!.htp goto ERROR
 )
-
+:compiler
+if not defined tpls (
+  if not defined srcs (
+    goto linker
+  )
+)
 for %%b in (!tpls!) do (
   set model=%%~nb
   for %%a in (!model! !srcs!) do (
@@ -128,7 +137,11 @@ for %%a in (!srcs!) do (
     goto ERROR
   )
 )
+:linker
 if not defined tpls (
+  if not defined objs (
+    goto ERROR
+  )
   for %%a in (!objs!) do (
     set model=%%~na
     set CMD=adlink !d! !g! !r! !s! !objs!
@@ -156,15 +169,12 @@ if not defined tpls (
     )
   )
 )
-
 :SUCCESS
 echo.&echo Successfully built executable.
 goto EOF
-
 :ERROR
 echo.&echo Error: Unable to build executable.
 goto EOF
-
 :HELP
 echo Usage: admb [-d] [-g] [-r] [-s] model
 echo.
@@ -178,9 +188,6 @@ echo   -O     Use optimized mode
 echo   model  Filename prefix, e.g. simple
 echo.
 goto EOF
-
-:EOF
-
 REM r982 [2011-02-16] arnima  rewrite, fixed bug when user option is not
 REM                           recognized, fixed spaces, improved messages
 REM r927 [2010-12-24] johnoel moved to 'admb' dir
@@ -194,3 +201,4 @@ REM r525 [2009-08-07] arnima  added support for filename extension like
 REM                           simple.tpl
 REM                   johnoel split -s option into separate -g and -s options
 REM r244 [2009-05-28] arnima  created
+:EOF

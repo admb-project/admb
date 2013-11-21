@@ -25,7 +25,7 @@ else
 endif
 
 ifdef DEBUG
-CXXFLAGS_PRE:=-g
+  CXXFLAGS_PRE:=-g
 else
   ifeq ($(CXX),openCC)
     CXXFLAGS_PRE:=-O2
@@ -122,9 +122,9 @@ endif
 	@echo For installation, check README.txt.
 
 shared: objects
-	g++ -shared -o${DISK}/lib/libadmb.so ../build/objects/dist/saflp-linad99-*.obj ../build/objects/dist/saflp-df1b2-separable-*.obj ../build/objects/dist/optlp-nh99-*.obj ../build/objects/dist/optlp-tools99-*.obj ../build/objects/dist/saflp-contrib-*.obj
-	g++ -shared -o${DISK}/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
-	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(PWD)/${DISK}" --directory=../contrib build-ad2csv
+	$(CXX) -shared -o${DISK}/lib/libadmb.so ../build/objects/dist/saflp-*.obj
+	$(CXX) -shared -o${DISK}/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
+	$(MAKE) CXXFLAGS="$(CXXFLAGS)" --directory=../contrib build-ad2csv
 	@echo ADMB shared build completed.
 	@echo For installation, check README.txt.
 
@@ -355,15 +355,15 @@ ifeq ($(TERMINAL),dos)
 	copy df1b2-separable\seddf1b* ${DISK}\bin
 	copy df1b2-separable\sedf1b2* ${DISK}\bin
 	if exist ${DISK}\bin\admb-cfg.bat del ${DISK}\bin\admb-cfg.bat
-	echo set ADMB_CFG_CXX=$(CXX) > ${DISK}\bin\admb-cfg.bat
-	echo set ADMB_CFG_CXXFLAGS=$(CXXFLAGS) >> ${DISK}\bin\admb-cfg.bat
+	echo set ADMB_CFG_CXX=$(CXX)>${DISK}\bin\admb-cfg.bat
+	echo set ADMB_CFG_CXXFLAGS=$(CXXFLAGS)>>${DISK}\bin\admb-cfg.bat
   ifeq ($(OS),Windows_NT)
-	echo set ADMB_CFG_LDFLAGS=-static $(LDFLAGS) >> ${DISK}\bin\admb-cfg.bat
+	echo set ADMB_CFG_LDFLAGS=$(LDFLAGS)>>${DISK}\bin\admb-cfg.bat
   else
-	echo set ADMB_CFG_LDFLAGS=$(LDFLAGS) >> ${DISK}\bin\admb-cfg.bat
+	echo set ADMB_CFG_LDFLAGS=$(LDFLAGS)>>${DISK}\bin\admb-cfg.bat
   endif
   ifdef MINGW_HOME
-	echo set MINGW_HOME=$MINGW_HOME >> ${DISK}\bin\admb-cfg.bat
+	echo set MINGW_HOME=$(MINGW_HOME)>>${DISK}\bin\admb-cfg.bat
   endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=..\${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=..\${DISK} bins
@@ -388,12 +388,12 @@ else
 	cp ../scripts/admb/adlink ${DISK}/bin
   endif
 	rm -f ${DISK}/bin/admb-cfg.sh
-	echo "ADMB_CFG_CXX=$(CXX)" > ${DISK}/bin/admb-cfg.sh
-	echo "ADMB_CFG_CXXFLAGS=$(CXXFLAGS)" >> ${DISK}/bin/admb-cfg.sh
+	echo "ADMB_CFG_CXX=$(CXX)">${DISK}/bin/admb-cfg.sh
+	echo "ADMB_CFG_CXXFLAGS=$(CXXFLAGS)">>${DISK}/bin/admb-cfg.sh
   ifeq ($(OS),Windows_NT)
-	echo "ADMB_CFG_LDFLAGS=-static $(LDFLAGS)" >> ${DISK}/bin/admb-cfg.sh
+	echo "ADMB_CFG_LDFLAGS=-static $(LDFLAGS)">>${DISK}/bin/admb-cfg.sh
   else
-	echo "ADMB_CFG_LDFLAGS=$(LDFLAGS)" >> ${DISK}/bin/admb-cfg.sh
+	echo "ADMB_CFG_LDFLAGS=$(LDFLAGS)">>${DISK}/bin/admb-cfg.sh
   endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DISK} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DISK} bins

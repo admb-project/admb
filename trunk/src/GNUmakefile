@@ -5,18 +5,18 @@ INSTALL_DIR=/usr/local/
 ifeq ($(OS),Windows_NT)
   ifndef TERM
     TERMINAL=dos
-    SHELL=cmd
   endif
 endif
 
 ifeq ($(TERMINAL),dos)
+  SHELL=cmd
   DISK=..\build\dist
   LIBPATH=..\build\objects\dist
   PWD=$(shell cd)
   ifdef MINGW_HOME
-    PATH:=$MINGW_HOME\bin;..\utilities;$(PATH)
+    PATH:=$(MINGW_HOME)\bin;$(PWD)\..\utilities;$(PATH)
   else
-    PATH:=..\utilities\mingw\bin;..\utilities;$(PATH)
+    PATH:=$(PWD)\..\utilities\mingw\bin;$(PWD)\..\utilities;$(PATH)
   endif
 else
   DISK=../build/dist
@@ -372,11 +372,11 @@ ifeq ($(TERMINAL),dos)
 	copy ..\utilities\libiconv2.dll ${DISK}\bin
 	copy ..\utilities\libintl3.dll ${DISK}\bin
 	copy ..\utilities\regex2.dll ${DISK}\bin
-	copy ..\scripts\admb\adcomp.bat ${DISK}\bin
-	copy ..\scripts\admb\adlink.bat ${DISK}\bin
-	copy ..\scripts\admb\admb.bat ${DISK}\bin
-	copy ..\scripts\admb\root-admb.bat ..\admb.bat
-	copy ..\scripts\admb\root-admb.bat ${DISK}\admb.bat
+	copy ..\scripts\admb\adcomp.bat ${DISK}\bin\adcomp.cmd
+	copy ..\scripts\admb\adlink.bat ${DISK}\bin\adlink.cmd
+	copy ..\scripts\admb\admb.bat ${DISK}\bin\admb.cmd
+	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
+	copy ..\scripts\admb\root-admb.bat ${DISK}\admb.cmd
 else
 	mkdir -p ${DISK}/bin
 	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DISK}/bin
@@ -454,6 +454,7 @@ ifeq ($(TERMINAL),dos)
 	if exist ..\build rd /S /Q ..\build
 	if exist ..\admb del ..\admb
 	if exist ..\admb.bat del ..\admb.bat
+	if exist ..\admb.cmd del ..\admb.cmd
 	if exist ..\admb.zip del ..\admb.zip
 	if exist nh99\lex.yy.c del nh99\lex.yy.c
 	if exist df1b2-separable\lex.yy.c del df1b2-separable\lex.yy.c
@@ -472,6 +473,13 @@ else
 	@$(MAKE) --directory=../tests clean
 	@rm -f ../admb
 	@rm -f ../admb.bat
+	@rm -f ../admb.cmd
 	@rm -f ../admb.zip
 	@rm -f ../REVISION
 endif
+
+check:
+	@echo "OS: $(OS)"
+	@echo "TERM: $(TERM)"
+	@echo "PATH: $(PATH)"
+	@echo "MINGW_HOME: $(MINGW_HOME)"

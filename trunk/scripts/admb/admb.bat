@@ -1,4 +1,7 @@
 @echo off
+@REM 
+@REM  Copyright 2013 (c) ADMB Foundation
+@REM 
 
 setlocal EnableExtensions EnableDelayedExpansion
 
@@ -13,7 +16,7 @@ if defined ADMB_HOME (
   echo "Error: Unable to unset ADMB_HOME=!ADMB_HOME!."
   goto EOF
 )
-for %%a in (%0.bat) do (
+for %%a in (%0) do (
   set HAS_PATH=%%~$PATH:a
   if defined HAS_PATH (
     set ADMB_PATH="%%~dp$PATH:a"

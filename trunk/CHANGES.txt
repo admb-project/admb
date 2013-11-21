@@ -1,82 +1,122 @@
-ADMB Project  
-============
+#ADMB Project  
+
 *ADMB-11.1*  
 *Released May 10, 2013*  
 
-Describe release changes and features.
+Describe changes and features for each release.
 
 ---
 
 Release Notes
 -------------
-The goal for all releases was to improve algorithms, add new requested features,
-correct defects (bugs), and streamline installation and build process.
+The goals for all releases are to
+ 
+* Continually improve algorithms
+* Add new requested features
+* Correct defects (bugs)
+* Continually streamline installation and build process
+* Continually improve and update documentation
 
 ADMB-dev
 --------
 
-###Changes and Improvements
+####Changes and Improvements
 * Added description documentation to the programming interface.
 * Improvements to admb scripts (see New Features).
 * Added more unit tests for improved code coverage. 
 * Fixed reported and found bugs.
 * Fixed compilers warnings.
+* Add more checks in admb scripts to test for errors.
+* Added Quickstart*.txt markup documentation for building and using ADMB.
 
-###New Supported Compilers
+####New Supported Compilers
 
 * GNU C++ 4.8 compiler
+* Apple XCode 5
 
-###New Features
+  _Note: Borland 5.5 compiler is no longer supported._
+
+####New Features
 
 * Add debug target to build files.
 
-  `$ make debug`
+      $ make debug
 
 * Add shared target to build files (Unix only).
 
-  `$ make shared`
+      $ make shared
 
 * admb scripts can be called directly and do not require setting enviromental variables
   ADMB_HOME and PATH.
 
-  For Unix, 
-  [~/simple/]$ ~/admb/admb simple
+  For Unix,  
+   
+      [~/admb/example/admb/simple/]$ ~/admb/admb simple
 
   For Windows, 
-  C:\simple\> C:\admb\admb simple
+  
+      C:\admb\example\admb\simple\> C:\admb\admb simple
 
 * admb scripts can build C++ source files and link.
 
   For Unix, 
-  [~/simple/]$ ~/admb/admb simple.tpl mysource.cpp
+  
+      [~/admb/example/admb/simple/]$ ~/admb/admb simple.tpl mysource.cpp
 
   For Windows, 
-  C:\simple\> C:\admb\admb simple.tpl mysource.cpp
+  
+      C:\admb\example\admb\simple\> C:\admb\admb simple.tpl mysource.cpp
 
 * admb scripts have a new option -f for optimized library "OPT_LIB".
 
+  For Unix, 
+  
+      [~/admb/example/admb/simple/]$ ~/admb/admb -f simple.tpl mysource.cpp
+
+  For Windows, 
+  
+      C:\admb\example\admb\simple\> C:\admb\admb -f simple.tpl mysource.cpp
+
 * admb scripts have a new option -c for only building object files.
 
-###To Do
+  Both commands below will only build simple.o and mysource.o compiled object files.  
+  The model application will not be built. 
+  
+  For Unix, 
+      
+      [~/admb/example/admb/simple/]$ ~/admb/admb -c simple.tpl mysource.cpp
+
+  For Windows, 
+  
+      C:\admb\example\admb\simple\> C:\admb\admb -c simple.tpl mysource.cpp
+
+####To Do
 
 The following are planned or requested features for the next release.
+
 * Migrating ADMB Subversion Version Control to Git
 * Migrating ADMB Redmine Issue Tracking to Git
 * Merge Threading Code to trunk
+* Atan2
+* Gradient output
 * Write Design Documentation
 * Write Developer Documentation
 
 ADMB-11.1
 ---------
 
-###Changes
+####Changes
 
 * Updated Visual Studio nmake build files.
 
-* Improved Unix build files. Only outdated files are rebuilt.
-  
-  Note: Building from source will create distribution folder in
-        build/dist instead of build/os-comiler-arch.
+* Improved Unix build files.
+ 
+  * Only outdated files are rebuilt.
+  * Fast parallel building with source distribution
+        
+        [~/admb/]$ make -j
+        
+  * Building from source will create distribution folder in 'build/dist' instead of 'build/os-compiler-arch'.
 
 * Combined mulitple libraries to a single library 'libadmb.a'. 
 
@@ -85,9 +125,9 @@ ADMB-11.1
 * The compilation scripts (adcomp, adlink, admb) compile in "safe" mode by 
   default.
 
-  To build with optimized libraries use option 
+  To build with optimized libraries use fast option (-f) instead of (-o). 
 
-  `$ admb -O model.tpl`
+      $ admb -f model.tpl
 
 * added 's' option with the Ctrl^C
 
@@ -95,12 +135,14 @@ ADMB-11.1
  
 * flex is not needed to build ADMB, but it is needed to develop the tpl2cpp.lex 
   and tpl2rem.lex files.
+  
+* Improved documentation.
 
-###New Features
+####New Features
 * admb script can now build tpl models without the need to set ADMB_HOME
   or PATH. For example, 
 
-  `[~/admb-11.1/examples/admb/simple/]$ ~/admb-11.1/admb simple`
+      [~/admb-11.1/examples/admb/simple/]$ ~/admb-11.1/admb simple
 
 * Functions from user-contributed packages can be loaded from
   directory 'contrib'. Read 'contrib/README.txt'.
@@ -121,16 +163,14 @@ ADMB-11.1
 
   For example,
 
-  `$ admb model.tpl supportcode.cpp anotherfile.cpp`
+      $ admb model.tpl supportcode.cpp anotherfile.cpp
 
   Output is executable 'model'.
 
-###Bug Fixes
+####Bug Fixes
 
 * Catch exit errors for adlink and adcomp.
-
 * Watch out for spaces in admb scripts
-
 * Fix memory leaks.
 
 Changes 9.2 to 11.0

@@ -1,5 +1,4 @@
-ADMB Project  
-============
+#ADMB Project
 *ADMB-11.1*  
 *Released May 10, 2013*  
 

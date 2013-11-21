@@ -43,9 +43,11 @@ Quick Start Visual C++
 
 4. Build ADMB distribution
 
+   To build ADMB, use the commands below.
+
        C:\admb\> nmake
 
-   Build with debug symbols,
+   If debug symbols are needed, use the command below.
 
        C:\admb\> nmake debug
 

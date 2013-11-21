@@ -2,7 +2,7 @@
 *ADMB-11.1*  
 *Released May 10, 2013*  
 
-Describe ADMB build and installation procedures for Unix distributions.
+Describe ADMB build and installation procedures for Unix operating systems such as Linux, MacOS, Solaris and BSD.
 
 ---
 
@@ -10,6 +10,7 @@ Prerequisites
 -------------
 
 The following programs should be installed on the local computer.
+_**Note**: For MacOS, install XCode with command line tools._
 
 * GNU sed
 * GNU flex
@@ -39,21 +40,21 @@ Quick Start Unix
 
        [~]$ unzip admb.zip
 
-3. Change to admb directory.
+3. Change to admb directory
 
        [~]$ cd admb
 
 4. Build ADMB distribution
 
+   To build ADMB, use the commands below.
+
        [~/admb/]$ make
 
-   Build with debug symbols,
+   _**Note**: ADMB will be built in ~/admb/build/dist/._
+
+   If debug symbols are needed, use the commands below.
 
        [~/admb/]$ make debug
-
-   Use help to show available compiler targets.
-
-       [~/admb/]$ make help
 
 5. Test ADMB
 

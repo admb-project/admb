@@ -6,31 +6,19 @@
 #
 shopt -s expand_aliases
 alias help='echo -e "
-Builds AD Model Builder application or library.\n
-Usage: 
-admb [-c] [-d] [-g] [-r] [-f] model [srcs]\n
+Builds AD Model Builder executable or library.\n
+
+Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]\n
+
 Options:
- -c     Build object file only.
- -d     Build a shared library.
+ -c     Build only object file(s) (.obj).
+ -d     Build a shared library (.so).
  -g     Build with debug symbols.
- -r     Build Random effects program (ADMB-RE).
- -f     Build with Fast optimized mode (no bounds checking).
+ -r     Build with Random effects library (ADMB-RE).
+ -f     Build with Fast optimized mode library (no bounds checking).
         By default, admb script builds with bounds checking.
  model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl extension)
- srcs   One or more C++ source files with functions that are used in the model.\n
-Examples:
-
-Build a random effects model,
-[admb/examples/admb-re/bcb]$ admb -r bcb.tpl
-The program file is bcb.
-
-Build a shared library,
-[admb/examples/admb/simple]$ admb -d simple.tpl
-The program file is simple.
-
-Build with srcs and debug symbols,
-[admb/contrib/ad2csv]$ admb -g ad2csv.cpp main.cpp
-The program file is ad2csv.
+ src(s) C/C++ Source file(s) containing classes, methods and variables that are used in model.
 "'
 
 if [[ "$1" == "" ]]; then help; exit; fi

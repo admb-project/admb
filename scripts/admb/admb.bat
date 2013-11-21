@@ -7,11 +7,15 @@ if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
 
 if defined ADMB_HOME (
-  set "ADMB_HOME="
+  set ADMB_HOME=
+)
+if defined ADMB_HOME (
+  echo "Error: Unable to unset ADMB_HOME=!ADMB_HOME!."
+  goto EOF
 )
 for %%a in (%0.bat) do (
   set HAS_PATH=%%~$PATH:a
-  if not "!HAS_PATH!"=="" (
+  if defined HAS_PATH (
     set ADMB_PATH="%%~dp$PATH:a"
   ) else (
     set ADMB_PATH="%%~dpa"
@@ -20,58 +24,76 @@ for %%a in (%0.bat) do (
   set ADMB_HOME=!CD!
   popd
 )
-if not "!MINGW_HOME!"=="" (
+if not defined ADMB_HOME (
+  echo "Error: ADMB_HOME is not defined."
+  goto EOF
+)
+if defined MINGW_HOME (
   set PATH=!ADMB_HOME!\bin;!MINGW_HOME!\bin;!PATH!
 ) else (
   set PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!
 )
-
-set srcs=
 set tpls=
+set srcs=
 set objs=
-set tplbounds=-bounds
-set tpldebug=
-set fast=
-
 for %%a in (%*) do (
   set arg=%%a
   if "!arg:~0,1!"=="-" (
-    if "%%a"=="-d" (
-      set d=-d
-      set dll=-dll
+    if "!arg!"=="-d" (
+      set d= -d
     )
-    if "%%a"=="-g" (
-      set g=-g
-      set tpldebug=-debug
+    if "!arg!"=="-g" (
+      set g= -g
     )
-    if "%%a"=="-r" (
-      set r=-r
+    if "!arg!"=="-r" (
+      set r = -r
       set parser=tpl2rem
     )
-    if "%%a"=="-s" (
-      set tplbounds=-bounds
-    )
-    if "%%a"=="-f" (
-      set fast=-f
+    if "!arg!"=="-f" (
+      set fast= -f
     )
   ) else (
     if "%%~xa"=="" (
-      set tpls=!tpls! %%a
-    )
-    if "%%~xa"==".c" (
-      set srcs=!srcs! %%a
-    )
-    if "%%~xa"==".cpp" (
-      set srcs=!srcs! %%a
-    )
-    if "%%~xa"==".o" (
-      set objs=!objs! %%a
-    )
-    if "%%~xa"==".obj" (
-      set objs=!objs! %%a
+      if not defined tpls (
+        set tpls=!arg!
+      ) else (
+        set tpls=!tpls! !arg!
+      )
     )
     if "%%~xa"==".tpl" (
-      set tpls=!tpls! %%a
+      if not defined tpls (
+        set tpls=%%a
+      ) else (
+        set tpls=!tpls! !arg!
+      )
+    )
+    if "%%~xa"==".c" (
+      if not defined srcs (
+        set srcs=%%a
+      ) else (
+        set srcs=!srcs! !arg!
+      )
+    )
+    if "%%~xa"==".cpp" (
+      if not defined srcs (
+        set srcs=%%a
+      ) else (
+        set srcs=!srcs! !arg!
+      )
+    )
+    if "%%~xa"==".o" (
+      if not defined objs (
+        set objs=%%a
+      ) else (
+        set objs=!objs! !arg!
+      )
+    )
+    if "%%~xa"==".obj" (
+      if not defined objs (
+        set objs=%%a
+      ) else (
+        set objs=!objs! !arg!
+      )
     )
   )
 )
@@ -82,89 +104,110 @@ if not defined tpls (
       echo.
       goto HELP
     )
+    goto linker
   )
-)
-if not defined tpls (
   goto compiler
-)
-if not defined parser (
-  set parser=tpl2cpp
-)
+) 
 for %%a in (!tpls!) do (
-  set model=%%~na
+  set tpl=%%~na
   if not exist %%~na.tpl (
-    echo.&echo Error: !model!.tpl not found
+    echo.&echo Error: !tpl!.tpl not found
     goto EOF
   )
   del classdef.tmp xxdata.tmp xxhtop.tmp xxhtopm.tmp xxglobal.tmp xxtopm.tmp 2> NUL
   del xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp 2> NUL
   del tfile1 tfile2 tfile3 tfile4 tfile5 2> NUL
-  del !model!.cpp !model!.htp !model!.obj !model!.exe 2> NUL
-  set CMD=!parser! !tpldebug! !tplbounds! !dll! !model!
+  del !tpl!.cpp !tpl!.htp !tpl!.obj !tpl!.exe 2> NUL
+  if defined d (
+    set dll= -dll
+  )
+  if defined g (
+    set debug= -debug
+  )
+  if not defined parser (
+    set parser=tpl2cpp
+  )
+  set CMD=!parser!!debug!!dll! !tpl!
   echo.&echo *** !CMD!
   call !CMD!
-  if not exist !model!.cpp goto ERROR
-  if not exist !model!.htp goto ERROR
-)
-:compiler
-if not defined tpls (
-  if not defined srcs (
-    goto linker
+  if not exist !tpl!.cpp (
+    echo.&echo Error: Unable to parse !tpl! to !tpl!.cpp.
+    goto ERROR
+  )
+  if not exist !tpl!.htp (
+    echo.&echo Error: Unable to parse !tpl! to !tpl!.htp.
+    goto ERROR
   )
 )
 for %%b in (!tpls!) do (
-  set model=%%~nb
-  for %%a in (!model! !srcs!) do (
-    set src=%%~na
-    set CMD=adcomp !d! !g! !r! !fast! !src!
-    echo.&echo *** !CMD!
-    call !CMD!
-    if not exist !src!.obj (
-      echo.&echo Error: Unable to build %%a
-      goto EOF
-    )
-  )
-)
-for %%a in (!srcs!) do (
-  set src=%%~na
-  set CMD=adcomp !d! !g! !r! !fast! !src!
+  set tpl=%%~nb
+  set CMD=adcomp!d!!g!!r!!fast! !tpl!
   echo.&echo *** !CMD!
   call !CMD!
-  if exist !src!.obj (
-    set objs=!objs! !src!.obj
+  if not exist !tpl!.obj (
+    echo.&echo Error: Unable to build !tpl!.obj
+    goto EOF
   )
-  if not exist !src!.obj (
-    echo.&echo Error: Unable to build !src!.obj
-    goto ERROR
+)
+:compiler
+if defined srcs (
+  for %%a in (!srcs!) do (
+    set src=%%a
+    if not exist !src! (
+      echo.&echo Error: !src! not found
+      goto ERROR
+    )
+    set CMD=adcomp!d!!g!!r!!fast! !src!
+    echo.&echo *** !CMD!
+    call !CMD!
+    set filename=%%~na
+    if not exist !filename!.obj (
+      echo.&echo Error: Unable to build !src! to !filename!.obj
+      goto ERROR
+    ) else (
+      if not defined objs (
+        set objs=!filename!.obj
+      ) else (
+        set objs=!objs! !filename!.obj
+      )
+    )
   )
 )
 :linker
 if not defined tpls (
   if not defined objs (
     goto ERROR
-  )
-  for %%a in (!objs!) do (
-    set model=%%~na
-    set CMD=adlink !d! !g! !r! !fast! !objs!
-    echo.&echo *** !CMD!
-    call !CMD!
-    if not exist !model!.exe (
-      goto ERROR
+  ) else (
+    for %%a in (!objs!) do (
+      set obj=%%a
+      if not exist !obj! (
+        echo.&echo Error: !obj! not found
+        goto ERROR
+      )
     )
-    goto SUCCESS
+    for %%a in (!objs!) do (
+      set main=%%~na
+      set CMD=adlink!d!!g!!r!!fast! !objs!
+      echo.&echo *** !CMD!
+      call !CMD!
+      if not exist !main!.exe (
+        goto ERROR
+      )
+      goto SUCCESS
+    )
   )
 ) else (
   for %%a in (!tpls!) do (
-    set model=%%~na
-    set CMD=adlink !d! !g! !r! !fast! !model!.obj !objs!
+    set tpl=%%~na
+    set CMD=adlink!d!!g!!r!!fast! !tpl!.obj !objs!
     echo.&echo *** !CMD!
     call !CMD!
-    if defined dll (
-      if not exist !model!.dll (
+    if defined d (
+      if not exist !tpl!.dll (
         goto ERROR
       )
     ) else (
-      if not exist !model!.exe (
+      if not exist !tpl!.exe (
         goto ERROR
       )
     )
@@ -175,6 +218,8 @@ echo.&echo Successfully built executable.
 goto EOF
 :ERROR
 echo.&echo Error: Unable to build executable.
+echo.&echo COMSPEC=%COMSPEC%.
+echo.&echo PATH=%PATH%.
 goto EOF
 :HELP
 echo Usage: admb [-d] [-g] [-r] [-f] model

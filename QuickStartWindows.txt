@@ -12,17 +12,22 @@ the [QuickStart for Visual C++](QuickStartVisualC++.html)._
 Prerequisites
 -------------
   
-The following programs should be installed on the local computer.  
+The following should be installed on the local computer.  
 
-* Subversion Client - SlikSVN 
+* Subversion Client   
+  _Note: SlikSVN is a command line Subversion Client._ 
 
 Quick Start Windows
 -------------------
 
-1. Open **Command Prompt** window
+1. Open **Command Prompt** window  
+   _Note: The 16 bit Command Prompt (Command.com) is no longer support._
 
 2. Download ADMB
 
+   There are **two ways** to get the source distribution.
+
+   **2.1 Version Control**  
    To get the most current code, download from directly from 
    ADMB version control using the command below.
 
@@ -30,6 +35,7 @@ Quick Start Windows
 
    This will download admb trunk folder to _C:\admb\ _.
 
+   **2.2 Zip**  
    If **unable** to checkout code, download the full source distribution.
 
    [download]: http://www.admb-project.org/buildbot/snapshots/admb-latest.zip
@@ -59,7 +65,7 @@ Quick Start Windows
 
        C:\admb\> utilities\make
 
-   Build with debug symbols,
+   If debug symbols are needed, use the command below.
 
        C:\admb\> utilities\make debug
 
@@ -68,7 +74,7 @@ Quick Start Windows
 
        C:\admb\> utilities\make MINGW_HOME=C:\MinGW
 
-   Build with debug symbols,
+   If debug symbols are needed, use the command below.
 
        C:\admb\> utilities\make MINGW_HOME=C:\MinGW debug
 

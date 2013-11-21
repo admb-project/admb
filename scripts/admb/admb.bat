@@ -3,12 +3,16 @@
 @REM  Copyright 2013 (c) ADMB Foundation
 @REM
 
-setlocal EnableExtensions EnableDelayedExpansion
-
 if [%1]==[] goto HELP
 if [%1]==[-h] goto HELP
 if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
+
+setlocal EnableExtensions EnableDelayedExpansion
+if "%ERRORLEVEL%"=="1" (
+  echo "Error: %COMSPEC% is unable to enable extensions and delayed expansion."
+  goto EOF
+)
 
 if defined ADMB_HOME (
   set ADMB_HOME=
@@ -189,15 +193,15 @@ for %%a in (!tpls!) do (
     set parser=tpl2cpp
   )
   set CMD=!parser!!debug!!dll! !tpl!
-  echo.&echo *** Parsing tpl file: !tpl!
+  echo.&echo *** Parsing tpl file: !tpl!.tpl
   echo !CMD!
   call !CMD!
   if not exist !tpl!.cpp (
-    echo.&echo Error: Unable to parse !tpl! to !tpl!.cpp.
+    echo.&echo Error: Unable to parse !tpl!.tpl to !tpl!.cpp.
     goto ERROR
   )
   if not exist !tpl!.htp (
-    echo.&echo Error: Unable to parse !tpl! to !tpl!.htp.
+    echo.&echo Error: Unable to parse !tpl!.tpl to !tpl!.htp.
     goto ERROR
   )
 )
@@ -205,7 +209,7 @@ for %%b in (!tpls!) do (
   set tpl=%%~nb
   @REM set CMD=adcomp!d!!g!!r!!fast! !tpl!
   set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
-  echo.&echo *** Compiling source file: !tpl!
+  echo.&echo *** Compiling source file: !tpl!.cpp
   echo !CMD!
   call !CMD!
   if not exist !tpl!.obj (
@@ -279,9 +283,17 @@ if not defined tpls (
     if defined d (
       set CMD=!LL!!LDFLAGS! -def !tpl!.def --driver-name !CXX! --output-lib !tpl!.dll --output-lib lib!tpl!.a -o !tpl!.dll !objs! !libs!
     ) else (
-      set CMD=!LL!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
+      if defined objs (
+        set CMD=!LL!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
+      ) else (
+        set CMD=!LL!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
+      )
     )
-    echo.&echo *** Linking files: !tpl!.obj !objs!
+    if defined objs (
+      echo.&echo *** Linking files: !tpl!.obj !objs!
+    ) else (
+      echo.&echo *** Linking file: !tpl!.obj
+    )
     echo !CMD!
     call !CMD!
     if defined d (

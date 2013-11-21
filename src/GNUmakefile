@@ -116,7 +116,7 @@ endif
 
 all: revision dist contrib
 ifndef BUILD_SHARED_LIBRARY
-	$(MAKE) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(PWD)/${DISK}" --directory=../contrib build-ad2csv
+	$(MAKE) CXXFLAGS="$(CXXFLAGS)" --directory=../contrib build-ad2csv
 endif
 	@echo ADMB build completed.
 	@echo For installation, check README.txt.

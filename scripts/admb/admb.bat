@@ -116,7 +116,7 @@ if defined LDFLAGS (
 if exist "!ADMB_HOME!"\bin\admb-cfg.bat (
   call "!ADMB_HOME!"\bin\admb-cfg.bat
   if defined ADMB_CFG_CXXFLAGS (
-    set CXXFLAGS=!CXXFLAGS!!ADMB_CFG_CXXFLAGS!
+    set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
   )
   if defined ADMB_CFG_CXX (
     set CXX=!ADMB_CFG_CXX!

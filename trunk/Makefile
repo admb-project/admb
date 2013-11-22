@@ -145,12 +145,3 @@ bcc-install:
 	cd src& $(MAKE) -fbcc.mak install
 bcc-clean:
 	cd src& $(MAKE) -fbcc.mak clean
-
-markdown:
-	perl $(MARKDOWN_DIR)Markdown.pl --html4tags README.txt > README.html
-	perl $(MARKDOWN_DIR)Markdown.pl --html4tags CHANGES.txt > CHANGES.html
-	perl $(MARKDOWN_DIR)Markdown.pl --html4tags INSTALL.txt > INSTALL.html
-	perl $(MARKDOWN_DIR)Markdown.pl --html4tags QuickStartWindows.txt > QuickStartWindows.html
-	perl $(MARKDOWN_DIR)Markdown.pl --html4tags QuickStartVisualC++.txt > QuickStartVisualC++.html
-	perl $(MARKDOWN_DIR)Markdown.pl --html4tags QuickStartUnix.txt > QuickStartUnix.html
-	perl $(MARKDOWN_DIR)Markdown.pl --html4tags LICENSE.txt > LICENSE.html

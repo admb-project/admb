@@ -1,4 +1,4 @@
-all: QuickStartWindows.html QuickStartVisualC++.html QuickStartUnix.html CHANGES.html INSTALL.html README.html
+all: QuickStartWindows.html QuickStartVisualC++.html QuickStartUnix.html CHANGES.html INSTALL.html README.html LICENSE.html
 
 QuickStartWindows.html: QuickStartWindows.txt
 	cat begin.html>$@
@@ -30,6 +30,11 @@ README.html: ../../README.txt
 	markdown_py $^>>$@
 	cat end.html>>$@
 
+LICENSE.html: ../../LICENSE.txt
+	cat begin.html>$@
+	markdown_py $^>>$@
+	cat end.html>>$@
+
 clean:
 	rm -vf QuickStartWindows.html QuickStartVisualC++.html QuickStartUnix.html
-	rm -vf CHANGES.html INSTALL.html README.html
+	rm -vf CHANGES.html INSTALL.html README.html LICENSE.html

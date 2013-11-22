@@ -23,8 +23,8 @@ please contact <users@admb-project.org>.
 
 Cool ADMB T-shirts are also available for purchase.
 
-How to Cite ADMB
-----------------
+ADMB Citation
+-------------
     Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, M.N. Maunder,
     A. Nielsen, and J. Sibert. 2012. AD Model Builder: using automatic
     differentiation for statistical inference of highly parameterized complex
@@ -53,12 +53,12 @@ Help and Support
 ----------------
 For help and support, email <users@admb-project.org>.
 
-User list [archives][ADMB_users] are available.
+Mailing list archives
+
++ [Users list][ADMB_users] is the general mailing list.
++ [Developers list][ADMB_developers] is for developers.
 
 [ADMB_users]: http://lists.admb-project.org/pipermail/users/
-
-Developers list [archives][ADMB_developers] are available.
-
 [ADMB_developers]: http://lists.admb-project.org/pipermail/developers/
 
 Contributors

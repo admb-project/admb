@@ -8,9 +8,10 @@ if [%1]==[-h] goto HELP
 if [%1]==[-help] goto HELP
 if [%1]==[--help] goto HELP
 
-setlocal EnableExtensions EnableDelayedExpansion
-if "%ERRORLEVEL%"=="1" (
-  echo "Error: %COMSPEC% is unable to enable extensions and delayed expansion."
+VERIFY OTHER 2>nul
+SETLOCAL ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
+if ERRORLEVEL 1 (
+  echo "Error[%COMSPEC%]: setlocal is unable to EnableExtensions and EnableDelayedExpansion."
   goto EOF
 )
 

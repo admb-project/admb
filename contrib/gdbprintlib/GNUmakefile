@@ -1,10 +1,17 @@
-all: $(addprefix $(PREFIX_OBJ), gdbprintlib.obj)
+$(PREFIX_OBJ)gdbprintlib.obj: gdbprintlib.cpp
+ifeq ($(SHELL),sh.exe)
+	..\..\admb.cmd -c gdbprintlib.cpp
+	copy gdbprintlib.obj $(PREFIX_OBJ)gdbprintlib.obj
+else
+	../../admb -c gdbprintlib.cpp
+	cp gdbprintlib.o $(PREFIX_OBJ)gdbprintlib.obj
+endif
 
 clean:
-
-$(PREFIX_OBJ)%.obj: %.cpp
-ifeq ($(CXX),cl)
-	$(CXX) /c $(CXXFLAGS) /Fo$@ $<
+ifeq ($(SHELL),sh.exe)
+	del gdbprintlib.obj
+	del gdbprintlib.o
 else
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	@rm -vf gdbprintlib.obj
+	@rm -vf gdbprintlib.o
 endif

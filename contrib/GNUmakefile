@@ -1,25 +1,32 @@
 .NOPARALLEL: all
-DISK=$(DIST)
+
+ifeq ($(SHELL),sh.exe)
+  PREFIX_DIR=..\..\build\objects\dist
+  PREFIX_DIR:=$(addsuffix \,$(PREFIX_DIR))
+  DISK=$(addsuffix \,$(DIST))
+else
+  PREFIX_DIR=../../build/objects/dist
+  PREFIX_DIR:=$(addsuffix \,$(PREFIX_DIR))
+  DISK=$(addsuffix /,$(DIST))
+endif
 
 all: build-gdbprintlib build-statslib build-ecolib build-qfclib build-src
 ifeq ($(SHELL),sh.exe)
-	$(AR) -rs $(DISK)\contrib\lib\libcontrib.a ..\build\objects\dist\saflp-contrib-*.obj
-	$(AR) -rs $(DISK)\contrib\lib\libcontribo.a ..\build\objects\dist\optlp-contrib-*.obj
+	$(AR) -rs $(DISK)\contrib\lib\libcontrib.a $(PREFIX_DIR)saflp-contrib-*.obj
+	$(AR) -rs $(DISK)\contrib\lib\libcontribo.a $(PREFIX_DIR)optlp-contrib-*.obj
 else
-	$(AR) -rs $(DISK)/contrib/lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
-	$(AR) -rs $(DISK)/contrib/lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
+	$(AR) -rs $(DISK)/contrib/lib/libcontrib.a $(PREFIX_DIR)saflp-contrib-*.obj
+	$(AR) -rs $(DISK)/contrib/lib/libcontribo.a $(PREFIX_DIR)optlp-contrib-*.obj
 endif
 
 ad2csv: build-ad2csv
 
 build-gdbprintlib:
+	$(MAKE) --directory=gdbprintlib PREFIX_OBJ=$(PREFIX_DIR)saflp-contrib-gdbprintlib-
+	$(MAKE) --directory=gdbprintlib PREFIX_OBJ=$(PREFIX_DIR)optlp-contrib-gdbprintlib-
 ifeq ($(SHELL),sh.exe)
-	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-gdbprintlib-
-	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-gdbprintlib-
 	copy gdbprintlib\gdbprintlib.h $(DISK)\contrib\include
 else
-	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-gdbprintlib-
-	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-gdbprintlib-
 	cp gdbprintlib/gdbprintlib.h $(DISK)/contrib/include
 endif
 
@@ -67,13 +74,11 @@ build-admb2r:
 	$(MAKE) --directory=admb2r ADMB_HOME="$(ADMB_HOME)" gcc
 
 build-src:
+	$(MAKE) --directory=src PREFIX_OBJ=$(PREFIX_DIR)optlp-contrib-
+	$(MAKE) --directory=src PREFIX_OBJ=$(PREFIX_DIR)saflp-contrib-
 ifeq ($(SHELL),sh.exe)
-	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-
-	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-
 	copy src\contrib.h $(DISK)\contrib\include
 else
-	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-
-	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-
 	cp src/contrib.h $(DISK)/contrib/include
 endif
 

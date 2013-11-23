@@ -1,28 +1,7 @@
 .NOPARALLEL: all
 
-ifeq ($(OS),Windows_NT)
-  ifdef TERM
-    ifeq ("$(TERM)","xterm")
-      TERMINAL=cygwin
-    endif
-    ifeq ("$(TERM)","cygwin")
-      TERMINAL=cygwin
-    endif
-  else
-    TERMINAL=dos
-    SHELL=cmd
-  endif
-endif
-
-ifeq ($(TERMINAL),dos)
-DISK=..\build\dist
-PATH:=$(PATH):..\..\utilities\mingw\bin
-else
-DISK=../build/dist
-endif
-
 all: build-gdbprintlib build-statslib build-ecolib build-qfclib build-src
-ifeq ($(TERMINAL),dos)
+ifeq ($(SHELL),sh.exe)
 	$(AR) -rs $(DISK)\contrib\lib\libcontrib.a ..\build\objects\dist\saflp-contrib-*.obj
 	$(AR) -rs $(DISK)\contrib\lib\libcontribo.a ..\build\objects\dist\optlp-contrib-*.obj
 else
@@ -33,7 +12,7 @@ endif
 ad2csv: build-ad2csv
 
 build-gdbprintlib:
-ifeq ($(TERMINAL),dos)
+ifeq ($(SHELL),sh.exe)
 	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-gdbprintlib-
 	$(MAKE) --directory=gdbprintlib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-gdbprintlib-
 	copy gdbprintlib\gdbprintlib.h $(DISK)\contrib\include
@@ -44,7 +23,7 @@ else
 endif
 
 build-statslib:
-ifeq ($(TERMINAL),dos)
+ifeq ($(SHELL),sh.exe)
 	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-statslib-
 	$(MAKE) --directory=statslib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-statslib-
 	copy statslib\statsLib.h $(DISK)\contrib\include
@@ -55,7 +34,7 @@ else
 endif
 
 build-ecolib:
-ifeq ($(TERMINAL),dos)
+ifeq ($(SHELL),sh.exe)
 	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-ecolib-
 	$(MAKE) --directory=ecolib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-ecolib-
 	copy ecolib\ecolib.h $(DISK)\contrib\include
@@ -66,7 +45,7 @@ else
 endif
 
 build-qfclib:
-ifeq ($(TERMINAL),dos)
+ifeq ($(SHELL),sh.exe)
 	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-qfclib-
 	$(MAKE) --directory=qfclib CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-qfclib-
 	copy qfclib\qfclib.h $(DISK)\contrib\include
@@ -77,7 +56,7 @@ else
 endif
 
 build-ad2csv:
-ifeq ($(TERMINAL),dos)
+ifeq ($(SHELL),sh.exe)
 	$(MAKE) --directory=ad2csv --file=Makefile
 else
 	$(MAKE) --directory=ad2csv
@@ -87,13 +66,13 @@ build-admb2r:
 	$(MAKE) --directory=admb2r ADMB_HOME="$(ADMB_HOME)" gcc
 
 build-src:
-ifeq ($(TERMINAL),dos)
-	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I..\..\build\dist\include" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-
-	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I..\..\build\dist\include" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-
+ifeq ($(SHELL),sh.exe)
+	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\optlp-contrib-
+	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=..\..\build\objects\dist\saflp-contrib-
 	copy src\contrib.h $(DISK)\contrib\include
 else
-	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DOPT_LIB $(CXXFLAGS) -I../../build/dist/include" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-
-	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="-DSAFE_ALL $(CXXFLAGS) -I../../build/dist/include" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-
+	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_OPT_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/optlp-contrib-
+	$(MAKE) --directory=src CXX=$(CXX) CXXFLAGS="$(CXXFLAGS_SAFE_CONTRIB)" PREFIX_OBJ=../../build/objects/dist/saflp-contrib-
 	cp src/contrib.h $(DISK)/contrib/include
 endif
 
@@ -109,7 +88,7 @@ clean:
 	@$(MAKE) --directory=ecolib clean
 	@$(MAKE) --directory=qfclib clean
 	@$(MAKE) --directory=statslib clean
-ifeq ($(TERMINAL),dos)
+ifeq ($(SHELL),sh.exe)
 	@$(MAKE) --file=Makefile --directory=ad2csv clean
 else
 	@$(MAKE) --directory=ad2csv clean

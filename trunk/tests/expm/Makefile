@@ -1,10 +1,7 @@
-ADMB_HOME=$(ADMB_HOME)
-PATH=$(ADMB_HOME)\bin;$(PATH)
-
 all: expm
 
 expm: expm.tpl
-	admb expm.tpl
+	..\..\admb expm.tpl
 	expm
 
 clean:

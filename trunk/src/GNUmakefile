@@ -1,16 +1,4 @@
-ifeq ($(OS),Windows_NT)
-  SET_VARIABLES=$(shell set)
-  HAS_CYGWIN=$(findstring OSTYPE=cygwin,$(SET_VARIABLES))
-  ifeq ("$(HAS_CYGWIN)","")
-    SHELL=cmd
-  endif
-  HAS_MSYS=$(findstring OSTYPE=msys,$(SET_VARIABLES))
-  ifeq ("$(HAS_MSYS)","")
-    SHELL=cmd
-  endif
-endif
-
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
   PWD=$(shell cd)
   PATH:=$(PWD)\..\utilities;$(PATH)
   ifdef MINGW_HOME
@@ -63,7 +51,7 @@ endif
 
 CXXFLAGS_DEFINES:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE
 
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 CXXFLAGS_INCLUDES:=-I..\build\dist\include
 else
 CXXFLAGS_INCLUDES:=-I../build/dist/include
@@ -107,14 +95,14 @@ shared: includes objects
 	@echo For installation, check README.txt.
 
 revision:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	-svnversion .. > ..\REVISION
 else
 	-svnversion .. > ../REVISION
 endif
 
 contrib:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\contrib md ${DIST}\contrib
 	if not exist ${DIST}\contrib\lib md ${DIST}\contrib\lib
 	if not exist ${DIST}\contrib\bin md ${DIST}\contrib\bin
@@ -130,7 +118,7 @@ endif
 dist: libs bins docs
 
 libs: includes objects_dir objects
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\lib md ${DIST}\lib
 	if exist ${DIST}\lib\libadmb.a del ${DIST}\lib\libadmb.a
 	if exist ${DIST}\lib\libadmbo.a del ${DIST}\lib\libadmbo.a
@@ -151,7 +139,7 @@ endif
 	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-sparse-*.obj
 
 bins:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\bin md ${DIST}\bin
 	copy df1b2-separable\seddf1b* ${DIST}\bin
 	copy df1b2-separable\sedf1b2* ${DIST}\bin
@@ -213,7 +201,7 @@ else
 endif
 
 docs:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\contrib md ${DIST}\contrib
 	xcopy ..\contrib $(DIST)\contrib /S /Y /D
 	if not exist ${DIST}\docs md ${DIST}\docs
@@ -249,7 +237,7 @@ else
 endif
 
 includes:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\include md ${DIST}\include
 	copy linad99\fvar.hpp ${DIST}\include
 	copy linad99\dfpool.h ${DIST}\include
@@ -300,7 +288,7 @@ else
 endif
 
 objects_dir:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	if not exist $(OBJSDIR) md $(OBJSDIR)
 else
 	mkdir -p $(OBJSDIR)
@@ -308,7 +296,7 @@ endif
 
 objects: $(OBJECTS)
 
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
 	$(CXX) -c $(CXXFLAGS_OPT) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o$@ $<
 
@@ -383,7 +371,7 @@ $(OBJSDIR)saflp-tools99-%.obj:tools99/%.cpp
 endif
 
 verify:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	$(MAKE) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
 	$(MAKE) -C $(DIST)\examples --file=Makefile all
@@ -411,7 +399,7 @@ install:
 	ln -sf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	if exist ..\build rd /S /Q ..\build
 	if exist ..\admb del ..\admb
 	if exist ..\admb.bat del ..\admb.bat

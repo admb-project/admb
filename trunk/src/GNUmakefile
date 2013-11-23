@@ -21,9 +21,9 @@ endif
 ifeq ($(SHELL),sh.exe)
   DIST=..\build\dist
   LIBSDIR=$(DIST)\lib
-  LIBSDIR:=$(subst  ,\,$(LIBSDIR))
+  LIBSDIR:=$(addsuffix \,$(LIBSDIR))
   OBJSDIR=..\build\objects\dist
-  OBJSDIR:=$(subst  ,\,$(OBJSDIR))
+  OBJSDIR:=$(addsuffix \,$(OBJSDIR))
 else
   INSTALL_DIR=/usr/local/
   DIST=../build/dist
@@ -117,12 +117,12 @@ ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\contrib\lib md ${DIST}\contrib\lib
 	if not exist ${DIST}\contrib\bin md ${DIST}\contrib\bin
 	if not exist ${DIST}\contrib\include md ${DIST}\contrib\include
-	$(MAKE) CXXFLAGS_OPT_CONTRIB="$(subst -I,-I..\,$(CXXFLAGS_OPT_LIB))" CXXFLAGS_SAFE_CONTRIB="$(subst -I,-I..\,$(CXXFLAGS))" ADMB_HOME="$(PWD)\${DIST}" --directory=..\contrib
+	$(MAKE) CXXFLAGS_OPT_CONTRIB="$(subst -I,-I..\,$(CXXFLAGS_OPT_LIB))" CXXFLAGS_SAFE_CONTRIB="$(subst -I,-I..\,$(CXXFLAGS))" DIST=${DIST} --directory=..\contrib
 else
 	mkdir -p ${DIST}/contrib/lib
 	mkdir -p ${DIST}/contrib/bin
 	mkdir -p ${DIST}/contrib/include
-	$(MAKE) CXXFLAGS_OPT_CONTRIB="$(subst -I,-I../,$(CXXFLAGS_OPT_LIB))" CXXFLAGS_SAFE_CONTRIB="$(subst -I,-I../,$(CXXFLAGS))" ADMB_HOME="$(PWD)/${DIST}" --directory=../contrib
+	$(MAKE) CXXFLAGS_OPT_CONTRIB="$(subst -I,-I../,$(CXXFLAGS_OPT_LIB))" CXXFLAGS_SAFE_CONTRIB="$(subst -I,-I../,$(CXXFLAGS))" DIST=${DIST} --directory=../contrib
 endif
 
 dist: libs bins docs
@@ -391,12 +391,12 @@ else
 endif
 
 tests:
-ifndef USE_ADMB_HOME
-	$(MAKE) ADMB_HOME="${PWD}/${DIST}" --directory=../contrib test
-	$(MAKE) ADMB_HOME="${PWD}/${DIST}" --directory=../tests
+ifeq ($(SHELL),sh.exe)
+	$(MAKE) --directory=..\contrib test
+	$(MAKE) --directory=..\tests
 else
-	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../contrib test
-	$(MAKE) ADMB_HOME="${ADMB_HOME}" --directory=../tests
+	$(MAKE) --directory=../contrib test
+	$(MAKE) --directory=../tests
 endif
 
 install:

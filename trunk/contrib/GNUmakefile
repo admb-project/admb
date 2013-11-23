@@ -1,4 +1,5 @@
 .NOPARALLEL: all
+DISK=$(DIST)
 
 all: build-gdbprintlib build-statslib build-ecolib build-qfclib build-src
 ifeq ($(SHELL),sh.exe)

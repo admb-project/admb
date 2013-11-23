@@ -1,6 +1,10 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(SHELL),sh.exe)
-    PWD=$(shell cd)
+  ifneq (,$(findstring sh.exe,$(SHELL)))
+    ifeq ($(SHELL),sh.exe)
+      PWD=$(shell cd)
+    else
+      PWD=$(shell cmd /c cd)
+    endif
     ifdef MINGW_HOME
       PATH:=$(MINGW_HOME)\bin;$(PATH)
     else
@@ -420,18 +424,18 @@ ifeq ($(SHELL),sh.exe)
 	$(MAKE) --directory=..\contrib clean
 	$(MAKE) --directory=..\tests clean
 else
-	@rm -rf ../build
-	@rm -f ../admb
-	@rm -f ../admb.bat
-	@rm -f ../admb.cmd
-	@rm -f ../admb.zip
-	@rm -f ../REVISION
-	@rm -f nh99/lex.yy.c
-	@rm -f nh99/tpl2cpp.c
-	@rm -f nh99/tpl2cpp
-	@rm -f df1b2-separable/lex.yy.c
-	@rm -f df1b2-separable/tpl2rem.c
-	@rm -f df1b2-separable/tpl2rem
+	@rm -vf ../admb
+	@rm -vf ../admb.bat
+	@rm -vf ../admb.cmd
+	@rm -vf ../admb.zip
+	@rm -vf ../REVISION
+	@rm -vf nh99/lex.yy.c
+	@rm -vf nh99/tpl2cpp.c
+	@rm -vf nh99/tpl2cpp
+	@rm -vf df1b2-separable/lex.yy.c
+	@rm -vf df1b2-separable/tpl2rem.c
+	@rm -vf df1b2-separable/tpl2rem
+	@rm -vrf ../build
 	$(MAKE) --directory=../contrib clean
 	$(MAKE) --directory=../tests clean
 endif

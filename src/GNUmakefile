@@ -1,19 +1,24 @@
-ifeq ($(SHELL),sh.exe)
-  PWD=$(shell cd)
-  PATH:=$(PWD)\..\utilities;$(PATH)
-  ifdef MINGW_HOME
-    PATH:=$(MINGW_HOME)\bin;$(PATH)
-  else
-    HAS_CXX=$(shell $(CXX) --version && echo %ERRORLEVEL%)
-    HAS_CC=$(shell $(CC) --version && echo %ERRORLEVEL%)
-    ifeq ("$(HAS_CXX)","")
-      HAS_CXX2=$(shell $(PWD)\..\utilities\mingw\bin\g++ --version && echo %ERRORLEVEL%)
-      HAS_CC2=$(shell $(PWD)\..\utilities\mingw\bin\gcc --version && echo %ERRORLEVEL%)
-      ifneq ("$(HAS_CXX2)","")
-        PATH:=$(PWD)\..\utilities\mingw\bin;$(PATH)
-      endif
+ifeq ($(OS),Windows_NT)
+  ifeq ($(SHELL),sh.exe)
+    PWD=$(shell cd)
+    ifdef MINGW_HOME
+      PATH:=$(MINGW_HOME)\bin;$(PATH)
+    else
+     PATH:=$(PWD)\..\utilities\mingw\bin;$(PATH)
     endif
+    PATH:=$(PWD)\..\utilities;$(PATH)
+  else
+    PWD=$(shell pwd)
+    ifdef MINGW_HOME
+      PATH:=$(MINGW_HOME)/bin:$(PATH)
+    else
+     PATH:=$(PWD)/../utilities/mingw/bin:$(PATH)
+    endif
+    PATH:=$(PWD)/../utilities:$(PATH)
   endif
+endif
+
+ifeq ($(SHELL),sh.exe)
   DIST=..\build\dist
   LIBSDIR=$(DIST)\lib
   LIBSDIR:=$(subst  ,\,$(LIBSDIR))
@@ -24,7 +29,6 @@ else
   DIST=../build/dist
   LIBSDIR=$(DIST)/lib/
   OBJSDIR=../build/objects/dist/
-  PWD=$(shell pwd)
 endif
 
 ifdef CXXFLAGS
@@ -143,7 +147,6 @@ ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\bin md ${DIST}\bin
 	copy df1b2-separable\seddf1b* ${DIST}\bin
 	copy df1b2-separable\sedf1b2* ${DIST}\bin
-	if exist ${DIST}\bin\admb-cfg.bat del ${DIST}\bin\admb-cfg.bat
 	echo set ADMB_CFG_CXX=$(CXX)>${DIST}\bin\admb-cfg.bat
 	echo set ADMB_CFG_CXXFLAGS=$(CXXFLAGS)>>${DIST}\bin\admb-cfg.bat
 	echo set ADMB_CFG_LDFLAGS=$(LDFLAGS)>>${DIST}\bin\admb-cfg.bat
@@ -170,18 +173,16 @@ else
   else
 	cp ../scripts/admb/adlink ${DIST}/bin
   endif
-	rm -f ${DIST}/bin/admb-cfg.sh
-	echo "ADMB_CFG_CXX=$(CXX)">${DIST}/bin/admb-cfg.sh
-	echo "ADMB_CFG_CXXFLAGS=$(CXXFLAGS)">>${DIST}/bin/admb-cfg.sh
+	echo "ADMB_CFG_CXX=\"$(CXX)\"">${DIST}/bin/admb-cfg.sh
+	echo "ADMB_CFG_CXXFLAGS=\"$(CXXFLAGS)\"">>${DIST}/bin/admb-cfg.sh
   ifeq ($(OS),Windows_NT)
-	echo "ADMB_CFG_LDFLAGS=-static $(LDFLAGS)">>${DIST}/bin/admb-cfg.sh
+	echo "ADMB_CFG_LDFLAGS=\"-static $(LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
   else
-	echo "ADMB_CFG_LDFLAGS=$(LDFLAGS)">>${DIST}/bin/admb-cfg.sh
+	echo "ADMB_CFG_LDFLAGS=\"$(LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
   endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DIST} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DIST} bins
   ifeq ($(OS),Windows_NT)
-	cp ../scripts/mingw/set-admb-mingw.bat ${DIST}/bin
 	cp ../utilities/sed.exe ${DIST}/bin
 	cp ../utilities/libiconv2.dll ${DIST}/bin
 	cp ../utilities/libintl3.dll ${DIST}/bin

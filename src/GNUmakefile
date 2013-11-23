@@ -46,7 +46,7 @@ ifdef BUILD_SHARED_LIBRARY
 endif
 
 ifneq ($(CXX),CC)
-CXXFLAGS:= -Wall$(CXXFLAGS)
+CXXFLAGS:= -Wall $(CXXFLAGS)
 endif
 
 CXXFLAGS_DEFINES:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE

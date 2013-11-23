@@ -1,11 +1,7 @@
-ifndef ADMB_HOME
-ADMB_HOME=../../build/dist
-endif
-
 all: $(addprefix $(PREFIX_OBJ), contrib.obj)
 
 test:
-	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" admb simple.tpl
+	../../admb simple.tpl
 	./simple
 
 clean:

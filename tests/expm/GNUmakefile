@@ -3,7 +3,7 @@ TARGET=expm
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:${PATH}" admb -s $(TARGET)
+	../../admb $(TARGET)
 
 run:
 	@printf "Started run:\n"

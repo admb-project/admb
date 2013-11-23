@@ -31,17 +31,24 @@ else
   OBJSDIR=../build/objects/dist/
 endif
 
+ifdef CXX
+  USER_CXX:= $(CXX)
+endif
 ifdef CXXFLAGS
+  USER_CXXFLAGS:= $(CXXFLAGS)
   CXXFLAGS:= $(CXXFLAGS)
+endif
+ifdef LDFLAGS
+  USER_LDFLAGS:= $(LDFLAGS)
 endif
 
 ifdef DEBUG
   CXXFLAGS:= -g$(CXXFLAGS)
 else
   ifeq ($(CXX),openCC)
-    CXXFLAGS_PRE:= -O2$(CXXFLAGS)
+    CXXFLAGS:= -O2$(CXXFLAGS)
   else
-    CXXFLAGS_PRE:= -O3$(CXXFLAGS)
+    CXXFLAGS:= -O3$(CXXFLAGS)
   endif
 endif
 
@@ -53,16 +60,15 @@ ifneq ($(CXX),CC)
 CXXFLAGS:= -Wall $(CXXFLAGS)
 endif
 
-CXXFLAGS_DEFINES:=-D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE
+CXXFLAGS:= $(CXXFLAGS) -DSAFE_ALL -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE
 
 ifeq ($(SHELL),sh.exe)
-CXXFLAGS_INCLUDES:=-I..\build\dist\include
+CXXFLAGS:= $(CXXFLAGS) -I..\build\dist\include
 else
-CXXFLAGS_INCLUDES:=-I../build/dist/include
+CXXFLAGS:= $(CXXFLAGS) -I../build/dist/include
 endif
 
-CXXFLAGS_OPT:=$(CXXFLAGS) -DOPT_LIB $(CXXFLAGS_DEFINES) $(CXXFLAGS_INCLUDES)
-CXXFLAGS_SAFE:=$(CXXFLAGS) -DSAFE_ALL $(CXXFLAGS_DEFINES) $(CXXFLAGS_INCLUDES)
+CXXFLAGS_OPT_LIB:=$(subst -DSAFE_ALL,-DOPT_LIB,$(CXXFLAGS))
 
 include df1b2-separable/objects.lst
 OBJECTS=$(addprefix optlp-df1b2-separable-,$(OBJ0)) $(addprefix saflp-df1b2-separable-,$(OBJ0))
@@ -111,12 +117,12 @@ ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\contrib\lib md ${DIST}\contrib\lib
 	if not exist ${DIST}\contrib\bin md ${DIST}\contrib\bin
 	if not exist ${DIST}\contrib\include md ${DIST}\contrib\include
-	$(MAKE) CXXFLAGS_OPT_CONTRIB="$(subst -I,-I..\,$(CXXFLAGS_OPT))" CXXFLAGS_SAFE_CONTRIB="$(subst -I,-I..\,$(CXXFLAGS_SAFE))" ADMB_HOME="$(PWD)\${DIST}" --directory=..\contrib
+	$(MAKE) CXXFLAGS_OPT_CONTRIB="$(subst -I,-I..\,$(CXXFLAGS_OPT_LIB))" CXXFLAGS_SAFE_CONTRIB="$(subst -I,-I..\,$(CXXFLAGS))" ADMB_HOME="$(PWD)\${DIST}" --directory=..\contrib
 else
 	mkdir -p ${DIST}/contrib/lib
 	mkdir -p ${DIST}/contrib/bin
 	mkdir -p ${DIST}/contrib/include
-	$(MAKE) CXXFLAGS_OPT_CONTRIB="$(subst -I,-I../,$(CXXFLAGS_OPT))" CXXFLAGS_SAFE_CONTRIB="$(subst -I,-I../,$(CXXFLAGS_SAFE))" ADMB_HOME="$(PWD)/${DIST}" --directory=../contrib
+	$(MAKE) CXXFLAGS_OPT_CONTRIB="$(subst -I,-I../,$(CXXFLAGS_OPT_LIB))" CXXFLAGS_SAFE_CONTRIB="$(subst -I,-I../,$(CXXFLAGS))" ADMB_HOME="$(PWD)/${DIST}" --directory=../contrib
 endif
 
 dist: libs bins docs
@@ -147,9 +153,9 @@ ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\bin md ${DIST}\bin
 	copy df1b2-separable\seddf1b* ${DIST}\bin
 	copy df1b2-separable\sedf1b2* ${DIST}\bin
-	echo set ADMB_CFG_CXX=$(CXX)>${DIST}\bin\admb-cfg.bat
-	echo set ADMB_CFG_CXXFLAGS=$(CXXFLAGS)>>${DIST}\bin\admb-cfg.bat
-	echo set ADMB_CFG_LDFLAGS=$(LDFLAGS)>>${DIST}\bin\admb-cfg.bat
+	echo set ADMB_CFG_CXX=$(USER_CXX)>${DIST}\bin\admb-cfg.bat
+	echo set ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)>>${DIST}\bin\admb-cfg.bat
+	echo set ADMB_CFG_LDFLAGS=$(USER_LDFLAGS)>>${DIST}\bin\admb-cfg.bat
 	echo set MINGW_HOME=$(MINGW_HOME)>>${DIST}\bin\admb-cfg.bat
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=..\${DIST} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=..\${DIST} bins
@@ -173,12 +179,12 @@ else
   else
 	cp ../scripts/admb/adlink ${DIST}/bin
   endif
-	echo "ADMB_CFG_CXX=\"$(CXX)\"">${DIST}/bin/admb-cfg.sh
-	echo "ADMB_CFG_CXXFLAGS=\"$(CXXFLAGS)\"">>${DIST}/bin/admb-cfg.sh
+	echo "ADMB_CFG_CXX=\"$(USER_CXX)\"">${DIST}/bin/admb-cfg.sh
+	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">>${DIST}/bin/admb-cfg.sh
   ifeq ($(OS),Windows_NT)
-	echo "ADMB_CFG_LDFLAGS=\"-static $(LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
+	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
   else
-	echo "ADMB_CFG_LDFLAGS=\"$(LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
+	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
   endif
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DIST} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DIST} bins
@@ -299,76 +305,76 @@ objects: $(OBJECTS)
 
 ifeq ($(SHELL),sh.exe)
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o$@ $<
 
 $(OBJSDIR)saflp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o$@ $<
 
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
 
 $(OBJSDIR)saflp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
 
 $(OBJSDIR)optlp-df1b2-separable-%.obj: df1b2-separable\%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
 
 $(OBJSDIR)saflp-df1b2-separable-%.obj: df1b2-separable\%.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
 
 $(OBJSDIR)optlp-linad99-%.obj:linad99\%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
 
 $(OBJSDIR)saflp-linad99-%.obj:linad99\%.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
 
 $(OBJSDIR)optlp-nh99-%.obj:nh99\%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
 
 $(OBJSDIR)saflp-nh99-%.obj:nh99\%.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
 
 $(OBJSDIR)optlp-tools99-%.obj:tools99\%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
 
 $(OBJSDIR)saflp-tools99-%.obj:tools99\%.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
 else
 $(OBJSDIR)optlp-nh99-banner.obj: nh99/banner.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell test -f ../REVISION && cat ../REVISION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell test -f ../REVISION && cat ../REVISION) -o$@ $<
 
 $(OBJSDIR)saflp-nh99-banner.obj: nh99/banner.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell test -f ../REVISION && cat ../REVISION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION) -DADMB_REVISION=$(shell test -f ../REVISION && cat ../REVISION) -o$@ $<
 
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
 
 $(OBJSDIR)saflp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
 
 $(OBJSDIR)optlp-df1b2-separable-%.obj:df1b2-separable/%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
 
 $(OBJSDIR)saflp-df1b2-separable-%.obj:df1b2-separable/%.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
 
 $(OBJSDIR)optlp-linad99-%.obj:linad99/%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
 
 $(OBJSDIR)saflp-linad99-%.obj:linad99/%.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
 
 $(OBJSDIR)optlp-nh99-%.obj:nh99/%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
 
 $(OBJSDIR)saflp-nh99-%.obj:nh99/%.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
 
 $(OBJSDIR)optlp-tools99-%.obj:tools99/%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
 
 $(OBJSDIR)saflp-tools99-%.obj:tools99/%.cpp
-	$(CXX) -c $(CXXFLAGS_SAFE) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o$@ $<
 endif
 
 verify:

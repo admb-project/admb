@@ -109,5 +109,9 @@ clean:
 	@$(MAKE) --directory=ecolib clean
 	@$(MAKE) --directory=qfclib clean
 	@$(MAKE) --directory=statslib clean
+ifeq ($(TERMINAL),dos)
+	@$(MAKE) --file=Makefile --directory=ad2csv clean
+else
 	@$(MAKE) --directory=ad2csv clean
 	@$(MAKE) --directory=src clean
+endif

@@ -22,7 +22,7 @@ ifeq ($(SHELL),sh.exe)
 else
   INSTALL_DIR=/usr/local/
   DIST=../build/dist
-  LIBSDIR=$(DIST)/lib
+  LIBSDIR=$(DIST)/lib/
   OBJSDIR=../build/objects/dist/
   PWD=$(shell pwd)
 endif

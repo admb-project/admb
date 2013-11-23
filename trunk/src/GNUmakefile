@@ -43,17 +43,17 @@ ifdef LDFLAGS
 endif
 
 ifdef DEBUG
-  CXXFLAGS:= -g$(CXXFLAGS)
+  CXXFLAGS:= -g $(CXXFLAGS)
 else
   ifeq ($(CXX),openCC)
-    CXXFLAGS:= -O2$(CXXFLAGS)
+    CXXFLAGS:= -O2 $(CXXFLAGS)
   else
-    CXXFLAGS:= -O3$(CXXFLAGS)
+    CXXFLAGS:= -O3 $(CXXFLAGS)
   endif
 endif
 
 ifdef BUILD_SHARED_LIBRARY
-  CXXFLAGS:= -fPIC$(CXXFLAGS)
+  CXXFLAGS:= -fPIC $(CXXFLAGS)
 endif
 
 ifneq ($(CXX),CC)

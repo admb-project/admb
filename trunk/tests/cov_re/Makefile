@@ -1,10 +1,7 @@
-ADMB_HOME=$(ADMB_HOME)
-PATH=$(ADMB_HOME)\bin;$(PATH)
-
 all: cov_re
 
 cov_re: cov_re.tpl
-	admb -r cov_re.tpl
+	..\..\admb -r cov_re.tpl
 	cov_re.exe
 
 clean:

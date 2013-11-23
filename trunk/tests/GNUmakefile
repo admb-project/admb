@@ -115,8 +115,14 @@ beta3:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 clean:
-	$(MAKE) --directory=geolocation clean
+ifeq ($(SHELL),sh.exe)
+	$(MAKE) --directory=expm --file=Makefile clean
+else
 	$(MAKE) --directory=expm clean
+endif
+
+clean2:
+	$(MAKE) --directory=geolocation clean
 	$(MAKE) --directory=priors clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=hysimple clean

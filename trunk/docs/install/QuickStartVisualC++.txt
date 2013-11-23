@@ -22,7 +22,7 @@ Quick Start Visual C++
 
 1. Open **Visual Studio Command Prompt** window
 
-2. Download ADMB
+2. **Download** ADMB
 
    To get the most current code, download from directly from 
    ADMB version control using the command below.
@@ -41,7 +41,7 @@ Quick Start Visual C++
 
        C:\> cd admb
 
-4. Build ADMB distribution
+4. **Build** ADMB
 
    To build ADMB, use the commands below.
 
@@ -51,7 +51,7 @@ Quick Start Visual C++
 
        C:\admb\> nmake debug
 
-5. Test ADMB
+5. **Use** ADMB
 
    The following commands build and run the simple example.
 

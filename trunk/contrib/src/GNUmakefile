@@ -4,7 +4,7 @@ ifeq ($(SHELL),sh.exe)
 	copy contrib.obj $(PREFIX_OBJ)contrib.obj
 else
 	../../admb -c contrib.cpp
-	cp contrib.obj $(PREFIX_OBJ)contrib.obj
+	cp contrib.o $(PREFIX_OBJ)contrib.o
 endif
 
 test:

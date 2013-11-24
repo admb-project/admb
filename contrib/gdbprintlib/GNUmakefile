@@ -4,7 +4,7 @@ ifeq ($(SHELL),sh.exe)
 	copy gdbprintlib.obj $(PREFIX_OBJ)gdbprintlib.obj
 else
 	../../admb -c gdbprintlib.cpp
-	cp gdbprintlib.o $(PREFIX_OBJ)gdbprintlib.obj
+	cp gdbprintlib.o $(PREFIX_OBJ)gdbprintlib.o
 endif
 
 clean:

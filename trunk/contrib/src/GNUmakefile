@@ -1,23 +1,21 @@
-$(PREFIX_OBJ)contrib.obj: contrib.cpp
+all: $(PREFIX_OBJ)contrib.obj
+
+$(PREFIX_OBJ)%.obj: %.cpp
 ifeq ($(SHELL),sh.exe)
-	..\..\admb -c contrib.cpp
-	copy contrib.obj $(PREFIX_OBJ)contrib.obj
+	..\..\admb -c $(OPTION) $<
+	copy $(basename $<).obj $@
 else
-	../../admb -c contrib.cpp
-	cp contrib.o $(PREFIX_OBJ)contrib.o
+	../../admb -c $(OPTION) $<
+	cp $(basename $<).obj $@
 endif
 
 test:
-ifeq ($(SHELL),sh.exe)
-	..\..\admb.cmd simple.tpl
-	simple.exe
-else
-	../../admb simple.tpl
-	./simple
-endif
+	..\..\admb $(OPTION) simple.tpl
 
 clean:
 ifeq ($(SHELL),sh.exe)
+	del contrib.obj
+	del contrib.o
 	del simple.obj
 	del simple.o
 	del simple.std
@@ -37,6 +35,8 @@ ifeq ($(SHELL),sh.exe)
 	del simple.cor
 	del admodel.dep
 else
+	@rm -f contrib.obj
+	@rm -f contrib.o
 	@rm -f simple.obj
 	@rm -f simple.o
 	@rm -f simple.std

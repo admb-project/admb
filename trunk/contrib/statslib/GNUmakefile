@@ -2,11 +2,20 @@ include objects.lst
 
 all: $(addprefix $(PREFIX_OBJ), $(OBJECTS))
 
-clean:
-
 $(PREFIX_OBJ)%.obj: %.cpp
-ifeq ($(CXX),cl)
-	$(CXX) /c $(CXXFLAGS) /Fo$@ $<
+ifeq ($(SHELL),sh.exe)
+	..\..\admb -c $(OPTION) $<
+	copy $(basename $<).obj $@
 else
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	../../admb -c $(OPTION) $<
+	cp $(basename $<).obj $@
+endif
+
+clean:
+ifeq ($(SHELL),sh.exe)
+	-del *.obj
+	-del *.o
+else
+	@rm -vf *.obj
+	@rm -vf *.o
 endif

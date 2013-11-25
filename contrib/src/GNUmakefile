@@ -10,7 +10,13 @@ else
 endif
 
 test:
+ifeq ($(SHELL),sh.exe)
 	..\..\admb $(OPTION) simple.tpl
+	simple
+else
+	../../admb $(OPTION) simple.tpl
+	./simple
+endif
 
 clean:
 ifeq ($(SHELL),sh.exe)

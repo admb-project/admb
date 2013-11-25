@@ -194,7 +194,7 @@ for %%a in (!tpls!) do (
     set parser=tpl2cpp
   )
   set CMD=!parser!!debug!!dll! !tpl!
-  echo.&echo *** Parsing tpl file: !tpl!.tpl
+  echo.&echo *** Parsing !tpl!.tpl:
   echo !CMD!
   call !CMD!
   if not exist !tpl!.cpp (
@@ -210,7 +210,7 @@ for %%b in (!tpls!) do (
   set tpl=%%~nb
   @REM set CMD=adcomp!d!!g!!r!!fast! !tpl!
   set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
-  echo.&echo *** Compiling source file: !tpl!.cpp
+  echo.&echo *** Compile !tpl!.cpp:
   echo !CMD!
   call !CMD!
   if not exist !tpl!.obj (
@@ -229,7 +229,7 @@ if defined srcs (
     set filename=%%~na
     @REM set CMD=adcomp!d!!g!!r!!fast! !src!
     set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
-    echo.&echo *** Compiling source file: !src!
+    echo.&echo *** Compile !src!:
     echo !CMD!
     call !CMD!
     if not exist !filename!.obj (
@@ -246,7 +246,7 @@ if defined srcs (
 )
 :linker
 if defined compileonly (
-  echo.&echo Successfully compiled object files.
+  echo.&echo Compiled !objs!.
   goto EOF
 )
 if not defined tpls (
@@ -268,7 +268,7 @@ if not defined tpls (
       ) else (
         set CMD=!LL!!LDFLAGS! -o !main!.exe !objs! !libs!
       )
-      echo.&echo *** Linking files: !objs!
+      echo.&echo *** Linking !objs!:
       echo !CMD!
       call !CMD!
       if not exist !main!.exe (
@@ -291,9 +291,9 @@ if not defined tpls (
       )
     )
     if defined objs (
-      echo.&echo *** Linking files: !tpl!.obj !objs!
+      echo.&echo *** Linking !tpl!.obj !objs!:
     ) else (
-      echo.&echo *** Linking file: !tpl!.obj
+      echo.&echo *** Linking !tpl!.obj:
     )
     echo !CMD!
     call !CMD!

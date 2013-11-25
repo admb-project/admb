@@ -151,10 +151,10 @@ do
   rm -vf classdef.tmp xxdata.tmp xxhtop.tmp xxhtopm.tmp xxglobal.tmp xxtopm.tmp 
   rm -vf xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp 
   rm -vf tfile1 tfile2 tfile3 tfile4 tfile5
-  rm -f $model.cpp $model.htp $model.o $model
+  rm -f $model.cpp $model.htp $model.obj $model.o $model
 
   CMD="$parser $debug $dll $model"
-  echo -e \\n\*\*\* Parsing tpl file: $model.tpl\\n$CMD
+  echo -e \\n\*\*\* Parse tpl: $model.tpl\\n$CMD
   eval $CMD
 
   if [ ! -f $model.cpp -o ! -f $model.htp ]; then
@@ -172,15 +172,16 @@ do
     exit 1
   fi
 
-  CMD="$CXX -c $CXXFLAGS $file"
-  echo -e \\n\*\*\* Compiling source file: $file\\n$CMD
+  fileobj=${file%.*}.obj
+  CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
+  echo -e \\n\*\*\* Compile $file:\\n$CMD
   eval $CMD
 
-  if [[ ! -f ${file%.*}.o ]]; then
+  if [[ ! -f $fileobj ]]; then
     echo -e "\\nError: Could not compile $file\\n"
     exit 1
   fi
-  tplobjs="$tplobjs ${file%.*}.o"
+  tplobjs="$tplobjs $fileobj"
 done
 
 for file in $srcs
@@ -189,14 +190,19 @@ do
     echo -e "\\nError: $file not found\\n"
     exit 1
   fi
-  CMD="$CXX -c $CXXFLAGS $file"
-  echo -e \\n\*\*\* Compiling source file: $file\\n$CMD
+  fileobj=${file%.*}.obj
+  CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
+  echo -e \\n\*\*\* Compile $file: \\n$CMD
   eval $CMD
-  if [[ ! -f ${file%.*}.o ]]; then
+  if [[ ! -f $fileobj ]]; then
     echo -e "\\nError: Could not compile $file\\n"
     exit 1
   fi
-  objs="${file%.*}.o $objs"
+  if [ ! -z "$objs" ]; then
+    objs="$fileobj $objs"
+  else
+    objs="$fileobj"
+  fi
 done
 
 if [ ! -z "$compileonly" ]; then
@@ -204,7 +210,7 @@ if [ ! -z "$compileonly" ]; then
   if [ ! -z "$objs" ]; then
     objects=$objs
   fi
-  echo -e "\\nSuccessfully compiled \"$objects\".\\n"
+  echo -e "\\nCompiled $objects.\\n"
   exit 0
 fi 
 
@@ -216,9 +222,9 @@ do
     model=${file%.*}
   fi
   if [ ! -z  "$dll" ]; then
-    CMD="$CXX $LDFLAGS -o $model.so"
+    CMD="$CXX $LDFLAGS -o$model.so"
   else
-    CMD="$CXX $LDFLAGS -o $model"
+    CMD="$CXX $LDFLAGS -o$model"
   fi
   CMD="$CMD $file $objs"
   if [[ "$library" == "opt" ]]; then
@@ -226,7 +232,7 @@ do
   else
     CMD="$CMD \"$ADMB_HOME\"/contrib/lib/libcontrib.a \"$ADMB_HOME\"/lib/libadmb.a"
   fi
-  echo -e \\n\*\*\* Linking files: $file $objs\\n$CMD
+  echo -e \\n\*\*\* Linking $file $objs:\\n$CMD
   eval $CMD
   if [[ -z $dll ]]; then 
     if [[ ! -f $model ]]; then 
@@ -253,7 +259,7 @@ if [[ "$tplobjs" == "" ]]; then
     if [ "$extension" = "o" -o "$extension" = "obj" ]; then
       listobjs="$listobjs $file"
     else
-      listobjs="$listobjs ${file%.*}.o"
+      listobjs="$listobjs ${file%.*}.obj"
     fi
     if [ -z  "$outputfilebasename" ]; then
       outputfilebasename="`basename $file`"
@@ -261,9 +267,9 @@ if [[ "$tplobjs" == "" ]]; then
     fi
   done
   if [ ! -z  "$dll" ]; then
-    CMD="$CXX $LDFLAGS -o $outputfilebasename.so"
+    CMD="$CXX $LDFLAGS -o$outputfilebasename.so"
   else
-    CMD="$CXX $LDFLAGS -o $outputfilebasename"
+    CMD="$CXX $LDFLAGS -o$outputfilebasename"
   fi
   CMD="$CMD $listobjs"
   if [[ "$library" == "opt" ]]; then
@@ -271,7 +277,7 @@ if [[ "$tplobjs" == "" ]]; then
   else
     CMD="$CMD \"$ADMB_HOME\"/contrib/lib/libcontrib.a \"$ADMB_HOME\"/lib/libadmb.a"
   fi
-  echo -e \\n\*\*\* Linking files: $listobjs\\n$CMD
+  echo -e \\n\*\*\* Linking $listobjs:\\n$CMD
   eval $CMD
 
   if [ ! -z  "$output" ]; then

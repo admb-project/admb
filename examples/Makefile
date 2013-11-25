@@ -1,5 +1,5 @@
-SHELL=cmd
 ADMB_HOME=..\\..\\..\\
+OPTIONS= $(FAST_OPTION)
 
 all: admb admb-re
 

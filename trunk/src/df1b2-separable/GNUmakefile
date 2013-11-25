@@ -1,21 +1,7 @@
-ifeq ($(OS),Windows_NT)
-  ifdef TERM
-    ifeq ("$(TERM)","xterm")
-      TERMINAL=cygwin
-    endif
-    ifeq ("$(TERM)","cygwin")
-      TERMINAL=cygwin
-    endif
-  else
-    TERMINAL=dos
-    PATH:=$(PATH);..\..\utilities;..\..\utilities\mingw\bin
-  endif
-endif
+ifeq ($(SHELL),sh.exe)
+bins: $(DIST)\bin\tpl2rem.exe
 
-ifeq ($(TERMINAL),dos)
-bins: $(DISKDIR)\bin\tpl2rem.exe
-
-$(DISKDIR)\bin\tpl2rem.exe: tpl2rem.c
+$(DIST)\bin\tpl2rem.exe: tpl2rem.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 tpl2rem.c: lex.yy.c
@@ -25,9 +11,9 @@ lex.yy.c: tpl2rem.lex
 	flex -w tpl2rem.lex
 
 else
-bins: $(DISKDIR)/bin/tpl2rem
+bins: $(DIST)/bin/tpl2rem
 
-$(DISKDIR)/bin/tpl2rem: tpl2rem.c
+$(DIST)/bin/tpl2rem: tpl2rem.c
 	$(CC) $(CFLAGS) -o $@ $<
 
 tpl2rem.c: lex.yy.c

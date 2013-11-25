@@ -159,7 +159,7 @@ else
 	cp -R ../src ${DIST}
 	cp -R ../scripts ${DIST}
 	cp -R ../tests ${DIST}
-	cp -R ../utilities ${DIST}
+	cp -vR ../utilities ${DIST}
 	cp -f ../LICENSE.txt ${DIST}
 	cp -f ../README.txt ${DIST}
 	cp -f ../CHANGES.txt ${DIST}
@@ -204,8 +204,8 @@ ifeq ($(SHELL),sh.exe)
 	copy ..\scripts\admb\admb.bat ${DIST}\bin\admb.cmd
 	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
 	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd
-	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=..\${DIST} bins
-	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=..\${DIST} bins
+	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=..\${DIST} bins
+	$(MAKE) --directory=nh99 CC=$(CC) DIST=..\${DIST} bins
 else
 	mkdir -p ${DIST}/bin
 	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DIST}/bin
@@ -232,8 +232,8 @@ else
 	ln -sf bin/admb ${DIST}
 	ln -sf build/dist/bin/admb ..
   endif
-	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DIST} bins
-	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DIST} bins
+	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=../${DIST} bins
+	$(MAKE) --directory=nh99 CC=$(CC) DIST=../${DIST} bins
 endif
 
 docs:

@@ -1,11 +1,15 @@
-$(PREFIX_OBJ)gdbprintlib.obj: gdbprintlib.cpp
+all: $(addprefix $(PREFIX_OBJ), gdbprintlib.obj)
+
+$(PREFIX_OBJ)%.obj: %.cpp
 ifeq ($(SHELL),sh.exe)
-	..\..\admb.cmd -c gdbprintlib.cpp
-	copy gdbprintlib.obj $(PREFIX_OBJ)gdbprintlib.obj
+	..\..\admb -c $(OPTION) $<
+	copy $(basename $<).obj $@
 else
-	../../admb -c gdbprintlib.cpp
-	cp gdbprintlib.o $(PREFIX_OBJ)gdbprintlib.o
+	../../admb -c $(OPTION) $<
+	cp $(basename $<).obj $@
 endif
+
+test:
 
 clean:
 ifeq ($(SHELL),sh.exe)

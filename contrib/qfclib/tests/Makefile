@@ -1,5 +1,5 @@
 all:
-	admb testfunction
+	..\..\..\admb testfunction
 	./testfunction
-	admb -r testfunctionre
+	..\..\..\admb -r testfunctionre
 	./testfunctionre

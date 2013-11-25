@@ -1,5 +1,3 @@
-SHELL=cmd
-
 all:
 	..\..\admb.cmd ad2csv.cpp main.cpp
 	copy ad2csv.exe ..\..\build\dist\contrib\bin

@@ -8,17 +8,17 @@ ifeq ($(OS),Windows_NT)
     ifdef MINGW_HOME
       PATH:=$(MINGW_HOME)\bin;$(PATH)
     else
-     PATH:=$(PWD)\..\utilities\mingw\bin;$(PATH)
+      PATH:=$(PWD)\..\utilities\mingw\bin;$(PATH)
     endif
-    PATH:=$(PWD)\..\utilities;$(PATH)
+    PATH:=$(PATH);$(PWD)\..\utilities
   else
     PWD=$(shell pwd)
     ifdef MINGW_HOME
       PATH:=$(MINGW_HOME)/bin:$(PATH)
     else
-     PATH:=$(PWD)/../utilities/mingw/bin:$(PATH)
+      PATH:=$(PWD)/../utilities/mingw/bin:$(PATH)
     endif
-    PATH:=$(PWD)/../utilities:$(PATH)
+    PATH:=$(PATH):$(PWD)/../utilities
   endif
 endif
 
@@ -38,10 +38,12 @@ endif
 ifdef CXX
   USER_CXX:= $(CXX)
 endif
+
 ifdef CXXFLAGS
   USER_CXXFLAGS:= $(CXXFLAGS)
   CXXFLAGS:= $(CXXFLAGS)
 endif
+
 ifdef LDFLAGS
   USER_LDFLAGS:= $(LDFLAGS)
 endif
@@ -121,97 +123,15 @@ ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\contrib\lib md ${DIST}\contrib\lib
 	if not exist ${DIST}\contrib\bin md ${DIST}\contrib\bin
 	if not exist ${DIST}\contrib\include md ${DIST}\contrib\include
-	$(MAKE) CXXFLAGS_OPT_CONTRIB="$(subst -I,-I..\,$(CXXFLAGS_OPT_LIB))" CXXFLAGS_SAFE_CONTRIB="$(subst -I,-I..\,$(CXXFLAGS))" DIST=${DIST} --directory=..\contrib
+	$(MAKE) DIST=${DIST} --directory=..\contrib
 else
 	mkdir -p ${DIST}/contrib/lib
 	mkdir -p ${DIST}/contrib/bin
 	mkdir -p ${DIST}/contrib/include
-	$(MAKE) CXXFLAGS_OPT_CONTRIB="$(subst -I,-I../,$(CXXFLAGS_OPT_LIB))" CXXFLAGS_SAFE_CONTRIB="$(subst -I,-I../,$(CXXFLAGS))" DIST=${DIST} --directory=../contrib
+	$(MAKE) DIST=${DIST} --directory=../contrib
 endif
 
 dist: libs bins docs
-
-libs: includes objects_dir objects
-ifeq ($(SHELL),sh.exe)
-	if not exist ${DIST}\lib md ${DIST}\lib
-	if exist ${DIST}\lib\libadmb.a del ${DIST}\lib\libadmb.a
-	if exist ${DIST}\lib\libadmbo.a del ${DIST}\lib\libadmbo.a
-else
-	mkdir -p ${DIST}/lib
-	rm -vf ${DIST}/lib/libadmb.a
-	rm -vf ${DIST}/lib/libadmbo.a
-endif
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-linad99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-df1b2-separable-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-nh99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-tools99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-sparse-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-linad99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-df1b2-separable-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-nh99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-tools99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-sparse-*.obj
-
-bins:
-ifeq ($(SHELL),sh.exe)
-	if not exist ${DIST}\bin md ${DIST}\bin
-	copy df1b2-separable\seddf1b* ${DIST}\bin
-	copy df1b2-separable\sedf1b2* ${DIST}\bin
-	echo set ADMB_CFG_CXX=$(USER_CXX)>${DIST}\bin\admb-cfg.bat
-	echo set ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)>>${DIST}\bin\admb-cfg.bat
-	echo set ADMB_CFG_LDFLAGS=$(USER_LDFLAGS)>>${DIST}\bin\admb-cfg.bat
-	echo set MINGW_HOME=$(MINGW_HOME)>>${DIST}\bin\admb-cfg.bat
-	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=..\${DIST} bins
-	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=..\${DIST} bins
-	copy ..\scripts\mingw\set-admb-mingw.bat ${DIST}\bin
-	copy ..\utilities\sed.exe ${DIST}\bin
-	copy ..\utilities\libiconv2.dll ${DIST}\bin
-	copy ..\utilities\libintl3.dll ${DIST}\bin
-	copy ..\utilities\regex2.dll ${DIST}\bin
-	copy ..\scripts\admb\adcomp.bat ${DIST}\bin\adcomp.cmd
-	copy ..\scripts\admb\adlink.bat ${DIST}\bin\adlink.cmd
-	copy ..\scripts\admb\admb.bat ${DIST}\bin\admb.cmd
-	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
-	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd
-else
-	mkdir -p ${DIST}/bin
-	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DIST}/bin
-	cp ../scripts/admb/admb ${DIST}/bin
-	cp ../scripts/admb/adcomp ${DIST}/bin
-  ifdef BUILD_SHARED_LIBRARY
-	cp ../scripts/admb/adlink-shared ${DIST}/bin/adlink
-  else
-	cp ../scripts/admb/adlink ${DIST}/bin
-  endif
-	echo "ADMB_CFG_CXX=\"$(USER_CXX)\"">${DIST}/bin/admb-cfg.sh
-	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">>${DIST}/bin/admb-cfg.sh
-  ifeq ($(OS),Windows_NT)
-	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
-  else
-	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
-  endif
-	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DIST} bins
-	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DIST} bins
-  ifeq ($(OS),Windows_NT)
-	cp ../utilities/sed.exe ${DIST}/bin
-	cp ../utilities/libiconv2.dll ${DIST}/bin
-	cp ../utilities/libintl3.dll ${DIST}/bin
-	cp ../utilities/regex2.dll ${DIST}/bin
-	cp ../scripts/admb/adcomp.bat ${DIST}/bin
-	cp ../scripts/admb/adlink.bat ${DIST}/bin
-	cp ../scripts/admb/admb.bat ${DIST}/bin
-	cp ../scripts/admb/root-admb.bat ../admb.bat
-	cp ../scripts/admb/root-admb.bat ${DIST}/admb.bat
-	cp ../scripts/admb/admb ${DIST}/bin
-	cp ../scripts/admb/root-admb ../admb
-	cp ../scripts/admb/root-admb ${DIST}/admb
-  else
-	ln -sf bin/admb ${DIST}
-	ln -sf build/dist/bin/admb ..
-  endif
-endif
-
-docs:
 ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\contrib md ${DIST}\contrib
 	xcopy ..\contrib $(DIST)\contrib /S /Y /D
@@ -245,6 +165,84 @@ else
 	cp -f ../CHANGES.txt ${DIST}
 	cp -f ../VERSION ${DIST}
 	cp -f ../Makefile ${DIST}
+endif
+
+libs: includes objects_dir objects
+ifeq ($(SHELL),sh.exe)
+	if not exist ${DIST}\lib md ${DIST}\lib
+	if exist ${DIST}\lib\libadmb.a del ${DIST}\lib\libadmb.a
+	if exist ${DIST}\lib\libadmbo.a del ${DIST}\lib\libadmbo.a
+else
+	mkdir -p ${DIST}/lib
+	rm -vf ${DIST}/lib/libadmb.a
+	rm -vf ${DIST}/lib/libadmbo.a
+endif
+	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-linad99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-df1b2-separable-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-nh99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-tools99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-sparse-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-linad99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-df1b2-separable-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-nh99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-tools99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-sparse-*.obj
+
+bins:
+ifeq ($(SHELL),sh.exe)
+	if not exist ${DIST}\bin md ${DIST}\bin
+	copy df1b2-separable\seddf1b* ${DIST}\bin
+	copy df1b2-separable\sedf1b2* ${DIST}\bin
+	echo set ADMB_CFG_CXX=$(USER_CXX)>${DIST}\bin\admb-cfg.bat
+	echo set ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)>>${DIST}\bin\admb-cfg.bat
+	echo set ADMB_CFG_LDFLAGS=$(USER_LDFLAGS)>>${DIST}\bin\admb-cfg.bat
+	echo set MINGW_HOME=$(MINGW_HOME)>>${DIST}\bin\admb-cfg.bat
+	copy ..\utilities\sed.exe ${DIST}\bin
+	copy ..\utilities\libiconv2.dll ${DIST}\bin
+	copy ..\utilities\libintl3.dll ${DIST}\bin
+	copy ..\utilities\regex2.dll ${DIST}\bin
+	copy ..\scripts\admb\admb.bat ${DIST}\bin\admb.cmd
+	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
+	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd
+	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=..\${DIST} bins
+	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=..\${DIST} bins
+else
+	mkdir -p ${DIST}/bin
+	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DIST}/bin
+  ifdef BUILD_SHARED_LIBRARY
+	cp ../scripts/admb/adlink-shared ${DIST}/bin/adlink
+  endif
+	echo "ADMB_CFG_CXX=\"$(USER_CXX)\"">${DIST}/bin/admb-cfg.sh
+	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">>${DIST}/bin/admb-cfg.sh
+  ifeq ($(OS),Windows_NT)
+	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
+	cp ../utilities/sed.exe ${DIST}/bin
+	cp ../utilities/libiconv2.dll ${DIST}/bin
+	cp ../utilities/libintl3.dll ${DIST}/bin
+	cp ../utilities/regex2.dll ${DIST}/bin
+	cp ../scripts/admb/admb ${DIST}/bin/admb
+	cp ../scripts/admb/root-admb ../admb
+	cp ../scripts/admb/root-admb ${DIST}/admb
+	cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd
+	cp ../scripts/admb/root-admb.bat ../admb.cmd
+	cp ../scripts/admb/root-admb.bat ${DIST}/admb.cmd
+  else
+	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
+	cp ../scripts/admb/admb ${DIST}/bin
+	ln -sf bin/admb ${DIST}
+	ln -sf build/dist/bin/admb ..
+  endif
+	$(MAKE) --directory=df1b2-separable CC=$(CC) DISKDIR=../${DIST} bins
+	$(MAKE) --directory=nh99 CC=$(CC) DISKDIR=../${DIST} bins
+endif
+
+docs:
+
+docs2:
+ifeq ($(SHELL),sh.exe)
+	$(MAKE) --directory=..\docs
+else
+	$(MAKE) --directory=../docs
 endif
 
 includes:

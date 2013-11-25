@@ -2,11 +2,22 @@ include objects.lst
 
 all: $(addprefix $(PREFIX_OBJ), $(OBJECTS))
 
+$(PREFIX_OBJ)%.obj: %.cpp
+ifeq ($(SHELL),sh.exe)
+	..\..\admb -c $(OPTION) $<
+	copy $(basename $<).obj $@
+else
+	../../admb -c $(OPTION) $<
+	cp $(basename $<).obj $@
+endif
+
 test:
-	ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" make --directory=tests
+	make --directory=tests
 
 clean:
 ifneq ($(SHELL),sh.exe)
+	@rm -vf *.obj
+	@rm -vf *.o
 	@rm -vf tests/testfunction.htp
 	@rm -vf tests/testfunction
 	@rm -vf tests/nf1b2list1
@@ -24,11 +35,4 @@ ifneq ($(SHELL),sh.exe)
 	@rm -vf tests/nf1b2list13
 	@rm -vf tests/fmin.log
 	@rm -vf tests/testfunctionre
-endif
-
-$(PREFIX_OBJ)%.obj: %.cpp
-ifeq ($(CXX),cl)
-	$(CXX) /c $(CXXFLAGS) /Fo$@ $<
-else
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
 endif

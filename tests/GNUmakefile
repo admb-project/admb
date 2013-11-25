@@ -14,7 +14,7 @@ $(GTEST_DIR)/gtest-all.o: googletest-read-only
 googletest-read-only:
 	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only
 
-svn: svn-geolocation
+svn:
 
 main: test-geolocation test-cov_re
 
@@ -23,9 +23,6 @@ test-adstring:
 
 test-geolocation:
 	$(MAKE) --directory=geolocation
-
-svn-geolocation:
-	$(MAKE) --directory=geolocation svn
 
 test-expm:
 	$(MAKE) --directory=expm

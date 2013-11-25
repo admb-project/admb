@@ -24,18 +24,18 @@ Quick Start Visual C++
 
 2. **Download** ADMB
 
-   To get the most current code, download from directly from 
-   ADMB version control using the command below.
+       To get the most current code, download from directly from 
+       ADMB version control using the command below.
 
-       C:\> svn checkout http://www.admb-project.org/svn/trunk admb
+           C:\> svn checkout http://www.admb-project.org/svn/trunk admb
 
-   This will download admb trunk folder to _C:\admb\ _.
+       This will download admb trunk folder to _C:\admb\ _.
 
-   If **unable** to checkout, download [ADMB source distribution](download).
+       If **unable** to checkout, download [ADMB source distribution](download).
  
-   [download]: http://www.admb-project.org/buildbot/snapshots/admb-latest.zip
+       [download]: http://www.admb-project.org/buildbot/snapshots/admb-latest.zip
 
-   Double click downloaded zip file and extract to _C:\admb\ _.
+       Double click downloaded zip file and extract to _C:\admb\ _.
 
 3. Change to admb directory
 
@@ -43,21 +43,21 @@ Quick Start Visual C++
 
 4. **Build** ADMB
 
-   To build ADMB, use the commands below.
+       To build ADMB, use the commands below.
 
-       C:\admb\> nmake
+           C:\admb\> nmake
 
-   If debug symbols are needed, use the command below.
+       If debug symbols are needed, use the command below.
 
-       C:\admb\> nmake debug
+           C:\admb\> nmake debug
 
 5. **Use** ADMB
 
-   The following commands build and run the simple example.
+       The following commands build and run the simple example.
 
-       C:\admb\> cd examples\admb\simple
-       C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
-       C:\admb\examples\admb\simple\> simple.exe
+           C:\admb\> cd examples\admb\simple
+           C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
+           C:\admb\examples\admb\simple\> simple.exe
 
 6. **[OPTIONAL]** Include ADMB in system **PATH**.
 

@@ -220,6 +220,7 @@ else
 	cp ../utilities/libiconv2.dll ${DIST}/bin
 	cp ../utilities/libintl3.dll ${DIST}/bin
 	cp ../utilities/regex2.dll ${DIST}/bin
+	cp ../scripts/admb/admb ${DIST}/bin
 	cp ../scripts/admb/root-admb ../admb
 	cp ../scripts/admb/root-admb ${DIST}/admb
 	cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd

@@ -10,7 +10,8 @@ ifeq ($(OS),Windows_NT)
   else
     PWD=$(shell pwd)
     ifdef MINGW_HOME
-      PATH:=$(MINGW_HOME)/bin:$(PATH)
+      MINGW_DIR=$(shell cd $(MINGW_HOME) && pwd)
+      PATH:=$(MINGW_DIR)/bin:$(PATH)
     else
       PATH:=$(PWD)/../utilities/mingw/bin:$(PATH)
     endif
@@ -437,5 +438,8 @@ else
 endif
 
 check:
-	echo "Shell: $(SHELL)"
+	echo "SHELL: $(SHELL)"
 	echo "PATH: $(PATH)"
+	echo "PWD: $(PWD)"
+	echo "MINGW_HOME: $(MINGW_HOME)"
+	echo "MINGW_DIR: $(MINGW_DIR)"

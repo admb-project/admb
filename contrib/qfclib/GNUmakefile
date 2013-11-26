@@ -12,7 +12,7 @@ else
 endif
 
 test:
-	make --directory=tests
+	$(MAKE) --directory=tests
 
 clean:
 ifneq ($(SHELL),sh.exe)

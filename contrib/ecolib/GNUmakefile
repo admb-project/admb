@@ -13,7 +13,7 @@ endif
 
 test:
 ifneq ($(SHELL),sh.exe)
-	make --directory=tests
+	$(MAKE) --directory=tests
 endif
 
 clean:

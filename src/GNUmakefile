@@ -1,10 +1,6 @@
 ifeq ($(OS),Windows_NT)
-  ifneq (,$(findstring sh.exe,$(SHELL)))
-    ifeq ($(SHELL),sh.exe)
-      PWD=$(shell cd)
-    else
-      PWD=$(shell cmd /c cd)
-    endif
+  ifeq ($(SHELL),sh.exe)
+    PWD=$(shell cd)
     ifdef MINGW_HOME
       PATH:=$(MINGW_HOME)\bin;$(PATH)
     else

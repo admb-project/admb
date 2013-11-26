@@ -1,12 +1,22 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(SHELL),sh.exe)
-    PWD=$(shell cd)
-    ifdef MINGW_HOME
-      PATH:=$(MINGW_HOME)\bin;$(PATH)
+  ifneq (,$(findstring sh.exe,$(SHELL)))
+    ifeq ($(SHELL),sh.exe)
+      PWD=$(shell cd)
+      ifdef MINGW_HOME
+        PATH:=$(MINGW_HOME)\bin;$(PATH)
+      else
+        PATH:=$(PWD)\..\utilities\mingw\bin;$(PATH)
+      endif
+      PATH:=$(PATH);$(PWD)\..\utilities
     else
-      PATH:=$(PWD)\..\utilities\mingw\bin;$(PATH)
+      PWD=$(shell cmd /C cd)
+      ifdef MINGW_HOME
+        PATH:=$(MINGW_HOME)\bin;$(PATH)
+      else
+        PATH:=$(PWD)\..\utilities\mingw\bin;$(PATH)
+      endif
+      PATH:=$(PATH);$(PWD)\..\utilities
     endif
-    PATH:=$(PATH);$(PWD)\..\utilities
   else
     PWD=$(shell pwd)
     ifdef MINGW_HOME

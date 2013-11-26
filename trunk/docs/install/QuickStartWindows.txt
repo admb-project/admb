@@ -21,7 +21,7 @@ Quick Start Windows
 -------------------
 
 1. Open **Command Prompt** window  
-   _Note: The 16 bit Command Prompt (Command.com) is no longer support._
+       _Note: The 16 bit Command Prompt (Command.com) is no longer support._
 
 2. **Download** ADMB
 
@@ -94,10 +94,10 @@ Quick Start Windows
        2. In the **Enviroment Variables** window, click on the **New** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb\;%PATH%`.
 
        3. Click the **OK** button when done and open a new command prompt.  
-          
-        C:\admb\> cd examples\admb\simple
-        C:\admb\examples\admb\simple\> admb simple.tpl
-        C:\admb\examples\admb\simple\> simple.exe
+
+            C:\admb\> cd examples\admb\simple
+            C:\admb\examples\admb\simple\> admb simple.tpl
+            C:\admb\examples\admb\simple\> simple.exe
 
 ---
 For help and support, email <users@admb-project.org>.

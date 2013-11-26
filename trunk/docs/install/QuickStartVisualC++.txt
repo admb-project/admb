@@ -27,47 +27,45 @@ Quick Start Visual C++
        To get the most current code, download from directly from 
        ADMB version control using the command below.
 
-           C:\> svn checkout http://www.admb-project.org/svn/trunk admb
+        C:\> svn checkout http://www.admb-project.org/svn/trunk admb
 
        This will download admb trunk folder to _C:\admb\ _.
 
-       If **unable** to checkout, download [ADMB source distribution](download).
- 
-       [download]: http://www.admb-project.org/buildbot/snapshots/admb-latest.zip
+       If **unable** to checkout, download [ADMB source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest.zip).
 
        Double click downloaded zip file and extract to _C:\admb\ _.
 
 3. Change to admb directory
 
-       C:\> cd admb
+        C:\> cd admb
 
 4. **Build** ADMB
 
        To build ADMB, use the commands below.
 
-           C:\admb\> nmake
+        C:\admb\> nmake
 
        If debug symbols are needed, use the command below.
 
-           C:\admb\> nmake debug
+        C:\admb\> nmake debug
 
 5. **Use** ADMB
 
        The following commands build and run the simple example.
 
-           C:\admb\> cd examples\admb\simple
-           C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
-           C:\admb\examples\admb\simple\> simple.exe
+        C:\admb\> cd examples\admb\simple
+        C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
+        C:\admb\examples\admb\simple\> simple.exe
 
 6. **[OPTIONAL]** Include ADMB in system **PATH**.
 
-   Avoids the need the to add the prefix path to the admb script.
+       Avoids the need the to add the prefix path to the admb script.
 
-   1. In the **System Properties** window, click on the **Enviroment Variables** button.
+       1. In the **System Properties** window, click on the **Enviroment Variables** button.
 
-   2. In the **Enviroment Variables** windows, click on the **New** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb\;%PATH%`.
+       2. In the **Enviroment Variables** windows, click on the **New** button, then in the **Variable name** input type `PATH` and in the **Variable value** input type `C:\admb\;%PATH%`.
 
-   3. Click the **OK** button when done and open a new command prompt.
+       3. Click the **OK** button when done and open a new command prompt.
 
             C:\admb\> cd examples\admb\simple
             C:\admb\examples\admb\simple\> admb simple.tpl

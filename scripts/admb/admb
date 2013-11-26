@@ -17,8 +17,11 @@ Options:
  -r     Build with Random effects library (ADMB-RE).
  -f     Build with Fast optimized mode library (no bounds checking).
         By default, admb script builds with bounds checking.
- model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl extension)
- src(s) C/C++ Source file(s) containing classes, methods and variables that are used in model.
+ model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl 
+        extension)
+ src(s) C/C++ Source file(s) containing classes, methods and variables that 
+        are used in model.
+01234567890123456789012345678901234567890123456789012345678901234567890123456789
 "'
 
 if [[ "$1" == "" ]]; then help; exit; fi

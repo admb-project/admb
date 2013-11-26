@@ -327,8 +327,11 @@ echo  -g     Build with debug symbols.
 echo  -r     Build Random effects library (ADMB-RE).
 echo  -f     Build with Fast optimized mode library (no bounds checking).
 echo         By default, admb script builds with bounds checking.
-echo  model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl extension)
-echo  src(s) C/C++ Source file(s) containing classe(s), method(s) and variable(s) that are used in model.
+echo  model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl 
+             extension)
+echo  src(s) C/C++ Source file(s) containing classes, methods and variables that 
+echo         are used in model.
+     01234567890123456789012345678901234567890123456789012345678901234567890123456789
 echo.
 goto EOF
 REM r982 [2011-02-16] arnima  rewrite, fixed bug when user option is not

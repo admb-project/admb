@@ -23,6 +23,7 @@ run:
 
 clean:
 	@rm -vf cov_re.o
+	@rm -vf cov_re.obj
 	@rm -vf cov_re.cor
 	@rm -vf cov_re.bar
 	@rm -vf cov_re.luu
@@ -45,6 +46,7 @@ clean:
 	@rm -vf cov_re.rhes
 	@rm -vf cov_re_sep
 	@rm -vf cov_re_sep.o
+	@rm -vf cov_re_sep.obj
 	@rm -vf cov_re_sep.cor
 	@rm -vf cov_re_sep.rhes
 	@rm -vf cov_re_sep.bar

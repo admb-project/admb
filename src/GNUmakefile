@@ -435,3 +435,7 @@ else
 	$(MAKE) --directory=../contrib clean
 	$(MAKE) --directory=../tests clean
 endif
+
+check:
+	echo "Shell: $(SHELL)"
+	echo "PATH: $(PATH)"

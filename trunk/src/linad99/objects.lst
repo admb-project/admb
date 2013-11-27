@@ -354,7 +354,6 @@ OBJ3=\
  fvar_mat.obj\
  fvar_op2.obj\
  fvar_op3.obj\
- fvar_op4.obj\
  fvar_op5.obj\
  fvar_op7.obj\
  fvar_op8.obj\
@@ -468,6 +467,7 @@ OBJ16=\
  dmat_acc.obj\
  dmat8.obj\
  dmat32.obj\
+ fvar_op4.obj\
  f3arr12.obj\
  f3arr18.obj\
  f3arr19.obj\

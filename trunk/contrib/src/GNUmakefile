@@ -1,3 +1,7 @@
+ifeq ($(OS),Windows_NT)
+EXT=.sh
+endif
+
 all: $(PREFIX_OBJ)contrib.obj
 
 $(PREFIX_OBJ)%.obj: %.cpp
@@ -5,7 +9,7 @@ ifeq ($(SHELL),sh.exe)
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
 else
-	../../admb -c $(OPTION) $<
+	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
 endif
 
@@ -14,7 +18,7 @@ ifeq ($(SHELL),sh.exe)
 	..\..\admb $(OPTION) simple.tpl
 	simple
 else
-	../../admb $(OPTION) simple.tpl
+	../../admb$(EXT) $(OPTION) simple.tpl
 	./simple
 endif
 

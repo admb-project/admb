@@ -1,3 +1,7 @@
+ifeq ($(OS),Windows_NT)
+EXT=.sh
+endif
+
 include objects.lst
 
 all: $(addprefix $(PREFIX_OBJ), $(OBJECTS))
@@ -7,7 +11,7 @@ ifeq ($(SHELL),sh.exe)
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
 else
-	../../admb -c $(OPTION) $<
+	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
 endif
 

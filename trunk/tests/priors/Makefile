@@ -1,11 +1,9 @@
-.PHONY: tpl
 TARGET=priors
 TPL_TARGET=rat
 TPL_TARGETRE=ratre
 
 all: clean run runre
 
-#run: $(TPL_TARGET) $(TARGET)
 run: $(TPL_TARGET)
 	./$(TPL_TARGET) -nohess
 
@@ -17,9 +15,6 @@ $(TPL_TARGET): $(TPL_TARGET).tpl
 
 $(TPL_TARGETRE): $(TPL_TARGETRE).tpl
 	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=${CXXFLAGS} admb -s -r $(TPL_TARGETRE)
-
-#$(TARGET).o: $(TARGET).cpp
-#	export ADMB_HOME=$(ADMB_HOME); export PATH=$(ADMB_HOME)/bin:${PATH}; CXXFLAGS=-m32 adcomp -s ${OPTIONS} $(TARGET) 
 
 clean:
 	@rm -f eigv.rpt

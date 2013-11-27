@@ -1,9 +1,13 @@
+ifneq (,$(findstring sh.exe,$(SHELL)))
+  SHELL=cmd
+endif
+
 include objects.lst
 
 all: $(addprefix $(PREFIX_OBJ), $(OBJECTS))
 
 $(PREFIX_OBJ)%.obj: %.cpp
-ifeq ($(SHELL),sh.exe)
+ifeq ($(SHELL),cmd)
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
 else
@@ -12,12 +16,12 @@ else
 endif
 
 test:
-ifneq ($(SHELL),sh.exe)
+ifneq ($(SHELL),cmd)
 	$(MAKE) --directory=tests
 endif
 
 clean:
-ifneq ($(SHELL),sh.exe)
+ifneq ($(SHELL),cmd)
 	@rm -vf *.obj
 	@rm -vf *.o
 	@rm -vf tests/tests.log

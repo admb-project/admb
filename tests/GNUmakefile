@@ -117,8 +117,6 @@ ifeq ($(SHELL),sh.exe)
 else
 	$(MAKE) --directory=expm clean
 	$(MAKE) --directory=priors --file=Makefile clean
-endif
-	$(MAKE) --directory=geolocation clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=hysimple clean
 	$(MAKE) --directory=admb_messages clean
@@ -127,6 +125,7 @@ endif
 	$(MAKE) --directory=gmrf clean
 	$(MAKE) --directory=simple_mcmc clean
 	$(MAKE) --directory=testminmax clean
+	$(MAKE) --directory=geolocation clean
 	$(MAKE) --directory=RC04_solve clean
 	$(MAKE) --directory=RC04_det clean
 	$(MAKE) --directory=RC04_inv clean
@@ -146,3 +145,4 @@ endif
 	$(MAKE) --directory=SS3 clean
 	$(MAKE) --directory=cov_re clean
 	$(MAKE) --directory=gtests clean
+endif

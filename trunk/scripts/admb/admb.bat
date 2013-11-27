@@ -274,7 +274,8 @@ if not defined tpls (
       if not exist !main!.exe (
         goto ERROR
       )
-      goto SUCCESS
+      echo.&echo Successfully built executable '!main!.exe'.
+      goto EOF
     )
   )
 ) else (
@@ -301,15 +302,18 @@ if not defined tpls (
       if not exist !tpl!.dll (
         goto ERROR
       )
+      echo.&echo Successfully built executable '!tpl!.dll'.
+      goto SUCCESS
     ) else (
       if not exist !tpl!.exe (
         goto ERROR
       )
+      echo.&echo Successfully built executable '!tpl!.exe'.
+      goto SUCCESS
     )
   )
 )
 :SUCCESS
-echo.&echo Successfully built executable.
 goto EOF
 :ERROR
 echo.&echo Error: Unable to build executable.
@@ -325,13 +329,12 @@ echo  -c     Build only object file(s) (.obj).
 echo  -d     Build a dynamic library (.dll).
 echo  -g     Build with debug symbols.
 echo  -r     Build Random effects library (ADMB-RE).
-echo  -f     Build with Fast optimized mode library (no bounds checking).
-echo         By default, admb script builds with bounds checking.
+echo  -f     Build with Fast optimized mode library (no error checking).
+echo         By default, admb script will include error checking in the build.
 echo  model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl 
-             extension)
+echo         extension)
 echo  src(s) C/C++ Source file(s) containing classes, methods and variables that 
 echo         are used in model.
-     01234567890123456789012345678901234567890123456789012345678901234567890123456789
 echo.
 goto EOF
 REM r982 [2011-02-16] arnima  rewrite, fixed bug when user option is not

@@ -1,10 +1,14 @@
+ifeq ($(OS),Windows_NT)
+EXT=.sh
+endif
+
 ifeq ($(SHELL),sh.exe)
 ..\..\build\dist\contrib\bin\ad2csv.exe: ad2csv.cpp main.cpp
 	..\..\admb $(OPTION) $^
 	copy ad2csv.exe $@
 else
 ../../build/dist/contrib/bin/ad2csv: ad2csv.cpp main.cpp
-	../../admb $(OPTION) $^
+	../../admb$(EXT) $(OPTION) $^
 	cp ad2csv $@
 endif
 

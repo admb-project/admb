@@ -225,12 +225,12 @@ else
 	cp ../utilities/libiconv2.dll ${DIST}/bin
 	cp ../utilities/libintl3.dll ${DIST}/bin
 	cp ../utilities/regex2.dll ${DIST}/bin
-	cp ../scripts/admb/admb ${DIST}/bin
-	cp ../scripts/admb/root-admb ../admb
-	cp ../scripts/admb/root-admb ${DIST}/admb
-	@#cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd
-	@#cp ../scripts/admb/root-admb.bat ../admb.cmd
-	@#cp ../scripts/admb/root-admb.bat ${DIST}/admb.cmd
+	cp ../scripts/admb/admb ${DIST}/bin/admb.sh
+	cp ../scripts/admb/root-admb ../admb.sh
+	cp ../scripts/admb/root-admb ${DIST}/admb.sh
+	cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd
+	cp ../scripts/admb/root-admb.bat ../admb.cmd
+	cp ../scripts/admb/root-admb.bat ${DIST}/admb.cmd
   else
 	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
 	cp ../scripts/admb/admb ${DIST}/bin

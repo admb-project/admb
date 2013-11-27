@@ -1,3 +1,7 @@
+ifeq ($(OS),Windows_NT)
+EXT=.sh
+endif
+
 all: $(addprefix $(PREFIX_OBJ), gdbprintlib.obj)
 
 $(PREFIX_OBJ)%.obj: %.cpp
@@ -5,7 +9,7 @@ ifeq ($(SHELL),sh.exe)
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
 else
-	../../admb -c $(OPTION) $<
+	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
 endif
 

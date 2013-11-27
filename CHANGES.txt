@@ -28,6 +28,11 @@ ADMB-dev
 * Fixed compilers warnings.
 * Add more checks in admb scripts to test for errors.
 * Added Quickstart*.txt markup documentation for building and using ADMB.
+* User interface: Windows admb bash script has a .sh extension to avoid 
+  conflict with batch file.  So in MinGW or Cygwin shell, user will need
+  to use 
+  
+    [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple
 
 ####New Supported Compilers
 
@@ -81,7 +86,7 @@ ADMB-dev
 
   Both commands below will only build simple.o and mysource.o compiled object files.  
   The model application will not be built. 
-  
+
   For Unix, 
       
       [~/admb/example/admb/simple/]$ ~/admb/admb -c simple.tpl mysource.cpp
@@ -89,6 +94,8 @@ ADMB-dev
   For Windows, 
   
       C:\admb\example\admb\simple\> C:\admb\admb -c simple.tpl mysource.cpp
+
+  _Note: This is the almost the same as using adcomp mysource._
 
 ####To Do
 

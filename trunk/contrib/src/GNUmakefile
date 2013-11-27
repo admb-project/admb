@@ -1,11 +1,7 @@
-ifneq (,$(findstring sh.exe,$(SHELL)))
-  SHELL=cmd
-endif
-
 all: $(PREFIX_OBJ)contrib.obj
 
 $(PREFIX_OBJ)%.obj: %.cpp
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
 else
@@ -14,7 +10,7 @@ else
 endif
 
 test:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	..\..\admb $(OPTION) simple.tpl
 	simple
 else
@@ -23,7 +19,7 @@ else
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	del contrib.obj
 	del contrib.o
 	del simple.obj

@@ -1,8 +1,4 @@
-ifneq (,$(findstring sh.exe,$(SHELL)))
-  SHELL=cmd
-endif
-
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 ..\..\build\dist\contrib\bin\ad2csv.exe: ad2csv.cpp main.cpp
 	..\..\admb $(OPTION) $^
 	copy ad2csv.exe $@
@@ -13,7 +9,7 @@ else
 endif
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	del ad2csv ad2csv.exe main.obj ad2csv.obj
 	del main.o ad2csv.o
 else

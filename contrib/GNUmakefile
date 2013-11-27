@@ -1,11 +1,10 @@
-ifneq (,$(findstring sh.exe,$(SHELL)))
+ifeq ($(SHELL),sh.exe)
   OBJSDIR=..\..\build\objects\dist
   OBJSDIR:=$(addsuffix \,$(OBJSDIR))
   ifndef DIST
     DIST=..\build\dist
   endif
   CONTRIBDIR=$(addsuffix \contrib\,$(DIST))
-  SHELL=cmd
 else
   OBJSDIR=../../build/objects/dist
   OBJSDIR:=$(addsuffix /,$(OBJSDIR))
@@ -18,7 +17,7 @@ endif
 all: libs build-ad2csv
 
 libs: build-gdbprintlib build-statslib build-ecolib build-qfclib build-src
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	$(AR) -rs $(CONTRIBDIR)lib\libcontrib.a ..\build\objects\dist\saflp-contrib-*.obj
 	$(AR) -rs $(CONTRIBDIR)lib\libcontribo.a ..\build\objects\dist\optlp-contrib-*.obj
 else
@@ -29,7 +28,7 @@ endif
 build-gdbprintlib:
 	$(MAKE) --directory=gdbprintlib PREFIX_OBJ=$(OBJSDIR)saflp-contrib-gdbprintlib-
 	$(MAKE) --directory=gdbprintlib PREFIX_OBJ=$(OBJSDIR)optlp-contrib-gdbprintlib-
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	copy gdbprintlib\gdbprintlib.h $(CONTRIBDIR)include
 else
 	cp gdbprintlib/gdbprintlib.h $(CONTRIBDIR)include
@@ -38,7 +37,7 @@ endif
 build-statslib:
 	$(MAKE) --directory=statslib PREFIX_OBJ=$(OBJSDIR)saflp-contrib-statslib-
 	$(MAKE) --directory=statslib OPTION=-f PREFIX_OBJ=$(OBJSDIR)optlp-contrib-statslib-
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	copy statslib\statsLib.h $(CONTRIBDIR)include
 else
 	cp statslib/statsLib.h $(CONTRIBDIR)include
@@ -47,7 +46,7 @@ endif
 build-ecolib:
 	$(MAKE) --directory=ecolib PREFIX_OBJ=$(OBJSDIR)saflp-contrib-ecolib-
 	$(MAKE) --directory=ecolib OPTION=-f PREFIX_OBJ=$(OBJSDIR)optlp-contrib-ecolib-
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	copy ecolib\ecolib.h $(CONTRIBDIR)include
 else
 	cp ecolib/ecolib.h $(CONTRIBDIR)include
@@ -56,7 +55,7 @@ endif
 build-qfclib:
 	$(MAKE) --directory=qfclib PREFIX_OBJ=$(OBJSDIR)saflp-contrib-qfclib-
 	$(MAKE) --directory=qfclib OPTION=-f PREFIX_OBJ=$(OBJSDIR)optlp-contrib-qfclib-
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	copy qfclib\qfclib.h $(CONTRIBDIR)include
 else
 	cp qfclib/qfclib.h $(CONTRIBDIR)include
@@ -71,7 +70,7 @@ build-admb2r:
 build-src:
 	$(MAKE) --directory=src OPTION=-f PREFIX_OBJ=$(OBJSDIR)optlp-contrib-
 	$(MAKE) --directory=src PREFIX_OBJ=$(OBJSDIR)saflp-contrib-
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	copy src\contrib.h $(CONTRIBDIR)include
 else
 	cp src/contrib.h $(CONTRIBDIR)include

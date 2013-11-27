@@ -1,11 +1,7 @@
-ifneq (,$(findstring sh.exe,$(SHELL)))
-  SHELL=cmd
-endif
-
 all: $(addprefix $(PREFIX_OBJ), gdbprintlib.obj)
 
 $(PREFIX_OBJ)%.obj: %.cpp
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
 else
@@ -16,7 +12,7 @@ endif
 test:
 
 clean:
-ifeq ($(SHELL),cmd)
+ifeq ($(SHELL),sh.exe)
 	del gdbprintlib.obj
 	del gdbprintlib.o
 else

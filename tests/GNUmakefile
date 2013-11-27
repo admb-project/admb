@@ -116,9 +116,9 @@ ifeq ($(SHELL),sh.exe)
 	$(MAKE) --directory=expm --file=Makefile clean
 else
 	$(MAKE) --directory=expm clean
+	$(MAKE) --directory=priors --file=Makefile clean
 endif
 	$(MAKE) --directory=geolocation clean
-	$(MAKE) --directory=priors clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=hysimple clean
 	$(MAKE) --directory=admb_messages clean

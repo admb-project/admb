@@ -106,14 +106,12 @@ OBJECTS:=$(OBJECTS) $(addprefix optlp-tools99-,$(OBJ7)) $(addprefix saflp-tools9
 OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
 
 all: revision dist contrib
-	$(MAKE) --directory=../contrib build-ad2csv
 	@echo ADMB build completed.
 	@echo For installation, check README.txt.
 
 shared: includes objects
 	$(CXX) -shared -o${DIST}/lib/libadmb.so ../build/objects/dist/saflp-*.obj
 	$(CXX) -shared -o${DIST}/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
-	$(MAKE) --directory=../contrib build-ad2csv
 	@echo ADMB shared build completed.
 	@echo For installation, check README.txt.
 
@@ -227,9 +225,9 @@ else
 	cp ../utilities/libiconv2.dll ${DIST}/bin
 	cp ../utilities/libintl3.dll ${DIST}/bin
 	cp ../utilities/regex2.dll ${DIST}/bin
-	cp ../scripts/admb/admb ${DIST}/bin
-	cp ../scripts/admb/root-admb ../admb
-	cp ../scripts/admb/root-admb ${DIST}/admb
+	@#cp ../scripts/admb/admb ${DIST}/bin
+	@#cp ../scripts/admb/root-admb ../admb
+	@#cp ../scripts/admb/root-admb ${DIST}/admb
 	cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd
 	cp ../scripts/admb/root-admb.bat ../admb.cmd
 	cp ../scripts/admb/root-admb.bat ${DIST}/admb.cmd

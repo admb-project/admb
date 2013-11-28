@@ -4,15 +4,17 @@ endif
 
 include objects.lst
 
-all: $(addprefix $(PREFIX_OBJ), $(OBJECTS))
+all: $(addprefix $(PREFIX), $(OBJECTS))
 
-$(PREFIX_OBJ)%.obj: %.cpp
+$(PREFIX)%.obj: %.cpp
 ifeq ($(SHELL),sh.exe)
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
+	copy ecolib.h $(CONTRIB_DIR)\include
 else
 	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
+	cp ecolib.h $(CONTRIB_DIR)/include
 endif
 
 test:

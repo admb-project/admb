@@ -2,15 +2,17 @@ ifeq ($(OS),Windows_NT)
 EXT=.sh
 endif
 
-all: $(PREFIX_OBJ)contrib.obj
+all: $(PREFIX)contrib.obj
 
-$(PREFIX_OBJ)%.obj: %.cpp
+$(PREFIX)%.obj: %.cpp
 ifeq ($(SHELL),sh.exe)
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
+	copy contrib.h $(CONTRIB_DIR)\include
 else
 	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
+	cp contrib.h $(CONTRIB_DIR)/include
 endif
 
 test:

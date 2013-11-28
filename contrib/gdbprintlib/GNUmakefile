@@ -2,15 +2,19 @@ ifeq ($(OS),Windows_NT)
 EXT=.sh
 endif
 
-all: $(addprefix $(PREFIX_OBJ), gdbprintlib.obj)
+OBJECTS=$(addprefix $(PREFIX), gdbprintlib.obj)
 
-$(PREFIX_OBJ)%.obj: %.cpp
+all: $(OBJECTS)
+
+$(PREFIX)%.obj: %.cpp
 ifeq ($(SHELL),sh.exe)
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
+	copy gdbprintlib.h $(CONTRIB_DIR)\include
 else
 	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
+	cp gdbprintlib.h $(CONTRIB_DIR)/include
 endif
 
 test:

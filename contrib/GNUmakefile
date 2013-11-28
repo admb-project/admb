@@ -1,80 +1,54 @@
 ifeq ($(SHELL),sh.exe)
-  OBJSDIR=..\..\build\objects\dist
-  OBJSDIR:=$(addsuffix \,$(OBJSDIR))
+  OBJS_DIR=..\..\build\objects\dist
+  OBJS_DIR:=$(addsuffix \,$(OBJS_DIR))
+  OBJS_DIR2=..\build\objects\dist
+  OBJS_DIR2:=$(addsuffix \,$(OBJS_DIR2))
   ifndef DIST
     DIST=..\build\dist
   endif
-  CONTRIBDIR=$(addsuffix \contrib\,$(DIST))
+  CONTRIB_DIR=..\$(addsuffix \contrib,$(DIST))
+  CONTRIB_LIB=$(addsuffix \contrib\lib\,$(DIST))
 else
-  OBJSDIR=../../build/objects/dist
-  OBJSDIR:=$(addsuffix /,$(OBJSDIR))
+  OBJS_DIR=../../build/objects/dist/
+  OBJS_DIR2=../build/objects/dist/
   ifndef DIST
     DIST=../build/dist
   endif
-  CONTRIBDIR=$(addsuffix /contrib/,$(DIST))
+  CONTRIB_DIR=../$(addsuffix /contrib,$(DIST))
+  CONTRIB_LIB=$(addsuffix /contrib/lib/,$(DIST))
 endif
 
-all: libs build-ad2csv
+all: libs contrib-ad2csv
 
-libs: build-gdbprintlib build-statslib build-ecolib build-qfclib build-src
-ifeq ($(SHELL),sh.exe)
-	$(AR) -rs $(CONTRIBDIR)lib\libcontrib.a ..\build\objects\dist\saflp-contrib-*.obj
-	$(AR) -rs $(CONTRIBDIR)lib\libcontribo.a ..\build\objects\dist\optlp-contrib-*.obj
-else
-	$(AR) -rs $(CONTRIBDIR)lib/libcontrib.a ../build/objects/dist/saflp-contrib-*.obj
-	$(AR) -rs $(CONTRIBDIR)lib/libcontribo.a ../build/objects/dist/optlp-contrib-*.obj
-endif
+libs: contrib-gdbprintlib contrib-statslib contrib-ecolib contrib-qfclib contrib-src
+	$(AR) -rs $(CONTRIB_LIB)libcontrib.a $(OBJS_DIR2)saflp-contrib-*.obj
+	$(AR) -rs $(CONTRIB_LIB)libcontribo.a $(OBJS_DIR2)optlp-contrib-*.obj
 
-build-gdbprintlib:
-	$(MAKE) --directory=gdbprintlib PREFIX_OBJ=$(OBJSDIR)saflp-contrib-gdbprintlib-
-	$(MAKE) --directory=gdbprintlib PREFIX_OBJ=$(OBJSDIR)optlp-contrib-gdbprintlib-
-ifeq ($(SHELL),sh.exe)
-	copy gdbprintlib\gdbprintlib.h $(CONTRIBDIR)include
-else
-	cp gdbprintlib/gdbprintlib.h $(CONTRIBDIR)include
-endif
+contrib-gdbprintlib:
+	$(MAKE) --directory=gdbprintlib PREFIX=$(OBJS_DIR)saflp-$@- CONTRIB_DIR=$(CONTRIB_DIR)
+	$(MAKE) --directory=gdbprintlib OPTION=-f PREFIX=$(OBJS_DIR)optlp-$@- CONTRIB_DIR=$(CONTRIB_DIR)
 
-build-statslib:
-	$(MAKE) --directory=statslib PREFIX_OBJ=$(OBJSDIR)saflp-contrib-statslib-
-	$(MAKE) --directory=statslib OPTION=-f PREFIX_OBJ=$(OBJSDIR)optlp-contrib-statslib-
-ifeq ($(SHELL),sh.exe)
-	copy statslib\statsLib.h $(CONTRIBDIR)include
-else
-	cp statslib/statsLib.h $(CONTRIBDIR)include
-endif
+contrib-statslib:
+	$(MAKE) --directory=statslib PREFIX=$(OBJS_DIR)saflp-$@- CONTRIB_DIR=$(CONTRIB_DIR)
+	$(MAKE) --directory=statslib OPTION=-f PREFIX=$(OBJS_DIR)optlp-$@- CONTRIB_DIR=$(CONTRIB_DIR)
 
-build-ecolib:
-	$(MAKE) --directory=ecolib PREFIX_OBJ=$(OBJSDIR)saflp-contrib-ecolib-
-	$(MAKE) --directory=ecolib OPTION=-f PREFIX_OBJ=$(OBJSDIR)optlp-contrib-ecolib-
-ifeq ($(SHELL),sh.exe)
-	copy ecolib\ecolib.h $(CONTRIBDIR)include
-else
-	cp ecolib/ecolib.h $(CONTRIBDIR)include
-endif
+contrib-ecolib:
+	$(MAKE) --directory=ecolib PREFIX=$(OBJS_DIR)saflp-$@- CONTRIB_DIR=$(CONTRIB_DIR)
+	$(MAKE) --directory=ecolib OPTION=-f PREFIX=$(OBJS_DIR)optlp-$@- CONTRIB_DIR=$(CONTRIB_DIR)
 
-build-qfclib:
-	$(MAKE) --directory=qfclib PREFIX_OBJ=$(OBJSDIR)saflp-contrib-qfclib-
-	$(MAKE) --directory=qfclib OPTION=-f PREFIX_OBJ=$(OBJSDIR)optlp-contrib-qfclib-
-ifeq ($(SHELL),sh.exe)
-	copy qfclib\qfclib.h $(CONTRIBDIR)include
-else
-	cp qfclib/qfclib.h $(CONTRIBDIR)include
-endif
+contrib-qfclib:
+	$(MAKE) --directory=qfclib PREFIX=$(OBJS_DIR)saflp-$@- CONTRIB_DIR=$(CONTRIB_DIR)
+	$(MAKE) --directory=qfclib OPTION=-f PREFIX=$(OBJS_DIR)optlp-$@- CONTRIB_DIR=$(CONTRIB_DIR)
 
-build-ad2csv:
-	$(MAKE) --directory=ad2csv
+contrib-src:
+	$(MAKE) --directory=src PREFIX=$(OBJS_DIR)saflp-$@- CONTRIB_DIR=$(CONTRIB_DIR)
+	$(MAKE) --directory=src OPTION=-f PREFIX=$(OBJS_DIR)optlp-$@- CONTRIB_DIR=$(CONTRIB_DIR)
+
+contrib-ad2csv:
+	$(MAKE) --directory=ad2csv OPTION=-f
 
 build-admb2r:
 	$(MAKE) --directory=admb2r ADMB_HOME="$(ADMB_HOME)" gcc
-
-build-src:
-	$(MAKE) --directory=src OPTION=-f PREFIX_OBJ=$(OBJSDIR)optlp-contrib-
-	$(MAKE) --directory=src PREFIX_OBJ=$(OBJSDIR)saflp-contrib-
-ifeq ($(SHELL),sh.exe)
-	copy src\contrib.h $(CONTRIBDIR)include
-else
-	cp src/contrib.h $(CONTRIBDIR)include
-endif
 
 test:
 	$(MAKE) --directory=src test 

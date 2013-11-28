@@ -15,23 +15,18 @@ if ERRORLEVEL 1 (
   goto EOF
 )
 
-if defined ADMB_HOME (
-  set ADMB_HOME=
-)
-if defined ADMB_HOME (
-  echo "Error: Unable to unset ADMB_HOME=!ADMB_HOME!."
-  goto EOF
-)
-for %%a in (%0) do (
-  set HAS_PATH=%%~$PATH:a
-  if defined HAS_PATH (
-    set ADMB_PATH="%%~dp$PATH:a"
-  ) else (
-    set ADMB_PATH="%%~dpa"
+if not defined ADMB_HOME (
+  for %%a in (%0) do (
+    set HAS_PATH=%%~$PATH:a
+    if defined HAS_PATH (
+      set ADMB_PATH="%%~dp$PATH:a"
+    ) else (
+      set ADMB_PATH="%%~dpa"
+    )
+    pushd !ADMB_PATH!\..
+    set ADMB_HOME=!CD!
+    popd
   )
-  pushd !ADMB_PATH!\..
-  set ADMB_HOME=!CD!
-  popd
 )
 if not defined ADMB_HOME (
   echo "Error: ADMB_HOME is not defined."
@@ -141,7 +136,7 @@ if not defined LL (
     set LL=dllwrap
   )
 )
-if defined debug (
+if defined g (
   set CXXFLAGS=!CXXFLAGS! -g
   set LDFLAGS=!LDFLAGS! -s
 ) else (

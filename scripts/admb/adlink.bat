@@ -16,4 +16,4 @@ for %%a in (%*) do (
     )
   )
 )
-call admb $args
+call admb !args!

@@ -1,7 +1,7 @@
 @echo off
-@REM 
+@REM
 @REM  Copyright 2013 (c) ADMB Foundation
-@REM 
+@REM
 
 setlocal EnableExtensions EnableDelayedExpansion
 

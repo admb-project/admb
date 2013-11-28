@@ -35,7 +35,7 @@ SAFLP_TOOLS99_OBJS=$(OBJ7: = ..\build\objects\dist\saflp-tools99-)
 all: dist bins contrib
 	pushd $(DESTDIR) & cscript ..\..\scripts\create-admb-shortcut.vbs & popd
 	@echo ADMB build completed.
-	@echo For installation, check README.txt.
+	@echo Check README.txt for usage and installation information.
 
 dist: srcs
 

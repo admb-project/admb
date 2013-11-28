@@ -9,7 +9,7 @@ do
   if [ "-" = "${arg:0:1}" ]; then
     args="$args $arg"
   elif [ "$extension" = "$arg" ]; then
-    args="$args ${arg}.obj
+    args="$args ${arg}.obj"
   else
     args="$args $arg"
   fi

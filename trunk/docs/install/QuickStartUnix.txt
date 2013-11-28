@@ -62,13 +62,19 @@ Quick Start Unix
            [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
            [~/admb/examples/admb/simple/]$ ./simple
 
+       For MinGW and Cygwin shells, use the admb.sh script.
+
+           [~/admb/]$ cd examples/admb/simple
+           [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
+           [~/admb/examples/admb/simple/]$ ./simple
+
 6. **[OPTIONAL]** Installation
 
        Avoids the need the to include path with the admb script.
 
-       Copy entire distribution folder.
+       Copy built binary distribution folder.
 
-           [~]$ sudo cp -Rvf admb /usr/local/admb
+           [~]$ sudo cp -Rvf admb/build/dist  /usr/local/admb
 
        Create symlink to main admb script.  Directory _/usr/local/bin/_ should already exist.
 

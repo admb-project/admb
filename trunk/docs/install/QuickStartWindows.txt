@@ -60,6 +60,9 @@ Quick Start Windows
 
 5. **Build** ADMB
 
+       If MinGW was installed, set the system enviromental variable 
+       to the directory location  (ie MINGW_HOME=C:\MinGW).
+
        If MinGW was installed with _get-mingw.bat_, use the command below.
 
         C:\admb\> utilities\make
@@ -67,15 +70,6 @@ Quick Start Windows
        If debug symbols are needed, use the command below.
 
         C:\admb\> utilities\make debug
-
-       If MinGW was installed, but was not added to the system PATH. Use the command below
-       to set MINGW_HOME to the directory location.
-
-        C:\admb\> utilities\make MINGW_HOME=C:\MinGW
-
-       If debug symbols are needed, use the command below.
-
-        C:\admb\> utilities\make MINGW_HOME=C:\MinGW debug
 
 6. **Use** ADMB
  

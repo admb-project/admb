@@ -107,13 +107,13 @@ OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
 
 all: revision dist contrib
 	@echo ADMB build completed.
-	@echo For installation, check README.txt.
+	@echo Check README.txt for usage and installation information.
 
 shared: includes objects
 	$(CXX) -shared -o${DIST}/lib/libadmb.so ../build/objects/dist/saflp-*.obj
 	$(CXX) -shared -o${DIST}/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
 	@echo ADMB shared build completed.
-	@echo For installation, check README.txt.
+	@echo Check README.txt for usage and installation information.
 
 revision:
 ifeq ($(SHELL),sh.exe)
@@ -209,6 +209,8 @@ ifeq ($(SHELL),sh.exe)
 	copy ..\scripts\admb\admb.bat ${DIST}\bin\admb.cmd
 	copy ..\scripts\admb\root-admb.bat ..\admb.cmd
 	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd
+	copy ..\scripts\admb\adlink.bat ${DIST}\bin\adlink.cmd
+	copy ..\scripts\admb\adcomp.bat ${DIST}\bin\adcomp.cmd
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=..\${DIST} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DIST=..\${DIST} bins
 else
@@ -221,6 +223,7 @@ else
 	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">>${DIST}/bin/admb-cfg.sh
   ifeq ($(OS),Windows_NT)
 	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
+	echo "MINGW_HOME=\"$(MINGW_HOME)\"">>${DIST}/bin/admb-cfg.sh
 	cp ../utilities/sed.exe ${DIST}/bin
 	cp ../utilities/libiconv2.dll ${DIST}/bin
 	cp ../utilities/libintl3.dll ${DIST}/bin
@@ -228,11 +231,16 @@ else
 	cp ../scripts/admb/admb ${DIST}/bin/admb.sh
 	cp ../scripts/admb/root-admb ../admb.sh
 	cp ../scripts/admb/root-admb ${DIST}/admb.sh
+	cp ../scripts/admb/adcomp ${DIST}/bin/adcomp.sh
+	cp ../scripts/admb/adlink ${DIST}/bin/adlink.sh
 	cp ../scripts/admb/admb.bat ${DIST}/bin/admb.cmd
 	cp ../scripts/admb/root-admb.bat ../admb.cmd
 	cp ../scripts/admb/root-admb.bat ${DIST}/admb.cmd
+	cp ../scripts/admb/adcomp.bat ${DIST}/bin/adcomp.cmd
+	cp ../scripts/admb/adlink.bat ${DIST}/bin/adlink.cmd
   else
 	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
+	echo "MINGW_HOME=\"$(MINGW_HOME)\"">>${DIST}/bin/admb-cfg.sh
 	cp ../scripts/admb/admb ${DIST}/bin
 	cp ../scripts/admb/adlink ${DIST}/bin
 	cp ../scripts/admb/adcomp ${DIST}/bin
@@ -246,11 +254,7 @@ endif
 docs:
 
 docs2:
-ifeq ($(SHELL),sh.exe)
-	$(MAKE) --directory=..\docs
-else
-	$(MAKE) --directory=../docs
-endif
+	$(MAKE) --directory=docs
 
 includes:
 ifeq ($(SHELL),sh.exe)

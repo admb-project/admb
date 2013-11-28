@@ -326,9 +326,9 @@ echo  -g     Build with debug symbols.
 echo  -r     Build Random effects library (ADMB-RE).
 echo  -f     Build with Fast optimized mode library (no error checking).
 echo         By default, admb script will include error checking in the build.
-echo  model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl 
+echo  model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl
 echo         extension)
-echo  src(s) C/C++ Source file(s) containing classes, methods and variables that 
+echo  src(s) C/C++ Source file(s) containing classes, methods and variables that
 echo         are used in model.
 echo.
 goto EOF

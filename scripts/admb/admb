@@ -17,9 +17,9 @@ Options:
  -r     Build with Random effects library (ADMB-RE).
  -f     Build with Fast optimized mode library (no bounds checking).
         By default, admb script builds with bounds checking.
- model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl 
+ model  TPL file (ie 'simple.tpl' or the filename 'simple' with no .tpl
         extension)
- src(s) C/C++ Source file(s) containing classes, methods and variables that 
+ src(s) C/C++ Source file(s) containing classes, methods and variables that
         are used in model.
 "'
 
@@ -34,7 +34,7 @@ fi
 
 FILE=$0
 DIRECTORY=$(cd `dirname $FILE` && pwd)
-while [ -h "${FILE}" ]; do 
+while [ -h "${FILE}" ]; do
   pushd $DIRECTORY &> /dev/null
   FILE=$(readlink $DIRECTORY/admb)
   DIRECTORY=$(cd `dirname $FILE` && pwd)
@@ -48,7 +48,7 @@ PATH=$ADMB_HOME/bin:$PATH
 # Pop args until model=$1
 unset dll
 unset debug
-unset parser 
+unset parser
 unset library
 unset compileonly
 dll=
@@ -59,24 +59,24 @@ compileonly=
 output=
 while getopts "dgrsfco:" A; do
   case $A in
-    d) 
+    d)
        dll=-dll
        ;;
-    g) 
+    g)
        debug=-debug
        ;;
-    r) 
+    r)
        parser=tpl2rem
        ;;
     s)
        ;;
-    f) 
+    f)
        library=opt
        ;;
-    c) 
+    c)
        compileonly=yes
        ;;
-    o) 
+    o)
        output="$OPTARG"
        ;;
     *)
@@ -107,10 +107,10 @@ do
     nontpls="$nontpls $file"
   fi
 done
-if [ -z "$tpls" ]; then 
-  if [ -z "$srcs" ]; then 
-    if [ -z "$objs" ]; then 
-      if [ -z "$nontpls" ]; then 
+if [ -z "$tpls" ]; then
+  if [ -z "$srcs" ]; then
+    if [ -z "$objs" ]; then
+      if [ -z "$nontpls" ]; then
         echo -e "Error: Nothing to build."
         exit 1
       fi
@@ -160,8 +160,8 @@ do
     exit 1
   fi
 
-  rm -vf classdef.tmp xxdata.tmp xxhtop.tmp xxhtopm.tmp xxglobal.tmp xxtopm.tmp 
-  rm -vf xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp 
+  rm -vf classdef.tmp xxdata.tmp xxhtop.tmp xxhtopm.tmp xxglobal.tmp xxtopm.tmp
+  rm -vf xxalloc.tmp xxalloc1.tmp xxalloc2.tmp xxalloc3.tmp xxalloc4.tmp xxalloc5.tmp xxalloc6.tmp header.tmp
   rm -vf tfile1 tfile2 tfile3 tfile4 tfile5
   rm -f $model.cpp $model.htp $model.obj $model.o $model
 
@@ -224,7 +224,7 @@ if [ ! -z "$compileonly" ]; then
   fi
   echo -e "\\nCompiled $objects.\\n"
   exit 0
-fi 
+fi
 
 for file in $tplobjs
 do
@@ -246,8 +246,8 @@ do
   fi
   echo -e \\n\*\*\* Linking $file $objs:\\n$CMD
   eval $CMD
-  if [[ -z $dll ]]; then 
-    if [[ ! -f $model ]]; then 
+  if [[ -z $dll ]]; then
+    if [[ ! -f $model ]]; then
         echo -e "\\nError: Could not build $model\\n"
         exit 1
     fi
@@ -293,8 +293,8 @@ if [[ "$tplobjs" == "" ]]; then
   eval $CMD
 
   if [ ! -z  "$output" ]; then
-    if [[ -z $dll ]]; then 
-      if [[ ! -f $output ]]; then 
+    if [[ -z $dll ]]; then
+      if [[ ! -f $output ]]; then
         echo -e "\\nError: Could not build $output\\n"
         exit 1
       fi
@@ -308,8 +308,8 @@ if [[ "$tplobjs" == "" ]]; then
     declare -a amodel=( $listobjs )
     m=${amodel[0]}
     m2=${m%.*}
-    if [[ -z $dll ]]; then 
-      if [[ ! -f $m2 ]]; then 
+    if [[ -z $dll ]]; then
+      if [[ ! -f $m2 ]]; then
         echo -e "\\nError: Could not build $m2\\n"
         exit 1
       fi

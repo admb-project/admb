@@ -6,9 +6,9 @@
 #
 shopt -s expand_aliases
 alias help='echo -e "
-Builds AD Model Builder executable or library.\n
+Builds AD Model Builder executable or library.
 
-Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]\n
+Usage: admb [-c] [-d] [-g] [-r] [-f] model [src(s)]
 
 Options:
  -c     Build only object file(s) (.obj).
@@ -21,7 +21,6 @@ Options:
         extension)
  src(s) C/C++ Source file(s) containing classes, methods and variables that 
         are used in model.
-01234567890123456789012345678901234567890123456789012345678901234567890123456789
 "'
 
 if [[ "$1" == "" ]]; then help; exit; fi
@@ -108,6 +107,16 @@ do
     nontpls="$nontpls $file"
   fi
 done
+if [ -z "$tpls" ]; then 
+  if [ -z "$srcs" ]; then 
+    if [ -z "$objs" ]; then 
+      if [ -z "$nontpls" ]; then 
+        echo -e "Error: Nothing to build."
+        exit 1
+      fi
+    fi
+  fi
+fi
 if [ -f "$ADMB_HOME/bin/admb-cfg.sh" ]; then
   source "$ADMB_HOME/bin/admb-cfg.sh"
   CXX=$ADMB_CFG_CXX

@@ -109,8 +109,8 @@ if defined LDFLAGS (
 ) else (
   set LDFLAGS= -static
 )
-if exist "!ADMB_HOME!"\bin\admb-cfg.bat (
-  call "!ADMB_HOME!"\bin\admb-cfg.bat
+if exist !ADMB_HOME!bin\admb-cfg.bat (
+  call !ADMB_HOME!bin\admb-cfg.bat
   if defined ADMB_CFG_CXXFLAGS (
     set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
   )
@@ -144,19 +144,19 @@ if defined g (
 )
 if defined fast (
   set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
-  set libs="%ADMB_HOME%"\contrib\lib\libcontribo.a "%ADMB_HOME%"\lib\libadmbo.a
+  set libs=!ADMB_HOME!contrib\lib\libcontribo.a !ADMB_HOME!lib\libadmbo.a
 ) else (
   set CXXFLAGS=!CXXFLAGS! -DSAFE_ALL
-  set libs="%ADMB_HOME%"\contrib\lib\libcontrib.a "%ADMB_HOME%"\lib\libadmb.a
+  set libs=!ADMB_HOME!contrib\lib\libcontrib.a !ADMB_HOME!lib\libadmb.a
 )
 if defined d (
   set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
 )
-set CXXFLAGS=!CXXFLAGS! -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -fpermissive -I. -I"!ADMB_HOME!"\include -I"!ADMB_HOME!"\contrib\include
+set CXXFLAGS=!CXXFLAGS! -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -fpermissive -I. -I!ADMB_HOME!include -I!ADMB_HOME!contrib\include
 if defined MINGW_HOME (
-  set PATH=!ADMB_HOME!\bin;!MINGW_HOME!\bin;!PATH!
+  set PATH=!ADMB_HOME!bin;!MINGW_HOME!\bin;!PATH!
 ) else (
-  set PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!
+  set PATH=!ADMB_HOME!bin;!ADMB_HOME!utilities\mingw\bin;!PATH!
 )
 if not defined tpls (
   if not defined srcs (

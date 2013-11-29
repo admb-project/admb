@@ -1,31 +1,22 @@
 ifeq ($(OS),Windows_NT)
-  ifneq (,$(findstring sh.exe,$(SHELL)))
-    ifeq ($(SHELL),sh.exe)
-      PWD=$(shell cd)
-      ifdef MINGW_HOME
-        PATH:=$(MINGW_HOME)\bin;$(PATH)
-      else
-        PATH:=$(PWD)\..\utilities\mingw\bin;$(PATH)
-      endif
-      PATH:=$(PATH);$(PWD)\..\utilities
+  ifeq ($(SHELL),sh.exe)
+    MYPWD=$(shell cd)
+    ifdef MINGW_HOME
+      PATH:=$(MINGW_HOME)\bin;$(PATH)
     else
-      PWD=$(shell cmd /C cd)
-      ifdef MINGW_HOME
-        PATH:=$(MINGW_HOME)\bin;$(PATH)
-      else
-        PATH:=$(PWD)\..\utilities\mingw\bin;$(PATH)
-      endif
-      PATH:=$(PATH);$(PWD)\..\utilities
+      PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH)
     endif
+    PATH:=$(PATH);$(MYPWD)\..\utilities
   else
-    PWD=$(shell pwd)
     ifdef MINGW_HOME
       MINGW_DIR=$(shell cd $(MINGW_HOME) && pwd)
       PATH:=$(MINGW_DIR)/bin:$(PATH)
-    else
-      PATH:=$(PWD)/../utilities/mingw/bin:$(PATH)
     endif
-    PATH:=$(PATH):$(PWD)/../utilities
+    MYPWD=$(shell pwd)
+    ifneq ($(TERM),xterm)
+      PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
+    endif
+    PATH:=$(PATH):$(MYPWD)/../utilities
   endif
 endif
 
@@ -201,7 +192,6 @@ ifeq ($(SHELL),sh.exe)
 	echo set ADMB_CFG_CXX=$(USER_CXX)>${DIST}\bin\admb-cfg.bat
 	echo set ADMB_CFG_CXXFLAGS=$(USER_CXXFLAGS)>>${DIST}\bin\admb-cfg.bat
 	echo set ADMB_CFG_LDFLAGS=$(USER_LDFLAGS)>>${DIST}\bin\admb-cfg.bat
-	echo set MINGW_HOME=$(MINGW_HOME)>>${DIST}\bin\admb-cfg.bat
 	copy ..\utilities\sed.exe ${DIST}\bin
 	copy ..\utilities\libiconv2.dll ${DIST}\bin
 	copy ..\utilities\libintl3.dll ${DIST}\bin
@@ -223,7 +213,6 @@ else
 	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">>${DIST}/bin/admb-cfg.sh
   ifeq ($(OS),Windows_NT)
 	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
-	echo "MINGW_HOME=\"$(MINGW_HOME)\"">>${DIST}/bin/admb-cfg.sh
 	cp ../utilities/sed.exe ${DIST}/bin
 	cp ../utilities/libiconv2.dll ${DIST}/bin
 	cp ../utilities/libintl3.dll ${DIST}/bin
@@ -240,7 +229,6 @@ else
 	cp ../scripts/admb/adlink.bat ${DIST}/bin/adlink.cmd
   else
 	echo "ADMB_CFG_LDFLAGS=\"$(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
-	echo "MINGW_HOME=\"$(MINGW_HOME)\"">>${DIST}/bin/admb-cfg.sh
 	cp ../scripts/admb/admb ${DIST}/bin
 	cp ../scripts/admb/adlink ${DIST}/bin
 	cp ../scripts/admb/adcomp ${DIST}/bin
@@ -453,5 +441,4 @@ check:
 	echo "SHELL: $(SHELL)"
 	echo "PATH: $(PATH)"
 	echo "PWD: $(PWD)"
-	echo "MINGW_HOME: $(MINGW_HOME)"
-	echo "MINGW_DIR: $(MINGW_DIR)"
+	echo "TERM: $(TERM)"

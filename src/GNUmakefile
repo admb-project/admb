@@ -213,10 +213,6 @@ else
 	echo "ADMB_CFG_CXXFLAGS=\"$(USER_CXXFLAGS)\"">>${DIST}/bin/admb-cfg.sh
   ifeq ($(OS),Windows_NT)
 	echo "ADMB_CFG_LDFLAGS=\"-static $(USER_LDFLAGS)\"">>${DIST}/bin/admb-cfg.sh
-	cp ../utilities/sed.exe ${DIST}/bin
-	cp ../utilities/libiconv2.dll ${DIST}/bin
-	cp ../utilities/libintl3.dll ${DIST}/bin
-	cp ../utilities/regex2.dll ${DIST}/bin
 	cp ../scripts/admb/admb ${DIST}/bin/admb.sh
 	cp ../scripts/admb/root-admb ../admb.sh
 	cp ../scripts/admb/root-admb ${DIST}/admb.sh
@@ -424,6 +420,7 @@ else
 	@rm -vf ../admb
 	@rm -vf ../admb.bat
 	@rm -vf ../admb.cmd
+	@rm -vf ../admb.sh
 	@rm -vf ../admb.zip
 	@rm -vf ../REVISION
 	@rm -vf nh99/lex.yy.c

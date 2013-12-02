@@ -1,4 +1,4 @@
-ADMB_HOME=$(shell cd .. && pwd)/
+ADMB_HOME=$(shell cd .. && pwd)
 
 ifeq ($(OS),Windows_NT)
 EXT=.sh
@@ -40,42 +40,42 @@ admb:\
 
 buscycle: ham4 ham5
 ham4:
-	pushd admb/buscycle && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -version && $(PROG) ./$@
+	pushd admb/buscycle && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -version && $(PROG) ./$@
 
 ham5:
-	pushd admb/buscycle && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb/buscycle && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
 
 catage:
-	pushd admb/$@ && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
 
 chem-eng:
-	pushd admb/$@ && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
 
 finance:
-	pushd admb/$@ && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
 
 forest:
-	-pushd admb/$@ && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	-pushd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
 
 pella-t:
-	pushd admb/$@ && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
 
 robreg: vonb vonbr
 vonb:
-	pushd admb/robreg && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb/robreg && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
 
 vonbr:
-	pushd admb/robreg && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb/robreg && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
 
 simple:
-	pushd admb/$@ && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
 
 truncreg:
-	pushd admb/$@ && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -ams 2000000 && $(PROG) ./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
+	pushd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -ams 2000000 && $(PROG) ./$@ -ams 2000000 -gbs 6000000 -cbs 4000000
 
 vol: n2mvol
 n2mvol:
-	pushd admb/vol && $(ADMB_HOME)admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -nohess
+	pushd admb/vol && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -nohess
 
 admb-re:\
  bcb\
@@ -102,76 +102,76 @@ admb-re:\
  weights
 
 bcb:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 biglog:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 bvprobit:
 	@#Do not catch for admb-9.x
-	-pushd admb-re/glmmadmb && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	-pushd admb-re/glmmadmb && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 glmmadmb:
 	@#Do not catch for admb-9.x
-	-pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	-pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 caest:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 gamma:
-	-pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) liver_$@ && $(PROG) ./liver_$@
+	-pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) liver_$@ && $(PROG) ./liver_$@
 
 kidney:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 lidar:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 logistic:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 nbmm:
-	-pushd admb-re/nbmm && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	-pushd admb-re/nbmm && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 nested4:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 orange:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 orange2:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 orange_cor:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@ -nohess
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@ -nohess
 
 pheno:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 polio:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 sdv:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 skewed: diet diet_sk
 diet:
-	pushd admb-re/skewed && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/skewed && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 diet_sk:
-	pushd admb-re/skewed && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/skewed && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 socatt:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 spatial:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 union:
-	pushd admb-re/$@ && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
 weights: binomial
 binomial:
-	pushd admb-re/weights && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
+	pushd admb-re/weights && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 binomial_w2:
-	pushd admb-re/weights && $(ADMB_HOME)admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@ -nohess
+	pushd admb-re/weights && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@ -nohess

@@ -133,12 +133,15 @@ endif
 
 dist: libs bins docs
 ifeq ($(SHELL),sh.exe)
+	if not exist ${DIST}\examples md ${DIST}\examples
+	xcopy ..\examples $(DIST)\examples /S /Y /D
 	copy /Y ..\LICENSE.txt ${DIST}
 	copy /Y ..\README.txt ${DIST}
 	copy /Y ..\CHANGES.txt ${DIST}
 	copy /Y ..\VERSION ${DIST}
 	copy /Y ..\Makefile ${DIST}
 else
+	cp -R ../examples ${DIST}
 	cp -f ../LICENSE.txt ${DIST}
 	cp -f ../README.txt ${DIST}
 	cp -f ../CHANGES.txt ${DIST}
@@ -152,8 +155,6 @@ ifeq ($(SHELL),sh.exe)
 	xcopy ..\contrib $(DIST)\contrib /S /Y /D
 	if not exist ${DIST}\docs md ${DIST}\docs
 	xcopy ..\docs $(DIST)\docs /S /Y /D
-	if not exist ${DIST}\examples md ${DIST}\examples
-	xcopy ..\examples $(DIST)\examples /S /Y /D
 	if not exist ${DIST}\src md ${DIST}\src
 	xcopy ..\src $(DIST)\src /S /Y /D
 	if not exist ${DIST}\scripts md ${DIST}\scripts
@@ -165,7 +166,6 @@ ifeq ($(SHELL),sh.exe)
 else
 	cp -R ../contrib ${DIST}
 	cp -R ../docs ${DIST} 
-	cp -R ../examples ${DIST}
 	cp -R ../src ${DIST}
 	cp -R ../scripts ${DIST}
 	cp -R ../tests ${DIST}

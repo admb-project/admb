@@ -28,21 +28,19 @@ if [[ "$1" == "-h" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 
-if [ ! -z "$ADMB_HOME" ]; then
-unset ADMB_HOME
-fi
-
-FILE=$0
-DIRECTORY=$(cd `dirname $FILE` && pwd)
-while [ -h "${FILE}" ]; do
-  pushd $DIRECTORY &> /dev/null
-  FILE=$(readlink $DIRECTORY/admb)
-  DIRECTORY=$(cd `dirname $FILE` && pwd)
+if [ -z "$ADMB_HOME" ]; then
+  FILE=$0
+  DIRECTORY=$(cd `dirname "$FILE"` && pwd)
+  while [ -h "${FILE}" ]; do
+    pushd "$DIRECTORY" &> /dev/null
+    FILE=$(readlink "$DIRECTORY"/admb)
+    DIRECTORY=$(cd `dirname "$FILE"` && pwd)
+    popd &> /dev/null
+  done
+  pushd "$DIRECTORY/.." &> /dev/null
+  declare -rx ADMB_HOME=$PWD
   popd &> /dev/null
-done
-pushd "$DIRECTORY/.." &> /dev/null
-declare -rx ADMB_HOME=$PWD
-popd &> /dev/null
+fi
 PATH=$ADMB_HOME/bin:$PATH
 
 # Pop args until model=$1
@@ -148,7 +146,7 @@ if [ "$library" == "opt" ]; then
 else
   CXXFLAGS="$CXXFLAGS -DSAFE_ALL"
 fi
-CXXFLAGS="$CXXFLAGS -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -I. -I$ADMB_HOME/include -I$ADMB_HOME/contrib/include"
+CXXFLAGS="$CXXFLAGS -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/contrib/include\""
 if [ "$CXX" == "adcomp-x86_64-w64-mingw32" ]; then
   LDFLAGS="--static $LDFLAGS"
 fi
@@ -240,9 +238,9 @@ do
   fi
   CMD="$CMD $file $objs"
   if [[ "$library" == "opt" ]]; then
-    CMD="$CMD $ADMB_HOME/contrib/lib/libcontribo.a $ADMB_HOME/lib/libadmbo.a"
+    CMD="$CMD \"$ADMB_HOME/contrib/lib/libcontribo.a\" \"$ADMB_HOME/lib/libadmbo.a\""
   else
-    CMD="$CMD $ADMB_HOME/contrib/lib/libcontrib.a $ADMB_HOME/lib/libadmb.a"
+    CMD="$CMD \"$ADMB_HOME/contrib/lib/libcontrib.a\" \"$ADMB_HOME/lib/libadmb.a\""
   fi
   echo -e \\n\*\*\* Linking $file $objs:\\n$CMD
   eval $CMD
@@ -285,9 +283,9 @@ if [[ "$tplobjs" == "" ]]; then
   fi
   CMD="$CMD $listobjs"
   if [[ "$library" == "opt" ]]; then
-    CMD="$CMD $ADMB_HOME/contrib/lib/libcontribo.a $ADMB_HOME/lib/libadmbo.a"
+    CMD="$CMD \"$ADMB_HOME/contrib/lib/libcontribo.a\" \"$ADMB_HOME/lib/libadmbo.a\""
   else
-    CMD="$CMD $ADMB_HOME/contrib/lib/libcontrib.a $ADMB_HOME/lib/libadmb.a"
+    CMD="$CMD \"$ADMB_HOME/contrib/lib/libcontrib.a\" \"$ADMB_HOME/lib/libadmb.a\""
   fi
   echo -e \\n\*\*\* Linking $listobjs:\\n$CMD
   eval $CMD

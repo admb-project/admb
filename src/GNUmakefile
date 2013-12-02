@@ -1,6 +1,10 @@
 ifeq ($(OS),Windows_NT)
-  ifeq ($(SHELL),sh.exe)
-    MYPWD=$(shell cd)
+  ifneq (,$(findstring sh.exe,$(SHELL)))
+    ifeq ($(SHELL),sh.exe)
+      MYPWD=$(shell cd)
+    else
+      MYPWD=$(shell cmd /C cd)
+    endif
     ifdef MINGW_HOME
       PATH:=$(MINGW_HOME)\bin;$(PATH)
     else
@@ -129,6 +133,21 @@ endif
 
 dist: libs bins docs
 ifeq ($(SHELL),sh.exe)
+	copy /Y ..\LICENSE.txt ${DIST}
+	copy /Y ..\README.txt ${DIST}
+	copy /Y ..\CHANGES.txt ${DIST}
+	copy /Y ..\VERSION ${DIST}
+	copy /Y ..\Makefile ${DIST}
+else
+	cp -f ../LICENSE.txt ${DIST}
+	cp -f ../README.txt ${DIST}
+	cp -f ../CHANGES.txt ${DIST}
+	cp -f ../VERSION ${DIST}
+	cp -f ../Makefile ${DIST}
+endif
+
+dist2:
+ifeq ($(SHELL),sh.exe)
 	if not exist ${DIST}\contrib md ${DIST}\contrib
 	xcopy ..\contrib $(DIST)\contrib /S /Y /D
 	if not exist ${DIST}\docs md ${DIST}\docs
@@ -143,11 +162,6 @@ ifeq ($(SHELL),sh.exe)
 	xcopy ..\tests $(DIST)\tests /S /Y /D
 	if not exist ${DIST}\utilities md ${DIST}\utilities
 	xcopy ..\utilities $(DIST)\utilities /S /Y /D
-	copy /Y ..\LICENSE.txt ${DIST}
-	copy /Y ..\README.txt ${DIST}
-	copy /Y ..\CHANGES.txt ${DIST}
-	copy /Y ..\VERSION ${DIST}
-	copy /Y ..\Makefile ${DIST}
 else
 	cp -R ../contrib ${DIST}
 	cp -R ../docs ${DIST} 
@@ -156,11 +170,6 @@ else
 	cp -R ../scripts ${DIST}
 	cp -R ../tests ${DIST}
 	cp -vR ../utilities ${DIST}
-	cp -f ../LICENSE.txt ${DIST}
-	cp -f ../README.txt ${DIST}
-	cp -f ../CHANGES.txt ${DIST}
-	cp -f ../VERSION ${DIST}
-	cp -f ../Makefile ${DIST}
 endif
 
 libs: includes objects_dir objects

@@ -111,6 +111,13 @@ if defined CXXFLAGS (
 ) else (
   set CXXFLAGS= -c
 )
+if defined d (
+  if defined LDFLAGS (
+    set LDFLAGS= -shared !LDFLAGS!
+  ) else (
+    set LDFLAGS= -shared
+  )
+)
 if defined LDFLAGS (
   set LDFLAGS= -static !LDFLAGS!
 ) else (
@@ -140,7 +147,7 @@ if not defined LL (
   if not defined d (
     set LL=g++
   ) else (
-    set LL=dllwrap
+    set LL=g++
   )
 )
 if defined g (
@@ -266,18 +273,26 @@ if not defined tpls (
       set main=%%~na
       @REM set CMD=adlink!d!!g!!r!!fast! !objs!
       if defined d (
-        set CMD=!LL!!LDFLAGS! -def !main!.def --driver-name !CXX! --output-lib !main!.dll --output-lib lib!main!.a -o !main!.dll !objs! !libs!
+        set CMD=!LL!!LDFLAGS! -o !main!.dll !objs! !libs!
       ) else (
         set CMD=!LL!!LDFLAGS! -o !main!.exe !objs! !libs!
       )
       echo.&echo *** Linking !objs!:
       echo !CMD!
       call !CMD!
-      if not exist !main!.exe (
-        goto ERROR
+      if defined d (
+        if not exist !main!.dll (
+          goto ERROR
+        )
+        echo.&echo Successfully built '!main!.dll'.
+        goto SUCCESS
+      ) else (
+        if not exist !main!.exe (
+          goto ERROR
+        )
+        echo.&echo Successfully built '!main!.exe'.
+        goto EOF
       )
-      echo.&echo Successfully built executable '!main!.exe'.
-      goto EOF
     )
   )
 ) else (
@@ -285,7 +300,7 @@ if not defined tpls (
     set tpl=%%~na
     @REM set CMD=adlink!d!!g!!r!!fast! !tpl!.obj !objs!
     if defined d (
-      set CMD=!LL!!LDFLAGS! -def !tpl!.def --driver-name !CXX! --output-lib !tpl!.dll --output-lib lib!tpl!.a -o !tpl!.dll !objs! !libs!
+      set CMD=!LL!!LDFLAGS! -o !tpl!.dll !objs! !libs!
     ) else (
       if defined objs (
         set CMD=!LL!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
@@ -304,13 +319,13 @@ if not defined tpls (
       if not exist !tpl!.dll (
         goto ERROR
       )
-      echo.&echo Successfully built executable '!tpl!.dll'.
+      echo.&echo Successfully built '!tpl!.dll'.
       goto SUCCESS
     ) else (
       if not exist !tpl!.exe (
         goto ERROR
       )
-      echo.&echo Successfully built executable '!tpl!.exe'.
+      echo.&echo Successfully built '!tpl!.exe'.
       goto SUCCESS
     )
   )
@@ -318,7 +333,7 @@ if not defined tpls (
 :SUCCESS
 goto EOF
 :ERROR
-echo.&echo Error: Unable to build executable.
+echo.&echo Error: Unable to build.
 echo.&echo COMSPEC=%COMSPEC%.
 echo.&echo PATH=%PATH%.
 goto EOF

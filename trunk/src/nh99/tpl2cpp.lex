@@ -3917,19 +3917,10 @@ TOP_OF_MAIN_SECTION {
     {
       if (makedll)
       {
-        fprintf(ftopmain,"\n#if !defined(__MSVC32__)"
-           "\n#  define __declspec(x)"
-           "\n#endif\n");
-
-        fprintf(ftopmain,"\n#if !defined(__BORLANDC__)"
-           "\n#  define _export"
-           "\n#else"
-           "\n#  define _export __stdcall"
-           "\n#endif\n");
         if (!makegaussdll)
-          fprintf(ftopmain,"\n__declspec(dllexport) void _export ");
+          fprintf(ftopmain,"\nvoid __stdcall __declspec(dllexport) ");
         else
-          fprintf(ftopmain,"\n__declspec(dllexport) int _export ");
+          fprintf(ftopmain,"\nint __stdcall __declspec(dllexport) ");
       }
       else
       {
@@ -4079,20 +4070,10 @@ TOP_OF_MAIN_SECTION {
         }
         if (!splus_debug_flag)
         {
-          fprintf(ftopmain,"\n#if !defined(__MSVC32__)"
-            "\n#  define __declspec(x)"
-            "\n#endif\n");
-
-          fprintf(ftopmain,"\n#if !defined(__BORLANDC__)"
-            "\n#  define _export"
-           "\n#else"
-           "\n#  define _export __stdcall"
-            "\n#endif\n");
-
           if (!makegaussdll)
-            fprintf(ftopmain,"\n__declspec(dllexport) void _export ");
+            fprintf(ftopmain,"\nvoid __stdcall __declspec(dllexport) ");
           else
-            fprintf(ftopmain,"\n__declspec(dllexport) int _export ");
+            fprintf(ftopmain,"\nint __stdcall __declspec(dllexport) ");
         }
         else
         {

@@ -84,6 +84,7 @@ Thanks to the following people for providing fixes and suggestions.
 * Gareth Williams
 * Weihai Liu
 * Barak A. Pearlmutter
+* Jon Schnute
 
 ---
 For help and support, email <users@admb-project.org>.

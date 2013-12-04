@@ -4,27 +4,35 @@
 <br><center>
 \image html admb-logo-notext-72.png
 </center><br>
-<H1>
-<CENTER>
-Documentation of mathematical functions can be found on the 
-Modules tab.
-</CENTER>
-</H1>
+
+<B>
+<ul>
+  <li> Documentation of mathematical functions can be found in the 
+"Function Reference" tab.</li>
+  <li> C++ class documentation can be found in the "Classes" tab. </li>
+  <li> Source code listings can be found in the "Source Code" tab. </li>
+  <li> The "Related Pages" tab contains miscellaneous information and is under construction. </li>
+</ul>
+</B>
+
 <br>
 <br>
+This version of the API documentation is a work in progress.
 Partial documentation of some of the AUTODIF Library and ADMB classes can
-found on the "Classes" tab. No class is 
+found on the "Classes" tab. Most classes are not
 fully documented, but see class \ref dvector for an example of 
 how it might look.
-<br>
-<br>
-This preliminary version of the API documentation is a work in progress.
 If you would like ton contribute your expertize to the enterprize please 
 contact developers@admb-project.org.
 
+<HR width="20%" align=center>
+<center>
+<H3>
 For up-to-date information and download and installation instructions
 consult the 
-<a href=" http://admb-project.org/documentation/readme.txt">ADMB README</a>.
+<a href="http://www.admb-project.org/buildbot/documentation/INSTALL.html">Installation Guide</a>.
+</H3>
+</center>
 
 */
 

@@ -38,7 +38,9 @@ admb:\
  simple\
  vol
 
-buscycle: ham4 ham5
+buscycle:
+	$(MAKE) ham4 
+	$(MAKE) ham5
 ham4:
 	pushd admb/buscycle && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@ -version && $(PROG) ./$@
 
@@ -60,7 +62,9 @@ forest:
 pella-t:
 	pushd admb/$@ && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
 
-robreg: vonb vonbr
+robreg:
+	$(MAKE) vonb
+	$(MAKE) vonbr
 vonb:
 	pushd admb/robreg && $(ADMB_HOME)/admb$(EXT)$(OPTIONS) $@ && $(PROG) ./$@
 
@@ -154,7 +158,9 @@ polio:
 sdv:
 	pushd admb-re/$@ && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 
-skewed: diet diet_sk
+skewed:
+	$(MAKE) diet
+	$(MAKE) diet_sk
 diet:
 	pushd admb-re/skewed && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 

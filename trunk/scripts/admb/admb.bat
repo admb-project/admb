@@ -131,9 +131,9 @@ if exist !ADMB_HOME!\bin\admb-cfg.bat (
   if defined ADMB_CFG_CXX (
     set CXX=!ADMB_CFG_CXX!
   )
-  if defined ADMB_CFG_LL (
+  if defined ADMB_CFG_LD (
     if not defined d (
-      set LL=!ADMB_CFG_LL!
+      set LD=!ADMB_CFG_LD!
     )
   )
   if defined ADMB_CFG_LDFLAGS (
@@ -143,11 +143,11 @@ if exist !ADMB_HOME!\bin\admb-cfg.bat (
 if not defined CXX (
   set CXX=g++
 )
-if not defined LL (
+if not defined LD (
   if not defined d (
-    set LL=g++
+    set LD=g++
   ) else (
-    set LL=g++
+    set LD=g++
   )
 )
 if defined g (
@@ -273,9 +273,9 @@ if not defined tpls (
       set main=%%~na
       @REM set CMD=adlink!d!!g!!r!!fast! !objs!
       if defined d (
-        set CMD=!LL!!LDFLAGS! -o !main!.dll !objs! !libs!
+        set CMD=!LD!!LDFLAGS! -o !main!.dll !objs! !libs!
       ) else (
-        set CMD=!LL!!LDFLAGS! -o !main!.exe !objs! !libs!
+        set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
       )
       echo.&echo *** Linking !objs!:
       echo !CMD!
@@ -300,12 +300,12 @@ if not defined tpls (
     set tpl=%%~na
     @REM set CMD=adlink!d!!g!!r!!fast! !tpl!.obj !objs!
     if defined d (
-      set CMD=!LL!!LDFLAGS! -o !tpl!.dll !objs! !libs!
+      set CMD=!LD!!LDFLAGS! -o !tpl!.dll !objs! !libs!
     ) else (
       if defined objs (
-        set CMD=!LL!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
+        set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
       ) else (
-        set CMD=!LL!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
+        set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
       )
     )
     if defined objs (

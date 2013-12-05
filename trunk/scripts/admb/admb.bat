@@ -16,18 +16,24 @@ if ERRORLEVEL 1 (
 )
 
 if not defined ADMB_HOME (
-  for %%a in (%0) do (
-    set HAS_PATH=%%~$PATH:a
-    if defined HAS_PATH (
-      set ADMB_PATH="%%~dp$PATH:a"
-    ) else (
-      set ADMB_PATH="%%~dpa"
-    )
-    pushd !ADMB_PATH!
+  set SCRIPT_PATH=%~dp0
+  if defined SCRIPT_PATH (
+    pushd !SCRIPT_PATH!
     pushd ..
     set ADMB_HOME=!CD!
     popd
     popd
+  ) else (
+    for %%a in (admb.cmd) do (
+      set HAS_PATH=%%~dp$PATH:a
+      if defined HAS_PATH (
+        pushd !HAS_PATH!
+        pushd ..
+        set ADMB_HOME=!CD!
+        popd
+        popd
+      )
+    )
   )
 ) else (
   pushd !ADMB_HOME!
@@ -336,6 +342,7 @@ goto EOF
 echo.&echo Error: Unable to build.
 echo.&echo COMSPEC=%COMSPEC%.
 echo.&echo PATH=%PATH%.
+echo.&echo ADMB_HOME: !ADMB_HOME!
 goto EOF
 :HELP
 echo Builds AD Model Builder executable or library.

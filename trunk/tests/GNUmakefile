@@ -120,9 +120,9 @@ ifeq ($(SHELL),sh.exe)
 	$(MAKE) -C $(DIST)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
 else
-	$(MAKE) -j 8 FAST_OPTION=-f -C $(DIST)/examples all
+	$(MAKE) FAST_OPTION=-f -C $(DIST)/examples all
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-opt.txt"
-	$(MAKE) -j 8 -C $(DIST)/examples all
+	$(MAKE) -C $(DIST)/examples all
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-saf.txt"
 endif
 

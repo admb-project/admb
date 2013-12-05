@@ -95,7 +95,6 @@ else
 endif
 
 clean:
-	echo $(PATH)
 	$(MAKE) --directory=ecolib clean
 	$(MAKE) --directory=gdbprintlib clean
 	$(MAKE) --directory=qfclib clean

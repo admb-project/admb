@@ -1,51 +1,22 @@
-.ONESHELL:
-ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-SHELL = cmd
-endif
-ifeq ($(OS),Windows_NT)
-EXT=.sh
-endif
-
-include objects.lst
 HEADERS=ecolib.h
+OBJECTS=\
+ Gompertz.obj\
+ Hassell.obj\
+ Hill.obj\
+ HollingII.obj\
+ HollingIII.obj\
+ HollingIV.obj\
+ Michaelis_Menten1.obj\
+ Michaelis_Menten2.obj\
+ Ricker.obj\
+ Shepherd.obj\
+ generalized_Ricker1.obj\
+ generalized_Ricker2.obj\
+ logistic.obj\
+ logistic3.obj\
+ logisticK.obj\
+ monomolecular.obj\
+ nonrectangular_hyperbola.obj\
+ theta_logistic.obj
 
-ifeq ($(SHELL),cmd)
-all: $(addprefix $(CONTRIB_OBJS_DIR)\saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)\optlp-contrib-, $(OBJECTS))
-
-$(CONTRIB_OBJS_DIR)\saflp-contrib-%.obj: %.cpp
-	..\..\admb -c $(OPTION) $<
-	copy $(basename $<).obj $@
-
-$(CONTRIB_OBJS_DIR)\optlp-contrib-%.obj: %.cpp
-	..\..\admb -c -f $(OPTION) $<
-	copy $(basename $<).obj $@
-else
-all: $(addprefix $(CONTRIB_OBJS_DIR)/saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)/optlp-contrib-, $(OBJECTS))
-
-$(CONTRIB_OBJS_DIR)/saflp-contrib-%.obj: %.cpp
-	../../admb$(EXT) -c $(OPTION) $<
-	cp $(basename $<).obj $@
-
-$(CONTRIB_OBJS_DIR)/optlp-contrib-%.obj: %.cpp
-	../../admb$(EXT) -c -f $(OPTION) $<
-	cp $(basename $<).obj $@
-endif
-
-includes:
-ifeq ($(SHELL),cmd)
-	copy $(HEADERS) $(CONTRIB_INCLUDE)
-else
-	cp $(HEADERS) $(CONTRIB_INCLUDE)
-endif
-
-test:
-ifneq ($(SHELL),cmd)
-	$(MAKE) --directory=tests
-endif
-
-clean:
-ifeq ($(SHELL),cmd)
-	del /Q $(OBJECTS)
-else
-	@rm -vf $(OBJECTS)
-endif
+include ../admb-rules.mak

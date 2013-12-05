@@ -1,46 +1,26 @@
-.ONESHELL:
-ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
-SHELL = cmd
-endif
-ifeq ($(OS),Windows_NT)
-EXT=.sh
-endif
-
-include objects.lst
 HEADERS=statsLib.h
+OBJECTS=\
+  alk.obj\
+  baranov.obj\
+  dbeta.obj\
+  dbinom.obj\
+  dgamma.obj\
+  dlnorm.obj\
+  dnbinom.obj\
+  dzinbinom.obj\
+  dnorm.obj\
+  dpois.obj\
+  fill.obj\
+  logistic.obj\
+  dmvlogistic.obj\
+  rmvlogistic.obj\
+  dmultinom.obj\
+  pearsonresiduals.obj\
+  eplogis.obj\
+  multifan.obj\
+  dunif.obj\
+  dinvgamma.obj\
+  studentT.obj\
+  vcubicspline.obj
 
-ifeq ($(SHELL),cmd)
-all: $(addprefix $(CONTRIB_OBJS_DIR)\saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)\optlp-contrib-, $(OBJECTS))
-
-$(CONTRIB_OBJS_DIR)\saflp-contrib-%.obj: %.cpp
-	..\..\admb -c $(OPTION) $<
-	copy $(basename $<).obj $@
-
-$(CONTRIB_OBJS_DIR)\optlp-contrib-%.obj: %.cpp
-	..\..\admb -c -f $(OPTION) $<
-	copy $(basename $<).obj $@
-else
-all: $(addprefix $(CONTRIB_OBJS_DIR)/saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)/optlp-contrib-, $(OBJECTS))
-
-$(CONTRIB_OBJS_DIR)/saflp-contrib-%.obj: %.cpp
-	../../admb$(EXT) -c $(OPTION) $<
-	cp $(basename $<).obj $@
-
-$(CONTRIB_OBJS_DIR)/optlp-contrib-%.obj: %.cpp
-	../../admb$(EXT) -c -f $(OPTION) $<
-	cp $(basename $<).obj $@
-endif
-
-includes:
-ifeq ($(SHELL),cmd)
-	copy $(HEADERS) $(CONTRIB_INCLUDE)
-else
-	cp $(HEADERS) $(CONTRIB_INCLUDE)
-endif
-
-clean:
-ifeq ($(SHELL),cmd)
-	@del /Q $(OBJECTS) 
-else
-	@rm -vf $(OBJECTS)
-endif
+include ../admb-rules.mak

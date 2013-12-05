@@ -1,27 +1,46 @@
+.ONESHELL:
+ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+SHELL = cmd
+endif
 ifeq ($(OS),Windows_NT)
 EXT=.sh
 endif
 
 include objects.lst
+HEADERS=statsLib.h
 
-all: $(addprefix $(PREFIX), $(OBJECTS))
+ifeq ($(SHELL),cmd)
+all: $(addprefix $(CONTRIB_OBJS_DIR)\saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)\optlp-contrib-, $(OBJECTS))
 
-$(PREFIX)%.obj: %.cpp
-ifeq ($(SHELL),sh.exe)
+$(CONTRIB_OBJS_DIR)\saflp-contrib-%.obj: %.cpp
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
-	copy statsLib.h $(CONTRIB_DIR)\include
+
+$(CONTRIB_OBJS_DIR)\optlp-contrib-%.obj: %.cpp
+	..\..\admb -c -f $(OPTION) $<
+	copy $(basename $<).obj $@
 else
+all: $(addprefix $(CONTRIB_OBJS_DIR)/saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)/optlp-contrib-, $(OBJECTS))
+
+$(CONTRIB_OBJS_DIR)/saflp-contrib-%.obj: %.cpp
 	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
-	cp statsLib.h $(CONTRIB_DIR)/include
+
+$(CONTRIB_OBJS_DIR)/optlp-contrib-%.obj: %.cpp
+	../../admb$(EXT) -c -f $(OPTION) $<
+	cp $(basename $<).obj $@
+endif
+
+includes:
+ifeq ($(SHELL),cmd)
+	copy $(HEADERS) $(CONTRIB_INCLUDE)
+else
+	cp $(HEADERS) $(CONTRIB_INCLUDE)
 endif
 
 clean:
-ifeq ($(SHELL),sh.exe)
-	-del *.obj
-	-del *.o
+ifeq ($(SHELL),cmd)
+	@del /Q $(OBJECTS) 
 else
-	@rm -vf *.obj
-	@rm -vf *.o
+	@rm -vf $(OBJECTS)
 endif

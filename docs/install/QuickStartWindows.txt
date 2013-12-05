@@ -6,8 +6,11 @@ Describe ADMB build and installation procedures for Windows and MinGW.
 
 ---
 
-_For Windows computers with Visual C++ compiler already installed, read
-the [QuickStart for Visual C++](QuickStartVisualC++.html)._
+_For Windows computers with Visual C++ compiler already installed, 
+read and follow the instuctions in [QuickStart for Visual C++](QuickStartVisualC++.html)._
+
+_For builds within *Cygwin* and *MinGW-Msys* shells, read and follow the
+instructions in the [QuickStart for Unix](QuickStartUnix.html)._
 
 Prerequisites
 -------------
@@ -21,7 +24,7 @@ Quick Start Windows
 -------------------
 
 1. Open **Command Prompt** window  
-       _Note: The 16 bit Command Prompt (Command.com) is no longer support._
+       _Note: 32 or 64 bit Command Prompt (Command.com) is required._
 
 2. **Download** ADMB
 
@@ -45,23 +48,19 @@ Quick Start Windows
 
         C:\> cd admb
 
-4. Install MinGW C++ compiler
+4. Install C++ compiler
 
-       If MinGW C++ compiler has already been installed, skip this step and go to
+       If C++ compiler (ie MinGW, Cygwin and Rtools) has already been installed and is in the System Enviroment PATH, skip this step and go to
    step 5.
 
-       If MinGW C++ compiler has not been installed, use the command below to download
-   and install from the MinGW site to the _C:\admb\utilities\mingw_ folder.
+       If C++ compiler has not been installed, use the command below to download
+   and install the MinGW C++ Compiler to the _C:\admb\utilities\mingw_ folder.
 
         C:\admb\> utilities\get-mingw.bat
 
-       Downloads approximately 177 MB from MinGW downloads.  This will also
-   update existing MinGW installation.
+       Downloads from MinGW website, then installs to the local computer.  This will also update existing MinGW installation.
 
 5. **Build** ADMB
-
-       If MinGW was installed, set the system enviromental variable 
-       to the directory location  (ie MINGW_HOME=C:\MinGW).
 
        If MinGW was installed with _get-mingw.bat_, use the command below.
 
@@ -71,6 +70,12 @@ Quick Start Windows
 
         C:\admb\> utilities\make debug
 
+       If MinGW-Msys was installed and is included in System Enviroment PATH, use the command below.
+
+        C:\admb\> make
+
+       _Note: For Rtools build, use utilities\make.exe instead of the included make in Rtools._
+
 6. **Use** ADMB
  
        The following commands build and run the simple example.
@@ -79,7 +84,7 @@ Quick Start Windows
         C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
         C:\admb\examples\admb\simple\> simple.exe
 
-7. **[OPTIONAL]** Include admb script in system **PATH**
+7. **[OPTIONAL]** Include admb script in System Enviroment **PATH**
 
        Avoids the need the to include path with the admb script.
 

@@ -1,22 +1,45 @@
+.ONESHELL:
+ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+SHELL = cmd
+endif
 ifeq ($(OS),Windows_NT)
 EXT=.sh
 endif
 
-all: $(PREFIX)contrib.obj
+OBJECTS=contrib.obj
+HEADERS=contrib.h
 
-$(PREFIX)%.obj: %.cpp
-ifeq ($(SHELL),sh.exe)
+ifeq ($(SHELL),cmd)
+all: $(addprefix $(CONTRIB_OBJS_DIR)\saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)\optlp-contrib-, $(OBJECTS))
+
+$(CONTRIB_OBJS_DIR)\saflp-contrib-%.obj: %.cpp
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
-	copy contrib.h $(CONTRIB_DIR)\include
+
+$(CONTRIB_OBJS_DIR)\optlp-contrib-%.obj: %.cpp
+	..\..\admb -c -f $(OPTION) $<
+	copy $(basename $<).obj $@
 else
+all: $(addprefix $(CONTRIB_OBJS_DIR)/saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)/optlp-contrib-, $(OBJECTS))
+
+$(CONTRIB_OBJS_DIR)/saflp-contrib-%.obj: %.cpp
 	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
-	cp contrib.h $(CONTRIB_DIR)/include
+
+$(CONTRIB_OBJS_DIR)/optlp-contrib-%.obj: %.cpp
+	../../admb$(EXT) -c -f $(OPTION) $<
+	cp $(basename $<).obj $@
+endif
+
+includes:
+ifeq ($(SHELL),cmd)
+	copy $(HEADERS) $(CONTRIB_INCLUDE)
+else
+	cp $(HEADERS) $(CONTRIB_INCLUDE)
 endif
 
 test:
-ifeq ($(SHELL),sh.exe)
+ifeq ($(SHELL),cmd)
 	..\..\admb $(OPTION) simple.tpl
 	simple
 else
@@ -25,46 +48,8 @@ else
 endif
 
 clean:
-ifeq ($(SHELL),sh.exe)
-	del contrib.obj
-	del contrib.o
-	del simple.obj
-	del simple.o
-	del simple.std
-	del simple.htp
-	del admodel.hes
-	del variance
-	del simple
-	del simple.exe
-	del admodel.cov
-	del simple.bar
-	del eigv.rpt
-	del simple.eva
-	del fmin.log
-	del simple.log
-	del simple.cpp
-	del simple.par
-	del simple.cor
-	del admodel.dep
+ifeq ($(SHELL),cmd)
+	@del /Q $(OBJECTS)
 else
-	@rm -f contrib.obj
-	@rm -f contrib.o
-	@rm -f simple.obj
-	@rm -f simple.o
-	@rm -f simple.std
-	@rm -f simple.htp
-	@rm -f admodel.hes
-	@rm -f variance
-	@rm -f simple
-	@rm -f simple.exe
-	@rm -f admodel.cov
-	@rm -f simple.bar
-	@rm -f eigv.rpt
-	@rm -f simple.eva
-	@rm -f fmin.log
-	@rm -f simple.log
-	@rm -f simple.cpp
-	@rm -f simple.par
-	@rm -f simple.cor
-	@rm -f admodel.dep
+	@rm -vf $(OBJECTS)
 endif

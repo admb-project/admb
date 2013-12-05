@@ -1,3 +1,5 @@
+DIST=../build/dist
+
 GTEST_DIR=googletest-read-only
 
 all: test-cov_re test-expm
@@ -111,6 +113,19 @@ beta2:
 beta3:
 	OPTIONS=-s $(MAKE) --directory=$@
 
+verify:
+ifeq ($(SHELL),sh.exe)
+	$(MAKE) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
+	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
+	$(MAKE) -C $(DIST)\examples --file=Makefile all
+	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+else
+	$(MAKE) -j 8 FAST_OPTION=-f -C $(DIST)/examples all
+	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-opt.txt"
+	$(MAKE) -j 8 -C $(DIST)/examples all
+	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-saf.txt"
+endif
+
 clean:
 ifeq ($(SHELL),sh.exe)
 	$(MAKE) --directory=expm --file=Makefile clean
@@ -145,4 +160,12 @@ else
 	$(MAKE) --directory=SS3 clean
 	$(MAKE) --directory=cov_re clean
 	$(MAKE) --directory=gtests clean
+endif
+
+copy:
+ifeq ($(SHELL),sh.exe)
+	if not exist ${DIST}\tests md ${DIST}\tests
+	xcopy ..\tests $(DIST)\tests /S /Y /D
+else
+	cp -R ../tests ${DIST}
 endif

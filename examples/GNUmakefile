@@ -1,5 +1,10 @@
+.ONESHELL:
+ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+SHELL = cmd
+ADMB_HOME=$(shell cmd /C cd .. && cd)
+else
 ADMB_HOME=$(shell cd .. && pwd)
-
+endif
 ifeq ($(OS),Windows_NT)
 EXT=.sh
 endif
@@ -181,3 +186,11 @@ binomial:
 	pushd admb-re/weights && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@
 binomial_w2:
 	pushd admb-re/weights && $(ADMB_HOME)/admb$(EXT) -r$(OPTIONS) $@ && $(PROG) ./$@ -nohess
+
+copy:
+ifeq ($(SHELL),cmd)
+	if not exist ..\build\dist\examples md ..\build\dist\examples
+	xcopy ..\examples ..\build\dist\examples /S /Y /D
+else
+	cp -R ../examples ../build/dist
+endif

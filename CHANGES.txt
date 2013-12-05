@@ -33,11 +33,17 @@ ADMB-dev
   to use 
   
     [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple
+* Fixed 'admb -d' for unix, mingw and cygwin shells. 
+* Able to use Rtools for building, but will need to use the utilities\make.exe
+  for building.
+* Improved the build by reworking the GNUmakefiles file.
+  + Able to use parallel build option (-j) again for faster builds.
 
 ####New Supported Compilers
 
 * GNU C++ 4.8 compiler
 * Apple XCode 5
+[] Microsoft C++ 2013 - Still need to port it
 
   _Note: Borland 5.5 compiler is no longer supported._
 
@@ -101,13 +107,14 @@ ADMB-dev
 
 The following are planned or requested features for the next release.
 
-* Migrating ADMB Subversion Version Control to Git
-* Migrating ADMB Redmine Issue Tracking to Git
-* Merge Threading Code to trunk
-* Atan2
-* Gradient output
-* Write Design Documentation
-* Write Developer Documentation
+[] Migrating ADMB Subversion Version Control to Git
+[] Migrating ADMB Redmine Issue Tracking to Git
+[] Merge Threading Code to trunk
+[] Atan2
+[] Gradient output
+[] Write Design Documentation
+[] Write Developer Documentation
+[] Shared library for Random Effects models
 
 ADMB-11.1
 ---------

@@ -1,46 +1,51 @@
+.ONESHELL:
+ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+SHELL = cmd
+endif
 ifeq ($(OS),Windows_NT)
 EXT=.sh
 endif
 
 include objects.lst
+HEADERS=ecolib.h
 
-all: $(addprefix $(PREFIX), $(OBJECTS))
+ifeq ($(SHELL),cmd)
+all: $(addprefix $(CONTRIB_OBJS_DIR)\saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)\optlp-contrib-, $(OBJECTS))
 
-$(PREFIX)%.obj: %.cpp
-ifeq ($(SHELL),sh.exe)
+$(CONTRIB_OBJS_DIR)\saflp-contrib-%.obj: %.cpp
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
-	copy ecolib.h $(CONTRIB_DIR)\include
+
+$(CONTRIB_OBJS_DIR)\optlp-contrib-%.obj: %.cpp
+	..\..\admb -c -f $(OPTION) $<
+	copy $(basename $<).obj $@
 else
+all: $(addprefix $(CONTRIB_OBJS_DIR)/saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)/optlp-contrib-, $(OBJECTS))
+
+$(CONTRIB_OBJS_DIR)/saflp-contrib-%.obj: %.cpp
 	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
-	cp ecolib.h $(CONTRIB_DIR)/include
+
+$(CONTRIB_OBJS_DIR)/optlp-contrib-%.obj: %.cpp
+	../../admb$(EXT) -c -f $(OPTION) $<
+	cp $(basename $<).obj $@
+endif
+
+includes:
+ifeq ($(SHELL),cmd)
+	copy $(HEADERS) $(CONTRIB_INCLUDE)
+else
+	cp $(HEADERS) $(CONTRIB_INCLUDE)
 endif
 
 test:
-ifneq ($(SHELL),sh.exe)
+ifneq ($(SHELL),cmd)
 	$(MAKE) --directory=tests
 endif
 
 clean:
-ifneq ($(SHELL),sh.exe)
-	@rm -vf *.obj
-	@rm -vf *.o
-	@rm -vf tests/tests.log
-	@rm -vf tests/tests.cpp
-	@rm -vf tests/admodel.hes
-	@rm -vf tests/tests.par
-	@rm -vf tests/tests.cor
-	@rm -vf tests/tests.pin
-	@rm -vf tests/variance
-	@rm -vf tests/admodel.cov
-	@rm -vf tests/tests.std
-	@rm -vf tests/tests.htp
-	@rm -vf tests/eigv.rpt
-	@rm -vf tests/tests
-	@rm -vf tests/tests.bar
-	@rm -vf tests/tests.dat
-	@rm -vf tests/fmin.log
-	@rm -vf tests/tests.eva
-	@rm -vf tests/admodel.dep
+ifeq ($(SHELL),cmd)
+	del /Q $(OBJECTS)
+else
+	@rm -vf $(OBJECTS)
 endif

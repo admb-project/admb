@@ -1,29 +1,48 @@
+.ONESHELL:
+ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+SHELL = cmd
+endif
 ifeq ($(OS),Windows_NT)
 EXT=.sh
 endif
 
-OBJECTS=$(addprefix $(PREFIX), gdbprintlib.obj)
+OBJECTS=gdbprintlib.obj
+HEADERS=gdbprintlib.h
 
-all: $(OBJECTS)
+ifeq ($(SHELL),cmd)
+all: $(addprefix $(CONTRIB_OBJS_DIR)\saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)\optlp-contrib-, $(OBJECTS))
 
-$(PREFIX)%.obj: %.cpp
-ifeq ($(SHELL),sh.exe)
+$(CONTRIB_OBJS_DIR)\saflp-contrib-%.obj: %.cpp
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
-	copy gdbprintlib.h $(CONTRIB_DIR)\include
+
+$(CONTRIB_OBJS_DIR)\optlp-contrib-%.obj: %.cpp
+	..\..\admb -c -f $(OPTION) $<
+	copy $(basename $<).obj $@
 else
+all: $(addprefix $(CONTRIB_OBJS_DIR)/saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)/optlp-contrib-, $(OBJECTS))
+
+$(CONTRIB_OBJS_DIR)/saflp-contrib-%.obj: %.cpp
 	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
-	cp gdbprintlib.h $(CONTRIB_DIR)/include
+
+$(CONTRIB_OBJS_DIR)/optlp-contrib-%.obj: %.cpp
+	../../admb$(EXT) -c -f $(OPTION) $<
+	cp $(basename $<).obj $@
+endif
+
+includes:
+ifeq ($(SHELL),cmd)
+	copy $(HEADERS) $(CONTRIB_INCLUDE)
+else
+	cp $(HEADERS) $(CONTRIB_INCLUDE)
 endif
 
 test:
 
 clean:
-ifeq ($(SHELL),sh.exe)
-	del gdbprintlib.obj
-	del gdbprintlib.o
+ifeq ($(SHELL),cmd)
+	del /Q $(OBJECTS)
 else
-	@rm -vf gdbprintlib.obj
-	@rm -vf gdbprintlib.o
+	@rm -vf $(OBJECTS)
 endif

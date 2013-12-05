@@ -1,6 +1,7 @@
 ifeq ($(OS),Windows_NT)
-  ifneq (,$(findstring sh.exe,$(SHELL)))
-    ifeq ($(SHELL),sh.exe)
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL = cmd
+    ifeq ($(SHELL),cmd)
       MYPWD=$(shell cd)
     else
       MYPWD=$(shell cmd /C cd)
@@ -24,7 +25,7 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 
-ifeq ($(SHELL),sh.exe)
+ifeq ($(SHELL),cmd)
   DIST=..\build\dist
   LIBSDIR=$(DIST)\lib
   LIBSDIR:=$(addsuffix \,$(LIBSDIR))
@@ -70,7 +71,7 @@ endif
 
 CXXFLAGS:= $(CXXFLAGS) -DSAFE_ALL -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE
 
-ifeq ($(SHELL),sh.exe)
+ifeq ($(SHELL),cmd)
 CXXFLAGS:= $(CXXFLAGS) -I..\build\dist\include
 else
 CXXFLAGS:= $(CXXFLAGS) -I../build/dist/include
@@ -100,48 +101,30 @@ OBJECTS:=$(OBJECTS) $(addprefix optlp-tools99-,$(OBJ7)) $(addprefix saflp-tools9
 
 OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
 
-all: revision dist contrib
+all: dist
+ifeq ($(SHELL),cmd)
+	-svnversion .. > ${DIST}\REVISION
+else
+	-svnversion .. > ${DIST}/REVISION
+	touch $(DIST)/include/contrib.h
+endif
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.
 
-shared: includes objects
+shared: objects
 	$(CXX) -shared -o${DIST}/lib/libadmb.so ../build/objects/dist/saflp-*.obj
 	$(CXX) -shared -o${DIST}/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
 	@echo ADMB shared build completed.
 	@echo Check README.txt for usage and installation information.
 
-revision:
-ifeq ($(SHELL),sh.exe)
-	-svnversion .. > ..\REVISION
-else
-	-svnversion .. > ../REVISION
-endif
-
-contrib:
-ifeq ($(SHELL),sh.exe)
-	if not exist ${DIST}\contrib md ${DIST}\contrib
-	if not exist ${DIST}\contrib\lib md ${DIST}\contrib\lib
-	if not exist ${DIST}\contrib\bin md ${DIST}\contrib\bin
-	if not exist ${DIST}\contrib\include md ${DIST}\contrib\include
-	$(MAKE) DIST=${DIST} --directory=..\contrib
-else
-	mkdir -p ${DIST}/contrib/lib
-	mkdir -p ${DIST}/contrib/bin
-	mkdir -p ${DIST}/contrib/include
-	$(MAKE) DIST=${DIST} --directory=../contrib
-endif
-
-dist: libs bins docs
-ifeq ($(SHELL),sh.exe)
-	if not exist ${DIST}\examples md ${DIST}\examples
-	xcopy ..\examples $(DIST)\examples /S /Y /D
+dist: bins
+ifeq ($(SHELL),cmd)
 	copy /Y ..\LICENSE.txt ${DIST}
 	copy /Y ..\README.txt ${DIST}
 	copy /Y ..\CHANGES.txt ${DIST}
 	copy /Y ..\VERSION ${DIST}
 	copy /Y ..\Makefile ${DIST}
 else
-	cp -R ../examples ${DIST}
 	cp -f ../LICENSE.txt ${DIST}
 	cp -f ../README.txt ${DIST}
 	cp -f ../CHANGES.txt ${DIST}
@@ -149,52 +132,8 @@ else
 	cp -f ../Makefile ${DIST}
 endif
 
-dist2:
-ifeq ($(SHELL),sh.exe)
-	if not exist ${DIST}\contrib md ${DIST}\contrib
-	xcopy ..\contrib $(DIST)\contrib /S /Y /D
-	if not exist ${DIST}\docs md ${DIST}\docs
-	xcopy ..\docs $(DIST)\docs /S /Y /D
-	if not exist ${DIST}\src md ${DIST}\src
-	xcopy ..\src $(DIST)\src /S /Y /D
-	if not exist ${DIST}\scripts md ${DIST}\scripts
-	xcopy ..\scripts $(DIST)\scripts /S /Y /D
-	if not exist ${DIST}\tests md ${DIST}\tests
-	xcopy ..\tests $(DIST)\tests /S /Y /D
-	if not exist ${DIST}\utilities md ${DIST}\utilities
-	xcopy ..\utilities $(DIST)\utilities /S /Y /D
-else
-	cp -R ../contrib ${DIST}
-	cp -R ../docs ${DIST} 
-	cp -R ../src ${DIST}
-	cp -R ../scripts ${DIST}
-	cp -R ../tests ${DIST}
-	cp -vR ../utilities ${DIST}
-endif
-
-libs: includes objects_dir objects
-ifeq ($(SHELL),sh.exe)
-	if not exist ${DIST}\lib md ${DIST}\lib
-	if exist ${DIST}\lib\libadmb.a del ${DIST}\lib\libadmb.a
-	if exist ${DIST}\lib\libadmbo.a del ${DIST}\lib\libadmbo.a
-else
-	mkdir -p ${DIST}/lib
-	rm -vf ${DIST}/lib/libadmb.a
-	rm -vf ${DIST}/lib/libadmbo.a
-endif
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-linad99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-df1b2-separable-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-nh99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-tools99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-sparse-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-linad99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-df1b2-separable-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-nh99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-tools99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-sparse-*.obj
-
-bins:
-ifeq ($(SHELL),sh.exe)
+bins: libs
+ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\bin md ${DIST}\bin
 	copy df1b2-separable\seddf1b* ${DIST}\bin
 	copy df1b2-separable\sedf1b2* ${DIST}\bin
@@ -244,72 +183,32 @@ else
 	$(MAKE) --directory=nh99 CC=$(CC) DIST=../${DIST} bins
 endif
 
-docs:
-
-docs2:
-	$(MAKE) --directory=docs
-
-includes:
-ifeq ($(SHELL),sh.exe)
-	if not exist ${DIST}\include md ${DIST}\include
-	copy linad99\fvar.hpp ${DIST}\include
-	copy linad99\dfpool.h ${DIST}\include
-	copy linad99\trunc.hpp ${DIST}\include
-	copy linad99\factors.h ${DIST}\include
-	copy tools99\adoption.hpp ${DIST}\include
-	copy tools99\adstring.hpp ${DIST}\include
-	copy tools99\cifstrem.h ${DIST}\include
-	copy tools99\clist.h ${DIST}\include
-	copy tools99\admb_messages.h ${DIST}\include
-	copy df1b2-separable\adpool.h ${DIST}\include
-	copy df1b2-separable\adrndeff.h ${DIST}\include
-	copy df1b2-separable\df1b2fun.h ${DIST}\include
-	copy df1b2-separable\df32fun.h ${DIST}\include
-	copy df1b2-separable\df3fun.h ${DIST}\include
-	copy df1b2-separable\df1b2fnl.h ${DIST}\include
-	copy df1b2-separable\df1b2loc.h ${DIST}\include
-	copy df1b2-separable\smartbuf.h ${DIST}\include
-	copy nh99\admodel.h ${DIST}\include
-	copy nh99\adsplus.h ${DIST}\include
-	copy nh99\spcomm.h ${DIST}\include
-	copy nh99\param_init_bounded_number_matrix.h ${DIST}\include
-	copy nh99\gccmanip.h ${DIST}\include
+libs: objects
+ifeq ($(SHELL),cmd)
+	if not exist ${DIST}\lib md ${DIST}\lib
+	if exist ${DIST}\lib\libadmb.a del ${DIST}\lib\libadmb.a
+	if exist ${DIST}\lib\libadmbo.a del ${DIST}\lib\libadmbo.a
 else
-	mkdir -p ${DIST}/include
-	cp linad99/fvar.hpp ${DIST}/include
-	cp linad99/dfpool.h ${DIST}/include
-	cp linad99/trunc.hpp ${DIST}/include
-	cp linad99/factors.h ${DIST}/include
-	cp tools99/adoption.hpp ${DIST}/include
-	cp tools99/adstring.hpp ${DIST}/include
-	cp tools99/cifstrem.h ${DIST}/include
-	cp tools99/clist.h ${DIST}/include
-	cp tools99/admb_messages.h ${DIST}/include
-	cp df1b2-separable/adpool.h ${DIST}/include
-	cp df1b2-separable/adrndeff.h ${DIST}/include
-	cp df1b2-separable/df1b2fun.h ${DIST}/include
-	cp df1b2-separable/df32fun.h ${DIST}/include
-	cp df1b2-separable/df3fun.h ${DIST}/include
-	cp df1b2-separable/df1b2fnl.h ${DIST}/include
-	cp df1b2-separable/df1b2loc.h ${DIST}/include
-	cp df1b2-separable/smartbuf.h ${DIST}/include
-	cp nh99/admodel.h ${DIST}/include
-	cp nh99/adsplus.h ${DIST}/include
-	cp nh99/spcomm.h ${DIST}/include
-	cp nh99/param_init_bounded_number_matrix.h ${DIST}/include
-	cp nh99/gccmanip.h ${DIST}/include
+	mkdir -p ${DIST}/lib
+	rm -vf ${DIST}/lib/libadmb.a
+	rm -vf ${DIST}/lib/libadmbo.a
 endif
-
-objects_dir:
-ifeq ($(SHELL),sh.exe)
-	if not exist $(OBJSDIR) md $(OBJSDIR)
-else
-	mkdir -p $(OBJSDIR)
-endif
+	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-linad99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-df1b2-separable-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-nh99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-tools99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-sparse-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-linad99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-df1b2-separable-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-nh99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-tools99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-sparse-*.obj
 
 objects: $(OBJECTS)
 
-ifeq ($(SHELL),sh.exe)
+$(OBJECTS): | includes
+
+ifeq ($(SHELL),cmd)
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o$@ $<
 
@@ -383,36 +282,66 @@ $(OBJSDIR)saflp-tools99-%.obj:tools99/%.cpp
 	$(CXX) -c $(CXXFLAGS) -o$@ $<
 endif
 
-verify:
-ifeq ($(SHELL),sh.exe)
-	$(MAKE) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
-	$(MAKE) -C $(DIST)\examples --file=Makefile all
-	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
+includes: dirs
+ifeq ($(SHELL),cmd)
+	if not exist ${DIST}\include md ${DIST}\include
+	copy linad99\fvar.hpp ${DIST}\include
+	copy linad99\dfpool.h ${DIST}\include
+	copy linad99\trunc.hpp ${DIST}\include
+	copy linad99\factors.h ${DIST}\include
+	copy tools99\adoption.hpp ${DIST}\include
+	copy tools99\adstring.hpp ${DIST}\include
+	copy tools99\cifstrem.h ${DIST}\include
+	copy tools99\clist.h ${DIST}\include
+	copy tools99\admb_messages.h ${DIST}\include
+	copy df1b2-separable\adpool.h ${DIST}\include
+	copy df1b2-separable\adrndeff.h ${DIST}\include
+	copy df1b2-separable\df1b2fun.h ${DIST}\include
+	copy df1b2-separable\df32fun.h ${DIST}\include
+	copy df1b2-separable\df3fun.h ${DIST}\include
+	copy df1b2-separable\df1b2fnl.h ${DIST}\include
+	copy df1b2-separable\df1b2loc.h ${DIST}\include
+	copy df1b2-separable\smartbuf.h ${DIST}\include
+	copy nh99\admodel.h ${DIST}\include
+	copy nh99\adsplus.h ${DIST}\include
+	copy nh99\spcomm.h ${DIST}\include
+	copy nh99\param_init_bounded_number_matrix.h ${DIST}\include
+	copy nh99\gccmanip.h ${DIST}\include
 else
-	$(MAKE) FAST_OPTION=-f -C $(DIST)/examples all
-	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-opt.txt"
-	$(MAKE) -C $(DIST)/examples all
-	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-saf.txt"
+	mkdir -p ${DIST}/include
+	cp linad99/fvar.hpp ${DIST}/include
+	cp linad99/dfpool.h ${DIST}/include
+	cp linad99/trunc.hpp ${DIST}/include
+	cp linad99/factors.h ${DIST}/include
+	cp tools99/adoption.hpp ${DIST}/include
+	cp tools99/adstring.hpp ${DIST}/include
+	cp tools99/cifstrem.h ${DIST}/include
+	cp tools99/clist.h ${DIST}/include
+	cp tools99/admb_messages.h ${DIST}/include
+	cp df1b2-separable/adpool.h ${DIST}/include
+	cp df1b2-separable/adrndeff.h ${DIST}/include
+	cp df1b2-separable/df1b2fun.h ${DIST}/include
+	cp df1b2-separable/df32fun.h ${DIST}/include
+	cp df1b2-separable/df3fun.h ${DIST}/include
+	cp df1b2-separable/df1b2fnl.h ${DIST}/include
+	cp df1b2-separable/df1b2loc.h ${DIST}/include
+	cp df1b2-separable/smartbuf.h ${DIST}/include
+	cp nh99/admodel.h ${DIST}/include
+	cp nh99/adsplus.h ${DIST}/include
+	cp nh99/spcomm.h ${DIST}/include
+	cp nh99/param_init_bounded_number_matrix.h ${DIST}/include
+	cp nh99/gccmanip.h ${DIST}/include
 endif
 
-tests:
-ifeq ($(SHELL),sh.exe)
-	$(MAKE) --directory=..\contrib test
-	$(MAKE) --directory=..\tests
+dirs:
+ifeq ($(SHELL),cmd)
+	if not exist $(OBJSDIR) md $(OBJSDIR)
 else
-	$(MAKE) --directory=../contrib test
-	$(MAKE) --directory=../tests
+	mkdir -p $(OBJSDIR)
 endif
-
-install:
-	@#echo "Read INSTALL.txt for installation instructions."
-	rm -rvf /usr/local/admb
-	cp -Rf ../build/dist $(INSTALL_DIR)admb
-	ln -sf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
 
 clean:
-ifeq ($(SHELL),sh.exe)
+ifeq ($(SHELL),cmd)
 	if exist ..\build rd /S /Q ..\build
 	if exist ..\admb del ..\admb
 	if exist ..\admb.bat del ..\admb.bat
@@ -423,8 +352,6 @@ ifeq ($(SHELL),sh.exe)
 	if exist nh99\tpl2cpp.c del nh99\tpl2cpp.c
 	if exist df1b2-separable\lex.yy.c del df1b2-separable\lex.yy.c
 	if exist df1b2-separable\tpl2rem.c del df1b2-separable\tpl2rem.c
-	$(MAKE) --directory=..\contrib clean
-	$(MAKE) --directory=..\tests clean
 else
 	@rm -vf ../admb
 	@rm -vf ../admb.bat
@@ -439,12 +366,24 @@ else
 	@rm -vf df1b2-separable/tpl2rem.c
 	@rm -vf df1b2-separable/tpl2rem
 	@rm -vrf ../build
-	$(MAKE) --directory=../contrib clean
-	$(MAKE) --directory=../tests clean
 endif
 
-check:
-	echo "SHELL: $(SHELL)"
-	echo "PATH: $(PATH)"
-	echo "PWD: $(PWD)"
-	echo "TERM: $(TERM)"
+install:
+	@#echo "Read INSTALL.txt for installation instructions."
+	rm -rvf /usr/local/admb
+	cp -Rf ../build/dist $(INSTALL_DIR)admb
+	ln -sf $(INSTALL_DIR)admb/bin/admb $(INSTALL_DIR)bin/admb
+
+copy:
+ifeq ($(SHELL),cmd)
+	if not exist ${DIST}\src md ${DIST}\src
+	xcopy ..\src $(DIST)\src /S /Y /D
+	if not exist ${DIST}\utilities md ${DIST}\utilities
+	xcopy ..\utilities $(DIST)\utilities /S /Y /D
+	if not exist ${DIST}\src md ${DIST}\src
+	xcopy ..\scripts $(DIST)\scripts /S /Y /D
+else
+	cp -R ../src ${DIST}
+	cp -vR ../utilities ${DIST}
+	cp -R ../scripts ${DIST}
+endif

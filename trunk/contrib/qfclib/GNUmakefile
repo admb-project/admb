@@ -1,44 +1,49 @@
+.ONESHELL:
+ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+SHELL = cmd
+endif
 ifeq ($(OS),Windows_NT)
 EXT=.sh
 endif
 
 include objects.lst
+HEADERS=qfclib.h
 
-all: $(addprefix $(PREFIX), $(OBJECTS))
+ifeq ($(SHELL),cmd)
+all: $(addprefix $(CONTRIB_OBJS_DIR)\saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)\optlp-contrib-, $(OBJECTS))
 
-$(PREFIX)%.obj: %.cpp
-ifeq ($(SHELL),sh.exe)
+$(CONTRIB_OBJS_DIR)\saflp-contrib-%.obj: %.cpp
 	..\..\admb -c $(OPTION) $<
 	copy $(basename $<).obj $@
-	copy qfclib.h $(CONTRIB_DIR)\include
+
+$(CONTRIB_OBJS_DIR)\optlp-contrib-%.obj: %.cpp
+	..\..\admb -c -f $(OPTION) $<
+	copy $(basename $<).obj $@
 else
+all: $(addprefix $(CONTRIB_OBJS_DIR)/saflp-contrib-, $(OBJECTS)) $(addprefix $(CONTRIB_OBJS_DIR)/optlp-contrib-, $(OBJECTS))
+
+$(CONTRIB_OBJS_DIR)/saflp-contrib-%.obj: %.cpp
 	../../admb$(EXT) -c $(OPTION) $<
 	cp $(basename $<).obj $@
-	cp qfclib.h $(CONTRIB_DIR)/include
+
+$(CONTRIB_OBJS_DIR)/optlp-contrib-%.obj: %.cpp
+	../../admb$(EXT) -c -f $(OPTION) $<
+	cp $(basename $<).obj $@
+endif
+
+includes:
+ifeq ($(SHELL),cmd)
+	copy $(HEADERS) $(CONTRIB_INCLUDE)
+else
+	cp $(HEADERS) $(CONTRIB_INCLUDE)
 endif
 
 test:
 	$(MAKE) --directory=tests
 
 clean:
-ifneq ($(SHELL),sh.exe)
-	@rm -vf *.obj
-	@rm -vf *.o
-	@rm -vf tests/testfunction.htp
-	@rm -vf tests/testfunction
-	@rm -vf tests/nf1b2list1
-	@rm -vf tests/variance
-	@rm -vf tests/f1b2list12
-	@rm -vf tests/f1b2list13
-	@rm -vf tests/testfunctionre.log
-	@rm -vf tests/testfunctionre.cpp
-	@rm -vf tests/eigv.rpt
-	@rm -vf tests/testfunction.log
-	@rm -vf tests/testfunction.cpp
-	@rm -vf tests/testfunctionre.htp
-	@rm -vf tests/nf1b2list12
-	@rm -vf tests/f1b2list1
-	@rm -vf tests/nf1b2list13
-	@rm -vf tests/fmin.log
-	@rm -vf tests/testfunctionre
+ifeq ($(SHELL),cmd)
+	del /Q $(OBJECTS)
+else
+	@rm -vf $(OBJECTS)
 endif

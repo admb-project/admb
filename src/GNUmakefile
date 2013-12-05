@@ -104,9 +104,12 @@ OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
 all: dist
 ifeq ($(SHELL),cmd)
 	-svnversion .. > ${DIST}\REVISION
+	xcopy ..\utilities $(DIST)\utilities /S /Y /D
+	if not exist ${DIST}\src md ${DIST}\src
 else
 	-svnversion .. > ${DIST}/REVISION
 	touch $(DIST)/include/contrib.h
+	cp -vR ../utilities ${DIST}
 endif
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.
@@ -342,7 +345,6 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	if exist ..\build rd /S /Q ..\build
 	if exist ..\admb del ..\admb
 	if exist ..\admb.bat del ..\admb.bat
 	if exist ..\admb.cmd del ..\admb.cmd
@@ -352,6 +354,7 @@ ifeq ($(SHELL),cmd)
 	if exist nh99\tpl2cpp.c del nh99\tpl2cpp.c
 	if exist df1b2-separable\lex.yy.c del df1b2-separable\lex.yy.c
 	if exist df1b2-separable\tpl2rem.c del df1b2-separable\tpl2rem.c
+	if exist ..\build rd /S /Q ..\build
 else
 	@rm -vf ../admb
 	@rm -vf ../admb.bat
@@ -376,14 +379,14 @@ install:
 
 copy:
 ifeq ($(SHELL),cmd)
+	xcopy ..\utilities $(DIST)\utilities /S /Y /D
+	if not exist ${DIST}\src md ${DIST}\src
 	if not exist ${DIST}\src md ${DIST}\src
 	xcopy ..\src $(DIST)\src /S /Y /D
 	if not exist ${DIST}\utilities md ${DIST}\utilities
-	xcopy ..\utilities $(DIST)\utilities /S /Y /D
-	if not exist ${DIST}\src md ${DIST}\src
 	xcopy ..\scripts $(DIST)\scripts /S /Y /D
 else
-	cp -R ../src ${DIST}
 	cp -vR ../utilities ${DIST}
+	cp -R ../src ${DIST}
 	cp -R ../scripts ${DIST}
 endif

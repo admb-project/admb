@@ -104,8 +104,8 @@ OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
 all: dist
 ifeq ($(SHELL),cmd)
 	-svnversion .. > ${DIST}\REVISION
+	if not exist $(DIST)\utilities md $(DIST)\utilities
 	xcopy ..\utilities $(DIST)\utilities /S /Y /D
-	if not exist ${DIST}\src md ${DIST}\src
 else
 	-svnversion .. > ${DIST}/REVISION
 	touch $(DIST)/include/contrib.h
@@ -379,14 +379,11 @@ install:
 
 copy:
 ifeq ($(SHELL),cmd)
-	xcopy ..\utilities $(DIST)\utilities /S /Y /D
-	if not exist ${DIST}\src md ${DIST}\src
-	if not exist ${DIST}\src md ${DIST}\src
+	if not exist $(DIST)\src md $(DIST)\src
 	xcopy ..\src $(DIST)\src /S /Y /D
-	if not exist ${DIST}\utilities md ${DIST}\utilities
+	if not exist $(DIST)\scripts md $(DIST)\scripts 
 	xcopy ..\scripts $(DIST)\scripts /S /Y /D
 else
-	cp -vR ../utilities ${DIST}
-	cp -R ../src ${DIST}
-	cp -R ../scripts ${DIST}
+	cp -R ../src $(DIST)
+	cp -R ../scripts $(DIST)
 endif

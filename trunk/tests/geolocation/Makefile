@@ -1,22 +1,22 @@
 all: kfsst kftrack trackit ukfsst
 
 kfsst:
-	if exist svn-kfsst pushd kfsst & $(MAKE) ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" & popd
+	$(MAKE) --directory=svn-kfsst PATH="$(CURDIR)/../..;$(PATH)"
 
 kftrack:
-	if exist svn-kftrack pushd kftrack & $(MAKE) ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" & popd
+	$(MAKE) --directory=svn-kftrack PATH="$(CURDIR)/../..;$(PATH)"
 
 trackit:
-	if exist svn-trackit pushd trackit & $(MAKE) ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" & popd
+	$(MAKE) --directory=svn-trackit PATH="$(CURDIR)/../..;$(PATH)"
 
 ukfsst:
-	if exist svn-ukfsst pushd svn-ukfsst & $(MAKE) ADMB_HOME="$(ADMB_HOME)" PATH="$(ADMB_HOME)/bin:$(PATH)" & popd
+	$(MAKE) --directory=svn-ukfsst PATH="$(CURDIR)/../..;$(PATH)"
 
 svn:
-	if not exist ukfsst svn export http://geolocation.googlecode.com/svn/trunk/ukfsst/inst/admb/src svn-ukfsst
-	if not exist trackit svn export http://geolocation.googlecode.com/svn/trunk/trackit/inst/admb/src svn-trackit
-	if not exist kftrack svn export http://geolocation.googlecode.com/svn/trunk/kftrack/inst/admb/src svn-kftrack
-	if not exist kfsst svn export http://geolocation.googlecode.com/svn/trunk/kfsst/inst/admb/src svn-kfsst
+	if not exist svn-ukfsst svn export http://geolocation.googlecode.com/svn/trunk/ukfsst/inst/admb/src svn-ukfsst
+	if not exist svn-trackit svn export http://geolocation.googlecode.com/svn/trunk/trackit/inst/admb/src svn-trackit
+	if not exist svn-kftrack svn export http://geolocation.googlecode.com/svn/trunk/kftrack/inst/admb/src svn-kftrack
+	if not exist svn-kfsst svn export http://geolocation.googlecode.com/svn/trunk/kfsst/kfsst/source svn-kfsst
 
 clean:
 	if exist svn-kfsst rd /S /Q svn-kfsst

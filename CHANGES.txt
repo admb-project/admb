@@ -1,7 +1,5 @@
 #ADMB Project  
 
-*ADMB-11.1*  
-*Released May 10, 2013*  
 
 Describe changes and features for each release.
 
@@ -9,7 +7,7 @@ Describe changes and features for each release.
 
 Release Notes
 -------------
-The goals for all releases are to
+The goals for all releases are
  
 * Continually improve algorithms
 * Add new requested features
@@ -17,8 +15,8 @@ The goals for all releases are to
 * Continually streamline installation and build process
 * Continually improve and update documentation
 
-ADMB-dev
---------
+ADMB-trunk
+----------
 
 ####Changes and Improvements
 * Added description documentation to the programming interface.
@@ -31,93 +29,101 @@ ADMB-dev
 * User interface: Windows admb bash script has a .sh extension to avoid 
   conflict with batch file.  So in MinGW or Cygwin shell, user will need
   to use 
-  
-    [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple
-* Fixed 'admb -d' for unix, mingw and cygwin shells. 
+
+        [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple
+
+* Fixed 'admb -d' for unix, mingw and cygwin shells.
 * Able to use Rtools for building, but will need to use the utilities\make.exe
   for building.
-* Improved the build by reworking the GNUmakefiles file.
-  + Able to use parallel build option (-j) again for faster builds.
+* Improved the build by restructuring and reworking the GNUmakefiles file.
+* Able to use parallel build option (-j) with verify and contrib targets for 
+  faster builds.
+* To build with optimized libraries use fast option (-f) instead of (-o). 
+
+        $ admb -f model.tpl
 
 ####New Supported Compilers
 
 * GNU C++ 4.8 compiler
 * Apple XCode 5
-[] Microsoft C++ 2013 - Still need to port it
+- [ ] Microsoft C++ 2013 - Still need to port it
 
-  _Note: Borland 5.5 compiler is no longer supported._
+ _Note: Borland 5.5 compiler is no longer supported._
 
 ####New Features
 
 * Add debug target to build files.
 
-      $ make debug
+        $ make debug
 
 * Add shared target to build files (Unix only).
 
-      $ make shared
+        $ make shared
 
 * admb scripts can be called directly and do not require setting enviromental variables
   ADMB_HOME and PATH.
 
-  For Unix,  
+    For Unix,  
    
-      [~/admb/example/admb/simple/]$ ~/admb/admb simple
+        [~/admb/example/admb/simple/]$ ~/admb/admb simple
 
-  For Windows, 
+    For Windows, 
   
-      C:\admb\example\admb\simple\> C:\admb\admb simple
+        C:\admb\example\admb\simple\> C:\admb\admb simple
 
 * admb scripts can build C++ source files and link.
 
-  For Unix, 
+    For Unix, 
   
-      [~/admb/example/admb/simple/]$ ~/admb/admb simple.tpl mysource.cpp
+        [~/admb/example/admb/simple/]$ ~/admb/admb simple.tpl mysource.cpp
 
-  For Windows, 
+    For Windows, 
   
-      C:\admb\example\admb\simple\> C:\admb\admb simple.tpl mysource.cpp
+        C:\admb\example\admb\simple\> C:\admb\admb simple.tpl mysource.cpp
 
 * admb scripts have a new option -f for optimized library "OPT_LIB".
 
-  For Unix, 
+    For Unix, 
   
-      [~/admb/example/admb/simple/]$ ~/admb/admb -f simple.tpl mysource.cpp
+        [~/admb/example/admb/simple/]$ ~/admb/admb -f simple.tpl mysource.cpp
 
-  For Windows, 
+    For Windows, 
   
-      C:\admb\example\admb\simple\> C:\admb\admb -f simple.tpl mysource.cpp
+        C:\admb\example\admb\simple\> C:\admb\admb -f simple.tpl mysource.cpp
 
 * admb scripts have a new option -c for only building object files.
 
-  Both commands below will only build simple.o and mysource.o compiled object files.  
-  The model application will not be built. 
+    Both commands below will only build simple.o and mysource.o compiled object files.  
+    The model application will not be built. 
 
-  For Unix, 
+    For Unix, 
       
-      [~/admb/example/admb/simple/]$ ~/admb/admb -c simple.tpl mysource.cpp
+        [~/admb/example/admb/simple/]$ ~/admb/admb -c simple.tpl mysource.cpp
 
-  For Windows, 
+    For Windows, 
   
-      C:\admb\example\admb\simple\> C:\admb\admb -c simple.tpl mysource.cpp
+        C:\admb\example\admb\simple\> C:\admb\admb -c simple.tpl mysource.cpp
 
-  _Note: This is the almost the same as using adcomp mysource._
+    _Note: This is the almost the same as using 'adcomp mysource'._
 
-####To Do
+####ToDo
 
 The following are planned or requested features for the next release.
 
-[] Migrating ADMB Subversion Version Control to Git
-[] Migrating ADMB Redmine Issue Tracking to Git
-[] Merge Threading Code to trunk
-[] Atan2
-[] Gradient output
-[] Write Design Documentation
-[] Write Developer Documentation
-[] Shared library for Random Effects models
+- [ ] Migrating ADMB Subversion Version Control to Git
+- [ ] Migrating ADMB Redmine Issue Tracking to Git
+- [ ] Merge Threading Code to trunk
+- [ ] Atan2
+- [ ] Gradient output
+- [ ] Write Design Documentation
+- [ ] Write Developer Documentation
+- [ ] Shared library for Random Effects models
 
 ADMB-11.1
 ---------
+
+*ADMB-11.1*  
+*Released May 10, 2013*  
 
 ####Changes
 
@@ -139,10 +145,6 @@ ADMB-11.1
 * The compilation scripts (adcomp, adlink, admb) compile in "safe" mode by 
   default.
 
-  To build with optimized libraries use fast option (-f) instead of (-o). 
-
-      $ admb -f model.tpl
-
 * added 's' option with the Ctrl^C
 
 * contributed libraries are built with the main libraries.
@@ -156,7 +158,7 @@ ADMB-11.1
 * admb script can now build tpl models without the need to set ADMB_HOME
   or PATH. For example, 
 
-      [~/admb-11.1/examples/admb/simple/]$ ~/admb-11.1/admb simple
+        [~/admb-11.1/examples/admb/simple/]$ ~/admb-11.1/admb simple
 
 * Functions from user-contributed packages can be loaded from
   directory 'contrib'. Read 'contrib/README.txt'.
@@ -175,11 +177,11 @@ ADMB-11.1
 * admb is now able to handle .obj, .cpp and .tpl files on
   the commandline.
 
-  For example,
+    For example,
 
-      $ admb model.tpl supportcode.cpp anotherfile.cpp
+        $ admb model.tpl supportcode.cpp anotherfile.cpp
 
-  Output is executable 'model'.
+    Output is executable 'model'.
 
 ####Bug Fixes
 

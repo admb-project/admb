@@ -1,6 +1,6 @@
-#ADMB Project  
-*ADMB-11.1*  
-*Released May 10, 2013*  
+#ADMB Project
+*ADMB-trunk*  
+*Released Month DD, YYYY*  
 
 Describe ADMB build and installation procedures for Unix operating systems such as Linux, MacOS, Solaris and BSD.
 
@@ -10,13 +10,14 @@ Prerequisites
 -------------
 
 The following programs should be installed on the local computer.
-_**Note**: For MacOS, install XCode with command line tools._
 
 * GNU sed
 * GNU flex
 * GNU make
 * C++ compiler
-* Subversion Client
+* *Optional*: Subversion Client to download from source version control.
+
+_**Note**: For MacOS, install XCode with command line tools includes all the prerequistes._
 
 Quick Start Unix
 ----------------
@@ -30,9 +31,9 @@ Quick Start Unix
 
            [~]$ svn checkout http://www.admb-project.org/svn/trunk admb
 
-       This will download admb trunk folder to _~/admb/_.
+       This will copy admb trunk folder to _~/admb/_.
 
-       If **unable** to checkout, download [ADMB source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest.zip).
+       If **unable** to checkout, download [full source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest.zip).
 
        Use the command below to extract to _~/admb/_. 
 
@@ -48,11 +49,11 @@ Quick Start Unix
 
            [~/admb/]$ make
 
-       _**Note**: ADMB will be built in ~/admb/build/dist/._
-
        If debug symbols are needed, use the commands below.
 
            [~/admb/]$ make debug
+
+       _**Note**: ADMB will be built to ~/admb/build/dist._
 
 5. **Use** ADMB
 
@@ -62,15 +63,17 @@ Quick Start Unix
            [~/admb/examples/admb/simple/]$ ~/admb/admb simple.tpl
            [~/admb/examples/admb/simple/]$ ./simple
 
-       For MinGW and Cygwin shells, use the admb.sh script.
+       For MinGW and Cygwin shells, use the **'admb.sh'** script.
 
            [~/admb/]$ cd examples/admb/simple
            [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
            [~/admb/examples/admb/simple/]$ ./simple
 
-6. **[OPTIONAL]** Installation
+6. *Optional*: Installation
+       _The dist folder can be copied to other computers with similar configurations._
 
-       Avoids the need the to include path with the admb script.
+       Follow the procedure below to avoid typing the directory 
+       when calling the admb script.
 
        Copy built binary distribution folder.
 

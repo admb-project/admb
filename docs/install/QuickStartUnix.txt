@@ -15,12 +15,12 @@ The following programs should be installed on the local computer.
 * GNU flex
 * GNU make
 * C++ compiler
-* *Optional*: Subversion Client to download from source version control.
+* _**Optional**_ &mdash; Subversion Client to download from source version control.
 
-_**Note**: For MacOS, install XCode with command line tools includes all the prerequistes._
+_**Note** &mdash; For MacOS, install XCode with command line tools includes all the prerequistes._
 
-Quick Start Unix
-----------------
+Quick Start
+-----------
 
 1. Open a **Terminal** window
 
@@ -53,7 +53,7 @@ Quick Start Unix
 
            [~/admb/]$ make debug
 
-       _**Note**: ADMB will be built to ~/admb/build/dist._
+       _**Note** &mdash; When completed, `~/admb/build/dist` is the binary distribution directory._
 
 5. **Use** ADMB
 
@@ -69,13 +69,14 @@ Quick Start Unix
            [~/admb/examples/admb/simple/]$ ~/admb/admb.sh simple.tpl
            [~/admb/examples/admb/simple/]$ ./simple
 
-6. *Optional*: Installation
+6. _**Optional**_ &mdash; Installation    
+
        _The dist folder can be copied to other computers with similar configurations._
 
        Follow the procedure below to avoid typing the directory 
        when calling the admb script.
 
-       Copy built binary distribution folder.
+       Copy binary distribution folder to /usr/local/ as super-user.
 
            [~]$ sudo cp -Rvf admb/build/dist  /usr/local/admb
 

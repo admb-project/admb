@@ -13,17 +13,17 @@ _For builds within *Cygwin* and *MinGW-Msys* shells, read and follow the
 instructions in the [QuickStart for Unix](QuickStartUnix.html)._
 
 
-Quick Start Windows
--------------------
+Quick Start
+-----------
 
 1. Open **Command Prompt** window  
-       _**Note**: 32 or 64 bit Command Prompt is required._
+       _**Note** &mdash; 32 or 64 bit Command Prompt is required._
 
 2. **Download** ADMB
 
        A installed Subversion Client is needed to download from ADMB source version control.
 
-       _**Note**: SlikSVN is a command line Subversion Client._ 
+       _**Note** &mdash; SlikSVN is a command line Subversion Client._ 
 
        To get the most current code, use the command below.
 
@@ -66,13 +66,13 @@ Quick Start Windows
 
         C:\admb\> utilities\make
 
-       _**Note**: Rtools includes a incompatible make which cannot be used to build the distribution._
+       _**Note** &mdash; Rtools includes a incompatible make which cannot be used to build the distribution._
 
        If **MinGW-Msys** was installed and is included in System Enviroment PATH, use the command below.
 
         C:\admb\> make
 
-       _**Note**: ADMB will be built to 'C:\admb\build\dist'._
+       _**Note** &mdash; When completed, `C:\admb\build\dist` is the binary distribution directory._
 
 6. **Use** ADMB
  
@@ -82,7 +82,7 @@ Quick Start Windows
         C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
         C:\admb\examples\admb\simple\> simple.exe
 
-7. *Optional*: Installation
+7. _**Optional**_ &mdash; Installation
 
        Add the admb directory to the system PATH to avoid typing the directory 
        when calling the admb script.

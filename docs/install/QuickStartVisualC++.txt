@@ -5,7 +5,7 @@
 Describe ADMB build and installation procedures for Windows and Visual C++ compilers.
 
 ---
-_**Note**: For Microsoft Visual C++ 2010, read [installation][help] documentation._
+_**Note** &mdash; For Microsoft Visual C++ 2010, read [installation][help] documentation._
 [help]: http://www.admb-project.org/documentation/installation/admb-installation-visual-c
 
 Prerequisites
@@ -14,10 +14,10 @@ Prerequisites
 The following programs should be installed on the local computer.
 
 * Visual C++ installed and updated
-* *Optional*: Subversion Client to download from source version control.
+* _**Optional**_ &mdash; Subversion Client to download from source version control.
 
-Quick Start Visual C++
-----------------------
+Quick Start
+-----------
 
 1. Open **Visual Studio Command Prompt** window
 
@@ -48,7 +48,7 @@ Quick Start Visual C++
 
         C:\admb\> nmake debug
 
-       _**Note**: ADMB will be built to 'C:\admb\build\dist'._
+       _**Note** &mdash; When completed, `C:\admb\build\dist` is the binary distribution directory._
 
 5. **Use** ADMB
 
@@ -58,7 +58,7 @@ Quick Start Visual C++
         C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
         C:\admb\examples\admb\simple\> simple.exe
 
-6. *Optional*: Installation
+6. _**Optional**_ &mdash; Installation
 
        Add the admb directory to the system PATH to avoid typing the directory 
        when calling the admb script.

@@ -1,7 +1,6 @@
-ADMB Project
-============
-*ADMB-11.1*  
-*Released May 10, 2013*  
+#ADMB Project
+*ADMB-trunk*  
+*Released Month DD, YYYY*  
 
 Describe ADMB build and installation procedures for Windows and Visual C++ compilers.
 
@@ -15,7 +14,7 @@ Prerequisites
 The following programs should be installed on the local computer.
 
 * Visual C++ installed and updated
-* Subversion Client SlikSVN 
+* *Optional*: Subversion Client to download from source version control.
 
 Quick Start Visual C++
 ----------------------
@@ -29,9 +28,9 @@ Quick Start Visual C++
 
         C:\> svn checkout http://www.admb-project.org/svn/trunk admb
 
-       This will download admb trunk folder to _C:\admb\ _.
+       This will copy admb trunk folder to _C:\admb\ _.
 
-       If **unable** to checkout, download [ADMB source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest.zip).
+       If **unable** to checkout, download [full source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest.zip).
 
        Double click downloaded zip file and extract to _C:\admb\ _.
 
@@ -49,6 +48,8 @@ Quick Start Visual C++
 
         C:\admb\> nmake debug
 
+       _**Note**: ADMB will be built to 'C:\admb\build\dist'._
+
 5. **Use** ADMB
 
        The following commands build and run the simple example.
@@ -57,9 +58,10 @@ Quick Start Visual C++
         C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
         C:\admb\examples\admb\simple\> simple.exe
 
-6. **[OPTIONAL]** Include ADMB in system **PATH**.
+6. *Optional*: Installation
 
-       Avoids the need the to add the prefix path to the admb script.
+       Add the admb directory to the system PATH to avoid typing the directory 
+       when calling the admb script.
 
        1. In the **System Properties** window, click on the **Enviroment Variables** button.
 

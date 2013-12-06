@@ -1,6 +1,6 @@
 #ADMB Project 
-*ADMB-11.1*  
-*Released May 10, 2013*  
+*ADMB-trunk*  
+*Released Month DD, YYYY*  
 
 Describe ADMB build and installation procedures for Windows and MinGW.
 
@@ -12,33 +12,25 @@ read and follow the instuctions in [QuickStart for Visual C++](QuickStartVisualC
 _For builds within *Cygwin* and *MinGW-Msys* shells, read and follow the
 instructions in the [QuickStart for Unix](QuickStartUnix.html)._
 
-Prerequisites
--------------
-  
-The following should be installed on the local computer.  
-
-* Subversion Client   
-  _Note: SlikSVN is a command line Subversion Client._ 
 
 Quick Start Windows
 -------------------
 
 1. Open **Command Prompt** window  
-       _Note: 32 or 64 bit Command Prompt (Command.com) is required._
+       _**Note**: 32 or 64 bit Command Prompt is required._
 
 2. **Download** ADMB
 
-       There are **two ways** to get the source distribution.
+       A installed Subversion Client is needed to download from ADMB source version control.
 
-       **From Version Control**  
-       To get the most current code, download from directly from 
-       ADMB version control using the command below.
+       _**Note**: SlikSVN is a command line Subversion Client._ 
+
+       To get the most current code, use the command below.
 
         C:\> svn checkout http://www.admb-project.org/svn/trunk admb
 
-       This will download admb trunk folder to _C:\admb\ _.
+       This will copy admb trunk folder to _C:\admb\ _.
 
-       **From Zip**  
        If **unable** to checkout code, download the
        [full source distribution](http://www.admb-project.org/buildbot/snapshots/admb-latest-src.zip).
 
@@ -62,7 +54,7 @@ Quick Start Windows
 
 5. **Build** ADMB
 
-       If MinGW was installed with _get-mingw.bat_, use the command below.
+       If **MinGW** was installed with _get-mingw.bat_, use the command below.
 
         C:\admb\> utilities\make
 
@@ -70,11 +62,17 @@ Quick Start Windows
 
         C:\admb\> utilities\make debug
 
-       If MinGW-Msys was installed and is included in System Enviroment PATH, use the command below.
+       If **Rtools** was installed and is included in System Enviroment PATH, use the command below.
+
+        C:\admb\> utilities\make
+
+       _**Note**: Rtools includes a incompatible make which cannot be used to build the distribution._
+
+       If **MinGW-Msys** was installed and is included in System Enviroment PATH, use the command below.
 
         C:\admb\> make
 
-       _Note: For Rtools build, use utilities\make.exe instead of the included make in Rtools._
+       _**Note**: ADMB will be built to 'C:\admb\build\dist'._
 
 6. **Use** ADMB
  
@@ -84,9 +82,10 @@ Quick Start Windows
         C:\admb\examples\admb\simple\> C:\admb\admb simple.tpl
         C:\admb\examples\admb\simple\> simple.exe
 
-7. **[OPTIONAL]** Include admb script in System Enviroment **PATH**
+7. *Optional*: Installation
 
-       Avoids the need the to include path with the admb script.
+       Add the admb directory to the system PATH to avoid typing the directory 
+       when calling the admb script.
 
        1. In the **System Properties** window, click on the **Enviroment Variables** button.
 

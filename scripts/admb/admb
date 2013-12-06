@@ -41,6 +41,9 @@ if [ -z "$ADMB_HOME" ]; then
   declare -rx ADMB_HOME=$PWD
   popd &> /dev/null
 fi
+if [ "$OS" == "Windows_NT" ]; then
+  PATH=$ADMB_HOME/utilities/mingw/bin:$PATH
+fi
 PATH=$ADMB_HOME/bin:$PATH
 
 # Pop args until model=$1

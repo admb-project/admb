@@ -112,30 +112,13 @@ for %%a in (%*) do (
     )
   )
 )
-if defined CXXFLAGS (
-  set CXXFLAGS= -c !CXXFLAGS!
-) else (
-  set CXXFLAGS= -c
-)
-if defined d (
-  if defined LDFLAGS (
-    set LDFLAGS= -shared !LDFLAGS!
-  ) else (
-    set LDFLAGS= -shared
-  )
-)
-if defined LDFLAGS (
-  set LDFLAGS= -static !LDFLAGS!
-) else (
-  set LDFLAGS= -static
-)
 if exist !ADMB_HOME!\bin\admb-cfg.bat (
   call !ADMB_HOME!\bin\admb-cfg.bat
-  if defined ADMB_CFG_CXXFLAGS (
-    set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
-  )
   if defined ADMB_CFG_CXX (
     set CXX=!ADMB_CFG_CXX!
+  )
+  if defined ADMB_CFG_CXXFLAGS (
+    set CXXFLAGS=!CXXFLAGS! !ADMB_CFG_CXXFLAGS!
   )
   if defined ADMB_CFG_LD (
     if not defined d (
@@ -146,37 +129,74 @@ if exist !ADMB_HOME!\bin\admb-cfg.bat (
     set LDFLAGS=!LDFLAGS! !ADMB_CFG_LDFLAGS!
   )
 )
-if not defined CXX (
-  set CXX=g++
-)
-if not defined LD (
-  if not defined d (
-    set LD=g++
+if "!CXX!"=="cl" (
+  set LD=!CXX!
+  if defined CXXFLAGS (
+    set CXXFLAGS= /c /nologo /EHsc !CXXFLAGS!
   ) else (
-    set LD=g++
+    set CXXFLAGS= /c /nologo /EHsc
   )
-)
-if defined g (
-  set CXXFLAGS=!CXXFLAGS! -g
-  set LDFLAGS=!LDFLAGS! -s
+  if defined g (
+    set CXXFLAGS=!CXXFLAGS! /Z7
+  ) else (
+    set CXXFLAGS=!CXXFLAGS! /O2
+  )
+  if defined fast (
+    set CXXFLAGS=!CXXFLAGS! /DOPT_LIB
+  ) else (
+    set CXXFLAGS=!CXXFLAGS! /DSAFE_ALL
+  )
+  set CXXFLAGS=!CXXFLAGS! /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I. /I!ADMB_HOME!\include /I!ADMB_HOME!\contrib\include
 ) else (
-  set CXXFLAGS=!CXXFLAGS! -O3
-)
-if defined fast (
-  set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
-  set libs=!ADMB_HOME!\contrib\lib\libcontribo.a !ADMB_HOME!\lib\libadmbo.a
-) else (
-  set CXXFLAGS=!CXXFLAGS! -DSAFE_ALL
-  set libs=!ADMB_HOME!\contrib\lib\libcontrib.a !ADMB_HOME!\lib\libadmb.a
-)
-if defined d (
-  set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
-)
-set CXXFLAGS=!CXXFLAGS! -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\contrib\include
-if defined MINGW_HOME (
-  set PATH=!ADMB_HOME!\bin;!MINGW_HOME!\bin;!PATH!
-) else (
-  set PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!
+  if not defined CXX (
+    set CXX=g++
+  )
+  if not defined LD (
+    if not defined d (
+      set LD=g++
+    ) else (
+      set LD=g++
+    )
+  )
+  if defined CXXFLAGS (
+    set CXXFLAGS= -c !CXXFLAGS!
+  ) else (
+    set CXXFLAGS= -c
+  )
+  if defined d (
+    if defined LDFLAGS (
+      set LDFLAGS= -shared !LDFLAGS!
+    ) else (
+      set LDFLAGS= -shared
+    )
+  )
+  if defined LDFLAGS (
+    set LDFLAGS= -static !LDFLAGS!
+  ) else (
+    set LDFLAGS= -static
+  )
+  if defined g (
+    set CXXFLAGS=!CXXFLAGS! -g
+    set LDFLAGS=!LDFLAGS! -s
+  ) else (
+    set CXXFLAGS=!CXXFLAGS! -O3
+  )
+  if defined fast (
+    set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
+    set libs=!ADMB_HOME!\contrib\lib\libcontribo.a !ADMB_HOME!\lib\libadmbo.a
+  ) else (
+    set CXXFLAGS=!CXXFLAGS! -DSAFE_ALL
+    set libs=!ADMB_HOME!\contrib\lib\libcontrib.a !ADMB_HOME!\lib\libadmb.a
+  )
+  if defined d (
+    set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
+  )
+  set CXXFLAGS=!CXXFLAGS! -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\contrib\include
+  if defined MINGW_HOME (
+    set PATH=!ADMB_HOME!\bin;!MINGW_HOME!\bin;!PATH!
+  ) else (
+    set PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!
+  )
 )
 if not defined tpls (
   if not defined srcs (
@@ -224,7 +244,11 @@ for %%a in (!tpls!) do (
 for %%b in (!tpls!) do (
   set tpl=%%~nb
   @REM set CMD=adcomp!d!!g!!r!!fast! !tpl!
-  set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
+  if "!CXX!"=="cl" (
+    set CMD=!CXX!!CXXFLAGS! /Fo!tpl!.obj !tpl!.cpp
+  ) else (
+    set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
+  )
   echo.&echo *** Compile !tpl!.cpp:
   echo !CMD!
   call !CMD!
@@ -243,7 +267,11 @@ if defined srcs (
     )
     set filename=%%~na
     @REM set CMD=adcomp!d!!g!!r!!fast! !src!
-    set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
+    if "!CXX!"=="cl" (
+      set CMD=!CXX!!CXXFLAGS! /Fo!filename!.obj !filename!.cpp
+    ) else (
+      set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
+    )
     echo.&echo *** Compile !src!:
     echo !CMD!
     call !CMD!
@@ -281,7 +309,11 @@ if not defined tpls (
       if defined d (
         set CMD=!LD!!LDFLAGS! -o !main!.dll !objs! !libs!
       ) else (
-        set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
+        if "!CXX!"=="cl" (
+          set CMD=!LD!!LDFLAGS! /Fe!main!.exe !objs! !libs!
+        ) else (
+          set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
+        )
       )
       echo.&echo *** Linking !objs!:
       echo !CMD!
@@ -308,10 +340,18 @@ if not defined tpls (
     if defined d (
       set CMD=!LD!!LDFLAGS! -o !tpl!.dll !objs! !libs!
     ) else (
-      if defined objs (
-        set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
+      if "!CXX!"=="cl" (
+        if defined objs (
+          set CMD=!LD!!LDFLAGS! /Fe!tpl!.exe !tpl!.obj !objs! !libs!
+        ) else (
+          set CMD=!LD!!LDFLAGS! /Fe!tpl!.exe !tpl!.obj !libs!
+        )
       ) else (
-        set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
+        if defined objs (
+          set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !objs! !libs!
+        ) else (
+          set CMD=!LD!!LDFLAGS! -o !tpl!.exe !tpl!.obj !libs!
+        )
       )
     )
     if defined objs (

@@ -1,4 +1,2 @@
-HEADERS=qfclib.h
-OBJECTS= qfc_est.obj qfc_sim.obj
-
+include objects.lst
 include ../admb-rules.mak

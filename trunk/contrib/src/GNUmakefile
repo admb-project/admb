@@ -1,4 +1,2 @@
-OBJECTS=contrib.obj
-HEADERS=contrib.h
-
+include objects.lst
 include ../admb-rules.mak

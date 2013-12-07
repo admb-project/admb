@@ -1,26 +1,47 @@
-all: contribs
+DESTDIR=..\build\dist
+OBJDESTDIR=..\build\objects\contrib
+all:
+	$(MAKE) contrib-includes
+	$(MAKE) contrib-libs
+	$(MAKE) contrib-ad2csv
 
-contribs: build-src build-gdbprintlib build-statslib build-qfclib build-ecolib
+contrib-includes: contrib-dirs
+	cd ecolib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
+	cd gdbprintlib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
+	cd qfclib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
+	cd statslib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
+	cd src& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
 
-build-gdbprintlib:
-	pushd gdbprintlib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)gdbprint-
-	copy gdbprintlib\gdbprintlib.h $(ADMB_HOME)\contrib\include
+contrib-dirs:
+	IF NOT EXIST $(DESTDIR)\contrib md $(DESTDIR)\contrib
+	IF NOT EXIST $(DESTDIR)\contrib\bin md $(DESTDIR)\contrib\bin
+	IF NOT EXIST $(DESTDIR)\contrib\include md $(DESTDIR)\contrib\include
+	IF NOT EXIST $(DESTDIR)\contrib\lib md $(DESTDIR)\contrib\lib
+	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)
 
-build-statslib:
-	pushd statslib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)statslib-
-	copy statslib\statsLib.h $(ADMB_HOME)\contrib\include
+contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src
+	IF EXIST $(DESTDIR)\contrib\lib\contrib.lib del $(DESTDIR)\contrib\lib\contrib.lib
+	lib /OUT:$(DESTDIR)\contrib\lib\contrib.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\saflp-contrib*.obj
+	IF EXIST $(DESTDIR)\contrib\lib\contribo.lib del $(DESTDIR)\contrib\lib\contribo.lib
+	lib /OUT:$(DESTDIR)\contrib\lib\contribo.lib /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\optlp-contrib*.obj
 
-build-ecolib:
-	pushd ecolib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)ecolib-
-	copy ecolib\ecolib.h $(ADMB_HOME)\contrib\include
+contrib-ad2csv:
+	pushd ad2csv& $(MAKE)
 
-build-qfclib:
-	pushd qfclib& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)qfclib-
-	copy qfclib\qfclib.h $(ADMB_HOME)\contrib\include
+contrib-ecolib:
+	pushd ecolib& $(MAKE)
 
-build-src:
-	pushd src& ..\..\utilities\make CXX=$(CXX) CXXFLAGS="$(CXXFLAGS)" ADMB_HOME="$(ADMB_HOME)" PREFIX_OBJ=$(PREFIX_OBJ)src-
-	copy src\contrib.h $(ADMB_HOME)\contrib\include
+contrib-gdbprintlib:
+	pushd gdbprintlib& $(MAKE)
+
+contrib-qfclib:
+	pushd qfclib& $(MAKE)
+
+contrib-statslib:
+	pushd statslib& $(MAKE)
+
+contrib-src:
+	pushd src& $(MAKE)
 
 test:
 	cd ecolib& $(MAKE) test
@@ -28,6 +49,11 @@ test:
 
 clean:
 	cd ecolib& $(MAKE) clean
+	cd gdbprintlib& $(MAKE) clean
 	cd qfclib& $(MAKE) clean
 	cd statslib& $(MAKE) clean
+	cd src& $(MAKE) clean
 	cd ad2csv& $(MAKE) clean
+
+copy:
+	IF NOT EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\contrib

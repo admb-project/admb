@@ -1,12 +1,20 @@
-.PHONY: all
-.SUFFIXES: .obj .cpp
-
 include objects.lst
 
-all: $(OBJECTS)
-	copy ..\..\..\..\contrib\qfclib\qfclib.h $(DISKDIR)
+OPT=$(OBJECTS: = ..\..\..\build\objects\contrib\optlp-contrib-qfclib-)
+SAF=$(OBJECTS: = ..\..\..\build\objects\contrib\saflp-contrib-qfclib-)
+
+all: $(OPT) $(SAF)
+
+$(OPT):: $(@B:optlp-contrib-qfclib-=).cpp
+	..\..\..\admb -c -f $?
+	copy $(?:.cpp=.obj) $@
+
+$(SAF):: $(@B:saflp-contrib-qfclib-=).cpp
+	..\..\..\admb -c $?
+	copy $(?:.cpp=.obj) $@
+
+includes: $(HEADERS)
+	copy $(HEADERS) $(CONTRIB_INCLUDE)
 
 clean:
-
-{..\..\..\..\contrib\qfclib}.cpp.obj:
-	$(CXX) -c $(CXXFLAGS) -I"..\..\dist\include" $<
+	del /Q $(OBJECTS)

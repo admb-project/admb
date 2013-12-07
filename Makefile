@@ -46,7 +46,8 @@ cl-docs:
 cl-test:
 	cd tests & nmake all
 cl-verify:
-	cd src& nmake verify
+	cd examples& nmake copy
+	cd tests& nmake verify
 cl-install:
 	cd src& nmake install
 cl-clean:

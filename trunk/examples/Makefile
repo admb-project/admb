@@ -187,3 +187,7 @@ binomial:
 binomial_w2:
 	pushd admb-re\\weights & $(ADMB_HOME)\\admb -r $(OPTIONS) $@
 	pushd admb-re\\weights & $@ -nohess
+
+copy:
+	if not exist ..\build\dist\examples md ..\build\dist\examples
+	xcopy ..\examples ..\build\dist\examples /S /Y /D

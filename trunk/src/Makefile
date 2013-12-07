@@ -108,10 +108,10 @@ $(SAFLP_TOOLS99_OBJS):: $(@B:saflp-tools99-=tools99\).cpp
 $(OPTLP_TOOLS99_OBJS):: $(@B:optlp-tools99-=tools99\).cpp
 	$(CXX) /c $(CXXFLAGS_OPT) /Fo$@ $?
 
-$(OBJDESTDIR)\optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
+$(OBJDESTDIR)\optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) /c $(CXXFLAGS_OPT) /Fo$@ $?
 
-$(OBJDESTDIR)\saflp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
+$(OBJDESTDIR)\saflp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) /c $(CXXFLAGS_SAF) /Fo$@ $?
 
 includes: objdestdir

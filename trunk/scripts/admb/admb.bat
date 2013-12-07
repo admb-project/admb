@@ -143,10 +143,12 @@ if "!CXX!"=="cl" (
   )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! /DOPT_LIB
+    set libs="!ADMB_HOME!\contrib\lib\libcontribo.a" "!ADMB_HOME!\lib\libadmbo.a" /link
   ) else (
     set CXXFLAGS=!CXXFLAGS! /DSAFE_ALL
+    set libs="!ADMB_HOME!\contrib\lib\libcontrib.a" "!ADMB_HOME!\lib\libadmb.a" /link
   )
-  set CXXFLAGS=!CXXFLAGS! /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I. /I!ADMB_HOME!\include /I!ADMB_HOME!\contrib\include
+  set CXXFLAGS=!CXXFLAGS! /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
 ) else (
   if not defined CXX (
     set CXX=g++

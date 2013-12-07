@@ -1,4 +1,2 @@
-HEADERS=gdbprintlib.h
-OBJECTS=gdbprintlib.obj
-
+include objects.lst
 include ../admb-rules.mak

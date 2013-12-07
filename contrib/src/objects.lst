@@ -1,0 +1,3 @@
+HEADERS=contrib.h
+OBJECTS=\
+ contrib.obj

@@ -1,6 +1,6 @@
 all:
-	..\..\..\admb.cmd ad2csv.cpp main.cpp
-	copy ad2csv.exe ..\..\..\build\dist\contrib\bin
+	..\..\admb.cmd ad2csv.cpp main.cpp
+	copy ad2csv.exe ..\..\build\dist\contrib\bin
 
 clean:
 	del ad2csv.obj

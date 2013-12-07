@@ -143,10 +143,10 @@ if "!CXX!"=="cl" (
   )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! /DOPT_LIB
-    set libs="!ADMB_HOME!\contrib\lib\libcontribo.a" "!ADMB_HOME!\lib\libadmbo.a" /link
+    set libs="!ADMB_HOME!\contrib\lib\contribo.lib" "!ADMB_HOME!\lib\admbo.lib" /link
   ) else (
     set CXXFLAGS=!CXXFLAGS! /DSAFE_ALL
-    set libs="!ADMB_HOME!\contrib\lib\libcontrib.a" "!ADMB_HOME!\lib\libadmb.a" /link
+    set libs="!ADMB_HOME!\contrib\lib\contrib.lib" "!ADMB_HOME!\lib\admb.lib" /link
   )
   set CXXFLAGS=!CXXFLAGS! /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
 ) else (

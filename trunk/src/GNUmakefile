@@ -106,10 +106,13 @@ ifeq ($(SHELL),cmd)
 	-svnversion .. > ${DIST}\REVISION
 	if not exist $(DIST)\utilities md $(DIST)\utilities
 	xcopy ..\utilities $(DIST)\utilities /S /Y /D
+	if not exist $(DIST)\include\contrib md $(DIST)\include\contrib
+	echo " ">$(DIST)\include\contrib\contrib.h
 else
 	-svnversion .. > ${DIST}/REVISION
-	touch $(DIST)/include/contrib.h
 	cp -vR ../utilities ${DIST}
+	mkdir -p $(DIST)/include/contrib
+	touch $(DIST)/include/contrib/contrib.h
 endif
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.

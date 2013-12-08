@@ -194,11 +194,11 @@ if "!CXX!"=="cl" (
     set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
   )
   set CXXFLAGS=!CXXFLAGS! -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\contrib\include
-  if defined MINGW_HOME (
-    set PATH=!ADMB_HOME!\bin;!MINGW_HOME!\bin;!PATH!
-  ) else (
-    set PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!
-  )
+)
+if defined MINGW_HOME (
+  set PATH=!ADMB_HOME!\bin;!MINGW_HOME!\bin;!PATH!
+) else (
+  set PATH=!ADMB_HOME!\bin;!ADMB_HOME!\utilities\mingw\bin;!PATH!
 )
 if not defined tpls (
   if not defined srcs (

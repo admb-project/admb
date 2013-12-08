@@ -135,6 +135,8 @@ includes: objdestdir
 	copy tools99\cifstrem.h $(DESTDIR)\include
 	copy tools99\adstring.hpp $(DESTDIR)\include
 	copy tools99\admb_messages.h $(DESTDIR)\include
+	if not exist $(DESTDIR)\include\contrib md $(DESTDIR)\include\contrib
+	echo " ">$(DESTDIR)\include\contrib\contrib.h
 
 objdestdir:
 	IF NOT EXIST $(OBJDESTDIR) md $(OBJDESTDIR)

@@ -143,12 +143,24 @@ if "!CXX!"=="cl" (
   )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! /DOPT_LIB
-    set libs="!ADMB_HOME!\contrib\lib\contribo.lib" "!ADMB_HOME!\lib\admbo.lib" /link
+    if not exist !ADMB_HOME!\contrib\lib\contribo.lib (
+      set libs="!ADMB_HOME!\lib\admbo.lib" /link
+    ) else (
+      set libs="!ADMB_HOME!\contrib\lib\contribo.lib" "!ADMB_HOME!\lib\admbo.lib" /link
+    )
   ) else (
     set CXXFLAGS=!CXXFLAGS! /DSAFE_ALL
-    set libs="!ADMB_HOME!\contrib\lib\contrib.lib" "!ADMB_HOME!\lib\admb.lib" /link
+    if not exist !ADMB_HOME!\contrib\lib\contrib.lib (
+      set libs="!ADMB_HOME!\lib\admb.lib" /link
+    ) else (
+      set libs="!ADMB_HOME!\contrib\lib\contrib.lib" "!ADMB_HOME!\lib\admb.lib" /link
+    )
   )
-  set CXXFLAGS=!CXXFLAGS! /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
+  if not exist !ADMB_HOME!\contrib\lib\contrib.lib (
+    set CXXFLAGS=!CXXFLAGS! /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
+  ) else (
+    set CXXFLAGS=!CXXFLAGS! /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
+  )
 ) else (
   if not defined CXX (
     set CXX=g++
@@ -185,15 +197,27 @@ if "!CXX!"=="cl" (
   )
   if defined fast (
     set CXXFLAGS=!CXXFLAGS! -DOPT_LIB
-    set libs=!ADMB_HOME!\contrib\lib\libcontribo.a !ADMB_HOME!\lib\libadmbo.a
+    if not exist !ADMB_HOME!\contrib\lib\libcontribo.a (
+      set libs=!ADMB_HOME!\lib\libadmbo.a
+    ) else (
+      set libs=!ADMB_HOME!\contrib\lib\libcontribo.a !ADMB_HOME!\lib\libadmbo.a
+    )
   ) else (
     set CXXFLAGS=!CXXFLAGS! -DSAFE_ALL
-    set libs=!ADMB_HOME!\contrib\lib\libcontrib.a !ADMB_HOME!\lib\libadmb.a
+    if not exist !ADMB_HOME!\contrib\lib\libcontrib.a (
+      set libs=!ADMB_HOME!\lib\libadmb.a
+    ) else (
+      set libs=!ADMB_HOME!\contrib\lib\libcontribo.a !ADMB_HOME!\lib\libadmb.a
+    )
   )
   if defined d (
     set CXXFLAGS=!CXXFLAGS! -DBUILDING_DLL
   )
-  set CXXFLAGS=!CXXFLAGS! -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\contrib\include
+  if not exist !ADMB_HOME!\contrib\lib\libcontrib.a (
+    set CXXFLAGS=!CXXFLAGS! -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\include\contrib
+  ) else (
+    set CXXFLAGS=!CXXFLAGS! -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -fpermissive -I. -I!ADMB_HOME!\include -I!ADMB_HOME!\contrib\include
+  )
 )
 if defined MINGW_HOME (
   set PATH=!ADMB_HOME!\bin;!MINGW_HOME!\bin;!PATH!

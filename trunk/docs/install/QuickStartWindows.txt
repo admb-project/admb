@@ -42,8 +42,7 @@ Quick Start
 
 4. Install C++ compiler
 
-       If C++ compiler (ie MinGW, Cygwin and Rtools) has already been installed and is in the System Enviroment PATH, skip this step and go to
-   step 5.
+       If a C++ compiler has been installed such as [MinGW](http://www.mingw.org/), [MinGW-w64](http://mingw-w64.sourceforge.net/), [Cygwin](http://www.cygwin.org/) or [Rtools](http://cran.r-project.org/bin/windows/Rtools/) and is in the System Enviroment **PATH**, skip this step and go to the next step.
 
        If C++ compiler has not been installed, use the command below to download
    and install the MinGW C++ Compiler to the _C:\admb\utilities\mingw_ folder.
@@ -98,6 +97,6 @@ Quick Start
             C:\admb\examples\admb\simple\> simple.exe
 
 ---
-For help and support, email <users@admb-project.org>.
+For help and support, contact <users@admb-project.org>.
 
 $Id$

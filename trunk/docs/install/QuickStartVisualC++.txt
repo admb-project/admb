@@ -74,6 +74,6 @@ Quick Start
             C:\admb\examples\admb\simple\> simple.exe
 
 ---
-For help and support, email <users@admb-project.org>.
+For help and support, contact <users@admb-project.org>.
 
 $Id$

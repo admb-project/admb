@@ -1,7 +1,9 @@
 #default targets depending on compiler
 all: $(CXX)-all
+	@echo ADMB build completed.
 src: $(CXX)-src
 debug: $(CXX)-debug
+	@echo ADMB debug build completed.
 contrib: $(CXX)-contrib
 test: $(CXX)-test
 copy: $(CXX)-copy
@@ -12,19 +14,7 @@ install: $(CXX)-install
 clean: $(CXX)-clean
 
 help:
-	@echo "Help"
-	@echo "\tFor GNU C++ compiler,"
-	@echo "\tmake g++\n"
-	@echo "\tFor Microsoft C++ compiler,"
-	@echo "\tnmake cl\n"
-	@echo "\tFor Clang C++ compiler,"
-	@echo "\tmake clang++\n"
-	@echo "\tFor Solaris Studio C++ compiler,"
-	@echo "\tmake icpc\n"
-	@echo "\tFor Intel C++ compiler,"
-	@echo "\tmake CC\n"
-	@echo "\tFor AMD C++ compiler(experimental),"
-	@echo "\tmake openCC\n"
+	@echo Read INSTALL.txt for installation help.
 
 installer:
 	rm -vf admb.zip build/admb

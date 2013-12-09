@@ -174,6 +174,7 @@ icpc: icpc-all
 icpc-all:
 	$(MAKE) icpc-src 
 	$(MAKE) icpc-contrib
+	$(MAKE) icpc-copy
 icpc-debug:
 	$(MAKE) icpc-all DEBUG=1
 icpc-src:
@@ -200,6 +201,7 @@ openCC: openCC-all
 openCC-all: 
 	$(MAKE) openCC-src
 	$(MAKE) openCC-contrib
+	$(MAKE) openCC-copy
 openCC-debug:
 	$(MAKE) openCC-all DEBUG=1
 openCC-src:

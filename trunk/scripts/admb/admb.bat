@@ -207,7 +207,7 @@ if "!CXX!"=="cl" (
     if not exist !ADMB_HOME!\contrib\lib\libcontrib.a (
       set libs=!ADMB_HOME!\lib\libadmb.a
     ) else (
-      set libs=!ADMB_HOME!\contrib\lib\libcontribo.a !ADMB_HOME!\lib\libadmb.a
+      set libs=!ADMB_HOME!\contrib\lib\libcontrib.a !ADMB_HOME!\lib\libadmb.a
     )
   )
   if defined d (

@@ -4,6 +4,7 @@ src: $(CXX)-src
 debug: $(CXX)-debug
 contrib: $(CXX)-contrib
 test: $(CXX)-test
+copy: $(CXX)-copy
 verify: $(CXX)-verify
 doc: $(CXX)-docs
 shared: g++-shared
@@ -35,6 +36,7 @@ cl: cl-all
 cl-all: 
 	nmake cl-src
 	nmake cl-contrib
+	nmake cl-copy
 cl-debug:
 	cd src& nmake DEBUG=1 all
 	cd contrib& nmake DEBUG=1 all
@@ -46,8 +48,10 @@ cl-docs:
 	cd docs& nmake all
 cl-test:
 	cd tests & nmake all
-cl-verify:
+cl-copy:
 	cd examples& nmake copy
+	cd contrib& nmake copy
+cl-verify:
 	cd tests& nmake verify
 cl-install:
 	cd src& nmake install
@@ -60,6 +64,7 @@ g++: g++-all
 g++-all: 
 	$(MAKE) g++-src
 	$(MAKE) g++-contrib
+	$(MAKE) g++-copy
 g++-debug:
 	$(MAKE) g++-all DEBUG=1
 g++-src:
@@ -70,8 +75,10 @@ g++-docs:
 	$(MAKE) --directory=docs CC=gcc CXX=g++ all
 g++-test:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ all
-g++-verify:
+g++-copy:
 	$(MAKE) --directory=examples copy
+	$(MAKE) --directory=contrib copy
+g++-verify:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ verify
 g++-shared:
 	$(MAKE) --directory=src CC=gcc CXX=g++ BUILD_SHARED_LIBRARY=1 all shared
@@ -86,6 +93,7 @@ clang++: clang++-all
 clang++-all:
 	$(MAKE) clang++-src
 	$(MAKE) clang++-contrib
+	$(MAKE) clang++-copy
 clang++-debug:
 	$(MAKE) clang++-all DEBUG=1
 clang++-src:
@@ -96,8 +104,10 @@ clang++-docs:
 	$(MAKE) --directory=docs CC=clang CXX=clang++ all
 clang++-test:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ all
-clang++-verify:
+clang++-copy:
 	$(MAKE) --directory=examples copy
+	$(MAKE) --directory=contrib copy
+clang++-verify:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ verify
 clang++-install:
 	$(MAKE) --directory=src CC=clang CXX=clang++ install
@@ -110,6 +120,7 @@ c++: c++-all
 c++-all:
 	$(MAKE) c++-src
 	$(MAKE) c++-contrib
+	$(MAKE) c++-copy
 c++-debug:
 	$(MAKE) c++-all DEBUG=1
 c++-src:
@@ -120,8 +131,10 @@ c++-docs:
 	$(MAKE) --directory=docs CC=cc CXX=c++ all
 c++-test:
 	$(MAKE) --directory=tests CC=cc CXX=c++ all
-c++-verify:
+c++-copy:
 	$(MAKE) --directory=examples copy
+	$(MAKE) --directory=contrib copy
+c++-verify:
 	$(MAKE) --directory=tests CC=cc CXX=c++ verify
 c++-install:
 	$(MAKE) --directory=src CC=cc CXX=c++ install
@@ -134,6 +147,7 @@ CC: CC-all
 CC-all:
 	$(MAKE) CC-src
 	$(MAKE) CC-contrib
+	$(MAKE) CC-copy
 CC-debug:
 	$(MAKE) CC-all DEBUG=1
 CC-src:
@@ -144,8 +158,10 @@ CC-docs:
 	$(MAKE) --directory=docs CC=cc CXX=CC all
 CC-test:
 	$(MAKE) --directory=tests CC=cc CXX=CC all
-CC-verify:
+CC-copy:
 	$(MAKE) --directory=examples copy
+	$(MAKE) --directory=contrib copy
+CC-verify:
 	$(MAKE) --directory=tests CC=cc CXX=CC verify
 CC-install:
 	$(MAKE) --directory=src CC=cc CXX=CC install
@@ -168,8 +184,10 @@ icpc-docs:
 	$(MAKE) --directory=docs CC=icc CXX=icpc all
 icpc-test:
 	$(MAKE) --directory=tests CC=icc CXX=icpc all
-icpc-verify:
+icpc-copy:
 	$(MAKE) --directory=examples copy
+	$(MAKE) --directory=contrib copy
+icpc-verify:
 	$(MAKE) --directory=tests CC=icc CXX=icpc verify
 icpc-install:
 	$(MAKE) --directory=src CC=icc CXX=icpc install
@@ -192,8 +210,10 @@ openCC-docs:
 	$(MAKE) --directory=docs CC=opencc CXX=openCC all
 openCC-test:
 	$(MAKE) --directory=tests CC=opencc CXX=openCC all
-openCC-verify:
+openCC-copy:
 	$(MAKE) --directory=examples copy
+	$(MAKE) --directory=contrib copy
+openCC-verify:
 	$(MAKE) --directory=tests CC=opencc CXX=openCC verify
 openCC-install:
 	$(MAKE) --directory=src CC=opencc CXX=openCC install

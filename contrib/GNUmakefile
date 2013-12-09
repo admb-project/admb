@@ -94,7 +94,7 @@ ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\contrib md ${DIST}\contrib
 	xcopy ..\contrib $(DIST)\contrib /S /Y /D
 else
-	cp -R ../contrib ${DIST}
+	cp -R ../contrib ../build/dist/
 endif
 
 clean:

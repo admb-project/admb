@@ -21,6 +21,9 @@ else
   CONTRIB_INCLUDE=$(addsuffix /include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix /lib,$(CONTRIB_DIR))
 endif
+ifdef DEBUG
+OPTION=-g
+endif
 
 all: 
 	$(MAKE) contrib-includes
@@ -44,22 +47,22 @@ else
 endif
 
 contrib-ad2csv: contrib-dirs
-	$(MAKE) --directory=ad2csv CONTRIB_BIN=$(CONTRIB_BIN)
+	$(MAKE) --directory=ad2csv OPTION=$(OPTION) CONTRIB_BIN=$(CONTRIB_BIN)
 
 contrib-ecolib:
-	$(MAKE) --directory=ecolib CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=ecolib OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-gdbprintlib:
-	$(MAKE) --directory=gdbprintlib CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=gdbprintlib OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-qfclib:
-	$(MAKE) --directory=qfclib CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=qfclib OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-statslib:
-	$(MAKE) --directory=statslib CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=statslib OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-src:
-	$(MAKE) --directory=src CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=src OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-dirs:
 ifeq ($(SHELL),cmd)

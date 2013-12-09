@@ -35,10 +35,11 @@ cl: cl-all
 cl-all: 
 	nmake cl-src
 	nmake cl-contrib
-cl-src:
-	cd src& nmake all
 cl-debug:
 	cd src& nmake DEBUG=1 all
+	cd contrib& nmake DEBUG=1 all
+cl-src:
+	cd src& nmake all
 cl-contrib:
 	cd contrib& nmake all
 cl-docs:
@@ -59,10 +60,10 @@ g++: g++-all
 g++-all: 
 	$(MAKE) g++-src
 	$(MAKE) g++-contrib
+g++-debug:
+	$(MAKE) g++-all DEBUG=1
 g++-src:
 	$(MAKE) --directory=src CC=gcc CXX=g++ all
-g++-debug:
-	$(MAKE) --directory=src CC=gcc CXX=g++ DEBUG=1 all
 g++-contrib:
 	$(MAKE) --directory=contrib CC=gcc CXX=g++ all
 g++-docs:
@@ -85,10 +86,10 @@ clang++: clang++-all
 clang++-all:
 	$(MAKE) clang++-src
 	$(MAKE) clang++-contrib
+clang++-debug:
+	$(MAKE) clang++-all DEBUG=1
 clang++-src:
 	$(MAKE) --directory=src CC=clang CXX=clang++ all
-clang++-debug:
-	$(MAKE) --directory=src CC=clang CXX=clang++ DEBUG=1 all
 clang++-contrib:
 	$(MAKE) --directory=contrib CC=clang CXX=clang++ all
 clang++-docs:
@@ -109,10 +110,10 @@ c++: c++-all
 c++-all:
 	$(MAKE) c++-src
 	$(MAKE) c++-contrib
+c++-debug:
+	$(MAKE) c++-all DEBUG=1
 c++-src:
 	$(MAKE) --directory=src CC=cc CXX=c++ all
-c++-debug:
-	$(MAKE) --directory=src CC=cc CXX=c++ DEBUG=1 all
 c++-contrib:
 	$(MAKE) --directory=contrib CC=cc CXX=c++ all
 c++-docs:
@@ -133,10 +134,10 @@ CC: CC-all
 CC-all:
 	$(MAKE) CC-src
 	$(MAKE) CC-contrib
+CC-debug:
+	$(MAKE) CC-all DEBUG=1
 CC-src:
 	$(MAKE) --directory=src CC=cc CXX=CC all
-CC-debug:
-	$(MAKE) --directory=src CC=cc CXX=CC DEBUG=1 all
 CC-contrib:
 	$(MAKE) --directory=contrib CC=cc CXX=CC all
 CC-docs:
@@ -157,10 +158,10 @@ icpc: icpc-all
 icpc-all:
 	$(MAKE) icpc-src 
 	$(MAKE) icpc-contrib
+icpc-debug:
+	$(MAKE) icpc-all DEBUG=1
 icpc-src:
 	$(MAKE) --directory=src CC=icc CXX=icpc all
-icpc-debug:
-	$(MAKE) --directory=src CC=icc CXX=icpc DEBUG=1 all
 icpc-contrib:
 	$(MAKE) --directory=contrib CC=icc CXX=icpc all
 icpc-docs:
@@ -181,10 +182,10 @@ openCC: openCC-all
 openCC-all: 
 	$(MAKE) openCC-src
 	$(MAKE) openCC-contrib
+openCC-debug:
+	$(MAKE) openCC-all DEBUG=1
 openCC-src:
 	$(MAKE) --directory=src CC=opencc CXX=openCC all
-openCC-debug:
-	$(MAKE) --directory=src CC=opencc CXX=openCC DEBUG=1 all
 openCC-contrib:
 	$(MAKE) --directory=contrib CC=opencc CXX=openCC all
 openCC-docs:

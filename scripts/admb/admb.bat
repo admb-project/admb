@@ -191,7 +191,7 @@ if "!CXX!"=="cl" (
   )
   if defined g (
     set CXXFLAGS=!CXXFLAGS! -g
-    set LDFLAGS=!LDFLAGS! -s
+    set LDFLAGS=!LDFLAGS! -g
   ) else (
     set CXXFLAGS=!CXXFLAGS! -O3
   )

@@ -91,8 +91,8 @@ contrib-test-R:
 
 copy:
 ifeq ($(SHELL),cmd)
-	if not exist ${DIST}\contrib md ${DIST}\contrib
-	xcopy ..\contrib $(DIST)\contrib /S /Y /D
+	if not exist ..\build\dist\contrib md ..\build\dist\contrib
+	xcopy ..\contrib ..\build\dist\contrib /S /Y /D
 else
 	cp -R ../contrib ../build/dist/
 endif

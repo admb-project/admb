@@ -29,6 +29,17 @@ all:
 	$(MAKE) contrib-includes
 	$(MAKE) contrib-libs
 	$(MAKE) contrib-ad2csv
+	@echo ADMB contrib build completed.
+
+shared: all
+ifeq ($(SHELL),cmd)
+	$(CXX) -static -shared -o src\$(CONTRIB_LIB)\contrib.dll src\$(CONTRIB_OBJS_DIR)\saflp-contrib-*.obj ..\build\dist\lib\libadmb.a
+	$(CXX) -static -shared -o src\$(CONTRIB_LIB)\contribo.dll src\$(CONTRIB_OBJS_DIR)\optlp-contrib-*.obj ..\build\dist\lib\libadmbo.a
+else
+	$(CXX) -shared -osrc/$(CONTRIB_LIB)/libcontrib.so src/$(CONTRIB_OBJS_DIR)/saflp-contrib-*.obj ../build/dist/lib/libadmb.a
+	$(CXX) -shared -osrc/$(CONTRIB_LIB)/libcontribo.so src/$(CONTRIB_OBJS_DIR)/optlp-contrib-*.obj ../build/dist/lib/libadmbo.a
+endif
+	@echo ADMB contrib shared build completed.
 
 contrib-includes: contrib-dirs
 	@$(MAKE) --directory=ecolib CONTRIB_INCLUDE=$(CONTRIB_INCLUDE) includes

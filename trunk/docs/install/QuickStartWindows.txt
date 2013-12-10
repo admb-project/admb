@@ -65,7 +65,7 @@ Quick Start
 
         C:\admb\> utilities\make
 
-       _**Note** &mdash; Rtools includes a incompatible make which cannot be used to build the distribution._
+       _**Note** &mdash; Do not use the make utility from Rtools because it is a older version which is incompatible with the current ADMB build files._
 
        If **MinGW-Msys** was installed and is included in System Enviroment PATH, use the command below.
 

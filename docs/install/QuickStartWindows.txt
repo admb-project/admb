@@ -67,6 +67,10 @@ Quick Start
 
        _**Note** &mdash; Do not use the make utility from Rtools because it is a older version which is incompatible with the current ADMB build files._
 
+       To build 64 bit with **Rtools**, use the command below 
+
+        C:\admb\> utilities\make CXXFLAGS=-m64 LDFLAGS=-m64
+
        If **MinGW-Msys** was installed and is included in System Enviroment PATH, use the command below.
 
         C:\admb\> make

@@ -1,4 +1,4 @@
-ifeq ($(SHELL),sh.exe)
+ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
 bins: $(DIST)\bin\tpl2rem.exe
 
 $(DIST)\bin\tpl2rem.exe: tpl2rem.c

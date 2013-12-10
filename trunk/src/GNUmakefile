@@ -44,7 +44,6 @@ endif
 
 ifdef CXXFLAGS
   USER_CXXFLAGS:= $(CXXFLAGS)
-  CXXFLAGS:= $(CXXFLAGS)
 endif
 
 ifdef LDFLAGS
@@ -52,30 +51,28 @@ ifdef LDFLAGS
 endif
 
 ifdef DEBUG
-  CXXFLAGS:= -g $(CXXFLAGS)
+  ADCXXFLAGS:= -g $(ADCXXFLAGS)
 else
   ifeq ($(CXX),openCC)
-    CXXFLAGS:= -O2 $(CXXFLAGS)
+    ADCXXFLAGS:= -O2 $(ADCXXFLAGS)
   else
-    CXXFLAGS:= -O3 $(CXXFLAGS)
+    ADCXXFLAGS:= -O3 $(ADCXXFLAGS)
   endif
 endif
 
-ifdef BUILD_SHARED_LIBRARY
-  CXXFLAGS:= -fPIC $(CXXFLAGS)
-endif
-
 ifneq ($(CXX),CC)
-CXXFLAGS:= -Wall $(CXXFLAGS)
+ADCXXFLAGS:= -Wall $(ADCXXFLAGS)
 endif
 
-CXXFLAGS:= $(CXXFLAGS) -DSAFE_ALL -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE
+ADCXXFLAGS:= $(ADCXXFLAGS) -DSAFE_ALL -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE
 
 ifeq ($(SHELL),cmd)
-CXXFLAGS:= $(CXXFLAGS) -I..\build\dist\include
+ADCXXFLAGS:= $(ADCXXFLAGS) -I..\build\dist\include
 else
-CXXFLAGS:= $(CXXFLAGS) -I../build/dist/include
+ADCXXFLAGS:= $(ADCXXFLAGS) -I../build/dist/include
 endif
+
+override CXXFLAGS += $(ADCXXFLAGS)
 
 CXXFLAGS_OPT_LIB:=$(subst -DSAFE_ALL,-DOPT_LIB,$(CXXFLAGS))
 
@@ -155,8 +152,8 @@ ifeq ($(SHELL),cmd)
 	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd
 	copy ..\scripts\admb\adlink.bat ${DIST}\bin\adlink.cmd
 	copy ..\scripts\admb\adcomp.bat ${DIST}\bin\adcomp.cmd
-	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=..\${DIST} bins
-	$(MAKE) --directory=nh99 CC=$(CC) DIST=..\${DIST} bins
+	$(MAKE) --directory=df1b2-separable CC=gcc DIST=..\${DIST} bins
+	$(MAKE) --directory=nh99 CC=gcc DIST=..\${DIST} bins
 else
 	mkdir -p ${DIST}/bin
 	cp df1b2-separable/seddf1b* df1b2-separable/sedf1b2* ${DIST}/bin

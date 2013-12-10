@@ -1,6 +1,7 @@
 OBJSPARSE=\
  ../sparse/hs_sparse.obj
 OBJ1=\
+ dmat21.obj\
  dmat3.obj\
  dmat34.obj\
  fvar_ma4.obj\
@@ -491,6 +492,5 @@ DEPRECATED=\
  dvect21.obj\
  tsdfpool.obj\
  fvar_a52.obj\
- dmat21.obj\
  ad_atlas.obj\
  getopt.obj

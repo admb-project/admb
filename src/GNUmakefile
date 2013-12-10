@@ -114,9 +114,14 @@ endif
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.
 
-shared: objects
-	$(CXX) -shared -o${DIST}/lib/libadmb.so ../build/objects/dist/saflp-*.obj
-	$(CXX) -shared -o${DIST}/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
+shared: all
+ifeq ($(SHELL),cmd)
+	$(CXX) -static -shared -o $(DIST)\lib\admbo.dll $(DIST)\lib\libadmbo.a
+	$(CXX) -static -shared -o $(DIST)\lib\admb.dll $(DIST)\lib\libadmb.a
+else
+	$(CXX) -shared -o$(DIST)/lib/libadmbo.so $(DIST)/lib/libadmbo.a
+	$(CXX) -shared -o$(DIST)/lib/libadmb.so $(DIST)/lib/libadmb.a
+endif
 	@echo ADMB shared build completed.
 	@echo Check README.txt for usage and installation information.
 

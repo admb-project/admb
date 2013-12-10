@@ -33,6 +33,13 @@ all: dist
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.
 
+shared: all
+	IF EXIST $(DESTDIR)\lib\admb.dll del $(DESTDIR)\lib\admb.dll
+	pushd $(OBJDESTDIR) & link /DLL /OUT:..\..\$(DESTDIR)\lib\admb.dll /NOLOGO /IGNORE:4006 saflp-df1b2-separable*.obj saflp-linad99*.obj saflp-nh99*.obj saflp-tools99*.obj saflp-sparse*.obj
+	IF EXIST $(DESTDIR)\lib\admbo.dll del $(DESTDIR)\lib\admbo.dll
+	pushd $(OBJDESTDIR) & link /DLL /OUT:..\..\$(DESTDIR)\lib\admbo.dll /NOLOGO /IGNORE:4006 optlp-df1b2-separable*.obj optlp-linad99*.obj optlp-nh99*.obj optlp-tools99*.obj optlp-sparse*.obj
+	@echo ADMB shared build completed.
+
 dist: bins
 	IF NOT EXIST $(DESTDIR) md $(DESTDIR)
 	copy ..\LICENSE.txt $(DESTDIR)

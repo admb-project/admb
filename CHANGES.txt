@@ -42,6 +42,15 @@ ADMB-trunk
 
         $ admb -f model.tpl
 
+* Fix shared (libadmb.so) and dynamic (admb.dll) builds.
+
+        [~/admb/]$ make shared
+
+        C:\admb\> utilities\make shared
+
+  Note &mdash; This is great for testing linker errors.
+
+
 ####New Supported Compilers
 
 * GNU C++ 4.8 compiler

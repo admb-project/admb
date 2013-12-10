@@ -4,6 +4,14 @@ all:
 	$(MAKE) contrib-includes
 	$(MAKE) contrib-libs
 	$(MAKE) contrib-ad2csv
+	@echo ADMB contrib build completed.
+	
+shared: all
+	IF EXIST $(DESTDIR)\contrib\lib\contrib.dll del $(DESTDIR)\contrib\lib\contrib.dll
+	link /DLL /OUT:$(DESTDIR)\contrib\lib\contrib.dll /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\saflp-contrib*.obj $(DESTDIR)\lib\admb.lib
+	IF EXIST $(DESTDIR)\contrib\lib\contribo.dll del $(DESTDIR)\contrib\lib\contribo.dll
+	link /DLL /OUT:$(DESTDIR)\contrib\lib\contribo.dll /NOLOGO /IGNORE:4006 $(OBJDESTDIR)\optlp-contrib*.obj $(DESTDIR)\lib\admbo.lib
+	@echo ADMB contrib shared build completed.
 
 contrib-includes: contrib-dirs
 	cd ecolib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes

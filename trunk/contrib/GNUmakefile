@@ -36,8 +36,8 @@ ifeq ($(SHELL),cmd)
 	pushd ..\build\objects\contrib & $(CXX) -static -shared -o ..\..\dist\contrib\lib\contrib.dll saflp-*.obj ..\..\dist\lib\admb.dll
 	pushd ..\build\objects\contrib & $(CXX) -static -shared -o ..\..\dist\contrib\lib\contribo.dll optlp-*.obj ..\..\dist\lib\admbo.dll
 else
-	$(CXX) -shared -o../build/dist/contrib/lib/libcontrib.so saflp-*.obj ../build/dist/lib/libadmb.so
-	$(CXX) -shared -o../build/dist/contrib/lib/libcontribo.so optlp-*.obj ../build/dist/lib/libadmbo.so
+	$(CXX) -shared -o../build/dist/contrib/lib/libcontrib.so ../build/objects/contrib/saflp-*.obj ../build/dist/lib/libadmb.so
+	$(CXX) -shared -o../build/dist/contrib/lib/libcontribo.so ../build/objects/contrib/optlp-*.obj ../build/dist/lib/libadmbo.so
 endif
 	@echo ADMB contrib shared build completed.
 

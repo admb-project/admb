@@ -75,8 +75,8 @@ g++-copy:
 g++-verify:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ verify
 g++-shared:
-	$(MAKE) --directory=src CC=gcc CXX=g++ CXXFLAGS=-fPIC shared
-	$(MAKE) --directory=contrib CC=gcc CXX=g++ CXXFLAGS=-fPIC shared
+	$(MAKE) --directory=src CC=gcc CXX=g++ CXXFLAGS+=-fPIC shared
+	$(MAKE) --directory=contrib CC=gcc CXX=g++ CXXFLAGS+=-fPIC shared
 	$(MAKE) g++-copy
 g++-install:
 	$(MAKE) --directory=src CC=gcc CXX=g++ install
@@ -106,8 +106,8 @@ clang++-copy:
 clang++-verify:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ verify
 clang++-shared:
-	$(MAKE) --directory=src CC=clang CXX=clang++ CXXFLAGS=-fpic shared
-	$(MAKE) --directory=contrib CC=clang CXX=clang++ CXXFLAGS=-fpic shared
+	$(MAKE) --directory=src CC=clang CXX=clang++ CXXFLAGS+=-fpic shared
+	$(MAKE) --directory=contrib CC=clang CXX=clang++ CXXFLAGS+=-fpic shared
 	$(MAKE) clang++-copy
 clang++-install:
 	$(MAKE) --directory=src CC=clang CXX=clang++ install
@@ -137,8 +137,8 @@ c++-copy:
 c++-verify:
 	$(MAKE) --directory=tests CC=cc CXX=c++ verify
 c++-shared:
-	$(MAKE) --directory=src CC=cc CXX=c++ CXXFLAGS=-fPIC shared
-	$(MAKE) --directory=contrib CC=cc CXX=c++ CXXFLAGS=-fPIC shared
+	$(MAKE) --directory=src CC=cc CXX=c++ CXXFLAGS+=-fPIC shared
+	$(MAKE) --directory=contrib CC=cc CXX=c++ CXXFLAGS+=-fPIC shared
 	$(MAKE) c++-copy
 c++-install:
 	$(MAKE) --directory=src CC=cc CXX=c++ install
@@ -168,8 +168,8 @@ CC-copy:
 CC-verify:
 	$(MAKE) --directory=tests CC=cc CXX=CC verify
 CC-shared:
-	$(MAKE) --directory=src CC=cc CXX=CC CXXFLAGS=-fpic shared
-	$(MAKE) --directory=contrib CC=cc CXX=CC CXXFLAGS=-fpic shared
+	$(MAKE) --directory=src CC=cc CXX=CC CXXFLAGS+=-fpic shared
+	$(MAKE) --directory=contrib CC=cc CXX=CC CXXFLAGS+=-fpic shared
 	$(MAKE) CC-copy
 CC-install:
 	$(MAKE) --directory=src CC=cc CXX=CC install
@@ -199,8 +199,8 @@ icpc-copy:
 icpc-verify:
 	$(MAKE) --directory=tests CC=icc CXX=icpc verify
 icpc-shared:
-	$(MAKE) --directory=src CC=icc CXX=icpc CXXFLAGS=-fpic shared
-	$(MAKE) --directory=contrib CC=icc CXX=icpc CXXFLAGS=-fpic shared
+	$(MAKE) --directory=src CC=icc CXX=icpc CXXFLAGS+=-fpic shared
+	$(MAKE) --directory=contrib CC=icc CXX=icpc CXXFLAGS+=-fpic shared
 	$(MAKE) icpc-copy
 icpc-install:
 	$(MAKE) --directory=src CC=icc CXX=icpc install
@@ -230,8 +230,8 @@ openCC-copy:
 openCC-verify:
 	$(MAKE) --directory=tests CC=opencc CXX=openCC verify
 openCC-shared:
-	$(MAKE) --directory=src CC=opencc CXX=openCC CXXFLAGS=-fPIC shared
-	$(MAKE) --directory=contrib CC=opencc CXX=openCC CXXFLAGS=-fPIC shared
+	$(MAKE) --directory=src CC=opencc CXX=openCC CXXFLAGS+=-fPIC shared
+	$(MAKE) --directory=contrib CC=opencc CXX=openCC CXXFLAGS+=-fPIC shared
 	$(MAKE) openCC-copy
 openCC-install:
 	$(MAKE) --directory=src CC=opencc CXX=openCC install

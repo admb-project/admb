@@ -100,24 +100,18 @@ OBJECTS:=$(sort $(addprefix $(OBJSDIR),$(OBJECTS)))
 
 all: dist
 ifeq ($(SHELL),cmd)
-	-svnversion .. > ${DIST}\REVISION
 	if not exist $(DIST)\utilities md $(DIST)\utilities
 	xcopy ..\utilities $(DIST)\utilities /S /Y /D
-	if not exist $(DIST)\include\contrib md $(DIST)\include\contrib
-	echo " ">$(DIST)\include\contrib\contrib.h
 else
-	-svnversion .. > ${DIST}/REVISION
 	cp -vR ../utilities ${DIST}
-	mkdir -p $(DIST)/include/contrib
-	touch $(DIST)/include/contrib/contrib.h
 endif
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.
 
 shared: all
 ifeq ($(SHELL),cmd)
-	cd ..\build\objects\dist & $(CXX) -static -shared -o ..\..\dist\lib\admbo.dll optlp-*.obj
-	cd ..\build\objects\dist & $(CXX) -static -shared -o ..\..\dist\lib\admb.dll saflp-*.obj
+	pushd ..\build\objects\dist & $(CXX) -static -shared -o..\..\dist\lib\admbo.dll optlp-*.obj
+	pushd ..\build\objects\dist & $(CXX) -static -shared -o..\..\dist\lib\admb.dll saflp-*.obj
 else
 	$(CXX) -shared -o../build/dist/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
 	$(CXX) -shared -o../build/dist/lib/libadmb.so ../build/objects/dist/saflp-*.obj
@@ -157,6 +151,8 @@ ifeq ($(SHELL),cmd)
 	copy ..\scripts\admb\root-admb.bat ${DIST}\admb.cmd
 	copy ..\scripts\admb\adlink.bat ${DIST}\bin\adlink.cmd
 	copy ..\scripts\admb\adcomp.bat ${DIST}\bin\adcomp.cmd
+	if not exist $(DIST)\include\contrib md $(DIST)\include\contrib
+	echo " ">$(DIST)\include\contrib\contrib.h
 	$(MAKE) --directory=df1b2-separable CC=gcc DIST=..\${DIST} bins
 	$(MAKE) --directory=nh99 CC=gcc DIST=..\${DIST} bins
 else
@@ -187,6 +183,8 @@ else
 	ln -sf bin/admb ${DIST}
 	ln -sf build/dist/bin/admb ..
   endif
+	mkdir -p $(DIST)/include/contrib
+	touch $(DIST)/include/contrib/contrib.h
 	$(MAKE) --directory=df1b2-separable CC=$(CC) DIST=../${DIST} bins
 	$(MAKE) --directory=nh99 CC=$(CC) DIST=../${DIST} bins
 endif

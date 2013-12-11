@@ -33,11 +33,11 @@ all:
 
 shared: all
 ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared -o src\$(CONTRIB_LIB)\contrib.dll src\$(CONTRIB_OBJS_DIR)\saflp-contrib-*.obj ..\build\dist\lib\libadmb.a
-	$(CXX) -static -shared -o src\$(CONTRIB_LIB)\contribo.dll src\$(CONTRIB_OBJS_DIR)\optlp-contrib-*.obj ..\build\dist\lib\libadmbo.a
+	$(CXX) -static -shared -o src\$(CONTRIB_LIB)\contrib.dll src\$(CONTRIB_OBJS_DIR)\saflp-contrib-*.obj ..\build\dist\lib\admb.dll
+	$(CXX) -static -shared -o src\$(CONTRIB_LIB)\contribo.dll src\$(CONTRIB_OBJS_DIR)\optlp-contrib-*.obj ..\build\dist\lib\admbo.dll
 else
-	$(CXX) -shared -osrc/$(CONTRIB_LIB)/libcontrib.so src/$(CONTRIB_OBJS_DIR)/saflp-contrib-*.obj ../build/dist/lib/libadmb.a
-	$(CXX) -shared -osrc/$(CONTRIB_LIB)/libcontribo.so src/$(CONTRIB_OBJS_DIR)/optlp-contrib-*.obj ../build/dist/lib/libadmbo.a
+	$(CXX) -shared -o../build/dist/contrib/lib/libcontrib.so ../build/objects/contrib/saflp-contrib-*.obj ../build/dist/lib/libadmb.so
+	$(CXX) -shared -o../build/dist/contrib/lib/libcontribo.so ../build/objects/contrib/optlp-contrib-*.obj ../build/dist/lib/libadmbo.so
 endif
 	@echo ADMB contrib shared build completed.
 

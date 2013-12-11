@@ -119,8 +119,8 @@ ifeq ($(SHELL),cmd)
 	cd ..\build\objects\dist & $(CXX) -static -shared -o ..\..\dist\lib\admbo.dll optlp-*.obj
 	cd ..\build\objects\dist & $(CXX) -static -shared -o ..\..\dist\lib\admb.dll saflp-*.obj
 else
-	cd ../build/objects/dist & $(CXX) -shared -o/lib/libadmbo.so optlp-*.obj
-	cd ../build/objects/dist & $(CXX) -shared -o$(DIST)/lib/libadmb.so saflp-*.obj
+	$(CXX) -shared -o../build/dist/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
+	$(CXX) -shared -o../build/dist/lib/libadmb.so ../build/objects/dist/saflp-*.obj
 endif
 	@echo ADMB shared build completed.
 	@echo Check README.txt for usage and installation information.

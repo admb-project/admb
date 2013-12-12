@@ -113,7 +113,7 @@ ifeq ($(SHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb.a -Wl,--no-whole-archive
 	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo.a -Wl,--no-whole-archive
 else
-  ifeq ($(CXX),c++)
+  ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
 	$(CXX) -shared -o../build/dist/lib/libadmb.so -Wl,-force_load ../build/dist/lib/libadmb.a
 	$(CXX) -shared -o../build/dist/lib/libadmbo.so -Wl,-force_load ../build/dist/lib/libadmbo.a
   else

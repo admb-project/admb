@@ -110,8 +110,8 @@ endif
 
 shared: all
 ifeq ($(SHELL),cmd)
-	pushd ..\build\objects\dist & $(CXX) -static -shared -o..\..\dist\lib\admbo.dll optlp-*.obj
-	pushd ..\build\objects\dist & $(CXX) -static -shared -o..\..\dist\lib\admb.dll saflp-*.obj
+	pushd ..\build\objects\dist & $(CXX) -static -shared $(LDFLAGS) -o..\..\dist\lib\admbo.dll optlp-*.obj
+	pushd ..\build\objects\dist & $(CXX) -static -shared $(LDFLAGS) -o..\..\dist\lib\admb.dll saflp-*.obj
 else
 	$(CXX) -shared -o../build/dist/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
 	$(CXX) -shared -o../build/dist/lib/libadmb.so ../build/objects/dist/saflp-*.obj

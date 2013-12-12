@@ -36,7 +36,7 @@ ifeq ($(SHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contrib.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontrib.a -Wl,--no-whole-archive ..\build\dist\lib\admb.dll
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contribo.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontribo.a -Wl,--no-whole-archive ..\build\dist\lib\admbo.dll
 else
-  ifeq ($(CXX),c++)
+  ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontrib.so -Wl,-force_load ../build/dist/contrib/lib/libcontrib.a ../build/dist/lib/libadmb.so
 	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontribo.so -Wl,-force_load ../build/dist/contrib/lib/libcontribo.a ../build/dist/lib/libadmbo.so
   else

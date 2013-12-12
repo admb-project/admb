@@ -110,11 +110,16 @@ endif
 
 shared: all
 ifeq ($(SHELL),cmd)
-	pushd ..\build\objects\dist & $(CXX) -static -shared $(LDFLAGS) -o..\..\dist\lib\admbo.dll optlp-*.obj
-	pushd ..\build\objects\dist & $(CXX) -static -shared $(LDFLAGS) -o..\..\dist\lib\admb.dll saflp-*.obj
+	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo.a -Wl,--no-whole-archive
 else
-	$(CXX) -shared -o../build/dist/lib/libadmbo.so ../build/objects/dist/optlp-*.obj
-	$(CXX) -shared -o../build/dist/lib/libadmb.so ../build/objects/dist/saflp-*.obj
+  ifeq ($(CXX),c++)
+	$(CXX) -shared -o../build/dist/lib/libadmb.so -Wl,-force_load ../build/dist/lib/libadmb.a
+	$(CXX) -shared -o../build/dist/lib/libadmbo.so -Wl,-force_load ../build/dist/lib/libadmbo.a
+  else
+	$(CXX) -shared -o../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb.a -Wl,--no-whole-archive
+	$(CXX) -shared -o../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo.a -Wl,--no-whole-archive
+  endif
 endif
 	@echo ADMB shared build completed.
 	@echo Check README.txt for usage and installation information.

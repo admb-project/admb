@@ -33,11 +33,16 @@ all:
 
 shared: all
 ifeq ($(SHELL),cmd)
-	pushd ..\build\objects\contrib & $(CXX) -static -shared $(LDFLAGS) -o ..\..\dist\contrib\lib\contrib.dll saflp-*.obj ..\..\dist\lib\admb.dll
-	pushd ..\build\objects\contrib & $(CXX) -static -shared $(LDFLAGS) -o ..\..\dist\contrib\lib\contribo.dll optlp-*.obj ..\..\dist\lib\admbo.dll
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contrib.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontrib.a -Wl,--no-whole-archive ..\build\dist\lib\admb.dll
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contribo.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontribo.a -Wl,--no-whole-archive ..\build\dist\lib\admbo.dll
 else
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontrib.so ../build/objects/contrib/saflp-*.obj ../build/dist/lib/libadmb.so
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontribo.so ../build/objects/contrib/optlp-*.obj ../build/dist/lib/libadmbo.so
+  ifeq ($(CXX),c++)
+	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontrib.so -Wl,-force_load ../build/dist/contrib/lib/libcontrib.a ../build/dist/lib/libadmb.so
+	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontribo.so -Wl,-force_load ../build/dist/contrib/lib/libcontribo.a ../build/dist/lib/libadmbo.so
+  else
+	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontrib.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontrib.a -Wl,--no-whole-archive ../build/dist/lib/libadmb.so
+	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontribo.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontribo.a -Wl,--no-whole-archive ../build/dist/lib/libadmbo.so
+  endif
 endif
 	@echo ADMB contrib shared build completed.
 

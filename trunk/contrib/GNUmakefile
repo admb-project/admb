@@ -33,8 +33,8 @@ all:
 
 shared: all
 ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contrib.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontrib.a -Wl,--no-whole-archive ..\build\dist\lib\admb.dll
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contribo.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontribo.a -Wl,--no-whole-archive ..\build\dist\lib\admbo.dll
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contrib.dll ..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontrib.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contribo.dll ..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontribo.a -Wl,--no-whole-archive
 else
   ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontrib.so -Wl,-force_load ../build/dist/contrib/lib/libcontrib.a ../build/dist/lib/libadmb.so
@@ -55,10 +55,14 @@ contrib-includes: contrib-dirs
 
 contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src
 ifeq ($(SHELL),cmd)
+	if exist  src\$(CONTRIB_LIB)\libcontrib.a del src\$(CONTRIB_LIB)\libcontrib.a
 	$(AR) -rs src\$(CONTRIB_LIB)\libcontrib.a src\$(CONTRIB_OBJS_DIR)\saflp-contrib-*.obj
+	if exist  src\$(CONTRIB_LIB)\libcontribo.a del src\$(CONTRIB_LIB)\libcontribo.a
 	$(AR) -rs src\$(CONTRIB_LIB)\libcontribo.a src\$(CONTRIB_OBJS_DIR)\optlp-contrib-*.obj
 else
+	rm -vf src/$(CONTRIB_LIB)/libcontrib.a
 	$(AR) -rs src/$(CONTRIB_LIB)/libcontrib.a src/$(CONTRIB_OBJS_DIR)/saflp-contrib-*.obj
+	rm -vf src/$(CONTRIB_LIB)/libcontribo.a
 	$(AR) -rs src/$(CONTRIB_LIB)/libcontribo.a src/$(CONTRIB_OBJS_DIR)/optlp-contrib-*.obj
 endif
 

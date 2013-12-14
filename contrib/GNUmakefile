@@ -1,11 +1,18 @@
 ifeq ($(OS),Windows_NT)
   ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
     SHELL = cmd
-    PATH:=..\..\utilities\mingw\bin;..\utilities\mingw\bin;$(PATH)
+    ifeq ($(SHELL),cmd)
+      MYPWD=$(shell cd)
+    else
+      MYPWD=$(shell cmd /C cd)
+    endif
+    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH);$(MYPWD)\..\utilities
   else
     ifneq ($(TERM),xterm)
-      PATH:=../../utilities/mingw/bin:../utilities/mingw/bin:$(PATH)
+      MYPWD=$(shell pwd)
+      PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
     endif
+    PATH:=$(PATH):$(MYPWD)/../utilities
   endif
 endif
 ifeq ($(SHELL),cmd)
@@ -33,8 +40,8 @@ all:
 
 shared: all
 ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contrib.dll ..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontrib.a -Wl,--no-whole-archive
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contribo.dll ..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontribo.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contrib.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontrib.a -Wl,--no-whole-archive -Wl,-Bdynamic ..\build\dist\lib\admb.dll
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contribo.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontribo.a -Wl,--no-whole-archive -Wl,-Bdynamic ..\build\dist\lib\admbo.dll
 else
   ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
 	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontrib.so -Wl,-force_load ../build/dist/contrib/lib/libcontrib.a ../build/dist/lib/libadmb.so
@@ -67,22 +74,22 @@ else
 endif
 
 contrib-ad2csv: contrib-dirs
-	$(MAKE) --directory=ad2csv OPTION=$(OPTION) CONTRIB_BIN=$(CONTRIB_BIN)
+	$(MAKE) --directory=ad2csv CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_BIN=$(CONTRIB_BIN)
 
 contrib-ecolib:
-	$(MAKE) --directory=ecolib OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=ecolib CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-gdbprintlib:
-	$(MAKE) --directory=gdbprintlib OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=gdbprintlib CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-qfclib:
-	$(MAKE) --directory=qfclib OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=qfclib CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-statslib:
-	$(MAKE) --directory=statslib OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=statslib CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-src:
-	$(MAKE) --directory=src OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
+	$(MAKE) --directory=src CXXFLAGS= LDFLAGS= OPTION=$(OPTION) CONTRIB_OBJS_DIR=$(CONTRIB_OBJS_DIR)
 
 contrib-dirs:
 ifeq ($(SHELL),cmd)
@@ -124,3 +131,12 @@ clean:
 	$(MAKE) --directory=statslib clean
 	$(MAKE) --directory=src clean
 	$(MAKE) --directory=ad2csv clean
+
+check:
+	@echo "SHELL: $(SHELL)"
+	@echo "PATH: $(PATH)"
+	@echo "TERM: $(TERM)"
+	@echo "MAKE: $(MAKE)"
+	@echo "CXX: $(CXX)"
+	@echo "OS: $(OS)"
+	@echo "OSTYPE: $(OSTYPE)"

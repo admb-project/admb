@@ -6,19 +6,10 @@ ifeq ($(OS),Windows_NT)
     else
       MYPWD=$(shell cmd /C cd)
     endif
-    ifdef MINGW_HOME
-      PATH:=$(MINGW_HOME)\bin;$(PATH)
-    else
-      PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH)
-    endif
-    PATH:=$(PATH);$(MYPWD)\..\utilities
+    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH);$(MYPWD)\..\utilities
   else
-    ifdef MINGW_HOME
-      MINGW_DIR=$(shell cd $(MINGW_HOME) && pwd)
-      PATH:=$(MINGW_DIR)/bin:$(PATH)
-    endif
-    MYPWD=$(shell pwd)
     ifneq ($(TERM),xterm)
+      MYPWD=$(shell pwd)
       PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
     endif
     PATH:=$(PATH):$(MYPWD)/../utilities
@@ -395,3 +386,12 @@ else
 	cp -R ../src $(DIST)
 	cp -R ../scripts $(DIST)
 endif
+
+check:
+	@echo "SHELL: $(SHELL)"
+	@echo "PATH: $(PATH)"
+	@echo "TERM: $(TERM)"
+	@echo "MAKE: $(MAKE)"
+	@echo "CXX: $(CXX)"
+	@echo "OS: $(OS)"
+	@echo "OSTYPE: $(OSTYPE)"

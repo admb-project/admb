@@ -113,4 +113,24 @@ dvar_vector plogis( const dvar_vector& x, const prevariable& location, const pre
 	}
 	return 1./(1.+mfexp((location-x)/scale));
 }
- 
+
+/**
+* Template function for plogis
+* \author Steven Martell
+* \param x is a vector of quantiles.
+* \param location is where 50% percentile occurs.
+* \param scale determines in the standard deviation of the distribution.
+* 
+* \return a template vector
+*/
+template <typename T1, typename T2>
+T1 plogis( const T1& x, const T2& location, const T2& scale )
+{
+	if( scale<=0 ) 
+	{
+		cerr<<"Standard deviation is less than or equal to zero in "
+		"plogis( const dvar_vector& x, const dvariable& location, const dvariable& scale )\n";
+		return 0;
+	}
+	return 1./(1.+mfexp((location-x)/scale));
+} 

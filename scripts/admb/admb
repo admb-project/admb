@@ -28,6 +28,7 @@ if [[ "$1" == "-h" ]]; then help; exit; fi
 if [[ "$1" == "-help" ]]; then help; exit; fi
 if [[ "$1" == "--help" ]]; then help; exit; fi
 
+ADMB_HOME=
 if [ -z "$ADMB_HOME" ]; then
   FILE=$0
   DIRECTORY=$(cd `dirname "$FILE"` && pwd)
@@ -191,7 +192,7 @@ do
 
   fileobj=${file%.*}.obj
   CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
-  echo -e \\n\*\*\* Compile $file:\\n$CMD
+  echo -e \\n\*\*\* Compile: $file\\n$CMD
   eval $CMD
 
   if [[ ! -f $fileobj ]]; then
@@ -209,7 +210,7 @@ do
   fi
   fileobj=${file%.*}.obj
   CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
-  echo -e \\n\*\*\* Compile $file: \\n$CMD
+  echo -e \\n\*\*\* Compile: $file\\n$CMD
   eval $CMD
   if [[ ! -f $fileobj ]]; then
     echo -e "\\nError: Could not compile $file\\n"
@@ -257,7 +258,7 @@ do
       CMD="$CMD \"$ADMB_HOME/contrib/lib/libcontrib.a\" \"$ADMB_HOME/lib/libadmb.a\""
     fi
   fi
-  echo -e \\n\*\*\* Linking $file $objs:\\n$CMD
+  echo -e \\n\*\*\* Linking: $file $objs\\n$CMD
   eval $CMD
   if [[ -z $dll ]]; then
     if [[ ! -f $model ]]; then
@@ -310,7 +311,7 @@ if [[ "$tplobjs" == "" ]]; then
       CMD="$CMD \"$ADMB_HOME/contrib/lib/libcontrib.a\" \"$ADMB_HOME/lib/libadmb.a\""
     fi
   fi
-  echo -e \\n\*\*\* Linking $listobjs:\\n$CMD
+  echo -e \\n\*\*\* Linking: $listobjs\\n$CMD
   eval $CMD
 
   if [ ! -z  "$output" ]; then

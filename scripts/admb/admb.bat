@@ -15,6 +15,7 @@ if ERRORLEVEL 1 (
   goto EOF
 )
 
+set ADMB_HOME=
 if not defined ADMB_HOME (
   set SCRIPT_PATH=%~dp0
   if defined SCRIPT_PATH (
@@ -271,7 +272,7 @@ for %%b in (!tpls!) do (
   ) else (
     set CMD=!CXX!!CXXFLAGS! -o !tpl!.obj !tpl!.cpp
   )
-  echo.&echo *** Compile !tpl!.cpp:
+  echo.&echo *** Compile: !tpl!.cpp
   echo !CMD!
   call !CMD!
   if not exist !tpl!.obj (
@@ -294,7 +295,7 @@ if defined srcs (
     ) else (
       set CMD=!CXX!!CXXFLAGS! -o !filename!.obj !filename!.cpp
     )
-    echo.&echo *** Compile !src!:
+    echo.&echo *** Compile: !src!
     echo !CMD!
     call !CMD!
     if not exist !filename!.obj (
@@ -337,7 +338,7 @@ if not defined tpls (
           set CMD=!LD!!LDFLAGS! -o !main!.exe !objs! !libs!
         )
       )
-      echo.&echo *** Linking !objs!:
+      echo.&echo *** Linking: !objs!
       echo !CMD!
       call !CMD!
       if defined d (
@@ -377,9 +378,9 @@ if not defined tpls (
       )
     )
     if defined objs (
-      echo.&echo *** Linking !tpl!.obj !objs!:
+      echo.&echo *** Linking: !tpl!.obj !objs!
     ) else (
-      echo.&echo *** Linking !tpl!.obj:
+      echo.&echo *** Linking: !tpl!.obj
     )
     echo !CMD!
     call !CMD!

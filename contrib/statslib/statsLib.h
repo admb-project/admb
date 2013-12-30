@@ -92,7 +92,7 @@ dvector     plogis( const dvector& x, const double& location, const double& scal
 dvar_vector plogis( const dvector& x, const prevariable& location, const prevariable& scale );
 dvar_vector plogis( const dvar_vector& x, const prevariable& location, const prevariable& scale );
 // template <typename T1, typename T2>
-// T1 plogis( const T1& x, const T2& location, const T2& scale );
+// T1 plogis( const T1& x, const T2& locatiogn, const T2& scale );
 
 // Exponential logistic distribution
 dvar_vector eplogis(const dvar_vector& x, const dvariable& alpha, const dvariable& beta, const dvariable& gamma);

@@ -25,6 +25,9 @@ void df_xdet(void);
     \n\n The implementation of this algorithm was inspired by
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
+
+    Edited by Steve Martell on Dec 30, 2013 to address a bug
+    where the lower bound of the square dvar_matrix was greater than 1.
 */
 dvariable det(const dvar_matrix& aa)
 {
@@ -129,7 +132,13 @@ dvariable det(const dvar_matrix& aa)
     }
   }
   double det=d;
-  part_prod(1)=d*bb(1,1);
+
+  // SM Bug 129, issue appears to be at this line
+  // part_prod is declared above as dvector(lb,ub)
+  // cout<<"Bug 129 ="<<part_prod(lb)<<endl;
+  // part_prod(1)=d*bb(1,1);  // replaced this line with:
+  part_prod(lb) = d*bb(lb,lb);
+  // cout<<"Ok got this far; det = "<<det<<endl;
   for (j=lb+1;j<=ub;j++)
   {
     part_prod(j)=part_prod(j-1)*bb(j,j);

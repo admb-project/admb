@@ -1,7 +1,8 @@
 /**
  * $Id: fvar_m20.cpp 789 2010-10-05 01:01:09Z johnoel $
  *
- * Author: Unknown
+ * Author: Steve Martell made Changes on Dec 30, 2013
+ * 
  */
 #include <fvar.hpp>
 #ifdef __TURBOC__

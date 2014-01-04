@@ -378,7 +378,7 @@ df3_one_variable operator-(const df3_one_variable& v)
                    + ::exp(*x.get_u())* *x.get_udot2();
 
     *z.get_udot3() = ::exp(*x.get_u()) * cube(*x.get_udot())
-                   + 3.0 * ::exp(*x.get_u()) * *x.get_udot() * *x.get_udot2();
+                   + 3.0 * ::exp(*x.get_u()) * *x.get_udot() * *x.get_udot2()
                    + ::exp(*x.get_u()) * *x.get_udot3();
     return z;
   }
@@ -399,7 +399,7 @@ df3_one_variable operator-(const df3_one_variable& v)
                    + xp * *x.get_udot2();
 
     *z.get_udot3() = xp3 * cube(*x.get_udot())
-                   + 3.0 * xp2 * *x.get_udot() * *x.get_udot2();
+                   + 3.0 * xp2 * *x.get_udot() * *x.get_udot2()
                    + xp * *x.get_udot3();
     return z;
   }
@@ -779,8 +779,8 @@ df1b2variable cumd_norm(const df1b2variable& _x)
   if (value(x)>=0)
   {
     df3_one_variable u1=p*x;
-    df3_one_variable u2=1.+p*x;
-    df3_one_variable u=1./(1.+p*x);
+    df3_one_variable u2=1.+u1;
+    df3_one_variable u=1./u2;
     df3_one_variable y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     df3_one_variable tmp1=-0.3989422804*exp(-.5*x*x);
     z=1.0+tmp1*y;
@@ -811,8 +811,8 @@ df1b2variable bounded_cumd_norm(const df1b2variable& _x, double beta)
   if (value(x)>=0)
   {
     df3_one_variable u1=p*x;
-    df3_one_variable u2=1.+p*x;
-    df3_one_variable u=1./(1.+p*x);
+    df3_one_variable u2=1.+u1;
+    df3_one_variable u=1./u2;
     df3_one_variable y=  ((((b5*u+b4)*u+b3)*u+b2)*u+b1)*u;
     df3_one_variable tmp1=-0.3989422804*exp(-.5*x*x);
     z=1.0+tmp1*y;

@@ -98,6 +98,25 @@ void set_value(const df1b2matrix& _m,const init_df1b2vector& _v, const int& _ii,
   }
 }
 
+void set_value(const df1b2matrix& _m,const init_df1b2vector& _v, const int& _ii,
+  double fmin,double fmax,const df1b2variable& fpen,double s)
+{
+  ADUNCONST(int,ii)
+  ADUNCONST(df1b2matrix,m)
+  ADUNCONST(init_df1b2vector,v)
+  int min=m.indexmin();
+  int max=m.indexmax();
+  for (int i=min;i<=max;i++)
+  {
+    int cmin=m(i).indexmin();
+    int cmax=m(i).indexmax();
+    for (int j=cmin;j<=cmax;j++)
+    {
+      m(i,j)=boundp(v(ii++),fmin,fmax,fpen,s);
+    }
+  }
+}
+
 /**
  * Description not yet available.
  * \param
@@ -128,7 +147,14 @@ void df1b2_init_bounded_matrix::set_value(const init_df1b2vector& _x,
       }
     }
   }
-  ::set_value(*this,x,ii,minb,maxb,pen);
+  if (scalefactor==0.0)
+  {
+    ::set_value(*this,x,ii,minb,maxb,pen);
+  }
+  else
+  {
+    ::set_value(*this,x,ii,minb,maxb,pen,scalefactor);
+  }
 }
 
 /**
@@ -150,6 +176,26 @@ void set_value(const df1b2_init_bounded_matrix & _v,const dvector& x,
     for (int j=cmin;j<=cmax;j++)
     {
       v(i,j)=boundp(x(ii++),fmin,fmax,fpen);
+    }
+  }
+}
+
+
+void set_value(const df1b2_init_bounded_matrix & _v,const dvector& x,
+  const int& _ii,double fmin,double fmax,double s)
+{
+  ADUNCONST(int,ii)
+  ADUNCONST(df1b2_init_bounded_matrix,v)
+  double fpen=0.0;
+  int mmin=v.indexmin();
+  int mmax=v.indexmax();
+  for (int i=mmin;i<=mmax;i++)
+  {
+    int cmin=v(i).indexmin();
+    int cmax=v(i).indexmax();
+    for (int j=cmin;j<=cmax;j++)
+    {
+      v(i,j)=boundp(x(ii++),fmin,fmax,fpen,s);
     }
   }
 }

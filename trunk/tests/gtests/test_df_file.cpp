@@ -37,11 +37,11 @@ TEST_F(test_df_file, instance_INT_MAX)
 {
   ASSERT_NO_THROW(DF_FILE instance(INT_MAX));
 }
+/*
 TEST_F(test_df_file, instance_INT_MAX_plus_1)
 {
   ASSERT_NO_THROW(DF_FILE instance(INT_MAX + 1));
 }
-/*
 TEST_F(test_df_file, allocate_INT_MAX_plus_1)
 {
   ASSERT_LT(INT_MAX, LONG_MAX);
@@ -115,6 +115,7 @@ TEST_F(test_df_file, write_read_char_array11)
   buffer.fread(&array[0], 11);
   ASSERT_STREQ(expected, array);
 }
+/*
 TEST_F(test_df_file, write_read_ptr)
 {
   DF_FILE buffer(50);
@@ -125,3 +126,4 @@ TEST_F(test_df_file, write_read_ptr)
   //buffer.fread(number);
   ASSERT_EQ(&expected, number);
 }
+*/

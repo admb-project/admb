@@ -66,6 +66,8 @@ void initial_df1b2params::reset(const init_df1b2vector& x,
   pen+=pen1;
 }
 
+void set_value(const df1b2vector& _x,const init_df1b2vector& _v, const int& _ii,
+  double fmin,double fmax,const df1b2variable& fpen,double s);
 /**
  * Description not yet available.
  * \param
@@ -80,13 +82,10 @@ void initial_df1b2params::reset(const init_df1b2vector& x,
  * \param sf Scale factor
  * The function minimizer will work internally with x*df, where x is the parameter in the model.
  */
- void initial_df1b2params::set_scalefactor(const double sf)
- {
-   scalefactor=sf;
- }
-
-
-
+void initial_df1b2params::set_scalefactor(const double sf)
+{
+  scalefactor=sf;
+}
 
 int initial_df1b2params::set_index(void)
 {
@@ -117,9 +116,19 @@ void df1b2_init_vector::set_value(const init_df1b2vector& _x,
 
   int mmin=indexmin();
   int mmax=indexmax();
-  for (int i=mmin;i<=mmax;i++)
+  if (scalefactor==0.0)
   {
-    (*this)(i) = (x(ii++));
+    for (int i=mmin;i<=mmax;i++)
+    {
+      (*this)(i) = (x(ii++));
+    }
+  }
+  else
+  {
+    for (int i=mmin;i<=mmax;i++)
+    {
+      (*this)(i) = (x(ii++)/scalefactor);
+    }
   }
 }
 
@@ -561,6 +570,21 @@ void set_value(const df1b2vector& _x,const init_df1b2vector& _v, const int& _ii,
      //  << " " << v(ii-1) << " " << x(i) << endl;
   }
 }
+void set_value(const df1b2vector& _x,const init_df1b2vector& _v, const int& _ii,
+  double fmin,double fmax,const df1b2variable& fpen,double s)
+{
+  ADUNCONST(int,ii)
+  ADUNCONST(df1b2vector,x)
+  ADUNCONST(init_df1b2vector,v)
+  int min=x.indexmin();
+  int max=x.indexmax();
+  for (int i=min;i<=max;i++)
+  {
+    x(i)=boundp(v(ii++),fmin,fmax,fpen,s);
+    //cout << setprecision(15) << fpen << " " << fmin << " " << fmax
+     //  << " " << v(ii-1) << " " << x(i) << endl;
+  }
+}
 
 /**
  * Description not yet available.
@@ -570,15 +594,32 @@ void df1b2_init_bounded_vector::set_value(const init_df1b2vector& _x,
   const int& ii,const df1b2variable& pen)
 {
   init_df1b2vector& x=(init_df1b2vector&) _x;
-  if (initial_params::mc_phase)
+
+  if (scalefactor==0.0)
   {
-    ::set_value_mc(*this,x,ii,minb,maxb);
+    if (initial_params::mc_phase)
+    {
+      ::set_value_mc(*this,x,ii,minb,maxb);
+    }
+    else
+    {
+      ::set_value(*this,x,ii,minb,maxb,pen);
+    }
   }
   else
   {
-    ::set_value(*this,x,ii,minb,maxb,pen);
+    if (initial_params::mc_phase)
+    {
+      // should this have scalefactor ??
+      //::set_value_mc(*this,x,ii,minb,maxb,scalefactor);
+      ::set_value_mc(*this,x,ii,minb,maxb);
+    }
+    else
+    {
+      ::set_value(*this,x,ii,minb,maxb,pen,scalefactor);
+      //::set_value(*this,x,ii,minb,maxb,pen);
+    }
   }
-
 }
 
 /**

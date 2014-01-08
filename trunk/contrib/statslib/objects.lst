@@ -1,4 +1,4 @@
- HEADERS=statsLib.h
+HEADERS=statsLib.h
 OBJECTS=\
   alk.obj\
   baranov.obj\

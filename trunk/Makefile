@@ -11,6 +11,12 @@ verify: $(CXX)-verify
 doc: $(CXX)-docs
 shared: $(CXX)-shared
 install: $(CXX)-install
+check: $(CXX)-check
+	@echo "SHELL: $(SHELL)"
+	@echo "PATH: $(PATH)"
+	@echo "TERM: $(TERM)"
+	@echo "MAKE: $(MAKE)"
+	@echo "CXX: $(CXX)"
 clean: $(CXX)-clean
 
 help:
@@ -49,6 +55,8 @@ cl-shared:
 	nmake cl-copy
 cl-install:
 	cd src& nmake install
+cl-check:
+	cd src& nmake check
 cl-clean:
 	cd src& nmake clean
 	cd contrib& nmake clean
@@ -80,6 +88,8 @@ g++-shared:
 	$(MAKE) g++-copy
 g++-install:
 	$(MAKE) --directory=src CC=gcc CXX=g++ install
+g++-check:
+	$(MAKE) --directory=src CC=gcc CXX=g++ check
 g++-clean:
 	$(MAKE) --directory=src CC=gcc CXX=g++ clean
 	$(MAKE) --directory=contrib CC=gcc CXX=g++ clean
@@ -111,6 +121,8 @@ clang++-shared:
 	$(MAKE) clang++-copy
 clang++-install:
 	$(MAKE) --directory=src CC=clang CXX=clang++ install
+clang++-check:
+	$(MAKE) --directory=src CC=clang CXX=clang++ check
 clang++-clean:
 	$(MAKE) --directory=src CC=clang CXX=clang++ clean
 	$(MAKE) --directory=contrib CC=clang CXX=clang++ clean
@@ -142,6 +154,8 @@ c++-shared:
 	$(MAKE) c++-copy
 c++-install:
 	$(MAKE) --directory=src CC=cc CXX=c++ install
+c++-check:
+	$(MAKE) --directory=src CC=cc CXX=c++ check 
 c++-clean:
 	$(MAKE) --directory=src CC=cc CXX=c++ clean
 	$(MAKE) --directory=contrib CC=cc CXX=c++ clean
@@ -173,6 +187,8 @@ CC-shared:
 	$(MAKE) CC-copy
 CC-install:
 	$(MAKE) --directory=src CC=cc CXX=CC install
+CC-check:
+	$(MAKE) --directory=src CC=cc CXX=CC check
 CC-clean:
 	$(MAKE) --directory=src CC=cc CXX=CC clean
 	$(MAKE) --directory=contrib CC=cc CXX=CC clean
@@ -204,6 +220,8 @@ icpc-shared:
 	$(MAKE) icpc-copy
 icpc-install:
 	$(MAKE) --directory=src CC=icc CXX=icpc install
+icpc-check:
+	$(MAKE) --directory=src CC=icc CXX=icpc check
 icpc-clean:
 	$(MAKE) --directory=src CC=icc CXX=icpc clean
 	$(MAKE) --directory=contrib CC=icc CXX=icpc clean
@@ -235,6 +253,8 @@ openCC-shared:
 	$(MAKE) openCC-copy
 openCC-install:
 	$(MAKE) --directory=src CC=opencc CXX=openCC install
+openCC-check:
+	$(MAKE) --directory=src CC=opencc CXX=openCC check
 openCC-clean:
 	$(MAKE) --directory=src CC=opencc CXX=openCC clean
 	$(MAKE) --directory=contrib CC=opencc CXX=openCC clean
@@ -253,10 +273,3 @@ bcc-install:
 	cd src& $(MAKE) -fbcc.mak install
 bcc-clean:
 	cd src& $(MAKE) -fbcc.mak clean
-
-check:
-	@echo "SHELL: $(SHELL)"
-	@echo "PATH: $(PATH)"
-	@echo "TERM: $(TERM)"
-	@echo "MAKE: $(MAKE)"
-	@echo "CXX: $(CXX)"

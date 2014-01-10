@@ -387,7 +387,13 @@ else
 	cp -R ../scripts $(DIST)
 endif
 
-check:
+coding-standard: cpplint.py
+	python cpplint.py --linelength=80 --extension=c,cpp,h,hpp --filter=-,+whitespace/tab,+whitespace/blank_line,+whitespace/line_length,+whitespace/end_of_line df1b2-separable/* linad99/* nh99/* sparse/* tools99/*
+
+cpplint.py:
+	svn cat http://google-styleguide.googlecode.com/svn/trunk/cpplint/cpplint.py > cpplint.py
+
+check: coding-standard
 	@echo "SHELL: $(SHELL)"
 	@echo "PATH: $(PATH)"
 	@echo "TERM: $(TERM)"

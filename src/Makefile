@@ -169,3 +169,12 @@ clean:
 	if exist ..\admb del ..\admb
 	if exist ..\admb.bat del ..\admb.bat
 	if exist ..\admb.zip del ..\admb.zip
+
+check:
+	@echo "SHELL: $(SHELL)"
+	@echo "PATH: $(PATH)"
+	@echo "TERM: $(TERM)"
+	@echo "MAKE: $(MAKE)"
+	@echo "CXX: $(CXX)"
+	@echo "OS: $(OS)"
+	@echo "OSTYPE: $(OSTYPE)"

@@ -8,9 +8,11 @@ GTESTS=\
  test_dlist.cpp\
  test_ad_comm.cpp\
  test_df1b2atan2.obj\
+ df1b2atan2.obj\
  test_gradient_structure.cpp\
  test_df_file.cpp\
  test_scalefactor.obj\
+ scalefactor.obj\
  main.cpp
 
 all: clean gtest-all
@@ -28,8 +30,8 @@ test_scalefactor.obj: test_scalefactor.cpp scalefactor.obj
 scalefactor.obj: scalefactor.tpl
 	CXXFLAGS="-Dmain=scalefactor" ../../admb -c -r -g $^
 
-#gtest-all: gtest-all.obj df1b2atan2.obj scalefactor.obj $(GTESTS)
-gtest-all: gtest-all.obj main.cpp test_scalefactor.obj scalefactor.obj
+gtest-all: gtest-all.obj $(GTESTS)
+#gtest-all: gtest-all.obj main.cpp test_scalefactor.obj scalefactor.obj
 	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb -g -r $^
 
 gtest-all.obj: googletest-read-only
@@ -62,4 +64,11 @@ clean:
 	@rm -vf admodel.hes
 	@rm -vf hesscheck
 	@rm -vf hessian.bin
-
+	@rm -vf scalefactor.bar
+	@rm -vf scalefactor.bgs
+	@rm -vf scalefactor.cor
+	@rm -vf scalefactor.eva
+	@rm -vf scalefactor.luu
+	@rm -vf scalefactor.par
+	@rm -vf scalefactor.rhes
+	@rm -vf scalefactor.std

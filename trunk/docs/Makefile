@@ -13,3 +13,7 @@ ifeq ($(SHELL),sh.exe)
 else
 	cp -R ../docs ${DIST} 
 endif
+
+clean:
+	$(MAKE) --directory=installs clean
+	$(MAKE) --directory=tpmarkdown clean

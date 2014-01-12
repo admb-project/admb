@@ -20,13 +20,13 @@ ifeq ($(SHELL),cmd)
   DIST=..\build\dist
   LIBSDIR=$(DIST)\lib
   LIBSDIR:=$(addsuffix \,$(LIBSDIR))
-  OBJSDIR=..\build\objects\dist
+  OBJSDIR=..\build\objects\dist$(SHARED)
   OBJSDIR:=$(addsuffix \,$(OBJSDIR))
 else
   INSTALL_DIR=/usr/local/
   DIST=../build/dist
   LIBSDIR=$(DIST)/lib/
-  OBJSDIR=../build/objects/dist/
+  OBJSDIR=../build/objects/dist$(SHARED)/
 endif
 
 ifdef CXX
@@ -39,6 +39,10 @@ endif
 
 ifdef LDFLAGS
   USER_LDFLAGS:= $(LDFLAGS)
+endif
+
+ifdef SHARED
+  ADCXXFLAGS:= -fPIC $(ADCXXFLAGS)
 endif
 
 ifdef DEBUG
@@ -99,7 +103,25 @@ endif
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.
 
-shared: all
+shared: $(OBJECTS)
+ifeq ($(SHELL),cmd)
+	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo-shared.a -Wl,--no-whole-archive
+else
+  ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
+	$(CXX) -shared -o../build/dist/lib/libadmb.so -Wl,-all_load ../build/dist/lib/libadmb-shared.a
+	$(CXX) -shared -o../build/dist/lib/libadmbo.so -Wl,-all_load ../build/dist/lib/libadmbo-shared.a
+  else
+	$(CXX) -shared -o../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared -o../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
+  endif
+endif
+	@echo ADMB shared build completed.
+	@echo Check README.txt for usage and installation information.
+
+shared: | dirs
+
+shared2:
 ifeq ($(SHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb.a -Wl,--no-whole-archive
 	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo.a -Wl,--no-whole-archive
@@ -112,8 +134,7 @@ else
 	$(CXX) -shared -o../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo.a -Wl,--no-whole-archive
   endif
 endif
-	@echo ADMB shared build completed.
-	@echo Check README.txt for usage and installation information.
+
 
 dist: bins
 ifeq ($(SHELL),cmd)
@@ -188,27 +209,31 @@ endif
 libs: objects
 ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\lib md ${DIST}\lib
-	if exist ${DIST}\lib\libadmb.a del ${DIST}\lib\libadmb.a
-	if exist ${DIST}\lib\libadmbo.a del ${DIST}\lib\libadmbo.a
+	if exist ${DIST}\lib\libadmb$(SHARED).a del ${DIST}\lib\libadmb$(SHARED).a
+	if exist ${DIST}\lib\libadmbo$(SHARED).a del ${DIST}\lib\libadmbo$(SHARED).a
 else
 	mkdir -p ${DIST}/lib
-	rm -vf ${DIST}/lib/libadmb.a
-	rm -vf ${DIST}/lib/libadmbo.a
+	rm -vf ${DIST}/lib/libadmb$(SHARED).a
+	rm -vf ${DIST}/lib/libadmbo$(SHARED).a
 endif
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-linad99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-df1b2-separable-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-nh99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-tools99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmb.a $(OBJSDIR)saflp-sparse-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-linad99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-df1b2-separable-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-nh99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-tools99-*.obj
-	$(AR) -rs $(LIBSDIR)libadmbo.a $(OBJSDIR)optlp-sparse-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-linad99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-df1b2-separable-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-nh99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-tools99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmb$(SHARED).a $(OBJSDIR)saflp-sparse-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-linad99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-df1b2-separable-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-nh99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-tools99-*.obj
+	$(AR) -rs $(LIBSDIR)libadmbo$(SHARED).a $(OBJSDIR)optlp-sparse-*.obj
 
 objects: $(OBJECTS)
 
+ifndef SHARED
 $(OBJECTS): | includes
+else
+$(OBJECTS): | dirs
+endif
 
 ifeq ($(SHELL),cmd)
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp

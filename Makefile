@@ -86,7 +86,7 @@ g++-copy:
 g++-verify:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ verify
 g++-shared:
-	$(MAKE) --directory=src CC=gcc CXX=g++ CXXFLAGS+=-fPIC SHARED=-shared shared
+	$(MAKE) --directory=src CC=gcc CXX=g++ SHARED=-shared shared
 	$(MAKE) --directory=contrib CC=gcc CXX=g++ SHARED=-shared shared
 g++-install:
 	$(MAKE) --directory=src CC=gcc CXX=g++ install

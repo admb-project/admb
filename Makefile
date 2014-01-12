@@ -66,13 +66,16 @@ g++: g++-all
 g++-all: 
 	$(MAKE) g++-src
 	$(MAKE) g++-contrib
+	$(MAKE) g++-shared
 	$(MAKE) g++-copy
 g++-debug:
 	$(MAKE) g++-all DEBUG=1
 g++-src:
 	$(MAKE) --directory=src CC=gcc CXX=g++ all
+	$(MAKE) --directory=src CC=gcc CXX=g++ SHARED=-shared libs
 g++-contrib:
 	$(MAKE) --directory=contrib CC=gcc CXX=g++ all
+	$(MAKE) --directory=contrib CC=gcc CXX=g++ SHARED=-shared libs
 g++-docs:
 	$(MAKE) --directory=docs CC=gcc CXX=g++ all
 g++-test:
@@ -83,9 +86,8 @@ g++-copy:
 g++-verify:
 	$(MAKE) --directory=tests CC=gcc CXX=g++ verify
 g++-shared:
-	$(MAKE) --directory=src CC=gcc CXX=g++ CXXFLAGS+=-fPIC shared
-	$(MAKE) --directory=contrib CC=gcc CXX=g++ CXXFLAGS+=-fPIC shared
-	$(MAKE) g++-copy
+	$(MAKE) --directory=src CC=gcc CXX=g++ CXXFLAGS+=-fPIC SHARED=-shared shared
+	$(MAKE) --directory=contrib CC=gcc CXX=g++ SHARED=-shared shared
 g++-install:
 	$(MAKE) --directory=src CC=gcc CXX=g++ install
 g++-check:
@@ -99,13 +101,16 @@ clang++: clang++-all
 clang++-all:
 	$(MAKE) clang++-src
 	$(MAKE) clang++-contrib
+	$(MAKE) clang++-shared
 	$(MAKE) clang++-copy
 clang++-debug:
 	$(MAKE) clang++-all DEBUG=1
 clang++-src:
 	$(MAKE) --directory=src CC=clang CXX=clang++ all
+	$(MAKE) --directory=src CC=clang CXX=clang++ SHARED=-shared libs
 clang++-contrib:
 	$(MAKE) --directory=contrib CC=clang CXX=clang++ all
+	$(MAKE) --directory=contrib CC=clang CXX=clang++ SHARED=-shared libs
 clang++-docs:
 	$(MAKE) --directory=docs CC=clang CXX=clang++ all
 clang++-test:
@@ -116,9 +121,8 @@ clang++-copy:
 clang++-verify:
 	$(MAKE) --directory=tests CC=clang CXX=clang++ verify
 clang++-shared:
-	$(MAKE) --directory=src CC=clang CXX=clang++ CXXFLAGS+=-fpic shared
-	$(MAKE) --directory=contrib CC=clang CXX=clang++ CXXFLAGS+=-fpic shared
-	$(MAKE) clang++-copy
+	$(MAKE) --directory=src CC=clang CXX=clang++ SHARED=-shared shared
+	$(MAKE) --directory=contrib CC=clang CXX=clang++ SHARED=-shared shared
 clang++-install:
 	$(MAKE) --directory=src CC=clang CXX=clang++ install
 clang++-check:
@@ -132,13 +136,16 @@ c++: c++-all
 c++-all:
 	$(MAKE) c++-src
 	$(MAKE) c++-contrib
+	$(MAKE) c++-shared
 	$(MAKE) c++-copy
 c++-debug:
 	$(MAKE) c++-all DEBUG=1
 c++-src:
 	$(MAKE) --directory=src CC=cc CXX=c++ all
+	$(MAKE) --directory=src CC=cc CXX=c++ SHARED=-shared libs
 c++-contrib:
 	$(MAKE) --directory=contrib CC=cc CXX=c++ all
+	$(MAKE) --directory=contrib CC=cc CXX=c++ SHARED=-shared libs
 c++-docs:
 	$(MAKE) --directory=docs CC=cc CXX=c++ all
 c++-test:
@@ -149,9 +156,8 @@ c++-copy:
 c++-verify:
 	$(MAKE) --directory=tests CC=cc CXX=c++ verify
 c++-shared:
-	$(MAKE) --directory=src CC=cc CXX=c++ CXXFLAGS+=-fPIC shared
-	$(MAKE) --directory=contrib CC=cc CXX=c++ CXXFLAGS+=-fPIC shared
-	$(MAKE) c++-copy
+	$(MAKE) --directory=src CC=cc CXX=c++ SHARED=-shared shared
+	$(MAKE) --directory=contrib CC=cc CXX=c++ SHARED=-shared shared
 c++-install:
 	$(MAKE) --directory=src CC=cc CXX=c++ install
 c++-check:
@@ -165,13 +171,16 @@ CC: CC-all
 CC-all:
 	$(MAKE) CC-src
 	$(MAKE) CC-contrib
+	$(MAKE) CC-shared
 	$(MAKE) CC-copy
 CC-debug:
 	$(MAKE) CC-all DEBUG=1
 CC-src:
 	$(MAKE) --directory=src CC=cc CXX=CC all
+	$(MAKE) --directory=src CC=cc CXX=CC SHARED=-shared libs
 CC-contrib:
 	$(MAKE) --directory=contrib CC=cc CXX=CC all
+	$(MAKE) --directory=contrib CC=cc CXX=CC SHARED=-shared libs
 CC-docs:
 	$(MAKE) --directory=docs CC=cc CXX=CC all
 CC-test:
@@ -182,9 +191,8 @@ CC-copy:
 CC-verify:
 	$(MAKE) --directory=tests CC=cc CXX=CC verify
 CC-shared:
-	$(MAKE) --directory=src CC=cc CXX=CC CXXFLAGS+=-fpic shared
-	$(MAKE) --directory=contrib CC=cc CXX=CC CXXFLAGS+=-fpic shared
-	$(MAKE) CC-copy
+	$(MAKE) --directory=src CC=cc CXX=CC SHARED=-shared shared
+	$(MAKE) --directory=contrib CC=cc CXX=CC SHARED=-shared shared
 CC-install:
 	$(MAKE) --directory=src CC=cc CXX=CC install
 CC-check:
@@ -198,11 +206,13 @@ icpc: icpc-all
 icpc-all:
 	$(MAKE) icpc-src 
 	$(MAKE) icpc-contrib
+	$(MAKE) icpc-shared
 	$(MAKE) icpc-copy
 icpc-debug:
 	$(MAKE) icpc-all DEBUG=1
 icpc-src:
 	$(MAKE) --directory=src CC=icc CXX=icpc all
+	$(MAKE) --directory=src CC=icc CXX=icpc SHARED=-shared libs
 icpc-contrib:
 	$(MAKE) --directory=contrib CC=icc CXX=icpc all
 icpc-docs:
@@ -215,9 +225,8 @@ icpc-copy:
 icpc-verify:
 	$(MAKE) --directory=tests CC=icc CXX=icpc verify
 icpc-shared:
-	$(MAKE) --directory=src CC=icc CXX=icpc CXXFLAGS+=-fpic shared
-	$(MAKE) --directory=contrib CC=icc CXX=icpc CXXFLAGS+=-fpic shared
-	$(MAKE) icpc-copy
+	$(MAKE) --directory=src CC=icc CXX=icpc SHARED=-shared shared
+	$(MAKE) --directory=contrib CC=icc CXX=icpc SHARED=-shared shared
 icpc-install:
 	$(MAKE) --directory=src CC=icc CXX=icpc install
 icpc-check:
@@ -231,13 +240,16 @@ openCC: openCC-all
 openCC-all: 
 	$(MAKE) openCC-src
 	$(MAKE) openCC-contrib
+	$(MAKE) openCC-shared
 	$(MAKE) openCC-copy
 openCC-debug:
 	$(MAKE) openCC-all DEBUG=1
 openCC-src:
 	$(MAKE) --directory=src CC=opencc CXX=openCC all
+	$(MAKE) --directory=src CC=opencc CXX=openCC SHARED=-shared libs
 openCC-contrib:
 	$(MAKE) --directory=contrib CC=opencc CXX=openCC all
+	$(MAKE) --directory=contrib CC=opencc CXX=openCC SHARED=-shared libs
 openCC-docs:
 	$(MAKE) --directory=docs CC=opencc CXX=openCC all
 openCC-test:
@@ -248,9 +260,8 @@ openCC-copy:
 openCC-verify:
 	$(MAKE) --directory=tests CC=opencc CXX=openCC verify
 openCC-shared:
-	$(MAKE) --directory=src CC=opencc CXX=openCC CXXFLAGS+=-fPIC shared
-	$(MAKE) --directory=contrib CC=opencc CXX=openCC CXXFLAGS+=-fPIC shared
-	$(MAKE) openCC-copy
+	$(MAKE) --directory=src CC=opencc CXX=openCC SHARED=-shared shared
+	$(MAKE) --directory=contrib CC=opencc CXX=openCC SHARED=-shared shared
 openCC-install:
 	$(MAKE) --directory=src CC=opencc CXX=openCC install
 openCC-check:

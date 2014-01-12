@@ -16,20 +16,23 @@ ifeq ($(OS),Windows_NT)
   endif
 endif
 ifeq ($(SHELL),cmd)
-  CONTRIB_OBJS_DIR=..\..\build\objects\contrib
+  CONTRIB_OBJS_DIR=..\..\build\objects\contrib$(SHARED)
   CONTRIB_DIR=..\..\build\dist\contrib
   CONTRIB_BIN=$(addsuffix \bin,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix \include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix \lib,$(CONTRIB_DIR))
 else
-  CONTRIB_OBJS_DIR=../../build/objects/contrib
+  CONTRIB_OBJS_DIR=../../build/objects/contrib$(SHARED)
   CONTRIB_DIR=../../build/dist/contrib
   CONTRIB_BIN=$(addsuffix /bin,$(CONTRIB_DIR))
   CONTRIB_INCLUDE=$(addsuffix /include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix /lib,$(CONTRIB_DIR))
 endif
 ifdef DEBUG
-OPTION=-g
+  OPTION=-g
+endif
+ifdef SHARED
+  OPTION:=-d $(OPTION)
 endif
 
 all: 
@@ -38,17 +41,17 @@ all:
 	$(MAKE) contrib-ad2csv
 	@echo ADMB contrib build completed.
 
-shared: all
+shared:
 ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contrib.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontrib.a -Wl,--no-whole-archive -Wl,-Bdynamic ..\build\dist\lib\admb.dll
-	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\contribo.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontribo.a -Wl,--no-whole-archive -Wl,-Bdynamic ..\build\dist\lib\admbo.dll
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\admb-contrib.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontrib-shared.a ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\admb-contribo.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
 else
   ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontrib.so -Wl,-force_load ../build/dist/contrib/lib/libcontrib.a ../build/dist/lib/libadmb.so
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontribo.so -Wl,-force_load ../build/dist/contrib/lib/libcontribo.a ../build/dist/lib/libadmbo.so
+	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libadmb-contrib.so -Wl,-force_load ../build/dist/contrib/lib/libcontrib-shared.a ../build/dist/lib/libadmb-shared.a
+	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libadmb-contribo.so -Wl,-force_load ../build/dist/contrib/lib/libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a
   else
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontrib.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontrib.a -Wl,--no-whole-archive ../build/dist/lib/libadmb.so
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libcontribo.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontribo.a -Wl,--no-whole-archive ../build/dist/lib/libadmbo.so
+	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libadmb-contrib.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontrib-shared.a ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libadmb-contribo.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
   endif
 endif
 	@echo ADMB contrib shared build completed.
@@ -60,17 +63,21 @@ contrib-includes: contrib-dirs
 	@$(MAKE) --directory=statslib CONTRIB_INCLUDE=$(CONTRIB_INCLUDE) includes
 	@$(MAKE) --directory=src CONTRIB_INCLUDE=$(CONTRIB_INCLUDE) includes
 
+libs: 
+	$(MAKE) contrib-dirs
+	$(MAKE) contrib-libs
+
 contrib-libs: contrib-ecolib contrib-gdbprintlib contrib-qfclib contrib-statslib contrib-src
 ifeq ($(SHELL),cmd)
-	if exist  src\$(CONTRIB_LIB)\libcontrib.a del src\$(CONTRIB_LIB)\libcontrib.a
-	$(AR) -rs src\$(CONTRIB_LIB)\libcontrib.a src\$(CONTRIB_OBJS_DIR)\saflp-contrib-*.obj
-	if exist  src\$(CONTRIB_LIB)\libcontribo.a del src\$(CONTRIB_LIB)\libcontribo.a
-	$(AR) -rs src\$(CONTRIB_LIB)\libcontribo.a src\$(CONTRIB_OBJS_DIR)\optlp-contrib-*.obj
+	if exist  src\$(CONTRIB_LIB)\libcontrib$(SHARED).a del src\$(CONTRIB_LIB)\libcontrib.a
+	$(AR) -rs src\$(CONTRIB_LIB)\libcontrib$(SHARED).a src\$(CONTRIB_OBJS_DIR)\saflp-contrib-*.obj
+	if exist  src\$(CONTRIB_LIB)\libcontribo$(SHARED).a del src\$(CONTRIB_LIB)\libcontribo.a
+	$(AR) -rs src\$(CONTRIB_LIB)\libcontribo$(SHARED).a src\$(CONTRIB_OBJS_DIR)\optlp-contrib-*.obj
 else
-	rm -vf src/$(CONTRIB_LIB)/libcontrib.a
-	$(AR) -rs src/$(CONTRIB_LIB)/libcontrib.a src/$(CONTRIB_OBJS_DIR)/saflp-contrib-*.obj
-	rm -vf src/$(CONTRIB_LIB)/libcontribo.a
-	$(AR) -rs src/$(CONTRIB_LIB)/libcontribo.a src/$(CONTRIB_OBJS_DIR)/optlp-contrib-*.obj
+	rm -vf src/$(CONTRIB_LIB)/libcontrib$(SHARED).a
+	$(AR) -rs src/$(CONTRIB_LIB)/libcontrib$(SHARED).a src/$(CONTRIB_OBJS_DIR)/saflp-contrib-*.obj
+	rm -vf src/$(CONTRIB_LIB)/libcontribo$(SHARED).a
+	$(AR) -rs src/$(CONTRIB_LIB)/libcontribo$(SHARED).a src/$(CONTRIB_OBJS_DIR)/optlp-contrib-*.obj
 endif
 
 contrib-ad2csv: contrib-dirs

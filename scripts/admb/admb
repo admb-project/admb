@@ -131,7 +131,7 @@ else
   LDFLAGS="$LDFLAGS"
 fi
 if [ ! -z "$dll" ]; then
-  CXXFLAGS="-fPIC $CXXFLAGSS"
+  CXXFLAGS="-fPIC $CXXFLAGS"
   LDFLAGS="-shared $LDFLAGS"
 fi
 if [ ! -z "$debug" ]; then

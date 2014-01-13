@@ -317,7 +317,7 @@ void adpool::set_size(unsigned int sz)
   if (size !=sz && size != 0)
   {
     cerr << "You can not change the allocation size in mid stream\n"
-         << " current size is " << size << " trying to change to " 
+         << " current size is " << size << " trying to change to "
          << sz << '\n';
   }
   size = sz < 0 ? 0 : sz;

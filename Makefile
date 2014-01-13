@@ -215,6 +215,7 @@ icpc-src:
 	$(MAKE) --directory=src CC=icc CXX=icpc SHARED=-shared libs
 icpc-contrib:
 	$(MAKE) --directory=contrib CC=icc CXX=icpc all
+	$(MAKE) --directory=contrib CC=icc CXX=icpc SHARED=-shared libs
 icpc-docs:
 	$(MAKE) --directory=docs CC=icc CXX=icpc all
 icpc-test:

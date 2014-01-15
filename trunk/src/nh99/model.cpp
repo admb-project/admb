@@ -474,6 +474,17 @@ void param_init_number::set_value_inv(const dvector& x, const int& ii)
     return 1;
   }
 
+  //Added By Steve Martell
+  void param_init_bounded_number::allocate(const data_vector & v,
+   const char * _s)
+   {
+    double lb = v(1);
+    double ub = v(2);
+    int   phz = int(v(3));
+
+    allocate(lb,ub,phz,_s);
+   }
+
   void param_init_bounded_number::allocate(double _minb,
     double _maxb,int _phase_start,const char * _s)
   {

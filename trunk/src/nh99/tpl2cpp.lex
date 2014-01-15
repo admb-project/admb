@@ -1621,7 +1621,9 @@ DATA_SECTION  {
                             }
 
 
-<INIT_BOUNDED_NUMBER_DEF>({name}\({float_num_exp},{float_num_exp},{num_exp}\)) {
+<INIT_BOUNDED_NUMBER_DEF>({name}\({float_num_exp},{float_num_exp},{num_exp}\)) |
+<INIT_BOUNDED_NUMBER_DEF>({name}\({name}\)) {
+
 
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)
     fprintf(fdat,"%s",tmp_string);

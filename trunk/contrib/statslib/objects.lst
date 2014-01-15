@@ -11,7 +11,6 @@ OBJECTS=\
   dnorm.obj\
   dpois.obj\
   fill.obj\
-  logistic.obj\
   dmvlogistic.obj\
   rmvlogistic.obj\
   dmultinom.obj\
@@ -22,3 +21,4 @@ OBJECTS=\
   dinvgamma.obj\
   studentT.obj\
   vcubicspline.obj
+  #logistic.obj\

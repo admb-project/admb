@@ -1153,6 +1153,9 @@ public:
   dll_param_init_number& operator=(const prevariable& m);
 };
 
+
+//forward declaration
+class data_vector;
 /**
  * Description not yet available.
  * \param
@@ -1170,6 +1173,8 @@ protected:
   void allocate(double _minb,double _maxb,int phase_start=1,
     const char * s="UNNAMED");
   void allocate(double _minb,double _maxb,const char * s="UNNAMED");
+  void allocate(const data_vector& v,const char * s="UNNAMED");
+
 public:
 #if defined(USE_ADPVM)
   void pvm_pack(void){::pvm_pack(*this);}

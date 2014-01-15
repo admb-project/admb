@@ -1411,8 +1411,8 @@ L30:
 /*        IF AN UNUSUAL TERMINATION IS TO OCCUR THEN LET */
 /*        STP BE THE LOWEST POINT OBTAINED SO FAR. */
 
-    if (brackt && (*stp <= stmin || *stp >= stmax) || *nfev >= *maxfev - 1 ||
-            infoc == 0 || brackt && stmax - stmin <= *xtol * stmax) {
+    if ( ( brackt && (*stp <= stmin || *stp >= stmax) ) || *nfev >= *maxfev - 1 ||
+            infoc == 0 || (brackt && stmax - stmin <= *xtol * stmax) ) {
         *stp = stx;
     }
 
@@ -1441,7 +1441,7 @@ L45:
 
 /*        TEST FOR CONVERGENCE. */
 
-    if ( brackt && (*stp <= stmin || *stp >= stmax) || infoc == 0) {
+    if ( (brackt && (*stp <= stmin || *stp >= stmax)) || infoc == 0) {
         *info = 6;
     }
     if (*stp == lb3_1.stpmax && *f <= ftest1 && dg <= dgtest) {

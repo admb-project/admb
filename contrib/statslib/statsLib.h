@@ -6,6 +6,8 @@
 #include <df1b2fun.h>
 #include <adrndeff.h> 
 
+
+
 dvar_matrix ageLengthKey( const dvar_vector& mu, const dvar_vector& sig, const dvector& x );
 dmatrix ageLengthKey( const dvector& mu, const dvector& sig, const dvector& x );
 dvar_matrix ALK(dvar_vector mu, dvar_vector sig, dvector x);
@@ -86,19 +88,69 @@ df1b2variable dnorm( const df1b2vector& x, const df1b2variable& mu, const df1b2v
 
 
 // Plogis distribution
-dvariable   plogis( const prevariable& x, const double& location, const double& scale );
-dvariable   plogis( const prevariable& x, const prevariable& location, const prevariable& scale );
-dvector     plogis( const dvector& x, const double& location, const double& scale );
-dvar_vector plogis( const dvector& x, const prevariable& location, const prevariable& scale );
-dvar_vector plogis( const dvar_vector& x, const prevariable& location, const prevariable& scale );
+// #include <plogis.cpp>
+template <typename T1, typename T2>
+T1 plogis(T1 *x, T2 *location, T2 *scale)
+{
+  T1 y = 1./(1.+mfexp((*location - *x) / *scale));
+  return (y);
+}  
+
+template <typename T1, typename T2>
+T1 plogis(T1 x, T2 location, T2 scale)
+{
+  T1 y = 1./(1.+mfexp((location - x) / scale));
+  return (y);
+} 
+
+template <typename T1, typename T2, typename T3>
+T1 plogis(T2 x, T3 location, T3 scale)
+{
+  T1 y = 1./(1.+mfexp((location - x) / scale));
+  //cout<<typeid(y)<<endl;
+  return (y);
+} 
+
+// template class plogis<dvariable>;
+// template class plogis<dvector>;
+// template class plogis<dvar_vector>;
+// template<typename T>
+// class AccumulationTraits;
+// template<>
+// class AccumulationTraits<dvector> {
+//   public:
+//   typedef dvar_vector AccT;
+// };
+// template<>
+// class AccumulationTraits<dvar_vector> {
+//   public:
+//   typedef dvector AccT;
+// };
+
 // template <typename T1, typename T2>
-// T1 plogis( const T1& x, const T2& locatiogn, const T2& scale );
+// typename AccumulationTraits<T1>::AccT plogis(  T1& x,  T2& location,  T2& scale )
+// {
+//   if( scale<=0 ) 
+//   {
+//     cerr<<"Standard deviation is less than or equal to zero in "
+//     "plogis( const dvar_vector& x, const dvariable& location, "
+//             "const dvariable& scale )\n";
+//     return 0;
+//   }
+//   typedef typename AccumulationTraits<T1>::AccT AccT;
+//   AccT logistic = 1./(1.+mfexp((location-x)/scale));
+//   return (logistic);
+// }  
+
+// dvariable   plogis( const prevariable& x, const double& location, const double& scale );
+// dvariable   plogis( const prevariable& x, const prevariable& location, const prevariable& scale );
+// dvector     plogis( const dvector& x, const double& location, const double& scale );
+// dvar_vector plogis( const dvector& x, const prevariable& location, const prevariable& scale );
+// dvar_vector plogis( const dvar_vector& x, const prevariable& location, const prevariable& scale );
 
 // Exponential logistic distribution
 dvar_vector eplogis(const dvar_vector& x, const dvariable& alpha, const dvariable& beta, const dvariable& gamma);
 dvector eplogis(const dvector& x, const double& alpha, const double& beta, const double& gamma);
-// template <typename t1, typename t2>
-// t1 eplogis(const t1& x, const t2& alpha, const t2& beta, const t2& gamma);
 
 // Beta distribution
 dvariable dbeta( const dvariable& x, const double& shape1, const double& shape2 );
@@ -189,4 +241,23 @@ dvariable splint(const dvector& _xa,const dvar_vector& _ya, const dvar_vector& _
 * @date 12/14/2011
 */
 
+
+
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

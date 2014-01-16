@@ -868,6 +868,7 @@ public:
   virtual void save_value(void)=0; // save the objects value in a ascii file
   virtual void bsave_value(void)=0; // save the objects value in a binary file
   virtual void save_value(const ofstream& ofs, int prec) = 0;
+  virtual void save_value(const ofstream& ofs, int prec,const dvector&,int& offset) = 0;
   //virtual void bsave_value(const uostream& ofs) = 0;
     virtual const char * label()=0;
   void allocate(int _phase_start);
@@ -878,6 +879,7 @@ public:
   initial_params(void);
   static void xinit(const dvector& x); // get the number of active parameters
   static void xinit_all(const dvector& x); // get the number of active parameters
+  static void save_all(const ofstream& _ofs,int prec,const dvector&g);
   static void set_active_random_effects(void); // get the number of active parameters
   static void set_active_only_random_effects(void); // get the number of active parameters
   static void set_inactive_only_random_effects(void); // get the number of active parameters
@@ -963,6 +965,7 @@ private:
   virtual void save_value(void);
   virtual void bsave_value(void);
   virtual void save_value(const ofstream& ofs, int prec);
+  virtual void save_value(const ofstream& ofs, int prec,const dvector&,int& offset);
   virtual void restore_value(const ifstream& ifs);
   void report_value(void);
   //virtual void read_value(void);
@@ -1047,6 +1050,7 @@ private:
   friend class param_init_bounded_vector_vector;
   virtual const char * label(void);
   virtual void save_value(const ofstream& ofs, int prec);
+  virtual void save_value(const ofstream& ofs, int prec,const dvector&,int& offset);
   virtual void restore_value(const ifstream& ifs);
   virtual void save_value(void);
   virtual void bsave_value(void);
@@ -1117,6 +1121,7 @@ class param_init_number: public named_dvariable , public initial_params
   virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
   virtual void save_value(const ofstream& ofs, int prec);
+  virtual void save_value(const ofstream& ofs, int prec,const dvector&,int& offset);
   virtual void restore_value(const ifstream& ifs);
   virtual void save_value(void);
   virtual void bsave_value(void);
@@ -1249,6 +1254,7 @@ public:
   virtual void set_value_inv(const dvector& x, const int& ii);
   virtual int size_count(void);
   virtual void save_value(void);
+  virtual void save_value(const ofstream& ofs, int prec,const dvector&,int& offset);
   virtual void bsave_value(void);
   virtual void save_value(const ofstream& ofs, int prec);
   virtual void restore_value(const ifstream& ifs);

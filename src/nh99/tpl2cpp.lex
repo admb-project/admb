@@ -3920,7 +3920,13 @@ TOP_OF_MAIN_SECTION {
       if (makedll)
       {
         if (!makegaussdll)
-          fprintf(ftopmain,"\nvoid __stdcall __declspec(dllexport) ");
+        {
+          fprintf(ftopmain, "#ifdef _MSC_VER\n");
+          fprintf(ftopmain, "void __stdcall __declspec(dllexport) \n");
+          fprintf(ftopmain, "#else\n");
+          fprintf(ftopmain, "void \n");
+          fprintf(ftopmain, "#endif\n");
+        }
         else
           fprintf(ftopmain,"\nint __stdcall __declspec(dllexport) ");
       }
@@ -4073,7 +4079,13 @@ TOP_OF_MAIN_SECTION {
         if (!splus_debug_flag)
         {
           if (!makegaussdll)
-            fprintf(ftopmain,"\nvoid __stdcall __declspec(dllexport) ");
+          {
+            fprintf(ftopmain, "#ifdef _MSC_VER\n");
+            fprintf(ftopmain, "void __stdcall __declspec(dllexport) \n");
+            fprintf(ftopmain, "#else\n");
+            fprintf(ftopmain, "void \n");
+            fprintf(ftopmain, "#endif\n");
+          }
           else
             fprintf(ftopmain,"\nint __stdcall __declspec(dllexport) ");
         }

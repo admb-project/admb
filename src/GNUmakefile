@@ -169,7 +169,7 @@ ifeq ($(SHELL),cmd)
 	copy ..\scripts\admb\adlink.bat ${DIST}\bin\adlink.cmd
 	copy ..\scripts\admb\adcomp.bat ${DIST}\bin\adcomp.cmd
 	if not exist $(DIST)\include\contrib md $(DIST)\include\contrib
-	echo " ">$(DIST)\include\contrib\contrib.h
+	copy nh99\nocontrib.h $(DIST)\include\contrib\contrib.h
 	$(MAKE) --directory=df1b2-separable CC=gcc DIST=..\${DIST} bins
 	$(MAKE) --directory=nh99 CC=gcc DIST=..\${DIST} bins
 else

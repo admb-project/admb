@@ -48,7 +48,7 @@ clean:
 	rm -vf simple.obj
 	rm -vf simple.par
 	rm -vf simple.std
-	rm -vf simple.tpl
+	rm -vf simple.dll
 	rm -vf testso
 	rm -vf testso.exe
 	rm -vf variance

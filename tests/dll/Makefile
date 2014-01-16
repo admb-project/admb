@@ -1,18 +1,13 @@
-all: testdll.exe
+all: simple.dll
 
 run:
-	testdll.exe
+	Rscript simple.r
 
 testdll.exe: main.obj simple.dll example.dll
 	$(CXX) -o $@ main.obj simple.dll example.dll
 
-simple.dll: simple.obj
-	..\..\admb -d $^
-
-simple.obj:
-	copy ..\..\examples\admb\simple\simple.tpl
-	copy ..\..\examples\admb\simple\simple.dat
-	..\..\admb -c -d simple.tpl
+simple.dll: simple.tpl
+	..\..\admb -d simple.tpl
 
 main.obj: main.cpp
 	$(CXX) -c -o $@ $^

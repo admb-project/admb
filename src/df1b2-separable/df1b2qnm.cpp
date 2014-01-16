@@ -15,9 +15,7 @@ using std::istringstream;
 #  include <admodel.h>
 #  include <df1b2fun.h>
 #  include <adrndeff.h>
-//#include <vmon.h>
 static int no_stuff=0;
-//static void xxxy(void) {}
 
 /**
  * Description not yet available.
@@ -413,5 +411,4 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   quit_flag=fmc.quit_flag;
   objective_function_value::gmax=fabs(fmc.gmax);
 } // end block for quasi newton minimization
-
 #endif

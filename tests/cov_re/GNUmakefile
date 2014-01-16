@@ -1,12 +1,14 @@
-.PHONY: run
+ifeq ($(OS),Windows_NT)
+EXT=.sh
+endif
 
 all: clean cov_re cov_re_sep run
 
 cov_re: cov_re.tpl
-	../../admb -r $@
+	../../admb$(EXT) -r $@
 
 cov_re_sep: cov_re_sep.tpl
-	../../admb -r $@
+	../../admb$(EXT) -r $@
 
 run:
 	@printf "Started run:\n"

@@ -361,7 +361,15 @@ if not defined tpls (
     set tpl=%%~na
     @REM set CMD=adlink!d!!g!!r!!fast! !tpl!.obj !objs!
     if defined d (
-      set CMD=!LD!!LDFLAGS! -o !tpl!.dll !objs! !libs!
+      if "!CXX!"=="cl" (
+        set CMD=!LD!!LDFLAGS! -o !tpl!.dll !objs! !libs!
+      ) else (
+        if defined objs (
+          set CMD=!LD!!LDFLAGS! -o !tpl!.dll !tpl!.obj !objs! !libs!
+        ) else (
+          set CMD=!LD!!LDFLAGS! -o !tpl!.dll !tpl!.obj !libs!
+        )
+      )
     ) else (
       if "!CXX!"=="cl" (
         if defined objs (

@@ -2,30 +2,13 @@ ifeq ($(OS),Windows_NT)
 EXT=.sh
 endif
 
-all: testso
+all: simple.so
 
 run:
-	./testso
+	Rscript simple-unix.r
 
-testso: main.obj simple.so example.so
-	$(CXX) -o $@ main.obj simple.so example.so
-
-simple.so: simple.obj
-	../../admb$(EXT) -d $^
-
-simple.obj:
-	cp ../../examples/admb/simple/simple.tpl .
-	cp ../../examples/admb/simple/simple.dat .
-	../../admb$(EXT) -c -d simple.tpl
-
-main.obj: main.cpp
-	$(CXX) -c -o $@ $^
-
-example.so: example.obj
-	$(CXX) -shared -o $@ $^
-
-example.obj: example.cpp
-	$(CXX) -c -o $@ $^
+simple.so: simple.tpl
+	../../admb$(EXT) -d simple.tpl
 
 clean:
 	rm -vf admodel.cov

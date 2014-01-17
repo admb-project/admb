@@ -86,9 +86,6 @@ void function_minimizer::sd_routine(void)
   }
   int end_stdlabels=ii-1;
 
-
-
-
   int ndvar=stddev_params::num_stddev_calc();
   dvector scale(1,nvar1);   // need to get scale from somewhere
   dvector v(1,nvar);  // need to read in v from model.rep
@@ -120,7 +117,6 @@ void function_minimizer::sd_routine(void)
 
   {
     ofstream ofs("admodel.tmp");
-
 
     #if defined(__GNU__) || defined(DOS386)  || defined(__GNUDOS__)
     // *******************************************************
@@ -184,7 +180,7 @@ void function_minimizer::sd_routine(void)
       }
       else  // have random effects
       {
-#if   defined(USE_LAPLACE)
+#if defined(USE_LAPLACE)
         dmatrix tv(1,ndvar,1,nvar1);
         adstring tmpstring="admodel.dep";
         if (ad_comm::wd_flag)

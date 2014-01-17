@@ -28,11 +28,11 @@ else
   CONTRIB_INCLUDE=$(addsuffix /include,$(CONTRIB_DIR))
   CONTRIB_LIB=$(addsuffix /lib,$(CONTRIB_DIR))
 endif
-ifdef DEBUG
+ifeq ($(DEBUG),yes)
   OPTION=-g
 endif
 ifdef SHARED
-  OPTION:=-d $(OPTION)
+  OPTION:="-d $(OPTION)"
 endif
 
 all: 

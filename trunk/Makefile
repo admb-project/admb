@@ -1,13 +1,18 @@
+DEBUG=yes
 #default targets depending on compiler
-all: $(CXX)-all
+all:
+	$(MAKE) $(CXX)-all DEBUG=$(DEBUG)
 	@echo ADMB build completed.
 src: $(CXX)-src
-debug: $(CXX)-debug
+debug:
+	$(MAKE) $(CXX)-all DEBUG=yes
 	@echo ADMB debug build completed.
 contrib: $(CXX)-contrib
-test: $(CXX)-test
+test:
+	$(MAKE) $(CXX)-test DEBUG=$(DEBUG)
 copy: $(CXX)-copy
-verify: $(CXX)-verify
+verify:
+	$(MAKE) $(CXX)-verify DEBUG=$(DEBUG)
 doc: $(CXX)-docs
 shared: $(CXX)-shared
 install: $(CXX)-install

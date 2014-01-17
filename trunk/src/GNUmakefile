@@ -45,7 +45,7 @@ ifdef SHARED
   ADCXXFLAGS:= -fPIC $(ADCXXFLAGS)
 endif
 
-ifdef DEBUG
+ifeq ($(DEBUG),yes)
   ADCXXFLAGS:= -g $(ADCXXFLAGS)
 else
   ifeq ($(CXX),openCC)

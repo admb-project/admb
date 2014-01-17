@@ -1,9 +1,13 @@
 TARGET=expm
 
+ifeq ($(OS),Windows_NT)
+EXT=.sh
+endif
+
 all: clean $(TARGET) run
 
 $(TARGET): $(TARGET).tpl $(TARGET).dat
-	../../admb $(TARGET)
+	../../admb$(EXT) $(TARGET)
 
 run:
 	@printf "Started run:\n"

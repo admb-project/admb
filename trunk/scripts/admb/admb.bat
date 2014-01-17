@@ -246,12 +246,12 @@ for %%a in (!tpls!) do (
     set dll= -dll
   )
   if defined g (
-    set debug= -debug
+    set addebug= -debug
   )
   if not defined parser (
     set parser=tpl2cpp
   )
-  set CMD=!parser!!debug!!dll! !tpl!
+  set CMD=!parser!!addebug!!dll! !tpl!
   echo.&echo *** Parsing !tpl!.tpl:
   echo !CMD!
   call !CMD!

@@ -39,8 +39,8 @@ cl-all:
 	nmake cl-contrib
 	nmake cl-copy
 cl-debug:
-	cd src& nmake DEBUG=1 all
-	cd contrib& nmake DEBUG=1 all
+	cd src& nmake DEBUG=yes all
+	cd contrib& nmake DEBUG=yes all
 cl-src:
 	cd src& nmake all
 cl-contrib:
@@ -74,7 +74,7 @@ g++-all:
 	$(MAKE) g++-shared
 	$(MAKE) g++-copy
 g++-debug:
-	$(MAKE) g++-all DEBUG=1
+	$(MAKE) g++-all DEBUG=yes
 g++-src:
 	$(MAKE) --directory=src CC=gcc CXX=g++ all
 	$(MAKE) --directory=src CC=gcc CXX=g++ SHARED=-shared libs
@@ -109,7 +109,7 @@ clang++-all:
 	$(MAKE) clang++-shared
 	$(MAKE) clang++-copy
 clang++-debug:
-	$(MAKE) clang++-all DEBUG=1
+	$(MAKE) clang++-all DEBUG=yes
 clang++-src:
 	$(MAKE) --directory=src CC=clang CXX=clang++ all
 	$(MAKE) --directory=src CC=clang CXX=clang++ SHARED=-shared libs
@@ -144,7 +144,7 @@ c++-all:
 	$(MAKE) c++-shared
 	$(MAKE) c++-copy
 c++-debug:
-	$(MAKE) c++-all DEBUG=1
+	$(MAKE) c++-all DEBUG=yes
 c++-src:
 	$(MAKE) --directory=src CC=cc CXX=c++ all
 	$(MAKE) --directory=src CC=cc CXX=c++ SHARED=-shared libs
@@ -179,7 +179,7 @@ CC-all:
 	$(MAKE) CC-shared
 	$(MAKE) CC-copy
 CC-debug:
-	$(MAKE) CC-all DEBUG=1
+	$(MAKE) CC-all DEBUG=yes
 CC-src:
 	$(MAKE) --directory=src CC=cc CXX=CC all
 	$(MAKE) --directory=src CC=cc CXX=CC SHARED=-shared libs
@@ -214,7 +214,7 @@ icpc-all:
 	$(MAKE) icpc-shared
 	$(MAKE) icpc-copy
 icpc-debug:
-	$(MAKE) icpc-all DEBUG=1
+	$(MAKE) icpc-all DEBUG=yes
 icpc-src:
 	$(MAKE) --directory=src CC=icc CXX=icpc all
 	$(MAKE) --directory=src CC=icc CXX=icpc SHARED=-shared libs
@@ -249,7 +249,7 @@ openCC-all:
 	$(MAKE) openCC-shared
 	$(MAKE) openCC-copy
 openCC-debug:
-	$(MAKE) openCC-all DEBUG=1
+	$(MAKE) openCC-all DEBUG=yes
 openCC-src:
 	$(MAKE) --directory=src CC=opencc CXX=openCC all
 	$(MAKE) --directory=src CC=opencc CXX=openCC SHARED=-shared libs

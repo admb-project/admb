@@ -19,8 +19,8 @@
   #include <stdio.h>
   #if defined(_WIN32)
   #include <io.h>  //fopen
-  #include <ctype.h> /* isalnum */
   #endif
+  #include <ctype.h> /* isalnum */
   char tmp_string[MAX_TMP_STRING];
   char tmp_string1[MAX_TMP_STRING];
   char tmp_string2[MAX_TMP_STRING];
@@ -3921,14 +3921,20 @@ TOP_OF_MAIN_SECTION {
       {
         if (!makegaussdll)
         {
-          fprintf(ftopmain, "#ifdef _MSC_VER\n");
+          fprintf(ftopmain, "#ifdef _WIN32\n");
           fprintf(ftopmain, "void __stdcall __declspec(dllexport) \n");
           fprintf(ftopmain, "#else\n");
           fprintf(ftopmain, "void \n");
           fprintf(ftopmain, "#endif\n");
         }
         else
-          fprintf(ftopmain,"\nint __stdcall __declspec(dllexport) ");
+        {
+          fprintf(ftopmain, "#ifdef _WIN32\n");
+          fprintf(ftopmain, "int __stdcall __declspec(dllexport) \n");
+          fprintf(ftopmain, "#else\n");
+          fprintf(ftopmain, "int \n");
+          fprintf(ftopmain, "#endif\n");
+        }
       }
       else
       {
@@ -4080,14 +4086,20 @@ TOP_OF_MAIN_SECTION {
         {
           if (!makegaussdll)
           {
-            fprintf(ftopmain, "#ifdef _MSC_VER\n");
+            fprintf(ftopmain, "#ifdef _WIN32\n");
             fprintf(ftopmain, "void __stdcall __declspec(dllexport) \n");
             fprintf(ftopmain, "#else\n");
             fprintf(ftopmain, "void \n");
             fprintf(ftopmain, "#endif\n");
           }
           else
-            fprintf(ftopmain,"\nint __stdcall __declspec(dllexport) ");
+          {
+            fprintf(ftopmain, "#ifdef _WIN32\n");
+            fprintf(ftopmain, "int __stdcall __declspec(dllexport) \n");
+            fprintf(ftopmain, "#else\n");
+            fprintf(ftopmain, "int \n");
+            fprintf(ftopmain, "#endif\n");
+          }
         }
         else
         {
@@ -4315,7 +4327,7 @@ int main(int argc, char * argv[])
     strcat(infile_name,".tpl");
     strcat(outfile_name,".cpp");
     strcat(headerfile_name,".htp");
-    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n", infile_name);
     yyin=fopen(infile_name,"r");
     if (!yyin)
     {
@@ -4323,7 +4335,7 @@ int main(int argc, char * argv[])
         infile_name);
       exit(1);
     }
-    if (debug_flag) fprintf(stderr,"Opened file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Opened file %s for input\n", infile_name);
     if (makedll)
     {
       strcpy(tmp_string1,argv[ioff]);
@@ -4340,7 +4352,7 @@ int main(int argc, char * argv[])
   {
     strcpy(infile_name,"admodel.tpl");
     strcpy(outfile_name,"admodel.cpp");
-    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Trying to open file %s for input\n", infile_name);
     yyin=fopen(infile_name,"r");
     if (!yyin)
     {
@@ -4348,7 +4360,7 @@ int main(int argc, char * argv[])
         infile_name);
       exit(1);
     }
-    if (debug_flag) fprintf(stderr,"Opened file %s for input\n");
+    if (debug_flag) fprintf(stderr,"Opened file %s for input\n", infile_name);
   }
   conlist_ptr=&(conlist[0]);
   classlist_ptr=&(classlist[0]);
@@ -4472,10 +4484,11 @@ char * after_part(char * d, char * s, char c)
       d[i-ipos]=s[i];
     }
     d[strlen(s)-ipos]='\0';
-    if (strlen(s)-ipos-1 >= 0)
+    int index = (int)strlen(s) - ipos - 1;
+    if (index >= 0)
     {
-      if (d[strlen(s)-ipos-1] == 13)   // crtl M
-        d[strlen(s)-ipos-1] = '\0';
+      if (d[index] == 13)   // crtl M
+        d[index] = '\0';
     }
   }
   return d;
@@ -4507,10 +4520,11 @@ char * strict_after_part(char * d, char * s, char c)
       d[i-ipos-1]=s[i];
     }
     d[strlen(s)-ipos-1]='\0';
-    if (strlen(s)-ipos-1 >= 0)
+    int index = (int)strlen(s) - ipos - 1;
+    if (index >= 0)
     {
-      if (d[strlen(s)-ipos-1] == 13)   // crtl M
-        d[strlen(s)-ipos-1] = '\0';
+      if (d[index] == 13)   // crtl M
+        d[index] = '\0';
     }
   }
   return d;
@@ -4544,10 +4558,11 @@ char * after_partb(char * d, char * s, char c)
       d[i-ipos]=s[i];
     }
     d[strlen(s)-ipos]='\0';
-    if (strlen(s)-ipos-1 >= 0)
+    int index = (int)strlen(s) - ipos - 1;
+    if (index >= 0)
     {
-      if (d[strlen(s)-ipos-1] == 13)   // crtl M
-        d[strlen(s)-ipos-1] = '\0';
+      if (d[index] == 13)   // crtl M
+        d[index] = '\0';
     }
   }
   else

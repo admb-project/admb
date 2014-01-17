@@ -9,6 +9,7 @@
   #include <stdlib.h>
   #include <string.h>
   #include <stdio.h>
+  #include <ctype.h>
   #if defined(_WIN32)
   #include <io.h>  /* fopen */
   #endif
@@ -4266,19 +4267,22 @@ TOP_OF_MAIN_SECTION {
     {
       if (makedll)
       {
-        fprintf(ftopmain,"\n#if !defined(__MSVC32__)"
-           "\n#  define __declspec(x)"
-           "\n#endif\n");
-
-        fprintf(ftopmain,"\n#if !defined(__BORLANDC__)"
-           "\n#  define _export"
-           "\n#else"
-           "\n#  define _export __stdcall"
-           "\n#endif\n");
         if (!makegaussdll)
-          fprintf(ftopmain,"\n__declspec(dllexport) void _export ");
+        {
+          fprintf(ftopmain, "#ifdef _WIN32\n");
+          fprintf(ftopmain, "void __stdcall __declspec(dllexport) \n");
+          fprintf(ftopmain, "#else\n");
+          fprintf(ftopmain, "void \n");
+          fprintf(ftopmain, "#endif\n");
+        }
         else
-          fprintf(ftopmain,"\n__declspec(dllexport) int _export ");
+        {
+          fprintf(ftopmain, "#ifdef _WIN32\n");
+          fprintf(ftopmain,"\nint __stdcall __declspec(dllexport) ");
+          fprintf(ftopmain, "#else\n");
+          fprintf(ftopmain, "int \n");
+          fprintf(ftopmain, "#endif\n");
+        }
       }
       else
       {	
@@ -4434,20 +4438,22 @@ TOP_OF_MAIN_SECTION {
         }   
         if (!splus_debug_flag)
         {
-          fprintf(ftopmain,"\n#if !defined(__MSVC32__)"
-            "\n#  define __declspec(x)"
-            "\n#endif\n");
-      
-          fprintf(ftopmain,"\n#if !defined(__BORLANDC__)"
-            "\n#  define _export"
-           "\n#else"
-           "\n#  define _export __stdcall"
-            "\n#endif\n");
-	    
           if (!makegaussdll)
-            fprintf(ftopmain,"\n__declspec(dllexport) void _export ");
+          {
+            fprintf(ftopmain, "#ifdef _WIN32\n");
+            fprintf(ftopmain,"\nvoid __stdcall __declspec(dllexport) ");
+            fprintf(ftopmain, "#else\n");
+            fprintf(ftopmain, "void \n");
+            fprintf(ftopmain, "#endif\n");
+          }
           else
-            fprintf(ftopmain,"\n__declspec(dllexport) int _export ");
+          {
+            fprintf(ftopmain, "#ifdef _WIN32\n");
+            fprintf(ftopmain,"\nint __stdcall __declspec(dllexport) ");
+            fprintf(ftopmain, "#else\n");
+            fprintf(ftopmain, "int \n");
+            fprintf(ftopmain, "#endif\n");
+          }
         }	
         else
         {
@@ -4987,10 +4993,11 @@ char * get_directory_name(const char * s)
 {
   char * path;
   char quote[]="\"";
+  char eol[]="\0";
   int bflag=0;
   int len;
   int i,j;
-  char * path1=getenv("ADMB_HOME");
+  char* path1=getenv("ADMB_HOME");
   /* char sed_file_separator='/'; */
 #if defined(_WIN32)
   char file_separator='\\';
@@ -5034,10 +5041,9 @@ char * get_directory_name(const char * s)
         strcat(path,quote);
         len+=2;
       }
-      
       strcat(path,"bin");
-      path[len+4]=file_separator;
-      path[len+5]=0;
+      strcat(path, file_separator_string);
+      strcat(path, eol);
     }
     else
     {

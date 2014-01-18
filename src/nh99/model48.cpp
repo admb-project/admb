@@ -35,6 +35,16 @@
    }
  }
 
+ void param_init_bounded_number_vector::allocate(const data_matrix &m, const char *s)
+ {
+  int min1 = m.rowmin();
+  int max1 = m.rowmax();
+  double_index_type bmin = column(m,1);
+  double_index_type bmax = column(m,2);
+  index_type phz1 = ivector(column(m,3));
+  allocate(min1,max1,bmin,bmax,phz1,s);
+ }
+
  void param_init_bounded_number_vector::allocate(int min1,int max1,
    const double_index_type & bmin,const double_index_type & bmax,const char * s)
  {

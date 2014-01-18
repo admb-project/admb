@@ -2657,6 +2657,7 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
  * Description not yet available.
  * \param
  */
+ class data_matrix;
  class param_init_bounded_number_vector
  {
    param_init_bounded_number * v;
@@ -2684,6 +2685,8 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
 
    void allocate(int min1,int max1,const double_index_type & bmin,
      const double_index_type & bmax,const char * s);
+
+   void allocate(const data_matrix &m, const char *s);
 
    int allocated(void) { return (v!=NULL); }
    int indexmin(void) {return (index_min);}

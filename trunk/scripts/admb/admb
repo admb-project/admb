@@ -172,7 +172,8 @@ do
   rm -vf tfile1 tfile2 tfile3 tfile4 tfile5
   rm -f $model.cpp $model.htp $model.obj $model.o $model
 
-  CMD="$parser $debug $dll $model"
+  #CMD="$parser $debug $dll $model"
+  CMD="$parser $dll $model"
   echo -e \\n\*\*\* Parse tpl: $model.tpl\\n$CMD
   eval $CMD
 

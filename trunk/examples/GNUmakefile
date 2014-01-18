@@ -11,7 +11,7 @@ endif
 ifdef OPTIONS
 OPTIONS:= $(OPTIONS)
 endif
-ifdef DEBUG_OPTION
+ifeq ($(DEBUG),yes)
 OPTIONS:= $(OPTIONS) -g
 endif
 ifdef FAST_OPTION

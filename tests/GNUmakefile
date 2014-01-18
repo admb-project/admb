@@ -1,3 +1,25 @@
+ifeq ($(OS),Windows_NT)
+  ifeq (sh.exe,$(findstring sh.exe,$(SHELL)))
+    SHELL = cmd
+    ifeq ($(SHELL),cmd)
+      MYPWD=$(shell cd)
+    else
+      MYPWD=$(shell cmd /C cd)
+    endif
+    PATH:=$(MYPWD)\..\utilities\mingw\bin;$(PATH);$(MYPWD)\..\utilities
+  else
+    ifneq ($(TERM),xterm)
+      MYPWD=$(shell pwd)
+      PATH:=$(MYPWD)/../utilities/mingw/bin:$(PATH)
+    endif
+    PATH:=$(PATH):$(MYPWD)/../utilities
+  endif
+endif
+
+ifeq ($(DEBUG),yes)
+DEBUG_OPTION=-g
+endif
+
 DIST=../build/dist
 
 GTEST_DIR=googletest-read-only
@@ -114,20 +136,20 @@ beta3:
 	OPTIONS=-s $(MAKE) --directory=$@
 
 verify:
-ifeq ($(SHELL),sh.exe)
-	$(MAKE) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
+ifeq ($(SHELL),cmd)
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-opt.txt" & popd
-	$(MAKE) -C $(DIST)\examples --file=Makefile all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)\examples --file=Makefile all
 	pushd ..\build\dist & ..\..\scripts\get-outputs.bat > "..\..\benchmarks-saf.txt" & popd
 else
-	$(MAKE) FAST_OPTION=-f -C $(DIST)/examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)/examples all
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-opt.txt"
-	$(MAKE) -C $(DIST)/examples all
+	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) -C $(DIST)/examples all
 	-../scripts/get-outputs.sh ${DIST}/examples/ > "../benchmarks-saf.txt"
 endif
 
 clean:
-ifeq ($(SHELL),sh.exe)
+ifeq ($(SHELL),cmd)
 	$(MAKE) --directory=expm --file=Makefile clean
 else
 	$(MAKE) --directory=expm clean
@@ -163,7 +185,7 @@ else
 endif
 
 copy:
-ifeq ($(SHELL),sh.exe)
+ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\tests md ${DIST}\tests
 	xcopy ..\tests $(DIST)\tests /S /Y /D
 else

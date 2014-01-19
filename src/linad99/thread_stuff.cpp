@@ -1,7 +1,7 @@
 #include <admodel.h>
 #include <cstddef>
 #include <cstring>
-#include <thread>
+//#include <thread>
 #include "adthread.h"
 #if !defined(OPT_LIB)
 #  if !defined(CHK_ID_STRING)
@@ -273,6 +273,8 @@ void adpthread_manager::check_buffer_size_read(int nbytes,int s1,int s2)
 {
   if (stransfer_buffer[s1][s2]== 0)
   {
+    cerr << "Check the logic of this if we get here" << endl;
+    ad_exit(1);
     //transfer_buffer[s1][s2]=new char[bs];
     //scurrent_bptr[s1][s2]=transfer_buffer[s1][s2];
     stransfer_buffer[s1][s2]=new char[bs];
@@ -996,6 +998,8 @@ void adthread_buffer::pop(char* value)
   memcpy(value, &source[buffer.size() - size], size);
   buffer.erase(buffer.size() - size, size);
 }
+
+/*
 adthread::adthread()
 {
 }
@@ -1013,3 +1017,4 @@ void adthread::routine()
 {
   cout << __func__ << ':' << __LINE__ << endl;
 }
+*/

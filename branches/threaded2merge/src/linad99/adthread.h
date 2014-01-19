@@ -57,6 +57,8 @@ private:
   pthread_cond_t condition;
   std::string buffer;
 };
+
+/*
 class adthread
 {
 public:
@@ -73,6 +75,8 @@ private:
 private:
   adthread_buffer buffer;
 };
+*/
+
 class adpthread_manager
 {
 private:

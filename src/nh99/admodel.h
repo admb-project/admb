@@ -1164,6 +1164,8 @@ class data_vector;
 /**
  * Description not yet available.
  * \param
+ * \author Dave Founier & Steve Martell
+ * Overloaded allocate function to recieve a data_vector from an input file.
  */
 class param_init_bounded_number: public param_init_number
 {
@@ -1178,6 +1180,7 @@ protected:
   void allocate(double _minb,double _maxb,int phase_start=1,
     const char * s="UNNAMED");
   void allocate(double _minb,double _maxb,const char * s="UNNAMED");
+  // Added by Steve Martell for using input data for allocation.
   void allocate(const data_vector& v,const char * s="UNNAMED");
 
 public:
@@ -2654,8 +2657,11 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
  };
 
 /**
- * Description not yet available.
+ * Class object for init_bounded_number vector
+ * \author Dave Fournier, addition by Steve Martell
  * \param
+ * Steve Martell overloaded the allocate routine to accomodate a matrix object
+ * of the form data_matrix that would be read in from an input file.
  */
  class data_matrix;
  class param_init_bounded_number_vector
@@ -2686,6 +2692,7 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
    void allocate(int min1,int max1,const double_index_type & bmin,
      const double_index_type & bmax,const char * s);
 
+   // Added by Steve Martell, Jan 18, 2014.
    void allocate(const data_matrix &m, const char *s);
 
    int allocated(void) { return (v!=NULL); }

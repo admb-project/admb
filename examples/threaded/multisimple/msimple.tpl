@@ -7,7 +7,7 @@ GLOBALS_SECTION
 
  
   // write the function to run on the threads
-  void simple_thread(void * ptr)
+  void* simple_thread(void * ptr)
   {
       // cast the pointer to the propper type
       new_thread_data * tptr = (new_thread_data *) ptr;

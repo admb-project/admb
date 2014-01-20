@@ -35,6 +35,10 @@
    }
  }
 
+ /**
+  * Overload the allocate function to use a data_matrix object.
+  * \author Steve Martell
+  */
  void param_init_bounded_number_vector::allocate(const data_matrix &m, const char *s)
  {
   int min1 = m.rowmin();

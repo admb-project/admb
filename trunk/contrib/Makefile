@@ -14,11 +14,11 @@ shared: all
 	@echo ADMB contrib shared build completed.
 
 contrib-includes: contrib-dirs
-	cd ecolib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
-	cd gdbprintlib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
-	cd qfclib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
-	cd statslib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
-	cd src& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
+	pushd ecolib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
+	pushd gdbprintlib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
+	pushd qfclib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
+	pushd statslib& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
+	pushd src& $(MAKE) CONTRIB_INCLUDE=..\$(DESTDIR)\contrib\include includes
 
 contrib-dirs:
 	IF NOT EXIST $(DESTDIR)\contrib md $(DESTDIR)\contrib
@@ -52,16 +52,16 @@ contrib-src:
 	pushd src& $(MAKE)
 
 test:
-	cd ecolib& $(MAKE) test
-	cd qfclib& $(MAKE) test
+	pushd ecolib& $(MAKE) test
+	pushd qfclib& $(MAKE) test
 
 clean:
-	cd ecolib& $(MAKE) clean
-	cd gdbprintlib& $(MAKE) clean
-	cd qfclib& $(MAKE) clean
-	cd statslib& $(MAKE) clean
-	cd src& $(MAKE) clean
-	cd ad2csv& $(MAKE) clean
+	pushd ecolib& $(MAKE) clean
+	pushd gdbprintlib& $(MAKE) clean
+	pushd qfclib& $(MAKE) clean
+	pushd statslib& $(MAKE) clean
+	pushd src& $(MAKE) clean
+	pushd ad2csv& $(MAKE) clean
 
 copy:
 	IF NOT EXIST $(DESTDIR)\contrib xcopy /I /E /Y ..\contrib $(DESTDIR)\contrib

@@ -13,7 +13,7 @@ export ADMB_HOME=/home/jsibert/admb/threaded2merge/head/build/dist
 CC=/usr/local/gcc-4.8.0/bin/g++
 LL = $(CC)
 
-CFLAGS = -c -pthread -fpermissive -m64 -Wall -Wno-deprecated -ggdb -I. -I$(ADMB_HOME)/include -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -DSAFE_ARRAYS
+CFLAGS = -c -pthread -m64 -Wall -ggdb -I. -I$(ADMB_HOME)/include -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -DSAFE_ARRAYS
 
 LFLAGS = -L$(ADMB_HOME)/lib -ladmb -lpthread
 #LFLAGS = -L$(ADMB_HOME)/lib -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -ldf1b2s -ladmod -ladt -lads -lpthread

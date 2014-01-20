@@ -141,7 +141,7 @@ GLOBALS_SECTION
   }
   
 
-  void funnel_loop(void* ptr)
+  void* funnel_loop(void* ptr)
   {
       // cast the pointer to the proper type
       new_thread_data * tptr = (new_thread_data *) ptr;

@@ -65,7 +65,6 @@ cl-check:
 cl-clean:
 	cd src& nmake clean
 	cd contrib& nmake clean
-	cd test& nmake clean
 
 #GNU
 g++: g++-all

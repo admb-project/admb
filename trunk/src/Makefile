@@ -163,11 +163,10 @@ copy:
 	IF NOT EXIST $(DESTDIR)\src xcopy /I /E /Y ..\src $(DESTDIR)\src
 
 clean:
-	IF EXIST $(DESTDIR) rd /S /Q $(DESTDIR)
-	IF EXIST $(OBJDESTDIR) rd /S /Q $(OBJDESTDIR)
 	if exist ..\build rd /S /Q ..\build
 	if exist ..\admb del ..\admb
 	if exist ..\admb.bat del ..\admb.bat
+	if exist ..\admb.sh del ..\admb.sh
 	if exist ..\admb.zip del ..\admb.zip
 
 check:

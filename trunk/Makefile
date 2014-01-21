@@ -39,32 +39,33 @@ cl-all:
 	nmake cl-contrib
 	nmake cl-copy
 cl-debug:
-	cd src& nmake DEBUG=yes all
-	cd contrib& nmake DEBUG=yes all
+	pushd src& nmake DEBUG=yes all
+	pushd contrib& nmake DEBUG=yes all
 cl-src:
-	cd src& nmake all
+	pushd src& nmake all
 cl-contrib:
-	cd contrib& nmake all
+	pushd contrib& nmake all
 cl-docs:
-	cd docs& nmake all
+	pushd docs& nmake all
 cl-test:
-	cd tests & nmake all
+	pushd tests & nmake all
 cl-copy:
-	cd examples& nmake copy
-	cd contrib& nmake copy
+	pushd examples& nmake copy
+	pushd contrib& nmake copy
 cl-verify:
-	cd tests& nmake verify
+	pushd tests& nmake verify
 cl-shared:
-	cd src& nmake shared
-	cd contrib& nmake shared
+	pushd src& nmake shared
+	pushd contrib& nmake shared
 	nmake cl-copy
 cl-install:
-	cd src& nmake install
+	pushd src& nmake install
 cl-check:
-	cd src& nmake check
+	pushd src& nmake check
 cl-clean:
-	cd src& nmake clean
-	cd contrib& nmake clean
+	pushd src& nmake clean
+	pushd contrib& nmake clean
+	pushd tests& nmake clean
 
 #GNU
 g++: g++-all

@@ -43,7 +43,6 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
     dmatrix h(1,nvar,1,nvar);
     //dmatrix gram(1,nvar-1,1,nvar-1);
     dvector ss(1,nvar);
-    double minsize;
     ifs >> h;
     if (!ifs)
     {
@@ -65,9 +64,9 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
     {
       ss(i)=norm(p(i));
     }
-    minsize=min(ss);
 
   /*
+    double minsize=min(ss);
     for (i=1;i<=nvar;i++)
     {
       if (ss(i)==minsize) break;

@@ -24,7 +24,7 @@ DIST=../build/dist
 
 GTEST_DIR=googletest-read-only
 
-all: test-cov_re test-expm test-agemat
+all: test-cov_re test-expm
 
 run-gtests: $(GTEST_DIR)/gtest-all.o
 	$(MAKE) --directory=gtests

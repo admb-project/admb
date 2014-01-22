@@ -20,15 +20,16 @@ istream & operator >> (istream & c, adstring & t)
   }
   t=tmp;
   delete [] tmp;
+  tmp = 0;
+
   return (c);
 }
 
 istream & operator >> (istream & c, line_adstring & t)
 {
   const unsigned int max_length=1025;
-  char * tmp= new char[max_length+1];
-  int ch;
-  ch=c.get();
+  char* tmp = new char[max_length+1];
+  int ch = c.get();
   // throw away the newline at the end of the last line if necessary
   if (ch == '\n') ch=c.get();
   unsigned int ii=0;
@@ -46,5 +47,7 @@ istream & operator >> (istream & c, line_adstring & t)
   tmp[ii]='\0';
   t=tmp;
   delete tmp;
+  tmp = 0;
+
   return (c);
 }

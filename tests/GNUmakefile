@@ -24,7 +24,7 @@ DIST=../build/dist
 
 GTEST_DIR=googletest-read-only
 
-all: test-cov_re test-expm
+all: test-cov_re test-expm test-agemat
 
 run-gtests: $(GTEST_DIR)/gtest-all.o
 	$(MAKE) --directory=gtests
@@ -135,6 +135,9 @@ beta2:
 beta3:
 	OPTIONS=-s $(MAKE) --directory=$@
 
+test-agemat:
+	OPTIONS=-s $(MAKE) --directory=agemat
+
 verify:
 ifeq ($(SHELL),cmd)
 	$(MAKE) DEBUG_OPTION=$(DEBUG_OPTION) FAST_OPTION=-f -C $(DIST)\examples --file=Makefile all
@@ -151,9 +154,10 @@ endif
 clean:
 ifeq ($(SHELL),cmd)
 	$(MAKE) --directory=expm --file=Makefile clean
+	$(MAKE) --directory=priors --file=Makefile clean
+	$(MAKE) --directory=agemat --file=Makefile clean
 else
 	$(MAKE) --directory=expm clean
-	$(MAKE) --directory=priors --file=Makefile clean
 	$(MAKE) --directory=beta_regression clean
 	$(MAKE) --directory=hysimple clean
 	$(MAKE) --directory=admb_messages clean
@@ -182,6 +186,7 @@ else
 	$(MAKE) --directory=SS3 clean
 	$(MAKE) --directory=cov_re clean
 	$(MAKE) --directory=gtests clean
+	$(MAKE) --directory=agemat clean
 endif
 
 copy:

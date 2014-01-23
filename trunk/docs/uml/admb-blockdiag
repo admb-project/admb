@@ -1,0 +1,13 @@
+blockdiag {
+  GlobalsSection [label = "GLOBALS_SECTION"];
+  TopOfMainSection [label = "TOP_OF_MAIN_SECTION"];
+  DataSection [label = "DATA_SECTION"];
+  PreliminaryCalculationsSection [label = "PRELIMINARY_CALCULATIONS_SECTION"];
+  RuntimeSection [label = "RUNTIME_SECTION"];
+  ParameterSection [label = "PARAMETER_SECTION"];
+  ProcedureSection [label = "PROCEDURE_SECTION"];
+  ReportSection [label = "REPORT_SECTION"];
+  FinalSection [label = "FINAL_SECTION"];
+
+  GlobalsSection -> TopOfMainSection -> DataSection -> PreliminaryCalculationsSection -> RuntimeSection -> ParameterSection -> ProcedureSection -> ReportSection -> FinalSection;
+}

@@ -48,7 +48,6 @@ ad_comm::ad_comm(int _argc,char * _argv[])
 
   ad_comm::argc=_argc;
   ad_comm::argv=_argv;
-  int pvm_flag=0;
   if (option_match(_argc,_argv,"-time")>-1)
   {
     time_flag=1;
@@ -70,18 +69,17 @@ ad_comm::ad_comm(int _argc,char * _argv[])
   }
   no_atlas_flag=0;
   if (option_match(_argc,_argv,"-noatlas")>-1) no_atlas_flag=1;
+
+#if defined(USE_ADPVM)
+  int pvm_flag=0;
   if (option_match(_argc,_argv,"-slave")>-1)  pvm_flag=2;
   if (option_match(_argc,_argv,"-master")>-1) pvm_flag=1;
 
-#if defined(USE_ADPVM)
   if (pvm_flag)
     pvm_manager = new adpvm_manager(pvm_flag);
   else
-#endif
     pvm_manager = NULL;
 
-
-#if defined(USE_ADPVM)
   if (pvm_manager)
   {
     if (pvm_manager->mode==2)  //slave
@@ -115,7 +113,6 @@ ad_comm::ad_comm(int _argc,char * _argv[])
     }
   }
 #endif
-
 
   /*
     if (option_match(_argc,_argv,"-gui")>-1)
@@ -200,11 +197,12 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( " -cbs N          set CMPDIF_BUFFER_SIZE to N (ARRAY_MEMBLOCK_SIZE)\n");
       (*ad_printf)( " -mno N          set the maximum number of independent variables to N\n");
       (*ad_printf)( " -mdl N          set the maximum number of dvariables to N\n");
-      (*ad_printf)( " -master         run as PVM master program\n");
       (*ad_printf)( " -gbs N          set GRADSTACK_BUFFER_SIZE to N (ARRAY_MEMBLOCK_SIZE)\n");
+#if defined(USE_ADPVM)
       (*ad_printf)( " -master         run as PVM master program\n");
       (*ad_printf)( " -slave          run as PVM slave program\n");
       (*ad_printf)( " -pvmtime        record timing information for PVM performance analysis\n");
+#endif
       (*ad_printf)( " -info           show how to cite ADMB, license, and acknowledgements\n");
       (*ad_printf)( " -version        show version information\n");
       (*ad_printf)( " -help           show this message\n\n");

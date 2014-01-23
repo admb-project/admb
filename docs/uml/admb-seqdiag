@@ -1,0 +1,19 @@
+seqdiag {
+  // auto return edge
+  main => model_parameters [label = "Constructor", return = "return"]
+  {
+    model_parameters => model_data [label = "Constructor", return = "return"]
+    {
+      model_data => ad_comm [label = "Constructor", return = "return"];
+    }
+    model_parameters => function_minimizer[label = "Constructor", return = "return"];
+  }
+  main => model_parameters [label = "preliminary_calculations", return = "return"];
+  main => function_minimizer [label = "computations", return = "return"]
+  {
+    function_minimizer => model_parameters [label = "set_runtime", return = "return"];
+    function_minimizer => model_parameters [label = "minimize procedure section", return = "return"];
+    function_minimizer => model_parameters [label = "final_calcs", return = "return"];
+  }
+  main => model_parameters [label = "Destructor", return = "return"];
+}

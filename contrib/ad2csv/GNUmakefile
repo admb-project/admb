@@ -19,8 +19,12 @@ endif
 
 clean:
 ifeq ($(SHELL),cmd)
-	del ad2csv ad2csv.exe main.obj ad2csv.obj
-	del main.o ad2csv.o
+	if exist ad2csv del /Q ad2csv
+	if exist ad2csv.exe del /Q ad2csv.exe
+	if exist main.del /Q objmain.obj
+	if exist ad2csv.obj del /Q ad2csv.obj
+	if exist main.o del /Q main.o
+	if exist ad2csv.o del /Q ad2csv.o
 else
 	rm -f ad2csv ad2csv.exe main.obj ad2csv.obj
 	rm -f main.o ad2csv.o

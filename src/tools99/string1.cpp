@@ -96,6 +96,9 @@ void adstring::realloc(const char * t)
   }
 }
 
+/**
+Destructor
+*/
 adstring::~adstring()
 {
   if (next==this)

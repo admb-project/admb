@@ -9,40 +9,49 @@
 #include "admb_messages.h"
 
 adstring_array::adstring_array(const adstring_array& sa):clist(sa)
-  {
-    shape=sa.shape;
-    ptr=sa.ptr;
-  }
+{
+  shape=sa.shape;
+  ptr=sa.ptr;
+}
 
-  adstring_array::~adstring_array()
+/**
+Destructor
+*/
+adstring_array::~adstring_array()
+{
+  if (ptr)
   {
-    if (ptr)
+    if (next==this)
     {
-      if (next==this)
+      int min=indexmin();
+      int max=indexmax();
+      for(int i=min;i<=max;i++)
       {
-        int min=indexmin();
-        int max=indexmax();
-        for(int i=min;i<=max;i++)
+        if (ptr[i])
         {
-          if (ptr[i])
-          {
-            delete ptr[i];
-          }
+          delete ptr[i];
+          ptr[i] = 0;
         }
-        ptr+=indexmin();
-        delete [] ptr;
-        delete shape;
-        shape=NULL;
-        ptr=NULL;
       }
+      ptr+=indexmin();
+
+      delete [] ptr;
+      ptr = 0;
+
+      delete shape;
+      shape = 0;
     }
   }
+}
 
-  adstring_array::adstring_array(void)
-  {
-    shape=NULL;
-    ptr=NULL;
-  }
+/**
+Default constructor
+*/
+adstring_array::adstring_array(void)
+{
+  shape=NULL;
+  ptr=NULL;
+}
 
 int adstring_array::size() const { return shape->indexmax()-shape->indexmin() + 1; }
 int adstring_array::indexmin(void) const { return shape->indexmin();}

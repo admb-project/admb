@@ -459,6 +459,9 @@ void ad_comm::allocate(void)
   }
 }
 
+/**
+Destructor
+*/
 ad_comm::~ad_comm()
 {
   if (ptm)

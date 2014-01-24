@@ -1,9 +1,13 @@
-all: agemat.tpl
+all: agemat.tpl run
 	..\\..\\admb agemat.tpl
+
+run: agemat.dat
 	agemat
 
 agemat.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/executables/AGEMAT.TPL > agemat.tpl
+
+agemat.dat:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/doc/agemat.dat > agemat.dat
 
 clean:

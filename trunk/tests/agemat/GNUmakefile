@@ -2,12 +2,16 @@ ifeq ($(OS),Windows_NT)
 EXT=.sh
 endif
 
-all: agemat.tpl
+all: agemat.tpl run
 	../../admb$(EXT) agemat.tpl
+
+run: agemat.dat
 	./agemat
 
 agemat.tpl:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/executables/AGEMAT.TPL > agemat.tpl
+
+agemat.dat:
 	svn cat svn://scm.r-forge.r-project.org/svnroot/nwfscassmt/pkg/nwfscAgeingError/inst/doc/agemat.dat > agemat.dat
 
 clean:

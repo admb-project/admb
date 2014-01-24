@@ -1,5 +1,7 @@
-all: agemat.tpl run
+all: 
+	$(MAKE) agemat.tpl
 	..\\..\\admb agemat.tpl
+	$(MAKE) run
 
 run: agemat.dat
 	agemat

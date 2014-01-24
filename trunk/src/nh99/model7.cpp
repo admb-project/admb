@@ -296,8 +296,9 @@ void ad_comm::allocate(void)
   directory_prefix='/';
 #endif
   adstring tmpstring;
-  // remove path (if __SPDLL__ is not defined)
+
 #if !defined(__SPDLL__)
+  //remove path
   for (int i = adprogram_name.size(); i >= 1; i--)
   {
     if (adprogram_name(i)==directory_prefix)
@@ -308,19 +309,22 @@ void ad_comm::allocate(void)
   }
 
 #endif
-  // strip off the .exe if it is there
-  int n=adprogram_name.size();
-  if(n>4)
+
+#if defined (_WIN32)
+  // strip off the .exe
+  int n = adprogram_name.size();
+  if (n > 4)
   {
     if (adprogram_name(n - 3) == '.'
-        && adprogram_name(n - 2) == 'e'
-        && adprogram_name(n - 1) == 'x'
-        && adprogram_name(n) == 'e')
+        && tolower(adprogram_name(n - 2)) == 'e'
+        && tolower(adprogram_name(n - 1)) == 'x'
+        && tolower(adprogram_name(n)) == 'e')
     {
       n -= 4;
     }
   }
   adprogram_name=adprogram_name(1,n);
+#endif
 
   // change the working directory name
   if (argc > 1)

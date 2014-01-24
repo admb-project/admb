@@ -601,29 +601,31 @@ void tracing_message(int traceflag,const char *s);
     }
   }
 
-  function_minimizer::~function_minimizer()
+/**
+Destructor
+*/
+function_minimizer::~function_minimizer()
+{
+#if defined(USE_LAPLACE)
+  if (multinomial_weights)
   {
-#  if defined(USE_LAPLACE)
-    if(multinomial_weights)
-    {
-      delete multinomial_weights;
-      multinomial_weights=0;
-    }
-
-    if (lapprox)
-    {
-      delete lapprox;
-      lapprox=0;
-    }
-#  endif
-    delete pgs;
-    pgs=NULL;
-    if (negdirections)
-    {
-      delete negdirections;
-      negdirections=0;
-    }
+    delete multinomial_weights;
+    multinomial_weights = 0;
   }
+  if (lapprox)
+  {
+    delete lapprox;
+    lapprox = 0;
+  }
+#endif
+  delete pgs;
+  pgs = 0;
+  if (negdirections)
+  {
+    delete negdirections;
+    negdirections = 0;
+  }
+}
 
   void function_minimizer::set_initial_simplex(const dmatrix& _p, const dvector& _y, int nvar, const dvector& x,
     double delta)

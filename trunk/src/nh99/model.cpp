@@ -51,17 +51,20 @@
      return 0;
   }
 
-  initial_params::~initial_params()
+/**
+Destructor
+*/
+initial_params::~initial_params()
+{
+  num_initial_params--;
+#if defined(USE_SHARE_FLAGS)
+  if (share_flags)
   {
-    num_initial_params--;
-#  if defined(USE_SHARE_FLAGS)
-    if (share_flags)
-    {
-      delete share_flags;
-      share_flags=0;
-    }
-#  endif
+    delete share_flags;
+    share_flags = 0;
   }
+#endif
+}
 
 extern int* pointer_to_phase;
   initial_params::initial_params(void)
@@ -1289,13 +1292,16 @@ void get_sp_printf(void)
     ptr[current++]=p;
   }
 
-  adlist_ptr::~adlist_ptr()
+/**
+Destructor
+*/
+adlist_ptr::~adlist_ptr()
+{
+  current = 0;
+  current_size = -1;
+  if (ptr)
   {
-    current=0;
-    current_size=-1;
-    if (ptr)
-    {
-      delete [] ptr;
-      ptr=0;
-    }
+    delete [] ptr;
+    ptr = 0;
   }
+}

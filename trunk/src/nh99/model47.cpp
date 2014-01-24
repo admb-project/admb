@@ -10,30 +10,37 @@
  {
     it=new double_index_type(_it);
  }
- param_init_number_vector::param_init_number_vector()
- {
-   it=NULL;
- }
-
- param_init_number_vector::~param_init_number_vector()
- {
-   deallocate();
- }
-
- void param_init_number_vector::deallocate(void)
- {
-   if(it)
-   {
-     delete it;
-     it=NULL;
-   }
-   if (v)
-   {
-     v+=indexmin();
-     delete [] v;
-     v=NULL;
-   }
- }
+/**
+Default constructor
+*/
+param_init_number_vector::param_init_number_vector()
+{
+  it = NULL;
+}
+/**
+Destructor
+*/
+param_init_number_vector::~param_init_number_vector()
+{
+  deallocate();
+}
+/**
+Free allocated memory.
+*/
+void param_init_number_vector::deallocate(void)
+{
+  if(it)
+  {
+    delete it;
+    it = NULL;
+  }
+  if (v)
+  {
+    v+=indexmin();
+    delete [] v;
+    v = NULL;
+  }
+}
 
  void param_init_number_vector::allocate(int min1,int max1,
    const char * s)

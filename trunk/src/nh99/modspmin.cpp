@@ -118,15 +118,12 @@ int kill_flag_107=901;
 #if !defined(ADMB_REDEMO)
     ad_exit(0);
 #endif
-    int f03=0;
-    int two=0;
-    //traceflag=1;
-    int *  xflag_105=0;
-    f03=503;
+    //int *  xflag_105=0;
+    int f03=503;
 #if defined(ADMB_REDEMO)
     kill_address=&stupid_flag;
 #endif
-    two=2;
+    int two=2;
     tracing_message(traceflag,"A1");
     //if (option_match(argc,argv,"-gui")>-1)
     //{
@@ -139,7 +136,7 @@ int kill_flag_107=901;
 #if defined (AD_DEMO)
      write_banner_stuff();
 #endif
-    xflag_105=&something_105;
+    int* xflag_105=&something_105;
     if (option_match(argc,argv,"-mceval") == -1)
     {
       //negative_eigenvalue_flag=0;

@@ -34,7 +34,7 @@
   #include  <assert.h>
 #endif
 
-#if defined(__MSVC32__)
+#if defined(_MSC_VER)
   #include  <dos.h>
 #endif
 
@@ -62,7 +62,7 @@ static int mem_scount;    /* # of sallocs that haven't been free'd */
 #else
   #define ferr  stderr
 #endif
-
+
 /*******************************/
 
 void mem_setexception(
@@ -705,4 +705,3 @@ void mem_term()
 #undef line
 #undef nbytes
 #undef beforeval
-

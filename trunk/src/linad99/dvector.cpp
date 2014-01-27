@@ -19,7 +19,7 @@ long int farptr_tolong(void *);
   int heapcheck(void);
 #endif
 
-#ifdef __MSVC32__
+#ifdef _MSC_VER
 #include <memory.h>
 #endif
 

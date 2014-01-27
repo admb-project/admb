@@ -12,7 +12,7 @@
 #include <stdlib.h>
 
 
-#if defined(__BORLANDC__) || defined(__MSVC32__) || defined(__MINGW32__)
+#if defined(__BORLANDC__) || defined(_MSC_VER) || defined(__MINGW32__)
 #  if !defined(__linux__)
 #   include <windows.h>
 #  endif

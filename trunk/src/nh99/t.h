@@ -114,7 +114,7 @@ public:
   exception * err;
   AD_matherror(exception * _err) : err(_err) {;}
 #endif
-#if defined (__MSVC32__)
+#if defined (_MSC_VER)
   _exception * err;
   AD_matherror(_exception * _err) : err(_err) {;}
 #endif

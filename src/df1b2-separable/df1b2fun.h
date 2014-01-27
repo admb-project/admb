@@ -131,7 +131,7 @@ extern dercheck_info * derchecker;
 
 typedef void * &  vreference;
 
-#if !defined(__MSVC32__)
+#if !defined(_MSC_VER)
 inline void increment_pointer(vreference p,int n)
 {
   char * cs =(char*)(p);

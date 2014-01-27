@@ -25,7 +25,7 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
   const dmatrix& _Hessadjoint,function_minimizer * pmin);
 
 #if defined(USE_DD_STUFF)
-#  if defined(__MSVC32__)
+#  if defined(_MSC_VER)
     extern "C" _export  void dd_newton_raphson(int n,double * v,double * diag,
       double * ldiag, double * yy);
 #  else

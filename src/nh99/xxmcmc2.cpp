@@ -17,7 +17,7 @@
 #endif
 
 #if defined (__ZTC__) || defined(__TURBOC__) || defined(__WAT32__) \
-  || defined (__MSVC32__)
+  || defined (_MSC_VER)
 #  if  !defined(__linux__)
 #    include <conio.h>
 #  endif

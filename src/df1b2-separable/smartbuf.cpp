@@ -11,7 +11,7 @@
 #define HOME_VERSION
 #include "fvar.hpp"
 #include "smartbuf.h"
-#ifdef __MSVC32__
+#ifdef _MSC_VER
   #define lseek _lseek
   #define  read _read
   #define write _write
@@ -85,7 +85,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#ifndef __MSVC32__
+#ifndef __MSC_VER
 #include <unistd.h>
 #endif
 #endif
@@ -315,7 +315,7 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
  */
 void byte_copy(void* dest, void* source, unsigned num_bytes)
 {
-#if !defined (__SUN__) && !defined (__WAT32__) && !defined(__ADSGI__) && !defined (__MSVC32__) && !defined(linux)
+#if !defined (__SUN__) && !defined (__WAT32__) && !defined(__ADSGI__) && !defined (_MSC_VER) && !defined(linux)
   char* pdest = (char*)dest;
   char* psource = (char*)source;
   int ii=0;

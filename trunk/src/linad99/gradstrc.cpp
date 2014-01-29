@@ -166,9 +166,8 @@ long int gradient_structure::NUM_GRADSTACK_BYTES_WRITTEN(void)
  extern char ad_random_part[6];
 
 /**
- * Description not yet available.
- * \param
- */
+Close gradient and variable files.  Free gradient structure memory.
+*/
 void cleanup_temporary_files()
 {
    if (gradient_structure::fp)
@@ -436,11 +435,7 @@ void allocate_dvariable_space(void)
      gradient_structure::hessian_ptr= (double*) GRAD_STACK1->true_ptr_first;
    }
     #ifdef DIAG
-      #ifdef __ZTC__
-        cout << "GRAD_STACK1= "<<_farptr_tolong(GRAD_STACK1)<<"\n";
-      #else
         cout << "GRAD_STACK1= "<< farptr_tolong(GRAD_STACK1)<<"\n";
-      #endif
     #endif
 
    if ( INDVAR_LIST!= NULL)

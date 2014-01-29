@@ -26,9 +26,10 @@ long int reset_gs_stack(void);
 void reset_gs_stack(long int);
 
 /**
- * Description not yet available.
- * \param
- */
+Copy index and pointer to values from v.
+
+\param vv a dvar_vector
+*/
 dvar_vector_position::dvar_vector_position(const dvar_vector& v)
 {
   min=v.indexmin();
@@ -37,53 +38,46 @@ dvar_vector_position::dvar_vector_position(const dvar_vector& v)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Copy index and pointer to values from vv.
+
+\param vv a dvector
+*/
 dvector_position::dvector_position(const dvector& vv)
 {
   min=vv.indexmin();
   max=vv.indexmax();
   v=vv.get_v();
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Copy constructor
+*/
 dvar_vector_position::dvar_vector_position(const dvar_vector_position& dvp)
 {
   min=dvp.min;
   max=dvp.max;
   va=dvp.va;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Copy constructor
+*/
 dvector_position::dvector_position(const dvector_position& dvp)
 {
   min=dvp.min;
   max=dvp.max;
   v=dvp.v;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 dvar_vector_position::dvar_vector_position(void)
 {
   min=0;
   max=-1;
   va=0;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 dvector_position::dvector_position(void)
 {
   min=0;
@@ -101,29 +95,24 @@ ivector_position::ivector_position(const ivector& iv)
   max=iv.indexmax();
   v=iv.get_v();
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Copy constructor
+*/
 ivector_position::ivector_position(const ivector_position& dvp)
 {
   min=dvp.min;
   max=dvp.max;
   v=dvp.v;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 ivector_position::ivector_position(void)
 {
   min=0;
   max=-1;
   v=0;
 }
-
 /**
  * Description not yet available.
  * \param
@@ -273,11 +262,9 @@ dvar_matrix_position::dvar_matrix_position(const dvar_matrix_position& p)
   ptr=p.ptr;
   // cout << "ptr= " << ptr ;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Copy constructor
+*/
 dmatrix_position::dmatrix_position(const dmatrix_position& p)
   : lb(p.row_min,p.row_max), ub(p.row_min,p.row_max),
     ptr(p.row_min,p.row_max)
@@ -287,9 +274,7 @@ dmatrix_position::dmatrix_position(const dmatrix_position& p)
   lb=p.lb;
   ub=p.ub;
   ptr=p.ptr;
-  // cout << "ptr= " << ptr ;
 }
-
 /**
 \ingroup DEVEL
 Writes a gradient stack verification string.
@@ -307,4 +292,3 @@ int save_identifier_string(const char* str)
 #endif
   return 0;
 }
-

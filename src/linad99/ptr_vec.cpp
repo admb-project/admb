@@ -113,7 +113,7 @@ ptr_vector::ptr_vector(int ncl,int nch)
   allocate(ncl,nch);
 }
 /**
-Default contructor
+Default constructor
 */
 ptr_vector::ptr_vector()
 {

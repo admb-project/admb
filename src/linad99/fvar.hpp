@@ -676,50 +676,50 @@ class vector_shape
  */
 class ptr_vector
 {
-   void **v;
-   vector_shape *shape;
+  void **v;
+  vector_shape *shape;
 
- public:
+public:
+  ptr_vector();
+  ptr_vector(const ptr_vector & t);
+  ptr_vector(int ncl, int ncu);
+  ~ptr_vector();
 
-   int indexmin() const
-   {
-      return shape->index_min;
-   }				// returns the minimum allowable index
-   int indexmax() const
-   {
-      return shape->index_max;
-   }				// returns the maximum allowable index
-   int size() const
-   {
-      return shape->index_max - shape->index_min + 1;
-   }				// returns the maximum allowable index
+  int indexmin() const
+  {
+    return shape->index_min;
+  }				// returns the minimum allowable index
+  int indexmax() const
+  {
+    return shape->index_max;
+  }				// returns the maximum allowable index
+  int size() const
+  {
+    return shape->index_max - shape->index_min + 1;
+  }				// returns the maximum allowable index
 
-   void shift(int min);
-   ptr_vector(int ncl, int ncu);
-   ptr_vector();
-   void allocate(int, int);
-   //operator void ** ();
-   ~ptr_vector();
-   void *&operator[] (int i);
-   void *&operator() (int i);
-   //void*& elem(int i);
-   void *&elem(int i)
-   {
-      return (*(v + i));
-   }
-   int operator!(void) const
-   {
-      return (shape == NULL);
-   }
-   int operator() (void) const
-   {
-      return (shape != NULL);
-   }
+  void shift(int min);
+  void allocate(int, int);
+  //operator void ** ();
+  void *&operator[] (int i);
+  void *&operator() (int i);
+  //void*& elem(int i);
+  void *&elem(int i)
+  {
+    return (*(v + i));
+  }
+  int operator!(void) const
+  {
+    return (shape == NULL);
+  }
+  int operator() (void) const
+  {
+    return (shape != NULL);
+  }
 
-   ptr_vector(const ptr_vector & t);
-   ptr_vector & operator=(const ptr_vector & t);
-   void initialize();
-};				// end of class ptr_vector
+  ptr_vector& operator=(const ptr_vector& t);
+  void initialize();
+};
 
 /**
  * Description not yet available.

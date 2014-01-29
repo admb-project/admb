@@ -7,13 +7,16 @@ GTESTS=\
  test_adstring_array.cpp\
  test_dlist.cpp\
  test_ad_comm.cpp\
- test_df1b2atan2.obj\
- df1b2atan2.obj\
  test_gradient_structure.cpp\
- test_df_file.cpp\
  test_scalefactor.obj\
  scalefactor.obj\
+ test_option_match.cpp\
  main.cpp
+
+# test_df_file.cpp\
+# test_df1b2atan2.obj\
+# df1b2atan2.obj\
+
 
 all: clean gtest-all
 	./gtest-all
@@ -31,8 +34,7 @@ scalefactor.obj: scalefactor.tpl
 	CXXFLAGS="-Dmain=scalefactor" ../../admb -c -r -g $^
 
 gtest-all: gtest-all.obj $(GTESTS)
-#gtest-all: gtest-all.obj main.cpp test_scalefactor.obj scalefactor.obj
-	CXXFLAGS=-I$(GTEST_DIR)/include ../../admb -g -r $^
+	CXXFLAGS=-I$(GTEST_DIR)/include LDFLAGS=-pthread ../../admb -g -r $^
 
 gtest-all.obj: googletest-read-only
 	$(CXX) -c -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc

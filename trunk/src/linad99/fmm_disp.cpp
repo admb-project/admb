@@ -129,7 +129,7 @@ void fmmdisp(const dvector& x, const dvector& g,
       strcpy(format2,"%3d%9.3lf %12.4le");
       strcpy(format3,"%3d%9.2lf %12.4le");
                  /*  12345678901234567 */
-    #elif defined(__MSVC32__)
+    #elif defined(_MSC_VER)
       strcpy(format,"%3d%8.4lf %12.4le");
       strcpy(format1,"%3d%8.3lf %12.4le");
       strcpy(format2,"%3d%8.2lf %12.4le");
@@ -218,7 +218,7 @@ void fmmdisp(const double *x, const double *g,
       strcpy(format2,"%3d%9.3lf            ");
       strcpy(format3,"%3d%9.2lf            ");
                  /*  12345678901234567 */
-    #elif defined(__MSVC32__)
+    #elif defined(_MSC_VER)
       strcpy(format,"%3d%8.4lf             ");
       strcpy(format1,"%3d%8.3lf            ");
       strcpy(format2,"%3d%8.2lf            ");

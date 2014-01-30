@@ -14,6 +14,6 @@
 
 #if defined(__GNUDOS__) && !defined(__linux__)
   extern "C" void clrscr(void){;}
-#elif defined(__MSVC32__)
+#elif defined(_MSC_VER)
   void __cdecl clrscr(void){;}
 #endif

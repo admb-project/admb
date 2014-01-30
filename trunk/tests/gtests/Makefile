@@ -11,6 +11,7 @@ GTESTS=\
  test_scalefactor.obj\
  scalefactor.obj\
  test_option_match.cpp\
+ test_lvector.cpp\
  main.cpp
 
 # test_df_file.cpp\

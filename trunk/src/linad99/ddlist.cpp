@@ -34,9 +34,8 @@ char* ddlist_space;
 char* ddlist_spacea;
 
 /**
- * Description not yet available.
- * \param
- */
+Default constructor
+*/
 dlist::dlist(void)
 {
   int on,nopt = 0;
@@ -53,8 +52,6 @@ dlist::dlist(void)
       ad_exit(1);
     }	
   }
-  // cout << sizeof(double_and_int) << endl;
-  // cerr << "dlist::dlist(void)\n";
   last = 0;
   last_offset = 0;
   nlinks = 0;
@@ -70,10 +67,7 @@ dlist::dlist(void)
 
   ddlist_spacea=ddlist_space+adjust;
 
-  for (int i = 0; i < gradient_structure::MAX_DLINKS; ++i)
-  {
-    dlink_addresses[i] = 0;
-  }
+  memset(dlink_addresses, 0, sizeof(dlink*) * gradient_structure::MAX_DLINKS);
 }
 
 /**
@@ -108,24 +102,18 @@ dlink * dlist::create()
 }
 
 /**
- * Description not yet available.
- * \param
- */
+If last node in list exist, remove it and return it.
+*/
 dlink* dlist::last_remove()
 {
-  dlink * tmp;
   if (last)
   {
-    tmp=last;
-    last=last->prev;
-    return(tmp);
+    dlink* tmp = last;
+    last = last->prev;
+    return tmp;
   }
-  else
-  {
-    return 0;
-  }
+  return 0;
 }
-
 /**
 Destructor
 */
@@ -164,15 +152,28 @@ dlist::~dlist()
   delete [] dlink_addresses;
   dlink_addresses = 0;
 }
-
+/**
+Get total addresses stored.
+*/
+size_t dlist::total_addresses() const
+{
+  size_t total = 0;
+  for (int i = 0; i < gradient_structure::MAX_DLINKS; ++i)
+  {
+    if (dlink_addresses[i] != 0)
+    {
+      total++;
+    }
+  }
+  return total;
+}
 /**
  * Description not yet available.
  * \param
  */
 void dlist::check_list(void)
 {
-  dlink * tmp;
-  dlink * tmp_last=last;
+  dlink* tmp_last=last;
 
   unsigned int count=0;
   while(tmp_last && count <=nlinks)
@@ -184,38 +185,31 @@ void dlist::check_list(void)
       cerr << " The number created was "<< nlinks << endl;
     }
 
-    tmp=tmp_last->prev;
+    dlink* tmp = tmp_last->prev;
 
 //  cout << "last =" << _farptr_tolong(last) << "\n";
 //  cout << "last->prev =" << _farptr_tolong(last->prev) << "\n";
 //  cout << "deleted dlink with address" << _farptr_tolong(last) << "\n";
 
-    tmp_last=tmp;
+    tmp_last = tmp;
   }
   cerr << "In check_list() number of free links is " << count << endl;
 }
-
 /**
- * Description not yet available.
- * \param
- */
-dlink * dlist::append(dlink * app)
+Append app to list.
+\param app node
+*/
+dlink* dlist::append(dlink* app)
 {
-  // cout << " In dlist::append\n";
-  if (app ==0)
+  if (app == 0)
   {
     cerr << "NULL pointer passed to  dlist::append()\n";
     ad_exit(1);
   }
 
-  dlink * tmp;
-
-  tmp = last;
-
+  dlink* tmp = last;
   last = app;
-
   last->prev = tmp;
-  // cout << " In dlist::append  last = " << _farptr_tolong(last) <<"\n";
 
-  return(last);
+  return last;
 }

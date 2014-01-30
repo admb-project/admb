@@ -9,6 +9,7 @@ TEST_F(test_dlist, constructor)
 {
   dlist lst;
   EXPECT_STRNE(0, ddlist_space);
+  EXPECT_EQ(0, lst.total_addresses());
 }
 TEST_F(test_dlist, destructor)
 {

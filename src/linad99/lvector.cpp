@@ -28,31 +28,31 @@ Destructor
 */
 lvector::~lvector()
 {
-   if (shape)
-   {
-     if (shape->ncopies)
-     {
-       (shape->ncopies)--;
-     }
-     else
-     {
-       if ( v == NULL)
-       {
-         cerr << " Trying to delete NULL pointer in ~lvector\n";
-         ad_exit(21);
-       }
-       v += indexmin();
-       delete []v;
-       v=NULL;
+  if (shape)
+  {
+    if (shape->ncopies)
+    {
+      (shape->ncopies)--;
+    }
+    else
+    {
+      if (v == NULL)
+      {
+        cerr << " Trying to delete NULL pointer in ~lvector\n";
+        ad_exit(21);
+      }
+      v += indexmin();
+      delete [] v;
+      v = NULL;
 
-       delete  shape;
-       shape = NULL;
-     }
-   }
-   else
-   {
-     cerr << "Trying to delete an unallocated lvector" << endl;
-   }
+      delete shape;
+      shape = NULL;
+    }
+  }
+  else
+  {
+    cerr << "Trying to delete an unallocated lvector" << endl;
+  }
 }
 /**
 Copy constructor
@@ -141,61 +141,55 @@ lvector& lvector::operator=(const lvector& t)
      v[i] = x[i];
    }
  }
-
 /**
  * Description not yet available.
  * \param
  */
- void lvector::allocate(const lvector& lv)
- {
-   allocate(lv.indexmin(),lv.indexmax());
- }
-
+void lvector::allocate(const lvector& lv)
+{
+  allocate(lv.indexmin(),lv.indexmax());
+}
 /**
- * Description not yet available.
- * \param
- */
- void lvector::allocate(int ncl,int nch)
- {
-   if ( (shape=new vector_shape(ncl,nch))==0 )
-   {
+Allocate vector of AD_LONG_INT.
+
+\param ncl lower index
+\param nch high index
+*/
+void lvector::allocate(int ncl, int nch)
+{
+  if ((shape = new vector_shape(ncl,nch)) == 0)
+  {
      cerr << " Error trying to allocate memory for lvector\n";
-   }
-   v = new AD_LONG_INT [(size_t) (nch-ncl+1)];
-   if (v ==0)
-   {
-     cerr << " Error trying to allocate memory for lvector\n";
-     ad_exit(21);
-   }
-
-   v -= indexmin();
-   #ifdef SAFE_ARRAYS
-     for ( int i=indexmin(); i<=indexmax(); i++)
-     {
-       v[i]=0.;
-     }
-   #endif
- }
-
+  }
+  v = new AD_LONG_INT[(size_t)(nch-ncl+1)];
+  if (v == 0)
+  {
+    cerr << " Error trying to allocate memory for lvector\n";
+    ad_exit(21);
+  }
+  v -= indexmin();
+#ifdef SAFE_ARRAYS
+  initialize();
+#endif
+}
 /**
- * Description not yet available.
- * \param
- */
- void lvector::allocate(void)
- {
-   shape=NULL;
-   v = NULL;
- }
-
+Does not really allocate, but empties the array.
+*/
+void lvector::allocate(void)
+{
+  shape = NULL;
+  v = NULL;
+}
 /**
- * Description not yet available.
- * \param
- */
- lvector::lvector(int ncl,int nch)
- {
-   allocate(ncl,nch);
- }
+Constructor to allocate vector of AD_LONG_INT.
 
+\param ncl lower index
+\param nch high index
+*/
+lvector::lvector(int ncl, int nch)
+{
+  allocate(ncl, nch);
+}
 /**
  * Description not yet available.
  * \param
@@ -219,15 +213,16 @@ lvector::lvector(const ivector& u)
      elem(i)=u.elem(i);
    }
  }
-
 /**
- * Description not yet available.
- * \param
- */
- void lvector::initialize(void)
- {
-   for ( int i=indexmin(); i<=indexmax(); i++)
-   {
-     elem(i)=0;
-   }
- }
+Intialize vector values to zero.
+*/
+void lvector::initialize(void)
+{
+/*
+  for (int i = indexmin(); i <= indexmax(); i++)
+  {
+     elem(i) = 0;
+  }
+*/
+  memset((void*)(v + indexmin()), 0, sizeof(AD_LONG_INT) * size());
+}

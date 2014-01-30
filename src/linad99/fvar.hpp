@@ -959,7 +959,7 @@ class lvector
    }				// returns the maximum allowable index
    int size() const
    {
-      return shape->index_max - shape->index_min + 1;
+      return shape ? shape->index_max - shape->index_min + 1 : 0;
    }				// returns the maximum allowable index
    void shift(int min);
 
@@ -1033,7 +1033,7 @@ class lvector
 
    void initialize(void);
    friend class lmatrix;
-};				// end of class lvector
+};
 
 AD_LONG_INT sum(const lvector &);
 

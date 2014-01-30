@@ -62,4 +62,3 @@
    return(*(v+i));
  }
 #endif
-void xyw8(void){/*int x=1;*/}

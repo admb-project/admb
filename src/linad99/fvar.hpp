@@ -1274,12 +1274,15 @@ class dlist
 
  public:
    dlist();			// constructor
-   void check_list(void);	// check list integrity
    ~dlist();			// destructor
    dlink *create();		//create a new link
    void free_remove(dlink * rem);
    dlink *append(dlink *);	// add a link
    dlink *last_remove();
+
+   void check_list(void);	// check list integrity
+   size_t total_addresses() const;
+
    friend void funnel_gradcalc(void);
    friend void slave_gradcalc(void);
    friend void gradcalc(int nvar, const dvector & g);

@@ -6,7 +6,7 @@ class test_lvector: public ::testing::Test {};
 TEST_F(test_lvector, constructor)
 {
   lvector v;
-  //EXPECT_EQ(0, v.size());
+  EXPECT_EQ(0, v.size());
 }
 TEST_F(test_lvector, initialize)
 {

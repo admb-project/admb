@@ -22,7 +22,13 @@
 
 #include <stdlib.h>
 //#define MAX_DLINKS 1000
-dlink * dlink::previous(){return prev;}
+/**
+\return previous node pointer.
+*/
+dlink* dlink::previous()
+{
+  return prev;
+}
 
 //////////////////////////////
 // global list names
@@ -67,42 +73,41 @@ dlist::dlist(void)
 
   ddlist_spacea=ddlist_space+adjust;
 
+  //Initialize addresses to zero
   memset(dlink_addresses, 0, sizeof(dlink*) * gradient_structure::MAX_DLINKS);
 }
-
 /**
- * Description not yet available.
- * \param
- */
-dlink * dlist::create()
+Create unlinked new node.
+*/
+dlink* dlist::create()
 {
-
-  dlink * tmp= (dlink*)(ddlist_spacea+2*sizeof(double)*nlinks);
-  /*
-  if ( (tmp = new dlink) ==0)
+  dlink* tmp= (dlink*)(ddlist_spacea+2*sizeof(double)*nlinks);
+  if (tmp == 0)
   {
     cerr << "Error allocating dlink in dlist::create()\n";
     ad_exit(21);
   }
- */
+  // cout << "Made a dlink with address " << _farptr_tolong(tmp) <<"\n";
 
-  dlink_addresses[nlinks]=tmp;   // keep track of the links so you can
-                                 // zero them out
+  // keep track of the links so you can zero them out
+  dlink_addresses[nlinks]=tmp;
   nlinks+=1;
 
-  if (nlinks > (unsigned int)gradient_structure::MAX_DLINKS)
+  if (nlinks > gradient_structure::MAX_DLINKS)
   {
     cerr << "Need to increase the maximum number of dlinks" << endl;
     ad_exit(1);
   }
 
+  //do not add to list.
   tmp->prev=0;
-  // cout << "Made a dlink with address " << _farptr_tolong(tmp) <<"\n";
-  return(tmp);
-}
 
+  return tmp;
+}
 /**
-If last node in list exist, remove it and return it.
+If list is not empty, pop and return last node.
+
+\return 0 empty list.
 */
 dlink* dlist::last_remove()
 {
@@ -168,9 +173,8 @@ size_t dlist::total_addresses() const
   return total;
 }
 /**
- * Description not yet available.
- * \param
- */
+Check link list integrity.
+*/
 void dlist::check_list(void)
 {
   dlink* tmp_last=last;

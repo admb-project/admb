@@ -1258,45 +1258,43 @@ class dlink
 };
 
 /**
- * Description not yet available.
- * \param
- */
+Link list
+*/
 class dlist
 {
-   dlink *last;
-   unsigned int last_offset;
-   unsigned int nlinks;
-   dlink **dlink_addresses;
-   friend double_and_int *gradnew();
-   friend void df_check_derivative_values(void);
-   friend void df_check_derivative_values_indexed(void);
-   friend void df_check_derivative_values_indexed_break(void);
+  dlink* last;
+  unsigned int last_offset;
+  unsigned int nlinks;
+  dlink** dlink_addresses;
+  friend double_and_int *gradnew();
+  friend void df_check_derivative_values(void);
+  friend void df_check_derivative_values_indexed(void);
+  friend void df_check_derivative_values_indexed_break(void);
 
- public:
-   dlist();			// constructor
-   ~dlist();			// destructor
-   dlink *create();		//create a new link
-   void free_remove(dlink * rem);
-   dlink *append(dlink *);	// add a link
-   dlink *last_remove();
+public:
+  dlist();			// constructor
+  ~dlist();			// destructor
+  dlink* create();		//create a new link
+  dlink* append(dlink*);	// add a link
+  dlink* last_remove();
 
-   void check_list(void);	// check list integrity
-   size_t total_addresses() const;
+  void check_list(void);	// check list integrity
+  size_t total_addresses() const;
 
-   friend void funnel_gradcalc(void);
-   friend void slave_gradcalc(void);
-   friend void gradcalc(int nvar, const dvector & g);
-   friend void gradloop();
-   friend void gradient_structure::restore_variables();
-   friend void gradient_structure::save_variables();
-   friend void gradient_structure::jacobcalc(int nvar,
-					     const dmatrix & jac);
+  friend void funnel_gradcalc(void);
+  friend void slave_gradcalc(void);
+  friend void gradcalc(int nvar, const dvector& g);
+  friend void gradloop();
+  friend void gradient_structure::restore_variables();
+  friend void gradient_structure::save_variables();
+  friend void gradient_structure::jacobcalc(int nvar,
+                                            const dmatrix& jac);
    friend void allocate_dvariable_space(void);
    //friend void gradient_structure::funnel_jacobcalc(void);
    friend void gradient_structure::jacobcalc(int nvar,
-					     const ofstream & jac);
+					     const ofstream& jac);
    friend void gradient_structure::jacobcalc(int nvar,
-					     const uostream & jac);
+					     const uostream& jac);
    friend void funnel_derivatives(void);
 };
 

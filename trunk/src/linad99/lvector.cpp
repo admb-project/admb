@@ -8,8 +8,6 @@
  * \file
  * Description not yet available.
  */
-#include "fvar.hpp"
-
 #ifdef __TURBOC__
   #pragma hdrstop
   #include <iostream.h>
@@ -20,9 +18,26 @@
 #endif
 
 #include <stdlib.h>
+#include "fvar.hpp"
 
 void denormalize_ptr(void * ptr, unsigned int byte_offset);
 
+/**
+Default constructor
+*/
+lvector::lvector(void)
+{
+  allocate();
+}
+/**
+Copy constructor
+*/
+lvector::lvector(const lvector& t)
+{
+  shape=t.shape;
+  (shape->ncopies)++;
+  v = t.v;
+}
 /**
 Destructor
 */
@@ -36,39 +51,16 @@ lvector::~lvector()
     }
     else
     {
-      if (v == NULL)
+      if (v)
       {
-        cerr << " Trying to delete NULL pointer in ~lvector\n";
-        ad_exit(21);
+        v += indexmin();
+        delete [] v;
+        v = NULL;
       }
-      v += indexmin();
-      delete [] v;
-      v = NULL;
-
       delete shape;
       shape = NULL;
     }
   }
-  else
-  {
-    cerr << "Trying to delete an unallocated lvector" << endl;
-  }
-}
-/**
-Copy constructor
-*/
-lvector::lvector(const lvector& t)
-{
-  shape=t.shape;
-  (shape->ncopies)++;
-  v = t.v;
-}
-/**
-Default constructor
-*/
-lvector::lvector(void)
-{
-  allocate();
 }
 /**
  * Description not yet available.
@@ -88,7 +80,7 @@ lvector::lvector(const dvector& u)
    }
 
    v -= indexmin();
-   for ( int i=indexmin(); i<=indexmax(); i++)
+   for (int i=indexmin(); i<=indexmax(); i++)
    {
    #if !defined(USE_DDOUBLE)
      v[i]= (AD_LONG_INT) u.elem(i);
@@ -196,7 +188,7 @@ lvector::lvector(int ncl, int nch)
  */
 lvector::lvector(const ivector& u)
  {
-   if ( (shape=new vector_shape(u.indexmin(),u.indexmax()))==0 )
+   if ((shape=new vector_shape(u.indexmin(),u.indexmax()))==0 )
    {
      cerr << " Error trying to allocate memory for lvector\n";
    }
@@ -206,7 +198,6 @@ lvector::lvector(const ivector& u)
      cerr << " Error trying to allocate memory for lvector\n";
      ad_exit(21);
    }
-
    v -= indexmin();
    for ( int i=indexmin(); i<=indexmax(); i++)
    {
@@ -218,11 +209,6 @@ Intialize vector values to zero.
 */
 void lvector::initialize(void)
 {
-/*
-  for (int i = indexmin(); i <= indexmax(); i++)
-  {
-     elem(i) = 0;
-  }
-*/
+  //for (int i = indexmin(); i <= indexmax(); i++) { elem(i) = 0; }
   memset((void*)(v + indexmin()), 0, sizeof(AD_LONG_INT) * size());
 }

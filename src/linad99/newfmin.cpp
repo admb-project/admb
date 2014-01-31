@@ -15,11 +15,9 @@
  */
 
 #include <fvar.hpp>
-#if defined(__SPDLL__)
-#  if !defined(linux)
-#    include <windows.h>
-#  endif
-#include <admodel.h>
+#if defined(_WIN32)
+  #include <windows.h>
+  #include <admodel.h>
 #endif
 #if defined(__BORLANDC__)
   #include <signal.h>

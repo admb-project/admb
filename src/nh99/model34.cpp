@@ -4,11 +4,9 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-#if defined(__SPDLL__)
-#  if !defined(linux)
-#    include <windows.h>
-#  endif
-#include <admodel.h>
+#if defined(_WIN32)
+  #include <windows.h>
+  #include <admodel.h>
 #endif
 
 #include <admodel.h>

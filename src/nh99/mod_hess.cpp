@@ -19,9 +19,8 @@ void hess_calcreport(int i,int nvar);
 void hess_errorreport(void);
 void set_labels_for_hess(int);
 
-class admb_javapointers;
-extern admb_javapointers * adjm_ptr;
-void useless(const double& sdelta2);
+void useless(const double& sdelta2){/*int i=0;*/}
+
 // estimate the matrix of second derivatives
 void ad_update_hess_stats_report(int i,int nvar);
 
@@ -35,10 +34,9 @@ void function_minimizer::hess_routine(void)
   else
   {
 #endif
-#    if !defined(USE_ADPVM)
-        hess_routine_noparallel();
-#    else
-
+#if !defined(USE_ADPVM)
+    hess_routine_noparallel();
+#else
     if (!ad_comm::pvm_manager)
     {
       hess_routine_noparallel();
@@ -54,17 +52,16 @@ void function_minimizer::hess_routine(void)
         hess_routine_slave();
         break;
       default:
-        cerr << "error illega value for pvm_manager->mode" << endl;
+        cerr << "Error: Illegal value for pvm_manager->mode." << endl;
         ad_exit(1);
       }
       cout << "finished hess routine" << endl;
     }
-#    endif
+#endif
 #if defined(USE_LAPLACE)
   }
 #endif
 }
-
 void function_minimizer::hess_routine_noparallel(void)
 {
 
@@ -104,12 +101,7 @@ void function_minimizer::hess_routine_noparallel(void)
     double sdelta2;
     for (int i=1;i<=nvar;i++)
     {
-#if defined (__SPDLL__)
       hess_calcreport(i,nvar);
-#else
-      cout << "Estimating row " << i << " out of " << nvar
-	   << " for hessian" << endl;
-#endif
 
       double xsave=x(i);
       sdelta1=x(i)+delta;
@@ -218,12 +210,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof, const dvector& g
 
     for (int i=1;i<=nvar;i++)
     {
-#if defined (__SPDLL__)
       hess_calcreport(i,nvar);
-#else
-      cout << "Estimating row " << i << " out of " << nvar
-	   << " for hessian" << endl;
-#endif
 
       double f=0.0;
       double xsave=x(i);
@@ -461,9 +448,10 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
 }
 */
 
-// calculate the derivatives of dependent variables with respect to
-// the independent variables
-
+/**
+Calculate the derivatives of dependent variables with respect to
+the independent variables.
+*/
 void function_minimizer::depvars_routine(void)
 {
   reset_gradient_stack();
@@ -514,8 +502,9 @@ void function_minimizer::depvars_routine(void)
 #endif
   gradient_structure::set_NO_DERIVATIVES();
 }
-
-// symmetrize and invert the hessian
+/**
+Symmetrize and invert the hessian
+*/
 void function_minimizer::hess_inv(void)
 {
   initial_params::set_inactive_only_random_effects();
@@ -701,9 +690,7 @@ void function_minimizer::hess_inv(void)
       {
         if (hess(i,i) <= 0.0)
         {
-    #if defined (__SPDLL__)
           hess_errorreport();
-    #endif
           ad_exit(1);
         }
       }
@@ -719,16 +706,19 @@ void function_minimizer::hess_inv(void)
     }
   }
 }
-
-void useless(const double& sdelta2){/*int i=0;*/}
-
+void hess_calcreport(int i,int nvar)
+{
 #if defined (__SPDLL__)
- void hess_calcreport(int i,int nvar)
- {
-   if (ad_printf) (*ad_printf)("Estimating row %d out of %d for hessian\n",i,nvar);
- }
- void hess_errorreport(void)
- {
-   if (ad_printf) (*ad_printf)("Hessian does not appear to be positive definite\n");
- }
+  if (ad_printf) (*ad_printf)("Estimating row %d out of %d for hessian\n",i,nvar);
+#else
+  cout << "Estimating row " << i << " out of " << nvar << " for hessian" << endl;
 #endif
+}
+void hess_errorreport(void)
+{
+#if defined (__SPDLL__)
+  if (ad_printf) (*ad_printf)("Hessian does not appear to be positive definite\n");
+#else
+  cout << "Hessian does not appear to be positive definite\n" << endl;
+#endif
+}

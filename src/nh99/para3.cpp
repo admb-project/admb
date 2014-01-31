@@ -52,12 +52,7 @@ void function_minimizer::hess_routine_master()
     double sdelta2;
     for (int i=1;i<=nvar;i++)
     {
-#if defined (__SPDLL__)
       hess_calcreport(i,nvar);
-#else
-      cout << "Estimating row " << i << " out of " << nvar
-           << " for hessian" << endl;
-#endif
 
       double f=0.0;
       double xsave=x(i);

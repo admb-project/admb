@@ -84,9 +84,6 @@ extern admb_javapointers * adjm_ptr;
     //  vm_initialize();
     //  cout << " called vm_initialize() " << endl;
     //}
-#if defined(__SPDLL__)
-    //if (ad_printf) (*ad_printf)("entered void function_minimizer::computations\n");
-#endif
 #if defined (AD_DEMO)
      write_banner_stuff();
 #endif
@@ -130,9 +127,6 @@ int kill_flag_107=901;
     //  vm_initialize();
     //  cout << " called vm_initialize() " << endl;
     //}
-#if defined(__SPDLL__)
-    //if (ad_printf) (*ad_printf)("entered void function_minimizer::computations\n");
-#endif
 #if defined (AD_DEMO)
      write_banner_stuff();
 #endif

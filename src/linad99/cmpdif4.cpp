@@ -78,13 +78,11 @@ dvector_position restore_dvector_position(void)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Saves the size, address, and value information for a dvar_vector.
+*/
 void dvar_vector::save_dvar_vector_value(void) const
 {
   //int ierr=save_dvar_vector_position();
-  // saves the size, address, and value information for a dvar_vector
   //const unsigned wsize=sizeof(double);
   //int num_rec;
   int min=indexmin();
@@ -98,12 +96,10 @@ void dvar_vector::save_dvar_vector_value(void) const
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Saves the size, address, and value information for a dvector.
+*/
 void dvector::save_dvector_value(void) const
 {
-  // saves the size, address, and value information for a dvar_vector
   // int ierr=save_dvector_position();
   //int wsize=sizeof(double);
   //int num_rec;
@@ -117,12 +113,10 @@ void dvector::save_dvector_value(void) const
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Saves the size, address, and value information for a ivector.
+*/
 void ivector::save_ivector_value(void) const
 {
-  // saves the size, address, and value information for a ivector
   // int ierr=save_ivector_position();
   const unsigned wsize=sizeof(int);
   int min=indexmin();
@@ -135,15 +129,16 @@ void ivector::save_ivector_value(void) const
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Restores the size, address, and value information for a dvector.
+Back up the stream and read the number of bytes written in the
+``write function'' corresponding to this ``read function''
+
+\param tmp To get indexmin and indexmax
+\return dvector 
+*/
 dvector restore_dvector_value(const dvector_position& tmp)
 {
   // restores the size, address, and value information for a dvar_vector
-  // restores the size, address, and value information for a ivector
-  // Back up the stream and read the number of bytes written in the
-  // ``write function'' corresponding to this ``read function''
   dvector temp_vec(tmp.indexmin(),tmp.indexmax());
   for (int i=tmp.indexmax();i>=tmp.indexmin();i--)
   {
@@ -175,15 +170,13 @@ ivector restore_ivector_value(const ivector_position& tmp)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+Restores the size, address, and value information for a dvar_vector.
+Back up the stream and read the number of bytes written in the
+``write function'' corresponding to this ``read function''
+\param
+*/
 dvector restore_dvar_vector_value(const dvar_vector_position& tmp)
 {
-  // restores the size, address, and value information for a dvar_vector
-  // Back up the stream and read the number of bytes written in the
-  // ``write function'' corresponding to this ``read function''
-
   dvector temp_vec(tmp.indexmin(),tmp.indexmax());
   for (int i=tmp.indexmax();i>=tmp.indexmin();i--)
   {
@@ -194,14 +187,11 @@ dvector restore_dvar_vector_value(const dvar_vector_position& tmp)
   }
   return temp_vec;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Saves the size, address, and value information for a dvar_matrix.
+*/
 void dvar_matrix::save_dvar_matrix_value(void) const
 {
-  // saves the size, address, and value information for a dvar_matrix
   int min=rowmin();
   int max=rowmax();
   for (int i=min;i<=max;i++)

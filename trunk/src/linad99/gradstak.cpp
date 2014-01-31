@@ -491,10 +491,10 @@ int grad_stack::decrement_current_gradfile_ptr()
 
   return 0;
 }
-#ifndef _MSC_VER
-int& grad_stack::gradfile_handle()
-#else
+#ifdef _MSC_VER
 int grad_stack::gradfile_handle()
+#else
+int& grad_stack::gradfile_handle()
 #endif
 {
   return _GRADFILE_PTR;

@@ -74,8 +74,6 @@
   long _cdecl _farptr_tolong(void _far *);
 #endif
 
-//void KLUDGEX(void * p);
-
 /**
   Compute the gradient from the data stored in the global \ref gradient_structure.
   \param nvar Number of variables in the gradient.
@@ -99,7 +97,6 @@ void gradcalc(int nvar, const dvector& _g)
   gradient_structure::TOTAL_BYTES = 0;
   gradient_structure::PREVIOUS_TOTAL_BYTES=0;
   unsigned int i;
-  long int lpos;
   if(!gradient_structure::instances)
   {
     g.initialize();
@@ -113,20 +110,20 @@ void gradcalc(int nvar, const dvector& _g)
   }
 
    gradient_structure::GRAD_STACK1->_GRADFILE_PTR =
-              gradient_structure::GRAD_STACK1->gradfile_handle();
+     gradient_structure::GRAD_STACK1->gradfile_handle();
 
   int& _GRADFILE_PTR=gradient_structure::GRAD_STACK1->_GRADFILE_PTR;
 
-  lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
+  long int lpos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
 
-  if(gradient_structure::GRAD_STACK1->ptr
-       <= gradient_structure::GRAD_STACK1->ptr_first)
+  if (gradient_structure::GRAD_STACK1->ptr <=
+        gradient_structure::GRAD_STACK1->ptr_first)
   {
    /*
-    #ifdef SAFE_ARRAYS
-      cerr << "warning -- calling gradcalc when no calculations generating"
-	 << endl << "derivative information have occurred" << endl;
-    #endif
+#ifdef SAFE_ARRAYS
+    cerr << "warning -- calling gradcalc when no calculations generating"
+         << endl << "derivative information have occurred" << endl;
+#endif
    */
     g.initialize();
     return;
@@ -140,102 +137,86 @@ void gradcalc(int nvar, const dvector& _g)
 
   gradient_structure::GRAD_STACK1->ptr--;
 
-  for (i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
+  for (i = 0; i < gradient_structure::GRAD_LIST->nlinks; i++)
   {
-    * (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i]) = 0;
+    *(double*)(gradient_structure::GRAD_LIST->dlink_addresses[i]) = 0;
   }
 
-   #if defined (__BORLANDC__) && !defined(DOS386)
-     double_and_int huge * tmp;
-   #else
-     double_and_int * tmp;
-   #endif
+#if defined (__BORLANDC__) && !defined(DOS386)
+  double_and_int huge* tmp =
+    (double_and_int huge *) gradient_structure::ARRAY_MEMBLOCK_BASE;
+#else
+  double_and_int* tmp =
+    (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
+#endif
 
-   #if defined (__BORLANDC__) && !defined(DOS386)
-      tmp = (double_and_int huge *) gradient_structure::ARRAY_MEMBLOCK_BASE;
-   #else
-      tmp = (double_and_int *) gradient_structure::ARRAY_MEMBLOCK_BASE;
-   #endif
-
-     unsigned long int max_last_offset = gradient_structure::ARR_LIST1->get_max_last_offset();
-
-     unsigned int size = sizeof(double_and_int );
-
-  double * zptr;
-
-   for (i=0 ; i< (max_last_offset/size) ; i++ )
-   {
+  unsigned long int max_last_offset = gradient_structure::ARR_LIST1->get_max_last_offset();
+  unsigned int size = sizeof(double_and_int);
+  for (i = 0; i < (max_last_offset/size); i++)
+  {
      tmp->x = 0;
-     #if defined (__ZTC__)
-       #if defined(DOS386)
-	tmp++;
-       #else
-        tmp = (double_and_int  *) _farptr_norm( (void*) (++tmp)  );
-       #endif
-     #endif
-     #if defined (__BORLANDC__)
-        tmp++;
-     #endif
-     #if (!defined (__ZTC__) && !defined (__BORLANDC__))
-       tmp++;
-     #endif
-   }
-
-    * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
-    zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
-
-//double z;
-int break_flag=1;
-int icount=0;
-
-do
-{
-  gradient_structure::GRAD_STACK1->ptr++;
-  #ifdef FAST_ASSEMBLER
-    gradloop();
+#if defined (__ZTC__)
+  #if defined(DOS386)
+     tmp++;
   #else
-    grad_stack_entry * grad_ptr_first=
+     tmp = (double_and_int*)_farptr_norm((void*)(++tmp));
+  #endif
+#else
+     tmp++;
+#endif
+  }
+
+  *gradient_structure::GRAD_STACK1->ptr->dep_addr = 1;
+  double* zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
+
+  //int icount=0;
+  int break_flag=1;
+  do
+  {
+    gradient_structure::GRAD_STACK1->ptr++;
+#ifdef FAST_ASSEMBLER
+    gradloop();
+#else
+    grad_stack_entry* grad_ptr_first =
       gradient_structure::GRAD_STACK1->ptr_first;
     while (gradient_structure::GRAD_STACK1->ptr-- >
-		grad_ptr_first)
+             grad_ptr_first)
     {
-      //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
       (*(gradient_structure::GRAD_STACK1->ptr->func))();
+/*
       icount++;
       if (icount%1000==0)
       {
         //cout << "icount = " << icount << endl;
       }
+*/
     }
+#endif
 
-  #endif
-
-  // back up the file one buffer size and read forward
-  //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
-  lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
+   // back up the file one buffer size and read forward
+   lpos = lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR,
       -((long int)(sizeof(grad_stack_entry)*gradient_structure::
         GRAD_STACK1->length)),SEEK_CUR);
-  //KLUDGEX(gradient_structure::GRAD_STACK1->ptr);
 
-  break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
+    break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
 
-}  while (break_flag); // do
+  } while (break_flag);
 
- {
-   #ifdef GRAD_DIAG
-  long int ttmp =
-   #endif
+  {
+#ifdef GRAD_DIAG
+    long int ttmp =
+#endif
     lseek(gradient_structure::GRAD_STACK1->_GRADFILE_PTR, 0,SEEK_CUR);
-   #ifdef GRAD_DIAG
-      cout << "Offset in file at end of gradcalc is " << ttmp
-				      << " bytes from the beginning\n";
-   #endif
+#ifdef GRAD_DIAG
+    cout << "Offset in file at end of gradcalc is " << ttmp
+         << " bytes from the beginning\n";
+#endif
   }
 
   int mindx = g.indexmin();
   for (i=0; i < (unsigned int)nvar; i++)
   {
-    g[i+mindx] =  * gradient_structure::INDVAR_LIST->get_address(i);
+    g[i + mindx] = *gradient_structure::INDVAR_LIST->get_address(i);
   }
 
   gradient_structure::GRAD_STACK1->ptr = gradient_structure::GRAD_STACK1->ptr_first;
@@ -246,7 +227,6 @@ do
     gradient_structure::restore_variables();
   }
 }
-
 /**
  */
 void gradient_structure::save_arrays()
@@ -379,9 +359,9 @@ void gradient_structure::restore_arrays()
     #endif
   }
 }
-
 /**
- */
+Save variables to a buffer.
+*/
 void gradient_structure::save_variables()
 {
   if ((variables_save = new double[gradient_structure::MAX_DLINKS])==NULL)
@@ -400,25 +380,24 @@ void gradient_structure::save_variables()
        gradient_structure::GRAD_LIST->dlink_addresses[i],sizeof(double));
   }
 }
-
 /**
- */
+Restore variables from buffer.
+*/
 void gradient_structure::restore_variables()
 {
   for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
-     //* (double*)(gradient_structure::GRAD_LIST->dlink_addresses[i])
-     //	= variables_save[i];
+    //* (double*)(gradient_structure::GRAD_LIST->dlink_addresses[i])
+    //	= variables_save[i];
     memcpy(gradient_structure::GRAD_LIST->dlink_addresses[i],
        &(variables_save[i]),sizeof(double));
   }
   delete [] variables_save;
+  variables_save = 0;
 }
-
-void KLUDGEX(void * p){;}
-
 /**
- */
+Rewind buffer.
+*/
 void reset_gradient_stack(void)
 {
   gradient_structure::GRAD_STACK1->ptr =
@@ -428,10 +407,6 @@ void reset_gradient_stack(void)
 
   lseek(_GRADFILE_PTR,0L,SEEK_SET);
 }
-
-static int inner_count=0;
-//static grad_stack_entry * pgse = (grad_stack_entry*) (0x1498fffc);
-
 /**
   Sets the gradient stack entry for a function or operator with a single
   independent variable.
@@ -442,31 +417,19 @@ static int inner_count=0;
   \param ind_addr1 Address of independent variable; pointer to double
  */
 void grad_stack::set_gradient_stack1(void (* func)(void),
-  double * dep_addr,double * ind_addr1)
+  double* dep_addr, double* ind_addr1)
 {
 #ifdef NO_DERIVS
   if (!gradient_structure::no_derivatives)
   {
 #endif
-    inner_count++;
-    /*
-    if (inner_count == 404849)
-    {
-       cout << ptr << endl;
-       cout << ptr->func << endl;
-       cout << ptr->dep_addr << endl;
-       cout << (int)(ptr->dep_addr)%8 << endl;
-    }
-    */
     if (ptr > ptr_last)
     {
        // current buffer is full -- write it to disk and reset pointer
        // and counter
        this->write_grad_stack_buffer();
     }
-
-    test_the_pointer();
-
+    //test_the_pointer();
     ptr->func = func;
     ptr->dep_addr = dep_addr;
     ptr->ind_addr1 = ind_addr1;
@@ -475,14 +438,24 @@ void grad_stack::set_gradient_stack1(void (* func)(void),
   }
 #endif
 }
-
-/**
- */
 void test_the_pointer(void)
 {
- /*
+}
+/**
+static int inner_count = 0;
+static grad_stack_entry * pgse = (grad_stack_entry*) (0x1498fffc);
+void test_the_pointer(void)
+{
+  inner_count++;
+  if (inner_count == 404849)
+  {
+    cout << ptr << endl;
+    cout << ptr->func << endl;
+    cout << ptr->dep_addr << endl;
+    cout << (int)(ptr->dep_addr)%8 << endl;
+  }
   pgse->func = (void (*)())(100);
   pgse->dep_addr = (double*) 100;
   pgse->ind_addr1 = (double*) 100;
- */
 }
+*/

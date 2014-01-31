@@ -1426,10 +1426,10 @@ class grad_stack
    int decrement_current_gradfile_ptr(void);
    //void open_gradfile();
    //void close_gradfile();
-#ifndef __MSC__
-   int &gradfile_handle();
-#else
+#ifdef _MSC_VER
    int gradfile_handle();
+#else
+   int &gradfile_handle();
 #endif
    char *get_gradfile_name();
    friend class gradient_structure;

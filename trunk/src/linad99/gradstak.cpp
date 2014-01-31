@@ -16,16 +16,15 @@
   #include <io.h>
 #endif
 
-  #ifdef __MSVC32__
-    #define lseek _lseek
-    #define  read _read
-    #define write _write
-    #define open _open
-    #define close _close
-    #include <sys\stat.h>
-    #include <fcntl.h>
-  #endif
-
+#ifdef _MSC_VER
+  #define lseek _lseek
+  #define  read _read
+  #define write _write
+  #define open _open
+  #define close _close
+  #include <sys\stat.h>
+  #include <fcntl.h>
+#endif
 
 #if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
@@ -91,212 +90,190 @@
 #include <string.h>
 #include <time.h>
 
-  char lastchar(char *);
+char lastchar(char *);
+char ad_random_part[6]="tmp";
 
-  char ad_random_part[6]="tmp";
-
-/**
- * Description not yet available.
- * \param
- */
-  void fill_ad_random_part(void)
+void fill_ad_random_part(void)
+{
+/*
+  time_t t,tt;
+  time(&t);
+  tt=t;
+  int div=1;
+  for (int i=0;i<6;i++)
   {
-   /*
-    time_t t,tt;
-    time(&t);
-    tt=t;
-    int div=1;
-    for (int i=0;i<6;i++)
-    {
-      ad_random_part[i]=(tt/div)%10+48;
-      div*=10;
-    }
-   */
+    ad_random_part[i]=(tt/div)%10+48;
+    div*=10;
+  }
+*/
+}
+/**
+Default constructor
+*/
+grad_stack::grad_stack()
+{
+  gradient_structure::TOTAL_BYTES = 0;
+  gradient_structure::PREVIOUS_TOTAL_BYTES=0;
+  true_length = gradient_structure::GRADSTACK_BUFFER_SIZE;
+  length = true_length;
+  if ((true_ptr_first = new grad_stack_entry[(size_t)length]) == 0)
+  {
+    cerr << "Memory allocation error in grad_stack constructor\n"
+         << " trying to allocate "
+         << length * sizeof(grad_stack_entry)<<" bytes\n";
+    ad_exit(1);
   }
 
-/**
- * Description not yet available.
- * \param
- */
-  grad_stack::grad_stack()
-  {
-    gradient_structure::TOTAL_BYTES = 0;
-    gradient_structure::PREVIOUS_TOTAL_BYTES=0;
-    true_length = gradient_structure::GRADSTACK_BUFFER_SIZE;
-    length = true_length;
-    if ( (true_ptr_first = new  grad_stack_entry [(size_t)length]) == 0)
-    {
-      cerr << "Memory allocation error in grad_stack constructor\n"
-        << " trying to allocate "
-                   << length * sizeof(grad_stack_entry)<<" bytes\n";
-      ad_exit(1);
-    }
+  test_the_pointer();
 
-    test_the_pointer();
+  ptr_first=true_ptr_first;
+  ptr = ptr_first;
+  ptr_last=ptr_first+(length-1);
+  //table=new lvector(-128,250);
 
-    ptr_first=true_ptr_first;
-    ptr = ptr_first;
-    ptr_last=ptr_first+(length-1);
-//    table=new lvector(-128,250);
+  _GRADFILE_PTR = -1; // set to illegal value for later checking
+  end_pos  = 0;
+  end_pos1 = 0;
+  end_pos2 = 0;
 
-    _GRADFILE_PTR = -1; // set to illegal value for later checking
-    end_pos  = 0;
-    end_pos1 = 0;
-    end_pos2 = 0;
+  char* path = getenv("ADTMP"); // NULL if not defined
 
-    char* path = getenv("ADTMP"); // NULL if not defined
 #if defined(USE_ADPVM)
-    adstring string_path;
-    if (path) string_path=path;
-    int on=0;
-    int nopt=0;
-    adstring currdir;
-    ad_getcd(currdir);
-    if (ad_comm::pvm_manager)
+  adstring string_path;
+  if (path) string_path=path;
+  int on=0;
+  int nopt=0;
+  adstring currdir;
+  ad_getcd(currdir);
+  if (ad_comm::pvm_manager)
+  {
+    if ((on = option_match(ad_comm::argc, ad_comm::argv, "-slave", nopt)) > -1)
     {
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-slave",nopt))>-1)
+      if (nopt ==1)
       {
-        if (nopt ==1)
-        {
-          {
-            int ierr=make_sub_directory(ad_comm::argv[on+1]);
-            ad_comm::subdir=ad_comm::argv[on+1];
-            string_path+=ad_comm::subdir;
-            path=(char*) string_path;
-          }
-        }
-        else
-        {
-          cerr << "Wrong number of options to -slave -- must be 1"
-            " you have " << nopt << endl;		
-          ad_exit(1);
-        }	
-      }
-    }
-#endif
-    if (path != NULL)
-    {
-    #  if defined ( __SUN__) ||  defined ( __GNU__)
-      sprintf(&gradfile_name1[0],"%s/gradfil1.%s", path,ad_random_part);
-    #  else
-      if (lastchar(path)!='\\')
-      {
-        sprintf(&gradfile_name1[0],"%s\\gradfil1.%s", path,ad_random_part);
+        int ierr=make_sub_directory(ad_comm::argv[on+1]);
+        ad_comm::subdir=ad_comm::argv[on+1];
+        string_path+=ad_comm::subdir;
+        path=(char*) string_path;
       }
       else
       {
-        sprintf(&gradfile_name1[0],"%sgradfil1.%s", path,ad_random_part);
-      }
-    #  endif
+        cerr << "Wrong number of options to -slave -- must be 1"
+            " you have " << nopt << endl;		
+        ad_exit(1);
+      }	
     }
-    else
-    {
-      sprintf(&gradfile_name1[0],"gradfil1.%s",ad_random_part);
-    }
-
-    path = getenv("ADTMP1"); // NULL if not defined
-#if defined(USE_ADPVM)
-    adstring string_path2;
-    if (path) string_path2=path;
-    string_path2+=ad_comm::subdir;
-    path=(char*) string_path2;
+  }
 #endif
-    if (path != NULL)
+
+  if (path != NULL)
+  {
+#if defined ( __SUN__) || defined ( __GNU__)
+    sprintf(&gradfile_name1[0],"%s/gradfil1.%s", path, ad_random_part);
+#else
+    if (lastchar(path) != '\\')
     {
-      #if defined ( __SUN__) ||  defined ( __GNU__)  || defined(linux)
-	if (strlen(path)>0)
-	{    	
-	  sprintf(&var_store_file_name[0],"%s/varssave.%s",path,
-            ad_random_part);
-	  sprintf(&gradfile_name2[0],"%s/gradfil2.%s", path,
-            ad_random_part);
-	}
-	else
-	{    	
-	  sprintf(&var_store_file_name[0],"varssave.tmp");
-	  sprintf(&gradfile_name2[0],"gradfil2.tmp");
-	}
-      #else
-        if (lastchar(path)!='\\')
-        {
-	  sprintf(&gradfile_name2[0],"%s\\gradfil2.%s", path,
-            ad_random_part);
-	  sprintf(&var_store_file_name[0],"%s\\varssave.%s",path,
-            ad_random_part);
-        }
-        else
-        {
-	  sprintf(&gradfile_name2[0],"%sgradfil2.%s", path,
-            ad_random_part);
-	  sprintf(&var_store_file_name[0],"%svarssave.%s",path,
-            ad_random_part);
-        }
-      #endif
+      sprintf(&gradfile_name1[0], "%s\\gradfil1.%s", path, ad_random_part);
     }
     else
     {
-      sprintf(&gradfile_name2[0],"gradfil2.%s",
-        ad_random_part);
-      sprintf(&var_store_file_name[0],"varssave.%s",
-        ad_random_part);
+      sprintf(&gradfile_name1[0], "%sgradfil1.%s", path, ad_random_part);
     }
-    create_gradfile();
+#endif
+  }
+  else
+  {
+    sprintf(&gradfile_name1[0], "gradfil1.%s", ad_random_part);
+  }
 
-    strcpy(gradfile_name, gradfile_name1);
-    _GRADFILE_PTR = _GRADFILE_PTR1;
+  path = getenv("ADTMP1"); // NULL if not defined
+#if defined(USE_ADPVM)
+  adstring string_path2;
+  if (path) string_path2=path;
+  string_path2+=ad_comm::subdir;
+  path=(char*) string_path2;
+#endif
+  if (path != NULL)
+  {
+#if defined (__SUN__) ||  defined (__GNU__)  || defined(linux)
+    if (strlen(path) > 0)
+    {    	
+      sprintf(&var_store_file_name[0],"%s/varssave.%s",path, ad_random_part);
+      sprintf(&gradfile_name2[0],"%s/gradfil2.%s", path, ad_random_part);
+    }
+    else
+    {    	
+      sprintf(&var_store_file_name[0],"varssave.tmp");
+      sprintf(&gradfile_name2[0],"gradfil2.tmp");
+    }
+#else
+    if (lastchar(path)!='\\')
+    {
+      sprintf(&gradfile_name2[0], "%s\\gradfil2.%s", path, ad_random_part);
+      sprintf(&var_store_file_name[0], "%s\\varssave.%s", path, ad_random_part);
+    }
+    else
+    {
+      sprintf(&gradfile_name2[0], "%sgradfil2.%s", path, ad_random_part);
+      sprintf(&var_store_file_name[0], "%svarssave.%s", path, ad_random_part);
+    }
+#endif
+  }
+  else
+  {
+    sprintf(&gradfile_name2[0], "gradfil2.%s", ad_random_part);
+    sprintf(&var_store_file_name[0], "varssave.%s", ad_random_part);
+  }
 
+  create_gradfile();
+
+  strcpy(gradfile_name, gradfile_name1);
+  _GRADFILE_PTR = _GRADFILE_PTR1;
 }
-
 /**
 Destructor
 */
 grad_stack::~grad_stack()
 {
-   // this->print();
-
-   int repfs=option_match(ad_comm::argc,ad_comm::argv,"-fsize");
-
-   if (ad_comm::global_logfile && repfs)
-   {
-     int pos;
-     pos=lseek(_GRADFILE_PTR1,0,SEEK_END);
+  const int repfs = option_match(ad_comm::argc, ad_comm::argv, "-fsize");
+  if (ad_comm::global_logfile && repfs)
+  {
+     int pos = lseek(_GRADFILE_PTR1, 0, SEEK_END);
      *ad_comm::global_logfile << "size of file " << gradfile_name1
-      << " = " << pos << endl;
+       << " = " << pos << endl;
 
-     pos=lseek(_GRADFILE_PTR2,0,SEEK_END);
+     pos = lseek(_GRADFILE_PTR2, 0, SEEK_END);
      *ad_comm::global_logfile << "size of file " << gradfile_name2
-      << " = " << pos << endl;
+       << " = " << pos << endl;
 
-     pos=lseek(_VARSSAV_PTR,0,SEEK_END);
+     pos = lseek(_VARSSAV_PTR, 0, SEEK_END);
      *ad_comm::global_logfile << "size of file " << var_store_file_name
-      << " = " << pos << endl;
-   }
+       << " = " << pos << endl;
+  }
+  if (close(_GRADFILE_PTR1))
+  {
+    cerr << "Error closing file " << gradfile_name1 << "\n";
+  }
+  if (close(_GRADFILE_PTR2))
+  {
+    cerr << "Error closing file " << gradfile_name2 << "\n";
+  }
+  if (close(_VARSSAV_PTR))
+  {
+    cerr << "Error closing file " << var_store_file_name << "\n";
+  }
+#if defined ( __SUN__) ||  defined ( __GNU__)
+  unlink(gradfile_name1);
+  unlink(gradfile_name2);
+  unlink(var_store_file_name);
+#else
+  remove(gradfile_name1);
+  remove(gradfile_name2);
+  remove(var_store_file_name);
+#endif
 
-   if (close(_GRADFILE_PTR1))
-   {
-     cerr << "Error closing file " << gradfile_name1 << "\n";
-   }
-   if (close(_GRADFILE_PTR2))
-   {
-     cerr << "Error closing file " << gradfile_name2 << "\n";
-   }
-   if (close(_VARSSAV_PTR))
-   {
-     cerr << "Error closing file " << var_store_file_name << "\n";
-   }
-
-  #if defined ( __SUN__) ||  defined ( __GNU__)
-   unlink(gradfile_name1);
-   unlink(gradfile_name2);
-   unlink(var_store_file_name);
-  #else
-   remove(gradfile_name1);
-   remove(gradfile_name2);
-   remove(var_store_file_name);
-  #endif
-
-   delete[] true_ptr_first;
-   true_ptr_first = 0;
+  delete [] true_ptr_first;
+  true_ptr_first = 0;
 }
 
 /**
@@ -387,7 +364,6 @@ grad_stack::~grad_stack()
  */
 void grad_stack::create_gradfile()
 {
-
   #if defined (__TURBOC__)
    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
        O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
@@ -418,7 +394,7 @@ void grad_stack::create_gradfile()
     _VARSSAV_PTR=open(var_store_file_name, O_RDWR |
       O_CREAT | O_TRUNC | O_BINARY, 0777);
 
-  #elif defined (__MSVC32__)
+  #elif defined (_MSC_VER)
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
 		O_BINARY ,   0777);
     _VARSSAV_PTR=open(var_store_file_name, O_RDWR |
@@ -465,7 +441,7 @@ void grad_stack::create_gradfile()
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
 		O_BINARY , 0777);
 
-  #elif defined (__MSVC32__)
+  #elif defined (_MSC_VER)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
 		     O_BINARY, S_IREAD | S_IWRITE);
 
@@ -483,17 +459,14 @@ void grad_stack::create_gradfile()
     ad_exit(1);
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+If there is another file set the handle to point to it otherwise
+we are out of room
+*/
 void grad_stack::increment_current_gradfile_ptr()
 {
   if (_GRADFILE_PTR == _GRADFILE_PTR2)
   {
-// If there is another file set the handle to point to it otherwise
-// we are out of room
     cerr << "Attempted to open a third gradient file -- There is\n"
       "probably no more room on the TMP1 (if defined) device\n"
       "if possible set TMP1 environment string to a device with more room\n";
@@ -502,42 +475,38 @@ void grad_stack::increment_current_gradfile_ptr()
    strcpy(gradfile_name, gradfile_name2);
   _GRADFILE_PTR = _GRADFILE_PTR2;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+If there is a previous file set the handle to point to it otherwise
+return a -1
+*/
 int grad_stack::decrement_current_gradfile_ptr()
-// If there is a previous file set the handle to point to it otherwise
-// return a -1
 {
   if (_GRADFILE_PTR == _GRADFILE_PTR1)
   {
     return -1;
   }
+
   strcpy(gradfile_name, gradfile_name1);
   _GRADFILE_PTR = _GRADFILE_PTR1;
+
   return 0;
 }
-
-#ifndef __MSC__
-  int& grad_stack::gradfile_handle()
+#ifndef _MSC_VER
+int& grad_stack::gradfile_handle()
 #else
-  int grad_stack::gradfile_handle()
+int grad_stack::gradfile_handle()
 #endif
 {
-  return(_GRADFILE_PTR);
+  return _GRADFILE_PTR;
 }
-
 /**
  * Description not yet available.
  * \param
  */
 char* grad_stack::get_gradfile_name()
 {
-  return(gradfile_name);
+  return gradfile_name;
 }
-
 /**
  * Description not yet available.
  * \param
@@ -552,27 +521,26 @@ void grad_stack::set_gbuffer_pointers()
     length=end_buf_size;
   }
 }
-
 /**
  * Description not yet available.
  * \param
  */
 void grad_stack::set_gradient_stack0(void (* func)(void),double * dep_addr)
 {
-  #ifdef NO_DERIVS
-    if (!gradient_structure::no_derivatives)
+#ifdef NO_DERIVS
+  if (!gradient_structure::no_derivatives)
+  {
+#endif
+    if (ptr > ptr_last)
     {
-  #endif
-      if (ptr > ptr_last)
-      {
-         // current buffer is full -- write it to disk and reset pointer
-         // and counter
-         this->write_grad_stack_buffer();
-      }
-      ptr->func = func;
-      ptr->dep_addr = dep_addr;
-      ptr++;
-  #ifdef NO_DERIVS
+      // current buffer is full -- write it to disk and reset pointer
+      // and counter
+      this->write_grad_stack_buffer();
     }
-  #endif
+    ptr->func = func;
+    ptr->dep_addr = dep_addr;
+    ptr++;
+#ifdef NO_DERIVS
+  }
+#endif
 }

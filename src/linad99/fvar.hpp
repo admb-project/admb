@@ -8585,38 +8585,31 @@ class pre_index_type
 class data_int;
 
 /**
- * Description not yet available.
- * \param
- */
+Stores integer.
+*/
 class ad_integer
 {
- protected:
-   int d;
- public:
-   operator  int () const
-   {
-      return d;
-   }
-   //operator int () { return d;}
-   ad_integer(const int &_d, const adkludge&): d(_d)
-   {
-   }
-   ad_integer(int _d):d(_d)
-   {
-   }
-   ad_integer(const index_type & it);
-   ad_integer make_ad_integer(int _d)
-   {
-      adkludge adk;
-      return ad_integer(d, adk);
-   }
-#if defined(_MSC_VER)
-//#  if (_MSC_VER  < 1200)
-   ad_integer(const data_int & _d);
-//#  endif
-#else
-   ad_integer(const data_int & _d);
-#endif
+protected:
+  int d;
+public:
+  operator int () const
+  {
+    return d;
+  }
+  ad_integer(const int &_d, const adkludge&): d(_d)
+  {
+  }
+  ad_integer(int _d):d(_d)
+  {
+  }
+  ad_integer(const index_type& it);
+  ad_integer make_ad_integer(int _d)
+  {
+    adkludge adk;
+    Should parameter be d or _d?
+    return ad_integer(d, adk);
+  }
+  ad_integer(const data_int & _d);
 };
 
 /**
@@ -9420,31 +9413,30 @@ class pre_double_index_type
 };
 
 /**
- * Description not yet available.
- * \param
- */
+Stores double value.
+*/
 class ad_double
 {
- protected:
-   double d;
- public:
-   operator  double () const
-   {
-      return d;
-   }
-   ad_double(const double& _d, const adkludge&):d(_d)
-   {
-   }
-   ad_double(double _d):d(_d)
-   {
-   }
-   ad_double(const double_index_type & it);
-   ad_double make_ad_double(double _d)
-   {
-      adkludge adk;
-      return ad_double(d, adk);
-   }
-   ad_double & operator =(const ad_double &);
+protected:
+  double d;
+public:
+  operator double () const
+  {
+    return d;
+  }
+  ad_double(const double& _d, const adkludge&):d(_d)
+  {
+  }
+  ad_double(double _d):d(_d)
+  {
+  }
+  ad_double(const double_index_type& it);
+  ad_double make_ad_double(double _d)
+  {
+    adkludge adk;
+    return ad_double(d, adk);
+  }
+  ad_double& operator=(const ad_double&);
 };
 
 /**

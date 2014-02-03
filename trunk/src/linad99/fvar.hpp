@@ -8606,7 +8606,7 @@ public:
   ad_integer make_ad_integer(int _d)
   {
     adkludge adk;
-    Should parameter be d or _d?
+    //??Should parameter be d or _d?
     return ad_integer(d, adk);
   }
   ad_integer(const data_int & _d);
@@ -9434,6 +9434,7 @@ public:
   ad_double make_ad_double(double _d)
   {
     adkludge adk;
+    //??Should parameter be d or _d?
     return ad_double(d, adk);
   }
   ad_double& operator=(const ad_double&);

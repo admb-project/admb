@@ -1234,64 +1234,79 @@ void initial_params::set_random_effects_inactive(void) {;}
 
 
 #if defined(__SPDLL__)
-#  if !defined(linux)
-#    include <windows.h>
-#  endif
+  #if defined(_WIN32)
+    #include <windows.h>
 void get_sp_printf(void)
 {
-#if !defined(linux)
   ad_printf=NULL;
   HINSTANCE h=LoadLibrary("sqpe.dll");
   if(h)
     ad_printf= (fptr) GetProcAddress(h,"S_newio_printf");
-#endif
 }
+  #endif
 #endif
 
-  pinitial_params & adlist_ptr::operator [] (int i)
+pinitial_params& adlist_ptr::operator[](int i)
+{
+  return (pinitial_params&)ptr[i];
+}
+/**
+Construct array with init_size.
+*/
+adlist_ptr::adlist_ptr(int init_size)
+{
+  current = 0;
+  ptr = new ptovoid[init_size];
+  if (ptr == 0)
   {
-    return (pinitial_params &) ptr[i];
+    cerr << "Error: allocating memory in adlist_ptr" << endl;
   }
-
-  adlist_ptr::adlist_ptr(int init_size)
+  current_size = init_size;
+}
+void adlist_ptr::initialize()
+{
+  for (int i = 0; i < current_size; i++)
   {
-    current=0;
-    ptr = new ptovoid[init_size];
-    if (ptr==0)
-    {
-      cerr << "Errorl allocating memory in adlist_ptr" << endl;
-    }
-    current_size=init_size;
+    ptr[i] = 0;
   }
-  void adlist_ptr::resize(void)
+  //reset current index to beginning
+  current = 0;
+}
+/**
+Double array size if needed.
+*/
+void adlist_ptr::resize(void)
+{
+  current_size *= 2;
+  ptovoid* tmp = new ptovoid[current_size];
+  if (tmp == 0)
   {
-    current_size*=2;
-    ptovoid * tmp = new ptovoid[current_size];
-    if (tmp==0)
-    {
-      cerr << "Errorl allocating memory in adlist_ptr" << endl;
-    }
-    for (int i=0;i<current;i++)
-    {
-      tmp[i]=ptr[i];
-    }
-    delete [] ptr;
-    ptr = tmp;
+    cerr << "Error: allocating memory in adlist_ptr" << endl;
   }
-  void adlist_ptr::add_to_list(void * p)
+  for (int i=0;i<current;i++)
   {
-    if (current>current_size)
-    {
-      cerr << "This can't happen in adlist_ptr" << endl;
-      exit(1);
-    }
-    if (current==current_size)
-    {
-      resize();
-    }
-    ptr[current++]=p;
+    tmp[i] = ptr[i];
   }
-
+  delete [] ptr;
+  ptr = tmp;
+  tmp = 0;
+}
+/**
+Store pointer p to array.
+*/
+void adlist_ptr::add_to_list(void* p)
+{
+  if (current > current_size)
+  {
+    cerr << "This can't happen in adlist_ptr" << endl;
+    exit(1);
+  }
+  if (current == current_size)
+  {
+    resize();
+  }
+  ptr[current++] = p;
+}
 /**
 Destructor
 */

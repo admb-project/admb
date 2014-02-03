@@ -730,27 +730,27 @@ public:
 };
 #endif // #if defined(USE_ADPVM)
 
-
 class initial_params;
-
-typedef initial_params * pinitial_params;
-typedef void * ptovoid;
-
+typedef initial_params* pinitial_params;
+typedef void* ptovoid;
 /**
- * Description not yet available.
- * \param
- */
+For storing void pointers in a array.
+*/
 class adlist_ptr
 {
   ptovoid * ptr;
   int current_size;
   int current;
   void resize(void);
-  void add_to_list(void * p);
+  void add_to_list(void* p);
 public:
-  ~adlist_ptr();
-  pinitial_params  & operator [] (int i);
   adlist_ptr(int init_size);
+  ~adlist_ptr();
+
+  void initialize();
+
+  pinitial_params& operator[](int i);
+
   friend class initial_params;
 };
 

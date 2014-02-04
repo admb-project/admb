@@ -232,12 +232,11 @@ void function_minimizer::limited_memory_quasi_newton
     }
     else
     {
-      char * end;
+      char* end;
       _crit=strtod(ad_comm::argv[on+1],&end);
       if (_crit<=0)
       {
         cerr << "Usage -crit option needs positive number  -- ignored" << endl;
-        _crit=0.0;
       }
     }
   }

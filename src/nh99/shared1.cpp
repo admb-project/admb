@@ -69,7 +69,7 @@
       int  jmin=bmap(i).indexmin();
       int  jmax=bmap(i).indexmax();
 
-      int ii1;
+      int ii1 = 0;
       for (int j=jmin;j<=jmax;j++)
       {
         dvar_vector& v=(*this)(bmap(i,j,1),bmap(i,j,2));

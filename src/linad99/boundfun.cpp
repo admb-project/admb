@@ -5,26 +5,36 @@
  * Copyright (c) 2008-2012 Regents of the University of California
  */
 /**
- * \file
- * Description not yet available.
- */
+  \file boundfun.cpp
+  \brief Code to implement placing constraints on parameters.
+  See in Section 10.1 of the AUTODIF manual. 
+  The code in thse section of the AUTODIF manual appears to be 
+  out of date with respect to some of the code in this file.
+*/
 #include "fvar.hpp"
-//#ifdef __TURBOC__
-//#  pragma hdrstop
-//#endif
 
+/**
+  \details Use penalties recomended in Bard, Y. (1974) Nonlinear parameter estimation. 
+  Academic Press, New York.
+*/
 #define USE_BARD_PEN
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
-double dmin(double,double);
-double dmax(double, double);
+// function prototypes duplicated in fvar.hpp
+// double dmin(double, double);
+// double dmax(double, double);
 
 /**
- * Description not yet available.
- * \param
+  Scale input variable between upper and lower bounds 
+  and compute a penalty for exceeding the bounds.
+  \param x Variable to be scaled
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
+  \param _fpen On return, contains penalty if x > fmax or x < fmin
+  \return Scaled value of x between fmin and fmax in the range [-1,1]
  */
 dvariable dfatan1(dvariable x, double fmin, double fmax, const prevariable&  _fpen)
 {
@@ -49,8 +59,10 @@ dvariable dfatan1(dvariable x, double fmin, double fmax, const prevariable&  _fp
 }
 
 /**
- * Description not yet available.
- * \param
+   Inverse of \ref dvariable dfatan1(dvariable x, double fmin, double fmax, const prevariable&  _fpen)
+  \param x Variable to be scaled
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
  */
 double dftinv(double x, double fmin, double fmax)
 {
@@ -69,18 +81,29 @@ double dftinv(double x, double fmin, double fmax)
 }
 
 /**
- * Description not yet available.
- * \param
- */
+  Scale input variable between upper and lower bounds 
+  and compute a penalty for exceeding the bounds.
+  \param x Variable to be scaled
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
+  \param _fpen On return, contains penalty if x > fmax or x < fmin
+  \param s Divide x by s before scaling and setting bounds
+  \return Scaled value of x between fmin and fmax in the range [-1,1]
+*/
 dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen,double s)
 {
   return boundp(x/s,fmin,fmax,_fpen);
 }
 
 /**
- * Description not yet available.
- * \param
- */
+  Scale input variable between upper and lower bounds 
+  and compute a penalty for exceeding the bounds.
+  \param x Variable to be scaled
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
+  \param _fpen On return, contains penalty if x > fmax or x < fmin
+  \return Scaled value of x between fmin and fmax in the range [-1,1]
+*/
 dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen)
 {
   if (gradient_structure::Hybrid_bounded_flag==0)
@@ -140,11 +163,20 @@ dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariabl
     return(t);
   }
 }
+
+
+/**
+  Does nothing; never referenced
+  \deprecated Does nothing. Not referenced by ADMB source code.
+*/  
 void xxjunk10(double){;}
 
 /**
- * Description not yet available.
- * \param
+  Computes the derivative of \ref dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen)
+  \param x Variable to be scaled
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
+  \return Derivative of scaled variable
  */
 dvariable dfboundp(const prevariable& x, double fmin,double fmax)
 {
@@ -178,8 +210,12 @@ dvariable dfboundp(const prevariable& x, double fmin,double fmax)
 }
 
 /**
- * Description not yet available.
- * \param
+  Derivatative code for \ref double nd2fboundp( double x, double fmin, double fmax,const double& fpen)
+  \param x Variable to be scaled
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
+  \param fpen Unchanged on return.
+  \return Derivative of scaled variable
  */
 double ndfboundp( double x, double fmin, double fmax,const double& fpen)
 {
@@ -209,8 +245,12 @@ double ndfboundp( double x, double fmin, double fmax,const double& fpen)
 }
 
 /**
- * Description not yet available.
- * \param
+  Scale input variable between upper and lower bounds 
+  and compute a penalty for exceeding the bounds.
+  \param x Variable to be scaled
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
+  \return Scaled value of x between fmin and fmax in the range [-1,1]
  */
 double boundp(double x, double fmin, double fmax)
 {
@@ -241,8 +281,14 @@ double boundp(double x, double fmin, double fmax)
 }
 
 /**
- * Description not yet available.
- * \param
+  Scale input variable between upper and lower bounds 
+  and compute a penalty for exceeding the bounds.
+  Intended for use with df1b2 variables.
+  \param x Variable to be scaled
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
+  \param _fpen On return, contains penalty if x > fmax or x < fmin
+  \return Scaled value of x between fmin and fmax in the range [-1,1]
  */
 double nd2fboundp( double x, double fmin, double fmax,const double& fpen)
 {
@@ -264,8 +310,13 @@ double nd2fboundp( double x, double fmin, double fmax,const double& fpen)
 }
 
 /**
- * Description not yet available.
- * \param
+  Scale input variable between upper and lower bounds 
+  and compute a penalty for exceeding the bounds.
+  \param x Variable to be scaled
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
+  \param _fpen On return, contains penalty if x > fmax or x < fmin
+  \return Scaled value of x between fmin and fmax in the range [-1,1]
  */
 double boundp( double x, double fmin, double fmax,const double& _fpen)
 {
@@ -327,8 +378,12 @@ double boundp( double x, double fmin, double fmax,const double& _fpen)
 }
 
 /**
- * Description not yet available.
- * \param
+  Inverse of \ref double boundp(double x, double fmin, double fmax, double s)
+  \param xx Variable in the range [-1,1] as computed by boundp
+  \param fmin Lower bound of unscaled variable, x
+  \param fmin Upper bound of unscaled variable, x
+  \param s Divide x by s before scaling and setting bounds
+  \return Unscaled variable
  */
 double boundpin(double x, double fmin, double fmax,double s)
 {
@@ -336,8 +391,11 @@ double boundpin(double x, double fmin, double fmax,double s)
 }
 
 /**
- * Description not yet available.
- * \param
+  Inverse of \ref double boundp(double x, double fmin, double fmax)
+  \param xx Variable in the range [-1,1] as computed by boundp
+  \param fmin Lower bound of unscaled variable, x
+  \param fmin Upper bound of unscaled variable, x
+  \return Unscaled variable
  */
 double boundpin(double x, double fmin, double fmax)
 {
@@ -376,8 +434,11 @@ double boundpin(double x, double fmin, double fmax)
 }
 
 /**
- * Description not yet available.
- * \param
+  Inverse of \ref dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen, double s).
+  \param xx Variable in the range [-1,1] as computed by boundp
+  \param fmin Lower bound of unscaled variable, x
+  \param fmin Upper bound of unscaled variable, x
+  \return Unscaled variable
  */
 double boundpin(const prevariable& x, double fmin, double fmax,double s)
 {
@@ -385,8 +446,11 @@ double boundpin(const prevariable& x, double fmin, double fmax,double s)
 }
 
 /**
- * Description not yet available.
- * \param
+  Inverse of \ref dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen).
+  \param xx Variable in the range [-1,1] as computed by boundp
+  \param fmin Lower bound of unscaled variable, x
+  \param fmin Upper bound of unscaled variable, x
+  \return Unscaled variable
  */
 double boundpin(const prevariable& xx, double fmin, double fmax)
 {
@@ -427,8 +491,9 @@ double boundpin(const prevariable& xx, double fmin, double fmax)
 }
 
 /**
- * Description not yet available.
- * \param
+  Returns the minimum of two numbers
+  \param x First number
+  \param y Second number
  */
 double dmin(double x, double y)
 {
@@ -443,8 +508,9 @@ double dmin(double x, double y)
 }
 
 /**
- * Description not yet available.
- * \param
+  Returns the maximum of two numbers
+  \param x First number
+  \param y Second number
  */
 double dmax(double x, double y)
 {

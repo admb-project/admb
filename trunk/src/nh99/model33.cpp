@@ -140,13 +140,30 @@ void cleanup_argv(int nopt,char *** pa)
   }
 }
 
+#if defined(__SPDLL__)
+  #if defined(_WIN32)
+    #include <windows.h>
+void get_sp_printf(void)
+{
+  ad_printf=NULL;
+/*
+  HINSTANCE h=LoadLibrary("sqpe.dll");
+  if(h)
+    ad_printf= (fptr) GetProcAddress(h,"S_newio_printf");
+*/
+}
+  #endif
+#endif
+
 void do_dll_housekeeping(int argc,char ** argv)
 {
   int on;
 #if defined(__SPDLL__)
   if ( (on=option_match(argc,argv,"-sp"))>-1)
   {
+  #if defined(_WIN32)
     get_sp_printf();
+  #endif
     ad_exit=spdll_exit;
   }
   else if ( (on=option_match(argc,argv,"-spexit"))>-1)

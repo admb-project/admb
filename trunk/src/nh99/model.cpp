@@ -1232,20 +1232,6 @@ void initial_params::set_random_effects_active(void) {;}
 
 void initial_params::set_random_effects_inactive(void) {;}
 
-
-#if defined(__SPDLL__)
-  #if defined(_WIN32)
-    #include <windows.h>
-void get_sp_printf(void)
-{
-  ad_printf=NULL;
-  HINSTANCE h=LoadLibrary("sqpe.dll");
-  if(h)
-    ad_printf= (fptr) GetProcAddress(h,"S_newio_printf");
-}
-  #endif
-#endif
-
 pinitial_params& adlist_ptr::operator[](int i)
 {
   return (pinitial_params&)ptr[i];

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ADMB.xsl"?>
+<!--    original simple.dat
+# number of observations
+     10
+# observed Y values
+    1.4  4.7  5.1  8.3  9.0  14.5  14.0  13.4  19.2  18 
+# observed x values
+    -1  0 1  2  3  4  5  6  7  8        
+
+       hand built .xml file from .dat
+-->
+<FIT id="Starting Values">
+  <nobs category="CON">
+    <title>Number of observations</title>
+    <value>10</value>
+  </nobs>
+  <Y category="CON">
+    <title>observed Y values</title>
+    <index>
+      <lb>1</lb>
+      <ub>10</ub>
+    </index>
+    <value> 1.4  4.7  5.1  8.3  9.0  14.5  14.0  13.4  19.2  18 </value>
+  </Y>
+  <x category="CON">
+    <title>observed x values</title>
+    <index>
+      <lb>1</lb>
+      <ub>10</ub>
+    </index>
+    <value> -1  0 1  2  3  4  5  6  7  8 </value>
+   </x>
+   <a category="VAR">
+     <title>slope</title>
+     <value> 0.0 </value>
+   </a>
+   <b category="VAR">
+     <title>intercept</title>
+     <value> 0.0 </value>
+   </b>
+</FIT>

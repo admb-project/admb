@@ -20,15 +20,15 @@ double set_value_mc(double z,double min,double max);
  */
 int initial_params::montecarlo_scale(const dvector& d, const dvector& x)
 {
-  int ii=1;
-  for (int i=0;i<num_initial_params;i++)
+  int ii = 1;
+  for (int i = 0; i < num_initial_params; i++)
   {
     //if ((varsptr[i])->phase_start <= current_phase)
-    if (withinbound(0,(varsptr[i])->phase_start,current_phase))
-	(varsptr[i])->mc_scale(d,x,ii);
-    }
-    return ii-1;
+    if (withinbound(0, (varsptr[i])->phase_start, current_phase))
+      (varsptr[i])->mc_scale(d,x,ii);
   }
+  return ii - 1;
+}
 
 /**
  * Description not yet available.

@@ -6,8 +6,8 @@ of .tpl file.
    \author John Sibert
 */
 
-#include <admodel.h>
 #include "ADMB_XMLDoc.h"
+#include "admodel.h"
 #include "trace.h"
 
 void init_xml_doc::allocate(const char * s)
@@ -54,3 +54,4 @@ void param_init_bounded_number::allocate(init_xml_doc& xml, char const* s)
    // overwrite the initial value from the previous allocate
    *this  = xml.getDouble(s);
 }
+

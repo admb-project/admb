@@ -74,7 +74,8 @@ ADMB_XMLDoc::~ADMB_XMLDoc()
  */
 int ADMB_XMLDoc::write(void)
 {
-   int nbyte = xmlSaveFormatFileEnc((const char*)XMLFileName.c_str(),doc, "UTF-8", 1);
+   int nbyte = 0;
+   nbyte = xmlSaveFormatFileEnc((const char*)XMLFileName.c_str(),doc, "UTF-8", 1);
    return  nbyte;
 }
 

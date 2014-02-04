@@ -1,5 +1,5 @@
 /*
- * $Id: admodel.h 1598 2014-02-03 21:21:41Z johnoel $
+ * $Id: admodel.h 1534 2014-01-20 06:48:55Z stevenmartell $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
@@ -73,6 +73,8 @@
 #include <cifstrem.h>
 
 #include <adstring.hpp>
+//#include "ADMB_XMLDoc.h"
+class init_xml_doc;
 
 #if defined(UNIXKLUDGE)
 #include <unistd.h>
@@ -139,7 +141,7 @@ public:
   exception * err;
   AD_matherror(exception * _err) : err(_err) {;}
 #endif
-#if defined (_MSC_VER)
+#if defined (__MSVC32__)
   _exception * err;
   AD_matherror(_exception * _err) : err(_err) {;}
 #endif
@@ -257,6 +259,16 @@ protected:
   named_dvariable& operator = (CGNU_DOUBLE m);
   friend class model_parameters;
 };
+/*
+class init_xml_doc : public ADMB_XMLDoc, public model_name_tag
+{
+public:
+  init_xml_doc(void) : ADMB_XMLDoc(), model_name_tag() {;}
+  void allocate(const char * s);
+  friend class model_parameters;
+};
+*/
+
 
 /**
  * Description not yet available.
@@ -730,27 +742,27 @@ public:
 };
 #endif // #if defined(USE_ADPVM)
 
+
 class initial_params;
-typedef initial_params* pinitial_params;
-typedef void* ptovoid;
+
+typedef initial_params * pinitial_params;
+typedef void * ptovoid;
+
 /**
-For storing void pointers in a array.
-*/
+ * Description not yet available.
+ * \param
+ */
 class adlist_ptr
 {
   ptovoid * ptr;
   int current_size;
   int current;
   void resize(void);
-  void add_to_list(void* p);
+  void add_to_list(void * p);
 public:
-  adlist_ptr(int init_size);
   ~adlist_ptr();
-
-  void initialize();
-
-  pinitial_params& operator[](int i);
-
+  pinitial_params  & operator [] (int i);
+  adlist_ptr(int init_size);
   friend class initial_params;
 };
 
@@ -1097,8 +1109,6 @@ public:
   param_init_bounded_dev_vector& operator = (const double& m);
 };
 
-class init_xml_doc;
-
 /**
  * Description not yet available.
  * \param
@@ -1138,7 +1148,8 @@ class param_init_number: public named_dvariable , public initial_params
 protected:
   void allocate(int phase_start=1,const char *s="UNNAMED");
   void allocate(const char *s="UNNAMED");
-  void allocate(init_xml_doc&, const char * s ="UNNAMED");
+  void allocate(init_xml_doc&, const char *s="UNNAMED");
+
   friend class model_parameters;
   friend class param_init_number_vector;
   param_init_number();
@@ -1646,6 +1657,7 @@ public:
   double * pd;
   void allocate(double * pd,int imin,int imax,const char * ="UNNAMED");
   void allocate(double *pd, int imin, const ivector& imax, const char * ="UNNAMED");
+
   virtual ~dll_data_vector();
   dll_data_vector& operator = (const dvector& x);
   dll_data_vector& operator = (const double& x);
@@ -2815,7 +2827,7 @@ dvector read_old_scale(int & old_nvar);
 
 int withinbound(int lb,int n,int ub);
 
-#if defined(_MSC_VER)
+#if defined(__MSVC32__)
 #  if defined(min)
 #    undef min
 #  endif

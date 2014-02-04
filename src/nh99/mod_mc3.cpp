@@ -36,7 +36,6 @@ void initial_params::get_jacobian_value(const dvector& y, const dvector& jac)
   }
 }
 
-
 void multivariate_mixture(const dvector& _mix, int nvar, long int& iseed,
   const double& _log_density_normal, const double& _log_density_cauchy,
   const double& _log_density_small_normal, int is)

@@ -22,7 +22,6 @@ void initial_params::add_random_vector(const dvector& x)
   }
 }
 
-
 void param_init_number::add_value(const dvector& ndev, const int& _ii)
 {
   int& ii=(int&) _ii;
@@ -36,8 +35,6 @@ void param_init_bounded_number::add_value(const dvector& ndev, const int& _ii)
   (*this)+=ndev(ii);
   ii++;
 }
-
-
 
 void param_init_vector::add_value(const dvector& ndev, const int& _ii)
 {

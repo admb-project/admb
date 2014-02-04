@@ -59,7 +59,7 @@ void function_minimizer::monte_carlo_routine(void)
       if (!cif)
       {
         cerr << "Error trying to open file " << tmpstring
-	    << " for reading" << endl;
+             << " for reading" << endl;
       }
       int tmp_nvar = 0;
       cif >> tmp_nvar;
@@ -73,7 +73,7 @@ void function_minimizer::monte_carlo_routine(void)
       if (!cif)
       {
         cerr << "error reading covariance matrix from "
-	     <<   tmpstring << endl;
+             <<  tmpstring << endl;
         exit(1);
       }
 

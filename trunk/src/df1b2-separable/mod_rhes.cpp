@@ -438,12 +438,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     lapprox->fmc1.fringe=1.e-9;
     for (int i=1;i<=nvar;i++)
     {
-#if defined (__SPDLL__)
       hess_calcreport(i,nvar);
-#else
-      cout << "Estimating row " << i << " out of " << nvar
-	   << " for hessian" << endl;
-#endif
 
       double f=0.0;
       double xsave=x(i);

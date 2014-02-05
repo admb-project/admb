@@ -11,8 +11,15 @@
 #include <fvar.hpp>
 
 /**
- * Description not yet available.
- * \param
+ * The tensor product of two dvar_matrixes
+ * \param a first dvar_matrix
+ * \param b second dvar_matrix
+ * \return c a dvar_matrix of the tensor product.
+ * 
+ * Calcuates the tensor product of a and b.
+ * \f$
+ *  C = A \otimes B
+ * \f$
  */
   dvar_matrix tensor_prod(const dvar_matrix& a,const dvar_matrix & b)
   {

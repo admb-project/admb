@@ -27,8 +27,8 @@
   }
 
 /**
- * Description not yet available.
- * \param
+ * Returns elapsed time in milliseconds of timer object and then 
+ * resets the timer to 0.
  */
   double adtimer::get_elapsed_time_and_reset(void)
   {
@@ -52,8 +52,7 @@
   }
 
 /**
- * Description not yet available.
- * \param
+ * Returns the elapsed time in milliseconds from the timer object.
  */
   double adtimer::get_elapsed_time(void)
   {

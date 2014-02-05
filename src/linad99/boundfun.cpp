@@ -81,14 +81,13 @@ double dftinv(double x, double fmin, double fmax)
 }
 
 /**
-  Scale input variable between upper and lower bounds 
-  and compute a penalty for exceeding the bounds.
-  \param x Variable to be scaled
+  Compute penalty for exceeding bounds on parameter; variable ojbects.
+  \param x Variable scaled between [-1,1]
   \param fmin Lower bound of x
   \param fmin Upper bound of x
-  \param _fpen On return, contains penalty if x > fmax or x < fmin
+  \param _fpen On return, contains penalty if x > 1 or x < -1
   \param s Divide x by s before scaling and setting bounds
-  \return Scaled value of x between fmin and fmax in the range [-1,1]
+  \return The variable x in original units
 */
 dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen,double s)
 {
@@ -96,13 +95,12 @@ dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariabl
 }
 
 /**
-  Scale input variable between upper and lower bounds 
-  and compute a penalty for exceeding the bounds.
-  \param x Variable to be scaled
+  Compute penalty for exceeding bounds on parameter; variable ojbects.
+  \param x Variable scaled between [-1,1]
   \param fmin Lower bound of x
   \param fmin Upper bound of x
-  \param _fpen On return, contains penalty if x > fmax or x < fmin
-  \return Scaled value of x between fmin and fmax in the range [-1,1]
+  \param _fpen On return, contains penalty if x > 1 or x < -1
+  \return The variable x in original units
 */
 dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen)
 {
@@ -245,12 +243,11 @@ double ndfboundp( double x, double fmin, double fmax,const double& fpen)
 }
 
 /**
-  Scale input variable between upper and lower bounds 
-  and compute a penalty for exceeding the bounds.
-  \param x Variable to be scaled
+  Return scaled variable to original units; constant objects.
+  \param x Variable scaled between [-1,1]
   \param fmin Lower bound of x
   \param fmin Upper bound of x
-  \return Scaled value of x between fmin and fmax in the range [-1,1]
+  \return The variable x in original units
  */
 double boundp(double x, double fmin, double fmax)
 {
@@ -310,13 +307,13 @@ double nd2fboundp( double x, double fmin, double fmax,const double& fpen)
 }
 
 /**
-  Scale input variable between upper and lower bounds 
-  and compute a penalty for exceeding the bounds.
-  \param x Variable to be scaled
+  Compute penalty for exceeding bounds on parameter; constant ojbects.
+  Inverse of \ref double boundp(const double& x, double fmin, double fmax,const double& _fpen).
+  \param x Model variable
   \param fmin Lower bound of x
   \param fmin Upper bound of x
   \param _fpen On return, contains penalty if x > fmax or x < fmin
-  \return Scaled value of x between fmin and fmax in the range [-1,1]
+  \return The variable x in original units
  */
 double boundp( double x, double fmin, double fmax,const double& _fpen)
 {
@@ -378,12 +375,13 @@ double boundp( double x, double fmin, double fmax,const double& _fpen)
 }
 
 /**
-  Inverse of \ref double boundp(double x, double fmin, double fmax, double s)
-  \param xx Variable in the range [-1,1] as computed by boundp
-  \param fmin Lower bound of unscaled variable, x
-  \param fmin Upper bound of unscaled variable, x
+  Scale model variable over [-1,1]; constant objects.
+  Inverse of \ref double boundp(double x, double fmin, double fmax)
+  \param x Model variable
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
   \param s Divide x by s before scaling and setting bounds
-  \return Unscaled variable
+  \return The variable x in original units
  */
 double boundpin(double x, double fmin, double fmax,double s)
 {
@@ -391,11 +389,12 @@ double boundpin(double x, double fmin, double fmax,double s)
 }
 
 /**
+  Scale model variable over [-1,1]; constant objects.
   Inverse of \ref double boundp(double x, double fmin, double fmax)
-  \param xx Variable in the range [-1,1] as computed by boundp
-  \param fmin Lower bound of unscaled variable, x
-  \param fmin Upper bound of unscaled variable, x
-  \return Unscaled variable
+  \param x Model variable
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
+  \return Scaled model variable over [-1,1].
  */
 double boundpin(double x, double fmin, double fmax)
 {
@@ -434,11 +433,13 @@ double boundpin(double x, double fmin, double fmax)
 }
 
 /**
+  Scale model variable over [-1,1]; variable objects.
   Inverse of \ref dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen, double s).
-  \param xx Variable in the range [-1,1] as computed by boundp
-  \param fmin Lower bound of unscaled variable, x
-  \param fmin Upper bound of unscaled variable, x
-  \return Unscaled variable
+  \param x Model variable
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
+  \param s Divide x by s before scaling and setting bounds
+  \return Scaled model variable over [-1,1].
  */
 double boundpin(const prevariable& x, double fmin, double fmax,double s)
 {
@@ -446,11 +447,12 @@ double boundpin(const prevariable& x, double fmin, double fmax,double s)
 }
 
 /**
+  Scale model variable over [-1,1]; variable objects.
   Inverse of \ref dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen).
-  \param xx Variable in the range [-1,1] as computed by boundp
-  \param fmin Lower bound of unscaled variable, x
-  \param fmin Upper bound of unscaled variable, x
-  \return Unscaled variable
+  \param x Model variable
+  \param fmin Lower bound of x
+  \param fmin Upper bound of x
+  \return Scaled model variable over [-1,1].
  */
 double boundpin(const prevariable& xx, double fmin, double fmax)
 {

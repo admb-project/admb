@@ -11,8 +11,12 @@
 #include <fvar.hpp>
 
 /**
- * Description not yet available.
- * \param
+ * Beta density function
+ * \param a shape parameter
+ * \param b shape parameter
+ * 
+ * Note that the mean of the distribution is given by 
+ * mu = a/(a+b), and the variance is ab/((a+b)^2 (a+b+1))
  */
 dvariable beta(const prevariable& a,const prevariable& b )
 {

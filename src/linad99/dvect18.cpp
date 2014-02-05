@@ -27,8 +27,10 @@
 #include <math.h>
 
 /**
- * Description not yet available.
- * \param
+ * Determine if the lower and upper bounds of two evctors match in a specified function.
+ * \param v1 a data vector
+ * \param v2 a data vector
+ * \param function_nam a pointer to the name of the function in question.
  */
 void shape_check(const dvector& v1, const dvector& v2, const char *function_name)
 {

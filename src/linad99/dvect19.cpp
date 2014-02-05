@@ -11,8 +11,9 @@
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
+ * Safe version of exp that interpolates values greater than equal to 60 in each element 
+ * of a vector v1.
+ * \param v1 a data vector
  */
 dvector mfexp(const dvector& v1)
 {
@@ -35,8 +36,10 @@ dvector mfexp(const dvector& v1)
 }
 
 /**
- * Description not yet available.
- * \param
+ * Safe version of exp that interpolates values greater than equal to 60 in each element 
+ * of a vector v1.
+ * \param v1 a data vector
+ * \param d macro for CGNU_DOUBLE
  */
 dvector mfexp(const dvector& v1, CGNU_DOUBLE d)
 {

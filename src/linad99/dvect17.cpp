@@ -11,8 +11,9 @@
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
+ * Extract the diagonal elements from a matrix and return the corresponding vector
+ * \param m a dmatrix
+ * \return a dvector correpsonding to the diagonal elements.
  */
 dvector extract_diagonal(const dmatrix& m)
 {

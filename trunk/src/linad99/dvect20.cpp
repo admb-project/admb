@@ -11,8 +11,8 @@
 #include "fvar.hpp"
 
 /**
- * Description not yet available.
- * \param
+ * Divide elements of a vector by a constant  
+ * \param x constant to divide vector by.
  */
 dvector& dvector::operator /= ( CGNU_DOUBLE x)
 {
@@ -24,8 +24,8 @@ dvector& dvector::operator /= ( CGNU_DOUBLE x)
 }
 
 /**
- * Description not yet available.
- * \param
+ * Multiply elements of a vector by a constant.
+ * \param x constant for multiplication.
  */
 dvector& dvector::operator *= ( CGNU_DOUBLE x)
 {

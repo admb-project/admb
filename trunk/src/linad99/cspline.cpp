@@ -20,8 +20,11 @@ double spline_cubic_val(int n, const dvector& t, double tval,
 double splint(const dvector& xa, const dvector& ya, const dvector& y2a, double x);
 
 /**
- * Description not yet available.
- * \param
+ * Constructor for the cubic spline class.
+ * \param _x independent variable
+ * \param  _y dependent variable
+ * \param yp1 derivative at first spline point
+ * \param ypn derivative at last spline point
  */
 cubic_spline_function::cubic_spline_function(const dvector & _x,
   const dvector& _y, double yp1, double ypn) : x(_x) , y(_y)
@@ -31,8 +34,8 @@ cubic_spline_function::cubic_spline_function(const dvector & _x,
 }
 
 /**
- * Description not yet available.
- * \param
+ * \brief operator for interpreting a single value at u
+ * \param u 
  */
 double cubic_spline_function::operator () (double u)
 {
@@ -41,7 +44,7 @@ double cubic_spline_function::operator () (double u)
 }
 
 /**
- * Description not yet available.
+ * Operator for a vector of interpolated points at u
  * \param
  */
 dvector cubic_spline_function::operator()(const dvector& u)

@@ -198,9 +198,7 @@ double randn(const random_number_generator& rng)
 */
 double randu(const random_number_generator& rng)
 {
-  double x;
-  x=((random_number_generator&) rng).better_rand();
-  return(x);
+  return ((random_number_generator&)rng).better_rand();
 }
 
 /**

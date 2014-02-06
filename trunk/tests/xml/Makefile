@@ -19,10 +19,10 @@
 # export ADMB_HOME=/home/jsibert/admb/trunk/build/dist
 
 # establish the C++ compiler (on Mac OSX use clang++)
-CC=gcc
-CXX=g++
-# CC=clang
-# CXX=clang++
+# CC=gcc
+# CXX=g++
+CC=clang
+CXX=clang++
 # and linker
 LL = $(CC)
 LD = $(CXX)

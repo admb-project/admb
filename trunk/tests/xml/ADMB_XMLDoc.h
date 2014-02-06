@@ -9,6 +9,7 @@ Definition of class ADMB_XMLDoc. Based on the XMLDocument2 class by Johnoel Anch
 #define __ADMB_XMLDoc__
 
 #include <fvar.hpp>
+#include <admodel.h>
 
 #include <libxml/tree.h>
 #include <libxml/parser.h>
@@ -17,20 +18,7 @@ Definition of class ADMB_XMLDoc. Based on the XMLDocument2 class by Johnoel Anch
 
 using namespace std;
 
-// forward declarations to avoid circular includes caused by
-#include <admodel.h>
-/*
-class data_vector;
-class data_matrix;
-class named_dvariable;
-class named_dvar_vector;
-class named_dvar_matrix;
-class param_init_bounded_number;
-class param_init_bounded_vector;
-class objective_function_value;
-class initial_params;
-class model_name_tag;
-*/
+
 /** Class for handling ADMB data types in XML. 
 */
 class ADMB_XMLDoc
@@ -93,10 +81,6 @@ public:
    int createXMLelement(const adstring& name, const param_init_bounded_number_vector& t, const adstring& title);
    int createXMLelement(const adstring& name, const param_init_bounded_number_matrix& t, const adstring& title, const int M);
    int createXMLelement(const adstring& name, const imatrix& t, const adstring& title);
-   //int createXMLelement(const adstring& name, const data_int& t, const adstring& title);
-   //int createXMLelement(const adstring& name, const data_number& t, const adstring& title);
-   //int createXMLelement(const adstring& name, const data_vector& t, const adstring& title);
-   //int createXMLelement(const adstring& name, const data_matrix& t, const adstring& title);
    /** @} */
 
    // -----------------------
@@ -111,6 +95,7 @@ public:
    \return 1 if successful; 0 otherwise.
    */
    int createXMLelement(const data_int& t, const adstring& title);
+   //int createXMLelement(const data_number& t, const adstring& title);
    int createXMLelement(const data_vector& t, const adstring& title);
    int createXMLelement(const data_matrix& t, const adstring& title);
 
@@ -207,10 +192,19 @@ protected:
 
 }; // class ADMB_XMLDoc
 
+/**
+  Implements allocate(...) instances of named ADMB_XMLDoc generated
+  by tpl2cpp in the DATA_SECTION
+*/
 class init_xml_doc : public ADMB_XMLDoc, public model_name_tag
 {
 public:
+  /// create unallocated instance
   init_xml_doc(void) : ADMB_XMLDoc(), model_name_tag() {;}
+  /**
+  Allocate member variables.
+  \param s Root name for input XML file. Default file extension is ".xml".
+  */
   void allocate(const char * s);
   friend class model_parameters;
 };

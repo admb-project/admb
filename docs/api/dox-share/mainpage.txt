@@ -10,8 +10,8 @@
   <li> Documentation of mathematical functions can be found in the 
 "Function Reference" tab.</li>
   <li> C++ class documentation can be found in the "Classes" tab. </li>
-  <li> Source code listings can be found in the "Source Code" tab. </li>
-  <li> The "Related Pages" tab contains miscellaneous information and is under construction. </li>
+  <li> Documentation for global funtions and source code listings can be found in the "Source Code" tab. </li>
+  <li> The "Related Pages" tab contains a list of deprecated code and is under construction. </li>
 </ul>
 </B>
 
@@ -19,10 +19,10 @@
 <br>
 This version of the API documentation is a work in progress.
 Partial documentation of some of the AUTODIF Library and ADMB classes can
-found on the "Classes" tab. Most classes are not
+found on the "Classes" and "Source Code" tabs. Most classes are not
 fully documented, but see class \ref dvector for an example of 
 how it might look.
-If you would like ton contribute your expertize to the enterprize please 
+If you would like to contribute your expertize to the enterprize please 
 contact developers@admb-project.org.
 
 <HR width="20%" align=center>

@@ -1,5 +1,5 @@
 /*
- * $Id: admodel.h 1534 2014-01-20 06:48:55Z stevenmartell $
+ * $Id: admodel.h 1598 2014-02-03 21:21:41Z johnoel $
  *
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
@@ -731,16 +731,12 @@ public:
 };
 #endif // #if defined(USE_ADPVM)
 
-
 class initial_params;
-
-typedef initial_params * pinitial_params;
-typedef void * ptovoid;
-
+typedef initial_params* pinitial_params;
+typedef void* ptovoid;
 /**
- * Description not yet available.
- * \param
- */
+For storing void pointers in a array.
+*/
 class adlist_ptr
 {
   ptovoid * ptr;
@@ -749,9 +745,13 @@ class adlist_ptr
   void resize(void);
   void add_to_list(void* p);
 public:
-  ~adlist_ptr();
-  pinitial_params  & operator [] (int i);
   adlist_ptr(int init_size);
+  ~adlist_ptr();
+
+  void initialize();
+
+  pinitial_params& operator[](int i);
+
   friend class initial_params;
 };
 

@@ -586,8 +586,13 @@ DATA_SECTION  {
 
 <DEFINE_DATA>init_number {
     likelihood_found=1;
-    BEGIN IN_NUMBER_DEF;
+    BEGIN INIT_BOUNDED_NUMBER_DEF;
     fprintf(fdat,"%s","  data_number ");
+                     }
+
+<DEFINE_DATA>init_xml_doc {
+    BEGIN IN_NUMBER_DEF;
+    fprintf(fdat,"%s","  init_xml_doc ");
                      }
 
 <DEFINE_DATA>init_adstring {
@@ -1789,7 +1794,8 @@ DATA_SECTION  {
 <IN_VECTOR_DEF>{name}\({num_exp},{num_exp}\) |
 <IN_VECTOR_DEF>{name}\({num_exp},{name}\) |
 <IN_VECTOR_DEF>{name}\({name},{num_exp}\) |
-<IN_VECTOR_DEF>{name}\({name},{name}\) {
+<IN_VECTOR_DEF>{name}\({name},{name}\) |
+<IN_VECTOR_DEF>({name}\({name}\)) {
 
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)
     fprintf(fdat,"%s",tmp_string);
@@ -2175,7 +2181,8 @@ DATA_SECTION  {
                             }
 
 <IN_MATRIX_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp}\) |
-<IN_MATRIX_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) {
+<IN_MATRIX_DEF>{name}\({num_exp},{num_exp},{num_exp},{num_exp},{num_exp}\) |
+<IN_MATRIX_DEF>({name}\({name}\)) {
 
     before_part(tmp_string,yytext,'(');  // get x in x(1,4)
     fprintf(fdat,"%s",tmp_string);

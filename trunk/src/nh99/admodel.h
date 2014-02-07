@@ -73,6 +73,7 @@
 #include <cifstrem.h>
 
 #include <adstring.hpp>
+class init_xml_doc;
 
 #if defined(UNIXKLUDGE)
 #include <unistd.h>
@@ -1136,6 +1137,7 @@ class param_init_number: public named_dvariable , public initial_params
 protected:
   void allocate(int phase_start=1,const char *s="UNNAMED");
   void allocate(const char *s="UNNAMED");
+  void allocate(init_xml_doc&, const char *s="UNNAMED");
   friend class model_parameters;
   friend class param_init_number_vector;
   param_init_number();
@@ -1182,6 +1184,7 @@ protected:
   void allocate(double _minb,double _maxb,const char * s="UNNAMED");
   // Added by Steve Martell for using input data for allocation.
   void allocate(const data_vector& v,const char * s="UNNAMED");
+  void allocate(init_xml_doc&, const char * s="UNNAMED");
 
 public:
 #if defined(USE_ADPVM)
@@ -1388,6 +1391,7 @@ protected:
   data_int& operator=(const int);
   void allocate(int n,const char * s="UNNAMED");
   void allocate(const char * s="UNNAMED");
+  void allocate(init_xml_doc&, const char * s="UNNAMED");
   friend class model_data;
   friend class model_parameters;
   friend int operator + (int n,data_int v);
@@ -1493,6 +1497,7 @@ private:
     const char * = "UNNAMED");
   void allocate(int rmin, int rmax, int cmin, const ivector& cmax,
     const char * = "UNNAMED");
+  void allocate(init_xml_doc&, const char * = "UNNAMED");
   friend class model_data;
 };
 
@@ -1626,6 +1631,7 @@ public:
 private:
   void allocate(int imin,int imax,const char * ="UNNAMED");
   void allocate(int imin, const ivector& imax, const char * ="UNNAMED");
+  void allocate(init_xml_doc&, const char * ="UNNAMED");
   friend class model_data;
 };
 

@@ -586,7 +586,7 @@ DATA_SECTION  {
 
 <DEFINE_DATA>init_number {
     likelihood_found=1;
-    BEGIN INIT_BOUNDED_NUMBER_DEF;
+    BEGIN IN_NUMBER_DEF;
     fprintf(fdat,"%s","  data_number ");
                      }
 

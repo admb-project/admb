@@ -933,7 +933,15 @@ int ADMB_XMLDoc::getPhase(const string& name) const
    int d = atoi(s.c_str());
    return(d);
 }
- 
+
+dvector ADMB_XMLDoc::getControlVector(const string& name) const
+{
+   dvector lui(1,3);
+   lui(1) = getPhase(name);
+   lui(2) = getMinb(name);
+   lui(3) = getMaxb(name);
+   return(lui);
+}
 
 /*
     <index>
@@ -1022,7 +1030,7 @@ dmatrix ADMB_XMLDoc::getDmatrix(const string& name) const
 }
 
 /**
- * @param xname absolute element xpath
+ * @param xpathfull absolute element xpath
  */
 string ADMB_XMLDoc::getContentString(const string& xpathfull) const 
 {

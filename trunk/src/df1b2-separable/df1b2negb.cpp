@@ -11,15 +11,16 @@
 #define HOME_VERSION
 #include "df1b2fun.h"
 
-/*/** Log negative bionomial density; random effects objects.
- A local parameter r is used to make it robust.
- \f$ r=\frac{\mu}{\tau-1.0} \f$
- \ingroup PDF
- \param x
- \param mu
- \param tau
- \return Log of NegativeBinomial density. \f$ log(\Gamma(x+r))-log(\Gamma(r))-log(x!)+rlog(r)+xlog(\mu)-(r+x)log(r+\mu) \f$
- */
+/**
+Log negative bionomial density; random effects objects.
+A local parameter r is used to make it robust.
+\f$ r=\frac{\mu}{\tau-1.0} \f$
+\ingroup PDF
+\param x
+\param mu
+\param tau
+\return Log of NegativeBinomial density. \f$ log(\Gamma(x+r))-log(\Gamma(r))-log(x!)+rlog(r)+xlog(\mu)-(r+x)log(r+\mu) \f$
+*/
 /*
   df1b2variable log_negbinomial_density(double x,const df1b2variable& mu,
     const df1b2variable& tau)

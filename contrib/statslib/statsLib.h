@@ -40,14 +40,29 @@ dvariable dbinom(const dvar_vector& x,const dvar_vector& n,const dvar_vector& p)
 dvariable dbinom(const prevariable& x,const dvar_vector& n,const dvar_vector& p);
 dvariable dbinom(const dvar_vector& x,const prevariable& n,const dvar_vector& p);
 dvariable dbinom(const dvar_vector& x,const dvar_vector& n,const prevariable& p);
+df1b2variable dbinom( const df1b2variable& x,const double& n,const double& p );
+df1b2variable dbinom( const df1b2variable& x,const df1b2variable& n,const double& p );
+df1b2variable dbinom( const df1b2variable& x,const df1b2variable& n,const df1b2variable& p );
+df1b2variable dbinom(const df1b2vector& x,const df1b2vector& n,const df1b2vector& p);
+df1b2variable dbinom(const df1b2variable& x,const df1b2vector& n,const df1b2vector& p);
+df1b2variable dbinom(const df1b2vector& x,const df1b2variable& n,const df1b2vector& p);
+df1b2variable dbinom(const df1b2vector& x,const df1b2vector& n,const df1b2variable& p);
 
 // Negative binomial distribution
-dvariable dnbinom(const double& x,const prevariable& mu, const prevariable& size);
+dvariable dnbinom(const double& x,const prevariable& mu, const prevariable& k);
 df1b2variable dnbinom(const double& x, const df1b2variable& mu, const df1b2variable& k);
 df1b2variable dnbinom(const dvector& x, const df1b2vector& mu, const df1b2variable& k);
 df1b2variable dnbinom(const dvector& x, const df1b2vector& mu, const df1b2vector& k);
 dvariable dnbinom(const dvector& x, const dvar_vector& mu, const prevariable& k);
 dvariable dnbinom(const dvector& x, const dvar_vector& mu, const dvar_vector& k);
+
+// Negative binomial distribution (other parametarization)
+dvariable dnbinom_tau(const double& x,const prevariable& mu, const prevariable& tau);
+df1b2variable dnbinom_tau(const double& x, const df1b2variable& mu, const df1b2variable& tau);
+df1b2variable dnbinom_tau(const dvector& x, const df1b2vector& mu, const df1b2variable& tau);
+df1b2variable dnbinom_tau(const dvector& x, const df1b2vector& mu, const df1b2vector& tau);
+dvariable dnbinom_tau(const dvector& x, const dvar_vector& mu, const prevariable& tau);
+dvariable dnbinom_tau(const dvector& x, const dvar_vector& mu, const dvar_vector& tau);
 
 // Zero Inflated Negative binomial distribution
 df1b2variable dzinbinom(const double& x, const df1b2variable& mu, const df1b2variable& k, const df1b2variable& p);

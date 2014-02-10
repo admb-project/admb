@@ -126,6 +126,14 @@ public:
    double getMinb(const string& name) const;
    double getMaxb(const string& name) const;
    int getPhase(const string& name) const;
+   /** Returns 3 element "lui" control vector form inint_bounded_number node.
+   \param name Name of the variable in the tpl file to be querried.
+   \return dvector indexed from 1 to 3. 
+   lui(1): estimation phase; 
+   lui(2): lower bound; 
+   lui(3): upper bound.
+   */
+   dvector getControlVector(const string& name) const;
    ivector getIvector(const string& name) const;
    ivector getIvector(const string& name, const int lb, const int ub) const; 
    dvector getDvector(const string& name) const;

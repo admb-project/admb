@@ -47,11 +47,11 @@ ifeq ($(SHELL),cmd)
 	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\contrib\lib\admb-contribo.dll -Wl,--whole-archive ..\build\dist\contrib\lib\libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
 else
   ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libadmb-contrib.so -Wl,-force_load ../build/dist/contrib/lib/libcontrib-shared.a ../build/dist/lib/libadmb-shared.a
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libadmb-contribo.so -Wl,-force_load ../build/dist/contrib/lib/libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contrib.so -Wl,-force_load ../build/dist/contrib/lib/libcontrib-shared.a ../build/dist/lib/libadmb-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contribo.so -Wl,-force_load ../build/dist/contrib/lib/libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a
   else
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libadmb-contrib.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontrib-shared.a ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/contrib/lib/libadmb-contribo.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contrib.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontrib-shared.a ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/contrib/lib/libadmb-contribo.so -Wl,--whole-archive ../build/dist/contrib/lib/libcontribo-shared.a ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
   endif
 endif
 	@echo ADMB contrib shared build completed.

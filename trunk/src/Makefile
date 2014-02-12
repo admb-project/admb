@@ -72,14 +72,14 @@ $(DESTDIR)\bin\tpl2cpp.exe: $(LEXDESTDIR)\tpl2cpp.c
 	$(CC) /nologo /TC /Fo$(LEXDESTDIR)\ /Fe$@ $(LEXDESTDIR)\tpl2cpp.c
 
 $(LEXDESTDIR)\tpl2cpp.c: nh99\tpl2cpp.lex
-	..\utilities\flex -o$(LEXDESTDIR)\lex.yy.c nh99\tpl2cpp.lex
+	..\utilities\flex -o $(LEXDESTDIR)\lex.yy.c nh99\tpl2cpp.lex
 	..\utilities\sed -f nh99\sedflex $(LEXDESTDIR)\lex.yy.c > $@
 
 $(DESTDIR)\bin\tpl2rem.exe: $(LEXDESTDIR)\tpl2rem.c
 	$(CC) /nologo /TC /Fo$(LEXDESTDIR)\ /Fe$@ $(LEXDESTDIR)\tpl2rem.c
 
 $(LEXDESTDIR)\tpl2rem.c: df1b2-separable\tpl2rem.lex
-	..\utilities\flex -o$(LEXDESTDIR)\lex.yy.c df1b2-separable\tpl2rem.lex
+	..\utilities\flex -o $(LEXDESTDIR)\lex.yy.c df1b2-separable\tpl2rem.lex
 	..\utilities\sed -f df1b2-separable\sedflex $(LEXDESTDIR)\lex.yy.c > $@
 
 libs: objects

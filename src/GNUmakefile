@@ -105,15 +105,15 @@ endif
 
 shared: $(OBJECTS)
 ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb-shared.a -Wl,--no-whole-archive
-	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo-shared.a -Wl,--no-whole-archive
 else
   ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/lib/libadmb.so -Wl,-all_load ../build/dist/lib/libadmb-shared.a
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/lib/libadmbo.so -Wl,-all_load ../build/dist/lib/libadmbo-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb.so -Wl,-all_load ../build/dist/lib/libadmb-shared.a
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo.so -Wl,-all_load ../build/dist/lib/libadmbo-shared.a
   else
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
-	$(CXX) -shared $(LDFLAGS) -o../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb-shared.a -Wl,--no-whole-archive
+	$(CXX) -shared $(LDFLAGS) -o ../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo-shared.a -Wl,--no-whole-archive
   endif
 endif
 	@echo ADMB shared build completed.
@@ -123,15 +123,15 @@ shared: | dirs
 
 shared2:
 ifeq ($(SHELL),cmd)
-	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb.a -Wl,--no-whole-archive
-	$(CXX) -static -shared $(LDFLAGS) -o..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admb.dll -Wl,--whole-archive ..\build\dist\lib\libadmb.a -Wl,--no-whole-archive
+	$(CXX) -static -shared $(LDFLAGS) -o ..\build\dist\lib\admbo.dll -Wl,--whole-archive ..\build\dist\lib\libadmbo.a -Wl,--no-whole-archive
 else
   ifeq (LLVM,$(findstring LLVM,$(shell $(CXX) --version)))
-	$(CXX) -shared -o../build/dist/lib/libadmb.so -Wl,-force_load ../build/dist/lib/libadmb.a
-	$(CXX) -shared -o../build/dist/lib/libadmbo.so -Wl,-force_load ../build/dist/lib/libadmbo.a
+	$(CXX) -shared -o ../build/dist/lib/libadmb.so -Wl,-force_load ../build/dist/lib/libadmb.a
+	$(CXX) -shared -o ../build/dist/lib/libadmbo.so -Wl,-force_load ../build/dist/lib/libadmbo.a
   else
-	$(CXX) -shared -o../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb.a -Wl,--no-whole-archive
-	$(CXX) -shared -o../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo.a -Wl,--no-whole-archive
+	$(CXX) -shared -o ../build/dist/lib/libadmb.so -Wl,--whole-archive ../build/dist/lib/libadmb.a -Wl,--no-whole-archive
+	$(CXX) -shared -o ../build/dist/lib/libadmbo.so -Wl,--whole-archive ../build/dist/lib/libadmbo.a -Wl,--no-whole-archive
   endif
 endif
 
@@ -237,76 +237,76 @@ endif
 
 ifeq ($(SHELL),cmd)
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o $@ $<
 
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-df1b2-separable-%.obj: df1b2-separable\%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-df1b2-separable-%.obj: df1b2-separable\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-linad99-%.obj:linad99\%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-linad99-%.obj:linad99\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-%.obj:nh99\%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-%.obj:nh99\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-tools99-%.obj:tools99\%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-tools99-%.obj:tools99\%.cpp
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 else
 $(OBJSDIR)optlp-nh99-banner.obj: nh99/banner.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -DADMB_VERSION=$(shell cat ../VERSION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -DADMB_VERSION=$(shell cat ../VERSION) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-banner.obj: nh99/banner.cpp
-	$(CXX) -c $(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION) -o $@ $<
 
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-df1b2-separable-%.obj:df1b2-separable/%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-df1b2-separable-%.obj:df1b2-separable/%.cpp
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-linad99-%.obj:linad99/%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-linad99-%.obj:linad99/%.cpp
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-%.obj:nh99/%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-%.obj:nh99/%.cpp
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-tools99-%.obj:tools99/%.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o$@ $<
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-tools99-%.obj:tools99/%.cpp
-	$(CXX) -c $(CXXFLAGS) -o$@ $<
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
 endif
 
 includes: dirs
@@ -356,7 +356,7 @@ else
 	cp nh99/admodel.h ${DIST}/include
 	cp nh99/adsplus.h ${DIST}/include
 	cp nh99/spcomm.h ${DIST}/include
-	cp nh99/param_init_bounded_number_matrix.h ${DIST}/include
+	cp nh99/param_init_bounded_numberx_matrix.h ${DIST}/include
 	cp nh99/gccmanip.h ${DIST}/include
 endif
 

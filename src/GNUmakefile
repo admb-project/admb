@@ -356,7 +356,7 @@ else
 	cp nh99/admodel.h ${DIST}/include
 	cp nh99/adsplus.h ${DIST}/include
 	cp nh99/spcomm.h ${DIST}/include
-	cp nh99/param_init_bounded_numberx_matrix.h ${DIST}/include
+	cp nh99/param_init_bounded_number_matrix.h ${DIST}/include
 	cp nh99/gccmanip.h ${DIST}/include
 endif
 

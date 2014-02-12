@@ -213,24 +213,11 @@ double_and_int * arr_new(unsigned int sz)
 
   if( gradient_structure::ARR_LIST1->last_offset >=gradient_structure::ARRAY_MEMBLOCK_SIZE)
   {
-#if defined(AD_DEMO)
-    cout << "demo capacity exceeded" << endl;
-#endif
     cout << gradient_structure::ARR_LIST1->last_offset <<">="
 	     <<  gradient_structure::ARRAY_MEMBLOCK_SIZE <<"\n";
-#if !defined(AD_DEMO)
     cout << " No memory for dvar_vectors\n"
 	 << " Need to increase ARRAY_MEMBLOCK_SIZE parameter\n"
       "In gradient_structure declaration\n";
-#else
-    cout << demo_capacity << endl;
-    cout << please_buy << endl;
-    cout << otter_address1 << endl;
-    cout << otter_address2 << endl;
-    cout << otter_address3 << endl;
-    cout << otter_address4 << endl;
-    cout << otter_address5 << endl;
-#endif
     //throw gradient_structure::arrmemblerr();
     ad_exit(1);
   }

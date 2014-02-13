@@ -36,7 +36,6 @@ OBJ6=\
  lbfgs.obj\
  lmnewton.obj\
  xxmcmc.obj\
- xxmcmc3.obj\
  mceval.obj\
  prmonte.obj\
  monte.obj\
@@ -104,6 +103,7 @@ PVM=\
  paral3re.obj\
  paral5re.obj\
  xxmcmc2.obj\
+ xxmcmc3.obj\
  profmin.obj\
  para3.obj
 UNUSED=\

@@ -172,8 +172,7 @@ do
   rm -vf tfile1 tfile2 tfile3 tfile4 tfile5
   rm -f $model.cpp $model.htp $model.obj $model.o $model
 
-  #CMD="$parser $debug $dll $model"
-  CMD="$parser $dll $model"
+  CMD="$parser $debug $dll $model"
   echo -e \\n\*\*\* Parse tpl: $model.tpl\\n$CMD
   eval $CMD
 
@@ -193,7 +192,7 @@ do
   fi
 
   fileobj=${file%.*}.obj
-  CMD="$CXX -c $CXXFLAGS -o $fileobj $file"
+  CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
   echo -e \\n\*\*\* Compile: $file\\n$CMD
   eval $CMD
 
@@ -211,7 +210,7 @@ do
     exit 1
   fi
   fileobj=${file%.*}.obj
-  CMD="$CXX -c $CXXFLAGS -o $fileobj $file"
+  CMD="$CXX -c $CXXFLAGS -o$fileobj $file"
   echo -e \\n\*\*\* Compile: $file\\n$CMD
   eval $CMD
   if [[ ! -f $fileobj ]]; then
@@ -242,9 +241,9 @@ do
     model=${file%.*}
   fi
   if [ ! -z  "$dll" ]; then
-    CMD="$CXX $LDFLAGS -o $model.so"
+    CMD="$CXX $LDFLAGS -o$model.so"
   else
-    CMD="$CXX $LDFLAGS -o $model"
+    CMD="$CXX $LDFLAGS -o$model"
   fi
   CMD="$CMD $file $objs"
   if [ ! -f "$ADMB_HOME/contrib/lib/libcontrib.a" ]; then
@@ -295,9 +294,9 @@ if [[ "$tplobjs" == "" ]]; then
     fi
   done
   if [ ! -z  "$dll" ]; then
-    CMD="$CXX $LDFLAGS -o $outputfilebasename.so"
+    CMD="$CXX $LDFLAGS -o$outputfilebasename.so"
   else
-    CMD="$CXX $LDFLAGS -o $outputfilebasename"
+    CMD="$CXX $LDFLAGS -o$outputfilebasename"
   fi
   CMD="$CMD $listobjs"
   if [ ! -f "$ADMB_HOME/contrib/lib/libcontrib.a" ]; then

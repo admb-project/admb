@@ -28,10 +28,9 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
 // ****************************************************************
 // ****************************************************************
 // ****************************************************************
-       int unvar=1;
        initial_params::set_active_only_random_effects();
        //cout << nvar << endl;
-       unvar=initial_params::nvarcalc(); // get the number of active
+       int unvar=initial_params::nvarcalc(); // get the number of active
        initial_params::restore_start_phase();
        initial_params::set_inactive_random_effects();
        int nvar=initial_params::nvarcalc(); // get the number of active

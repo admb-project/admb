@@ -10,10 +10,6 @@
  */
 #include <admodel.h>
 
-#ifdef __GNUDOS__
-  #include <gccmanip.h>
-#endif
-
 /**
  * Description not yet available.
  * \param

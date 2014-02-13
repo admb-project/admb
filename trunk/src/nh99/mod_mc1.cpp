@@ -6,9 +6,11 @@
  */
 #include <admodel.h>
 
+/*
 #ifdef __GNUDOS__
   #include <gccmanip.h>
 #endif
+*/
 
 void initial_params::add_random_vector(const dvector& x)
 {

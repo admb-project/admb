@@ -10,9 +10,11 @@
  */
 #include <admodel.h>
 
+/*
 #ifdef __GNUDOS__
   #include <gccmanip.h>
 #endif
+*/
 
 void useless(const double& sdelta2);
 // estimate the matrix of second derivatives

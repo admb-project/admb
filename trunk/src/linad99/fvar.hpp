@@ -204,9 +204,6 @@ Macro definitions.
 #ifdef __GNUDOS__
 #   define DOS386
 #   define __GNU__
-#   ifdef OLDGNU
-#      include <gccmanip.h>
-#   endif
 #endif
 
 //#define USE_CONST

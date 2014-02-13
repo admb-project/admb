@@ -43,6 +43,7 @@
   int in_objective_function_value_flag=0;
   int  pvmslaves_defined=0;
   int  splus_debug_flag=0;
+  int enable_pad = 0;
   int  spnumber_flag=0;
   int random_effects_flag=0;
   int data_defined=0;
@@ -3822,7 +3823,7 @@ PROCEDURE_SECTION {
     fprintf(fall,"%s","void model_parameters::userfunction(void)"
       "\n{\n");
     fprintf(fall,"  %s%s",objective_function_name_string," =0.0;\n");
-    if(splus_debug_flag){
+    if(enable_pad){
       fprintf(fall,"  pad();\n");
     }
 
@@ -5109,7 +5110,8 @@ int main(int argc, char * argv[])
   }  
   if ( (on=option_match(argc,argv,"-debug"))>-1)
   {
-    splus_debug_flag=1;
+    splus_debug_flag = 0;
+    enable_pad = 1;
   }  
   if ( (on=option_match(argc,argv,"-no_pad"))>-1)
   {

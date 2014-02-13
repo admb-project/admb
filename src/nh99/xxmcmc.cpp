@@ -16,9 +16,11 @@
   #define getch getchar
 #endif
 
+/*
 #ifdef __GNUDOS__
   #include <gccmanip.h>
 #endif
+*/
 
 #if defined (__ZTC__) || defined(__TURBOC__) || defined(__WAT32__) \
   || defined (_MSC_VER)

@@ -6,9 +6,11 @@
  */
 #include <admodel.h>
 
+/*
 #ifdef __GNUDOS__
   #include <gccmanip.h>
 #endif
+*/
 
 double better_rand(long int&);
 

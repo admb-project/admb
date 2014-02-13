@@ -1922,7 +1922,11 @@ public:
   int restart_flag);
   void pvm_master_mcmc_routine(int nmcmc,int iseed0,double dscale,
     int restart_flag);
+#if defined(USE_ADPVM)
   void pvm_slave_mcmc_routine(void);
+#else
+  void pvm_slave_mcmc_routine(void) {}
+#endif
   void trust_region_update(int nvar,int _crit,
     independent_variables& x,const dvector& _g,const double& _f);
 

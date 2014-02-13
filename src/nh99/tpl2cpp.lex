@@ -41,7 +41,7 @@
 
   int  num_spargs=0;
   int  pvmslaves_defined=0;
-  int  splus_debug_flag=0;
+  int splus_debug_flag=0;
   int enable_pad =0;
   int  spnumber_flag=0;
   int data_defined=0;

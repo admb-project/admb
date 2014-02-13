@@ -9,9 +9,11 @@
 #endif
 #include <admodel.h>
 
+/*
 #ifdef __GNUDOS__
   #include <gccmanip.h>
 #endif
+*/
 
 dmatrix * GAUSS_varcovariance_matrix = NULL;
 

@@ -98,7 +98,7 @@ ifeq ($(SHELL),cmd)
 	if not exist $(DIST)\utilities md $(DIST)\utilities
 	xcopy ..\utilities $(DIST)\utilities /S /Y /D
 else
-	cp -vR ../utilities ${DIST}
+	cp -vRf ../utilities ${DIST}
 endif
 	@echo ADMB build completed.
 	@echo Check README.txt for usage and installation information.
@@ -329,7 +329,6 @@ ifeq ($(SHELL),cmd)
 	copy df1b2-separable\df1b2fnl.h ${DIST}\include
 	copy df1b2-separable\df1b2loc.h ${DIST}\include
 	copy df1b2-separable\smartbuf.h ${DIST}\include
-	@REM copy df1b2-separable\df3_two_variable.h ${DIST}\include
 	copy nh99\admodel.h ${DIST}\include
 	copy nh99\spcomm.h ${DIST}\include
 	copy nh99\param_init_bounded_number_matrix.h ${DIST}\include
@@ -352,7 +351,6 @@ else
 	cp df1b2-separable/df1b2fnl.h ${DIST}/include
 	cp df1b2-separable/df1b2loc.h ${DIST}/include
 	cp df1b2-separable/smartbuf.h ${DIST}/include
-	#cp df1b2-separable/df3_two_variable.h ${DIST}/include
 	cp nh99/admodel.h ${DIST}/include
 	cp nh99/spcomm.h ${DIST}/include
 	cp nh99/param_init_bounded_number_matrix.h ${DIST}/include

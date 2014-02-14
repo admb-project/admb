@@ -458,8 +458,7 @@ OBJ4=\
  factors.obj\
  orthpoly.obj\
  makesub.obj\
- fvar_a49.obj\
- adpvm2.obj
+ fvar_a49.obj
 OBJ5=\
  manip.obj\
  conjprod.obj

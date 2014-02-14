@@ -264,7 +264,6 @@ df3_two_variable operator *(double x, const df3_two_variable & y);
 df3_two_variable operator *(const df3_two_variable & x, double y);
 df3_two_variable operator /(const df3_two_variable & x,
 			    const df3_two_variable & y);
-
 df3_two_variable operator /(const double x, const df3_two_variable & y);
 
 df3_two_variable operator /(const df3_two_variable & x, const double y);
@@ -277,14 +276,7 @@ df3_two_variable operator +(const df3_two_variable & x,
 			    const df3_two_variable & y);
 df3_two_variable operator -(double x, const df3_two_variable & y);
 df3_two_variable operator -(const df3_two_variable & x, double y);
-
 df3_two_variable operator -(const df3_two_variable & x,
-			    const df3_two_variable & y);
-df3_two_variable operator -(const df3_two_variable & x,
-			    const df3_two_variable & y);
-df3_two_variable operator /(const df3_two_variable & x,
-			    const df3_two_variable & y);
-df3_two_variable operator *(const df3_two_variable & x,
 			    const df3_two_variable & y);
 int operator <(const df3_two_variable & x, double n);
 int operator >(const df3_two_variable & x, double n);
@@ -300,7 +292,6 @@ df3_two_matrix choleski_decomp(const df3_two_matrix & MM);
 
 df3_two_variable cumd_gamma(const df3_two_variable & x,
 			    const df3_two_variable & a);
-
 
 df3_two_variable gammln(const df3_two_variable & xx);
 #endif				// __DF32FUN__

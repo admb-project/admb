@@ -1065,13 +1065,6 @@ void set_derivatives( df3_two_variable& z, const df3_two_variable& x,
     return z;
   }
 
-  df3_two_variable operator - (const df3_two_variable& x,
-    const df3_two_variable& y);
-  df3_two_variable operator / (const df3_two_variable& x,
-    const df3_two_variable& y);
-  df3_two_variable operator * (const df3_two_variable& x,
-    const df3_two_variable& y);
-
 /**
  * Description not yet available.
  * \param
@@ -1288,12 +1281,6 @@ df1b2variable& df1b2variable::operator = (const df3_two_variable& v)
     *zd++ = dfx * *xd++ + dfy * *yd++;
   }
 
- /*
-  cout << *v.get_u()  << " ";
-  cout << *v.get_udot()  << " ";
-  cout << *v.get_udot2()  << " ";
-  cout << *v.get_udot3()  << endl;
-  */
   f1b2gradlist->write_pass1(px,py,this,
     *v.get_u_x(),
     *v.get_u_y(),

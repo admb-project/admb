@@ -195,16 +195,7 @@
     double);
   df3_one_variable operator - (const df3_one_variable& x,
     const df3_one_variable& y);
-  df3_one_variable operator - (const df3_one_variable& x,
-    const df3_one_variable& y);
-  df3_one_variable operator / (const df3_one_variable& x,
-    const df3_one_variable& y);
-  df3_one_variable operator * (const df3_one_variable& x,
-    const df3_one_variable& y);
-
 
   df3_one_variable operator - (const df3_one_variable& v);
   df3_one_matrix choleski_decomp(const df3_one_matrix& MM);
-
 #endif  // __DF3FUN__
-

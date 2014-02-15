@@ -264,20 +264,12 @@ class df1b2variable;
 
   df3_three_variable operator - (const df3_three_variable& x,
     const df3_three_variable& y);
-  df3_three_variable operator - (const df3_three_variable& x,
-    const df3_three_variable& y);
-  df3_three_variable operator / (const df3_three_variable& x,
-    const df3_three_variable& y);
-  df3_three_variable operator * (const df3_three_variable& x,
-    const df3_three_variable& y);
-
 
   df3_three_variable operator - (const df3_three_variable& v);
   df3_three_matrix choleski_decomp(const df3_three_matrix& MM);
 
   df3_three_variable cumd_gamma(const df3_three_variable& x,
     const df3_three_variable& a);
-
 
   df3_three_variable gammln(const df3_three_variable& xx);
 #endif  // __DF32FUN__

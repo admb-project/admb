@@ -587,14 +587,6 @@ df3_one_variable operator-(const df3_one_variable& v)
     return z;
   }
 
-  df3_one_variable operator - (const df3_one_variable& x,
-    const df3_one_variable& y);
-  df3_one_variable operator / (const df3_one_variable& x,
-    const df3_one_variable& y);
-  df3_one_variable operator * (const df3_one_variable& x,
-    const df3_one_variable& y);
-
-
   init_df3_one_variable::init_df3_one_variable(const df1b2variable& _v)
   {
     ADUNCONST(df1b2variable,v)

@@ -182,5 +182,5 @@ ifeq ($(SHELL),cmd)
 	if not exist ${DIST}\tests md ${DIST}\tests
 	xcopy ..\tests $(DIST)\tests /S /Y /D
 else
-	cp -R ../tests ${DIST}
+	cp -Rvf ../tests ${DIST}
 endif

@@ -192,5 +192,5 @@ ifeq ($(SHELL),cmd)
 	if not exist ..\build\dist\examples md ..\build\dist\examples
 	xcopy ..\examples ..\build\dist\examples /S /Y /D
 else
-	cp -R ../examples ../build/dist
+	cp -Rvf ../examples ../build/dist
 endif

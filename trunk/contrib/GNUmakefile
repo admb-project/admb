@@ -128,7 +128,7 @@ ifeq ($(SHELL),cmd)
 	if not exist ..\build\dist\contrib md ..\build\dist\contrib
 	xcopy ..\contrib ..\build\dist\contrib /S /Y /D
 else
-	cp -R ../contrib ../build/dist/
+	cp -Rvf ../contrib ../build/dist/
 endif
 
 clean:

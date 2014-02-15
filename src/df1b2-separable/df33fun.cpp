@@ -1446,14 +1446,6 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
 
     return z;
   }
-
-  df3_three_variable operator - (const df3_three_variable& x,
-    const df3_three_variable& y);
-  df3_three_variable operator / (const df3_three_variable& x,
-    const df3_three_variable& y);
-  df3_three_variable operator * (const df3_three_variable& x,
-    const df3_three_variable& y);
-
 /**
  * Description not yet available.
  * \param

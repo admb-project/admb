@@ -61,7 +61,6 @@ OBJ0=\
  df1b2qnm.obj\
  df1b2lp1.obj\
  df1b2lp2.obj\
- df1b2lp5.obj\
  df1b2lp6.obj\
  df1b2lp7.obj\
  df1b2lp8.obj\
@@ -132,3 +131,5 @@ UNUSED=\
  f1b2lndt.obj\
  df1b2min3.obj\
  df1b2lp4.cpp
+PVM=\
+ df1b2lp5.obj

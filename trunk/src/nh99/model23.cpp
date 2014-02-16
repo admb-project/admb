@@ -8,14 +8,7 @@
 
 int adkdelta(int i,int j)
 {
-  if (i==j)
-  {
-    return 1;
-  }
-  else
-  {
-    return 0;
-  }
+  return i == j ? 1 : 0;
 }
 
 void param_init_number::dev_correction(const dmatrix& H, const int& _ii)

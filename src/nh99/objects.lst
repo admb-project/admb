@@ -94,9 +94,7 @@ OBJ6=\
  randeff.obj\
  t.obj\
  dfqromb.obj
-OBJSPLUS=\
- spcomm.obj
-PVM=\
+UNUSED_PVM=\
  pvmvar1.obj\
  parallel.obj\
  paralle2.obj\
@@ -115,3 +113,5 @@ UNUSED=\
  confmin.obj\
  model_mi.obj\
  evalxtrn.obj
+UNUSED_OBJSPLUS=\
+ spcomm.obj

@@ -135,7 +135,6 @@ includes: objdestdir
 	copy linad99\dfpool.h $(DESTDIR)\include
 	copy linad99\factors.h $(DESTDIR)\include
 	copy nh99\admodel.h $(DESTDIR)\include
-	copy nh99\spcomm.h $(DESTDIR)\include
 	copy nh99\param_init_bounded_number_matrix.h $(DESTDIR)\include
 	copy tools99\clist.h $(DESTDIR)\include
 	copy tools99\cifstrem.h $(DESTDIR)\include

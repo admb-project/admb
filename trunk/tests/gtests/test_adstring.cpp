@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-//#include <fvar.hpp>
 #include <adstring.hpp>
 
 class test_adstring: public ::testing::Test {};
@@ -155,4 +154,46 @@ TEST_F(test_adstring, substring)
   EXPECT_EQ('4', b(1));
   EXPECT_EQ('a', b(2));
   EXPECT_EQ('d', b(3));
+}
+TEST_F(test_adstring, operator_substring)
+{
+  adstring a;
+  a = "1234adcd";
+
+  adstring b;
+  b = a(3, 6);
+
+  EXPECT_EQ(false, a == b);
+  EXPECT_EQ(true, b == adstring("34ad"));
+  EXPECT_EQ(4, length(b));
+}
+TEST_F(test_adstring, operator_equalequal)
+{
+  adstring a;
+  a = "1234adcd";
+
+  adstring b;
+  b = "4ad";
+
+  adstring c;
+  c = a;
+
+  EXPECT_EQ(true, a == a);
+  EXPECT_EQ(false, a == b);
+  EXPECT_EQ(true, a == c);
+}
+TEST_F(test_adstring, operator_notequal)
+{
+  adstring a;
+  a = "1234adcd";
+
+  adstring b;
+  b = "4ad";
+
+  adstring c;
+  c = a;
+
+  EXPECT_EQ(false, a != a);
+  EXPECT_EQ(true, a != b);
+  EXPECT_EQ(false, a != c);
 }

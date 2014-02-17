@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
-#include <df3_two_variable.h>
+
+#include <df1b2fun.h>
 
 class test_df3_two_variable: public ::testing::Test {};
 
@@ -202,6 +203,7 @@ TEST_F(test_df3_two_variable, operator_division_equal_df3_two_variable)
   ASSERT_EQ(0, *x.get_u_xyy());
   ASSERT_EQ(0, *x.get_u_yyy());
 }
+/*
 TEST_F(test_df3_two_variable, operator_division_equal_double)
 {
   df3_two_variable x;
@@ -221,6 +223,7 @@ TEST_F(test_df3_two_variable, operator_division_equal_double)
   ASSERT_EQ(0, *x.get_u_xyy());
   ASSERT_EQ(0, *x.get_u_yyy());
 }
+*/
 TEST_F(test_df3_two_variable, operator_plus_d3_two_variable_d3_two_variable)
 {
   df3_two_variable x;

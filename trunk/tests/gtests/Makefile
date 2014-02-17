@@ -4,6 +4,7 @@ GTESTS=\
  test_adstring_strcase.cpp\
  test_fmm_control.cpp\
  test_atan2.cpp\
+ test_adstring.cpp\
  test_adstring_array.cpp\
  test_dlist.cpp\
  test_ad_comm.cpp\
@@ -12,8 +13,8 @@ GTESTS=\
  scalefactor.obj\
  test_option_match.cpp\
  test_lvector.cpp\
- test_adjson.cpp\
  test_df3_two_variable.cpp\
+ test_adjson.cpp\
  main.cpp
 
 # test_df_file.cpp\

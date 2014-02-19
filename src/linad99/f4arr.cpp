@@ -203,7 +203,7 @@
 const dvar3_array& dvar4_array::operator()(int i) const
     {
       #ifdef SAFE_ARRAYS
-	if (i<hslicemin()||i>hslicemax())
+        if (i<hslicemin()||i>hslicemax())
         { cerr << "Error hslice index out of bounds in\n"
             "dvar3_array& dvar4_array::operator ( )" << endl;
           ad_exit(1);
@@ -253,7 +253,7 @@ const dvar_vector& dvar4_array::operator()(int i, int j, int k) const
       #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
         { cerr << "Error hslice index out of bounds in\n"
-	    "dvarvector& dvar4_array::operator ( )" << endl;
+            "dvarvector& dvar4_array::operator ( )" << endl;
           ad_exit(1);
         }
       #endif

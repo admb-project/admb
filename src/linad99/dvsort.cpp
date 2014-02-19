@@ -80,7 +80,7 @@ dvector sort(const dvector &_v, const ivector &_index, int NSTACK)
    if (v.size() != index.size())
    {
       cerr << " Incompatible array sizes in vector v and ivector index\n"
-	 << " in ivector sort(const ivector& v,const ivector& index)\n";
+           << " in ivector sort(const ivector& v,const ivector& index)\n";
       ad_exit(1);
    }
 

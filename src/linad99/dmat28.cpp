@@ -220,13 +220,13 @@ dmatrix::dmatrix(const banded_symmetric_dmatrix& S)
     {
       if (j<=i)
       {
-	j1=j;
-	i1=i;
+        j1=j;
+        i1=i;
       }
       else
       {
-	j1=i;
-	i1=j;
+        j1=i;
+        i1=j;
       }
       if ( (i1-j1) < bw)
         (*this)(i,j)=S(i1,j1);
@@ -332,11 +332,11 @@ banded_lower_triangular_dmatrix choleski_decomp(
     for (j=i-bw+1;j<=i-1;j++)
     {
       if (j>1)
-      {	
+      {
         tmp=M(i,j);
         for (k=i-bw+1;k<=j-1;k++)
         {
-	  if (k>0 && k>j-bw)
+          if (k>0 && k>j-bw)
             tmp-=L(i,k)*L(j,k);
         }
         L(i,j)=tmp/L(j,j);
@@ -345,7 +345,7 @@ banded_lower_triangular_dmatrix choleski_decomp(
     tmp=M(i,i);
     for (k=i-bw+1;k<=i-1;k++)
     {
-      if (k>0)	
+      if (k>0)
         tmp-=L(i,k)*L(i,k);
     }
     if (tmp<=0)

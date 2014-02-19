@@ -154,7 +154,7 @@ double norm(const d3_array& m)
       double tmp=0.0;
       for (int k=m.slicemin();k<=m.slicemax();k++)
       {
-	tmp+=norm2(m(k));
+        tmp+=norm2(m(k));
       }
       tmp=sqrt(tmp);
       return tmp;
@@ -169,7 +169,7 @@ double norm2(const d3_array& m)
       double tmp=0.0;
       for (int k=m.slicemin();k<=m.slicemax();k++)
       {
-	tmp+=norm2(m(k));
+         tmp+=norm2(m(k));
       }
       return tmp;
     }

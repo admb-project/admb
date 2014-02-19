@@ -18,7 +18,7 @@ double inv_cumd_norm_inner(double x);
  */
 double cumd_logistic(const double& x)
 {
-  if (x>=0.0)	
+  if (x>=0.0)
   {
     return 1.0/(1.0+exp(-x));
   }

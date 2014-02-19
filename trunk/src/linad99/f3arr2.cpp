@@ -20,7 +20,7 @@ dvariable norm(const dvar3_array& m)
       dvariable tmp=0.0;
       for (int k=m.slicemin();k<=m.slicemax();k++)
       {
-	tmp+=norm2(m(k));
+        tmp+=norm2(m(k));
       }
       tmp=sqrt(tmp);
       RETURN_ARRAYS_DECREMENT();
@@ -37,7 +37,7 @@ dvariable norm2(const dvar3_array& m)
       dvariable tmp=0.0;
       for (int k=m.slicemin();k<=m.slicemax();k++)
       {
-	tmp+=norm2(m(k));
+        tmp+=norm2(m(k));
       }
       RETURN_ARRAYS_DECREMENT();
       return tmp;

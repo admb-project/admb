@@ -59,7 +59,7 @@ dmatrix MAT(const dvector& v, int n, int m)
     {
       for (int j=1;j<=m;j++)
       {
-	tmp(i,j)=v(ii++);
+        tmp(i,j)=v(ii++);
       }
     }
     return tmp;

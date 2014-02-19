@@ -32,13 +32,13 @@ ostream& operator << (const ostream& ofs1,const banded_symmetric_dmatrix& S1)
     {
       if (j<=i)
       {
-	j1=j;
-	i1=i;
+        j1=j;
+        i1=i;
       }
       else
       {
-	j1=i;
-	i1=j;
+        j1=i;
+        i1=j;
       }
       if ( (i1-j1) < bw)
         ofs << setw(w) << S(i1,j1) << " ";

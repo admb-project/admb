@@ -371,7 +371,6 @@ OBJ3=\
  imat10.obj\
  ivec_io1.obj\
  libtype.obj\
- lvec1.obj\
  lvect_io.obj\
  lvec_io1.obj\
  minim.obj\
@@ -480,6 +479,7 @@ OBJ16=\
  lmat1.obj\
  lmat2.obj\
  lmat4.obj\
+ lvec1.obj\
  lvec2.obj\
  imat4.obj\
  model49.obj\

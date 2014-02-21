@@ -9,17 +9,17 @@ GTESTS=\
  test_dlist.cpp\
  test_ad_comm.cpp\
  test_gradient_structure.cpp\
- test_scalefactor.obj\
- scalefactor.obj\
  test_option_match.cpp\
  test_lvector.cpp\
  test_df3_two_variable.cpp\
  test_adjson.cpp\
+ test_df_file.cpp\
  main.cpp
 
-# test_df_file.cpp\
 # test_df1b2atan2.obj\
 # df1b2atan2.obj\
+# test_scalefactor.obj\
+# scalefactor.obj\
 
 
 all: clean gtest-all

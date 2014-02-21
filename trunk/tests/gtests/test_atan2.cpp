@@ -4,10 +4,7 @@
 
 extern "C"
 {
-  void test_ad_exit(const int exit_code)
-  {
-    throw exit_code;
-  }
+  void test_ad_exit(const int exit_code);
 }
 
 class test_atan2: public ::testing::Test {};

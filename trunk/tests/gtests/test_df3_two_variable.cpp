@@ -4,7 +4,8 @@
 
 class test_df3_two_variable: public ::testing::Test {};
 
-TEST_F(test_df3_two_variable, constructor)
+/*
+TEST_F(test_df3_two_variable, default_constructor)
 {
   df3_two_variable v;
   ASSERT_EQ(0, *v.get_u());
@@ -18,6 +19,7 @@ TEST_F(test_df3_two_variable, constructor)
   ASSERT_EQ(0, *v.get_u_xyy());
   ASSERT_EQ(0, *v.get_u_yyy());
 }
+*/
 TEST_F(test_df3_two_variable, operator_equal_double)
 {
   df3_two_variable v;

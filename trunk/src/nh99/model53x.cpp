@@ -25,8 +25,8 @@
           {
             if (allocated((*this)(i,j)))
             {
-              int cmin=(*this)(i,j).indexmin();	
-              int cmax=(*this)(i,j).indexmin();	
+              int cmin=(*this)(i,j).indexmin();
+              int cmax=(*this)(i,j).indexmin();
               for (int k=cmin;k<=cmax;k++)
               {
                 d(ii)=0.0;
@@ -34,7 +34,7 @@
               }
             }
           }
-	}
+        }
       }
     }
   }

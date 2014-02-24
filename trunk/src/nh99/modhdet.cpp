@@ -38,7 +38,7 @@ double function_minimizer::hess_determinant(int underflow_flag)
       {
         double tmp=(h(i,j)+h(j,i))/2.;
         h(i,j)=tmp;
-	h(j,i)=tmp;
+        h(j,i)=tmp;
       }
     }
     lndet=ln_det(h,sgn);

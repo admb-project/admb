@@ -61,7 +61,7 @@ void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H, const int&
         for (l=lmin;l<=lmax;l++)
         {
           tmp+=(adkdelta(i,k)-ninv)*(adkdelta(j,l)-ninv)*H(k,l);
-	}
+        }
       }
       Htmp(i,j)=tmp;
     }

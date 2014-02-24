@@ -104,12 +104,12 @@ void param_init_d3array::save_value(const ofstream& _ofs,int prec)
     {
       for (int i=indexmin();i<=indexmax();i++)
       {
-	if (allocated((*this)(i)))
-	{
+        if (allocated((*this)(i)))
+        {
           for (int j=(*this)(i).indexmin();j<=(*this)(i).indexmax();j++)
           {
             if (allocated((*this)(i,j)))
-	    {
+            {
               if (ad_comm::global_bparfile)
               {
                 *(ad_comm::global_bparfile) >> (*this)(i,j);
@@ -121,10 +121,10 @@ void param_init_d3array::save_value(const ofstream& _ofs,int prec)
               else
               {
                 (*this)(i,j)=(initial_value);
-	      }
-	    }
-	  }
-	}
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -138,8 +138,8 @@ void param_init_d3array::save_value(const ofstream& _ofs,int prec)
     {
       for (int i=indexmin();i<=indexmax();i++)
       {
-	if (allocated((*this)(i)))
-	{
+        if (allocated((*this)(i)))
+        {
           if (ad_comm::global_bparfile)
           {
             *(ad_comm::global_bparfile) >> (*this)(i);
@@ -225,8 +225,8 @@ void param_init_d3array::sd_scale(const dvector& _v, const dvector& x, const int
               {
                 v(ii++)=1.;
               }
-	    }
-	  }
+            }
+          }
         }
       }
     }

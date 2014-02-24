@@ -18,12 +18,12 @@ void param_init_matrix::allocate(const ad_integer& rmin,
     }
     else if (ad_comm::global_parfile)
     {
-      if (allocated(*this))	
+      if (allocated(*this))
         *(ad_comm::global_parfile) >> dvar_matrix(*this);
     }
     else
     {
-      if (allocated(*this))	
+      if (allocated(*this))
       for (int i=indexmin();i<=indexmax();i++)
         if (allocated((*this)(i)))
           (*this)(i)=(initial_value);

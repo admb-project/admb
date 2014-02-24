@@ -78,7 +78,7 @@ dmatrix trans(const dvector& x)
         int sno=likeprof_params::likeprofptr[ip]->get_stepnumber();
         if (sno)
         {
-	  if (sno>num_pp) num_pp=sno;
+          if (sno>num_pp) num_pp=sno;
         }
       }
     }
@@ -143,21 +143,21 @@ dmatrix trans(const dvector& x)
       double snz=likeprof_params::likeprofptr[ip]->get_stepsize();
       if (sno)
       {
-	num_pp=sno;
+        num_pp=sno;
       }
       if (snz)
       {
-	relsig=snz;
+        relsig=snz;
       }
       if (ip>0)
       {
-	int ii=1;
-	initial_params::restore_all_values(xsave,ii);
+        int ii=1;
+        initial_params::restore_all_values(xsave,ii);
       }
       sigma=likeprof_params::likeprofptr[ip]->get_sigma(); // this is the
       if (sigma==0.0)
         cerr << "error standard dev of likeporf parameter is 0" << endl;
-					// estimated sd
+                                        // estimated sd
       old_value=likeprof_save(ip);
       old_value=old_value+offset*relsig*sigma;  // this is where we
       int bigint_flag=0;
@@ -169,63 +169,63 @@ dmatrix trans(const dvector& x)
       for (int i=1;i<=2;i++)  // go in positive and negative directions
       {
         num_sigs=0.0;
-	bigint_flag=0;
-	lastj=0;
-	bigint_flag1=0;
-	lastj1=0;
-	int underflow_flag=0;
-	if (i>1) // get the parameter values at the global minimum
-	{
-	 int ii=1;
-	 initial_params::restore_all_values(xsave,ii);
-	}
-	if (i==1)
-	{
-	  sign=1;
-	}
-	else
-	{
-	  sign=-1;
-	}
-	current_value=old_value;  // initialize at the minimum
-	for (int j=0;j<=num_pp;j++)  // go in positive and negative directions
-	{
-	 if (j!=0 || sign > 0)
-	 {
-	  if (bigint_flag==0)
-	  {
-	    num_sigs+=mult_factor(j)*relsig*sign;
-	    current_value+=mult_factor(j)*relsig*sign*sigma;
-	    new_value=current_value;
-	    // new_value=current_value+j*relsig*sign*sigma;
-	  }
-	  else
-	  {
-	    if (bigint_flag1==0)
-	    {
-	      num_sigs+=1.5*relsig*sign;
-	      current_value+=1.5*relsig*sign*sigma;
-	      new_value=current_value;
-	    }
-	    else
-	    {
-	      num_sigs+=2.5*relsig*sign;
-	      current_value+=2.5*relsig*sign*sigma;
-	      new_value=current_value;
-	    }
-	  }
+        bigint_flag=0;
+        lastj=0;
+        bigint_flag1=0;
+        lastj1=0;
+        int underflow_flag=0;
+        if (i>1) // get the parameter values at the global minimum
+        {
+          int ii=1;
+          initial_params::restore_all_values(xsave,ii);
+        }
+        if (i==1)
+        {
+          sign=1;
+        }
+        else
+        {
+          sign=-1;
+        }
+        current_value=old_value;  // initialize at the minimum
+        for (int j=0;j<=num_pp;j++)  // go in positive and negative directions
+        {
+          if (j!=0 || sign > 0)
+          {
+            if (bigint_flag==0)
+            {
+              num_sigs+=mult_factor(j)*relsig*sign;
+              current_value+=mult_factor(j)*relsig*sign*sigma;
+              new_value=current_value;
+              // new_value=current_value+j*relsig*sign*sigma;
+            }
+            else
+            {
+              if (bigint_flag1==0)
+              {
+                num_sigs+=1.5*relsig*sign;
+                current_value+=1.5*relsig*sign*sigma;
+                new_value=current_value;
+              }
+              else
+              {
+                num_sigs+=2.5*relsig*sign;
+                current_value+=2.5*relsig*sign*sigma;
+                new_value=current_value;
+              }
+            }
           if (!ad_comm::pvm_manager)
           {
             if (random_effects_flag==0)
             {
-	      prof_minimize(ip,sigma,new_value,fprof,underflow_flag,
-	        global_min,penalties(ip,j*sign),final_weight); // get the
+              prof_minimize(ip,sigma,new_value,fprof,underflow_flag,
+              global_min,penalties(ip,j*sign),final_weight); // get the
                                                         // conditional max
             }
             else
             {
-	      prof_minimize_re(ip,sigma,new_value,fprof,underflow_flag,
-	        global_min,penalties(ip,j*sign),final_weight); // get the
+              prof_minimize_re(ip,sigma,new_value,fprof,underflow_flag,
+              global_min,penalties(ip,j*sign),final_weight); // get the
                                                         // conditional max
             }
           }
@@ -235,8 +235,8 @@ dmatrix trans(const dvector& x)
             if (ad_comm::pvm_manager->mode==1) // master
             {
               send_int_to_slaves(3);
-	      pvm_master_prof_minimize(ip,sigma,new_value,fprof,underflow_flag,
-	        global_min,penalties(ip,j*sign),final_weight); // get the
+              pvm_master_prof_minimize(ip,sigma,new_value,fprof,underflow_flag,
+                global_min,penalties(ip,j*sign),final_weight); // get the
             }
 #else
             {
@@ -246,107 +246,107 @@ dmatrix trans(const dvector& x)
 #endif
           }
           all_num_sigs(j*sign)=num_sigs;
-	  initial_params::xinit(xvector); // save the
-	  int ic=1;
-	  initial_params::copy_all_values(xmax(sign*j),ic); // save the
-							// conditional maximum
-	  /*int check=*/initial_params::stddev_scale(xscale,xvector);
+          initial_params::xinit(xvector); // save the
+          int ic=1;
+          initial_params::copy_all_values(xmax(sign*j),ic); // save the
+                                                            // conditional maximum
+          /*int check=*/initial_params::stddev_scale(xscale,xvector);
         //#if defined(DO_PROFILE)
-	  //dvector curvscale(1,nvar);   // need to get scale from somewhere
+          //dvector curvscale(1,nvar);   // need to get scale from somewhere
         //#endif
 
        // #if defined(DO_PROFILE)
-	 // check=initial_params::stddev_curvscale(curvscale,xvector);
+          // check=initial_params::stddev_curvscale(curvscale,xvector);
        // #endif
-	  //cout << "xscale = " << endl << xscale << endl;
+          //cout << "xscale = " << endl << xscale << endl;
           //{
            // ofstream ofs("xscale");
            // ofs << xscale << endl;
          // }
 #if defined(USE_DDOUBLE)
-	  lg_jacob(ip,sign*j)=sum(log(fabs(xscale)+double(1.e-60)));
+          lg_jacob(ip,sign*j)=sum(log(fabs(xscale)+double(1.e-60)));
 #else
-	  lg_jacob(ip,sign*j)=sum(log(fabs(xscale)+1.e-60));
+          lg_jacob(ip,sign*j)=sum(log(fabs(xscale)+1.e-60));
 #endif
-	  if (!underflow_flag)
-	  {
-	    lprof(ip,sign*j)=fprof;
-	  }
-	  else
-	  {
-	    lprof(ip,sign*j)=lprof(ip,sign*(j-1))+2;
-	  }
-	  double xx=likeprof_params::likeprofptr[ip]->get_value();
-	  if (!underflow_flag)
-	  {
-	    actual_value(ip,sign*j)=xx;
-	  }
-	  else
-	  {
-	    actual_value(ip,sign*j)=new_value;  // this is where we
-	  }
-	
-	  ldiff=fprof-lprof(ip,0);
-	  if ( ldiff > 40.0)
-	  {
-	    underflow_flag=1;
-	  }
+          if (!underflow_flag)
+          {
+            lprof(ip,sign*j)=fprof;
+          }
+          else
+          {
+            lprof(ip,sign*j)=lprof(ip,sign*(j-1))+2;
+          }
+          double xx=likeprof_params::likeprofptr[ip]->get_value();
+          if (!underflow_flag)
+          {
+            actual_value(ip,sign*j)=xx;
+          }
+          else
+          {
+            actual_value(ip,sign*j)=new_value;  // this is where we
+          }
 
-	  //if ( (fprof-lprof(ip,0)) > 3.0 && bigint_flag ==0)
-	  if ( abs(j) >4 )
-	  {
-	    bigint_flag=1;
-	    lastj=5;
-	  }
-	  if ( abs(j) >5 )
-	  {
-	    bigint_flag1=1;
-	    lastj1=6;
-	  }
-	  // get the gradient for the profile likelihood variable at
-	  // the conditional maximum
-	  initial_params::current_phase = initial_params::max_number_phases;
-	  int nvar=initial_params::nvarcalc();
-	  dvector g(1,nvar);
-	  dvector fg(1,nvar);
-	  if (!underflow_flag)
-	  {
-	    // g is the grad. wrt the prof lik var
-	    // fg is the grad. wrt the log-likelihood
-	    get_particular_grad(ip,nvar,fg,g);
-	    gprof(sign*j)=g;
+          ldiff=fprof-lprof(ip,0);
+          if ( ldiff > 40.0)
+          {
+            underflow_flag=1;
+          }
 
-	    fgrads(sign*j)=fg;
+          //if ( (fprof-lprof(ip,0)) > 3.0 && bigint_flag ==0)
+          if (abs(j) > 4)
+          {
+            bigint_flag=1;
+            lastj=5;
+          }
+          if (abs(j) > 5)
+          {
+            bigint_flag1=1;
+            lastj1=6;
+          }
+          // get the gradient for the profile likelihood variable at
+          // the conditional maximum
+          initial_params::current_phase = initial_params::max_number_phases;
+          int nvar=initial_params::nvarcalc();
+          dvector g(1,nvar);
+          dvector fg(1,nvar);
+          if (!underflow_flag)
+          {
+            // g is the grad. wrt the prof lik var
+            // fg is the grad. wrt the log-likelihood
+            get_particular_grad(ip,nvar,fg,g);
+            gprof(sign*j)=g;
+
+            fgrads(sign*j)=fg;
             xdist(ip,sign*j)=norm(elem_div(gprof(sign*j),xscale));
-	  }
-	  else
-	  {
-	    gprof(sign*j)=gprof(sign*(j-1));
+          }
+          else
+          {
+            gprof(sign*j)=gprof(sign*(j-1));
             xdist(ip,sign*j)=xdist(ip,sign*(j-1));
-	  }
+          }
 
         //#if defined(DO_PROFILE)
-	/*
-	  if (!underflow_flag)
-	  {
+        /*
+          if (!underflow_flag)
+          {
             hess_routine_and_constraint(ip,g,fg);  // calculate the hessian
                                             // at the conditional max
           }
 
-	  if (!underflow_flag)
-	  {
+          if (!underflow_flag)
+          {
             ldet(ip,sign*j)=projected_hess_determinant(g,underflow_flag,
               xscale,ln_det_proj_jac(ip,sign*j));
           }
           else
-	  {
+          {
             ldet(ip,sign*j)=ldet(ip,sign*(j-1));
             ln_det_proj_jac(ip,sign*j)=ln_det_proj_jac(ip,sign*(j-1));
           }
-	 */
+          */
         //#endif
-	 }   // end of the j loop
-	}
+          }   // end of the j loop
+        }
       }
       //for (int ix=-num_pp;ix<=num_pp;ix++)
       //{
@@ -357,11 +357,11 @@ dmatrix trans(const dvector& x)
         adstring profrep_name=(likeprof_params::likeprofptr[ip]->label());
         ofstream ofs3((char*) (profrep_name+adstring(".pvl")));
         for (int ix=-num_pp;ix<=num_pp;ix++)
-	{
-	  ofs3 << "#Step " << ix << endl;
-	  ofs3 << "#num sigmas " << all_num_sigs(ix) << endl;
-	  ofs3 << xmax(ix) << endl;
-	}
+        {
+          ofs3 << "#Step " << ix << endl;
+          ofs3 << "#num sigmas " << all_num_sigs(ix) << endl;
+          ofs3 << xmax(ix) << endl;
+        }
       }
     }
   #if defined(DO_PROFILE)

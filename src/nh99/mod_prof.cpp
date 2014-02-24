@@ -36,14 +36,14 @@
   }
 
 /*
-	void param_likeprof_number::set_dependent_variables(void)
-	{
-		#ifndef __ZTC__
-		dvariable(*this) << dvariable(*this);
-		#else
-		*this << *this;
-		#endif
-	}
+        void param_likeprof_number::set_dependent_variables(void)
+        {
+                #ifndef __ZTC__
+                dvariable(*this) << dvariable(*this);
+                #else
+                *this << *this;
+                #endif
+        }
 */
 
   void param_likeprof_number::allocate(const char * _s)
@@ -58,18 +58,18 @@
   }
 
 param_likeprof_number& param_likeprof_number::operator=(const prevariable& v)
-	{
-		this->param_stddev_number::operator = (v);
-		return *this;
-	}
+        {
+                this->param_stddev_number::operator = (v);
+                return *this;
+        }
 
-	param_likeprof_number& param_likeprof_number::operator = (CGNU_DOUBLE v)
-	{
-		this->param_stddev_number::operator = (v);
-		return *this;
-	}
+        param_likeprof_number& param_likeprof_number::operator = (CGNU_DOUBLE v)
+        {
+                this->param_stddev_number::operator = (v);
+                return *this;
+        }
 
-	// for now only do likelihood profiles for numbers
+        // for now only do likelihood profiles for numbers
   /*
   int likeprof_params::num_likeprof_calc(void)
   {

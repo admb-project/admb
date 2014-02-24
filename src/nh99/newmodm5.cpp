@@ -44,7 +44,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
        dvector g(1,nvar);
        independent_variables x(1,nvar);
        initial_params::xinit(x);    // get the initial values into the
- 	   // x vector
+                                    // x vector
        fmm fmc(nvar);
        fmc.maxfn= maxfn;
        fmc.iprint= iprint;
@@ -64,7 +64,7 @@ void function_minimizer::prof_minimize_re(int iprof, double sigma,
        }
        if (!(!maximum_function_evaluations))
        {
- 	int ind=min(maximum_function_evaluations.indexmax(),
+         int ind=min(maximum_function_evaluations.indexmax(),
            initial_params::current_phase);
          fmc.maxfn=int(maximum_function_evaluations(ind));
        }

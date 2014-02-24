@@ -47,8 +47,8 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
       initial_params::allocate(_phase_start);
       for (int i=indexmin();i<=indexmax();i++)
       {
-	if (allocated((*this)(i)))
-	{
+        if (allocated((*this)(i)))
+        {
           if (ad_comm::global_bparfile)
           {
             *(ad_comm::global_bparfile) >> (*this)(i);
@@ -66,8 +66,8 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
               initial_value=(minb+maxb)/2.;
             }
             (*this)(i)=(initial_value);
-	  }
-	}
+          }
+        }
       }
     }
     else
@@ -88,8 +88,8 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
       initial_params::allocate(1);
       for (int i=indexmin();i<=indexmax();i++)
       {
-	if (allocated((*this)(i)))
-	{
+        if (allocated((*this)(i)))
+        {
           if (ad_comm::global_bparfile)
           {
             *(ad_comm::global_bparfile) >> (*this)(i);
@@ -107,8 +107,8 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
               initial_value=(minb+maxb)/2.;
             }
             (*this)(i)=(initial_value);
-	  }
-	}
+          }
+       }
       }
     }
     else
@@ -131,8 +131,8 @@ void param_init_bounded_matrix::allocate(const ad_integer& rmin,
       initial_params::allocate(_phase_start);
       for (int i=indexmin();i<=indexmax();i++)
       {
-	if (allocated((*this)(i)))
-	{
+        if (allocated((*this)(i)))
+        {
           if (ad_comm::global_bparfile)
           {
             *(ad_comm::global_bparfile) >> (*this)(i);
@@ -150,8 +150,8 @@ void param_init_bounded_matrix::allocate(const ad_integer& rmin,
               initial_value=(minb+maxb)/2.;
             }
             (*this)(i)=(initial_value);
-	  }
-	}
+          }
+        }
       }
     }
     else
@@ -175,8 +175,8 @@ void param_init_bounded_matrix::allocate(const ad_integer& rmin,
       initial_params::allocate(1);
       for (int i=indexmin();i<=indexmax();i++)
       {
-	if (allocated((*this)(i)))
-	{
+        if (allocated((*this)(i)))
+        {
           if (ad_comm::global_bparfile)
           {
             *(ad_comm::global_bparfile) >> (*this)(i);
@@ -194,8 +194,8 @@ void param_init_bounded_matrix::allocate(const ad_integer& rmin,
               initial_value=(minb+maxb)/2.;
             }
             (*this)(i)=(initial_value);
-	  }
-	}
+          }
+        }
       }
     }
     else

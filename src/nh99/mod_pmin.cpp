@@ -106,11 +106,11 @@ dmatrix trans(const dvector& x)
       -num_pp,num_pp);
     dvector all_values(-num_pp,num_pp);
     dvector all_num_sigs(-num_pp,num_pp);
-    dvector xxxtmp(-num_pp,num_pp);
+    //dvector xxxtmp(-num_pp,num_pp);
     //d3_array hesses(-num_pp,num_pp,1,nvar,1,nvar);
     dmatrix lg_jacob(0,likeprof_params::num_likeprof_params-1,-num_pp,num_pp);
     dmatrix lg_prjacob(0,likeprof_params::num_likeprof_params-1,-num_pp,num_pp);
-    dmatrix xxtmp(-num_pp,num_pp,1,nvar);
+    //dmatrix xxtmp(-num_pp,num_pp,1,nvar);
     dvector xvector(1,nvar);
     dmatrix xmax(-num_pp,num_pp,1,nvar);  // this holds the conditional max
     dmatrix gprof(-num_pp,num_pp,1,nvar);  // this holds the conditional max

@@ -31,8 +31,7 @@ dvar_vector operator/(const dvar_vector& t1, CGNU_DOUBLE x)
     t1.save_dvar_vector_position();
     save_identifier_string("ddba");
     RETURN_ARRAYS_DECREMENT();
-    gradient_structure::GRAD_STACK1->
-	    set_gradient_stack(DF_dv_cdble_div);
+    gradient_structure::GRAD_STACK1->set_gradient_stack(DF_dv_cdble_div);
     return(tmp);
   }
 

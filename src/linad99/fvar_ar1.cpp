@@ -24,10 +24,10 @@
  {
    if (shape)
    {
-     #ifdef DIAG
-       cout << " Deallocating dvar_vector with ptr_address\n  "
-	 << &ptr << "  pointing at  " << (ptr+indexmin()) << "\n";
-     #endif
+#ifdef DIAG
+     cout << " Deallocating dvar_vector with ptr_address\n  "
+          << &ptr << "  pointing at  " << (ptr+indexmin()) << "\n";
+#endif
      if (shape->ncopies)
      {
        (shape->ncopies)--;

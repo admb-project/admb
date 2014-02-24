@@ -111,7 +111,6 @@
     index_type& af=*(share_flags->get_activeflags());
     for (i=mmin;i<=mmax;i++)
     {
-
       int jmin=(*this)(i).indexmin();
       int jmax=(*this)(i).indexmax();
       for (j=jmin;j<=jmax;j++)
@@ -161,7 +160,6 @@
     index_type& af=*(share_flags->get_activeflags());
     for (i=mmin;i<=mmax;i++)
     {
-
       int jmin=(*this)(i).indexmin();
       int jmax=(*this)(i).indexmax();
       for (j=jmin;j<=jmax;j++)

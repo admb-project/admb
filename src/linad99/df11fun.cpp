@@ -213,12 +213,12 @@ df1_one_vector::~df1_one_vector()
     return *this;
   }
 
-  df1_one_variable operator - (const df1_one_variable& v)
+  df1_one_variable operator-(const df1_one_variable& v)
   {
     df1_one_variable z;
 
-    *z.get_u() =- *v.get_u();
-    *z.get_u_x() =- *v.get_u_x();
+    *z.get_u() = -(*v.get_u());
+    *z.get_u_x() = -(*v.get_u_x());
 
     return z;
   }

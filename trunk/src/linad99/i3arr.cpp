@@ -246,7 +246,6 @@ i3_array::i3_array(int _sl, int _sh, const imatrix& m1)
      }
      else
      {
-
        t[i].shape=NULL;
        t[i].m=NULL;
      }

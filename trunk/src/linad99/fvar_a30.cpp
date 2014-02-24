@@ -69,8 +69,7 @@ dvar_vector& dvar_vector::operator+=(const prevariable& d)
    save_dvar_vector_position();  // for this->
    d.save_prevariable_position();
    save_identifier_string("Qxx");
-    gradient_structure::GRAD_STACK1->
-	    set_gradient_stack(dv_xpluseq);
+    gradient_structure::GRAD_STACK1->set_gradient_stack(dv_xpluseq);
    return(*this);
  }
 

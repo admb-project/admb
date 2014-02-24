@@ -179,7 +179,6 @@ double calculate_importance_sample_block_diagonal_option_antithetical
 
         sample_value(is)=*objective_function_value::pobjfun
           -neps;
-
      }
      else
      {

@@ -312,7 +312,6 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
             }
           }
         }
-
       }
       if (initial_df1b2params::separable_flag)
       {

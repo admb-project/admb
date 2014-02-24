@@ -120,7 +120,6 @@ void print_derivatives(df1b2_header * px,const char * s,
     *derout << endl;
   }
   *derout << endl;
-
 }
 #endif
 

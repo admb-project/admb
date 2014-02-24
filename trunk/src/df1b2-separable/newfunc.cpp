@@ -282,7 +282,6 @@ void read_xxx_1(void)
 
       pxubar[i]+=zprime[0]*pzubar[i];
       pyubar[i]+=zprime[1]*pzubar[i];
-
     }
   }
 }
@@ -458,5 +457,4 @@ void read_xxx_2(void)
 
   df1b2variable::passnumber=3;
   df1b2_gradcalc1();
-
 }

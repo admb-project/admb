@@ -168,9 +168,7 @@ double do_gauss_hermite_block_diagonal(const dvector& x,
 
      *objective_function_value::pobjfun=0.0;
      pmin->AD_uf_outer();
-
    }
-
 
    nsc=pmin->lapprox->num_separable_calls;
 

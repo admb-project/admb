@@ -185,7 +185,6 @@ double do_gauss_hermite_block_diagonal_multi(const dvector& x,
      *objective_function_value::pobjfun=0.0;
      pmin->AD_uf_outer();
      ++mi;
-
    }
    while(mi.get_depth()<=pmin->lapprox->multi_random_effects);
 

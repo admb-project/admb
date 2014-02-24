@@ -177,7 +177,6 @@ double calculate_importance_sample_block_diagonal_option2(const dvector& x,
 
         sample_value(is)=*objective_function_value::pobjfun
           -neps;
-
      }
      else
      {

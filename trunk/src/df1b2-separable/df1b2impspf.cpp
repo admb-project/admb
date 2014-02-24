@@ -81,7 +81,6 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
   }
   else
   {
-
     dcompressed_triplet & lst = *(pmin->lapprox->sparse_triplet2);
     int mmin=lst.indexmin();
     int mmax=lst.indexmax();
@@ -138,7 +137,6 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
       }
     }
     vsparse_triplet->get_x()=vy(ii,ii+mmax-mmin).shift(1);
-
   }
 
    int nsamp=pmin->lapprox->num_importance_samples;
@@ -195,7 +193,6 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
      }
      dvariable min_vf=min(sample_value);
      vf=min_vf-log(mean(exp(min_vf-sample_value)));
-
    }
    else
    {

@@ -333,7 +333,6 @@ void read_pass1_init_1(void)
     pz->u_dot_bar[i]=0;
   }
   */
-
 }
 
 /**
@@ -415,7 +414,6 @@ void read_pass1_init_2(void)
     z_bar_tilde[i]=0;
     z_dot_bar_tilde[i]=0;
   }
-
 }
 
 /**
@@ -447,11 +445,9 @@ void read_pass1_init_3(void)
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.restoreposition(); // save pointer to beginning of record;
 
-  int i;
   *(pz->u_tilde)=0;
-  for (i=0;i<nvar;i++)
+  for (int i=0;i<nvar;i++)
   {
     pz->u_dot_tilde[i]=0;
   }
-
 }

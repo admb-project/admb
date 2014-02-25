@@ -162,17 +162,13 @@ dmatrix trans(const dvector& x)
       old_value=old_value+offset*relsig*sigma;  // this is where we
       int bigint_flag=0;
       int bigint_flag1=0;
-      int lastj=0;
-      int lastj1=0;
       double ldiff=0.0;
       double num_sigs;
       for (int i=1;i<=2;i++)  // go in positive and negative directions
       {
         num_sigs=0.0;
         bigint_flag=0;
-        lastj=0;
         bigint_flag1=0;
-        lastj1=0;
         int underflow_flag=0;
         if (i>1) // get the parameter values at the global minimum
         {
@@ -296,12 +292,10 @@ dmatrix trans(const dvector& x)
           if (abs(j) > 4)
           {
             bigint_flag=1;
-            lastj=5;
           }
           if (abs(j) > 5)
           {
             bigint_flag1=1;
-            lastj1=6;
           }
           // get the gradient for the profile likelihood variable at
           // the conditional maximum

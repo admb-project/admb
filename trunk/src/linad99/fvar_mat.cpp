@@ -269,7 +269,7 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, const ivector& 
        nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
        cerr << "Incompatible array bounds in dvar_matrix(int nrl, int nrh, const ivector& ncl, const ivector& nch)"
-  	  << endl ;
+            << endl ;
        ad_exit(1);
      }
      index_min=nrl;
@@ -320,7 +320,7 @@ void dvar_matrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
      if (nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
        cerr << "Incompatible array bounds in dvar_matrix(int nrl, int nrh, const int& ncl, const ivector& nch)"
-  	  << endl;
+            << endl;
        ad_exit(1);
      }
      index_min=nrl;
@@ -359,7 +359,7 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, int nch)
      if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())
      {
        cerr << "Incompatible array bounds in dvar_matrix(int nrl, int nrh, const ivector& ncl,int nch)"
-  	  << endl;
+            << endl;
        ad_exit(1);
      }
      index_min=nrl;

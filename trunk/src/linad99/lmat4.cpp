@@ -45,13 +45,13 @@ const lvector& lmatrix::operator[](int i) const
      if (i<rowmin())
      {
        cerr << "matrix bound exceeded -- row index too low in imatrix::operator[]"
-	     << "value was" << i;
+            << "value was" << i;
        ad_exit(21);
      }
      if (i>rowsize()+rowmin()-1)
      {
        cerr << "matrix bound exceeded -- row index too high in imatrix::operator[]"
-	     << "value was" << i;
+            << "value was" << i;
        ad_exit(22);
      }
    #endif

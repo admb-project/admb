@@ -252,12 +252,12 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
     #if defined( __HP__)
         if (ireturn <= 0 )
         {
-	   signal(SIGINT, &onintr);
+          signal(SIGINT, &onintr);
         }
     #else
         if (ireturn <= 0 )
         {
-	   signal(SIGINT, (SIG_PF)&onintr);
+          signal(SIGINT, (SIG_PF)&onintr);
         }
     #endif
   #endif
@@ -265,7 +265,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
 #if defined( __GNU__) || defined (__BORLANDC__)
       if (ireturn <= 0 )
       {
-	 signal(SIGINT, &onintr);
+        signal(SIGINT, &onintr);
       }
 #endif
 #ifdef __ZTC__
@@ -497,14 +497,14 @@ label20: /* check for convergence */
 label7003: /* Printing table header */
       if (iprint>0)
       {
-	if (ad_printf)
+        if (ad_printf)
         {
           (*ad_printf)("%d variables; iteration %ld; function evaluation %ld", n, itn, ifn);
           if (pointer_to_phase)
           {
             (*ad_printf)("; phase %d", *pointer_to_phase);
           }
-	  (*ad_printf)("\nFunction value %15.7le; maximum gradient component mag %12.4le\n",
+          (*ad_printf)("\nFunction value %15.7le; maximum gradient component mag %12.4le\n",
 #if defined(USE_DDOUBLE)
   #undef double
               double(f), double(gmax));
@@ -528,7 +528,7 @@ label21 : /* Calculating Newton step */
       pfmintime->get_elapsed_time_and_reset();
 
       /* solving system of linear equations H_(k+1) * (x_(k+1)-x(k)) = -g_k 
-	 to get next search direction p_k = (x_(k+1)-x(k)) = - inv(H_(k+1)) * g_k */
+         to get next search direction p_k = (x_(k+1)-x(k)) = - inv(H_(k+1)) * g_k */
       for (i=2; i<=n; i++)
       {
         i1=i-1;
@@ -654,7 +654,7 @@ label30: /* Taking a step, updating x */
             if (ifn != dcheck_flag)
             {
             #if !defined(__GNUDOS__)  || defined(UNIXKLUDGE)  || defined(linux) \
-  	      || defined(__CYGWIN32__) || defined(__MINGW32__)
+              || defined(__CYGWIN32__) || defined(__MINGW32__)
               c = toupper(getch());
             #else
               c = toupper(getxkey());
@@ -674,10 +674,10 @@ label30: /* Taking a step, updating x */
             }
             else if(c=='S')
             {
-	      //set convergence criteria to something high to stop now
-	      crit=100000.0;
-	      return;
-	    }
+              //set convergence criteria to something high to stop now
+              crit=100000.0;
+              return;
+            }
             else
             {
               if ( c == 'Q'|| c == 'N')
@@ -694,8 +694,8 @@ label30: /* Taking a step, updating x */
        }
        if (quit_flag)
        {
-	 if (quit_flag==1) quit_flag='Q';
-	 if (quit_flag==2) quit_flag='N';
+         if (quit_flag==1) quit_flag='Q';
+         if (quit_flag==2) quit_flag='N';
          goto label92;
        }
       /* Otherwise, continue */
@@ -789,7 +789,7 @@ label40: /* new step is not acceptable, stepping back and
          ialph=1;
         if (ialph)
         {
-	   if (ad_printf) (*ad_printf)("\nFunction minimizer: Step size"
+          if (ad_printf) (*ad_printf)("\nFunction minimizer: Step size"
             "  too small -- ialph=1");
         }
          return;
@@ -878,11 +878,11 @@ label92: /* Exit with error */
       {
         if (ialph)
         {
-	   if (ad_printf) (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
+          if (ad_printf) (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
         }
         if (ihang == 1)
         {
-	   if (ad_printf) (*ad_printf)("Function minimizer not making progress ... is minimum attained?\n");
+          if (ad_printf) (*ad_printf)("Function minimizer not making progress ... is minimum attained?\n");
 #if defined(USE_DDOUBLE)
 #undef double
            if (ad_printf) (*ad_printf)("Minimprove criterion = %12.4le\n",double(min_improve));
@@ -908,7 +908,7 @@ label92: /* Exit with error */
       {
         if (iprint>0)
         {
-	  if (ad_printf) (*ad_printf)("Maximum number of function evaluations exceeded");
+          if (ad_printf) (*ad_printf)("Maximum number of function evaluations exceeded");
         }
       }
       if (iprint>0)
@@ -919,7 +919,7 @@ label92: /* Exit with error */
       if(iprint == 0) goto label777;
       if (ad_printf) (*ad_printf)("\n - final statistics:\n");
       if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-	      n, itn, ifn);
+                       n, itn, ifn);
 #if defined(USE_DDOUBLE)
 #undef double
       if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",

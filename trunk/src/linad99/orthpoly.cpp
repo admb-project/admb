@@ -221,7 +221,6 @@ dmatrix orthpoly_constant_begin_end(int n,int deg,int nconst_begin,
  */
 dmatrix seldif_basis(int n)
 {
-
   int i; int j;
   dmatrix ocoff(1,n,1,n);
   dmatrix ocoff1(1,n,1,n);

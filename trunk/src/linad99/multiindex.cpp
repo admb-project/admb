@@ -56,7 +56,6 @@
     }
     if (tmpdepth>depth)
       depth =tmpdepth;
-
   }
   int multi_index::get_offset(void)
   {

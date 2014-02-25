@@ -122,19 +122,19 @@ double_and_int * arr_new(unsigned int sz)
         // remove tmp from the free list
         arr_free_remove(tmp);
 
-	temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp->offset;
+        temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp->offset;
 
-	(* (arr_link **) (temp_ptr)) = tmp; //put the address
-					  //tmp into the location pointed to
-					  //by temp_ptr
-	return  (double_and_int *) (temp_ptr);
+        //put the address tmp into the location pointed to by temp_ptr
+        (* (arr_link **) (temp_ptr)) = tmp;
+
+        return (double_and_int*)temp_ptr;
       }
       else
       {
-	// otherwise split up this memory block and return
-	// the part you need
+        // otherwise split up this memory block and return
+        // the part you need
 
-	arr_link * tmp1 = new arr_link;
+        arr_link* tmp1 = new arr_link;
         gradient_structure::ARR_LIST1->number_arr_links += 1;
 
         // put the new link tmp1-> into the list BEFORE tmp->
@@ -152,19 +152,18 @@ double_and_int * arr_new(unsigned int sz)
         // get the size of the new link and mark it free
 
         tmp1->size=bytes_needed;
-	tmp1->status=1;
+        tmp1->status=1;
         tmp1->offset=tmp->offset;
 
         tmp->offset+=bytes_needed;
-	tmp->size-=bytes_needed;
+        tmp->size-=bytes_needed;
 
-	temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp1->offset;
+        temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp1->offset;
 
-	(* (arr_link **) (temp_ptr )) = tmp1; //put the address
-					 //pointed to by
-					 // tmp1 into the location pointed to
-					 //by temp_ptr
-	return  (double_and_int *) (temp_ptr);
+        //put the address pointed to by tmp1 into the location pointed to by temp_ptr
+        (*(arr_link**)(temp_ptr)) = tmp1;
+
+        return (double_and_int*)temp_ptr;
       }
     }
     tmp=tmp->free_prev;
@@ -214,9 +213,9 @@ double_and_int * arr_new(unsigned int sz)
   if( gradient_structure::ARR_LIST1->last_offset >=gradient_structure::ARRAY_MEMBLOCK_SIZE)
   {
     cout << gradient_structure::ARR_LIST1->last_offset <<">="
-	     <<  gradient_structure::ARRAY_MEMBLOCK_SIZE <<"\n";
+         <<  gradient_structure::ARRAY_MEMBLOCK_SIZE <<"\n";
     cout << " No memory for dvar_vectors\n"
-	 << " Need to increase ARRAY_MEMBLOCK_SIZE parameter\n"
+         << " Need to increase ARRAY_MEMBLOCK_SIZE parameter\n"
       "In gradient_structure declaration\n";
     //throw gradient_structure::arrmemblerr();
     ad_exit(1);

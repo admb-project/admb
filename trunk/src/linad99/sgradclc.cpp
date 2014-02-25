@@ -167,7 +167,6 @@ void gradcalc(int nvar, const dvector& _g)
   }
 
   *gradient_structure::GRAD_STACK1->ptr->dep_addr = 1;
-  double* zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
   //int icount=0;
   int break_flag=1;

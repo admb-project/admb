@@ -179,20 +179,20 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
 #endif
 
 /**
-* Function fmin contains Quasi-Newton function minimizer with 
-* inexact line search using Wolfe conditions and 
+* Function fmin contains Quasi-Newton function minimizer with
+* inexact line search using Wolfe conditions and
 * BFGS correction formula for Hessian update.
 *
 * The algorithm consists of the following steps (in the order of execution):
 * - Initial step with Hessian being an identity matrix (see call1)
-* - Line search test for step length satisfying Wolfe conditions (beginning of call2) 
-* - Line search backtracking and reducing alpha (label40) if the current direction 
+* - Line search test for step length satisfying Wolfe conditions (beginning of call2)
+* - Line search backtracking and reducing alpha (label40) if the current direction
 *   is not a gradient descent one or the function value has increased
-* - Hessian update (labels 50-70) once all conditions are satisfied to assure its 
+* - Hessian update (labels 50-70) once all conditions are satisfied to assure its
 *   positive-definiteness
 * - Update of a vector of independent variables (label30)
 *
-* Convergence is detected if the maximal gradient component falls below small constant 
+* Convergence is detected if the maximal gradient component falls below small constant
 * (see label20)
 *
 * Requires:
@@ -206,7 +206,7 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
 *        maxfn  (maximal number of function evaluations, after which minimization stops)
 *        crit   (convergence criterion constant)
 *        imax   (maximal number of function evaluations within one linear search before to stop)
-*        iprint (flag to allow (=1) or supress (=0) printing intermediate statistics 
+*        iprint (flag to allow (=1) or supress (=0) printing intermediate statistics
 *        min_improve (stop after 10 iterations with overall function decrease less than this value)
 *    The default values can be found in function set_defaults of class fmm_control
 * Modifies:
@@ -224,7 +224,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
   if (pfmintime==0) pfmintime=new adtimer;
   tracing_message(traceflag,"A3");
 
-  /* Remember gradient and function values 
+  /* Remember gradient and function values
      resulted from previous function evaluation */
   dvector& g=(dvector&) _g;
   double& f=(double&) _f;
@@ -292,13 +292,13 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
       if (ireturn == 1) goto call1;
       if (ireturn == 2) goto call2;
 
-     /* we are here because ireturn=0 
+     /* we are here because ireturn=0
         Start initializing function minimizer variables */
       fbest=1.e+100;
   tracing_message(traceflag,"A6");
-      
-      /* allocate Hessian 
-         h - object of class dfsdmat, the memory is allocated 
+
+      /* allocate Hessian
+         h - object of class dfsdmat, the memory is allocated
              only for elements of lower triagonal matrix */
       if (!h) h.allocate(n);
 
@@ -312,9 +312,9 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
       alpha=1.0; /* full Newton step at the beginning */
       ihflag=0;
 
-      /* validity check for dimensions and indexing of 
+      /* validity check for dimensions and indexing of
          independent vector and gradient vector
-         Note, this function will work correctly only if 
+         Note, this function will work correctly only if
          indices start at 1  */
      if (n==0)
      {
@@ -366,14 +366,14 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
       /* icc - obsolete calls counter? */
       icc=0;
 
-       /* initialize funval vector, 
+       /* initialize funval vector,
           it will contain last 10 function values (10-th is the most recent)
           needed to stop minimization in case if f(1)-f(10)<min_improve  */
        for (i=1; i< 11; i++)
           funval.elem(i)=0.;
   tracing_message(traceflag,"A11");
       ihang = 0;  /* flag, =1 when function minimizer is not making progress */
-      llog=1;     
+      llog=1;
       np=n+1;
       n1=n-1;
       nn=n*np/2;
@@ -396,7 +396,7 @@ void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
       }
   tracing_message(traceflag,"A13");
 
-      /* dmin - minimal element of hessian used to 
+      /* dmin - minimal element of hessian used to
          verify its positive definiteness */
       dmin=h.elem(1,1);
       for ( i=2; i<=n; i++)
@@ -469,7 +469,7 @@ label20: /* check for convergence */
         if(fabs(g.elem(i)) > crit) iconv = 2;
         if(fabs(g.elem(i)) > fabs(gmax) ) gmax = g.elem(i);
       }
-      /* exit if either convergence or no improvement has been achieved 
+      /* exit if either convergence or no improvement has been achieved
          during last 10 iterations */
       if( iconv == 1 || ihang == 1)
       {
@@ -479,7 +479,7 @@ label20: /* check for convergence */
       /* otherwise proceed to the Newton step (label21) */
       if(iprint == 0)
          goto label21; /* without printing */
-      if(itn == 0) 
+      if(itn == 0)
          goto label7000; /* printing Initial statistics first */
 #if defined(USE_DDOUBLE)
 #undef double
@@ -521,13 +521,13 @@ label7002: /* Printing Statistics table */
       }
 label21 : /* Calculating Newton step */
       /* found good search direction, increment iteration number */
-      itn=itn+1; 
+      itn=itn+1;
       for (i=1; i<=n; i++)
          x.elem(i)=xx.elem(i);
       w.elem(1)=-g.elem(1);
       pfmintime->get_elapsed_time_and_reset();
 
-      /* solving system of linear equations H_(k+1) * (x_(k+1)-x(k)) = -g_k 
+      /* solving system of linear equations H_(k+1) * (x_(k+1)-x(k)) = -g_k
          to get next search direction p_k = (x_(k+1)-x(k)) = - inv(H_(k+1)) * g_k */
       for (i=2; i<=n; i++)
       {
@@ -557,7 +557,7 @@ label21 : /* Calculating Newton step */
           }
           w.elem(is+n-i)=w.elem(n-i)/h.elem(n-i,n-i)-tmp(i);
         }
-      }/* w(n+1,2n) now contains search direction 
+      }/* w(n+1,2n) now contains search direction
           with current Hessian approximation */
       gs=0.0;
       for (i=1; i<=n; i++)
@@ -718,7 +718,7 @@ label30: /* Taking a step, updating x */
       }
       /* new function value was passed to fmin, will increment ifn */
       ifn++;
-      
+
       gys=0.0;
       for (i=1; i<= n; i++)
          gys+=w.elem(i)*w.elem(is+i);/* gys = transpose(p_k) * df(x_k+alpha_k*p_k) */
@@ -726,7 +726,7 @@ label30: /* Taking a step, updating x */
       {
          goto label40; /* backtrack */
       }
-      /* Otherwise verify if the search step length satisfies 
+      /* Otherwise verify if the search step length satisfies
          strong Wolfe condition */
       if(fabs(gys/gso)<=.9)
          goto label50; /* proceed to Hessian update */
@@ -757,7 +757,7 @@ label30: /* Taking a step, updating x */
       f=fy;
       gs=gys;
       goto label30; /* update x with new alpha */
-label40: /* new step is not acceptable, stepping back and 
+label40: /* new step is not acceptable, stepping back and
             start backtracking along the Newton direction
             trying a smaller value of alpha */
       for (i=1;i<=n;i++)

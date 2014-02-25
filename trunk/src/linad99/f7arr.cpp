@@ -387,7 +387,7 @@ const dvar4_array& dvar7_array::operator()(int i,int j,int k) const
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
         { cerr << "Error hslice index out of bounds in\n"
-	    "dvar_matrix& dvar7_array::operator ( )" << endl;
+          "dvar_matrix& dvar7_array::operator ( )" << endl;
           ad_exit(1);
         }
       #endif

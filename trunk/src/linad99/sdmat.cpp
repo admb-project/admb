@@ -68,7 +68,6 @@ void sdmatrix::allocate(int irh)
    #ifdef DIAG
      myheapcheck("Leaving sdmatrix(nrh)" );
    #endif
-
 }
 
 /**

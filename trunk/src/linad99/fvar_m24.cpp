@@ -99,7 +99,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z, prevariable& ln_u
       sum=bb.elem(i,j);
       for (k=lb;k<i;k++)
       {
-	sum -= bb.elem(i,k)*bb.elem(k,j);
+        sum -= bb.elem(i,k)*bb.elem(k,j);
       }
       //a[i][j]=sum;
       bb.elem(i,j)=sum;
@@ -110,7 +110,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z, prevariable& ln_u
       sum=bb.elem(i,j);
       for (k=lb;k<j;k++)
       {
-	sum -= bb.elem(i,k)*bb.elem(k,j);
+        sum -= bb.elem(i,k)*bb.elem(k,j);
       }
       bb.elem(i,j)=sum;
       dum=vv[i]*fabs(sum);
@@ -150,7 +150,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z, prevariable& ln_u
       dum=1.0/bb.elem(j,j);
       for (i=j+1;i<=ub;i++)
       {
-	bb.elem(i,j) = bb.elem(i,j) * dum;
+        bb.elem(i,j) = bb.elem(i,j) * dum;
       }
     }
   }
@@ -359,7 +359,7 @@ void dmdv_solve(void)
         // b.elem(i,j)=sum/b.elem(j,j);
         dfsum+=dfb.elem(i,j)/b.elem(j,j);
         dfb.elem(j,j)-=dfb.elem(i,j)*b.elem(i,j)/b.elem(j,j);
-	dfb.elem(i,j)=0.;
+        dfb.elem(i,j)=0.;
       }
 
       for (int k=min(i-1,j-1);k>=lb;k--)

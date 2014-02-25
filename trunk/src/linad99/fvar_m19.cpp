@@ -45,7 +45,6 @@ dvar_matrix operator*(const dvar_matrix& m1, const dmatrix& cm2)
 
    for (int j=cm2.colmin(); j<=cm2.colmax(); j++)
    {
-
      for (int k=cm2.rowmin(); k<=cm2.rowmax(); k++)
      {
        temp_col[k] = cm2.elem(k,j);

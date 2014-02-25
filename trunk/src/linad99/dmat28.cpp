@@ -389,7 +389,6 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
     cerr << "incompatible shape in symmetric_dmatrix::operator = "
          << endl;
     ad_exit(1);
-
   }
 
   for (int i=mmin;i<=mmax;i++)

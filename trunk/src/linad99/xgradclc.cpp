@@ -109,7 +109,7 @@ void funnel_gradcalc(void)
   {
     #ifdef SAFE_ARRAYS
       cerr << "warning -- calling funnel_gradcalc when no calculations generating"
-	 << endl << "derivative information have occurred" << endl;
+           << endl << "derivative information have occurred" << endl;
     #endif
     return;
   }    // current is one past the end so -- it
@@ -150,7 +150,7 @@ void funnel_gradcalc(void)
      tmp->x = 0;
      #if defined (__ZTC__)
        #if defined(DOS386)
-	tmp++;
+       tmp++;
        #else
         tmp = (double_and_int  *) _farptr_norm( (void*) (++tmp)  );
        #endif
@@ -179,12 +179,12 @@ do
     grad_stack_entry * grad_ptr_first=
       gradient_structure::GRAD_STACK1->ptr_first;
     while (gradient_structure::GRAD_STACK1->ptr-- >
-		grad_ptr_first)
+           grad_ptr_first)
     {
       if (!gradient_structure::GRAD_STACK1->ptr->func)
       {
-	funnel_flag=1;
-	break;
+        funnel_flag=1;
+        break;
       }
       else
         (*(gradient_structure::GRAD_STACK1->ptr->func))();
@@ -212,7 +212,7 @@ do
 
      #ifdef GRAD_DIAG
       cout << "Offset in file at end of gradcalc is " << ttmp
-				      << " bytes from the beginning\n";
+           << " bytes from the beginning\n";
      #endif
    }
  }
@@ -254,24 +254,24 @@ do
       if (*(++dptr))
       {
         save_double_value(*dptr);
-	dcount++;
+        dcount++;
         nnzero++;
         if (zero_flag)
-	{
-	  offset(ii++)=nzero;
-	  nzero=0;
-	  zero_flag=0;
-	}
+        {
+          offset(ii++)=nzero;
+          nzero=0;
+          zero_flag=0;
+        }
       }
       else
       {
         nzero++;
-	if (!zero_flag)
-	{
-	  offset(ii++)=nnzero;
-	  nnzero=0;
-	  zero_flag=1;
-	}
+        if (!zero_flag)
+        {
+          offset(ii++)=nnzero;
+          nnzero=0;
+          zero_flag=1;
+        }
       }
     }
     save_int_value(dcount);
@@ -354,7 +354,7 @@ void funnel_derivatives(void)
     {
       if (i==dcount-1)
       {
-	break;
+        break;
       }
       dptr+=offset(ii+1);
       ii+=2;

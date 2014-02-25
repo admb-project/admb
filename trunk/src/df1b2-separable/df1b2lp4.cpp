@@ -764,8 +764,5 @@ void laplace_approximation_calculator::get_newton_raphson_info_master
       grad(j-xsize)=g1_k(j);
     }
   }
-
 }
-
-
-#endif //#if defined(USE_LAPLACE)
+#endif

@@ -25,7 +25,7 @@
     for (int i=0;i<num_initial_df1b2params;i++)
     {
       if (withinbound(0,(varsptr[i])->phase_start,current_phase))
-	(varsptr[i])->sd_scale(d,x,ii);
+        (varsptr[i])->sd_scale(d,x,ii);
     }
     return ii-1;
   }
@@ -66,9 +66,9 @@
       else
         d(ii)=ndfboundp_mc(x(ii)/scalefactor,minb,maxb,pen)/scalefactor;
     }
-	
+
     //d(ii)=(boundp(x(ii)+1.e-6,minb,maxb,pen)-
-	//boundp(x(ii)-1.e-6,minb,maxb,pen))/2.e-6;
+    //boundp(x(ii)-1.e-6,minb,maxb,pen))/2.e-6;
     ii++;
   }
 
@@ -117,7 +117,7 @@
             if (scalefactor) v(ii)/=scalefactor;
             ii++;
           }
-	}
+        }
       }
     }
   }
@@ -183,7 +183,7 @@
             else
               v(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/
                 scalefactor;
-	    ii++;
+            ii++;
           }
         }
       }

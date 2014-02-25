@@ -182,7 +182,6 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
     }
     else
     {
-
       int i;
       int nx=negdirections->indexmax();
       independent_variables u(1,nx);
@@ -296,7 +295,7 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           break;
         case 2:
           cout << "\nBlock diagonal Hessian (Block size =" <<
-		 (lapprox->usize)/(lapprox->num_separable_calls) << ")\n" << endl;
+            (lapprox->usize)/(lapprox->num_separable_calls) << ")\n" << endl;
           break;
         case 3:
           cout << "\nBanded Hessian (Band width = " << lapprox->bw << ")\n" << endl;
@@ -308,7 +307,6 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
           cerr << "This can't happen" << endl;
           ad_exit(1);
         }
-
       }
     }
 

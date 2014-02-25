@@ -23,13 +23,11 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
 {
   double & f= (double&)_f;
   dvector & g= (dvector&)_g;
-  int unvar=1; 
   fmm fmc(nvar);
   if (random_effects_flag)
   {
     initial_params::set_active_only_random_effects();
-    //cout << nvar << endl;
-    unvar=initial_params::nvarcalc(); // get the number of active
+    //int unvar=initial_params::nvarcalc(); // get the number of active
     initial_params::restore_start_phase();
     initial_params::set_inactive_random_effects();
     int nvar1=initial_params::nvarcalc(); // get the number of active

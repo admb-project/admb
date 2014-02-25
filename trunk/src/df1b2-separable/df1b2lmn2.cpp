@@ -104,7 +104,6 @@ void function_minimizer::limited_memory_quasi_newton_block(int nvar,int _crit,
     }
     else
     {
-
       istringstream ist(ad_comm::argv[on+1]);
       ist >> _dfn;
 

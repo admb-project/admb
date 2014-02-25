@@ -102,43 +102,42 @@ df1b2vector pow(const double v,const df1b2vector& _x)
 /**
  \brief raise x to the power a.
  \param x vector of bases
- \param a the exponent	
+ \param a the exponent
  */
 df1b2vector pow(const dvector& x,  const df1b2variable& a)
 {
-    RETURN_ARRAYS_INCREMENT();	
-	df1b2vector y(x.indexmin(), x.indexmax());
-	
-	for(int i=x.indexmin(); i<=x.indexmax(); i++)
-	{
-		y(i)=pow(x(i),a);
-	}	
+  RETURN_ARRAYS_INCREMENT();
+  df1b2vector y(x.indexmin(), x.indexmax());
+  for(int i=x.indexmin(); i<=x.indexmax(); i++)
+  {
+    y(i)=pow(x(i),a);
+  }
 
-	RETURN_ARRAYS_DECREMENT();	
-    return(y);
+  RETURN_ARRAYS_DECREMENT();
+  return(y);
 }
 /**
  \brief raise x to the power a.
  \param x vector of bases
- \param a vector of exponents	
+ \param a vector of exponents
  */
 df1b2vector pow(const dvector& x,  const df1b2vector& a)
 {
-    RETURN_ARRAYS_INCREMENT();	
-	df1b2vector y(x.indexmin(), x.indexmax());
+  RETURN_ARRAYS_INCREMENT();
+  df1b2vector y(x.indexmin(), x.indexmax());
 
-	for(int i=x.indexmin(); i<=x.indexmax(); i++)
-	{
-		y(i)=pow(x(i),a(i));
-	}	
+  for(int i=x.indexmin(); i<=x.indexmax(); i++)
+  {
+    y(i)=pow(x(i),a(i));
+  }
 
-	RETURN_ARRAYS_DECREMENT();	
-    return(y);
+  RETURN_ARRAYS_DECREMENT();
+  return(y);
 }
 /**
  \brief raise v1 to the power v2.
  \param v1 vector of bases
- \param v2 vector of exponents	
+ \param v2 vector of exponents
  */
   dvar_vector pow(const dvar_vector& v1, const dvector& v2)
   {
@@ -154,7 +153,7 @@ df1b2vector pow(const dvector& x,  const df1b2vector& a)
 /**
  \brief raise x to the power v.
  \param x vector of bases
- \param v vector of exponents	
+ \param v vector of exponents
  */
   df1b2vector pow(df1b2vector const& _x,dvector const& v)
   {

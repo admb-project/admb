@@ -299,7 +299,6 @@ dvector laplace_approximation_calculator::default_calculations
             quadratic_prior::get_cHessian_contribution(Hess,xsize);
             quadratic_prior::get_cgradient_contribution(grad,xsize);
           }
-
         }
         else if (trust_update_flag==1)
         {

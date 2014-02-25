@@ -69,8 +69,6 @@
   long _cdecl _farptr_tolong(void _far *);
 #endif
 
-//void KLUDGEX(void * p);
-
 /**
  * Description not yet available.
  * \param
@@ -200,7 +198,6 @@ void slave_gradcalc(void)
   				      << " bytes from the beginning\n";
      #endif
     }
-
 
     gradient_structure::GRAD_STACK1->ptr = gradient_structure::GRAD_STACK1->ptr_first;
 

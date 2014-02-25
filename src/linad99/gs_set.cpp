@@ -137,7 +137,6 @@ void gradient_structure::set_GRADSTACK_BUFFER_SIZE(long long int i)
     cerr << " i = " << i << endl;
     cerr << " gs_size = " << gs_size << endl;
     cerr << " i*gs_size = " << i*gs_size << endl;
-
   }
 #else
   long long max_size = LLONG_MAX / sizeof(grad_stack_entry);

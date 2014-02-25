@@ -401,7 +401,6 @@ void allocate_dvariable_space(void)
    {
      cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCKa\n";
      ad_exit(1);
-
    }
 
   /*

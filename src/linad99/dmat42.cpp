@@ -285,7 +285,6 @@ int svd_mln(int m, int n, int  withu, int withv, double eps, double tol,
             {
               v[k][j] += (s * v[k][i]);
             }
-
           } /* end j */
         } /* end g */
         for (j=l;j<n;j++)
@@ -447,7 +446,6 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
             const dmatrix& aa, const dvector& _q,
             const dmatrix& _u, const dmatrix& _v)
 {
-
   ADUNCONST(dmatrix,u)
   ADUNCONST(dmatrix,v)
   ADUNCONST(dvector,q)
@@ -554,7 +552,6 @@ int svd_nlm(int m, int n, int withu, int withv, double eps, double tol,
           {
             v[k][j] += (s * v[k][i]);
           }
-
         } /* end j */
       } /* end g */
       for (j=l;j<n;j++)

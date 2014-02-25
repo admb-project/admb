@@ -51,7 +51,6 @@ void gradfree(dlink *);
       #endif
       //((va+i)->nc)++;
       return (va+i);
-
     }
 
 /**
@@ -74,7 +73,6 @@ void gradfree(dlink *);
       #endif
       //((va+i)->nc)++;
       return (va+i);
-
     }
 #endif
 
@@ -99,7 +97,6 @@ const prevariable dvar_vector::operator[](int i) const
       #endif
       //((va+i)->nc)++;
       return (va+i);
-
     }
 
 /**
@@ -122,6 +119,5 @@ const prevariable dvar_vector::operator()(int i) const
       #endif
       //((va+i)->nc)++;
       return (va+i);
-
     }
 #endif

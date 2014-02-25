@@ -74,7 +74,6 @@ OBJ1=\
  c_ghk.obj\
  v_ghk.obj\
  suballoc.obj\
- slgrdclc.obj\
  gradstrc.obj\
  compare.obj\
  signalh.obj\
@@ -486,6 +485,7 @@ OBJ16=\
  i3arr1.obj\
  d3arr11.obj
 PVM=\
+ slgrdclc.obj\
  adcomm1.obj
 DEPRECATED=\
  dvect21.obj\

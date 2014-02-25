@@ -396,7 +396,6 @@ void set_derivatives( df1_two_variable& z, const df1_two_variable& x,
 
     *z.get_u_y() = f_u* *x.get_u_y()
                  + f_v* *y.get_u_y();
-
 }
 
 /**

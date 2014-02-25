@@ -66,9 +66,7 @@
 
     friend class d4_array;
     friend class dvar4_array;
-
   }; // End of class four_array_shape
-
 
 /**
  * Description not yet available.

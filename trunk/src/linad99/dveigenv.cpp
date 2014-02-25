@@ -55,7 +55,6 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
   #endif
            // eigenvalues are returned in columns of z
   return m1;
-
 }
 
 /** Householder transformation for eivenvector computation.

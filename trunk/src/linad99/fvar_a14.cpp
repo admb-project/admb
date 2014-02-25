@@ -108,7 +108,6 @@ void dvdv_dot(void)
   {
     *pdf1++ = dftmp * *pc2++;
     *pdf2++ = dftmp * *pc1++;
-
   }
   while (pdf1<=pdf1m);
 #else

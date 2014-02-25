@@ -54,7 +54,7 @@ double ghk(const dvector& lower,const dvector& upper,const dmatrix& Sigma,
  * \param
  */
 void ghk_test(const dmatrix& eps,int i)
-{	
+{
   if (i<eps.indexmin())
   {
     cerr << "Index too low in function ghk -- min is "

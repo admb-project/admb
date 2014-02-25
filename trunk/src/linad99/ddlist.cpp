@@ -54,9 +54,9 @@ dlist::dlist(void)
     else
     {
       cerr << "Wrong number of options to -mdl -- must be 1"
-        " you have " << nopt << endl;		
+        " you have " << nopt << endl;
       ad_exit(1);
-    }	
+    }
   }
   last = 0;
   last_offset = 0;
@@ -147,7 +147,7 @@ dlist::~dlist()
   {
     cerr << "In ~dlist() number of links destroyed not equal to number created\n";
     cerr << " The number created was "<< nlinks << " The number destroyed was "
-	 << count << "\n";
+         << count << "\n";
     ad_exit(1);
   }
 */

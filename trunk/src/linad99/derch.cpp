@@ -15,12 +15,9 @@
 #include "fvar.hpp"
 
 #if !defined(__SUN__) && !defined(__GNU__) && !defined(__linux__)
-	#if !defined(__NDPX__)
-	  #include <conio.h>
-	#else
-	  extern "C" {
-	  }
-	#endif
+  #if !defined(__NDPX__)
+    #include <conio.h>
+  #endif
 #endif
 
 #include <ctype.h>

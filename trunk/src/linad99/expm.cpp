@@ -216,7 +216,7 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_uns
       sum=bb(i,j);
       for (k=lb;k<i;k++)
       {
-	sum -= bb(i,k)*bb(k,j);
+        sum -= bb(i,k)*bb(k,j);
       }
       //a[i][j]=sum;
       bb(i,j)=sum;
@@ -227,7 +227,7 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_uns
       sum=bb(i,j);
       for (k=lb;k<j;k++)
       {
-	sum -= bb(i,k)*bb(k,j);
+        sum -= bb(i,k)*bb(k,j);
       }
       bb(i,j)=sum;
       dum=vv[i]*fabs(sum);
@@ -267,7 +267,7 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_uns
       dum=1.0/bb(j,j);
       for (i=j+1;i<=ub;i++)
       {
-	bb(i,j) = bb(i,j) * dum;
+        bb(i,j) = bb(i,j) * dum;
       }
     }
   }
@@ -324,7 +324,6 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_uns
       }
       x(kk)(i)=sum/b(i,i);
     }
-
   }
   RETURN_ARRAYS_DECREMENT();
   return trans(x);

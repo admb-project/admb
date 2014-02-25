@@ -90,12 +90,12 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
       #if defined( __HP__)
         if (ireturn <= 0 )
         {
-	   signal(SIGINT, &onintr);
+          signal(SIGINT, &onintr);
         }
       #else
         if (ireturn <= 0 )
         {
-	   signal(SIGINT, (SIG_PF)&onintr);
+          signal(SIGINT, (SIG_PF)&onintr);
         }
       #endif
     #endif
@@ -106,7 +106,7 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
     #if defined( __GNU__)
       if (ireturn <= 0 )
       {
-	 signal(SIGINT, &onintr);
+        signal(SIGINT, &onintr);
       }
     #endif
   }
@@ -239,7 +239,7 @@ label20:
 label7003:
       if (iprint!=0)
       {
-	if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+        if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
               n, itn, ifn);
         if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
             f, gmax);
@@ -340,7 +340,7 @@ label30:
 #endif
        {
           #if !defined(__GNUDOS__)  || defined(UNIXKLUDGE)  || defined(linux) \
-	      || defined(__CYGWIN32__)
+          || defined(__CYGWIN32__)
             int c = toupper(getch());
           #else
             int c = toupper(getxkey());
@@ -486,7 +486,7 @@ label92:
       if (iprint>0)
       {
         if (ihang == 1)
-	   if (ad_printf) (*ad_printf)("Function minimizer not making progress ... is minimum attained?\n");
+          if (ad_printf) (*ad_printf)("Function minimizer not making progress ... is minimum attained?\n");
       }
       if(iexit == 2)
       {
@@ -504,7 +504,7 @@ label92:
       {
         if (iprint>0)
         {
-	  if (ad_printf) (*ad_printf)("Maximum number of function evaluations exceeded");
+          if (ad_printf) (*ad_printf)("Maximum number of function evaluations exceeded");
         }
       }
       if (iprint>0)
@@ -515,7 +515,7 @@ label92:
       if(iprint == 0) goto label777;
       if (ad_printf) (*ad_printf)(" - final statistics:\n");
       if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-	      n, itn, ifn);
+                       n, itn, ifn);
       if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
               f, gmax);
       if (ad_printf) (*ad_printf)("Exit code = %ld;  converg criter %12.4le\n",iexit,crit);

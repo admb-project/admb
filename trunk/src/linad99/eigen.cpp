@@ -36,7 +36,6 @@ dvector eigenvalues(const dmatrix& m)
   get_eigen(diag,off_diag,m1); // eigenvalues are returned in diag
            // eigenvalues are returned in columns of z
   return diag;
-
 }
 
 /** Householder transformation for eigenvalue computation.

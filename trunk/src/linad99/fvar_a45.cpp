@@ -53,8 +53,7 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)
   v2.save_dvar_vector_position();
   tmp.save_dvar_vector_position();
   save_identifier_string("a");
-  gradient_structure::GRAD_STACK1->
-	    set_gradient_stack(dvdv_elem_prod);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(dvdv_elem_prod);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
@@ -116,8 +115,7 @@ dvar_vector elem_prod(const dvector& v1, const dvar_vector& v2)
   v2.save_dvar_vector_position();
   tmp.save_dvar_vector_position();
   save_identifier_string("a");
-  gradient_structure::GRAD_STACK1->
-	    set_gradient_stack(cvdv_elem_prod);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(cvdv_elem_prod);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }
@@ -175,8 +173,7 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvector& v2)
   v2.save_dvector_position();
   tmp.save_dvar_vector_position();
   save_identifier_string("a");
-  gradient_structure::GRAD_STACK1->
-	    set_gradient_stack(dvcv_elem_prod);
+  gradient_structure::GRAD_STACK1->set_gradient_stack(dvcv_elem_prod);
   RETURN_ARRAYS_DECREMENT();
   return tmp;
 }

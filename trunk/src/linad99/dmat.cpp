@@ -467,7 +467,6 @@ dmatrix cube(const dmatrix& m)
      cout << " B " << ycounter << endl;
      test_the_pointer();
    }
-
 #ifdef  SAFE_ARRAYS
    else
    {

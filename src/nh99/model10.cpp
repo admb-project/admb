@@ -36,9 +36,8 @@ void param_init_bounded_number::sd_scale(const dvector& _d, const dvector& x, co
       else
         d(ii)=ndfboundp_mc(x(ii)/scalefactor,minb,maxb,pen)/scalefactor;
     }
-	
     //d(ii)=(boundp(x(ii)+1.e-6,minb,maxb,pen)-
-	//boundp(x(ii)-1.e-6,minb,maxb,pen))/2.e-6;
+    //boundp(x(ii)-1.e-6,minb,maxb,pen))/2.e-6;
     ii++;
   }
 
@@ -80,7 +79,7 @@ void param_init_matrix::sd_scale(const dvector& _v, const dvector& x, const int&
             if (scalefactor) v(ii)/=scalefactor;
             ii++;
           }
-	}
+        }
       }
     }
   }
@@ -117,7 +116,6 @@ void param_init_bounded_vector::sd_scale(const dvector& _v, const dvector& x, co
     }
   }
 
-
 void param_init_bounded_matrix::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
   {
     if (allocated(*this))
@@ -140,13 +138,12 @@ void param_init_bounded_matrix::sd_scale(const dvector& _v, const dvector& x, co
             else
               v(ii)=ndfboundp(x(ii)/scalefactor,minb,maxb,pen)/
                 scalefactor;
-	    ii++;
+            ii++;
           }
         }
       }
     }
   }
-
 
   void param_init_bounded_number::set_minb(double x)
   {

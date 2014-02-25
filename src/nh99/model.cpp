@@ -431,7 +431,6 @@ dvariable initial_params::reset(const dvector& x)
         ad_comm::global_bsavefile=NULL;
       }
     }
-
   }
 
   void initial_params::set_active_flag(void)
@@ -476,7 +475,7 @@ void param_init_number::set_value_inv(const dvector& x, const int& ii)
   {
     return 1;
   }
-  
+
   /**
    * Use a data_vector to allocate an init_bounded_number
    * \author Steve Martell

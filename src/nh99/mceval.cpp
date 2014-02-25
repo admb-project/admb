@@ -74,7 +74,6 @@ void function_minimizer::mcmc_eval(void)
       (*pifs_psave) >> y;
       if (pifs_psave->eof())
       {
-
         break;
       }
       int ii=1;

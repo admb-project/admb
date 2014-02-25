@@ -340,7 +340,7 @@ void ad_comm::allocate(void)
       else
       {
         tmpstring = adstring(argv[on+1]);
-	      wd_flag=1;
+        wd_flag=1;
       }
     }
   }
@@ -419,12 +419,12 @@ void ad_comm::allocate(void)
     {
       if (!(*global_bparfile))
       {
-	if (biopt>-1)
-	{
-	  cerr << "Error trying to open binary inoput par file "
-	       << tmpstring << endl;
-	  exit(1);
-	}
+        if (biopt>-1)
+        {
+          cerr << "Error trying to open binary inoput par file "
+               << tmpstring << endl;
+          exit(1);
+        }
         delete global_bparfile;
         global_bparfile=NULL;
       }
@@ -450,12 +450,12 @@ void ad_comm::allocate(void)
     {
       if (!(*global_parfile))
       {
-	if (aiopt>-1)
-	{
-	  cerr << "Error trying to open ascii inoput par file "
-	       << tmpstring << endl;
-	  exit(1);
-	}
+        if (aiopt>-1)
+        {
+          cerr << "Error trying to open ascii inoput par file "
+               << tmpstring << endl;
+          exit(1);
+        }
         delete global_parfile;
         global_parfile=NULL;
       }

@@ -85,7 +85,7 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
       {
         double tmp=(h(i,j)+h(j,i))/2.;
         h(i,j)=tmp;
-	h(j,i)=tmp;
+        h(j,i)=tmp;
       }
     }
 
@@ -158,7 +158,6 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
   //  cout << "finished S eigenvalues" << endl;
     //lndet2=sum(log(eig));
   //  cout << sort(eig) << endl << endl;
-
   }
  }
  else
@@ -167,7 +166,6 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
  }
  return lndet;
 }
-
 
 void function_minimizer::get_particular_grad(int iprof,int nvar, const dvector& fg, const dvector& g)
   {
@@ -237,8 +235,8 @@ void function_minimizer::prof_minimize(int iprof, double sigma,
               // parameters
        dvector g(1,nvar);
        independent_variables x(1,nvar);
-       initial_params::xinit(x);    // get the initial values into the
- 	   // x vector
+       // get the initial values into the x vector
+       initial_params::xinit(x);
        fmm fmc(nvar);
        fmc.maxfn= maxfn;
        fmc.iprint= iprint;
@@ -258,7 +256,7 @@ void function_minimizer::prof_minimize(int iprof, double sigma,
        }
        if (!(!maximum_function_evaluations))
        {
- 	int ind=min(maximum_function_evaluations.indexmax(),
+         int ind=min(maximum_function_evaluations.indexmax(),
            initial_params::current_phase);
          fmc.maxfn=int(maximum_function_evaluations(ind));
        }
@@ -285,15 +283,15 @@ void function_minimizer::prof_minimize(int iprof, double sigma,
          }
          if (fmc.ireturn>0)
          {
- 	  dvariable vf=0.0;
+           dvariable vf=0.0;
            vf=initial_params::reset(dvar_vector(x));
- 	  *objective_function_value::pobjfun=0.0;
+           *objective_function_value::pobjfun=0.0;
            userfunction();
            dvariable tv=likeprof_params::likeprofptr[iprof]->variable();
            vf+=weight*square(new_value-tv);
            vf+=*objective_function_value::pobjfun;
            f=value(vf);
- 	  gradcalc(nvar,g);
+           gradcalc(nvar,g);
          }
        }
        gradient_structure::set_NO_DERIVATIVES();

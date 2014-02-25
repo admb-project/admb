@@ -94,7 +94,6 @@ public:
  */
 class funnel_dependent_df1b2variable : public df1b2variable
 {
-  int assign_flag;
 public:
   double * get_u(void){ return df1b2variable::get_u();}
   void operator = (const df1b2variable&)

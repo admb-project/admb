@@ -35,5 +35,5 @@ int val(const adstring& s)
     code = 1;
   else
     code = 0;
-  return v;  
+  return v;
 }

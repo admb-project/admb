@@ -154,7 +154,6 @@ void cifstream::filter(void)
 
     while (testc == ' ' || testc == '\n' || testc == '\r')
       testc = bp->snextc();
-
   }
   if ( (!good()) || (testc == EOF))
   {

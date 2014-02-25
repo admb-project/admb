@@ -70,11 +70,10 @@ public:
 
   prnstream& operator<< (prnstream& (*fn)(prnstream &));
 //  prnstream& operator<< (ios& (*_f)(ios&));
-
 };
 
 inline prnstream& prnstream::operator<< (prnstream& (*_f)(prnstream &))
-		{ return (*_f)(*this); }
+  { return (*_f)(*this); }
 
 prnstream& endl(prnstream&);
 

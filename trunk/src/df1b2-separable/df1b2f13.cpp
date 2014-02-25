@@ -388,74 +388,73 @@ void memcpy(void * p,const fixed_smartlist & _list,int nsize)
   ADUNCONST(fixed_smartlist,list)
   if ( list.bptr+nsize-1 > list.buffend)
   {
-	    cerr << " Trying to write outside list buffer" << endl;
-	    exit(1);
-	  }
-	  memcpy(p,list.bptr,nsize);
-	  list.bptr+=nsize;
-	}
+    cerr << " Trying to write outside list buffer" << endl;
+    exit(1);
+  }
+  memcpy(p,list.bptr,nsize);
+  list.bptr+=nsize;
+}
 
-	void fixed_smartlist::operator -= (int n)
-	{
-	  if (bptr-n<buffer)
-	  {
-	    if (bptr != buffer)
-	    {
-	      cerr << " Sanity error in fixed_smartlist::operator -= (int)" << endl;
-	      exit(1);
-	    }
-	    else
-	    {
-	      // get previous record from the file
-	      read_buffer();
-	      bptr=recend-n+1;
-	    }
-	  }
-	  else
-	  {
-	    bptr-=n;
-	  }
-	}
+void fixed_smartlist::operator -= (int n)
+{
+  if (bptr-n<buffer)
+  {
+    if (bptr != buffer)
+    {
+      cerr << " Sanity error in fixed_smartlist::operator -= (int)" << endl;
+      exit(1);
+    }
+    else
+    {
+      // get previous record from the file
+      read_buffer();
+      bptr=recend-n+1;
+    }
+  }
+  else
+  {
+    bptr-=n;
+  }
+}
+void fixed_smartlist::operator -- (void)
+{
+  if (bptr-1<buffer)
+  {
+    if (bptr != buffer)
+    {
+      cerr << " Sanity error in fixed_smartlist::operator -= (int)" << endl;
+      exit(1);
+    }
+    else
+    {
+      // get previous record from the file
+      read_buffer();
+      //bptr=recend+1;
+      bptr=recend;
+    }
+  }
+  else
+  {
+    bptr--;
+  }
+}
 
-	void fixed_smartlist::operator -- (void)
-	{
-	  if (bptr-1<buffer)
-	  {
-	    if (bptr != buffer)
-	    {
-	      cerr << " Sanity error in fixed_smartlist::operator -= (int)" << endl;
-	      exit(1);
-	    }
-	    else
-	    {
-	      // get previous record from the file
-	      read_buffer();
-	      //bptr=recend+1;
-	      bptr=recend;
-	    }
-	  }
-	  else
-	  {
-	    bptr--;
-	  }
-	}
-
-	void fixed_smartlist::operator += (int nsize)
-	{
-	  if ( bptr+nsize-1 > buffend)
-	  {
-	    if (df1b2variable::get_passnumber()==2 && !noreadflag )
-	    {
-	      read_buffer();
-	    }
-	    else
-	    {
-	      if ((unsigned int)nsize>bufsize)
-	      {
-		 cout << "Need to increase buffsize in list" << endl;
-		 exit(1);
-	      }
-	      write_buffer();
+void fixed_smartlist::operator += (int nsize)
+{
+  if ( bptr+nsize-1 > buffend)
+  {
+    if (df1b2variable::get_passnumber()==2 && !noreadflag )
+    {
+      read_buffer();
+    }
+    else
+    {
+      if ((unsigned int)nsize>bufsize)
+      {
+        cout << "Need to increase buffsize in list" << endl;
+        exit(1);
+      }
+      write_buffer();
     }
   }
   else

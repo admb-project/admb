@@ -290,10 +290,8 @@ double laplace_approximation_calculator::
   inner_optimization_banded(/*dvector& uhat,*/ dvector& x,
   function_minimizer * pfmin,int& no_converge_flag)
 {
-  int reset_flag=0;
   if (no_converge_flag)
   {
-    reset_flag=1;
     no_converge_flag=0;
   }
 

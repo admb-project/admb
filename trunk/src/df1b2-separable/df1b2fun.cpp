@@ -103,7 +103,6 @@ void initial_df1b2params::restore_varsptr(void)
   }
   else
   {
-
     if (num_initial_df1b2params+num_initial_df1b2params_sav
      > 1000)
     {
@@ -231,7 +230,6 @@ void df1b2_gradcalc1(void)
                   << (nlist.buffer+122)->pf << endl;
         }
        */
-
     }
     while(nlist.bptr>=nlist.buffer);
     break;

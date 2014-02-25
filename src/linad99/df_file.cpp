@@ -157,9 +157,9 @@
         else
         {
           cerr << "Wrong number of options to -slave -- must be 1"
-            " you have " << nopt << endl;		
+            " you have " << nopt << endl;
           ad_exit(1);
-        }	
+        }
       }
     }
 #endif
@@ -352,8 +352,8 @@ void DF_FILE::read_cmpdif_stack_buffer(my_off_t & lpos)
     //if (write(file_ptr,buff,buff_size)<buff_size)
     for(unsigned int i=0;i<sizeof(unsigned int);i++)
     {
-	 *(buff+buff_end+1+i)=fourb[i]; // save the offset at the
-			//end of the used part of the buffer
+       // save the offset at the end of the used part of the buffer
+       *(buff+buff_end+1+i)=fourb[i];
     }
     if (write(file_ptr,buff,buff_size)<buff_size)
     {

@@ -266,8 +266,6 @@ void set_derivatives( df1_one_variable& z, const df1_one_variable& x,
 
     *z.get_u_x() = f_u* *x.get_u_x()
                  + f_v* *y.get_u_x();
-
-
 }
 
   df1_one_variable sqrt(const df1_one_variable& x)

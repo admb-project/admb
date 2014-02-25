@@ -16,7 +16,6 @@
  */
 dvector operator*(const dvector& t1, CGNU_DOUBLE x)
   {
-
      dvector tmp(t1.indexmin(),t1.indexmax());
 
      for (int i=t1.indexmin(); i<=t1.indexmax(); i++)

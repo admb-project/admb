@@ -292,7 +292,6 @@ double& dfsdmat::operator () (int i,int j)
  */
 uostream& operator<<(const uostream& ofs, const dfsdmat& m)
 {
-
   double * p=((dfsdmat&)m).getminp();
   int nn=((dfsdmat&)m).size();
   nn=(nn*(nn+1))/2;

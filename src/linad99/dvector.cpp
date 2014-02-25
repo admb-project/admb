@@ -244,7 +244,6 @@ dvector::dvector(const predvector& pdv)
  */
  dvector& dvector::operator = ( CGNU_DOUBLE x)
  {
-
    #ifdef DIAG
      myheapcheck("Entering dvector =");
    #endif
@@ -312,7 +311,6 @@ dvector& dvector::operator=(const dvector& t)
  */
  independent_variables& independent_variables::operator=(const dvector& t)
  {
-
    #ifdef DIAG
      myheapcheck("Entering dvector =");
    #endif

@@ -327,7 +327,7 @@ const dvector& d4_array::operator()(int i, int j, int k) const
       #ifdef SAFE_ARRAYS
         if (i<hslicemin()||i>hslicemax())
         { cerr << "Error hslice index out of bounds in\n"
-	    "dvector& d4_array::operator ( )" << endl;
+          "dvector& d4_array::operator ( )" << endl;
           ad_exit(1);
         }
       #endif
@@ -482,7 +482,6 @@ void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh,
     ivector ncl,ivector nch)
  {
    allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
-
  }
 
 /**

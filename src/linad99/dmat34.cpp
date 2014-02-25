@@ -107,7 +107,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
       sum=bb(i,j);
       for (k=lb;k<i;k++)
       {
-	sum -= bb(i,k)*bb(k,j);
+        sum -= bb(i,k)*bb(k,j);
       }
       //a[i][j]=sum;
       bb(i,j)=sum;
@@ -118,7 +118,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
       sum=bb(i,j);
       for (k=lb;k<j;k++)
       {
-	sum -= bb(i,k)*bb(k,j);
+        sum -= bb(i,k)*bb(k,j);
       }
       bb(i,j)=sum;
       dum=vv[i]*fabs(sum);
@@ -158,7 +158,7 @@ dvector solve(const dmatrix& aa,const dvector& z,
       dum=1.0/bb(j,j);
       for (i=j+1;i<=ub;i++)
       {
-	bb(i,j) = bb(i,j) * dum;
+        bb(i,j) = bb(i,j) * dum;
       }
     }
   }

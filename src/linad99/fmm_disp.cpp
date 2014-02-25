@@ -160,22 +160,22 @@ void fmmdisp(const dvector& x, const dvector& g,
         ij = cols*(i-1)+(j+1);
         if (ij <= nvar)
         {
-	  if (fabs(x[ij])<100)
-	  {
+          if (fabs(x[ij])<100)
+          {
             if (ad_printf) (*ad_printf)(format, ij, x[ij], g[ij]);
-	  }
-	  else if (fabs(x[ij])<1000)
-	  {
+          }
+          else if (fabs(x[ij])<1000)
+          {
             if (ad_printf) (*ad_printf)(format1, ij, x[ij], g[ij]);
-	  }
-	  else if (fabs(x[ij])<10000)
-	  {
+          }
+          else if (fabs(x[ij])<10000)
+          {
             if (ad_printf) (*ad_printf)(format2, ij, x[ij], g[ij]);
-	  }
-	  else
-	  {
+          }
+          else
+          {
             if (ad_printf) (*ad_printf)(format3, ij, x[ij], g[ij]);
-	  }
+          }
           if (j<cols-1)
           {
             if (ad_printf) (*ad_printf)(" |");
@@ -249,22 +249,22 @@ void fmmdisp(const double *x, const double *g,
         ij = cols*(i-1)+(j+1);
         if (ij <= nvar)
         {
-	  if (fabs(x[ij])<100)
-	  {
+          if (fabs(x[ij])<100)
+          {
             if (ad_printf) (*ad_printf)(format, ij, x[ij]);
-	  }
-	  else if (fabs(x[ij])<1000)
-	  {
+          }
+          else if (fabs(x[ij])<1000)
+          {
             if (ad_printf) (*ad_printf)(format1, ij, x[ij]);
-	  }
-	  else if (fabs(x[ij])<10000)
-	  {
+          }
+          else if (fabs(x[ij])<10000)
+          {
             if (ad_printf) (*ad_printf)(format2, ij, x[ij]);
-	  }
-	  else
-	  {
+          }
+          else
+          {
             if (ad_printf) (*ad_printf)(format3, ij, x[ij]);
-	  }
+          }
           if (j<cols-1)
           {
             if (ad_printf) (*ad_printf)(" |");

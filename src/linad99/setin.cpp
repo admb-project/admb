@@ -199,7 +199,7 @@ void set_value_inv_partial(const dvector& x, const dvector& _v, const int& _ii, 
     if (max >x.indexmax())
     {
       cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
-	   << endl;
+           << endl;
     }
   #endif
   for (int i=min;i<=max;i++)
@@ -223,7 +223,7 @@ void set_value_inv_partial(const dvector& x,const dvector& _v, const int& _ii, i
     if (max >x.indexmax())
     {
       cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
-	   << endl;
+           << endl;
     }
   #endif
   for (int i=min;i<=max;i++)
@@ -262,7 +262,7 @@ void set_value_inv_partial(const dvar_vector& x, const dvector& _v,
     if (max >x.indexmax())
     {
       cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
-	   << endl;
+           << endl;
     }
   #endif
   for (int i=min;i<=max;i++)
@@ -286,7 +286,7 @@ void set_value_inv_partial(const dvar_vector& x, const dvector& _v, const int& _
     if (max >x.indexmax())
     {
       cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
-	   << endl;
+           << endl;
     }
   #endif
   for (int i=min;i<=max;i++)

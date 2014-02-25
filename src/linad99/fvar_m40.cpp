@@ -175,13 +175,13 @@ ostream& operator<<(const ostream& _ofs, const banded_symmetric_dvar_matrix& S1)
     {
       if (j<i)
       {
-	j1=j;
-	i1=i;
+        j1=j;
+        i1=i;
       }
       else
       {
-	j1=i;
-	i1=j;
+        j1=i;
+        i1=j;
       }
       if ( (i1-j1) < bw)
         ofs << S(i1,j1) << " ";
@@ -373,12 +373,12 @@ banded_lower_triangular_dvar_matrix choleski_decomp(
 
       for (int i=1;i<=4;i++)
       {
-	N(i,i)=value(M(i,i));
+        N(i,i)=value(M(i,i));
         for (int j=1;j<i;j++)
         {
-	  N(i,j)=value(M(i,j));
-	  N(j,i)=value(M(i,j));
-	}
+          N(i,j)=value(M(i,j));
+          N(j,i)=value(M(i,j));
+        }
       }
       cout << N << endl;
       cout << eigenvalues(N) << endl;
@@ -566,13 +566,13 @@ dvar_matrix::dvar_matrix(const banded_symmetric_dvar_matrix& S1)
     {
       if (j<=i)
       {
-	j1=j;
-	i1=i;
+        j1=j;
+        i1=i;
       }
       else
       {
-	j1=i;
-	i1=j;
+        j1=i;
+        i1=j;
       }
       if ( (i1-j1) < bw)
         (*this)(i,j)=S(i1,j1);

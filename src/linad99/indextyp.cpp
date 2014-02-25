@@ -295,7 +295,6 @@ index_type::index_type(const imatrix& x)
  void i3_array::allocate(int sl,int sh,const index_type& nrl,
   const index_type& nrh,const index_type& ncl,const index_type& nch)
  {
-
    if (sl>sh)
    {
      allocate();

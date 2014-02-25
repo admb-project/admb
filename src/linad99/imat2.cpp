@@ -65,13 +65,13 @@ const int& imatrix::operator()(int i, int j) const
      if (j<(*this)(i).indexmin())
      {
        cerr << "matrix bound exceeded -- column index too low in imatrix::operator()(int, int)"
-	     << "\nvalue was " << j << endl;
+            << "\nvalue was " << j << endl;
        ad_exit(21);
      }
      if (j>(*this)(i).indexmax())
      {
        cerr << "matrix bound exceeded -- column index too high in imatrix::operator()(int, int)"
-	     << "\nvalue was " << j << endl;
+            << "\nvalue was " << j << endl;
        ad_exit(22);
      }
    #endif

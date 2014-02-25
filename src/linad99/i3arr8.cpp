@@ -22,12 +22,12 @@ const int& i3_array::operator()(int k, int i, int j) const
       #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
-	  cerr << "array bound exceeded -- slice index too low in i3_array::operator(int,int)";
+          cerr << "array bound exceeded -- slice index too low in i3_array::operator(int,int)";
           ad_exit(1);
         }
         if (k>slicemax())
         {
-	  cerr << "array bound exceeded -- slice index too high in i3_array::operator(int,int)";
+          cerr << "array bound exceeded -- slice index too high in i3_array::operator(int,int)";
           ad_exit(1);
         }
       #endif
@@ -43,12 +43,12 @@ const ivector& i3_array::operator()(int k, int i) const
       #ifdef SAFE_ARRAYS
         if (k<slicemin())
         {
-	  cerr << "array bound exceeded -- slice index too low in i3_array::operator(int,int)";
-	  ad_exit(1);
+          cerr << "array bound exceeded -- slice index too low in i3_array::operator(int,int)";
+          ad_exit(1);
         }
         if (k>slicemax())
         {
-	  cerr << "array bound exceeded -- slice index too high in i3_array::operator(int,int)";
+          cerr << "array bound exceeded -- slice index too high in i3_array::operator(int,int)";
           ad_exit(1);
         }
       #endif

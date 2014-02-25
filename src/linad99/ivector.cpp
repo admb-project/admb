@@ -100,8 +100,7 @@ ivector::~ivector()
    }
    else
    {
-     //cerr << "Warning -- trying to deallocate an unitialized ivector"
-//	   << endl;
+     //cerr << "Warning -- trying to deallocate an unitialized ivector" << endl;
    }
    shape=NULL;
  }
@@ -116,7 +115,7 @@ ivector::ivector(const ivector& t)
    index_max=t.index_max;
    #ifdef DIAG
     cout << "Copy constructor called for ivector with address "
-	 << _farptr_tolong(t.v) <<"\n";
+         << _farptr_tolong(t.v) <<"\n";
    #endif
    shape=t.shape;
    if (shape)
@@ -136,7 +135,7 @@ void ivector::shallow_copy(const ivector& t)
    index_max=t.index_max;
    #ifdef DIAG
     cout << "Copy constructor called for ivector with address "
-	 << _farptr_tolong(t.v) <<"\n";
+         << _farptr_tolong(t.v) <<"\n";
    #endif
    shape=t.shape;
    if (shape)
@@ -246,7 +245,7 @@ ivector::ivector(const dvector& u)
    if (itemp<0)
    {
      //cerr << "Error in ivector constructor max index must be >= minindex\n"
-	//  << "minindex = " << ncl << " maxindex = " << nch <<endl;
+     //  << "minindex = " << ncl << " maxindex = " << nch <<endl;
      //ad_exit(1);
      allocate();
    }

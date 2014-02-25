@@ -285,8 +285,8 @@ const i3_array& i4_array::operator()(int i) const
 #     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
       {
-	cerr << "Index out of bounds in i4_array::operator () (int)"
-	     << endl;
+        cerr << "Index out of bounds in i4_array::operator () (int)"
+             << endl;
         ad_exit(1);
       }
 #     endif
@@ -302,8 +302,8 @@ const i3_array& i4_array::operator[](int i) const
 #     if defined(SAFE_ARRAYS)
       if (i<indexmin() || i>indexmax())
       {
-	cerr << "Index out of bounds in i4_array::operator () (int)"
-	     << endl;
+        cerr << "Index out of bounds in i4_array::operator () (int)"
+             << endl;
         ad_exit(1);
       }
 #     endif

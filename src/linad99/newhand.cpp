@@ -52,6 +52,5 @@ void ad_set_new_handler (void)
 #else
   set_new_handler (adnewhandler);
 #endif
-
 }
 #endif

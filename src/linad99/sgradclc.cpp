@@ -248,7 +248,7 @@ void gradient_structure::save_arrays()
    {
      gradient_structure::save_var_file_flag=1;
      cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCK"
-	  << " save buffer " << endl;
+          << " save buffer " << endl;
    }
    if (gradient_structure::save_var_file_flag==0)
    {
@@ -257,7 +257,7 @@ void gradient_structure::save_arrays()
      //#if DOS386==1
        #ifndef USE_ASSEMBLER
          memcpy((char*)ARRAY_MEMBLOCK_SAVE,(char*)ARRAY_MEMBLOCK_BASE,
-	   bytes_needed);
+           bytes_needed);
        #else
          dw_block_move((double*)ARRAY_MEMBLOCK_SAVE,
            (double*)ARRAY_MEMBLOCK_BASE,bytes_needed/8);
@@ -312,7 +312,7 @@ void gradient_structure::restore_arrays()
     //#if DOS386==1
       #ifndef USE_ASSEMBLER
         memcpy((char*)ARRAY_MEMBLOCK_BASE,(char*)ARRAY_MEMBLOCK_SAVE,
-	  bytes_needed);
+          bytes_needed);
        #else
          dw_block_move((double*)ARRAY_MEMBLOCK_BASE,
            (double*)ARRAY_MEMBLOCK_SAVE,bytes_needed/8);
@@ -366,15 +366,15 @@ void gradient_structure::save_variables()
   if ((variables_save = new double[gradient_structure::MAX_DLINKS])==NULL)
   {
     //_VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT | O_TRUNC ,
-    //		     S_IREAD | S_IWRITE);
+    //               S_IREAD | S_IWRITE);
     cerr << "insufficient memory to allocate space for dvariables"
-	 << " save buffer " << endl;
+         << " save buffer " << endl;
     ad_exit(1);
   }
   for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
     //variables_save[i]= * (double*)
-    //	  (gradient_structure::GRAD_LIST->dlink_addresses[i]);
+    //    (gradient_structure::GRAD_LIST->dlink_addresses[i]);
     memcpy(&(variables_save[i]),
        gradient_structure::GRAD_LIST->dlink_addresses[i],sizeof(double));
   }
@@ -387,7 +387,7 @@ void gradient_structure::restore_variables()
   for (unsigned int i=0; i<gradient_structure::GRAD_LIST->nlinks; i++)
   {
     //* (double*)(gradient_structure::GRAD_LIST->dlink_addresses[i])
-    //	= variables_save[i];
+    //  = variables_save[i];
     memcpy(gradient_structure::GRAD_LIST->dlink_addresses[i],
        &(variables_save[i]),sizeof(double));
   }

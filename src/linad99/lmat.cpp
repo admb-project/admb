@@ -54,8 +54,8 @@
  */
  void lmatrix::allocate(int nrl,int nrh,const ivector& ncl,const ivector& nch)
  {
-   if ( (shape = new mat_shape(nrl,nrh,ncl(ncl.indexmin()),
-					       nch(nch.indexmin()) ))== 0)
+   if ((shape = new mat_shape(nrl,nrh,ncl(ncl.indexmin()),
+                      nch(nch.indexmin()) ))== 0)
    {
      cerr << " Error allocating memory in lmatrix contructor\n";
      ad_exit(21);

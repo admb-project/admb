@@ -576,7 +576,6 @@ void set_derivatives( df3_three_variable& z,const df3_three_variable& x,double u
     *z.get_u_zzz() = zp3 * cube(*x.get_u_z())
                    + 3.0 * zp2 * *x.get_u_z() * *x.get_u_zz()
                    + zp * *x.get_u_zzz();
-
 }
 
 /**
@@ -819,7 +818,6 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
                    + 3.0 * f_uvv * *x.get_u_z()* square(*y.get_u_z())
                    + 3.0 * f_uv * *x.get_u_zz() * *y.get_u_z()
                    + 3.0 * f_uv * *x.get_u_z() * *y.get_u_zz();
-
 }
 
 /**
@@ -1019,7 +1017,6 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
  */
   df3_three_variable& df3_three_variable::operator = (double x)
   {
-
     *get_u() =x;
     *get_u_x() =0.0;
     *get_u_y() =0.0;

@@ -108,9 +108,7 @@ void function_minimizer::trust_region_update(int nvar,int _crit,
     initial_df1b2params::reset_all(y);
 
     g=(*lapprox)(step,f,this);
-
   }
-
 } // end block for quasi newton minimization
 
 #endif

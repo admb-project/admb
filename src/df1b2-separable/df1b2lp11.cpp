@@ -258,7 +258,6 @@ void laplace_approximation_calculator::
       cout << " angle = " << step*grad/(norm(step)*norm(grad)) << endl;
     }
     int iic=0;
-    int ibad=0;
     double testangle=-1;
     int extra_try=0;
     dvector utry(1,usize);
@@ -267,7 +266,6 @@ void laplace_approximation_calculator::
     {
       if (++iic>10)
       {
-        ibad=1;
         break;
       }
       if (extra_try==0)

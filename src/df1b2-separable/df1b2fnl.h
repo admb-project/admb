@@ -152,7 +152,6 @@ public:
   virtual void set_index(imatrix&,int& ii);
 };
 
-
 /**
  * Description not yet available.
  * \param
@@ -174,7 +173,6 @@ public:
   virtual void allocate(void);
 };
 
-
 /**
  * Description not yet available.
  * \param
@@ -194,7 +192,4 @@ public:
   virtual void set_value(const init_df1b2vector&, const int&){ cout << "here"<< endl;}
   virtual void set_index(imatrix&,int& ii);
 };
-
-
-
 #endif  //  #if !defined(__DF1B2FNL__)

@@ -2775,7 +2775,6 @@ dvector laplace_approximation_calculator::get_uhat_lm_newton2
       gradcalc(usize,g);
       //cout << " f = " << setprecision(17) << f << " " << norm(g)
        // << " " << norm(u) << endl;
-
     }
     u=ub;
   }

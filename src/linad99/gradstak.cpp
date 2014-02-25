@@ -159,9 +159,9 @@ grad_stack::grad_stack()
       else
       {
         cerr << "Wrong number of options to -slave -- must be 1"
-            " you have " << nopt << endl;		
+            " you have " << nopt << endl;
         ad_exit(1);
-      }	
+      }
     }
   }
 #endif
@@ -197,12 +197,12 @@ grad_stack::grad_stack()
   {
 #if defined (__SUN__) ||  defined (__GNU__)  || defined(linux)
     if (strlen(path) > 0)
-    {    	
+    {
       sprintf(&var_store_file_name[0],"%s/varssave.%s",path, ad_random_part);
       sprintf(&gradfile_name2[0],"%s/gradfil2.%s", path, ad_random_part);
     }
     else
-    {    	
+    {
       sprintf(&var_store_file_name[0],"varssave.tmp");
       sprintf(&gradfile_name2[0],"gradfil2.tmp");
     }
@@ -329,21 +329,21 @@ grad_stack::~grad_stack()
 
       if  (ierr != nbw)
       {
-	perror("Error writing to temporary gradient stack file");
-	cerr <<"   File name: " << gradfile_name << "\n";
-	#if !defined(__NDPX__ ) && !defined(__SUN__)   && !defined(__GNU__)
-	cerr <<"   File length: "
-	   << filelength(_GRADFILE_PTR)
-           << " bytes.\n";
-	#endif
-	cerr <<"   Attempting to write " << nbw <<" bytes; wrote " << ierr << ".\n";
-	exit(1);
+        perror("Error writing to temporary gradient stack file");
+        cerr <<"   File name: " << gradfile_name << "\n";
+        #if !defined(__NDPX__ ) && !defined(__SUN__)   && !defined(__GNU__)
+        cerr <<"   File length: "
+             << filelength(_GRADFILE_PTR)
+             << " bytes.\n";
+        #endif
+        cerr <<"   Attempting to write " << nbw <<" bytes; wrote " << ierr << ".\n";
+        exit(1);
       }
     }
     else
     {
       #ifdef GRAD_DIAG
-	cout << "Wrote " << ierr << "bytes into temp. grad. file\n";
+      cout << "Wrote " << ierr << "bytes into temp. grad. file\n";
       #endif
     }
 
@@ -351,7 +351,7 @@ grad_stack::~grad_stack()
     {
       long int lpos = lseek(gradient_structure::_GRADFILE_PTR,0L,SEEK_CUR);
       cout << "Offset in file after write is " << lpos
-				      << " bytes from the beginning\n";
+           << " bytes from the beginning\n";
     }
     #endif
     gradient_structure::TOTAL_BYTES+=nbw; //keep track of the size of the grad_stack
@@ -373,9 +373,9 @@ void grad_stack::create_gradfile()
 
   #elif defined (__ZTC__)
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
-	O_TRUNC , S_IREAD | S_IWRITE);
+      O_TRUNC , S_IREAD | S_IWRITE);
     _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT
-	| O_TRUNC,  S_IREAD | S_IWRITE);
+      | O_TRUNC,  S_IREAD | S_IWRITE);
 
   #elif defined (__NDPX__)
     _GRADFILE_PTR1=creat(gradfile_name1, O_RDWR);
@@ -390,13 +390,13 @@ void grad_stack::create_gradfile()
 
   #elif (defined (__GNUDOS__) && !defined(__GNU__))
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
-		O_BINARY ,   0777);
+      O_BINARY ,   0777);
     _VARSSAV_PTR=open(var_store_file_name, O_RDWR |
       O_CREAT | O_TRUNC | O_BINARY, 0777);
 
   #elif defined (_MSC_VER)
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
-		O_BINARY ,   0777);
+      O_BINARY ,   0777);
     _VARSSAV_PTR=open(var_store_file_name, O_RDWR |
       O_CREAT | O_TRUNC | O_BINARY, 0777);
 
@@ -426,28 +426,28 @@ void grad_stack::create_gradfile()
 
   #if defined (__TURBOC__)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
-		     O_BINARY, S_IREAD | S_IWRITE);
+      O_BINARY, S_IREAD | S_IWRITE);
   #elif defined (__ZTC__)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC ,
-		     S_IREAD | S_IWRITE);
+      S_IREAD | S_IWRITE);
   #elif defined (__NDPX__)
     _GRADFILE_PTR2=creat(gradfile_name2, O_RDWR);
 
   #elif ( defined (__SUN__) ||  defined (__GNU__) )
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
-		O_BINARY , 0777);
+      O_BINARY , 0777);
 
   #elif (defined (__GNUDOS__) && !defined (__GNU__))
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
-		O_BINARY , 0777);
+      O_BINARY , 0777);
 
   #elif defined (_MSC_VER)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
-		     O_BINARY, S_IREAD | S_IWRITE);
+      O_BINARY, S_IREAD | S_IWRITE);
 
   #elif defined (__WAT32__)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
-		     O_BINARY, S_IREAD | S_IWRITE);
+      O_BINARY, S_IREAD | S_IWRITE);
   #else
     xxxx  // need to define this for this compiler
   #endif

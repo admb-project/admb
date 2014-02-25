@@ -248,8 +248,6 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
 
     unsigned int size = sizeof(double_and_int );
 
-    double * zptr;
-
     for (i=0 ; i< (max_last_offset/size) ; i++ )
     {
       tmp->x = 0;
@@ -269,11 +267,9 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
     }
 
     * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
-    zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
     //double z;
     int break_flag=1;
-
     do
     {
       gradient_structure::GRAD_STACK1->ptr++;
@@ -282,7 +278,7 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
       #else
         //int counter=0;
       while (gradient_structure::GRAD_STACK1->ptr-- >
-    		gradient_structure::GRAD_STACK1->ptr_first)
+             gradient_structure::GRAD_STACK1->ptr_first)
       {
         grad_ptr = gradient_structure::GRAD_STACK1->ptr;
         {
@@ -298,7 +294,6 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
 
        break_flag=gradient_structure::
                   GRAD_STACK1->read_grad_stack_buffer(lpos);
-
     }  while (break_flag); // do
 
     int mindx = g.indexmin();
@@ -310,7 +305,6 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
     }
     gradient_structure::GRAD_STACK1->ptr =
          gradient_structure::GRAD_STACK1->ptr_first;
-
   }// loop over dep vars
   DEPVARS_INFO->depvar_count=0;
   if (gradient_structure::save_var_flag)

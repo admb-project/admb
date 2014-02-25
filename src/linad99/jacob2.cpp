@@ -237,7 +237,7 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
       #else
         //int counter=0;
       while (gradient_structure::GRAD_STACK1->ptr-- >
-    		gradient_structure::GRAD_STACK1->ptr_first)
+             gradient_structure::GRAD_STACK1->ptr_first)
       {
         grad_ptr = gradient_structure::GRAD_STACK1->ptr;
         {
@@ -253,7 +253,6 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
 
        break_flag=gradient_structure::
                   GRAD_STACK1->read_grad_stack_buffer(lpos);
-
     }  while (break_flag); // do
 
     int mindx = g.indexmin();

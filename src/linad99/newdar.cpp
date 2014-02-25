@@ -231,7 +231,6 @@ double_and_int * arr_new(unsigned int sz)
 
 //  return  (double_and_int *) (temp_ptr+sizeof(double_and_int));
   return  (double_and_int *) (temp_ptr);
-
 }
 
 /**

@@ -16,7 +16,7 @@
  */
 dvariable cumd_logistic(const prevariable& x)
 {
-  if (value(x)>=0.0)	
+  if (value(x)>=0.0)
   {
     return 1.0/(1.0+exp(-x));
   }

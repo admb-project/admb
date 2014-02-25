@@ -178,7 +178,6 @@ dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x, 
     dfa-=dfaa(i)*aa(i)/(a+m2);
     dfqam-=dfaa(i)*aa(i)/(qam+m2);
     dfaa(i)=0.0;
-
   }
   /*
   c1(0)=1.0;

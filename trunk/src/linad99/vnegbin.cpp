@@ -30,24 +30,24 @@
       cerr << "tau <=1 in log_negbinomial_density " << endl;
       ad_exit(1);
     }
-    RETURN_ARRAYS_INCREMENT();	
+    RETURN_ARRAYS_INCREMENT();
     dvariable r=mu/(1.e-120+(tau-1));
     dvariable tmp;
     tmp=gammln(x+r)-gammln(r) -gammln(x+1)
       +r*log(r)+x*log(mu)-(r+x)*log(r+mu);
-    RETURN_ARRAYS_DECREMENT();	
+    RETURN_ARRAYS_DECREMENT();
     return tmp;
   }
 
-	/** Negative bionomial density; variable objects.
-	A local parameter r is used to make it robust.
-	\f$ r=\frac{\mu}{10.0^{-120}+\tau-1.0} \f$
-	\ingroup PDF
-	\param x
-	\param mu
-	\param tau
-	\return Log of NegativeBinomial density. \f$ \frac{\Gamma(x+r)}{\Gamma(r)x!}(\frac{r}{r+\mu})^r(\frac{\mu}{r+\mu})^x \f$
-	*/
+/** Negative bionomial density; variable objects.
+A local parameter r is used to make it robust.
+\f$ r=\frac{\mu}{10.0^{-120}+\tau-1.0} \f$
+\ingroup PDF
+\param x
+\param mu
+\param tau
+\return Log of NegativeBinomial density. \f$ \frac{\Gamma(x+r)}{\Gamma(r)x!}(\frac{r}{r+\mu})^r(\frac{\mu}{r+\mu})^x \f$
+*/
   dvariable negbinomial_density(double x,const prevariable& mu,
     const prevariable& tau)
   {
@@ -56,7 +56,7 @@
       cerr << "tau <=1 in log_negbinomial_density " << endl;
       ad_exit(1);
     }
-    RETURN_ARRAYS_INCREMENT();	
+    RETURN_ARRAYS_INCREMENT();
     dvariable r=mu/(1.e-120+(tau-1));
     dvariable tmp;
     //tmp=exp(gammln(x+r)-gammln(r) -gammln(x+1)
@@ -70,7 +70,7 @@
     tmp=exp(tmp);
 
 
-    RETURN_ARRAYS_DECREMENT();	
+    RETURN_ARRAYS_DECREMENT();
     return tmp;
   }
 

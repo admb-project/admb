@@ -225,9 +225,9 @@ void allocate_dvariable_space(void)
     else
     {
       cerr << "Wrong number of options to -mdl -- must be 1"
-        " you have " << nopt << endl;		
+        " you have " << nopt << endl;
       ad_exit(1);
-    }	
+    }
   }
   int numlinks=gradient_structure::MAX_DLINKS;
   cout << sizeof(dlink) << endl;
@@ -289,17 +289,17 @@ void allocate_dvariable_space(void)
    if (path != NULL)
    {
      #ifdef __SUN__
-	sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
+     sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
           ad_random_part);
      #else
         if (lastchar(path)!='\\')
         {
-	  sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
+          sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
             ad_random_part);
         }
         else
         {
-	  sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
+          sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
             ad_random_part);
         }
      #endif
@@ -461,9 +461,9 @@ void allocate_dvariable_space(void)
         else
         {
           cerr << "Wrong number of options to -mno -- must be 1"
-            " you have " << nopt << endl;		
+            " you have " << nopt << endl;
           ad_exit(1);
-        }	
+        }
       }
 
  // ****************************************************************
@@ -488,8 +488,8 @@ void allocate_dvariable_space(void)
       //allocate_dvariable_space();
       for (i=0; i< NUM_RETURN_ARRAYS; i++)
       {
-	 RETURN_ARRAYS[i]=new dvariable[RETURN_ARRAYS_SIZE];
-	 memory_allocate_error("RETURN_ARRAYS[i]",RETURN_ARRAYS[i]);
+        RETURN_ARRAYS[i]=new dvariable[RETURN_ARRAYS_SIZE];
+        memory_allocate_error("RETURN_ARRAYS[i]",RETURN_ARRAYS[i]);
       }
       RETURN_ARRAYS_PTR=0;
       MIN_RETURN = RETURN_ARRAYS[RETURN_ARRAYS_PTR];
@@ -528,7 +528,7 @@ void RETURN_ARRAYS_INCREMENT(void)
   }
       gradient_structure::MIN_RETURN = gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
       gradient_structure::MAX_RETURN = gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
-	      gradient_structure::RETURN_ARRAYS_SIZE-1;
+      gradient_structure::RETURN_ARRAYS_SIZE-1;
       gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
 #if defined(THREAD_SAFE)
   pthread_mutex_unlock(&mutex_return_arrays);
@@ -578,8 +578,8 @@ gradient_structure::~gradient_structure()
    {
      for (int i=0; i< NUM_RETURN_ARRAYS; i++)
      {
-	delete [] RETURN_ARRAYS[i];
-	RETURN_ARRAYS[i]=NULL;
+       delete [] RETURN_ARRAYS[i];
+       RETURN_ARRAYS[i]=NULL;
      }
      delete [] RETURN_ARRAYS;
      RETURN_ARRAYS = NULL;

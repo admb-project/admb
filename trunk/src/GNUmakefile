@@ -56,7 +56,7 @@ else
 endif
 
 ifneq ($(CXX),CC)
-ADCXXFLAGS:= -Wall -Wextra $(ADCXXFLAGS)
+ADCXXFLAGS:= -Wall -Wextra -Wno-unused-parameter $(ADCXXFLAGS)
 endif
 
 ADCXXFLAGS:= $(ADCXXFLAGS) -DSAFE_ALL -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE

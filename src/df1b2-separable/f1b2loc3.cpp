@@ -105,7 +105,6 @@ void local_init_pass1_var::allocate_all(void)
           df1b2variable::increment_adpool_counter();
           df1b2variable::pool->on_adpool_vector()=1;
         }
-
       }
     }
   }

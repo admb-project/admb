@@ -61,11 +61,11 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
     for (j=i-bw+1;j<=i-1;j++)
     {
       if (j>1)
-      {	
+      {
         tmp=M(i,j);
         for (k=i-bw+1;k<=j-1;k++)
         {
-	  if (k>0 && k>j-bw)
+          if (k>0 && k>j-bw)
             tmp-=L(i,k)*L(j,k);
         }
         L(i,j)=tmp/L(j,j);
@@ -74,7 +74,7 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
     tmp=M(i,i);
     for (k=i-bw+1;k<=i-1;k++)
     {
-      if (k>0)	
+      if (k>0)
         tmp-=L(i,k)*L(i,k);
     }
     if (tmp<=0)
@@ -128,7 +128,6 @@ dvector get_solution_vector(int npts);
  */
 void function_minimizer::hess_routine_noparallel_random_effects(void)
 {
-
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
@@ -361,7 +360,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       for (int i=1;i<=nvar;i++)
       {
         cout << "Estimating row " << i << " out of " << nvar
-  	   << " for hessian" << endl;
+             << " for hessian" << endl;
 
         for (int j=-npts;j<=npts;j++)
         {
@@ -492,7 +491,6 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
  */
 void function_minimizer::hess_routine_slave_random_effects(void)
 {
-
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);

@@ -234,7 +234,6 @@ void laplace_approximation_calculator::
         int i1=list(lrei,1);
         local_grad(i)*=scale(i1-xsize);
       }
-
     }
 
     double mg=max(fabs(local_grad));

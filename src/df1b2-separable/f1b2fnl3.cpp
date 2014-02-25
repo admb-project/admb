@@ -110,22 +110,22 @@ void laplace_approximation_calculator::
 void laplace_approximation_calculator::
   do_separable_stuff_laplace_approximation_block_diagonal(df1b2variable& ff)
 {
-  set_dependent_variable(ff);			// Initializs "dot_bar" for reverse mode AD			
+  set_dependent_variable(ff);// Initializs "dot_bar" for reverse mode AD
   df1b2_gradlist::set_no_derivatives();
   df1b2variable::passnumber=1;
-  df1b2_gradcalc1();				// Forward mode AD follow by a series of reverse sweeps
+  df1b2_gradcalc1();// Forward mode AD follow by a series of reverse sweeps
 
   init_df1b2vector & locy= *funnel_init_var::py; // Independent variables for separable function
-  imatrix& list=*funnel_init_var::plist;	 // Index into "locy"
+  imatrix& list=*funnel_init_var::plist; // Index into "locy"
 
-  int i; int j; int us=0; int xs=0;		 // us = #u's and xs = #x's
+  int i; int j; int us=0; int xs=0; // us = #u's and xs = #x's
   ivector lre_index(1,funnel_init_var::num_active_parameters);
   ivector lfe_index(1,funnel_init_var::num_active_parameters);
 
   // count to find us and xs, and find indexes of fixed and random effects
   for (i=1;i<=funnel_init_var::num_active_parameters;i++)
   {
-    if (list(i,1)>xsize) 	// x's are stored first in the joint vector
+    if (list(i,1)>xsize) // x's are stored first in the joint vector
     {
       lre_index(++us)=i;
     }
@@ -183,9 +183,9 @@ void laplace_approximation_calculator::
     //if (initial_df1b2params::separable_calculation_type==3)
     {
     //int nvar=us*us;
-    double f;				// 0.5*log(det(local_Hess))
+    double f;// 0.5*log(det(local_Hess))
     dmatrix Hessadjoint=get_gradient_for_hessian_calcs(local_Hess,f);
-    initial_df1b2params::cobjfun+=f;  	// Adds 0.5*log(det(local_Hess))
+    initial_df1b2params::cobjfun+=f;  // Adds 0.5*log(det(local_Hess))
 
     for (i=1;i<=us;i++)
     {

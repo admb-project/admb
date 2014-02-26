@@ -16,7 +16,6 @@
  */
 void grad_chk(void)
 {
-
   if(gradient_structure::GRAD_STACK1->ptr
        <= gradient_structure::GRAD_STACK1->ptr_first)
   {

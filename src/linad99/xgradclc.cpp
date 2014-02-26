@@ -199,7 +199,6 @@ do
         GRAD_STACK1->length)),SEEK_CUR);
 
   break_flag=gradient_structure::GRAD_STACK1->read_grad_stack_buffer(lpos);
-
 }  while (break_flag); // do
 
  {

@@ -212,7 +212,6 @@ void derch(const double& _f, const independent_variables & _x, const dvector& _g
         }
       }
 #endif
-
     } // for loop
   } // while (j > 0)
 //  ireturn = 2;

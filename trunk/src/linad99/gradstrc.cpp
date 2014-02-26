@@ -230,7 +230,7 @@ void allocate_dvariable_space(void)
     }
   }
   unsigned int numlinks=gradient_structure::MAX_DLINKS;
-  cout << sizeof(dlink) << endl;
+  //cout << sizeof(dlink) << endl;
 
   if (sizeof(char)!=1)
   {

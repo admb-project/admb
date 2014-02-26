@@ -244,12 +244,13 @@ typedef doublereal E_f;	/* real function with -R not specified */
 #undef vax
 #endif
 #endif
-dvariable mvbvu_(const dvariable *sh,const  dvariable *sk,
-  const dvariable  *r__);
 
 #ifdef __cplusplus
 }
 #endif
+
+dvariable mvbvu_(const dvariable *sh,const  dvariable *sk,
+  const dvariable  *r__);
 
 /** Cumulative bivariate normal distribution.
   Assumes two distributions X and Y both N(0,1).
@@ -290,10 +291,8 @@ dvariable cumbvn(const dvariable& xl,const dvariable& yl,
   return my;
 }
 
+dvariable mvphi_(dvariable*);
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 dvariable mvbvu_(const dvariable *sh,const dvariable *sk,const dvariable *r__)
 {
   //cout << " " << *r__;
@@ -354,7 +353,6 @@ dvariable mvbvu_(const dvariable *sh,const dvariable *sk,const dvariable *r__)
     static integer i__;
     //static doublereal k;
     /*static*/ dvariable k;
-    extern dvariable mvphi_(dvariable *);
     static integer lg;
     //static doublereal as;
     /*static*/ dvariable as;
@@ -578,7 +576,3 @@ dvariable mvphi_(dvariable *z__)
     RETURN_ARRAYS_DECREMENT();
     return ret_val;
 } /* mvphi_ */
-
-#ifdef __cplusplus
-	}
-#endif

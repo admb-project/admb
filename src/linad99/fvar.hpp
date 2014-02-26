@@ -1099,7 +1099,7 @@ class gradient_structure
    static int save_var_file_flag;
    static int save_var_flag;
 
-   static int MAX_DLINKS;
+   static unsigned int MAX_DLINKS;
    static indvar_offset_list *INDVAR_LIST;
    static int NUM_DEPENDENT_VARIABLES;
    static dependent_variables_information *DEPVARS_INFO;

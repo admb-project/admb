@@ -117,7 +117,7 @@ grad_stack * gradient_structure::GRAD_STACK1;
 indvar_offset_list * gradient_structure::INDVAR_LIST = NULL;
 arr_list * gradient_structure::ARR_LIST1 = NULL;
 arr_list * gradient_structure::ARR_FREE_LIST1 = NULL;
-int gradient_structure::MAX_DLINKS = 5000;
+unsigned int gradient_structure::MAX_DLINKS = 5000;
 
 // note: ARRAY_MEMBLOCK stuff is set by tpl2cpp for historical reasons
 //       those settings could be moved into this file in the future
@@ -229,7 +229,7 @@ void allocate_dvariable_space(void)
       ad_exit(1);
     }
   }
-  int numlinks=gradient_structure::MAX_DLINKS;
+  unsigned int numlinks=gradient_structure::MAX_DLINKS;
   cout << sizeof(dlink) << endl;
 
   if (sizeof(char)!=1)
@@ -251,7 +251,7 @@ void allocate_dvariable_space(void)
   dlink * prev=dl;
   int& nlinks=(int&)gradient_structure::GRAD_LIST->nlinks;
   gradient_structure::GRAD_LIST->dlink_addresses[nlinks++]=dl;
-  for (int i=1;i<=numlinks;i++)
+  for (unsigned int i=1;i<=numlinks;i++)
   {
     dl=(dlink*)tmp1;
     dl->prev=prev;

@@ -226,5 +226,5 @@ void gradient_structure::set_MAX_NVAR_OFFSET(unsigned int i)
 void gradient_structure::set_MAX_DLINKS(int i)
 {
   check_set_error("MAX_DLINKS");
-  MAX_DLINKS = i;
+  MAX_DLINKS = i > 0 ? i : 0;
 }

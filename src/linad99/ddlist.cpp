@@ -163,7 +163,7 @@ Get total addresses stored.
 size_t dlist::total_addresses() const
 {
   size_t total = 0;
-  for (int i = 0; i < gradient_structure::MAX_DLINKS; ++i)
+  for (unsigned int i = 0; i < gradient_structure::MAX_DLINKS; ++i)
   {
     if (dlink_addresses[i] != 0)
     {

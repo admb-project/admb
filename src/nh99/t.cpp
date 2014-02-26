@@ -390,6 +390,8 @@ L40:
 } /* xdaxpy_ */
 
 
+dvariable xddot_(integer *n,const dvar_vector & dx, integer *incx,const dvar_vector & dy, integer *incy);
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -437,7 +439,6 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
     /* Local variables */
     static dvariable beta;
     static integer inmc;
-    extern dvariable xddot_(integer *n,const dvar_vector & dx, integer *incx,const dvar_vector & dy, integer *incy);
     static integer info, iscn, nfev, iycn;
     static double ftol;
     static integer nfun, ispt, iypt, i, bound;
@@ -1314,10 +1315,6 @@ L40:
     return 0;
 } /* xdaxpy_ */
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 
 /*   ---------------------------------------------------------- */
 
@@ -1405,6 +1402,10 @@ L60:
     ret_val = dtemp;
     return ret_val;
 } /* xddot_ */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*    ------------------------------------------------------------------ */
 

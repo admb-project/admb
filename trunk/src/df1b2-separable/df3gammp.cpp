@@ -167,7 +167,8 @@ df3_two_variable cumd_exponential(const df3_two_variable& x,
   else
     return 1.0-0.5*exp(-x);
 }
-df3_two_variable cumd_cauchy(const df3_two_variable& x,const df3_two_variable& a)
+df3_two_variable cumd_cauchy(const df3_two_variable& x,
+  const df3_two_variable& a)
 {
   return atan(x/a);
 }

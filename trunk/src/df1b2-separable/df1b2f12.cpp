@@ -258,7 +258,8 @@ void read_pass2_1(void)
     px->u_bar[i]+=(pf->d2f11)(xu,yu)*xdot[i]*pz->u_dot_bar[i];
     px->u_bar[i]+=(pf->d2f12)(xu,yu)*ydot[i]*pz->u_dot_bar[i];
 #if defined(ADDEBUG_PRINT)
-    cout << px->u_bar[i] << " " << pz->u_dot_bar[i] << " " << addebug_count << endl;
+    cout << px->u_bar[i] << " " << pz->u_dot_bar[i] << " " << addebug_count 
+         << endl;
 #endif
   }
   for (i=0;i<nvar;i++)
@@ -268,7 +269,8 @@ void read_pass2_1(void)
     py->u_bar[i]+=(pf->d2f22)(xu,yu)*ydot[i]*pz->u_dot_bar[i];
     py->u_bar[i]+=(pf->d2f12)(xu,yu)*xdot[i]*pz->u_dot_bar[i];
 #if defined(ADDEBUG_PRINT)
-    cout << py->u_bar[i] << " " << pz->u_dot_bar[i] << " " << addebug_count << endl;
+    cout << py->u_bar[i] << " " << pz->u_dot_bar[i] << " " << addebug_count
+         << endl;
 #endif
   }
   for (i=0;i<nvar;i++)

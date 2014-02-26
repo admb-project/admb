@@ -52,7 +52,7 @@ void function_minimizer::sd_routine(void)
   param_size.allocate(1,num_sdrep_types);
 
   int ii=1;
-  int max_name_length=0;
+  unsigned int max_name_length = 0;
   int i;
   for (i=0;i<initial_params::num_initial_params;i++)
   {
@@ -378,7 +378,8 @@ void function_minimizer::sd_routine(void)
     ofsd << " index  ";
     ofs << " name  ";
     ofsd << " name ";
-    for (int in=1;in<=max_name_length-5;in++)
+    unsigned int inmax = max_name_length > 5 ? max_name_length - 5 : 0; 
+    for (unsigned int in = 1;in <= inmax; in++)
     {
       ofs << " ";
       ofsd << " ";
@@ -435,7 +436,10 @@ void function_minimizer::sd_routine(void)
         }
       }
 
-      for (int in=1;in<=max_name_length+1-param_labels[lc].size();in++)
+      unsigned int inmax = max_name_length + 1 > param_labels[lc].size()
+                           ? max_name_length + 1 - param_labels[lc].size()
+                           : 0;
+      for (unsigned int in = 1; in <= inmax; in++)
       {
         ofs << " ";
         ofsd << " ";

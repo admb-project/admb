@@ -460,7 +460,6 @@ dmatrix cube(const dmatrix& m)
        delete shape;
        shape=NULL;
      }
-
    }
    if (testflag)
    {

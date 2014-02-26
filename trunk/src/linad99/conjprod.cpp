@@ -199,7 +199,7 @@ void fmmc::fmin(const double& fret, const dvector& p, const dvector& gg)
       {
         this->ireturn=-1;
         {
-	  if (iprint>0)
+          if (iprint>0)
           {
             if (ad_printf) (*ad_printf)("Gradient magnitude criterion satisfied\n");
             if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
@@ -305,7 +305,7 @@ label1000:
           quit_flag=c;
           this->ireturn=-1;
           {
-	    if (iprint>0)
+            if (iprint>0)
             {
               if (ad_printf) (*ad_printf)("User initiated interrupt\n");
               if (ad_printf) (*ad_printf)(" - final statistics:\n");
@@ -361,7 +361,7 @@ label1000:
       ihang = 1;
       this->ireturn=-1;
       {
-	if (iprint>0)
+        if (iprint>0)
         {
           if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
             n, iter, ifn);
@@ -393,7 +393,7 @@ label1000:
       {
         this->ireturn=-1;
         {
-	  if (iprint>0)
+          if (iprint>0)
           {
             if (ad_printf) (*ad_printf)("Gradient magnitude criterion satisfied\n");
             if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
@@ -413,16 +413,17 @@ label1000:
 
     if ( ifn > maxfn )
     {
+      if (iprint>0)
       {
-	if (iprint>0)
+        if (ad_printf) 
         {
-          if (ad_printf) (*ad_printf)("Maximum number of function evaluations exceeded\n");
-          if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+          (*ad_printf)("Maximum number of function evaluations exceeded\n");
+          (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
             n, iter, ifn);
-          if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
-             fbest, max(fabs(*gbest)) );
-          fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
+          (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+            fbest, max(fabs(*gbest)) );
         }
+        fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
       }
       p=*xbest;
       gg=*gbest;
@@ -434,17 +435,17 @@ label1000:
     {
       if (!(iter%iprint)&&(iprint>0))
       {
-	{
+        {
 #     if !defined (__WAT32__) && !defined (__MSVC32__)
             if (!scroll_flag) clrscr();
 #         endif
-	  if (ad_printf) (*ad_printf)("Intermediate statistics: ");
-	}
-	if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-	 n, iter, ifn);
-	if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
-	     fbest, max(fabs(*gbest)) );
-	  fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
+          if (ad_printf) (*ad_printf)("Intermediate statistics: ");
+        }
+        if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+          n, iter, ifn);
+        if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+          fbest, max(fabs(*gbest)) );
+        fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
       }
     }
 
@@ -547,8 +548,7 @@ label1:
         *(cs.left_bracket_gradient), cs.right_bracket,
         cs.right_bracket_value,*(cs.right_bracket_gradient),theta,
         *(cs.d),cs.J,cs.rho_0,cs.ifn,cs.ifnex,cs.ext_flag,cs.rho_1,
-	cs.Psi_1,*(cs.grad) );
-
+        cs.Psi_1,*(cs.grad) );
     }
     if (cs.ext_flag==0)
     {
@@ -616,10 +616,8 @@ label555:
       *(cs.grad)=*(cs.extg);
     }
     goto label1100;
-
   label1120:
     int itemp=1;;
-
   }
   theta=theta+cs.rho_i* *(cs.d) ;
   return cs.converge_flag;
@@ -681,7 +679,7 @@ label120:
         double step=gamma*rho_0*rho_0/
           (2*(gamma*rho_0+left_bracket_value-right_bracket_value));
          // rho_star=left_bracket+gamma*rho_0*rho_0/
-	 //(2*(gamma*rho_0+left_bracket_value-right_bracket_value));
+         //(2*(gamma*rho_0+left_bracket_value-right_bracket_value));
          double width=right_bracket-left_bracket;
          if (step<.25*width)step=.25*width;
          if (step>.75*width)step=.75*width;
@@ -721,7 +719,6 @@ label200:
 
     if (Psi_2 < left_bracket_value && (d*g1) < 0)
     {
-
 #ifdef DIAG
         cout << " Before interpolation -- new left side\n";
         bracket_report( theta,left_bracket,right_bracket,d);
@@ -738,7 +735,6 @@ label200:
     }
     else
     {
-
 #ifdef DIAG
         cout << " Before interpolation -- new right side\n";
         bracket_report( theta,left_bracket,right_bracket,d);
@@ -1060,10 +1056,8 @@ void derch(const double& f, const dvector& _x, const dvector& _gg, int n, const 
       f = fsave;
       x(i)=xsave;
       g2=(f1-f2)/(2.*s);
-
       if (ad_printf) (*ad_printf)("  %12.5e  %12.5e  %12.5e  %12.5e ; %5d \n",
               x(i), f, g(i), g2, i);
-
     } // for loop
   } // while (j > 0)
 //  ireturn = 2;

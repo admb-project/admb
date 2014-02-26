@@ -117,7 +117,6 @@ main()
  */
 double robust_normal_logistic_mixture_deviate(double x,double spread)
 {
-
   double y=cumd_norm(x);
   y = 0.99999999*y + 0.000000005; // To gain numerical stability
   double z = inv_cumd_normal_logistic_mixture(y,spread);

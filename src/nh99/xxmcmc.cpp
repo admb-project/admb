@@ -1027,7 +1027,7 @@ void print_hist_data(const dmatrix& hist, const dmatrix& values, const dvector& 
   adstring_array param_labels(1,nsdvars);
   ivector param_size(1,nsdvars);
   int ii=1;
-  int max_name_length=0;
+  //int max_name_length=0;
   int i;
   for (i=0;i< stddev_params::num_stddev_params;i++)
   {
@@ -1035,10 +1035,12 @@ void print_hist_data(const dmatrix& hist, const dmatrix& values, const dvector& 
       stddev_params::stddevptr[i]->label();
     param_size[ii]=
       stddev_params::stddevptr[i]->size_count();
+/*
     if (max_name_length<param_labels[ii].size())
     {
       max_name_length=param_labels[ii].size();
     }
+*/
     ii++;
   }
   //int end_stdlabels=ii-1;
@@ -1560,7 +1562,6 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS,
 
   ofs << "S* modified S" << endl;
   ofs << S*Save << endl;
-
 }
 
 int user_stop(void)

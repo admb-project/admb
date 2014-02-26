@@ -34,7 +34,8 @@
  * Description not yet available.
  * \param
  */
-  void df1b2_init_number::sd_scale(const dvector& _d,const dvector& x,const int& _ii)
+void df1b2_init_number::sd_scale(const dvector& _d,const dvector& x,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& d=(dvector&) _d;
@@ -47,7 +48,8 @@
  * Description not yet available.
  * \param
  */
-  void df1b2_init_bounded_number::sd_scale(const dvector& _d,const dvector& x,const int& _ii)
+void df1b2_init_bounded_number::sd_scale(const dvector& _d,const dvector& x,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& d=(dvector&) _d;
@@ -76,7 +78,8 @@
  * Description not yet available.
  * \param
  */
-  void df1b2_init_vector::sd_scale(const dvector& _v,const dvector& x,const int& _ii)
+void df1b2_init_vector::sd_scale(const dvector& _v,const dvector& x,
+  const int& _ii)
   {
     if (allocated())
     {
@@ -97,7 +100,8 @@
  * Description not yet available.
  * \param
  */
-  void df1b2_init_matrix::sd_scale(const dvector& _v,const dvector& x,const int& _ii)
+void df1b2_init_matrix::sd_scale(const dvector& _v,const dvector& x,
+  const int& _ii)
   {
     if (allocated())
     {
@@ -126,7 +130,8 @@
  * Description not yet available.
  * \param
  */
-  void df1b2_init_bounded_vector::sd_scale(const dvector& _v,const dvector& x,const int& _ii)
+void df1b2_init_bounded_vector::sd_scale(const dvector& _v,const dvector& x,
+  const int& _ii)
   {
     if (allocated())
     {
@@ -161,7 +166,8 @@
  * Description not yet available.
  * \param
  */
-  void df1b2_init_bounded_matrix::sd_scale(const dvector& _v,const dvector& x,const int& _ii)
+void df1b2_init_bounded_matrix::sd_scale(const dvector& _v,const dvector& x,
+  const int& _ii)
   {
     if (allocated())
     {

@@ -254,7 +254,8 @@ void read_pass2_1c1(void)
   {
     py->u_bar[i]+=(pf->d2f)(xu,yu)*ydot[i]*pz->u_dot_bar[i];
 #if defined(ADDEBUG_PRINT)
-    cout << px->u_bar[i] << " " << pz->u_dot_bar[i] << " " << addebug_count << endl;
+    cout << px->u_bar[i] << " " << pz->u_dot_bar[i] << " " << addebug_count
+         << endl;
 #endif
   }
   for (i=0;i<nvar;i++)

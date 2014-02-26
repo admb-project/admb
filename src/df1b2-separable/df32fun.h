@@ -211,7 +211,8 @@ class df3_two_matrix
       return (df3_two_variable &) (*(v + i)) (j);
    }
    void initialize(void);
-   //df3_two_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
+   //df3_two_variable& operator () (int i,int j) const 
+   //  { return *((v+i)->(v+j)); }
    void deallocate(void);
    ~df3_two_matrix();
     df3_two_matrix(const df3_two_matrix & m2);

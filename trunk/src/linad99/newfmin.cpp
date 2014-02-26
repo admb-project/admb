@@ -514,7 +514,8 @@ label7003: /* Printing table header */
 #endif
         }
       }
-label7002: /* Printing Statistics table */
+/*label7002:*/
+      /* Printing Statistics table */
       if(iprint>0)
       {
         fmmdisp(x, g, n, this->scroll_flag,noprintx);
@@ -870,7 +871,7 @@ label70:  // Hessian update
       }
       if (xxlink == 1) goto label60;
       if (xxlink == 2) goto label65;
-label90: /* obsolete? */
+/*label90:*/
       for (i=1;i<=n;i++)
          g.elem(i)=w.elem(i);
 label92: /* Exit with error */

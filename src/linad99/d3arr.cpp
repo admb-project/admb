@@ -81,7 +81,8 @@ double sum(const d3_array& m)
  * Description not yet available.
  * \param
  */
-d3_array::d3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch)
+d3_array::d3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl,
+  int nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
    #ifdef SAFE_ARRAYS
@@ -93,7 +94,8 @@ d3_array::d3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch
  * Description not yet available.
  * \param
  */
-d3_array::d3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl, const ivector& nch)
+d3_array::d3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl,
+  const ivector& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
    #ifdef SAFE_ARRAYS
@@ -105,7 +107,8 @@ d3_array::d3_array(int sl, int sh, int nrl, int nrh, const ivector& ncl, const i
  * Description not yet available.
  * \param
  */
-void d3_array::allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch)
+void d3_array::allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl,
+  int nch)
  {
    #ifdef DIAG
      myheapcheck("Entering d3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
@@ -136,7 +139,8 @@ void d3_array::allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl, in
  * Description not yet available.
  * \param
  */
-void d3_array::allocate(int sl, int sh, int nrl, int nrh, int ncl, const ivector& nch)
+void d3_array::allocate(int sl, int sh, int nrl, int nrh, int ncl,
+  const ivector& nch)
  {
    #ifdef DIAG
      myheapcheck("Entering d3_array matrix(sl,sh,nrl,nrh,ncl,nch)" );
@@ -289,7 +293,8 @@ void d3_array::allocate(const d3_array& d3v)
  * Description not yet available.
  * \param
  */
-void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh, const imatrix& ncl, const imatrix& nch)
+void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+  const imatrix& ncl, const imatrix& nch)
  {
    if (sl !=nrl.indexmin() || sh !=nrl.indexmax() ||
        sl !=nrh.indexmin() || sh !=nrh.indexmax())
@@ -318,7 +323,8 @@ void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh, 
  * Description not yet available.
  * \param
  */
-void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh, int ncl, int nch)
+void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+  int ncl, int nch)
  {
    if (sl !=nrl.indexmin() || sh !=nrl.indexmax() ||
        sl !=nrh.indexmin() || sh !=nrh.indexmax())
@@ -347,7 +353,8 @@ void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh, 
  * Description not yet available.
  * \param
  */
-void d3_array::allocate(int sl, int sh, const ivector& nrl, int nrh, int ncl, int nch)
+void d3_array::allocate(int sl, int sh, const ivector& nrl, int nrh, int ncl,
+  int nch)
  {
    if (sl !=nrl.indexmin() || sh !=nrl.indexmax())
    {
@@ -375,7 +382,8 @@ void d3_array::allocate(int sl, int sh, const ivector& nrl, int nrh, int ncl, in
  * Description not yet available.
  * \param
  */
-void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl, int nch)
+void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl,
+  int nch)
  {
    if ( sl !=nrh.indexmin() || sh !=nrh.indexmax())
    {
@@ -403,7 +411,8 @@ void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl, in
  * Description not yet available.
  * \param
  */
-void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh, int ncl, const imatrix& nch)
+void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+  int ncl, const imatrix& nch)
  {
    if (sl !=nrl.indexmin() || sh !=nrl.indexmax() ||
        sl !=nrh.indexmin() || sh !=nrh.indexmax())
@@ -432,7 +441,8 @@ void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh, 
  * Description not yet available.
  * \param
  */
-void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl, const imatrix& nch)
+void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl,
+  const imatrix& nch)
  {
    if (sl !=nrh.indexmin() || sh !=nrh.indexmax())
    {
@@ -460,7 +470,8 @@ void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl, co
  * Description not yet available.
  * \param
  */
-void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh, const ivector& ncl, const ivector& nch)
+void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh,
+  const ivector& ncl, const ivector& nch)
  {
    if (sl !=nrl.indexmin() || sh !=nrl.indexmax() ||
        sl !=nrh.indexmin() || sh !=nrh.indexmax())
@@ -489,7 +500,8 @@ void d3_array::allocate(int sl, int sh, const ivector& nrl, const ivector& nrh, 
  * Description not yet available.
  * \param
  */
-void d3_array::allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl, const ivector& nch)
+void d3_array::allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl,
+  const ivector& nch)
  {
    if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
@@ -512,7 +524,8 @@ void d3_array::allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl, co
  * Description not yet available.
  * \param
  */
-void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl, const ivector& nch)
+void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl,
+  const ivector& nch)
  {
    if ( (shape=new three_array_shape(sl,sh)) == 0)
    {
@@ -535,7 +548,8 @@ void d3_array::allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl, co
  * Description not yet available.
  * \param
  */
-d3_array::d3_array(int sl, int sh, int nrl, const ivector& nrh, int ncl, const ivector& nch)
+d3_array::d3_array(int sl, int sh, int nrl, const ivector& nrh, int ncl,
+  const ivector& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
@@ -562,7 +576,8 @@ d3_array::d3_array(int sl, int sh, const ivector& nrl, const ivector& nrh, int n
  * Description not yet available.
  * \param
  */
-d3_array::d3_array(int sl, int sh, int nrl, const ivector& nrh, int ncl, const imatrix& nch)
+d3_array::d3_array(int sl, int sh, int nrl, const ivector& nrh, int ncl,
+  const imatrix& nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }
@@ -571,7 +586,8 @@ d3_array::d3_array(int sl, int sh, int nrl, const ivector& nrh, int ncl, const i
  * Description not yet available.
  * \param
  */
-d3_array::d3_array(int sl, int sh, int nrl, const ivector& nrh, int ncl, int nch)
+d3_array::d3_array(int sl, int sh, int nrl, const ivector& nrh, int ncl,
+  int nch)
  {
    allocate(sl,sh,nrl,nrh,ncl,nch);
  }

@@ -73,7 +73,8 @@ void banded_symmetric_dmatrix::save_dmatrix_value(void) const
  * Description not yet available.
  * \param
  */
-banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(const dvar_matrix_position& mpos)
+banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(
+  const dvar_matrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
   banded_symmetric_dmatrix out((const dvar_matrix_position&)mpos);
@@ -92,7 +93,9 @@ banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(const dvar_m
  * Description not yet available.
  * \param
  */
-banded_lower_triangular_dmatrix restore_banded_lower_triangular_dvar_matrix_value(const dvar_matrix_position& mpos)
+banded_lower_triangular_dmatrix
+restore_banded_lower_triangular_dvar_matrix_value(
+  const dvar_matrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
   banded_lower_triangular_dmatrix out((const dvar_matrix_position&)mpos);

@@ -131,12 +131,12 @@ double sum(const d4_array& m)
        delete shape;
      }
    }
+#if defined(SAFE_ALL)
    else
    {
-#    if defined(SAFE_ALL)
-   //  cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
-#    endif
+     //cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
    }
+#endif
  }
 
 /**
@@ -407,7 +407,7 @@ void d4_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
  * \param
  */
 void d4_array::allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
-                        const ivector& nrh, const ivector& ncl, const ivector& nch)
+  const ivector& nrh, const ivector& ncl, const ivector& nch)
  {
    if ( (shape=new four_array_shape(hsl,hsu)) == 0)
    {
@@ -432,17 +432,17 @@ void d4_array::allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
  * \param
  */
 d4_array::d4_array(int hsl, int hsu, int sl, const ivector& sh,
-                   int nrl, const imatrix& nrh, int ncl, int nch)
- {
-   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
- }
+  int nrl, const imatrix& nrh, int ncl, int nch)
+{
+  allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
+}
 
 /**
  * Description not yet available.
  * \param
  */
 void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh,
-                        int nrl, const imatrix& nrh, int ncl, int nch)
+  int nrl, const imatrix& nrh, int ncl, int nch)
  {
    //int rmin=nrh.rowmin();
    //int cmin=nrh(rmin).indexmin();
@@ -478,11 +478,11 @@ void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh,
  * Description not yet available.
  * \param
  */
- d4_array::d4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
-    ivector ncl,ivector nch)
- {
-   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
- }
+d4_array::d4_array(int hsl,int hsu, int sl,int sh,ivector nrl,ivector nrh,
+  ivector ncl,ivector nch)
+{
+  allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
+}
 
 /**
  * Description not yet available.
@@ -504,7 +504,7 @@ void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh,
  * \param
  */
 d4_array::d4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
-                   const imatrix& nrh, int ncl, const i3_array& nch)
+  const imatrix& nrh, int ncl, const i3_array& nch)
 {
   allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
 }
@@ -514,7 +514,7 @@ d4_array::d4_array(int hsl, int hsu, int sl, const ivector& sh, int nrl,
  * \param
  */
 void d4_array::allocate(int hsl, int hsu, int sl, const ivector& sh, int nrl,
-                        const imatrix& nrh, int ncl, const i3_array& nch)
+  const imatrix& nrh, int ncl, const i3_array& nch)
 {
   //int rmin=nrh.rowmin();
   //int cmin=nrh(rmin).indexmin();

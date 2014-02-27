@@ -4,15 +4,14 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
+
 /**
- * \file
- * Description not yet available.
- */
-// file: dvect_io.cpp
+\file
+i/o operations for class ivector
+*/
+
+#include <string.h>
 #include "fvar.hpp"
-
-// i/o ooperations for class ivector
-
 
 #ifdef __TURBOC__
   #pragma hdrstop
@@ -29,28 +28,23 @@
   #define __USE_IOSTREAM__
 #endif
 
-#include <string.h>
-
 /**
- * Description not yet available.
- * \param
- */
+Insertion operator for ivector z.
+*/
 ostream& operator<<(const ostream& ostr, const ivector& z)
 {
   z.write_on(ostr);
   return (ostream&) ostr;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Writes all the elements to the ostream _s.
+*/
 void ivector::write_on(const ostream& _s) const
 {
-  ostream& s = (ostream&) _s;
+  ostream& s = (ostream&)_s;
 #ifdef __USE_IOSTREAM__
-  int new_w = s.width();
-  int new_p = s.precision();
+  std::streamsize new_w = s.width();
+  std::streamsize new_p = s.precision();
 #if defined(GCC3)
   ios::fmtflags new_form = s.flags();
 #else
@@ -60,55 +54,49 @@ void ivector::write_on(const ostream& _s) const
 #endif
   for (int i=indexmin(); i <= indexmax(); i++)
   {
-  #ifdef __USE_IOSTREAM__
-     s.width(0);
-     s << " ";
-     s.width(new_w);
-     s.precision(new_p);
-     s.flags(new_form);
-     s.fill(new_fill);
-     s << (*this)[i];
-     s.width(new_w);
-     s.precision(new_p);
-     s.flags(new_form);
-     s.fill(new_fill);
-     /*
-     if (!s.good())
-     {
-       cerr << " Error in ivector write\n";
-       ad_exit(1);
-     }
-     */
-  #else
-     s << " " << (*this)[i];
-  #endif
+#ifdef __USE_IOSTREAM__
+    s.width(0);
+    s << " ";
+    s.width(new_w);
+    s.precision(new_p);
+    s.flags(new_form);
+    s.fill(new_fill);
+    s << (*this)[i];
+    s.width(new_w);
+    s.precision(new_p);
+    s.flags(new_form);
+    s.fill(new_fill);
+    /*
+    if (!s.good())
+    {
+      cerr << " Error in ivector write\n";
+      ad_exit(1);
+    }
+    */
+#else
+    s << " " << (*this)[i];
+#endif
   }
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Extraction operator for ivector _z.
+*/
 istream& operator>>(const istream& istr, const ivector& _z)
 {
   ADUNCONST(ivector,z)
   z.read_from(istr);
-
   return (istream&)istr;
 }
-
 /**
- * Description not yet available.
- * \param
- */
+Reads all the elements from istream _s.
+*/
 void ivector::read_from(const istream& _s)
 {
-  istream& s=(istream&) _s;
+  istream& s=(istream&)_s;
   int mmin=indexmin();
   int mmax=indexmax();
-
   for (int i=mmin; i <= mmax; i++)
   {
-     s >> (*this)[i];
+    s >> (*this)[i];
   }
 }

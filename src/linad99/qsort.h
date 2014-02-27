@@ -477,14 +477,14 @@ typedef struct {
     register QSORT_TYPE *_run_ptr;					\
     register QSORT_TYPE2 *_run_ptr2;					\
     QSORT_TYPE *_thresh;						\
-    QSORT_TYPE2 *_thresh2;						\
+    //QSORT_TYPE2 *_thresh2;						\
 									\
     _thresh = _base + _QSORT_MAX_THRESH;				\
-    _thresh2 = _base2 + _QSORT_MAX_THRESH;				\
+    //_thresh2 = _base2 + _QSORT_MAX_THRESH;				\
     if (_thresh > _end_ptr)						\
     {									\
       _thresh = _end_ptr;						\
-      _thresh2 = _end_ptr2;						\
+      //_thresh2 = _end_ptr2;						\
     }									\
 									\
     /* Find smallest element in first threshold and place it at the	\

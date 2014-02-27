@@ -210,8 +210,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     s_covar.initialize();
 
     int ndvar=stddev_params::num_stddev_calc();
-    int numdvar=stddev_params::num_stddev_number_calc();
     /*
+    int numdvar=stddev_params::num_stddev_number_calc();
     if (adjm_ptr)
     {
       mcmc_display_matrix.allocate(1,numdvar,1,mcmc_gui_length);
@@ -426,7 +426,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
         {
           iseed=-iseed;
         }
-        double br=rng.better_rand();
+        /*double br=*/rng.better_rand();
         if (tmp) have_hist_flag=1;
         chd=size_scale*chd;
         chdinv=chdinv/size_scale;

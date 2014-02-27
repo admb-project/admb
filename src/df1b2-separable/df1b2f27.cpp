@@ -12,9 +12,6 @@
 
 void ncount_checker(int ncount,int ncount_check);
 
-void myderkludge(void);
-
-
 void ad_read_pass1x(void);
 void ad_read_pass2x(void);
 void read_pass1_3x(void);

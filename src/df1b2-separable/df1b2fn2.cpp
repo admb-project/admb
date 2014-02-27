@@ -15,8 +15,6 @@
 #include <df1b2fun.h>
 #include "admb_messages.h"
 
-void myderkludge(void);
-
 do_naught_kludge df1b2_init_number::do_naught_kludge_a;
 
 //#define  ADDEBUG_PRINT

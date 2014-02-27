@@ -10,8 +10,6 @@
  */
 #include <df1b2fun.h>
 
-void myderkludge(void){;}
-
 void ad_read_pass2(void);
 
 /**
@@ -180,7 +178,6 @@ void read_pass2_1(void)
   {
     if (derchecker->counter == derchecker->node_number)
     {
-      myderkludge();
       switch (derchecker->pass_number) // increment the variable of interest
       {
       case 2:
@@ -481,7 +478,6 @@ void read_pass2_2(void)
   {
     if (derchecker->counter == derchecker->node_number)
     {
-      myderkludge();
       if (derchecker->pass_number==1) // increment the variable of interest
       {
         switch(derchecker->vartype)

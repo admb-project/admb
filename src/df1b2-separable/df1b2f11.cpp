@@ -20,9 +20,6 @@ void ncount_checker(int ncount,int ncount_check)
   //  cout << ncount << endl;
 }
 
-void myderkludge(void);
-
-
 void ad_read_pass1(void);
 void ad_read_pass2(void);
 void read_pass1_3(void);

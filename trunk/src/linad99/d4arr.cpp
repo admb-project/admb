@@ -204,7 +204,8 @@ void d4_array::allocate(const d4_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "d3_array& d4_array::operator() (int i)", hslicemin(), hslicemax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "d3_array& d4_array::operator() (int i)", hslicemin(), hslicemax(), i);
       }
       #endif
       return t[i];
@@ -219,7 +220,9 @@ void d4_array::allocate(const d4_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "d3_array& d4_array::operator[] (int i)", hslicemin(), hslicemax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "d3_array& d4_array::operator[] (int i)",
+        hslicemin(), hslicemax(), i);
       }
       #endif
       return t[i];
@@ -234,7 +237,9 @@ void d4_array::allocate(const d4_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dmatrix& d4_array::operator() (int i, int j)", hslicemin(), hslicemax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "dmatrix& d4_array::operator() (int i, int j)",
+        hslicemin(), hslicemax(), i);
       }
       #endif
       return ((*this)(i))(j);
@@ -249,7 +254,9 @@ void d4_array::allocate(const d4_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvector& d4_array::operator() (int i, int j, int k)", hslicemin(), hslicemax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "dvector& d4_array::operator() (int i, int j, int k)",
+        hslicemin(), hslicemax(), i);
       }
       #endif
       return (((*this)(i,j))(k));
@@ -264,7 +271,9 @@ void d4_array::allocate(const d4_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "double& d4_array::operator() (int i, int j, int k, int l)", hslicemin(), hslicemax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "double& d4_array::operator() (int i, int j, int k, int l)",
+        hslicemin(), hslicemax(), i);
       }
       #endif
       return ( ((*this)(i,j,k))(l));

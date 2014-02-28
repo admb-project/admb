@@ -145,7 +145,8 @@ void banded_lower_triangular_dmatrix::shift(int j)
  * Description not yet available.
  * \param
  */
-banded_symmetric_dmatrix::banded_symmetric_dmatrix(const dvar_matrix_position& pos)
+banded_symmetric_dmatrix::banded_symmetric_dmatrix(
+  const dvar_matrix_position& pos)
 {
   int nrl=pos.row_min;
   int nrh=pos.row_max;
@@ -161,7 +162,8 @@ banded_symmetric_dmatrix::banded_symmetric_dmatrix(const dvar_matrix_position& p
  * Description not yet available.
  * \param
  */
-banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix(const dvar_matrix_position& pos)
+banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix(
+  const dvar_matrix_position& pos)
 {
   int nrl=pos.row_min;
   int nrh=pos.row_max;
@@ -253,7 +255,8 @@ banded_lower_triangular_dmatrix::banded_lower_triangular_dmatrix
  * Description not yet available.
  * \param
  */
-ostream& operator<<(const ostream& _ofs, const banded_lower_triangular_dmatrix& S1)
+ostream& operator<<(const ostream& _ofs,
+  const banded_lower_triangular_dmatrix& S1)
 {
   ostream & ofs = (ostream&) _ofs;
   banded_lower_triangular_dmatrix& S=(banded_lower_triangular_dmatrix&)(S1);
@@ -472,8 +475,6 @@ banded_symmetric_dmatrix& banded_symmetric_dmatrix::operator =
 
     return eigenvectors(M);
   }
-
-
 /*
   dvector eigenvalues(const banded_symmetric_dmatrix& _SS)
   {

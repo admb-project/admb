@@ -34,8 +34,8 @@ void nograd_assign_row(const dvar_matrix& m, const dvector& v, const int& ii)
    (v.indexmax()!=m(ii).indexmax()) )
   {
     cerr << "Error -- Index out of bounds in\n"
-      "void nograd_assign(const dvar_matrix& m, const dvector& v, const int& ii)"
-      << endl;
+    "void nograd_assign(const dvar_matrix& m, const dvector& v, const int& ii)"
+    << endl;
     ad_exit(1);
   }
   int min=v.indexmin();

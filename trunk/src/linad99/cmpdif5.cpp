@@ -183,8 +183,8 @@ void dvector::save_dvector_derivatives(const dvar_vector_position& pos) const
   if (min!=pos.indexmin() || max!=pos.indexmax())
   {
     cerr << "Incompatible array sizes in " <<
-     "void dvector::save_dvector_derivatives(const dvar_vector_position& pos)" <<
-     endl;
+    "void dvector::save_dvector_derivatives(const dvar_vector_position& pos)"
+    << endl;
   }
   double_and_int * ptr=pos.va;
 
@@ -212,8 +212,8 @@ void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
   if (min!=pos.indexmin() || max!=pos.indexmax())
   {
     cerr << "Incompatible array sizes in " <<
-     "void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos)" <<
-     endl;
+    "void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos)"
+    << endl;
   }
   double_and_int * ptr=pos.va;
 
@@ -232,8 +232,8 @@ void dvector::save_dvector_derivatives_na(const dvar_vector_position& pos) const
  * Description not yet available.
  * \param
  */
-void save_dmatrix_derivatives(const dvar_matrix_position& _pos, CGNU_DOUBLE x, const int& i,
-  int& j)
+void save_dmatrix_derivatives(const dvar_matrix_position& _pos, CGNU_DOUBLE x,
+  const int& i, int& j)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   if ( i<pos.rowmin()||i>pos.rowmax() ||
@@ -261,8 +261,8 @@ void dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& _pos) const
   if (min!=pos.row_min||max!=pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
-     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)" <<
-     endl;
+    "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)"
+    << endl;
   }
   for (int i=min;i<=max;i++)
   {
@@ -275,7 +275,8 @@ void dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& _pos) const
  * Description not yet available.
  * \param
  */
-void dmatrix::save_dmatrix_derivatives_na(const dvar_matrix_position& _pos) const
+void dmatrix::save_dmatrix_derivatives_na(const dvar_matrix_position& _pos)
+  const
 {
   dvar_matrix_position& pos=(dvar_matrix_position&) _pos;
   // puts the derivative values in a dvector into a dvar_vector's guts
@@ -284,8 +285,8 @@ void dmatrix::save_dmatrix_derivatives_na(const dvar_matrix_position& _pos) cons
   if (min!=pos.row_min||max!=pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
-     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)" <<
-     endl;
+    "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)"
+    << endl;
   }
   for (int i=min;i<=max;i++)
   {

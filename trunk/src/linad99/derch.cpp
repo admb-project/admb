@@ -32,8 +32,8 @@ static ofstream * pofs=0;
  * Description not yet available.
  * \param
  */
-void derch(const double& _f, const independent_variables & _x, const dvector& _gg,
-           int n, const int & _ireturn)
+void derch(const double& _f, const independent_variables & _x,
+ const dvector& _gg, int n, const int & _ireturn)
 {
   dvector& gg=(dvector&) _gg;
   double& f=(double&) _f;
@@ -130,7 +130,7 @@ void derch(const double& _f, const independent_variables & _x, const dvector& _g
     }
     else
     {
-      cout << "\n       X           Function     Analytical     Finite Diff;  Index"
+cout << "\n       X           Function     Analytical     Finite Diff;  Index"
          << endl;
     }
 

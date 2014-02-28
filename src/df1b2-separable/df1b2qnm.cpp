@@ -32,7 +32,8 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
   {
     if (nopt !=2)
     {
-      cerr << "Usage -fntrap option needs two non-negative integers  -- ignored" << endl;
+      cerr <<
+        "Usage -fntrap option needs two non-negative integers  -- ignored.\n";
     }
     else
     {

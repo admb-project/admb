@@ -660,7 +660,8 @@ local_init_df1b2vector::local_init_df1b2vector(const df1b2vector & _x)
   }
  //
  //
- // funnel_init_df1b2vector::funnel_init_df1b2vector(const df1b2_init_vector & _x)
+ // funnel_init_df1b2vector::funnel_init_df1b2vector(
+ //   const df1b2_init_vector& _x)
  // {
  //   ADUNCONST(df1b2_init_vector,x)
  //   //type=0;

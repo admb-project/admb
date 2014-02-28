@@ -90,7 +90,8 @@ static double cumd_normal_logistic_mixture_initx(double y,double a)
  * Description not yet available.
  * \param
  */
-df1b2variable inv_cumd_normal_logistic_mixture(const df1b2variable& _yy,double a)
+df1b2variable inv_cumd_normal_logistic_mixture(const df1b2variable& _yy,
+  double a)
 {
   ADUNCONST(df1b2variable,yy)
   df1b2variable z;

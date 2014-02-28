@@ -315,7 +315,8 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
  */
 void byte_copy(void* dest, void* source, unsigned num_bytes)
 {
-#if !defined (__SUN__) && !defined (__WAT32__) && !defined(__ADSGI__) && !defined (_MSC_VER) && !defined(linux)
+#if !defined (__SUN__) && !defined (__WAT32__) && !defined(__ADSGI__) \
+&& !defined (_MSC_VER) && !defined(linux)
   char* pdest = (char*)dest;
   char* psource = (char*)source;
   int ii=0;

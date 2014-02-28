@@ -25,8 +25,9 @@ static int write_sparse_flag=0;
 int noboundepen_flag=1;
 
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
-void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,dmatrix& Hess,
-  dvector& grad, df1b2_gradlist * f1b2gradlist,function_minimizer * pfmin);
+void get_newton_raphson_info(int xs,int us,const init_df1b2vector _y,
+  dmatrix& Hess, dvector& grad,
+  df1b2_gradlist* f1b2gradlist,function_minimizer * pfmin);
 
 //dvariable AD_uf_inner(const dvector& x,const dvar_vector& u);
 void get_second_ders(int xs,int us,const init_df1b2vector y,dmatrix& Hess,
@@ -401,14 +402,15 @@ laplace_approximation_calculator::laplace_approximation_calculator
   {
     if (!nopt)
     {
-      cerr << "Usage -ndi option needs integer  -- set to default 20000" << endl;
+      cerr << "Usage -ndi option needs integer  -- set to default 20000.\n";
     }
     else
     {
       int jj=atoi(ad_comm::argv[inner_lmnflag+1]);
       if (jj<=0)
       {
-        cerr << "Usage -ndi option needs positive integer  -- set to defalt 20000" << endl;
+        cerr << "Usage -ndi option needs positive integer"
+        "  -- set to defalt 20000" << endl;
       }
       else
       {
@@ -444,7 +446,8 @@ laplace_approximation_calculator::laplace_approximation_calculator
       int jj=atoi(ad_comm::argv[inner_lmnflag+1]);
       if (jj<=0)
       {
-        cerr << "Usage -ilmn option needs positive integer  -- set to defalt 10" << endl;
+        cerr << "Usage -ilmn option needs positive integer"
+          "  -- set to defalt 10" << endl;
       }
       else
       {
@@ -463,7 +466,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
   {
     if (!nopt)
     {
-      cerr << "Usage -ndb option needs non-negative integer  -- ignored" << endl;
+      cerr << "Usage -ndb option needs non-negative integer  -- ignored.\n";
     }
     else
     {
@@ -483,7 +486,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
   {
     if (!nopt)
     {
-      cerr << "Usage -isf option needs non-negative integer  -- ignored" << endl;
+      cerr << "Usage -isf option needs non-negative integer  -- ignored.\n";
     }
     else
     {
@@ -563,7 +566,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
       int _num_nr_iters=atoi(ad_comm::argv[on+1]);
       if (_num_nr_iters<0)
       {
-        cerr << "Usage -nr option needs non-negative integer  -- ignored" << endl;
+        cerr << "Usage -nr option needs non-negative integer  -- ignored.\n";
       }
       else
       {
@@ -598,7 +601,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
 
       if (_nr_crit<=0)
       {
-        cerr << "Usage -nrcrit option needs positive number  -- ignored" << endl;
+        cerr << "Usage -nrcrit option needs positive number  -- ignored.\n";
         _nr_crit=0.0;
       }
     }
@@ -660,14 +663,14 @@ laplace_approximation_calculator::laplace_approximation_calculator
   {
     if (!nopt)
     {
-      cerr << "Usage -iprint option needs non-negative integer  -- ignored" << endl;
+      cerr << "Usage -iprint option needs non-negative integer  -- ignored.\n";
     }
     else
     {
       int _inner_iprint=atoi(ad_comm::argv[on+1]);
       if (_inner_iprint<=0)
       {
-        cerr << "Usage -iip option needs non-negative integer  -- ignored" << endl;
+        cerr << "Usage -iip option needs non-negative integer  -- ignored.\n";
       }
       else
       {
@@ -682,14 +685,14 @@ laplace_approximation_calculator::laplace_approximation_calculator
   {
     if (!nopt)
     {
-      cerr << "Usage -maxfn option needs non-negative integer  -- ignored" << endl;
+      cerr << "Usage -maxfn option needs non-negative integer  -- ignored.\n";
     }
     else
     {
       int _inner_maxfn=atoi(ad_comm::argv[on+1]);
       if (_inner_maxfn<0)
       {
-        cerr << "Usage -iip option needs non-negative integer  -- ignored" << endl;
+        cerr << "Usage -iip option needs non-negative integer  -- ignored.\n";
       }
       else
       {
@@ -715,7 +718,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
       int tht=atoi(ad_comm::argv[on+1]);
       if (tht<=0)
       {
-        cerr << "Usage -is option needs non-negative integer  -- ignored" << endl;
+        cerr << "Usage -is option needs non-negative integer  -- ignored.\n";
       }
       else
       {
@@ -726,7 +729,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
         int rseed1=atoi(ad_comm::argv[on+2]);
         if (rseed1<=0)
         {
-          cerr << "Usage -is option needs non-negative integer  -- ignored" << endl;
+          cerr << "Usage -is option needs non-negative integer  -- ignored.\n";
         }
         else
         {
@@ -748,7 +751,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
       int tht=atoi(ad_comm::argv[on+1]);
       if (tht<=0)
       {
-        cerr << "Usage -isb option needs non-negative integer  -- ignored" << endl;
+        cerr << "Usage -isb option needs non-negative integer  -- ignored.\n";
       }
       else
       {
@@ -759,7 +762,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
         int rseed1=atoi(ad_comm::argv[on+2]);
         if (rseed1<=0)
         {
-          cerr << "Usage -isb option needs non-negative integer  -- ignored" << endl;
+          cerr << "Usage -isb option needs non-negative integer  -- ignored.\n";
         }
         else
         {
@@ -882,7 +885,7 @@ laplace_approximation_calculator::laplace_approximation_calculator
       int tht=atoi(ad_comm::argv[on+1]);
       if (tht<=0)
       {
-        cerr << "Usage -ht option needs non-negative integer  -- ignored" << endl;
+        cerr << "Usage -ht option needs non-negative integer  -- ignored.\n";
         set_default_hessian_type();
       }
       else
@@ -1712,7 +1715,8 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
      dmatrix tt2=trans(r);
      dmatrix ss2=trans(sort(tt2,1));
 
-     cout << " t " << setprecision(3) << ss2(1)(1,5) << " --- " << t(nnn)*cHess*t(nnn) << endl;
+     cout << " t " << setprecision(3) << ss2(1)(1,5) << " --- "
+          << t(nnn)*cHess*t(nnn) << endl;
      cout << "   " << setprecision(3) << ss2(2)(1,5) << endl;
      //cout << " t " << t(1) << " " << t(1)*cHess*t(2) << endl;
    }
@@ -1942,7 +1946,8 @@ double evaluate_function(const dvector& x,function_minimizer * pfmin)
  * Description not yet available.
  * \param
  */
-double evaluate_function(double& fval,const dvector& x,function_minimizer * pfmin)
+double evaluate_function(double& fval,const dvector& x,
+  function_minimizer* pfmin)
 {
   int usize=initial_params::nvarcalc();
   //double f=0.0;
@@ -2072,7 +2077,8 @@ void evaluate_function_gradient(double& f,const dvector& x,
  * Description not yet available.
  * \param
  */
-double evaluate_function_no_derivatives(const dvector& x,function_minimizer * pfmin)
+double evaluate_function_no_derivatives(const dvector& x,
+  function_minimizer* pfmin)
 {
   double fval;
   gradient_structure::set_NO_DERIVATIVES();

@@ -295,7 +295,7 @@ void laplace_approximation_calculator::
         if (nr_debug==1)
         {
           testangle=g*step/(norm(g)*norm(step));
-          cout << fval-fbest << " step too large  angle = " << testangle 
+          cout << fval-fbest << " step too large  angle = " << testangle
                << endl;
         }
       }

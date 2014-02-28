@@ -50,8 +50,8 @@
  * Description not yet available.
  * \param
  */
-  df1b2variable log_gamma_density(const df1b2variable& _x,const df1b2variable& _r,
-    const  df1b2variable& _mu)
+df1b2variable log_gamma_density(const df1b2variable& _x,
+  const df1b2variable& _r, const  df1b2variable& _mu)
   {
     df1b2variable& x= (df1b2variable&)(_x);
     df1b2variable& r= (df1b2variable&)(_r);

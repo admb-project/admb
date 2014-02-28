@@ -338,7 +338,7 @@ void df3_three_variable::initialize(void)
  * Description not yet available.
  * \param
  */
-  df3_three_variable& df3_three_variable::operator -= (const df3_three_variable& v)
+df3_three_variable& df3_three_variable::operator-=(const df3_three_variable& v)
   {
     *get_u() -= *v.get_u();
     *get_u_x() -= *v.get_u_x();
@@ -409,7 +409,7 @@ df3_three_variable operator-(const df3_three_variable& v)
  * Description not yet available.
  * \param
  */
-  df3_three_variable& df3_three_variable::operator += (const df3_three_variable& v)
+df3_three_variable& df3_three_variable::operator+=(const df3_three_variable& v)
   {
     *get_u() += *v.get_u();
     *get_u_x() += *v.get_u_x();
@@ -467,7 +467,7 @@ df3_three_variable operator-(const df3_three_variable& v)
  * Description not yet available.
  * \param
  */
-  df3_three_variable& df3_three_variable::operator *= (const df3_three_variable& v)
+df3_three_variable& df3_three_variable::operator*=(const df3_three_variable& v)
   {
     df3_three_variable x=*this * v;
     *this=x;
@@ -478,7 +478,7 @@ df3_three_variable operator-(const df3_three_variable& v)
  * Description not yet available.
  * \param
  */
-  df3_three_variable& df3_three_variable::operator /= (const df3_three_variable& v)
+df3_three_variable& df3_three_variable::operator/=(const df3_three_variable& v)
   {
     df3_three_variable x=*this / v;
     *this=x;
@@ -500,8 +500,8 @@ df3_three_variable operator-(const df3_three_variable& v)
  * Description not yet available.
  * \param
  */
-void set_derivatives( df3_three_variable& z,const df3_three_variable& x,double u,
-  double zp,double zp2,double zp3)
+void set_derivatives(df3_three_variable& z,const df3_three_variable& x,
+  double u, double zp,double zp2,double zp3)
 {
     //*z.get_u() = u;
 
@@ -982,7 +982,7 @@ void set_derivatives( df3_three_variable& z, const df3_three_variable& x,
  * Description not yet available.
  * \param
  */
-  df3_three_variable& df3_three_variable::operator = (const df3_three_variable& v)
+df3_three_variable& df3_three_variable::operator=(const df3_three_variable& v)
   {
     *get_u() =  *v.get_u();
     *get_u_x() = *v.get_u_x();

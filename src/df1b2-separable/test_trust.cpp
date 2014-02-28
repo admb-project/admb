@@ -268,8 +268,8 @@ void laplace_approximation_calculator::get_complete_hessian
         if (ad_comm::global_logfile)
         {
           double time=ad_comm::ptm->get_elapsed_time();
-          (*ad_comm::global_logfile) << "       Time in user_function() " <<  ip << "  "
-            << time-time1 << endl;
+          (*ad_comm::global_logfile) << "       Time in user_function() "
+            <<  ip << "  " << time-time1 << endl;
         }
       }
     }

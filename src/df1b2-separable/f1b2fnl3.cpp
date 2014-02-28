@@ -101,12 +101,13 @@ void laplace_approximation_calculator::
 }
 
 /**
- * Calculates the Laplace approximation for a single separable function
- * in the "block diagonal", i.e. each u(i) occurs only in a single separable function
- * \param ff value of separable function (???)
- * This function will be called multiple times (once for each separable function).
- * Notation: x = fixed effects (parameters) and u = random effects.
- */
+Calculates the Laplace approximation for a single separable function
+in the "block diagonal", i.e. each u(i) occurs only in a single separable
+function.
+\param ff value of separable function (???)
+This function will be called multiple times (once for each separable function).
+Notation: x = fixed effects (parameters) and u = random effects.
+*/
 void laplace_approximation_calculator::
   do_separable_stuff_laplace_approximation_block_diagonal(df1b2variable& ff)
 {
@@ -115,7 +116,8 @@ void laplace_approximation_calculator::
   df1b2variable::passnumber=1;
   df1b2_gradcalc1();// Forward mode AD follow by a series of reverse sweeps
 
-  init_df1b2vector & locy= *funnel_init_var::py; // Independent variables for separable function
+  // Independent variables for separable function
+  init_df1b2vector& locy= *funnel_init_var::py;
   imatrix& list=*funnel_init_var::plist; // Index into "locy"
 
   int i; int j; int us=0; int xs=0; // us = #u's and xs = #x's
@@ -225,7 +227,8 @@ void laplace_approximation_calculator::
   for (i=1;i<=xs;i++)
   {
     int ii=lfe_index(i);
-    xadjoint(list(ii,1))+=local_xadjoint(i);  // Ads contribution to "global" gradient vector
+    // Ads contribution to "global" gradient vector
+    xadjoint(list(ii,1))+=local_xadjoint(i);
   }
   f1b2gradlist->reset();
   f1b2gradlist->list.initialize();

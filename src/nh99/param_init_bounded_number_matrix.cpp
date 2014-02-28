@@ -114,7 +114,8 @@ param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](
   //#endif
   return v[i];
 }
-param_init_bounded_number_vector& param_init_bounded_number_matrix::operator()(const int i) const
+param_init_bounded_number_vector& param_init_bounded_number_matrix::operator()(
+  const int i) const
 {
   //#ifdef SAFE_ARRAYS
   if (i < index_min)

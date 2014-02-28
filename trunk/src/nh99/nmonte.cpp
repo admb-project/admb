@@ -6,13 +6,15 @@
  */
 #include <admodel.h>
 
-void generate_actual_multivariate_mixture(int nvar, const dvector& a, const dvector& b,
-  dmatrix& ch,long int& iseed, const double& lprob, const dvector& w);
+void generate_actual_multivariate_mixture(int nvar, const dvector& a,
+  const dvector& b, dmatrix& ch,long int& iseed, const double& lprob,
+  const dvector& w);
 
 double cumd_mixture_02(const double& x);
 
-void generate_actual_multivariate_cauchy(int nvar, const dvector& a, const dvector& b,
-  dmatrix& ch,long int& iseed, const double& lprob, const dvector& w);
+void generate_actual_multivariate_cauchy(int nvar, const dvector& a,
+  const dvector& b, dmatrix& ch,long int& iseed, const double& lprob,
+  const dvector& w);
 double log_likelihood_mixture_02(const double& x);
 double log_likelihood_mixture(const double& x);
 double inv_cumd_norm(const double& x);
@@ -23,31 +25,29 @@ double ln_normal_tail_right(const double& x);
 double ln_normal_tail_left(const double& x);
 double ln_normal_tail(const double& x);
 double better_rand(long int& iseed);
-void get_bounded_mixture(double x1,double x2, const double& y, const double& density,
-  long int& iseed);
-void get_bounded_cauchy(double x1,double x2, const double& y, const double& density,
-  long int& iseed);
-void get_bounded_normal(double x1,double x2, const double& y, const double& density,
-  long int& iseed);
-
-double myran1(long int&);
+void get_bounded_mixture(double x1,double x2, const double& y,
+  const double& density, long int& iseed);
+void get_bounded_cauchy(double x1,double x2, const double& y,
+  const double& density, long int& iseed);
+void get_bounded_normal(double x1,double x2, const double& y,
+  const double& density, long int& iseed);
 
 void get_bounded_normal_virtual(double x1,double x2, const double& _y,
   double& _log_density);
 
-dvector bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch,long int& iseed);
+dvector bounded_multivariate_normal(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch,long int& iseed);
 
-void generate_virtual_multivariate(int nvar, const dvector& a, const dvector& b, const dmatrix& ch,
-  const double& lprob, const dvector& eps);
-
-void generate_actual_multivariate(int nvar, const dvector& a, const dvector& b, const dmatrix& ch,
-  long int& iseed, const double& lprob, const dvector& w);
+void generate_virtual_multivariate(int nvar, const dvector& a,
+  const dvector& b, const dmatrix& ch, const double& lprob, const dvector& eps); 
+void generate_actual_multivariate(int nvar, const dvector& a, const dvector& b,
+  const dmatrix& ch, long int& iseed, const double& lprob, const dvector& w);
 
 dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
-  dvector& b1, const dmatrix& ch, const dmatrix& ch3, const dmatrix& chinv, const dmatrix& ch3inv,
-  double contaminant,long int& iseed, const double& lprob, const double& _lprob3,
-  double& log_tprob, const int& _outflag)
+  dvector& b1, const dmatrix& ch, const dmatrix& ch3, const dmatrix& chinv,
+  const dmatrix& ch3inv, double contaminant,long int& iseed,
+  const double& lprob, const double& _lprob3, double& log_tprob,
+  const int& _outflag)
 {
   double& lprob3=(double&) _lprob3;
   int& outflag=(int&) _outflag;
@@ -114,8 +114,9 @@ dvector bounded_multivariate_cauchy(int nvar, const dvector& a1,
   return w;
 }
 
-void generate_actual_multivariate_cauchy(int nvar, const dvector& _a, const dvector& _b,
-  dmatrix& ch,long int& iseed, const double& _lprob, const dvector& _w)
+void generate_actual_multivariate_cauchy(int nvar, const dvector& _a,
+  const dvector& _b, dmatrix& ch,long int& iseed, const double& _lprob,
+  const dvector& _w)
 {
   double& lprob=(double&) _lprob;
   dvector& a=(dvector&) _a;
@@ -144,7 +145,8 @@ void generate_actual_multivariate_cauchy(int nvar, const dvector& _a, const dvec
 }
 
 dvector bounded_multivariate_mixture(int nvar, const dvector& a1,
-  dvector& b1, const dmatrix& _ch,long int& iseed, const double& lprob, const int& _outflag)
+  dvector& b1, const dmatrix& _ch,long int& iseed, const double& lprob,
+  const int& _outflag)
 {
   dmatrix& ch=(dmatrix&)_ch;
   int& outflag=(int&) _outflag;
@@ -161,8 +163,9 @@ dvector bounded_multivariate_mixture(int nvar, const dvector& a1,
   return w;
 }
 
-void generate_actual_multivariate_mixture(int nvar, const dvector& _a, const dvector& _b,
-  dmatrix& ch,long int& iseed, const double& _lprob, const dvector& _w)
+void generate_actual_multivariate_mixture(int nvar, const dvector& _a,
+  const dvector& _b, dmatrix& ch,long int& iseed, const double& _lprob,
+  const dvector& _w)
 {
   double& lprob=(double&) _lprob;
   dvector& a=(dvector&) _a;
@@ -190,8 +193,9 @@ void generate_actual_multivariate_mixture(int nvar, const dvector& _a, const dve
   }
 }
 
-void generate_actual_multivariate(int nvar, const dvector& _a, const dvector& _b, const dmatrix& ch,
-  long int& iseed, const double& _lprob, const dvector& _w)
+void generate_actual_multivariate(int nvar, const dvector& _a,
+  const dvector& _b, const dmatrix& ch, long int& iseed, const double& _lprob,
+  const dvector& _w)
 {
   double& lprob=(double&) _lprob;
   dvector& a=(dvector&) _a;
@@ -219,8 +223,9 @@ void generate_actual_multivariate(int nvar, const dvector& _a, const dvector& _b
   }
 }
 
-void generate_virtual_multivariate(int nvar, const dvector& _a, const dvector& _b, const dmatrix& ch,
-  const double& _lprob, const dvector& eps)
+void generate_virtual_multivariate(int nvar, const dvector& _a,
+  const dvector& _b, const dmatrix& ch, const double& _lprob,
+  const dvector& eps)
 {
   double& lprob=(double&) _lprob;
   dvector& a=(dvector&) _a;
@@ -245,8 +250,8 @@ void generate_virtual_multivariate(int nvar, const dvector& _a, const dvector& _
   }
 }
 
-void get_bounded_cauchy(double x1,double x2, const double& _y, const double& _log_density,
-  long int& iseed)
+void get_bounded_cauchy(double x1,double x2, const double& _y,
+  const double& _log_density, long int& iseed)
 {
   double& log_density=(double&) _log_density;
   double& y=(double&) _y;
@@ -265,8 +270,8 @@ void get_bounded_cauchy(double x1,double x2, const double& _y, const double& _lo
   log_density=w-log(1+0.5*y*y);
 }
 
-void get_bounded_mixture(double x1,double x2, const double& _y, const double& _log_density,
-  long int& iseed)
+void get_bounded_mixture(double x1,double x2, const double& _y,
+  const double& _log_density, long int& iseed)
 {
   double& y=(double&) _y;
   double& log_density=(double&) _log_density;
@@ -289,8 +294,8 @@ void get_bounded_mixture(double x1,double x2, const double& _y, const double& _l
   log_density=w+log_likelihood_mixture(y);
 }
 
-void get_bounded_normal(double x1,double x2, const double& _y, const double& _log_density,
-  long int& iseed)
+void get_bounded_normal(double x1,double x2, const double& _y,
+  const double& _log_density, long int& iseed)
 {
   double& y=(double&) _y;
   double& log_density=(double&) _log_density;

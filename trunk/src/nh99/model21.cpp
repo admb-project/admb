@@ -18,7 +18,8 @@ void param_init_d3array::set_simulation_bounds(const dmatrix& symbds,
 void param_init_d3array::get_jacobian(const dvector& y, const dvector& ndev,
   const int& ii)
 {
- cerr << " Error -- void param_init_number::add_value(const dvector& ndev, const int& ii)"
+ cerr << " Error -- "
+   " void param_init_number::add_value(const dvector& ndev, const int& ii)"
    " has not yet been defined" << endl;
  exit(1);
 }

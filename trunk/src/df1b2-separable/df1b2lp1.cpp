@@ -171,7 +171,7 @@ dvector laplace_approximation_calculator::default_calculations
       if (ii==1)
       {
         /*
-        double diff = fabs(re_objective_function_value::fun_without_pen 
+        double diff = fabs(re_objective_function_value::fun_without_pen
                       - objective_function_value::fun_without_pen);
         if (diff>1.e-7)
         {
@@ -193,8 +193,8 @@ dvector laplace_approximation_calculator::default_calculations
           double time=ad_comm::ptm->get_elapsed_time_and_reset();
           if (ad_comm::global_logfile)
           {
-            (*ad_comm::global_logfile) << " Time in newton-raphson " <<  ii << "  "
-              << time << endl;
+            (*ad_comm::global_logfile) << " Time in newton-raphson " <<  ii
+              << "  " << time << endl;
           }
         }
       }
@@ -465,8 +465,8 @@ dvector laplace_approximation_calculator::default_calculations
         double time=ad_comm::ptm->get_elapsed_time_and_reset();
         if (ad_comm::global_logfile)
         {
-          (*ad_comm::global_logfile) << " Time in calculate laplace approximation "
-            << time << endl;
+          (*ad_comm::global_logfile) <<
+            " Time in calculate laplace approximation " << time << endl;
         }
       }
     }
@@ -744,7 +744,9 @@ void laplace_approximation_calculator::get_newton_raphson_info
         if (ad_comm::global_logfile)
         {
           double time=ad_comm::ptm->get_elapsed_time();
-          (*ad_comm::global_logfile) << "       Time in user_function() " <<  ip << "  " << time-time1 << endl;
+          (*ad_comm::global_logfile) <<
+            "       Time in user_function() " <<  ip << "  " << time-time1
+            << endl;
         }
       }
     }

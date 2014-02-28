@@ -534,7 +534,7 @@ df1b2variable boundp(const df1b2variable& x, double fmin, double fmax)
  * Description not yet available.
  * \param
  */
-void set_value_mc(const df1b2vector& _x,const init_df1b2vector& _v, 
+void set_value_mc(const df1b2vector& _x,const init_df1b2vector& _v,
   const int& _ii, double fmin,double fmax)
 {
   ADUNCONST(int,ii)
@@ -555,8 +555,8 @@ void set_value_mc(const df1b2vector& _x,const init_df1b2vector& _v,
  * Description not yet available.
  * \param
  */
-void set_value(const df1b2vector& _x,const init_df1b2vector& _v, const int& _ii,
-  double fmin,double fmax,const df1b2variable& fpen)
+void set_value(const df1b2vector& _x,const init_df1b2vector& _v,
+  const int& _ii, double fmin,double fmax,const df1b2variable& fpen)
 {
   ADUNCONST(int,ii)
   ADUNCONST(df1b2vector,x)
@@ -570,8 +570,8 @@ void set_value(const df1b2vector& _x,const init_df1b2vector& _v, const int& _ii,
      //  << " " << v(ii-1) << " " << x(i) << endl;
   }
 }
-void set_value(const df1b2vector& _x,const init_df1b2vector& _v, const int& _ii,
-  double fmin,double fmax,const df1b2variable& fpen,double s)
+void set_value(const df1b2vector& _x,const init_df1b2vector& _v,
+  const int& _ii, double fmin,double fmax,const df1b2variable& fpen,double s)
 {
   ADUNCONST(int,ii)
   ADUNCONST(df1b2vector,x)

@@ -66,7 +66,8 @@ df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
     }
     if (value(big) == 0.0)
     {
-      cerr << "Error in matrix inverse -- matrix singular in inv(df1b2matrix)\n";
+      cerr <<
+        "Error in matrix inverse -- matrix singular in inv(df1b2matrix)\n";
     }
     vv[i] = 1.0/big;
   }
@@ -215,8 +216,10 @@ df1b2matrix expm(const df1b2matrix & A)
   int rmin = A.rowmin();
   int rmax = A.rowmax();
 
-  if(rmax != A.colmax()){cout<<"Error: Not square matrix in expm."<<endl; ad_exit(1);}
-  if(rmin != A.colmin()){cout<<"Error: Not square matrix in expm."<<endl; ad_exit(1);}
+  if(rmax != A.colmax())
+    {cout<<"Error: Not square matrix in expm."<<endl; ad_exit(1);}
+  if(rmin != A.colmin())
+    {cout<<"Error: Not square matrix in expm."<<endl; ad_exit(1);}
 
   df1b2matrix I(rmin,rmax,rmin,rmax);
   df1b2matrix AA(rmin,rmax,rmin,rmax);

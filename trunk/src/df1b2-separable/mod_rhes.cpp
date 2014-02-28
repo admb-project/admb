@@ -316,7 +316,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
     {
       if (nopt !=1)
       {
-        cerr << "Usage -hpts option needs non-negative integer  -- ignored" << endl;
+        cerr << "Usage -hpts option needs non-negative integer  -- ignored.\n";
       }
       else
       {
@@ -339,7 +339,7 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 
         if (_delta<=0)
         {
-          cerr << "Usage -hsize option needs positive number  -- ignored" << endl;
+          cerr << "Usage -hsize option needs positive number  -- ignored.\n";
           _delta=0.0;
         }
       }

@@ -11,7 +11,9 @@ static char nullptrerror[] = " Trying to access null pointer"
 static char unallocatederror[] = " Trying to access unallocated"
  " matrix in df1b2quadratic_prior";
 
- df1b2quadratic_prior * df1b2quadratic_prior::ptr[100]; // this should be a resizeable array
+// this should be a resizeable array
+df1b2quadratic_prior* df1b2quadratic_prior::ptr[100];
+
  int df1b2quadratic_prior::num_quadratic_prior=0;
  const int df1b2quadratic_prior::max_num_quadratic_prior=100;
 
@@ -100,7 +102,8 @@ static char unallocatederror[] = " Trying to access unallocated"
     pu=0;
   }
 
-  void df1b2quadratic_prior::allocate(const df1b2_init_vector & _u, const char * s)
+void df1b2quadratic_prior::allocate(const df1b2_init_vector& _u,
+  const char* s)
   {
     allocate(_u);
   }

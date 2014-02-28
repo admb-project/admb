@@ -23,8 +23,8 @@
     const df3_three_variable& b, double x);
   df3_three_variable betai(const df3_three_variable& a,
     const df3_three_variable& b,const df3_three_variable& x,int maxit);
-  df3_three_variable betai(const df3_three_variable& a,const df3_three_variable& b,
-    double x,int maxit);
+  df3_three_variable betai(const df3_three_variable& a,
+    const df3_three_variable& b, double x,int maxit);
 
 /*
   static double lnbeta(double a,double b)
@@ -207,7 +207,8 @@
   {
     df3_three_variable bt;
 
-    if (value(x) < 0.0 || value(x) > 1.0) cerr << "Bad x in routine betai" << endl;
+    if (value(x) < 0.0 || value(x) > 1.0)
+      cerr << "Bad x in routine betai" << endl;
     if (value(x) == 0.0 || value(x) == 1.0) bt=0.0;
     else
       bt=exp(gammln(a+b)-gammln(a)-gammln(b)+a*log(x)+b*log(1.0-x));

@@ -363,7 +363,8 @@ double AD_df3_tan(double x)
 
 df1b2function1 ADf1b2_tan(::tan,::AD_df1_tan,::AD_df2_tan ,::AD_df3_tan,"tan");
 
-df1b2function1 ADf1b2_atan(::atan,::AD_df1_atan,::AD_df2_atan ,::AD_df3_atan,"atan");
+df1b2function1 ADf1b2_atan(::atan,::AD_df1_atan,::AD_df2_atan ,::AD_df3_atan,
+  "atan");
 
 /**
  * Description not yet available.

@@ -84,7 +84,8 @@ df1b2vector solve(const df1b2matrix& aa,const df1b2vector& _z,
     }
     if (value(big) == 0.0)
     {
-      cerr << "Error in matrix inverse -- matrix singular in inv(df1b2matrix)\n";
+      cerr <<
+        "Error in matrix inverse -- matrix singular in inv(df1b2matrix)\n";
     }
     vv[i]=1.0/big;
   }

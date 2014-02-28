@@ -103,7 +103,7 @@ void laplace_approximation_calculator::make_sparse_triplet(void)
       (*sparse_iterator)(cti(3,i))=ii;
     }
   }
-  //cout << setw(8) << setprecision(2) << setscientific() << rowsum(Hess) 
+  //cout << setw(8) << setprecision(2) << setscientific() << rowsum(Hess)
   //     << endl;
   //cout << setw(8) << setprecision(2) << setscientific() << Hess << endl;
  /*

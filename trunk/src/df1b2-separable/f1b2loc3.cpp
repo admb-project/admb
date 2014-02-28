@@ -14,7 +14,8 @@ class newadkludge;
 extern newadkludge * newadkl;
 
 typedef local_init_pass1_var  * PLOCAL_INIT_PASS1_VAR;
-local_init_pass1_var ** local_init_pass1_var::list=new PLOCAL_INIT_PASS1_VAR[200];
+local_init_pass1_var** local_init_pass1_var::list =
+  new PLOCAL_INIT_PASS1_VAR[200];
 int local_init_pass1_var::num_active_parameters=0;
 int local_init_pass1_var::num_vars=0;
 
@@ -207,7 +208,8 @@ int local_init_pass1_var::nvarcalc_all(void)
  * Description not yet available.
  * \param
  */
-local_init_pass1_df1b2variable::local_init_pass1_df1b2variable(double _xu,double* _xudot)
+local_init_pass1_df1b2variable::local_init_pass1_df1b2variable(double _xu,
+  double* _xudot)
 {
   xu=_xu;
   *get_u()=_xu;

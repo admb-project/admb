@@ -13,7 +13,9 @@
 
 int quadratic_prior::in_qp_calculations=0;
 
-quadratic_prior * quadratic_prior::ptr[100]; // this should be a resizeable array
+// this should be a resizeable array
+quadratic_prior * quadratic_prior::ptr[100];
+
 int quadratic_prior::num_quadratic_prior=0;
 const int quadratic_prior::max_num_quadratic_prior=100;
 
@@ -637,7 +639,8 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
  * Description not yet available.
  * \param
  */
- void quadratic_prior::get_cHessian_contribution_from_vHessian(dmatrix Hess,int xsize)
+void quadratic_prior::get_cHessian_contribution_from_vHessian(dmatrix Hess,
+  int xsize)
  {
    for (int i=0;i<num_quadratic_prior;i++)
    {
@@ -724,7 +727,8 @@ dvector evaluate_function_with_quadprior(const dvector& x,int usize,
      }
      if (laplace_approximation_calculator::where_are_we_flag==3)
      {
-       int nv=df1b2quadratic_prior::get_ptr(xmyindex)->get_num_active_parameters();
+       int nv =
+         df1b2quadratic_prior::get_ptr(xmyindex)->get_num_active_parameters();
        //if (nv==0)
        if (nv!=0)
        {

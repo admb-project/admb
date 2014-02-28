@@ -464,11 +464,15 @@ df1b2variable& df1b2matrix::operator () (int i,int j) const
 {
   if (i < indexmin())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2variable& df1b2matrix::operator () (int i, int j) const", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low",
+    "df1b2variable& df1b2matrix::operator () (int i, int j) const",
+    indexmin(), indexmax(), i);
   }
   if (i > indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "df1b2variable& df1b2matrix::operator () (int i, int j) const", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high",
+    "df1b2variable& df1b2matrix::operator () (int i, int j) const",
+    indexmin(), indexmax(), i);
   }
   return (df1b2variable&)(v[i][j]);
 }
@@ -481,11 +485,15 @@ df1b2vector& df1b2matrix::operator [] (int i) const
 {
   if (i < indexmin())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2vector& df1b2matrix::operator [] (int i) const", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low",
+    "df1b2vector& df1b2matrix::operator [] (int i) const",
+    indexmin(), indexmax(), i);
   }
   if (i > indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "df1b2vector& df1b2matrix::operator [] (int i) const", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high",
+    "df1b2vector& df1b2matrix::operator [] (int i) const",
+    indexmin(), indexmax(), i);
   }
   return (df1b2vector&)(v[i]);
 }
@@ -498,11 +506,15 @@ df1b2vector& df1b2matrix::operator () (int i) const
 {
   if (i < indexmin())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2vector& df1b2matrix::operator () (int i) const", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low",
+    "df1b2vector& df1b2matrix::operator () (int i) const",
+    indexmin(), indexmax(), i);
   }
   if (i > indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "df1b2vector& df1b2matrix::operator () (int i) const", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high",
+    "df1b2vector& df1b2matrix::operator () (int i) const",
+    indexmin(), indexmax(), i);
   }
   return (df1b2vector&)(v[i]);
 }
@@ -515,11 +527,15 @@ df1b2variable& df1b2vector::operator () (int i) const
 {
   if (i < indexmin())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2variable& df1b2vector::operator () (int i) const", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low",
+    "df1b2variable& df1b2vector::operator () (int i) const",
+    indexmin(), indexmax(), i);
   }
   if (i > indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "df1b2variable& df1b2vector::operator () (int i) const", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high",
+    "df1b2variable& df1b2vector::operator () (int i) const",
+    indexmin(), indexmax(), i);
   }
   return *(v+i);
   //return *((df1b2variable*)((char*)(v)+i*pointersize()));
@@ -552,11 +568,15 @@ df1b2variable& df1b2vector::operator [] (int i) const
 {
   if (i < indexmin())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "df1b2variable& df1b2vector::operator [] (int i) const", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low",
+    "df1b2variable& df1b2vector::operator [] (int i) const",
+    indexmin(), indexmax(), i);
   }
   if (i > indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "df1b2variable& df1b2vector::operator [] (int i) const", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high",
+    "df1b2variable& df1b2vector::operator [] (int i) const",
+    indexmin(), indexmax(), i);
   }
   //return *(v+i);
   return *((df1b2variable*)((char*)(v)+i*pointersize()));

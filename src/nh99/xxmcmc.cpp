@@ -40,7 +40,7 @@ int maxnz(const dvector& xa);
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s,
   int mcmc2_flag);
 
-int read_hist_data(const dmatrix& hist, const dvector& h, dvector& m, 
+int read_hist_data(const dmatrix& hist, const dvector& h, dvector& m,
   const dvector& s, const dvector& parsave, long int& iseed,
   const double& size_scale);
 
@@ -56,13 +56,13 @@ void add_guihist_values(const dvector& s, const dvector& m,
   const dmatrix& _hist, dvector& mcmcnumber_values, double llc,
   const dvector& h, int nslots, double total_spread);
 
-void write_empirical_covariance_matrix(int ncor, const dvector& s_mean, 
+void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
   const dmatrix& s_covar, adstring& prog_name);
 
 void read_empirical_covariance_matrix(int nvar, const dmatrix& S,
   const adstring& prog_name);
 
-void read_hessian_matrix_and_scale(int nvar, const dmatrix& S, 
+void read_hessian_matrix_and_scale(int nvar, const dmatrix& S,
   const dvector& pen_vector);
 
 int user_stop(void);

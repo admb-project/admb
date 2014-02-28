@@ -167,7 +167,8 @@ double function_minimizer::projected_hess_determinant(const dvector& g,
  return lndet;
 }
 
-void function_minimizer::get_particular_grad(int iprof,int nvar, const dvector& fg, const dvector& g)
+void function_minimizer::get_particular_grad(int iprof,int nvar,
+  const dvector& fg, const dvector& g)
   {
     independent_variables x(1,nvar);
     initial_params::xinit(x);    // get the initial values into the

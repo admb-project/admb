@@ -11,8 +11,9 @@ double cumd_norm(const double& x);
 double myran1(long int&);
 //double better_rand(long int&);
 
-dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& _wght,double pprobe, random_number_generator& rng)
+dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& _wght,double pprobe,
+  random_number_generator& rng)
 {
   double& wght=(double&) _wght;
   const double rob1=0.95;
@@ -163,8 +164,9 @@ dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, con
   return w;
 }
 
-void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& _wght, const dvector& _y,double pprobe, random_number_generator& rng)
+void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& _wght, const dvector& _y,
+  double pprobe, random_number_generator& rng)
 {
   double& wght=(double&) _wght;
   const double rob1=0.95;

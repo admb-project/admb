@@ -170,7 +170,6 @@ L20:
       }
       else
       {
-
         double xf=value(fbest);
         double xg=max(value(gbest));
         if (ad_printf)

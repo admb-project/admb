@@ -34,7 +34,8 @@ int initial_params::montecarlo_scale(const dvector& d, const dvector& x)
  * Description not yet available.
  * \param
  */
-void param_init_number::mc_scale(const dvector& _d, const dvector& x, const int& _ii)
+void param_init_number::mc_scale(const dvector& _d, const dvector& x,
+  const int& _ii)
 {
   dvector& d=(dvector&) _d;
   int& ii=(int&) _ii;
@@ -46,7 +47,8 @@ void param_init_number::mc_scale(const dvector& _d, const dvector& x, const int&
  * Description not yet available.
  * \param
  */
-void param_init_bounded_number::mc_scale(const dvector& _d, const dvector& x, const int& _ii)
+void param_init_bounded_number::mc_scale(const dvector& _d, const dvector& x,
+  const int& _ii)
 {
   dvector& d=(dvector&) _d;
   int& ii=(int&) _ii;
@@ -64,7 +66,7 @@ void param_init_bounded_number::mc_scale(const dvector& _d, const dvector& x, co
  * Description not yet available.
  * \param
  */
-double ndfboundp_mc( double x, double fmin, double fmax,const double& fpen)
+double ndfboundp_mc(double x, double fmin, double fmax,const double& fpen)
 {
   if (x<-0.99999)
   {
@@ -93,7 +95,8 @@ double ndfboundp_mc( double x, double fmin, double fmax,const double& fpen)
  * Description not yet available.
  * \param
  */
-void param_init_vector::mc_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_vector::mc_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -109,7 +112,8 @@ void param_init_vector::mc_scale(const dvector& _v, const dvector& x, const int&
  * Description not yet available.
  * \param
  */
-void param_init_matrix::mc_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_matrix::mc_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -130,7 +134,8 @@ void param_init_matrix::mc_scale(const dvector& _v, const dvector& x, const int&
  * Description not yet available.
  * \param
  */
-void param_init_d3array::mc_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_d3array::mc_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -156,7 +161,8 @@ void param_init_d3array::mc_scale(const dvector& _v, const dvector& x, const int
  * Description not yet available.
  * \param
  */
-void param_init_bounded_vector::mc_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_bounded_vector::mc_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -178,7 +184,8 @@ void param_init_bounded_vector::mc_scale(const dvector& _v, const dvector& x, co
  * Description not yet available.
  * \param
  */
-void param_init_bounded_matrix::mc_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_bounded_matrix::mc_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;

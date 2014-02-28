@@ -34,15 +34,10 @@ using std::istringstream;
 double better_rand(long int&);
 void store_mcmc_values(const ofstream& ofs);
 void set_labels_for_mcmc(void);
-void save_mcmc_for_gui(const dvector& mcmc_values,dmatrix &mdm,int& ids);
-void save_mcmc_for_gui1(const dvector& mcmc_values,
-  dmatrix &mdm,int& ids,int& iwrap,ivector& no);
 
-void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
-  int& next_flag);
-void print_hist_data(const dmatrix& hist, const dmatrix& values, const dvector& h,
-  dvector& m, const dvector& s, const dvector& parsave,long int iseed, double size_scale);
-
+void print_hist_data(const dmatrix& hist, const dmatrix& values,
+  const dvector& h, dvector& m, const dvector& s, const dvector& parsave,
+  long int iseed, double size_scale);
 
 int minnz(const dvector& x);
 int maxnz(const dvector& xa);
@@ -51,41 +46,37 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS,double s,
   int mcmc2_flag);
 
 int read_hist_data(const dmatrix& hist, const dvector& h,
-  dvector& m, const dvector& s, const dvector& parsave,long int& iseed, const double& size_scale);
+  dvector& m, const dvector& s, const dvector& parsave,long int& iseed,
+  const double& size_scale);
 
-void make_preliminary_hist(const dvector& s, const dvector& m,int nsim, const dmatrix& values,
-  dmatrix& hist, const dvector& h,int slots,double total_spread,int probflag=0);
+void make_preliminary_hist(const dvector& s, const dvector& m,int nsim,
+  const dmatrix& values, dmatrix& hist, const dvector& h,int slots,
+  double total_spread,int probflag=0);
 
 void add_hist_values(const dvector& s, const dvector& m, const dmatrix& hist,
   dvector& mcmc_values,double llc, const dvector& h,int nslots,
   double total_spreadd,int probflag=0);
 
-void add_guihist_values(const dvector& s, const dvector& m,
-  const dmatrix& _hist,dvector& mcmcnumber_values,double llc,
-  const dvector& h,int nslots,double total_spread);
-
-void write_empirical_covariance_matrix(int ncor, const dvector& s_mean, const dmatrix& s_covar,
-  adstring& prog_name);
+void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
+  const dmatrix& s_covar, adstring& prog_name);
 
 void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
 
-
 void read_hessian_matrix_and_scale(int nvar, const dmatrix& S, const dvector& pen_vector);
 
-int user_stop(void);
+dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& wght,double pprobe,
+  random_number_generator& rng);
 
-extern int ctlc_flag;
-class admb_javapointers;
-extern admb_javapointers *adjm_ptr;
+void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& wght, const dvector& _y,
+  double pprobe, random_number_generator& rng);
 
-dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& wght,double pprobe, random_number_generator& rng);
+//void newton_raftery_bayes_estimate(double cbf,int ic, const dvector& lk,
+//double d);
 
-void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& wght, const dvector& _y,double pprobe, random_number_generator& rng);
-
-//void  newton_raftery_bayes_estimate(double cbf,int ic, const dvector& lk,double d);
-void newton_raftery_bayes_estimate_new(double cbf, int ic, const dvector& lk, double d);
+void newton_raftery_bayes_estimate_new(double cbf, int ic, const dvector& lk,
+  double d);
 
 void ad_update_mcmc_stats_report
   (int feval,int iter,double fval,double gmax);
@@ -110,7 +101,6 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dmatrix mcmc_display_matrix;
   //int mcmc_save_index=1;
   //int mcmc_wrap_flag=0;
-  //int mcmc_gui_length=10000;
   int no_sd_mcmc=0;
 
   int on2=-1;
@@ -238,7 +228,7 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
 
         if (_hybeps<=0)
         {
-          cerr << "Usage -hyeps option needs positive number  -- ignored" << endl;
+          cerr << "Usage -hyeps option needs positive number  -- ignored\n";
           _hybeps=-1.0;
         }
       }

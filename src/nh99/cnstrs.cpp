@@ -783,9 +783,7 @@ void make_all_classes(int _n,int _numberw,int _numberv)
   stj29 = 19;
   stj123 = .33333333333333331;
   stj124 = .14285714285714285;
-
 }
-
 #ifdef __cplusplus
 }
 #endif

@@ -316,7 +316,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
     for (int i=1;i<=nvar;i++)
     {
       cout << "Estimating row " << i << " out of " << nvar
-	   << " for hessian" << endl;
+           << " for hessian" << endl;
 
       double f=0.0;
       double xsave=x(i);
@@ -384,7 +384,7 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
     for (i=1;i<=nvar;i++)
     {
       cout << "Estimating row " << i << " out of " << nvar
-	   << " for hessian" << endl;
+           << " for hessian" << endl;
 
       double f=0.0;
       double xsave=x(i);
@@ -522,7 +522,7 @@ void function_minimizer::hess_inv(void)
   if (nvar != file_nvar)
   {
     cerr << "Number of active variables in file mod_hess.rpt is wrong"
-	 << endl;
+         << endl;
   }
 
   for (int i = 1;i <= nvar; i++)
@@ -531,7 +531,7 @@ void function_minimizer::hess_inv(void)
     if (!ifs)
     {
       cerr << "Error reading line " << i  << " of the hessian"
-	   << " in routine hess_inv()" << endl;
+           << " in routine hess_inv()" << endl;
       exit(1);
     }
   }
@@ -572,7 +572,7 @@ void function_minimizer::hess_inv(void)
     {
       if (hess(i,j)!=0.0)
       {
-	zero_switch=1;
+        zero_switch=1;
       }
     }
     if (!zero_switch)
@@ -592,7 +592,7 @@ void function_minimizer::hess_inv(void)
     {
       dvector se=eigenvalues(hess);
       ofs3 << setshowpoint() << setw(14) << setprecision(10)
-	 << "unsorted:\t" << se << endl;
+           << "unsorted:\t" << se << endl;
      se=sort(se);
      ofs3 << setshowpoint() << setw(14) << setprecision(10)
      << "sorted:\t" << se << endl;
@@ -711,15 +711,18 @@ void function_minimizer::hess_inv(void)
 void hess_calcreport(int i,int nvar)
 {
 #if defined (__SPDLL__)
-  if (ad_printf) (*ad_printf)("Estimating row %d out of %d for hessian\n",i,nvar);
+  if (ad_printf)
+    (*ad_printf)("Estimating row %d out of %d for hessian\n",i,nvar);
 #else
-  cout << "Estimating row " << i << " out of " << nvar << " for hessian" << endl;
+  cout << "Estimating row " << i << " out of " << nvar << " for hessian"
+       << endl;
 #endif
 }
 void hess_errorreport(void)
 {
 #if defined (__SPDLL__)
-  if (ad_printf) (*ad_printf)("Hessian does not appear to be positive definite\n");
+  if (ad_printf)
+    (*ad_printf)("Hessian does not appear to be positive definite\n");
 #else
   cout << "Hessian does not appear to be positive definite\n" << endl;
 #endif

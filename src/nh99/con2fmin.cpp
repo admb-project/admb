@@ -93,7 +93,7 @@ void function_minimizer::constraints_minimize(void)
       int jj=atoi(ad_comm::argv[on+1]);
       if (jj<=0)
       {
-        cerr << "Usage -maxph uerton needs positive integer  -- ignored" << endl;
+        cerr << "Usage -maxph uerton needs positive integer  -- ignored\n.";
       }
       else
       {
@@ -117,7 +117,7 @@ void function_minimizer::constraints_minimize(void)
       int _maxfn=atoi(ad_comm::argv[on+1]);
       if (_maxfn<=0)
       {
-        cerr << "Usage -maxfn uerton needs positive integer  -- ignored" << endl;
+        cerr << "Usage -maxfn uerton needs positive integer  -- ignored\n";
       }
       else
       {
@@ -136,7 +136,6 @@ void function_minimizer::constraints_minimize(void)
     }
     else
     {
-
       istrstream ist(ad_comm::argv[on+1]);
       ist >> _crit;
 

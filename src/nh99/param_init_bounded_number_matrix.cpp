@@ -7,7 +7,8 @@
 #include "param_init_bounded_number_matrix.h"
 #include "admb_messages.h"
 
-param_init_bounded_number_matrix::param_init_bounded_number_matrix(): v(NULL), index_min(0), index_max(0)
+param_init_bounded_number_matrix::param_init_bounded_number_matrix(): v(NULL),
+  index_min(0), index_max(0)
 {
 }
 void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
@@ -100,11 +101,15 @@ param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](
   //#ifdef SAFE_ARRAYS
   if (i < index_min)
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](const int i) const", index_min, index_max, i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low",
+    "param_init_bounded_number_matrix::operator[](const int i) const",
+    index_min, index_max, i);
   }
   if (i > index_max)
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](const int i) const", index_min, index_max, i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high",
+    "param_init_bounded_number_matrix::operator[](const int i) const",
+    index_min, index_max, i);
   }
   //#endif
   return v[i];
@@ -114,11 +119,15 @@ param_init_bounded_number_vector& param_init_bounded_number_matrix::operator()(c
   //#ifdef SAFE_ARRAYS
   if (i < index_min)
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](const int i) const", index_min, index_max, i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low",
+    "param_init_bounded_number_matrix::operator[](const int i) const",
+    index_min, index_max, i);
   }
   if (i > index_max)
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](const int i) const", index_min, index_max, i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high",
+    "param_init_bounded_number_matrix::operator[](const int i) const",
+    index_min, index_max, i);
   }
   //#endif
   return v[i];

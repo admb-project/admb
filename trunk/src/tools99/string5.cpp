@@ -8,12 +8,26 @@
 #include <stdlib.h>
 #include "admb_messages.h"
 
-adstring_array::adstring_array(const adstring_array& sa):clist(sa)
+/**
+Default constructor
+*/
+adstring_array::adstring_array()
+{
+  shape=NULL;
+  ptr=NULL;
+}
+/**
+Copy constructor
+*/
+adstring_array::adstring_array(const adstring_array& sa): clist(sa)
 {
   shape=sa.shape;
   ptr=sa.ptr;
 }
-
+adstring_array::adstring_array(int min,int max)
+{
+  allocate(min,max);
+}
 /**
 Destructor
 */
@@ -44,25 +58,12 @@ adstring_array::~adstring_array()
   }
 }
 
-/**
-Default constructor
-*/
-adstring_array::adstring_array(void)
-{
-  shape=NULL;
-  ptr=NULL;
-}
+int adstring_array::size() const
+  { return shape->indexmax()-shape->indexmin() + 1; }
+int adstring_array::indexmin() const { return shape->indexmin();}
+int adstring_array::indexmax() const { return shape->indexmax();}
 
-int adstring_array::size() const { return shape->indexmax()-shape->indexmin() + 1; }
-int adstring_array::indexmin(void) const { return shape->indexmin();}
-int adstring_array::indexmax(void) const { return shape->indexmax();}
-
-  adstring_array::adstring_array(int min,int max)
-  {
-    allocate(min,max);
-  }
-
-  void adstring_array::allocate(int min,int max)
+void adstring_array::allocate(int min, int max)
   {
     if (min > max)
     {
@@ -85,7 +86,7 @@ int adstring_array::indexmax(void) const { return shape->indexmax();}
     }
   }
 
-  adstring& adstring_array::operator [] (int i)
+adstring& adstring_array::operator[](int i)
   {
     if (!shape)
     {
@@ -105,7 +106,7 @@ int adstring_array::indexmax(void) const { return shape->indexmax();}
     return *(ptr[i]);
   }
 
-  adstring& adstring_array::operator () (int i)
+adstring& adstring_array::operator()(int i)
   {
     if (!shape)
     {

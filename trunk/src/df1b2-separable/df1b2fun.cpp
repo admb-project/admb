@@ -346,7 +346,8 @@ double AD_df2_tan(double x)
  */
 double AD_df3_atan(double x)
 {
-  return double(-2.0)/square(double(1)+square(x))+double(12.0)*square(x)/cube(double(1)+square(x));
+  return double(-2.0)/square(double(1)+square(x))
+         + double(12.0)*square(x)/cube(double(1)+square(x));
 }
 
 /**

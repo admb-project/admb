@@ -534,8 +534,8 @@ df1b2variable boundp(const df1b2variable& x, double fmin, double fmax)
  * Description not yet available.
  * \param
  */
-void set_value_mc(const df1b2vector& _x,const init_df1b2vector& _v, const int& _ii,
-  double fmin,double fmax)
+void set_value_mc(const df1b2vector& _x,const init_df1b2vector& _v, 
+  const int& _ii, double fmin,double fmax)
 {
   ADUNCONST(int,ii)
   ADUNCONST(df1b2vector,x)

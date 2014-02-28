@@ -43,7 +43,8 @@ fixed_smartlist::fixed_smartlist(void)
  * Description not yet available.
  * \param
  */
-fixed_smartlist::fixed_smartlist(unsigned int _bufsize,const adstring& _filename)
+fixed_smartlist::fixed_smartlist(unsigned int _bufsize,
+  const adstring& _filename)
 {
   allocate(_bufsize,_filename);
 }

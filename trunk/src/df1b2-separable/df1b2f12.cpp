@@ -255,7 +255,7 @@ void read_pass2_1(void)
     px->u_bar[i]+=(pf->d2f11)(xu,yu)*xdot[i]*pz->u_dot_bar[i];
     px->u_bar[i]+=(pf->d2f12)(xu,yu)*ydot[i]*pz->u_dot_bar[i];
 #if defined(ADDEBUG_PRINT)
-    cout << px->u_bar[i] << " " << pz->u_dot_bar[i] << " " << addebug_count 
+    cout << px->u_bar[i] << " " << pz->u_dot_bar[i] << " " << addebug_count
          << endl;
 #endif
   }

@@ -319,7 +319,6 @@ funnel_init_df1b2variable::funnel_init_df1b2variable
     lapprox->used_flags(ind_index)+=1;
   }
   xu=*(x.get_u());
-
 }
 
 /**
@@ -822,7 +821,8 @@ void funnel_init_df1b2vector::set_value(const init_df1b2vector& _x,
  * Description not yet available.
  * \param
  */
-funnel_init_bounded_df1b2vector::funnel_init_bounded_df1b2vector(const df1b2_init_bounded_vector & _x)
+funnel_init_bounded_df1b2vector::funnel_init_bounded_df1b2vector(
+  const df1b2_init_bounded_vector& _x)
 {
   ADUNCONST(df1b2_init_bounded_vector,x)
   //type=0;

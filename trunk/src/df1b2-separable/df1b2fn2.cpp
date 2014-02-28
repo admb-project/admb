@@ -934,11 +934,15 @@ init_df1b2variable& init_df1b2vector::operator () (int i)
 {
   if (i < indexmin())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "init_df1b2variable& init_df1b2vector::operator () (int i)", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low",
+    "init_df1b2variable& init_df1b2vector::operator () (int i)",
+    indexmin(), indexmax(), i);
   }
   if (i > indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "init_df1b2variable& init_df1b2vector::operator () (int i)", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high",
+    "init_df1b2variable& init_df1b2vector::operator () (int i)",
+    indexmin(), indexmax(), i);
   }
   return ptr[i];
 }
@@ -951,20 +955,19 @@ init_df1b2variable& init_df1b2vector::operator [] (int i)
 {
   if (i < indexmin())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too low", "init_df1b2variable& init_df1b2vector::operator [] (int i)", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too low",
+    "init_df1b2variable& init_df1b2vector::operator [] (int i)",
+    indexmin(), indexmax(), i);
   }
   if (i > indexmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index too high", "init_df1b2variable& init_df1b2vector::operator [] (int i)", indexmin(), indexmax(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index too high",
+    "init_df1b2variable& init_df1b2vector::operator [] (int i)",
+    indexmin(), indexmax(), i);
   }
   return ptr[i];
 }
 #endif
-//int active (const df1b2_init_vector &){return 1;}
-//int active(const initial_df1b2params& x){return 1;}
-//int active(const df1b2vector& x){return 1;}
-//int active(const df1b2matrix& x){return 1;}
-
 /**
 Get f1b2buffer size from commandline options.
 */

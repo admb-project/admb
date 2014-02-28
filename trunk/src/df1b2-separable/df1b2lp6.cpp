@@ -218,7 +218,8 @@ void laplace_approximation_calculator::
 
             int on;
             int nopt;
-            if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-ieigvec",nopt))>-1)
+            if ((on=option_match(ad_comm::argc,ad_comm::argv,"-ieigvec",nopt))
+              >-1)
             {
               dmatrix M=make_dmatrix(*sparse_triplet2);
 
@@ -231,7 +232,8 @@ void laplace_approximation_calculator::
               for (i=1;i<=ev.indexmax();i++)
                {
                   ofs3 << setw(4) << i  << " "
-                   << setshowpoint() << setw(14) << setprecision(10) << v(i) << " "
+                   << setshowpoint() << setw(14) << setprecision(10) << v(i)
+                   << " "
                    << setshowpoint() << setw(14) << setprecision(10)
                    << ev(i) << endl;
                }
@@ -636,7 +638,7 @@ dvector laplace_approximation_calculator::banded_calculations
       {
         if (sparse_hessian_flag)
         {
-          //dvector tmp=solve(*sparse_triplet,Hess,uadjoint,*sparse_symbolic)*Dux;
+//dvector tmp=solve(*sparse_triplet,Hess,uadjoint,*sparse_symbolic)*Dux;
           dvector tmp=solve(*sparse_triplet2,uadjoint,*sparse_symbolic2)*Dux;
           xadjoint -= tmp;
         }
@@ -1047,7 +1049,8 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
      ofstream ofs("ee");
      dvector ev(bHess.indexmin(),bHess.indexmax());
      dmatrix evecs=eigenvectors(dmatrix(bHess),ev);
-     ofs << setprecision(3) << setw(12) << setscientific() << dmatrix(bHess) << endl << endl;
+     ofs << setprecision(3) << setw(12) << setscientific() << dmatrix(bHess)
+         << endl << endl;
      ofs << ev << endl << endl << evecs << endl;
    }
    ld=0.5*ln_det_choleski(vHess,sgn);

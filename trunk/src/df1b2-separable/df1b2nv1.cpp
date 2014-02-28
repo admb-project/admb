@@ -25,11 +25,13 @@
  * Description not yet available.
  * \param
  */
- df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator [] (int i)
+df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator[](int i)
  {
    if (i < indexmin() || i > indexmax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator [] (int i)", indexmin(), indexmax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("Index out of range",
+     "df1b2_init_bounded_number_vector::operator [] (int i)",
+     indexmin(), indexmax(), i);
    }
    return v[i];
  }
@@ -38,11 +40,13 @@
  * Description not yet available.
  * \param
  */
- df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator () (int i)
+df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator()(int i)
  {
    if (i < indexmin() || i > indexmax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_bounded_number& df1b2_init_bounded_number_vector::operator () (int i)", indexmin(), indexmax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("Index out of range",
+     "df1b2_init_bounded_number_vector::operator () (int i)",
+     indexmin(), indexmax(), i);
    }
    return v[i];
  }
@@ -195,7 +199,8 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
   }
 }
 
- void df1b2_init_bounded_number_vector::set_initial_value(const double_index_type& _it)
+void df1b2_init_bounded_number_vector::set_initial_value(
+  const double_index_type& _it)
  {
     it=new double_index_type(_it);
  }
@@ -209,7 +214,9 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
  {
    if (i < indexmin() || i > indexmax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_number& df1b2_init_number_vector::operator [] (int i)", indexmin(), indexmax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("Index out of range",
+     "df1b2_init_number_vector::operator [] (int i)",
+     indexmin(), indexmax(), i);
    }
    return v[i];
  }
@@ -222,7 +229,9 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
  {
    if (i < indexmin() || i > indexmax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("Index out of range", "df1b2_init_number& df1b2_init_number_vector::operator () (int i)", indexmin(), indexmax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("Index out of range",
+     "df1b2_init_number_vector::operator () (int i)",
+     indexmin(), indexmax(), i);
    }
    return v[i];
  }
@@ -304,4 +313,3 @@ void df1b2_init_bounded_number_vector::set_scalefactor(double s)
    else
      v=NULL;
  }
-

@@ -263,8 +263,8 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
           double time=ad_comm::ptm->get_elapsed_time_and_reset();
           if (ad_comm::global_logfile)
           {
-            (*ad_comm::global_logfile) << " Time in newton-raphson " <<  ii << "  "
-              << time << endl;
+            (*ad_comm::global_logfile) << " Time in newton-raphson " <<  ii
+              << "  " << time << endl;
           }
         }
       }
@@ -299,8 +299,8 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
           double time=ad_comm::ptm->get_elapsed_time_and_reset();
           if (ad_comm::global_logfile)
           {
-            (*ad_comm::global_logfile) << " Time in send dvector to slaves " <<  ii <<  "   "
-              << time << endl;
+            (*ad_comm::global_logfile) << " Time in send dvector to slaves "
+              <<  ii <<  "   " << time << endl;
           }
         }
       }
@@ -362,7 +362,8 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
       double time=ad_comm::ptm->get_elapsed_time_and_reset();
       if (ad_comm::global_logfile)
       {
-        (*ad_comm::global_logfile) << " Time in calculate laplace approximation "
+        (*ad_comm::global_logfile) << 
+          " Time in calculate laplace approximation "
           << time << endl;
       }
     }
@@ -408,7 +409,8 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
         double time=ad_comm::pvm_manager->tm.get_elapsed_time_and_reset();
         if (ad_comm::global_logfile)
         {
-          (*ad_comm::global_logfile) << "Time in send dmatrix to slaves Hessadjoint "
+          (*ad_comm::global_logfile) <<
+            "Time in send dmatrix to slaves Hessadjoint "
             << time << endl;
         }
       }
@@ -515,7 +517,8 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
         double time=ad_comm::ptm->get_elapsed_time_and_reset();
         if (ad_comm::global_logfile)
         {
-          (*ad_comm::global_logfile) << " Time in get dvector from slaves slave_dtmp "
+          (*ad_comm::global_logfile) <<
+            " Time in get dvector from slaves slave_dtmp "
             << time << endl;
         }
       }
@@ -543,7 +546,8 @@ dvector laplace_approximation_calculator::default_calculations_parallel_master
       double time=ad_comm::ptm->get_elapsed_time_and_reset();
       if (ad_comm::global_logfile)
       {
-        (*ad_comm::global_logfile) << " Time in get dvector from slaves slave_utmps "
+        (*ad_comm::global_logfile) <<
+          " Time in get dvector from slaves slave_utmps "
           << time << endl;
       }
     }
@@ -659,8 +663,8 @@ void laplace_approximation_calculator::get_newton_raphson_info_master
         double time=ad_comm::ptm->get_elapsed_time();
         if (ad_comm::global_logfile)
         {
-          (*ad_comm::global_logfile) << "       Time in user_function() " <<  ip << "  "
-            << time-time1 << endl;
+          (*ad_comm::global_logfile) << "       Time in user_function() "
+            <<  ip << "  " << time-time1 << endl;
         }
       }
     }
@@ -706,7 +710,8 @@ void laplace_approximation_calculator::get_newton_raphson_info_master
       double time=ad_comm::ptm->get_elapsed_time();
       if (ad_comm::global_logfile)
       {
-        (*ad_comm::global_logfile) << "       Time to getdmatrix from slaves in "
+        (*ad_comm::global_logfile) <<
+          "       Time to getdmatrix from slaves in "
           " get newton raphson " <<  ip << "  " << time-time1 << endl;
       }
     }

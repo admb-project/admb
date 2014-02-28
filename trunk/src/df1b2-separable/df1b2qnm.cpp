@@ -299,7 +299,8 @@ void function_minimizer::quasi_newton_block(int nvar,int _crit,
             (lapprox->usize)/(lapprox->num_separable_calls) << ")\n" << endl;
           break;
         case 3:
-          cout << "\nBanded Hessian (Band width = " << lapprox->bw << ")\n" << endl;
+          cout << "\nBanded Hessian (Band width = " << lapprox->bw << ")\n"
+               << endl;
           break;
         case 4:
           cout << "Hessian type 4 " << endl;

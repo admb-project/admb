@@ -6,7 +6,8 @@
  */
 #include <admodel.h>
 /*
-void param_init_d3array::set_simulation_bounds(const dmatrix& symbds, const int& ii)
+void param_init_d3array::set_simulation_bounds(const dmatrix& symbds,
+  const int& ii)
 {
  cerr << " Error -- void param_init_d3array::set_simulation_bounds"
    " (const dmatrix& symbds, const int& ii) has not yet been defined" << endl;
@@ -14,7 +15,8 @@ void param_init_d3array::set_simulation_bounds(const dmatrix& symbds, const int&
 }
 */
 
-void param_init_d3array::get_jacobian(const dvector& y, const dvector& ndev, const int& ii)
+void param_init_d3array::get_jacobian(const dvector& y, const dvector& ndev,
+  const int& ii)
 {
  cerr << " Error -- void param_init_number::add_value(const dvector& ndev, const int& ii)"
    " has not yet been defined" << endl;
@@ -69,7 +71,8 @@ void param_init_d3array::copy_value_to_vector(const dvector& x, const int& ii)
     ::copy_value_to_vector(*this,x,ii);
   }
 
-void param_init_d3array::restore_value_from_vector(const dvector& x, const int& ii)
+void param_init_d3array::restore_value_from_vector(const dvector& x,
+  const int& ii)
   {
     ::restore_value_from_vector(*this,x,ii);
   }
@@ -157,7 +160,8 @@ void param_init_d3array::save_value(const ofstream& _ofs,int prec)
     }
   }
 
-void param_init_d3array::curv_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_d3array::curv_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -179,7 +183,8 @@ void param_init_d3array::curv_scale(const dvector& _v, const dvector& x, const i
     }
   }
 
-  void param_init_d3array::hess_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_d3array::hess_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -201,7 +206,8 @@ void param_init_d3array::curv_scale(const dvector& _v, const dvector& x, const i
     }
   }
 
-void param_init_d3array::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_d3array::sd_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;

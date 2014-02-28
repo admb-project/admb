@@ -41,7 +41,8 @@ void param_init_bounded_vector::dev_correction(const dmatrix& H, const int& _ii)
   ii+=size_count();
 }
 
-void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H, const int& _ii)
+void param_init_bounded_dev_vector::dev_correction(const dmatrix& _H,
+  const int& _ii)
 {
   dmatrix& H=(dmatrix&) _H;
   int& ii=(int&) _ii;

@@ -62,7 +62,7 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
             if ((!initial_value_flag) || initial_value <=minb
                  || initial_value >= maxb)
             {
-              //cerr << "Initial value out of bounds -- using halfway value" << endl;
+              //cerr << "Initial value out of bounds -- using halfway value\n.";
               initial_value=(minb+maxb)/2.;
             }
             (*this)(i)=(initial_value);
@@ -103,7 +103,7 @@ void param_init_bounded_matrix::set_value_inv(const dvector& x, const int& ii)
             if ((!initial_value_flag) || initial_value <=minb
                  || initial_value >= maxb)
             {
-              //cerr << "Initial value out of bounds -- using halfway value" << endl;
+              //cerr << "Initial value out of bounds -- using halfway value\n.";
               initial_value=(minb+maxb)/2.;
             }
             (*this)(i)=(initial_value);
@@ -146,7 +146,7 @@ void param_init_bounded_matrix::allocate(const ad_integer& rmin,
             if ((!initial_value_flag) || initial_value <=minb
                  || initial_value >= maxb)
             {
-              //cerr << "Initial value out of bounds -- using halfway value" << endl;
+              //cerr << "Initial value out of bounds -- using halfway value\n.";
               initial_value=(minb+maxb)/2.;
             }
             (*this)(i)=(initial_value);
@@ -190,7 +190,7 @@ void param_init_bounded_matrix::allocate(const ad_integer& rmin,
             if ((!initial_value_flag) || initial_value <=minb
                  || initial_value >= maxb)
             {
-              //cerr << "Initial value out of bounds -- using halfway value" << endl;
+              //cerr << "Initial value out of bounds -- using halfway value\n.";
               initial_value=(minb+maxb)/2.;
             }
             (*this)(i)=(initial_value);

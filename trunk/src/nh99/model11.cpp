@@ -193,7 +193,8 @@ param_init_bounded_number& param_init_bounded_number::operator = (CGNU_DOUBLE m)
   return *this;
 }
 
-param_init_bounded_number& param_init_bounded_number::operator=(const prevariable& m)
+param_init_bounded_number& param_init_bounded_number::operator=(
+  const prevariable& m)
 {
   this->dvariable::operator=(m);
   return *this;

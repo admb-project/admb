@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2014 Regents of the University of California 
+ * Copyright (c) 2008-2014 Regents of the University of California
  */
 #include <admodel.h>
 
@@ -62,7 +62,7 @@ void param_init_vector::save_value(const ofstream& _ofs, int prec,
   for (int i=mmin;i<=mmax;i++)
   {
     ofs << label()
-        << "(" << i << ") " 
+        << "(" << i << ") "
         << setw(prec+6) << setprecision(prec) << (*this)(i) << " "
         << setw(prec+6) << setprecision(prec) << g(offset++) << endl;
   }
@@ -77,7 +77,7 @@ void param_init_bounded_vector::save_value(const ofstream& _ofs, int prec,
   for (int i=mmin;i<=mmax;i++)
   {
     ofs << label()
-        << "(" << i << ") " 
+        << "(" << i << ") "
         << setw(prec+6) << setprecision(prec) << (*this)(i) << " "
         << setw(prec+6) << setprecision(prec) << g(offset++) << endl;
   }

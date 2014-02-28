@@ -1480,7 +1480,6 @@ L45:
 /*        OBTAINED BUT THE DECREASE IS NOT SUFFICIENT. */
 
     if (stage1 && *f <= fx && *f > ftest1) {
-
 /*           DEFINE THE MODIFIED FUNCTION AND DERIVATIVE VALUES. */
 
         fm = *f - *stp * dgtest;
@@ -1503,7 +1502,6 @@ L45:
         dgx = dgxm + dgtest;
         dgy = dgym + dgtest;
     } else {
-
 /*           CALL MCSTEP TO UPDATE THE INTERVAL OF UNCERTAINTY */
 /*           AND TO COMPUTE THE NEW STEP. */
 
@@ -1527,7 +1525,6 @@ L45:
     goto L30;
 
 /*     LAST LINE OF SUBROUTINE MCSRCH. */
-
 } /* mcsrch_ */
 
 /* Subroutine */ int mcstep_(doublereal *stx, doublereal *fx, doublereal *dx,
@@ -1806,7 +1803,6 @@ L45:
     return 0;
 
 /*     LAST LINE OF SUBROUTINE MCSTEP. */
-
 } /* mcstep_ */
 
 #ifdef __cplusplus

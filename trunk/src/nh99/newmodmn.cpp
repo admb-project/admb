@@ -9,15 +9,16 @@
 double polint(double * xa,double * ya,double x);
 
 void get_confidence_interval(const dvector& left_bd, const dvector& right_bd,
-  dmatrix& ms, const dvector& xs, const dvector& siglevel, const int& level_index,
-  int index);
+  dmatrix& ms, const dvector& xs, const dvector& siglevel,
+  const int& level_index, int index);
 void get_onesided_intervals(const dvector& left_bd, const dvector& right_bd,
-  dmatrix& ms, const dvector& xs, const dvector& siglevel, const int& level_index,
-  int index);
+  dmatrix& ms, const dvector& xs, const dvector& siglevel,
+  const int& level_index, int index);
 void report_confidence_limits(const ofstream& ofs3,int numsig_levels,
   const dvector& siglevel, const dvector& left_bd, const dvector& right_bd);
 void report_onesided_confidence_limits(const ofstream& ofs3,int numsig_levels,
-  const dvector& siglevel, const dvector& left_bd, const dvector& right_bd,int ip);
+  const dvector& siglevel, const dvector& left_bd, const dvector& right_bd,
+  int ip);
 
 void report_confidence_limits(const ofstream& _ofs3,int numsig_levels,
   const dvector& siglevel, const dvector& left_bd, const dvector& right_bd)
@@ -35,7 +36,8 @@ void report_confidence_limits(const ofstream& _ofs3,int numsig_levels,
 }
 
 void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
-  const dvector& siglevel, const dvector& left_bd, const dvector& right_bd,int ip)
+  const dvector& siglevel, const dvector& left_bd, const dvector& right_bd,
+  int ip)
 {
   ofstream& ofs3=(ofstream&) _ofs3;
   int i;
@@ -69,7 +71,8 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
     dmatrix& actual_value,double global_min,int offset, const dmatrix& lprof,
     dmatrix& ldet, const dmatrix& xdist, const dmatrix& penalties)
    */
-   // dmatrix& ldet, const dmatrix& xdist, const dmatrix& penalties, const dmatrix& lg_jacob)
+   // dmatrix& ldet, const dmatrix& xdist, const dmatrix& penalties,
+   // const dmatrix& lg_jacob)
 #else
 
   void function_minimizer::normalize_posterior_distribution(double udet,
@@ -158,7 +161,8 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
         }
         else
         {
-          m(2,j)=tempint1(j)/xdist(ip,j); // profile likelihood adjusted for gradient of dep var
+          // profile likelihood adjusted for gradient of dep var
+          m(2,j)=tempint1(j)/xdist(ip,j);
         }
         //m(2,j)=tempint1(j);
       }
@@ -252,8 +256,8 @@ void report_onesided_confidence_limits(const ofstream& _ofs3,int numsig_levels,
           ms(ii,kmult*k)=lm(ii,k);
           if (k<max_ind)
           {
-	    double l=lm(ii,k);
-	    double u=lm(ii,k+1);
+            double l=lm(ii,k);
+            double u=lm(ii,k+1);
             for (int i=1;i<kmult;i++)
             {
               ms(ii,kmult*k+i)=l+double(i)/kmult*(u-l);

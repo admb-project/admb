@@ -60,9 +60,11 @@ void add_hist_values(const dvector& s, const dvector& m, const dmatrix& hist,
 void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
   const dmatrix& s_covar, adstring& prog_name);
 
-void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
+void read_empirical_covariance_matrix(int nvar, const dmatrix& S,
+  const adstring& prog_name);
 
-void read_hessian_matrix_and_scale(int nvar, const dmatrix& S, const dvector& pen_vector);
+void read_hessian_matrix_and_scale(int nvar, const dmatrix& S,
+  const dvector& pen_vector);
 
 dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1,
   const dvector& b1, dmatrix& ch, const double& wght,double pprobe,

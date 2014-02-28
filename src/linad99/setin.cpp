@@ -25,8 +25,8 @@ void set_value_inv( CGNU_DOUBLE x,const dvector& _v, const int& _ii)
  * Description not yet available.
  * \param
  */
-void set_value_inv( CGNU_DOUBLE u,const dvector& _x,const int& _ii, CGNU_DOUBLE fmin,
-  CGNU_DOUBLE fmax)
+void set_value_inv(CGNU_DOUBLE u, const dvector& _x, const int& _ii,
+  CGNU_DOUBLE fmin, CGNU_DOUBLE fmax)
 {
   int& ii=(int&) _ii;
   dvector& x=(dvector&) _x;
@@ -37,8 +37,8 @@ void set_value_inv( CGNU_DOUBLE u,const dvector& _x,const int& _ii, CGNU_DOUBLE 
  * Description not yet available.
  * \param
  */
-void set_value_inv(const prevariable& u,const dvector& _x,const int& _ii,CGNU_DOUBLE fmin,
-  CGNU_DOUBLE fmax)
+void set_value_inv(const prevariable& u, const dvector& _x, const int& _ii,
+  CGNU_DOUBLE fmin, CGNU_DOUBLE fmax)
 {
   dvector& x=(dvector&) _x;
   int& ii=(int&) _ii;
@@ -189,7 +189,8 @@ void set_value_inv(const d3_array& x,const dvector& v, const int& ii,
  * Description not yet available.
  * \param
  */
-void set_value_inv_partial(const dvector& x, const dvector& _v, const int& _ii, int n)
+void set_value_inv_partial(const dvector& x, const dvector& _v, const int& _ii,
+  int n)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -212,8 +213,8 @@ void set_value_inv_partial(const dvector& x, const dvector& _v, const int& _ii, 
  * Description not yet available.
  * \param
  */
-void set_value_inv_partial(const dvector& x,const dvector& _v, const int& _ii, int n,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
+void set_value_inv_partial(const dvector& x,const dvector& _v, const int& _ii,
+  int n, CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;
@@ -275,8 +276,8 @@ void set_value_inv_partial(const dvar_vector& x, const dvector& _v,
  * Description not yet available.
  * \param
  */
-void set_value_inv_partial(const dvar_vector& x, const dvector& _v, const int& _ii, int n,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
+void set_value_inv_partial(const dvar_vector& x, const dvector& _v,
+  const int& _ii, int n, CGNU_DOUBLE fmin,CGNU_DOUBLE fmax)
 {
   int& ii=(int&) _ii;
   int min=x.indexmin();
@@ -310,8 +311,8 @@ void set_value_inv(const prevariable& x, const dvector& _v, const int& _ii)
  * Description not yet available.
  * \param
  */
-void set_value_inv(const dvariable& u, const dvector& _x, const int& _ii, CGNU_DOUBLE fmin,
-  CGNU_DOUBLE fmax)
+void set_value_inv(const dvariable& u, const dvector& _x, const int& _ii,
+  CGNU_DOUBLE fmin, CGNU_DOUBLE fmax)
 {
   int& ii=(int&) _ii;
   dvector& x=(dvector&) _x;
@@ -378,7 +379,8 @@ void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,
  * Description not yet available.
  * \param
  */
-void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,double s)
+void set_value_inv(const dvar_vector& x,const dvector& _v,const int& _ii,
+  double s)
 {
   int& ii=(int&) _ii;
   dvector& v=(dvector&) _v;

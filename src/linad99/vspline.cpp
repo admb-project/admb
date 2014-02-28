@@ -164,7 +164,8 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
     ybcend = ypn;
   }
 
-  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend, ybcend);
+  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend,
+    ybcend);
   ret.shift(_x.indexmin());
   return ret;
 }
@@ -210,7 +211,8 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,double yp1,
     ybcend = ypn;
   }
 
-  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend, ybcend);
+  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend,
+    ybcend);
   ret.shift(_x.indexmin());
   return ret;
 }
@@ -256,7 +258,8 @@ dvar_vector spline(const dvector &_x,const dvar_vector&_y,dvariable yp1,
     ybcend = ypn;
   }
 
-  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend, ybcend);
+  dvar_vector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend,
+    ybcend);
   ret.shift(_x.indexmin());
   return ret;
 }
@@ -282,7 +285,8 @@ dvariable spline_cubic_val(int n,  const dvector& _t, double tval,
 //
 //  Discussion:
 //
-//    SPLINE_CUBIC_SET must have already been called to define the values of YPP.
+//    SPLINE_CUBIC_SET must have already been called to define the values of
+//    YPP.
 //
 //    For any point T in the interval T(IVAL), T(IVAL+1), the form of
 //    the spline is
@@ -406,7 +410,8 @@ dvariable spline_cubic_val2(int n, const dvector& _t, const prevariable tval,
 //
 //  Discussion:
 //
-//    SPLINE_CUBIC_SET must have already been called to define the values of YPP.
+//    SPLINE_CUBIC_SET must have already been called to define the values of
+//    YPP.
 //
 //    For any point T in the interval T(IVAL), T(IVAL+1), the form of
 //    the spline is
@@ -635,7 +640,8 @@ dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
 //
 //  Purpose:
 //
-//    SPLINE_CUBIC_SET computes the second derivatives of a piecewise cubic spline.
+//    SPLINE_CUBIC_SET computes the second derivatives of a piecewise cubic
+//    spline.
 //
 //  Discussion:
 //
@@ -746,7 +752,8 @@ dvar_vector spline_cubic_set (int n, const dvector& t, const dvar_vector& y,
 //    Input, double YBCEND, the values to be used in the boundary
 //    conditions if IBCEND is equal to 1 or 2.
 //
-//    Output, double SPLINE_CUBIC_SET[N], the second derivatives of the cubic spline.
+//    Output, double SPLINE_CUBIC_SET[N], the second derivatives of the cubic
+//    spline.
 //
 {
   dvar_vector a(0,3*n-1);

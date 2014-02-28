@@ -55,7 +55,8 @@ dvariable ghk(const dvar_vector& lower,const dvar_vector& upper,
  * Description not yet available.
  * \param
  */
-dvariable ghk_m(const dvar_vector& upper,const dvar_matrix& Sigma, const dmatrix& eps)
+dvariable ghk_m(const dvar_vector& upper,const dvar_matrix& Sigma,
+  const dmatrix& eps)
 {
   RETURN_ARRAYS_INCREMENT();
   int n=upper.indexmax();

@@ -36,7 +36,8 @@ uistream& uistream::operator>> (const TYPE& x) \
 #  define __BINFILE__ 0
 #endif
 
-#if defined(__TURBOC__) || defined(__GNUDOS__) || defined(__MSVC32__) || defined (__WAT32__)
+#if defined(__TURBOC__) || defined(__GNUDOS__) || defined(__MSVC32__) \
+|| defined (__WAT32__)
 uostream::uostream(const char* name, int  m, int prot)
 #  if defined(__GNU_NEWER__)
     :ofstream(name, std::ios::binary | std::ios::openmode(m))
@@ -117,7 +118,8 @@ uistream::uistream(const char* name, int m, int prot)
 #  if (__BORLANDC__  > 0x0520  && __BORLANDC__  < 0x0560)
   :ifstream(name, m | __BINFILE__ , prot) { }
 #  else
-#  if ( defined(__GNU_NEWER__) || defined(__MSC_NEWER__)  || __BORLANDC__  > 0x0550)
+#  if ( defined(__GNU_NEWER__) || defined(__MSC_NEWER__) \
+|| __BORLANDC__  > 0x0550)
        :ifstream(name, std::ios::binary ) { }
 #    else
        :ifstream(name, m | ios::nocreate | __BINFILE__ , prot) { }

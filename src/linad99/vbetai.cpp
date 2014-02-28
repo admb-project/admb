@@ -18,7 +18,8 @@
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 */
-dvariable betai(const dvariable a, const dvariable b, const dvariable x, int maxit)
+dvariable betai(const dvariable a, const dvariable b, const dvariable x,
+  int maxit)
 {
   dvariable bt;
 

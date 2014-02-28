@@ -119,7 +119,8 @@ static double Sn(double x,double a);
 
 #if defined(USE_LAPLACE)
 #include <df1b2fun.h>
-df3_two_variable cumd_gamma(const df3_two_variable& x, const df3_two_variable& a);
+df3_two_variable cumd_gamma(const df3_two_variable& x,
+  const df3_two_variable& a);
 
 dvariable inv_cumd_gamma(const prevariable& _y,const prevariable& _a)
 {

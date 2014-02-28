@@ -66,7 +66,6 @@ void function_minimizer::hess_routine(void)
 }
 void function_minimizer::hess_routine_noparallel(void)
 {
-
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   //if (adjm_ptr) set_labels_for_hess(nvar);
   independent_variables x(1,nvar);
@@ -173,8 +172,8 @@ void function_minimizer::hess_routine_noparallel(void)
   ofs << tscale;
 }
 
-void function_minimizer::hess_routine_and_constraint(int iprof, const dvector& g,
-  dvector& fg)
+void function_minimizer::hess_routine_and_constraint(int iprof,
+  const dvector& g, dvector& fg)
 {
   int nvar=initial_params::nvarcalc(); // get the number of active parameters
   independent_variables x(1,nvar);

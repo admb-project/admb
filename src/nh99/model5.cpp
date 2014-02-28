@@ -6,7 +6,8 @@
  */
 #include <admodel.h>
 
-void param_init_bounded_dev_vector::set_value(const dvar_vector& x, const int& ii, const dvariable& _pen)
+void param_init_bounded_dev_vector::set_value(const dvar_vector& x,
+  const int& ii, const dvariable& _pen)
   {
     dvariable& pen= (dvariable&) _pen;
     if (initial_params::mc_phase)

@@ -49,8 +49,9 @@ double cumd_exp(double x)
   }
 }
 
-dvector bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& _wght, random_number_generator & rng)
+dvector bounded_multivariate_normal(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& _wght,
+  random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   const double sqrt_tpi =sqrt(2*PI);
@@ -122,8 +123,9 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& 
   return w;
 }
 
-dvector probing_bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& _wght, double pprobe, random_number_generator & rng)
+dvector probing_bounded_multivariate_normal(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& _wght, double pprobe,
+  random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   const double sqrt_tpi =sqrt(2*PI);
@@ -200,8 +202,9 @@ dvector probing_bounded_multivariate_normal(int nvar, const dvector& a1, const d
   return w;
 }
 
-dvector bounded_multivariate_uniform(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& _wght, random_number_generator & rng)
+dvector bounded_multivariate_uniform(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& _wght,
+  random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   dvector a(1,nvar);
@@ -239,9 +242,9 @@ dvector bounded_multivariate_uniform(int nvar, const dvector& a1, const dvector&
   return w;
 }
 
-dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const dmatrix& ch3, double contaminant, const double& _wght,
-  random_number_generator & rng)
+dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const dmatrix& ch3, double contaminant,
+  const double& _wght, random_number_generator & rng)
 {
   double& wght= (double&) _wght;
   dvector w(1,nvar);
@@ -309,4 +312,3 @@ dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1, const dv
   }
   return w;
 }
-void sobseq(int*, const dvector&);

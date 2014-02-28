@@ -6,7 +6,8 @@
  */
 #include <admodel.h>
 
- void param_init_bounded_number_vector::set_initial_value(const double_index_type& _it)
+void param_init_bounded_number_vector::set_initial_value(
+  const double_index_type& _it)
  {
     it=new double_index_type(_it);
  }
@@ -14,7 +15,8 @@
 /**
 Default constructor
 */
-param_init_bounded_number_vector::param_init_bounded_number_vector(): v(NULL), it(NULL)
+param_init_bounded_number_vector::param_init_bounded_number_vector():
+  v(NULL), it(NULL)
 {
 }
 /**
@@ -45,7 +47,8 @@ void param_init_bounded_number_vector::deallocate(void)
 Overload the allocate function to use a data_matrix object.
 \author Steve Martell
 */
-void param_init_bounded_number_vector::allocate(const data_matrix &m, const char *s)
+void param_init_bounded_number_vector::allocate(const data_matrix &m,
+  const char *s)
 {
   int min1 = m.rowmin();
   int max1 = m.rowmax();

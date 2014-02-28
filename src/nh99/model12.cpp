@@ -44,7 +44,8 @@ void param_init_matrix::save_value(const ofstream& _ofs, int prec)
   ofs << setw(prec+6) << setprecision(prec) << dvar_matrix(*this) << endl;
 }
 
-void param_init_number::save_value(const ofstream& _ofs, int prec, const dvector& g, int& offset)
+void param_init_number::save_value(const ofstream& _ofs, int prec,
+  const dvector& g, int& offset)
 {
   ADUNCONST(ofstream,ofs)
   ofs << label() << " "
@@ -52,7 +53,8 @@ void param_init_number::save_value(const ofstream& _ofs, int prec, const dvector
       << setw(prec+6) << setprecision(prec) << g(offset++) << endl;
 }
 
-void param_init_vector::save_value(const ofstream& _ofs, int prec, const dvector& g, int& offset)
+void param_init_vector::save_value(const ofstream& _ofs, int prec,
+  const dvector& g, int& offset)
 {
   ADUNCONST(ofstream,ofs)
   int mmin=indexmin();
@@ -66,7 +68,8 @@ void param_init_vector::save_value(const ofstream& _ofs, int prec, const dvector
   }
 }
 
-void param_init_bounded_vector::save_value(const ofstream& _ofs, int prec, const dvector& g, int& offset)
+void param_init_bounded_vector::save_value(const ofstream& _ofs, int prec,
+  const dvector& g, int& offset)
 {
   ADUNCONST(ofstream,ofs)
   int mmin=indexmin();
@@ -95,7 +98,8 @@ void initial_params::save_all(const ofstream& _ofs, int prec, const dvector& g)
   }
 }
 
-void param_init_matrix::save_value(const ofstream& _ofs, int prec, const dvector&g, int& offset)
+void param_init_matrix::save_value(const ofstream& _ofs, int prec,
+  const dvector&g, int& offset)
 {
   //ADUNCONST(ofstream,ofs)
   //cerr << "not done yet" << endl;

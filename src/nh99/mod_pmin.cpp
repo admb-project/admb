@@ -7,11 +7,11 @@
 #include <admodel.h>
 
 void get_confidence_interval(const dvector& left_bd, const dvector& right_bd,
-  dmatrix& ms, const dvector& xs, const dvector& siglevel, const int& level_index,
-  dvector& xdist,int index);
+  dmatrix& ms, const dvector& xs, const dvector& siglevel,
+  const int& level_index, dvector& xdist,int index);
 void get_onesided_intervals(const dvector& left_bd, const dvector& right_bd,
-  dmatrix& ms, const dvector& xs, const dvector& siglevel, const int& level_index,
-  dvector& xdist,int index);
+  dmatrix& ms, const dvector& xs, const dvector& siglevel,
+  const int& level_index, dvector& xdist,int index);
 void report_confidence_limits(const ofstream& ofs3,int numsig_levels,
   dvector& siglevel, const dvector& left_bd, const dvector& right_bd);
 void report_onesided_confidence_limits(const ofstream& ofs3,int numsig_levels,
@@ -244,8 +244,8 @@ dmatrix trans(const dvector& x)
           all_num_sigs(j*sign)=num_sigs;
           initial_params::xinit(xvector); // save the
           int ic=1;
-          initial_params::copy_all_values(xmax(sign*j),ic); // save the
-                                                            // conditional maximum
+          // save the conditional maximum
+          initial_params::copy_all_values(xmax(sign*j),ic);
           /*int check=*/initial_params::stddev_scale(xscale,xvector);
         //#if defined(DO_PROFILE)
           //dvector curvscale(1,nvar);   // need to get scale from somewhere

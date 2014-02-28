@@ -8,7 +8,8 @@
 
 //double ndfboundp(double x, double fmin, double fmax, const double& fpen);
 
-void param_init_number::sd_scale(const dvector& _d, const dvector& x, const int& _ii)
+void param_init_number::sd_scale(const dvector& _d, const dvector& x,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& d=(dvector&) _d;
@@ -17,7 +18,8 @@ void param_init_number::sd_scale(const dvector& _d, const dvector& x, const int&
     ii++;
   }
 
-void param_init_bounded_number::sd_scale(const dvector& _d, const dvector& x, const int& _ii)
+void param_init_bounded_number::sd_scale(const dvector& _d, const dvector& x,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& d=(dvector&) _d;
@@ -41,7 +43,8 @@ void param_init_bounded_number::sd_scale(const dvector& _d, const dvector& x, co
     ii++;
   }
 
-void param_init_vector::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_vector::sd_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
   {
     if (allocated(*this))
     {
@@ -58,8 +61,8 @@ void param_init_vector::sd_scale(const dvector& _v, const dvector& x, const int&
     }
   }
 
-
-void param_init_matrix::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_matrix::sd_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
   {
     if (allocated(*this))
     {
@@ -84,8 +87,8 @@ void param_init_matrix::sd_scale(const dvector& _v, const dvector& x, const int&
     }
   }
 
-
-void param_init_bounded_vector::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_bounded_vector::sd_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
   {
     if (allocated(*this))
     {
@@ -116,7 +119,8 @@ void param_init_bounded_vector::sd_scale(const dvector& _v, const dvector& x, co
     }
   }
 
-void param_init_bounded_matrix::sd_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_bounded_matrix::sd_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
   {
     if (allocated(*this))
     {

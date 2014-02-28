@@ -22,7 +22,8 @@ void param_init_number::copy_value_to_vector(const dvector& x, const int& ii)
   {
     ::copy_value_to_vector(*this,x,ii);
   }
-void param_init_bounded_number::copy_value_to_vector(const dvector& x, const int& ii)
+void param_init_bounded_number::copy_value_to_vector(const dvector& x,
+  const int& ii)
   {
     ::copy_value_to_vector(*this,x,ii);
   }
@@ -32,7 +33,8 @@ void param_init_vector::copy_value_to_vector(const dvector& x, const int& ii)
     ::copy_value_to_vector(*this,x,ii);
   }
 
-void param_init_bounded_vector::copy_value_to_vector(const dvector& x, const int& ii)
+void param_init_bounded_vector::copy_value_to_vector(const dvector& x,
+  const int& ii)
   {
     ::copy_value_to_vector(*this,x,ii);
   }
@@ -42,14 +44,16 @@ void param_init_matrix::copy_value_to_vector(const dvector& x, const int& ii)
     ::copy_value_to_vector(*this,x,ii);
   }
 
-void copy_value_to_vector(const prevariable& x, const dvector& _v, const int& _ii)
+void copy_value_to_vector(const prevariable& x, const dvector& _v,
+  const int& _ii)
   {
     dvector& v=(dvector&) _v;
     int& ii=(int&) _ii;
     v(ii++)=value(x);
   }
 
-void copy_value_to_vector(const dvar_vector& x, const dvector& _v, const int& _ii)
+void copy_value_to_vector(const dvar_vector& x, const dvector& _v,
+  const int& _ii)
   {
     dvector& v=(dvector&) _v;
     int& ii=(int&) _ii;
@@ -100,31 +104,38 @@ void initial_params::restore_all_values(const dvector& x, const int& ii)
     }
   }
 
-void param_init_number::restore_value_from_vector(const dvector& x, const int& ii)
-  {
-    ::restore_value_from_vector(*this,x,ii);
-  }
-void param_init_bounded_number::restore_value_from_vector(const dvector& x, const int& ii)
-  {
-    ::restore_value_from_vector(*this,x,ii);
-  }
-
-void param_init_vector::restore_value_from_vector(const dvector& x, const int& ii)
+void param_init_number::restore_value_from_vector(const dvector& x,
+  const int& ii)
   {
     ::restore_value_from_vector(*this,x,ii);
   }
 
-void param_init_bounded_vector::restore_value_from_vector(const dvector& x, const int& ii)
+void param_init_bounded_number::restore_value_from_vector(const dvector& x,
+  const int& ii)
   {
     ::restore_value_from_vector(*this,x,ii);
   }
 
-void param_init_matrix::restore_value_from_vector(const dvector& x, const int& ii)
+void param_init_vector::restore_value_from_vector(const dvector& x,
+  const int& ii)
   {
     ::restore_value_from_vector(*this,x,ii);
   }
 
-void restore_value_from_vector(const prevariable& _x, const dvector& v, const int& _ii)
+void param_init_bounded_vector::restore_value_from_vector(const dvector& x,
+  const int& ii)
+  {
+    ::restore_value_from_vector(*this,x,ii);
+  }
+
+void param_init_matrix::restore_value_from_vector(const dvector& x,
+  const int& ii)
+  {
+    ::restore_value_from_vector(*this,x,ii);
+  }
+
+void restore_value_from_vector(const prevariable& _x, const dvector& v,
+  const int& _ii)
   {
     ADUNCONST(prevariable,x)
     int& ii=(int&) _ii;
@@ -132,7 +143,8 @@ void restore_value_from_vector(const prevariable& _x, const dvector& v, const in
     x=v(ii++);
   }
 
-void restore_value_from_vector(const dvar_vector& _x, const dvector& v, const int& _ii)
+void restore_value_from_vector(const dvar_vector& _x, const dvector& v,
+  const int& _ii)
   {
     ADUNCONST(dvar_vector,x)
     int& ii=(int&) _ii;
@@ -148,7 +160,8 @@ void restore_value_from_vector(const dvar_vector& _x, const dvector& v, const in
     }
   }
 
-void restore_value_from_vector(const dvar_matrix& x, const dvector& v, const int& ii)
+void restore_value_from_vector(const dvar_matrix& x, const dvector& v,
+  const int& ii)
   {
     if (!(!(x)))
     {

@@ -6,15 +6,18 @@
  */
 #include <admodel.h>
 
- int initial_params::num_initial_params=0;
+int initial_params::num_initial_params=0;
 
 #if !defined(BIG_INIT_PARAMS)
-  const int initial_params::max_num_initial_params=4000;
-#  if (__BORLANDC__  >= 0x0550)
- initial_params * initial_params::varsptr[4001]; // this should be a resizeable array
-#  else
- initial_params * initial_params::varsptr[initial_params::max_num_initial_params+1]; // this should be a resizeable array
-#  endif
+const int initial_params::max_num_initial_params=4000;
+  #if (__BORLANDC__  >= 0x0550)
+// this should be a resizeable array
+initial_params* initial_params::varsptr[4001];
+  #else
+// this should be a resizeable array
+initial_params*
+initial_params::varsptr[initial_params::max_num_initial_params + 1];
+  #endif
 #else
   const int initial_params::max_num_initial_params=250;
   adlist_ptr initial_params::varsptr(initial_params::max_num_initial_params);
@@ -476,11 +479,12 @@ void param_init_number::set_value_inv(const dvector& x, const int& ii)
     return 1;
   }
 
-  /**
-   * Use a data_vector to allocate an init_bounded_number
-   * \author Steve Martell
-   * \param v vector containing the lower bound, upper bound, and phase of estimation.
-  **/
+/**
+Use a data_vector to allocate an init_bounded_number
+\author Steve Martell
+\param v vector containing the lower bound, upper bound, and phase of 
+estimation.
+*/
   void param_init_bounded_number::allocate(const data_vector & v,
    const char * _s)
    {

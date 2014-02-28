@@ -312,7 +312,7 @@ dvector laplace_approximation_calculator::
       double time=ad_comm::ptm->get_elapsed_time_and_reset();
       if (ad_comm::global_logfile)
       {
-        (*ad_comm::global_logfile) << " Time in calculate laplace approximation "
+        (*ad_comm::global_logfile) << "Time in calculate laplace approximation "
           << time << endl;
       }
     }

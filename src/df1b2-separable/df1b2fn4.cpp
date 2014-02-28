@@ -383,7 +383,8 @@ void read_pass1_eq_3(void)
     {
       cout << "trap" << endl;
     }
-    cout << *(px->u_tilde) << " " << *(pz->u_tilde) << " " << addebug_count << endl;
+    cout << *(px->u_tilde) << " " << *(pz->u_tilde) << " " << addebug_count
+         << endl;
 #endif
   for (i=0;i<nvar;i++)
   {

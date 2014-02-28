@@ -18,11 +18,7 @@ using std::istringstream;
 #endif
 
 #include "cifstrem.h"
-/*
-#ifdef __GNUDOS__
-  void strnset(char *, const char, size_t n); // is never referenced
-#endif
-*/
+
 void cifstream::set_eof_bit(void)
 {
 #ifdef __BCPLUSPLUS__
@@ -34,7 +30,6 @@ void cifstream::set_eof_bit(void)
   clear(current_state | ios::eofbit);
 #endif
 }
-
 
 char* cifstream::signature()
 {
@@ -159,7 +154,8 @@ void cifstream::filter(void)
   {
     if (testc == EOF)
       set_eof_bit();
-    report_error("function: void cifstream::prefilter(); premature end of file?");
+    report_error(
+      "function: void cifstream::prefilter(); premature end of file?");
   }
 }
 
@@ -201,7 +197,8 @@ void cifstream::get_field(char * s,int space_flag)
   {
     if (testc == EOF)
       set_eof_bit();
-    report_error("function: void cifstream::prefilter(); premature end of file?");
+    report_error(
+      "function: void cifstream::prefilter(); premature end of file?");
   }
   s[n++] = '\0';
   field ++;
@@ -216,7 +213,6 @@ cifstream& cifstream::operator >> (adstring& s)
   return (*this);
 }
 
-
 // the new version
 cifstream& cifstream::operator>>(const adstring& _s)
 {
@@ -227,7 +223,6 @@ cifstream& cifstream::operator>>(const adstring& _s)
   delete [] t;
   return (*this);
 }
-
 
 cifstream& cifstream::operator>>(const line_adstring& s)
 {

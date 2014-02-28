@@ -13,11 +13,14 @@ adstring adstring::operator()(int i, int j)
 {
   if (i < 1 || i > (int) shape->size())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("First index out of bounds", "adstring adstring::operator()(int i, int j)", 1, shape->size(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("First index out of bounds",
+    "adstring adstring::operator()(int i, int j)", 1, shape->size(), i);
   }
   if (i > j)
   {
-    ADMB_ARRAY_BOUNDS_ERROR("First index must be less than or equal to second index", "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
+    ADMB_ARRAY_BOUNDS_ERROR(
+    "First index must be less than or equal to second index",
+    "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
   }
   if (j > (int) shape->size())
   {
@@ -35,15 +38,19 @@ adstring adstring::operator()(int i, int j) const
 {
   if (i < 1 || i > (int) shape->size())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("First index out of bounds", "adstring adstring::operator()(int i, int j)", 1, shape->size(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("First index out of bounds",
+    "adstring adstring::operator()(int i, int j)", 1, shape->size(), i);
   }
   if (i > j)
   {
-    ADMB_ARRAY_BOUNDS_ERROR("First index must be less than or equal to second index", "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
+    ADMB_ARRAY_BOUNDS_ERROR(
+    "First index must be less than or equal to second index",
+    "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
   }
   if (j > (int) shape->size())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Second index out of bounds", "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
+    ADMB_ARRAY_BOUNDS_ERROR("Second index out of bounds",
+    "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
   }
   adstring tmp(1, size_t(j - i + 1));
   for (int ii = i; ii <= j; ii++)
@@ -111,7 +118,8 @@ unsigned char & adstring::operator()(const int i)
 {
   if (i < 1 || i > (int) shape->size())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "unsigned char & adstring::operator()(int i)", 1, shape->size(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
+    "unsigned char & adstring::operator()(int i)", 1, shape->size(), i);
   }
   return ( ((unsigned char *)s)[i]);
 }
@@ -120,7 +128,8 @@ const unsigned char& adstring::operator()(const int i) const
 {
   if (i < 1 || i > (int) shape->size())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "unsigned char & adstring::operator()(int i) const", 1, shape->size(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
+    "unsigned char & adstring::operator()(int i) const", 1, shape->size(), i);
   }
   return (s[i]);
 }
@@ -129,7 +138,8 @@ const unsigned char& adstring::operator[](const int i) const
 {
   if (i < 1 || i > (int) shape->size())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "unsigned char & adstring::operator[](int i) const ", 1, shape->size(), i);
+    ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
+    "unsigned char & adstring::operator[](int i) const ", 1, shape->size(), i);
   }
   return (s[i]);
 }

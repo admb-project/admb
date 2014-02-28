@@ -24,7 +24,8 @@ adstring adstring::operator()(int i, int j)
   }
   if (j > (int) shape->size())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Second index out of bounds", "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
+    ADMB_ARRAY_BOUNDS_ERROR("Second index out of bounds",
+    "adstring adstring::operator()(int i, int j)", 1, shape->size(), j);
   }
   adstring tmp(1, size_t(j - i + 1));
   for (int ii = i; ii <= j; ii++)

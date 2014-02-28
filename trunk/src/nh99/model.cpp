@@ -720,7 +720,8 @@ void param_init_vector::set_value(const dvar_vector& x,
   void param_init_vector::save_value(void)
   {
     if (!(!(*this)))
-      *(ad_comm::global_savefile) << label_class(this->label()) << dvar_vector(*this) << endl;
+      *(ad_comm::global_savefile) << label_class(this->label())
+        << dvar_vector(*this) << endl;
   }
 
   void param_init_vector::bsave_value(void)
@@ -1015,8 +1016,8 @@ void param_init_matrix::set_value_inv(const dvector& x, const int& ii)
     }
   }
 
-void data_matrix::allocate(int rmin,int rmax, const ivector& cmin, const ivector& cmax,
-  const char * s)
+void data_matrix::allocate(int rmin,int rmax, const ivector& cmin,
+  const ivector& cmax, const char * s)
   {
     named_dmatrix::allocate(rmin,rmax,cmin,cmax,s);
     if (!(!(*this)))

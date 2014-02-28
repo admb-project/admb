@@ -14,14 +14,15 @@ using std::istringstream;
 #  include <adrndeff.h>
 #endif
 
-  void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,int& next_flag);
+void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
+  int& next_flag);
 
-  void ad_update_function_minimizer_report(int feval,int iter,int phase,double fval,
-    double gmax,const char * cbuf);
-  void vm_initialize(void);
+void ad_update_function_minimizer_report(int feval,int iter,int phase,
+  double fval, double gmax,const char * cbuf);
+void vm_initialize(void);
 
-  void set_initial_simplex(const tdmatrix& p, const dvector& y,int nvar, const dvector& x,
-    double delta);
+void set_initial_simplex(const tdmatrix& p, const dvector& y,int nvar,
+  const dvector& x, double delta);
 
 int get_option_number(const char * option_name,const char * error_message,
   int& option_value);
@@ -33,8 +34,6 @@ int get_option_number(const char * option_name,const char * error_message,
   long long int& option_value);
 #endif
 
-class admb_javapointers;
-extern admb_javapointers * adjm_ptr;
 extern int traceflag;
 
 void tracing_message(int traceflag,const char *s);

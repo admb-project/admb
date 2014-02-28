@@ -17,8 +17,8 @@ int xxxmin(int x,int y)
   return y;
 }
 void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
-    dmatrix& ms, const dvector& xs, const dvector& siglevel, const int& level_index,
-    int index)
+  dmatrix& ms, const dvector& xs, const dvector& siglevel,
+  const int& level_index, int index)
   {
     dvector& left_bd=(dvector&) _left_bd;
     dvector& right_bd=(dvector&) _right_bd;
@@ -122,8 +122,8 @@ void get_confidence_interval(const dvector& _left_bd, const dvector& _right_bd,
   }
 
 void get_onesided_intervals(const dvector& _left_bd, const dvector& _right_bd,
-    dmatrix& ms, const dvector& xs, const dvector& siglevel, const int& level_index,
-    int index)
+  dmatrix& ms, const dvector& xs, const dvector& siglevel,
+  const int& level_index, int index)
   {
     dvector& left_bd=(dvector&) _left_bd;
     dvector& right_bd=(dvector&) _right_bd;

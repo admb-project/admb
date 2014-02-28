@@ -11,8 +11,9 @@ double cumd_norm(const double& x);
 double myran1(long int&);
 //double better_rand(long int&);
 
-void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& _wght, const dvector& y, const random_number_generator& rng)
+void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& _wght, const dvector& y,
+  const random_number_generator& rng)
 {
   double & wght=(double &) _wght;
   //cout << y << endl;
@@ -75,9 +76,9 @@ void bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector
   wght +=  in*log(1./sqrt_tpi);
 }
 
-
-void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& _wght, const dvector& y,double pprobe, const random_number_generator& rng)
+void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& _wght, const dvector& y,
+  double pprobe, const random_number_generator& rng)
 {
   double & wght=(double &) _wght;
   //cout << y << endl;
@@ -126,9 +127,9 @@ void probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const
   }
 }
 
-
-void bounded_multivariate_uniform_mcmc(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& _wght, const dvector& y, const random_number_generator& rng)
+void bounded_multivariate_uniform_mcmc(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& _wght, const dvector& y,
+  const random_number_generator& rng)
 {
   double& wght=(double&) _wght;
   dvector a(1,nvar);

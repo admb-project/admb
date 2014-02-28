@@ -287,5 +287,3 @@ void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, c
     b(j)-=tmp;
   }
 }
-
-void sobseq(int*, const dvector&);

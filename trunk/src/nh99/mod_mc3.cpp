@@ -14,8 +14,8 @@
 
 double better_rand(long int&);
 
-void initial_params::add_random_vector(const dvector& y, const dvector& x, const double& ll,
-  const dvector& diag)
+void initial_params::add_random_vector(const dvector& y, const dvector& x,
+ const double& ll, const dvector& diag)
 {
   int ii=1;
   for (int i=0;i<num_initial_params;i++)

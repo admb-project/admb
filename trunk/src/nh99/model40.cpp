@@ -19,7 +19,8 @@
 
 void data_5array::allocate(ad_integer hhhsl, ad_integer hhhsu,
   const index_type& hhsl, const index_type& hhsu,
-  const index_type& hsl, const index_type& hsu, const index_type& rmin, const index_type& rmax,
+  const index_type& hsl, const index_type& hsu,
+  const index_type& rmin, const index_type& rmax,
   const index_type& cmin, const index_type& cmax, const char* s)
   {
     named_d5_array::allocate(hhhsl,hhhsu,hhsl,hhsu,hsl,hsu,rmin,rmax,

@@ -8,9 +8,11 @@
 
  int stddev_params::num_stddev_params=0;
  int stddev_params::num_stddev_number_params=0;
- stddev_params * stddev_params::stddev_number_ptr[150]; // this should be a resizeable array
 
- stddev_params * stddev_params::stddevptr[150]; // this should be a resizeable array
+// this should be a resizeable array
+stddev_params* stddev_params::stddev_number_ptr[150];
+// this should be a resizeable array
+stddev_params* stddev_params::stddevptr[150];
 
   void stddev_params::add_to_list(void)
   {

@@ -621,7 +621,6 @@ void write_banner_stuff(void)
 
       //ad_update_mcmc_report(&(v(1)),i);
       ADSleep(500);
-
     }
   }
 

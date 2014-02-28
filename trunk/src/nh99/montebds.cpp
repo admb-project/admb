@@ -27,11 +27,12 @@
     {
       //if ((varsptr[i])->phase_start <= current_phase)
       if (withinbound(0,(varsptr[i])->phase_start,current_phase))
-	(varsptr[i])->set_simulation_bounds(symbds,ii);
+        (varsptr[i])->set_simulation_bounds(symbds,ii);
     }
   }
 
-  void param_init_number::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
+void param_init_number::set_simulation_bounds(const dmatrix& _symbds,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     dmatrix& symbds=(dmatrix&) _symbds;
@@ -40,7 +41,8 @@
     ii++;
   }
 
-  void param_init_bounded_number::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
+void param_init_bounded_number::set_simulation_bounds(const dmatrix& _symbds,
+  const int& _ii)
   {
     dmatrix& symbds=(dmatrix&) _symbds;
     int& ii=(int&) _ii;
@@ -49,7 +51,8 @@
     ii++;
   }
 
-  void param_init_vector::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
+void param_init_vector::set_simulation_bounds(const dmatrix& _symbds,
+  const int& _ii)
   {
     dmatrix& symbds=(dmatrix&) _symbds;
     int& ii=(int&) _ii;
@@ -63,7 +66,8 @@
     }
   }
 
-  void param_init_bounded_vector::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
+void param_init_bounded_vector::set_simulation_bounds(const dmatrix& _symbds,
+  const int& _ii)
   {
     dmatrix& symbds=(dmatrix&) _symbds;
     int& ii=(int&) _ii;
@@ -77,8 +81,8 @@
     }
   }
 
-
-  void param_init_matrix::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
+void param_init_matrix::set_simulation_bounds(const dmatrix& _symbds,
+  const int& _ii)
   {
     dmatrix& symbds=(dmatrix&) _symbds;
     int& ii=(int&) _ii;
@@ -97,8 +101,8 @@
     }
   }
 
-
-  void param_init_bounded_matrix::set_simulation_bounds(const dmatrix& _symbds, const int& _ii)
+void param_init_bounded_matrix::set_simulation_bounds(const dmatrix& _symbds,
+  const int& _ii)
   {
     dmatrix& symbds=(dmatrix&) _symbds;
     int& ii=(int&) _ii;
@@ -117,16 +121,16 @@
     }
   }
 
-  void param_init_number::add_value(const dvector& y, const dvector& ndev, const int& _ii, const double& s,
-    const dvector& diag)
+void param_init_number::add_value(const dvector& y, const dvector& ndev,
+  const int& _ii, const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     (*this)+=diag(ii)*ndev(ii);
     ii++;
   }
 
-double new_value_mc(const double& _jac,double x,double min,double max,double eps,
-  double sig)
+double new_value_mc(const double& _jac,double x,double min,double max,
+  double eps, double sig)
 {
   double& jac=(double&) _jac;
   double y;
@@ -186,16 +190,16 @@ double new_value_mc(const double& _jac,double x,double min,double max,double eps
   return y;
 }
 
-  void param_init_bounded_number::add_value(const dvector& _y, const dvector& ndev, const int& _ii,
-    const double& s, const dvector& diag)
+void param_init_bounded_number::add_value(const dvector& _y,
+  const dvector& ndev, const int& _ii, const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     *this = new_value_mc(_y(ii),value(*this),minb,maxb,ndev(ii),diag(ii));
     ii++;
   }
 
-  void param_init_vector::add_value(const dvector& y, const dvector& ndev, const int& _ii,
-    const double& s, const dvector& diag)
+void param_init_vector::add_value(const dvector& y, const dvector& ndev,
+  const int& _ii, const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     int mmin=indexmin();
@@ -207,8 +211,8 @@ double new_value_mc(const double& _jac,double x,double min,double max,double eps
     }
   }
 
-  void param_init_bounded_vector::add_value(const dvector& y, const dvector& ndev, const int& _ii,
-    const double& s, const dvector& diag)
+void param_init_bounded_vector::add_value(const dvector& y,
+  const dvector& ndev, const int& _ii, const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     int mmin=indexmin();
@@ -221,9 +225,9 @@ double new_value_mc(const double& _jac,double x,double min,double max,double eps
     }
   }
 
-
 /*
-  void param_init_bounded_vector::add_value(const dvector& y, const dvector& ndev, const int& ii, const double& s)
+void param_init_bounded_vector::add_value(const dvector& y,
+  const dvector& ndev, const int& ii, const double& s)
   {
     int mmin=indexmin();
     int mmax=indexmax();
@@ -243,9 +247,8 @@ double new_value_mc(const double& _jac,double x,double min,double max,double eps
   }
 */
 
-
-void param_init_matrix::add_value(const dvector& y, const dvector& ndev, const int& _ii, const double& s,
-  const dvector& diag)
+void param_init_matrix::add_value(const dvector& y, const dvector& ndev,
+  const int& _ii, const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     int rmin=rowmin();
@@ -262,8 +265,8 @@ void param_init_matrix::add_value(const dvector& y, const dvector& ndev, const i
     }
   }
 
-void param_init_bounded_matrix::add_value(const dvector& y, const dvector& ndev, const int& _ii,
-  const double& s, const dvector& diag)
+void param_init_bounded_matrix::add_value(const dvector& y, const dvector& ndev,
+  const int& _ii, const double& s, const dvector& diag)
   {
     int& ii=(int&) _ii;
     int rmin=rowmin();
@@ -281,8 +284,8 @@ void param_init_bounded_matrix::add_value(const dvector& y, const dvector& ndev,
     }
   }
 
-void param_init_d3array::add_value(const dvector& y, const dvector& ndev, const int& _ii,
-  const double& s, const dvector& diag)
+void param_init_d3array::add_value(const dvector& y, const dvector& ndev,
+  const int& _ii, const double& s, const dvector& diag)
 {
   int& ii=(int&) _ii;
   int smin=indexmin();
@@ -326,22 +329,24 @@ void param_init_d3array::add_value(const dvector& ndev, const int& _ii)
   }
 }
 
-
-  void param_init_number::get_jacobian(const dvector& y, const dvector& ndev, const int& _ii)
+void param_init_number::get_jacobian(const dvector& y, const dvector& ndev,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     (*this)+=ndev(ii);
     ii++;
   }
 
-  void param_init_bounded_number::get_jacobian(const dvector& y, const dvector& ndev, const int& _ii)
+void param_init_bounded_number::get_jacobian(const dvector& y,
+  const dvector& ndev, const int& _ii)
   {
     int& ii=(int&) _ii;
     (*this)+=ndev(ii);
     ii++;
   }
 
-  void param_init_vector::get_jacobian(const dvector& y, const dvector& ndev, const int& _ii)
+void param_init_vector::get_jacobian(const dvector& y, const dvector& ndev,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     int mmin=indexmin();
@@ -353,7 +358,8 @@ void param_init_d3array::add_value(const dvector& ndev, const int& _ii)
     }
   }
 
-  void param_init_matrix::get_jacobian(const dvector& y, const dvector& ndev, const int& _ii)
+void param_init_matrix::get_jacobian(const dvector& y, const dvector& ndev,
+   const int& _ii)
   {
     int& ii=(int&) _ii;
     int rmin=rowmin();
@@ -370,8 +376,8 @@ void param_init_d3array::add_value(const dvector& ndev, const int& _ii)
     }
   }
 
-  void param_init_bounded_matrix::get_jacobian(const dvector& y, const dvector& ndev,
-    const int& _ii)
+void param_init_bounded_matrix::get_jacobian(const dvector& y,
+  const dvector& ndev, const int& _ii)
   {
     int& ii=(int&) _ii;
     int rmin=rowmin();
@@ -388,8 +394,8 @@ void param_init_d3array::add_value(const dvector& ndev, const int& _ii)
     }
   }
 
-  void param_init_bounded_vector::get_jacobian(const dvector& _y, const dvector& _jac,
-    const int& _ii)
+void param_init_bounded_vector::get_jacobian(const dvector& _y,
+  const dvector& _jac, const int& _ii)
   {
     dvector& y=(dvector&) _y;
     dvector& jac=(dvector&) _jac;
@@ -431,6 +437,4 @@ void param_init_d3array::set_simulation_bounds(const dmatrix& _symbds,
       }
     }
   }
-
 }
-

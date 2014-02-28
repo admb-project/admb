@@ -61,7 +61,7 @@ void tracing_message(int traceflag,const char *s);
     }
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-pis"))>-1)
     {
-      laplace_approximation_calculator::print_importance_sampling_weights_flag=1;
+     laplace_approximation_calculator::print_importance_sampling_weights_flag=1;
     }
     if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-sp"))>-1)
     {
@@ -99,7 +99,7 @@ void tracing_message(int traceflag,const char *s);
         int jj=atoi(ad_comm::argv[on+1]);
         if (jj<=0)
         {
-          cerr << "Usage -maxph option needs positive integer  -- ignored" << endl;
+          cerr << "Usage -maxph option needs positive integer  -- ignored.\n";
         }
         else
         {
@@ -125,7 +125,7 @@ void tracing_message(int traceflag,const char *s);
         int jj=atoi(ad_comm::argv[on+1]);
         if (jj<=0)
         {
-          cerr << "Usage -ndv option needs positive integer  -- ignored" << endl;
+          cerr << "Usage -ndv option needs positive integer  -- ignored.\n";
         }
         else
         {
@@ -146,7 +146,7 @@ void tracing_message(int traceflag,const char *s);
         int _maxfn=atoi(ad_comm::argv[on+1]);
         if (_maxfn<0)
         {
-          cerr << "Usage -maxfn option needs positive integer  -- ignored" << endl;
+          cerr << "Usage -maxfn option needs positive integer  -- ignored.\n";
         }
         else
         {
@@ -164,13 +164,12 @@ void tracing_message(int traceflag,const char *s);
       }
       else
       {
-
         istringstream ist(ad_comm::argv[on+1]);
         ist >> _crit;
 
         if (_crit<=0)
         {
-          cerr << "Usage -crit option needs positive number  -- ignored" << endl;
+          cerr << "Usage -crit option needs positive number  -- ignored.\n";
           _crit=0.0;
         }
       }
@@ -184,7 +183,6 @@ void tracing_message(int traceflag,const char *s);
       }
       else
       {
-
         istringstream ist(ad_comm::argv[on+1]);
         ist >> bandwidth;
 
@@ -318,7 +316,8 @@ void tracing_message(int traceflag,const char *s);
         int* picount = &icount;
         int* pnumres = &numres;
         int* pifault = &ifault;
-        neldmead(nvar,mincords,mincords,pynewlo,ftol,delta,picount,pnumres,pifault);
+        neldmead(nvar,mincords,mincords,pynewlo,ftol,delta,picount,pnumres,
+          pifault);
         x = mincords;
       }
       if ( (lmnflag=option_match(ad_comm::argc,ad_comm::argv,"-lmn",nopt))>-1)
@@ -333,14 +332,15 @@ void tracing_message(int traceflag,const char *s);
 #endif
         if (!nopt)
         {
-          cerr << "Usage -lmn option needs integer  -- set to default 10" << endl;
+          cerr << "Usage -lmn option needs integer  -- set to default 10.\n";
         }
         else
         {
           int jj=atoi(ad_comm::argv[lmnflag+1]);
           if (jj<=0)
           {
-            cerr << "Usage -lmn option needs positive integer  -- set to defalt 10" << endl;
+            cerr << 
+            "Usage -lmn option needs positive integer  -- set to default 10.\n";
           }
           else
           {
@@ -626,8 +626,8 @@ function_minimizer::~function_minimizer()
   }
 }
 
-  void function_minimizer::set_initial_simplex(const dmatrix& _p, const dvector& _y, int nvar, const dvector& x,
-    double delta)
+void function_minimizer::set_initial_simplex(const dmatrix& _p,
+  const dvector& _y, int nvar, const dvector& x, double delta)
   {
     dvector& y=(dvector&) _y;
     dmatrix& p=(dmatrix&) _p;
@@ -804,7 +804,6 @@ void function_minimizer::get_function_difference(void)
   (*(lapprox->separable_function_difference))(nsc)=
     value(*objective_function_value::pobjfun);
     value(*objective_function_value::pobjfun)=0.0;
-
 }
 void function_minimizer::end_df1b2_funnel_stuff(void)
 {
@@ -838,7 +837,6 @@ void function_minimizer::end_df1b2_funnel_stuff(void)
     }
   }
 }
-
 
 void function_minimizer::end_gauss_hermite_stuff(void)
 {

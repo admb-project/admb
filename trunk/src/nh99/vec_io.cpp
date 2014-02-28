@@ -48,7 +48,7 @@
   matrix_kludge::matrix_kludge(const param_init_bounded_vector_vector & _v):
     dvar_matrix()
   {
-    param_init_bounded_vector_vector & v = (param_init_bounded_vector_vector &) _v;
+    param_init_bounded_vector_vector& v = (param_init_bounded_vector_vector&)_v;
     int mmin=v.indexmin();
     int mmax=v.indexmax();
     dvar_matrix::allocate(mmin,mmax);
@@ -70,7 +70,8 @@
 //     return s;
 //   }
 //
-//   ostream& operator <<  (const ostream& _s, const param_init_bounded_number_vector v)
+// ostream& operator<<(const ostream& _s,
+//   const param_init_bounded_number_vector v)
 //   {
 //     ostream & s = (ostream &)(_s);
 //     int mmin=v.indexmin();
@@ -82,7 +83,7 @@
 //     return s;
 //   }
 //
-//   ostream& operator <<  (const ostream& _s, const param_init_vector_vector v)
+// ostream& operator <<  (const ostream& _s, const param_init_vector_vector v)
 //   {
 //     ostream & s = (ostream &)(_s);
 //     int mmin=v.indexmin();
@@ -94,7 +95,8 @@
 //     return s;
 //   }
 //
-//   ostream& operator <<  (const ostream& _s, const param_init_bounded_vector_vector v)
+// ostream& operator<<(const ostream& _s,
+//   const param_init_bounded_vector_vector v)
 //   {
 //     ostream & s = (ostream &)(_s);
 //     int mmin=v.indexmin();
@@ -118,7 +120,8 @@
 //     return s;
 //   }
 //
-//   ostream& operator <<  (const ostream& _s, const param_init_bounded_matrix_vector v)
+// ostream& operator<<(const ostream& _s,
+//   const param_init_bounded_matrix_vector v)
 //   {
 //     ostream & s = (ostream &)(_s);
 //     int mmin=v.indexmin();

@@ -83,19 +83,19 @@ CTIONS*/
 /* ***** THIS IS A MODEL OF EVAL_EXTERN, SIMPLY CALLING THE */
 /* ***** STANDARD EVALUATION FUNCTIONS OF THE OPTIMIZATION PACKAGE */
     if (*mode == 0) {
-	i__1 = gggg05_1->nres;
-	for (i = 1; i <= i__1; ++i) {
-	    if (gunit_ref(1, i) == 1) {
-		if (i <= gggg05_1->numberw) {
-		    eh_(&i, gggg18_1->xtr, &gggg18_1->fu[i]);
-		}
-		if (i > gggg05_1->numberw) {
-		    i__2 = i - gggg05_1->numberw;
-		    eg_(&i__2, gggg18_1->xtr, &gggg18_1->fu[i]);
-		}
-	    }
-	}
-	return 0;
+        i__1 = gggg05_1->nres;
+        for (i = 1; i <= i__1; ++i) {
+            if (gunit_ref(1, i) == 1) {
+                if (i <= gggg05_1->numberw) {
+                    eh_(&i, gggg18_1->xtr, &gggg18_1->fu[i]);
+                }
+                if (i > gggg05_1->numberw) {
+                    i__2 = i - gggg05_1->numberw;
+                    eg_(&i__2, gggg18_1->xtr, &gggg18_1->fu[i]);
+                }
+            }
+        }
+        return 0;
     }
     if ( !(gunit_ref(1, 0) != 1 && *mode == 2))
     {
@@ -112,13 +112,13 @@ CTIONS*/
    /*
     ef_(gggg18_1->xtr, gggg18_1->fu);
     if (gunit_ref(1, 0) != 1 && *mode == 2) {
-	if (gggg01_1->wwuq3) {
-	    egradf_(gggg18_1->xtr, gr);
-	    i__1 = gggg05_1->n;
-	    for (i = 1; i <= i__1; ++i) {
-		fugrad_ref(i, 0) = gr[i - 1];
-	    }
-	}
+        if (gggg01_1->wwuq3) {
+            egradf_(gggg18_1->xtr, gr);
+            i__1 = gggg05_1->n;
+            for (i = 1; i <= i__1; ++i) {
+                fugrad_ref(i, 0) = gr[i - 1];
+            }
+        }
     }
     */
 
@@ -130,29 +130,29 @@ CTIONS*/
 
       i__1 = gggg05_1->numberw;
       for (j = 1; j <= i__1; ++j) {
-  	gggg18_1->fu[j]=h(j);
-  	if (gunit_ref(1, j) != 1 && *mode == 2) {
-  	    if (gggg01_1->wwuq3) {
-  		i__2 = gggg05_1->n;
-  		for (i = 1; i <= i__2; ++i) {
-  		    fugrad_ref(i, j) = jacob_hg(j,i);
-  		}
-  	    }
-  	}
+        gggg18_1->fu[j]=h(j);
+        if (gunit_ref(1, j) != 1 && *mode == 2) {
+            if (gggg01_1->wwuq3) {
+                i__2 = gggg05_1->n;
+                for (i = 1; i <= i__2; ++i) {
+                    fugrad_ref(i, j) = jacob_hg(j,i);
+                }
+            }
+        }
       }
       i__1 = gggg05_1->numberv;
       for (j = 1; j <= i__1; ++j) {
-  	//eg_(&j, gggg18_1->xtr, &gggg18_1->fu[gggg05_1->numberw + j]);
-  	gggg18_1->fu[gggg05_1->numberw + j]=g(j);
-  	if (gunit_ref(1, j + gggg05_1->numberw) != 1 && *mode == 2) {
-  	    if (gggg01_1->wwuq3) {
-  		i__2 = gggg05_1->n;
-  		for (i = 1; i <= i__2; ++i) {
-  		    fugrad_ref(i, j + gggg05_1->numberw)
+        //eg_(&j, gggg18_1->xtr, &gggg18_1->fu[gggg05_1->numberw + j]);
+        gggg18_1->fu[gggg05_1->numberw + j]=g(j);
+        if (gunit_ref(1, j + gggg05_1->numberw) != 1 && *mode == 2) {
+            if (gggg01_1->wwuq3) {
+                i__2 = gggg05_1->n;
+                for (i = 1; i <= i__2; ++i) {
+                    fugrad_ref(i, j + gggg05_1->numberw)
                         = jacob_hg(j+ gggg05_1->numberw,i);
-  		}
-  	    }
-  	}
+                }
+            }
+        }
       }
     }
     else
@@ -163,43 +163,43 @@ CTIONS*/
 
       i__1 = gggg05_1->numberw;
       for (j = 1; j <= i__1; ++j) {
-  	gggg18_1->fu[j]=h(j);
+        gggg18_1->fu[j]=h(j);
       }
       i__1 = gggg05_1->numberv;
       for (j = 1; j <= i__1; ++j) {
-  	gggg18_1->fu[gggg05_1->numberw + j]=g(j);
+        gggg18_1->fu[gggg05_1->numberw + j]=g(j);
       }
     }
 
    /*
     i__1 = gggg05_1->numberw;
     for (j = 1; j <= i__1; ++j) {
-	eh_(&j, gggg18_1->xtr, &gggg18_1->fu[j]);
-	if (gunit_ref(1, j) != 1 && *mode == 2) {
-	    if (gggg01_1->wwuq3) {
-		egradh_(&j, gggg18_1->xtr, gr);
-		i__2 = gggg05_1->n;
-		for (i = 1; i <= i__2; ++i) {
-		    fugrad_ref(i, j) = gr[i - 1];
-		}
-	    }
-	}
+        eh_(&j, gggg18_1->xtr, &gggg18_1->fu[j]);
+        if (gunit_ref(1, j) != 1 && *mode == 2) {
+            if (gggg01_1->wwuq3) {
+                egradh_(&j, gggg18_1->xtr, gr);
+                i__2 = gggg05_1->n;
+                for (i = 1; i <= i__2; ++i) {
+                    fugrad_ref(i, j) = gr[i - 1];
+                }
+            }
+        }
     }
     */
 
     /*
     i__1 = gggg05_1->numberv;
     for (j = 1; j <= i__1; ++j) {
-	eg_(&j, gggg18_1->xtr, &gggg18_1->fu[gggg05_1->numberw + j]);
-	if (gunit_ref(1, j + gggg05_1->numberw) != 1 && *mode == 2) {
-	    if (gggg01_1->wwuq3) {
-		egradg_(&j, gggg18_1->xtr, gr);
-		i__2 = gggg05_1->n;
-		for (i = 1; i <= i__2; ++i) {
-		    fugrad_ref(i, j + gggg05_1->numberw) = gr[i - 1];
-		}
-	    }
-	}
+        eg_(&j, gggg18_1->xtr, &gggg18_1->fu[gggg05_1->numberw + j]);
+        if (gunit_ref(1, j + gggg05_1->numberw) != 1 && *mode == 2) {
+            if (gggg01_1->wwuq3) {
+                egradg_(&j, gggg18_1->xtr, gr);
+                i__2 = gggg05_1->n;
+                for (i = 1; i <= i__2; ++i) {
+                    fugrad_ref(i, j + gggg05_1->numberw) = gr[i - 1];
+                }
+            }
+        }
     }
     */
     gggg19_1->wwuq4 = TRUE_;
@@ -211,5 +211,5 @@ CTIONS*/
 
 
 #ifdef __cplusplus
-	}
+}
 #endif

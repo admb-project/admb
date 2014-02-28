@@ -18,7 +18,8 @@ dmatrix  operator-(const dmatrix& m1, const dmatrix& m2)
  {
    if (m1.colmin() != m2.colmin() || m1.colmax() != m2.colmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator - (const dmatrix& x, const dmatrix& m)\n";
+     cerr << " Incompatible array bounds in "
+     "dmatrix  operator - (const dmatrix& x, const dmatrix& m)\n";
      ad_exit(21);
    }
 
@@ -40,7 +41,8 @@ dmatrix operator+(const dmatrix& m1, const dmatrix& m2)
  {
    if (m1.colmin() != m2.colmin() || m1.colmax() != m2.colmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator + (const dmatrix& x, const dmatrix& m)\n";
+     cerr << " Incompatible array bounds in "
+     "dmatrix  operator + (const dmatrix& x, const dmatrix& m)\n";
      ad_exit(21);
    }
 

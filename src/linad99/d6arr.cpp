@@ -140,7 +140,8 @@ void d6_array::allocate(const d6_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "d5_array& d6_array::operator()(int i)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
+        "d5_array& d6_array::operator()(int i)", indexmin(), indexmax(), i);
       }
       #endif
       //return t[i];
@@ -156,7 +157,8 @@ void d6_array::allocate(const d6_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("index out of bounds", "d5_array& d6_array::operator[](int i)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("index out of bounds",
+        "d5_array& d6_array::operator[](int i)", indexmin(), indexmax(), i);
       }
       #endif
       return t[i];
@@ -171,7 +173,9 @@ void d6_array::allocate(const d6_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "d4_array& d6_array::operator()(int i, int j)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "d4_array& d6_array::operator()(int i, int j)",
+        indexmin(), indexmax(), i);
       }
       #endif
       return elem(i)(j);
@@ -186,7 +190,9 @@ void d6_array::allocate(const d6_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "d3_array& d6_array::operator()(int i, int j, int k)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "d3_array& d6_array::operator()(int i, int j, int k)",
+        indexmin(), indexmax(), i);
       }
       #endif
       return elem(i)(j,k);
@@ -201,7 +207,9 @@ void d6_array::allocate(const d6_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dmatrix& d6_array::operator()(int i, int j, int k, int l)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "dmatrix& d6_array::operator()(int i, int j, int k, int l)",
+        indexmin(), indexmax(), i);
       }
       #endif
       return elem(i)(j,k,l);
@@ -216,7 +224,9 @@ void d6_array::allocate(const d6_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvector& d6_array::operator()(int i, int j, int k, int l, int m)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "dvector& d6_array::operator()(int i, int j, int k, int l, int m)",
+        indexmin(), indexmax(), i);
       }
       #endif
       return elem(i)(j,k,l,m);
@@ -231,7 +241,9 @@ void d6_array::allocate(const d6_array& m1)
       #ifdef SAFE_ARRAYS
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "double& d6_array::operator()(int i, int j, int k, int l, int m, int n)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+     "double& d6_array::operator()(int i, int j, int k, int l, int m, int n)",
+        indexmin(), indexmax(), i);
       }
       #endif
       return elem(i)(j,k,l,m,n);
@@ -338,7 +350,8 @@ const dvector& d6_array::operator()(int i, int j, int k, int l, int m) const
  * Description not yet available.
  * \param
  */
-const double& d6_array::operator()(int i, int j, int k, int l, int m, int n) const
+const double& d6_array::operator()(int i, int j, int k, int l, int m, int n)
+  const
     {
       #ifdef SAFE_ARRAYS
         if (i<indexmin()||i>indexmax())
@@ -425,8 +438,8 @@ void d6_array::allocate(int hsl,int hsu,int sl,int sh,int nrl,
    int i2=hsu;
    for (int i=i1; i<=i2; i++)
    {
-     (*this)(i).allocate(ad_integer(sl(i)),ad_integer(sh(i)),nrl(i),nrh(i),ncl(i),nch(i),
-       l5(i),u5(i),l6(i),u6(i));
+     (*this)(i).allocate(ad_integer(sl(i)),ad_integer(sh(i)),nrl(i),nrh(i),
+       ncl(i),nch(i), l5(i),u5(i),l6(i),u6(i));
    }
  }
 

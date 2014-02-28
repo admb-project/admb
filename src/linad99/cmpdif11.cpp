@@ -160,7 +160,8 @@ void banded_lower_triangular_dvar_matrix::save_dvar_matrix_position(void) const
  * Description not yet available.
  * \param
  */
-void banded_symmetric_dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& pos) const
+void banded_symmetric_dmatrix::save_dmatrix_derivatives(
+  const dvar_matrix_position& pos) const
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
   int min=rowmin();
@@ -193,7 +194,8 @@ void banded_symmetric_dmatrix::save_dmatrix_derivatives(const dvar_matrix_positi
  * Description not yet available.
  * \param
  */
-void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(const dvar_matrix_position& pos) const
+void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(
+  const dvar_matrix_position& pos) const
 {
   // puts the derivative values in a dvector into a dvar_vector's guts
   int min=rowmin();
@@ -201,8 +203,8 @@ void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(const dvar_matrix
   if (min!=pos.row_min||max!=pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
-     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)" <<
-     endl;
+    "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)"
+    << endl;
   }
   for (int i=min;i<=max;i++)
   {

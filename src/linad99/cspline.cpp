@@ -36,7 +36,7 @@ cubic_spline_function::cubic_spline_function(const dvector & _x,
 
 /**
  * \brief operator for interpreting a single value at u
- * \param u 
+ * \param u
  */
 double cubic_spline_function::operator () (double u)
 {
@@ -99,7 +99,7 @@ dvector spline(const dvector& _x, const dvector& _y,double yp1,double ypn)
     ibcend = 1;
     ybcend = ypn;
   }
-  dvector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend, 
+  dvector ret = spline_cubic_set(x.size(), x, y, ibcbeg, ybcbeg, ibcend,
     ybcend);
   ret.shift(_x.indexmin());
   return ret;

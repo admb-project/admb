@@ -287,7 +287,7 @@ df1_three_vector::~df1_three_vector()
  * Description not yet available.
  * \param
  */
-  df1_three_variable& df1_three_variable::operator -= (const df1_three_variable& v)
+df1_three_variable& df1_three_variable::operator-=(const df1_three_variable& v)
   {
     *get_u() -= *v.get_u();
     *get_u_x() -= *v.get_u_x();
@@ -316,7 +316,7 @@ df1_three_variable operator-(const df1_three_variable& v)
  * Description not yet available.
  * \param
  */
-  df1_three_variable& df1_three_variable::operator += (const df1_three_variable& v)
+df1_three_variable& df1_three_variable::operator+=(const df1_three_variable& v)
   {
     *get_u() += *v.get_u();
     *get_u_x() += *v.get_u_x();
@@ -347,7 +347,7 @@ df1_three_variable operator-(const df1_three_variable& v)
  * Description not yet available.
  * \param
  */
-  df1_three_variable& df1_three_variable::operator *= (const df1_three_variable& y)
+df1_three_variable& df1_three_variable::operator*=(const df1_three_variable& y)
   {
    /*
     df1_three_variable x=*this * v;
@@ -397,7 +397,7 @@ df1_three_variable operator-(const df1_three_variable& v)
  * Description not yet available.
  * \param
  */
-  df1_three_variable& df1_three_variable::operator /= (const df1_three_variable& y)
+df1_three_variable& df1_three_variable::operator/=(const df1_three_variable& y)
   {
    /*
     df1_three_variable x=*this * inv(y);
@@ -439,8 +439,8 @@ df1_three_variable operator-(const df1_three_variable& v)
  * Description not yet available.
  * \param
  */
-void set_derivatives( df1_three_variable& z,const df1_three_variable& x,double u,
-  double zp)
+void set_derivatives(df1_three_variable& z,const df1_three_variable& x,
+  double u, double zp)
 {
     //*z.get_u() = u;
     *z.get_u_x() = zp* *x.get_u_x();
@@ -614,7 +614,7 @@ void set_derivatives( df1_three_variable& z, const df1_three_variable& x,
  * Description not yet available.
  * \param
  */
-  df1_three_variable& df1_three_variable::operator = (const df1_three_variable& x)
+df1_three_variable& df1_three_variable::operator=(const df1_three_variable& x)
   {
     *get_u() = *x.get_u();
     *get_u_x() = *x.get_u_x();
@@ -719,7 +719,7 @@ void set_derivatives( df1_three_variable& z, const df1_three_variable& x,
  * Description not yet available.
  * \param
  */
-  df1_three_variable pow(const df1_three_variable& x,const df1_three_variable& y)
+df1_three_variable pow(const df1_three_variable& x,const df1_three_variable& y)
   {
     return exp(y*log(x));
   }

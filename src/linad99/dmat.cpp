@@ -224,7 +224,8 @@ int ivector_check(const ivector& v, int l, int u)
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh,const ivector& ncl,const ivector& nch)\n";
+     cerr << "Incompatible array bounds in "
+     "dmatrix(int nrl,int nrh,const ivector& ncl,const ivector& nch)\n";
      ad_exit(1);
    }
    index_min=nrl;

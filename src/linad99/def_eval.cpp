@@ -110,8 +110,9 @@
     * grad_ptr->dep_addr=0.;
     * grad_ptr->ind_addr1 += z;
     //gradlog <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
-     //   if (fabs(* grad_ptr->ind_addr1+XXX)<1.e-16)
-      //    cout << setscientific() <<  setprecision(13) << * grad_ptr->ind_addr1  << endl;
+    //if (fabs(* grad_ptr->ind_addr1+XXX)<1.e-16)
+    //cout << setscientific() <<  setprecision(13) << * grad_ptr->ind_addr1
+    //<< endl;
   }
 
 /**

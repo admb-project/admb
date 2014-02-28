@@ -409,7 +409,8 @@ double boundpin(double x, double fmin, double fmax)
 
   if (x > fmax)
   {
-    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf)
+      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -432,7 +433,8 @@ double boundpin(double x, double fmin, double fmax)
 }
 /**
 Scale model variable over [-1,1]; variable objects.
-Inverse of \ref dvariable boundp(const prevariable& x, double fmin, double fmax,const prevariable& _fpen, double s).
+Inverse of \ref dvariable boundp(const prevariable& x, double fmin,
+double fmax,const prevariable& _fpen, double s).
 \param x Model variable
 \param fmin Lower bound of x
 \param fmin Upper bound of x

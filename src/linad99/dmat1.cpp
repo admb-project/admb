@@ -19,17 +19,20 @@ dvector operator*(const dvector& x, const dmatrix& m)
 #ifdef DIAG
      if( heapcheck() == _HEAPCORRUPT )
      {
-        if (ad_printf) (*ad_printf)( "Entering dvector * dvec dmat is corrupted.\n" );
+        if (ad_printf)
+         (*ad_printf)( "Entering dvector * dvec dmat is corrupted.\n" );
      }
      else
      {
-        if (ad_printf) (*ad_printf)( "Entering dvector * dvec dmat  Heap is OK.\n" );
+        if (ad_printf)
+          (*ad_printf)( "Entering dvector * dvec dmat  Heap is OK.\n" );
      }
 #endif
 
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
    {
-     cerr << " Incompatible array bounds in dvector  operator * (const dvector& x,const dmatrix& m)\n";
+     cerr << " Incompatible array bounds in "
+     "dvector  operator * (const dvector& x,const dmatrix& m)\n";
      ad_exit(21);
    }
    dvector tmp(m.colmin(),m.colmax());
@@ -45,11 +48,13 @@ dvector operator*(const dvector& x, const dmatrix& m)
 #ifdef DIAG
      if( heapcheck() == _HEAPCORRUPT )
      {
-        if (ad_printf) (*ad_printf)( "Leaving dvector * dvec dmat is corrupted.\n" );
+        if (ad_printf)
+          (*ad_printf)( "Leaving dvector * dvec dmat is corrupted.\n" );
      }
      else
      {
-        if (ad_printf) (*ad_printf)( "Leaving dvector * dvec dmat  Heap is OK.\n" );
+        if (ad_printf)
+          (*ad_printf)( "Leaving dvector * dvec dmat  Heap is OK.\n" );
      }
 #endif
    return(tmp);
@@ -64,16 +69,19 @@ dvector operator*(const dmatrix& m, const dvector& x)
 #ifdef DIAG
      if( heapcheck() == _HEAPCORRUPT )
      {
-        if (ad_printf) (*ad_printf)( "Entering dvector * dmat dvec is corrupted.\n" );
+        if (ad_printf)
+          (*ad_printf)( "Entering dvector * dmat dvec is corrupted.\n" );
      }
      else
      {
-        if (ad_printf) (*ad_printf)( "Entering dvector * dmat dvec   Heap is OK.\n" );
+        if (ad_printf)
+          (*ad_printf)( "Entering dvector * dmat dvec   Heap is OK.\n" );
      }
 #endif
    if (x.indexmin() != m.colmin() || x.indexmax() != m.colmax())
    {
-     cerr << " Incompatible array bounds in dvector  operator * (const dvector& x, const dmatrix& m)\n";
+     cerr << " Incompatible array bounds in "
+     "dvector  operator * (const dvector& x, const dmatrix& m)\n";
      ad_exit(21);
    }
 
@@ -90,11 +98,13 @@ dvector operator*(const dmatrix& m, const dvector& x)
 #ifdef DIAG
      if( heapcheck() == _HEAPCORRUPT )
      {
-        if (ad_printf) (*ad_printf)( "Leaving dvector * dmat dvec is corrupted.\n" );
+        if (ad_printf)
+          (*ad_printf)( "Leaving dvector * dmat dvec is corrupted.\n" );
      }
      else
      {
-        if (ad_printf) (*ad_printf)( "Leaving dvector * dmat dvec   Heap is OK.\n" );
+        if (ad_printf)
+          (*ad_printf)( "Leaving dvector * dmat dvec   Heap is OK.\n" );
      }
 #endif
    return(tmp);
@@ -108,7 +118,8 @@ dvector operator*(const dmatrix& m, const dvector& x)
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator * (const dmatrix& x, const dmatrix& m)\n";
+     cerr << " Incompatible array bounds in "
+     "dmatrix  operator * (const dmatrix& x, const dmatrix& m)\n";
      ad_exit(21);
    }
    dmatrix tmp(m1.rowmin(),m1.rowmax(), m2.colmin(), m2.colmax());
@@ -126,14 +137,13 @@ dvector operator*(const dmatrix& m, const dvector& x)
    }
    return(tmp);
  }
-
 /*
-
 dmatrix operator*(const dmatrix& m1, const dmatrix& m2 )
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix  operator * (const dmatrix& x, const dmatrix& m)\n";
+     cerr << " Incompatible array bounds in "
+     "dmatrix  operator * (const dmatrix& x, const dmatrix& m)\n";
      ad_exit(21);
    }
 
@@ -170,4 +180,3 @@ dmatrix operator*(const dmatrix& m1, const dmatrix& m2 )
    return(tmp);
  }
 */
-

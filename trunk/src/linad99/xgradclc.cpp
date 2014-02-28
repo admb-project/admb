@@ -108,7 +108,8 @@ void funnel_gradcalc(void)
        <= gradient_structure::GRAD_STACK1->ptr_first)
   {
     #ifdef SAFE_ARRAYS
-      cerr << "warning -- calling funnel_gradcalc when no calculations generating"
+      cerr << 
+        "warning -- calling funnel_gradcalc when no calculations generating"
            << endl << "derivative information have occurred" << endl;
     #endif
     return;
@@ -139,7 +140,8 @@ void funnel_gradcalc(void)
       tmp = (double_and_int *) gradient_structure::ARRAY_MEMBLOCK_BASE;
    #endif
 
-     unsigned long int max_last_offset = gradient_structure::ARR_LIST1->get_max_last_offset();
+     unsigned long int max_last_offset =
+       gradient_structure::ARR_LIST1->get_max_last_offset();
 
      unsigned int size = sizeof(double_and_int );
 

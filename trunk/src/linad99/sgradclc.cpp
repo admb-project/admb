@@ -105,7 +105,7 @@ void gradcalc(int nvar, const dvector& _g)
 
   if (g.size() < nvar)
   {
-    cerr  << "gradient vector size is less than the number of variables" << endl;
+    cerr  << "gradient vector size is less than the number of variables.\n";
     ad_exit(1);
   }
 
@@ -150,7 +150,8 @@ void gradcalc(int nvar, const dvector& _g)
     (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
 #endif
 
-  unsigned long int max_last_offset = gradient_structure::ARR_LIST1->get_max_last_offset();
+  unsigned long int max_last_offset =
+    gradient_structure::ARR_LIST1->get_max_last_offset();
   unsigned int size = sizeof(double_and_int);
   for (i = 0; i < (max_last_offset/size); i++)
   {
@@ -217,7 +218,8 @@ void gradcalc(int nvar, const dvector& _g)
     g[i + mindx] = *gradient_structure::INDVAR_LIST->get_address(i);
   }
 
-  gradient_structure::GRAD_STACK1->ptr = gradient_structure::GRAD_STACK1->ptr_first;
+  gradient_structure::GRAD_STACK1->ptr =
+    gradient_structure::GRAD_STACK1->ptr_first;
 
   if (gradient_structure::save_var_flag)
   {

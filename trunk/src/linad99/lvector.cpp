@@ -100,7 +100,8 @@ lvector& lvector::operator=(const lvector& t)
    {
      if (indexmin() != t.indexmin() || indexmax() != t.indexmax())
      {
-       cerr << " Array sizes do not match in lvector operator =(const lvector&)\n";
+       cerr <<
+         " Array sizes do not match in lvector operator =(const lvector&)\n";
      }
 
      for ( int i=indexmin(); i<=indexmax(); i++)

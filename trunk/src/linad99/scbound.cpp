@@ -26,8 +26,8 @@ double dmax(double, double);
  * Description not yet available.
  * \param
  */
-  dvariable boundp( dvariable xx, double fmin, double fmax, const prevariable& _fpen,
-    const double& s)
+dvariable boundp(dvariable xx, double fmin, double fmax,
+  const prevariable& _fpen, const double& s)
 {
   prevariable& fpen=(prevariable&) _fpen;
 
@@ -118,7 +118,8 @@ double boundpin(double x, double fmin, double fmax,const double& s)
 
   if (x < fmin)
   {
-    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf)
+      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -127,7 +128,8 @@ double boundpin(double x, double fmin, double fmax,const double& s)
 
   if (x > fmax)
   {
-    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf)
+      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -139,14 +141,16 @@ double boundpin(double x, double fmin, double fmax,const double& s)
 }
 
 /*
-double boundpin(const prevariable& xx, double fmin, double fmax, const double& s)
+double boundpin(const prevariable& xx, double fmin, double fmax,
+  const double& s)
 {
   double tinv;
   double x=value(xx);
 
   if (x < fmin)
   {
-    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf)
+      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -155,7 +159,8 @@ double boundpin(const prevariable& xx, double fmin, double fmax, const double& s
 
   if (x > fmax)
   {
-    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf)
+      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -166,4 +171,3 @@ double boundpin(const prevariable& xx, double fmin, double fmax, const double& s
   return(s*tinv);
 }
 */
-

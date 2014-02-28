@@ -125,7 +125,8 @@ void set_value(const dvar_vector& x, const dvar_vector& v, const int& _ii)
  * Description not yet available.
  * \param
  */
-void set_value(const dvar_vector& _x,const dvar_vector& v, const int& _ii,double s)
+void set_value(const dvar_vector& _x,const dvar_vector& v, const int& _ii,
+  double s)
 {
   dvar_vector& x=(dvar_vector&) _x;
   int& ii = (int&) _ii;
@@ -304,7 +305,8 @@ void set_value(dvar3_array& x, const dvar_vector& v, const int& ii,
  * Description not yet available.
  * \param
  */
-void set_value_partial(const dvar_matrix& x, const dvar_vector& v, const int& _ii, int n)
+void set_value_partial(const dvar_matrix& x, const dvar_vector& v,
+  const int& _ii, int n)
 {
   int mmin=x.indexmin();
   int mmax=x.indexmax();
@@ -318,7 +320,8 @@ void set_value_partial(const dvar_matrix& x, const dvar_vector& v, const int& _i
  * Description not yet available.
  * \param
  */
-void set_value_partial(const dvar_vector& x, const dvar_vector& v, const int& _ii, int n)
+void set_value_partial(const dvar_vector& x, const dvar_vector& v,
+  const int& _ii, int n)
 {
   int& ii = (int&) _ii;
   if (!(!(x)))
@@ -328,8 +331,9 @@ void set_value_partial(const dvar_vector& x, const dvar_vector& v, const int& _i
     #ifdef SAFE_ARRAYS
       if (max >x.indexmax())
       {
-        cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
-             << endl;
+        cerr << 
+          "index out of range in set_value_patial(const dvar_vector&, ... "
+          << endl;
       }
     #endif
     for (int i=min;i<=max;i++)
@@ -343,8 +347,9 @@ void set_value_partial(const dvar_vector& x, const dvar_vector& v, const int& _i
  * Description not yet available.
  * \param
  */
-void set_value_partial(const dvar_vector& x, const dvar_vector& v, const int& _ii, int n,
-  CGNU_DOUBLE fmin,CGNU_DOUBLE fmax,const dvariable& fpen)
+void set_value_partial(const dvar_vector& x, const dvar_vector& v,
+  const int& _ii, int n, CGNU_DOUBLE fmin,CGNU_DOUBLE fmax,
+  const dvariable& fpen)
 {
   int& ii = (int&) _ii;
   if (!(!(x)))
@@ -354,7 +359,8 @@ void set_value_partial(const dvar_vector& x, const dvar_vector& v, const int& _i
     #ifdef SAFE_ARRAYS
       if (max >x.indexmax())
       {
-        cerr << "index out of range in set_value_patial(const dvar_vector&, ... "
+        cerr <<
+          "index out of range in set_value_patial(const dvar_vector&, ... "
              << endl;
       }
     #endif

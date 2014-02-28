@@ -14,7 +14,8 @@
  * Description not yet available.
  * \param
  */
-dvariable robust_regression(const dvector& obs, const dvar_vector& pred, const dvariable& a)
+dvariable robust_regression(const dvector& obs, const dvar_vector& pred,
+  const dvariable& a)
 {
   if (obs.indexmin() != pred.indexmin() || obs.indexmax() != pred.indexmax() )
   {

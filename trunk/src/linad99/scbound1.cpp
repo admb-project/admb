@@ -33,7 +33,8 @@ double boundpin(const prevariable& xx, double fmin, double fmax,const double& s)
 
   if (x < fmin)
   {
-    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf)
+      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 
@@ -42,7 +43,8 @@ double boundpin(const prevariable& xx, double fmin, double fmax,const double& s)
 
   if (x > fmax)
   {
-    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf)
+      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 

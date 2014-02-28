@@ -17,7 +17,8 @@
   double pf(const dvar_vector&);
   \returns double containing value of the function at the minimum.
  */
-double fmm::minimize(const independent_variables & x, double (*pf)(const dvar_vector&))
+double fmm::minimize(const independent_variables & x,
+  double (*pf)(const dvar_vector&))
 {
   int nvar=x.size();
   double f;

@@ -36,7 +36,8 @@ int colsum(const imatrix& m, int col)
   if (col < m.colmin() || col > m.colmax())
   {
     //JCA: Should be Column out of bounds
-    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "int colsum(const imatrix& m,int col)", m.colmin(), m.colmax(), col);
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds",
+    "int colsum(const imatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
   int isum=0;
   int mmin=m.rowmin();
@@ -57,7 +58,8 @@ ivector column(const imatrix& m, int col)
   if (col < m.colmin() || col > m.colmax())
   {
     //JCA: Should be Column out of bounds
-    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "int colsum(const imatrix& m,int col)", m.colmin(), m.colmax(), col);
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds",
+    "int colsum(const imatrix& m,int col)", m.colmin(), m.colmax(), col);
   }
   int mmin=m.rowmin();
   int mmax=m.rowmax();

@@ -411,7 +411,8 @@ void d3_array::allocate(const ad_integer& sl,const ad_integer& sh,
    if ( (ncl.isinteger() && (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())) ||
      (nch.isinteger() && (nrl !=nch.indexmin() || nrh !=nch.indexmax())))
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
+     cerr << "Incompatible array bounds in "
+     "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
      ad_exit(1);
    }
    int ss=nrh-nrl+1;

@@ -32,9 +32,10 @@ dvector bounded_multivariate_cauchy(int nvar, const dvector& a1,
   double& log_tprob, const int& outflag);
 
 dvector bounded_robust_multivariate_normal(int nvar, const dvector& a1,
-  dvector& b1, const dmatrix& ch, const dmatrix& ch3, const dmatrix& chinv, const dmatrix& ch3inv,
-  double contaminant,long int& iseed, const double& lprob, const double& lprob3,
-  double& log_tprob, const int& outflag);
+  dvector& b1, const dmatrix& ch, const dmatrix& ch3, const dmatrix& chinv,
+  const dmatrix& ch3inv, double contaminant,long int& iseed,
+  const double& lprob, const double& lprob3, double& log_tprob,
+  const int& outflag);
 
 void function_minimizer::monte_carlo_routine(void)
 {

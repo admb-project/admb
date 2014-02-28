@@ -18,7 +18,8 @@
 
 double better_rand(long int&);
 
-double function_minimizer::get_monte_carlo_value(int nvar, const independent_variables& x)
+double function_minimizer::get_monte_carlo_value(int nvar,
+  const independent_variables& x)
 {
   //initial_params::xinit(x);
   double f=0.0;
@@ -85,7 +86,8 @@ void function_minimizer::pvm_slave_get_monte_carlo_value(int nvar)
 }
 #endif
 
-double function_minimizer::get_monte_carlo_value(int nvar, const independent_variables& x,dvector& g)
+double function_minimizer::get_monte_carlo_value(int nvar,
+  const independent_variables& x,dvector& g)
 {
   //initial_params::xinit(x);
   double f=0.0;

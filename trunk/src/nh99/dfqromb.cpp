@@ -268,7 +268,8 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
 //#undef K
 
  //Not used elsewhere
-void polint(const dvector& xa, const dvar_vector& ya,int n,double x, const dvariable& _y, const dvariable& _dy)
+void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
+  const dvariable& _y, const dvariable& _dy)
 {
   dvariable& y=(dvariable&) _y;
   dvariable& dy=(dvariable&) _dy;

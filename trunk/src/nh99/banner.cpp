@@ -20,8 +20,6 @@ using std::ostringstream;
 #define STR(x) #x
 #define STR2(x) STR(x)
 
-//extern adstring copyright; ///< Text string containing copyright information; defined in the .tpl file
-
 /*! \brief Generates a boast.
      Provides information on SVN revision number, compiler and operating system.
      Includes the file
@@ -49,7 +47,8 @@ void banner(const adstring& program_name)
   ss << " compiled with ";
 
 #if defined(__GNUC__)
-  ss <<  "GNU C++ " << __GNUC__ << '.' << __GNUC_MINOR__ << '.' << __GNUC_PATCHLEVEL__;
+  ss <<  "GNU C++ " << __GNUC__ << '.' << __GNUC_MINOR__ << '.' 
+    << __GNUC_PATCHLEVEL__;
   #if defined(__x86_64)
   ss <<  " (64bit)";
   #else
@@ -113,7 +112,8 @@ void banner(const adstring& program_name)
   ss << "unknown compiler";
 #endif
   ss << "\n";
-  ss << "Copyright (c) 2008-2013 ADMB Foundation and Regents of the University of California\n";
+  ss << "Copyright (c) 2008-2013 ADMB Foundation"
+     << " and Regents of the University of California\n";
   ss << "Build date: " << __DATE__ << "\n";
 #if defined(ADMB_REVISION)
   ss << "Revision: " << STR2(ADMB_REVISION) << "\n";

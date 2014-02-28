@@ -41,8 +41,8 @@
 
   \deprecated User should use the neldmead function
 */
-void function_minimizer::adamoeba(const dmatrix& _p, const dvector& _y, int ndim,
-  double ftol,int nfunk)
+void function_minimizer::adamoeba(const dmatrix& _p, const dvector& _y,
+  int ndim, double ftol,int nfunk)
 {
   dmatrix& p=(dmatrix&) _p;
   dvector& y=(dvector&) _y;
@@ -92,7 +92,6 @@ void function_minimizer::adamoeba(const dmatrix& _p, const dvector& _y, int ndim
             vf+=*objective_function_value::pobjfun;
 
             y[i]=value(vf);
-
           }
         }
         nfunk += ndim;
@@ -111,8 +110,8 @@ void function_minimizer::adamoeba(const dmatrix& _p, const dvector& _y, int ndim
  * Description not yet available.
  * \param
  */
-double function_minimizer::amxxx(const dmatrix& _p, const dvector& _y, const dvector& _psum, int ndim,
-  int ihi, double fac)
+double function_minimizer::amxxx(const dmatrix& _p, const dvector& _y,
+  const dvector& _psum, int ndim, int ihi, double fac)
 {
   dmatrix& p=(dmatrix&) _p;
   dvector& y=(dvector&) _y;
@@ -155,7 +154,8 @@ double function_minimizer::amxxx(const dmatrix& _p, const dvector& _y, const dve
   \param ifault Integer pointer
 */
 void function_minimizer::neldmead(int n, dvector& _start, dvector& _xmin,
-  double *ynewlo, double reqmin, double delta,int *icount, int *numres, int *ifault)
+  double *ynewlo, double reqmin, double delta,int *icount, int *numres,
+  int *ifault)
 //
 //  Purpose:
 //

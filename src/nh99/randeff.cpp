@@ -16,12 +16,14 @@ typedef long int logical;
 #ifdef __cplusplus
 extern "C" {
 #endif
- int xlbfgs_(integer *n, integer *m, dvar_vector & x, dvariable & f, dvar_vector & g, logical *diagco, dvar_vector & diag, integer *iprint, double*  eps, double*  xtol, dvar_vector & w, integer *iflag, integer* iter);
+
+int xlbfgs_(integer *n, integer *m, dvar_vector & x, dvariable & f,
+  dvar_vector & g, logical *diagco, dvar_vector & diag, integer *iprint,
+  double*  eps, double*  xtol, dvar_vector & w, integer *iflag, integer* iter);
+
 #ifdef __cplusplus
 }
 #endif
-
- void goofr(void){;}
 
 dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
 {
@@ -153,23 +155,28 @@ L20:
         if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
       }
 
-      if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+      if (ad_printf)
+        (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
         nvar, itn, ifn);
 
       if (!itn)
       {
         double xf=value(f);
         double xg=max(value(g));
-        if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
-          xf, xg);
+        if (ad_printf)
+          (*ad_printf)(
+            "Function value %12.4le; maximum gradient component mag %12.4le\n",
+            xf, xg);
       }
       else
       {
 
         double xf=value(fbest);
         double xg=max(value(gbest));
-        if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
-          xf, xg);
+        if (ad_printf)
+          (*ad_printf)(
+            "Function value %12.4le; maximum gradient component mag %12.4le\n",
+            xf, xg);
       }
       if (!noprintx)
       {
@@ -186,12 +193,10 @@ L20:
 
   if (iflag <= 0)
   {
-    goofr();
     goto L50;
   }
   if (iflag > 1)
   {
-    goofr();
     goto L50;
   }
   ++icall;
@@ -199,7 +204,6 @@ L20:
   if (itn > maxiter)
   {
     cout << "Exceeded maxiter" << endl;
-    goofr();
     goto L50;
   }
   goto L20;
@@ -214,12 +218,15 @@ L50:
   {
     double xf=value(f);
     double xg=max(value(g));
-    if (ad_printf) (*ad_printf)("\nfinal statistics: ");
-
-    if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-      nvar, itn, ifn);
-    if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
-      xf, xg);
+    if (ad_printf)
+    {
+      (*ad_printf)("\nfinal statistics: ");
+      (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+        nvar, itn, ifn);
+      (*ad_printf)(
+        "Function value %12.4le; maximum gradient component mag %12.4le\n",
+        xf, xg);
+    }
     fmmdisp(value(x),value(g), nvar, 0,noprintx);
   }
   //gradient_structure::set_NO_DERIVATIVES();

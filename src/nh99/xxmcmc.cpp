@@ -9,24 +9,16 @@
 #include <admodel.h>
 
 
-//ofstream tmpof("testmc");
-
 #if defined(__GNU__) || defined(UNIXKLUDGE) || defined(__SUN__) \
   || defined(__linux__)
   #define getch getchar
 #endif
 
-/*
-#ifdef __GNUDOS__
-  #include <gccmanip.h>
-#endif
-*/
-
 #if defined (__ZTC__) || defined(__TURBOC__) || defined(__WAT32__) \
   || defined (_MSC_VER)
-#  if !defined(__linux__)
+  #if !defined(__linux__)
      #include <conio.h>
-#  endif
+  #endif
 #endif
 
 double better_rand(long int&);
@@ -38,9 +30,9 @@ void save_mcmc_for_gui1(const dvector& mcmc_values,
 
 void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
   int& next_flag);
-void print_hist_data(const dmatrix& hist, const dmatrix& values, const dvector& h,
-  dvector& m, const dvector& s, const dvector& parsave,long int iseed, double size_scale);
-
+void print_hist_data(const dmatrix& hist, const dmatrix& values,
+  const dvector& h, dvector& m, const dvector& s, const dvector& parsave,
+  long int iseed, double size_scale);
 
 int minnz(const dvector& x);
 int maxnz(const dvector& xa);
@@ -48,11 +40,13 @@ int maxnz(const dvector& xa);
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS, double s,
   int mcmc2_flag);
 
-int read_hist_data(const dmatrix& hist, const dvector& h,
-  dvector& m, const dvector& s, const dvector& parsave, long int& iseed, const double& size_scale);
+int read_hist_data(const dmatrix& hist, const dvector& h, dvector& m, 
+  const dvector& s, const dvector& parsave, long int& iseed,
+  const double& size_scale);
 
-void make_preliminary_hist(const dvector& s, const dvector& m,int nsim, const dmatrix& values,
-  dmatrix& hist, const dvector& h,int slots,double total_spread,int probflag=0);
+void make_preliminary_hist(const dvector& s, const dvector& m,int nsim,
+  const dmatrix& values, dmatrix& hist, const dvector& h,int slots,
+  double total_spread,int probflag=0);
 
 void add_hist_values(const dvector& s, const dvector& m, const dmatrix& hist,
   dvector& mcmc_values,double llc, const dvector& h,int nslots,
@@ -62,29 +56,32 @@ void add_guihist_values(const dvector& s, const dvector& m,
   const dmatrix& _hist, dvector& mcmcnumber_values, double llc,
   const dvector& h, int nslots, double total_spread);
 
-void write_empirical_covariance_matrix(int ncor, const dvector& s_mean, const dmatrix& s_covar,
-  adstring& prog_name);
+void write_empirical_covariance_matrix(int ncor, const dvector& s_mean, 
+  const dmatrix& s_covar, adstring& prog_name);
 
-void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name);
+void read_empirical_covariance_matrix(int nvar, const dmatrix& S,
+  const adstring& prog_name);
 
-
-void read_hessian_matrix_and_scale(int nvar, const dmatrix& S, const dvector& pen_vector);
+void read_hessian_matrix_and_scale(int nvar, const dmatrix& S, 
+  const dvector& pen_vector);
 
 int user_stop(void);
 
 extern int ctlc_flag;
-class admb_javapointers;
-extern admb_javapointers * adjm_ptr;
 
-dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& wght,double pprobe, random_number_generator& rng);
+dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& wght,double pprobe,
+   random_number_generator& rng);
  // const random_number_generator& rng);
 
-void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, const dvector& b1,
-  dmatrix& ch, const double& wght, const dvector& _y,double pprobe, random_number_generator& rng);
+void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
+  const dvector& b1, dmatrix& ch, const double& wght, const dvector& _y,
+  double pprobe, random_number_generator& rng);
 
-//void  newton_raftery_bayes_estimate(double cbf,int ic, const dvector& lk,double d);
-void  newton_raftery_bayes_estimate_new(double cbf,int ic, const dvector& lk,double d);
+//void newton_raftery_bayes_estimate(double cbf,int ic, const dvector& lk,
+//  double d);
+void newton_raftery_bayes_estimate_new(double cbf,int ic, const dvector& lk,
+  double d);
 
 void ad_update_mcmc_stats_report
   (int feval,int iter,double fval,double gmax);
@@ -161,10 +158,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
      return;
   }
   {
-    //ofstream of_bf("testbf");
-
-    //if (adjm_ptr) set_labels_for_mcmc();
-
     ivector number_offsets;
     dvector lkvector;
     //double current_bf=0;
@@ -176,7 +169,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     //double total_spread=2500;
     uostream * pofs_sd = NULL;
 
-
     int nvar_x=0;
 #if defined(USE_LAPLACE)
     initial_params::set_inactive_random_effects();
@@ -184,7 +176,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     initial_params::set_active_random_effects();
     int nvar_re=initial_params::nvarcalc();
 #endif
-
 
     int nvar=initial_params::nvarcalc(); // get the number of active parameters
     int scov_option=0;
@@ -591,8 +582,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
                 new uostream(
                   (char*)(ad_comm::adprogram_name + adstring(".psv")),ios::app);
             } else {
-              pofs_psave=
-                new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
+              pofs_psave= new uostream((char*)(ad_comm::adprogram_name
+                + adstring(".psv")));
             }
           } else {
             pofs_psave=
@@ -753,8 +744,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
             bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),chd,
               lpinv,-1*(chdinv*bmn1),rng);
           else
-            new_probing_bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),
-              chd,lpinv,-1*(chdinv*bmn1),pprobe,rng);
+            new_probing_bounded_multivariate_normal_mcmc(nvar,symbds(1),
+              symbds(2), chd,lpinv,-1*(chdinv*bmn1),pprobe,rng);
 
           ll=-get_monte_carlo_value(nvar,y);
 #if defined(USE_LAPLACE)
@@ -769,8 +760,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
         }
         else
         {
-          dvector bmn1=bounded_multivariate_uniform(nvar,symbds(1),symbds(2),chd,
-            lprob,rng);
+          dvector bmn1=bounded_multivariate_uniform(nvar,symbds(1),symbds(2),
+            chd, lprob,rng);
           initial_params::add_random_vector(bmn1);
           initial_params::xinit(y);
           // get the simulation bounds for the inverse transition
@@ -864,7 +855,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
             mean_mcmc_values/=double(isim);
             square_mcmc_values/=double(isim);
 #if defined(USE_DDOUBLE)
-            s=2.*sqrt(double(1.e-20)+square_mcmc_values-square(mean_mcmc_values));
+            s=2.*sqrt(double(1.e-20)+square_mcmc_values
+              -square(mean_mcmc_values));
 #else
             s=2.*sqrt(1.e-20+square_mcmc_values-square(mean_mcmc_values));
 #endif
@@ -975,7 +967,9 @@ void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
  * \param dmatrix& S
  * \param adstring& prog_name
  * \return Nothing, but S has been assigned to the contents of the file.
- */void read_empirical_covariance_matrix(int nvar, const dmatrix& S, const adstring& prog_name)
+ */
+void read_empirical_covariance_matrix(int nvar, const dmatrix& S,
+  const adstring& prog_name)
 {
   adstring infile_name=ad_comm::adprogram_name + adstring(".ecm");
   uistream ifs((char*)(infile_name));
@@ -1019,8 +1013,9 @@ void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
  */
 }
 
-void print_hist_data(const dmatrix& hist, const dmatrix& values, const dvector& h,
-  dvector& m, const dvector& s, const dvector& parsave, long int iseed, double size_scale)
+void print_hist_data(const dmatrix& hist, const dmatrix& values,
+  const dvector& h, dvector& m, const dvector& s, const dvector& parsave,
+  long int iseed, double size_scale)
 {
   ofstream ofs((char*)(ad_comm::adprogram_name + adstring(".hst")));
   int nsdvars=stddev_params::num_stddev_calc();
@@ -1097,11 +1092,11 @@ void print_hist_data(const dmatrix& hist, const dmatrix& values, const dvector& 
     }
     if (i<nsdvars) ofs << endl;
   }
-
 }
 
-int read_hist_data(const dmatrix& _hist, const dvector& h,
-  dvector& m, const dvector& s, const dvector& parsave, long int& iseed, const double& size_scale)
+int read_hist_data(const dmatrix& _hist, const dvector& h, dvector& m,
+  const dvector& s, const dvector& parsave, long int& iseed,
+  const double& size_scale)
 {
   dmatrix& hist= (dmatrix&) _hist;
   cifstream cif((char*)(ad_comm::adprogram_name + adstring(".hst")));
@@ -1185,7 +1180,6 @@ int maxnz(const dvector& x)
   return m;
 }
 
-
 void add_hist_values(const dvector& s, const dvector& m, const dmatrix& _hist,
   dvector& mcmc_values, double llc, const dvector& h, int nslots,
   double total_spread,int probflag)
@@ -1249,8 +1243,9 @@ void add_guihist_values(const dvector& s, const dvector& m,
 }
 */
 
-void make_preliminary_hist(const dvector& s, const dvector& m,int nsim, const dmatrix& _values,
-  dmatrix& hist, const dvector& _h, int nslots, double total_spread, int probflag)
+void make_preliminary_hist(const dvector& s, const dvector& m,int nsim,
+  const dmatrix& _values, dmatrix& hist, const dvector& _h, int nslots,
+  double total_spread, int probflag)
 {
   ADUNCONST(dmatrix,values)
   dvector& h = (dvector&) _h;
@@ -1369,7 +1364,8 @@ void read_covariance_matrix(const dmatrix& S,int nvar,int& oldHbf,
     exit(1);
   }
 }
-void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS, const dvector& pen_vector)
+void read_hessian_matrix_and_scale(int nvar, const dmatrix& _SS,
+  const dvector& pen_vector)
 {
   dmatrix& S= (dmatrix&) _SS;
   adstring tmpstring="admodel.hes";
@@ -1567,7 +1563,8 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS,
 int user_stop(void)
 {
   int quit_flag=0;
-#if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) || defined(linux) || defined(__CYGWIN__)
+#if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) \
+  || defined(linux) || defined(__CYGWIN__)
   if(ctlc_flag)
 #else
   if ( kbhit() )
@@ -1588,7 +1585,8 @@ int user_stop(void)
 }
 
 /*
-void  newton_raftery_bayes_estimate(double cbf, int ic, const dvector& lk, double d)
+void newton_raftery_bayes_estimate(double cbf, int ic, const dvector& lk,
+  double d)
 {
   double d1=1.0-d;
   double cbold=cbf;
@@ -1616,7 +1614,8 @@ void  newton_raftery_bayes_estimate(double cbf, int ic, const dvector& lk, doubl
 }
 */
 
-void  newton_raftery_bayes_estimate_new(double lcbf, int ic, const dvector& lk, double d)
+void newton_raftery_bayes_estimate_new(double lcbf, int ic, const dvector& lk,
+  double d)
 {
   double d1=1.0-d;
   double lcbold=lcbf;
@@ -1669,7 +1668,6 @@ void save_mcmc_for_gui1(const dvector& mcmc_values,
     mdm(i,ids)=mcmc_values(no(i));
   ids++;
 }
-
 
 dvector read_old_scale(int & old_nvar)
 {

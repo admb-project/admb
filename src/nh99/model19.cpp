@@ -60,7 +60,8 @@ void param_init_matrix::curv_scale(const dvector& _v,const dvector& x,
     }
   }
 
-void param_init_bounded_vector::curv_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_bounded_vector::curv_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;
@@ -74,7 +75,8 @@ void param_init_bounded_vector::curv_scale(const dvector& _v, const dvector& x, 
     }
   }
 
-void param_init_bounded_matrix::curv_scale(const dvector& _v, const dvector& x, const int& _ii)
+void param_init_bounded_matrix::curv_scale(const dvector& _v, const dvector& x,
+  const int& _ii)
   {
     int& ii=(int&) _ii;
     dvector& v=(dvector&) _v;

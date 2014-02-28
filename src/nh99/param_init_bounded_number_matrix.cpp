@@ -11,19 +11,19 @@ param_init_bounded_number_matrix::param_init_bounded_number_matrix(): v(NULL), i
 {
 }
 void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
-                                                int colmin, int colmax,
-                                                const dmatrix& bmin, const dmatrix& bmax,
-                                                const char* s)
+  int colmin, int colmax,
+  const dmatrix& bmin, const dmatrix& bmax,
+  const char* s)
 {
   imatrix phase_start(rowmin, rowmax, colmin, colmax);
   phase_start = 1;
   allocate(rowmin, rowmax, colmin, colmax, bmin, bmax, phase_start, s);
 }
 void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
-                                                int colmin, int colmax,
-                                                const dmatrix& bmin, const dmatrix& bmax,
-                                                const imatrix& phase_start,
-                                                const char* s)
+  int colmin, int colmax,
+  const dmatrix& bmin, const dmatrix& bmax,
+  const imatrix& phase_start,
+  const char* s)
 {
   index_min = rowmin;
   index_max = rowmax;
@@ -42,7 +42,8 @@ void param_init_bounded_number_matrix::allocate(int rowmin, int rowmax,
     {
       /*if (it) v[i].set_initial_value(it[i]);*/
       adstring a = s + adstring("[") + str(i) + adstring("]");
-      v[i].allocate(colmin, colmax, bmin[i], bmax[i], phase_start[i], (char*)(a));
+      v[i].allocate(colmin, colmax, bmin[i], bmax[i], phase_start[i],
+       (char*)(a));
     }
   }
 }
@@ -53,7 +54,8 @@ void param_init_bounded_number_matrix::set_scalefactor(const double scalefactor)
     v[i].set_scalefactor(scalefactor);
   }
 }
-void param_init_bounded_number_matrix::set_scalefactor(const dmatrix& scalefactor)
+void param_init_bounded_number_matrix::set_scalefactor(
+  const dmatrix& scalefactor)
 {
   for (int i = index_min; i <= index_max; i++)
   {
@@ -92,7 +94,8 @@ void param_init_bounded_number_matrix::deallocate()
     v = NULL;
   }
 }
-param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](const int i) const
+param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](
+  const int i) const
 {
   //#ifdef SAFE_ARRAYS
   if (i < index_min)
@@ -120,7 +123,8 @@ param_init_bounded_number_vector& param_init_bounded_number_matrix::operator()(c
   //#endif
   return v[i];
 }
-param_init_bounded_number& param_init_bounded_number_matrix::operator()(const int i, const int j) const
+param_init_bounded_number& param_init_bounded_number_matrix::operator()(
+  const int i, const int j) const
 {
   return this->operator()(i)(j);
 }

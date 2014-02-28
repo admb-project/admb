@@ -7,7 +7,8 @@
 #include <admodel.h>
 
 double function_minimizer::projected_hess_determinant(const dvector& g,
-  const int underflow_flag, const dvector& xscale, const double& _ln_det_proj_jac)
+  const int underflow_flag, const dvector& xscale,
+  const double& _ln_det_proj_jac)
 {
  double& ln_det_proj_jac=(double&) _ln_det_proj_jac;
  int ibreak=-1;

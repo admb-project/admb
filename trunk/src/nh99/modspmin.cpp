@@ -315,7 +315,8 @@ int kill_flag_107=901;
       gradient_structure::Hybrid_bounded_flag=1;
     }
 
-    // Sets the maximum number of function evaluation as determined from the command line
+    // Sets the maximum number of function evaluation as determined from the 
+    // command line
     if ( (on=option_match(argc,argv,"-maxfn",nopt))>-1)
     {
       if (nopt ==1)
@@ -400,7 +401,6 @@ int kill_flag_107=901;
       {
         if (!quit_flag)
         {
-
 #       if defined(USE_LAPLACE)
           // save the sparse Hessian for the random effects
           if (lapprox && lapprox->sparse_hessian_flag)
@@ -541,7 +541,8 @@ int kill_flag_107=901;
                 nsob=atoi(argv[on+1]);
                 if (nsob <=0)
                 {
-                  cerr << " Invalid option following command line option -sob -- "
+                  cerr << " Invalid option following command line option -sob"
+                          " -- "
                     << endl << " ignored" << endl;
                 }
               }
@@ -574,7 +575,7 @@ int kill_flag_107=901;
     }
     while(spminflag || repeatminflag);
   }
-  
+
   void function_minimizer::computations(void)
   {
     // for now just do parameter estimates

@@ -39,7 +39,8 @@ dvector bounded_multivariate_normal(int nvar, const dvector& a1,
   const dvector& b1, dmatrix& ch,long int& iseed);
 
 void generate_virtual_multivariate(int nvar, const dvector& a,
-  const dvector& b, const dmatrix& ch, const double& lprob, const dvector& eps); 
+  const dvector& b, const dmatrix& ch, const double& lprob, const dvector& eps);
+
 void generate_actual_multivariate(int nvar, const dvector& a, const dvector& b,
   const dmatrix& ch, long int& iseed, const double& lprob, const dvector& w);
 

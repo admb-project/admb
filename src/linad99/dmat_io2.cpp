@@ -246,7 +246,8 @@ dmatrix::dmatrix(char * s)
    if (nr == 0)
    {
      cerr << "Error in dmatrix constructor There doesn't seem to be any data\n"
-      << "in file " << filename << " caled in dmatrix::dmatrix(char * filename)\n";
+      << "in file " << filename
+      << " caled in dmatrix::dmatrix(char * filename)\n";
       ad_exit(1);
    }
 

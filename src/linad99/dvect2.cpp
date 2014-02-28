@@ -21,7 +21,8 @@ dvector elem_prod(const dvector& t1, const dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
      {
-       cerr << "Index bounds do not match in dvector elem_prod(const dvector&, const dvector&)\n";
+       cerr << "Index bounds do not match in dvector "
+       "elem_prod(const dvector&, const dvector&)\n";
        ad_exit(1);
      }
      dvector tmp(t1.indexmin(),t1.indexmax());
@@ -52,7 +53,8 @@ dvector elem_div(const dvector& t1, const dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
      {
-       cerr << "Index bounds do not match in dvector elem_div(const dvector&, const dvector&)\n";
+       cerr << "Index bounds do not match in "
+       "dvector elem_div(const dvector&, const dvector&)\n";
        ad_exit(1);
      }
      dvector tmp(t1.indexmin(),t1.indexmax());

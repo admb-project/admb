@@ -16,7 +16,8 @@
 
 #include <math.h>
 
-void shape_check(const dvector& v1, const dvector& v2, const char *function_name);
+void shape_check(const dvector& v1, const dvector& v2,
+  const char *function_name);
 
 /**
  * Description not yet available.

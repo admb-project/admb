@@ -27,12 +27,14 @@
 #include <math.h>
 
 /**
- * Determine if the lower and upper bounds of two evctors match in a specified function.
- * \param v1 a data vector
- * \param v2 a data vector
- * \param function_nam a pointer to the name of the function in question.
- */
-void shape_check(const dvector& v1, const dvector& v2, const char *function_name)
+Determine if the lower and upper bounds of two evctors match in a specified
+function.
+\param v1 a data vector
+\param v2 a data vector
+\param function_nam a pointer to the name of the function in question.
+*/
+void shape_check(const dvector& v1, const dvector& v2,
+  const char *function_name)
 {
   if (v1.indexmin() != v2.indexmin() || v1.indexmax() != v2.indexmax())
   {

@@ -7,15 +7,15 @@
 /**
   \file boundfun.cpp
   \brief Code to implement placing constraints on parameters.
-  See in Section 10.1 of the AUTODIF manual. 
-  The code in thse section of the AUTODIF manual appears to be 
+  See in Section 10.1 of the AUTODIF manual.
+  The code in thse section of the AUTODIF manual appears to be
   out of date with respect to some of the code in this file.
 */
 #include "fvar.hpp"
 
 /**
-\details 
-Use penalties recomended in Bard, Y. (1974) Nonlinear parameter estimation. 
+\details
+Use penalties recomended in Bard, Y. (1974) Nonlinear parameter estimation.
 Academic Press, New York.
 */
 #define USE_BARD_PEN
@@ -29,7 +29,7 @@ Academic Press, New York.
 // double dmax(double, double);
 
 /**
-  Scale input variable between upper and lower bounds 
+  Scale input variable between upper and lower bounds
   and compute a penalty for exceeding the bounds.
   \param x Variable to be scaled
   \param fmin Lower bound of x
@@ -60,7 +60,7 @@ dvariable dfatan1(dvariable x, double fmin, double fmax,
   return(t);
 }
 /**
-Inverse of \ref dvariable dfatan1(dvariable x, double fmin, double fmax, 
+Inverse of \ref dvariable dfatan1(dvariable x, double fmin, double fmax,
   const prevariable&  _fpen)
 \param x Variable to be scaled
 \param fmin Lower bound of x
@@ -276,7 +276,7 @@ double boundp(double x, double fmin, double fmax)
 }
 
 /**
-  Scale input variable between upper and lower bounds 
+  Scale input variable between upper and lower bounds
   and compute a penalty for exceeding the bounds.
   Intended for use with df1b2 variables.
   \param x Variable to be scaled
@@ -461,7 +461,8 @@ double boundpin(const prevariable& xx, double fmin, double fmax)
 
   if (x < fmin)
   {
-    if (ad_printf) (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
+    if (ad_printf)
+      (*ad_printf)("variable out of bounds in boundpin: variable = %lg", x);
     if (ad_printf) (*ad_printf)("; min = %lg", fmin);
     if (ad_printf) (*ad_printf)("; max = %lg\n", fmax);
 

@@ -30,7 +30,8 @@ dmatrix& dmatrix::operator=(const dmatrix& m1)
      if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
        colmin() != m1.colmin() || colmax() != m1.colmax() )
      {
-       cerr << " Incompatible array bounds in dmatrix& operator = (const dmatrix&)\n";
+       cerr << " Incompatible array bounds in "
+       "dmatrix& operator = (const dmatrix&)\n";
        ad_exit(21);
      }
 
@@ -64,7 +65,8 @@ dmatrix& dmatrix::operator+=(const dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
    {
-     cerr << " Incompatible array bounds in dmatrix& operator += (const dmatrix&)\n";
+     cerr << " Incompatible array bounds in "
+     "dmatrix& operator += (const dmatrix&)\n";
      ad_exit(21);
    }
 
@@ -83,7 +85,8 @@ dmatrix& dmatrix::operator-=(const dmatrix& m1)
  {
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() )
    {
-     cerr << " Incompatible array bounds in dmatrix& operator -= (const dmatrix&)\n";
+     cerr << " Incompatible array bounds in "
+     "dmatrix& operator -= (const dmatrix&)\n";
      ad_exit(21);
    }
 

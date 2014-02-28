@@ -25,7 +25,8 @@ double& dvector::operator[](int i)
   #if defined(USE_EXCEPTIONS)
     throw vector_range_exception(i,index_min,index_max);
   #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array", "double& dvector::operator[] (int i)", index_min, index_max, i);
+    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
+    "double& dvector::operator[] (int i)", index_min, index_max, i);
   #endif
   }
 #endif
@@ -44,7 +45,8 @@ double& dvector::operator()(int i)
   #if defined(USE_EXCEPTIONS)
     throw vector_range_exception(i,index_min,index_max);
   #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array", "double& dvector::operator[] (int i)", index_min, index_max, i);
+    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
+    "double& dvector::operator[] (int i)", index_min, index_max, i);
   #endif
   }
 #endif
@@ -63,7 +65,8 @@ const double& dvector::operator[](int i) const
   #if defined(USE_EXCEPTIONS)
     throw vector_range_exception(i,index_min,index_max);
   #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array", "double& dvector::operator[] (int i)", index_min, index_max, i);
+    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
+    "double& dvector::operator[] (int i)", index_min, index_max, i);
   #endif
   }
 #endif
@@ -82,7 +85,8 @@ const double& dvector::operator()(int i) const
   #if defined(USE_EXCEPTIONS)
     throw vector_range_exception(i,index_min,index_max);
   #else
-    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array", "double& dvector::operator[] (int i)", index_min, index_max, i);
+    ADMB_ARRAY_BOUNDS_ERROR("invalid index for array",
+    "double& dvector::operator[] (int i)", index_min, index_max, i);
   #endif
   }
 #endif

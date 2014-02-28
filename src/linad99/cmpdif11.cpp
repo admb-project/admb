@@ -169,8 +169,8 @@ void banded_symmetric_dmatrix::save_dmatrix_derivatives(
   if (min!=pos.row_min||max!=pos.row_max)
   {
     cerr << "Incompatible array sizes in " <<
-     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)" <<
-     endl;
+     "void dmatrix::save_dmatrix__derivatives(const dvar_matrix_position& pos)"
+     << endl;
   }
   for (int i=min;i<=max;i++)
   {

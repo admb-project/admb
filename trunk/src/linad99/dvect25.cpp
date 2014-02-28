@@ -14,7 +14,8 @@
  * Description not yet available.
  * \param
  */
-void dvector::fill_multinomial(const random_number_generator& rng, const dvector& p)
+void dvector::fill_multinomial(const random_number_generator& rng,
+  const dvector& p)
   // Fils a dvector with random numbers drawn from a multinomial distribution
   {
     double sum=mean(p)*p.size();
@@ -48,7 +49,8 @@ void dvector::fill_multinomial(const random_number_generator& rng, const dvector
  * Description not yet available.
  * \param
  */
-void ivector::fill_multinomial(const random_number_generator& rng, const dvector& p)
+void ivector::fill_multinomial(const random_number_generator& rng,
+  const dvector& p)
   // Fills a dvector with random numbers drawn from a multinomial distribution
   {
     double sum=mean(p)*p.size();
@@ -82,7 +84,8 @@ void ivector::fill_multinomial(const random_number_generator& rng, const dvector
  * Description not yet available.
  * \param
  */
-void lvector::fill_multinomial(const random_number_generator& rng, const dvector& p)
+void lvector::fill_multinomial(const random_number_generator& rng,
+  const dvector& p)
   // Fils a dvector with random numbers drawn from a multinomial distribution
   {
     double sum=mean(p)*p.size();

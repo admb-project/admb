@@ -35,7 +35,8 @@
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
+     cerr << "Incompatible array bounds in "
+     "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
      ad_exit(1);
    }
    index_min=nrl;
@@ -88,7 +89,8 @@
    if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
      nrl !=nch.indexmin() || nrh !=nch.indexmax())
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
+     cerr << "Incompatible array bounds in "
+     "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
      ad_exit(1);
    }
    index_min=nrl;
@@ -121,4 +123,3 @@
      myheapcheck("Leaving dmatrix(nrl,nrh,ncl,nch)" );
    #endif
  }
-

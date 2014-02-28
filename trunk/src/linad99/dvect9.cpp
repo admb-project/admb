@@ -104,7 +104,8 @@ dvector::dvector(const char * s)
 
   if (lbraces > 1)
   {
-    cerr << "Only one level of braces allowed in dvector::dvector(const char * s)\n";
+    cerr << "Only one level of braces allowed in "
+    "dvector::dvector(const char * s)\n";
     cerr << s << "\n";
     ad_exit(1);
   }
@@ -217,7 +218,8 @@ dvector::dvector(const char * s)
     v -= indexmin();
 
    #ifdef DIAG
-     cout << "Created a ncopies with address " << _farptr_tolong(ncopies) <<"\n";
+     cout << "Created a ncopies with address " << _farptr_tolong(ncopies)
+          <<"\n";
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
    char * err_ptr;
@@ -308,7 +310,8 @@ void dvector::allocate(const char * s)
 
   if (lbraces > 1)
   {
-    cerr << "Only one level of braces allowed in dvector::dvector(const char * s)\n";
+    cerr << "Only one level of braces allowed in "
+    "dvector::dvector(const char * s)\n";
     cerr << s << "\n";
     ad_exit(1);
   }
@@ -417,7 +420,8 @@ void dvector::allocate(const char * s)
    }
 
    #ifdef DIAG
-     cout << "Created a ncopies with address " << _farptr_tolong(ncopies) <<"\n";
+     cout << "Created a ncopies with address " << _farptr_tolong(ncopies)
+          <<"\n";
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
    v -= indexmin();

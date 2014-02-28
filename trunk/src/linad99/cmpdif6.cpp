@@ -165,7 +165,8 @@ dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position& _pos)
  * Description not yet available.
  * \param
  */
-dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& _pos, const int& ii)
+dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& _pos,
+  const int& ii)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   dvector tmp=restore_dvar_vector_derivatives(pos(ii));
@@ -176,7 +177,8 @@ dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& _pos, con
  * Description not yet available.
  * \param
  */
-dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& _pos, const int& ii)
+dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& _pos,
+  const int& ii)
 {
   dvar_matrix_position& pos= (dvar_matrix_position&) _pos;
   dvector tmpvec(pos.rowmin(),pos.rowmax());

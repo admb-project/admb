@@ -26,10 +26,13 @@
 #define RNMX (1.0-EPS)
 */
 
-/** Poisson random deviates.
-   \param xm Mean of Poisson distribution
-   \param rng Instance of class random_number_generator.
-   \return Integer-valued double drawn from the Poisson distribution with given mean.
+/**
+Poisson random deviates.
+
+\param xm Mean of Poisson distribution
+\param rng Instance of class random_number_generator.
+\return Integer-valued double drawn from the Poisson distribution with given
+mean.
 */
 double randpoisson(double xm, const random_number_generator& rng)
 {
@@ -79,7 +82,8 @@ double randpoisson(double xm, const random_number_generator& rng)
   \param rng Instance of class random_number_generator.
   \returns dvector containing Poisson deviates
 */
-  void dvector::fill_randpoisson(double lambda, const random_number_generator& rng)
+void dvector::fill_randpoisson(double lambda,
+  const random_number_generator& rng)
   {
     for (int i=indexmin(); i<=indexmax(); i++)
     {

@@ -110,7 +110,8 @@ int get_non_blank_line(const ifstream& infile, char * & line,
    if (nr == 0)
    {
      cerr << "Error in dvector constructor There doesn't seem to be any data\n"
-      << "in file:  " << filename << " called in dvector::dvector(char * filename,const const& column)\n";
+      << "in file:  " << filename
+      << " called in dvector::dvector(char * filename,const const& column)\n";
       ad_exit(1);
    }
    infile.clear();
@@ -132,7 +133,8 @@ int get_non_blank_line(const ifstream& infile, char * & line,
    }
 
    #ifdef DIAG
-     cout << "Created a ncopies with address " << _farptr_tolong(ncopies) <<"\n";
+     cout << "Created a ncopies with address " << _farptr_tolong(ncopies)
+          <<"\n";
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
 
@@ -144,9 +146,9 @@ int get_non_blank_line(const ifstream& infile, char * & line,
      if ( (unsigned) v < indexmin() * sizeof(double) )
 #endif
      {
-        //cerr << "Pointer wrap in dvector(unsigned int ncl, unsigned int nch)\n";
-        //cerr << "pointer = "<< (unsigned int) v <<
-                         //" indexmin() = "<<indexmin()<<"\n";
+      //cerr << "Pointer wrap in dvector(unsigned int ncl, unsigned int nch)\n";
+      //cerr << "pointer = "<< (unsigned int) v <<
+      //" indexmin() = "<<indexmin()<<"\n";
         denormalize_ptr(&v, indexmin() * sizeof(double));
      }
    }

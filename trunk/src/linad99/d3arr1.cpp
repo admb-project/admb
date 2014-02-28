@@ -27,7 +27,9 @@
         }
         if (k>slicemax())
         {
-          ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high", "dmatrix& d3_array::operator() (int k, int i, int j)", slicemin(), slicemax(), k);
+        ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high",
+        "dmatrix& d3_array::operator() (int k, int i, int j)",
+        slicemin(), slicemax(), k);
         }
       #endif
       return ( (elem(k))(i,j) );

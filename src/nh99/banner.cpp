@@ -47,7 +47,7 @@ void banner(const adstring& program_name)
   ss << " compiled with ";
 
 #if defined(__GNUC__)
-  ss <<  "GNU C++ " << __GNUC__ << '.' << __GNUC_MINOR__ << '.' 
+  ss <<  "GNU C++ " << __GNUC__ << '.' << __GNUC_MINOR__ << '.'
     << __GNUC_PATCHLEVEL__;
   #if defined(__x86_64)
   ss <<  " (64bit)";

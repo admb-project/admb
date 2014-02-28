@@ -28,22 +28,25 @@
     return *this;
   }
 
-  param_init_bounded_vector& param_init_bounded_vector::operator = (const dvector& v)
+param_init_bounded_vector& param_init_bounded_vector::operator=(
+  const dvector& v)
   {
     dvar_vector::operator =(v);
     return *this;
   }
-  param_init_bounded_vector& param_init_bounded_vector::operator = (const dvar_vector& v)
+param_init_bounded_vector& param_init_bounded_vector::operator=(
+  const dvar_vector& v)
   {
     dvar_vector::operator =(v);
     return *this;
   }
-  param_init_bounded_vector& param_init_bounded_vector::operator = (const prevariable& v)
+param_init_bounded_vector& param_init_bounded_vector::operator=(
+  const prevariable& v)
   {
     dvar_vector::operator =(v);
     return *this;
   }
-  param_init_bounded_vector& param_init_bounded_vector::operator = (const double& v)
+param_init_bounded_vector& param_init_bounded_vector::operator=(const double& v)
   {
     dvar_vector::operator = (v);
     return *this;

@@ -17,10 +17,14 @@
 
 class model_parameters;
 
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),double a, const dvariable& b,int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&), const dvariable& a, const dvariable& b, int n);
-dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&), const dvariable& a, double b, int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
+  double a,double b,int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
+  double a, const dvariable& b,int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
+  const dvariable& a, const dvariable& b, int n);
+dvariable trapzd(dvariable (model_parameters::*func)(const dvariable&),
+  const dvariable& a, double b, int n);
 
 void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
   const dvariable& y, const dvariable& dy);
@@ -32,7 +36,9 @@ void polint(const dvector& xa, const dvar_vector& ya,int n,double x,
   \param ns
   \return The integral of the function from a to b using Romberg's method
 */
-dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int ns)
+dvariable function_minimizer::adromb(
+  dvariable (model_parameters::*func)(const dvariable&),
+  double a, double b, int ns)
 {
   const double base = 4;
   int MAXN = min(JMAX, ns);
@@ -61,8 +67,9 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   \param ns
   \return The integral of the function from a to b using Romberg's method
 */
-dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&), const dvariable& a,
-  double b,int ns)
+dvariable function_minimizer::adromb(
+  dvariable (model_parameters::*func)(const dvariable&),
+  const dvariable& a, double b, int ns)
 {
   const double base = 4;
   int MAXN = min(JMAX, ns);
@@ -91,8 +98,9 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   \param ns
   \return The integral of the function from a to b using Romberg's method
 */
-dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),double a,
-  const dvariable& b,int ns)
+dvariable function_minimizer::adromb(
+  dvariable (model_parameters::*func)(const dvariable&),
+  double a, const dvariable& b, int ns)
 {
   const double base = 4;
   int MAXN = min(JMAX, ns);
@@ -121,7 +129,8 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
   \param ns
   \return The integral of the function from a to b using Romberg's method
 */
-dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const dvariable&),
+dvariable function_minimizer::adromb(
+  dvariable (model_parameters::*func)(const dvariable&),
   const dvariable& a, const dvariable& b, int ns)
 {
   const double base = 4;
@@ -151,7 +160,9 @@ dvariable function_minimizer::adromb(dvariable (model_parameters::*func)(const d
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
  *
  */
-dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&),double a,double b,int n)
+dvariable function_minimizer::trapzd(
+  dvariable (model_parameters::*func)(const dvariable&),
+  double a, double b, int n)
 {
   double x,num_interval,hn;
   dvariable sum;
@@ -180,7 +191,9 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
  *
  */
-dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&), const dvariable& a,double b,int n)
+dvariable function_minimizer::trapzd(
+  dvariable (model_parameters::*func)(const dvariable&),
+  const dvariable& a, double b, int n)
 {
   double num_interval;
   dvariable x,sum,hn;
@@ -207,9 +220,10 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
  * This algorithm was adapted from function trapzd in
  * "Numerical Recipes in C", 2nd edition,
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
- *
  */
-dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&), double a, const dvariable& b,int n)
+dvariable function_minimizer::trapzd(
+  dvariable (model_parameters::*func)(const dvariable&),
+  double a, const dvariable& b, int n)
 {
   double num_interval;
   dvariable sum,hn,x;
@@ -238,9 +252,10 @@ dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const d
  * This algorithm was adapted from function trapzd in
  * "Numerical Recipes in C", 2nd edition,
  * Press, Teukolsky, Vetterling, Flannery, chapter 4.2
- *
  */
-dvariable function_minimizer::trapzd(dvariable (model_parameters::*func)(const dvariable&), const dvariable& a, const dvariable& b,int n)
+dvariable function_minimizer::trapzd(
+  dvariable (model_parameters::*func)(const dvariable&),
+  const dvariable& a, const dvariable& b, int n)
 {
   double num_interval;
   dvariable sum,hn,x;

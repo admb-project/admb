@@ -40,12 +40,14 @@ void gradfree(dlink *);
       #ifdef SAFE_ARRAYS
         if (i<indexmin())
         {
-          cerr << "array bound exceeded -- index too low in prevariable::operator[]";
+          cerr << "array bound exceeded -- index too low in "
+          "prevariable::operator[]";
           ad_exit(1);
         }
         if (i>indexmax())
         {
-          cerr << "array bound exceeded -- index too high in prevariable::operator[]";
+          cerr << "array bound exceeded -- index too high in "
+          "prevariable::operator[]";
           ad_exit(1);
         }
       #endif
@@ -62,12 +64,14 @@ void gradfree(dlink *);
       #ifdef SAFE_ARRAYS
         if (i<indexmin())
         {
-          cerr << "array bound exceeded -- index too low in prevariable::operator()";
+          cerr << "array bound exceeded -- index too low in "
+          "prevariable::operator()";
           ad_exit(1);
         }
         if (i>indexmax())
         {
-          cerr << "array bound exceeded -- index too high in prevariable::operator()";
+          cerr << "array bound exceeded -- index too high in "
+          "prevariable::operator()";
           ad_exit(1);
         }
       #endif
@@ -86,12 +90,14 @@ const prevariable dvar_vector::operator[](int i) const
       #ifdef SAFE_ARRAYS
         if (i<indexmin())
         {
-          cerr << "array bound exceeded -- index too low in prevariable::operator[]";
+          cerr << "array bound exceeded -- index too low in "
+          "prevariable::operator[]";
           ad_exit(1);
         }
         if (i>indexmax())
         {
-          cerr << "array bound exceeded -- index too high in prevariable::operator[]";
+          cerr << "array bound exceeded -- index too high in "
+          "prevariable::operator[]";
           ad_exit(1);
         }
       #endif
@@ -108,12 +114,14 @@ const prevariable dvar_vector::operator()(int i) const
       #ifdef SAFE_ARRAYS
         if (i<indexmin())
         {
-          cerr << "array bound exceeded -- index too low in prevariable::operator()";
+          cerr << "array bound exceeded -- index too low in "
+          "prevariable::operator()";
           ad_exit(1);
         }
         if (i>indexmax())
         {
-          cerr << "array bound exceeded -- index too high in prevariable::operator()";
+          cerr << "array bound exceeded -- index too high in "
+          "prevariable::operator()";
           ad_exit(1);
         }
       #endif

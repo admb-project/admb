@@ -16,7 +16,8 @@ void dfempirical_covarv_partial(void);
  * Description not yet available.
  * \param
  */
-dvar_matrix empirical_covariance(const dvar_matrix& _v1, const imatrix& _missflags)
+dvar_matrix empirical_covariance(const dvar_matrix& _v1,
+  const imatrix& _missflags)
  {
    dvar_matrix& v1 = (dvar_matrix&) (_v1);
    imatrix& missflags=(imatrix&) (_missflags);

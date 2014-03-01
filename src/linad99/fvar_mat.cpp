@@ -247,7 +247,8 @@ void dvar_matrix::allocate(const dvar_matrix& m1)
  * Description not yet available.
  * \param
  */
-dvar_matrix::dvar_matrix(int nrl, int nrh, const ivector& ncl, const ivector& nch)
+dvar_matrix::dvar_matrix(int nrl, int nrh, const ivector& ncl,
+  const ivector& nch)
  {
    allocate(nrl,nrh,ncl,nch);
    #ifdef SAFE_ARRAYS
@@ -259,7 +260,8 @@ dvar_matrix::dvar_matrix(int nrl, int nrh, const ivector& ncl, const ivector& nc
  * Description not yet available.
  * \param
  */
-void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, const ivector& nch)
+void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl,
+  const ivector& nch)
  {
    if (nrl>nrh)
      allocate();
@@ -268,7 +270,8 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, const ivector& 
      if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
        nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
-       cerr << "Incompatible array bounds in dvar_matrix(int nrl, int nrh, const ivector& ncl, const ivector& nch)"
+       cerr << "Incompatible array bounds in "
+       "dvar_matrix(int nrl, int nrh, const ivector& ncl, const ivector& nch)"
             << endl ;
        ad_exit(1);
      }
@@ -319,8 +322,9 @@ void dvar_matrix::allocate(int nrl, int nrh, int ncl, const ivector& nch)
    {
      if (nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
-       cerr << "Incompatible array bounds in dvar_matrix(int nrl, int nrh, const int& ncl, const ivector& nch)"
-            << endl;
+       cerr << "Incompatible array bounds in "
+       "dvar_matrix(int nrl, int nrh, const int& ncl, const ivector& nch)"
+       << endl;
        ad_exit(1);
      }
      index_min=nrl;
@@ -358,8 +362,9 @@ void dvar_matrix::allocate(int nrl, int nrh, const ivector& ncl, int nch)
    {
      if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax())
      {
-       cerr << "Incompatible array bounds in dvar_matrix(int nrl, int nrh, const ivector& ncl,int nch)"
-            << endl;
+       cerr << "Incompatible array bounds in "
+       "dvar_matrix(int nrl, int nrh, const ivector& ncl,int nch)"
+       << endl;
        ad_exit(1);
      }
      index_min=nrl;
@@ -559,7 +564,8 @@ dvar_matrix& dvar_matrix::operator=(const dmatrix& m1)
    if (rowmin() != m1.rowmin() || rowmax() != m1.rowmax() ||
      colmin() != m1.colmin() || colmax() != m1.colmax() )
    {
-     cerr << " Incompatible array bounds in dvar_matrix& operator = (const dvar_vector&)\n";
+     cerr << " Incompatible array bounds in "
+     "dvar_matrix& operator = (const dvar_vector&)\n";
      ad_exit(21);
    }
 

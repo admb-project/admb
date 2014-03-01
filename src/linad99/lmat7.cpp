@@ -33,7 +33,9 @@ AD_LONG_INT colsum(const lmatrix& m,int col)
 {
   if (col < m.colmin() || col > m.colmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "AD_LONG_INT colsum(const lmatrix& m,int col)", m.colmin(), m.colmax(), col);
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds",
+    "AD_LONG_INT colsum(const lmatrix& m,int col)",
+    m.colmin(), m.colmax(), col);
   }
   AD_LONG_INT isum=0;
   int mmin=m.rowmin();
@@ -53,7 +55,9 @@ lvector column(const lmatrix& m,int col)
 {
   if (col < m.colmin() || col > m.colmax())
   {
-    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds", "lvector column(const lmatrix& m,int col)", m.colmin(), m.colmax(), col);
+    ADMB_ARRAY_BOUNDS_ERROR("Row out of bounds",
+    "lvector column(const lmatrix& m,int col)",
+    m.colmin(), m.colmax(), col);
   }
   int mmin=m.rowmin();
   int mmax=m.rowmax();

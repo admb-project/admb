@@ -200,7 +200,8 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
      if (nrl !=ncl.indexmin() || nrh !=ncl.indexmax() ||
        nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
-       cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
+       cerr << "Incompatible array bounds in "
+       "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)\n";
        ad_exit(1);
      }
      m -= rowmin();
@@ -233,7 +234,8 @@ void imatrix::allocate(int nrl, int nrh, const ivector& iv)
      }
      if (nrl !=nch.indexmin() || nrh !=nch.indexmax())
      {
-       cerr << "Incompatible array bounds in imatrix::allocate(int nrl,int nrh,int ncl, const ivector& nch)\n";
+       cerr << "Incompatible array bounds in "
+       "imatrix::allocate(int nrl,int nrh,int ncl, const ivector& nch)\n";
        ad_exit(1);
      }
      if ( (shape = new mat_shapex(m))== 0)

@@ -93,7 +93,8 @@ ptr_vector& ptr_vector::operator=(const ptr_vector& _t)
   {
     if (indexmin() != t.indexmin() || indexmax() != t.indexmax())
     {
-      cerr << " Array sizes do not match in ptr_vector operator =(const ivector&)\n";
+      cerr << " Array sizes do not match in "
+      "ptr_vector operator =(const ivector&)\n";
     }
     for ( int i=indexmin(); i<=indexmax(); i++)
     {

@@ -198,7 +198,7 @@ void gradient_structure::set_GRADSTACK_BUFFER_BYTES(long long int i)
       "the\n GRADSTACK_BUFFER is > " << LLONG_MAX <<
       "This appears\n to be an error. The maximum size argument ";
     cerr << "for the function\n"
-      "--- gradient_structure::set_GRADSTACK_BUFFER_BYTES(long long int i) ---\n"
+     "--- gradient_structure::set_GRADSTACK_BUFFER_BYTES(long long int i) ---\n"
       "should probably be  " << max_size << endl;
     cerr << "LLONG_MAX = " << LLONG_MAX << endl;
     cerr << " i = " << i << endl;

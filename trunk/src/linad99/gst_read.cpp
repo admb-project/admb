@@ -114,7 +114,8 @@
       if (lpos == -1L)
       {
         cerr << "Error positioning temporary gradient file "
-           << gradient_structure::GRAD_STACK1->get_gradfile_name() << " after open.\n";
+             << gradient_structure::GRAD_STACK1->get_gradfile_name()
+             << " after open.\n";
         ad_exit(1);
       }
     }
@@ -133,7 +134,7 @@
     }
     if (nread <((long int)(sizeof(grad_stack_entry)*length)) )
     {
-      perror("End of file encountered trying to read temporary gradient file\n");
+     perror("End of file encountered trying to read temporary gradient file\n");
       cout << "Read " << nread << "bytes from temp. grad. file\n";
     }
     lpos = lseek(_GRADFILE_PTR,-((long int)(sizeof(grad_stack_entry)*length)),

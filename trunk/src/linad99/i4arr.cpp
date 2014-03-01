@@ -228,7 +228,8 @@ i4_array::i4_array(const i4_array& m2)
 #     if defined(SAFE_ARRAYS)
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "i3_array& i4_array::operator ( ) (int i)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
+        "i3_array& i4_array::operator ( ) (int i)", indexmin(), indexmax(), i);
       }
 #     endif
       return t[i];
@@ -243,7 +244,8 @@ i4_array::i4_array(const i4_array& m2)
 #     if defined(SAFE_ARRAYS)
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "i3_array& i4_array::operator [] (int i)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
+        "i3_array& i4_array::operator [] (int i)", indexmin(), indexmax(), i);
       }
 #     endif
       return t[i];

@@ -203,7 +203,8 @@ i5_array::i5_array(const i5_array& m2)
 #     if defined(SAFE_ARRAYS)
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "i4_array& i5_array::operator ( ) (int i)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
+        "i4_array& i5_array::operator ( ) (int i)", indexmin(), indexmax(), i);
       }
 #     endif
       return t[i];
@@ -218,7 +219,8 @@ i5_array::i5_array(const i5_array& m2)
 #     if defined(SAFE_ARRAYS)
       if (i < indexmin() || i > indexmax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds", "i4_array& i5_array::operator [] (int i)", indexmin(), indexmax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("Index out of bounds",
+        "i4_array& i5_array::operator [] (int i)", indexmin(), indexmax(), i);
       }
 #     endif
       return t[i];

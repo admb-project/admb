@@ -29,7 +29,8 @@ imatrix& imatrix::operator=(const imatrix& m1)
        cerr << colmax() << endl;
        cerr << m1.colmin() << endl;
        cerr << m1.colmax() << endl;
-       cerr << " Incompatible array bounds in imatrix& operator=(const imatrix&)\n";
+       cerr << " Incompatible array bounds in "
+       "imatrix& operator=(const imatrix&)\n";
        ad_exit(21);
      }
 

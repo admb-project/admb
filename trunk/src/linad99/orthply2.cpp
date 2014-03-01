@@ -60,14 +60,14 @@ d4_array orthpoly2(int d1,int d2, int n,int m)
     //cout     << "X" << endl;
     if (ii>1)
     {
-      //cout << dot(B(ialpha(ii-1),ibeta(ii-1)),A(ialpha(ii),ibeta(ii))) << endl;
+//cout << dot(B(ialpha(ii-1),ibeta(ii-1)),A(ialpha(ii),ibeta(ii))) << endl;
       //cout << dot(B(ialpha(ii-1),ibeta(ii-1)),
        //  A(ialpha(ii),ibeta(ii))/norm(A(ialpha(ii),ibeta(ii)))) << endl;
     }
     B(ialpha(ii),ibeta(ii))=A(ialpha(ii),ibeta(ii))/
       norm(A(ialpha(ii),ibeta(ii)));
     //if (ii>1)
-     // cout << dot(B(ialpha(ii-1),ibeta(ii-1)),B(ialpha(ii),ibeta(ii))) << endl;
+// cout << dot(B(ialpha(ii-1),ibeta(ii-1)),B(ialpha(ii),ibeta(ii))) << endl;
     //cout     << "Y" << endl;
     for (jj=ii+1;jj<=N;jj++)
     {

@@ -32,17 +32,20 @@
    #ifdef SAFE_ARRAYS
    if (!v)
    {
-       cerr << "\nattempting to acces non-allocated ivector in ivector::operator[]";
+       cerr << "\nattempting to acces non-allocated ivector in "
+       "ivector::operator[]";
        ad_exit(1);
        cerr << endl;
    }
    if (i > indexmax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high", "int& ivector::operator[] (int i)", indexmin(), indexmax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
+     "int& ivector::operator[] (int i)", indexmin(), indexmax(), i);
    }
    if (i<indexmin())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low", "int& ivector::operator[] (int i)", indexmin(), indexmax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
+     "int& ivector::operator[] (int i)", indexmin(), indexmax(), i);
    }
    #endif
    return(*(v+i));
@@ -57,17 +60,20 @@
    #ifdef SAFE_ARRAYS
    if (!v)
    {
-       cerr << "\nattempting to acces non-allocated ivector in ivector::operator()";
-       ad_exit(1);
-       cerr << endl;
+     cerr << "\nattempting to acces non-allocated ivector in "
+     "ivector::operator()";
+     cerr << endl;
+     ad_exit(1);
    }
    if (i > indexmax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high", "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too high",
+     "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
    }
    if (i < indexmin())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low", "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- index too low",
+     "int& ivector::operator() (int i)", indexmin(), indexmax(), i);
    }
    #endif
    return(*(v+i));
@@ -82,13 +88,15 @@ const int& ivector::operator[](int i) const
    #ifdef SAFE_ARRAYS
      if (!v)
      {
-       cerr << "\nattempting to acces non-allocated ivector in ivector::operator[]";
-       ad_exit(1);
+       cerr << "\nattempting to acces non-allocated ivector in "
+       "ivector::operator[]";
        cerr << endl;
+       ad_exit(1);
      }
      if (i>indexmax())
      {
-       cerr << "\narray bound exceeded -- index too high in ivector::operator[]";
+       cerr << "\narray bound exceeded -- index too high in "
+       "ivector::operator[]";
        cerr << "index value " << i << " max value " << indexmax() << endl;
        cerr << endl;
        ad_exit(1);
@@ -113,13 +121,15 @@ const int& ivector::operator()(int i) const
    #ifdef SAFE_ARRAYS
      if (!v)
      {
-       cerr << "\nattempting to acces non-allocated ivector in ivector::operator()";
-       ad_exit(1);
+       cerr << "\nattempting to acces non-allocated ivector in "
+       "ivector::operator()";
        cerr << endl;
+       ad_exit(1);
      }
      if (i>indexmax())
      {
-       cerr << "\narray bound exceeded -- index too high in ivector::operator()";
+       cerr << "\narray bound exceeded -- index too high in "
+       "ivector::operator()";
        cerr << "index value " << i << " max value " << indexmax() << endl;
        cerr << endl;
        ad_exit(1);

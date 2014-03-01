@@ -108,7 +108,7 @@ void funnel_gradcalc(void)
        <= gradient_structure::GRAD_STACK1->ptr_first)
   {
     #ifdef SAFE_ARRAYS
-      cerr << 
+      cerr <<
         "warning -- calling funnel_gradcalc when no calculations generating"
            << endl << "derivative information have occurred" << endl;
     #endif

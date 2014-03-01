@@ -331,7 +331,7 @@ void set_value_partial(const dvar_vector& x, const dvar_vector& v,
     #ifdef SAFE_ARRAYS
       if (max >x.indexmax())
       {
-        cerr << 
+        cerr <<
           "index out of range in set_value_patial(const dvar_vector&, ... "
           << endl;
       }

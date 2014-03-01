@@ -41,7 +41,8 @@
  * Description not yet available.
  * \param
  */
-void dvar_matrix::colfill_seqadd(const int& j, CGNU_DOUBLE base, CGNU_DOUBLE offset)
+void dvar_matrix::colfill_seqadd(const int& j, CGNU_DOUBLE base,
+  CGNU_DOUBLE offset)
   {
     double temp=0;
     RETURN_ARRAYS_INCREMENT();
@@ -57,7 +58,8 @@ void dvar_matrix::colfill_seqadd(const int& j, CGNU_DOUBLE base, CGNU_DOUBLE off
  * Description not yet available.
  * \param
  */
-void dvar_matrix::rowfill_seqadd(const int& i, CGNU_DOUBLE base, CGNU_DOUBLE offset)
+void dvar_matrix::rowfill_seqadd(const int& i, CGNU_DOUBLE base,
+  CGNU_DOUBLE offset)
   {
     double temp=0;
     RETURN_ARRAYS_INCREMENT();

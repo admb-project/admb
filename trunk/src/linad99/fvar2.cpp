@@ -110,7 +110,8 @@ dvariable::dvariable()
   //(*v).nc=0;
 #ifdef SAFE_INITIALIZE
   (*v).x = 0;
-  gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0,&((*v).x));
+  gradient_structure::GRAD_STACK1->set_gradient_stack0(
+    default_evaluation0,&((*v).x));
 #endif
 }
 /**
@@ -140,7 +141,8 @@ dvariable::dvariable(CGNU_DOUBLE t)
   v = gradnew();
   v->x = t;
   //(*v).nc=0;
-  gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0, &(v->x));
+  gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0,
+    &(v->x));
 }
 /**
    Creates dvariable instance from a int constant.
@@ -153,5 +155,6 @@ dvariable::dvariable(const int& t)
   v = gradnew();
   v->x = t;
   //(*v).nc=0;
-  gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0, &(v->x) );
+  gradient_structure::GRAD_STACK1->set_gradient_stack0(default_evaluation0,
+    &(v->x) );
 }

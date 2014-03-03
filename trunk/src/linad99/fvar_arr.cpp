@@ -151,7 +151,8 @@ void make_indvar_list(const dvar_vector& t)
   {
     return;
   }
-  if ( (unsigned int)(t.indexmax()-t.indexmin()+1)> gradient_structure::MAX_NVAR_OFFSET)
+  if ((unsigned int)(t.indexmax()-t.indexmin()+1)
+    > gradient_structure::MAX_NVAR_OFFSET)
   {
    #if defined(__SPDLL__)
    if (ad_printf)

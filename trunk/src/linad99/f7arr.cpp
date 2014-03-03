@@ -99,12 +99,12 @@ void dvar7_array::allocate(int l7,int u7)
        shape=NULL;
      }
    }
+#if defined(SAFE_ALL)
    else
    {
-#    if defined(SAFE_ALL)
-     //cerr << "Warning -- trying to deallocate an unallocated dvar5_array"<<endl;
-#    endif
+   //cerr << "Warning -- trying to deallocate an unallocated dvar5_array"<<endl;
    }
+#endif
  }
 
 /**

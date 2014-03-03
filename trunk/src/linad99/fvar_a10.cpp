@@ -99,7 +99,8 @@ void dvar_vector::fill(const char * s)
 
   if (lbraces > 1)
   {
-    cerr << "Only one level of braces allowed in dvar_vector::fill(const char * s)\n";
+    cerr << "Only one level of braces allowed in "
+    "dvar_vector::fill(const char * s)\n";
     cerr << s << "\n";
     ad_exit(1);
   }
@@ -119,13 +120,15 @@ void dvar_vector::fill(const char * s)
     {
       if (nch < size())
       {
-        cerr << "Not enough elements to fill vector in dvar_vector::fill(const char * s)\n";
+        cerr << "Not enough elements to fill vector in "
+        "dvar_vector::fill(const char * s)\n";
         cerr << s << "\n";
         ad_exit(1);
       }
       else
       {
-        cerr << "Too many elements for size of vector in dvar_vector::fill(const char * s)\n";
+        cerr << "Too many elements for size of vector in "
+        "dvar_vector::fill(const char * s)\n";
         cerr << s << "\n";
         ad_exit(1);
       }

@@ -27,11 +27,15 @@
       }
       if (k < slicemin())
       {
-         ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low", "prevariable dvar3_array::operator () (int k, int i, int j)", slicemin(), slicemax(), k);
+         ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low",
+         "prevariable dvar3_array::operator () (int k, int i, int j)",
+         slicemin(), slicemax(), k);
       }
       if (k > slicemax())
       {
-         ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high", "prevariable dvar3_array::operator () (int k, int i, int j)", slicemin(), slicemax(), k);
+         ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high",
+         "prevariable dvar3_array::operator () (int k, int i, int j)",
+         slicemin(), slicemax(), k);
       }
       return ( (elem(k))(i,j) );
       #else
@@ -48,11 +52,14 @@
       #ifdef SAFE_ARRAYS
       if (k < slicemin())
       {
-         ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low", "dvar_vector& dvar3_array::operator () (int k, int i)", slicemin(), slicemax(), k);
+         ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low",          "dvar_vector& dvar3_array::operator () (int k, int i)",
+         slicemin(), slicemax(), k);
       }
       if (k > slicemax())
       {
-         ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high", "dvar_vector& dvar3_array::operator () (int k, int i)", slicemin(), slicemax(), k);
+         ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high",
+         "dvar_vector& dvar3_array::operator () (int k, int i)",
+         slicemin(), slicemax(), k);
       }
       #endif
       return ( (elem(k))(i) );
@@ -67,11 +74,15 @@
    #ifdef SAFE_ARRAYS
    if (i < slicemin())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low", "dvar_matrix& dvar3_array::operator [] (int i)", slicemin(), slicemax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low",
+     "dvar_matrix& dvar3_array::operator [] (int i)",
+     slicemin(), slicemax(), i);
    }
    if (i > slicemax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high", "dvar_matrix& dvar3_array::operator [] (int i)", slicemin(), slicemax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high",
+     "dvar_matrix& dvar3_array::operator [] (int i)",
+     slicemin(), slicemax(), i);
    }
    #endif
    return( t[i]);
@@ -91,17 +102,20 @@
    }
    if (i < slicemin())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low", "dvar_matrix& dvar3_array::operator () (int i)", slicemin(), slicemax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low",
+     "dvar_matrix& dvar3_array::operator () (int i)",
+     slicemin(), slicemax(), i);
    }
    if (i > slicemax())
    {
-     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high", "dvar_matrix& dvar3_array::operator () (int i)", slicemin(), slicemax(), i);
+     ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too high",
+     "dvar_matrix& dvar3_array::operator () (int i)",
+     slicemin(), slicemax(), i);
    }
    #endif
    return( t[i]);
  }
 #endif
- void s9ee43q(void){/*int i=1;*/}
 
 /**
  * Description not yet available.

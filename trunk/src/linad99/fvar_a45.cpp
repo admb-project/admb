@@ -35,7 +35,8 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-      "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)" << endl;
+    "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)"
+    << endl;
     ad_exit(1);
   }
   dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -98,7 +99,8 @@ dvar_vector elem_prod(const dvector& v1, const dvar_vector& v2)
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-      "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)" << endl;
+    "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)"
+    << endl;
     ad_exit(1);
   }
   dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -156,7 +158,8 @@ dvar_vector elem_prod(const dvar_vector& v1, const dvector& v2)
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-      "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)" << endl;
+    "dvar_vector elem_prod(const dvar_vector& v1, const dvar_vector& v2)"
+    << endl;
     ad_exit(1);
   }
   dvar_vector tmp(v1.indexmin(),v1.indexmax());

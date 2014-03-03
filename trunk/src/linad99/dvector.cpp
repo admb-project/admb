@@ -155,11 +155,15 @@ static int ycounter=0;
     Invoked by the compiler in some circumstances such as function
     call containing an argument of class %dvector passed by value.
 
-    The following code segments creates the \c dvector object \c x and fills it with
-    uniform random numbers (using the constant 79 as seed; \ref fill_randu). The new \c dvector
-    object \c y will reference the same memory locations as \c x, and any changes in \c y
+    The following code segments creates the \c dvector object \c x and fills it
+    with
+    uniform random numbers (using the constant 79 as seed; \ref fill_randu). The
+    new \c dvector
+    object \c y will reference the same memory locations as \c x, and any change
+    s in \c y
     will also appear in \c x. The new \c dvector object \c z does not refer to
-    the same memory locations as \c x, and any changes in \c z will be unique to \c z.
+    the same memory locations as \c x, and any changes in \c z will be unique to
+    \c z.
 
     \code
     dvector x(1,10);
@@ -286,7 +290,8 @@ dvector& dvector::operator=(const dvector& t)
    {
      if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
      {
-       cerr << "Index bounds do not match in dvector& operator = (const dvector&)\n";
+       cerr << "Index bounds do not match in "
+       "dvector& operator = (const dvector&)\n";
        ad_exit(1);
      }
 
@@ -303,7 +308,8 @@ dvector& dvector::operator=(const dvector& t)
  /**
   \ingroup matop
   Assignment operator for %dvector argument.
-  Assigns the values of the argument to a %independent_variables target in the LHS of the
+  Assigns the values of the argument to a %independent_variables target in the
+  LHS of the
   assignment operator. The range of valid subscripts in the argument and the
   target must be identical.
   \param t A %dvector constant
@@ -317,7 +323,8 @@ dvector& dvector::operator=(const dvector& t)
 
    if (indexmin() != t.indexmin() ||  indexmax() != t.indexmax() )
    {
-     cerr << "Index bounds do not match in independent_variables& independent_variables::operator=(const dvector& t)\n";
+     cerr << "Index bounds do not match in "
+  "independent_variables& independent_variables::operator=(const dvector& t)\n";
      ad_exit(1);
    }
      //double tmp;
@@ -362,7 +369,8 @@ dvector& dvector::operator=(const dvector& t)
  /**
  Construct a %dvector object from a dvar_vector_position object.
  Used in writing adjoint functions callled by the autodif library,
- \param dvp Reference to a %dvar_vector_position object (usually read from stack)
+ \param dvp Reference to a %dvar_vector_position object
+ (usually read from stack)
  \param kk Kludge to avoid ambiguous function references
  */
 dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
@@ -394,7 +402,8 @@ dvector::dvector(const dvar_vector_position& dvp, const kkludge_object& kk)
 
  /**
  Safely allocate memory for a %dvector.
- Exits with an error message if memory for this instance has already been allocated.
+ Exits with an error message if memory for this instance has already been
+ allocated.
  \param ncl Integer specifying lowest valid subscript.
  \param nch Integer specifying highest valid subscript.
  */
@@ -531,7 +540,8 @@ double operator*(const dvector& t1, const dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
      {
-       cerr << "Index bounds do not match in dvector operator * (const dvector&, const dvector&)\n";
+       cerr << "Index bounds do not match in "
+       "dvector operator * (const dvector&, const dvector&)\n";
        ad_exit(1);
      }
      double tmp;
@@ -577,7 +587,8 @@ dvector operator+(const dvector& t1, const dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
      {
-       cerr << "Index bounds do not match in dvector operator+(const dvector&, const dvector&)\n";
+       cerr << "Index bounds do not match in "
+       "dvector operator+(const dvector&, const dvector&)\n";
        ad_exit(1);
      }
      dvector tmp(t1.indexmin(),t1.indexmax());
@@ -615,7 +626,8 @@ dvector operator-(const dvector& t1, const dvector& t2)
   {
      if (t1.indexmin() != t2.indexmin() ||  t1.indexmax() != t2.indexmax())
      {
-       cerr << "Index bounds do not match in dvector operator - (const dvector&, const dvector&)\n";
+       cerr << "Index bounds do not match in "
+       "dvector operator - (const dvector&, const dvector&)\n";
        ad_exit(1);
      }
      dvector tmp(t1.indexmin(),t1.indexmax());
@@ -685,7 +697,8 @@ dvector operator*(CGNU_DOUBLE x, const dvector& t1)
 #else
 */
    /** Does nothing. This function is only defined for older Borland compilers.
-   The user could provide an implementation that might be useful in certain circumstances.
+   The user could provide an implementation that might be useful in certain
+   circumstances.
    \param msg Pointer to character array.
    */
    void myheapcheck(char * msg){}

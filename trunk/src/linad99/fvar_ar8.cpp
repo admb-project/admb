@@ -33,10 +33,14 @@ void gradfree(dlink *);
 //extern int RETURN_INDEX;
 //extern dlist * GRAD_LIST; //js
 
-void shape_check(const dvar_vector& v1, const dvar_vector& v2, const char *function_name);
-void shape_check(const dvector& v1, const dvar_vector& v2, const char *function_name);
-void shape_check(const dvector& v1, const dvector& v2, const char *function_name);
-void shape_check(const dvar_vector& v1, const dvector& v2, const char *function_name);
+void shape_check(const dvar_vector& v1, const dvar_vector& v2,
+  const char *function_name);
+void shape_check(const dvector& v1, const dvar_vector& v2,
+  const char *function_name);
+void shape_check(const dvector& v1, const dvector& v2,
+  const char *function_name);
+void shape_check(const dvar_vector& v1, const dvector& v2,
+  const char *function_name);
 
 /**
  * Description not yet available.
@@ -92,7 +96,8 @@ void shape_check(const dvar_vector& v1, const dvector& v2, const char *function_
  */
  dvar_vector pow(const dvar_vector& v1, const dvar_vector& v2)// ***
  {
-   shape_check(v1,v2,"dvar_vector pow(const dvar_vector& v1,const dvar_vector& v2)");
+   shape_check(v1,v2,
+     "dvar_vector pow(const dvar_vector& v1,const dvar_vector& v2)");
 
    RETURN_ARRAYS_INCREMENT();
    dvar_vector tmp(v1.indexmin(),v1.indexmax());
@@ -172,7 +177,8 @@ void shape_check(const dvar_vector& v1, const dvector& v2, const char *function_
  * Description not yet available.
  * \param
  */
- void shape_check(const dvar_vector& v1, const dvar_vector& v2, const char *function_name)
+ void shape_check(const dvar_vector& v1, const dvar_vector& v2,
+   const char *function_name)
  {
    if (v1.indexmin() != v2.indexmin() || v1.indexmax() != v2.indexmax())
    {
@@ -185,7 +191,8 @@ void shape_check(const dvar_vector& v1, const dvector& v2, const char *function_
  * Description not yet available.
  * \param
  */
- void shape_check(const dvector& v1, const dvar_vector& v2, const char *function_name)
+ void shape_check(const dvector& v1, const dvar_vector& v2,
+   const char *function_name)
  {
    if (v1.indexmin() != v2.indexmin() || v1.indexmax() != v2.indexmax())
    {
@@ -198,7 +205,8 @@ void shape_check(const dvar_vector& v1, const dvector& v2, const char *function_
  * Description not yet available.
  * \param
  */
- void shape_check(const dvar_vector& v1, const dvector& v2, const char *function_name)
+ void shape_check(const dvar_vector& v1, const dvector& v2,
+   const char *function_name)
  {
    if (v1.indexmin() != v2.indexmin() || v1.indexmax() != v2.indexmax())
    {

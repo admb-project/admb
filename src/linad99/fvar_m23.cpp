@@ -23,7 +23,8 @@ dvar_vector operator*(const dvar_vector& x, const dvar_matrix& m)
 
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
    {
-     cerr << " Incompatible array bounds in dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)\n";
+     cerr << " Incompatible array bounds in "
+     "dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)\n";
      ad_exit(21);
    }
 
@@ -107,7 +108,8 @@ dvar_vector operator*(const dvar_vector& x, const dmatrix& m)
 
    if (x.indexmin() != m.rowmin() || x.indexmax() != m.rowmax())
    {
-     cerr << " Incompatible array bounds in dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)\n";
+     cerr << " Incompatible array bounds in "
+     "dvar_vector operator*(const dvar_matrix& m, const dvar_vector& x)\n";
      ad_exit(21);
    }
 

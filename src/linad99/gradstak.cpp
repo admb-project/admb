@@ -336,7 +336,8 @@ grad_stack::~grad_stack()
              << filelength(_GRADFILE_PTR)
              << " bytes.\n";
         #endif
-        cerr <<"   Attempting to write " << nbw <<" bytes; wrote " << ierr << ".\n";
+        cerr <<"   Attempting to write " << nbw <<" bytes; wrote " << ierr
+        << ".\n";
         exit(1);
       }
     }
@@ -354,7 +355,8 @@ grad_stack::~grad_stack()
            << " bytes from the beginning\n";
     }
     #endif
-    gradient_structure::TOTAL_BYTES+=nbw; //keep track of the size of the grad_stack
+    //keep track of the size of the grad_stack
+    gradient_structure::TOTAL_BYTES+=nbw;
     ptr = ptr_first;
   }
 

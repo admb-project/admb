@@ -210,10 +210,12 @@ banded_lower_triangular_dvar_matrix::banded_lower_triangular_dvar_matrix
  * Description not yet available.
  * \param
  */
-ostream& operator<<(const ostream& _ofs, const banded_lower_triangular_dvar_matrix& S1)
+ostream& operator<<(const ostream& _ofs,
+  const banded_lower_triangular_dvar_matrix& S1)
 {
   ostream& ofs= (ostream&) _ofs;
-  banded_lower_triangular_dvar_matrix& S=(banded_lower_triangular_dvar_matrix&) S1;
+  banded_lower_triangular_dvar_matrix& S =
+    (banded_lower_triangular_dvar_matrix&)S1;
   int imin=S.indexmin();
   int imax=S.indexmax();
   int bw=S.bandwidth();
@@ -628,7 +630,8 @@ int max(int i,int j,int k)
  * Description not yet available.
  * \param
  */
-dmatrix restore_lower_triangular_dvar_matrix_value(const dvar_matrix_position& mpos)
+dmatrix restore_lower_triangular_dvar_matrix_value(
+  const dvar_matrix_position& mpos)
 {
   // restores the size, address, and value information for a dvar_matrix
   banded_lower_triangular_dmatrix out((const dvar_matrix_position&)mpos);
@@ -647,7 +650,8 @@ dmatrix restore_lower_triangular_dvar_matrix_value(const dvar_matrix_position& m
  * Description not yet available.
  * \param
  */
-void check_choleski_decomp(const banded_symmetric_dvar_matrix& MM, const int& _ierr)
+void check_choleski_decomp(const banded_symmetric_dvar_matrix& MM,
+  const int& _ierr)
 {
   int& ierr=(int&)(_ierr);
   // kludge to deal with constantness

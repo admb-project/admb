@@ -74,7 +74,8 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
     }
     if (big == 0.0)
     {
-      cerr << "Error in matrix inverse -- matrix singular in inv(dvar_matrix)\n";
+      cerr << "Error in matrix inverse -- matrix singular in "
+      "inv(dvar_matrix)\n";
       big=1.e+10;
       errflag=1;
     }

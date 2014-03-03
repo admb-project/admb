@@ -21,7 +21,6 @@
   #include <iostream.hpp>
 #endif
 
-
 /*
  dvar_matrix  operator*(const dvar_matrix& m1, const dvar_matrix& m2 )
  {
@@ -84,7 +83,8 @@
  {
    if (m1.colmin() != m2.rowmin() || m1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix operator*(const dmatrix& x, const dmatrix& m)\n";
+     cerr << " Incompatible array bounds in "
+     "dmatrix operator*(const dmatrix& x, const dmatrix& m)\n";
      ad_exit(21);
    }
    //dmatrix cm1=value(m1);

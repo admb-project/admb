@@ -105,10 +105,18 @@ dependent_variables_information * gradient_structure::DEPVARS_INFO=NULL;
 
 int gradient_structure::save_var_flag=0;
 int gradient_structure::save_var_file_flag=0;
-//int gradient_structure::_GRADFILE_PTR = NULL; // should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR1 = NULL; // should be int gradfile_handle;
-//int gradient_structure::_GRADFILE_PTR2 = NULL; // should be int gradfile_handle;
-//int gradient_structure::_VARSSAV_PTR = 0; // should be int gradfile_handle;
+
+// should be int gradfile_handle;
+//int gradient_structure::_GRADFILE_PTR = NULL;
+
+// should be int gradfile_handle;
+//int gradient_structure::_GRADFILE_PTR1 = NULL;
+
+// should be int gradfile_handle;
+//int gradient_structure::_GRADFILE_PTR2 = NULL;
+
+// should be int gradfile_handle;
+//int gradient_structure::_VARSSAV_PTR = 0;
 
 unsigned int gradient_structure::MAX_NVAR_OFFSET = 5000;
 unsigned long gradient_structure::ARRAY_MEMBLOCK_SIZE = 0L; //js
@@ -179,15 +187,18 @@ void cleanup_temporary_files()
    {
      if (close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR1))
      {
-       cerr << "Error closing file " << gradient_structure::GRAD_STACK1->gradfile_name1 << "\n";
+       cerr << "Error closing file "
+       << gradient_structure::GRAD_STACK1->gradfile_name1 << "\n";
      }
      if (close(gradient_structure::GRAD_STACK1->_GRADFILE_PTR2))
      {
-       cerr << "Error closing file " << gradient_structure::GRAD_STACK1->gradfile_name2 << "\n";
+       cerr << "Error closing file "
+       << gradient_structure::GRAD_STACK1->gradfile_name2 << "\n";
      }
      if (close( gradient_structure::GRAD_STACK1->_VARSSAV_PTR))
      {
-       cerr << "Error closing file " << gradient_structure::GRAD_STACK1->var_store_file_name << "\n";
+       cerr << "Error closing file "
+       << gradient_structure::GRAD_STACK1->var_store_file_name << "\n";
      }
    }
   #if defined ( __SUN__) ||  defined ( __GNU__)
@@ -362,7 +373,7 @@ void allocate_dvariable_space(void)
 
    if ( GRAD_LIST!= NULL)
    {
-      cerr << "  1 Trying to allocate to a non NULL pointer in gradient structure \n";
+    cerr << "Trying to allocate to a non NULL pointer in gradient structure\n";
    }
    else
    {
@@ -372,7 +383,7 @@ void allocate_dvariable_space(void)
 
    if ( ARR_LIST1!= NULL)
    {
-      cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
+     cerr << "Trying to allocate to a non NULL pointer in gradient structure\n";
    }
    else
    {
@@ -383,7 +394,7 @@ void allocate_dvariable_space(void)
  /*
    if ( ARR_FREE_LIST1!= NULL)
    {
-      cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
+cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
    }
    else
    {
@@ -406,7 +417,7 @@ void allocate_dvariable_space(void)
   /*
    if (ARRAY_MEMBLOCK_BASE != NULL)
    {
-      cerr << "  3b Trying to allocate to a non NULL pointer in gradient structure \n";
+cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
    }
  */
 
@@ -439,7 +450,7 @@ void allocate_dvariable_space(void)
 
    if ( INDVAR_LIST!= NULL)
    {
-      cerr << "  4 Trying to allocate to a non NULL pointer in gradient structure \n";
+cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
       ad_exit(1);
    }
    else
@@ -476,7 +487,7 @@ void allocate_dvariable_space(void)
 
    if ( RETURN_ARRAYS!= NULL)
    {
-      cerr << "   5 Trying to allocate to a non NULL pointer in gradient structure \n";
+cerr << "Trying to allocate to a non NULL pointer in gradient structure \n";
       ad_exit(1);
    }
    else
@@ -517,18 +528,22 @@ void RETURN_ARRAYS_INCREMENT(void)
 #if defined(THREAD_SAFE)
   pthread_mutex_lock(&mutex_return_arrays);
 #endif
-  gradient_structure::RETURN_PTR_CONTAINER[gradient_structure::RETURN_ARRAYS_PTR]=gradient_structure::RETURN_PTR;
-  if (++gradient_structure::RETURN_ARRAYS_PTR==gradient_structure::NUM_RETURN_ARRAYS)
+  gradient_structure::RETURN_PTR_CONTAINER[
+    gradient_structure::RETURN_ARRAYS_PTR]=gradient_structure::RETURN_PTR;
+  if (++gradient_structure::RETURN_ARRAYS_PTR ==
+    gradient_structure::NUM_RETURN_ARRAYS)
   {
     cerr << " Overflow in RETURN_ARRAYS stack -- Increase NUM_RETURN_ARRAYS\n";
     cerr << " There may be a RETURN_ARRAYS_INCREMENT()\n";
     cerr << " which is not matched by a RETURN_ARRAYS_DECREMENT()\n";
     ad_exit(24);
   }
-      gradient_structure::MIN_RETURN = gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
-      gradient_structure::MAX_RETURN = gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
-      gradient_structure::RETURN_ARRAYS_SIZE-1;
-      gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
+  gradient_structure::MIN_RETURN =
+    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
+  gradient_structure::MAX_RETURN =
+    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
+    gradient_structure::RETURN_ARRAYS_SIZE-1;
+  gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
 #if defined(THREAD_SAFE)
   pthread_mutex_unlock(&mutex_return_arrays);
 #endif
@@ -552,10 +567,14 @@ void RETURN_ARRAYS_DECREMENT(void)
     cerr << " which is not matched by a RETURN_ARRAYS_INCREMENT()\n";
     ad_exit(24);
   }
-  gradient_structure::MIN_RETURN = gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
-  gradient_structure::MAX_RETURN = gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
-     gradient_structure::RETURN_ARRAYS_SIZE-1;
-  gradient_structure::RETURN_PTR = gradient_structure::RETURN_PTR_CONTAINER[gradient_structure::RETURN_ARRAYS_PTR];
+  gradient_structure::MIN_RETURN =
+    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR];
+  gradient_structure::MAX_RETURN =
+    gradient_structure::RETURN_ARRAYS[gradient_structure::RETURN_ARRAYS_PTR]+
+    gradient_structure::RETURN_ARRAYS_SIZE-1;
+  gradient_structure::RETURN_PTR =
+    gradient_structure::RETURN_PTR_CONTAINER[
+      gradient_structure::RETURN_ARRAYS_PTR];
 #if defined(THREAD_SAFE)
   pthread_mutex_unlock(&mutex_return_arrays);
 #endif

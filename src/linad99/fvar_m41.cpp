@@ -15,7 +15,8 @@ void dfbltsolve(void);
  * Description not yet available.
  * \param
  */
-dvar_vector solve(const banded_lower_triangular_dvar_matrix& m, const dvar_vector &v)
+dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
+  const dvar_vector &v)
 {
   int bw=m.bandwidth();
   int imin=m.indexmin();
@@ -45,8 +46,8 @@ dvar_vector solve(const banded_lower_triangular_dvar_matrix& m, const dvar_vecto
 }
 
 /*
-dvar_vector solve(const banded_lower_triangular_dvar_matrix& m, const dvar_vector &v,
-  dvariable& lndet)
+dvar_vector solve(const banded_lower_triangular_dvar_matrix& m,
+  const dvar_vector &v, dvariable& lndet)
 {
   int bw=m.bandwidth();
   int imin=m.indexmin();

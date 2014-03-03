@@ -54,7 +54,8 @@ prevariable banded_lower_triangular_dvar_matrix::operator () (int i,int j)
   return d(i-j,i);
 }
 
-const prevariable banded_lower_triangular_dvar_matrix::operator()(int i, int j) const
+const prevariable banded_lower_triangular_dvar_matrix::operator()(int i, int j)
+  const
 {
   return d(i-j,i);
 }

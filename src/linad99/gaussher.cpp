@@ -83,7 +83,7 @@ void gauss_hermite (const dvector& _t,const dvector& _wts)
   if( t.indexmax()!=wts.indexmax() )
   {
     cerr << "Incompatible sizes in void "
-         << "void gauss_hermite (const dvector& _t,const dvector& _wts)" << endl;
+        << "void gauss_hermite (const dvector& _t,const dvector& _wts)" << endl;
     ad_exit(-1);
   }
 
@@ -145,7 +145,8 @@ void gauss_hermite (const dvector& _t,const dvector& _wts)
  * \param _t array of abscissa
  * \param _wts array of corresponding wights
  */
-void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts )
+void gauss_legendre( double a, double b, const dvector& _t,
+  const dvector& _wts )
 //
 //  Purpose:
 //
@@ -196,7 +197,8 @@ void gauss_legendre( double a, double b, const dvector& _t, const dvector& _wts 
   if( t.indexmax()!=wts.indexmax() )
   {
     cerr << "Incompatible sizes in void "
-         << "void mygauss_legendre(double a, double b, const dvector& _t, const dvector& _wts)" << endl;
+"mygauss_legendre(double a, double b, const dvector& _t, const dvector& _wts)"
+    << endl;
     ad_exit(-1);
   }
 
@@ -370,7 +372,7 @@ void imtqlx( const dvector& _d, const dvector& _e, const dvector& _z )
 //
 //    It has been modified to produce the product Q' * Z, where Z is an input
 //    vector and Q is the orthogonal matrix diagonalizing the input matrix.
-//    The changes consist (essentialy) of applying the orthogonal transformations
+//   The changes consist (essentialy) of applying the orthogonal transformations
 //    directly to Z as they are generated.
 //
 //  Licensing:
@@ -416,10 +418,12 @@ void imtqlx( const dvector& _d, const dvector& _e, const dvector& _z )
   dvector d=(dvector&) _d;
   dvector e=(dvector&) _e;
   dvector z=(dvector&) _z;
-  if( d.indexmax()!=e.indexmax() || d.indexmax()!=z.indexmax() || z.indexmax()!=e.indexmax() )
+  if (d.indexmax()!=e.indexmax() || d.indexmax()!=z.indexmax() ||
+    z.indexmax()!=e.indexmax() )
   {
     cerr << "Incompatible sizes in void "
-         << "imtqlx ( const dvector& _d, const dvector& _e, const dvector& _z )" << endl;
+         << "imtqlx ( const dvector& _d, const dvector& _e, const dvector& _z )"
+         << endl;
     ad_exit(-1);
   }
 

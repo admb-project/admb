@@ -614,7 +614,8 @@ void dvar3_array::allocate(int sl, int sh, const ivector& nrl,
    if (sl !=nrl.indexmin() || sh !=nrl.indexmax() ||
        sl !=nrh.indexmin() || sh !=nrh.indexmax())
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)" << endl;
+     cerr << "Incompatible array bounds in "
+     "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)" << endl;
      ad_exit(1);
    }
    if ( (shape=new three_array_shape(sl,sh)) == 0)
@@ -648,7 +649,8 @@ void dvar3_array::allocate(int sl, int sh, const ivector& nrl, int nrh,
    }
    if (sl !=nrl.indexmin() || sh !=nrl.indexmax())
    {
-     cerr << "Incompatible array bounds in dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)" << endl;
+     cerr << "Incompatible array bounds in "
+     "dmatrix(int nrl,int nrh, const ivector& ncl, const ivector& nch)" << endl;
      ad_exit(1);
    }
    if ( (shape=new three_array_shape(sl,sh)) == 0)

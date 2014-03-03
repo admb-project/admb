@@ -44,7 +44,6 @@ const int MAXROWS = 5050;
  */
 void dvar_matrix::fill( const char * s)
 {
-
   int n = strlen(s);
   int braces = 0;
   int nrow = 0;

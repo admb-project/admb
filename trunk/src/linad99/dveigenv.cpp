@@ -72,9 +72,11 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
 */
 
 #ifdef EIGEN_VECTORS
-  void tri_dagv(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
+void tri_dagv(const dvar_matrix& _m,const dvar_vector& _d,
+  const dvar_vector& _e)
 #else
-  void tri_dagv(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
+void tri_dagv(const dvar_matrix& _m,const dvar_vector& _d,
+  const dvar_vector& _e)
 #endif
 {
   ADUNCONST(dvar_vector,d)

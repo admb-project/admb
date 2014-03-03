@@ -160,7 +160,7 @@ double_and_int * arr_new(unsigned int sz)
 
         temp_ptr = gradient_structure::ARRAY_MEMBLOCK_BASE + tmp1->offset;
 
-        //put the address pointed to by tmp1 into the location pointed to by temp_ptr
+   //put the address pointed to by tmp1 into the location pointed to by temp_ptr
         (*(arr_link**)(temp_ptr)) = tmp1;
 
         return (double_and_int*)temp_ptr;
@@ -188,7 +188,7 @@ double_and_int * arr_new(unsigned int sz)
     gradient_structure::ARR_LIST1->last->next = tmp; // the previous last
                                                   // block point forward to tmp
   }
-  gradient_structure::ARR_LIST1->last = tmp;         // tmp is the new last block
+  gradient_structure::ARR_LIST1->last = tmp;        // tmp is the new last block
 
   tmp->next = 0;
 
@@ -205,12 +205,15 @@ double_and_int * arr_new(unsigned int sz)
       gradient_structure::ARR_LIST1->last_offset;
   }
 
-  if (gradient_structure::ARR_LIST1->last_offset > gradient_structure::ARR_LIST1->max_last_offset)
+  if (gradient_structure::ARR_LIST1->last_offset >
+    gradient_structure::ARR_LIST1->max_last_offset)
   {
-    gradient_structure::ARR_LIST1->max_last_offset=gradient_structure::ARR_LIST1->last_offset;
+    gradient_structure::ARR_LIST1->max_last_offset =
+     gradient_structure::ARR_LIST1->last_offset;
   }
 
-  if( gradient_structure::ARR_LIST1->last_offset >=gradient_structure::ARRAY_MEMBLOCK_SIZE)
+  if( gradient_structure::ARR_LIST1->last_offset >=
+    gradient_structure::ARRAY_MEMBLOCK_SIZE)
   {
     cout << gradient_structure::ARR_LIST1->last_offset <<">="
          <<  gradient_structure::ARRAY_MEMBLOCK_SIZE <<"\n";
@@ -573,5 +576,6 @@ void arr_remove(arr_link ** pptr)
     tmp=NULL;
   }
   gradient_structure::ARR_LIST1->number_arr_links -= 1;
-  //cout <<  "after delete number_arr_links = "<<  gradient_structure::ARR_LIST1->number_arr_links <<"\n";
+  //cout <<  "after delete number_arr_links = "
+  //<<  gradient_structure::ARR_LIST1->number_arr_links <<"\n";
 }

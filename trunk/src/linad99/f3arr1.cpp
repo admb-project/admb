@@ -52,7 +52,8 @@
       #ifdef SAFE_ARRAYS
       if (k < slicemin())
       {
-         ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low",          "dvar_vector& dvar3_array::operator () (int k, int i)",
+         ADMB_ARRAY_BOUNDS_ERROR("array bound exceeded -- slice index too low",
+         "dvar_vector& dvar3_array::operator () (int k, int i)",
          slicemin(), slicemax(), k);
       }
       if (k > slicemax())

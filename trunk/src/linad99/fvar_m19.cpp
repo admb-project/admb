@@ -32,7 +32,8 @@ dvar_matrix operator*(const dvar_matrix& m1, const dmatrix& cm2)
  {
    if (m1.colmin() != cm2.rowmin() || m1.colmax() != cm2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix operator*(const dvar_matrix& x, const dmatrix& m)\n";
+     cerr << " Incompatible array bounds in "
+     "dmatrix operator*(const dvar_matrix& x, const dmatrix& m)\n";
      ad_exit(21);
    }
    dmatrix cm1=value(m1);

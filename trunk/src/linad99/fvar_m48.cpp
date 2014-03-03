@@ -22,13 +22,15 @@ const dvar_vector& dvar_matrix::operator()(int i) const
    #ifdef SAFE_ARRAYS
      if (i<rowmin())
      {
-       cerr << "matrix bound exceeded -- row index too low in dvar_matrix::operator()"
+       cerr << "matrix bound exceeded -- row index too low in "
+       "dvar_matrix::operator()"
              << "value was" << i << endl;
        ad_exit(21);
      }
      if (i>rowmax())
      {
-       cerr << "matrix bound exceeded -- row index too high in dvar_matrix::operator()"
+       cerr << "matrix bound exceeded -- row index too high in "
+       "dvar_matrix::operator()"
              << "value was" << i << endl;
        ad_exit(22);
      }

@@ -107,12 +107,14 @@ void dvar_matrix::fill( const char * s)
   {
     if (nrow < rowsize())
     {
-      cerr << " Not enough rows in the data for dvar_matrix::fill(const char *) \n";
+      cerr << " Not enough rows in the data for "
+      "dvar_matrix::fill(const char *) \n";
       ad_exit(1);
     }
     else
     {
-      cerr << " Too many rows in the data for dvar_matrix::fill(const char *) \n";
+      cerr << " Too many rows in the data for "
+      "dvar_matrix::fill(const char *) \n";
       ad_exit(1);
     }
   }

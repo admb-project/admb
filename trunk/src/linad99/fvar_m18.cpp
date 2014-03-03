@@ -29,7 +29,8 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
  {
    if (cm1.colmin() != m2.rowmin() || cm1.colmax() != m2.rowmax())
    {
-     cerr << " Incompatible array bounds in dmatrix operator*(const dmatrix& x, const dvar_matrix& m)\n";
+     cerr << " Incompatible array bounds in "
+     "dmatrix operator*(const dmatrix& x, const dvar_matrix& m)\n";
      ad_exit(21);
    }
    dmatrix cm2=value(m2);
@@ -57,7 +58,6 @@ dvar_matrix operator*(const dmatrix& cm1, const dvar_matrix& m2)
        tmp(i,j)=sum;
      }
    }
-
 
    temp_col+=cm2.rowmin();
    free ((char*)temp_col);

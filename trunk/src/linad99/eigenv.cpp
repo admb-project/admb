@@ -68,7 +68,8 @@ dmatrix eigenvectors(const dmatrix& m)  //,_CONST dvector& diag)
     \param _diag
     \return Matrix of eigenvectors.
 */
-dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)  //,_CONST dvector& diag)
+dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)
+  //,_CONST dvector& diag)
 {
   ADUNCONST(dvector,diag)
   if (m.rowsize()!=m.colsize())
@@ -126,13 +127,15 @@ dmatrix eigenvectors(const dmatrix& m,const dvector& _diag)  //,_CONST dvector& 
   dmatrix& m = (dmatrix&) _m;
   if (m.rowsize() != m.colsize())
   {
-    cerr << "Error -- non square matrix passed to void tridag(const dmatrix& m)\n";
+    cerr << "Error -- non square matrix passed to "
+    "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
   if (m.rowsize() != d.size() || m.rowsize() != e.size()
     || d.indexmin() != 1 || e.indexmin() !=1 )
   {
-    cerr <<"Error -- incorrect vector size passed to void tridag(const dmatrix& m)\n";
+    cerr <<"Error -- incorrect vector size passed to "
+    "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
   int n=m.rowsize();

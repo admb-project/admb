@@ -22,9 +22,10 @@
 #define TINY 1.0e-20;
 void dmdv_solve(void);
 
-dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z, prevariable& ln_unsigned_det, const prevariable& sign);
+dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
+  prevariable& ln_unsigned_det, const prevariable& sign);
 /** Solve a linear system using LU decomposition.
-    \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$.
+\param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$.
     \param z A dvar_vector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved.
     \return A dvar_vector containing solution vector \f$X\f$.
@@ -38,7 +39,7 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z)
 }
 
 /** Solve a linear sysgem using LU decomposition.
-    \param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$.
+\param aa A dvar_matrix containing LU decomposition of input matrix. \f$a\f$.
     \param z A dvar_vector containing the RHS, \f$b\f$ of the linear equation
     \f$A\cdot X = B\f$, to be solved.
     \param _ln_unsigned_deg
@@ -48,7 +49,8 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z)
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 2
 */
-dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z, prevariable& ln_unsigned_det, const prevariable& _sign)
+dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
+  prevariable& ln_unsigned_det, const prevariable& _sign)
 {
   prevariable& sign=(prevariable&) _sign;
 
@@ -87,7 +89,8 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z, prevariable& ln_u
     }
     if (big == 0.0)
     {
-      cerr << "Error in matrix inverse -- matrix singular in solve(dvar_dmatrix)\n";
+      cerr << "Error in matrix inverse -- matrix singular in "
+      "solve(dvar_dmatrix)\n";
     }
     vv[i]=1.0/big;
   }
@@ -235,7 +238,8 @@ dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z, prevariable& ln_u
   return vc;
 }
 
-/// Adjoint code for dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
+/// Adjoint code for
+/// dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
 void dmdv_solve(void)
 {
   verify_identifier_string("PLACE0");
@@ -374,7 +378,4 @@ void dmdv_solve(void)
     }
   }
 }
-
-
 #undef TINY
-

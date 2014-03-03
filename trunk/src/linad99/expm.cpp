@@ -29,7 +29,8 @@ dmatrix fabs(const dmatrix & X){
   return ret;
 }
 
-dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_unsigned_det, dvariable& sign);
+dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz,
+  dvariable ln_unsigned_det, dvariable& sign);
 
 dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz)
 {
@@ -42,10 +43,12 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz)
   \ingroup matop
    Matrix exponential.
 
-   The matrix exponential is calculated using the Pade approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
+The matrix exponential is calculated using the Pade approximation adapted from
+Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the
+Exponential of a Matrix, Twenty-Five Years Later"
 
-
-The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems:
+The main use of the matrix exponential is to solve linear ordinary differential
+equation (ODE) systems:
 \f[
 \frac{d}{dt}y(t) = Ay(t)\ , \ \mbox{with } y(0) = y_0
 \f]
@@ -61,8 +64,16 @@ dmatrix expm(const dmatrix& A)
 {
   int rmin = A.rowmin();
   int rmax = A.rowmax();
-  if(rmax != A.colmax()){cout<<"Error: Not square matrix in expm."<<endl; ad_exit(1);}
-  if(rmin != A.colmin()){cout<<"Error: Not square matrix in expm."<<endl; ad_exit(1);}
+  if(rmax != A.colmax())
+  {
+    cout<<"Error: Not square matrix in expm."<<endl;
+    ad_exit(1);
+  }
+  if(rmin != A.colmin())
+  {
+    cout<<"Error: Not square matrix in expm."<<endl;
+    ad_exit(1);
+  }
   dmatrix I(rmin,rmax,rmin,rmax);
   dmatrix AA(rmin,rmax,rmin,rmax);
   dmatrix X(rmin,rmax,rmin,rmax);
@@ -104,10 +115,13 @@ dmatrix expm(const dmatrix& A)
   \ingroup matop
    Matrix exponential.
 
-   The matrix exponential is calculated using the Pade approximation adapted from Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the Exponential of a Matrix, Twenty-Five Years Later"
+The matrix exponential is calculated using the Pade approximation adapted from
+Moler, Cleve; Van Loan, Charles F. (2003), "Nineteen Dubious Ways to Compute the
+Exponential of a Matrix, Twenty-Five Years Later"
 
 
-The main use of the matrix exponential is to solve linear ordinary differential equation (ODE) systems:
+The main use of the matrix exponential is to solve linear ordinary differential
+equation (ODE) systems:
 \f[
 \frac{d}{dt}y(t) = Ay(t)\ , \ \mbox{with } y(0) = y_0
 \f]
@@ -125,8 +139,16 @@ dvar_matrix expm(const dvar_matrix& A)
   int rmin = A.rowmin();
   int rmax = A.rowmax();
 
-  if(rmax != A.colmax()){cout<<"Error: Not square matrix in expm."<<endl; ad_exit(1);}
-  if(rmin != A.colmin()){cout<<"Error: Not square matrix in expm."<<endl; ad_exit(1);}
+  if(rmax != A.colmax())
+  {
+    cout<<"Error: Not square matrix in expm."<<endl;
+    ad_exit(1);
+  }
+  if(rmin != A.colmin())
+  {
+    cout<<"Error: Not square matrix in expm."<<endl;
+    ad_exit(1);
+  }
 
   dvar_matrix I(rmin,rmax,rmin,rmax);
   dvar_matrix AA(rmin,rmax,rmin,rmax);
@@ -169,7 +191,8 @@ dvar_matrix expm(const dvar_matrix& A)
   return E;
 }
 
-dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_unsigned_det, dvariable& sign)
+dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz,
+  dvariable ln_unsigned_det, dvariable& sign)
 {
   RETURN_ARRAYS_INCREMENT();
   int i,imax,j,k,n;
@@ -204,7 +227,7 @@ dvar_matrix solve(const dvar_matrix& aa, const dvar_matrix& tz, dvariable ln_uns
     }
     if (big == 0.0)
     {
-      cerr << "Error in matrix inverse -- matrix singular in inv(dvar_matrix)\n";
+     cerr << "Error in matrix inverse -- matrix singular in inv(dvar_matrix)\n";
     }
     vv[i]=1.0/big;
   }

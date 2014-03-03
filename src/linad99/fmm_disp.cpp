@@ -302,14 +302,16 @@ void fmmdisp(const double *x, const double *g,
 //            /*  12345678901234567 */
 //  #endif
 //
-//#if defined(__NDPX__) || defined(__SUN__) || defined(__GNU__) || defined(_Windows)
+//#if defined(__NDPX__) || defined(__SUN__) || defined(__GNU__) \
+// || defined(_Windows)
 //  wmax = 22;
 //#if  defined(__SUN__) || defined(__GNU__) || defined(_WINDOWS)
 //  strcpy(colhead,"Var   Value    Gradient   ");
 //  if (ad_printf) (*ad_printf)("%26s|%26s|%26s\n",colhead,colhead,colhead);
 //#else
 //  strcpy(colhead,"Var   Value    Gradient");
-//  if (ad_printf) (*ad_printf)("%23s   |%23s   |%23s\n",colhead,colhead,colhead);
+//  if (ad_printf)
+//    (*ad_printf)("%23s   |%23s   |%23s\n",colhead,colhead,colhead);
 //#endif
 //  imax = nvar / cols;
 //  // cout << "imax = " << imax << endl;
@@ -338,7 +340,8 @@ void fmmdisp(const double *x, const double *g,
 //
 //  for (i=1; i<=imax; i++)
 //  {
-//#if !defined(__NDPX__) && !defined(__SUN__) && !defined(__GNU__) && !defined(_Windows)
+//#if !defined(__NDPX__) && !defined(__SUN__) && !defined(__GNU__) \
+// && !defined(_Windows)
 //    rownum++;
 //    if (rownum > ti.winbottom)
 //    {
@@ -369,7 +372,8 @@ void fmmdisp(const double *x, const double *g,
 //  }  // i loop
 //
 //  if  (scroll_flag)
-//#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__)  || defined(_Windows)
+//#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__) \
+//  || defined(_Windows)
 //    if (ad_printf) (*ad_printf)("\n");
 //#else
 //    if (ad_printf) (*ad_printf)("\n\n");

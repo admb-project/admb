@@ -13,17 +13,16 @@
 #ifdef __TURBOC__
   #pragma hdrstop
   #include <iostream.h>
-   #include <iomanip.h>
+  #include <iomanip.h>
 #endif
 
 #ifdef __ZTC__
   #include <iostream.hpp>
-   #include <iomanip.hpp>
+  #include <iomanip.hpp>
 #endif
 
 #include <stdio.h>
 #include <math.h>
-
 
 void gradfree(dlink *);
 
@@ -46,7 +45,8 @@ prevariable& pow(const prevariable& v1, CGNU_DOUBLE u)
       x=::pow(v1.v->x,u-1);
       y=x* v1.v->x;
       gradient_structure::RETURN_PTR->v->x=y;
-      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x), &(v1.v->x), u * x );
+      gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+        &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x), u * x );
       return(*gradient_structure::RETURN_PTR);
     }
 
@@ -68,7 +68,8 @@ prevariable& pow(const prevariable& v1, CGNU_DOUBLE u)
    if (++gradient_structure::RETURN_PTR > gradient_structure::MAX_RETURN)
      gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=::sin(v1.v->x);
-   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x), &(v1.v->x), ::cos(v1.v->x) );
+   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+     &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x), ::cos(v1.v->x) );
    return(*gradient_structure::RETURN_PTR);
  }
 
@@ -85,7 +86,8 @@ prevariable& sigmoid(const prevariable& v1)
    //gradient_structure::RETURN_PTR->v->x=atan(tmp)/1.5708;
       gradient_structure::RETURN_PTR->v->x=::atan(tmp)/2.8;
 
-   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,&(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),
+   gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
+     &(gradient_structure::RETURN_PTR->v->x), &(v1.v->x),
  //                1./((1.+tmp*tmp)*1.5708));
                    1./((1.+tmp*tmp)*2.8));
    return(*gradient_structure::RETURN_PTR);
@@ -181,7 +183,6 @@ prevariable& sfabs(const prevariable& v1)
       return(*gradient_structure::RETURN_PTR);
     }
 
-
 /**
  * Description not yet available.
  * \param
@@ -222,6 +223,7 @@ prevariable& log10(const prevariable& v1)
         gradient_structure::RETURN_PTR = gradient_structure::MIN_RETURN;
       gradient_structure::RETURN_PTR->v->x=::log10(v1.v->x);
       gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation,
-        &(gradient_structure::RETURN_PTR->v->x),&(v1.v->x),1./(v1.v->x)/2.3025851 );
+        &(gradient_structure::RETURN_PTR->v->x),&(v1.v->x),
+        1./(v1.v->x)/2.3025851);
       return(*gradient_structure::RETURN_PTR);
     }

@@ -20,7 +20,8 @@ void dv_minuseq(void);
  {
    if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
    {
-     cerr << " Incompatible array bounds in dvector& operator += (const dvar_vector&)\n";
+     cerr << " Incompatible array bounds in "
+     "dvector& operator += (const dvar_vector&)\n";
      ad_exit(21);
    }
 
@@ -63,7 +64,8 @@ dvar_vector& dvar_vector::operator-=(const dvector& v1)
  {
    if (indexmin() != v1.indexmin() || indexmax() != v1.indexmax())
    {
-     cerr << " Incompatible array bounds in dvector& operator += (const dvar_vector&)\n";
+     cerr << " Incompatible array bounds in "
+     "dvector& operator += (const dvar_vector&)\n";
      ad_exit(21);
    }
 

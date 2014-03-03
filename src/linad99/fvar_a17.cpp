@@ -24,7 +24,8 @@ dvar_vector operator+(const dvar_vector& v1, const dvar_vector& v2)
   if (v1.indexmin()!=v2.indexmin()||v1.indexmax()!=v2.indexmax())
   {
     cerr << "Incompatible bounds in "
-      "prevariable operator + (const dvar_vector& v1, const dvar_vector& v2)" << endl;
+    "prevariable operator + (const dvar_vector& v1, const dvar_vector& v2)"
+    << endl;
     ad_exit(1);
   }
   //dvector cv1=value(v1);

@@ -101,7 +101,8 @@ dvar_vector::dvar_vector(const char * s)
 
   if (lbraces > 1)
   {
-    cerr << "Only one level of braces allowed in dvector::dvector(const char * s)\n";
+    cerr << "Only one level of braces allowed in "
+    "dvector::dvector(const char * s)\n";
     cerr << s << "\n";
     ad_exit(1);
   }
@@ -166,7 +167,7 @@ dvar_vector::dvar_vector(const char * s)
    allocate(1,count);
 
    #ifdef DIAG
-     cout << "Created a ncopies with address " << _farptr_tolong(ncopies) <<"\n";
+     cout << "Created a ncopies with address " << _farptr_tolong(ncopies)<<"\n";
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
    if ( (va = arr_new(size()))==0 )
@@ -174,7 +175,7 @@ dvar_vector::dvar_vector(const char * s)
      cerr << " Error trying to allocate memory for dvector\n";
      ad_exit(21);
    }
-   char * err_ptr;
+   char* err_ptr;
    for (i=1;i<=count;i++)
    {
      infile >> field;

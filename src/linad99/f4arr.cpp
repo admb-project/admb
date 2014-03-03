@@ -101,25 +101,23 @@
        shape=NULL;
      }
    }
+#    if defined(SAKE_ARRAYS)
    else
    {
-#    if defined(SAKE_ARRAYS)
-       //cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
-#    endif
+     cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
    }
+#    endif
  }
 
 /**
- * Description not yet available.
- * \param
- */
- dvar4_array::~dvar4_array()
- {
-   deallocate();
- }
+Destructor
+*/
+dvar4_array::~dvar4_array()
+{
+  deallocate();
+}
 
-
-  #ifndef OPT_LIB
+#ifndef OPT_LIB
 
 /**
  * Description not yet available.
@@ -130,7 +128,9 @@
       #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar3_array& dvar4_array::operator() (int i)", hslicemin(), hslicemax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "dvar3_array& dvar4_array::operator() (int i)",
+        hslicemin(), hslicemax(), i);
       }
       #endif
       return t[i];
@@ -145,7 +145,9 @@
       #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar3_array& dvar4_array::operator[] (int i)", hslicemin(), hslicemax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "dvar3_array& dvar4_array::operator[] (int i)",
+        hslicemin(), hslicemax(), i);
       }
       #endif
       return t[i];
@@ -160,7 +162,9 @@
       #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar_matrix& dvar4_array::operator() (int i, int j)", hslicemin(), hslicemax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "dvar_matrix& dvar4_array::operator() (int i, int j)",
+        hslicemin(), hslicemax(), i);
       }
       #endif
       return ((*this)(i))(j);
@@ -175,7 +179,9 @@
       #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "dvar_vector& dvar4_array::operator() (int i, int j, int k)", hslicemin(), hslicemax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "dvar_vector& dvar4_array::operator() (int i, int j, int k)",
+        hslicemin(), hslicemax(), i);
       }
       #endif
       return (((*this)(i,j))(k));
@@ -190,7 +196,9 @@
       #ifdef SAFE_ARRAYS
       if (i < hslicemin() || i > hslicemax())
       {
-        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds", "prevariable& dvar4_array::operator() (int i, int j, int k)", hslicemin(), hslicemax(), i);
+        ADMB_ARRAY_BOUNDS_ERROR("hslice index out of bounds",
+        "prevariable& dvar4_array::operator() (int i, int j, int k)",
+        hslicemin(), hslicemax(), i);
       }
       #endif
       return ( ((*this)(i,j,k))(l));
@@ -514,8 +522,9 @@ void dvar4_array::allocate(int hsl, int hsu, int sl, int sh, const ivector& nrl,
  * Description not yet available.
  * \param
  */
- dvar4_array::dvar4_array(ad_integer hsl,ad_integer hsu,const index_type& sl,const index_type& sh,
-   const index_type& nrl,const index_type& nrh,const index_type& ncl,const index_type& nch)
+ dvar4_array::dvar4_array(ad_integer hsl,ad_integer hsu,const index_type& sl,
+   const index_type& sh, const index_type& nrl,const index_type& nrh,
+   const index_type& ncl,const index_type& nch)
  {
    allocate(hsl,hsu,sl,sh,nrl,nrh,ncl,nch);
  }
@@ -672,4 +681,3 @@ dvar4_array::dvar4_array(int hsl,int hsu, int sl, const ivector& sh,int nrl,
    }
  }
 */
-

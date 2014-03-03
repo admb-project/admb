@@ -16,9 +16,11 @@
   void tri_dag(const dvar_matrix& m,const dvar_vector& d,const dvar_vector& e);
 #endif
 #ifdef EIGEN_VECTORS
-  void get_eigenv(const dvar_vector& d, const dvar_vector& e,const dvar_matrix& z);
+  void get_eigenv(const dvar_vector& d, const dvar_vector& e,
+    const dvar_matrix& z);
 #else
-  void get_eigen(const dvar_vector& d, const dvar_vector& e,const dvar_matrix& z);
+  void get_eigen(const dvar_vector& d, const dvar_vector& e,
+    const dvar_matrix& z);
 #endif
 
 /** Eigenvectors.
@@ -31,7 +33,8 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
 {
   if (m.rowsize()!=m.colsize())
   {
-    cerr << "Error -- non square matrix passed to dvector eigen(const dmatrix& m)\n";
+    cerr << "Error -- non square matrix passed to "
+    "dvector eigen(const dmatrix& m)\n";
     ad_exit(1);
   }
 
@@ -79,13 +82,15 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
   dvar_matrix& m=(dvar_matrix&) _m;
   if (m.rowsize() != m.colsize())
   {
-    cerr << "Error -- non square matrix passed to void tridag(const dvar_matrix& m)\n";
+    cerr << "Error -- non square matrix passed to "
+    "void tridag(const dvar_matrix& m)\n";
     ad_exit(1);
   }
   if (m.rowsize() != d.size() || m.rowsize() != e.size()
     || d.indexmin() != 1 || e.indexmin() !=1 )
   {
-    cerr <<"Error -- incorrect vector size passed to void tridag(const dmatrix& m)\n";
+    cerr <<"Error -- incorrect vector size passed to "
+    "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
   int n=m.rowsize();
@@ -190,7 +195,8 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
 }
 
 /** Eigenvalues and eigenvectors.
-  \param _d Diagonal elements of the matrix computed by Householder transformation.
+  \param _d Diagonal elements of the matrix computed by Householder
+  transformation.
   \param _e Off-diagonal elements.
   \param _z On output contains eigenvectors of _d.
 
@@ -199,9 +205,11 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
     Press, Teukolsky, Vetterling, Flannery, chapter 11
 */
 #ifdef EIGEN_VECTORS
-  void get_eigenv(const dvar_vector& _d, const dvar_vector& _e, const dvar_matrix& _z)
+  void get_eigenv(const dvar_vector& _d, const dvar_vector& _e,
+    const dvar_matrix& _z)
 #else
-  void get_eigen(const dvar_vector& _d, const dvar_vector& _e, const dvar_matrix& _z)
+  void get_eigen(const dvar_vector& _d, const dvar_vector& _e,
+    const dvar_matrix& _z)
 #endif
 {
   ADUNCONST(dvar_matrix,z)
@@ -269,9 +277,4 @@ dvar_matrix eigenvectors(const dvar_matrix& m)
     } while (m != l);
   }
 }
-
 #undef EIGEN_VECTORS
-
-
-
-

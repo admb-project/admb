@@ -20,13 +20,15 @@ const dvar_matrix& dvar3_array::operator()(int i) const
    #ifdef SAFE_ARRAYS
      if (i<slicemin())
      {
-       cerr << "matrix bound exceeded -- row index too low in 3d_array::operator[]"
+       cerr << "matrix bound exceeded -- row index too low in "
+       "3d_array::operator[]"
              << "value was" << i;
        ad_exit(21);
      }
      if (i>slicemax())
      {
-       cerr << "matrix bound exceeded -- row index too high in 3d_array::operator[]"
+       cerr << "matrix bound exceeded -- row index too high in "
+       "3d_array::operator[]"
              << "value was" << i;
        ad_exit(22);
      }

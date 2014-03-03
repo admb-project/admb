@@ -16,7 +16,8 @@ dvar_vector eigenvalues(const dvar_matrix& m)
 {
   if (m.rowsize()!=m.colsize())
   {
-    cerr << "Error -- non square matrix passed to dvector eigen(const dvar_matrix& m)\n";
+    cerr << "Error -- non square matrix passed to "
+    "dvector eigen(const dvar_matrix& m)\n";
     ad_exit(1);
   }
   dvar_matrix m1=symmetrize(m);
@@ -52,13 +53,15 @@ void tri_dag(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
   dvar_matrix& m=(dvar_matrix&) _m;
   if (m.rowsize() != m.colsize())
   {
-    cerr << "Error -- non square matrix passed to void tridag(const dmatrix& m)\n";
+    cerr << "Error -- non square matrix passed to "
+    "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
   if (m.rowsize() != d.size() || m.rowsize() != e.size()
     || d.indexmin() != 1 || e.indexmin() !=1 )
   {
-    cerr <<"Error -- incorrect vector size passed to void tridag(const dmatrix& m)\n";
+    cerr <<"Error -- incorrect vector size passed to "
+    "void tridag(const dmatrix& m)\n";
     ad_exit(1);
   }
   int n=m.rowsize();
@@ -168,7 +171,8 @@ void tri_dag(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
 //#define SIGN(a,b) ((b)<0 ? -fabs(a) : fabs(a))
 
 /** Eigenvalues.
-  \param _d Diagonal elements of the matrix computed by Householder transformation.
+  \param _d Diagonal elements of the matrix computed by Householder
+  transformation.
   \param _e Off-diagonal elements.
   \param _z On output contains nothing useful.
 
@@ -176,7 +180,8 @@ void tri_dag(const dvar_matrix& _m,const dvar_vector& _d, const dvar_vector& _e)
     "Numerical Recipes in C", 2nd edition,
     Press, Teukolsky, Vetterling, Flannery, chapter 11
 */
-void get_eigen(const dvar_vector& _d,const dvar_vector& _e, const dvar_matrix& z)
+void get_eigen(const dvar_vector& _d,const dvar_vector& _e,
+  const dvar_matrix& z)
 {
   ADUNCONST(dvar_vector,d)
   ADUNCONST(dvar_vector,e)
@@ -244,7 +249,8 @@ void get_eigen(const dvar_vector& _d,const dvar_vector& _e, const dvar_matrix& z
 }
 
 /** Eigenvalues and eigenvectors.
-  \param _d Diagonal elements of the matrix computed by Householder transformation.
+  \param _d Diagonal elements of the matrix computed by Householder
+  transformation.
   \param _e Off-diagonal elements.
   \param _z On return containses eigenvectors.
   \return Vector of eigenvalues.
@@ -258,14 +264,11 @@ dvar_vector get_eigen_values(const dvar_vector& _ddd,const dvar_vector& _eee)
   ADUNCONST(dvar_vector,ddd)
   ADUNCONST(dvar_vector,eee)
 
-
   dvar_vector d(ddd.indexmin(),ddd.indexmax());
   dvar_vector e(eee.indexmin(),eee.indexmax());
 
   d=ddd;
   e=eee;
-
-
 
   int n=d.size();
   int m,l,iter,i;
@@ -322,6 +325,4 @@ dvar_vector get_eigen_values(const dvar_vector& _ddd,const dvar_vector& _eee)
   }
   return d;
 }
-
 #undef EIGEN_VECTORS
-

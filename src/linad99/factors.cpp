@@ -87,7 +87,11 @@ void factor::allocate(const ivector& v, dvar_vector & par){
   int to=v.indexmax();
 
   ivector idxlocal(from,to);
-  if(par.indexmin()!=1){cout<<"Error: par indexmin is not 1 in factor - something is wrong"<<endl; ad_exit(1);}
+  if(par.indexmin()!=1)
+  {
+    cout<<"Error: par indexmin is not 1 in factor - something is wrong"<<endl;
+    ad_exit(1);
+  }
   nlevels=par.indexmax();
   ivector whichlevel(1,nlevels);
   int  whichlevelindex=0;

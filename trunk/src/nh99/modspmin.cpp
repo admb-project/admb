@@ -315,7 +315,7 @@ int kill_flag_107=901;
       gradient_structure::Hybrid_bounded_flag=1;
     }
 
-    // Sets the maximum number of function evaluation as determined from the 
+    // Sets the maximum number of function evaluation as determined from the
     // command line
     if ( (on=option_match(argc,argv,"-maxfn",nopt))>-1)
     {

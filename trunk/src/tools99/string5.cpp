@@ -60,106 +60,136 @@ adstring_array::~adstring_array()
 
 int adstring_array::size() const
   { return shape->indexmax()-shape->indexmin() + 1; }
-int adstring_array::indexmin() const { return shape->indexmin();}
-int adstring_array::indexmax() const { return shape->indexmax();}
+
+int adstring_array::indexmin() const
+  { return shape->indexmin();}
+
+int adstring_array::indexmax() const
+  { return shape->indexmax();}
 
 void adstring_array::allocate(int min, int max)
+{
+  if (min > max)
   {
-    if (min > max)
-    {
-      cerr << " Error in adstring_array(int min,int max) --"
-              " max must be >= min" << endl;
-      exit(1);
-    }
-    if (!(shape=new vector_shape(min,max)))
-    {
-      cerr << "Error allocating memory in adstring_array" << endl;
-    }
-    if (!(ptr=new adstring* [max-min+1]))
-    {
-      cerr << "Error allocating memory in adstring_array" << endl;
-    }
-    ptr-=indexmin();
-    for (int i=min;i<=max;i++)
-    {
-      ptr[i]=new adstring;
-    }
+    cerr << " Error in adstring_array(int min,int max) --"
+            " max must be >= min" << endl;
+    exit(1);
   }
+  if (!(shape=new vector_shape(min,max)))
+  {
+    cerr << "Error allocating memory in adstring_array" << endl;
+  }
+  if (!(ptr=new adstring* [max-min+1]))
+  {
+    cerr << "Error allocating memory in adstring_array" << endl;
+  }
+  ptr-=indexmin();
+  for (int i=min;i<=max;i++)
+  {
+    ptr[i]=new adstring;
+  }
+}
+/**
+Returns a reference to the element at specified index i. Bounds checking is performed.
 
+\param i index
+*/
 adstring& adstring_array::operator[](int i)
+{
+  if (!shape)
   {
-    if (!shape)
-    {
-      cerr << "Error -- trying to acess unallocated adstring array"
-        << endl;
-      exit(1);
-    }
-
-    if (i<indexmin())
-    {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator [] (int i)", indexmin(), indexmax(), i);
-    }
-    if (i>indexmax())
-    {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator [] (int i)", indexmin(), indexmax(), i);
-    }
-    return *(ptr[i]);
+    cerr << "Error -- trying to acess unallocated adstring array" << endl;
+    ad_exit(1);
   }
+  if (i < indexmin())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("Error index too low",
+    "adstring& adstring_array::operator [] (int i)",
+    indexmin(), indexmax(), i);
+  }
+  if (i > indexmax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("Error index too high",
+    "adstring& adstring_array::operator [] (int i)",
+    indexmin(), indexmax(), i);
+  }
+  return *(ptr[i]);
+}
+/**
+Returns a reference to the element at specified index i. Bounds checking is performed.
 
+\param i index
+*/
 adstring& adstring_array::operator()(int i)
+{
+  if (!shape)
   {
-    if (!shape)
-    {
-      cerr << "Error -- trying to acess unallocated adstring array"
-        << endl;
-      exit(1);
-    }
-    if (i<indexmin())
-    {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator () (int i)", indexmin(), indexmax(), i);
-    }
-    if (i>indexmax())
-    {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator () (int i)", indexmin(), indexmax(), i);
-    }
-    return *(ptr[i]);
+    cerr << "Error -- trying to acess unallocated adstring array" << endl;
+    ad_exit(1);
   }
+  if (i < indexmin())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("Error index too low",
+    "adstring& adstring_array::operator () (int i)",
+    indexmin(), indexmax(), i);
+  }
+  if (i > indexmax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("Error index too high",
+    "adstring& adstring_array::operator () (int i)",
+    indexmin(), indexmax(), i);
+  }
+  return *(ptr[i]);
+}
+/**
+Returns a reference to the element at specified index i. Bounds checking is performed.
 
+\param i index
+*/
 const adstring& adstring_array::operator[](int i) const
+{
+  if (!shape)
   {
-    if (!shape)
-    {
-      cerr << "Error -- trying to acess unallocated adstring array"
-        << endl;
-      exit(1);
-    }
-
-    if (i<indexmin())
-    {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator [] (int i) const ", indexmin(), indexmax(), i);
-    }
-    if (i>indexmax())
-    {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator [] (int i) const ", indexmin(), indexmax(), i);
-    }
-    return *(ptr[i]);
+    cerr << "Error -- trying to acess unallocated adstring array" << endl;
+    exit(1);
   }
+  if (i < indexmin())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("Error index too low",
+    "adstring& adstring_array::operator [] (int i) const ",
+    indexmin(), indexmax(), i);
+  }
+  if (i > indexmax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("Error index too high",
+    "adstring& adstring_array::operator [] (int i) const ",
+    indexmin(), indexmax(), i);
+  }
+  return *(ptr[i]);
+}
+/**
+Returns a reference to the element at specified index i. Bounds checking is performed.
 
+\param i index
+*/
 const adstring& adstring_array::operator()(int i) const
+{
+  if (!shape)
   {
-    if (!shape)
-    {
-      cerr << "Error -- trying to acess unallocated adstring array"
-        << endl;
-      exit(1);
-    }
-    if (i<indexmin())
-    {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too low", "adstring& adstring_array::operator () (int i) const", indexmin(), indexmax(), i);
-    }
-    if (i>indexmax())
-    {
-      ADMB_ARRAY_BOUNDS_ERROR("Error index too high", "adstring& adstring_array::operator () (int i) const", indexmin(), indexmax(), i);
-    }
-    return *(ptr[i]);
+    cerr << "Error -- trying to acess unallocated adstring array" << endl;
+    ad_exit(1);
   }
+  if (i < indexmin())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("Error index too low",
+    "adstring& adstring_array::operator () (int i) const",
+    indexmin(), indexmax(), i);
+  }
+  if (i > indexmax())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("Error index too high",
+    "adstring& adstring_array::operator () (int i) const",
+    indexmin(), indexmax(), i);
+  }
+  return *(ptr[i]);
+}

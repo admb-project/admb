@@ -423,7 +423,7 @@ label1000:
     {
       if (iprint>0)
       {
-        if (ad_printf) 
+        if (ad_printf)
         {
           (*ad_printf)("Maximum number of function evaluations exceeded\n");
           (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
@@ -1045,7 +1045,7 @@ void derch(const double& f, const dvector& _x, const dvector& _gg, int n,
     }
     cout << "   Enter step size (to quit derivative checker, enter 0): ";
     cin >> s;
-    cout << 
+    cout <<
        "\n       X           Function     Analytical     Finite Diff;  Index\n";
 
     if (s <= 0) ad_exit(0);

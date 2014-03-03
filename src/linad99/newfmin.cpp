@@ -65,7 +65,10 @@ extern int ctlc_flag;
   {
     signal(SIGINT, exit_handler);
     ctlc_flag = 1;
-    if (ad_printf) (*ad_printf)("\npress q to quit or c to invoke derivative checker or s to stop optimizing: ");
+    if (ad_printf)
+      (*ad_printf)(
+"\npress q to quit or c to invoke derivative checker or s to stop optimizing: "
+      );
   }
 #ifdef __NDPX__
   #include <iostream.hxx>
@@ -171,7 +174,8 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
   if (fdwCtrlType == CTRL_C_EVENT)
   {
     ctlc_flag = 1;
-    if (ad_printf) (*ad_printf)("\npress q to quit or c to invoke derivative checker: ");
+    if (ad_printf)
+      (*ad_printf)("\npress q to quit or c to invoke derivative checker: ");
     return true;
   }
   return false;
@@ -185,15 +189,18 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
 *
 * The algorithm consists of the following steps (in the order of execution):
 * - Initial step with Hessian being an identity matrix (see call1)
-* - Line search test for step length satisfying Wolfe conditions (beginning of call2)
-* - Line search backtracking and reducing alpha (label40) if the current direction
+* - Line search test for step length satisfying Wolfe conditions (beginning of
+*   call2)
+* - Line search backtracking and reducing alpha (label40) if the current
+*   direction
 *   is not a gradient descent one or the function value has increased
-* - Hessian update (labels 50-70) once all conditions are satisfied to assure its
+* - Hessian update (labels 50-70) once all conditions are satisfied to assure
+*   its
 *   positive-definiteness
 * - Update of a vector of independent variables (label30)
 *
-* Convergence is detected if the maximal gradient component falls below small constant
-* (see label20)
+* Convergence is detected if the maximal gradient component falls below small
+* constant (see label20)
 *
 * Requires:
 *    \param _f Value of function to be minimized.
@@ -201,18 +208,24 @@ BOOL CtrlHandler( DWORD fdwCtrlType )
 *    \param _g Vector containing the partial derivatives of _f with respect to
 *    each independent variable. The gradient vector returned by \ref gradcalc.
 * Pre:
-*    Some class member variables can be initialized by user prior to calling this function.
+*    Some class member variables can be initialized by user prior to calling
+*    this function.
 *    These control variables may change the behavior of fmin, they are:
-*        maxfn  (maximal number of function evaluations, after which minimization stops)
+*        maxfn  (maximal number of function evaluations, after which
+*                minimization stops)
 *        crit   (convergence criterion constant)
-*        imax   (maximal number of function evaluations within one linear search before to stop)
-*        iprint (flag to allow (=1) or supress (=0) printing intermediate statistics
-*        min_improve (stop after 10 iterations with overall function decrease less than this value)
-*    The default values can be found in function set_defaults of class fmm_control
+*        imax   (maximal number of function evaluations within one linear search*                before to stop)
+*        iprint (flag to allow (=1) or supress (=0) printing intermediate
+*                statistics
+*        min_improve (stop after 10 iterations with overall function decrease
+*                     less than this value)
+*    The default values can be found in function set_defaults of class
+*    fmm_control
 * Modifies:
 *    The Hessian matrix (and not its inverse) h
 * Returns (via parameter vector x):
-*    A vector x after a step of linear search in the direction of gradient descent
+*    A vector x after a step of linear search in the direction of gradient
+*    descent
 \ingroup FMM
 */
 void fmm::fmin(const double& _f, const dvector &_x, const dvector& _g)
@@ -499,12 +512,14 @@ label7003: /* Printing table header */
       {
         if (ad_printf)
         {
-          (*ad_printf)("%d variables; iteration %ld; function evaluation %ld", n, itn, ifn);
+          (*ad_printf)("%d variables; iteration %ld; function evaluation %ld",
+           n, itn, ifn);
           if (pointer_to_phase)
           {
             (*ad_printf)("; phase %d", *pointer_to_phase);
           }
-          (*ad_printf)("\nFunction value %15.7le; maximum gradient component mag %12.4le\n",
+          (*ad_printf)(
+           "\nFunction value %15.7le; maximum gradient component mag %12.4le\n",
 #if defined(USE_DDOUBLE)
   #undef double
               double(f), double(gmax));
@@ -529,7 +544,8 @@ label21 : /* Calculating Newton step */
       pfmintime->get_elapsed_time_and_reset();
 
       /* solving system of linear equations H_(k+1) * (x_(k+1)-x(k)) = -g_k
-         to get next search direction p_k = (x_(k+1)-x(k)) = - inv(H_(k+1)) * g_k */
+         to get next search direction
+         p_k = (x_(k+1)-x(k)) = - inv(H_(k+1)) * g_k */
       for (i=2; i<=n; i++)
       {
         i1=i-1;
@@ -641,7 +657,8 @@ label30: /* Taking a step, updating x */
       /* what to do if CTRL-C keys were pressed */
       if (use_control_c==1)
       {
-#if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) || defined(linux)
+#if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) \
+  || defined(linux)
          if(ctlc_flag || ifn == dcheck_flag )
 #elif defined(__BORLANDC__)
          if ( kbhit() || ctlc_flag|| ifn == dcheck_flag )
@@ -654,8 +671,8 @@ label30: /* Taking a step, updating x */
             int c=0;
             if (ifn != dcheck_flag)
             {
-            #if !defined(__GNUDOS__)  || defined(UNIXKLUDGE)  || defined(linux) \
-              || defined(__CYGWIN32__) || defined(__MINGW32__)
+            #if !defined(__GNUDOS__)  || defined(UNIXKLUDGE)  \
+              || defined(linux) || defined(__CYGWIN32__) || defined(__MINGW32__)
               c = toupper(getch());
             #else
               c = toupper(getxkey());
@@ -710,7 +727,8 @@ label30: /* Taking a step, updating x */
       {
          if (iprint>0)
          {
-           if (ad_printf) (*ad_printf)("  ic > imax  in fminim is answer attained ?\n" );
+           if (ad_printf)
+             (*ad_printf)("  ic > imax  in fminim is answer attained ?\n");
            fmmdisp(x, g, n, this->scroll_flag,noprintx);
          }
          ihflag=1;
@@ -721,9 +739,13 @@ label30: /* Taking a step, updating x */
       ifn++;
 
       gys=0.0;
+
+      /* gys = transpose(p_k) * df(x_k+alpha_k*p_k) */
       for (i=1; i<= n; i++)
-         gys+=w.elem(i)*w.elem(is+i);/* gys = transpose(p_k) * df(x_k+alpha_k*p_k) */
-      if(fy>f+fringe) /* bad step; unless modified by the user, fringe default = 0 */
+         gys+=w.elem(i)*w.elem(is+i);
+
+      /* bad step; unless modified by the user, fringe default = 0 */
+      if(fy>f+fringe)
       {
          goto label40; /* backtrack */
       }
@@ -731,7 +753,8 @@ label30: /* Taking a step, updating x */
          strong Wolfe condition */
       if(fabs(gys/gso)<=.9)
          goto label50; /* proceed to Hessian update */
-      /* or slightly modified constant in Wolfe condition for the number of calls > 4 */
+/* or slightly modified constant in Wolfe condition for the number of
+ calls > 4 */
       if(fabs(gys/gso)<=.95 && ic > 4)
          goto label50; /* proceed to Hessian update */
       if(gys>0.0) /* not a descent direction */
@@ -879,17 +902,22 @@ label92: /* Exit with error */
       {
         if (ialph)
         {
-          if (ad_printf) (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
+          if (ad_printf)
+           (*ad_printf)("\nFunction minimizer: Step size too small -- ialph=1");
         }
         if (ihang == 1)
         {
-          if (ad_printf) (*ad_printf)("Function minimizer not making progress ... is minimum attained?\n");
+          if (ad_printf)
+            (*ad_printf)(
+           "Function minimizer not making progress ... is minimum attained?\n");
 #if defined(USE_DDOUBLE)
 #undef double
-           if (ad_printf) (*ad_printf)("Minimprove criterion = %12.4le\n",double(min_improve));
+           if (ad_printf)
+           (*ad_printf)("Minimprove criterion = %12.4le\n",double(min_improve));
 #define double dd_real
 #else
-           if (ad_printf) (*ad_printf)("Minimprove criterion = %12.4le\n",min_improve);
+           if (ad_printf)
+             (*ad_printf)("Minimprove criterion = %12.4le\n",min_improve);
 #endif
         }
       }
@@ -897,7 +925,8 @@ label92: /* Exit with error */
       {
         if (iprint>0)
         {
-          if (ad_printf) (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
+          if (ad_printf)
+            (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
            " --- convergence critera may be too strict\n");
           ireturn=-1;
         }
@@ -909,7 +938,8 @@ label92: /* Exit with error */
       {
         if (iprint>0)
         {
-          if (ad_printf) (*ad_printf)("Maximum number of function evaluations exceeded");
+          if (ad_printf)
+            (*ad_printf)("Maximum number of function evaluations exceeded");
         }
       }
       if (iprint>0)
@@ -919,18 +949,27 @@ label92: /* Exit with error */
       }
       if(iprint == 0) goto label777;
       if (ad_printf) (*ad_printf)("\n - final statistics:\n");
-      if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+      if (ad_printf)
+        (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
                        n, itn, ifn);
 #if defined(USE_DDOUBLE)
 #undef double
-      if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
-              double(f), double(gmax));
-      if (ad_printf) (*ad_printf)("Exit code = %ld;  converg criter %12.4le\n",iexit,double(crit));
+      if (ad_printf)
+        (*ad_printf)(
+             "Function value %12.4le; maximum gradient component mag %12.4le\n",
+             double(f), double(gmax));
+      if (ad_printf)
+        (*ad_printf)(
+          "Exit code = %ld;  converg criter %12.4le\n",iexit,double(crit));
 #define double dd_real
 #else
-      if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
-              f, gmax);
-      if (ad_printf) (*ad_printf)("Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
+      if (ad_printf)
+        (*ad_printf)(
+          "Function value %12.4le; maximum gradient component mag %12.4le\n",
+          f, gmax);
+      if (ad_printf)
+        (*ad_printf)(
+          "Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
 #endif
       fmmdisp(x, g, n, this->scroll_flag,noprintx);
 label777: /* Printing final Hessian approximation */

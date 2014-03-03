@@ -24,9 +24,12 @@
 
        void xgoofr(void){;}
 //dvariable sqrt(const prevariable&);
-dvariable fmax(double x,prevariable& y){ if (x>=value(y)) return x; else return y;}
-dvariable fmax(prevariable& x,double y){ if (value(x)>=y) return x; else return y;}
-dvariable fmin(prevariable& x,double y){ if (value(x)<=y) return x; else return y;}
+dvariable fmax(double x,prevariable& y)
+  { if (x>=value(y)) return x; else return y;}
+dvariable fmax(prevariable& x,double y)
+  { if (value(x)>=y) return x; else return y;}
+dvariable fmin(prevariable& x,double y)
+  { if (value(x)<=y) return x; else return y;}
 dvariable fmax(double x,double * y)
 {
   //if (x>=y)
@@ -35,10 +38,12 @@ dvariable fmax(double x,double * y)
   else
     return 2;
 }
-dvariable fmax(double x,double & y){ if (x>=y) return x; else return y;}
-int operator < (double& x,prevariable& y){ if (x<value(y)) return 1;else return 0;}
-int operator <= (double& x,prevariable& y){ if (x<=value(y)) return 1;else return 0;}
-
+dvariable fmax(double x,double & y)
+  { if (x>=y) return x; else return y;}
+int operator < (double& x,prevariable& y)
+  { if (x<value(y)) return 1;else return 0;}
+int operator <= (double& x,prevariable& y)
+  { if (x<=value(y)) return 1;else return 0;}
 
 dvariable daves_kludge(prevariable& x)
 {
@@ -73,7 +78,7 @@ extern "C" {
 
 /**  barf  [ba:rf]  2.  "He suggested using FORTRAN, and everybody barfed."
 
-	- From The Shogakukan DICTIONARY OF NEW ENGLISH (Second edition) */
+- From The Shogakukan DICTIONARY OF NEW ENGLISH (Second edition) */
 
 #ifndef F2C_INCLUDE
 #define F2C_INCLUDE
@@ -113,109 +118,115 @@ typedef long int ftnint;
 
 /*external read, write*/
 typedef struct
-{	flag cierr;
-	ftnint ciunit;
-	flag ciend;
-	char *cifmt;
-	ftnint cirec;
+{
+  flag cierr;
+  ftnint ciunit;
+  flag ciend;
+  char *cifmt;
+  ftnint cirec;
 } cilist;
 
 /*internal read, write*/
 typedef struct
-{	flag icierr;
-	char *iciunit;
-	flag iciend;
-	char *icifmt;
-	ftnint icirlen;
-	ftnint icirnum;
+{
+  flag icierr;
+  char *iciunit;
+  flag iciend;
+  char *icifmt;
+  ftnint icirlen;
+  ftnint icirnum;
 } icilist;
 
 /*open*/
 typedef struct
-{	flag oerr;
-	ftnint ounit;
-	char *ofnm;
-	ftnlen ofnmlen;
-	char *osta;
-	char *oacc;
-	char *ofm;
-	ftnint orl;
-	char *oblnk;
+{
+  flag oerr;
+  ftnint ounit;
+  char *ofnm;
+  ftnlen ofnmlen;
+  char *osta;
+  char *oacc;
+  char *ofm;
+  ftnint orl;
+  char *oblnk;
 } olist;
 
 /*close*/
 typedef struct
-{	flag cerr;
-	ftnint cunit;
-	char *csta;
+{
+  flag cerr;
+  ftnint cunit;
+  char *csta;
 } cllist;
 
 /*rewind, backspace, endfile*/
 typedef struct
-{	flag aerr;
-	ftnint aunit;
+{
+  flag aerr;
+  ftnint aunit;
 } alist;
 
 /* inquire */
 typedef struct
-{	flag inerr;
-	ftnint inunit;
-	char *infile;
-	ftnlen infilen;
-	ftnint	*inex;	/*parameters in standard's order*/
-	ftnint	*inopen;
-	ftnint	*innum;
-	ftnint	*innamed;
-	char	*inname;
-	ftnlen	innamlen;
-	char	*inacc;
-	ftnlen	inacclen;
-	char	*inseq;
-	ftnlen	inseqlen;
-	char 	*indir;
-	ftnlen	indirlen;
-	char	*infmt;
-	ftnlen	infmtlen;
-	char	*inform;
-	ftnint	informlen;
-	char	*inunf;
-	ftnlen	inunflen;
-	ftnint	*inrecl;
-	ftnint	*innrec;
-	char	*inblank;
-	ftnlen	inblanklen;
+{
+  flag inerr;
+  ftnint inunit;
+  char *infile;
+  ftnlen infilen;
+  ftnint *inex;/*parameters in standard's order*/
+  ftnint *inopen;
+  ftnint *innum;
+  ftnint *innamed;
+  char *inname;
+  ftnlen innamlen;
+  char *inacc;
+  ftnlen inacclen;
+  char *inseq;
+  ftnlen inseqlen;
+  char *indir;
+  ftnlen indirlen;
+  char *infmt;
+  ftnlen infmtlen;
+  char *inform;
+  ftnint informlen;
+  char *inunf;
+  ftnlen inunflen;
+  ftnint *inrecl;
+  ftnint *innrec;
+  char *inblank;
+  ftnlen inblanklen;
 } inlist;
 
 #define VOID void
  //
- // union Multitype {	/* for multiple entry points */
- // 	integer1 g;
- // 	shortint h;
- // 	integer i;
- // 	/* longint j; */
- // 	real r;
- // 	double d;
- // 	complex c;
- // 	//doublecomplex z;
- // 	};
+ // union Multitype {/* for multiple entry points */
+ // integer1 g;
+ // shortint h;
+ // integer i;
+ // /* longint j; */
+ // real r;
+ // double d;
+ // complex c;
+ // //doublecomplex z;
+ // };
  //
  // typedef union Multitype Multitype;
  //
-/*typedef long int Long;*/	/* No longer used; formerly in Namelist */
+/*typedef long int Long;*//* No longer used; formerly in Namelist */
 
-struct Vardesc {	/* for Namelist */
-	char *name;
-	char *addr;
-	ftnlen *dims;
-	int  type;
-	};
+struct Vardesc {/* for Namelist */
+  char *name;
+  char *addr;
+  ftnlen *dims;
+  int  type;
+};
 typedef struct Vardesc Vardesc;
 
 struct Namelist {
-	char *name;
-	Vardesc **vars;
-	int nvars;
-	};
+  char *name;
+  Vardesc **vars;
+  int nvars;
+};
 typedef struct Namelist Namelist;
 
 //#define abs(x) ((x) >= 0 ? (x) : -(x))
@@ -254,10 +265,10 @@ typedef /* Character */ VOID (*H_fp)();
 typedef /* Subroutine */ int (*S_fp)();
 #endif
 /* E_fp is for real functions when -R is not specified */
-typedef VOID C_f;	/* complex function */
-typedef VOID H_f;	/* character function */
-typedef VOID Z_f;	/* double complex function */
-typedef dvariable E_f;	/* real function with -R not specified */
+typedef VOID C_f;/* complex function */
+typedef VOID H_f;/* character function */
+typedef VOID Z_f;/* double complex function */
+typedef dvariable E_f;/* real function with -R not specified */
 
 /* undef any lower-case symbols that your C compiler predefines, e.g.: */
 
@@ -301,13 +312,17 @@ struct {
 }
 #endif
 
-int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx, integer *incx, const dvar_vector & dy, integer *incy);
+int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx, integer *incx,
+  const dvar_vector & dy, integer *incy);
 
-//int xdaxpy_(integer *n, double* da, dvar_vector & dx, integer *incx, dvar_vector& dy, integer *incy);
+//int xdaxpy_(integer *n, double* da, dvar_vector & dx, integer *incx,
+//  dvar_vector& dy, integer *incy);
 
-//int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx, integer *incx,const dvar_vector& dy, integer *incy);
+//int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx, integer *incx,
+//  const dvar_vector& dy, integer *incy);
 
-int  xdaxpy_2(integer * n, dvariable *da,const dvar_vector& _dx,integer * incx,const dvar_vector& _dy, integer* incy)
+int xdaxpy_2(integer * n, dvariable *da,const dvar_vector& _dx,integer * incx,
+  const dvar_vector& _dy, integer* incy)
 {
     /* System generated locals */
     integer i__1;
@@ -315,11 +330,9 @@ int  xdaxpy_2(integer * n, dvariable *da,const dvar_vector& _dx,integer * incx,c
     /* Local variables */
     static integer i, m, ix, iy, mp1;
 
-
 /*     constant times a vector plus a vector. */
 /*     uses unrolled loops for increments equal to one. */
 /*     jack dongarra, linpack, 3/11/78. */
-
 
     dvar_vector& dx = (dvar_vector&) _dx;
     dvar_vector& dy = (dvar_vector&) _dy;
@@ -389,8 +402,8 @@ L40:
     return 0;
 } /* xdaxpy_ */
 
-
-dvariable xddot_(integer *n,const dvar_vector & dx, integer *incx,const dvar_vector & dy, integer *incy);
+dvariable xddot_(integer *n,const dvar_vector & dx, integer *incx,
+  const dvar_vector & dy, integer *incy);
 
 #ifdef __cplusplus
 extern "C" {
@@ -444,17 +457,21 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
     static integer nfun, ispt, iypt, i, bound;
     static dvariable gnorm;
     //extern /* Subroutine */
-//  int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx, integer *incx, const dvar_vector & dy, integer *incy);
+//  int xdaxpy_(integer *n, dvariable* da,const dvar_vector & dx,
+// integer *incx, const dvar_vector & dy, integer *incy);
     static integer point;
     //static dvariable xnorm;
     static integer cp;
     static dvariable sq, yr, ys;
-  extern /* Subroutine */ int xmcsrch_(integer *n, dvar_vector & x, dvariable * f, dvar_vector & g,const dvar_vector & s, dvariable * stp, double * ftol, double * xtol, integer *maxfev, integer *info, integer *nfev, dvar_vector & wa);
+  extern /* Subroutine */ int xmcsrch_(integer *n, dvar_vector & x,
+   dvariable * f, dvar_vector & g,const dvar_vector & s, dvariable * stp,
+   double * ftol, double * xtol, integer *maxfev, integer *info,
+   integer *nfev, dvar_vector & wa);
     static logical finish;
     static dvariable yy;
     static integer maxfev;
     extern /* Subroutine */ int xlb1_(integer *, integer *, integer *,
-            dvar_vector & , integer *, integer *, dvar_vector & , dvar_vector & ,
+      dvar_vector & , integer *, integer *, dvar_vector & , dvar_vector & ,
             dvar_vector & , dvar_vector & , logical *);
     static integer npt;
     static dvariable stp, stp1;
@@ -464,9 +481,6 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
     static cilist io___30 = { 0, 0, 0, fmt_200, 0 };
     static cilist io___31 = { 0, 0, 0, fmt_235, 0 };
     static cilist io___32 = { 0, 0, 0, fmt_240, 0 };
-
-
-
 
 /*        LIMITED MEMORY BFGS METHOD FOR LARGE SCALE OPTIMIZATION */
 /*                          JORGE NOCEDAL */
@@ -837,9 +851,11 @@ L80:
         bound = *m;
     }
 
-    ys = xddot_(n, w(iypt + npt+1,w.indexmax()), &c__1, w(ispt + npt+1,w.indexmax()), &c__1);
+    ys = xddot_(n, w(iypt + npt+1,w.indexmax()), &c__1, w(ispt + npt+1,
+      w.indexmax()), &c__1);
     if (! (*diagco)) {
-        yy = xddot_(n, w(iypt + npt+1,w.indexmax()), &c__1, w(iypt + npt+1,w.indexmax()), &c__1);
+        yy = xddot_(n, w(iypt + npt+1,w.indexmax()), &c__1, w(iypt + npt+1,
+          w.indexmax()), &c__1);
         i__1 = *n;
         for (i = 1; i <= i__1; ++i) {
 /* L90: */
@@ -939,7 +955,7 @@ L165:
         w[i] = g[i];
     }
 L172:
-    xmcsrch_(n, x, &f, g, w(ispt + point * *n+1,w.indexmax()), &stp, &ftol, xtol,
+   xmcsrch_(n, x, &f, g, w(ispt + point * *n+1,w.indexmax()), &stp, &ftol, xtol,
             &maxfev, &info, &nfev, diag);
     if (info == -1) {
         *iflag = 1;
@@ -1032,8 +1048,8 @@ L196:
 
 
 /* Subroutine */ int xlb1_(integer *iprint, integer *iter, integer *nfun,
-        dvar_vector & gnorm, integer *n, integer *m, dvar_vector & x, dvar_vector &
-        f, dvar_vector & g, dvar_vector & stp, logical *finish)
+        dvar_vector & gnorm, integer *n, integer *m, dvar_vector & x,
+        dvar_vector & f, dvar_vector & g, dvar_vector & stp, logical *finish)
 {
     /* Format strings */
     static char fmt_10[] = "(\002*******************************************\
@@ -1233,7 +1249,8 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
 #endif
 
 /* Subroutine */
-int xdaxpy_(integer *n, dvariable* da,const dvar_vector & _dx, integer *incx, const dvar_vector & _dy, integer *incy)
+int xdaxpy_(integer *n, dvariable* da,const dvar_vector & _dx, integer *incx,
+  const dvar_vector & _dy, integer *incy)
 {
     /* System generated locals */
     integer i__1;
@@ -1318,7 +1335,8 @@ L40:
 
 /*   ---------------------------------------------------------- */
 
-dvariable xddot_(integer *n,const dvar_vector & _dx, integer *incx,const dvar_vector & _dy, integer *incy)
+dvariable xddot_(integer *n,const dvar_vector & _dx, integer *incx,
+  const dvar_vector & _dy, integer *incy)
 {
     /* System generated locals */
     integer i__1;
@@ -1413,7 +1431,10 @@ extern "C" {
 /*     LINE SEARCH ROUTINE MCSRCH */
 /*     ************************** */
 //  line search routine
-/* Subroutine */ int xmcsrch_(integer *n, dvar_vector & x, dvariable * f, dvar_vector & g,const dvar_vector & _s, dvariable * stp, double * ftol, double * xtol, integer *maxfev, integer *info, integer *nfev, dvar_vector & wa)
+/* Subroutine */ int xmcsrch_(integer *n, dvar_vector & x, dvariable * f,
+   dvar_vector & g,const dvar_vector & _s, dvariable * stp, double * ftol,
+   double * xtol, integer *maxfev, integer *info, integer *nfev,
+   dvar_vector & wa)
 {
     /* Initialized data */
 
@@ -1445,7 +1466,10 @@ RECTION\002)";
     static dvariable width1, ftest1, dg, fm, fx, fy;
     static logical brackt;
     static dvariable dginit, dgtest;
-extern /* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx, dvariable * dx, dvariable * sty, dvariable * fy, dvariable * dy, dvariable * stp, dvariable * fp, dvariable * dp, logical *brackt, dvariable * stpmin, dvariable * stpmax, integer *info);
+extern /* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx,
+   dvariable * dx, dvariable * sty, dvariable * fy, dvariable * dy,
+   dvariable * stp, dvariable * fp, dvariable * dp, logical *brackt,
+   dvariable * stpmin, dvariable * stpmax, integer *info);
     static dvariable dgm, dgx, dgy, fxm, fym, stx, sty;
 
     /* Fortran I/O blocks */
@@ -1747,7 +1771,10 @@ L45:
 
 } /* xmcsrch_ */
 
-/* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx, dvariable * dx, dvariable * sty, dvariable * fy, dvariable * dy, dvariable * stp, dvariable * fp, dvariable * dp, logical *brackt, dvariable * stpmin, dvariable * stpmax, integer *info)
+/* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx, dvariable * dx,
+  dvariable * sty, dvariable * fy, dvariable * dy, dvariable * stp,
+  dvariable * fp, dvariable * dp, logical *brackt, dvariable * stpmin,
+  dvariable * stpmax, integer *info)
 {
     /* System generated locals */
     dvariable d__1, d__2, d__3;
@@ -1838,7 +1865,7 @@ L45:
         bound = TRUE_;
         theta = (*fx - *fp) * 3 / (*stp - *stx) + *dx + *dp;
 /* Computing MAX */
-        d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
+       d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
                 *dp);
         s = max(d__1,d__2);
 /* Computing 2nd power */
@@ -1871,7 +1898,7 @@ L45:
         bound = FALSE_;
         theta = (*fx - *fp) * 3 / (*stp - *stx) + *dx + *dp;
 /* Computing MAX */
-        d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
+       d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
                 *dp);
         s = max(d__1,d__2);
 /* Computing 2nd power */
@@ -1908,7 +1935,7 @@ L45:
         bound = TRUE_;
         theta = (*fx - *fp) * 3 / (*stp - *stx) + *dx + *dp;
 /* Computing MAX */
-        d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
+       d__1 = fabs(theta), d__2 = fabs(*dx), d__1 = max(d__1,d__2), d__2 = fabs(
                 *dp);
         s = max(d__1,d__2);
 
@@ -2023,5 +2050,5 @@ L45:
 
 } /* xmcstep_ */
 #ifdef __cplusplus
-	}
+}
 #endif

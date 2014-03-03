@@ -67,8 +67,9 @@ extern int ctlc_flag;
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
-dvector update(int nvar, int iter, int m, const dvector& g, const dmatrix& xalpha,
-  dmatrix& y, const dvector& x, const dvector& xold, const dvector& gold, const dvector& xrho);
+dvector update(int nvar, int iter, int m, const dvector& g,
+  const dmatrix& xalpha, dmatrix& y, const dvector& x, const dvector& xold,
+  const dvector& gold, const dvector& xrho);
 double dafsqrt( double x );
 
 /**
@@ -233,15 +234,17 @@ label20:
       if( (itn%iprint) != 0)
          goto label21;
       if (llog) goto label7010;
-#     if   !defined (__MSVC32__)  && !defined (__WAT32__) && !defined(__GNUDOS__)
+#if   !defined (__MSVC32__)  && !defined (__WAT32__) && !defined(__GNUDOS__)
         if (!scroll_flag) clrscr();
-#     endif
+#endif
 label7003:
       if (iprint!=0)
       {
-        if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+        if (ad_printf)
+          (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
               n, itn, ifn);
-        if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
+        if (ad_printf)
+(*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
             f, gmax);
       }
 /*label7002:*/
@@ -334,7 +337,8 @@ label30:
           gbest.elem(i)=w.elem(i);
         }
       }
-#if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) || defined(linux)
+#if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) \
+  || defined(linux)
        if(ctlc_flag && use_control_c)
 #else
        if ( kbhit() )
@@ -377,7 +381,8 @@ label30:
       {
          if (iprint>0)
          {
-           if (ad_printf) (*ad_printf)("  ic > imax  in fminim is answer attained ?\n" );
+           if (ad_printf)
+             (*ad_printf)("  ic > imax  in fminim is answer attained ?\n" );
            fmmdisp(x, g, n, this->scroll_flag,noprintx);
          }
          ihflag=1;
@@ -487,13 +492,16 @@ label92:
       if (iprint>0)
       {
         if (ihang == 1)
-          if (ad_printf) (*ad_printf)("Function minimizer not making progress ... is minimum attained?\n");
+          if (ad_printf)
+            (*ad_printf)(
+           "Function minimizer not making progress ... is minimum attained?\n");
       }
       if(iexit == 2)
       {
         if (iprint>0)
         {
-          if (ad_printf) (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
+          if (ad_printf)
+            (*ad_printf)("*** grad transpose times delta x greater >= 0\n"
            " --- convergence critera may be too strict\n");
           ireturn=-1;
         }
@@ -505,7 +513,8 @@ label92:
       {
         if (iprint>0)
         {
-          if (ad_printf) (*ad_printf)("Maximum number of function evaluations exceeded");
+          if (ad_printf)
+            (*ad_printf)("Maximum number of function evaluations exceeded");
         }
       }
       if (iprint>0)
@@ -515,11 +524,16 @@ label92:
       }
       if(iprint == 0) goto label777;
       if (ad_printf) (*ad_printf)(" - final statistics:\n");
-      if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-                       n, itn, ifn);
-      if (ad_printf) (*ad_printf)("Function value %12.4le; maximum gradient component mag %12.4le\n",
-              f, gmax);
-      if (ad_printf) (*ad_printf)("Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
+      if (ad_printf)
+        (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+          n, itn, ifn);
+      if (ad_printf)
+        (*ad_printf)(
+        "Function value %12.4le; maximum gradient component mag %12.4le\n",
+        f, gmax);
+      if (ad_printf)
+        (*ad_printf)("Exit code = %ld;  converg criter %12.4le\n",iexit,crit);
+
       fmmdisp(x, g, n, this->scroll_flag,noprintx);
 label777:
          if (ireturn <= 0)
@@ -571,7 +585,8 @@ label7020:
  * \param
  */
 dvector update(int nvar, int iter, int m, const dvector& g, const dmatrix& _s,
-  dmatrix& y, const dvector& x, const dvector& _xold, const dvector& _gold, const dvector& _xrho)
+  dmatrix& y, const dvector& x, const dvector& _xold, const dvector& _gold,
+  const dvector& _xrho)
   {
     dvector& xold= (dvector&) _xold;
     dmatrix& s= (dmatrix&) _s;

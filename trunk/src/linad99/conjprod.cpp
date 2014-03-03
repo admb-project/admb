@@ -78,8 +78,6 @@ extern int ctlc_flag;
   #endif
 #endif
 
-
-
 #ifdef __NDPX__
 
 #include <iostream.hxx>
@@ -104,32 +102,31 @@ extern int ctlc_flag;
   void gettextinfo(struct text_info *r);
 #endif
 
-
 class fmmc;
-
 
 double do_interpolate(const double& fret, const double& left_bracket,
   double& left_bracket_value, const dvector& left_bracket_gradient,
   double& right_bracket, const double& right_bracket_value,
-  dvector& right_bracket_gradient, const dvector& theta, const dvector& d, const int& J,
-  long int& ifn, const double& crit1,
+  dvector& right_bracket_gradient, const dvector& theta, const dvector& d,
+  const int& J, long int& ifn, const double& crit1,
   int& int_flag, const double& rho_1, const double& Psi_2, const dvector& g1);
 
-void do_extrapolate(const double& left_bracket, const double& left_bracket_value,
-  dvector& left_bracket_gradient, const double& right_bracket,
-  double& right_bracket_value, const dvector& right_bracket_gradient, const dvector& theta,
-  dvector& d, const int& J, const double& rho_0, long int& ifn, const int& ifnex,
-  int& ext_flag, const double& rho_1, const double& rf, const dvector& g1);
+void do_extrapolate(const double& left_bracket,
+  const double& left_bracket_value, dvector& left_bracket_gradient,
+  const double& right_bracket, double& right_bracket_value,
+  const dvector& right_bracket_gradient, const dvector& theta,
+  dvector& d, const int& J, const double& rho_0, long int& ifn,
+  const int& ifnex, int& ext_flag, const double& rho_1, const double& rf,
+  const dvector& g1);
 
-double mylinmin(const double& fret, const double& Phi_i, const dvector& theta1, const dvector& q_i,
-  fmmc& cs);
+double mylinmin(const double& fret, const double& Phi_i, const dvector& theta1,
+  const dvector& q_i, fmmc& cs);
 
 void bracket_report(const dvector& theta, const double& left_bracket,
                     double& right_bracket, const dvector& d);
 
-double cubic_interpolation(const double& u, const double& v, const double& a, const double& b,
-                           double& ap, const double& bp);
-
+double cubic_interpolation(const double& u, const double& v, const double& a,
+  const double& b, double& ap, const double& bp);
 
 double Phi(const dvector&);
 double min(const double&, const double&);
@@ -201,10 +198,13 @@ void fmmc::fmin(const double& fret, const dvector& p, const dvector& gg)
         {
           if (iprint>0)
           {
-            if (ad_printf) (*ad_printf)("Gradient magnitude criterion satisfied\n");
-            if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
-              n, iter, ifn);
-            if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+            if (ad_printf)
+              (*ad_printf)("Gradient magnitude criterion satisfied\n");
+            if (ad_printf)
+          (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+            n, iter, ifn);
+            if (ad_printf)
+   (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
                fret, max(fabs(gg)) );
             fmmdisp(p, gg, n, this->scroll_flag); //fmc);
           }
@@ -216,8 +216,6 @@ void fmmc::fmin(const double& fret, const dvector& p, const dvector& gg)
       *gbest=gg;
     }
   }
-
-
 
   if (this->frp_flag==1) goto label800;
   if (this->frp_flag==2) goto label2000;
@@ -260,9 +258,11 @@ label800:
         if (!scroll_flag) clrscr();
 #     endif
       if (ad_printf) (*ad_printf)("Initial statistics: ");
-      if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+      if (ad_printf)
+ (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
        n, iter, ifn);
-      if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+      if (ad_printf)
+ (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
        fbest, max(fabs(*gbest)) );
       fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
     }
@@ -283,7 +283,8 @@ label800:
 label1000:
     iter++;
   label5:
-#if ((defined(__SUN__) || defined(__GNU__)) && !defined(__GNUDOS__)) || defined(UNIXKLUDGE)
+#if ((defined(__SUN__) || defined(__GNU__)) && !defined(__GNUDOS__)) \
+  || defined(UNIXKLUDGE)
     if (ctlc_flag)
 #else
     if ( kbhit() )
@@ -309,9 +310,11 @@ label1000:
             {
               if (ad_printf) (*ad_printf)("User initiated interrupt\n");
               if (ad_printf) (*ad_printf)(" - final statistics:\n");
-              if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+              if (ad_printf)
+ (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
                 n, iter, ifn);
-              if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+              if (ad_printf)
+ (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
                 fbest, max(fabs(*gbest)) );
               fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
             }
@@ -363,9 +366,11 @@ label1000:
       {
         if (iprint>0)
         {
-          if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+          if (ad_printf)
+ (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
             n, iter, ifn);
-          if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+          if (ad_printf)
+ (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
              fbest, max(fabs(*gbest)) );
           fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
         }
@@ -395,10 +400,13 @@ label1000:
         {
           if (iprint>0)
           {
-            if (ad_printf) (*ad_printf)("Gradient magnitude criterion satisfied\n");
-            if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+            if (ad_printf)
+ (*ad_printf)("Gradient magnitude criterion satisfied\n");
+            if (ad_printf)
+ (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
               n, iter, ifn);
-            if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+            if (ad_printf)
+ (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
              fbest, max(fabs(*gbest)) );
             fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
           }
@@ -420,7 +428,7 @@ label1000:
           (*ad_printf)("Maximum number of function evaluations exceeded\n");
           (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
             n, iter, ifn);
-          (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+        (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
             fbest, max(fabs(*gbest)) );
         }
         fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
@@ -441,9 +449,11 @@ label1000:
 #         endif
           if (ad_printf) (*ad_printf)("Intermediate statistics: ");
         }
-        if (ad_printf) (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
+        if (ad_printf)
+ (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
           n, iter, ifn);
-        if (ad_printf) (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
+        if (ad_printf)
+ (*ad_printf)("Function value %le; maximum gradient component mag %le\n",
           fbest, max(fabs(*gbest)) );
         fmmdisp(*xbest, *gbest, n, this->scroll_flag); //fmc);
       }
@@ -497,9 +507,9 @@ label1000:
  * bracket the minimum
  * \param
  */
-double mylinmin(const double& fret, const double& Phi_i, const dvector& theta1, const dvector& q_i,
+double mylinmin(const double& fret, const double& Phi_i, const dvector& theta1,
+  const dvector& q_i,
   fmmc& cs)
-
 {
   // d is the current direction for the 1 dimensional search
   // q_i is the gradient at the current best point
@@ -534,7 +544,7 @@ label1:
   }
 
 
-  //cout << "Check " << cs.Psi_0 << " " << Phi_i << "  " << cs.dir_deriv << "\n";
+//cout << "Check " << cs.Psi_0 << " " << Phi_i << "  " << cs.dir_deriv << "\n";
 
   if (!(cs.Psi_0 < Phi_i && cs.dir_deriv < 0)) goto label555;
   // Extrapolate to get a right bracket
@@ -630,8 +640,8 @@ label555:
 double do_interpolate(const double& fret, const double& left_bracket,
   double& left_bracket_value, const dvector& left_bracket_gradient,
   double& right_bracket, const double& right_bracket_value,
-  dvector& right_bracket_gradient, const dvector& theta, const dvector& d, const int& _J,
-  long int& ifn, const double& crit1,
+  dvector& right_bracket_gradient, const dvector& theta, const dvector& d,
+  const int& _J, long int& ifn, const double& crit1,
   int& int_flag, const double& rho_1, const double& Psi_2, const dvector& g1)
 {
   double rho_min=1.e-10;
@@ -653,7 +663,6 @@ label120:
       gamma1=right_bracket_gradient*d;
 #endif
     rho_0=right_bracket-left_bracket;
-
 
 #ifdef DIAG
       cout << "f'(x) " << gamma  << "   "
@@ -792,11 +801,13 @@ label200:
  * Description not yet available.
  * \param
  */
-void do_extrapolate(const double& left_bracket, const double& left_bracket_value,
-  dvector& left_bracket_gradient, const double& right_bracket,
-  double& right_bracket_value, const dvector& right_bracket_gradient, const dvector& theta,
-  dvector& d, const int& J, const double& rho_0, long int& ifn, const int& ifnex,
-  int& ext_flag, const double& rho_1, const double& rf, const dvector& g1)
+void do_extrapolate(const double& left_bracket,
+  const double& left_bracket_value, dvector& left_bracket_gradient,
+  const double& right_bracket, double& right_bracket_value,
+  const dvector& right_bracket_gradient, const dvector& theta,
+  dvector& d, const int& J, const double& rho_0, long int& ifn,
+  const int& ifnex, int& ext_flag, const double& rho_1, const double& rf,
+  const dvector& g1)
 {
   if (ext_flag==1) goto label1500;
   J=J/2;
@@ -856,8 +867,8 @@ void bracket_report(const dvector& theta, const double& left_bracket,
  * Description not yet available.
  * \param
  */
-double cubic_interpolation(const double& u, const double& v, const double& aa, const double& bb,
-                           double& ap, const double& bp)
+double cubic_interpolation(const double& u, const double& v, const double& aa,
+  const double& bb, double& ap, const double& bp)
 {
   //cout <<"Begin cube\n";
   dmatrix M(1,4,1,4);
@@ -998,7 +1009,8 @@ fmmc::~fmmc(void)
  * Description not yet available.
  * \param
  */
-void derch(const double& f, const dvector& _x, const dvector& _gg, int n, const int & _ireturn)
+void derch(const double& f, const dvector& _x, const dvector& _gg, int n,
+  const int & _ireturn)
 {
   int& ireturn=(int&) _ireturn;
   dvector& x = (dvector&) _x;
@@ -1033,7 +1045,8 @@ void derch(const double& f, const dvector& _x, const dvector& _gg, int n, const 
     }
     cout << "   Enter step size (to quit derivative checker, enter 0): ";
     cin >> s;
-    cout << "\n       X           Function     Analytical     Finite Diff;  Index\n";
+    cout << 
+       "\n       X           Function     Analytical     Finite Diff;  Index\n";
 
     if (s <= 0) ad_exit(0);
 
@@ -1063,5 +1076,4 @@ void derch(const double& f, const dvector& _x, const dvector& _gg, int n, const 
 //  ireturn = 2;
   ad_exit(0);
 }
-
 // #undef DIAG

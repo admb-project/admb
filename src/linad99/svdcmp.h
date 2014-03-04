@@ -55,7 +55,8 @@ double sign(double a,double b){ if (b>0) return fabs(a); else return -fabs(a);}
 
 dvariable pythag(const prevariable& a, double b);
 dvariable pythag(const prevariable& a, const prevariable& b);
-dvariable fmax(const prevariable& a, const prevariable& b) { return a > b ? a : b; }
+dvariable fmax(const prevariable& a, const prevariable& b)
+  { return a > b ? a : b; }
 dvariable sign(const prevariable& a, const prevariable& b)
   { if (b>0) return fabs(a); else return -fabs(a);}
 

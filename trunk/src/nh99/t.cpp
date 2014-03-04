@@ -420,7 +420,10 @@ static integer c__1 = 1;
 /*     LBFGS SUBROUTINE */
 /*     **************** */
 
-/* Subroutine */ int xlbfgs_(integer *n, integer *m, dvar_vector & x, dvariable & f, dvar_vector & g, logical *diagco, dvar_vector & diag, integer *iprint, double*  eps, double*  xtol, dvar_vector & w, integer *iflag, integer* iter)
+/* Subroutine */ int xlbfgs_(integer *n, integer *m, dvar_vector & x,
+   dvariable & f, dvar_vector & g, logical *diagco, dvar_vector & diag,
+   integer *iprint, double*  eps, double*  xtol, dvar_vector & w,
+   integer *iflag, integer* iter)
 {
     /* Initialized data */
 
@@ -1072,7 +1075,7 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
     integer i__1;
 
     /* Builtin functions */
-    //integer //s_wsfe(cilist *), e_wsfe(), // do_fio(integer *, char *, ftnlen);
+   //integer //s_wsfe(cilist *), e_wsfe(), // do_fio(integer *, char *, ftnlen);
 
     /* Local variables */
     static integer i;
@@ -1098,13 +1101,10 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
     static cilist io___51 = { 0, 0, 0, fmt_50, 0 };
     static cilist io___52 = { 0, 0, 0, fmt_100, 0 };
 
-
-
 /*     ------------------------------------------------------------- */
 /*     THIS ROUTINE PRINTS MONITORING INFORMATION. THE FREQUENCY AND */
 /*     AMOUNT OF OUTPUT ARE CONTROLLED BY IPRINT. */
 /*     ------------------------------------------------------------- */
-
 
     /* Parameter adjustments */
     --iprint;
@@ -1228,12 +1228,10 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
         }
     }
 
-
     return 0;
 } /* xlb1_ */
 
 /*     ****** */
-
 
 /*   ---------------------------------------------------------- */
 /*     DATA */
@@ -1258,11 +1256,9 @@ int xdaxpy_(integer *n, dvariable* da,const dvar_vector & _dx, integer *incx,
     /* Local variables */
     static integer i, m, ix, iy, mp1;
 
-
 /*     constant times a vector plus a vector. */
 /*     uses unrolled loops for increments equal to one. */
 /*     jack dongarra, linpack, 3/11/78. */
-
 
     dvar_vector& dx = (dvar_vector&) _dx;
     dvar_vector& dy = (dvar_vector&) _dy;
@@ -1302,7 +1298,6 @@ int xdaxpy_(integer *n, dvariable* da,const dvar_vector & _dx, integer *incx,
     return 0;
 
 /*        code for both increments equal to 1 */
-
 
 /*        clean-up loop */
 
@@ -1736,9 +1731,7 @@ L45:
 
         xmcstep_(&stx, &fxm, &dgxm, &sty, &fym, &dgym, stp, &fm, &dgm, &brackt,
                  &stmin, &stmax, &infoc);
-
 /*           RESET THE FUNCTION AND GRADIENT VALUES FOR F. */
-
         fx = fxm + stx * dgtest;
         fy = fym + sty * dgtest;
         dgx = dgxm + dgtest;
@@ -1762,9 +1755,7 @@ L45:
         width1 = width;
         width = (d__1 = sty - stx, fabs(d__1));
     }
-
 /*        END OF ITERATION. */
-
     goto L30;
 
 /*     LAST LINE OF SUBROUTINE MCSRCH. */
@@ -2029,7 +2020,6 @@ L45:
     }
 
 /*     COMPUTE THE NEW STEP AND SAFEGUARD IT. */
-
     stpf = min(*stpmax,stpf);
     stpf = max(*stpmin,stpf);
     *stp = stpf;
@@ -2045,9 +2035,7 @@ L45:
         }
     }
     return 0;
-
 /*     LAST LINE OF SUBROUTINE MCSTEP. */
-
 } /* xmcstep_ */
 #ifdef __cplusplus
 }

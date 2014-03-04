@@ -108,7 +108,8 @@ public:
 public:
   fmmt(int _nvar,int _m=7);
 
-  double minimize(const independent_variables &x,double (*pf)(const dvar_vector&));
+  double minimize(const independent_variables &x,
+    double (*pf)(const dvar_vector&));
 
   double minimize(const independent_variables &x, const dvector& c,
                   double (*pf)(const dvar_vector&, const dvector&));

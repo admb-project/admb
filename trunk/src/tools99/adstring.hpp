@@ -48,12 +48,6 @@
 
 #include <stdio.h>
 
-#ifdef HERE
-  #undef HERE
-#endif
-//#define HERE cout << "reached line " << __LINE__ << " in " << __FILE__ << endl;
-#define HERE
-
 #define _CONST const
 
 class adstring_shape
@@ -157,7 +151,8 @@ public :
 
   // Pascal-like adstring functions
 
-  int pos(const adstring& substr) const;  // returns the starting position of substr
+  // returns the starting position of substr
+  int pos(const adstring& substr) const;
 
   // converts a double into a adstring
   friend adstring str(double x, int minwidth, int decplaces);
@@ -228,7 +223,8 @@ public:
   adstring_array& operator += (const adstring& s);
   adstring_array& append_distinct(const adstring& s);
   friend std::ifstream& operator >> (std::ifstream& ifs,adstring_array& sa);
-  friend std::ostream& operator<<(const std::ostream& ifs, const adstring_array& sa);
+  friend std::ostream& operator<<(const std::ostream& ifs,
+    const adstring_array& sa);
   friend cifstream& operator >> (cifstream& ifs,adstring_array& sa);
 
   void to_upper(void);

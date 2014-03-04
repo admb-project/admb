@@ -151,7 +151,7 @@
       return (df1_two_variable&) (*(v+i))(j);
     }
     void initialize(void);
-    //df1_two_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
+//df1_two_variable& operator()(int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df1_two_matrix();
     df1_two_matrix(const df1_two_matrix& m2);

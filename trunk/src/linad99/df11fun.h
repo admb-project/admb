@@ -133,7 +133,7 @@
       return (df1_one_variable&) (*(v+i))(j);
     }
     void initialize(void);
-    //df1_one_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
+//df1_one_variable& operator()(int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df1_one_matrix();
     df1_one_matrix(const df1_one_matrix& m2);

@@ -123,7 +123,6 @@ Definition of the cifstream class.
 #define FILTER_BUF_SIZE 8000
 #define SIGNATURE_LENGTH  80
 
-//#define HERE cout << "reached line " << __LINE__ << " in " << __FILE__ << endl;
 class cifstream : public ifstream
 {
 #if defined(__ZTC__) || defined(__GNUDOS__) || defined (__WAT32__)

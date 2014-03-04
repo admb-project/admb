@@ -108,16 +108,17 @@ public:
 void fgcomp(const double& f, const dvector& x, const dvector& g);
 
 void mc11b(const dvector& h, const int& n, const int& k);
-void mc11e(const dvector& h, const int& n, const dvector& d, const dvector& w, const int& nn);
+void mc11e(const dvector& h, const int& n, const dvector& d, const dvector& w,
+  const int& nn);
 
 // if you pass ir by referenc it stops after the third func eval
 // if you pass ir by value it runs but is wrong
 
-void mc11a(const dvector& h, const int& n, const dvector& xb, const double& sig, const dvector& w,
-           int& ir, const int& mk, const double& eps);
+void mc11a(const dvector& h, const int& n, const dvector& xb, const double& sig,
+  const dvector& w, int& ir, const int& mk, const double& eps);
 
-void mc11adp(const dvector& h, const int& n, const dvector& d, const double&, const dvector& , const int& ir,
-             int& mk, const double&);
+void mc11adp(const dvector& h, const int& n, const dvector& d, const double&,
+  const dvector& , const int& ir, int& mk, const double&);
 
 double fmax(const double& x, const double& y);
 double ffmin(const double& x, const double& y);
@@ -125,9 +126,9 @@ double ffmin(const int& x, const int& y);
 double mypow(double x, double p);
 double dafsqrt(double x);
 
-void fmmq_disp(int nfun, int itn, double f, double gmax, const dvector& x, const dvector& g);
+void fmmq_disp(int nfun, int itn, double f, double gmax, const dvector& x,
+  const dvector& g);
 void here(const char* place);
-
 
 //  dvector xa(1,nvar);
 //  dvector xb(1,nvar);

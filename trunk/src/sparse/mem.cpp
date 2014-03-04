@@ -2,7 +2,7 @@
  * $Id$
  *
  * Author: David Fournier
- * Copyright (c) 2008-2012 Regents of the University of California 
+ * Copyright (c) 2008-2012 Regents of the University of California
  */
 #include <stdio.h>
 #include  <stdlib.h>
@@ -101,7 +101,7 @@ static int NEAR mem_exception()
       case MEM_ABORTMSG:
       #if defined (MSDOS) || defined (__OS2__)
     /* Avoid linking in buffered I/O */
-        {  
+        {
           static char msg[] = "Fatal error: out of memory\r\n";
           write(1,msg,sizeof(msg) - 1);
         }
@@ -314,7 +314,7 @@ void *mem_realloc(void* p, unsigned u)
 void mem_free(void *p)
 {
   mem_free_debug(p,__FILE__,__LINE__);
-}    
+}
 
 /**************************/
 
@@ -537,10 +537,11 @@ void *mem_malloc(unsigned numbytes)
 /***************************/
 
 void *mem_calloc(unsigned numbytes)
-{  void *p;
-
+{
   if (numbytes == 0)
     return NULL;
+
+  void *p;
   while (1)
   {
     p = calloc(numbytes,1);

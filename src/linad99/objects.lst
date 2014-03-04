@@ -175,7 +175,6 @@ OBJ1=\
  cmpdif11.obj\
  combc.obj\
  combv.obj\
- d3arr1.obj\
  d3arr2a.obj\
  d3arr2b.obj\
  d3arr2c.obj\
@@ -461,6 +460,7 @@ OBJ5=\
  manip.obj\
  conjprod.obj
 OBJ16=\
+ d3arr1.obj\
  dvec_acc.obj\
  dmat_acc.obj\
  dmat8.obj\

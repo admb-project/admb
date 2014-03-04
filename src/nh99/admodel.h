@@ -152,7 +152,6 @@ public:
   _exception * err;
   AD_matherror(_exception * _err) : err(_err) {;}
 #endif
-
 };
 
 class model_data;
@@ -1274,7 +1273,7 @@ class dll_param_init_bounded_number: public param_init_bounded_number
 public:
   void allocate(double * _pd,double _minb,double _maxb,int phase_start=1,
     const char * s="UNNAMED");
-  void allocate(double * _pd,double _minb,double _maxb,const char * s="UNNAMED");
+  void allocate(double* _pd,double _minb, double _maxb,const char* s="UNNAMED");
 public:
   virtual ~dll_param_init_bounded_number();
   void report_value(void);

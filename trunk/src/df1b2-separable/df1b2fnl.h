@@ -148,7 +148,8 @@ public:
   virtual void xinit(dvector&, int&){ cout << "here"<< endl;}
   virtual void set_value(const init_df1b2vector&,const int& ii,
     const df1b2variable&);
-  virtual void set_value(const init_df1b2vector&, const int&){ cout << "here"<< endl;}
+  virtual void set_value(const init_df1b2vector&, const int&)
+    { cout << "here"<< endl;}
   virtual void set_index(imatrix&,int& ii);
 };
 
@@ -168,7 +169,8 @@ public:
   virtual void xinit(dvector&, int&){ cout << "here"<< endl;}
   virtual void set_value(const init_df1b2vector&,const int& ii,
     const df1b2variable&);
-  virtual void set_value(const init_df1b2vector&, const int&){ cout << "here"<< endl;}
+  virtual void set_value(const init_df1b2vector&, const int&)
+    { cout << "here"<< endl;}
   virtual void set_index(imatrix&,int& ii);
   virtual void allocate(void);
 };
@@ -189,7 +191,8 @@ public:
   virtual void xinit(dvector&, int&){ cout << "here"<< endl;}
   virtual void set_value(const init_df1b2vector&,const int& ii,
     const df1b2variable&);
-  virtual void set_value(const init_df1b2vector&, const int&){ cout << "here"<< endl;}
+  virtual void set_value(const init_df1b2vector&, const int&)
+    { cout << "here"<< endl;}
   virtual void set_index(imatrix&,int& ii);
 };
 #endif  //  #if !defined(__DF1B2FNL__)

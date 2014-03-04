@@ -141,7 +141,8 @@ public:
   virtual void xinit(dvector&,int& ii){ cout << "here"<< endl;}
   virtual void set_value(const init_df1b2vector&,const int& ii,
     const df1b2variable&);
-  virtual void set_value(const init_df1b2vector&,const int& ii){ cout << "here"<< endl;}
+  virtual void set_value(const init_df1b2vector&,const int& ii)
+    { cout << "here"<< endl;}
   virtual void set_index(imatrix&,int& ii);
 };
 
@@ -161,7 +162,8 @@ public:
     const df1b2variable&);
   virtual void set_value(const init_df1b2vector&,const int& ii);
   virtual void set_index(imatrix&,int& ii);
-  virtual void dot_calcs(local_dep_df1b2variable&,int ){ cout << "Here" << endl;}
+  virtual void dot_calcs(local_dep_df1b2variable&,int )
+    { cout << "Here" << endl;}
 };
 // ************************************************************
 // ************************************************************

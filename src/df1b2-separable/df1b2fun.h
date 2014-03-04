@@ -681,7 +681,8 @@ public:
     void operator += (int);
     double report_usage(void)
     {
-      return double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
+      return 
+double(size_t(bptr)-size_t(buffer))/double(size_t(buffend)-size_t(buffer));
     }
     void write(void * p,int n);
     void write(int n);
@@ -904,7 +905,7 @@ class df3_two_vector;
  //   df1b2vector * p;
  //   int lb;
  //   int ub;
- //   inline predf1b2vector(df1b2vector * _p,int _lb,int _ub) {p=_p;lb=_lb,ub=_ub;}
+ //inline predf1b2vector(df1b2vector * _p,int _lb,int _ub) {p=_p;lb=_lb,ub=_ub;}
  //   friend class df1b2vector;
  // };
 
@@ -1042,7 +1043,8 @@ public:
   void allocate(void);
   void deallocate(void);
 #  if defined(OPT_LIB)
-  df1b2variable& operator () (int i,int j) const {return (df1b2variable&)(v[i][j]);}
+  df1b2variable& operator () (int i,int j) const
+    {return (df1b2variable&)(v[i][j]);}
   df1b2vector& operator [] (int i) const {return (df1b2vector&)(v[i]);}
   df1b2vector& operator () (int i) const {return (df1b2vector&)(v[i]);}
 #else
@@ -1381,7 +1383,8 @@ public:
   {
     df1b2matrix::allocate(rmin,rmax,cmin,cmax,s);
   }
-  inline void allocate(int rmin, int rmax, int cmin, int cmax, double, double, const char* s)
+  inline void allocate(int rmin, int rmax, int cmin, int cmax, double, double,
+    const char* s)
   {
     df1b2matrix::allocate(rmin,rmax,cmin,cmax,s);
   }
@@ -1577,9 +1580,11 @@ protected:
 public:
   virtual void sd_scale(const dvector& d,const dvector& x,const int& ii);
   void allocate(int,int,int,int,double,double,int,const char *);
-  void allocate(int,int,const index_type& ,const index_type& ,double,double,int,const char *);
+  void allocate(int,int,const index_type& ,const index_type& ,double,double,int,
+    const char *);
   void allocate(int,int,int,int,double,double,const char *);
-  void allocate(int,int,const index_type& ,const index_type& ,double,double,const char *);
+  void allocate(int,int,const index_type& ,const index_type& ,double,double,
+    const char *);
   void allocate(int,int,int,int,double,double);
   //void allocate(int,int);
   virtual void set_value(const dvector& x,const int& _ii);
@@ -1671,7 +1676,8 @@ ostream& operator << (const ostream& ostr,const df1b2vector& z);
 ostream& operator << (const ostream& ostr,const df1b2matrix& z);
 ostream& operator << (const ostream& ostr,const df1b2_init_number_vector& z);
 ostream& operator << (const ostream& ostr,const init_df1b2vector& z);
-ostream& operator << (const ostream& ostr,const df1b2_init_bounded_number_vector& z);
+ostream& operator << (const ostream& ostr,
+  const df1b2_init_bounded_number_vector& z);
 
 class adkludge1;
 
@@ -1724,7 +1730,8 @@ int active(const df1b2_init_matrix& x);
 
 double evaluate_function_quiet(const dvector& x,function_minimizer * pfmin);
 double evaluate_function(const dvector& x,function_minimizer * pfmin);
-double evaluate_function(double& fval,const dvector& x,function_minimizer * pfmin);
+double evaluate_function(double& fval,const dvector& x,
+  function_minimizer * pfmin);
 double evaluate_function(double& fval,const dvector& x,const dvector&,
   function_minimizer * pfmin);
 

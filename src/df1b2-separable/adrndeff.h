@@ -310,7 +310,8 @@ public:
   dmatrix Hessadjoint;
   dmatrix Dux;
   init_df1b2vector y;
-  dvector get_uhat_quasi_newton_block_diagonal(const dvector& x,function_minimizer * pfmin);
+  dvector get_uhat_quasi_newton_block_diagonal(const dvector& x,
+    function_minimizer * pfmin);
   dvector get_uhat_quasi_newton(const dvector& x,function_minimizer * pfmin);
   dvector get_uhat_quasi_newton_qd(const dvector& x,function_minimizer * pfmin);
   void set_u_dot(int i);

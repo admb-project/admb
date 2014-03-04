@@ -44,7 +44,9 @@
 #include <fvar.hpp>
 
 #define ADMB_ERROR(x) admb::messages::error(x);
-#define ADMB_ARRAY_BOUNDS_ERROR(message,function,lower_bounds,upper_bounds,index) admb::messages::array_bounds_error(message,function,lower_bounds,upper_bounds,index);
+#define ADMB_ARRAY_BOUNDS_ERROR(message,function,lower_bounds,upper_bounds,\
+index) admb::messages::array_bounds_error(message,function,lower_bounds,\
+upper_bounds,index);
 
 namespace admb
 {

@@ -62,7 +62,6 @@
 class param_init_d3array: public named_dvar3_array,public initial_params
 {
 public:
-
   virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
@@ -78,7 +77,6 @@ public:
   virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){};
 
 public:
-
   void allocate(int smin,int smax,int rmin,int rmax,int cmin,int cmax,
     int phase_start=1,const char * = "UNNAMED");
   void allocate(int smin,int smax,int rmin,int rmax,int cmin,int cmax,
@@ -107,14 +105,12 @@ class param_init_bounded_d3array: public param_init_d3array
   double minb;
   double maxb;
 public:
-
   virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
   virtual void set_value_inv(const dvector& x, const int& ii);
   virtual void sd_scale(const dvector& d, const dvector& x, const int& ii);
   virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){};
 
 public:
-
   void allocate(int smin,int smax,int rmin,int rmax,int cmin,int cmax,
     double _minb,double _maxb,
     int phase_start=1,const char * = "UNNAMED");

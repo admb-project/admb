@@ -521,7 +521,7 @@ public:
   virtual void bsave_value(void)=0; // save the objects value in a binary file
   virtual void save_value(const ofstream& ofs, int prec) = 0;
   //virtual void bsave_value(const uostream& ofs) = 0;
-	virtual const char * label()=0;
+  virtual const char * label()=0;
   void allocate(int _phase_start);
   void set_active_flag(void);
   void set_inactive_flag(void);
@@ -1179,7 +1179,7 @@ public:
     double& ln_det_proj_jac, const double& tmp, const dmatrix& hesses);
   double diag_projected_hess_determinant(const dvector& g, const int underflow_flag,
     dmatrix& dh);
-	double unrestricted_hess_determinant(void);
+  double unrestricted_hess_determinant(void);
   void monte_carlo_routine(void);
   double get_monte_carlo_value(int nvar, const independent_variables& x);
   double get_monte_carlo_value(int nvar, const dvector& x);
@@ -1194,7 +1194,7 @@ public:
   void multint(int n, const dvar_vector& a, const dvar_vector& b, const dvar_vector& h,
     double al, int m, const dvariable& e, const dvariable& aint, const int& key, PMFVI f);
 
-	static void set_runtime(void);
+  static void set_runtime(void);
   dvariable adromb(PMF,double a,double b,int ns=9);
   dvariable adromb(PMF, const dvariable& a, double b,int ns = 9);
   dvariable adromb(PMF, const dvariable& a, const dvariable& b, int ns = 9);
@@ -1276,12 +1276,12 @@ public:
 
 class param_stddev_vector: public named_dvar_vector , stddev_params
 {
-	virtual int size_count(void); // get the number of active parameters
-	virtual const char * label(void);
-	param_stddev_vector();
-	void allocate(int imin,int imax,const char * s="UNNAMED");
-	virtual void set_dependent_variables(void);
-	friend class model_parameters;
+  virtual int size_count(void); // get the number of active parameters
+  virtual const char * label(void);
+  param_stddev_vector();
+  void allocate(int imin,int imax,const char * s="UNNAMED");
+  virtual void set_dependent_variables(void);
+  friend class model_parameters;
   void copy_value_to_vector(const dvector& x, const int& ii);
   param_stddev_vector& operator=(const dvar_vector& m);
   param_stddev_vector& operator=(const dvector& m);
@@ -1290,42 +1290,42 @@ class param_stddev_vector: public named_dvar_vector , stddev_params
 
 class param_stddev_number: public named_dvariable , public stddev_params
 {
-	void allocate(const char *s="UNNAMED");
-	virtual int size_count(void); // get the number of active parameters
-	virtual const char * label(void);
+  void allocate(const char *s="UNNAMED");
+  virtual int size_count(void); // get the number of active parameters
+  virtual const char * label(void);
   void copy_value_to_vector(const dvector& x, const int& ii);
 protected:
-	param_stddev_number();
-	friend class model_parameters;
-	virtual void set_dependent_variables(void);
+  param_stddev_number();
+  friend class model_parameters;
+  virtual void set_dependent_variables(void);
   param_stddev_number& operator=(const prevariable&);
-	param_stddev_number& operator = (CGNU_DOUBLE);
+  param_stddev_number& operator = (CGNU_DOUBLE);
 };
 
-class param_likeprof_number: public param_stddev_number ,
-	public likeprof_params
+class param_likeprof_number: public param_stddev_number,
+  public likeprof_params
 {
-	double sigma;
-	void allocate(const char *s="UNNAMED");
-	virtual int size_count(void); // get the number of active parameters
-	virtual const char * label(void);
-	virtual double& get_sigma(void){return sigma;}
-	virtual double get_value(void){return value(*this);}
+  double sigma;
+  void allocate(const char *s="UNNAMED");
+  virtual int size_count(void); // get the number of active parameters
+  virtual const char * label(void);
+  virtual double& get_sigma(void){return sigma;}
+  virtual double get_value(void){return value(*this);}
   //void copy_value_to_vector(const dvector& x, const int& ii);
-	virtual dvariable variable(void){ return dvariable(*this);}
-	param_likeprof_number();
-	friend class model_parameters;
+  virtual dvariable variable(void){ return dvariable(*this);}
+  param_likeprof_number();
+  friend class model_parameters;
 public:
   param_likeprof_number& operator=(const prevariable&);
-	param_likeprof_number& operator = (CGNU_DOUBLE);
+    param_likeprof_number& operator = (CGNU_DOUBLE);
 };
 
 class param_stddev_matrix: public named_dvar_matrix , stddev_params
 {
-	virtual int size_count(void);
-	//virtual void read_value(void);
-	virtual const char * label(void);
-	void allocate(int rmin,int rmax,int cmin,int cmax,
+  virtual int size_count(void);
+  //virtual void read_value(void);
+  virtual const char * label(void);
+  void allocate(int rmin,int rmax,int cmin,int cmax,
     const char * s="UNNAMED");
   param_stddev_matrix(void);
   friend class model_parameters;

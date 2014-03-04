@@ -157,7 +157,7 @@
       return (df1_three_variable&) (*(v+i))(j);
     }
     void initialize(void);
-    //df1_three_variable& operator () (int i,int j) const { return *((v+i)->(v+j)); }
+//df1_three_variable& operator()(int i,int j) const { return *((v+i)->(v+j)); }
     void deallocate(void);
     ~df1_three_matrix();
     df1_three_matrix(const df1_three_matrix& m2);

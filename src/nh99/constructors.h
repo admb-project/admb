@@ -93,10 +93,10 @@ struct gggg24 {
  */
 struct gggg25 {
   doublereal *x, *x0, *x1, *xmin, *resmin, *d, *d0,
-	     *dd, *difx, xnorm, x0norm, dnorm, d0norm, sig, sig0,
-	     sigmin, dscal, upsi, upsi0, upsi1, upsist, upsim, psi, psi0,
-	    psi1, psist, psimin, phi, phi0, phi1, phimin, fx, fx0, fx1, fxst,
-	    fmin, b2n, b2n0, dirder, cosphi;
+         *dd, *difx, xnorm, x0norm, dnorm, d0norm, sig, sig0,
+         sigmin, dscal, upsi, upsi0, upsi1, upsist, upsim, psi, psi0,
+        psi1, psist, psimin, phi, phi0, phi1, phimin, fx, fx0, fx1, fxst,
+        fmin, b2n, b2n0, dirder, cosphi;
   gggg25();
   ~gggg25();
 };
@@ -108,10 +108,10 @@ struct gggg25 {
  * \param
  */
 struct gggg26 {
-    //doublereal *gradf, gfn, *qgf, *gres	/* was ** */,
-//	     *gresn, *gphi0, *gphi1;
-    doublereal *gradf, gfn, *qgf, *gres	/* was ** */,
-	     *gresn;
+    //doublereal *gradf, gfn, *qgf, *gres    /* was ** */,
+//         *gresn, *gphi0, *gphi1;
+    doublereal *gradf, gfn, *qgf, *gres    /* was ** */,
+         *gresn;
     doublestar gphi0, gphi1;
   gggg26();
   ~gggg26();
@@ -124,8 +124,8 @@ struct gggg26 {
  * \param
  */
 struct gggg27 {
-    doublereal *qr	/* was ** */, *betaq, *diag
-	    , *cscal, *colle;
+    doublereal *qr    /* was ** */, *betaq, *diag
+        , *cscal, *colle;
     integer *colno, *perm, *perm1, rank;
   gggg27();
   ~gggg27();
@@ -139,7 +139,7 @@ struct gggg27 {
  */
 struct gggg00 {
   logical *val, *gconst;
-  integer *gunit	/* was ** */;
+  integer *gunit    /* was ** */;
   logical *llow, *lup;
   gggg00();
   ~gggg00();
@@ -153,7 +153,7 @@ struct gggg00 {
  */
 struct gggg01 {
     logical intakt, inx, std, te0, te1, te2, te3, sinumbervul, ident, eqres,
-	    silent, wwuq3, cold;
+        silent, wwuq3, cold;
   gggg01(logical _wwuq3, logical _te0, logical _te1,
     logical _te2, logical _te3, logical _cold);
 };
@@ -165,8 +165,8 @@ struct gggg01 {
  * \param
  */
 struct gggg02 {
-  doublereal *a	/* was ** */, *diag0, scalm, scalm2,
-	    matsc;
+  doublereal *a    /* was ** */, *diag0, scalm, scalm2,
+        matsc;
   gggg02();
   ~gggg02();
 };
@@ -191,8 +191,8 @@ struct gggg03 {
  */
 struct gggg04 {
   doublereal *res, *res0, *res1, *resst, *u, *u0,
-	     *w, *w1, *work, *yu, *slack, scf,
-	    scf0, infeas;
+         *w, *w1, *work, *yu, *slack, scf,
+        scf0, infeas;
   gggg04();
   ~gggg04();
 };
@@ -227,7 +227,7 @@ struct gggg06 {
 struct gggg07 {
     gggg07(doublereal _jgh4,doublereal _jgh5);
     doublereal jgh4, jgh41, del, delmin, jgh5, wdg5, wdg9, wdg10, wdg11, wdg111,
-	     eta, ny, wdg7, c1d, scfmax, wdg5qp, wdg5fac, wdg5max, updmy0;
+         eta, ny, wdg7, c1d, scfmax, wdg5qp, wdg5fac, wdg5max, updmy0;
     integer wdg6, ifill1;
 };
 
@@ -239,7 +239,7 @@ struct gggg07 {
  */
 struct gggg08 {
     doublereal alpha, beta, theta, wdg8, sigla, delta, stptrm, delta1,
-	    stmaxl;
+        stmaxl;
 };
 
 #define gggg081 gggg08
@@ -351,9 +351,9 @@ struct gggg17 {
  */
 struct gggg18 {
   independent_variables xtr;
-  doublereal *xsc, *fu, *fugrad	/* was *[
-  //doublereal *xtr, *xsc, *fu, *fugrad	/ * was *[
-	    number3+1] */, *fud	/* was ** */, wwuq5, wdg5bnd;
+  doublereal *xsc, *fu, *fugrad    /* was *[
+  //doublereal *xtr, *xsc, *fu, *fugrad    / * was *[
+        number3+1] */, *fud    /* was ** */, wwuq5, wdg5bnd;
   gggg18(int nvar,doublereal _wwuq5, doublereal _wdg5bnd);
   ~gggg18();
 };
@@ -484,7 +484,7 @@ extern "C" {
 #endif
   void make_all_classes(int,int,int);
 #ifdef __cplusplus
-	}
+}
 #endif
 
 /**

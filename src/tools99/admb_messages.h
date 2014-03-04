@@ -91,7 +91,8 @@ public:
       message += "allocating memory in dmatrix contructor";
       break;
     case 2:
-      message += "attempting to access non-allocated ivector in ivector::operator()";
+      message +=
+        "attempting to access non-allocated ivector in ivector::operator()";
       break;
     default:
       break;
@@ -102,7 +103,8 @@ public:
    *
    */
   static
-  void error(const adstring& message, const adstring& function_name, const int error_code)
+  void error(const adstring& message, const adstring& function_name,
+    const int error_code)
   {
     adstring m = message;
     if (function_name.size() > 0)

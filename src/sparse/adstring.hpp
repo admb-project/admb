@@ -160,7 +160,8 @@ public :
 
   // Pascal-like adstring functions
 
-  int pos(const adstring& substr) const;  // returns the starting position of substr
+  // returns the starting position of substr
+  int pos(const adstring& substr) const;
 
   // converts a double into a adstring
   friend adstring str(double x, int minwidth, int decplaces);

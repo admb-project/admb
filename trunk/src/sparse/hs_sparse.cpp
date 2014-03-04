@@ -482,7 +482,6 @@ hs_smatrix::hs_smatrix(XCONST cs *A)
 // Extends nzmax; new entries initialized to zero
 void hs_smatrix::reallocate(int _nzmax)
 {
-
     ivector tmp(0,nzmax-1);
     tmp=i;
     i.deallocate();
@@ -502,7 +501,6 @@ void hs_smatrix::reallocate(int _nzmax)
 
 void dvar_hs_smatrix::reallocate(int _nzmax)
 {
-
     ivector tmp(0,nzmax-1);
     tmp=i;
     i.deallocate();
@@ -2551,9 +2549,9 @@ hs_symbolic::hs_symbolic(XCONST dvar_compressed_triplet &_T, int order)
     ivector post = cs_post (parent, n) ;  /* postorder the etree */
    ivector c = cs_counts (C, parent, post) ; /* find column counts of chol(C) */
     lnz = cs_cumsum (cp, c, n) ;         /* find column pointers for L */
-
 }
-dvar_compressed_triplet::dvar_compressed_triplet(int mmin,int mmax,int _n,int _m)
+dvar_compressed_triplet::dvar_compressed_triplet(int mmin,int mmax,int _n,
+  int _m)
 {
   allocate(mmin,mmax,_n,_m);
 }
@@ -3556,7 +3554,6 @@ void report_derivatives(const dvar_vector& x)
   gradient_structure::GRAD_STACK1->
       set_gradient_stack(report_dvar_vector_derivatives);
   save_identifier_string("jr");
-
 }
 
 void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
@@ -3584,7 +3581,6 @@ void get_inverse_sparse_hessian(dcompressed_triplet & st, hs_symbolic& S,
     x.shift(1);
     ofs1 << x;
     x.shift(0);
-
   }
 }
 //#include "cs.h"

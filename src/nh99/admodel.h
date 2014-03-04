@@ -1253,7 +1253,6 @@ class param_init_matrix: public named_dvar_matrix,public initial_params
   virtual void add_value(const dvector&, const int&);
   virtual void get_jacobian(const dvector&, const dvector&, const int&);
 public:
-
   virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
@@ -1274,7 +1273,6 @@ public:
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,const int& ii);
 
 public:
-
   void allocate(int rmin,int rmax,int cmin,int cmax,
     int phase_start=1,const char * = "UNNAMED");
 #if defined(USE_SHARE_FLAGS)
@@ -1340,7 +1338,6 @@ protected:
   virtual void add_value(const dvector&, const int&);
   virtual void get_jacobian(const dvector&, const dvector&, const int&);
 public:
-
 #if defined(USE_ADPVM)
   void pvm_pack(void){::pvm_pack(*this);}
   void pvm_unpack(void){::pvm_unpack(*this);}
@@ -1358,7 +1355,6 @@ public:
   virtual void sd_vscale(const dvar_vector& d,const dvar_vector& x,const int& ii);
 
 public:
-
  void allocate(const ad_integer& imin,
    const ad_integer& imax, const ad_integer& imin2,
    const ad_integer& imax2, const ad_double& _bmin,
@@ -1415,7 +1411,6 @@ protected:
   void allocate(const char * s1,const char * s="UNNAMED");
   void operator = (const adstring&);
   void operator = (const char *);
-public:
 };
 
 /**
@@ -1428,7 +1423,6 @@ protected:
   void allocate(const char * s1,const char * s="UNNAMED");
   void operator = (const adstring&);
   void operator = (const char *);
-public:
 };
 
 /**
@@ -2217,7 +2211,6 @@ class param_init_matrix: public named_dvar_matrix,public initial_params
   virtual void add_value(const dvector&, const int&);
   virtual void get_jacobian(const dvector&, const dvector&, const int&);
 public:
-
   virtual void set_value(const dvar_vector& x, const int& ii, const dvariable& pen);
   virtual void copy_value_to_vector(const dvector& x, const int& ii);
   virtual void restore_value_from_vector(const dvector&, const int&);
@@ -2236,7 +2229,6 @@ public:
   virtual void hess_scale(const dvector& d, const dvector& x, const int& ii){;};
 
 public:
-
   void allocate(int rmin,int rmax,int cmin,int cmax,
     int phase_start=1,const char * = "UNNAMED");
   void allocate(int rmin,int rmax,int cmin,int cmax,
@@ -2592,7 +2584,6 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
    int index_max;
    double_index_type * it;
  public:
-
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
   dvector get_scalefactor(void);
@@ -2681,7 +2672,6 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
    int index_max;
    double_index_type * it;
  public:
-
   void set_scalefactor(double s);
   void set_scalefactor(const dvector& s);
   dvector get_scalefactor(void);

@@ -154,7 +154,8 @@ int cs_fkeep (hs_smatrix &A, int (*fkeep) (int, int, double, void *),
   void *other);
 int cs_fkeep (dvar_hs_smatrix &A, int (*fkeep) (int, int, const prevariable& ,
   void *), void *other);
-int cs_scatter(XCONST hs_smatrix &A, int j, double beta, ivector &w, dvector &x, int mark,hs_smatrix &C, int nz);
+int cs_scatter(XCONST hs_smatrix &A, int j, double beta, ivector &w, dvector &x,
+  int mark,hs_smatrix &C, int nz);
 int cs_scatter(XCONST dvar_hs_smatrix &A, int j, double beta, ivector &w,
   dvar_vector &x, int mark,hs_smatrix &C, int nz);
 hs_smatrix cs_add(XCONST hs_smatrix &A, XCONST hs_smatrix &B, double alpha=1.0,

@@ -79,7 +79,8 @@
     void initialize(void);
   };
 
-  inline  double value(const df1_three_variable& x) { return double(*x.get_u()); }
+  inline double value(const df1_three_variable& x)
+    { return double(*x.get_u()); }
 
 /**
  * Description not yet available.

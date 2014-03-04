@@ -220,7 +220,7 @@
     //virtual double_f1b1_node operator () (virtual_f1b1_node& v,
     //  virtual_f1b1_node& w);
 
-    //virtual double_f1b1_node operator () (f1b1_init_data& v,f1b1_init_data& w);
+    //virtual double_f1b1_node operator()(f1b1_init_data& v,f1b1_init_data& w);
     void node_evaluate(void);
   };
 
@@ -234,7 +234,7 @@
     //virtual double_f1b1_node operator () (virtual_f1b1_node& v,
     //  virtual_f1b1_node& w);
 
-    //virtual double_f1b1_node operator () (f1b1_init_data& v,f1b1_init_data& w);
+    //virtual double_f1b1_node operator()(f1b1_init_data& v,f1b1_init_data& w);
     void node_evaluate(void);
   };
 

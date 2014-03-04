@@ -78,15 +78,15 @@ Quick Start
 
        Copy binary distribution folder to /usr/local/ as super-user.
 
-           [~]$ sudo cp -Rvf admb/build/dist  /usr/local/admb
+           [~/admb/]$ sudo cp -Rvf build/dist  /usr/local/admb
 
        Create symlink to main admb script.  Directory _/usr/local/bin/_ should already exist.
 
-           [~]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
+           [~/admb/]$ sudo ln -sf /usr/local/admb/admb /usr/local/bin/admb
 
        After copying, build and run the simple example.
 
-           [~]$ cd admb/examples/admb/simple
+           [~/admb/]$ cd examples/admb/simple
            [~/admb/examples/admb/simple/]$ admb simple.tpl
            [~/admb/examples/admb/simple/]$ ./simple
 

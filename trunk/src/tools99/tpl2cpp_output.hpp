@@ -88,6 +88,5 @@ public:
   model_parameters(int sz,int argc, char * argv[]);
   virtual void initializationfunction(void);
   void my_function(void);
-
 };
 #endif

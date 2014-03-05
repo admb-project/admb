@@ -3541,7 +3541,7 @@ void dvar_hs_smatrix::set_symbolic(hs_symbolic& s)
 void report_dvar_vector_derivatives(void)
 {
   verify_identifier_string("jr");
-  dvar_vector_position dpos=restore_dvar_vector_position();
+  /*dvar_vector_position dpos=*/restore_dvar_vector_position();
   //dvector  dfLx=restore_dvar_vector_derivatives(dpos);
   verify_identifier_string("jx");
 }

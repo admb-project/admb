@@ -1469,15 +1469,15 @@ inline void grad_stack::set_gradient_stack(void (*func) (void),
       {
         // current buffer is full -- write it to disk and reset pointer
         // and counter
-	 this->write_grad_stack_buffer();
+        this->write_grad_stack_buffer();
 #     if defined(MYDEBUG)
-	 wrote_buffer = 1;
+        wrote_buffer = 1;
 #     endif
       }
 #     if defined(MYDEBUG)
       if (wrote_buffer == 1)
       {
-	 cout << "WROTE BUFFER" << endl;
+        cout << "WROTE BUFFER" << endl;
       }
 #     endif
       ptr->func = func;
@@ -1502,10 +1502,8 @@ inline void grad_stack::set_gradient_stack(void (*func) (void),
  * \param
  */
 inline void grad_stack::set_gradient_stack(void (*func) (void),
-					   double *dep_addr,
-					   double *ind_addr1, double mult1,
-					   double *ind_addr2, double mult2,
-					   double *ind_addr3, double mult3)
+  double *dep_addr, double *ind_addr1, double mult1, double *ind_addr2,
+  double mult2, double *ind_addr3, double mult3)
 {
 #ifdef NO_DERIVS
    if (!gradient_structure::no_derivatives)
@@ -1513,9 +1511,9 @@ inline void grad_stack::set_gradient_stack(void (*func) (void),
 #endif
       if (ptr > ptr_last)
       {
-	 // current buffer is full -- write it to disk and reset pointer
-	 // and counter
-	 this->write_grad_stack_buffer();
+         // current buffer is full -- write it to disk and reset pointer
+         // and counter
+         this->write_grad_stack_buffer();
       }
       ptr->func = NULL;
       ptr->dep_addr = dep_addr;
@@ -1526,9 +1524,9 @@ inline void grad_stack::set_gradient_stack(void (*func) (void),
       ptr++;
       if (ptr > ptr_last)
       {
-	 // current buffer is full -- write it to disk and reset pointer
-	 // and counter
-	 this->write_grad_stack_buffer();
+         // current buffer is full -- write it to disk and reset pointer
+         // and counter
+         this->write_grad_stack_buffer();
       }
       ptr->func = func;
       ptr->ind_addr1 = ind_addr3;
@@ -1544,11 +1542,9 @@ inline void grad_stack::set_gradient_stack(void (*func) (void),
  * \param
  */
 inline void grad_stack::set_gradient_stack(void (*func) (void),
-					   double *dep_addr,
-					   double *ind_addr1, double mult1,
-					   double *ind_addr2, double mult2,
-					   double *ind_addr3, double mult3,
-					   double *ind_addr4, double mult4)
+  double *dep_addr, double *ind_addr1, double mult1, double *ind_addr2,
+  double mult2, double *ind_addr3, double mult3, double *ind_addr4,
+  double mult4)
 {
 #ifdef NO_DERIVS
    if (!gradient_structure::no_derivatives)
@@ -1556,9 +1552,9 @@ inline void grad_stack::set_gradient_stack(void (*func) (void),
 #endif
       if (ptr > ptr_last)
       {
-	 // current buffer is full -- write it to disk and reset pointer
-	 // and counter
-	 this->write_grad_stack_buffer();
+         // current buffer is full -- write it to disk and reset pointer
+         // and counter
+         this->write_grad_stack_buffer();
       }
       ptr->func = NULL;
       ptr->dep_addr = dep_addr;
@@ -1569,9 +1565,9 @@ inline void grad_stack::set_gradient_stack(void (*func) (void),
       ptr++;
       if (ptr > ptr_last)
       {
-	 // current buffer is full -- write it to disk and reset pointer
-	 // and counter
-	 this->write_grad_stack_buffer();
+         // current buffer is full -- write it to disk and reset pointer
+         // and counter
+         this->write_grad_stack_buffer();
       }
       ptr->func = func;
       ptr->ind_addr1 = ind_addr3;
@@ -1589,9 +1585,7 @@ inline void grad_stack::set_gradient_stack(void (*func) (void),
  * \param
  */
 inline void grad_stack::set_gradient_stack(void (*func) (void),
-					   double *dep_addr,
-					   double *ind_addr1,
-					   double *ind_addr2)
+  double *dep_addr, double *ind_addr1, double *ind_addr2)
 {
 #ifdef NO_DERIVS
    if (!gradient_structure::no_derivatives)
@@ -1599,9 +1593,9 @@ inline void grad_stack::set_gradient_stack(void (*func) (void),
 #endif
       if (ptr > ptr_last)
       {
-	 // current buffer is full -- write it to disk and reset pointer
-	 // and counter
-	 this->write_grad_stack_buffer();
+         // current buffer is full -- write it to disk and reset pointer
+         // and counter
+         this->write_grad_stack_buffer();
       }
       ptr->func = func;
       ptr->dep_addr = dep_addr;
@@ -1618,9 +1612,7 @@ inline void grad_stack::set_gradient_stack(void (*func) (void),
  * \param
  */
 inline void grad_stack::set_gradient_stack2(void (*func) (void),
-					    double *dep_addr,
-					    double *ind_addr1,
-					    double mult1)
+  double *dep_addr, double *ind_addr1, double mult1)
 {
 #ifdef NO_DERIVS
    if (!gradient_structure::no_derivatives)
@@ -1628,9 +1620,9 @@ inline void grad_stack::set_gradient_stack2(void (*func) (void),
 #endif
       if (ptr > ptr_last)
       {
-	 // current buffer is full -- write it to disk and reset pointer
-	 // and counter
-	 this->write_grad_stack_buffer();
+         // current buffer is full -- write it to disk and reset pointer
+         // and counter
+         this->write_grad_stack_buffer();
       }
       ptr->func = func;
       ptr->dep_addr = dep_addr;
@@ -1647,9 +1639,7 @@ inline void grad_stack::set_gradient_stack2(void (*func) (void),
  * \param
  */
 inline void grad_stack::set_gradient_stack4(void (*func) (void),
-					    double *dep_addr,
-					    double *ind_addr1,
-					    double *ind_addr2)
+  double *dep_addr, double *ind_addr1, double *ind_addr2)
 {
 #ifdef NO_DERIVS
    if (!gradient_structure::no_derivatives)
@@ -1657,9 +1647,9 @@ inline void grad_stack::set_gradient_stack4(void (*func) (void),
 #endif
       if (ptr > ptr_last)
       {
-	 // current buffer is full -- write it to disk and reset pointer
-	 // and counter
-	 this->write_grad_stack_buffer();
+         // current buffer is full -- write it to disk and reset pointer
+         // and counter
+         this->write_grad_stack_buffer();
       }
       ptr->func = func;
       ptr->dep_addr = dep_addr;
@@ -1683,14 +1673,15 @@ inline void grad_stack::set_gradient_stack(void (*func) (void))
 #endif
       if (ptr > ptr_last)
       {
-	 // current buffer is full -- write it to disk and reset pointer
-	 // and counter
-	 this->write_grad_stack_buffer();
+         // current buffer is full -- write it to disk and reset pointer
+         // and counter
+         this->write_grad_stack_buffer();
       }
 
       ptr->dep_addr = NULL;
       ptr->func = func;
-      ptr->ind_addr2 = NULL;	// want to put a long int                                            //into the memory space of a double
+      // want to put a long int into the memory space of a double
+      ptr->ind_addr2 = NULL;
       ptr->mult2 = 0;
       ptr++;
 #ifdef NO_DERIVS
@@ -1704,7 +1695,8 @@ inline void grad_stack::set_gradient_stack(void (*func) (void))
  */
 class indvar_offset_list
 {
-   int nvar;			// The number of independent variables
+   // The number of independent variables
+   int nvar;
    double **address;
 
  public:
@@ -4573,7 +4565,6 @@ class three_array_shape
    friend class dd3_array;
    friend class qd3_array;
    friend class dvar3_array;
-
 };
 
 //class dmatrix_ptr { dmatrix *p; };
@@ -8410,7 +8401,6 @@ class lmatrix
    friend char *fform(const char *, const dmatrix &);
 
  public:
-
    int operator!(void) const
    {
       return (shape == NULL);
@@ -9679,7 +9669,8 @@ void reset_gradient_stack(void);
       &(value(depvar)), &(value(indvar1)),df1,&(value(indvar2)),df2, \
       &(value(indvar3)),df3);
 
-#define AD_SET_DERIVATIVES4(depvar,indvar1,df1,indvar2,df2,indvar3,df3,indvar4,df4)  \
+#define AD_SET_DERIVATIVES4(depvar,indvar1,df1,indvar2,df2,indvar3,df3, \
+  indvar4, df4)  \
     gradient_structure::GRAD_STACK1->set_gradient_stack(default_evaluation4ind,\
       &(value(depvar)), &(value(indvar1)),df1,&(value(indvar2)),df2, \
       &(value(indvar3)),df3, \

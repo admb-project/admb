@@ -440,7 +440,6 @@ while (cntrl.ireturn >= 0) \
   cntrl.fmin(objective_function,ind_vars,gradient ); \
   if (cntrl.ireturn > 0) \
   {
-
 #define END_MINIMIZATION(nvar,gradient) \
     gradcalc(nvar, gradient); \
   } \
@@ -1322,7 +1321,8 @@ class indvar_offset_list;
 class grad_stack_entry
 {
  public:
-   void (*func) (void); ///< Pointer to function (if any) to be used for derivative calculation
+   ///< Pointer to function (if any) to be used for derivative calculation
+   void (*func) (void);
    double *dep_addr;    ///< Pointer to dependent variable
    double *ind_addr1;   ///< Pointer to first independent variable
    double mult1;        ///< First mutiplicand in chain rule multipication
@@ -1774,7 +1774,8 @@ class prevariable
    friend prevariable & fabs(const prevariable & t1);
    friend prevariable & sigmoid(const prevariable & t1);
 
-   friend prevariable & sfabs(const prevariable & t1);//"smoothed absolute value function
+   //"smoothed absolute value function
+   friend prevariable & sfabs(const prevariable & t1);
 
    friend prevariable & sqrt(const prevariable & t1);
    friend prevariable & sqr(const prevariable & t1);
@@ -2779,7 +2780,6 @@ class arr_list
    friend class arr_link;
 
  public:
-
    arr_list(void)
    {
       last = 0;
@@ -3500,7 +3500,6 @@ class dmatrix
    friend char *fform(const char *, const dmatrix &);
    friend class dvar_matrix;
  public:
-
    dmatrix & operator --(void)
    {
       index_min--;
@@ -3850,7 +3849,6 @@ class imatrix
    friend char *fform(const char *, const dmatrix &);
 
  public:
-
    int operator!(void) const
    {
       return (shape == NULL);
@@ -4147,7 +4145,7 @@ class fmm:public fmm_control
    double minimize(const independent_variables & x, const dvector & c,
      double (*pf) (const dvar_vector &, const dvector &));
 
-   //void fmin(const double& f, const independent_variables &x, const dvector& g);
+ //void fmin(const double& f, const independent_variables &x, const dvector& g);
    void fmin(const double &f, const dvector & x, const dvector & g);
 
    dmatrix & hessian(); ///< Undefined

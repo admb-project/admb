@@ -313,7 +313,8 @@ typedef struct {
 }
 
 //modified by Derek Seiple
-#define QSORT2(QSORT_TYPE,QSORT_TYPE2,QSORT_BASE,QSORT_BASE2,QSORT_NELT,QSORT_LT)  \
+#define \
+QSORT2(QSORT_TYPE,QSORT_TYPE2,QSORT_BASE,QSORT_BASE2,QSORT_NELT,QSORT_LT)\
 {                  \
   QSORT_TYPE *const _base = (QSORT_BASE);        \
   QSORT_TYPE2 *const _base2 = (QSORT_BASE2);        \

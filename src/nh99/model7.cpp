@@ -156,77 +156,124 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)( "Usage: %s [options]\n\n",(char*)(adprogram_name));
 
       (*ad_printf)( "Options:\n");
-      (*ad_printf)( " -ainp FILE      change default ascii input parameter filename to FILE\n");
-      (*ad_printf)( " -binp FILE      change default binary input parameter filename to FILE\n");
+      (*ad_printf)( " -ainp FILE      change default ascii input parameter "
+      "filename to FILE\n");
+      (*ad_printf)( " -binp FILE      change default binary input parameter "
+      "filename to FILE\n");
       (*ad_printf)( " -est            only do the parameter estimation\n");
-      (*ad_printf)( " -noest          do not do the parameter estimation (optimization) \n");
-      (*ad_printf)( " -ind FILE       change default input data filename to FILE\n");
-      (*ad_printf)( " -lmn N          use limited memory quasi newton -- keep N steps\n");
-      (*ad_printf)( " -lmn2 N         use other limited memory quasi newton -- keep N steps\n");
-      (*ad_printf)( " -ilmn N         use other limited memory quasi newton for random effects models - keep N steps\n");
-      (*ad_printf)( " -dd N           check derivatives after N function evaluations\n");
-      (*ad_printf)( " -lprof          perform profile likelihood calculations\n");
-      (*ad_printf)( " -maxph N        increase the maximum phase number to N\n");
-      (*ad_printf)( " -mcdiag         use diagonal covariance matrix for mcmc with diagonal values 1\n");
-      (*ad_printf)( " -mcmc [N]       perform markov chain monte carlo with N simulations\n");
+      (*ad_printf)( " -noest          do not do the parameter estimation "
+      "(optimization) \n");
+      (*ad_printf)( " -ind FILE       change default input data filename to "
+      "FILE\n");
+      (*ad_printf)( " -lmn N          use limited memory quasi newton -- keep "
+      "N steps\n");
+      (*ad_printf)( " -lmn2 N         use other limited memory quasi newton -- "
+      "keep N steps\n");
+      (*ad_printf)( " -ilmn N         use other limited memory quasi newton "
+      "for random effects models - keep N steps\n");
+      (*ad_printf)( " -dd N           check derivatives after N function "
+      "evaluations\n");
+      (*ad_printf)( " -lprof          perform profile likelihood "
+      "calculations\n");
+      (*ad_printf)( " -maxph N        increase the maximum phase number to "
+      "N\n");
+      (*ad_printf)( " -mcdiag         use diagonal covariance matrix for mcmc "       "with diagonal values 1\n");
+      (*ad_printf)( " -mcmc [N]       perform markov chain monte carlo with N "
+      "simulations\n");
       (*ad_printf)( " -mcmult N       multiplier N for mcmc default\n");
       (*ad_printf)( " -mcr            resume previous mcmc\n");
-      (*ad_printf)( " -mcrb  N        reduce amount of correlation in the covariance matrix 1<=N<=9\n");
-      (*ad_printf)( " -mcnoscale      don't rescale step size for mcmc depending on acceptance rate\n");
-      (*ad_printf)( " -nosdmcmc       turn off mcmc histogram calcs to make mcsave run faster\n");
-      (*ad_printf)( " -mcprobe N      use probing strategy for mcmc with factor N\n");
+      (*ad_printf)( " -mcrb  N        reduce amount of correlation in the "
+      "covariance matrix 1<=N<=9\n");
+      (*ad_printf)( " -mcnoscale      don't rescale step size for mcmc "
+      "depending on acceptance rate\n");
+      (*ad_printf)( " -nosdmcmc       turn off mcmc histogram calcs to make "
+      "mcsave run faster\n");
+      (*ad_printf)( " -mcprobe N      use probing strategy for mcmc with "
+      "factor N\n");
       (*ad_printf)( " -mcgrope N      Deprecated, same as -mcprobe\n");
-      (*ad_printf)( " -mcseed N       seed for random number generator for markov chain monte carlo\n");
-      (*ad_printf)( " -mcscale N      rescale step size for first N evaluations\n");
-      (*ad_printf)( " -mcsave N       save the parameters for every Nth simulation\n");
-      (*ad_printf)( " -mceval         go through the saved mcmc values from a previous mcsave\n");
-      (*ad_printf)( " -mcu            use uniformaly distributed steps for mcmc instead of random normal\n");
-      (*ad_printf)( " -crit N1,N2,... set gradient magnitude convergence criterion to N\n");
-      (*ad_printf)( " -iprint N       print out function minimizer report every N iterations\n");
-      (*ad_printf)( " -maxfn N1,N2,.. set maximum number opf function eval's to N\n");
-      (*ad_printf)( " -rs             if function minimizer can't make progress rescale and try again\n");
-    //(*ad_printf)( " -sp             for DLL running from splus write to command window\n");
-      (*ad_printf)( " -nox            suppress vector and gradient values in minimizer screen report\n");
+      (*ad_printf)( " -mcseed N       seed for random number generator for "
+      "markov chain monte carlo\n");
+      (*ad_printf)( " -mcscale N      rescale step size for first N "
+      "evaluations\n");
+      (*ad_printf)( " -mcsave N       save the parameters for every Nth "
+      "simulation\n");
+      (*ad_printf)( " -mceval         go through the saved mcmc values from a "
+      "previous mcsave\n");
+      (*ad_printf)( " -mcu            use uniformaly distributed steps for "
+      "mcmc instead of random normal\n");
+      (*ad_printf)( " -crit N1,N2,... set gradient magnitude convergence "
+      "criterion to N\n");
+      (*ad_printf)( " -iprint N       print out function minimizer report "
+      "every N iterations\n");
+      (*ad_printf)( " -maxfn N1,N2,.. set maximum number opf function eval's "
+      "to N\n");
+      (*ad_printf)( " -rs             if function minimizer can't make "
+      "progress rescale and try again\n");
+      //(*ad_printf)( " -sp             for DLL running from splus write to "
+      //"command window\n");
+      (*ad_printf)( " -nox            suppress vector and gradient values in "
+      "minimizer screen report\n");
       (*ad_printf)( " -phase N        start minimization in phase N\n");
-      (*ad_printf)( " -simplex        use simplex for minimization -- deprecated, use -neldmead\n");
-      (*ad_printf)( " -neldmead       use Nelder-Mead simplex algorithm for minimization\n");
-      (*ad_printf)( " -nohess         don't do hessian or delta method for std dev\n");
+      (*ad_printf)( " -simplex        use simplex for minimization -- "
+      "deprecated, use -neldmead\n");
+      (*ad_printf)( " -neldmead       use Nelder-Mead simplex algorithm for "
+      "minimization\n");
+      (*ad_printf)( " -nohess         don't do hessian or delta method for std "
+      "dev\n");
       (*ad_printf)( " -eigvec         calculate eigenvectors of the Hessian\n");
-      (*ad_printf)( " -sdonly         do delta method for std dev estimates without redoing hessian\n");
-      (*ad_printf)( " -ams N          set arrmblsize to N (ARRAY_MEMBLOCK_SIZE)\n");
-      (*ad_printf)( " -cbs N          set CMPDIF_BUFFER_SIZE to N (ARRAY_MEMBLOCK_SIZE)\n");
-      (*ad_printf)( " -mno N          set the maximum number of independent variables to N\n");
-      (*ad_printf)( " -mdl N          set the maximum number of dvariables to N\n");
-      (*ad_printf)( " -gbs N          set GRADSTACK_BUFFER_SIZE to N (ARRAY_MEMBLOCK_SIZE)\n");
+      (*ad_printf)( " -sdonly         do delta method for std dev estimates "
+      "without redoing hessian\n");
+      (*ad_printf)( " -ams N          set arrmblsize to N "
+      "(ARRAY_MEMBLOCK_SIZE)\n");
+      (*ad_printf)( " -cbs N          set CMPDIF_BUFFER_SIZE to N "
+      "(ARRAY_MEMBLOCK_SIZE)\n");
+      (*ad_printf)( " -mno N          set the maximum number of independent "
+      "variables to N\n");
+      (*ad_printf)( " -mdl N          set the maximum number of dvariables to "
+      "N\n");
+      (*ad_printf)( " -gbs N          set GRADSTACK_BUFFER_SIZE to N "
+      "(ARRAY_MEMBLOCK_SIZE)\n");
 #if defined(USE_ADPVM)
       (*ad_printf)( " -master         run as PVM master program\n");
       (*ad_printf)( " -slave          run as PVM slave program\n");
-      (*ad_printf)( " -pvmtime        record timing information for PVM performance analysis\n");
+      (*ad_printf)( " -pvmtime        record timing information for PVM "
+      "performance analysis\n");
 #endif
-      (*ad_printf)( " -info           show how to cite ADMB, license, and acknowledgements\n");
+      (*ad_printf)( " -info           show how to cite ADMB, license, and "
+      "acknowledgements\n");
       (*ad_printf)( " -version        show version information\n");
       (*ad_printf)( " -help           show this message\n\n");
     //if (function_minimizer::random_effects_flag)
     //{
       (*ad_printf)( "Random effects options if applicable\n");
-      (*ad_printf)( " -nr N           maximum number of Newton-Raphson steps\n");
-      (*ad_printf)( " -imaxfn N       maximum number of evals in quasi-Newton inner optimization\n");
+      (*ad_printf)( " -nr N           maximum number of Newton-Raphson "
+      "steps\n");
+      (*ad_printf)( " -imaxfn N       maximum number of evals in quasi-Newton "
+      "inner optimization\n");
       (*ad_printf)( " -is N           set importance sampling size to N\n");
-      (*ad_printf)( " -isf N          set importance sampling size funnel blocks to N\n");
+      (*ad_printf)( " -isf N          set importance sampling size funnel "
+      "blocks to N\n");
       (*ad_printf)( " -isdiag         print importance sampling diagnostics\n");
       (*ad_printf)( " -hybrid         do hybrid Monte Carlo version of MCMC\n");
-      (*ad_printf)( " -hbf            set the hybrid bounded flag for bounded parameters\n");
+      (*ad_printf)( " -hbf            set the hybrid bounded flag for bounded "
+      "parameters\n");
       (*ad_printf)( " -hyeps          mean step size for hybrid Monte Carlo\n");
-      (*ad_printf)( " -hynstep        number of steps for hybrid Monte Carlo\n");
-      (*ad_printf)( " -noinit         do not initialize RE before inner optimization\n");
+      (*ad_printf)( " -hynstep        number of steps for hybrid Monte "
+      "Carlo\n");
+      (*ad_printf)( " -noinit         do not initialize RE before inner "
+      "optimization\n");
       (*ad_printf)( " -ndi N          set maximum number of separable calls\n");
-      (*ad_printf)( " -ndb N          set number of blocks for RE derivatives (reduce temp file size)\n");
-      (*ad_printf)( " -ddnr           use high precision Newton-Raphson, for banded Hessian case only\n");
-      (*ad_printf)( " -nrdbg          verbose reporting for debugging newton-raphson\n");
+      (*ad_printf)( " -ndb N          set number of blocks for RE derivatives "
+      "(reduce temp file size)\n");
+      (*ad_printf)( " -ddnr           use high precision Newton-Raphson, for "
+      "banded Hessian case only\n");
+      (*ad_printf)( " -nrdbg          verbose reporting for debugging "
+      "newton-raphson\n");
 #  if defined(__MINI_MAX__)
       (*ad_printf)( " -mm N           do minimax optimization\n");
 #  endif
-      (*ad_printf)( " -shess          use sparse Hessian structure inner optimzation\n\n");
+      (*ad_printf)( " -shess          use sparse Hessian structure inner "
+      "optimzation\n\n");
 
       (*ad_printf)("Read online documentation at http://admb-project.org\n");
       (*ad_printf)("Contact <users@admb-project.org> for help.\n");
@@ -241,9 +288,12 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)("How to Cite ADMB\n");
       (*ad_printf)("----------------\n\n");
 
-      (*ad_printf)("Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, A. Magnusson, M.N. Maunder,\n");
-      (*ad_printf)("A. Nielsen, and J. Sibert. 2012. AD Model Builder: using automatic\n");
-      (*ad_printf)("differentiation for statistical inference of highly parameterized complex\n");
+      (*ad_printf)("Fournier, D.A., H.J. Skaug, J. Ancheta, J. Ianelli, "
+      "A. Magnusson, M.N. Maunder,\n");
+      (*ad_printf)("A. Nielsen, and J. Sibert. 2012. AD Model Builder: using "
+      "automatic\n");
+      (*ad_printf)("differentiation for statistical inference of highly "
+      "parameterized complex\n");
       (*ad_printf)("nonlinear models. Optim. Methods Softw. 27:233-249.\n\n");
 
       //(*ad_printf)(" %s", (char*)admb_banner);
@@ -251,30 +301,45 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       (*ad_printf)("-------\n\n");
 
       (*ad_printf)("Copyright (c) 2008-2013\n");
-      (*ad_printf)("Regents of the University of California and ADMB Foundation\n\n");
-
-      (*ad_printf)("ADMB is free software and comes with ABSOLUTELY NO WARRANTY.\n");
-      (*ad_printf)("You are welcome to redistribute it under certain conditions.\n\n");
-
-      (*ad_printf)("AD Model Builder, or ADMB, was developed by David Fournier of Otter Research\n");
-      (*ad_printf)("Ltd, Sidney, BC, Canada. In 2007, scientists from the University of Hawai'i at\n");
-      (*ad_printf)("Manoa Pelagic Fisheries Research Program (John Sibert and Anders Nielsen) and\n");
-      (*ad_printf)("the Inter-American Tropical Tuna Commission (Mark Maunder), in consultation with\n");
-      (*ad_printf)("scientists from NOAA Fisheries (Richard Methot), created the non-profit ADMB\n");
-      (*ad_printf)("Foundation (admb-foundation.org) with the goal of increasing the number of ADMB\n");
-      (*ad_printf)("users by making the software free and open source. In partnership with NOAA\n");
-      (*ad_printf)("Fisheries and the National Center for Ecological Analysis and Synthesis (NCEAS,\n");
-      (*ad_printf)("www.nceas.ucsb.edu), the ADMB Foundation obtained funding from the Gordon and\n");
-      (*ad_printf)("Betty Moore Foundation (www.moore.org) to acquire the copyright to the ADMB\n");
-      (*ad_printf)("software suite, in order to make it broadly and freely available to the research\n");
-      (*ad_printf)("community. In 2008 the copyright was transferred from Otter Research Ltd to the\n");
-      (*ad_printf)("University of California. The binary files were released in November 2008 and\n");
-      (*ad_printf)("the source code was released in December 2009. More information about the ADMB\n");
+      (*ad_printf)("Regents of the University of California and ADMB "
+      "Foundation\n\n");
+      (*ad_printf)("ADMB is free software and comes with ABSOLUTELY NO "
+      "WARRANTY.\n");
+      (*ad_printf)("You are welcome to redistribute it under certain "
+      "conditions.\n\n");
+      (*ad_printf)("AD Model Builder, or ADMB, was developed by David Fournier "
+      "of Otter Research\n");
+      (*ad_printf)("Ltd, Sidney, BC, Canada. In 2007, scientists from the "
+      "University of Hawai'i at\n");
+      (*ad_printf)("Manoa Pelagic Fisheries Research Program (John Sibert and "
+      "Anders Nielsen) and\n");
+      (*ad_printf)("the Inter-American Tropical Tuna Commission (Mark "
+      "Maunder), in consultation with\n");
+      (*ad_printf)("scientists from NOAA Fisheries (Richard Methot), created "
+      "the non-profit ADMB\n");
+      (*ad_printf)("Foundation (admb-foundation.org) with the goal of "
+      "increasing the number of ADMB\n");
+      (*ad_printf)("users by making the software free and open source. In "
+      "partnership with NOAA\n");
+      (*ad_printf)("Fisheries and the National Center for Ecological Analysis "
+      "and Synthesis (NCEAS,\n");
+      (*ad_printf)("www.nceas.ucsb.edu), the ADMB Foundation obtained funding "
+      "from the Gordon and\n");
+      (*ad_printf)("Betty Moore Foundation (www.moore.org) to acquire the "
+      "copyright to the ADMB\n");
+      (*ad_printf)("software suite, in order to make it broadly and freely "
+      "available to the research\n");
+      (*ad_printf)("community. In 2008 the copyright was transferred from "
+      "Otter Research Ltd to the\n");
+      (*ad_printf)("University of California. The binary files were released "
+      "in November 2008 and\n");
+      (*ad_printf)("the source code was released in December 2009. More "
+      "information about the ADMB\n");
       (*ad_printf)("Project can be found at admb-project.org.\n\n");
-
-      (*ad_printf)("ADMB was originally developed by David Fournier of Otter Research Ltd.\n\n");
-
-      (*ad_printf)("It is now maintained by the ADMB Core Team, whose members are listed on\n");
+      (*ad_printf)("ADMB was originally developed by David Fournier of Otter "
+      "Research Ltd.\n\n");
+      (*ad_printf)("It is now maintained by the ADMB Core Team, whose members "
+      "are listed on\n");
       (*ad_printf)("http://admb-project.org/developers/core-team.\n");
 
       ad_exit(0);

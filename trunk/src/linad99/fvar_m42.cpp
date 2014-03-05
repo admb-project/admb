@@ -189,7 +189,7 @@ dvariable ln_det(const dvar_matrix& aa,const int& _sgn)
 void df_xldet(void)
 {
   verify_identifier_string("PLACE0");
-  double ld=restore_double_value();
+  /*double ld=*/restore_double_value();
   verify_identifier_string("PLACE1");
   dmatrix_position bpos=restore_dmatrix_position();
   verify_identifier_string("PLACE2");

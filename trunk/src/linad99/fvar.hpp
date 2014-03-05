@@ -3111,7 +3111,8 @@ class dvar_vector
    friend dvar_vector first_difference(const dvar_vector &);
    friend dvar_vector second_difference(const dvar_vector &);
 
-   //friend dvar_vector elem_div(const dvar_vector&, const dvar_vector&); // js, see above
+   // js, see above
+   //friend dvar_vector elem_div(const dvar_vector&, const dvar_vector&);
 
    friend dvar_vector elem_prod(const dvector &, const dvar_vector &);
 
@@ -6941,7 +6942,7 @@ class i5_array
    int xxx(void);
    //ivector& elem(int i,int j,int k,int l)
    int yyy(void);
-   //int& elem(int i,int j,int k,int l,int ll) {return( ((*this)(i,j,k))(l,ll));}
+  //int& elem(int i,int j,int k,int l,int ll) {return( ((*this)(i,j,k))(l,ll));}
 #ifdef OPT_LIB
    i4_array & operator () (int i)
    {
@@ -7458,7 +7459,8 @@ class dvar5_array
    {
       return (((*this) (i)) (j, k, l));
    }
-   inline const prevariable operator() (int i, int j, int k, int l, int _m) const
+   inline const prevariable operator() (int i, int j, int k, int l, int _m)
+     const
    {
       return (((*this) (i)) (j, k, l, _m));
    }
@@ -7865,7 +7867,8 @@ class dvar6_array
    const dvar3_array & operator() (int i, int j, int k) const;
    const dvar_matrix & operator() (int i, int j, int k, int l) const;
    const dvar_vector & operator() (int i, int j, int k, int l, int _m) const;
-   const prevariable operator() (int i, int j, int k, int l, int _m, int _n) const;
+   const prevariable operator() (int i, int j, int k, int l, int _m, int _n)
+     const;
    dvar5_array & operator ()(int);
    dvar5_array & operator [](int);
    dvar4_array & operator ()(int, int);
@@ -8304,8 +8307,10 @@ class dvar7_array
    const dvar4_array & operator() (int i, int j, int k) const;
    const dvar3_array & operator() (int i, int j, int k, int l) const;
    const dvar_matrix & operator() (int i, int j, int k, int l, int _m) const;
-   const dvar_vector & operator() (int i, int j, int k, int l, int _m, int _n) const;
-   const prevariable operator() (int i, int j, int k, int l, int _m, int _n, int _p) const;
+   const dvar_vector & operator() (int i, int j, int k, int l, int _m, int _n)
+     const;
+   const prevariable operator() (int i, int j, int k, int l, int _m, int _n,
+     int _p) const;
    dvar6_array & operator ()(int);
    dvar6_array & operator [](int);
    dvar5_array & operator ()(int, int);

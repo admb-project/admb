@@ -25,7 +25,6 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
 {
   ADUNCONST(dvector,xadjoint)
   ADUNCONST(dvector,uadjoint)
-  ADUNCONST(dmatrix,Hessadjoint)
   const int xs=x.size();
   const int us=u0.size();
   gradient_structure::set_YES_DERIVATIVES();
@@ -48,7 +47,7 @@ double calculate_importance_sample_shess(const dvector& x,const dvector& u0,
   // init parameters should be active in this phase
   initial_params::set_inactive_only_random_effects();
   initial_params::set_active_random_effects();
-  int onvar=initial_params::nvarcalc();
+  /*int onvar=*/initial_params::nvarcalc();
   initial_params::xinit(y);    // get the initial values into the
   // do we need this next line?
   y(1,xs)=x;

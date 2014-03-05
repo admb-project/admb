@@ -432,7 +432,8 @@ class independent_variables;
 #   include <iomanip.h>
 #endif
 
-#define BEGIN_MINIMIZATION(nvar, objective_function, ind_vars, gradient, cntrl) \
+#define BEGIN_MINIMIZATION(nvar, objective_function, ind_vars, gradient, \
+cntrl) \
 gradient_structure gs; \
 while (cntrl.ireturn >= 0) \
 { \
@@ -444,7 +445,6 @@ while (cntrl.ireturn >= 0) \
     gradcalc(nvar, gradient); \
   } \
 }
-
 
 void default_evaluation4ind(void);
 void default_evaluation(void);
@@ -905,7 +905,6 @@ class ivector
    void initialize(void);
    ivector & operator+=(const ivector & t);
    ivector & operator +=(int t);
-
 };
 
 ivector operator+(const ivector & v, const ivector & w);
@@ -1807,7 +1806,6 @@ class prevariable
 
 
  public:
-
    void save_prevariable_position(void) const;
    prevariable_position restore_prevariable_position(void);
    void save_prevariable_value(void) const;
@@ -1910,7 +1908,6 @@ class prevariable
    friend prevariable & pow(const prevariable & t1, double t2);
 
    friend prevariable & pow(double t1, const prevariable & t2);
-
 };
 
 inline double &value(const prevariable & v1)
@@ -1959,7 +1956,6 @@ class dvariable:public prevariable
 //#  if (__BORLANDC__  > 0x0520)
 //     dvariable& operator+=(const prevariable&);
 //#  endif
-
 };
 
 #if defined(max)
@@ -2655,7 +2651,6 @@ class dvector
 class independent_variables:public dvector
 {
  public:
-
    independent_variables(const independent_variables & v):dvector(v)
    {
    }
@@ -2670,7 +2665,6 @@ class independent_variables:public dvector
    }
 
    independent_variables & operator=(const dvector & t);
-
 };
 
 
@@ -3147,7 +3141,6 @@ class dvar_vector
 
    friend void make_indvar_list(const dvar_vector &);
    friend class array_size;
-
 };
 
  /*
@@ -3469,7 +3462,6 @@ class dvar_matrix
    friend dvariable sumsq(const dvar_matrix &);
 
    friend void copy_status(const ostream & s, const dvar_matrix & m1);
-
 };
 
 dvariable ln_det(const dvar_matrix &);
@@ -3769,7 +3761,6 @@ class dmatrix
 
    dmatrix & operator /=(double d);
    dmatrix & operator *=(double d);
-
 };
 
 imatrix operator*(const imatrix &, const imatrix &);
@@ -4780,7 +4771,6 @@ class d3_array
    void fill_randn_ni(long int &n);
    double fill_seqadd(double, double);
    void operator /=(double d);
-
 };
 
 /**
@@ -4979,7 +4969,6 @@ class i3_array
    void fill_randn(long int &n);
    void fill_randu_ni(long int &n);
    void fill_randn_ni(long int &n);
-
 };
 
 #   if defined(__NUMBERVECTOR__)
@@ -5193,7 +5182,6 @@ class dvar3_array
    double fill_seqadd(double, double);
    void operator/=(const prevariable &);
    void operator /=(double);
-
 };
 
 dvariable inv_cumd_exponential(const prevariable & y);
@@ -9321,9 +9309,11 @@ void gauss_legendre(const dvector & _x, const dvector & _w);
 
 double betacf(const double _a, const double _b, double _x, int maxit = 100);
 
-dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x, int maxit = 100);
+dvariable betacf(const dvariable& _a, const dvariable& _b, const dvariable& _x,
+  int maxit = 100);
 
-dvariable betai(const dvariable a, const dvariable b, const dvariable x, int maxit = 100);
+dvariable betai(const dvariable a, const dvariable b, const dvariable x,
+  int maxit = 100);
 double betai(const double a,const double b,const double x, int maxit=100);
 
 /*

@@ -1747,7 +1747,7 @@ class prevariable
 #endif
 
  public:
-   double_and_int * v;		///< pointer to the data
+   double_and_int * v; ///< pointer to the data
    friend class dvar_vector_iterator;
    friend class dvar_vector;
    friend class dvar_matrix;
@@ -1766,15 +1766,13 @@ class prevariable
 
    //void gradfree(dlink * v)
 
-   friend prevariable & operator*(const prevariable & v1,
-				  const prevariable & v2);
+   friend prevariable & operator*(const prevariable& v1, const prevariable& v2);
 
    friend prevariable & operator*(double v1, const prevariable & v2);
 
    friend prevariable & operator*(const prevariable & v1, double v2);
 
-   friend prevariable & operator/(const prevariable & t1,
-				  const prevariable & t2);
+   friend prevariable & operator/(const prevariable& t1, const prevariable& t2);
 
    friend prevariable & operator/(double t1, const prevariable & t2);
 
@@ -1785,7 +1783,7 @@ class prevariable
    friend prevariable & fabs(const prevariable & t1);
    friend prevariable & sigmoid(const prevariable & t1);
 
-   friend prevariable & sfabs(const prevariable & t1);	//"smoothed absolute value function
+   friend prevariable & sfabs(const prevariable & t1);//"smoothed absolute value function
 
    friend prevariable & sqrt(const prevariable & t1);
    friend prevariable & sqr(const prevariable & t1);
@@ -4657,15 +4655,15 @@ class d3_array
    void allocate(int sl, int sh, const ivector & nrl, const ivector & nrh,
      const ivector & ncl, const ivector & nch);
    void allocate(int sl, int sh, int nrl, const ivector & nrh, int ncl,
-		 const ivector & nch);
+     const ivector & nch);
    void allocate(int sl, int sh, int nrl, int nrh, const ivector & ncl,
-		 const ivector & nch);
+     const ivector & nch);
    void allocate(int sl, int sh, int nrl, int nrh, int ncl,
-		 const ivector & nch);
+     const ivector & nch);
    void allocate(void);
    void deallocate(void);
    void initialize(int sl, int sh, int nrl, const ivector & nrh,
-		   int ncl, const ivector & nch);
+     int ncl, const ivector & nch);
 
    //access functions
    int indexmin(void) const
@@ -4700,19 +4698,21 @@ class d3_array
    {
       return ((*this) (slicemin()).rowmax());
    }
-
+   // returns the number of rows
    int slicesize(void) const
    {
       return (slicemax() - slicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int rowsize(void) const
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize(void) const
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    void initialize(void);
 
    dmatrix & elem(int k)
@@ -4790,7 +4790,7 @@ class d3_array
    double fill_seqadd(double, double);
    void operator /=(double d);
 
-};				//end of class d3_array
+};
 
 /**
  * Description not yet available.
@@ -4813,70 +4813,64 @@ class i3_array
    void shallow_copy(const i3_array &);
    i3_array(void);
    i3_array(int sl, int sh, const index_type & nrl, const index_type & nrh,
-	    const index_type & ncl, const index_type & nch);
+     const index_type & ncl, const index_type & nch);
 
    i3_array(int _sl, int _sh, const imatrix & m1);
 
    i3_array(int sl, int sh);
    i3_array(int sl, int sh, int nrl, int nrh, int ncl, int nch);
-   i3_array(int sl, int sh, int nrl, int nrh, const ivector & ncl,
-	    int nch);
+   i3_array(int sl, int sh, int nrl, int nrh, const ivector & ncl, int nch);
 
    i3_array(int sl, int sh, const ivector & nrl, const ivector & nrh,
-	    const imatrix & ncl, const imatrix & nch);
+     const imatrix & ncl, const imatrix & nch);
    i3_array(int sl, int sh, const ivector & nrl, const ivector & nrh,
-	    int ncl, const imatrix & nch);
+     int ncl, const imatrix & nch);
    i3_array(int sl, int sh, const ivector & nrl, const ivector & nrh,
-	    const ivector & ncl, const ivector & nch);
+     const ivector & ncl, const ivector & nch);
    i3_array(int sl, int sh, int nrl, int nrh, const ivector & ncl,
-	    const ivector & nch);
-   i3_array(int sl, int sh, int nrl, const ivector & nrh,
-	    int ncl, const ivector & nch);
-   i3_array(int sl, int sh, int nrl, const ivector & nrh,
-	    int ncl, int nch);
-   i3_array(int sl, int sh, int nrl, const ivector & nrh,
-	    int ncl, const imatrix & nch);
+     const ivector & nch);
+   i3_array(int sl, int sh, int nrl, const ivector & nrh, int ncl,
+     const ivector & nch);
+   i3_array(int sl, int sh, int nrl, const ivector & nrh, int ncl, int nch);
+   i3_array(int sl, int sh, int nrl, const ivector & nrh, int ncl,
+     const imatrix & nch);
    i3_array(const i3_array & m2);
    ~i3_array();
 
-   void allocate(int sl, int sh, int nrl, const ivector & nrh, int ncl,
-		 int nch);
+   void allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl, int nch);
    void allocate(const dvar3_array &);
    void allocate(const i3_array & i3v);
    void allocate(int sl, int sh, int nrl, int nrh, int ncl, int nch);
    void allocate(int sl, int sh);
 
-   void allocate(int sl, int sh, int nrl, int nrh, const ivector & ncl,
-		 int nch);
+   void allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch);
 
-   void allocate(int sl, int sh, const index_type & nrl,
-		 const index_type & nrh, const index_type & ncl,
-		 const index_type & nch);
+   void allocate(int sl, int sh, const index_type& nrl, const index_type& nrh,
+     const index_type & ncl, const index_type & nch);
 
    void allocate(int sl, int sh, const ivector & nrl, const ivector & nrh,
-		 const imatrix & ncl, const imatrix & nch);
-   void allocate(int sl, int sh, int nrl, const ivector & nrh,
-		 int ncl, const imatrix & nch);
+     const imatrix & ncl, const imatrix & nch);
+   void allocate(int sl, int sh, int nrl, const ivector & nrh, int ncl,
+     const imatrix & nch);
    void allocate(int sl, int sh, const ivector & nrl, const ivector & nrh,
-		 int ncl, const imatrix & nch);
+     int ncl, const imatrix & nch);
    void allocate(int sl, int sh, const ivector & nrl, const ivector & nrh,
-		 int ncl, int nch);
+     int ncl, int nch);
    void allocate(int sl, int sh, const ivector & nrl, int nrh,
-		 int ncl, int nch);
+     int ncl, int nch);
    //void allocate(int sl, int sh, int nrl, const ivector& nrh,
    //  int ncl,int nch);
    void allocate(int sl, int sh, const ivector & nrl, const ivector & nrh,
-		 const ivector & ncl, const ivector & nch);
+     const ivector & ncl, const ivector & nch);
    void allocate(int sl, int sh, int nrl, const ivector & nrh,
-		 int ncl, const ivector & nch);
-   void allocate(int sl, int sh, int nrl, int nrh,
-		 const ivector & ncl, const ivector & nch);
-   void allocate(int sl, int sh, int nrl, int nrh,
-		 int ncl, const ivector & nch);
+     int ncl, const ivector & nch);
+   void allocate(int sl, int sh, int nrl, int nrh, const ivector & ncl,
+     const ivector & nch);
+   void allocate(int sl, int sh, int nrl, int nrh, int ncl, const ivector& nch);
    void allocate(void);
    void deallocate(void);
-   void initialize(int sl, int sh, int nrl, const ivector & nrh,
-		   int ncl, const ivector & nch);
+   void initialize(int sl, int sh, int nrl, const ivector & nrh, int ncl,
+     const ivector & nch);
 
    //access functions
    int indexmin(void) const
@@ -4911,19 +4905,21 @@ class i3_array
    {
       return ((*this) (slicemin()).rowmax());
    }
-
+   // returns the number of rows
    int slicesize() const
    {
       return (slicemax() - slicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int rowsize() const
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize() const
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    void initialize(void);
 
    imatrix & elem(int k)
@@ -4993,7 +4989,7 @@ class i3_array
    void fill_randu_ni(long int &n);
    void fill_randn_ni(long int &n);
 
-};				//end of class i3_array
+};
 
 #   if defined(__NUMBERVECTOR__)
 class param_init_matrix_vector;
@@ -5006,12 +5002,10 @@ class param_init_bounded_matrix_vector;
  */
 class dvar3_array
 {
-
    dvar_matrix *t;
    three_array_shape *shape;
 
  public:
-
    void shallow_copy(const dvar3_array &);
    dvar3_array sub(int, int);
    dvar3_array(int, int);
@@ -5024,55 +5018,47 @@ class dvar3_array
    void initialize(void);
    void allocate(int sl, int sh, int nrl, int nrh, int ncl, int nch);
    void allocate(int sl, int sh, int nrl, int nrh);
-   void allocate(int sl, int sh, const index_type & nrl,
-		 const index_type & nrh);
+   void allocate(int sl, int sh, const index_type& nrl, const index_type& nrh);
    void allocate(int sl, int sh);
 
-
-   void allocate(int sl, int sh, int nrl, int nrh, const ivector & ncl,
-		 int nch);
+   void allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch);
    void allocate(const d3_array & m1);
    void allocate(void);
    void allocate(const dvar3_array & m1);
    void allocate(int sl, int sh, int nrl, int nrh,
-		 const ivector & ncl, const ivector & nch);
+     const ivector & ncl, const ivector & nch);
    void allocate(int sl, int sh, const ivector & nrl, const ivector & nrh,
-		 const ivector & ncl, const ivector & nch);
+     const ivector & ncl, const ivector & nch);
    void allocate(int sl, int sh, const ivector & nrl, const ivector & nrh,
-		 int ncl, int nch);
+     int ncl, int nch);
    void allocate(int sl, int sh, const ivector & nrl, int nrh,
-		 int ncl, int nch);
+     int ncl, int nch);
    void allocate(int sl, int sh, int nrl, const ivector & nrh,
-		 int ncl, int nch);
+     int ncl, int nch);
    void allocate(int sl, int sh, int nrl, const ivector & nrh,
-		 int ncl, const ivector & nch);
+     int ncl, const ivector & nch);
    void allocate(int sl, int sh, int nrl, int nrh,
-		 int ncl, const ivector & nch);
-   void allocate(ad_integer sl, ad_integer sh,
-		 const index_type & nrl, const index_type & nrh,
-		 const index_type & ncl, const index_type & nch);
-   void allocate(ad_integer sl, ad_integer sh,
-		 const index_type & nrl, const index_type & nrh);
+     int ncl, const ivector & nch);
+   void allocate(ad_integer sl, ad_integer sh, const index_type & nrl,
+     const index_type & nrh, const index_type & ncl, const index_type & nch);
+   void allocate(ad_integer sl, ad_integer sh, const index_type & nrl,
+     const index_type & nrh);
    void allocate(ad_integer sl, ad_integer sh);
 
    void deallocate();
    dvar3_array(int sl, int sh, int nrl, int nrh, int ncl, int nch);
-   dvar3_array(int sl, int sh, int nrl, int nrh, const ivector & ncl,
-	       int nch);
+   dvar3_array(int sl, int sh, int nrl, int nrh, const ivector & ncl, int nch);
 
    dvar3_array(int sl, int sh, const ivector & nrl, const ivector & nrh,
-	       ivector & ncl, const ivector & nch);
+     ivector & ncl, const ivector & nch);
 
-   dvar3_array(int sl, int sh, int nrl, const ivector & nrh,
-	       int ncl, const ivector & nch);
+   dvar3_array(int sl, int sh, int nrl, const ivector & nrh, int ncl,
+     const ivector & nch);
 
-   dvar3_array(int sl, int sh, int nrl, const ivector & nrh,
-	       int ncl, int nch);
+   dvar3_array(int sl, int sh, int nrl, const ivector & nrh, int ncl, int nch);
 
-   dvar3_array(ad_integer sl, ad_integer sh,
-	       const index_type & nrl, const index_type & nrh,
-	       const index_type & ncl, const index_type & nch);
-
+   dvar3_array(ad_integer sl, ad_integer sh, const index_type & nrl,
+     const index_type & nrh, const index_type & ncl, const index_type & nch);
 
    dvar3_array(const d3_array & m2);
 #   if defined(__NUMBERVECTOR__)
@@ -5121,20 +5107,21 @@ class dvar3_array
    {
       return ((*this) (slicemin()).rowmax());
    }
-
+   // returns the number of rows
    int slicesize() const
    {
       return (slicemax() - slicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int rowsize() const
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize() const
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
-
+   }
    dvar_matrix & elem(int k)
    {
       return (t[k]);
@@ -5216,7 +5203,7 @@ class dvar3_array
    void operator/=(const prevariable &);
    void operator /=(double);
 
-};				//end of class dvar3_array
+};
 
 dvariable inv_cumd_exponential(const prevariable & y);
 dvariable cumd_exponential(const prevariable & x);
@@ -5390,114 +5377,103 @@ dvar_vector cube(const dvar_vector & x);
 dvar_matrix cube(const dvar_matrix & x);
 dvar3_array cube(const dvar3_array & x);
 
-void set_value(const dvar_matrix & x, const dvar_vector & v,
-	       const int &_ii, double s);
+void set_value(const dvar_matrix & x, const dvar_vector & v, const int &_ii,
+  double s);
 void set_value(const dvar_matrix & x, const dvar_vector & v, const int &ii,
-	       double fmin, double fmax, const dvariable & fpen, double s);
+  double fmin, double fmax, const dvariable & fpen, double s);
 void set_value_inv(const dvar_matrix & x, const dvector & v, const int &ii,
-		   double s);
+  double s);
 void set_value_inv(const dvar_matrix & x, const dvector & v, const int &ii,
-		   double fmin, double fmax, double s);
-void set_value(const dvar_vector & x, const dvar_vector & v,
-	       const int &_ii, double s);
-void set_value(const dvar_vector & _x, const dvar_vector & v,
-	       const int &_ii, double fmin, double fmax,
-	       const dvariable & fpen, double s);
-void set_value_inv(const dvar_vector & x, const dvector & _v,
-		   const int &_ii, double s);
-void set_value_inv(const dvar_vector & x, const dvector & _v,
-		   const int &_ii, double fmin, double fmax, double s);
-void set_value_inv(const dvar_matrix & x, const dvector & v,
-		   const int &ii);
+  double fmin, double fmax, double s);
+void set_value(const dvar_vector & x, const dvar_vector & v, const int &_ii,
+   double s);
+void set_value(const dvar_vector & _x, const dvar_vector & v, const int &_ii,
+  double fmin, double fmax, const dvariable & fpen, double s);
+void set_value_inv(const dvar_vector & x, const dvector & _v, const int &_ii,
+  double s);
+void set_value_inv(const dvar_vector & x, const dvector & _v, const int &_ii,
+  double fmin, double fmax, double s);
+void set_value_inv(const dvar_matrix & x, const dvector & v, const int &ii);
 void set_value_inv(const prevariable & x, const dvector & v, const int &ii,
-		   double s);
-void set_value_inv(const prevariable & x, const dvector & v,
-		   const int &ii);
-void set_value_inv(const dvar_matrix & x, const dvector & v,
-		   const int &ii);
+  double s);
+void set_value_inv(const prevariable & x, const dvector & v, const int &ii);
+void set_value_inv(const dvar_matrix & x, const dvector & v, const int &ii);
 void set_value_inv(const dvar_matrix & u, const dvector & x, const int &ii,
-		   double fmin, double fmax);
+  double fmin, double fmax);
 void set_value_inv(const dvar3_array & u, const dvector & x, const int &ii,
-		   double fmin, double fmax);
-void set_value_inv(const dvar3_array & u, const dvector & x,
-		   const int &ii);
+  double fmin, double fmax);
+void set_value_inv(const dvar3_array & u, const dvector & x, const int &ii);
 
 void set_value_inv(double x, const dvector & v, const int &ii);
 
 void set_value_inv_exp(const prevariable & x, const dvector & _v,
-		       const int &_ii, double fmin, double fmax, double s);
+  const int &_ii, double fmin, double fmax, double s);
 
-void set_value_inv(const prevariable & x, const dvector & _v,
-		   const int &_ii, double fmin, double fmax, double s);
+void set_value_inv(const prevariable & x, const dvector & _v, const int &_ii,
+  double fmin, double fmax, double s);
 
 void set_value_inv(const prevariable & u, const dvector & x, const int &ii,
-		   double fmin, double fmax);
+  double fmin, double fmax);
 void set_value_inv(double u, const dvector & x, const int &ii, double fmin,
-		   double fmax);
+  double fmax);
 void set_value_inv(const dvector & x, const dvector & v, const int &ii);
-void set_value_inv(const dvar_vector & x, const dvector & v,
-		   const int &ii);
+void set_value_inv(const dvar_vector & x, const dvector & v, const int &ii);
 void set_value_inv(const dvar_vector & x, const dvector & v, const int &ii,
-		   double fmin, double fmax);
+  double fmin, double fmax);
 void set_value_inv(const dvector & x, const dvector & v, const int &ii,
-		   double fmin, double fmax);
+  double fmin, double fmax);
 void set_value_inv(const dmatrix & x, const dvector & v, const int &ii);
 void set_value_inv(const dmatrix & x, const dvector & v, const int &ii,
-		   double fmin, double fmax);
+  double fmin, double fmax);
 void set_value_inv(const d3_array & x, const dvector & v, const int &ii);
 void set_value_inv(const d3_array & x, const dvector & v, const int &ii,
-		   double fmin, double fmax);
-void set_value(const prevariable & x, const dvar_vector & v,
-	       const int &ii);
+  double fmin, double fmax);
+void set_value(const prevariable & x, const dvar_vector & v, const int &ii);
 void set_value(const prevariable & x, const dvar_vector & v, const int &ii,
-	       double s);
-void set_value(const dvar_vector & x, const dvar_vector & v,
-	       const int &ii);
+  double s);
+void set_value(const dvar_vector & x, const dvar_vector & v, const int &ii);
 
 void set_value_exp(const prevariable & _x, const dvar_vector & v,
-		   const int &_ii, double fmin, double fmax,
-		   const dvariable & fpen, double s);
-void set_value(const prevariable & _x, const dvar_vector & v,
-	       const int &_ii, double fmin, double fmax,
-	       const dvariable & fpen, double s);
+  const int &_ii, double fmin, double fmax, const dvariable & fpen, double s);
+void set_value(const prevariable & _x, const dvar_vector & v, const int &_ii,
+  double fmin, double fmax, const dvariable & fpen, double s);
 
 void set_value(const prevariable & x, const dvar_vector & v, const int &ii,
-	       double fmin, double fmax, const dvariable & fpen);
+  double fmin, double fmax, const dvariable & fpen);
 void set_value(const dvar_vector & x, const dvar_vector & v, const int &ii,
-	       double fmin, double fmax, const dvariable & fpen);
+  double fmin, double fmax, const dvariable & fpen);
 void set_value(const dvar_matrix & x, const dvar_vector & v,
-	       const int &ii);
+  const int &ii);
 void set_value(const dvar_matrix & x, const dvar_vector & v, const int &ii,
-	       double fmin, double fmax, const dvariable & fpen);
+  double fmin, double fmax, const dvariable & fpen);
 void set_value(dvar3_array & x, const dvar_vector & v, const int &ii);
 void set_value(dvar3_array & x, const dvar_vector & v, const int &ii,
-	       double fmin, double fmax, const dvariable & fpen);
+  double fmin, double fmax, const dvariable & fpen);
 
-void set_value_inv_partial(const dvector & x, const dvector & v,
-			   const int &ii, int n);
-void set_value_inv_partial(const dvector & x, const dvector & v,
-			   const int &ii, int n, double fmin, double fmax);
-void set_value_inv_partial(const dmatrix & x, const dvector & v,
-			   const int &ii, int n);
+void set_value_inv_partial(const dvector & x, const dvector & v, const int &ii,
+  int n);
+void set_value_inv_partial(const dvector & x, const dvector & v, const int &ii,
+  int n, double fmin, double fmax);
+void set_value_inv_partial(const dmatrix & x, const dvector & v, const int &ii,
+  int n);
 void set_value_inv_partial(const dvar_matrix & x, const dvector & v,
-			   const int &ii, int n);
-void set_value_inv_partial(const d3_array & x, const dvector & v,
-			   const int &ii, int n);
+  const int &ii, int n);
+void set_value_inv_partial(const d3_array & x, const dvector& v, const int &ii,
+  int n);
 
 void set_value_inv_partial(const dvar_vector & x, const dvector & v,
-			   const int &ii, int n);
+  const int &ii, int n);
 void set_value_inv_partial(const dvar_vector & x, const dvector & v,
-			   const int &ii, int n, double fmin, double fmax);
+  const int &ii, int n, double fmin, double fmax);
 
 void set_value_partial(const dvar_vector & x, const dvar_vector & v,
-		       const int &ii, int n);
+  const int &ii, int n);
 void set_value_partial(const dvar_vector & x, const dvar_vector & v,
-		       const int &ii, int n, double fmin, double fmax,
-		       const dvariable & fpen);
+  const int &ii, int n, double fmin, double fmax, const dvariable & fpen);
 void set_value_partial(const dvar_matrix & x, const dvar_vector & v,
-		       const int &ii, int n);
-void set_value_partial(dvar3_array & x, const dvar_vector & v,
-		       const int &ii, int n);
+  const int &ii, int n);
+void set_value_partial(dvar3_array & x, const dvar_vector & v, const int &ii,
+  int n);
 
 int size_count(const dvar_vector & x);
 int size_count(const dvar_matrix & x);
@@ -5533,10 +5509,10 @@ void verify_identifier_string(const char *);
 ivector restore_ivector_value(const ivector_position &);
 ivector_position restore_ivector_position(void);
 dvar_matrix_position restore_dvar_matrix_position(void);
-dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position &
-					   pos, const int &ii);
-dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position &
-					      pos, const int &ii);
+dvector restore_dvar_matrix_derivative_row(const dvar_matrix_position& pos,
+  const int &ii);
+dvector restore_dvar_matrix_derivative_column(const dvar_matrix_position& pos,
+  const int &ii);
 dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position & pos);
 dmatrix restore_dvar_matrix_derivatives(void);
 double restore_prevariable_derivative(void);
@@ -5556,26 +5532,26 @@ dvector_position restore_dvector_position(void);
 dvector restore_dvector_value(const dvector_position &);
 dmatrix restore_dmatrix_value(const dmatrix_position &);
 dvector restore_dvar_matrix_derivatives(const dvar_matrix_position & pos,
-					const int &ii);
+  const int &ii);
 dvector restore_dvar_vector_derivatives(const dvar_vector_position & tmp);
 dmatrix restore_dvar_matrix_derivatives(const dvar_matrix_position & pos);
 void save_dmatrix_derivatives(const dvar_matrix_position & pos, double x,
-			      const int &i, int &j);
+  const int &i, int &j);
 dmatrix restore_dvar_matrix_der_nozero(const dvar_matrix_position & pos);
 dvector restore_dvar_vector_der_nozero(const dvar_vector_position & tmp);
 d3_array_position restore_d3_array_position(void);
 d3_array restore_d3_array_value(const d3_array_position &);
 void nograd_assign_row(const dvar_matrix & m, const dvector & v,
-		       const int &ii);
+  const int &ii);
 void nograd_assign_column(const dvar_matrix & m, const dvector & v,
-			  const int &ii);
+  const int &ii);
 
 long int reset_gs_stack(void);
 void reset_gs_stack(long int);
 
 dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z);
 dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
-		  prevariable & ln_unsigned_det, const prevariable & sign);
+  prevariable & ln_unsigned_det, const prevariable & sign);
 
 //dvar_vector solve(const dvar_matrix& aa, const dvar_vector& z,
  // prevariable& ln_unsigned_det, const prevariable& sign);
@@ -5583,7 +5559,7 @@ dvar_vector solve(const dvar_matrix & aa, const dvar_vector & z,
 dvector csolve(const dmatrix & aa, const dvector & z);
 dvector solve(const dmatrix & aa, const dvector & z);
 dvector solve(const dmatrix & aa, const dvector & z,
-	      const double &ln_unsigned_det, double &sign);
+  const double &ln_unsigned_det, double &sign);
 
 dmatrix choleski_decomp(const dmatrix & M);
 dmatrix choleski_decomp_error(const dmatrix & M, int &ierror);
@@ -5601,12 +5577,9 @@ double factln(double n);
 dvar_vector factln(const dvar_vector & n);
 dvector factln(const dvector & n);
 
-dvar_vector posfun(const dvar_vector & x, double eps,
-		   const prevariable & pen);
-dvariable posfun(const dvariable & x, const double eps,
-		 const prevariable & pen);
-dvariable posfun2(const dvariable & x, const double eps,
-		  const prevariable & pen);
+dvar_vector posfun(const dvar_vector & x, double eps, const prevariable & pen);
+dvariable posfun(const dvariable& x, const double eps, const prevariable & pen);
+dvariable posfun2(const dvariable& x, const double eps, const prevariable& pen);
 double posfun(const double &x, const double eps, const double &_pen);
 double posfun2(const double &x, const double eps, const double &_pen);
 double dfposfun(const double &x, const double eps);
@@ -5686,8 +5659,7 @@ class dvar_matrix_position
    {
       return ub;
    }
-   friend ostream & operator<<(const ostream &,
-			       const dvar_matrix_position &);
+   friend ostream & operator<<(const ostream &, const dvar_matrix_position &);
    friend class dmatrix_position;
    friend class dmatrix;
 };
@@ -5892,7 +5864,7 @@ class fmmq:public fmm_control
    fmmq(int nvar, const lvector & ipar);
    double minimize(const dvector & x, double (*pf) (const dvar_vector &));
    double minimize(const independent_variables & x, const dvector & c,
-		   double (*pf) (const dvar_vector &, const dvector &));
+     double (*pf) (const dvar_vector &, const dvector &));
    void fmin(const double &f, const dvector & x, const dvector & g);
    void va13c(const dvector & x, double f, const dvector & g);
 };
@@ -5903,16 +5875,16 @@ class fmmq:public fmm_control
  */
 class vcubic_spline_function
 {
-   dvector x;			// indep variables values
-   dvar_vector y;		// dep variable values
-   dvar_vector y2;		// second derivatives
+   dvector x; // indep variables values
+   dvar_vector y; // dep variable values
+   dvar_vector y2; // second derivatives
  public:
    vcubic_spline_function(const dvector & _x, const dvar_vector & _y,
-			  double yp1 = 0.0, double ypn = 0.0);
+     double yp1 = 0.0, double ypn = 0.0);
    vcubic_spline_function(const dvector & _x, const dvar_vector & _y,
-			  dvariable yp1, dvariable ypn);
+     dvariable yp1, dvariable ypn);
    vcubic_spline_function(const dvector & _x, const dvar_vector & _y,
-			  dvariable yp1);
+     dvariable yp1);
    dvariable operator   () (double u);
    dvar_vector operator () (const dvector & u);
    dvar_vector operator () (const dvar_vector & u);
@@ -5924,12 +5896,12 @@ class vcubic_spline_function
  */
 class cubic_spline_function
 {
-   dvector x;			// indep variables values
-   dvector y;			// dep variable values
-   dvector y2;			// second derivatives
+   dvector x; // indep variables values
+   dvector y; // dep variable values
+   dvector y2; // second derivatives
  public:
    cubic_spline_function(const dvector & _x, const dvector & _y,
-			 double yp1 = 0.0, double ypn = 0.0);
+     double yp1 = 0.0, double ypn = 0.0);
    double operator () (double u);
    dvector operator() (const dvector & u);
 };
@@ -5966,8 +5938,7 @@ void *cdecl _farptr_fromlong(unsigned long int);
 */
 
 // this is the speical version with an index for reordering the matrix
-void ludcmp_index(const dmatrix & a, const ivector & indx,
-		  const double &d);
+void ludcmp_index(const dmatrix & a, const ivector & indx, const double &d);
 
 void ludcmp(const dmatrix & a, const ivector & indx, const double &d);
 // this should allways appear at the end of the file
@@ -6017,14 +5988,13 @@ class four_array_shape
    //int row_max;
    //int col_min;
    //int col_max;
-   four_array_shape(int hsl, int hsu);	//, int sl,int sh,int rl,
+   four_array_shape(int hsl, int hsu);//, int sl,int sh,int rl,
    // int ru,int cl,int cu);
    //mat_shape(){};
 
    friend class d4_array;
    friend class dvar4_array;
-
-};				// End of class four_array_shape
+};
 
 /**
  * Description not yet available.
@@ -6038,19 +6008,18 @@ class d4_array
    void shallow_copy(const d4_array &);
    d4_array(int, int);
    d4_array sub(int, int);
-   void allocate(int hsl, int hsu, int sl, int sh, int nrl,
-		 int nrh, int ncl, int nch);
+   void allocate(int hsl, int hsu, int sl, int sh, int nrl, int nrh, int ncl,
+     int nch);
    void allocate(int hsl, int hsu, int sl, const ivector & sh, int nrl,
-		 const imatrix & nrh, int ncl, const imatrix & nch);
+     const imatrix & nrh, int ncl, const imatrix & nch);
    void allocate(int hsl, int hsu, int sl, const ivector & sh, int nrl,
-		 const imatrix & nrh, int ncl, const i3_array & nch);
+     const imatrix & nrh, int ncl, const i3_array & nch);
    void allocate(int hsl, int hsu, int sl, int sh, int nrl,
-		 int nrh, const ivector & ncl, const ivector & nch);
+     int nrh, const ivector & ncl, const ivector & nch);
    void allocate(int hsl, int hsu, int sl, int sh, const ivector & nrl,
-		 const ivector & nrh, const ivector & ncl,
-		 const ivector & nch);
+     const ivector & nrh, const ivector & ncl, const ivector & nch);
    void allocate(int hsl, int hsu, int sl, const ivector & sh, int nrl,
-		 const imatrix & nrh, int ncl, int nch);
+     const imatrix & nrh, int ncl, int nch);
    void deallocate(void);
    void allocate(void);
    void allocate(const d4_array &);
@@ -6060,38 +6029,34 @@ class d4_array
       return (shape == NULL);
    }
    d4_array(int hsl, int hsu, int sl, int sh, ivector nrl, ivector nrh,
-	    ivector ncl, ivector nch);
+     ivector ncl, ivector nch);
 
    d4_array(int hsl, int hsu, int sl, const ivector & sh, int nrl,
-	    const imatrix & nrh, int ncl, const i3_array & nch);
+     const imatrix & nrh, int ncl, const i3_array & nch);
 
-   d4_array(int hsl, int hsu, const index_type & sl,
-	    const index_type & sh, const index_type & nrl,
-	    const index_type & nrh, const index_type & ncl,
-	    const index_type & nch);
+   d4_array(int hsl, int hsu, const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh, const index_type & ncl,
+     const index_type & nch);
 
-   void allocate(int hsl, int hsu, const index_type & sl,
-		 const index_type & sh, const index_type & nrl,
-		 const index_type & nrh, const index_type & ncl,
-		 const index_type & nch);
+   void allocate(int hsl, int hsu, const index_type & sl, const index_type& sh,
+     const index_type & nrl, const index_type & nrh, const index_type & ncl,
+     const index_type & nch);
    void allocate(ad_integer hsl, ad_integer hsu, const index_type & sl,
-		 const index_type & sh, const index_type & nrl,
-		 const index_type & nrh, const index_type & ncl,
-		 const index_type & nch);
+     const index_type & sh, const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch);
 
    void allocate(ad_integer hsl, ad_integer hsu, const index_type & sl,
-		 const index_type & sh, const index_type & nrl,
-		 const index_type & nrh);
+     const index_type & sh, const index_type & nrl, const index_type & nrh);
    void allocate(ad_integer hsl, ad_integer hsu, const index_type & sl,
-		 const index_type & sh);
+     const index_type & sh);
    void allocate(ad_integer hsl, ad_integer hsu);
 
    d4_array & operator=(const d4_array &);
    d4_array(const d4_array & m2);
    d4_array(int, int, int, int, int, int, int, int);
    //d4_array(int,int,int,ivector,int,imatrix,int,int);
-   d4_array(int hsl, int hsu, int sl, const ivector & sh,
-	    int nrl, const imatrix & nrh, int ncl, int nch);
+   d4_array(int hsl, int hsu, int sl, const ivector & sh, int nrl,
+     const imatrix & nrh, int ncl, int nch);
    d4_array();
    ~d4_array();
    d3_array & elem(int i)
@@ -6222,23 +6187,26 @@ class d4_array
    {
       return ((*this) (hslicemin(), slicemin(), rowmax()).indexmax());
    }
-
+   // returns the number of rows
    int hslicesize()
    {
       return (hslicemax() - hslicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int slicesize()
    {
       return (slicemax() - slicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int rowsize()
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize()
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    int indexmin(void) const
    {
       return (shape->hslice_min);
@@ -6288,22 +6256,27 @@ class d4_array
    //int colmax(void) const { return(shape->col_max);}
    //int rowmin(void) const { return(shape->row_min);}
    //int rowmax(void) const { return(shape->row_max);}
+
+   // returns the number of rows
    int hslicesize() const
    {
       return (hslicemax() - hslicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int slicesize() const
    {
       return (slicemax() - slicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int rowsize() const
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize() const
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    void initialize(void);
    void operator /=(double d);
 };
@@ -6326,22 +6299,17 @@ class dvar4_array
    void shallow_copy(const dvar4_array &);
    dvar4_array(int, int);
    dvar4_array sub(int, int);
-   void allocate(int hsl, int hsu, int sl, int sh, int nrl,
-		 int nrh, int ncl, int nch);
-   void allocate(int hsl, int hsu, int sl, int sh, int nrl,
-		 int nrh, const ivector & ncl, const ivector & nch);
+   void allocate(int hsl, int hsu, int sl, int sh, int nrl, int nrh, int ncl,
+     int nch);
+   void allocate(int hsl, int hsu, int sl, int sh, int nrl, int nrh,
+     const ivector & ncl, const ivector & nch);
    void allocate(int hsl, int hsu, int sl, int sh, const ivector & nrl,
-		 const ivector & nrh, const ivector & ncl,
-		 const ivector & nch);
-   void allocate(ad_integer, ad_integer, const index_type &,
-		 const index_type &, const index_type &,
-		 const index_type &, const index_type &,
-		 const index_type &);
-   void allocate(ad_integer, ad_integer, const index_type &,
-		 const index_type &, const index_type &,
-		 const index_type &);
-   void allocate(ad_integer, ad_integer, const index_type &,
-		 const index_type &);
+     const ivector & nrh, const ivector & ncl, const ivector & nch);
+   void allocate(ad_integer, ad_integer, const index_type&, const index_type&,
+    const index_type&, const index_type&, const index_type&, const index_type&);
+   void allocate(ad_integer, ad_integer, const index_type &, const index_type &,
+     const index_type &, const index_type &);
+   void allocate(ad_integer, ad_integer, const index_type&, const index_type &);
    void allocate(ad_integer, ad_integer);
 
    void deallocate(void);
@@ -6353,19 +6321,19 @@ class dvar4_array
       return (shape == NULL);
    }
    dvar4_array(int hsl, int hsu, int sl, int sh, ivector nrl, ivector nrh,
-	       ivector ncl, ivector nch);
+     ivector ncl, ivector nch);
    dvar4_array(const d4_array & m1);
    dvar4_array(const dvar4_array & m2);
    dvar4_array(int, int, int, int, int, int, int, int);
 
-   dvar4_array(ad_integer, ad_integer, const index_type &,
-	       const index_type &, const index_type &, const index_type &,
-	       const index_type &, const index_type &);
+   dvar4_array(ad_integer, ad_integer, const index_type &, const index_type &,
+     const index_type &, const index_type &, const index_type &,
+     const index_type &);
 
-   dvar4_array(int hsl, int hsu, int sl, const ivector & sh,
-	       int nrl, const imatrix & nrh, int ncl, int nch);
-   void allocate(int hsl, int hsu, int sl, const ivector & sh,
-		 int nrl, const imatrix & nrh, int ncl, int nch);
+   dvar4_array(int hsl, int hsu, int sl, const ivector & sh, int nrl,
+     const imatrix & nrh, int ncl, int nch);
+   void allocate(int hsl, int hsu, int sl, const ivector & sh, int nrl,
+     const imatrix & nrh, int ncl, int nch);
    //dvar4_array(int,int,int,ivector,int,imatrix,int,int);
    dvar4_array();
    ~dvar4_array();
@@ -6509,23 +6477,27 @@ class dvar4_array
    //int colmax(void) { return(shape->col_max);}
    //int rowmin(void) { return(shape->row_min);}
    //int rowmax(void) { return(shape->row_max);}
+
+   // returns the number of rows
    int hslicesize()
    {
       return (hslicemax() - hslicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int slicesize()
    {
       return (slicemax() - slicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int rowsize()
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize()
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
-
+   }
    int indexmin(void) const
    {
       return (shape->hslice_min);
@@ -6574,22 +6546,27 @@ class dvar4_array
    //int colmax(void) const { return(shape->col_max); }
    //int rowmin(void) const { return(shape->row_min); }
    //int rowmax(void) const { return(shape->row_max); }
+
+   // returns the number of rows
    int hslicesize() const
    {
       return (hslicemax() - hslicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int slicesize() const
    {
       return (slicemax() - slicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int rowsize() const
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+// returns the number of columns
    int colsize() const
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    void initialize(void);
    void operator/=(const prevariable & d);
    void operator/=(const double &d);
@@ -6662,11 +6639,11 @@ class fmmt:public fmm_control
 
  public:
    double minimize(const independent_variables & x,
-		   double (*pf) (const dvar_vector &));
+     double (*pf) (const dvar_vector &));
    fmmt(int _nvar, int _m = 7);
 
    double minimize(const independent_variables & x, const dvector & c,
-		   double (*pf) (const dvar_vector &, const dvector &));
+     double (*pf) (const dvar_vector &, const dvector &));
 
    void fmin(const double &f, const dvector & x, const dvector & g);
 
@@ -6682,13 +6659,13 @@ class i4_array
    vector_shapex *shape;
    i3_array *t;
  public:
-   void allocate(int hsl, int hsu, int sl, int sh, int nrl, int nrh,
-		 int ncl, int nch);
+   void allocate(int hsl, int hsu, int sl, int sh, int nrl, int nrh, int ncl,
+     int nch);
 
    void allocate(const ad_integer & hsl, const ad_integer & hsu,
-		 const index_type & sl, const index_type & sh,
-		 const index_type & nrl, const index_type & nrh,
-		 const index_type & ncl, const index_type & nch);
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch);
 
    void shallow_copy(const i4_array &);
    void deallocate(void);
@@ -6700,25 +6677,25 @@ class i4_array
       return (shape == NULL);
    }
    i4_array(int hsl, int hsu, int sl, int sh, ivector nrl, ivector nrh,
-	    ivector ncl, ivector nch);
+     ivector ncl, ivector nch);
 
    i4_array(int hsl, int hsu);
    void allocate(int hsl, int hsu);
 
    i4_array(int hsl, int hsu, int sl, const ivector & sh, int nrl,
-	    const imatrix & nrh, int ncl, const i3_array & nch);
+     const imatrix & nrh, int ncl, const i3_array & nch);
 
    i4_array(const ad_integer & hsl, const ad_integer & hsh,
-	    const index_type & sl, const index_type & sh,
-	    const index_type & nrl, const index_type & nrh,
-	    const index_type & ncl, const index_type & nch);
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch);
 
    i4_array & operator=(const i4_array &);
    i4_array(const i4_array & m2);
    i4_array(int, int, int, int, int, int, int, int);
    //i4_array(int,int,int,ivector,int,imatrix,int,int);
    i4_array(int hsl, int hsu, int sl, const ivector & sh,
-	    int nrl, const imatrix & nrh, int ncl, int nch);
+     int nrl, const imatrix & nrh, int ncl, int nch);
    i4_array();
    ~i4_array();
    i3_array & elem(int i)
@@ -6833,27 +6810,31 @@ class i4_array
    {
       return ((*this) (hslicemin(), slicemin(), rowmax()).indexmax());
    }
-
+   // returns the number of rows
    int hslicesize()
    {
       return (hslicemax() - hslicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int size()
    {
       return (indexmax() - indexmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int slicesize()
    {
       return (slicemax() - slicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int rowsize()
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize()
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    int hslicemin(void) const
    {
       return (shape->indexmin());
@@ -6903,18 +6884,21 @@ class i4_array
    {
       return (indexmax() - indexmin() + 1);
    }
+   // returns the number of rows
    int slicesize() const
    {
       return (slicemax() - slicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int rowsize() const
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize() const
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    void initialize(void);
 };
 
@@ -6935,14 +6919,13 @@ class i5_array
  public:
    void allocate(int hhsl, int hhsu);
 
-   void allocate(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
-		 int nrl, int nrh, int ncl, int nch);
+   void allocate(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh, int nrl,
+     int nrh, int ncl, int nch);
 
    void allocate(const ad_integer & hsl, const ad_integer & hsu,
-		 const index_type & sl, const index_type & sh,
-		 const index_type & nrl, const index_type & nrh,
-		 const index_type & ncl, const index_type & nch,
-		 const index_type & aa, const index_type & bb);
+     const index_type & sl, const index_type & sh, const index_type & nrl,
+     const index_type & nrh, const index_type & ncl, const index_type & nch,
+     const index_type & aa, const index_type & bb);
 
    void shallow_copy(const i5_array &);
    void deallocate(void);
@@ -6955,23 +6938,23 @@ class i5_array
    }
    i5_array(int hsl, int hsu);
    i5_array(int hsl, int hsu, int sl, int sh, ivector nrl, ivector nrh,
-	    ivector ncl, ivector nch);
+     ivector ncl, ivector nch);
 
    i5_array(int hsl, int hsu, int sl, const ivector & sh, int nrl,
-	    const imatrix & nrh, int ncl, const i3_array & nch);
+     const imatrix & nrh, int ncl, const i3_array & nch);
 
    i5_array(const ad_integer & hsl, const ad_integer & hsh,
-	    const index_type & sl, const index_type & sh,
-	    const index_type & nrl, const index_type & nrh,
-	    const index_type & ncl, const index_type & nch,
-	    const index_type & aa, const index_type & bb);
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch,
+     const index_type & aa, const index_type & bb);
 
    i5_array & operator=(const i5_array &);
    i5_array(const i5_array & m2);
    i5_array(int, int, int, int, int, int, int, int);
    //i5_array(int,int,int,ivector,int,imatrix,int,int);
    i5_array(int hsl, int hsu, int sl, const ivector & sh,
-	    int nrl, const imatrix & nrh, int ncl, int nch);
+     int nrl, const imatrix & nrh, int ncl, int nch);
    i5_array();
    ~i5_array();
    //i4_array& elem(int i) { return t[i];}
@@ -7089,26 +7072,31 @@ class i5_array
       return ((*this) (hslicemin(), slicemin(), rowmax()).indexmax());
    }
 
+   // returns the number of rows
    int hslicesize()
    {
       return (hslicemax() - hslicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int size()
    {
       return (indexmax() - indexmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int slicesize()
    {
       return (slicemax() - slicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int rowsize()
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize()
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    int hslicemin(void) const
    {
       return (shape->indexmin());
@@ -7158,24 +7146,27 @@ class i5_array
    {
       return (indexmax() - indexmin() + 1);
    }
+   // returns the number of rows
    int slicesize() const
    {
       return (slicemax() - slicemin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of rows
    int rowsize() const
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize() const
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    void initialize(void);
 };
 
 ostream & operator<<(const ostream & istr, const i5_array & z);
 istream & operator>>(const istream & istr, const i5_array & z);
-#endif				//  if defined(MFCL2_CONSTRUCTORS)
+#endif //  if defined(MFCL2_CONSTRUCTORS)
 
 ostream & operator<<(const ostream & istr, const i4_array & z);
 istream & operator>>(const istream & istr, const i4_array & z);
@@ -7193,25 +7184,24 @@ class d5_array
    d4_array *t;
  public:
    d5_array(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh, int nrl,
-	    int nrh, int ncl, int nch);
+     int nrh, int ncl, int nch);
    void allocate(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
-		 int nrl, int nrh, int ncl, int nch);
+     int nrl, int nrh, int ncl, int nch);
 
    void allocate(int imin, int imax);
    void shallow_copy(const d5_array &);
    d5_array(int imin, int imax);
 
    d5_array(const ad_integer & hhsl, const ad_integer & hhsu,
-	    const index_type & hsl, const index_type & hsu,
-	    const index_type & sl, const index_type & sh,
-	    const index_type & nrl, const index_type & nrh,
-	    const index_type & ncl, const index_type & nch);
+     const index_type & hsl, const index_type & hsu, const index_type & sl,
+     const index_type & sh, const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch);
 
    void allocate(const ad_integer & hhsl, const ad_integer & hhsu,
-		 const index_type & hsl, const index_type & hsu,
-		 const index_type & sl, const index_type & sh,
-		 const index_type & nrl, const index_type & nrh,
-		 const index_type & ncl, const index_type & nch);
+     const index_type & hsl, const index_type & hsu,
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch);
 
    void deallocate(void);
    void allocate(void);
@@ -7373,23 +7363,23 @@ class dvar5_array
    dvar5_array(int hhsl, int hhsu);
    dvar5_array sub(int hhsl, int hhsu);
    dvar5_array(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
-	       int nrl, int nrh, int ncl, int nch);
+     int nrl, int nrh, int ncl, int nch);
    void allocate(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
-		 int nrl, int nrh, int ncl, int nch);
+     int nrl, int nrh, int ncl, int nch);
 
    dvar5_array(const ad_integer & hhsl, const ad_integer & hhsu,
-	       const index_type & hsl, const index_type & hsu,
-	       const index_type & sl, const index_type & sh,
-	       const index_type & nrl, const index_type & nrh,
-	       const index_type & ncl, const index_type & nch);
+     const index_type & hsl, const index_type & hsu,
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch);
 
    void allocate(int imin, int imax);
 
    void allocate(const ad_integer & hhsl, const ad_integer & hhsu,
-		 const index_type & hsl, const index_type & hsu,
-		 const index_type & sl, const index_type & sh,
-		 const index_type & nrl, const index_type & nrh,
-		 const index_type & ncl, const index_type & nch);
+     const index_type & hsl, const index_type & hsu,
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch);
 
    void deallocate(void);
    void allocate(void);
@@ -7554,23 +7544,23 @@ class d6_array
  public:
    void shallow_copy(const d6_array &);
    d6_array(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh, int nrl,
-	    int nrh, int ncl, int nch, int l6, int u6);
+     int nrh, int ncl, int nch, int l6, int u6);
    void allocate(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
-		 int nrl, int nrh, int ncl, int nch, int l6, int u6);
+     int nrl, int nrh, int ncl, int nch, int l6, int u6);
 
    d6_array(const ad_integer & hhsl, const ad_integer & hhsu,
-	    const index_type & hsl, const index_type & hsu,
-	    const index_type & sl, const index_type & sh,
-	    const index_type & nrl, const index_type & nrh,
-	    const index_type & ncl, const index_type & nch,
-	    const index_type & l6, const index_type & u6);
+     const index_type & hsl, const index_type & hsu,
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch,
+     const index_type & l6, const index_type & u6);
 
    void allocate(const ad_integer & hhsl, const ad_integer & hhsu,
-		 const index_type & hsl, const index_type & hsu,
-		 const index_type & sl, const index_type & sh,
-		 const index_type & nrl, const index_type & nrh,
-		 const index_type & ncl, const index_type & nch,
-		 const index_type & l6, const index_type & u6);
+     const index_type & hsl, const index_type & hsu,
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch,
+     const index_type & l6, const index_type & u6);
 
    void deallocate(void);
    void allocate(void);
@@ -7686,8 +7676,8 @@ class d6_array
    {
       return (((*this) (i)) (j, k, l, _m));
    }
-   inline const double &operator() (int i, int j, int k, int l, int _m,
-				    int _n) const
+   inline const double &operator() (int i, int j, int k, int l, int _m, int _n)
+     const
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
@@ -7751,23 +7741,23 @@ class dvar6_array
    dvar6_array(int hhsl, int hhsu);
    void allocate(int hhsl, int hhsu);
    dvar6_array(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
-	       int nrl, int nrh, int ncl, int nch, int l6, int u6);
+     int nrl, int nrh, int ncl, int nch, int l6, int u6);
    void allocate(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
-		 int nrl, int nrh, int ncl, int nch, int l6, int u6);
+     int nrl, int nrh, int ncl, int nch, int l6, int u6);
 
    dvar6_array(const ad_integer & hhsl, const ad_integer & hhsu,
-	       const index_type & hsl, const index_type & hsu,
-	       const index_type & sl, const index_type & sh,
-	       const index_type & nrl, const index_type & nrh,
-	       const index_type & ncl, const index_type & nch,
-	       const index_type & l6, const index_type & u6);
+     const index_type & hsl, const index_type & hsu,
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch,
+     const index_type & l6, const index_type & u6);
 
    void allocate(const ad_integer & hhsl, const ad_integer & hhsu,
-		 const index_type & hsl, const index_type & hsu,
-		 const index_type & sl, const index_type & sh,
-		 const index_type & nrl, const index_type & nrh,
-		 const index_type & ncl, const index_type & nch,
-		 const index_type & l6, const index_type & u6);
+     const index_type & hsl, const index_type & hsu,
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch,
+     const index_type & l6, const index_type & u6);
 
    void deallocate(void);
    void allocate(void);
@@ -7881,13 +7871,13 @@ class dvar6_array
    {
       return (((*this) (i)) (j, k, l));
    }
-   inline const dvar_vector & operator() (int i, int j, int k, int l,
-					  int _m) const
+   inline const dvar_vector & operator() (int i, int j, int k, int l, int _m)
+     const
    {
       return (((*this) (i)) (j, k, l, _m));
    }
    inline const prevariable operator() (int i, int j, int k, int l, int _m,
-					int _n) const
+     int _n) const
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
@@ -7952,7 +7942,7 @@ class d7_array
  public:
    void allocate(int l7, int u7);
    d7_array(int l7, int u7, int hhsl, int hhsu, int hsl, int hsu, int sl,
-	    int sh, int nrl, int nrh, int ncl, int nch, int l6, int u6);
+     int sh, int nrl, int nrh, int ncl, int nch, int l6, int u6);
    void allocate(int l7, int u7, int hhsl, int hhsu, int hsl, int hsu,
      int sl, int sh, int nrl, int nrh, int ncl, int nch, int l6, int u6);
 
@@ -10014,11 +10004,10 @@ extern "C"
 {
 #endif
 //#include <f2c.h>
-   int smbfct_(int *neqns, ivector & xadj, ivector & adjncy,
-	       ivector & perm, ivector & invp, ivector & xlnz, int *maxlnz,
-	       ivector & xnzsub, ivector & nzsub, int *maxsub,
-	       ivector & rchlnk, ivector & mrglnk, ivector & marker,
-	       int *flag__);
+int smbfct_(int *neqns, ivector & xadj, ivector & adjncy, ivector & perm,
+  ivector & invp, ivector & xlnz, int *maxlnz, ivector & xnzsub,
+  ivector & nzsub, int *maxsub, ivector & rchlnk, ivector & mrglnk,
+  ivector & marker, int *flag__);
 
 //  int smbfct_(int *neqns, int *xadj, int *adjncy,
 //      int *perm, int *invp, int *xlnz, int *maxlnz, int

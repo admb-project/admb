@@ -177,7 +177,8 @@ ad_comm::ad_comm(int _argc,char * _argv[])
       "calculations\n");
       (*ad_printf)( " -maxph N        increase the maximum phase number to "
       "N\n");
-      (*ad_printf)( " -mcdiag         use diagonal covariance matrix for mcmc "       "with diagonal values 1\n");
+      (*ad_printf)( " -mcdiag         use diagonal covariance matrix for mcmc "
+      "with diagonal values 1\n");
       (*ad_printf)( " -mcmc [N]       perform markov chain monte carlo with N "
       "simulations\n");
       (*ad_printf)( " -mcmult N       multiplier N for mcmc default\n");

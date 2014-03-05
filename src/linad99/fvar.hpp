@@ -167,7 +167,7 @@ Macro definitions.
 #endif
 
 #if defined(linux) || defined(__ADSGI__) || defined(__linux__)
-#   include <fcntl.h>		// to get fstreambase
+#   include <fcntl.h> // to get fstreambase
 #   if !defined(O_BINARY)
 #      define O_BINARY 0
 #   endif
@@ -256,7 +256,8 @@ class smart_counter
 class double_and_int
 {
  public:
-   double x;			///< value of the variable
+   ///< value of the variable
+   double x;
     /** Return the value of the variable.
     \return double reference containing the value of the variable.
     */
@@ -346,7 +347,7 @@ class independent_variables;
 
 #if defined(__BORLANDC__)
 #   if (__BORLANDC__  < 0x0550)
-#      include <fcntl.h>		// to get fstreambase
+#      include <fcntl.h> // to get fstreambase
 #      include <strstrea.h>
 #   else
 #      include <strstream>
@@ -361,7 +362,7 @@ class independent_variables;
 #      include <strstrea.h>
 #   endif
 #   include <stddef.h>
-#   include <fcntl.h>		// to get fstreambase
+#   include <fcntl.h> // to get fstreambase
 #   include <dos.h>
 #   undef __ZTC__
 #   define __USE_IOSTREAM__
@@ -369,7 +370,7 @@ class independent_variables;
 #endif
 
 #ifdef __ZTC__
-#   include <fstream.hpp>		// to get fstreambase
+#   include <fstream.hpp> // to get fstreambase
 #   include <iostream.hpp>
 #   define __USE_IOSTREAM__
 #   include <dos.h>
@@ -682,18 +683,21 @@ public:
   ptr_vector(int ncl, int ncu);
   ~ptr_vector();
 
+  // returns the minimum allowable index
   int indexmin() const
   {
     return shape->index_min;
-  }				// returns the minimum allowable index
+  }
+  // returns the maximum allowable index
   int indexmax() const
   {
     return shape->index_max;
-  }				// returns the maximum allowable index
+  }
+  // returns the maximum allowable index
   int size() const
   {
     return shape->index_max - shape->index_min + 1;
-  }				// returns the maximum allowable index
+  }
 
   void shift(int min);
   void allocate(int, int);
@@ -784,18 +788,21 @@ class ivector
    {
       return v[i];
    }
+   // returns the minimum allowable index
    int indexmin() const
    {
       return index_min;
-   }				// returns the minimum allowable index
+   }
+   // returns the maximum allowable index
    int indexmax() const
    {
       return index_max;
-   }				// returns the maximum allowable index
+   }
+   // returns the maximum allowable index
    int size() const
    {
       return index_max - index_min + 1;
-   }				// returns the maximum allowable index
+   }
    int *get_v(void) const
    {
       return v;
@@ -812,7 +819,7 @@ class ivector
    void fill_seqadd(int, int);
    void fill_multinomial(const int &seed, const dvector & p);
    void fill_multinomial(const random_number_generator & rng,
-			 const dvector & p);
+     const dvector & p);
    ivector(int ncl, int ncu);
    ivector(const ad_integer & ncl, const index_type & ncu);
    void allocate(const ad_integer & ncl, const index_type & ncu);
@@ -899,7 +906,7 @@ class ivector
    ivector & operator+=(const ivector & t);
    ivector & operator +=(int t);
 
-};				// end of class ivector
+};
 
 ivector operator+(const ivector & v, const ivector & w);
 ivector operator-(const ivector & v, const ivector & w);
@@ -946,25 +953,28 @@ class lvector
    {
       return v[i];
    }
+   // returns the minimum allowable index
    int indexmin() const
    {
       return shape->index_min;
-   }				// returns the minimum allowable index
+   }
+   // returns the maximum allowable index
    int indexmax() const
    {
       return shape->index_max;
-   }				// returns the maximum allowable index
+   }
+   // returns the maximum allowable index
    int size() const
    {
       return shape ? shape->index_max - shape->index_min + 1 : 0;
-   }				// returns the maximum allowable index
+   }
    void shift(int min);
 
    void fill(const char *s);
    void fill_seqadd(const AD_LONG_INT &, const AD_LONG_INT &);
    void fill_multinomial(const int &seed, const dvector & p);
    void fill_multinomial(const random_number_generator & rng,
-			 const dvector & p);
+     const dvector & p);
 
    //lvector(unsigned int sz); //makes an array [0..sz]
 
@@ -1077,7 +1087,7 @@ class gradient_structure
    static dvariable **RETURN_PTR_CONTAINER;
    static long int TOTAL_BYTES;
    static long int PREVIOUS_TOTAL_BYTES;
-   static unsigned long ARRAY_MEMBLOCK_SIZE;	//js
+   static unsigned long ARRAY_MEMBLOCK_SIZE;//js
    static humungous_pointer ARRAY_MEMBLOCK_BASE;
    static humungous_pointer ARRAY_MEMBLOCK_BASEA;
    static humungous_pointer ARRAY_MEMBLOCK_SAVE;
@@ -1112,9 +1122,10 @@ class gradient_structure
    int x;
 
  public:
+   // exception class
    class arrmemblerr
    {
-   };				// exception class
+   };
 
    static int Hybrid_bounded_flag;
    static double *hessian_ptr;
@@ -1127,15 +1138,15 @@ class gradient_structure
       USE_FOR_HESSIAN = i;
    }
    friend class dfsdmat;
-   gradient_structure(long int size = 100000L);	// constructor
-   ~gradient_structure(void);	// destructor
+   gradient_structure(long int size = 100000L);// constructor
+   ~gradient_structure(void);// destructor
    static void save_variables(void);
    static void restore_variables(void);
    static void save_arrays(void);
    static void restore_arrays(void);
    static long int totalbytes(void);
-   friend dvector restore_dvar_vector_value(const dvar_vector_position &
-					    tmp);
+   friend dvector restore_dvar_vector_value(
+     const dvar_vector_position& tmp);
    friend void cleanup_temporary_files();
    //friend dvector restore_dvar_vector_value(const dvar_vector_position&);
    friend dvector restore_dvar_vector_derivatives(void);
@@ -1143,7 +1154,7 @@ class gradient_structure
    friend dmatrix restore_dvar_matrix_value(void);
    //friend dmatrix restore_derivatives(void);
    friend void gradfree(dlink * v);
-   friend double_and_int *arr_new(unsigned int sz);	//js
+   friend double_and_int *arr_new(unsigned int sz);//js
    friend void arr_free(double_and_int *);
    friend void RETURN_ARRAYS_DECREMENT(void);
    friend void RETURN_ARRAYS_INCREMENT(void);
@@ -1236,12 +1247,13 @@ class dlink
 {
    double_and_int di;
    dlink *prev;
- public:			// comments
+ public:// comments
    dlink * previous();
+   //access function
    inline double_and_int *get_address()
    {
       return &di;
-   }				//access function
+   }
 
    //friend tempvar();
    //friend class prevariable;
@@ -1269,13 +1281,18 @@ class dlist
   friend void df_check_derivative_values_indexed_break(void);
 
 public:
-  dlist();			// constructor
-  ~dlist();			// destructor
-  dlink* create();		//create a new link
-  dlink* append(dlink*);	// add a link
+  // constructor
+  dlist();
+  // destructor
+  ~dlist();
+  //create a new link
+  dlink* create();
+  // add a link
+  dlink* append(dlink*);
   dlink* last_remove();
 
-  void check_list(void);	// check list integrity
+  // check list integrity
+  void check_list(void);
   size_t total_addresses() const;
 
   friend void funnel_gradcalc(void);
@@ -1289,9 +1306,9 @@ public:
    friend void allocate_dvariable_space(void);
    //friend void gradient_structure::funnel_jacobcalc(void);
    friend void gradient_structure::jacobcalc(int nvar,
-					     const ofstream& jac);
+     const ofstream& jac);
    friend void gradient_structure::jacobcalc(int nvar,
-					     const uostream& jac);
+     const uostream& jac);
    friend void funnel_derivatives(void);
 };
 
@@ -1319,7 +1336,7 @@ class grad_stack_entry
    friend void default_evaluation(void);
    friend class grad_stack;
    friend void gradient_structure::jacobcalc(int nvar,
-					     const dmatrix & jac);
+     const dmatrix & jac);
    //friend void gradient_structure::funnel_jacobcalc(void);
 };
 void default_evaluation3ind(void);
@@ -1345,10 +1362,10 @@ class grad_stack
  private:
    //lvector * table;
    // js
-   int _GRADFILE_PTR;		// should be int gradfile_handle;
-   int _GRADFILE_PTR1;		// should be int gradfile_handle;
-   int _GRADFILE_PTR2;		// should be int gradfile_handle;
-   int _VARSSAV_PTR;		// should be int gradfile_handle;
+   int _GRADFILE_PTR;  // should be int gradfile_handle;
+   int _GRADFILE_PTR1;  // should be int gradfile_handle;
+   int _GRADFILE_PTR2;  // should be int gradfile_handle;
+   int _VARSSAV_PTR;  // should be int gradfile_handle;
    char gradfile_name[61];
    char gradfile_name1[61];
    char gradfile_name2[61];
@@ -1382,38 +1399,36 @@ class grad_stack
    void write_grad_stack_buffer(void);
 
    void set_gradient_stack(void (*func) (void),
-			   double *dep_addr, double *ind_addr1 =
-			   NULL, double mult1 = 0, double *ind_addr2 =
-			   NULL, double mult2 = 0);
+     double *dep_addr, double *ind_addr1 = NULL, double mult1 = 0,
+     double *ind_addr2 = NULL, double mult2 = 0);
 
    void set_gradient_stack(void (*func) (void),
-			   double *dep_addr, double *ind_addr1,
-			   double *ind_addr2);
+     double *dep_addr, double *ind_addr1,
+     double *ind_addr2);
 
 
    void set_gradient_stack0(void (*func) (void), double *dep_addr);
 
    void set_gradient_stack1(void (*func) (void),
-			    double *dep_addr, double *ind_addr1);
+     double *dep_addr, double *ind_addr1);
 
    void set_gradient_stack2(void (*func) (void),
-			    double *dep_addr, double *ind_addr1,
-			    double mult1);
+     double *dep_addr, double *ind_addr1, double mult1);
 
    void set_gradient_stack4(void (*func) (void),
-			    double *dep_addr, double *ind_addr1,
-			    double *ind_addr2);
+     double *dep_addr, double *ind_addr1,
+     double *ind_addr2);
 
    void set_gradient_stack(void (*func) (void),
-			   double *dep_addr, double *ind_addr1,
-			   double mult1, double *ind_addr2, double mult2,
-			   double *ind_addr3, double mult3,
-			   double *ind_addr4, double mult4);
+     double *dep_addr, double *ind_addr1,
+     double mult1, double *ind_addr2, double mult2,
+     double *ind_addr3, double mult3,
+     double *ind_addr4, double mult4);
 
    void set_gradient_stack(void (*func) (void),
-			   double *dep_addr, double *ind_addr1,
-			   double mult1, double *ind_addr2, double mult2,
-			   double *ind_addr3, double mult3);
+     double *dep_addr, double *ind_addr1,
+     double mult1, double *ind_addr2, double mult2,
+     double *ind_addr3, double mult3);
 
    int read_grad_stack_buffer(my_off_t & lpos);
    void set_gradient_stack(void (*ptr) (void));
@@ -1431,7 +1446,7 @@ class grad_stack
    char *get_gradfile_name();
    friend class gradient_structure;
    //int get_ngradfiles();
-};				// end of grad_stack
+};
 
 
 #ifdef OPT_LIB
@@ -1440,9 +1455,8 @@ class grad_stack
  * \param
  */
 inline void grad_stack::set_gradient_stack(void (*func) (void),
-					   double *dep_addr,
-					   double *ind_addr1, double mult1,
-					   double *ind_addr2, double mult2)
+  double *dep_addr, double *ind_addr1, double mult1, double *ind_addr2,
+  double mult2)
 {
 #ifdef NO_DERIVS
    if (!gradient_structure::no_derivatives)
@@ -1453,8 +1467,8 @@ inline void grad_stack::set_gradient_stack(void (*func) (void),
 #     endif
       if (ptr > ptr_last)
       {
-	 // current buffer is full -- write it to disk and reset pointer
-	 // and counter
+        // current buffer is full -- write it to disk and reset pointer
+        // and counter
 	 this->write_grad_stack_buffer();
 #     if defined(MYDEBUG)
 	 wrote_buffer = 1;
@@ -1784,7 +1798,7 @@ class prevariable
    friend prevariable & tanh(const prevariable & t1);
 
    friend prevariable & atan2(const prevariable & t1,
-			      const prevariable & t2);
+     const prevariable & t2);
    friend prevariable & atan2(const prevariable & t1, double t2);
    friend prevariable & atan2(double t1, const prevariable & t2);
 
@@ -1887,8 +1901,7 @@ class prevariable
    void operator*=(const prevariable & v1);
    void operator *=(double v1);
 
-   friend prevariable & operator+(const prevariable & v1,
-				  const prevariable & v2);
+   friend prevariable& operator+(const prevariable& v1, const prevariable& v2);
 
    friend prevariable & operator+(double v1, const prevariable & v2);
 
@@ -1896,21 +1909,19 @@ class prevariable
 
    friend prevariable & operator-(const prevariable & v1);
 
-   friend prevariable & operator-(const prevariable & v1,
-				  const prevariable & v2);
+   friend prevariable & operator-(const prevariable& v1, const prevariable& v2);
 
    friend prevariable & operator-(double v1, const prevariable & v2);
 
    friend prevariable & operator-(const prevariable & v1, double v2);
 
-   friend prevariable & pow(const prevariable & t1,
-			    const prevariable & t2);
+   friend prevariable & pow(const prevariable & t1, const prevariable & t2);
 
    friend prevariable & pow(const prevariable & t1, double t2);
 
    friend prevariable & pow(double t1, const prevariable & t2);
 
-};				// end of class prevariable
+};
 
 inline double &value(const prevariable & v1)
 {
@@ -1959,7 +1970,7 @@ class dvariable:public prevariable
 //     dvariable& operator+=(const prevariable&);
 //#  endif
 
-};				// end of class dvariable
+};
 
 #if defined(max)
 #undef max
@@ -2338,9 +2349,9 @@ All ADMB vector classes have similar functionality.
 class dvector
 {
  protected:
-   double *v;			///< pointer to the data
-   int index_min;		///< minimum valid subscript
-   int index_max;		///< maximum valid subscript
+   double *v; ///< pointer to the data
+   int index_min; ///< minimum valid subscript
+   int index_max; ///< maximum valid subscript
    /// pointer to vector "shape"
 #if defined(THREAD_SAFE)
    ts_vector_shapex *shape;
@@ -2400,10 +2411,9 @@ class dvector
 
    dvector(const predvector & pd);
 
-   void fill_randpoisson(double lambda,
-			 const random_number_generator & rng);
+   void fill_randpoisson(double lambda, const random_number_generator & rng);
    void fill_randnegbinomial(double lambda, double tau,
-			     const random_number_generator & rng);
+     const random_number_generator & rng);
    void shallow_copy(const dvector &);
 
    friend class banded_symmetric_dvar_matrix;
@@ -2467,19 +2477,20 @@ class dvector
 
    void fill_seqadd(double, double);
    void fill_multinomial(const int &seed, const dvector & p);
-   void fill_multinomial(const random_number_generator & rng,
-			 const dvector & p);
+   void fill_multinomial(const random_number_generator& rng, const dvector& p);
    void initialize(void);
 
+   // returns the minimum allowable index
    int &testmin()
    {
       return shape->index_min;
-   }				// returns the minimum allowable index
+   }
 
+   // returns the minimum allowable index
    int &testmax()
    {
       return shape->index_max;
-   }				// returns the minimum allowable index
+   }
 
    /// Get minimum valid index.
    int indexmin() const
@@ -2680,9 +2691,9 @@ double boundp(double x, double fmin, double fmax, const double &fpen);
 double boundp(double x, double fmin, double fmax);
 
 dvariable boundp(const prevariable & x, double fmin, double fmax,
-		 const prevariable & fpen);
+  const prevariable & fpen);
 dvariable boundp(const prevariable & x, double fmin, double fmax,
-		 const prevariable & fpen, double s);
+  const prevariable & fpen, double s);
 
 double nd2fboundp(double x, double minb, double maxb, const double &pen);
 double boundpin(double x, double fmin, double fmax);
@@ -2906,10 +2917,9 @@ class dvar_vector
    friend class banded_symmetric_dmatrix;
    friend class banded_lower_triangular_dmatrix;
 
-   void fill_randpoisson(double lambda,
-			 const random_number_generator & rng);
+   void fill_randpoisson(double lambda, const random_number_generator & rng);
    void fill_randnegbinomial(double lambda, double tau,
-			     const random_number_generator & rng);
+     const random_number_generator & rng);
    prevariable elem(int i)
    {
       return (va + i);
@@ -2940,14 +2950,13 @@ class dvar_vector
       return va;
    }
 
-   friend dvar_matrix operator*(const dvar_matrix & m1,
-				const dmatrix & m2);
+   friend dvar_matrix operator*(const dvar_matrix & m1, const dmatrix & m2);
 
    void deallocate();
    dvar_vector(const dvar_vector &);
    dvar_vector(const predvar_vector &);
    dvar_vector();
-   dvar_vector(int ncl, int ncu);	// makes an array [ncl..ncu]
+   dvar_vector(int ncl, int ncu); // makes an array [ncl..ncu]
    dvar_vector(int ncl, int ncu, kkludge_object);
 
    //dvar_vector(const ad_integer&,const ad_integer&);
@@ -2976,18 +2985,21 @@ class dvar_vector
    void write_on(const uostream &) const;
    void read_from(const istream &);
    void read_from(const uistream &);
+   // returns the minimum allowable index
    int indexmin() const
    {
       return index_min;
-   }				// returns the minimum allowable index
+   }
+   // returns the maximum allowable index
    int indexmax() const
    {
       return index_max;
-   }				// returns the maximum allowable index
+   }
+   // returns the number of elements
    int size() const
    {
       return (index_max - index_min + 1);
-   }				// returns the number of elements
+   }
    dvar_vector & shift(int min);
 
 #ifdef OPT_LIB
@@ -3072,8 +3084,7 @@ class dvar_vector
 
    void fill_seqadd(double, double);
    void fill_multinomial(const int &seed, const dvector & p);
-   void fill_multinomial(const random_number_generator & rng,
-			 const dvector & p);
+   void fill_multinomial(const random_number_generator& rng, const dvector& p);
    friend dvar_vector operator+(const dvar_vector &, const dvar_vector &);
    friend dvar_vector operator+(const dvar_vector &, const dvector &);
    friend dvar_vector operator+(const dvector &, const dvar_vector &);
@@ -3147,7 +3158,7 @@ class dvar_vector
    friend void make_indvar_list(const dvar_vector &);
    friend class array_size;
 
-};				// end of class dvar_vector
+};
 
  /*
     class funnel_dvar_vector : public dvar_vector
@@ -3220,8 +3231,7 @@ class dvar_matrix
    void allocate(ad_integer nrl, ad_integer nrh);
    void allocate(const dmatrix & m1);
    void allocate(const dvar_matrix & m1);
-   void allocate(int nrl, int nrh, const ivector & ncl,
-		 const ivector & nch);
+   void allocate(int nrl, int nrh, const ivector & ncl, const ivector & nch);
    void allocate(int nrl, int nrh, int ncl, const ivector & nch);
    void allocate(int nrl, int nrh, const ivector & ncl, int nch);
    void allocate(void);
@@ -3261,14 +3271,16 @@ class dvar_matrix
    {
       return (index_max);
    }
+   // returns the number of rows
    int rowsize() const
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize() const
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    void colshift(int min);
    void rowshift(int min);
 
@@ -3277,10 +3289,10 @@ class dvar_matrix
    friend class dvar_vector;
 
    dvar_matrix(const ad_integer & nrl, const ad_integer & nrh,
-	       const index_type & ncl, const index_type & nch);
+     const index_type & ncl, const index_type & nch);
 
    void allocate(const ad_integer & nrl, const ad_integer & nrh,
-		 const index_type & ncl, const index_type & nch);
+     const index_type & ncl, const index_type & nch);
 
    dvar_matrix(int, int, int, int);
    dvar_matrix(int, int);
@@ -3468,7 +3480,7 @@ class dvar_matrix
 
    friend void copy_status(const ostream & s, const dvar_matrix & m1);
 
-};				// end of class dvar_matrix
+};
 
 dvariable ln_det(const dvar_matrix &);
 dvar_matrix operator *(const dvar_matrix & t1, double x);
@@ -3543,9 +3555,9 @@ class dmatrix
    void allocate(int nrl, int nrh, const ivector & ncl, int nch);
    void deallocate();
    void allocate(const ad_integer & nrl, const ad_integer & nrh,
-		 const index_type & ncl, const index_type & nch);
+     const index_type & ncl, const index_type & nch);
    void allocate(int nrl, int nrh, const ivector & ncl,
-		 const ivector & nch);
+     const ivector & nch);
    friend class banded_symmetric_dmatrix;
    friend class banded_lower_triangular_dmatrix;
 
@@ -3553,7 +3565,7 @@ class dmatrix
    // makes a matrix [nrl..nrh][ncl..nch]
 
    dmatrix(const ad_integer & nrl, const ad_integer & nrh,
-	   const index_type & ncl, const index_type & nch);
+     const index_type & ncl, const index_type & nch);
 
    dmatrix(int, int, const ivector & coll, const ivector & colh);
    // makes a ragged dmatrix[nrl..nrh][ncl..nch]
@@ -3606,14 +3618,16 @@ class dmatrix
    {
       return ((*this) (indexmin()).indexmax());
    }
+   // returns the number of rows
    int rowsize() const
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize() const
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    void rowshift(int min);
    void colshift(int min);
 
@@ -3742,7 +3756,7 @@ class dmatrix
 
    friend dmatrix inv(const dmatrix &);
    friend dmatrix inv(const dmatrix & m1, const double &_ln_det,
-		      const int &_sgn);
+     const int &_sgn);
 
    friend double det(const dmatrix &);
    friend double ln_det(const dmatrix & m1, const int &sgn);
@@ -3766,7 +3780,7 @@ class dmatrix
    dmatrix & operator /=(double d);
    dmatrix & operator *=(double d);
 
-};				// end of class dmatrix
+};
 
 imatrix operator*(const imatrix &, const imatrix &);
 
@@ -3814,11 +3828,9 @@ int colsum(const imatrix &, int column);
 double colsum(const dmatrix &, int column);
 dvariable colsum(const dvar_matrix &, int column);
 
-double sfabs(double t1);	//"smoothed absolute value function
+double sfabs(double t1); //"smoothed absolute value function
 
-dvector sfabs(const dvector & t1);	//"smoothed absolute value function
-
-
+dvector sfabs(const dvector & t1); //"smoothed absolute value function
 
 //// daves' addition to john's additions
 
@@ -3875,7 +3887,7 @@ class imatrix
    imatrix sub(int, int);
    imatrix(int, int, const ivector &, const ivector &);
    imatrix(const ad_integer & nrl, const ad_integer & nrh,
-	   const index_type & ncl, const index_type & nch);
+     const index_type & ncl, const index_type & nch);
 
    imatrix & operator=(const imatrix & t);
    imatrix & operator =(const int);
@@ -3897,10 +3909,9 @@ class imatrix
    void allocate(int nrl, int nrh, int ncl, int nch);
    void allocate(int nrl, int nrh);
    void allocate(int nrl, int nrh, int ncl, const ivector & nch);
-   void allocate(int nrl, int nrh, const ivector & ncl,
-		 const ivector & nch);
+   void allocate(int nrl, int nrh, const ivector & ncl, const ivector & nch);
    void allocate(const ad_integer & nrl, const ad_integer & nrh,
-		 const index_type & ncl, const index_type & nch);
+     const index_type & ncl, const index_type & nch);
    void deallocate();
 
 #ifdef OPT_LIB
@@ -3964,14 +3975,16 @@ class imatrix
    {
       return ((*this) (indexmin()).indexmax());
    }
+   // returns the number of rows
    int rowsize() const
    {
       return (rowmax() - rowmin() + 1);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize() const
    {
       return (colmax() - colmin() + 1);
-   }				// returns the number of columns
+   }
    void rowshift(int min);
 
    void write_on(const ostream &) const;
@@ -3981,19 +3994,18 @@ class imatrix
    void initialize(void);
    friend class i3_array;
    void fill_seqadd(int, int);
-};				//end of class imatrix
+};
 
 dvariable regression(const dvector & obs, const dvar_vector & pred);
 double regression(const dvector & obs, const dvector & pred);
 
-dvariable robust_regression_fixed(const dvector & obs,
-				  const dvar_vector & pred, double a =
-				  0.7);
+dvariable robust_regression_fixed(const dvector& obs, const dvar_vector& pred,
+  double a = 0.7);
 dvariable robust_regression(const dvector & obs, const dvar_vector & pred,
-			    double a = 0.7);
+  double a = 0.7);
 
 dvariable robust_regression(const dvector & obs, const dvar_vector & pred,
-			    const dvariable & cutoff);
+  const dvariable & cutoff);
 
 dmatrix column_vector(const dvector &);
 dmatrix row_vector(const dvector &);
@@ -4148,11 +4160,11 @@ class fmm:public fmm_control
    fmm(int nvar, int disk_save = 0);
    fmm(int nvar, const lvector & ipar, int disk_save = 0);
    double minimize(const independent_variables & x,
-		   double (*pf) (const dvar_vector &));
+     double (*pf) (const dvar_vector &));
 
    /// Undefined
    double minimize(const independent_variables & x, const dvector & c,
-		   double (*pf) (const dvar_vector &, const dvector &));
+     double (*pf) (const dvar_vector &, const dvector &));
 
    //void fmin(const double& f, const independent_variables &x, const dvector& g);
    void fmin(const double &f, const dvector & x, const dvector & g);
@@ -4198,32 +4210,30 @@ class fmmt1:public fmm_control
    fmmt1(int nvar, int _xm = 7);
    fmmt1(int nvar, const lvector & ipar);
    double minimize(const independent_variables & x,
-		   double (*pf) (const dvar_vector &));
+     double (*pf) (const dvar_vector &));
 
    double minimize(const independent_variables & x, const dvector & c,
-		   double (*pf) (const dvar_vector &, const dvector &));
+     double (*pf) (const dvar_vector &, const dvector &));
 
    void fmin2(const double &f, const independent_variables & x,
-	      const dvector & g, function_minimizer *);
+     const dvector & g, function_minimizer *);
 
    void fmin(const double &f, const dvector & x, const dvector & g);
 
 //  dmatrix& hessian();
 };
 
-
 void derch(const double &f, const independent_variables & x,
-	   const dvector & g, int n, const int &ireturn);
+  const dvector & g, int n, const int &ireturn);
 
 void fmin(double f, const independent_variables & x, const dvector & g,
-	  const int &n, const dvector & w, const dvector & h,
-	  const fmm_control & fmc);
+  const int &n, const dvector & w, const dvector & h, const fmm_control & fmc);
 
 void fmmdisp(const dvector & x, const dvector & g, const int &nvar,
-	     int scroll_flag, int noprintx = 0);
+  int scroll_flag, int noprintx = 0);
 
 void fmmdisp(const double *x, const double *g, const int &nvar,
-	     int scroll_flag, int noprintx = 0);
+  int scroll_flag, int noprintx = 0);
 
 ostream & operator<<(const ostream & s, const fmm_control & fmc);
 
@@ -4237,23 +4247,17 @@ class uostream:public ofstream
 {
  public:
 #if defined(__TURBOC__) && (__BORLANDC__  <= 0x0520)
-   uostream(const char *, int = ios::out | ios::binary,
-	    int = filebuf::openprot);
-   void open(const char *, int = ios::out | ios::binary,
-	     int = filebuf::openprot);
+  uostream(const char*, int = ios::out | ios::binary, int = filebuf::openprot);
+  void open(const char*, int = ios::out | ios::binary, int = filebuf::openprot);
 #endif
 #if (__BORLANDC__  >= 0x0540)
-   uostream(const char *, int = ios::out | ios::binary,
-	    int protection = 666);
-   void open(const char *, int = ios::out | ios::binary,
-	     int protection = 666);
+   uostream(const char *, int = ios::out | ios::binary, int protection = 666);
+   void open(const char *, int = ios::out | ios::binary, int protection = 666);
 #endif
 #if defined (__MSVC32__) || defined (__WAT32__)
 #  if (__MSVC32__ <7)
-   uostream(const char *, int = ios::out | ios::binary,
-	    int = filebuf::openprot);
-   void open(const char *, int = ios::out | ios::binary,
-	     int = filebuf::openprot);
+   uostream(const char*, int = ios::out | ios::binary, int = filebuf::openprot);
+  void open(const char*, int = ios::out | ios::binary, int = filebuf::openprot);
 #  else
    uostream(const char *, int = ios::out | ios::binary, int prot = 0664);
    void open(const char *, int = ios::out | ios::binary, int prot = 0664);
@@ -4278,15 +4282,12 @@ class uostream:public ofstream
 #if defined(__GNUDOS__)
 #  if !defined(__ADSGI__)
 #    if (__GNUC__  < 3) && !defined(__SUNPRO_CC)
-   uostream(const char *name, int mode = ios::out | ios::bin, int prot =
-	    0664);
-   void open(const char *name, int mode = ios::out | ios::bin, int prot =
-	     0664);
+   uostream(const char *name, int mode = ios::out | ios::bin, int prot = 0664);
+   void open(const char *name, int mode = ios::out | ios::bin, int prot = 0664);
 #    else
-   uostream(const char *name, int mode = ios::out | ios::binary, int prot =
-	    0664);
-   void open(const char *name, int mode =
-	     ios::out | ios::binary, int prot = 0664);
+ uostream(const char *name, int mode = ios::out | ios::binary, int prot = 0664);
+   void open(const char *name, int mode = ios::out | ios::binary,
+     int prot = 0664);
 #    endif
 #  else
    uostream(const char *name, int mode = ios::out, int prot = 0664);
@@ -4371,23 +4372,17 @@ class uistream:public ifstream
 {
  public:
 #if defined (__TURBOC__) &&   (__BORLANDC__  <= 0x0520)
-   uistream(const char *, int = ios::in | ios::binary,
-	    int = filebuf::openprot);
-   void open(const char *, int = ios::in | ios::binary,
-	     int = filebuf::openprot);
+   uistream(const char *, int = ios::in | ios::binary, int = filebuf::openprot);
+  void open(const char *, int = ios::in | ios::binary, int = filebuf::openprot);
 #endif
 #if (__BORLANDC__  >= 0x0540)
-   uistream(const char *, int = ios::in | ios::binary,
-	    int protection = 666);
-   void open(const char *, int = ios::in | ios::binary,
-	     int protection = 666);
+   uistream(const char *, int = ios::in | ios::binary, int protection = 666);
+   void open(const char *, int = ios::in | ios::binary, int protection = 666);
 #endif
 #if defined (__MSVC32__) || defined (__WAT32__)
 #if (__MSVC32__ <7)
-   uistream(const char *, int = ios::in | ios::binary,
-	    int = filebuf::openprot);
-   void open(const char *, int = ios::in | ios::binary,
-	     int = filebuf::openprot);
+   uistream(const char *, int = ios::in | ios::binary, int = filebuf::openprot);
+  void open(const char *, int = ios::in | ios::binary, int = filebuf::openprot);
 #else
    uistream(const char *, int = ios::in | ios::binary, int prot = 0664);
    void open(const char *, int = ios::in | ios::binary, int prot = 0664);
@@ -4412,15 +4407,11 @@ class uistream:public ifstream
 #if defined(__GNUDOS__)
 #  if !defined(__ADSGI__)
 #    if (__GNUC__  < 3) && !defined(__SUNPRO_CC)
-   uistream(const char *name, int mode = ios::in | ios::bin, int prot =
-	    0664);
-   void open(const char *name, int mode = ios::in | ios::bin, int prot =
-	     0664);
+   uistream(const char *name, int mode = ios::in | ios::bin, int prot = 0664);
+   void open(const char *name, int mode = ios::in | ios::bin, int prot = 0664);
 #    else
-   uistream(const char *name, int mode = ios::in | ios::binary, int prot =
-	    0664);
-   void open(const char *name, int mode = ios::in | ios::binary, int prot =
-	     0664);
+  uistream(const char *name, int mode = ios::in | ios::binary, int prot = 0664);
+ void open(const char *name, int mode = ios::in | ios::binary, int prot = 0664);
 #    endif
 #  else
    uistream(const char *name, int mode = ios::in, int prot = 0664);
@@ -4487,9 +4478,8 @@ class uistream:public ifstream
 
 class fmmc;
 
-
 void derch(const double &f, const dvector & x, const dvector & gg, int n,
-	   const int &ireturn);
+  const int &ireturn);
 
 /**
  * Description not yet available.
@@ -4586,7 +4576,7 @@ class three_array_shape
    friend class qd3_array;
    friend class dvar3_array;
 
-};				// End of class three_array_shape
+};
 
 //class dmatrix_ptr { dmatrix *p; };
 //class dvar_matrix_ptr { dvar_matrix *p; };
@@ -4612,38 +4602,36 @@ class d3_array
    d3_array sub(int, int);
    d3_array(int sl, int sh, int nrl, int nrh, int ncl, int nch);
    d3_array(int sl, int sh, int nrl, int nrh);
-   d3_array(int sl, int sh, const index_type & nrl,
-	    const index_type & nrh);
+   d3_array(int sl, int sh, const index_type & nrl, const index_type & nrh);
    d3_array(int sl, int sh);
    d3_array(const d3_array_position &);
 
    void save_d3_array_position(void) const;
 
-   d3_array(int sl, int sh, int nrl, int nrh, const ivector & ncl,
-	    int nch);
+   d3_array(int sl, int sh, int nrl, int nrh, const ivector & ncl, int nch);
 
    d3_array(const ad_integer & sl, const ad_integer & sh,
-	    const index_type & nrl, const index_type & nrh,
-	    const index_type & ncl, const index_type & nch);
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch);
 
    void allocate(const ad_integer & sl, const ad_integer & sh,
-		 const index_type & nrl, const index_type & nrh,
-		 const index_type & ncl, const index_type & nch);
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch);
 
    d3_array(int sl, int sh, const ivector & nrl, const ivector & nrh,
-	    const imatrix & ncl, const imatrix & nch);
+     const imatrix & ncl, const imatrix & nch);
    d3_array(int sl, int sh, const ivector & nrl, const ivector & nrh,
-	    int ncl, const imatrix & nch);
+     int ncl, const imatrix & nch);
    d3_array(int sl, int sh, int nrl, const ivector & nrh,
-	    int ncl, const imatrix & nch);
+     int ncl, const imatrix & nch);
    d3_array(int sl, int sh, const ivector & nrl, const ivector & nrh,
-	    const ivector & ncl, const ivector & nch);
+     const ivector & ncl, const ivector & nch);
    d3_array(int sl, int sh, int nrl, int nrh, const ivector & ncl,
-	    const ivector & nch);
+     const ivector & nch);
    d3_array(int sl, int sh, int nrl, const ivector & nrh,
-	    int ncl, const ivector & nch);
+     int ncl, const ivector & nch);
    d3_array(int sl, int sh, int nrl, const ivector & nrh,
-	    int ncl, int nch);
+     int ncl, int nch);
    d3_array(const d3_array & m2);
    ~d3_array();
 
@@ -4652,25 +4640,22 @@ class d3_array
    void allocate(int sl, int sh, int nrl, int nrh, int ncl, int nch);
    void allocate(int sl, int sh, int nrl, int nrh);
    void allocate(int sl, int sh, const index_type & nrl,
-		 const index_type & nrh);
+     const index_type & nrh);
    void allocate(int sl, int sh);
 
-   void allocate(int sl, int sh, int nrl, int nrh, const ivector & ncl,
-		 int nch);
+   void allocate(int sl, int sh, int nrl, int nrh, const ivector& ncl, int nch);
    void allocate(int sl, int sh, const ivector & nrl, const ivector & nrh,
-		 const imatrix & ncl, const imatrix & nch);
+     const imatrix & ncl, const imatrix & nch);
    void allocate(int sl, int sh, int nrl, const ivector & nrh, int ncl,
-		 const imatrix & nch);
+     const imatrix & nch);
    void allocate(int sl, int sh, const ivector & nrl, const ivector & nrh,
-		 int ncl, const imatrix & nch);
+     int ncl, const imatrix & nch);
    void allocate(int sl, int sh, const ivector & nrl, const ivector & nrh,
-		 int ncl, int nch);
-   void allocate(int sl, int sh, const ivector & nrl, int nrh, int ncl,
-		 int nch);
-   void allocate(int sl, int sh, int nrl, const ivector & nrh, int ncl,
-		 int nch);
+     int ncl, int nch);
+   void allocate(int sl, int sh, const ivector& nrl, int nrh, int ncl, int nch);
+   void allocate(int sl, int sh, int nrl, const ivector& nrh, int ncl, int nch);
    void allocate(int sl, int sh, const ivector & nrl, const ivector & nrh,
-		 const ivector & ncl, const ivector & nch);
+     const ivector & ncl, const ivector & nch);
    void allocate(int sl, int sh, int nrl, const ivector & nrh, int ncl,
 		 const ivector & nch);
    void allocate(int sl, int sh, int nrl, int nrh, const ivector & ncl,
@@ -7969,24 +7954,23 @@ class d7_array
    d7_array(int l7, int u7, int hhsl, int hhsu, int hsl, int hsu, int sl,
 	    int sh, int nrl, int nrh, int ncl, int nch, int l6, int u6);
    void allocate(int l7, int u7, int hhsl, int hhsu, int hsl, int hsu,
-		 int sl, int sh, int nrl, int nrh, int ncl, int nch,
-		 int l6, int u6);
+     int sl, int sh, int nrl, int nrh, int ncl, int nch, int l6, int u6);
 
    d7_array(const ad_integer & hhsl, const ad_integer & hhsu,
-	    const index_type & l7, const index_type & u7,
-	    const index_type & hsl, const index_type & hsu,
-	    const index_type & sl, const index_type & sh,
-	    const index_type & nrl, const index_type & nrh,
-	    const index_type & ncl, const index_type & nch,
-	    const index_type & l6, const index_type & u6);
+     const index_type & l7, const index_type & u7,
+     const index_type & hsl, const index_type & hsu,
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch,
+     const index_type & l6, const index_type & u6);
 
    void allocate(const ad_integer & hhsl, const ad_integer & hhsu,
-		 const index_type & l7, const index_type & u7,
-		 const index_type & hsl, const index_type & hsu,
-		 const index_type & sl, const index_type & sh,
-		 const index_type & nrl, const index_type & nrh,
-		 const index_type & ncl, const index_type & nch,
-		 const index_type & l6, const index_type & u6);
+     const index_type & l7, const index_type & u7,
+     const index_type & hsl, const index_type & hsu,
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch,
+     const index_type & l6, const index_type & u6);
 
    void deallocate(void);
    void allocate(void);
@@ -8115,12 +8099,12 @@ class d7_array
       return (((*this) (i)) (j, k, l, _m));
    }
    inline const dvector & operator() (int i, int j, int k, int l, int _m,
-				      int _n) const
+     int _n) const
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-   inline const double &operator() (int i, int j, int k, int l, int _m,
-				    int _n, int _p) const
+   inline const double &operator() (int i, int j, int k, int l, int _m, int _n,
+     int _p) const
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
@@ -8131,10 +8115,10 @@ class d7_array
    const d4_array & operator() (int i, int j, int k) const;
    const d3_array & operator() (int i, int j, int k, int l) const;
    const dmatrix & operator() (int i, int j, int k, int l, int _m) const;
-   const dvector & operator() (int i, int j, int k, int l, int _m,
-			       int _n) const;
-   const double &operator() (int i, int j, int k, int l, int _m, int _n,
-			     int _p) const;
+   const dvector & operator() (int i, int j, int k, int l, int _m, int _n)
+     const;
+   const double &operator() (int i, int j, int k, int l, int _m, int _n, int _p)
+     const;
    d6_array & operator ()(int);
    d6_array & operator [](int);
    d5_array & operator ()(int, int);
@@ -8185,28 +8169,26 @@ class dvar7_array
    dvar6_array *t;
  public:
    dvar7_array(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
-	       int nrl, int nrh, int ncl, int nch, int l6, int u6, int l7,
-	       int u7);
+     int nrl, int nrh, int ncl, int nch, int l6, int u6, int l7, int u7);
    void allocate(int hhsl, int hhsu);
    void allocate(int hhsl, int hhsu, int hsl, int hsu, int sl, int sh,
-		 int nrl, int nrh, int ncl, int nch, int l6, int u6,
-		 int l7, int u7);
+     int nrl, int nrh, int ncl, int nch, int l6, int u6, int l7, int u7);
 
    dvar7_array(const ad_integer & hhsl, const ad_integer & hhsu,
-	       const index_type & l7, const index_type & u7,
-	       const index_type & hsl, const index_type & hsu,
-	       const index_type & sl, const index_type & sh,
-	       const index_type & nrl, const index_type & nrh,
-	       const index_type & ncl, const index_type & nch,
-	       const index_type & l6, const index_type & u6);
+     const index_type & l7, const index_type & u7,
+     const index_type & hsl, const index_type & hsu,
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch,
+     const index_type & l6, const index_type & u6);
 
    void allocate(const ad_integer & hhsl, const ad_integer & hhsu,
-		 const index_type & l7, const index_type & u7,
-		 const index_type & hsl, const index_type & hsu,
-		 const index_type & sl, const index_type & sh,
-		 const index_type & nrl, const index_type & nrh,
-		 const index_type & ncl, const index_type & nch,
-		 const index_type & l6, const index_type & u6);
+     const index_type & l7, const index_type & u7,
+     const index_type & hsl, const index_type & hsu,
+     const index_type & sl, const index_type & sh,
+     const index_type & nrl, const index_type & nrh,
+     const index_type & ncl, const index_type & nch,
+     const index_type & l6, const index_type & u6);
 
    void deallocate(void);
    void allocate(void);
@@ -8275,8 +8257,8 @@ class dvar7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-   const prevariable elem(int i, int j, int k, int l, int _m, int _n,
-			  int _p) const
+   const prevariable elem(int i, int j, int k, int l, int _m, int _n, int _p)
+     const
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
@@ -8309,8 +8291,7 @@ class dvar7_array
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-   prevariable operator () (int i, int j, int k, int l, int _m, int _n,
-			    int _p)
+   prevariable operator () (int i, int j, int k, int l, int _m, int _n, int _p)
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
@@ -8334,18 +8315,18 @@ class dvar7_array
    {
       return (((*this) (i)) (j, k, l));
    }
-   inline const dvar_matrix & operator() (int i, int j, int k, int l,
-					  int _m) const
+   inline const dvar_matrix & operator() (int i, int j, int k, int l, int _m)
+     const
    {
       return (((*this) (i)) (j, k, l, _m));
    }
-   inline const dvar_vector & operator() (int i, int j, int k, int l,
-					  int _m, int _n) const
+   inline const dvar_vector & operator() (int i, int j, int k, int l, int _m,
+     int _n) const
    {
       return (((*this) (i)) (j, k, l, _m, _n));
    }
-   inline const prevariable operator() (int i, int j, int k, int l, int _m,
-					int _n, int _p) const
+   inline const prevariable operator()(int i, int j, int k, int l, int _m,
+     int _n, int _p) const
    {
       return (((*this) (i)) (j, k, l, _m, _n, _p));
    }
@@ -8402,7 +8383,7 @@ dvar7_array operator/(const dvar7_array & m, double d);
 dvar7_array operator/(const dvar7_array & m, const prevariable & d);
 
 
-#endif				// #if defined(USE_HIGHER_ARRAYS)
+#endif // #if defined(USE_HIGHER_ARRAYS)
 
 class lmatrix;
 
@@ -8453,7 +8434,7 @@ class lmatrix
    lmatrix(int, int, int, const ivector &);
    lmatrix(int, int, const ivector &, const ivector &);
    lmatrix(const ad_integer & nrl, const ad_integer & nrh,
-	   const index_type & ncl, const index_type & nch);
+     const index_type & ncl, const index_type & nch);
 
    lmatrix & operator=(const lmatrix & t);
    lmatrix & operator=(const imatrix & t);
@@ -8473,9 +8454,9 @@ class lmatrix
    void allocate(int nrl, int nrh, int ncl, int nch);
    void allocate(int nrl, int nrh, int ncl, const ivector & nch);
    void allocate(int nrl, int nrh, const ivector & ncl,
-		 const ivector & nch);
+     const ivector & nch);
    void allocate(const ad_integer & nrl, const ad_integer & nrh,
-		 const index_type & ncl, const index_type & nch);
+     const index_type & ncl, const index_type & nch);
    void deallocate();
 
 #ifdef OPT_LIB
@@ -8532,14 +8513,16 @@ class lmatrix
    {
       return (shape->row_max);
    }
+   // returns the number of rows
    int rowsize() const
    {
       return (shape->nrows);
-   }				// returns the number of rows
+   }
+   // returns the number of columns
    int colsize() const
    {
       return (shape->ncols);
-   }				// returns the number of columns
+   }
 
    void write_on(const ostream &) const;
    void write_on(const uostream &) const;
@@ -8547,10 +8530,10 @@ class lmatrix
    void read_from(const uistream &);
    void initialize(void);
    friend class i3_array;
-};				//end of class lmatrix
+};
 
 // void dmatrix::allocate(int nrl,int nrh,const index_type& ncl,
-  // const index_type& nch)
+// const index_type& nch)
 class index_guts;
 class index_type;
 class number_index;
@@ -8631,7 +8614,7 @@ class index_guts
    virtual operator  int ()
    {
       cerr << "Error in index_type"
-	 " -- object not dereferenced enough" << endl;
+      " -- object not dereferenced enough" << endl;
       ad_exit(1);
       return 1;
    }
@@ -8873,10 +8856,10 @@ class spdll_exception
  * Description not yet available.
  * \param
  */
-class random_number_generator	/// Random number generator
+class random_number_generator /// Random number generator
 {
-   unsigned long *mt;		///< the array for the state vector
-   int mti;			///< mti==N+1 means mt[N] is not initialized
+   unsigned long *mt; ///< the array for the state vector
+   int mti; ///< mti==N+1 means mt[N] is not initialized
  public:
    random_number_generator(int seed);
    ~random_number_generator();
@@ -8888,17 +8871,15 @@ double randpoisson(double lambda, const random_number_generator & rng);
 
 // note that od is the overdispersion od >1
 double randnegbinomial(double mu, double tau,
-		       const random_number_generator & rng);
+  const random_number_generator & rng);
 double randn(const random_number_generator & rng);
 double randu(const random_number_generator & rng);
 double gasdev(const random_number_generator & _rng);
 double expdev(const random_number_generator & _rng);
 double sgamma(double a, const random_number_generator & _rng);
 banded_symmetric_dmatrix value(const banded_symmetric_dvar_matrix & v);
-banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(const
-								    dvar_matrix_position
-								    &
-								    mpos);
+banded_symmetric_dmatrix restore_banded_symmetric_dvar_matrix_value(
+  const dvar_matrix_position& mpos);
 
 /**
  * Description not yet available.
@@ -8975,11 +8956,11 @@ class banded_symmetric_dmatrix
    const double &operator() (int i, int j) const;
    const dvector operator() (int i) const;
 #endif
-   friend banded_symmetric_dmatrix value(const banded_symmetric_dvar_matrix
-					 & v);
+   friend banded_symmetric_dmatrix value(
+     const banded_symmetric_dvar_matrix& v);
    friend banded_symmetric_dmatrix
-      restore_banded_symmetric_dvar_matrix_value(const dvar_matrix_position
-						 & mpos);
+      restore_banded_symmetric_dvar_matrix_value(
+        const dvar_matrix_position& mpos);
    friend double norm2(const banded_symmetric_dmatrix & B);
    friend double sumsq(const banded_symmetric_dmatrix & B);
 };
@@ -9033,8 +9014,7 @@ class banded_symmetric_dvar_matrix
    prevariable operator () (int i, int j);
    dvar_vector operator () (int i);
 #endif
-   friend banded_symmetric_dmatrix value(const banded_symmetric_dvar_matrix
-					 & v);
+   friend banded_symmetric_dmatrix value(const banded_symmetric_dvar_matrix& v);
    friend dvariable norm(const banded_symmetric_dvar_matrix & B);
    friend dvariable norm2(const banded_symmetric_dvar_matrix & B);
    friend dvariable sumsq(const banded_symmetric_dvar_matrix & B);
@@ -9076,16 +9056,13 @@ class banded_lower_triangular_dmatrix
    void save_dmatrix_position(void) const;
    banded_lower_triangular_dmatrix(const dvar_matrix_position & mpos);
    banded_lower_triangular_dmatrix(int _min, int _max, int _bw);
-   banded_lower_triangular_dmatrix(const banded_lower_triangular_dmatrix
-				   &);
-   banded_lower_triangular_dmatrix & operator =(const
-						banded_lower_triangular_dmatrix
-						&);
+   banded_lower_triangular_dmatrix(const banded_lower_triangular_dmatrix &);
+   banded_lower_triangular_dmatrix & operator=(
+     const banded_lower_triangular_dmatrix &);
    void save_dmatrix_derivatives(const dvar_matrix_position &) const;
    friend banded_lower_triangular_dmatrix
-      restore_banded_lower_triangular_dvar_matrix_value(const
-							dvar_matrix_position
-							& mpos);
+      restore_banded_lower_triangular_dvar_matrix_value(
+        const dvar_matrix_position& mpos);
 #if defined(OPT_LIB)
    inline double &operator () (register int i, register int j)
    {
@@ -9186,13 +9163,13 @@ class banded_lower_triangular_dvar_matrix
 };
 
 ostream & operator<<(const ostream & ofs,
-		     const banded_symmetric_dmatrix & S);
+  const banded_symmetric_dmatrix & S);
 ostream & operator<<(const ostream & ofs,
-		     const banded_symmetric_dvar_matrix & S);
+  const banded_symmetric_dvar_matrix & S);
 ostream & operator<<(const ostream & ofs,
-		     const banded_lower_triangular_dmatrix & S);
+  const banded_lower_triangular_dmatrix & S);
 ostream & operator<<(const ostream & ofs,
-		     const banded_lower_triangular_dvar_matrix & S);
+  const banded_lower_triangular_dvar_matrix & S);
 
 // check to see how this is transposed before using
 dmatrix solve(const banded_symmetric_dmatrix & m, const dmatrix & M);
@@ -9206,9 +9183,8 @@ banded_lower_triangular_dvar_matrix choleski_decomp_positive
    (const banded_symmetric_dvar_matrix & S, double eps, dvariable & fpen);
 
 dvariable ln_det_choleski(const banded_symmetric_dvar_matrix & S,
-			  const int &ierr);
-double ln_det_choleski(const banded_symmetric_dmatrix & S,
-		       const int &ierr);
+  const int &ierr);
+double ln_det_choleski(const banded_symmetric_dmatrix & S, const int &ierr);
 
 banded_lower_triangular_dvar_matrix choleski_decomp
    (const banded_symmetric_dvar_matrix & S, const int &ierr);
@@ -9232,15 +9208,15 @@ int max(int i, int j, int k);
 int max(int i, int j);
 
 dvar_vector solve(const banded_lower_triangular_dvar_matrix & m,
-		  const dvar_vector & v);
+  const dvar_vector & v);
 
 void check_choleski_decomp(const banded_symmetric_dvar_matrix & MM,
-			   int &ierr);
+  int &ierr);
 
 dvector solve(const banded_lower_triangular_dmatrix & m,
-	      const dvector & v);
+  const dvector & v);
 dvector solve_trans(const banded_lower_triangular_dmatrix & m,
-		    const dvector & v);
+  const dvector & v);
 int admax(int i, int j);
 
 dmatrix diagonal_matrix(const dvector & v);
@@ -9265,7 +9241,7 @@ dvariable kludge_cumd_cauchy(const prevariable & x);
 double log_negbinomial_density(double x, double mu, double tau);
 
 dvariable log_negbinomial_density(double x, const prevariable & mu,
-				  const prevariable & tau);
+  const prevariable & tau);
 
 dvariable log_density_poisson(double x, const prevariable & mu);
 double log_density_poisson(double x, double mu);
@@ -9349,16 +9325,16 @@ int allocated(const d7_array & v);
 int allocated(const dvar7_array & v);
 
 dvar_matrix positive_definite_matrix(const dvar_matrix & MM, double eps,
-				     dvariable & fpen);
+  dvariable & fpen);
 
 dvar_matrix empirical_covariance(const dvar_matrix & v1);
 dvar_matrix empirical_covariance(const dvar_matrix & v1,
-				 const imatrix & missflags);
+  const imatrix & missflags);
 
 void gauss_hermite(const dvector & _x, const dvector & _w);
 void normalized_gauss_hermite(const dvector & _x, const dvector & _w);
 void gauss_legendre(double x1, double x2, const dvector & _x,
-		    const dvector & _w);
+  const dvector & _w);
 void gauss_legendre(const dvector & _x, const dvector & _w);
 
 //dvariable beta(const prevariable&,const prevariable&);
@@ -9373,14 +9349,13 @@ double betai(const double a,const double b,const double x, int maxit=100);
 /*
 double betai(double _aa, double _bb, double _xx);
 dvariable betai(const dvariable & _a, const dvariable & _b,
-		const dvariable & _x);
+  const dvariable & _x);
 double incbet(const double a, const double b, const double x);
 dvariable incbet(const dvariable & _a, const dvariable & _b,
-		 const dvariable & _x);
+  const dvariable & _x);
 
 df1_three_variable incbet(const df1_three_variable & _aa,
-			  const df1_three_variable & _bb,
-			  const df1_three_variable & _xx);
+  const df1_three_variable & _bb, const df1_three_variable & _xx);
 */
 
 dvar_matrix tensor_prod(const dvar_matrix & a, const dvar_matrix & b);
@@ -9455,7 +9430,7 @@ class double_index_guts
    virtual operator  double ()
    {
       cerr << "Error in double_index_type"
-	 " -- object not dereferenced enough" << endl;
+      " -- object not dereferenced enough" << endl;
       ad_exit(1);
       return 1;
    }
@@ -9616,8 +9591,7 @@ class d3_index:public d3_array, public double_index_guts
    friend class index_type;
 };
 
-dvariable mf_upper_bound(const prevariable & x, double M,
-			 prevariable & fpen);
+dvariable mf_upper_bound(const prevariable & x, double M, prevariable & fpen);
 double mf_upper_bound(const double &x, double M, prevariable & fpen);
 
 int operator==(double v0, const prevariable & v1);
@@ -9627,42 +9601,37 @@ int operator>(double v0, const prevariable & v1);
 int operator<(double v0, const prevariable & v1);
 int operator!=(double v0, const prevariable & v1);
 
-dvariable cumd_bivariate_normal(const prevariable & xu,
-				const prevariable & yu,
-				const prevariable & rho, int nbox);
+dvariable cumd_bivariate_normal(const prevariable & xu, const prevariable & yu,
+  const prevariable & rho, int nbox);
 
-dvariable cumbvn(const dvariable & x, const dvariable & y,
-		 const dvariable & rho);
+dvariable cumbvn(const dvariable& x, const dvariable& y, const dvariable& rho);
 
 dvariable cumbvn(const dvariable & xl, const dvariable & yl,
-		 const dvariable & xu, const dvariable & yu,
-		 const dvariable & rho);
+  const dvariable & xu, const dvariable & yu, const dvariable & rho);
 
 double ghk(const dvector & lower, const dvector & upper,
-	   const dmatrix & Sigma, const dmatrix & eps);
+  const dmatrix & Sigma, const dmatrix & eps);
 
 double ghk_choleski(const dvector & lower, const dvector & upper,
-		    const dmatrix & ch, const dmatrix & eps);
+  const dmatrix & ch, const dmatrix & eps);
 
 dvariable ghk_choleski_m(const dvar_vector & upper,
-			 const dvar_matrix & ch, const dmatrix & eps);
+  const dvar_matrix & ch, const dmatrix & eps);
 
 double ghk(const dvector & lower, const dvector & upper,
-	   const dmatrix & Sigma, const dmatrix & eps, int i);
+  const dmatrix & Sigma, const dmatrix & eps, int i);
 
 dvariable ghk(const dvar_vector & lower, const dvar_vector & upper,
-	      const dvar_matrix & Sigma, const dmatrix & eps);
+  const dvar_matrix & Sigma, const dmatrix & eps);
 
 dvariable ghk(const dvar_vector & lower, const dvar_vector & upper,
-	      const dvar_matrix & Sigma, const dmatrix & eps, int i);
+  const dvar_matrix & Sigma, const dmatrix & eps, int i);
 
 dvariable ghk_choleski_m_cauchy(const dvar_vector & upper,
-				const dvar_matrix & ch,
-				const dmatrix & eps);
+  const dvar_matrix & ch, const dmatrix & eps);
 
 dvariable ghk_choleski_m_logistic(const dvar_vector & upper,
-				  const dvar_matrix & ch,
-				  const dmatrix & eps);
+  const dvar_matrix & ch, const dmatrix & eps);
 
 /**
  * Description not yet available.
@@ -9761,9 +9730,9 @@ class ad_comm
    static adpvm_manager *pvm_manager;
    static adstring subdir;
    static streampos change_datafile_name(const adstring & s,
-					 const streampos & off = 0);
+     const streampos & off = 0);
    static streampos change_pinfile_name(const adstring & s,
-					const streampos & off = 0);
+     const streampos & off = 0);
    static cifstream *global_datafile;
    static cifstream *global_parfile;
    static ofstream *global_savefile;
@@ -9779,10 +9748,8 @@ class ad_comm
    static char **argv;
 };
 
-
 int option_match(int argc, char *argv[], const char *string);
-int option_match(int argc, char *argv[], const char *string,
-		 const int &nopt);
+int option_match(int argc, char *argv[], const char *string, const int &nopt);
 int option_match(char *s, const char *string, const int &_nopt);
 int option_match(char *s, const char *string);
 int ad_chdir(const char *s);
@@ -9798,14 +9765,12 @@ inline dvariable inv(const prevariable & x)
 double gamma_density(double _x, double r, double mu);
 dvariable gamma_density(const prevariable & _x, double r, double mu);
 dvariable gamma_density(const dvariable & _x, const dvariable & _r,
-			const dvariable & _mu);
+  const dvariable & _mu);
 
 double log_gamma_density(double _x, double r, double mu);
 dvariable log_gamma_density(const prevariable & _x, double r, double mu);
 dvariable log_gamma_density(const dvariable & _x, const dvariable & _r,
-			    const dvariable & _mu);
-
-
+  const dvariable & _mu);
 
 #if (defined(linux) || defined(__linux__)) && !defined(_WIN32)
 #include <sys/time.h>
@@ -9820,8 +9785,8 @@ class adtimer
    timeval tv;
    timeval tvold;
  public:
-   double get_elapsed_time_and_reset(void);	// return time in milliseconds;
-   double get_elapsed_time(void);	// return time in milliseconds;
+   double get_elapsed_time_and_reset(void);// return time in milliseconds;
+   double get_elapsed_time(void);// return time in milliseconds;
    adtimer(void);
 };
 
@@ -9837,8 +9802,8 @@ class adtimer
    DWORD t;
    DWORD told;
  public:
-   double get_elapsed_time_and_reset(void);	// return time in milliseconds;
-   double get_elapsed_time(void);	// return time in milliseconds;
+   double get_elapsed_time_and_reset(void);// return time in milliseconds;
+   double get_elapsed_time(void);// return time in milliseconds;
    adtimer(void);
 };
 
@@ -9874,8 +9839,7 @@ class lower_triangular_dmatrix:public dmatrix
 dmatrix symmetrize(const lower_triangular_dmatrix & M);
 dvector solve(const lower_triangular_dmatrix & M, const dvector & v);
 dvector lower_triangular_solve(const dmatrix & M, const dvector & v);
-dvar_vector lower_triangular_solve(const dvar_matrix & M,
-				   const dvar_vector & v);
+dvar_vector lower_triangular_solve(const dvar_matrix& M, const dvar_vector& v);
 dvector solve_trans(const lower_triangular_dmatrix & M, const dvector & v);
 dmatrix fillout(const lower_triangular_dmatrix & M);
 dmatrix fillout_trans(const lower_triangular_dmatrix & M);
@@ -9884,7 +9848,7 @@ lower_triangular_dmatrix lower_triangular_choleski_decomp_positive
    (const dmatrix & MM, const int &_ierr);
 
 dvar_vector solve_trans(const banded_lower_triangular_dvar_matrix & M,
-			const dvector & y);
+  const dvector & y);
 
 inline int admax(int i, int j)
 {
@@ -9918,8 +9882,7 @@ double lower_triangular_ln_det(const dmatrix & m, int &sgn);
 dvariable lower_triangular_ln_det(const dvar_matrix & m);
 dvariable lower_triangular_ln_det(const dvar_matrix & m, int &sgn);
 double bounder(double x, double min, double max, double scale);
-dvariable bounder(const prevariable & x, double min, double max,
-		  double scale);
+dvariable bounder(const prevariable & x, double min, double max, double scale);
 dmatrix inv(const dmatrix & m1, const double &_ln_det, const int &_sgn);
 
 double gamma_deviate(double _x, double _a);
@@ -9932,93 +9895,72 @@ extern int just_to_link_fvar1;
 
 dvector inv_cumd_pareto(const dvector & _y, double alpha, double xm);
 
-dvector cumd_upper_trunc_pareto(const dvector & _y, double alpha,
-				double xm);
+dvector cumd_upper_trunc_pareto(const dvector & _y, double alpha, double xm);
 
 dvector cumd_pareto(const dvector & _y, double alpha, double xm);
 
-dvector inv_cumd_upper_trunc_pareto(const dvector & _y,
-				    double alpha, double xmin,
-				    double xmax);
+dvector inv_cumd_upper_trunc_pareto(const dvector & _y, double alpha,
+  double xmin, double xmax);
 
 dvar_vector inv_cumd_upper_trunc_pareto(const dvar_vector & _y,
-					const prevariable & alpha,
-					const prevariable & xmin,
-					const prevariable & xmax);
+  const prevariable & alpha, const prevariable & xmin, const prevariable& xmax);
 
-dvar_vector inv_cumd_pareto(const dvar_vector & _y,
-			    const prevariable & alpha,
-			    const prevariable & xm);
+dvar_vector inv_cumd_pareto(const dvar_vector & _y, const prevariable & alpha,
+  const prevariable & xm);
 
 dvar_vector ln_upper_trunc_pareto_density(const dvar_vector & _y,
-					  const prevariable & alpha,
-					  const prevariable & xm);
+  const prevariable & alpha, const prevariable & xm);
 
-dvar_vector ln_pareto_density(const dvar_vector & _y,
-			      const prevariable & alpha,
-			      const prevariable & xm);
+dvar_vector ln_pareto_density(const dvar_vector & _y, const prevariable & alpha,
+  const prevariable & xm);
 
 dvar_vector ln_pareto_upper_trunc_density(const dvar_vector & y,
-					  const prevariable & alpha,
-					  const prevariable & xmin,
-					  const prevariable & xmax);
+  const prevariable & alpha, const prevariable& xmin, const prevariable& xmax);
 
-dvar_vector pareto_density(const dvar_vector & _y,
-			   const prevariable & alpha,
-			   const prevariable & xm);
+dvar_vector pareto_density(const dvar_vector & _y, const prevariable & alpha,
+  const prevariable & xm);
 
 dvariable ln_upper_trunc_pareto_density(const prevariable & _y,
-					const prevariable & alpha,
-					const prevariable & xmin,
-					const prevariable & xmax);
+  const prevariable & alpha, const prevariable & xmin, const prevariable& xmax);
 
-dvariable ln_pareto_density(const prevariable & _y,
-			    const prevariable & alpha,
-			    const prevariable & xm);
+dvariable ln_pareto_density(const prevariable & _y, const prevariable & alpha,
+  const prevariable & xm);
 
 dvariable pareto_density(const prevariable & _y, const prevariable & alpha,
-			 const prevariable & xm);
+  const prevariable & xm);
 
 dvar_vector cumd_pareto(const dvar_vector & _y, const prevariable & alpha,
-			const prevariable & xm);
+  const prevariable & xm);
 
 dvar_vector cumd_upper_trunc_pareto(const dvar_vector & _y,
-				    const prevariable & alpha,
-				    const prevariable & xmin,
-				    const prevariable & xmax);
+  const prevariable & alpha, const prevariable & xmin, const prevariable& xmax);
 
-dvariable inv_cumd_pareto(const prevariable & _y,
-			  const prevariable & alpha,
-			  const prevariable & xm);
+dvariable inv_cumd_pareto(const prevariable& _y, const prevariable& alpha,
+  const prevariable & xm);
 
 dvariable cumd_upper_trunc_pareto(const prevariable & _y,
-				  const prevariable & alpha,
-				  const prevariable & xmin,
-				  const prevariable & xmax);
+  const prevariable& alpha, const prevariable& xmin, const prevariable& xmax);
 
 dvariable cumd_pareto(const prevariable & _y, const prevariable & alpha,
-		      const prevariable & xm);
+  const prevariable & xm);
 
-dvariable inv_cumd_pareto(const prevariable & _y,
-			  const prevariable & alpha,
-			  const prevariable & xm);
+dvariable inv_cumd_pareto(const prevariable & _y, const prevariable & alpha,
+  const prevariable & xm);
 
 dvariable cumd_pareto(const prevariable & _y, const prevariable & alpha,
-		      const prevariable & xm);
+  const prevariable & xm);
 
 double inv_cumd_upper_trunc_pareto(double _y, double alpha, double xmin,
-				   double xmax);
+  double xmax);
 
 double inv_cumd_pareto(double _y, double alpha, double xm);
 
 double cumd_pareto(double _y, double alpha, double xm);
 
-
-double robust_normal_logistic_mixture_deviate(double x, double spread =
-					      3.0);
+double robust_normal_logistic_mixture_deviate(double x, double spread = 3.0);
 double robust_normal_mixture_deviate(double x, double spread = 3.0);
 dvariable robust_normal_mixture_deviate(const prevariable & x,
-					double spread = 3.0);
+  double spread = 3.0);
 
 dvector lower_triagnular_solve_trans(const dmatrix & M, const dvector & y);
 dvector lower_triagular_solve(const dmatrix & m, const dvector & v);
@@ -10035,8 +9977,7 @@ dvariable cumd_normal_mixture(const prevariable & _x, double _a);
 dvar_vector cumd_normal_mixture(const dvar_vector & _x, double _a);
 
 dvariable inv_cumd_normal_mixture(const prevariable & _x, double _a);
-dvariable inv_cumd_normal_logistic_mixture(const prevariable & _x,
-					   double _a);
+dvariable inv_cumd_normal_logistic_mixture(const prevariable & _x, double _a);
 
 double inv_cumd_normal_mixture(double _x, double _a);
 double inv_cumd_normal_logistic_mixture(double _x, double _a);
@@ -10044,30 +9985,28 @@ double inv_cumd_normal_logistic_mixture(double _x, double _a);
 double inv_cumd_t(double n, double y, double eps = 1.e-7);
 
 dvariable inv_cumd_t(const prevariable & n, const prevariable & y,
-		     double eps = 1.e-7);
+  double eps = 1.e-7);
 
-double inv_cumd_beta_stable(double a, double b, double y, double eps =
-			    1.e-7);
-dvariable inv_cumd_beta_stable(const prevariable & _a,
-			       const prevariable & _b,
-			       const prevariable & _y, double eps = 1.e-7);
+double inv_cumd_beta_stable(double a, double b, double y, double eps = 1.e-7);
+dvariable inv_cumd_beta_stable(const prevariable & _a, const prevariable & _b,
+  const prevariable & _y, double eps = 1.e-7);
 
 dvariable norm_to_gamma(const prevariable & v, const prevariable & alpha,
-			double bound = 0.999999);
+  double bound = 0.999999);
 
 double norm_to_gamma(double v, double alpha, double bound = 0.999999);
 
 dmatrix eigenvectors(const banded_symmetric_dmatrix & _SS,
-		     const dvector & e);
+  const dvector & e);
 dvector eigenvalues(const banded_symmetric_dmatrix & _SS);
 dvector get_eigen_values(const dvector & _d, const dvector & _e);
 dvar_vector get_eigen_values(const dvar_vector & _d,
-			     const dvar_vector & _e);
+  const dvar_vector & _e);
 dvector get_eigen_values(const dvector & _d, const dvector & _e,
-			 const dmatrix & _z);
+  const dmatrix & _z);
 
 dvariable beta_deviate(const prevariable & _x, const prevariable & _a,
-		       const prevariable & _b, double eps = 1.e-7);
+  const prevariable & _b, double eps = 1.e-7);
 double beta_deviate(double x, double a, double b, double eps = 1.e-7);
 
 #ifdef __cplusplus
@@ -10091,7 +10030,7 @@ extern "C"
 
 dmatrix orthpoly_constant_begin(int n, int deg, int nconst);
 dmatrix orthpoly_constant_begin_end(int n, int deg, int nconst_begin,
-				    int enddeg, int nconst_end);
+  int enddeg, int nconst_end);
 #if defined(USE_DD)
 #  include <ddfvar.hpp>
 #  include <qdfvar.hpp>
@@ -10124,8 +10063,7 @@ class sing_val_decomp
    sing_val_decomp()
    {
    };
-   sing_val_decomp(const dmatrix & _a, const dvector & _w,
-		   const dmatrix & _v);
+   sing_val_decomp(const dmatrix & _a, const dvector & _w, const dmatrix & _v);
    dmatrix get_u(void)
    {
       return a;
@@ -10141,11 +10079,8 @@ class sing_val_decomp
 };
 
 sing_val_decomp singval_decomp(const dmatrix & _a);
-banded_lower_triangular_dmatrix choleski_decomp_trust_bound(const
-							    banded_symmetric_dmatrix
-							    & _M,
-							    const int
-							    &_ierr);
+banded_lower_triangular_dmatrix choleski_decomp_trust_bound(
+  const banded_symmetric_dmatrix& _M, const int &_ierr);
 
 dvariable avg(const prevariable & x, const prevariable & y);
 double avg(double x, double y);
@@ -10279,8 +10214,10 @@ class dvar_compressed_triplet
  */
 class dcompressed_triplet
 {
-   int n;			// number of rows
-   int m;			// number of columns
+   // number of rows
+   int n;
+   // number of columns
+   int m;
    imatrix coords;
    dvector x;
  public:
@@ -10340,15 +10277,21 @@ typedef struct cs_symbolic css;
  * Description not yet available.
  * \param
  */
-class hs_symbolic		// Info for symbolic cholesky
+class hs_symbolic // Info for symbolic cholesky
 {
  public:
-   int n;			// Dimension of underlying pos. def. matrix
-   int m;			// Dimension of underlying pos. def. matrix
-   ivector pinv;		// inverse row perm. for QR, fill red. perm for Chol
-   ivector parent;		// elimination tree for Cholesky and QR
-   ivector cp;			// column pointers for Cholesky, row counts for QR
-   double lnz;			// # entries in L for LU or Cholesky; in V for QR
+   // Dimension of underlying pos. def. matrix
+   int n;
+   // Dimension of underlying pos. def. matrix
+   int m;
+   // inverse row perm. for QR, fill red. perm for Chol
+   ivector pinv;
+   // elimination tree for Cholesky and QR
+   ivector parent;
+   // column pointers for Cholesky, row counts for QR
+   ivector cp;
+   // # entries in L for LU or Cholesky; in V for QR
+   double lnz;
    hs_symbolic(int, css *);
    hs_symbolic(int n, dmatrix & T, int order);
    hs_symbolic(const dcompressed_triplet & T, int order);
@@ -10368,10 +10311,10 @@ hs_smatrix *return_choleski_decomp(dcompressed_triplet & st);
 dvector return_choleski_factor_solve(hs_smatrix * PL, dvector & eps);
 
 dvar_vector return_choleski_factor_solve(dvar_hs_smatrix * PL,
-					 dvector & eps);
+  dvector & eps);
 
 dvector return_choleski_decomp_solve(dcompressed_triplet & dct,
-				     dvector & eps);
+  dvector & eps);
 
 dvar_hs_smatrix *return_choleski_decomp(dvar_compressed_triplet & st);
 
@@ -10379,32 +10322,32 @@ int allocated(const dcompressed_triplet & t);
 int allocated(const dvar_compressed_triplet & t);
 
 dvector solve(const dcompressed_triplet &, const dmatrix &,
-	      const dvector &);
+  const dvector &);
 dvector solve(const dcompressed_triplet &, const dvector &,
-	      const hs_symbolic &, int &ierr);
+  const hs_symbolic &, int &ierr);
 dvector solve(const dcompressed_triplet &, const dvector &,
-	      const hs_symbolic &);
+  const hs_symbolic &);
 dvector solve(const dcompressed_triplet &, const dmatrix &,
-	      const dvector &, const hs_symbolic &);
+  const dvector &, const hs_symbolic &);
 double ln_det(const dcompressed_triplet &);
 double ln_det(const dcompressed_triplet &, const hs_symbolic &);
 double ln_det(const dcompressed_triplet &, int &ierr);
 dvariable ln_det(const dvar_compressed_triplet &, int &ierr);
 
 dvar_vector return_choleski_factor_solve(dvar_hs_smatrix * PL,
-					 dvector & eps);
+  dvector & eps);
 void save_ad_pointer(void *);
 void *restore_ad_pointer(void);
 
 class laplace_approximation_calculator;
 
 dvariable ln_det(dvar_compressed_triplet &, hs_symbolic &,
-		 laplace_approximation_calculator *);
+  laplace_approximation_calculator *);
 
 dvariable ln_det(dvar_compressed_triplet &);
 dvariable ln_det(dvar_compressed_triplet &, hs_symbolic &);
 dvariable ln_det(dvar_compressed_triplet &, hs_symbolic &,
-		 dcompressed_triplet &);
+  dcompressed_triplet &);
 
 dmatrix make_dmatrix(dcompressed_triplet & M);
 int norm2(const ivector &);

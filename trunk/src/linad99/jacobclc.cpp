@@ -134,7 +134,6 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
   {
     fp->write_cmpdif_stack_buffer();
   }
-  grad_stack_entry * grad_ptr;
 
   for (i=jac.rowmin();i<=(unsigned int)jac.rowmax();i++)
   {
@@ -280,7 +279,8 @@ void gradient_structure::jacobcalc(int nvar, const dmatrix& _jac)
       while (gradient_structure::GRAD_STACK1->ptr-- >
              gradient_structure::GRAD_STACK1->ptr_first)
       {
-        grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+        //grad_stack_entry* grad_ptr =
+        //gradient_structure::GRAD_STACK1->ptr;
         {
           (* gradient_structure::GRAD_STACK1->ptr->func)();
         }

@@ -103,7 +103,6 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
   {
     fp->write_cmpdif_stack_buffer();
   }
-  grad_stack_entry * grad_ptr;
 
   // save variable values if desired
   if (save_var_flag)
@@ -202,7 +201,6 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
 
     unsigned int size = sizeof(double_and_int );
 
-    double * zptr;
 
     for (i=0 ; i< (max_last_offset/size) ; i++ )
     {
@@ -223,11 +221,9 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
     }
 
     * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
-    zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
+    //double* zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
-    //double z;
     int break_flag=1;
-
     do
     {
       gradient_structure::GRAD_STACK1->ptr++;
@@ -238,7 +234,8 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
       while (gradient_structure::GRAD_STACK1->ptr-- >
              gradient_structure::GRAD_STACK1->ptr_first)
       {
-        grad_ptr = gradient_structure::GRAD_STACK1->ptr;
+        //grad_stack_entry * grad_ptr =
+        //gradient_structure::GRAD_STACK1->ptr;
         {
           (* gradient_structure::GRAD_STACK1->ptr->func)();
         }

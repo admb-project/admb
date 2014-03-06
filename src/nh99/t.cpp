@@ -473,9 +473,12 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
     static logical finish;
     static dvariable yy;
     static integer maxfev;
-    extern /* Subroutine */ int xlb1_(integer *, integer *, integer *,
+/*
+//Subroutine 
+    extern int xlb1_(integer *, integer *, integer *,
       dvar_vector & , integer *, integer *, dvar_vector & , dvar_vector & ,
             dvar_vector & , dvar_vector & , logical *);
+*/
     static integer npt;
     static dvariable stp, stp1;
 
@@ -1050,11 +1053,12 @@ L196:
 /*     LAST LINE OF SUBROUTINE LBFGS */
 
 
-/* Subroutine */ int xlb1_(integer *iprint, integer *iter, integer *nfun,
+/* 
+Subroutine int xlb1_(integer *iprint, integer *iter, integer *nfun,
         dvar_vector & gnorm, integer *n, integer *m, dvar_vector & x,
         dvar_vector & f, dvar_vector & g, dvar_vector & stp, logical *finish)
 {
-    /* Format strings */
+    // Format strings
     static char fmt_10[] = "(\002*******************************************\
 ******\002)";
     static char fmt_20[] = "(\002  N=\002,i5,\002   NUMBER OF CORRECTIONS\
@@ -1071,16 +1075,16 @@ ORM\002,7x,\002STEPLENGTH\002/)";
     static char fmt_100[] = "(/\002 THE MINIMIZATION TERMINATED WITHOUT DETE\
 CTING ERRORS.\002,/\002 IFLAG = 0\002)";
 
-    /* System generated locals */
+    // System generated locals
     integer i__1;
 
-    /* Builtin functions */
+    // Builtin functions
    //integer //s_wsfe(cilist *), e_wsfe(), // do_fio(integer *, char *, ftnlen);
 
-    /* Local variables */
+    // Local variables
     static integer i;
 
-    /* Fortran I/O blocks */
+    // Fortran I/O blocks
     static cilist io___33 = { 0, 0, 0, fmt_10, 0 };
     static cilist io___34 = { 0, 0, 0, fmt_20, 0 };
     static cilist io___35 = { 0, 0, 0, fmt_30, 0 };
@@ -1101,17 +1105,17 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
     static cilist io___51 = { 0, 0, 0, fmt_50, 0 };
     static cilist io___52 = { 0, 0, 0, fmt_100, 0 };
 
-/*     ------------------------------------------------------------- */
-/*     THIS ROUTINE PRINTS MONITORING INFORMATION. THE FREQUENCY AND */
-/*     AMOUNT OF OUTPUT ARE CONTROLLED BY IPRINT. */
-/*     ------------------------------------------------------------- */
+//     -------------------------------------------------------------
+//     THIS ROUTINE PRINTS MONITORING INFORMATION. THE FREQUENCY AND
+//     AMOUNT OF OUTPUT ARE CONTROLLED BY IPRINT.
+//     -------------------------------------------------------------
 
-    /* Parameter adjustments */
+    // Parameter adjustments
     --iprint;
     g.shift(1);
     x.shift(1);
 
-    /* Function Body */
+    // Function Body
     if (*iter == 0) {
         io___33.ciunit = lb4_1.mp;
         // s_wsfe(&io___33);
@@ -1229,7 +1233,8 @@ CTING ERRORS.\002,/\002 IFLAG = 0\002)";
     }
 
     return 0;
-} /* xlb1_ */
+} 
+*/
 
 /*     ****** */
 

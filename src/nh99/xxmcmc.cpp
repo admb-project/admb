@@ -140,7 +140,6 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
   int no_sd_mcmc=0;
 
   int on2=-1;
-  int nvar1=0;
   if ( (on2=option_match(ad_comm::argc,ad_comm::argv,"-nosdmcmc"))>-1)
   {
     no_sd_mcmc=1;
@@ -148,7 +147,8 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
   if (mcmc2_flag==1)
   {
     initial_params::restore_start_phase();
-    nvar1=initial_params::nvarcalc(); // get the number of active parameters
+    //get the number of active parameters
+    //int nvar1=initial_params::nvarcalc();
   }
 
   if (stddev_params::num_stddev_params==0)
@@ -169,16 +169,15 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     //double total_spread=2500;
     uostream * pofs_sd = NULL;
 
-    int nvar_x=0;
 #if defined(USE_LAPLACE)
     initial_params::set_inactive_random_effects();
-    nvar_x=initial_params::nvarcalc();
+    //int nvar_x=initial_params::nvarcalc();
     initial_params::set_active_random_effects();
     int nvar_re=initial_params::nvarcalc();
 #endif
 
     int nvar=initial_params::nvarcalc(); // get the number of active parameters
-    int scov_option=0;
+    //int scov_option=0;
     dmatrix s_covar;
     dvector s_mean;
     int on=-1;
@@ -194,7 +193,7 @@ void function_minimizer::mcmc_routine(int nmcmc,int iseed0, double dscale,
     //int ntmp=0;
     //if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-mcscov",ntmp))>-1)
     //{
-    scov_option=1;
+    //scov_option=1;
     s_covar.allocate(1,nvar,1,nvar);
     s_mean.allocate(1,nvar);
     s_mean.initialize();

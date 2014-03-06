@@ -300,11 +300,9 @@ void read_pass1_eq_2(void)
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
 
-  double * zbar;
-  double * zdotbar;
-
-  zbar=(double*)list2.bptr;
-  zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
+  //double* zbar=(double*)list2.bptr;
+  //double* zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
+ 
   list2.restoreposition(); // save pointer to beginning of record;
 
   double * x_bar_tilde=px->get_u_bar_tilde();

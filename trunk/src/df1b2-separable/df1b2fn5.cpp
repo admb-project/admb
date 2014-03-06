@@ -275,7 +275,6 @@ void read_pass1_init_1(void)
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
   //df1b2_header z;
-  df1b2function1 * pf;
 
   // get info from tape1
 #if defined(SAFE_ARRAYS)
@@ -283,7 +282,7 @@ void read_pass1_init_1(void)
 #endif
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  pf=*(df1b2function1 **) list.bptr;
+  //df1b2function1* pf = *(df1b2function1**)list.bptr;
   list.bptr+=sizeof(char*);
   list.restoreposition(); // save pointer to beginning of record;
   //int i;
@@ -379,7 +378,6 @@ void read_pass1_init_2(void)
   // bptr and bptr2 now both point to the beginning of their records
 
   //df1b2_header z;
-  df1b2function1 * pf;
 
   // get info from tape1
   list2.saveposition(); // save pointer to beginning of record;
@@ -389,15 +387,12 @@ void read_pass1_init_2(void)
 #endif
   df1b2_header * pz=(df1b2_header *) list.bptr;
   list.bptr+=sizeof(df1b2_header);
-  pf=*(df1b2function1 **) list.bptr;
+  //df1b2function1 * pf = *(df1b2function1**)list.bptr;
   list.bptr+=sizeof(char*);
   list.restoreposition(num_bytes); // save pointer to beginning of record;
 
-  double * zbar;
-  double * zdotbar;
-
-  zbar=(double*)list2.bptr;
-  zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
+  //double* zbar=(double*)list2.bptr;
+  //double* zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
 
   list2.restoreposition(); // save pointer to beginning of record;
 

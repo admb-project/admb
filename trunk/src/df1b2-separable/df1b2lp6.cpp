@@ -347,7 +347,6 @@ dvector laplace_approximation_calculator::banded_calculations
     initial_params::xinit(ubest);
     gradient_structure::set_YES_DERIVATIVES();
   }
-  //int lmn_flag=0;
   //double maxg;
   //double maxg_save;
   //dvector uhat(1,usize);
@@ -781,7 +780,7 @@ void laplace_approximation_calculator::
   funnel_init_var::num_active_parameters=0;
   funnel_init_var::num_inactive_vars=0;
 }
-int tmp_testcount=0;
+//int tmp_testcount=0;
 df1b2variable * tmp_pen=00;
 
 /**
@@ -791,9 +790,6 @@ df1b2variable * tmp_pen=00;
 dvector laplace_approximation_calculator::
   get_newton_raphson_info_banded (function_minimizer * pfmin)
 {
-  //int i,j,ip;
-  int ip;
-
   int nv=initial_df1b2params::set_index();
   if (allocated(used_flags))
   {
@@ -807,7 +803,7 @@ dvector laplace_approximation_calculator::
     used_flags.safe_allocate(1,nv);
   }
 
-  for (ip=1;ip<=num_der_blocks;ip++)
+  for (int ip=1;ip<=num_der_blocks;ip++)
   {
     if (ip>1)   // change to combine sparse matrix stuff with num der blocks
     {           // df  3-4-09
@@ -822,7 +818,6 @@ dvector laplace_approximation_calculator::
     (*re_objective_function_value::pobjfun)=0;
     df1b2variable pen=0.0;
     tmp_pen=&pen;
-  tmp_testcount++;
     df1b2variable zz=0.0;
 
     initial_df1b2params::reset(y,pen);
@@ -835,6 +830,7 @@ dvector laplace_approximation_calculator::
     //cout << funnel_init_var::lapprox << endl;
     block_diagonal_flag=1;
    /*
+    tmp_testcount++;
     if (tmp_testcount>=9)
     {
       pen.deallocate();
@@ -1177,17 +1173,13 @@ dvector laplace_approximation_calculator::
   }
   return uhat_best;
   initial_params::set_active_only_random_effects();
-  //int lmn_flag=0;
-  double maxg;
-  //double maxg_save;
-  double f_from_1=0.0;
   if (!inner_lmnflag)
   {
     if (!ADqd_flag)
     {
       uhat=get_uhat_quasi_newton(uhat_new,pfmin);
-      maxg=fabs(fmc1.gmax);
-      f_from_1=fmc1.fbest;
+      //double maxg=fabs(fmc1.gmax);
+      //double f_from_1=fmc1.fbest;
     }
     else
     {

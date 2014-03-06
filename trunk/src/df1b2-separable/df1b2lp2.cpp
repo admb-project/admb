@@ -106,8 +106,8 @@ dvector laplace_approximation_calculator::block_diagonal_calculations
     {
       // test newton raphson
       //Hess.initialize();
-      int check=initial_params::stddev_scale(scale,uhat);
-      check=initial_params::stddev_curvscale(curv,uhat);
+      /*int check=*/initial_params::stddev_scale(scale,uhat);
+      /*check=*/initial_params::stddev_curvscale(curv,uhat);
       max_separable_g=0.0;
       pmin->inner_opt_flag=1;
       step=get_newton_raphson_info_block_diagonal(pfmin);

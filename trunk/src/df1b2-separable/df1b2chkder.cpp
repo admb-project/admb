@@ -444,14 +444,14 @@ dvector laplace_approximation_calculator::
       block_diagonal_flag=0;
       dvector scale1(1,nvar);   // need to get scale from somewhere
       initial_params::set_inactive_only_random_effects();
-      int check=initial_params::stddev_scale(scale1,x);
+      /*int check=*/initial_params::stddev_scale(scale1,x);
 
       laplace_approximation_calculator::where_are_we_flag=3;
       quadratic_prior::in_qp_calculations=1;
       funnel_init_var::lapprox=this;
       df1b2_gradlist::set_no_derivatives();
       dvector scale(1,nvar);   // need to get scale from somewhere
-      check=initial_params::stddev_scale(scale,x);
+      /*check=*/initial_params::stddev_scale(scale,x);
       dvector sscale=scale(1,Dux(1).indexmax());
 
       for (i=1;i<=usize;i++)

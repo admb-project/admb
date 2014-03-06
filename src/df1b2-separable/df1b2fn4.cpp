@@ -302,7 +302,7 @@ void read_pass1_eq_2(void)
 
   //double* zbar=(double*)list2.bptr;
   //double* zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
- 
+
   list2.restoreposition(); // save pointer to beginning of record;
 
   double * x_bar_tilde=px->get_u_bar_tilde();

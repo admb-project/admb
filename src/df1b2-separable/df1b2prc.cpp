@@ -280,7 +280,6 @@ void read_pass2_2_prodc1(void)
   // bptr and bptr2 now both point to the beginning of their records
 
   double yu;
-  double * ydot;
   //df1b2_header x,z;
   //df1b2function2 * pf;
 
@@ -300,14 +299,13 @@ void read_pass2_2_prodc1(void)
   //list.bptr+=sizeof(char*);
   memcpy(&yu,list.bptr,sizeof(double));
   list.bptr+=sizeof(double);
-  ydot=(double*)list.bptr;
+
+  //double* ydot=(double*)list.bptr;
   list.restoreposition(num_bytes); // save pointer to beginning of record;
 
-  double * zbar;
-  double * zdotbar;
+  //double* zbar=(double*)list2.bptr;
+  //double* zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
 
-  zbar=(double*)list2.bptr;
-  zdotbar=(double*)(list2.bptr+nvar*sizeof(double));
   list2.restoreposition(); // save pointer to beginning of record;
 
   //double * y_tilde=py->get_u_tilde();
@@ -358,7 +356,6 @@ void read_pass2_3_prodc1(void)
   list.saveposition(); // save pointer to beginning of record;
   // save the pointer to the beginning of the record
   double yu;
-  double * ydot;
   //df1b2_header z;
   //df1b2function2 * pf;
 
@@ -375,7 +372,9 @@ void read_pass2_3_prodc1(void)
   list.bptr+=sizeof(df1b2_header);
   memcpy(&yu,list.bptr,sizeof(double));
   list.bptr+=sizeof(double);
-  ydot=(double*)list.bptr;
+
+  //double * ydot = (double*)list.bptr;
+
   list.restoreposition(); // save pointer to beginning of record;
   int i;
 

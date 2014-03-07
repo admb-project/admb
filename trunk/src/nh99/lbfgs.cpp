@@ -1619,7 +1619,7 @@ L45:
 
 /*     CHECK THE INPUT PARAMETERS FOR ERRORS. */
 
-    if (*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty)) || *dx *
+    if ((*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty))) || *dx *
              (*stp - *stx) >= (float)0. || *stpmax < *stpmin) {
         return 0;
     }

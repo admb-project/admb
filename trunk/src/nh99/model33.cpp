@@ -45,9 +45,6 @@ void ad_make_code_reentrant(void)
   }
 }
 
-//REMOVE
-void ssbul_l(char * ptmp){;}
-
 void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
   char *** pargv)
 {
@@ -64,7 +61,7 @@ void parse_dll_options(char *pname, const int& _nopt, char *sp_options,
     strcpy(p,sp_options);
     ptmp = strtok(p," ");
     if (ptmp) nopt++;
-    ssbul_l(ptmp);
+    //ssbul_l(ptmp);
     do
     {
       ptmp = strtok(NULL, " ");
@@ -184,6 +181,7 @@ void do_dll_housekeeping(int argc,char ** argv)
 }
 
 /*
+void ssbul_l(char * ptmp){;}
 char ** parse_dll_options(char * pname, const int& _nopt,char * sp_options)
 {
   int& nopt=(int&) _nopt;

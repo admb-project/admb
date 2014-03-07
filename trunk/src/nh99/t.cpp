@@ -431,6 +431,7 @@ static integer c__1 = 1;
     static dvariable zero = 0.;
 
     /* Format strings */
+/*
     static char fmt_245[] = "(/\002  GTOL IS LESS THAN OR EQUAL TO 1.D-04\
 \002,/\002 IT HAS BEEN RESET TO 9.D-01\002)";
     static char fmt_200[] = "(/\002 IFLAG= -1 \002,/\002 LINE SEARCH FAILED.\
@@ -442,6 +443,7 @@ IAGONAL ELEMENT OF THE\002,/,\002 INVERSE HESSIAN APPROXIMATION IS NOT POSIT\
 IVE\002)";
     static char fmt_240[] = "(/\002 IFLAG= -3\002,/\002 IMPROPER INPUT PARAM\
 ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
+*/
 
     /* System generated locals */
     integer i__1;
@@ -483,10 +485,12 @@ ETERS (N OR M\002,\002 ARE NOT POSITIVE)\002)";
     static dvariable stp, stp1;
 
     /* Fortran I/O blocks */
+/*
     static cilist io___4 = { 0, 0, 0, fmt_245, 0 };
     static cilist io___30 = { 0, 0, 0, fmt_200, 0 };
     static cilist io___31 = { 0, 0, 0, fmt_235, 0 };
     static cilist io___32 = { 0, 0, 0, fmt_240, 0 };
+*/
 
 /*        LIMITED MEMORY BFGS METHOD FOR LARGE SCALE OPTIMIZATION */
 /*                          JORGE NOCEDAL */
@@ -778,7 +782,7 @@ L10:
     }
     if (lb4_1.gtol <= 1e-4) {
         if (lb4_1.lp > 0) {
-            io___4.ciunit = lb4_1.lp;
+            //io___4.ciunit = lb4_1.lp;
             //s_wsfe(&io___4);
             //e_wsfe();
         }
@@ -1020,7 +1024,7 @@ L172:
 L190:
     *iflag = -1;
     if (lb4_1.lp > 0) {
-        io___30.ciunit = lb4_1.lp;
+        //io___30.ciunit = lb4_1.lp;
         //s_wsfe(&io___30);
         //// do_fio(&c__1, (char *)&info, (ftnlen)sizeof(integer));
         //e_wsfe();
@@ -1029,7 +1033,7 @@ L190:
 L195:
     *iflag = -2;
     if (lb4_1.lp > 0) {
-        io___31.ciunit = lb4_1.lp;
+        //io___31.ciunit = lb4_1.lp;
         //s_wsfe(&io___31);
         //// do_fio(&c__1, (char *)&i, (ftnlen)sizeof(integer));
         //e_wsfe();
@@ -1038,7 +1042,7 @@ L195:
 L196:
     *iflag = -3;
     if (lb4_1.lp > 0) {
-        io___32.ciunit = lb4_1.lp;
+        //io___32.ciunit = lb4_1.lp;
         //s_wsfe(&io___32);
         //e_wsfe();
     }
@@ -1448,8 +1452,10 @@ extern "C" {
     static dvariable zero = 0.;
 
     /* Format strings */
+/*
     static char fmt_15[] = "(/\002  THE SEARCH DIRECTION IS NOT A DESCENT DI\
 RECTION\002)";
+*/
 
     /* System generated locals */
     integer i__1;
@@ -1473,7 +1479,7 @@ extern /* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx,
     static dvariable dgm, dgx, dgy, fxm, fym, stx, sty;
 
     /* Fortran I/O blocks */
-    static cilist io___71 = { 0, 0, 0, fmt_15, 0 };
+    //static cilist io___71 = { 0, 0, 0, fmt_15, 0 };
 
 
 
@@ -1547,7 +1553,7 @@ extern /* Subroutine */ int xmcstep_(dvariable * stx, dvariable * fx,
     *xlinebest=x;
  */
     if (dginit >= zero) {
-        io___71.ciunit = lb4_1.lp;
+        //io___71.ciunit = lb4_1.lp;
         // s_wsfe(&io___71);
         // e_wsfe();
         return 0;

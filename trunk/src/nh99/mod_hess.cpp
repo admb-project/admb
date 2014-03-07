@@ -709,20 +709,16 @@ void function_minimizer::hess_inv(void)
 }
 void hess_calcreport(int i,int nvar)
 {
-#if defined (__SPDLL__)
   if (ad_printf)
     (*ad_printf)("Estimating row %d out of %d for hessian\n",i,nvar);
-#else
-  cout << "Estimating row " << i << " out of " << nvar << " for hessian"
-       << endl;
-#endif
+  else
+    cout << "Estimating row " << i << " out of " << nvar << " for hessian"
+         << endl;
 }
 void hess_errorreport(void)
 {
-#if defined (__SPDLL__)
   if (ad_printf)
     (*ad_printf)("Hessian does not appear to be positive definite\n");
-#else
-  cout << "Hessian does not appear to be positive definite\n" << endl;
-#endif
+  else
+    cout << "Hessian does not appear to be positive definite\n" << endl;
 }

@@ -154,7 +154,6 @@ void make_indvar_list(const dvar_vector& t)
   if ((unsigned int)(t.indexmax()-t.indexmin()+1)
     > gradient_structure::MAX_NVAR_OFFSET)
   {
-   #if defined(__SPDLL__)
    if (ad_printf)
    {
      (*ad_printf)("Current maximum number of independent variables is %d\n",
@@ -168,18 +167,19 @@ void make_indvar_list(const dvar_vector& t)
         " or the command line option -mno %d\n",
         t.indexmax()-t.indexmin()+1);
    }
-   #else
-   cerr << "Current maximum number of independent variables is "
-        << gradient_structure::MAX_NVAR_OFFSET << "\n"
-        <<  "  You need to increase the global variable MAX_NVAR_OFFSET to "
-        << (t.indexmax()-t.indexmin()+1) << "\n"
-        << "  This can be done by putting the line\n"
-        << "    'gradient_structure::set_MAX_NVAR_OFFSET("
-        << (t.indexmax()-t.indexmin()+1) << ");'\n"
-        << "  before the declaration of the gradient_structure object.\n"
-        << " or use the -mno 1149 command line option in AD Model Builder\n";
-    #endif
-      ad_exit(21);
+   else
+   {
+     cerr << "Current maximum number of independent variables is "
+          << gradient_structure::MAX_NVAR_OFFSET << "\n"
+          <<  "  You need to increase the global variable MAX_NVAR_OFFSET to "
+          << (t.indexmax()-t.indexmin()+1) << "\n"
+          << "  This can be done by putting the line\n"
+          << "    'gradient_structure::set_MAX_NVAR_OFFSET("
+          << (t.indexmax()-t.indexmin()+1) << ");'\n"
+          << "  before the declaration of the gradient_structure object.\n"
+          << " or use the -mno 1149 command line option in AD Model Builder\n";
+   }
+   ad_exit(21);
   }
 
   for (int i=t.indexmin(); i<=t.indexmax(); i++)

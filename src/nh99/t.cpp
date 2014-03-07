@@ -1612,8 +1612,8 @@ L30:
 /*        IF AN UNUSUAL TERMINATION IS TO OCCUR THEN LET */
 /*        STP BE THE LOWEST POINT OBTAINED SO FAR. */
 
-    if (brackt && (*stp <= stmin || *stp >= stmax) || *nfev >= *maxfev - 1 ||
-            infoc == 0 || brackt && stmax - stmin <= *xtol * stmax) {
+    if ((brackt && (*stp <= stmin || *stp >= stmax)) || *nfev >= *maxfev - 1 ||
+            infoc == 0 || (brackt && stmax - stmin <= *xtol * stmax)) {
         *stp = stx;
     }
 
@@ -1845,7 +1845,7 @@ L45:
 
 /*     CHECK THE INPUT PARAMETERS FOR ERRORS. */
 
-    if (*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty)) || *dx *
+    if ((*brackt && (*stp <= min(*stx,*sty) || *stp >= max(*stx,*sty))) || *dx *
              (*stp - *stx) >= (float)0. || *stpmax < *stpmin) {
         return 0;
     }

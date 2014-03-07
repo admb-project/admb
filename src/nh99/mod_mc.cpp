@@ -185,18 +185,18 @@ void function_minimizer::monte_carlo_routine(void)
       ii=1;
       initial_params::restore_all_values(parsave,ii);
 
-      double fbest;
+      //double fbest;
 
       if (!ad_comm::pvm_manager)
       {
-        fbest=get_monte_carlo_value(nvar,x);
+        /*fbest=*/get_monte_carlo_value(nvar,x);
       }
       else
       {
         switch (ad_comm::pvm_manager->mode)
         {
         case 1: // master
-          fbest=pvm_master_get_monte_carlo_value(nvar,x);
+          /*fbest=*/pvm_master_get_monte_carlo_value(nvar,x);
           break;
         case 2: // slave
           pvm_slave_get_monte_carlo_value(nvar);

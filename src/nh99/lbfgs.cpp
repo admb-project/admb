@@ -1286,8 +1286,10 @@ L60:
     static doublereal zero = 0.;
 
     /* Format strings */
+/*
     static char fmt_15[] = "(/\002  THE SEARCH DIRECTION IS NOT A DESCENT DI\
 RECTION\002)";
+*/
 
     /* System generated locals */
     integer i__1;
@@ -1311,7 +1313,7 @@ RECTION\002)";
     static doublereal dgm, dgx, dgy, fxm, fym, stx, sty;
 
     /* Fortran I/O blocks */
-    static cilist io___71 = { 0, 0, 0, fmt_15, 0 };
+    //static cilist io___71 = { 0, 0, 0, fmt_15, 0 };
 
 
 
@@ -1366,7 +1368,7 @@ RECTION\002)";
 /* L10: */
     }
     if (dginit >= zero) {
-        io___71.ciunit = lb3_1.lp;
+        //io___71.ciunit = lb3_1.lp;
         // s_wsfe(&io___71);
         // e_wsfe();
         return 0;

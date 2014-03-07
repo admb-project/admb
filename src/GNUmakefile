@@ -59,7 +59,7 @@ ifneq ($(CXX),CC)
 ADCXXFLAGS:= -Wall -Wextra -Wno-unused-parameter $(ADCXXFLAGS)
 endif
 
-ADCXXFLAGS:= $(ADCXXFLAGS) -DSAFE_ALL -D__GNUDOS__ -Dlinux -D__SPDLL__ -DUSE_LAPLACE
+ADCXXFLAGS:= $(ADCXXFLAGS) -DSAFE_ALL -D__GNUDOS__ -Dlinux -DUSE_LAPLACE
 
 ifeq ($(SHELL),cmd)
 ADCXXFLAGS:= $(ADCXXFLAGS) -I..\build\dist\include
@@ -236,6 +236,18 @@ $(OBJECTS): | dirs
 endif
 
 ifeq ($(SHELL),cmd)
+$(OBJSDIR)optlp-nh99-model7.obj: nh99\model7.cpp
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -D__SPDLL__ -o $@ $<
+
+$(OBJSDIR)saflp-nh99-model7.obj: nh99\model7.cpp
+	$(CXX) -c $(CXXFLAGS) -D__SPDLL__ -o $@ $<
+
+$(OBJSDIR)optlp-nh99-model33.obj: nh99\model33.cpp
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -D__SPDLL__ -o $@ $<
+
+$(OBJSDIR)saflp-nh99-model33.obj: nh99\model33.cpp
+	$(CXX) -c $(CXXFLAGS) -D__SPDLL__ -o $@ $<
+
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o $@ $<
 
@@ -272,6 +284,18 @@ $(OBJSDIR)optlp-tools99-%.obj:tools99\%.cpp
 $(OBJSDIR)saflp-tools99-%.obj:tools99\%.cpp
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 else
+$(OBJSDIR)optlp-nh99-model7.obj: nh99/model7.cpp
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -D__SPDLL__ -o $@ $<
+
+$(OBJSDIR)saflp-nh99-model7.obj: nh99/model7.cpp
+	$(CXX) -c $(CXXFLAGS) -D__SPDLL__ -o $@ $<
+
+$(OBJSDIR)optlp-nh99-model33.obj: nh99/model33.cpp
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -D__SPDLL__ -o $@ $<
+
+$(OBJSDIR)saflp-nh99-model33.obj: nh99/model33.cpp
+	$(CXX) -c $(CXXFLAGS) -D__SPDLL__ -o $@ $<
+
 $(OBJSDIR)optlp-nh99-banner.obj: nh99/banner.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -DADMB_VERSION=$(shell cat ../VERSION) -o $@ $<
 

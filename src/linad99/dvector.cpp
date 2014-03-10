@@ -75,60 +75,26 @@ dvector::~dvector()
   }
 }
 
-static int testflag=0;
-static int ycounter=0;
-  /** Deallocates memory for a dvector object.
-  Called by the ~dvector(); produces an error if the double * member
-  is NULL.
-  */
-  void dvector::deallocate()
+/**
+Deallocates memory for a dvector object.
+Called by the ~dvector(); produces an error if the double * member
+is NULL.
+*/
+void dvector::deallocate()
+{
+  if (shape)
   {
-   if (testflag)
-   {
-     ycounter++;
-     cout << " C " << ycounter << endl;
-     if (ycounter==41)
-       cout << "HERE" << endl;
-     test_the_pointer();
-   }
-    if(shape)
+    v = (double*)(shape->trueptr);
+    if (v)
     {
-      v = (double*) (shape->trueptr);
-      if (v)
-      {
-       if (testflag)
-       {
-         test_the_pointer();
-       }
-        delete [] v;
-       if (testflag)
-       {
-         test_the_pointer();
-       }
-        v = NULL;
-      }
-      else
-      {
-        cerr << "error in dvector shape not zero but v=0" << endl;
-      }
-      delete shape;
-      if (testflag)
-      {
-        test_the_pointer();
-      }
+      delete [] v;
+      v = NULL;
     }
-    else
-    {
-      //cerr << "Warning -- trying to deallocate an unitialized dvector"
-       //    << endl;
-    }
-    shape=NULL;
-   if (testflag)
-   {
-     cout << " D " << ycounter << endl;
-     test_the_pointer();
-   }
+
+    delete shape;
+    shape = NULL;
   }
+}
 
   /**
   Deallocate memory safely. Checks if shallow copies are in scope.
@@ -215,60 +181,36 @@ void dvector::shallow_copy(const dvector& t)
    index_max=t.index_max;
  }
 
- /**
- Creates a %dvector from an instance of class %predvector.
- Creates a shallow copy.
- \param pdv an instance of class %predvector.
- Updated by Martell, March 10, 2014, from Dave's email
-
- *
- *I noticed that the subvector operator for dvectors does not
- *check to see that the index bounds for the subvector are valid.
- *This should fix the problem. code is in dvector.cpp
- */
-dvector::dvector(_CONST predvector& pdv)
+/**
+Creates a %dvector from an instance of class %predvector.
+Creates a shallow copy.
+\param pdv an instance of class %predvector.
+Updated by Martell, March 10, 2014, from Dave's email
+*/
+dvector::dvector(const predvector& pdv)
 {
-  shape=pdv.p->shape;
+  int mmin = pdv.p->indexmin();
+  int mmax = pdv.p->indexmax();
+  if (pdv.lb < mmin || pdv.ub > mmax)
+  {
+    cerr << "index out of bounds in dvector subvector operator" << endl;
+    ad_exit(1);
+  }
+
+  shape = pdv.p->shape;
   if (shape)
   {
     (shape->ncopies)++;
   }
   else
   {
-    cerr << "Taking a subvector  of an unallocated dvector"<<endl;
+    cerr << "Waring: Taking a subvector of an unallocated dvector.\n";
   }
+
   v = pdv.p->v;
-  int mmin=pdv.p->indexmin();
-  int mmax=pdv.p->indexmax();
-  if (pdv.lb<mmin || pdv.ub> mmax)
-  {
-    cerr << "index out of bounds in dvector subvector operator" << endl;
-    ad_exit(1);
-  }
-  index_min=pdv.lb;
-  index_max=pdv.ub;
+  index_min = pdv.lb;
+  index_max = pdv.ub;
 }
-
-// dvector::dvector(const predvector& pdv)
-//  {
-//    #ifdef DIAG
-//     // cout << "starting out in dvector contructor\n";
-//    #endif
-//    shape=pdv.p->shape;
-//    if (shape)
-//    {
-//      (shape->ncopies)++;
-//    }
-//    else
-//    {
-//      cerr << "Taking a subvector  of an unallocated dvector"<<endl;
-//    }
-//    v = pdv.p->v;
-//    index_min=pdv.lb;
-//    index_max=pdv.ub;
-//  }
-
-
 
  /**
   Assignment operator for double argument.

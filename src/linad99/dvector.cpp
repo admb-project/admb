@@ -219,25 +219,56 @@ void dvector::shallow_copy(const dvector& t)
  Creates a %dvector from an instance of class %predvector.
  Creates a shallow copy.
  \param pdv an instance of class %predvector.
+ Updated by Martell, March 10, 2014, from Dave's email
+
+ *
+ *I noticed that the subvector operator for dvectors does not
+ *check to see that the index bounds for the subvector are valid.
+ *This should fix the problem. code is in dvector.cpp
  */
-dvector::dvector(const predvector& pdv)
- {
-   #ifdef DIAG
-    // cout << "starting out in dvector contructor\n";
-   #endif
-   shape=pdv.p->shape;
-   if (shape)
-   {
-     (shape->ncopies)++;
-   }
-   else
-   {
-     cerr << "Taking a subvector  of an unallocated dvector"<<endl;
-   }
-   v = pdv.p->v;
-   index_min=pdv.lb;
-   index_max=pdv.ub;
- }
+dvector::dvector(_CONST predvector& pdv)
+{
+  shape=pdv.p->shape;
+  if (shape)
+  {
+    (shape->ncopies)++;
+  }
+  else
+  {
+    cerr << "Taking a subvector  of an unallocated dvector"<<endl;
+  }
+  v = pdv.p->v;
+  int mmin=pdv.p->indexmin();
+  int mmax=pdv.p->indexmax();
+  if (pdv.lb<mmin || pdv.ub> mmax)
+  {
+    cerr << "index out of bounds in dvector subvector operator" << endl;
+    ad_exit(1);
+  }
+  index_min=pdv.lb;
+  index_max=pdv.ub;
+}
+
+// dvector::dvector(const predvector& pdv)
+//  {
+//    #ifdef DIAG
+//     // cout << "starting out in dvector contructor\n";
+//    #endif
+//    shape=pdv.p->shape;
+//    if (shape)
+//    {
+//      (shape->ncopies)++;
+//    }
+//    else
+//    {
+//      cerr << "Taking a subvector  of an unallocated dvector"<<endl;
+//    }
+//    v = pdv.p->v;
+//    index_min=pdv.lb;
+//    index_max=pdv.ub;
+//  }
+
+
 
  /**
   Assignment operator for double argument.

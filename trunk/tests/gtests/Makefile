@@ -14,6 +14,7 @@ GTESTS=\
  test_df3_two_variable.cpp\
  test_adjson.cpp\
  test_adpool.cpp\
+ test_dvector.cpp\
  main.cpp
 
 # test_df_file.cpp\

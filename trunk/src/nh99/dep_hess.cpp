@@ -30,7 +30,7 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
   initial_params::xinit(x);        // get the initial values into the x vector
   dvector scale(1,nvar);   // need to get scale from somewhere
   dvector tscale(1,nvar);   // need to get scale from somewhere
-  /*int check=*/initial_params::stddev_scale(scale,x);
+  int check=initial_params::stddev_scale(scale,x);
   //check=initial_params::stddev_curvscale(curv,x);
   double f;
   double delta=1.e-7;

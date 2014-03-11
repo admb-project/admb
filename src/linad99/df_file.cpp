@@ -79,98 +79,93 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-  char lastchar(char *);
 
-  void byte_copy(void * dest,void * source, unsigned num_bytes);
-  extern char ad_random_part[6];
+char lastchar(char*);
+void byte_copy(void* dest,void* source, unsigned num_bytes);
+extern char ad_random_part[6];
 
 /**
- * Description not yet available.
- * \param
- */
-#ifdef __BORLANDC__
-  DF_FILE::DF_FILE(unsigned long int sz)
-#else
-  DF_FILE::DF_FILE(unsigned long long int sz)
-#endif
-  {
-    const int us=sizeof(unsigned int);
-#ifdef __BORLANDC__
-    if (sz > ULONG_MAX)
-    {
-      cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
-        << ULONG_MAX<<endl;
-    }
-#else
-    if (sz > ULLONG_MAX)
-    {
-      cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
-        << ULLONG_MAX<<endl;
-    }
-#endif
-    if ( (buff=new char[sz])==NULL)
-    {
-      cerr << "Error trying to allocate memory for DF_FILE buffer"<<endl;
-      ad_exit(1);
-    }
-    /*
-    // This initialization was used during original development
-    // and is not longer needed.
-    cout << "HERE 1" << endl;
-  #ifdef __BORLANDC__
-    for (unsigned int i=0;i<sz;i++)
-  #else
-    for (long long int i=0;i<sz;i++)
-  #endif
-    {
-      buff[i]='\0';
-    }
-    cout << "HERE 2" << endl;
-    */
-    buff_size=sz;
-    buff_end=sz-us-2;
-    offset=0;
-    toffset=0;
+Constructor to allocate buffer.
 
-    char * path = getenv("ADTMP1"); // NULL if not defined
+\param nbytes size of buffer
+*/
+DF_FILE::DF_FILE(unsigned long long nbytes)
+{
+#if defined(__BORLANDC__)
+  if (nbytes > INT_MAX)
+  {
+    cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
+         << INT_MAX<<endl;
+  }
+#endif
+
+#if defined(_M_IX86)
+  if (nbytes > LONG_MAX)
+  {
+    cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
+         << LONG_MAX <<endl;
+  }
+#endif
+
+#if defined(__GNC__) && defined(__i686__)
+  if (nbytes > INT_MAX)
+  {
+    cout << "Error -- largest size for CMPDIF_BUFFER_SIZE is "
+         << INT_MAX<<endl;
+  }
+#endif
+
+  buff_size = nbytes;
+
+  if ((buff = new char[buff_size]) == NULL)
+  {
+    cerr << "Error trying to allocate memory for DF_FILE buffer"<<endl;
+    ad_exit(1);
+  }
+  const int us = sizeof(unsigned long long);
+  buff_end = nbytes - us - 2;
+  offset = 0;
+  toffset = 0;
+
+  char* path = getenv("ADTMP1"); // NULL if not defined
 
 #if defined(USE_ADPVM)
-    adstring string_path;
-    if (path) string_path=path;
-    int on=0;
-    int nopt=0;
-    adstring currdir;
-    ad_getcd(currdir);
-    if (ad_comm::pvm_manager)
+  adstring string_path;
+  if (path) string_path=path;
+
+  adstring currdir;
+  ad_getcd(currdir);
+  if (ad_comm::pvm_manager)
+  {
+    int on = 0;
+    int nopt = 0;
+    if ((on = option_match(ad_comm::argc,ad_comm::argv,"-slave",nopt)) > -1)
     {
-      if ( (on=option_match(ad_comm::argc,ad_comm::argv,"-slave",nopt))>-1)
+      if (nopt == 1)
       {
-        if (nopt ==1)
-        {
-          {
-            int ierr=make_sub_directory(ad_comm::argv[on+1]);
-            ad_comm::subdir=ad_comm::argv[on+1];
-            string_path+=ad_comm::subdir;
-            path=(char*) string_path;
-          }
-        }
-        else
-        {
-          cerr << "Wrong number of options to -slave -- must be 1"
-            " you have " << nopt << endl;
-          ad_exit(1);
-        }
+        int ierr=make_sub_directory(ad_comm::argv[on+1]);
+        ad_comm::subdir=ad_comm::argv[on+1];
+        string_path+=ad_comm::subdir;
+        path=(char*) string_path;
+      }
+      else
+      {
+        cerr << "Wrong number of options to -slave -- must be 1"
+          " you have " << nopt << endl;
+        ad_exit(1);
       }
     }
+  }
 #endif
 
-    if (path != NULL)
+  if (path != NULL)
 #if defined (__SUN__) ||defined (__GNU__)
-    {
+  {
       sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
         ad_random_part);
-    }
+  }
 #else
+  {
     if (lastchar(path) != '\\')
     {
       sprintf(&cmpdif_file_name[0],"%s\\cmpdiff.%s", path,
@@ -181,41 +176,40 @@
       sprintf(&cmpdif_file_name[0],"%scmpdiff.%s", path,
         ad_random_part);
     }
+  }
 #endif
-    else
-    {
-      sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
-    }
+  else
+  {
+    sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
+  }
 #if defined (__MSVC32__) || defined (__WAT32__)
-    file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
+  file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
                      O_BINARY, S_IREAD | S_IWRITE);
 #elif defined (__TURBOC__)
-    file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
+  file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
                      O_BINARY, S_IREAD | S_IWRITE);
 #elif defined (__ZTC__)
-    file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC ,
+  file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC ,
                      S_IREAD | S_IWRITE);
 #elif  defined (__NDPX__)
-    file_ptr=creat(cmpdif_file_name, O_RDWR);
+  file_ptr=creat(cmpdif_file_name, O_RDWR);
 #elif ( defined (__SUN__) || defined (__GNU__) )
-    file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
+  file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
        O_BINARY, 0777);
 #elif ( !defined (__GNU__) && defined (__GNUDOS__))
-    file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
+  file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
        O_BINARY, 0777);
 #else
  xxxx // need to define this for this compiler
 #endif
 
-    if (file_ptr == -1)
-    {
-      if (ad_printf) (*ad_printf)("Error opening temporary gradient"
+  if (file_ptr == -1)
+  {
+    if (ad_printf) (*ad_printf)("Error opening temporary gradient"
         " file %s\n", cmpdif_file_name );
-      ad_exit(1);
-    }
+    ad_exit(1);
   }
-
-
+}
 /**
 Destructor
 */
@@ -223,14 +217,12 @@ DF_FILE::~DF_FILE()
 {
   delete [] buff;
   buff=0;
-  buff_end=0;
 
-  int repfs=option_match(ad_comm::argc,ad_comm::argv,"-fsize");
+  int repfs = option_match(ad_comm::argc,ad_comm::argv,"-fsize");
 
   if (ad_comm::global_logfile && repfs)
   {
-    my_off_t pos;
-    pos=lseek(file_ptr,0,SEEK_END);
+    my_off_t pos = lseek(file_ptr, 0, SEEK_END);
     *ad_comm::global_logfile << "size of file " << cmpdif_file_name
         << " = " << pos << endl;
   }
@@ -252,8 +244,6 @@ DF_FILE::~DF_FILE()
   }
 #endif
 }
-
-
 /**
  * Description not yet available.
  * \param
@@ -262,16 +252,8 @@ void DF_FILE::fread(void* s,const size_t num_bytes)
 {
   if (toffset < num_bytes)
   {
-    my_off_t lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
-    //cout << "In fread filepos = " << lpos << endl;
+    my_off_t lpos = lseek(file_ptr, -buff_size, SEEK_CUR);
     read_cmpdif_stack_buffer(lpos);
-/*
-    for(int i=0;i<sizeof(unsigned int);i++)
-    {
-       fourb[i] = *(buff+buff_end+1+i);
-    }
-*/
-   // cout << "roffset: " << offset << endl;
     offset -= num_bytes;
     toffset = offset;
   }
@@ -279,30 +261,30 @@ void DF_FILE::fread(void* s,const size_t num_bytes)
   {
     toffset-=num_bytes; //decrement the temporary offset count
   }
-  byte_copy((char *)s,buff+toffset,num_bytes);
+  byte_copy((char*)s, buff+toffset,num_bytes);
   offset=toffset;
 }
-
 /**
  * Description not yet available.
  * \param
  */
 void DF_FILE::fwrite(const void* s, const size_t num_bytes)
 {
-  #ifdef NO_DERIVS
-    if (gradient_structure::no_derivatives)
-    {
-      return;
-    }
-  #endif
+#ifdef NO_DERIVS
+  if (gradient_structure::no_derivatives)
+  {
+    return;
+  }
+#endif
   toffset+=num_bytes; //increment the temporary offset count
   if (toffset>buff_end)
   {
     if (num_bytes > buff_end)
     {
-      const int us=sizeof(unsigned int);
+      const unsigned long long us = toffset
+        + sizeof(unsigned long long) + 2L;
       cerr << "Need to increase gradient_structure::CMPDIF_BUFFER_SIZE "
-       "to at least" << long (toffset)+long(us)+2L << endl;
+       "to at least" << us << endl;
     }
     write_cmpdif_stack_buffer();
     toffset=num_bytes;
@@ -311,57 +293,44 @@ void DF_FILE::fwrite(const void* s, const size_t num_bytes)
   byte_copy(buff+offset,(char *) s,num_bytes);
   offset=toffset;
 }
-
 /**
  * Description not yet available.
  * \param
  */
-void DF_FILE::read_cmpdif_stack_buffer(my_off_t & lpos)
+void DF_FILE::read_cmpdif_stack_buffer(my_off_t& lpos)
 {
   if (lpos == -1L)
-  { cerr << "Error rewinding file in DF_FILE:fread"<<endl;
+  {
+    cerr << "Error rewinding file in DF_FILE:fread"<<endl;
     ad_exit(1);
   }
-    //cout << " trying to read buff_size = " << buff_size
-      //   << " from cmpdif file" << endl;
-  //cout << "offset before read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
-  if (read(file_ptr,buff,buff_size)<buff_size)
+  if (read(file_ptr, buff, buff_size) < 0)
   {
     cerr << "End of file trying to read "<< cmpdif_file_name << endl;
     ad_exit(1);
   }
-  lpos = lseek(file_ptr,-((long int) buff_size),SEEK_CUR);
-  //cout << "offset after read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
-  for(unsigned int i=0;i<sizeof(unsigned int);i++)
+  lpos = lseek(file_ptr, -buff_size,SEEK_CUR);
+  for(unsigned int i = 0;i < sizeof(unsigned long long); i++)
   {
-     fourb[i] = *(buff+buff_end+1+i);
+    fourb[i] = *(buff+buff_end+1+i);
   }
 }
-
 /**
  * Description not yet available.
  * \param
  */
-  void DF_FILE::write_cmpdif_stack_buffer(void)
+void DF_FILE::write_cmpdif_stack_buffer(void)
+{
+  // save the offset at the end of the used part of the buffer
+  for (unsigned int i = 0;i < sizeof(unsigned long long); i++)
   {
-    //cout << " trying to write buff_size = " << buff_size
-      //   << " into cmpdif file" << endl;
-    //clogf << " trying to write buff_size = " << buff_size
-         //<< " into cmpdif file" << endl;
-    //cout << "offset before write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
-    //if (write(file_ptr,buff,buff_size)<buff_size)
-    for(unsigned int i=0;i<sizeof(unsigned int);i++)
-    {
-       // save the offset at the end of the used part of the buffer
-       *(buff+buff_end+1+i)=fourb[i];
-    }
-    if (write(file_ptr,buff,buff_size)<buff_size)
-    {
-      cerr << "End of file trying to write to file "<< cmpdif_file_name << endl;
-      cerr << "There is probably no more room on the TMP1 (if defined) device\n"
-      "If possible set TMP1 environment string to a device with more room\n";
-      ad_exit(1);
-    }
-    //cout << "offset after write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
-    //clogf << "offset after write is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
+    *(buff+buff_end+1+i) = fourb[i];
   }
+  if (write(file_ptr, buff, buff_size) < 0)
+  {
+    cerr << "End of file trying to write to file "<< cmpdif_file_name << endl;
+    cerr << "There is probably no more room on the TMP1 (if defined) device\n"
+    "If possible set TMP1 environment string to a device with more room\n";
+    ad_exit(1);
+  }
+}

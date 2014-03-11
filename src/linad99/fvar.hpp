@@ -5741,44 +5741,36 @@ ostream & operator<<(const ostream &, const dvar_matrix_position &);
  */
 class DF_FILE
 {
- public:
-   char *buff;
-#ifdef __BORLANDC__
-   unsigned long buff_end;
-   unsigned long buff_size;
-#else
-   unsigned long long buff_end;
-   unsigned long long buff_size;
-#endif
-   union
-   {
-#ifdef __BORLANDC__
-      unsigned long offset;
-#else
-      unsigned long long offset;
-#endif
-      char fourb[sizeof(unsigned int)];
-   };
-#ifdef __BORLANDC__
-   unsigned long toffset;
-#else
-   unsigned long long toffset;
-#endif
-   char cmpdif_file_name[81];
-   int file_ptr;
-   DF_FILE(my_u_off_t);
-   ~DF_FILE();
-   void write_cmpdif_stack_buffer(void);
-   void read_cmpdif_stack_buffer(my_off_t & lpos);
-   void fwrite(const void *s, const size_t num_bytes);
-   void fread(void *s, const size_t num_bytes);
-   void fwrite(double);
-   void fwrite(const int &);
-   void fread(const int &);
-   void fread(const double &);
+public:
+  DF_FILE(unsigned long long nbytes);
+  ~DF_FILE();
 
-   void fwrite(void *ptr);
-   void fread(void *&ptr);
+  char* buff;
+  unsigned long long buff_end;
+  unsigned long long buff_size;
+  unsigned long long toffset;
+  union
+  {
+    unsigned long long offset;
+    char fourb[sizeof(unsigned long long)];
+  };
+  char cmpdif_file_name[81];
+  int file_ptr;
+
+  void write_cmpdif_stack_buffer(void);
+  void read_cmpdif_stack_buffer(my_off_t & lpos);
+
+  void fwrite(const void *s, const size_t num_bytes);
+  void fread(void *s, const size_t num_bytes);
+
+  void fwrite(const int &);
+  void fread(const int &);
+
+  void fwrite(double);
+  void fread(const double &);
+
+  void fread(void *&ptr);
+  void fwrite(void *ptr);
 };
 
 char which_library();

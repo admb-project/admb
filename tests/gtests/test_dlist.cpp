@@ -24,6 +24,7 @@ TEST_F(test_dlist, last_remove_empty_list)
   dlist lst;
   EXPECT_EQ(0, lst.last_remove());
 }
+/*
 TEST_F(test_dlist, create)
 {
   dlist lst;
@@ -45,6 +46,7 @@ TEST_F(test_dlist, create)
   EXPECT_EQ((intptr_t)ddlist_space + (2 * sizeof(dlink)), (intptr_t)c);
   EXPECT_EQ(0, (intptr_t)c->previous());
 }
+*/
 TEST_F(test_dlist, append)
 {
   dlist lst;

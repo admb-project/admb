@@ -15,9 +15,9 @@ GTESTS=\
  test_adjson.cpp\
  test_adpool.cpp\
  test_dvector.cpp\
+ test_df_file.cpp\
  main.cpp
 
-# test_df_file.cpp\
 # test_df1b2atan2.obj\
 # df1b2atan2.obj\
 # test_scalefactor.obj\
@@ -43,7 +43,7 @@ gtest-all: gtest-all.obj $(GTESTS)
 	CXXFLAGS=-I$(GTEST_DIR)/include LDFLAGS=-pthread ../../admb -g -r $^
 
 gtest-all.obj: googletest-read-only
-	$(CXX) -c -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
+	$(CXX) -c $(CXXFLAGS) -g -I$(GTEST_DIR)/include -I$(GTEST_DIR) -o $@ $(GTEST_DIR)/src/gtest-all.cc
 
 googletest-read-only:
 	svn checkout http://googletest.googlecode.com/svn/trunk/ googletest-read-only

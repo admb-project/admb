@@ -1252,6 +1252,8 @@ laplace_approximation_calculator::~laplace_approximation_calculator()
 dvector laplace_approximation_calculator::operator()
   (const dvector& _x, const double& _f, function_minimizer * pfmin)
 {
+  dvector g;
+
 #if defined(USE_ADPVM)
   if (pfmin->test_trust_flag)
   {
@@ -1295,18 +1297,18 @@ dvector laplace_approximation_calculator::operator()
         }
         if (check_der_flag==1)
         {
-          return default_calculations_check_derivatives(_x,pfmin,_f);
+          g = default_calculations_check_derivatives(_x,pfmin,_f);
         }
         else
         {
-          return default_calculations(_x,_f,pfmin);
+          g = default_calculations(_x,_f,pfmin);
         }
         break;
       }
       case 2:
       {
         // Hessian for the random effects is block diagonal
-        return block_diagonal_calculations(_x,_f,pfmin);
+        g = block_diagonal_calculations(_x,_f,pfmin);
         break;
       }
       case 3:
@@ -1315,11 +1317,11 @@ dvector laplace_approximation_calculator::operator()
         // Hessian for the random effects is block diagonal
         if (laplace_approximation_calculator::variance_components_vector)
         {
-          return banded_calculations_lme(_x,_f,pfmin);
+          g = banded_calculations_lme(_x,_f,pfmin);
         }
         else
         {
-          return banded_calculations(_x,_f,pfmin);
+          g = banded_calculations(_x,_f,pfmin);
         }
         break;
       }
@@ -1330,6 +1332,8 @@ dvector laplace_approximation_calculator::operator()
       }
     }
   }
+
+  return g;
 }
 
 void random_effects_userfunction(double f,const dvector& x, const dvector& g);

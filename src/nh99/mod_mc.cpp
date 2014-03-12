@@ -303,17 +303,16 @@ void function_minimizer::monte_carlo_routine(void)
 
 
        // ogs << log_tprob << " " << ll << " " << x << endl;
-        double f;
         if (!ad_comm::pvm_manager)
         {
-          f=get_monte_carlo_value(nvar,x);
+          get_monte_carlo_value(nvar,x);
         }
         else
         {
           switch (ad_comm::pvm_manager->mode)
           {
           case 1: // master
-            f=pvm_master_get_monte_carlo_value(nvar,x);
+            pvm_master_get_monte_carlo_value(nvar,x);
             break;
           case 2: // slave
             pvm_master_get_monte_carlo_value(nvar,x);

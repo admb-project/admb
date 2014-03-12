@@ -103,13 +103,12 @@ void function_minimizer::hybrid_mcmc_routine(int nmcmc,int iseed0,double dscale,
   dmatrix mcmc_display_matrix;
   //int mcmc_save_index=1;
   //int mcmc_wrap_flag=0;
-  int no_sd_mcmc=0;
 
   int on2=-1;
   //int nvar1=0;
   if ( (on2=option_match(ad_comm::argc,ad_comm::argv,"-nosdmcmc"))>-1)
   {
-    no_sd_mcmc=1;
+    //int no_sd_mcmc = 1;
   }
   if (mcmc2_flag==1)
   {

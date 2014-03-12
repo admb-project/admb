@@ -341,7 +341,7 @@ public:
   void  do_separable_stuff_laplace_approximation_block_diagonal(df1b2variable&);
   void  do_separable_stuff_laplace_approximation_banded(df1b2variable&);
   dvector default_calculations_check_derivatives(const dvector& _x,
-    function_minimizer * pfmin,double f);
+    function_minimizer * pfmin,const double& f);
   dvector default_calculations(const dvector& _x,const double& _f,
     function_minimizer * pfmin);
   dvector banded_calculations(const dvector& _x,const double& _f,

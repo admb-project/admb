@@ -42,15 +42,14 @@ dvar_vector *
 dvector laplace_approximation_calculator::local_minimization
 (dvector& s,dmatrix& H,dvector& grad,double lambda)
 {
+  dvector vbest(1,usize);
+  vbest.initialize();
+
   int better_flag=0;
   int counter=0;
-  //double fbest,f2;
-  double fbest;
-  dvector vbest(1,usize);
   s.initialize();
   s(1)=1.0;
-  vbest.initialize();
-  fbest=evaluate_function_no_derivatives(uhat,pmin);
+  double fbest=evaluate_function_no_derivatives(uhat,pmin);
   do
   {
     dvector v=local_minimization_routine(s,H,grad,lambda);
@@ -70,7 +69,7 @@ dvector laplace_approximation_calculator::local_minimization
       if (better_flag==1)
       {
         // we have a better value so go with it
-        return vbest;
+        break;
       }
       else
       {
@@ -87,6 +86,8 @@ dvector laplace_approximation_calculator::local_minimization
     cerr << "Error cannot find better value to try and get a"
       " positive definite hessian" << endl;
   }
+
+  return vbest;
 }
 
 /**

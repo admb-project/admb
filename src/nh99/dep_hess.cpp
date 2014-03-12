@@ -30,9 +30,8 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
   initial_params::xinit(x);        // get the initial values into the x vector
   dvector scale(1,nvar);   // need to get scale from somewhere
   dvector tscale(1,nvar);   // need to get scale from somewhere
-  int check=initial_params::stddev_scale(scale,x);
+  initial_params::stddev_scale(scale,x);
   //check=initial_params::stddev_curvscale(curv,x);
-  double f;
   double delta=1.e-7;
   dvector g1(1,nvar);
   dvector depg(1,nvar);
@@ -50,8 +49,7 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
     vf=initial_params::reset(dvar_vector(x));
     userfunction();
     vf=dep;
-    f=value(vf);
-    gradcalc(nvar,depg);
+    gradcalc(nvar, depg, vf);
   }
   double sdelta1;
   double sdelta2;
@@ -68,27 +66,25 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
     sdelta1-=x(i);
     x(i)=xsave+sdelta1;
     dvariable vf=0.0;
-    check=initial_params::stddev_scale(tscale,x);
+    initial_params::stddev_scale(tscale,x);
     gradcalc(0,depg);
     vf=initial_params::reset(dvar_vector(x));
     userfunction();
     vf=dep;
-    f=value(vf);
-    gradcalc(nvar,g1);
+    gradcalc(nvar, g1, vf);
     g1=elem_div(g1,tscale);
 
     sdelta2=x(i)-delta;
     useless(sdelta2);
     sdelta2-=x(i);
     x(i)=xsave+sdelta2;
-    check=initial_params::stddev_scale(tscale,x);
+    initial_params::stddev_scale(tscale,x);
     //gradcalc(nvar,depg);
     vf=0.0;
     vf=initial_params::reset(dvar_vector(x));
     userfunction();
     vf=dep;
-    f=value(vf);
-    gradcalc(nvar,g2);
+    gradcalc(nvar, g2, vf);
     g2=elem_div(g2,tscale);
     x(i)=xsave;
     hess1=(g1-g2)/(sdelta1-sdelta2)/scale(i);
@@ -97,14 +93,13 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
     useless(sdelta1);
     sdelta1-=x(i);
     x(i)=xsave+sdelta1;
-    check=initial_params::stddev_scale(tscale,x);
+    initial_params::stddev_scale(tscale,x);
     //gradcalc(nvar,depg);
     vf=0.0;
     vf=initial_params::reset(dvar_vector(x));
     userfunction();
     vf=dep;
-    f=value(vf);
-    gradcalc(nvar,g1);
+    gradcalc(nvar, g1, vf);
     g1=elem_div(g1,tscale);
 
     x(i)=xsave-eps*delta;
@@ -112,14 +107,13 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
     useless(sdelta2);
     sdelta2-=x(i);
     x(i)=xsave+sdelta2;
-    check=initial_params::stddev_scale(tscale,x);
+    initial_params::stddev_scale(tscale,x);
     //gradcalc(nvar,depg);
     vf=0.0;
     vf=initial_params::reset(dvar_vector(x));
     userfunction();
     vf=dep;
-    f=value(vf);
-    gradcalc(nvar,g2);
+    gradcalc(nvar, g2, vf);
     g2=elem_div(g2,tscale);
     x(i)=xsave;
 

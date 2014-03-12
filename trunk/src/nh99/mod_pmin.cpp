@@ -69,7 +69,6 @@ dmatrix trans(const dvector& x)
 #endif
   void function_minimizer::likeprof_routine(double global_min)
   {
-   // dvector siglevel(sshhiitt);
     dvector siglevel("{.90,.95,.975}");
     int num_pp=likeprof_params::likeprofptr[0]->get_stepnumber();
     {

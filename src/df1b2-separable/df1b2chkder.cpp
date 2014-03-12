@@ -48,11 +48,12 @@ void laplace_approximation_calculator::
  */
 dvector laplace_approximation_calculator::
   default_calculations_check_derivatives(const dvector& _x,
-    function_minimizer * pfmin,double f)
+    function_minimizer * pfmin, const double& _f)
 {
   // for use when there is no separability
   ADUNCONST(dvector,x)
   int i,j;
+  double& f = (double&)_f;
 
   initial_params::set_inactive_only_random_effects();
   gradient_structure::set_NO_DERIVATIVES();

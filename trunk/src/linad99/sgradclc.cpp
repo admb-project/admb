@@ -75,10 +75,11 @@
 #endif
 
 /**
-  Compute the gradient from the data stored in the global \ref gradient_structure.
-  \param nvar Number of variables in the gradient.
-  \param _g Vector from 1 to nvar. On return contains the gradient.
- */
+Compute the gradient from the data stored in the global \ref gradient_structure.
+
+\param nvar Number of variables in the gradient.
+\param _g Vector from 1 to nvar. On return contains the gradient.
+*/
 void gradcalc(int nvar, const dvector& _g)
 {
   if (nvar!=0)
@@ -226,6 +227,20 @@ void gradcalc(int nvar, const dvector& _g)
     gradient_structure::restore_arrays();
     gradient_structure::restore_variables();
   }
+}
+/**
+Compute the gradient from the data stored in the global \ref gradient_structure.
+
+\param nvar Number of variables in the gradient.
+\param _g Vector from 1 to nvar. On return contains the gradient.
+\param f objective function
+\returns likelihood value
+*/
+double gradcalc(int nvar, const dvector& _g, dvariable& f)
+{
+  double v = value(f);
+  gradcalc(nvar, _g);
+  return v;
 }
 /**
  */

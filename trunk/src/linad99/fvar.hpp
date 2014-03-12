@@ -3485,6 +3485,7 @@ int count_factor(const ivector & v);
 
  //void gradcalc( int , double *);
 void gradcalc(int nvar, const dvector & g);
+double gradcalc(int nvar, const dvector& g, dvariable& f);
 void slave_gradcalc(void);
 
 /**

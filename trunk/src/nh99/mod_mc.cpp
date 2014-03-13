@@ -177,7 +177,7 @@ void function_minimizer::monte_carlo_routine(void)
       double log_tprob_normal=0.0;
       double log_tprob_small_normal=0.0;
       double log_tprob_cauchy=0.0;
-      double log_tprob=0.0;
+      //double log_tprob=0.0;
       int ndvar=stddev_params::num_stddev_calc();
       dvector param_values(1,ndvar);
       //int outflag;
@@ -210,6 +210,7 @@ void function_minimizer::monte_carlo_routine(void)
       multivariate_mixture(bmn,nvar,iseed,log_tprob_normal,
         log_tprob_cauchy,log_tprob_small_normal,-1);
       bmn=elem_div(bmn,scale);
+/*
       if (log_tprob_normal >= log_tprob_cauchy)
       {
         log_tprob=log_tprob_normal
@@ -220,6 +221,7 @@ void function_minimizer::monte_carlo_routine(void)
         log_tprob=log_tprob_cauchy
           +log(0.95*exp(log_tprob_normal-log_tprob_cauchy)+.05);
       }
+*/
       //double cdiff=-fbest-log_tprob;
       //double cfb=-fbest;
       //double clt=log_tprob;
@@ -250,7 +252,7 @@ void function_minimizer::monte_carlo_routine(void)
         log_tprob_normal=0.0;
         log_tprob_small_normal=0.0;
         log_tprob_cauchy=0.0;
-        log_tprob=0.0;
+        //log_tprob=0.0;
         ii=1;
         initial_params::restore_all_values(parsave,ii);
 
@@ -273,6 +275,7 @@ void function_minimizer::monte_carlo_routine(void)
           log_tprob_cauchy,log_tprob_small_normal,mixswitch);
         //bmn=elem_div(bmn,scale);
 
+/*
         if (log_tprob_normal >= log_tprob_cauchy)
         {
           log_tprob=log_tprob_normal
@@ -285,6 +288,7 @@ void function_minimizer::monte_carlo_routine(void)
             +log( 0.50*exp(log_tprob_normal-log_tprob_cauchy)
             +     0.45*exp(log_tprob_small_normal-log_tprob_cauchy)+.05 );
         }
+*/
         dvector bmn1=CHD*bmn;
         //bmn1=elem_div(bmn1,scale);
 

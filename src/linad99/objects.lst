@@ -190,7 +190,6 @@ OBJ1=\
  d3_io1.obj\
  d4_io.obj\
  d4_io1.obj\
- denorm.obj\
  dmat0.obj\
  dmat1.obj\
  dmat2.obj\
@@ -488,6 +487,7 @@ PVM=\
  slgrdclc.obj\
  adcomm1.obj
 DEPRECATED=\
+ denorm.obj\
  dvect21.obj\
  tsdfpool.obj\
  fvar_a52.obj\

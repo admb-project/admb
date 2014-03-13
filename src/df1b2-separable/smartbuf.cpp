@@ -268,7 +268,7 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
     //cout << " trying to read buff_size = " << buff_size
       //   << " from cmpdif file" << endl;
   //cout << "offset before read is " << lseek(file_ptr,0,SEEK_CUR)<< endl;
-  if (read(file_ptr,buff,buff_size)<buff_size)
+  if (read(file_ptr,buff,buff_size) < 0)
   {
     cerr << "End of file trying to read "<< cmpdif_file_name << endl;
     ad_exit(1);
@@ -298,7 +298,7 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
       // save the offset at the end of the used part of the buffer
       *(buff+buff_end+1+i)=fourb[i];
     }
-    if (write(file_ptr,buff,buff_size)<buff_size)
+    if (write(file_ptr,buff,buff_size) < 0)
     {
       cerr << "End of file trying to write to file "<< cmpdif_file_name << endl;
       cerr << "There is probably no more room on the TMP1 (if defined) device\n"

@@ -20,8 +20,6 @@
 #include <stdlib.h>
 #include "fvar.hpp"
 
-void denormalize_ptr(void * ptr, unsigned int byte_offset);
-
 /**
 Default constructor
 */

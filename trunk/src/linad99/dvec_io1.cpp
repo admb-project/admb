@@ -138,6 +138,7 @@ int get_non_blank_line(const ifstream& infile, char * & line,
      cout << "Created a dvector with address " << _farptr_tolong(v) <<"\n";
    #endif
 
+/* Deprecated empty function
    if (sizeof(int)==sizeof(char*))
    {
 #if defined(__x86_64)
@@ -152,6 +153,7 @@ int get_non_blank_line(const ifstream& infile, char * & line,
         denormalize_ptr(&v, indexmin() * sizeof(double));
      }
    }
+*/
 
    v -= indexmin();
 

@@ -21,7 +21,6 @@
 
 #include <stdlib.h>
 
-void denormalize_ptr(void * ptr, unsigned int byte_offset);
 long int _farptr_tolong(void * px);
 long int farptr_tolong(void *);
 

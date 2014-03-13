@@ -695,8 +695,6 @@ ad_dstar::ad_dstar(void)
   p = new double[n];
 }
 
-void junk(void* a ,void* b,void* c,void* d,void * e){;}
-
 /**
  * Description not yet available.
  * \param

@@ -23,7 +23,7 @@
 #define TINY 1.0e-20;
 
 dmatrix solve(const dmatrix& aa,const dmatrix& tz,
-  double ln_unsigned_det,double& sign);
+  const double& ln_unsigned_det,double& sign);
 
 /**
 /param aa
@@ -43,8 +43,9 @@ dmatrix solve(const dmatrix& aa, const dmatrix& tz)
 /param sign
 */
 dmatrix solve(const dmatrix& aa,const dmatrix& tz,
-  double ln_unsigned_det,double& sign)
+  const double& _ln_unsigned_det,double& sign)
 {
+  double& ln_unsigned_det = (double&)_ln_unsigned_det;
   int i,imax,j,k,n;
   n=aa.colsize();
   int lb=aa.colmin();

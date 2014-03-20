@@ -23,11 +23,11 @@
 \newcommand\callout[6]{%
    {\small
    \put(2,#1){\circle*{1.6}}
-   \FPeval{\qX}{\mainX+5- #6}
+   \FPeval{\qX}{\mainX+3- #6}
    \qbezier{(2,#1)(#2,#3)(\qX,#4)}
 %  \put(#2,#3){\circle{1}}
-   \FPeval{\oX}{\qX+20.0}
-   \put(\oX,#4){\oval(40,12)}
+   \FPeval{\oX}{\qX+17.5}
+   \put(\oX,#4){\oval(35,12)}
 %  \put(\oX,#4){\circle{1}}
    \FPeval{\tX}{\qX+2}
    \FPeval{\tY}{#4-3.5}
@@ -45,16 +45,18 @@
 %\FPeval{\result}{clip(5+6)}%
 \FPeval{\mainX}{60}
 \begin{picture}(100.0,100.0)
-\put(50,102){\makebox(0,0){\large\bf ADMB Application}}
-\thicklines\put(0,0){\framebox(100.0,100.0){}} 
+\put(50,102){\makebox(0,1){\large\bf ADMB Application}}
+\linethickness{2.0pt}
+  \put(0,0){\framebox(100.0,100.0){}} 
   \thinlines
   \callout{98}{52}{99}{93}{GLOBALS\_SECTION\\ User \includes\\ User methods}{0}
   \put(1,94){\shortstack[l]{ADMB \includes\ and global methods}}
 
-  \thinlines
   \put(1,1){\begin{picture}(\mainX,91)
     % main() box
+    \linethickness{1pt}
     \put(0,0){\framebox(\mainX,91){%
+    \thinlines
        \put(1,88){{\tt int main(int argc, char * argv[])}}
        \put(0,87){\line(1,0){\mainX}}
        \put(1,84){Set {\tt new} and {\tt exit} routines}
@@ -65,12 +67,12 @@
        \put(1,30){\begin{picture}(\mpX, 50)
        %  \color{red}
           \put(0,0){\framebox(\mpX,50){%
-          \put(1,47){{\tt model\_parameters(...)}}
-          \put(0,46){\line(1,0){\mpX}}
+          \put(1,44){{\tt model\_parameters(...)}}
+          \put(0,43){\line(1,0){\mpX}}
  
        %  \put(1,15){\circle{2.2}}
           \FPeval{\mdX}{\mpX-2}
-          \put(1,15){\begin{picture}(\mdX,30)
+          \put(1,12){\begin{picture}(\mdX,30)
               \put(0,0){\framebox(\mdX,30){%
               \put(1,27){{\tt model\_data(...)}}
               \put(0,26){\line(1,0){\mdX}}
@@ -81,7 +83,7 @@
                   \put(0,0){\framebox(\commX,13){%
                   \put(1,11){{\tt ad\_comm(...)}}
                   \put(0,10){\line(1,0){\commX}}
-                  \callout{8}{50}{11}{7.5}{Process certain\\ user-specified\\ commmand-line options}{3}
+                  \callout{8}{50}{11}{6.0}{Process certain\\ user-specified\\ commmand-line options}{3}
                   \put(1,5){Initialize {\tt ad\_comm} member variables}
                   \put(1,2){Set file names for I/O operations}
                   }} % ad_comm box
@@ -89,17 +91,19 @@
               \put(1,7){Read data from {\tt .dat} or}
               \put(1,3){user-specified file.}
               {\color{blue}\thicklines
-              
               \callout{1}{50}{1}{5}{Allocate variables\\ defined in\\DATA\_SECTION}{2}
               } % blue
               }} %model_data box
               \end{picture}}
-              \callout{12}{\mainX}{12}{7}{Execute user code in\\ INITIALIZATION\_SECTION}{2}
+              \callout{10}{\mainX}{12}{7}{Execute user code in\\ INITIALIZATION\_\\ SECTION}{2}
               {\color{blue}\thicklines
-              \callout{8}{\mainX}{9}{0}{Alllocate parameters in\\ PARAMETER\_SECTION\\ add user variables to parameter vector}{2}
-               } %blue
+              \callout{7}{\mainX}{9}{0}{Alllocate parameters in\\ \\ PARAMETER\_SECTION}{2}
+              } % blue
+              \put(1,3){Append user variables}
+              \put(1,0){ADMB parameter vector.}
           }} %model_parameters box
           \end{picture}}
+          \callout{28}{\mainX}{28}{20}{Execute user code in\\PRELIMINARY\_CALCS\_\\ SECTION}{0}
 
     }} % main() box
     \end{picture}}

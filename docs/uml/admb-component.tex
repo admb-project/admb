@@ -5,7 +5,7 @@
 %\usepackage{fullpage}
 \usepackage[pdftex]{pict2e}
 %\usepackage{calc}
-\usepackage[nomessages]{fp}
+\usepackage[nomessages]{fp} % for computing positions in picture boxes
 %\usepackage[pdftex]{hyperref}
 \usepackage{color}
 \listfiles
@@ -39,6 +39,10 @@
 \author{John Sibert}
 
 \begin{document}
+
+%Text before figure.
+\begin{figure}[t]
+
 %\small
 \sffamily
 \setlength{\unitlength}{0.01\textwidth}
@@ -83,7 +87,7 @@
                   \put(0,0){\framebox(\commX,13){%
                   \put(1,11){{\tt ad\_comm(...)}}
                   \put(0,10){\line(1,0){\commX}}
-                  \callout{8}{50}{11}{6.0}{Process certain\\ user-specified\\ commmand-line options}{3}
+                  \callout{8}{50}{11}{6.0}{Process certain\\ user-specified\\ commmand-line options}{4}
                   \put(1,5){Initialize {\tt ad\_comm} member variables}
                   \put(1,2){Set file names for I/O operations}
                   }} % ad_comm box
@@ -91,24 +95,42 @@
               \put(1,7){Read data from {\tt .dat} or}
               \put(1,3){user-specified file.}
               {\color{blue}\thicklines
-              \callout{1}{50}{1}{5}{Allocate variables\\ defined in\\DATA\_SECTION}{2}
+              \callout{1}{50}{1}{5}{Allocate variables\\ defined in\\DATA\_SECTION}{3}
               } % blue
               }} %model_data box
               \end{picture}}
               \callout{10}{\mainX}{12}{7}{Execute user code in\\ INITIALIZATION\_\\ SECTION}{2}
               {\color{blue}\thicklines
-              \callout{7}{\mainX}{9}{0}{Alllocate parameters in\\ \\ PARAMETER\_SECTION}{2}
+              \callout{7}{\mainX}{9}{0}{Alllocate parameters in\\ \\ PARAMETER\_SECTION}{3}
               } % blue
               \put(1,3){Append user variables}
               \put(1,0){ADMB parameter vector.}
           }} %model_parameters box
           \end{picture}}
-          \callout{28}{\mainX}{28}{20}{Execute user code in\\PRELIMINARY\_CALCS\_\\ SECTION}{0}
+          \callout{28}{\mainX}{28}{20}{Execute user code in\\PRELIMINARY\_CALCS\_\\ SECTION}{1}
 
+         \put(1,1){\begin{picture}(\mpX,24)
+         %     \color{red}
+              \put(0,0){\framebox(\mpX,24){%
+              \put(1,21){{\tt mp.computations(...)}}
+              \put(0,20){\line(1,0){\mpX}}
+              \put(1,17){Set up minimizer control structure.}
+              \put(1,12){No more room in this box.}
+              \put(1,8){See Figure Figure~\ref{fig:comp2}}
+          }} %model_parameters box
+          \end{picture}}             
     }} % main() box
     \end{picture}}
 
 \end{picture}
+\caption{\label{fig:comp1}\rmfamily
+Components invoked during startup phases of an 
+ADMB application. Ovals set in {\color{blue}blue} type indicate required SECTIONs.
+For subsequent components see Figure~\ref{fig:comp2}.
+}
+\end{figure}
+
+%Text after figure.
 
 \end{document}
 

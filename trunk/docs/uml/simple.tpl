@@ -1,7 +1,5 @@
-/*
-Version of simple ADMB example with superflous SECTIONs
-for following program flow with debugger.
-*/
+  //Version of simple ADMB example with superflous SECTIONs
+  //for following program flow with debugger.
 
 GLOBALS_SECTION
   #include "trace.h"

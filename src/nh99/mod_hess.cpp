@@ -21,8 +21,6 @@ void hess_calcreport(int i,int nvar);
 void hess_errorreport(void);
 void set_labels_for_hess(int);
 
-void useless(const double& sdelta2){/*int i=0;*/}
-
 // estimate the matrix of second derivatives
 void ad_update_hess_stats_report(int i,int nvar);
 
@@ -104,7 +102,6 @@ void function_minimizer::hess_routine_noparallel(void)
 
       double xsave=x(i);
       sdelta1=x(i)+delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       dvariable vf=0.0;
@@ -115,7 +112,6 @@ void function_minimizer::hess_routine_noparallel(void)
       gradcalc(nvar, g1, vf);
 
       sdelta2=x(i)-delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -128,7 +124,6 @@ void function_minimizer::hess_routine_noparallel(void)
       hess1=(g1-g2)/(sdelta1-sdelta2);
 
       sdelta1=x(i)+eps*delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       vf=0.0;
@@ -140,7 +135,6 @@ void function_minimizer::hess_routine_noparallel(void)
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -207,7 +201,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof,
 
       double xsave=x(i);
       sdelta1=x(i)+delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       dvariable vf=0.0;
@@ -219,7 +212,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof,
       gradcalc(nvar, g1, vf);
 
       sdelta2=x(i)-delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -233,7 +225,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof,
       hess1=(g1-g2)/(sdelta1-sdelta2);
   /*
       sdelta1=x(i)+eps*delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       vf=0.0;
@@ -247,7 +238,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof,
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -309,7 +299,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       double f=0.0;
       double xsave=x(i);
       double sdelta1=x(i)+delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       dvariable vf=0.0;
@@ -321,7 +310,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       gradcalc(nvar,g1);
 
       double sdelta2=x(i)-delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -335,7 +323,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       hess1=(g1-g2)/(sdelta1-sdelta2);
 
       sdelta1=x(i)+eps*delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       vf=0.0;
@@ -348,7 +335,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -377,7 +363,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       double f=0.0;
       double xsave=x(i);
       sdelta1=x(i)+delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       dvariable vf=0.0;
@@ -389,7 +374,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       gradcalc(nvar,g1);
 
       sdelta2=x(i)-delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -403,7 +387,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
       hess1=(g1-g2)/(sdelta1-sdelta2);
 
       sdelta1=x(i)+eps*delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       vf=0.0;
@@ -416,7 +399,6 @@ void function_minimizer::hess_routine_and_constraint(int iprof)
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       vf=0.0;
@@ -574,7 +556,6 @@ void function_minimizer::hess_inv(void)
   int ssggnn;
   double llss=ln_det(hess,ssggnn);
   int on1=0;
-  useless(llss);
   {
     ofstream ofs3((char*)(ad_comm::adprogram_name + adstring(".eva")));
     {

@@ -90,8 +90,6 @@ banded_lower_triangular_dmatrix quiet_choleski_decomp(
   return L;
 }
 
-void useless(const double& sdelta2);
-
 /**
  * Description not yet available.
  * \param
@@ -351,7 +349,6 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
 
     // get a number which is exactly representable
     double sdelta=1.0+delta;
-    useless(sdelta);
     sdelta-=1.0;
     {
       //
@@ -444,13 +441,11 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       double f=0.0;
       double xsave=x(i);
       sdelta1=x(i)+delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       g1=(*lapprox)(x,f,this);
 
       sdelta2=x(i)-delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       g2=(*lapprox)(x,f,this);
@@ -458,14 +453,12 @@ void function_minimizer::hess_routine_noparallel_random_effects(void)
       hess1=(g1-g2)/(sdelta1-sdelta2);
 
       sdelta1=x(i)+eps*delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       g1=(*lapprox)(x,f,this);
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       g2=(*lapprox)(x,f,this);
@@ -514,27 +507,23 @@ void function_minimizer::hess_routine_slave_random_effects(void)
       double f=0.0;
       double xsave=x(i);
       sdelta1=x(i)+delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       (*lapprox)(x,f,this);
 
       sdelta2=x(i)-delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       (*lapprox)(x,f,this);
       x(i)=xsave;
 
       sdelta1=x(i)+eps*delta;
-      useless(sdelta1);
       sdelta1-=x(i);
       x(i)=xsave+sdelta1;
       (*lapprox)(x,f,this);
 
       x(i)=xsave-eps*delta;
       sdelta2=x(i)-eps*delta;
-      useless(sdelta2);
       sdelta2-=x(i);
       x(i)=xsave+sdelta2;
       (*lapprox)(x,f,this);

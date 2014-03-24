@@ -16,7 +16,6 @@
 #endif
 */
 
-void useless(const double& sdelta2);
 // estimate the matrix of second derivatives
 
 /**
@@ -61,7 +60,6 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
 
     double xsave=x(i);
     sdelta1=x(i)+delta;
-    useless(sdelta1);
     sdelta1-=x(i);
     x(i)=xsave+sdelta1;
     dvariable vf=0.0;
@@ -74,7 +72,6 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
     g1=elem_div(g1,tscale);
 
     sdelta2=x(i)-delta;
-    useless(sdelta2);
     sdelta2-=x(i);
     x(i)=xsave+sdelta2;
     initial_params::stddev_scale(tscale,x);
@@ -89,7 +86,6 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
     hess1=(g1-g2)/(sdelta1-sdelta2)/scale(i);
 
     sdelta1=x(i)+eps*delta;
-    useless(sdelta1);
     sdelta1-=x(i);
     x(i)=xsave+sdelta1;
     initial_params::stddev_scale(tscale,x);
@@ -103,7 +99,6 @@ dmatrix function_minimizer::dep_hess_routine(const dvariable& dep)
 
     x(i)=xsave-eps*delta;
     sdelta2=x(i)-eps*delta;
-    useless(sdelta2);
     sdelta2-=x(i);
     x(i)=xsave+sdelta2;
     initial_params::stddev_scale(tscale,x);

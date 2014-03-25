@@ -42,7 +42,9 @@ ifdef LDFLAGS
 endif
 
 ifdef SHARED
-  ADCXXFLAGS:= -fPIC $(ADCXXFLAGS)
+  ifneq ($(SHELL),cmd)
+    ADCXXFLAGS:= -fPIC $(ADCXXFLAGS)
+  endif
 endif
 
 ifeq ($(DEBUG),yes)

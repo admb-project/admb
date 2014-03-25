@@ -379,7 +379,8 @@ void funnel_init_df1b2variable::
  * \param
  */
 funnel_init_df1b2variable::funnel_init_df1b2variable
-  (const funnel_init_df1b2variable& x)  : df1b2variable(x)
+  (const funnel_init_df1b2variable& x): df1b2variable(x),
+  funnel_init_var()
 {}
 
 /**

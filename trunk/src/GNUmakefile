@@ -237,22 +237,22 @@ endif
 
 ifeq ($(SHELL),cmd)
 $(OBJSDIR)optlp-nh99-model7.obj: nh99\model7.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -D__SPDLL__ -o $@ $<
+	$(CXX) -c -D__SPDLL__ $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-model7.obj: nh99\model7.cpp
-	$(CXX) -c $(CXXFLAGS) -D__SPDLL__ -o $@ $<
+	$(CXX) -c -D__SPDLL__ $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-model33.obj: nh99\model33.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -D__SPDLL__ -o $@ $<
+	$(CXX) -c -D__SPDLL__ $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-model33.obj: nh99\model33.cpp
-	$(CXX) -c $(CXXFLAGS) -D__SPDLL__ -o $@ $<
+	$(CXX) -c -D__SPDLL__ $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o $@ $<
+	$(CXX) -c -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c $(CXXFLAGS) -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) -o $@ $<
+	$(CXX) -c -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
@@ -285,22 +285,22 @@ $(OBJSDIR)saflp-tools99-%.obj:tools99\%.cpp
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 else
 $(OBJSDIR)optlp-nh99-model7.obj: nh99/model7.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -D__SPDLL__ -o $@ $<
+	$(CXX) -c -D__SPDLL__ $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-model7.obj: nh99/model7.cpp
-	$(CXX) -c $(CXXFLAGS) -D__SPDLL__ -o $@ $<
+	$(CXX) -c -D__SPDLL__ $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-model33.obj: nh99/model33.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -D__SPDLL__ -o $@ $<
+	$(CXX) -c -D__SPDLL__ $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-model33.obj: nh99/model33.cpp
-	$(CXX) -c $(CXXFLAGS) -D__SPDLL__ -o $@ $<
+	$(CXX) -c -D__SPDLL__ $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-banner.obj: nh99/banner.cpp
-	$(CXX) -c $(CXXFLAGS_OPT_LIB) -DADMB_VERSION=$(shell cat ../VERSION) -o $@ $<
+	$(CXX) -c -DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS_OPT_LIB) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-banner.obj: nh99/banner.cpp
-	$(CXX) -c $(CXXFLAGS) -DADMB_VERSION=$(shell cat ../VERSION) -o $@ $<
+	$(CXX) -c -DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS) -o $@ $<
 
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<

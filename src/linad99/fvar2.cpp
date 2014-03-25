@@ -92,7 +92,7 @@ dvariable::dvariable(const prevariable& t)
   Allocates memory and assigns value of argument to new object.
   \param t constant devariable object
  */
-dvariable::dvariable(const dvariable& t)
+dvariable::dvariable(const dvariable& t): prevariable()
 {
   v=gradnew();
   v->x=t.v->x;

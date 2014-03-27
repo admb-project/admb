@@ -53,14 +53,11 @@
 void imatrix::colfill_seqadd(int j, int base, int offset)
   {
     int temp=0;
-    // RETURN_ARRAYS_INCREMENT();
     for (int i=rowmin(); i<=rowmax(); i++)
     {
-      // elem(i,j)  = base+temp;
       (*this)[i][j] = base+temp;
       temp          = temp+offset;
     }
-    // RETURN_ARRAYS_DECREMENT();
   }
   
 /**

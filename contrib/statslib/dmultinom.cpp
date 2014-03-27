@@ -32,6 +32,21 @@ double neff(const dvector& obs, const dvar_vector& pred)
 	return sum(var)/norm2(resid);
 }
 
+// dvariable dmultinom(const dmatrix o, const dvar_matrix& p,dvar_matrix& nu,double& tau2,const double minp, double &neff)
+// {
+// 	RETURN_ARRAYS_INCREMENT();
+// 	dvariable nloglike = dmultinom(o,p,nu,tau2,minp);
+// 	int t = o.rowmin();
+// 	int T = o.rowmax();
+// 	dvector n(t,T);
+// 	for(int i = t; i <= T; i++ )
+// 	{
+// 		n(i) = neff(o(i),p(i));
+// 	}
+// 	neff = mean(n(i));
+// 	RETURN_ARRAYS_DECREMENT();
+// 	return(nloglike);
+// }
 dvariable dmultinom(const dmatrix o, const dvar_matrix& p,dvar_matrix& nu,double& tau2,const double minp)
 {	// returns the negative loglikelihood
 	/*

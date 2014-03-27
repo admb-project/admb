@@ -59,7 +59,6 @@ void imatrix::colfill_seqadd(int j, int base, int offset)
       temp          = temp+offset;
     }
   }
-  
 /**
  * Fills column of a matrix with a sequence of the form base, base+offset, base+2*offset,...
   \author Dave Fournier

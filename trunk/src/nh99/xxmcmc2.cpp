@@ -32,8 +32,8 @@ void save_mcmc_for_gui1(const dvector& mcmc_values,
 
 void check_java_flags(int& start_flag,int& quit_flag,int& der_flag,
   int& next_flag);
-void print_hist_data(const dmatrix& hist, const dmatrix& values, 
-                     const dvector& h, dvector& m, const dvector& s, 
+void print_hist_data(const dmatrix& hist, const dmatrix& values,
+                     const dvector& h, dvector& m, const dvector& s,
                      const dvector& parsave, long int iseed, double size_scale);
 
 void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS,double s,
@@ -43,11 +43,12 @@ int minnz(const dvector& x);
 int maxnz(const dvector& xa);
 
 int read_hist_data(const dmatrix& hist, const dvector& h,
-  dvector& m, const dvector& s, const dvector& parsave,long int& iseed, 
+  dvector& m, const dvector& s, const dvector& parsave,long int& iseed,
   const double& size_scale);
 
-void make_preliminary_hist(const dvector& s, const dvector& m,int nsim, 
-                           const dmatrix& values, dmatrix& hist, const dvector& h,
+void make_preliminary_hist(const dvector& s, const dvector& m,int nsim,
+                           const dmatrix& values, dmatrix& hist, 
+                           const dvector& h,
                            int slots,double total_spread,int probflag=0);
 
 void add_hist_values(const dvector& s, const dvector& m, const dmatrix& hist,
@@ -58,15 +59,15 @@ void add_guihist_values(const dvector& s, const dvector& m,
   const dmatrix& _hist, dvector& mcmcnumber_values, double llc,
   const dvector& h,int nslots,double total_spread);
 
-void write_empirical_covariance_matrix(int ncor, const dvector& s_mean, 
-                                       const dmatrix& s_covar, 
+void write_empirical_covariance_matrix(int ncor, const dvector& s_mean,
+                                       const dmatrix& s_covar,
                                        adstring& prog_name);
 
-void read_empirical_covariance_matrix(int nvar, const dmatrix& S, 
+void read_empirical_covariance_matrix(int nvar, const dmatrix& S,
                                       const adstring& prog_name);
 
 
-void read_hessian_matrix_and_scale(int nvar, const dmatrix& S, 
+void read_hessian_matrix_and_scale(int nvar, const dmatrix& S,
                                    const dvector& pen_vector);
 
 int user_stop(void);
@@ -75,16 +76,17 @@ extern int ctlc_flag;
 class admb_javapointers;
 extern admb_javapointers * adjm_ptr;
 
-dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1, 
+dvector new_probing_bounded_multivariate_normal(int nvar, const dvector& a1,
                                                 const dvector& b1,
   dmatrix& ch, const double& wght,double pprobe, random_number_generator& rng);
 
-void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1, 
+void new_probing_bounded_multivariate_normal_mcmc(int nvar, const dvector& a1,
                                                   const dvector& b1,
-  dmatrix& ch, const double& wght, const dvector& _y,double pprobe, 
+  dmatrix& ch, const double& wght, const dvector& _y,double pprobe,
   random_number_generator& rng);
 
-//void  newton_raftery_bayes_estimate(double cbf,int ic, const dvector& lk,double d);
+//void  newton_raftery_bayes_estimate(double cbf,int ic, 
+// const dvector& lk,double d);
 void  newton_raftery_bayes_estimate_new(double cbf,int ic, const dvector& lk,
                                         double d);
 
@@ -111,7 +113,7 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,
   int mcmc_save_index=1;
   int mcmc_wrap_flag=0;
   int mcmc_gui_length=10000;
-  int no_sd_mcmc=1; // Ianelli changed to make default behavior have sdmcmc turned off
+  int no_sd_mcmc=1; // Ianelli changed to make default behavior have sdmcmc off
 
   int on2=-1;
   if ( (on2=option_match(ad_comm::argc,ad_comm::argv,"-sdmcmc"))>-1)
@@ -503,7 +505,8 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,
                   (char*)(ad_comm::adprogram_name + adstring(".psv")),ios::app);
             } else {
               pofs_psave=
-                new uostream((char*)(ad_comm::adprogram_name + adstring(".psv")));
+                new uostream((char*)(ad_comm::adprogram_name +
+                             adstring(".psv")));
             }
 
           } else {
@@ -643,8 +646,8 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,
             bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),chd,
               lpinv,-1*(chdinv*bmn1),rng);
           else
-            new_probing_bounded_multivariate_normal_mcmc(nvar,symbds(1),symbds(2),
-              chd,lpinv,-1*(chdinv*bmn1),pprobe,rng);
+            new_probing_bounded_multivariate_normal_mcmc(nvar,symbds(1),
+              symbds(2), chd,lpinv,-1*(chdinv*bmn1),pprobe,rng);
 
           send_int_to_slaves(1);
           ll=-pvm_master_get_monte_carlo_value(nvar,y);
@@ -654,8 +657,8 @@ void function_minimizer::pvm_master_mcmc_routine(int nmcmc,int iseed0,
         }
         else
         {
-          dvector bmn1=bounded_multivariate_uniform(nvar,symbds(1),symbds(2),chd,
-                                                    lprob,rng);
+          dvector bmn1=bounded_multivariate_uniform(nvar,symbds(1),symbds(2),
+                                                    chd, lprob,rng);
           initial_params::add_random_vector(bmn1);
           initial_params::xinit(y);
           // get the simulation bounds for the inverse transition

@@ -1,8 +1,12 @@
+% $Id$
+% Author: John Sibert
+% Copyright (c) 2014 ADMB Foundation
+
 \documentclass[letterpaper,12pt]{article}
 
 %\usepackage[T1]{fontenc}
 %\usepackage[utf8x]{inputenc}
-%\usepackage{fullpage}
+\usepackage[plain]{fullpage}
 \usepackage[pdftex]{pict2e}
 %\usepackage{calc}
 \usepackage[nomessages]{fp} % for computing positions in picture boxes
@@ -40,7 +44,12 @@
 
 \begin{document}
 
-%Text before figure.
+textwidth in pt: \the\textwidth , textheigth in pt: \the\textheight\\
+%paperwitdth: \the\paperwidth , papersize \the\papersize\\
+unitlength in pt: \setlength{\unitlength}{0.01\textwidth}
+unitlength: \the\unitlength
+\clearpage
+Text before figure.
 \begin{figure}[t]
 
 %\small

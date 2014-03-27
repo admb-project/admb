@@ -1,0 +1,155 @@
+% $Id$
+% Author: John Sibert
+% Copyright (c) 2014 ADMB Foundation
+
+\documentclass[letterpaper,12pt]{article}
+
+%\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage[plain]{fullpage}
+\usepackage[pdftex]{pict2e}
+%\usepackage{calc}
+\usepackage[nomessages]{fp} % for computing positions in picture boxes
+%\usepackage[pdftex]{hyperref}
+\usepackage{color}
+\listfiles
+
+\newcommand\includes{{\tt \#include}s}
+
+
+% 1. height of callout dot
+% 2,3 coordinates of Bezier control point
+% 4 height of middle of oval
+% 5 text to be displayed 
+% 6 x position of dot
+\newcommand\callout[6]{%
+   {\small
+   \put(#6,#1){\circle*{1.6}}
+   \FPeval{\qX}{\mainX+3}%- #6}
+   \qbezier{(#6,#1)(#2,#3)(\qX,#4)}
+%  \put(#2,#3){\circle{1}}
+   \FPeval{\oX}{\qX+15.0}
+   \put(\oX,#4){\oval(30,12)}
+%  \put(\oX,#4){\circle{1}}
+   \FPeval{\tX}{\qX+2}
+   \FPeval{\tY}{#4-3.5}
+   \put(\tX,\tY){\shortstack[l]{#5}}
+   }% small
+}
+
+\title{ADMB UML Diagrams}
+\author{John Sibert}
+
+\begin{document}
+\pagenumbering{gobble}
+\noindent
+textwidth = \the\textwidth , textheigth = \the\textheight\\
+paperwitdth = \the\paperwidth\\ % , papersize = \the\papersize \\
+%\setlength{\unitlength}{0.01\textwidth}
+\setlength{\unitlength}{0.01\textwidth}
+unitlength = \the\unitlength\\
+\FPeval{\globY}{\number\textheight / \number\unitlength}\\
+\FPeval{\globX}{\number\textwidth / \number\unitlength}
+globX = \FPprint{\globX} , globY = \FPprint{\globY}\\
+\FPeval{\mainX}{0.65*\globX}
+\FPeval{\mainY}{\globY-2}
+mainX = \FPprint{\mainX} , mainY = \FPprint{\mainY}\\
+\FPeval{\lineY}{1.2*\number\baselineskip/\number\unitlength}
+lineY = \lineY
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\sffamily
+%\FPeval{\result}{clip(5+6)}%
+
+\begin{picture}(\globX,\globY)
+%\put(50,102){\makebox(0,1){\large\bf ADMB Application}}
+\linethickness{2.0pt}
+% \put(0,0){\framebox(100.0,100.0){}} 
+  \put(0,0){\framebox(\globX,\globY){}} 
+  \thinlines
+  \FPeval{\result}{\globY-\lineY}
+  %result = \FPprint{\result}
+% \callout{\result}{52}{\result}{125}{GLOBALS\_SECTION\\ User \includes\\ User methods}{0}
+  \FPeval{\result}{\globY - 2*\lineY}
+  \put(1,\result){\shortstack[l]{ADMB \includes\ and global methods}}
+
+   \put(1,1){\begin{picture}(\mainX,\mainY)
+     % main() box
+     \linethickness{1pt}
+     \put(0,0){\framebox(\mainX,122){%
+     \thinlines
+        \put(1,118){{\tt int main(int argc, char * argv[])}}
+        \put(0,117){\line(1,0){\mainX}}
+        \put(1,113){Set {\tt new} and {\tt exit} routines}
+%       \callout{111}{52}{111}{110}{TOP\_OF\_MAIN\_SECTION\\~ \\User-specified buffer sizes}{1}
+ 
+        \FPeval{\mpX}{\mainX-2}
+        \put(1,58){\begin{picture}(\mpX, 50)
+        %  \color{red}
+           \put(0,0){\framebox(\mpX,50){%
+           \put(1,44){{\tt model\_parameters(sz, argc, argv)}}
+           \put(0,43){\line(1,0){\mpX}}
+% 
+        %  \put(1,15){\circle{2.2}}
+           \FPeval{\mdX}{\mpX-2}
+           \put(1,12){\begin{picture}(\mdX,30)
+               \put(0,0){\framebox(\mdX,30){%
+               \put(1,27){{\tt model\_data(argc, argv)}}
+               \put(0,26){\line(1,0){\mdX}}
+ 
+               \FPeval{\commX}{\mdX-2}
+               \put(1,12){\begin{picture}(\commX,13)
+                   \put(0,0){\framebox(\commX,13){%
+                   \put(1,11){{\tt ad\_comm(argc, argv)}}
+                   \put(0,10){\line(1,0){\commX}}
+%                  \callout{8}{50}{8}{10}{Process certain\\ user-specified\\ commmand-line options}{4}
+                   \put(1,5){Initialize {\tt ad\_comm} member variables}
+                   \put(1,2){Set file names for I/O operations}
+                   }} % ad_comm box
+                   \end{picture}}
+               \put(1,7){Read data from {\tt .dat} or}
+               \put(1,3){user-specified file.}
+%              {\color{blue}\thicklines
+%              \callout{1}{50}{1}{8}{Allocate variables\\ defined in\\DATA\_SECTION}{3}} % blue
+               }} %model_data box
+               \end{picture}}
+%              \callout{10}{\mainX}{12}{7}{Execute user code in\\ INITIALIZATION\_\\ SECTION}{2}
+%              {\color{blue}\thicklines
+%              \callout{7}{\mainX}{9}{0}{Alllocate parameters in\\ \\ PARAMETER\_SECTION}{3}} % blue
+               \put(1,3){Append user variables}
+               \put(1,0){ADMB parameter vector.}
+           }} %model_parameters box
+           \end{picture}}
+%         \callout{55}{\mainX}{55}{50}{Execute user code in\\PRELIMINARY\_CALCS\_\\ SECTION}{1}
+ 
+          \put(1,28){\begin{picture}(\mpX,24)
+               \put(0,0){\framebox(\mpX,24){%
+               \put(1,21){{\tt mp.computations(...)}}
+               \put(0,20){\line(1,0){\mpX}}
+               \put(1,17){Set up minimizer control structure.}
+               \put(1,12){No more room in this box.}
+               \put(1,8){See Figure Figure~\ref{fig:comp2}}
+           }} %model_parameters box
+           \end{picture}}             
+     }} % main() box
+     \end{picture}}
+     %%%
+    \callout{129}{52}{129}{125}{GLOBALS\_SECTION\\ User \includes\\ User methods}{2}
+    \callout{113}{52}{113}{111}{TOP\_OF\_MAIN\_SECTION\\~ \\User-specified buffer sizes}{3}
+    \callout{95}{52}{95}{97}{Process certain\\ user-specified\\ commmand-line options}{6}
+    {\color{blue}\thicklines%
+    \callout{76}{52}{76}{83}{Allocate variables\\ defined in\\DATA\_SECTION}{5}}% blue
+
+    \callout{71}{52}{71}{69}{Execute user code in\\ INITIALIZATION\_\\ SECTION}{4}
+
+    {\color{blue}\thicklines%
+    \callout{69}{52}{69}{55}{Alllocate parameters in\\ \\ PARAMETER\_SECTION}{3}}% blue
+    \callout{57}{52}{57}{41}{Execute user code in\\PRELIMINARY\_CALCS\_\\ SECTION}{1}
+
+\end{picture}
+
+%Text after figure.
+
+\end{document}
+

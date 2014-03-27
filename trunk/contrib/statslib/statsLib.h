@@ -184,6 +184,7 @@ dvariable dpois(const prevariable& k, const prevariable& lambda);
 
 // Multinomial distribution
 dvariable dmultinom(const dvector& x, const dvar_vector& p);
+// dvariable dmultinom(const dmatrix o, const dvar_matrix& p,dvar_matrix& nu,double& tau2,const double minp, double &neff);
 dvariable dmultinom(const dmatrix o, const dvar_matrix& p,dvar_matrix& nu,double& tau2,const double minp);
 double neff(const dvector& obs, const dvar_vector& pred);
 

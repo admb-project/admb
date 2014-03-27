@@ -3155,8 +3155,9 @@ class dvar_vector
 //class fvar_ptr { dvar_vector *p; };
 
 /**
- * Description not yet available.
- * \param
+ * Class definition of matrix with derivitive information
+  \index_min
+
  */
 class dvar_matrix
 {
@@ -3647,6 +3648,7 @@ class dmatrix
 
 
 
+   void colfill_seqadd(const int &, const int &, const int &);
    void colfill_seqadd(const int &, double, double);
    void rowfill_seqadd(const int &, double, double);
    void colfill(int j, const dvector & v);
@@ -3966,6 +3968,23 @@ class imatrix
       return (colmax() - colmin() + 1);
    }
    void rowshift(int min);
+   inline ivector & elem(int i)
+   {
+      return (*(m + i));
+   }
+   inline int &elem(int i, int j)
+   {
+      return (*((*(m + i)).v + j));
+   }
+   inline const ivector & elem(int i) const
+   {
+      return (*(m + i));
+   }
+   inline const int &elem(int i, int j) const
+   {
+      return (*((*(m + i)).v + j));
+   }
+
 
    void write_on(const ostream &) const;
    void write_on(const uostream &) const;
@@ -3974,6 +3993,7 @@ class imatrix
    void initialize(void);
    friend class i3_array;
    void fill_seqadd(int, int);
+   void colfill_seqadd(int, int, int);
 };
 
 dvariable regression(const dvector & obs, const dvar_vector & pred);

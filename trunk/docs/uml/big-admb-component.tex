@@ -10,14 +10,22 @@
 \usepackage[pdftex]{pict2e}
 %\usepackage{calc}
 \usepackage[nomessages]{fp} % for computing positions in picture boxes
-%\usepackage[pdftex]{hyperref}
+\usepackage[pdftex]{hyperref}
 \usepackage{color}
 \listfiles
 
+
+\hypersetup{pdfauthor={John Sibert}}
+\hypersetup{pdfsubject={ADMB  Project}}
+\hypersetup{pdftitle={ADMB Component Diagram}}
+
+
+
 \newcommand\includes{{\tt \#include}s}
 
-
-% 1. height of callout dot
+% this version of the callout macro operates differently the original
+% all (x,y) positions are relative to the outer ("global") box
+% 1. height (y position) of callout dot
 % 2,3 coordinates of Bezier control point
 % 4 height of middle of oval
 % 5 text to be displayed 
@@ -45,7 +53,6 @@
 \noindent
 textwidth = \the\textwidth , textheigth = \the\textheight\\
 paperwitdth = \the\paperwidth\\ % , papersize = \the\papersize \\
-%\setlength{\unitlength}{0.01\textwidth}
 \setlength{\unitlength}{0.01\textwidth}
 unitlength = \the\unitlength\\
 \FPeval{\globY}{\number\textheight / \number\unitlength}\\
@@ -135,18 +142,15 @@ lineY = \lineY
      }} % main() box
      \end{picture}}
      %%%
-    \callout{129}{52}{129}{125}{GLOBALS\_SECTION\\ User \includes\\ User methods}{2}
-    \callout{113}{52}{113}{111}{TOP\_OF\_MAIN\_SECTION\\~ \\User-specified buffer sizes}{3}
-    \callout{95}{52}{95}{97}{Process certain\\ user-specified\\ commmand-line options}{6}
-    {\color{blue}\thicklines%
-    \callout{76}{52}{76}{83}{Allocate variables\\ defined in\\DATA\_SECTION}{5}}% blue
-
-    \callout{71}{52}{71}{69}{Execute user code in\\ INITIALIZATION\_\\ SECTION}{4}
-
-    {\color{blue}\thicklines%
-    \callout{69}{52}{69}{55}{Alllocate parameters in\\ \\ PARAMETER\_SECTION}{3}}% blue
-    \callout{57}{52}{57}{41}{Execute user code in\\PRELIMINARY\_CALCS\_\\ SECTION}{1}
-
+\callout{129}{52}{129}{125}{GLOBALS\_SECTION\\ User \includes\\ User methods}{2}
+\callout{113}{52}{113}{111}{TOP\_OF\_MAIN\_SECTION\\~\\~\\User-specified buffer sizes}{3}
+\callout{95}{52}{95}{97}{Process certain\\ user-specified\\ commmand-line options}{6}
+{\color{blue}\thicklines%
+\callout{76}{52}{76}{83}{Allocate variables\\ defined in\\DATA\_SECTION}{5}}% blue
+\callout{71}{52}{71}{69}{Execute user code in\\ INITIALIZATION\_\\ SECTION}{4}
+{\color{blue}\thicklines%
+\callout{69}{52}{69}{55}{Alllocate parameters in\\~\\~\\PARAMETER\_SECTION}{3}}% blue
+\callout{57}{52}{57}{41}{Execute user code in\\PRELIMINARY\_CALCS\_\\ SECTION}{1}
 \end{picture}
 
 %Text after figure.

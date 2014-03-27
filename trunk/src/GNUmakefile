@@ -22,11 +22,13 @@ ifeq ($(SHELL),cmd)
   LIBSDIR:=$(addsuffix \,$(LIBSDIR))
   OBJSDIR=..\build\objects\dist$(SHARED)
   OBJSDIR:=$(addsuffix \,$(OBJSDIR))
+  ADMB_VERSION:=$(shell if exist ..\VERSION type ..\VERSION)
 else
   INSTALL_DIR=/usr/local/
   DIST=../build/dist
   LIBSDIR=$(DIST)/lib/
   OBJSDIR=../build/objects/dist$(SHARED)/
+  ADMB_VERSION:=$(shell cat ../VERSION)
 endif
 
 ifdef CXX
@@ -239,22 +241,29 @@ endif
 
 ifeq ($(SHELL),cmd)
 $(OBJSDIR)optlp-nh99-model7.obj: nh99\model7.cpp
-	$(CXX) -c -D__SPDLL__ $(CXXFLAGS_OPT_LIB) -o $@ $<
+	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-model7.obj: nh99\model7.cpp
-	$(CXX) -c -D__SPDLL__ $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS)) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-model33.obj: nh99\model33.cpp
-	$(CXX) -c -D__SPDLL__ $(CXXFLAGS_OPT_LIB) -o $@ $<
+	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-model33.obj: nh99\model33.cpp
-	$(CXX) -c -D__SPDLL__ $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS)) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) $(CXXFLAGS_OPT_LIB) -o $@ $<
-
+ifeq ($(ADMB_VERSION),)
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
+else
+	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
+endif
 $(OBJSDIR)saflp-nh99-banner.obj: nh99\banner.cpp
-	$(CXX) -c -DADMB_VERSION=$(shell if exist ..\VERSION type ..\VERSION) $(CXXFLAGS) -o $@ $<
+ifeq ($(ADMB_VERSION),)
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
+else
+	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS)) -o $@ $<
+endif
 
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse\hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
@@ -287,22 +296,31 @@ $(OBJSDIR)saflp-tools99-%.obj:tools99\%.cpp
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 else
 $(OBJSDIR)optlp-nh99-model7.obj: nh99/model7.cpp
-	$(CXX) -c -D__SPDLL__ $(CXXFLAGS_OPT_LIB) -o $@ $<
+	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-model7.obj: nh99/model7.cpp
-	$(CXX) -c -D__SPDLL__ $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS)) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-model33.obj: nh99/model33.cpp
-	$(CXX) -c -D__SPDLL__ $(CXXFLAGS_OPT_LIB) -o $@ $<
+	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
 
 $(OBJSDIR)saflp-nh99-model33.obj: nh99/model33.cpp
-	$(CXX) -c -D__SPDLL__ $(CXXFLAGS) -o $@ $<
+	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS)) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-banner.obj: nh99/banner.cpp
-	$(CXX) -c -DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS_OPT_LIB) -o $@ $<
-
+	echo "$(ADMB_VERSION)"
+ifeq ($(ADMB_VERSION),)
+	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
+else
+	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
+endif
 $(OBJSDIR)saflp-nh99-banner.obj: nh99/banner.cpp
-	$(CXX) -c -DADMB_VERSION=$(shell cat ../VERSION) $(CXXFLAGS) -o $@ $<
+	echo "$(ADMB_VERSION)"
+ifeq ($(ADMB_VERSION),)
+	$(CXX) -c $(CXXFLAGS) -o $@ $<
+else
+	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS)) -o $@ $<
+endif
 
 $(OBJSDIR)optlp-sparse-hs_sparse.obj: sparse/hs_sparse.cpp
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<

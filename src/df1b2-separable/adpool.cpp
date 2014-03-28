@@ -359,12 +359,12 @@ void adpool::deallocate(void)
 }
 */
 
- const int pvalues_size=500000;
 /**
 */
 void adpool::grow(void)
 {
 #if defined(__CHECK_MEMORY__)
+  const int pvalues_size=500000;
   if (!pvalues)
   {
     maxchunks=20000;

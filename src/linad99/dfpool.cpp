@@ -438,9 +438,6 @@ void dfpool::set_size(unsigned int sz)
     size=sz;
 }
 
-
-//void xxiieeuu(void * tmp0){;}
-
 /**
  * Description not yet available.
  * \param
@@ -477,8 +474,6 @@ void dfpool::deallocate(void)
 }
 */
 
- const int pvalues_size=500000;
-
 /**
  * Description not yet available.
  * \param
@@ -486,6 +481,7 @@ void dfpool::deallocate(void)
 void dfpool::grow(void)
 {
 #if defined(__CHECK_MEMORY__)
+  const int pvalues_size=500000;
   if (!pvalues)
   {
     maxchunks=100;

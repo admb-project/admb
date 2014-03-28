@@ -154,9 +154,9 @@ void get_sp_printf(void)
 
 void do_dll_housekeeping(int argc,char ** argv)
 {
-  int on;
 #if defined(__SPDLL__)
-  if ( (on=option_match(argc,argv,"-sp"))>-1)
+  int on = option_match(argc,argv,"-sp");
+  if (on > -1)
   {
   #if defined(_WIN32)
     get_sp_printf();

@@ -108,7 +108,7 @@ dvector laplace_approximation_calculator::local_minimization_routine
   fmc1.ihang=0;
   fmc1.ihflag=0;
   fmc1.crit=1.e-12;
-  double fmsave=fmc1.maxfn;
+  long fmsave = fmc1.maxfn;
   fmc1.maxfn=1000;;
 
   fmc1.dfn=1.e-2;

@@ -94,7 +94,7 @@ df1b2matrix solve(const df1b2matrix& aa,const df1b2matrix& tz,
       }
       bb(i,j) = sum;
       dum = vv[i]*fabs(sum);
-      if ( value(dum) >= value(big))
+      if (value(dum) >= value(big))
       {
         big = dum;
         imax = i;

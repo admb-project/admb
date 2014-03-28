@@ -109,7 +109,7 @@ dvariable function_minimizer::random_effects_maximization(const dvar_vector& _x)
   dvar_vector gbest(1,nvar);
   g.initialize();
   //double t1, t2;
-  long int diagco=0.0;
+  long int diagco = 0;
   integer iprintx[2];
   //double epsx;
   //m = 35;

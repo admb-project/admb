@@ -92,7 +92,7 @@ void function_minimizer::limited_memory_quasi_newton(
   dvector xbest(1,nvar);
   dvector gbest(1,nvar);
   //double t1, t2;
-  long int diagco=0.0;
+  long int diagco=0;
   int iprintx[2];
   //double epsx;
   //m = 35;

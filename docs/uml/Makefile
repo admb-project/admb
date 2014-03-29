@@ -1,4 +1,18 @@
-all: admb-component.pdf admb-seqdiag.png admb-blockdiag.png
+#$Id$
+#
+.SUFFIXES: .pdf .tex .png
+all: big-admb-component.png admb-component.pdf admb-seqdiag.png admb-blockdiag.png
+
+%.pdf:%.tex
+	pdflatex $^
+
+big-admb-component.png: big-admb-component.pdf
+#	extract page 2
+	gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -dFirstPage=2 -dLastPage=2 -sOutputFile=t1.pdf $*.pdf
+#	crop page 2
+	pdfcrop --verbose --margins 0 --clip t1.pdf t2.pdf
+#	convert to 300 dpi png
+	convert -antialias -density 600 t2.pdf $@
 
 admb-component.pdf: admb-component.tex
 	pdflatex admb-component
@@ -10,11 +24,12 @@ admb-blockdiag.png: admb-blockdiag
 	blockdiag admb-blockdiag
 
 clean:
-	@rm -vf admb-blockdiag.png
-	@rm -vf admb-seqdiag.png
-	@rm -vf admb-component.aux
-	@rm -vf admb-component.log
-	@rm -vf admb-component.pdf
+	@rm -vf *.png
+	@rm -vf *.aux
+	@rm -vf *.aux
+	@rm -vf *.out
+	@rm -vf *.log
+	@rm -vf *.pdf
 	@rm -vf simple
 	@rm -vf simple.bar
 	@rm -vf simple.cor

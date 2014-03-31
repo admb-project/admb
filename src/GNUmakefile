@@ -308,14 +308,12 @@ $(OBJSDIR)saflp-nh99-model33.obj: nh99/model33.cpp
 	$(CXX) -c $(subst -I,-D__SPDLL__ -I,$(CXXFLAGS)) -o $@ $<
 
 $(OBJSDIR)optlp-nh99-banner.obj: nh99/banner.cpp
-	echo "$(ADMB_VERSION)"
 ifeq ($(ADMB_VERSION),)
 	$(CXX) -c $(CXXFLAGS_OPT_LIB) -o $@ $<
 else
 	$(CXX) -c $(subst -I,-DADMB_VERSION=$(ADMB_VERSION) -I,$(CXXFLAGS_OPT_LIB)) -o $@ $<
 endif
 $(OBJSDIR)saflp-nh99-banner.obj: nh99/banner.cpp
-	echo "$(ADMB_VERSION)"
 ifeq ($(ADMB_VERSION),)
 	$(CXX) -c $(CXXFLAGS) -o $@ $<
 else

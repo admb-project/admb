@@ -1832,7 +1832,7 @@ private:
   ivector param_size;
 protected:
   void report_function_minimizer_stats(void){;}
-  virtual void report(void){;};
+  virtual void report(const dvector& gradients){;};
   static dvector convergence_criteria;
   static dvector maximum_function_evaluations;
   static int sd_flag;

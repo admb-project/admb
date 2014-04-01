@@ -224,7 +224,7 @@ REPORT_SECTION  {
 
     setup_for_prior_likelihood();
 
-    fprintf(fall,"%s","}\n\nvoid model_parameters::report()"
+    fprintf(fall,"%s","}\n\nvoid model_parameters::report(const dvector& gradients)"
       "\n{\n");
     fprintf(fall," adstring ad_tmp=initial_params::get_reportfile_name();\n");
     fprintf(fall,"  ofstream report((char*)"
@@ -3590,7 +3590,7 @@ PROCEDURE_SECTION {
     if (makedll)
     {
       fprintf(fdat,"public:\n  virtual void userfunction(void);\n"
-        "  virtual void report(void);\n" // define this to get a report
+        "  virtual void report(const dvector& gradients);\n" // define this to get a report
         "  virtual void final_calcs(void);\n"
         "  model_parameters(int sz,int argc, char * argv[],"
         " dll_args& ad_dll);\n");
@@ -3598,7 +3598,7 @@ PROCEDURE_SECTION {
     else
     {
       fprintf(fdat,"public:\n  virtual void userfunction(void);\n"
-        "  virtual void report(void);\n" // define this to get a report
+        "  virtual void report(const dvector& gradients);\n" // define this to get a report
         "  virtual void final_calcs(void);\n"
         "  model_parameters(int sz,int argc, char * argv[]);\n");
     }
@@ -4033,7 +4033,7 @@ TOP_OF_MAIN_SECTION {
     if (!report_defined)
     {
       fprintf(fall,"}\n");
-      fprintf(fall,"\nvoid model_parameters::report(void)"
+      fprintf(fall,"\nvoid model_parameters::report(const dvector& gradients)"
         "{");
     }
 

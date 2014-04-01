@@ -515,7 +515,7 @@ void tracing_message(int traceflag,const char *s);
       }
 #endif
       initial_params::save();
-      report();
+      report(g);
       // in case the user changes some initial_params in the report section
       // call reset again
       initial_params::reset(dvar_vector(x));

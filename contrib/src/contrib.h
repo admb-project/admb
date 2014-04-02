@@ -43,7 +43,4 @@
 #include <qfclib.h>
 #include <gdbprintlib.h>
 
-/**
- * Description: Outputs "Hello World" to screen.
- */
-void sample_hello_world();
+void save_gradients(const dvector& g);

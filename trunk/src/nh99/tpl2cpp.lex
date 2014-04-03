@@ -596,6 +596,16 @@ DATA_SECTION  {
     fprintf(fdat,"%s","  init_xml_doc ");
                      }
 
+<DEFINE_DATA>friend_class {
+    BEGIN IN_NAMED_NUMBER_DEF;
+    fprintf(fdat,"%s","  friend class ");
+                     }
+
+<DEFINE_PARAMETERS>friend_class {
+    BEGIN IN_NAMED_NUMBER_DEF;
+    fprintf(fdat,"%s","  friend class ");
+                     }
+
 <DEFINE_DATA>init_adstring {
 
     BEGIN IN_NUMBER_DEF;

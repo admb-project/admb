@@ -131,10 +131,10 @@ double sum(const d4_array& m)
        delete shape;
      }
    }
-#if defined(SAFE_ALL)
+#if defined(ADWARN_DEALLOCATE_NULL)
    else
    {
-     //cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
+     cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
    }
 #endif
  }

@@ -131,7 +131,9 @@ else
   LDFLAGS="$LDFLAGS"
 fi
 if [ ! -z "$dll" ]; then
-  CXXFLAGS="-fPIC $CXXFLAGS"
+  if [ "$OS" != "Windows_NT" ]; then
+    CXXFLAGS="-fPIC $CXXFLAGS"
+  fi
   LDFLAGS="-shared $LDFLAGS"
 fi
 if [ ! -z "$debug" ]; then

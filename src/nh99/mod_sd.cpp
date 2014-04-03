@@ -9,12 +9,6 @@
 #endif
 #include <admodel.h>
 
-/*
-#ifdef __GNUDOS__
-  #include <gccmanip.h>
-#endif
-*/
-
 dmatrix * GAUSS_varcovariance_matrix = NULL;
 
 void  set_gauss_covariance_matrix(const dll_data_matrix& m)

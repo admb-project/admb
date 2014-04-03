@@ -2495,18 +2495,6 @@ double ffmin(double a,double b);
 
 void check_datafile_pointer(void * p);
 
-#if (defined(__GNUDOS__))
-#  if (defined(linux)) || (defined(__ADSGI__))
-#    define IOS_BINARY 0
-#  else
-#    define IOS_BINARY ios::bin
-#  endif
-#endif
-
-#if (defined(__BORLANDC__))
-#  define IOS_BINARY ios::binary
-#endif
-
 adstring get_reportfile_name(void);
 
 void ad_make_code_reentrant(void);

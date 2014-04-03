@@ -6,12 +6,6 @@
  */
 #include <admodel.h>
 
-/*
-#ifdef __GNUDOS__
-  #include <gccmanip.h>
-#endif
-*/
-
 double inv_cumd_norm(const double& x);
 double inv_cumd_cauchy(const double& x);
 double inv_cumd_norms(const double& x);

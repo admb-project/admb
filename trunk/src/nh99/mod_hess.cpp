@@ -11,12 +11,6 @@
 #endif
 //#include <parallel.h>
 
-/*
-#ifdef __GNUDOS__
-  #include <gccmanip.h>
-#endif
-*/
-
 void hess_calcreport(int i,int nvar);
 void hess_errorreport(void);
 void set_labels_for_hess(int);

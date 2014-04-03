@@ -6,12 +6,6 @@
  */
 #include <admodel.h>
 
-/*
-#ifdef __GNUDOS__
-  #include <gccmanip.h>
-#endif
-*/
-
 double better_rand(long int&);
 
 double function_minimizer::get_monte_carlo_value(int nvar, const dvector& x)

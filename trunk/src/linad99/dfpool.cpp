@@ -323,9 +323,6 @@ void * pchecker=0;
  */
 void dfpool::free(void * b)
 {
-#if defined(SAFE_ALL)
-#endif
-
 #if defined(THREAD_SAFE)
   pthread_mutex_lock(&mutex_dfpool);
 #endif
@@ -355,9 +352,6 @@ void dfpool::free(void * b)
  */
 void tsdfpool::free(void * b)
 {
-#if defined(SAFE_ALL)
-#endif
-
 #if defined(THREAD_SAFE)
   //pthread_mutex_lock(&mutex_dfpool);
 #endif

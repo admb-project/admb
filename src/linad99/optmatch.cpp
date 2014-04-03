@@ -85,14 +85,17 @@ int option_match(char* _s, const char* option, const int& _nopt)
     i++;
   }
   while (p);
+
+  bool found = false;
   do
   {
     p = strtok(NULL, " ");
     if (!p) break;
-    if (p[0] == '-') break;
+    if (p[0] == '-')
+      found = true;
     nopt++;
   }
-  while(1);
+  while(!found);
 
   return rval;
 }

@@ -77,7 +77,7 @@
        shape=NULL;
      }
    }
-#if defined(ADWARN_DEALLOCATE_NULL)
+#if defined(ADWARN_DEV)
    else
    {
      cerr << "Warning -- trying to deallocate an unallocated dvar4_array"<<endl;

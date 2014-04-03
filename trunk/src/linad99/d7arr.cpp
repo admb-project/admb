@@ -66,12 +66,12 @@
        shape=NULL;
      }
    }
+#if defined(ADWARN_DEALLOCATE_NULL)
    else
    {
-#    if defined(SAFE_ALL)
      cerr << "Warning -- trying to deallocate an unallocated d5_array"<<endl;
-#    endif
    }
+#endif
  }
 /**
 Destructor

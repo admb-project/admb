@@ -67,12 +67,12 @@
        shape=NULL;
      }
    }
+#if defined(ADWARN_DEALLOCATE_NULL)
    else
    {
-#    if defined(SAFE_ALL)
-  //   cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
-#    endif
+     cerr << "Warning -- trying to deallocate an unallocated d4_array"<<endl;
    }
+#endif
  }
 
 /**

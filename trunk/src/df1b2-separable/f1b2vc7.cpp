@@ -26,7 +26,7 @@ df1b2vector& df1b2vector::shift(int min)
 /*
  df1b2vector::df1b2vector(const predf1b2vector& pdv)
  {
- #ifdef SAFE_ALL
+#ifndef OPT_LIB
    if (pdv.ub<pdv.lb)
    {
      cerr << "lower index greater than upper index in df1b2vector::"
@@ -46,7 +46,7 @@ df1b2vector& df1b2vector::shift(int min)
        " operator(int lb,int ub) " << endl;
      ad_exit (1);
    }
-  #endif
+#endif
    index_min=pdv.lb;
    index_max=pdv.ub;
    shape=pdv.p->shape;

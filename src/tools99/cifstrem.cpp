@@ -75,31 +75,15 @@ cifstream::cifstream(const char* fn, int open_m, char cc)
  : ifstream(fn, ios::in | open_m) , file_name(fn)
 #elif defined (__INTEL_COMPILER)
  : ifstream(fn) , file_name(fn)
-#elif defined (__GNUDOS__)
- #if defined(__SUNPRO_CC)
+#elif defined(__SUNPRO_CC)
  : ifstream(fn, ios::in | open_m) , file_name(fn)
- #else
- : ifstream(fn, ios::in | std::ios::openmode(open_m)) , file_name(fn)
- #endif
 #elif defined (__ZTC__)
  : ios(&buffer), ifstream(fn, ios::in | open_m) , file_name(fn)
 #else
-  xxxx need to define this foir this compiler you idiot!
+ : ifstream(fn, ios::in | std::ios::openmode(open_m)) , file_name(fn)
 #endif
 {
-  #if defined(__ZTC__) || defined(__GNUDOS__) || defined (__WAT32__)
-    bp = rdbuf();
-  #endif
-#if defined(__MSVC32__)
-#  if (__MSVC32__  >= 7)
-    bp = rdbuf();
-#  endif
-#endif
-#if defined(__BORLANDC__)
-#  if (__BORLANDC__  >= 0x0520)
-    bp = rdbuf();
-#  endif
-#endif
+  bp = rdbuf();
   COMMENT_CHAR = cc;
   if (this->good())
   {
@@ -261,7 +245,6 @@ cifstream& cifstream::operator>>(const long& i)
   return *this;
 }
 
-#if defined(USE_LONG_LONG)
 #if defined(__ADSGI__)
 istream& istream::operator >> (long long & x)
 {
@@ -288,7 +271,6 @@ cifstream& cifstream::operator >> (long long & i)
   delete []s;
   return *this;
 }
-#endif
 
 void js_strip_leading_zeros(char * s)
 {
@@ -426,12 +408,11 @@ void cifstream::report_error(const char * msg)
 void cifstream::report_error(const char * msg) {;}
 
 /*
-#if defined(__GNUDOS__)
-#  if !defined(__ADSGI__)
+#if !defined(__ADSGI__)
   void strnset(char * comment_line, char x, size_t len)
-#  else
+#else
   void strnset(char * comment_line, const char x, size_t len)
-#  endif
+#endif
   {
     unsigned int tlen;
     //len=100;
@@ -440,5 +421,4 @@ void cifstream::report_error(const char * msg) {;}
     if (tlen>len)tlen=len;
     memset(comment_line,x,tlen);
   }
-#endif
 */

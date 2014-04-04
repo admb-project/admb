@@ -137,16 +137,9 @@ Macro definitions.
 #define __USE_IOSTREAM__
 
 #if defined(__BORLANDC__)
-#   if (__BORLANDC__  >= 0x0550)
-#      include <fcntl.h>
-#   endif
-#   if (__BORLANDC__  >= 0x0520)
-#      define BOR_CONST const
-#   else
-#      define BOR_CONST
-#   endif
-#else
-#   define BOR_CONST
+  #if (__BORLANDC__  >= 0x0550)
+    #include <fcntl.h>
+  #endif
 #endif
 
 #define USE_HIGHER_ARRAYS

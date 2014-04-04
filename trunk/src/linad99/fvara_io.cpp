@@ -49,8 +49,8 @@ void dvar_vector::write_on(const ostream& _s) const
 {
   ostream& s =(ostream&) _s;
 #ifdef __USE_IOSTREAM__
-  int new_w = s.width();
-  int new_p = s.precision();
+  std::streamsize new_w = s.width();
+  std::streamsize new_p = s.precision();
 #if defined(GCC3)
   ios::fmtflags new_form = s.flags();
 #else

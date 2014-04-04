@@ -193,14 +193,9 @@ DF_FILE::DF_FILE(unsigned long long nbytes)
                      S_IREAD | S_IWRITE);
 #elif  defined (__NDPX__)
   file_ptr=creat(cmpdif_file_name, O_RDWR);
-#elif ( defined (__SUN__) || defined (__GNU__) )
-  file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
-       O_BINARY, 0777);
-#elif ( !defined (__GNU__) && defined (__GNUDOS__))
-  file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
-       O_BINARY, 0777);
 #else
- xxxx // need to define this for this compiler
+  file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
+       O_BINARY, 0777);
 #endif
 
   if (file_ptr == -1)

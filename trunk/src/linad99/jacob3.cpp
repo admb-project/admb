@@ -136,11 +136,7 @@ void gradient_structure::jacobcalc(int nvar, const uostream& ofs)
     {
       my_off_t cmp_lpos=DEPVARS_INFO->cmpdif_file_position(ijac);
       lseek(fp->file_ptr,cmp_lpos,SEEK_SET);
-      #if !defined(__MSVC32__) && !defined(__GNUDOS__) && !defined (__WAT32__)
-        fp->read_cmpdif_stack_buffer(cmp_lpos);
-      #else
-        fp->read_cmpdif_stack_buffer(cmp_lpos);
-      #endif
+      fp->read_cmpdif_stack_buffer(cmp_lpos);
     }
     GRAD_STACK1->_GRADFILE_PTR = GRAD_STACK1->gradfile_handle();
 

@@ -86,7 +86,7 @@ dvar_vector::dvar_vector(const dvar_vector& t)
  */
 dvar_vector::dvar_vector(const predvar_vector& pdv)
  {
- #ifdef SAFE_ALL
+#ifndef OPT_LIB
    if (pdv.ub<pdv.lb)
    {
      cerr << "lower index greater than upper index in dvar_vector::"
@@ -106,7 +106,7 @@ dvar_vector::dvar_vector(const predvar_vector& pdv)
        " operator(int lb,int ub) " << endl;
      ad_exit (1);
    }
-  #endif
+#endif
    index_min=pdv.lb;
    index_max=pdv.ub;
    shape=pdv.p->shape;
@@ -122,7 +122,7 @@ dvar_vector::dvar_vector(const predvar_vector& pdv)
 /*
 dvar_vector::dvar_vector(const dvar_vector& t, int lb, int ub)
  {
- #ifdef SAFE_ALL
+#ifndef OPT_LIB
    if (ub<lb)
    {
      cerr << "lower index greater than upper index in dvar_vector::"
@@ -142,8 +142,7 @@ dvar_vector::dvar_vector(const dvar_vector& t, int lb, int ub)
        " operator(int lb,int ub) " << endl;
      ad_exit (1);
    }
-  #endif
-
+#endif
 
    index_min=lb;
    index_max=ub;

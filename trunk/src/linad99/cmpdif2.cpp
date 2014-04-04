@@ -12,9 +12,6 @@
 #ifdef __TURBOC__
   #pragma hdrstop
 #endif
-#if !defined (__NDPX__) && !defined(__SUN__) && !defined(__GNU__)
-#endif
-
 
 #include <string.h>
 int save_identifier_string(const char*);
@@ -24,6 +21,10 @@ void verify_identifier_string(const char*);
 //struct dvector_position;
 long int reset_gs_stack(void);
 void reset_gs_stack(long int);
+
+#ifndef OPT_LIB
+  #define CHK_ID_STRING
+#endif
 
 /**
 Copy index and pointer to values from v.

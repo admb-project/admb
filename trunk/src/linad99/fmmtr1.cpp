@@ -16,9 +16,6 @@
 #ifdef __ZTC__
   #include <conio.h>
 #endif
-#ifdef __GNUDOS__
-  #define ADGETCH getch
-#endif
 #include <fvar.hpp>
 extern int ctlc_flag;
 #ifdef __TURBOC__
@@ -344,11 +341,10 @@ label30:
        if ( kbhit() )
 #endif
        {
-          #if !defined(__GNUDOS__)  || defined(UNIXKLUDGE)  || defined(linux) \
-          || defined(__CYGWIN32__)
-            int c = toupper(getch());
-          #else
+          #if defined(__DJGPP__)
             int c = toupper(getxkey());
+          #else
+            int c = toupper(getch());
           #endif
           if ( c == 'C')
           {

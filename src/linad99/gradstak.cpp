@@ -369,47 +369,26 @@ void grad_stack::create_gradfile()
   #if defined (__TURBOC__)
    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
        O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
-
    _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT |
        O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
-
   #elif defined (__ZTC__)
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
       O_TRUNC , S_IREAD | S_IWRITE);
     _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT
       | O_TRUNC,  S_IREAD | S_IWRITE);
-
   #elif defined (__NDPX__)
     _GRADFILE_PTR1=creat(gradfile_name1, O_RDWR);
      _VARSSAV_PTR=creat(var_store_file_name, O_RDWR);
-
-  #elif ( defined ( __SUN__) ||  defined ( __GNU__))
-
+  #elif defined (__WAT32__)
+   _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
+       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+   _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT |
+       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
+  #else
     _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY , 0777);
     _VARSSAV_PTR=open(var_store_file_name, O_RDWR |
       O_CREAT | O_TRUNC | O_BINARY, 0777);
-
-  #elif (defined (__GNUDOS__) && !defined(__GNU__))
-    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
-      O_BINARY ,   0777);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR |
-      O_CREAT | O_TRUNC | O_BINARY, 0777);
-
-  #elif defined (_MSC_VER)
-    _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT | O_TRUNC |
-      O_BINARY ,   0777);
-    _VARSSAV_PTR=open(var_store_file_name, O_RDWR |
-      O_CREAT | O_TRUNC | O_BINARY, 0777);
-
-  #elif defined (__WAT32__)
-   _GRADFILE_PTR1=open(gradfile_name1, O_RDWR | O_CREAT |
-       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
-
-   _VARSSAV_PTR=open(var_store_file_name, O_RDWR | O_CREAT |
-       O_TRUNC | O_BINARY, S_IREAD | S_IWRITE);
-  #else
-    xxxxx   // need to define this for thei compiler!
   #endif
 
   if (_GRADFILE_PTR1 == -1)
@@ -434,24 +413,15 @@ void grad_stack::create_gradfile()
       S_IREAD | S_IWRITE);
   #elif defined (__NDPX__)
     _GRADFILE_PTR2=creat(gradfile_name2, O_RDWR);
-
-  #elif ( defined (__SUN__) ||  defined (__GNU__) )
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
-      O_BINARY , 0777);
-
-  #elif (defined (__GNUDOS__) && !defined (__GNU__))
-    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
-      O_BINARY , 0777);
-
   #elif defined (_MSC_VER)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY, S_IREAD | S_IWRITE);
-
   #elif defined (__WAT32__)
     _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
       O_BINARY, S_IREAD | S_IWRITE);
   #else
-    xxxx  // need to define this for this compiler
+    _GRADFILE_PTR2=open(gradfile_name2, O_RDWR | O_CREAT | O_TRUNC |
+      O_BINARY , 0777);
   #endif
 
   if (_GRADFILE_PTR2 == -1)

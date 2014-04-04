@@ -1041,11 +1041,10 @@ void print_hist_data(const dmatrix& hist, const dmatrix& values,
 
   int lc=1;
   int ic=1;
-  int nsim;
   ivector mmin(1,nsdvars);
   ivector mmax(1,nsdvars);
 
-  nsim=sum(hist(1));
+  int nsim = sum(hist(1));
   for (i=1;i<=nsdvars;i++)
   {
     mmin(i)=minnz(hist(i));
@@ -1569,13 +1568,12 @@ int user_stop(void)
   if ( kbhit() )
 #endif
   {
-    #if !defined(__GNUDOS__)  || defined(UNIXKLUDGE)  || defined(linux) \
-      || defined(__CYGWIN32__) || defined(__MINGW32__)
-      int c = toupper(getch());
-    #else
-      int c = toupper(getxkey());
-    #endif
-    if ( c == 'Q')
+#if defined(__DJGPP__)
+    int c = toupper(getxkey());
+#else
+    int c = toupper(getch());
+#endif
+    if (c == 'Q')
     {
       quit_flag=1;
     }

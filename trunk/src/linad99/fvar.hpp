@@ -216,9 +216,8 @@ Macro definitions.
 #   define  NO_DERIVS
 #endif
 
-#ifdef SAFE_ALL
-#   define CHK_ID_STRING
-#   define SAFE_ARRAYS
+#ifndef OPT_LIB
+  #define SAFE_ARRAYS
 #endif
 
 // C language function prototypes

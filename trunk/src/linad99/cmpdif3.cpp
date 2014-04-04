@@ -20,6 +20,11 @@
 #endif
 
 #include <string.h>
+
+#ifndef OPT_LIB
+  #define CHK_ID_STRING
+#endif
+
 extern ofstream clogf;
 
 /**

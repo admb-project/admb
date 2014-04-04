@@ -57,7 +57,6 @@ void lvector::write_on(const ostream& _s) const
   long new_form = s.flags();
 #endif
 
-
   char new_fill = s.fill();
 #endif
   for (int i=indexmin(); i <= indexmax(); i++)

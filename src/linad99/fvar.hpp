@@ -174,11 +174,9 @@ Macro definitions.
 #   define UNIXKLUDGE
 #endif
 
-#if !defined(linux)
-#   include <dos.h>
-#   if !defined(__MSVC32__) && !defined(__BORLANDC__) && !defined (__GNUDOS__)
-#      include <pc.h>
-#   endif
+#if defined(__DJGPP__)
+  #include <dos.h>
+  #include <pc.h>
 #endif
 
 #define AD_VERSION 7
@@ -220,7 +218,6 @@ Macro definitions.
 
 #ifdef SAFE_ALL
 #   define CHK_ID_STRING
-#   define DSAFE_ALLOCATE
 #   define SAFE_ARRAYS
 #endif
 

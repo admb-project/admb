@@ -75,8 +75,8 @@
 #include <adstring.hpp>
 class init_xml_doc;
 
-#if defined(UNIXKLUDGE)
-#include <unistd.h>
+#if !defined(_MSC_VER)
+  #include <unistd.h>
 #endif
 
 //#define _ADSTD_ std::

@@ -20,11 +20,6 @@
 #endif
 #include <stdlib.h>
 
-int aabbbcd(void)
-{
-  return 1;
-}
-
 #ifdef DOS386
 
 #if defined( __NDPX__) || defined(__SUN__)

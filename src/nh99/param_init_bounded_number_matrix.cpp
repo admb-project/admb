@@ -98,7 +98,7 @@ void param_init_bounded_number_matrix::deallocate()
 param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](
   const int i) const
 {
-  //#ifdef SAFE_ARRAYS
+#ifndef OPT_LIB
   if (i < index_min)
   {
     ADMB_ARRAY_BOUNDS_ERROR("Index too low",
@@ -111,13 +111,13 @@ param_init_bounded_number_vector& param_init_bounded_number_matrix::operator[](
     "param_init_bounded_number_matrix::operator[](const int i) const",
     index_min, index_max, i);
   }
-  //#endif
+#endif
   return v[i];
 }
 param_init_bounded_number_vector& param_init_bounded_number_matrix::operator()(
   const int i) const
 {
-  //#ifdef SAFE_ARRAYS
+#ifndef OPT_LIB
   if (i < index_min)
   {
     ADMB_ARRAY_BOUNDS_ERROR("Index too low",
@@ -130,7 +130,7 @@ param_init_bounded_number_vector& param_init_bounded_number_matrix::operator()(
     "param_init_bounded_number_matrix::operator[](const int i) const",
     index_min, index_max, i);
   }
-  //#endif
+#endif
   return v[i];
 }
 param_init_bounded_number& param_init_bounded_number_matrix::operator()(

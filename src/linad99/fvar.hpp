@@ -125,7 +125,6 @@ Macro definitions.
 
 #if (defined(__GNUDOS__))
 #   if (  (__GNUC__>3) || (__GNUC__==3 && __GNUC_MINOR__>=0)  )
-#      define __GNU_NEWER__
 #      define GCC3
 #   endif
 #endif
@@ -156,14 +155,12 @@ Macro definitions.
 #   include <io.h>
 #endif
 
-#if defined(linux) || defined (__GNUDOS__)
-#   define AD_LONG_INT long int
-#else
-#   define AD_LONG_INT long int
+#if !defined(AD_LONG_INT)
+  #define AD_LONG_INT long int
 #endif
 
-#if defined(linux) || defined (__GNUDOS__)
-#  include <unistd.h>
+#if !defined(_MSC_VER)
+  #include <unistd.h>
 #endif
 
 #if defined(linux) || defined(__ADSGI__) || defined(__linux__)
@@ -182,21 +179,14 @@ Macro definitions.
 #define AD_VERSION 7
 
 #if defined(__GNUDOS__)
-   extern "C"
-   {
-      void clrscr(void);
-   }
-   #define CGNU_DOUBLE double
-#else
-#   if defined(__BORLANDC__)
-#      if (__BORLANDC__  > 0x0520)
-#         define CGNU_DOUBLE double
-#      else
-#         define CGNU_DOUBLE  double
-#      endif
-#   else
-#      define CGNU_DOUBLE  double
-#   endif
+  extern "C"
+  {
+    void clrscr(void);
+  }
+#endif
+
+#if !defined(CGNU_DOUBLE)
+  #define CGNU_DOUBLE double
 #endif
 
 #ifdef __GNUDOS__
@@ -213,7 +203,7 @@ Macro definitions.
 #endif
 
 #ifndef NO_DERIVS
-#   define  NO_DERIVS
+  #define  NO_DERIVS
 #endif
 
 #ifndef OPT_LIB

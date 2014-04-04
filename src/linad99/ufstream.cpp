@@ -10,6 +10,9 @@
  */
 #include "fvar.hpp"
 
+#if (__GNUC__ >= 3)
+  #define __GNU_NEWER__
+#endif
 
 void uistream::sss(void){}
 void uostream::sss(void){}

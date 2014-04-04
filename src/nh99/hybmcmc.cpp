@@ -17,13 +17,6 @@ using std::istringstream;
 #endif
 #include <admodel.h>
 
-
-#if defined(__GNU__) || defined(UNIXKLUDGE) || defined(__SUN__) \
-  || defined(__linux__)
-  #define getch getchar
-#endif
-
-
 #if defined (__ZTC__) || defined(__TURBOC__) || defined(__WAT32__) \
   || defined (_MSC_VER)
 #  if !defined(__linux__)

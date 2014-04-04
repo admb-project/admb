@@ -42,11 +42,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#if defined(__BORLANDC__) || defined(__GNUDOS__)
-  #include <fstream.h>
-#endif
 #ifdef __ZTC__
   #include <fstream.hpp>
+#else
+  #include <fstream.h>
 #endif
 
 #ifndef PRN_T

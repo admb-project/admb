@@ -52,10 +52,6 @@ Definition of the cifstream class.
   #pragma interface
 #endif
 
-#if defined(linux) || defined(__GNUDOS__)
-#define USE_LONG_LONG
-#endif
-
 #include <stdio.h>
 
 #ifdef __WAT32__
@@ -75,16 +71,11 @@ Definition of the cifstream class.
   #include <dos.h>
   }
 #endif
-
-#if defined(__GNU__) || defined(__GNUDOS__)
-  #if !defined(linux) && !defined(__CYGWIN32__) && !defined(__MINGW32__)
-    #include <strstrea.h>
+#if defined(__GNUC__)
+  #if (__GNUC__  < 3)
+    #include <strstream.h>
   #else
-    #if (__GNUC__  >= 3)
-      #include <sstream>
-    #else
-      # include <strstream.h>
-    #endif
+    #include <sstream>
   #endif
 #endif
 
@@ -125,18 +116,7 @@ Definition of the cifstream class.
 
 class cifstream : public ifstream
 {
-#if defined(__ZTC__) || defined(__GNUDOS__) || defined (__WAT32__)
   streambuf* bp;
-#endif
-#if defined(__BORLANDC__)
-#  if (__BORLANDC__  >= 0x0520)
-  streambuf* bp;
-#  endif
-#endif
-
-#if ( defined(__MSVC32__) && __MSVC32__ >=7 )
-  streambuf* bp;
-#endif
   char COMMENT_CHAR;
   char comment_line[SIGNATURE_LENGTH+1];
   char signature_line[SIGNATURE_LENGTH+1];
@@ -209,9 +189,7 @@ char* signature();
 
   cifstream& operator>>(const dvariable& z);
  //  cifstream& operator>>(const prevariable& z);
-#if defined(USE_LONG_LONG)
   cifstream& operator >> (long long& i);
-#endif
   cifstream& operator>>(const long& i);
   cifstream& operator>>(const int& i);
   cifstream& operator>>(const double& x);

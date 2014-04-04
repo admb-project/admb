@@ -120,12 +120,10 @@ void gradcalc(int nvar, const dvector& _g)
   if (gradient_structure::GRAD_STACK1->ptr <=
         gradient_structure::GRAD_STACK1->ptr_first)
   {
-   /*
-#ifdef SAFE_ARRAYS
+#ifdef ADWARN_DEV
     cerr << "warning -- calling gradcalc when no calculations generating"
          << endl << "derivative information have occurred" << endl;
 #endif
-   */
     g.initialize();
     return;
   }    // current is one past the end so -- it

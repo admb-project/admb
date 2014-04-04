@@ -20,7 +20,7 @@
    it=NULL;
  }
 
-#if defined(SAFE_ALL)
+#if !defined(OPT_LIB)
 /**
  * Description not yet available.
  * \param
@@ -205,7 +205,7 @@ void df1b2_init_bounded_number_vector::set_initial_value(
     it=new double_index_type(_it);
  }
 */
-#if defined(SAFE_ALL)
+#if !defined(OPT_LIB)
 /**
  * Description not yet available.
  * \param

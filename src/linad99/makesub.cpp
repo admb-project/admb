@@ -12,14 +12,12 @@
 #include <adstring.hpp>
 //#include <fstream.h>
 #include <stdlib.h>
-#if (defined(__GNUDOS__) || defined(unix) || defined(__BORLANDC__))
-#  include <dirent.h>
+#if !defined(_MSC_VER)
+  #include <dirent.h>
+  #include <sys/stat.h>
 #endif
 #if defined(__BORLANDC__)
 #  include <dir.h>
-#endif
-#if (defined(__GNUDOS__) || defined(unix))
-#  include <sys/stat.h>
 #endif
 #if defined(_WIN32)
 #  include <windows.h>
@@ -49,11 +47,8 @@ int ad_chdir(const char * s)
 {
 #if defined(_WIN32)
   return SetCurrentDirectory(s);
-#elif (defined(__GNUDOS__) || defined(unix) || defined(__linux__) )
-    return chdir(s);
 #else
-  xxx
-  // not defined for this compiler
+  return chdir(s);
 #endif
 }
 
@@ -69,14 +64,11 @@ void ad_getcd(const adstring& _s)
   tmp[0]='\0';
   GetCurrentDirectory(100,tmp);
   s=tmp;
-#elif (defined(__GNUDOS__) || defined(unix) || defined(__linux__) )
+#else
   char tmp[101];
   tmp[0]='\0';
   getcwd(tmp,100);
   s=adstring(tmp);
-#else
-  xxx
-  // not defined for this compiler
 #endif
 }
 
@@ -88,11 +80,8 @@ int ad_mkdir(const char * s)
 {
 #if defined(_WIN32)
   return CreateDirectory(s,NULL);
-#elif (defined(__GNUDOS__) || defined(unix) || defined(__linux__) )
-    return mkdir(s,S_IREAD | S_IWRITE);
 #else
-  xxxx
-  cerr << "ad_mkdir not defined for this compiler" << endl;
+  return mkdir(s,S_IREAD | S_IWRITE);
 #endif
 }
 

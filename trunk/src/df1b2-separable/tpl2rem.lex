@@ -4531,13 +4531,7 @@ TOP_OF_MAIN_SECTION {
     if (makedll)
     {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
-        "  #if defined(__GNUDOS__) || defined(DOS386) || defined(__DPMI32__) "
-        " || \\\n"
-        "     defined(_MSC_VER)\n"
-        "      if (!arrmblsize) arrmblsize=150000;\n"
-        "  #else\n"
-        "      if (!arrmblsize) arrmblsize=25000;\n"
-        "  #endif\n");
+        "      if (!arrmblsize) arrmblsize=150000;\n");
 
       if (!random_effects_flag)
       {
@@ -4555,13 +4549,7 @@ TOP_OF_MAIN_SECTION {
     else
     {
       fprintf(ftopmain,"    gradient_structure::set_YES_SAVE_VARIABLES_VALUES();\n"
-        "  #if defined(__GNUDOS__) || defined(DOS386) || defined(__DPMI32__) "
-        " || \\\n"
-        "     defined(_MSC_VER)\n"
-        "      if (!arrmblsize) arrmblsize=150000;\n"
-        "  #else\n"
-        "      if (!arrmblsize) arrmblsize=25000;\n"
-        "  #endif\n");
+        "      if (!arrmblsize) arrmblsize=150000;\n");
       if (!random_effects_flag)
       {
        fprintf(ftopmain,"    model_parameters mp(arrmblsize,argc,argv);\n"

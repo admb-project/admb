@@ -246,15 +246,15 @@ cifstream& cifstream::operator>>(const long& i)
 }
 
 #if defined(__ADSGI__)
-istream& istream::operator >> (long long & x)
+istream& istream::operator>>(long long & x)
 {
   long int i;
   (*this) >> i;
   x=i;
   return *this;
 }
-#endif
-cifstream& cifstream::operator >> (long long & i)
+#else
+cifstream& cifstream::operator>>(long long & i)
 {
   char * s = new char[FILTER_BUF_SIZE];
   get_field(s);
@@ -271,6 +271,7 @@ cifstream& cifstream::operator >> (long long & i)
   delete []s;
   return *this;
 }
+#endif
 
 void js_strip_leading_zeros(char * s)
 {

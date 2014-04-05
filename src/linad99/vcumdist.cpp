@@ -355,7 +355,7 @@ prevariable& bounded_cumd_norm(const prevariable& _x,double beta)
  */
 dvariable inv_cumd_norm_logistic(const prevariable& x,double p)
 {
-#if defined(SAFE_ALL)
+#if !defined(OPT_LIB)
   if (0.0<p || 1.0>p)
   {
     cerr << "Error in dvariable inv_cumd_norm_logistic -- illegal p value = "

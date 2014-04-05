@@ -13,48 +13,45 @@
 #ifdef __TURBOC__
   #pragma hdrstop
 #endif
+
 #if !defined(OPT_LIB)
 /**
  * Description not yet available.
  * \param
  */
- lvector& lmatrix::operator() (int i)
- {
-   #ifdef SAFE_ARRAYS
-   if (i < rowmin())
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
-     "lvector& lmatrix::operator() (int i)", rowmin(), rowmax(), i);
-   }
-   if (i > rowsize() + rowmin() - 1)
-   {
-     ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
-     "lvector& lmatrix::operator() (int i)", rowmin(), rowmax(), i);
-   }
-   #endif
-   return m[i];
- }
+lvector& lmatrix::operator()(int i)
+{
+  if (i < rowmin())
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too low",
+    "lvector& lmatrix::operator() (int i)", rowmin(), rowmax(), i);
+  }
+  if (i > rowsize() + rowmin() - 1)
+  {
+    ADMB_ARRAY_BOUNDS_ERROR("matrix bound exceeded -- row index too high",
+    "lvector& lmatrix::operator() (int i)", rowmin(), rowmax(), i);
+  }
+  return m[i];
+}
 
 /**
  * Description not yet available.
  * \param
  */
 const lvector& lmatrix::operator()(int i) const
- {
-   #ifdef SAFE_ARRAYS
-     if (i<rowmin())
-     {
-       cerr << "matrix bound exceeded -- row index too low in "
-       "lmatrix::operator[]" << "value was" << i;
-       ad_exit(21);
-     }
-     if (i>rowsize()+rowmin()-1)
-     {
-       cerr << "matrix bound exceeded -- row index too high in "
-       "lmatrix::operator[]" << "value was" << i;
-       ad_exit(22);
-     }
-   #endif
-   return m[i];
- }
+{
+  if (i < rowmin())
+  {
+    cerr << "matrix bound exceeded -- row index too low in "
+    "lmatrix::operator[]" << "value was" << i;
+    ad_exit(21);
+  }
+  if (i > rowsize() + rowmin() - 1)
+  {
+    cerr << "matrix bound exceeded -- row index too high in "
+    "lmatrix::operator[]" << "value was" << i;
+    ad_exit(22);
+  }
+  return m[i];
+}
 #endif

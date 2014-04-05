@@ -159,7 +159,7 @@ void lvector::allocate(int ncl, int nch)
     ad_exit(21);
   }
   v -= indexmin();
-#ifdef SAFE_ARRAYS
+#ifndef OPT_LIB
   initialize();
 #endif
 }

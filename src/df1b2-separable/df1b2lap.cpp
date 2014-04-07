@@ -1500,12 +1500,10 @@ double calculate_laplace_approximation(const dvector& x,const dvector& u0,
       y(ii++)=lst(i);
   }
 
-//#if !defined(__MSVC32__)
   if (quadratic_prior::get_num_quadratic_prior()>0)
   {
     Hess=Hess_save;
   }
-//#endif
 
   dvar_vector vy=dvar_vector(y);
   initial_params::stddev_vscale(d,vy);

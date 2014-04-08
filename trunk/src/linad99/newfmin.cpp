@@ -70,7 +70,7 @@ extern int ctlc_flag;
 #if defined (_MSC_VER)
   void __cdecl clrscr();
 #else
-  extern "C" void clrscr(){}
+  extern "C" void clrscr();
 #endif
 
 #include <math.h>

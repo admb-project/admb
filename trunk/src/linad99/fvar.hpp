@@ -147,13 +147,6 @@ Macro definitions.
 
 #define AD_VERSION 7
 
-#if defined(__GNUDOS__)
-  extern "C"
-  {
-    void clrscr(void);
-  }
-#endif
-
 #if !defined(CGNU_DOUBLE)
   #define CGNU_DOUBLE double
 #endif
@@ -162,8 +155,6 @@ Macro definitions.
 #   define DOS386
 #   define __GNU__
 #endif
-
-//#define USE_CONST
 
 #define _CONST const
 

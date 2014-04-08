@@ -77,7 +77,7 @@ adstring str(double x, int minwidth, int decplaces)
 
 void str(const int a, adstring& s)
 {
- #if !defined(__GNUDOS__) && !defined(linux)
+#if defined(_MSC_VER)
   char  buffer[50];
   itoa(a, buffer, 10);
   s = adstring(buffer);
@@ -88,7 +88,7 @@ void str(const int a, adstring& s)
 
 adstring str(const int a)
 {
- #if !defined(__GNUDOS__) && !defined(linux)
+#if defined(_MSC_VER)
   char  buffer[50];
   itoa(a, buffer, 10);
   //adstring* tmp = new adstring(1,strlen(buffer));

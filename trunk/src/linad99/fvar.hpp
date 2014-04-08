@@ -105,12 +105,6 @@ Macro definitions.
 
 #define  MFCL2_CONSTRUCTORS
 
-#if (defined(__GNUDOS__))
-#   if (  (__GNUC__>3) || (__GNUC__==3 && __GNUC_MINOR__>=0)  )
-#      define GCC3
-#   endif
-#endif
-
 #if defined(_ADEXEP)
 #   define USE_EXECPTIONS
 #endif
@@ -367,8 +361,8 @@ class independent_variables;
 #endif
 
 #if ( (defined(__GNUC__) && (__GNUC__>=3))  \
-    || (defined(_MSC_VER) && (_MSC_VER >= 1300))  \
-    || (defined(__BORLANDC__) && (__BORLANDC__>=0x0570)  && defined(__linux__)) )
+  || (defined(_MSC_VER) && (_MSC_VER >= 1300))  \
+  || (defined(__BORLANDC__) && (__BORLANDC__>=0x0570) && defined(__linux__)))
 #   include <iostream>
 #   include <iomanip>
 #   include <sstream>

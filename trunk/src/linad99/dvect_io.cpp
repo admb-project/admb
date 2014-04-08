@@ -52,7 +52,7 @@ void dvector::write_on(const ostream& _s) const
 #ifdef __USE_IOSTREAM__
   int new_w = s.width();
   int new_p = s.precision();
-#if defined(GCC3)
+#if !defined(__cplusplus)
   ios::fmtflags new_form = s.flags();
 #else
   long new_form = s.flags();

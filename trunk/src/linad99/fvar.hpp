@@ -156,8 +156,6 @@ Macro definitions.
 #   define __GNU__
 #endif
 
-#define _CONST const
-
 #ifdef _SNGL_
    #define double float
 #endif

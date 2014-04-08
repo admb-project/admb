@@ -473,19 +473,13 @@ void function_minimizer::sd_routine(void)
       ofsd << endl;
     }
   }
-  //cout << "GAUSS_varcovariance_matrix"<< endl;
-  //cout << *GAUSS_varcovariance_matrix << endl;
-
-  char msg[40]={"Error trying to delete temporary file "};
-  #if !defined(__GNUDOS__) && !defined(__GNU__)
-    if (system("del admodel.tmp")==-1)
-    {
-      cerr << msg << "admodel.tmp" << endl;
-    }
-  #else
-    if (unlink("admodel.tmp")==-1)
-    {
-      cerr << msg << "admodel.tmp" << endl;
-    }
-  #endif
+#if defined(_MSC_VER)
+  if (system("del admodel.tmp") == -1)
+#else
+  if (unlink("admodel.tmp") == -1)
+#endif
+  {
+    char msg[40] = {"Error trying to delete temporary file "};
+    cerr << msg << "admodel.tmp" << endl;
+  }
 }

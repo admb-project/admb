@@ -30,13 +30,11 @@ extern int ctlc_flag;
   #include <iostream.hpp>
   #include <disp.h>
   #define endl "\n"
-  void clrscr(void);
 #endif
 #ifdef __SUN__
   #include <iostream.h>
   #include <signal.h>
   #define getch getchar
-  void clrscr(void);
   #ifdef __HP__
   extern "C" void onintr(int k);
   #endif
@@ -53,12 +51,11 @@ extern int ctlc_flag;
 #endif
 #ifdef __NDPX__
   #include <iostream.hxx>
-  extern "C" {
-    void clrscr();
-  };
 #endif
 #if defined (_MSC_VER)
-  void __cdecl clrscr(void);
+  void __cdecl clrscr();
+#else
+  extern "C" void clrscr();
 #endif
 #include <math.h>
 #include <stdlib.h>
@@ -231,7 +228,7 @@ label20:
       if( (itn%iprint) != 0)
          goto label21;
       if (llog) goto label7010;
-#if   !defined (_MSC_VER)  && !defined (__WAT32__) && !defined(__GNUDOS__)
+#if !defined (_MSC_VER)  && !defined (__linux__) && !defined(__GNUDOS__)
         if (!scroll_flag) clrscr();
 #endif
 label7003:

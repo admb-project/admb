@@ -27,9 +27,7 @@
 #endif
 #include <fvar.hpp>
 extern int ctlc_flag;
-#if defined(__TURBOC__) && defined(__linux__)
-  void clrscr(void);
-#endif
+
 #if defined(__TURBOC__) && !defined(__linux__)
   #pragma hdrstop
   #include <iostream.h>
@@ -48,11 +46,9 @@ extern int ctlc_flag;
   #include <iostream.hpp>
   #include <disp.h>
   #define endl "\n"
-  void clrscr(void);
 #endif
 #ifdef __SUN__
   #define getch getchar
-  void clrscr(void);
 #endif
 #if defined(__GNU__) || defined(UNIXKLUDGE)
   #define getch getchar
@@ -69,13 +65,14 @@ extern int ctlc_flag;
   }
 #ifdef __NDPX__
   #include <iostream.hxx>
-  extern "C" {
-    void clrscr();
-  };
 #endif
+
 #if defined (_MSC_VER)
-  void __cdecl clrscr(void);
+  void __cdecl clrscr();
+#else
+  extern "C" void clrscr(){}
 #endif
+
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>

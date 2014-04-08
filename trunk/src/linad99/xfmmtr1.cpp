@@ -37,15 +37,12 @@ extern int ctlc_flag;
   #include <disp.h>
   #define endl "\n"
 //  #define if (ad_printf) (*ad_printf) disp_if (ad_printf) (*ad_printf)
-  void clrscr(void);
 #endif
-
 
 #ifdef __SUN__
   #include <iostream.h>
   #include <signal.h>
   #define getch getchar
-  void clrscr(void); //{ if (ad_printf) (*ad_printf)("\n"); }
   #ifdef __HP__
   extern "C" void onintr(int k);
   #endif
@@ -71,15 +68,6 @@ extern int ctlc_flag;
 
 #ifdef __NDPX__
   #include <iostream.hxx>
-  extern "C" {
-    void clrscr();
-  };
-#endif
-
-
-#if defined (_MSC_VER)
-  //void __cdecl clrscr(void){}
-  void __cdecl clrscr(void);
 #endif
 
 #include <math.h>

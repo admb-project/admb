@@ -8,12 +8,8 @@
  * \file
  * Description not yet available.
  */
-#if  defined(__linux__)
-  void clrscr(void){;}
-#endif
-
-#if defined(__GNUDOS__) && !defined(__linux__)
-  extern "C" void clrscr(void){;}
-#elif defined(_MSC_VER)
-  void __cdecl clrscr(void){;}
+#if defined(_MSC_VER)
+  void __cdecl clrscr(){}
+#else
+  extern "C" void clrscr(){}
 #endif

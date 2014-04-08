@@ -70,12 +70,17 @@ extern int ctlc_flag;
 #include <iostream.h>
 #include <signal.h>
 #define getch getchar
-  void clrscr(void); // { if (ad_printf) (*ad_printf)("\n"); }
   #if defined(__HP__) || defined(linux)
   extern "C" void onintr(int k);
   #else
   extern "C" int onintr(int* k);
   #endif
+#endif
+
+#if defined(_MSC_VER)
+  void __cdecl clrscr(){}
+#else
+  extern "C" void clrscr(){}
 #endif
 
 #ifdef __NDPX__

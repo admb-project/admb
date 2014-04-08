@@ -30,10 +30,6 @@ const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
 const int MAX_NUMBER_ROWS = 6550;
 
-#if !defined(HUGE)
-#define HUGE 1.e+100
-#endif
-
 int get_non_blank_line(const ifstream& infile, char * & line,
    const unsigned int& line_length);
 
@@ -196,11 +192,7 @@ int get_non_blank_line(const ifstream& infile, char * & line,
          ad_exit(1);
        }
 
-     #ifdef __GNU__
-       if (elem(i)== HUGE ||elem(i)== -HUGE)
-     #else
-       if (elem(i)== HUGE_VAL ||elem(i)== -HUGE_VAL)
-     #endif
+       if (elem(i) == HUGE_VAL || elem(i) == -HUGE_VAL)
        {
          cerr << "Overflow Error decoding field " << filename
                 << " in dvector::dvector(char * filename) " << "\n";

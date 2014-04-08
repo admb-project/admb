@@ -73,10 +73,6 @@ int get_non_blank_line(const ifstream& infile,char * & line,
    void ** m;
  };
 
-#if !defined(HUGE)
-#define HUGE 1.e+100
-#endif
-
 const int MAXROWS = 5050;
 
 /**
@@ -321,11 +317,7 @@ dmatrix::dmatrix(char * s)
          ad_exit(1);
        }
 
-       #ifdef __GNU__
-          if (elem(i,j)== HUGE ||elem(i,j)== -HUGE)
-       #else
-         if (elem(i,j)== HUGE_VAL ||elem(i,j)== -HUGE_VAL)
-       #endif
+       if (elem(i,j) == HUGE_VAL ||elem(i,j) == -HUGE_VAL)
        {
          cerr << "Overflow Error decoding field " << filename
                 << " in dmatrix::dmatrix(char * filename) " << "\n";

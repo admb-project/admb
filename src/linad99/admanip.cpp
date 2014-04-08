@@ -55,8 +55,6 @@ ostream& operator<<(const ostream& _s, preshowpoint p)
   return s;
 }
 
-#if !(__MSVC32__>=7 || __BORLANDC__  >= 0x0560)
-
 /**
  * Description not yet available.
  * \param
@@ -98,4 +96,3 @@ ostream& operator<<(const ostream& _s, prescientific p)
   s.setf(ios::scientific,ios::floatfield);
   return s;
 }
-#endif

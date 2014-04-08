@@ -60,24 +60,6 @@ Macro definitions.
   #pragma interface
 #endif
 
-#if defined(_MSC_VER)
-#   if defined(__MSVC32__)
-#      undef __MSVC32__
-#   endif
-#   if (_MSC_VER>=1200  && _MSC_VER<1300)
-#      define __MSVC32__ 6
-#   endif
-#   if (_MSC_VER>=1300  && _MSC_VER<1400)
-#      define __MSVC32__ 7
-#   endif
-#   if (_MSC_VER>=1400)
-#      define __MSVC32__ 8
-#   endif
-#   if (__MSVC32__>=7)
-#      define __MSC_NEWER__
-#   endif
-#endif
-
 #if defined(THREAD_EXPERIMENT)
 #   define THREAD_SAFE
 #endif
@@ -144,7 +126,7 @@ Macro definitions.
 
 #define USE_HIGHER_ARRAYS
 
-#if defined(__BORLANDC__) || defined (__MSVC32__) || defined(__WAT32__)
+#if defined(__BORLANDC__) || defined (_MSC_VER) || defined(__WAT32__)
 #   include <io.h>
 #endif
 
@@ -304,8 +286,8 @@ class independent_variables;
 #   else
 #      include <fstream.h>
 #   endif
-#elif defined(__MSVC32__)
-#   if (__MSVC32__  >= 7)
+#elif defined(_MSC_VER)
+#   if (_MSC_VER >= 1300)
 #      include <fstream>
 #   else
 #      include <fstream.h>
@@ -333,8 +315,8 @@ class independent_variables;
 #   endif
 #endif
 
-#if defined(__MSVC32__ )
-#   if (__MSVC32__  >= 7)
+#if defined(_MSC_VER)
+#   if (_MSC_VER >= 1300)
 #     include <iostream>
 #   else
 #      include <iostream.h>
@@ -384,9 +366,9 @@ class independent_variables;
 #   endif
 #endif
 
-#if ( (defined(__GNUC__) && __GNUC__>=3)   \
-    || (defined(__MSVC32__) && __MSVC32__>=7)  \
-    || (defined(__BORLANDC__) && __BORLANDC__>=0x0570  && defined(__linux__)) )
+#if ( (defined(__GNUC__) && (__GNUC__>=3))  \
+    || (defined(_MSC_VER) && (_MSC_VER >= 1300))  \
+    || (defined(__BORLANDC__) && (__BORLANDC__>=0x0570)  && defined(__linux__)) )
 #   include <iostream>
 #   include <iomanip>
 #   include <sstream>
@@ -500,7 +482,7 @@ ostream & setscientific(const ostream & s);
 class preshowpoint {};
 preshowpoint setshowpoint(void);
 ostream & operator <<(const ostream &, preshowpoint);
-#if (__MSVC32__>=7 || __BORLANDC__  >= 0x0560)
+#if (__BORLANDC__  >= 0x0560)
   #define setfixed() std::fixed
 #else
 ostream & setfixed(const ostream & s);
@@ -509,7 +491,7 @@ prefixed setfixed(void);
 ostream & operator<<(const ostream &, prefixed);
 #endif
 
-#if (__MSVC32__>=7 || __BORLANDC__  >= 0x0560)
+#if (__BORLANDC__  >= 0x0560)
   #define setscientific() std::scientific
 #else
 class prescientific {};
@@ -4233,14 +4215,14 @@ class uostream:public ofstream
    uostream(const char *, int = ios::out | ios::binary, int protection = 666);
    void open(const char *, int = ios::out | ios::binary, int protection = 666);
 #endif
-#if defined (__MSVC32__) || defined (__WAT32__)
-#  if (__MSVC32__ <7)
-   uostream(const char*, int = ios::out | ios::binary, int = filebuf::openprot);
+#if defined (_MSC_VER) || defined (__WAT32__)
+  #if (_MSC_VER < 1300)
+  uostream(const char*, int = ios::out | ios::binary, int = filebuf::openprot);
   void open(const char*, int = ios::out | ios::binary, int = filebuf::openprot);
-#  else
-   uostream(const char *, int = ios::out | ios::binary, int prot = 0664);
-   void open(const char *, int = ios::out | ios::binary, int prot = 0664);
-#  endif
+  #else
+  uostream(const char *, int = ios::out | ios::binary, int prot = 0664);
+  void open(const char *, int = ios::out | ios::binary, int prot = 0664);
+  #endif
 #endif
 
 #ifdef __ZTC__
@@ -4324,8 +4306,8 @@ class uostream:public ofstream
  // #  endif
  // #endif
  //
- // #ifdef __MSVC32__
- // #  if (__MSVC32__>=8)
+ // #ifdef _MSC_VER
+ // #  if (_MSC_VER >= 1400)
  //   ofstream::open(name, m);
  // #  else
  //   //fstreambase::open(name, m, prot);
@@ -4358,14 +4340,14 @@ class uistream:public ifstream
    uistream(const char *, int = ios::in | ios::binary, int protection = 666);
    void open(const char *, int = ios::in | ios::binary, int protection = 666);
 #endif
-#if defined (__MSVC32__) || defined (__WAT32__)
-#if (__MSVC32__ <7)
-   uistream(const char *, int = ios::in | ios::binary, int = filebuf::openprot);
+#if defined (_MSC_VER) || defined (__WAT32__)
+  #if (_MSC_VER < 1300)
+  uistream(const char *, int = ios::in | ios::binary, int = filebuf::openprot);
   void open(const char *, int = ios::in | ios::binary, int = filebuf::openprot);
-#else
-   uistream(const char *, int = ios::in | ios::binary, int prot = 0664);
-   void open(const char *, int = ios::in | ios::binary, int prot = 0664);
-#endif
+  #else
+  uistream(const char *, int = ios::in | ios::binary, int prot = 0664);
+  void open(const char *, int = ios::in | ios::binary, int prot = 0664);
+  #endif
 #endif
 #ifdef __ZTC__
    uistream(const char *, int = ios::in, int = filebuf::openprot);
@@ -4432,7 +4414,7 @@ class uistream:public ifstream
    uistream & operator>>(const float &);
    uistream & operator>>(const double &);
    uistream & operator>>(const char &);
-#if defined(__TURBOC__) || defined (__MSVC32__)
+#if defined(__TURBOC__) || defined (_MSC_VER)
    uistream & operator>>(const long double &);
 #endif
    virtual void sss(void);

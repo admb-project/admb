@@ -18,8 +18,8 @@
 
 void dv_assign(void);
 
-#ifdef __MSVC32__
-#include <memory.h>
+#ifdef _MSC_VER
+  #include <memory.h>
 #endif
 
 /**

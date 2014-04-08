@@ -403,11 +403,10 @@ cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
    }
  */
 
-//#if DOS386==1
-#if defined(DOS386) || defined (__MSVC32__) || defined (__WAT32__)
-   if ( (temp_ptr = (void *) malloc(ARRAY_MEMBLOCK_SIZE )) == 0)
+#if defined(DOS386) || defined (_MSC_VER) || defined (__WAT32__)
+   if ((temp_ptr = (void *) malloc(ARRAY_MEMBLOCK_SIZE )) == 0)
 #else
-   if ( (temp_ptr = farmalloc(ARRAY_MEMBLOCK_SIZE) ) == 0)
+   if ((temp_ptr = farmalloc(ARRAY_MEMBLOCK_SIZE) ) == 0)
 #endif
    {
      cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCKa\n";

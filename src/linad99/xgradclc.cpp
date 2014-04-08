@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __MSVC32__
+#ifdef _MSC_VER
   #define lseek _lseek
   #define  read _read
   #define write _write
@@ -41,9 +41,7 @@
   #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>
-  #ifndef __MSVC32__
-    #include <unistd.h>
-  #endif
+  #include <unistd.h>
 #endif
 
 #if defined(__GNU__) || defined(UNIXKLUDGE)

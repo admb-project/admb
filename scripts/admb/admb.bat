@@ -158,9 +158,9 @@ if "!CXX!"=="cl" (
     )
   )
   if not exist !ADMB_HOME!\contrib\lib\contrib.lib (
-    set CXXFLAGS=!CXXFLAGS! /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
+    set CXXFLAGS=!CXXFLAGS! /DUSE_LAPLACE /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\include\contrib"
   ) else (
-    set CXXFLAGS=!CXXFLAGS! /DUSE_LAPLACE /DWIN32 /D__MSVC32__=8 /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
+    set CXXFLAGS=!CXXFLAGS! /DUSE_LAPLACE /I. /I"!ADMB_HOME!\include" /I"!ADMB_HOME!\contrib\include"
   )
 ) else (
   if not defined CXX (

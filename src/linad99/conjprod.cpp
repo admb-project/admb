@@ -32,8 +32,8 @@ extern int ctlc_flag;
 
 //#define CUBIC_INTERPOLATION
 
-#if defined (__WAT32__) || defined (__MSVC32__)
-#include <conio.h>
+#if defined (__WAT32__) || defined (_MSC_VER)
+  #include <conio.h>
 #endif
 
 #ifdef __ZTC__
@@ -221,7 +221,7 @@ void fmmc::fmin(const double& fret, const dvector& p, const dvector& gg)
   if (this->frp_flag==2) goto label2000;
   if (this->frp_flag==3) goto label3000;
 
-#if defined(__SUN__) && !defined(__GNUDOS__) && !defined(__MSVC32__)
+#if defined(__SUN__) && !defined(__GNUDOS__) && !defined(_MSC_VER)
   #ifdef __HP__
   signal(SIGINT, &onintr);
   #else
@@ -254,9 +254,9 @@ label800:
   {
     if (!(iter%iprint)&& (iprint > 0) )
     {
-#     if !defined (__WAT32__) && !defined (__MSVC32__)
+#if !defined (__WAT32__) && !defined (_MSC_VER)
         if (!scroll_flag) clrscr();
-#     endif
+#endif
       if (ad_printf) (*ad_printf)("Initial statistics: ");
       if (ad_printf)
  (*ad_printf)("%d variables; iteration %ld; function evaluation %ld\n",
@@ -444,9 +444,9 @@ label1000:
       if (!(iter%iprint)&&(iprint>0))
       {
         {
-#     if !defined (__WAT32__) && !defined (__MSVC32__)
+#if !defined (__WAT32__) && !defined (_MSC_VER)
             if (!scroll_flag) clrscr();
-#         endif
+#endif
           if (ad_printf) (*ad_printf)("Intermediate statistics: ");
         }
         if (ad_printf)

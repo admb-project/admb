@@ -14,7 +14,7 @@
   #include <fcntl.h>
 #endif
 
-#ifdef __MSVC32__
+#ifdef _MSC_VER
   #define lseek _lseek
   #define  read _read
   #define write _write
@@ -67,7 +67,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#ifndef __MSVC32__
+#ifndef _MSC_VER
 #include <unistd.h>
 #endif
 #endif

@@ -146,7 +146,7 @@ public:
 #    else
        cifstream(const char*, int = ios::nocreate, char cc = '#');
 #    endif
-#  elif ( defined(__MSVC32__) && __MSVC32__ >=7)
+#  elif defined(_MSC_VER)
        cifstream(const char*, int = std::ios_base::in , char cc = '#');
 #  else
      cifstream(const char*, int = ios::nocreate, char cc = '#');
@@ -175,7 +175,7 @@ public:
 #    else
        void open(const char*, int = ios::nocreate);
 #    endif
-#  elif ( defined(__MSVC32__) && __MSVC32__ >=7)
+#  elif defined(_MSC_VER)
        void open(const char*, int);
 #  else
      void open(const char*, int = ios::nocreate);

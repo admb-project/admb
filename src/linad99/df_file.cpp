@@ -70,7 +70,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#ifndef __MSVC32__
+#ifndef _MSC_VER
 #include <unistd.h>
 #endif
 #endif
@@ -182,7 +182,7 @@ DF_FILE::DF_FILE(unsigned long long nbytes)
   {
     sprintf(&cmpdif_file_name[0],"cmpdiff.%s",ad_random_part);
   }
-#if defined (__MSVC32__) || defined (__WAT32__)
+#if defined (_MSC_VER) || defined (__WAT32__)
   file_ptr=open(cmpdif_file_name, O_RDWR | O_CREAT | O_TRUNC |
                      O_BINARY, S_IREAD | S_IWRITE);
 #elif defined (__TURBOC__)

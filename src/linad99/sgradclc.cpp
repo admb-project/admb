@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef __MSVC32__
+#ifdef _MSC_VER
   #define lseek _lseek
   #define  read _read
   #define write _write
@@ -41,9 +41,7 @@
   #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>
-  #ifndef __MSVC32__
-    #include <unistd.h>
-  #endif
+  #include <unistd.h>
 #endif
 
 #if defined(__GNU__) || defined(UNIXKLUDGE)
@@ -252,7 +250,7 @@ void gradient_structure::save_arrays()
   #if defined(DOS386)
    if ( (temp_ptr = (void *) malloc(bytes_needed )) == 0)
   #else
-#if !defined(__MSVC32__) && !defined (__WAT32__)
+#if !defined(_MSC_VER) && !defined (__WAT32__)
    if ( (temp_ptr = farmalloc(bytes_needed) ) == 0)
 #else
    if ( (temp_ptr = malloc(bytes_needed) ) == 0)

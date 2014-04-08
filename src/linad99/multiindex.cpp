@@ -66,11 +66,11 @@
     int sz=maxd-mind+1;
     for (int i=imin+1;i<=mx;i++)
     {
-#  if (__MSVC32__>=8) || defined(__SUNPRO_CC)
+#if (defined(_MSC_VER) && (_MSC_VER >= 1400)) || defined(__SUNPRO_CC)
       offset+=int(pow(double(sz),i-imin))*(index(i)-mind);
-#  else
+#else
       offset+=pow(sz,i-imin)*(index(i)-mind);
-#  endif
+#endif
     }
     return offset;
   }

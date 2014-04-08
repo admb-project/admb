@@ -28,11 +28,7 @@
   #include <iomanip.h>
   #include <fstream.h>
   #include <limits.h>
-#if !defined(__MSVC32__)
   #include <strstream.h>
-#else
-  #include <strstrea.h>
-#endif
   #define __USE_IOSTREAM__
 #endif
 

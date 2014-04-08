@@ -11,7 +11,7 @@
 #endif
 
 //#if defined(__NDPX__) || defined (__GNUDOS__) || defined(DOS386) \
-// || defined(__MSVC32__)
+// || defined(_MSC_VER)
   #define NEAR
 //#else
 //  #define NEAR near

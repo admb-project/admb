@@ -174,19 +174,11 @@ void banded_symmetric_dmatrix::save_dmatrix_derivatives(
   }
   for (int i=min;i<=max;i++)
   {
-#if defined(__MSVC32__)
-     const dvector& xx=(*this)(i);
-#else
     const dvector& xx=(*this)(i);
-#endif
     dvector& x=(dvector&) xx;
     dvar_matrix_position& pos1=(dvar_matrix_position&)pos;
-#if defined(__MSVC32__)
     //((const dvector&)x).save_dvector_derivatives(pos1(i));
-    x.save_dvector_derivatives((pos1(i)));
-#else
     x.save_dvector_derivatives(pos1(i));
-#endif
   }
 }
 
@@ -208,7 +200,7 @@ void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(
   }
   for (int i=min;i<=max;i++)
   {
-#if defined(__MSVC32__)
+#if defined(_MSC_VER)
     dvector& x=(dvector&)(*this)(i);
 #else
     const dvector& cx=(const dvector&)(*this)(i);
@@ -216,11 +208,7 @@ void banded_lower_triangular_dmatrix::save_dmatrix_derivatives(
     //dvector& x=(dvector&)(*this)(i);
 #endif
     dvar_matrix_position& pos1= (dvar_matrix_position&) pos;
-#if defined(__MSVC32__)
     x.save_dvector_derivatives(pos1(i));
-#else
-    x.save_dvector_derivatives(pos1(i));
-#endif
   }
 }
 

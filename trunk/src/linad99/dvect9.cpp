@@ -35,11 +35,7 @@
 
 #ifdef __SUN__
   #include <iostream.h>
-#if !defined(__MSVC32__)
   #include <strstream.h>
-#else
-  #include <strstrea.h>
-#endif
   #define __USE_IOSTREAM__
 #endif
 

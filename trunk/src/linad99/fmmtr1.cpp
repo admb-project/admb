@@ -23,7 +23,7 @@ extern int ctlc_flag;
   #include <iostream.h>
   #include <conio.h>
 #endif
-#if defined (__WAT32__) || defined(__MSVC32__)
+#if defined (__WAT32__) || defined(_MSC_VER)
   #include <conio.h>
 #endif
 #ifdef __ZTC__
@@ -57,7 +57,7 @@ extern int ctlc_flag;
     void clrscr();
   };
 #endif
-#if defined (__MSVC32__)
+#if defined (_MSC_VER)
   void __cdecl clrscr(void);
 #endif
 #include <math.h>
@@ -83,7 +83,7 @@ void fmmt1::fmin(const double& _f, const dvector & _x, const dvector& _g)
     #endif
   if (use_control_c)
   {
-#if !defined (__MSVC32__)
+#if !defined (_MSC_VER)
     #if defined( __SUN__) && !(defined __GNU__)
       #if defined( __HP__)
         if (ireturn <= 0 )
@@ -231,7 +231,7 @@ label20:
       if( (itn%iprint) != 0)
          goto label21;
       if (llog) goto label7010;
-#if   !defined (__MSVC32__)  && !defined (__WAT32__) && !defined(__GNUDOS__)
+#if   !defined (_MSC_VER)  && !defined (__WAT32__) && !defined(__GNUDOS__)
         if (!scroll_flag) clrscr();
 #endif
 label7003:
@@ -502,7 +502,7 @@ label92:
           ireturn=-1;
         }
       }
-#     if defined (__MSVC32__)  && !defined (__WAT32__)
+#     if defined (_MSC_VER)  && !defined (__WAT32__)
         if (scroll_flag == 0) clrscr();
 #     endif
       if (maxfn_flag == 1)
@@ -546,7 +546,7 @@ label777:
 label7000:
       if (iprint>0)
       {
-#     if defined (__MSVC32__)  && !defined (__WAT32__)
+#     if defined (_MSC_VER)  && !defined (__WAT32__)
         if (!scroll_flag) clrscr();
 #endif
         if (ad_printf) (*ad_printf)("Initial statistics: ");
@@ -555,7 +555,7 @@ label7000:
 label7010:
    if (iprint>0)
    {
-#     if defined (__MSVC32__)  && !defined (__WAT32__)
+#     if defined (_MSC_VER)  && !defined (__WAT32__)
      if (!scroll_flag)  clrscr();
 #endif
      if (ad_printf) (*ad_printf)("Intermediate statistics: ");

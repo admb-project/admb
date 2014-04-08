@@ -31,10 +31,8 @@
   #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>
-  #ifndef __MSVC32__
-    #include <unistd.h>
-  #endif
-  #ifdef __MSVC32__
+  #include <unistd.h>
+  #ifdef _MSC_VER
     #define lseek _lseek
     #define  read _read
     #define write _write

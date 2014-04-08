@@ -67,7 +67,7 @@ adstring cifstream::get_file_name(void)
 }
 
 cifstream::cifstream(const char* fn, int open_m, char cc)
-#if defined (__MSVC32__) || defined (__WAT32__)
+#if defined (_MSC_VER) || defined (__WAT32__)
  : ifstream(fn, ios::in | open_m) , file_name(fn)
 #elif defined(__BCPLUSPLUS__)
  : ifstream(fn, ios::in | open_m) , file_name(fn)

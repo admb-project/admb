@@ -28,7 +28,7 @@ extern int ctlc_flag;
   #include <conio.h>
 #endif
 
-#if defined (__WAT32__) || defined(__MSVC32__)
+#if defined (__WAT32__) || defined(_MSC_VER)
   #include <conio.h>
 #endif
 
@@ -77,7 +77,7 @@ extern int ctlc_flag;
 #endif
 
 
-#if defined (__MSVC32__)
+#if defined (_MSC_VER)
   //void __cdecl clrscr(void){}
   void __cdecl clrscr(void);
 #endif

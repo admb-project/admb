@@ -9,7 +9,7 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
-#ifdef __MSVC32__
+#ifdef _MSC_VER
 #include <memory.h>
 #endif
 

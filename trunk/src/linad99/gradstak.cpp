@@ -60,16 +60,14 @@
   #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>
-  #ifdef __MSC__
+  #ifdef _MSC_VER
     #define lseek _lseek
     #define  read _read
     #define write _write
     #define open _open
     #define close _close
   #endif
-  #ifndef __MSVC32__
-    #include <unistd.h>
-  #endif
+  #include <unistd.h>
 #endif
 
 #if  defined(__GNU__) || defined(__linux__)

@@ -126,17 +126,7 @@ void funnel_gradcalc(void)
     * (double*) (gradient_structure::GRAD_LIST->dlink_addresses[i]) = 0;
   }
 
-   #if defined (__BORLANDC__) && !defined(DOS386)
-     double_and_int huge * tmp;
-   #else
-     double_and_int * tmp;
-   #endif
-
-   #if defined (__BORLANDC__) && !defined(DOS386)
-      tmp = (double_and_int huge *) gradient_structure::ARRAY_MEMBLOCK_BASE;
-   #else
-      tmp = (double_and_int *) gradient_structure::ARRAY_MEMBLOCK_BASE;
-   #endif
+  double_and_int* tmp = (double_and_int*)gradient_structure::ARRAY_MEMBLOCK_BASE;
 
      unsigned long int max_last_offset =
        gradient_structure::ARR_LIST1->get_max_last_offset();

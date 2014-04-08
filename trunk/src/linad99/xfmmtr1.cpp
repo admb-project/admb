@@ -15,10 +15,6 @@
   #include <conio.h>
 #endif
 
-#ifdef __GNUDOS__
-  #define ADGETCH getch
-#endif
-
 #include <admodel.h>
 extern int ctlc_flag;
 

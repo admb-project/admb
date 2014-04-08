@@ -48,8 +48,6 @@
 
 #include <stdio.h>
 
-#define _CONST const
-
 class adstring_shape
 {
   unsigned int sz;

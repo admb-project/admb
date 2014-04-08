@@ -53,9 +53,9 @@ void dvector::write_on(const ostream& _s) const
   int new_w = s.width();
   int new_p = s.precision();
 #if !defined(__cplusplus)
-  ios::fmtflags new_form = s.flags();
-#else
   long new_form = s.flags();
+#else
+  ios::fmtflags new_form = s.flags();
 #endif
   char new_fill = s.fill();
 #endif

@@ -52,10 +52,10 @@ void dvar_matrix::write_on(const ostream& _s) const
 #ifdef __USE_IOSTREAM__
   int new_w = s.width();
   int new_p = s.precision();
-#if defined(GCC3)
-  ios::fmtflags new_form = s.flags();
-#else
+#if !defined(__cplusplus)
   long new_form = s.flags();
+#else
+  ios::fmtflags new_form = s.flags();
 #endif
   char new_fill = s.fill();
 #endif

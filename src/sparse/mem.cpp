@@ -10,12 +10,8 @@
   #define EXIT_FAILURE 1
 #endif
 
-//#if defined(__NDPX__) || defined (__GNUDOS__) || defined(DOS386) \
-// || defined(_MSC_VER)
-  #define NEAR
-//#else
-//  #define NEAR near
-//#endif
+//#define NEAR near
+#define NEAR
 
 #if defined (__WAT32__)
   #include <io.h>

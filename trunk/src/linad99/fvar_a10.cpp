@@ -45,9 +45,6 @@ const unsigned int MAX_LINE_LENGTH = 10000;
 const int MAX_FIELD_LENGTH = 500;
 const int MAX_NUMBER_COLUMNS = 6550;
 const int MAX_NUMBER_ROWS = 6550;
-#if !defined(HUGE)
-#define HUGE 1.e+100
-#endif
 
 /**
  * Description not yet available.
@@ -152,14 +149,7 @@ void dvar_vector::fill(const char * s)
            << err_ptr[3] << "\n";
        ad_exit(1);
      }
-#if defined(__SUN__) && !defined(__GNUDOS__)
-     dvariable  cmp = elem(i);
-     if (cmp == HUGE_VAL || cmp== -HUGE_VAL)
-#elif defined( __GNU__) || defined( __GNUDOS__)
-     if (elem(i)== HUGE ||elem(i)== -HUGE)
-#else
-     if (elem(i)== HUGE_VAL ||elem(i)== -HUGE_VAL)
-#endif
+     if (elem(i) == HUGE_VAL || elem(i) == -HUGE_VAL)
      {
        cerr << "Overflow Error decoding field "
            " in dmatrix::dmatrix(char * ) " << "\n";

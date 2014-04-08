@@ -504,12 +504,7 @@ class kkludge_object{};
 class humungous_pointer
 {
  public:
-//__WIN32__ is a Borland macro
-#if defined(__BORLANDC__ ) && !defined(DOS386) && !defined(__WIN32__)
-   char huge *ptr;
-#else
    char *ptr;
-#endif
    int adjustment;
    void free(void);
    ~humungous_pointer()

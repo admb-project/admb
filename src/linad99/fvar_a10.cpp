@@ -152,8 +152,8 @@ void dvar_vector::fill(const char * s)
            << err_ptr[3] << "\n";
        ad_exit(1);
      }
-#if defined( __SUN__) && !defined(__GNUDOS__)
-  dvariable  cmp = elem(i);
+#if defined(__SUN__) && !defined(__GNUDOS__)
+     dvariable  cmp = elem(i);
      if (cmp == HUGE_VAL || cmp== -HUGE_VAL)
 #elif defined( __GNU__) || defined( __GNUDOS__)
      if (elem(i)== HUGE ||elem(i)== -HUGE)

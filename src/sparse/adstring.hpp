@@ -58,11 +58,7 @@
 #include <stdio.h>
 
 #define USE_CONST
-#ifdef USE_CONST
-  #define _CONST const
-#else
-  #define _CONST
-#endif
+
 class adstring_shape
 {
   unsigned int sz;

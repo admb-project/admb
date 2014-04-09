@@ -54,11 +54,6 @@
 
 #define BIG_INIT_PARAMS
 
-#if !defined(linux)
-#  define BORCAST (prevariable&)
-#else
-#  define BORCAST
-#endif
 #if defined(USE_LAPLACE)
   class laplace_approximation_calculator;
   void cleanup_laplace_stuff(laplace_approximation_calculator *);
@@ -2537,7 +2532,7 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
 #if defined(OPT_LIB)
    param_init_vector& operator [] (int i) { return v[i];}
    param_init_vector& operator () (int i) { return v[i];}
-   prevariable operator () (int i,int j) { return BORCAST(v[i][j]);}
+   prevariable operator () (int i,int j) { return v[i][j];}
 #else
    param_init_vector& operator [] (int i);
    param_init_vector& operator () (int i);
@@ -2578,7 +2573,7 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
 #if defined(OPT_LIB)
    param_init_bounded_vector& operator [] (int i) { return v[i];}
    param_init_bounded_vector& operator () (int i) { return v[i];}
-   prevariable operator () (int i,int j) { return BORCAST (v[i][j]);}
+   prevariable operator () (int i,int j) { return v[i][j];}
 #else
    param_init_bounded_vector& operator [] (int i);
    param_init_bounded_vector& operator () (int i);
@@ -2628,7 +2623,7 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
    param_init_matrix& operator [] (int i) { return v[i];}
    param_init_matrix& operator () (int i) { return v[i];}
    dvar_vector& operator () (int i,int j) { return v[i][j];}
-   prevariable operator () (int i,int j,int k) { return BORCAST (v[i](j,k));}
+   prevariable operator () (int i,int j,int k) { return v[i](j,k);}
 #else
    param_init_matrix& operator [] (int i);
    param_init_matrix& operator () (int i);
@@ -2683,7 +2678,7 @@ int ad_get_commandline_option(const char *option_label, const int &option_value,
    param_init_bounded_matrix& operator [] (int i) { return v[i];}
    param_init_bounded_matrix& operator () (int i) { return v[i];}
    dvar_vector& operator () (int i,int j) { return v[i][j];}
-   prevariable operator () (int i,int j,int k) { return BORCAST (v[i](j,k));}
+   prevariable operator () (int i,int j,int k) { return v[i](j,k);}
 #else
    param_init_bounded_matrix& operator [] (int i);
    param_init_bounded_matrix& operator () (int i);

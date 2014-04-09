@@ -228,7 +228,7 @@ label20:
       if( (itn%iprint) != 0)
          goto label21;
       if (llog) goto label7010;
-#if !defined (_MSC_VER)  && !defined (__linux__) && !defined(__GNUDOS__)
+#if !defined (_MSC_VER)  && !defined (__GNUC__)
         if (!scroll_flag) clrscr();
 #endif
 label7003:

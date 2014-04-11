@@ -4220,9 +4220,6 @@ class uostream:public ofstream
   #if defined(__ADSGI__)
   uostream(const char *name, int mode = ios::out, int prot = 0664);
   void open(const char *name, int mode = ios::out, int prot = 0664);
-  #elif (__GNUC__  < 3)
-  uostream(const char *name, int mode = ios::out | ios::bin, int prot = 0664);
-  void open(const char *name, int mode = ios::out | ios::bin, int prot = 0664);
   #else
   uostream(const char *name, int mode = ios::out | ios::binary,
     int prot = 0664);
@@ -4343,9 +4340,6 @@ class uistream:public ifstream
   #if defined(__ADSGI__)
   uistream(const char *name, int mode = ios::in, int prot = 0664);
   void open(const char *name, int mode = ios::in, int prot = 0664);
-  #elif (__GNUC__  < 3)
-  uistream(const char *name, int mode = ios::in | ios::bin, int prot = 0664);
-  void open(const char *name, int mode = ios::in | ios::bin, int prot = 0664);
   #else
   uistream(const char *name, int mode = ios::in | ios::binary,
     int prot = 0664);

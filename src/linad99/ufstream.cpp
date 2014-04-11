@@ -29,7 +29,7 @@ uistream& uistream::operator>> (const TYPE& x) \
 
 uostream::uostream(const char* name, int  m, int prot)
   :ofstream(name, std::ios::binary | std::ios::openmode(m))
-{ 
+{
 }
 
 /**

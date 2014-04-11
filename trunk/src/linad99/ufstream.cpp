@@ -10,10 +10,6 @@
  */
 #include "fvar.hpp"
 
-#if (__GNUC__ >= 3)
-  #define __GNU_NEWER__
-#endif
-
 void uistream::sss(void){}
 void uostream::sss(void){}
 
@@ -31,25 +27,10 @@ uistream& uistream::operator>> (const TYPE& x) \
   return *this; \
 }
 
-#if defined(__GNUDOS__) || defined(_MSC_VER) || defined (__WAT32__)
-#  define __BINFILE__ ios::binary
-#elif defined(__TURBOC__)
-#  define __BINFILE__ ios::binary
-#else
-#  define __BINFILE__ 0
-#endif
-
-#if defined(__TURBOC__) || defined(__GNUDOS__) || defined(_MSC_VER) \
-|| defined (__WAT32__)
 uostream::uostream(const char* name, int  m, int prot)
-#  if defined(__GNU_NEWER__)
-    :ofstream(name, std::ios::binary | std::ios::openmode(m))
-#  elif defined(_MSC_VER) || (__BORLANDC__  > 0x0550)
-    :ofstream(name, std::ios::binary | m)
-#  else
-    :ofstream(name, m | __BINFILE__, prot)
-#  endif
-{ }
+  :ofstream(name, std::ios::binary | std::ios::openmode(m))
+{ 
+}
 
 /**
  * Description not yet available.
@@ -57,18 +38,7 @@ uostream::uostream(const char* name, int  m, int prot)
  */
 void uistream::open(const char* name, int m, int prot)
 {
-#if defined(__TURBOC__) && (__BORLANDC__  <= 0x0520)
-  fstreambase::open(name, m, prot);
-#endif
-#ifdef __ZTC__
-  fstream_common::open(name, m, prot);
-#endif
-#ifdef __NDPX__
-  ifstream::open(name, m, prot);
-#endif
-#ifdef __SUN__
-  ifstream::open(name, m, prot);
-#endif
+  ifstream::open(name, std::ios::binary | std::ios::openmode(m));
 }
 
 /**
@@ -77,40 +47,7 @@ void uistream::open(const char* name, int m, int prot)
  */
 void uostream::open(const char* name, int m, int prot)
 {
-#if defined (__TURBOC__) &&   (__BORLANDC__  <= 0x0520)
-  fstreambase::open(name, m, prot);
-#endif
-#if (__BORLANDC__  >= 0x0540 && __BORLANDC__  <= 0x0550)
-  ofstream::open(name, m, prot);
-#else
-#  if defined(linux)
-#    if (__GNUC__  >= 3)
-       ofstream::open(name, std::ios::openmode(m));
-#    else
-       ofstream::open(name, m);
-#    endif
-#  else
-     ofstream::open(name, m);
-#  endif
-#endif
-
-#ifdef _MSC_VER
-  #if (_MSC_VER >= 1400)
-  ofstream::open(name, m);
-  #else
-  //fstreambase::open(name, m, prot);
-  ofstream::open(name, m, prot);
-  #endif
-#endif
-#ifdef __ZTC__
-  fstream_common::open(name, m, prot);
-#endif
-#ifdef __NDPX__
-  ofstream::open(name, m, prot);
-#endif
-#ifdef __SUN__
-  ofstream::open(name, m, prot);
-#endif
+  ofstream::open(name, std::ios::binary | std::ios::openmode(m));
 }
 
 /**
@@ -118,17 +55,9 @@ void uostream::open(const char* name, int m, int prot)
  * \param
  */
 uistream::uistream(const char* name, int m, int prot)
-#  if (__BORLANDC__  > 0x0520  && __BORLANDC__  < 0x0560)
-  :ifstream(name, m | __BINFILE__ , prot) { }
-#  else
-#  if ( defined(__GNU_NEWER__) || defined(_MSC_VER) \
-|| __BORLANDC__  > 0x0550)
-       :ifstream(name, std::ios::binary ) { }
-#    else
-       :ifstream(name, m | ios::nocreate | __BINFILE__ , prot) { }
-#    endif
-#  endif
-#endif
+  :ifstream(name, std::ios::binary | std::ios::openmode(m))
+{
+}
 
 #ifdef __ZTC__
 uostream::uostream(const char* name, int  m, int prot)

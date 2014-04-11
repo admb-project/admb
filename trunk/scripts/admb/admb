@@ -154,9 +154,9 @@ else
   CXXFLAGS="$CXXFLAGS -DSAFE_ALL"
 fi
 if [ ! -f "$ADMB_HOME/contrib/lib/libcontrib.a" ]; then
-  CXXFLAGS="$CXXFLAGS -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/include/contrib\""
+  CXXFLAGS="$CXXFLAGS -Dlinux -DUSE_LAPLACE -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/include/contrib\""
 else
-  CXXFLAGS="$CXXFLAGS -D__GNUDOS__ -Dlinux -DUSE_LAPLACE -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/contrib/include\""
+  CXXFLAGS="$CXXFLAGS -Dlinux -DUSE_LAPLACE -I. -I\"$ADMB_HOME/include\" -I\"$ADMB_HOME/contrib/include\""
 fi
 if [ "$CXX" == "adcomp-x86_64-w64-mingw32" ]; then
   LDFLAGS="--static $LDFLAGS"

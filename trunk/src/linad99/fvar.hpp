@@ -151,7 +151,7 @@ Macro definitions.
   #define CGNU_DOUBLE double
 #endif
 
-#ifdef __GNUDOS__
+#if !defined(_MSC_VER)
 #   define DOS386
 #   define __GNU__
 #endif
@@ -339,8 +339,6 @@ class independent_variables;
 #      define _FPOS_T_DEFINED
 #   endif
 #endif
-
-//#include <math.h>
 
 #if defined(__BORLANDC__)
 #   if (__BORLANDC__  > 0x0520)
@@ -4218,20 +4216,17 @@ class uostream:public ofstream
    //void open(const char*, int = ios::out, int = openprot);
 #endif
 
-#if defined(__GNUDOS__)
-#  if !defined(__ADSGI__)
-#    if (__GNUC__  < 3) && !defined(__SUNPRO_CC)
-   uostream(const char *name, int mode = ios::out | ios::bin, int prot = 0664);
-   void open(const char *name, int mode = ios::out | ios::bin, int prot = 0664);
-#    else
- uostream(const char *name, int mode = ios::out | ios::binary, int prot = 0664);
-   void open(const char *name, int mode = ios::out | ios::binary,
-     int prot = 0664);
-#    endif
-#  else
+#if !defined(_MSC_VER)
+  #if defined(__ADSGI__)
    uostream(const char *name, int mode = ios::out, int prot = 0664);
    void open(const char *name, int mode = ios::out, int prot = 0664);
-#  endif
+  #elif (__GNUC__  < 3)
+   uostream(const char *name, int mode = ios::out | ios::bin, int prot = 0664);
+   void open(const char *name, int mode = ios::out | ios::bin, int prot = 0664);
+  #else
+    uostream(const char *name, int mode = ios::out | ios::binary, int prot = 0664);
+    void open(const char *name, int mode = ios::out | ios::binary, int prot = 0664);
+  #endif
 #endif
 
    // insert character
@@ -4342,20 +4337,17 @@ class uistream:public ifstream
    // void open(const char* name, int mode = ios::in, int prot=0664);
 #endif
 
-
-#if defined(__GNUDOS__)
-#  if !defined(__ADSGI__)
-#    if (__GNUC__  < 3) && !defined(__SUNPRO_CC)
-   uistream(const char *name, int mode = ios::in | ios::bin, int prot = 0664);
-   void open(const char *name, int mode = ios::in | ios::bin, int prot = 0664);
-#    else
+#if !defined(_MSC_VER)
+  #if defined(__ADSGI__)
+  uistream(const char *name, int mode = ios::in, int prot = 0664);
+  void open(const char *name, int mode = ios::in, int prot = 0664);
+  #elif (__GNUC__  < 3)
+  uistream(const char *name, int mode = ios::in | ios::bin, int prot = 0664);
+  void open(const char *name, int mode = ios::in | ios::bin, int prot = 0664);
+  #else
   uistream(const char *name, int mode = ios::in | ios::binary, int prot = 0664);
- void open(const char *name, int mode = ios::in | ios::binary, int prot = 0664);
-#    endif
-#  else
-   uistream(const char *name, int mode = ios::in, int prot = 0664);
-   void open(const char *name, int mode = ios::in, int prot = 0664);
-#  endif
+  void open(const char *name, int mode = ios::in | ios::binary, int prot = 0664);
+  #endif
 #endif
 
    // extract characters into an array

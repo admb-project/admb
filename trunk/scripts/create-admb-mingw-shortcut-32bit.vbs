@@ -10,7 +10,7 @@ Set oShellLink = WshShell.CreateShortcut("ADMB Command Prompt (MinGW 32-Bit).lnk
 oShellLink.TargetPath = "cmd"
 
 'Set the additional parameters for the shortcut
-oShellLink.Arguments = "/K set ADMB_HOME=%CD%& set PATH=%CD%\bin;%CD%\utilities\mingw32;%PATH%"
+oShellLink.Arguments = "/K set ADMB_HOME=%CD%& set PATH=%CD%\bin;%CD%\utilities\mingw32\bin;%PATH%"
 
 oShellLink.WorkingDirectory = "%CD%"
 

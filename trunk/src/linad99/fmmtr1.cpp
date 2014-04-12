@@ -43,11 +43,7 @@ extern int ctlc_flag;
   #include <iostream>
   #include <signal.h>
   #define getch getchar
-#if !defined(UNIXKLUDGE) && !defined(linux)
   extern "C" void onintr(int k);
-#else
-  extern "C" void onintr(int k);
-#endif
 #endif
 #ifdef __NDPX__
   #include <iostream.hxx>

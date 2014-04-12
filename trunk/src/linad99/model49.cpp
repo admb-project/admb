@@ -68,19 +68,7 @@
        "prevariable param_init_vector_vector::operator () (int i, int j)",
        indexmin(), indexmax(), i);
      }
-#if defined(__BORLANDC__)
-#  if (__BORLANDC__  >= 0x0540)
-     return (prevariable&) (v[i][j]);
-#  else
      return v[i][j];
-#  endif
-#else
-#  if ( defined(linux) && __GNUC__ < 4 && !defined(__MINGW64__))
-     return (prevariable&) (v[i][j]);
-#  else
-     return v[i][j];
-#  endif
-#endif
    }
 
 /**
@@ -156,19 +144,7 @@
  "prevariable param_init_matrix_vector::operator () (int i, int j, int k)",
        indexmin(), indexmax(), i);
      }
-#if defined(__BORLANDC__)
-#  if (__BORLANDC__  >= 0x0540)
-     return (prevariable&) (v[i](j,k));
-#  else
      return v[i](j,k);
-#  endif
-#else
-#  if ( defined(linux) && __GNUC__ < 4 && !defined(__MINGW64__))
-     return (prevariable&) v[i](j,k);
-#  else
-     return v[i](j,k);
-#  endif
-#endif
    }
 
 /**
@@ -225,19 +201,7 @@ param_init_bounded_vector& param_init_bounded_vector_vector::operator()(int i)
        "param_init_bounded_vector_vector::operator () (int i, int j)",
        indexmin(), indexmax(), i);
      }
-#if defined(__BORLANDC__)
-#  if (__BORLANDC__  >= 0x0540)
-     return (prevariable&) (v[i][j]);
-#  else
      return v[i][j];
-#  endif
-#else
-#  if ( defined(linux) && __GNUC__ < 4 && !defined(__MINGW64__))
-     return (prevariable&) (v[i][j]);
-#  else
-     return v[i][j];
-#  endif
-#endif
    }
 
 /**
@@ -313,19 +277,7 @@ prevariable param_init_bounded_matrix_vector::operator()(int i,int j,int k)
        "param_init_bounded_matrix_vector::operator () (int i, int j, int k)",
        indexmin(), indexmax(), i);
      }
-#if defined(__BORLANDC__)
-#  if (__BORLANDC__  >= 0x0540)
-     return (prevariable&) (v[i](j,k));
-#  else
      return v[i](j,k);
-#  endif
-#else
-#  if ( defined(linux) && __GNUC__ < 4 && !defined(__MINGW64__))
-     return (prevariable&) v[i](j,k);
-#  else
-     return v[i](j,k);
-#  endif
-#endif
    }
 
 /**

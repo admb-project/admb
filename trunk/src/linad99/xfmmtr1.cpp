@@ -39,9 +39,6 @@ extern int ctlc_flag;
   #include <iostream.h>
   #include <signal.h>
   #define getch getchar
-  #ifdef __HP__
-  extern "C" void onintr(int k);
-  #endif
 #endif
 
 #if defined(__GNU__) || defined(UNIXKLUDGE)
@@ -55,12 +52,7 @@ extern int ctlc_flag;
   #define getch getchar
   //typedef void (*SignalHandler) ();
 
-#if !defined(UNIXKLUDGE) && !defined(linux)
-  extern "C" void onintr(int k);
-#else
-  extern "C" void onintr(int k);
-#endif
-#endif
+extern "C" void onintr(int k);
 
 #ifdef __NDPX__
   #include <iostream.hxx>

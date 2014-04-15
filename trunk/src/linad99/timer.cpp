@@ -109,5 +109,4 @@
     double diff=t-told;
     return diff;
   }
-
 #endif

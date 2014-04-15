@@ -50,7 +50,7 @@ extern int ctlc_flag;
   #endif
   #include <signal.h>
   #define getch getchar
-  //typedef void (*SignalHandler) ();
+#endif
 
 extern "C" void onintr(int k);
 

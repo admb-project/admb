@@ -14,10 +14,6 @@
 #if ( (defined(_WINDOWS) || defined(_Windows)) && !defined(BORBUGS))
 #  include <windows.h>
 #endif
-int ad_cheat_flag=0;
-#if defined(linux)
-  int Sleep(int);
-#endif
 
 /*
 static int return_int(int * v)

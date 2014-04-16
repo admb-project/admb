@@ -12,7 +12,7 @@
 // #define UNIXKLUDGE
 
 //#define DIAG
-#ifndef __GNUDOS__
+#ifdef _MSC_VER
   #include <conio.h>
 #else
   #include <unistd.h>
@@ -31,10 +31,6 @@ extern int ctlc_flag;
 #include <string.h>
 
 //#define CUBIC_INTERPOLATION
-
-#if defined (__WAT32__) || defined (_MSC_VER)
-  #include <conio.h>
-#endif
 
 #ifdef __ZTC__
 #include <conio.h>

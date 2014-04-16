@@ -10,11 +10,9 @@
  */
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable
-#define DOS386
-
 #include "fvar.hpp"
 
-#if (defined(__ZTC__) && !defined(DOS386))
+#if defined(__ZTC__)
 //  void _far * _cdecl _farptr_norm(void _far *);
   void _far * _cdecl _farptr_fromlong(unsigned long);
   long _cdecl _farptr_tolong(void _far *);
@@ -28,23 +26,11 @@ void humungous_pointer::free(void)
 {
   ptr-=adjustment;
   adjustment=0;
-  #if (defined(__BORLANDC__))
-    #if (!defined(DOSX286) && !defined(DOS386))
-      farfree(ptr);
-    #else
-      ::free(ptr);
-    #endif
-  #endif
-  #if (defined(__ZTC__))
-    #if (!defined(DOS386))
-      farfree(ptr);
-    #else
-      ::free(ptr);
-    #endif
-  #endif
-  #if (!defined(__BORLANDC__)&& !defined(__ZTC__))
-    ::free(ptr);
-  #endif
+#if defined(__BORLANDC__) || defined(__ZTC__)
+  farfree(ptr);
+#else
+  ::free(ptr);
+#endif
   ptr=NULL;
 }
 
@@ -132,11 +118,11 @@ humungous_pointer humungous_pointer::operator + (unsigned long int& offset)
 // object pointed to
 {
   humungous_pointer tmp;
-  #if (defined(__ZTC__) && !defined(DOS386))
+#if defined(__ZTC__)
     tmp.ptr=(char*)(_farptr_fromlong(_farptr_tolong(ptr)+offset));
-  #else
+#else
     tmp.ptr=(ptr+offset);
-  #endif
+#endif
   return tmp;
 }
 
@@ -149,11 +135,11 @@ humungous_pointer& humungous_pointer::operator += (unsigned long int& offset)
 // object pointed to
 {
   //char * tmp;
-  #if (defined(__ZTC__) && !defined(DOS386))
+#if defined(__ZTC__)
     ptr=(char*)(_farptr_fromlong(_farptr_tolong(ptr)+offset));
-  #else
+#else
     ptr=(ptr+offset);
-  #endif
+#endif
   return *this;
 }
 
@@ -163,10 +149,10 @@ humungous_pointer& humungous_pointer::operator += (unsigned long int& offset)
  */
 humungous_pointer& humungous_pointer::operator = (void * p)
 {
-  #if defined(__BORLANDC__) && !defined(DOS386)
+#if defined(__BORLANDC__)
     ptr = (char huge *) p;
-  #else
+#else
     ptr = (char *) p;
-  #endif
+#endif
   return *this;
 }

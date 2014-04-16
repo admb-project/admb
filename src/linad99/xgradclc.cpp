@@ -68,7 +68,7 @@
 
 void funnel_derivatives(void);
 
-#if (defined(__ZTC__) && !defined(DOS386))
+#if defined(__ZTC__)
   void _far * _cdecl _farptr_norm(void _far *);
   void _far * _cdecl _farptr_fromlong(unsigned long);
   long _cdecl _farptr_tolong(void _far *);
@@ -136,28 +136,19 @@ void funnel_gradcalc(void)
 
   double * zptr;
 
-   for (i=0 ; i< (max_last_offset/size) ; i++ )
+   for (i = 0; i < (max_last_offset/size); i++)
    {
      tmp->x = 0;
-     #if defined (__ZTC__)
-       #if defined(DOS386)
-       tmp++;
-       #else
-        tmp = (double_and_int  *) _farptr_norm( (void*) (++tmp)  );
-       #endif
-     #endif
-     #if defined (__BORLANDC__)
-        tmp++;
-     #endif
-     #if (!defined (__ZTC__) && !defined (__BORLANDC__))
-       tmp++;
-     #endif
+#if defined (__ZTC__)
+     tmp = (double_and_int*)_farptr_norm((void*)(++tmp));
+#else
+     tmp++;
+#endif
    }
 
-    * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
+    *gradient_structure::GRAD_STACK1->ptr->dep_addr = 1;
     zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
-//double z;
 int break_flag=1;
 int funnel_flag=0;
 

@@ -19,16 +19,11 @@
   #include <iostream.h>
 #endif
 
-#if defined (__WAT32__)
-#endif
-
-
 #include <stdio.h>
 #include <stdlib.h>
 
 #ifdef __SUN__
   #include <iostream.h>
-  #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
@@ -48,7 +43,6 @@
   #else
     #include <iostream.h>
   #endif
-  #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
@@ -187,29 +181,19 @@ void gradient_structure::jacobcalc(int nvar, const ofstream& _ofs)
 
     unsigned int size = sizeof(double_and_int );
 
-
-    for (i=0 ; i< (max_last_offset/size) ; i++ )
+    for (i = 0; i < (max_last_offset/size); i++)
     {
       tmp->x = 0;
-      #if defined (__ZTC__)
-        #if defined(DOS386)
-          tmp++;
-        #else
-          tmp = (double_and_int  *) _farptr_norm( (void*) (++tmp)  );
-        #endif
-      #endif
-      #if defined (__BORLANDC__)
-        tmp++;
-      #endif
-      #if (!defined (__ZTC__) && !defined (__BORLANDC__))
-        tmp++;
-      #endif
+#if defined (__ZTC__)
+      tmp = (double_and_int*)_farptr_norm((void*)(++tmp));
+#else
+      tmp++;
+#endif
     }
 
     * gradient_structure::GRAD_STACK1->ptr->dep_addr  = 1;
     //double* zptr = gradient_structure::GRAD_STACK1->ptr->dep_addr;
 
-    //double z;
     int break_flag=1;
 
     do

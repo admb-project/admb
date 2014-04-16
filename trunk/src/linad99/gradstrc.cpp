@@ -26,29 +26,20 @@ void null_ptr_err_message(void);
   #include <alloc.h>
 #endif
 
+#include <stdlib.h>
+
 #ifdef __ZTC__
   #include <iostream.hpp>
-  #ifndef DOS386
-    int _cdecl farfree(void _far *ptr);
-  #endif
+  int _cdecl farfree(void _far *ptr);
+  void _far * _cdecl farmalloc(unsigned long size);
 #endif
-
-
-#include <stdlib.h>
-#ifdef __ZTC__
-  #ifndef DOS386
-    int _cdecl farfree(void _far *ptr);
-    void _far * _cdecl farmalloc(unsigned long size);
-  #endif
-#endif
-
-//void adwait(double);
 
 extern ofstream clogf;
 #ifndef __SUNPRO_CC
 typedef int (* fptr) (const char * format, ...) ;
 #endif
 
+//void adwait(double);
 fptr ad_printf = printf;
 extern "C"{
   exitptr ad_exit=&exit;
@@ -403,10 +394,10 @@ cerr << "  2 Trying to allocate to a non NULL pointer in gradient structure \n";
    }
  */
 
-#if defined(DOS386) || defined (_MSC_VER) || defined (__WAT32__)
-   if ((temp_ptr = (void *) malloc(ARRAY_MEMBLOCK_SIZE )) == 0)
+#ifdef __ZTC__
+   if ((temp_ptr = farmalloc(ARRAY_MEMBLOCK_SIZE)) == 0)
 #else
-   if ((temp_ptr = farmalloc(ARRAY_MEMBLOCK_SIZE) ) == 0)
+   if ((temp_ptr = (void*)malloc(ARRAY_MEMBLOCK_SIZE)) == 0)
 #endif
    {
      cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCKa\n";

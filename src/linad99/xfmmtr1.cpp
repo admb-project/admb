@@ -18,7 +18,7 @@
 #include <admodel.h>
 extern int ctlc_flag;
 
-#if defined(__TURBOC__) && !defined(__linux__)
+#if defined(__TURBOC__)
   #pragma hdrstop
   #include <iostream.h>
   #include <conio.h>
@@ -42,12 +42,8 @@ extern int ctlc_flag;
 #endif
 
 #if defined(__GNU__) || defined(UNIXKLUDGE)
-  #if (__GNUC__ >3)
-     #include <iostream>
-     using namespace std;
-  #else
-    #include <iostream.h>
-  #endif
+  #include <iostream>
+  using namespace std;
   #include <signal.h>
   #define getch getchar
 #endif

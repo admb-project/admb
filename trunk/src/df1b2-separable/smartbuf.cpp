@@ -147,9 +147,7 @@
     {
       cerr << "Error closing file " << cmpdif_file_name << "\n";
     }
-#   if defined ( __SUN__) ||  defined ( __GNU__)
-      unlink(cmpdif_file_name);
-#else
+#if defined (_MSC_VER)
       adstring currentdir;
       ad_getcd(currentdir);
       int xxx=remove(cmpdif_file_name);
@@ -158,6 +156,8 @@
         xxx=unlink(cmpdif_file_name);
         cout << xxx << endl;
       }
+#else
+      unlink(cmpdif_file_name);
 #endif
   }
 

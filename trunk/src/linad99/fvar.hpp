@@ -4151,8 +4151,6 @@ void fmmdisp(const double *x, const double *g, const int &nvar,
 
 ostream & operator<<(const ostream & s, const fmm_control & fmc);
 
-// !!!! #ifndef __GNU__
-
 /**
  * Description not yet available.
  * \param
@@ -4380,7 +4378,6 @@ class uistream:public ifstream
   //   ifstream::open(name, m, prot);
   // #endif
   // }
-// !!!!!!!!!!!!!!!#endif
 
 class fmmc;
 

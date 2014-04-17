@@ -63,7 +63,7 @@ ifneq ($(CXX),CC)
 ADCXXFLAGS:= -Wall -Wextra -Wno-unused-parameter $(ADCXXFLAGS)
 endif
 
-ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL -Dlinux -DUSE_LAPLACE
+ADCXXFLAGS:=$(strip $(ADCXXFLAGS)) -DSAFE_ALL -DUSE_LAPLACE
 
 ifeq ($(SHELL),cmd)
 ADCXXFLAGS:= $(ADCXXFLAGS) -I..\build\dist\include

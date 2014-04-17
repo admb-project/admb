@@ -20,8 +20,6 @@
 #endif
 #include <stdlib.h>
 
-#ifdef DOS386
-
 #if defined( __NDPX__) || defined(__SUN__)
   void * _farptr_fromlong(long int i)
 #else
@@ -50,4 +48,3 @@ void * _farptr_norm(void * ptr)
 {
   return(ptr);
 }
-#endif

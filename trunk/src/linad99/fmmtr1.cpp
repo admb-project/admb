@@ -39,18 +39,16 @@ extern int ctlc_flag;
   extern "C" void onintr(int k);
   #endif
 #endif
-#if defined(__GNU__) || defined(UNIXKLUDGE)
-  #include <iostream>
-  #include <signal.h>
-  #define getch getchar
-  extern "C" void onintr(int k);
-#endif
 #ifdef __NDPX__
   #include <iostream.hxx>
 #endif
 #if defined (_MSC_VER)
   void __cdecl clrscr();
 #else
+  #include <iostream>
+  #include <signal.h>
+  #define getch getchar
+  extern "C" void onintr(int k);
   extern "C" void clrscr();
 #endif
 #include <math.h>
@@ -327,11 +325,10 @@ label30:
           gbest.elem(i)=w.elem(i);
         }
       }
-#if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) \
-  || defined(linux)
-       if(ctlc_flag && use_control_c)
+#if defined(_MSC_VER)
+       if (kbhit())
 #else
-       if ( kbhit() )
+       if(ctlc_flag && use_control_c)
 #endif
        {
           #if defined(__DJGPP__)

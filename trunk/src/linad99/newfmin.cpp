@@ -28,11 +28,6 @@
 #include <fvar.hpp>
 extern int ctlc_flag;
 
-#if defined(__TURBOC__) && !defined(__linux__)
-  #pragma hdrstop
-  #include <iostream.h>
-  #include <conio.h>
-#endif
 #if defined (__WAT32__) || defined (_MSC_VER)
   #include <conio.h>
 #endif
@@ -46,12 +41,6 @@ extern int ctlc_flag;
   #include <iostream.hpp>
   #include <disp.h>
   #define endl "\n"
-#endif
-#ifdef __SUN__
-  #define getch getchar
-#endif
-#if defined(__GNU__) || defined(UNIXKLUDGE)
-  #define getch getchar
 #endif
   #include <signal.h>
   extern "C" void onintr(int k)
@@ -71,6 +60,7 @@ extern int ctlc_flag;
   void __cdecl clrscr();
 #else
   extern "C" void clrscr();
+  #define getch getchar
 #endif
 
 #include <math.h>
@@ -651,15 +641,13 @@ label30: /* Taking a step, updating x */
       /* what to do if CTRL-C keys were pressed */
       if (use_control_c==1)
       {
-#if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) \
-  || defined(linux)
-         if(ctlc_flag || ifn == dcheck_flag )
-#elif defined(__BORLANDC__)
+#if defined(__BORLANDC__)
          if ( kbhit() || ctlc_flag|| ifn == dcheck_flag )
 #elif defined(_MSC_VER)
+         //if ( kbhit() || ifn == dcheck_flag )
          if ( _kbhit() || ctlc_flag || ifn == dcheck_flag )
 #else
-         if ( kbhit() || ifn == dcheck_flag )
+         if(ctlc_flag || ifn == dcheck_flag )
 #endif
          {
             int c=0;

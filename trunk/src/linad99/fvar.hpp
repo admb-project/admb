@@ -129,14 +129,10 @@ Macro definitions.
 
 #if !defined(_MSC_VER)
   #include <unistd.h>
-#endif
-
-#if defined(linux) || defined(__ADSGI__) || defined(__linux__)
-#   include <fcntl.h> // to get fstreambase
-#   if !defined(O_BINARY)
-#      define O_BINARY 0
-#   endif
-#   define UNIXKLUDGE
+  #include <fcntl.h> // to get fstreambase
+  #if !defined(O_BINARY)
+    #define O_BINARY 0
+  #endif
 #endif
 
 #if defined(__DJGPP__)

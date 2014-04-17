@@ -28,11 +28,11 @@ fixed_smartlist::~fixed_smartlist()
     }
   }
   close(fp);
-  #if defined ( __SUN__) ||  defined ( __GNU__)
-   unlink(filename);
-  #else
-   remove(filename);
-  #endif
+#if defined (_MSC_VER)
+  remove(filename);
+#else
+  unlink(filename);
+#endif
 }
 
 /**
@@ -54,9 +54,9 @@ fixed_smartlist2::~fixed_smartlist2()
     }
   }
   close(fp);
-  #if defined ( __SUN__) ||  defined ( __GNU__)
-   unlink(filename);
-  #else
-   remove(filename);
-  #endif
+#if defined (_MSC_VER)
+  remove(filename);
+#else
+  unlink(filename);
+#endif
 }

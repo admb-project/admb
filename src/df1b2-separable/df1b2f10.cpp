@@ -426,9 +426,9 @@ test_smartlist::~test_smartlist()
   }
   close(fp);
   fp=0;
-#if defined ( __SUN__) ||  defined ( __GNU__)
-  unlink(filename);
-#else
+#if defined (_MSC_VER)
   remove(filename);
+#else
+  unlink(filename);
 #endif
 }

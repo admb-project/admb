@@ -8,11 +8,13 @@
  * \file
  * Description not yet available.
  */
+#include <iostream>
+using namespace std;
+#include <fcntl.h>
 #include "fvar.hpp"
 #include <adstring.hpp>
 
 #if defined (__WAT32__)
-  #include <fcntl.h>
   #include <io.h>
 #endif
 
@@ -23,22 +25,23 @@
   #define open _open
   #define close _close
   #include <sys\stat.h>
-  #include <fcntl.h>
+#else
+  #include <sys/stat.h>
+  #include <sys/types.h>
+  #include <unistd.h>
 #endif
 
-#if defined(__TURBOC__) && !defined(__linux__)
+#if defined(__TURBOC__)
   #pragma hdrstop
   #include <iostream.h>
   #include <iomanip.h>
   #include <sys\stat.h>
-  #include <fcntl.h>
 #endif
 
 #ifdef __ZTC__
   #include <iostream.hpp>
   #define S_IREAD 0000400
   #define S_IWRITE 0000200
-  #include <fcntl.h>
 #endif
 
 #ifdef __NDPX__
@@ -53,34 +56,6 @@
     int close(int);
     int write(int, char*, int);
   };
-#endif
-
-#ifdef __SUN__
-  #include <iostream.h>
-  #include <fcntl.h>
-  #include <sys/stat.h>
-  #include <sys/types.h>
-  #ifdef _MSC_VER
-    #define lseek _lseek
-    #define  read _read
-    #define write _write
-    #define open _open
-    #define close _close
-  #endif
-  #include <unistd.h>
-#endif
-
-#if  defined(__GNU__) || defined(__linux__)
-  #if (__GNUC__ >3)
-     #include <iostream>
-     using namespace std;
-  #else
-    #include <iostream.h>
-  #endif
-  #include <fcntl.h>
-  #include <sys/stat.h>
-  #include <sys/types.h>
-  #include <unistd.h>
 #endif
 
 #include <stdlib.h>
@@ -166,7 +141,7 @@ grad_stack::grad_stack()
 
   if (path != NULL)
   {
-#if defined ( __SUN__) || defined ( __GNU__)
+#if !defined (_WIN32)
     sprintf(&gradfile_name1[0],"%s/gradfil1.%s", path, ad_random_part);
 #else
     if (lastchar(path) != '\\')
@@ -193,7 +168,7 @@ grad_stack::grad_stack()
 #endif
   if (path != NULL)
   {
-#if defined (__SUN__) ||  defined (__GNU__)  || defined(linux)
+#if !defined (_WIN32)
     if (strlen(path) > 0)
     {
       sprintf(&var_store_file_name[0],"%s/varssave.%s",path, ad_random_part);

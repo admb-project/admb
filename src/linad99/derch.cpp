@@ -14,10 +14,8 @@
 
 #include "fvar.hpp"
 
-#if !defined(__SUN__) && !defined(__GNU__) && !defined(__linux__)
-  #if !defined(__NDPX__)
-    #include <conio.h>
-  #endif
+#if defined(_WIN32)
+  #include <conio.h>
 #endif
 
 #include <ctype.h>
@@ -26,7 +24,7 @@
 int derchflag=0;
 double derch_stepsize=0.0;
 
-static ofstream * pofs=0;
+static ofstream* pofs=0;
 
 /**
  * Description not yet available.
@@ -201,7 +199,7 @@ cout << "\n       X           Function     Analytical     Finite Diff;  Index"
           fflush(stdout);
         }
       }
-#if !defined( __SUN__) && !defined( __GNU__) && !defined(__linux__)
+#if defined(_MSC_VER)
       if ( kbhit() )
       {
         int c = toupper(getch());

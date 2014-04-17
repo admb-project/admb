@@ -11,11 +11,8 @@
 #include <admodel.h>
 #include <stdlib.h>
 
-
-#if defined(__BORLANDC__) || defined(_MSC_VER) || defined(__MINGW32__)
-#  if !defined(__linux__)
-#   include <windows.h>
-#  endif
+#if defined(_WIN32)
+  #include <windows.h>
 #endif
 
 /**
@@ -24,13 +21,9 @@
  */
 void ADSleep(int t)
 {
-#if !defined(linux) && !defined(__CYGWIN__) && !defined(__linux__)
+#if defined(_WIN32)
   Sleep(t);
 #else
-#  if defined(__MINGW32__)
-     Sleep(t);
-#  else
-     sleep(t);
-#  endif
+  sleep(t);
 #endif
 }

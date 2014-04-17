@@ -25,13 +25,9 @@
 #  include <unistd.h>
 #endif
 
-#if  defined(__GNU__) || defined(__linux__)
-  #if (__GNUC__ >3)
-     #include <iostream>
-     using namespace std;
-  #else
-    #include <iostream.h>
-  #endif
+#if !defined(_MSC_VER)
+#include <iostream>
+using namespace std;
 #include <memory.h>
 #include <fcntl.h>
 #include <sys/stat.h>

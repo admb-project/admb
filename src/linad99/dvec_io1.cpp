@@ -10,7 +10,7 @@
  */
 #include "fvar.hpp"
 
-#if defined(__TURBOC__) && !defined(__linux__)
+#if defined(__TURBOC__)
    #include <iostream.h>
    #include <strstrea.h>
 #endif

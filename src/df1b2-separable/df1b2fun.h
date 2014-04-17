@@ -55,9 +55,9 @@
 #  include <fvar.hpp>
 #endif
 #include <sys/stat.h>
-#if defined(__CYGWIN__) || defined(linux)
-#include <stddef.h>
-#  include <fcntl.h>
+#if !defined(_MSC_VER)
+  #include <stddef.h>
+  #include <fcntl.h>
 #endif
 
 #define USE_BARD_PEN

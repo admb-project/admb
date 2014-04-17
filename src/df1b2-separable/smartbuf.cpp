@@ -16,27 +16,17 @@
   #define  read _read
   #define write _write
   #include <sys\stat.h>
-#endif
-
-#if defined (__WAT32__)
+#else
+  #include <iostream>
+  using namespace std;
+  #include <memory.h>
   #include <fcntl.h>
+  #include <sys/stat.h>
+  #include <sys/types.h>
+  #include <unistd.h>
 #endif
 
-#if  defined(__GNU__) || defined(__linux__)
-#include <memory.h>
-  #if (__GNUC__ >3)
-     #include <iostream>
-     using namespace std;
-  #else
-    #include <iostream.h>
-  #endif
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-#endif
-
-#if defined(__TURBOC__) && !defined(__linux__)
+#if defined(__TURBOC__)
   #pragma hdrstop
   #include <iostream.h>
   #include <sys\stat.h>
@@ -63,31 +53,6 @@
     int write(int, char*, int);
     int read(int, char*, int);
   };
-#endif
-
-#ifdef __GNU__
-#include <memory.h>
-  #if (__GNUC__ >3)
-     #include <iostream>
-     using namespace std;
-  #else
-    #include <iostream.h>
-  #endif
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-#endif
-
-#ifdef __SUN__
-#include <memory.h>
-#include <iostream.h>
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#ifndef __MSC_VER
-#include <unistd.h>
-#endif
 #endif
 
 #include <limits.h>
@@ -315,8 +280,7 @@ void ad_sbuffer::read_cmpdif_stack_buffer(long int& lpos)
  */
 void byte_copy(void* dest, void* source, unsigned num_bytes)
 {
-#if !defined (__SUN__) && !defined (__WAT32__) && !defined(__ADSGI__) \
-&& !defined (_MSC_VER) && !defined(linux)
+#if defined(__ADSGI__)
   char* pdest = (char*)dest;
   char* psource = (char*)source;
   int ii=0;

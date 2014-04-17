@@ -82,7 +82,7 @@ Macro definitions.
     dd_real pow(const dd_real & d, const dd_real &);
 #endif
 
-#if defined(__TURBOC__) && defined(__linux__)
+#if defined(__TURBOC__)
 #   define __STL_PTHREADS
 #   include <k3stl.h>
 #   include <pthread_alloc>
@@ -275,14 +275,6 @@ class independent_variables;
 
 #include <stdio.h>
 
-#if ( defined(__GNUC__) && __GNUC__<3) || defined(__SUNPRO_CC)
-#   if defined(linux) || defined(__CYGWIN__) || defined(__SUNPRO_CC)
-#      include <strstream.h>
-#   else
-#      include <strstrea.h>
-#   endif
-#endif
-
 #if defined(__BORLANDC__)
 #   if (__BORLANDC__  < 0x0550)
 #      include <fcntl.h> // to get fstreambase
@@ -293,11 +285,11 @@ class independent_variables;
 #endif
 
 #if defined(_MSC_VER)
-#   if (_MSC_VER >= 1300)
-#     include <iostream>
+#   if (_MSC_VER < 1300)
+#     include <iostream.h>
+#     include <strstrea.h>
 #   else
-#      include <iostream.h>
-#      include <strstrea.h>
+#     include <iostream>
 #   endif
 #   include <stddef.h>
 #   include <fcntl.h> // to get fstreambase
@@ -341,31 +333,30 @@ class independent_variables;
 #   endif
 #endif
 
-#if ( (defined(__GNUC__) && (__GNUC__>=3))  \
-  || (defined(_MSC_VER) && (_MSC_VER >= 1300))  \
-  || (defined(__BORLANDC__) && (__BORLANDC__>=0x0570) && defined(__linux__)))
-#   include <iostream>
-#   include <iomanip>
-#   include <sstream>
-#   include <istream>
-#   include <sstream>
-    using std::ofstream;
-    using std::ostream;
-    using std::ifstream;
-    using std::istream;
-    using std::istringstream;
-    using std::streampos;
-    using std::streambuf;
-    using std::setw;
-    using std::setprecision;
-    using std::istringstream;
-    using std::ios;
-    using std::cerr;
-    using std::cin;
-    using std::cout;
-    using std::endl;
+#if defined(__cplusplus)
+  #include <iostream>
+  #include <iomanip>
+  #include <sstream>
+  #include <istream>
+  #include <sstream>
+  using std::ofstream;
+  using std::ostream;
+  using std::ifstream;
+  using std::istream;
+  using std::istringstream;
+  using std::streampos;
+  using std::streambuf;
+  using std::setw;
+  using std::setprecision;
+  using std::istringstream;
+  using std::ios;
+  using std::cerr;
+  using std::cin;
+  using std::cout;
+  using std::endl;
 #else
-#   include <iomanip.h>
+  #include <iomanip.h>
+  #include <strstream.h>
 #endif
 
 #define BEGIN_MINIMIZATION(nvar, objective_function, ind_vars, gradient, \

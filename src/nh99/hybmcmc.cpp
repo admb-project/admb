@@ -17,11 +17,8 @@ using std::istringstream;
 #endif
 #include <admodel.h>
 
-#if defined (__ZTC__) || defined(__TURBOC__) || defined(__WAT32__) \
-  || defined (_MSC_VER)
-#  if !defined(__linux__)
-     #include <conio.h>
-#  endif
+#if defined(_MSC_VER)
+  #include <conio.h>
 #endif
 
 double better_rand(long int&);

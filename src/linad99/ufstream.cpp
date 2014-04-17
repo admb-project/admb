@@ -86,7 +86,7 @@ INSERT_IMPLEMENT(long double)
 
 // implement extraction operators for various types in class uistream
 #ifndef __SUN__
-//#  if (__BORLANDC__  > 0x0520 || defined(linux))
+//#  if (__BORLANDC__  > 0x0520 || defined(__linux__))
 EXTRACT_IMPLEMENT(signed char)
 EXTRACT_IMPLEMENT(unsigned char)
 EXTRACT_IMPLEMENT(char)

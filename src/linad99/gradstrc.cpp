@@ -20,7 +20,7 @@ void null_ptr_err_message(void);
 
 #include <string.h>
 
-#if defined(__TURBOC__) && !defined(__linux__)
+#if defined(__TURBOC__)
   #pragma hdrstop
   #include <iostream.h>
   #include <alloc.h>

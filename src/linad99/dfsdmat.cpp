@@ -27,7 +27,7 @@
     #define close _close
 #endif
 
-#if defined(__TURBOC__) && !defined(__linux__)
+#if defined(__TURBOC__)
   #pragma hdrstop
   #include <iostream.h>
   #include <iomanip.h>

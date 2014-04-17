@@ -109,7 +109,6 @@ Macro definitions.
 #   define USE_EXECPTIONS
 #endif
 
-#define DOS386
 #define __USE_IOSTREAM__
 
 #if defined(__BORLANDC__)
@@ -152,7 +151,6 @@ Macro definitions.
 #endif
 
 #if !defined(_MSC_VER)
-#   define DOS386
 #   define __GNU__
 #endif
 
@@ -404,9 +402,7 @@ void RETURN_ARRAYS_DECREMENT(void);
 
 void *farptr_norm(void *);
 long int farptr_tolong(void *);
-#if (!defined(__ZTC__) || defined(DOS386))
 long int _farptr_tolong(void *);
-#endif
 
 class i3_array;
 
@@ -2625,16 +2621,10 @@ double dmin(double, double);
 
 double dmax(double i, double j);
 
-
-
-
 #include <stdlib.h>
 #ifdef __TURBOC__
-#  if !defined(__linux__)
-#    include <alloc.h>
-#  endif
+  #include <alloc.h>
 #endif
-
 
 double sigmoid(double t1);
 
@@ -5826,10 +5816,8 @@ class cubic_spline_function
 };
 
 #ifdef __ZTC__
-#ifndef DOS386
 void *cdecl _farptr_norm(void *);
 void *cdecl _farptr_fromlong(unsigned long int);
-#endif
 #endif
 /*
 #if DOS386==1
@@ -9687,7 +9675,7 @@ dvariable log_gamma_density(const prevariable & _x, double r, double mu);
 dvariable log_gamma_density(const dvariable & _x, const dvariable & _r,
   const dvariable & _mu);
 
-#if (defined(linux) || defined(__linux__)) && !defined(_WIN32)
+#if !defined(_WIN32)
 #include <sys/time.h>
 #include <iostream>
 

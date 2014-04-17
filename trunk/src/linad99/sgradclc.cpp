@@ -8,6 +8,10 @@
   \file sgradclc.cpp
   Functions to compute gradient from the global \ref gradient_structure.
  */
+#if !defined(DOS386)
+  #define DOS386
+#endif
+
 #include "fvar.hpp"
 
 #include <sys/stat.h>
@@ -66,7 +70,7 @@
 
 #include <math.h>
 
-#if (defined(__ZTC__) && !defined(DOS386))
+#if defined(__ZTC__)
   void _far * _cdecl _farptr_norm(void _far *);
   void _far * _cdecl _farptr_fromlong(unsigned long);
   long _cdecl _farptr_tolong(void _far *);
@@ -149,11 +153,7 @@ void gradcalc(int nvar, const dvector& _g)
   {
      tmp->x = 0;
 #if defined (__ZTC__)
-  #if defined(DOS386)
-     tmp++;
-  #else
      tmp = (double_and_int*)_farptr_norm((void*)(++tmp));
-  #endif
 #else
      tmp++;
 #endif
@@ -241,17 +241,13 @@ void gradient_structure::save_arrays()
   long bytes_needed=min(gradient_structure::ARR_LIST1->get_last_offset()+1,
     ARRAY_MEMBLOCK_SIZE);
   gradient_structure::save_var_file_flag=0;
-  //#if DOS386==1
-  #if defined(DOS386)
-   if ( (temp_ptr = (void *) malloc(bytes_needed )) == 0)
-  #else
-#if !defined(_MSC_VER) && !defined (__WAT32__)
+#ifdef __ZTC__
    if ( (temp_ptr = farmalloc(bytes_needed) ) == 0)
 #else
-   if ( (temp_ptr = malloc(bytes_needed) ) == 0)
-#endif
+   //if ( (temp_ptr = malloc(bytes_needed) ) == 0)
+   if ((temp_ptr = (void *)malloc(bytes_needed)) == 0)
   #define __USE_IOSTREAM__
-  #endif
+#endif
    {
      gradient_structure::save_var_file_flag=1;
      cerr << "insufficient memory to allocate space for ARRAY_MEMBLOCK"
@@ -260,16 +256,15 @@ void gradient_structure::save_arrays()
    if (gradient_structure::save_var_file_flag==0)
    {
      ARRAY_MEMBLOCK_SAVE = temp_ptr;
-     #if defined(DOS386)
-     //#if DOS386==1
-       #ifndef USE_ASSEMBLER
+#if defined(DOS386)
+  #ifndef USE_ASSEMBLER
          memcpy((char*)ARRAY_MEMBLOCK_SAVE,(char*)ARRAY_MEMBLOCK_BASE,
            bytes_needed);
-       #else
+  #else
          dw_block_move((double*)ARRAY_MEMBLOCK_SAVE,
            (double*)ARRAY_MEMBLOCK_BASE,bytes_needed/8);
-       #endif
-     #else
+  #endif
+#else
      unsigned long int max_move=50000;
      unsigned long int left_to_move=bytes_needed;
      humungous_pointer dest = ARRAY_MEMBLOCK_SAVE;
@@ -282,17 +277,16 @@ void gradient_structure::save_arrays()
        dest+=max_move;
      }
      memcpy((char*)dest,(char*)src,left_to_move);
-    #endif
+#endif
   }
   else
   {
      humungous_pointer src = ARRAY_MEMBLOCK_BASE;
      lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
-     #if defined(DOS386)
-     //#if DOS386==1
+#if defined(DOS386)
        write(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
          (char*)src,bytes_needed);
-     #else
+#else
      unsigned long int max_move=500;
      unsigned long int left_to_move=bytes_needed;
      while(left_to_move > max_move)
@@ -303,7 +297,7 @@ void gradient_structure::save_arrays()
      }
      write(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,(char*)src,
        left_to_move);
-    #endif
+#endif
   }
 }
 
@@ -315,16 +309,15 @@ void gradient_structure::restore_arrays()
     ARRAY_MEMBLOCK_SIZE);
   if (gradient_structure::save_var_file_flag==0)
   {
-    #if defined(DOS386)
-    //#if DOS386==1
-      #ifndef USE_ASSEMBLER
+#if defined(DOS386)
+  #ifndef USE_ASSEMBLER
         memcpy((char*)ARRAY_MEMBLOCK_BASE,(char*)ARRAY_MEMBLOCK_SAVE,
           bytes_needed);
-       #else
+  #else
          dw_block_move((double*)ARRAY_MEMBLOCK_BASE,
            (double*)ARRAY_MEMBLOCK_SAVE,bytes_needed/8);
-       #endif
-     #else
+  #endif
+#else
      unsigned long max_move=50000;
 
      long int left_to_move=bytes_needed;
@@ -338,18 +331,17 @@ void gradient_structure::restore_arrays()
        dest+=max_move;
      }
      memcpy((char*)dest,(char*)src,left_to_move);
-    #endif
+#endif
     ARRAY_MEMBLOCK_SAVE.free();
   }
   else
   {
     humungous_pointer dest = ARRAY_MEMBLOCK_BASE;
     lseek(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,0L,SEEK_SET);
-    #if defined(DOS386)
-    // #if DOS386==1
+#if defined(DOS386)
       read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
        (char*)dest,bytes_needed);
-    #else
+#else
      unsigned long int max_move=50000;
 
      long int left_to_move=bytes_needed;
@@ -362,7 +354,7 @@ void gradient_structure::restore_arrays()
      }
      read(gradient_structure::GRAD_STACK1->_VARSSAV_PTR,
        (char*)dest,left_to_move);
-    #endif
+#endif
   }
 }
 /**

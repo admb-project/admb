@@ -8,8 +8,6 @@
   \file xfnntr1.cpp
   Minimize artibrary user-supplied function.
  */
-// this is to get UNIX systems to use getchar
-// #define UNIXKLUDGE
 
 #ifdef __ZTC__
   #include <conio.h>
@@ -26,6 +24,12 @@ extern int ctlc_flag;
 
 #if defined (__WAT32__) || defined(_MSC_VER)
   #include <conio.h>
+#else
+  #include <iostream>
+  using namespace std;
+  #include <signal.h>
+  // this is to get UNIX systems to use getchar
+  #define getch getchar
 #endif
 
 #ifdef __ZTC__
@@ -37,13 +41,6 @@ extern int ctlc_flag;
 
 #ifdef __SUN__
   #include <iostream.h>
-  #include <signal.h>
-  #define getch getchar
-#endif
-
-#if defined(__GNU__) || defined(UNIXKLUDGE)
-  #include <iostream>
-  using namespace std;
   #include <signal.h>
   #define getch getchar
 #endif

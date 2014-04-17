@@ -34,24 +34,16 @@
   #define lseek _lseek
   #define  read _read
   #define write _write
-#endif
-
-#ifdef __SUN__
-  #include <iostream.h>
-  #include <fcntl.h>
+#else
+  #include <iostream>
+  using namespace std;
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
 #endif
 
-#if defined(__GNU__) || defined(UNIXKLUDGE)
-  #if (__GNUC__ >3)
-     #include <iostream>
-     using namespace std;
-  #else
-    #include <iostream.h>
-  #endif
-  #include <fcntl.h>
+#ifdef __SUN__
+  #include <iostream.h>
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>

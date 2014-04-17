@@ -488,7 +488,7 @@ label20: /* check for convergence */
          goto label21;
 #endif
       if (llog) goto label7010;
-#if !defined (_MSC_VER) && !defined (__WAT32__) && !defined(__linux__)
+#if defined (_MSC_VER) && !defined (__WAT32__)
         if (!scroll_flag) clrscr();
 #endif
 label7003: /* Printing table header */
@@ -912,7 +912,7 @@ label92: /* Exit with error */
           ireturn=-1;
         }
       }
-#if defined (_MSC_VER)  && !defined (__WAT32__)
+#if defined (_MSC_VER) && !defined (__WAT32__)
         if (scroll_flag == 0) clrscr();
 #endif
       if (maxfn_flag == 1)
@@ -968,7 +968,7 @@ label777: /* Printing final Hessian approximation */
 label7000:/* Printing Initial statistics */
       if (iprint>0)
       {
-#if defined (_MSC_VER)  && !defined (__WAT32__)
+#if defined (_MSC_VER) && !defined (__WAT32__)
         if (!scroll_flag) clrscr();
 #endif
         if (ad_printf) (*ad_printf)("\nInitial statistics: ");
@@ -977,8 +977,8 @@ label7000:/* Printing Initial statistics */
 label7010:/* Printing Intermediate statistics */
    if (iprint>0)
    {
-#if defined (_MSC_VER)  && !defined (__WAT32__)
-     if (!scroll_flag)  clrscr();
+#if defined (_MSC_VER) && !defined (__WAT32__)
+     if (!scroll_flag) clrscr();
 #endif
      if (ad_printf) (*ad_printf)("\nIntermediate statistics: ");
    }

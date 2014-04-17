@@ -9,7 +9,7 @@
  * Description not yet available.
  */
 #include <admodel.h>
-#if (defined(linux) || defined(__linux__)) && !defined(_WIN32)
+#if !defined(_WIN32)
 #include <sys/time.h>
 #include <iostream>
 

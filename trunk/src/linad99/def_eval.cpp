@@ -23,26 +23,11 @@
   #include <iostream.hpp>
 #endif
 
-
 #include <stdio.h>
 #include <stdlib.h>
 
 #ifdef __SUN__
   #include <iostream.h>
-  #include <fcntl.h>
-  #include <sys/stat.h>
-  #include <sys/types.h>
-  #include <unistd.h>
-#endif
-
-#ifdef __GNU__
- #if (__GNUC__ >3)
-   #include <iostream>
-   using namespace std;
-  #else
-    #include <iostream.h>
-  #endif
-  #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>
@@ -52,15 +37,20 @@
   #define lseek _lseek
   #define  read _read
   #define write _write
+#else
+  #include <iostream>
+  using namespace std;
+  #include <sys/stat.h>
+  #include <sys/types.h>
+  #include <unistd.h>
 #endif
 
 #if defined (__WAT32__)
   #include <io.h>
-  #include <fcntl.h>
 #endif
 
 #include <math.h>
-#define XXX 3.70255042e-17
+//#define XXX 3.70255042e-17
 
   //ofstream gradlog("grad.log");
 

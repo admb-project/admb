@@ -9,13 +9,11 @@
  * Description not yet available.
  */
 #include "fvar.hpp"
+#include <stdlib.h>
+
 #ifdef __TURBOC__
   #pragma hdrstop
-#endif
-
-#include <stdlib.h>
-#if defined(__TURBOC__) && !defined(__linux__)
-   #include <alloc.h>
+  #include <alloc.h>
 #endif
 
 /**

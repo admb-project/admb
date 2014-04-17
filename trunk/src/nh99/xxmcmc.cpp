@@ -4,21 +4,12 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
-
-
 #include <admodel.h>
 
-
-#if defined(__GNU__) || defined(UNIXKLUDGE) || defined(__SUN__) \
-  || defined(__linux__)
+#if defined(_MSC_VER)
+  #include <conio.h>
+#else
   #define getch getchar
-#endif
-
-#if defined (__ZTC__) || defined(__TURBOC__) || defined(__WAT32__) \
-  || defined (_MSC_VER)
-  #if !defined(__linux__)
-     #include <conio.h>
-  #endif
 #endif
 
 double better_rand(long int&);
@@ -1561,11 +1552,10 @@ void read_hessian_matrix_and_scale1(int nvar, const dmatrix& _SS,
 int user_stop(void)
 {
   int quit_flag=0;
-#if (defined( __SUN__) && !defined(__GNU__)) || defined(UNIXKLUDGE) \
-  || defined(linux) || defined(__CYGWIN__)
-  if(ctlc_flag)
+#if defined(_MSC_VER)
+  if (kbhit())
 #else
-  if ( kbhit() )
+  if(ctlc_flag)
 #endif
   {
 #if defined(__DJGPP__)

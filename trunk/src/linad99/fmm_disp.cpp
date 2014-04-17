@@ -15,7 +15,7 @@
 #endif
 #include <admodel.h>
 
-#if defined(__TURBOC__) && !defined(__linux__)
+#if defined(__TURBOC__)
   #pragma hdrstop
   #include <conio.h>
 #endif

@@ -19,11 +19,6 @@
   #endif
 #endif
 
-#if defined(__TURBOC__) && !defined(__linux__)
-   #include <iostream.h>
-   #include <strstrea.h>
-#endif
-
 #ifdef __SUN__
    #include <iostream.h>
   #include <strstream.h>

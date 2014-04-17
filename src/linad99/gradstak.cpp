@@ -235,7 +235,7 @@ grad_stack::~grad_stack()
   {
     cerr << "Error closing file " << var_store_file_name << "\n";
   }
-#if defined ( __SUN__) ||  defined ( __GNU__)
+#if !defined (_MSC_VER)
   unlink(gradfile_name1);
   unlink(gradfile_name2);
   unlink(var_store_file_name);

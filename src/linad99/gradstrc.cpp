@@ -192,7 +192,7 @@ void cleanup_temporary_files()
        << gradient_structure::GRAD_STACK1->var_store_file_name << "\n";
      }
    }
-  #if defined ( __SUN__) ||  defined ( __GNU__)
+#if !defined (_MSC_VER)
    if (gradient_structure::GRAD_STACK1)
    {
      unlink(gradient_structure::GRAD_STACK1->gradfile_name1);
@@ -200,7 +200,7 @@ void cleanup_temporary_files()
      unlink(gradient_structure::GRAD_STACK1->var_store_file_name);
      //unlink(gradient_structure::cmpdif_file_name);
    }
-  #else
+#else
    if (gradient_structure::GRAD_STACK1)
    {
      remove(gradient_structure::GRAD_STACK1->gradfile_name1);
@@ -208,7 +208,7 @@ void cleanup_temporary_files()
      remove(gradient_structure::GRAD_STACK1->var_store_file_name);
      //cout << remove(gradient_structure::cmpdif_file_name);
    }
-  #endif
+#endif
 }
 
 /**

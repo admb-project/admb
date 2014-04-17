@@ -10,21 +10,23 @@
  */
 #define SAFE_ARRAYS
 #include <fvar.hpp>
+#include <fcntl.h>
 
 #if defined (__WAT32__)
   #include <io.h>
-  #include <fcntl.h>
 #endif
-
 
 #ifdef _MSC_VER
   #include <io.h>
-  #include <fcntl.h>
-    #define lseek _lseek
-    #define  read _read
-    #define write _write
-    #define open _open
-    #define close _close
+  #define lseek _lseek
+  #define  read _read
+  #define write _write
+  #define open _open
+  #define close _close
+#else
+  #include <sys/stat.h>
+  #include <sys/types.h>
+  #include <unistd.h>
 #endif
 
 #if defined(__TURBOC__)
@@ -32,14 +34,12 @@
   #include <iostream.h>
   #include <iomanip.h>
   #include <sys\stat.h>
-  #include <fcntl.h>
 #endif
 
 #ifdef __ZTC__
   #include <iostream.hpp>
   #define S_IREAD 0000400
   #define S_IWRITE 0000200
-  #include <fcntl.h>
 #endif
 
 #ifdef __NDPX__
@@ -58,7 +58,6 @@
 
 #ifdef __SUN__
   #include <iostream.h>
-  #include <fcntl.h>
   #include <sys/stat.h>
   #include <sys/types.h>
   #ifdef _MSC_VER
@@ -68,14 +67,6 @@
     #define open _open
     #define close _close
   #endif
-  #include <unistd.h>
-#endif
-
-#ifdef __GNU__
-  //#include <iostream.h>
-  #include <fcntl.h>
-  #include <sys/stat.h>
-  #include <sys/types.h>
   #include <unistd.h>
 #endif
 

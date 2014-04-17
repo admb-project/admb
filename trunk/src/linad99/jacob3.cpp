@@ -36,13 +36,9 @@
   #endif
 #endif
 
-#ifdef __GNU__
-  #if (__GNUC__ >3)
-     #include <iostream>
-     using namespace std;
-  #else
-    #include <iostream.h>
-  #endif
+#if !defined(_MSC_VER)
+  #include <iostream>
+  using namespace std;
   #include <sys/stat.h>
   #include <sys/types.h>
   #include <unistd.h>

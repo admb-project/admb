@@ -147,7 +147,7 @@ DF_FILE::DF_FILE(unsigned long long nbytes)
 #endif
 
   if (path != NULL)
-#if defined (__SUN__) ||defined (__GNU__)
+#if !defined (_WIN32)
   {
       sprintf(&cmpdif_file_name[0],"%s/cmpdiff.%s", path,
         ad_random_part);
@@ -213,7 +213,7 @@ DF_FILE::~DF_FILE()
   {
     cerr << "Error closing file " << cmpdif_file_name << "\n";
   }
-#if defined ( __SUN__) ||  defined ( __GNU__)
+#if !defined (_WIN32)
   unlink(cmpdif_file_name);
 #else
   adstring currentdir;

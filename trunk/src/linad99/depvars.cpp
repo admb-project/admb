@@ -11,15 +11,14 @@
 // file fvar.cpp
 // constructors, destructors and misc functions involving class prevariable
 #include "fvar.hpp"
-  #ifdef __MSC__
-    #define lseek _lseek
-    #define  read _read
-    #define write _write
-    #define open _open
-    #define close _close
-  #endif
 
-#ifdef __GNU__
+#ifdef _MSC_VER
+  #define lseek _lseek
+  #define read _read
+  #define write _write
+  #define open _open
+  #define close _close
+#else
   #include <unistd.h>
 #endif
 

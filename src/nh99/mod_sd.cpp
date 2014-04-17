@@ -4,6 +4,9 @@
  * Author: David Fournier
  * Copyright (c) 2008-2012 Regents of the University of California
  */
+#if !defined(DOS386)
+  #define DOS386
+#endif
 #if defined(USE_LAPLACE)
 #  include <df1b2fun.h>
 #endif

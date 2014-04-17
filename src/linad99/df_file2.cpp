@@ -9,23 +9,25 @@
  * Description not yet available.
  */
 #include <fvar.hpp>
-
-#if defined (__WAT32__)
-  #include <fcntl.h>
-#endif
+#include <fcntl.h>
 
 #ifdef _MSC_VER
   #define lseek _lseek
   #define  read _read
   #define write _write
+#else
+  #include <iostream>
+  using namespace std;
+  #include <sys/stat.h>
+  #include <sys/types.h>
+  #include <unistd.h>
 #endif
 
-#if defined(__TURBOC__) && !defined(__linux__)
+#if defined(__TURBOC__)
 #pragma hdrstop
 #include <iostream.h>
 #include <iomanip.h>
 #include <sys\stat.h>
-#include <fcntl.h>
 #endif
 
 #ifdef __ZTC__
@@ -49,22 +51,8 @@
   };
 #endif
 
-#if  defined(__GNU__) || defined(__linux__)
-  #if (__GNUC__ >3)
-     #include <iostream>
-     using namespace std;
-  #else
-    #include <iostream.h>
-  #endif
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-#endif
-
 #ifdef __SUN__
 #include <iostream.h>
-#include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #ifndef _MSC_VER

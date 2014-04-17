@@ -133,6 +133,7 @@ Macro definitions.
   #if !defined(O_BINARY)
     #define O_BINARY 0
   #endif
+  #define __GNU__
 #endif
 
 #if defined(__DJGPP__)
@@ -144,10 +145,6 @@ Macro definitions.
 
 #if !defined(CGNU_DOUBLE)
   #define CGNU_DOUBLE double
-#endif
-
-#if !defined(_MSC_VER)
-#   define __GNU__
 #endif
 
 #ifdef _SNGL_
@@ -295,14 +292,12 @@ class independent_variables;
 #   include <fcntl.h> // to get fstreambase
 #   include <dos.h>
 #   undef __ZTC__
-#   define __USE_IOSTREAM__
 #   undef __SUN__
 #endif
 
 #ifdef __ZTC__
 #   include <fstream.hpp> // to get fstreambase
 #   include <iostream.hpp>
-#   define __USE_IOSTREAM__
 #   include <dos.h>
 #   undef __SUN__
 #endif
@@ -311,7 +306,6 @@ class independent_variables;
 #   undef __NDPX__
 #   include <fstream.h>
 #   include <iostream.h>
-#   define __USE_IOSTREAM__
 #   ifndef _FPOS_T_DEFINED
 #      ifdef __GNUDOS__
 #         if defined(linux) || defined(__ADSGI__)|| defined(__CYGWIN32__)

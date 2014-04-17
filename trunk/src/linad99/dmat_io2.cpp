@@ -8,6 +8,8 @@
  * \file
  * Description not yet available.
  */
+#define __USE_IOSTREAM__
+
 #include "fvar.hpp"
 
 #if defined(__TURBOC__)
@@ -16,11 +18,6 @@
   #include <iomanip.h>
   #include <fstream.h>
   #include <strstrea.h>
-  #define __USE_IOSTREAM__
-#endif
-
-#ifdef __GNU__
-  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __SUN__
@@ -29,7 +26,6 @@
   #include <fstream.h>
   #include <limits.h>
   #include <strstream.h>
-  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __ZTC__
@@ -39,13 +35,11 @@
   #else
     #include <strstream.h>
   #endif
-  #define __USE_IOSTREAM__
 #endif
 
 #ifdef __NDPX__
   #include <iostream.h>
   #include <sstream.h>
-  #define __USE_IOSTREAM__
 #endif
 
 #include <string.h>

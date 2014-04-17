@@ -281,11 +281,11 @@ grad_stack::~grad_stack()
 
     // save the current end of file in case we can't write the whole buffer
     end_pos = lseek(_GRADFILE_PTR,0L,SEEK_CUR);
-    #if !defined(__NDPX__ ) && !defined(__SUN__)  && !defined(__GNU__)
+#if defined(_MSC_VER)
     ierr = write(_GRADFILE_PTR, ptr_first, nbw);
-    #else
+#else
     ierr = write(_GRADFILE_PTR, (char*)ptr_first, nbw);
-    #endif
+#endif
 
     if  (ierr != nbw)
     {
@@ -294,21 +294,21 @@ grad_stack::~grad_stack()
       //save the end of file for this file so we can reposition later
       end_pos1 = end_pos;
       increment_current_gradfile_ptr();
-      #if !defined(__NDPX__ ) && !defined(__SUN__)   && !defined(__GNU__)
+#if defined(_MSC_VER)
       ierr = write(_GRADFILE_PTR, ptr_first, nbw);
-      #else
+#else
       ierr = write(_GRADFILE_PTR, (char*)ptr_first, nbw);
-      #endif
+#endif
 
       if  (ierr != nbw)
       {
         perror("Error writing to temporary gradient stack file");
         cerr <<"   File name: " << gradfile_name << "\n";
-        #if !defined(__NDPX__ ) && !defined(__SUN__)   && !defined(__GNU__)
+#if defined(_MSC_VER)
         cerr <<"   File length: "
              << filelength(_GRADFILE_PTR)
              << " bytes.\n";
-        #endif
+#endif
         cerr <<"   Attempting to write " << nbw <<" bytes; wrote " << ierr
         << ".\n";
         exit(1);

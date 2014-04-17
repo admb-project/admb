@@ -74,7 +74,7 @@
 
 #endif
 
-#if defined(__NDPX__) || defined(__SUN__)  || defined(__GNU__)
+#if !defined(_MSC_VER)
   void gotoxy(int x, int y) { ; }
 
 /**
